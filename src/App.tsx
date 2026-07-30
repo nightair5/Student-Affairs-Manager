@@ -8,14 +8,28 @@ import { CalendarPage } from './pages/CalendarPage'
 import { DashboardPage } from './pages/DashboardPage'
 import { LibraryPage } from './pages/LibraryPage'
 import { TasksPage } from './pages/TasksPage'
+import { loadSources, loadTasks, saveSources, saveTasks } from './lib/storage'
+import { updateTaskWithHistory } from './lib/taskUpdates'
 import type { PageId, Source, Task } from './types'
 
 function App() {
   const [currentPage, setCurrentPage] = useState<PageId>('today')
-  const [tasks, setTasks] = useState<Task[]>(demoTasks)
-  const [sources, setSources] = useState<Source[]>(demoSources)
+  const [tasks, setTasks] = useState<Task[]>(() => loadTasks(demoTasks))
+  const [sources, setSources] = useState<Source[]>(() =>
+    loadSources(demoSources),
+  )
   const [intakeOpen, setIntakeOpen] = useState(false)
-  const [selectedTask, setSelectedTask] = useState<Task | null>(null)
+  const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null)
+  const selectedTask =
+    tasks.find((task) => task.id === selectedTaskId) ?? null
+
+  useEffect(() => {
+    saveTasks(tasks)
+  }, [tasks])
+
+  useEffect(() => {
+    saveSources(sources)
+  }, [sources])
 
   useEffect(() => {
     const openIntake = (event: KeyboardEvent) => {
@@ -34,30 +48,22 @@ function App() {
   }, [])
 
   const handleComplete = (taskId: string) => {
-    const now = new Date().toISOString()
     setTasks((current) =>
       current.map((task) =>
         task.id === taskId
-          ? {
-              ...task,
-              status: '已完成',
-              updatedAt: now,
-              history: [
-                ...task.history,
-                {
-                  id: `${taskId}-completed-${Date.now()}`,
-                  field: '状态',
-                  before: task.status,
-                  after: '已完成',
-                  changedAt: now,
-                  actor: 'user',
-                },
-              ],
-            }
+          ? updateTaskWithHistory(task, { status: '已完成' })
           : task,
       ),
     )
-    setSelectedTask(null)
+    setSelectedTaskId(null)
+  }
+
+  const handleUpdateTask = (taskId: string, patch: Partial<Task>) => {
+    setTasks((current) =>
+      current.map((task) =>
+        task.id === taskId ? updateTaskWithHistory(task, patch) : task,
+      ),
+    )
   }
 
   const handleConfirmIntake = (task: Task, source: Source) => {
@@ -65,7 +71,7 @@ function App() {
     setSources((current) => [source, ...current])
     setIntakeOpen(false)
     setCurrentPage('tasks')
-    setSelectedTask(task)
+    setSelectedTaskId(task.id)
   }
 
   const renderPage = () => {
@@ -75,7 +81,7 @@ function App() {
           <DashboardPage
             tasks={tasks}
             onOpenIntake={() => setIntakeOpen(true)}
-            onOpenTask={setSelectedTask}
+            onOpenTask={(task) => setSelectedTaskId(task.id)}
             onCompleteTask={handleComplete}
             onShowTasks={() => setCurrentPage('tasks')}
           />
@@ -84,12 +90,17 @@ function App() {
         return (
           <TasksPage
             tasks={tasks}
-            onOpenTask={setSelectedTask}
+            onOpenTask={(task) => setSelectedTaskId(task.id)}
             onCompleteTask={handleComplete}
           />
         )
       case 'calendar':
-        return <CalendarPage tasks={tasks} onOpenTask={setSelectedTask} />
+        return (
+          <CalendarPage
+            tasks={tasks}
+            onOpenTask={(task) => setSelectedTaskId(task.id)}
+          />
+        )
       case 'library':
         return <LibraryPage sources={sources} />
       case 'archive':
@@ -114,10 +125,12 @@ function App() {
       )}
       {selectedTask && (
         <TaskDetailPanel
+          key={selectedTask.id}
           task={selectedTask}
           sources={sources}
-          onClose={() => setSelectedTask(null)}
+          onClose={() => setSelectedTaskId(null)}
           onComplete={handleComplete}
+          onUpdate={handleUpdateTask}
         />
       )}
     </div>
