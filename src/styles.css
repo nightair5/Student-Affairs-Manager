@@ -1444,6 +1444,10 @@ h3 {
   animation: panel-enter 360ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
+.intake-panel {
+  width: min(780px, 64vw);
+}
+
 @keyframes panel-enter {
   from {
     transform: translateX(40px);
@@ -1633,6 +1637,103 @@ h3 {
 .suggestion-banner p {
   clear: both;
   margin: 8px 0 0;
+  color: var(--ink-soft);
+  font-size: 10px;
+}
+
+.suggestion-stack {
+  display: grid;
+  gap: 18px;
+}
+
+.suggestion-card {
+  min-width: 0;
+  margin: 0;
+  padding: 20px;
+  border: 1px solid #cfd9d2;
+  border-radius: 12px 12px 12px 4px;
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(24, 50, 57, 0.045);
+}
+
+.suggestion-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+.suggestion-number {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+  place-items: center;
+  color: #fff;
+  font-family: 'Noto Serif SC', serif;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 10px 3px 10px 3px;
+  background: var(--navy);
+}
+
+.suggestion-time-summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--green);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.confidence-label {
+  margin-left: auto;
+  color: #7d8e88;
+  font-size: 9px;
+}
+
+.remove-suggestion-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 9px;
+  color: var(--red);
+  font-size: 9px;
+  font-weight: 700;
+  border-radius: 6px;
+  background: var(--red-soft);
+  cursor: pointer;
+}
+
+.suggestion-card .field textarea {
+  min-height: 78px;
+}
+
+.suggestion-card .evidence-box {
+  margin-bottom: 0;
+}
+
+.empty-suggestions {
+  display: grid;
+  min-height: 210px;
+  place-items: center;
+  align-content: center;
+  color: var(--red);
+  border: 1px dashed #d7bbb4;
+  border-radius: 12px;
+  background: #faf3f1;
+}
+
+.empty-suggestions h3 {
+  margin: 12px 0 5px;
+  color: var(--ink);
+  font-size: 16px;
+}
+
+.empty-suggestions p {
+  margin: 0;
   color: var(--ink-soft);
   font-size: 10px;
 }

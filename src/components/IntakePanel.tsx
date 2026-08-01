@@ -1,11 +1,13 @@
 import {
   ArrowLeft,
+  CalendarClock,
   Check,
   FileImage,
   FileText,
   Link2,
   LoaderCircle,
   Sparkles,
+  Trash2,
   Upload,
   X,
 } from 'lucide-react'
@@ -17,7 +19,7 @@ import {
   type ChangeEvent,
   type FormEvent,
 } from 'react'
-import { createSuggestion } from '../lib/parser'
+import { createSuggestions } from '../lib/parser'
 import type {
   ParsedSuggestion,
   Source,
@@ -28,7 +30,7 @@ import type {
 
 interface IntakePanelProps {
   onClose: () => void
-  onConfirm: (task: Task, source: Source) => void
+  onConfirm: (tasks: Task[], source: Source) => void
 }
 
 type IntakeStep = 'input' | 'review'
@@ -42,7 +44,7 @@ export function IntakePanel({ onClose, onConfirm }: IntakePanelProps) {
   const [sourceTitle, setSourceTitle] = useState('')
   const [fileName, setFileName] = useState('')
   const [isParsing, setIsParsing] = useState(false)
-  const [suggestion, setSuggestion] = useState<ParsedSuggestion | null>(null)
+  const [suggestions, setSuggestions] = useState<ParsedSuggestion[]>([])
   const titleId = useId()
   const firstControlRef = useRef<HTMLTextAreaElement>(null)
 
@@ -72,8 +74,8 @@ export function IntakePanel({ onClose, onConfirm }: IntakePanelProps) {
     if (!content.trim() && !sourceTitle.trim() && !fileName) return
     setIsParsing(true)
     window.setTimeout(() => {
-      setSuggestion(
-        createSuggestion(content, sourceType, sourceTitle || fileName),
+      setSuggestions(
+        createSuggestions(content, sourceType, sourceTitle || fileName),
       )
       setIsParsing(false)
       setStep('review')
@@ -81,20 +83,30 @@ export function IntakePanel({ onClose, onConfirm }: IntakePanelProps) {
   }
 
   const updateSuggestion = <K extends keyof ParsedSuggestion>(
+    suggestionId: string,
     key: K,
     value: ParsedSuggestion[K],
   ) => {
-    setSuggestion((current) =>
-      current ? { ...current, [key]: value } : current,
+    setSuggestions((current) =>
+      current.map((suggestion) =>
+        suggestion.id === suggestionId
+          ? { ...suggestion, [key]: value }
+          : suggestion,
+      ),
+    )
+  }
+
+  const removeSuggestion = (suggestionId: string) => {
+    setSuggestions((current) =>
+      current.filter((suggestion) => suggestion.id !== suggestionId),
     )
   }
 
   const handleConfirm = (event: FormEvent) => {
     event.preventDefault()
-    if (!suggestion) return
+    if (!suggestions.length) return
     const now = new Date().toISOString()
     const sourceId = `source-${Date.now()}`
-    const taskId = `task-${Date.now()}`
     const source: Source = {
       id: sourceId,
       type: sourceType,
@@ -102,47 +114,52 @@ export function IntakePanel({ onClose, onConfirm }: IntakePanelProps) {
         sourceTitle ||
         fileName ||
         (sourceType === 'link' ? '网页通知' : '手动粘贴消息'),
-      contentPreview: suggestion.evidence,
+      contentPreview:
+        content.trim().slice(0, 500) ||
+        suggestions.map((suggestion) => suggestion.evidence).join('；'),
       createdAt: now,
       extractionStatus: '已识别',
     }
-    const task: Task = {
-      id: taskId,
-      title: suggestion.title,
-      category: suggestion.category,
-      status: '待开始',
-      deadline: suggestion.deadline,
-      estimatedMinutes: suggestion.estimatedMinutes,
-      nextAction: suggestion.nextAction,
-      description: suggestion.description,
-      priority: suggestion.priority,
-      riskFlags: suggestion.confidence === '低' ? ['待确认'] : [],
-      materials: suggestion.materials.map((name, index) => ({
-        id: `${taskId}-material-${index}`,
-        name,
-        done: false,
-      })),
-      dependencies: [],
-      reminders: [],
-      sourceIds: [sourceId],
-      priorityReason:
-        suggestion.confidence === '低'
-          ? '识别置信度较低，请优先核对截止时间'
-          : '新录入事项，建议确认后安排开工时间',
-      createdAt: now,
-      updatedAt: now,
-      history: [
-        {
-          id: `${taskId}-history-created`,
-          field: '任务',
-          before: '',
-          after: '从识别建议确认创建',
-          changedAt: now,
-          actor: 'user',
-        },
-      ],
-    }
-    onConfirm(task, source)
+    const tasks = suggestions.map((suggestion, suggestionIndex): Task => {
+      const taskId = `task-${Date.now()}-${suggestionIndex}`
+      return {
+        id: taskId,
+        title: suggestion.title,
+        category: suggestion.category,
+        status: '待开始',
+        deadline: suggestion.deadline,
+        estimatedMinutes: suggestion.estimatedMinutes,
+        nextAction: suggestion.nextAction,
+        description: suggestion.description,
+        priority: suggestion.priority,
+        riskFlags: suggestion.confidence === '低' ? ['待确认'] : [],
+        materials: suggestion.materials.map((name, materialIndex) => ({
+          id: `${taskId}-material-${materialIndex}`,
+          name,
+          done: false,
+        })),
+        dependencies: [],
+        reminders: [],
+        sourceIds: [sourceId],
+        priorityReason:
+          suggestion.confidence === '低'
+            ? '识别置信度较低，请优先核对截止时间'
+            : '新录入事项，建议确认后安排开工时间',
+        createdAt: now,
+        updatedAt: now,
+        history: [
+          {
+            id: `${taskId}-history-created`,
+            field: '任务',
+            before: '',
+            after: `从同一来源的第 ${suggestionIndex + 1} 条识别建议确认创建`,
+            changedAt: now,
+            actor: 'user',
+          },
+        ],
+      }
+    })
+    onConfirm(tasks, source)
   }
 
   return (
@@ -298,97 +315,173 @@ export function IntakePanel({ onClose, onConfirm }: IntakePanelProps) {
             <div className="suggestion-banner">
               <span>
                 <Sparkles size={16} />
-                演示识别建议
+                演示识别建议 · {suggestions.length} 项
               </span>
-              <strong>置信度：{suggestion?.confidence}</strong>
-              <p>请核对每一项。自动结果不会替你做最终决定。</p>
+              <strong>
+                已拆成 {suggestions.length} 条独立待确认任务
+              </strong>
+              <p>
+                每个时间点对应一张任务卡。你可以逐条修改或删除，确认后才会一起进入任务中心。
+              </p>
             </div>
 
-            <div className="form-grid">
-              <label className="field span-2">
-                <span>任务名称</span>
-                <input
-                  value={suggestion?.title ?? ''}
-                  onChange={(event) =>
-                    updateSuggestion('title', event.target.value)
-                  }
-                  required
-                />
-              </label>
-              <label className="field">
-                <span>分类</span>
-                <select
-                  value={suggestion?.category}
-                  onChange={(event) =>
-                    updateSuggestion(
-                      'category',
-                      event.target.value as TaskCategory,
-                    )
-                  }
-                >
-                  {categories.map((category) => (
-                    <option key={category}>{category}</option>
-                  ))}
-                </select>
-              </label>
-              <label className="field">
-                <span>优先级</span>
-                <select
-                  value={suggestion?.priority}
-                  onChange={(event) =>
-                    updateSuggestion(
-                      'priority',
-                      event.target.value as ParsedSuggestion['priority'],
-                    )
-                  }
-                >
-                  <option>高</option>
-                  <option>中</option>
-                  <option>低</option>
-                </select>
-              </label>
-              <label className="field">
-                <span>截止时间</span>
-                <input
-                  type="datetime-local"
-                  value={suggestion?.deadline ?? ''}
-                  onChange={(event) =>
-                    updateSuggestion('deadline', event.target.value)
-                  }
-                  required
-                />
-              </label>
-              <label className="field">
-                <span>预计耗时（分钟）</span>
-                <input
-                  type="number"
-                  min="5"
-                  step="5"
-                  value={suggestion?.estimatedMinutes ?? 60}
-                  onChange={(event) =>
-                    updateSuggestion(
-                      'estimatedMinutes',
-                      Number(event.target.value),
-                    )
-                  }
-                />
-              </label>
-              <label className="field span-2">
-                <span>下一步动作</span>
-                <input
-                  value={suggestion?.nextAction ?? ''}
-                  onChange={(event) =>
-                    updateSuggestion('nextAction', event.target.value)
-                  }
-                  required
-                />
-              </label>
-            </div>
+            {suggestions.length ? (
+              <div className="suggestion-stack">
+                {suggestions.map((suggestion, index) => (
+                  <fieldset className="suggestion-card" key={suggestion.id}>
+                    <legend className="sr-only">待确认任务 {index + 1}</legend>
+                    <header className="suggestion-card-header">
+                      <span className="suggestion-number">
+                        {String(index + 1).padStart(2, '0')}
+                      </span>
+                      <span className="suggestion-time-summary">
+                        <CalendarClock size={15} />
+                        {new Intl.DateTimeFormat('zh-CN', {
+                          month: 'long',
+                          day: 'numeric',
+                          hour: '2-digit',
+                          minute: '2-digit',
+                          hour12: false,
+                        }).format(new Date(suggestion.deadline))}
+                      </span>
+                      <span className="confidence-label">
+                        置信度 {suggestion.confidence}
+                      </span>
+                      <button
+                        className="remove-suggestion-button"
+                        type="button"
+                        onClick={() => removeSuggestion(suggestion.id)}
+                        aria-label={`删除待确认任务 ${index + 1}：${suggestion.title}`}
+                      >
+                        <Trash2 size={15} />
+                        删除
+                      </button>
+                    </header>
 
-            <div className="evidence-box">
-              <span>来源依据</span>
-              <p>{suggestion?.evidence}</p>
-            </div>
+                    <div className="form-grid">
+                      <label className="field span-2">
+                        <span>任务名称</span>
+                        <input
+                          value={suggestion.title}
+                          onChange={(event) =>
+                            updateSuggestion(
+                              suggestion.id,
+                              'title',
+                              event.target.value,
+                            )
+                          }
+                          required
+                        />
+                      </label>
+                      <label className="field">
+                        <span>分类</span>
+                        <select
+                          value={suggestion.category}
+                          onChange={(event) =>
+                            updateSuggestion(
+                              suggestion.id,
+                              'category',
+                              event.target.value as TaskCategory,
+                            )
+                          }
+                        >
+                          {categories.map((category) => (
+                            <option key={category}>{category}</option>
+                          ))}
+                        </select>
+                      </label>
+                      <label className="field">
+                        <span>优先级</span>
+                        <select
+                          value={suggestion.priority}
+                          onChange={(event) =>
+                            updateSuggestion(
+                              suggestion.id,
+                              'priority',
+                              event.target.value as ParsedSuggestion['priority'],
+                            )
+                          }
+                        >
+                          <option>高</option>
+                          <option>中</option>
+                          <option>低</option>
+                        </select>
+                      </label>
+                      <label className="field">
+                        <span>截止时间</span>
+                        <input
+                          type="datetime-local"
+                          value={suggestion.deadline}
+                          onChange={(event) =>
+                            updateSuggestion(
+                              suggestion.id,
+                              'deadline',
+                              event.target.value,
+                            )
+                          }
+                          required
+                        />
+                      </label>
+                      <label className="field">
+                        <span>预计耗时（分钟）</span>
+                        <input
+                          type="number"
+                          min="5"
+                          step="5"
+                          value={suggestion.estimatedMinutes}
+                          onChange={(event) =>
+                            updateSuggestion(
+                              suggestion.id,
+                              'estimatedMinutes',
+                              Number(event.target.value),
+                            )
+                          }
+                        />
+                      </label>
+                      <label className="field span-2">
+                        <span>下一步动作</span>
+                        <input
+                          value={suggestion.nextAction}
+                          onChange={(event) =>
+                            updateSuggestion(
+                              suggestion.id,
+                              'nextAction',
+                              event.target.value,
+                            )
+                          }
+                          required
+                        />
+                      </label>
+                      <label className="field span-2">
+                        <span>事项说明</span>
+                        <textarea
+                          rows={3}
+                          value={suggestion.description}
+                          onChange={(event) =>
+                            updateSuggestion(
+                              suggestion.id,
+                              'description',
+                              event.target.value,
+                            )
+                          }
+                        />
+                      </label>
+                    </div>
+
+                    <div className="evidence-box">
+                      <span>这一条的来源依据</span>
+                      <p>{suggestion.evidence}</p>
+                    </div>
+                  </fieldset>
+                ))}
+              </div>
+            ) : (
+              <div className="empty-suggestions">
+                <Trash2 size={26} />
+                <h3>待确认任务已全部删除</h3>
+                <p>返回原文重新解析，或关闭本次录入。</p>
+              </div>
+            )}
 
             <div className="panel-actions">
               <button
@@ -399,9 +492,13 @@ export function IntakePanel({ onClose, onConfirm }: IntakePanelProps) {
                 <ArrowLeft size={17} />
                 返回原文
               </button>
-              <button className="primary-button" type="submit">
+              <button
+                className="primary-button"
+                type="submit"
+                disabled={!suggestions.length}
+              >
                 <Check size={17} />
-                确认并加入任务中心
+                确认 {suggestions.length} 项并加入任务中心
               </button>
             </div>
           </form>

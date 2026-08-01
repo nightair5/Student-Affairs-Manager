@@ -74,8 +74,8 @@ export function Sidebar({
       <div className="sidebar-note">
         <span className="status-dot" />
         <div>
-          <strong>演示识别模式</strong>
-          <p>结果仅作建议，确认后才会进入任务中心。</p>
+          <strong>已在此设备自动保存</strong>
+          <p>同一浏览器与站点地址下可恢复；识别结果确认后才入库。</p>
         </div>
       </div>
 

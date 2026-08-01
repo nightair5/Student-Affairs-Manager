@@ -4,6 +4,19 @@ import type {
   TaskCategory,
 } from '../types'
 
+interface TemporalContext {
+  year: number
+  month: number
+  day: number
+}
+
+interface TemporalMatch {
+  deadline: string
+  context: TemporalContext
+}
+
+const temporalPattern = /(?:(?:(20\d{2})[年/-])?(\d{1,2})[月/-](\d{1,2})日?(?:\s*(上午|下午|晚上|中午|凌晨)?\s*(\d{1,2})(?:[:：点时](\d{1,2})?分?)?)?)|(?:(上午|下午|晚上|中午|凌晨)\s*(\d{1,2})(?:[:：点时](\d{1,2})?分?)?)|(?<![\d月/-])(\d{1,2})[:：](\d{2})|(?<![\d月/-])(\d{1,2})点/g
+
 function inferCategory(content: string): TaskCategory {
   if (/比赛|竞赛|参赛|作品/.test(content)) return '比赛'
   if (/保研|推免|夏令营|预推免/.test(content)) return '保研'
@@ -12,27 +25,47 @@ function inferCategory(content: string): TaskCategory {
   return '其他'
 }
 
-function inferDeadline(content: string): string {
-  const dateMatch = content.match(
-    /(?:(20\d{2})[年/-])?(\d{1,2})[月/-](\d{1,2})日?(?:\s*(\d{1,2})(?:[:：点时](\d{1,2})?)?)?/,
-  )
+function convertHour(hour: number, period?: string): number {
+  if ((period === '下午' || period === '晚上') && hour < 12) return hour + 12
+  if (period === '中午' && hour < 11) return hour + 12
+  if (period === '凌晨' && hour === 12) return 0
+  return hour
+}
 
-  if (!dateMatch) {
-    const fallback = new Date()
-    fallback.setDate(fallback.getDate() + 7)
-    fallback.setHours(18, 0, 0, 0)
-    return toLocalDateTime(fallback)
-  }
+function parseTemporal(
+  content: string,
+  previousContext?: TemporalContext,
+): TemporalMatch | null {
+  temporalPattern.lastIndex = 0
+  const match = temporalPattern.exec(content)
+  if (!match) return null
 
-  const [, year, month, day, hour, minute] = dateMatch
+  const now = new Date()
+  const hasDate = Boolean(match[2] && match[3])
+  const context: TemporalContext = hasDate
+    ? {
+        year: Number(match[1] ?? previousContext?.year ?? now.getFullYear()),
+        month: Number(match[2]),
+        day: Number(match[3]),
+      }
+    : previousContext ?? {
+        year: now.getFullYear(),
+        month: now.getMonth() + 1,
+        day: now.getDate() + 7,
+      }
+
+  const period = match[4] ?? match[7]
+  const rawHour = Number(match[5] ?? match[8] ?? match[10] ?? match[12] ?? 18)
+  const minute = Number(match[6] ?? match[9] ?? match[11] ?? 0)
   const target = new Date(
-    Number(year ?? new Date().getFullYear()),
-    Number(month) - 1,
-    Number(day),
-    Number(hour ?? 18),
-    Number(minute ?? 0),
+    context.year,
+    context.month - 1,
+    context.day,
+    convertHour(rawHour, period),
+    minute,
   )
-  return toLocalDateTime(target)
+
+  return { deadline: toLocalDateTime(target), context }
 }
 
 function toLocalDateTime(date: Date): string {
@@ -47,15 +80,78 @@ function inferMaterials(content: string): string[] {
   return known.filter((item) => content.includes(item))
 }
 
-export function createSuggestion(
-  content: string,
+function splitByTemporalAnchors(clause: string): string[] {
+  const matcher = new RegExp(temporalPattern.source, 'g')
+  const matches = [...clause.matchAll(matcher)]
+  if (matches.length <= 1) return [clause]
+
+  return matches.map((match, index) => {
+    const start = index === 0 ? 0 : (match.index ?? 0)
+    const end = matches[index + 1]?.index ?? clause.length
+    return clause.slice(start, end).trim()
+  })
+}
+
+function splitEventClauses(content: string): string[] {
+  const rawClauses = content
+    .replace(/\r/g, '')
+    .split(/[；;。！？!\n，,]+/)
+    .map((clause) => clause.trim())
+    .filter(Boolean)
+    .flatMap(splitByTemporalAnchors)
+  const groupedClauses: string[] = []
+  let pendingPrefix = ''
+
+  for (const clause of rawClauses) {
+    temporalPattern.lastIndex = 0
+    const hasTemporal = temporalPattern.test(clause)
+    temporalPattern.lastIndex = 0
+
+    if (hasTemporal) {
+      groupedClauses.push(
+        pendingPrefix ? `${pendingPrefix}，${clause}` : clause,
+      )
+      pendingPrefix = ''
+    } else if (groupedClauses.length) {
+      const lastIndex = groupedClauses.length - 1
+      groupedClauses[lastIndex] = `${groupedClauses[lastIndex]}，${clause}`
+    } else {
+      pendingPrefix = pendingPrefix ? `${pendingPrefix}，${clause}` : clause
+    }
+  }
+
+  if (!groupedClauses.length && pendingPrefix) return [pendingPrefix]
+  return groupedClauses
+}
+
+function stripTemporalText(content: string): string {
+  temporalPattern.lastIndex = 0
+  return content
+    .replace(temporalPattern, ' ')
+    .replace(/^(?:请|请于|请在|需要|需|务必|记得|截至)\s*/u, '')
+    .replace(/(?:之前|以前|前|截止|截至)\s*$/u, '')
+    .replace(/^[：:、\s]+|[：:、\s]+$/g, '')
+    .trim()
+}
+
+function fallbackDeadline(): string {
+  const fallback = new Date()
+  fallback.setDate(fallback.getDate() + 7)
+  fallback.setHours(18, 0, 0, 0)
+  return toLocalDateTime(fallback)
+}
+
+function buildSuggestion(
+  eventContent: string,
   sourceType: SourceType,
-  sourceTitle?: string,
+  sourceTitle: string | undefined,
+  deadline: string,
+  index: number,
 ): ParsedSuggestion {
-  const cleanContent = content.trim()
-  const category = inferCategory(`${sourceTitle ?? ''}${cleanContent}`)
-  const materials = inferMaterials(cleanContent)
-  const titleMap: Record<TaskCategory, string> = {
+  const category = inferCategory(`${sourceTitle ?? ''}${eventContent}`)
+  const materials = inferMaterials(eventContent)
+  const extractedTitle = stripTemporalText(eventContent)
+  const fallbackTitles: Record<TaskCategory, string> = {
     比赛: '完成比赛通知要求',
     保研: '准备推免申请材料',
     课程: '完成课程任务',
@@ -71,19 +167,68 @@ export function createSuggestion(
   }
 
   return {
-    title: titleMap[category],
+    id: `suggestion-${index}-${deadline}`,
+    title: extractedTitle.slice(0, 36) || fallbackTitles[category],
     category,
-    deadline: inferDeadline(cleanContent),
+    deadline,
     estimatedMinutes: materials.length >= 2 ? 120 : 60,
-    nextAction: actionMap[category],
+    nextAction: extractedTitle
+      ? `开始处理：${extractedTitle.slice(0, 30)}`
+      : actionMap[category],
     description:
-      cleanContent ||
+      eventContent ||
       `${sourceTitle ?? '上传内容'}将在接入解析服务后读取正文；当前按文件名生成演示建议。`,
-    priority: /今天|明天|尽快|截止/.test(cleanContent) ? '高' : '中',
+    priority: /今天|明天|尽快|截止/.test(eventContent) ? '高' : '中',
     materials,
     evidence:
-      cleanContent.slice(0, 180) ||
+      eventContent.slice(0, 220) ||
       `来源：${sourceTitle ?? (sourceType === 'link' ? '网页链接' : '上传文件')}`,
-    confidence: cleanContent.length > 20 ? '中' : '低',
+    confidence: eventContent.length > 12 ? '中' : '低',
   }
+}
+
+export function createSuggestions(
+  content: string,
+  sourceType: SourceType,
+  sourceTitle?: string,
+): ParsedSuggestion[] {
+  const cleanContent = content.trim()
+  const clauses = splitEventClauses(cleanContent)
+  const suggestions: ParsedSuggestion[] = []
+  let context: TemporalContext | undefined
+
+  for (const clause of clauses) {
+    const temporal = parseTemporal(clause, context)
+    if (!temporal) continue
+    context = temporal.context
+    suggestions.push(
+      buildSuggestion(
+        clause,
+        sourceType,
+        sourceTitle,
+        temporal.deadline,
+        suggestions.length,
+      ),
+    )
+  }
+
+  if (suggestions.length) return suggestions
+
+  return [
+    buildSuggestion(
+      cleanContent,
+      sourceType,
+      sourceTitle,
+      fallbackDeadline(),
+      0,
+    ),
+  ]
+}
+
+export function createSuggestion(
+  content: string,
+  sourceType: SourceType,
+  sourceTitle?: string,
+): ParsedSuggestion {
+  return createSuggestions(content, sourceType, sourceTitle)[0]
 }

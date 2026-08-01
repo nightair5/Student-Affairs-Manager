@@ -8,28 +8,25 @@ import { CalendarPage } from './pages/CalendarPage'
 import { DashboardPage } from './pages/DashboardPage'
 import { LibraryPage } from './pages/LibraryPage'
 import { TasksPage } from './pages/TasksPage'
-import { loadSources, loadTasks, saveSources, saveTasks } from './lib/storage'
+import { loadWorkspace, saveWorkspace } from './lib/storage'
 import { updateTaskWithHistory } from './lib/taskUpdates'
 import type { PageId, Source, Task } from './types'
 
 function App() {
-  const [currentPage, setCurrentPage] = useState<PageId>('today')
-  const [tasks, setTasks] = useState<Task[]>(() => loadTasks(demoTasks))
-  const [sources, setSources] = useState<Source[]>(() =>
-    loadSources(demoSources),
+  const [initialWorkspace] = useState(() =>
+    loadWorkspace(demoTasks, demoSources),
   )
+  const [currentPage, setCurrentPage] = useState<PageId>('today')
+  const [tasks, setTasks] = useState<Task[]>(initialWorkspace.tasks)
+  const [sources, setSources] = useState<Source[]>(initialWorkspace.sources)
   const [intakeOpen, setIntakeOpen] = useState(false)
   const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null)
   const selectedTask =
     tasks.find((task) => task.id === selectedTaskId) ?? null
 
   useEffect(() => {
-    saveTasks(tasks)
-  }, [tasks])
-
-  useEffect(() => {
-    saveSources(sources)
-  }, [sources])
+    saveWorkspace(tasks, sources)
+  }, [sources, tasks])
 
   useEffect(() => {
     const openIntake = (event: KeyboardEvent) => {
@@ -66,12 +63,12 @@ function App() {
     )
   }
 
-  const handleConfirmIntake = (task: Task, source: Source) => {
-    setTasks((current) => [task, ...current])
+  const handleConfirmIntake = (newTasks: Task[], source: Source) => {
+    setTasks((current) => [...newTasks, ...current])
     setSources((current) => [source, ...current])
     setIntakeOpen(false)
     setCurrentPage('tasks')
-    setSelectedTaskId(task.id)
+    setSelectedTaskId(newTasks[0]?.id ?? null)
   }
 
   const renderPage = () => {

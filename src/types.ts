@@ -60,6 +60,7 @@ export interface Source {
 }
 
 export interface ParsedSuggestion {
+  id: string
   title: string
   category: TaskCategory
   deadline: string
