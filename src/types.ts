@@ -5,6 +5,7 @@ export type PageId =
   | 'calendar'
   | 'library'
   | 'archive'
+  | 'knowledge'
 
 export type TaskCategory = '比赛' | '保研' | '课程' | '老师任务' | '其他'
 export type TaskStatus = '待开始' | '进行中' | '已完成'
@@ -121,11 +122,17 @@ export interface Project {
   updatedAt: string
 }
 
+export interface KnowledgeSettings {
+  /** 用户明确允许本地问答读取其已保存工作区的时间。 */
+  localSearchAuthorizedAt?: string
+}
+
 export interface WorkspaceData {
-  schemaVersion: 3
+  schemaVersion: 4
   tasks: Task[]
   sources: Source[]
   drafts: ExtractionDraft[]
   projects: Project[]
+  knowledgeSettings: KnowledgeSettings
   savedAt: string
 }

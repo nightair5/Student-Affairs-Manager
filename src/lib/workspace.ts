@@ -17,13 +17,15 @@ export function createWorkspaceData(
   sources: Source[],
   drafts: ExtractionDraft[] = [],
   projects: Project[] = [],
+  localSearchAuthorizedAt?: string,
 ): WorkspaceData {
   return {
-    schemaVersion: 3,
+    schemaVersion: 4,
     tasks,
     sources,
     drafts,
     projects,
+    knowledgeSettings: { localSearchAuthorizedAt },
     savedAt: new Date().toISOString(),
   }
 }

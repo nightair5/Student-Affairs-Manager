@@ -1,4 +1,4 @@
-import type { WorkspaceData } from '../types'
+import type { KnowledgeSettings, WorkspaceData } from '../types'
 
 const DATABASE_NAME = 'student-affairs-steward'
 const STORE_NAME = 'workspace'
@@ -15,13 +15,25 @@ export interface WorkspaceRepository {
 function isWorkspaceData(value: unknown): value is WorkspaceData {
   if (typeof value !== 'object' || value === null) return false
   const data = value as Partial<WorkspaceData>
+  const version = (data as { schemaVersion?: number }).schemaVersion
   return (
-    data.schemaVersion === 3 &&
+    (version === 3 || version === 4) &&
     Array.isArray(data.tasks) &&
     Array.isArray(data.sources) &&
     Array.isArray(data.drafts) &&
     Array.isArray(data.projects)
   )
+}
+
+function normalizeWorkspace(value: WorkspaceData): WorkspaceData {
+  const settings = value.knowledgeSettings as KnowledgeSettings | undefined
+  return {
+    ...value,
+    schemaVersion: 4,
+    knowledgeSettings: {
+      localSearchAuthorizedAt: settings?.localSearchAuthorizedAt,
+    },
+  }
 }
 
 export class IndexedDbWorkspaceRepository implements WorkspaceRepository {
@@ -49,7 +61,7 @@ export class IndexedDbWorkspaceRepository implements WorkspaceRepository {
         .objectStore(STORE_NAME)
         .get(RECORD_KEY)
       request.onerror = () => reject(request.error)
-      request.onsuccess = () => resolve(isWorkspaceData(request.result) ? request.result : null)
+      request.onsuccess = () => resolve(isWorkspaceData(request.result) ? normalizeWorkspace(request.result) : null)
     })
   }
 
@@ -82,6 +94,6 @@ export class IndexedDbWorkspaceRepository implements WorkspaceRepository {
     if (!isWorkspaceData(parsed)) {
       throw new Error('导入文件不是有效的学生事务管家数据')
     }
-    return parsed
+    return normalizeWorkspace(parsed)
   }
 }

@@ -9,6 +9,7 @@ import { ArchivePage } from './pages/ArchivePage'
 import { CalendarPage } from './pages/CalendarPage'
 import { DashboardPage } from './pages/DashboardPage'
 import { LibraryPage } from './pages/LibraryPage'
+import { KnowledgePage } from './pages/KnowledgePage'
 import { TasksPage } from './pages/TasksPage'
 import { IndexedDbWorkspaceRepository } from './lib/repository'
 import { loadWorkspace } from './lib/storage'
@@ -30,6 +31,7 @@ function App() {
   const [sources, setSources] = useState<Source[]>(initialWorkspace.sources)
   const [drafts, setDrafts] = useState<ExtractionDraft[]>([])
   const [projects, setProjects] = useState<Project[]>([])
+  const [localSearchAuthorizedAt, setLocalSearchAuthorizedAt] = useState<string | undefined>()
   const [workspaceReady, setWorkspaceReady] = useState(false)
   const [storageError, setStorageError] = useState(false)
   const [intakeOpen, setIntakeOpen] = useState(false)
@@ -44,8 +46,8 @@ function App() {
     ? sources.find((source) => source.id === selectedDraft.sourceId) ?? null
     : null
   const workspace = useMemo(
-    () => createWorkspaceData(tasks, sources, drafts, projects),
-    [drafts, projects, sources, tasks],
+    () => createWorkspaceData(tasks, sources, drafts, projects, localSearchAuthorizedAt),
+    [drafts, localSearchAuthorizedAt, projects, sources, tasks],
   )
 
   useEffect(() => {
@@ -59,6 +61,7 @@ function App() {
           setSources(saved.sources)
           setDrafts(saved.drafts)
           setProjects(saved.projects)
+          setLocalSearchAuthorizedAt(saved.knowledgeSettings.localSearchAuthorizedAt)
         } else {
           await workspaceRepository.save(
             createWorkspaceData(initialWorkspace.tasks, initialWorkspace.sources),
@@ -272,6 +275,8 @@ function App() {
         return <LibraryPage sources={sources} />
       case 'archive':
         return <ArchivePage tasks={tasks} projects={projects} workspace={workspace} onImport={handleImportWorkspace} onClear={handleClearWorkspace} />
+      case 'knowledge':
+        return <KnowledgePage tasks={tasks} sources={sources} projects={projects} localSearchAuthorizedAt={localSearchAuthorizedAt} onSaveLocalAuthorization={() => setLocalSearchAuthorizedAt(new Date().toISOString())} />
     }
   }
 

@@ -8,5 +8,11 @@ export default defineConfig(({ command }) => ({
   base: command === 'build' ? '/Student-Affairs-Manager/' : '/',
   server: {
     port: 4173,
+    proxy: {
+      '/api/deepseek': {
+        target: 'http://127.0.0.1:8787',
+        changeOrigin: true,
+      },
+    },
   },
 }))

@@ -1337,6 +1337,146 @@ h3 {
 .workspace-status.error { background: #9c3f34; }
 .app-toast button { border: 0; background: transparent; color: inherit; font: inherit; cursor: pointer; text-decoration: underline; }
 
+.knowledge-header { align-items: flex-start; }
+.connection-state,
+.authorized-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 10px;
+  color: #7c6357;
+  font-size: 11px;
+  font-weight: 700;
+  border: 1px solid #e3cdc0;
+  border-radius: 7px;
+  background: #fbf1ec;
+}
+
+.connection-state.connected,
+.authorized-label {
+  color: var(--green);
+  border-color: #c9d8ce;
+  background: #edf4ed;
+}
+
+.knowledge-consent,
+.knowledge-query,
+.knowledge-answer,
+.obsidian-export {
+  border: 1px solid var(--line);
+  border-radius: 14px 14px 14px 4px;
+  background: var(--paper);
+}
+
+.knowledge-consent {
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr);
+  gap: 18px;
+  max-width: 840px;
+  padding: 28px;
+  color: var(--green);
+}
+
+.knowledge-consent h2,
+.knowledge-query h2,
+.knowledge-answer h2,
+.obsidian-export h2,
+.knowledge-dialog h2 {
+  margin: 5px 0 8px;
+  font-size: 23px;
+}
+
+.knowledge-consent p,
+.obsidian-export p,
+.knowledge-dialog > p {
+  max-width: 680px;
+  color: var(--ink-soft);
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.knowledge-consent .primary-button { margin-top: 8px; }
+
+.knowledge-query { padding: 25px; }
+.knowledge-query-heading,
+.answer-heading,
+.obsidian-export,
+.knowledge-actions,
+.obsidian-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.knowledge-query textarea {
+  width: 100%;
+  min-height: 96px;
+  margin-top: 20px;
+  padding: 14px;
+  color: var(--ink);
+  line-height: 1.7;
+  border: 1px solid #cbd5ce;
+  border-radius: 9px;
+  background: #fff;
+  resize: vertical;
+}
+
+.knowledge-actions { justify-content: flex-start; margin-top: 12px; }
+.configuration-note,
+.workspace-control-message {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  margin: 15px 0 0;
+  color: var(--ink-soft);
+  font-size: 10px;
+  line-height: 1.7;
+}
+.configuration-note { padding-top: 14px; border-top: 1px solid var(--line); }
+.configuration-note svg { flex: 0 0 auto; color: var(--orange); }
+.configuration-note code,
+.obsidian-export code { color: var(--navy); font-size: 0.95em; }
+
+.knowledge-loading,
+.knowledge-error {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 18px;
+  padding: 13px 15px;
+  font-size: 12px;
+  border-left: 3px solid var(--green);
+  background: #edf4ed;
+}
+.knowledge-error { color: #8e3e34; border-left-color: var(--red); background: var(--red-soft); }
+
+.knowledge-answer { max-width: 900px; margin-top: 20px; padding: 25px; animation: answer-enter 240ms ease both; }
+@keyframes answer-enter { from { opacity: 0; transform: translateY(5px); } }
+.answer-heading { align-items: flex-start; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
+.answer-heading > svg { color: var(--green); }
+.knowledge-answer > p { margin: 20px 0 0; color: var(--ink); font-size: 13px; line-height: 1.9; white-space: pre-line; }
+.citation-section { margin-top: 24px; padding-top: 18px; border-top: 1px solid var(--line); }
+.citation-section h3 { margin: 0 0 12px; font-family: 'Noto Sans SC', sans-serif; font-size: 12px; }
+.citation-section ul { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.citation-section li { display: grid; grid-template-columns: 46px minmax(0, 1fr); gap: 10px; padding: 11px; border-left: 2px solid #b7d0c0; background: #f4f7f3; }
+.citation-section li > span { color: var(--green); font-size: 10px; font-weight: 700; }
+.citation-section li strong { display: block; color: var(--ink); font-size: 11px; }
+.citation-section li p { margin: 4px 0 0; color: var(--ink-soft); font-size: 10px; line-height: 1.6; }
+
+.obsidian-export { align-items: flex-end; margin-top: 32px; padding: 25px; }
+.obsidian-export h2 { margin-bottom: 5px; }
+.obsidian-export p { margin-bottom: 0; }
+.obsidian-actions { flex: 0 0 auto; }
+.obsidian-export .workspace-control-message { flex-basis: 100%; margin-top: 0; }
+
+.knowledge-dialog-backdrop { z-index: 60; align-items: center; justify-content: center; padding: 24px; }
+.knowledge-dialog { width: min(560px, 100%); padding: 30px; border: 1px solid #d6e0d9; border-radius: 14px 14px 14px 4px; background: var(--paper); box-shadow: var(--shadow); animation: dialog-enter 180ms ease both; }
+@keyframes dialog-enter { from { opacity: 0; transform: translateY(8px); } }
+.cloud-acknowledgement { display: flex; align-items: flex-start; gap: 9px; margin-top: 20px; padding: 12px; color: var(--ink); font-size: 11px; line-height: 1.6; border: 1px solid var(--line); background: #f4f7f3; cursor: pointer; }
+.cloud-acknowledgement input { width: 16px; height: 16px; margin: 1px 0 0; accent-color: var(--green); }
+.knowledge-dialog .panel-actions { margin-top: 20px; }
+
 .project-card {
   position: relative;
   min-height: 310px;

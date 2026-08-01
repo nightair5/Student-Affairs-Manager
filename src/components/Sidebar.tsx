@@ -5,6 +5,7 @@ import {
   ClipboardCheck,
   FileText,
   Home,
+  MessagesSquare,
   Plus,
   Sparkles,
 } from 'lucide-react'
@@ -23,6 +24,7 @@ const navigation = [
   { id: 'calendar' as const, label: '日历', icon: CalendarDays },
   { id: 'library' as const, label: '文件库', icon: FileText },
   { id: 'archive' as const, label: '项目档案', icon: Archive },
+  { id: 'knowledge' as const, label: '知识问答', icon: MessagesSquare },
 ]
 
 export function Sidebar({
