@@ -1,6 +1,7 @@
 import { timingSafeEqual } from 'node:crypto'
 import { isWorkspacePayload } from './workspace-store.mjs'
 import { validateEmailJobInput } from './email-service.mjs'
+import { validateDeepSeekRequest } from './deepseek-service.mjs'
 
 function json(response, status, payload, headers = {}) {
   response.writeHead(status, {
@@ -46,7 +47,7 @@ function corsHeaders(request, config) {
   }
 }
 
-export function createRequestHandler(config, workspaceStore, emailQueue, emailProvider, webFetcher) {
+export function createRequestHandler(config, workspaceStore, emailQueue, emailProvider, webFetcher, deepSeekProvider) {
   return async (request, response) => {
     const headers = corsHeaders(request, config)
     if (request.headers.origin && request.headers.origin !== config.allowedOrigin) {
@@ -70,8 +71,32 @@ export function createRequestHandler(config, workspaceStore, emailQueue, emailPr
           email: config.emailConfigured ? 'configured' : 'not-configured',
           webMonitoring: webFetcher?.configured ? 'configured' : 'local-compare-only',
           wechat: 'not-connected',
+          deepseek: deepSeekProvider?.configured ? 'configured' : 'not-configured',
         },
       }, headers)
+    }
+
+    if (request.method === 'GET' && url.pathname === '/api/deepseek/status') {
+      return json(response, 200, { configured: deepSeekProvider?.configured === true }, headers)
+    }
+
+    if (url.pathname === '/api/deepseek') {
+      if (request.method !== 'POST') return json(response, 405, { error: 'METHOD_NOT_ALLOWED' }, headers)
+      if (!deepSeekProvider?.configured) {
+        return json(response, 503, { error: 'DEEPSEEK_NOT_CONFIGURED', message: 'DeepSeek 尚未配置服务端密钥。' }, headers)
+      }
+      try {
+        const body = await readJsonBody(request, Math.min(config.maxBodyBytes, 100_000))
+        const validationError = validateDeepSeekRequest(body)
+        if (validationError) return json(response, 400, { error: validationError, message: '问题或引用范围无效。' }, headers)
+        return json(response, 200, await deepSeekProvider.ask(body), headers)
+      } catch (error) {
+        if (error?.code === 'PAYLOAD_TOO_LARGE') return json(response, 413, { error: 'PAYLOAD_TOO_LARGE' }, headers)
+        if (error instanceof SyntaxError) return json(response, 400, { error: 'INVALID_JSON' }, headers)
+        const safeCodes = new Set(['DEEPSEEK_RATE_LIMITED', 'DEEPSEEK_UPSTREAM_ERROR', 'DEEPSEEK_RESPONSE_INVALID'])
+        const code = safeCodes.has(error?.code) ? error.code : 'INTERNAL_ERROR'
+        return json(response, code === 'DEEPSEEK_RATE_LIMITED' ? 429 : 502, { error: code, message: error?.message ?? 'DeepSeek 服务暂时无法响应。' }, headers)
+      }
     }
 
     if (url.pathname.startsWith('/api/email/')) {

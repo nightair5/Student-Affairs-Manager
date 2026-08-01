@@ -26,6 +26,7 @@ export function normalizeWorkspaceData(value: unknown): WorkspaceData | null {
     projects?: unknown
     courseBlocks?: unknown
     integrations?: unknown
+    knowledgeSettings?: unknown
     savedAt?: unknown
   }
   if (
@@ -76,6 +77,9 @@ export function normalizeWorkspaceData(value: unknown): WorkspaceData | null {
               : [],
           }
         : { sync: { endpoint: 'http://127.0.0.1:8787' }, webMonitors: [], connectionIntents: [] },
+    knowledgeSettings: isRecord(data.knowledgeSettings) && typeof data.knowledgeSettings.localSearchAuthorizedAt === 'string'
+      ? { localSearchAuthorizedAt: data.knowledgeSettings.localSearchAuthorizedAt }
+      : {},
     savedAt: typeof data.savedAt === 'string' ? data.savedAt : new Date(0).toISOString(),
   }
 }

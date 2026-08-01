@@ -2,6 +2,7 @@ import type {
   DraftItem,
   CourseBlock,
   IntegrationState,
+  KnowledgeSettings,
   ExtractionDraft,
   ParsedSuggestion,
   Project,
@@ -22,6 +23,7 @@ export function createWorkspaceData(
   projects: Project[] = [],
   courseBlocks: CourseBlock[] = [],
   integrations: IntegrationState = createIntegrationState(),
+  knowledgeSettings: KnowledgeSettings = {},
 ): WorkspaceData {
   return {
     schemaVersion: 5,
@@ -31,6 +33,7 @@ export function createWorkspaceData(
     projects,
     courseBlocks,
     integrations,
+    knowledgeSettings,
     savedAt: new Date().toISOString(),
   }
 }

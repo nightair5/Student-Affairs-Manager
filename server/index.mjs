@@ -4,13 +4,15 @@ import { loadServerConfig } from './config.mjs'
 import { FileWorkspaceStore } from './workspace-store.mjs'
 import { createEmailProvider, FileEmailQueue } from './email-service.mjs'
 import { createWebFetcher } from './web-fetch-service.mjs'
+import { createDeepSeekProvider } from './deepseek-service.mjs'
 
 const config = loadServerConfig()
 const store = new FileWorkspaceStore(config.workspaceFile)
 const emailQueue = new FileEmailQueue(config.emailQueueFile)
 const emailProvider = createEmailProvider(config)
 const webFetcher = createWebFetcher(config)
-const server = createServer(createRequestHandler(config, store, emailQueue, emailProvider, webFetcher))
+const deepSeekProvider = createDeepSeekProvider(config)
+const server = createServer(createRequestHandler(config, store, emailQueue, emailProvider, webFetcher, deepSeekProvider))
 
 const emailTimer = setInterval(() => {
   void emailQueue.processDue(emailProvider).catch(() => undefined)

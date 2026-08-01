@@ -16,9 +16,20 @@ describe('normalizeWorkspaceData', () => {
       schemaVersion: 5,
       courseBlocks: [],
       integrations: { sync: { endpoint: 'http://127.0.0.1:8787' }, webMonitors: [], connectionIntents: [] },
+      knowledgeSettings: {},
       tasks: [{ id: 'task-1' }],
       projects: [{ id: 'project-1', milestones: [] }],
     })
+  })
+
+  it('preserves local knowledge authorization during hydration', () => {
+    const migrated = normalizeWorkspaceData({
+      schemaVersion: 5,
+      tasks: [], sources: [], drafts: [], projects: [], courseBlocks: [],
+      knowledgeSettings: { localSearchAuthorizedAt: '2026-08-01T00:00:00.000Z' },
+      savedAt: '2026-08-01T00:00:00.000Z',
+    })
+    expect(migrated?.knowledgeSettings.localSearchAuthorizedAt).toBe('2026-08-01T00:00:00.000Z')
   })
 
   it('拒绝缺少核心实体数组的导入', () => {

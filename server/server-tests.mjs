@@ -8,6 +8,7 @@ import { createRequestHandler } from './app.mjs'
 import { FileWorkspaceStore } from './workspace-store.mjs'
 import { DisabledEmailProvider, FileEmailQueue } from './email-service.mjs'
 import { AllowlistedWebFetcher, DisabledWebFetcher, validateFetchTarget } from './web-fetch-service.mjs'
+import { createDeepSeekProvider, validateDeepSeekRequest } from './deepseek-service.mjs'
 
 const workspace = {
   schemaVersion: 4,
@@ -141,4 +142,27 @@ test('allowlisted web fetch extracts inert text and never follows redirects', as
   assert.equal(options.redirect, 'error')
   assert.match(result.text, /比赛通知/)
   assert.doesNotMatch(result.text, /steal/)
+})
+
+test('DeepSeek remains disabled without a server-side key', () => {
+  const provider = createDeepSeekProvider({ deepSeekConfigured: false })
+  assert.equal(provider.configured, false)
+  assert.equal(validateDeepSeekRequest({ question: '今天做什么？', context: [] }), 'DEEPSEEK_CONTEXT_INVALID')
+})
+
+test('DeepSeek adapter sends only the bounded question and citations', async () => {
+  let received
+  const provider = createDeepSeekProvider({
+    deepSeekConfigured: true,
+    deepSeekApiKey: 'server-only-test-key-with-length',
+    deepSeekApiUrl: 'https://api.deepseek.com/chat/completions',
+    deepSeekModel: 'deepseek-chat',
+  }, async (_url, options) => {
+    received = JSON.parse(options.body)
+    return Response.json({ choices: [{ message: { content: '先完成报名表。' } }] })
+  })
+  const result = await provider.ask({ question: '今天做什么？', context: [{ kind: '任务', title: '报名', excerpt: '今天截止' }] })
+  assert.equal(result.answer, '先完成报名表。')
+  assert.equal(received.model, 'deepseek-chat')
+  assert.match(received.messages[0].content, /不可信资料/)
 })

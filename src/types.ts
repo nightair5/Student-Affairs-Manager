@@ -5,6 +5,7 @@ export type PageId =
   | 'calendar'
   | 'library'
   | 'archive'
+  | 'knowledge'
   | 'services'
 
 export type TaskCategory = '比赛' | '保研' | '课程' | '老师任务' | '其他'
@@ -195,6 +196,10 @@ export interface IntegrationState {
   connectionIntents: ConnectionIntent[]
 }
 
+export interface KnowledgeSettings {
+  localSearchAuthorizedAt?: string
+}
+
 export interface WorkspaceData {
   schemaVersion: 5
   tasks: Task[]
@@ -203,5 +208,6 @@ export interface WorkspaceData {
   projects: Project[]
   courseBlocks: CourseBlock[]
   integrations: IntegrationState
+  knowledgeSettings: KnowledgeSettings
   savedAt: string
 }
