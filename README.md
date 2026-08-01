@@ -64,13 +64,15 @@ npm run server:check
 
 Firebase Hosting 是当前生产部署目标。仓库提供根路径构建和单页应用回退配置：
 
+生产站点：[https://student-affairs-nightair.web.app](https://student-affairs-nightair.web.app)
+
 ```bash
 npm run build:firebase
 npm run firebase:serve
 npm run deploy:firebase
 ```
 
-首次部署前需要在本机完成有效登录并明确绑定项目：
+当前仓库已通过 `.firebaserc` 绑定 `student-affairs-nightair`。在新的开发设备部署前，需要先完成有效登录并核对项目：
 
 ```bash
 npx --yes firebase-tools login
