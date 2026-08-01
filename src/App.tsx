@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { DraftReviewPanel } from './components/DraftReviewPanel'
 import { IntakePanel } from './components/IntakePanel'
 import { Sidebar } from './components/Sidebar'
@@ -11,6 +11,12 @@ import { DashboardPage } from './pages/DashboardPage'
 import { LibraryPage } from './pages/LibraryPage'
 import { TasksPage } from './pages/TasksPage'
 import { IndexedDbWorkspaceRepository } from './lib/repository'
+import {
+  getBrowserNotificationPermission,
+  requestBrowserNotificationPermission,
+  scheduleBrowserNotifications,
+  type BrowserNotificationPermission,
+} from './lib/notifications'
 import { loadWorkspace } from './lib/storage'
 import { updateTaskWithHistory } from './lib/taskUpdates'
 import {
@@ -36,6 +42,9 @@ function App() {
   const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null)
   const [selectedDraftId, setSelectedDraftId] = useState<string | null>(null)
   const [notice, setNotice] = useState<{ text: string; undo?: () => void } | null>(null)
+  const [notificationPermission, setNotificationPermission] =
+    useState<BrowserNotificationPermission>(() => getBrowserNotificationPermission())
+  const deliveredNotifications = useRef(new Set<string>())
   const selectedTask =
     tasks.find((task) => task.id === selectedTaskId) ?? null
 
@@ -96,6 +105,31 @@ function App() {
     window.addEventListener('keydown', openIntake)
     return () => window.removeEventListener('keydown', openIntake)
   }, [])
+
+  useEffect(() => {
+    if (notificationPermission !== 'granted') return
+    return scheduleBrowserNotifications(tasks, deliveredNotifications.current, () => {
+      setNotice({ text: '浏览器通知发送失败，请检查网站通知权限。' })
+    })
+  }, [notificationPermission, tasks])
+
+  useEffect(() => {
+    const refreshPermission = () => {
+      setNotificationPermission(getBrowserNotificationPermission())
+    }
+    window.addEventListener('focus', refreshPermission)
+    document.addEventListener('visibilitychange', refreshPermission)
+    return () => {
+      window.removeEventListener('focus', refreshPermission)
+      document.removeEventListener('visibilitychange', refreshPermission)
+    }
+  }, [])
+
+  const handleRequestNotificationPermission = async () => {
+    const permission = await requestBrowserNotificationPermission()
+    setNotificationPermission(permission)
+    return permission
+  }
 
   const handleComplete = (taskId: string) => {
     setTasks((current) =>
@@ -316,6 +350,8 @@ function App() {
           onClose={() => setSelectedTaskId(null)}
           onComplete={handleComplete}
           onUpdate={handleUpdateTask}
+          notificationPermission={notificationPermission}
+          onRequestNotificationPermission={handleRequestNotificationPermission}
         />
       )}
     </div>

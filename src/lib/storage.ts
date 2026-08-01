@@ -74,7 +74,9 @@ function migrateReminders(value: unknown): Reminder[] {
   return value.flatMap((item, index) => {
     if (!isRecord(item)) return []
     const channel =
-      item.channel === 'email' || item.channel === 'wechat-placeholder'
+      item.channel === 'browser' ||
+      item.channel === 'email' ||
+      item.channel === 'wechat-placeholder'
         ? item.channel
         : null
     if (!channel) return []

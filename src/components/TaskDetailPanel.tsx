@@ -8,11 +8,16 @@ import {
   History,
   Link2,
   Mail,
+  MonitorCheck,
   Save,
   X,
 } from 'lucide-react'
 import { useEffect, useId, useState, type FormEvent } from 'react'
 import { formatDeadline, formatDuration } from '../lib/taskLogic'
+import {
+  toDateTimeLocalValue,
+  type BrowserNotificationPermission,
+} from '../lib/notifications'
 import type {
   Priority,
   Source,
@@ -27,6 +32,8 @@ interface TaskDetailPanelProps {
   onClose: () => void
   onComplete: (taskId: string) => void
   onUpdate: (taskId: string, patch: Partial<Task>) => void
+  notificationPermission: BrowserNotificationPermission
+  onRequestNotificationPermission: () => Promise<BrowserNotificationPermission>
 }
 
 export function TaskDetailPanel({
@@ -35,10 +42,13 @@ export function TaskDetailPanel({
   onClose,
   onComplete,
   onUpdate,
+  notificationPermission,
+  onRequestNotificationPermission,
 }: TaskDetailPanelProps) {
   const titleId = useId()
   const [editing, setEditing] = useState(false)
   const [draft, setDraft] = useState(task)
+  const [notificationFeedback, setNotificationFeedback] = useState('')
   const linkedSources = sources.filter((source) =>
     task.sourceIds.includes(source.id),
   )
@@ -79,6 +89,49 @@ export function TaskDetailPanel({
   const emailReminder = task.reminders.find(
     (reminder) => reminder.channel === 'email',
   )
+  const browserReminder = task.reminders.find(
+    (reminder) => reminder.channel === 'browser',
+  )
+
+  const updateBrowserReminder = (enabled: boolean, scheduledAt?: string) => {
+    const defaultTime = new Date(new Date(task.deadline).getTime() - 60 * 60 * 1000)
+    const defaultScheduledAt = toDateTimeLocalValue(defaultTime)
+    const nextReminder = {
+      id: browserReminder?.id ?? `${task.id}-browser-reminder`,
+      channel: 'browser' as const,
+      scheduledAt: scheduledAt ?? browserReminder?.scheduledAt ?? defaultScheduledAt,
+      enabled,
+    }
+    onUpdate(task.id, {
+      reminders: [
+        ...task.reminders.filter((reminder) => reminder.channel !== 'browser'),
+        nextReminder,
+      ],
+    })
+  }
+
+  const handleBrowserReminderToggle = async (enabled: boolean) => {
+    if (!enabled) {
+      updateBrowserReminder(false)
+      setNotificationFeedback('浏览器提醒已关闭。')
+      return
+    }
+    const permission = notificationPermission === 'granted'
+      ? 'granted'
+      : await onRequestNotificationPermission()
+    if (permission !== 'granted') {
+      setNotificationFeedback(
+        permission === 'denied'
+          ? '通知权限已被拒绝，请在浏览器的网站设置中手动开启。'
+          : permission === 'unsupported'
+            ? '当前浏览器不支持系统通知。'
+            : '需要授权后才能启用浏览器提醒。',
+      )
+      return
+    }
+    updateBrowserReminder(true)
+    setNotificationFeedback('已启用；提醒仅在本页面保持打开时触发。')
+  }
 
   const updateEmailReminder = (enabled: boolean, scheduledAt?: string) => {
     const nextReminder = {
@@ -87,7 +140,7 @@ export function TaskDetailPanel({
       scheduledAt:
         scheduledAt ??
         emailReminder?.scheduledAt ??
-        new Date(task.deadline).toISOString().slice(0, 16),
+        toDateTimeLocalValue(new Date(task.deadline)),
       enabled,
     }
     onUpdate(task.id, {
@@ -306,22 +359,68 @@ export function TaskDetailPanel({
             <div className="reminder-option">
               <div>
                 <span className="reminder-icon">
+                  <MonitorCheck size={17} />
+                </span>
+                <span>
+                  <strong>浏览器本地提醒</strong>
+                  <small>
+                    {notificationPermission === 'granted'
+                      ? '已授权；仅当前页面保持打开时真实触发。'
+                      : notificationPermission === 'denied'
+                        ? '权限已拒绝，请在浏览器网站设置中开启。'
+                        : notificationPermission === 'unsupported'
+                          ? '当前浏览器不支持系统通知。'
+                          : '首次启用会请求浏览器通知权限。'}
+                  </small>
+                </span>
+              </div>
+              <label className="switch">
+                <span className="sr-only">启用浏览器本地提醒</span>
+                <input
+                  type="checkbox"
+                  checked={browserReminder?.enabled ?? false}
+                  disabled={notificationPermission === 'denied' || notificationPermission === 'unsupported'}
+                  onChange={(event) => void handleBrowserReminderToggle(event.target.checked)}
+                />
+                <i />
+              </label>
+            </div>
+            {notificationFeedback && <p className="reminder-feedback" role="status">{notificationFeedback}</p>}
+            {browserReminder?.enabled && (
+              <label className="field reminder-time">
+                <span>
+                  <CalendarClock size={15} />
+                  浏览器提醒时间
+                </span>
+                <input
+                  type="datetime-local"
+                  value={browserReminder.scheduledAt.slice(0, 16)}
+                  onChange={(event) => updateBrowserReminder(true, event.target.value)}
+                />
+              </label>
+            )}
+            <div className="reminder-option">
+              <div>
+                <span className="reminder-icon">
                   <Mail size={17} />
                 </span>
                 <span>
                   <strong>邮件提醒</strong>
-                  <small>当前保存提醒计划；接入邮件服务后自动发送。</small>
+                  <small>只保存提醒计划；邮件发送服务尚未接通。</small>
                 </span>
               </div>
-              <label className="switch">
-                <span className="sr-only">启用邮件提醒</span>
-                <input
-                  type="checkbox"
-                  checked={emailReminder?.enabled ?? false}
-                  onChange={(event) => updateEmailReminder(event.target.checked)}
-                />
-                <i />
-              </label>
+              <div className="reminder-option-actions">
+                <span className="coming-badge">未接通</span>
+                <label className="switch">
+                  <span className="sr-only">保存邮件提醒计划</span>
+                  <input
+                    type="checkbox"
+                    checked={emailReminder?.enabled ?? false}
+                    onChange={(event) => updateEmailReminder(event.target.checked)}
+                  />
+                  <i />
+                </label>
+              </div>
             </div>
             {emailReminder?.enabled && (
               <label className="field reminder-time">

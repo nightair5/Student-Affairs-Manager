@@ -11,7 +11,7 @@ export type TaskStatus = '待开始' | '进行中' | '已完成'
 export type Priority = '高' | '中' | '低'
 export type RiskFlag = '紧急' | '缺材料' | '待确认' | '有依赖' | '已逾期'
 export type SourceType = 'text' | 'file' | 'image' | 'link'
-export type ReminderChannel = 'email' | 'wechat-placeholder'
+export type ReminderChannel = 'browser' | 'email' | 'wechat-placeholder'
 
 export interface Material {
   id: string

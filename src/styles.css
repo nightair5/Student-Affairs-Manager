@@ -2069,6 +2069,13 @@ h3 {
   gap: 10px;
 }
 
+.reminder-option .reminder-option-actions {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 8px;
+}
+
 .reminder-icon {
   display: grid;
   width: 34px;
@@ -2148,6 +2155,16 @@ h3 {
   padding: 12px 13px;
   border-left: 2px solid var(--green);
   background: #edf3ed;
+}
+
+.reminder-feedback {
+  margin: 0;
+  padding: 10px 12px;
+  color: var(--green);
+  font-size: 9px;
+  line-height: 1.55;
+  border-left: 2px solid var(--green);
+  background: var(--green-soft);
 }
 
 .reminder-time > span {

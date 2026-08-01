@@ -45,7 +45,11 @@ function displayValue(
     if (!reminders.length) return '未设置'
     return reminders
       .map((item) => {
-        const channel = item.channel === 'email' ? '邮件' : '微信（待接入）'
+        const channel = item.channel === 'browser'
+          ? '浏览器'
+          : item.channel === 'email'
+            ? '邮件计划（未接通）'
+            : '微信（待接入）'
         return `${channel} · ${item.enabled ? item.scheduledAt : '已关闭'}`
       })
       .join('；')
