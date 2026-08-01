@@ -40,6 +40,7 @@ export interface HistoryEntry {
 
 export interface Task {
   id: string
+  projectId?: string
   title: string
   category: TaskCategory
   status: TaskStatus

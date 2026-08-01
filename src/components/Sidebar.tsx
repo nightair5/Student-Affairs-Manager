@@ -2,6 +2,7 @@ import {
   Archive,
   CalendarDays,
   CheckSquare2,
+  ClipboardCheck,
   FileText,
   Home,
   Plus,
@@ -17,6 +18,7 @@ interface SidebarProps {
 
 const navigation = [
   { id: 'today' as const, label: '今日', icon: Home },
+  { id: 'inbox' as const, label: '待确认', icon: ClipboardCheck },
   { id: 'tasks' as const, label: '任务中心', icon: CheckSquare2 },
   { id: 'calendar' as const, label: '日历', icon: CalendarDays },
   { id: 'library' as const, label: '文件库', icon: FileText },
