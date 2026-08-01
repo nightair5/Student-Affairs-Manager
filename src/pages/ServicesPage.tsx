@@ -14,6 +14,7 @@ import {
 } from 'lucide-react'
 import { useState } from 'react'
 import { WebMonitoringPanel } from '../components/WebMonitoringPanel'
+import { PlatformConnectionsPanel } from '../components/PlatformConnectionsPanel'
 import {
   emailJobStatusLabel,
   HttpEmailClient,
@@ -26,7 +27,7 @@ import {
   type RemoteWorkspaceRecord,
   type ServiceHealth,
 } from '../lib/syncClient'
-import type { SyncIntegrationState, WebMonitor, WorkspaceData } from '../types'
+import type { ConnectionIntent, SyncIntegrationState, WebMonitor, WorkspaceData } from '../types'
 
 interface ServicesPageProps {
   workspace: WorkspaceData
@@ -34,6 +35,8 @@ interface ServicesPageProps {
   onUpdateSyncState: (patch: Partial<SyncIntegrationState>) => void
   webMonitors: WebMonitor[]
   onUpdateWebMonitors: (monitors: WebMonitor[]) => void
+  connectionIntents: ConnectionIntent[]
+  onUpdateConnectionIntents: (intents: ConnectionIntent[]) => void
   onReplaceWorkspace: (record: RemoteWorkspaceRecord, endpoint: string) => void
 }
 
@@ -44,7 +47,7 @@ function maskedEmail(value: string): string {
   return domain ? `${name.slice(0, 2)}***@${domain}` : '已隐藏'
 }
 
-export function ServicesPage({ workspace, syncState, onUpdateSyncState, webMonitors, onUpdateWebMonitors, onReplaceWorkspace }: ServicesPageProps) {
+export function ServicesPage({ workspace, syncState, onUpdateSyncState, webMonitors, onUpdateWebMonitors, connectionIntents, onUpdateConnectionIntents, onReplaceWorkspace }: ServicesPageProps) {
   const [endpoint, setEndpoint] = useState(syncState.endpoint)
   const [token, setToken] = useState('')
   const [operation, setOperation] = useState<OperationState>('idle')
@@ -267,5 +270,6 @@ export function ServicesPage({ workspace, syncState, onUpdateSyncState, webMonit
     </section>
 
     <WebMonitoringPanel endpoint={endpoint} token={token} monitors={webMonitors} onChange={onUpdateWebMonitors} />
+    <PlatformConnectionsPanel intents={connectionIntents} onChange={onUpdateConnectionIntents} />
   </main>
 }

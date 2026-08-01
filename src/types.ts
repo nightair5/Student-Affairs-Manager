@@ -176,9 +176,23 @@ export interface WebMonitor {
   lastResult?: WebChangeResult
 }
 
+export type ConnectionPlatform = 'wechat' | 'cross-device'
+export type ConnectionReadinessStatus =
+  | 'not-connected'
+  | 'blocked-platform-approval'
+  | 'backend-not-configured'
+
+export interface ConnectionIntent {
+  platform: ConnectionPlatform
+  status: Exclude<ConnectionReadinessStatus, 'not-connected'>
+  reviewedAt: string
+  plannedScopes: string[]
+}
+
 export interface IntegrationState {
   sync: SyncIntegrationState
   webMonitors: WebMonitor[]
+  connectionIntents: ConnectionIntent[]
 }
 
 export interface WorkspaceData {

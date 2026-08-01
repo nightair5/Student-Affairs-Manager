@@ -383,6 +383,8 @@ function App() {
           syncState={integrations.sync}
           webMonitors={integrations.webMonitors}
           onUpdateWebMonitors={(webMonitors) => setIntegrations((current) => ({ ...current, webMonitors }))}
+          connectionIntents={integrations.connectionIntents}
+          onUpdateConnectionIntents={(connectionIntents) => setIntegrations((current) => ({ ...current, connectionIntents }))}
           onUpdateSyncState={(patch) => setIntegrations((current) => ({
             ...current,
             sync: { ...current.sync, ...patch },

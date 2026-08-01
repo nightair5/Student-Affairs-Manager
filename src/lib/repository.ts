@@ -71,8 +71,11 @@ export function normalizeWorkspaceData(value: unknown): WorkspaceData | null {
             webMonitors: Array.isArray(data.integrations.webMonitors)
               ? data.integrations.webMonitors as WorkspaceData['integrations']['webMonitors']
               : [],
+            connectionIntents: Array.isArray(data.integrations.connectionIntents)
+              ? data.integrations.connectionIntents as WorkspaceData['integrations']['connectionIntents']
+              : [],
           }
-        : { sync: { endpoint: 'http://127.0.0.1:8787' }, webMonitors: [] },
+        : { sync: { endpoint: 'http://127.0.0.1:8787' }, webMonitors: [], connectionIntents: [] },
     savedAt: typeof data.savedAt === 'string' ? data.savedAt : new Date(0).toISOString(),
   }
 }

@@ -15,7 +15,7 @@ describe('normalizeWorkspaceData', () => {
     expect(migrated).toMatchObject({
       schemaVersion: 5,
       courseBlocks: [],
-      integrations: { sync: { endpoint: 'http://127.0.0.1:8787' }, webMonitors: [] },
+      integrations: { sync: { endpoint: 'http://127.0.0.1:8787' }, webMonitors: [], connectionIntents: [] },
       tasks: [{ id: 'task-1' }],
       projects: [{ id: 'project-1', milestones: [] }],
     })
