@@ -19,6 +19,19 @@ npm run test
 npm run build
 ```
 
+## GitHub Pages 部署
+
+推送到 `feature/student-affairs-mvp` 会触发 GitHub Actions。工作流执行
+`npm ci` 与 `npm run build`，并仅将生成的 `dist` 目录发布到 GitHub Pages；
+不会直接发布源码。生产构建已配置仓库子路径
+`/Student-Affairs-Manager/`，因此 Pages 地址为：
+
+`https://nightair5.github.io/Student-Affairs-Manager/`
+
+首次启用时，请在仓库 **Settings → Pages → Build and deployment** 中将
+**Source** 设为 **GitHub Actions**。部署完成后，可在 Actions 的部署任务中
+查看对应环境链接。
+
 当前版本使用前端演示识别逻辑，不包含真实 OCR、邮件发送或微信授权。产品范围与开发约束见 [PRD.md](./PRD.md) 和 [AGENTS.md](./AGENTS.md)。
 
 ## 当前能力
