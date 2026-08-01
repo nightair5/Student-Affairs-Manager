@@ -1,11 +1,10 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-export default defineConfig(({ command, mode }) => ({
+export default defineConfig(() => ({
   plugins: [react()],
-  // GitHub Pages serves this project beneath the repository name. Keep the
-  // development server at the root while emitting deployable production URLs.
-  base: mode === 'sites' ? '/' : command === 'build' ? '/Student-Affairs-Manager/' : '/',
+  // Firebase Hosting serves the application from the site root.
+  base: '/',
   server: {
     port: 4173,
     proxy: {

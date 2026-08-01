@@ -60,18 +60,27 @@ npm run build
 npm run server:check
 ```
 
-## GitHub Pages 部署
+## Firebase Hosting 部署
 
-推送到 `feature/student-affairs-mvp` 会触发 GitHub Actions。工作流执行
-`npm ci` 与 `npm run build`，并仅将生成的 `dist` 目录发布到 GitHub Pages；
-不会直接发布源码。生产构建已配置仓库子路径
-`/Student-Affairs-Manager/`，因此 Pages 地址为：
+Firebase Hosting 是当前生产部署目标。仓库提供根路径构建和单页应用回退配置：
 
-`https://nightair5.github.io/Student-Affairs-Manager/`
+```bash
+npm run build:firebase
+npm run firebase:serve
+npm run deploy:firebase
+```
 
-首次启用时，请在仓库 **Settings → Pages → Build and deployment** 中将
-**Source** 设为 **GitHub Actions**。部署完成后，可在 Actions 的部署任务中
-查看对应环境链接。
+首次部署前需要在本机完成有效登录并明确绑定项目：
+
+```bash
+npx --yes firebase-tools login
+npx --yes firebase-tools projects:list
+npx --yes firebase-tools use --add
+```
+
+`use --add` 生成的 `.firebaserc` 只包含非敏感项目标识，可以在确认项目无误后提交。不要提交 Firebase 服务账号 JSON、访问令牌、真实用户数据或 `.env`。
+
+Firebase Hosting 只托管 `dist` 静态文件，不能安全保存或代理 DeepSeek API Key。要在 Firebase 生产站点启用 DeepSeek，必须另行部署 Firebase Functions 或 Cloud Run，通过 Secret Manager/服务端环境变量读取密钥，再显式配置 `/api/deepseek` 重写；在此之前页面会正确显示“DeepSeek 尚未连接”。
 
 ## P0：可信确认闭环
 
@@ -135,6 +144,6 @@ P1 阶段不包含生产 OCR、邮件发送、网页抓取/监测、微信授权
 
 数据保存在当前设备与浏览器的站点存储中。使用相同的站点地址刷新或关闭后重新打开，数据会自动恢复；更换设备、浏览器、站点地址，或清除浏览器站点数据时不会自动同步。跨设备同步需要后续账号与后端服务。
 
-## Codex Sites 构建
+## Firebase 能力边界
 
-`npm run build:sites` 会以站点根路径构建前端，并生成 `dist/server/index.js` 同源 Worker。Worker 目前只承载可选 DeepSeek 代理；同步、邮件队列和网页抓取仍属于本机 Node 服务，不会因 Sites 部署自动接通。Sites 的运行时密钥必须通过站点环境变量配置，`.openai/hosting.json` 只保存非敏感项目标识。
+本轮只配置 Firebase Hosting 静态部署，不包含 Functions、Cloud Run、账号系统或云数据库。同步、邮件队列、网页读取和 DeepSeek 代理仍属于可选本机 Node 服务，不会因 Hosting 部署自动接通。生产域名拥有独立的 IndexedDB 站点存储，不会自动继承 localhost 或旧部署地址的数据。

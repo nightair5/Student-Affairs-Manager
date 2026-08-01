@@ -156,7 +156,8 @@ P2 服务接入边界：
 
 - 本地知识检索必须由用户显式授权且可撤销，检索范围只限统一工作区的任务、项目、来源摘要、材料与修改历史。
 - 回答必须附可回看的实体引用；无命中时明确说明，不得用演示文案或模型常识补齐。
-- DeepSeek 密钥只允许由 Node/Codex Sites 服务端环境变量读取，禁止放入 React、`VITE_*`、IndexedDB、导出文件、日志或 Git。
+- DeepSeek 密钥只允许由 Node、Firebase Functions 或 Cloud Run 的服务端密钥机制读取，禁止放入 React、Firebase Hosting、`VITE_*`、IndexedDB、导出文件、日志或 Git。
 - 每次云端发送前都要说明并确认实际范围；当前最多发送问题和 4 条命中摘要，不发送完整工作区或文件本体。
 - Obsidian 导出只能下载 ZIP/Markdown 或写入用户主动选择且授权的文件夹；不得声称已自动同步。
-- Codex Sites 构建必须保持 Worker ESM 与静态资源可部署，运行时变量通过 Sites 配置；`.openai/hosting.json` 只保存非敏感站点标识。
+- Firebase Hosting 只发布根路径 `dist` 静态产物并配置 SPA 回退；项目选择通过非敏感 `.firebaserc` 或部署参数完成，不得提交 CLI 登录状态、服务账号 JSON 或访问令牌。
+- 纯 Hosting 不得伪装为 DeepSeek 服务端代理。未来接入 Functions/Cloud Run 时，密钥必须存入 Secret Manager/服务端环境变量，并在后端实际部署后才配置 `/api/deepseek` 重写。
