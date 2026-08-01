@@ -1586,6 +1586,13 @@ h3 {
   border: 1px dashed #a9b9af;
   border-radius: 12px;
   background: #f3f6f1;
+  transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
+}
+
+.upload-zone.dragging {
+  border-color: var(--green);
+  background: #e8f1e9;
+  transform: translateY(-2px);
 }
 
 .upload-zone strong {
@@ -1607,6 +1614,44 @@ h3 {
   position: relative;
   overflow: hidden;
   cursor: pointer;
+}
+
+.upload-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 9px;
+}
+
+.upload-actions .file-picker {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.extraction-state {
+  width: min(100%, 460px);
+  margin: 16px 0 0 !important;
+  padding: 10px 12px;
+  color: var(--green) !important;
+  border-left: 2px solid var(--green);
+  background: #e8f1e9;
+}
+
+.extraction-state.needs-input,
+.extraction-state.error,
+.extraction-state.unsupported {
+  color: var(--orange) !important;
+  border-left-color: var(--orange);
+  background: var(--orange-soft);
+}
+
+.manual-source-field textarea {
+  min-height: 150px;
+}
+
+.mobile-capture {
+  display: none !important;
 }
 
 .file-picker input {
@@ -2219,6 +2264,41 @@ h3 {
 
   .archive-grid {
     grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .intake-panel,
+  .detail-panel {
+    width: 100%;
+  }
+
+  .intake-header,
+  .detail-header {
+    padding: 22px 20px 18px;
+  }
+
+  .intake-body,
+  .detail-body {
+    padding: 20px 20px 36px;
+  }
+
+  .source-tabs button {
+    min-height: 44px;
+    font-size: 10px;
+  }
+
+  .upload-zone {
+    min-height: 240px;
+    padding: 24px 16px;
+  }
+
+  .mobile-capture {
+    display: inline-flex !important;
+  }
+
+  .primary-button.wide {
+    min-height: 48px;
   }
 }
 
