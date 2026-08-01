@@ -1,4 +1,10 @@
-export type PageId = 'today' | 'tasks' | 'calendar' | 'library' | 'archive'
+export type PageId =
+  | 'today'
+  | 'inbox'
+  | 'tasks'
+  | 'calendar'
+  | 'library'
+  | 'archive'
 
 export type TaskCategory = '比赛' | '保研' | '课程' | '老师任务' | '其他'
 export type TaskStatus = '待开始' | '进行中' | '已完成'
@@ -11,6 +17,9 @@ export interface Material {
   id: string
   name: string
   done: boolean
+  taskId?: string
+  projectId?: string
+  sourceId?: string
 }
 
 export interface Reminder {
@@ -55,8 +64,17 @@ export interface Source {
   type: SourceType
   title: string
   contentPreview: string
+  content?: string
+  url?: string
   createdAt: string
-  extractionStatus: '已识别' | '待确认'
+  extractionStatus: '已识别' | '待确认' | '部分确认' | '已确认' | '已拒绝'
+}
+
+export interface EvidenceReference {
+  id: string
+  sourceId: string
+  quote: string
+  field: 'title' | 'deadline' | 'materials' | 'description'
 }
 
 export interface ParsedSuggestion {
@@ -70,5 +88,43 @@ export interface ParsedSuggestion {
   priority: Priority
   materials: string[]
   evidence: string
+  evidenceRefs?: EvidenceReference[]
   confidence: '高' | '中' | '低'
+}
+
+export type DraftItemStatus = '待确认' | '已确认' | '已拒绝'
+
+export interface DraftItem {
+  id: string
+  suggestion: ParsedSuggestion
+  status: DraftItemStatus
+  updatedAt: string
+}
+
+export interface ExtractionDraft {
+  id: string
+  sourceId: string
+  status: '待确认' | '部分确认' | '已确认' | '已拒绝'
+  items: DraftItem[]
+  createdAt: string
+  updatedAt: string
+}
+
+export interface Project {
+  id: string
+  title: string
+  category: TaskCategory
+  sourceIds: string[]
+  taskIds: string[]
+  createdAt: string
+  updatedAt: string
+}
+
+export interface WorkspaceData {
+  schemaVersion: 3
+  tasks: Task[]
+  sources: Source[]
+  drafts: ExtractionDraft[]
+  projects: Project[]
+  savedAt: string
 }
