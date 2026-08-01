@@ -1291,6 +1291,55 @@ h3 {
   -webkit-line-clamp: 2;
 }
 
+.source-preview {
+  min-width: 0;
+}
+
+.source-preview > p {
+  display: -webkit-box;
+  margin: 0;
+  overflow: hidden;
+  color: var(--ink-soft);
+  font-size: 10px;
+  line-height: 1.7;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.duplicate-notice {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 9px;
+  padding: 8px 10px;
+  color: var(--orange);
+  font-size: 9px;
+  line-height: 1.5;
+  border-left: 2px solid var(--orange);
+  background: var(--orange-soft);
+}
+
+.duplicate-notice span {
+  flex: 1;
+}
+
+.duplicate-notice button {
+  flex: 0 0 auto;
+  color: var(--orange);
+  font-size: 9px;
+  font-weight: 700;
+  text-decoration: underline;
+  background: transparent;
+  cursor: pointer;
+}
+
+.reviewed-note {
+  display: block;
+  margin-top: 7px;
+  color: var(--green);
+  font-size: 9px;
+}
+
 .status-badge {
   width: fit-content;
   padding: 5px 8px;
@@ -1339,12 +1388,175 @@ h3 {
 
 .project-card {
   position: relative;
-  min-height: 310px;
+  min-height: 360px;
   padding: 24px;
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: 16px 16px 16px 4px;
   background: var(--paper);
+}
+
+.milestone-form {
+  display: grid;
+  margin-top: 18px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  background: var(--paper-soft);
+}
+
+.milestone-form .field {
+  margin-bottom: 10px;
+}
+
+.milestone-list {
+  display: grid;
+  gap: 7px;
+  margin-top: 18px;
+}
+
+.milestone-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 10px;
+  color: var(--green);
+  text-align: left;
+  border: 1px solid var(--line);
+  background: #f7f8f4;
+  cursor: pointer;
+}
+
+.milestone-item span,
+.milestone-item strong,
+.milestone-item small {
+  display: block;
+}
+
+.milestone-item strong {
+  color: var(--ink);
+  font-size: 10px;
+}
+
+.milestone-item small {
+  margin-top: 3px;
+  color: var(--ink-soft);
+  font-size: 8px;
+}
+
+.milestone-item.done strong {
+  color: var(--ink-soft);
+  text-decoration: line-through;
+}
+
+.calendar-more {
+  display: block;
+  margin-top: 5px;
+  color: var(--ink-soft);
+  font-size: 8px;
+}
+
+.schedule-section {
+  margin-top: 26px;
+  padding: 24px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+}
+
+.schedule-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 18px;
+}
+
+.course-panel,
+.work-slot-panel {
+  padding: 18px;
+  border: 1px solid var(--line);
+  background: var(--paper-soft);
+}
+
+.course-form {
+  display: grid;
+  grid-template-columns: 1.4fr 0.8fr 0.8fr 0.8fr auto;
+  gap: 8px;
+  align-items: end;
+}
+
+.course-form .field {
+  margin: 0;
+}
+
+.course-form .secondary-button {
+  min-height: 39px;
+}
+
+.course-list {
+  display: grid;
+  gap: 7px;
+  margin-top: 16px;
+}
+
+.course-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 9px 10px;
+  border-left: 2px solid var(--green);
+  background: var(--green-soft);
+}
+
+.course-item strong,
+.course-item small {
+  display: block;
+}
+
+.course-item strong {
+  font-size: 10px;
+}
+
+.course-item small {
+  margin-top: 3px;
+  color: var(--ink-soft);
+  font-size: 8px;
+}
+
+.work-slot-panel h3 {
+  margin: 0 0 14px;
+  font-size: 16px;
+}
+
+.work-slot {
+  display: grid;
+  gap: 7px;
+  width: 100%;
+  padding: 12px;
+  color: var(--ink);
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+  background: transparent;
+  cursor: pointer;
+}
+
+.work-slot strong,
+.work-slot small {
+  display: block;
+}
+
+.work-slot strong {
+  font-size: 11px;
+}
+
+.work-slot small,
+.work-slot em {
+  margin-top: 4px;
+  color: var(--ink-soft);
+  font-size: 9px;
+  font-style: normal;
+}
+
+.work-slot em {
+  color: var(--green);
 }
 
 .project-card::after {
@@ -2282,6 +2494,14 @@ h3 {
   .archive-grid {
     grid-template-columns: 1fr 1fr;
   }
+
+  .schedule-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .course-form {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 @media (max-width: 720px) {
@@ -2316,6 +2536,26 @@ h3 {
 
   .primary-button.wide {
     min-height: 48px;
+  }
+
+  .schedule-section {
+    padding: 16px;
+  }
+
+  .course-form {
+    grid-template-columns: 1fr;
+  }
+
+  .library-list-head {
+    display: none;
+  }
+
+  .source-row {
+    grid-template-columns: 1fr auto;
+  }
+
+  .source-preview {
+    grid-column: 1 / -1;
   }
 }
 

@@ -1,8 +1,10 @@
 import type {
   DraftItem,
+  CourseBlock,
   ExtractionDraft,
   ParsedSuggestion,
   Project,
+  Milestone,
   RiskFlag,
   Source,
   Task,
@@ -17,13 +19,15 @@ export function createWorkspaceData(
   sources: Source[],
   drafts: ExtractionDraft[] = [],
   projects: Project[] = [],
+  courseBlocks: CourseBlock[] = [],
 ): WorkspaceData {
   return {
-    schemaVersion: 3,
+    schemaVersion: 4,
     tasks,
     sources,
     drafts,
     projects,
+    courseBlocks,
     savedAt: new Date().toISOString(),
   }
 }
@@ -118,6 +122,54 @@ export function taskSignals(task: Task, now = new Date()): {
   return {
     risks: [...new Set(risks)],
     reason: reasons.join('；') || '按你的优先级与截止时间排序',
+  }
+}
+
+export function createTaskMilestone(
+  projectId: string,
+  task: Task,
+  now = new Date().toISOString(),
+): Milestone {
+  return {
+    id: `milestone-${task.id}`,
+    projectId,
+    title: task.title,
+    dueAt: task.deadline,
+    status: task.status === '已完成' ? '已完成' : '待完成',
+    createdAt: now,
+  }
+}
+
+export function createManualMilestone(
+  projectId: string,
+  title: string,
+  dueAt: string,
+  now = new Date().toISOString(),
+): Milestone {
+  return {
+    id: `milestone-${Date.now()}`,
+    projectId,
+    title: title.trim(),
+    dueAt,
+    status: '待完成',
+    createdAt: now,
+  }
+}
+
+export function syncTaskMilestone(project: Project, task: Task): Project {
+  const milestoneId = `milestone-${task.id}`
+  if (!project.milestones.some((milestone) => milestone.id === milestoneId)) return project
+  return {
+    ...project,
+    milestones: project.milestones.map((milestone) => milestone.id === milestoneId
+      ? {
+          ...milestone,
+          title: task.title,
+          dueAt: task.deadline,
+          status: task.status === '已完成' ? '已完成' : '待完成',
+        }
+      : milestone),
+    updatedAt: task.updatedAt,
   }
 }
 

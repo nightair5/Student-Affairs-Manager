@@ -69,6 +69,8 @@ export interface Source {
   url?: string
   createdAt: string
   extractionStatus: '已识别' | '待确认' | '部分确认' | '已确认' | '已拒绝'
+  duplicateOfSourceIds?: string[]
+  duplicateReviewStatus?: '待核对' | '保留为独立来源'
 }
 
 export interface EvidenceReference {
@@ -117,15 +119,35 @@ export interface Project {
   category: TaskCategory
   sourceIds: string[]
   taskIds: string[]
+  milestones: Milestone[]
   createdAt: string
   updatedAt: string
 }
 
+export interface Milestone {
+  id: string
+  projectId: string
+  title: string
+  dueAt: string
+  status: '待完成' | '已完成'
+  createdAt: string
+}
+
+export interface CourseBlock {
+  id: string
+  title: string
+  weekday: 1 | 2 | 3 | 4 | 5 | 6 | 7
+  startTime: string
+  endTime: string
+  createdAt: string
+}
+
 export interface WorkspaceData {
-  schemaVersion: 3
+  schemaVersion: 4
   tasks: Task[]
   sources: Source[]
   drafts: ExtractionDraft[]
   projects: Project[]
+  courseBlocks: CourseBlock[]
   savedAt: string
 }

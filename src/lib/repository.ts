@@ -12,16 +12,49 @@ export interface WorkspaceRepository {
   importJson(serialized: string): WorkspaceData
 }
 
-function isWorkspaceData(value: unknown): value is WorkspaceData {
-  if (typeof value !== 'object' || value === null) return false
-  const data = value as Partial<WorkspaceData>
-  return (
-    data.schemaVersion === 3 &&
-    Array.isArray(data.tasks) &&
-    Array.isArray(data.sources) &&
-    Array.isArray(data.drafts) &&
-    Array.isArray(data.projects)
-  )
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value)
+}
+
+export function normalizeWorkspaceData(value: unknown): WorkspaceData | null {
+  if (typeof value !== 'object' || value === null) return null
+  const data = value as {
+    schemaVersion?: number
+    tasks?: unknown
+    sources?: unknown
+    drafts?: unknown
+    projects?: unknown
+    courseBlocks?: unknown
+    savedAt?: unknown
+  }
+  if (
+    (data.schemaVersion !== 3 && data.schemaVersion !== 4) ||
+    !Array.isArray(data.tasks) ||
+    !Array.isArray(data.sources) ||
+    !Array.isArray(data.drafts) ||
+    !Array.isArray(data.projects)
+  ) return null
+
+  return {
+    schemaVersion: 4,
+    tasks: data.tasks as WorkspaceData['tasks'],
+    sources: data.sources.map((source) => isRecord(source)
+      ? {
+          ...source,
+          duplicateOfSourceIds: Array.isArray(source.duplicateOfSourceIds)
+            ? source.duplicateOfSourceIds.filter((id): id is string => typeof id === 'string')
+            : undefined,
+        }
+      : source) as WorkspaceData['sources'],
+    drafts: data.drafts as WorkspaceData['drafts'],
+    projects: data.projects.map((project) => isRecord(project)
+      ? { ...project, milestones: Array.isArray(project.milestones) ? project.milestones : [] }
+      : project) as WorkspaceData['projects'],
+    courseBlocks: Array.isArray(data.courseBlocks)
+      ? data.courseBlocks as WorkspaceData['courseBlocks']
+      : [],
+    savedAt: typeof data.savedAt === 'string' ? data.savedAt : new Date(0).toISOString(),
+  }
 }
 
 export class IndexedDbWorkspaceRepository implements WorkspaceRepository {
@@ -49,7 +82,7 @@ export class IndexedDbWorkspaceRepository implements WorkspaceRepository {
         .objectStore(STORE_NAME)
         .get(RECORD_KEY)
       request.onerror = () => reject(request.error)
-      request.onsuccess = () => resolve(isWorkspaceData(request.result) ? request.result : null)
+      request.onsuccess = () => resolve(normalizeWorkspaceData(request.result))
     })
   }
 
@@ -79,9 +112,10 @@ export class IndexedDbWorkspaceRepository implements WorkspaceRepository {
 
   importJson(serialized: string): WorkspaceData {
     const parsed: unknown = JSON.parse(serialized)
-    if (!isWorkspaceData(parsed)) {
+    const normalized = normalizeWorkspaceData(parsed)
+    if (!normalized) {
       throw new Error('导入文件不是有效的学生事务管家数据')
     }
-    return parsed
+    return normalized
   }
 }

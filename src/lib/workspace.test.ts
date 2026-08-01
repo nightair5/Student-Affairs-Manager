@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { demoSources, demoTasks } from '../data/demo'
-import { createExtractionDraft, taskSignals, updateDraftItem } from './workspace'
+import { createExtractionDraft, createTaskMilestone, syncTaskMilestone, taskSignals, updateDraftItem } from './workspace'
 
 describe('P0 workspace rules', () => {
   it('keeps draft items independent for partial confirmation and rejection', () => {
@@ -34,6 +34,25 @@ describe('P0 workspace rules', () => {
     expect(draft.items[0].suggestion.evidenceRefs?.[0]).toMatchObject({
       sourceId: demoSources[0].id,
       quote: '8 月 4 日前提交报名表',
+    })
+  })
+
+  it('keeps a task-backed milestone in sync with confirmed task changes', () => {
+    const task = demoTasks[0]
+    const project = {
+      id: 'project-1',
+      title: '比赛项目',
+      category: '比赛' as const,
+      sourceIds: task.sourceIds,
+      taskIds: [task.id],
+      milestones: [createTaskMilestone('project-1', task)],
+      createdAt: task.createdAt,
+      updatedAt: task.updatedAt,
+    }
+    const nextTask = { ...task, title: '完成报名', status: '已完成' as const }
+    expect(syncTaskMilestone(project, nextTask).milestones[0]).toMatchObject({
+      title: '完成报名',
+      status: '已完成',
     })
   })
 })

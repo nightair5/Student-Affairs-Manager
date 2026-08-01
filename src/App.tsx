@@ -19,13 +19,17 @@ import {
 } from './lib/notifications'
 import { loadWorkspace } from './lib/storage'
 import { updateTaskWithHistory } from './lib/taskUpdates'
+import { findDuplicateSources } from './lib/sourceDuplicates'
 import {
   buildConfirmedTask,
+  createManualMilestone,
+  createTaskMilestone,
   createExtractionDraft,
   createWorkspaceData,
+  syncTaskMilestone,
   updateDraftItem,
 } from './lib/workspace'
-import type { ExtractionDraft, PageId, ParsedSuggestion, Project, Source, Task } from './types'
+import type { CourseBlock, ExtractionDraft, PageId, ParsedSuggestion, Project, Source, Task } from './types'
 
 const workspaceRepository = new IndexedDbWorkspaceRepository()
 
@@ -36,6 +40,7 @@ function App() {
   const [sources, setSources] = useState<Source[]>(initialWorkspace.sources)
   const [drafts, setDrafts] = useState<ExtractionDraft[]>([])
   const [projects, setProjects] = useState<Project[]>([])
+  const [courseBlocks, setCourseBlocks] = useState<CourseBlock[]>([])
   const [workspaceReady, setWorkspaceReady] = useState(false)
   const [storageError, setStorageError] = useState(false)
   const [intakeOpen, setIntakeOpen] = useState(false)
@@ -53,8 +58,8 @@ function App() {
     ? sources.find((source) => source.id === selectedDraft.sourceId) ?? null
     : null
   const workspace = useMemo(
-    () => createWorkspaceData(tasks, sources, drafts, projects),
-    [drafts, projects, sources, tasks],
+    () => createWorkspaceData(tasks, sources, drafts, projects, courseBlocks),
+    [courseBlocks, drafts, projects, sources, tasks],
   )
 
   useEffect(() => {
@@ -68,6 +73,7 @@ function App() {
           setSources(saved.sources)
           setDrafts(saved.drafts)
           setProjects(saved.projects)
+          setCourseBlocks(saved.courseBlocks)
         } else {
           await workspaceRepository.save(
             createWorkspaceData(initialWorkspace.tasks, initialWorkspace.sources),
@@ -132,26 +138,40 @@ function App() {
   }
 
   const handleComplete = (taskId: string) => {
-    setTasks((current) =>
-      current.map((task) =>
-        task.id === taskId
-          ? updateTaskWithHistory(task, { status: '已完成' })
-          : task,
-      ),
-    )
+    const task = tasks.find((candidate) => candidate.id === taskId)
+    if (!task) return
+    const nextTask = updateTaskWithHistory(task, { status: '已完成' })
+    setTasks((current) => current.map((candidate) => candidate.id === taskId ? nextTask : candidate))
+    if (task.projectId) {
+      setProjects((current) => current.map((project) => project.id === task.projectId
+        ? syncTaskMilestone(project, nextTask)
+        : project))
+    }
     setSelectedTaskId(null)
   }
 
   const handleUpdateTask = (taskId: string, patch: Partial<Task>) => {
-    setTasks((current) =>
-      current.map((task) =>
-        task.id === taskId ? updateTaskWithHistory(task, patch) : task,
-      ),
-    )
+    const task = tasks.find((candidate) => candidate.id === taskId)
+    if (!task) return
+    const nextTask = updateTaskWithHistory(task, patch)
+    setTasks((current) => current.map((candidate) => candidate.id === taskId ? nextTask : candidate))
+    if (task.projectId) {
+      setProjects((current) => current.map((project) => project.id === task.projectId
+        ? syncTaskMilestone(project, nextTask)
+        : project))
+    }
   }
 
   const handleCreateDraft = (source: Source, suggestions: ParsedSuggestion[]) => {
-    const draft = createExtractionDraft(source.id, suggestions)
+    const duplicateCandidates = findDuplicateSources(source, sources)
+    const nextSource: Source = duplicateCandidates.length
+      ? {
+          ...source,
+          duplicateOfSourceIds: duplicateCandidates.map((candidate) => candidate.sourceId),
+          duplicateReviewStatus: '待核对',
+        }
+      : source
+    const draft = createExtractionDraft(nextSource.id, suggestions)
     const now = new Date().toISOString()
     const project: Project | null = suggestions[0]
       ? {
@@ -160,16 +180,20 @@ function App() {
           category: suggestions[0].category,
           sourceIds: [source.id],
           taskIds: [],
+          milestones: [],
           createdAt: now,
           updatedAt: now,
         }
       : null
-    setSources((current) => [source, ...current])
+    setSources((current) => [nextSource, ...current])
     setDrafts((current) => [draft, ...current])
     if (project) setProjects((current) => [project, ...current])
     setIntakeOpen(false)
     setCurrentPage('inbox')
     setSelectedDraftId(draft.id)
+    if (duplicateCandidates.length) {
+      setNotice({ text: `发现 ${duplicateCandidates.length} 个可能重复来源；已保留两份，等待你人工核对。` })
+    }
   }
 
   const handleUpdateDraft = (
@@ -199,7 +223,12 @@ function App() {
       : baseTask
     setTasks((current) => [task, ...current])
     if (project) setProjects((current) => current.map((candidate) => candidate.id === project.id
-      ? { ...candidate, taskIds: [...candidate.taskIds, task.id], updatedAt: new Date().toISOString() }
+      ? {
+          ...candidate,
+          taskIds: [...candidate.taskIds, task.id],
+          milestones: [...candidate.milestones, createTaskMilestone(candidate.id, task)],
+          updatedAt: new Date().toISOString(),
+        }
       : candidate))
     handleUpdateDraft(draftId, itemId, {}, '已确认')
     setSources((current) => current.map((candidate) =>
@@ -236,7 +265,15 @@ function App() {
     })
     setTasks((current) => [...created, ...current])
     if (project) setProjects((current) => current.map((candidate) => candidate.id === project.id
-      ? { ...candidate, taskIds: [...candidate.taskIds, ...created.map((task) => task.id)], updatedAt: new Date().toISOString() }
+      ? {
+          ...candidate,
+          taskIds: [...candidate.taskIds, ...created.map((task) => task.id)],
+          milestones: [
+            ...candidate.milestones,
+            ...created.map((task) => createTaskMilestone(candidate.id, task)),
+          ],
+          updatedAt: new Date().toISOString(),
+        }
       : candidate))
     setDrafts((current) => current.map((item) => item.id === draftId
       ? {
@@ -261,6 +298,7 @@ function App() {
     setSources(imported.sources)
     setDrafts(imported.drafts)
     setProjects(imported.projects)
+    setCourseBlocks(imported.courseBlocks)
     setNotice({ text: '已导入 JSON 备份。' })
   }
 
@@ -269,6 +307,7 @@ function App() {
     setSources([])
     setDrafts([])
     setProjects([])
+    setCourseBlocks([])
     void workspaceRepository.clear()
     setNotice({ text: '已清空本机工作区。' })
   }
@@ -299,13 +338,39 @@ function App() {
         return (
           <CalendarPage
             tasks={tasks}
+            courseBlocks={courseBlocks}
             onOpenTask={(task) => setSelectedTaskId(task.id)}
+            onAddCourseBlock={(block) => setCourseBlocks((current) => [...current, block])}
+            onRemoveCourseBlock={(blockId) => setCourseBlocks((current) => current.filter((block) => block.id !== blockId))}
           />
         )
       case 'library':
-        return <LibraryPage sources={sources} />
+        return <LibraryPage sources={sources} onMarkIndependent={(sourceId) => {
+          setSources((current) => current.map((source) => source.id === sourceId
+            ? { ...source, duplicateReviewStatus: '保留为独立来源' }
+            : source))
+          setNotice({ text: '已保留为独立来源；系统未合并或删除任何内容。' })
+        }} />
       case 'archive':
-        return <ArchivePage tasks={tasks} projects={projects} workspace={workspace} onImport={handleImportWorkspace} onClear={handleClearWorkspace} />
+        return <ArchivePage
+          tasks={tasks}
+          projects={projects}
+          workspace={workspace}
+          onImport={handleImportWorkspace}
+          onClear={handleClearWorkspace}
+          onAddMilestone={(projectId, title, dueAt) => setProjects((current) => current.map((project) => project.id === projectId
+            ? { ...project, milestones: [...project.milestones, createManualMilestone(projectId, title, dueAt)], updatedAt: new Date().toISOString() }
+            : project))}
+          onToggleMilestone={(projectId, milestoneId) => setProjects((current) => current.map((project) => project.id === projectId
+            ? {
+                ...project,
+                milestones: project.milestones.map((milestone) => milestone.id === milestoneId
+                  ? { ...milestone, status: milestone.status === '已完成' ? '待完成' : '已完成' }
+                  : milestone),
+                updatedAt: new Date().toISOString(),
+              }
+            : project))}
+        />
     }
   }
 
