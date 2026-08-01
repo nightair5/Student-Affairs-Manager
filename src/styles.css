@@ -1801,6 +1801,138 @@ h3 {
   gap: 18px;
 }
 
+.monitor-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 18px;
+}
+
+.consent-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin: 14px 0 16px;
+  color: var(--ink-soft);
+  font-size: 9px;
+  line-height: 1.65;
+}
+
+.consent-row input {
+  width: 16px;
+  height: 16px;
+  margin-top: 1px;
+  accent-color: var(--green);
+}
+
+.monitor-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.monitor-record {
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--green);
+  background: var(--paper);
+}
+
+.monitor-record-title {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.monitor-record-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.monitor-record-actions > button {
+  display: inline-grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  color: var(--ink-soft);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.monitor-record-title strong,
+.monitor-record-title a,
+.monitor-record > small {
+  display: block;
+}
+
+.monitor-record-title strong {
+  font-size: 11px;
+}
+
+.monitor-record-title a {
+  margin-top: 4px;
+  color: var(--green);
+  font-size: 9px;
+  text-decoration: underline;
+}
+
+.monitor-record > small {
+  margin-top: 9px;
+  color: var(--ink-soft);
+  font-size: 8px;
+}
+
+.change-explanation {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 7px;
+  margin-top: 12px;
+  padding: 11px;
+  color: var(--ink-soft);
+  font-size: 9px;
+  line-height: 1.6;
+  background: var(--paper-soft);
+}
+
+.change-explanation q {
+  grid-column: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.monitor-delete-confirm {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 10px;
+  color: var(--orange);
+  font-size: 9px;
+  background: var(--orange-soft);
+}
+
+.monitor-delete-confirm span {
+  flex: 1 1 220px;
+}
+
+.monitor-delete-confirm button {
+  color: var(--orange);
+  font-size: 9px;
+  font-weight: 700;
+  background: transparent;
+  cursor: pointer;
+}
+
+.empty-service-state.compact {
+  min-height: 140px;
+  margin-top: 14px;
+}
+
 .queue-toolbar {
   display: flex;
   align-items: center;
@@ -2838,6 +2970,10 @@ h3 {
   }
 
   .email-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .monitor-layout {
     grid-template-columns: 1fr;
   }
 }

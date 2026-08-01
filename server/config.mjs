@@ -12,6 +12,11 @@ export function loadServerConfig(env = process.env, cwd = process.cwd()) {
   const emailWebhookUrl = env.SAM_EMAIL_WEBHOOK_URL?.trim() || ''
   const emailWebhookToken = env.SAM_EMAIL_WEBHOOK_TOKEN?.trim() || ''
   const emailFrom = env.SAM_EMAIL_FROM?.trim() || ''
+  const webAllowedHosts = (env.SAM_WEB_ALLOWED_HOSTS ?? '')
+    .split(',')
+    .map((host) => host.trim().toLowerCase())
+    .filter(Boolean)
+  const webFetchConfigured = env.SAM_WEB_FETCH_ENABLED === 'true' && webAllowedHosts.length > 0
   const emailConfigured = emailProvider === 'webhook' && Boolean(
     emailWebhookUrl.startsWith('https://') && emailWebhookToken.length >= 20 && emailFrom,
   )
@@ -29,6 +34,8 @@ export function loadServerConfig(env = process.env, cwd = process.cwd()) {
     emailWebhookToken,
     emailFrom,
     emailConfigured,
+    webAllowedHosts,
+    webFetchConfigured,
     maxBodyBytes: 2 * 1024 * 1024,
   }
 }

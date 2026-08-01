@@ -40,13 +40,13 @@ function corsHeaders(request, config) {
   return {
     'access-control-allow-origin': origin,
     'access-control-allow-headers': 'authorization, content-type',
-    'access-control-allow-methods': 'GET, PUT, OPTIONS',
+    'access-control-allow-methods': 'GET, POST, PUT, OPTIONS',
     'access-control-allow-private-network': 'true',
     vary: 'Origin',
   }
 }
 
-export function createRequestHandler(config, workspaceStore, emailQueue, emailProvider) {
+export function createRequestHandler(config, workspaceStore, emailQueue, emailProvider, webFetcher) {
   return async (request, response) => {
     const headers = corsHeaders(request, config)
     if (request.headers.origin && request.headers.origin !== config.allowedOrigin) {
@@ -68,7 +68,7 @@ export function createRequestHandler(config, workspaceStore, emailQueue, emailPr
         capabilities: {
           sync: config.syncConfigured ? 'configured' : 'not-configured',
           email: config.emailConfigured ? 'configured' : 'not-configured',
-          webMonitoring: 'local-compare-only',
+          webMonitoring: webFetcher?.configured ? 'configured' : 'local-compare-only',
           wechat: 'not-connected',
         },
       }, headers)
@@ -117,6 +117,34 @@ export function createRequestHandler(config, workspaceStore, emailQueue, emailPr
         return json(response, 200, { jobs }, headers)
       }
       return json(response, 404, { error: 'NOT_FOUND' }, headers)
+    }
+
+    if (url.pathname === '/api/web/fetch') {
+      if (!config.syncConfigured) {
+        return json(response, 503, { error: 'SERVICE_AUTH_NOT_CONFIGURED', message: '服务端尚未配置访问令牌。' }, headers)
+      }
+      if (!authorized(request, config.syncToken)) {
+        return json(response, 401, { error: 'UNAUTHORIZED', message: '服务令牌无效。' }, headers)
+      }
+      if (request.method !== 'POST') return json(response, 405, { error: 'METHOD_NOT_ALLOWED' }, headers)
+      if (!webFetcher?.configured) {
+        return json(response, 503, { error: 'WEB_FETCH_NOT_CONFIGURED', message: '网页读取未在服务端启用。' }, headers)
+      }
+      try {
+        const body = await readJsonBody(request, config.maxBodyBytes)
+        if (!body || typeof body.url !== 'string') return json(response, 400, { error: 'WEB_URL_INVALID' }, headers)
+        const result = await webFetcher.fetchText(body.url)
+        return json(response, 200, result, headers)
+      } catch (error) {
+        if (error instanceof SyntaxError) return json(response, 400, { error: 'INVALID_JSON' }, headers)
+        const safeCodes = new Set([
+          'WEB_URL_INVALID', 'WEB_HTTPS_REQUIRED', 'WEB_CREDENTIALS_FORBIDDEN', 'WEB_HOST_NOT_ALLOWED',
+          'WEB_PRIVATE_ADDRESS_FORBIDDEN', 'WEB_FETCH_FAILED', 'WEB_CONTENT_TYPE_UNSUPPORTED', 'WEB_RESPONSE_TOO_LARGE',
+        ])
+        return json(response, safeCodes.has(error?.code) ? 400 : 500, {
+          error: safeCodes.has(error?.code) ? error.code : 'INTERNAL_ERROR',
+        }, headers)
+      }
     }
 
     if (url.pathname !== '/api/sync/workspace') {

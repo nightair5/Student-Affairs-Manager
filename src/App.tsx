@@ -381,6 +381,8 @@ function App() {
         return <ServicesPage
           workspace={workspace}
           syncState={integrations.sync}
+          webMonitors={integrations.webMonitors}
+          onUpdateWebMonitors={(webMonitors) => setIntegrations((current) => ({ ...current, webMonitors }))}
           onUpdateSyncState={(patch) => setIntegrations((current) => ({
             ...current,
             sync: { ...current.sync, ...patch },

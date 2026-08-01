@@ -149,8 +149,36 @@ export interface SyncIntegrationState {
   lastSyncedAt?: string
 }
 
+export type WebMonitorStatus = 'baseline-ready' | 'unchanged' | 'changed' | 'error'
+export type WebMonitorCheckMethod = 'local-paste' | 'server-fetch'
+
+export interface WebChangeResult {
+  changed: boolean
+  previousHash: string
+  currentHash: string
+  addedLineCount: number
+  removedLineCount: number
+  addedSamples: string[]
+  removedSamples: string[]
+  checkedAt: string
+  method: WebMonitorCheckMethod
+}
+
+export interface WebMonitor {
+  id: string
+  title: string
+  url: string
+  authorizedAt: string
+  baselineText: string
+  baselineHash: string
+  status: WebMonitorStatus
+  lastCheckedAt?: string
+  lastResult?: WebChangeResult
+}
+
 export interface IntegrationState {
   sync: SyncIntegrationState
+  webMonitors: WebMonitor[]
 }
 
 export interface WorkspaceData {

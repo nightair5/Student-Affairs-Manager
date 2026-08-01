@@ -13,6 +13,7 @@ import {
   TriangleAlert,
 } from 'lucide-react'
 import { useState } from 'react'
+import { WebMonitoringPanel } from '../components/WebMonitoringPanel'
 import {
   emailJobStatusLabel,
   HttpEmailClient,
@@ -25,12 +26,14 @@ import {
   type RemoteWorkspaceRecord,
   type ServiceHealth,
 } from '../lib/syncClient'
-import type { SyncIntegrationState, WorkspaceData } from '../types'
+import type { SyncIntegrationState, WebMonitor, WorkspaceData } from '../types'
 
 interface ServicesPageProps {
   workspace: WorkspaceData
   syncState: SyncIntegrationState
   onUpdateSyncState: (patch: Partial<SyncIntegrationState>) => void
+  webMonitors: WebMonitor[]
+  onUpdateWebMonitors: (monitors: WebMonitor[]) => void
   onReplaceWorkspace: (record: RemoteWorkspaceRecord, endpoint: string) => void
 }
 
@@ -41,7 +44,7 @@ function maskedEmail(value: string): string {
   return domain ? `${name.slice(0, 2)}***@${domain}` : '已隐藏'
 }
 
-export function ServicesPage({ workspace, syncState, onUpdateSyncState, onReplaceWorkspace }: ServicesPageProps) {
+export function ServicesPage({ workspace, syncState, onUpdateSyncState, webMonitors, onUpdateWebMonitors, onReplaceWorkspace }: ServicesPageProps) {
   const [endpoint, setEndpoint] = useState(syncState.endpoint)
   const [token, setToken] = useState('')
   const [operation, setOperation] = useState<OperationState>('idle')
@@ -262,5 +265,7 @@ export function ServicesPage({ workspace, syncState, onUpdateSyncState, onReplac
         </div>
       </div>
     </section>
+
+    <WebMonitoringPanel endpoint={endpoint} token={token} monitors={webMonitors} onChange={onUpdateWebMonitors} />
   </main>
 }
