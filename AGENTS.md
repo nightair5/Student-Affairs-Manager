@@ -160,4 +160,5 @@ P2 服务接入边界：
 - 每次云端发送前都要说明并确认实际范围；当前最多发送问题和 4 条命中摘要，不发送完整工作区或文件本体。
 - Obsidian 导出只能下载 ZIP/Markdown 或写入用户主动选择且授权的文件夹；不得声称已自动同步。
 - Firebase Hosting 只发布根路径 `dist` 静态产物并配置 SPA 回退；项目选择通过非敏感 `.firebaserc` 或部署参数完成，不得提交 CLI 登录状态、服务账号 JSON 或访问令牌。
-- 纯 Hosting 不得伪装为 DeepSeek 服务端代理。未来接入 Functions/Cloud Run 时，密钥必须存入 Secret Manager/服务端环境变量，并在后端实际部署后才配置 `/api/deepseek` 重写。
+- 纯 Hosting 不得伪装为 DeepSeek 服务端代理。Firebase Function 必须从 Secret Manager 读取密钥；只有后端实际部署、状态接口确认且生产调用成功后，才可将 DeepSeek 标记为已连接。
+- 当前公开站点没有账号系统；Functions 代理必须限制 Origin、请求体、引用数量、实例数和基础频率，并明确这些措施不等于用户级鉴权。不得在未增加 Firebase Authentication/App Check 前扩大为通用 AI 代理。

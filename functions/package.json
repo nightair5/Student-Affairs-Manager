@@ -1,0 +1,17 @@
+{
+  "name": "student-affairs-firebase-functions",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "main": "index.mjs",
+  "engines": {
+    "node": "20"
+  },
+  "scripts": {
+    "check": "node --check index.mjs && node --check deepseek-handler.mjs",
+    "test": "node --test functions-tests.mjs"
+  },
+  "dependencies": {
+    "firebase-functions": "^7.3.2"
+  }
+}

@@ -6,13 +6,13 @@
   "scripts": {
     "dev": "vite",
     "server": "node --env-file-if-exists=.env server/index.mjs",
-    "server:check": "node --check server/index.mjs && node --check server/app.mjs && node --check server/web-fetch-service.mjs && node --check server/deepseek-service.mjs",
+    "server:check": "node --check server/index.mjs && node --check server/app.mjs && node --check server/web-fetch-service.mjs && node --check server/deepseek-service.mjs && npm --prefix functions run check",
     "build": "tsc -b && vite build",
     "build:firebase": "tsc -b && vite build --mode firebase",
     "firebase:serve": "npm run build:firebase && npx --yes firebase-tools emulators:start --only hosting",
-    "deploy:firebase": "npm run build:firebase && npx --yes firebase-tools deploy --only hosting",
+    "deploy:firebase": "npm run build:firebase && npm --prefix functions run check && npx --yes firebase-tools deploy --only functions,hosting",
     "lint": "eslint .",
-    "test": "vitest run && node --test server/server-tests.mjs"
+    "test": "vitest run && node --test server/server-tests.mjs && npm --prefix functions test"
   },
   "dependencies": {
     "lucide-react": "^0.468.0",

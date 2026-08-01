@@ -82,7 +82,14 @@ npx --yes firebase-tools use --add
 
 `use --add` 生成的 `.firebaserc` 只包含非敏感项目标识，可以在确认项目无误后提交。不要提交 Firebase 服务账号 JSON、访问令牌、真实用户数据或 `.env`。
 
-Firebase Hosting 只托管 `dist` 静态文件，不能安全保存或代理 DeepSeek API Key。要在 Firebase 生产站点启用 DeepSeek，必须另行部署 Firebase Functions 或 Cloud Run，通过 Secret Manager/服务端环境变量读取密钥，再显式配置 `/api/deepseek` 重写；在此之前页面会正确显示“DeepSeek 尚未连接”。
+仓库包含 Firebase Functions 的 DeepSeek 同源代理，并将 `/api/deepseek` 与 `/api/deepseek/status` 放在 SPA 回退规则之前。密钥只能通过 Firebase Secret Manager 交互式写入，不能放入 Hosting、`.env`、前端代码或 Git：
+
+```bash
+npx --yes firebase-tools functions:secrets:set DEEPSEEK_API_KEY --project student-affairs-nightair
+npm run deploy:firebase
+```
+
+只有 Secret Manager 已配置且 Function 实际部署成功时，页面才会显示“DeepSeek 代理已配置”。代理固定调用 DeepSeek 官方 HTTPS 接口和 `deepseek-chat`，只接受本站 Origin、每次最多 4 条引用摘要，并限制请求体、实例数和基础频率。当前站点没有账号系统，Origin 与内存限流不能替代用户级鉴权；公开启用前应在 DeepSeek 控制台设置合理余额和用量上限。
 
 ## P0：可信确认闭环
 
@@ -148,4 +155,4 @@ P1 阶段不包含生产 OCR、邮件发送、网页抓取/监测、微信授权
 
 ## Firebase 能力边界
 
-本轮只配置 Firebase Hosting 静态部署，不包含 Functions、Cloud Run、账号系统或云数据库。同步、邮件队列、网页读取和 DeepSeek 代理仍属于可选本机 Node 服务，不会因 Hosting 部署自动接通。生产域名拥有独立的 IndexedDB 站点存储，不会自动继承 localhost 或旧部署地址的数据。
+Firebase Hosting 发布 `dist` 静态产物；DeepSeek 使用独立 Firebase Function 和 Secret Manager，不把密钥交给浏览器。同步、邮件队列和网页读取仍属于可选本机 Node 服务，未部署到 Firebase。当前没有账号系统、App Check 或云数据库，因此代理只具备来源限制、字段最小化、单实例和基础频率保护，不构成用户级鉴权。生产域名拥有独立的 IndexedDB 站点存储，不会自动继承 localhost 或旧部署地址的数据。
