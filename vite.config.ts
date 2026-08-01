@@ -8,5 +8,10 @@ export default defineConfig(({ command }) => ({
   base: command === 'build' ? '/Student-Affairs-Manager/' : '/',
   server: {
     port: 4173,
+    proxy: {
+      // Development-only same-origin bridge to the optional local service.
+      // Production deployments must provide an explicit service endpoint.
+      '/api': 'http://127.0.0.1:8787',
+    },
   },
 }))

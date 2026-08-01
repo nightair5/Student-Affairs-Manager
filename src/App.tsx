@@ -10,6 +10,7 @@ import { CalendarPage } from './pages/CalendarPage'
 import { DashboardPage } from './pages/DashboardPage'
 import { LibraryPage } from './pages/LibraryPage'
 import { TasksPage } from './pages/TasksPage'
+import { ServicesPage } from './pages/ServicesPage'
 import { IndexedDbWorkspaceRepository } from './lib/repository'
 import {
   getBrowserNotificationPermission,
@@ -25,11 +26,12 @@ import {
   createManualMilestone,
   createTaskMilestone,
   createExtractionDraft,
+  createIntegrationState,
   createWorkspaceData,
   syncTaskMilestone,
   updateDraftItem,
 } from './lib/workspace'
-import type { CourseBlock, ExtractionDraft, PageId, ParsedSuggestion, Project, Source, Task } from './types'
+import type { CourseBlock, ExtractionDraft, IntegrationState, PageId, ParsedSuggestion, Project, Source, Task } from './types'
 
 const workspaceRepository = new IndexedDbWorkspaceRepository()
 
@@ -41,6 +43,7 @@ function App() {
   const [drafts, setDrafts] = useState<ExtractionDraft[]>([])
   const [projects, setProjects] = useState<Project[]>([])
   const [courseBlocks, setCourseBlocks] = useState<CourseBlock[]>([])
+  const [integrations, setIntegrations] = useState<IntegrationState>(() => createIntegrationState())
   const [workspaceReady, setWorkspaceReady] = useState(false)
   const [storageError, setStorageError] = useState(false)
   const [intakeOpen, setIntakeOpen] = useState(false)
@@ -58,8 +61,8 @@ function App() {
     ? sources.find((source) => source.id === selectedDraft.sourceId) ?? null
     : null
   const workspace = useMemo(
-    () => createWorkspaceData(tasks, sources, drafts, projects, courseBlocks),
-    [courseBlocks, drafts, projects, sources, tasks],
+    () => createWorkspaceData(tasks, sources, drafts, projects, courseBlocks, integrations),
+    [courseBlocks, drafts, integrations, projects, sources, tasks],
   )
 
   useEffect(() => {
@@ -74,6 +77,7 @@ function App() {
           setDrafts(saved.drafts)
           setProjects(saved.projects)
           setCourseBlocks(saved.courseBlocks)
+          setIntegrations(saved.integrations)
         } else {
           await workspaceRepository.save(
             createWorkspaceData(initialWorkspace.tasks, initialWorkspace.sources),
@@ -299,6 +303,7 @@ function App() {
     setDrafts(imported.drafts)
     setProjects(imported.projects)
     setCourseBlocks(imported.courseBlocks)
+    setIntegrations(imported.integrations)
     setNotice({ text: '已导入 JSON 备份。' })
   }
 
@@ -308,6 +313,7 @@ function App() {
     setDrafts([])
     setProjects([])
     setCourseBlocks([])
+    setIntegrations(createIntegrationState())
     void workspaceRepository.clear()
     setNotice({ text: '已清空本机工作区。' })
   }
@@ -370,6 +376,31 @@ function App() {
                 updatedAt: new Date().toISOString(),
               }
             : project))}
+        />
+      case 'services':
+        return <ServicesPage
+          workspace={workspace}
+          syncState={integrations.sync}
+          onUpdateSyncState={(patch) => setIntegrations((current) => ({
+            ...current,
+            sync: { ...current.sync, ...patch },
+          }))}
+          onReplaceWorkspace={(record, endpoint) => {
+            const imported = workspaceRepository.importJson(JSON.stringify(record.workspace))
+            setTasks(imported.tasks)
+            setSources(imported.sources)
+            setDrafts(imported.drafts)
+            setProjects(imported.projects)
+            setCourseBlocks(imported.courseBlocks)
+            setIntegrations({
+              ...imported.integrations,
+              sync: {
+                endpoint,
+                lastRemoteRevision: record.revision,
+                lastSyncedAt: record.updatedAt,
+              },
+            })
+          }}
         />
     }
   }

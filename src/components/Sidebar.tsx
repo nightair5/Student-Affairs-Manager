@@ -7,6 +7,7 @@ import {
   Home,
   Plus,
   Sparkles,
+  Server,
 } from 'lucide-react'
 import type { PageId } from '../types'
 
@@ -23,6 +24,7 @@ const navigation = [
   { id: 'calendar' as const, label: '日历', icon: CalendarDays },
   { id: 'library' as const, label: '文件库', icon: FileText },
   { id: 'archive' as const, label: '项目档案', icon: Archive },
+  { id: 'services' as const, label: '服务接入', icon: Server },
 ]
 
 export function Sidebar({

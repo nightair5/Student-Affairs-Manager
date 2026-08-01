@@ -1,6 +1,7 @@
 import type {
   DraftItem,
   CourseBlock,
+  IntegrationState,
   ExtractionDraft,
   ParsedSuggestion,
   Project,
@@ -20,15 +21,25 @@ export function createWorkspaceData(
   drafts: ExtractionDraft[] = [],
   projects: Project[] = [],
   courseBlocks: CourseBlock[] = [],
+  integrations: IntegrationState = createIntegrationState(),
 ): WorkspaceData {
   return {
-    schemaVersion: 4,
+    schemaVersion: 5,
     tasks,
     sources,
     drafts,
     projects,
     courseBlocks,
+    integrations,
     savedAt: new Date().toISOString(),
+  }
+}
+
+export function createIntegrationState(): IntegrationState {
+  return {
+    sync: {
+      endpoint: 'http://127.0.0.1:8787',
+    },
   }
 }
 

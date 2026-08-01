@@ -25,10 +25,11 @@ export function normalizeWorkspaceData(value: unknown): WorkspaceData | null {
     drafts?: unknown
     projects?: unknown
     courseBlocks?: unknown
+    integrations?: unknown
     savedAt?: unknown
   }
   if (
-    (data.schemaVersion !== 3 && data.schemaVersion !== 4) ||
+    (data.schemaVersion !== 3 && data.schemaVersion !== 4 && data.schemaVersion !== 5) ||
     !Array.isArray(data.tasks) ||
     !Array.isArray(data.sources) ||
     !Array.isArray(data.drafts) ||
@@ -36,7 +37,7 @@ export function normalizeWorkspaceData(value: unknown): WorkspaceData | null {
   ) return null
 
   return {
-    schemaVersion: 4,
+    schemaVersion: 5,
     tasks: data.tasks as WorkspaceData['tasks'],
     sources: data.sources.map((source) => isRecord(source)
       ? {
@@ -53,6 +54,22 @@ export function normalizeWorkspaceData(value: unknown): WorkspaceData | null {
     courseBlocks: Array.isArray(data.courseBlocks)
       ? data.courseBlocks as WorkspaceData['courseBlocks']
       : [],
+    integrations:
+      isRecord(data.integrations) && isRecord(data.integrations.sync)
+        ? {
+            sync: {
+              endpoint: typeof data.integrations.sync.endpoint === 'string'
+                ? data.integrations.sync.endpoint
+                : 'http://127.0.0.1:8787',
+              lastRemoteRevision: typeof data.integrations.sync.lastRemoteRevision === 'string'
+                ? data.integrations.sync.lastRemoteRevision
+                : undefined,
+              lastSyncedAt: typeof data.integrations.sync.lastSyncedAt === 'string'
+                ? data.integrations.sync.lastSyncedAt
+                : undefined,
+            },
+          }
+        : { sync: { endpoint: 'http://127.0.0.1:8787' } },
     savedAt: typeof data.savedAt === 'string' ? data.savedAt : new Date(0).toISOString(),
   }
 }

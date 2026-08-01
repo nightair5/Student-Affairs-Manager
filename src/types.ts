@@ -5,6 +5,7 @@ export type PageId =
   | 'calendar'
   | 'library'
   | 'archive'
+  | 'services'
 
 export type TaskCategory = '比赛' | '保研' | '课程' | '老师任务' | '其他'
 export type TaskStatus = '待开始' | '进行中' | '已完成'
@@ -142,12 +143,23 @@ export interface CourseBlock {
   createdAt: string
 }
 
+export interface SyncIntegrationState {
+  endpoint: string
+  lastRemoteRevision?: string
+  lastSyncedAt?: string
+}
+
+export interface IntegrationState {
+  sync: SyncIntegrationState
+}
+
 export interface WorkspaceData {
-  schemaVersion: 4
+  schemaVersion: 5
   tasks: Task[]
   sources: Source[]
   drafts: ExtractionDraft[]
   projects: Project[]
   courseBlocks: CourseBlock[]
+  integrations: IntegrationState
   savedAt: string
 }

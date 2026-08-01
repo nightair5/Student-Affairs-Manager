@@ -13,14 +13,15 @@ describe('normalizeWorkspaceData', () => {
     })
 
     expect(migrated).toMatchObject({
-      schemaVersion: 4,
+      schemaVersion: 5,
       courseBlocks: [],
+      integrations: { sync: { endpoint: 'http://127.0.0.1:8787' } },
       tasks: [{ id: 'task-1' }],
       projects: [{ id: 'project-1', milestones: [] }],
     })
   })
 
   it('拒绝缺少核心实体数组的导入', () => {
-    expect(normalizeWorkspaceData({ schemaVersion: 4, tasks: [] })).toBeNull()
+    expect(normalizeWorkspaceData({ schemaVersion: 5, tasks: [] })).toBeNull()
   })
 })

@@ -5,9 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "server": "node --env-file-if-exists=.env server/index.mjs",
+    "server:check": "node --check server/index.mjs && node --check server/app.mjs",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "test": "vitest run"
+    "test": "vitest run && node --test server/server-tests.mjs"
   },
   "dependencies": {
     "lucide-react": "^0.468.0",
