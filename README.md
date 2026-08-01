@@ -25,6 +25,19 @@ npm run server
 
 如果没有配置 `SAM_SYNC_TOKEN`，健康检查仍可用，但同步读写会明确返回 `SYNC_NOT_CONFIGURED`。这不是互联网云同步：没有账号系统、后台自动同步、端到端加密或跨设备托管。
 
+### 可选邮件 Webhook
+
+邮件默认不发送。服务接入页可把已有邮件提醒计划加入服务端队列；未配置时状态固定为“因未配置而阻塞”。要连接你控制的邮件网关，需在服务端 `.env` 设置：
+
+```dotenv
+SAM_EMAIL_PROVIDER=webhook
+SAM_EMAIL_FROM=student-desk@example.com
+SAM_EMAIL_WEBHOOK_URL=https://your-email-gateway.example/send
+SAM_EMAIL_WEBHOOK_TOKEN=replace-with-a-long-random-token
+```
+
+Webhook 接收 `{ from, to, subject, text }`，Bearer 令牌只由服务端持有。队列最多自动尝试 3 次并记录失败码；“加入队列”和“处理到期任务”都不直接等同于发送成功，只有服务端适配器返回成功后状态才是 `sent`。
+
 ## 验证
 
 ```bash
@@ -74,6 +87,7 @@ npm run server:check
 - 服务端工作区使用原子文件写入 `.data/`；该目录不会提交 Git。
 - 非敏感服务地址和最后修订保存在 schema v5；令牌不持久化。
 - 当前仍不等于云账号或跨设备自动同步。
+- 邮件队列支持未配置阻塞、发送失败、有限重试与真实 `sent` 状态；默认适配器关闭。
 
 ## 当前能力
 

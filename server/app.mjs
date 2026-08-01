@@ -1,5 +1,6 @@
 import { timingSafeEqual } from 'node:crypto'
 import { isWorkspacePayload } from './workspace-store.mjs'
+import { validateEmailJobInput } from './email-service.mjs'
 
 function json(response, status, payload, headers = {}) {
   response.writeHead(status, {
@@ -45,7 +46,7 @@ function corsHeaders(request, config) {
   }
 }
 
-export function createRequestHandler(config, workspaceStore) {
+export function createRequestHandler(config, workspaceStore, emailQueue, emailProvider) {
   return async (request, response) => {
     const headers = corsHeaders(request, config)
     if (request.headers.origin && request.headers.origin !== config.allowedOrigin) {
@@ -66,11 +67,56 @@ export function createRequestHandler(config, workspaceStore) {
         status: 'ok',
         capabilities: {
           sync: config.syncConfigured ? 'configured' : 'not-configured',
-          email: 'not-configured',
+          email: config.emailConfigured ? 'configured' : 'not-configured',
           webMonitoring: 'local-compare-only',
           wechat: 'not-connected',
         },
       }, headers)
+    }
+
+    if (url.pathname.startsWith('/api/email/')) {
+      if (!config.syncConfigured) {
+        return json(response, 503, { error: 'SERVICE_AUTH_NOT_CONFIGURED', message: '服务端尚未配置访问令牌。' }, headers)
+      }
+      if (!authorized(request, config.syncToken)) {
+        return json(response, 401, { error: 'UNAUTHORIZED', message: '服务令牌无效。' }, headers)
+      }
+      if (!emailQueue || !emailProvider) return json(response, 503, { error: 'EMAIL_SERVICE_UNAVAILABLE' }, headers)
+
+      if (request.method === 'GET' && url.pathname === '/api/email/status') {
+        return json(response, 200, {
+          provider: emailProvider.name,
+          configured: emailProvider.configured,
+          state: emailProvider.configured ? 'configured' : 'not-configured',
+        }, headers)
+      }
+      if (request.method === 'GET' && url.pathname === '/api/email/jobs') {
+        return json(response, 200, { jobs: await emailQueue.readJobs() }, headers)
+      }
+      if (request.method === 'POST' && url.pathname === '/api/email/jobs') {
+        try {
+          const body = await readJsonBody(request, config.maxBodyBytes)
+          const validationError = validateEmailJobInput(body)
+          if (validationError) return json(response, 400, { error: validationError }, headers)
+          const job = await emailQueue.enqueue(body, emailProvider)
+          return json(response, 202, { job }, headers)
+        } catch (error) {
+          if (error instanceof SyntaxError) return json(response, 400, { error: 'INVALID_JSON' }, headers)
+          return json(response, 500, { error: 'INTERNAL_ERROR' }, headers)
+        }
+      }
+      const retryMatch = url.pathname.match(/^\/api\/email\/jobs\/([^/]+)\/retry$/)
+      if (request.method === 'POST' && retryMatch) {
+        const job = await emailQueue.retry(decodeURIComponent(retryMatch[1]), emailProvider)
+        return job
+          ? json(response, 200, { job }, headers)
+          : json(response, 404, { error: 'EMAIL_JOB_NOT_FOUND' }, headers)
+      }
+      if (request.method === 'POST' && url.pathname === '/api/email/process') {
+        const jobs = await emailQueue.processDue(emailProvider)
+        return json(response, 200, { jobs }, headers)
+      }
+      return json(response, 404, { error: 'NOT_FOUND' }, headers)
     }
 
     if (url.pathname !== '/api/sync/workspace') {

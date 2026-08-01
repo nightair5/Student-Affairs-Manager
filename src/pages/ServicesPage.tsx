@@ -5,11 +5,19 @@ import {
   CloudCog,
   KeyRound,
   LoaderCircle,
+  Mail,
+  ListRestart,
   RefreshCw,
+  Send,
   ShieldCheck,
   TriangleAlert,
 } from 'lucide-react'
 import { useState } from 'react'
+import {
+  emailJobStatusLabel,
+  HttpEmailClient,
+  type EmailQueueJob,
+} from '../lib/emailClient'
 import {
   HttpSyncClient,
   ServiceClientError,
@@ -28,6 +36,11 @@ interface ServicesPageProps {
 
 type OperationState = 'idle' | 'checking' | 'pushing' | 'pulling'
 
+function maskedEmail(value: string): string {
+  const [name, domain] = value.split('@')
+  return domain ? `${name.slice(0, 2)}***@${domain}` : '已隐藏'
+}
+
 export function ServicesPage({ workspace, syncState, onUpdateSyncState, onReplaceWorkspace }: ServicesPageProps) {
   const [endpoint, setEndpoint] = useState(syncState.endpoint)
   const [token, setToken] = useState('')
@@ -37,8 +50,16 @@ export function ServicesPage({ workspace, syncState, onUpdateSyncState, onReplac
   const [messageTone, setMessageTone] = useState<'neutral' | 'success' | 'warning'>('neutral')
   const [pendingRemote, setPendingRemote] = useState<RemoteWorkspaceRecord | null>(null)
   const [conflictRevision, setConflictRevision] = useState<string | null>(null)
+  const emailTasks = workspace.tasks.filter((task) => task.reminders.some((reminder) => reminder.channel === 'email' && reminder.enabled))
+  const [emailTaskId, setEmailTaskId] = useState(emailTasks[0]?.id ?? '')
+  const [recipient, setRecipient] = useState('')
+  const [emailJobs, setEmailJobs] = useState<EmailQueueJob[]>([])
+  const [emailConfigured, setEmailConfigured] = useState<boolean | null>(null)
+  const [emailBusy, setEmailBusy] = useState(false)
+  const [emailMessage, setEmailMessage] = useState('')
 
   const client = () => new HttpSyncClient(endpoint.trim(), token)
+  const emailClient = () => new HttpEmailClient(endpoint.trim(), token)
   const requireToken = () => {
     if (token.trim()) return true
     setMessage('请输入服务端同步令牌。令牌只保留在当前页面内存中。')
@@ -118,6 +139,80 @@ export function ServicesPage({ workspace, syncState, onUpdateSyncState, onReplac
     setPendingRemote(null)
   }
 
+  const refreshEmail = async () => {
+    if (!requireToken()) return
+    setEmailBusy(true)
+    try {
+      const [status, jobs] = await Promise.all([emailClient().status(), emailClient().jobs()])
+      setEmailConfigured(status.configured)
+      setEmailJobs(jobs)
+      setEmailMessage(status.configured
+        ? '服务端邮件适配器已配置；队列状态来自真实服务。'
+        : '邮件适配器未配置；队列任务不会被标记为已发送。')
+    } catch (error) {
+      setEmailMessage(syncErrorMessage(error))
+    } finally {
+      setEmailBusy(false)
+    }
+  }
+
+  const enqueueEmail = async () => {
+    if (!requireToken()) return
+    const task = workspace.tasks.find((candidate) => candidate.id === emailTaskId)
+    const reminder = task?.reminders.find((candidate) => candidate.channel === 'email' && candidate.enabled)
+    if (!task || !reminder || !recipient.trim()) {
+      setEmailMessage('请选择已启用邮件计划的任务并填写收件地址。')
+      return
+    }
+    setEmailBusy(true)
+    try {
+      const job = await emailClient().enqueue({
+        recipient: recipient.trim(),
+        taskId: task.id,
+        taskTitle: task.title,
+        nextAction: task.nextAction,
+        deadline: task.deadline,
+        scheduledAt: reminder.scheduledAt,
+      })
+      setEmailJobs((current) => [job, ...current.filter((candidate) => candidate.id !== job.id)])
+      setEmailMessage(job.status === 'blocked-not-configured'
+        ? '计划已进入服务端队列，但因邮件适配器未配置而阻塞；没有发送。'
+        : '计划已进入服务端队列，尚未等同于发送成功。')
+    } catch (error) {
+      setEmailMessage(syncErrorMessage(error))
+    } finally {
+      setEmailBusy(false)
+    }
+  }
+
+  const retryEmail = async (jobId: string) => {
+    setEmailBusy(true)
+    try {
+      const job = await emailClient().retry(jobId)
+      setEmailJobs((current) => current.map((candidate) => candidate.id === job.id ? job : candidate))
+      setEmailMessage(job.status === 'blocked-not-configured'
+        ? '仍未配置邮件适配器，任务继续阻塞且没有发送。'
+        : '已重新进入队列；最终结果以队列状态为准。')
+    } catch (error) {
+      setEmailMessage(syncErrorMessage(error))
+    } finally {
+      setEmailBusy(false)
+    }
+  }
+
+  const processEmailQueue = async () => {
+    setEmailBusy(true)
+    try {
+      const jobs = await emailClient().process()
+      setEmailJobs(jobs)
+      setEmailMessage('已要求服务端处理到期任务；请核对每项状态，不以按钮点击代替发送结果。')
+    } catch (error) {
+      setEmailMessage(syncErrorMessage(error))
+    } finally {
+      setEmailBusy(false)
+    }
+  }
+
   return <main className="page services-page">
     <header className="page-header">
       <div><span className="eyebrow">P2 · 安全服务边界</span><h1>服务接入</h1><p>真实服务默认关闭。密钥只属于服务端；浏览器令牌不持久化，任何覆盖都需要你再次确认。</p></div>
@@ -149,5 +244,23 @@ export function ServicesPage({ workspace, syncState, onUpdateSyncState, onReplac
     </div>
 
     <section className="boundary-list" aria-label="同步能力边界"><div><CheckCircle2 size={17} /><span><strong>真实可用</strong> 本地 HTTP 服务、令牌认证、原子保存、拉取/推送和冲突检测。</span></div><div><TriangleAlert size={17} /><span><strong>需要配置</strong> 用户需复制 `.env.example` 为 `.env`，设置随机令牌并启动服务。</span></div><div><CloudCog size={17} /><span><strong>尚未提供</strong> 账号登录、互联网托管、端到端加密和后台自动同步。</span></div></section>
+
+    <section className="integration-section" aria-labelledby="email-service-title">
+      <div className="integration-section-heading"><div><span className="section-index">EMAIL QUEUE</span><h2 id="email-service-title">邮件提醒队列</h2><p>收件地址和任务摘要只提交给你配置的本地服务；浏览器不保存邮件服务商密钥。</p></div><span className={`capability-badge light ${emailConfigured ? 'ready' : 'offline'}`}>{emailConfigured ? '适配器已配置' : '未接通'}</span></div>
+      <div className="email-layout">
+        <div className="service-card email-compose">
+          <div className="service-card-heading"><div><span className="eyebrow">最小发送范围</span><h2>把已有提醒加入队列</h2></div><Mail size={20} /></div>
+          <label className="field"><span>已有邮件提醒计划</span><select value={emailTaskId} onChange={(event) => setEmailTaskId(event.target.value)}><option value="">请选择任务</option>{emailTasks.map((task) => <option value={task.id} key={task.id}>{task.title}</option>)}</select><small>仅发送任务标题、下一步动作和截止时间，不发送来源原文或材料文件。</small></label>
+          <label className="field"><span>收件邮箱</span><input type="email" value={recipient} onChange={(event) => setRecipient(event.target.value)} placeholder="student@example.com" autoComplete="email" /></label>
+          <div className="service-actions"><button className="primary-button" type="button" disabled={emailBusy || !emailTaskId || !recipient.trim()} onClick={() => void enqueueEmail()}><Send size={16} />加入服务端队列</button><button className="secondary-button" type="button" disabled={emailBusy} onClick={() => void refreshEmail()}>{emailBusy ? <LoaderCircle className="spin" size={16} /> : <RefreshCw size={16} />}读取真实状态</button></div>
+          {emailMessage && <div className="service-message warning" role="status"><TriangleAlert size={17} /><span>{emailMessage}</span></div>}
+        </div>
+        <div className="service-card email-queue-card">
+          <div className="service-card-heading"><div><span className="eyebrow">服务端记录</span><h2>发送与重试状态</h2></div><ListRestart size={20} /></div>
+          <div className="queue-toolbar"><span>{emailJobs.length} 项队列记录</span><button className="secondary-button" type="button" disabled={emailBusy || !token.trim()} onClick={() => void processEmailQueue()}><RefreshCw size={15} />处理到期任务</button></div>
+          {emailJobs.length ? <div className="email-job-list">{emailJobs.slice(0, 8).map((job) => <article className="email-job" key={job.id}><div><strong>{job.subject.replace('学生事务提醒 · ', '')}</strong><small>{maskedEmail(job.recipient)} · {new Intl.DateTimeFormat('zh-CN', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }).format(new Date(job.scheduledAt))}</small></div><span className={`job-status ${job.status}`}>{emailJobStatusLabel(job.status)}</span><small>尝试 {job.attempts}/{job.maxAttempts}</small>{job.status !== 'sent' && <button type="button" onClick={() => void retryEmail(job.id)} disabled={emailBusy}>重试</button>}</article>)}</div> : <div className="empty-service-state"><Mail size={24} /><strong>尚未读取队列</strong><p>输入服务令牌并点击“读取真实状态”。未配置时不会生成虚假发送记录。</p></div>}
+        </div>
+      </div>
+    </section>
   </main>
 }
