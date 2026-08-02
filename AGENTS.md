@@ -165,3 +165,6 @@ P2 服务接入边界：
 - Firebase Hosting 只发布根路径 `dist` 静态产物并配置 SPA 回退；项目选择通过非敏感 `.firebaserc` 或部署参数完成，不得提交 CLI 登录状态、服务账号 JSON 或访问令牌。
 - 纯 Hosting 不得伪装为 DeepSeek 服务端代理。Firebase Function 必须从 Secret Manager 读取密钥；只有后端实际部署、状态接口确认且生产调用成功后，才可将 DeepSeek 标记为已连接。
 - 当前公开站点没有账号系统；Functions 代理必须限制 Origin、请求体、引用数量、实例数和基础频率，并明确这些措施不等于用户级鉴权。不得在未增加 Firebase Authentication/App Check 前扩大为通用 AI 代理。
+- Cloudflare 生产部署使用 Workers Static Assets 与同源 `/api/deepseek`；只有 `/api/*` 优先进入 Worker，其他资源直接由静态资产服务提供。
+- `DEEPSEEK_API_KEY` 只能通过 `wrangler secret put` 或等价的 Cloudflare Secret 机制写入。禁止提交 `.dev.vars`、Wrangler OAuth 文件、API Token、账户凭证或 Secret 明文。
+- Worker 未设置 Secret 时必须返回 `configured: false` 和 `DEEPSEEK_NOT_CONFIGURED`；只有生产状态接口确认且真实上游调用成功后，页面才能显示已连接。

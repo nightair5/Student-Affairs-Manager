@@ -71,36 +71,29 @@ npm run build
 npm run server:check
 ```
 
-## Firebase Hosting 部署
+## Cloudflare Workers 部署
 
-Firebase Hosting 是当前生产部署目标。仓库提供根路径构建和单页应用回退配置：
-
-生产站点：[https://student-affairs-nightair.web.app](https://student-affairs-nightair.web.app)
+Cloudflare Workers Static Assets 是当前生产部署目标：一个 Worker 同时发布 Vite 的 `dist` 静态产物、提供 SPA 回退，并只让 `/api/*` 请求优先经过服务端代码。部署前先确认账号：
 
 ```bash
-npm run build:firebase
-npm run firebase:serve
-npm run deploy:firebase
+npx wrangler whoami
+npm run deploy:cloudflare
 ```
 
-当前仓库已通过 `.firebaserc` 绑定 `student-affairs-nightair`。在新的开发设备部署前，需要先完成有效登录并核对项目：
+DeepSeek 代理位于同源 `/api/deepseek`，状态接口为 `/api/deepseek/status`。密钥只能写入 Cloudflare Secret，不能放入 `wrangler.jsonc`、`.dev.vars.example`、前端、IndexedDB、日志或 Git：
 
 ```bash
-npx --yes firebase-tools login
-npx --yes firebase-tools projects:list
-npx --yes firebase-tools use --add
+npx wrangler secret put DEEPSEEK_API_KEY
+npm run deploy:cloudflare
 ```
 
-`use --add` 生成的 `.firebaserc` 只包含非敏感项目标识，可以在确认项目无误后提交。不要提交 Firebase 服务账号 JSON、访问令牌、真实用户数据或 `.env`。
+`secret put` 会在本机终端隐式输入密钥。未设置 Secret 时站点与本地知识检索仍可使用，但状态接口必须返回 `configured: false`，页面显示“DeepSeek 未连接”。代理固定调用 `deepseek-chat`，只接受同源或显式白名单 Origin、当前问题和最多 4 条引用摘要，并限制请求体和基础频率；外部来源仍按不可信文本处理。当前没有账号系统，Origin 与单实例内存限流不等于用户级鉴权，公开启用前应在 DeepSeek 控制台设置余额和用量上限。
 
-仓库包含 Firebase Functions 的 DeepSeek 同源代理，并将 `/api/deepseek` 与 `/api/deepseek/status` 放在 SPA 回退规则之前。密钥只能通过 Firebase Secret Manager 交互式写入，不能放入 Hosting、`.env`、前端代码或 Git：
+本地调试可复制 `.dev.vars.example` 为不提交的 `.dev.vars`，然后运行 `npm run cloudflare:dev`。`wrangler.jsonc` 不含账户令牌或服务密钥。
 
-```bash
-npx --yes firebase-tools functions:secrets:set DEEPSEEK_API_KEY --project student-affairs-nightair
-npm run deploy:firebase
-```
+### 旧 Firebase 部署
 
-只有 Secret Manager 已配置且 Function 实际部署成功时，页面才会显示“DeepSeek 代理已配置”。代理固定调用 DeepSeek 官方 HTTPS 接口和 `deepseek-chat`，只接受本站 Origin、每次最多 4 条引用摘要，并限制请求体、实例数和基础频率。当前站点没有账号系统，Origin 与内存限流不能替代用户级鉴权；公开启用前应在 DeepSeek 控制台设置合理余额和用量上限。
+Firebase Hosting 配置仍保留用于回滚，但已不再是主部署目标。旧站点不会自动获得 Cloudflare Worker Secret，也不应再被描述为 DeepSeek 已连接。
 
 ## P0：可信确认闭环
 
@@ -167,6 +160,6 @@ P1 阶段不包含生产 OCR、邮件发送、网页抓取/监测、微信授权
 
 数据保存在当前设备与浏览器的站点存储中。使用相同的站点地址刷新或关闭后重新打开，数据会自动恢复；更换设备、浏览器、站点地址，或清除浏览器站点数据时不会自动同步。跨设备同步需要后续账号与后端服务。
 
-## Firebase 能力边界
+## Cloudflare 能力边界
 
-Firebase Hosting 发布 `dist` 静态产物；DeepSeek 使用独立 Firebase Function 和 Secret Manager，不把密钥交给浏览器。同步、邮件队列和网页读取仍属于可选本机 Node 服务，未部署到 Firebase。当前没有账号系统、App Check 或云数据库，因此代理只具备来源限制、字段最小化、单实例和基础频率保护，不构成用户级鉴权。生产域名拥有独立的 IndexedDB 站点存储，不会自动继承 localhost 或旧部署地址的数据。
+Cloudflare Worker 发布 `dist` 静态产物，并通过 Worker Secret 调用 DeepSeek，不把密钥交给浏览器。同步、邮件队列和网页读取仍属于可选本机 Node 服务，未部署到 Cloudflare。当前没有账号系统、Turnstile 或持久化限流，因此代理只具备来源限制、字段最小化、单实例和基础频率保护，不构成用户级鉴权。Cloudflare 生产域名拥有独立的 IndexedDB 站点存储，不会自动继承 localhost、Firebase 或其他旧部署地址的数据。

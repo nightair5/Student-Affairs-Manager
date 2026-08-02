@@ -11,8 +11,11 @@
     "build:firebase": "tsc -b && vite build --mode firebase",
     "firebase:serve": "npm run build:firebase && npx --yes firebase-tools emulators:start --only hosting",
     "deploy:firebase": "npm run build:firebase && npm --prefix functions run check && npx --yes firebase-tools deploy --only functions,hosting",
+    "cloudflare:dev": "npm run build && wrangler dev",
+    "cloudflare:check": "node --test cloudflare/worker-tests.mjs && wrangler deploy --dry-run",
+    "deploy:cloudflare": "npm run build && npm run cloudflare:check && wrangler deploy",
     "lint": "eslint .",
-    "test": "vitest run && node --test server/server-tests.mjs && npm --prefix functions test"
+    "test": "vitest run && node --test server/server-tests.mjs && node --test cloudflare/worker-tests.mjs && npm --prefix functions test"
   },
   "dependencies": {
     "lucide-react": "^0.468.0",
@@ -32,6 +35,7 @@
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.65.0",
     "vite": "^6.1.0",
-    "vitest": "^3.0.5"
+    "vitest": "^3.0.5",
+    "wrangler": "^4.118.0"
   }
 }

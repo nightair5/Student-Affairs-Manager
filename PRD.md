@@ -1,7 +1,7 @@
 # 学生事务管家 PRD
 
 > 版本：v0.7
-> 状态：Firebase Hosting 已发布；DeepSeek Functions 代理已实现，待 Secret Manager 配置与生产部署
+> 状态：Cloudflare Workers 静态站点与 DeepSeek 同源代理已实现；生产 Secret 配置状态以接口为准
 > 最后更新：2026-08-02
 
 ## 1. 产品概述
@@ -374,7 +374,7 @@ MVP 提供可导航、可理解的桌面页面骨架：
 - 本地知识问答必须先取得可撤销授权；所有回答展示任务或来源引用，没有匹配引用时明确说明且不得生成猜测。
 - 每次 DeepSeek 调用前必须展示实际发送范围并取得显式确认；只发送问题与最多 4 条命中摘要，API Key 仅存在于服务端环境变量。
 - Obsidian 导出必须生成可识别的 Markdown 文件名、日期/标签、内部链接与索引，并明确它是下载或授权写入的静态快照，不是自动同步。
-- Firebase Hosting 只发布静态 `dist` 产物并支持 SPA 回退；任何 DeepSeek 接入必须由 Functions/Cloud Run 在服务端读取 Secret Manager 或环境变量，纯 Hosting 不得承载密钥。
+- Cloudflare Worker 必须只发布静态 `dist` 产物并支持 SPA 回退；DeepSeek 接入只允许从 Worker Secret 读取密钥，`wrangler.jsonc`、浏览器和 Git 不得承载密钥。未设置 Secret 时状态接口必须诚实返回未配置。
 
 ### 10.2 工程验收
 
