@@ -40,6 +40,7 @@ export function OnboardingGuide({ onClose }: OnboardingGuideProps) {
   const [step, setStep] = useState(0)
   const titleId = useId()
   const closeRef = useRef<HTMLButtonElement>(null)
+  const contentRef = useRef<HTMLDivElement>(null)
   const current = steps[step]
   const Icon = current.icon
 
@@ -52,6 +53,10 @@ export function OnboardingGuide({ onClose }: OnboardingGuideProps) {
     return () => window.removeEventListener('keydown', closeOnEscape)
   }, [onClose])
 
+  useEffect(() => {
+    contentRef.current?.scrollTo({ top: 0 })
+  }, [step])
+
   return <div className="modal-backdrop guide-backdrop" role="presentation">
     <section className="onboarding-guide" role="dialog" aria-modal="true" aria-labelledby={titleId}>
       <header className="guide-header">
@@ -61,7 +66,7 @@ export function OnboardingGuide({ onClose }: OnboardingGuideProps) {
       <div className="guide-progress" aria-label={`教程进度：第 ${step + 1} 步，共 ${steps.length} 步`}>
         {steps.map((item, index) => <span key={item.title} className={index <= step ? 'active' : ''} />)}
       </div>
-      <div className="guide-content">
+      <div ref={contentRef} className="guide-content" aria-live="polite">
         <div className="guide-illustration" aria-hidden="true"><span>{step + 1}</span><Icon size={42} strokeWidth={1.4} /></div>
         <div>
           <span className="eyebrow">{current.eyebrow}</span>

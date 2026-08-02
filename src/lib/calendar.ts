@@ -13,6 +13,7 @@ export interface DaySummary {
   active: number
   completed: number
   headline: string
+  compactHeadline: string
   timeLabel: string
   riskCount: number
 }
@@ -65,6 +66,10 @@ function shortTitle(title: string, limit = 9): string {
   return characters.length > limit ? `${characters.slice(0, limit).join('')}…` : characters.join('')
 }
 
+function compactTitle(title: string, limit = 4): string {
+  return [...title.trim()].slice(0, limit).join('')
+}
+
 export function summarizeDay(tasks: Task[]): DaySummary | null {
   if (!tasks.length) return null
   const sorted = [...tasks].sort((a, b) => new Date(a.deadline).getTime() - new Date(b.deadline).getTime())
@@ -85,6 +90,7 @@ export function summarizeDay(tasks: Task[]): DaySummary | null {
       : activeTasks.length === 1
         ? shortTitle(activeTasks[0].title, 11)
         : `${shortTitle(activeTasks[0].title, 5)}等 ${activeTasks.length} 项`,
+    compactHeadline: activeTasks.length === 0 ? '已完成' : compactTitle(activeTasks[0].title),
     timeLabel,
     riskCount,
   }

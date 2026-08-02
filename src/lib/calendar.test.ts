@@ -39,7 +39,17 @@ describe('calendar summaries', () => {
     ])
     expect(summary).toMatchObject({ total: 3, active: 2, completed: 1, riskCount: 1 })
     expect(summary?.headline).toBe('提交报名表…等 2 项')
+    expect(summary?.compactHeadline).toBe('提交报名')
     expect(summary?.timeLabel).toBe('09:00')
+  })
+
+  it('keeps a readable compact action label for narrow calendar cells', () => {
+    expect(summarizeDay([
+      task('long', '完成调研报告初稿', '2026-08-03T20:00'),
+    ])?.compactHeadline).toBe('完成调研')
+    expect(summarizeDay([
+      task('done', '提交报名表', '2026-08-03T09:00', '已完成'),
+    ])?.compactHeadline).toBe('已完成')
   })
 
   it('uses local date keys without UTC day drift', () => {

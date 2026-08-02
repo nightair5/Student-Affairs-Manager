@@ -82,8 +82,8 @@ export function CalendarPage({ tasks, courseBlocks, onOpenTask, onAddCourseBlock
   return (
     <main className="page calendar-page">
       <header className="page-header calendar-page-header">
-        <div><span className="eyebrow">截止与开工安排</span><h1>日历</h1><p>月历只保留每天的行动摘要；选择有事项的日期，在右侧查看清单。</p></div>
-        <div className="legend"><span><i className="legend-dot deadline" />有截止事项</span><span><i className="legend-dot start" />当前选中</span></div>
+        <div><span className="eyebrow">截止与开工安排</span><h1>日历</h1><p>日期格显示最早事项、时间和数量；选择日期后在详情区查看完整清单。</p></div>
+        <div className="legend"><span><i className="legend-dot deadline" />格内为行动摘要</span><span><i className="legend-dot start" />当前选中</span></div>
       </header>
 
       <div className="calendar-layout">
@@ -103,6 +103,7 @@ export function CalendarPage({ tasks, courseBlocks, onOpenTask, onAddCourseBlock
                 'calendar-day',
                 !cell.inMonth && 'muted',
                 summary && 'has-event',
+                summary?.riskCount && 'has-risk',
                 selected && 'selected',
                 cell.isToday && 'today',
               ].filter(Boolean).join(' ')
@@ -113,8 +114,10 @@ export function CalendarPage({ tasks, courseBlocks, onOpenTask, onAddCourseBlock
                 <span className="calendar-date"><strong>{cell.day}</strong>{cell.isToday && <em>今天</em>}</span>
                 {summary
                   ? <span className="calendar-day-summary">
-                      <strong>{summary.headline}</strong>
-                      <small>{summary.active ? `${summary.active} 项待办 · ${summary.timeLabel}` : `${summary.completed} 项已完成`}</small>
+                      <strong className="calendar-summary-full">{summary.headline}</strong>
+                      <strong className="calendar-summary-compact">{summary.compactHeadline}</strong>
+                      <small className="calendar-meta-full">{summary.active ? `${summary.active} 项待办 · ${summary.timeLabel}` : `${summary.completed} 项已完成`}</small>
+                      <small className="calendar-meta-compact">{summary.active ? `${summary.timeLabel}·${summary.active}项` : `${summary.completed}项完成`}</small>
                       {summary.riskCount > 0 && <em>{summary.riskCount} 项需留意</em>}
                     </span>
                   : <span className="calendar-day-empty">—</span>}
