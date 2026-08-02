@@ -75,7 +75,9 @@ npm run server:check
 
 Cloudflare Workers Static Assets 是当前生产部署目标：一个 Worker 同时发布 Vite 的 `dist` 静态网页、提供 SPA 回退，并只让 `/api/*` 请求优先经过服务端代码。因此 Cloudflare 控制台会把它列在 “Workers” 下，但访问地址呈现的仍是完整网页；Worker 同时承担不暴露密钥的 DeepSeek 服务端代理。部署前先确认账号：
 
-生产站点：[https://student-affairs-manager.nightsdell.workers.dev](https://student-affairs-manager.nightsdell.workers.dev)
+生产主站：[https://student-affairs.site](https://student-affairs.site)
+
+Cloudflare 备用地址：[https://student-affairs-manager.nightsdell.workers.dev](https://student-affairs-manager.nightsdell.workers.dev)
 
 ```bash
 npx wrangler whoami
@@ -91,7 +93,7 @@ npm run deploy:cloudflare
 
 `secret put` 会在本机终端隐式输入密钥。未设置 Secret 时站点与本地知识检索仍可使用，但状态接口必须返回 `configured: false`，页面显示“DeepSeek 未连接”。代理固定调用 `deepseek-v4-flash` 并关闭思考模式：知识问答只接受当前问题和最多 4 条引用摘要；智能整理只接受用户点击后提交的当前文本或本机提取文字，生成最多 20 条可编辑建议。两类接口都限制同源、请求体和基础频率，外部来源始终按不可信文本处理。当前没有账号系统，Origin 与单实例内存限流不等于用户级鉴权，公开启用前应在 DeepSeek 控制台设置余额和用量上限。
 
-计划自定义域名为 `student-affairs.site`。只有先在 Cloudflare 添加该域名，并在腾讯云域名控制台把 DNS 服务器改为 Cloudflare 分配的两条 Nameserver 后，才能给 Worker 添加 Custom Domain；DNS 尚未切换时不要把该地址描述为已上线。
+自定义域名为 `student-affairs.site`。权威 DNS 已切换至 Cloudflare，Worker 通过 `wrangler.jsonc` 的 Custom Domain 路由发布；域名、HTTPS 和页面可用性仍应在每次部署后实测，不能只根据配置推测。
 
 当前生产 Worker 已部署；由于尚未写入新的 Cloudflare Secret，DeepSeek 状态仍为未连接。这是预期的安全关闭状态，不影响本地知识检索、任务管理和 Obsidian 导出。
 
