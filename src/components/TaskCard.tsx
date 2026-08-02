@@ -7,10 +7,18 @@ import {
 } from 'lucide-react'
 import type { Task } from '../types'
 import {
-  formatDeadline,
   formatDuration,
   getMaterialProgress,
 } from '../lib/taskLogic'
+
+function deadlineParts(value: string): { date: string; time: string; weekday: string } {
+  const deadline = new Date(value)
+  return {
+    date: new Intl.DateTimeFormat('zh-CN', { month: 'long', day: 'numeric' }).format(deadline),
+    time: new Intl.DateTimeFormat('zh-CN', { hour: '2-digit', minute: '2-digit', hour12: false }).format(deadline),
+    weekday: new Intl.DateTimeFormat('zh-CN', { weekday: 'short' }).format(deadline),
+  }
+}
 
 interface TaskCardProps {
   task: Task
@@ -26,6 +34,7 @@ export function TaskCard({
   onComplete,
 }: TaskCardProps) {
   const materials = getMaterialProgress(task)
+  const deadline = deadlineParts(task.deadline)
 
   return (
     <article
@@ -34,22 +43,24 @@ export function TaskCard({
     >
       <div className="task-card-topline">
         <span className="category-label">{task.category}</span>
-        <span className="deadline-label">
-          <Clock3 size={15} />
-          {formatDeadline(task.deadline)}
-        </span>
+        <button className="task-detail-button" type="button" onClick={() => onOpen(task)} aria-label={`查看 ${task.title} 详情`}>
+          查看详情<ArrowUpRight size={16} />
+        </button>
       </div>
 
-      <div className="task-title-row">
-        <h3>{task.title}</h3>
-        <button
-          className="icon-button"
-          type="button"
-          onClick={() => onOpen(task)}
-          aria-label={`查看 ${task.title} 详情`}
-        >
-          <ArrowUpRight size={18} />
-        </button>
+      <h3 className="task-card-title">{task.title}</h3>
+
+      <div className="task-timing-panel">
+        <div className="task-deadline-block">
+          <span><Clock3 size={15} />截止时间</span>
+          <strong>{deadline.date}</strong>
+          <em>{deadline.weekday} · {deadline.time}</em>
+        </div>
+        <div className="task-duration-block">
+          <span>预计用时</span>
+          <strong>{formatDuration(task.estimatedMinutes)}</strong>
+          {materials.total > 0 && <small><Paperclip size={13} />材料 {materials.done}/{materials.total}</small>}
+        </div>
       </div>
 
       <p className="priority-reason">{task.priorityReason}</p>
@@ -57,19 +68,6 @@ export function TaskCard({
       <div className="next-action">
         <span>下一步</span>
         <strong>{task.nextAction}</strong>
-      </div>
-
-      <div className="task-meta">
-        <span>
-          <Clock3 size={15} />
-          {formatDuration(task.estimatedMinutes)}
-        </span>
-        {materials.total > 0 && (
-          <span>
-            <Paperclip size={15} />
-            材料 {materials.done}/{materials.total}
-          </span>
-        )}
       </div>
 
       <div className="task-card-footer">
@@ -91,7 +89,7 @@ export function TaskCard({
             type="button"
             onClick={() => onComplete(task.id)}
           >
-            <CheckCircle2 size={16} />
+            <CheckCircle2 size={19} />
             标记完成
           </button>
         )}

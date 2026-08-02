@@ -1,5 +1,6 @@
-import { CalendarDays, Clock3, Lightbulb, Plus, Trash2 } from 'lucide-react'
+import { CalendarDays, ChevronLeft, ChevronRight, Clock3, Lightbulb, Plus, Trash2 } from 'lucide-react'
 import { useMemo, useState, type FormEvent } from 'react'
+import { buildMonthCells, groupTasksByDate, localDateKey, summarizeDay } from '../lib/calendar'
 import { findSuggestedWorkSlot } from '../lib/scheduling'
 import { formatDuration } from '../lib/taskLogic'
 import type { CourseBlock, Task } from '../types'
@@ -12,11 +13,6 @@ interface CalendarPageProps {
   onRemoveCourseBlock: (blockId: string) => void
 }
 
-const days = Array.from({ length: 35 }, (_, index) => {
-  const value = index - 4
-  return value <= 0 ? 31 + value : value
-})
-
 const weekdays: Array<{ value: CourseBlock['weekday']; label: string }> = [
   { value: 1, label: '周一' },
   { value: 2, label: '周二' },
@@ -27,24 +23,47 @@ const weekdays: Array<{ value: CourseBlock['weekday']; label: string }> = [
   { value: 7, label: '周日' },
 ]
 
+function monthLabel(value: Date): string {
+  return new Intl.DateTimeFormat('zh-CN', { year: 'numeric', month: 'long' }).format(value)
+}
+
+function dayLabel(dateKey: string): string {
+  return new Intl.DateTimeFormat('zh-CN', { month: 'long', day: 'numeric', weekday: 'short' })
+    .format(new Date(`${dateKey}T12:00`))
+}
+
+function taskTime(task: Task): string {
+  return new Intl.DateTimeFormat('zh-CN', { hour: '2-digit', minute: '2-digit', hour12: false })
+    .format(new Date(task.deadline))
+}
+
 export function CalendarPage({ tasks, courseBlocks, onOpenTask, onAddCourseBlock, onRemoveCourseBlock }: CalendarPageProps) {
+  const today = new Date()
+  const [viewDate, setViewDate] = useState(() => new Date(today.getFullYear(), today.getMonth(), 1))
+  const [selectedDateKey, setSelectedDateKey] = useState(() => localDateKey(today))
   const [courseTitle, setCourseTitle] = useState('')
   const [courseWeekday, setCourseWeekday] = useState<CourseBlock['weekday']>(1)
   const [courseStart, setCourseStart] = useState('08:00')
   const [courseEnd, setCourseEnd] = useState('10:00')
-  const eventByDay = new Map<number, Task[]>()
-  tasks.forEach((task) => {
-    const day = new Date(task.deadline).getDate()
-    eventByDay.set(day, [...(eventByDay.get(day) ?? []), task])
-  })
-  const activeTasks = tasks
+  const eventByDate = useMemo(() => groupTasksByDate(tasks), [tasks])
+  const monthCells = useMemo(() => buildMonthCells(viewDate), [viewDate])
+  const selectedTasks = eventByDate.get(selectedDateKey) ?? []
+  const activeTasks = useMemo(() => tasks
     .filter((task) => task.status !== '已完成')
     .slice()
-    .sort((a, b) => new Date(a.deadline).getTime() - new Date(b.deadline).getTime())
+    .sort((a, b) => new Date(a.deadline).getTime() - new Date(b.deadline).getTime()), [tasks])
+  const agendaTasks = selectedTasks.length ? selectedTasks : activeTasks.slice(0, 5)
+  const agendaTitle = selectedTasks.length ? `${dayLabel(selectedDateKey)} · ${selectedTasks.length} 项` : '近期节点'
   const suggestions = useMemo(() => activeTasks
     .map((task) => ({ task, slot: findSuggestedWorkSlot(task, courseBlocks) }))
     .filter((item) => item.slot)
     .slice(0, 3), [activeTasks, courseBlocks])
+
+  const changeMonth = (offset: number) => {
+    const next = new Date(viewDate.getFullYear(), viewDate.getMonth() + offset, 1)
+    setViewDate(next)
+    setSelectedDateKey(localDateKey(next))
+  }
 
   const addCourse = (event: FormEvent) => {
     event.preventDefault()
@@ -61,31 +80,59 @@ export function CalendarPage({ tasks, courseBlocks, onOpenTask, onAddCourseBlock
   }
 
   return (
-    <main className="page">
-      <header className="page-header">
-        <div><span className="eyebrow">截止与开工安排</span><h1>八月日历</h1><p>录入固定课程后，开工建议会避开这些时段；其他行程仍需你确认。</p></div>
-        <div className="legend"><span><i className="legend-dot deadline" />截止</span><span><i className="legend-dot start" />建议开工</span></div>
+    <main className="page calendar-page">
+      <header className="page-header calendar-page-header">
+        <div><span className="eyebrow">截止与开工安排</span><h1>日历</h1><p>月历只保留每天的行动摘要；选择有事项的日期，在右侧查看清单。</p></div>
+        <div className="legend"><span><i className="legend-dot deadline" />有截止事项</span><span><i className="legend-dot start" />当前选中</span></div>
       </header>
 
       <div className="calendar-layout">
-        <section className="calendar-card" aria-label="2026 年 8 月日历">
+        <section className="calendar-card" aria-label={`${monthLabel(viewDate)}日历`}>
+          <div className="calendar-toolbar">
+            <button className="icon-button" type="button" onClick={() => changeMonth(-1)} aria-label="查看上个月"><ChevronLeft size={19} /></button>
+            <strong>{monthLabel(viewDate)}</strong>
+            <button className="icon-button" type="button" onClick={() => changeMonth(1)} aria-label="查看下个月"><ChevronRight size={19} /></button>
+          </div>
           <div className="calendar-weekdays">{['一', '二', '三', '四', '五', '六', '日'].map((day) => <span key={day}>周{day}</span>)}</div>
           <div className="calendar-grid">
-            {days.map((day, index) => {
-              const dayTasks = index >= 4 ? eventByDay.get(day) ?? [] : []
-              return <button key={`${index}-${day}`} className={`calendar-day${index < 4 ? ' muted' : ''}${dayTasks.length ? ' has-event' : ''}`} type="button" onClick={() => dayTasks[0] && onOpenTask(dayTasks[0])} disabled={!dayTasks.length}>
-                <span>{day}</span>
-                {dayTasks.slice(0, 2).map((task) => <span className="calendar-event" key={task.id}><i />{task.title}</span>)}
-                {dayTasks.length > 2 && <span className="calendar-more">另有 {dayTasks.length - 2} 项</span>}
+            {monthCells.map((cell) => {
+              const dayTasks = eventByDate.get(cell.dateKey) ?? []
+              const summary = summarizeDay(dayTasks)
+              const selected = cell.dateKey === selectedDateKey
+              const className = [
+                'calendar-day',
+                !cell.inMonth && 'muted',
+                summary && 'has-event',
+                selected && 'selected',
+                cell.isToday && 'today',
+              ].filter(Boolean).join(' ')
+              const accessibleSummary = summary
+                ? `${summary.total} 项，最早 ${summary.timeLabel}，${summary.headline}`
+                : '无事项'
+              return <button key={cell.dateKey} className={className} type="button" onClick={() => summary && setSelectedDateKey(cell.dateKey)} disabled={!summary} aria-label={`${dayLabel(cell.dateKey)}，${accessibleSummary}`}>
+                <span className="calendar-date"><strong>{cell.day}</strong>{cell.isToday && <em>今天</em>}</span>
+                {summary
+                  ? <span className="calendar-day-summary">
+                      <strong>{summary.headline}</strong>
+                      <small>{summary.active ? `${summary.active} 项待办 · ${summary.timeLabel}` : `${summary.completed} 项已完成`}</small>
+                      {summary.riskCount > 0 && <em>{summary.riskCount} 项需留意</em>}
+                    </span>
+                  : <span className="calendar-day-empty">—</span>}
               </button>
             })}
           </div>
         </section>
 
         <aside className="calendar-agenda">
-          <div className="section-heading compact"><div><span className="section-index">NEXT</span><h2>近期节点</h2></div><CalendarDays size={20} /></div>
-          {activeTasks.slice(0, 3).map((task) => <button className="agenda-item" key={task.id} type="button" onClick={() => onOpenTask(task)}><span className="agenda-date">{new Date(task.deadline).getMonth() + 1}月<strong>{new Date(task.deadline).getDate()}</strong></span><span className="agenda-copy"><strong>{task.title}</strong><small><Clock3 size={13} />预计 {formatDuration(task.estimatedMinutes)}</small></span></button>)}
-          <div className="agenda-tip"><Lightbulb size={18} /><p>开工建议只避让已录入课程，不会读取系统日历。</p></div>
+          <div className="section-heading compact"><div><span className="section-index">DETAIL</span><h2>{agendaTitle}</h2></div><CalendarDays size={20} /></div>
+          {agendaTasks.length
+            ? agendaTasks.slice(0, 5).map((task) => <button className="agenda-item" key={task.id} type="button" onClick={() => onOpenTask(task)}>
+                <span className="agenda-time">{taskTime(task)}</span>
+                <span className="agenda-copy"><strong>{task.title}</strong><small><Clock3 size={13} />预计 {formatDuration(task.estimatedMinutes)} · {task.status}</small></span>
+              </button>)
+            : <div className="calendar-empty-agenda"><strong>近期没有截止事项</strong><p>确认后的任务会自动出现在对应日期。</p></div>}
+          {agendaTasks.length > 5 && <p className="calendar-agenda-more">另有 {agendaTasks.length - 5} 项，请在任务中心查看。</p>}
+          <div className="agenda-tip"><Lightbulb size={18} /><p>选择日期只查看摘要；点击右侧任务再打开详情。</p></div>
         </aside>
       </div>
 

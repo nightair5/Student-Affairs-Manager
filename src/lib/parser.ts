@@ -215,6 +215,7 @@ function stripTemporalText(content: string): string {
 function cleanTaskPhrase(value: string): string {
   let phrase = value
     .replace(politePrefixPattern, '')
+    .replace(/^(?:请)?(?:务必|特别)?注意[：:，,、\s]+/u, '')
     .replace(discoursePrefixPattern, '')
     .replace(/^(?:(?:同日|当天|当日|随后|接着|并且|并在|并于|且|截至|截止)[：:，,、\s]*)+/u, '')
     .replace(politeSuffixPattern, '')
@@ -231,6 +232,7 @@ function cleanTaskPhrase(value: string): string {
     /^(提交|上传|发送|参加|完成|准备|填写|联系|回复|确认|查看|核对|整理)(?:一下|下)\s*/u,
     '$1',
   )
+  phrase = phrase.replace(/一下\s*$/u, '')
   return phrase.trim()
 }
 

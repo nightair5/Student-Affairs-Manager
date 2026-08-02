@@ -182,4 +182,20 @@ describe('demo parser', () => {
     expect(result.title).toBe('核对推免材料')
     expect(result.nextAction).toBe('开始处理：核对推免材料')
   })
+
+  it('removes attention prompts and trailing softeners from same-day multi-task messages', () => {
+    const results = createSuggestions(
+      '老师通知一下哈，请大家务必注意：8月10日 9:00 提交报名表，谢谢；8月10日 14:00 参加说明会哈；8月12日 18:00 前请把确认函上传一下，谢谢。',
+      'text',
+      undefined,
+      new Date('2026-08-02T08:00:00+08:00'),
+    )
+
+    expect(results).toHaveLength(3)
+    expect(results.map((item) => item.title)).toEqual([
+      '提交报名表',
+      '参加说明会',
+      '上传确认函',
+    ])
+  })
 })
