@@ -32,6 +32,10 @@ const relativeDateSource = '(?:今天|今日|明天|后天|(?:本周|这周|下�
 const temporalSource = `(?:(?:${absoluteDateSource}|${relativeDateSource})(?:\\s*${clockSource})?|${clockSource})`
 const headerOnlyPattern = /^(?:(?:安排|事项|时间|日程|要求|节点)(?:如下|如下所示)?|请注意)$/u
 const bulletMarker = '§'
+const taskActionPattern = /(?:提交|上传|发送|交(?:到|至)?|参加|完成|准备|填写|领取|下载|打印|盖章|签字|联系|回复|确认|阅读|查看|缴纳|支付|报名|报到|开会|汇报|答辩|考试|复习|撰写|修改|预约|核对|整理|办理|登录|申报)/u
+const politePrefixPattern = /^(?:(?:@所有人|各位(?:同学)?|同学们|大家|全体同学|请同学们|请大家|请各位(?:同学)?|麻烦大家|麻烦各位|烦请大家|老师(?:说|提到|强调|提醒)?|学院(?:现)?(?:通知|提醒)|学校(?:现)?(?:通知|提醒)|温馨提醒|友情提醒|特别提醒|现通知|通知如下|现将有关事项通知如下|关于.+?的通知)(?:好|注意|一下|哈)?[：:，,、\s]*)+/u
+const discoursePrefixPattern = /^(?:(?:那个|这个|嗯|呃|就是|然后|另外|还有|届时|到时候|请务必|请于|请在|请|麻烦|烦请|务必|一定要|记得|别忘了|需要|须要|须|需|应当|应该|要|于|在|前|现|特此)[：:，,、\s]*)+/u
+const politeSuffixPattern = /(?:请知悉|请周知|收到请回复|收到回复|辛苦大家|辛苦了|谢谢(?:大家)?|多谢|不要迟到|别迟到|哈|哦|呀|啦|呢)[。！!，,、\s]*$/u
 
 function createTemporalMatcher(): RegExp {
   return new RegExp(temporalSource, 'gu')
@@ -195,15 +199,39 @@ function splitEventClauses(content: string): EventClause[] {
 }
 
 function stripTemporalText(content: string): string {
-  return content
+  const withoutTemporal = content
     .replace(createTemporalMatcher(), ' ')
     .replace(/^[：:、；;，,\s]+/gu, '')
     .replace(/^(?:(?:学院|学校|课程|比赛|项目)?(?:通知|提醒|公告|消息)\s*[：:]\s*)+/u, '')
-    .replace(/^(?:(?:请大家|大家|请于|请在|请|需要|务必|记得|截至|截止|同日|当天|当日|随后|然后|接着|并且|并在|并于|且|前)\s*)+/u, '')
+  const phrases = withoutTemporal
+    .split(/[，,；;。！？!]+/u)
+    .map(cleanTaskPhrase)
+    .filter(Boolean)
+  return phrases.find((phrase) => taskActionPattern.test(phrase))
+    ?? phrases.find((phrase) => !/^(?:请注意|相关安排|具体安排|安排如下|事项如下)$/u.test(phrase))
+    ?? ''
+}
+
+function cleanTaskPhrase(value: string): string {
+  let phrase = value
+    .replace(politePrefixPattern, '')
+    .replace(discoursePrefixPattern, '')
+    .replace(/^(?:(?:同日|当天|当日|随后|接着|并且|并在|并于|且|截至|截止)[：:，,、\s]*)+/u, '')
+    .replace(politeSuffixPattern, '')
     .replace(/(?:之前|以前|前|截止|截至)\s*$/u, '')
     .replace(/^[：:、；;，,\s]+|[：:、；;，,\s]+$/gu, '')
     .replace(/\s+/g, ' ')
     .trim()
+
+  phrase = phrase.replace(
+    /^(?:将|把)\s*(.{1,28}?)\s*(提交|上传|发送|交到|交至|发到|发至)(.*)$/u,
+    (_, object: string, verb: string, remainder: string) => `${verb}${object}${remainder}`,
+  )
+  phrase = phrase.replace(
+    /^(提交|上传|发送|参加|完成|准备|填写|联系|回复|确认|查看|核对|整理)(?:一下|下)\s*/u,
+    '$1',
+  )
+  return phrase.trim()
 }
 
 function fallbackDeadline(now: Date): string {

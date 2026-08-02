@@ -141,4 +141,45 @@ describe('demo parser', () => {
       '2026-08-10T15:00',
     ])
   })
+
+  it('removes greetings, reported speech, emphasis and polite endings from titles', () => {
+    const results = createSuggestions(
+      '各位同学大家好，老师提醒一下：请大家务必于8月10日18:00前提交报名表，谢谢大家！另外，麻烦各位在8月12日上午9点参加说明会，届时不要迟到哈。',
+      'text',
+      undefined,
+      new Date('2026-08-02T08:00:00+08:00'),
+    )
+
+    expect(results).toHaveLength(2)
+    expect(results.map((item) => item.title)).toEqual([
+      '提交报名表',
+      '参加说明会',
+    ])
+  })
+
+  it('turns object-first chat instructions into concise action titles', () => {
+    const results = createSuggestions(
+      '友情提醒：明天中午12点前，请同学们把最终版作品上传到系统；后天下午3点需要将确认函发送至学院邮箱，收到请回复。',
+      'text',
+      undefined,
+      new Date('2026-08-02T08:00:00+08:00'),
+    )
+
+    expect(results.map((item) => item.title)).toEqual([
+      '上传最终版作品到系统',
+      '发送确认函至学院邮箱',
+    ])
+  })
+
+  it('uses the actionable clause instead of surrounding conversational filler', () => {
+    const result = createSuggestion(
+      '那个，老师说下周一下午2点要核对推免材料，辛苦大家啦。',
+      'text',
+      undefined,
+      new Date('2026-08-02T08:00:00+08:00'),
+    )
+
+    expect(result.title).toBe('核对推免材料')
+    expect(result.nextAction).toBe('开始处理：核对推免材料')
+  })
 })
