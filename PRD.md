@@ -1,7 +1,7 @@
 # 学生事务管家 PRD
 
 > 版本：v0.8
-> 状态：Cloudflare Workers 生产站点与同源 DeepSeek 代理已部署，自定义域名为 `student-affairs.site`；当前生产 Secret 未配置，状态保持未连接
+> 状态：Cloudflare Workers 生产站点与同源 DeepSeek V4 Flash 代理已部署，自定义域名为 `student-affairs.site`；生产 Secret 已通过 Cloudflare Secret 安全配置并完成真实多任务整理验证
 > 最后更新：2026-08-02
 
 ## 1. 产品概述

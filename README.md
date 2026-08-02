@@ -95,7 +95,7 @@ npm run deploy:cloudflare
 
 自定义域名为 `student-affairs.site`。权威 DNS 已切换至 Cloudflare，Worker 通过 `wrangler.jsonc` 的 Custom Domain 路由发布；域名、HTTPS 和页面可用性仍应在每次部署后实测，不能只根据配置推测。
 
-当前生产 Worker 已部署；由于尚未写入新的 Cloudflare Secret，DeepSeek 状态仍为未连接。这是预期的安全关闭状态，不影响本地知识检索、任务管理和 Obsidian 导出。
+当前生产 Worker 与 Cloudflare Secret 均已配置。`/api/deepseek/status` 已实测返回 `configured: true`，`deepseek-v4-flash` 多任务整理也已完成真实请求验证；密钥明文不在前端、配置文件、日志或 Git 中。若服务商密钥被撤销、余额不足或上游不可用，界面仍会诚实回退到本地规则并提示连接状态。
 
 本地调试可复制 `.dev.vars.example` 为不提交的 `.dev.vars`，然后运行 `npm run cloudflare:dev`。`wrangler.jsonc` 不含账户令牌或服务密钥。
 
