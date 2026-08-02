@@ -156,13 +156,14 @@ test('DeepSeek adapter sends only the bounded question and citations', async () 
     deepSeekConfigured: true,
     deepSeekApiKey: 'server-only-test-key-with-length',
     deepSeekApiUrl: 'https://api.deepseek.com/chat/completions',
-    deepSeekModel: 'deepseek-chat',
+    deepSeekModel: 'deepseek-v4-flash',
   }, async (_url, options) => {
     received = JSON.parse(options.body)
     return Response.json({ choices: [{ message: { content: '先完成报名表。' } }] })
   })
   const result = await provider.ask({ question: '今天做什么？', context: [{ kind: '任务', title: '报名', excerpt: '今天截止' }] })
   assert.equal(result.answer, '先完成报名表。')
-  assert.equal(received.model, 'deepseek-chat')
+  assert.equal(received.model, 'deepseek-v4-flash')
+  assert.deepEqual(received.thinking, { type: 'disabled' })
   assert.match(received.messages[0].content, /不可信资料/)
 })

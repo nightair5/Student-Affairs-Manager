@@ -11,6 +11,7 @@ describe('intake result', () => {
 
     expect(result.source.title).toBe('手动粘贴消息')
     expect(result.source.content).toContain('参加说明会')
+    expect(result.source.extractionMethod).toBe('local-rules')
     expect(result.suggestions).toHaveLength(2)
   })
 })

@@ -21,17 +21,18 @@ import {
   extractFileContent,
   type FileExtractionStatus,
 } from '../lib/fileExtraction'
-import { createIntakeResult } from '../lib/intake'
-import type { ParsedSuggestion, Source, SourceType } from '../types'
+import type { IntakeInput } from '../lib/intake'
+import type { SourceType } from '../types'
 
 interface IntakePanelProps {
   onClose: () => void
-  onCreateDraft: (source: Source, suggestions: ParsedSuggestion[]) => void
+  onSubmitIntake: (input: IntakeInput) => Promise<void>
+  smartExtractionStatus: 'checking' | 'connected' | 'unavailable'
 }
 
 type IntakeFileStatus = FileExtractionStatus | 'idle' | 'reading'
 
-export function IntakePanel({ onClose, onCreateDraft }: IntakePanelProps) {
+export function IntakePanel({ onClose, onSubmitIntake, smartExtractionStatus }: IntakePanelProps) {
   const [sourceType, setSourceType] = useState<SourceType>('text')
   const [content, setContent] = useState('')
   const [sourceTitle, setSourceTitle] = useState('')
@@ -39,6 +40,7 @@ export function IntakePanel({ onClose, onCreateDraft }: IntakePanelProps) {
   const [fileStatus, setFileStatus] = useState<IntakeFileStatus>('idle')
   const [fileMessage, setFileMessage] = useState('')
   const [isDragging, setIsDragging] = useState(false)
+  const [isParsing, setIsParsing] = useState(false)
   const titleId = useId()
   const firstControlRef = useRef<HTMLTextAreaElement>(null)
 
@@ -95,12 +97,15 @@ export function IntakePanel({ onClose, onCreateDraft }: IntakePanelProps) {
     Boolean(content.trim()) &&
     (!fileNeedsContent || Boolean(fileName))
 
-  const handleParse = (event: FormEvent) => {
+  const handleParse = async (event: FormEvent) => {
     event.preventDefault()
     if (!canSubmit) return
-    const result = createIntakeResult({ sourceType, content, sourceTitle, fileName })
-    onCreateDraft(result.source, result.suggestions)
-    onClose()
+    setIsParsing(true)
+    try {
+      await onSubmitIntake({ sourceType, content, sourceTitle, fileName })
+    } finally {
+      setIsParsing(false)
+    }
   }
 
   return (
@@ -180,9 +185,16 @@ export function IntakePanel({ onClose, onCreateDraft }: IntakePanelProps) {
               <label className="field"><span>网页链接</span><input type="url" value={content} onChange={(event) => setContent(event.target.value)} placeholder="https://..." required /><small>当前只保存链接，尚未抓取网页正文或监测变更。</small></label>
             </>
           )}
-          <div className="privacy-note"><Sparkles size={18} /><p><strong>先建议，后确认</strong> 本地规则不会上传内容，也不会直接创建任务；下一页可删除或修改每一项。</p></div>
-          <button className="primary-button wide" type="submit" disabled={!canSubmit}>
-            <Sparkles size={18} />整理成待确认任务
+          <div className={`privacy-note ${smartExtractionStatus === 'connected' ? 'cloud-enabled' : 'cloud-unavailable'}`}><Sparkles size={18} /><p>
+            <strong>{smartExtractionStatus === 'connected' ? 'DeepSeek V4 Flash 智能整理' : '本地规则兜底可用'}</strong>
+            {sourceType === 'link'
+              ? ' 当前只保存链接，不会把它伪装成已读取的网页正文。'
+              : smartExtractionStatus === 'connected'
+                ? ' 点击整理会发送本次粘贴或本机提取的文字，不发送文件本体；结果确认前不会创建任务。'
+                : ' DeepSeek 未连接，当前内容不会发往云端，将生成可编辑的本地规则建议。'}
+          </p></div>
+          <button className="primary-button wide" type="submit" disabled={!canSubmit || isParsing}>
+            {isParsing ? <><LoaderCircle className="spin" size={18} />正在智能整理…</> : <><Sparkles size={18} />整理成待确认任务</>}
           </button>
         </form>
       </section>

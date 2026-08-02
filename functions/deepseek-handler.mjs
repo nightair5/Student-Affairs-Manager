@@ -1,5 +1,5 @@
 const DEEPSEEK_ENDPOINT = 'https://api.deepseek.com/chat/completions'
-const DEEPSEEK_MODEL = 'deepseek-chat'
+const DEEPSEEK_MODEL = 'deepseek-v4-flash'
 const MAX_BODY_BYTES = 100_000
 const ALLOWED_ORIGINS = new Set([
   'https://student-affairs-nightair.web.app',
@@ -76,7 +76,7 @@ export function createDeepSeekHandler({ getApiKey, fetcher = fetch, isRateLimite
     const configured = apiKey.length >= 20
 
     if (request.method === 'GET' && path.endsWith('/status')) {
-      return json(response, 200, { configured })
+      return json(response, 200, { configured, model: DEEPSEEK_MODEL })
     }
     if (request.method !== 'POST') {
       return json(response, 405, { error: 'METHOD_NOT_ALLOWED' })
@@ -113,6 +113,7 @@ export function createDeepSeekHandler({ getApiKey, fetcher = fetch, isRateLimite
         },
         body: JSON.stringify({
           model: DEEPSEEK_MODEL,
+          thinking: { type: 'disabled' },
           temperature: 0.2,
           messages: [
             {

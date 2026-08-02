@@ -7,12 +7,13 @@ import type { Task } from '../types'
 interface DashboardPageProps {
   tasks: Task[]
   pendingReviewCount: number
-  onQuickCapture: (content: string) => void
+  onQuickCapture: (content: string) => Promise<void>
   onOpenIntake: () => void
   onOpenTask: (task: Task) => void
   onCompleteTask: (taskId: string) => void
   onShowTasks: () => void
   onShowInbox: () => void
+  smartExtractionStatus: 'checking' | 'connected' | 'unavailable'
 }
 
 function todayLabel(): string {
@@ -30,17 +31,24 @@ export function DashboardPage({
   onCompleteTask,
   onShowTasks,
   onShowInbox,
+  smartExtractionStatus,
 }: DashboardPageProps) {
   const [quickText, setQuickText] = useState('')
+  const [isParsing, setIsParsing] = useState(false)
   const focusTasks = getFocusTasks(tasks)
   const activeCount = tasks.filter((task) => task.status !== '已完成').length
 
-  const submitQuickCapture = (event: FormEvent) => {
+  const submitQuickCapture = async (event: FormEvent) => {
     event.preventDefault()
     const content = quickText.trim()
     if (!content) return
-    onQuickCapture(content)
-    setQuickText('')
+    setIsParsing(true)
+    try {
+      await onQuickCapture(content)
+      setQuickText('')
+    } finally {
+      setIsParsing(false)
+    }
   }
 
   return (
@@ -57,12 +65,18 @@ export function DashboardPage({
         <div className="quick-capture-heading">
           <span className="quick-capture-icon"><ClipboardPaste size={20} /></span>
           <div><strong>收到新通知？直接粘贴</strong><small>日期、事项和材料会先拆成待确认建议。</small></div>
+          <span className={`ai-assist-status ${smartExtractionStatus}`}>
+            {smartExtractionStatus === 'connected' ? 'DeepSeek V4 Flash 已连接' : smartExtractionStatus === 'checking' ? '正在检查智能服务' : 'DeepSeek 未连接 · 本地规则可用'}
+          </span>
         </div>
         <textarea value={quickText} onChange={(event) => setQuickText(event.target.value)} rows={3} placeholder="粘贴老师消息、群通知或网页正文……" aria-label="快速粘贴通知" />
         <div className="quick-capture-actions">
           <button className="text-button" type="button" onClick={onOpenIntake}><Upload size={15} />上传文件或链接</button>
-          <button className="primary-button" type="submit" disabled={!quickText.trim()}><Plus size={16} />帮我拆成任务</button>
+          <button className="primary-button" type="submit" disabled={!quickText.trim() || isParsing}>
+            {isParsing ? '正在智能整理…' : <><Plus size={16} />智能拆分任务</>}
+          </button>
         </div>
+        <small className="cloud-send-disclosure">点击整理会把当前粘贴文字发送给 DeepSeek V4 Flash；结果仅为建议，确认前不会创建任务。服务不可用时自动改用本地规则。</small>
       </form>
 
       {pendingReviewCount > 0 && <button className="pending-review-banner" type="button" onClick={onShowInbox}>

@@ -71,6 +71,7 @@ export interface Source {
   url?: string
   createdAt: string
   extractionStatus: '已识别' | '待确认' | '部分确认' | '已确认' | '已拒绝'
+  extractionMethod?: 'local-rules' | 'deepseek-v4-flash'
   duplicateOfSourceIds?: string[]
   duplicateReviewStatus?: '待核对' | '保留为独立来源'
 }

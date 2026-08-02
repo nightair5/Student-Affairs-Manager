@@ -23,7 +23,8 @@ import {
 import { loadWorkspace } from './lib/storage'
 import { updateTaskWithHistory } from './lib/taskUpdates'
 import { findDuplicateSources } from './lib/sourceDuplicates'
-import { createIntakeResult } from './lib/intake'
+import { createIntakeResult, type IntakeInput } from './lib/intake'
+import { ProxyDeepSeekExtractionService } from './lib/deepseekExtraction'
 import { markOnboardingComplete, shouldShowOnboarding } from './lib/onboarding'
 import {
   buildConfirmedTask,
@@ -38,6 +39,7 @@ import {
 import type { CourseBlock, ExtractionDraft, IntegrationState, KnowledgeSettings, PageId, ParsedSuggestion, Project, Source, Task } from './types'
 
 const workspaceRepository = new IndexedDbWorkspaceRepository()
+const deepSeekExtractionService = new ProxyDeepSeekExtractionService()
 
 function App() {
   const [initialWorkspace] = useState(() => loadWorkspace(demoTasks, demoSources))
@@ -56,6 +58,7 @@ function App() {
   const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null)
   const [selectedDraftId, setSelectedDraftId] = useState<string | null>(null)
   const [notice, setNotice] = useState<{ text: string; undo?: () => void } | null>(null)
+  const [smartExtractionStatus, setSmartExtractionStatus] = useState<'checking' | 'connected' | 'unavailable'>('checking')
   const [notificationPermission, setNotificationPermission] =
     useState<BrowserNotificationPermission>(() => getBrowserNotificationPermission())
   const deliveredNotifications = useRef(new Set<string>())
@@ -74,6 +77,14 @@ function App() {
     () => createWorkspaceData(tasks, sources, drafts, projects, courseBlocks, integrations, knowledgeSettings),
     [courseBlocks, drafts, integrations, knowledgeSettings, projects, sources, tasks],
   )
+
+  useEffect(() => {
+    let active = true
+    void deepSeekExtractionService.status().then((status) => {
+      if (active) setSmartExtractionStatus(status.configured ? 'connected' : 'unavailable')
+    })
+    return () => { active = false }
+  }, [])
 
   useEffect(() => {
     let active = true
@@ -177,6 +188,13 @@ function App() {
     }
   }
 
+  const openDraftReview = (draftId: string, message: string) => {
+    setIntakeOpen(false)
+    setCurrentPage('inbox')
+    setSelectedDraftId(draftId)
+    setNotice({ text: message })
+  }
+
   const handleCreateDraft = (source: Source, suggestions: ParsedSuggestion[]) => {
     const duplicateCandidates = findDuplicateSources(source, sources)
     const nextSource: Source = duplicateCandidates.length
@@ -203,17 +221,52 @@ function App() {
     setSources((current) => [nextSource, ...current])
     setDrafts((current) => [draft, ...current])
     if (project) setProjects((current) => [project, ...current])
-    setIntakeOpen(false)
-    setCurrentPage('inbox')
-    setSelectedDraftId(draft.id)
-    if (duplicateCandidates.length) {
-      setNotice({ text: `发现 ${duplicateCandidates.length} 个可能重复来源；已保留两份，等待你人工核对。` })
+    return { draft, source: nextSource, project, duplicateCount: duplicateCandidates.length }
+  }
+
+  const handleIntakeInput = async (input: IntakeInput) => {
+    const localResult = createIntakeResult(input)
+    const provisional = handleCreateDraft(localResult.source, localResult.suggestions)
+    if (input.sourceType === 'link') {
+      openDraftReview(provisional.draft.id, '网页正文尚未抓取，已保存链接并生成可编辑的本地建议。')
+      return
+    }
+    try {
+      const suggestions = await deepSeekExtractionService.extract(input)
+      const aiDraft = {
+        ...createExtractionDraft(provisional.source.id, suggestions, provisional.draft.createdAt),
+        id: provisional.draft.id,
+      }
+      setDrafts((current) => current.map((draft) => draft.id === provisional.draft.id ? aiDraft : draft))
+      setSources((current) => current.map((source) => source.id === provisional.source.id
+        ? { ...source, extractionMethod: 'deepseek-v4-flash' }
+        : source))
+      if (provisional.project && suggestions[0]) {
+        setProjects((current) => current.map((project) => project.id === provisional.project?.id
+          ? { ...project, category: suggestions[0].category, updatedAt: new Date().toISOString() }
+          : project))
+      }
+      setSmartExtractionStatus('connected')
+      openDraftReview(
+        provisional.draft.id,
+        provisional.duplicateCount
+          ? `DeepSeek 已整理；另发现 ${provisional.duplicateCount} 个可能重复来源，请人工核对。`
+          : 'DeepSeek V4 Flash 已生成可编辑建议；请逐项核对后再确认。',
+      )
+    } catch (error) {
+      setSmartExtractionStatus('unavailable')
+      const reason = error instanceof Error ? error.message : 'DeepSeek 智能整理暂时不可用'
+      openDraftReview(
+        provisional.draft.id,
+        provisional.duplicateCount
+          ? `${reason}，已使用本地规则；另发现 ${provisional.duplicateCount} 个可能重复来源。`
+          : `${reason}，已使用本地规则建议，请重点核对。`,
+      )
     }
   }
 
-  const handleQuickCapture = (content: string) => {
-    const result = createIntakeResult({ sourceType: 'text', content })
-    handleCreateDraft(result.source, result.suggestions)
+  const handleQuickCapture = async (content: string) => {
+    await handleIntakeInput({ sourceType: 'text', content })
   }
 
   const handleUpdateDraft = (
@@ -353,6 +406,7 @@ function App() {
             onCompleteTask={handleComplete}
             onShowTasks={() => setCurrentPage('tasks')}
             onShowInbox={() => setCurrentPage('inbox')}
+            smartExtractionStatus={smartExtractionStatus}
           />
         )
       case 'inbox':
@@ -465,7 +519,8 @@ function App() {
       {intakeOpen && (
         <IntakePanel
           onClose={() => setIntakeOpen(false)}
-          onCreateDraft={handleCreateDraft}
+          onSubmitIntake={handleIntakeInput}
+          smartExtractionStatus={smartExtractionStatus}
         />
       )}
       {selectedDraft && (

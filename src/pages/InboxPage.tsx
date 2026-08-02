@@ -24,13 +24,13 @@ export function InboxPage({ drafts, sources, onOpenDraft }: InboxPageProps) {
           const source = sources.find((item) => item.id === draft.sourceId)
           const pending = draft.items.filter((item) => item.status === '待确认').length
           return <article className="task-card" key={draft.id}>
-            <div className="task-card-top"><span className="category-label">演示建议</span><span className="risk-pill">待确认 {pending} 项</span></div>
+            <div className="task-card-top"><span className="category-label">{source?.extractionMethod === 'deepseek-v4-flash' ? 'DeepSeek V4 Flash 建议' : '本地规则建议'}</span><span className="risk-pill">待确认 {pending} 项</span></div>
             <h2>{source?.title ?? '已保存来源'}</h2>
             <p className="task-description">{source?.contentPreview ?? '来源内容不可用'}</p>
             <div className="task-card-actions"><button className="secondary-button" type="button" onClick={() => onOpenDraft(draft.id)}><Pencil size={16} />逐项检查</button></div>
           </article>
         })}
-      </div> : <div className="empty-state"><Check size={34} /><h2>没有待确认的建议</h2><p>录入一份通知后，演示识别结果会显示在这里。</p></div>}
+      </div> : <div className="empty-state"><Check size={34} /><h2>没有待确认的建议</h2><p>录入一份通知后，可编辑的识别建议会显示在这里。</p></div>}
     </main>
   )
 }

@@ -35,6 +35,7 @@ export function createIntakeResult({
       url: sourceType === 'link' ? cleanContent : undefined,
       createdAt: now.toISOString(),
       extractionStatus: '待确认',
+      extractionMethod: 'local-rules',
     },
     suggestions: createSuggestions(cleanContent, sourceType, title, now),
   }

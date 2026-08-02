@@ -73,7 +73,7 @@ npm run server:check
 
 ## Cloudflare Workers 部署
 
-Cloudflare Workers Static Assets 是当前生产部署目标：一个 Worker 同时发布 Vite 的 `dist` 静态产物、提供 SPA 回退，并只让 `/api/*` 请求优先经过服务端代码。部署前先确认账号：
+Cloudflare Workers Static Assets 是当前生产部署目标：一个 Worker 同时发布 Vite 的 `dist` 静态网页、提供 SPA 回退，并只让 `/api/*` 请求优先经过服务端代码。因此 Cloudflare 控制台会把它列在 “Workers” 下，但访问地址呈现的仍是完整网页；Worker 同时承担不暴露密钥的 DeepSeek 服务端代理。部署前先确认账号：
 
 生产站点：[https://student-affairs-manager.nightsdell.workers.dev](https://student-affairs-manager.nightsdell.workers.dev)
 
@@ -89,7 +89,9 @@ npx wrangler secret put DEEPSEEK_API_KEY
 npm run deploy:cloudflare
 ```
 
-`secret put` 会在本机终端隐式输入密钥。未设置 Secret 时站点与本地知识检索仍可使用，但状态接口必须返回 `configured: false`，页面显示“DeepSeek 未连接”。代理固定调用 `deepseek-chat`，只接受同源或显式白名单 Origin、当前问题和最多 4 条引用摘要，并限制请求体和基础频率；外部来源仍按不可信文本处理。当前没有账号系统，Origin 与单实例内存限流不等于用户级鉴权，公开启用前应在 DeepSeek 控制台设置余额和用量上限。
+`secret put` 会在本机终端隐式输入密钥。未设置 Secret 时站点与本地知识检索仍可使用，但状态接口必须返回 `configured: false`，页面显示“DeepSeek 未连接”。代理固定调用 `deepseek-v4-flash` 并关闭思考模式：知识问答只接受当前问题和最多 4 条引用摘要；智能整理只接受用户点击后提交的当前文本或本机提取文字，生成最多 20 条可编辑建议。两类接口都限制同源、请求体和基础频率，外部来源始终按不可信文本处理。当前没有账号系统，Origin 与单实例内存限流不等于用户级鉴权，公开启用前应在 DeepSeek 控制台设置余额和用量上限。
+
+计划自定义域名为 `student-affairs.site`。只有先在 Cloudflare 添加该域名，并在腾讯云域名控制台把 DNS 服务器改为 Cloudflare 分配的两条 Nameserver 后，才能给 Worker 添加 Custom Domain；DNS 尚未切换时不要把该地址描述为已上线。
 
 当前生产 Worker 已部署；由于尚未写入新的 Cloudflare Secret，DeepSeek 状态仍为未连接。这是预期的安全关闭状态，不影响本地知识检索、任务管理和 Obsidian 导出。
 
@@ -106,7 +108,7 @@ Firebase Hosting 配置仍保留用于回滚，但已不再是主部署目标。
 - 任务关联来源、项目、材料和修改历史；风险与优先级理由来自可测试规则。
 - 实体数据保存到 IndexedDB，并会安全迁移旧 localStorage 工作区。项目档案页支持 JSON 导入、导出和二次确认清空。
 
-数据只保存在当前设备、浏览器和站点地址中；不支持跨设备同步。文件本体、大图片不会写入本机工作区；所有自动结果均为可修改的本地规则建议。
+数据只保存在当前设备、浏览器和站点地址中；不支持跨设备同步。文件本体、大图片不会写入本机工作区；DeepSeek 可用时会生成可修改的云端建议，不可用时自动退回本地规则，任何建议都必须由用户确认后才创建任务。
 
 ## P1：本地增强能力
 
@@ -126,7 +128,7 @@ DeepSeek 默认未连接，本地知识检索不依赖它。真实云端问答�
 ```dotenv
 DEEPSEEK_API_KEY=
 DEEPSEEK_API_URL=https://api.deepseek.com/chat/completions
-DEEPSEEK_MODEL=deepseek-chat
+DEEPSEEK_MODEL=deepseek-v4-flash
 ```
 
 每次云端问答都要求用户确认，只发送当前问题和本地检索命中的最多 4 条引用摘要；没有匹配引用时不会发送。外部来源文本始终按不可信内容处理。不要使用 `VITE_` 前缀配置密钥，也不要提交真实 `.env`。
@@ -148,6 +150,8 @@ P1 阶段不包含生产 OCR、邮件发送、网页抓取/监测、微信授权
 
 - 面向新手的首页直接粘贴入口、待确认提醒、最多三项行动重点和可随时重开的 4 步教程。
 - 粘贴消息、拖拽或选择受支持文件、拍摄/选择截图，或录入网页链接。
+- DeepSeek V4 Flash 已配置时，由服务端代理拆分多事项并建议分类、截止时间、预计耗时、下一步、材料与优先级；页面明确展示发送范围，结果仍需逐项核对、编辑、拒绝或确认。
+- DeepSeek 未配置、不可达或返回无效结构时，自动退回可测试的本地规则；裸网页链接不会被假装成已读取正文。
 - 生成可编辑的本地规则建议；多时间点、同日多时间、相对日期和日期标题下的编号清单会拆成独立任务，清理常见连接词并分别保留来源依据；时间区间不会重复建项。
 - 任务标题会优先提取“提交、参加、上传、核对”等行动及其对象，过滤常见寒暄、转述、强调和礼貌语；原句仍保留在描述与来源依据中，方便人工核对。
 - 待确认面板默认使用摘要卡，只有需要修改时才展开字段；支持逐项加入、不需要、部分确认和一键确认剩余任务。

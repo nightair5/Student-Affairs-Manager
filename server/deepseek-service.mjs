@@ -33,7 +33,7 @@ export class DeepSeekProvider {
   constructor(config, fetcher = fetch) {
     this.apiKey = config.deepSeekApiKey
     this.endpoint = config.deepSeekApiUrl || DEFAULT_ENDPOINT
-    this.model = config.deepSeekModel || 'deepseek-chat'
+    this.model = config.deepSeekModel || 'deepseek-v4-flash'
     this.fetcher = fetcher
   }
 
@@ -46,6 +46,7 @@ export class DeepSeekProvider {
       headers: { authorization: `Bearer ${this.apiKey}`, 'content-type': 'application/json' },
       body: JSON.stringify({
         model: this.model,
+        thinking: { type: 'disabled' },
         temperature: 0.2,
         messages: [
           {

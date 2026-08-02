@@ -19,7 +19,7 @@ export function loadServerConfig(env = process.env, cwd = process.cwd()) {
   const webFetchConfigured = env.SAM_WEB_FETCH_ENABLED === 'true' && webAllowedHosts.length > 0
   const deepSeekApiKey = env.DEEPSEEK_API_KEY?.trim() ?? ''
   const deepSeekApiUrl = env.DEEPSEEK_API_URL?.trim() || 'https://api.deepseek.com/chat/completions'
-  const deepSeekModel = env.DEEPSEEK_MODEL?.trim() || 'deepseek-chat'
+  const deepSeekModel = env.DEEPSEEK_MODEL?.trim() || 'deepseek-v4-flash'
   const deepSeekConfigured = deepSeekApiKey.length >= 20 && deepSeekApiUrl.startsWith('https://')
   const emailConfigured = emailProvider === 'webhook' && Boolean(
     emailWebhookUrl.startsWith('https://') && emailWebhookToken.length >= 20 && emailFrom,

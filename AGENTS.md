@@ -170,3 +170,6 @@ P2 服务接入边界：
 - Cloudflare 生产部署使用 Workers Static Assets 与同源 `/api/deepseek`；只有 `/api/*` 优先进入 Worker，其他资源直接由静态资产服务提供。
 - `DEEPSEEK_API_KEY` 只能通过 `wrangler secret put` 或等价的 Cloudflare Secret 机制写入。禁止提交 `.dev.vars`、Wrangler OAuth 文件、API Token、账户凭证或 Secret 明文。
 - Worker 未设置 Secret 时必须返回 `configured: false` 和 `DEEPSEEK_NOT_CONFIGURED`；只有生产状态接口确认且真实上游调用成功后，页面才能显示已连接。
+- Cloudflare Worker 的智能整理固定使用 `deepseek-v4-flash`；只允许用户主动提交当前文本或浏览器已提取文字，禁止发送文件本体、图片、整个工作区或裸链接对应的未读取网页。
+- 智能整理最多接收 24,000 字并返回 20 条建议；服务端必须校验字段白名单、长度、日期、材料数量与逐字来源依据。无效、超时或未配置时保留 `Source` 并回退本地规则，不得让 AI 输出直接创建或覆盖已确认任务。
+- 自定义域名只有在 Cloudflare Zone 已激活、权威 Nameserver 已切换且 Custom Domain 验证成功后才能标记为上线；域名注册、DNS 切换和证书状态不得根据配置文件推测。

@@ -498,7 +498,7 @@ h3 {
 
 .section-index {
   color: #82928e;
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.12em;
 }
@@ -667,7 +667,7 @@ h3 {
 .next-action span {
   margin-bottom: 5px;
   color: #73847f;
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.12em;
 }
@@ -3326,9 +3326,37 @@ h3 {
 
 .quick-capture-heading {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 11px;
   margin-bottom: 13px;
+}
+
+.quick-capture-heading > .ai-assist-status {
+  display: inline-flex;
+  width: auto;
+  height: auto;
+  min-height: 28px;
+  margin-left: auto;
+  padding: 6px 9px;
+  color: var(--ink-soft);
+  font-size: 9px;
+  font-weight: 800;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--paper-soft);
+}
+
+.quick-capture-heading > .ai-assist-status.connected {
+  color: var(--green);
+  border-color: #b7cbbf;
+  background: var(--green-soft);
+}
+
+.quick-capture-heading > .ai-assist-status.unavailable {
+  color: var(--orange);
+  border-color: #dec8b8;
+  background: var(--orange-soft);
 }
 
 .quick-capture-heading > span {
@@ -3379,6 +3407,23 @@ h3 {
   justify-content: space-between;
   gap: 14px;
   margin-top: 11px;
+}
+
+.cloud-send-disclosure {
+  display: block;
+  margin-top: 10px;
+  color: var(--ink-soft);
+  font-size: 9px;
+  line-height: 1.6;
+}
+
+.privacy-note.cloud-unavailable {
+  color: var(--orange);
+  background: var(--orange-soft);
+}
+
+.privacy-note.cloud-unavailable strong {
+  color: var(--orange);
 }
 
 .pending-review-banner {

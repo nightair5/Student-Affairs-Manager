@@ -39,7 +39,7 @@ test('status reports whether the server secret is configured', async () => {
   const output = response()
   await handler(request({ method: 'GET', path: '/api/deepseek/status' }), output)
   assert.equal(output.statusCode, 200)
-  assert.deepEqual(JSON.parse(output.payload), { configured: false })
+  assert.deepEqual(JSON.parse(output.payload), { configured: false, model: 'deepseek-v4-flash' })
 })
 
 test('POST rejects untrusted origins before contacting DeepSeek', async () => {
@@ -67,7 +67,8 @@ test('POST sends only bounded question and citation summaries', async () => {
   await handler(request(), output)
   assert.equal(output.statusCode, 200)
   assert.equal(JSON.parse(output.payload).answer, '先提交报名材料。')
-  assert.equal(upstreamBody.model, 'deepseek-chat')
+  assert.equal(upstreamBody.model, 'deepseek-v4-flash')
+  assert.deepEqual(upstreamBody.thinking, { type: 'disabled' })
   assert.match(upstreamBody.messages[0].content, /不可信资料/)
   assert.match(upstreamBody.messages[1].content, /报名材料/)
 })
