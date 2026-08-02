@@ -75,6 +75,8 @@ npm run server:check
 
 Cloudflare Workers Static Assets 是当前生产部署目标：一个 Worker 同时发布 Vite 的 `dist` 静态产物、提供 SPA 回退，并只让 `/api/*` 请求优先经过服务端代码。部署前先确认账号：
 
+生产站点：[https://student-affairs-manager.nightsdell.workers.dev](https://student-affairs-manager.nightsdell.workers.dev)
+
 ```bash
 npx wrangler whoami
 npm run deploy:cloudflare
@@ -88,6 +90,8 @@ npm run deploy:cloudflare
 ```
 
 `secret put` 会在本机终端隐式输入密钥。未设置 Secret 时站点与本地知识检索仍可使用，但状态接口必须返回 `configured: false`，页面显示“DeepSeek 未连接”。代理固定调用 `deepseek-chat`，只接受同源或显式白名单 Origin、当前问题和最多 4 条引用摘要，并限制请求体和基础频率；外部来源仍按不可信文本处理。当前没有账号系统，Origin 与单实例内存限流不等于用户级鉴权，公开启用前应在 DeepSeek 控制台设置余额和用量上限。
+
+当前生产 Worker 已部署；由于尚未写入新的 Cloudflare Secret，DeepSeek 状态仍为未连接。这是预期的安全关闭状态，不影响本地知识检索、任务管理和 Obsidian 导出。
 
 本地调试可复制 `.dev.vars.example` 为不提交的 `.dev.vars`，然后运行 `npm run cloudflare:dev`。`wrangler.jsonc` 不含账户令牌或服务密钥。
 
