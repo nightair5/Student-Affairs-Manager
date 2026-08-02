@@ -1,135 +1,84 @@
-import {
-  ArrowRight,
-  CalendarClock,
-  CheckCircle2,
-  CircleAlert,
-  Plus,
-  Sparkles,
-} from 'lucide-react'
+import { ArrowRight, ClipboardPaste, Inbox, Plus, Upload } from 'lucide-react'
+import { useState, type FormEvent } from 'react'
 import { TaskCard } from '../components/TaskCard'
 import { getFocusTasks } from '../lib/taskLogic'
 import type { Task } from '../types'
 
 interface DashboardPageProps {
   tasks: Task[]
+  pendingReviewCount: number
+  onQuickCapture: (content: string) => void
   onOpenIntake: () => void
   onOpenTask: (task: Task) => void
   onCompleteTask: (taskId: string) => void
   onShowTasks: () => void
+  onShowInbox: () => void
+}
+
+function todayLabel(): string {
+  return new Intl.DateTimeFormat('zh-CN', {
+    month: 'long', day: 'numeric', weekday: 'long',
+  }).format(new Date())
 }
 
 export function DashboardPage({
   tasks,
+  pendingReviewCount,
+  onQuickCapture,
   onOpenIntake,
   onOpenTask,
   onCompleteTask,
   onShowTasks,
+  onShowInbox,
 }: DashboardPageProps) {
+  const [quickText, setQuickText] = useState('')
   const focusTasks = getFocusTasks(tasks)
-  const riskCount = tasks.filter(
-    (task) => task.status !== '已完成' && task.riskFlags.length,
-  ).length
+  const activeCount = tasks.filter((task) => task.status !== '已完成').length
+
+  const submitQuickCapture = (event: FormEvent) => {
+    event.preventDefault()
+    const content = quickText.trim()
+    if (!content) return
+    onQuickCapture(content)
+    setQuickText('')
+  }
 
   return (
     <main className="page dashboard-page">
-      <header className="page-header dashboard-header">
+      <header className="simple-dashboard-header">
         <div>
-          <span className="date-line">2026 年 7 月 31 日 · 星期五</span>
-          <h1>
-            今天先把这
-            <em>{focusTasks.length}</em>
-            件事推进
-          </h1>
-          <p>已经按截止时间、材料和依赖整理好顺序，最终决定仍由你掌握。</p>
+          <span className="date-line">{todayLabel()}</span>
+          <h1>{focusTasks.length ? <>今天只看最重要的 <em>{focusTasks.length}</em> 件事</> : '先把新通知变成清楚的下一步'}</h1>
+          <p>不用管理所有事情。先处理首页，再去任务中心查看其余内容。</p>
         </div>
-        <button className="primary-button" type="button" onClick={onOpenIntake}>
-          <Plus size={18} />
-          录入新事项
-        </button>
       </header>
+
+      <form className="quick-capture" onSubmit={submitQuickCapture}>
+        <div className="quick-capture-heading">
+          <span className="quick-capture-icon"><ClipboardPaste size={20} /></span>
+          <div><strong>收到新通知？直接粘贴</strong><small>日期、事项和材料会先拆成待确认建议。</small></div>
+        </div>
+        <textarea value={quickText} onChange={(event) => setQuickText(event.target.value)} rows={3} placeholder="粘贴老师消息、群通知或网页正文……" aria-label="快速粘贴通知" />
+        <div className="quick-capture-actions">
+          <button className="text-button" type="button" onClick={onOpenIntake}><Upload size={15} />上传文件或链接</button>
+          <button className="primary-button" type="submit" disabled={!quickText.trim()}><Plus size={16} />帮我拆成任务</button>
+        </div>
+      </form>
+
+      {pendingReviewCount > 0 && <button className="pending-review-banner" type="button" onClick={onShowInbox}>
+        <Inbox size={18} />
+        <span><strong>还有 {pendingReviewCount} 项建议等你确认</strong><small>关闭页面也不会丢失，可以稍后处理。</small></span>
+        <ArrowRight size={17} />
+      </button>}
 
       <section className="focus-section" aria-labelledby="focus-title">
         <div className="section-heading">
-          <div>
-            <span className="section-index">01</span>
-            <h2 id="focus-title">现在最值得做</h2>
-          </div>
-          <button className="text-button" type="button" onClick={onShowTasks}>
-            查看全部任务
-            <ArrowRight size={16} />
-          </button>
+          <div><span className="section-index">TODAY</span><h2 id="focus-title">现在先做这些</h2></div>
+          <button className="text-button" type="button" onClick={onShowTasks}>全部 {activeCount} 项<ArrowRight size={16} /></button>
         </div>
-        <div className="focus-grid">
-          {focusTasks.map((task, index) => (
-            <TaskCard
-              key={task.id}
-              task={task}
-              featured={index === 0}
-              onOpen={onOpenTask}
-              onComplete={onCompleteTask}
-            />
-          ))}
-        </div>
-      </section>
-
-      <section className="dashboard-lower-grid">
-        <div className="week-card">
-          <div className="section-heading compact">
-            <div>
-              <span className="section-index">02</span>
-              <h2>这一周的节奏</h2>
-            </div>
-            <CalendarClock size={20} />
-          </div>
-          <div className="week-strip">
-            {[
-              { day: '五', date: '31', count: 0 },
-              { day: '六', date: '01', count: 1 },
-              { day: '日', date: '02', count: 1, active: true },
-              { day: '一', date: '03', count: 0 },
-              { day: '二', date: '04', count: 1 },
-              { day: '三', date: '05', count: 0 },
-              { day: '四', date: '06', count: 0 },
-            ].map((item) => (
-              <div
-                className={`week-day${item.active ? ' active' : ''}`}
-                key={`${item.day}-${item.date}`}
-              >
-                <span>{item.day}</span>
-                <strong>{item.date}</strong>
-                {item.count > 0 ? <i>{item.count} 项</i> : <i>—</i>}
-              </div>
-            ))}
-          </div>
-          <div className="start-suggestion">
-            <Sparkles size={18} />
-            <p>
-              <strong>开工建议</strong>
-              周六上午留出 90 分钟写报告框架，避开周日晚截止前的集中压力。
-            </p>
-          </div>
-        </div>
-
-        <aside className="status-card">
-          <div className="status-card-head">
-            <span>事务健康度</span>
-            <strong>需要留意</strong>
-          </div>
-          <div className="status-ring" aria-label={`${riskCount} 项任务有风险`}>
-            <span>{riskCount}</span>
-            <small>项有风险</small>
-          </div>
-          <ul>
-            <li>
-              <CircleAlert size={16} />
-              2 项材料尚未准备
-            </li>
-            <li>
-              <CheckCircle2 size={16} />
-              本周暂无逾期任务
-            </li>
-          </ul>
-        </aside>
+        {focusTasks.length
+          ? <div className="focus-grid">{focusTasks.map((task, index) => <TaskCard key={task.id} task={task} featured={index === 0} onOpen={onOpenTask} onComplete={onCompleteTask} />)}</div>
+          : <div className="home-empty-state"><strong>今天还没有任务</strong><p>把一段通知粘贴到上方，确认后就会出现在这里。</p></div>}
       </section>
     </main>
   )

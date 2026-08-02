@@ -21,7 +21,7 @@ import {
   extractFileContent,
   type FileExtractionStatus,
 } from '../lib/fileExtraction'
-import { createSuggestions } from '../lib/parser'
+import { createIntakeResult } from '../lib/intake'
 import type { ParsedSuggestion, Source, SourceType } from '../types'
 
 interface IntakePanelProps {
@@ -39,7 +39,6 @@ export function IntakePanel({ onClose, onCreateDraft }: IntakePanelProps) {
   const [fileStatus, setFileStatus] = useState<IntakeFileStatus>('idle')
   const [fileMessage, setFileMessage] = useState('')
   const [isDragging, setIsDragging] = useState(false)
-  const [isParsing, setIsParsing] = useState(false)
   const titleId = useId()
   const firstControlRef = useRef<HTMLTextAreaElement>(null)
 
@@ -90,7 +89,6 @@ export function IntakePanel({ onClose, onCreateDraft }: IntakePanelProps) {
 
   const fileNeedsContent = sourceType === 'file' || sourceType === 'image'
   const canSubmit =
-    !isParsing &&
     fileStatus !== 'reading' &&
     fileStatus !== 'error' &&
     fileStatus !== 'unsupported' &&
@@ -100,31 +98,9 @@ export function IntakePanel({ onClose, onCreateDraft }: IntakePanelProps) {
   const handleParse = (event: FormEvent) => {
     event.preventDefault()
     if (!canSubmit) return
-    setIsParsing(true)
-    window.setTimeout(() => {
-      const now = new Date().toISOString()
-      const title =
-        sourceTitle ||
-        fileName ||
-        (sourceType === 'link' ? '网页通知链接' : '手动粘贴消息')
-      const cleanContent = content.trim().slice(0, 50_000)
-      const suggestions = createSuggestions(cleanContent, sourceType, title)
-      onCreateDraft(
-        {
-          id: `source-${Date.now()}`,
-          type: sourceType,
-          title,
-          contentPreview: cleanContent.slice(0, 500),
-          content: sourceType === 'link' ? undefined : cleanContent,
-          url: sourceType === 'link' ? cleanContent : undefined,
-          createdAt: now,
-          extractionStatus: '待确认',
-        },
-        suggestions,
-      )
-      setIsParsing(false)
-      onClose()
-    }, 320)
+    const result = createIntakeResult({ sourceType, content, sourceTitle, fileName })
+    onCreateDraft(result.source, result.suggestions)
+    onClose()
   }
 
   return (
@@ -132,14 +108,16 @@ export function IntakePanel({ onClose, onCreateDraft }: IntakePanelProps) {
       <section className="intake-panel" role="dialog" aria-modal="true" aria-labelledby={titleId}>
         <header className="intake-header">
           <div>
-            <span className="eyebrow">统一录入</span>
-            <h2 id={titleId}>把通知交给管家整理</h2>
+            <span className="eyebrow">第 1 步 · 放入原文</span>
+            <h2 id={titleId}>把通知原样放进来</h2>
+            <p>不用先整理。下一步会让你核对拆分结果。</p>
           </div>
           <button className="icon-button" type="button" onClick={onClose} aria-label="关闭录入面板">
             <X size={20} />
           </button>
         </header>
         <form className="intake-body" onSubmit={handleParse}>
+          <div className="intake-steps" aria-label="录入流程"><span className="active">1 放入原文</span><span>2 核对拆分</span><span>3 回到今日</span></div>
           <div className="source-tabs" role="tablist" aria-label="选择来源">
             <button type="button" className={sourceType === 'text' ? 'active' : ''} onClick={() => selectSourceType('text')}>
               <FileText size={17} />粘贴消息
@@ -153,9 +131,10 @@ export function IntakePanel({ onClose, onCreateDraft }: IntakePanelProps) {
           </div>
           {sourceType === 'text' && (
             <label className="field">
-              <span>老师或群聊消息</span>
-              <textarea ref={firstControlRef} value={content} onChange={(event) => setContent(event.target.value)} rows={10} placeholder="例如：请大家 8 月 4 日 18:00 前提交报名表和确认函……" required />
-              <small>原文与本地识别建议会先进入待确认队列，不会直接创建任务。</small>
+              <span>粘贴老师消息、群通知或网页正文</span>
+              <textarea ref={firstControlRef} value={content} onChange={(event) => setContent(event.target.value)} rows={7} placeholder="例如：8 月 4 日 18:00 前提交报名表；8 月 6 日上午 9 点参加说明会……" required />
+              <small>包含多个时间也没关系，系统会逐条拆开。</small>
+              {!content && <button className="example-fill" type="button" onClick={() => setContent('比赛通知：8月4日18:00提交报名表和确认函；8月6日上午9点参加说明会；8月8日20:00上传作品初稿。')}>不会填？放入一段示例</button>}
             </label>
           )}
           {(sourceType === 'file' || sourceType === 'image') && (
@@ -201,9 +180,9 @@ export function IntakePanel({ onClose, onCreateDraft }: IntakePanelProps) {
               <label className="field"><span>网页链接</span><input type="url" value={content} onChange={(event) => setContent(event.target.value)} placeholder="https://..." required /><small>当前只保存链接，尚未抓取网页正文或监测变更。</small></label>
             </>
           )}
-          <div className="privacy-note"><Sparkles size={18} /><p><strong>本地规则识别</strong> 不会上传内容。日期、分类和材料均为可编辑建议，须经你确认后才创建任务。</p></div>
+          <div className="privacy-note"><Sparkles size={18} /><p><strong>先建议，后确认</strong> 本地规则不会上传内容，也不会直接创建任务；下一页可删除或修改每一项。</p></div>
           <button className="primary-button wide" type="submit" disabled={!canSubmit}>
-            {isParsing ? <><LoaderCircle className="spin" size={18} />正在生成本地建议</> : <><Sparkles size={18} />保存并查看待确认建议</>}
+            <Sparkles size={18} />整理成待确认任务
           </button>
         </form>
       </section>

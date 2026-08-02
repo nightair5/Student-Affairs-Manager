@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { DraftReviewPanel } from './components/DraftReviewPanel'
 import { IntakePanel } from './components/IntakePanel'
+import { OnboardingGuide } from './components/OnboardingGuide'
 import { Sidebar } from './components/Sidebar'
 import { TaskDetailPanel } from './components/TaskDetailPanel'
 import { demoSources, demoTasks } from './data/demo'
@@ -22,6 +23,8 @@ import {
 import { loadWorkspace } from './lib/storage'
 import { updateTaskWithHistory } from './lib/taskUpdates'
 import { findDuplicateSources } from './lib/sourceDuplicates'
+import { createIntakeResult } from './lib/intake'
+import { markOnboardingComplete, shouldShowOnboarding } from './lib/onboarding'
 import {
   buildConfirmedTask,
   createManualMilestone,
@@ -49,6 +52,7 @@ function App() {
   const [workspaceReady, setWorkspaceReady] = useState(false)
   const [storageError, setStorageError] = useState(false)
   const [intakeOpen, setIntakeOpen] = useState(false)
+  const [guideOpen, setGuideOpen] = useState(() => shouldShowOnboarding())
   const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null)
   const [selectedDraftId, setSelectedDraftId] = useState<string | null>(null)
   const [notice, setNotice] = useState<{ text: string; undo?: () => void } | null>(null)
@@ -59,6 +63,10 @@ function App() {
     tasks.find((task) => task.id === selectedTaskId) ?? null
 
   const selectedDraft = drafts.find((draft) => draft.id === selectedDraftId) ?? null
+  const pendingReviewCount = drafts.reduce(
+    (count, draft) => count + draft.items.filter((item) => item.status === '待确认').length,
+    0,
+  )
   const selectedDraftSource = selectedDraft
     ? sources.find((source) => source.id === selectedDraft.sourceId) ?? null
     : null
@@ -203,6 +211,11 @@ function App() {
     }
   }
 
+  const handleQuickCapture = (content: string) => {
+    const result = createIntakeResult({ sourceType: 'text', content })
+    handleCreateDraft(result.source, result.suggestions)
+  }
+
   const handleUpdateDraft = (
     draftId: string,
     itemId: string,
@@ -249,8 +262,11 @@ function App() {
           }
         : candidate,
     ))
-    setSelectedTaskId(task.id)
     setNotice({ text: '已创建任务，可在任务中心继续编辑。' })
+    if (draft.items.filter((draftItem) => draftItem.status === '待确认').length <= 1) {
+      setSelectedDraftId(null)
+      setCurrentPage('today')
+    }
   }
 
   const handleConfirmAll = (draftId: string) => {
@@ -295,7 +311,8 @@ function App() {
     setSources((current) => current.map((item) => item.id === source.id
       ? { ...item, extractionStatus: '已确认' }
       : item))
-    setSelectedTaskId(created[0].id)
+    setSelectedDraftId(null)
+    setCurrentPage('today')
     setNotice({ text: `已创建 ${created.length} 项任务。` })
   }
 
@@ -329,10 +346,13 @@ function App() {
         return (
           <DashboardPage
             tasks={tasks}
+            pendingReviewCount={pendingReviewCount}
+            onQuickCapture={handleQuickCapture}
             onOpenIntake={() => setIntakeOpen(true)}
             onOpenTask={(task) => setSelectedTaskId(task.id)}
             onCompleteTask={handleComplete}
             onShowTasks={() => setCurrentPage('tasks')}
+            onShowInbox={() => setCurrentPage('inbox')}
           />
         )
       case 'inbox':
@@ -431,8 +451,10 @@ function App() {
     <div className="app-shell">
       <Sidebar
         currentPage={currentPage}
+        pendingReviewCount={pendingReviewCount}
         onNavigate={setCurrentPage}
         onOpenIntake={() => setIntakeOpen(true)}
+        onOpenGuide={() => setGuideOpen(true)}
       />
       <div className="content-shell">{renderPage()}</div>
 
@@ -472,6 +494,10 @@ function App() {
           onRequestNotificationPermission={handleRequestNotificationPermission}
         />
       )}
+      {guideOpen && <OnboardingGuide onClose={() => {
+        markOnboardingComplete()
+        setGuideOpen(false)
+      }} />}
     </div>
   )
 }
