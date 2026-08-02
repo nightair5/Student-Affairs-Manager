@@ -15,57 +15,117 @@ interface TemporalMatch {
   context: TemporalContext
 }
 
-const temporalPattern = /(?:(?:(20\d{2})[年/-])?(\d{1,2})[月/-](\d{1,2})日?(?:\s*(上午|下午|晚上|中午|凌晨)?\s*(\d{1,2})(?:[:：点时](\d{1,2})?分?)?)?)|(?:(上午|下午|晚上|中午|凌晨)\s*(\d{1,2})(?:[:：点时](\d{1,2})?分?)?)|(?<![\d月/-])(\d{1,2})[:：](\d{2})|(?<![\d月/-])(\d{1,2})点/g
+interface EventClause {
+  text: string
+  bullet: boolean
+}
 
-function inferCategory(content: string): TaskCategory {
+interface TemporalAnchor {
+  index: number
+  text: string
+}
+
+const periodSource = '(?:上午|下午|晚上|晚|中午|凌晨)'
+const clockSource = `(?:(?:${periodSource})\\s*\\d{1,2}(?:(?:[:：]\\d{1,2})|(?:点|时)(?:\\d{1,2}分?)?)?|\\d{1,2}(?:(?:[:：]\\d{1,2})|(?:点|时)(?:\\d{1,2}分?)?))`
+const absoluteDateSource = '(?:(?:20\\d{2})[年/-]\\s*)?\\d{1,2}[月/-]\\s*\\d{1,2}(?:日|号)?'
+const relativeDateSource = '(?:今天|今日|明天|后天|(?:本周|这周|下周)[一二三四五六日天])'
+const temporalSource = `(?:(?:${absoluteDateSource}|${relativeDateSource})(?:\\s*${clockSource})?|${clockSource})`
+const headerOnlyPattern = /^(?:(?:安排|事项|时间|日程|要求|节点)(?:如下|如下所示)?|请注意)$/u
+const bulletMarker = '§'
+
+function createTemporalMatcher(): RegExp {
+  return new RegExp(temporalSource, 'gu')
+}
+
+function inferExplicitCategory(content: string): TaskCategory | null {
   if (/比赛|竞赛|参赛|作品/.test(content)) return '比赛'
   if (/保研|推免|夏令营|预推免/.test(content)) return '保研'
   if (/老师|导师|初稿|汇报/.test(content)) return '老师任务'
   if (/课程|作业|课堂|论文/.test(content)) return '课程'
-  return '其他'
+  return null
 }
 
 function convertHour(hour: number, period?: string): number {
-  if ((period === '下午' || period === '晚上') && hour < 12) return hour + 12
+  if ((period === '下午' || period === '晚上' || period === '晚') && hour < 12) return hour + 12
   if (period === '中午' && hour < 11) return hour + 12
   if (period === '凌晨' && hour === 12) return 0
   return hour
 }
 
+function contextFromRelativeDate(value: string, now: Date): TemporalContext | null {
+  const target = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+  if (/^(?:今天|今日)$/.test(value)) return dateContext(target)
+  if (value === '明天' || value === '后天') {
+    target.setDate(target.getDate() + (value === '明天' ? 1 : 2))
+    return dateContext(target)
+  }
+  const week = value.match(/^(本周|这周|下周)([一二三四五六日天])$/u)
+  if (!week) return null
+  const weekdays: Record<string, number> = { 一: 1, 二: 2, 三: 3, 四: 4, 五: 5, 六: 6, 日: 7, 天: 7 }
+  const currentWeekday = now.getDay() || 7
+  const targetWeekday = weekdays[week[2]]
+  target.setDate(target.getDate() + targetWeekday - currentWeekday + (week[1] === '下周' ? 7 : 0))
+  return dateContext(target)
+}
+
+function dateContext(date: Date): TemporalContext {
+  return { year: date.getFullYear(), month: date.getMonth() + 1, day: date.getDate() }
+}
+
+function parseAnchor(
+  anchor: string,
+  previousContext: TemporalContext | undefined,
+  now: Date,
+): TemporalMatch | null {
+  const absolute = anchor.match(/(?:(20\d{2})[年/-]\s*)?(\d{1,2})[月/-]\s*(\d{1,2})(?:日|号)?/u)
+  const relative = anchor.match(/今天|今日|明天|后天|(?:本周|这周|下周)[一二三四五六日天]/u)
+  let context: TemporalContext
+  let timeText = anchor
+
+  if (absolute) {
+    context = {
+      year: Number(absolute[1] ?? previousContext?.year ?? now.getFullYear()),
+      month: Number(absolute[2]),
+      day: Number(absolute[3]),
+    }
+    timeText = anchor.replace(absolute[0], '')
+  } else if (relative) {
+    const relativeContext = contextFromRelativeDate(relative[0], now)
+    if (!relativeContext) return null
+    context = relativeContext
+    timeText = anchor.replace(relative[0], '')
+  } else {
+    context = previousContext ?? dateContext(new Date(now.getFullYear(), now.getMonth(), now.getDate() + 7))
+  }
+
+  const time = timeText.match(/(上午|下午|晚上|晚|中午|凌晨)?\s*(\d{1,2})(?:(?:[:：](\d{1,2}))|(?:点|时)(?:(\d{1,2})分?)?)?/u)
+  const rawHour = time ? Number(time[2]) : 18
+  const minute = time ? Number(time[3] ?? time[4] ?? 0) : 0
+  const hour = convertHour(rawHour, time?.[1])
+  if (context.month < 1 || context.month > 12 || context.day < 1 || context.day > 31 || hour > 23 || minute > 59) {
+    return null
+  }
+  const target = new Date(context.year, context.month - 1, context.day, hour, minute)
+  return { deadline: toLocalDateTime(target), context }
+}
+
+function isRangeContinuation(content: string, index: number): boolean {
+  return /(?:-|–|—|至|到)\s*$/u.test(content.slice(Math.max(0, index - 6), index))
+}
+
+function findTemporalAnchors(content: string): TemporalAnchor[] {
+  return [...content.matchAll(createTemporalMatcher())]
+    .filter((match) => !isRangeContinuation(content, match.index ?? 0))
+    .map((match) => ({ index: match.index ?? 0, text: match[0] }))
+}
+
 function parseTemporal(
   content: string,
-  previousContext?: TemporalContext,
+  previousContext: TemporalContext | undefined,
+  now: Date,
 ): TemporalMatch | null {
-  temporalPattern.lastIndex = 0
-  const match = temporalPattern.exec(content)
-  if (!match) return null
-
-  const now = new Date()
-  const hasDate = Boolean(match[2] && match[3])
-  const context: TemporalContext = hasDate
-    ? {
-        year: Number(match[1] ?? previousContext?.year ?? now.getFullYear()),
-        month: Number(match[2]),
-        day: Number(match[3]),
-      }
-    : previousContext ?? {
-        year: now.getFullYear(),
-        month: now.getMonth() + 1,
-        day: now.getDate() + 7,
-      }
-
-  const period = match[4] ?? match[7]
-  const rawHour = Number(match[5] ?? match[8] ?? match[10] ?? match[12] ?? 18)
-  const minute = Number(match[6] ?? match[9] ?? match[11] ?? 0)
-  const target = new Date(
-    context.year,
-    context.month - 1,
-    context.day,
-    convertHour(rawHour, period),
-    minute,
-  )
-
-  return { deadline: toLocalDateTime(target), context }
+  const anchor = findTemporalAnchors(content)[0]
+  return anchor ? parseAnchor(anchor.text, previousContext, now) : null
 }
 
 function toLocalDateTime(date: Date): string {
@@ -80,65 +140,85 @@ function inferMaterials(content: string): string[] {
   return known.filter((item) => content.includes(item))
 }
 
-function splitByTemporalAnchors(clause: string): string[] {
-  const matcher = new RegExp(temporalPattern.source, 'g')
-  const matches = [...clause.matchAll(matcher)]
+function splitByTemporalAnchors(clause: EventClause): EventClause[] {
+  const matches = findTemporalAnchors(clause.text)
   if (matches.length <= 1) return [clause]
-
   return matches.map((match, index) => {
-    const start = index === 0 ? 0 : (match.index ?? 0)
-    const end = matches[index + 1]?.index ?? clause.length
-    return clause.slice(start, end).trim()
+    const start = index === 0 ? 0 : match.index
+    const end = matches[index + 1]?.index ?? clause.text.length
+    return { text: clause.text.slice(start, end).trim(), bullet: clause.bullet }
   })
 }
 
-function splitEventClauses(content: string): string[] {
-  const rawClauses = content
+function markListItems(content: string): string {
+  return content
     .replace(/\r/g, '')
-    .split(/[；;。！？!\n，,]+/)
-    .map((clause) => clause.trim())
-    .filter(Boolean)
+    .replace(/\s+(?=(?:\d{1,2}[.、]|[（(]\d{1,2}[）)])\s*)/gu, '\n')
+    .replace(/(^|\n)\s*(?:[-*•]\s*|\d{1,2}[.、]\s*|[（(]\d{1,2}[）)]\s*)/gu, `$1${bulletMarker}`)
+}
+
+function splitEventClauses(content: string): EventClause[] {
+  const rawClauses = markListItems(content)
+    .split(/[；;。！？!\n，,]+/u)
+    .map((raw) => ({
+      text: raw.replace(bulletMarker, '').trim(),
+      bullet: raw.trimStart().startsWith(bulletMarker),
+    }))
+    .filter((clause) => Boolean(clause.text))
     .flatMap(splitByTemporalAnchors)
-  const groupedClauses: string[] = []
+  const groupedClauses: EventClause[] = []
   let pendingPrefix = ''
 
   for (const clause of rawClauses) {
-    temporalPattern.lastIndex = 0
-    const hasTemporal = temporalPattern.test(clause)
-    temporalPattern.lastIndex = 0
-
+    const hasTemporal = findTemporalAnchors(clause.text).length > 0
     if (hasTemporal) {
-      groupedClauses.push(
-        pendingPrefix ? `${pendingPrefix}，${clause}` : clause,
-      )
+      groupedClauses.push({
+        text: pendingPrefix && !clause.bullet ? `${pendingPrefix}，${clause.text}` : clause.text,
+        bullet: clause.bullet,
+      })
       pendingPrefix = ''
+    } else if (clause.bullet) {
+      groupedClauses.push(clause)
     } else if (groupedClauses.length) {
       const lastIndex = groupedClauses.length - 1
-      groupedClauses[lastIndex] = `${groupedClauses[lastIndex]}，${clause}`
+      groupedClauses[lastIndex] = {
+        ...groupedClauses[lastIndex],
+        text: `${groupedClauses[lastIndex].text}，${clause.text}`,
+      }
     } else {
-      pendingPrefix = pendingPrefix ? `${pendingPrefix}，${clause}` : clause
+      pendingPrefix = pendingPrefix ? `${pendingPrefix}，${clause.text}` : clause.text
     }
   }
 
-  if (!groupedClauses.length && pendingPrefix) return [pendingPrefix]
+  if (!groupedClauses.length && pendingPrefix) return [{ text: pendingPrefix, bullet: false }]
   return groupedClauses
 }
 
 function stripTemporalText(content: string): string {
-  temporalPattern.lastIndex = 0
   return content
-    .replace(temporalPattern, ' ')
-    .replace(/^(?:请|请于|请在|需要|需|务必|记得|截至)\s*/u, '')
+    .replace(createTemporalMatcher(), ' ')
+    .replace(/^[：:、；;，,\s]+/gu, '')
+    .replace(/^(?:(?:学院|学校|课程|比赛|项目)?(?:通知|提醒|公告|消息)\s*[：:]\s*)+/u, '')
+    .replace(/^(?:(?:请大家|大家|请于|请在|请|需要|务必|记得|截至|截止|同日|当天|当日|随后|然后|接着|并且|并在|并于|且|前)\s*)+/u, '')
     .replace(/(?:之前|以前|前|截止|截至)\s*$/u, '')
-    .replace(/^[：:、\s]+|[：:、\s]+$/g, '')
+    .replace(/^[：:、；;，,\s]+|[：:、；;，,\s]+$/gu, '')
+    .replace(/\s+/g, ' ')
     .trim()
 }
 
-function fallbackDeadline(): string {
-  const fallback = new Date()
+function fallbackDeadline(now: Date): string {
+  const fallback = new Date(now)
   fallback.setDate(fallback.getDate() + 7)
   fallback.setHours(18, 0, 0, 0)
   return toLocalDateTime(fallback)
+}
+
+function inferredDuration(content: string, materials: string[]): number {
+  if (/报告|论文|作品|初稿|方案/.test(content)) return 120
+  if (/说明会|会议|开会|汇报|答辩|上课/.test(content)) return 60
+  if (materials.length >= 2) return 90
+  if (/提交|上传|发送|确认|签字|联系|回复/.test(content)) return 30
+  return 60
 }
 
 function buildSuggestion(
@@ -147,8 +227,13 @@ function buildSuggestion(
   sourceTitle: string | undefined,
   deadline: string,
   index: number,
+  overallCategory: TaskCategory | null,
+  now: Date,
 ): ParsedSuggestion {
-  const category = inferCategory(`${sourceTitle ?? ''}${eventContent}`)
+  const category = inferExplicitCategory(sourceTitle ?? '')
+    ?? overallCategory
+    ?? inferExplicitCategory(eventContent)
+    ?? '其他'
   const materials = inferMaterials(eventContent)
   const extractedTitle = stripTemporalText(eventContent)
   const fallbackTitles: Record<TaskCategory, string> = {
@@ -165,20 +250,24 @@ function buildSuggestion(
     老师任务: '先整理交付要求并回复老师',
     其他: '先核对截止时间与交付内容',
   }
+  const hoursUntilDeadline = (new Date(deadline).getTime() - now.getTime()) / 3_600_000
+  const priority = /今天|今日|明天|尽快|截止/.test(eventContent) || hoursUntilDeadline <= 48
+    ? '高'
+    : hoursUntilDeadline <= 24 * 7 ? '中' : '低'
 
   return {
     id: `suggestion-${index}-${deadline}`,
     title: extractedTitle.slice(0, 36) || fallbackTitles[category],
     category,
     deadline,
-    estimatedMinutes: materials.length >= 2 ? 120 : 60,
+    estimatedMinutes: inferredDuration(eventContent, materials),
     nextAction: extractedTitle
       ? `开始处理：${extractedTitle.slice(0, 30)}`
       : actionMap[category],
     description:
       eventContent ||
       `${sourceTitle ?? '上传内容'}将在接入解析服务后读取正文；当前按文件名生成演示建议。`,
-    priority: /今天|明天|尽快|截止/.test(eventContent) ? '高' : '中',
+    priority,
     materials,
     evidence:
       eventContent.slice(0, 220) ||
@@ -191,25 +280,46 @@ export function createSuggestions(
   content: string,
   sourceType: SourceType,
   sourceTitle?: string,
+  now = new Date(),
 ): ParsedSuggestion[] {
   const cleanContent = content.trim()
   const clauses = splitEventClauses(cleanContent)
   const suggestions: ParsedSuggestion[] = []
+  const firstAnchorIndex = findTemporalAnchors(cleanContent)[0]?.index ?? cleanContent.length
+  const overallCategory = inferExplicitCategory(
+    `${sourceTitle ?? ''}${cleanContent.slice(0, firstAnchorIndex)}`,
+  )
   let context: TemporalContext | undefined
 
   for (const clause of clauses) {
-    const temporal = parseTemporal(clause, context)
-    if (!temporal) continue
-    context = temporal.context
-    suggestions.push(
-      buildSuggestion(
-        clause,
+    const temporal = parseTemporal(clause.text, context, now)
+    if (temporal) {
+      context = temporal.context
+      const title = stripTemporalText(clause.text)
+      if (!title || headerOnlyPattern.test(title)) continue
+      suggestions.push(buildSuggestion(
+        clause.text,
         sourceType,
         sourceTitle,
         temporal.deadline,
         suggestions.length,
-      ),
-    )
+        overallCategory,
+        now,
+      ))
+      continue
+    }
+    if (clause.bullet && context) {
+      const deadline = toLocalDateTime(new Date(context.year, context.month - 1, context.day, 18, 0))
+      suggestions.push(buildSuggestion(
+        clause.text,
+        sourceType,
+        sourceTitle,
+        deadline,
+        suggestions.length,
+        overallCategory,
+        now,
+      ))
+    }
   }
 
   if (suggestions.length) return suggestions
@@ -219,8 +329,10 @@ export function createSuggestions(
       cleanContent,
       sourceType,
       sourceTitle,
-      fallbackDeadline(),
+      fallbackDeadline(now),
       0,
+      overallCategory,
+      now,
     ),
   ]
 }
@@ -229,6 +341,7 @@ export function createSuggestion(
   content: string,
   sourceType: SourceType,
   sourceTitle?: string,
+  now = new Date(),
 ): ParsedSuggestion {
-  return createSuggestions(content, sourceType, sourceTitle)[0]
+  return createSuggestions(content, sourceType, sourceTitle, now)[0]
 }

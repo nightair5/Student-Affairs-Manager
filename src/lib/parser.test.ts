@@ -68,4 +68,77 @@ describe('demo parser', () => {
     expect(results[0].title).toContain('开项目会')
     expect(results[1].title).toContain('提交材料')
   })
+
+  it('removes connector noise while preserving six independent events', () => {
+    const results = createSuggestions(
+      '学院通知：8月3日 9:00参加说明会，11:30前提交报名表和确认函；同日15:00找导师签字。8月5日 20:00提交作品初稿。8月8日晚上8点上传最终版，并在8月9日10:00完成系统确认。',
+      'text',
+      undefined,
+      new Date('2026-08-02T08:00:00+08:00'),
+    )
+
+    expect(results).toHaveLength(6)
+    expect(results.map((item) => item.title)).toEqual([
+      '参加说明会',
+      '提交报名表和确认函',
+      '找导师签字',
+      '提交作品初稿',
+      '上传最终版',
+      '完成系统确认',
+    ])
+    expect(results.map((item) => item.deadline)).toEqual([
+      '2026-08-03T09:00',
+      '2026-08-03T11:30',
+      '2026-08-03T15:00',
+      '2026-08-05T20:00',
+      '2026-08-08T20:00',
+      '2026-08-09T10:00',
+    ])
+  })
+
+  it('creates separate tasks for bullet items under one date heading', () => {
+    const results = createSuggestions(
+      '比赛通知：8月6日安排如下：\n1. 提交报名表\n2. 联系指导老师\n3. 上传确认函',
+      'text',
+      undefined,
+      new Date('2026-08-02T08:00:00+08:00'),
+    )
+
+    expect(results).toHaveLength(3)
+    expect(results.map((item) => item.title)).toEqual([
+      '提交报名表',
+      '联系指导老师',
+      '上传确认函',
+    ])
+    expect(results.every((item) => item.deadline === '2026-08-06T18:00')).toBe(true)
+    expect(results.every((item) => item.category === '比赛')).toBe(true)
+  })
+
+  it('does not split a time range into duplicate tasks', () => {
+    const results = createSuggestions(
+      '8月7日 9:00-10:30参加项目说明会；8月7日 18:00提交报名表。',
+      'text',
+      undefined,
+      new Date('2026-08-02T08:00:00+08:00'),
+    )
+
+    expect(results).toHaveLength(2)
+    expect(results[0].title).toContain('参加项目说明会')
+    expect(results[1].title).toBe('提交报名表')
+  })
+
+  it('understands relative dates with a deterministic reference time', () => {
+    const results = createSuggestions(
+      '明天上午9点参加课程答疑，后天20:00提交作业，下周一下午3点联系老师。',
+      'text',
+      undefined,
+      new Date('2026-08-05T08:00:00+08:00'),
+    )
+
+    expect(results.map((item) => item.deadline)).toEqual([
+      '2026-08-06T09:00',
+      '2026-08-07T20:00',
+      '2026-08-10T15:00',
+    ])
+  })
 })
