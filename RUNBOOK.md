@@ -128,3 +128,16 @@ npx wrangler tail student-affairs-manager
 暂停：撤销 DeepSeek Key，或从 Worker 移除 `DEEPSEEK_API_KEY` Secret 后重新部署。页面必须显示未连接并回退本地规则。
 
 恢复：设置新 Secret、部署 Preview、验证 `/api/deepseek/status` 与真实整理，再发布生产。禁止仅根据“部署成功”判断 AI 可用。
+
+## 2026-08-03 全面升级 Preview 记录
+
+- 源分支：`codex/feature/comprehensive-upgrade`
+- 精确提交：`149a078`
+- Preview：`https://student-affairs-manager-preview.nightsdell.workers.dev`
+- Worker Version：`04c02993-af18-412a-8f1f-1da6203d44fa`
+- DeepSeek：Preview 未设置生产 Secret，状态接口如实返回 `configured: false`，页面回退本地规则。
+- 自动验证：lint 通过；前端 23 个文件、85 项测试通过；Node 服务 8 项、Worker 12 项、Firebase Functions 5 项测试通过；生产构建和 Wrangler 双环境 dry-run 通过。
+- HTTP 验收：首页与哈希资源返回 200；入口 HTML 使用 `max-age=0, must-revalidate`；哈希资源使用 `max-age=31536000, immutable`；CSP Report-Only、HSTS 与基础安全响应头存在。
+- 浏览器验收：教程四步、首页前三、三事项拆分、逐条编辑、单项拒绝、部分确认、任务创建、材料六状态、完成与撤销、刷新持久化、修改历史及未配置 DeepSeek 的诚实回退均通过。
+- 验收中发现并修复：口语前缀残留、三项材料误计为一项，以及懒加载模块偶发失败导致主内容白屏。懒加载失败现在保留应用壳并提供安全重载入口。
+- 人工闸门：合并生产分支前，仍需在真实手机上复核新手教程滚动、日历月格摘要和日期详情；不得仅凭本记录发布生产。
