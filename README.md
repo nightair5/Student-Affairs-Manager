@@ -71,10 +71,12 @@ SAM_WEB_ALLOWED_HOSTS=www.example.edu,notice.example.edu
 ## 验证
 
 ```bash
+npm ci
 npm run lint
 npm run test
 npm run build
 npm run server:check
+npm audit --audit-level=high
 ```
 
 ## Cloudflare Workers 部署
@@ -90,6 +92,14 @@ npx wrangler whoami
 npm run deploy:cloudflare
 ```
 
+任何生产修改都必须先部署到隔离的 Preview Worker：
+
+```bash
+npm run deploy:cloudflare:preview
+```
+
+Preview 使用独立的 `student-affairs-manager-preview` Worker、完整采样日志和独立 Secret，不会覆盖 `student-affairs.site`。只有 Preview 人工验收与 CI 均通过，且对应提交已合并后，才运行生产部署。详细发布、日志和回滚步骤见 [RUNBOOK.md](./RUNBOOK.md)。
+
 DeepSeek 代理位于同源 `/api/deepseek`，状态接口为 `/api/deepseek/status`。密钥只能写入 Cloudflare Secret，不能放入 `wrangler.jsonc`、`.dev.vars.example`、前端、IndexedDB、日志或 Git：
 
 ```bash
@@ -102,6 +112,8 @@ npm run deploy:cloudflare
 自定义域名为 `student-affairs.site`。权威 DNS 已切换至 Cloudflare，Worker 通过 `wrangler.jsonc` 的 Custom Domain 路由发布；域名、HTTPS 和页面可用性仍应在每次部署后实测，不能只根据配置推测。
 
 当前生产 Worker 与 Cloudflare Secret 均已配置。`/api/deepseek/status` 已实测返回 `configured: true`，`deepseek-v4-flash` 多任务整理也已完成真实请求验证；密钥明文不在前端、配置文件、日志或 Git 中。若服务商密钥被撤销、余额不足或上游不可用，界面仍会诚实回退到本地规则并提示连接状态。
+
+Worker 会为 API 响应生成 `requestId`，严格校验方法、JSON Content-Type、字段白名单、请求大小、文本长度、引用数量、AI 输出结构和日期；模型、token 上限、系统提示词与超时均由服务端固定。日志只记录 requestId、状态、耗时、输入长度、输出 token、错误类型和匿名客户端标识，不记录用户正文或凭证。代码内单实例频率/并发限制不等于平台级防滥用，正式站点仍需按 [RUNBOOK.md](./RUNBOOK.md) 配置 Cloudflare WAF Rate Limiting，并在高频或风险场景接入服务端验证的 Turnstile。安全报告方式见 [SECURITY.md](./SECURITY.md)。
 
 本地调试可复制 `.dev.vars.example` 为不提交的 `.dev.vars`，然后运行 `npm run cloudflare:dev`。`wrangler.jsonc` 不含账户令牌或服务密钥。
 
