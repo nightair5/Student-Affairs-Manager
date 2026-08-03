@@ -2,6 +2,7 @@ import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { DraftReviewPanel } from './components/DraftReviewPanel'
 import { IntakePanel } from './components/IntakePanel'
 import { OnboardingGuide } from './components/OnboardingGuide'
+import { PageLoadBoundary } from './components/PageLoadBoundary'
 import { Sidebar } from './components/Sidebar'
 import { TaskDetailPanel } from './components/TaskDetailPanel'
 import { demoSources, demoTasks } from './data/demo'
@@ -545,7 +546,13 @@ function App() {
         onOpenIntake={() => setIntakeOpen(true)}
         onOpenGuide={() => setGuideOpen(true)}
       />
-      <div id="main-content" className="content-shell" tabIndex={-1}><Suspense fallback={<main className="page page-loading" role="status">正在打开页面…</main>}>{renderPage()}</Suspense></div>
+      <div id="main-content" className="content-shell" tabIndex={-1}>
+        <PageLoadBoundary key={currentPage} onRetry={() => window.location.reload()}>
+          <Suspense fallback={<main className="page page-loading" role="status">正在打开页面…</main>}>
+            {renderPage()}
+          </Suspense>
+        </PageLoadBoundary>
+      </div>
 
       {!workspaceReady && <div className="workspace-status" role="status">正在恢复本机工作区…</div>}
       {storageError && <div className="workspace-status error" role="alert">本机数据库暂不可用；本次更改可能无法在刷新后保留。</div>}

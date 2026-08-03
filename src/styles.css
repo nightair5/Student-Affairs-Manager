@@ -3673,6 +3673,31 @@ h3 {
   color: var(--ink-soft);
 }
 
+.page-load-error {
+  min-height: 40vh;
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  max-width: 720px;
+  margin: 0 auto;
+  padding-top: clamp(48px, 10vh, 96px);
+}
+
+.page-load-error > svg {
+  flex: 0 0 auto;
+  color: var(--red);
+}
+
+.page-load-error h1 {
+  margin: 8px 0 10px;
+}
+
+.page-load-error p {
+  margin: 0 0 20px;
+  color: var(--ink-soft);
+  line-height: 1.7;
+}
+
 @media (max-width: 900px) {
   .review-body {
     display: block;
