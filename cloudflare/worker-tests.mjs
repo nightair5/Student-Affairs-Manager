@@ -114,9 +114,10 @@ test('structured extraction uses V4 Flash JSON mode and returns bounded suggesti
   assert.match(upstreamBody.messages[0].content, /不可信资料/)
 })
 
-test('allowlisted HTTPS pages are converted to inert text before client-side DeepSeek submission', async () => {
+test('public HTTPS pages are converted to inert text before client-side DeepSeek submission', async () => {
   let requestedUrl = ''
   const worker = createWorker({
+    resolveHostname: async () => undefined,
     fetcher: async (url, options) => {
       requestedUrl = url.toString()
       assert.equal(options.redirect, 'manual')
@@ -127,7 +128,7 @@ test('allowlisted HTTPS pages are converted to inert text before client-side Dee
   })
   const response = await worker.fetch(request('/api/source/fetch', {
     body: JSON.stringify({ url: 'https://notice.example/item#section' }),
-  }), environment({ WEB_FETCH_ALLOWED_HOSTS: 'notice.example' }))
+  }), environment())
   assert.equal(response.status, 200)
   const payload = await response.json()
   assert.equal(requestedUrl, 'https://notice.example/item')
@@ -136,17 +137,65 @@ test('allowlisted HTTPS pages are converted to inert text before client-side Dee
   assert.doesNotMatch(payload.text, /steal/u)
 })
 
-test('web fetch stays closed for non-allowlisted and unsafe targets', async () => {
+test('web fetch accepts public hosts and rejects unsafe targets', async () => {
   let contacted = false
   const worker = createWorker({ fetcher: async () => { contacted = true } })
   const response = await worker.fetch(request('/api/source/fetch', {
-    body: JSON.stringify({ url: 'https://blocked.example/item' }),
-  }), environment({ WEB_FETCH_ALLOWED_HOSTS: 'notice.example' }))
-  assert.equal(response.status, 403)
-  assert.equal((await response.json()).error, 'WEB_HOST_NOT_ALLOWED')
+    body: JSON.stringify({ url: 'https://127.0.0.1/item' }),
+  }), environment())
+  assert.equal(response.status, 400)
+  assert.equal((await response.json()).error, 'WEB_PRIVATE_ADDRESS_FORBIDDEN')
   assert.equal(contacted, false)
-  assert.equal(validateWebFetchTarget('http://notice.example', ['notice.example']).error, 'WEB_HTTPS_REQUIRED')
-  assert.equal(validateWebFetchTarget('https://127.0.0.1/item', ['127.0.0.1']).error, 'WEB_PRIVATE_ADDRESS_FORBIDDEN')
+  assert.equal(validateWebFetchTarget('https://other.edu/item').url.hostname, 'other.edu')
+  assert.equal(validateWebFetchTarget('http://notice.example').error, 'WEB_HTTPS_REQUIRED')
+  assert.equal(validateWebFetchTarget('https://127.0.0.1/item').error, 'WEB_PRIVATE_ADDRESS_FORBIDDEN')
+  assert.equal(validateWebFetchTarget('https://printer.local/item').error, 'WEB_PRIVATE_ADDRESS_FORBIDDEN')
+  assert.equal(validateWebFetchTarget('https://notice.example:8443/item').error, 'WEB_PORT_FORBIDDEN')
+})
+
+test('web fetch follows only bounded redirects whose target is revalidated', async () => {
+  const contacted = []
+  const worker = createWorker({
+    resolveHostname: async () => undefined,
+    fetcher: async (url) => {
+      contacted.push(url.toString())
+      if (contacted.length === 1) return new Response(null, { status: 302, headers: { location: '/final' } })
+      return new Response('<title>最终通知</title><p>提交材料</p>', { headers: { 'content-type': 'text/html' } })
+    },
+  })
+  const response = await worker.fetch(request('/api/source/fetch', {
+    body: JSON.stringify({ url: 'https://notice.example/start' }),
+  }), environment())
+  assert.equal(response.status, 200)
+  assert.deepEqual(contacted, ['https://notice.example/start', 'https://notice.example/final'])
+  assert.equal((await response.json()).finalUrl, 'https://notice.example/final')
+
+  const blockedWorker = createWorker({
+    resolveHostname: async () => undefined,
+    fetcher: async () => new Response(null, {
+      status: 302,
+      headers: { location: 'https://127.0.0.1/private' },
+    }),
+  })
+  const blockedResponse = await blockedWorker.fetch(request('/api/source/fetch', {
+    body: JSON.stringify({ url: 'https://notice.example/start' }),
+  }), environment())
+  assert.equal(blockedResponse.status, 400)
+  assert.equal((await blockedResponse.json()).error, 'WEB_PRIVATE_ADDRESS_FORBIDDEN')
+})
+
+test('web fetch refuses a public-looking hostname that resolves to a private address', async () => {
+  let contacted = false
+  const worker = createWorker({
+    resolveHostname: async () => { throw new Error('WEB_PRIVATE_ADDRESS_FORBIDDEN') },
+    fetcher: async () => { contacted = true },
+  })
+  const response = await worker.fetch(request('/api/source/fetch', {
+    body: JSON.stringify({ url: 'https://rebinding.example/item' }),
+  }), environment())
+  assert.equal(response.status, 400)
+  assert.equal((await response.json()).error, 'WEB_PRIVATE_ADDRESS_FORBIDDEN')
+  assert.equal(contacted, false)
 })
 
 test('link text is accepted for structured extraction but a naked URL is never fetched by DeepSeek', () => {

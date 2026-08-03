@@ -7,7 +7,7 @@ import test from 'node:test'
 import { createRequestHandler } from './app.mjs'
 import { FileWorkspaceStore } from './workspace-store.mjs'
 import { DisabledEmailProvider, FileEmailQueue } from './email-service.mjs'
-import { AllowlistedWebFetcher, DisabledWebFetcher, validateFetchTarget } from './web-fetch-service.mjs'
+import { DisabledWebFetcher, PublicWebFetcher, validateFetchTarget } from './web-fetch-service.mjs'
 import { createDeepSeekProvider, validateDeepSeekRequest } from './deepseek-service.mjs'
 
 const workspace = {
@@ -122,24 +122,27 @@ test('email queue records failure and explicit retry before sent', async () => {
   }
 })
 
-test('web fetch is closed without an explicit allowlist configuration', async () => {
+test('web fetch is closed unless explicitly enabled and validates public HTTPS targets', async () => {
   await assert.rejects(() => new DisabledWebFetcher().fetchText('https://example.edu'), { code: 'WEB_FETCH_NOT_CONFIGURED' })
-  assert.equal(validateFetchTarget('http://example.edu', ['example.edu']).error, 'WEB_HTTPS_REQUIRED')
-  assert.equal(validateFetchTarget('https://127.0.0.1/private', ['127.0.0.1']).error, 'WEB_PRIVATE_ADDRESS_FORBIDDEN')
-  assert.equal(validateFetchTarget('https://other.edu', ['example.edu']).error, 'WEB_HOST_NOT_ALLOWED')
+  assert.equal(validateFetchTarget('http://example.edu').error, 'WEB_HTTPS_REQUIRED')
+  assert.equal(validateFetchTarget('https://127.0.0.1/private').error, 'WEB_PRIVATE_ADDRESS_FORBIDDEN')
+  assert.equal(validateFetchTarget('https://other.edu').url.hostname, 'other.edu')
 })
 
-test('allowlisted web fetch extracts inert text and never follows redirects', async () => {
-  let options
-  const fetcher = async (_url, receivedOptions) => {
-    options = receivedOptions
+test('public web fetch extracts inert text and revalidates redirects', async () => {
+  const requested = []
+  const fetcher = async (url, receivedOptions) => {
+    requested.push({ url: url.toString(), options: receivedOptions })
+    if (requested.length === 1) return new Response(null, { status: 302, headers: { location: '/notice' } })
     return new Response('<main><h1>比赛通知</h1><script>steal()</script><p>截止 8 月 4 日</p></main>', {
       headers: { 'content-type': 'text/html; charset=utf-8' },
     })
   }
-  const resolver = async () => [{ address: '203.0.113.10', family: 4 }]
-  const result = await new AllowlistedWebFetcher(['example.edu'], fetcher, resolver).fetchText('https://example.edu/notice')
-  assert.equal(options.redirect, 'error')
+  const resolver = async () => [{ address: '8.8.8.8', family: 4 }]
+  const result = await new PublicWebFetcher(fetcher, resolver).fetchText('https://example.edu/start')
+  assert.equal(requested[0].options.redirect, 'manual')
+  assert.deepEqual(requested.map((item) => item.url), ['https://example.edu/start', 'https://example.edu/notice'])
+  assert.equal(result.finalUrl, 'https://example.edu/notice')
   assert.match(result.text, /比赛通知/)
   assert.doesNotMatch(result.text, /steal/)
 })
