@@ -12,7 +12,7 @@ import {
   Save,
   X,
 } from 'lucide-react'
-import { useEffect, useId, useState, type FormEvent } from 'react'
+import { useId, useRef, useState, type FormEvent } from 'react'
 import {
   isMaterialSatisfied,
   materialStatusFromLegacy,
@@ -30,6 +30,7 @@ import type {
   TaskCategory,
   TaskStatus,
 } from '../types'
+import { useDialogFocusTrap } from '../lib/useDialogFocusTrap'
 
 const materialStatusOptions: Array<{ value: MaterialStatus; label: string }> = [
   { value: 'missing', label: '缺失' },
@@ -60,6 +61,7 @@ export function TaskDetailPanel({
   onRequestNotificationPermission,
 }: TaskDetailPanelProps) {
   const titleId = useId()
+  const panelRef = useRef<HTMLElement>(null)
   const [editing, setEditing] = useState(false)
   const [draft, setDraft] = useState(task)
   const [notificationFeedback, setNotificationFeedback] = useState('')
@@ -67,13 +69,7 @@ export function TaskDetailPanel({
     task.sourceIds.includes(source.id),
   )
 
-  useEffect(() => {
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') onClose()
-    }
-    window.addEventListener('keydown', closeOnEscape)
-    return () => window.removeEventListener('keydown', closeOnEscape)
-  }, [onClose])
+  useDialogFocusTrap(panelRef, onClose)
 
   const handleSave = (event: FormEvent) => {
     event.preventDefault()
@@ -172,6 +168,7 @@ export function TaskDetailPanel({
   return (
     <div className="modal-backdrop detail-backdrop" role="presentation">
       <aside
+        ref={panelRef}
         className="detail-panel"
         role="dialog"
         aria-modal="true"

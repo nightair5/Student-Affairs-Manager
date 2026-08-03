@@ -1,5 +1,6 @@
 import { Check, CheckCheck, Clock3, FileText, ListChecks, PencilLine, Trash2, X } from 'lucide-react'
-import { useId, useState } from 'react'
+import { useId, useRef, useState } from 'react'
+import { useDialogFocusTrap } from '../lib/useDialogFocusTrap'
 import type { DraftItem, ExtractionDraft, Source, TaskCategory } from '../types'
 
 interface DraftReviewPanelProps {
@@ -24,20 +25,25 @@ function deadlineLabel(value: string): string {
 
 export function DraftReviewPanel({ draft, source, onClose, onUpdate, onConfirm, onReject, onConfirmAll, projectWillCreate }: DraftReviewPanelProps) {
   const titleId = useId()
+  const panelRef = useRef<HTMLElement>(null)
   const [editingId, setEditingId] = useState<string | null>(null)
+  const [activeEvidence, setActiveEvidence] = useState('')
   const pending = draft.items.filter((item) => item.status === '待确认')
   const processed = draft.items.length - pending.length
   const pendingMaterials = pending.reduce((count, item) => count + item.suggestion.materials.length, 0)
+  useDialogFocusTrap(panelRef, onClose)
+  const sourceText = source?.content ?? source?.rawText ?? source?.contentPreview ?? '原文暂不可用'
+  const evidenceIndex = activeEvidence ? sourceText.indexOf(activeEvidence) : -1
 
   return <div className="modal-backdrop detail-backdrop" role="presentation">
-    <aside className="detail-panel review-panel" role="dialog" aria-modal="true" aria-labelledby={titleId}>
+    <aside ref={panelRef} className="detail-panel review-panel" role="dialog" aria-modal="true" aria-labelledby={titleId}>
       <header className="detail-header review-header">
         <div><span className="category-label">第 2 步 · {source?.extractionMethod === 'deepseek-v4-flash' ? 'DeepSeek 建议' : '本地规则建议'}</span><h2 id={titleId}>识别出 {draft.items.length} 件事</h2><p>先看标题和时间；不准确时再点“编辑”。</p></div>
         <button className="icon-button" type="button" onClick={onClose} aria-label="稍后处理并关闭"><X size={20} /></button>
       </header>
       <div className="detail-body review-body">
         <div className="review-progress"><ListChecks size={18} /><span><strong>{pending.length} 项待确认</strong><small>{processed ? `已处理 ${processed} 项` : '确认后才会进入今日和任务中心'}</small></span></div>
-        <details className="source-details"><summary><FileText size={16} />查看原文依据</summary><p>{source?.content ?? source?.contentPreview ?? '原文暂不可用'}</p></details>
+        <details className="source-details" open><summary><FileText size={16} />原始通知与定位依据</summary><p>{evidenceIndex >= 0 ? <>{sourceText.slice(0, evidenceIndex)}<mark>{activeEvidence}</mark>{sourceText.slice(evidenceIndex + activeEvidence.length)}</> : sourceText}</p>{activeEvidence && evidenceIndex < 0 && <small>这条依据来自解析结果，但无法在当前保存的原文中精确定位，请人工核对。</small>}</details>
         <section className="review-list" aria-label="拆分后的待确认事项">
           {draft.items.map((item, index) => <DraftItemReview
             key={item.id}
@@ -48,6 +54,7 @@ export function DraftReviewPanel({ draft, source, onClose, onUpdate, onConfirm, 
             onUpdate={onUpdate}
             onConfirm={onConfirm}
             onReject={onReject}
+            onFocusEvidence={setActiveEvidence}
           />)}
         </section>
       </div>
@@ -74,9 +81,10 @@ interface DraftItemReviewProps {
   onUpdate: DraftReviewPanelProps['onUpdate']
   onConfirm: DraftReviewPanelProps['onConfirm']
   onReject: DraftReviewPanelProps['onReject']
+  onFocusEvidence: (quote: string) => void
 }
 
-function DraftItemReview({ index, item, editing, onToggleEdit, onUpdate, onConfirm, onReject }: DraftItemReviewProps) {
+function DraftItemReview({ index, item, editing, onToggleEdit, onUpdate, onConfirm, onReject, onFocusEvidence }: DraftItemReviewProps) {
   const suggestion = item.suggestion
   if (item.status !== '待确认') return <article className={`review-item processed ${item.status === '已拒绝' ? 'rejected' : ''}`}>
     <span className="review-number">{index + 1}</span><div><strong>{suggestion.title}</strong><p>{item.status === '已确认' ? '已加入任务中心' : '已移除，不会创建任务'}</p></div>
@@ -98,7 +106,7 @@ function DraftItemReview({ index, item, editing, onToggleEdit, onUpdate, onConfi
       <label className="field span-2"><span>下一步动作</span><input value={suggestion.nextAction} onChange={(event) => onUpdate(item.id, { nextAction: event.target.value })} /></label>
       <label className="field span-2"><span>材料（用逗号或顿号分隔）</span><input value={suggestion.materials.join('、')} onChange={(event) => onUpdate(item.id, { materials: event.target.value.split(/[，,、]/).map((value) => value.trim()).filter(Boolean) })} /></label>
     </div></fieldset>}
-    <details className="item-evidence" open={suggestion.confidence === '低'}><summary>为什么这样拆？</summary><p>{suggestion.evidence || '原文未直接说明，需要人工确认。'}</p>{suggestion.evidenceRefs?.length ? <ul>{suggestion.evidenceRefs.map((reference) => <li key={reference.id}><strong>{reference.field}</strong>：{reference.quotedText ?? reference.quote}</li>)}</ul> : <small>系统推测 · 原文未提供可定位依据</small>}</details>
+    <details className="item-evidence" open={suggestion.confidence === '低'}><summary>为什么这样拆？</summary><p>{suggestion.evidence || '原文未直接说明，需要人工确认。'}</p>{suggestion.evidenceRefs?.length ? <ul>{suggestion.evidenceRefs.map((reference) => { const quote = reference.quotedText ?? reference.quote; return <li key={reference.id}><strong>{reference.field}</strong>：{quote}<button type="button" onClick={() => onFocusEvidence(quote)}>在原文中定位</button></li> })}</ul> : <small>系统推测 · 原文未提供可定位依据</small>}</details>
     <footer className="review-item-actions"><button className="text-button remove" type="button" onClick={() => onReject(item.id)}><Trash2 size={14} />不需要</button><button className="secondary-button" type="button" onClick={() => onConfirm(item.id)}><Check size={15} />加入任务</button></footer>
   </article>
 }

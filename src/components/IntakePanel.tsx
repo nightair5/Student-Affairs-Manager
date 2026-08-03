@@ -10,7 +10,6 @@ import {
   X,
 } from 'lucide-react'
 import {
-  useEffect,
   useId,
   useRef,
   useState,
@@ -24,6 +23,7 @@ import {
   type FileExtractionStatus,
 } from '../lib/fileExtraction'
 import type { IntakeInput } from '../lib/intake'
+import { useDialogFocusTrap } from '../lib/useDialogFocusTrap'
 import type { Priority, SourceType, TaskCategory } from '../types'
 
 interface IntakePanelProps {
@@ -56,15 +56,8 @@ export function IntakePanel({ onClose, onSubmitIntake, smartExtractionStatus }: 
   const [manualMaterials, setManualMaterials] = useState('')
   const titleId = useId()
   const firstControlRef = useRef<HTMLTextAreaElement>(null)
-
-  useEffect(() => {
-    firstControlRef.current?.focus()
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') onClose()
-    }
-    window.addEventListener('keydown', closeOnEscape)
-    return () => window.removeEventListener('keydown', closeOnEscape)
-  }, [onClose])
+  const panelRef = useRef<HTMLElement>(null)
+  useDialogFocusTrap(panelRef, onClose, firstControlRef)
 
   const selectSourceType = (nextType: SourceType) => {
     setManualMode(false)
@@ -177,7 +170,7 @@ export function IntakePanel({ onClose, onSubmitIntake, smartExtractionStatus }: 
 
   return (
     <div className="modal-backdrop" role="presentation">
-      <section className="intake-panel" role="dialog" aria-modal="true" aria-labelledby={titleId} onPaste={handlePaste}>
+      <section ref={panelRef} className="intake-panel" role="dialog" aria-modal="true" aria-labelledby={titleId} onPaste={handlePaste}>
         <header className="intake-header">
           <div>
             <span className="eyebrow">第 1 步 · 放入原文</span>

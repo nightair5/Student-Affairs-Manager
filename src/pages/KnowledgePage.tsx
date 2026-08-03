@@ -3,6 +3,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { ProxyDeepSeekService } from '../lib/deepseek'
 import { answerLocally, buildKnowledgeDocuments, type KnowledgeCitation } from '../lib/knowledge'
 import { buildObsidianVault, downloadObsidianZip, writeObsidianFolder } from '../lib/obsidian'
+import { useDialogFocusTrap } from '../lib/useDialogFocusTrap'
 import type { Project, Source, Task } from '../types'
 
 interface KnowledgePageProps {
@@ -30,6 +31,7 @@ export function KnowledgePage({
   const [exportMessage, setExportMessage] = useState('')
   const [selectedTaskIds, setSelectedTaskIds] = useState<Set<string>>(() => new Set(tasks.map((task) => task.id)))
   const cloudCancelRef = useRef<HTMLButtonElement>(null)
+  const cloudDialogRef = useRef<HTMLElement>(null)
   const documents = useMemo(() => buildKnowledgeDocuments(tasks, sources, projects), [projects, sources, tasks])
   const selectedTasks = useMemo(() => tasks.filter((task) => selectedTaskIds.has(task.id)), [selectedTaskIds, tasks])
   const selectedSourceIds = useMemo(() => new Set(selectedTasks.flatMap((task) => task.sourceIds)), [selectedTasks])
@@ -40,13 +42,7 @@ export function KnowledgePage({
     projects.filter((project) => selectedProjectIds.has(project.id)),
   ), [projects, selectedProjectIds, selectedSourceIds, selectedTasks, sources])
 
-  useEffect(() => {
-    const closeOnEscape = (event: KeyboardEvent) => { if (event.key === 'Escape') setCloudDialogOpen(false) }
-    window.addEventListener('keydown', closeOnEscape)
-    return () => window.removeEventListener('keydown', closeOnEscape)
-  }, [])
-
-  useEffect(() => { if (cloudDialogOpen) cloudCancelRef.current?.focus() }, [cloudDialogOpen])
+  useDialogFocusTrap(cloudDialogRef, () => setCloudDialogOpen(false), cloudCancelRef, cloudDialogOpen)
 
   useEffect(() => {
     let active = true
@@ -146,6 +142,6 @@ export function KnowledgePage({
       {exportMessage && <p className="workspace-control-message" role="status">{exportMessage}</p>}
     </section>
 
-    {cloudDialogOpen && <div className="modal-backdrop knowledge-dialog-backdrop" role="presentation"><section className="knowledge-dialog" role="dialog" aria-modal="true" aria-labelledby="cloud-confirm-title"><span className="eyebrow">每次云端问答确认</span><h2 id="cloud-confirm-title">确认发送范围</h2><p>本次只会发送问题和本地命中的最多 4 条引用摘要到你配置的 DeepSeek 服务端代理，不会发送整个工作区。</p><label className="cloud-acknowledgement"><input type="checkbox" checked={cloudAcknowledged} onChange={(event) => setCloudAcknowledged(event.target.checked)} />我已了解本次发送范围并同意。</label><div className="panel-actions"><button ref={cloudCancelRef} className="secondary-button" type="button" onClick={() => setCloudDialogOpen(false)}>取消</button><button className="primary-button" type="button" disabled={!cloudAcknowledged} onClick={() => void askCloud()}>确认并发送</button></div></section></div>}
+    {cloudDialogOpen && <div className="modal-backdrop knowledge-dialog-backdrop" role="presentation"><section ref={cloudDialogRef} className="knowledge-dialog" role="dialog" aria-modal="true" aria-labelledby="cloud-confirm-title"><span className="eyebrow">每次云端问答确认</span><h2 id="cloud-confirm-title">确认发送范围</h2><p>本次只会发送问题和本地命中的最多 4 条引用摘要到你配置的 DeepSeek 服务端代理，不会发送整个工作区。</p><label className="cloud-acknowledgement"><input type="checkbox" checked={cloudAcknowledged} onChange={(event) => setCloudAcknowledged(event.target.checked)} />我已了解本次发送范围并同意。</label><div className="panel-actions"><button ref={cloudCancelRef} className="secondary-button" type="button" onClick={() => setCloudDialogOpen(false)}>取消</button><button className="primary-button" type="button" disabled={!cloudAcknowledged} onClick={() => void askCloud()}>确认并发送</button></div></section></div>}
   </main>
 }

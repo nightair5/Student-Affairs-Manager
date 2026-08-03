@@ -3,6 +3,7 @@ import {
   Menu,
   Plus,
   Server,
+  ShieldCheck,
   Sparkles,
   X,
 } from 'lucide-react'
@@ -10,6 +11,7 @@ import { useEffect, useId, useRef, useState } from 'react'
 import type { PageId } from '../types'
 import { coreNavigation, libraryNavigation } from './navigation'
 import type { NavigationItem } from './navigation'
+import { useDialogFocusTrap } from '../lib/useDialogFocusTrap'
 
 interface SidebarProps {
   currentPage: PageId
@@ -29,6 +31,8 @@ export function Sidebar({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const menuTitleId = useId()
   const mobileCloseRef = useRef<HTMLButtonElement>(null)
+  const mobileSheetRef = useRef<HTMLElement>(null)
+  useDialogFocusTrap(mobileSheetRef, () => setMobileMenuOpen(false), mobileCloseRef, mobileMenuOpen)
 
   const navigate = (page: PageId) => {
     onNavigate(page)
@@ -37,15 +41,9 @@ export function Sidebar({
 
   useEffect(() => {
     if (!mobileMenuOpen) return
-    mobileCloseRef.current?.focus()
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setMobileMenuOpen(false)
-    }
     document.body.classList.add('mobile-menu-visible')
-    window.addEventListener('keydown', closeOnEscape)
     return () => {
       document.body.classList.remove('mobile-menu-visible')
-      window.removeEventListener('keydown', closeOnEscape)
     }
   }, [mobileMenuOpen])
 
@@ -84,6 +82,7 @@ export function Sidebar({
       <div className="sidebar-utility">
         <button type="button" onClick={onOpenGuide}><HelpCircle size={16} />新手教程</button>
         <button type="button" className={currentPage === 'services' ? 'active' : ''} onClick={() => navigate('services')}><Server size={16} />服务与设置</button>
+        <button type="button" className={currentPage === 'privacy' ? 'active' : ''} onClick={() => navigate('privacy')}><ShieldCheck size={16} />隐私与数据</button>
       </div>
 
       <div className="sidebar-note">
@@ -111,13 +110,13 @@ export function Sidebar({
           <small>{item.shortLabel ?? item.label}</small>
         </button>
       })}
-      <button type="button" className={mobileMenuOpen || [...libraryNavigation.map((item) => item.id), 'services'].includes(currentPage) ? 'active' : ''} onClick={() => setMobileMenuOpen(true)} aria-expanded={mobileMenuOpen}>
+      <button type="button" className={mobileMenuOpen || [...libraryNavigation.map((item) => item.id), 'services', 'privacy'].includes(currentPage) ? 'active' : ''} onClick={() => setMobileMenuOpen(true)} aria-expanded={mobileMenuOpen}>
         <span className="mobile-nav-icon"><Menu size={21} /></span><small>更多</small>
       </button>
     </nav>
 
     {mobileMenuOpen && <div className="mobile-menu-backdrop" role="presentation" onClick={() => setMobileMenuOpen(false)}>
-      <section className="mobile-menu-sheet" role="dialog" aria-modal="true" aria-labelledby={menuTitleId} onClick={(event) => event.stopPropagation()}>
+      <section ref={mobileSheetRef} className="mobile-menu-sheet" role="dialog" aria-modal="true" aria-labelledby={menuTitleId} onClick={(event) => event.stopPropagation()}>
         <header>
           <div><span>更多功能</span><h2 id={menuTitleId}>资料与设置</h2></div>
           <button ref={mobileCloseRef} type="button" onClick={() => setMobileMenuOpen(false)} aria-label="关闭更多功能"><X size={21} /></button>
@@ -131,6 +130,9 @@ export function Sidebar({
           })}
           <button type="button" className={currentPage === 'services' ? 'active' : ''} onClick={() => navigate('services')}>
             <span><Server size={21} /></span><strong>服务与设置</strong><small>接入状态与安全边界</small>
+          </button>
+          <button type="button" className={currentPage === 'privacy' ? 'active' : ''} onClick={() => navigate('privacy')}>
+            <span><ShieldCheck size={21} /></span><strong>隐私与数据</strong><small>本机存储、云端发送与备份</small>
           </button>
         </div>
         <button className="mobile-guide-button" type="button" onClick={openGuide}><HelpCircle size={18} />打开新手教程</button>

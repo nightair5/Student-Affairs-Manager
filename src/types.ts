@@ -7,6 +7,7 @@ export type PageId =
   | 'archive'
   | 'knowledge'
   | 'services'
+  | 'privacy'
 
 export type TaskCategory = '比赛' | '保研' | '课程' | '老师任务' | '其他'
 export type TaskStatus = '待开始' | '进行中' | '已完成'

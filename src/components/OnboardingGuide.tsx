@@ -1,5 +1,6 @@
 import { ArrowLeft, ArrowRight, Check, ClipboardPaste, ListChecks, ShieldCheck, Sparkles, X } from 'lucide-react'
 import { useEffect, useId, useRef, useState } from 'react'
+import { useDialogFocusTrap } from '../lib/useDialogFocusTrap'
 
 interface OnboardingGuideProps {
   onClose: () => void
@@ -41,24 +42,18 @@ export function OnboardingGuide({ onClose }: OnboardingGuideProps) {
   const titleId = useId()
   const closeRef = useRef<HTMLButtonElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
+  const dialogRef = useRef<HTMLElement>(null)
   const current = steps[step]
   const Icon = current.icon
 
-  useEffect(() => {
-    closeRef.current?.focus()
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') onClose()
-    }
-    window.addEventListener('keydown', closeOnEscape)
-    return () => window.removeEventListener('keydown', closeOnEscape)
-  }, [onClose])
+  useDialogFocusTrap(dialogRef, onClose, closeRef)
 
   useEffect(() => {
     contentRef.current?.scrollTo({ top: 0 })
   }, [step])
 
   return <div className="modal-backdrop guide-backdrop" role="presentation">
-    <section className="onboarding-guide" role="dialog" aria-modal="true" aria-labelledby={titleId}>
+    <section ref={dialogRef} className="onboarding-guide" role="dialog" aria-modal="true" aria-labelledby={titleId}>
       <header className="guide-header">
         <div className="guide-brand"><span><Sparkles size={18} /></span><strong>3 分钟上手事务管家</strong></div>
         <button ref={closeRef} className="icon-button" type="button" onClick={onClose} aria-label="关闭新手教程"><X size={19} /></button>

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { DraftReviewPanel } from './components/DraftReviewPanel'
 import { IntakePanel } from './components/IntakePanel'
 import { OnboardingGuide } from './components/OnboardingGuide'
@@ -6,13 +6,8 @@ import { Sidebar } from './components/Sidebar'
 import { TaskDetailPanel } from './components/TaskDetailPanel'
 import { demoSources, demoTasks } from './data/demo'
 import { InboxPage } from './pages/InboxPage'
-import { ArchivePage } from './pages/ArchivePage'
-import { CalendarPage } from './pages/CalendarPage'
 import { DashboardPage } from './pages/DashboardPage'
-import { LibraryPage } from './pages/LibraryPage'
-import { KnowledgePage } from './pages/KnowledgePage'
 import { TasksPage } from './pages/TasksPage'
-import { ServicesPage } from './pages/ServicesPage'
 import { IndexedDbWorkspaceRepository } from './lib/repository'
 import {
   getBrowserNotificationPermission,
@@ -39,6 +34,13 @@ import type { CourseBlock, ExtractionDraft, IntegrationState, KnowledgeSettings,
 
 const workspaceRepository = new IndexedDbWorkspaceRepository()
 const deepSeekExtractionService = new ProxyDeepSeekExtractionService()
+
+const CalendarPage = lazy(() => import('./pages/CalendarPage').then((module) => ({ default: module.CalendarPage })))
+const LibraryPage = lazy(() => import('./pages/LibraryPage').then((module) => ({ default: module.LibraryPage })))
+const ArchivePage = lazy(() => import('./pages/ArchivePage').then((module) => ({ default: module.ArchivePage })))
+const KnowledgePage = lazy(() => import('./pages/KnowledgePage').then((module) => ({ default: module.KnowledgePage })))
+const ServicesPage = lazy(() => import('./pages/ServicesPage').then((module) => ({ default: module.ServicesPage })))
+const PrivacyPage = lazy(() => import('./pages/PrivacyPage').then((module) => ({ default: module.PrivacyPage })))
 
 function App() {
   const [initialWorkspace] = useState(() => loadWorkspace(demoTasks, demoSources))
@@ -528,11 +530,14 @@ function App() {
             })
           }}
         />
+      case 'privacy':
+        return <PrivacyPage workspace={workspace} onOpenArchive={() => setCurrentPage('archive')} />
     }
   }
 
   return (
     <div className="app-shell">
+      <a className="skip-link" href="#main-content">跳到主要内容</a>
       <Sidebar
         currentPage={currentPage}
         pendingReviewCount={pendingReviewCount}
@@ -540,7 +545,7 @@ function App() {
         onOpenIntake={() => setIntakeOpen(true)}
         onOpenGuide={() => setGuideOpen(true)}
       />
-      <div className="content-shell">{renderPage()}</div>
+      <div id="main-content" className="content-shell" tabIndex={-1}><Suspense fallback={<main className="page page-loading" role="status">正在打开页面…</main>}>{renderPage()}</Suspense></div>
 
       {!workspaceReady && <div className="workspace-status" role="status">正在恢复本机工作区…</div>}
       {storageError && <div className="workspace-status error" role="alert">本机数据库暂不可用；本次更改可能无法在刷新后保留。</div>}
