@@ -25,7 +25,21 @@ function jaccard(left: Set<string>, right: Set<string>): number {
   return intersection / union
 }
 
+function normalizeUrl(value: string): string {
+  try {
+    const url = new URL(value)
+    url.hash = ''
+    url.searchParams.sort()
+    url.pathname = url.pathname.replace(/\/$/, '') || '/'
+    return url.toString().replace(/\/$/, '')
+  } catch {
+    return value.trim().replace(/\/$/, '')
+  }
+}
+
 export function duplicateSourceScore(left: Source, right: Source): number {
+  if (left.fileHash && right.fileHash && left.fileHash === right.fileHash) return 1
+  if (left.url && right.url && normalizeUrl(left.url) === normalizeUrl(right.url)) return 1
   const leftTitle = normalize(left.title)
   const rightTitle = normalize(right.title)
   const titleScore = leftTitle && leftTitle === rightTitle
@@ -49,9 +63,13 @@ export function findDuplicateSources(
       return {
         sourceId: candidate.id,
         score,
-        reason: normalize(source.title) === normalize(candidate.title)
-          ? '标题相同，正文摘要也可能重复'
-          : '正文摘要高度相似',
+        reason: source.fileHash && source.fileHash === candidate.fileHash
+          ? '文件指纹完全相同'
+          : source.url && candidate.url && normalizeUrl(source.url) === normalizeUrl(candidate.url)
+            ? '网页链接相同'
+            : normalize(source.title) === normalize(candidate.title)
+              ? '标题相同，正文摘要也可能重复'
+              : '正文摘要高度相似',
       }
     })
     .filter((candidate) => candidate.score >= 0.72)

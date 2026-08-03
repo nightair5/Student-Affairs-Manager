@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { demoSources, demoTasks } from '../data/demo'
-import { createExtractionDraft, createTaskMilestone, syncTaskMilestone, taskSignals, updateDraftItem } from './workspace'
+import { buildConfirmedProjectBatch, createExtractionDraft, createTaskMilestone, syncTaskMilestone, taskSignals, updateDraftItem } from './workspace'
 
 describe('P0 workspace rules', () => {
   it('keeps draft items independent for partial confirmation and rejection', () => {
@@ -54,5 +54,32 @@ describe('P0 workspace rules', () => {
       title: '完成报名',
       status: '已完成',
     })
+  })
+
+  it('creates a project only when one or more draft items are confirmed', () => {
+    const draft = createExtractionDraft(demoSources[0].id, [
+      { id: 'one', title: '提交报名', category: '比赛', deadline: '2026-08-04T18:00', estimatedMinutes: 60, nextAction: '核对材料', description: '', priority: '高', materials: ['报名表'], evidence: '8 月 4 日前提交报名表', confidence: '中' },
+    ], '2026-08-01T00:00:00.000Z')
+    const batch = buildConfirmedProjectBatch(
+      [draft.items[0]],
+      demoSources[0],
+      undefined,
+      '2026-08-01T00:00:00.000Z',
+    )
+
+    expect(batch.tasks).toHaveLength(1)
+    expect(batch.tasks[0].projectId).toBe(batch.project.id)
+    expect(batch.project.taskIds).toEqual([batch.tasks[0].id])
+    expect(batch.project.milestones).toHaveLength(1)
+    expect(batch.tasks[0].history[0].after).not.toContain('演示')
+  })
+
+  it('stores draft rejection and reopening history', () => {
+    const draft = createExtractionDraft(demoSources[0].id, [
+      { id: 'one', title: '提交报名', category: '比赛', deadline: '2026-08-04T18:00', estimatedMinutes: 60, nextAction: '核对材料', description: '', priority: '高', materials: [], evidence: '原文', confidence: '中' },
+    ], '2026-08-01T00:00:00.000Z')
+    const rejected = updateDraftItem(draft, draft.items[0].id, {}, '已拒绝', '2026-08-01T01:00:00.000Z')
+    const reopened = updateDraftItem(rejected, draft.items[0].id, {}, '待确认', '2026-08-01T02:00:00.000Z')
+    expect(reopened.items[0].history?.map((entry) => entry.action)).toEqual(['rejected', 'reopened'])
   })
 })

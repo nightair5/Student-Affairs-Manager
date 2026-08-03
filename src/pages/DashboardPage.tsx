@@ -2,15 +2,19 @@ import { ArrowRight, ClipboardPaste, Inbox, Plus, Upload } from 'lucide-react'
 import { useState, type FormEvent } from 'react'
 import { TaskCard } from '../components/TaskCard'
 import { getFocusTasks } from '../lib/taskLogic'
-import type { Task } from '../types'
+import type { Project, Task } from '../types'
 
 interface DashboardPageProps {
   tasks: Task[]
+  projects: Project[]
   pendingReviewCount: number
   onQuickCapture: (content: string) => Promise<void>
   onOpenIntake: () => void
   onOpenTask: (task: Task) => void
   onCompleteTask: (taskId: string) => void
+  onStartTask: (taskId: string) => void
+  onSnoozeTask: (taskId: string) => void
+  onTogglePinTask: (taskId: string) => void
   onShowTasks: () => void
   onShowInbox: () => void
   smartExtractionStatus: 'checking' | 'connected' | 'unavailable'
@@ -24,11 +28,15 @@ function todayLabel(): string {
 
 export function DashboardPage({
   tasks,
+  projects,
   pendingReviewCount,
   onQuickCapture,
   onOpenIntake,
   onOpenTask,
   onCompleteTask,
+  onStartTask,
+  onSnoozeTask,
+  onTogglePinTask,
   onShowTasks,
   onShowInbox,
   smartExtractionStatus,
@@ -91,7 +99,7 @@ export function DashboardPage({
           <button className="text-button" type="button" onClick={onShowTasks}>全部 {activeCount} 项<ArrowRight size={16} /></button>
         </div>
         {focusTasks.length
-          ? <div className="focus-grid">{focusTasks.map((task, index) => <TaskCard key={task.id} task={task} featured={index === 0} onOpen={onOpenTask} onComplete={onCompleteTask} />)}</div>
+          ? <div className="focus-grid">{focusTasks.map((task, index) => <TaskCard key={task.id} task={task} allTasks={tasks} projectTitle={projects.find((project) => project.id === task.projectId)?.title} featured={index === 0} onOpen={onOpenTask} onComplete={onCompleteTask} onStart={onStartTask} onSnooze={onSnoozeTask} onTogglePin={onTogglePinTask} />)}</div>
           : <div className="home-empty-state"><strong>今天还没有任务</strong><p>把一段通知粘贴到上方，确认后就会出现在这里。</p></div>}
       </section>
     </main>

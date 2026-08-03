@@ -15,6 +15,7 @@ export interface FileExtractionResult {
 
 const MAX_TEXT_LENGTH = 50_000
 const MAX_PDF_PAGES = 80
+export const MAX_LOCAL_FILE_BYTES = 20 * 1024 * 1024
 
 export function classifyFile(name: string, mimeType: string): SupportedFileKind {
   const lowerName = name.toLowerCase()
@@ -95,6 +96,13 @@ async function extractPdfText(file: File): Promise<FileExtractionResult> {
 }
 
 export async function extractFileContent(file: File): Promise<FileExtractionResult> {
+  if (file.size > MAX_LOCAL_FILE_BYTES) {
+    return {
+      status: 'error',
+      text: '',
+      message: '文件超过 20 MB 本机读取上限。请压缩文件，或只粘贴与任务有关的原文。',
+    }
+  }
   const kind = classifyFile(file.name, file.type)
 
   if (kind === 'text') {

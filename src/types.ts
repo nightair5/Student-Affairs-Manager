@@ -16,7 +16,7 @@ export type SourceType = 'text' | 'file' | 'image' | 'link'
 export type ReminderChannel = 'browser' | 'email' | 'wechat-placeholder'
 export type MaterialStatus = 'missing' | 'preparing' | 'ready' | 'submitted' | 'verified' | 'not_required'
 export type ReminderDeliveryStatus = 'draft' | 'scheduled' | 'sent' | 'failed' | 'unsupported'
-export type CanonicalDraftStatus = 'processing' | 'needs_review' | 'partially_confirmed' | 'confirmed' | 'rejected' | 'failed'
+export type CanonicalDraftStatus = 'processing' | 'needs_review' | 'partially_confirmed' | 'confirmed' | 'rejected' | 'failed' | 'archived'
 export type CanonicalSourceStatus = 'uploaded' | 'extracting' | 'needs_review' | 'partially_confirmed' | 'confirmed' | 'failed' | 'archived'
 export type HistoryEntityType = 'task' | 'project' | 'material' | 'source' | 'draft' | 'reminder'
 export type TimePointType = 'deadline' | 'registration_deadline' | 'submission_deadline' | 'event_start' | 'event_end' | 'planned_start'
@@ -193,6 +193,7 @@ export interface DraftItem {
   suggestion: ParsedSuggestion
   status: DraftItemStatus
   updatedAt: string
+  history?: HistoryEntry[]
 }
 
 export interface ExtractionDraft {

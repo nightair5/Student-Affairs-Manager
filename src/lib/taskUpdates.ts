@@ -14,6 +14,10 @@ type EditableTaskPatch = Partial<
     | 'priority'
     | 'materials'
     | 'reminders'
+    | 'plannedStart'
+    | 'manualPriority'
+    | 'pinnedUntil'
+    | 'snoozedUntil'
   >
 >
 
@@ -28,6 +32,10 @@ const fieldLabels: Record<keyof EditableTaskPatch, string> = {
   priority: '优先级',
   materials: '材料清单',
   reminders: '提醒设置',
+  plannedStart: '计划开工时间',
+  manualPriority: '手动排序',
+  pinnedUntil: '置顶至',
+  snoozedUntil: '稍后处理至',
 }
 
 function displayValue(

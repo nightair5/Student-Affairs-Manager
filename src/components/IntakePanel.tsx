@@ -4,6 +4,7 @@ import {
   FileText,
   Link2,
   LoaderCircle,
+  PenLine,
   Sparkles,
   Upload,
   X,
@@ -14,6 +15,7 @@ import {
   useRef,
   useState,
   type ChangeEvent,
+  type ClipboardEvent,
   type DragEvent,
   type FormEvent,
 } from 'react'
@@ -22,7 +24,7 @@ import {
   type FileExtractionStatus,
 } from '../lib/fileExtraction'
 import type { IntakeInput } from '../lib/intake'
-import type { SourceType } from '../types'
+import type { Priority, SourceType, TaskCategory } from '../types'
 
 interface IntakePanelProps {
   onClose: () => void
@@ -34,13 +36,24 @@ type IntakeFileStatus = FileExtractionStatus | 'idle' | 'reading'
 
 export function IntakePanel({ onClose, onSubmitIntake, smartExtractionStatus }: IntakePanelProps) {
   const [sourceType, setSourceType] = useState<SourceType>('text')
+  const [manualMode, setManualMode] = useState(false)
   const [content, setContent] = useState('')
   const [sourceTitle, setSourceTitle] = useState('')
   const [fileName, setFileName] = useState('')
+  const [mimeType, setMimeType] = useState('')
+  const [fileSize, setFileSize] = useState<number | undefined>()
+  const [fileHash, setFileHash] = useState('')
   const [fileStatus, setFileStatus] = useState<IntakeFileStatus>('idle')
   const [fileMessage, setFileMessage] = useState('')
   const [isDragging, setIsDragging] = useState(false)
   const [isParsing, setIsParsing] = useState(false)
+  const [manualTitle, setManualTitle] = useState('')
+  const [manualDeadline, setManualDeadline] = useState('')
+  const [manualDuration, setManualDuration] = useState(30)
+  const [manualNextAction, setManualNextAction] = useState('')
+  const [manualCategory, setManualCategory] = useState<TaskCategory>('其他')
+  const [manualPriority, setManualPriority] = useState<Priority>('中')
+  const [manualMaterials, setManualMaterials] = useState('')
   const titleId = useId()
   const firstControlRef = useRef<HTMLTextAreaElement>(null)
 
@@ -54,9 +67,22 @@ export function IntakePanel({ onClose, onSubmitIntake, smartExtractionStatus }: 
   }, [onClose])
 
   const selectSourceType = (nextType: SourceType) => {
+    setManualMode(false)
     setSourceType(nextType)
     setContent('')
     setSourceTitle('')
+    setFileName('')
+    setMimeType('')
+    setFileSize(undefined)
+    setFileHash('')
+    setFileStatus('idle')
+    setFileMessage('')
+  }
+
+  const selectManualMode = () => {
+    setManualMode(true)
+    setSourceType('text')
+    setContent('')
     setFileName('')
     setFileStatus('idle')
     setFileMessage('')
@@ -66,11 +92,21 @@ export function IntakePanel({ onClose, onSubmitIntake, smartExtractionStatus }: 
     const isImage = file.type.startsWith('image/')
     setSourceType(isImage ? 'image' : 'file')
     setFileName(file.name)
+    setMimeType(file.type)
+    setFileSize(file.size)
     setSourceTitle(file.name)
     setContent('')
     setFileStatus('reading')
     setFileMessage('正在本机读取，不会上传文件……')
     const result = await extractFileContent(file)
+    if (result.status !== 'error' && globalThis.crypto?.subtle) {
+      try {
+        const digest = await globalThis.crypto.subtle.digest('SHA-256', await file.arrayBuffer())
+        setFileHash(Array.from(new Uint8Array(digest), (byte) => byte.toString(16).padStart(2, '0')).join(''))
+      } catch {
+        setFileHash('')
+      }
+    }
     setContent(result.text)
     setFileStatus(result.status)
     setFileMessage(result.message)
@@ -89,8 +125,17 @@ export function IntakePanel({ onClose, onSubmitIntake, smartExtractionStatus }: 
     if (file) void processFile(file)
   }
 
-  const fileNeedsContent = sourceType === 'file' || sourceType === 'image'
-  const canSubmit =
+  const handlePaste = (event: ClipboardEvent<HTMLElement>) => {
+    const image = Array.from(event.clipboardData.files).find((file) => file.type.startsWith('image/'))
+    if (!image) return
+    event.preventDefault()
+    void processFile(image)
+  }
+
+  const fileNeedsContent = !manualMode && (sourceType === 'file' || sourceType === 'image')
+  const canSubmit = manualMode
+    ? Boolean(manualTitle.trim() && manualDeadline && manualNextAction.trim())
+    :
     fileStatus !== 'reading' &&
     fileStatus !== 'error' &&
     fileStatus !== 'unsupported' &&
@@ -102,7 +147,29 @@ export function IntakePanel({ onClose, onSubmitIntake, smartExtractionStatus }: 
     if (!canSubmit) return
     setIsParsing(true)
     try {
-      await onSubmitIntake({ sourceType, content, sourceTitle, fileName })
+      if (manualMode) {
+        const evidence = `手动录入：${manualTitle.trim()}；截止 ${manualDeadline}；下一步 ${manualNextAction.trim()}`
+        await onSubmitIntake({
+          sourceType: 'text',
+          content: evidence,
+          sourceTitle: `手动任务 · ${manualTitle.trim()}`,
+          manualSuggestion: {
+            id: `manual-${new Date().getTime()}`,
+            title: manualTitle.trim(),
+            category: manualCategory,
+            deadline: manualDeadline,
+            estimatedMinutes: manualDuration,
+            nextAction: manualNextAction.trim(),
+            description: '由用户手动录入，仍需确认后创建。',
+            priority: manualPriority,
+            materials: manualMaterials.split(/[，,、]/).map((value) => value.trim()).filter(Boolean),
+            evidence,
+            confidence: '高',
+          },
+        })
+      } else {
+        await onSubmitIntake({ sourceType, content, sourceTitle, fileName, mimeType, fileSize, fileHash })
+      }
     } finally {
       setIsParsing(false)
     }
@@ -110,7 +177,7 @@ export function IntakePanel({ onClose, onSubmitIntake, smartExtractionStatus }: 
 
   return (
     <div className="modal-backdrop" role="presentation">
-      <section className="intake-panel" role="dialog" aria-modal="true" aria-labelledby={titleId}>
+      <section className="intake-panel" role="dialog" aria-modal="true" aria-labelledby={titleId} onPaste={handlePaste}>
         <header className="intake-header">
           <div>
             <span className="eyebrow">第 1 步 · 放入原文</span>
@@ -124,17 +191,20 @@ export function IntakePanel({ onClose, onSubmitIntake, smartExtractionStatus }: 
         <form className="intake-body" onSubmit={handleParse}>
           <div className="intake-steps" aria-label="录入流程"><span className="active">1 放入原文</span><span>2 核对拆分</span><span>3 回到今日</span></div>
           <div className="source-tabs" role="tablist" aria-label="选择来源">
-            <button type="button" className={sourceType === 'text' ? 'active' : ''} onClick={() => selectSourceType('text')}>
+            <button type="button" className={!manualMode && sourceType === 'text' ? 'active' : ''} onClick={() => selectSourceType('text')}>
               <FileText size={17} />粘贴消息
             </button>
-            <button type="button" className={sourceType === 'file' || sourceType === 'image' ? 'active' : ''} onClick={() => selectSourceType('file')}>
+            <button type="button" className={!manualMode && (sourceType === 'file' || sourceType === 'image') ? 'active' : ''} onClick={() => selectSourceType('file')}>
               <FileImage size={17} />上传文件
             </button>
-            <button type="button" className={sourceType === 'link' ? 'active' : ''} onClick={() => selectSourceType('link')}>
+            <button type="button" className={!manualMode && sourceType === 'link' ? 'active' : ''} onClick={() => selectSourceType('link')}>
               <Link2 size={17} />网页链接
             </button>
+            <button type="button" className={manualMode ? 'active' : ''} onClick={selectManualMode}>
+              <PenLine size={17} />手动建任务
+            </button>
           </div>
-          {sourceType === 'text' && (
+          {!manualMode && sourceType === 'text' && (
             <label className="field">
               <span>粘贴老师消息、群通知或网页正文</span>
               <textarea ref={firstControlRef} value={content} onChange={(event) => setContent(event.target.value)} rows={7} placeholder="例如：8 月 4 日 18:00 前提交报名表；8 月 6 日上午 9 点参加说明会……" required />
@@ -142,7 +212,7 @@ export function IntakePanel({ onClose, onSubmitIntake, smartExtractionStatus }: 
               {!content && <button className="example-fill" type="button" onClick={() => setContent('比赛通知：8月4日18:00提交报名表和确认函；8月6日上午9点参加说明会；8月8日20:00上传作品初稿。')}>不会填？放入一段示例</button>}
             </label>
           )}
-          {(sourceType === 'file' || sourceType === 'image') && (
+          {!manualMode && (sourceType === 'file' || sourceType === 'image') && (
             <>
               <div
                 className={`upload-zone ${isDragging ? 'dragging' : ''}`}
@@ -155,7 +225,7 @@ export function IntakePanel({ onClose, onSubmitIntake, smartExtractionStatus }: 
               >
                 {fileStatus === 'reading' ? <LoaderCircle className="spin" size={30} /> : <Upload size={30} strokeWidth={1.5} />}
                 <strong>{fileName || '拖入文件，或从设备中选择'}</strong>
-                <p>支持 TXT、Markdown、带文本层的 PDF 和图片。只保存提取文字，不保存文件本体。</p>
+                <p>支持 20 MB 内的 TXT、Markdown、带文本层 PDF 和图片；也可直接粘贴截图。只保存提取文字与文件指纹，不保存文件本体。</p>
                 <div className="upload-actions">
                   <label className="secondary-button file-picker">选择文件
                     <input type="file" accept=".txt,.md,.markdown,.pdf,image/*" onChange={handleFile} />
@@ -179,15 +249,31 @@ export function IntakePanel({ onClose, onSubmitIntake, smartExtractionStatus }: 
               )}
             </>
           )}
-          {sourceType === 'link' && (
+          {!manualMode && sourceType === 'link' && (
             <>
               <label className="field"><span>网页标题</span><input type="text" value={sourceTitle} onChange={(event) => setSourceTitle(event.target.value)} placeholder="例如：学院 2026 推免预通知" required /></label>
               <label className="field"><span>网页链接</span><input type="url" value={content} onChange={(event) => setContent(event.target.value)} placeholder="https://..." required /><small>当前只保存链接，尚未抓取网页正文或监测变更。</small></label>
             </>
           )}
+          {manualMode && (
+            <fieldset className="manual-task-form">
+              <legend>手动填写一项任务</legend>
+              <div className="form-grid">
+                <label className="field span-2"><span>任务名称</span><input value={manualTitle} onChange={(event) => setManualTitle(event.target.value)} required /></label>
+                <label className="field"><span>分类</span><select value={manualCategory} onChange={(event) => setManualCategory(event.target.value as TaskCategory)}>{(['比赛', '保研', '课程', '老师任务', '其他'] as TaskCategory[]).map((category) => <option key={category}>{category}</option>)}</select></label>
+                <label className="field"><span>截止时间</span><input type="datetime-local" value={manualDeadline} onChange={(event) => setManualDeadline(event.target.value)} required /></label>
+                <label className="field"><span>预计耗时（分钟）</span><input type="number" min="5" max="10080" step="5" value={manualDuration} onChange={(event) => setManualDuration(Number(event.target.value))} /></label>
+                <label className="field"><span>优先级</span><select value={manualPriority} onChange={(event) => setManualPriority(event.target.value as Priority)}>{(['高', '中', '低'] as Priority[]).map((priority) => <option key={priority}>{priority}</option>)}</select></label>
+                <label className="field span-2"><span>下一步动作</span><input value={manualNextAction} onChange={(event) => setManualNextAction(event.target.value)} placeholder="例如：先下载报名表模板" required /></label>
+                <label className="field span-2"><span>材料（可选，用逗号分隔）</span><input value={manualMaterials} onChange={(event) => setManualMaterials(event.target.value)} /></label>
+              </div>
+            </fieldset>
+          )}
           <div className={`privacy-note ${smartExtractionStatus === 'connected' ? 'cloud-enabled' : 'cloud-unavailable'}`}><Sparkles size={18} /><p>
             <strong>{smartExtractionStatus === 'connected' ? 'DeepSeek V4 Flash 智能整理' : '本地规则兜底可用'}</strong>
-            {sourceType === 'link'
+            {manualMode
+              ? ' 手动填写的内容只保存在本机，仍会先进入待确认。'
+              : sourceType === 'link'
               ? ' 当前只保存链接，不会把它伪装成已读取的网页正文。'
               : smartExtractionStatus === 'connected'
                 ? ' 点击整理会发送本次粘贴或本机提取的文字，不发送文件本体；结果确认前不会创建任务。'

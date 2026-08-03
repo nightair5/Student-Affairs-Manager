@@ -1,10 +1,11 @@
 import { CheckCircle2, Filter, ListTodo, Search } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { TaskCard } from '../components/TaskCard'
-import type { Task, TaskCategory, TaskStatus } from '../types'
+import type { Project, Task, TaskCategory, TaskStatus } from '../types'
 
 interface TasksPageProps {
   tasks: Task[]
+  projects: Project[]
   onOpenTask: (task: Task) => void
   onCompleteTask: (taskId: string) => void
 }
@@ -13,6 +14,7 @@ type FilterValue = '全部' | TaskCategory | TaskStatus
 
 export function TasksPage({
   tasks,
+  projects,
   onOpenTask,
   onCompleteTask,
 }: TasksPageProps) {
@@ -84,6 +86,8 @@ export function TasksPage({
             <TaskCard
               key={task.id}
               task={task}
+              allTasks={tasks}
+              projectTitle={projects.find((project) => project.id === task.projectId)?.title}
               onOpen={onOpenTask}
               onComplete={
                 task.status === '已完成' ? undefined : onCompleteTask

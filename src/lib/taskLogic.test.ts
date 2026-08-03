@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { demoTasks } from '../data/demo'
 import {
+  calculateTaskPriority,
   formatDuration,
   getFocusTasks,
   getMaterialProgress,
@@ -22,6 +23,28 @@ describe('task prioritization', () => {
     expect(getTaskScore(urgent, now)).toBeGreaterThan(
       getTaskScore(lowRisk, now),
     )
+  })
+
+  it('explains material, dependency, pin, and snooze decisions', () => {
+    const dependency = { ...demoTasks[1], id: 'dependency', status: '待开始' as const }
+    const task = {
+      ...demoTasks[0],
+      dependencyIds: [dependency.id],
+      pinnedUntil: '2026-08-02T09:00:00+08:00',
+      snoozedUntil: '2026-08-01T09:00:00+08:00',
+    }
+    const result = calculateTaskPriority(task, [task, dependency], now)
+    expect(result.isPinned).toBe(true)
+    expect(result.isSnoozed).toBe(true)
+    expect(result.risks).toEqual(expect.arrayContaining(['缺材料', '有依赖']))
+    expect(result.reasons.join('；')).toContain('你已置顶')
+    expect(result.reasons.join('；')).toContain('前置事项')
+  })
+
+  it('keeps snoozed tasks out of focus unless pinned', () => {
+    const snoozed = { ...demoTasks[1], snoozedUntil: '2026-08-01T09:00:00+08:00' }
+    expect(getFocusTasks([snoozed], now)).toHaveLength(0)
+    expect(getFocusTasks([{ ...snoozed, pinnedUntil: '2026-08-02T09:00:00+08:00' }], now)).toHaveLength(1)
   })
 })
 

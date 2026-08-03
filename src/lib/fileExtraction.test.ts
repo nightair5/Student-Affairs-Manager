@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { classifyFile, normalizeExtractedText } from './fileExtraction'
+import { classifyFile, extractFileContent, MAX_LOCAL_FILE_BYTES, normalizeExtractedText } from './fileExtraction'
 
 describe('classifyFile', () => {
   it('识别文本、PDF 和图片', () => {
@@ -24,5 +24,15 @@ describe('normalizeExtractedText', () => {
     expect(normalizeExtractedText('第一段\u0000  \n\n\n\n第二段')).toBe(
       '第一段\n\n第二段',
     )
+  })
+})
+
+describe('file safety limits', () => {
+  it('rejects oversized files before parsing', async () => {
+    const file = new File([new Uint8Array(MAX_LOCAL_FILE_BYTES + 1)], 'large.txt', { type: 'text/plain' })
+    await expect(extractFileContent(file)).resolves.toMatchObject({
+      status: 'error',
+      text: '',
+    })
   })
 })

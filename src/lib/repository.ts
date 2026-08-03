@@ -163,6 +163,20 @@ function normalizeDraftRecord(value: unknown, index: number, savedAt: string): E
         ? item.status as DraftItem['status']
         : '待确认',
       updatedAt: validDateValue(item.updatedAt, savedAt),
+      history: Array.isArray(item.history) ? item.history.flatMap((entry, historyIndex) => {
+        if (!isRecord(entry)) return []
+        return [{
+          id: stringValue(entry.id, `draft-item-${index}-${itemIndex}-history-${historyIndex}`),
+          field: stringValue(entry.field, '识别建议'),
+          before: stringValue(entry.before),
+          after: stringValue(entry.after),
+          changedAt: validDateValue(entry.changedAt, savedAt),
+          actor: entry.actor === 'system' ? 'system' as const : 'user' as const,
+          entityType: 'draft' as const,
+          entityId: stringValue(entry.entityId) || stringValue(item.id, `draft-item-${index}-${itemIndex}`),
+          action: stringValue(entry.action, 'updated'),
+        }]
+      }) : [],
       suggestion: {
         id: stringValue(suggestion.id, `suggestion-${index}-${itemIndex}`),
         title: stringValue(suggestion.title, '待核对事项'),
@@ -393,7 +407,7 @@ function validateCurrentSchemaInput(value: unknown): void {
     requireString(draft.id, `草稿 ${index + 1} ID`)
     requireString(draft.sourceId, `草稿 ${index + 1} 来源 ID`)
     requireEnum(draft.status, ['待确认', '部分确认', '已确认', '已拒绝'], `草稿 ${index + 1} 状态`)
-    requireEnum(draft.workflowStatus, ['processing', 'needs_review', 'partially_confirmed', 'confirmed', 'rejected', 'failed'], `草稿 ${index + 1} 工作流状态`)
+    requireEnum(draft.workflowStatus, ['processing', 'needs_review', 'partially_confirmed', 'confirmed', 'rejected', 'failed', 'archived'], `草稿 ${index + 1} 工作流状态`)
     requireDate(draft.createdAt, `草稿 ${index + 1} 创建时间`)
     requireDate(draft.updatedAt, `草稿 ${index + 1} 更新时间`)
     requireArray(draft.items, `草稿 ${index + 1} 建议`)
@@ -510,7 +524,7 @@ function validateWorkspaceIntegrity(workspace: WorkspaceData): void {
     assertValidDate(source.updatedAt, `来源“${source.title}”`)
   })
   workspace.drafts.forEach((draft) => {
-    assertEnum(draft.workflowStatus, ['processing', 'needs_review', 'partially_confirmed', 'confirmed', 'rejected', 'failed'], '草稿状态')
+    assertEnum(draft.workflowStatus, ['processing', 'needs_review', 'partially_confirmed', 'confirmed', 'rejected', 'failed', 'archived'], '草稿状态')
     if (!sourceIds.has(draft.sourceId)) throw new Error('草稿引用了不存在的来源')
     assertValidDate(draft.createdAt, '草稿')
     assertValidDate(draft.updatedAt, '草稿')

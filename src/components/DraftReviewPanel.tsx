@@ -10,21 +10,24 @@ interface DraftReviewPanelProps {
   onConfirm: (itemId: string) => void
   onReject: (itemId: string) => void
   onConfirmAll: () => void
+  projectWillCreate: boolean
 }
 
 const categories: TaskCategory[] = ['比赛', '保研', '课程', '老师任务', '其他']
 
 function deadlineLabel(value: string): string {
+  if (Number.isNaN(new Date(value).getTime())) return '日期待确认'
   return new Intl.DateTimeFormat('zh-CN', {
     month: 'numeric', day: 'numeric', weekday: 'short', hour: '2-digit', minute: '2-digit',
   }).format(new Date(value))
 }
 
-export function DraftReviewPanel({ draft, source, onClose, onUpdate, onConfirm, onReject, onConfirmAll }: DraftReviewPanelProps) {
+export function DraftReviewPanel({ draft, source, onClose, onUpdate, onConfirm, onReject, onConfirmAll, projectWillCreate }: DraftReviewPanelProps) {
   const titleId = useId()
   const [editingId, setEditingId] = useState<string | null>(null)
   const pending = draft.items.filter((item) => item.status === '待确认')
   const processed = draft.items.length - pending.length
+  const pendingMaterials = pending.reduce((count, item) => count + item.suggestion.materials.length, 0)
 
   return <div className="modal-backdrop detail-backdrop" role="presentation">
     <aside className="detail-panel review-panel" role="dialog" aria-modal="true" aria-labelledby={titleId}>
@@ -49,6 +52,13 @@ export function DraftReviewPanel({ draft, source, onClose, onUpdate, onConfirm, 
         </section>
       </div>
       <footer className="detail-footer review-footer">
+        {pending.length > 0 && <div className="confirmation-preview" aria-label="确认后创建预览">
+          <strong>本次将创建</strong>
+          <span>{projectWillCreate ? 1 : 0} 个项目</span>
+          <span>{pending.length} 个任务</span>
+          <span>{pending.length} 个时间节点</span>
+          <span>{pendingMaterials} 项材料</span>
+        </div>}
         <button className="secondary-button" type="button" onClick={onClose}>{pending.length ? '稍后再处理' : '完成'}</button>
         {pending.length > 0 && <button className="primary-button" type="button" onClick={onConfirmAll}><CheckCheck size={17} />全部加入任务（{pending.length}）</button>}
       </footer>
@@ -86,8 +96,9 @@ function DraftItemReview({ index, item, editing, onToggleEdit, onUpdate, onConfi
       <label className="field"><span>截止时间</span><input type="datetime-local" value={suggestion.deadline} onChange={(event) => onUpdate(item.id, { deadline: event.target.value })} /></label>
       <label className="field"><span>预计耗时（分钟）</span><input type="number" min="5" step="5" value={suggestion.estimatedMinutes} onChange={(event) => onUpdate(item.id, { estimatedMinutes: Number(event.target.value) })} /></label>
       <label className="field span-2"><span>下一步动作</span><input value={suggestion.nextAction} onChange={(event) => onUpdate(item.id, { nextAction: event.target.value })} /></label>
+      <label className="field span-2"><span>材料（用逗号或顿号分隔）</span><input value={suggestion.materials.join('、')} onChange={(event) => onUpdate(item.id, { materials: event.target.value.split(/[，,、]/).map((value) => value.trim()).filter(Boolean) })} /></label>
     </div></fieldset>}
-    <details className="item-evidence"><summary>为什么这样拆？</summary><p>{suggestion.evidence}</p></details>
+    <details className="item-evidence" open={suggestion.confidence === '低'}><summary>为什么这样拆？</summary><p>{suggestion.evidence || '原文未直接说明，需要人工确认。'}</p>{suggestion.evidenceRefs?.length ? <ul>{suggestion.evidenceRefs.map((reference) => <li key={reference.id}><strong>{reference.field}</strong>：{reference.quotedText ?? reference.quote}</li>)}</ul> : <small>系统推测 · 原文未提供可定位依据</small>}</details>
     <footer className="review-item-actions"><button className="text-button remove" type="button" onClick={() => onReject(item.id)}><Trash2 size={14} />不需要</button><button className="secondary-button" type="button" onClick={() => onConfirm(item.id)}><Check size={15} />加入任务</button></footer>
   </article>
 }

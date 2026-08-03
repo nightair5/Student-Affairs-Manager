@@ -159,7 +159,7 @@ export function materializeWorkspaceEntities(
     updatedAt: task.updatedAt,
   })))
 
-  const historyRecords = normalizedTasks.flatMap((task) => task.history.map((entry): HistoryRecord => ({
+  const taskHistoryRecords = normalizedTasks.flatMap((task) => task.history.map((entry): HistoryRecord => ({
     id: entry.id,
     entityType: entry.entityType ?? 'task',
     entityId: entry.entityId ?? task.id,
@@ -170,6 +170,19 @@ export function materializeWorkspaceEntities(
     action: entry.action ?? (entry.field === '任务' ? 'confirmed' : 'updated'),
     changedAt: entry.changedAt,
   })))
+  const draftHistoryRecords = normalizedDrafts.flatMap((draft) => draft.items.flatMap((item) =>
+    (item.history ?? []).map((entry): HistoryRecord => ({
+      id: entry.id,
+      entityType: 'draft',
+      entityId: entry.entityId ?? item.id,
+      field: entry.field,
+      before: entry.before,
+      after: entry.after,
+      actor: entry.actor,
+      action: entry.action ?? 'updated',
+      changedAt: entry.changedAt,
+    }))))
+  const historyRecords = [...taskHistoryRecords, ...draftHistoryRecords]
 
   const reminderRecords = normalizedTasks.flatMap((task) => task.reminders.map((reminder): ReminderRecord => ({
     id: reminder.id,
