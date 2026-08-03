@@ -16,6 +16,7 @@ describe('mobile application shell', () => {
       'library',
       'archive',
       'knowledge',
+      'reports',
     ])
   })
 

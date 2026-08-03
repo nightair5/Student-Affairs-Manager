@@ -6,6 +6,7 @@ export type PageId =
   | 'library'
   | 'archive'
   | 'knowledge'
+  | 'reports'
   | 'services'
   | 'privacy'
 

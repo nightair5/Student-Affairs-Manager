@@ -3,6 +3,7 @@ import {
   CalendarDays,
   CheckSquare2,
   ClipboardCheck,
+  ClipboardList,
   FileText,
   Home,
   MessagesSquare,
@@ -28,4 +29,5 @@ export const libraryNavigation: NavigationItem[] = [
   { id: 'library', label: '文件库', icon: FileText },
   { id: 'archive', label: '项目档案', icon: Archive },
   { id: 'knowledge', label: '知识问答', icon: MessagesSquare },
+  { id: 'reports', label: '周报月报', icon: ClipboardList },
 ]

@@ -125,7 +125,7 @@ export function Sidebar({
           {libraryNavigation.map((item) => {
             const Icon = item.icon
             return <button key={item.id} type="button" className={item.id === currentPage ? 'active' : ''} onClick={() => navigate(item.id)}>
-              <span><Icon size={21} /></span><strong>{item.label}</strong><small>{item.id === 'library' ? '查看来源依据' : item.id === 'archive' ? '项目、备份与成果' : '本地资料问答'}</small>
+              <span><Icon size={21} /></span><strong>{item.label}</strong><small>{item.id === 'library' ? '查看来源依据' : item.id === 'archive' ? '项目、备份与成果' : item.id === 'knowledge' ? '本地资料问答' : '复盘、导出与手机提醒'}</small>
             </button>
           })}
           <button type="button" className={currentPage === 'services' ? 'active' : ''} onClick={() => navigate('services')}>

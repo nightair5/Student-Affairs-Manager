@@ -1,6 +1,7 @@
 import {
   BellRing,
   CalendarClock,
+  CalendarPlus,
   CheckCircle2,
   Clock3,
   Edit3,
@@ -9,6 +10,7 @@ import {
   Link2,
   Mail,
   MonitorCheck,
+  ListTodo,
   Save,
   X,
 } from 'lucide-react'
@@ -31,6 +33,7 @@ import type {
   TaskStatus,
 } from '../types'
 import { useDialogFocusTrap } from '../lib/useDialogFocusTrap'
+import { buildCalendarIcs, buildTodoIcs, shareOrDownloadIcs } from '../lib/calendarExport'
 
 const materialStatusOptions: Array<{ value: MaterialStatus; label: string }> = [
   { value: 'missing', label: '缺失' },
@@ -65,6 +68,7 @@ export function TaskDetailPanel({
   const [editing, setEditing] = useState(false)
   const [draft, setDraft] = useState(task)
   const [notificationFeedback, setNotificationFeedback] = useState('')
+  const [calendarFeedback, setCalendarFeedback] = useState('')
   const linkedSources = sources.filter((source) =>
     task.sourceIds.includes(source.id),
   )
@@ -163,6 +167,19 @@ export function TaskDetailPanel({
         nextReminder,
       ],
     })
+  }
+
+  const exportToPhone = async (kind: 'calendar' | 'todo') => {
+    try {
+      const result = await shareOrDownloadIcs(
+        `${task.title.replace(/[\\/:*?"<>|]/gu, '-')}-${kind === 'calendar' ? '日历提醒' : '待办'}.ics`,
+        kind === 'calendar' ? buildCalendarIcs([task]) : buildTodoIcs([task]),
+      )
+      setCalendarFeedback(result === 'shared' ? '已打开系统分享，请选择日历或待办应用。' : '已下载 ICS 文件，请在手机日历或待办应用中导入。')
+    } catch (cause) {
+      if (cause instanceof DOMException && cause.name === 'AbortError') return
+      setCalendarFeedback('系统分享或下载失败，请检查浏览器下载权限。')
+    }
   }
 
   return (
@@ -465,6 +482,14 @@ export function TaskDetailPanel({
                 />
               </label>
             )}
+            <div className="phone-export-card">
+              <div><strong>手机日历与待办</strong><small>生成标准 ICS，由你在手机系统中确认导入；网页不会静默修改原生闹钟。</small></div>
+              <div className="phone-export-actions">
+                <button className="secondary-button" type="button" onClick={() => void exportToPhone('calendar')}><CalendarPlus size={16} />日历提醒</button>
+                <button className="secondary-button" type="button" onClick={() => void exportToPhone('todo')}><ListTodo size={16} />手机待办</button>
+              </div>
+              {calendarFeedback && <p role="status">{calendarFeedback}</p>}
+            </div>
             <div className="reminder-option disabled-option">
               <div>
                 <span className="reminder-icon">

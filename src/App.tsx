@@ -40,6 +40,7 @@ const CalendarPage = lazy(() => import('./pages/CalendarPage').then((module) => 
 const LibraryPage = lazy(() => import('./pages/LibraryPage').then((module) => ({ default: module.LibraryPage })))
 const ArchivePage = lazy(() => import('./pages/ArchivePage').then((module) => ({ default: module.ArchivePage })))
 const KnowledgePage = lazy(() => import('./pages/KnowledgePage').then((module) => ({ default: module.KnowledgePage })))
+const ReportsPage = lazy(() => import('./pages/ReportsPage').then((module) => ({ default: module.ReportsPage })))
 const ServicesPage = lazy(() => import('./pages/ServicesPage').then((module) => ({ default: module.ServicesPage })))
 const PrivacyPage = lazy(() => import('./pages/PrivacyPage').then((module) => ({ default: module.PrivacyPage })))
 
@@ -263,10 +264,6 @@ function App() {
     const provisional = handleCreateDraft(localResult.source, localResult.suggestions)
     if (input.manualSuggestion) {
       openDraftReview(provisional.draft.id, '手动任务已保存为待确认草稿；核对后再加入任务中心。')
-      return
-    }
-    if (input.sourceType === 'link') {
-      openDraftReview(provisional.draft.id, '网页正文尚未抓取，已保存链接并生成可编辑的本地建议。')
       return
     }
     try {
@@ -501,6 +498,8 @@ function App() {
             setNotice({ text: '已撤销本地检索授权。' })
           }}
         />
+      case 'reports':
+        return <ReportsPage tasks={tasks} projects={projects} />
       case 'services':
         return <ServicesPage
           workspace={workspace}
