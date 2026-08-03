@@ -33,4 +33,17 @@ describe('intake result', () => {
       fileHash: 'abc123',
     })
   })
+
+  it('keeps an authorized link and its extracted text as separate traceable fields', () => {
+    const result = createIntakeResult({
+      sourceType: 'link',
+      url: 'https://notice.example/item',
+      sourceTitle: '学院通知',
+      content: '8月10日18:00提交报名表',
+      now: new Date('2026-08-02T08:00:00+08:00'),
+    })
+    expect(result.source.url).toBe('https://notice.example/item')
+    expect(result.source.rawText).toBe('8月10日18:00提交报名表')
+    expect(result.suggestions[0].title).toBe('提交报名表')
+  })
 })

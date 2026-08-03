@@ -9,6 +9,7 @@ export interface IntakeInput {
   mimeType?: string
   fileSize?: number
   fileHash?: string
+  url?: string
   manualSuggestion?: ParsedSuggestion
   now?: Date
 }
@@ -26,6 +27,7 @@ export function createIntakeResult({
   mimeType,
   fileSize,
   fileHash,
+  url,
   manualSuggestion,
   now = new Date(),
 }: IntakeInput): IntakeResult {
@@ -39,9 +41,9 @@ export function createIntakeResult({
       type: sourceType,
       title,
       contentPreview: cleanContent.slice(0, 500),
-      content: sourceType === 'link' ? undefined : cleanContent,
-      rawText: sourceType === 'link' ? undefined : cleanContent,
-      url: sourceType === 'link' ? cleanContent : undefined,
+      content: cleanContent || undefined,
+      rawText: cleanContent || undefined,
+      url: sourceType === 'link' ? url?.trim() : undefined,
       originalFileName: fileName?.trim() || undefined,
       mimeType: mimeType || undefined,
       fileSize,

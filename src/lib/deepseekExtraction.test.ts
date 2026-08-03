@@ -58,11 +58,28 @@ describe('smart intake', () => {
       extract: async () => { called = true; return [aiSuggestion] },
     }
     const result = await createSmartIntakeResult({
-      sourceType: 'link', content: 'https://example.edu/notice', sourceTitle: '学院通知',
+      sourceType: 'link', content: '', url: 'https://example.edu/notice', sourceTitle: '学院通知',
     }, proxy)
 
     expect(called).toBe(false)
     expect(result.method).toBe('local-rules')
-    expect(result.fallbackReason).toContain('尚未抓取')
+    expect(result.fallbackReason).toContain('尚未读取')
+  })
+
+  it('sends only server-extracted link text to DeepSeek', async () => {
+    let received = ''
+    const proxy: DeepSeekExtractionService = {
+      status: async () => ({ configured: true }),
+      extract: async (input) => { received = input.content; return [aiSuggestion] },
+    }
+    const result = await createSmartIntakeResult({
+      sourceType: 'link',
+      content: '8月10日18:00提交报名表',
+      url: 'https://example.edu/notice',
+      sourceTitle: '学院通知',
+    }, proxy)
+
+    expect(received).toBe('8月10日18:00提交报名表')
+    expect(result.method).toBe('deepseek-v4-flash')
   })
 })

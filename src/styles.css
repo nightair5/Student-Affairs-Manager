@@ -2523,6 +2523,26 @@ h3 {
   accent-color: var(--forest-600);
 }
 
+.link-authorization {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 0.85rem;
+  background: var(--paper-soft);
+  color: var(--ink-muted);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.link-authorization input {
+  width: 1.1rem;
+  height: 1.1rem;
+  margin-top: 0.15rem;
+  accent-color: var(--forest-600);
+}
+
 .extraction-state.needs-input,
 .extraction-state.error,
 .extraction-state.unsupported {

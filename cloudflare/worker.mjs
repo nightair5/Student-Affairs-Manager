@@ -3,6 +3,7 @@ const DEEPSEEK_MODEL = 'deepseek-v4-flash'
 const MAX_BODY_BYTES = 100_000
 const MAX_KNOWLEDGE_TOKENS = 2_000
 const MAX_EXTRACTION_TOKENS = 6_000
+const MAX_WEB_RESPONSE_BYTES = 512 * 1024
 const UPSTREAM_TIMEOUT_MS = 45_000
 const TASK_CATEGORIES = new Set(['比赛', '保研', '课程', '老师任务', '其他'])
 const PRIORITIES = new Set(['高', '中', '低'])
@@ -23,6 +24,7 @@ const KNOWLEDGE_CONTEXT_FIELDS = new Set(['title', 'kind', 'excerpt'])
 const EXTRACTION_REQUEST_FIELDS = new Set([
   'sourceType', 'sourceTitle', 'content', 'referenceTime', 'timezone',
 ])
+const WEB_FETCH_REQUEST_FIELDS = new Set(['url'])
 const EXTRACTION_OUTPUT_FIELDS = new Set([
   'title', 'category', 'deadline', 'estimatedMinutes', 'nextAction',
   'description', 'priority', 'materials', 'evidence', 'confidence',
@@ -100,14 +102,172 @@ export function validateDeepSeekRequest(value) {
 
 export function validateExtractionRequest(value) {
   if (!hasOnlyFields(value, EXTRACTION_REQUEST_FIELDS)) return 'INVALID_REQUEST'
-  if (!['text', 'file', 'image'].includes(value.sourceType)) return 'DEEPSEEK_SOURCE_TYPE_INVALID'
+  if (!['text', 'file', 'image', 'link'].includes(value.sourceType)) return 'DEEPSEEK_SOURCE_TYPE_INVALID'
   if (!isBoundedString(value.content, 24_000)) return 'DEEPSEEK_CONTENT_INVALID'
+  if (value.sourceType === 'link' && /^https?:\/\/\S+$/iu.test(value.content.trim())) return 'DEEPSEEK_LINK_TEXT_REQUIRED'
   if (value.sourceTitle !== undefined && !isBoundedString(value.sourceTitle, 160, false)) return 'DEEPSEEK_SOURCE_TITLE_INVALID'
   if (value.timezone !== undefined && !isBoundedString(value.timezone, 80, false)) return 'DEEPSEEK_TIMEZONE_INVALID'
   if (!isBoundedString(value.referenceTime, 80) || Number.isNaN(new Date(value.referenceTime).getTime())) {
     return 'DEEPSEEK_REFERENCE_TIME_INVALID'
   }
   return null
+}
+
+function allowedWebHosts(value = '') {
+  return [...new Set(String(value).split(',').map((host) => host.trim().toLowerCase()).filter(Boolean))]
+}
+
+function isIpLiteral(hostname) {
+  return /^\d{1,3}(?:\.\d{1,3}){3}$/u.test(hostname) || hostname.includes(':')
+}
+
+export function validateWebFetchTarget(value, configuredHosts) {
+  let url
+  try {
+    url = new URL(value)
+  } catch {
+    return { error: 'WEB_URL_INVALID' }
+  }
+  const hostname = url.hostname.toLowerCase()
+  if (url.protocol !== 'https:') return { error: 'WEB_HTTPS_REQUIRED' }
+  if (url.username || url.password) return { error: 'WEB_CREDENTIALS_FORBIDDEN' }
+  if (url.port && url.port !== '443') return { error: 'WEB_PORT_FORBIDDEN' }
+  if (hostname === 'localhost' || hostname.endsWith('.localhost') || isIpLiteral(hostname)) {
+    return { error: 'WEB_PRIVATE_ADDRESS_FORBIDDEN' }
+  }
+  if (!configuredHosts.includes(hostname)) return { error: 'WEB_HOST_NOT_ALLOWED' }
+  url.hash = ''
+  return { url }
+}
+
+function decodeBasicHtmlEntities(value) {
+  return value
+    .replace(/&nbsp;|&#160;/giu, ' ')
+    .replace(/&amp;/giu, '&')
+    .replace(/&lt;/giu, '<')
+    .replace(/&gt;/giu, '>')
+    .replace(/&quot;/giu, '"')
+    .replace(/&#39;|&apos;/giu, "'")
+}
+
+function inertHtmlToText(value) {
+  return decodeBasicHtmlEntities(value)
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/giu, ' ')
+    .replace(/<style\b[^>]*>[\s\S]*?<\/style>/giu, ' ')
+    .replace(/<noscript\b[^>]*>[\s\S]*?<\/noscript>/giu, ' ')
+    .replace(/<[^>]+>/gu, '\n')
+    .replace(/\r\n?/gu, '\n')
+    .split('\n')
+    .map((line) => line.replace(/\s+/gu, ' ').trim())
+    .filter(Boolean)
+    .join('\n')
+    .slice(0, 80_000)
+}
+
+async function fetchSourceText(request, env, fetcher, isRateLimited, context) {
+  if (!isTrustedOrigin(request, env.ALLOWED_ORIGINS)) {
+    context.errorType = 'ORIGIN_NOT_ALLOWED'
+    return failure('ORIGIN_NOT_ALLOWED', '请求来源不受信任。', 403, context.requestId)
+  }
+  if (!isJsonRequest(request)) {
+    context.errorType = 'INVALID_CONTENT_TYPE'
+    return failure('INVALID_CONTENT_TYPE', '请求必须使用 application/json。', 415, context.requestId)
+  }
+  const hosts = allowedWebHosts(env.WEB_FETCH_ALLOWED_HOSTS)
+  if (!hosts.length) {
+    context.errorType = 'WEB_FETCH_NOT_CONFIGURED'
+    return failure('WEB_FETCH_NOT_CONFIGURED', '网页读取尚未配置允许域名，请粘贴网页正文后继续。', 503, context.requestId)
+  }
+  if (isRateLimited(`web:${clientKey(request)}`)) {
+    context.errorType = 'RATE_LIMITED'
+    return failure('RATE_LIMITED', '网页读取请求过于频繁，请稍后再试。', 429, context.requestId)
+  }
+  const rawBody = await request.text()
+  context.inputLength = rawBody.length
+  if (new TextEncoder().encode(rawBody).byteLength > 4_096) {
+    context.errorType = 'INPUT_TOO_LARGE'
+    return failure('INPUT_TOO_LARGE', '网页读取请求超过允许大小。', 413, context.requestId)
+  }
+  let body
+  try {
+    body = JSON.parse(rawBody)
+  } catch {
+    context.errorType = 'INVALID_REQUEST'
+    return failure('INVALID_REQUEST', '请求格式无效。', 400, context.requestId)
+  }
+  if (!hasOnlyFields(body, WEB_FETCH_REQUEST_FIELDS) || !isBoundedString(body.url, 2_048)) {
+    context.errorType = 'WEB_URL_INVALID'
+    return failure('WEB_URL_INVALID', '网页链接无效。', 400, context.requestId)
+  }
+  const target = validateWebFetchTarget(body.url, hosts)
+  if (target.error) {
+    context.errorType = target.error
+    const messages = {
+      WEB_HTTPS_REQUIRED: '只允许读取 HTTPS 网页。',
+      WEB_CREDENTIALS_FORBIDDEN: '链接不得包含账号或密码。',
+      WEB_PORT_FORBIDDEN: '只允许标准 HTTPS 端口。',
+      WEB_PRIVATE_ADDRESS_FORBIDDEN: '不允许读取本机、私网或 IP 地址。',
+      WEB_HOST_NOT_ALLOWED: '这个域名尚未加入服务端读取白名单，请粘贴正文或由管理员配置。',
+      WEB_URL_INVALID: '网页链接无效。',
+    }
+    return failure(target.error, messages[target.error] ?? '网页链接不允许读取。', target.error === 'WEB_HOST_NOT_ALLOWED' ? 403 : 400, context.requestId)
+  }
+  try {
+    const upstream = await fetcher(target.url, {
+      method: 'GET',
+      redirect: 'manual',
+      headers: {
+        accept: 'text/html,text/plain;q=0.9',
+        'user-agent': 'Student-Affairs-Reader/1.0',
+      },
+      signal: AbortSignal.timeout(10_000),
+    })
+    if (upstream.status >= 300 && upstream.status < 400) {
+      context.errorType = 'WEB_REDIRECT_FORBIDDEN'
+      return failure('WEB_REDIRECT_FORBIDDEN', '网页发生重定向；为防止越过允许域名，本次没有跟随。', 400, context.requestId)
+    }
+    if (!upstream.ok) {
+      context.errorType = 'WEB_FETCH_FAILED'
+      return failure('WEB_FETCH_FAILED', '目标网页暂时无法读取。', 502, context.requestId)
+    }
+    const contentType = upstream.headers.get('content-type') ?? ''
+    if (!/^(?:text\/html|text\/plain)(?:;|$)/iu.test(contentType)) {
+      context.errorType = 'WEB_CONTENT_TYPE_UNSUPPORTED'
+      return failure('WEB_CONTENT_TYPE_UNSUPPORTED', '目标不是可读取的 HTML 或纯文本。', 415, context.requestId)
+    }
+    const declaredSize = Number(upstream.headers.get('content-length') ?? 0)
+    if (Number.isFinite(declaredSize) && declaredSize > MAX_WEB_RESPONSE_BYTES) {
+      context.errorType = 'WEB_RESPONSE_TOO_LARGE'
+      return failure('WEB_RESPONSE_TOO_LARGE', '网页正文超过 512 KB 安全上限。', 413, context.requestId)
+    }
+    const buffer = await upstream.arrayBuffer()
+    if (buffer.byteLength > MAX_WEB_RESPONSE_BYTES) {
+      context.errorType = 'WEB_RESPONSE_TOO_LARGE'
+      return failure('WEB_RESPONSE_TOO_LARGE', '网页正文超过 512 KB 安全上限。', 413, context.requestId)
+    }
+    const html = new TextDecoder('utf-8', { fatal: false }).decode(buffer)
+    const titleMatch = html.match(/<title\b[^>]*>([\s\S]*?)<\/title>/iu)
+    const title = safeText(titleMatch ? inertHtmlToText(titleMatch[1]) : target.url.hostname, 160)
+    const text = inertHtmlToText(html)
+    if (!text) {
+      context.errorType = 'WEB_TEXT_EMPTY'
+      return failure('WEB_TEXT_EMPTY', '网页没有可读取的正文。', 422, context.requestId)
+    }
+    return success({
+      finalUrl: target.url.toString(),
+      title: title || target.url.hostname,
+      text,
+      fetchedAt: new Date().toISOString(),
+    }, context.requestId)
+  } catch (error) {
+    context.errorType = timeoutError(error) ? 'WEB_FETCH_TIMEOUT' : 'WEB_FETCH_FAILED'
+    return failure(
+      context.errorType,
+      context.errorType === 'WEB_FETCH_TIMEOUT' ? '网页读取超时，请稍后重试。' : '网页读取失败，请粘贴正文后继续。',
+      context.errorType === 'WEB_FETCH_TIMEOUT' ? 504 : 502,
+      context.requestId,
+    )
+  }
 }
 
 function json(payload, status, requestId) {
@@ -476,7 +636,7 @@ export function createWorker({
         client: anonymousClientId(clientKey(request)),
       }
       let response
-      if (request.method === 'OPTIONS' && url.pathname.startsWith('/api/deepseek')) {
+      if (request.method === 'OPTIONS' && url.pathname.startsWith('/api/')) {
         if (!isTrustedOrigin(request, env.ALLOWED_ORIGINS)) {
           context.errorType = 'ORIGIN_NOT_ALLOWED'
           response = failure('ORIGIN_NOT_ALLOWED', '请求来源不受信任。', 403, context.requestId)
@@ -485,6 +645,15 @@ export function createWorker({
         }
       } else if (request.method === 'GET' && url.pathname === '/api/deepseek/status') {
         response = success({ configured: safeText(env.DEEPSEEK_API_KEY, 512).length >= 20, model: DEEPSEEK_MODEL }, context.requestId)
+      } else if (request.method === 'GET' && url.pathname === '/api/source/status') {
+        response = success({ configured: allowedWebHosts(env.WEB_FETCH_ALLOWED_HOSTS).length > 0 }, context.requestId)
+      } else if (url.pathname === '/api/source/fetch') {
+        if (request.method !== 'POST') {
+          context.errorType = 'METHOD_NOT_ALLOWED'
+          response = failure('METHOD_NOT_ALLOWED', '该接口只接受 POST。', 405, context.requestId)
+        } else {
+          response = await fetchSourceText(request, env, fetcher, isRateLimited, context)
+        }
       } else if (url.pathname === '/api/deepseek/extract') {
         if (request.method !== 'POST') {
           context.errorType = 'METHOD_NOT_ALLOWED'
