@@ -208,6 +208,133 @@
 
 .quick-capture textarea::placeholder { color: #879bad; }
 
+/* Keep secondary copy readable: no essential instruction drops below 11px. */
+.sidebar-utility button,
+.quick-capture-heading > .ai-assist-status,
+.quick-capture-heading small,
+.cloud-send-disclosure,
+.pending-review-banner small,
+.review-header p,
+.intake-steps span,
+.example-fill,
+.review-progress small,
+.item-evidence summary,
+.item-evidence p,
+.review-item-header time,
+.review-edit,
+.review-item.processed p,
+.item-evidence ul,
+.item-evidence > small,
+.task-deadline-block > span,
+.task-duration-block > span,
+.task-duration-block small {
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.home-empty-state p,
+.review-next,
+.confirmation-preview,
+.workspace-control-message,
+.citation-section li p {
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.review-meta em,
+.review-next span,
+.review-edit-form legend { font-size: 10px; }
+
+.task-detail-button {
+  min-height: 36px;
+  font-size: 12px;
+}
+
+/* The tutorial footer has its own explicit contrast contract. */
+.guide-content > div:last-child > p {
+  color: #536b83;
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+.guide-content li {
+  color: #293f57;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.guide-footer > .text-button,
+.guide-footer .secondary-button,
+.guide-footer .primary-button {
+  min-height: 44px;
+  padding: 10px 15px;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.2;
+  text-decoration: none;
+  border-radius: 10px;
+}
+
+.guide-footer > .text-button {
+  color: #315d84;
+  border: 1px solid #c8dceb;
+  background: #f3f8fc;
+}
+
+.guide-footer > .text-button:hover {
+  color: #173f68;
+  border-color: #9fc2df;
+  background: #eaf4fc;
+}
+
+.guide-footer .secondary-button {
+  color: #204d77;
+  border: 1px solid #bfd5e6;
+  background: #fbfdff;
+}
+
+.guide-footer .secondary-button:hover {
+  color: #153c63;
+  border-color: #91bbdc;
+  background: #edf6fd;
+}
+
+.guide-footer .primary-button,
+.guide-footer .primary-button:hover:not(:disabled) {
+  color: #fff;
+  border: 1px solid #1d4f80;
+  background: #1d4f80;
+  box-shadow: 0 8px 18px rgba(29, 79, 128, 0.2);
+}
+
+.guide-footer button:focus-visible {
+  outline: 3px solid rgba(68, 143, 201, 0.42);
+  outline-offset: 3px;
+}
+
+.onboarding-guide .icon-button {
+  color: #385d80;
+  opacity: 1;
+}
+
+/* Replace the last fixed sage surfaces outside the token system. */
+.project-progress > span { background: #dce9f3; }
+.review-item.processed { color: #2f6fa8; background: #eef7ff; }
+.calendar-day.has-event { background: #f8fbfe; }
+.calendar-day.has-event:hover { background: #eef6fd; }
+.calendar-day.selected {
+  background: #eaf4fd;
+  box-shadow: inset 0 0 0 2px #65a3d4;
+}
+
+.calendar-day.muted .calendar-date > strong { color: #8798aa; }
+.calendar-date em,
+.calendar-day-summary > strong,
+.calendar-day-summary small,
+.calendar-day-summary em,
+.calendar-day-empty,
+.calendar-agenda-more { font-size: 10px; }
+
 .task-card.featured {
   color: #172b44;
   border-color: #bdd7ef;
