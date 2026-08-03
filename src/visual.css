@@ -1,4 +1,340 @@
 /* Loaded after the legacy responsive layer so the light visual system is consistent. */
+:root {
+  --status-info: #2f6fa8;
+  --status-info-surface: #edf7ff;
+  --status-info-border: #bddaf0;
+  --status-warning: #963f22;
+  --status-warning-surface: #fff2e9;
+  --status-warning-border: #edbea4;
+  --status-danger: #9f2f2d;
+  --status-danger-strong: #b63b35;
+  --status-danger-surface: #fff0ee;
+  --status-danger-border: #e8aaa5;
+  --orange: var(--status-warning);
+  --orange-soft: var(--status-warning-surface);
+  --red: var(--status-danger);
+  --red-soft: var(--status-danger-surface);
+}
+
+/* Informational and confirmed states use cool blue, never mint or sage. */
+.pending-review-banner {
+  color: var(--status-info);
+  border: 1px solid var(--status-info-border);
+  border-left: 4px solid #3f85bd;
+  border-radius: 0 12px 12px 0;
+  background: linear-gradient(90deg, #eaf5ff, #f4f9fe);
+  box-shadow: 0 7px 18px rgba(45, 105, 158, 0.06);
+}
+
+.pending-review-banner:hover {
+  border-color: #9fc9e9;
+  border-left-color: #2e73ae;
+  background: linear-gradient(90deg, #e2f1ff, #eef7ff);
+}
+
+.pending-review-banner strong { color: #173b62; }
+.pending-review-banner small { color: #58738f; }
+.nav-badge { color: #174f82; background: #ddecfb; }
+
+.status-badge,
+.reviewed-note,
+.service-message.success,
+.connection-state.connected,
+.capability-badge.ready {
+  color: #245f95;
+}
+
+.status-badge,
+.service-message.success,
+.connection-state.connected {
+  border-color: var(--status-info-border);
+  background: var(--status-info-surface);
+}
+
+.capability-badge.ready {
+  border-color: #93bfe2;
+  background: rgba(224, 241, 255, 0.14);
+}
+
+/* Timing is a neutral reading surface; green-grey made dates feel unavailable. */
+.task-timing-panel,
+.featured .task-timing-panel {
+  border-color: #c9dff0;
+  background: linear-gradient(135deg, #f8fbff, #eef6fd);
+}
+
+.task-deadline-block,
+.featured .task-deadline-block {
+  border-right-color: #d2e2ef;
+}
+
+.task-deadline-block > span,
+.task-duration-block > span,
+.task-duration-block small { color: #647e98; }
+.task-deadline-block strong { color: #183d65; }
+.task-deadline-block em { color: #2c75b1; }
+
+/* Risk is warmer and more legible, while remaining a small semantic accent. */
+.task-card[data-priority='高']::after { background: #cf6042; }
+
+.risk-tag {
+  min-height: 26px;
+  padding: 5px 9px;
+  color: #922f29;
+  font-size: 12px;
+  line-height: 1.2;
+  border: 1px solid #efb6ae;
+  background: #fff0ed;
+}
+
+.featured .risk-tag {
+  color: #922f29;
+  border-color: #efb6ae;
+  background: #fff0ed;
+}
+
+.calm-tag {
+  color: #496983;
+  border: 1px solid #d1e0ec;
+  background: #f1f6fa;
+}
+
+.service-message.warning,
+.duplicate-notice,
+.status-badge.warning,
+.privacy-note.cloud-unavailable,
+.knowledge-error {
+  color: var(--status-warning);
+  border-color: var(--status-warning-border);
+  background: var(--status-warning-surface);
+}
+
+.service-message.warning,
+.duplicate-notice,
+.privacy-note.cloud-unavailable,
+.knowledge-error { border-left: 3px solid #c15a36; }
+
+.duplicate-notice button,
+.privacy-note.cloud-unavailable strong { color: #84351e; }
+
+.conflict-panel,
+.remote-preview {
+  border-color: var(--status-warning-border);
+  background: var(--status-warning-surface);
+}
+
+.conflict-panel strong,
+.remote-preview > span { color: var(--status-warning); }
+
+/* Destructive actions stay unmistakable in both idle and armed states. */
+.danger-button {
+  min-height: 42px;
+  padding: 10px 14px;
+  color: var(--status-danger);
+  font-weight: 800;
+  border: 1px solid var(--status-danger-border);
+  border-radius: 10px;
+  background: var(--status-danger-surface);
+  box-shadow: 0 4px 12px rgba(159, 47, 45, 0.06);
+}
+
+.danger-button:hover:not(:disabled) {
+  color: #fff;
+  border-color: var(--status-danger-strong);
+  background: var(--status-danger-strong);
+  box-shadow: 0 8px 18px rgba(159, 47, 45, 0.18);
+}
+
+.danger-button.armed {
+  color: #fff;
+  border-color: #9c2c29;
+  background: var(--status-danger-strong);
+  box-shadow: 0 8px 18px rgba(159, 47, 45, 0.22);
+}
+
+.text-button.remove,
+.remove-suggestion-button {
+  color: var(--status-danger);
+  font-weight: 800;
+}
+
+.text-button.remove {
+  min-height: 34px;
+  padding: 7px 10px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+}
+
+.text-button.remove:hover {
+  border-color: var(--status-danger-border);
+  background: var(--status-danger-surface);
+}
+
+.remove-suggestion-button {
+  border: 1px solid var(--status-danger-border);
+  background: var(--status-danger-surface);
+}
+
+.monitor-delete-confirm {
+  color: var(--status-danger);
+  border: 1px solid var(--status-danger-border);
+  border-left: 3px solid var(--status-danger-strong);
+  background: var(--status-danger-surface);
+}
+
+.monitor-delete-confirm button:first-of-type {
+  color: #fff;
+  border-radius: 7px;
+  background: var(--status-danger-strong);
+}
+
+.featured .task-quick-actions button {
+  color: #315d84;
+  border-color: #c7dceb;
+  background: rgba(255,255,255,0.78);
+}
+
+.featured .task-quick-actions button:hover,
+.featured .task-quick-actions button[aria-pressed='true'] {
+  color: #164a7b;
+  border-color: #9ec6e5;
+  background: #e5f2fd;
+}
+
+.quick-capture {
+  border-color: #c8ddea;
+  box-shadow: 0 12px 34px rgba(43, 87, 130, 0.06);
+}
+
+.quick-capture textarea::placeholder { color: #879bad; }
+
+/* Keep secondary copy readable: no essential instruction drops below 11px. */
+.sidebar-utility button,
+.quick-capture-heading > .ai-assist-status,
+.quick-capture-heading small,
+.cloud-send-disclosure,
+.pending-review-banner small,
+.review-header p,
+.intake-steps span,
+.example-fill,
+.review-progress small,
+.item-evidence summary,
+.item-evidence p,
+.review-item-header time,
+.review-edit,
+.review-item.processed p,
+.item-evidence ul,
+.item-evidence > small,
+.task-deadline-block > span,
+.task-duration-block > span,
+.task-duration-block small {
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.home-empty-state p,
+.review-next,
+.confirmation-preview,
+.workspace-control-message,
+.citation-section li p {
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.review-meta em,
+.review-next span,
+.review-edit-form legend { font-size: 10px; }
+
+.task-detail-button {
+  min-height: 36px;
+  font-size: 12px;
+}
+
+/* The tutorial footer has its own explicit contrast contract. */
+.guide-content > div:last-child > p {
+  color: #536b83;
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+.guide-content li {
+  color: #293f57;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.guide-footer > .text-button,
+.guide-footer .secondary-button,
+.guide-footer .primary-button {
+  min-height: 44px;
+  padding: 10px 15px;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.2;
+  text-decoration: none;
+  border-radius: 10px;
+}
+
+.guide-footer > .text-button {
+  color: #315d84;
+  border: 1px solid #c8dceb;
+  background: #f3f8fc;
+}
+
+.guide-footer > .text-button:hover {
+  color: #173f68;
+  border-color: #9fc2df;
+  background: #eaf4fc;
+}
+
+.guide-footer .secondary-button {
+  color: #204d77;
+  border: 1px solid #bfd5e6;
+  background: #fbfdff;
+}
+
+.guide-footer .secondary-button:hover {
+  color: #153c63;
+  border-color: #91bbdc;
+  background: #edf6fd;
+}
+
+.guide-footer .primary-button,
+.guide-footer .primary-button:hover:not(:disabled) {
+  color: #fff;
+  border: 1px solid #1d4f80;
+  background: #1d4f80;
+  box-shadow: 0 8px 18px rgba(29, 79, 128, 0.2);
+}
+
+.guide-footer button:focus-visible {
+  outline: 3px solid rgba(68, 143, 201, 0.42);
+  outline-offset: 3px;
+}
+
+.onboarding-guide .icon-button {
+  color: #385d80;
+  opacity: 1;
+}
+
+/* Replace the last fixed sage surfaces outside the token system. */
+.project-progress > span { background: #dce9f3; }
+.review-item.processed { color: #2f6fa8; background: #eef7ff; }
+.calendar-day.has-event { background: #f8fbfe; }
+.calendar-day.has-event:hover { background: #eef6fd; }
+.calendar-day.selected {
+  background: #eaf4fd;
+  box-shadow: inset 0 0 0 2px #65a3d4;
+}
+
+.calendar-day.muted .calendar-date > strong { color: #8798aa; }
+.calendar-date em,
+.calendar-day-summary > strong,
+.calendar-day-summary small,
+.calendar-day-summary em,
+.calendar-day-empty,
+.calendar-agenda-more { font-size: 10px; }
+
 .task-card.featured {
   color: #172b44;
   border-color: #bdd7ef;
@@ -28,6 +364,8 @@
 .featured .next-action span { color: #6586a6; }
 
 @media (max-width: 760px) {
+  body { background: #f6faff; }
+
   .mobile-topbar {
     color: #1c3857;
     border-bottom-color: #d7e6f2;
@@ -59,4 +397,8 @@
   .mobile-bottom-nav > button.active { color: #266ca8; background: #eaf5ff; }
   .mobile-bottom-nav > button.active::before { background: #5498d0; }
   .mobile-menu-sheet { border-color: #d7e6f2; background: #fcfeff; }
+  .mobile-menu-grid > button { border-color: #d7e5f0; background: #f8fbfe; }
+  .mobile-menu-grid > button.active { border-color: #9fc5e2; background: #eaf5ff; }
+  .mobile-menu-grid > button > span { color: #2b6da7; background: #e7f3fd; }
+  .mobile-guide-button { color: #2f6798; border-color: #bfd7e9; background: #f0f7fc; }
 }
