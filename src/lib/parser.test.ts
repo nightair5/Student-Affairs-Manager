@@ -198,4 +198,21 @@ describe('demo parser', () => {
       '上传确认函',
     ])
   })
+
+  it('removes a conversational lead-in and keeps each listed material', () => {
+    const results = createSuggestions(
+      '同学们辛苦啦，请大家注意一下：8月6日 10:00前提交选题；8月6日 15:30参加线上答疑；另外8月8日 18:00前上传报名表、身份证明和承诺书。谢谢配合！',
+      'text',
+      undefined,
+      new Date('2026-08-03T01:00:00+08:00'),
+    )
+
+    expect(results).toHaveLength(3)
+    expect(results.map((item) => item.title)).toEqual([
+      '提交选题',
+      '参加线上答疑',
+      '上传报名表、身份证明和承诺书',
+    ])
+    expect(results[2].materials).toEqual(['报名表', '身份证明', '承诺书'])
+  })
 })

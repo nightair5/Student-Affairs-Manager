@@ -140,7 +140,20 @@ function toLocalDateTime(date: Date): string {
 }
 
 function inferMaterials(content: string): string[] {
-  const known = ['报名表', '确认函', '成绩单', '个人陈述', '初稿', '编码表']
+  const known = [
+    '报名表',
+    '确认函',
+    '成绩单',
+    '个人陈述',
+    '初稿',
+    '编码表',
+    '身份证明',
+    '承诺书',
+    '推荐信',
+    '简历',
+    '证书',
+    '照片',
+  ]
   return known.filter((item) => content.includes(item))
 }
 
@@ -215,9 +228,12 @@ function stripTemporalText(content: string): string {
 function cleanTaskPhrase(value: string): string {
   let phrase = value
     .replace(politePrefixPattern, '')
+    .replace(/^(?:一下|下)[：:，,、\s]*/u, '')
+    .replace(/^(?:(?:请)?(?:大家|各位(?:同学)?|同学们)?(?:务必|特别)?(?:注意|留意)(?:一下)?[：:，,、\s]*)+/u, '')
     .replace(/^(?:请)?(?:务必|特别)?注意[：:，,、\s]+/u, '')
     .replace(discoursePrefixPattern, '')
     .replace(/^(?:(?:同日|当天|当日|随后|接着|并且|并在|并于|且|截至|截止)[：:，,、\s]*)+/u, '')
+    .replace(/^(?:(?:前|之前|以内|内|截止到?|截至)[：:，,、\s]*)+/u, '')
     .replace(politeSuffixPattern, '')
     .replace(/(?:之前|以前|前|截止|截至)\s*$/u, '')
     .replace(/^[：:、；;，,\s]+|[：:、；;，,\s]+$/gu, '')
