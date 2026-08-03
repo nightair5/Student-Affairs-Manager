@@ -1,0 +1,62 @@
+/* Loaded after the legacy responsive layer so the light visual system is consistent. */
+.task-card.featured {
+  color: #172b44;
+  border-color: #bdd7ef;
+  background:
+    radial-gradient(circle at 98% 2%, rgba(155, 207, 249, 0.35), transparent 35%),
+    linear-gradient(135deg, rgba(255,255,255,0.98), rgba(235,247,255,0.94));
+}
+
+.featured .task-detail-button {
+  color: #436781;
+  border-color: #c7ddec;
+  background: rgba(255,255,255,0.82);
+}
+
+.featured .task-detail-button:hover { color: #245d96; background: #edf7ff; }
+.featured .task-timing-panel { border-color: #c9e0f4; background: rgba(245, 250, 255, 0.72); }
+.featured .task-deadline-block { border-right-color: #d8e7f3; }
+.featured .task-deadline-block > span,
+.featured .task-duration-block > span,
+.featured .task-duration-block small { color: #68819b; }
+.featured .task-deadline-block strong { color: #193d66; }
+.featured .task-deadline-block em { color: #397db8; }
+.featured .task-card-footer { border-top-color: #dce9f4; }
+.featured .complete-button { color: #fff; background: #27619a; }
+.featured .complete-button:hover { background: #1d4e81; }
+.featured .next-action { border-left-color: #65a0d2; background: rgba(239,248,255,0.76); }
+.featured .next-action span { color: #6586a6; }
+
+@media (max-width: 760px) {
+  .mobile-topbar {
+    color: #1c3857;
+    border-bottom-color: #d7e6f2;
+    background: rgba(252, 254, 255, 0.95);
+    box-shadow: 0 7px 22px rgba(43, 87, 130, 0.08);
+  }
+
+  .mobile-brand > span {
+    color: #2b659e;
+    border-color: #c9dff0;
+    border-radius: 10px;
+    background: #ebf6ff;
+  }
+
+  .mobile-intake-button {
+    color: #fff;
+    border-radius: 10px;
+    background: #245f99;
+    box-shadow: 0 6px 15px rgba(34, 86, 137, 0.15);
+  }
+
+  .mobile-bottom-nav {
+    border-top-color: #d8e6f2;
+    background: rgba(253, 254, 255, 0.96);
+    box-shadow: 0 -8px 24px rgba(43, 87, 130, 0.075);
+  }
+
+  .mobile-bottom-nav > button { color: #71859b; }
+  .mobile-bottom-nav > button.active { color: #266ca8; background: #eaf5ff; }
+  .mobile-bottom-nav > button.active::before { background: #5498d0; }
+  .mobile-menu-sheet { border-color: #d7e6f2; background: #fcfeff; }
+}
