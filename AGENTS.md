@@ -90,6 +90,8 @@ npm run test
 npm run build
 ```
 
+全面发布阶段还必须执行 `npm run security:scan`、`npm audit --audit-level=high` 和 `npm run cloudflare:check`；GitHub CI 必须保持同等或更严格门槛。
+
 若阶段仅包含首批文档且项目尚无运行环境，则改为：
 
 - 人工检查 PRD 和本文件结构。

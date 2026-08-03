@@ -195,6 +195,15 @@ P1 阶段不包含生产 OCR、邮件发送、网页抓取/监测、微信授权
 
 当前工作区采用 IndexedDB schema v6，将来源、待确认草稿、项目、任务、时间节点、材料、证据、历史和提醒表示为可追溯实体，并安全迁移 schema v3/v4/v5。JSON 备份导入上限为 5 MB；当前 schema 会严格校验必需数组、枚举、日期、唯一 ID、实体引用和任务依赖环，拒绝不完整或被篡改的备份。导入文本始终作为普通数据呈现，不执行其中的 HTML 或脚本。
 
+## 维护与审计
+
+- [架构、数据流、能力状态与依赖许可证](./docs/ARCHITECTURE.md)
+- [全面升级审计记录](./docs/PRODUCT_AUDIT.md)
+- [安全策略与漏洞报告](./SECURITY.md)
+- [发布、回滚与事故运行手册](./RUNBOOK.md)
+
+Pull Request 与受保护分支由 GitHub CI 执行锁定依赖安装、lint、全量测试、生产构建、源码/产物密钥扫描、高危依赖审计和 Cloudflare dry-run。Dependabot 每周只创建更新 PR；大版本仍需人工评估和 Preview 验证。
+
 ## Cloudflare 能力边界
 
 Cloudflare Worker 发布 `dist` 静态产物，并通过 Worker Secret 调用 DeepSeek，不把密钥交给浏览器。同步、邮件队列和网页读取仍属于可选本机 Node 服务，未部署到 Cloudflare。当前没有账号系统、Turnstile 或持久化限流，因此代理只具备来源限制、字段最小化、单实例和基础频率保护，不构成用户级鉴权。Cloudflare 生产域名拥有独立的 IndexedDB 站点存储，不会自动继承 localhost、Firebase 或其他旧部署地址的数据。
