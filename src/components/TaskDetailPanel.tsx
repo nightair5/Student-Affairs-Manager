@@ -13,18 +13,32 @@ import {
   X,
 } from 'lucide-react'
 import { useEffect, useId, useState, type FormEvent } from 'react'
+import {
+  isMaterialSatisfied,
+  materialStatusFromLegacy,
+} from '../lib/domainEntities'
 import { formatDeadline, formatDuration } from '../lib/taskLogic'
 import {
   toDateTimeLocalValue,
   type BrowserNotificationPermission,
 } from '../lib/notifications'
 import type {
+  MaterialStatus,
   Priority,
   Source,
   Task,
   TaskCategory,
   TaskStatus,
 } from '../types'
+
+const materialStatusOptions: Array<{ value: MaterialStatus; label: string }> = [
+  { value: 'missing', label: '缺失' },
+  { value: 'preparing', label: '准备中' },
+  { value: 'ready', label: '已准备' },
+  { value: 'submitted', label: '已提交' },
+  { value: 'verified', label: '已确认通过' },
+  { value: 'not_required', label: '不需要' },
+]
 
 interface TaskDetailPanelProps {
   task: Task
@@ -76,11 +90,15 @@ export function TaskDetailPanel({
     setEditing(false)
   }
 
-  const toggleMaterial = (materialId: string) => {
+  const updateMaterialStatus = (materialId: string, status: MaterialStatus) => {
     onUpdate(task.id, {
       materials: task.materials.map((material) =>
         material.id === materialId
-          ? { ...material, done: !material.done }
+          ? {
+              ...material,
+              status,
+              done: isMaterialSatisfied(false, status),
+            }
           : material,
       ),
     })
@@ -327,22 +345,35 @@ export function TaskDetailPanel({
             <div className="detail-section-title">
               <h3>材料清单</h3>
               <small>
-                {task.materials.filter((item) => item.done).length}/
+                {task.materials.filter((item) => isMaterialSatisfied(item.done, item.status)).length}/
                 {task.materials.length}
               </small>
             </div>
             {task.materials.length ? (
               <ul className="material-list">
                 {task.materials.map((material) => (
-                  <li key={material.id} className={material.done ? 'done' : ''}>
-                    <button
-                      type="button"
-                      onClick={() => toggleMaterial(material.id)}
-                      aria-label={`${material.done ? '取消完成' : '标记完成'}材料：${material.name}`}
-                    >
+                  <li
+                    key={material.id}
+                    className={isMaterialSatisfied(material.done, material.status) ? 'satisfied' : ''}
+                  >
+                    <span className="material-copy">
                       <CheckCircle2 size={17} />
                       {material.name}
-                    </button>
+                    </span>
+                    <label>
+                      <span className="sr-only">{material.name}状态</span>
+                      <select
+                        value={materialStatusFromLegacy(material.done, material.status)}
+                        onChange={(event) => updateMaterialStatus(
+                          material.id,
+                          event.target.value as MaterialStatus,
+                        )}
+                      >
+                        {materialStatusOptions.map((option) => (
+                          <option key={option.value} value={option.value}>{option.label}</option>
+                        ))}
+                      </select>
+                    </label>
                   </li>
                 ))}
               </ul>

@@ -12,6 +12,8 @@ import type {
   Task,
   WorkspaceData,
 } from '../types'
+import { materializeWorkspaceEntities } from './domainEntities'
+import { isMaterialSatisfied } from './domainEntities'
 
 const minute = 60_000
 const day = 24 * 60 * minute
@@ -25,12 +27,10 @@ export function createWorkspaceData(
   integrations: IntegrationState = createIntegrationState(),
   knowledgeSettings: KnowledgeSettings = {},
 ): WorkspaceData {
+  const entities = materializeWorkspaceEntities(tasks, sources, drafts, projects)
   return {
-    schemaVersion: 5,
-    tasks,
-    sources,
-    drafts,
-    projects,
+    schemaVersion: 6,
+    ...entities,
     courseBlocks,
     integrations,
     knowledgeSettings,
@@ -113,7 +113,7 @@ export function taskSignals(task: Task, now = new Date()): {
   const reasons: string[] = []
   const deadline = new Date(task.deadline).getTime()
   const remaining = deadline - now.getTime()
-  const missing = task.materials.filter((item) => !item.done).length
+  const missing = task.materials.filter((item) => !isMaterialSatisfied(item.done, item.status)).length
 
   if (Number.isFinite(deadline) && remaining < 0) {
     risks.push('已逾期')
@@ -210,6 +210,7 @@ export function buildConfirmedTask(
       id: `${taskId}-material-${index}`,
       name,
       done: false,
+      status: 'missing',
       taskId,
       sourceId: source.id,
     })),

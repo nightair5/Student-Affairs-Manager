@@ -2841,9 +2841,32 @@ h3 {
 }
 
 .material-list li {
-  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 10px 8px 12px;
   border-radius: 7px;
   background: #f2f4ef;
+}
+
+.material-copy {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 9px;
+  color: var(--ink);
+  font-size: 12px;
+}
+
+.material-list select {
+  min-height: 38px;
+  padding: 7px 28px 7px 10px;
+  color: var(--ink);
+  font: inherit;
+  border: 1px solid var(--line-strong);
+  border-radius: 7px;
+  background: var(--paper);
 }
 
 .material-list li button {
@@ -2876,6 +2899,26 @@ h3 {
 
 .material-list li.done svg {
   color: var(--green);
+}
+
+.material-list li.satisfied {
+  background: var(--green-soft);
+}
+
+.material-list li.satisfied svg {
+  color: var(--green);
+}
+
+@media (max-width: 520px) {
+  .material-list li {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .material-list label,
+  .material-list select {
+    width: 100%;
+  }
 }
 
 .muted-copy {

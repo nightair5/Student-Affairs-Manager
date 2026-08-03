@@ -1,6 +1,7 @@
 import { Download, RotateCcw, Upload } from 'lucide-react'
 import { useRef, useState, type ChangeEvent } from 'react'
 import type { WorkspaceData } from '../types'
+import { MAX_WORKSPACE_IMPORT_BYTES } from '../lib/repository'
 
 interface WorkspaceControlsProps {
   workspace: WorkspaceData
@@ -27,6 +28,11 @@ export function WorkspaceControls({ workspace, onImport, onClear }: WorkspaceCon
   const importData = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
     if (!file) return
+    if (file.size > MAX_WORKSPACE_IMPORT_BYTES) {
+      setMessage('导入失败：JSON 备份不能超过 5 MB。')
+      event.target.value = ''
+      return
+    }
     try {
       onImport(await file.text())
       setMessage('已导入备份并替换当前本机工作区。')

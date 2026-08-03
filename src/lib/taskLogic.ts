@@ -1,4 +1,5 @@
 import type { RiskFlag, Task } from '../types'
+import { isMaterialSatisfied } from './domainEntities'
 
 const priorityWeight: Record<Task['priority'], number> = {
   高: 30,
@@ -64,7 +65,7 @@ export function getMaterialProgress(task: Task): {
   total: number
 } {
   return {
-    done: task.materials.filter((material) => material.done).length,
+    done: task.materials.filter((material) => isMaterialSatisfied(material.done, material.status)).length,
     total: task.materials.length,
   }
 }
