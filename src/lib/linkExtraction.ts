@@ -12,8 +12,9 @@ interface LinkExtractionErrorPayload {
 
 function errorMessage(payload: LinkExtractionErrorPayload | null, status: number): string {
   if (typeof payload?.message === 'string' && payload.message.trim()) return payload.message
-  if (status === 403) return '这个网页域名尚未加入服务端读取白名单。'
-  if (status === 503) return '网页读取服务尚未配置允许域名。'
+  if (status === 400) return '该链接不是可读取的公网 HTTPS 网页。'
+  if (status === 429) return '网页读取请求过于频繁，请稍后再试。'
+  if (status === 503) return '网页读取服务暂时不可用。'
   return '网页正文读取失败，请粘贴正文后继续。'
 }
 

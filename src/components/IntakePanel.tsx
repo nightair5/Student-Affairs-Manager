@@ -284,7 +284,7 @@ export function IntakePanel({ onClose, onSubmitIntake, smartExtractionStatus }: 
           {!manualMode && sourceType === 'link' && (
             <>
               <label className="field"><span>网页标题</span><input type="text" value={sourceTitle} onChange={(event) => setSourceTitle(event.target.value)} placeholder="例如：学院 2026 推免预通知" required /></label>
-              <label className="field"><span>网页链接</span><input type="url" value={linkUrl} onChange={(event) => { setLinkUrl(event.target.value); setContent(''); setLinkStatus('idle'); setLinkMessage('') }} placeholder="https://..." required /><small>只支持 HTTPS 和服务端明确允许的域名，不跟随重定向，也不执行页面脚本。</small></label>
+              <label className="field"><span>网页链接</span><input type="url" value={linkUrl} onChange={(event) => { setLinkUrl(event.target.value); setContent(''); setLinkStatus('idle'); setLinkMessage('') }} placeholder="https://..." required /><small>支持任意公网 HTTPS 页面；重定向逐跳校验，不读取内网地址，也不执行页面脚本。</small></label>
               <label className="link-authorization">
                 <input type="checkbox" checked={linkAuthorized} onChange={(event) => setLinkAuthorized(event.target.checked)} />
                 <span>我确认有权读取这个公开网页，并同意把读取到的正文用于本次任务整理。</span>
@@ -294,7 +294,7 @@ export function IntakePanel({ onClose, onSubmitIntake, smartExtractionStatus }: 
                 {linkStatus === 'reading' ? '正在读取网页…' : '授权读取网页正文'}
               </button>
               {linkMessage && <p className={`extraction-state ${linkStatus}`} role={linkStatus === 'error' ? 'alert' : 'status'}>{linkMessage}</p>}
-              {(content || linkStatus === 'error') && <label className="field"><span>网页正文（可核对修改）</span><textarea value={content} onChange={(event) => setContent(event.target.value)} rows={8} placeholder="若该域名未获准读取，请粘贴网页正文……" required /><small>外部网页始终按不可信纯文本处理；DeepSeek 只会生成待确认建议。</small></label>}
+              {(content || linkStatus === 'error') && <label className="field"><span>网页正文（可核对修改）</span><textarea value={content} onChange={(event) => setContent(event.target.value)} rows={8} placeholder="若网站要求登录或限制自动读取，请粘贴网页正文……" required /><small>外部网页始终按不可信纯文本处理；DeepSeek 只会生成待确认建议。</small></label>}
             </>
           )}
           {manualMode && (

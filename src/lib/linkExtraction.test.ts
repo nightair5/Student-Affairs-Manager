@@ -16,13 +16,13 @@ describe('fetchAuthorizedLinkText', () => {
     })
   })
 
-  it('keeps a clear closed state for hosts outside the allowlist', async () => {
+  it('shows a clear error for targets outside the public HTTPS boundary', async () => {
     const fetcher = vi.fn(async () => Response.json(
-      { error: 'WEB_HOST_NOT_ALLOWED', message: '这个域名尚未获准读取。' },
-      { status: 403 },
+      { error: 'WEB_PRIVATE_ADDRESS_FORBIDDEN', message: '不允许读取私网地址。' },
+      { status: 400 },
     )) as unknown as typeof fetch
 
-    await expect(fetchAuthorizedLinkText('https://blocked.example', fetcher))
-      .rejects.toThrow('这个域名尚未获准读取。')
+    await expect(fetchAuthorizedLinkText('https://127.0.0.1', fetcher))
+      .rejects.toThrow('不允许读取私网地址。')
   })
 })

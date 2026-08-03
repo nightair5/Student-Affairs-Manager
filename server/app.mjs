@@ -163,8 +163,9 @@ export function createRequestHandler(config, workspaceStore, emailQueue, emailPr
       } catch (error) {
         if (error instanceof SyntaxError) return json(response, 400, { error: 'INVALID_JSON' }, headers)
         const safeCodes = new Set([
-          'WEB_URL_INVALID', 'WEB_HTTPS_REQUIRED', 'WEB_CREDENTIALS_FORBIDDEN', 'WEB_HOST_NOT_ALLOWED',
-          'WEB_PRIVATE_ADDRESS_FORBIDDEN', 'WEB_FETCH_FAILED', 'WEB_CONTENT_TYPE_UNSUPPORTED', 'WEB_RESPONSE_TOO_LARGE',
+          'WEB_URL_INVALID', 'WEB_HTTPS_REQUIRED', 'WEB_CREDENTIALS_FORBIDDEN', 'WEB_PORT_FORBIDDEN',
+          'WEB_PRIVATE_ADDRESS_FORBIDDEN', 'WEB_DNS_FAILED', 'WEB_REDIRECT_INVALID', 'WEB_REDIRECT_LIMIT', 'WEB_FETCH_TIMEOUT',
+          'WEB_FETCH_FAILED', 'WEB_CONTENT_TYPE_UNSUPPORTED', 'WEB_RESPONSE_TOO_LARGE',
         ])
         return json(response, safeCodes.has(error?.code) ? 400 : 500, {
           error: safeCodes.has(error?.code) ? error.code : 'INTERNAL_ERROR',

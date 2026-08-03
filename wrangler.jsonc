@@ -4,9 +4,6 @@
   "main": "./cloudflare/worker.mjs",
   "compatibility_date": "2026-08-02",
   "workers_dev": true,
-  "vars": {
-    "WEB_FETCH_ALLOWED_HOSTS": "www.moe.gov.cn,www.chsi.com.cn,mp.weixin.qq.com,docs.qq.com"
-  },
   "routes": [
     {
       "pattern": "student-affairs.site",
@@ -34,9 +31,6 @@
       "name": "student-affairs-manager-preview",
       "workers_dev": true,
       "routes": [],
-      "vars": {
-        "WEB_FETCH_ALLOWED_HOSTS": ""
-      },
       "assets": {
         "directory": "./dist",
         "binding": "ASSETS",
