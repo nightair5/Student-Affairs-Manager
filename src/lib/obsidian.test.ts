@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { demoSources, demoTasks } from '../data/demo'
-import { buildObsidianVault, createZipArchive } from './obsidian'
+import { buildKnowledgeCsv, buildObsidianVault, createZipArchive } from './obsidian'
 
 describe('Obsidian export', () => {
   it('exports stable unique notes with links, materials, and history', () => {
@@ -17,5 +17,13 @@ describe('Obsidian export', () => {
     const archive = createZipArchive([{ path: '索引.md', content: '# 知识库' }])
     expect(Array.from(archive.slice(0, 4))).toEqual([0x50, 0x4b, 0x03, 0x04])
     expect(Array.from(archive.slice(-22, -18))).toEqual([0x50, 0x4b, 0x05, 0x06])
+  })
+
+  it('exports a spreadsheet index for knowledge entities', () => {
+    const csv = buildKnowledgeCsv(demoTasks, demoSources, [])
+    expect(csv).toContain('类型,标题,状态,日期')
+    expect(csv).toContain('任务')
+    expect(csv).toContain('来源')
+    expect(csv).toContain('历史条数')
   })
 })

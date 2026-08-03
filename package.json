@@ -12,7 +12,9 @@
     "firebase:serve": "npm run build:firebase && npx --yes firebase-tools emulators:start --only hosting",
     "deploy:firebase": "npm run build:firebase && npm --prefix functions run check && npx --yes firebase-tools deploy --only functions,hosting",
     "cloudflare:dev": "npm run build && wrangler dev",
-    "cloudflare:check": "node --test cloudflare/worker-tests.mjs && wrangler deploy --dry-run",
+    "cloudflare:check": "node --test cloudflare/worker-tests.mjs && wrangler deploy --dry-run --env=\"\" && wrangler deploy --dry-run --env preview",
+    "security:scan": "node scripts/scan-secrets.mjs",
+    "deploy:cloudflare:preview": "npm run build && npm run cloudflare:check && wrangler deploy --env preview",
     "deploy:cloudflare": "npm run build && npm run cloudflare:check && wrangler deploy",
     "lint": "eslint .",
     "test": "vitest run && node --test server/server-tests.mjs && node --test cloudflare/worker-tests.mjs && npm --prefix functions test"
@@ -21,7 +23,11 @@
     "lucide-react": "^0.468.0",
     "pdfjs-dist": "^6.2.108",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "tesseract.js": "^7.0.0"
+  },
+  "engines": {
+    "node": ">=20"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

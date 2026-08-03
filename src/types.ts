@@ -6,7 +6,9 @@ export type PageId =
   | 'library'
   | 'archive'
   | 'knowledge'
+  | 'reports'
   | 'services'
+  | 'privacy'
 
 export type TaskCategory = '比赛' | '保研' | '课程' | '老师任务' | '其他'
 export type TaskStatus = '待开始' | '进行中' | '已完成'
@@ -14,11 +16,18 @@ export type Priority = '高' | '中' | '低'
 export type RiskFlag = '紧急' | '缺材料' | '待确认' | '有依赖' | '已逾期'
 export type SourceType = 'text' | 'file' | 'image' | 'link'
 export type ReminderChannel = 'browser' | 'email' | 'wechat-placeholder'
+export type MaterialStatus = 'missing' | 'preparing' | 'ready' | 'submitted' | 'verified' | 'not_required'
+export type ReminderDeliveryStatus = 'draft' | 'scheduled' | 'sent' | 'failed' | 'unsupported'
+export type CanonicalDraftStatus = 'processing' | 'needs_review' | 'partially_confirmed' | 'confirmed' | 'rejected' | 'failed' | 'archived'
+export type CanonicalSourceStatus = 'uploaded' | 'extracting' | 'needs_review' | 'partially_confirmed' | 'confirmed' | 'failed' | 'archived'
+export type HistoryEntityType = 'task' | 'project' | 'material' | 'source' | 'draft' | 'reminder'
+export type TimePointType = 'deadline' | 'registration_deadline' | 'submission_deadline' | 'event_start' | 'event_end' | 'planned_start'
 
 export interface Material {
   id: string
   name: string
   done: boolean
+  status?: MaterialStatus
   taskId?: string
   projectId?: string
   sourceId?: string
@@ -38,11 +47,15 @@ export interface HistoryEntry {
   after: string
   changedAt: string
   actor: 'user' | 'system'
+  entityType?: HistoryEntityType
+  entityId?: string
+  action?: string
 }
 
 export interface Task {
   id: string
   projectId?: string
+  parentTaskId?: string
   title: string
   category: TaskCategory
   status: TaskStatus
@@ -54,9 +67,19 @@ export interface Task {
   riskFlags: RiskFlag[]
   materials: Material[]
   dependencies: string[]
+  dependencyIds?: string[]
   reminders: Reminder[]
   sourceIds: string[]
   priorityReason: string
+  plannedStart?: string
+  completedAt?: string
+  manualPriority?: number
+  computedPriorityScore?: number
+  priorityReasons?: string[]
+  pinnedUntil?: string
+  snoozedUntil?: string
+  timePointIds?: string[]
+  materialIds?: string[]
   createdAt: string
   updatedAt: string
   history: HistoryEntry[]
@@ -69,7 +92,16 @@ export interface Source {
   contentPreview: string
   content?: string
   url?: string
+  rawText?: string
+  originalFileName?: string
+  mimeType?: string
+  fileSize?: number
+  fileHash?: string
+  status?: CanonicalSourceStatus
+  processingError?: string
+  parserVersion?: string
   createdAt: string
+  updatedAt?: string
   extractionStatus: '已识别' | '待确认' | '部分确认' | '已确认' | '已拒绝'
   extractionMethod?: 'local-rules' | 'deepseek-v4-flash'
   duplicateOfSourceIds?: string[]
@@ -79,8 +111,66 @@ export interface Source {
 export interface EvidenceReference {
   id: string
   sourceId: string
+  page?: number
+  textStart?: number
+  textEnd?: number
   quote: string
+  quotedText?: string
   field: 'title' | 'deadline' | 'materials' | 'description'
+  extractionMethod?: 'manual' | 'demo' | 'ocr' | 'parser' | 'ai'
+  confidence?: number
+}
+
+export interface TimePoint {
+  id: string
+  taskId?: string
+  projectId?: string
+  type: TimePointType
+  value: string | null
+  timezone: string
+  isAllDay: boolean
+  originalText?: string
+  confidence?: number
+  needsConfirmation: boolean
+  evidenceIds: string[]
+}
+
+export interface MaterialItemEntity {
+  id: string
+  projectId?: string
+  taskId?: string
+  name: string
+  required: boolean
+  status: MaterialStatus
+  formatRequirement?: string
+  quantity?: number
+  note?: string
+  deadline?: string
+  evidenceIds: string[]
+  createdAt: string
+  updatedAt: string
+}
+
+export interface HistoryRecord {
+  id: string
+  entityType: HistoryEntityType
+  entityId: string
+  field: string
+  before: unknown
+  after: unknown
+  actor: 'user' | 'system'
+  action: string
+  changedAt: string
+}
+
+export interface ReminderRecord {
+  id: string
+  taskId: string
+  channel: ReminderChannel
+  scheduledAt: string
+  enabled: boolean
+  status: ReminderDeliveryStatus
+  errorMessage?: string
 }
 
 export interface ParsedSuggestion {
@@ -105,6 +195,7 @@ export interface DraftItem {
   suggestion: ParsedSuggestion
   status: DraftItemStatus
   updatedAt: string
+  history?: HistoryEntry[]
 }
 
 export interface ExtractionDraft {
@@ -114,6 +205,9 @@ export interface ExtractionDraft {
   items: DraftItem[]
   createdAt: string
   updatedAt: string
+  workflowStatus?: CanonicalDraftStatus
+  modelVersion?: string
+  promptVersion?: string
 }
 
 export interface Project {
@@ -123,6 +217,8 @@ export interface Project {
   sourceIds: string[]
   taskIds: string[]
   milestones: Milestone[]
+  status?: 'active' | 'completed' | 'archived'
+  description?: string
   createdAt: string
   updatedAt: string
 }
@@ -202,11 +298,16 @@ export interface KnowledgeSettings {
 }
 
 export interface WorkspaceData {
-  schemaVersion: 5
+  schemaVersion: 6
   tasks: Task[]
   sources: Source[]
   drafts: ExtractionDraft[]
   projects: Project[]
+  evidence: EvidenceReference[]
+  timePoints: TimePoint[]
+  materialItems: MaterialItemEntity[]
+  historyRecords: HistoryRecord[]
+  reminderRecords: ReminderRecord[]
   courseBlocks: CourseBlock[]
   integrations: IntegrationState
   knowledgeSettings: KnowledgeSettings

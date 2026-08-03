@@ -1,4 +1,5 @@
 import type { HistoryEntry, Task } from '../types'
+import { materialStatusFromLegacy } from './domainEntities'
 
 type EditableTaskPatch = Partial<
   Pick<
@@ -13,6 +14,10 @@ type EditableTaskPatch = Partial<
     | 'priority'
     | 'materials'
     | 'reminders'
+    | 'plannedStart'
+    | 'manualPriority'
+    | 'pinnedUntil'
+    | 'snoozedUntil'
   >
 >
 
@@ -27,6 +32,10 @@ const fieldLabels: Record<keyof EditableTaskPatch, string> = {
   priority: '优先级',
   materials: '材料清单',
   reminders: '提醒设置',
+  plannedStart: '计划开工时间',
+  manualPriority: '手动排序',
+  pinnedUntil: '置顶至',
+  snoozedUntil: '稍后处理至',
 }
 
 function displayValue(
@@ -35,8 +44,16 @@ function displayValue(
 ): string {
   if (key === 'materials' && Array.isArray(value)) {
     const materials = value as Task['materials']
+    const statusLabels = {
+      missing: '缺失',
+      preparing: '准备中',
+      ready: '已准备',
+      submitted: '已提交',
+      verified: '已确认通过',
+      not_required: '不需要',
+    } as const
     return materials
-      .map((item) => `${item.done ? '已完成' : '未完成'}：${item.name}`)
+      .map((item) => `${statusLabels[materialStatusFromLegacy(item.done, item.status)]}：${item.name}`)
       .join('；')
   }
 
@@ -73,6 +90,30 @@ export function updateTaskWithHistory(
       continue
     }
 
+    if (key === 'materials' && Array.isArray(before) && Array.isArray(after)) {
+      const previousMaterials = before as Task['materials']
+      const nextMaterials = after as Task['materials']
+      nextMaterials.forEach((material) => {
+        const previous = previousMaterials.find((candidate) => candidate.id === material.id)
+        if (!previous) return
+        const beforeStatus = materialStatusFromLegacy(previous.done, previous.status)
+        const afterStatus = materialStatusFromLegacy(material.done, material.status)
+        if (beforeStatus === afterStatus) return
+        historyEntries.push({
+          id: `${task.id}-material-${material.id}-${changedAt}`,
+          field: `材料状态 · ${material.name}`,
+          before: beforeStatus,
+          after: afterStatus,
+          changedAt,
+          actor: 'user',
+          entityType: 'material',
+          entityId: material.id,
+          action: 'material_status_changed',
+        })
+      })
+      if (historyEntries.some((entry) => entry.entityType === 'material')) continue
+    }
+
     historyEntries.push({
       id: `${task.id}-${key}-${changedAt}-${historyEntries.length}`,
       field: fieldLabels[key],
@@ -80,6 +121,9 @@ export function updateTaskWithHistory(
       after: displayValue(key, after),
       changedAt,
       actor: 'user',
+      entityType: 'task',
+      entityId: task.id,
+      action: key === 'status' && after === '已完成' ? 'completed' : 'updated',
     })
   }
 

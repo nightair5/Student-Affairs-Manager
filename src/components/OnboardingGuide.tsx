@@ -1,5 +1,6 @@
 import { ArrowLeft, ArrowRight, Check, ClipboardPaste, ListChecks, ShieldCheck, Sparkles, X } from 'lucide-react'
 import { useEffect, useId, useRef, useState } from 'react'
+import { useDialogFocusTrap } from '../lib/useDialogFocusTrap'
 
 interface OnboardingGuideProps {
   onClose: () => void
@@ -11,7 +12,7 @@ const steps = [
     title: '直接粘贴，不用先整理',
     description: '把老师消息、群通知或网页正文原样粘进首页。文件、PDF 和截图则点“上传文件或链接”。不用自己先找日期，也不用先想分类。',
     icon: ClipboardPaste,
-    points: ['保留原文，方便以后回看', '本地规则只给建议，不会直接建任务', '图片与扫描 PDF 目前需要人工补充文字'],
+    points: ['图片与扫描 PDF 在本机 OCR，先核对文字再整理', '网页链接需逐次授权，域名未获准时可粘贴正文', 'DeepSeek 或本地规则只给建议，不会直接建任务'],
   },
   {
     eyebrow: '第 2 步 · 核对拆分',
@@ -32,7 +33,7 @@ const steps = [
     title: '资料归你，决定也归你',
     description: '内容保存在当前浏览器的 IndexedDB 中。定期从项目档案导出 JSON 备份；换设备不会自动同步。云端问答每次发送前都会再次征求同意。',
     icon: ShieldCheck,
-    points: ['每天：看今日 → 做下一步 → 标记完成', '每周：核对待确认与日历', '每月：导出一次 JSON 备份'],
+    points: ['每天：看今日 → 做下一步 → 标记完成', '每周：核对待确认、日历并生成周报', '每月：生成月报并导出一次 JSON 备份'],
   },
 ]
 
@@ -41,24 +42,18 @@ export function OnboardingGuide({ onClose }: OnboardingGuideProps) {
   const titleId = useId()
   const closeRef = useRef<HTMLButtonElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
+  const dialogRef = useRef<HTMLElement>(null)
   const current = steps[step]
   const Icon = current.icon
 
-  useEffect(() => {
-    closeRef.current?.focus()
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') onClose()
-    }
-    window.addEventListener('keydown', closeOnEscape)
-    return () => window.removeEventListener('keydown', closeOnEscape)
-  }, [onClose])
+  useDialogFocusTrap(dialogRef, onClose, closeRef)
 
   useEffect(() => {
     contentRef.current?.scrollTo({ top: 0 })
   }, [step])
 
   return <div className="modal-backdrop guide-backdrop" role="presentation">
-    <section className="onboarding-guide" role="dialog" aria-modal="true" aria-labelledby={titleId}>
+    <section ref={dialogRef} className="onboarding-guide" role="dialog" aria-modal="true" aria-labelledby={titleId}>
       <header className="guide-header">
         <div className="guide-brand"><span><Sparkles size={18} /></span><strong>3 分钟上手事务管家</strong></div>
         <button ref={closeRef} className="icon-button" type="button" onClick={onClose} aria-label="关闭新手教程"><X size={19} /></button>

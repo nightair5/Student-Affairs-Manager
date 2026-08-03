@@ -27,4 +27,25 @@ describe('task updates', () => {
     const task = demoTasks[0]
     expect(updateTaskWithHistory(task, { title: task.title })).toBe(task)
   })
+
+  it('records a material status transition against the material entity', () => {
+    const task = demoTasks[0]
+    const materials = task.materials.map((material) => material.id === 'mat-2'
+      ? { ...material, done: true, status: 'submitted' as const }
+      : material)
+    const result = updateTaskWithHistory(
+      task,
+      { materials },
+      '2026-08-01T10:00:00.000Z',
+    )
+
+    expect(result.materials.find((material) => material.id === 'mat-2')?.status).toBe('submitted')
+    expect(result.history.at(-1)).toMatchObject({
+      entityType: 'material',
+      entityId: 'mat-2',
+      action: 'material_status_changed',
+      before: 'missing',
+      after: 'submitted',
+    })
+  })
 })

@@ -64,6 +64,9 @@ function migrateMaterials(value: unknown): Material[] {
         id: stringValue(item.id, `material-migrated-${index}`),
         name: item.name,
         done: Boolean(item.done),
+        status: item.status === 'preparing' || item.status === 'submitted' || item.status === 'verified' || item.status === 'not_required'
+          ? item.status
+          : item.done ? 'ready' : 'missing',
       },
     ]
   })
@@ -103,6 +106,11 @@ function migrateHistory(value: unknown): HistoryEntry[] {
         after: stringValue(item.after),
         changedAt: stringValue(item.changedAt, new Date(0).toISOString()),
         actor: item.actor === 'system' ? 'system' : 'user',
+        entityType: item.entityType === 'project' || item.entityType === 'material' || item.entityType === 'source' || item.entityType === 'draft' || item.entityType === 'reminder'
+          ? item.entityType
+          : 'task',
+        entityId: stringValue(item.entityId) || undefined,
+        action: stringValue(item.action) || undefined,
       },
     ]
   })

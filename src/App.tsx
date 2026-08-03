@@ -1,18 +1,14 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { DraftReviewPanel } from './components/DraftReviewPanel'
 import { IntakePanel } from './components/IntakePanel'
 import { OnboardingGuide } from './components/OnboardingGuide'
+import { PageLoadBoundary } from './components/PageLoadBoundary'
 import { Sidebar } from './components/Sidebar'
 import { TaskDetailPanel } from './components/TaskDetailPanel'
 import { demoSources, demoTasks } from './data/demo'
 import { InboxPage } from './pages/InboxPage'
-import { ArchivePage } from './pages/ArchivePage'
-import { CalendarPage } from './pages/CalendarPage'
 import { DashboardPage } from './pages/DashboardPage'
-import { LibraryPage } from './pages/LibraryPage'
-import { KnowledgePage } from './pages/KnowledgePage'
 import { TasksPage } from './pages/TasksPage'
-import { ServicesPage } from './pages/ServicesPage'
 import { IndexedDbWorkspaceRepository } from './lib/repository'
 import {
   getBrowserNotificationPermission,
@@ -27,9 +23,8 @@ import { createIntakeResult, type IntakeInput } from './lib/intake'
 import { ProxyDeepSeekExtractionService } from './lib/deepseekExtraction'
 import { markOnboardingComplete, shouldShowOnboarding } from './lib/onboarding'
 import {
-  buildConfirmedTask,
+  buildConfirmedProjectBatch,
   createManualMilestone,
-  createTaskMilestone,
   createExtractionDraft,
   createIntegrationState,
   createWorkspaceData,
@@ -40,6 +35,14 @@ import type { CourseBlock, ExtractionDraft, IntegrationState, KnowledgeSettings,
 
 const workspaceRepository = new IndexedDbWorkspaceRepository()
 const deepSeekExtractionService = new ProxyDeepSeekExtractionService()
+
+const CalendarPage = lazy(() => import('./pages/CalendarPage').then((module) => ({ default: module.CalendarPage })))
+const LibraryPage = lazy(() => import('./pages/LibraryPage').then((module) => ({ default: module.LibraryPage })))
+const ArchivePage = lazy(() => import('./pages/ArchivePage').then((module) => ({ default: module.ArchivePage })))
+const KnowledgePage = lazy(() => import('./pages/KnowledgePage').then((module) => ({ default: module.KnowledgePage })))
+const ReportsPage = lazy(() => import('./pages/ReportsPage').then((module) => ({ default: module.ReportsPage })))
+const ServicesPage = lazy(() => import('./pages/ServicesPage').then((module) => ({ default: module.ServicesPage })))
+const PrivacyPage = lazy(() => import('./pages/PrivacyPage').then((module) => ({ default: module.PrivacyPage })))
 
 function App() {
   const [initialWorkspace] = useState(() => loadWorkspace(demoTasks, demoSources))
@@ -174,6 +177,52 @@ function App() {
         : project))
     }
     setSelectedTaskId(null)
+    setNotice({
+      text: '任务已完成。',
+      undo: () => {
+        const undoAt = new Date().toISOString()
+        setTasks((current) => current.map((candidate) => candidate.id === taskId
+          ? updateTaskWithHistory(candidate, { status: task.status }, undoAt)
+          : candidate))
+        if (task.projectId) {
+          setProjects((current) => current.map((project) => project.id === task.projectId
+            ? syncTaskMilestone(project, { ...nextTask, status: task.status, updatedAt: undoAt })
+            : project))
+        }
+      },
+    })
+  }
+
+  const handleStart = (taskId: string) => {
+    const task = tasks.find((candidate) => candidate.id === taskId)
+    if (!task || task.status !== '待开始') return
+    handleUpdateTask(taskId, { status: '进行中' })
+    setNotice({ text: '已开始任务，首页会优先帮助你收尾。' })
+  }
+
+  const handleSnooze = (taskId: string) => {
+    const task = tasks.find((candidate) => candidate.id === taskId)
+    if (!task) return
+    const nextMorning = new Date()
+    nextMorning.setDate(nextMorning.getDate() + 1)
+    nextMorning.setHours(9, 0, 0, 0)
+    handleUpdateTask(taskId, { snoozedUntil: nextMorning.toISOString() })
+    setNotice({
+      text: '已稍后到明天 09:00；到时会重新参与首页排序。',
+      undo: () => handleUpdateTask(taskId, { snoozedUntil: task.snoozedUntil }),
+    })
+  }
+
+  const handleTogglePin = (taskId: string) => {
+    const task = tasks.find((candidate) => candidate.id === taskId)
+    if (!task) return
+    const now = new Date()
+    const pinned = task.pinnedUntil && new Date(task.pinnedUntil).getTime() > now.getTime()
+    const pinnedUntil = pinned
+      ? undefined
+      : new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000).toISOString()
+    handleUpdateTask(taskId, { pinnedUntil })
+    setNotice({ text: pinned ? '已取消置顶。' : '已置顶 7 天；你可以随时取消。' })
   }
 
   const handleUpdateTask = (taskId: string, patch: Partial<Task>) => {
@@ -205,30 +254,16 @@ function App() {
         }
       : source
     const draft = createExtractionDraft(nextSource.id, suggestions)
-    const now = new Date().toISOString()
-    const project: Project | null = suggestions[0]
-      ? {
-          id: `project-${source.id}`,
-          title: source.title,
-          category: suggestions[0].category,
-          sourceIds: [source.id],
-          taskIds: [],
-          milestones: [],
-          createdAt: now,
-          updatedAt: now,
-        }
-      : null
     setSources((current) => [nextSource, ...current])
     setDrafts((current) => [draft, ...current])
-    if (project) setProjects((current) => [project, ...current])
-    return { draft, source: nextSource, project, duplicateCount: duplicateCandidates.length }
+    return { draft, source: nextSource, duplicateCount: duplicateCandidates.length }
   }
 
   const handleIntakeInput = async (input: IntakeInput) => {
     const localResult = createIntakeResult(input)
     const provisional = handleCreateDraft(localResult.source, localResult.suggestions)
-    if (input.sourceType === 'link') {
-      openDraftReview(provisional.draft.id, '网页正文尚未抓取，已保存链接并生成可编辑的本地建议。')
+    if (input.manualSuggestion) {
+      openDraftReview(provisional.draft.id, '手动任务已保存为待确认草稿；核对后再加入任务中心。')
       return
     }
     try {
@@ -241,11 +276,6 @@ function App() {
       setSources((current) => current.map((source) => source.id === provisional.source.id
         ? { ...source, extractionMethod: 'deepseek-v4-flash' }
         : source))
-      if (provisional.project && suggestions[0]) {
-        setProjects((current) => current.map((project) => project.id === provisional.project?.id
-          ? { ...project, category: suggestions[0].category, updatedAt: new Date().toISOString() }
-          : project))
-      }
       setSmartExtractionStatus('connected')
       openDraftReview(
         provisional.draft.id,
@@ -285,24 +315,12 @@ function App() {
     const source = draft ? sources.find((item) => item.id === draft.sourceId) : null
     const item = draft?.items.find((candidate) => candidate.id === itemId)
     if (!draft || !source || !item || item.status !== '待确认') return
-    const project = projects.find((candidate) => candidate.sourceIds.includes(source.id))
-    const baseTask = buildConfirmedTask(item, source)
-    const task = project
-      ? {
-          ...baseTask,
-          projectId: project.id,
-          materials: baseTask.materials.map((material) => ({ ...material, projectId: project.id })),
-        }
-      : baseTask
+    const existingProject = projects.find((candidate) => candidate.sourceIds.includes(source.id))
+    const { tasks: [task], project } = buildConfirmedProjectBatch([item], source, existingProject)
     setTasks((current) => [task, ...current])
-    if (project) setProjects((current) => current.map((candidate) => candidate.id === project.id
-      ? {
-          ...candidate,
-          taskIds: [...candidate.taskIds, task.id],
-          milestones: [...candidate.milestones, createTaskMilestone(candidate.id, task)],
-          updatedAt: new Date().toISOString(),
-        }
-      : candidate))
+    setProjects((current) => existingProject
+      ? current.map((candidate) => candidate.id === project.id ? project : candidate)
+      : [project, ...current])
     handleUpdateDraft(draftId, itemId, {}, '已确认')
     setSources((current) => current.map((candidate) =>
       candidate.id === source.id
@@ -328,45 +346,45 @@ function App() {
     if (!draft || !source) return
     const pending = draft.items.filter((item) => item.status === '待确认')
     if (!pending.length) return
-    const project = projects.find((candidate) => candidate.sourceIds.includes(source.id))
-    const created = pending.map((item) => {
-      const baseTask = buildConfirmedTask(item, source)
-      return project
-        ? {
-            ...baseTask,
-            projectId: project.id,
-            materials: baseTask.materials.map((material) => ({ ...material, projectId: project.id })),
-          }
-        : baseTask
-    })
+    const existingProject = projects.find((candidate) => candidate.sourceIds.includes(source.id))
+    const { tasks: created, project } = buildConfirmedProjectBatch(pending, source, existingProject)
     setTasks((current) => [...created, ...current])
-    if (project) setProjects((current) => current.map((candidate) => candidate.id === project.id
-      ? {
-          ...candidate,
-          taskIds: [...candidate.taskIds, ...created.map((task) => task.id)],
-          milestones: [
-            ...candidate.milestones,
-            ...created.map((task) => createTaskMilestone(candidate.id, task)),
-          ],
-          updatedAt: new Date().toISOString(),
-        }
-      : candidate))
-    setDrafts((current) => current.map((item) => item.id === draftId
-      ? {
-          ...item,
-          status: '已确认',
-          updatedAt: new Date().toISOString(),
-          items: item.items.map((draftItem) => draftItem.status === '待确认'
-            ? { ...draftItem, status: '已确认', updatedAt: new Date().toISOString() }
-            : draftItem),
-        }
-      : item))
+    setProjects((current) => existingProject
+      ? current.map((candidate) => candidate.id === project.id ? project : candidate)
+      : [project, ...current])
+    const confirmedAt = new Date().toISOString()
+    setDrafts((current) => current.map((candidate) => {
+      if (candidate.id !== draftId) return candidate
+      return pending.reduce(
+        (nextDraft, draftItem) => updateDraftItem(nextDraft, draftItem.id, {}, '已确认', confirmedAt),
+        candidate,
+      )
+    }))
     setSources((current) => current.map((item) => item.id === source.id
       ? { ...item, extractionStatus: '已确认' }
       : item))
     setSelectedDraftId(null)
     setCurrentPage('today')
     setNotice({ text: `已创建 ${created.length} 项任务。` })
+  }
+
+  const handleArchiveDrafts = (draftIds: string[]) => {
+    const archivedDrafts = drafts.filter((draft) => draftIds.includes(draft.id))
+    const sourceIds = archivedDrafts.map((draft) => draft.sourceId)
+    const archivedSources = sources.filter((source) => sourceIds.includes(source.id))
+    setDrafts((current) => current.map((draft) => draftIds.includes(draft.id)
+      ? { ...draft, workflowStatus: 'archived', updatedAt: new Date().toISOString() }
+      : draft))
+    setSources((current) => current.map((source) => sourceIds.includes(source.id)
+      ? { ...source, status: 'archived', extractionStatus: '已拒绝', updatedAt: new Date().toISOString() }
+      : source))
+    setNotice({
+      text: `已归档 ${draftIds.length} 份草稿，没有删除来源。`,
+      undo: () => {
+        setDrafts((current) => current.map((draft) => archivedDrafts.find((item) => item.id === draft.id) ?? draft))
+        setSources((current) => current.map((source) => archivedSources.find((item) => item.id === source.id) ?? source))
+      },
+    })
   }
 
   const handleImportWorkspace = (serialized: string) => {
@@ -399,22 +417,34 @@ function App() {
         return (
           <DashboardPage
             tasks={tasks}
+            projects={projects}
             pendingReviewCount={pendingReviewCount}
             onQuickCapture={handleQuickCapture}
             onOpenIntake={() => setIntakeOpen(true)}
             onOpenTask={(task) => setSelectedTaskId(task.id)}
             onCompleteTask={handleComplete}
+            onStartTask={handleStart}
+            onSnoozeTask={handleSnooze}
+            onTogglePinTask={handleTogglePin}
             onShowTasks={() => setCurrentPage('tasks')}
             onShowInbox={() => setCurrentPage('inbox')}
             smartExtractionStatus={smartExtractionStatus}
           />
         )
       case 'inbox':
-        return <InboxPage drafts={drafts} sources={sources} onOpenDraft={setSelectedDraftId} />
+        return <InboxPage
+          drafts={drafts}
+          sources={sources}
+          onOpenDraft={setSelectedDraftId}
+          onConfirmDrafts={(draftIds) => draftIds.forEach(handleConfirmAll)}
+          onArchiveDrafts={handleArchiveDrafts}
+          onOpenManual={() => setIntakeOpen(true)}
+        />
       case 'tasks':
         return (
           <TasksPage
             tasks={tasks}
+            projects={projects}
             onOpenTask={(task) => setSelectedTaskId(task.id)}
             onCompleteTask={handleComplete}
           />
@@ -468,6 +498,8 @@ function App() {
             setNotice({ text: '已撤销本地检索授权。' })
           }}
         />
+      case 'reports':
+        return <ReportsPage tasks={tasks} projects={projects} />
       case 'services':
         return <ServicesPage
           workspace={workspace}
@@ -498,11 +530,14 @@ function App() {
             })
           }}
         />
+      case 'privacy':
+        return <PrivacyPage workspace={workspace} onOpenArchive={() => setCurrentPage('archive')} />
     }
   }
 
   return (
     <div className="app-shell">
+      <a className="skip-link" href="#main-content">跳到主要内容</a>
       <Sidebar
         currentPage={currentPage}
         pendingReviewCount={pendingReviewCount}
@@ -510,7 +545,13 @@ function App() {
         onOpenIntake={() => setIntakeOpen(true)}
         onOpenGuide={() => setGuideOpen(true)}
       />
-      <div className="content-shell">{renderPage()}</div>
+      <div id="main-content" className="content-shell" tabIndex={-1}>
+        <PageLoadBoundary key={currentPage} onRetry={() => window.location.reload()}>
+          <Suspense fallback={<main className="page page-loading" role="status">正在打开页面…</main>}>
+            {renderPage()}
+          </Suspense>
+        </PageLoadBoundary>
+      </div>
 
       {!workspaceReady && <div className="workspace-status" role="status">正在恢复本机工作区…</div>}
       {storageError && <div className="workspace-status error" role="alert">本机数据库暂不可用；本次更改可能无法在刷新后保留。</div>}
@@ -535,6 +576,7 @@ function App() {
             setNotice({ text: '已拒绝该建议，不会创建任务。', undo: () => handleUpdateDraft(selectedDraft.id, itemId, {}, '待确认') })
           }}
           onConfirmAll={() => handleConfirmAll(selectedDraft.id)}
+          projectWillCreate={!projects.some((project) => project.sourceIds.includes(selectedDraft.sourceId))}
         />
       )}
       {selectedTask && (

@@ -6,6 +6,11 @@ export interface IntakeInput {
   content: string
   sourceTitle?: string
   fileName?: string
+  mimeType?: string
+  fileSize?: number
+  fileHash?: string
+  url?: string
+  manualSuggestion?: ParsedSuggestion
   now?: Date
 }
 
@@ -19,6 +24,11 @@ export function createIntakeResult({
   content,
   sourceTitle,
   fileName,
+  mimeType,
+  fileSize,
+  fileHash,
+  url,
+  manualSuggestion,
   now = new Date(),
 }: IntakeInput): IntakeResult {
   const cleanContent = content.trim().slice(0, 50_000)
@@ -31,12 +41,20 @@ export function createIntakeResult({
       type: sourceType,
       title,
       contentPreview: cleanContent.slice(0, 500),
-      content: sourceType === 'link' ? undefined : cleanContent,
-      url: sourceType === 'link' ? cleanContent : undefined,
+      content: cleanContent || undefined,
+      rawText: cleanContent || undefined,
+      url: sourceType === 'link' ? url?.trim() : undefined,
+      originalFileName: fileName?.trim() || undefined,
+      mimeType: mimeType || undefined,
+      fileSize,
+      fileHash,
+      status: 'needs_review',
       createdAt: now.toISOString(),
+      updatedAt: now.toISOString(),
       extractionStatus: '待确认',
       extractionMethod: 'local-rules',
+      parserVersion: 'local-rules-v2',
     },
-    suggestions: createSuggestions(cleanContent, sourceType, title, now),
+    suggestions: manualSuggestion ? [{ ...manualSuggestion }] : createSuggestions(cleanContent, sourceType, title, now),
   }
 }

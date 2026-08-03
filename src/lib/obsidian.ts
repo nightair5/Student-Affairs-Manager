@@ -5,6 +5,42 @@ export interface MarkdownFile {
   content: string
 }
 
+function csvCell(value: string | number): string {
+  const text = String(value)
+  return /[",\n]/u.test(text) ? `"${text.replace(/"/gu, '""')}"` : text
+}
+
+export function buildKnowledgeCsv(tasks: Task[], sources: Source[], projects: Project[]): string {
+  const rows: Array<Array<string | number>> = [
+    ...tasks.map((task) => [
+      '任务', task.title, task.status, task.deadline, task.category,
+      task.materials.map((item) => `${item.name}:${item.status ?? (item.done ? '已完成' : '未完成')}`).join('；'),
+      task.nextAction, task.history.length,
+    ]),
+    ...projects.map((project) => [
+      '项目', project.title, project.status ?? 'active', project.updatedAt, project.category,
+      `${project.taskIds.length} 项任务；${project.milestones.length} 个里程碑`, project.description ?? '', 0,
+    ]),
+    ...sources.map((source) => [
+      '来源', source.title, source.extractionStatus, source.createdAt, source.type,
+      source.url ?? '', (source.content ?? source.contentPreview).slice(0, 500), 0,
+    ]),
+  ]
+  return [
+    '类型,标题,状态,日期,分类,关联或材料,摘要或下一步,历史条数',
+    ...rows.map((row) => row.map(csvCell).join(',')),
+  ].join('\r\n')
+}
+
+export function downloadKnowledgeCsv(tasks: Task[], sources: Source[], projects: Project[]): void {
+  const content = `\uFEFF${buildKnowledgeCsv(tasks, sources, projects)}`
+  const link = document.createElement('a')
+  link.href = URL.createObjectURL(new Blob([content], { type: 'text/csv;charset=utf-8' }))
+  link.download = `学生事务知识库索引-${new Date().toISOString().slice(0, 10)}.csv`
+  link.click()
+  window.setTimeout(() => URL.revokeObjectURL(link.href), 0)
+}
+
 function safeName(value: string, id: string): string {
   const stem = value.replace(/[\\/:*?"<>|]/g, '-').trim().slice(0, 64) || '未命名'
   const suffix = id.replace(/[^a-zA-Z0-9_-]/g, '').slice(-8) || 'item'

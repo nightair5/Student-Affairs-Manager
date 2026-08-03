@@ -1,6 +1,7 @@
 import {
   BellRing,
   CalendarClock,
+  CalendarPlus,
   CheckCircle2,
   Clock3,
   Edit3,
@@ -9,22 +10,39 @@ import {
   Link2,
   Mail,
   MonitorCheck,
+  ListTodo,
   Save,
   X,
 } from 'lucide-react'
-import { useEffect, useId, useState, type FormEvent } from 'react'
+import { useId, useRef, useState, type FormEvent } from 'react'
+import {
+  isMaterialSatisfied,
+  materialStatusFromLegacy,
+} from '../lib/domainEntities'
 import { formatDeadline, formatDuration } from '../lib/taskLogic'
 import {
   toDateTimeLocalValue,
   type BrowserNotificationPermission,
 } from '../lib/notifications'
 import type {
+  MaterialStatus,
   Priority,
   Source,
   Task,
   TaskCategory,
   TaskStatus,
 } from '../types'
+import { useDialogFocusTrap } from '../lib/useDialogFocusTrap'
+import { buildCalendarIcs, buildTodoIcs, shareOrDownloadIcs } from '../lib/calendarExport'
+
+const materialStatusOptions: Array<{ value: MaterialStatus; label: string }> = [
+  { value: 'missing', label: '缺失' },
+  { value: 'preparing', label: '准备中' },
+  { value: 'ready', label: '已准备' },
+  { value: 'submitted', label: '已提交' },
+  { value: 'verified', label: '已确认通过' },
+  { value: 'not_required', label: '不需要' },
+]
 
 interface TaskDetailPanelProps {
   task: Task
@@ -46,20 +64,16 @@ export function TaskDetailPanel({
   onRequestNotificationPermission,
 }: TaskDetailPanelProps) {
   const titleId = useId()
+  const panelRef = useRef<HTMLElement>(null)
   const [editing, setEditing] = useState(false)
   const [draft, setDraft] = useState(task)
   const [notificationFeedback, setNotificationFeedback] = useState('')
+  const [calendarFeedback, setCalendarFeedback] = useState('')
   const linkedSources = sources.filter((source) =>
     task.sourceIds.includes(source.id),
   )
 
-  useEffect(() => {
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') onClose()
-    }
-    window.addEventListener('keydown', closeOnEscape)
-    return () => window.removeEventListener('keydown', closeOnEscape)
-  }, [onClose])
+  useDialogFocusTrap(panelRef, onClose)
 
   const handleSave = (event: FormEvent) => {
     event.preventDefault()
@@ -76,11 +90,15 @@ export function TaskDetailPanel({
     setEditing(false)
   }
 
-  const toggleMaterial = (materialId: string) => {
+  const updateMaterialStatus = (materialId: string, status: MaterialStatus) => {
     onUpdate(task.id, {
       materials: task.materials.map((material) =>
         material.id === materialId
-          ? { ...material, done: !material.done }
+          ? {
+              ...material,
+              status,
+              done: isMaterialSatisfied(false, status),
+            }
           : material,
       ),
     })
@@ -151,9 +169,23 @@ export function TaskDetailPanel({
     })
   }
 
+  const exportToPhone = async (kind: 'calendar' | 'todo') => {
+    try {
+      const result = await shareOrDownloadIcs(
+        `${task.title.replace(/[\\/:*?"<>|]/gu, '-')}-${kind === 'calendar' ? '日历提醒' : '待办'}.ics`,
+        kind === 'calendar' ? buildCalendarIcs([task]) : buildTodoIcs([task]),
+      )
+      setCalendarFeedback(result === 'shared' ? '已打开系统分享，请选择日历或待办应用。' : '已下载 ICS 文件，请在手机日历或待办应用中导入。')
+    } catch (cause) {
+      if (cause instanceof DOMException && cause.name === 'AbortError') return
+      setCalendarFeedback('系统分享或下载失败，请检查浏览器下载权限。')
+    }
+  }
+
   return (
     <div className="modal-backdrop detail-backdrop" role="presentation">
       <aside
+        ref={panelRef}
         className="detail-panel"
         role="dialog"
         aria-modal="true"
@@ -327,22 +359,35 @@ export function TaskDetailPanel({
             <div className="detail-section-title">
               <h3>材料清单</h3>
               <small>
-                {task.materials.filter((item) => item.done).length}/
+                {task.materials.filter((item) => isMaterialSatisfied(item.done, item.status)).length}/
                 {task.materials.length}
               </small>
             </div>
             {task.materials.length ? (
               <ul className="material-list">
                 {task.materials.map((material) => (
-                  <li key={material.id} className={material.done ? 'done' : ''}>
-                    <button
-                      type="button"
-                      onClick={() => toggleMaterial(material.id)}
-                      aria-label={`${material.done ? '取消完成' : '标记完成'}材料：${material.name}`}
-                    >
+                  <li
+                    key={material.id}
+                    className={isMaterialSatisfied(material.done, material.status) ? 'satisfied' : ''}
+                  >
+                    <span className="material-copy">
                       <CheckCircle2 size={17} />
                       {material.name}
-                    </button>
+                    </span>
+                    <label>
+                      <span className="sr-only">{material.name}状态</span>
+                      <select
+                        value={materialStatusFromLegacy(material.done, material.status)}
+                        onChange={(event) => updateMaterialStatus(
+                          material.id,
+                          event.target.value as MaterialStatus,
+                        )}
+                      >
+                        {materialStatusOptions.map((option) => (
+                          <option key={option.value} value={option.value}>{option.label}</option>
+                        ))}
+                      </select>
+                    </label>
                   </li>
                 ))}
               </ul>
@@ -437,6 +482,14 @@ export function TaskDetailPanel({
                 />
               </label>
             )}
+            <div className="phone-export-card">
+              <div><strong>手机日历与待办</strong><small>生成标准 ICS，由你在手机系统中确认导入；网页不会静默修改原生闹钟。</small></div>
+              <div className="phone-export-actions">
+                <button className="secondary-button" type="button" onClick={() => void exportToPhone('calendar')}><CalendarPlus size={16} />日历提醒</button>
+                <button className="secondary-button" type="button" onClick={() => void exportToPhone('todo')}><ListTodo size={16} />手机待办</button>
+              </div>
+              {calendarFeedback && <p role="status">{calendarFeedback}</p>}
+            </div>
             <div className="reminder-option disabled-option">
               <div>
                 <span className="reminder-icon">

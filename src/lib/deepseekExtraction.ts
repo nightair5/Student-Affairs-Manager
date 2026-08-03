@@ -83,8 +83,8 @@ export async function createSmartIntakeResult(
   service: DeepSeekExtractionService,
 ): Promise<SmartIntakeResult> {
   const localResult = createIntakeResult(input)
-  if (input.sourceType === 'link') {
-    return { ...localResult, method: 'local-rules', fallbackReason: '网页正文尚未抓取，仅保存链接。' }
+  if (input.sourceType === 'link' && !input.content.trim()) {
+    return { ...localResult, method: 'local-rules', fallbackReason: '网页正文尚未读取，仅保存链接。' }
   }
   try {
     const suggestions = await service.extract(input)

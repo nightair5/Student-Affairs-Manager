@@ -12,9 +12,8 @@ import type {
   Task,
   WorkspaceData,
 } from '../types'
-
-const minute = 60_000
-const day = 24 * 60 * minute
+import { materializeWorkspaceEntities } from './domainEntities'
+import { calculateTaskPriority } from './taskLogic'
 
 export function createWorkspaceData(
   tasks: Task[],
@@ -25,12 +24,10 @@ export function createWorkspaceData(
   integrations: IntegrationState = createIntegrationState(),
   knowledgeSettings: KnowledgeSettings = {},
 ): WorkspaceData {
+  const entities = materializeWorkspaceEntities(tasks, sources, drafts, projects)
   return {
-    schemaVersion: 5,
-    tasks,
-    sources,
-    drafts,
-    projects,
+    schemaVersion: 6,
+    ...entities,
     courseBlocks,
     integrations,
     knowledgeSettings,
@@ -90,18 +87,40 @@ export function updateDraftItem(
   itemId: string,
   patch: Partial<DraftItem['suggestion']>,
   status?: DraftItem['status'],
+  now = new Date().toISOString(),
 ): ExtractionDraft {
-  const now = new Date().toISOString()
-  const items = draft.items.map((item) =>
-    item.id === itemId
-      ? {
-          ...item,
-          suggestion: { ...item.suggestion, ...patch },
-          status: status ?? item.status,
-          updatedAt: now,
-        }
-      : item,
-  )
+  const items = draft.items.map((item) => {
+    if (item.id !== itemId) return item
+    const nextStatus = status ?? item.status
+    const suggestionChanged = Object.keys(patch).some((key) => {
+      const field = key as keyof DraftItem['suggestion']
+      return JSON.stringify(item.suggestion[field]) !== JSON.stringify(patch[field])
+    })
+    const statusChanged = nextStatus !== item.status
+    if (!suggestionChanged && !statusChanged) return item
+    return {
+      ...item,
+      suggestion: { ...item.suggestion, ...patch },
+      status: nextStatus,
+      updatedAt: now,
+      history: [
+        ...(item.history ?? []),
+        {
+          id: `${item.id}-history-${now}-${item.history?.length ?? 0}`,
+          field: statusChanged ? '确认状态' : '识别建议',
+          before: statusChanged ? item.status : JSON.stringify(item.suggestion),
+          after: statusChanged ? nextStatus : JSON.stringify({ ...item.suggestion, ...patch }),
+          changedAt: now,
+          actor: 'user' as const,
+          entityType: 'draft' as const,
+          entityId: item.id,
+          action: statusChanged
+            ? nextStatus === '已确认' ? 'confirmed' : nextStatus === '已拒绝' ? 'rejected' : 'reopened'
+            : 'updated',
+        },
+      ],
+    }
+  })
   return { ...draft, items, status: deriveDraftStatus(items), updatedAt: now }
 }
 
@@ -109,35 +128,30 @@ export function taskSignals(task: Task, now = new Date()): {
   risks: RiskFlag[]
   reason: string
 } {
-  const risks: RiskFlag[] = []
-  const reasons: string[] = []
-  const deadline = new Date(task.deadline).getTime()
-  const remaining = deadline - now.getTime()
-  const missing = task.materials.filter((item) => !item.done).length
-
-  if (Number.isFinite(deadline) && remaining < 0) {
-    risks.push('已逾期')
-    reasons.push('已逾期')
-  } else if (remaining <= day) {
-    risks.push('紧急')
-    reasons.push('24 小时内截止')
-  }
-  if (missing) {
-    risks.push('缺材料')
-    reasons.push(`缺 ${missing} 项材料`)
-  }
-  if (task.dependencies.length) {
-    risks.push('有依赖')
-    reasons.push('存在前置事项')
-  }
-  if (task.riskFlags.includes('待确认')) {
-    risks.push('待确认')
-    reasons.push('关键信息待核对')
-  }
-
+  const result = calculateTaskPriority(task, [task], now)
   return {
-    risks: [...new Set(risks)],
-    reason: reasons.join('；') || '按你的优先级与截止时间排序',
+    risks: result.risks,
+    reason: result.reasons.slice(0, 3).join('；'),
+  }
+}
+
+export function createProjectFromConfirmation(
+  source: Source,
+  suggestion: ParsedSuggestion,
+  tasks: Task[],
+  now = new Date().toISOString(),
+): Project {
+  const projectId = `project-${source.id}`
+  return {
+    id: projectId,
+    title: source.title,
+    category: suggestion.category,
+    sourceIds: [source.id],
+    taskIds: tasks.map((task) => task.id),
+    milestones: tasks.map((task) => createTaskMilestone(projectId, task, now)),
+    status: 'active',
+    createdAt: now,
+    updatedAt: now,
   }
 }
 
@@ -210,6 +224,7 @@ export function buildConfirmedTask(
       id: `${taskId}-material-${index}`,
       name,
       done: false,
+      status: 'missing',
       taskId,
       sourceId: source.id,
     })),
@@ -224,12 +239,53 @@ export function buildConfirmedTask(
         id: `${taskId}-created`,
         field: '任务',
         before: '',
-        after: '由用户确认演示识别建议后创建',
+        after: source.extractionMethod === 'deepseek-v4-flash'
+          ? '由用户确认 DeepSeek 建议后创建'
+          : '由用户确认本地规则建议后创建',
         changedAt: now,
         actor: 'user',
+        entityType: 'task',
+        entityId: taskId,
+        action: 'confirmed',
       },
     ],
   }
   const signal = taskSignals(base)
   return { ...base, riskFlags: signal.risks, priorityReason: signal.reason }
+}
+
+export function buildConfirmedProjectBatch(
+  items: DraftItem[],
+  source: Source,
+  existingProject: Project | undefined,
+  now = new Date().toISOString(),
+): { tasks: Task[]; project: Project } {
+  if (!items.length) throw new Error('至少需要一项已确认建议')
+  const projectId = existingProject?.id ?? `project-${source.id}`
+  const tasks = items.map((item) => {
+    const task = buildConfirmedTask(item, source, now)
+    return {
+      ...task,
+      projectId,
+      materials: task.materials.map((material) => ({ ...material, projectId })),
+    }
+  })
+  if (!existingProject) {
+    return {
+      tasks,
+      project: createProjectFromConfirmation(source, items[0].suggestion, tasks, now),
+    }
+  }
+  return {
+    tasks,
+    project: {
+      ...existingProject,
+      taskIds: [...new Set([...existingProject.taskIds, ...tasks.map((task) => task.id)])],
+      milestones: [
+        ...existingProject.milestones,
+        ...tasks.map((task) => createTaskMilestone(existingProject.id, task, now)),
+      ],
+      updatedAt: now,
+    },
+  }
 }

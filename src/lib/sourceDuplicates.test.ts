@@ -26,4 +26,14 @@ describe('findDuplicateSources', () => {
     const existing = source('old', '比赛报名', '周五提交团队报名表')
     expect(findDuplicateSources(incoming, [existing])).toEqual([])
   })
+
+  it('优先识别完全相同的文件指纹和规范化链接', () => {
+    const fileIncoming = { ...source('file-new', '新文件名', '短摘要'), type: 'file' as const, fileHash: 'same-hash' }
+    const fileExisting = { ...source('file-old', '旧文件名', '另一摘要'), type: 'file' as const, fileHash: 'same-hash' }
+    expect(findDuplicateSources(fileIncoming, [fileExisting])[0]?.reason).toBe('文件指纹完全相同')
+
+    const linkIncoming = { ...source('link-new', '链接', ''), type: 'link' as const, url: 'https://example.com/notice/?b=2&a=1#top' }
+    const linkExisting = { ...source('link-old', '另一个标题', ''), type: 'link' as const, url: 'https://example.com/notice?a=1&b=2' }
+    expect(findDuplicateSources(linkIncoming, [linkExisting])[0]?.reason).toBe('网页链接相同')
+  })
 })
