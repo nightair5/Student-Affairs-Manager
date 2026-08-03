@@ -25,8 +25,11 @@ interface TemporalAnchor {
   text: string
 }
 
-const periodSource = '(?:上午|下午|晚上|晚|中午|凌晨)'
-const clockSource = `(?:(?:${periodSource})\\s*\\d{1,2}(?:(?:[:：]\\d{1,2})|(?:点|时)(?:\\d{1,2}分?)?)?|\\d{1,2}(?:(?:[:：]\\d{1,2})|(?:点|时)(?:\\d{1,2}分?)?))`
+const periodSource = '(?:清晨|早晨|早上|上午|中午|下午|傍晚|晚上|夜间|夜里|晚|凌晨)'
+const chineseNumberSource = '[零〇一二两三四五六七八九十]{1,3}'
+const hourSource = `(?:\\d{1,2}|${chineseNumberSource})`
+const minuteSource = `(?:\\d{1,2}|${chineseNumberSource})`
+const clockSource = `(?:(?:${periodSource})\\s*${hourSource}(?:(?:[:：]${minuteSource})|(?:点|时)(?:(?:${minuteSource}分?)|半)?)?|\\d{1,2}(?:(?:[:：]\\d{1,2})|(?:点|时)(?:(?:\\d{1,2}分?)|半)?))`
 const absoluteDateSource = '(?:(?:20\\d{2})[年/-]\\s*)?\\d{1,2}[月/-]\\s*\\d{1,2}(?:日|号)?'
 const relativeDateSource = '(?:今天|今日|明天|后天|(?:本周|这周|下周)[一二三四五六日天])'
 const temporalSource = `(?:(?:${absoluteDateSource}|${relativeDateSource})(?:\\s*${clockSource})?|${clockSource})`
@@ -49,11 +52,29 @@ function inferExplicitCategory(content: string): TaskCategory | null {
   return null
 }
 
-function convertHour(hour: number, period?: string): number {
-  if ((period === '下午' || period === '晚上' || period === '晚') && hour < 12) return hour + 12
-  if (period === '中午' && hour < 11) return hour + 12
-  if (period === '凌晨' && hour === 12) return 0
-  return hour
+function parseChineseNumber(value: string): number {
+  if (/^\d+$/u.test(value)) return Number(value)
+  const digits: Record<string, number> = {
+    零: 0, 〇: 0, 一: 1, 二: 2, 两: 2, 三: 3, 四: 4,
+    五: 5, 六: 6, 七: 7, 八: 8, 九: 9,
+  }
+  if (!value.includes('十')) return digits[value] ?? Number.NaN
+  const [tens, ones] = value.split('十')
+  return (tens ? digits[tens] : 1) * 10 + (ones ? digits[ones] : 0)
+}
+
+function convertHour(hour: number, period?: string): { hour: number; dayOffset: number } {
+  if (['下午', '傍晚', '晚上', '夜间', '夜里', '晚'].includes(period ?? '') && hour < 12) {
+    return { hour: hour + 12, dayOffset: 0 }
+  }
+  if (['晚上', '夜间', '夜里', '晚'].includes(period ?? '') && hour === 12) {
+    return { hour: 0, dayOffset: 1 }
+  }
+  if (period === '中午' && hour < 11) return { hour: hour + 12, dayOffset: 0 }
+  if (['凌晨', '清晨', '早晨', '早上', '上午'].includes(period ?? '') && hour === 12) {
+    return { hour: 0, dayOffset: 0 }
+  }
+  return { hour, dayOffset: 0 }
 }
 
 function contextFromRelativeDate(value: string, now: Date): TemporalContext | null {
@@ -102,14 +123,14 @@ function parseAnchor(
     context = previousContext ?? dateContext(new Date(now.getFullYear(), now.getMonth(), now.getDate() + 7))
   }
 
-  const time = timeText.match(/(上午|下午|晚上|晚|中午|凌晨)?\s*(\d{1,2})(?:(?:[:：](\d{1,2}))|(?:点|时)(?:(\d{1,2})分?)?)?/u)
-  const rawHour = time ? Number(time[2]) : 18
-  const minute = time ? Number(time[3] ?? time[4] ?? 0) : 0
-  const hour = convertHour(rawHour, time?.[1])
-  if (context.month < 1 || context.month > 12 || context.day < 1 || context.day > 31 || hour > 23 || minute > 59) {
+  const time = timeText.match(new RegExp(`(${periodSource.slice(3, -1)})?\\s*(${hourSource})(?:(?:[:：](${minuteSource}))|(?:点|时)(?:(${minuteSource})分?|(半))?)?`, 'u'))
+  const rawHour = time ? parseChineseNumber(time[2]) : 18
+  const minute = time ? (time[5] ? 30 : parseChineseNumber(time[3] ?? time[4] ?? '0')) : 0
+  const converted = convertHour(rawHour, time?.[1])
+  if (context.month < 1 || context.month > 12 || context.day < 1 || context.day > 31 || converted.hour > 23 || minute > 59) {
     return null
   }
-  const target = new Date(context.year, context.month - 1, context.day, hour, minute)
+  const target = new Date(context.year, context.month - 1, context.day + converted.dayOffset, converted.hour, minute)
   return { deadline: toLocalDateTime(target), context }
 }
 

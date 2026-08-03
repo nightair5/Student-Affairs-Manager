@@ -215,4 +215,34 @@ describe('demo parser', () => {
     ])
     expect(results[2].materials).toEqual(['报名表', '身份证明', '承诺书'])
   })
+
+  it('distinguishes Chinese day periods and half-hour expressions', () => {
+    const results = createSuggestions(
+      '8月10日早上八点半参加晨会；8月10日中午十二点提交表格；8月10日傍晚六点半联系老师；8月10日夜里十二点上传最终版。',
+      'text',
+      undefined,
+      new Date('2026-08-03T08:00:00+08:00'),
+    )
+
+    expect(results.map((item) => item.deadline)).toEqual([
+      '2026-08-10T08:30',
+      '2026-08-10T12:00',
+      '2026-08-10T18:30',
+      '2026-08-11T00:00',
+    ])
+  })
+
+  it('treats 上午十二点 as midnight and 下午十二点 as noon', () => {
+    const results = createSuggestions(
+      '8月15日上午十二点完成系统确认；8月15日下午十二点参加答疑。',
+      'text',
+      undefined,
+      new Date('2026-08-03T08:00:00+08:00'),
+    )
+
+    expect(results.map((item) => item.deadline)).toEqual([
+      '2026-08-15T00:00',
+      '2026-08-15T12:00',
+    ])
+  })
 })

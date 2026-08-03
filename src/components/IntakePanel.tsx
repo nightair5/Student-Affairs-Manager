@@ -45,6 +45,7 @@ export function IntakePanel({ onClose, onSubmitIntake, smartExtractionStatus }: 
   const [fileHash, setFileHash] = useState('')
   const [fileStatus, setFileStatus] = useState<IntakeFileStatus>('idle')
   const [fileMessage, setFileMessage] = useState('')
+  const [fileProgress, setFileProgress] = useState(0)
   const [isDragging, setIsDragging] = useState(false)
   const [isParsing, setIsParsing] = useState(false)
   const [manualTitle, setManualTitle] = useState('')
@@ -70,6 +71,7 @@ export function IntakePanel({ onClose, onSubmitIntake, smartExtractionStatus }: 
     setFileHash('')
     setFileStatus('idle')
     setFileMessage('')
+    setFileProgress(0)
   }
 
   const selectManualMode = () => {
@@ -79,6 +81,7 @@ export function IntakePanel({ onClose, onSubmitIntake, smartExtractionStatus }: 
     setFileName('')
     setFileStatus('idle')
     setFileMessage('')
+    setFileProgress(0)
   }
 
   const processFile = async (file: File) => {
@@ -91,7 +94,13 @@ export function IntakePanel({ onClose, onSubmitIntake, smartExtractionStatus }: 
     setContent('')
     setFileStatus('reading')
     setFileMessage('正在本机读取，不会上传文件……')
-    const result = await extractFileContent(file)
+    setFileProgress(0)
+    const result = await extractFileContent(file, {
+      onProgress: ({ progress, message }) => {
+        setFileProgress(Math.max(0, Math.min(100, Math.round(progress * 100))))
+        setFileMessage(message)
+      },
+    })
     if (result.status !== 'error' && globalThis.crypto?.subtle) {
       try {
         const digest = await globalThis.crypto.subtle.digest('SHA-256', await file.arrayBuffer())
@@ -228,16 +237,19 @@ export function IntakePanel({ onClose, onSubmitIntake, smartExtractionStatus }: 
                   </label>
                 </div>
                 {fileMessage && (
-                  <p className={`extraction-state ${fileStatus}`} role={fileStatus === 'error' || fileStatus === 'unsupported' ? 'alert' : 'status'}>
-                    {fileMessage}
-                  </p>
+                  <div className={`extraction-state ${fileStatus}`} role={fileStatus === 'error' || fileStatus === 'unsupported' ? 'alert' : 'status'}>
+                    <p>{fileMessage}</p>
+                    {fileStatus === 'reading' && fileProgress > 0 && (
+                      <progress value={fileProgress} max="100" aria-label="本地文字识别进度">{fileProgress}%</progress>
+                    )}
+                  </div>
                 )}
               </div>
               {fileName && (
                 <label className="field manual-source-field">
                   <span>{fileStatus === 'ready' ? '已提取原文（可核对修改）' : '人工补充原文（必填）'}</span>
                   <textarea value={content} onChange={(event) => setContent(event.target.value)} rows={8} placeholder="请粘贴或输入通知中的日期、事项、材料等原文……" required />
-                  <small>扫描件和图片的 OCR 尚未接通；填写的原文会作为后续任务的可回看依据。</small>
+                  <small>图片和扫描 PDF 会在本机 OCR；只有你核对后的文字才会在点击整理时发送给 DeepSeek，文件本体不会上传。</small>
                 </label>
               )}
             </>

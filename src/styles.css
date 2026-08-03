@@ -2512,6 +2512,17 @@ h3 {
   background: #e8f1e9;
 }
 
+.extraction-state p {
+  margin: 0;
+}
+
+.extraction-state progress {
+  width: min(100%, 22rem);
+  height: 0.5rem;
+  margin-top: 0.65rem;
+  accent-color: var(--forest-600);
+}
+
 .extraction-state.needs-input,
 .extraction-state.error,
 .extraction-state.unsupported {
