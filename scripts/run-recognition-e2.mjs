@@ -1,5 +1,6 @@
 /* global console, fetch, process, setTimeout */
 import { createHash } from 'node:crypto'
+import { spawn } from 'node:child_process'
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { createServer } from 'vite'
@@ -21,6 +22,51 @@ function milliseconds(value) {
 
 function sleep(millisecondsValue) {
   return new Promise((resolve) => setTimeout(resolve, millisecondsValue))
+}
+
+function curlJson(url, { method = 'GET', headers = {}, body = null } = {}) {
+  return new Promise((resolve, reject) => {
+    const command = process.platform === 'win32' ? 'curl.exe' : 'curl'
+    const args = ['--silent', '--show-error', '--connect-timeout', '20', '--max-time', '120', '--request', method]
+    Object.entries(headers).forEach(([name, value]) => args.push('--header', `${name}: ${value}`))
+    if (body !== null) args.push('--data-binary', '@-')
+    args.push('--write-out', '\n%{http_code}', url)
+    const child = spawn(command, args, { stdio: ['pipe', 'pipe', 'pipe'], windowsHide: true })
+    const stdout = []
+    const stderr = []
+    child.stdout.on('data', (chunk) => stdout.push(chunk))
+    child.stderr.on('data', (chunk) => stderr.push(chunk))
+    child.on('error', reject)
+    child.on('close', (code) => {
+      const output = Buffer.concat(stdout).toString('utf8')
+      const errorText = Buffer.concat(stderr).toString('utf8').trim()
+      if (code !== 0) {
+        reject(new Error(`curl exited ${code}${errorText ? `: ${errorText}` : ''}`))
+        return
+      }
+      const match = output.match(/\n(\d{3})$/u)
+      if (!match) {
+        reject(new Error('curl response did not include an HTTP status'))
+        return
+      }
+      const responseText = output.slice(0, -match[0].length)
+      let json = null
+      try { json = JSON.parse(responseText) } catch { /* handled by caller */ }
+      const status = Number(match[1])
+      resolve({ ok: status >= 200 && status < 300, status, json })
+    })
+    child.stdin.end(body ?? undefined)
+  })
+}
+
+async function requestJson(transport, url, options = {}) {
+  if (transport === 'curl') return curlJson(url, options)
+  const response = await fetch(url, {
+    method: options.method,
+    headers: options.headers,
+    body: options.body,
+  })
+  return { ok: response.ok, status: response.status, json: await response.json().catch(() => null) }
 }
 
 async function readCheckpoint(file) {
@@ -101,6 +147,8 @@ async function main() {
   const requestedCaseIds = option('case-ids').split(',').map((value) => value.trim()).filter(Boolean)
   const resume = option('resume', 'false') === 'true'
   const retryInvalid = option('retry-invalid', 'false') === 'true'
+  const transport = option('transport', 'fetch')
+  if (!['fetch', 'curl'].includes(transport)) throw new Error(`Unsupported transport: ${transport}`)
   const reportedStartedAt = option('run-started-at')
   const reportedCompletedAt = option('run-completed-at')
   const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'error', server: { middlewareMode: true } })
@@ -144,8 +192,8 @@ async function main() {
     const startedAt = new Date().toISOString()
 
     if (provider === 'deepseek-production') {
-      const response = await fetch(`${endpoint}/status`, { headers: { Accept: 'application/json', Origin: origin } })
-      const status = await response.json().catch(() => null)
+      const response = await requestJson(transport, `${endpoint}/status`, { headers: { Accept: 'application/json', Origin: origin } })
+      const status = response.json
       if (!response.ok || status?.configured !== true) throw new Error('Production DeepSeek is not configured')
       if (status.model !== prompt.RECOGNITION_MODEL_NAME) throw new Error(`Model drift: expected ${prompt.RECOGNITION_MODEL_NAME}, got ${status.model}`)
     }
@@ -170,7 +218,7 @@ async function main() {
         scored = scoreRecognitionCase(fixture, provider, result, Date.now() - started)
       } else {
         try {
-          const response = await fetch(`${endpoint}/extract`, {
+          const response = await requestJson(transport, `${endpoint}/extract`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', Accept: 'application/json', Origin: origin },
             body: JSON.stringify({
@@ -183,7 +231,7 @@ async function main() {
               existingTasks: [],
             }),
           })
-          const payload = await response.json().catch(() => null)
+          const payload = response.json
           const latencyMs = Date.now() - started
           if (!response.ok) {
             scored = scoreRecognitionCase(fixture, provider, null, latencyMs, { status: 'request_failure', failureReason: `${response.status} ${payload?.code ?? payload?.message ?? 'request failed'}` })
@@ -238,6 +286,7 @@ async function main() {
       startedAt: reportedStartedAt || startedAt,
       completedAt,
       endpoint: provider === 'deepseek-production' ? endpoint : null,
+      transport: provider === 'deepseek-production' ? transport : null,
       tokenAndCostObservation: metrics.tokenUsage ? 'Token usage is the sum of real Worker execution metadata.' : 'Token usage or cost is incomplete; no estimate is substituted for observed data.',
       evaluationNotes: retryInvalid ? [
         'The first pass exposed a harness-only null-field scoring crash. The 26 affected cases had no persisted raw result and were rerun once after the scorer was made null-safe.',
