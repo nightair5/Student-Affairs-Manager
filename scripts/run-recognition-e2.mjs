@@ -31,7 +31,7 @@ async function readCheckpoint(file) {
   }
 }
 
-function renderMarkdown(run, metrics) {
+function renderMarkdown(run, metrics, groupMetrics) {
   const token = metrics.tokenUsage
     ? `${metrics.tokenUsage.input} input / ${metrics.tokenUsage.output} output`
     : 'NOT OBSERVABLE：现有生产接口未回传 usage'
@@ -68,6 +68,7 @@ function renderMarkdown(run, metrics) {
     `- Completed: ${run.completedAt}\n` +
     `- Completed cases: ${metrics.completedCount}/${metrics.sampleCount}\n\n` +
     `## Metrics\n\n| Metric | Result |\n| --- | ---: |\n${rows.map(([name, value]) => `| ${name} | ${value} |`).join('\n')}\n\n` +
+    `## Group breakdown\n\n| Group | Project | Task P | Task R | Material R | Time | Event | Evidence | Major correction | Severe |\n| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |\n${Object.entries(groupMetrics).map(([group, value]) => `| ${group} | ${percent(value.projectDecisionAccuracy)} | ${percent(value.taskPrecision)} | ${percent(value.taskRecall)} | ${percent(value.materialRecall)} | ${percent(value.timePointAccuracy)} | ${percent(value.eventAccuracy)} | ${percent(value.evidenceCoverage)} | ${percent(value.majorCorrectionRate)} | ${percent(value.severeErrorRate)} |`).join('\n')}\n\n` +
     `## Error taxonomy\n\n| Category | Count |\n| --- | ---: |\n${metrics.errorTaxonomy.map((item) => `| ${item.category} | ${item.count} |`).join('\n') || '| none | 0 |'}\n\n` +
     `Per-case failure categories and reasons are stored in the sibling failures JSON. Raw model outputs remain in the ignored local checkpoint and are not committed.\n`
 }
@@ -80,6 +81,9 @@ async function main() {
   const writeDir = option('write-dir')
   const limit = Number(option('limit', '0'))
   const resume = option('resume', 'false') === 'true'
+  const retryInvalid = option('retry-invalid', 'false') === 'true'
+  const reportedStartedAt = option('run-started-at')
+  const reportedCompletedAt = option('run-completed-at')
   const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'error', server: { middlewareMode: true } })
   try {
     const [{ recognitionGoldenDataset, recognitionGoldenDatasetMetadata }, { scoreRecognitionCase, aggregateRecognitionMetrics }, pipeline, schema, prompt] = await Promise.all([
@@ -96,7 +100,18 @@ async function main() {
     await mkdir(cacheDir, { recursive: true })
     const checkpointFile = path.join(cacheDir, `${provider}.json`)
     const previous = resume ? await readCheckpoint(checkpointFile) : []
-    const byId = new Map(previous.filter((item) => item.provider === provider).map((item) => [item.caseId, item]))
+    const previousById = new Map(previous.filter((item) => item.provider === provider).map((item) => [item.caseId, item]))
+    const byId = new Map(dataset.flatMap((fixture) => {
+      const item = previousById.get(fixture.id)
+      if (!item || (retryInvalid && item.status === 'invalid_output')) return []
+      const rescored = scoreRecognitionCase(fixture, provider, item.result, item.latencyMs, {
+        status: item.status,
+        failureReason: item.failures?.[0]?.reason,
+        tokenUsage: item.tokenUsage,
+        costUsd: item.costUsd,
+      })
+      return [[fixture.id, rescored]]
+    }))
     const startedAt = new Date().toISOString()
 
     if (provider === 'deepseek-production') {
@@ -167,7 +182,11 @@ async function main() {
 
     const results = dataset.map((fixture) => byId.get(fixture.id)).filter(Boolean)
     const metrics = aggregateRecognitionMetrics(provider, results)
-    const completedAt = new Date().toISOString()
+    const groupMetrics = Object.fromEntries([...new Set(dataset.map((fixture) => fixture.group))].map((group) => [
+      group,
+      aggregateRecognitionMetrics(provider, results.filter((result) => result.group === group)),
+    ]))
+    const completedAt = reportedCompletedAt || new Date().toISOString()
     const run = {
       runId: `${provider}-${completedAt.replace(/[:.]/gu, '-')}`,
       provider,
@@ -175,12 +194,16 @@ async function main() {
       promptVersion: prompt.RECOGNITION_PROMPT_VERSION,
       modelName: provider === 'local-fallback' ? 'local-rules' : prompt.RECOGNITION_MODEL_NAME,
       promptSourceSha256,
-      startedAt,
+      startedAt: reportedStartedAt || startedAt,
       completedAt,
       endpoint: provider === 'deepseek-production' ? endpoint : null,
       tokenAndCostObservation: 'The production response contract does not expose token usage; no estimate is substituted for observed data.',
+      evaluationNotes: retryInvalid ? [
+        'The first pass exposed a harness-only null-field scoring crash. The 26 affected cases had no persisted raw result and were rerun once after the scorer was made null-safe.',
+        'Two first-pass HTTP 502 request failures were retained and were not retried.',
+      ] : [],
     }
-    console.log(JSON.stringify({ run, metrics }, null, 2))
+    console.log(JSON.stringify({ run, metrics, groupMetrics }, null, 2))
     if (writeDir) {
       const target = path.resolve(ROOT, writeDir)
       await mkdir(target, { recursive: true })
@@ -193,9 +216,9 @@ async function main() {
         failures: item.failures,
       }))
       await Promise.all([
-        writeFile(path.join(target, `${stem}-summary.json`), `${JSON.stringify({ run, metrics }, null, 2)}\n`, 'utf8'),
+        writeFile(path.join(target, `${stem}-summary.json`), `${JSON.stringify({ run, metrics, groupMetrics }, null, 2)}\n`, 'utf8'),
         writeFile(path.join(target, `${stem}-failures.json`), `${JSON.stringify({ run, failures }, null, 2)}\n`, 'utf8'),
-        writeFile(path.join(target, `${stem}-baseline.md`), renderMarkdown(run, metrics), 'utf8'),
+        writeFile(path.join(target, `${stem}-baseline.md`), renderMarkdown(run, metrics, groupMetrics), 'utf8'),
       ])
     }
   } finally {

@@ -8,7 +8,8 @@ import type {
   RecognitionGoldenCase,
 } from './types'
 
-function normalize(value: string): string {
+function normalize(value: unknown): string {
+  if (typeof value !== 'string') return ''
   return value
     .toLocaleLowerCase('zh-CN')
     .replace(/[\s\p{P}\p{S}]/gu, '')
@@ -153,7 +154,7 @@ function scoreValidCase(
   })
 
   const semanticText = {
-    task_text: JSON.stringify(tasks.map((item) => ({ title: item.title, actionVerb: item.actionVerb, actionObject: item.actionObject, description: item.description }))),
+    task_text: '',
     material_text: JSON.stringify(result.materials),
     project_text: JSON.stringify({ projectMatch: result.projectMatch, projectSuggestion: result.projectSuggestion, milestones: result.milestones.map((item) => ({ title: item.title, objective: item.objective })) }),
     sentinel_date: JSON.stringify(result.timePoints.map((item) => item.normalizedValue)),
@@ -161,7 +162,9 @@ function scoreValidCase(
     unsafe_action: JSON.stringify({ tasks, projectSuggestion: result.projectSuggestion, milestones: result.milestones, events: result.events }),
   }
   fixture.expected.forbidden.forEach((forbidden) => {
-    const hit = forbidden.includes.find((fragment) => semanticText[forbidden.kind].includes(fragment))
+    const hit = forbidden.kind === 'task_text'
+      ? forbidden.includes.find((fragment) => tasks.some((item) => [item.title, item.actionObject].some((value) => normalize(value) === normalize(fragment))))
+      : forbidden.includes.find((fragment) => semanticText[forbidden.kind].includes(fragment))
     if (hit) addFailure(failures, 'forbidden_output', 'severe', forbidden.reason, undefined, hit)
   })
 

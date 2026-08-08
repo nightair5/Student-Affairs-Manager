@@ -49,6 +49,8 @@ Omit `--resume=true` for a clean run. `--limit=N` is available only for harness 
 
 Failure categories are saved per case and aggregated into the Error Taxonomy. Scoring code is deterministic, has no network dependency, and does not call the model from the regular test suite.
 
+The completed E2-A report is available at [`baselines/e2-a/BASELINE_REPORT.md`](baselines/e2-a/BASELINE_REPORT.md). It records the production run correction note as well as the final metrics; do not cite the pre-correction invalid-output count.
+
 ## Legacy 60-case check
 
 `npm run eval:recognition` remains as a compatibility regression for the deterministic fallback. It is not a DeepSeek benchmark and must not be compared with the E2-A dataset because its contract and denominators differ.
