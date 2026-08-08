@@ -104,7 +104,7 @@ export function validateRecognitionQuality(
   tasks.forEach((task) => {
     checkEvidence(task.tempId, task.evidenceIds)
     if (!ACTION_VERBS.some((verb) => task.title.includes(verb)) || !task.actionObject.trim()) {
-      add({ code: 'FALSE_ACTION', severity: 'warning', repairable: true, message: '任务不满足“动作 + 明确对象”。', entityId: task.tempId, evidence: task.title })
+      add({ code: 'FALSE_ACTION', severity: 'warning', repairable: false, message: '任务不满足“动作 + 明确对象”，需人工复核。', entityId: task.tempId, evidence: task.title })
     }
     if (task.hierarchyType === 'subtask') {
       const parent = task.parentTempId ? taskMap.get(task.parentTempId) : undefined
@@ -156,7 +156,7 @@ export function validateRecognitionQuality(
   if (EVENT_CUE.test(sourceContent) && result.events.length === 0) add({ code: 'MISSING_EVENT', severity: 'warning', repairable: true, message: '来源包含参加型安排，但结果没有 Event。', entityId: null, evidence: null })
   if (result.projectMatch.decision === 'new_project' && sourceTimeTokens(sourceContent).length >= 3 && result.milestones.length === 0) add({ code: 'MISSING_MILESTONE', severity: 'warning', repairable: true, message: '复杂新项目缺少可解释阶段。', entityId: null, evidence: null })
   const explicitActionCount = ACTION_VERBS.reduce((count, verb) => count + (sourceContent.match(new RegExp(verb, 'gu'))?.length ?? 0), 0)
-  if (tasks.length > Math.max(5, explicitActionCount + 3)) add({ code: 'OVER_FRAGMENTATION', severity: 'warning', repairable: true, message: '任务数量明显高于来源中的动作数量。', entityId: null, evidence: String(tasks.length) })
+  if (tasks.length > Math.max(5, explicitActionCount + 3)) add({ code: 'OVER_FRAGMENTATION', severity: 'warning', repairable: false, message: '任务数量明显高于来源中的动作数量，需人工复核。', entityId: null, evidence: String(tasks.length) })
 
   return {
     validatorVersion: RECOGNITION_VALIDATOR_VERSION,

@@ -134,6 +134,30 @@ test('structured extraction uses V4 Flash JSON mode and returns bounded suggesti
   assert.match(upstreamBody.messages[0].content, /quotedText\/quote 必须是来源正文中连续、逐字存在的片段/u)
 })
 
+test('conditional repair runs at most once and keeps the first valid result when repair fails', async () => {
+  let calls = 0
+  const original = {
+    schemaVersion: '2.0', createdAt: '2026-08-08T00:00:00.000Z',
+    sourceSummary: { title: '申请通知', sourceType: 'text', notificationType: 'material_submission', summary: '提交申请表', requiresAction: true, actionReason: '需提交' },
+    projectMatch: { decision: 'standalone_task', matchedProjectId: null, suggestedProjectTitle: null, confidence: 0.8, reasons: [] }, projectSuggestion: null,
+    milestones: [], standaloneTasks: [], materials: [], timePoints: [], events: [], evidence: [], conflicts: [], ambiguities: [], ignoredContent: [],
+    quality: { overallConfidence: 0.6, hierarchyConfidence: 0.6, dateConfidence: 0.2, evidenceCoverage: 0, duplicateRisk: 0, overFragmentationRisk: 0, missingActionRisk: 0.5, needsHumanReview: true, reviewReasons: [] },
+  }
+  const worker = createWorker({ fetcher: async () => {
+    calls += 1
+    if (calls === 1) return new Response(JSON.stringify({ choices: [{ message: { content: JSON.stringify(original) } }], usage: { completion_tokens: 20 } }), { status: 200 })
+    return new Response('temporary', { status: 503 })
+  } })
+  const response = await worker.fetch(request('/api/deepseek/extract', { body: JSON.stringify({ sourceType: 'text', sourceTitle: '申请通知', content: '8月20日提交申请表。', referenceTime: '2026-08-08T00:00:00.000Z', timezone: 'Asia/Shanghai' }) }), environment({ DEEPSEEK_API_KEY: 'server-only-test-key-with-length' }))
+  const payload = await response.json()
+  assert.equal(response.status, 200)
+  assert.equal(calls, 2)
+  assert.equal(payload.repair.attempted, true)
+  assert.equal(payload.repair.applied, false)
+  assert.equal(payload.repair.errorCode, 'REPAIR_UPSTREAM_503')
+  assert.equal(payload.result.sourceSummary.title, '申请通知')
+})
+
 test('public HTTPS pages are converted to inert text before client-side DeepSeek submission', async () => {
   let requestedUrl = ''
   const worker = createWorker({

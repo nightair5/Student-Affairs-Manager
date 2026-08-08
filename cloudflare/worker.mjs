@@ -3,6 +3,12 @@ import {
   recognitionSystemPrompt,
 } from './recognition.mjs'
 import { annotateRecognitionQuality, validateRecognitionQuality } from './recognition-quality.mjs'
+import {
+  RECOGNITION_REPAIR_VERSION,
+  buildRecognitionRepairInstruction,
+  mergeRecognitionRepair,
+  shouldAttemptRecognitionRepair,
+} from './recognition-repair.mjs'
 
 const DEEPSEEK_ENDPOINT = 'https://api.deepseek.com/chat/completions'
 const DEEPSEEK_MODEL = 'deepseek-v4-flash'
@@ -668,13 +674,58 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
       return failure('INVALID_AI_RESPONSE', 'DeepSeek 未返回有效的任务结构。', 502, context.requestId)
     }
     const normalizedResult = normalizeRecognitionResult(parsed, sourceContent, referenceTime)
-    const validation = normalizedResult ? validateRecognitionQuality(normalizedResult, sourceContent) : null
-    const result = normalizedResult && validation ? annotateRecognitionQuality(normalizedResult, validation) : normalizedResult
-    if (!result) {
+    if (!normalizedResult) {
       context.errorType = 'INVALID_AI_RESPONSE'
       return failure('INVALID_AI_RESPONSE', 'DeepSeek 没有返回有效的 RecognitionResult 2.0。', 502, context.requestId)
     }
-    return success({ model: DEEPSEEK_MODEL, result, validation }, context.requestId)
+    let validation = validateRecognitionQuality(normalizedResult, sourceContent)
+    let result = normalizedResult
+    const repair = {
+      repairVersion: RECOGNITION_REPAIR_VERSION,
+      attempted: false,
+      applied: false,
+      errorCode: null,
+      issueCodes: validation.issues.filter((issue) => issue.repairable).map((issue) => issue.code),
+    }
+    if (shouldAttemptRecognitionRepair(validation)) {
+      repair.attempted = true
+      try {
+        const repairUpstream = await fetcher(DEEPSEEK_ENDPOINT, {
+          method: 'POST',
+          headers: { authorization: `Bearer ${apiKey}`, 'content-type': 'application/json' },
+          body: JSON.stringify({
+            model: DEEPSEEK_MODEL,
+            thinking: { type: 'disabled' },
+            temperature: 0,
+            max_tokens: MAX_EXTRACTION_TOKENS,
+            response_format: { type: 'json_object' },
+            messages: [
+              { role: 'system', content: `${systemPrompt}\n\n${buildRecognitionRepairInstruction(validation)}` },
+              { role: 'user', content: `来源正文：\n${sourceContent}\n\n首轮 RecognitionResult：\n${JSON.stringify(normalizedResult)}` },
+            ],
+          }),
+          signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS),
+        })
+        if (!repairUpstream.ok) repair.errorCode = `REPAIR_UPSTREAM_${repairUpstream.status}`
+        else {
+          const repairPayload = await repairUpstream.json()
+          context.outputTokens += Number.isFinite(repairPayload?.usage?.completion_tokens) ? repairPayload.usage.completion_tokens : 0
+          const repairContent = safeText(repairPayload?.choices?.[0]?.message?.content, 30_000)
+          const repairRaw = JSON.parse(repairContent)
+          const repairCandidate = normalizeRecognitionResult(repairRaw, sourceContent, referenceTime)
+          if (!repairCandidate) repair.errorCode = 'REPAIR_INVALID_OUTPUT'
+          else {
+            result = mergeRecognitionRepair(normalizedResult, repairCandidate, validation, sourceContent)
+            repair.applied = JSON.stringify(result) !== JSON.stringify(normalizedResult)
+          }
+        }
+      } catch (repairError) {
+        repair.errorCode = timeoutError(repairError) ? 'REPAIR_TIMEOUT' : 'REPAIR_FAILURE'
+      }
+    }
+    validation = validateRecognitionQuality(result, sourceContent)
+    result = annotateRecognitionQuality(result, validation)
+    return success({ model: DEEPSEEK_MODEL, result, validation, repair }, context.requestId)
   } catch (error) {
     context.errorType = timeoutError(error) ? 'UPSTREAM_TIMEOUT' : 'UPSTREAM_UNAVAILABLE'
     return failure(

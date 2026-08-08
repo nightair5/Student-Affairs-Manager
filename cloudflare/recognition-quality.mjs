@@ -41,7 +41,7 @@ export function validateRecognitionQuality(result, sourceContent) {
   result.milestones.forEach((item) => { checkEvidence(item.tempId, item.evidenceIds); item.workPackages.forEach((workPackage) => checkEvidence(workPackage.tempId, workPackage.evidenceIds)) })
   tasks.forEach((task) => {
     checkEvidence(task.tempId, task.evidenceIds)
-    if (!ACTION_VERBS.some((verb) => task.title.includes(verb)) || !task.actionObject.trim()) add({ code: 'FALSE_ACTION', severity: 'warning', repairable: true, message: '任务不满足“动作 + 明确对象”。', entityId: task.tempId, evidence: task.title })
+    if (!ACTION_VERBS.some((verb) => task.title.includes(verb)) || !task.actionObject.trim()) add({ code: 'FALSE_ACTION', severity: 'warning', repairable: false, message: '任务不满足“动作 + 明确对象”，需人工复核。', entityId: task.tempId, evidence: task.title })
     if (task.hierarchyType === 'subtask') { const parent = task.parentTempId ? taskMap.get(task.parentTempId) : undefined; if (!parent || parent.hierarchyType === 'subtask') add({ code: 'SUBTASK_DEPTH_EXCEEDED', severity: 'error', repairable: false, message: 'Subtask 必须且只能指向顶层 Task。', entityId: task.tempId, evidence: task.parentTempId }) }
     task.dependencyTempIds.forEach((id) => { if (!taskMap.has(id)) add({ code: 'INVALID_REFERENCE', severity: 'error', repairable: false, message: `任务依赖不存在：${id}`, entityId: task.tempId, evidence: id }) })
     task.materialTempIds.forEach((id) => { if (!materials.has(id)) add({ code: 'INVALID_REFERENCE', severity: 'error', repairable: false, message: `材料引用不存在：${id}`, entityId: task.tempId, evidence: id }) })
@@ -61,7 +61,7 @@ export function validateRecognitionQuality(result, sourceContent) {
   if (EVENT_CUE.test(sourceContent) && result.events.length === 0) add({ code: 'MISSING_EVENT', severity: 'warning', repairable: true, message: '来源包含参加型安排，但结果没有 Event。', entityId: null, evidence: null })
   if (result.projectMatch.decision === 'new_project' && sourceTimeTokens(sourceContent).length >= 3 && result.milestones.length === 0) add({ code: 'MISSING_MILESTONE', severity: 'warning', repairable: true, message: '复杂新项目缺少可解释阶段。', entityId: null, evidence: null })
   const explicitActionCount = ACTION_VERBS.reduce((count, verb) => count + (sourceContent.match(new RegExp(verb, 'gu'))?.length ?? 0), 0)
-  if (tasks.length > Math.max(5, explicitActionCount + 3)) add({ code: 'OVER_FRAGMENTATION', severity: 'warning', repairable: true, message: '任务数量明显高于来源中的动作数量。', entityId: null, evidence: String(tasks.length) })
+  if (tasks.length > Math.max(5, explicitActionCount + 3)) add({ code: 'OVER_FRAGMENTATION', severity: 'warning', repairable: false, message: '任务数量明显高于来源中的动作数量，需人工复核。', entityId: null, evidence: String(tasks.length) })
   return { validatorVersion: RECOGNITION_VALIDATOR_VERSION, valid: !issues.some((issue) => issue.severity === 'error'), repairRecommended: issues.some((issue) => issue.repairable), issues }
 }
 
