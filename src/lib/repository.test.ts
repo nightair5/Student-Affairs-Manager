@@ -15,7 +15,7 @@ describe('normalizeWorkspaceData', () => {
     })
 
     expect(migrated).toMatchObject({
-      schemaVersion: 6,
+      schemaVersion: 7,
       courseBlocks: [],
       integrations: { sync: { endpoint: 'http://127.0.0.1:8787' }, webMonitors: [], connectionIntents: [] },
       knowledgeSettings: {},
@@ -43,12 +43,12 @@ describe('normalizeWorkspaceData', () => {
     expect(normalizeWorkspaceData({ schemaVersion: 5, tasks: [] })).toBeNull()
   })
 
-  it('exports and imports schema v6 with material, history, reminder, and time-point entities', () => {
+  it('exports and imports schema v7 with hierarchical recognition entities', () => {
     const repository = new IndexedDbWorkspaceRepository()
     const workspace = createWorkspaceData(demoTasks, demoSources)
     const restored = repository.importJson(repository.exportJson(workspace))
 
-    expect(restored.schemaVersion).toBe(6)
+    expect(restored.schemaVersion).toBe(7)
     expect(restored.timePoints).toHaveLength(demoTasks.length)
     expect(restored.materialItems.map((item) => item.status)).toContain('missing')
     expect(restored.reminderRecords.every((item) => item.status !== 'sent')).toBe(true)
@@ -66,7 +66,7 @@ describe('normalizeWorkspaceData', () => {
   it('strictly rejects incomplete or invalid current-schema backups', () => {
     const repository = new IndexedDbWorkspaceRepository()
     const incomplete = {
-      schemaVersion: 6,
+      schemaVersion: 7,
       tasks: [],
       sources: [],
       drafts: [],

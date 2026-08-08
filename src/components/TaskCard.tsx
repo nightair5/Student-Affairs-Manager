@@ -29,6 +29,7 @@ interface TaskCardProps {
   task: Task
   allTasks?: Task[]
   projectTitle?: string
+  stageTitle?: string
   featured?: boolean
   onOpen: (task: Task) => void
   onComplete?: (taskId: string) => void
@@ -41,6 +42,7 @@ export function TaskCard({
   task,
   allTasks = [task],
   projectTitle,
+  stageTitle,
   featured = false,
   onOpen,
   onComplete,
@@ -58,7 +60,7 @@ export function TaskCard({
       data-priority={task.priority}
     >
       <div className="task-card-topline">
-        <span className="category-label">{projectTitle ? `${projectTitle} · ${task.category}` : task.category}</span>
+        <span className="category-label">{projectTitle ?? '独立事项'} · {stageTitle ?? task.category}</span>
         <button className="task-detail-button" type="button" onClick={() => onOpen(task)} aria-label={`查看 ${task.title} 详情`}>
           查看详情<ArrowUpRight size={16} />
         </button>

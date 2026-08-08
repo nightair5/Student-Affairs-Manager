@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { demoSources, demoTasks } from '../data/demo'
 import { buildConfirmedProjectBatch, createExtractionDraft, createTaskMilestone, syncTaskMilestone, taskSignals, updateDraftItem } from './workspace'
+import { buildLocalRecognition, recognitionToLegacySuggestions } from '../recognition/pipeline'
 
 describe('P0 workspace rules', () => {
   it('keeps draft items independent for partial confirmation and rejection', () => {
@@ -68,9 +69,10 @@ describe('P0 workspace rules', () => {
     )
 
     expect(batch.tasks).toHaveLength(1)
-    expect(batch.tasks[0].projectId).toBe(batch.project.id)
-    expect(batch.project.taskIds).toEqual([batch.tasks[0].id])
-    expect(batch.project.milestones).toHaveLength(1)
+    expect(batch.project).not.toBeNull()
+    expect(batch.tasks[0].projectId).toBe(batch.project!.id)
+    expect(batch.project!.taskIds).toEqual([batch.tasks[0].id])
+    expect(batch.project!.milestones).toHaveLength(1)
     expect(batch.tasks[0].history[0].after).not.toContain('演示')
   })
 
@@ -81,5 +83,25 @@ describe('P0 workspace rules', () => {
     const rejected = updateDraftItem(draft, draft.items[0].id, {}, '已拒绝', '2026-08-01T01:00:00.000Z')
     const reopened = updateDraftItem(rejected, draft.items[0].id, {}, '待确认', '2026-08-01T02:00:00.000Z')
     expect(reopened.items[0].history?.map((entry) => entry.action)).toEqual(['rejected', 'reopened'])
+  })
+
+  it('keeps inferred recognition tasks visible but unselected by default', () => {
+    const recognition = buildLocalRecognition({
+      sourceType: 'text',
+      sourceTitle: '课程通知',
+      content: '请于 8 月 20 日前提交课程报告。',
+      referenceTime: new Date('2026-08-08T08:00:00+08:00'),
+      timezone: 'Asia/Shanghai',
+      projects: [],
+      tasks: [],
+    })
+    const task = recognition.milestones.flatMap((milestone) => milestone.tasks)[0]
+      ?? recognition.standaloneTasks[0]
+    if (!task) throw new Error('expected a recognition task')
+    task.selected = false
+    task.inferenceLevel = 'strong_inference'
+    const draft = createExtractionDraft('source-1', recognitionToLegacySuggestions(recognition), '2026-08-08T00:00:00.000Z', recognition)
+    expect(draft.items[0].selected).toBe(false)
+    expect(draft.items[0].status).toBe('待确认')
   })
 })

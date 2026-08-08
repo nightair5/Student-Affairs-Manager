@@ -1,6 +1,11 @@
 import type { IntakeInput, IntakeResult } from './intake'
 import { createIntakeResult } from './intake'
 import type { ParsedSuggestion } from '../types'
+import type { Project, Task } from '../types'
+import { parseRecognitionResult } from '../recognition/schema'
+import { recognitionToLegacySuggestions } from '../recognition/pipeline'
+import type { RecognitionResult } from '../recognition/types'
+import { RECOGNITION_PROMPT_VERSION } from '../recognition/prompt'
 
 export type SmartExtractionMethod = 'deepseek-v4-flash' | 'local-rules'
 
@@ -12,6 +17,7 @@ export interface SmartIntakeResult extends IntakeResult {
 export interface DeepSeekExtractionService {
   status(): Promise<{ configured: boolean; model?: string }>
   extract(input: IntakeInput): Promise<ParsedSuggestion[]>
+  recognize?(input: IntakeInput, context?: { projects: Project[]; tasks: Task[] }): Promise<RecognitionResult>
 }
 
 function serverMessage(value: unknown, fallback: string): string {
@@ -20,23 +26,10 @@ function serverMessage(value: unknown, fallback: string): string {
   return typeof message === 'string' && message.trim() ? message : fallback
 }
 
-function isSuggestion(value: unknown): value is ParsedSuggestion {
-  if (typeof value !== 'object' || value === null) return false
-  const item = value as Partial<ParsedSuggestion>
-  return typeof item.id === 'string'
-    && typeof item.title === 'string'
-    && ['比赛', '保研', '课程', '老师任务', '其他'].includes(item.category ?? '')
-    && typeof item.deadline === 'string'
-    && typeof item.estimatedMinutes === 'number'
-    && typeof item.nextAction === 'string'
-    && typeof item.description === 'string'
-    && ['高', '中', '低'].includes(item.priority ?? '')
-    && Array.isArray(item.materials)
-    && typeof item.evidence === 'string'
-    && ['高', '中', '低'].includes(item.confidence ?? '')
-}
-
 export class ProxyDeepSeekExtractionService implements DeepSeekExtractionService {
+  private readonly cache = new Map<string, RecognitionResult>()
+  private readonly inFlight = new Map<string, Promise<RecognitionResult>>()
+
   constructor(private readonly endpoint = '/api/deepseek') {}
 
   async status(): Promise<{ configured: boolean; model?: string }> {
@@ -56,26 +49,84 @@ export class ProxyDeepSeekExtractionService implements DeepSeekExtractionService
   }
 
   async extract(input: IntakeInput): Promise<ParsedSuggestion[]> {
-    const response = await fetch(`${this.endpoint}/extract`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-      body: JSON.stringify({
-        sourceType: input.sourceType,
-        sourceTitle: input.sourceTitle ?? input.fileName ?? '',
-        content: input.content,
-        referenceTime: (input.now ?? new Date()).toISOString(),
-        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'Asia/Shanghai',
-      }),
-    })
-    const data: unknown = await response.json().catch(() => null)
-    if (!response.ok) throw new Error(serverMessage(data, 'DeepSeek 智能整理暂时不可用'))
-    if (typeof data !== 'object' || data === null) throw new Error('DeepSeek 返回了无法识别的结果')
-    const suggestions = (data as { suggestions?: unknown }).suggestions
-    if (!Array.isArray(suggestions) || !suggestions.length || !suggestions.every(isSuggestion)) {
-      throw new Error('DeepSeek 返回的任务结构不完整')
-    }
+    const result = await this.recognize(input)
+    const suggestions = recognitionToLegacySuggestions(result)
+    if (!suggestions.length && result.sourceSummary.requiresAction) throw new Error('DeepSeek 没有返回可执行任务')
     return suggestions
   }
+
+  async recognize(input: IntakeInput, context: { projects: Project[]; tasks: Task[] } = { projects: [], tasks: [] }): Promise<RecognitionResult> {
+    const body = {
+        sourceType: input.sourceType,
+        sourceTitle: (input.sourceTitle ?? input.fileName ?? '').slice(0, 160),
+        content: input.content.slice(0, 24_000),
+        referenceTime: (input.now ?? new Date()).toISOString(),
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'Asia/Shanghai',
+        projectCandidates: context.projects.slice(0, 20).map((project) => ({
+          projectId: project.id.slice(0, 100),
+          title: project.title.slice(0, 160),
+          category: project.category,
+          keywords: (project.keywords ?? []).slice(0, 20).map((keyword) => keyword.slice(0, 80)),
+          activeMilestones: project.milestones.filter((milestone) => milestone.status !== '已完成').map((milestone) => milestone.title.slice(0, 100)).slice(0, 6),
+          recentSourceTitles: project.sourceIds.slice(-3).map((title) => title.slice(0, 160)),
+          dateRange: project.milestones.length
+            ? [project.milestones[0].dueAt, project.milestones[project.milestones.length - 1].dueAt]
+            : [],
+        })),
+        existingTasks: context.tasks.filter((task) => task.status !== '已完成').slice(0, 40).map((task) => ({
+          id: task.id.slice(0, 100),
+          projectId: task.projectId?.slice(0, 100) ?? null,
+          title: task.title.slice(0, 160),
+          deadline: task.deadline,
+        })),
+      }
+    const serialized = JSON.stringify(body)
+    const key = `${RECOGNITION_PROMPT_VERSION}:${requestHash(serialized)}`
+    const cached = this.cache.get(key)
+    if (cached) return structuredClone(cached)
+    const running = this.inFlight.get(key)
+    if (running) return running.then((result) => structuredClone(result))
+    const request = this.requestRecognition(serialized).then((result) => {
+      this.cache.set(key, result)
+      if (this.cache.size > 20) this.cache.delete(this.cache.keys().next().value ?? key)
+      return result
+    }).finally(() => this.inFlight.delete(key))
+    this.inFlight.set(key, request)
+    return request.then((result) => structuredClone(result))
+  }
+
+  private async requestRecognition(body: string): Promise<RecognitionResult> {
+    const controller = new AbortController()
+    const timeout = globalThis.setTimeout(() => controller.abort(), 50_000)
+    try {
+      const response = await fetch(`${this.endpoint}/extract`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body,
+        signal: controller.signal,
+      })
+      const data: unknown = await response.json().catch(() => null)
+      if (!response.ok) throw new Error(serverMessage(data, 'DeepSeek 智能整理暂时不可用'))
+      if (typeof data !== 'object' || data === null) throw new Error('DeepSeek 返回了无法识别的结果')
+      return parseRecognitionResult((data as { result?: unknown }).result)
+    } catch (error) {
+      if (error instanceof DOMException && error.name === 'AbortError') {
+        throw new Error('DeepSeek 识别超时，原始来源已保存，可稍后重试', { cause: error })
+      }
+      throw error
+    } finally {
+      globalThis.clearTimeout(timeout)
+    }
+  }
+}
+
+function requestHash(value: string): string {
+  let hash = 2166136261
+  for (let index = 0; index < value.length; index += 1) {
+    hash ^= value.charCodeAt(index)
+    hash = Math.imul(hash, 16777619)
+  }
+  return (hash >>> 0).toString(16)
 }
 
 export async function createSmartIntakeResult(

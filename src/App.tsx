@@ -21,6 +21,7 @@ import { updateTaskWithHistory } from './lib/taskUpdates'
 import { findDuplicateSources } from './lib/sourceDuplicates'
 import { createIntakeResult, type IntakeInput } from './lib/intake'
 import { ProxyDeepSeekExtractionService } from './lib/deepseekExtraction'
+import { buildLocalRecognition, recognitionToLegacySuggestions } from './recognition/pipeline'
 import { markOnboardingComplete, shouldShowOnboarding } from './lib/onboarding'
 import {
   buildConfirmedProjectBatch,
@@ -31,7 +32,8 @@ import {
   syncTaskMilestone,
   updateDraftItem,
 } from './lib/workspace'
-import type { CourseBlock, ExtractionDraft, IntegrationState, KnowledgeSettings, PageId, ParsedSuggestion, Project, Source, Task } from './types'
+import type { CourseBlock, Event, ExtractionDraft, IntegrationState, KnowledgeSettings, MigrationRecord, PageId, ParsedSuggestion, Project, RecognitionFeedbackRecord, Source, Task, WorkPackage } from './types'
+import type { RecognitionResult } from './recognition/types'
 
 const workspaceRepository = new IndexedDbWorkspaceRepository()
 const deepSeekExtractionService = new ProxyDeepSeekExtractionService()
@@ -54,6 +56,11 @@ function App() {
   const [courseBlocks, setCourseBlocks] = useState<CourseBlock[]>([])
   const [integrations, setIntegrations] = useState<IntegrationState>(() => createIntegrationState())
   const [knowledgeSettings, setKnowledgeSettings] = useState<KnowledgeSettings>({})
+  const [workPackages, setWorkPackages] = useState<WorkPackage[]>([])
+  const [events, setEvents] = useState<Event[]>([])
+  const [migrationLog, setMigrationLog] = useState<MigrationRecord[]>([])
+  const [recognitionFeedback, setRecognitionFeedback] = useState<RecognitionFeedbackRecord[]>([])
+  const [legacyData, setLegacyData] = useState<Record<string, unknown>>({})
   const [workspaceReady, setWorkspaceReady] = useState(false)
   const [storageError, setStorageError] = useState(false)
   const [intakeOpen, setIntakeOpen] = useState(false)
@@ -77,8 +84,8 @@ function App() {
     ? sources.find((source) => source.id === selectedDraft.sourceId) ?? null
     : null
   const workspace = useMemo(
-    () => createWorkspaceData(tasks, sources, drafts, projects, courseBlocks, integrations, knowledgeSettings),
-    [courseBlocks, drafts, integrations, knowledgeSettings, projects, sources, tasks],
+    () => createWorkspaceData(tasks, sources, drafts, projects, courseBlocks, integrations, knowledgeSettings, workPackages, events, migrationLog, recognitionFeedback, legacyData),
+    [courseBlocks, drafts, events, integrations, knowledgeSettings, legacyData, migrationLog, projects, recognitionFeedback, sources, tasks, workPackages],
   )
 
   useEffect(() => {
@@ -103,6 +110,11 @@ function App() {
           setCourseBlocks(saved.courseBlocks)
           setIntegrations(saved.integrations)
           setKnowledgeSettings(saved.knowledgeSettings)
+          setWorkPackages(saved.workPackages)
+          setEvents(saved.events)
+          setMigrationLog(saved.migrationLog)
+          setRecognitionFeedback(saved.recognitionFeedback)
+          setLegacyData(saved.legacyData)
         } else {
           await workspaceRepository.save(
             createWorkspaceData(initialWorkspace.tasks, initialWorkspace.sources),
@@ -244,7 +256,7 @@ function App() {
     setNotice({ text: message })
   }
 
-  const handleCreateDraft = (source: Source, suggestions: ParsedSuggestion[]) => {
+  const handleCreateDraft = (source: Source, suggestions: ParsedSuggestion[], recognitionResult?: RecognitionResult) => {
     const duplicateCandidates = findDuplicateSources(source, sources)
     const nextSource: Source = duplicateCandidates.length
       ? {
@@ -253,7 +265,7 @@ function App() {
           duplicateReviewStatus: '待核对',
         }
       : source
-    const draft = createExtractionDraft(nextSource.id, suggestions)
+    const draft = createExtractionDraft(nextSource.id, suggestions, new Date().toISOString(), recognitionResult)
     setSources((current) => [nextSource, ...current])
     setDrafts((current) => [draft, ...current])
     return { draft, source: nextSource, duplicateCount: duplicateCandidates.length }
@@ -261,15 +273,28 @@ function App() {
 
   const handleIntakeInput = async (input: IntakeInput) => {
     const localResult = createIntakeResult(input)
-    const provisional = handleCreateDraft(localResult.source, localResult.suggestions)
+    const localRecognition = buildLocalRecognition({
+      sourceType: input.sourceType,
+      sourceTitle: input.sourceTitle ?? input.fileName ?? localResult.source.title,
+      content: input.content,
+      referenceTime: input.now ?? new Date(),
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'Asia/Shanghai',
+      projects,
+      tasks,
+    })
+    const provisionalSuggestions = input.manualSuggestion
+      ? localResult.suggestions
+      : recognitionToLegacySuggestions(localRecognition)
+    const provisional = handleCreateDraft(localResult.source, provisionalSuggestions, input.manualSuggestion ? undefined : localRecognition)
     if (input.manualSuggestion) {
       openDraftReview(provisional.draft.id, '手动任务已保存为待确认草稿；核对后再加入任务中心。')
       return
     }
     try {
-      const suggestions = await deepSeekExtractionService.extract(input)
+      const recognitionResult = await deepSeekExtractionService.recognize(input, { projects, tasks })
+      const suggestions = recognitionToLegacySuggestions(recognitionResult)
       const aiDraft = {
-        ...createExtractionDraft(provisional.source.id, suggestions, provisional.draft.createdAt),
+        ...createExtractionDraft(provisional.source.id, suggestions, provisional.draft.createdAt, recognitionResult),
         id: provisional.draft.id,
       }
       setDrafts((current) => current.map((draft) => draft.id === provisional.draft.id ? aiDraft : draft))
@@ -308,6 +333,190 @@ function App() {
     setDrafts((current) => current.map((draft) =>
       draft.id === draftId ? updateDraftItem(draft, itemId, patch, status) : draft,
     ))
+    if (Object.keys(patch).length > 0 || status === '已拒绝') {
+      const action = status === '已拒绝' ? 'rejected' : 'modified'
+      setRecognitionFeedback((current) => [...current, {
+        id: `feedback-${Date.now()}-${current.length}`,
+        draftId,
+        originalKind: `task:${itemId}`,
+        correctedKind: status === '已拒绝' ? 'rejected' : `fields:${Object.keys(patch).sort().join(',')}`,
+        action,
+        createdAt: new Date().toISOString(),
+      }])
+    }
+  }
+
+  const handleProjectChoice = (draftId: string, value: string) => {
+    setDrafts((current) => current.map((draft) => {
+      if (draft.id !== draftId || !draft.recognitionResult) return draft
+      const existingProjectId = value.startsWith('existing:') ? value.slice('existing:'.length) : null
+      const decision = existingProjectId
+        ? 'existing_project'
+        : value === 'new_project' || value === 'standalone_task' || value === 'uncertain'
+          ? value
+          : 'uncertain'
+      return {
+        ...draft,
+        recognitionResult: {
+          ...draft.recognitionResult,
+          projectMatch: {
+            ...draft.recognitionResult.projectMatch,
+            decision,
+            matchedProjectId: existingProjectId,
+            confidence: 1,
+            reasons: ['由用户在确认页选择'],
+          },
+        },
+        updatedAt: new Date().toISOString(),
+      }
+    }))
+  }
+
+  const handleKeepExplicit = (draftId: string) => {
+    setDrafts((current) => current.map((draft) => {
+      if (draft.id !== draftId || !draft.recognitionResult) return draft
+      const recognizedTasks = [
+        ...draft.recognitionResult.standaloneTasks,
+        ...draft.recognitionResult.milestones.flatMap((milestone) => [
+          ...milestone.tasks,
+          ...milestone.workPackages.flatMap((workPackage) => workPackage.tasks),
+        ]),
+      ]
+      const explicitIds = new Set(recognizedTasks.filter((task) => task.inferenceLevel === 'explicit').map((task) => task.tempId))
+      const now = new Date().toISOString()
+      const next = draft.items.reduce((candidate, item) => (
+        item.status === '待确认' && !explicitIds.has(item.suggestion.id)
+          ? updateDraftItem(candidate, item.id, {}, '已拒绝', now)
+          : candidate
+      ), draft)
+      return next
+    }))
+    setNotice({ text: '已移除强推断和可选建议；原文明确事项仍待你确认。' })
+  }
+
+  const handleMoveRecognizedTask = (draftId: string, taskTempId: string, milestoneTempId: string) => {
+    setDrafts((current) => current.map((draft) => {
+      if (draft.id !== draftId || !draft.recognitionResult) return draft
+      let movedTask = draft.recognitionResult.standaloneTasks.find((task) => task.tempId === taskTempId)
+      for (const milestone of draft.recognitionResult.milestones) {
+        movedTask ??= milestone.tasks.find((task) => task.tempId === taskTempId)
+        movedTask ??= milestone.workPackages.flatMap((workPackage) => workPackage.tasks).find((task) => task.tempId === taskTempId)
+      }
+      if (!movedTask || !draft.recognitionResult.milestones.some((milestone) => milestone.tempId === milestoneTempId)) return draft
+      return {
+        ...draft,
+        recognitionResult: {
+          ...draft.recognitionResult,
+          standaloneTasks: draft.recognitionResult.standaloneTasks.filter((task) => task.tempId !== taskTempId),
+          milestones: draft.recognitionResult.milestones.map((milestone) => ({
+            ...milestone,
+            tasks: [
+              ...milestone.tasks.filter((task) => task.tempId !== taskTempId),
+              ...(milestone.tempId === milestoneTempId ? [{ ...movedTask!, parentTempId: null }] : []),
+            ],
+            workPackages: milestone.workPackages.map((workPackage) => ({
+              ...workPackage,
+              tasks: workPackage.tasks.filter((task) => task.tempId !== taskTempId),
+            })),
+          })),
+        },
+        updatedAt: new Date().toISOString(),
+      }
+    }))
+    setNotice({ text: '已调整识别草稿中的阶段；正式任务尚未创建。' })
+    setRecognitionFeedback((current) => [...current, {
+      id: `feedback-${Date.now()}-${current.length}`,
+      draftId,
+      originalKind: `task:${taskTempId}`,
+      correctedKind: `milestone:${milestoneTempId}`,
+      action: 'moved',
+      createdAt: new Date().toISOString(),
+    }])
+  }
+
+  const handleToggleRecognitionEntity = (draftId: string, kind: 'event' | 'material' | 'timePoint', tempId: string, selected: boolean) => {
+    setDrafts((current) => current.map((draft) => {
+      if (draft.id !== draftId || !draft.recognitionResult) return draft
+      const material = kind === 'material' ? draft.recognitionResult.materials.find((item) => item.tempId === tempId) : undefined
+      const timePoint = kind === 'timePoint' ? draft.recognitionResult.timePoints.find((item) => item.tempId === tempId) : undefined
+      return {
+        ...draft,
+        items: material ? draft.items.map((item) => material.relatedTaskTempIds.includes(item.suggestion.id)
+          ? {
+              ...item,
+              suggestion: {
+                ...item.suggestion,
+                materials: selected
+                  ? [...new Set([...item.suggestion.materials, material.name])]
+                  : item.suggestion.materials.filter((name) => name !== material.name),
+              },
+            }
+          : item) : timePoint ? draft.items.map((item) => timePoint.relatedTaskTempIds.includes(item.suggestion.id)
+            ? { ...item, suggestion: { ...item.suggestion, deadline: selected ? timePoint.normalizedValue ?? '' : '' } }
+            : item) : draft.items,
+        recognitionResult: {
+          ...draft.recognitionResult,
+          events: kind === 'event' ? draft.recognitionResult.events.map((item) => item.tempId === tempId ? { ...item, selected } : item) : draft.recognitionResult.events,
+          materials: kind === 'material' ? draft.recognitionResult.materials.map((item) => item.tempId === tempId ? { ...item, selected } : item) : draft.recognitionResult.materials,
+          timePoints: kind === 'timePoint' ? draft.recognitionResult.timePoints.map((item) => item.tempId === tempId ? { ...item, selected } : item) : draft.recognitionResult.timePoints,
+        },
+        updatedAt: new Date().toISOString(),
+      }
+    }))
+  }
+
+  const handleToggleDraftItemSelection = (draftId: string, itemId: string, selected: boolean) => {
+    setDrafts((current) => current.map((draft) => draft.id !== draftId ? draft : {
+      ...draft,
+      items: draft.items.map((item) => item.id === itemId ? { ...item, selected, updatedAt: new Date().toISOString() } : item),
+      updatedAt: new Date().toISOString(),
+    }))
+  }
+
+  const handleSplitDraftItem = (draftId: string, itemId: string) => {
+    setDrafts((current) => current.map((draft) => {
+      if (draft.id !== draftId) return draft
+      const item = draft.items.find((candidate) => candidate.id === itemId)
+      if (!item || item.status !== '待确认') return draft
+      const rawParts = item.suggestion.title.split(/(?:并且|并|以及|及|和|、)/u).map((value) => value.trim()).filter(Boolean)
+      const parts = rawParts.length >= 2 ? rawParts.slice(0, 2) : [item.suggestion.title, '补充步骤（请编辑）']
+      const verb = item.suggestion.title.match(/^(提交|上传|填写|完成|准备|核对|确认|联系|参加|阅读|下载|打印|盖章|签字|回复|领取|整理|撰写|制作|报名)/u)?.[1] ?? '完成'
+      const now = new Date().toISOString()
+      const firstTitle = parts[0]
+      const secondTitle = /^(提交|上传|填写|完成|准备|核对|确认|联系|参加|阅读|下载|打印|盖章|签字|回复|领取|整理|撰写|制作|报名)/u.test(parts[1]) ? parts[1] : `${verb}${parts[1]}`
+      const first = updateDraftItem(draft, itemId, { title: firstTitle, nextAction: firstTitle }, undefined, now)
+      return {
+        ...first,
+        items: [...first.items, {
+          ...item,
+          id: `${item.id}-split-${Date.now()}`,
+          suggestion: { ...item.suggestion, id: `${item.suggestion.id}-split-${Date.now()}`, title: secondTitle, nextAction: secondTitle },
+          updatedAt: now,
+          history: [{ id: `${item.id}-split-history-${Date.now()}`, field: '识别建议', before: item.suggestion.title, after: secondTitle, changedAt: now, actor: 'user', entityType: 'draft', entityId: item.id, action: 'split' }],
+        }],
+        updatedAt: now,
+      }
+    }))
+    setRecognitionFeedback((current) => [...current, { id: `feedback-${Date.now()}-${current.length}`, draftId, originalKind: `task:${itemId}`, correctedKind: 'two_tasks', action: 'split', createdAt: new Date().toISOString() }])
+    setNotice({ text: '已拆成两条待确认任务，请分别核对标题、时间和材料。' })
+  }
+
+  const handleMergeDraftItems = (draftId: string, sourceItemId: string, targetItemId: string) => {
+    setDrafts((current) => current.map((draft) => {
+      if (draft.id !== draftId || sourceItemId === targetItemId) return draft
+      const sourceItem = draft.items.find((item) => item.id === sourceItemId)
+      const targetItem = draft.items.find((item) => item.id === targetItemId)
+      if (!sourceItem || !targetItem || sourceItem.status !== '待确认' || targetItem.status !== '待确认') return draft
+      const now = new Date().toISOString()
+      const merged = updateDraftItem(draft, targetItemId, {
+        description: [targetItem.suggestion.description, sourceItem.suggestion.description].filter(Boolean).join('；'),
+        materials: [...new Set([...targetItem.suggestion.materials, ...sourceItem.suggestion.materials])],
+        evidence: [targetItem.suggestion.evidence, sourceItem.suggestion.evidence].filter(Boolean).join('；'),
+      }, undefined, now)
+      return updateDraftItem(merged, sourceItemId, {}, '已拒绝', now)
+    }))
+    setRecognitionFeedback((current) => [...current, { id: `feedback-${Date.now()}-${current.length}`, draftId, originalKind: `task:${sourceItemId}`, correctedKind: `task:${targetItemId}`, action: 'merged', createdAt: new Date().toISOString() }])
+    setNotice({ text: '已合并到目标建议；原建议保留为已拒绝记录，可追溯。' })
   }
 
   const handleConfirmDraftItem = (draftId: string, itemId: string) => {
@@ -315,12 +524,29 @@ function App() {
     const source = draft ? sources.find((item) => item.id === draft.sourceId) : null
     const item = draft?.items.find((candidate) => candidate.id === itemId)
     if (!draft || !source || !item || item.status !== '待确认') return
-    const existingProject = projects.find((candidate) => candidate.sourceIds.includes(source.id))
-    const { tasks: [task], project } = buildConfirmedProjectBatch([item], source, existingProject)
+    if (Number.isNaN(new Date(item.suggestion.deadline).getTime())) {
+      setNotice({ text: '请先补全并确认该任务的截止时间；模糊日期不会直接进入正式任务。' })
+      return
+    }
+    const unconfirmedTime = draft.recognitionResult?.timePoints.some((point) => point.relatedTaskTempIds.includes(item.suggestion.id) && point.selected === false)
+    if (unconfirmedTime) {
+      setNotice({ text: '该任务仍有模糊或未勾选的时间节点，请在“时间节点”中确认后再加入。' })
+      return
+    }
+    const matchedProjectId = draft.recognitionResult?.projectMatch.decision === 'existing_project'
+      ? draft.recognitionResult.projectMatch.matchedProjectId
+      : null
+    const existingProject = projects.find((candidate) => candidate.id === matchedProjectId)
+      ?? projects.find((candidate) => candidate.sourceIds.includes(source.id))
+    const { tasks: [task], project, workPackages: createdPackages, events: createdEvents } = buildConfirmedProjectBatch([item], source, existingProject, new Date().toISOString(), draft.recognitionResult)
     setTasks((current) => [task, ...current])
-    setProjects((current) => existingProject
-      ? current.map((candidate) => candidate.id === project.id ? project : candidate)
-      : [project, ...current])
+    setProjects((current) => !project
+      ? current
+      : existingProject
+        ? current.map((candidate) => candidate.id === project.id ? project : candidate)
+        : [project, ...current])
+    setWorkPackages((current) => [...createdPackages.filter((item) => !current.some((candidate) => candidate.id === item.id)), ...current])
+    setEvents((current) => [...createdEvents.filter((item) => !current.some((candidate) => candidate.id === item.id)), ...current])
     handleUpdateDraft(draftId, itemId, {}, '已确认')
     setSources((current) => current.map((candidate) =>
       candidate.id === source.id
@@ -344,14 +570,31 @@ function App() {
     const draft = drafts.find((item) => item.id === draftId)
     const source = draft ? sources.find((item) => item.id === draft.sourceId) : null
     if (!draft || !source) return
-    const pending = draft.items.filter((item) => item.status === '待确认')
+    const pending = draft.items.filter((item) => item.status === '待确认' && item.selected !== false)
     if (!pending.length) return
-    const existingProject = projects.find((candidate) => candidate.sourceIds.includes(source.id))
-    const { tasks: created, project } = buildConfirmedProjectBatch(pending, source, existingProject)
+    if (pending.some((item) => Number.isNaN(new Date(item.suggestion.deadline).getTime()))) {
+      setNotice({ text: '仍有任务的截止时间未确认，请逐项补全后再全部加入。' })
+      return
+    }
+    const pendingIds = new Set(pending.map((item) => item.suggestion.id))
+    if (draft.recognitionResult?.timePoints.some((point) => point.selected === false && point.relatedTaskTempIds.some((id) => pendingIds.has(id)))) {
+      setNotice({ text: '仍有模糊或未勾选的时间节点，请先逐项确认。' })
+      return
+    }
+    const matchedProjectId = draft.recognitionResult?.projectMatch.decision === 'existing_project'
+      ? draft.recognitionResult.projectMatch.matchedProjectId
+      : null
+    const existingProject = projects.find((candidate) => candidate.id === matchedProjectId)
+      ?? projects.find((candidate) => candidate.sourceIds.includes(source.id))
+    const { tasks: created, project, workPackages: createdPackages, events: createdEvents } = buildConfirmedProjectBatch(pending, source, existingProject, new Date().toISOString(), draft.recognitionResult)
     setTasks((current) => [...created, ...current])
-    setProjects((current) => existingProject
-      ? current.map((candidate) => candidate.id === project.id ? project : candidate)
-      : [project, ...current])
+    setProjects((current) => !project
+      ? current
+      : existingProject
+        ? current.map((candidate) => candidate.id === project.id ? project : candidate)
+        : [project, ...current])
+    setWorkPackages((current) => [...createdPackages.filter((item) => !current.some((candidate) => candidate.id === item.id)), ...current])
+    setEvents((current) => [...createdEvents.filter((item) => !current.some((candidate) => candidate.id === item.id)), ...current])
     const confirmedAt = new Date().toISOString()
     setDrafts((current) => current.map((candidate) => {
       if (candidate.id !== draftId) return candidate
@@ -396,6 +639,11 @@ function App() {
     setCourseBlocks(imported.courseBlocks)
     setIntegrations(imported.integrations)
     setKnowledgeSettings(imported.knowledgeSettings)
+    setWorkPackages(imported.workPackages)
+    setEvents(imported.events)
+    setMigrationLog(imported.migrationLog)
+    setRecognitionFeedback(imported.recognitionFeedback)
+    setLegacyData(imported.legacyData)
     setNotice({ text: '已导入 JSON 备份。' })
   }
 
@@ -407,8 +655,28 @@ function App() {
     setCourseBlocks([])
     setIntegrations(createIntegrationState())
     setKnowledgeSettings({})
+    setWorkPackages([])
+    setEvents([])
+    setMigrationLog([])
+    setRecognitionFeedback([])
+    setLegacyData({})
     void workspaceRepository.clear()
     setNotice({ text: '已清空本机工作区。' })
+  }
+
+  const handleExportMigrationBackup = async () => {
+    const serialized = await workspaceRepository.exportLatestMigrationBackup()
+    if (!serialized) {
+      setNotice({ text: '当前没有可导出的 Schema 迁移前备份。' })
+      return
+    }
+    const url = URL.createObjectURL(new Blob([serialized], { type: 'application/json;charset=utf-8' }))
+    const anchor = document.createElement('a')
+    anchor.href = url
+    anchor.download = `student-affairs-migration-backup-${new Date().toISOString().slice(0, 10)}.json`
+    anchor.click()
+    URL.revokeObjectURL(url)
+    setNotice({ text: '已导出迁移前备份；回滚前请先保留当前备份。' })
   }
 
   const renderPage = () => {
@@ -470,6 +738,8 @@ function App() {
         return <ArchivePage
           tasks={tasks}
           projects={projects}
+          workPackages={workPackages}
+          events={events}
           workspace={workspace}
           onImport={handleImportWorkspace}
           onClear={handleClearWorkspace}
@@ -531,7 +801,7 @@ function App() {
           }}
         />
       case 'privacy':
-        return <PrivacyPage workspace={workspace} onOpenArchive={() => setCurrentPage('archive')} />
+        return <PrivacyPage workspace={workspace} onOpenArchive={() => setCurrentPage('archive')} onExportMigrationBackup={() => void handleExportMigrationBackup()} />
     }
   }
 
@@ -576,7 +846,17 @@ function App() {
             setNotice({ text: '已拒绝该建议，不会创建任务。', undo: () => handleUpdateDraft(selectedDraft.id, itemId, {}, '待确认') })
           }}
           onConfirmAll={() => handleConfirmAll(selectedDraft.id)}
-          projectWillCreate={!projects.some((project) => project.sourceIds.includes(selectedDraft.sourceId))}
+          projectWillCreate={selectedDraft.recognitionResult
+            ? selectedDraft.recognitionResult.projectMatch.decision === 'new_project'
+            : !projects.some((project) => project.sourceIds.includes(selectedDraft.sourceId))}
+          projects={projects}
+          onProjectChoice={(value) => handleProjectChoice(selectedDraft.id, value)}
+          onKeepExplicit={() => handleKeepExplicit(selectedDraft.id)}
+          onMoveTask={(taskTempId, milestoneTempId) => handleMoveRecognizedTask(selectedDraft.id, taskTempId, milestoneTempId)}
+          onToggleRecognitionEntity={(kind, tempId, selected) => handleToggleRecognitionEntity(selectedDraft.id, kind, tempId, selected)}
+          onToggleTaskSelected={(itemId, selected) => handleToggleDraftItemSelection(selectedDraft.id, itemId, selected)}
+          onSplitTask={(itemId) => handleSplitDraftItem(selectedDraft.id, itemId)}
+          onMergeTask={(sourceItemId, targetItemId) => handleMergeDraftItems(selectedDraft.id, sourceItemId, targetItemId)}
         />
       )}
       {selectedTask && (

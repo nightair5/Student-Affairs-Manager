@@ -7008,3 +7008,300 @@ select:focus-visible {
     overscroll-behavior: contain;
   }
 }
+/* Recognition 2.0 confirmation tree */
+.recognition-overview {
+  display: grid;
+  gap: 12px;
+}
+
+.review-task-select {
+  display: inline-flex;
+  align-items: center;
+  min-width: 24px;
+  min-height: 24px;
+}
+
+.review-task-select input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--green-700);
+}
+
+.recognition-project-choice,
+.recognition-quality {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid var(--border, #d8ded8);
+  border-radius: 12px;
+  background: #f7faf7;
+}
+
+.recognition-project-choice > div,
+.recognition-quality > span {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.recognition-project-choice small,
+.recognition-quality small,
+.recognition-stage summary small,
+.recognition-work-package header small {
+  color: var(--text-muted, #65716b);
+}
+
+.recognition-quality.warning,
+.recognition-conflicts {
+  border-color: #d8aa75;
+  background: #fff8ef;
+}
+
+.recognition-conflicts {
+  padding: 12px 14px;
+  border-left: 3px solid #b45f30;
+  border-radius: 8px;
+}
+
+.recognition-conflicts p {
+  margin: 6px 0 0;
+}
+
+.recognition-tree {
+  display: grid;
+  gap: 14px;
+}
+
+.recognition-stage {
+  border: 1px solid var(--border, #d8ded8);
+  border-radius: 14px;
+  background: #fbfcfa;
+  overflow: clip;
+}
+
+.recognition-stage > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  cursor: pointer;
+  color: #173f3b;
+}
+
+.recognition-stage > summary span,
+.recognition-work-package header {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.recognition-stage > summary em {
+  font-style: normal;
+  color: var(--text-muted, #65716b);
+}
+
+.recognition-stage > .review-item,
+.recognition-work-package {
+  margin: 0 12px 12px;
+}
+
+.recognition-work-package {
+  padding: 12px;
+  border-left: 3px solid #376a5e;
+  background: #f1f6f2;
+  border-radius: 10px;
+}
+
+.recognition-work-package .review-item {
+  margin-top: 10px;
+}
+
+.inference-badge.explicit {
+  color: #225e50;
+  background: #e7f2eb;
+}
+
+.inference-badge.strong_inference {
+  color: #80501f;
+  background: #fff2df;
+}
+
+.inference-badge.optional_suggestion {
+  color: #666b68;
+  background: #eef0ed;
+}
+
+.recognition-events {
+  padding: 14px;
+  border: 1px dashed #8da69c;
+  border-radius: 12px;
+}
+
+.recognition-entity-list {
+  display: grid;
+  gap: 8px;
+  padding: 14px;
+  border: 1px solid var(--border, #d8ded8);
+  border-radius: 12px;
+}
+
+.recognition-entity-list label,
+.recognition-events label {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+}
+
+.recognition-entity-list label > span {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.review-structure-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-top: 4px;
+}
+
+.recognition-events article {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4px 12px;
+  padding: 10px 0;
+}
+
+.recognition-events article + article {
+  border-top: 1px solid var(--border, #d8ded8);
+}
+
+.recognition-events p {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+
+.project-command-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 14px 0;
+}
+
+.project-command-summary span,
+.project-next-action,
+.project-material-summary {
+  padding: 10px;
+  border-radius: 10px;
+  background: #f2f6f2;
+}
+
+.project-command-summary span,
+.project-next-action span {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.project-command-summary small,
+.project-stage small,
+.project-tree-task small {
+  color: var(--text-muted, #65716b);
+}
+
+.project-detail-tree {
+  margin-top: 14px;
+  border-top: 1px solid var(--border, #d8ded8);
+  padding-top: 12px;
+}
+
+.project-detail-tree > summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: #214d45;
+}
+
+.project-next-action,
+.project-material-summary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.project-stage {
+  margin-top: 12px;
+  padding: 12px;
+  border-left: 3px solid #9aa9a1;
+  background: #fafbf9;
+}
+
+.project-stage.current {
+  border-left-color: #2e675a;
+  background: #f1f6f2;
+}
+
+.project-stage > header,
+.project-tree-task {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.project-stage > header span,
+.project-tree-task p {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+}
+
+.project-stage > header em {
+  font-style: normal;
+}
+
+.project-work-package {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.project-tree-task {
+  margin-top: 8px;
+  align-items: flex-start;
+}
+
+.project-tree-task > span {
+  min-width: 48px;
+  font-size: 12px;
+  color: #50645d;
+}
+
+.project-events,
+.project-history-summary {
+  margin-top: 12px;
+}
+
+@media (max-width: 720px) {
+  .recognition-project-choice,
+  .recognition-quality {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .recognition-project-choice select,
+  .recognition-project-choice label {
+    width: 100%;
+  }
+
+  .project-command-summary {
+    grid-template-columns: 1fr;
+  }
+}

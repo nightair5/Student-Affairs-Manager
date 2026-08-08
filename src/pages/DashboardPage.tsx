@@ -99,7 +99,7 @@ export function DashboardPage({
           <button className="text-button" type="button" onClick={onShowTasks}>全部 {activeCount} 项<ArrowRight size={16} /></button>
         </div>
         {focusTasks.length
-          ? <div className="focus-grid">{focusTasks.map((task, index) => <TaskCard key={task.id} task={task} allTasks={tasks} projectTitle={projects.find((project) => project.id === task.projectId)?.title} featured={index === 0} onOpen={onOpenTask} onComplete={onCompleteTask} onStart={onStartTask} onSnooze={onSnoozeTask} onTogglePin={onTogglePinTask} />)}</div>
+          ? <div className="focus-grid">{focusTasks.map((task, index) => { const project = projects.find((candidate) => candidate.id === task.projectId); return <TaskCard key={task.id} task={task} allTasks={tasks} projectTitle={project?.title} stageTitle={project?.milestones.find((milestone) => milestone.id === task.milestoneId)?.title} featured={index === 0} onOpen={onOpenTask} onComplete={onCompleteTask} onStart={onStartTask} onSnooze={onSnoozeTask} onTogglePin={onTogglePinTask} /> })}</div>
           : <div className="home-empty-state"><strong>今天还没有任务</strong><p>把一段通知粘贴到上方，确认后就会出现在这里。</p></div>}
       </section>
     </main>

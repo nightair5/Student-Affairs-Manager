@@ -17,7 +17,8 @@
     "deploy:cloudflare:preview": "npm run build && npm run cloudflare:check && wrangler deploy --env preview",
     "deploy:cloudflare": "npm run build && npm run cloudflare:check && wrangler deploy",
     "lint": "eslint .",
-    "test": "vitest run && node --test server/server-tests.mjs && node --test cloudflare/worker-tests.mjs && npm --prefix functions test"
+    "test": "vitest run && node --test server/server-tests.mjs && node --test cloudflare/worker-tests.mjs && npm --prefix functions test",
+    "eval:recognition": "vitest run src/recognition/evaluation.test.ts"
   },
   "dependencies": {
     "lucide-react": "^0.468.0",

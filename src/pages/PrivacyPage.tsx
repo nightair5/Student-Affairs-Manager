@@ -4,9 +4,10 @@ import type { WorkspaceData } from '../types'
 interface PrivacyPageProps {
   workspace: WorkspaceData
   onOpenArchive: () => void
+  onExportMigrationBackup: () => void
 }
 
-export function PrivacyPage({ workspace, onOpenArchive }: PrivacyPageProps) {
+export function PrivacyPage({ workspace, onOpenArchive, onExportMigrationBackup }: PrivacyPageProps) {
   return (
     <main className="page privacy-page">
       <header className="page-header">
@@ -28,7 +29,8 @@ export function PrivacyPage({ workspace, onOpenArchive }: PrivacyPageProps) {
       </div>
 
       <section className="privacy-actions">
-        <div><h2>备份与删除由你决定</h2><p>在项目档案中导出 JSON。清空本机数据需要应用内二次确认；建议先下载备份。</p></div>
+        <div><h2>备份与删除由你决定</h2><p>在项目档案中导出 JSON。Schema 升级前的原始数据会先另存一份，可在此下载；清空前仍建议手动备份。</p></div>
+        <button className="secondary-button" type="button" onClick={onExportMigrationBackup}><Download size={17} />导出迁移前备份</button>
         <button className="primary-button" type="button" onClick={onOpenArchive}><Download size={17} />前往备份与清空</button>
       </section>
     </main>

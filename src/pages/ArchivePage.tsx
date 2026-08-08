@@ -1,11 +1,13 @@
-import { Archive, CheckCircle2, Flag, Plus, Trophy } from 'lucide-react'
+import { Archive, CheckCircle2, Clock3, Flag, PackageCheck, Plus, Trophy } from 'lucide-react'
 import { useState, type FormEvent } from 'react'
 import { WorkspaceControls } from '../components/WorkspaceControls'
-import type { Project, Task, WorkspaceData } from '../types'
+import type { Event, Project, Task, WorkspaceData, WorkPackage } from '../types'
 
 interface ArchivePageProps {
   tasks: Task[]
   projects: Project[]
+  workPackages: WorkPackage[]
+  events: Event[]
   workspace: WorkspaceData
   onImport: (serialized: string) => void
   onClear: () => void
@@ -16,11 +18,13 @@ interface ArchivePageProps {
 interface ProjectCardProps {
   project: Project
   tasks: Task[]
+  workPackages: WorkPackage[]
+  events: Event[]
   onAddMilestone: ArchivePageProps['onAddMilestone']
   onToggleMilestone: ArchivePageProps['onToggleMilestone']
 }
 
-function ProjectCard({ project, tasks, onAddMilestone, onToggleMilestone }: ProjectCardProps) {
+function ProjectCard({ project, tasks, workPackages, events, onAddMilestone, onToggleMilestone }: ProjectCardProps) {
   const [adding, setAdding] = useState(false)
   const [title, setTitle] = useState('')
   const [dueAt, setDueAt] = useState('')
@@ -28,6 +32,13 @@ function ProjectCard({ project, tasks, onAddMilestone, onToggleMilestone }: Proj
   const completed = projectTasks.filter((task) => task.status === '已完成').length
   const progress = projectTasks.length ? Math.round((completed / projectTasks.length) * 100) : 0
   const milestones = project.milestones.slice().sort((a, b) => a.dueAt.localeCompare(b.dueAt))
+  const currentMilestone = milestones.find((milestone) => milestone.status !== '已完成') ?? milestones.at(-1)
+  const nextTask = projectTasks.filter((task) => task.status !== '已完成' && !(task.dependencyIds ?? []).some((dependencyId) => projectTasks.find((candidate) => candidate.id === dependencyId)?.status !== '已完成')).sort((a, b) => a.deadline.localeCompare(b.deadline))[0]
+  const nextDeadline = projectTasks.filter((task) => task.status !== '已完成').map((task) => task.deadline).sort()[0]
+  const projectPackages = workPackages.filter((workPackage) => workPackage.projectId === project.id)
+  const projectEvents = events.filter((event) => event.projectId === project.id)
+  const materialCount = projectTasks.reduce((count, task) => count + task.materials.length, 0)
+  const missingMaterialCount = projectTasks.reduce((count, task) => count + task.materials.filter((material) => !material.done && (!material.status || material.status === 'missing' || material.status === 'preparing')).length, 0)
 
   const submit = (event: FormEvent) => {
     event.preventDefault()
@@ -45,7 +56,12 @@ function ProjectCard({ project, tasks, onAddMilestone, onToggleMilestone }: Proj
     </div>
     <span className="category-label">{project.category}</span>
     <h2>{project.title}</h2>
-    <p>{project.sourceIds.length} 份来源 · {project.taskIds.length} 项确认任务</p>
+    <p>{project.objective || `${project.sourceIds.length} 份来源 · ${project.taskIds.length} 项确认任务`}</p>
+    <div className="project-command-summary">
+      <span><small>当前阶段</small><strong>{currentMilestone?.title ?? '待整理'}</strong></span>
+      <span><small>最近截止</small><strong>{nextDeadline ? new Intl.DateTimeFormat('zh-CN', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }).format(new Date(nextDeadline)) : '暂无'}</strong></span>
+      <span><small>主要风险</small><strong>{missingMaterialCount ? `缺 ${missingMaterialCount} 项材料` : '暂无明显风险'}</strong></span>
+    </div>
     <div className="project-progress"><span><i style={{ width: `${progress}%` }} /></span><small>{progress}%</small></div>
     {adding && <form className="milestone-form" onSubmit={submit}>
       <label className="field"><span>节点名称</span><input value={title} onChange={(event) => setTitle(event.target.value)} placeholder="例如：完成报名材料初审" required /></label>
@@ -58,14 +74,31 @@ function ProjectCard({ project, tasks, onAddMilestone, onToggleMilestone }: Proj
         <span><strong>{milestone.title}</strong><small>{new Intl.DateTimeFormat('zh-CN', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }).format(new Date(milestone.dueAt))}</small></span>
       </button>) : <p className="muted-copy">暂无里程碑；确认任务或手动添加后会显示在这里。</p>}
     </div>
+    <details className="project-detail-tree">
+      <summary>查看阶段、任务与材料</summary>
+      {nextTask && <div className="project-next-action"><Clock3 size={16} /><span><small>下一步行动</small><strong>{nextTask.nextAction || nextTask.title}</strong></span></div>}
+      {milestones.map((milestone) => {
+        const stageTasks = projectTasks.filter((task) => task.milestoneId === milestone.id)
+        const stagePackages = projectPackages.filter((workPackage) => workPackage.milestoneId === milestone.id)
+        return <section className={milestone.id === currentMilestone?.id ? 'project-stage current' : 'project-stage'} key={milestone.id}>
+          <header><span><strong>{milestone.title}</strong><small>{milestone.objective || '阶段目标待补充'}</small></span><em>{stageTasks.filter((task) => task.status === '已完成').length}/{stageTasks.length}</em></header>
+          {stagePackages.map((workPackage) => <div className="project-work-package" key={workPackage.id}><strong>{workPackage.title}</strong>{stageTasks.filter((task) => task.workPackageId === workPackage.id).map((task) => <div className="project-tree-task" key={task.id}><span>{task.status === '已完成' ? '已完成' : '待办'}</span><p><strong>{task.title}</strong><small>{task.nextAction}</small></p></div>)}</div>)}
+          {stageTasks.filter((task) => !task.workPackageId).map((task) => <div className="project-tree-task" key={task.id}><span>{task.status === '已完成' ? '已完成' : '待办'}</span><p><strong>{task.title}</strong><small>{task.nextAction}</small></p></div>)}
+          {!stageTasks.length && <p className="muted-copy">该阶段当前只有时间或事件节点。</p>}
+        </section>
+      })}
+      {projectEvents.length > 0 && <section className="project-events"><strong>事件安排</strong>{projectEvents.map((event) => <p key={event.id}>{event.title} · {event.startAt ? new Intl.DateTimeFormat('zh-CN', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }).format(new Date(event.startAt)) : '时间待确认'}</p>)}</section>}
+      <div className="project-material-summary"><PackageCheck size={17} /><span>材料 {materialCount} 项 · {missingMaterialCount ? `${missingMaterialCount} 项未准备好` : '已准备齐全或暂无材料'}</span></div>
+      <p className="project-history-summary">{project.sourceIds.length} 份来源 · 最后更新 {new Intl.DateTimeFormat('zh-CN', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }).format(new Date(project.updatedAt))}</p>
+    </details>
     <footer><span>{projectTasks.length} 项关联任务</span><span>{milestones.filter((item) => item.status === '已完成').length}/{milestones.length} 个节点完成</span></footer>
   </article>
 }
 
-export function ArchivePage({ tasks, projects, workspace, onImport, onClear, onAddMilestone, onToggleMilestone }: ArchivePageProps) {
+export function ArchivePage({ tasks, projects, workPackages, events, workspace, onImport, onClear, onAddMilestone, onToggleMilestone }: ArchivePageProps) {
   return <main className="page">
     <header className="page-header"><div><span className="eyebrow">长期成果沉淀</span><h1>项目档案</h1><p>确认的任务、材料和来源均可追溯到对应项目；里程碑由你确认和维护。</p></div><div className="header-stat"><Trophy size={20} /><span><strong>{projects.length}</strong> 个已创建项目</span></div></header>
-    {projects.length ? <div className="archive-grid">{projects.map((project) => <ProjectCard key={project.id} project={project} tasks={tasks} onAddMilestone={onAddMilestone} onToggleMilestone={onToggleMilestone} />)}</div> : <div className="empty-state"><Archive size={34} /><h2>还没有项目档案</h2><p>确认一份通知中的任意事项后，会自动建立可追溯项目。</p></div>}
+    {projects.length ? <div className="archive-grid">{projects.map((project) => <ProjectCard key={project.id} project={project} tasks={tasks} workPackages={workPackages} events={events} onAddMilestone={onAddMilestone} onToggleMilestone={onToggleMilestone} />)}</div> : <div className="empty-state"><Archive size={34} /><h2>还没有项目档案</h2><p>确认一份通知中的任意事项后，会自动建立可追溯项目。</p></div>}
     <WorkspaceControls workspace={workspace} onImport={onImport} onClear={onClear} />
   </main>
 }
