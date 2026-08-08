@@ -1,13 +1,15 @@
 export const MODEL_GATEWAY_VERSION = 'model-gateway-1.0.0'
 export const RECOGNITION_PIPELINE_VERSION = 'recognition-pipeline-2.0.0'
+export const RECOGNITION_RETRY_POLICY_VERSION = 'recognition-retry-1.0.0'
+const RETRYABLE_STATUS = new Set([429, 502, 503])
 
 function usageFrom(payload) {
   if (!Number.isFinite(payload?.usage?.prompt_tokens) || !Number.isFinite(payload?.usage?.completion_tokens)) return null
   return { input: payload.usage.prompt_tokens, output: payload.usage.completion_tokens }
 }
 
-export function createDeepSeekProvider({ fetcher, endpoint, apiKey, model, timeoutMs }) {
-  const execute = async (operation, input) => {
+export function createDeepSeekProvider({ fetcher, endpoint, apiKey, model, timeoutMs, maxRetries = 1, sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay)), random = Math.random }) {
+  const executeAttempt = async (operation, input) => {
     const startedAt = Date.now()
     try {
       const response = await fetcher(endpoint, {
@@ -35,6 +37,20 @@ export function createDeepSeekProvider({ fetcher, endpoint, apiKey, model, timeo
       const timeout = error instanceof Error && (error.name === 'TimeoutError' || error.name === 'AbortError')
       return { operation, ok: false, provider: 'deepseek', model, status: null, transportStatus: timeout ? 'timeout' : 'network_error', errorCode: timeout ? 'UPSTREAM_TIMEOUT' : 'UPSTREAM_NETWORK_ERROR', content: null, tokenUsage: null, durationMs: Date.now() - startedAt, attempts: 1 }
     }
+  }
+  const execute = async (operation, input) => {
+    const startedAt = Date.now()
+    let attempts = 0
+    let result
+    while (attempts <= maxRetries) {
+      attempts += 1
+      result = await executeAttempt(operation, input)
+      const retryable = !result.ok && (result.status === null || RETRYABLE_STATUS.has(result.status))
+      if (!retryable || attempts > maxRetries) break
+      const delay = 250 * (2 ** (attempts - 1)) + Math.floor(random() * 100)
+      await sleep(delay)
+    }
+    return { ...result, attempts, durationMs: Date.now() - startedAt }
   }
   return {
     name: 'deepseek', model,
@@ -65,6 +81,7 @@ export function createModelGateway(provider) {
       const knownUsage = operations.every((item) => item.tokenUsage !== null)
       return {
         gatewayVersion: MODEL_GATEWAY_VERSION,
+        retryPolicyVersion: RECOGNITION_RETRY_POLICY_VERSION,
         pipelineVersion: RECOGNITION_PIPELINE_VERSION,
         provider: provider.name,
         model: provider.model,

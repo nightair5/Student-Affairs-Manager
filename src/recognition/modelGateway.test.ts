@@ -33,4 +33,29 @@ describe('Recognition ModelGateway', () => {
     await new ModelGateway(provider).recognize({ systemPrompt: '', userPrompt: '', maxTokens: 1, temperature: 0 })
     expect(calls).toEqual(['recognize'])
   })
+
+  it('retries retryable transport failures once with deterministic backoff', async () => {
+    const calls: number[] = []
+    const delays: number[] = []
+    const provider = new DeepSeekProvider('deepseek-v4-flash', async (operation) => {
+      calls.push(calls.length + 1)
+      if (calls.length === 1) return { ...result(operation, null), ok: false, status: 503, transportStatus: 'http_503', errorCode: 'UPSTREAM_503', content: null }
+      return { ...result(operation, { input: 10, output: 5 }), provider: 'deepseek', model: 'deepseek-v4-flash' }
+    }, { maxRetries: 1, sleep: async (delay) => { delays.push(delay) }, random: () => 0 })
+    const operation = await provider.recognize({ systemPrompt: '', userPrompt: '', maxTokens: 1, temperature: 0 })
+    expect(calls).toHaveLength(2)
+    expect(delays).toEqual([250])
+    expect(operation).toMatchObject({ ok: true, attempts: 2 })
+  })
+
+  it('does not retry invalid 400 requests or successful semantic output', async () => {
+    let calls = 0
+    const provider = new DeepSeekProvider('deepseek-v4-flash', async (operation) => {
+      calls += 1
+      return { ...result(operation, null), ok: false, status: 400, transportStatus: 'http_400', errorCode: 'UPSTREAM_400', content: null }
+    })
+    const operation = await provider.recognize({ systemPrompt: '', userPrompt: '', maxTokens: 1, temperature: 0 })
+    expect(calls).toBe(1)
+    expect(operation.attempts).toBe(1)
+  })
 })

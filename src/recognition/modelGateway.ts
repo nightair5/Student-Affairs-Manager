@@ -1,5 +1,6 @@
 export const MODEL_GATEWAY_VERSION = 'model-gateway-1.0.0'
 export const RECOGNITION_PIPELINE_VERSION = 'recognition-pipeline-2.0.0'
+export const RECOGNITION_RETRY_POLICY_VERSION = 'recognition-retry-1.0.0'
 
 export type ModelOperation = 'recognize' | 'repair' | 'extractFacts'
 
@@ -34,14 +35,42 @@ export interface RecognitionModelProvider {
 
 export type RecognitionTransport = (operation: ModelOperation, request: ModelRequest) => Promise<ModelOperationResult>
 
+interface ModelRetryPolicy {
+  maxRetries: number
+  sleep(delay: number): Promise<void>
+  random(): number
+}
+
 export class DeepSeekProvider implements RecognitionModelProvider {
   readonly name = 'deepseek'
 
-  constructor(readonly model: string, private readonly transport: RecognitionTransport) {}
+  constructor(
+    readonly model: string,
+    private readonly transport: RecognitionTransport,
+    private readonly retry: ModelRetryPolicy = {
+      maxRetries: 1,
+      sleep: async (delay: number) => { void delay },
+      random: () => 0,
+    },
+  ) {}
 
-  recognize(request: ModelRequest) { return this.transport('recognize', request) }
-  repair(request: ModelRequest) { return this.transport('repair', request) }
-  extractFacts(request: ModelRequest) { return this.transport('extractFacts', request) }
+  private async execute(operation: ModelOperation, request: ModelRequest): Promise<ModelOperationResult> {
+    const startedAt = Date.now()
+    let attempts = 0
+    let result: ModelOperationResult
+    do {
+      attempts += 1
+      result = await this.transport(operation, request)
+      const retryable = !result.ok && (result.status === null || [429, 502, 503].includes(result.status))
+      if (!retryable || attempts > this.retry.maxRetries) break
+      await this.retry.sleep(250 * (2 ** (attempts - 1)) + Math.floor(this.retry.random() * 100))
+    } while (attempts <= this.retry.maxRetries)
+    return { ...result, attempts, durationMs: Date.now() - startedAt }
+  }
+
+  recognize(request: ModelRequest) { return this.execute('recognize', request) }
+  repair(request: ModelRequest) { return this.execute('repair', request) }
+  extractFacts(request: ModelRequest) { return this.execute('extractFacts', request) }
 }
 
 export class MockRecognitionProvider implements RecognitionModelProvider {
@@ -80,6 +109,7 @@ export class ModelGateway {
     const knownUsage = this.operationResults.every((item) => item.tokenUsage !== null)
     return {
       gatewayVersion: MODEL_GATEWAY_VERSION,
+      retryPolicyVersion: RECOGNITION_RETRY_POLICY_VERSION,
       pipelineVersion: RECOGNITION_PIPELINE_VERSION,
       provider: this.provider.name,
       model: this.provider.model,

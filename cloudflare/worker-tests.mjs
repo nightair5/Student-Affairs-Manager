@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 import { createWorker, validateDeepSeekRequest, validateExtractionRequest, validateWebFetchTarget } from './worker.mjs'
+import { createDeepSeekProvider } from './model-gateway.mjs'
 
 const baseContext = [{ kind: '任务', title: '报名材料', excerpt: '今天 18:00 截止' }]
 
@@ -151,7 +152,7 @@ test('conditional repair runs at most once and keeps the first valid result when
     milestones: [], standaloneTasks: [], materials: [], timePoints: [], events: [], evidence: [], conflicts: [], ambiguities: [], ignoredContent: [],
     quality: { overallConfidence: 0.6, hierarchyConfidence: 0.6, dateConfidence: 0.2, evidenceCoverage: 0, duplicateRisk: 0, overFragmentationRisk: 0, missingActionRisk: 0.5, needsHumanReview: true, reviewReasons: [] },
   }
-  const worker = createWorker({ fetcher: async () => {
+  const worker = createWorker({ retrySleep: async () => {}, retryRandom: () => 0, fetcher: async () => {
     calls += 1
     if (calls === 1) return new Response(JSON.stringify({ choices: [{ message: { content: JSON.stringify(original) } }], usage: { completion_tokens: 20 } }), { status: 200 })
     return new Response('temporary', { status: 503 })
@@ -159,11 +160,41 @@ test('conditional repair runs at most once and keeps the first valid result when
   const response = await worker.fetch(request('/api/deepseek/extract', { body: JSON.stringify({ sourceType: 'text', sourceTitle: '申请通知', content: '8月20日提交申请表。', referenceTime: '2026-08-08T00:00:00.000Z', timezone: 'Asia/Shanghai' }) }), environment({ DEEPSEEK_API_KEY: 'server-only-test-key-with-length' }))
   const payload = await response.json()
   assert.equal(response.status, 200)
-  assert.equal(calls, 2)
+  assert.equal(calls, 3)
   assert.equal(payload.repair.attempted, true)
   assert.equal(payload.repair.applied, false)
   assert.equal(payload.repair.errorCode, 'REPAIR_UPSTREAM_503')
   assert.equal(payload.result.sourceSummary.title, '申请通知')
+})
+
+test('recognition provider retries 502/503 once but never retries 400', async () => {
+  const delays = []
+  let calls = 0
+  const provider = createDeepSeekProvider({
+    endpoint: 'https://api.deepseek.test', apiKey: 'server-only', model: 'deepseek-v4-flash', timeoutMs: 100,
+    sleep: async (delay) => { delays.push(delay) }, random: () => 0,
+    fetcher: async () => {
+      calls += 1
+      if (calls === 1) return new Response('temporary', { status: 503 })
+      return Response.json({ choices: [{ message: { content: '{}' } }], usage: { prompt_tokens: 2, completion_tokens: 3 } })
+    },
+  })
+  const requestBody = { systemPrompt: 'system', userPrompt: 'data', maxTokens: 10, temperature: 0 }
+  const recovered = await provider.recognize(requestBody)
+  assert.equal(recovered.ok, true)
+  assert.equal(recovered.attempts, 2)
+  assert.deepEqual(delays, [250])
+
+  let invalidCalls = 0
+  const invalidProvider = createDeepSeekProvider({
+    endpoint: 'https://api.deepseek.test', apiKey: 'server-only', model: 'deepseek-v4-flash', timeoutMs: 100,
+    sleep: async () => { throw new Error('must not sleep') }, random: () => 0,
+    fetcher: async () => { invalidCalls += 1; return new Response('invalid', { status: 400 }) },
+  })
+  const invalid = await invalidProvider.recognize(requestBody)
+  assert.equal(invalid.ok, false)
+  assert.equal(invalid.attempts, 1)
+  assert.equal(invalidCalls, 1)
 })
 
 test('public HTTPS pages are converted to inert text before client-side DeepSeek submission', async () => {

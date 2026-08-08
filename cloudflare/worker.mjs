@@ -579,7 +579,7 @@ async function askDeepSeek(request, env, fetcher, isRateLimited, acquireConcurre
   }
 }
 
-async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurrency, context) {
+async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurrency, context, retrySleep, retryRandom) {
   if (!isTrustedOrigin(request, env.ALLOWED_ORIGINS)) {
     context.errorType = 'ORIGIN_NOT_ALLOWED'
     return failure('ORIGIN_NOT_ALLOWED', '请求来源不受信任。', 403, context.requestId)
@@ -626,7 +626,7 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
   const referenceTime = safeText(body.referenceTime, 80)
   const timezone = safeText(body.timezone, 80) || 'Asia/Shanghai'
   const route = routeRecognitionSource(sourceContent, false)
-  const gateway = createModelGateway(createDeepSeekProvider({ fetcher, endpoint: DEEPSEEK_ENDPOINT, apiKey, model: DEEPSEEK_MODEL, timeoutMs: UPSTREAM_TIMEOUT_MS }))
+  const gateway = createModelGateway(createDeepSeekProvider({ fetcher, endpoint: DEEPSEEK_ENDPOINT, apiKey, model: DEEPSEEK_MODEL, timeoutMs: UPSTREAM_TIMEOUT_MS, sleep: retrySleep, random: retryRandom }))
   const systemPrompt = recognitionSystemPrompt()
   const projectContext = Array.isArray(body.projectCandidates) ? body.projectCandidates : []
   const existingTaskContext = Array.isArray(body.existingTasks) ? body.existingTasks : []
@@ -728,6 +728,8 @@ export function createWorker({
   resolveHostname = resolvePublicHostname,
   isRateLimited = createRateLimiter(),
   acquireConcurrency = createConcurrencyLimiter(),
+  retrySleep,
+  retryRandom,
 } = {}) {
   return {
     async fetch(request, env) {
@@ -766,7 +768,7 @@ export function createWorker({
           context.errorType = 'METHOD_NOT_ALLOWED'
           response = failure('METHOD_NOT_ALLOWED', '该接口只接受 POST。', 405, context.requestId)
         } else {
-          response = await extractTasks(request, env, fetcher, isRateLimited, acquireConcurrency, context)
+          response = await extractTasks(request, env, fetcher, isRateLimited, acquireConcurrency, context, retrySleep, retryRandom)
         }
       } else if (url.pathname === '/api/deepseek') {
         if (request.method !== 'POST') {
