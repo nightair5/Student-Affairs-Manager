@@ -274,13 +274,15 @@ MVP 提供可导航、可理解的桌面页面骨架：
 
 ## 6. 数据模型
 
-### 6.0 Product v2 E1 Phase A 数据底座
+### 6.0 Product v2 E1 数据底座
 
-- 当前生产运行时保持 Workspace schema v7；E1 Phase A 只冻结 schema v8 类型、全图校验、离线迁移/备份/回滚契约和 round-trip 测试，不接入生产加载路径。
+- E1 Phase A 冻结 schema v8 契约；E1 Phase B 将 v8 接入本机 IndexedDB 运行时，但本轮不部署 Production。
 - v8 的 Source/SourceVersion/RecognitionRun/ExtractionDraft/Project/Milestone/WorkPackage/Task/Material/TimePoint/Event/EvidenceRef/HistoryRecord/ReminderRecord/ChangeProposal 为 canonical facts。
 - ProjectState、Risk、Priority、TodayRecommendation、Progress 与 NextDeadline 为可重算 derived data，不得成为第二事实源。
 - date-only、zoned datetime 与 vague/relative 时间分离；未知时间使用 null + needsConfirmation，禁止 sentinel date。
-- Rich RecognitionResult 原子提交、Source-before-AI、真实 v7→v8 IndexedDB 迁移和 legacy bridge 退休属于 E1 Phase B，不在本轮实施。
+- v7 加载必须先备份并校验再原子迁移；Rich RecognitionResult 直接生成可校验、幂等的 DomainCommitPlan，确认成功或零写入。
+- Capture 必须 await Source、SourceVersion、RecognitionRun 与 processing Draft 的原子持久化后再调用 AI；Retry 新建 Run/Draft 而不复制 Source。
+- 旧 UI 兼容视图只允许按稳定 ID 显式回写用户编辑，禁止由 Task/Draft 投影覆盖 v8 独立实体。
 - 完整矩阵、Workspace v8 结构和迁移映射见 `docs/product-v2-e1-phase-a.md`。
 
 ### 6.1 Task
@@ -368,7 +370,7 @@ MVP 提供可导航、可理解的桌面页面骨架：
 - 拆分以不同交付物、截止时间、操作方式、阶段或依赖为依据；同一交付物的背景、格式、联系人和重复说明不单独建任务。
 - 每条建议标记原文明示、强推断或可选建议；默认只勾选原文明示项，用户可逐条勾选、编辑、拒绝、拆分、合并或移动阶段。
 - DeepSeek 输出使用 `RecognitionResult 2.0`，promptVersion 为 `recognition-2.0.0`；浏览器和 Worker 都执行字段、长度、数量、日期、层级和逐字证据校验。
-- 工作区升级为 IndexedDB schema v7；迁移 v3-v6 前保存独立原始备份，无法确定的旧里程碑保留到 `legacyData` 并记录为需要人工复核。
+- 旧工作区先兼容升级为 v7，再按 E1 Phase B 的备份、校验与原子迁移流程进入 IndexedDB schema v8；无法确定的旧字段保留到 `legacyData` 并记录为需要人工复核。
 - 建立 60 条匿名回归样本和可重复识别评测命令；阶段准确率与任务召回率仍是本地回退规则的明确改进项，不将其冒充为线上模型效果。
 
 ## 8. 视觉与交互规范

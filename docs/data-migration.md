@@ -2,19 +2,19 @@
 
 ## Current schema
 
-IndexedDB workspace schema v7 adds work packages, events, migration logs, recognition feedback and RecognitionResult metadata while preserving sources, drafts, projects, tasks, time points, materials, evidence, history and reminders.
+The development runtime now persists Workspace schema v8 as the canonical IndexedDB record. SourceVersion, RecognitionRun, ExtractionDraft, Project hierarchy, Task/Subtask, Material, TimePoint, Event, Evidence, History and Reminder are independent entities; UI compatibility projections are not persisted as replacements for these arrays.
 
 ## Migration
 
-Schemas v3-v6 are normalized into v7. Existing confirmed tasks and projects retain their IDs and content. Old milestone structures that cannot be classified confidently are preserved in `legacyData` and recorded as `needs_review`; the migration does not invent parent relationships.
+Schemas v3-v6 are first normalized through the v7 compatibility contract; v7 is then upgraded to v8. Existing confirmed tasks and projects retain their IDs and content. Old structures that cannot be classified confidently are preserved in `legacyData` and recorded as `needs_review`; migration never invents parent relationships.
 
-Before the first in-browser migration, the repository stores the untouched old record under a separate `migration-backup-*` key in the same IndexedDB database. If this backup cannot be written, loading fails instead of continuing with an unprotected migration. The current record is not deleted during normalization.
+Before v7→v8 replacement, the repository stores the untouched v7 record under a separate `backup:*` key with an integrity hash. It then migrates in memory, validates the complete domain graph and verifies an export/import round-trip. If any step fails, loading reports recovery required and leaves the current v7 record untouched.
 
 ## Backup and rollback
 
-The Privacy & Data page can download the latest pre-migration JSON. To roll back data, first export the current v7 workspace, deploy a compatible earlier application build, then import/restore the pre-migration JSON with that version's supported procedure. A v7 application will intentionally migrate an old backup forward again; it cannot run an old schema in place.
+The Privacy & Data page can download the latest pre-migration JSON. The canonical repository can restore the exact v7 snapshot by backup ID after rechecking its hash. Before rollback, export the current v8 workspace; a later v8 load will intentionally offer migration again rather than silently running v7 in place.
 
-Current v7 JSON imports are strict: required arrays, enums, dates, unique IDs, references and dependency cycles are validated. Older supported backups use the migration path; unsupported or unsafe input is rejected. Unrecognized legacy content is retained rather than discarded.
+Current v8 JSON imports validate required arrays, time semantics, unique IDs, references, hierarchy depth and dependency cycles. v7 imports use the protected migration path; unsupported or unsafe input is rejected. Unrecognized legacy content is retained rather than discarded.
 
 ## Product v2 Workspace v8 preparation
 

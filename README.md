@@ -167,7 +167,7 @@ P1 阶段不包含生产 OCR、邮件发送、网页抓取/监测、微信授权
 - 可选 Node.js 本地服务：令牌缺失时同步默认关闭。
 - 手动认证拉取/推送、修订号冲突检测、远端摘要预览和二次确认覆盖。
 - 服务端工作区使用原子文件写入 `.data/`；该目录不会提交 Git。
-- 非敏感服务地址和最后修订保存在 schema v7；令牌不持久化。
+- 非敏感服务地址和最后修订通过 schema v8 preferences 的兼容字段保存；令牌不持久化。
 - 当前仍不等于云账号或跨设备自动同步。
 - 邮件队列支持未配置阻塞、发送失败、有限重试与真实 `sent` 状态；默认适配器关闭。
 - 网页监测支持持久化本机基线与可解释的手动差异；服务端可按按钮读取任意公网 HTTPS 页面，并受私网阻断、逐跳重定向校验和响应上限约束。本地 Node 服务仍默认关闭。
@@ -208,15 +208,15 @@ npm run eval:recognition
 
 当前包含 60 条匿名、确定性样本。详细指标与已知短板见 [recognition-evaluation.md](./docs/recognition-evaluation.md)，Prompt 升级流程见 [prompt-versioning.md](./docs/prompt-versioning.md)。
 
-工作区现为 IndexedDB schema v7，可安全迁移 v3-v6。浏览器会在首次迁移前另存原始记录，“隐私与数据”页可下载最新迁移前备份。回滚步骤和失败保护见 [data-migration.md](./docs/data-migration.md)，识别管线与层级规则见 [recognition-architecture.md](./docs/recognition-architecture.md) 和 [task-hierarchy-rules.md](./docs/task-hierarchy-rules.md)。
+工作区现以 IndexedDB schema v8 作为唯一事实来源。首次读取 v7 时，浏览器先保存带完整性哈希的原始备份，再在内存迁移、全图校验和 JSON round-trip，全部通过后才原子替换；失败不会覆盖 v7。“隐私与数据”页可下载最新迁移前备份。回滚步骤和失败保护见 [data-migration.md](./docs/data-migration.md)，识别管线与层级规则见 [recognition-architecture.md](./docs/recognition-architecture.md) 和 [task-hierarchy-rules.md](./docs/task-hierarchy-rules.md)。
 
-Product v2 E1 Phase A 已冻结独立的 Workspace v8 领域契约、全图校验器、离线 v7→v8 迁移/备份/回滚契约和 round-trip fixtures。当前运行时仍是 v7，尚未把真实 IndexedDB 数据切换到 v8，也尚未退休 lossy legacy bridge；详细边界与映射见 [Product v2 E1 Phase A 领域契约](./docs/product-v2-e1-phase-a.md)。
+Product v2 E1 Phase B 已把 Workspace v8 接入本机运行时：Source 在识别请求前持久化，Rich RecognitionResult 经 `DomainCommitPlan` 原子提交，Subtask、多 TimePoint、Material rich fields、Event、字段级 Evidence 与 History 不再经过旧 Task 投影压缩。旧组件仍通过只读/显式回写兼容视图渐进运行，但不能覆盖 v8 canonical 数组；本阶段没有生产部署。详细契约与阶段证据见 [Product v2 E1 领域契约](./docs/product-v2-e1-phase-a.md)。
 
 ## 数据保存范围
 
 数据保存在当前设备与浏览器的站点存储中。使用相同的站点地址刷新或关闭后重新打开，数据会自动恢复；更换设备、浏览器、站点地址，或清除浏览器站点数据时不会自动同步。跨设备同步需要后续账号与后端服务。
 
-当前工作区采用 IndexedDB schema v7，将来源、待确认草稿、项目、阶段、工作包、任务、事件、时间节点、材料、证据、历史、识别反馈和提醒表示为可追溯实体，并安全迁移 schema v3-v6。JSON 备份导入上限为 5 MB；当前 schema 会严格校验必需数组、枚举、日期、唯一 ID、实体引用和任务依赖环，拒绝不完整或被篡改的备份。导入文本始终作为普通数据呈现，不执行其中的 HTML 或脚本。
+当前工作区采用 IndexedDB schema v8，独立保存 SourceVersion、RecognitionRun、ExtractionDraft、项目层级、任务/子任务、材料、时间点、事件、证据、历史和提醒。JSON 备份导入上限为 5 MB；v8 导入导出执行全图校验并保持实体 ID、关系、Evidence、History 与未知 `legacyData` 语义。v7 可安全迁移和回滚；导入文本始终作为普通数据呈现，不执行其中的 HTML 或脚本。
 
 ## 维护与审计
 

@@ -1,28 +1,32 @@
 import { Download, RotateCcw, Upload } from 'lucide-react'
 import { useRef, useState, type ChangeEvent } from 'react'
-import type { WorkspaceData } from '../types'
 import { MAX_WORKSPACE_IMPORT_BYTES } from '../lib/repository'
 
 interface WorkspaceControlsProps {
-  workspace: WorkspaceData
-  onImport: (serialized: string) => void
+  onExport: () => Promise<string>
+  onImport: (serialized: string) => Promise<void>
   onClear: () => void
 }
 
-export function WorkspaceControls({ workspace, onImport, onClear }: WorkspaceControlsProps) {
+export function WorkspaceControls({ onExport, onImport, onClear }: WorkspaceControlsProps) {
   const inputRef = useRef<HTMLInputElement>(null)
   const [clearArmed, setClearArmed] = useState(false)
   const [message, setMessage] = useState('')
 
-  const exportData = () => {
-    const blob = new Blob([JSON.stringify(workspace, null, 2)], { type: 'application/json' })
-    const url = URL.createObjectURL(blob)
-    const link = document.createElement('a')
-    link.href = url
-    link.download = `student-affairs-backup-${new Date().toISOString().slice(0, 10)}.json`
-    link.click()
-    URL.revokeObjectURL(url)
-    setMessage('已下载本机数据备份。')
+  const exportData = async () => {
+    try {
+      const serialized = await onExport()
+      const blob = new Blob([serialized], { type: 'application/json' })
+      const url = URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.href = url
+      link.download = `student-affairs-v8-backup-${new Date().toISOString().slice(0, 10)}.json`
+      link.click()
+      URL.revokeObjectURL(url)
+      setMessage('已下载 Workspace v8 本机数据备份。')
+    } catch {
+      setMessage('导出失败：当前权威工作区尚未就绪。')
+    }
   }
 
   const importData = async (event: ChangeEvent<HTMLInputElement>) => {
@@ -34,8 +38,8 @@ export function WorkspaceControls({ workspace, onImport, onClear }: WorkspaceCon
       return
     }
     try {
-      onImport(await file.text())
-      setMessage('已导入备份并替换当前本机工作区。')
+      await onImport(await file.text())
+      setMessage('已校验并导入备份，当前本机工作区已原子替换。')
     } catch {
       setMessage('导入失败：请选择由本产品导出的 JSON 文件。')
     } finally {

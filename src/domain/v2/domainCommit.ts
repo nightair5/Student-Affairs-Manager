@@ -89,11 +89,17 @@ function planEvidence(result: RecognitionResult, evidenceIds: Set<string>, draft
 
 export function selectionFromDraftItems(result: RecognitionResult, items: DraftItem[]): DomainCommitSelection {
   const accepted = new Set(items.filter((item) => item.status === '待确认' && item.selected !== false).map((item) => item.suggestion.id))
+  const selectedTimePointIds = new Set(result.timePoints
+    .filter((item) => item.selected !== false && item.relatedTaskTempIds.some((id) => accepted.has(id)))
+    .map((item) => item.tempId))
   return {
     taskTempIds: [...accepted],
     materialTempIds: result.materials.filter((item) => item.selected !== false && item.relatedTaskTempIds.some((id) => accepted.has(id))).map((item) => item.tempId),
-    timePointTempIds: result.timePoints.filter((item) => item.selected !== false && item.relatedTaskTempIds.some((id) => accepted.has(id))).map((item) => item.tempId),
-    eventTempIds: result.events.filter((item) => item.selected !== false).map((item) => item.tempId),
+    timePointTempIds: [...selectedTimePointIds],
+    eventTempIds: result.events.filter((item) => {
+      const referenced = [item.startTimePointTempId, item.endTimePointTempId].filter((id): id is string => Boolean(id))
+      return item.selected !== false && referenced.length > 0 && referenced.every((id) => selectedTimePointIds.has(id))
+    }).map((item) => item.tempId),
     rejectedTempIds: items.filter((item) => item.status === '已拒绝' || item.selected === false).map((item) => item.suggestion.id),
     taskOverrides: Object.fromEntries(items.map((item) => [item.suggestion.id, item.suggestion])),
   }
@@ -135,6 +141,16 @@ export function buildDomainCommitPlan(
   const materialIdMap = new Map(materialSuggestions.map((item) => [item.tempId, entityId('material', draftId, item.tempId)]))
   const timeSuggestions = result.timePoints.filter((item) => selection.timePointTempIds.includes(item.tempId))
   const timeIdMap = new Map(timeSuggestions.map((item) => [item.tempId, entityId('time', draftId, item.tempId)]))
+  const primaryOverrideTimeIds = new Map<string, string>()
+  selectedTasks.forEach((task) => {
+    const candidates = timeSuggestions.filter((point) => point.relatedTaskTempIds.includes(task.tempId)
+      && point.type !== 'event_start' && point.type !== 'event_end' && point.type !== 'planned_start')
+    const preferred = candidates.find((point) => point.type === 'task_deadline')
+      ?? candidates.find((point) => point.type === 'submission_deadline')
+      ?? candidates.find((point) => point.type === 'registration_deadline')
+      ?? candidates[0]
+    if (preferred && selection.taskOverrides?.[task.tempId]?.deadline) primaryOverrideTimeIds.set(task.tempId, preferred.tempId)
+  })
   const eventSuggestions = result.events.filter((item) => selection.eventTempIds.includes(item.tempId))
   eventSuggestions.forEach((event) => {
     for (const timeId of [event.startTimePointTempId, event.endTimePointTempId]) {
@@ -198,15 +214,22 @@ export function buildDomainCommitPlan(
     const relatedTasks = item.relatedTaskTempIds.map((id) => taskIdMap.get(id)).filter((id): id is string => Boolean(id))
     const relatedMaterials = item.relatedMaterialTempIds.map((id) => materialIdMap.get(id)).filter((id): id is string => Boolean(id))
     const event = eventSuggestions.find((candidate) => candidate.startTimePointTempId === item.tempId || candidate.endTimePointTempId === item.tempId)
+    const overrideTaskTempId = item.relatedTaskTempIds.find((id) => primaryOverrideTimeIds.get(id) === item.tempId)
+    const overrideDeadline = overrideTaskTempId ? selection.taskOverrides?.[overrideTaskTempId]?.deadline : undefined
+    const overrideIsDateOnly = Boolean(overrideDeadline && /^\d{4}-\d{2}-\d{2}$/u.test(overrideDeadline))
+    const hasValidOverride = Boolean(overrideDeadline && (overrideIsDateOnly || !Number.isNaN(new Date(overrideDeadline).getTime())))
     return {
       id: timeIdMap.get(item.tempId)!, projectId,
       milestoneId: selectedTasks.find((task) => item.relatedTaskTempIds.includes(task.tempId))?.milestoneTempId
         ? entityId('milestone', draftId, selectedTasks.find((task) => item.relatedTaskTempIds.includes(task.tempId))!.milestoneTempId!) : null,
       taskId: relatedTasks[0] ?? null, materialId: relatedMaterials[0] ?? null,
       eventId: event ? eventIdMap.get(event.tempId)! : null, relatedTaskIds: relatedTasks, relatedMaterialIds: relatedMaterials,
-      type: item.type, rawText: item.rawText, normalizedValue: item.normalizedValue,
-      timezone: item.precision === 'exact' ? item.timezone : null, isAllDay: item.isAllDay,
-      precision: item.precision, needsConfirmation: item.needsConfirmation,
+      type: item.type, rawText: hasValidOverride ? overrideDeadline! : item.rawText,
+      normalizedValue: hasValidOverride ? overrideDeadline! : item.normalizedValue,
+      timezone: hasValidOverride ? (overrideIsDateOnly ? null : workspace.settings.defaultTimezone) : item.precision === 'exact' ? item.timezone : null,
+      isAllDay: hasValidOverride ? overrideIsDateOnly : item.isAllDay,
+      precision: hasValidOverride ? (overrideIsDateOnly ? 'date_only' : 'exact') : item.precision,
+      needsConfirmation: hasValidOverride ? false : item.needsConfirmation,
       createdAt: now, updatedAt: now,
       legacyData: { recognitionTempId: item.tempId, evidenceIds: item.evidenceIds, confidence: item.confidence },
     }

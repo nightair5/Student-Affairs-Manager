@@ -18,6 +18,7 @@ import {
 
 function deadlineParts(value: string): { date: string; time: string; weekday: string } {
   const deadline = new Date(value)
+  if (!Number.isFinite(deadline.getTime())) return { date: '时间待确认', time: '待补充', weekday: '未排期' }
   return {
     date: new Intl.DateTimeFormat('zh-CN', { month: 'long', day: 'numeric' }).format(deadline),
     time: new Intl.DateTimeFormat('zh-CN', { hour: '2-digit', minute: '2-digit', hour12: false }).format(deadline),

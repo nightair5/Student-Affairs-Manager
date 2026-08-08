@@ -1,15 +1,15 @@
 import { Archive, CheckCircle2, Clock3, Flag, PackageCheck, Plus, Trophy } from 'lucide-react'
 import { useState, type FormEvent } from 'react'
 import { WorkspaceControls } from '../components/WorkspaceControls'
-import type { Event, Project, Task, WorkspaceData, WorkPackage } from '../types'
+import type { Event, Project, Task, WorkPackage } from '../types'
 
 interface ArchivePageProps {
   tasks: Task[]
   projects: Project[]
   workPackages: WorkPackage[]
   events: Event[]
-  workspace: WorkspaceData
-  onImport: (serialized: string) => void
+  onExport: () => Promise<string>
+  onImport: (serialized: string) => Promise<void>
   onClear: () => void
   onAddMilestone: (projectId: string, title: string, dueAt: string) => void
   onToggleMilestone: (projectId: string, milestoneId: string) => void
@@ -95,10 +95,10 @@ function ProjectCard({ project, tasks, workPackages, events, onAddMilestone, onT
   </article>
 }
 
-export function ArchivePage({ tasks, projects, workPackages, events, workspace, onImport, onClear, onAddMilestone, onToggleMilestone }: ArchivePageProps) {
+export function ArchivePage({ tasks, projects, workPackages, events, onExport, onImport, onClear, onAddMilestone, onToggleMilestone }: ArchivePageProps) {
   return <main className="page">
     <header className="page-header"><div><span className="eyebrow">长期成果沉淀</span><h1>项目档案</h1><p>确认的任务、材料和来源均可追溯到对应项目；里程碑由你确认和维护。</p></div><div className="header-stat"><Trophy size={20} /><span><strong>{projects.length}</strong> 个已创建项目</span></div></header>
     {projects.length ? <div className="archive-grid">{projects.map((project) => <ProjectCard key={project.id} project={project} tasks={tasks} workPackages={workPackages} events={events} onAddMilestone={onAddMilestone} onToggleMilestone={onToggleMilestone} />)}</div> : <div className="empty-state"><Archive size={34} /><h2>还没有项目档案</h2><p>确认一份通知中的任意事项后，会自动建立可追溯项目。</p></div>}
-    <WorkspaceControls workspace={workspace} onImport={onImport} onClear={onClear} />
+    <WorkspaceControls onExport={onExport} onImport={onImport} onClear={onClear} />
   </main>
 }

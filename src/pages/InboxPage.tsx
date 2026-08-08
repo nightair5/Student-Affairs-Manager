@@ -14,7 +14,10 @@ interface InboxPageProps {
 export function InboxPage({ drafts, sources, onOpenDraft, onConfirmDrafts, onArchiveDrafts, onOpenManual }: InboxPageProps) {
   const [selectedIds, setSelectedIds] = useState<string[]>([])
   const pendingDrafts = drafts.filter((draft) =>
-    (draft.status === '待确认' || draft.status === '部分确认') && draft.workflowStatus !== 'archived')
+    (draft.status === '待确认' || draft.status === '部分确认')
+      && draft.workflowStatus !== 'archived'
+      && draft.workflowStatus !== 'failed'
+      && draft.workflowStatus !== 'processing')
   const selectableIds = pendingDrafts.map((draft) => draft.id)
   const selected = selectedIds.filter((id) => selectableIds.includes(id))
 
@@ -64,7 +67,7 @@ export function InboxPage({ drafts, sources, onOpenDraft, onConfirmDrafts, onArc
           const pending = draft.items.filter((item) => item.status === '待确认').length
           return <article className="task-card inbox-card" key={draft.id}>
             <label className="draft-selector"><input type="checkbox" checked={selected.includes(draft.id)} onChange={() => toggleSelected(draft.id)} /><span className="sr-only">选择 {source?.title ?? '草稿'}</span></label>
-            <div className="task-card-top"><span className="category-label">{source?.extractionMethod === 'deepseek-v4-flash' ? 'DeepSeek V4 Flash 建议' : '本地规则建议'}</span><span className="risk-pill">待确认 {pending} 项</span></div>
+            <div className="task-card-top"><span className="category-label">{draft.modelName?.includes('deepseek') ? 'DeepSeek V4 Flash 建议' : '本地规则建议'}</span><span className="risk-pill">待确认 {pending} 项</span></div>
             <h2>{source?.title ?? '已保存来源'}</h2>
             <p className="task-description">{source?.contentPreview ?? '来源内容不可用'}</p>
             {source?.processingError && <p className="inline-error" role="alert">{source.processingError}</p>}
