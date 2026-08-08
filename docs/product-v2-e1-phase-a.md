@@ -116,6 +116,12 @@ Repository 的 schema-aware 加载现可识别 v7/v8。v7 升级先保存带完�
 
 匿名化的真实 v7 序列化副本覆盖 Task、Project/embedded Milestone、rich Material、TimePoint、Event start/end、Evidence、History、Reminder 与未知字段，并执行 migration → reload → rollback 演练。Event 的明确 start/end 会迁为独立 `event_start` / `event_end` TimePoint；无法可靠解释的值仍进入 `legacyData` / `needsReview`，不猜测。
 
+### B3 Recognition Domain Atomic Commit
+
+`DomainCommitPlan` 直接消费 `RecognitionResult 2.0` 与用户选择/编辑结果，统一解析 tempId，并在写入前校验父子层级、依赖、Event 时间和完整合并图。正式 v8 提交保留 Subtask、全部已接受 TimePoint、Material 的格式/命名/数量/提交渠道、独立 Event、字段级 Evidence 与确认 History；未知时间保持 null/relative/vague，不生成 sentinel date。
+
+Repository 使用单个 IndexedDB transaction 应用计划；任何引用或全图校验失败均为零写入。operationId 与 Draft 上的已提交记录提供幂等确认；Partial Confirm 只提交选中实体，拒绝项和缺少必要父级/依赖的孤儿实体不会进入 canonical graph。legacy suggestion adapter 仍保留给旧 UI 显示，但不参与 v8 正式 Domain Commit。
+
 ## E1 Phase B gate
 
 进入 Phase B 前必须单独批准并完成：v8 repository/IndexedDB store、v7 真实数据迁移接入与恢复演练、Rich RecognitionResult → Domain Commit Plan、单事务原子提交、Source-before-AI 持久化，以及旧 lossy adapter 退休。Phase A 不声称这些已经上线。

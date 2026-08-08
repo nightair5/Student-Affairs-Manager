@@ -49,6 +49,8 @@ export function validateReferences(workspace: WorkspaceV8): ValidationIssue[] {
     requireRef(issues, taskIds, item.taskId, `timePoints[${index}].taskId`)
     requireRef(issues, materialIds, item.materialId, `timePoints[${index}].materialId`)
     requireRef(issues, eventIds, item.eventId, `timePoints[${index}].eventId`)
+    item.relatedTaskIds.forEach((id, taskIndex) => requireRef(issues, taskIds, id, `timePoints[${index}].relatedTaskIds[${taskIndex}]`))
+    item.relatedMaterialIds.forEach((id, materialIndex) => requireRef(issues, materialIds, id, `timePoints[${index}].relatedMaterialIds[${materialIndex}]`))
   })
   workspace.events.forEach((item, index) => {
     requireRef(issues, projectIds, item.projectId, `events[${index}].projectId`)

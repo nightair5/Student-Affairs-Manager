@@ -39,6 +39,7 @@ describe('B1 canonical Workspace v8 repository', () => {
       timePoints: [...workspace.timePoints, {
         id: 'time-extra', projectId: 'project-competition', milestoneId: 'milestone-3', taskId: 'task-3',
         materialId: null, eventId: null, type: 'task_deadline', rawText: '补充核对时间', normalizedValue: null,
+        relatedTaskIds: ['task-3'], relatedMaterialIds: [],
         timezone: null, isAllDay: false, precision: 'vague', needsConfirmation: true,
         createdAt: workspace.savedAt, updatedAt: workspace.savedAt,
       }],
