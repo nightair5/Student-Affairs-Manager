@@ -15,7 +15,8 @@ describe('findSuggestedWorkSlot', () => {
       createdAt: '2026-08-01T00:00:00+08:00',
     }]
     const slot = findSuggestedWorkSlot(task, blocks, new Date('2026-08-03T07:50:00+08:00'))
-    expect(new Date(slot?.start ?? '').getHours()).toBe(10)
+    expect(slot?.start).toBe('2026-08-03T02:00:00.000Z')
+    expect(slot?.end).toBe('2026-08-03T03:00:00.000Z')
     expect(slot?.reason).toContain('已避开')
   })
 
