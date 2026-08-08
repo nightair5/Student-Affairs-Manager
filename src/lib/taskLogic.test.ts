@@ -46,6 +46,16 @@ describe('task prioritization', () => {
     expect(getFocusTasks([snoozed], now)).toHaveLength(0)
     expect(getFocusTasks([{ ...snoozed, pinnedUntil: '2026-08-02T09:00:00+08:00' }], now)).toHaveLength(1)
   })
+
+  it('spreads focus across projects and does not lead with blocked work when ready work exists', () => {
+    const dependency = { ...demoTasks[0], id: 'dependency-ready', projectId: 'project-a', status: '待开始' as const }
+    const blocked = { ...demoTasks[0], id: 'blocked', projectId: 'project-a', dependencyIds: [dependency.id], deadline: '2026-07-31T10:00:00+08:00' }
+    const sameProject = { ...demoTasks[1], id: 'same-project', projectId: 'project-a', deadline: '2026-07-31T11:00:00+08:00' }
+    const otherProject = { ...demoTasks[2], id: 'other-project', projectId: 'project-b', deadline: '2026-08-01T10:00:00+08:00' }
+    const result = getFocusTasks([blocked, dependency, sameProject, otherProject], now, 3)
+    expect(result[0].id).not.toBe('blocked')
+    expect(new Set(result.map((task) => task.projectId))).toEqual(new Set(['project-a', 'project-b']))
+  })
 })
 
 describe('task presentation helpers', () => {

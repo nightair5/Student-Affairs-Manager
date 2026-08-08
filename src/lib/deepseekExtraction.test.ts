@@ -1,6 +1,7 @@
-import { describe, expect, it } from 'vitest'
-import { createSmartIntakeResult, type DeepSeekExtractionService } from './deepseekExtraction'
+import { describe, expect, it, vi } from 'vitest'
+import { createSmartIntakeResult, ProxyDeepSeekExtractionService, type DeepSeekExtractionService } from './deepseekExtraction'
 import type { ParsedSuggestion } from '../types'
+import { buildLocalRecognition } from '../recognition/pipeline'
 
 const aiSuggestion: ParsedSuggestion = {
   id: 'ai-1',
@@ -81,5 +82,23 @@ describe('smart intake', () => {
 
     expect(received).toBe('8月10日18:00提交报名表')
     expect(result.method).toBe('deepseek-v4-flash')
+  })
+
+  it('deduplicates identical in-flight requests and caches by prompt version', async () => {
+    const recognition = buildLocalRecognition({ sourceType: 'text', sourceTitle: '比赛通知', content: '8月10日18:00提交报名表', referenceTime: new Date('2026-08-02T08:00:00+08:00'), timezone: 'Asia/Shanghai', projects: [], tasks: [] })
+    const fetchMock = vi.fn(async () => Response.json({ result: recognition }))
+    vi.stubGlobal('fetch', fetchMock)
+    try {
+      const proxy = new ProxyDeepSeekExtractionService('/api/deepseek')
+      const input = { sourceType: 'text' as const, sourceTitle: '比赛通知', content: '8月10日18:00提交报名表', now: new Date('2026-08-02T08:00:00+08:00') }
+      const [first, second] = await Promise.all([proxy.recognize(input), proxy.recognize(input)])
+      const cached = await proxy.recognize(input)
+      expect(first.schemaVersion).toBe('2.0')
+      expect(second).toEqual(first)
+      expect(cached).toEqual(first)
+      expect(fetchMock).toHaveBeenCalledTimes(1)
+    } finally {
+      vi.unstubAllGlobals()
+    }
   })
 })

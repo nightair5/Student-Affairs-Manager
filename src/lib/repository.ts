@@ -1,9 +1,11 @@
 import type { DraftItem, ExtractionDraft, Project, Source, Task, WorkspaceData } from '../types'
 import { materializeWorkspaceEntities } from './domainEntities'
+import { isRecognitionResult } from '../recognition/schema'
 
 const DATABASE_NAME = 'student-affairs-steward'
 const STORE_NAME = 'workspace'
 const RECORD_KEY = 'current'
+const CURRENT_SCHEMA_VERSION = 7
 
 export interface WorkspaceRepository {
   load(): Promise<WorkspaceData | null>
@@ -76,7 +78,7 @@ function normalizeTaskRecord(value: unknown, index: number, savedAt: string): Ta
       after: stringValue(item.after),
       changedAt: validDateValue(item.changedAt, updatedAt),
       actor: item.actor === 'system' ? 'system' as const : 'user' as const,
-      entityType: ['task', 'project', 'material', 'source', 'draft', 'reminder'].includes(stringValue(item.entityType))
+      entityType: ['task', 'subtask', 'project', 'milestone', 'work_package', 'material', 'time_point', 'event', 'source', 'draft', 'reminder'].includes(stringValue(item.entityType))
         ? item.entityType as Task['history'][number]['entityType']
         : undefined,
       entityId: stringValue(item.entityId) || undefined,
@@ -90,6 +92,16 @@ function normalizeTaskRecord(value: unknown, index: number, savedAt: string): Ta
     id,
     projectId: stringValue(value.projectId) || undefined,
     parentTaskId: stringValue(value.parentTaskId) || undefined,
+    hierarchyType: value.hierarchyType === 'subtask' ? 'subtask' : value.hierarchyType === 'task' ? 'task' : undefined,
+    milestoneId: stringValue(value.milestoneId) || undefined,
+    workPackageId: stringValue(value.workPackageId) || undefined,
+    actionVerb: stringValue(value.actionVerb) || undefined,
+    actionObject: stringValue(value.actionObject) || undefined,
+    completionCriteria: stringArray(value.completionCriteria),
+    evidenceIds: stringArray(value.evidenceIds),
+    inferenceLevel: ['explicit', 'strong_inference', 'optional_suggestion'].includes(stringValue(value.inferenceLevel))
+      ? value.inferenceLevel as Task['inferenceLevel']
+      : undefined,
     title: stringValue(value.title, '待核对任务'),
     category,
     status,
@@ -159,6 +171,7 @@ function normalizeDraftRecord(value: unknown, index: number, savedAt: string): E
       : '其他'
     return [{
       id: stringValue(item.id, `draft-item-${index}-${itemIndex}`),
+      selected: typeof item.selected === 'boolean' ? item.selected : true,
       status: ['待确认', '已确认', '已拒绝'].includes(stringValue(item.status))
         ? item.status as DraftItem['status']
         : '待确认',
@@ -201,6 +214,10 @@ function normalizeDraftRecord(value: unknown, index: number, savedAt: string): E
     items,
     createdAt,
     updatedAt: validDateValue(value.updatedAt, createdAt),
+    schemaVersion: stringValue(value.schemaVersion) || undefined,
+    modelName: stringValue(value.modelName) || undefined,
+    promptVersion: stringValue(value.promptVersion) || undefined,
+    recognitionResult: isRecognitionResult(value.recognitionResult) ? value.recognitionResult : undefined,
   }
 }
 
@@ -218,6 +235,10 @@ function normalizeProjectRecord(value: unknown, index: number, savedAt: string):
     taskIds: stringArray(value.taskIds),
     milestones: Array.isArray(value.milestones) ? value.milestones as Project['milestones'] : [],
     status: ['active', 'completed', 'archived'].includes(stringValue(value.status)) ? value.status as Project['status'] : undefined,
+    objective: stringValue(value.objective) || undefined,
+    keywords: stringArray(value.keywords),
+    currentMilestoneId: stringValue(value.currentMilestoneId) || undefined,
+    evidenceIds: stringArray(value.evidenceIds),
     description: stringValue(value.description) || undefined,
     createdAt,
     updatedAt: validDateValue(value.updatedAt, createdAt),
@@ -235,10 +256,15 @@ export function normalizeWorkspaceData(value: unknown): WorkspaceData | null {
     courseBlocks?: unknown
     integrations?: unknown
     knowledgeSettings?: unknown
+    workPackages?: unknown
+    events?: unknown
+    migrationLog?: unknown
+    recognitionFeedback?: unknown
+    legacyData?: unknown
     savedAt?: unknown
   }
   if (
-    (data.schemaVersion !== 3 && data.schemaVersion !== 4 && data.schemaVersion !== 5 && data.schemaVersion !== 6) ||
+    (data.schemaVersion !== 3 && data.schemaVersion !== 4 && data.schemaVersion !== 5 && data.schemaVersion !== 6 && data.schemaVersion !== 7) ||
     !Array.isArray(data.tasks) ||
     !Array.isArray(data.sources) ||
     !Array.isArray(data.drafts) ||
@@ -267,7 +293,7 @@ export function normalizeWorkspaceData(value: unknown): WorkspaceData | null {
   const entities = materializeWorkspaceEntities(tasks, sources, drafts, projects)
 
   return {
-    schemaVersion: 6,
+    schemaVersion: 7,
     ...entities,
     courseBlocks: Array.isArray(data.courseBlocks)
       ? data.courseBlocks as WorkspaceData['courseBlocks']
@@ -297,6 +323,38 @@ export function normalizeWorkspaceData(value: unknown): WorkspaceData | null {
     knowledgeSettings: isRecord(data.knowledgeSettings) && typeof data.knowledgeSettings.localSearchAuthorizedAt === 'string'
       ? { localSearchAuthorizedAt: data.knowledgeSettings.localSearchAuthorizedAt }
       : {},
+    workPackages: Array.isArray(data.workPackages)
+      ? data.workPackages as WorkspaceData['workPackages']
+      : [],
+    events: Array.isArray(data.events)
+      ? data.events as WorkspaceData['events']
+      : [],
+    migrationLog: Array.isArray(data.migrationLog)
+      ? data.migrationLog as WorkspaceData['migrationLog']
+      : data.schemaVersion === 7
+        ? []
+        : [{
+            id: `migration-${data.schemaVersion}-7-${savedAt}`,
+            fromVersion: data.schemaVersion,
+            toVersion: 7,
+            migratedAt: savedAt,
+            status: 'needs_review',
+            notes: ['旧任务和项目已保留；无法可靠判断的阶段关系保持为待整理状态。'],
+          }],
+    recognitionFeedback: Array.isArray(data.recognitionFeedback)
+      ? data.recognitionFeedback as WorkspaceData['recognitionFeedback']
+      : [],
+    legacyData: isRecord(data.legacyData)
+      ? data.legacyData
+      : data.schemaVersion === 7
+        ? {}
+        : {
+            previousSchemaVersion: data.schemaVersion,
+            projectMilestones: projects.map((project) => ({
+              projectId: project.id,
+              milestones: project.milestones,
+            })),
+          },
     savedAt,
   }
 }
@@ -350,13 +408,13 @@ function requireDate(value: unknown, label: string): void {
 }
 
 /**
- * Version 6 is the current, exported contract. It must be rejected instead of
+ * Version 7 is the current, exported contract. It must be rejected instead of
  * silently repaired when required fields or enums are invalid. Older versions
  * remain intentionally lenient so existing local data can migrate safely.
  */
 function validateCurrentSchemaInput(value: unknown): void {
   const root = requireRecord(value, '工作区')
-  if (root.schemaVersion !== 6) return
+  if (root.schemaVersion !== 7) return
 
   const tasks = requireArray(root.tasks, '任务列表')
   const sources = requireArray(root.sources, '来源列表')
@@ -367,6 +425,11 @@ function validateCurrentSchemaInput(value: unknown): void {
   const materialItems = requireArray(root.materialItems, '材料列表')
   const historyRecords = requireArray(root.historyRecords, '历史列表')
   const reminderRecords = requireArray(root.reminderRecords, '提醒列表')
+  const workPackages = requireArray(root.workPackages, '工作包列表')
+  const events = requireArray(root.events, '事件列表')
+  const migrationLog = requireArray(root.migrationLog, '迁移日志')
+  const recognitionFeedback = requireArray(root.recognitionFeedback, '识别反馈')
+  requireRecord(root.legacyData, '旧版保留数据')
   requireDate(root.savedAt, '保存时间')
 
   tasks.forEach((item, index) => {
@@ -411,6 +474,9 @@ function validateCurrentSchemaInput(value: unknown): void {
     requireDate(draft.createdAt, `草稿 ${index + 1} 创建时间`)
     requireDate(draft.updatedAt, `草稿 ${index + 1} 更新时间`)
     requireArray(draft.items, `草稿 ${index + 1} 建议`)
+    if (draft.recognitionResult !== undefined && !isRecognitionResult(draft.recognitionResult)) {
+      throw new Error(`草稿 ${index + 1} 的 RecognitionResult 2.0 无效`)
+    }
   })
 
   projects.forEach((item, index) => {
@@ -431,8 +497,8 @@ function validateCurrentSchemaInput(value: unknown): void {
   timePoints.forEach((item, index) => {
     const record = requireRecord(item, `时间节点 ${index + 1}`)
     requireString(record.id, `时间节点 ${index + 1} ID`)
-    requireEnum(record.type, ['deadline', 'registration_deadline', 'submission_deadline', 'event_start', 'event_end', 'planned_start'], `时间节点 ${index + 1} 类型`)
-    requireDate(record.value, `时间节点 ${index + 1} 时间`)
+    requireEnum(record.type, ['deadline', 'registration_deadline', 'submission_deadline', 'task_deadline', 'event_start', 'event_end', 'result_announcement', 'planned_start'], `时间节点 ${index + 1} 类型`)
+    if (record.value !== null) requireDate(record.value, `时间节点 ${index + 1} 时间`)
   })
   materialItems.forEach((item, index) => {
     const record = requireRecord(item, `材料 ${index + 1}`)
@@ -442,7 +508,7 @@ function validateCurrentSchemaInput(value: unknown): void {
   historyRecords.forEach((item, index) => {
     const record = requireRecord(item, `历史 ${index + 1}`)
     requireString(record.id, `历史 ${index + 1} ID`)
-    requireEnum(record.entityType, ['task', 'project', 'material', 'source', 'draft', 'reminder'], `历史 ${index + 1} 实体类型`)
+    requireEnum(record.entityType, ['task', 'subtask', 'project', 'milestone', 'work_package', 'material', 'time_point', 'event', 'source', 'draft', 'reminder'], `历史 ${index + 1} 实体类型`)
     requireDate(record.changedAt, `历史 ${index + 1} 时间`)
   })
   reminderRecords.forEach((item, index) => {
@@ -451,6 +517,38 @@ function validateCurrentSchemaInput(value: unknown): void {
     requireEnum(record.channel, ['browser', 'email', 'wechat-placeholder'], `提醒 ${index + 1} 渠道`)
     requireEnum(record.status, ['draft', 'scheduled', 'sent', 'failed', 'unsupported'], `提醒 ${index + 1} 状态`)
     requireDate(record.scheduledAt, `提醒 ${index + 1} 时间`)
+  })
+  workPackages.forEach((item, index) => {
+    const record = requireRecord(item, `工作包 ${index + 1}`)
+    requireString(record.id, `工作包 ${index + 1} ID`)
+    requireString(record.projectId, `工作包 ${index + 1} 项目 ID`)
+    requireString(record.milestoneId, `工作包 ${index + 1} 阶段 ID`)
+    requireString(record.title, `工作包 ${index + 1} 标题`)
+    requireArray(record.taskIds, `工作包 ${index + 1} 任务引用`)
+    requireDate(record.createdAt, `工作包 ${index + 1} 创建时间`)
+    requireDate(record.updatedAt, `工作包 ${index + 1} 更新时间`)
+  })
+  events.forEach((item, index) => {
+    const record = requireRecord(item, `事件 ${index + 1}`)
+    requireString(record.id, `事件 ${index + 1} ID`)
+    requireString(record.title, `事件 ${index + 1} 标题`)
+    if (record.startAt !== null) requireDate(record.startAt, `事件 ${index + 1} 开始时间`)
+    if (record.endAt !== null) requireDate(record.endAt, `事件 ${index + 1} 结束时间`)
+    requireDate(record.createdAt, `事件 ${index + 1} 创建时间`)
+    requireDate(record.updatedAt, `事件 ${index + 1} 更新时间`)
+  })
+  migrationLog.forEach((item, index) => {
+    const record = requireRecord(item, `迁移日志 ${index + 1}`)
+    requireString(record.id, `迁移日志 ${index + 1} ID`)
+    requireEnum(record.status, ['completed', 'needs_review'], `迁移日志 ${index + 1} 状态`)
+    requireDate(record.migratedAt, `迁移日志 ${index + 1} 时间`)
+  })
+  recognitionFeedback.forEach((item, index) => {
+    const record = requireRecord(item, `识别反馈 ${index + 1}`)
+    requireString(record.id, `识别反馈 ${index + 1} ID`)
+    requireString(record.draftId, `识别反馈 ${index + 1} 草稿 ID`)
+    requireEnum(record.action, ['modified', 'rejected', 'merged', 'split', 'moved'], `识别反馈 ${index + 1} 动作`)
+    requireDate(record.createdAt, `识别反馈 ${index + 1} 时间`)
   })
 }
 
@@ -497,10 +595,16 @@ function validateWorkspaceIntegrity(workspace: WorkspaceData): void {
   assertUniqueIds(workspace.materialItems, '材料')
   assertUniqueIds(workspace.historyRecords, '历史')
   assertUniqueIds(workspace.reminderRecords, '提醒')
+  assertUniqueIds(workspace.workPackages, '工作包')
+  assertUniqueIds(workspace.events, '事件')
+  assertUniqueIds(workspace.migrationLog, '迁移日志')
+  assertUniqueIds(workspace.recognitionFeedback, '识别反馈')
 
   const taskIds = new Set(workspace.tasks.map((item) => item.id))
   const sourceIds = new Set(workspace.sources.map((item) => item.id))
   const projectIds = new Set(workspace.projects.map((item) => item.id))
+  const milestoneIds = new Set(workspace.projects.flatMap((item) => item.milestones.map((milestone) => milestone.id)))
+  const workPackageIds = new Set(workspace.workPackages.map((item) => item.id))
   workspace.tasks.forEach((task) => {
     assertEnum(task.category, ['比赛', '保研', '课程', '老师任务', '其他'], `任务“${task.title}”分类`)
     assertEnum(task.status, ['待开始', '进行中', '已完成'], `任务“${task.title}”状态`)
@@ -514,6 +618,8 @@ function validateWorkspaceIntegrity(workspace: WorkspaceData): void {
     assertValidDate(task.updatedAt, `任务“${task.title}”`)
     if (task.projectId && !projectIds.has(task.projectId)) throw new Error('任务引用了不存在的项目')
     if (task.parentTaskId && !taskIds.has(task.parentTaskId)) throw new Error('任务引用了不存在的父任务')
+    if (task.milestoneId && !milestoneIds.has(task.milestoneId)) throw new Error('任务引用了不存在的阶段')
+    if (task.workPackageId && !workPackageIds.has(task.workPackageId)) throw new Error('任务引用了不存在的工作包')
     if (task.sourceIds.some((id) => !sourceIds.has(id))) throw new Error('任务引用了不存在的来源')
     if ((task.dependencyIds ?? []).some((id) => !taskIds.has(id))) throw new Error('任务引用了不存在的依赖任务')
   })
@@ -539,7 +645,7 @@ function validateWorkspaceIntegrity(workspace: WorkspaceData): void {
     if (!sourceIds.has(evidence.sourceId)) throw new Error('证据引用了不存在的来源')
   })
   workspace.timePoints.forEach((point) => {
-    assertEnum(point.type, ['deadline', 'registration_deadline', 'submission_deadline', 'event_start', 'event_end', 'planned_start'], '时间节点类型')
+    assertEnum(point.type, ['deadline', 'registration_deadline', 'submission_deadline', 'task_deadline', 'event_start', 'event_end', 'result_announcement', 'planned_start'], '时间节点类型')
     if (point.taskId && !taskIds.has(point.taskId)) throw new Error('时间节点引用了不存在的任务')
     if (point.projectId && !projectIds.has(point.projectId)) throw new Error('时间节点引用了不存在的项目')
     assertValidDate(point.value ?? undefined, '时间节点')
@@ -554,6 +660,17 @@ function validateWorkspaceIntegrity(workspace: WorkspaceData): void {
     assertEnum(reminder.status, ['draft', 'scheduled', 'sent', 'failed', 'unsupported'], '提醒状态')
     if (!taskIds.has(reminder.taskId)) throw new Error('提醒引用了不存在的任务')
     assertValidDate(reminder.scheduledAt, '提醒')
+  })
+  workspace.workPackages.forEach((workPackage) => {
+    if (!projectIds.has(workPackage.projectId)) throw new Error('工作包引用了不存在的项目')
+    if (!milestoneIds.has(workPackage.milestoneId)) throw new Error('工作包引用了不存在的阶段')
+    if (workPackage.taskIds.some((id) => !taskIds.has(id))) throw new Error('工作包引用了不存在的任务')
+  })
+  workspace.events.forEach((event) => {
+    if (event.projectId && !projectIds.has(event.projectId)) throw new Error('事件引用了不存在的项目')
+    if (event.milestoneId && !milestoneIds.has(event.milestoneId)) throw new Error('事件引用了不存在的阶段')
+    if (event.startAt) assertValidDate(event.startAt, `事件“${event.title}”开始时间`)
+    if (event.endAt) assertValidDate(event.endAt, `事件“${event.title}”结束时间`)
   })
   assertNoDependencyCycles(workspace)
 }
@@ -583,8 +700,53 @@ export class IndexedDbWorkspaceRepository implements WorkspaceRepository {
         .objectStore(STORE_NAME)
         .get(RECORD_KEY)
       request.onerror = () => reject(request.error)
-      request.onsuccess = () => resolve(normalizeWorkspaceData(request.result))
+      request.onsuccess = async () => {
+        const raw = request.result
+        try {
+          if (isRecord(raw) && typeof raw.schemaVersion === 'number' && raw.schemaVersion < CURRENT_SCHEMA_VERSION) {
+            await this.saveMigrationBackup(database, raw, raw.schemaVersion)
+          }
+          resolve(normalizeWorkspaceData(raw))
+        } catch (error) {
+          reject(error)
+        }
+      }
     })
+  }
+
+  private async saveMigrationBackup(database: IDBDatabase, raw: Record<string, unknown>, version: number): Promise<void> {
+    const savedAt = typeof raw.savedAt === 'string' ? raw.savedAt : 'unknown'
+    const backupKey = `migration-backup-v${version}-${savedAt}`
+    const existing = await new Promise<unknown>((resolve, reject) => {
+      const request = database.transaction(STORE_NAME, 'readonly').objectStore(STORE_NAME).get(backupKey)
+      request.onerror = () => reject(request.error)
+      request.onsuccess = () => resolve(request.result)
+    })
+    if (existing !== undefined) return
+    await new Promise<void>((resolve, reject) => {
+      const transaction = database.transaction(STORE_NAME, 'readwrite')
+      transaction.onerror = () => reject(transaction.error)
+      transaction.oncomplete = () => resolve()
+      transaction.objectStore(STORE_NAME).put(structuredClone(raw), backupKey)
+    })
+  }
+
+  async exportLatestMigrationBackup(): Promise<string | null> {
+    const database = await this.open()
+    const keys = await new Promise<IDBValidKey[]>((resolve, reject) => {
+      const request = database.transaction(STORE_NAME, 'readonly').objectStore(STORE_NAME).getAllKeys()
+      request.onerror = () => reject(request.error)
+      request.onsuccess = () => resolve(request.result)
+    })
+    const backupKeys = keys.map(String).filter((key) => key.startsWith('migration-backup-v')).sort()
+    const latestKey = backupKeys.at(-1)
+    if (!latestKey) return null
+    const backup = await new Promise<unknown>((resolve, reject) => {
+      const request = database.transaction(STORE_NAME, 'readonly').objectStore(STORE_NAME).get(latestKey)
+      request.onerror = () => reject(request.error)
+      request.onsuccess = () => resolve(request.result)
+    })
+    return backup === undefined ? null : JSON.stringify(backup, null, 2)
   }
 
   async save(workspace: WorkspaceData): Promise<void> {

@@ -352,6 +352,16 @@ MVP 提供可导航、可理解的桌面页面骨架：
 - 未提供：生产 OCR、互联网云托管、账号系统、后台自动同步与自动外发。
 - 未提供：Obsidian 自动同步、浏览器端 DeepSeek 密钥、无引用的云端生成；Firebase Hosting 不会自动启用本机同步、邮件或网页读取，DeepSeek 仅在独立 Function 与 Secret Manager 均成功部署后接通。
 
+## 7.1 项目化识别 2.0
+
+- 一份通知先形成 Source 和可持久化 ExtractionDraft，再拆为 Project → Milestone → WorkPackage → Task → Subtask；Material、TimePoint 和 Event 为独立实体，不冒充任务。
+- 项目匹配可建议新建、关联已有项目、独立事项或稍后决定；低置信匹配必须用户选择，不静默合并。
+- 拆分以不同交付物、截止时间、操作方式、阶段或依赖为依据；同一交付物的背景、格式、联系人和重复说明不单独建任务。
+- 每条建议标记原文明示、强推断或可选建议；默认只勾选原文明示项，用户可逐条勾选、编辑、拒绝、拆分、合并或移动阶段。
+- DeepSeek 输出使用 `RecognitionResult 2.0`，promptVersion 为 `recognition-2.0.0`；浏览器和 Worker 都执行字段、长度、数量、日期、层级和逐字证据校验。
+- 工作区升级为 IndexedDB schema v7；迁移 v3-v6 前保存独立原始备份，无法确定的旧里程碑保留到 `legacyData` 并记录为需要人工复核。
+- 建立 60 条匿名回归样本和可重复识别评测命令；阶段准确率与任务召回率仍是本地回退规则的明确改进项，不将其冒充为线上模型效果。
+
 ## 8. 视觉与交互规范
 
 ### 8.1 设计方向

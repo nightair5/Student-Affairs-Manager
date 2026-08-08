@@ -126,14 +126,31 @@ export function getFocusTasks(
   now = new Date(),
   limit = 3,
 ): Task[] {
-  return [...tasks]
+  const ranked = [...tasks]
     .filter((task) => task.status !== '已完成')
     .filter((task) => {
       const result = calculateTaskPriority(task, tasks, now)
       return !result.isSnoozed || result.isPinned
     })
     .sort((a, b) => calculateTaskPriority(b, tasks, now).score - calculateTaskPriority(a, tasks, now).score)
-    .slice(0, limit)
+  const hasReadyTask = ranked.some((task) => calculateTaskPriority(task, tasks, now).risks.every((risk) => risk !== '有依赖'))
+  const actionable = hasReadyTask
+    ? ranked.filter((task) => calculateTaskPriority(task, tasks, now).risks.every((risk) => risk !== '有依赖'))
+    : ranked
+  const selected: Task[] = []
+  const representedProjects = new Set<string>()
+  for (const task of actionable) {
+    const projectKey = task.projectId ?? `standalone:${task.id}`
+    if (representedProjects.has(projectKey)) continue
+    selected.push(task)
+    representedProjects.add(projectKey)
+    if (selected.length >= limit) return selected
+  }
+  for (const task of actionable) {
+    if (!selected.some((candidate) => candidate.id === task.id)) selected.push(task)
+    if (selected.length >= limit) break
+  }
+  return selected
 }
 
 export function formatDuration(minutes: number): string {

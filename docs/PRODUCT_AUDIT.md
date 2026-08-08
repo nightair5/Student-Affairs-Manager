@@ -10,7 +10,7 @@
 ## High
 
 - 已修复：Worker 请求体、模型输出和错误处理边界不足。现已固定模型和 token、限制 Origin/方法/类型/字段/长度/并发/频率，并对 AI 结构和逐字证据二次校验。
-- 已修复：当前备份可被静默规范化。schema v6 现在严格拒绝非法枚举、日期、重复 ID、悬空引用与依赖环；schema v3/v4/v5 保留兼容迁移。
+- 已修复：当前备份可被静默规范化。schema v7 现在严格拒绝非法枚举、日期、重复 ID、悬空引用与依赖环；schema v3/v4/v5/v6 保留兼容迁移。
 - 仍存在：公开站点没有 Firebase Authentication、Cloudflare Access 或 App Check。单实例内存限流不是持久化 WAF，扩大公开调用前必须增加平台级 Rate Limiting/Turnstile 与消费上限。
 
 ## Medium
@@ -26,6 +26,26 @@
 - 已修复：次级页面全部打进首屏包。现在日历、档案、知识问答、服务和隐私页面按需加载。
 - 已补充：CI、Dependabot、PR 清单、密钥扫描、架构说明、安全策略和运行手册。
 - 保留：Firebase Functions 与本机 Node 服务是替代/回滚适配器，不代表当前 Cloudflare 生产环境已部署这些能力。
+
+## 识别系统 2.0 内部审计
+
+### Critical
+
+- 已修复：`cloudflare/worker.mjs` 原输出扁平 `tasks[]`，无法表达一份通知中的项目、多阶段、材料与事件，造成严重过度拆分和语义混淆。现改用严格 `RecognitionResult 2.0` 和独立实体。
+
+### High
+
+- 已修复：`src/App.tsx` 和 `src/lib/workspace.ts` 原把每条任务当作项目节点，且项目匹配主要依赖同一 Source ID。现在识别结果指定项目决策、阶段和工作包，低置信匹配必须人工选择。
+- 已修复：原有 schema v6 不能持久化 WorkPackage、Event、识别质量、冲突与迁移日志。schema v7 已添加这些实体，且迁移前先写入原始备份。
+
+### Medium
+
+- 已改善：`src/components/DraftReviewPanel.tsx` 原为扁平表单。现以项目树展示，仅原文明示项默认勾选，支持编辑、拒绝、拆分、合并、移动阶段和依据定位。
+- 仍存在：60 条本地评测中阶段准确率为 38.06%，任务召回率为 67.78%。这是确定性回退规则的短板，不代表真实 DeepSeek 评测。
+
+### Low
+
+- 已补充：版本化 Prompt、运行时 Schema、请求去重/短期缓存、60 条匿名评测和五份架构/迁移文档。
 
 ## 审计命令
 

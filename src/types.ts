@@ -20,8 +20,28 @@ export type MaterialStatus = 'missing' | 'preparing' | 'ready' | 'submitted' | '
 export type ReminderDeliveryStatus = 'draft' | 'scheduled' | 'sent' | 'failed' | 'unsupported'
 export type CanonicalDraftStatus = 'processing' | 'needs_review' | 'partially_confirmed' | 'confirmed' | 'rejected' | 'failed' | 'archived'
 export type CanonicalSourceStatus = 'uploaded' | 'extracting' | 'needs_review' | 'partially_confirmed' | 'confirmed' | 'failed' | 'archived'
-export type HistoryEntityType = 'task' | 'project' | 'material' | 'source' | 'draft' | 'reminder'
-export type TimePointType = 'deadline' | 'registration_deadline' | 'submission_deadline' | 'event_start' | 'event_end' | 'planned_start'
+export type HistoryEntityType =
+  | 'task'
+  | 'subtask'
+  | 'project'
+  | 'milestone'
+  | 'work_package'
+  | 'material'
+  | 'time_point'
+  | 'event'
+  | 'source'
+  | 'draft'
+  | 'reminder'
+export type TimePointType =
+  | 'deadline'
+  | 'registration_deadline'
+  | 'submission_deadline'
+  | 'task_deadline'
+  | 'event_start'
+  | 'event_end'
+  | 'result_announcement'
+  | 'planned_start'
+export type InferenceLevel = 'explicit' | 'strong_inference' | 'optional_suggestion'
 
 export interface Material {
   id: string
@@ -56,6 +76,14 @@ export interface Task {
   id: string
   projectId?: string
   parentTaskId?: string
+  hierarchyType?: 'task' | 'subtask'
+  milestoneId?: string
+  workPackageId?: string
+  actionVerb?: string
+  actionObject?: string
+  completionCriteria?: string[]
+  evidenceIds?: string[]
+  inferenceLevel?: InferenceLevel
   title: string
   category: TaskCategory
   status: TaskStatus
@@ -116,7 +144,13 @@ export interface EvidenceReference {
   textEnd?: number
   quote: string
   quotedText?: string
-  field: 'title' | 'deadline' | 'materials' | 'description'
+  boundingBox?: {
+    x: number
+    y: number
+    width: number
+    height: number
+  }
+  field: 'title' | 'deadline' | 'materials' | 'description' | 'project' | 'milestone' | 'event' | 'requirement'
   extractionMethod?: 'manual' | 'demo' | 'ocr' | 'parser' | 'ai'
   confidence?: number
 }
@@ -130,6 +164,9 @@ export interface TimePoint {
   timezone: string
   isAllDay: boolean
   originalText?: string
+  precision?: 'exact' | 'date_only' | 'relative' | 'vague'
+  relatedTaskIds?: string[]
+  relatedMaterialIds?: string[]
   confidence?: number
   needsConfirmation: boolean
   evidenceIds: string[]
@@ -193,6 +230,7 @@ export type DraftItemStatus = '待确认' | '已确认' | '已拒绝'
 export interface DraftItem {
   id: string
   suggestion: ParsedSuggestion
+  selected?: boolean
   status: DraftItemStatus
   updatedAt: string
   history?: HistoryEntry[]
@@ -208,6 +246,9 @@ export interface ExtractionDraft {
   workflowStatus?: CanonicalDraftStatus
   modelVersion?: string
   promptVersion?: string
+  schemaVersion?: string
+  modelName?: string
+  recognitionResult?: import('./recognition/types').RecognitionResult
 }
 
 export interface Project {
@@ -218,6 +259,10 @@ export interface Project {
   taskIds: string[]
   milestones: Milestone[]
   status?: 'active' | 'completed' | 'archived'
+  objective?: string
+  keywords?: string[]
+  currentMilestoneId?: string
+  evidenceIds?: string[]
   description?: string
   createdAt: string
   updatedAt: string
@@ -229,6 +274,57 @@ export interface Milestone {
   title: string
   dueAt: string
   status: '待完成' | '已完成'
+  objective?: string
+  order?: number
+  evidenceIds?: string[]
+  workPackageIds?: string[]
+  taskIds?: string[]
+  createdAt: string
+}
+
+export interface WorkPackage {
+  id: string
+  projectId: string
+  milestoneId: string
+  title: string
+  objective: string
+  order: number
+  taskIds: string[]
+  evidenceIds: string[]
+  createdAt: string
+  updatedAt: string
+}
+
+export interface Event {
+  id: string
+  projectId?: string
+  milestoneId?: string
+  title: string
+  description: string
+  startAt: string | null
+  endAt: string | null
+  location?: string
+  evidenceIds: string[]
+  needsConfirmation: boolean
+  createdAt: string
+  updatedAt: string
+}
+
+export interface MigrationRecord {
+  id: string
+  fromVersion: number
+  toVersion: number
+  migratedAt: string
+  status: 'completed' | 'needs_review'
+  notes: string[]
+}
+
+export interface RecognitionFeedbackRecord {
+  id: string
+  draftId: string
+  originalKind: string
+  correctedKind: string
+  action: 'modified' | 'rejected' | 'merged' | 'split' | 'moved'
   createdAt: string
 }
 
@@ -298,7 +394,7 @@ export interface KnowledgeSettings {
 }
 
 export interface WorkspaceData {
-  schemaVersion: 6
+  schemaVersion: 7
   tasks: Task[]
   sources: Source[]
   drafts: ExtractionDraft[]
@@ -308,6 +404,11 @@ export interface WorkspaceData {
   materialItems: MaterialItemEntity[]
   historyRecords: HistoryRecord[]
   reminderRecords: ReminderRecord[]
+  workPackages: WorkPackage[]
+  events: Event[]
+  migrationLog: MigrationRecord[]
+  recognitionFeedback: RecognitionFeedbackRecord[]
+  legacyData: Record<string, unknown>
   courseBlocks: CourseBlock[]
   integrations: IntegrationState
   knowledgeSettings: KnowledgeSettings

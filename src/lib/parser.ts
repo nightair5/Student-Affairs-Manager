@@ -45,7 +45,7 @@ function createTemporalMatcher(): RegExp {
 }
 
 function inferExplicitCategory(content: string): TaskCategory | null {
-  if (/比赛|竞赛|参赛|作品/.test(content)) return '比赛'
+  if (/比赛|竞赛|大赛|挑战赛|赛事|参赛|作品/.test(content)) return '比赛'
   if (/保研|推免|夏令营|预推免/.test(content)) return '保研'
   if (/老师|导师|初稿|汇报/.test(content)) return '老师任务'
   if (/课程|作业|课堂|论文/.test(content)) return '课程'
@@ -174,6 +174,19 @@ function inferMaterials(content: string): string[] {
     '简历',
     '证书',
     '照片',
+    '原创声明',
+    '作品文件',
+    '作品链接',
+    'PDF',
+    '课程反思',
+    '实验报告',
+    '报告',
+    '代码',
+    '提纲',
+    '成片',
+    '摘要',
+    '申请表',
+    '盖章证明',
   ]
   return known.filter((item) => content.includes(item))
 }

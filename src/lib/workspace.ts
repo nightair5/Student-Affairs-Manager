@@ -11,9 +11,14 @@ import type {
   Source,
   Task,
   WorkspaceData,
+  WorkPackage,
+  Event,
+  MigrationRecord,
+  RecognitionFeedbackRecord,
 } from '../types'
 import { materializeWorkspaceEntities } from './domainEntities'
 import { calculateTaskPriority } from './taskLogic'
+import type { RecognitionResult } from '../recognition/types'
 
 export function createWorkspaceData(
   tasks: Task[],
@@ -23,14 +28,24 @@ export function createWorkspaceData(
   courseBlocks: CourseBlock[] = [],
   integrations: IntegrationState = createIntegrationState(),
   knowledgeSettings: KnowledgeSettings = {},
+  workPackages: WorkPackage[] = [],
+  events: Event[] = [],
+  migrationLog: MigrationRecord[] = [],
+  recognitionFeedback: RecognitionFeedbackRecord[] = [],
+  legacyData: Record<string, unknown> = {},
 ): WorkspaceData {
   const entities = materializeWorkspaceEntities(tasks, sources, drafts, projects)
   return {
-    schemaVersion: 6,
+    schemaVersion: 7,
     ...entities,
     courseBlocks,
     integrations,
     knowledgeSettings,
+    workPackages,
+    events,
+    migrationLog,
+    recognitionFeedback,
+    legacyData,
     savedAt: new Date().toISOString(),
   }
 }
@@ -49,6 +64,7 @@ export function createExtractionDraft(
   sourceId: string,
   suggestions: ParsedSuggestion[],
   now = new Date().toISOString(),
+  recognitionResult?: RecognitionResult,
 ): ExtractionDraft {
   return {
     id: `draft-${Date.now()}`,
@@ -56,8 +72,28 @@ export function createExtractionDraft(
     status: '待确认',
     createdAt: now,
     updatedAt: now,
+    schemaVersion: recognitionResult?.schemaVersion,
+    modelName: recognitionResult?.modelName,
+    promptVersion: recognitionResult?.promptVersion,
+    recognitionResult: recognitionResult
+      ? {
+          ...recognitionResult,
+          evidence: recognitionResult.evidence.map((reference) => ({ ...reference, sourceId })),
+        }
+      : undefined,
     items: suggestions.map((suggestion, index): DraftItem => ({
       id: `draft-item-${Date.now()}-${index}`,
+      selected: (() => {
+        if (!recognitionResult) return true
+        const recognizedTask = [
+          ...recognitionResult.standaloneTasks,
+          ...recognitionResult.milestones.flatMap((milestone) => [
+            ...milestone.tasks,
+            ...milestone.workPackages.flatMap((workPackage) => workPackage.tasks),
+          ]),
+        ].find((task) => task.tempId === suggestion.id)
+        return recognizedTask?.selected !== false
+      })(),
       suggestion: {
         ...suggestion,
         evidenceRefs: suggestion.evidenceRefs ?? [
@@ -259,21 +295,106 @@ export function buildConfirmedProjectBatch(
   source: Source,
   existingProject: Project | undefined,
   now = new Date().toISOString(),
-): { tasks: Task[]; project: Project } {
+  recognitionResult?: RecognitionResult,
+): { tasks: Task[]; project: Project | null; workPackages: WorkPackage[]; events: Event[] } {
   if (!items.length) throw new Error('至少需要一项已确认建议')
-  const projectId = existingProject?.id ?? `project-${source.id}`
+  const standalone = recognitionResult?.projectMatch.decision === 'standalone_task'
+  const projectId = standalone ? '' : existingProject?.id ?? `project-${source.id}`
+  const recognitionTasks = recognitionResult
+    ? [
+        ...recognitionResult.standaloneTasks,
+        ...recognitionResult.milestones.flatMap((milestone) => [
+          ...milestone.tasks,
+          ...milestone.workPackages.flatMap((workPackage) => workPackage.tasks),
+        ]),
+      ]
+    : []
+  const taskIdByTempId = new Map(items.map((item) => [item.suggestion.id, `task-${Date.now()}-${item.id}`]))
   const tasks = items.map((item) => {
     const task = buildConfirmedTask(item, source, now)
+    const recognized = recognitionTasks.find((candidate) => candidate.tempId === item.suggestion.id)
+    const milestone = recognitionResult?.milestones.find((candidate) =>
+      candidate.tasks.some((candidateTask) => candidateTask.tempId === item.suggestion.id)
+      || candidate.workPackages.some((workPackage) => workPackage.tasks.some((candidateTask) => candidateTask.tempId === item.suggestion.id)))
+    const workPackage = milestone?.workPackages.find((candidate) => candidate.tasks.some((candidateTask) => candidateTask.tempId === item.suggestion.id))
     return {
       ...task,
-      projectId,
-      materials: task.materials.map((material) => ({ ...material, projectId })),
+      id: taskIdByTempId.get(item.suggestion.id) ?? task.id,
+      projectId: projectId || undefined,
+      hierarchyType: recognized?.hierarchyType ?? 'task',
+      parentTaskId: recognized?.parentTempId ? taskIdByTempId.get(recognized.parentTempId) : undefined,
+      milestoneId: milestone ? `milestone-${projectId}-${milestone.tempId}` : undefined,
+      workPackageId: workPackage ? `work-package-${projectId}-${workPackage.tempId}` : undefined,
+      actionVerb: recognized?.actionVerb,
+      actionObject: recognized?.actionObject,
+      completionCriteria: recognized?.completionCriteria,
+      evidenceIds: recognized?.evidenceIds,
+      inferenceLevel: recognized?.inferenceLevel,
+      dependencies: recognized?.dependencyTempIds.map((tempId) => taskIdByTempId.get(tempId)).filter((id): id is string => Boolean(id)) ?? [],
+      dependencyIds: recognized?.dependencyTempIds.map((tempId) => taskIdByTempId.get(tempId)).filter((id): id is string => Boolean(id)) ?? [],
+      materials: task.materials.map((material) => ({ ...material, taskId: taskIdByTempId.get(item.suggestion.id) ?? task.id, projectId: projectId || undefined })),
     }
   })
+  const recognizedMilestones: Milestone[] = recognitionResult?.milestones.map((milestone) => {
+    const relatedTasks = tasks.filter((task) => task.milestoneId === `milestone-${projectId}-${milestone.tempId}`)
+    const dueAt = relatedTasks.map((task) => task.deadline).filter((value) => !Number.isNaN(new Date(value).getTime())).sort()[0] ?? now
+    return {
+      id: `milestone-${projectId}-${milestone.tempId}`,
+      projectId,
+      title: milestone.title,
+      objective: milestone.objective,
+      order: milestone.order,
+      dueAt,
+      status: relatedTasks.length > 0 && relatedTasks.every((task) => task.status === '已完成') ? '已完成' : '待完成',
+      evidenceIds: milestone.evidenceIds,
+      workPackageIds: milestone.workPackages.map((workPackage) => `work-package-${projectId}-${workPackage.tempId}`),
+      taskIds: relatedTasks.map((task) => task.id),
+      createdAt: now,
+    }
+  }) ?? []
+  const recognizedWorkPackages: WorkPackage[] = recognitionResult?.milestones.flatMap((milestone) => milestone.workPackages.map((workPackage) => ({
+    id: `work-package-${projectId}-${workPackage.tempId}`,
+    projectId,
+    milestoneId: `milestone-${projectId}-${milestone.tempId}`,
+    title: workPackage.title,
+    objective: workPackage.objective,
+    order: workPackage.order,
+    taskIds: tasks.filter((task) => task.workPackageId === `work-package-${projectId}-${workPackage.tempId}`).map((task) => task.id),
+    evidenceIds: workPackage.evidenceIds,
+    createdAt: now,
+    updatedAt: now,
+  }))) ?? []
+  const pointById = new Map(recognitionResult?.timePoints.map((point) => [point.tempId, point]) ?? [])
+  const recognizedEvents: Event[] = recognitionResult?.events.filter((event) => event.selected !== false).map((event) => ({
+    id: `event-${projectId}-${event.tempId}`,
+    projectId,
+    title: event.title,
+    description: event.description,
+    startAt: event.startTimePointTempId ? pointById.get(event.startTimePointTempId)?.normalizedValue ?? null : null,
+    endAt: event.endTimePointTempId ? pointById.get(event.endTimePointTempId)?.normalizedValue ?? null : null,
+    location: event.location ?? undefined,
+    evidenceIds: event.evidenceIds,
+    needsConfirmation: event.inferenceLevel !== 'explicit' || !event.startTimePointTempId || Boolean(pointById.get(event.startTimePointTempId)?.needsConfirmation),
+    createdAt: now,
+    updatedAt: now,
+  })) ?? []
+  if (standalone) return { tasks, project: null, workPackages: [], events: recognizedEvents.map((event) => ({ ...event, projectId: undefined })) }
   if (!existingProject) {
+    const project = createProjectFromConfirmation(source, items[0].suggestion, tasks, now)
     return {
       tasks,
-      project: createProjectFromConfirmation(source, items[0].suggestion, tasks, now),
+      project: {
+        ...project,
+        title: recognitionResult?.projectSuggestion?.title.value || project.title,
+        category: recognitionResult?.projectSuggestion?.category.value || project.category,
+        objective: recognitionResult?.projectSuggestion?.objective.value,
+        description: recognitionResult?.projectSuggestion?.description.value || project.description,
+        milestones: recognizedMilestones.length ? recognizedMilestones : project.milestones,
+        evidenceIds: recognitionResult?.projectSuggestion?.title.evidenceIds,
+        currentMilestoneId: recognizedMilestones[0]?.id,
+      },
+      workPackages: recognizedWorkPackages,
+      events: recognizedEvents,
     }
   }
   return {
@@ -281,11 +402,26 @@ export function buildConfirmedProjectBatch(
     project: {
       ...existingProject,
       taskIds: [...new Set([...existingProject.taskIds, ...tasks.map((task) => task.id)])],
-      milestones: [
-        ...existingProject.milestones,
-        ...tasks.map((task) => createTaskMilestone(existingProject.id, task, now)),
-      ],
+      sourceIds: [...new Set([...existingProject.sourceIds, source.id])],
+      milestones: recognizedMilestones.length
+        ? [
+            ...existingProject.milestones.map((current) => {
+              const incoming = recognizedMilestones.find((milestone) => milestone.title === current.title)
+              return incoming ? {
+                ...current,
+                objective: current.objective || incoming.objective,
+                taskIds: [...new Set([...(current.taskIds ?? []), ...(incoming.taskIds ?? [])])],
+                workPackageIds: [...new Set([...(current.workPackageIds ?? []), ...(incoming.workPackageIds ?? [])])],
+                evidenceIds: [...new Set([...(current.evidenceIds ?? []), ...(incoming.evidenceIds ?? [])])],
+                dueAt: [current.dueAt, incoming.dueAt].filter(Boolean).sort()[0],
+              } : current
+            }),
+            ...recognizedMilestones.filter((milestone) => !existingProject.milestones.some((current) => current.title === milestone.title)),
+          ]
+        : [...existingProject.milestones, ...tasks.map((task) => createTaskMilestone(existingProject.id, task, now))],
       updatedAt: now,
     },
+    workPackages: recognizedWorkPackages,
+    events: recognizedEvents,
   }
 }

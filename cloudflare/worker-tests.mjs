@@ -53,7 +53,7 @@ test('same-origin POST sends only bounded citation summaries to DeepSeek', async
   assert.equal(upstreamBody.model, 'deepseek-v4-flash')
   assert.equal(upstreamBody.max_tokens, 2_000)
   assert.deepEqual(upstreamBody.thinking, { type: 'disabled' })
-  assert.match(upstreamBody.messages[0].content, /不可信资料/)
+  assert.match(upstreamBody.messages[0].content, /不可信(?:资料|数据)/)
   assert.match(upstreamBody.messages[1].content, /报名材料/)
 })
 
@@ -86,11 +86,23 @@ test('structured extraction uses V4 Flash JSON mode and returns bounded suggesti
     fetcher: async (_url, options) => {
       upstreamBody = JSON.parse(options.body)
       return Response.json({ choices: [{ message: { content: JSON.stringify({
-        tasks: [{
-          title: '提交报名表', category: '比赛', deadline: '2026-08-10T18:00',
-          estimatedMinutes: 30, nextAction: '核对报名表字段', description: '提交比赛报名表',
-          priority: '中', materials: ['报名表'], evidence: '8月10日18:00提交报名表', confidence: '高',
-        }],
+        schemaVersion: '2.0', promptVersion: 'model-output', modelName: 'ignored-client-value', createdAt: '2026-08-02T08:00:00.000Z',
+        sourceSummary: { title: '比赛通知', sourceType: 'text', notificationType: 'new_project', summary: '比赛报名', requiresAction: true, actionReason: '有明确提交要求' },
+        projectMatch: { decision: 'new_project', matchedProjectId: null, suggestedProjectTitle: '比赛通知', confidence: 0.9, reasons: ['没有已有项目'] },
+        projectSuggestion: {
+          title: { value: '比赛通知', evidenceIds: ['e1'], confidence: 0.8, inferenceLevel: 'strong_inference' },
+          category: { value: '比赛', evidenceIds: ['e1'], confidence: 0.9, inferenceLevel: 'explicit' },
+          objective: { value: '完成报名', evidenceIds: ['e1'], confidence: 0.7, inferenceLevel: 'strong_inference' },
+          description: { value: '提交报名表', evidenceIds: ['e1'], confidence: 0.9, inferenceLevel: 'explicit' },
+        },
+        milestones: [{ tempId: 'm1', title: '报名与组队', objective: '完成报名', order: 1, evidenceIds: ['e1'], workPackages: [], tasks: [{
+          tempId: 't1', parentTempId: null, hierarchyType: 'task', title: '提交报名表', actionVerb: '提交', actionObject: '报名表', description: '提交比赛报名表', completionCriteria: ['报名表已提交'], estimatedMinutes: 30, statusSuggestion: 'todo', prioritySuggestion: 'medium', dependencyTempIds: [], materialTempIds: ['mat1'], timePointTempIds: ['time1'], evidenceIds: ['e1'], confidence: 0.9, inferenceLevel: 'explicit', userConfirmationRequired: true,
+        }] }],
+        standaloneTasks: [],
+        materials: [{ tempId: 'mat1', name: '报名表', required: true, formatRequirements: [], namingRequirements: [], quantity: 1, submissionChannel: null, relatedTaskTempIds: ['t1'], evidenceIds: ['e1'], confidence: 0.9 }],
+        timePoints: [{ tempId: 'time1', type: 'registration_deadline', rawText: '8月10日18:00提交报名表', normalizedValue: '2026-08-10T18:00', timezone: 'Asia/Shanghai', isAllDay: false, precision: 'exact', needsConfirmation: false, relatedTaskTempIds: ['t1'], relatedMaterialTempIds: ['mat1'], evidenceIds: ['e1'], confidence: 0.9 }],
+        events: [], evidence: [{ id: 'e1', sourceId: 'pending-source', quotedText: '8月10日18:00提交报名表', quote: '8月10日18:00提交报名表', field: 'description', extractionMethod: 'ai', confidence: 0.9 }], conflicts: [], ambiguities: [], ignoredContent: [],
+        quality: { overallConfidence: 0.9, hierarchyConfidence: 0.9, dateConfidence: 0.9, evidenceCoverage: 1, duplicateRisk: 0, overFragmentationRisk: 0, missingActionRisk: 0, needsHumanReview: false, reviewReasons: [] },
       }) } }] })
     },
   })
@@ -107,11 +119,13 @@ test('structured extraction uses V4 Flash JSON mode and returns bounded suggesti
   assert.equal(response.status, 200)
   const payload = await response.json()
   assert.equal(payload.model, 'deepseek-v4-flash')
-  assert.equal(payload.suggestions[0].title, '提交报名表')
-  assert.equal(payload.suggestions[0].evidence, '8月10日18:00提交报名表')
+  assert.equal(payload.result.schemaVersion, '2.0')
+  assert.equal(payload.result.promptVersion, 'recognition-2.0.0')
+  assert.equal(payload.result.milestones[0].tasks[0].title, '提交报名表')
+  assert.equal(payload.result.evidence[0].quotedText, '8月10日18:00提交报名表')
   assert.equal(upstreamBody.model, 'deepseek-v4-flash')
   assert.deepEqual(upstreamBody.response_format, { type: 'json_object' })
-  assert.match(upstreamBody.messages[0].content, /不可信资料/)
+  assert.match(upstreamBody.messages[0].content, /不可信(?:资料|数据)/)
 })
 
 test('public HTTPS pages are converted to inert text before client-side DeepSeek submission', async () => {
