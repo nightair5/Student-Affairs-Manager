@@ -110,6 +110,12 @@ Workspace v8 现在具备独立的 schema-aware repository：保存、加载、�
 
 B1 尚未切换现有 App 的 v7 加载路径；真实 v7→v8 原子迁移、运行时切换、rich recognition commit 和 Source-before-AI 分别由 B2、B3、B4 接入。
 
+### B2 Runtime Migration
+
+Repository 的 schema-aware 加载现可识别 v7/v8。v7 升级先保存带完整快照与完整性哈希的独立备份，再在内存迁移、执行 Domain Graph Validator 与 v8 export/import round-trip；只有原记录仍与备份哈希一致时才原子替换 `current`。校验、备份或写入失败时 v7 不被覆盖，Repository 返回可解释的 migration 状态，并可按 backup ID 恢复原 v7。
+
+匿名化的真实 v7 序列化副本覆盖 Task、Project/embedded Milestone、rich Material、TimePoint、Event start/end、Evidence、History、Reminder 与未知字段，并执行 migration → reload → rollback 演练。Event 的明确 start/end 会迁为独立 `event_start` / `event_end` TimePoint；无法可靠解释的值仍进入 `legacyData` / `needsReview`，不猜测。
+
 ## E1 Phase B gate
 
 进入 Phase B 前必须单独批准并完成：v8 repository/IndexedDB store、v7 真实数据迁移接入与恢复演练、Rich RecognitionResult → Domain Commit Plan、单事务原子提交、Source-before-AI 持久化，以及旧 lossy adapter 退休。Phase A 不声称这些已经上线。

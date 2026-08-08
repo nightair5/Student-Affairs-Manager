@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 7,
+  "tasks": [{
+    "id": "task-v7-copy", "projectId": "project-v7-copy", "title": "提交匿名比赛作品", "category": "比赛",
+    "status": "进行中", "deadline": "2026-08-25T17:00:00+08:00", "estimatedMinutes": 120,
+    "nextAction": "核对作品 PDF", "description": "匿名化真实 v7 工作区副本", "priority": "高", "riskFlags": ["缺材料"],
+    "materials": [{ "id": "material-v7-embedded", "name": "作品 PDF", "done": false, "status": "missing", "taskId": "task-v7-copy" }],
+    "dependencies": [], "dependencyIds": [], "reminders": [], "sourceIds": ["source-v7-copy"],
+    "priorityReason": "临近截止", "createdAt": "2026-08-01T08:00:00.000Z", "updatedAt": "2026-08-08T08:00:00.000Z", "history": [],
+    "legacyCustomTaskField": { "reviewOwner": "anonymous" }
+  }],
+  "sources": [{
+    "id": "source-v7-copy", "type": "text", "title": "匿名比赛补充通知", "contentPreview": "提交作品并参加答辩",
+    "rawText": "8月25日17:00前提交作品；9月2日14:00参加答辩。", "fileHash": "fixture-hash",
+    "status": "confirmed", "createdAt": "2026-08-01T08:00:00.000Z", "updatedAt": "2026-08-08T08:00:00.000Z",
+    "extractionStatus": "已确认", "extractionMethod": "local-rules"
+  }],
+  "drafts": [],
+  "projects": [{
+    "id": "project-v7-copy", "title": "匿名创新比赛", "category": "比赛", "sourceIds": ["source-v7-copy"], "taskIds": ["task-v7-copy"],
+    "milestones": [{ "id": "milestone-v7-stable", "projectId": "project-v7-copy", "title": "提交与答辩", "dueAt": "2026-09-02", "status": "待完成", "order": 1, "createdAt": "2026-08-01T08:00:00.000Z" }],
+    "status": "active", "objective": "完成作品提交与答辩", "createdAt": "2026-08-01T08:00:00.000Z", "updatedAt": "2026-08-08T08:00:00.000Z"
+  }],
+  "evidence": [{ "id": "evidence-v7-copy", "sourceId": "source-v7-copy", "page": 1, "textStart": 0, "textEnd": 13, "quote": "8月25日17:00前提交作品", "quotedText": "8月25日17:00前提交作品", "field": "deadline", "extractionMethod": "manual", "confidence": 1 }],
+  "timePoints": [{ "id": "time-v7-copy", "taskId": "task-v7-copy", "projectId": "project-v7-copy", "type": "submission_deadline", "value": "2026-08-25T17:00:00+08:00", "timezone": "Asia/Shanghai", "isAllDay": false, "originalText": "8月25日17:00前", "needsConfirmation": false, "evidenceIds": ["evidence-v7-copy"] }],
+  "materialItems": [{ "id": "material-v7-copy", "projectId": "project-v7-copy", "taskId": "task-v7-copy", "name": "作品 PDF", "required": true, "status": "preparing", "formatRequirement": "PDF/A", "quantity": 1, "note": "不超过 20 MB", "evidenceIds": ["evidence-v7-copy"], "createdAt": "2026-08-01T08:00:00.000Z", "updatedAt": "2026-08-08T08:00:00.000Z" }],
+  "historyRecords": [{ "id": "history-v7-copy", "entityType": "task", "entityId": "task-v7-copy", "field": "状态", "before": "待开始", "after": "进行中", "actor": "user", "action": "updated", "changedAt": "2026-08-08T08:00:00.000Z" }],
+  "reminderRecords": [{ "id": "reminder-v7-copy", "taskId": "task-v7-copy", "channel": "browser", "scheduledAt": "2026-08-25T09:00:00+08:00", "enabled": true, "status": "scheduled" }],
+  "workPackages": [],
+  "events": [{ "id": "event-v7-copy", "projectId": "project-v7-copy", "milestoneId": "milestone-v7-stable", "title": "参加匿名答辩", "description": "现场答辩", "startAt": "2026-09-02T14:00:00+08:00", "endAt": "2026-09-02T15:00:00+08:00", "location": "校内会议室", "evidenceIds": ["evidence-v7-copy"], "needsConfirmation": false, "createdAt": "2026-08-01T08:00:00.000Z", "updatedAt": "2026-08-08T08:00:00.000Z" }],
+  "migrationLog": [], "recognitionFeedback": [],
+  "legacyData": { "legacyCustomField": { "foo": "bar" } },
+  "courseBlocks": [],
+  "integrations": { "sync": { "endpoint": "http://127.0.0.1:8787" }, "webMonitors": [], "connectionIntents": [] },
+  "knowledgeSettings": {},
+  "savedAt": "2026-08-08T08:00:00.000Z",
+  "unknownTopLevelField": { "mustSurvive": true }
+}
