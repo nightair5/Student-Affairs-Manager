@@ -1,0 +1,209 @@
+/* global console, fetch, process, setTimeout */
+import { createHash } from 'node:crypto'
+import { mkdir, readFile, writeFile } from 'node:fs/promises'
+import path from 'node:path'
+import { createServer } from 'vite'
+
+const ROOT = process.cwd()
+
+function option(name, fallback = '') {
+  const prefix = `--${name}=`
+  return process.argv.find((argument) => argument.startsWith(prefix))?.slice(prefix.length) ?? fallback
+}
+
+function percent(value) {
+  return `${(value * 100).toFixed(2)}%`
+}
+
+function milliseconds(value) {
+  return `${Math.round(value)} ms`
+}
+
+function sleep(millisecondsValue) {
+  return new Promise((resolve) => setTimeout(resolve, millisecondsValue))
+}
+
+async function readCheckpoint(file) {
+  try {
+    return JSON.parse(await readFile(file, 'utf8'))
+  } catch {
+    return []
+  }
+}
+
+function renderMarkdown(run, metrics) {
+  const token = metrics.tokenUsage
+    ? `${metrics.tokenUsage.input} input / ${metrics.tokenUsage.output} output`
+    : 'NOT OBSERVABLE：现有生产接口未回传 usage'
+  const cost = metrics.costUsd === null ? 'NOT OBSERVABLE：缺少可归属的 Token usage' : `$${metrics.costUsd.toFixed(6)}`
+  const rows = [
+    ['Project Decision Accuracy', percent(metrics.projectDecisionAccuracy)],
+    ['Milestone Precision', percent(metrics.milestonePrecision)],
+    ['Milestone Recall', percent(metrics.milestoneRecall)],
+    ['Task Precision', percent(metrics.taskPrecision)],
+    ['Task Recall', percent(metrics.taskRecall)],
+    ['Material Recall', percent(metrics.materialRecall)],
+    ['TimePoint Accuracy', percent(metrics.timePointAccuracy)],
+    ['Event Accuracy', percent(metrics.eventAccuracy)],
+    ['Evidence Coverage', percent(metrics.evidenceCoverage)],
+    ['Duplicate Rate', percent(metrics.duplicateRate)],
+    ['Over-fragmentation Rate', percent(metrics.overFragmentationRate)],
+    ['Major Correction Rate', percent(metrics.majorCorrectionRate)],
+    ['Severe Error Rate', percent(metrics.severeErrorRate)],
+    ['Invalid Output Rate', percent(metrics.invalidOutputRate)],
+    ['Request Failure Rate', percent(metrics.requestFailureRate)],
+    ['Latency Mean', milliseconds(metrics.latencyMs.mean)],
+    ['Latency P50', milliseconds(metrics.latencyMs.p50)],
+    ['Latency P95', milliseconds(metrics.latencyMs.p95)],
+    ['Token Usage', token],
+    ['Cost', cost],
+  ]
+  return `# E2-A Recognition Baseline — ${metrics.provider}\n\n` +
+    `- Run ID: \`${run.runId}\`\n` +
+    `- Dataset: \`${run.datasetVersion}\` (${metrics.sampleCount} samples)\n` +
+    `- Prompt: \`${run.promptVersion}\`\n` +
+    `- Model: \`${run.modelName}\`\n` +
+    `- Production recognition source SHA-256: \`${run.promptSourceSha256}\`\n` +
+    `- Started: ${run.startedAt}\n` +
+    `- Completed: ${run.completedAt}\n` +
+    `- Completed cases: ${metrics.completedCount}/${metrics.sampleCount}\n\n` +
+    `## Metrics\n\n| Metric | Result |\n| --- | ---: |\n${rows.map(([name, value]) => `| ${name} | ${value} |`).join('\n')}\n\n` +
+    `## Error taxonomy\n\n| Category | Count |\n| --- | ---: |\n${metrics.errorTaxonomy.map((item) => `| ${item.category} | ${item.count} |`).join('\n') || '| none | 0 |'}\n\n` +
+    `Per-case failure categories and reasons are stored in the sibling failures JSON. Raw model outputs remain in the ignored local checkpoint and are not committed.\n`
+}
+
+async function main() {
+  const provider = option('provider', 'local-fallback')
+  if (!['local-fallback', 'deepseek-production'].includes(provider)) throw new Error(`Unsupported provider: ${provider}`)
+  const endpoint = option('endpoint', 'https://student-affairs.site/api/deepseek')
+  const delayMs = Number(option('delay-ms', provider === 'deepseek-production' ? '8000' : '0'))
+  const writeDir = option('write-dir')
+  const limit = Number(option('limit', '0'))
+  const resume = option('resume', 'false') === 'true'
+  const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'error', server: { middlewareMode: true } })
+  try {
+    const [{ recognitionGoldenDataset, recognitionGoldenDatasetMetadata }, { scoreRecognitionCase, aggregateRecognitionMetrics }, pipeline, schema, prompt] = await Promise.all([
+      vite.ssrLoadModule('/src/recognition/e2/goldenDataset.ts'),
+      vite.ssrLoadModule('/src/recognition/e2/scoring.ts'),
+      vite.ssrLoadModule('/src/recognition/pipeline.ts'),
+      vite.ssrLoadModule('/src/recognition/schema.ts'),
+      vite.ssrLoadModule('/src/recognition/prompt.ts'),
+    ])
+    const dataset = limit > 0 ? recognitionGoldenDataset.slice(0, limit) : recognitionGoldenDataset
+    const promptSource = await readFile(path.join(ROOT, 'cloudflare', 'recognition.mjs'))
+    const promptSourceSha256 = createHash('sha256').update(promptSource).digest('hex')
+    const cacheDir = path.join(ROOT, '.evaluation-cache')
+    await mkdir(cacheDir, { recursive: true })
+    const checkpointFile = path.join(cacheDir, `${provider}.json`)
+    const previous = resume ? await readCheckpoint(checkpointFile) : []
+    const byId = new Map(previous.filter((item) => item.provider === provider).map((item) => [item.caseId, item]))
+    const startedAt = new Date().toISOString()
+
+    if (provider === 'deepseek-production') {
+      const response = await fetch(`${endpoint}/status`, { headers: { Accept: 'application/json', Origin: 'https://student-affairs.site' } })
+      const status = await response.json().catch(() => null)
+      if (!response.ok || status?.configured !== true) throw new Error('Production DeepSeek is not configured')
+      if (status.model !== prompt.RECOGNITION_MODEL_NAME) throw new Error(`Model drift: expected ${prompt.RECOGNITION_MODEL_NAME}, got ${status.model}`)
+    }
+
+    for (const [index, fixture] of dataset.entries()) {
+      if (byId.has(fixture.id)) {
+        console.log(`[${index + 1}/${dataset.length}] ${fixture.id} resumed`)
+        continue
+      }
+      const started = Date.now()
+      let scored
+      if (provider === 'local-fallback') {
+        const result = pipeline.buildLocalRecognition({
+          sourceType: fixture.sourceType,
+          sourceTitle: fixture.sourceTitle,
+          content: fixture.rawText,
+          referenceTime: new Date(fixture.referenceTime),
+          timezone: fixture.timezone,
+          projects: [],
+          tasks: [],
+        })
+        scored = scoreRecognitionCase(fixture, provider, result, Date.now() - started)
+      } else {
+        let response
+        let payload
+        let attempt = 0
+        while (attempt < 4) {
+          attempt += 1
+          response = await fetch(`${endpoint}/extract`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Accept: 'application/json', Origin: 'https://student-affairs.site' },
+            body: JSON.stringify({
+              sourceType: fixture.sourceType,
+              sourceTitle: fixture.sourceTitle,
+              content: fixture.rawText,
+              referenceTime: fixture.referenceTime,
+              timezone: fixture.timezone,
+              projectCandidates: [],
+              existingTasks: [],
+            }),
+          })
+          payload = await response.json().catch(() => null)
+          if (response.status !== 429 || attempt >= 4) break
+          await sleep(15_000)
+        }
+        const latencyMs = Date.now() - started
+        if (!response?.ok) {
+          scored = scoreRecognitionCase(fixture, provider, null, latencyMs, { status: 'request_failure', failureReason: `${response?.status ?? 0} ${payload?.code ?? payload?.message ?? 'request failed'}` })
+        } else {
+          try {
+            const result = schema.parseRecognitionResult(payload?.result)
+            scored = scoreRecognitionCase(fixture, provider, result, latencyMs)
+          } catch (error) {
+            scored = scoreRecognitionCase(fixture, provider, null, latencyMs, { status: 'invalid_output', failureReason: error instanceof Error ? error.message : 'invalid output' })
+          }
+        }
+      }
+      byId.set(fixture.id, scored)
+      await writeFile(checkpointFile, `${JSON.stringify([...byId.values()], null, 2)}\n`, 'utf8')
+      console.log(`[${index + 1}/${dataset.length}] ${fixture.id} ${scored.status} ${scored.latencyMs}ms failures=${scored.failures.length}`)
+      if (delayMs > 0 && index < dataset.length - 1) await sleep(delayMs)
+    }
+
+    const results = dataset.map((fixture) => byId.get(fixture.id)).filter(Boolean)
+    const metrics = aggregateRecognitionMetrics(provider, results)
+    const completedAt = new Date().toISOString()
+    const run = {
+      runId: `${provider}-${completedAt.replace(/[:.]/gu, '-')}`,
+      provider,
+      datasetVersion: recognitionGoldenDatasetMetadata.datasetVersion,
+      promptVersion: prompt.RECOGNITION_PROMPT_VERSION,
+      modelName: provider === 'local-fallback' ? 'local-rules' : prompt.RECOGNITION_MODEL_NAME,
+      promptSourceSha256,
+      startedAt,
+      completedAt,
+      endpoint: provider === 'deepseek-production' ? endpoint : null,
+      tokenAndCostObservation: 'The production response contract does not expose token usage; no estimate is substituted for observed data.',
+    }
+    console.log(JSON.stringify({ run, metrics }, null, 2))
+    if (writeDir) {
+      const target = path.resolve(ROOT, writeDir)
+      await mkdir(target, { recursive: true })
+      const stem = provider === 'local-fallback' ? 'local-fallback' : 'deepseek-production'
+      const failures = results.filter((item) => item.failures.length > 0).map((item) => ({
+        caseId: item.caseId,
+        group: item.group,
+        status: item.status,
+        latencyMs: item.latencyMs,
+        failures: item.failures,
+      }))
+      await Promise.all([
+        writeFile(path.join(target, `${stem}-summary.json`), `${JSON.stringify({ run, metrics }, null, 2)}\n`, 'utf8'),
+        writeFile(path.join(target, `${stem}-failures.json`), `${JSON.stringify({ run, failures }, null, 2)}\n`, 'utf8'),
+        writeFile(path.join(target, `${stem}-baseline.md`), renderMarkdown(run, metrics), 'utf8'),
+      ])
+    }
+  } finally {
+    await vite.close()
+  }
+}
+
+main().catch((error) => {
+  console.error(error)
+  process.exitCode = 1
+})

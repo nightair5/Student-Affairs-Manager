@@ -19,7 +19,8 @@
     "lint": "eslint .",
     "typecheck": "tsc -b --pretty false",
     "test": "vitest run && node --test server/server-tests.mjs && node --test cloudflare/worker-tests.mjs && npm --prefix functions test",
-    "eval:recognition": "vitest run src/recognition/evaluation.test.ts"
+    "eval:recognition": "vitest run src/recognition/evaluation.test.ts",
+    "eval:recognition:e2": "node scripts/run-recognition-e2.mjs"
   },
   "dependencies": {
     "lucide-react": "^0.468.0",

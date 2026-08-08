@@ -131,6 +131,15 @@ Product v2 E1 Phase B 额外约束：
 - 正式确认只能通过 `DomainCommitPlan` 在单个 IndexedDB 事务中写入；录入必须先持久化 Source、SourceVersion、RecognitionRun 和 Draft，再调用识别服务。
 - 本阶段禁止 Prompt 大改、E2 识别质量优化、Project Memory、Follow AI、Risk Engine、D1/R2、账号同步、PWA、支付和生产部署。
 
+Product v2 E2-A Recognition Baseline 额外约束：
+
+- E1 已冻结；本阶段只新增匿名 Golden Dataset、Evaluation Harness、逐例错误分类与 Baseline Report。
+- 生产 Prompt、模型、temperature、RecognitionResult 2.0、Domain v8、Migration、Repository、Project Matching 和 Follow 均不得修改。
+- 本地 fallback 与生产 DeepSeek 必须使用不同 provider 标识和独立报告，不得混合或用 fallback 成绩代替模型成绩。
+- 常规 CI 禁止自动调用付费生产模型；真实基线必须由显式命令运行，并遵守生产限流、断点续跑和不接触密钥原则。
+- Token/Cost 只能报告现有接口真实返回或可审计日志中的观测值；不可观测时写 `NOT OBSERVABLE`，禁止估算冒充实测。
+- E2-A 报告完成后停止，不得自动修改 Prompt、调参或进入 E2-B。
+
 P0 可信确认闭环额外约束：
 
 - 录入必须先形成可持久化的 `Source` 和 `ExtractionDraft`，不得因关闭弹层丢失待确认建议。

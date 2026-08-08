@@ -479,3 +479,16 @@ MVP 验证阶段关注：
 - 客户端演示数据不得被描述为真实用户数据或真实服务结果。
 - 本地检索结果不是大模型推理；只有服务端密钥已配置且请求成功时，才可将回答标记为 DeepSeek 代理生成。
 - DeepSeek V4 Flash 的任务拆分、分类、日期、耗时、材料和优先级都是建议；服务端输出必须经过白名单字段、数量、长度、日期和逐字证据校验，失败时退回本地规则，用户确认后的实体不得被后续解析静默覆盖。
+
+## 13. Product v2 E2-A Recognition Baseline
+
+E2-A 只测量已冻结的 `RecognitionResult 2.0`，不修改 Prompt、模型、Domain v8、Migration、Repository、Project Matching 或 Follow。
+
+- 使用版本化的 110 条匿名 Golden Dataset，覆盖课程、复杂通知、比赛、申请、活动、多截止、材料、模糊时间、纯信息、OCR 噪声与安全输入。
+- 每条样例都显式定义 Project、Milestone、Task/Subtask、Material、TimePoint、Event、Evidence、Ambiguity 与 forbidden output；空数组代表禁止臆造对应实体。
+- 本地 fallback 与真实 DeepSeek 必须分开运行、分开落盘、分开报告，禁止混合平均。
+- 真实基线固定使用生产 `recognition-2.0.0` 与 `deepseek-v4-flash`，评测器不得在运行中重写 Prompt、temperature、模型或结果。
+- 指标至少包含 Project Decision、Milestone P/R、Task P/R、Material Recall、TimePoint Accuracy、Event Accuracy、Evidence Coverage、Duplicate、Over-fragmentation、Major Correction、Severe Error、Invalid Output、Latency、Token/Cost。
+- 现有接口无法观测 Token/Cost 时必须明确标记 `NOT OBSERVABLE`，不得以字符数估算冒充实测。
+- 每个失败样例保存 case ID、错误分类、严重级别与原因；原始模型输出只进入 Git 忽略的本地断点目录。
+- 完成 Baseline Report 后停止，不得自动进入 E2-B 或据此修改 Prompt。

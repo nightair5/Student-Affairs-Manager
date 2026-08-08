@@ -1,0 +1,91 @@
+{
+  "run": {
+    "runId": "local-fallback-2026-08-08T12-37-09-539Z",
+    "provider": "local-fallback",
+    "datasetVersion": "e2-a-golden-1.0.0",
+    "promptVersion": "recognition-2.0.0",
+    "modelName": "local-rules",
+    "promptSourceSha256": "75e0bcdf8e09f88241e92d8cc97fc18bdf2362c80ff355192e904443f9f57793",
+    "startedAt": "2026-08-08T12:37:08.664Z",
+    "completedAt": "2026-08-08T12:37:09.539Z",
+    "endpoint": null,
+    "tokenAndCostObservation": "The production response contract does not expose token usage; no estimate is substituted for observed data."
+  },
+  "metrics": {
+    "provider": "local-fallback",
+    "sampleCount": 110,
+    "completedCount": 110,
+    "projectDecisionAccuracy": 0.7909090909090909,
+    "milestonePrecision": 0.5897435897435898,
+    "milestoneRecall": 0.3150684931506849,
+    "taskPrecision": 0.6940298507462687,
+    "taskRecall": 0.7322834645669292,
+    "materialRecall": 0.5841584158415841,
+    "timePointAccuracy": 0.25806451612903225,
+    "eventAccuracy": 0.52,
+    "evidenceCoverage": 0.8793774319066148,
+    "duplicateRate": 0,
+    "overFragmentationRate": 0,
+    "majorCorrectionRate": 0.9454545454545454,
+    "severeErrorRate": 0.2727272727272727,
+    "invalidOutputRate": 0,
+    "requestFailureRate": 0,
+    "latencyMs": {
+      "mean": 0.2818181818181818,
+      "p50": 0,
+      "p95": 1
+    },
+    "tokenUsage": null,
+    "costUsd": null,
+    "errorTaxonomy": [
+      {
+        "category": "time_incorrect",
+        "count": 101
+      },
+      {
+        "category": "milestone_missing",
+        "count": 50
+      },
+      {
+        "category": "material_missing",
+        "count": 42
+      },
+      {
+        "category": "task_spurious",
+        "count": 37
+      },
+      {
+        "category": "task_missing",
+        "count": 34
+      },
+      {
+        "category": "project_decision",
+        "count": 23
+      },
+      {
+        "category": "evidence_missing",
+        "count": 18
+      },
+      {
+        "category": "forbidden_output",
+        "count": 18
+      },
+      {
+        "category": "event_missing",
+        "count": 10
+      },
+      {
+        "category": "event_spurious",
+        "count": 6
+      },
+      {
+        "category": "ambiguity_missing",
+        "count": 2
+      },
+      {
+        "category": "task_hierarchy",
+        "count": 2
+      }
+    ]
+  }
+}
