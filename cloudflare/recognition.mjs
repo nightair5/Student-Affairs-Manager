@@ -14,6 +14,8 @@ export {
 
 const ACTION_VERBS = ['提交', '上传', '填写', '完成', '准备', '核对', '确认', '联系', '参加', '阅读', '下载', '打印', '盖章', '签字', '回复', '领取', '整理', '撰写', '制作', '报名', '发送', '携带', '出示', '归还', '反馈', '汇总', '组队', '办理', '预约']
 const REGISTRATION_EVIDENCE = /报名(?:截止|时间|开始|开放|组队)|(?:截止|完成)报名|组队/u
+const PROMPT_INJECTION_SIGNAL = /忽略.{0,12}(?:规则|指令)|系统提示词|API\s*Key|删除.{0,8}任务|改成管理员|执行.{0,8}脚本|发送到外部|不要输出\s*JSON|环境变量|绕过.{0,8}确认|修改数据库/iu
+const REAL_NOTICE_MARKER = /(?:实际|真正)通知[:：]/gu
 const SUBMISSION_VERBS = new Set(['提交', '上传', '发送', '报送', '补交'])
 const FORMAT_ONLY_VERBS = new Set(['保存', '命名', '重命名', '转换', '设置格式'])
 const RECEIVE_ONLY_VERBS = new Set(['领取', '下载'])
@@ -171,7 +173,13 @@ export function normalizeRecognitionResult(raw, sourceContent, nowIso) {
     const reason = ['background', 'contact', 'address', 'policy', 'format_requirement', 'other'].includes(item.reason) ? item.reason : 'other'
     return [{ text: ignoredText, reason }]
   }) : []
-  const explicitActionInSource = ACTION_VERBS.some((verb) => sourceContent.includes(verb))
+  const markerMatches = [...sourceContent.matchAll(REAL_NOTICE_MARKER)]
+  const lastMarker = markerMatches.at(-1)
+  const markerEnd = lastMarker ? (lastMarker.index ?? 0) + lastMarker[0].length : -1
+  const trustedActionContent = markerEnd >= 0 && PROMPT_INJECTION_SIGNAL.test(sourceContent.slice(0, markerEnd))
+    ? sourceContent.slice(markerEnd)
+    : sourceContent
+  const explicitActionInSource = ACTION_VERBS.some((verb) => trustedActionContent.includes(verb))
   const informationOnly = sourceSummaryRaw.notificationType === 'information_only' || (sourceSummaryRaw.requiresAction === false && !explicitActionInSource)
   const evidenceById = new Map(evidence.map((item) => [item.id, item]))
   const splitTaskIds = new Map()
@@ -222,6 +230,7 @@ export function normalizeRecognitionResult(raw, sourceContent, nowIso) {
     const quote = evidenceById.get(id)?.quotedText || ''
     return quote.includes(task.actionVerb)
   })
+  const hasTrustedEvidence = (task) => task.evidenceIds.some((id) => trustedActionContent.includes(evidenceById.get(id)?.quotedText || ''))
   const sharesContext = (left, right) => left.evidenceIds.some((id) => right.evidenceIds.includes(id))
     || left.materialTempIds.some((id) => right.materialTempIds.includes(id))
     || left.timePointTempIds.some((id) => right.timePointTempIds.includes(id))
@@ -230,7 +239,7 @@ export function normalizeRecognitionResult(raw, sourceContent, nowIso) {
       || event.title.includes(task.actionObject)
       || task.actionObject.includes(event.title))
   const keepTask = (task) => {
-    if (informationOnly || FORMAT_ONLY_VERBS.has(task.actionVerb) || eventSupportsTask(task)) return false
+    if (informationOnly || !hasTrustedEvidence(task) || FORMAT_ONLY_VERBS.has(task.actionVerb) || eventSupportsTask(task)) return false
     if (hasSupportedAction(task)) return true
     return !currentTasks.some((candidate) => candidate.tempId !== task.tempId
       && SUBMISSION_VERBS.has(candidate.actionVerb)
