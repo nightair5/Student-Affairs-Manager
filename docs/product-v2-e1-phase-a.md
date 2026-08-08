@@ -2,7 +2,7 @@
 
 ## 状态与边界
 
-E1 Phase A 冻结 Workspace v8 的类型、校验和离线迁移契约，但**没有**把 v8 接入当前 IndexedDB 加载、保存或正式确认路径。线上与当前 UI 仍使用 schema v7；`ParsedSuggestion`、`recognitionToLegacySuggestions` 和 `materializeWorkspaceEntities` 仅作为旧兼容层保留。生产 v7→v8 切换、Rich RecognitionResult 原子提交、AI 请求前持久化链路和旧桥退休属于 E1 Phase B，必须另行评审。
+E1 Phase A 冻结了 Workspace v8 的类型、校验和离线迁移契约。经批准的 E1 Phase B 已把 v8 接入本机 IndexedDB 加载、保存、导入导出和正式确认路径；`ParsedSuggestion`、`recognitionToLegacySuggestions` 和 `materializeWorkspaceEntities` 只作为现有 React UI 的兼容视图保留，不再是正式提交路径。本轮没有生产部署。
 
 这一区隔避免 Phase A 用未经生产验证的新结构触碰真实用户工作区，也避免 v7 的投影逻辑覆盖 v8 的独立实体数组。
 
@@ -58,7 +58,7 @@ interface WorkspaceV8 {
 }
 ```
 
-v7 的材料、时间点、证据、历史和提醒数组在运行时仍可能由 Task/Source/Draft 投影重建。v8 明确相反：这些顶层数组就是事实源；未来 `normalizeWorkspaceData` 只允许做 schema detection、migration、default normalization、validation 和轻微修复，不得用 Task 投影覆盖它们。
+v7 的材料、时间点、证据、历史和提醒数组曾由 Task/Source/Draft 投影重建。v8 明确相反：这些顶层数组就是事实源；当前 canonical repository 只允许 schema detection、migration、default normalization、validation 和轻微修复，不得用 Task 投影覆盖它们。
 
 ## 时间语义
 
@@ -94,7 +94,7 @@ v7 的材料、时间点、证据、历史和提醒数组在运行时仍可能�
 | course/integration/knowledge/feedback | `preferences.legacyData` | REVIEW | 安全保留，不在 E1 猜测新领域位置 |
 | 任意未知字段 | `legacyData` | UNMAPPABLE | 原样 JSON-safe 保留并标记 review |
 
-迁移优先级固定为 Preserve > Review > Guess。`prepareV7ToV8Migration` 先复制完整 v7 backup，再在内存构造 v8 并执行全图校验；失败时 `workspace=null` 且列出安全错误，不可 apply。`rollbackPreparedV8Migration` 返回独立的原 v7 快照。该机制目前只用于离线测试，尚未接入 IndexedDB。
+迁移优先级固定为 Preserve > Review > Guess。`prepareV7ToV8Migration` 先复制完整 v7 backup，再在内存构造 v8 并执行全图校验；失败时 `workspace=null` 且列出安全错误，不可 apply。运行时 repository 已接入同一契约，并在替换 `current` 前持久化完整性校验过的备份；`rollbackMigration` 可恢复原 v7 快照。
 
 ## Golden fixtures 与 round-trip
 
@@ -108,7 +108,7 @@ v7 的材料、时间点、证据、历史和提醒数组在运行时仍可能�
 
 Workspace v8 现在具备独立的 schema-aware repository：保存、加载、事务、导入与导出都先执行 v8 全图校验，浏览器写入使用单个 IndexedDB `readwrite` transaction。该路径直接持久化 `materials`、`timePoints`、`evidenceRefs`、`historyRecords` 与 `reminderRecords`，不会调用 v7 的 `materializeWorkspaceEntities`。`ProjectState` 仅由纯函数按 canonical graph 重算，不进入 Workspace v8 持久化结构。
 
-B1 尚未切换现有 App 的 v7 加载路径；真实 v7→v8 原子迁移、运行时切换、rich recognition commit 和 Source-before-AI 分别由 B2、B3、B4 接入。
+B1 的 repository 已由 B2-B4 接入现有 App。React 页面从 v8 派生兼容视图；保存只按稳定 ID 回写明确可编辑字段，不能调用旧投影覆盖 canonical arrays。
 
 ### B2 Runtime Migration
 
@@ -122,6 +122,12 @@ Repository 的 schema-aware 加载现可识别 v7/v8。v7 升级先保存带完�
 
 Repository 使用单个 IndexedDB transaction 应用计划；任何引用或全图校验失败均为零写入。operationId 与 Draft 上的已提交记录提供幂等确认；Partial Confirm 只提交选中实体，拒绝项和缺少必要父级/依赖的孤儿实体不会进入 canonical graph。legacy suggestion adapter 仍保留给旧 UI 显示，但不参与 v8 正式 Domain Commit。
 
-## E1 Phase B gate
+### B4 Source-before-AI
 
-进入 Phase B 前必须单独批准并完成：v8 repository/IndexedDB store、v7 真实数据迁移接入与恢复演练、Rich RecognitionResult → Domain Commit Plan、单事务原子提交、Source-before-AI 持久化，以及旧 lossy adapter 退休。Phase A 不声称这些已经上线。
+Capture service 在任何 AI/本地识别 executor 被调用前，先在一个 canonical repository transaction 中持久化 Source、SourceVersion、queued RecognitionRun 与 processing ExtractionDraft，并等待事务成功。识别成功后只更新 Run/Draft/Source 状态；超时或无效结构会记录安全错误码并保留 Source，且不会创建任何正式 Project/Task。刷新或页面中断后仍可从 v8 恢复 processing/failed 草稿。
+
+Retry 复用同一 SourceVersion，并创建新的 RecognitionRun 与 Draft；client operation ID 防止技术性重复点击创建重复 Source，但不会按正文相同自动合并真实通知。旧 UI bridge 只用于显示建议，已移除 Subtask 过滤和 `1970-01-01` fallback；正式保存仍只经过 DomainCommitPlan。
+
+## E1 Phase B completion boundary
+
+B1-B4 已在开发分支完成：v8 repository/IndexedDB store、v7 真实副本迁移与回滚演练、Rich RecognitionResult → Domain Commit Plan、单事务幂等确认、Source-before-AI 和运行时兼容视图。旧 adapter 文件仍为渐进 UI 展示保留，但已退出 v8 正式提交及 canonical 保存路径。E1 到此停止；未实施 E2 Prompt/识别质量优化、Project Memory、Follow AI、Risk Engine、D1/R2、账号同步、PWA、支付或 Production 部署。

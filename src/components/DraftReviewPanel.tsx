@@ -88,7 +88,7 @@ export function DraftReviewPanel({ draft, source, onClose, onUpdate, onConfirm, 
   return <div className="modal-backdrop detail-backdrop" role="presentation">
     <aside ref={panelRef} className="detail-panel review-panel" role="dialog" aria-modal="true" aria-labelledby={titleId}>
       <header className="detail-header review-header">
-        <div><span className="category-label">第 2 步 · {source?.extractionMethod === 'deepseek-v4-flash' ? 'DeepSeek 建议' : '本地规则建议'}</span><h2 id={titleId}>识别出 {draft.items.length} 件事</h2><p>先看标题和时间；不准确时再点“编辑”。</p></div>
+        <div><span className="category-label">第 2 步 · {draft.modelName?.includes('deepseek') ? 'DeepSeek 建议' : '本地规则建议'}</span><h2 id={titleId}>识别出 {draft.items.length} 件事</h2><p>先看标题和时间；不准确时再点“编辑”。</p></div>
         <button className="icon-button" type="button" onClick={onClose} aria-label="稍后处理并关闭"><X size={20} /></button>
       </header>
       <div className="detail-body review-body">

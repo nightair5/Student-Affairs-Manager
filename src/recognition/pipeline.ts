@@ -428,14 +428,14 @@ export function postProcessRecognition(result: RecognitionResult, sourceText: st
  */
 export function recognitionToLegacySuggestions(result: RecognitionResult): ParsedSuggestion[] {
   const points = new Map(result.timePoints.map((point) => [point.tempId, point]))
-  return allTasks(result).filter((task) => task.hierarchyType === 'task').map((task) => {
+  return allTasks(result).map((task) => {
     const point = points.get(task.timePointTempIds[0])
     const materialNames = result.materials.filter((material) => material.selected !== false && material.relatedTaskTempIds.includes(task.tempId)).map((material) => material.name)
     return {
       id: task.tempId,
       title: task.title,
       category: result.projectSuggestion?.category.value ?? '其他',
-      deadline: point?.normalizedValue ?? '1970-01-01T00:00',
+      deadline: point?.normalizedValue ?? '',
       estimatedMinutes: task.estimatedMinutes ?? 30,
       nextAction: `${task.actionVerb}${task.actionObject}`,
       description: task.description,

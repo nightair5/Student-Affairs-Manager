@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
+import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { DraftReviewPanel } from './components/DraftReviewPanel'
 import { IntakePanel } from './components/IntakePanel'
 import { OnboardingGuide } from './components/OnboardingGuide'
@@ -18,24 +18,25 @@ import {
 } from './lib/notifications'
 import { loadWorkspace } from './lib/storage'
 import { updateTaskWithHistory } from './lib/taskUpdates'
-import { findDuplicateSources } from './lib/sourceDuplicates'
 import { createIntakeResult, type IntakeInput } from './lib/intake'
 import { ProxyDeepSeekExtractionService } from './lib/deepseekExtraction'
-import { buildLocalRecognition, recognitionToLegacySuggestions } from './recognition/pipeline'
+import { buildLocalRecognition } from './recognition/pipeline'
 import { markOnboardingComplete, shouldShowOnboarding } from './lib/onboarding'
+import { CapturePersistenceService } from './domain/v2/capture'
+import { CanonicalWorkspaceRepository } from './domain/v2/repository'
+import { buildDomainCommitPlan, commitDomainPlan, selectionFromDraftItems } from './domain/v2/domainCommit'
 import {
-  buildConfirmedProjectBatch,
   createManualMilestone,
-  createExtractionDraft,
   createIntegrationState,
   createWorkspaceData,
   syncTaskMilestone,
   updateDraftItem,
 } from './lib/workspace'
-import type { CourseBlock, Event, ExtractionDraft, IntegrationState, KnowledgeSettings, MigrationRecord, PageId, ParsedSuggestion, Project, RecognitionFeedbackRecord, Source, Task, WorkPackage } from './types'
-import type { RecognitionResult } from './recognition/types'
+import type { CourseBlock, Event, ExtractionDraft, IntegrationState, KnowledgeSettings, MigrationRecord, PageId, ParsedSuggestion, Project, RecognitionFeedbackRecord, Source, Task, WorkPackage, WorkspaceData } from './types'
 
-const workspaceRepository = new IndexedDbWorkspaceRepository()
+const canonicalWorkspaceRepository = new CanonicalWorkspaceRepository()
+const workspaceRepository = new IndexedDbWorkspaceRepository(canonicalWorkspaceRepository)
+const capturePersistenceService = new CapturePersistenceService(canonicalWorkspaceRepository)
 const deepSeekExtractionService = new ProxyDeepSeekExtractionService()
 
 const CalendarPage = lazy(() => import('./pages/CalendarPage').then((module) => ({ default: module.CalendarPage })))
@@ -88,6 +89,21 @@ function App() {
     [courseBlocks, drafts, events, integrations, knowledgeSettings, legacyData, migrationLog, projects, recognitionFeedback, sources, tasks, workPackages],
   )
 
+  const applyWorkspaceView = useCallback((saved: WorkspaceData) => {
+    setTasks(saved.tasks)
+    setSources(saved.sources)
+    setDrafts(saved.drafts)
+    setProjects(saved.projects)
+    setCourseBlocks(saved.courseBlocks)
+    setIntegrations(saved.integrations)
+    setKnowledgeSettings(saved.knowledgeSettings)
+    setWorkPackages(saved.workPackages)
+    setEvents(saved.events)
+    setMigrationLog(saved.migrationLog)
+    setRecognitionFeedback(saved.recognitionFeedback)
+    setLegacyData(saved.legacyData)
+  }, [])
+
   useEffect(() => {
     let active = true
     void deepSeekExtractionService.status().then((status) => {
@@ -103,18 +119,7 @@ function App() {
         const saved = await workspaceRepository.load()
         if (!active) return
         if (saved) {
-          setTasks(saved.tasks)
-          setSources(saved.sources)
-          setDrafts(saved.drafts)
-          setProjects(saved.projects)
-          setCourseBlocks(saved.courseBlocks)
-          setIntegrations(saved.integrations)
-          setKnowledgeSettings(saved.knowledgeSettings)
-          setWorkPackages(saved.workPackages)
-          setEvents(saved.events)
-          setMigrationLog(saved.migrationLog)
-          setRecognitionFeedback(saved.recognitionFeedback)
-          setLegacyData(saved.legacyData)
+          applyWorkspaceView(saved)
         } else {
           await workspaceRepository.save(
             createWorkspaceData(initialWorkspace.tasks, initialWorkspace.sources),
@@ -130,7 +135,7 @@ function App() {
     return () => {
       active = false
     }
-  }, [initialWorkspace.sources, initialWorkspace.tasks])
+  }, [applyWorkspaceView, initialWorkspace.sources, initialWorkspace.tasks])
 
   useEffect(() => {
     if (!workspaceReady || storageError) return
@@ -256,21 +261,6 @@ function App() {
     setNotice({ text: message })
   }
 
-  const handleCreateDraft = (source: Source, suggestions: ParsedSuggestion[], recognitionResult?: RecognitionResult) => {
-    const duplicateCandidates = findDuplicateSources(source, sources)
-    const nextSource: Source = duplicateCandidates.length
-      ? {
-          ...source,
-          duplicateOfSourceIds: duplicateCandidates.map((candidate) => candidate.sourceId),
-          duplicateReviewStatus: '待核对',
-        }
-      : source
-    const draft = createExtractionDraft(nextSource.id, suggestions, new Date().toISOString(), recognitionResult)
-    setSources((current) => [nextSource, ...current])
-    setDrafts((current) => [draft, ...current])
-    return { draft, source: nextSource, duplicateCount: duplicateCandidates.length }
-  }
-
   const handleIntakeInput = async (input: IntakeInput) => {
     const localResult = createIntakeResult(input)
     const localRecognition = buildLocalRecognition({
@@ -282,41 +272,65 @@ function App() {
       projects,
       tasks,
     })
-    const provisionalSuggestions = input.manualSuggestion
-      ? localResult.suggestions
-      : recognitionToLegacySuggestions(localRecognition)
-    const provisional = handleCreateDraft(localResult.source, provisionalSuggestions, input.manualSuggestion ? undefined : localRecognition)
-    if (input.manualSuggestion) {
-      openDraftReview(provisional.draft.id, '手动任务已保存为待确认草稿；核对后再加入任务中心。')
-      return
+    const captureRequest = {
+      operationId: crypto.randomUUID(),
+      sourceType: input.sourceType,
+      title: input.sourceTitle ?? input.fileName ?? localResult.source.title,
+      rawText: input.content,
+      provider: input.manualSuggestion ? 'manual' as const : 'deepseek' as const,
+      modelName: input.manualSuggestion ? 'manual-entry' : 'deepseek-v4-flash',
+      promptVersion: input.manualSuggestion ? null : localRecognition.promptVersion,
+      pipelineVersion: 'source-before-ai-v1',
+      sourceLegacyData: {
+        contentPreview: localResult.source.contentPreview,
+        url: input.url ?? null,
+        originalFileName: input.fileName ?? null,
+        mimeType: input.mimeType ?? null,
+        fileSize: input.fileSize ?? null,
+        parserVersion: localResult.source.parserVersion ?? null,
+      },
+      now: input.now?.toISOString(),
     }
     try {
-      const recognitionResult = await deepSeekExtractionService.recognize(input, { projects, tasks })
-      const suggestions = recognitionToLegacySuggestions(recognitionResult)
-      const aiDraft = {
-        ...createExtractionDraft(provisional.source.id, suggestions, provisional.draft.createdAt, recognitionResult),
-        id: provisional.draft.id,
-      }
-      setDrafts((current) => current.map((draft) => draft.id === provisional.draft.id ? aiDraft : draft))
-      setSources((current) => current.map((source) => source.id === provisional.source.id
-        ? { ...source, extractionMethod: 'deepseek-v4-flash' }
-        : source))
+      const handle = await capturePersistenceService.beginCapture(captureRequest)
+      const recognitionResult = await capturePersistenceService.recognize(
+        handle,
+        input.manualSuggestion
+          ? async () => localRecognition
+          : async () => deepSeekExtractionService.recognize(input, { projects, tasks }),
+      )
+      const saved = await workspaceRepository.load()
+      if (saved) applyWorkspaceView(saved)
       setSmartExtractionStatus('connected')
       openDraftReview(
-        provisional.draft.id,
-        provisional.duplicateCount
-          ? `DeepSeek 已整理；另发现 ${provisional.duplicateCount} 个可能重复来源，请人工核对。`
-          : 'DeepSeek V4 Flash 已生成可编辑建议；请逐项核对后再确认。',
+        handle.draftId,
+        input.manualSuggestion
+          ? '手动录入已先保存来源，再生成待确认草稿；核对后才会创建正式任务。'
+          : `${recognitionResult.modelName} 已生成可编辑建议；来源已在请求前安全保存。`,
       )
     } catch (error) {
       setSmartExtractionStatus('unavailable')
       const reason = error instanceof Error ? error.message : 'DeepSeek 智能整理暂时不可用'
-      openDraftReview(
-        provisional.draft.id,
-        provisional.duplicateCount
-          ? `${reason}，已使用本地规则；另发现 ${provisional.duplicateCount} 个可能重复来源。`
-          : `${reason}，已使用本地规则建议，请重点核对。`,
-      )
+      try {
+        const canonical = await canonicalWorkspaceRepository.load()
+        const failedSource = canonical?.sources.find((source) => source.legacyData?.captureOperationId === captureRequest.operationId)
+        if (!failedSource) throw new Error('CAPTURE_SOURCE_NOT_FOUND_AFTER_FAILURE', { cause: error })
+        const retry = await capturePersistenceService.beginRetry(failedSource.id, {
+          provider: 'local-rules',
+          modelName: 'local-rules',
+          promptVersion: localRecognition.promptVersion,
+          pipelineVersion: 'source-before-ai-local-fallback-v1',
+        })
+        await capturePersistenceService.recognize(retry, async () => localRecognition)
+        const saved = await workspaceRepository.load()
+        if (saved) applyWorkspaceView(saved)
+        openDraftReview(retry.draftId, `${reason}；原始来源仍已保存，现已建立一次独立的本地规则重试，请重点核对。`)
+      } catch {
+        const saved = await workspaceRepository.load().catch(() => null)
+        if (saved) applyWorkspaceView(saved)
+        setStorageError(true)
+        setNotice({ text: `${reason}；来源保存状态需要检查，请勿重复关闭页面。` })
+      }
     }
   }
 
@@ -519,11 +533,10 @@ function App() {
     setNotice({ text: '已合并到目标建议；原建议保留为已拒绝记录，可追溯。' })
   }
 
-  const handleConfirmDraftItem = (draftId: string, itemId: string) => {
+  const handleConfirmDraftItem = async (draftId: string, itemId: string) => {
     const draft = drafts.find((item) => item.id === draftId)
-    const source = draft ? sources.find((item) => item.id === draft.sourceId) : null
     const item = draft?.items.find((candidate) => candidate.id === itemId)
-    if (!draft || !source || !item || item.status !== '待确认') return
+    if (!draft || !item || item.status !== '待确认' || !draft.recognitionResult) return
     if (Number.isNaN(new Date(item.suggestion.deadline).getTime())) {
       setNotice({ text: '请先补全并确认该任务的截止时间；模糊日期不会直接进入正式任务。' })
       return
@@ -533,43 +546,32 @@ function App() {
       setNotice({ text: '该任务仍有模糊或未勾选的时间节点，请在“时间节点”中确认后再加入。' })
       return
     }
-    const matchedProjectId = draft.recognitionResult?.projectMatch.decision === 'existing_project'
-      ? draft.recognitionResult.projectMatch.matchedProjectId
-      : null
-    const existingProject = projects.find((candidate) => candidate.id === matchedProjectId)
-      ?? projects.find((candidate) => candidate.sourceIds.includes(source.id))
-    const { tasks: [task], project, workPackages: createdPackages, events: createdEvents } = buildConfirmedProjectBatch([item], source, existingProject, new Date().toISOString(), draft.recognitionResult)
-    setTasks((current) => [task, ...current])
-    setProjects((current) => !project
-      ? current
-      : existingProject
-        ? current.map((candidate) => candidate.id === project.id ? project : candidate)
-        : [project, ...current])
-    setWorkPackages((current) => [...createdPackages.filter((item) => !current.some((candidate) => candidate.id === item.id)), ...current])
-    setEvents((current) => [...createdEvents.filter((item) => !current.some((candidate) => candidate.id === item.id)), ...current])
-    handleUpdateDraft(draftId, itemId, {}, '已确认')
-    setSources((current) => current.map((candidate) =>
-      candidate.id === source.id
-        ? {
-            ...candidate,
-            extractionStatus:
-              draft.items.filter((draftItem) => draftItem.status === '待确认').length <= 1
-                ? '已确认'
-                : '部分确认',
-          }
-        : candidate,
-    ))
-    setNotice({ text: '已创建任务，可在任务中心继续编辑。' })
-    if (draft.items.filter((draftItem) => draftItem.status === '待确认').length <= 1) {
-      setSelectedDraftId(null)
-      setCurrentPage('today')
+    try {
+      await workspaceRepository.save(workspace)
+      const canonical = await canonicalWorkspaceRepository.load()
+      if (!canonical) throw new Error('WORKSPACE_V8_NOT_INITIALIZED')
+      const selection = selectionFromDraftItems(draft.recognitionResult, [item])
+      selection.rejectedTempIds = draft.items.filter((candidate) => candidate.status === '已拒绝').map((candidate) => candidate.suggestion.id)
+      const plan = buildDomainCommitPlan(canonical, draftId, selection)
+      await commitDomainPlan(canonicalWorkspaceRepository, plan)
+      const saved = await workspaceRepository.load()
+      if (saved) applyWorkspaceView(saved)
+      setNotice({ text: '已原子创建任务及关联实体，可在任务中心继续编辑。' })
+      if (draft.items.filter((draftItem) => draftItem.status === '待确认').length <= 1) {
+        setSelectedDraftId(null)
+        setCurrentPage('today')
+      }
+    } catch (error) {
+      const message = error instanceof Error && error.message.startsWith('DOMAIN_COMMIT_PARENT_REQUIRED')
+        ? '该子任务依赖父任务，请先一并勾选父任务后使用“全部加入”。'
+        : '确认未写入：实体关系或时间仍需核对，现有数据未被部分修改。'
+      setNotice({ text: message })
     }
   }
 
-  const handleConfirmAll = (draftId: string) => {
+  const handleConfirmAll = async (draftId: string) => {
     const draft = drafts.find((item) => item.id === draftId)
-    const source = draft ? sources.find((item) => item.id === draft.sourceId) : null
-    if (!draft || !source) return
+    if (!draft?.recognitionResult) return
     const pending = draft.items.filter((item) => item.status === '待确认' && item.selected !== false)
     if (!pending.length) return
     if (pending.some((item) => Number.isNaN(new Date(item.suggestion.deadline).getTime()))) {
@@ -581,34 +583,21 @@ function App() {
       setNotice({ text: '仍有模糊或未勾选的时间节点，请先逐项确认。' })
       return
     }
-    const matchedProjectId = draft.recognitionResult?.projectMatch.decision === 'existing_project'
-      ? draft.recognitionResult.projectMatch.matchedProjectId
-      : null
-    const existingProject = projects.find((candidate) => candidate.id === matchedProjectId)
-      ?? projects.find((candidate) => candidate.sourceIds.includes(source.id))
-    const { tasks: created, project, workPackages: createdPackages, events: createdEvents } = buildConfirmedProjectBatch(pending, source, existingProject, new Date().toISOString(), draft.recognitionResult)
-    setTasks((current) => [...created, ...current])
-    setProjects((current) => !project
-      ? current
-      : existingProject
-        ? current.map((candidate) => candidate.id === project.id ? project : candidate)
-        : [project, ...current])
-    setWorkPackages((current) => [...createdPackages.filter((item) => !current.some((candidate) => candidate.id === item.id)), ...current])
-    setEvents((current) => [...createdEvents.filter((item) => !current.some((candidate) => candidate.id === item.id)), ...current])
-    const confirmedAt = new Date().toISOString()
-    setDrafts((current) => current.map((candidate) => {
-      if (candidate.id !== draftId) return candidate
-      return pending.reduce(
-        (nextDraft, draftItem) => updateDraftItem(nextDraft, draftItem.id, {}, '已确认', confirmedAt),
-        candidate,
-      )
-    }))
-    setSources((current) => current.map((item) => item.id === source.id
-      ? { ...item, extractionStatus: '已确认' }
-      : item))
-    setSelectedDraftId(null)
-    setCurrentPage('today')
-    setNotice({ text: `已创建 ${created.length} 项任务。` })
+    try {
+      await workspaceRepository.save(workspace)
+      const canonical = await canonicalWorkspaceRepository.load()
+      if (!canonical) throw new Error('WORKSPACE_V8_NOT_INITIALIZED')
+      const selection = selectionFromDraftItems(draft.recognitionResult, draft.items)
+      const plan = buildDomainCommitPlan(canonical, draftId, selection)
+      await commitDomainPlan(canonicalWorkspaceRepository, plan)
+      const saved = await workspaceRepository.load()
+      if (saved) applyWorkspaceView(saved)
+      setSelectedDraftId(null)
+      setCurrentPage('today')
+      setNotice({ text: `已原子创建 ${plan.create.tasks.length} 项任务，并完整保存材料、时间与证据。` })
+    } catch {
+      setNotice({ text: '全部确认未写入：请检查父子任务、依赖和未确认时间，当前数据未被部分修改。' })
+    }
   }
 
   const handleArchiveDrafts = (draftIds: string[]) => {
@@ -630,22 +619,13 @@ function App() {
     })
   }
 
-  const handleImportWorkspace = (serialized: string) => {
-    const imported = workspaceRepository.importJson(serialized)
-    setTasks(imported.tasks)
-    setSources(imported.sources)
-    setDrafts(imported.drafts)
-    setProjects(imported.projects)
-    setCourseBlocks(imported.courseBlocks)
-    setIntegrations(imported.integrations)
-    setKnowledgeSettings(imported.knowledgeSettings)
-    setWorkPackages(imported.workPackages)
-    setEvents(imported.events)
-    setMigrationLog(imported.migrationLog)
-    setRecognitionFeedback(imported.recognitionFeedback)
-    setLegacyData(imported.legacyData)
+  const handleImportWorkspace = async (serialized: string) => {
+    const imported = await workspaceRepository.importAndReplace(serialized)
+    applyWorkspaceView(imported)
     setNotice({ text: '已导入 JSON 备份。' })
   }
+
+  const handleExportWorkspace = async () => workspaceRepository.exportCurrentJson()
 
   const handleClearWorkspace = () => {
     setTasks([])
@@ -740,7 +720,7 @@ function App() {
           projects={projects}
           workPackages={workPackages}
           events={events}
-          workspace={workspace}
+          onExport={handleExportWorkspace}
           onImport={handleImportWorkspace}
           onClear={handleClearWorkspace}
           onAddMilestone={(projectId, title, dueAt) => setProjects((current) => current.map((project) => project.id === projectId

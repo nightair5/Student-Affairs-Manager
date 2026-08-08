@@ -1,6 +1,10 @@
 import type { DraftItem, ExtractionDraft, Project, Source, Task, WorkspaceData } from '../types'
 import { materializeWorkspaceEntities } from './domainEntities'
 import { isRecognitionResult } from '../recognition/schema'
+import { CanonicalWorkspaceRepository } from '../domain/v2/repository'
+import { applyPreparedV8Migration, prepareV7ToV8Migration } from '../domain/v2/migration'
+import { mergeLegacyViewIntoWorkspaceV8, workspaceV8ToLegacyView } from '../domain/v2/legacyView'
+import { parseWorkspaceV8 } from '../domain/v2/workspaceSchema'
 
 const DATABASE_NAME = 'student-affairs-steward'
 const STORE_NAME = 'workspace'
@@ -678,6 +682,8 @@ function validateWorkspaceIntegrity(workspace: WorkspaceData): void {
 export class IndexedDbWorkspaceRepository implements WorkspaceRepository {
   private database: Promise<IDBDatabase> | null = null
 
+  constructor(private readonly canonical = new CanonicalWorkspaceRepository()) {}
+
   private open(): Promise<IDBDatabase> {
     if (this.database) return this.database
     this.database = new Promise((resolve, reject) => {
@@ -695,23 +701,26 @@ export class IndexedDbWorkspaceRepository implements WorkspaceRepository {
 
   async load(): Promise<WorkspaceData | null> {
     const database = await this.open()
-    return new Promise((resolve, reject) => {
+    const raw = await new Promise<unknown>((resolve, reject) => {
       const request = database.transaction(STORE_NAME, 'readonly')
         .objectStore(STORE_NAME)
         .get(RECORD_KEY)
       request.onerror = () => reject(request.error)
-      request.onsuccess = async () => {
-        const raw = request.result
-        try {
-          if (isRecord(raw) && typeof raw.schemaVersion === 'number' && raw.schemaVersion < CURRENT_SCHEMA_VERSION) {
-            await this.saveMigrationBackup(database, raw, raw.schemaVersion)
-          }
-          resolve(normalizeWorkspaceData(raw))
-        } catch (error) {
-          reject(error)
-        }
-      }
+      request.onsuccess = () => resolve(request.result)
     })
+    if (raw === undefined) return null
+    if (isRecord(raw) && raw.schemaVersion === 8) return workspaceV8ToLegacyView(parseWorkspaceV8(raw))
+    let v7: WorkspaceData | null
+    if (isRecord(raw) && typeof raw.schemaVersion === 'number' && raw.schemaVersion < CURRENT_SCHEMA_VERSION) {
+      await this.saveMigrationBackup(database, raw, raw.schemaVersion)
+      v7 = normalizeWorkspaceData(raw)
+      if (!v7) throw new Error('WORKSPACE_LEGACY_MIGRATION_FAILED')
+      await this.canonical.save(applyPreparedV8Migration(prepareV7ToV8Migration(v7)))
+      return workspaceV8ToLegacyView((await this.canonical.load())!)
+    }
+    const migration = await this.canonical.loadOrMigrate()
+    if (!migration.workspace) throw new Error(migration.errors.join(',') || 'WORKSPACE_V8_MIGRATION_FAILED')
+    return workspaceV8ToLegacyView(migration.workspace)
   }
 
   private async saveMigrationBackup(database: IDBDatabase, raw: Record<string, unknown>, version: number): Promise<void> {
@@ -738,7 +747,7 @@ export class IndexedDbWorkspaceRepository implements WorkspaceRepository {
       request.onerror = () => reject(request.error)
       request.onsuccess = () => resolve(request.result)
     })
-    const backupKeys = keys.map(String).filter((key) => key.startsWith('migration-backup-v')).sort()
+    const backupKeys = keys.map(String).filter((key) => key.startsWith('migration-backup-v') || key.startsWith('backup:')).sort()
     const latestKey = backupKeys.at(-1)
     if (!latestKey) return null
     const backup = await new Promise<unknown>((resolve, reject) => {
@@ -750,23 +759,37 @@ export class IndexedDbWorkspaceRepository implements WorkspaceRepository {
   }
 
   async save(workspace: WorkspaceData): Promise<void> {
-    const database = await this.open()
-    await new Promise<void>((resolve, reject) => {
-      const transaction = database.transaction(STORE_NAME, 'readwrite')
-      transaction.onerror = () => reject(transaction.error)
-      transaction.oncomplete = () => resolve()
-      transaction.objectStore(STORE_NAME).put(workspace, RECORD_KEY)
-    })
+    const current = await this.canonical.load().catch(() => null)
+    if (!current) {
+      await this.canonical.save(applyPreparedV8Migration(prepareV7ToV8Migration(workspace)))
+      return
+    }
+    await this.canonical.transaction((canonical) => mergeLegacyViewIntoWorkspaceV8(canonical, workspace))
   }
 
   async clear(): Promise<void> {
-    const database = await this.open()
-    await new Promise<void>((resolve, reject) => {
-      const transaction = database.transaction(STORE_NAME, 'readwrite')
-      transaction.onerror = () => reject(transaction.error)
-      transaction.oncomplete = () => resolve()
-      transaction.objectStore(STORE_NAME).delete(RECORD_KEY)
-    })
+    await this.canonical.clear()
+  }
+
+  async exportCurrentJson(): Promise<string> {
+    const workspace = await this.canonical.load()
+    if (!workspace) throw new Error('WORKSPACE_V8_NOT_INITIALIZED')
+    return this.canonical.exportJson(workspace)
+  }
+
+  async importAndReplace(serialized: string): Promise<WorkspaceData> {
+    if (new TextEncoder().encode(serialized).byteLength > MAX_WORKSPACE_IMPORT_BYTES) throw new Error('导入文件超过 5 MB 上限')
+    const parsed: unknown = JSON.parse(serialized)
+    validateSafeJson(parsed)
+    if (isRecord(parsed) && parsed.schemaVersion === 8) {
+      const canonical = this.canonical.importJson(serialized)
+      await this.canonical.save(canonical)
+      return workspaceV8ToLegacyView(canonical)
+    }
+    const legacy = this.importJson(serialized)
+    const canonical = applyPreparedV8Migration(prepareV7ToV8Migration(legacy))
+    await this.canonical.save(canonical)
+    return workspaceV8ToLegacyView(canonical)
   }
 
   exportJson(workspace: WorkspaceData): string {

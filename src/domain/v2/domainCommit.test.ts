@@ -1,10 +1,13 @@
 import { describe, expect, it } from 'vitest'
 import type { EvidenceReference } from '../../types'
+import { createWorkspaceData } from '../../lib/workspace'
 import type { RecognitionResult, TaskSuggestionV2 } from '../../recognition/types'
 import { buildDomainCommitPlan, commitDomainPlan, type DomainCommitSelection } from './domainCommit'
 import { createGoldenWorkspaceV8 } from './fixtures'
+import { mergeLegacyViewIntoWorkspaceV8, workspaceV8ToLegacyView } from './legacyView'
 import { CanonicalWorkspaceRepository, MemoryWorkspaceRecordStore } from './repository'
 import type { WorkspaceV8 } from './types'
+import { validateWorkspaceV8 } from './validators/workspaceValidator'
 
 const NOW = '2026-08-08T12:00:00.000Z'
 
@@ -108,6 +111,12 @@ describe('B3 rich RecognitionResult domain atomic commit', () => {
     expect(committed.historyRecords.length).toBeGreaterThanOrEqual(20)
     expect((await repository.load())?.tasks).toEqual(committed.tasks)
     expect(committed.timePoints.some((item) => item.normalizedValue?.startsWith('1970-01-01'))).toBe(false)
+    const view = workspaceV8ToLegacyView(committed)
+    const autosaveView = createWorkspaceData(
+      view.tasks, view.sources, view.drafts, view.projects, view.courseBlocks, view.integrations,
+      view.knowledgeSettings, view.workPackages, view.events, view.migrationLog, view.recognitionFeedback, view.legacyData,
+    )
+    expect(validateWorkspaceV8(mergeLegacyViewIntoWorkspaceV8(committed, autosaveView))).toEqual({ valid: true, issues: [] })
   })
 
   it('is idempotent when the same confirmation operation is repeated', async () => {
@@ -128,11 +137,12 @@ describe('B3 rich RecognitionResult domain atomic commit', () => {
     await repository.save(workspace)
     const selection: DomainCommitSelection = {
       taskTempIds: ['t1', 't1s'], materialTempIds: ['mat1'], timePointTempIds: ['tp1'], eventTempIds: [],
-      rejectedTempIds: ['t2', 'mat3'], taskOverrides: { t1: { title: '填写并提交报名表' } },
+      rejectedTempIds: ['t2', 'mat3'], taskOverrides: { t1: { title: '填写并提交报名表', deadline: '2026-08-11T09:30' } },
     }
     const committed = await commitDomainPlan(repository, buildDomainCommitPlan(workspace, 'draft-rich', selection, NOW), NOW)
     expect(committed.tasks.map((item) => item.title)).toEqual(['填写并提交报名表', '核对团队信息'])
     expect(committed.tasks.some((item) => item.legacyData?.recognitionTempId === 't2')).toBe(false)
+    expect(committed.timePoints[0]).toMatchObject({ normalizedValue: '2026-08-11T09:30', timezone: 'Asia/Shanghai', precision: 'exact' })
     expect(committed.extractionDrafts[0].status).toBe('partially_confirmed')
     expect(committed.extractionDrafts[0].rejectedEntityTempIds).toEqual(expect.arrayContaining(['t2', 'mat3']))
   })

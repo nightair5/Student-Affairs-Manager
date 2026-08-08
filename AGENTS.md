@@ -123,12 +123,13 @@ npm run build
 
 ## 11. 当前阶段边界
 
-Product v2 E1 Phase A 额外约束：
+Product v2 E1 Phase B 额外约束：
 
-- 当前生产 repository 与 IndexedDB 继续使用 schema v7；schema v8 仅作为隔离的类型、验证、序列化和离线迁移契约，未经 Phase B 审批不得接入加载或保存路径。
+- 当前开发运行时以 Workspace schema v8 作为 IndexedDB 唯一事实来源；加载旧 v7 时必须先备份、内存迁移、全图校验和 round-trip，再原子替换，失败不得覆盖原记录。
 - v8 顶层 `materials`、`timePoints`、`evidenceRefs`、`historyRecords` 和 `reminderRecords` 是 canonical facts，不得由 Task/Draft 投影重新覆盖。
-- `ParsedSuggestion`、`recognitionToLegacySuggestions`、`materializeWorkspaceEntities` 仅为 v7 兼容层；Phase A 不删除、不扩展为 v8 提交路径。
-- 本阶段不得实施生产 v7→v8 数据迁移、Recognition commit pipeline 重写、Source-before-AI 工作流改造、Prompt 大改、UI 重构或生产部署。
+- `ParsedSuggestion`、`recognitionToLegacySuggestions`、`materializeWorkspaceEntities` 仅为现有 React UI 的兼容视图；不得进入 v8 正式确认提交，也不得重建独立 canonical 数组。
+- 正式确认只能通过 `DomainCommitPlan` 在单个 IndexedDB 事务中写入；录入必须先持久化 Source、SourceVersion、RecognitionRun 和 Draft，再调用识别服务。
+- 本阶段禁止 Prompt 大改、E2 识别质量优化、Project Memory、Follow AI、Risk Engine、D1/R2、账号同步、PWA、支付和生产部署。
 
 P0 可信确认闭环额外约束：
 
@@ -136,7 +137,7 @@ P0 可信确认闭环额外约束：
 - 多事项来源须支持逐项编辑、拒绝、部分确认与全部确认；确认后不得被后续解析静默覆盖。
 - 未确认草稿不得创建空项目；项目只能在至少一项建议由用户确认时建立。今日排序必须使用可测试纯函数，并尊重完成、稍后、置顶和用户优先级。
 - 业务实体优先存入 IndexedDB；保留旧 localStorage 的安全迁移路径。不得把文件本体、图片或其他大二进制内容塞入 localStorage。
-- 当前 schema v7 必须集中保存来源、草稿、项目、阶段、工作包、任务、事件、时间节点、材料、证据、历史、识别反馈和提醒；当前版本 JSON 导入采用严格校验，旧 schema v3/v4/v5/v6 允许安全迁移。
+- 当前 schema v8 必须独立保存来源版本、识别执行、草稿、项目、阶段、工作包、任务、事件、时间节点、材料、证据、历史和提醒；v7 仅作为受保护迁移输入，旧 schema v3-v6 先沿兼容路径升级。
 - 导入、导出与清空必须走统一 repository/service；清空数据需应用内二次确认，不使用浏览器 `alert`/`confirm`。
 - 明确说明本机浏览器存储、无跨设备同步，以及 OCR、网页抓取、邮件、微信授权等尚未接通的边界。
 
