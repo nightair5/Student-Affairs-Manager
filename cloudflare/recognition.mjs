@@ -16,6 +16,8 @@ const ACTION_VERBS = ['提交', '上传', '填写', '完成', '准备', '核对'
 const SUBMISSION_VERBS = new Set(['提交', '上传', '发送', '报送', '补交'])
 const FORMAT_ONLY_VERBS = new Set(['保存', '命名', '重命名', '转换', '设置格式'])
 const RECEIVE_ONLY_VERBS = new Set(['领取', '下载'])
+const DELIVERABLE_CREATION_VERBS = new Set(['准备', '完成', '撰写', '制作', '汇总', '填写', '打印', '盖章', '签字'])
+const DELIVERABLE_NOUN = /(?:表|书|报告|提纲|证明|成绩单|PPT|PDF|Word|Excel|文件|照片|证书|截图|承诺书|声明|清单|音频|视频|记录|总结|论文|问卷|方案|作品|代码|简历|陈述|教材|设备|电脑|马甲)$/iu
 const CATEGORIES = new Set(['比赛', '保研', '课程', '老师任务', '其他'])
 const INFERENCE_LEVELS = new Set(['explicit', 'strong_inference', 'optional_suggestion'])
 const NOTIFICATION_TYPES = new Set(['new_project', 'project_addendum', 'project_correction', 'course_assignment', 'teacher_task', 'event_notice', 'meeting_notice', 'material_submission', 'registration_notice', 'result_notice', 'information_only', 'uncertain'])
@@ -168,8 +170,52 @@ export function normalizeRecognitionResult(raw, sourceContent, nowIso) {
     const reason = ['background', 'contact', 'address', 'policy', 'format_requirement', 'other'].includes(item.reason) ? item.reason : 'other'
     return [{ text: ignoredText, reason }]
   }) : []
-  const informationOnly = sourceSummaryRaw.notificationType === 'information_only' || sourceSummaryRaw.requiresAction === false
+  const explicitActionInSource = ACTION_VERBS.some((verb) => sourceContent.includes(verb))
+  const informationOnly = sourceSummaryRaw.notificationType === 'information_only' || (sourceSummaryRaw.requiresAction === false && !explicitActionInSource)
   const evidenceById = new Map(evidence.map((item) => [item.id, item]))
+  const splitTaskIds = new Map()
+  const splitSubmissionTask = (task) => {
+    if (!SUBMISSION_VERBS.has(task.actionVerb)) return [task]
+    const linkedMaterials = materials.filter((material) => task.materialTempIds.includes(material.tempId) && task.actionObject.includes(material.name))
+    if (linkedMaterials.length < 2) return [task]
+    const split = linkedMaterials.map((material, index) => ({
+      ...task,
+      tempId: index === 0 ? task.tempId : `${task.tempId}-part-${index + 1}`,
+      title: `${task.actionVerb}${material.name}`,
+      actionObject: material.name,
+      materialTempIds: [material.tempId],
+    }))
+    splitTaskIds.set(task.tempId, split.map((item) => item.tempId))
+    return split
+  }
+  standaloneTasks = standaloneTasks.flatMap(splitSubmissionTask)
+  milestones.forEach((milestone) => {
+    milestone.tasks = milestone.tasks.flatMap(splitSubmissionTask)
+    milestone.workPackages.forEach((workPackage) => { workPackage.tasks = workPackage.tasks.flatMap(splitSubmissionTask) })
+  })
+  if (splitTaskIds.size > 0) {
+    const expandIds = (ids) => [...new Set(ids.flatMap((id) => splitTaskIds.get(id) || [id]))]
+    materials = materials.map((material) => ({ ...material, relatedTaskTempIds: expandIds(material.relatedTaskTempIds) }))
+    timePoints = timePoints.map((timePoint) => ({ ...timePoint, relatedTaskTempIds: expandIds(timePoint.relatedTaskTempIds) }))
+  }
+  for (const task of allTasks()) {
+    if (task.materialTempIds.length > 0 || !DELIVERABLE_CREATION_VERBS.has(task.actionVerb) || !DELIVERABLE_NOUN.test(task.actionObject)) continue
+    const tempId = `material-from-${task.tempId}`
+    materials.push({
+      tempId,
+      name: task.actionObject,
+      required: true,
+      formatRequirements: [],
+      namingRequirements: [],
+      quantity: null,
+      submissionChannel: null,
+      relatedTaskTempIds: [task.tempId],
+      evidenceIds: [...task.evidenceIds],
+      confidence: task.confidence,
+      selected: task.evidenceIds.length > 0,
+    })
+    task.materialTempIds = [tempId]
+  }
   const currentTasks = allTasks()
   const hasSupportedAction = (task) => task.evidenceIds.some((id) => {
     const quote = evidenceById.get(id)?.quotedText || ''
@@ -210,18 +256,24 @@ export function normalizeRecognitionResult(raw, sourceContent, nowIso) {
     const eventTimeIds = new Set(events.flatMap((event) => [event.startTimePointTempId, event.endTimePointTempId]).filter(Boolean))
     timePoints = timePoints.map((timePoint) => {
       const relatedTasks = survivingTasks.filter((task) => timePoint.relatedTaskTempIds.includes(task.tempId))
+      const relatedEvidenceText = timePoint.evidenceIds.map((id) => evidenceById.get(id)?.quotedText || '').join(' ')
       let type = timePoint.type
       if (!eventTimeIds.has(timePoint.tempId) && !['result_announcement', 'planned_start'].includes(type) && relatedTasks.length > 0) {
-        if (relatedTasks.some((task) => task.actionVerb === '报名')) type = 'registration_deadline'
+        if (relatedTasks.some((task) => task.actionVerb === '报名') || /报名|组队/u.test(relatedEvidenceText)) type = 'registration_deadline'
         else if (relatedTasks.some((task) => SUBMISSION_VERBS.has(task.actionVerb))) type = 'submission_deadline'
         else type = 'task_deadline'
       }
       let rawText = timePoint.rawText
       if (rawText && sourceContent.includes(`${rawText}前`) && !rawText.endsWith('前')) rawText = `${rawText}前`
+      const normalizedValue = timePoint.precision === 'date_only' && typeof timePoint.normalizedValue === 'string'
+        ? timePoint.normalizedValue.match(/^\d{4}-\d{2}-\d{2}/u)?.[0] || timePoint.normalizedValue
+        : timePoint.normalizedValue
       return {
         ...timePoint,
         type,
         rawText,
+        normalizedValue,
+        isAllDay: timePoint.precision === 'date_only' ? true : timePoint.isAllDay,
         relatedTaskTempIds: timePoint.relatedTaskTempIds.filter((id) => survivingTaskIds.has(id)),
         relatedMaterialTempIds: timePoint.relatedMaterialTempIds.filter((id) => materialIds.has(id)),
       }

@@ -1,5 +1,5 @@
 export const MODEL_GATEWAY_VERSION = 'model-gateway-1.0.0'
-export const RECOGNITION_PIPELINE_VERSION = 'recognition-pipeline-2.0.0'
+export const RECOGNITION_PIPELINE_VERSION = 'recognition-pipeline-2.1.0'
 export const RECOGNITION_RETRY_POLICY_VERSION = 'recognition-retry-1.0.0'
 const RETRYABLE_STATUS = new Set([429, 502, 503])
 

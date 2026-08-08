@@ -130,7 +130,7 @@ test('structured extraction uses V4 Flash JSON mode and returns bounded suggesti
   assert.equal(payload.route.routerVersion, 'recognition-router-1.0.0')
   assert.equal(payload.route.selectedStrategy, 'single_pass')
   assert.equal(payload.execution.gatewayVersion, 'model-gateway-1.0.0')
-  assert.equal(payload.execution.pipelineVersion, 'recognition-pipeline-2.0.0')
+  assert.equal(payload.execution.pipelineVersion, 'recognition-pipeline-2.1.0')
   assert.equal(payload.execution.provider, 'deepseek')
   assert.equal(payload.execution.model, 'deepseek-v4-flash')
   assert.equal(payload.execution.attempts >= 1, true)
@@ -198,6 +198,41 @@ test('recognition normalization removes format-only, duplicate event, and inform
   assert.equal(informationOnly.timePoints.length, 0)
   assert.equal(informationOnly.events.length, 0)
   assert.equal(informationOnly.ambiguities.length, 0)
+})
+
+test('recognition normalization splits explicit multi-material submissions and keeps action events', () => {
+  const source = '8月18日前组队并提交成员表；8月25日前完成访谈提纲；9月10日提交调研报告和访谈记录；9月15日下午2点参加答辩。'
+  const result = normalizeRecognitionResult({
+    schemaVersion: '2.0',
+    sourceSummary: { title: '调研通知', sourceType: 'text', notificationType: 'event_notice', summary: source, requiresAction: false, actionReason: '' },
+    projectMatch: { decision: 'new_project', matchedProjectId: null, suggestedProjectTitle: '调研项目', confidence: 0.9, reasons: [] },
+    projectSuggestion: null, milestones: [], conflicts: [], ambiguities: [], ignoredContent: [],
+    standaloneTasks: [
+      { tempId: 'task-outline', title: '完成访谈提纲', actionVerb: '完成', actionObject: '访谈提纲', evidenceIds: ['ev-outline'], inferenceLevel: 'explicit', materialTempIds: [], timePointTempIds: [] },
+      { tempId: 'task-submit', title: '提交调研报告和访谈记录', actionVerb: '提交', actionObject: '调研报告和访谈记录', evidenceIds: ['ev-submit'], inferenceLevel: 'explicit', materialTempIds: ['mat-report', 'mat-record'], timePointTempIds: ['tp-submit'] },
+    ],
+    materials: [
+      { tempId: 'mat-report', name: '调研报告', required: true, relatedTaskTempIds: ['task-submit'], evidenceIds: ['ev-submit'], confidence: 0.9 },
+      { tempId: 'mat-record', name: '访谈记录', required: true, relatedTaskTempIds: ['task-submit'], evidenceIds: ['ev-submit'], confidence: 0.9 },
+    ],
+    timePoints: [
+      { tempId: 'tp-submit', type: 'submission_deadline', rawText: '9月10日', normalizedValue: '2026-09-10T23:59:59+08:00', timezone: 'Asia/Shanghai', isAllDay: false, precision: 'date_only', needsConfirmation: false, relatedTaskTempIds: ['task-submit'], relatedMaterialTempIds: ['mat-report', 'mat-record'], evidenceIds: ['ev-submit'], confidence: 0.9 },
+      { tempId: 'tp-event', type: 'event_start', rawText: '9月15日下午2点', normalizedValue: '2026-09-15T14:00:00+08:00', timezone: 'Asia/Shanghai', isAllDay: false, precision: 'exact', needsConfirmation: false, relatedTaskTempIds: [], relatedMaterialTempIds: [], evidenceIds: ['ev-event'], confidence: 0.9 },
+    ],
+    events: [{ tempId: 'event-defense', title: '答辩', description: '', startTimePointTempId: 'tp-event', endTimePointTempId: null, location: null, evidenceIds: ['ev-event'], confidence: 0.9, inferenceLevel: 'explicit' }],
+    evidence: [
+      { id: 'ev-outline', quotedText: '8月25日前完成访谈提纲', field: 'description', confidence: 0.9 },
+      { id: 'ev-submit', quotedText: '9月10日提交调研报告和访谈记录', field: 'description', confidence: 0.9 },
+      { id: 'ev-event', quotedText: '9月15日下午2点参加答辩', field: 'event', confidence: 0.9 },
+    ],
+    quality: {},
+  }, source, '2026-08-09T00:00:00.000Z')
+
+  assert.deepEqual(result.standaloneTasks.map((task) => task.title), ['完成访谈提纲', '提交调研报告', '提交访谈记录'])
+  assert.equal(result.materials.some((material) => material.name === '访谈提纲'), true)
+  assert.equal(result.timePoints.find((item) => item.tempId === 'tp-submit').normalizedValue, '2026-09-10')
+  assert.equal(result.timePoints.find((item) => item.tempId === 'tp-submit').isAllDay, true)
+  assert.equal(result.events.length, 1)
 })
 
 test('conditional repair runs at most once and keeps the first valid result when repair fails', async () => {
