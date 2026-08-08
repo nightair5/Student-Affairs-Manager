@@ -200,7 +200,7 @@ P1 阶段不包含生产 OCR、邮件发送、网页抓取/监测、微信授权
 
 新的识别管线不再把一份通知压平成若干孤立卡片。它先匹配项目，再组织为阶段、可选工作包和可执行任务，并把材料、时间点与事件分开。待确认页默认只勾选原文明示任务，推断项保持可见但需人工勾选；所有建议都可编辑、拒绝、拆分、合并、换阶段和回看逐字依据。
 
-DeepSeek 使用 `RecognitionResult 2.0` / `recognition-2.0.0` 严格合同。未配置、超时或返回非法数据时，已保存 Source 不丢失，并回退到本地规则草稿。已确认项目和任务不会被后续识别静默覆盖。
+DeepSeek 使用 `RecognitionResult 2.0` / `recognition-2.1.0` 严格合同，模型仍为 `deepseek-v4-flash`。E2 已加入结构质量校验、最多一次条件修复、复杂度路由、统一 ModelGateway、有限传输重试与执行元数据；复杂来源两阶段识别在 Holdout 证明收益前保持关闭。未配置、超时或返回非法数据时，已保存 Source 不丢失，并回退到本地规则草稿。已确认项目和任务不会被后续识别静默覆盖。
 
 ```bash
 npm run eval:recognition
@@ -211,6 +211,8 @@ npm run eval:recognition
 工作区现以 IndexedDB schema v8 作为唯一事实来源。首次读取 v7 时，浏览器先保存带完整性哈希的原始备份，再在内存迁移、全图校验和 JSON round-trip，全部通过后才原子替换；失败不会覆盖 v7。“隐私与数据”页可下载最新迁移前备份。回滚步骤和失败保护见 [data-migration.md](./docs/data-migration.md)，识别管线与层级规则见 [recognition-architecture.md](./docs/recognition-architecture.md) 和 [task-hierarchy-rules.md](./docs/task-hierarchy-rules.md)。
 
 Product v2 E1 Phase B 已把 Workspace v8 接入本机运行时：Source 在识别请求前持久化，Rich RecognitionResult 经 `DomainCommitPlan` 原子提交，Subtask、多 TimePoint、Material rich fields、Event、字段级 Evidence 与 History 不再经过旧 Task 投影压缩。旧组件仍通过只读/显式回写兼容视图渐进运行，但不能覆盖 v8 canonical 数组；本阶段没有生产部署。详细契约与阶段证据见 [Product v2 E1 领域契约](./docs/product-v2-e1-phase-a.md)。
+
+Product v2 E2 的工程链路已实现并通过全量回归，但质量阶段尚未完成：优化后的真实 DeepSeek Golden/Holdout After 因当前本机没有安全预览环境 Secret/Cloudflare 授权且本轮禁止生产部署而 `NOT RUN`，不能以 local fallback 或旧生产 Prompt 代替。最终审计、Before 指标、阻碍和解阻步骤见 [E2 Final Report](./docs/E2_FINAL_REPORT.md)。
 
 ## 数据保存范围
 

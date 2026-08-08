@@ -140,6 +140,14 @@ Product v2 E2-A Recognition Baseline 额外约束：
 - Token/Cost 只能报告现有接口真实返回或可审计日志中的观测值；不可观测时写 `NOT OBSERVABLE`，禁止估算冒充实测。
 - E2-A 报告完成后停止，不得自动修改 Prompt、调参或进入 E2-B。
 
+Product v2 E2 Recognition Pipeline v2 额外约束：
+
+- Golden 与 Holdout 必须独立冻结；不得为了提高分数修改 expected，合法订正只能写入 corrections log。
+- Local fallback、Mock、旧生产 Prompt 与真实 DeepSeek After 指标必须分开，缺少安全服务端 Secret 或预览部署条件时写 `NOT RUN`，不得伪造 PASS。
+- Validator 只能发现问题；Repair 最多一次且不能新增无证据事实。复杂两阶段调用只有 Holdout 证明净收益后才能开启。
+- Transport Failure 与 Semantic Failure 分开；评估器不得在 Worker 的有限重试之外偷偷重试并覆盖失败。
+- 在 Golden After、Holdout After、质量门槛和 A-J 浏览器回归完成前，不得宣布 E2 Complete 或进入 E3。
+
 P0 可信确认闭环额外约束：
 
 - 录入必须先形成可持久化的 `Source` 和 `ExtractionDraft`，不得因关闭弹层丢失待确认建议。

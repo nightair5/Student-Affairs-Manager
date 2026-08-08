@@ -492,3 +492,12 @@ E2-A 只测量已冻结的 `RecognitionResult 2.0`，不修改 Prompt、模型�
 - 现有接口无法观测 Token/Cost 时必须明确标记 `NOT OBSERVABLE`，不得以字符数估算冒充实测。
 - 每个失败样例保存 case ID、错误分类、严重级别与原因；原始模型输出只进入 Git 忽略的本地断点目录。
 - 完成 Baseline Report 后停止，不得自动进入 E2-B 或据此修改 Prompt。
+
+## 13.1 Product v2 E2 Recognition Pipeline v2 状态
+
+- Golden 110 条保持冻结；另建 40 条独立 Holdout 和 33 类 Error Taxonomy，所有修订必须进入显式 corrections log。
+- RecognitionResult 仍为 schema 2.0，模型仍为 `deepseek-v4-flash`；Prompt 升级为 `recognition-2.1.0`，Pipeline 为 `recognition-pipeline-2.0.0`。
+- 质量校验器只报告结构问题；条件 Repair 最多一次且不得新增事实；复杂两阶段识别在 Holdout 证明收益前保持关闭。
+- 传输故障与语义失败分开；只有 429/502/503/network/timeout 允许一次有限重试。
+- 优化后真实 DeepSeek Golden/Holdout After 未运行时，产品和文档不得声称 E2 质量已经达标，也不得用 local fallback、Mock 或旧生产 Prompt 冒充。
+- E2 完整状态、门槛、回归与阻碍以 `docs/E2_FINAL_REPORT.md` 为准；未通过 After 门槛前不得进入 E3。
