@@ -422,6 +422,10 @@ export function postProcessRecognition(result: RecognitionResult, sourceText: st
   return result
 }
 
+/**
+ * @deprecated Legacy schema v7 UI bridge. This intentionally remains in
+ * Phase A, but it is lossy and must not become the Workspace v8 commit path.
+ */
 export function recognitionToLegacySuggestions(result: RecognitionResult): ParsedSuggestion[] {
   const points = new Map(result.timePoints.map((point) => [point.tempId, point]))
   return allTasks(result).filter((task) => task.hierarchyType === 'task').map((task) => {

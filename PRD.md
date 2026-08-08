@@ -274,6 +274,15 @@ MVP 提供可导航、可理解的桌面页面骨架：
 
 ## 6. 数据模型
 
+### 6.0 Product v2 E1 Phase A 数据底座
+
+- 当前生产运行时保持 Workspace schema v7；E1 Phase A 只冻结 schema v8 类型、全图校验、离线迁移/备份/回滚契约和 round-trip 测试，不接入生产加载路径。
+- v8 的 Source/SourceVersion/RecognitionRun/ExtractionDraft/Project/Milestone/WorkPackage/Task/Material/TimePoint/Event/EvidenceRef/HistoryRecord/ReminderRecord/ChangeProposal 为 canonical facts。
+- ProjectState、Risk、Priority、TodayRecommendation、Progress 与 NextDeadline 为可重算 derived data，不得成为第二事实源。
+- date-only、zoned datetime 与 vague/relative 时间分离；未知时间使用 null + needsConfirmation，禁止 sentinel date。
+- Rich RecognitionResult 原子提交、Source-before-AI、真实 v7→v8 IndexedDB 迁移和 legacy bridge 退休属于 E1 Phase B，不在本轮实施。
+- 完整矩阵、Workspace v8 结构和迁移映射见 `docs/product-v2-e1-phase-a.md`。
+
 ### 6.1 Task
 
 - `id`

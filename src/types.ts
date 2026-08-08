@@ -210,6 +210,10 @@ export interface ReminderRecord {
   errorMessage?: string
 }
 
+/**
+ * @deprecated Legacy confirmation compatibility only. Workspace v8 stores
+ * rich extraction drafts and canonical entities without this lossy adapter.
+ */
 export interface ParsedSuggestion {
   id: string
   title: string

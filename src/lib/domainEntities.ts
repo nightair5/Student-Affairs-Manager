@@ -65,6 +65,10 @@ export interface MaterializedWorkspaceEntities {
   reminderRecords: ReminderRecord[]
 }
 
+/**
+ * @deprecated Legacy schema v7 compatibility projection. It must never be
+ * used to rebuild or overwrite canonical Workspace v8 entity arrays.
+ */
 export function materializeWorkspaceEntities(
   tasks: Task[],
   sources: Source[],

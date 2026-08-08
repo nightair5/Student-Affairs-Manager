@@ -210,6 +210,8 @@ npm run eval:recognition
 
 工作区现为 IndexedDB schema v7，可安全迁移 v3-v6。浏览器会在首次迁移前另存原始记录，“隐私与数据”页可下载最新迁移前备份。回滚步骤和失败保护见 [data-migration.md](./docs/data-migration.md)，识别管线与层级规则见 [recognition-architecture.md](./docs/recognition-architecture.md) 和 [task-hierarchy-rules.md](./docs/task-hierarchy-rules.md)。
 
+Product v2 E1 Phase A 已冻结独立的 Workspace v8 领域契约、全图校验器、离线 v7→v8 迁移/备份/回滚契约和 round-trip fixtures。当前运行时仍是 v7，尚未把真实 IndexedDB 数据切换到 v8，也尚未退休 lossy legacy bridge；详细边界与映射见 [Product v2 E1 Phase A 领域契约](./docs/product-v2-e1-phase-a.md)。
+
 ## 数据保存范围
 
 数据保存在当前设备与浏览器的站点存储中。使用相同的站点地址刷新或关闭后重新打开，数据会自动恢复；更换设备、浏览器、站点地址，或清除浏览器站点数据时不会自动同步。跨设备同步需要后续账号与后端服务。

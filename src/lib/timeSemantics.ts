@@ -13,7 +13,7 @@ interface DateTimeParts {
   second: number
 }
 
-function validTimeZone(timeZone: string): boolean {
+export function isValidTimeZone(timeZone: string): boolean {
   try {
     new Intl.DateTimeFormat('en-US', { timeZone }).format(0)
     return true
@@ -23,7 +23,7 @@ function validTimeZone(timeZone: string): boolean {
 }
 
 export function resolveWorkspaceTimeZone(timeZone?: string): string {
-  return timeZone && validTimeZone(timeZone) ? timeZone : DEFAULT_WORKSPACE_TIMEZONE
+  return timeZone && isValidTimeZone(timeZone) ? timeZone : DEFAULT_WORKSPACE_TIMEZONE
 }
 
 export function isDateOnly(value: string): boolean {
