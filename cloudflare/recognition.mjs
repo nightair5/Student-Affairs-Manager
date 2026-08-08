@@ -13,6 +13,7 @@ export {
 } from './recognition-prompt.mjs'
 
 const ACTION_VERBS = ['提交', '上传', '填写', '完成', '准备', '核对', '确认', '联系', '参加', '阅读', '下载', '打印', '盖章', '签字', '回复', '领取', '整理', '撰写', '制作', '报名', '发送', '携带', '出示', '归还', '反馈', '汇总', '组队', '办理', '预约']
+const REGISTRATION_EVIDENCE = /报名(?:截止|时间|开始|开放|组队)|(?:截止|完成)报名|组队/u
 const SUBMISSION_VERBS = new Set(['提交', '上传', '发送', '报送', '补交'])
 const FORMAT_ONLY_VERBS = new Set(['保存', '命名', '重命名', '转换', '设置格式'])
 const RECEIVE_ONLY_VERBS = new Set(['领取', '下载'])
@@ -259,7 +260,7 @@ export function normalizeRecognitionResult(raw, sourceContent, nowIso) {
       const relatedEvidenceText = timePoint.evidenceIds.map((id) => evidenceById.get(id)?.quotedText || '').join(' ')
       let type = timePoint.type
       if (!eventTimeIds.has(timePoint.tempId) && !['result_announcement', 'planned_start'].includes(type) && relatedTasks.length > 0) {
-        if (relatedTasks.some((task) => task.actionVerb === '报名') || /报名|组队/u.test(relatedEvidenceText)) type = 'registration_deadline'
+        if (relatedTasks.some((task) => task.actionVerb === '报名' || task.actionVerb === '组队') || REGISTRATION_EVIDENCE.test(relatedEvidenceText)) type = 'registration_deadline'
         else if (relatedTasks.some((task) => SUBMISSION_VERBS.has(task.actionVerb))) type = 'submission_deadline'
         else type = 'task_deadline'
       }

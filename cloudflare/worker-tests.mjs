@@ -235,6 +235,28 @@ test('recognition normalization splits explicit multi-material submissions and k
   assert.equal(result.events.length, 1)
 })
 
+test('registration deadline normalization requires registration semantics, not a material named registration form', () => {
+  const base = {
+    schemaVersion: '2.0', createdAt: '2026-08-09T00:00:00.000Z',
+    sourceSummary: { title: '报名表提交', sourceType: 'text', notificationType: 'material_submission', summary: '提交报名表', requiresAction: true, actionReason: '需提交' },
+    projectMatch: { decision: 'standalone_task', matchedProjectId: null, suggestedProjectTitle: null, confidence: 0.9, reasons: [] }, projectSuggestion: null,
+    milestones: [],
+    standaloneTasks: [{ tempId: 'task-submit', title: '提交报名表', actionVerb: '提交', actionObject: '报名表', description: '', nextAction: '提交报名表', estimatedMinutes: 10, suggestedPriority: 'medium', hierarchyType: 'task', parentTempId: null, dependencyTempIds: [], materialTempIds: ['material-form'], timePointTempIds: ['time-submit'], evidenceIds: ['evidence-submit'], confidence: 0.9, inferenceLevel: 'explicit', selected: true }],
+    materials: [{ tempId: 'material-form', name: '报名表', required: true, relatedTaskTempIds: ['task-submit'], evidenceIds: ['evidence-submit'], confidence: 0.9 }],
+    timePoints: [{ tempId: 'time-submit', type: 'registration_deadline', rawText: '8月20日前', normalizedValue: '2026-08-20', timezone: 'Asia/Shanghai', isAllDay: true, precision: 'date_only', needsConfirmation: false, relatedTaskTempIds: ['task-submit'], relatedMaterialTempIds: ['material-form'], evidenceIds: ['evidence-submit'], confidence: 0.9 }],
+    events: [], evidence: [{ id: 'evidence-submit', quotedText: '8月20日前提交报名表', field: 'description', confidence: 0.9 }], conflicts: [], ambiguities: [], ignoredContent: [], quality: {},
+  }
+  const submission = normalizeRecognitionResult(base, '8月20日前提交报名表', '2026-08-09T00:00:00.000Z')
+  assert.equal(submission.timePoints[0].type, 'submission_deadline')
+
+  const registration = normalizeRecognitionResult({
+    ...base,
+    standaloneTasks: [{ ...base.standaloneTasks[0], actionVerb: '报名', actionObject: '创新赛' }],
+    evidence: [{ id: 'evidence-submit', quotedText: '报名截止8月20日', field: 'description', confidence: 0.9 }],
+  }, '报名截止8月20日', '2026-08-09T00:00:00.000Z')
+  assert.equal(registration.timePoints[0].type, 'registration_deadline')
+})
+
 test('conditional repair runs at most once and keeps the first valid result when repair fails', async () => {
   let calls = 0
   const original = {
