@@ -3,6 +3,7 @@ import { createHash } from 'node:crypto'
 import { spawn } from 'node:child_process'
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
+import { createInterface } from 'node:readline'
 import { createServer } from 'vite'
 
 const ROOT = process.cwd()
@@ -59,8 +60,59 @@ function curlJson(url, { method = 'GET', headers = {}, body = null } = {}) {
   })
 }
 
-async function requestJson(transport, url, options = {}) {
+function createPythonSessionTransport() {
+  const source = [
+    'import json, sys, requests',
+    'session = requests.Session()',
+    'for line in sys.stdin:',
+    '  try:',
+    '    item = json.loads(line)',
+    "    response = session.request(item.get('method', 'GET'), item['url'], headers=item.get('headers') or {}, data=item.get('body'), timeout=(20, 120))",
+    '    try: payload = response.json()',
+    '    except Exception: payload = None',
+    "    output = {'ok': response.ok, 'status': response.status_code, 'json': payload}",
+    '  except Exception as error:',
+    "    output = {'transportError': type(error).__name__}",
+    "  print(json.dumps(output, ensure_ascii=False), flush=True)",
+  ].join('\n')
+  const child = spawn('python', ['-X', 'utf8', '-u', '-c', source], { stdio: ['pipe', 'pipe', 'pipe'], windowsHide: true })
+  const lines = createInterface({ input: child.stdout })
+  const pending = []
+  let stderr = ''
+  child.stderr.on('data', (chunk) => { stderr = `${stderr}${chunk.toString('utf8')}`.slice(-1000) })
+  lines.on('line', (line) => {
+    const request = pending.shift()
+    if (!request) return
+    try {
+      const response = JSON.parse(line)
+      if (response.transportError) request.reject(new Error(`python transport failed: ${response.transportError}`))
+      else request.resolve(response)
+    } catch {
+      request.reject(new Error('python transport returned invalid JSON'))
+    }
+  })
+  const rejectPending = (reason) => {
+    while (pending.length > 0) pending.shift().reject(reason)
+  }
+  child.on('error', (error) => rejectPending(error))
+  child.on('close', (code) => rejectPending(new Error(`python transport exited ${code}${stderr ? ': stderr available' : ''}`)))
+  return {
+    request(url, options = {}) {
+      return new Promise((resolve, reject) => {
+        pending.push({ resolve, reject })
+        child.stdin.write(`${JSON.stringify({ url, method: options.method ?? 'GET', headers: options.headers ?? {}, body: options.body ?? null })}\n`)
+      })
+    },
+    close() {
+      lines.close()
+      child.stdin.end()
+    },
+  }
+}
+
+async function requestJson(transport, pythonSession, url, options = {}) {
   if (transport === 'curl') return curlJson(url, options)
+  if (transport === 'python-session') return pythonSession.request(url, options)
   const response = await fetch(url, {
     method: options.method,
     headers: options.headers,
@@ -148,9 +200,10 @@ async function main() {
   const resume = option('resume', 'false') === 'true'
   const retryInvalid = option('retry-invalid', 'false') === 'true'
   const transport = option('transport', 'fetch')
-  if (!['fetch', 'curl'].includes(transport)) throw new Error(`Unsupported transport: ${transport}`)
+  if (!['fetch', 'curl', 'python-session'].includes(transport)) throw new Error(`Unsupported transport: ${transport}`)
   const reportedStartedAt = option('run-started-at')
   const reportedCompletedAt = option('run-completed-at')
+  const pythonSession = transport === 'python-session' ? createPythonSessionTransport() : null
   const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'error', server: { middlewareMode: true } })
   try {
     const [{ recognitionGoldenDataset, recognitionGoldenDatasetMetadata }, { recognitionHoldoutDataset, recognitionHoldoutMetadata }, { scoreRecognitionCase, aggregateRecognitionMetrics }, pipeline, schema, prompt] = await Promise.all([
@@ -192,7 +245,7 @@ async function main() {
     const startedAt = new Date().toISOString()
 
     if (provider === 'deepseek-production') {
-      const response = await requestJson(transport, `${endpoint}/status`, { headers: { Accept: 'application/json', Origin: origin } })
+      const response = await requestJson(transport, pythonSession, `${endpoint}/status`, { headers: { Accept: 'application/json', Origin: origin } })
       const status = response.json
       if (!response.ok || status?.configured !== true) throw new Error('Production DeepSeek is not configured')
       if (status.model !== prompt.RECOGNITION_MODEL_NAME) throw new Error(`Model drift: expected ${prompt.RECOGNITION_MODEL_NAME}, got ${status.model}`)
@@ -218,7 +271,7 @@ async function main() {
         scored = scoreRecognitionCase(fixture, provider, result, Date.now() - started)
       } else {
         try {
-          const response = await requestJson(transport, `${endpoint}/extract`, {
+          const response = await requestJson(transport, pythonSession, `${endpoint}/extract`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', Accept: 'application/json', Origin: origin },
             body: JSON.stringify({
@@ -315,6 +368,7 @@ async function main() {
       ])
     }
   } finally {
+    pythonSession?.close()
     await vite.close()
   }
 }
