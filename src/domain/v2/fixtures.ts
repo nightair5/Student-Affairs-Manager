@@ -62,6 +62,8 @@ export function createGoldenWorkspaceV8(): WorkspaceV8 {
     requirements: [],
     formatRequirements: index === 2 ? ['PDF'] : [],
     namingRequirements: index === 2 ? ['学校-团队-作品名'] : [],
+    quantity: 1,
+    submissionChannel: index === 2 ? '比赛系统' : null,
     relatedTaskIds: [index < 2 ? 'task-1' : index === 2 ? 'task-3' : 'task-4'],
     deadlineTimePointId: index < 2 ? 'time-1' : index === 2 ? 'time-3' : null,
     createdAt: NOW,

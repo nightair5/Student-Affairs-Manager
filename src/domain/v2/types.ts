@@ -145,6 +145,8 @@ export interface Material extends ReviewableEntity {
   requirements: string[]
   formatRequirements: string[]
   namingRequirements: string[]
+  quantity: number | null
+  submissionChannel: string | null
   relatedTaskIds: string[]
   deadlineTimePointId: string | null
   createdAt: string

@@ -11,6 +11,7 @@ export interface WorkspaceV7Backup {
   id: string
   schemaVersion: 7
   createdAt: string
+  integrityHash: string
   snapshot: WorkspaceData
 }
 
@@ -43,6 +44,29 @@ function legacy(value: Record<string, unknown>): LegacyData {
 
 function cloneV7(workspace: WorkspaceData): WorkspaceData {
   return JSON.parse(JSON.stringify(workspace)) as WorkspaceData
+}
+
+export function workspaceSnapshotHash(value: unknown): string {
+  const text = JSON.stringify(value)
+  let hash = 0x811c9dc5
+  for (let index = 0; index < text.length; index += 1) {
+    hash ^= text.charCodeAt(index)
+    hash = Math.imul(hash, 0x01000193)
+  }
+  return `fnv1a32:${(hash >>> 0).toString(16).padStart(8, '0')}`
+}
+
+export function parseWorkspaceV7Snapshot(value: unknown): WorkspaceData {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('WORKSPACE_V7_INVALID')
+  const record = value as Partial<Record<keyof WorkspaceData, unknown>> & { schemaVersion?: unknown }
+  const requiredArrays: Array<keyof WorkspaceData> = [
+    'tasks', 'sources', 'drafts', 'projects', 'evidence', 'timePoints', 'materialItems', 'historyRecords',
+    'reminderRecords', 'workPackages', 'events', 'migrationLog', 'recognitionFeedback', 'courseBlocks',
+  ]
+  if (record.schemaVersion !== 7 || requiredArrays.some((key) => !Array.isArray(record[key]))) {
+    throw new Error('WORKSPACE_V7_INVALID')
+  }
+  return cloneV7(value as WorkspaceData)
 }
 
 function sourceStatus(source: WorkspaceData['sources'][number]): Source['status'] {
@@ -251,6 +275,32 @@ function mapTimePoints(workspace: WorkspaceData, timezone: string, now: string):
       needsReview: normalized.needsConfirmation,
     })
   })
+  workspace.events.forEach((event) => {
+    const addEventPoint = (kind: 'start' | 'end', value: string | null) => {
+      if (!value) return
+      const id = `time:event:${event.id}:${kind}`
+      if (ids.has(id)) return
+      ids.add(id)
+      const normalized = canonicalTimeValue(value, timezone)
+      mapped.push({
+        id,
+        projectId: event.projectId ?? null,
+        milestoneId: event.milestoneId ?? null,
+        taskId: null,
+        materialId: null,
+        eventId: event.id,
+        type: kind === 'start' ? 'event_start' : 'event_end',
+        rawText: value,
+        ...normalized,
+        createdAt: event.createdAt,
+        updatedAt: event.updatedAt,
+        needsReview: normalized.needsConfirmation,
+        legacyData: legacy({ v7EventId: event.id, v7Field: kind === 'start' ? 'startAt' : 'endAt' }),
+      })
+    }
+    addEventPoint('start', event.startAt)
+    addEventPoint('end', event.endAt)
+  })
   return mapped
 }
 
@@ -272,6 +322,8 @@ function mapMaterials(workspace: WorkspaceData, timePoints: TimePoint[]): Materi
     requirements: item.note ? [item.note] : [],
     formatRequirements: item.formatRequirement ? [item.formatRequirement] : [],
     namingRequirements: [],
+    quantity: item.quantity ?? null,
+    submissionChannel: null,
     relatedTaskIds: item.taskId ? [item.taskId] : [],
     deadlineTimePointId: timePoints.find((point) => point.materialId === item.id)?.id ?? null,
     createdAt: item.createdAt,
@@ -281,18 +333,19 @@ function mapMaterials(workspace: WorkspaceData, timePoints: TimePoint[]): Materi
   }))
 }
 
-function mapEvents(workspace: WorkspaceData): Event[] {
+function mapEvents(workspace: WorkspaceData, timePoints: TimePoint[]): Event[] {
   return workspace.events.map((item): Event => ({
     id: item.id,
     projectId: item.projectId ?? null,
     title: item.title,
     description: item.description || null,
-    startTimePointId: null,
-    endTimePointId: null,
+    startTimePointId: timePoints.find((point) => point.eventId === item.id && point.type === 'event_start')?.id ?? null,
+    endTimePointId: timePoints.find((point) => point.eventId === item.id && point.type === 'event_end')?.id ?? null,
     location: item.location ?? null,
     createdAt: item.createdAt,
     updatedAt: item.updatedAt,
-    needsReview: Boolean(item.startAt || item.endAt),
+    needsReview: Boolean((item.startAt && !timePoints.some((point) => point.eventId === item.id && point.type === 'event_start' && !point.needsConfirmation))
+      || (item.endAt && !timePoints.some((point) => point.eventId === item.id && point.type === 'event_end' && !point.needsConfirmation))),
     legacyData: legacy({ v7Record: item, startAt: item.startAt, endAt: item.endAt, milestoneId: item.milestoneId, evidenceIds: item.evidenceIds, needsConfirmation: item.needsConfirmation }),
   }))
 }
@@ -379,7 +432,14 @@ export function prepareV7ToV8Migration(workspace: WorkspaceData, options: Migrat
   const migrationId = options.migrationId ?? `migration-v7-v8-${now}`
   const workspaceId = options.workspaceId ?? 'workspace-local'
   const timezone = options.defaultTimezone ?? DEFAULT_WORKSPACE_TIMEZONE
-  const backup: WorkspaceV7Backup = { id: `backup:${migrationId}`, schemaVersion: 7, createdAt: now, snapshot: cloneV7(workspace) }
+  const backupSnapshot = cloneV7(workspace)
+  const backup: WorkspaceV7Backup = {
+    id: `backup:${migrationId}`,
+    schemaVersion: 7,
+    createdAt: now,
+    integrityHash: workspaceSnapshotHash(backupSnapshot),
+    snapshot: backupSnapshot,
+  }
   const metadata: MigrationMetadata = {
     migrationId, sourceVersion: 7, targetVersion: 8, startedAt: now, completedAt: null,
     status: 'prepared', warnings: [], errors: [], backupId: backup.id,
@@ -390,6 +450,14 @@ export function prepareV7ToV8Migration(workspace: WorkspaceData, options: Migrat
   const tasks = mapTasks(workspace)
   const timePoints = mapTimePoints(workspace, timezone, now)
   const history = mapHistory(workspace)
+  const knownTopLevelKeys = new Set([
+    'schemaVersion', 'tasks', 'sources', 'drafts', 'projects', 'evidence', 'timePoints', 'materialItems',
+    'historyRecords', 'reminderRecords', 'workPackages', 'events', 'migrationLog', 'recognitionFeedback',
+    'legacyData', 'courseBlocks', 'integrations', 'knowledgeSettings', 'savedAt',
+  ])
+  const unknownTopLevelFields = Object.fromEntries(
+    Object.entries(workspace as unknown as Record<string, unknown>).filter(([key]) => !knownTopLevelKeys.has(key)),
+  )
   const topLevelLegacy = legacy({
     courseBlocks: workspace.courseBlocks,
     integrations: workspace.integrations,
@@ -398,6 +466,7 @@ export function prepareV7ToV8Migration(workspace: WorkspaceData, options: Migrat
     v7MigrationLog: workspace.migrationLog,
     v7LegacyData: workspace.legacyData,
     orphanHistoryRecords: history.orphans,
+    unknownTopLevelFields,
   })
   const candidate: WorkspaceV8 = {
     schemaVersion: 8,
@@ -414,7 +483,7 @@ export function prepareV7ToV8Migration(workspace: WorkspaceData, options: Migrat
     tasks,
     materials: mapMaterials(workspace, timePoints),
     timePoints,
-    events: mapEvents(workspace),
+    events: mapEvents(workspace, timePoints),
     evidenceRefs: mapEvidence(workspace, now),
     changeProposals: [],
     historyRecords: history.records,
