@@ -1,4 +1,15 @@
 import type { Task } from '../types'
+import {
+  addDateOnlyDays,
+  compactDateOnly,
+  DEFAULT_WORKSPACE_TIMEZONE,
+  isDateOnly,
+  parseBusinessDateTime,
+} from './timeSemantics'
+
+export interface CalendarExportOptions {
+  defaultTimezone?: string
+}
 
 function escapeIcs(value: string): string {
   return value.replace(/\\/gu, '\\\\').replace(/\r?\n/gu, '\\n').replace(/,/gu, '\\,').replace(/;/gu, '\\;')
@@ -14,19 +25,40 @@ function calendarHeader(name: string): string[] {
   return ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Student Affairs Manager//CN', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH', `X-WR-CALNAME:${escapeIcs(name)}`]
 }
 
-function earliestReminder(task: Task): string {
+function earliestReminder(task: Task, timeZone: string): Date {
   const enabled = task.reminders
     .filter((reminder) => reminder.enabled && reminder.scheduledAt)
     .sort((left, right) => left.scheduledAt.localeCompare(right.scheduledAt))[0]
-  if (enabled) return enabled.scheduledAt
-  return new Date(new Date(task.deadline).getTime() - 60 * 60 * 1000).toISOString()
+  if (enabled) {
+    const scheduled = parseBusinessDateTime(enabled.scheduledAt, timeZone)
+    if (scheduled) return scheduled
+  }
+  const deadline = parseBusinessDateTime(task.deadline, timeZone)
+  if (!deadline) throw new Error('INVALID_CALENDAR_DATE')
+  return new Date(deadline.getTime() - 60 * 60 * 1000)
 }
 
-export function buildCalendarIcs(tasks: Task[], generatedAt = new Date()): string {
+export function buildCalendarIcs(tasks: Task[], generatedAt = new Date(), options: CalendarExportOptions = {}): string {
   const lines = calendarHeader('学生事务管家')
+  const timeZone = options.defaultTimezone ?? DEFAULT_WORKSPACE_TIMEZONE
   tasks.filter((task) => task.status !== '已完成').forEach((task) => {
-    const deadline = new Date(task.deadline)
-    const start = task.plannedStart ? new Date(task.plannedStart) : new Date(deadline.getTime() - Math.max(15, task.estimatedMinutes) * 60_000)
+    if (isDateOnly(task.deadline)) {
+      lines.push(
+        'BEGIN:VEVENT',
+        `UID:${escapeIcs(task.id)}@student-affairs.site`,
+        `DTSTAMP:${utcStamp(generatedAt)}`,
+        `DTSTART;VALUE=DATE:${compactDateOnly(task.deadline)}`,
+        `DTEND;VALUE=DATE:${compactDateOnly(addDateOnlyDays(task.deadline, 1))}`,
+        `SUMMARY:${escapeIcs(task.title)}`,
+        `DESCRIPTION:${escapeIcs(`${task.nextAction}\n预计 ${task.estimatedMinutes} 分钟\n分类：${task.category}`)}`,
+        'END:VEVENT',
+      )
+      return
+    }
+    const deadline = parseBusinessDateTime(task.deadline, timeZone)
+    if (!deadline) throw new Error('INVALID_CALENDAR_DATE')
+    const planned = task.plannedStart ? parseBusinessDateTime(task.plannedStart, timeZone) : null
+    const start = planned ?? new Date(deadline.getTime() - Math.max(15, task.estimatedMinutes) * 60_000)
     lines.push(
       'BEGIN:VEVENT',
       `UID:${escapeIcs(task.id)}@student-affairs.site`,
@@ -36,7 +68,7 @@ export function buildCalendarIcs(tasks: Task[], generatedAt = new Date()): strin
       `SUMMARY:${escapeIcs(task.title)}`,
       `DESCRIPTION:${escapeIcs(`${task.nextAction}\n预计 ${task.estimatedMinutes} 分钟\n分类：${task.category}`)}`,
       'BEGIN:VALARM',
-      `TRIGGER;VALUE=DATE-TIME:${utcStamp(earliestReminder(task))}`,
+      `TRIGGER;VALUE=DATE-TIME:${utcStamp(earliestReminder(task, timeZone))}`,
       'ACTION:DISPLAY',
       `DESCRIPTION:${escapeIcs(`该处理：${task.title}`)}`,
       'END:VALARM',
@@ -47,14 +79,18 @@ export function buildCalendarIcs(tasks: Task[], generatedAt = new Date()): strin
   return `${lines.join('\r\n')}\r\n`
 }
 
-export function buildTodoIcs(tasks: Task[], generatedAt = new Date()): string {
+export function buildTodoIcs(tasks: Task[], generatedAt = new Date(), options: CalendarExportOptions = {}): string {
   const lines = calendarHeader('学生事务待办')
+  const timeZone = options.defaultTimezone ?? DEFAULT_WORKSPACE_TIMEZONE
   tasks.filter((task) => task.status !== '已完成').forEach((task) => {
+    const due = isDateOnly(task.deadline)
+      ? `DUE;VALUE=DATE:${compactDateOnly(task.deadline)}`
+      : `DUE:${utcStamp(parseBusinessDateTime(task.deadline, timeZone) ?? task.deadline)}`
     lines.push(
       'BEGIN:VTODO',
       `UID:${escapeIcs(task.id)}-todo@student-affairs.site`,
       `DTSTAMP:${utcStamp(generatedAt)}`,
-      `DUE:${utcStamp(task.deadline)}`,
+      due,
       `SUMMARY:${escapeIcs(task.title)}`,
       `DESCRIPTION:${escapeIcs(task.nextAction)}`,
       `PRIORITY:${task.priority === '高' ? 1 : task.priority === '中' ? 5 : 9}`,

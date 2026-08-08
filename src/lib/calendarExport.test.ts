@@ -19,4 +19,13 @@ describe('mobile calendar exports', () => {
     expect(content.match(/BEGIN:VTODO/gu)).toHaveLength(1)
     expect(content).toContain('STATUS:NEEDS-ACTION')
   })
+
+  it('exports date-only deadlines as all-day calendar values', () => {
+    const task = { ...demoTasks[0], deadline: '2026-08-10', reminders: [] }
+    const event = buildCalendarIcs([task], new Date('2026-08-03T00:00:00Z'))
+    const todo = buildTodoIcs([task], new Date('2026-08-03T00:00:00Z'))
+    expect(event).toContain('DTSTART;VALUE=DATE:20260810')
+    expect(event).toContain('DTEND;VALUE=DATE:20260811')
+    expect(todo).toContain('DUE;VALUE=DATE:20260810')
+  })
 })

@@ -7,6 +7,7 @@ on:
       - main
       - feature/student-affairs-mvp
       - codex/feature/comprehensive-upgrade
+      - 'codex/**'
 
 permissions:
   contents: read
@@ -35,8 +36,18 @@ jobs:
       - name: Lint
         run: npm run lint
 
-      - name: Test all adapters
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Test all adapters in UTC
         run: npm run test
+        env:
+          TZ: UTC
+
+      - name: Test all adapters in Asia/Shanghai
+        run: npm run test
+        env:
+          TZ: Asia/Shanghai
 
       - name: Build production assets
         run: npm run build
