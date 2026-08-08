@@ -120,12 +120,16 @@ test('structured extraction uses V4 Flash JSON mode and returns bounded suggesti
   const payload = await response.json()
   assert.equal(payload.model, 'deepseek-v4-flash')
   assert.equal(payload.result.schemaVersion, '2.0')
-  assert.equal(payload.result.promptVersion, 'recognition-2.0.0')
+  assert.equal(payload.result.promptVersion, 'recognition-2.1.0')
   assert.equal(payload.result.milestones[0].tasks[0].title, '提交报名表')
   assert.equal(payload.result.evidence[0].quotedText, '8月10日18:00提交报名表')
   assert.equal(upstreamBody.model, 'deepseek-v4-flash')
   assert.deepEqual(upstreamBody.response_format, { type: 'json_object' })
-  assert.match(upstreamBody.messages[0].content, /不可信(?:资料|数据)/)
+  assert.match(upstreamBody.messages[0].content, /DATA ONLY/u)
+  assert.match(upstreamBody.messages[0].content, /每个有业务含义的时间表达都必须成为顶层 timePoints/u)
+  assert.match(upstreamBody.messages[0].content, /材料不是任务/u)
+  assert.match(upstreamBody.messages[0].content, /Subtask.*最多一层/u)
+  assert.match(upstreamBody.messages[0].content, /quotedText\/quote 必须是来源正文中连续、逐字存在的片段/u)
 })
 
 test('public HTTPS pages are converted to inert text before client-side DeepSeek submission', async () => {
