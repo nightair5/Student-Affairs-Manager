@@ -1,15 +1,19 @@
 import {
+  RECOGNITION_MODEL_NAME,
+  RECOGNITION_PROMPT_VERSION,
+  RECOGNITION_SCHEMA_VERSION,
   normalizeRecognitionResult,
   recognitionSystemPrompt,
 } from './recognition.mjs'
-import { annotateRecognitionQuality, validateRecognitionQuality } from './recognition-quality.mjs'
+import { RECOGNITION_VALIDATOR_VERSION, annotateRecognitionQuality, validateRecognitionQuality } from './recognition-quality.mjs'
 import {
   RECOGNITION_REPAIR_VERSION,
   buildRecognitionRepairInstruction,
   mergeRecognitionRepair,
   shouldAttemptRecognitionRepair,
 } from './recognition-repair.mjs'
-import { routeRecognitionSource } from './complexity-router.mjs'
+import { RECOGNITION_ROUTER_VERSION, routeRecognitionSource } from './complexity-router.mjs'
+import { RECOGNITION_PIPELINE_VERSION, createDeepSeekProvider, createModelGateway } from './model-gateway.mjs'
 
 const DEEPSEEK_ENDPOINT = 'https://api.deepseek.com/chat/completions'
 const DEEPSEEK_MODEL = 'deepseek-v4-flash'
@@ -622,6 +626,7 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
   const referenceTime = safeText(body.referenceTime, 80)
   const timezone = safeText(body.timezone, 80) || 'Asia/Shanghai'
   const route = routeRecognitionSource(sourceContent, false)
+  const gateway = createModelGateway(createDeepSeekProvider({ fetcher, endpoint: DEEPSEEK_ENDPOINT, apiKey, model: DEEPSEEK_MODEL, timeoutMs: UPSTREAM_TIMEOUT_MS }))
   const systemPrompt = recognitionSystemPrompt()
   const projectContext = Array.isArray(body.projectCandidates) ? body.projectCandidates : []
   const existingTaskContext = Array.isArray(body.existingTasks) ? body.existingTasks : []
@@ -631,30 +636,14 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
     return failure('RATE_LIMITED', '同时请求过多，请稍后再试。', 429, context.requestId)
   }
   try {
-    const upstream = await fetcher(DEEPSEEK_ENDPOINT, {
-      method: 'POST',
-      headers: {
-        authorization: `Bearer ${apiKey}`,
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: DEEPSEEK_MODEL,
-        thinking: { type: 'disabled' },
-        temperature: 0.1,
-        max_tokens: MAX_EXTRACTION_TOKENS,
-        response_format: { type: 'json_object' },
-        messages: [
-          { role: 'system', content: systemPrompt },
-          {
-            role: 'user',
-            content: `参考时间：${referenceTime}\n时区：${timezone}\n来源类型：${body.sourceType}\n来源标题：${sourceTitle || '未提供'}\n可选已有项目（仅供匹配建议）：${JSON.stringify(projectContext)}\n已有未完成任务（仅供重复检测）：${JSON.stringify(existingTaskContext)}\n来源正文：\n${sourceContent}`,
-          },
-        ],
-      }),
-      signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS),
+    const recognitionCall = await gateway.recognize({
+      systemPrompt,
+      userPrompt: `参考时间：${referenceTime}\n时区：${timezone}\n来源类型：${body.sourceType}\n来源标题：${sourceTitle || '未提供'}\n可选已有项目（仅供匹配建议）：${JSON.stringify(projectContext)}\n已有未完成任务（仅供重复检测）：${JSON.stringify(existingTaskContext)}\n来源正文：\n${sourceContent}`,
+      maxTokens: MAX_EXTRACTION_TOKENS,
+      temperature: 0.1,
     })
-    if (!upstream.ok) {
-      const limited = upstream.status === 429
+    if (!recognitionCall.ok) {
+      const limited = recognitionCall.status === 429
       context.errorType = limited ? 'RATE_LIMITED' : 'UPSTREAM_UNAVAILABLE'
       return failure(
         context.errorType,
@@ -663,11 +652,7 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
         context.requestId,
       )
     }
-    const payload = await upstream.json()
-    context.outputTokens = Number.isFinite(payload?.usage?.completion_tokens)
-      ? payload.usage.completion_tokens
-      : 0
-    const content = safeText(payload?.choices?.[0]?.message?.content, 30_000)
+    const content = safeText(recognitionCall.content, 30_000)
     let parsed
     try {
       parsed = JSON.parse(content)
@@ -692,27 +677,15 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
     if (shouldAttemptRecognitionRepair(validation)) {
       repair.attempted = true
       try {
-        const repairUpstream = await fetcher(DEEPSEEK_ENDPOINT, {
-          method: 'POST',
-          headers: { authorization: `Bearer ${apiKey}`, 'content-type': 'application/json' },
-          body: JSON.stringify({
-            model: DEEPSEEK_MODEL,
-            thinking: { type: 'disabled' },
-            temperature: 0,
-            max_tokens: MAX_EXTRACTION_TOKENS,
-            response_format: { type: 'json_object' },
-            messages: [
-              { role: 'system', content: `${systemPrompt}\n\n${buildRecognitionRepairInstruction(validation)}` },
-              { role: 'user', content: `来源正文：\n${sourceContent}\n\n首轮 RecognitionResult：\n${JSON.stringify(normalizedResult)}` },
-            ],
-          }),
-          signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS),
+        const repairCall = await gateway.repair({
+          systemPrompt: `${systemPrompt}\n\n${buildRecognitionRepairInstruction(validation)}`,
+          userPrompt: `来源正文：\n${sourceContent}\n\n首轮 RecognitionResult：\n${JSON.stringify(normalizedResult)}`,
+          maxTokens: MAX_EXTRACTION_TOKENS,
+          temperature: 0,
         })
-        if (!repairUpstream.ok) repair.errorCode = `REPAIR_UPSTREAM_${repairUpstream.status}`
+        if (!repairCall.ok) repair.errorCode = repairCall.status ? `REPAIR_UPSTREAM_${repairCall.status}` : repairCall.errorCode
         else {
-          const repairPayload = await repairUpstream.json()
-          context.outputTokens += Number.isFinite(repairPayload?.usage?.completion_tokens) ? repairPayload.usage.completion_tokens : 0
-          const repairContent = safeText(repairPayload?.choices?.[0]?.message?.content, 30_000)
+          const repairContent = safeText(repairCall.content, 30_000)
           const repairRaw = JSON.parse(repairContent)
           const repairCandidate = normalizeRecognitionResult(repairRaw, sourceContent, referenceTime)
           if (!repairCandidate) repair.errorCode = 'REPAIR_INVALID_OUTPUT'
@@ -727,7 +700,16 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
     }
     validation = validateRecognitionQuality(result, sourceContent)
     result = annotateRecognitionQuality(result, validation)
-    return success({ model: DEEPSEEK_MODEL, result, validation, repair, route }, context.requestId)
+    const execution = gateway.executionMetadata({
+      promptVersion: RECOGNITION_PROMPT_VERSION,
+      schemaVersion: RECOGNITION_SCHEMA_VERSION,
+      pipelineVersion: RECOGNITION_PIPELINE_VERSION,
+      validatorVersion: RECOGNITION_VALIDATOR_VERSION,
+      repairVersion: RECOGNITION_REPAIR_VERSION,
+      routerVersion: RECOGNITION_ROUTER_VERSION,
+    })
+    context.outputTokens = execution.tokenUsage?.output ?? 0
+    return success({ model: DEEPSEEK_MODEL, result, validation, repair, route, execution }, context.requestId)
   } catch (error) {
     context.errorType = timeoutError(error) ? 'UPSTREAM_TIMEOUT' : 'UPSTREAM_UNAVAILABLE'
     return failure(
@@ -769,7 +751,7 @@ export function createWorker({
           response = new Response(null, { status: 204 })
         }
       } else if (request.method === 'GET' && url.pathname === '/api/deepseek/status') {
-        response = success({ configured: safeText(env.DEEPSEEK_API_KEY, 512).length >= 20, model: DEEPSEEK_MODEL }, context.requestId)
+        response = success({ configured: safeText(env.DEEPSEEK_API_KEY, 512).length >= 20, model: DEEPSEEK_MODEL, pipelineVersion: RECOGNITION_PIPELINE_VERSION }, context.requestId)
       } else if (request.method === 'GET' && url.pathname === '/api/source/status') {
         response = success({ configured: true, mode: 'public-https', maxRedirects: MAX_WEB_REDIRECTS }, context.requestId)
       } else if (url.pathname === '/api/source/fetch') {

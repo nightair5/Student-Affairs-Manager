@@ -21,6 +21,7 @@ import { updateTaskWithHistory } from './lib/taskUpdates'
 import { createIntakeResult, type IntakeInput } from './lib/intake'
 import { ProxyDeepSeekExtractionService } from './lib/deepseekExtraction'
 import { buildLocalRecognition } from './recognition/pipeline'
+import { RECOGNITION_PIPELINE_VERSION } from './recognition/modelGateway'
 import { markOnboardingComplete, shouldShowOnboarding } from './lib/onboarding'
 import { CapturePersistenceService } from './domain/v2/capture'
 import { CanonicalWorkspaceRepository } from './domain/v2/repository'
@@ -280,7 +281,7 @@ function App() {
       provider: input.manualSuggestion ? 'manual' as const : 'deepseek' as const,
       modelName: input.manualSuggestion ? 'manual-entry' : 'deepseek-v4-flash',
       promptVersion: input.manualSuggestion ? null : localRecognition.promptVersion,
-      pipelineVersion: 'source-before-ai-v1',
+      pipelineVersion: `${RECOGNITION_PIPELINE_VERSION}|validator=recognition-quality-2.0.0|repair=recognition-repair-1.0.0|router=recognition-router-1.0.0`,
       sourceLegacyData: {
         contentPreview: localResult.source.contentPreview,
         url: input.url ?? null,
