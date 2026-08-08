@@ -130,7 +130,7 @@ test('structured extraction uses V4 Flash JSON mode and returns bounded suggesti
   assert.equal(payload.route.routerVersion, 'recognition-router-1.0.0')
   assert.equal(payload.route.selectedStrategy, 'single_pass')
   assert.equal(payload.execution.gatewayVersion, 'model-gateway-1.0.0')
-  assert.equal(payload.execution.pipelineVersion, 'recognition-pipeline-2.1.1')
+  assert.equal(payload.execution.pipelineVersion, 'recognition-pipeline-2.1.2')
   assert.equal(payload.execution.provider, 'deepseek')
   assert.equal(payload.execution.model, 'deepseek-v4-flash')
   assert.equal(payload.execution.attempts >= 1, true)
@@ -273,6 +273,24 @@ test('recognition normalization discards prompt-injection tasks before an explic
     ], conflicts: [], ambiguities: [], ignoredContent: [], quality: {},
   }, source, '2026-08-09T00:00:00.000Z')
   assert.deepEqual(result.standaloneTasks.map((task) => task.title), ['提交报名表'])
+})
+
+test('recognition normalization removes unsupported passive result tasks and event duplicates', () => {
+  const source = '9月6日公布入围结果；入围作者9月10日晚八点参加展映交流。'
+  const result = normalizeRecognitionResult({
+    schemaVersion: '2.0', createdAt: '2026-08-09T00:00:00.000Z',
+    sourceSummary: { title: '展映通知', sourceType: 'text', notificationType: 'event_notice', summary: '结果与展映安排', requiresAction: true, actionReason: '需参加展映' },
+    projectMatch: { decision: 'standalone_task', matchedProjectId: null, suggestedProjectTitle: null, confidence: 0.9, reasons: [] }, projectSuggestion: null, milestones: [],
+    standaloneTasks: [
+      { tempId: 'passive', title: '查看入围结果', actionVerb: '查看', actionObject: '入围结果', evidenceIds: ['result-evidence'], confidence: 0.8, inferenceLevel: 'strong_inference' },
+      { tempId: 'event-task', title: '参加展映交流', actionVerb: '参加', actionObject: '展映交流', evidenceIds: ['event-evidence'], confidence: 0.9, inferenceLevel: 'explicit' },
+    ],
+    materials: [], timePoints: [], events: [{ tempId: 'event', title: '展映交流', description: '', startTimePointTempId: null, endTimePointTempId: null, location: null, evidenceIds: ['event-evidence'], confidence: 0.9, inferenceLevel: 'explicit' }], evidence: [
+      { id: 'result-evidence', quotedText: '9月6日公布入围结果', field: 'task', confidence: 0.8 },
+      { id: 'event-evidence', quotedText: '参加展映交流', field: 'event', confidence: 0.9 },
+    ], conflicts: [], ambiguities: [], ignoredContent: [], quality: {},
+  }, source, '2026-08-09T00:00:00.000Z')
+  assert.deepEqual(result.standaloneTasks, [])
 })
 
 test('conditional repair runs at most once and keeps the first valid result when repair fails', async () => {

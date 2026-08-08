@@ -19,6 +19,9 @@ const REAL_NOTICE_MARKER = /(?:实际|真正)通知[:：]/gu
 const SUBMISSION_VERBS = new Set(['提交', '上传', '发送', '报送', '补交'])
 const FORMAT_ONLY_VERBS = new Set(['保存', '命名', '重命名', '转换', '设置格式'])
 const RECEIVE_ONLY_VERBS = new Set(['领取', '下载'])
+const EVENT_ONLY_VERBS = new Set(['参加', '集合', '到场', '上岗', '参会', '出席'])
+const PASSIVE_RESULT_VERBS = new Set(['查看', '等待', '关注', '查收'])
+const PASSIVE_RESULT_OBJECT = /结果|名单|通知|公告|公示/u
 const DELIVERABLE_CREATION_VERBS = new Set(['准备', '完成', '撰写', '制作', '汇总', '填写', '打印', '盖章', '签字'])
 const DELIVERABLE_NOUN = /(?:表|书|报告|提纲|证明|成绩单|PPT|PDF|Word|Excel|文件|照片|证书|截图|承诺书|声明|清单|音频|视频|记录|总结|论文|问卷|方案|作品|代码|简历|陈述|教材|设备|电脑|马甲)$/iu
 const CATEGORIES = new Set(['比赛', '保研', '课程', '老师任务', '其他'])
@@ -234,12 +237,13 @@ export function normalizeRecognitionResult(raw, sourceContent, nowIso) {
   const sharesContext = (left, right) => left.evidenceIds.some((id) => right.evidenceIds.includes(id))
     || left.materialTempIds.some((id) => right.materialTempIds.includes(id))
     || left.timePointTempIds.some((id) => right.timePointTempIds.includes(id))
-  const eventSupportsTask = (task) => task.actionVerb === '参加' && events.some((event) =>
+  const eventSupportsTask = (task) => EVENT_ONLY_VERBS.has(task.actionVerb) && events.some((event) =>
     event.evidenceIds.some((id) => task.evidenceIds.includes(id))
       || event.title.includes(task.actionObject)
       || task.actionObject.includes(event.title))
   const keepTask = (task) => {
     if (informationOnly || !hasTrustedEvidence(task) || FORMAT_ONLY_VERBS.has(task.actionVerb) || eventSupportsTask(task)) return false
+    if (PASSIVE_RESULT_VERBS.has(task.actionVerb) && PASSIVE_RESULT_OBJECT.test(task.actionObject) && !hasSupportedAction(task)) return false
     if (hasSupportedAction(task)) return true
     return !currentTasks.some((candidate) => candidate.tempId !== task.tempId
       && SUBMISSION_VERBS.has(candidate.actionVerb)
