@@ -2,6 +2,7 @@ import {
   normalizeRecognitionResult,
   recognitionSystemPrompt,
 } from './recognition.mjs'
+import { annotateRecognitionQuality, validateRecognitionQuality } from './recognition-quality.mjs'
 
 const DEEPSEEK_ENDPOINT = 'https://api.deepseek.com/chat/completions'
 const DEEPSEEK_MODEL = 'deepseek-v4-flash'
@@ -666,12 +667,14 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
       context.errorType = 'INVALID_AI_RESPONSE'
       return failure('INVALID_AI_RESPONSE', 'DeepSeek 未返回有效的任务结构。', 502, context.requestId)
     }
-    const result = normalizeRecognitionResult(parsed, sourceContent, referenceTime)
+    const normalizedResult = normalizeRecognitionResult(parsed, sourceContent, referenceTime)
+    const validation = normalizedResult ? validateRecognitionQuality(normalizedResult, sourceContent) : null
+    const result = normalizedResult && validation ? annotateRecognitionQuality(normalizedResult, validation) : normalizedResult
     if (!result) {
       context.errorType = 'INVALID_AI_RESPONSE'
       return failure('INVALID_AI_RESPONSE', 'DeepSeek 没有返回有效的 RecognitionResult 2.0。', 502, context.requestId)
     }
-    return success({ model: DEEPSEEK_MODEL, result }, context.requestId)
+    return success({ model: DEEPSEEK_MODEL, result, validation }, context.requestId)
   } catch (error) {
     context.errorType = timeoutError(error) ? 'UPSTREAM_TIMEOUT' : 'UPSTREAM_UNAVAILABLE'
     return failure(
