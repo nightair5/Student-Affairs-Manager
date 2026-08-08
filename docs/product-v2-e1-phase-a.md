@@ -102,6 +102,14 @@ v7 的材料、时间点、证据、历史和提醒数组在运行时仍可能�
 
 同一完整测试套件在 CI 中分别以 `TZ=UTC` 与 `TZ=Asia/Shanghai` 运行，验证宿主时区不改变业务日期语义。
 
+## E1 Phase B progress
+
+### B1 Canonical Repository
+
+Workspace v8 现在具备独立的 schema-aware repository：保存、加载、事务、导入与导出都先执行 v8 全图校验，浏览器写入使用单个 IndexedDB `readwrite` transaction。该路径直接持久化 `materials`、`timePoints`、`evidenceRefs`、`historyRecords` 与 `reminderRecords`，不会调用 v7 的 `materializeWorkspaceEntities`。`ProjectState` 仅由纯函数按 canonical graph 重算，不进入 Workspace v8 持久化结构。
+
+B1 尚未切换现有 App 的 v7 加载路径；真实 v7→v8 原子迁移、运行时切换、rich recognition commit 和 Source-before-AI 分别由 B2、B3、B4 接入。
+
 ## E1 Phase B gate
 
 进入 Phase B 前必须单独批准并完成：v8 repository/IndexedDB store、v7 真实数据迁移接入与恢复演练、Rich RecognitionResult → Domain Commit Plan、单事务原子提交、Source-before-AI 持久化，以及旧 lossy adapter 退休。Phase A 不声称这些已经上线。
