@@ -123,6 +123,13 @@ npm run build
 
 ## 11. 当前阶段边界
 
+Product v2 E1 Phase A 额外约束：
+
+- 当前生产 repository 与 IndexedDB 继续使用 schema v7；schema v8 仅作为隔离的类型、验证、序列化和离线迁移契约，未经 Phase B 审批不得接入加载或保存路径。
+- v8 顶层 `materials`、`timePoints`、`evidenceRefs`、`historyRecords` 和 `reminderRecords` 是 canonical facts，不得由 Task/Draft 投影重新覆盖。
+- `ParsedSuggestion`、`recognitionToLegacySuggestions`、`materializeWorkspaceEntities` 仅为 v7 兼容层；Phase A 不删除、不扩展为 v8 提交路径。
+- 本阶段不得实施生产 v7→v8 数据迁移、Recognition commit pipeline 重写、Source-before-AI 工作流改造、Prompt 大改、UI 重构或生产部署。
+
 P0 可信确认闭环额外约束：
 
 - 录入必须先形成可持久化的 `Source` 和 `ExtractionDraft`，不得因关闭弹层丢失待确认建议。
