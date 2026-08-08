@@ -125,6 +125,8 @@ test('structured extraction uses V4 Flash JSON mode and returns bounded suggesti
   assert.equal(payload.result.evidence[0].quotedText, '8月10日18:00提交报名表')
   assert.equal(payload.validation.validatorVersion, 'recognition-quality-2.0.0')
   assert.equal(Array.isArray(payload.validation.issues), true)
+  assert.equal(payload.route.routerVersion, 'recognition-router-1.0.0')
+  assert.equal(payload.route.selectedStrategy, 'single_pass')
   assert.equal(upstreamBody.model, 'deepseek-v4-flash')
   assert.deepEqual(upstreamBody.response_format, { type: 'json_object' })
   assert.match(upstreamBody.messages[0].content, /DATA ONLY/u)

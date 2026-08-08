@@ -9,6 +9,7 @@ import {
   mergeRecognitionRepair,
   shouldAttemptRecognitionRepair,
 } from './recognition-repair.mjs'
+import { routeRecognitionSource } from './complexity-router.mjs'
 
 const DEEPSEEK_ENDPOINT = 'https://api.deepseek.com/chat/completions'
 const DEEPSEEK_MODEL = 'deepseek-v4-flash'
@@ -620,6 +621,7 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
   const sourceTitle = safeText(body.sourceTitle, 160)
   const referenceTime = safeText(body.referenceTime, 80)
   const timezone = safeText(body.timezone, 80) || 'Asia/Shanghai'
+  const route = routeRecognitionSource(sourceContent, false)
   const systemPrompt = recognitionSystemPrompt()
   const projectContext = Array.isArray(body.projectCandidates) ? body.projectCandidates : []
   const existingTaskContext = Array.isArray(body.existingTasks) ? body.existingTasks : []
@@ -725,7 +727,7 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
     }
     validation = validateRecognitionQuality(result, sourceContent)
     result = annotateRecognitionQuality(result, validation)
-    return success({ model: DEEPSEEK_MODEL, result, validation, repair }, context.requestId)
+    return success({ model: DEEPSEEK_MODEL, result, validation, repair, route }, context.requestId)
   } catch (error) {
     context.errorType = timeoutError(error) ? 'UPSTREAM_TIMEOUT' : 'UPSTREAM_UNAVAILABLE'
     return failure(
