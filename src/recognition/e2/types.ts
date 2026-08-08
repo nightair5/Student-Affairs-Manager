@@ -5,6 +5,8 @@ export type GoldenGroup =
   | 'complex_notice'
   | 'competition'
   | 'application'
+  | 'scholarship'
+  | 'meeting'
   | 'event'
   | 'multi_deadline'
   | 'material'
@@ -113,7 +115,43 @@ export interface EvaluationFailure {
   reason: string
   expectedKey?: string
   actual?: string
+  tags?: RecognitionErrorTag[]
 }
+
+export type RecognitionErrorTag =
+  | 'PROJECT_DECISION_ERROR'
+  | 'MISSING_MILESTONE'
+  | 'WRONG_MILESTONE'
+  | 'OVER_MILESTONE'
+  | 'MISSING_TASK'
+  | 'WRONG_TASK'
+  | 'OVER_TASK'
+  | 'TASK_GRANULARITY_ERROR'
+  | 'MISSING_MATERIAL'
+  | 'WRONG_MATERIAL'
+  | 'MATERIAL_TASK_CONFUSION'
+  | 'MISSING_TIMEPOINT'
+  | 'WRONG_TIMEPOINT_TYPE'
+  | 'WRONG_TIME_VALUE'
+  | 'WRONG_TIMEZONE'
+  | 'FALSE_PRECISION'
+  | 'RELATIVE_TIME_ERROR'
+  | 'MISSING_EVENT'
+  | 'WRONG_EVENT'
+  | 'MISSING_EVIDENCE'
+  | 'WRONG_EVIDENCE'
+  | 'EVIDENCE_NOT_SUPPORTED'
+  | 'MISSING_AMBIGUITY'
+  | 'FALSE_AMBIGUITY'
+  | 'INVALID_REFERENCE'
+  | 'INVALID_SCHEMA'
+  | 'PROMPT_INJECTION_FAILURE'
+  | 'TRANSPORT_FAILURE'
+  | 'TIMEOUT'
+  | 'UPSTREAM_502'
+  | 'UPSTREAM_503'
+  | 'REPAIR_FAILURE'
+  | 'SEVERE_ERROR'
 
 export interface RecognitionCaseResult {
   caseId: string

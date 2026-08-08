@@ -7,6 +7,7 @@ import type {
   RecognitionCaseResult,
   RecognitionGoldenCase,
 } from './types'
+import { withErrorTags } from './errorTaxonomy'
 
 function normalize(value: unknown): string {
   if (typeof value !== 'string') return ''
@@ -56,7 +57,7 @@ function addFailure(
   expectedKey?: string,
   actual?: string,
 ): void {
-  failures.push({ category, severity, reason, expectedKey, actual })
+  failures.push(withErrorTags({ category, severity, reason, expectedKey, actual }))
 }
 
 function sameLocalTime(actual: string | null, expected: string | null): boolean {
@@ -242,7 +243,7 @@ export function scoreRecognitionCase(
     tokenUsage: options.tokenUsage ?? null,
     costUsd: options.costUsd ?? null,
     result: null,
-    failures: [{ category, severity: 'severe', reason: options.failureReason ?? category }],
+    failures: [withErrorTags({ category, severity: 'severe', reason: options.failureReason ?? category })],
     scores: {
       projectDecision: 0,
       milestoneTruePositive: 0,

@@ -18,7 +18,7 @@
     "deploy:cloudflare": "npm run build && npm run cloudflare:check && wrangler deploy",
     "lint": "eslint .",
     "typecheck": "tsc -b --pretty false",
-    "test": "vitest run && node --test server/server-tests.mjs && node --test cloudflare/worker-tests.mjs && npm --prefix functions test",
+    "test": "vitest run && node --test scripts/recognition-e2-dataset-freeze.mjs && node --test server/server-tests.mjs && node --test cloudflare/worker-tests.mjs && npm --prefix functions test",
     "eval:recognition": "vitest run src/recognition/evaluation.test.ts",
     "eval:recognition:e2": "node scripts/run-recognition-e2.mjs"
   },
