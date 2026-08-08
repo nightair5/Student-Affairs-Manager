@@ -7,11 +7,11 @@ import {
   recognitionSystemPrompt,
 } from './prompt'
 
-describe('Recognition 2.1 modular prompt contract', () => {
+describe('Recognition 2.2 modular prompt contract', () => {
   it('keeps schema and model fixed while advancing only the prompt version', () => {
     expect(RECOGNITION_SCHEMA_VERSION).toBe('2.0')
     expect(RECOGNITION_MODEL_NAME).toBe('deepseek-v4-flash')
-    expect(RECOGNITION_PROMPT_VERSION).toBe('recognition-2.1.0')
+    expect(RECOGNITION_PROMPT_VERSION).toBe('recognition-2.2.0')
   })
 
   it('composes seven unique, auditable prompt modules', () => {
@@ -22,8 +22,11 @@ describe('Recognition 2.1 modular prompt contract', () => {
     expect(recognitionSystemPrompt).toContain('材料不是任务')
     expect(recognitionSystemPrompt).toMatch(/Subtask.*最多一层/u)
     expect(recognitionSystemPrompt).toContain('不得使用 1970-01-01')
-    expect(recognitionSystemPrompt).toContain('必须引用结果中真实存在且类型正确的 ID')
+    expect(recognitionSystemPrompt).toContain('所有引用必须指向结果中真实存在且类型正确的 ID')
     expect(recognitionSystemPrompt).toContain('逐字存在的片段')
+    expect(recognitionSystemPrompt).toContain('禁止用顶层 tasks 替代 standaloneTasks')
+    expect(recognitionSystemPrompt).toContain('Ambiguity={id,field,message,options,evidenceIds}')
+    expect(recognitionSystemPrompt).toContain('禁止“阶段 1”“阶段 2”占位')
   })
 
   it('requires honest ambiguity instead of false time precision', () => {

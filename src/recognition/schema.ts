@@ -11,6 +11,8 @@ const timePointTypes = new Set([
   'registration_deadline', 'submission_deadline', 'task_deadline', 'event_start',
   'event_end', 'result_announcement', 'planned_start',
 ])
+const conflictTypes = new Set(['deadline', 'project_match', 'duplicate', 'hierarchy', 'other'])
+const ignoredReasons = new Set(['background', 'contact', 'address', 'policy', 'format_requirement', 'other'])
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value)
@@ -66,6 +68,33 @@ function validTimePoint(value: unknown): value is TimePointSuggestionV2 {
     && confidence(value.confidence)
 }
 
+function validMaterial(value: unknown): boolean {
+  if (!isRecord(value)) return false
+  return boundedString(value.tempId, 100)
+    && boundedString(value.name, 100)
+    && typeof value.required === 'boolean'
+    && isStringArray(value.formatRequirements, 10)
+    && isStringArray(value.namingRequirements, 10)
+    && (value.quantity === null || (typeof value.quantity === 'number' && Number.isInteger(value.quantity) && value.quantity >= 1 && value.quantity <= 100))
+    && (value.submissionChannel === null || boundedString(value.submissionChannel, 100))
+    && isStringArray(value.relatedTaskTempIds, 30)
+    && isStringArray(value.evidenceIds, 20)
+    && confidence(value.confidence)
+}
+
+function validEvent(value: unknown): boolean {
+  if (!isRecord(value)) return false
+  return boundedString(value.tempId, 100)
+    && boundedString(value.title, 100)
+    && boundedString(value.description, 500, true)
+    && (value.startTimePointTempId === null || boundedString(value.startTimePointTempId, 100))
+    && (value.endTimePointTempId === null || boundedString(value.endTimePointTempId, 100))
+    && (value.location === null || boundedString(value.location, 160))
+    && isStringArray(value.evidenceIds, 20)
+    && confidence(value.confidence)
+    && inferenceLevels.has(String(value.inferenceLevel))
+}
+
 export function isRecognitionResult(value: unknown): value is RecognitionResult {
   if (!isRecord(value) || value.schemaVersion !== '2.0') return false
   if (!boundedString(value.promptVersion, 80) || !boundedString(value.modelName, 80) || !boundedString(value.createdAt, 80)) return false
@@ -106,9 +135,9 @@ export function isRecognitionResult(value: unknown): value is RecognitionResult 
     }
   }
   if (!Array.isArray(value.standaloneTasks) || !value.standaloneTasks.every(validTask)) return false
-  if (!Array.isArray(value.materials) || value.materials.length > 60) return false
+  if (!Array.isArray(value.materials) || value.materials.length > 60 || !value.materials.every(validMaterial)) return false
   if (!Array.isArray(value.timePoints) || value.timePoints.length > 60 || !value.timePoints.every(validTimePoint)) return false
-  if (!Array.isArray(value.events) || value.events.length > 30) return false
+  if (!Array.isArray(value.events) || value.events.length > 30 || !value.events.every(validEvent)) return false
   if (!Array.isArray(value.evidence) || value.evidence.length > 120 || !value.evidence.every((item) => {
     if (!isRecord(item)) return false
     return boundedString(item.id, 100) && boundedString(item.sourceId, 100)
@@ -116,7 +145,28 @@ export function isRecognitionResult(value: unknown): value is RecognitionResult 
       && boundedString(item.field, 40)
       && (item.confidence === undefined || confidence(item.confidence))
   })) return false
-  if (!Array.isArray(value.conflicts) || !Array.isArray(value.ambiguities) || !Array.isArray(value.ignoredContent)) return false
+  if (!Array.isArray(value.conflicts) || value.conflicts.length > 30 || !value.conflicts.every((item) => {
+    if (!isRecord(item)) return false
+    return boundedString(item.id, 100)
+      && conflictTypes.has(String(item.type))
+      && boundedString(item.message, 500)
+      && isStringArray(item.entityTempIds, 30)
+      && isStringArray(item.evidenceIds, 20)
+      && typeof item.requiresDecision === 'boolean'
+  })) return false
+  if (!Array.isArray(value.ambiguities) || value.ambiguities.length > 30 || !value.ambiguities.every((item) => {
+    if (!isRecord(item)) return false
+    return boundedString(item.id, 100)
+      && boundedString(item.field, 100)
+      && boundedString(item.message, 500)
+      && isStringArray(item.options, 12)
+      && isStringArray(item.evidenceIds, 20)
+  })) return false
+  if (!Array.isArray(value.ignoredContent) || value.ignoredContent.length > 30 || !value.ignoredContent.every((item) => {
+    if (!isRecord(item)) return false
+    return boundedString(item.text, 500)
+      && ignoredReasons.has(String(item.reason))
+  })) return false
   if (!isRecord(value.quality)) return false
   const quality = value.quality
   return ['overallConfidence', 'hierarchyConfidence', 'dateConfidence', 'evidenceCoverage', 'duplicateRisk', 'overFragmentationRisk', 'missingActionRisk']

@@ -2,6 +2,7 @@ import assert from 'node:assert/strict'
 import test from 'node:test'
 import { createWorker, validateDeepSeekRequest, validateExtractionRequest, validateWebFetchTarget } from './worker.mjs'
 import { createDeepSeekProvider } from './model-gateway.mjs'
+import { normalizeRecognitionResult } from './recognition.mjs'
 
 const baseContext = [{ kind: '任务', title: '报名材料', excerpt: '今天 18:00 截止' }]
 
@@ -121,7 +122,7 @@ test('structured extraction uses V4 Flash JSON mode and returns bounded suggesti
   const payload = await response.json()
   assert.equal(payload.model, 'deepseek-v4-flash')
   assert.equal(payload.result.schemaVersion, '2.0')
-  assert.equal(payload.result.promptVersion, 'recognition-2.1.0')
+  assert.equal(payload.result.promptVersion, 'recognition-2.2.0')
   assert.equal(payload.result.milestones[0].tasks[0].title, '提交报名表')
   assert.equal(payload.result.evidence[0].quotedText, '8月10日18:00提交报名表')
   assert.equal(payload.validation.validatorVersion, 'recognition-quality-2.0.0')
@@ -141,6 +142,28 @@ test('structured extraction uses V4 Flash JSON mode and returns bounded suggesti
   assert.match(upstreamBody.messages[0].content, /材料不是任务/u)
   assert.match(upstreamBody.messages[0].content, /Subtask.*最多一层/u)
   assert.match(upstreamBody.messages[0].content, /quotedText\/quote 必须是来源正文中连续、逐字存在的片段/u)
+})
+
+test('recognition normalization preserves near-schema model output without dropping tasks or ambiguities', () => {
+  const result = normalizeRecognitionResult({
+    schemaVersion: '2.0',
+    sourceSummary: { title: '创新比赛通知', sourceType: 'text', notificationType: 'new_project', summary: '报名比赛', requiresAction: true, actionReason: '需要报名' },
+    projectMatch: { decision: 'new_project', suggestedProjectTitle: '创新比赛', confidence: 0.8, reasons: [] },
+    projectSuggestion: { title: '创新比赛', category: '比赛', objective: '完成参赛', description: '按通知报名' },
+    milestones: [{ tempId: 'ms-1', name: '报名', description: '完成报名', evidenceIds: ['ev-1'], actions: [] }],
+    tasks: [{ tempId: 'task-1', title: '提交报名表', actionVerb: '提交', actionObject: '报名表', evidenceIds: ['ev-1'], inferenceLevel: 'explicit' }],
+    materials: [], timePoints: [], events: [], conflicts: [], ignoredContent: [],
+    ambiguities: [{ tempId: 'amb-1', type: 'deadline', description: '截止时间只写了月底', options: ['本月底'], evidenceIds: ['ev-1'] }],
+    evidence: [{ id: 'ev-1', quotedText: '月底前提交报名表', field: 'description', confidence: 0.9 }],
+    quality: {},
+  }, '月底前提交报名表', '2026-08-09T00:00:00.000Z')
+
+  assert.equal(result.projectSuggestion.title.value, '创新比赛')
+  assert.equal(result.milestones[0].title, '报名')
+  assert.equal(result.standaloneTasks[0].title, '提交报名表')
+  assert.deepEqual(result.ambiguities[0], {
+    id: 'amb-1', field: 'deadline', message: '截止时间只写了月底', options: ['本月底'], evidenceIds: ['ev-1'],
+  })
 })
 
 test('conditional repair runs at most once and keeps the first valid result when repair fails', async () => {

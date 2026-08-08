@@ -98,6 +98,7 @@ async function main() {
   const delayMs = Number(option('delay-ms', provider === 'deepseek-production' ? '8000' : '0'))
   const writeDir = option('write-dir')
   const limit = Number(option('limit', '0'))
+  const requestedCaseIds = option('case-ids').split(',').map((value) => value.trim()).filter(Boolean)
   const resume = option('resume', 'false') === 'true'
   const retryInvalid = option('retry-invalid', 'false') === 'true'
   const reportedStartedAt = option('run-started-at')
@@ -114,7 +115,14 @@ async function main() {
     ])
     const fullDataset = datasetName === 'holdout' ? recognitionHoldoutDataset : recognitionGoldenDataset
     const datasetMetadata = datasetName === 'holdout' ? recognitionHoldoutMetadata : recognitionGoldenDatasetMetadata
-    const dataset = limit > 0 ? fullDataset.slice(0, limit) : fullDataset
+    const filteredDataset = requestedCaseIds.length > 0
+      ? requestedCaseIds.map((id) => fullDataset.find((fixture) => fixture.id === id)).filter(Boolean)
+      : fullDataset
+    if (requestedCaseIds.length > 0 && filteredDataset.length !== requestedCaseIds.length) {
+      const foundIds = new Set(filteredDataset.map((fixture) => fixture.id))
+      throw new Error(`Unknown case IDs: ${requestedCaseIds.filter((id) => !foundIds.has(id)).join(', ')}`)
+    }
+    const dataset = limit > 0 ? filteredDataset.slice(0, limit) : filteredDataset
     const promptSource = await readFile(path.join(ROOT, 'cloudflare', 'recognition.mjs'))
     const promptSourceSha256 = createHash('sha256').update(promptSource).digest('hex')
     const cacheDir = path.join(ROOT, '.evaluation-cache')
@@ -161,9 +169,8 @@ async function main() {
         })
         scored = scoreRecognitionCase(fixture, provider, result, Date.now() - started)
       } else {
-        let response
-        let payload
-        response = await fetch(`${endpoint}/extract`, {
+        try {
+          const response = await fetch(`${endpoint}/extract`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', Accept: 'application/json', Origin: origin },
             body: JSON.stringify({
@@ -176,22 +183,32 @@ async function main() {
               existingTasks: [],
             }),
           })
-        payload = await response.json().catch(() => null)
-        const latencyMs = Date.now() - started
-        if (!response?.ok) {
-          scored = scoreRecognitionCase(fixture, provider, null, latencyMs, { status: 'request_failure', failureReason: `${response?.status ?? 0} ${payload?.code ?? payload?.message ?? 'request failed'}` })
-        } else {
-          try {
-            const result = schema.parseRecognitionResult(payload?.result)
-            if (expectedPrompt && result.promptVersion !== expectedPrompt) throw new Error(`Prompt drift: expected ${expectedPrompt}, got ${result.promptVersion}`)
-            scored = scoreRecognitionCase(fixture, provider, result, latencyMs, {
-              tokenUsage: payload?.execution?.tokenUsage ?? null,
-              costUsd: null,
-            })
-            scored = { ...scored, execution: payload?.execution ?? null, repair: payload?.repair ?? null, route: payload?.route ?? null }
-          } catch (error) {
-            scored = scoreRecognitionCase(fixture, provider, null, latencyMs, { status: 'invalid_output', failureReason: error instanceof Error ? error.message : 'invalid output' })
+          const payload = await response.json().catch(() => null)
+          const latencyMs = Date.now() - started
+          if (!response.ok) {
+            scored = scoreRecognitionCase(fixture, provider, null, latencyMs, { status: 'request_failure', failureReason: `${response.status} ${payload?.code ?? payload?.message ?? 'request failed'}` })
+          } else {
+            try {
+              const result = schema.parseRecognitionResult(payload?.result)
+              if (expectedPrompt && result.promptVersion !== expectedPrompt) throw new Error(`Prompt drift: expected ${expectedPrompt}, got ${result.promptVersion}`)
+              scored = scoreRecognitionCase(fixture, provider, result, latencyMs, {
+                tokenUsage: payload?.execution?.tokenUsage ?? null,
+                costUsd: null,
+              })
+              scored = { ...scored, execution: payload?.execution ?? null, repair: payload?.repair ?? null, route: payload?.route ?? null }
+            } catch (error) {
+              scored = scoreRecognitionCase(fixture, provider, null, latencyMs, {
+                status: 'invalid_output',
+                failureReason: error instanceof Error ? error.message : 'invalid output',
+              })
+            }
           }
+        } catch (error) {
+          const latencyMs = Date.now() - started
+          scored = scoreRecognitionCase(fixture, provider, null, latencyMs, {
+            status: 'request_failure',
+            failureReason: error instanceof Error ? error.message : 'request failed',
+          })
         }
       }
       byId.set(fixture.id, scored)

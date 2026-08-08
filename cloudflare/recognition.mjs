@@ -32,7 +32,8 @@ function strings(value, limit = 20, itemLimit = 160) {
 
 function field(value, fallback, allowedCategories = false) {
   const record = value && typeof value === 'object' && !Array.isArray(value) ? value : {}
-  const raw = allowedCategories && !CATEGORIES.has(record.value) ? '其他' : text(record.value, 300, fallback)
+  const candidate = typeof value === 'string' ? value : record.value
+  const raw = allowedCategories && !CATEGORIES.has(candidate) ? '其他' : text(candidate, 300, fallback)
   return {
     value: raw,
     evidenceIds: strings(record.evidenceIds),
@@ -91,11 +92,11 @@ export function normalizeRecognitionResult(raw, sourceContent, nowIso) {
     if (!item || typeof item !== 'object' || Array.isArray(item)) return []
     const workPackages = (Array.isArray(item.workPackages) ? item.workPackages : []).slice(0, 8).flatMap((workPackage, packageIndex) => {
       if (!workPackage || typeof workPackage !== 'object' || Array.isArray(workPackage)) return []
-      return [{ tempId: text(workPackage.tempId, 100, `work-package-${index + 1}-${packageIndex + 1}`), title: text(workPackage.title, 100, `工作包 ${packageIndex + 1}`), objective: text(workPackage.objective, 300), order: Number.isFinite(workPackage.order) ? workPackage.order : packageIndex + 1, evidenceIds: strings(workPackage.evidenceIds).filter((id) => evidenceIds.has(id)), tasks: normalizeTasks(workPackage.tasks, 20) }]
+      return [{ tempId: text(workPackage.tempId, 100, `work-package-${index + 1}-${packageIndex + 1}`), title: text(workPackage.title || workPackage.name, 100, `工作包 ${packageIndex + 1}`), objective: text(workPackage.objective || workPackage.description, 300), order: Number.isFinite(workPackage.order) ? workPackage.order : packageIndex + 1, evidenceIds: strings(workPackage.evidenceIds).filter((id) => evidenceIds.has(id)), tasks: normalizeTasks(workPackage.tasks || workPackage.actions, 20) }]
     })
-    return [{ tempId: text(item.tempId, 100, `milestone-${index + 1}`), title: text(item.title, 100, `阶段 ${index + 1}`), objective: text(item.objective, 300), order: Number.isFinite(item.order) ? item.order : index + 1, evidenceIds: strings(item.evidenceIds).filter((id) => evidenceIds.has(id)), workPackages, tasks: normalizeTasks(item.tasks, 20) }]
+    return [{ tempId: text(item.tempId, 100, `milestone-${index + 1}`), title: text(item.title || item.name, 100, `阶段 ${index + 1}`), objective: text(item.objective || item.description, 300), order: Number.isFinite(item.order) ? item.order : index + 1, evidenceIds: strings(item.evidenceIds).filter((id) => evidenceIds.has(id)), workPackages, tasks: normalizeTasks(item.tasks || item.actions, 20) }]
   })
-  let standaloneTasks = normalizeTasks(raw.standaloneTasks, 20)
+  let standaloneTasks = normalizeTasks(raw.standaloneTasks || raw.tasks, 20)
   const allTasks = () => [...standaloneTasks, ...milestones.flatMap((milestone) => [...milestone.tasks, ...milestone.workPackages.flatMap((workPackage) => workPackage.tasks)])]
   const seen = new Set()
   const duplicates = new Set()
@@ -129,6 +130,41 @@ export function normalizeRecognitionResult(raw, sourceContent, nowIso) {
   const rawMatch = raw.projectMatch && typeof raw.projectMatch === 'object' ? raw.projectMatch : {}
   const decision = ['new_project', 'existing_project', 'standalone_task', 'uncertain'].includes(rawMatch.decision) ? rawMatch.decision : 'uncertain'
   const sourceSummaryRaw = raw.sourceSummary && typeof raw.sourceSummary === 'object' ? raw.sourceSummary : {}
+  const normalizeConflicts = (items) => Array.isArray(items) ? items.slice(0, 30).flatMap((item, index) => {
+    if (!item || typeof item !== 'object' || Array.isArray(item)) return []
+    const type = ['deadline', 'project_match', 'duplicate', 'hierarchy', 'other'].includes(item.type) ? item.type : 'other'
+    const message = text(item.message || item.description, 500)
+    if (!message) return []
+    return [{
+      id: text(item.id || item.tempId, 100, `conflict-${index + 1}`),
+      type,
+      message,
+      entityTempIds: strings(item.entityTempIds || item.relatedTempIds),
+      evidenceIds: strings(item.evidenceIds).filter((id) => evidenceIds.has(id)),
+      requiresDecision: item.requiresDecision !== false,
+    }]
+  }) : []
+  const normalizeAmbiguities = (items) => Array.isArray(items) ? items.slice(0, 30).flatMap((item, index) => {
+    if (!item || typeof item !== 'object' || Array.isArray(item)) return []
+    const fieldName = text(item.field || item.subject || item.type, 100)
+    const message = text(item.message || item.description, 500)
+    if (!fieldName || !message) return []
+    return [{
+      id: text(item.id || item.tempId, 100, `ambiguity-${index + 1}`),
+      field: fieldName,
+      message,
+      options: strings(item.options, 12),
+      evidenceIds: strings(item.evidenceIds).filter((id) => evidenceIds.has(id)),
+    }]
+  }) : []
+  const normalizeIgnoredContent = (items) => Array.isArray(items) ? items.slice(0, 30).flatMap((item) => {
+    if (typeof item === 'string') return text(item, 500) ? [{ text: text(item, 500), reason: 'other' }] : []
+    if (!item || typeof item !== 'object' || Array.isArray(item)) return []
+    const ignoredText = text(item.text || item.content, 500)
+    if (!ignoredText) return []
+    const reason = ['background', 'contact', 'address', 'policy', 'format_requirement', 'other'].includes(item.reason) ? item.reason : 'other'
+    return [{ text: ignoredText, reason }]
+  }) : []
   const taskCount = allTasks().filter((task) => task.hierarchyType === 'task').length
   const subtaskCount = allTasks().filter((task) => task.hierarchyType === 'subtask').length
   const overFragmented = taskCount > 20 || subtaskCount > 40
@@ -138,9 +174,9 @@ export function normalizeRecognitionResult(raw, sourceContent, nowIso) {
     schemaVersion: '2.0', promptVersion: RECOGNITION_PROMPT_VERSION, modelName: RECOGNITION_MODEL_NAME, createdAt: text(raw.createdAt, 80, nowIso),
     sourceSummary: { title: text(sourceSummaryRaw.title, 160, '未命名来源'), sourceType: text(sourceSummaryRaw.sourceType, 30, 'text'), notificationType: NOTIFICATION_TYPES.has(sourceSummaryRaw.notificationType) ? sourceSummaryRaw.notificationType : 'uncertain', summary: text(sourceSummaryRaw.summary, 800), requiresAction: Boolean(sourceSummaryRaw.requiresAction), actionReason: text(sourceSummaryRaw.actionReason, 300) },
     projectMatch: { decision, matchedProjectId: text(rawMatch.matchedProjectId, 100) || null, suggestedProjectTitle: text(rawMatch.suggestedProjectTitle, 160) || null, confidence: number01(rawMatch.confidence), reasons: strings(rawMatch.reasons, 12) },
-    projectSuggestion: raw.projectSuggestion && typeof raw.projectSuggestion === 'object' ? { title: field(raw.projectSuggestion.title, '待确认项目'), category: field(raw.projectSuggestion.category, '其他', true), objective: field(raw.projectSuggestion.objective, ''), description: field(raw.projectSuggestion.description, '') } : null,
+    projectSuggestion: raw.projectSuggestion && typeof raw.projectSuggestion === 'object' ? { title: field(raw.projectSuggestion.title, text(rawMatch.suggestedProjectTitle || sourceSummaryRaw.title, 160, '未命名项目')), category: field(raw.projectSuggestion.category, '其他', true), objective: field(raw.projectSuggestion.objective, ''), description: field(raw.projectSuggestion.description, '') } : null,
     milestones, standaloneTasks, materials, timePoints, events, evidence,
-    conflicts: Array.isArray(raw.conflicts) ? raw.conflicts.slice(0, 30) : [], ambiguities: Array.isArray(raw.ambiguities) ? raw.ambiguities.slice(0, 30) : [], ignoredContent: Array.isArray(raw.ignoredContent) ? raw.ignoredContent.slice(0, 30) : [],
+    conflicts: normalizeConflicts(raw.conflicts), ambiguities: normalizeAmbiguities(raw.ambiguities), ignoredContent: normalizeIgnoredContent(raw.ignoredContent),
     quality: { overallConfidence: number01(qualityRaw.overallConfidence), hierarchyConfidence: number01(qualityRaw.hierarchyConfidence), dateConfidence: number01(qualityRaw.dateConfidence), evidenceCoverage: number01(qualityRaw.evidenceCoverage), duplicateRisk: Math.max(number01(qualityRaw.duplicateRisk, 0), duplicates.size / Math.max(1, taskCount)), overFragmentationRisk: overFragmented ? 1 : number01(qualityRaw.overFragmentationRisk, 0), missingActionRisk: number01(qualityRaw.missingActionRisk, 0), needsHumanReview: Boolean(qualityRaw.needsHumanReview) || overFragmented || decision === 'uncertain', reviewReasons: [...new Set([...strings(qualityRaw.reviewReasons, 20), ...(duplicates.size ? ['存在重复任务，已从默认结果中合并'] : []), ...(overFragmented ? ['任务数量超过安全阈值，可能拆分过细'] : []), ...(decision === 'uncertain' ? ['项目归属不确定'] : [])])] },
   }
 }
