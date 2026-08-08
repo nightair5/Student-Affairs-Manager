@@ -1,0 +1,5864 @@
+{
+  "run": {
+    "runId": "deepseek-production-2026-08-08T19-29-34-147Z",
+    "provider": "deepseek-production",
+    "label": "after-2-3-golden-pass",
+    "datasetName": "golden",
+    "datasetVersion": "e2-a-golden-1.0.0",
+    "localPromptVersion": "recognition-2.3.0",
+    "expectedPromptVersion": "recognition-2.3.0",
+    "observedPromptVersions": [
+      "recognition-2.3.0"
+    ],
+    "modelName": "deepseek-v4-flash",
+    "promptSourceSha256": "c2732ce95e9033837c50c73d052cb1c3f8b560b023c3731b8d25998fb1b7e71a",
+    "startedAt": "2026-08-08T19:00:02.656Z",
+    "completedAt": "2026-08-08T19:29:34.147Z",
+    "endpoint": "https://student-affairs-manager-preview.nightsdell.workers.dev/api/deepseek",
+    "transport": "python-session",
+    "tokenAndCostObservation": "Token usage is the sum of real Worker execution metadata.",
+    "evaluationNotes": []
+  },
+  "failures": [
+    {
+      "caseId": "e2-course-01",
+      "group": "course",
+      "status": "ok",
+      "latencyMs": 23394,
+      "failures": [
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：正式提交",
+          "expectedKey": "submit",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 23160,
+        "tokenUsage": {
+          "input": 1935,
+          "output": 938
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1935,
+              "output": 938
+            },
+            "durationMs": 23160,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-course-03",
+      "group": "course",
+      "status": "ok",
+      "latencyMs": 6735,
+      "failures": [
+        {
+          "category": "ambiguity_missing",
+          "severity": "major",
+          "reason": "应标记的歧义未标记",
+          "expectedKey": "ambiguity-1",
+          "tags": [
+            "MISSING_AMBIGUITY"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 6499,
+        "tokenUsage": {
+          "input": 1920,
+          "output": 1149
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1920,
+              "output": 1149
+            },
+            "durationMs": 6499,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-course-06",
+      "group": "course",
+      "status": "ok",
+      "latencyMs": 6302,
+      "failures": [
+        {
+          "category": "project_decision",
+          "severity": "major",
+          "reason": "项目决策应为 new_project，实际为 standalone_task",
+          "tags": [
+            "PROJECT_DECISION_ERROR"
+          ]
+        },
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：资料准备/展示准备",
+          "expectedKey": "prepare",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：答辩或展示/展示",
+          "expectedKey": "present",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 6017,
+        "tokenUsage": {
+          "input": 1922,
+          "output": 966
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1922,
+              "output": 966
+            },
+            "durationMs": 6017,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "medium",
+        "score": 2,
+        "reasons": [
+          "包含更正或补充语义"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-course-08",
+      "group": "course",
+      "status": "ok",
+      "latencyMs": 6871,
+      "failures": [
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 6640,
+        "tokenUsage": {
+          "input": 1924,
+          "output": 1178
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1924,
+              "output": 1178
+            },
+            "durationMs": 6640,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-course-09",
+      "group": "course",
+      "status": "ok",
+      "latencyMs": 9621,
+      "failures": [
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 9368,
+        "tokenUsage": {
+          "input": 1924,
+          "output": 1779
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1924,
+              "output": 1779
+            },
+            "durationMs": 9368,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "medium",
+        "score": 2,
+        "reasons": [
+          "包含 2 个时间表达"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-complex_notice-01",
+      "group": "complex_notice",
+      "status": "ok",
+      "latencyMs": 13578,
+      "failures": [
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：内容制作/调研",
+          "expectedKey": "research",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 13340,
+        "tokenUsage": {
+          "input": 1958,
+          "output": 2732
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1958,
+              "output": 2732
+            },
+            "durationMs": 13340,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "complex",
+        "score": 5,
+        "reasons": [
+          "包含 4 个时间表达",
+          "包含 4 个动作词"
+        ],
+        "candidateStrategy": "fact_then_plan",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-complex_notice-02",
+      "group": "complex_notice",
+      "status": "ok",
+      "latencyMs": 11167,
+      "failures": [
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：正式提交",
+          "expectedKey": "submit",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "time_incorrect",
+          "severity": "major",
+          "reason": "时间点不正确：8月20日中午12点",
+          "expectedKey": "register-time",
+          "actual": "2026-08-20T12:00:00+08:00",
+          "tags": [
+            "WRONG_TIME_VALUE"
+          ]
+        },
+        {
+          "category": "ambiguity_missing",
+          "severity": "major",
+          "reason": "应标记的歧义未标记",
+          "expectedKey": "ambiguity-1",
+          "tags": [
+            "MISSING_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 10944,
+        "tokenUsage": {
+          "input": 1955,
+          "output": 2086
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1955,
+              "output": 2086
+            },
+            "durationMs": 10944,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "medium",
+        "score": 3,
+        "reasons": [
+          "包含 3 个时间表达",
+          "包含 4 个动作词"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-complex_notice-03",
+      "group": "complex_notice",
+      "status": "ok",
+      "latencyMs": 13489,
+      "failures": [
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：资料准备",
+          "expectedKey": "prepare",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "task_hierarchy",
+          "severity": "minor",
+          "reason": "任务层级应为 subtask",
+          "expectedKey": "expense",
+          "actual": "task",
+          "tags": [
+            "TASK_GRANULARITY_ERROR"
+          ]
+        },
+        {
+          "category": "task_hierarchy",
+          "severity": "minor",
+          "reason": "预期子任务缺少父任务引用",
+          "expectedKey": "expense",
+          "tags": [
+            "TASK_GRANULARITY_ERROR"
+          ]
+        },
+        {
+          "category": "task_hierarchy",
+          "severity": "minor",
+          "reason": "任务层级应为 subtask",
+          "expectedKey": "personal",
+          "actual": "task",
+          "tags": [
+            "TASK_GRANULARITY_ERROR"
+          ]
+        },
+        {
+          "category": "task_hierarchy",
+          "severity": "minor",
+          "reason": "预期子任务缺少父任务引用",
+          "expectedKey": "personal",
+          "tags": [
+            "TASK_GRANULARITY_ERROR"
+          ]
+        },
+        {
+          "category": "task_spurious",
+          "severity": "minor",
+          "reason": "存在 2 条未匹配任务",
+          "tags": [
+            "OVER_TASK"
+          ]
+        },
+        {
+          "category": "material_missing",
+          "severity": "major",
+          "reason": "缺少材料：结题材料包",
+          "expectedKey": "package",
+          "tags": [
+            "MISSING_MATERIAL"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 13274,
+        "tokenUsage": {
+          "input": 1961,
+          "output": 2607
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1961,
+              "output": 2607
+            },
+            "durationMs": 13274,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "medium",
+        "score": 3,
+        "reasons": [
+          "包含 3 个时间表达",
+          "包含 3 个动作词"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-complex_notice-04",
+      "group": "complex_notice",
+      "status": "ok",
+      "latencyMs": 12270,
+      "failures": [
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：培训",
+          "expectedKey": "training",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：报名/提交 志愿服务",
+          "expectedKey": "register",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：准备/自备 志愿者马甲",
+          "expectedKey": "prepare-vest",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "task_spurious",
+          "severity": "minor",
+          "reason": "存在 1 条未匹配任务",
+          "tags": [
+            "OVER_TASK"
+          ]
+        },
+        {
+          "category": "event_missing",
+          "severity": "major",
+          "reason": "缺少事件：集合上岗/志愿服务",
+          "expectedKey": "service",
+          "tags": [
+            "MISSING_EVENT"
+          ]
+        },
+        {
+          "category": "event_spurious",
+          "severity": "major",
+          "reason": "存在 1 个未匹配事件",
+          "tags": [
+            "WRONG_EVENT"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 11959,
+        "tokenUsage": {
+          "input": 1951,
+          "output": 2369
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1951,
+              "output": 2369
+            },
+            "durationMs": 11959,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "medium",
+        "score": 3,
+        "reasons": [
+          "包含 3 个时间表达",
+          "包含条件适用语义"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-complex_notice-05",
+      "group": "complex_notice",
+      "status": "ok",
+      "latencyMs": 10313,
+      "failures": [
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：初审",
+          "expectedKey": "review",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "ambiguity_missing",
+          "severity": "major",
+          "reason": "应标记的歧义未标记",
+          "expectedKey": "ambiguity-1",
+          "tags": [
+            "MISSING_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 10049,
+        "tokenUsage": {
+          "input": 1946,
+          "output": 2066
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1946,
+              "output": 2066
+            },
+            "durationMs": 10049,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "medium",
+        "score": 3,
+        "reasons": [
+          "包含 3 个时间表达",
+          "包含 3 个动作词"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-complex_notice-06",
+      "group": "complex_notice",
+      "status": "ok",
+      "latencyMs": 19062,
+      "failures": [
+        {
+          "category": "project_decision",
+          "severity": "major",
+          "reason": "项目决策应为 new_project，实际为 standalone_task",
+          "tags": [
+            "PROJECT_DECISION_ERROR"
+          ]
+        },
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：正式提交",
+          "expectedKey": "submit",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：验收/答辩或展示",
+          "expectedKey": "acceptance",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：提交 说明书",
+          "expectedKey": "submit-doc",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "time_incorrect",
+          "severity": "major",
+          "reason": "时间点不正确：另行通知补测时间",
+          "expectedKey": "retest-time",
+          "tags": [
+            "WRONG_TIME_VALUE"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 2,
+        "durationMs": 18822,
+        "tokenUsage": {
+          "input": 5317,
+          "output": 3783
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1946,
+              "output": 1787
+            },
+            "durationMs": 9660,
+            "attempts": 1
+          },
+          {
+            "operation": "repair",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 3371,
+              "output": 1996
+            },
+            "durationMs": 9162,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": true,
+        "applied": true,
+        "errorCode": null,
+        "issueCodes": [
+          "MISSING_TIMEPOINT"
+        ]
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "medium",
+        "score": 3,
+        "reasons": [
+          "包含 3 个时间表达",
+          "包含条件适用语义"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-complex_notice-07",
+      "group": "complex_notice",
+      "status": "ok",
+      "latencyMs": 20983,
+      "failures": [
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：正式提交",
+          "expectedKey": "submit",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：展映/交流",
+          "expectedKey": "screening",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：提交 授权书",
+          "expectedKey": "submit-license",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 2,
+        "durationMs": 20566,
+        "tokenUsage": {
+          "input": 5442,
+          "output": 4150
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1946,
+              "output": 2141
+            },
+            "durationMs": 11177,
+            "attempts": 1
+          },
+          {
+            "operation": "repair",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 3496,
+              "output": 2009
+            },
+            "durationMs": 9389,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": true,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": [
+          "MISSING_TIMEPOINT"
+        ]
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "complex",
+        "score": 5,
+        "reasons": [
+          "包含 4 个时间表达",
+          "包含条件适用语义"
+        ],
+        "candidateStrategy": "fact_then_plan",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-complex_notice-08",
+      "group": "complex_notice",
+      "status": "ok",
+      "latencyMs": 12125,
+      "failures": [
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：摘要",
+          "expectedKey": "abstract",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：全文/正式提交",
+          "expectedKey": "paper",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 11904,
+        "tokenUsage": {
+          "input": 1941,
+          "output": 2462
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1941,
+              "output": 2462
+            },
+            "durationMs": 11904,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "medium",
+        "score": 3,
+        "reasons": [
+          "包含 3 个时间表达",
+          "包含条件适用语义"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-complex_notice-09",
+      "group": "complex_notice",
+      "status": "ok",
+      "latencyMs": 9261,
+      "failures": [
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：学生提交/资料准备",
+          "expectedKey": "student",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "time_spurious",
+          "severity": "minor",
+          "reason": "存在 2 个未匹配时间点",
+          "tags": [
+            "WRONG_TIMEPOINT_TYPE"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 9047,
+        "tokenUsage": {
+          "input": 1943,
+          "output": 1812
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1943,
+              "output": 1812
+            },
+            "durationMs": 9047,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "medium",
+        "score": 2,
+        "reasons": [
+          "包含 3 个时间表达"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-complex_notice-10",
+      "group": "complex_notice",
+      "status": "ok",
+      "latencyMs": 26532,
+      "failures": [
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：方案",
+          "expectedKey": "plan",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：评比",
+          "expectedKey": "review",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：报名 宿舍文化节",
+          "expectedKey": "register",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：完成/进行 宿舍布置",
+          "expectedKey": "setup",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "task_spurious",
+          "severity": "minor",
+          "reason": "存在 2 条未匹配任务",
+          "tags": [
+            "OVER_TASK"
+          ]
+        },
+        {
+          "category": "time_incorrect",
+          "severity": "major",
+          "reason": "时间点不正确：8月16日前",
+          "expectedKey": "register-date",
+          "actual": "2026-08-16",
+          "tags": [
+            "WRONG_TIME_VALUE"
+          ]
+        },
+        {
+          "category": "time_spurious",
+          "severity": "minor",
+          "reason": "存在 1 个未匹配时间点",
+          "tags": [
+            "WRONG_TIMEPOINT_TYPE"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 2,
+        "durationMs": 26313,
+        "tokenUsage": {
+          "input": 5999,
+          "output": 5505
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1944,
+              "output": 2732
+            },
+            "durationMs": 13983,
+            "attempts": 1
+          },
+          {
+            "operation": "repair",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 4055,
+              "output": 2773
+            },
+            "durationMs": 12330,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": true,
+        "applied": true,
+        "errorCode": null,
+        "issueCodes": [
+          "FALSE_PRECISION"
+        ]
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "medium",
+        "score": 4,
+        "reasons": [
+          "包含 4 个时间表达"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-competition-01",
+      "group": "competition",
+      "status": "ok",
+      "latencyMs": 6537,
+      "failures": [
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：资料准备/申请准备",
+          "expectedKey": "prepare",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：正式提交/报名",
+          "expectedKey": "submit",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 6311,
+        "tokenUsage": {
+          "input": 1924,
+          "output": 1177
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1924,
+              "output": 1177
+            },
+            "durationMs": 6311,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-competition-02",
+      "group": "competition",
+      "status": "ok",
+      "latencyMs": 7453,
+      "failures": [
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：资料准备/申请准备",
+          "expectedKey": "prepare",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：正式提交/报名",
+          "expectedKey": "submit",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 6882,
+        "tokenUsage": {
+          "input": 1922,
+          "output": 1187
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1922,
+              "output": 1187
+            },
+            "durationMs": 6882,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-competition-03",
+      "group": "competition",
+      "status": "ok",
+      "latencyMs": 7320,
+      "failures": [
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：资料准备/申请准备",
+          "expectedKey": "prepare",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：正式提交/报名",
+          "expectedKey": "submit",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "task_spurious",
+          "severity": "minor",
+          "reason": "存在 1 条未匹配任务",
+          "tags": [
+            "OVER_TASK"
+          ]
+        },
+        {
+          "category": "time_incorrect",
+          "severity": "major",
+          "reason": "时间点不正确：8月19日",
+          "expectedKey": "deadline",
+          "actual": "2026-08-19",
+          "tags": [
+            "WRONG_TIME_VALUE"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 7098,
+        "tokenUsage": {
+          "input": 1923,
+          "output": 1327
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1923,
+              "output": 1327
+            },
+            "durationMs": 7098,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 1,
+        "reasons": [
+          "包含 3 个动作词"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-competition-04",
+      "group": "competition",
+      "status": "ok",
+      "latencyMs": 6593,
+      "failures": [
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：资料准备/申请准备",
+          "expectedKey": "prepare",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：正式提交/报名",
+          "expectedKey": "submit",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 6335,
+        "tokenUsage": {
+          "input": 1929,
+          "output": 1118
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1929,
+              "output": 1118
+            },
+            "durationMs": 6335,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-competition-05",
+      "group": "competition",
+      "status": "ok",
+      "latencyMs": 7092,
+      "failures": [
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：资料准备/申请准备",
+          "expectedKey": "prepare",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：正式提交/报名",
+          "expectedKey": "submit",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 6651,
+        "tokenUsage": {
+          "input": 1924,
+          "output": 1249
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1924,
+              "output": 1249
+            },
+            "durationMs": 6651,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-competition-06",
+      "group": "competition",
+      "status": "ok",
+      "latencyMs": 6278,
+      "failures": [
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：资料准备/申请准备",
+          "expectedKey": "prepare",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：正式提交/报名",
+          "expectedKey": "submit",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 6060,
+        "tokenUsage": {
+          "input": 1929,
+          "output": 1098
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1929,
+              "output": 1098
+            },
+            "durationMs": 6060,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-competition-07",
+      "group": "competition",
+      "status": "ok",
+      "latencyMs": 6884,
+      "failures": [
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：资料准备/申请准备",
+          "expectedKey": "prepare",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：正式提交/报名",
+          "expectedKey": "submit",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 6659,
+        "tokenUsage": {
+          "input": 1921,
+          "output": 1168
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1921,
+              "output": 1168
+            },
+            "durationMs": 6659,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-competition-08",
+      "group": "competition",
+      "status": "ok",
+      "latencyMs": 6017,
+      "failures": [
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：资料准备/申请准备",
+          "expectedKey": "prepare",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：正式提交/报名",
+          "expectedKey": "submit",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 5791,
+        "tokenUsage": {
+          "input": 1923,
+          "output": 1083
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1923,
+              "output": 1083
+            },
+            "durationMs": 5791,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-competition-09",
+      "group": "competition",
+      "status": "ok",
+      "latencyMs": 6019,
+      "failures": [
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：资料准备/申请准备",
+          "expectedKey": "prepare",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：正式提交/报名",
+          "expectedKey": "submit",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 5806,
+        "tokenUsage": {
+          "input": 1926,
+          "output": 1072
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1926,
+              "output": 1072
+            },
+            "durationMs": 5806,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-competition-10",
+      "group": "competition",
+      "status": "ok",
+      "latencyMs": 6035,
+      "failures": [
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：资料准备/申请准备",
+          "expectedKey": "prepare",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：正式提交/报名",
+          "expectedKey": "submit",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 5798,
+        "tokenUsage": {
+          "input": 1920,
+          "output": 1064
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1920,
+              "output": 1064
+            },
+            "durationMs": 5798,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-application-01",
+      "group": "application",
+      "status": "ok",
+      "latencyMs": 5877,
+      "failures": [
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：资料准备/申请准备",
+          "expectedKey": "prepare",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：正式提交/报名",
+          "expectedKey": "submit",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 5636,
+        "tokenUsage": {
+          "input": 1918,
+          "output": 1045
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1918,
+              "output": 1045
+            },
+            "durationMs": 5636,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-application-02",
+      "group": "application",
+      "status": "ok",
+      "latencyMs": 6349,
+      "failures": [
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：资料准备/申请准备",
+          "expectedKey": "prepare",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：正式提交/报名",
+          "expectedKey": "submit",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 5992,
+        "tokenUsage": {
+          "input": 1924,
+          "output": 1091
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1924,
+              "output": 1091
+            },
+            "durationMs": 5992,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-application-03",
+      "group": "application",
+      "status": "ok",
+      "latencyMs": 6851,
+      "failures": [
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：资料准备/申请准备",
+          "expectedKey": "prepare",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：正式提交/报名",
+          "expectedKey": "submit",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 6598,
+        "tokenUsage": {
+          "input": 1923,
+          "output": 1190
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1923,
+              "output": 1190
+            },
+            "durationMs": 6598,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-application-04",
+      "group": "application",
+      "status": "ok",
+      "latencyMs": 6201,
+      "failures": [
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：资料准备/申请准备",
+          "expectedKey": "prepare",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：正式提交/报名",
+          "expectedKey": "submit",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 5865,
+        "tokenUsage": {
+          "input": 1925,
+          "output": 1154
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1925,
+              "output": 1154
+            },
+            "durationMs": 5865,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-application-05",
+      "group": "application",
+      "status": "ok",
+      "latencyMs": 7079,
+      "failures": [
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：资料准备/申请准备",
+          "expectedKey": "prepare",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：正式提交/报名",
+          "expectedKey": "submit",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 6491,
+        "tokenUsage": {
+          "input": 1920,
+          "output": 1089
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1920,
+              "output": 1089
+            },
+            "durationMs": 6491,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-application-06",
+      "group": "application",
+      "status": "ok",
+      "latencyMs": 7025,
+      "failures": [
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：资料准备/申请准备",
+          "expectedKey": "prepare",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：正式提交/报名",
+          "expectedKey": "submit",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 6602,
+        "tokenUsage": {
+          "input": 1922,
+          "output": 1169
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1922,
+              "output": 1169
+            },
+            "durationMs": 6602,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-application-07",
+      "group": "application",
+      "status": "ok",
+      "latencyMs": 5339,
+      "failures": [
+        {
+          "category": "project_decision",
+          "severity": "major",
+          "reason": "项目决策应为 new_project，实际为 standalone_task",
+          "tags": [
+            "PROJECT_DECISION_ERROR"
+          ]
+        },
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：资料准备/申请准备",
+          "expectedKey": "prepare",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：正式提交/报名",
+          "expectedKey": "submit",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "evidence_missing",
+          "severity": "major",
+          "reason": "缺少 1 项可回看证据",
+          "tags": [
+            "MISSING_EVIDENCE"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 5128,
+        "tokenUsage": {
+          "input": 1923,
+          "output": 865
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1923,
+              "output": 865
+            },
+            "durationMs": 5128,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-application-08",
+      "group": "application",
+      "status": "ok",
+      "latencyMs": 6189,
+      "failures": [
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：资料准备/申请准备",
+          "expectedKey": "prepare",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：正式提交/报名",
+          "expectedKey": "submit",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 5978,
+        "tokenUsage": {
+          "input": 1925,
+          "output": 1089
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1925,
+              "output": 1089
+            },
+            "durationMs": 5978,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-application-09",
+      "group": "application",
+      "status": "ok",
+      "latencyMs": 6672,
+      "failures": [
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：资料准备/申请准备",
+          "expectedKey": "prepare",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：正式提交/报名",
+          "expectedKey": "submit",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 6453,
+        "tokenUsage": {
+          "input": 1923,
+          "output": 1160
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1923,
+              "output": 1160
+            },
+            "durationMs": 6453,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-application-10",
+      "group": "application",
+      "status": "ok",
+      "latencyMs": 6450,
+      "failures": [
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：资料准备/申请准备",
+          "expectedKey": "prepare",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：正式提交/报名",
+          "expectedKey": "submit",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 6236,
+        "tokenUsage": {
+          "input": 1922,
+          "output": 1161
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1922,
+              "output": 1161
+            },
+            "durationMs": 6236,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-event-03",
+      "group": "event",
+      "status": "ok",
+      "latencyMs": 4304,
+      "failures": [
+        {
+          "category": "evidence_missing",
+          "severity": "major",
+          "reason": "缺少 1 项可回看证据",
+          "tags": [
+            "MISSING_EVIDENCE"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 4041,
+        "tokenUsage": {
+          "input": 1921,
+          "output": 693
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1921,
+              "output": 693
+            },
+            "durationMs": 4041,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-event-05",
+      "group": "event",
+      "status": "ok",
+      "latencyMs": 4283,
+      "failures": [
+        {
+          "category": "evidence_missing",
+          "severity": "major",
+          "reason": "缺少 1 项可回看证据",
+          "tags": [
+            "MISSING_EVIDENCE"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 4060,
+        "tokenUsage": {
+          "input": 1921,
+          "output": 669
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1921,
+              "output": 669
+            },
+            "durationMs": 4060,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-event-09",
+      "group": "event",
+      "status": "ok",
+      "latencyMs": 4398,
+      "failures": [
+        {
+          "category": "evidence_missing",
+          "severity": "major",
+          "reason": "缺少 1 项可回看证据",
+          "tags": [
+            "MISSING_EVIDENCE"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 4188,
+        "tokenUsage": {
+          "input": 1922,
+          "output": 694
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1922,
+              "output": 694
+            },
+            "durationMs": 4188,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-event-10",
+      "group": "event",
+      "status": "ok",
+      "latencyMs": 4698,
+      "failures": [
+        {
+          "category": "evidence_missing",
+          "severity": "major",
+          "reason": "缺少 1 项可回看证据",
+          "tags": [
+            "MISSING_EVIDENCE"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 4472,
+        "tokenUsage": {
+          "input": 1920,
+          "output": 695
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1920,
+              "output": 695
+            },
+            "durationMs": 4472,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-multi_deadline-01",
+      "group": "multi_deadline",
+      "status": "ok",
+      "latencyMs": 22323,
+      "failures": [
+        {
+          "category": "milestone_spurious",
+          "severity": "minor",
+          "reason": "预测阶段数量明显超过黄金答案",
+          "actual": "2",
+          "tags": [
+            "OVER_MILESTONE"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 2,
+        "durationMs": 22084,
+        "tokenUsage": {
+          "input": 5598,
+          "output": 4571
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1942,
+              "output": 2222
+            },
+            "durationMs": 10746,
+            "attempts": 1
+          },
+          {
+            "operation": "repair",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 3656,
+              "output": 2349
+            },
+            "durationMs": 11338,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": true,
+        "applied": true,
+        "errorCode": null,
+        "issueCodes": [
+          "MISSING_MILESTONE"
+        ]
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "medium",
+        "score": 3,
+        "reasons": [
+          "包含 3 个时间表达",
+          "包含 5 个动作词"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-multi_deadline-02",
+      "group": "multi_deadline",
+      "status": "ok",
+      "latencyMs": 20492,
+      "failures": [
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 2,
+        "durationMs": 20259,
+        "tokenUsage": {
+          "input": 5550,
+          "output": 4374
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1942,
+              "output": 2078
+            },
+            "durationMs": 10044,
+            "attempts": 1
+          },
+          {
+            "operation": "repair",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 3608,
+              "output": 2296
+            },
+            "durationMs": 10215,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": true,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": [
+          "MISSING_MILESTONE"
+        ]
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "medium",
+        "score": 3,
+        "reasons": [
+          "包含 3 个时间表达",
+          "包含 5 个动作词"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-multi_deadline-06",
+      "group": "multi_deadline",
+      "status": "ok",
+      "latencyMs": 22248,
+      "failures": [
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 2,
+        "durationMs": 21902,
+        "tokenUsage": {
+          "input": 5559,
+          "output": 4491
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1942,
+              "output": 2187
+            },
+            "durationMs": 11036,
+            "attempts": 1
+          },
+          {
+            "operation": "repair",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 3617,
+              "output": 2304
+            },
+            "durationMs": 10866,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": true,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": [
+          "MISSING_MILESTONE"
+        ]
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "medium",
+        "score": 3,
+        "reasons": [
+          "包含 3 个时间表达",
+          "包含 5 个动作词"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-multi_deadline-09",
+      "group": "multi_deadline",
+      "status": "ok",
+      "latencyMs": 20126,
+      "failures": [
+        {
+          "category": "milestone_spurious",
+          "severity": "minor",
+          "reason": "预测阶段数量明显超过黄金答案",
+          "actual": "2",
+          "tags": [
+            "OVER_MILESTONE"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 2,
+        "durationMs": 19891,
+        "tokenUsage": {
+          "input": 5472,
+          "output": 4260
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1942,
+              "output": 2072
+            },
+            "durationMs": 9699,
+            "attempts": 1
+          },
+          {
+            "operation": "repair",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 3530,
+              "output": 2188
+            },
+            "durationMs": 10192,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": true,
+        "applied": true,
+        "errorCode": null,
+        "issueCodes": [
+          "MISSING_MILESTONE"
+        ]
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "medium",
+        "score": 3,
+        "reasons": [
+          "包含 3 个时间表达",
+          "包含 5 个动作词"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-multi_deadline-10",
+      "group": "multi_deadline",
+      "status": "ok",
+      "latencyMs": 21466,
+      "failures": [
+        {
+          "category": "milestone_spurious",
+          "severity": "minor",
+          "reason": "预测阶段数量明显超过黄金答案",
+          "actual": "2",
+          "tags": [
+            "OVER_MILESTONE"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 2,
+        "durationMs": 21229,
+        "tokenUsage": {
+          "input": 5555,
+          "output": 4464
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1942,
+              "output": 2176
+            },
+            "durationMs": 10735,
+            "attempts": 1
+          },
+          {
+            "operation": "repair",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 3613,
+              "output": 2288
+            },
+            "durationMs": 10494,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": true,
+        "applied": true,
+        "errorCode": null,
+        "issueCodes": [
+          "MISSING_MILESTONE"
+        ]
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "medium",
+        "score": 3,
+        "reasons": [
+          "包含 3 个时间表达",
+          "包含 5 个动作词"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-material-02",
+      "group": "material",
+      "status": "ok",
+      "latencyMs": 6368,
+      "failures": [
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 6144,
+        "tokenUsage": {
+          "input": 1921,
+          "output": 1014
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1921,
+              "output": 1014
+            },
+            "durationMs": 6144,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-material-06",
+      "group": "material",
+      "status": "ok",
+      "latencyMs": 6009,
+      "failures": [
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 5784,
+        "tokenUsage": {
+          "input": 1924,
+          "output": 1008
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1924,
+              "output": 1008
+            },
+            "durationMs": 5784,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-material-07",
+      "group": "material",
+      "status": "ok",
+      "latencyMs": 6109,
+      "failures": [
+        {
+          "category": "task_spurious",
+          "severity": "minor",
+          "reason": "存在 1 条未匹配任务",
+          "tags": [
+            "OVER_TASK"
+          ]
+        },
+        {
+          "category": "material_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配材料",
+          "tags": [
+            "WRONG_MATERIAL"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 5856,
+        "tokenUsage": {
+          "input": 1919,
+          "output": 1077
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1919,
+              "output": 1077
+            },
+            "durationMs": 5856,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-material-08",
+      "group": "material",
+      "status": "ok",
+      "latencyMs": 6046,
+      "failures": [
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 5827,
+        "tokenUsage": {
+          "input": 1920,
+          "output": 987
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1920,
+              "output": 987
+            },
+            "durationMs": 5827,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-material-10",
+      "group": "material",
+      "status": "ok",
+      "latencyMs": 6015,
+      "failures": [
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 5780,
+        "tokenUsage": {
+          "input": 1922,
+          "output": 991
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1922,
+              "output": 991
+            },
+            "durationMs": 5780,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-vague_time-01",
+      "group": "vague_time",
+      "status": "ok",
+      "latencyMs": 11026,
+      "failures": [
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：提交/完成/报名 月底",
+          "expectedKey": "action",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "task_spurious",
+          "severity": "minor",
+          "reason": "存在 1 条未匹配任务",
+          "tags": [
+            "OVER_TASK"
+          ]
+        },
+        {
+          "category": "material_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配材料",
+          "tags": [
+            "WRONG_MATERIAL"
+          ]
+        },
+        {
+          "category": "time_incorrect",
+          "severity": "major",
+          "reason": "时间点不正确：本月底前",
+          "expectedKey": "vague-time",
+          "tags": [
+            "WRONG_TIME_VALUE"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 2,
+        "durationMs": 10811,
+        "tokenUsage": {
+          "input": 4597,
+          "output": 1846
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1915,
+              "output": 916
+            },
+            "durationMs": 5530,
+            "attempts": 1
+          },
+          {
+            "operation": "repair",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 2682,
+              "output": 930
+            },
+            "durationMs": 5281,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": true,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": [
+          "MISSING_TIMEPOINT"
+        ]
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-vague_time-02",
+      "group": "vague_time",
+      "status": "ok",
+      "latencyMs": 5753,
+      "failures": [
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：准备 开学前",
+          "expectedKey": "action",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "task_spurious",
+          "severity": "minor",
+          "reason": "存在 1 条未匹配任务",
+          "tags": [
+            "OVER_TASK"
+          ]
+        },
+        {
+          "category": "material_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配材料",
+          "tags": [
+            "WRONG_MATERIAL"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 5526,
+        "tokenUsage": {
+          "input": 1915,
+          "output": 923
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1915,
+              "output": 923
+            },
+            "durationMs": 5526,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-vague_time-03",
+      "group": "vague_time",
+      "status": "ok",
+      "latencyMs": 5543,
+      "failures": [
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：携带/带 答辩当天",
+          "expectedKey": "action",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "task_spurious",
+          "severity": "minor",
+          "reason": "存在 1 条未匹配任务",
+          "tags": [
+            "OVER_TASK"
+          ]
+        },
+        {
+          "category": "material_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配材料",
+          "tags": [
+            "WRONG_MATERIAL"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 5236,
+        "tokenUsage": {
+          "input": 1915,
+          "output": 917
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1915,
+              "output": 917
+            },
+            "durationMs": 5236,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-vague_time-04",
+      "group": "vague_time",
+      "status": "ok",
+      "latencyMs": 5391,
+      "failures": [
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：提交/完成/报名 另行通知",
+          "expectedKey": "action",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "task_spurious",
+          "severity": "minor",
+          "reason": "存在 1 条未匹配任务",
+          "tags": [
+            "OVER_TASK"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 5178,
+        "tokenUsage": {
+          "input": 1917,
+          "output": 875
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1917,
+              "output": 875
+            },
+            "durationMs": 5178,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 1,
+        "reasons": [
+          "包含条件适用语义"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-vague_time-05",
+      "group": "vague_time",
+      "status": "ok",
+      "latencyMs": 8756,
+      "failures": [
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：9月下旬",
+          "expectedKey": "vague-time",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "event_missing",
+          "severity": "major",
+          "reason": "缺少事件：项目汇报",
+          "expectedKey": "report",
+          "tags": [
+            "MISSING_EVENT"
+          ]
+        },
+        {
+          "category": "ambiguity_missing",
+          "severity": "major",
+          "reason": "应标记的歧义未标记",
+          "expectedKey": "ambiguity-1",
+          "tags": [
+            "MISSING_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 2,
+        "durationMs": 8523,
+        "tokenUsage": {
+          "input": 4269,
+          "output": 1461
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1914,
+              "output": 814
+            },
+            "durationMs": 4859,
+            "attempts": 1
+          },
+          {
+            "operation": "repair",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 2355,
+              "output": 647
+            },
+            "durationMs": 3664,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": true,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": [
+          "MISSING_EVENT"
+        ]
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-vague_time-06",
+      "group": "vague_time",
+      "status": "ok",
+      "latencyMs": 5504,
+      "failures": [
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：提交/完成/报名 近期",
+          "expectedKey": "action",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "task_spurious",
+          "severity": "minor",
+          "reason": "存在 1 条未匹配任务",
+          "tags": [
+            "OVER_TASK"
+          ]
+        },
+        {
+          "category": "material_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配材料",
+          "tags": [
+            "WRONG_MATERIAL"
+          ]
+        },
+        {
+          "category": "time_incorrect",
+          "severity": "major",
+          "reason": "时间点不正确：近期",
+          "expectedKey": "vague-time",
+          "tags": [
+            "WRONG_TIME_VALUE"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 5276,
+        "tokenUsage": {
+          "input": 1913,
+          "output": 895
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1913,
+              "output": 895
+            },
+            "durationMs": 5276,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-vague_time-07",
+      "group": "vague_time",
+      "status": "ok",
+      "latencyMs": 5202,
+      "failures": [
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：归还 放假前",
+          "expectedKey": "action",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "task_spurious",
+          "severity": "minor",
+          "reason": "存在 1 条未匹配任务",
+          "tags": [
+            "OVER_TASK"
+          ]
+        },
+        {
+          "category": "material_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配材料",
+          "tags": [
+            "WRONG_MATERIAL"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 4985,
+        "tokenUsage": {
+          "input": 1915,
+          "output": 893
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1915,
+              "output": 893
+            },
+            "durationMs": 4985,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-vague_time-08",
+      "group": "vague_time",
+      "status": "ok",
+      "latencyMs": 5101,
+      "failures": [
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：完成/阅读 课前",
+          "expectedKey": "action",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "task_spurious",
+          "severity": "minor",
+          "reason": "存在 1 条未匹配任务",
+          "tags": [
+            "OVER_TASK"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 4830,
+        "tokenUsage": {
+          "input": 1914,
+          "output": 819
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1914,
+              "output": 819
+            },
+            "durationMs": 4830,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-vague_time-09",
+      "group": "vague_time",
+      "status": "ok",
+      "latencyMs": 5746,
+      "failures": [
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：办理 结果后办理",
+          "expectedKey": "action",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "task_spurious",
+          "severity": "minor",
+          "reason": "存在 1 条未匹配任务",
+          "tags": [
+            "OVER_TASK"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 5352,
+        "tokenUsage": {
+          "input": 1917,
+          "output": 852
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1917,
+              "output": 852
+            },
+            "durationMs": 5352,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-vague_time-10",
+      "group": "vague_time",
+      "status": "ok",
+      "latencyMs": 5681,
+      "failures": [
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：反馈/回复 周末前",
+          "expectedKey": "action",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "task_spurious",
+          "severity": "minor",
+          "reason": "存在 1 条未匹配任务",
+          "tags": [
+            "OVER_TASK"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 5362,
+        "tokenUsage": {
+          "input": 1915,
+          "output": 897
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1915,
+              "output": 897
+            },
+            "durationMs": 5362,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-ocr_noise-01",
+      "group": "ocr_noise",
+      "status": "ok",
+      "latencyMs": 6826,
+      "failures": [
+        {
+          "category": "ambiguity_missing",
+          "severity": "major",
+          "reason": "应标记的歧义未标记",
+          "expectedKey": "ambiguity-1",
+          "tags": [
+            "MISSING_AMBIGUITY"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 6608,
+        "tokenUsage": {
+          "input": 1931,
+          "output": 1031
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1931,
+              "output": 1031
+            },
+            "durationMs": 6608,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-ocr_noise-02",
+      "group": "ocr_noise",
+      "status": "ok",
+      "latencyMs": 5836,
+      "failures": [
+        {
+          "category": "time_incorrect",
+          "severity": "major",
+          "reason": "时间点不正确：9月I5日I7:30",
+          "expectedKey": "noisy-time",
+          "actual": "2026-09-15T17:30:00+08:00",
+          "tags": [
+            "WRONG_TIME_VALUE"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 5616,
+        "tokenUsage": {
+          "input": 1927,
+          "output": 989
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1927,
+              "output": 989
+            },
+            "durationMs": 5616,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-ocr_noise-03",
+      "group": "ocr_noise",
+      "status": "ok",
+      "latencyMs": 5758,
+      "failures": [
+        {
+          "category": "ambiguity_missing",
+          "severity": "major",
+          "reason": "应标记的歧义未标记",
+          "expectedKey": "ambiguity-1",
+          "tags": [
+            "MISSING_AMBIGUITY"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 5536,
+        "tokenUsage": {
+          "input": 1926,
+          "output": 961
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1926,
+              "output": 961
+            },
+            "durationMs": 5536,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-ocr_noise-04",
+      "group": "ocr_noise",
+      "status": "ok",
+      "latencyMs": 6092,
+      "failures": [
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务： 答辩",
+          "expectedKey": "action",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "ambiguity_missing",
+          "severity": "major",
+          "reason": "应标记的歧义未标记",
+          "expectedKey": "ambiguity-1",
+          "tags": [
+            "MISSING_AMBIGUITY"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 2 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 5757,
+        "tokenUsage": {
+          "input": 1927,
+          "output": 894
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1927,
+              "output": 894
+            },
+            "durationMs": 5757,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-ocr_noise-06",
+      "group": "ocr_noise",
+      "status": "ok",
+      "latencyMs": 5642,
+      "failures": [
+        {
+          "category": "ambiguity_missing",
+          "severity": "major",
+          "reason": "应标记的歧义未标记",
+          "expectedKey": "ambiguity-1",
+          "tags": [
+            "MISSING_AMBIGUITY"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 5397,
+        "tokenUsage": {
+          "input": 1922,
+          "output": 971
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1922,
+              "output": 971
+            },
+            "durationMs": 5397,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-ocr_noise-08",
+      "group": "ocr_noise",
+      "status": "ok",
+      "latencyMs": 6714,
+      "failures": [
+        {
+          "category": "ambiguity_missing",
+          "severity": "major",
+          "reason": "应标记的歧义未标记",
+          "expectedKey": "ambiguity-1",
+          "tags": [
+            "MISSING_AMBIGUITY"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 2 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 6360,
+        "tokenUsage": {
+          "input": 1921,
+          "output": 1090
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1921,
+              "output": 1090
+            },
+            "durationMs": 6360,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-ocr_noise-09",
+      "group": "ocr_noise",
+      "status": "ok",
+      "latencyMs": 6014,
+      "failures": [
+        {
+          "category": "ambiguity_missing",
+          "severity": "major",
+          "reason": "应标记的歧义未标记",
+          "expectedKey": "ambiguity-1",
+          "tags": [
+            "MISSING_AMBIGUITY"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 5787,
+        "tokenUsage": {
+          "input": 1927,
+          "output": 1001
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1927,
+              "output": 1001
+            },
+            "durationMs": 5787,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-ocr_noise-10",
+      "group": "ocr_noise",
+      "status": "ok",
+      "latencyMs": 5937,
+      "failures": [
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：回复 确认函",
+          "expectedKey": "action",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "task_spurious",
+          "severity": "minor",
+          "reason": "存在 1 条未匹配任务",
+          "tags": [
+            "OVER_TASK"
+          ]
+        },
+        {
+          "category": "material_missing",
+          "severity": "major",
+          "reason": "缺少材料：确认函",
+          "expectedKey": "material",
+          "tags": [
+            "MISSING_MATERIAL"
+          ]
+        },
+        {
+          "category": "time_incorrect",
+          "severity": "major",
+          "reason": "时间点不正确：IO月2日l6:OO",
+          "expectedKey": "noisy-time",
+          "actual": "2026-10-02T16:00:00+08:00",
+          "tags": [
+            "WRONG_TIME_VALUE"
+          ]
+        },
+        {
+          "category": "ambiguity_missing",
+          "severity": "major",
+          "reason": "应标记的歧义未标记",
+          "expectedKey": "ambiguity-1",
+          "tags": [
+            "MISSING_AMBIGUITY"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 5724,
+        "tokenUsage": {
+          "input": 1925,
+          "output": 904
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1925,
+              "output": 904
+            },
+            "durationMs": 5724,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-security-04",
+      "group": "security",
+      "status": "ok",
+      "latencyMs": 6009,
+      "failures": [
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 5527,
+        "tokenUsage": {
+          "input": 1930,
+          "output": 987
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1930,
+              "output": 987
+            },
+            "durationMs": 5527,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-security-06",
+      "group": "security",
+      "status": "ok",
+      "latencyMs": 7384,
+      "failures": [
+        {
+          "category": "material_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配材料",
+          "tags": [
+            "WRONG_MATERIAL"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.1.2",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.3.0",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.0.0",
+        "repairVersion": "recognition-repair-1.0.0",
+        "routerVersion": "recognition-router-1.0.0",
+        "attempts": 1,
+        "durationMs": 7162,
+        "tokenUsage": {
+          "input": 1933,
+          "output": 1315
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 1933,
+              "output": 1315
+            },
+            "durationMs": 7162,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.0.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": []
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.0.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    }
+  ]
+}

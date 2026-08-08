@@ -1,160 +1,132 @@
 # Student Affairs Product v2.0 — E2 Final Report
 
-## 1. Executive Summary
+更新时间：2026-08-09（Asia/Shanghai）
 
-E2 在不修改 Workspace v8、Migration、Repository、DomainCommitPlan、Project Matching、Follow 和 UI 主流程的前提下，为 RecognitionResult 2.0 建立了可审计的质量工程链路：冻结 Golden/Holdout、模块化输出合同、纯结构质量校验、最多一次的条件修复、确定性复杂度路由、DeepSeek ModelGateway、有限传输重试、可观测执行元数据和统一质量门槛。
+## 1. 结论
 
-工程实现与 E1 回归均通过；但 E2 质量验收为 **E2 BLOCKED**。原因是当前生产仍运行旧 `recognition-2.0.0`，本轮又明确禁止生产部署；Cloudflare preview 已部署优化代码，但 preview 环境尚未配置 `DEEPSEEK_API_KEY` Secret，因此不能对优化后的 `recognition-2.1.0` 执行真实 DeepSeek Golden After 与 Holdout After。Local fallback、Mock 和旧生产 Prompt 均未被冒充为 After。
+E2 的工程链路已经完成并通过回归，但独立 Holdout 质量门槛未通过，因此当前结论仍为 **E2 BLOCKED / E3 NOT READY**。
 
-## 2. Baseline
+- 冻结 Golden 110 条使用真实 `deepseek-v4-flash`、Prompt `recognition-2.3.0`、Pipeline `recognition-pipeline-2.1.2` 全量运行，全部核心质量门槛通过。
+- 冻结 Holdout 40 条只运行一次，没有根据结果修改 expected、Prompt 或规则；任务、事件、需大改、严重错误和请求失败门槛未通过。
+- Preview 已发布精确待验代码；Production `https://student-affairs.site/` 未被本轮覆盖，避免把未通过泛化门槛的版本上线。
+- A–J 浏览器矩阵只完成首页与服务状态检查；实际整理交互连续触发浏览器控制超时，不能宣称完整浏览器验收通过。
 
-E2-A 冻结的 110 条 Golden / DeepSeek 生产基线：
+## 2. 运行身份
 
-| Metric | Before |
-| --- | ---: |
-| Project Decision Accuracy | 84.55% |
-| Milestone Precision / Recall | 52.17% / 16.44% |
-| Task Precision / Recall | 81.90% / 74.80% |
-| Material Precision / Recall | 96.88% / 30.69% |
-| TimePoint Precision / Recall | 100.00% / 6.38% |
-| TimePoint Type / Value / Overall | 6.38% / 4.96% / 6.38% |
-| Event Accuracy | 86.96% |
-| Evidence Coverage / Validity | 95.33% / 100.00% |
-| Ambiguity Precision / Recall | 0.00% / 0.00% |
-| Duplicate / Over-fragmentation | 0.00% / 0.00% |
-| Major Correction / Severe Error | 87.27% / 5.45% |
-| Invalid Output / Request Failure | 0.00% / 1.82% |
-| Latency mean / P50 / P95 | 6,266 / 5,698 / 12,725 ms |
+| 项目 | 值 |
+| --- | --- |
+| Provider | `deepseek-production` |
+| Model | `deepseek-v4-flash` |
+| Schema | `RecognitionResult 2.0` |
+| Prompt | `recognition-2.3.0` |
+| Pipeline | `recognition-pipeline-2.1.2` |
+| Gateway | `model-gateway-1.0.0` |
+| Retry | `recognition-retry-1.0.0` |
+| Transport | `python-session`（持久 HTTPS 会话，评估器无隐藏重试） |
+| Preview | `https://student-affairs-manager-preview.nightsdell.workers.dev/` |
 
-## 3. Error Taxonomy
+Preview 状态接口已确认 `configured: true`。Secret 只存在于 Cloudflare 服务端 Secret，不进入前端、报告、缓存或 Git。
 
-Golden Before 的主要失败为 `time_missing` 127、`material_missing` 67、`milestone_missing` 56、`project_decision` 29、`task_missing` 29、`ambiguity_missing` 26、`task_spurious` 17、`evidence_missing` 6、`event_missing` 2、`request_failure` 2、`task_hierarchy` 2。E2-B 将其扩展为 33 个稳定标签；逐样例分类、严重度和原因保存于 baseline failures JSON，不保存真实用户正文。
+## 3. Before / After
 
-## 4. Prompt / Output Contract Changes
+| Dataset | Project | Task P / R | Material R | Time | Event | Evidence | Major | Severe | Invalid | Request |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Golden Before / DeepSeek 2.0 | 84.55% | 81.90% / 74.80% | 30.69% | 6.38% | 86.96% | 95.33% | 87.27% | 5.45% | 0.00% | 1.82% |
+| Golden After / DeepSeek 2.3 | **97.27%** | **86.61% / 86.61%** | **98.02%** | **91.67%** | **91.30%** | **98.05%** | **30.91%** | **0.00%** | **0.00%** | **0.00%** |
+| Holdout Before / DeepSeek 2.0 | 80.00% | 68.57% / 45.28% | 32.08% | 3.33% | 66.67% | 83.61% | 90.00% | 10.00% | 0.00% | 5.00% |
+| Holdout After / DeepSeek 2.3 | **95.00%** | **70.69% / 77.36%** | **100.00%** | **78.69%** | **82.35%** | **95.63%** | **60.00%** | **2.50%** | **0.00%** | **2.50%** |
 
-Prompt 从 `recognition-2.0.0` 升到 `recognition-2.1.0`，模型保持 `deepseek-v4-flash`，Schema 保持 `2.0`。合同拆成安全边界、输出合同、时间、材料、结构、证据/歧义、质量七个模块；浏览器 TypeScript 与 Worker MJS 使用同一语义合同。来源始终是 DATA ONLY；所有实体必须引用逐字 Evidence；Material、TimePoint、Event 是顶层独立集合；Subtask 最大一层；不得用哨兵日期或伪精确时间。
+门槛：Project ≥88%；Task P/R ≥85%/82%；Material R ≥75%；Time ≥75%；Event ≥86.96%；Evidence ≥95.33%；Duplicate ≤3%；Over-fragmentation ≤5%；Major ≤35%；Severe ≤2%；Invalid/Request 各 ≤1%。
 
-## 5. TimePoint Improvements
+Golden 全部通过。Holdout 失败项为 Task P、Task R、Event、Major、Severe 和 Request；其余列出的门槛通过。Duplicate 与 Over-fragmentation 在两组 After 均为 0。
 
-合同要求每个有业务意义的时间表达形成独立顶层 TimePoint，区分 exact、date_only、relative、vague。relative/vague、OCR 歧义或无法可靠归一时必须 `normalizedValue=null`、`needsConfirmation=true` 并创建 Ambiguity。Validator 检查缺失引用、非法归一值、哨兵日期和 false precision；Repair 只能用已有逐字证据补回缺失/模糊时间，不能发明日期。真实 After 未运行，因此不能宣称 Accuracy 已提升。
+## 4. 可观测性
 
-## 6. Material Improvements
+### Golden After
 
-合同明确交付物、证明、表格、文件和携带物应成为独立 Material，普通背景名词不得冒充材料；格式、命名、数量、渠道与关联任务保持独立字段。Validator 检查材料引用和材料型文本被错误当作任务；Repair 只允许从已有证据恢复缺失 Material。真实 After 未运行，因此不能宣称 Recall 已提升。
+- 样例：110/110 完成；请求失败 0。
+- 延迟 mean / p50 / p95：8,153 / 6,017 / 20,983 ms。
+- Token：input 268,472；output 158,683。
+- Cost：`NOT OBSERVABLE`，上游没有返回可审计费用，未作价格估算。
+- Repair：触发 15.45%，成功 29.41%；repair p95 12,330 ms。
 
-## 7. Milestone / Task Improvements
+### Holdout After
 
-Milestone 仅用于具有真实阶段结构的项目，简单通知不强制创建；Task 必须是动作加明确对象，Material、地址、联系人和格式要求不得独立冒充 Task；Subtask 最深一层。质量校验检测孤儿 Subtask、引用缺失、疑似假动作、重复和过度拆分。正式确认仍走 E1 `DomainCommitPlan` 原子提交。
+- 样例：39/40 完成；1 次真实传输失败，未由评估器补跑或覆盖。
+- 延迟 mean / p50 / p95：9,262 / 7,013 / 22,876 ms。
+- Token / Cost：`NOT OBSERVABLE`，一次失败导致运行级 usage 不完整。
+- Repair：触发 23.08%，成功 66.67%；repair p95 14,342 ms。
 
-## 8. Ambiguity Improvements
+## 5. 错误分类
 
-合同要求主体不明、条件适用、模糊/相对时间、OCR 疑似字符、更正冲突和项目归属不确定显式进入 Ambiguity/Conflict，不得静默猜测。每项歧义也必须引用 Evidence。
+Golden After 的主要差异为 `milestone_missing` 57、`ambiguity_spurious` 29、`task_missing` 17、`task_spurious` 15、`ambiguity_missing` 11、`time_incorrect` 8。Golden 的 Milestone Recall 仍只有 21.92%，它未纳入当前硬门槛，但属于显著剩余风险。
 
-## 9. Quality Validator
+Holdout After 的主要差异为 `milestone_missing` 15、`task_missing` 12、`task_spurious` 11、`ambiguity_missing` 8、`evidence_missing` 8、`time_missing` 8、`time_incorrect` 4、`time_spurious` 4、`event_missing` 3、`request_failure` 1。逐样例匿名分类与原因保存在对应 failures JSON；模型原始正文只在 Git 忽略的本地 checkpoint 中，不提交。
 
-`recognition-quality-2.0.0` 是纯函数，只报告问题并给出受影响路径：ID 唯一性、引用完整性、Evidence 引用、Subtask 深度、TimePoint 合法性/伪精确、Material/Event/Milestone 结构、假动作、重复和过度拆分。它不创建事实、不写 Domain、不覆盖用户确认结果。单元测试和 Worker 集成测试均通过。
+## 6. 质量工程实现
 
-## 10. Repair
+- 输出合同保持 Source、Project、Milestone、Task/Subtask、Material、TimePoint、Event、Evidence、Conflict、Ambiguity 的丰富结构。
+- Worker 对近似 Schema 输出做有界归一化，不把用户确认前建议直接写入 Domain。
+- 只接受带逐字来源证据的建议；来源中的提示注入视为数据，不得变成执行指令。
+- 材料型约束、纯格式动作、纯信息、与 Event 重复的参加类动作、无原文动作依据的“查看结果/等待通知”等被确定性过滤。
+- 报名截止与“报名表材料截止”分开判定；未知时间不使用 `1970-01-01` 等哨兵值。
+- Repair 最多一次，不得新增无证据事实；复杂两阶段调用继续关闭，因为 Holdout 未证明净收益。
+- Workspace v8、Migration、Repository、DomainCommitPlan、Source-before-AI 与原子提交未改契约。
 
-`recognition-repair-1.0.0` 只在缺失 Evidence、TimePoint、Material、Event、Milestone、时间歧义或 false precision 时触发；每次管线最多一个 repair operation，失败保留第一份合法结果，deterministic merge 不允许新增任务。由于真实 After 未运行，Repair trigger rate、success rate 与真实 latency impact 为 **NOT RUN / NOT OBSERVABLE**，不能用 Mock 测试结果代替。
+## 7. 浏览器验收
 
-## 11. Complexity Router
+已在 Preview 实际确认：
 
-`recognition-router-1.0.0` 依据长度、时间表达、动作词、列表、更正和条件语义确定性分级。冻结数据静态分布为 Golden：simple 87 / medium 21 / complex 2；Holdout：simple 25 / medium 12 / complex 3。simple/medium 继续 single pass；complex 仅把 `fact_then_plan` 作为候选。因为没有真实 Holdout After 收益证据，两阶段调用保持关闭。
+- 首页成功加载，无白屏。
+- 页面显示 `DeepSeek V4 Flash 已连接`。
+- 首页最多突出三项任务；截止日期、具体时间、风险、下一步和“标记完成”均可见。
+- 待确认入口显示持久化说明。
 
-## 12. Model Gateway
+未完成：A–J 的逐例 UI 提交、Draft → Confirm → atomic commit → reload 全链路。浏览器控制在填写/提交匿名课程样例时连续超时并重置会话，因此状态为 **PARTIAL / TOOL BLOCKED**，不是 PASS。
 
-`model-gateway-1.0.0` 统一 recognize、repair、extractFacts。Worker 的 `DeepSeekProvider` 是唯一接触服务端 Secret 的实现；浏览器仅使用无密钥接口，Mock 只用于确定性测试。Provider 仍为 DeepSeek，模型未更换。成功响应只返回去除模型正文的 execution 元数据。
+## 8. 工程与安全回归
 
-## 13. Reliability
+在 2026-08-09 真实执行：
 
-`recognition-retry-1.0.0` 只对 429、502、503、网络错误和 timeout 重试一次，使用指数退避与抖动；400、输入校验、JSON/Schema 和语义失败不重试。评估器不再叠加重试，Transport Failure 与 Semantic Failure 分开。旧生产 Holdout Before 仍有 2/40 请求失败，说明优化后改善尚待真实 After 验证。
-
-## 14. Before vs After Metrics
-
-| Dataset / Provider | Project | Task P/R | Material P/R | Time P/R/Overall | Event | Evidence Coverage/Validity | Major | Severe | Transport |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| Golden Before / DeepSeek 2.0 | 84.55% | 81.90% / 74.80% | 96.88% / 30.69% | 100.00% / 6.38% / 6.38% | 86.96% | 95.33% / 100.00% | 87.27% | 5.45% | 1.82% |
-| Golden After / DeepSeek 2.1 | **NOT RUN** | **NOT RUN** | **NOT RUN** | **NOT RUN** | **NOT RUN** | **NOT RUN** | **NOT RUN** | **NOT RUN** | **NOT RUN** |
-| Holdout Before / DeepSeek 2.0 | 80.00% | 68.57% / 45.28% | 94.44% / 32.08% | 100.00% / 3.33% / 3.33% | 66.67% | 83.61% / 100.00% | 90.00% | 10.00% | 5.00% |
-| Holdout After / DeepSeek 2.1 | **NOT RUN** | **NOT RUN** | **NOT RUN** | **NOT RUN** | **NOT RUN** | **NOT RUN** | **NOT RUN** | **NOT RUN** | **NOT RUN** |
-| Golden / local fallback | 79.09% | 69.40% / 73.23% | 86.76% / 58.42% | 90.85% / 98.58% / 25.81% | 52.00% | 87.94% / 90.20% | 94.55% | 18.18% | 0.00% |
-| Holdout / local fallback | 77.50% | 40.82% / 37.74% | 84.21% / 30.19% | 90.00% / 90.00% / 28.79% | 50.00% | 89.07% / 93.33% | 100.00% | 22.50% | 0.00% |
-
-Gate 要求 Project ≥88%、Task P/R ≥85%/82%、Material ≥75%、Time ≥75%、Event ≥86.96%、Evidence ≥95.33%、Duplicate ≤3%、Over-fragmentation ≤5%、Major ≤35%、Severe ≤2%、Invalid/Transport 各 ≤1%。没有真实 After 就不能判定通过。
-
-## 15. Regression
-
-Workspace v8、v7→v8 Migration/Backup/Rollback、Canonical Repository、DomainCommitPlan、atomic commit、Source-before-AI、Draft 人工确认、Today、Tasks、Projects、Calendar、OCR、知识问答和导出均未改契约。UTC 与 Asia/Shanghai 下 E1/E2 全量测试都通过。没有部署生产、没有进入 Project Matching/Memory、Follow、Risk、D1/R2、Auth、Sync 或 UI 重构。
-
-## 16. Failed Samples
-
-Holdout Before 最典型问题：复杂通知两条真实请求失败；49 个时间遗漏、30 个材料遗漏、24 个任务遗漏、22 个歧义遗漏、13 个阶段遗漏、11 个伪任务、9 个项目判断错误、7 个证据缺口。复杂通知完成率仅 2/4，申请类 Project Decision 25%，多截止 TimePoint 为 0%。逐条记录见 `docs/baselines/e2-i/holdout-before-deepseek-production-failures.json`。
-
-## 17. Performance
-
-Golden Before mean/P50/P95 为 6.27/5.70/12.73 秒；Holdout Before 为 6.85/6.06/13.21 秒。优化后真实延迟、Repair 额外延迟和两阶段成本均 NOT RUN。两阶段路由保持关闭，避免在没有质量收益证据时增加延迟。
-
-## 18. Token / Cost
-
-旧生产响应没有完整 operation usage，Golden/ Holdout Before Token 与 Cost 均 `NOT OBSERVABLE`。新 Gateway 只在上游真实返回完整 usage 时聚合，否则保持 null；不使用字符数或公开价格估算冒充实测。
-
-## 19. Files Changed
-
-- `src/recognition/e2/*`、`scripts/run-recognition-e2.mjs`：冻结数据、评分、taxonomy、门槛与可重复 runner。
-- `src/recognition/promptModules.ts`、`cloudflare/recognition-prompt.mjs`：七模块合同。
-- `src/recognition/qualityValidator.ts`、`cloudflare/recognition-quality.mjs`：纯结构质量校验。
-- `src/recognition/repair.ts`、`cloudflare/recognition-repair.mjs`：最多一次条件修复与确定性合并。
-- `src/recognition/complexityRouter.ts`、`cloudflare/complexity-router.mjs`：复杂度路由。
-- `src/recognition/modelGateway.ts`、`cloudflare/model-gateway.mjs`：Provider/Gateway/metadata/retry。
-- `cloudflare/recognition.mjs`、`cloudflare/worker.mjs`、`src/App.tsx`：最小编排接线与版本记录，不改变 Domain v8。
-- `docs/E2-*.md`、`docs/baselines/e2-*`：协议、结果与审计证据。
-
-## 20. Tests
-
-- `npm ci`：PASS（首次因本地 Vite 占用 esbuild 失败，关闭验收服务器后同命令 PASS；0 vulnerabilities）。
 - `npm run lint`：PASS。
 - `npm run typecheck`：PASS。
-- `TZ=UTC npm test`：PASS，45 files / 178 Vitest tests；Golden/Holdout freeze、Server 8、Worker 19、Functions 5 全部 PASS。
+- `TZ=UTC npm test`：PASS，45 files / 178 Vitest tests；Dataset Freeze 4、Server 8、Worker 25、Functions 5 均 PASS。
 - `TZ=Asia/Shanghai npm test`：同上 PASS。
 - `npm run build`：PASS。
-- `npm run security:scan`：PASS，245 个源码/构建文件未发现 Secret。
+- `npm run server:check`：PASS。
+- `npm run security:scan`：PASS，251 个源码/构建文件未发现 Secret。
 - `npm audit --audit-level=high`：PASS，0 vulnerabilities。
-- `npm run cloudflare:check`：PASS，Worker 19 tests 与默认/preview 两次 dry-run 均通过。
-- 浏览器本地验收：多截止来源先保存 Source/Draft，显示 Evidence/Material/TimePoint/Event，确认后任务进入任务中心，刷新后恢复；页面无 console error。DeepSeek 未配置时诚实显示本地规则并保留来源。A–J 的真实优化模型浏览器矩阵未运行，原因与 After 相同；不能伪造 PASS。
+- `npm run cloudflare:check`：PASS，Worker 25 tests、Production/Preview dry-run 均通过。
 
-## 21. Remaining Risks
+## 9. 证据文件
 
-1. 优化后真实 DeepSeek 质量和延迟未测；所有质量改善仍是合同与防护能力，不是已证明的指标提升。
-2. Holdout Before 明显低于 Golden，存在复杂通知、申请、多截止的泛化风险。
-3. Repair 的真实触发率、成功率、token 与延迟未知。
-4. Two-pass 的收益未知，因此保持关闭。
-5. 本地 fallback 明显低于质量门槛，只是保底，不是 E2 After。
-6. 公网站点仍是旧 Prompt；本轮按禁令没有部署生产。非生产 preview 已发布精确 E2 代码，但其状态接口诚实返回 `configured: false`。
+- `docs/baselines/e2-i/golden-after-2-3-golden-pass-deepseek-production-baseline.md`
+- `docs/baselines/e2-i/golden-after-2-3-golden-pass-deepseek-production-summary.json`
+- `docs/baselines/e2-i/golden-after-2-3-golden-pass-deepseek-production-failures.json`
+- `docs/baselines/e2-i/holdout-after-2-3-holdout-deepseek-production-baseline.md`
+- `docs/baselines/e2-i/holdout-after-2-3-holdout-deepseek-production-summary.json`
+- `docs/baselines/e2-i/holdout-after-2-3-holdout-deepseek-production-failures.json`
 
-最小解阻：在本机项目终端运行 `npx wrangler secret put DEEPSEEK_API_KEY --env preview`，通过隐藏输入配置 preview Secret；不得把 Key 发到聊天、前端、文件或 Git。随后在 `https://student-affairs-manager-preview.nightsdell.workers.dev` 运行 Golden/Holdout After 与 A–J 浏览器验收；达到门槛后才可判定 E2 Complete。
+其他本轮探索性或传输失败运行不作为最终门槛证据，也不应提交。
 
-## 22. E2 Definition of Done
+## 10. 发布决定与下一步
 
-| Item | Status |
+本轮 **不执行 Production deploy**。原因不是构建或 Cloudflare 配置失败，而是独立 Holdout 暴露出明显泛化退化，并且 A–J 浏览器验收不完整。生产站点继续保留先前稳定版本。
+
+后续必须创建新的开发集处理任务别名/层级、复杂申请与奖学金场景、事件遗漏和模糊时间；不得反向修改已见 Holdout 的 expected，也不得用重复运行挑选一次“好看”结果。完成新训练迭代后，应使用新的、未见过的独立盲测集和稳定浏览器环境重新验收。达到全部门槛后才能部署 Production，并在部署后检查状态接口、真实提取、静态资源、SPA 路由和控制台。
+
+## 11. Definition of Done
+
+| 项目 | 状态 |
 | --- | --- |
-| Golden 未为刷分修改；Holdout 与 taxonomy 已建立 | PASS |
-| Time/Material/Milestone/Ambiguity 合同 | PASS |
-| Validator 不编造事实 | PASS |
-| Repair 最多一次、deterministic merge | PASS |
-| Router；simple 不强制多调用；two-pass 有收益才启用 | PASS |
-| ModelGateway；仍使用 DeepSeek；版本与 metadata | PASS |
-| Transport/Semantic 分离；有限 retry；Source 保持 | PASS |
-| Prompt injection / Evidence / Duplicate / Over-fragmentation / Event 回归测试 | PASS（工程测试） |
-| Golden Before/After | **FAIL：After NOT RUN** |
-| Holdout Before/After | **FAIL：After NOT RUN** |
-| E1 regression 与工程门槛 | PASS |
-| Production 未部署；E3/E4 未提前实施 | PASS |
+| Golden/Holdout 冻结与 corrections log | PASS |
+| Prompt/Schema/Model/Pipeline 身份可审计 | PASS |
+| Validator、Repair、Router、Gateway、有限 Retry | PASS |
+| Source-before-AI 与 Workspace v8 不回退 | PASS |
+| Golden After 全门槛 | PASS |
+| Holdout After 全门槛 | **FAIL** |
+| A–J 浏览器回归 | **PARTIAL / TOOL BLOCKED** |
+| 工程、安全与双时区回归 | PASS |
+| Production deploy | **NOT RUN（质量保护）** |
 
-结论：**E2 BLOCKED**。不能宣布 E2 Complete。
-
-## 23. E3 Readiness
-
-**NOT READY**。
-
-架构与工程回归已具备进入最终质量验证的条件，但在 Golden After、Holdout After、Repair/Latency/Token 实测和 A–J 真实优化模型浏览器验收完成前，不得进入 E3。
+最终结论：**E2 BLOCKED；E3 NOT READY；Production 保持不变。**

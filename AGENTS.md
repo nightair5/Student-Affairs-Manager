@@ -147,6 +147,7 @@ Product v2 E2 Recognition Pipeline v2 额外约束：
 - Validator 只能发现问题；Repair 最多一次且不能新增无证据事实。复杂两阶段调用只有 Holdout 证明净收益后才能开启。
 - Transport Failure 与 Semantic Failure 分开；评估器不得在 Worker 的有限重试之外偷偷重试并覆盖失败。
 - 在 Golden After、Holdout After、质量门槛和 A-J 浏览器回归完成前，不得宣布 E2 Complete 或进入 E3。
+- 当前候选 `recognition-2.3.0` / `recognition-pipeline-2.1.2` 的 Golden After 已过门槛，但首次独立 Holdout After 与 A-J 浏览器回归未通过；在新的未见盲测和完整浏览器验收通过前不得部署 Production，也不得针对已见 Holdout 反向调参或修改 expected。
 
 P0 可信确认闭环额外约束：
 

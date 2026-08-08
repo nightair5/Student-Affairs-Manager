@@ -496,8 +496,8 @@ E2-A 只测量已冻结的 `RecognitionResult 2.0`，不修改 Prompt、模型�
 ## 13.1 Product v2 E2 Recognition Pipeline v2 状态
 
 - Golden 110 条保持冻结；另建 40 条独立 Holdout 和 33 类 Error Taxonomy，所有修订必须进入显式 corrections log。
-- RecognitionResult 仍为 schema 2.0，模型仍为 `deepseek-v4-flash`；Prompt 升级为 `recognition-2.1.0`，Pipeline 为 `recognition-pipeline-2.0.0`。
+- RecognitionResult 仍为 schema 2.0，模型仍为 `deepseek-v4-flash`；当前候选 Prompt 为 `recognition-2.3.0`，Pipeline 为 `recognition-pipeline-2.1.2`。
 - 质量校验器只报告结构问题；条件 Repair 最多一次且不得新增事实；复杂两阶段识别在 Holdout 证明收益前保持关闭。
 - 传输故障与语义失败分开；只有 429/502/503/network/timeout 允许一次有限重试。
-- 优化后真实 DeepSeek Golden/Holdout After 未运行时，产品和文档不得声称 E2 质量已经达标，也不得用 local fallback、Mock 或旧生产 Prompt 冒充。
+- 真实 DeepSeek Golden After 110 条已通过核心门槛；首次独立 Holdout After 40 条未通过 Task、Event、Major Correction、Severe Error 与 Request Failure 门槛，且 A–J 浏览器矩阵只完成首页检查。因此 E2 仍为 `BLOCKED`，候选版本只允许停留在 Preview，不得覆盖 Production。
 - E2 完整状态、门槛、回归与阻碍以 `docs/E2_FINAL_REPORT.md` 为准；未通过 After 门槛前不得进入 E3。
