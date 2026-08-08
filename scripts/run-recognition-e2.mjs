@@ -34,7 +34,7 @@ async function readCheckpoint(file) {
 function renderMarkdown(run, metrics, groupMetrics) {
   const token = metrics.tokenUsage
     ? `${metrics.tokenUsage.input} input / ${metrics.tokenUsage.output} output`
-    : 'NOT OBSERVABLE：现有生产接口未回传 usage'
+    : 'NOT OBSERVABLE：接口未对每个 operation 回传完整 usage'
   const cost = metrics.costUsd === null ? 'NOT OBSERVABLE：缺少可归属的 Token usage' : `$${metrics.costUsd.toFixed(6)}`
   const rows = [
     ['Project Decision Accuracy', percent(metrics.projectDecisionAccuracy)],
@@ -58,12 +58,12 @@ function renderMarkdown(run, metrics, groupMetrics) {
     ['Token Usage', token],
     ['Cost', cost],
   ]
-  return `# E2-A Recognition Baseline — ${metrics.provider}\n\n` +
+  return `# E2 Recognition Evaluation — ${run.label} / ${metrics.provider}\n\n` +
     `- Run ID: \`${run.runId}\`\n` +
     `- Dataset: \`${run.datasetVersion}\` (${metrics.sampleCount} samples)\n` +
-    `- Prompt: \`${run.promptVersion}\`\n` +
+    `- Observed Prompt: \`${run.observedPromptVersions.join(', ') || 'NOT OBSERVED'}\`\n` +
     `- Model: \`${run.modelName}\`\n` +
-    `- Production recognition source SHA-256: \`${run.promptSourceSha256}\`\n` +
+    `- Local recognition source SHA-256: \`${run.promptSourceSha256}\`\n` +
     `- Started: ${run.startedAt}\n` +
     `- Completed: ${run.completedAt}\n` +
     `- Completed cases: ${metrics.completedCount}/${metrics.sampleCount}\n\n` +
@@ -77,6 +77,11 @@ async function main() {
   const provider = option('provider', 'local-fallback')
   if (!['local-fallback', 'deepseek-production'].includes(provider)) throw new Error(`Unsupported provider: ${provider}`)
   const endpoint = option('endpoint', 'https://student-affairs.site/api/deepseek')
+  const datasetName = option('dataset', 'golden')
+  if (!['golden', 'holdout'].includes(datasetName)) throw new Error(`Unsupported dataset: ${datasetName}`)
+  const label = option('label', 'baseline')
+  const expectedPrompt = option('expected-prompt')
+  const origin = option('origin', 'https://student-affairs.site')
   const delayMs = Number(option('delay-ms', provider === 'deepseek-production' ? '8000' : '0'))
   const writeDir = option('write-dir')
   const limit = Number(option('limit', '0'))
@@ -86,19 +91,22 @@ async function main() {
   const reportedCompletedAt = option('run-completed-at')
   const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'error', server: { middlewareMode: true } })
   try {
-    const [{ recognitionGoldenDataset, recognitionGoldenDatasetMetadata }, { scoreRecognitionCase, aggregateRecognitionMetrics }, pipeline, schema, prompt] = await Promise.all([
+    const [{ recognitionGoldenDataset, recognitionGoldenDatasetMetadata }, { recognitionHoldoutDataset, recognitionHoldoutMetadata }, { scoreRecognitionCase, aggregateRecognitionMetrics }, pipeline, schema, prompt] = await Promise.all([
       vite.ssrLoadModule('/src/recognition/e2/goldenDataset.ts'),
+      vite.ssrLoadModule('/src/recognition/e2/holdoutDataset.ts'),
       vite.ssrLoadModule('/src/recognition/e2/scoring.ts'),
       vite.ssrLoadModule('/src/recognition/pipeline.ts'),
       vite.ssrLoadModule('/src/recognition/schema.ts'),
       vite.ssrLoadModule('/src/recognition/prompt.ts'),
     ])
-    const dataset = limit > 0 ? recognitionGoldenDataset.slice(0, limit) : recognitionGoldenDataset
+    const fullDataset = datasetName === 'holdout' ? recognitionHoldoutDataset : recognitionGoldenDataset
+    const datasetMetadata = datasetName === 'holdout' ? recognitionHoldoutMetadata : recognitionGoldenDatasetMetadata
+    const dataset = limit > 0 ? fullDataset.slice(0, limit) : fullDataset
     const promptSource = await readFile(path.join(ROOT, 'cloudflare', 'recognition.mjs'))
     const promptSourceSha256 = createHash('sha256').update(promptSource).digest('hex')
     const cacheDir = path.join(ROOT, '.evaluation-cache')
     await mkdir(cacheDir, { recursive: true })
-    const checkpointFile = path.join(cacheDir, `${provider}.json`)
+    const checkpointFile = path.join(cacheDir, `${provider}-${datasetName}-${label}.json`)
     const previous = resume ? await readCheckpoint(checkpointFile) : []
     const previousById = new Map(previous.filter((item) => item.provider === provider).map((item) => [item.caseId, item]))
     const byId = new Map(dataset.flatMap((fixture) => {
@@ -110,12 +118,12 @@ async function main() {
         tokenUsage: item.tokenUsage,
         costUsd: item.costUsd,
       })
-      return [[fixture.id, rescored]]
+      return [[fixture.id, { ...rescored, execution: item.execution ?? null, repair: item.repair ?? null, route: item.route ?? null }]]
     }))
     const startedAt = new Date().toISOString()
 
     if (provider === 'deepseek-production') {
-      const response = await fetch(`${endpoint}/status`, { headers: { Accept: 'application/json', Origin: 'https://student-affairs.site' } })
+      const response = await fetch(`${endpoint}/status`, { headers: { Accept: 'application/json', Origin: origin } })
       const status = await response.json().catch(() => null)
       if (!response.ok || status?.configured !== true) throw new Error('Production DeepSeek is not configured')
       if (status.model !== prompt.RECOGNITION_MODEL_NAME) throw new Error(`Model drift: expected ${prompt.RECOGNITION_MODEL_NAME}, got ${status.model}`)
@@ -142,12 +150,9 @@ async function main() {
       } else {
         let response
         let payload
-        let attempt = 0
-        while (attempt < 4) {
-          attempt += 1
-          response = await fetch(`${endpoint}/extract`, {
+        response = await fetch(`${endpoint}/extract`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json', Accept: 'application/json', Origin: 'https://student-affairs.site' },
+            headers: { 'Content-Type': 'application/json', Accept: 'application/json', Origin: origin },
             body: JSON.stringify({
               sourceType: fixture.sourceType,
               sourceTitle: fixture.sourceTitle,
@@ -158,17 +163,19 @@ async function main() {
               existingTasks: [],
             }),
           })
-          payload = await response.json().catch(() => null)
-          if (response.status !== 429 || attempt >= 4) break
-          await sleep(15_000)
-        }
+        payload = await response.json().catch(() => null)
         const latencyMs = Date.now() - started
         if (!response?.ok) {
           scored = scoreRecognitionCase(fixture, provider, null, latencyMs, { status: 'request_failure', failureReason: `${response?.status ?? 0} ${payload?.code ?? payload?.message ?? 'request failed'}` })
         } else {
           try {
             const result = schema.parseRecognitionResult(payload?.result)
-            scored = scoreRecognitionCase(fixture, provider, result, latencyMs)
+            if (expectedPrompt && result.promptVersion !== expectedPrompt) throw new Error(`Prompt drift: expected ${expectedPrompt}, got ${result.promptVersion}`)
+            scored = scoreRecognitionCase(fixture, provider, result, latencyMs, {
+              tokenUsage: payload?.execution?.tokenUsage ?? null,
+              costUsd: null,
+            })
+            scored = { ...scored, execution: payload?.execution ?? null, repair: payload?.repair ?? null, route: payload?.route ?? null }
           } catch (error) {
             scored = scoreRecognitionCase(fixture, provider, null, latencyMs, { status: 'invalid_output', failureReason: error instanceof Error ? error.message : 'invalid output' })
           }
@@ -190,14 +197,18 @@ async function main() {
     const run = {
       runId: `${provider}-${completedAt.replace(/[:.]/gu, '-')}`,
       provider,
-      datasetVersion: recognitionGoldenDatasetMetadata.datasetVersion,
-      promptVersion: prompt.RECOGNITION_PROMPT_VERSION,
+      label,
+      datasetName,
+      datasetVersion: datasetMetadata.datasetVersion,
+      localPromptVersion: prompt.RECOGNITION_PROMPT_VERSION,
+      expectedPromptVersion: expectedPrompt || null,
+      observedPromptVersions: [...new Set(results.flatMap((item) => item.result?.promptVersion ? [item.result.promptVersion] : []))],
       modelName: provider === 'local-fallback' ? 'local-rules' : prompt.RECOGNITION_MODEL_NAME,
       promptSourceSha256,
       startedAt: reportedStartedAt || startedAt,
       completedAt,
       endpoint: provider === 'deepseek-production' ? endpoint : null,
-      tokenAndCostObservation: 'The production response contract does not expose token usage; no estimate is substituted for observed data.',
+      tokenAndCostObservation: metrics.tokenUsage ? 'Token usage is the sum of real Worker execution metadata.' : 'Token usage or cost is incomplete; no estimate is substituted for observed data.',
       evaluationNotes: retryInvalid ? [
         'The first pass exposed a harness-only null-field scoring crash. The 26 affected cases had no persisted raw result and were rerun once after the scorer was made null-safe.',
         'Two first-pass HTTP 502 request failures were retained and were not retried.',
@@ -207,13 +218,16 @@ async function main() {
     if (writeDir) {
       const target = path.resolve(ROOT, writeDir)
       await mkdir(target, { recursive: true })
-      const stem = provider === 'local-fallback' ? 'local-fallback' : 'deepseek-production'
+      const stem = `${datasetName}-${label}-${provider === 'local-fallback' ? 'local-fallback' : 'deepseek-production'}`
       const failures = results.filter((item) => item.failures.length > 0).map((item) => ({
         caseId: item.caseId,
         group: item.group,
         status: item.status,
         latencyMs: item.latencyMs,
         failures: item.failures,
+        execution: item.execution ?? null,
+        repair: item.repair ?? null,
+        route: item.route ?? null,
       }))
       await Promise.all([
         writeFile(path.join(target, `${stem}-summary.json`), `${JSON.stringify({ run, metrics, groupMetrics }, null, 2)}\n`, 'utf8'),

@@ -1,0 +1,1940 @@
+{
+  "run": {
+    "runId": "deepseek-production-2026-08-08T14-21-49-502Z",
+    "provider": "deepseek-production",
+    "label": "before",
+    "datasetName": "holdout",
+    "datasetVersion": "e2-holdout-1.0.0",
+    "localPromptVersion": "recognition-2.1.0",
+    "expectedPromptVersion": "recognition-2.0.0",
+    "observedPromptVersions": [
+      "recognition-2.0.0"
+    ],
+    "modelName": "deepseek-v4-flash",
+    "promptSourceSha256": "8787e4f64977e22b587719d8c563467ab7b22eded9217c4be65b4827395279b5",
+    "startedAt": "2026-08-08T14:12:01.768Z",
+    "completedAt": "2026-08-08T14:21:49.502Z",
+    "endpoint": "https://student-affairs.site/api/deepseek",
+    "tokenAndCostObservation": "Token usage or cost is incomplete; no estimate is substituted for observed data.",
+    "evaluationNotes": []
+  },
+  "failures": [
+    {
+      "caseId": "e2-holdout-01",
+      "group": "course",
+      "status": "ok",
+      "latencyMs": 4880,
+      "failures": [
+        {
+          "category": "material_missing",
+          "severity": "major",
+          "reason": "缺少材料：媒介观察周记/周记",
+          "expectedKey": "journal",
+          "tags": [
+            "MISSING_MATERIAL"
+          ]
+        },
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：8月17日中午12点",
+          "expectedKey": "deadline",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        }
+      ],
+      "execution": null,
+      "repair": null,
+      "route": null
+    },
+    {
+      "caseId": "e2-holdout-02",
+      "group": "course",
+      "status": "ok",
+      "latencyMs": 7571,
+      "failures": [
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：阅读 案例甲",
+          "expectedKey": "read",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：携带/带 问题清单",
+          "expectedKey": "bring",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "task_spurious",
+          "severity": "minor",
+          "reason": "存在 1 条未匹配任务",
+          "tags": [
+            "OVER_TASK"
+          ]
+        },
+        {
+          "category": "material_missing",
+          "severity": "major",
+          "reason": "缺少材料：问题清单",
+          "expectedKey": "questions",
+          "tags": [
+            "MISSING_MATERIAL"
+          ]
+        },
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：下次课前",
+          "expectedKey": "class",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "ambiguity_missing",
+          "severity": "major",
+          "reason": "应标记的歧义未标记",
+          "expectedKey": "ambiguity-1",
+          "tags": [
+            "MISSING_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": null,
+      "repair": null,
+      "route": null
+    },
+    {
+      "caseId": "e2-holdout-03",
+      "group": "course",
+      "status": "ok",
+      "latencyMs": 5141,
+      "failures": [
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：复核 实验数据",
+          "expectedKey": "check",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "material_missing",
+          "severity": "major",
+          "reason": "缺少材料：修订版Excel/Excel",
+          "expectedKey": "sheet",
+          "tags": [
+            "MISSING_MATERIAL"
+          ]
+        },
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：8月26日晚9:30",
+          "expectedKey": "deadline",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        }
+      ],
+      "execution": null,
+      "repair": null,
+      "route": null
+    },
+    {
+      "caseId": "e2-holdout-05",
+      "group": "competition",
+      "status": "ok",
+      "latencyMs": 8737,
+      "failures": [
+        {
+          "category": "project_decision",
+          "severity": "major",
+          "reason": "项目标题未匹配黄金答案",
+          "expectedKey": "project",
+          "actual": "待确认项目",
+          "tags": [
+            "PROJECT_DECISION_ERROR"
+          ]
+        },
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：正式提交",
+          "expectedKey": "submit",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：报名/组队 校园算法挑战赛",
+          "expectedKey": "register",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：提交 源代码",
+          "expectedKey": "code",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：提交 技术报告",
+          "expectedKey": "report",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "material_missing",
+          "severity": "major",
+          "reason": "缺少材料：源代码",
+          "expectedKey": "code",
+          "tags": [
+            "MISSING_MATERIAL"
+          ]
+        },
+        {
+          "category": "material_missing",
+          "severity": "major",
+          "reason": "缺少材料：技术报告",
+          "expectedKey": "report",
+          "tags": [
+            "MISSING_MATERIAL"
+          ]
+        },
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：8月21日前",
+          "expectedKey": "register-time",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：9月4日20:00",
+          "expectedKey": "submit-time",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：9月9日下午",
+          "expectedKey": "defense-time",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "evidence_missing",
+          "severity": "major",
+          "reason": "缺少 1 项可回看证据",
+          "tags": [
+            "MISSING_EVIDENCE"
+          ]
+        },
+        {
+          "category": "ambiguity_missing",
+          "severity": "major",
+          "reason": "应标记的歧义未标记",
+          "expectedKey": "ambiguity-1",
+          "tags": [
+            "MISSING_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": null,
+      "repair": null,
+      "route": null
+    },
+    {
+      "caseId": "e2-holdout-06",
+      "group": "competition",
+      "status": "ok",
+      "latencyMs": 10183,
+      "failures": [
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：正式提交",
+          "expectedKey": "submit",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "task_spurious",
+          "severity": "minor",
+          "reason": "存在 1 条未匹配任务",
+          "tags": [
+            "OVER_TASK"
+          ]
+        },
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：9月7日前",
+          "expectedKey": "submit-time",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：9月14日晚七点",
+          "expectedKey": "roadshow-time",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "ambiguity_missing",
+          "severity": "major",
+          "reason": "应标记的歧义未标记",
+          "expectedKey": "ambiguity-1",
+          "tags": [
+            "MISSING_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": null,
+      "repair": null,
+      "route": null
+    },
+    {
+      "caseId": "e2-holdout-07",
+      "group": "competition",
+      "status": "ok",
+      "latencyMs": 6090,
+      "failures": [
+        {
+          "category": "project_decision",
+          "severity": "major",
+          "reason": "项目决策应为 new_project，实际为 standalone_task",
+          "tags": [
+            "PROJECT_DECISION_ERROR"
+          ]
+        },
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：上传/提交 原创声明",
+          "expectedKey": "statement",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "material_missing",
+          "severity": "major",
+          "reason": "缺少材料：海报",
+          "expectedKey": "poster",
+          "tags": [
+            "MISSING_MATERIAL"
+          ]
+        },
+        {
+          "category": "material_missing",
+          "severity": "major",
+          "reason": "缺少材料：原创声明",
+          "expectedKey": "statement",
+          "tags": [
+            "MISSING_MATERIAL"
+          ]
+        },
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：10月6日17:00",
+          "expectedKey": "deadline",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        }
+      ],
+      "execution": null,
+      "repair": null,
+      "route": null
+    },
+    {
+      "caseId": "e2-holdout-08",
+      "group": "competition",
+      "status": "ok",
+      "latencyMs": 6428,
+      "failures": [
+        {
+          "category": "project_decision",
+          "severity": "major",
+          "reason": "项目标题未匹配黄金答案",
+          "expectedKey": "project",
+          "actual": "待确认项目",
+          "tags": [
+            "PROJECT_DECISION_ERROR"
+          ]
+        },
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：报名/完成 模拟法庭竞赛",
+          "expectedKey": "register",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：提交 书状",
+          "expectedKey": "submit",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "material_missing",
+          "severity": "major",
+          "reason": "缺少材料：书状",
+          "expectedKey": "brief",
+          "tags": [
+            "MISSING_MATERIAL"
+          ]
+        },
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：9月18日前",
+          "expectedKey": "register-time",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：10月中旬",
+          "expectedKey": "brief-time",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "evidence_missing",
+          "severity": "major",
+          "reason": "缺少 1 项可回看证据",
+          "tags": [
+            "MISSING_EVIDENCE"
+          ]
+        },
+        {
+          "category": "ambiguity_missing",
+          "severity": "major",
+          "reason": "应标记的歧义未标记",
+          "expectedKey": "ambiguity-1",
+          "tags": [
+            "MISSING_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": null,
+      "repair": null,
+      "route": null
+    },
+    {
+      "caseId": "e2-holdout-09",
+      "group": "application",
+      "status": "ok",
+      "latencyMs": 6814,
+      "failures": [
+        {
+          "category": "project_decision",
+          "severity": "major",
+          "reason": "项目决策应为 new_project，实际为 standalone_task",
+          "tags": [
+            "PROJECT_DECISION_ERROR"
+          ]
+        },
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：申请准备/资料准备",
+          "expectedKey": "prepare",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：正式提交",
+          "expectedKey": "submit",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：10月12日18:00",
+          "expectedKey": "deadline",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "evidence_missing",
+          "severity": "major",
+          "reason": "缺少 1 项可回看证据",
+          "tags": [
+            "MISSING_EVIDENCE"
+          ]
+        }
+      ],
+      "execution": null,
+      "repair": null,
+      "route": null
+    },
+    {
+      "caseId": "e2-holdout-10",
+      "group": "application",
+      "status": "ok",
+      "latencyMs": 7400,
+      "failures": [
+        {
+          "category": "project_decision",
+          "severity": "major",
+          "reason": "项目决策应为 new_project，实际为 standalone_task",
+          "tags": [
+            "PROJECT_DECISION_ERROR"
+          ]
+        },
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：申请/报名",
+          "expectedKey": "apply",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：资格审核/审核",
+          "expectedKey": "review",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "task_spurious",
+          "severity": "minor",
+          "reason": "存在 1 条未匹配任务",
+          "tags": [
+            "OVER_TASK"
+          ]
+        },
+        {
+          "category": "material_missing",
+          "severity": "major",
+          "reason": "缺少材料：转专业申请表",
+          "expectedKey": "form",
+          "tags": [
+            "MISSING_MATERIAL"
+          ]
+        },
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：9月11日前",
+          "expectedKey": "submit-time",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：9月13日上午",
+          "expectedKey": "review-time",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "ambiguity_missing",
+          "severity": "major",
+          "reason": "应标记的歧义未标记",
+          "expectedKey": "ambiguity-1",
+          "tags": [
+            "MISSING_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": null,
+      "repair": null,
+      "route": null
+    },
+    {
+      "caseId": "e2-holdout-11",
+      "group": "application",
+      "status": "ok",
+      "latencyMs": 5682,
+      "failures": [
+        {
+          "category": "project_decision",
+          "severity": "major",
+          "reason": "项目决策应为 new_project，实际为 standalone_task",
+          "tags": [
+            "PROJECT_DECISION_ERROR"
+          ]
+        },
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：提交 家长知情书",
+          "expectedKey": "notice",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "material_missing",
+          "severity": "major",
+          "reason": "缺少材料：延期住宿申请",
+          "expectedKey": "application",
+          "tags": [
+            "MISSING_MATERIAL"
+          ]
+        },
+        {
+          "category": "material_missing",
+          "severity": "major",
+          "reason": "缺少材料：家长知情书",
+          "expectedKey": "notice",
+          "tags": [
+            "MISSING_MATERIAL"
+          ]
+        },
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：12月9日前",
+          "expectedKey": "deadline",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        }
+      ],
+      "execution": null,
+      "repair": null,
+      "route": null
+    },
+    {
+      "caseId": "e2-holdout-12",
+      "group": "application",
+      "status": "ok",
+      "latencyMs": 4630,
+      "failures": [
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：报名 辅修",
+          "expectedKey": "register",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：暂定9月1日开放",
+          "expectedKey": "start",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：截止时间另行通知",
+          "expectedKey": "deadline",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "evidence_missing",
+          "severity": "major",
+          "reason": "缺少 1 项可回看证据",
+          "tags": [
+            "MISSING_EVIDENCE"
+          ]
+        },
+        {
+          "category": "ambiguity_missing",
+          "severity": "major",
+          "reason": "应标记的歧义未标记",
+          "expectedKey": "ambiguity-1",
+          "tags": [
+            "MISSING_AMBIGUITY"
+          ]
+        },
+        {
+          "category": "ambiguity_missing",
+          "severity": "major",
+          "reason": "应标记的歧义未标记",
+          "expectedKey": "ambiguity-2",
+          "tags": [
+            "MISSING_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": null,
+      "repair": null,
+      "route": null
+    },
+    {
+      "caseId": "e2-holdout-13",
+      "group": "scholarship",
+      "status": "ok",
+      "latencyMs": 5660,
+      "failures": [
+        {
+          "category": "project_decision",
+          "severity": "major",
+          "reason": "项目决策应为 new_project，实际为 standalone_task",
+          "tags": [
+            "PROJECT_DECISION_ERROR"
+          ]
+        },
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：资料准备/申请准备",
+          "expectedKey": "prepare",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：正式提交",
+          "expectedKey": "submit",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：提交 奖学金材料",
+          "expectedKey": "submit",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "task_spurious",
+          "severity": "minor",
+          "reason": "存在 1 条未匹配任务",
+          "tags": [
+            "OVER_TASK"
+          ]
+        },
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：9月16日前",
+          "expectedKey": "deadline",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "evidence_missing",
+          "severity": "major",
+          "reason": "缺少 1 项可回看证据",
+          "tags": [
+            "MISSING_EVIDENCE"
+          ]
+        }
+      ],
+      "execution": null,
+      "repair": null,
+      "route": null
+    },
+    {
+      "caseId": "e2-holdout-14",
+      "group": "scholarship",
+      "status": "ok",
+      "latencyMs": 7005,
+      "failures": [
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：9月22日17:00",
+          "expectedKey": "deadline",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "ambiguity_missing",
+          "severity": "major",
+          "reason": "应标记的歧义未标记",
+          "expectedKey": "ambiguity-1",
+          "tags": [
+            "MISSING_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": null,
+      "repair": null,
+      "route": null
+    },
+    {
+      "caseId": "e2-holdout-15",
+      "group": "scholarship",
+      "status": "ok",
+      "latencyMs": 6056,
+      "failures": [
+        {
+          "category": "task_spurious",
+          "severity": "severe",
+          "reason": "存在 1 条未匹配任务",
+          "tags": [
+            "OVER_TASK"
+          ]
+        }
+      ],
+      "execution": null,
+      "repair": null,
+      "route": null
+    },
+    {
+      "caseId": "e2-holdout-16",
+      "group": "meeting",
+      "status": "ok",
+      "latencyMs": 7646,
+      "failures": [
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：汇报 实验进度",
+          "expectedKey": "report",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：携带 实验记录",
+          "expectedKey": "bring",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "task_spurious",
+          "severity": "minor",
+          "reason": "存在 1 条未匹配任务",
+          "tags": [
+            "OVER_TASK"
+          ]
+        },
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：本周五下午4点",
+          "expectedKey": "meeting-time",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        }
+      ],
+      "execution": null,
+      "repair": null,
+      "route": null
+    },
+    {
+      "caseId": "e2-holdout-18",
+      "group": "meeting",
+      "status": "ok",
+      "latencyMs": 3927,
+      "failures": [
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：预计下周",
+          "expectedKey": "meeting-time",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "event_missing",
+          "severity": "major",
+          "reason": "缺少事件：导师面谈",
+          "expectedKey": "meeting",
+          "tags": [
+            "MISSING_EVENT"
+          ]
+        },
+        {
+          "category": "ambiguity_missing",
+          "severity": "major",
+          "reason": "应标记的歧义未标记",
+          "expectedKey": "ambiguity-1",
+          "tags": [
+            "MISSING_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": null,
+      "repair": null,
+      "route": null
+    },
+    {
+      "caseId": "e2-holdout-19",
+      "group": "event",
+      "status": "ok",
+      "latencyMs": 5898,
+      "failures": [
+        {
+          "category": "task_spurious",
+          "severity": "severe",
+          "reason": "存在 1 条未匹配任务",
+          "tags": [
+            "OVER_TASK"
+          ]
+        },
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：8月23日上午9:00",
+          "expectedKey": "start",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：11:30",
+          "expectedKey": "end",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        }
+      ],
+      "execution": null,
+      "repair": null,
+      "route": null
+    },
+    {
+      "caseId": "e2-holdout-20",
+      "group": "event",
+      "status": "ok",
+      "latencyMs": 5852,
+      "failures": [
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：出示/携带 校园卡",
+          "expectedKey": "bring",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "material_missing",
+          "severity": "major",
+          "reason": "缺少材料：校园卡",
+          "expectedKey": "card",
+          "tags": [
+            "MISSING_MATERIAL"
+          ]
+        }
+      ],
+      "execution": null,
+      "repair": null,
+      "route": null
+    },
+    {
+      "caseId": "e2-holdout-21",
+      "group": "event",
+      "status": "ok",
+      "latencyMs": 5257,
+      "failures": [
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：10月第三周",
+          "expectedKey": "start",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "ambiguity_missing",
+          "severity": "major",
+          "reason": "应标记的歧义未标记",
+          "expectedKey": "ambiguity-1",
+          "tags": [
+            "MISSING_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": null,
+      "repair": null,
+      "route": null
+    },
+    {
+      "caseId": "e2-holdout-22",
+      "group": "complex_notice",
+      "status": "request_failure",
+      "latencyMs": 14252,
+      "failures": [
+        {
+          "category": "request_failure",
+          "severity": "severe",
+          "reason": "502 DeepSeek 未返回有效的任务结构。",
+          "tags": [
+            "TRANSPORT_FAILURE",
+            "SEVERE_ERROR",
+            "UPSTREAM_502"
+          ]
+        }
+      ],
+      "execution": null,
+      "repair": null,
+      "route": null
+    },
+    {
+      "caseId": "e2-holdout-23",
+      "group": "complex_notice",
+      "status": "ok",
+      "latencyMs": 11230,
+      "failures": [
+        {
+          "category": "project_decision",
+          "severity": "major",
+          "reason": "项目标题未匹配黄金答案",
+          "expectedKey": "project",
+          "actual": "待确认项目",
+          "tags": [
+            "PROJECT_DECISION_ERROR"
+          ]
+        },
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：确定 选题",
+          "expectedKey": "topic",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：提交 开题报告",
+          "expectedKey": "report",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：提交 导师签字页",
+          "expectedKey": "signature",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：9月20日前",
+          "expectedKey": "topic-time",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：9月28日前",
+          "expectedKey": "report-time",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：10月6日上午",
+          "expectedKey": "defense-time",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "ambiguity_missing",
+          "severity": "major",
+          "reason": "应标记的歧义未标记",
+          "expectedKey": "ambiguity-1",
+          "tags": [
+            "MISSING_AMBIGUITY"
+          ]
+        },
+        {
+          "category": "ambiguity_missing",
+          "severity": "major",
+          "reason": "应标记的歧义未标记",
+          "expectedKey": "ambiguity-2",
+          "tags": [
+            "MISSING_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": null,
+      "repair": null,
+      "route": null
+    },
+    {
+      "caseId": "e2-holdout-24",
+      "group": "complex_notice",
+      "status": "request_failure",
+      "latencyMs": 14116,
+      "failures": [
+        {
+          "category": "request_failure",
+          "severity": "severe",
+          "reason": "502 DeepSeek 未返回有效的任务结构。",
+          "tags": [
+            "TRANSPORT_FAILURE",
+            "SEVERE_ERROR",
+            "UPSTREAM_502"
+          ]
+        }
+      ],
+      "execution": null,
+      "repair": null,
+      "route": null
+    },
+    {
+      "caseId": "e2-holdout-25",
+      "group": "complex_notice",
+      "status": "ok",
+      "latencyMs": 13211,
+      "failures": [
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：资料准备",
+          "expectedKey": "prepare",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：正式演出",
+          "expectedKey": "performance",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "material_missing",
+          "severity": "major",
+          "reason": "缺少材料：节目单",
+          "expectedKey": "program",
+          "tags": [
+            "MISSING_MATERIAL"
+          ]
+        },
+        {
+          "category": "material_missing",
+          "severity": "major",
+          "reason": "缺少材料：伴奏音频",
+          "expectedKey": "audio",
+          "tags": [
+            "MISSING_MATERIAL"
+          ]
+        },
+        {
+          "category": "material_missing",
+          "severity": "major",
+          "reason": "缺少材料：舞台需求表",
+          "expectedKey": "stage",
+          "tags": [
+            "MISSING_MATERIAL"
+          ]
+        },
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：9月2日前",
+          "expectedKey": "program-time",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：9月10日前",
+          "expectedKey": "material-time",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：9月16日傍晚",
+          "expectedKey": "rehearsal-time",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：暂定9月18日晚",
+          "expectedKey": "show-time",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "ambiguity_missing",
+          "severity": "major",
+          "reason": "应标记的歧义未标记",
+          "expectedKey": "ambiguity-1",
+          "tags": [
+            "MISSING_AMBIGUITY"
+          ]
+        },
+        {
+          "category": "ambiguity_missing",
+          "severity": "major",
+          "reason": "应标记的歧义未标记",
+          "expectedKey": "ambiguity-2",
+          "tags": [
+            "MISSING_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": null,
+      "repair": null,
+      "route": null
+    },
+    {
+      "caseId": "e2-holdout-26",
+      "group": "multi_deadline",
+      "status": "ok",
+      "latencyMs": 8302,
+      "failures": [
+        {
+          "category": "material_missing",
+          "severity": "major",
+          "reason": "缺少材料：审批表",
+          "expectedKey": "form",
+          "tags": [
+            "MISSING_MATERIAL"
+          ]
+        },
+        {
+          "category": "material_missing",
+          "severity": "major",
+          "reason": "缺少材料：扫描件",
+          "expectedKey": "scan",
+          "tags": [
+            "MISSING_MATERIAL"
+          ]
+        },
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：8月25日上午9点",
+          "expectedKey": "collect-time",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：当天下午2点",
+          "expectedKey": "stamp-time",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：晚上8点",
+          "expectedKey": "upload-time",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        }
+      ],
+      "execution": null,
+      "repair": null,
+      "route": null
+    },
+    {
+      "caseId": "e2-holdout-27",
+      "group": "multi_deadline",
+      "status": "ok",
+      "latencyMs": 8195,
+      "failures": [
+        {
+          "category": "project_decision",
+          "severity": "major",
+          "reason": "项目决策应为 new_project，实际为 standalone_task",
+          "tags": [
+            "PROJECT_DECISION_ERROR"
+          ]
+        },
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：选题",
+          "expectedKey": "topic",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：初稿",
+          "expectedKey": "draft",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：定稿/正式提交",
+          "expectedKey": "final",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "material_missing",
+          "severity": "major",
+          "reason": "缺少材料：选题表",
+          "expectedKey": "topic",
+          "tags": [
+            "MISSING_MATERIAL"
+          ]
+        },
+        {
+          "category": "material_missing",
+          "severity": "major",
+          "reason": "缺少材料：初稿",
+          "expectedKey": "draft",
+          "tags": [
+            "MISSING_MATERIAL"
+          ]
+        },
+        {
+          "category": "material_missing",
+          "severity": "major",
+          "reason": "缺少材料：定稿PDF/定稿",
+          "expectedKey": "final",
+          "tags": [
+            "MISSING_MATERIAL"
+          ]
+        },
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：10月1日",
+          "expectedKey": "topic-time",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：10月9日17:00",
+          "expectedKey": "draft-time",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：10月23日中午前",
+          "expectedKey": "final-time",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        }
+      ],
+      "execution": null,
+      "repair": null,
+      "route": null
+    },
+    {
+      "caseId": "e2-holdout-28",
+      "group": "multi_deadline",
+      "status": "ok",
+      "latencyMs": 7038,
+      "failures": [
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：报名 报名",
+          "expectedKey": "register",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "task_spurious",
+          "severity": "minor",
+          "reason": "存在 1 条未匹配任务",
+          "tags": [
+            "OVER_TASK"
+          ]
+        },
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：原报名截止9月5日",
+          "expectedKey": "old-time",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：延长到9月8日18:00",
+          "expectedKey": "new-time",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：9月12日",
+          "expectedKey": "material-time",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "ambiguity_missing",
+          "severity": "major",
+          "reason": "应标记的歧义未标记",
+          "expectedKey": "ambiguity-1",
+          "tags": [
+            "MISSING_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": null,
+      "repair": null,
+      "route": null
+    },
+    {
+      "caseId": "e2-holdout-29",
+      "group": "material",
+      "status": "ok",
+      "latencyMs": 6482,
+      "failures": [
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：提交 培养材料",
+          "expectedKey": "submit",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "task_spurious",
+          "severity": "minor",
+          "reason": "存在 1 条未匹配任务",
+          "tags": [
+            "OVER_TASK"
+          ]
+        },
+        {
+          "category": "material_missing",
+          "severity": "major",
+          "reason": "缺少材料：档案袋",
+          "expectedKey": "bag",
+          "tags": [
+            "MISSING_MATERIAL"
+          ]
+        },
+        {
+          "category": "evidence_missing",
+          "severity": "major",
+          "reason": "缺少 1 项可回看证据",
+          "tags": [
+            "MISSING_EVIDENCE"
+          ]
+        },
+        {
+          "category": "ambiguity_missing",
+          "severity": "major",
+          "reason": "应标记的歧义未标记",
+          "expectedKey": "ambiguity-1",
+          "tags": [
+            "MISSING_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": null,
+      "repair": null,
+      "route": null
+    },
+    {
+      "caseId": "e2-holdout-30",
+      "group": "material",
+      "status": "ok",
+      "latencyMs": 5222,
+      "failures": [
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：携带 报销凭证",
+          "expectedKey": "bring",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "task_spurious",
+          "severity": "minor",
+          "reason": "存在 1 条未匹配任务",
+          "tags": [
+            "OVER_TASK"
+          ]
+        },
+        {
+          "category": "material_missing",
+          "severity": "major",
+          "reason": "缺少材料：发票原件",
+          "expectedKey": "invoice",
+          "tags": [
+            "MISSING_MATERIAL"
+          ]
+        },
+        {
+          "category": "material_missing",
+          "severity": "major",
+          "reason": "缺少材料：付款截图",
+          "expectedKey": "payment",
+          "tags": [
+            "MISSING_MATERIAL"
+          ]
+        },
+        {
+          "category": "material_missing",
+          "severity": "major",
+          "reason": "缺少材料：获奖证书复印件",
+          "expectedKey": "certificate",
+          "tags": [
+            "MISSING_MATERIAL"
+          ]
+        },
+        {
+          "category": "evidence_missing",
+          "severity": "major",
+          "reason": "缺少 1 项可回看证据",
+          "tags": [
+            "MISSING_EVIDENCE"
+          ]
+        }
+      ],
+      "execution": null,
+      "repair": null,
+      "route": null
+    },
+    {
+      "caseId": "e2-holdout-31",
+      "group": "material",
+      "status": "ok",
+      "latencyMs": 5397,
+      "failures": [
+        {
+          "category": "material_missing",
+          "severity": "major",
+          "reason": "缺少材料：MP4视频/视频",
+          "expectedKey": "video",
+          "tags": [
+            "MISSING_MATERIAL"
+          ]
+        },
+        {
+          "category": "material_missing",
+          "severity": "major",
+          "reason": "缺少材料：字幕文件",
+          "expectedKey": "subtitle",
+          "tags": [
+            "MISSING_MATERIAL"
+          ]
+        },
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：11月1日前",
+          "expectedKey": "deadline",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        }
+      ],
+      "execution": null,
+      "repair": null,
+      "route": null
+    },
+    {
+      "caseId": "e2-holdout-32",
+      "group": "vague_time",
+      "status": "ok",
+      "latencyMs": 4751,
+      "failures": [
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：预约 访谈",
+          "expectedKey": "schedule",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：近期",
+          "expectedKey": "time",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "event_missing",
+          "severity": "major",
+          "reason": "缺少事件：访谈",
+          "expectedKey": "interview",
+          "tags": [
+            "MISSING_EVENT"
+          ]
+        },
+        {
+          "category": "ambiguity_missing",
+          "severity": "major",
+          "reason": "应标记的歧义未标记",
+          "expectedKey": "ambiguity-1",
+          "tags": [
+            "MISSING_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": null,
+      "repair": null,
+      "route": null
+    },
+    {
+      "caseId": "e2-holdout-33",
+      "group": "vague_time",
+      "status": "ok",
+      "latencyMs": 5444,
+      "failures": [
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：回复 是否参加",
+          "expectedKey": "reply",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "task_spurious",
+          "severity": "minor",
+          "reason": "存在 1 条未匹配任务",
+          "tags": [
+            "OVER_TASK"
+          ]
+        },
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：名单公布后两天内",
+          "expectedKey": "deadline",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：发布时间暂未确定",
+          "expectedKey": "result",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "ambiguity_missing",
+          "severity": "major",
+          "reason": "应标记的歧义未标记",
+          "expectedKey": "ambiguity-1",
+          "tags": [
+            "MISSING_AMBIGUITY"
+          ]
+        },
+        {
+          "category": "ambiguity_missing",
+          "severity": "major",
+          "reason": "应标记的歧义未标记",
+          "expectedKey": "ambiguity-2",
+          "tags": [
+            "MISSING_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": null,
+      "repair": null,
+      "route": null
+    },
+    {
+      "caseId": "e2-holdout-34",
+      "group": "vague_time",
+      "status": "ok",
+      "latencyMs": 5562,
+      "failures": [
+        {
+          "category": "material_missing",
+          "severity": "major",
+          "reason": "缺少材料：初稿",
+          "expectedKey": "draft",
+          "tags": [
+            "MISSING_MATERIAL"
+          ]
+        },
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：大约月底",
+          "expectedKey": "deadline",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "ambiguity_missing",
+          "severity": "major",
+          "reason": "应标记的歧义未标记",
+          "expectedKey": "ambiguity-1",
+          "tags": [
+            "MISSING_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": null,
+      "repair": null,
+      "route": null
+    },
+    {
+      "caseId": "e2-holdout-35",
+      "group": "information_only",
+      "status": "ok",
+      "latencyMs": 4967,
+      "failures": [
+        {
+          "category": "event_spurious",
+          "severity": "minor",
+          "reason": "存在 1 个未匹配事件",
+          "tags": [
+            "WRONG_EVENT"
+          ]
+        }
+      ],
+      "execution": null,
+      "repair": null,
+      "route": null
+    },
+    {
+      "caseId": "e2-holdout-37",
+      "group": "ocr_noise",
+      "status": "ok",
+      "latencyMs": 6305,
+      "failures": [
+        {
+          "category": "material_missing",
+          "severity": "major",
+          "reason": "缺少材料：申请表",
+          "expectedKey": "form",
+          "tags": [
+            "MISSING_MATERIAL"
+          ]
+        },
+        {
+          "category": "material_missing",
+          "severity": "major",
+          "reason": "缺少材料：身份证明",
+          "expectedKey": "id",
+          "tags": [
+            "MISSING_MATERIAL"
+          ]
+        },
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：9 月 2O 日 17:OO",
+          "expectedKey": "deadline",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "ambiguity_missing",
+          "severity": "major",
+          "reason": "应标记的歧义未标记",
+          "expectedKey": "ambiguity-1",
+          "tags": [
+            "MISSING_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": null,
+      "repair": null,
+      "route": null
+    },
+    {
+      "caseId": "e2-holdout-38",
+      "group": "ocr_noise",
+      "status": "ok",
+      "latencyMs": 7900,
+      "failures": [
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：携带 PPT",
+          "expectedKey": "bring",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：IO月I5日下牛3点",
+          "expectedKey": "start",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "ambiguity_missing",
+          "severity": "major",
+          "reason": "应标记的歧义未标记",
+          "expectedKey": "ambiguity-1",
+          "tags": [
+            "MISSING_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": null,
+      "repair": null,
+      "route": null
+    },
+    {
+      "caseId": "e2-holdout-39",
+      "group": "security",
+      "status": "ok",
+      "latencyMs": 5216,
+      "failures": [
+        {
+          "category": "material_missing",
+          "severity": "major",
+          "reason": "缺少材料：安全培训确认表",
+          "expectedKey": "form",
+          "tags": [
+            "MISSING_MATERIAL"
+          ]
+        },
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：8月31日前",
+          "expectedKey": "deadline",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        }
+      ],
+      "execution": null,
+      "repair": null,
+      "route": null
+    },
+    {
+      "caseId": "e2-holdout-40",
+      "group": "security",
+      "status": "ok",
+      "latencyMs": 6736,
+      "failures": [
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：9月6日12:00",
+          "expectedKey": "deadline",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        }
+      ],
+      "execution": null,
+      "repair": null,
+      "route": null
+    }
+  ]
+}

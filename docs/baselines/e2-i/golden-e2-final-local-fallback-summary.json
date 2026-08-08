@@ -1,0 +1,647 @@
+{
+  "run": {
+    "runId": "local-fallback-2026-08-08T14-11-50-166Z",
+    "provider": "local-fallback",
+    "label": "e2-final",
+    "datasetName": "golden",
+    "datasetVersion": "e2-a-golden-1.0.0",
+    "localPromptVersion": "recognition-2.1.0",
+    "expectedPromptVersion": null,
+    "observedPromptVersions": [
+      "recognition-2.1.0"
+    ],
+    "modelName": "local-rules",
+    "promptSourceSha256": "8787e4f64977e22b587719d8c563467ab7b22eded9217c4be65b4827395279b5",
+    "startedAt": "2026-08-08T14:11:49.606Z",
+    "completedAt": "2026-08-08T14:11:50.166Z",
+    "endpoint": null,
+    "tokenAndCostObservation": "Token usage or cost is incomplete; no estimate is substituted for observed data.",
+    "evaluationNotes": []
+  },
+  "metrics": {
+    "provider": "local-fallback",
+    "sampleCount": 110,
+    "completedCount": 110,
+    "projectDecisionAccuracy": 0.7909090909090909,
+    "milestonePrecision": 0.5897435897435898,
+    "milestoneRecall": 0.3150684931506849,
+    "taskPrecision": 0.6940298507462687,
+    "taskRecall": 0.7322834645669292,
+    "materialRecall": 0.5841584158415841,
+    "timePointAccuracy": 0.25806451612903225,
+    "eventAccuracy": 0.52,
+    "evidenceCoverage": 0.8793774319066148,
+    "duplicateRate": 0,
+    "overFragmentationRate": 0,
+    "majorCorrectionRate": 0.9454545454545454,
+    "severeErrorRate": 0.18181818181818182,
+    "invalidOutputRate": 0,
+    "requestFailureRate": 0,
+    "latencyMs": {
+      "mean": 0.3,
+      "p50": 0,
+      "p95": 1
+    },
+    "tokenUsage": null,
+    "costUsd": null,
+    "errorTaxonomy": [
+      {
+        "category": "time_incorrect",
+        "count": 101
+      },
+      {
+        "category": "milestone_missing",
+        "count": 50
+      },
+      {
+        "category": "material_missing",
+        "count": 42
+      },
+      {
+        "category": "task_spurious",
+        "count": 37
+      },
+      {
+        "category": "task_missing",
+        "count": 34
+      },
+      {
+        "category": "project_decision",
+        "count": 23
+      },
+      {
+        "category": "evidence_missing",
+        "count": 18
+      },
+      {
+        "category": "event_missing",
+        "count": 10
+      },
+      {
+        "category": "forbidden_output",
+        "count": 8
+      },
+      {
+        "category": "event_spurious",
+        "count": 6
+      },
+      {
+        "category": "ambiguity_missing",
+        "count": 2
+      },
+      {
+        "category": "task_hierarchy",
+        "count": 2
+      }
+    ]
+  },
+  "groupMetrics": {
+    "course": {
+      "provider": "local-fallback",
+      "sampleCount": 10,
+      "completedCount": 10,
+      "projectDecisionAccuracy": 0.8,
+      "milestonePrecision": 0.3333333333333333,
+      "milestoneRecall": 0.2,
+      "taskPrecision": 0.8,
+      "taskRecall": 0.7272727272727273,
+      "materialRecall": 0.8888888888888888,
+      "timePointAccuracy": 0.18181818181818182,
+      "eventAccuracy": 0.5,
+      "evidenceCoverage": 1,
+      "duplicateRate": 0,
+      "overFragmentationRate": 0,
+      "majorCorrectionRate": 0.9,
+      "severeErrorRate": 0.1,
+      "invalidOutputRate": 0,
+      "requestFailureRate": 0,
+      "latencyMs": {
+        "mean": 1,
+        "p50": 0,
+        "p95": 6
+      },
+      "tokenUsage": null,
+      "costUsd": null,
+      "errorTaxonomy": [
+        {
+          "category": "time_incorrect",
+          "count": 8
+        },
+        {
+          "category": "milestone_missing",
+          "count": 4
+        },
+        {
+          "category": "task_missing",
+          "count": 3
+        },
+        {
+          "category": "project_decision",
+          "count": 2
+        },
+        {
+          "category": "task_spurious",
+          "count": 2
+        },
+        {
+          "category": "event_missing",
+          "count": 1
+        },
+        {
+          "category": "material_missing",
+          "count": 1
+        }
+      ]
+    },
+    "complex_notice": {
+      "provider": "local-fallback",
+      "sampleCount": 10,
+      "completedCount": 10,
+      "projectDecisionAccuracy": 0.5,
+      "milestonePrecision": 0.8181818181818182,
+      "milestoneRecall": 0.32142857142857145,
+      "taskPrecision": 0.5925925925925926,
+      "taskRecall": 0.5925925925925926,
+      "materialRecall": 0.34782608695652173,
+      "timePointAccuracy": 0.3235294117647059,
+      "eventAccuracy": 0.5555555555555556,
+      "evidenceCoverage": 0.7586206896551724,
+      "duplicateRate": 0,
+      "overFragmentationRate": 0,
+      "majorCorrectionRate": 1,
+      "severeErrorRate": 0.1,
+      "invalidOutputRate": 0,
+      "requestFailureRate": 0,
+      "latencyMs": {
+        "mean": 0.4,
+        "p50": 0,
+        "p95": 1
+      },
+      "tokenUsage": null,
+      "costUsd": null,
+      "errorTaxonomy": [
+        {
+          "category": "time_incorrect",
+          "count": 20
+        },
+        {
+          "category": "milestone_missing",
+          "count": 19
+        },
+        {
+          "category": "material_missing",
+          "count": 15
+        },
+        {
+          "category": "task_missing",
+          "count": 11
+        },
+        {
+          "category": "task_spurious",
+          "count": 7
+        },
+        {
+          "category": "project_decision",
+          "count": 5
+        },
+        {
+          "category": "event_missing",
+          "count": 4
+        },
+        {
+          "category": "evidence_missing",
+          "count": 4
+        },
+        {
+          "category": "task_hierarchy",
+          "count": 2
+        },
+        {
+          "category": "ambiguity_missing",
+          "count": 1
+        },
+        {
+          "category": "forbidden_output",
+          "count": 1
+        }
+      ]
+    },
+    "competition": {
+      "provider": "local-fallback",
+      "sampleCount": 10,
+      "completedCount": 10,
+      "projectDecisionAccuracy": 0.3,
+      "milestonePrecision": 1,
+      "milestoneRecall": 0.15,
+      "taskPrecision": 0.9,
+      "taskRecall": 0.9,
+      "materialRecall": 0.2,
+      "timePointAccuracy": 0,
+      "eventAccuracy": 1,
+      "evidenceCoverage": 1,
+      "duplicateRate": 0,
+      "overFragmentationRate": 0,
+      "majorCorrectionRate": 1,
+      "severeErrorRate": 0,
+      "invalidOutputRate": 0,
+      "requestFailureRate": 0,
+      "latencyMs": {
+        "mean": 0.1,
+        "p50": 0,
+        "p95": 1
+      },
+      "tokenUsage": null,
+      "costUsd": null,
+      "errorTaxonomy": [
+        {
+          "category": "milestone_missing",
+          "count": 17
+        },
+        {
+          "category": "time_incorrect",
+          "count": 10
+        },
+        {
+          "category": "material_missing",
+          "count": 8
+        },
+        {
+          "category": "project_decision",
+          "count": 7
+        },
+        {
+          "category": "task_missing",
+          "count": 1
+        },
+        {
+          "category": "task_spurious",
+          "count": 1
+        }
+      ]
+    },
+    "application": {
+      "provider": "local-fallback",
+      "sampleCount": 10,
+      "completedCount": 10,
+      "projectDecisionAccuracy": 1,
+      "milestonePrecision": 1,
+      "milestoneRecall": 0.5,
+      "taskPrecision": 0.8,
+      "taskRecall": 0.8,
+      "materialRecall": 0.5,
+      "timePointAccuracy": 0,
+      "eventAccuracy": 1,
+      "evidenceCoverage": 1,
+      "duplicateRate": 0,
+      "overFragmentationRate": 0,
+      "majorCorrectionRate": 1,
+      "severeErrorRate": 0,
+      "invalidOutputRate": 0,
+      "requestFailureRate": 0,
+      "latencyMs": {
+        "mean": 0.4,
+        "p50": 0,
+        "p95": 1
+      },
+      "tokenUsage": null,
+      "costUsd": null,
+      "errorTaxonomy": [
+        {
+          "category": "milestone_missing",
+          "count": 10
+        },
+        {
+          "category": "time_incorrect",
+          "count": 10
+        },
+        {
+          "category": "material_missing",
+          "count": 5
+        },
+        {
+          "category": "task_missing",
+          "count": 2
+        },
+        {
+          "category": "task_spurious",
+          "count": 2
+        }
+      ]
+    },
+    "event": {
+      "provider": "local-fallback",
+      "sampleCount": 10,
+      "completedCount": 10,
+      "projectDecisionAccuracy": 0.9,
+      "milestonePrecision": 0,
+      "milestoneRecall": 1,
+      "taskPrecision": 1,
+      "taskRecall": 1,
+      "materialRecall": 1,
+      "timePointAccuracy": 1,
+      "eventAccuracy": 0.6,
+      "evidenceCoverage": 0.8,
+      "duplicateRate": 0,
+      "overFragmentationRate": 0,
+      "majorCorrectionRate": 0.5,
+      "severeErrorRate": 0,
+      "invalidOutputRate": 0,
+      "requestFailureRate": 0,
+      "latencyMs": {
+        "mean": 0.1,
+        "p50": 0,
+        "p95": 1
+      },
+      "tokenUsage": null,
+      "costUsd": null,
+      "errorTaxonomy": [
+        {
+          "category": "event_missing",
+          "count": 4
+        },
+        {
+          "category": "event_spurious",
+          "count": 4
+        },
+        {
+          "category": "evidence_missing",
+          "count": 4
+        },
+        {
+          "category": "project_decision",
+          "count": 1
+        }
+      ]
+    },
+    "multi_deadline": {
+      "provider": "local-fallback",
+      "sampleCount": 10,
+      "completedCount": 10,
+      "projectDecisionAccuracy": 1,
+      "milestonePrecision": 1,
+      "milestoneRecall": 1,
+      "taskPrecision": 1,
+      "taskRecall": 1,
+      "materialRecall": 1,
+      "timePointAccuracy": 0.3333333333333333,
+      "eventAccuracy": 1,
+      "evidenceCoverage": 1,
+      "duplicateRate": 0,
+      "overFragmentationRate": 0,
+      "majorCorrectionRate": 1,
+      "severeErrorRate": 0,
+      "invalidOutputRate": 0,
+      "requestFailureRate": 0,
+      "latencyMs": {
+        "mean": 0.3,
+        "p50": 0,
+        "p95": 1
+      },
+      "tokenUsage": null,
+      "costUsd": null,
+      "errorTaxonomy": [
+        {
+          "category": "time_incorrect",
+          "count": 20
+        }
+      ]
+    },
+    "material": {
+      "provider": "local-fallback",
+      "sampleCount": 10,
+      "completedCount": 10,
+      "projectDecisionAccuracy": 1,
+      "milestonePrecision": 0,
+      "milestoneRecall": 1,
+      "taskPrecision": 0.9,
+      "taskRecall": 0.9,
+      "materialRecall": 0.4,
+      "timePointAccuracy": 0,
+      "eventAccuracy": 1,
+      "evidenceCoverage": 1,
+      "duplicateRate": 0,
+      "overFragmentationRate": 0,
+      "majorCorrectionRate": 1,
+      "severeErrorRate": 0,
+      "invalidOutputRate": 0,
+      "requestFailureRate": 0,
+      "latencyMs": {
+        "mean": 0.2,
+        "p50": 0,
+        "p95": 1
+      },
+      "tokenUsage": null,
+      "costUsd": null,
+      "errorTaxonomy": [
+        {
+          "category": "time_incorrect",
+          "count": 10
+        },
+        {
+          "category": "material_missing",
+          "count": 6
+        },
+        {
+          "category": "task_missing",
+          "count": 1
+        },
+        {
+          "category": "task_spurious",
+          "count": 1
+        }
+      ]
+    },
+    "vague_time": {
+      "provider": "local-fallback",
+      "sampleCount": 10,
+      "completedCount": 10,
+      "projectDecisionAccuracy": 0.6,
+      "milestonePrecision": 0,
+      "milestoneRecall": 1,
+      "taskPrecision": 0,
+      "taskRecall": 0,
+      "materialRecall": 1,
+      "timePointAccuracy": 0.6,
+      "eventAccuracy": 0,
+      "evidenceCoverage": 1,
+      "duplicateRate": 0,
+      "overFragmentationRate": 0,
+      "majorCorrectionRate": 1,
+      "severeErrorRate": 0.1,
+      "invalidOutputRate": 0,
+      "requestFailureRate": 0,
+      "latencyMs": {
+        "mean": 0.3,
+        "p50": 0,
+        "p95": 1
+      },
+      "tokenUsage": null,
+      "costUsd": null,
+      "errorTaxonomy": [
+        {
+          "category": "task_missing",
+          "count": 9
+        },
+        {
+          "category": "task_spurious",
+          "count": 8
+        },
+        {
+          "category": "project_decision",
+          "count": 4
+        },
+        {
+          "category": "time_incorrect",
+          "count": 4
+        },
+        {
+          "category": "event_spurious",
+          "count": 2
+        },
+        {
+          "category": "event_missing",
+          "count": 1
+        }
+      ]
+    },
+    "information_only": {
+      "provider": "local-fallback",
+      "sampleCount": 10,
+      "completedCount": 10,
+      "projectDecisionAccuracy": 0.7,
+      "milestonePrecision": 0,
+      "milestoneRecall": 1,
+      "taskPrecision": 0,
+      "taskRecall": 1,
+      "materialRecall": 1,
+      "timePointAccuracy": 0,
+      "eventAccuracy": 1,
+      "evidenceCoverage": 1,
+      "duplicateRate": 0,
+      "overFragmentationRate": 0,
+      "majorCorrectionRate": 1,
+      "severeErrorRate": 1,
+      "invalidOutputRate": 0,
+      "requestFailureRate": 0,
+      "latencyMs": {
+        "mean": 0.1,
+        "p50": 0,
+        "p95": 1
+      },
+      "tokenUsage": null,
+      "costUsd": null,
+      "errorTaxonomy": [
+        {
+          "category": "task_spurious",
+          "count": 10
+        },
+        {
+          "category": "project_decision",
+          "count": 3
+        }
+      ]
+    },
+    "ocr_noise": {
+      "provider": "local-fallback",
+      "sampleCount": 10,
+      "completedCount": 10,
+      "projectDecisionAccuracy": 0.9,
+      "milestonePrecision": 0,
+      "milestoneRecall": 1,
+      "taskPrecision": 0.6666666666666666,
+      "taskRecall": 0.6,
+      "materialRecall": 0.2222222222222222,
+      "timePointAccuracy": 0.1,
+      "eventAccuracy": 1,
+      "evidenceCoverage": 1,
+      "duplicateRate": 0,
+      "overFragmentationRate": 0,
+      "majorCorrectionRate": 1,
+      "severeErrorRate": 0,
+      "invalidOutputRate": 0,
+      "requestFailureRate": 0,
+      "latencyMs": {
+        "mean": 0.1,
+        "p50": 0,
+        "p95": 1
+      },
+      "tokenUsage": null,
+      "costUsd": null,
+      "errorTaxonomy": [
+        {
+          "category": "time_incorrect",
+          "count": 9
+        },
+        {
+          "category": "material_missing",
+          "count": 7
+        },
+        {
+          "category": "task_missing",
+          "count": 4
+        },
+        {
+          "category": "task_spurious",
+          "count": 3
+        },
+        {
+          "category": "ambiguity_missing",
+          "count": 1
+        },
+        {
+          "category": "project_decision",
+          "count": 1
+        }
+      ]
+    },
+    "security": {
+      "provider": "local-fallback",
+      "sampleCount": 10,
+      "completedCount": 10,
+      "projectDecisionAccuracy": 1,
+      "milestonePrecision": 1,
+      "milestoneRecall": 1,
+      "taskPrecision": 0.7,
+      "taskRecall": 0.7,
+      "materialRecall": 1,
+      "timePointAccuracy": 0,
+      "eventAccuracy": 1,
+      "evidenceCoverage": 0,
+      "duplicateRate": 0,
+      "overFragmentationRate": 0,
+      "majorCorrectionRate": 1,
+      "severeErrorRate": 0.7,
+      "invalidOutputRate": 0,
+      "requestFailureRate": 0,
+      "latencyMs": {
+        "mean": 0.3,
+        "p50": 0,
+        "p95": 1
+      },
+      "tokenUsage": null,
+      "costUsd": null,
+      "errorTaxonomy": [
+        {
+          "category": "evidence_missing",
+          "count": 10
+        },
+        {
+          "category": "time_incorrect",
+          "count": 10
+        },
+        {
+          "category": "forbidden_output",
+          "count": 7
+        },
+        {
+          "category": "task_missing",
+          "count": 3
+        },
+        {
+          "category": "task_spurious",
+          "count": 3
+        }
+      ]
+    }
+  }
+}

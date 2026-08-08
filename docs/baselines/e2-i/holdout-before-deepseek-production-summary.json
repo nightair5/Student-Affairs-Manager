@@ -1,0 +1,757 @@
+{
+  "run": {
+    "runId": "deepseek-production-2026-08-08T14-21-49-502Z",
+    "provider": "deepseek-production",
+    "label": "before",
+    "datasetName": "holdout",
+    "datasetVersion": "e2-holdout-1.0.0",
+    "localPromptVersion": "recognition-2.1.0",
+    "expectedPromptVersion": "recognition-2.0.0",
+    "observedPromptVersions": [
+      "recognition-2.0.0"
+    ],
+    "modelName": "deepseek-v4-flash",
+    "promptSourceSha256": "8787e4f64977e22b587719d8c563467ab7b22eded9217c4be65b4827395279b5",
+    "startedAt": "2026-08-08T14:12:01.768Z",
+    "completedAt": "2026-08-08T14:21:49.502Z",
+    "endpoint": "https://student-affairs.site/api/deepseek",
+    "tokenAndCostObservation": "Token usage or cost is incomplete; no estimate is substituted for observed data.",
+    "evaluationNotes": []
+  },
+  "metrics": {
+    "provider": "deepseek-production",
+    "sampleCount": 40,
+    "completedCount": 38,
+    "projectDecisionAccuracy": 0.8,
+    "milestonePrecision": 0.8333333333333334,
+    "milestoneRecall": 0.3448275862068966,
+    "taskPrecision": 0.6857142857142857,
+    "taskRecall": 0.4528301886792453,
+    "materialRecall": 0.32075471698113206,
+    "timePointAccuracy": 0.03333333333333333,
+    "eventAccuracy": 0.6666666666666666,
+    "evidenceCoverage": 0.8360655737704918,
+    "duplicateRate": 0,
+    "overFragmentationRate": 0,
+    "majorCorrectionRate": 0.9,
+    "severeErrorRate": 0.1,
+    "invalidOutputRate": 0,
+    "requestFailureRate": 0.05,
+    "latencyMs": {
+      "mean": 6853.975,
+      "p50": 6056,
+      "p95": 13211
+    },
+    "tokenUsage": null,
+    "costUsd": null,
+    "errorTaxonomy": [
+      {
+        "category": "time_missing",
+        "count": 49
+      },
+      {
+        "category": "material_missing",
+        "count": 30
+      },
+      {
+        "category": "task_missing",
+        "count": 24
+      },
+      {
+        "category": "ambiguity_missing",
+        "count": 22
+      },
+      {
+        "category": "milestone_missing",
+        "count": 13
+      },
+      {
+        "category": "task_spurious",
+        "count": 11
+      },
+      {
+        "category": "project_decision",
+        "count": 9
+      },
+      {
+        "category": "evidence_missing",
+        "count": 7
+      },
+      {
+        "category": "event_missing",
+        "count": 2
+      },
+      {
+        "category": "request_failure",
+        "count": 2
+      },
+      {
+        "category": "event_spurious",
+        "count": 1
+      }
+    ]
+  },
+  "groupMetrics": {
+    "course": {
+      "provider": "deepseek-production",
+      "sampleCount": 4,
+      "completedCount": 4,
+      "projectDecisionAccuracy": 1,
+      "milestonePrecision": 1,
+      "milestoneRecall": 1,
+      "taskPrecision": 0.6666666666666666,
+      "taskRecall": 0.4,
+      "materialRecall": 0,
+      "timePointAccuracy": 0,
+      "eventAccuracy": 1,
+      "evidenceCoverage": 1,
+      "duplicateRate": 0,
+      "overFragmentationRate": 0,
+      "majorCorrectionRate": 0.75,
+      "severeErrorRate": 0,
+      "invalidOutputRate": 0,
+      "requestFailureRate": 0,
+      "latencyMs": {
+        "mean": 5330.25,
+        "p50": 4880,
+        "p95": 7571
+      },
+      "tokenUsage": null,
+      "costUsd": null,
+      "errorTaxonomy": [
+        {
+          "category": "material_missing",
+          "count": 3
+        },
+        {
+          "category": "task_missing",
+          "count": 3
+        },
+        {
+          "category": "time_missing",
+          "count": 3
+        },
+        {
+          "category": "ambiguity_missing",
+          "count": 1
+        },
+        {
+          "category": "task_spurious",
+          "count": 1
+        }
+      ]
+    },
+    "competition": {
+      "provider": "deepseek-production",
+      "sampleCount": 4,
+      "completedCount": 4,
+      "projectDecisionAccuracy": 0.75,
+      "milestonePrecision": 0.7142857142857143,
+      "milestoneRecall": 0.7142857142857143,
+      "taskPrecision": 0.6666666666666666,
+      "taskRecall": 0.25,
+      "materialRecall": 0.16666666666666666,
+      "timePointAccuracy": 0,
+      "eventAccuracy": 1,
+      "evidenceCoverage": 0.9166666666666666,
+      "duplicateRate": 0,
+      "overFragmentationRate": 0,
+      "majorCorrectionRate": 1,
+      "severeErrorRate": 0,
+      "invalidOutputRate": 0,
+      "requestFailureRate": 0,
+      "latencyMs": {
+        "mean": 7859.5,
+        "p50": 6428,
+        "p95": 10183
+      },
+      "tokenUsage": null,
+      "costUsd": null,
+      "errorTaxonomy": [
+        {
+          "category": "time_missing",
+          "count": 8
+        },
+        {
+          "category": "task_missing",
+          "count": 6
+        },
+        {
+          "category": "material_missing",
+          "count": 5
+        },
+        {
+          "category": "ambiguity_missing",
+          "count": 3
+        },
+        {
+          "category": "project_decision",
+          "count": 3
+        },
+        {
+          "category": "evidence_missing",
+          "count": 2
+        },
+        {
+          "category": "milestone_missing",
+          "count": 2
+        },
+        {
+          "category": "task_spurious",
+          "count": 1
+        }
+      ]
+    },
+    "application": {
+      "provider": "deepseek-production",
+      "sampleCount": 4,
+      "completedCount": 4,
+      "projectDecisionAccuracy": 0.25,
+      "milestonePrecision": 1,
+      "milestoneRecall": 0,
+      "taskPrecision": 0.75,
+      "taskRecall": 0.6,
+      "materialRecall": 0.5714285714285714,
+      "timePointAccuracy": 0,
+      "eventAccuracy": 1,
+      "evidenceCoverage": 0.8947368421052632,
+      "duplicateRate": 0,
+      "overFragmentationRate": 0,
+      "majorCorrectionRate": 1,
+      "severeErrorRate": 0,
+      "invalidOutputRate": 0,
+      "requestFailureRate": 0,
+      "latencyMs": {
+        "mean": 6131.5,
+        "p50": 5682,
+        "p95": 7400
+      },
+      "tokenUsage": null,
+      "costUsd": null,
+      "errorTaxonomy": [
+        {
+          "category": "time_missing",
+          "count": 6
+        },
+        {
+          "category": "milestone_missing",
+          "count": 4
+        },
+        {
+          "category": "ambiguity_missing",
+          "count": 3
+        },
+        {
+          "category": "material_missing",
+          "count": 3
+        },
+        {
+          "category": "project_decision",
+          "count": 3
+        },
+        {
+          "category": "evidence_missing",
+          "count": 2
+        },
+        {
+          "category": "task_missing",
+          "count": 2
+        },
+        {
+          "category": "task_spurious",
+          "count": 1
+        }
+      ]
+    },
+    "scholarship": {
+      "provider": "deepseek-production",
+      "sampleCount": 3,
+      "completedCount": 3,
+      "projectDecisionAccuracy": 0.6666666666666666,
+      "milestonePrecision": 1,
+      "milestoneRecall": 0,
+      "taskPrecision": 0.3333333333333333,
+      "taskRecall": 0.5,
+      "materialRecall": 1,
+      "timePointAccuracy": 0,
+      "eventAccuracy": 1,
+      "evidenceCoverage": 0.875,
+      "duplicateRate": 0,
+      "overFragmentationRate": 0,
+      "majorCorrectionRate": 1,
+      "severeErrorRate": 0.3333333333333333,
+      "invalidOutputRate": 0,
+      "requestFailureRate": 0,
+      "latencyMs": {
+        "mean": 6240.333333333333,
+        "p50": 6056,
+        "p95": 7005
+      },
+      "tokenUsage": null,
+      "costUsd": null,
+      "errorTaxonomy": [
+        {
+          "category": "milestone_missing",
+          "count": 2
+        },
+        {
+          "category": "task_spurious",
+          "count": 2
+        },
+        {
+          "category": "time_missing",
+          "count": 2
+        },
+        {
+          "category": "ambiguity_missing",
+          "count": 1
+        },
+        {
+          "category": "evidence_missing",
+          "count": 1
+        },
+        {
+          "category": "project_decision",
+          "count": 1
+        },
+        {
+          "category": "task_missing",
+          "count": 1
+        }
+      ]
+    },
+    "meeting": {
+      "provider": "deepseek-production",
+      "sampleCount": 3,
+      "completedCount": 3,
+      "projectDecisionAccuracy": 1,
+      "milestonePrecision": 1,
+      "milestoneRecall": 1,
+      "taskPrecision": 0,
+      "taskRecall": 0,
+      "materialRecall": 1,
+      "timePointAccuracy": 0.3333333333333333,
+      "eventAccuracy": 0.6666666666666666,
+      "evidenceCoverage": 1,
+      "duplicateRate": 0,
+      "overFragmentationRate": 0,
+      "majorCorrectionRate": 0.6666666666666666,
+      "severeErrorRate": 0,
+      "invalidOutputRate": 0,
+      "requestFailureRate": 0,
+      "latencyMs": {
+        "mean": 5521,
+        "p50": 4990,
+        "p95": 7646
+      },
+      "tokenUsage": null,
+      "costUsd": null,
+      "errorTaxonomy": [
+        {
+          "category": "task_missing",
+          "count": 2
+        },
+        {
+          "category": "time_missing",
+          "count": 2
+        },
+        {
+          "category": "ambiguity_missing",
+          "count": 1
+        },
+        {
+          "category": "event_missing",
+          "count": 1
+        },
+        {
+          "category": "task_spurious",
+          "count": 1
+        }
+      ]
+    },
+    "event": {
+      "provider": "deepseek-production",
+      "sampleCount": 3,
+      "completedCount": 3,
+      "projectDecisionAccuracy": 1,
+      "milestonePrecision": 1,
+      "milestoneRecall": 1,
+      "taskPrecision": 0,
+      "taskRecall": 0,
+      "materialRecall": 0,
+      "timePointAccuracy": 0.25,
+      "eventAccuracy": 1,
+      "evidenceCoverage": 1,
+      "duplicateRate": 0,
+      "overFragmentationRate": 0,
+      "majorCorrectionRate": 1,
+      "severeErrorRate": 0.3333333333333333,
+      "invalidOutputRate": 0,
+      "requestFailureRate": 0,
+      "latencyMs": {
+        "mean": 5669,
+        "p50": 5852,
+        "p95": 5898
+      },
+      "tokenUsage": null,
+      "costUsd": null,
+      "errorTaxonomy": [
+        {
+          "category": "time_missing",
+          "count": 3
+        },
+        {
+          "category": "ambiguity_missing",
+          "count": 1
+        },
+        {
+          "category": "material_missing",
+          "count": 1
+        },
+        {
+          "category": "task_missing",
+          "count": 1
+        },
+        {
+          "category": "task_spurious",
+          "count": 1
+        }
+      ]
+    },
+    "complex_notice": {
+      "provider": "deepseek-production",
+      "sampleCount": 4,
+      "completedCount": 2,
+      "projectDecisionAccuracy": 0.5,
+      "milestonePrecision": 1,
+      "milestoneRecall": 0.38461538461538464,
+      "taskPrecision": 1,
+      "taskRecall": 0.2727272727272727,
+      "materialRecall": 0.18181818181818182,
+      "timePointAccuracy": 0,
+      "eventAccuracy": 0.5,
+      "evidenceCoverage": 0.4772727272727273,
+      "duplicateRate": 0,
+      "overFragmentationRate": 0,
+      "majorCorrectionRate": 1,
+      "severeErrorRate": 0.5,
+      "invalidOutputRate": 0,
+      "requestFailureRate": 0.5,
+      "latencyMs": {
+        "mean": 13202.25,
+        "p50": 13211,
+        "p95": 14252
+      },
+      "tokenUsage": null,
+      "costUsd": null,
+      "errorTaxonomy": [
+        {
+          "category": "time_missing",
+          "count": 7
+        },
+        {
+          "category": "ambiguity_missing",
+          "count": 4
+        },
+        {
+          "category": "material_missing",
+          "count": 3
+        },
+        {
+          "category": "task_missing",
+          "count": 3
+        },
+        {
+          "category": "milestone_missing",
+          "count": 2
+        },
+        {
+          "category": "request_failure",
+          "count": 2
+        },
+        {
+          "category": "project_decision",
+          "count": 1
+        }
+      ]
+    },
+    "multi_deadline": {
+      "provider": "deepseek-production",
+      "sampleCount": 3,
+      "completedCount": 3,
+      "projectDecisionAccuracy": 0.6666666666666666,
+      "milestonePrecision": 1,
+      "milestoneRecall": 0,
+      "taskPrecision": 0.875,
+      "taskRecall": 0.875,
+      "materialRecall": 0,
+      "timePointAccuracy": 0,
+      "eventAccuracy": 1,
+      "evidenceCoverage": 1,
+      "duplicateRate": 0,
+      "overFragmentationRate": 0,
+      "majorCorrectionRate": 1,
+      "severeErrorRate": 0,
+      "invalidOutputRate": 0,
+      "requestFailureRate": 0,
+      "latencyMs": {
+        "mean": 7845,
+        "p50": 8195,
+        "p95": 8302
+      },
+      "tokenUsage": null,
+      "costUsd": null,
+      "errorTaxonomy": [
+        {
+          "category": "time_missing",
+          "count": 9
+        },
+        {
+          "category": "material_missing",
+          "count": 5
+        },
+        {
+          "category": "milestone_missing",
+          "count": 3
+        },
+        {
+          "category": "ambiguity_missing",
+          "count": 1
+        },
+        {
+          "category": "project_decision",
+          "count": 1
+        },
+        {
+          "category": "task_missing",
+          "count": 1
+        },
+        {
+          "category": "task_spurious",
+          "count": 1
+        }
+      ]
+    },
+    "material": {
+      "provider": "deepseek-production",
+      "sampleCount": 3,
+      "completedCount": 3,
+      "projectDecisionAccuracy": 1,
+      "milestonePrecision": 1,
+      "milestoneRecall": 1,
+      "taskPrecision": 0.3333333333333333,
+      "taskRecall": 0.3333333333333333,
+      "materialRecall": 0.3333333333333333,
+      "timePointAccuracy": 0,
+      "eventAccuracy": 1,
+      "evidenceCoverage": 0.8461538461538461,
+      "duplicateRate": 0,
+      "overFragmentationRate": 0,
+      "majorCorrectionRate": 1,
+      "severeErrorRate": 0,
+      "invalidOutputRate": 0,
+      "requestFailureRate": 0,
+      "latencyMs": {
+        "mean": 5700.333333333333,
+        "p50": 5397,
+        "p95": 6482
+      },
+      "tokenUsage": null,
+      "costUsd": null,
+      "errorTaxonomy": [
+        {
+          "category": "material_missing",
+          "count": 6
+        },
+        {
+          "category": "evidence_missing",
+          "count": 2
+        },
+        {
+          "category": "task_missing",
+          "count": 2
+        },
+        {
+          "category": "task_spurious",
+          "count": 2
+        },
+        {
+          "category": "ambiguity_missing",
+          "count": 1
+        },
+        {
+          "category": "time_missing",
+          "count": 1
+        }
+      ]
+    },
+    "vague_time": {
+      "provider": "deepseek-production",
+      "sampleCount": 3,
+      "completedCount": 3,
+      "projectDecisionAccuracy": 1,
+      "milestonePrecision": 1,
+      "milestoneRecall": 1,
+      "taskPrecision": 0.6666666666666666,
+      "taskRecall": 0.5,
+      "materialRecall": 0,
+      "timePointAccuracy": 0,
+      "eventAccuracy": 0,
+      "evidenceCoverage": 1,
+      "duplicateRate": 0,
+      "overFragmentationRate": 0,
+      "majorCorrectionRate": 1,
+      "severeErrorRate": 0,
+      "invalidOutputRate": 0,
+      "requestFailureRate": 0,
+      "latencyMs": {
+        "mean": 5252.333333333333,
+        "p50": 5444,
+        "p95": 5562
+      },
+      "tokenUsage": null,
+      "costUsd": null,
+      "errorTaxonomy": [
+        {
+          "category": "ambiguity_missing",
+          "count": 4
+        },
+        {
+          "category": "time_missing",
+          "count": 4
+        },
+        {
+          "category": "task_missing",
+          "count": 2
+        },
+        {
+          "category": "event_missing",
+          "count": 1
+        },
+        {
+          "category": "material_missing",
+          "count": 1
+        },
+        {
+          "category": "task_spurious",
+          "count": 1
+        }
+      ]
+    },
+    "information_only": {
+      "provider": "deepseek-production",
+      "sampleCount": 2,
+      "completedCount": 2,
+      "projectDecisionAccuracy": 1,
+      "milestonePrecision": 1,
+      "milestoneRecall": 1,
+      "taskPrecision": 1,
+      "taskRecall": 1,
+      "materialRecall": 1,
+      "timePointAccuracy": 1,
+      "eventAccuracy": 0,
+      "evidenceCoverage": 1,
+      "duplicateRate": 0,
+      "overFragmentationRate": 0,
+      "majorCorrectionRate": 0,
+      "severeErrorRate": 0,
+      "invalidOutputRate": 0,
+      "requestFailureRate": 0,
+      "latencyMs": {
+        "mean": 4612,
+        "p50": 4257,
+        "p95": 4967
+      },
+      "tokenUsage": null,
+      "costUsd": null,
+      "errorTaxonomy": [
+        {
+          "category": "event_spurious",
+          "count": 1
+        }
+      ]
+    },
+    "ocr_noise": {
+      "provider": "deepseek-production",
+      "sampleCount": 2,
+      "completedCount": 2,
+      "projectDecisionAccuracy": 1,
+      "milestonePrecision": 1,
+      "milestoneRecall": 1,
+      "taskPrecision": 1,
+      "taskRecall": 0.5,
+      "materialRecall": 0.3333333333333333,
+      "timePointAccuracy": 0,
+      "eventAccuracy": 1,
+      "evidenceCoverage": 1,
+      "duplicateRate": 0,
+      "overFragmentationRate": 0,
+      "majorCorrectionRate": 1,
+      "severeErrorRate": 0,
+      "invalidOutputRate": 0,
+      "requestFailureRate": 0,
+      "latencyMs": {
+        "mean": 7102.5,
+        "p50": 6305,
+        "p95": 7900
+      },
+      "tokenUsage": null,
+      "costUsd": null,
+      "errorTaxonomy": [
+        {
+          "category": "ambiguity_missing",
+          "count": 2
+        },
+        {
+          "category": "material_missing",
+          "count": 2
+        },
+        {
+          "category": "time_missing",
+          "count": 2
+        },
+        {
+          "category": "task_missing",
+          "count": 1
+        }
+      ]
+    },
+    "security": {
+      "provider": "deepseek-production",
+      "sampleCount": 2,
+      "completedCount": 2,
+      "projectDecisionAccuracy": 1,
+      "milestonePrecision": 1,
+      "milestoneRecall": 1,
+      "taskPrecision": 1,
+      "taskRecall": 1,
+      "materialRecall": 0.5,
+      "timePointAccuracy": 0,
+      "eventAccuracy": 1,
+      "evidenceCoverage": 1,
+      "duplicateRate": 0,
+      "overFragmentationRate": 0,
+      "majorCorrectionRate": 1,
+      "severeErrorRate": 0,
+      "invalidOutputRate": 0,
+      "requestFailureRate": 0,
+      "latencyMs": {
+        "mean": 5976,
+        "p50": 5216,
+        "p95": 6736
+      },
+      "tokenUsage": null,
+      "costUsd": null,
+      "errorTaxonomy": [
+        {
+          "category": "time_missing",
+          "count": 2
+        },
+        {
+          "category": "material_missing",
+          "count": 1
+        }
+      ]
+    }
+  }
+}
