@@ -122,7 +122,7 @@ test('structured extraction uses V4 Flash JSON mode and returns bounded suggesti
   const payload = await response.json()
   assert.equal(payload.model, 'deepseek-v4-flash')
   assert.equal(payload.result.schemaVersion, '2.0')
-  assert.equal(payload.result.promptVersion, 'recognition-2.2.0')
+  assert.equal(payload.result.promptVersion, 'recognition-2.3.0')
   assert.equal(payload.result.milestones[0].tasks[0].title, '提交报名表')
   assert.equal(payload.result.evidence[0].quotedText, '8月10日18:00提交报名表')
   assert.equal(payload.validation.validatorVersion, 'recognition-quality-2.0.0')
@@ -164,6 +164,40 @@ test('recognition normalization preserves near-schema model output without dropp
   assert.deepEqual(result.ambiguities[0], {
     id: 'amb-1', field: 'deadline', message: '截止时间只写了月底', options: ['本月底'], evidenceIds: ['ev-1'],
   })
+})
+
+test('recognition normalization removes format-only, duplicate event, and information-only pseudo tasks', () => {
+  const evidence = [
+    { id: 'ev-submit', quotedText: '提交课程反思，PDF格式，文件命名为学号+姓名', field: 'description', confidence: 0.9 },
+    { id: 'ev-event', quotedText: '下午3点参加学术讲座', field: 'event', confidence: 0.9 },
+  ]
+  const base = {
+    schemaVersion: '2.0',
+    sourceSummary: { title: '课程安排', sourceType: 'text', notificationType: 'course_assignment', summary: '提交并参加讲座', requiresAction: true, actionReason: '有明确动作' },
+    projectMatch: { decision: 'standalone_task', matchedProjectId: null, suggestedProjectTitle: null, confidence: 0.9, reasons: [] },
+    projectSuggestion: null, milestones: [], materials: [],
+    standaloneTasks: [
+      { tempId: 'task-write', title: '撰写课程反思', actionVerb: '撰写', actionObject: '课程反思', evidenceIds: ['ev-submit'], inferenceLevel: 'strong_inference', materialTempIds: ['mat-1'], timePointTempIds: [] },
+      { tempId: 'task-name', title: '命名PDF文件', actionVerb: '命名', actionObject: 'PDF文件', evidenceIds: ['ev-submit'], inferenceLevel: 'explicit', materialTempIds: ['mat-1'], timePointTempIds: [] },
+      { tempId: 'task-submit', title: '提交课程反思', actionVerb: '提交', actionObject: '课程反思', evidenceIds: ['ev-submit'], inferenceLevel: 'explicit', materialTempIds: ['mat-1'], timePointTempIds: [] },
+      { tempId: 'task-attend', title: '参加学术讲座', actionVerb: '参加', actionObject: '学术讲座', evidenceIds: ['ev-event'], inferenceLevel: 'explicit', materialTempIds: [], timePointTempIds: ['tp-event'] },
+    ],
+    timePoints: [{ tempId: 'tp-event', type: 'event_start', rawText: '下午3点', normalizedValue: null, timezone: 'Asia/Shanghai', isAllDay: false, precision: 'vague', needsConfirmation: true, relatedTaskTempIds: ['task-attend'], relatedMaterialTempIds: [], evidenceIds: ['ev-event'], confidence: 0.8 }],
+    events: [{ tempId: 'event-1', title: '学术讲座', description: '', startTimePointTempId: 'tp-event', endTimePointTempId: null, location: null, evidenceIds: ['ev-event'], confidence: 0.9, inferenceLevel: 'explicit' }],
+    evidence, conflicts: [], ambiguities: [], ignoredContent: [], quality: {},
+  }
+  const result = normalizeRecognitionResult(base, '提交课程反思，PDF格式，文件命名为学号+姓名；下午3点参加学术讲座', '2026-08-09T00:00:00.000Z')
+  assert.deepEqual(result.standaloneTasks.map((task) => task.title), ['提交课程反思'])
+  assert.equal(result.events.length, 1)
+
+  const informationOnly = normalizeRecognitionResult({
+    ...base,
+    sourceSummary: { title: '开放时间', sourceType: 'text', notificationType: 'information_only', summary: '每天开放', requiresAction: false, actionReason: '' },
+  }, '图书馆每天8:00至22:00开放', '2026-08-09T00:00:00.000Z')
+  assert.equal(informationOnly.standaloneTasks.length, 0)
+  assert.equal(informationOnly.timePoints.length, 0)
+  assert.equal(informationOnly.events.length, 0)
+  assert.equal(informationOnly.ambiguities.length, 0)
 })
 
 test('conditional repair runs at most once and keeps the first valid result when repair fails', async () => {

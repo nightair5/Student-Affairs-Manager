@@ -12,7 +12,10 @@ export {
   recognitionSystemPrompt,
 } from './recognition-prompt.mjs'
 
-const ACTION_VERBS = ['提交', '上传', '填写', '完成', '准备', '核对', '确认', '联系', '参加', '阅读', '下载', '打印', '盖章', '签字', '回复', '领取', '整理', '撰写', '制作', '报名']
+const ACTION_VERBS = ['提交', '上传', '填写', '完成', '准备', '核对', '确认', '联系', '参加', '阅读', '下载', '打印', '盖章', '签字', '回复', '领取', '整理', '撰写', '制作', '报名', '发送', '携带', '出示', '归还', '反馈', '汇总', '组队', '办理', '预约']
+const SUBMISSION_VERBS = new Set(['提交', '上传', '发送', '报送', '补交'])
+const FORMAT_ONLY_VERBS = new Set(['保存', '命名', '重命名', '转换', '设置格式'])
+const RECEIVE_ONLY_VERBS = new Set(['领取', '下载'])
 const CATEGORIES = new Set(['比赛', '保研', '课程', '老师任务', '其他'])
 const INFERENCE_LEVELS = new Set(['explicit', 'strong_inference', 'optional_suggestion'])
 const NOTIFICATION_TYPES = new Set(['new_project', 'project_addendum', 'project_correction', 'course_assignment', 'teacher_task', 'event_notice', 'meeting_notice', 'material_submission', 'registration_notice', 'result_notice', 'information_only', 'uncertain'])
@@ -110,18 +113,18 @@ export function normalizeRecognitionResult(raw, sourceContent, nowIso) {
     milestone.tasks = milestone.tasks.filter((task) => !duplicates.has(task.tempId))
     milestone.workPackages.forEach((workPackage) => { workPackage.tasks = workPackage.tasks.filter((task) => !duplicates.has(task.tempId)) })
   })
-  const materials = (Array.isArray(raw.materials) ? raw.materials : []).slice(0, 60).flatMap((item, index) => {
+  let materials = (Array.isArray(raw.materials) ? raw.materials : []).slice(0, 60).flatMap((item, index) => {
     if (!item || typeof item !== 'object' || Array.isArray(item) || !text(item.name, 100)) return []
     return [{ tempId: text(item.tempId, 100, `material-${index + 1}`), name: text(item.name, 100), required: item.required !== false, formatRequirements: strings(item.formatRequirements, 10), namingRequirements: strings(item.namingRequirements, 10), quantity: Number.isFinite(item.quantity) ? Math.max(1, Math.min(100, Math.round(item.quantity))) : null, submissionChannel: text(item.submissionChannel, 100) || null, relatedTaskTempIds: strings(item.relatedTaskTempIds), evidenceIds: strings(item.evidenceIds).filter((id) => evidenceIds.has(id)), confidence: number01(item.confidence), selected: strings(item.evidenceIds).some((id) => evidenceIds.has(id)) }]
   })
-  const timePoints = (Array.isArray(raw.timePoints) ? raw.timePoints : []).slice(0, 60).flatMap((item, index) => {
+  let timePoints = (Array.isArray(raw.timePoints) ? raw.timePoints : []).slice(0, 60).flatMap((item, index) => {
     if (!item || typeof item !== 'object' || Array.isArray(item) || !TIME_POINT_TYPES.has(item.type)) return []
     const normalizedValue = item.normalizedValue === null || !Number.isNaN(new Date(item.normalizedValue).getTime()) ? item.normalizedValue : null
     const linkedEvidence = strings(item.evidenceIds).filter((id) => evidenceIds.has(id))
     const needsConfirmation = Boolean(item.needsConfirmation) || normalizedValue === null
     return [{ tempId: text(item.tempId, 100, `time-${index + 1}`), type: item.type, rawText: text(item.rawText, 160), normalizedValue, timezone: text(item.timezone, 80, 'Asia/Shanghai'), isAllDay: Boolean(item.isAllDay), precision: ['exact', 'date_only', 'relative', 'vague'].includes(item.precision) ? item.precision : 'vague', needsConfirmation, relatedTaskTempIds: strings(item.relatedTaskTempIds), relatedMaterialTempIds: strings(item.relatedMaterialTempIds), evidenceIds: linkedEvidence, confidence: number01(item.confidence), selected: linkedEvidence.length > 0 && normalizedValue !== null && !needsConfirmation }]
   })
-  const events = (Array.isArray(raw.events) ? raw.events : []).slice(0, 30).flatMap((item, index) => {
+  let events = (Array.isArray(raw.events) ? raw.events : []).slice(0, 30).flatMap((item, index) => {
     if (!item || typeof item !== 'object' || Array.isArray(item) || !text(item.title, 100)) return []
     const linkedEvidence = strings(item.evidenceIds).filter((id) => evidenceIds.has(id))
     const inferenceLevel = INFERENCE_LEVELS.has(item.inferenceLevel) ? item.inferenceLevel : linkedEvidence.length ? 'explicit' : 'optional_suggestion'
@@ -165,6 +168,79 @@ export function normalizeRecognitionResult(raw, sourceContent, nowIso) {
     const reason = ['background', 'contact', 'address', 'policy', 'format_requirement', 'other'].includes(item.reason) ? item.reason : 'other'
     return [{ text: ignoredText, reason }]
   }) : []
+  const informationOnly = sourceSummaryRaw.notificationType === 'information_only' || sourceSummaryRaw.requiresAction === false
+  const evidenceById = new Map(evidence.map((item) => [item.id, item]))
+  const currentTasks = allTasks()
+  const hasSupportedAction = (task) => task.evidenceIds.some((id) => {
+    const quote = evidenceById.get(id)?.quotedText || ''
+    return quote.includes(task.actionVerb)
+  })
+  const sharesContext = (left, right) => left.evidenceIds.some((id) => right.evidenceIds.includes(id))
+    || left.materialTempIds.some((id) => right.materialTempIds.includes(id))
+    || left.timePointTempIds.some((id) => right.timePointTempIds.includes(id))
+  const eventSupportsTask = (task) => task.actionVerb === '参加' && events.some((event) =>
+    event.evidenceIds.some((id) => task.evidenceIds.includes(id))
+      || event.title.includes(task.actionObject)
+      || task.actionObject.includes(event.title))
+  const keepTask = (task) => {
+    if (informationOnly || FORMAT_ONLY_VERBS.has(task.actionVerb) || eventSupportsTask(task)) return false
+    if (hasSupportedAction(task)) return true
+    return !currentTasks.some((candidate) => candidate.tempId !== task.tempId
+      && SUBMISSION_VERBS.has(candidate.actionVerb)
+      && hasSupportedAction(candidate)
+      && sharesContext(task, candidate))
+  }
+  standaloneTasks = standaloneTasks.filter(keepTask)
+  milestones.forEach((milestone) => {
+    milestone.tasks = milestone.tasks.filter(keepTask)
+    milestone.workPackages.forEach((workPackage) => { workPackage.tasks = workPackage.tasks.filter(keepTask) })
+  })
+  const survivingTasks = allTasks()
+  const survivingTaskIds = new Set(survivingTasks.map((task) => task.tempId))
+  if (informationOnly) {
+    materials = []
+    timePoints = []
+    events = []
+  } else {
+    materials = materials.filter((material) => {
+      const relatedTasks = survivingTasks.filter((task) => material.relatedTaskTempIds.includes(task.tempId))
+      return relatedTasks.length === 0 || relatedTasks.some((task) => !RECEIVE_ONLY_VERBS.has(task.actionVerb))
+    }).map((material) => ({ ...material, relatedTaskTempIds: material.relatedTaskTempIds.filter((id) => survivingTaskIds.has(id)) }))
+    const materialIds = new Set(materials.map((material) => material.tempId))
+    const eventTimeIds = new Set(events.flatMap((event) => [event.startTimePointTempId, event.endTimePointTempId]).filter(Boolean))
+    timePoints = timePoints.map((timePoint) => {
+      const relatedTasks = survivingTasks.filter((task) => timePoint.relatedTaskTempIds.includes(task.tempId))
+      let type = timePoint.type
+      if (!eventTimeIds.has(timePoint.tempId) && !['result_announcement', 'planned_start'].includes(type) && relatedTasks.length > 0) {
+        if (relatedTasks.some((task) => task.actionVerb === '报名')) type = 'registration_deadline'
+        else if (relatedTasks.some((task) => SUBMISSION_VERBS.has(task.actionVerb))) type = 'submission_deadline'
+        else type = 'task_deadline'
+      }
+      let rawText = timePoint.rawText
+      if (rawText && sourceContent.includes(`${rawText}前`) && !rawText.endsWith('前')) rawText = `${rawText}前`
+      return {
+        ...timePoint,
+        type,
+        rawText,
+        relatedTaskTempIds: timePoint.relatedTaskTempIds.filter((id) => survivingTaskIds.has(id)),
+        relatedMaterialTempIds: timePoint.relatedMaterialTempIds.filter((id) => materialIds.has(id)),
+      }
+    })
+    const timePointIds = new Set(timePoints.map((timePoint) => timePoint.tempId))
+    events = events.map((event) => ({
+      ...event,
+      startTimePointTempId: event.startTimePointTempId && timePointIds.has(event.startTimePointTempId) ? event.startTimePointTempId : null,
+      endTimePointTempId: event.endTimePointTempId && timePointIds.has(event.endTimePointTempId) ? event.endTimePointTempId : null,
+    }))
+    const taskMaterialIds = new Set(materials.map((material) => material.tempId))
+    const taskTimeIds = new Set(timePoints.map((timePoint) => timePoint.tempId))
+    const normalizeTaskReferences = (task) => ({ ...task, materialTempIds: task.materialTempIds.filter((id) => taskMaterialIds.has(id)), timePointTempIds: task.timePointTempIds.filter((id) => taskTimeIds.has(id)) })
+    standaloneTasks = standaloneTasks.map(normalizeTaskReferences)
+    milestones.forEach((milestone) => {
+      milestone.tasks = milestone.tasks.map(normalizeTaskReferences)
+      milestone.workPackages.forEach((workPackage) => { workPackage.tasks = workPackage.tasks.map(normalizeTaskReferences) })
+    })
+  }
   const taskCount = allTasks().filter((task) => task.hierarchyType === 'task').length
   const subtaskCount = allTasks().filter((task) => task.hierarchyType === 'subtask').length
   const overFragmented = taskCount > 20 || subtaskCount > 40
@@ -176,7 +252,7 @@ export function normalizeRecognitionResult(raw, sourceContent, nowIso) {
     projectMatch: { decision, matchedProjectId: text(rawMatch.matchedProjectId, 100) || null, suggestedProjectTitle: text(rawMatch.suggestedProjectTitle, 160) || null, confidence: number01(rawMatch.confidence), reasons: strings(rawMatch.reasons, 12) },
     projectSuggestion: raw.projectSuggestion && typeof raw.projectSuggestion === 'object' ? { title: field(raw.projectSuggestion.title, text(rawMatch.suggestedProjectTitle || sourceSummaryRaw.title, 160, '未命名项目')), category: field(raw.projectSuggestion.category, '其他', true), objective: field(raw.projectSuggestion.objective, ''), description: field(raw.projectSuggestion.description, '') } : null,
     milestones, standaloneTasks, materials, timePoints, events, evidence,
-    conflicts: normalizeConflicts(raw.conflicts), ambiguities: normalizeAmbiguities(raw.ambiguities), ignoredContent: normalizeIgnoredContent(raw.ignoredContent),
+    conflicts: informationOnly ? [] : normalizeConflicts(raw.conflicts), ambiguities: informationOnly ? [] : normalizeAmbiguities(raw.ambiguities), ignoredContent: normalizeIgnoredContent(raw.ignoredContent),
     quality: { overallConfidence: number01(qualityRaw.overallConfidence), hierarchyConfidence: number01(qualityRaw.hierarchyConfidence), dateConfidence: number01(qualityRaw.dateConfidence), evidenceCoverage: number01(qualityRaw.evidenceCoverage), duplicateRisk: Math.max(number01(qualityRaw.duplicateRisk, 0), duplicates.size / Math.max(1, taskCount)), overFragmentationRisk: overFragmented ? 1 : number01(qualityRaw.overFragmentationRisk, 0), missingActionRisk: number01(qualityRaw.missingActionRisk, 0), needsHumanReview: Boolean(qualityRaw.needsHumanReview) || overFragmented || decision === 'uncertain', reviewReasons: [...new Set([...strings(qualityRaw.reviewReasons, 20), ...(duplicates.size ? ['存在重复任务，已从默认结果中合并'] : []), ...(overFragmented ? ['任务数量超过安全阈值，可能拆分过细'] : []), ...(decision === 'uncertain' ? ['项目归属不确定'] : [])])] },
   }
 }

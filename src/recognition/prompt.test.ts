@@ -7,11 +7,11 @@ import {
   recognitionSystemPrompt,
 } from './prompt'
 
-describe('Recognition 2.2 modular prompt contract', () => {
+describe('Recognition 2.3 modular prompt contract', () => {
   it('keeps schema and model fixed while advancing only the prompt version', () => {
     expect(RECOGNITION_SCHEMA_VERSION).toBe('2.0')
     expect(RECOGNITION_MODEL_NAME).toBe('deepseek-v4-flash')
-    expect(RECOGNITION_PROMPT_VERSION).toBe('recognition-2.2.0')
+    expect(RECOGNITION_PROMPT_VERSION).toBe('recognition-2.3.0')
   })
 
   it('composes seven unique, auditable prompt modules', () => {
