@@ -97,12 +97,16 @@ export type ErrorCategory =
   | 'task_spurious'
   | 'task_hierarchy'
   | 'material_missing'
+  | 'material_spurious'
   | 'time_missing'
   | 'time_incorrect'
+  | 'time_spurious'
   | 'event_missing'
   | 'event_spurious'
   | 'evidence_missing'
+  | 'evidence_invalid'
   | 'ambiguity_missing'
+  | 'ambiguity_spurious'
   | 'duplicate'
   | 'over_fragmentation'
   | 'forbidden_output'
@@ -163,6 +167,25 @@ export interface RecognitionCaseResult {
   costUsd: number | null
   result: RecognitionResult | null
   failures: EvaluationFailure[]
+  repair: {
+    attempted: boolean
+    applied: boolean
+    errorCode: string | null
+  } | null
+  execution: {
+    attempts: number
+    durationMs: number
+    operations: Array<{
+      operation: 'recognize' | 'repair' | 'extractFacts'
+      durationMs: number
+      attempts: number
+      ok: boolean
+    }>
+  } | null
+  route: {
+    level: 'simple' | 'medium' | 'complex'
+    selectedStrategy: 'single_pass' | 'fact_then_plan'
+  } | null
   scores: {
     projectDecision: number
     milestoneTruePositive: number
@@ -172,7 +195,11 @@ export interface RecognitionCaseResult {
     taskPredicted: number
     taskExpected: number
     materialMatched: number
+    materialPredicted: number
     materialExpected: number
+    timePointDetected: number
+    timePointTypeCorrect: number
+    timePointValueCorrect: number
     timePointMatched: number
     timePointPredicted: number
     timePointExpected: number
@@ -180,7 +207,12 @@ export interface RecognitionCaseResult {
     eventPredicted: number
     eventExpected: number
     evidenceMatched: number
+    evidenceValid: number
+    evidencePredicted: number
     evidenceExpected: number
+    ambiguityMatched: number
+    ambiguityPredicted: number
+    ambiguityExpected: number
     duplicateCount: number
     overFragmented: boolean
     majorCorrection: boolean
@@ -197,16 +229,29 @@ export interface RecognitionBaselineMetrics {
   milestoneRecall: number
   taskPrecision: number
   taskRecall: number
+  materialPrecision: number
   materialRecall: number
+  timePointPrecision: number
+  timePointRecall: number
+  timePointTypeAccuracy: number
+  timePointValueAccuracy: number
   timePointAccuracy: number
   eventAccuracy: number
   evidenceCoverage: number
+  evidenceValidity: number
+  ambiguityPrecision: number
+  ambiguityRecall: number
   duplicateRate: number
   overFragmentationRate: number
   majorCorrectionRate: number
   severeErrorRate: number
   invalidOutputRate: number
   requestFailureRate: number
+  repairTriggerRate: number
+  repairSuccessRate: number | null
+  repairLatencyMs: { mean: number; p95: number } | null
+  retryRate: number
+  complexityDistribution: { simple: number; medium: number; complex: number; unknown: number }
   latencyMs: { mean: number; p50: number; p95: number }
   tokenUsage: { input: number; output: number } | null
   costUsd: number | null

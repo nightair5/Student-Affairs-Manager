@@ -6,10 +6,16 @@ function metrics(overrides: Partial<RecognitionBaselineMetrics> = {}): Recogniti
   return {
     provider: 'deepseek-production', sampleCount: 40, completedCount: 40,
     projectDecisionAccuracy: 0.9, milestonePrecision: 0.8, milestoneRecall: 0.8,
-    taskPrecision: 0.9, taskRecall: 0.85, materialRecall: 0.8, timePointAccuracy: 0.8,
-    eventAccuracy: 0.9, evidenceCoverage: 0.97, duplicateRate: 0.01,
+    taskPrecision: 0.9, taskRecall: 0.85, materialPrecision: 0.9, materialRecall: 0.8,
+    timePointPrecision: 0.9, timePointRecall: 0.85, timePointTypeAccuracy: 0.85,
+    timePointValueAccuracy: 0.82, timePointAccuracy: 0.8,
+    eventAccuracy: 0.9, evidenceCoverage: 0.97, evidenceValidity: 1,
+    ambiguityPrecision: 0.9, ambiguityRecall: 0.85, duplicateRate: 0.01,
     overFragmentationRate: 0.02, majorCorrectionRate: 0.3, severeErrorRate: 0.01,
-    invalidOutputRate: 0, requestFailureRate: 0, latencyMs: { mean: 1, p50: 1, p95: 1 },
+    invalidOutputRate: 0, requestFailureRate: 0, repairTriggerRate: 0.2,
+    repairSuccessRate: 0.75, repairLatencyMs: { mean: 1, p95: 1 }, retryRate: 0,
+    complexityDistribution: { simple: 20, medium: 15, complex: 5, unknown: 0 },
+    latencyMs: { mean: 1, p50: 1, p95: 1 },
     tokenUsage: null, costUsd: null, errorTaxonomy: [], ...overrides,
   }
 }

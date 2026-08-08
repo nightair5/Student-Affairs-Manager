@@ -1,12 +1,12 @@
 # E2 Recognition Evaluation — before / deepseek-production
 
-- Run ID: `deepseek-production-2026-08-08T14-21-49-502Z`
+- Run ID: `deepseek-production-2026-08-08T14-39-44-986Z`
 - Dataset: `e2-holdout-1.0.0` (40 samples)
 - Observed Prompt: `recognition-2.0.0`
 - Model: `deepseek-v4-flash`
 - Local recognition source SHA-256: `8787e4f64977e22b587719d8c563467ab7b22eded9217c4be65b4827395279b5`
-- Started: 2026-08-08T14:12:01.768Z
-- Completed: 2026-08-08T14:21:49.502Z
+- Started: 2026-08-08T14:39:43.923Z
+- Completed: 2026-08-08T14:39:44.986Z
 - Completed cases: 38/40
 
 ## Metrics
@@ -18,16 +18,29 @@
 | Milestone Recall | 34.48% |
 | Task Precision | 68.57% |
 | Task Recall | 45.28% |
+| Material Precision | 94.44% |
 | Material Recall | 32.08% |
+| TimePoint Precision | 100.00% |
+| TimePoint Recall | 3.33% |
+| TimePoint Type Accuracy | 3.33% |
+| TimePoint Value Accuracy | 3.33% |
 | TimePoint Accuracy | 3.33% |
 | Event Accuracy | 66.67% |
 | Evidence Coverage | 83.61% |
+| Evidence Validity | 100.00% |
+| Ambiguity Precision | 0.00% |
+| Ambiguity Recall | 0.00% |
 | Duplicate Rate | 0.00% |
 | Over-fragmentation Rate | 0.00% |
 | Major Correction Rate | 90.00% |
 | Severe Error Rate | 10.00% |
 | Invalid Output Rate | 0.00% |
 | Request Failure Rate | 5.00% |
+| Repair Trigger Rate | 0.00% |
+| Repair Success Rate | NOT OBSERVABLE |
+| Repair Latency Mean | NOT OBSERVABLE |
+| Repair Latency P95 | NOT OBSERVABLE |
+| Retry Rate | 0.00% |
 | Latency Mean | 6854 ms |
 | Latency P50 | 6056 ms |
 | Latency P95 | 13211 ms |
@@ -58,6 +71,7 @@
 | --- | ---: |
 | time_missing | 49 |
 | material_missing | 30 |
+| ambiguity_spurious | 29 |
 | task_missing | 24 |
 | ambiguity_missing | 22 |
 | milestone_missing | 13 |
@@ -67,5 +81,6 @@
 | event_missing | 2 |
 | request_failure | 2 |
 | event_spurious | 1 |
+| material_spurious | 1 |
 
 Per-case failure categories and reasons are stored in the sibling failures JSON. Raw model outputs remain in the ignored local checkpoint and are not committed.

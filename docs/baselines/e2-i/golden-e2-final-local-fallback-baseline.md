@@ -1,12 +1,12 @@
 # E2 Recognition Evaluation — e2-final / local-fallback
 
-- Run ID: `local-fallback-2026-08-08T14-11-50-166Z`
+- Run ID: `local-fallback-2026-08-08T14-39-02-819Z`
 - Dataset: `e2-a-golden-1.0.0` (110 samples)
 - Observed Prompt: `recognition-2.1.0`
 - Model: `local-rules`
 - Local recognition source SHA-256: `8787e4f64977e22b587719d8c563467ab7b22eded9217c4be65b4827395279b5`
-- Started: 2026-08-08T14:11:49.606Z
-- Completed: 2026-08-08T14:11:50.166Z
+- Started: 2026-08-08T14:39:00.422Z
+- Completed: 2026-08-08T14:39:02.819Z
 - Completed cases: 110/110
 
 ## Metrics
@@ -18,16 +18,29 @@
 | Milestone Recall | 31.51% |
 | Task Precision | 69.40% |
 | Task Recall | 73.23% |
+| Material Precision | 86.76% |
 | Material Recall | 58.42% |
+| TimePoint Precision | 90.85% |
+| TimePoint Recall | 98.58% |
+| TimePoint Type Accuracy | 25.81% |
+| TimePoint Value Accuracy | 41.29% |
 | TimePoint Accuracy | 25.81% |
 | Event Accuracy | 52.00% |
 | Evidence Coverage | 87.94% |
+| Evidence Validity | 90.20% |
+| Ambiguity Precision | 28.74% |
+| Ambiguity Recall | 92.59% |
 | Duplicate Rate | 0.00% |
 | Over-fragmentation Rate | 0.00% |
 | Major Correction Rate | 94.55% |
 | Severe Error Rate | 18.18% |
 | Invalid Output Rate | 0.00% |
 | Request Failure Rate | 0.00% |
+| Repair Trigger Rate | 0.00% |
+| Repair Success Rate | NOT OBSERVABLE |
+| Repair Latency Mean | NOT OBSERVABLE |
+| Repair Latency P95 | NOT OBSERVABLE |
+| Retry Rate | 0.00% |
 | Latency Mean | 0 ms |
 | Latency P50 | 0 ms |
 | Latency P95 | 1 ms |
@@ -55,14 +68,18 @@
 | Category | Count |
 | --- | ---: |
 | time_incorrect | 101 |
+| ambiguity_spurious | 52 |
 | milestone_missing | 50 |
 | material_missing | 42 |
 | task_spurious | 37 |
 | task_missing | 34 |
 | project_decision | 23 |
 | evidence_missing | 18 |
+| evidence_invalid | 15 |
+| time_spurious | 13 |
 | event_missing | 10 |
 | forbidden_output | 8 |
+| material_spurious | 8 |
 | event_spurious | 6 |
 | ambiguity_missing | 2 |
 | task_hierarchy | 2 |

@@ -4,6 +4,7 @@ import { recognitionGoldenDataset, recognitionGoldenDatasetMetadata } from './go
 import { recognitionHoldoutDataset, recognitionHoldoutMetadata } from './holdoutDataset'
 import { recognitionErrorTaxonomy } from './errorTaxonomy'
 import { aggregateRecognitionMetrics, scoreRecognitionCase } from './scoring'
+import type { RecognitionCaseResult } from './types'
 
 describe('E2-A recognition golden dataset', () => {
   it('contains 110 unique anonymous cases with a complete expected contract', () => {
@@ -49,6 +50,16 @@ describe('E2-A recognition golden dataset', () => {
     expect(metrics.completedCount).toBe(110)
     expect(metrics.invalidOutputRate).toBe(0)
     expect(metrics.requestFailureRate).toBe(0)
+    expect(metrics.materialPrecision).toBeGreaterThanOrEqual(0)
+    expect(metrics.timePointPrecision).toBeGreaterThanOrEqual(0)
+    expect(metrics.timePointRecall).toBeGreaterThanOrEqual(0)
+    expect(metrics.timePointTypeAccuracy).toBeGreaterThanOrEqual(0)
+    expect(metrics.timePointValueAccuracy).toBeGreaterThanOrEqual(0)
+    expect(metrics.evidenceValidity).toBeGreaterThanOrEqual(0)
+    expect(metrics.ambiguityPrecision).toBeGreaterThanOrEqual(0)
+    expect(metrics.ambiguityRecall).toBeGreaterThanOrEqual(0)
+    expect(metrics.repairTriggerRate).toBe(0)
+    expect(metrics.repairSuccessRate).toBeNull()
     expect(metrics.tokenUsage).toBeNull()
     expect(metrics.costUsd).toBeNull()
     expect(metrics.errorTaxonomy.length).toBeGreaterThan(0)
@@ -70,6 +81,39 @@ describe('E2-A recognition golden dataset', () => {
     expect(metrics.severeErrorRate).toBe(1)
     expect(metrics.tokenUsage).toBeNull()
     expect(metrics.costUsd).toBeNull()
+  })
+
+  it('aggregates observed repair, retry and route metadata without guessing missing values', () => {
+    const fixture = recognitionGoldenDataset[0]
+    const result = buildLocalRecognition({
+      sourceType: fixture.sourceType,
+      sourceTitle: fixture.sourceTitle,
+      content: fixture.rawText,
+      referenceTime: new Date(fixture.referenceTime),
+      timezone: fixture.timezone,
+      projects: [],
+      tasks: [],
+    })
+    const scored = scoreRecognitionCase(fixture, 'deepseek-production', result, 900)
+    const observed: RecognitionCaseResult = {
+      ...scored,
+      repair: { attempted: true, applied: true, errorCode: null },
+      execution: {
+        attempts: 3,
+        durationMs: 850,
+        operations: [
+          { operation: 'recognize', durationMs: 500, attempts: 2, ok: true },
+          { operation: 'repair', durationMs: 350, attempts: 1, ok: true },
+        ],
+      },
+      route: { level: 'medium', selectedStrategy: 'single_pass' },
+    }
+    const metrics = aggregateRecognitionMetrics('deepseek-production', [observed])
+    expect(metrics.repairTriggerRate).toBe(1)
+    expect(metrics.repairSuccessRate).toBe(1)
+    expect(metrics.repairLatencyMs).toEqual({ mean: 350, p95: 350 })
+    expect(metrics.retryRate).toBe(1)
+    expect(metrics.complexityDistribution).toEqual({ simple: 0, medium: 1, complex: 0, unknown: 0 })
   })
 })
 

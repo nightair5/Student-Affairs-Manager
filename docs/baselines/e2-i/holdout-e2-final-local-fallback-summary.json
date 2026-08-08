@@ -1,6 +1,6 @@
 {
   "run": {
-    "runId": "local-fallback-2026-08-08T14-11-51-953Z",
+    "runId": "local-fallback-2026-08-08T14-39-05-501Z",
     "provider": "local-fallback",
     "label": "e2-final",
     "datasetName": "holdout",
@@ -12,8 +12,8 @@
     ],
     "modelName": "local-rules",
     "promptSourceSha256": "8787e4f64977e22b587719d8c563467ab7b22eded9217c4be65b4827395279b5",
-    "startedAt": "2026-08-08T14:11:51.792Z",
-    "completedAt": "2026-08-08T14:11:51.953Z",
+    "startedAt": "2026-08-08T14:39:05.164Z",
+    "completedAt": "2026-08-08T14:39:05.501Z",
     "endpoint": null,
     "tokenAndCostObservation": "Token usage or cost is incomplete; no estimate is substituted for observed data.",
     "evaluationNotes": []
@@ -27,18 +27,36 @@
     "milestoneRecall": 0.3793103448275862,
     "taskPrecision": 0.40816326530612246,
     "taskRecall": 0.37735849056603776,
+    "materialPrecision": 0.8421052631578947,
     "materialRecall": 0.3018867924528302,
+    "timePointPrecision": 0.9,
+    "timePointRecall": 0.9,
+    "timePointTypeAccuracy": 0.2878787878787879,
+    "timePointValueAccuracy": 0.21212121212121213,
     "timePointAccuracy": 0.2878787878787879,
     "eventAccuracy": 0.5,
     "evidenceCoverage": 0.8907103825136612,
+    "evidenceValidity": 0.9333333333333333,
+    "ambiguityPrecision": 0.4,
+    "ambiguityRecall": 0.75,
     "duplicateRate": 0,
     "overFragmentationRate": 0,
     "majorCorrectionRate": 1,
     "severeErrorRate": 0.225,
     "invalidOutputRate": 0,
     "requestFailureRate": 0,
+    "repairTriggerRate": 0,
+    "repairSuccessRate": null,
+    "repairLatencyMs": null,
+    "retryRate": 0,
+    "complexityDistribution": {
+      "simple": 0,
+      "medium": 0,
+      "complex": 0,
+      "unknown": 40
+    },
     "latencyMs": {
-      "mean": 0.4,
+      "mean": 0.575,
       "p50": 0,
       "p95": 1
     },
@@ -62,6 +80,10 @@
         "count": 24
       },
       {
+        "category": "ambiguity_spurious",
+        "count": 23
+      },
+      {
         "category": "milestone_missing",
         "count": 18
       },
@@ -78,11 +100,23 @@
         "count": 8
       },
       {
+        "category": "ambiguity_missing",
+        "count": 6
+      },
+      {
+        "category": "time_spurious",
+        "count": 6
+      },
+      {
+        "category": "evidence_invalid",
+        "count": 4
+      },
+      {
         "category": "forbidden_output",
         "count": 4
       },
       {
-        "category": "ambiguity_missing",
+        "category": "material_spurious",
         "count": 3
       },
       {
@@ -101,20 +135,38 @@
       "milestoneRecall": 1,
       "taskPrecision": 0.75,
       "taskRecall": 0.6,
+      "materialPrecision": 0,
       "materialRecall": 0,
+      "timePointPrecision": 0.75,
+      "timePointRecall": 1,
+      "timePointTypeAccuracy": 0.25,
+      "timePointValueAccuracy": 0.25,
       "timePointAccuracy": 0.25,
       "eventAccuracy": 1,
       "evidenceCoverage": 1,
+      "evidenceValidity": 1,
+      "ambiguityPrecision": 0.3333333333333333,
+      "ambiguityRecall": 1,
       "duplicateRate": 0,
       "overFragmentationRate": 0,
       "majorCorrectionRate": 1,
       "severeErrorRate": 0.25,
       "invalidOutputRate": 0,
       "requestFailureRate": 0,
+      "repairTriggerRate": 0,
+      "repairSuccessRate": null,
+      "repairLatencyMs": null,
+      "retryRate": 0,
+      "complexityDistribution": {
+        "simple": 0,
+        "medium": 0,
+        "complex": 0,
+        "unknown": 4
+      },
       "latencyMs": {
-        "mean": 1.75,
+        "mean": 2.25,
         "p50": 0,
-        "p95": 6
+        "p95": 8
       },
       "tokenUsage": null,
       "costUsd": null,
@@ -122,6 +174,10 @@
         {
           "category": "material_missing",
           "count": 3
+        },
+        {
+          "category": "ambiguity_spurious",
+          "count": 2
         },
         {
           "category": "task_missing",
@@ -132,11 +188,19 @@
           "count": 2
         },
         {
+          "category": "material_spurious",
+          "count": 1
+        },
+        {
           "category": "project_decision",
           "count": 1
         },
         {
           "category": "task_spurious",
+          "count": 1
+        },
+        {
+          "category": "time_spurious",
           "count": 1
         }
       ]
@@ -150,20 +214,38 @@
       "milestoneRecall": 0.7142857142857143,
       "taskPrecision": 0.5,
       "taskRecall": 0.375,
+      "materialPrecision": 0.75,
       "materialRecall": 0.5,
+      "timePointPrecision": 1,
+      "timePointRecall": 0.875,
+      "timePointTypeAccuracy": 0.375,
+      "timePointValueAccuracy": 0.25,
       "timePointAccuracy": 0.375,
       "eventAccuracy": 0.5,
       "evidenceCoverage": 0.7916666666666666,
+      "evidenceValidity": 0.8571428571428571,
+      "ambiguityPrecision": 0.6,
+      "ambiguityRecall": 1,
       "duplicateRate": 0,
       "overFragmentationRate": 0,
       "majorCorrectionRate": 1,
       "severeErrorRate": 0,
       "invalidOutputRate": 0,
       "requestFailureRate": 0,
+      "repairTriggerRate": 0,
+      "repairSuccessRate": null,
+      "repairLatencyMs": null,
+      "retryRate": 0,
+      "complexityDistribution": {
+        "simple": 0,
+        "medium": 0,
+        "complex": 0,
+        "unknown": 4
+      },
       "latencyMs": {
-        "mean": 0.5,
+        "mean": 0.75,
         "p50": 0,
-        "p95": 1
+        "p95": 2
       },
       "tokenUsage": null,
       "costUsd": null,
@@ -185,6 +267,10 @@
           "count": 3
         },
         {
+          "category": "ambiguity_spurious",
+          "count": 2
+        },
+        {
           "category": "milestone_missing",
           "count": 2
         },
@@ -193,7 +279,15 @@
           "count": 1
         },
         {
+          "category": "evidence_invalid",
+          "count": 1
+        },
+        {
           "category": "evidence_missing",
+          "count": 1
+        },
+        {
+          "category": "material_spurious",
           "count": 1
         },
         {
@@ -211,16 +305,34 @@
       "milestoneRecall": 0.25,
       "taskPrecision": 0.5,
       "taskRecall": 0.4,
+      "materialPrecision": 1,
       "materialRecall": 0.42857142857142855,
+      "timePointPrecision": 1,
+      "timePointRecall": 0.8333333333333334,
+      "timePointTypeAccuracy": 0.16666666666666666,
+      "timePointValueAccuracy": 0.3333333333333333,
       "timePointAccuracy": 0.3333333333333333,
       "eventAccuracy": 1,
       "evidenceCoverage": 0.9473684210526315,
+      "evidenceValidity": 1,
+      "ambiguityPrecision": 0.5,
+      "ambiguityRecall": 0.6666666666666666,
       "duplicateRate": 0,
       "overFragmentationRate": 0,
       "majorCorrectionRate": 1,
       "severeErrorRate": 0,
       "invalidOutputRate": 0,
       "requestFailureRate": 0,
+      "repairTriggerRate": 0,
+      "repairSuccessRate": null,
+      "repairLatencyMs": null,
+      "retryRate": 0,
+      "complexityDistribution": {
+        "simple": 0,
+        "medium": 0,
+        "complex": 0,
+        "unknown": 4
+      },
       "latencyMs": {
         "mean": 0,
         "p50": 0,
@@ -246,8 +358,16 @@
           "count": 3
         },
         {
+          "category": "ambiguity_spurious",
+          "count": 2
+        },
+        {
           "category": "task_spurious",
           "count": 2
+        },
+        {
+          "category": "ambiguity_missing",
+          "count": 1
         },
         {
           "category": "evidence_missing",
@@ -268,20 +388,38 @@
       "milestoneRecall": 0.5,
       "taskPrecision": 0,
       "taskRecall": 0,
+      "materialPrecision": 1,
       "materialRecall": 0.75,
+      "timePointPrecision": 0.6666666666666666,
+      "timePointRecall": 1,
+      "timePointTypeAccuracy": 0,
+      "timePointValueAccuracy": 0.3333333333333333,
       "timePointAccuracy": 0,
       "eventAccuracy": 1,
       "evidenceCoverage": 0.875,
+      "evidenceValidity": 1,
+      "ambiguityPrecision": 0,
+      "ambiguityRecall": 0,
       "duplicateRate": 0,
       "overFragmentationRate": 0,
       "majorCorrectionRate": 1,
       "severeErrorRate": 0.3333333333333333,
       "invalidOutputRate": 0,
       "requestFailureRate": 0,
+      "repairTriggerRate": 0,
+      "repairSuccessRate": null,
+      "repairLatencyMs": null,
+      "retryRate": 0,
+      "complexityDistribution": {
+        "simple": 0,
+        "medium": 0,
+        "complex": 0,
+        "unknown": 3
+      },
       "latencyMs": {
-        "mean": 0,
-        "p50": 0,
-        "p95": 0
+        "mean": 0.6666666666666666,
+        "p50": 1,
+        "p95": 1
       },
       "tokenUsage": null,
       "costUsd": null,
@@ -289,6 +427,10 @@
         {
           "category": "task_spurious",
           "count": 3
+        },
+        {
+          "category": "ambiguity_spurious",
+          "count": 2
         },
         {
           "category": "task_missing",
@@ -313,6 +455,10 @@
         {
           "category": "milestone_missing",
           "count": 1
+        },
+        {
+          "category": "time_spurious",
+          "count": 1
         }
       ]
     },
@@ -325,16 +471,34 @@
       "milestoneRecall": 1,
       "taskPrecision": 0,
       "taskRecall": 0,
+      "materialPrecision": 1,
       "materialRecall": 0,
+      "timePointPrecision": 1,
+      "timePointRecall": 1,
+      "timePointTypeAccuracy": 0,
+      "timePointValueAccuracy": 0,
       "timePointAccuracy": 0,
       "eventAccuracy": 0,
       "evidenceCoverage": 1,
+      "evidenceValidity": 1,
+      "ambiguityPrecision": 0.3333333333333333,
+      "ambiguityRecall": 1,
       "duplicateRate": 0,
       "overFragmentationRate": 0,
       "majorCorrectionRate": 1,
       "severeErrorRate": 0.6666666666666666,
       "invalidOutputRate": 0,
       "requestFailureRate": 0,
+      "repairTriggerRate": 0,
+      "repairSuccessRate": null,
+      "repairLatencyMs": null,
+      "retryRate": 0,
+      "complexityDistribution": {
+        "simple": 0,
+        "medium": 0,
+        "complex": 0,
+        "unknown": 3
+      },
       "latencyMs": {
         "mean": 0.3333333333333333,
         "p50": 0,
@@ -354,6 +518,10 @@
         {
           "category": "time_incorrect",
           "count": 3
+        },
+        {
+          "category": "ambiguity_spurious",
+          "count": 2
         },
         {
           "category": "task_missing",
@@ -378,20 +546,38 @@
       "milestoneRecall": 1,
       "taskPrecision": 0,
       "taskRecall": 0,
+      "materialPrecision": 0,
       "materialRecall": 0,
+      "timePointPrecision": 1,
+      "timePointRecall": 0.75,
+      "timePointTypeAccuracy": 0.5,
+      "timePointValueAccuracy": 0.25,
       "timePointAccuracy": 0.5,
       "eventAccuracy": 0.6666666666666666,
       "evidenceCoverage": 1,
+      "evidenceValidity": 1,
+      "ambiguityPrecision": 0.5,
+      "ambiguityRecall": 1,
       "duplicateRate": 0,
       "overFragmentationRate": 0,
       "majorCorrectionRate": 1,
       "severeErrorRate": 0.3333333333333333,
       "invalidOutputRate": 0,
       "requestFailureRate": 0,
+      "repairTriggerRate": 0,
+      "repairSuccessRate": null,
+      "repairLatencyMs": null,
+      "retryRate": 0,
+      "complexityDistribution": {
+        "simple": 0,
+        "medium": 0,
+        "complex": 0,
+        "unknown": 3
+      },
       "latencyMs": {
-        "mean": 0,
+        "mean": 0.3333333333333333,
         "p50": 0,
-        "p95": 0
+        "p95": 1
       },
       "tokenUsage": null,
       "costUsd": null,
@@ -401,11 +587,19 @@
           "count": 2
         },
         {
+          "category": "ambiguity_spurious",
+          "count": 1
+        },
+        {
           "category": "event_missing",
           "count": 1
         },
         {
           "category": "material_missing",
+          "count": 1
+        },
+        {
+          "category": "material_spurious",
           "count": 1
         },
         {
@@ -427,19 +621,37 @@
       "milestoneRecall": 0.3076923076923077,
       "taskPrecision": 0.45454545454545453,
       "taskRecall": 0.45454545454545453,
+      "materialPrecision": 1,
       "materialRecall": 0.18181818181818182,
+      "timePointPrecision": 1,
+      "timePointRecall": 0.9375,
+      "timePointTypeAccuracy": 0.5,
+      "timePointValueAccuracy": 0.1875,
       "timePointAccuracy": 0.5,
       "eventAccuracy": 0.6666666666666666,
       "evidenceCoverage": 0.9772727272727273,
+      "evidenceValidity": 1,
+      "ambiguityPrecision": 0.4166666666666667,
+      "ambiguityRecall": 0.8333333333333334,
       "duplicateRate": 0,
       "overFragmentationRate": 0,
       "majorCorrectionRate": 1,
       "severeErrorRate": 0,
       "invalidOutputRate": 0,
       "requestFailureRate": 0,
+      "repairTriggerRate": 0,
+      "repairSuccessRate": null,
+      "repairLatencyMs": null,
+      "retryRate": 0,
+      "complexityDistribution": {
+        "simple": 0,
+        "medium": 0,
+        "complex": 0,
+        "unknown": 4
+      },
       "latencyMs": {
-        "mean": 0.5,
-        "p50": 0,
+        "mean": 0.75,
+        "p50": 1,
         "p95": 1
       },
       "tokenUsage": null,
@@ -462,6 +674,10 @@
           "count": 6
         },
         {
+          "category": "ambiguity_spurious",
+          "count": 4
+        },
+        {
           "category": "task_spurious",
           "count": 3
         },
@@ -472,6 +688,10 @@
         {
           "category": "project_decision",
           "count": 2
+        },
+        {
+          "category": "ambiguity_missing",
+          "count": 1
         },
         {
           "category": "evidence_missing",
@@ -488,16 +708,34 @@
       "milestoneRecall": 0,
       "taskPrecision": 0.5,
       "taskRecall": 0.5,
+      "materialPrecision": 1,
       "materialRecall": 0.4,
+      "timePointPrecision": 1,
+      "timePointRecall": 0.8888888888888888,
+      "timePointTypeAccuracy": 0.3333333333333333,
+      "timePointValueAccuracy": 0.3333333333333333,
       "timePointAccuracy": 0.2222222222222222,
       "eventAccuracy": 1,
       "evidenceCoverage": 1,
+      "evidenceValidity": 1,
+      "ambiguityPrecision": 0,
+      "ambiguityRecall": 0,
       "duplicateRate": 0,
       "overFragmentationRate": 0,
       "majorCorrectionRate": 1,
       "severeErrorRate": 0,
       "invalidOutputRate": 0,
       "requestFailureRate": 0,
+      "repairTriggerRate": 0,
+      "repairSuccessRate": null,
+      "repairLatencyMs": null,
+      "retryRate": 0,
+      "complexityDistribution": {
+        "simple": 0,
+        "medium": 0,
+        "complex": 0,
+        "unknown": 3
+      },
       "latencyMs": {
         "mean": 0.3333333333333333,
         "p50": 0,
@@ -513,6 +751,10 @@
         {
           "category": "task_missing",
           "count": 4
+        },
+        {
+          "category": "ambiguity_spurious",
+          "count": 3
         },
         {
           "category": "material_missing",
@@ -545,20 +787,38 @@
       "milestoneRecall": 1,
       "taskPrecision": 0.5,
       "taskRecall": 0.3333333333333333,
+      "materialPrecision": 1,
       "materialRecall": 0.1111111111111111,
+      "timePointPrecision": 0.3333333333333333,
+      "timePointRecall": 1,
+      "timePointTypeAccuracy": 0,
+      "timePointValueAccuracy": 0,
       "timePointAccuracy": 0,
       "eventAccuracy": 1,
       "evidenceCoverage": 0.5384615384615384,
+      "evidenceValidity": 0.6666666666666666,
+      "ambiguityPrecision": 0,
+      "ambiguityRecall": 0,
       "duplicateRate": 0,
       "overFragmentationRate": 0,
       "majorCorrectionRate": 1,
       "severeErrorRate": 0,
       "invalidOutputRate": 0,
       "requestFailureRate": 0,
+      "repairTriggerRate": 0,
+      "repairSuccessRate": null,
+      "repairLatencyMs": null,
+      "retryRate": 0,
+      "complexityDistribution": {
+        "simple": 0,
+        "medium": 0,
+        "complex": 0,
+        "unknown": 3
+      },
       "latencyMs": {
-        "mean": 0,
-        "p50": 0,
-        "p95": 0
+        "mean": 0.6666666666666666,
+        "p50": 1,
+        "p95": 1
       },
       "tokenUsage": null,
       "costUsd": null,
@@ -566,6 +826,10 @@
         {
           "category": "material_missing",
           "count": 8
+        },
+        {
+          "category": "ambiguity_spurious",
+          "count": 3
         },
         {
           "category": "evidence_missing",
@@ -576,7 +840,15 @@
           "count": 2
         },
         {
+          "category": "time_spurious",
+          "count": 2
+        },
+        {
           "category": "ambiguity_missing",
+          "count": 1
+        },
+        {
+          "category": "evidence_invalid",
           "count": 1
         },
         {
@@ -602,20 +874,38 @@
       "milestoneRecall": 1,
       "taskPrecision": 0.5,
       "taskRecall": 0.25,
+      "materialPrecision": 1,
       "materialRecall": 1,
+      "timePointPrecision": 1,
+      "timePointRecall": 0.75,
+      "timePointTypeAccuracy": 0,
+      "timePointValueAccuracy": 0,
       "timePointAccuracy": 0,
       "eventAccuracy": 0,
       "evidenceCoverage": 1,
+      "evidenceValidity": 1,
+      "ambiguityPrecision": 1,
+      "ambiguityRecall": 0.75,
       "duplicateRate": 0,
       "overFragmentationRate": 0,
       "majorCorrectionRate": 1,
       "severeErrorRate": 0,
       "invalidOutputRate": 0,
       "requestFailureRate": 0,
+      "repairTriggerRate": 0,
+      "repairSuccessRate": null,
+      "repairLatencyMs": null,
+      "retryRate": 0,
+      "complexityDistribution": {
+        "simple": 0,
+        "medium": 0,
+        "complex": 0,
+        "unknown": 3
+      },
       "latencyMs": {
-        "mean": 0.3333333333333333,
+        "mean": 0,
         "p50": 0,
-        "p95": 1
+        "p95": 0
       },
       "tokenUsage": null,
       "costUsd": null,
@@ -627,6 +917,10 @@
         {
           "category": "task_missing",
           "count": 3
+        },
+        {
+          "category": "ambiguity_missing",
+          "count": 1
         },
         {
           "category": "event_missing",
@@ -651,16 +945,34 @@
       "milestoneRecall": 1,
       "taskPrecision": 0,
       "taskRecall": 1,
+      "materialPrecision": 1,
       "materialRecall": 1,
+      "timePointPrecision": 0,
+      "timePointRecall": 1,
+      "timePointTypeAccuracy": 0,
+      "timePointValueAccuracy": 0,
       "timePointAccuracy": 0,
       "eventAccuracy": 1,
       "evidenceCoverage": 1,
+      "evidenceValidity": 1,
+      "ambiguityPrecision": 0,
+      "ambiguityRecall": 1,
       "duplicateRate": 0,
       "overFragmentationRate": 0,
       "majorCorrectionRate": 1,
       "severeErrorRate": 1,
       "invalidOutputRate": 0,
       "requestFailureRate": 0,
+      "repairTriggerRate": 0,
+      "repairSuccessRate": null,
+      "repairLatencyMs": null,
+      "retryRate": 0,
+      "complexityDistribution": {
+        "simple": 0,
+        "medium": 0,
+        "complex": 0,
+        "unknown": 2
+      },
       "latencyMs": {
         "mean": 0.5,
         "p50": 0,
@@ -672,6 +984,14 @@
         {
           "category": "task_spurious",
           "count": 2
+        },
+        {
+          "category": "time_spurious",
+          "count": 2
+        },
+        {
+          "category": "ambiguity_spurious",
+          "count": 1
         }
       ]
     },
@@ -684,20 +1004,38 @@
       "milestoneRecall": 1,
       "taskPrecision": 0,
       "taskRecall": 0,
+      "materialPrecision": 1,
       "materialRecall": 0,
+      "timePointPrecision": 1,
+      "timePointRecall": 1,
+      "timePointTypeAccuracy": 0.5,
+      "timePointValueAccuracy": 0,
       "timePointAccuracy": 0.5,
       "eventAccuracy": 1,
       "evidenceCoverage": 1,
+      "evidenceValidity": 1,
+      "ambiguityPrecision": 1,
+      "ambiguityRecall": 1,
       "duplicateRate": 0,
       "overFragmentationRate": 0,
       "majorCorrectionRate": 1,
       "severeErrorRate": 0,
       "invalidOutputRate": 0,
       "requestFailureRate": 0,
+      "repairTriggerRate": 0,
+      "repairSuccessRate": null,
+      "repairLatencyMs": null,
+      "retryRate": 0,
+      "complexityDistribution": {
+        "simple": 0,
+        "medium": 0,
+        "complex": 0,
+        "unknown": 2
+      },
       "latencyMs": {
-        "mean": 0.5,
+        "mean": 0,
         "p50": 0,
-        "p95": 1
+        "p95": 0
       },
       "tokenUsage": null,
       "costUsd": null,
@@ -733,16 +1071,34 @@
       "milestoneRecall": 1,
       "taskPrecision": 0.5,
       "taskRecall": 0.5,
+      "materialPrecision": 1,
       "materialRecall": 0.5,
+      "timePointPrecision": 1,
+      "timePointRecall": 1,
+      "timePointTypeAccuracy": 0,
+      "timePointValueAccuracy": 0.5,
       "timePointAccuracy": 0,
       "eventAccuracy": 1,
       "evidenceCoverage": 0,
+      "evidenceValidity": 0,
+      "ambiguityPrecision": 0,
+      "ambiguityRecall": 1,
       "duplicateRate": 0,
       "overFragmentationRate": 0,
       "majorCorrectionRate": 1,
       "severeErrorRate": 1,
       "invalidOutputRate": 0,
       "requestFailureRate": 0,
+      "repairTriggerRate": 0,
+      "repairSuccessRate": null,
+      "repairLatencyMs": null,
+      "retryRate": 0,
+      "complexityDistribution": {
+        "simple": 0,
+        "medium": 0,
+        "complex": 0,
+        "unknown": 2
+      },
       "latencyMs": {
         "mean": 0,
         "p50": 0,
@@ -756,12 +1112,20 @@
           "count": 3
         },
         {
+          "category": "evidence_invalid",
+          "count": 2
+        },
+        {
           "category": "evidence_missing",
           "count": 2
         },
         {
           "category": "time_incorrect",
           "count": 2
+        },
+        {
+          "category": "ambiguity_spurious",
+          "count": 1
         },
         {
           "category": "material_missing",

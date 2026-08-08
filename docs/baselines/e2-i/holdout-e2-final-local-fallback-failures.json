@@ -1,6 +1,6 @@
 {
   "run": {
-    "runId": "local-fallback-2026-08-08T14-11-51-953Z",
+    "runId": "local-fallback-2026-08-08T14-39-05-501Z",
     "provider": "local-fallback",
     "label": "e2-final",
     "datasetName": "holdout",
@@ -12,8 +12,8 @@
     ],
     "modelName": "local-rules",
     "promptSourceSha256": "8787e4f64977e22b587719d8c563467ab7b22eded9217c4be65b4827395279b5",
-    "startedAt": "2026-08-08T14:11:51.792Z",
-    "completedAt": "2026-08-08T14:11:51.953Z",
+    "startedAt": "2026-08-08T14:39:05.164Z",
+    "completedAt": "2026-08-08T14:39:05.501Z",
     "endpoint": null,
     "tokenAndCostObservation": "Token usage or cost is incomplete; no estimate is substituted for observed data.",
     "evaluationNotes": []
@@ -23,7 +23,7 @@
       "caseId": "e2-holdout-01",
       "group": "course",
       "status": "ok",
-      "latencyMs": 6,
+      "latencyMs": 8,
       "failures": [
         {
           "category": "material_missing",
@@ -35,6 +35,14 @@
           ]
         },
         {
+          "category": "material_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配材料",
+          "tags": [
+            "WRONG_MATERIAL"
+          ]
+        },
+        {
           "category": "time_incorrect",
           "severity": "major",
           "reason": "时间点不正确：8月17日中午12点",
@@ -42,6 +50,14 @@
           "actual": "2026-08-17T12:00",
           "tags": [
             "WRONG_TIME_VALUE"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
           ]
         }
       ],
@@ -138,6 +154,22 @@
           "tags": [
             "OVER_TASK"
           ]
+        },
+        {
+          "category": "time_spurious",
+          "severity": "minor",
+          "reason": "存在 1 个未匹配时间点",
+          "tags": [
+            "WRONG_TIMEPOINT_TYPE"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
         }
       ],
       "execution": null,
@@ -148,7 +180,7 @@
       "caseId": "e2-holdout-05",
       "group": "competition",
       "status": "ok",
-      "latencyMs": 1,
+      "latencyMs": 2,
       "failures": [
         {
           "category": "task_missing",
@@ -185,6 +217,14 @@
           "tags": [
             "WRONG_TIME_VALUE"
           ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
         }
       ],
       "execution": null,
@@ -195,7 +235,7 @@
       "caseId": "e2-holdout-06",
       "group": "competition",
       "status": "ok",
-      "latencyMs": 0,
+      "latencyMs": 1,
       "failures": [
         {
           "category": "milestone_missing",
@@ -221,6 +261,14 @@
           "expectedKey": "plan",
           "tags": [
             "MISSING_MATERIAL"
+          ]
+        },
+        {
+          "category": "material_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配材料",
+          "tags": [
+            "WRONG_MATERIAL"
           ]
         },
         {
@@ -251,6 +299,14 @@
           "tags": [
             "MISSING_EVENT"
           ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
         }
       ],
       "execution": null,
@@ -261,7 +317,7 @@
       "caseId": "e2-holdout-07",
       "group": "competition",
       "status": "ok",
-      "latencyMs": 1,
+      "latencyMs": 0,
       "failures": [
         {
           "category": "project_decision",
@@ -370,6 +426,14 @@
           "reason": "缺少 5 项可回看证据",
           "tags": [
             "MISSING_EVIDENCE"
+          ]
+        },
+        {
+          "category": "evidence_invalid",
+          "severity": "major",
+          "reason": "存在 1 项不受原文支持的证据",
+          "tags": [
+            "EVIDENCE_NOT_SUPPORTED"
           ]
         }
       ],
@@ -483,6 +547,14 @@
           "tags": [
             "WRONG_TIME_VALUE"
           ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
         }
       ],
       "execution": null,
@@ -531,6 +603,14 @@
           "tags": [
             "WRONG_TIME_VALUE"
           ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
         }
       ],
       "execution": null,
@@ -577,6 +657,15 @@
           "tags": [
             "WRONG_TIME_VALUE"
           ]
+        },
+        {
+          "category": "ambiguity_missing",
+          "severity": "major",
+          "reason": "应标记的歧义未标记",
+          "expectedKey": "ambiguity-2",
+          "tags": [
+            "MISSING_AMBIGUITY"
+          ]
         }
       ],
       "execution": null,
@@ -587,7 +676,7 @@
       "caseId": "e2-holdout-13",
       "group": "scholarship",
       "status": "ok",
-      "latencyMs": 0,
+      "latencyMs": 1,
       "failures": [
         {
           "category": "milestone_missing",
@@ -640,6 +729,14 @@
           "reason": "缺少 1 项可回看证据",
           "tags": [
             "MISSING_EVIDENCE"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
           ]
         }
       ],
@@ -698,7 +795,7 @@
       "caseId": "e2-holdout-15",
       "group": "scholarship",
       "status": "ok",
-      "latencyMs": 0,
+      "latencyMs": 1,
       "failures": [
         {
           "category": "task_spurious",
@@ -706,6 +803,22 @@
           "reason": "存在 1 条未匹配任务",
           "tags": [
             "OVER_TASK"
+          ]
+        },
+        {
+          "category": "time_spurious",
+          "severity": "minor",
+          "reason": "存在 1 个未匹配时间点",
+          "tags": [
+            "WRONG_TIMEPOINT_TYPE"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
           ]
         }
       ],
@@ -717,7 +830,7 @@
       "caseId": "e2-holdout-16",
       "group": "meeting",
       "status": "ok",
-      "latencyMs": 0,
+      "latencyMs": 1,
       "failures": [
         {
           "category": "task_missing",
@@ -772,6 +885,14 @@
           "tags": [
             "MISSING_EVENT"
           ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
         }
       ],
       "execution": null,
@@ -782,7 +903,7 @@
       "caseId": "e2-holdout-17",
       "group": "meeting",
       "status": "ok",
-      "latencyMs": 1,
+      "latencyMs": 0,
       "failures": [
         {
           "category": "task_spurious",
@@ -809,6 +930,14 @@
           "expectedKey": "meeting",
           "tags": [
             "MISSING_EVENT"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
           ]
         },
         {
@@ -889,7 +1018,7 @@
       "caseId": "e2-holdout-20",
       "group": "event",
       "status": "ok",
-      "latencyMs": 0,
+      "latencyMs": 1,
       "failures": [
         {
           "category": "task_missing",
@@ -907,6 +1036,22 @@
           "expectedKey": "card",
           "tags": [
             "MISSING_MATERIAL"
+          ]
+        },
+        {
+          "category": "material_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配材料",
+          "tags": [
+            "WRONG_MATERIAL"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
           ]
         }
       ],
@@ -1038,6 +1183,14 @@
           "tags": [
             "MISSING_EVIDENCE"
           ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 2 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
         }
       ],
       "execution": null,
@@ -1103,6 +1256,23 @@
           "tags": [
             "WRONG_TIME_VALUE"
           ]
+        },
+        {
+          "category": "ambiguity_missing",
+          "severity": "major",
+          "reason": "应标记的歧义未标记",
+          "expectedKey": "ambiguity-2",
+          "tags": [
+            "MISSING_AMBIGUITY"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 2 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
         }
       ],
       "execution": null,
@@ -1113,7 +1283,7 @@
       "caseId": "e2-holdout-24",
       "group": "complex_notice",
       "status": "ok",
-      "latencyMs": 0,
+      "latencyMs": 1,
       "failures": [
         {
           "category": "project_decision",
@@ -1186,6 +1356,14 @@
           "actual": "2026-08-21T18:00",
           "tags": [
             "WRONG_TIME_VALUE"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
           ]
         }
       ],
@@ -1353,6 +1531,14 @@
           "tags": [
             "MISSING_EVENT"
           ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 2 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
         }
       ],
       "execution": null,
@@ -1392,6 +1578,14 @@
           "tags": [
             "WRONG_TIME_VALUE"
           ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
         }
       ],
       "execution": null,
@@ -1402,7 +1596,7 @@
       "caseId": "e2-holdout-27",
       "group": "multi_deadline",
       "status": "ok",
-      "latencyMs": 1,
+      "latencyMs": 0,
       "failures": [
         {
           "category": "project_decision",
@@ -1512,6 +1706,14 @@
           "tags": [
             "WRONG_TIME_VALUE"
           ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 2 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
         }
       ],
       "execution": null,
@@ -1522,7 +1724,7 @@
       "caseId": "e2-holdout-28",
       "group": "multi_deadline",
       "status": "ok",
-      "latencyMs": 0,
+      "latencyMs": 1,
       "failures": [
         {
           "category": "project_decision",
@@ -1586,6 +1788,14 @@
           "expectedKey": "ambiguity-1",
           "tags": [
             "MISSING_AMBIGUITY"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
           ]
         }
       ],
@@ -1653,6 +1863,14 @@
           ]
         },
         {
+          "category": "time_spurious",
+          "severity": "minor",
+          "reason": "存在 1 个未匹配时间点",
+          "tags": [
+            "WRONG_TIMEPOINT_TYPE"
+          ]
+        },
+        {
           "category": "evidence_missing",
           "severity": "major",
           "reason": "缺少 1 项可回看证据",
@@ -1668,6 +1886,14 @@
           "tags": [
             "MISSING_AMBIGUITY"
           ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
         }
       ],
       "execution": null,
@@ -1678,7 +1904,7 @@
       "caseId": "e2-holdout-30",
       "group": "material",
       "status": "ok",
-      "latencyMs": 0,
+      "latencyMs": 1,
       "failures": [
         {
           "category": "project_decision",
@@ -1716,11 +1942,27 @@
           ]
         },
         {
+          "category": "time_spurious",
+          "severity": "minor",
+          "reason": "存在 1 个未匹配时间点",
+          "tags": [
+            "WRONG_TIMEPOINT_TYPE"
+          ]
+        },
+        {
           "category": "evidence_missing",
           "severity": "major",
           "reason": "缺少 1 项可回看证据",
           "tags": [
             "MISSING_EVIDENCE"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
           ]
         }
       ],
@@ -1732,7 +1974,7 @@
       "caseId": "e2-holdout-31",
       "group": "material",
       "status": "ok",
-      "latencyMs": 0,
+      "latencyMs": 1,
       "failures": [
         {
           "category": "material_missing",
@@ -1768,6 +2010,22 @@
           "reason": "缺少 4 项可回看证据",
           "tags": [
             "MISSING_EVIDENCE"
+          ]
+        },
+        {
+          "category": "evidence_invalid",
+          "severity": "major",
+          "reason": "存在 1 项不受原文支持的证据",
+          "tags": [
+            "EVIDENCE_NOT_SUPPORTED"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
           ]
         }
       ],
@@ -1818,7 +2076,7 @@
       "caseId": "e2-holdout-33",
       "group": "vague_time",
       "status": "ok",
-      "latencyMs": 1,
+      "latencyMs": 0,
       "failures": [
         {
           "category": "task_missing",
@@ -1855,6 +2113,15 @@
           "reason": "存在 1 个未匹配事件",
           "tags": [
             "WRONG_EVENT"
+          ]
+        },
+        {
+          "category": "ambiguity_missing",
+          "severity": "major",
+          "reason": "应标记的歧义未标记",
+          "expectedKey": "ambiguity-2",
+          "tags": [
+            "MISSING_AMBIGUITY"
           ]
         }
       ],
@@ -1913,6 +2180,14 @@
           "tags": [
             "OVER_TASK"
           ]
+        },
+        {
+          "category": "time_spurious",
+          "severity": "minor",
+          "reason": "存在 1 个未匹配时间点",
+          "tags": [
+            "WRONG_TIMEPOINT_TYPE"
+          ]
         }
       ],
       "execution": null,
@@ -1931,6 +2206,22 @@
           "reason": "存在 1 条未匹配任务",
           "tags": [
             "OVER_TASK"
+          ]
+        },
+        {
+          "category": "time_spurious",
+          "severity": "minor",
+          "reason": "存在 1 个未匹配时间点",
+          "tags": [
+            "WRONG_TIMEPOINT_TYPE"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
           ]
         }
       ],
@@ -2006,7 +2297,7 @@
       "caseId": "e2-holdout-38",
       "group": "ocr_noise",
       "status": "ok",
-      "latencyMs": 1,
+      "latencyMs": 0,
       "failures": [
         {
           "category": "task_missing",
@@ -2062,6 +2353,22 @@
           "reason": "缺少 3 项可回看证据",
           "tags": [
             "MISSING_EVIDENCE"
+          ]
+        },
+        {
+          "category": "evidence_invalid",
+          "severity": "major",
+          "reason": "存在 1 项不受原文支持的证据",
+          "tags": [
+            "EVIDENCE_NOT_SUPPORTED"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
           ]
         },
         {
@@ -2128,6 +2435,14 @@
           "reason": "缺少 3 项可回看证据",
           "tags": [
             "MISSING_EVIDENCE"
+          ]
+        },
+        {
+          "category": "evidence_invalid",
+          "severity": "major",
+          "reason": "存在 1 项不受原文支持的证据",
+          "tags": [
+            "EVIDENCE_NOT_SUPPORTED"
           ]
         },
         {

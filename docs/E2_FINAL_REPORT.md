@@ -4,7 +4,7 @@
 
 E2 在不修改 Workspace v8、Migration、Repository、DomainCommitPlan、Project Matching、Follow 和 UI 主流程的前提下，为 RecognitionResult 2.0 建立了可审计的质量工程链路：冻结 Golden/Holdout、模块化输出合同、纯结构质量校验、最多一次的条件修复、确定性复杂度路由、DeepSeek ModelGateway、有限传输重试、可观测执行元数据和统一质量门槛。
 
-工程实现与 E1 回归均通过；但 E2 质量验收为 **E2 BLOCKED**。原因是当前生产仍运行旧 `recognition-2.0.0`，本轮又明确禁止生产部署；本机没有 `DEEPSEEK_API_KEY`、有效 Wrangler 登录或 `CLOUDFLARE_API_TOKEN`，因此不能对优化后的 `recognition-2.1.0` 执行真实 DeepSeek Golden After 与 Holdout After。Local fallback、Mock 和旧生产 Prompt 均未被冒充为 After。
+工程实现与 E1 回归均通过；但 E2 质量验收为 **E2 BLOCKED**。原因是当前生产仍运行旧 `recognition-2.0.0`，本轮又明确禁止生产部署；Cloudflare preview 已部署优化代码，但 preview 环境尚未配置 `DEEPSEEK_API_KEY` Secret，因此不能对优化后的 `recognition-2.1.0` 执行真实 DeepSeek Golden After 与 Holdout After。Local fallback、Mock 和旧生产 Prompt 均未被冒充为 After。
 
 ## 2. Baseline
 
@@ -15,10 +15,12 @@ E2-A 冻结的 110 条 Golden / DeepSeek 生产基线：
 | Project Decision Accuracy | 84.55% |
 | Milestone Precision / Recall | 52.17% / 16.44% |
 | Task Precision / Recall | 81.90% / 74.80% |
-| Material Recall | 30.69% |
-| TimePoint Accuracy | 6.38% |
+| Material Precision / Recall | 96.88% / 30.69% |
+| TimePoint Precision / Recall | 100.00% / 6.38% |
+| TimePoint Type / Value / Overall | 6.38% / 4.96% / 6.38% |
 | Event Accuracy | 86.96% |
-| Evidence Coverage | 95.33% |
+| Evidence Coverage / Validity | 95.33% / 100.00% |
+| Ambiguity Precision / Recall | 0.00% / 0.00% |
 | Duplicate / Over-fragmentation | 0.00% / 0.00% |
 | Major Correction / Severe Error | 87.27% / 5.45% |
 | Invalid Output / Request Failure | 0.00% / 1.82% |
@@ -70,14 +72,14 @@ Milestone 仅用于具有真实阶段结构的项目，简单通知不强制创�
 
 ## 14. Before vs After Metrics
 
-| Dataset / Provider | Project | Task P/R | Material R | Time | Event | Evidence | Major | Severe | Transport |
+| Dataset / Provider | Project | Task P/R | Material P/R | Time P/R/Overall | Event | Evidence Coverage/Validity | Major | Severe | Transport |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| Golden Before / DeepSeek 2.0 | 84.55% | 81.90% / 74.80% | 30.69% | 6.38% | 86.96% | 95.33% | 87.27% | 5.45% | 1.82% |
+| Golden Before / DeepSeek 2.0 | 84.55% | 81.90% / 74.80% | 96.88% / 30.69% | 100.00% / 6.38% / 6.38% | 86.96% | 95.33% / 100.00% | 87.27% | 5.45% | 1.82% |
 | Golden After / DeepSeek 2.1 | **NOT RUN** | **NOT RUN** | **NOT RUN** | **NOT RUN** | **NOT RUN** | **NOT RUN** | **NOT RUN** | **NOT RUN** | **NOT RUN** |
-| Holdout Before / DeepSeek 2.0 | 80.00% | 68.57% / 45.28% | 32.08% | 3.33% | 66.67% | 83.61% | 90.00% | 10.00% | 5.00% |
+| Holdout Before / DeepSeek 2.0 | 80.00% | 68.57% / 45.28% | 94.44% / 32.08% | 100.00% / 3.33% / 3.33% | 66.67% | 83.61% / 100.00% | 90.00% | 10.00% | 5.00% |
 | Holdout After / DeepSeek 2.1 | **NOT RUN** | **NOT RUN** | **NOT RUN** | **NOT RUN** | **NOT RUN** | **NOT RUN** | **NOT RUN** | **NOT RUN** | **NOT RUN** |
-| Golden / local fallback | 79.09% | 69.40% / 73.23% | 58.42% | 25.81% | 52.00% | 87.94% | 94.55% | 18.18% | 0.00% |
-| Holdout / local fallback | 77.50% | 40.82% / 37.74% | 30.19% | 28.79% | 50.00% | 89.07% | 100.00% | 22.50% | 0.00% |
+| Golden / local fallback | 79.09% | 69.40% / 73.23% | 86.76% / 58.42% | 90.85% / 98.58% / 25.81% | 52.00% | 87.94% / 90.20% | 94.55% | 18.18% | 0.00% |
+| Holdout / local fallback | 77.50% | 40.82% / 37.74% | 84.21% / 30.19% | 90.00% / 90.00% / 28.79% | 50.00% | 89.07% / 93.33% | 100.00% | 22.50% | 0.00% |
 
 Gate 要求 Project ≥88%、Task P/R ≥85%/82%、Material ≥75%、Time ≥75%、Event ≥86.96%、Evidence ≥95.33%、Duplicate ≤3%、Over-fragmentation ≤5%、Major ≤35%、Severe ≤2%、Invalid/Transport 各 ≤1%。没有真实 After 就不能判定通过。
 
@@ -113,10 +115,10 @@ Golden Before mean/P50/P95 为 6.27/5.70/12.73 秒；Holdout Before 为 6.85/6.0
 - `npm ci`：PASS（首次因本地 Vite 占用 esbuild 失败，关闭验收服务器后同命令 PASS；0 vulnerabilities）。
 - `npm run lint`：PASS。
 - `npm run typecheck`：PASS。
-- `TZ=UTC npm test`：PASS，45 files / 177 Vitest tests；Golden/Holdout freeze、Server 8、Worker 19、Functions 5 全部 PASS。
+- `TZ=UTC npm test`：PASS，45 files / 178 Vitest tests；Golden/Holdout freeze、Server 8、Worker 19、Functions 5 全部 PASS。
 - `TZ=Asia/Shanghai npm test`：同上 PASS。
 - `npm run build`：PASS。
-- `npm run security:scan`：PASS，241 个源码/构建文件未发现 Secret。
+- `npm run security:scan`：PASS，245 个源码/构建文件未发现 Secret。
 - `npm audit --audit-level=high`：PASS，0 vulnerabilities。
 - `npm run cloudflare:check`：PASS，Worker 19 tests 与默认/preview 两次 dry-run 均通过。
 - 浏览器本地验收：多截止来源先保存 Source/Draft，显示 Evidence/Material/TimePoint/Event，确认后任务进入任务中心，刷新后恢复；页面无 console error。DeepSeek 未配置时诚实显示本地规则并保留来源。A–J 的真实优化模型浏览器矩阵未运行，原因与 After 相同；不能伪造 PASS。
@@ -128,9 +130,9 @@ Golden Before mean/P50/P95 为 6.27/5.70/12.73 秒；Holdout Before 为 6.85/6.0
 3. Repair 的真实触发率、成功率、token 与延迟未知。
 4. Two-pass 的收益未知，因此保持关闭。
 5. 本地 fallback 明显低于质量门槛，只是保底，不是 E2 After。
-6. 公网站点仍是旧 Prompt；本轮按禁令没有部署。
+6. 公网站点仍是旧 Prompt；本轮按禁令没有部署生产。非生产 preview 已发布精确 E2 代码，但其状态接口诚实返回 `configured: false`。
 
-最小解阻：在安全的非生产 Cloudflare 预览环境完成 Wrangler 登录或提供环境级 `CLOUDFLARE_API_TOKEN`，并通过 `wrangler secret put DEEPSEEK_API_KEY --env preview` 配置 Secret；不得把 Key 发到聊天、前端、文件或 Git。随后部署精确 E2 commit 到 preview，运行 Golden/Holdout After 与 A–J 浏览器验收；达到门槛后才可判定 E2 Complete。
+最小解阻：在本机项目终端运行 `npx wrangler secret put DEEPSEEK_API_KEY --env preview`，通过隐藏输入配置 preview Secret；不得把 Key 发到聊天、前端、文件或 Git。随后在 `https://student-affairs-manager-preview.nightsdell.workers.dev` 运行 Golden/Holdout After 与 A–J 浏览器验收；达到门槛后才可判定 E2 Complete。
 
 ## 22. E2 Definition of Done
 

@@ -1,6 +1,6 @@
 {
   "run": {
-    "runId": "deepseek-production-2026-08-08T14-21-49-502Z",
+    "runId": "deepseek-production-2026-08-08T14-39-44-986Z",
     "provider": "deepseek-production",
     "label": "before",
     "datasetName": "holdout",
@@ -12,8 +12,8 @@
     ],
     "modelName": "deepseek-v4-flash",
     "promptSourceSha256": "8787e4f64977e22b587719d8c563467ab7b22eded9217c4be65b4827395279b5",
-    "startedAt": "2026-08-08T14:12:01.768Z",
-    "completedAt": "2026-08-08T14:21:49.502Z",
+    "startedAt": "2026-08-08T14:39:43.923Z",
+    "completedAt": "2026-08-08T14:39:44.986Z",
     "endpoint": "https://student-affairs.site/api/deepseek",
     "tokenAndCostObservation": "Token usage or cost is incomplete; no estimate is substituted for observed data.",
     "evaluationNotes": []
@@ -41,6 +41,14 @@
           "expectedKey": "deadline",
           "tags": [
             "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
           ]
         }
       ],
@@ -90,6 +98,14 @@
           ]
         },
         {
+          "category": "material_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配材料",
+          "tags": [
+            "WRONG_MATERIAL"
+          ]
+        },
+        {
           "category": "time_missing",
           "severity": "major",
           "reason": "时间点不正确：下次课前",
@@ -105,6 +121,14 @@
           "expectedKey": "ambiguity-1",
           "tags": [
             "MISSING_AMBIGUITY"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
           ]
         }
       ],
@@ -263,6 +287,14 @@
           "tags": [
             "MISSING_AMBIGUITY"
           ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
         }
       ],
       "execution": null,
@@ -318,6 +350,14 @@
           "tags": [
             "MISSING_AMBIGUITY"
           ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 2 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
         }
       ],
       "execution": null,
@@ -372,6 +412,14 @@
           "expectedKey": "deadline",
           "tags": [
             "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
           ]
         }
       ],
@@ -456,6 +504,14 @@
           "tags": [
             "MISSING_AMBIGUITY"
           ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
         }
       ],
       "execution": null,
@@ -509,6 +565,14 @@
           "reason": "缺少 1 项可回看证据",
           "tags": [
             "MISSING_EVIDENCE"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
           ]
         }
       ],
@@ -591,6 +655,14 @@
           "tags": [
             "MISSING_AMBIGUITY"
           ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
         }
       ],
       "execution": null,
@@ -645,6 +717,14 @@
           "expectedKey": "deadline",
           "tags": [
             "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
           ]
         }
       ],
@@ -709,6 +789,14 @@
           "expectedKey": "ambiguity-2",
           "tags": [
             "MISSING_AMBIGUITY"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 2 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
           ]
         }
       ],
@@ -810,6 +898,14 @@
           "tags": [
             "MISSING_AMBIGUITY"
           ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
         }
       ],
       "execution": null,
@@ -828,6 +924,14 @@
           "reason": "存在 1 条未匹配任务",
           "tags": [
             "OVER_TASK"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
           ]
         }
       ],
@@ -875,6 +979,14 @@
           "tags": [
             "MISSING_TIMEPOINT"
           ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
         }
       ],
       "execution": null,
@@ -912,6 +1024,14 @@
           "expectedKey": "ambiguity-1",
           "tags": [
             "MISSING_AMBIGUITY"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 2 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
           ]
         }
       ],
@@ -1007,6 +1127,14 @@
           "expectedKey": "ambiguity-1",
           "tags": [
             "MISSING_AMBIGUITY"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
           ]
         }
       ],
@@ -1121,6 +1249,14 @@
           "expectedKey": "ambiguity-2",
           "tags": [
             "MISSING_AMBIGUITY"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
           ]
         }
       ],
@@ -1252,6 +1388,14 @@
           "expectedKey": "ambiguity-2",
           "tags": [
             "MISSING_AMBIGUITY"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 2 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
           ]
         }
       ],
@@ -1409,6 +1553,14 @@
           "tags": [
             "MISSING_TIMEPOINT"
           ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
         }
       ],
       "execution": null,
@@ -1473,6 +1625,14 @@
           "tags": [
             "MISSING_AMBIGUITY"
           ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
         }
       ],
       "execution": null,
@@ -1526,6 +1686,14 @@
           "expectedKey": "ambiguity-1",
           "tags": [
             "MISSING_AMBIGUITY"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 2 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
           ]
         }
       ],
@@ -1590,6 +1758,14 @@
           "tags": [
             "MISSING_EVIDENCE"
           ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
         }
       ],
       "execution": null,
@@ -1627,6 +1803,14 @@
           "expectedKey": "deadline",
           "tags": [
             "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
           ]
         }
       ],
@@ -1674,6 +1858,14 @@
           "expectedKey": "ambiguity-1",
           "tags": [
             "MISSING_AMBIGUITY"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
           ]
         }
       ],
@@ -1739,6 +1931,14 @@
           "tags": [
             "MISSING_AMBIGUITY"
           ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 2 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
         }
       ],
       "execution": null,
@@ -1776,6 +1976,14 @@
           "expectedKey": "ambiguity-1",
           "tags": [
             "MISSING_AMBIGUITY"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 2 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
           ]
         }
       ],
@@ -1843,6 +2051,14 @@
           "tags": [
             "MISSING_AMBIGUITY"
           ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
         }
       ],
       "execution": null,
@@ -1881,6 +2097,14 @@
           "tags": [
             "MISSING_AMBIGUITY"
           ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 3 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
         }
       ],
       "execution": null,
@@ -1910,6 +2134,14 @@
           "tags": [
             "MISSING_TIMEPOINT"
           ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
         }
       ],
       "execution": null,
@@ -1929,6 +2161,14 @@
           "expectedKey": "deadline",
           "tags": [
             "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
           ]
         }
       ],

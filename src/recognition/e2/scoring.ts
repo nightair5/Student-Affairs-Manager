@@ -118,6 +118,25 @@ function scoreValidCase(
   fixture.expected.materials.forEach((item, index) => {
     if (materialMatch.expectedMatches[index] === null) addFailure(failures, 'material_missing', 'major', `缺少材料：${item.nameAliases.join('/')}`, item.key)
   })
+  const spuriousMaterialCount = Math.max(0, result.materials.length - materialMatch.count)
+  if (spuriousMaterialCount > 0) addFailure(failures, 'material_spurious', 'minor', `存在 ${spuriousMaterialCount} 项未匹配材料`)
+
+  const timeDetectionMatch = matchOneToOne(fixture.expected.timePoints, result.timePoints, (expected, actual) => (
+    expected.rawIncludes.some((fragment) => normalize(actual.rawText).includes(normalize(fragment)))
+  ))
+  let timePointTypeCorrect = 0
+  let timePointValueCorrect = 0
+  fixture.expected.timePoints.forEach((expected, index) => {
+    const actualIndex = timeDetectionMatch.expectedMatches[index]
+    if (actualIndex === null) return
+    const actual = result.timePoints[actualIndex]
+    if (actual.type === expected.type) timePointTypeCorrect += 1
+    const normalizedCorrect = expected.normalizedLocal === null
+      ? actual.normalizedValue === null
+      : sameLocalTime(actual.normalizedValue, expected.normalizedLocal)
+    const uncertaintyCorrect = actual.precision === expected.precision && actual.needsConfirmation === expected.needsConfirmation
+    if (normalizedCorrect && uncertaintyCorrect) timePointValueCorrect += 1
+  })
 
   const timeMatch = matchOneToOne(fixture.expected.timePoints, result.timePoints, (expected, actual) => {
     if (actual.type !== expected.type) return false
@@ -132,6 +151,8 @@ function scoreValidCase(
     const sameRaw = result.timePoints.find((candidate) => item.rawIncludes.some((fragment) => normalize(candidate.rawText).includes(normalize(fragment))))
     addFailure(failures, sameRaw ? 'time_incorrect' : 'time_missing', 'major', `时间点不正确：${item.rawIncludes.join('/')}`, item.key, sameRaw?.normalizedValue ?? undefined)
   })
+  const spuriousTimeCount = Math.max(0, result.timePoints.length - timeDetectionMatch.count)
+  if (spuriousTimeCount > 0) addFailure(failures, 'time_spurious', 'minor', `存在 ${spuriousTimeCount} 个未匹配时间点`)
 
   const eventMatch = matchOneToOne(fixture.expected.events, result.events, (expected, actual) => includesAlias(actual.title, expected.titleAliases))
   fixture.expected.events.forEach((item, index) => {
@@ -145,14 +166,21 @@ function scoreValidCase(
       && fixture.rawText.includes(quote)
   })).length
   if (evidenceMatch < fixture.expected.evidence.length) addFailure(failures, 'evidence_missing', 'major', `缺少 ${fixture.expected.evidence.length - evidenceMatch} 项可回看证据`)
+  const evidenceValid = result.evidence.filter((actual) => {
+    const quote = actual.quotedText ?? actual.quote
+    return typeof quote === 'string' && quote.length > 0 && fixture.rawText.includes(quote)
+  }).length
+  if (evidenceValid < result.evidence.length) addFailure(failures, 'evidence_invalid', 'major', `存在 ${result.evidence.length - evidenceValid} 项不受原文支持的证据`)
 
-  fixture.expected.ambiguities.forEach((expected, index) => {
-    const matched = result.ambiguities.some((actual) => (
+  const ambiguityMatch = matchOneToOne(fixture.expected.ambiguities, result.ambiguities, (expected, actual) => (
       expected.fieldIncludes.some((value) => normalize(actual.field).includes(normalize(value)))
       || expected.messageIncludes.some((value) => normalize(actual.message).includes(normalize(value)))
-    ))
-    if (!matched) addFailure(failures, 'ambiguity_missing', 'major', '应标记的歧义未标记', `ambiguity-${index + 1}`)
+  ))
+  fixture.expected.ambiguities.forEach((_expected, index) => {
+    if (ambiguityMatch.expectedMatches[index] === null) addFailure(failures, 'ambiguity_missing', 'major', '应标记的歧义未标记', `ambiguity-${index + 1}`)
   })
+  const spuriousAmbiguityCount = Math.max(0, result.ambiguities.length - ambiguityMatch.count)
+  if (spuriousAmbiguityCount > 0) addFailure(failures, 'ambiguity_spurious', 'minor', `存在 ${spuriousAmbiguityCount} 项未匹配歧义`)
 
   const semanticText = {
     task_text: '',
@@ -193,6 +221,9 @@ function scoreValidCase(
     costUsd,
     result,
     failures,
+    repair: null,
+    execution: null,
+    route: null,
     scores: {
       projectDecision,
       milestoneTruePositive: milestoneMatch.count,
@@ -202,7 +233,11 @@ function scoreValidCase(
       taskPredicted: tasks.length,
       taskExpected: fixture.expected.tasks.length,
       materialMatched: materialMatch.count,
+      materialPredicted: result.materials.length,
       materialExpected: fixture.expected.materials.length,
+      timePointDetected: timeDetectionMatch.count,
+      timePointTypeCorrect,
+      timePointValueCorrect,
       timePointMatched: timeMatch.count,
       timePointPredicted: result.timePoints.length,
       timePointExpected: fixture.expected.timePoints.length,
@@ -210,7 +245,12 @@ function scoreValidCase(
       eventPredicted: result.events.length,
       eventExpected: fixture.expected.events.length,
       evidenceMatched: evidenceMatch,
+      evidenceValid,
+      evidencePredicted: result.evidence.length,
       evidenceExpected: fixture.expected.evidence.length,
+      ambiguityMatched: ambiguityMatch.count,
+      ambiguityPredicted: result.ambiguities.length,
+      ambiguityExpected: fixture.expected.ambiguities.length,
       duplicateCount,
       overFragmented,
       majorCorrection,
@@ -244,6 +284,9 @@ export function scoreRecognitionCase(
     costUsd: options.costUsd ?? null,
     result: null,
     failures: [withErrorTags({ category, severity: 'severe', reason: options.failureReason ?? category })],
+    repair: null,
+    execution: null,
+    route: null,
     scores: {
       projectDecision: 0,
       milestoneTruePositive: 0,
@@ -253,7 +296,11 @@ export function scoreRecognitionCase(
       taskPredicted: 0,
       taskExpected: fixture.expected.tasks.length,
       materialMatched: 0,
+      materialPredicted: 0,
       materialExpected: fixture.expected.materials.length,
+      timePointDetected: 0,
+      timePointTypeCorrect: 0,
+      timePointValueCorrect: 0,
       timePointMatched: 0,
       timePointPredicted: 0,
       timePointExpected: fixture.expected.timePoints.length,
@@ -261,7 +308,12 @@ export function scoreRecognitionCase(
       eventPredicted: 0,
       eventExpected: fixture.expected.events.length,
       evidenceMatched: 0,
+      evidenceValid: 0,
+      evidencePredicted: 0,
       evidenceExpected: fixture.expected.evidence.length,
+      ambiguityMatched: 0,
+      ambiguityPredicted: 0,
+      ambiguityExpected: fixture.expected.ambiguities.length,
       duplicateCount: 0,
       overFragmented: false,
       majorCorrection: true,
@@ -288,6 +340,12 @@ export function aggregateRecognitionMetrics(provider: EvaluationProvider, result
   const tokenResults = results.filter((result) => result.tokenUsage !== null)
   const costResults = results.filter((result) => result.costUsd !== null)
   const latencies = results.map((result) => result.latencyMs)
+  const repairAttempts = results.filter((result) => result.repair?.attempted)
+  const repairLatencies = repairAttempts.flatMap((result) => result.execution?.operations
+    .filter((operation) => operation.operation === 'repair')
+    .map((operation) => operation.durationMs) ?? [])
+  const routeCounts = { simple: 0, medium: 0, complex: 0, unknown: 0 }
+  results.forEach((result) => { routeCounts[result.route?.level ?? 'unknown'] += 1 })
   return {
     provider,
     sampleCount: results.length,
@@ -297,16 +355,32 @@ export function aggregateRecognitionMetrics(provider: EvaluationProvider, result
     milestoneRecall: ratio(sum((result) => result.scores.milestoneTruePositive), sum((result) => result.scores.milestoneExpected)),
     taskPrecision: ratio(sum((result) => result.scores.taskTruePositive), sum((result) => result.scores.taskPredicted)),
     taskRecall: ratio(sum((result) => result.scores.taskTruePositive), sum((result) => result.scores.taskExpected)),
+    materialPrecision: ratio(sum((result) => result.scores.materialMatched), sum((result) => result.scores.materialPredicted)),
     materialRecall: ratio(sum((result) => result.scores.materialMatched), sum((result) => result.scores.materialExpected)),
+    timePointPrecision: ratio(sum((result) => result.scores.timePointDetected), sum((result) => result.scores.timePointPredicted)),
+    timePointRecall: ratio(sum((result) => result.scores.timePointDetected), sum((result) => result.scores.timePointExpected)),
+    timePointTypeAccuracy: ratio(sum((result) => result.scores.timePointTypeCorrect), sum((result) => Math.max(result.scores.timePointExpected, result.scores.timePointPredicted))),
+    timePointValueAccuracy: ratio(sum((result) => result.scores.timePointValueCorrect), sum((result) => Math.max(result.scores.timePointExpected, result.scores.timePointPredicted))),
     timePointAccuracy: ratio(sum((result) => result.scores.timePointMatched), sum((result) => Math.max(result.scores.timePointExpected, result.scores.timePointPredicted))),
     eventAccuracy: ratio(sum((result) => result.scores.eventMatched), sum((result) => Math.max(result.scores.eventExpected, result.scores.eventPredicted))),
     evidenceCoverage: ratio(sum((result) => result.scores.evidenceMatched), sum((result) => result.scores.evidenceExpected)),
+    evidenceValidity: ratio(sum((result) => result.scores.evidenceValid), sum((result) => result.scores.evidencePredicted)),
+    ambiguityPrecision: ratio(sum((result) => result.scores.ambiguityMatched), sum((result) => result.scores.ambiguityPredicted)),
+    ambiguityRecall: ratio(sum((result) => result.scores.ambiguityMatched), sum((result) => result.scores.ambiguityExpected)),
     duplicateRate: ratio(sum((result) => result.scores.duplicateCount), sum((result) => result.scores.taskPredicted), 0),
     overFragmentationRate: ratio(sum((result) => Number(result.scores.overFragmented)), results.length),
     majorCorrectionRate: ratio(sum((result) => Number(result.scores.majorCorrection)), results.length),
     severeErrorRate: ratio(sum((result) => Number(result.scores.severeError)), results.length),
     invalidOutputRate: ratio(results.filter((result) => result.status === 'invalid_output').length, results.length),
     requestFailureRate: ratio(results.filter((result) => result.status === 'request_failure').length, results.length),
+    repairTriggerRate: ratio(repairAttempts.length, completed.length, 0),
+    repairSuccessRate: repairAttempts.length ? ratio(repairAttempts.filter((result) => result.repair?.applied).length, repairAttempts.length, 0) : null,
+    repairLatencyMs: repairLatencies.length ? {
+      mean: ratio(repairLatencies.reduce((total, value) => total + value, 0), repairLatencies.length, 0),
+      p95: percentile(repairLatencies, 0.95),
+    } : null,
+    retryRate: ratio(results.filter((result) => (result.execution?.attempts ?? 1) > (result.execution?.operations.length ?? 1)).length, results.length, 0),
+    complexityDistribution: routeCounts,
     latencyMs: {
       mean: ratio(latencies.reduce((total, value) => total + value, 0), latencies.length, 0),
       p50: percentile(latencies, 0.5),
