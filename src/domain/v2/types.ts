@@ -79,6 +79,9 @@ export interface ExtractionDraft extends ReviewableEntity {
   recognitionRunId: string
   status: 'processing' | 'needs_review' | 'partially_confirmed' | 'confirmed' | 'rejected' | 'failed' | 'archived'
   result: RecognitionResult | null
+  commitOperationIds: string[]
+  acceptedEntityTempIds: string[]
+  rejectedEntityTempIds: string[]
   createdAt: string
   updatedAt: string
 }
@@ -161,6 +164,8 @@ export interface TimePoint extends ReviewableEntity {
   taskId: string | null
   materialId: string | null
   eventId: string | null
+  relatedTaskIds: string[]
+  relatedMaterialIds: string[]
   type: TimePointType
   rawText: string
   normalizedValue: string | null
