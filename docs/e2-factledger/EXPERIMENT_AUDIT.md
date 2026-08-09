@@ -1,7 +1,9 @@
 # Experiment Audit Report
 
-**Date**: 2026-08-09  
-**Auditor**: GPT-5.6-Sol ultra（fresh same-family agent，read-only，provisional）  
+**Date**: 2026-08-09
+
+**Auditor**: GPT-5.6-Sol ultra（fresh same-family agent，read-only，provisional）
+
 **Project**: Student Affairs Manager E2.5 FactLedger Diagnostic
 
 ## Overall Verdict: WARN
