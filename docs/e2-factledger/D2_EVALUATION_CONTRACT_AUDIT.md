@@ -62,9 +62,11 @@ Ambiguity 只要 field 或 message 命中任一 alias 即匹配（约第 175–1
 
 后续以稳定 issue code + target fact + evidence span 匹配；自由文案只用于解释，不作为身份。
 
-### 6. Repair Harm 当前仍不可充分观测
+### 6. Repair Harm 可观测，但结论受 strict scorer 限制
 
-聚合器只有在 `beforeScores` 存在时才计算 Repair Harm（约第 343–366 行）。本次已提交 failure JSON 中多条 Repair 有 `beforeResult`，但现有缓存记录未提供可直接汇总的 `beforeScores`；因此 D1 不能声称 Repair Harm 为 0，只能说选中 30 条中没有观察到事实被删除的证据。
+聚合器只有在 `beforeScores` 存在时才计算 Repair Harm（约第 343–366 行）。复核三份 `recognition-2.4.1` 暴露缓存后，258 条运行中共有 29 次 Repair attempt，29 次均有 `beforeScores`，24 次 applied；按当前 strict scorer，Repair Success 为 6.90%，Repair Harm 为 0%。
+
+这支持“当前缓存内没有观察到 strict-score harm”，但不代表 human-impact harm 已被完全排除，因为 before/after 仍使用 D2 已指出的严格别名和结构匹配。后续若运行 B，应同时保存 FactLedger、Planner before/after 与 semantic/human-impact 评分。
 
 ## 语义等价评分规则
 

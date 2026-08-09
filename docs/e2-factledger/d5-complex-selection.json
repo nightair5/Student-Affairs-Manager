@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "e2.5-d5-selection-1.0.0",
+  "blindEligibility": false,
+  "selectionPolicy": "All 10 Golden complex_notice cases, all 4 Exposed Holdout complex_notice cases, and 10 exposed Development cases covering multi-stage, event-task, dependent time, changed deadline, material boundary, OCR, same-day sequence, and missing-fact diagnostics.",
+  "cases": [
+    {"caseId":"e2-gen-03-3","sourceSet":"development","reason":"multi-stage competition with time roles and eligibility"},
+    {"caseId":"e2-gen-07-1","sourceSet":"development","reason":"event plus explicit check-in task"},
+    {"caseId":"e2-gen-10-3","sourceSet":"development","reason":"conditional reply and dependent unknown time"},
+    {"caseId":"e2-gen-11-3","sourceSet":"development","reason":"changed deadline and remaining materials"},
+    {"caseId":"e2-gen-12-1","sourceSet":"development","reason":"material versus task boundary"},
+    {"caseId":"e2-gen-15-3","sourceSet":"development","reason":"OCR noise with uncertain time"},
+    {"caseId":"e2-gen-20-2","sourceSet":"development","reason":"event-dependent relative deadline"},
+    {"caseId":"e2-gen-21-3","sourceSet":"development","reason":"three-step same-day sequence"},
+    {"caseId":"e2-gen-22-1","sourceSet":"development","reason":"multi-stage complex notice with repair"},
+    {"caseId":"e2-gen-22-3","sourceSet":"development","reason":"complex variant with time and ambiguity repair"},
+    {"caseId":"e2-complex_notice-01","sourceSet":"golden","reason":"frozen complex_notice"},
+    {"caseId":"e2-complex_notice-02","sourceSet":"golden","reason":"frozen complex_notice"},
+    {"caseId":"e2-complex_notice-03","sourceSet":"golden","reason":"frozen complex_notice"},
+    {"caseId":"e2-complex_notice-04","sourceSet":"golden","reason":"frozen complex_notice"},
+    {"caseId":"e2-complex_notice-05","sourceSet":"golden","reason":"frozen complex_notice"},
+    {"caseId":"e2-complex_notice-06","sourceSet":"golden","reason":"frozen complex_notice"},
+    {"caseId":"e2-complex_notice-07","sourceSet":"golden","reason":"frozen complex_notice"},
+    {"caseId":"e2-complex_notice-08","sourceSet":"golden","reason":"frozen complex_notice"},
+    {"caseId":"e2-complex_notice-09","sourceSet":"golden","reason":"frozen complex_notice"},
+    {"caseId":"e2-complex_notice-10","sourceSet":"golden","reason":"frozen complex_notice"},
+    {"caseId":"e2-holdout-22","sourceSet":"exposed_holdout","reason":"all exposed complex_notice"},
+    {"caseId":"e2-holdout-23","sourceSet":"exposed_holdout","reason":"all exposed complex_notice"},
+    {"caseId":"e2-holdout-24","sourceSet":"exposed_holdout","reason":"all exposed complex_notice"},
+    {"caseId":"e2-holdout-25","sourceSet":"exposed_holdout","reason":"all exposed complex_notice"}
+  ]
+}

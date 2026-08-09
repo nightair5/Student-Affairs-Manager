@@ -1,0 +1,43 @@
+{
+  "schemaVersion": "e2.5-d5-results-1.0.0",
+  "status": "INCONCLUSIVE",
+  "sampleCount": 24,
+  "modelRequired": "deepseek-v4-flash",
+  "pathA": {
+    "status": "COMPLETE_FROM_EXPOSED_CACHE",
+    "promptVersion": "recognition-2.4.1",
+    "factRecall": "NOT_OBSERVABLE_NO_EXPLICIT_FACT_LAYER",
+    "taskPrecision": 0.813953488372093,
+    "taskRecall": 0.6140350877192983,
+    "materialPrecision": 0.9803921568627451,
+    "materialRecall": 0.9803921568627451,
+    "timePointTypeAccuracy": 0.7894736842105263,
+    "timePointValueAccuracy": 0.8289473684210527,
+    "milestonePrecision": 0.5909090909090909,
+    "milestoneRecall": 0.5,
+    "eventAccuracy": 1,
+    "ambiguityPrecision": 0.7083333333333334,
+    "ambiguityRecall": 0.7391304347826086,
+    "evidenceCoverage": 0.9928057553956835,
+    "majorCorrectionRate": 0.8333333333333334,
+    "severeErrorRate": 0,
+    "latencyMs": {"mean":11299.416666666666,"p50":11313,"p95":17055},
+    "tokenUsage": {"input":91814,"output":54481,"meanInputPerCase":3825.5833333333335,"meanOutputPerCase":2270.0416666666665},
+    "costUsd": "NOT_OBSERVABLE"
+  },
+  "pathB": {
+    "status": "NOT_RUN",
+    "code": "DEEPSEEK_NOT_CONFIGURED",
+    "completedCases": 0,
+    "metrics": null,
+    "latencyMs": null,
+    "tokenUsage": null
+  },
+  "thresholdDecision": {
+    "taskRecallGain8To10pp": "NOT_COMPUTABLE",
+    "majorCorrectionReduction20pp": "NOT_COMPUTABLE",
+    "taskPrecisionAtLeast82Percent": "NOT_COMPUTABLE",
+    "evidenceCoverageAtLeast95Percent": "NOT_COMPUTABLE",
+    "severeErrorNotIncreased": "NOT_COMPUTABLE"
+  }
+}
