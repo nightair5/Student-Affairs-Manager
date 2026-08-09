@@ -1,0 +1,43 @@
+{
+  "audit_skill": "experiment-audit",
+  "verdict": "WARN",
+  "reason_code": "scope_gt_and_scorer_limitations",
+  "summary": "Numbers and NOT_RUN boundaries are reproducible; remaining warnings are exposed synthetic scope, single-rater labels, no B run, and incomplete semantic scoring.",
+  "audited_input_hashes": {
+    "docs/e2-factledger/d1-attributions.json": "sha256:b0c0201eb9b6cdbe1b2677650409f93883b35071be8b8ed16be2c8cc8b9f3675",
+    "docs/e2-factledger/d5-ab-results.json": "sha256:835e812c520bca03177c0a2b3f5b58ab60455dcdbdd4f6c3248198ee7e0f7347",
+    "docs/e2-factledger/d6-metrics.json": "sha256:85a411d29abf0b26a352e2620a1736fbd6490c578a2f04c4e3d4c87fdc0b5da6",
+    "docs/e2-factledger/d6-router-labels.json": "sha256:8ac8fe1d5df51a41e6694905bda550743fefb2c4a0b47f22d7f1c6fba8821d95",
+    "docs/e2-factledger/d6-validator-labels.json": "sha256:5a177f327e1866c22cdea54a2190f27f9e675a75c1bf62db5ec085fb0411222a"
+  },
+  "trace_path": ".aris/traces/experiment-audit/2026-08-09_run01/",
+  "agent_id": "/root/experiment_integrity_audit",
+  "verdict_id": "/root/experiment_integrity_audit",
+  "executor_model": "codex-gpt-5.6-sol",
+  "executor_family": "openai",
+  "reviewer_model": "gpt-5.6-sol",
+  "reviewer_family": "openai",
+  "reviewer_reasoning": "ultra",
+  "review_independence": "same-family",
+  "acceptance_status": "provisional",
+  "generated_at": "2026-08-09T10:45:50Z",
+  "date": "2026-08-09",
+  "auditor": "gpt-5.6-sol-ultra",
+  "overall_verdict": "warn",
+  "integrity_status": "warn",
+  "checks": {
+    "gt_provenance": {"status":"warn","details":"Developer-authored synthetic fixtures plus exposed single-rater human diagnostics; no model-derived GT."},
+    "score_normalization": {"status":"warn","details":"No self-normalization; empty-alias bug fixed, but strict scorer still has semantic and null-date limitations."},
+    "result_existence": {"status":"warn","details":"All files and raw cache hashes verified; B is genuinely NOT_RUN and legacy A lacks invocation-time input binding."},
+    "dead_code": {"status":"warn","details":"Diagnostic paths are live, but semantic equivalence evaluator and real B execution do not yet exist."},
+    "scope": {"status":"warn","details":"30 D1, 24 D5 A, 60 D6 exposed cases; no B, Blind, second rater, replication, or multilingual scope."},
+    "eval_type": "synthetic_proxy_and_exposed_human_eval"
+  },
+  "claims": [
+    {"id":"factledger_superiority","impact":"unsupported"},
+    {"id":"d5_a_strict_metrics","impact":"supported_with_scope_qualifier"},
+    {"id":"planning_73_7_percent","impact":"supported_selected_sample_only"},
+    {"id":"d6_router_validator","impact":"supported_exposed_diagnostic_only"},
+    {"id":"release_readiness","impact":"supported_blocked"}
+  ]
+}
