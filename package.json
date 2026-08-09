@@ -22,6 +22,7 @@
     "eval:recognition": "vitest run src/recognition/evaluation.test.ts",
     "eval:recognition:e2": "node scripts/run-recognition-e2.mjs",
     "eval:recognition:e2:factledger": "node scripts/run-factledger-ab.mjs",
+    "eval:recognition:e2:factledger:d5": "node scripts/summarize-factledger-d5.mjs",
     "eval:recognition:e2:factledger:d6": "node scripts/audit-factledger-d6.mjs"
   },
   "dependencies": {

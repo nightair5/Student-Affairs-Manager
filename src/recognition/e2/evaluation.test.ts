@@ -83,6 +83,40 @@ describe('E2-A recognition golden dataset', () => {
     expect(metrics.costUsd).toBeNull()
   })
 
+  it('never matches an empty prediction as an alias', () => {
+    const fixture = recognitionGoldenDataset.find((entry) => entry.expected.tasks.length > 0)
+    expect(fixture).toBeDefined()
+    const result = buildLocalRecognition({
+      sourceType: fixture!.sourceType,
+      sourceTitle: fixture!.sourceTitle,
+      content: fixture!.rawText,
+      referenceTime: new Date(fixture!.referenceTime),
+      timezone: fixture!.timezone,
+      projects: [],
+      tasks: [],
+    })
+    const blankTask = (task: typeof result.standaloneTasks[number]) => ({
+      ...task,
+      title: '',
+      actionVerb: '',
+      actionObject: '',
+    })
+    const blank = {
+      ...result,
+      standaloneTasks: result.standaloneTasks.map(blankTask),
+      milestones: result.milestones.map((milestone) => ({
+        ...milestone,
+        tasks: milestone.tasks.map(blankTask),
+        workPackages: milestone.workPackages.map((workPackage) => ({
+          ...workPackage,
+          tasks: workPackage.tasks.map(blankTask),
+        })),
+      })),
+    }
+    const scored = scoreRecognitionCase(fixture!, 'local-fallback', blank, 0)
+    expect(scored.scores.taskTruePositive).toBe(0)
+  })
+
   it('aggregates observed repair, retry and route metadata without guessing missing values', () => {
     const fixture = recognitionGoldenDataset[0]
     const result = buildLocalRecognition({

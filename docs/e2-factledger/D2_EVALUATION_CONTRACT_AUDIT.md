@@ -70,6 +70,14 @@ Ambiguity 只要 field 或 message 命中任一 alias 即匹配（约第 175–1
 
 ## 语义等价评分规则
 
+### 空 alias 命中缺陷
+
+独立完整性复核发现 `includesAlias` 原实现只检查 expected 非空，却未检查 actual 非空；JavaScript 的 `expected.includes('')` 为 true，因此空 Task/Material/Event 名称可能被错误计为命中。D2 已增加 actual 非空守卫和回归测试，并由 `scripts/summarize-factledger-d5.mjs` 从 24 条原始输出重新评分。该修复没有改变本次 24 条 A 指标，但消除了后续 A/B 的虚高路径。
+
+以下语义等价契约仍是设计稿，尚未接入正式 strict scorer；当前结果继续明确标注 strict，不能把契约文件存在本身写成“语义评分已运行”。
+
+另一个未消除的 strict scorer 限制是：当冻结 expected 的 `normalizedLocal=null` 且 `needsConfirmation=false` 时，完整时间匹配只要求模型给出任意非空 normalized value，无法验证具体值是否正确。部分显式日期 fixture 使用了这一契约。禁止修改 expected，因此本阶段只把它记录为 TimePoint Value 的评测风险，不把当前值准确率解释为全面的归一化正确率。
+
 机器可读规则见 `d2-semantic-equivalence-contract.json`。核心规则如下：
 
 ### Task

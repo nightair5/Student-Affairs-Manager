@@ -19,6 +19,7 @@ function normalize(value: unknown): string {
 
 function includesAlias(actual: string, aliases: string[]): boolean {
   const normalized = normalize(actual)
+  if (normalized.length === 0) return false
   return aliases.some((alias) => {
     const expected = normalize(alias)
     return expected.length > 0 && (normalized.includes(expected) || expected.includes(normalized))

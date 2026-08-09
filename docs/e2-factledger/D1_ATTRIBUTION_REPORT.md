@@ -30,7 +30,7 @@
 | EVENT_TASK_CONFUSION | 1 | 3.3% |
 | EVALUATION_MISMATCH | 1 | 3.3% |
 
-`ROUTER_UNDER_ROUTED` 和 `VALIDATOR_MISSED` 作为次标签分别出现在零 Task/零 Event 仍通过的样例中。检查到的 Repair 均未删除已发现事实；D1 没有足够证据把任何一条归为 `REPAIR_HARM`。
+`ROUTER_UNDER_ROUTED` 出现在低估关系复杂度的样例中；`VALIDATOR_MISSED` 只保留给未发现核心缺失实体的样例。`e2-gen-21-3` 的 D6 直接重跑会报告 `MISSING_ACTION`，问题是该不可 Repair 的报告没有被 pipeline gating 转化为阻止/修复，因此不再标为 Validator 逻辑漏检。检查到的 Repair 均未删除已发现事实；D1 没有足够证据把任何一条归为 `REPAIR_HARM`。
 
 ## 30 条逐例摘要
 
@@ -45,7 +45,7 @@
 | Development | e2-gen-12-1 | VALID_EQUIVALENT_STRUCTURE | Evaluation | 否 | 总 Task + 两 Material 可等价于两个办理步骤。 |
 | Development | e2-gen-15-3 | VALID_EQUIVALENT_STRUCTURE | Evaluation | 否 | 上位词 Task 覆盖两材料，OCR 时间仍需确认。 |
 | Development | e2-gen-20-2 | TIME_ROLE_ERROR | Planning | 是 | 依赖未知结束时刻却生成精确截止。 |
-| Development | e2-gen-21-3 | FACT_FOUND_PLANNING_WRONG | Planning | 是 | 三动作证据齐全但零 Task，且 Router/Validator 均漏检。 |
+| Development | e2-gen-21-3 | FACT_FOUND_PLANNING_WRONG | Planning | 是 | 三动作证据齐全但零 Task；Router 低路由，Validator 报告未转化为阻止/修复。 |
 | Golden complex | e2-complex_notice-01 | VALID_EQUIVALENT_STRUCTURE | Evaluation | 否 | 同截止报告与记录合并提交。 |
 | Golden complex | e2-complex_notice-02 | VALID_EQUIVALENT_STRUCTURE | Planning | 是 | 合并 Task 合理，但报名角色和优秀团队条件错误。 |
 | Golden complex | e2-complex_notice-03 | VALID_EQUIVALENT_STRUCTURE | Evaluation | 否 | 仅层级/阶段粒度不同，Major=false。 |

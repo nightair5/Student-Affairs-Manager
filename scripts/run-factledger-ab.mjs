@@ -20,6 +20,16 @@ function errorCode(error) {
   return 'DIAGNOSTIC_FAILURE'
 }
 
+function fixtureInputSha256(fixture) {
+  return createHash('sha256').update(JSON.stringify({
+    sourceType: fixture.sourceType,
+    sourceTitle: fixture.sourceTitle,
+    sourceText: fixture.rawText,
+    referenceTime: fixture.referenceTime,
+    timezone: fixture.timezone,
+  })).digest('hex')
+}
+
 async function readJson(file) {
   return JSON.parse(await readFile(file, 'utf8'))
 }
@@ -89,8 +99,15 @@ async function main() {
   await mkdir(cacheDir, { recursive: true })
   const checkpointPath = path.join(cacheDir, `factledger-b-${datasetName}-${label}.json`)
   const resume = option('resume', 'false') === 'true'
+  if (!resume) {
+    try {
+      await readFile(checkpointPath, 'utf8')
+      throw new Error(`Checkpoint already exists for label ${label}; use --resume=true or a new label`)
+    } catch (error) {
+      if (!(error && typeof error === 'object' && 'code' in error && error.code === 'ENOENT')) throw error
+    }
+  }
   const previous = resume ? await readJson(checkpointPath).catch(() => []) : []
-  const byId = new Map(previous.map((entry) => [entry.caseId, entry]))
   const baseline = await readJson(path.resolve(ROOT, baselineCachePath))
   const baselineById = new Map(baseline.map((entry) => [entry.caseId, entry]))
 
@@ -112,13 +129,38 @@ async function main() {
     let selected = caseIds.length > 0 ? caseIds.map((id) => fullDataset.find((entry) => entry.id === id)) : fullDataset
     if (selected.some((entry) => !entry)) throw new Error('Unknown case id')
     if (limit > 0) selected = selected.slice(0, limit)
+    const previousById = new Map(previous.map((entry) => [entry.caseId, entry]))
+    const byId = new Map(selected.flatMap((fixture) => {
+      const entry = previousById.get(fixture.id)
+      const sourceSha256 = createHash('sha256').update(fixture.rawText).digest('hex')
+      const inputSha256 = fixtureInputSha256(fixture)
+      if (!entry) return []
+      if (entry.model !== model || entry.sourceSha256 !== sourceSha256 || entry.inputSha256 !== inputSha256) {
+        throw new Error(`Stale B checkpoint row for ${fixture.id}`)
+      }
+      if (entry.status === 'failed') return [[fixture.id, entry]]
+      if (entry.status !== 'ok' || !entry.pathB) throw new Error(`Malformed B checkpoint row for ${fixture.id}`)
+      return [[fixture.id, entry]]
+    }))
     const client = createDeepSeekClient(apiKey, model, endpoint)
 
     for (const [index, fixture] of selected.entries()) {
       if (byId.has(fixture.id)) continue
       const baselineEntry = baselineById.get(fixture.id)
       if (!baselineEntry?.result) throw new Error(`Missing A baseline result for ${fixture.id}`)
+      if (baselineEntry.status !== 'ok') throw new Error(`Incomplete A baseline result for ${fixture.id}`)
+      if (baselineEntry.result.promptVersion !== 'recognition-2.4.1') throw new Error(`A prompt version drift for ${fixture.id}`)
+      if (baselineEntry.result.modelName !== model) throw new Error(`A model drift for ${fixture.id}`)
       const sourceSha256 = createHash('sha256').update(fixture.rawText).digest('hex')
+      const inputSha256 = fixtureInputSha256(fixture)
+      if (!baselineEntry.sourceSha256) throw new Error(`A baseline source hash missing for ${fixture.id}`)
+      if (baselineEntry.sourceSha256 !== sourceSha256) throw new Error(`A baseline source drift for ${fixture.id}`)
+      if (!baselineEntry.inputSha256) throw new Error(`A baseline input hash missing for ${fixture.id}`)
+      if (baselineEntry.inputSha256 !== inputSha256) throw new Error(`A baseline input drift for ${fixture.id}`)
+      const baselineScored = scoring.scoreRecognitionCase(fixture, 'deepseek-production', baselineEntry.result, baselineEntry.latencyMs, {
+        tokenUsage: baselineEntry.tokenUsage,
+        costUsd: baselineEntry.costUsd,
+      })
       try {
         const result = await harness.runFactLedgerDiagnostic({
           sourceType: fixture.sourceType,
@@ -135,9 +177,10 @@ async function main() {
           caseId: fixture.id,
           group: fixture.group,
           sourceSha256,
+          inputSha256,
           status: 'ok',
           model,
-          pathA: { promptVersion: baselineEntry.result.promptVersion, scores: baselineEntry.scores, latencyMs: baselineEntry.latencyMs, tokenUsage: baselineEntry.tokenUsage },
+          pathA: { promptVersion: baselineEntry.result.promptVersion, scores: baselineScored.scores, latencyMs: baselineEntry.latencyMs, tokenUsage: baselineEntry.tokenUsage },
           pathB: { ledger: result.ledger, result: result.recognition, scores: scored.scores, failures: scored.failures, latencyMs: result.latencyMs, tokenUsage: result.tokenUsage, operations: result.operations },
         })
       } catch (error) {
@@ -145,10 +188,11 @@ async function main() {
           caseId: fixture.id,
           group: fixture.group,
           sourceSha256,
+          inputSha256,
           status: 'failed',
           code: errorCode(error),
           model,
-          pathA: { promptVersion: baselineEntry.result.promptVersion, scores: baselineEntry.scores, latencyMs: baselineEntry.latencyMs, tokenUsage: baselineEntry.tokenUsage },
+          pathA: { promptVersion: baselineEntry.result.promptVersion, scores: baselineScored.scores, latencyMs: baselineEntry.latencyMs, tokenUsage: baselineEntry.tokenUsage },
           pathB: null,
         })
       }
@@ -156,7 +200,10 @@ async function main() {
       console.log(`[${index + 1}/${selected.length}] ${fixture.id} ${byId.get(fixture.id).status}`)
       if (delayMs > 0 && index < selected.length - 1) await new Promise((resolve) => setTimeout(resolve, delayMs))
     }
-    console.log(JSON.stringify({ status: 'COMPLETE', dataset: datasetName, cases: selected.length, checkpoint: path.relative(ROOT, checkpointPath), model }))
+    const selectedResults = selected.map((fixture) => byId.get(fixture.id))
+    const completedCases = selectedResults.filter((entry) => entry?.status === 'ok').length
+    const failedCases = selectedResults.length - completedCases
+    console.log(JSON.stringify({ status: failedCases > 0 ? 'PARTIAL' : 'COMPLETE', dataset: datasetName, cases: selected.length, completedCases, failedCases, checkpoint: path.relative(ROOT, checkpointPath), model }))
   } finally {
     await vite.close()
   }

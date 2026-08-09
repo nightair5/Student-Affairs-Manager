@@ -13,6 +13,16 @@ function option(name, fallback = '') {
   return process.argv.find((argument) => argument.startsWith(prefix))?.slice(prefix.length) ?? fallback
 }
 
+function fixtureInputSha256(fixture) {
+  return createHash('sha256').update(JSON.stringify({
+    sourceType: fixture.sourceType,
+    sourceTitle: fixture.sourceTitle,
+    sourceText: fixture.rawText,
+    referenceTime: fixture.referenceTime,
+    timezone: fixture.timezone,
+  })).digest('hex')
+}
+
 function percent(value) {
   return `${(value * 100).toFixed(2)}%`
 }
@@ -195,7 +205,7 @@ async function main() {
   const datasetName = option('dataset', 'golden')
   if (!['golden', 'holdout', 'generalization'].includes(datasetName)) throw new Error(`Unsupported dataset: ${datasetName}`)
   const label = option('label', 'baseline')
-  const expectedPrompt = option('expected-prompt')
+  const expectedPromptOption = option('expected-prompt')
   const origin = option('origin', 'https://student-affairs.site')
   const delayMs = Number(option('delay-ms', provider === 'deepseek-production' ? '8000' : '0'))
   const writeDir = option('write-dir')
@@ -219,6 +229,9 @@ async function main() {
       vite.ssrLoadModule('/src/recognition/schema.ts'),
       vite.ssrLoadModule('/src/recognition/prompt.ts'),
     ])
+    const expectedPrompt = provider === 'deepseek-production'
+      ? (expectedPromptOption || prompt.RECOGNITION_PROMPT_VERSION)
+      : expectedPromptOption
     const fullDataset = datasetName === 'holdout'
       ? recognitionHoldoutDataset
       : datasetName === 'generalization'
@@ -242,18 +255,31 @@ async function main() {
     const cacheDir = path.join(ROOT, '.evaluation-cache')
     await mkdir(cacheDir, { recursive: true })
     const checkpointFile = path.join(cacheDir, `${provider}-${datasetName}-${label}.json`)
+    if (!resume) {
+      try {
+        await readFile(checkpointFile, 'utf8')
+        throw new Error(`Checkpoint already exists for label ${label}; use --resume=true or a new label`)
+      } catch (error) {
+        if (!(error && typeof error === 'object' && 'code' in error && error.code === 'ENOENT')) throw error
+      }
+    }
     const previous = resume ? await readCheckpoint(checkpointFile) : []
     const previousById = new Map(previous.filter((item) => item.provider === provider).map((item) => [item.caseId, item]))
     const byId = new Map(dataset.flatMap((fixture) => {
       const item = previousById.get(fixture.id)
       if (!item || (retryInvalid && item.status === 'invalid_output')) return []
+      const sourceSha256 = createHash('sha256').update(fixture.rawText).digest('hex')
+      const inputSha256 = fixtureInputSha256(fixture)
+      if (!item.sourceSha256 || item.sourceSha256 !== sourceSha256 || !item.inputSha256 || item.inputSha256 !== inputSha256) return []
+      if (expectedPrompt && item.result?.promptVersion !== expectedPrompt) return []
+      if (provider === 'deepseek-production' && item.result?.modelName !== prompt.RECOGNITION_MODEL_NAME) return []
       const rescored = scoreRecognitionCase(fixture, provider, item.result, item.latencyMs, {
         status: item.status,
         failureReason: item.failures?.[0]?.reason,
         tokenUsage: item.tokenUsage,
         costUsd: item.costUsd,
       })
-      return [[fixture.id, { ...rescored, execution: item.execution ?? null, repair: item.repair ?? null, route: item.route ?? null }]]
+      return [[fixture.id, { ...rescored, sourceSha256, inputSha256, execution: item.execution ?? null, repair: item.repair ?? null, route: item.route ?? null }]]
     }))
     const startedAt = new Date().toISOString()
 
@@ -348,7 +374,11 @@ async function main() {
           })
         }
       }
-      byId.set(fixture.id, scored)
+      byId.set(fixture.id, {
+        ...scored,
+        sourceSha256: createHash('sha256').update(fixture.rawText).digest('hex'),
+        inputSha256: fixtureInputSha256(fixture),
+      })
       await writeFile(checkpointFile, `${JSON.stringify([...byId.values()], null, 2)}\n`, 'utf8')
       console.log(`[${index + 1}/${dataset.length}] ${fixture.id} ${scored.status} ${scored.latencyMs}ms failures=${scored.failures.length}`)
       if (delayMs > 0 && index < dataset.length - 1) await sleep(delayMs)

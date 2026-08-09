@@ -8,7 +8,7 @@
 - 模型：`deepseek-v4-flash`。
 - Prompt：`recognition-2.4.1`。
 - 输出：`RecognitionResult 2.0`。
-- D5 复用同日已暴露 `g8-*-2-4-1` 原始缓存，避免把重复付费调用误写为新基线。
+- D5 复用同日已暴露 `g8-*-2-4-1` 原始缓存，只用于当前 A 诊断重算；这些 legacy cache 没有生成时的 source hash，不能作为未来真实配对 B 的密码学输入证明。
 
 ### B：隔离两阶段
 
@@ -54,6 +54,8 @@ npm run eval:recognition:e2:factledger -- \
 - B 的任一模型调用不做隐式重试；失败单独记录，不用后续成功覆盖；
 - FactLedger invalid 时停止该例的 Planner 调用；
 - A cache 必须含同一个 caseId 和原始结果；
+- 未来真实配对 B 要求 A cache 同时带由评测运行器在调用时写入的 `sourceSha256` 与覆盖 sourceType/title/text/referenceTime/timezone 的 `inputSha256`，且 Prompt、模型和 hash 全部与 fixture 一致；旧缓存缺 hash 时必须重新运行 A，不能事后补 hash 冒充调用时来源证明；
+- `--resume=true` 只复用 input hash、模型和状态一致的成功或失败行；失败行保持失败，不隐式重跑覆盖。若确需重试，必须使用新 label 形成独立 checkpoint；
 - 不读取 expected 生成 Prompt，expected 只在模型调用完成后进入 scorer。
 
 ## 当前可执行状态

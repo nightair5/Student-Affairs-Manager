@@ -1,10 +1,37 @@
 {
-  "schemaVersion": "e2.5-d5-results-1.0.0",
+  "schemaVersion": "e2.5-d5-results-1.1.0",
   "status": "INCONCLUSIVE",
   "sampleCount": 24,
   "modelRequired": "deepseek-v4-flash",
+  "scoringIntegrity": "RECOMPUTED_FROM_RAW_EXPOSED_CACHE_WITH_NONEMPTY_ALIAS_GUARD",
+  "baselineSourceBinding": "LEGACY_CACHE_NO_INVOCATION_SOURCE_HASH",
+  "inputCaches": [
+    {
+      "file": "deepseek-production-golden-g8-regression-2-4-1.json",
+      "sha256": "b41145a89ea7ec170624285d396708c90dd6681d133b5e4c386a8ab438fc056c",
+      "entryCount": 110
+    },
+    {
+      "file": "deepseek-production-holdout-g8-regression-2-4-1.json",
+      "sha256": "15c14c0c709ebc0f4939a023d97af1575093b66f1fa2cb61ffbf8d7c1c83a545",
+      "entryCount": 40
+    },
+    {
+      "file": "deepseek-production-generalization-g8-after-2-4-1.json",
+      "sha256": "440524fcb27d07256df78ed41565170987c09069fd8b7979f5a51fa305d5a46c",
+      "entryCount": 108
+    }
+  ],
+  "exposedCacheAudit": {
+    "sampleCount": 258,
+    "completedCount": 257,
+    "repairTriggerRate": 0.11284046692607004,
+    "repairAppliedRate": 0.8275862068965517,
+    "repairSuccessRate": 0.06896551724137931,
+    "repairHarmRate": 0
+  },
   "pathA": {
-    "status": "COMPLETE_FROM_EXPOSED_CACHE",
+    "status": "RECOMPUTED_FROM_RAW_EXPOSED_CACHE",
     "promptVersion": "recognition-2.4.1",
     "factRecall": "NOT_OBSERVABLE_NO_EXPLICIT_FACT_LAYER",
     "taskPrecision": 0.813953488372093,
@@ -21,9 +48,24 @@
     "evidenceCoverage": 0.9928057553956835,
     "majorCorrectionRate": 0.8333333333333334,
     "severeErrorRate": 0,
-    "latencyMs": {"mean":11299.416666666666,"p50":11313,"p95":17055},
-    "tokenUsage": {"input":91814,"output":54481,"meanInputPerCase":3825.5833333333335,"meanOutputPerCase":2270.0416666666665},
-    "costUsd": "NOT_OBSERVABLE"
+    "latencyMs": {
+      "mean": 11299.416666666666,
+      "p50": 11313,
+      "p95": 17055
+    },
+    "tokenUsage": {
+      "input": 91814,
+      "output": 54481,
+      "meanInputPerCase": 3825.5833333333335,
+      "meanOutputPerCase": 2270.0416666666665
+    },
+    "costUsd": "NOT_OBSERVABLE",
+    "repair": {
+      "triggerRate": 0.3333333333333333,
+      "appliedRate": 0.75,
+      "successRate": 0.25,
+      "harmRate": 0
+    }
   },
   "pathB": {
     "status": "NOT_RUN",

@@ -2,7 +2,7 @@
 
 ## 状态：INCONCLUSIVE
 
-24 条复杂样例已经冻结选择，A 路径从同日、同模型、同 Prompt 的已暴露原始缓存完成聚合。B 路径 Harness 已执行启动检查，但当前 Node 服务端进程与同仓库 Worktree 均没有 `DEEPSEEK_API_KEY`，命令返回 `NOT_RUN / DEEPSEEK_NOT_CONFIGURED`，没有发起模型调用。
+24 条复杂样例已经冻结选择。A 路径由 `scripts/summarize-factledger-d5.mjs` 从同日、同模型、同 Prompt 的已暴露原始输出重新调用当前 strict scorer，不信任缓存内预计算 scores；评分器已增加空 actual 不能命中 alias 的守卫。本次修复前后 24 条汇总数值一致。B 路径 Harness 已执行启动检查，但当前 Node 服务端进程与同仓库 Worktree 均没有 `DEEPSEEK_API_KEY`，命令返回 `NOT_RUN / DEEPSEEK_NOT_CONFIGURED`，没有发起模型调用。
 
 不得用 mock、本地 fallback、A 输出变换或人工 FactLedger 替代 B，因此本阶段没有可计算的 A/B delta。
 
@@ -15,6 +15,8 @@
 - Development：10 条，覆盖多阶段、Event/Task、依赖时间、更正通知、材料边界、OCR 和同日多步骤。
 
 全部 24 条均已暴露，`blindEligibility=false`。
+
+`d5-ab-results.json` 同时保存三份外部 raw cache 的文件名、entry count 与 SHA-256；原始缓存仍保持 Git 忽略且不提交，其中 Golden 有 1 条与本次选择无关的 request failure，所以全量缓存为 258 entries / 257 completed。
 
 ## 指标
 
@@ -71,3 +73,4 @@ A Token 包含 recognize 与已触发的 Repair 操作的真实上游 usage；�
 - 也不能据此否定两阶段架构；
 - D1 的 73.7% planning-side 比例只是方向性人工证据，不是 A/B 效果；
 - D5 状态必须保持 `INCONCLUSIVE`，直到合法服务端 Secret 下完成同模型 24 条 B 运行。
+- 本次 legacy A cache 没有调用时 source hash，只能作为暴露集诊断证据；未来真实配对 B 必须使用评测运行器新生成、带 `sourceSha256` 的 A cache。
