@@ -116,6 +116,10 @@ export interface FactLedger {
   evidence: FactLedgerEvidence[]
 }
 
+export type FactLedgerModelPayload = Omit<FactLedger, 'referenceTime' | 'timezone' | 'sourceText'>
+
+export type FactLedgerPlannerView = Omit<FactLedger, 'sourceText'>
+
 export interface FactLedgerValidationIssue {
   code:
     | 'SCHEMA_VERSION'
