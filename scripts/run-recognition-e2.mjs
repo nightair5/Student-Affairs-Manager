@@ -189,7 +189,7 @@ async function main() {
   if (!['local-fallback', 'deepseek-production'].includes(provider)) throw new Error(`Unsupported provider: ${provider}`)
   const endpoint = option('endpoint', 'https://student-affairs.site/api/deepseek')
   const datasetName = option('dataset', 'golden')
-  if (!['golden', 'holdout'].includes(datasetName)) throw new Error(`Unsupported dataset: ${datasetName}`)
+  if (!['golden', 'holdout', 'generalization'].includes(datasetName)) throw new Error(`Unsupported dataset: ${datasetName}`)
   const label = option('label', 'baseline')
   const expectedPrompt = option('expected-prompt')
   const origin = option('origin', 'https://student-affairs.site')
@@ -206,16 +206,25 @@ async function main() {
   const pythonSession = transport === 'python-session' ? createPythonSessionTransport() : null
   const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'error', server: { middlewareMode: true } })
   try {
-    const [{ recognitionGoldenDataset, recognitionGoldenDatasetMetadata }, { recognitionHoldoutDataset, recognitionHoldoutMetadata }, { scoreRecognitionCase, aggregateRecognitionMetrics }, pipeline, schema, prompt] = await Promise.all([
+    const [{ recognitionGoldenDataset, recognitionGoldenDatasetMetadata }, { recognitionHoldoutDataset, recognitionHoldoutMetadata }, { recognitionGeneralizationDevelopmentDataset, recognitionGeneralizationDevelopmentMetadata }, { scoreRecognitionCase, aggregateRecognitionMetrics }, pipeline, schema, prompt] = await Promise.all([
       vite.ssrLoadModule('/src/recognition/e2/goldenDataset.ts'),
       vite.ssrLoadModule('/src/recognition/e2/holdoutDataset.ts'),
+      vite.ssrLoadModule('/src/recognition/e2/generalizationDataset.ts'),
       vite.ssrLoadModule('/src/recognition/e2/scoring.ts'),
       vite.ssrLoadModule('/src/recognition/pipeline.ts'),
       vite.ssrLoadModule('/src/recognition/schema.ts'),
       vite.ssrLoadModule('/src/recognition/prompt.ts'),
     ])
-    const fullDataset = datasetName === 'holdout' ? recognitionHoldoutDataset : recognitionGoldenDataset
-    const datasetMetadata = datasetName === 'holdout' ? recognitionHoldoutMetadata : recognitionGoldenDatasetMetadata
+    const fullDataset = datasetName === 'holdout'
+      ? recognitionHoldoutDataset
+      : datasetName === 'generalization'
+        ? recognitionGeneralizationDevelopmentDataset
+        : recognitionGoldenDataset
+    const datasetMetadata = datasetName === 'holdout'
+      ? recognitionHoldoutMetadata
+      : datasetName === 'generalization'
+        ? recognitionGeneralizationDevelopmentMetadata
+        : recognitionGoldenDatasetMetadata
     const filteredDataset = requestedCaseIds.length > 0
       ? requestedCaseIds.map((id) => fullDataset.find((fixture) => fixture.id === id)).filter(Boolean)
       : fullDataset

@@ -30,3 +30,19 @@ test('Holdout corrections are explicit and currently empty', async () => {
   assert.equal(log.datasetVersion, 'e2-holdout-1.0.0')
   assert.deepEqual(log.corrections, [])
 })
+
+test('E2 generalization development source stays frozen after G2', async () => {
+  const manifest = JSON.parse(await readFile('docs/baselines/e2-generalization/development-freeze.json', 'utf8'))
+  const source = await readFile(manifest.sourceFile)
+  const actual = createHash('sha256').update(source).digest('hex')
+  assert.equal(actual, manifest.sha256)
+  assert.equal(manifest.sampleCount, 108)
+  assert.equal(manifest.semanticFamilyCount, 27)
+  assert.equal(manifest.blindEligibility, false)
+})
+
+test('Generalization development corrections are explicit and currently empty', async () => {
+  const log = JSON.parse(await readFile('docs/baselines/e2-generalization/development-corrections.json', 'utf8'))
+  assert.equal(log.datasetVersion, 'e2-generalization-development-1.0.0')
+  assert.deepEqual(log.corrections, [])
+})
