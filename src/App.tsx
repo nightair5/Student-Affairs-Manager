@@ -22,6 +22,9 @@ import { createIntakeResult, type IntakeInput } from './lib/intake'
 import { ProxyDeepSeekExtractionService } from './lib/deepseekExtraction'
 import { buildLocalRecognition } from './recognition/pipeline'
 import { RECOGNITION_PIPELINE_VERSION } from './recognition/modelGateway'
+import { RECOGNITION_VALIDATOR_VERSION } from './recognition/qualityValidator'
+import { RECOGNITION_REPAIR_VERSION } from './recognition/repair'
+import { RECOGNITION_ROUTER_VERSION } from './recognition/complexityRouter'
 import { markOnboardingComplete, shouldShowOnboarding } from './lib/onboarding'
 import { CapturePersistenceService } from './domain/v2/capture'
 import { CanonicalWorkspaceRepository } from './domain/v2/repository'
@@ -281,7 +284,7 @@ function App() {
       provider: input.manualSuggestion ? 'manual' as const : 'deepseek' as const,
       modelName: input.manualSuggestion ? 'manual-entry' : 'deepseek-v4-flash',
       promptVersion: input.manualSuggestion ? null : localRecognition.promptVersion,
-      pipelineVersion: `${RECOGNITION_PIPELINE_VERSION}|validator=recognition-quality-2.0.0|repair=recognition-repair-1.0.0|router=recognition-router-1.0.0`,
+      pipelineVersion: `${RECOGNITION_PIPELINE_VERSION}|validator=${RECOGNITION_VALIDATOR_VERSION}|repair=${RECOGNITION_REPAIR_VERSION}|router=${RECOGNITION_ROUTER_VERSION}`,
       sourceLegacyData: {
         contentPreview: localResult.source.contentPreview,
         url: input.url ?? null,

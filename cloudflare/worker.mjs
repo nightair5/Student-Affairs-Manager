@@ -9,6 +9,7 @@ import { RECOGNITION_VALIDATOR_VERSION, annotateRecognitionQuality, validateReco
 import {
   RECOGNITION_REPAIR_VERSION,
   buildRecognitionRepairInstruction,
+  createRecognitionRepairCandidate,
   mergeRecognitionRepair,
   shouldAttemptRecognitionRepair,
 } from './recognition-repair.mjs'
@@ -673,9 +674,16 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
       applied: false,
       errorCode: null,
       issueCodes: validation.issues.filter((issue) => issue.repairable).map((issue) => issue.code),
+      allowedFields: ['evidence', 'materials', 'timePoints', 'events', 'ambiguities', 'taskReferenceUpdates'],
+      changedFields: [],
+      beforeValidation: null,
+      afterValidation: null,
+      beforeResult: null,
     }
     if (shouldAttemptRecognitionRepair(validation)) {
       repair.attempted = true
+      repair.beforeValidation = validation
+      repair.beforeResult = normalizedResult
       try {
         const repairCall = await gateway.repair({
           systemPrompt: `${systemPrompt}\n\n${buildRecognitionRepairInstruction(validation)}`,
@@ -687,11 +695,17 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
         else {
           const repairContent = safeText(repairCall.content, 30_000)
           const repairRaw = JSON.parse(repairContent)
-          const repairCandidate = normalizeRecognitionResult(repairRaw, sourceContent, referenceTime)
+          const scopedCandidate = createRecognitionRepairCandidate(normalizedResult, repairRaw, validation)
+          const repairCandidate = scopedCandidate ? normalizeRecognitionResult(scopedCandidate, sourceContent, referenceTime) : null
           if (!repairCandidate) repair.errorCode = 'REPAIR_INVALID_OUTPUT'
           else {
             result = mergeRecognitionRepair(normalizedResult, repairCandidate, validation, sourceContent)
             repair.applied = JSON.stringify(result) !== JSON.stringify(normalizedResult)
+            repair.changedFields = [
+              ...['evidence', 'materials', 'timePoints', 'events', 'ambiguities'].filter((field) => JSON.stringify(result[field]) !== JSON.stringify(normalizedResult[field])),
+              ...(JSON.stringify(result.standaloneTasks) !== JSON.stringify(normalizedResult.standaloneTasks)
+                || JSON.stringify(result.milestones) !== JSON.stringify(normalizedResult.milestones) ? ['taskReferenceUpdates'] : []),
+            ]
           }
         }
       } catch (repairError) {
@@ -699,6 +713,7 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
       }
     }
     validation = validateRecognitionQuality(result, sourceContent)
+    if (repair.attempted) repair.afterValidation = validation
     result = annotateRecognitionQuality(result, validation)
     const execution = gateway.executionMetadata({
       promptVersion: RECOGNITION_PROMPT_VERSION,

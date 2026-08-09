@@ -1,6 +1,13 @@
 import { describe, expect, it } from 'vitest'
 import { buildLocalRecognition } from './pipeline'
-import { mergeRecognitionRepair, shouldAttemptRecognitionRepair } from './repair'
+import {
+  RECOGNITION_REPAIR_PATCH_VERSION,
+  buildRecognitionRepairInstruction,
+  createRecognitionRepairCandidate,
+  mergeRecognitionRepair,
+  shouldAttemptRecognitionRepair,
+  type RecognitionRepairPatch,
+} from './repair'
 import { RECOGNITION_VALIDATOR_VERSION, validateRecognitionQuality } from './qualityValidator'
 import type { RecognitionResult } from './types'
 
@@ -13,6 +20,20 @@ function allTasks(result: RecognitionResult) {
     ...milestone.tasks,
     ...milestone.workPackages.flatMap((workPackage) => workPackage.tasks),
   ])]
+}
+
+function patch(overrides: Partial<RecognitionRepairPatch> = {}): RecognitionRepairPatch {
+  return {
+    contractVersion: RECOGNITION_REPAIR_PATCH_VERSION,
+    issueCodes: [],
+    evidence: [],
+    materials: [],
+    timePoints: [],
+    events: [],
+    ambiguities: [],
+    taskReferenceUpdates: [],
+    ...overrides,
+  }
 }
 
 describe('conditional recognition repair', () => {
@@ -34,7 +55,19 @@ describe('conditional recognition repair', () => {
     const complete = recognize(source)
     const base = { ...complete, materials: [], timePoints: [] }
     const report = validateRecognitionQuality(base, source)
-    const merged = mergeRecognitionRepair(base, complete, report, source)
+    const candidate = createRecognitionRepairCandidate(base, patch({
+      issueCodes: ['MISSING_MATERIAL', 'MISSING_TIMEPOINT'],
+      materials: complete.materials,
+      timePoints: complete.timePoints,
+      taskReferenceUpdates: allTasks(complete).map((task) => ({
+        taskTempId: task.tempId,
+        evidenceIds: task.evidenceIds,
+        materialTempIds: task.materialTempIds,
+        timePointTempIds: task.timePointTempIds,
+      })),
+    }), report)
+    expect(candidate).not.toBeNull()
+    const merged = mergeRecognitionRepair(base, candidate!, report, source)
     expect(merged.materials.length).toBeGreaterThan(0)
     expect(merged.timePoints.length).toBeGreaterThan(0)
     expect(allTasks(merged).map((task) => task.tempId)).toEqual(allTasks(base).map((task) => task.tempId))
@@ -42,18 +75,17 @@ describe('conditional recognition repair', () => {
     expect(allTasks(merged)[0].timePointTempIds.length).toBeGreaterThan(0)
   })
 
-  it('does not import unsupported evidence or invented tasks', () => {
-    const source = '请提交报名表。'
+  it('rejects full-result rewrites and unsupported patch evidence', () => {
+    const source = '请提交申请表单。'
     const base = recognize(source)
     const report = validateRecognitionQuality({ ...base, materials: [] }, source)
-    const inventedTask = { ...base.standaloneTasks[0], tempId: 'invented-task', title: '联系负责人', actionVerb: '联系', actionObject: '负责人' }
-    const candidate = {
-      ...base,
-      standaloneTasks: [...base.standaloneTasks, inventedTask],
-      evidence: [...base.evidence, { ...base.evidence[0], id: 'fake-evidence', quote: '负责人电话', quotedText: '负责人电话' }],
-    }
-    const merged = mergeRecognitionRepair({ ...base, materials: [] }, candidate, report, source)
-    expect(merged.standaloneTasks.some((task) => task.tempId === 'invented-task')).toBe(false)
+    expect(createRecognitionRepairCandidate(base, { ...patch(), standaloneTasks: [] }, report)).toBeNull()
+    const candidate = createRecognitionRepairCandidate(base, patch({
+      issueCodes: ['MISSING_MATERIAL'],
+      evidence: [{ ...base.evidence[0], id: 'fake-evidence', quote: '负责人电话', quotedText: '负责人电话' }],
+    }), report)
+    expect(candidate).not.toBeNull()
+    const merged = mergeRecognitionRepair({ ...base, materials: [] }, candidate!, report, source)
     expect(merged.evidence.some((item) => item.id === 'fake-evidence')).toBe(false)
   })
 
@@ -63,9 +95,24 @@ describe('conditional recognition repair', () => {
     const original = base.timePoints[0]
     const unsafe = { ...base, timePoints: [{ ...original, precision: 'vague' as const, normalizedValue: '2026-08-31', needsConfirmation: false }] }
     const report = validateRecognitionQuality(unsafe, source)
-    const safeCandidate = { ...base, timePoints: [{ ...original, precision: 'vague' as const, normalizedValue: null, needsConfirmation: true }] }
-    const merged = mergeRecognitionRepair(unsafe, safeCandidate, report, source)
+    const safeCandidate = createRecognitionRepairCandidate(unsafe, patch({
+      issueCodes: ['FALSE_PRECISION'],
+      timePoints: [{ ...original, precision: 'vague' as const, normalizedValue: null, needsConfirmation: true }],
+    }), report)
+    expect(safeCandidate).not.toBeNull()
+    const merged = mergeRecognitionRepair(unsafe, safeCandidate!, report, source)
     expect(merged.timePoints[0].normalizedValue).toBeNull()
     expect(merged.timePoints[0].needsConfirmation).toBe(true)
+  })
+
+  it('requests only a bounded patch and never a full recognition rewrite', () => {
+    const source = '请于8月20日提交申请表。'
+    const result = recognize(source)
+    const report = validateRecognitionQuality({ ...result, materials: [] }, source)
+    const instruction = buildRecognitionRepairInstruction(report)
+    expect(instruction).toContain(RECOGNITION_REPAIR_PATCH_VERSION)
+    expect(instruction).toContain('不要重新生成 RecognitionResult')
+    expect(instruction).toContain('taskReferenceUpdates')
+    expect(instruction).not.toContain('返回完整 RecognitionResult')
   })
 })

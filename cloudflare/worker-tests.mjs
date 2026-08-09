@@ -130,7 +130,7 @@ test('structured extraction uses V4 Flash JSON mode and returns bounded suggesti
   assert.equal(payload.route.routerVersion, 'recognition-router-1.0.0')
   assert.equal(payload.route.selectedStrategy, 'single_pass')
   assert.equal(payload.execution.gatewayVersion, 'model-gateway-1.0.0')
-  assert.equal(payload.execution.pipelineVersion, 'recognition-pipeline-2.1.2')
+  assert.equal(payload.execution.pipelineVersion, 'recognition-pipeline-2.2.0')
   assert.equal(payload.execution.provider, 'deepseek')
   assert.equal(payload.execution.model, 'deepseek-v4-flash')
   assert.equal(payload.execution.attempts >= 1, true)

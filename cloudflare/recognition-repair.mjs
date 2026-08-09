@@ -1,17 +1,36 @@
-export const RECOGNITION_REPAIR_VERSION = 'recognition-repair-1.0.0'
-const REPAIRABLE_CODES = new Set(['MISSING_EVIDENCE', 'MISSING_TIMEPOINT', 'FALSE_PRECISION', 'MISSING_TIME_AMBIGUITY', 'MISSING_MATERIAL', 'MISSING_EVENT', 'MISSING_MILESTONE'])
+export const RECOGNITION_REPAIR_VERSION = 'recognition-repair-1.1.0'
+export const RECOGNITION_REPAIR_PATCH_VERSION = 'recognition-repair-patch-1.0.0'
+const REPAIRABLE_CODES = new Set(['MISSING_EVIDENCE', 'MISSING_TIMEPOINT', 'FALSE_PRECISION', 'MISSING_TIME_AMBIGUITY', 'MISSING_MATERIAL', 'MISSING_EVENT'])
+const PATCH_FIELDS = new Set(['contractVersion', 'issueCodes', 'evidence', 'materials', 'timePoints', 'events', 'ambiguities', 'taskReferenceUpdates'])
+const PATCH_ARRAY_FIELDS = ['issueCodes', 'evidence', 'materials', 'timePoints', 'events', 'ambiguities', 'taskReferenceUpdates']
 
 function allTasks(result) { return [...result.standaloneTasks, ...result.milestones.flatMap((milestone) => [...milestone.tasks, ...milestone.workPackages.flatMap((workPackage) => workPackage.tasks)])] }
 function taskMap(result) { return new Map(allTasks(result).map((task) => [task.tempId, task])) }
 export function shouldAttemptRecognitionRepair(report) { return report.issues.some((issue) => issue.repairable && REPAIRABLE_CODES.has(issue.code)) }
 export function buildRecognitionRepairInstruction(report) {
   const issues = report.issues.filter((issue) => issue.repairable && REPAIRABLE_CODES.has(issue.code))
-  return `这是唯一一次结构修复。只修复下列问题，不得重做或扩写整个结果：${JSON.stringify(issues)}。保留所有原有 tempId、实体和用户可见语义；不得删除任务，不得新增原文不支持的事实。新增内容必须引用来源逐字证据。模糊时间只能降为 null + needsConfirmation。返回完整 RecognitionResult 2.0 JSON。repairVersion=${RECOGNITION_REPAIR_VERSION}。`
+  return `这是唯一一次 issue-scoped 结构修复，只处理这些问题：${JSON.stringify(issues)}。不要重新生成 RecognitionResult，不要返回 Project、Milestone、WorkPackage、Task、sourceSummary、projectMatch 或 quality。只返回严格 JSON patch：{contractVersion:"${RECOGNITION_REPAIR_PATCH_VERSION}",issueCodes:[],evidence:[],materials:[],timePoints:[],events:[],ambiguities:[],taskReferenceUpdates:[]}。允许修改范围仅为问题对应的 Evidence、Material、TimePoint、Event、Ambiguity 以及既有 Task 的引用数组；taskReferenceUpdates 每项只能含 taskTempId,evidenceIds,materialTempIds,timePointTempIds。保留所有既有实体，不得删除或重写任务，不得新增无逐字证据的事实。模糊时间只能降为 normalizedValue=null + needsConfirmation=true。repairVersion=${RECOGNITION_REPAIR_VERSION}。`
+}
+function isRecord(value) { return typeof value === 'object' && value !== null && !Array.isArray(value) }
+function replaceById(base, patch, id) { const replacements = new Map(patch.map((item) => [id(item), item])); const baseIds = new Set(base.map(id)); return [...base.map((item) => replacements.get(id(item)) ?? item), ...patch.filter((item) => !baseIds.has(id(item)))] }
+function updateTaskReferences(result, updates) {
+  const byId = new Map(updates.map((update) => [update.taskTempId, update]))
+  const updateTask = (task) => { const update = byId.get(task.tempId); return update ? { ...task, evidenceIds: [...new Set([...task.evidenceIds, ...update.evidenceIds])], materialTempIds: [...new Set([...task.materialTempIds, ...update.materialTempIds])], timePointTempIds: [...new Set([...task.timePointTempIds, ...update.timePointTempIds])] } : task }
+  return { standaloneTasks: result.standaloneTasks.map(updateTask), milestones: result.milestones.map((milestone) => ({ ...milestone, tasks: milestone.tasks.map(updateTask), workPackages: milestone.workPackages.map((workPackage) => ({ ...workPackage, tasks: workPackage.tasks.map(updateTask) })) })) }
+}
+export function createRecognitionRepairCandidate(base, raw, report) {
+  if (!isRecord(raw) || Object.keys(raw).some((key) => !PATCH_FIELDS.has(key)) || raw.contractVersion !== RECOGNITION_REPAIR_PATCH_VERSION || PATCH_ARRAY_FIELDS.some((field) => !Array.isArray(raw[field]))) return null
+  const allowedCodes = new Set(report.issues.filter((issue) => issue.repairable && REPAIRABLE_CODES.has(issue.code)).map((issue) => issue.code))
+  if (raw.issueCodes.some((code) => typeof code !== 'string' || !allowedCodes.has(code))) return null
+  if (raw.taskReferenceUpdates.length > 40 || raw.taskReferenceUpdates.some((value) => !isRecord(value) || Object.keys(value).some((key) => !['taskTempId', 'evidenceIds', 'materialTempIds', 'timePointTempIds'].includes(key)) || typeof value.taskTempId !== 'string' || !Array.isArray(value.evidenceIds) || !Array.isArray(value.materialTempIds) || !Array.isArray(value.timePointTempIds) || [...value.evidenceIds, ...value.materialTempIds, ...value.timePointTempIds].some((id) => typeof id !== 'string'))) return null
+  if (raw.evidence.length > 80 || raw.materials.length > 40 || raw.timePoints.length > 40 || raw.events.length > 20 || raw.ambiguities.length > 40) return null
+  const taskReferences = updateTaskReferences(base, raw.taskReferenceUpdates)
+  return { ...base, ...taskReferences, evidence: replaceById(base.evidence, raw.evidence, (item) => item.id), materials: replaceById(base.materials, raw.materials, (item) => item.tempId), timePoints: replaceById(base.timePoints, raw.timePoints, (item) => item.tempId), events: replaceById(base.events, raw.events, (item) => item.tempId), ambiguities: replaceById(base.ambiguities, raw.ambiguities, (item) => item.id) }
 }
 function mergeUnique(base, candidate, key) { const keys = new Set(base.map(key)); return [...base, ...candidate.filter((item) => { const value = key(item); if (!value || keys.has(value)) return false; keys.add(value); return true })] }
 
 export function mergeRecognitionRepair(base, candidate, report, sourceContent) {
-  const allowed = new Set(report.issues.filter((issue) => issue.repairable).map((issue) => issue.code))
+  const allowed = new Set(report.issues.filter((issue) => issue.repairable && REPAIRABLE_CODES.has(issue.code)).map((issue) => issue.code))
   const evidence = allowed.has('MISSING_EVIDENCE') || allowed.has('MISSING_TIMEPOINT') || allowed.has('MISSING_MATERIAL') || allowed.has('MISSING_EVENT') ? mergeUnique(base.evidence, candidate.evidence.filter((item) => sourceContent.includes(item.quotedText || item.quote || '')), (item) => item.id) : base.evidence
   const evidenceIds = new Set(evidence.map((item) => item.id))
   const baseTaskMap = taskMap(base)

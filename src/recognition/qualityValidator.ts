@@ -180,7 +180,7 @@ export function validateRecognitionQuality(
   if (result.sourceSummary.requiresAction && actionSignals.length > 0 && tasks.length === 0) add({ code: 'MISSING_ACTION', severity: 'warning', repairable: false, message: '来源表达了用户义务或可执行动作，但结果没有 Task。', entityId: null, evidence: actionSignals[0] })
   if (hasMaterialObligation(sourceContent) && result.materials.length === 0) add({ code: 'MISSING_MATERIAL', severity: 'warning', repairable: true, message: '来源表达了需准备、取得、携带、提交或核验的对象，但结果没有 Material。', entityId: null, evidence: null })
   if (EVENT_CUE.test(sourceContent) && result.events.length === 0) add({ code: 'MISSING_EVENT', severity: 'warning', repairable: true, message: '来源包含参加型安排，但结果没有 Event。', entityId: null, evidence: null })
-  if (result.projectMatch.decision === 'new_project' && sourceTimeTokens(sourceContent).length >= 3 && result.milestones.length === 0) add({ code: 'MISSING_MILESTONE', severity: 'warning', repairable: true, message: '复杂新项目缺少可解释阶段。', entityId: null, evidence: null })
+  if (result.projectMatch.decision === 'new_project' && sourceTimeTokens(sourceContent).length >= 3 && result.milestones.length === 0) add({ code: 'MISSING_MILESTONE', severity: 'warning', repairable: false, message: '复杂新项目缺少可解释阶段，需人工复核；Repair 不得重组任务层级。', entityId: null, evidence: null })
   if (tasks.length > Math.max(5, actionSignals.length + 3)) add({ code: 'OVER_FRAGMENTATION', severity: 'warning', repairable: false, message: '任务数量明显高于来源中的语义动作单元，需人工复核。', entityId: null, evidence: String(tasks.length) })
 
   return {

@@ -171,6 +171,12 @@ export interface RecognitionCaseResult {
     attempted: boolean
     applied: boolean
     errorCode: string | null
+    issueCodes?: string[]
+    allowedFields?: string[]
+    changedFields?: string[]
+    beforeResult?: RecognitionResult | null
+    beforeValidation?: { issues?: Array<{ code?: string }> } | null
+    afterValidation?: { issues?: Array<{ code?: string }> } | null
   } | null
   execution: {
     attempts: number

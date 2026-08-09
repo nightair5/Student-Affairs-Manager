@@ -1,12 +1,32 @@
 import type { RecognitionResult, TaskSuggestionV2 } from './types'
 import type { RecognitionQualityIssue, RecognitionQualityReport } from './qualityValidator'
 
-export const RECOGNITION_REPAIR_VERSION = 'recognition-repair-1.0.0'
+export const RECOGNITION_REPAIR_VERSION = 'recognition-repair-1.1.0'
+export const RECOGNITION_REPAIR_PATCH_VERSION = 'recognition-repair-patch-1.0.0'
 
 const REPAIRABLE_CODES = new Set<RecognitionQualityIssue['code']>([
   'MISSING_EVIDENCE', 'MISSING_TIMEPOINT', 'FALSE_PRECISION', 'MISSING_TIME_AMBIGUITY',
-  'MISSING_MATERIAL', 'MISSING_EVENT', 'MISSING_MILESTONE',
+  'MISSING_MATERIAL', 'MISSING_EVENT',
 ])
+
+export interface RecognitionRepairPatch {
+  contractVersion: typeof RECOGNITION_REPAIR_PATCH_VERSION
+  issueCodes: RecognitionQualityIssue['code'][]
+  evidence: RecognitionResult['evidence']
+  materials: RecognitionResult['materials']
+  timePoints: RecognitionResult['timePoints']
+  events: RecognitionResult['events']
+  ambiguities: RecognitionResult['ambiguities']
+  taskReferenceUpdates: Array<{
+    taskTempId: string
+    evidenceIds: string[]
+    materialTempIds: string[]
+    timePointTempIds: string[]
+  }>
+}
+
+const PATCH_FIELDS = new Set(['contractVersion', 'issueCodes', 'evidence', 'materials', 'timePoints', 'events', 'ambiguities', 'taskReferenceUpdates'])
+const PATCH_ARRAY_FIELDS = ['issueCodes', 'evidence', 'materials', 'timePoints', 'events', 'ambiguities', 'taskReferenceUpdates'] as const
 
 function allTasks(result: RecognitionResult): TaskSuggestionV2[] {
   return [...result.standaloneTasks, ...result.milestones.flatMap((milestone) => [
@@ -25,7 +45,72 @@ export function shouldAttemptRecognitionRepair(report: RecognitionQualityReport)
 
 export function buildRecognitionRepairInstruction(report: RecognitionQualityReport): string {
   const issues = report.issues.filter((issue) => issue.repairable && REPAIRABLE_CODES.has(issue.code))
-  return `这是唯一一次结构修复。只修复下列问题，不得重做或扩写整个结果：${JSON.stringify(issues)}。保留所有原有 tempId、实体和用户可见语义；不得删除任务，不得新增原文不支持的事实。新增内容必须引用来源逐字证据。模糊时间只能降为 null + needsConfirmation。返回完整 RecognitionResult 2.0 JSON。repairVersion=${RECOGNITION_REPAIR_VERSION}。`
+  return `这是唯一一次 issue-scoped 结构修复，只处理这些问题：${JSON.stringify(issues)}。不要重新生成 RecognitionResult，不要返回 Project、Milestone、WorkPackage、Task、sourceSummary、projectMatch 或 quality。只返回严格 JSON patch：{contractVersion:"${RECOGNITION_REPAIR_PATCH_VERSION}",issueCodes:[],evidence:[],materials:[],timePoints:[],events:[],ambiguities:[],taskReferenceUpdates:[]}。允许修改范围仅为问题对应的 Evidence、Material、TimePoint、Event、Ambiguity 以及既有 Task 的引用数组；taskReferenceUpdates 每项只能含 taskTempId,evidenceIds,materialTempIds,timePointTempIds。保留所有既有实体，不得删除或重写任务，不得新增无逐字证据的事实。模糊时间只能降为 normalizedValue=null + needsConfirmation=true。repairVersion=${RECOGNITION_REPAIR_VERSION}。`
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value)
+}
+
+function replaceById<T>(base: T[], patch: T[], id: (item: T) => string): T[] {
+  const replacements = new Map(patch.map((item) => [id(item), item]))
+  const baseIds = new Set(base.map(id))
+  return [...base.map((item) => replacements.get(id(item)) ?? item), ...patch.filter((item) => !baseIds.has(id(item)))]
+}
+
+function updateTaskReferences(result: RecognitionResult, updates: RecognitionRepairPatch['taskReferenceUpdates']): Pick<RecognitionResult, 'standaloneTasks' | 'milestones'> {
+  const byId = new Map(updates.map((update) => [update.taskTempId, update]))
+  const updateTask = (task: TaskSuggestionV2): TaskSuggestionV2 => {
+    const update = byId.get(task.tempId)
+    if (!update) return task
+    return {
+      ...task,
+      evidenceIds: [...new Set([...task.evidenceIds, ...update.evidenceIds])],
+      materialTempIds: [...new Set([...task.materialTempIds, ...update.materialTempIds])],
+      timePointTempIds: [...new Set([...task.timePointTempIds, ...update.timePointTempIds])],
+    }
+  }
+  return {
+    standaloneTasks: result.standaloneTasks.map(updateTask),
+    milestones: result.milestones.map((milestone) => ({
+      ...milestone,
+      tasks: milestone.tasks.map(updateTask),
+      workPackages: milestone.workPackages.map((workPackage) => ({ ...workPackage, tasks: workPackage.tasks.map(updateTask) })),
+    })),
+  }
+}
+
+export function createRecognitionRepairCandidate(
+  base: RecognitionResult,
+  raw: unknown,
+  report: RecognitionQualityReport,
+): RecognitionResult | null {
+  if (!isRecord(raw) || Object.keys(raw).some((key) => !PATCH_FIELDS.has(key))) return null
+  if (raw.contractVersion !== RECOGNITION_REPAIR_PATCH_VERSION) return null
+  if (PATCH_ARRAY_FIELDS.some((field) => !Array.isArray(raw[field]))) return null
+  const allowedCodes = new Set(report.issues.filter((issue) => issue.repairable && REPAIRABLE_CODES.has(issue.code)).map((issue) => issue.code))
+  const issueCodes = raw.issueCodes as unknown[]
+  if (issueCodes.some((code) => typeof code !== 'string' || !allowedCodes.has(code as RecognitionQualityIssue['code']))) return null
+  const updates = raw.taskReferenceUpdates as unknown[]
+  if (updates.length > 40 || updates.some((value) => !isRecord(value)
+    || Object.keys(value).some((key) => !['taskTempId', 'evidenceIds', 'materialTempIds', 'timePointTempIds'].includes(key))
+    || typeof value.taskTempId !== 'string'
+    || !Array.isArray(value.evidenceIds)
+    || !Array.isArray(value.materialTempIds)
+    || !Array.isArray(value.timePointTempIds)
+    || [...value.evidenceIds, ...value.materialTempIds, ...value.timePointTempIds].some((id) => typeof id !== 'string'))) return null
+  const patch = raw as unknown as RecognitionRepairPatch
+  if (patch.evidence.length > 80 || patch.materials.length > 40 || patch.timePoints.length > 40 || patch.events.length > 20 || patch.ambiguities.length > 40) return null
+  const taskReferences = updateTaskReferences(base, patch.taskReferenceUpdates)
+  return {
+    ...base,
+    ...taskReferences,
+    evidence: replaceById(base.evidence, patch.evidence, (item) => item.id),
+    materials: replaceById(base.materials, patch.materials, (item) => item.tempId),
+    timePoints: replaceById(base.timePoints, patch.timePoints, (item) => item.tempId),
+    events: replaceById(base.events, patch.events, (item) => item.tempId),
+    ambiguities: replaceById(base.ambiguities, patch.ambiguities, (item) => item.id),
+  }
 }
 
 function mergeUnique<T>(base: T[], candidate: T[], key: (item: T) => string): T[] {
@@ -44,7 +129,7 @@ export function mergeRecognitionRepair(
   report: RecognitionQualityReport,
   sourceContent: string,
 ): RecognitionResult {
-  const allowed = new Set(report.issues.filter((issue) => issue.repairable).map((issue) => issue.code))
+  const allowed = new Set(report.issues.filter((issue) => issue.repairable && REPAIRABLE_CODES.has(issue.code)).map((issue) => issue.code))
   const evidence = allowed.has('MISSING_EVIDENCE') || allowed.has('MISSING_TIMEPOINT') || allowed.has('MISSING_MATERIAL') || allowed.has('MISSING_EVENT')
     ? mergeUnique(base.evidence, candidate.evidence.filter((item) => sourceContent.includes(item.quotedText || item.quote || '')), (item) => item.id)
     : base.evidence
