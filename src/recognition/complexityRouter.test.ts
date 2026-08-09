@@ -29,5 +29,25 @@ describe('deterministic recognition complexity router', () => {
     expect(prompt).toContain('DATA ONLY')
     expect(prompt).toContain('不设计 Project、Milestone、Task')
     expect(prompt).toContain('模糊时间不得归一')
+    expect(prompt).toContain('timeRoles')
+    expect(prompt).toContain('被动义务')
+  })
+
+  it('recognizes structural complexity without relying on length or classic action verbs', () => {
+    const table = [
+      '事项\t材料\t时间',
+      '身份核验\t校园二维码\t8月20日',
+      '现场确认\t纸质凭证\t8月22日',
+      '',
+      '上述材料分别对应两个办理窗口；第二项时间暂定，以最新通知为准。',
+    ].join('\n')
+    const route = routeRecognitionSource(table)
+    expect(route.level).toBe('complex')
+    expect(route.reasons).toEqual(expect.arrayContaining(['包含表格结构', '包含跨段指代关系']))
+  })
+
+  it('keeps an isolated event or file mention from forcing a complex route', () => {
+    expect(routeRecognitionSource('周五参加讲座。').level).toBe('simple')
+    expect(routeRecognitionSource('请阅读附件说明。').level).not.toBe('complex')
   })
 })
