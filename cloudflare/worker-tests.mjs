@@ -125,7 +125,7 @@ test('structured extraction uses V4 Flash JSON mode and returns bounded suggesti
   assert.equal(payload.result.promptVersion, 'recognition-2.4.0')
   assert.equal(payload.result.milestones[0].tasks[0].title, '提交报名表')
   assert.equal(payload.result.evidence[0].quotedText, '8月10日18:00提交报名表')
-  assert.equal(payload.validation.validatorVersion, 'recognition-quality-2.0.0')
+  assert.equal(payload.validation.validatorVersion, 'recognition-quality-2.1.0')
   assert.equal(Array.isArray(payload.validation.issues), true)
   assert.equal(payload.route.routerVersion, 'recognition-router-1.0.0')
   assert.equal(payload.route.selectedStrategy, 'single_pass')

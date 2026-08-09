@@ -66,4 +66,46 @@ describe('Recognition quality validator', () => {
     expect(annotated.quality.reviewReasons.some((reason) => reason.startsWith('MISSING_EVENT'))).toBe(true)
     expect(annotated.standaloneTasks).toEqual(incomplete.standaloneTasks)
   })
+
+  it('accepts a semantic action outside the old verb list when action and object are explicit', () => {
+    const source = '入校手续须于周五前办理。'
+    const seeded = recognize('请提交入校手续。')
+    const task = seeded.standaloneTasks[0]
+    const semantic = {
+      ...seeded,
+      evidence: seeded.evidence.map((item) => ({ ...item, quote: source, quotedText: source })),
+      standaloneTasks: [{ ...task, title: '办理入校手续', actionVerb: '办理', actionObject: '入校手续' }],
+    }
+    expect(validateRecognitionQuality(semantic, source).issues.some((issue) => issue.code === 'FALSE_ACTION')).toBe(false)
+  })
+
+  it('detects passive obligations and cutoff dates without inventing entities', () => {
+    const source = '身份认证窗口将于8月20日关闭，逾期不再受理。'
+    const result = recognize(source)
+    const incomplete = {
+      ...result,
+      sourceSummary: { ...result.sourceSummary, requiresAction: true },
+      standaloneTasks: [],
+      milestones: [],
+      timePoints: [],
+    }
+    const report = validateRecognitionQuality(incomplete, source)
+    expect(report.issues.map((issue) => issue.code)).toEqual(expect.arrayContaining(['MISSING_ACTION', 'MISSING_TIMEPOINT']))
+    expect(incomplete.standaloneTasks).toEqual([])
+    expect(incomplete.timePoints).toEqual([])
+  })
+
+  it('distinguishes required objects from reference-only attachments and event-like words', () => {
+    const referenceSource = '附件《培养方案》仅供参考，无需提交。'
+    const reference = { ...recognize(referenceSource), materials: [] }
+    expect(validateRecognitionQuality(reference, referenceSource).issues.some((issue) => issue.code === 'MISSING_MATERIAL')).toBe(false)
+
+    const materialSource = '入场时须凭校园二维码核验身份。'
+    const missingMaterial = { ...recognize(materialSource), materials: [] }
+    expect(validateRecognitionQuality(missingMaterial, materialSource).issues.some((issue) => issue.code === 'MISSING_MATERIAL')).toBe(true)
+
+    const reportSource = '请于周五前提交汇报材料。'
+    const noEvent = { ...recognize(reportSource), events: [] }
+    expect(validateRecognitionQuality(noEvent, reportSource).issues.some((issue) => issue.code === 'MISSING_EVENT')).toBe(false)
+  })
 })
