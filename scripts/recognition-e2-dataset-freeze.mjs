@@ -3,10 +3,15 @@ import { createHash } from 'node:crypto'
 import { readFile } from 'node:fs/promises'
 import test from 'node:test'
 
-test('E2-A Golden source stays byte-for-byte frozen', async () => {
+function canonicalSourceHash(source) {
+  const canonicalLf = source.toString('utf8').replace(/\r\n?/g, '\n')
+  return createHash('sha256').update(canonicalLf, 'utf8').digest('hex')
+}
+
+test('E2-A Golden source stays content-frozen across checkout line endings', async () => {
   const manifest = JSON.parse(await readFile('docs/baselines/e2-a/dataset-freeze.json', 'utf8'))
   const source = await readFile(manifest.sourceFile)
-  const actual = createHash('sha256').update(source).digest('hex')
+  const actual = canonicalSourceHash(source)
   assert.equal(actual, manifest.sha256)
   assert.equal(manifest.sampleCount, 110)
 })
@@ -17,10 +22,10 @@ test('Golden corrections are explicit and currently empty', async () => {
   assert.deepEqual(log.corrections, [])
 })
 
-test('E2 holdout source stays byte-for-byte frozen', async () => {
+test('E2 holdout source stays content-frozen across checkout line endings', async () => {
   const manifest = JSON.parse(await readFile('docs/baselines/e2-a/holdout-freeze.json', 'utf8'))
   const source = await readFile(manifest.sourceFile)
-  const actual = createHash('sha256').update(source).digest('hex')
+  const actual = canonicalSourceHash(source)
   assert.equal(actual, manifest.sha256)
   assert.equal(manifest.sampleCount, 40)
 })
@@ -31,10 +36,10 @@ test('Holdout corrections are explicit and currently empty', async () => {
   assert.deepEqual(log.corrections, [])
 })
 
-test('E2 generalization development source stays frozen after G2', async () => {
+test('E2 generalization development source stays content-frozen after G2', async () => {
   const manifest = JSON.parse(await readFile('docs/baselines/e2-generalization/development-freeze.json', 'utf8'))
   const source = await readFile(manifest.sourceFile)
-  const actual = createHash('sha256').update(source).digest('hex')
+  const actual = canonicalSourceHash(source)
   assert.equal(actual, manifest.sha256)
   assert.equal(manifest.sampleCount, 108)
   assert.equal(manifest.semanticFamilyCount, 27)

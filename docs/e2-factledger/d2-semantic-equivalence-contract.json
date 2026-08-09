@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "e2.5-semantic-equivalence-1.0.0",
+  "status": "DIAGNOSTIC_ONLY",
+  "frozenExpectedPolicy": "PRESERVE_ALL_EXPECTED_FACTS",
+  "reporting": {
+    "strictStructuralMetrics": "retain",
+    "semanticEquivalentMetrics": "report_separately",
+    "neverOverwriteHistoricalBaseline": true
+  },
+  "taskEquivalence": {
+    "predicate": "same_action_family",
+    "object": "all_expected_objects_covered_by_literal_or_alias",
+    "allowOneActualToCoverManyExpected": true,
+    "allowOnlyWhen": ["same_actor", "same_modality", "same_condition", "same_deadline", "same_submission_channel", "no_independent_completion_requirement"],
+    "forbidWhen": ["different_deadlines", "different_actors", "different_conditions", "ordered_steps", "event_task_kind_mismatch"]
+  },
+  "milestoneEquivalence": {
+    "matchBy": ["covered_task_facts", "covered_timepoints", "covered_events", "order"],
+    "allowMergeOrSplit": true,
+    "reportGranularityDeltaSeparately": true
+  },
+  "timeEquivalence": {
+    "typeMustMatch": true,
+    "valueComparedSeparatelyFromType": true,
+    "relativeOrVagueRequiresNullAndConfirmation": true,
+    "rangeRequiresStartEndSemantics": true,
+    "changedDeadlineRequiresStatusRelation": ["superseded", "active"]
+  },
+  "ambiguityEquivalence": {
+    "matchBy": ["issue_code", "target_fact", "evidence_span"],
+    "messageTextIsNotIdentity": true
+  },
+  "evidenceEquivalence": {
+    "literalSubstringRequired": true,
+    "oneQuoteMaySupportMultipleCoveredFacts": true,
+    "unsupportedQuoteIsNeverEquivalent": true
+  },
+  "majorCorrection": {
+    "positive": ["missing_required_action", "wrong_action_predicate", "wrong_actor", "wrong_modality", "wrong_applicability_condition", "wrong_time_value_affecting_schedule", "wrong_time_role_affecting_workflow", "false_precision", "missing_required_event", "unsupported_evidence", "severe_or_safety_failure"],
+    "negative": ["equivalent_task_merge", "equivalent_task_split", "milestone_rename", "milestone_merge_or_split_without_fact_loss", "project_container_choice_without_action_loss", "evidence_fragmentation_with_full_literal_coverage", "informational_event_without_action_invention"]
+  }
+}
