@@ -185,31 +185,6 @@ export function normalizeRecognitionResult(raw, sourceContent, nowIso) {
   const explicitActionInSource = ACTION_VERBS.some((verb) => trustedActionContent.includes(verb))
   const informationOnly = sourceSummaryRaw.notificationType === 'information_only' || (sourceSummaryRaw.requiresAction === false && !explicitActionInSource)
   const evidenceById = new Map(evidence.map((item) => [item.id, item]))
-  const splitTaskIds = new Map()
-  const splitSubmissionTask = (task) => {
-    if (!SUBMISSION_VERBS.has(task.actionVerb)) return [task]
-    const linkedMaterials = materials.filter((material) => task.materialTempIds.includes(material.tempId) && task.actionObject.includes(material.name))
-    if (linkedMaterials.length < 2) return [task]
-    const split = linkedMaterials.map((material, index) => ({
-      ...task,
-      tempId: index === 0 ? task.tempId : `${task.tempId}-part-${index + 1}`,
-      title: `${task.actionVerb}${material.name}`,
-      actionObject: material.name,
-      materialTempIds: [material.tempId],
-    }))
-    splitTaskIds.set(task.tempId, split.map((item) => item.tempId))
-    return split
-  }
-  standaloneTasks = standaloneTasks.flatMap(splitSubmissionTask)
-  milestones.forEach((milestone) => {
-    milestone.tasks = milestone.tasks.flatMap(splitSubmissionTask)
-    milestone.workPackages.forEach((workPackage) => { workPackage.tasks = workPackage.tasks.flatMap(splitSubmissionTask) })
-  })
-  if (splitTaskIds.size > 0) {
-    const expandIds = (ids) => [...new Set(ids.flatMap((id) => splitTaskIds.get(id) || [id]))]
-    materials = materials.map((material) => ({ ...material, relatedTaskTempIds: expandIds(material.relatedTaskTempIds) }))
-    timePoints = timePoints.map((timePoint) => ({ ...timePoint, relatedTaskTempIds: expandIds(timePoint.relatedTaskTempIds) }))
-  }
   for (const task of allTasks()) {
     if (task.materialTempIds.length > 0 || !DELIVERABLE_CREATION_VERBS.has(task.actionVerb) || !DELIVERABLE_NOUN.test(task.actionObject)) continue
     const tempId = `material-from-${task.tempId}`

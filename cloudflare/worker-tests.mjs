@@ -122,7 +122,7 @@ test('structured extraction uses V4 Flash JSON mode and returns bounded suggesti
   const payload = await response.json()
   assert.equal(payload.model, 'deepseek-v4-flash')
   assert.equal(payload.result.schemaVersion, '2.0')
-  assert.equal(payload.result.promptVersion, 'recognition-2.4.0')
+  assert.equal(payload.result.promptVersion, 'recognition-2.4.1')
   assert.equal(payload.result.milestones[0].tasks[0].title, '提交报名表')
   assert.equal(payload.result.evidence[0].quotedText, '8月10日18:00提交报名表')
   assert.equal(payload.validation.validatorVersion, 'recognition-quality-2.1.0')
@@ -130,7 +130,7 @@ test('structured extraction uses V4 Flash JSON mode and returns bounded suggesti
   assert.equal(payload.route.routerVersion, 'recognition-router-1.1.0')
   assert.equal(payload.route.selectedStrategy, 'single_pass')
   assert.equal(payload.execution.gatewayVersion, 'model-gateway-1.0.0')
-  assert.equal(payload.execution.pipelineVersion, 'recognition-pipeline-2.2.0')
+  assert.equal(payload.execution.pipelineVersion, 'recognition-pipeline-2.2.1')
   assert.equal(payload.execution.provider, 'deepseek')
   assert.equal(payload.execution.model, 'deepseek-v4-flash')
   assert.equal(payload.execution.attempts >= 1, true)
@@ -200,7 +200,7 @@ test('recognition normalization removes format-only, duplicate event, and inform
   assert.equal(informationOnly.ambiguities.length, 0)
 })
 
-test('recognition normalization splits explicit multi-material submissions and keeps action events', () => {
+test('recognition normalization preserves one explicit multi-material submission and keeps action events', () => {
   const source = '8月18日前组队并提交成员表；8月25日前完成访谈提纲；9月10日提交调研报告和访谈记录；9月15日下午2点参加答辩。'
   const result = normalizeRecognitionResult({
     schemaVersion: '2.0',
@@ -228,7 +228,8 @@ test('recognition normalization splits explicit multi-material submissions and k
     quality: {},
   }, source, '2026-08-09T00:00:00.000Z')
 
-  assert.deepEqual(result.standaloneTasks.map((task) => task.title), ['完成访谈提纲', '提交调研报告', '提交访谈记录'])
+  assert.deepEqual(result.standaloneTasks.map((task) => task.title), ['完成访谈提纲', '提交调研报告和访谈记录'])
+  assert.deepEqual(result.standaloneTasks[1].materialTempIds, ['mat-report', 'mat-record'])
   assert.equal(result.materials.some((material) => material.name === '访谈提纲'), true)
   assert.equal(result.timePoints.find((item) => item.tempId === 'tp-submit').normalizedValue, '2026-09-10')
   assert.equal(result.timePoints.find((item) => item.tempId === 'tp-submit').isAllDay, true)

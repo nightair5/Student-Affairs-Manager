@@ -11,7 +11,7 @@ describe('Recognition 2.4 modular prompt contract', () => {
   it('keeps schema and model fixed while advancing only the prompt version', () => {
     expect(RECOGNITION_SCHEMA_VERSION).toBe('2.0')
     expect(RECOGNITION_MODEL_NAME).toBe('deepseek-v4-flash')
-    expect(RECOGNITION_PROMPT_VERSION).toBe('recognition-2.4.0')
+    expect(RECOGNITION_PROMPT_VERSION).toBe('recognition-2.4.1')
   })
 
   it('composes eight unique, auditable prompt modules', () => {
@@ -29,6 +29,9 @@ describe('Recognition 2.4 modular prompt contract', () => {
     expect(recognitionSystemPrompt).toContain('禁止用顶层 tasks 替代 standaloneTasks')
     expect(recognitionSystemPrompt).toContain('Ambiguity={id,field,message,options,evidenceIds}')
     expect(recognitionSystemPrompt).toContain('禁止“阶段 1”“阶段 2”占位')
+    expect(recognitionSystemPrompt).toContain('一次提交动作可以关联多个 Material')
+    expect(recognitionSystemPrompt).toContain('先找出约束整个分句的谓词')
+    expect(recognitionSystemPrompt).toContain('旧时间与新时间')
   })
 
   it('requires honest ambiguity instead of false time precision', () => {

@@ -22,7 +22,7 @@ Prompt 不包含 Development、Golden、Holdout 的具体句子或答案，也�
 
 - 模型固定为 `deepseek-v4-flash`。
 - Schema 固定为 `RecognitionResult 2.0`。
-- Prompt 版本更新为 `recognition-2.4.0`。
+- Prompt 版本由 `recognition-2.4.0` 更新为 `recognition-2.4.1`。开发集首轮真实评估发现，一次提交多个材料被强拆、材料准备被误建为独立任务、条件句谓词选择错误，以及未知/更正时间遗漏；本次仅按这些语义边界收敛，不加入样例 ID、固定句子或专用词组。
 - 不修改 Workspace v8、Repository、Migration、DomainCommitPlan 或 UI。
 - 事实清单只作为模型内部推理顺序，不新增输出字段。
 - Complex 两阶段默认关闭；未完成同候选的 A/B 对照前不得声称更优。
