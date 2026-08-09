@@ -341,11 +341,59 @@ export function aggregateRecognitionMetrics(provider: EvaluationProvider, result
   const costResults = results.filter((result) => result.costUsd !== null)
   const latencies = results.map((result) => result.latencyMs)
   const repairAttempts = results.filter((result) => result.repair?.attempted)
+  const repairObservable = repairAttempts.filter((result) => result.repair?.beforeScores)
+  const repairHarmed = repairObservable.filter((result) => {
+    if (!result.repair?.applied || !result.repair.beforeScores) return false
+    const before = result.repair.beforeScores
+    const afterMatched = result.scores.taskTruePositive + result.scores.materialMatched + result.scores.timePointMatched + result.scores.eventMatched + result.scores.evidenceMatched
+    const beforeMatched = before.taskTruePositive + before.materialMatched + before.timePointMatched + before.eventMatched + before.evidenceMatched
+    return (!before.severeError && result.scores.severeError)
+      || (!before.majorCorrection && result.scores.majorCorrection)
+      || result.scores.duplicateCount > before.duplicateCount
+      || (!before.overFragmented && result.scores.overFragmented)
+      || afterMatched < beforeMatched
+  })
+  const repairImproved = repairObservable.filter((result) => {
+    if (!result.repair?.applied || !result.repair.beforeScores || repairHarmed.includes(result)) return false
+    const before = result.repair.beforeScores
+    const afterMatched = result.scores.taskTruePositive + result.scores.materialMatched + result.scores.timePointMatched + result.scores.eventMatched + result.scores.evidenceMatched
+    const beforeMatched = before.taskTruePositive + before.materialMatched + before.timePointMatched + before.eventMatched + before.evidenceMatched
+    return (before.severeError && !result.scores.severeError)
+      || (before.majorCorrection && !result.scores.majorCorrection)
+      || result.scores.duplicateCount < before.duplicateCount
+      || (before.overFragmented && !result.scores.overFragmented)
+      || afterMatched > beforeMatched
+  })
   const repairLatencies = repairAttempts.flatMap((result) => result.execution?.operations
     .filter((operation) => operation.operation === 'repair')
     .map((operation) => operation.durationMs) ?? [])
   const routeCounts = { simple: 0, medium: 0, complex: 0, unknown: 0 }
   results.forEach((result) => { routeCounts[result.route?.level ?? 'unknown'] += 1 })
+  const complexityProfiles = Object.fromEntries((['simple', 'medium', 'complex', 'unknown'] as const).map((level) => {
+    const members = results.filter((result) => (result.route?.level ?? 'unknown') === level)
+    const memberLatencies = members.map((result) => result.latencyMs)
+    const hasCompleteUsage = members.length > 0 && members.every((result) => result.tokenUsage !== null)
+    return [level, {
+      sampleCount: members.length,
+      latencyMs: {
+        mean: memberLatencies.length ? ratio(memberLatencies.reduce((total, value) => total + value, 0), memberLatencies.length, 0) : 0,
+        p50: memberLatencies.length ? percentile(memberLatencies, 0.5) : 0,
+        p95: memberLatencies.length ? percentile(memberLatencies, 0.95) : 0,
+      },
+      tokenUsage: hasCompleteUsage ? {
+        input: members.reduce((total, result) => total + (result.tokenUsage?.input ?? 0), 0),
+        output: members.reduce((total, result) => total + (result.tokenUsage?.output ?? 0), 0),
+      } : null,
+    }]
+  })) as RecognitionBaselineMetrics['complexityProfiles']
+  const operationTokenUsage = Object.fromEntries((['recognize', 'repair', 'extractFacts'] as const).map((operation) => {
+    const observed = results.flatMap((result) => result.execution?.operations.filter((item) => item.operation === operation) ?? [])
+    const complete = observed.length > 0 && observed.every((item) => item.tokenUsage !== null && item.tokenUsage !== undefined)
+    return [operation, complete ? {
+      input: observed.reduce((total, item) => total + (item.tokenUsage?.input ?? 0), 0),
+      output: observed.reduce((total, item) => total + (item.tokenUsage?.output ?? 0), 0),
+    } : null]
+  })) as RecognitionBaselineMetrics['operationTokenUsage']
   return {
     provider,
     sampleCount: results.length,
@@ -374,13 +422,17 @@ export function aggregateRecognitionMetrics(provider: EvaluationProvider, result
     invalidOutputRate: ratio(results.filter((result) => result.status === 'invalid_output').length, results.length),
     requestFailureRate: ratio(results.filter((result) => result.status === 'request_failure').length, results.length),
     repairTriggerRate: ratio(repairAttempts.length, completed.length, 0),
-    repairSuccessRate: repairAttempts.length ? ratio(repairAttempts.filter((result) => result.repair?.applied).length, repairAttempts.length, 0) : null,
+    repairAppliedRate: repairAttempts.length ? ratio(repairAttempts.filter((result) => result.repair?.applied).length, repairAttempts.length, 0) : null,
+    repairSuccessRate: repairObservable.length ? ratio(repairImproved.length, repairObservable.length, 0) : null,
+    repairHarmRate: repairObservable.length ? ratio(repairHarmed.length, repairObservable.length, 0) : null,
     repairLatencyMs: repairLatencies.length ? {
       mean: ratio(repairLatencies.reduce((total, value) => total + value, 0), repairLatencies.length, 0),
       p95: percentile(repairLatencies, 0.95),
     } : null,
     retryRate: ratio(results.filter((result) => (result.execution?.attempts ?? 1) > (result.execution?.operations.length ?? 1)).length, results.length, 0),
     complexityDistribution: routeCounts,
+    complexityProfiles,
+    operationTokenUsage,
     latencyMs: {
       mean: ratio(latencies.reduce((total, value) => total + value, 0), latencies.length, 0),
       p50: percentile(latencies, 0.5),

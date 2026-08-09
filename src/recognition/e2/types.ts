@@ -175,6 +175,17 @@ export interface RecognitionCaseResult {
     allowedFields?: string[]
     changedFields?: string[]
     beforeResult?: RecognitionResult | null
+    beforeScores?: {
+      taskTruePositive: number
+      materialMatched: number
+      timePointMatched: number
+      eventMatched: number
+      evidenceMatched: number
+      duplicateCount: number
+      overFragmented: boolean
+      majorCorrection: boolean
+      severeError: boolean
+    } | null
     beforeValidation?: { issues?: Array<{ code?: string }> } | null
     afterValidation?: { issues?: Array<{ code?: string }> } | null
   } | null
@@ -186,6 +197,7 @@ export interface RecognitionCaseResult {
       durationMs: number
       attempts: number
       ok: boolean
+      tokenUsage?: { input: number; output: number } | null
     }>
   } | null
   route: {
@@ -254,10 +266,18 @@ export interface RecognitionBaselineMetrics {
   invalidOutputRate: number
   requestFailureRate: number
   repairTriggerRate: number
+  repairAppliedRate: number | null
   repairSuccessRate: number | null
+  repairHarmRate: number | null
   repairLatencyMs: { mean: number; p95: number } | null
   retryRate: number
   complexityDistribution: { simple: number; medium: number; complex: number; unknown: number }
+  complexityProfiles: Record<'simple' | 'medium' | 'complex' | 'unknown', {
+    sampleCount: number
+    latencyMs: { mean: number; p50: number; p95: number }
+    tokenUsage: { input: number; output: number } | null
+  }>
+  operationTokenUsage: Record<'recognize' | 'repair' | 'extractFacts', { input: number; output: number } | null>
   latencyMs: { mean: number; p50: number; p95: number }
   tokenUsage: { input: number; output: number } | null
   costUsd: number | null

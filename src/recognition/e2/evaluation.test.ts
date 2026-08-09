@@ -97,23 +97,42 @@ describe('E2-A recognition golden dataset', () => {
     const scored = scoreRecognitionCase(fixture, 'deepseek-production', result, 900)
     const observed: RecognitionCaseResult = {
       ...scored,
-      repair: { attempted: true, applied: true, errorCode: null },
+      repair: {
+        attempted: true,
+        applied: true,
+        errorCode: null,
+        beforeScores: {
+          taskTruePositive: Math.max(0, scored.scores.taskTruePositive - 1),
+          materialMatched: scored.scores.materialMatched,
+          timePointMatched: scored.scores.timePointMatched,
+          eventMatched: scored.scores.eventMatched,
+          evidenceMatched: scored.scores.evidenceMatched,
+          duplicateCount: scored.scores.duplicateCount,
+          overFragmented: scored.scores.overFragmented,
+          majorCorrection: scored.scores.majorCorrection,
+          severeError: scored.scores.severeError,
+        },
+      },
       execution: {
         attempts: 3,
         durationMs: 850,
         operations: [
-          { operation: 'recognize', durationMs: 500, attempts: 2, ok: true },
-          { operation: 'repair', durationMs: 350, attempts: 1, ok: true },
+          { operation: 'recognize', durationMs: 500, attempts: 2, ok: true, tokenUsage: { input: 100, output: 50 } },
+          { operation: 'repair', durationMs: 350, attempts: 1, ok: true, tokenUsage: { input: 80, output: 20 } },
         ],
       },
       route: { level: 'medium', selectedStrategy: 'single_pass' },
     }
     const metrics = aggregateRecognitionMetrics('deepseek-production', [observed])
     expect(metrics.repairTriggerRate).toBe(1)
+    expect(metrics.repairAppliedRate).toBe(1)
     expect(metrics.repairSuccessRate).toBe(1)
+    expect(metrics.repairHarmRate).toBe(0)
     expect(metrics.repairLatencyMs).toEqual({ mean: 350, p95: 350 })
     expect(metrics.retryRate).toBe(1)
     expect(metrics.complexityDistribution).toEqual({ simple: 0, medium: 1, complex: 0, unknown: 0 })
+    expect(metrics.complexityProfiles.medium.sampleCount).toBe(1)
+    expect(metrics.operationTokenUsage.repair).toEqual({ input: 80, output: 20 })
   })
 })
 

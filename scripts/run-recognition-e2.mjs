@@ -159,7 +159,9 @@ function renderMarkdown(run, metrics, groupMetrics) {
     ['Invalid Output Rate', percent(metrics.invalidOutputRate)],
     ['Request Failure Rate', percent(metrics.requestFailureRate)],
     ['Repair Trigger Rate', percent(metrics.repairTriggerRate)],
+    ['Repair Applied Rate', metrics.repairAppliedRate === null ? 'NOT OBSERVABLE' : percent(metrics.repairAppliedRate)],
     ['Repair Success Rate', metrics.repairSuccessRate === null ? 'NOT OBSERVABLE' : percent(metrics.repairSuccessRate)],
+    ['Repair Harm Rate', metrics.repairHarmRate === null ? 'NOT OBSERVABLE' : percent(metrics.repairHarmRate)],
     ['Repair Latency Mean', metrics.repairLatencyMs === null ? 'NOT OBSERVABLE' : `${metrics.repairLatencyMs.mean.toFixed(0)} ms`],
     ['Repair Latency P95', metrics.repairLatencyMs === null ? 'NOT OBSERVABLE' : `${metrics.repairLatencyMs.p95.toFixed(0)} ms`],
     ['Retry Rate', percent(metrics.retryRate)],
@@ -180,6 +182,8 @@ function renderMarkdown(run, metrics, groupMetrics) {
     `- Completed cases: ${metrics.completedCount}/${metrics.sampleCount}\n\n` +
     `## Metrics\n\n| Metric | Result |\n| --- | ---: |\n${rows.map(([name, value]) => `| ${name} | ${value} |`).join('\n')}\n\n` +
     `## Group breakdown\n\n| Group | Project | Task P | Task R | Material R | Time | Event | Evidence | Major correction | Severe |\n| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |\n${Object.entries(groupMetrics).map(([group, value]) => `| ${group} | ${percent(value.projectDecisionAccuracy)} | ${percent(value.taskPrecision)} | ${percent(value.taskRecall)} | ${percent(value.materialRecall)} | ${percent(value.timePointAccuracy)} | ${percent(value.eventAccuracy)} | ${percent(value.evidenceCoverage)} | ${percent(value.majorCorrectionRate)} | ${percent(value.severeErrorRate)} |`).join('\n')}\n\n` +
+    `## Complexity profile\n\n| Route | Cases | Latency mean | P50 | P95 | Input tokens | Output tokens |\n| --- | ---: | ---: | ---: | ---: | ---: | ---: |\n${Object.entries(metrics.complexityProfiles).map(([level, value]) => `| ${level} | ${value.sampleCount} | ${milliseconds(value.latencyMs.mean)} | ${milliseconds(value.latencyMs.p50)} | ${milliseconds(value.latencyMs.p95)} | ${value.tokenUsage?.input ?? 'NOT OBSERVABLE'} | ${value.tokenUsage?.output ?? 'NOT OBSERVABLE'} |`).join('\n')}\n\n` +
+    `## Operation tokens\n\n| Operation | Input | Output |\n| --- | ---: | ---: |\n${Object.entries(metrics.operationTokenUsage).map(([operation, value]) => `| ${operation} | ${value?.input ?? 'NOT OBSERVABLE'} | ${value?.output ?? 'NOT OBSERVABLE'} |`).join('\n')}\n\n` +
     `## Error taxonomy\n\n| Category | Count |\n| --- | ---: |\n${metrics.errorTaxonomy.map((item) => `| ${item.category} | ${item.count} |`).join('\n') || '| none | 0 |'}\n\n` +
     `Per-case failure categories and reasons are stored in the sibling failures JSON. Raw model outputs remain in the ignored local checkpoint and are not committed.\n`
 }
@@ -305,7 +309,30 @@ async function main() {
                 tokenUsage: payload?.execution?.tokenUsage ?? null,
                 costUsd: null,
               })
-              scored = { ...scored, execution: payload?.execution ?? null, repair: payload?.repair ?? null, route: payload?.route ?? null }
+              let repair = payload?.repair ?? null
+              if (repair?.beforeResult) {
+                try {
+                  const beforeResult = schema.parseRecognitionResult(repair.beforeResult)
+                  const before = scoreRecognitionCase(fixture, provider, beforeResult, latencyMs)
+                  repair = {
+                    ...repair,
+                    beforeScores: {
+                      taskTruePositive: before.scores.taskTruePositive,
+                      materialMatched: before.scores.materialMatched,
+                      timePointMatched: before.scores.timePointMatched,
+                      eventMatched: before.scores.eventMatched,
+                      evidenceMatched: before.scores.evidenceMatched,
+                      duplicateCount: before.scores.duplicateCount,
+                      overFragmented: before.scores.overFragmented,
+                      majorCorrection: before.scores.majorCorrection,
+                      severeError: before.scores.severeError,
+                    },
+                  }
+                } catch {
+                  repair = { ...repair, beforeScores: null }
+                }
+              }
+              scored = { ...scored, execution: payload?.execution ?? null, repair, route: payload?.route ?? null }
             } catch (error) {
               scored = scoreRecognitionCase(fixture, provider, null, latencyMs, {
                 status: 'invalid_output',
