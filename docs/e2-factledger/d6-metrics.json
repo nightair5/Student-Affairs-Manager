@@ -1,0 +1,1011 @@
+{
+  "schemaVersion": "e2.5-d6-metrics-1.0.0",
+  "datasetStatus": "EXPOSED_DIAGNOSTIC_ONLY",
+  "baseline": {
+    "promptVersion": "recognition-2.4.1",
+    "routerVersion": "recognition-router-1.1.0",
+    "validatorVersion": "recognition-quality-2.1.0"
+  },
+  "router": {
+    "sampleCount": 60,
+    "labelDistribution": {
+      "complex": 28,
+      "simple": 10,
+      "medium": 22
+    },
+    "predictedDistribution": {
+      "complex": 12,
+      "medium": 28,
+      "simple": 20
+    },
+    "accuracy": 0.45,
+    "exact": 27,
+    "underRouted": 29,
+    "overRouted": 4,
+    "complexToSimpleUnderRoutingRate": 0.03571428571428571,
+    "simpleToComplexOverRoutingRate": 0,
+    "confusion": {
+      "complex->complex": 12,
+      "complex->medium": 15,
+      "simple->medium": 4,
+      "medium->simple": 13,
+      "simple->simple": 6,
+      "medium->medium": 9,
+      "complex->simple": 1
+    },
+    "errors": [
+      {
+        "caseId": "e2-complex_notice-03",
+        "expected": "complex",
+        "predicted": "medium",
+        "score": 5
+      },
+      {
+        "caseId": "e2-complex_notice-06",
+        "expected": "complex",
+        "predicted": "medium",
+        "score": 4
+      },
+      {
+        "caseId": "e2-complex_notice-08",
+        "expected": "complex",
+        "predicted": "medium",
+        "score": 5
+      },
+      {
+        "caseId": "e2-complex_notice-09",
+        "expected": "complex",
+        "predicted": "medium",
+        "score": 3
+      },
+      {
+        "caseId": "e2-holdout-01",
+        "expected": "simple",
+        "predicted": "medium",
+        "score": 4
+      },
+      {
+        "caseId": "e2-holdout-02",
+        "expected": "medium",
+        "predicted": "simple",
+        "score": 0
+      },
+      {
+        "caseId": "e2-holdout-03",
+        "expected": "medium",
+        "predicted": "simple",
+        "score": 0
+      },
+      {
+        "caseId": "e2-holdout-05",
+        "expected": "complex",
+        "predicted": "medium",
+        "score": 3
+      },
+      {
+        "caseId": "e2-holdout-06",
+        "expected": "complex",
+        "predicted": "medium",
+        "score": 4
+      },
+      {
+        "caseId": "e2-holdout-07",
+        "expected": "medium",
+        "predicted": "simple",
+        "score": 1
+      },
+      {
+        "caseId": "e2-holdout-11",
+        "expected": "simple",
+        "predicted": "medium",
+        "score": 4
+      },
+      {
+        "caseId": "e2-holdout-15",
+        "expected": "simple",
+        "predicted": "medium",
+        "score": 2
+      },
+      {
+        "caseId": "e2-holdout-18",
+        "expected": "medium",
+        "predicted": "simple",
+        "score": 0
+      },
+      {
+        "caseId": "e2-holdout-19",
+        "expected": "simple",
+        "predicted": "medium",
+        "score": 2
+      },
+      {
+        "caseId": "e2-holdout-20",
+        "expected": "medium",
+        "predicted": "simple",
+        "score": 1
+      },
+      {
+        "caseId": "e2-holdout-21",
+        "expected": "medium",
+        "predicted": "simple",
+        "score": 0
+      },
+      {
+        "caseId": "e2-holdout-26",
+        "expected": "complex",
+        "predicted": "medium",
+        "score": 3
+      },
+      {
+        "caseId": "e2-holdout-27",
+        "expected": "complex",
+        "predicted": "medium",
+        "score": 3
+      },
+      {
+        "caseId": "e2-holdout-28",
+        "expected": "complex",
+        "predicted": "medium",
+        "score": 5
+      },
+      {
+        "caseId": "e2-holdout-31",
+        "expected": "medium",
+        "predicted": "simple",
+        "score": 0
+      },
+      {
+        "caseId": "e2-holdout-32",
+        "expected": "medium",
+        "predicted": "simple",
+        "score": 1
+      },
+      {
+        "caseId": "e2-holdout-33",
+        "expected": "complex",
+        "predicted": "medium",
+        "score": 2
+      },
+      {
+        "caseId": "e2-holdout-34",
+        "expected": "medium",
+        "predicted": "simple",
+        "score": 0
+      },
+      {
+        "caseId": "e2-holdout-37",
+        "expected": "medium",
+        "predicted": "simple",
+        "score": 1
+      },
+      {
+        "caseId": "e2-holdout-38",
+        "expected": "medium",
+        "predicted": "simple",
+        "score": 1
+      },
+      {
+        "caseId": "e2-holdout-39",
+        "expected": "medium",
+        "predicted": "simple",
+        "score": 1
+      },
+      {
+        "caseId": "e2-gen-03-3",
+        "expected": "complex",
+        "predicted": "medium",
+        "score": 3
+      },
+      {
+        "caseId": "e2-gen-07-1",
+        "expected": "complex",
+        "predicted": "medium",
+        "score": 4
+      },
+      {
+        "caseId": "e2-gen-10-3",
+        "expected": "complex",
+        "predicted": "medium",
+        "score": 2
+      },
+      {
+        "caseId": "e2-gen-11-3",
+        "expected": "complex",
+        "predicted": "medium",
+        "score": 4
+      },
+      {
+        "caseId": "e2-gen-12-1",
+        "expected": "medium",
+        "predicted": "simple",
+        "score": 1
+      },
+      {
+        "caseId": "e2-gen-20-2",
+        "expected": "complex",
+        "predicted": "simple",
+        "score": 0
+      },
+      {
+        "caseId": "e2-gen-21-3",
+        "expected": "complex",
+        "predicted": "medium",
+        "score": 2
+      }
+    ]
+  },
+  "validator": {
+    "sampleCount": 60,
+    "expectedIssueCounts": {
+      "NO_ISSUE": 36,
+      "WRONG_TIME_ROLE": 11,
+      "MISSING_AMBIGUITY": 10,
+      "MISSING_TASK": 9,
+      "MISSING_TIMEPOINT": 3,
+      "EVENT_TASK_CONFUSION": 4
+    },
+    "predictedIssueCounts": {
+      "NO_ISSUE": 48,
+      "MISSING_AMBIGUITY": 1,
+      "MISSING_TIMEPOINT": 6,
+      "MISSING_TASK": 4,
+      "EVENT_TASK_CONFUSION": 1
+    },
+    "micro": {
+      "truePositive": 6,
+      "falsePositive": 6,
+      "falseNegative": 31,
+      "precision": 0.5,
+      "recall": 0.16216216216216217
+    },
+    "perIssue": {
+      "MISSING_TASK": {
+        "truePositive": 4,
+        "falsePositive": 0,
+        "falseNegative": 5,
+        "precision": 1,
+        "recall": 0.4444444444444444
+      },
+      "MISSING_TIMEPOINT": {
+        "truePositive": 1,
+        "falsePositive": 5,
+        "falseNegative": 2,
+        "precision": 0.16666666666666666,
+        "recall": 0.3333333333333333
+      },
+      "WRONG_TIME_ROLE": {
+        "truePositive": 0,
+        "falsePositive": 0,
+        "falseNegative": 11,
+        "precision": 0,
+        "recall": 0
+      },
+      "MISSING_AMBIGUITY": {
+        "truePositive": 0,
+        "falsePositive": 1,
+        "falseNegative": 10,
+        "precision": 0,
+        "recall": 0
+      },
+      "EVENT_TASK_CONFUSION": {
+        "truePositive": 1,
+        "falsePositive": 0,
+        "falseNegative": 3,
+        "precision": 1,
+        "recall": 0.25
+      }
+    },
+    "noIssueSpecificity": 0.8333333333333334,
+    "rows": [
+      {
+        "caseId": "e2-complex_notice-01",
+        "sourceSet": "golden",
+        "expected": [
+          "NO_ISSUE"
+        ],
+        "predicted": [
+          "NO_ISSUE"
+        ],
+        "rawValidatorCodes": []
+      },
+      {
+        "caseId": "e2-complex_notice-02",
+        "sourceSet": "golden",
+        "expected": [
+          "WRONG_TIME_ROLE",
+          "MISSING_AMBIGUITY"
+        ],
+        "predicted": [
+          "NO_ISSUE"
+        ],
+        "rawValidatorCodes": []
+      },
+      {
+        "caseId": "e2-complex_notice-03",
+        "sourceSet": "golden",
+        "expected": [
+          "NO_ISSUE"
+        ],
+        "predicted": [
+          "NO_ISSUE"
+        ],
+        "rawValidatorCodes": []
+      },
+      {
+        "caseId": "e2-complex_notice-04",
+        "sourceSet": "golden",
+        "expected": [
+          "NO_ISSUE"
+        ],
+        "predicted": [
+          "NO_ISSUE"
+        ],
+        "rawValidatorCodes": []
+      },
+      {
+        "caseId": "e2-complex_notice-05",
+        "sourceSet": "golden",
+        "expected": [
+          "MISSING_AMBIGUITY"
+        ],
+        "predicted": [
+          "NO_ISSUE"
+        ],
+        "rawValidatorCodes": []
+      },
+      {
+        "caseId": "e2-complex_notice-06",
+        "sourceSet": "golden",
+        "expected": [
+          "NO_ISSUE"
+        ],
+        "predicted": [
+          "MISSING_AMBIGUITY"
+        ],
+        "rawValidatorCodes": [
+          "MISSING_TIME_AMBIGUITY"
+        ]
+      },
+      {
+        "caseId": "e2-complex_notice-07",
+        "sourceSet": "golden",
+        "expected": [
+          "NO_ISSUE"
+        ],
+        "predicted": [
+          "MISSING_TIMEPOINT"
+        ],
+        "rawValidatorCodes": [
+          "MISSING_TIMEPOINT"
+        ]
+      },
+      {
+        "caseId": "e2-complex_notice-08",
+        "sourceSet": "golden",
+        "expected": [
+          "NO_ISSUE"
+        ],
+        "predicted": [
+          "NO_ISSUE"
+        ],
+        "rawValidatorCodes": []
+      },
+      {
+        "caseId": "e2-complex_notice-09",
+        "sourceSet": "golden",
+        "expected": [
+          "WRONG_TIME_ROLE"
+        ],
+        "predicted": [
+          "NO_ISSUE"
+        ],
+        "rawValidatorCodes": []
+      },
+      {
+        "caseId": "e2-complex_notice-10",
+        "sourceSet": "golden",
+        "expected": [
+          "WRONG_TIME_ROLE",
+          "MISSING_AMBIGUITY"
+        ],
+        "predicted": [
+          "NO_ISSUE"
+        ],
+        "rawValidatorCodes": []
+      },
+      {
+        "caseId": "e2-holdout-01",
+        "sourceSet": "exposed_holdout",
+        "expected": [
+          "NO_ISSUE"
+        ],
+        "predicted": [
+          "NO_ISSUE"
+        ],
+        "rawValidatorCodes": []
+      },
+      {
+        "caseId": "e2-holdout-02",
+        "sourceSet": "exposed_holdout",
+        "expected": [
+          "MISSING_TASK"
+        ],
+        "predicted": [
+          "NO_ISSUE"
+        ],
+        "rawValidatorCodes": []
+      },
+      {
+        "caseId": "e2-holdout-03",
+        "sourceSet": "exposed_holdout",
+        "expected": [
+          "MISSING_TASK"
+        ],
+        "predicted": [
+          "NO_ISSUE"
+        ],
+        "rawValidatorCodes": []
+      },
+      {
+        "caseId": "e2-holdout-04",
+        "sourceSet": "exposed_holdout",
+        "expected": [
+          "NO_ISSUE"
+        ],
+        "predicted": [
+          "NO_ISSUE"
+        ],
+        "rawValidatorCodes": []
+      },
+      {
+        "caseId": "e2-holdout-05",
+        "sourceSet": "exposed_holdout",
+        "expected": [
+          "NO_ISSUE"
+        ],
+        "predicted": [
+          "NO_ISSUE"
+        ],
+        "rawValidatorCodes": []
+      },
+      {
+        "caseId": "e2-holdout-06",
+        "sourceSet": "exposed_holdout",
+        "expected": [
+          "NO_ISSUE"
+        ],
+        "predicted": [
+          "NO_ISSUE"
+        ],
+        "rawValidatorCodes": []
+      },
+      {
+        "caseId": "e2-holdout-07",
+        "sourceSet": "exposed_holdout",
+        "expected": [
+          "NO_ISSUE"
+        ],
+        "predicted": [
+          "NO_ISSUE"
+        ],
+        "rawValidatorCodes": []
+      },
+      {
+        "caseId": "e2-holdout-08",
+        "sourceSet": "exposed_holdout",
+        "expected": [
+          "NO_ISSUE"
+        ],
+        "predicted": [
+          "NO_ISSUE"
+        ],
+        "rawValidatorCodes": []
+      },
+      {
+        "caseId": "e2-holdout-09",
+        "sourceSet": "exposed_holdout",
+        "expected": [
+          "NO_ISSUE"
+        ],
+        "predicted": [
+          "NO_ISSUE"
+        ],
+        "rawValidatorCodes": []
+      },
+      {
+        "caseId": "e2-holdout-10",
+        "sourceSet": "exposed_holdout",
+        "expected": [
+          "WRONG_TIME_ROLE"
+        ],
+        "predicted": [
+          "NO_ISSUE"
+        ],
+        "rawValidatorCodes": []
+      },
+      {
+        "caseId": "e2-holdout-11",
+        "sourceSet": "exposed_holdout",
+        "expected": [
+          "NO_ISSUE"
+        ],
+        "predicted": [
+          "NO_ISSUE"
+        ],
+        "rawValidatorCodes": []
+      },
+      {
+        "caseId": "e2-holdout-12",
+        "sourceSet": "exposed_holdout",
+        "expected": [
+          "MISSING_AMBIGUITY"
+        ],
+        "predicted": [
+          "NO_ISSUE"
+        ],
+        "rawValidatorCodes": []
+      },
+      {
+        "caseId": "e2-holdout-13",
+        "sourceSet": "exposed_holdout",
+        "expected": [
+          "NO_ISSUE"
+        ],
+        "predicted": [
+          "NO_ISSUE"
+        ],
+        "rawValidatorCodes": []
+      },
+      {
+        "caseId": "e2-holdout-14",
+        "sourceSet": "exposed_holdout",
+        "expected": [
+          "WRONG_TIME_ROLE"
+        ],
+        "predicted": [
+          "NO_ISSUE"
+        ],
+        "rawValidatorCodes": []
+      },
+      {
+        "caseId": "e2-holdout-15",
+        "sourceSet": "exposed_holdout",
+        "expected": [
+          "NO_ISSUE"
+        ],
+        "predicted": [
+          "MISSING_TIMEPOINT"
+        ],
+        "rawValidatorCodes": [
+          "MISSING_TIMEPOINT"
+        ]
+      },
+      {
+        "caseId": "e2-holdout-16",
+        "sourceSet": "exposed_holdout",
+        "expected": [
+          "NO_ISSUE"
+        ],
+        "predicted": [
+          "MISSING_TIMEPOINT"
+        ],
+        "rawValidatorCodes": [
+          "MISSING_TIMEPOINT"
+        ]
+      },
+      {
+        "caseId": "e2-holdout-17",
+        "sourceSet": "exposed_holdout",
+        "expected": [
+          "NO_ISSUE"
+        ],
+        "predicted": [
+          "NO_ISSUE"
+        ],
+        "rawValidatorCodes": [
+          "MISSING_MATERIAL"
+        ]
+      },
+      {
+        "caseId": "e2-holdout-18",
+        "sourceSet": "exposed_holdout",
+        "expected": [
+          "MISSING_TIMEPOINT",
+          "MISSING_AMBIGUITY",
+          "EVENT_TASK_CONFUSION"
+        ],
+        "predicted": [
+          "MISSING_TIMEPOINT"
+        ],
+        "rawValidatorCodes": [
+          "MISSING_TIMEPOINT"
+        ]
+      },
+      {
+        "caseId": "e2-holdout-19",
+        "sourceSet": "exposed_holdout",
+        "expected": [
+          "NO_ISSUE"
+        ],
+        "predicted": [
+          "NO_ISSUE"
+        ],
+        "rawValidatorCodes": []
+      },
+      {
+        "caseId": "e2-holdout-20",
+        "sourceSet": "exposed_holdout",
+        "expected": [
+          "MISSING_TASK"
+        ],
+        "predicted": [
+          "MISSING_TASK"
+        ],
+        "rawValidatorCodes": [
+          "MISSING_ACTION"
+        ]
+      },
+      {
+        "caseId": "e2-holdout-21",
+        "sourceSet": "exposed_holdout",
+        "expected": [
+          "MISSING_TIMEPOINT",
+          "MISSING_AMBIGUITY",
+          "EVENT_TASK_CONFUSION"
+        ],
+        "predicted": [
+          "EVENT_TASK_CONFUSION"
+        ],
+        "rawValidatorCodes": [
+          "MISSING_EVENT"
+        ]
+      },
+      {
+        "caseId": "e2-holdout-22",
+        "sourceSet": "exposed_holdout",
+        "expected": [
+          "NO_ISSUE"
+        ],
+        "predicted": [
+          "NO_ISSUE"
+        ],
+        "rawValidatorCodes": []
+      },
+      {
+        "caseId": "e2-holdout-23",
+        "sourceSet": "exposed_holdout",
+        "expected": [
+          "NO_ISSUE"
+        ],
+        "predicted": [
+          "MISSING_TIMEPOINT"
+        ],
+        "rawValidatorCodes": [
+          "MISSING_TIMEPOINT"
+        ]
+      },
+      {
+        "caseId": "e2-holdout-24",
+        "sourceSet": "exposed_holdout",
+        "expected": [
+          "WRONG_TIME_ROLE",
+          "MISSING_AMBIGUITY"
+        ],
+        "predicted": [
+          "NO_ISSUE"
+        ],
+        "rawValidatorCodes": [
+          "INVALID_REFERENCE"
+        ]
+      },
+      {
+        "caseId": "e2-holdout-25",
+        "sourceSet": "exposed_holdout",
+        "expected": [
+          "NO_ISSUE"
+        ],
+        "predicted": [
+          "NO_ISSUE"
+        ],
+        "rawValidatorCodes": []
+      },
+      {
+        "caseId": "e2-holdout-26",
+        "sourceSet": "exposed_holdout",
+        "expected": [
+          "NO_ISSUE"
+        ],
+        "predicted": [
+          "NO_ISSUE"
+        ],
+        "rawValidatorCodes": []
+      },
+      {
+        "caseId": "e2-holdout-27",
+        "sourceSet": "exposed_holdout",
+        "expected": [
+          "NO_ISSUE"
+        ],
+        "predicted": [
+          "NO_ISSUE"
+        ],
+        "rawValidatorCodes": []
+      },
+      {
+        "caseId": "e2-holdout-28",
+        "sourceSet": "exposed_holdout",
+        "expected": [
+          "WRONG_TIME_ROLE",
+          "MISSING_AMBIGUITY"
+        ],
+        "predicted": [
+          "NO_ISSUE"
+        ],
+        "rawValidatorCodes": []
+      },
+      {
+        "caseId": "e2-holdout-29",
+        "sourceSet": "exposed_holdout",
+        "expected": [
+          "NO_ISSUE"
+        ],
+        "predicted": [
+          "NO_ISSUE"
+        ],
+        "rawValidatorCodes": []
+      },
+      {
+        "caseId": "e2-holdout-30",
+        "sourceSet": "exposed_holdout",
+        "expected": [
+          "NO_ISSUE"
+        ],
+        "predicted": [
+          "NO_ISSUE"
+        ],
+        "rawValidatorCodes": []
+      },
+      {
+        "caseId": "e2-holdout-31",
+        "sourceSet": "exposed_holdout",
+        "expected": [
+          "NO_ISSUE"
+        ],
+        "predicted": [
+          "NO_ISSUE"
+        ],
+        "rawValidatorCodes": []
+      },
+      {
+        "caseId": "e2-holdout-32",
+        "sourceSet": "exposed_holdout",
+        "expected": [
+          "EVENT_TASK_CONFUSION"
+        ],
+        "predicted": [
+          "NO_ISSUE"
+        ],
+        "rawValidatorCodes": []
+      },
+      {
+        "caseId": "e2-holdout-33",
+        "sourceSet": "exposed_holdout",
+        "expected": [
+          "MISSING_TASK"
+        ],
+        "predicted": [
+          "NO_ISSUE"
+        ],
+        "rawValidatorCodes": [
+          "INVALID_REFERENCE"
+        ]
+      },
+      {
+        "caseId": "e2-holdout-34",
+        "sourceSet": "exposed_holdout",
+        "expected": [
+          "NO_ISSUE"
+        ],
+        "predicted": [
+          "NO_ISSUE"
+        ],
+        "rawValidatorCodes": []
+      },
+      {
+        "caseId": "e2-holdout-35",
+        "sourceSet": "exposed_holdout",
+        "expected": [
+          "NO_ISSUE"
+        ],
+        "predicted": [
+          "MISSING_TIMEPOINT"
+        ],
+        "rawValidatorCodes": [
+          "MISSING_TIMEPOINT"
+        ]
+      },
+      {
+        "caseId": "e2-holdout-36",
+        "sourceSet": "exposed_holdout",
+        "expected": [
+          "NO_ISSUE"
+        ],
+        "predicted": [
+          "NO_ISSUE"
+        ],
+        "rawValidatorCodes": []
+      },
+      {
+        "caseId": "e2-holdout-37",
+        "sourceSet": "exposed_holdout",
+        "expected": [
+          "NO_ISSUE"
+        ],
+        "predicted": [
+          "NO_ISSUE"
+        ],
+        "rawValidatorCodes": []
+      },
+      {
+        "caseId": "e2-holdout-38",
+        "sourceSet": "exposed_holdout",
+        "expected": [
+          "MISSING_TASK"
+        ],
+        "predicted": [
+          "MISSING_TASK"
+        ],
+        "rawValidatorCodes": [
+          "MISSING_ACTION"
+        ]
+      },
+      {
+        "caseId": "e2-holdout-39",
+        "sourceSet": "exposed_holdout",
+        "expected": [
+          "WRONG_TIME_ROLE"
+        ],
+        "predicted": [
+          "NO_ISSUE"
+        ],
+        "rawValidatorCodes": []
+      },
+      {
+        "caseId": "e2-holdout-40",
+        "sourceSet": "exposed_holdout",
+        "expected": [
+          "NO_ISSUE"
+        ],
+        "predicted": [
+          "NO_ISSUE"
+        ],
+        "rawValidatorCodes": []
+      },
+      {
+        "caseId": "e2-gen-03-3",
+        "sourceSet": "development",
+        "expected": [
+          "WRONG_TIME_ROLE",
+          "MISSING_AMBIGUITY"
+        ],
+        "predicted": [
+          "NO_ISSUE"
+        ],
+        "rawValidatorCodes": []
+      },
+      {
+        "caseId": "e2-gen-07-1",
+        "sourceSet": "development",
+        "expected": [
+          "MISSING_TASK",
+          "EVENT_TASK_CONFUSION"
+        ],
+        "predicted": [
+          "MISSING_TASK"
+        ],
+        "rawValidatorCodes": [
+          "MISSING_ACTION"
+        ]
+      },
+      {
+        "caseId": "e2-gen-10-3",
+        "sourceSet": "development",
+        "expected": [
+          "MISSING_TASK"
+        ],
+        "predicted": [
+          "NO_ISSUE"
+        ],
+        "rawValidatorCodes": []
+      },
+      {
+        "caseId": "e2-gen-11-3",
+        "sourceSet": "development",
+        "expected": [
+          "MISSING_TASK",
+          "MISSING_TIMEPOINT"
+        ],
+        "predicted": [
+          "NO_ISSUE"
+        ],
+        "rawValidatorCodes": []
+      },
+      {
+        "caseId": "e2-gen-12-1",
+        "sourceSet": "development",
+        "expected": [
+          "NO_ISSUE"
+        ],
+        "predicted": [
+          "NO_ISSUE"
+        ],
+        "rawValidatorCodes": []
+      },
+      {
+        "caseId": "e2-gen-15-3",
+        "sourceSet": "development",
+        "expected": [
+          "NO_ISSUE"
+        ],
+        "predicted": [
+          "NO_ISSUE"
+        ],
+        "rawValidatorCodes": []
+      },
+      {
+        "caseId": "e2-gen-20-2",
+        "sourceSet": "development",
+        "expected": [
+          "WRONG_TIME_ROLE",
+          "MISSING_AMBIGUITY"
+        ],
+        "predicted": [
+          "NO_ISSUE"
+        ],
+        "rawValidatorCodes": []
+      },
+      {
+        "caseId": "e2-gen-21-3",
+        "sourceSet": "development",
+        "expected": [
+          "MISSING_TASK",
+          "WRONG_TIME_ROLE"
+        ],
+        "predicted": [
+          "MISSING_TASK"
+        ],
+        "rawValidatorCodes": [
+          "MISSING_ACTION"
+        ]
+      },
+      {
+        "caseId": "e2-gen-22-1",
+        "sourceSet": "development",
+        "expected": [
+          "NO_ISSUE"
+        ],
+        "predicted": [
+          "NO_ISSUE"
+        ],
+        "rawValidatorCodes": []
+      },
+      {
+        "caseId": "e2-gen-22-3",
+        "sourceSet": "development",
+        "expected": [
+          "NO_ISSUE"
+        ],
+        "predicted": [
+          "NO_ISSUE"
+        ],
+        "rawValidatorCodes": []
+      }
+    ]
+  },
+  "notes": [
+    "Labels were authored against exposed source and final output; this is diagnostic, not blind evidence.",
+    "MISSING_ACTION maps to MISSING_TASK; FALSE_PRECISION maps to WRONG_TIME_ROLE; MISSING_TIME_AMBIGUITY maps to MISSING_AMBIGUITY; MISSING_EVENT maps to EVENT_TASK_CONFUSION.",
+    "The current validator has no direct code for wrong business time type or task/event boundary, so these recalls are expected to expose contract gaps.",
+    "Repair triggering is not used as a correctness label."
+  ]
+}

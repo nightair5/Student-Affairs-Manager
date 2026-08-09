@@ -18,10 +18,11 @@
     "deploy:cloudflare": "npm run build && npm run cloudflare:check && wrangler deploy",
     "lint": "eslint .",
     "typecheck": "tsc -b --pretty false",
-    "test": "vitest run && node --test scripts/recognition-e2-dataset-freeze.mjs && node --test server/server-tests.mjs && node --test cloudflare/worker-tests.mjs && npm --prefix functions test",
+    "test": "vitest run && node --test scripts/recognition-e2-dataset-freeze.mjs scripts/factledger-d6-labels.node.mjs && node --test server/server-tests.mjs && node --test cloudflare/worker-tests.mjs && npm --prefix functions test",
     "eval:recognition": "vitest run src/recognition/evaluation.test.ts",
     "eval:recognition:e2": "node scripts/run-recognition-e2.mjs",
-    "eval:recognition:e2:factledger": "node scripts/run-factledger-ab.mjs"
+    "eval:recognition:e2:factledger": "node scripts/run-factledger-ab.mjs",
+    "eval:recognition:e2:factledger:d6": "node scripts/audit-factledger-d6.mjs"
   },
   "dependencies": {
     "lucide-react": "^0.468.0",
