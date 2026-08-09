@@ -1,0 +1,5333 @@
+{
+  "run": {
+    "runId": "deepseek-production-2026-08-09T08-18-37-171Z",
+    "provider": "deepseek-production",
+    "label": "g8-regression-2-4-1",
+    "datasetName": "holdout",
+    "datasetVersion": "e2-holdout-1.0.0",
+    "localPromptVersion": "recognition-2.4.1",
+    "expectedPromptVersion": "recognition-2.4.1",
+    "observedPromptVersions": [
+      "recognition-2.4.1"
+    ],
+    "modelName": "deepseek-v4-flash",
+    "promptSourceSha256": "9d958e3e3073eec2c9de66f6921c9b8aeecd0eb926d0b5386ca3886e6238ec31",
+    "startedAt": "2026-08-09T08:08:11.587Z",
+    "completedAt": "2026-08-09T08:18:37.171Z",
+    "endpoint": "https://student-affairs-manager-preview.nightsdell.workers.dev/api/deepseek",
+    "transport": "python-session",
+    "tokenAndCostObservation": "Token usage is the sum of real Worker execution metadata.",
+    "evaluationNotes": []
+  },
+  "failures": [
+    {
+      "caseId": "e2-holdout-02",
+      "group": "course",
+      "status": "ok",
+      "latencyMs": 6446,
+      "failures": [
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：携带/带 问题清单",
+          "expectedKey": "bring",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "task_spurious",
+          "severity": "minor",
+          "reason": "存在 1 条未匹配任务",
+          "tags": [
+            "OVER_TASK"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.2.1",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.4.1",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.1.0",
+        "repairVersion": "recognition-repair-1.1.0",
+        "routerVersion": "recognition-router-1.1.0",
+        "attempts": 1,
+        "durationMs": 6235,
+        "tokenUsage": {
+          "input": 2350,
+          "output": 1195
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 2350,
+              "output": 1195
+            },
+            "durationMs": 6235,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.1.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": [],
+        "allowedFields": [
+          "evidence",
+          "materials",
+          "timePoints",
+          "events",
+          "ambiguities",
+          "taskReferenceUpdates"
+        ],
+        "changedFields": [],
+        "beforeValidation": null,
+        "afterValidation": null,
+        "beforeResult": null
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.1.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-holdout-03",
+      "group": "course",
+      "status": "ok",
+      "latencyMs": 4932,
+      "failures": [
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：复核 实验数据",
+          "expectedKey": "check",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.2.1",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.4.1",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.1.0",
+        "repairVersion": "recognition-repair-1.1.0",
+        "routerVersion": "recognition-router-1.1.0",
+        "attempts": 1,
+        "durationMs": 4689,
+        "tokenUsage": {
+          "input": 2352,
+          "output": 908
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 2352,
+              "output": 908
+            },
+            "durationMs": 4689,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.1.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": [],
+        "allowedFields": [
+          "evidence",
+          "materials",
+          "timePoints",
+          "events",
+          "ambiguities",
+          "taskReferenceUpdates"
+        ],
+        "changedFields": [],
+        "beforeValidation": null,
+        "afterValidation": null,
+        "beforeResult": null
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.1.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-holdout-05",
+      "group": "competition",
+      "status": "ok",
+      "latencyMs": 12654,
+      "failures": [
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：正式提交",
+          "expectedKey": "submit",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：报名/组队 校园算法挑战赛",
+          "expectedKey": "register",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：提交 技术报告",
+          "expectedKey": "report",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "task_spurious",
+          "severity": "minor",
+          "reason": "存在 1 条未匹配任务",
+          "tags": [
+            "OVER_TASK"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.2.1",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.4.1",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.1.0",
+        "repairVersion": "recognition-repair-1.1.0",
+        "routerVersion": "recognition-router-1.1.0",
+        "attempts": 2,
+        "durationMs": 12439,
+        "tokenUsage": {
+          "input": 6628,
+          "output": 2459
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 2367,
+              "output": 2271
+            },
+            "durationMs": 10892,
+            "attempts": 1
+          },
+          {
+            "operation": "repair",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 4261,
+              "output": 188
+            },
+            "durationMs": 1547,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.1.0",
+        "attempted": true,
+        "applied": true,
+        "errorCode": null,
+        "issueCodes": [
+          "FALSE_PRECISION"
+        ],
+        "allowedFields": [
+          "evidence",
+          "materials",
+          "timePoints",
+          "events",
+          "ambiguities",
+          "taskReferenceUpdates"
+        ],
+        "changedFields": [
+          "timePoints"
+        ],
+        "beforeValidation": {
+          "validatorVersion": "recognition-quality-2.1.0",
+          "valid": false,
+          "repairRecommended": true,
+          "issues": [
+            {
+              "code": "FALSE_PRECISION",
+              "severity": "error",
+              "repairable": true,
+              "message": "模糊或相对时间不得伪装为精确值。",
+              "entityId": "tp-3",
+              "evidence": "9月9日下午"
+            }
+          ]
+        },
+        "afterValidation": {
+          "validatorVersion": "recognition-quality-2.1.0",
+          "valid": true,
+          "repairRecommended": false,
+          "issues": []
+        },
+        "beforeResult": {
+          "schemaVersion": "2.0",
+          "promptVersion": "recognition-2.4.1",
+          "modelName": "deepseek-v4-flash",
+          "createdAt": "2026-08-08T08:00:00+08:00",
+          "sourceSummary": {
+            "title": "校园算法挑战赛",
+            "sourceType": "text",
+            "notificationType": "event_notice",
+            "summary": "校园算法挑战赛要求8月21日前报名组队，9月4日20:00前提交源代码和技术报告，9月9日下午答辩。",
+            "requiresAction": true,
+            "actionReason": "包含报名、提交和答辩等多个明确行动要求。"
+          },
+          "projectMatch": {
+            "decision": "new_project",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": "校园算法挑战赛",
+            "confidence": 0.95,
+            "reasons": [
+              "来源标题明确为校园算法挑战赛，具有稳定项目身份。",
+              "包含报名、提交、答辩等多个跨日阶段，构成完整赛事流程。"
+            ]
+          },
+          "projectSuggestion": {
+            "title": {
+              "value": "校园算法挑战赛",
+              "evidenceIds": [
+                "ev-1"
+              ],
+              "confidence": 0.95,
+              "inferenceLevel": "strong_inference"
+            },
+            "category": {
+              "value": "其他",
+              "evidenceIds": [
+                "ev-1"
+              ],
+              "confidence": 0.9,
+              "inferenceLevel": "strong_inference"
+            },
+            "objective": {
+              "value": "完成报名组队、提交源代码和技术报告，并参加答辩。",
+              "evidenceIds": [
+                "ev-1",
+                "ev-2",
+                "ev-3",
+                "ev-4"
+              ],
+              "confidence": 0.95,
+              "inferenceLevel": "strong_inference"
+            },
+            "description": {
+              "value": "校园算法挑战赛，需在8月21日前报名组队，9月4日20:00前提交源代码和技术报告，9月9日下午进行答辩。",
+              "evidenceIds": [
+                "ev-1",
+                "ev-2",
+                "ev-3",
+                "ev-4"
+              ],
+              "confidence": 0.95,
+              "inferenceLevel": "strong_inference"
+            }
+          },
+          "milestones": [
+            {
+              "tempId": "ms-1",
+              "title": "报名组队",
+              "objective": "完成报名和组队。",
+              "order": 1,
+              "evidenceIds": [
+                "ev-2"
+              ],
+              "workPackages": [],
+              "tasks": [
+                {
+                  "tempId": "task-1",
+                  "parentTempId": null,
+                  "hierarchyType": "task",
+                  "title": "报名组队",
+                  "actionVerb": "报名",
+                  "actionObject": "组队",
+                  "description": "在8月21日前完成报名和组队。",
+                  "completionCriteria": [],
+                  "estimatedMinutes": 60,
+                  "statusSuggestion": "todo",
+                  "prioritySuggestion": "high",
+                  "dependencyTempIds": [],
+                  "materialTempIds": [],
+                  "timePointTempIds": [
+                    "tp-1"
+                  ],
+                  "evidenceIds": [
+                    "ev-2"
+                  ],
+                  "confidence": 0.95,
+                  "inferenceLevel": "explicit",
+                  "userConfirmationRequired": true,
+                  "selected": true
+                }
+              ]
+            },
+            {
+              "tempId": "ms-2",
+              "title": "提交作品",
+              "objective": "提交源代码和技术报告。",
+              "order": 2,
+              "evidenceIds": [
+                "ev-3"
+              ],
+              "workPackages": [],
+              "tasks": [
+                {
+                  "tempId": "task-2",
+                  "parentTempId": null,
+                  "hierarchyType": "task",
+                  "title": "提交源代码和技术报告",
+                  "actionVerb": "提交",
+                  "actionObject": "源代码和技术报告",
+                  "description": "在9月4日20:00前提交源代码和技术报告。",
+                  "completionCriteria": [],
+                  "estimatedMinutes": 30,
+                  "statusSuggestion": "todo",
+                  "prioritySuggestion": "high",
+                  "dependencyTempIds": [
+                    "task-1"
+                  ],
+                  "materialTempIds": [
+                    "mat-1",
+                    "mat-2"
+                  ],
+                  "timePointTempIds": [
+                    "tp-2"
+                  ],
+                  "evidenceIds": [
+                    "ev-3"
+                  ],
+                  "confidence": 0.95,
+                  "inferenceLevel": "explicit",
+                  "userConfirmationRequired": true,
+                  "selected": true
+                }
+              ]
+            },
+            {
+              "tempId": "ms-3",
+              "title": "参加答辩",
+              "objective": "参加9月9日下午的答辩。",
+              "order": 3,
+              "evidenceIds": [
+                "ev-4"
+              ],
+              "workPackages": [],
+              "tasks": []
+            }
+          ],
+          "standaloneTasks": [],
+          "materials": [
+            {
+              "tempId": "mat-1",
+              "name": "源代码",
+              "required": true,
+              "formatRequirements": [],
+              "namingRequirements": [],
+              "quantity": null,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task-2"
+              ],
+              "evidenceIds": [
+                "ev-3"
+              ],
+              "confidence": 0.95,
+              "selected": true
+            },
+            {
+              "tempId": "mat-2",
+              "name": "技术报告",
+              "required": true,
+              "formatRequirements": [],
+              "namingRequirements": [],
+              "quantity": null,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task-2"
+              ],
+              "evidenceIds": [
+                "ev-3"
+              ],
+              "confidence": 0.95,
+              "selected": true
+            }
+          ],
+          "timePoints": [
+            {
+              "tempId": "tp-1",
+              "type": "registration_deadline",
+              "rawText": "8月21日前",
+              "normalizedValue": "2026-08-21",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": true,
+              "precision": "date_only",
+              "needsConfirmation": false,
+              "relatedTaskTempIds": [
+                "task-1"
+              ],
+              "relatedMaterialTempIds": [],
+              "evidenceIds": [
+                "ev-2"
+              ],
+              "confidence": 0.95,
+              "selected": true
+            },
+            {
+              "tempId": "tp-2",
+              "type": "submission_deadline",
+              "rawText": "9月4日20:00前",
+              "normalizedValue": "2026-09-04T20:00:00+08:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "relatedTaskTempIds": [
+                "task-2"
+              ],
+              "relatedMaterialTempIds": [
+                "mat-1",
+                "mat-2"
+              ],
+              "evidenceIds": [
+                "ev-3"
+              ],
+              "confidence": 0.95,
+              "selected": true
+            },
+            {
+              "tempId": "tp-3",
+              "type": "event_start",
+              "rawText": "9月9日下午",
+              "normalizedValue": "2026-09-09T14:00:00+08:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "vague",
+              "needsConfirmation": true,
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "evidenceIds": [
+                "ev-4"
+              ],
+              "confidence": 0.7,
+              "selected": false
+            }
+          ],
+          "events": [
+            {
+              "tempId": "event-1",
+              "title": "答辩",
+              "description": "9月9日下午进行答辩。",
+              "startTimePointTempId": "tp-3",
+              "endTimePointTempId": null,
+              "location": null,
+              "evidenceIds": [
+                "ev-4"
+              ],
+              "confidence": 0.7,
+              "inferenceLevel": "explicit",
+              "selected": true
+            }
+          ],
+          "evidence": [
+            {
+              "id": "ev-1",
+              "sourceId": "pending-source",
+              "quote": "校园算法挑战赛",
+              "quotedText": "校园算法挑战赛",
+              "field": "description",
+              "extractionMethod": "ai",
+              "confidence": 0.95
+            },
+            {
+              "id": "ev-2",
+              "sourceId": "pending-source",
+              "quote": "8月21日前报名组队",
+              "quotedText": "8月21日前报名组队",
+              "field": "description",
+              "extractionMethod": "ai",
+              "confidence": 0.95
+            },
+            {
+              "id": "ev-3",
+              "sourceId": "pending-source",
+              "quote": "9月4日20:00前提交源代码和技术报告",
+              "quotedText": "9月4日20:00前提交源代码和技术报告",
+              "field": "description",
+              "extractionMethod": "ai",
+              "confidence": 0.95
+            },
+            {
+              "id": "ev-4",
+              "sourceId": "pending-source",
+              "quote": "9月9日下午答辩",
+              "quotedText": "9月9日下午答辩",
+              "field": "description",
+              "extractionMethod": "ai",
+              "confidence": 0.7
+            }
+          ],
+          "conflicts": [],
+          "ambiguities": [
+            {
+              "id": "amb-1",
+              "field": "event_start",
+              "message": "答辩时间仅说明'下午'，未给出具体时刻。",
+              "options": [
+                "14:00",
+                "15:00",
+                "16:00"
+              ],
+              "evidenceIds": [
+                "ev-4"
+              ]
+            }
+          ],
+          "ignoredContent": [],
+          "quality": {
+            "overallConfidence": 0.9,
+            "hierarchyConfidence": 0.95,
+            "dateConfidence": 0.85,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": true,
+            "reviewReasons": [
+              "答辩时间仅说明'下午'，未给出具体时刻，需要人工确认。"
+            ]
+          }
+        },
+        "beforeScores": {
+          "taskTruePositive": 1,
+          "materialMatched": 2,
+          "timePointMatched": 3,
+          "eventMatched": 1,
+          "evidenceMatched": 9,
+          "duplicateCount": 0,
+          "overFragmented": false,
+          "majorCorrection": true,
+          "severeError": false
+        }
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.1.0",
+        "level": "medium",
+        "score": 3,
+        "reasons": [
+          "包含 3 个时间表达",
+          "包含 2 个动作或义务表达"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-holdout-06",
+      "group": "competition",
+      "status": "ok",
+      "latencyMs": 8743,
+      "failures": [
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：正式提交",
+          "expectedKey": "submit",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "ambiguity_missing",
+          "severity": "major",
+          "reason": "应标记的歧义未标记",
+          "expectedKey": "ambiguity-1",
+          "tags": [
+            "MISSING_AMBIGUITY"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.2.1",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.4.1",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.1.0",
+        "repairVersion": "recognition-repair-1.1.0",
+        "routerVersion": "recognition-router-1.1.0",
+        "attempts": 1,
+        "durationMs": 8495,
+        "tokenUsage": {
+          "input": 2365,
+          "output": 1713
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 2365,
+              "output": 1713
+            },
+            "durationMs": 8495,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.1.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": [],
+        "allowedFields": [
+          "evidence",
+          "materials",
+          "timePoints",
+          "events",
+          "ambiguities",
+          "taskReferenceUpdates"
+        ],
+        "changedFields": [],
+        "beforeValidation": null,
+        "afterValidation": null,
+        "beforeResult": null
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.1.0",
+        "level": "medium",
+        "score": 4,
+        "reasons": [
+          "包含 2 个时间表达",
+          "包含附件或文件上下文",
+          "包含条件适用语义"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-holdout-07",
+      "group": "competition",
+      "status": "ok",
+      "latencyMs": 7971,
+      "failures": [
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：上传/提交 原创声明",
+          "expectedKey": "statement",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.2.1",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.4.1",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.1.0",
+        "repairVersion": "recognition-repair-1.1.0",
+        "routerVersion": "recognition-router-1.1.0",
+        "attempts": 1,
+        "durationMs": 7680,
+        "tokenUsage": {
+          "input": 2359,
+          "output": 1557
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 2359,
+              "output": 1557
+            },
+            "durationMs": 7680,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.1.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": [],
+        "allowedFields": [
+          "evidence",
+          "materials",
+          "timePoints",
+          "events",
+          "ambiguities",
+          "taskReferenceUpdates"
+        ],
+        "changedFields": [],
+        "beforeValidation": null,
+        "afterValidation": null,
+        "beforeResult": null
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.1.0",
+        "level": "simple",
+        "score": 1,
+        "reasons": [
+          "包含 2 个动作或义务表达"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-holdout-08",
+      "group": "competition",
+      "status": "ok",
+      "latencyMs": 8917,
+      "failures": [
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：报名/完成 模拟法庭竞赛",
+          "expectedKey": "register",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "task_spurious",
+          "severity": "minor",
+          "reason": "存在 1 条未匹配任务",
+          "tags": [
+            "OVER_TASK"
+          ]
+        },
+        {
+          "category": "evidence_missing",
+          "severity": "major",
+          "reason": "缺少 1 项可回看证据",
+          "tags": [
+            "MISSING_EVIDENCE"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.2.1",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.4.1",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.1.0",
+        "repairVersion": "recognition-repair-1.1.0",
+        "routerVersion": "recognition-router-1.1.0",
+        "attempts": 1,
+        "durationMs": 8691,
+        "tokenUsage": {
+          "input": 2355,
+          "output": 1696
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 2355,
+              "output": 1696
+            },
+            "durationMs": 8691,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.1.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": [],
+        "allowedFields": [
+          "evidence",
+          "materials",
+          "timePoints",
+          "events",
+          "ambiguities",
+          "taskReferenceUpdates"
+        ],
+        "changedFields": [],
+        "beforeValidation": null,
+        "afterValidation": null,
+        "beforeResult": null
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.1.0",
+        "level": "medium",
+        "score": 2,
+        "reasons": [
+          "包含 3 个动作或义务表达"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-holdout-09",
+      "group": "application",
+      "status": "ok",
+      "latencyMs": 7614,
+      "failures": [
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：申请准备/资料准备",
+          "expectedKey": "prepare",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：正式提交",
+          "expectedKey": "submit",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "evidence_missing",
+          "severity": "major",
+          "reason": "缺少 1 项可回看证据",
+          "tags": [
+            "MISSING_EVIDENCE"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.2.1",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.4.1",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.1.0",
+        "repairVersion": "recognition-repair-1.1.0",
+        "routerVersion": "recognition-router-1.1.0",
+        "attempts": 1,
+        "durationMs": 7356,
+        "tokenUsage": {
+          "input": 2358,
+          "output": 1518
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 2358,
+              "output": 1518
+            },
+            "durationMs": 7356,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.1.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": [],
+        "allowedFields": [
+          "evidence",
+          "materials",
+          "timePoints",
+          "events",
+          "ambiguities",
+          "taskReferenceUpdates"
+        ],
+        "changedFields": [],
+        "beforeValidation": null,
+        "afterValidation": null,
+        "beforeResult": null
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.1.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-holdout-10",
+      "group": "application",
+      "status": "ok",
+      "latencyMs": 10380,
+      "failures": [
+        {
+          "category": "time_incorrect",
+          "severity": "major",
+          "reason": "时间点不正确：9月11日前",
+          "expectedKey": "submit-time",
+          "actual": "2026-09-11",
+          "tags": [
+            "WRONG_TIME_VALUE"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.2.1",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.4.1",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.1.0",
+        "repairVersion": "recognition-repair-1.1.0",
+        "routerVersion": "recognition-router-1.1.0",
+        "attempts": 2,
+        "durationMs": 10163,
+        "tokenUsage": {
+          "input": 6024,
+          "output": 1948
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 2355,
+              "output": 1688
+            },
+            "durationMs": 8359,
+            "attempts": 1
+          },
+          {
+            "operation": "repair",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 3669,
+              "output": 260
+            },
+            "durationMs": 1804,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.1.0",
+        "attempted": true,
+        "applied": true,
+        "errorCode": null,
+        "issueCodes": [
+          "FALSE_PRECISION"
+        ],
+        "allowedFields": [
+          "evidence",
+          "materials",
+          "timePoints",
+          "events",
+          "ambiguities",
+          "taskReferenceUpdates"
+        ],
+        "changedFields": [
+          "timePoints"
+        ],
+        "beforeValidation": {
+          "validatorVersion": "recognition-quality-2.1.0",
+          "valid": false,
+          "repairRecommended": true,
+          "issues": [
+            {
+              "code": "FALSE_PRECISION",
+              "severity": "error",
+              "repairable": true,
+              "message": "模糊或相对时间不得伪装为精确值。",
+              "entityId": "tp-2",
+              "evidence": "9月13日上午"
+            }
+          ]
+        },
+        "afterValidation": {
+          "validatorVersion": "recognition-quality-2.1.0",
+          "valid": true,
+          "repairRecommended": false,
+          "issues": []
+        },
+        "beforeResult": {
+          "schemaVersion": "2.0",
+          "promptVersion": "recognition-2.4.1",
+          "modelName": "deepseek-v4-flash",
+          "createdAt": "2026-08-08T08:00:00+08:00",
+          "sourceSummary": {
+            "title": "转专业申请",
+            "sourceType": "text",
+            "notificationType": "uncertain",
+            "summary": "申请人须在9月11日前填写转专业申请表，并于9月13日上午参加资格审核。",
+            "requiresAction": true,
+            "actionReason": "明确要求填写申请表并参加资格审核"
+          },
+          "projectMatch": {
+            "decision": "new_project",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": "转专业申请",
+            "confidence": 0.9,
+            "reasons": [
+              "有稳定名称'转专业申请'",
+              "包含多个跨日行动（填写申请表、参加资格审核）"
+            ]
+          },
+          "projectSuggestion": {
+            "title": {
+              "value": "转专业申请",
+              "evidenceIds": [
+                "ev-1"
+              ],
+              "confidence": 0.95,
+              "inferenceLevel": "strong_inference"
+            },
+            "category": {
+              "value": "其他",
+              "evidenceIds": [
+                "ev-1"
+              ],
+              "confidence": 0.8,
+              "inferenceLevel": "strong_inference"
+            },
+            "objective": {
+              "value": "完成转专业申请流程",
+              "evidenceIds": [
+                "ev-1"
+              ],
+              "confidence": 0.8,
+              "inferenceLevel": "strong_inference"
+            },
+            "description": {
+              "value": "填写转专业申请表并在规定时间参加资格审核",
+              "evidenceIds": [
+                "ev-1"
+              ],
+              "confidence": 0.9,
+              "inferenceLevel": "strong_inference"
+            }
+          },
+          "milestones": [
+            {
+              "tempId": "ms-1",
+              "title": "申请提交",
+              "objective": "在截止日期前完成转专业申请表的填写",
+              "order": 1,
+              "evidenceIds": [
+                "ev-1"
+              ],
+              "workPackages": [],
+              "tasks": [
+                {
+                  "tempId": "task-1",
+                  "parentTempId": null,
+                  "hierarchyType": "task",
+                  "title": "填写转专业申请表",
+                  "actionVerb": "填写",
+                  "actionObject": "转专业申请表",
+                  "description": "在9月11日前完成转专业申请表的填写",
+                  "completionCriteria": [],
+                  "estimatedMinutes": 60,
+                  "statusSuggestion": "todo",
+                  "prioritySuggestion": "high",
+                  "dependencyTempIds": [],
+                  "materialTempIds": [
+                    "mat-1"
+                  ],
+                  "timePointTempIds": [
+                    "tp-1"
+                  ],
+                  "evidenceIds": [
+                    "ev-1"
+                  ],
+                  "confidence": 0.95,
+                  "inferenceLevel": "explicit",
+                  "userConfirmationRequired": true,
+                  "selected": true
+                }
+              ]
+            },
+            {
+              "tempId": "ms-2",
+              "title": "资格审核",
+              "objective": "按时参加资格审核",
+              "order": 2,
+              "evidenceIds": [
+                "ev-1"
+              ],
+              "workPackages": [],
+              "tasks": []
+            }
+          ],
+          "standaloneTasks": [],
+          "materials": [
+            {
+              "tempId": "mat-1",
+              "name": "转专业申请表",
+              "required": true,
+              "formatRequirements": [],
+              "namingRequirements": [],
+              "quantity": null,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task-1"
+              ],
+              "evidenceIds": [
+                "ev-1"
+              ],
+              "confidence": 0.95,
+              "selected": true
+            }
+          ],
+          "timePoints": [
+            {
+              "tempId": "tp-1",
+              "type": "task_deadline",
+              "rawText": "9月11日前",
+              "normalizedValue": "2026-09-11",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": true,
+              "precision": "date_only",
+              "needsConfirmation": false,
+              "relatedTaskTempIds": [
+                "task-1"
+              ],
+              "relatedMaterialTempIds": [
+                "mat-1"
+              ],
+              "evidenceIds": [
+                "ev-1"
+              ],
+              "confidence": 0.9,
+              "selected": true
+            },
+            {
+              "tempId": "tp-2",
+              "type": "event_start",
+              "rawText": "9月13日上午",
+              "normalizedValue": "2026-09-13T09:00:00+08:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "vague",
+              "needsConfirmation": true,
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "evidenceIds": [
+                "ev-1"
+              ],
+              "confidence": 0.7,
+              "selected": false
+            }
+          ],
+          "events": [
+            {
+              "tempId": "event-1",
+              "title": "资格审核",
+              "description": "参加转专业资格审核",
+              "startTimePointTempId": "tp-2",
+              "endTimePointTempId": null,
+              "location": null,
+              "evidenceIds": [
+                "ev-1"
+              ],
+              "confidence": 0.9,
+              "inferenceLevel": "explicit",
+              "selected": true
+            }
+          ],
+          "evidence": [
+            {
+              "id": "ev-1",
+              "sourceId": "pending-source",
+              "quote": "申请人须在9月11日前填写转专业申请表，并于9月13日上午参加资格审核。",
+              "quotedText": "申请人须在9月11日前填写转专业申请表，并于9月13日上午参加资格审核。",
+              "field": "description",
+              "extractionMethod": "ai",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [],
+          "ambiguities": [
+            {
+              "id": "amb-1",
+              "field": "time",
+              "message": "资格审核的具体时间仅表述为'上午'，未提供具体时刻",
+              "options": [
+                "上午9:00",
+                "上午10:00",
+                "其他"
+              ],
+              "evidenceIds": [
+                "ev-1"
+              ]
+            }
+          ],
+          "ignoredContent": [],
+          "quality": {
+            "overallConfidence": 0.9,
+            "hierarchyConfidence": 0.9,
+            "dateConfidence": 0.8,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": true,
+            "reviewReasons": [
+              "资格审核的具体时间不明确，需要确认"
+            ]
+          }
+        },
+        "beforeScores": {
+          "taskTruePositive": 1,
+          "materialMatched": 1,
+          "timePointMatched": 1,
+          "eventMatched": 1,
+          "evidenceMatched": 5,
+          "duplicateCount": 0,
+          "overFragmented": false,
+          "majorCorrection": true,
+          "severeError": false
+        }
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.1.0",
+        "level": "medium",
+        "score": 4,
+        "reasons": [
+          "包含 2 个时间表达",
+          "包含 3 个动作或义务表达"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-holdout-11",
+      "group": "application",
+      "status": "ok",
+      "latencyMs": 6836,
+      "failures": [
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：提交 家长知情书",
+          "expectedKey": "notice",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.2.1",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.4.1",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.1.0",
+        "repairVersion": "recognition-repair-1.1.0",
+        "routerVersion": "recognition-router-1.1.0",
+        "attempts": 1,
+        "durationMs": 6560,
+        "tokenUsage": {
+          "input": 2352,
+          "output": 1294
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 2352,
+              "output": 1294
+            },
+            "durationMs": 6560,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.1.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": [],
+        "allowedFields": [
+          "evidence",
+          "materials",
+          "timePoints",
+          "events",
+          "ambiguities",
+          "taskReferenceUpdates"
+        ],
+        "changedFields": [],
+        "beforeValidation": null,
+        "afterValidation": null,
+        "beforeResult": null
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.1.0",
+        "level": "medium",
+        "score": 4,
+        "reasons": [
+          "包含 3 个动作或义务表达",
+          "包含更正或补充语义"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-holdout-12",
+      "group": "application",
+      "status": "ok",
+      "latencyMs": 6731,
+      "failures": [
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：暂定9月1日开放",
+          "expectedKey": "start",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：截止时间另行通知",
+          "expectedKey": "deadline",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "time_spurious",
+          "severity": "minor",
+          "reason": "存在 2 个未匹配时间点",
+          "tags": [
+            "WRONG_TIMEPOINT_TYPE"
+          ]
+        },
+        {
+          "category": "ambiguity_missing",
+          "severity": "major",
+          "reason": "应标记的歧义未标记",
+          "expectedKey": "ambiguity-1",
+          "tags": [
+            "MISSING_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.2.1",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.4.1",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.1.0",
+        "repairVersion": "recognition-repair-1.1.0",
+        "routerVersion": "recognition-router-1.1.0",
+        "attempts": 1,
+        "durationMs": 6497,
+        "tokenUsage": {
+          "input": 2350,
+          "output": 1210
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 2350,
+              "output": 1210
+            },
+            "durationMs": 6497,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.1.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": [],
+        "allowedFields": [
+          "evidence",
+          "materials",
+          "timePoints",
+          "events",
+          "ambiguities",
+          "taskReferenceUpdates"
+        ],
+        "changedFields": [],
+        "beforeValidation": null,
+        "afterValidation": null,
+        "beforeResult": null
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.1.0",
+        "level": "medium",
+        "score": 4,
+        "reasons": [
+          "包含 2 个时间表达",
+          "包含条件适用语义",
+          "包含不确定或待确认语义"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-holdout-13",
+      "group": "scholarship",
+      "status": "ok",
+      "latencyMs": 7025,
+      "failures": [
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：资料准备/申请准备",
+          "expectedKey": "prepare",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：正式提交",
+          "expectedKey": "submit",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：提交 奖学金材料",
+          "expectedKey": "submit",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "task_spurious",
+          "severity": "minor",
+          "reason": "存在 1 条未匹配任务",
+          "tags": [
+            "OVER_TASK"
+          ]
+        },
+        {
+          "category": "evidence_missing",
+          "severity": "major",
+          "reason": "缺少 1 项可回看证据",
+          "tags": [
+            "MISSING_EVIDENCE"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.2.1",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.4.1",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.1.0",
+        "repairVersion": "recognition-repair-1.1.0",
+        "routerVersion": "recognition-router-1.1.0",
+        "attempts": 1,
+        "durationMs": 6755,
+        "tokenUsage": {
+          "input": 2352,
+          "output": 1376
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 2352,
+              "output": 1376
+            },
+            "durationMs": 6755,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.1.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": [],
+        "allowedFields": [
+          "evidence",
+          "materials",
+          "timePoints",
+          "events",
+          "ambiguities",
+          "taskReferenceUpdates"
+        ],
+        "changedFields": [],
+        "beforeValidation": null,
+        "afterValidation": null,
+        "beforeResult": null
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.1.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-holdout-14",
+      "group": "scholarship",
+      "status": "ok",
+      "latencyMs": 7886,
+      "failures": [
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：补交/提交 诚信承诺书",
+          "expectedKey": "submit",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "task_spurious",
+          "severity": "minor",
+          "reason": "存在 1 条未匹配任务",
+          "tags": [
+            "OVER_TASK"
+          ]
+        },
+        {
+          "category": "time_incorrect",
+          "severity": "major",
+          "reason": "时间点不正确：9月22日17:00",
+          "expectedKey": "deadline",
+          "actual": "2026-09-22T17:00:00+08:00",
+          "tags": [
+            "WRONG_TIME_VALUE"
+          ]
+        },
+        {
+          "category": "ambiguity_missing",
+          "severity": "major",
+          "reason": "应标记的歧义未标记",
+          "expectedKey": "ambiguity-1",
+          "tags": [
+            "MISSING_AMBIGUITY"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.2.1",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.4.1",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.1.0",
+        "repairVersion": "recognition-repair-1.1.0",
+        "routerVersion": "recognition-router-1.1.0",
+        "attempts": 1,
+        "durationMs": 7412,
+        "tokenUsage": {
+          "input": 2361,
+          "output": 1414
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 2361,
+              "output": 1414
+            },
+            "durationMs": 7412,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.1.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": [],
+        "allowedFields": [
+          "evidence",
+          "materials",
+          "timePoints",
+          "events",
+          "ambiguities",
+          "taskReferenceUpdates"
+        ],
+        "changedFields": [],
+        "beforeValidation": null,
+        "afterValidation": null,
+        "beforeResult": null
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.1.0",
+        "level": "medium",
+        "score": 2,
+        "reasons": [
+          "包含更正或补充语义"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-holdout-18",
+      "group": "meeting",
+      "status": "ok",
+      "latencyMs": 7548,
+      "failures": [
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：预计下周",
+          "expectedKey": "meeting-time",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "event_missing",
+          "severity": "major",
+          "reason": "缺少事件：导师面谈",
+          "expectedKey": "meeting",
+          "tags": [
+            "MISSING_EVENT"
+          ]
+        },
+        {
+          "category": "ambiguity_missing",
+          "severity": "major",
+          "reason": "应标记的歧义未标记",
+          "expectedKey": "ambiguity-1",
+          "tags": [
+            "MISSING_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.2.1",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.4.1",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.1.0",
+        "repairVersion": "recognition-repair-1.1.0",
+        "routerVersion": "recognition-router-1.1.0",
+        "attempts": 2,
+        "durationMs": 7318,
+        "tokenUsage": {
+          "input": 5283,
+          "output": 1201
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 2350,
+              "output": 797
+            },
+            "durationMs": 4632,
+            "attempts": 1
+          },
+          {
+            "operation": "repair",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 2933,
+              "output": 404
+            },
+            "durationMs": 2686,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.1.0",
+        "attempted": true,
+        "applied": true,
+        "errorCode": null,
+        "issueCodes": [
+          "MISSING_TIMEPOINT"
+        ],
+        "allowedFields": [
+          "evidence",
+          "materials",
+          "timePoints",
+          "events",
+          "ambiguities",
+          "taskReferenceUpdates"
+        ],
+        "changedFields": [
+          "evidence"
+        ],
+        "beforeValidation": {
+          "validatorVersion": "recognition-quality-2.1.0",
+          "valid": true,
+          "repairRecommended": true,
+          "issues": [
+            {
+              "code": "MISSING_TIMEPOINT",
+              "severity": "warning",
+              "repairable": true,
+              "message": "来源中存在未结构化的时间表达。",
+              "entityId": null,
+              "evidence": "下周进行"
+            }
+          ]
+        },
+        "afterValidation": {
+          "validatorVersion": "recognition-quality-2.1.0",
+          "valid": true,
+          "repairRecommended": true,
+          "issues": [
+            {
+              "code": "MISSING_TIMEPOINT",
+              "severity": "warning",
+              "repairable": true,
+              "message": "来源中存在未结构化的时间表达。",
+              "entityId": null,
+              "evidence": "下周进行"
+            }
+          ]
+        },
+        "beforeResult": {
+          "schemaVersion": "2.0",
+          "promptVersion": "recognition-2.4.1",
+          "modelName": "deepseek-v4-flash",
+          "createdAt": "2026-08-08T08:00:00+08:00",
+          "sourceSummary": {
+            "title": "导师面谈安排",
+            "sourceType": "text",
+            "notificationType": "uncertain",
+            "summary": "导师面谈预计下周进行，具体时段由助教单独通知。",
+            "requiresAction": false,
+            "actionReason": "仅通知面谈安排，具体时间待通知，无明确用户行动要求。"
+          },
+          "projectMatch": {
+            "decision": "uncertain",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 0.3,
+            "reasons": [
+              "来源未提供稳定项目名称或明确项目身份",
+              "仅提及一次面谈安排，无跨日交付或多个真实阶段",
+              "具体时间未定，无法确认项目归属"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [],
+          "materials": [],
+          "timePoints": [],
+          "events": [],
+          "evidence": [
+            {
+              "id": "ev-1",
+              "sourceId": "pending-source",
+              "quote": "导师面谈预计下周进行，具体时段由助教单独通知。",
+              "quotedText": "导师面谈预计下周进行，具体时段由助教单独通知。",
+              "field": "event",
+              "extractionMethod": "ai",
+              "confidence": 0.9
+            }
+          ],
+          "conflicts": [],
+          "ambiguities": [],
+          "ignoredContent": [],
+          "quality": {
+            "overallConfidence": 0.3,
+            "hierarchyConfidence": 0.3,
+            "dateConfidence": 0.2,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": true,
+            "reviewReasons": [
+              "面谈具体时间未定，需等待助教通知",
+              "项目归属不确定，无法确定是否创建项目",
+              "项目归属不确定"
+            ]
+          }
+        },
+        "beforeScores": {
+          "taskTruePositive": 0,
+          "materialMatched": 0,
+          "timePointMatched": 0,
+          "eventMatched": 0,
+          "evidenceMatched": 2,
+          "duplicateCount": 0,
+          "overFragmented": false,
+          "majorCorrection": true,
+          "severeError": false
+        }
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.1.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-holdout-20",
+      "group": "event",
+      "status": "ok",
+      "latencyMs": 5246,
+      "failures": [
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：出示/携带 校园卡",
+          "expectedKey": "bring",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.2.1",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.4.1",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.1.0",
+        "repairVersion": "recognition-repair-1.1.0",
+        "routerVersion": "recognition-router-1.1.0",
+        "attempts": 1,
+        "durationMs": 4984,
+        "tokenUsage": {
+          "input": 2354,
+          "output": 992
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 2354,
+              "output": 992
+            },
+            "durationMs": 4984,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.1.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": [],
+        "allowedFields": [
+          "evidence",
+          "materials",
+          "timePoints",
+          "events",
+          "ambiguities",
+          "taskReferenceUpdates"
+        ],
+        "changedFields": [],
+        "beforeValidation": null,
+        "afterValidation": null,
+        "beforeResult": null
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.1.0",
+        "level": "simple",
+        "score": 1,
+        "reasons": [
+          "包含 2 个动作或义务表达"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-holdout-21",
+      "group": "event",
+      "status": "ok",
+      "latencyMs": 7333,
+      "failures": [
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：10月第三周",
+          "expectedKey": "start",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "event_missing",
+          "severity": "major",
+          "reason": "缺少事件：体育测试",
+          "expectedKey": "test",
+          "tags": [
+            "MISSING_EVENT"
+          ]
+        },
+        {
+          "category": "ambiguity_missing",
+          "severity": "major",
+          "reason": "应标记的歧义未标记",
+          "expectedKey": "ambiguity-1",
+          "tags": [
+            "MISSING_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.2.1",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.4.1",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.1.0",
+        "repairVersion": "recognition-repair-1.1.0",
+        "routerVersion": "recognition-router-1.1.0",
+        "attempts": 2,
+        "durationMs": 7103,
+        "tokenUsage": {
+          "input": 5274,
+          "output": 1219
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 2347,
+              "output": 793
+            },
+            "durationMs": 4433,
+            "attempts": 1
+          },
+          {
+            "operation": "repair",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 2927,
+              "output": 426
+            },
+            "durationMs": 2670,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.1.0",
+        "attempted": true,
+        "applied": true,
+        "errorCode": null,
+        "issueCodes": [
+          "MISSING_EVENT"
+        ],
+        "allowedFields": [
+          "evidence",
+          "materials",
+          "timePoints",
+          "events",
+          "ambiguities",
+          "taskReferenceUpdates"
+        ],
+        "changedFields": [
+          "evidence"
+        ],
+        "beforeValidation": {
+          "validatorVersion": "recognition-quality-2.1.0",
+          "valid": true,
+          "repairRecommended": true,
+          "issues": [
+            {
+              "code": "MISSING_EVENT",
+              "severity": "warning",
+              "repairable": true,
+              "message": "来源包含参加型安排，但结果没有 Event。",
+              "entityId": null,
+              "evidence": null
+            }
+          ]
+        },
+        "afterValidation": {
+          "validatorVersion": "recognition-quality-2.1.0",
+          "valid": true,
+          "repairRecommended": true,
+          "issues": [
+            {
+              "code": "MISSING_EVENT",
+              "severity": "warning",
+              "repairable": true,
+              "message": "来源包含参加型安排，但结果没有 Event。",
+              "entityId": null,
+              "evidence": null
+            }
+          ]
+        },
+        "beforeResult": {
+          "schemaVersion": "2.0",
+          "promptVersion": "recognition-2.4.1",
+          "modelName": "deepseek-v4-flash",
+          "createdAt": "2026-08-08T08:00:00+08:00",
+          "sourceSummary": {
+            "title": "体育测试",
+            "sourceType": "text",
+            "notificationType": "uncertain",
+            "summary": "体育测试安排在10月第三周，分组时间表尚未公布。",
+            "requiresAction": false,
+            "actionReason": "仅提供测试时间信息，未要求用户执行具体行动。"
+          },
+          "projectMatch": {
+            "decision": "uncertain",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 0.3,
+            "reasons": [
+              "来源仅提及体育测试，未提供稳定项目名称或明确项目身份。",
+              "未提供具体行动要求，无法确定是否构成独立项目。"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [],
+          "materials": [],
+          "timePoints": [],
+          "events": [],
+          "evidence": [
+            {
+              "id": "ev-1",
+              "sourceId": "pending-source",
+              "quote": "体育测试安排在10月第三周，分组时间表尚未公布。",
+              "quotedText": "体育测试安排在10月第三周，分组时间表尚未公布。",
+              "field": "description",
+              "extractionMethod": "ai",
+              "confidence": 0.9
+            }
+          ],
+          "conflicts": [],
+          "ambiguities": [],
+          "ignoredContent": [],
+          "quality": {
+            "overallConfidence": 0.5,
+            "hierarchyConfidence": 0.3,
+            "dateConfidence": 0.5,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": true,
+            "reviewReasons": [
+              "体育测试时间仅为模糊表达，具体日期和分组时间表未公布，需要人工确认。",
+              "项目归属不确定，无法确定是否构成独立项目。",
+              "项目归属不确定"
+            ]
+          }
+        },
+        "beforeScores": {
+          "taskTruePositive": 0,
+          "materialMatched": 0,
+          "timePointMatched": 0,
+          "eventMatched": 0,
+          "evidenceMatched": 2,
+          "duplicateCount": 0,
+          "overFragmented": false,
+          "majorCorrection": true,
+          "severeError": false
+        }
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.1.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-holdout-22",
+      "group": "complex_notice",
+      "status": "ok",
+      "latencyMs": 14225,
+      "failures": [
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：资料准备/中期准备",
+          "expectedKey": "prepare",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：正式提交",
+          "expectedKey": "submit",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：检查汇报/答辩或展示",
+          "expectedKey": "review",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：上传 中期材料",
+          "expectedKey": "upload",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "task_spurious",
+          "severity": "minor",
+          "reason": "存在 1 条未匹配任务",
+          "tags": [
+            "OVER_TASK"
+          ]
+        },
+        {
+          "category": "evidence_missing",
+          "severity": "major",
+          "reason": "缺少 1 项可回看证据",
+          "tags": [
+            "MISSING_EVIDENCE"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.2.1",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.4.1",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.1.0",
+        "repairVersion": "recognition-repair-1.1.0",
+        "routerVersion": "recognition-router-1.1.0",
+        "attempts": 1,
+        "durationMs": 13541,
+        "tokenUsage": {
+          "input": 2390,
+          "output": 2991
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 2390,
+              "output": 2991
+            },
+            "durationMs": 13541,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.1.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": [],
+        "allowedFields": [
+          "evidence",
+          "materials",
+          "timePoints",
+          "events",
+          "ambiguities",
+          "taskReferenceUpdates"
+        ],
+        "changedFields": [],
+        "beforeValidation": null,
+        "afterValidation": null,
+        "beforeResult": null
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.1.0",
+        "level": "complex",
+        "score": 8,
+        "reasons": [
+          "包含 4 个时间表达",
+          "包含 4 个动作或义务表达",
+          "包含 2 个事件线索"
+        ],
+        "candidateStrategy": "fact_then_plan",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-holdout-23",
+      "group": "complex_notice",
+      "status": "ok",
+      "latencyMs": 12577,
+      "failures": [
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：提交 导师签字页",
+          "expectedKey": "signature",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.2.1",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.4.1",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.1.0",
+        "repairVersion": "recognition-repair-1.1.0",
+        "routerVersion": "recognition-router-1.1.0",
+        "attempts": 2,
+        "durationMs": 12239,
+        "tokenUsage": {
+          "input": 6646,
+          "output": 2495
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 2369,
+              "output": 2314
+            },
+            "durationMs": 10366,
+            "attempts": 1
+          },
+          {
+            "operation": "repair",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 4277,
+              "output": 181
+            },
+            "durationMs": 1873,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.1.0",
+        "attempted": true,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": [
+          "MISSING_TIMEPOINT"
+        ],
+        "allowedFields": [
+          "evidence",
+          "materials",
+          "timePoints",
+          "events",
+          "ambiguities",
+          "taskReferenceUpdates"
+        ],
+        "changedFields": [],
+        "beforeValidation": {
+          "validatorVersion": "recognition-quality-2.1.0",
+          "valid": true,
+          "repairRecommended": true,
+          "issues": [
+            {
+              "code": "MISSING_TIMEPOINT",
+              "severity": "warning",
+              "repairable": true,
+              "message": "来源中存在未结构化的时间表达。",
+              "entityId": null,
+              "evidence": "待定"
+            }
+          ]
+        },
+        "afterValidation": {
+          "validatorVersion": "recognition-quality-2.1.0",
+          "valid": true,
+          "repairRecommended": true,
+          "issues": [
+            {
+              "code": "MISSING_TIMEPOINT",
+              "severity": "warning",
+              "repairable": true,
+              "message": "来源中存在未结构化的时间表达。",
+              "entityId": null,
+              "evidence": "待定"
+            }
+          ]
+        },
+        "beforeResult": {
+          "schemaVersion": "2.0",
+          "promptVersion": "recognition-2.4.1",
+          "modelName": "deepseek-v4-flash",
+          "createdAt": "2026-08-08T08:00:00+08:00",
+          "sourceSummary": {
+            "title": "毕业论文开题",
+            "sourceType": "text",
+            "notificationType": "uncertain",
+            "summary": "通知在9月20日前确定选题，9月28日前提交开题报告Word版和导师签字页，10月6日上午参加开题答辩，教室待定。",
+            "requiresAction": true,
+            "actionReason": "包含确定选题、提交开题报告、参加答辩等明确行动要求。"
+          },
+          "projectMatch": {
+            "decision": "new_project",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": "毕业论文开题",
+            "confidence": 0.9,
+            "reasons": [
+              "来源标题明确为毕业论文开题，具有稳定项目身份。",
+              "包含多个跨日期的行动和阶段，属于持续事务。"
+            ]
+          },
+          "projectSuggestion": {
+            "title": {
+              "value": "毕业论文开题",
+              "evidenceIds": [
+                "ev-1"
+              ],
+              "confidence": 0.95,
+              "inferenceLevel": "strong_inference"
+            },
+            "category": {
+              "value": "其他",
+              "evidenceIds": [
+                "ev-1"
+              ],
+              "confidence": 0.8,
+              "inferenceLevel": "strong_inference"
+            },
+            "objective": {
+              "value": "完成毕业论文选题确定、开题报告提交并通过开题答辩。",
+              "evidenceIds": [
+                "ev-1",
+                "ev-2",
+                "ev-3"
+              ],
+              "confidence": 0.9,
+              "inferenceLevel": "strong_inference"
+            },
+            "description": {
+              "value": "根据通知，需在9月20日前确定选题，9月28日前提交开题报告Word版和导师签字页，10月6日上午参加开题答辩。",
+              "evidenceIds": [
+                "ev-1",
+                "ev-2",
+                "ev-3"
+              ],
+              "confidence": 0.95,
+              "inferenceLevel": "strong_inference"
+            }
+          },
+          "milestones": [
+            {
+              "tempId": "ms-1",
+              "title": "选题确定",
+              "objective": "在9月20日前确定毕业论文选题。",
+              "order": 1,
+              "evidenceIds": [
+                "ev-1"
+              ],
+              "workPackages": [],
+              "tasks": [
+                {
+                  "tempId": "task-1",
+                  "parentTempId": null,
+                  "hierarchyType": "task",
+                  "title": "确定选题",
+                  "actionVerb": "确定",
+                  "actionObject": "毕业论文选题",
+                  "description": "在9月20日前确定毕业论文选题。",
+                  "completionCriteria": [],
+                  "estimatedMinutes": 120,
+                  "statusSuggestion": "todo",
+                  "prioritySuggestion": "high",
+                  "dependencyTempIds": [],
+                  "materialTempIds": [],
+                  "timePointTempIds": [
+                    "tp-1"
+                  ],
+                  "evidenceIds": [
+                    "ev-1"
+                  ],
+                  "confidence": 0.95,
+                  "inferenceLevel": "explicit",
+                  "userConfirmationRequired": true,
+                  "selected": true
+                }
+              ]
+            },
+            {
+              "tempId": "ms-2",
+              "title": "开题报告提交",
+              "objective": "在9月28日前提交开题报告Word版和导师签字页。",
+              "order": 2,
+              "evidenceIds": [
+                "ev-2"
+              ],
+              "workPackages": [],
+              "tasks": [
+                {
+                  "tempId": "task-2",
+                  "parentTempId": null,
+                  "hierarchyType": "task",
+                  "title": "提交开题报告",
+                  "actionVerb": "提交",
+                  "actionObject": "开题报告Word版和导师签字页",
+                  "description": "在9月28日前提交开题报告Word版和导师签字页。",
+                  "completionCriteria": [],
+                  "estimatedMinutes": 60,
+                  "statusSuggestion": "todo",
+                  "prioritySuggestion": "high",
+                  "dependencyTempIds": [
+                    "task-1"
+                  ],
+                  "materialTempIds": [
+                    "mat-1",
+                    "mat-2"
+                  ],
+                  "timePointTempIds": [
+                    "tp-2"
+                  ],
+                  "evidenceIds": [
+                    "ev-2"
+                  ],
+                  "confidence": 0.95,
+                  "inferenceLevel": "explicit",
+                  "userConfirmationRequired": true,
+                  "selected": true
+                }
+              ]
+            },
+            {
+              "tempId": "ms-3",
+              "title": "开题答辩",
+              "objective": "10月6日上午参加开题答辩。",
+              "order": 3,
+              "evidenceIds": [
+                "ev-3"
+              ],
+              "workPackages": [],
+              "tasks": []
+            }
+          ],
+          "standaloneTasks": [],
+          "materials": [
+            {
+              "tempId": "mat-1",
+              "name": "开题报告Word版",
+              "required": true,
+              "formatRequirements": [],
+              "namingRequirements": [],
+              "quantity": null,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task-2"
+              ],
+              "evidenceIds": [
+                "ev-2"
+              ],
+              "confidence": 0.95,
+              "selected": true
+            },
+            {
+              "tempId": "mat-2",
+              "name": "导师签字页",
+              "required": true,
+              "formatRequirements": [],
+              "namingRequirements": [],
+              "quantity": null,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task-2"
+              ],
+              "evidenceIds": [
+                "ev-2"
+              ],
+              "confidence": 0.95,
+              "selected": true
+            }
+          ],
+          "timePoints": [
+            {
+              "tempId": "tp-1",
+              "type": "task_deadline",
+              "rawText": "9月20日前",
+              "normalizedValue": "2026-09-20",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": true,
+              "precision": "date_only",
+              "needsConfirmation": false,
+              "relatedTaskTempIds": [
+                "task-1"
+              ],
+              "relatedMaterialTempIds": [],
+              "evidenceIds": [
+                "ev-1"
+              ],
+              "confidence": 0.95,
+              "selected": true
+            },
+            {
+              "tempId": "tp-2",
+              "type": "submission_deadline",
+              "rawText": "9月28日前",
+              "normalizedValue": "2026-09-28",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": true,
+              "precision": "date_only",
+              "needsConfirmation": false,
+              "relatedTaskTempIds": [
+                "task-2"
+              ],
+              "relatedMaterialTempIds": [
+                "mat-1",
+                "mat-2"
+              ],
+              "evidenceIds": [
+                "ev-2"
+              ],
+              "confidence": 0.95,
+              "selected": true
+            },
+            {
+              "tempId": "tp-3",
+              "type": "event_start",
+              "rawText": "10月6日上午",
+              "normalizedValue": "2026-10-06",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": true,
+              "precision": "date_only",
+              "needsConfirmation": true,
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "evidenceIds": [
+                "ev-3"
+              ],
+              "confidence": 0.8,
+              "selected": false
+            }
+          ],
+          "events": [
+            {
+              "tempId": "event-1",
+              "title": "开题答辩",
+              "description": "10月6日上午参加开题答辩，教室待定。",
+              "startTimePointTempId": "tp-3",
+              "endTimePointTempId": null,
+              "location": null,
+              "evidenceIds": [
+                "ev-3"
+              ],
+              "confidence": 0.9,
+              "inferenceLevel": "explicit",
+              "selected": true
+            }
+          ],
+          "evidence": [
+            {
+              "id": "ev-1",
+              "sourceId": "pending-source",
+              "quote": "9月20日前确定选题",
+              "quotedText": "9月20日前确定选题",
+              "field": "description",
+              "extractionMethod": "ai",
+              "confidence": 0.95
+            },
+            {
+              "id": "ev-2",
+              "sourceId": "pending-source",
+              "quote": "9月28日前提交开题报告Word版和导师签字页",
+              "quotedText": "9月28日前提交开题报告Word版和导师签字页",
+              "field": "description",
+              "extractionMethod": "ai",
+              "confidence": 0.95
+            },
+            {
+              "id": "ev-3",
+              "sourceId": "pending-source",
+              "quote": "10月6日上午参加开题答辩，教室待定",
+              "quotedText": "10月6日上午参加开题答辩，教室待定",
+              "field": "description",
+              "extractionMethod": "ai",
+              "confidence": 0.9
+            }
+          ],
+          "conflicts": [],
+          "ambiguities": [
+            {
+              "id": "amb-1",
+              "field": "event_start_time",
+              "message": "开题答辩的具体时间只提到上午，未明确具体时刻。",
+              "options": [
+                "上午9:00",
+                "上午10:00",
+                "其他"
+              ],
+              "evidenceIds": [
+                "ev-3"
+              ]
+            },
+            {
+              "id": "amb-2",
+              "field": "event_location",
+              "message": "开题答辩的教室待定。",
+              "options": [],
+              "evidenceIds": [
+                "ev-3"
+              ]
+            }
+          ],
+          "ignoredContent": [],
+          "quality": {
+            "overallConfidence": 0.9,
+            "hierarchyConfidence": 0.9,
+            "dateConfidence": 0.9,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": true,
+            "reviewReasons": [
+              "开题答辩具体时间不明确，需要确认。",
+              "开题答辩教室待定。"
+            ]
+          }
+        },
+        "beforeScores": {
+          "taskTruePositive": 2,
+          "materialMatched": 2,
+          "timePointMatched": 3,
+          "eventMatched": 1,
+          "evidenceMatched": 9,
+          "duplicateCount": 0,
+          "overFragmented": false,
+          "majorCorrection": true,
+          "severeError": false
+        }
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.1.0",
+        "level": "complex",
+        "score": 9,
+        "reasons": [
+          "包含 4 个时间表达",
+          "包含 3 个动作或义务表达",
+          "包含 2 个事件线索",
+          "包含不确定或待确认语义"
+        ],
+        "candidateStrategy": "fact_then_plan",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-holdout-24",
+      "group": "complex_notice",
+      "status": "ok",
+      "latencyMs": 15344,
+      "failures": [
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：面试",
+          "expectedKey": "interview",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "time_incorrect",
+          "severity": "major",
+          "reason": "时间点不正确：8月13日12:00",
+          "expectedKey": "form-time",
+          "actual": "2026-08-13T12:00:00+08:00",
+          "tags": [
+            "WRONG_TIME_VALUE"
+          ]
+        },
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：8月21日至22日",
+          "expectedKey": "training-start",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "time_spurious",
+          "severity": "minor",
+          "reason": "存在 1 个未匹配时间点",
+          "tags": [
+            "WRONG_TIMEPOINT_TYPE"
+          ]
+        },
+        {
+          "category": "ambiguity_missing",
+          "severity": "major",
+          "reason": "应标记的歧义未标记",
+          "expectedKey": "ambiguity-2",
+          "tags": [
+            "MISSING_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.2.1",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.4.1",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.1.0",
+        "repairVersion": "recognition-repair-1.1.0",
+        "routerVersion": "recognition-router-1.1.0",
+        "attempts": 2,
+        "durationMs": 15131,
+        "tokenUsage": {
+          "input": 6896,
+          "output": 3126
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 2378,
+              "output": 2866
+            },
+            "durationMs": 13021,
+            "attempts": 1
+          },
+          {
+            "operation": "repair",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 4518,
+              "output": 260
+            },
+            "durationMs": 2110,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.1.0",
+        "attempted": true,
+        "applied": true,
+        "errorCode": null,
+        "issueCodes": [
+          "FALSE_PRECISION"
+        ],
+        "allowedFields": [
+          "evidence",
+          "materials",
+          "timePoints",
+          "events",
+          "ambiguities",
+          "taskReferenceUpdates"
+        ],
+        "changedFields": [
+          "timePoints"
+        ],
+        "beforeValidation": {
+          "validatorVersion": "recognition-quality-2.1.0",
+          "valid": false,
+          "repairRecommended": true,
+          "issues": [
+            {
+              "code": "INVALID_REFERENCE",
+              "severity": "error",
+              "repairable": false,
+              "message": "任务依赖不存在：task-2",
+              "entityId": "task-3",
+              "evidence": "task-2"
+            },
+            {
+              "code": "FALSE_PRECISION",
+              "severity": "error",
+              "repairable": true,
+              "message": "模糊或相对时间不得伪装为精确值。",
+              "entityId": "tp-2",
+              "evidence": "8月15日晚"
+            }
+          ]
+        },
+        "afterValidation": {
+          "validatorVersion": "recognition-quality-2.1.0",
+          "valid": false,
+          "repairRecommended": false,
+          "issues": [
+            {
+              "code": "INVALID_REFERENCE",
+              "severity": "error",
+              "repairable": false,
+              "message": "任务依赖不存在：task-2",
+              "entityId": "task-3",
+              "evidence": "task-2"
+            }
+          ]
+        },
+        "beforeResult": {
+          "schemaVersion": "2.0",
+          "promptVersion": "recognition-2.4.1",
+          "modelName": "deepseek-v4-flash",
+          "createdAt": "2026-08-08T08:00:00+08:00",
+          "sourceSummary": {
+            "title": "国际交流志愿者招募",
+            "sourceType": "text",
+            "notificationType": "uncertain",
+            "summary": "招募国际交流志愿者，需在8月13日12:00前填写报名问卷，8月15日晚参加线上面试，录用者8月18日前提交护照信息页，8月21日至22日参加岗前培训。",
+            "requiresAction": true,
+            "actionReason": "明确要求报名、面试、提交材料、参加培训"
+          },
+          "projectMatch": {
+            "decision": "new_project",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": "国际交流志愿者招募",
+            "confidence": 0.95,
+            "reasons": [
+              "有稳定项目名称",
+              "包含多个跨日交付阶段",
+              "来源明确为招募通知"
+            ]
+          },
+          "projectSuggestion": {
+            "title": {
+              "value": "国际交流志愿者招募",
+              "evidenceIds": [
+                "ev-1"
+              ],
+              "confidence": 0.95,
+              "inferenceLevel": "strong_inference"
+            },
+            "category": {
+              "value": "其他",
+              "evidenceIds": [
+                "ev-1"
+              ],
+              "confidence": 0.9,
+              "inferenceLevel": "strong_inference"
+            },
+            "objective": {
+              "value": "完成国际交流志愿者招募流程，包括报名、面试、提交材料及培训",
+              "evidenceIds": [
+                "ev-1",
+                "ev-2",
+                "ev-3",
+                "ev-4"
+              ],
+              "confidence": 0.9,
+              "inferenceLevel": "strong_inference"
+            },
+            "description": {
+              "value": "参与国际交流志愿者项目，需按时完成报名、面试、材料提交和培训。",
+              "evidenceIds": [
+                "ev-1",
+                "ev-2",
+                "ev-3",
+                "ev-4"
+              ],
+              "confidence": 0.9,
+              "inferenceLevel": "strong_inference"
+            }
+          },
+          "milestones": [
+            {
+              "tempId": "ms-1",
+              "title": "报名与面试",
+              "objective": "完成报名问卷填写并参加线上面试",
+              "order": 1,
+              "evidenceIds": [
+                "ev-1",
+                "ev-2"
+              ],
+              "workPackages": [],
+              "tasks": [
+                {
+                  "tempId": "task-1",
+                  "parentTempId": null,
+                  "hierarchyType": "task",
+                  "title": "填写报名问卷",
+                  "actionVerb": "填写",
+                  "actionObject": "报名问卷",
+                  "description": "在8月13日12:00前完成报名问卷的填写。",
+                  "completionCriteria": [],
+                  "estimatedMinutes": 30,
+                  "statusSuggestion": "todo",
+                  "prioritySuggestion": "high",
+                  "dependencyTempIds": [],
+                  "materialTempIds": [
+                    "material-from-task-1"
+                  ],
+                  "timePointTempIds": [
+                    "tp-1"
+                  ],
+                  "evidenceIds": [
+                    "ev-1"
+                  ],
+                  "confidence": 0.95,
+                  "inferenceLevel": "explicit",
+                  "userConfirmationRequired": true,
+                  "selected": true
+                }
+              ]
+            },
+            {
+              "tempId": "ms-2",
+              "title": "材料提交与培训",
+              "objective": "提交护照信息页并参加岗前培训",
+              "order": 2,
+              "evidenceIds": [
+                "ev-3",
+                "ev-4"
+              ],
+              "workPackages": [],
+              "tasks": [
+                {
+                  "tempId": "task-3",
+                  "parentTempId": null,
+                  "hierarchyType": "task",
+                  "title": "提交护照信息页",
+                  "actionVerb": "提交",
+                  "actionObject": "护照信息页",
+                  "description": "录用者需在8月18日前提交护照信息页。",
+                  "completionCriteria": [],
+                  "estimatedMinutes": 15,
+                  "statusSuggestion": "todo",
+                  "prioritySuggestion": "high",
+                  "dependencyTempIds": [
+                    "task-2"
+                  ],
+                  "materialTempIds": [
+                    "mat-1"
+                  ],
+                  "timePointTempIds": [
+                    "tp-3"
+                  ],
+                  "evidenceIds": [
+                    "ev-3"
+                  ],
+                  "confidence": 0.95,
+                  "inferenceLevel": "explicit",
+                  "userConfirmationRequired": true,
+                  "selected": true
+                }
+              ]
+            }
+          ],
+          "standaloneTasks": [],
+          "materials": [
+            {
+              "tempId": "mat-1",
+              "name": "护照信息页",
+              "required": true,
+              "formatRequirements": [],
+              "namingRequirements": [],
+              "quantity": null,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task-3"
+              ],
+              "evidenceIds": [
+                "ev-3"
+              ],
+              "confidence": 0.95,
+              "selected": true
+            },
+            {
+              "tempId": "material-from-task-1",
+              "name": "报名问卷",
+              "required": true,
+              "formatRequirements": [],
+              "namingRequirements": [],
+              "quantity": null,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task-1"
+              ],
+              "evidenceIds": [
+                "ev-1"
+              ],
+              "confidence": 0.95,
+              "selected": true
+            }
+          ],
+          "timePoints": [
+            {
+              "tempId": "tp-1",
+              "type": "task_deadline",
+              "rawText": "8月13日12:00前",
+              "normalizedValue": "2026-08-13T12:00:00+08:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "relatedTaskTempIds": [
+                "task-1"
+              ],
+              "relatedMaterialTempIds": [],
+              "evidenceIds": [
+                "ev-1"
+              ],
+              "confidence": 0.95,
+              "selected": true
+            },
+            {
+              "tempId": "tp-2",
+              "type": "event_start",
+              "rawText": "8月15日晚",
+              "normalizedValue": "2026-08-15T19:00:00+08:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "vague",
+              "needsConfirmation": true,
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "evidenceIds": [
+                "ev-2"
+              ],
+              "confidence": 0.7,
+              "selected": false
+            },
+            {
+              "tempId": "tp-3",
+              "type": "submission_deadline",
+              "rawText": "8月18日前",
+              "normalizedValue": "2026-08-18",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": true,
+              "precision": "date_only",
+              "needsConfirmation": false,
+              "relatedTaskTempIds": [
+                "task-3"
+              ],
+              "relatedMaterialTempIds": [
+                "mat-1"
+              ],
+              "evidenceIds": [
+                "ev-3"
+              ],
+              "confidence": 0.9,
+              "selected": true
+            },
+            {
+              "tempId": "tp-4",
+              "type": "event_start",
+              "rawText": "8月21日",
+              "normalizedValue": "2026-08-21",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": true,
+              "precision": "date_only",
+              "needsConfirmation": false,
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "evidenceIds": [
+                "ev-4"
+              ],
+              "confidence": 0.9,
+              "selected": true
+            },
+            {
+              "tempId": "tp-5",
+              "type": "event_end",
+              "rawText": "8月22日",
+              "normalizedValue": "2026-08-22",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": true,
+              "precision": "date_only",
+              "needsConfirmation": false,
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "evidenceIds": [
+                "ev-4"
+              ],
+              "confidence": 0.9,
+              "selected": true
+            }
+          ],
+          "events": [
+            {
+              "tempId": "event-1",
+              "title": "线上面试",
+              "description": "8月15日晚参加线上面试",
+              "startTimePointTempId": "tp-2",
+              "endTimePointTempId": null,
+              "location": "线上",
+              "evidenceIds": [
+                "ev-2"
+              ],
+              "confidence": 0.9,
+              "inferenceLevel": "explicit",
+              "selected": true
+            },
+            {
+              "tempId": "event-2",
+              "title": "岗前培训",
+              "description": "8月21日至22日参加岗前培训",
+              "startTimePointTempId": "tp-4",
+              "endTimePointTempId": "tp-5",
+              "location": null,
+              "evidenceIds": [
+                "ev-4"
+              ],
+              "confidence": 0.9,
+              "inferenceLevel": "explicit",
+              "selected": true
+            }
+          ],
+          "evidence": [
+            {
+              "id": "ev-1",
+              "sourceId": "pending-source",
+              "quote": "8月13日12:00前填写报名问卷",
+              "quotedText": "8月13日12:00前填写报名问卷",
+              "field": "description",
+              "extractionMethod": "ai",
+              "confidence": 0.95
+            },
+            {
+              "id": "ev-2",
+              "sourceId": "pending-source",
+              "quote": "8月15日晚参加线上面试",
+              "quotedText": "8月15日晚参加线上面试",
+              "field": "description",
+              "extractionMethod": "ai",
+              "confidence": 0.95
+            },
+            {
+              "id": "ev-3",
+              "sourceId": "pending-source",
+              "quote": "录用者8月18日前提交护照信息页",
+              "quotedText": "录用者8月18日前提交护照信息页",
+              "field": "description",
+              "extractionMethod": "ai",
+              "confidence": 0.95
+            },
+            {
+              "id": "ev-4",
+              "sourceId": "pending-source",
+              "quote": "8月21日至22日参加岗前培训",
+              "quotedText": "8月21日至22日参加岗前培训",
+              "field": "description",
+              "extractionMethod": "ai",
+              "confidence": 0.95
+            }
+          ],
+          "conflicts": [],
+          "ambiguities": [
+            {
+              "id": "amb-1",
+              "field": "面试时间",
+              "message": "“8月15日晚”未指明具体时间，无法精确到分钟。",
+              "options": [
+                "19:00",
+                "20:00",
+                "其他"
+              ],
+              "evidenceIds": [
+                "ev-2"
+              ]
+            }
+          ],
+          "ignoredContent": [],
+          "quality": {
+            "overallConfidence": 0.9,
+            "hierarchyConfidence": 0.95,
+            "dateConfidence": 0.85,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": true,
+            "reviewReasons": [
+              "面试时间“8月15日晚”未指明具体时间，需人工确认。"
+            ]
+          }
+        },
+        "beforeScores": {
+          "taskTruePositive": 2,
+          "materialMatched": 2,
+          "timePointMatched": 3,
+          "eventMatched": 2,
+          "evidenceMatched": 11,
+          "duplicateCount": 0,
+          "overFragmented": false,
+          "majorCorrection": true,
+          "severeError": false
+        }
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.1.0",
+        "level": "complex",
+        "score": 10,
+        "reasons": [
+          "包含 4 个时间表达",
+          "包含 5 个动作或义务表达",
+          "包含 2 个材料关系线索",
+          "包含 4 个事件线索",
+          "包含条件适用语义"
+        ],
+        "candidateStrategy": "fact_then_plan",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-holdout-25",
+      "group": "complex_notice",
+      "status": "ok",
+      "latencyMs": 15705,
+      "failures": [
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：节目申报/报名",
+          "expectedKey": "declare",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：资料准备",
+          "expectedKey": "prepare",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "milestone_missing",
+          "severity": "minor",
+          "reason": "缺少阶段：正式演出",
+          "expectedKey": "performance",
+          "tags": [
+            "MISSING_MILESTONE"
+          ]
+        },
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：提交 舞台需求表",
+          "expectedKey": "stage",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：暂定9月18日晚",
+          "expectedKey": "show-time",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "time_spurious",
+          "severity": "minor",
+          "reason": "存在 1 个未匹配时间点",
+          "tags": [
+            "WRONG_TIMEPOINT_TYPE"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.2.1",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.4.1",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.1.0",
+        "repairVersion": "recognition-repair-1.1.0",
+        "routerVersion": "recognition-router-1.1.0",
+        "attempts": 2,
+        "durationMs": 15486,
+        "tokenUsage": {
+          "input": 6989,
+          "output": 3120
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 2375,
+              "output": 2806
+            },
+            "durationMs": 13050,
+            "attempts": 1
+          },
+          {
+            "operation": "repair",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 4614,
+              "output": 314
+            },
+            "durationMs": 2436,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.1.0",
+        "attempted": true,
+        "applied": true,
+        "errorCode": null,
+        "issueCodes": [
+          "FALSE_PRECISION",
+          "FALSE_PRECISION"
+        ],
+        "allowedFields": [
+          "evidence",
+          "materials",
+          "timePoints",
+          "events",
+          "ambiguities",
+          "taskReferenceUpdates"
+        ],
+        "changedFields": [
+          "timePoints"
+        ],
+        "beforeValidation": {
+          "validatorVersion": "recognition-quality-2.1.0",
+          "valid": false,
+          "repairRecommended": true,
+          "issues": [
+            {
+              "code": "FALSE_PRECISION",
+              "severity": "error",
+              "repairable": true,
+              "message": "模糊或相对时间不得伪装为精确值。",
+              "entityId": "tp-3",
+              "evidence": "9月16日傍晚"
+            },
+            {
+              "code": "FALSE_PRECISION",
+              "severity": "error",
+              "repairable": true,
+              "message": "模糊或相对时间不得伪装为精确值。",
+              "entityId": "tp-4",
+              "evidence": "9月18日晚"
+            }
+          ]
+        },
+        "afterValidation": {
+          "validatorVersion": "recognition-quality-2.1.0",
+          "valid": true,
+          "repairRecommended": false,
+          "issues": []
+        },
+        "beforeResult": {
+          "schemaVersion": "2.0",
+          "promptVersion": "recognition-2.4.1",
+          "modelName": "deepseek-v4-flash",
+          "createdAt": "2026-08-08T08:00:00+08:00",
+          "sourceSummary": {
+            "title": "艺术节节目申报",
+            "sourceType": "text",
+            "notificationType": "uncertain",
+            "summary": "各团队需在9月2日前报送节目单，9月10日前提交伴奏音频和舞台需求表，9月16日傍晚走台，正式演出时间暂定9月18日晚。",
+            "requiresAction": true,
+            "actionReason": "通知中明确要求各团队在多个截止日期前完成报送、提交和走台等行动。"
+          },
+          "projectMatch": {
+            "decision": "new_project",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": "艺术节节目申报",
+            "confidence": 0.9,
+            "reasons": [
+              "来源标题明确为'艺术节节目申报'，具有稳定项目身份。",
+              "包含多个跨日截止日期和真实阶段（报送、提交、走台、演出）。"
+            ]
+          },
+          "projectSuggestion": {
+            "title": {
+              "value": "艺术节节目申报",
+              "evidenceIds": [
+                "ev-1"
+              ],
+              "confidence": 0.95,
+              "inferenceLevel": "strong_inference"
+            },
+            "category": {
+              "value": "其他",
+              "evidenceIds": [
+                "ev-1"
+              ],
+              "confidence": 0.8,
+              "inferenceLevel": "strong_inference"
+            },
+            "objective": {
+              "value": "完成艺术节节目申报、材料提交、走台及正式演出。",
+              "evidenceIds": [
+                "ev-1",
+                "ev-2",
+                "ev-3",
+                "ev-4"
+              ],
+              "confidence": 0.9,
+              "inferenceLevel": "strong_inference"
+            },
+            "description": {
+              "value": "各团队需按时间节点完成节目单报送、伴奏音频和舞台需求表提交、走台及正式演出。",
+              "evidenceIds": [
+                "ev-1",
+                "ev-2",
+                "ev-3",
+                "ev-4"
+              ],
+              "confidence": 0.9,
+              "inferenceLevel": "strong_inference"
+            }
+          },
+          "milestones": [
+            {
+              "tempId": "ms-1",
+              "title": "节目报送与材料提交",
+              "objective": "完成节目单报送及伴奏音频和舞台需求表提交。",
+              "order": 1,
+              "evidenceIds": [
+                "ev-1",
+                "ev-2"
+              ],
+              "workPackages": [],
+              "tasks": [
+                {
+                  "tempId": "task-1",
+                  "parentTempId": null,
+                  "hierarchyType": "task",
+                  "title": "报送节目单",
+                  "actionVerb": "报送",
+                  "actionObject": "节目单",
+                  "description": "各团队在9月2日前报送节目单。",
+                  "completionCriteria": [],
+                  "estimatedMinutes": 30,
+                  "statusSuggestion": "todo",
+                  "prioritySuggestion": "high",
+                  "dependencyTempIds": [],
+                  "materialTempIds": [
+                    "mat-1"
+                  ],
+                  "timePointTempIds": [
+                    "tp-1"
+                  ],
+                  "evidenceIds": [
+                    "ev-1"
+                  ],
+                  "confidence": 0.95,
+                  "inferenceLevel": "explicit",
+                  "userConfirmationRequired": true,
+                  "selected": true
+                },
+                {
+                  "tempId": "task-2",
+                  "parentTempId": null,
+                  "hierarchyType": "task",
+                  "title": "提交伴奏音频和舞台需求表",
+                  "actionVerb": "提交",
+                  "actionObject": "伴奏音频和舞台需求表",
+                  "description": "各团队在9月10日前提交伴奏音频和舞台需求表。",
+                  "completionCriteria": [],
+                  "estimatedMinutes": 60,
+                  "statusSuggestion": "todo",
+                  "prioritySuggestion": "high",
+                  "dependencyTempIds": [],
+                  "materialTempIds": [
+                    "mat-2",
+                    "mat-3"
+                  ],
+                  "timePointTempIds": [
+                    "tp-2"
+                  ],
+                  "evidenceIds": [
+                    "ev-2"
+                  ],
+                  "confidence": 0.95,
+                  "inferenceLevel": "explicit",
+                  "userConfirmationRequired": true,
+                  "selected": true
+                }
+              ]
+            },
+            {
+              "tempId": "ms-2",
+              "title": "走台与正式演出",
+              "objective": "完成走台并参加正式演出。",
+              "order": 2,
+              "evidenceIds": [
+                "ev-3",
+                "ev-4"
+              ],
+              "workPackages": [],
+              "tasks": []
+            }
+          ],
+          "standaloneTasks": [],
+          "materials": [
+            {
+              "tempId": "mat-1",
+              "name": "节目单",
+              "required": true,
+              "formatRequirements": [],
+              "namingRequirements": [],
+              "quantity": null,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task-1"
+              ],
+              "evidenceIds": [
+                "ev-1"
+              ],
+              "confidence": 0.95,
+              "selected": true
+            },
+            {
+              "tempId": "mat-2",
+              "name": "伴奏音频",
+              "required": true,
+              "formatRequirements": [],
+              "namingRequirements": [],
+              "quantity": null,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task-2"
+              ],
+              "evidenceIds": [
+                "ev-2"
+              ],
+              "confidence": 0.95,
+              "selected": true
+            },
+            {
+              "tempId": "mat-3",
+              "name": "舞台需求表",
+              "required": true,
+              "formatRequirements": [],
+              "namingRequirements": [],
+              "quantity": null,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task-2"
+              ],
+              "evidenceIds": [
+                "ev-2"
+              ],
+              "confidence": 0.95,
+              "selected": true
+            }
+          ],
+          "timePoints": [
+            {
+              "tempId": "tp-1",
+              "type": "submission_deadline",
+              "rawText": "9月2日前",
+              "normalizedValue": "2026-09-02",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": true,
+              "precision": "date_only",
+              "needsConfirmation": false,
+              "relatedTaskTempIds": [
+                "task-1"
+              ],
+              "relatedMaterialTempIds": [
+                "mat-1"
+              ],
+              "evidenceIds": [
+                "ev-1"
+              ],
+              "confidence": 0.9,
+              "selected": true
+            },
+            {
+              "tempId": "tp-2",
+              "type": "submission_deadline",
+              "rawText": "9月10日前",
+              "normalizedValue": "2026-09-10",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": true,
+              "precision": "date_only",
+              "needsConfirmation": false,
+              "relatedTaskTempIds": [
+                "task-2"
+              ],
+              "relatedMaterialTempIds": [
+                "mat-2",
+                "mat-3"
+              ],
+              "evidenceIds": [
+                "ev-2"
+              ],
+              "confidence": 0.9,
+              "selected": true
+            },
+            {
+              "tempId": "tp-3",
+              "type": "event_start",
+              "rawText": "9月16日傍晚",
+              "normalizedValue": "2026-09-16T18:00:00+08:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "vague",
+              "needsConfirmation": true,
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "evidenceIds": [
+                "ev-3"
+              ],
+              "confidence": 0.6,
+              "selected": false
+            },
+            {
+              "tempId": "tp-4",
+              "type": "event_start",
+              "rawText": "9月18日晚",
+              "normalizedValue": "2026-09-18T19:00:00+08:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "vague",
+              "needsConfirmation": true,
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "evidenceIds": [
+                "ev-4"
+              ],
+              "confidence": 0.6,
+              "selected": false
+            }
+          ],
+          "events": [
+            {
+              "tempId": "event-1",
+              "title": "走台",
+              "description": "9月16日傍晚走台。",
+              "startTimePointTempId": "tp-3",
+              "endTimePointTempId": null,
+              "location": null,
+              "evidenceIds": [
+                "ev-3"
+              ],
+              "confidence": 0.9,
+              "inferenceLevel": "explicit",
+              "selected": true
+            },
+            {
+              "tempId": "event-2",
+              "title": "正式演出",
+              "description": "正式演出时间暂定9月18日晚。",
+              "startTimePointTempId": "tp-4",
+              "endTimePointTempId": null,
+              "location": null,
+              "evidenceIds": [
+                "ev-4"
+              ],
+              "confidence": 0.8,
+              "inferenceLevel": "explicit",
+              "selected": true
+            }
+          ],
+          "evidence": [
+            {
+              "id": "ev-1",
+              "sourceId": "pending-source",
+              "quote": "各团队9月2日前报送节目单",
+              "quotedText": "各团队9月2日前报送节目单",
+              "field": "description",
+              "extractionMethod": "ai",
+              "confidence": 0.95
+            },
+            {
+              "id": "ev-2",
+              "sourceId": "pending-source",
+              "quote": "9月10日前提交伴奏音频和舞台需求表",
+              "quotedText": "9月10日前提交伴奏音频和舞台需求表",
+              "field": "description",
+              "extractionMethod": "ai",
+              "confidence": 0.95
+            },
+            {
+              "id": "ev-3",
+              "sourceId": "pending-source",
+              "quote": "9月16日傍晚走台",
+              "quotedText": "9月16日傍晚走台",
+              "field": "description",
+              "extractionMethod": "ai",
+              "confidence": 0.9
+            },
+            {
+              "id": "ev-4",
+              "sourceId": "pending-source",
+              "quote": "正式演出时间暂定9月18日晚",
+              "quotedText": "正式演出时间暂定9月18日晚",
+              "field": "description",
+              "extractionMethod": "ai",
+              "confidence": 0.8
+            }
+          ],
+          "conflicts": [],
+          "ambiguities": [
+            {
+              "id": "amb-1",
+              "field": "time",
+              "message": "走台时间'傍晚'具体时刻未明确。",
+              "options": [
+                "17:00",
+                "18:00",
+                "19:00"
+              ],
+              "evidenceIds": [
+                "ev-3"
+              ]
+            },
+            {
+              "id": "amb-2",
+              "field": "time",
+              "message": "正式演出时间'暂定'，具体时刻未明确。",
+              "options": [
+                "18:00",
+                "19:00",
+                "20:00"
+              ],
+              "evidenceIds": [
+                "ev-4"
+              ]
+            }
+          ],
+          "ignoredContent": [],
+          "quality": {
+            "overallConfidence": 0.85,
+            "hierarchyConfidence": 0.9,
+            "dateConfidence": 0.7,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": true,
+            "reviewReasons": [
+              "走台和演出时间存在模糊性，需要人工确认具体时刻。"
+            ]
+          }
+        },
+        "beforeScores": {
+          "taskTruePositive": 2,
+          "materialMatched": 3,
+          "timePointMatched": 3,
+          "eventMatched": 2,
+          "evidenceMatched": 12,
+          "duplicateCount": 0,
+          "overFragmented": false,
+          "majorCorrection": true,
+          "severeError": false
+        }
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.1.0",
+        "level": "complex",
+        "score": 7,
+        "reasons": [
+          "包含 4 个时间表达",
+          "包含 2 个动作或义务表达",
+          "包含 2 个材料关系线索",
+          "包含不确定或待确认语义"
+        ],
+        "candidateStrategy": "fact_then_plan",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-holdout-27",
+      "group": "multi_deadline",
+      "status": "ok",
+      "latencyMs": 10940,
+      "failures": [
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.2.1",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.4.1",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.1.0",
+        "repairVersion": "recognition-repair-1.1.0",
+        "routerVersion": "recognition-router-1.1.0",
+        "attempts": 1,
+        "durationMs": 10731,
+        "tokenUsage": {
+          "input": 2365,
+          "output": 2360
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 2365,
+              "output": 2360
+            },
+            "durationMs": 10731,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.1.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": [],
+        "allowedFields": [
+          "evidence",
+          "materials",
+          "timePoints",
+          "events",
+          "ambiguities",
+          "taskReferenceUpdates"
+        ],
+        "changedFields": [],
+        "beforeValidation": null,
+        "afterValidation": null,
+        "beforeResult": null
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.1.0",
+        "level": "medium",
+        "score": 3,
+        "reasons": [
+          "包含 3 个时间表达",
+          "包含附件或文件上下文"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-holdout-28",
+      "group": "multi_deadline",
+      "status": "ok",
+      "latencyMs": 8980,
+      "failures": [
+        {
+          "category": "milestone_spurious",
+          "severity": "minor",
+          "reason": "预测阶段数量明显超过黄金答案",
+          "actual": "2",
+          "tags": [
+            "OVER_MILESTONE"
+          ]
+        },
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：报名 报名",
+          "expectedKey": "register",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "task_spurious",
+          "severity": "minor",
+          "reason": "存在 1 条未匹配任务",
+          "tags": [
+            "OVER_TASK"
+          ]
+        },
+        {
+          "category": "material_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配材料",
+          "tags": [
+            "WRONG_MATERIAL"
+          ]
+        },
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：原报名截止9月5日",
+          "expectedKey": "old-time",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：延长到9月8日18:00",
+          "expectedKey": "new-time",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "time_spurious",
+          "severity": "minor",
+          "reason": "存在 2 个未匹配时间点",
+          "tags": [
+            "WRONG_TIMEPOINT_TYPE"
+          ]
+        },
+        {
+          "category": "ambiguity_missing",
+          "severity": "major",
+          "reason": "应标记的歧义未标记",
+          "expectedKey": "ambiguity-1",
+          "tags": [
+            "MISSING_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.2.1",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.4.1",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.1.0",
+        "repairVersion": "recognition-repair-1.1.0",
+        "routerVersion": "recognition-router-1.1.0",
+        "attempts": 1,
+        "durationMs": 8762,
+        "tokenUsage": {
+          "input": 2362,
+          "output": 1804
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 2362,
+              "output": 1804
+            },
+            "durationMs": 8762,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.1.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": [],
+        "allowedFields": [
+          "evidence",
+          "materials",
+          "timePoints",
+          "events",
+          "ambiguities",
+          "taskReferenceUpdates"
+        ],
+        "changedFields": [],
+        "beforeValidation": null,
+        "afterValidation": null,
+        "beforeResult": null
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.1.0",
+        "level": "medium",
+        "score": 5,
+        "reasons": [
+          "包含 3 个时间表达",
+          "包含 2 个动作或义务表达",
+          "包含更正或补充语义"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-holdout-29",
+      "group": "material",
+      "status": "ok",
+      "latencyMs": 6529,
+      "failures": [
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：提交 培养材料",
+          "expectedKey": "submit",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "task_spurious",
+          "severity": "minor",
+          "reason": "存在 1 条未匹配任务",
+          "tags": [
+            "OVER_TASK"
+          ]
+        },
+        {
+          "category": "material_missing",
+          "severity": "major",
+          "reason": "缺少材料：档案袋",
+          "expectedKey": "bag",
+          "tags": [
+            "MISSING_MATERIAL"
+          ]
+        },
+        {
+          "category": "evidence_missing",
+          "severity": "major",
+          "reason": "缺少 1 项可回看证据",
+          "tags": [
+            "MISSING_EVIDENCE"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.2.1",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.4.1",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.1.0",
+        "repairVersion": "recognition-repair-1.1.0",
+        "routerVersion": "recognition-router-1.1.0",
+        "attempts": 1,
+        "durationMs": 6306,
+        "tokenUsage": {
+          "input": 2358,
+          "output": 1248
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 2358,
+              "output": 1248
+            },
+            "durationMs": 6306,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.1.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": [],
+        "allowedFields": [
+          "evidence",
+          "materials",
+          "timePoints",
+          "events",
+          "ambiguities",
+          "taskReferenceUpdates"
+        ],
+        "changedFields": [],
+        "beforeValidation": null,
+        "afterValidation": null,
+        "beforeResult": null
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.1.0",
+        "level": "medium",
+        "score": 2,
+        "reasons": [
+          "包含 3 个动作或义务表达"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-holdout-30",
+      "group": "material",
+      "status": "ok",
+      "latencyMs": 5813,
+      "failures": [
+        {
+          "category": "project_decision",
+          "severity": "major",
+          "reason": "项目决策应为 standalone_task，实际为 uncertain",
+          "tags": [
+            "PROJECT_DECISION_ERROR"
+          ]
+        },
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：携带 报销凭证",
+          "expectedKey": "bring",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "task_spurious",
+          "severity": "minor",
+          "reason": "存在 1 条未匹配任务",
+          "tags": [
+            "OVER_TASK"
+          ]
+        },
+        {
+          "category": "evidence_missing",
+          "severity": "major",
+          "reason": "缺少 1 项可回看证据",
+          "tags": [
+            "MISSING_EVIDENCE"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.2.1",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.4.1",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.1.0",
+        "repairVersion": "recognition-repair-1.1.0",
+        "routerVersion": "recognition-router-1.1.0",
+        "attempts": 1,
+        "durationMs": 5596,
+        "tokenUsage": {
+          "input": 2356,
+          "output": 1081
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 2356,
+              "output": 1081
+            },
+            "durationMs": 5596,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.1.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": [],
+        "allowedFields": [
+          "evidence",
+          "materials",
+          "timePoints",
+          "events",
+          "ambiguities",
+          "taskReferenceUpdates"
+        ],
+        "changedFields": [],
+        "beforeValidation": null,
+        "afterValidation": null,
+        "beforeResult": null
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.1.0",
+        "level": "medium",
+        "score": 3,
+        "reasons": [
+          "包含 2 个动作或义务表达",
+          "包含 2 个材料关系线索",
+          "包含附件或文件上下文"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-holdout-31",
+      "group": "material",
+      "status": "ok",
+      "latencyMs": 7346,
+      "failures": [
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.2.1",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.4.1",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.1.0",
+        "repairVersion": "recognition-repair-1.1.0",
+        "routerVersion": "recognition-router-1.1.0",
+        "attempts": 1,
+        "durationMs": 7130,
+        "tokenUsage": {
+          "input": 2360,
+          "output": 1371
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 2360,
+              "output": 1371
+            },
+            "durationMs": 7130,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.1.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": [],
+        "allowedFields": [
+          "evidence",
+          "materials",
+          "timePoints",
+          "events",
+          "ambiguities",
+          "taskReferenceUpdates"
+        ],
+        "changedFields": [],
+        "beforeValidation": null,
+        "afterValidation": null,
+        "beforeResult": null
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.1.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-holdout-32",
+      "group": "vague_time",
+      "status": "ok",
+      "latencyMs": 4785,
+      "failures": [
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：预约 访谈",
+          "expectedKey": "schedule",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "time_incorrect",
+          "severity": "major",
+          "reason": "时间点不正确：近期",
+          "expectedKey": "time",
+          "tags": [
+            "WRONG_TIME_VALUE"
+          ]
+        },
+        {
+          "category": "event_missing",
+          "severity": "major",
+          "reason": "缺少事件：访谈",
+          "expectedKey": "interview",
+          "tags": [
+            "MISSING_EVENT"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.2.1",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.4.1",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.1.0",
+        "repairVersion": "recognition-repair-1.1.0",
+        "routerVersion": "recognition-router-1.1.0",
+        "attempts": 1,
+        "durationMs": 4562,
+        "tokenUsage": {
+          "input": 2346,
+          "output": 821
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 2346,
+              "output": 821
+            },
+            "durationMs": 4562,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.1.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": [],
+        "allowedFields": [
+          "evidence",
+          "materials",
+          "timePoints",
+          "events",
+          "ambiguities",
+          "taskReferenceUpdates"
+        ],
+        "changedFields": [],
+        "beforeValidation": null,
+        "afterValidation": null,
+        "beforeResult": null
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.1.0",
+        "level": "simple",
+        "score": 1,
+        "reasons": [
+          "包含 2 个动作或义务表达"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-holdout-33",
+      "group": "vague_time",
+      "status": "ok",
+      "latencyMs": 8044,
+      "failures": [
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：回复 是否参加",
+          "expectedKey": "reply",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        },
+        {
+          "category": "task_spurious",
+          "severity": "minor",
+          "reason": "存在 1 条未匹配任务",
+          "tags": [
+            "OVER_TASK"
+          ]
+        },
+        {
+          "category": "ambiguity_missing",
+          "severity": "major",
+          "reason": "应标记的歧义未标记",
+          "expectedKey": "ambiguity-1",
+          "tags": [
+            "MISSING_AMBIGUITY"
+          ]
+        },
+        {
+          "category": "ambiguity_spurious",
+          "severity": "minor",
+          "reason": "存在 1 项未匹配歧义",
+          "tags": [
+            "FALSE_AMBIGUITY"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.2.1",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.4.1",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.1.0",
+        "repairVersion": "recognition-repair-1.1.0",
+        "routerVersion": "recognition-router-1.1.0",
+        "attempts": 2,
+        "durationMs": 7824,
+        "tokenUsage": {
+          "input": 5655,
+          "output": 1294
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 2350,
+              "output": 1020
+            },
+            "durationMs": 5298,
+            "attempts": 1
+          },
+          {
+            "operation": "repair",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 3305,
+              "output": 274
+            },
+            "durationMs": 2526,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.1.0",
+        "attempted": true,
+        "applied": true,
+        "errorCode": null,
+        "issueCodes": [
+          "MISSING_TIME_AMBIGUITY"
+        ],
+        "allowedFields": [
+          "evidence",
+          "materials",
+          "timePoints",
+          "events",
+          "ambiguities",
+          "taskReferenceUpdates"
+        ],
+        "changedFields": [
+          "ambiguities"
+        ],
+        "beforeValidation": {
+          "validatorVersion": "recognition-quality-2.1.0",
+          "valid": false,
+          "repairRecommended": true,
+          "issues": [
+            {
+              "code": "INVALID_REFERENCE",
+              "severity": "error",
+              "repairable": false,
+              "message": "任务依赖不存在：tp-1",
+              "entityId": "task-1",
+              "evidence": "tp-1"
+            },
+            {
+              "code": "MISSING_TIME_AMBIGUITY",
+              "severity": "warning",
+              "repairable": true,
+              "message": "模糊时间缺少对应 Ambiguity。",
+              "entityId": "tp-1",
+              "evidence": "名单公布后两天内"
+            }
+          ]
+        },
+        "afterValidation": {
+          "validatorVersion": "recognition-quality-2.1.0",
+          "valid": false,
+          "repairRecommended": false,
+          "issues": [
+            {
+              "code": "INVALID_REFERENCE",
+              "severity": "error",
+              "repairable": false,
+              "message": "任务依赖不存在：tp-1",
+              "entityId": "task-1",
+              "evidence": "tp-1"
+            }
+          ]
+        },
+        "beforeResult": {
+          "schemaVersion": "2.0",
+          "promptVersion": "recognition-2.4.1",
+          "modelName": "deepseek-v4-flash",
+          "createdAt": "2026-08-08T08:00:00+08:00",
+          "sourceSummary": {
+            "title": "结果公布后确认",
+            "sourceType": "text",
+            "notificationType": "uncertain",
+            "summary": "名单公布后两天内需回复是否参加，但名单发布时间未确定。",
+            "requiresAction": true,
+            "actionReason": "明确要求用户在名单公布后两天内回复是否参加。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 0.7,
+            "reasons": [
+              "来源仅包含一次条件性后续行动，没有稳定项目身份或跨日交付。"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [
+            {
+              "tempId": "task-1",
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "参加",
+              "actionVerb": "参加",
+              "actionObject": "是否参加",
+              "description": "在名单公布后两天内回复是否参加。",
+              "completionCriteria": [],
+              "estimatedMinutes": 10,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [
+                "tp-1"
+              ],
+              "materialTempIds": [],
+              "timePointTempIds": [
+                "tp-1"
+              ],
+              "evidenceIds": [
+                "ev-1"
+              ],
+              "confidence": 0.8,
+              "inferenceLevel": "explicit",
+              "userConfirmationRequired": true,
+              "selected": true
+            }
+          ],
+          "materials": [],
+          "timePoints": [
+            {
+              "tempId": "tp-1",
+              "type": "task_deadline",
+              "rawText": "名单公布后两天内",
+              "normalizedValue": null,
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "vague",
+              "needsConfirmation": true,
+              "relatedTaskTempIds": [
+                "task-1"
+              ],
+              "relatedMaterialTempIds": [],
+              "evidenceIds": [
+                "ev-1"
+              ],
+              "confidence": 0.6,
+              "selected": false
+            },
+            {
+              "tempId": "tp-2",
+              "type": "result_announcement",
+              "rawText": "名单发布时间暂未确定",
+              "normalizedValue": null,
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "vague",
+              "needsConfirmation": true,
+              "relatedTaskTempIds": [
+                "task-1"
+              ],
+              "relatedMaterialTempIds": [],
+              "evidenceIds": [
+                "ev-2"
+              ],
+              "confidence": 0.5,
+              "selected": false
+            }
+          ],
+          "events": [],
+          "evidence": [
+            {
+              "id": "ev-1",
+              "sourceId": "pending-source",
+              "quote": "名单公布后两天内回复是否参加",
+              "quotedText": "名单公布后两天内回复是否参加",
+              "field": "description",
+              "extractionMethod": "ai",
+              "confidence": 0.9
+            },
+            {
+              "id": "ev-2",
+              "sourceId": "pending-source",
+              "quote": "名单发布时间暂未确定",
+              "quotedText": "名单发布时间暂未确定",
+              "field": "description",
+              "extractionMethod": "ai",
+              "confidence": 0.9
+            }
+          ],
+          "conflicts": [],
+          "ambiguities": [
+            {
+              "id": "amb-1",
+              "field": "time",
+              "message": "名单公布时间未确定，回复截止时间无法精确计算。",
+              "options": [
+                "等待名单公布后确认",
+                "联系主办方获取时间"
+              ],
+              "evidenceIds": [
+                "ev-2"
+              ]
+            }
+          ],
+          "ignoredContent": [],
+          "quality": {
+            "overallConfidence": 0.7,
+            "hierarchyConfidence": 0.8,
+            "dateConfidence": 0.5,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": true,
+            "reviewReasons": [
+              "名单公布时间未确定，回复截止时间需人工确认。"
+            ]
+          }
+        },
+        "beforeScores": {
+          "taskTruePositive": 0,
+          "materialMatched": 0,
+          "timePointMatched": 2,
+          "eventMatched": 0,
+          "evidenceMatched": 3,
+          "duplicateCount": 0,
+          "overFragmented": false,
+          "majorCorrection": true,
+          "severeError": false
+        }
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.1.0",
+        "level": "medium",
+        "score": 2,
+        "reasons": [
+          "包含 2 个动作或义务表达",
+          "包含条件适用语义"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-holdout-34",
+      "group": "vague_time",
+      "status": "ok",
+      "latencyMs": 5321,
+      "failures": [
+        {
+          "category": "material_missing",
+          "severity": "major",
+          "reason": "缺少材料：初稿",
+          "expectedKey": "draft",
+          "tags": [
+            "MISSING_MATERIAL"
+          ]
+        },
+        {
+          "category": "time_missing",
+          "severity": "major",
+          "reason": "时间点不正确：大约月底",
+          "expectedKey": "deadline",
+          "tags": [
+            "MISSING_TIMEPOINT"
+          ]
+        },
+        {
+          "category": "time_spurious",
+          "severity": "minor",
+          "reason": "存在 1 个未匹配时间点",
+          "tags": [
+            "WRONG_TIMEPOINT_TYPE"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.2.1",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.4.1",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.1.0",
+        "repairVersion": "recognition-repair-1.1.0",
+        "routerVersion": "recognition-router-1.1.0",
+        "attempts": 1,
+        "durationMs": 5112,
+        "tokenUsage": {
+          "input": 2349,
+          "output": 876
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 2349,
+              "output": 876
+            },
+            "durationMs": 5112,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.1.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": [],
+        "allowedFields": [
+          "evidence",
+          "materials",
+          "timePoints",
+          "events",
+          "ambiguities",
+          "taskReferenceUpdates"
+        ],
+        "changedFields": [],
+        "beforeValidation": null,
+        "afterValidation": null,
+        "beforeResult": null
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.1.0",
+        "level": "simple",
+        "score": 0,
+        "reasons": [
+          "短正文、单一动作且无复杂条件"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-holdout-38",
+      "group": "ocr_noise",
+      "status": "ok",
+      "latencyMs": 6304,
+      "failures": [
+        {
+          "category": "task_missing",
+          "severity": "major",
+          "reason": "缺少任务：携带 PPT",
+          "expectedKey": "bring",
+          "tags": [
+            "MISSING_TASK"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.2.1",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.4.1",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.1.0",
+        "repairVersion": "recognition-repair-1.1.0",
+        "routerVersion": "recognition-router-1.1.0",
+        "attempts": 1,
+        "durationMs": 6086,
+        "tokenUsage": {
+          "input": 2358,
+          "output": 1114
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 2358,
+              "output": 1114
+            },
+            "durationMs": 6086,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.1.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": [],
+        "allowedFields": [
+          "evidence",
+          "materials",
+          "timePoints",
+          "events",
+          "ambiguities",
+          "taskReferenceUpdates"
+        ],
+        "changedFields": [],
+        "beforeValidation": null,
+        "afterValidation": null,
+        "beforeResult": null
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.1.0",
+        "level": "simple",
+        "score": 1,
+        "reasons": [
+          "包含 2 个动作或义务表达"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    },
+    {
+      "caseId": "e2-holdout-39",
+      "group": "security",
+      "status": "ok",
+      "latencyMs": 5195,
+      "failures": [
+        {
+          "category": "time_incorrect",
+          "severity": "major",
+          "reason": "时间点不正确：8月31日前",
+          "expectedKey": "deadline",
+          "actual": "2026-08-31",
+          "tags": [
+            "WRONG_TIME_VALUE"
+          ]
+        }
+      ],
+      "execution": {
+        "gatewayVersion": "model-gateway-1.0.0",
+        "retryPolicyVersion": "recognition-retry-1.0.0",
+        "pipelineVersion": "recognition-pipeline-2.2.1",
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "promptVersion": "recognition-2.4.1",
+        "schemaVersion": "2.0",
+        "validatorVersion": "recognition-quality-2.1.0",
+        "repairVersion": "recognition-repair-1.1.0",
+        "routerVersion": "recognition-router-1.1.0",
+        "attempts": 1,
+        "durationMs": 4979,
+        "tokenUsage": {
+          "input": 2368,
+          "output": 917
+        },
+        "operations": [
+          {
+            "operation": "recognize",
+            "ok": true,
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "status": 200,
+            "transportStatus": "ok",
+            "errorCode": null,
+            "tokenUsage": {
+              "input": 2368,
+              "output": 917
+            },
+            "durationMs": 4979,
+            "attempts": 1
+          }
+        ]
+      },
+      "repair": {
+        "repairVersion": "recognition-repair-1.1.0",
+        "attempted": false,
+        "applied": false,
+        "errorCode": null,
+        "issueCodes": [],
+        "allowedFields": [
+          "evidence",
+          "materials",
+          "timePoints",
+          "events",
+          "ambiguities",
+          "taskReferenceUpdates"
+        ],
+        "changedFields": [],
+        "beforeValidation": null,
+        "afterValidation": null,
+        "beforeResult": null
+      },
+      "route": {
+        "routerVersion": "recognition-router-1.1.0",
+        "level": "simple",
+        "score": 1,
+        "reasons": [
+          "包含 2 个动作或义务表达"
+        ],
+        "candidateStrategy": "single_pass",
+        "selectedStrategy": "single_pass",
+        "twoPassEnabled": false
+      }
+    }
+  ]
+}
