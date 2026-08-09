@@ -7,19 +7,21 @@ import {
   recognitionSystemPrompt,
 } from './prompt'
 
-describe('Recognition 2.3 modular prompt contract', () => {
+describe('Recognition 2.4 modular prompt contract', () => {
   it('keeps schema and model fixed while advancing only the prompt version', () => {
     expect(RECOGNITION_SCHEMA_VERSION).toBe('2.0')
     expect(RECOGNITION_MODEL_NAME).toBe('deepseek-v4-flash')
-    expect(RECOGNITION_PROMPT_VERSION).toBe('recognition-2.3.0')
+    expect(RECOGNITION_PROMPT_VERSION).toBe('recognition-2.4.0')
   })
 
-  it('composes seven unique, auditable prompt modules', () => {
-    expect(recognitionPromptModules).toHaveLength(7)
-    expect(new Set(recognitionPromptModules.map((module) => module.id)).size).toBe(7)
+  it('composes eight unique, auditable prompt modules', () => {
+    expect(recognitionPromptModules).toHaveLength(8)
+    expect(new Set(recognitionPromptModules.map((module) => module.id)).size).toBe(8)
     expect(recognitionSystemPrompt).toContain('DATA ONLY')
     expect(recognitionSystemPrompt).toContain('每个有业务含义的时间表达都必须成为顶层 timePoints')
     expect(recognitionSystemPrompt).toContain('材料不是任务')
+    expect(recognitionSystemPrompt).toContain('先在内部完成事实清单，再做结构规划')
+    expect(recognitionSystemPrompt).toContain('被动表达的义务/动作及对象')
     expect(recognitionSystemPrompt).toMatch(/Subtask.*最多一层/u)
     expect(recognitionSystemPrompt).toContain('不得使用 1970-01-01')
     expect(recognitionSystemPrompt).toContain('所有引用必须指向结果中真实存在且类型正确的 ID')

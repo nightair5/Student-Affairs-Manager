@@ -1,5 +1,5 @@
 export interface RecognitionPromptModule {
-  id: 'role-safety' | 'output-contract' | 'time' | 'materials' | 'structure' | 'evidence-ambiguity' | 'quality'
+  id: 'role-safety' | 'output-contract' | 'facts-first' | 'time' | 'materials' | 'structure' | 'evidence-ambiguity' | 'quality'
   content: string
 }
 
@@ -10,12 +10,16 @@ export const recognitionPromptModules: readonly RecognitionPromptModule[] = Obje
   },
   {
     id: 'output-contract',
-    content: `只输出一个符合 RecognitionResult 2.0 的严格 JSON 对象，不得输出 Markdown、前言、注释或未声明字段。schemaVersion 固定为 "2.0"，promptVersion 固定为 "recognition-2.3.0"，modelName 固定为 "deepseek-v4-flash"。顶层字段必须且只能是 schemaVersion,promptVersion,modelName,createdAt,sourceSummary,projectMatch,projectSuggestion,milestones,standaloneTasks,materials,timePoints,events,evidence,conflicts,ambiguities,ignoredContent,quality，所有数组即使为空也必须输出。
+    content: `只输出一个符合 RecognitionResult 2.0 的严格 JSON 对象，不得输出 Markdown、前言、注释或未声明字段。schemaVersion 固定为 "2.0"，promptVersion 固定为 "recognition-2.4.0"，modelName 固定为 "deepseek-v4-flash"。顶层字段必须且只能是 schemaVersion,promptVersion,modelName,createdAt,sourceSummary,projectMatch,projectSuggestion,milestones,standaloneTasks,materials,timePoints,events,evidence,conflicts,ambiguities,ignoredContent,quality，所有数组即使为空也必须输出。
 字段形状必须严格使用以下名字，禁止自创别名：sourceSummary={title,sourceType,notificationType,summary,requiresAction,actionReason}；projectMatch={decision,matchedProjectId,suggestedProjectTitle,confidence,reasons}；projectSuggestion 为 null 或 {title,category,objective,description}，其中每个字段都是 {value,evidenceIds,confidence,inferenceLevel}，不能直接写字符串。
 Milestone={tempId,title,objective,order,evidenceIds,workPackages,tasks}；WorkPackage={tempId,title,objective,order,evidenceIds,tasks}；Task={tempId,parentTempId,hierarchyType,title,actionVerb,actionObject,description,completionCriteria,estimatedMinutes,statusSuggestion,prioritySuggestion,dependencyTempIds,materialTempIds,timePointTempIds,evidenceIds,confidence,inferenceLevel,userConfirmationRequired}。所有明确动作必须恰好进入一次 standaloneTasks、Milestone.tasks 或 WorkPackage.tasks；禁止用顶层 tasks 替代 standaloneTasks，禁止只输出 Material/TimePoint 而遗漏对应明确动作。
 Material={tempId,name,required,formatRequirements,namingRequirements,quantity,submissionChannel,relatedTaskTempIds,evidenceIds,confidence}；TimePoint={tempId,type,rawText,normalizedValue,timezone,isAllDay,precision,needsConfirmation,relatedTaskTempIds,relatedMaterialTempIds,evidenceIds,confidence}；Event={tempId,title,description,startTimePointTempId,endTimePointTempId,location,evidenceIds,confidence,inferenceLevel}。
 Evidence={id,sourceId,quotedText,field,extractionMethod,confidence}；Conflict={id,type,message,entityTempIds,evidenceIds,requiresDecision}；Ambiguity={id,field,message,options,evidenceIds}；IgnoredContent={text,reason}；quality={overallConfidence,hierarchyConfidence,dateConfidence,evidenceCoverage,duplicateRisk,overFragmentationRisk,missingActionRisk,needsHumanReview,reviewReasons}。不得用 Ambiguity 的 tempId/description/type/relatedTempIds 替代 id/field/message/options/evidenceIds。
 未知值使用 null、空数组或 needsConfirmation，不得使用 1970-01-01、1900-01-01、9999-12-31 等哨兵日期。ID 使用不冲突前缀：证据 ev-、阶段 ms-、工作包 wp-、任务 task-、材料 mat-、时间 tp-、事件 event-、歧义 amb-、冲突 conflict-；所有 ID 在结果内全局唯一。所有引用必须指向结果中真实存在且类型正确的 ID。`,
+  },
+  {
+    id: 'facts-first',
+    content: `先在内部完成事实清单，再做结构规划；不要输出中间清单，也不要因为先决定了任务层级而遗漏事实。事实清单逐段覆盖：涉及主体；明确或被动表达的义务/动作及对象；需准备、获取、填写、制作、携带、提交或核验的对象及其用途；每个时间表达及其业务角色；发生型事件；条件、适用范围、渠道、格式与约束；冲突、模糊和逐字证据。完成后执行一次完整性核对：每个事实只进入合适的 Task、Material、TimePoint、Event、Ambiguity 或 IgnoredContent，不重复、不凭常识补齐。最后才组织 Project、Milestone、WorkPackage 和关联关系。Simple/Medium 仍在单次调用内完成此流程。`,
   },
   {
     id: 'time',
@@ -27,7 +31,7 @@ Evidence={id,sourceId,quotedText,field,extractionMethod,confidence}；Conflict={
   },
   {
     id: 'structure',
-    content: `结构规则：先逐句列出原文明示动作、材料、时间和事件，再判断项目归属，再生成最小充分层级。projectMatch.decision 只能是 new_project|existing_project|standalone_task|uncertain；没有候选项目时禁止选择 existing_project。比赛、申请、持续多阶段事务通常为 new_project；单次课程动作或短老师任务通常为 standalone_task；若 decision=new_project，projectSuggestion 必须非 null，title.value 使用来源标题或原文明示项目名，禁止输出“待确认项目”。Milestone 只表示真实业务阶段；复杂通知按“报名与组队”“资料准备”“内容制作”“正式提交”“审核”“答辩或展示”等真实结果命名，禁止“阶段 1”“阶段 2”占位，不把单个材料、日期或普通动作包装成阶段。简单通知不创建 WorkPackage；只有同一阶段存在可解释任务组时才创建。Task 必须是“动作动词 + 明确对象”，只保留原文逐字出现动作词的动作；不得把撰写、保存为PDF、命名文件等推断步骤从一次明确提交中额外拆出。背景、政策、联系人、地址、材料名称、格式限制和语气词不能成为任务。每个原文明示的提交、上传、填写、制作、阅读、联系、报名、回复、携带等动作必须恰好生成一条可完成 Task；材料和时间不能替代 Task。不同交付物、截止、操作方式、阶段或依赖可以拆分；同一动作的说明和格式不得拆分。Subtask 仅用于父任务内部可执行步骤，最多一层，parentTempId 必须指向 task。参加会议/答辩/培训只建立 Event，不再重复建立“参加……”Task；只有原文明示准备产出才另建 Task。纯信息通知 requiresAction=false，tasks、materials、timePoints、events、ambiguities 均为空，不得把开放时间、维护时段等说明强造为个人事务。`,
+    content: `结构规则：根据事实清单判断项目归属，再生成最小充分层级。projectMatch.decision 只能是 new_project|existing_project|standalone_task|uncertain；没有候选项目时禁止选择 existing_project。比赛、申请、持续多阶段事务通常为 new_project；单次课程动作或短老师任务通常为 standalone_task；若 decision=new_project，projectSuggestion 必须非 null，title.value 使用来源标题或原文明示项目名，禁止输出“待确认项目”。Milestone 只表示真实业务阶段；复杂通知按真实业务结果命名，禁止“阶段 1”“阶段 2”占位，不把单个材料、日期或普通动作包装成阶段。简单通知不创建 WorkPackage；只有同一阶段存在可解释任务组时才创建。Task 必须表达“可执行动作 + 明确对象”；动作既可以由动词直接表达，也可以由“须、需、应、务必、截止后不再受理、窗口关闭”等义务或截止语义表达。只有来源明确要求用户行动且有逐字证据时才建 Task；不得仅因词表命中建任务，也不得把说明性语句强改成动作。不得把撰写、保存为PDF、命名文件等未明示步骤从一次提交中额外拆出。背景、政策、联系人、地址、材料名称、格式限制和语气词不能成为任务。每个来源明确要求的动作恰好生成一条可完成 Task；材料和时间不能替代 Task。不同交付物、截止、操作方式、阶段或依赖可以拆分；同一动作的说明和格式不得拆分。Subtask 仅用于父任务内部可执行步骤，最多一层，parentTempId 必须指向 task。参加会议/答辩/培训只建立 Event，不再重复建立“参加……”Task；只有来源明确要求准备产出才另建 Task。纯信息通知 requiresAction=false，tasks、materials、timePoints、events、ambiguities 均为空，不得把开放时间、维护时段等说明强造为个人事务。`,
   },
   {
     id: 'evidence-ambiguity',

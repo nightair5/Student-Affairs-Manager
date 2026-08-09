@@ -1,6 +1,6 @@
 import { composeRecognitionSystemPrompt, recognitionPromptModules } from './promptModules'
 
-export const RECOGNITION_PROMPT_VERSION = 'recognition-2.3.0'
+export const RECOGNITION_PROMPT_VERSION = 'recognition-2.4.0'
 export const RECOGNITION_SCHEMA_VERSION = '2.0' as const
 export const RECOGNITION_MODEL_NAME = 'deepseek-v4-flash'
 
