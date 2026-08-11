@@ -1,0 +1,128 @@
+{
+  "schemaVersion": "e2.7-p2b-full-results-1.0.0",
+  "status": "COMPLETE_EXPOSED_DIAGNOSTIC_ONLY",
+  "reviewer": {
+    "reviewerId": "e2-7-independent-full-blind-reviewer-02",
+    "reviewerType": "ISOLATED_CODEX_REVIEWER",
+    "independence": "NO_EXPECTED_NO_CASE_ID_NO_STRICT_SCORE_NO_REVEAL_KEY",
+    "startedAt": "2026-08-11T17:39:12.1262072+08:00",
+    "completedAt": "2026-08-11T17:55:30.7746374+08:00"
+  },
+  "provenance": {
+    "packetSha256": "0ad91dc4bb5a7d7ee6c88e749b731044e20dfc19c23e4cc69a94839a0eadda7d",
+    "labelsSha256": "a18f5befd71948d0c843939d48e1f6d8832425a3dd7c4802981daaf3b5ebb3b7",
+    "revealKeySha256": "e4a6086600654a90854d88a05b223f8b1a1a966d77a1ec1e470eef1743422a3e",
+    "labelsFrozenCommit": "e331bc0992b93b8ed2755db00fd9e8ebadadbfaf",
+    "labelsFrozenCommitTime": "2026-08-11T17:57:26+08:00",
+    "revealedAt": "2026-08-11T09:57:42.958Z",
+    "chronologyValid": true
+  },
+  "totals": {
+    "sampleCount": 72,
+    "determinateCount": 72,
+    "userImpactMajorCount": 14,
+    "userImpactMajorRate": 0.19444444444444445,
+    "strictMajorCount": 41,
+    "strictMajorRate": 0.5694444444444444,
+    "strictSevereCount": 0,
+    "confusion": {
+      "truePositive": 8,
+      "falsePositive": 33,
+      "falseNegative": 6,
+      "trueNegative": 25
+    },
+    "strictMajorPrecisionAgainstUserImpact": 0.1951219512195122,
+    "strictMajorRecallAgainstUserImpact": 0.5714285714285714
+  },
+  "labelDistributions": {
+    "userImpactMajor": {
+      "MAJOR": 14,
+      "NOT_MAJOR": 58
+    },
+    "planningError": {
+      "NO": 54,
+      "YES": 18
+    },
+    "factMissing": {
+      "NO": 67,
+      "YES": 5
+    },
+    "reasonableEquivalent": {
+      "NO": 18,
+      "YES": 54
+    },
+    "timeRoleError": {
+      "NO": 63,
+      "YES": 9
+    },
+    "eventTaskError": {
+      "NO": 66,
+      "YES": 6
+    },
+    "materialTaskError": {
+      "NO": 72
+    },
+    "ambiguityMissing": {
+      "NO": 66,
+      "YES": 6
+    },
+    "taskGroupingEquivalent": {
+      "NO": 53,
+      "YES": 19
+    },
+    "milestoneAliasOnly": {
+      "NO": 58,
+      "YES": 14
+    }
+  },
+  "p2Gate": {
+    "strictMajorFalsePositiveCount": 33,
+    "strictMajorFalseDiscoveryRate": 0.8048780487804879,
+    "strictMajorFalsePositiveRateAcrossHumanNotMajor": 0.5689655172413793,
+    "taskRecallErrorCount": 18,
+    "taskRecallErrorsWithEquivalentGrouping": 5,
+    "taskRecallEquivalentGroupingShare": 0.2777777777777778,
+    "milestoneStructuralErrorCount": 29,
+    "milestoneErrorsAliasOnly": 12,
+    "milestoneAliasOnlyShare": 0.41379310344827586,
+    "genuineFactMissingCount": 5,
+    "genuineFactMissingRate": 0.06944444444444445,
+    "factFoundPlanningWrongCount": 13,
+    "factFoundPlanningWrongRate": 0.18055555555555555,
+    "strictMajorsReasonableEquivalentCount": 31,
+    "strictMajorsReasonableEquivalentShare": 0.7560975609756098,
+    "evaluationContractMustBeCalibratedBeforeModel": true
+  },
+  "bySourceSet": {
+    "golden": {
+      "sampleCount": 24,
+      "userImpactMajorCount": 2,
+      "strictMajorCount": 11,
+      "planningErrorCount": 3,
+      "factMissingCount": 1,
+      "reasonableEquivalentCount": 19
+    },
+    "exposed_holdout": {
+      "sampleCount": 24,
+      "userImpactMajorCount": 7,
+      "strictMajorCount": 16,
+      "planningErrorCount": 7,
+      "factMissingCount": 3,
+      "reasonableEquivalentCount": 17
+    },
+    "development": {
+      "sampleCount": 24,
+      "userImpactMajorCount": 5,
+      "strictMajorCount": 14,
+      "planningErrorCount": 8,
+      "factMissingCount": 1,
+      "reasonableEquivalentCount": 18
+    }
+  },
+  "limitations": [
+    "All 72 sources are already exposed diagnostic data; P2B calibrates evaluation but is not new Blind generalization evidence.",
+    "The independent reviewer was an isolated Codex reviewer, not an external human research participant.",
+    "Legacy generation-time per-observation hashes are unavailable; frozen cache hashes and post-generation source/result bindings are verified.",
+    "Task grouping and milestone alias proportions are reviewer judgments against source/output, not automatic edits to expected answers."
+  ]
+}
