@@ -50,7 +50,13 @@ try {
     const baseTokens = recognizeOperation?.tokenUsage ?? cached.tokenUsage
     const before = scoring.scoreRecognitionCase(fixture, 'deepseek-production', baseResult, baseLatency, { tokenUsage: baseTokens, costUsd: null })
     baseScores.set(cached.caseId, before.scores)
-    const baseExecution = cached.execution ? { ...cached.execution, operations: recognizeOperation ? [recognizeOperation] : [] } : null
+    const baseExecution = cached.execution ? {
+      ...cached.execution,
+      attempts: recognizeOperation?.attempts ?? 1,
+      durationMs: baseLatency,
+      tokenUsage: baseTokens,
+      operations: recognizeOperation ? [recognizeOperation] : [],
+    } : null
     if (mode === 'R0') return { ...before, execution: baseExecution, repair: null, route: cached.route ?? null }
     const row = rowByKey.get(`${cached.caseId}:${mode}`)
     if (!row) return { ...before, execution: baseExecution, repair: { attempted: false, applied: false, beforeScores: null }, route: cached.route ?? null }
@@ -108,11 +114,19 @@ try {
 
 **${output.recommendation === 'KEEP_R2_FOR_P9' ? 'R2 retained for P9' : 'Repair disabled for the candidate path'}.**
 
-R0 uses the frozen first-pass RecognitionResult with Repair disabled. R1 and R2 reuse that exact base output and make one real repair-only DeepSeek call only for the 22 frozen Validator triggers. All 44 planned calls completed; no mock, fallback, or failed call was substituted.
+R0 uses the frozen first-pass RecognitionResult with Repair disabled. R1 and R2 reuse that exact base output and make one real repair-only DeepSeek call only for the ${manifest.triggeredCaseCount} frozen Validator triggers. All ${manifest.callCountPlanned} planned calls completed; no mock, fallback, or failed call was substituted.
 
 | Arm | Task P | Task R | Material R | Time Role | Event | Evidence | Strict Major | Severe | Trigger | Success | Harm | Repair latency mean / p95 | Repair tokens in / out |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 ${rows}
+
+## Net effect
+
+- R2 leaves Task Precision/Recall unchanged at 80.00% / 67.80%; Repair cannot solve the dominant missing-Task planning gap under the bounded patch contract.
+- Material Recall improves from 95.54% to 100.00%, Event Accuracy from 84.62% to 89.74%, Ambiguity Recall from 65.96% to 80.85%, and Strict Major from 66.25% to 60.00%.
+- Evidence Coverage rises from 97.35% to 97.94%; Evidence Validity remains 100%; Severe Error remains 0%.
+- R2 adds 94,034 input and 5,380 output tokens across 24 attempts. Mean repair-only latency is 2.61 s and P95 is 3.92 s; full-path mean latency rises from 7.73 s to 8.51 s.
+- The first 44-call run used already-repaired cached results by mistake. It is retained only as \`.evaluation-cache/e2-7/p8-repair-ablation-invalid-postrepair-pilot.json\`, explicitly excluded from every metric above, and replaced by the bound 48-call run over true pre-repair R0 outputs.
 
 ## Integrity boundary
 
