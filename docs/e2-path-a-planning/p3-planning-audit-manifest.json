@@ -1,0 +1,41 @@
+{
+  "schemaVersion": "e2.7-p3-planning-audit-manifest-1.0.0",
+  "status": "PACKET_FROZEN_AUDIT_NOT_STARTED",
+  "createdAt": "2026-08-11T10:03:51.349Z",
+  "selectionVersion": "e2.7-p3-planning-failure-stratified-1.0.0",
+  "packet": {
+    "ignoredPath": ".evaluation-cache/e2-7/p3-planning-audit-packet.json",
+    "sha256": "c92855a66d6410ac2d6b90109e6e40b5f0e9a7c713dec4c27d29d128793667c1",
+    "sampleCount": 60,
+    "distribution": {
+      "golden": 20,
+      "exposed_holdout": 20,
+      "development": 20
+    }
+  },
+  "cacheProvenance": {
+    "golden": {
+      "file": "deepseek-production-golden-g8-regression-2-4-1.json",
+      "sha256": "b41145a89ea7ec170624285d396708c90dd6681d133b5e4c386a8ab438fc056c",
+      "rowCount": 110,
+      "planningFailureCandidates": 80,
+      "selectedCount": 20
+    },
+    "exposed_holdout": {
+      "file": "deepseek-production-holdout-g8-regression-2-4-1.json",
+      "sha256": "15c14c0c709ebc0f4939a023d97af1575093b66f1fa2cb61ffbf8d7c1c83a545",
+      "rowCount": 40,
+      "planningFailureCandidates": 29,
+      "selectedCount": 20
+    },
+    "development": {
+      "file": "deepseek-production-generalization-g8-after-2-4-1.json",
+      "sha256": "440524fcb27d07256df78ed41565170987c09069fd8b7979f5a51fa305d5a46c",
+      "rowCount": 108,
+      "planningFailureCandidates": 83,
+      "selectedCount": 20
+    }
+  },
+  "expectedPolicy": "READ_ONLY_NEVER_MODIFY",
+  "promptModificationAllowed": false
+}
