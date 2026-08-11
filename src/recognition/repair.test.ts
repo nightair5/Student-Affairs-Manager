@@ -96,7 +96,7 @@ describe('conditional recognition repair', () => {
     const unsafe = { ...base, timePoints: [{ ...original, precision: 'vague' as const, normalizedValue: '2026-08-31', needsConfirmation: false }] }
     const report = validateRecognitionQuality(unsafe, source)
     const safeCandidate = createRecognitionRepairCandidate(unsafe, patch({
-      issueCodes: ['FALSE_PRECISION'],
+      issueCodes: ['POSSIBLE_FALSE_PRECISION'],
       timePoints: [{ ...original, precision: 'vague' as const, normalizedValue: null, needsConfirmation: true }],
     }), report)
     expect(safeCandidate).not.toBeNull()

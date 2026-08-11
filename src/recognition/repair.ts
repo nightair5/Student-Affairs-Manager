@@ -5,8 +5,8 @@ export const RECOGNITION_REPAIR_VERSION = 'recognition-repair-1.1.0'
 export const RECOGNITION_REPAIR_PATCH_VERSION = 'recognition-repair-patch-1.0.0'
 
 const REPAIRABLE_CODES = new Set<RecognitionQualityIssue['code']>([
-  'MISSING_EVIDENCE', 'MISSING_TIMEPOINT', 'FALSE_PRECISION', 'MISSING_TIME_AMBIGUITY',
-  'MISSING_MATERIAL', 'MISSING_EVENT',
+  'INVALID_EVIDENCE', 'MISSING_TIMEPOINT', 'POSSIBLE_FALSE_PRECISION', 'MISSING_AMBIGUITY',
+  'MISSING_MATERIAL', 'EVENT_TASK_CONFUSION',
 ])
 
 export interface RecognitionRepairPatch {
@@ -130,7 +130,7 @@ export function mergeRecognitionRepair(
   sourceContent: string,
 ): RecognitionResult {
   const allowed = new Set(report.issues.filter((issue) => issue.repairable && REPAIRABLE_CODES.has(issue.code)).map((issue) => issue.code))
-  const evidence = allowed.has('MISSING_EVIDENCE') || allowed.has('MISSING_TIMEPOINT') || allowed.has('MISSING_MATERIAL') || allowed.has('MISSING_EVENT')
+  const evidence = allowed.has('INVALID_EVIDENCE') || allowed.has('MISSING_TIMEPOINT') || allowed.has('MISSING_MATERIAL') || allowed.has('EVENT_TASK_CONFUSION')
     ? mergeUnique(base.evidence, candidate.evidence.filter((item) => sourceContent.includes(item.quotedText || item.quote || '')), (item) => item.id)
     : base.evidence
   const evidenceIds = new Set(evidence.map((item) => item.id))
@@ -146,15 +146,15 @@ export function mergeRecognitionRepair(
   let timePoints = allowed.has('MISSING_TIMEPOINT')
     ? mergeUnique(base.timePoints, safeCandidateTimes, (item) => item.rawText.replace(/\s/gu, '').toLowerCase())
     : [...base.timePoints]
-  if (allowed.has('FALSE_PRECISION')) {
+  if (allowed.has('POSSIBLE_FALSE_PRECISION')) {
     const replacement = new Map(safeCandidateTimes.filter((item) => (item.precision === 'vague' || item.precision === 'relative') && item.normalizedValue === null && item.needsConfirmation).map((item) => [item.tempId, item]))
     timePoints = timePoints.map((item) => replacement.get(item.tempId) ?? item)
   }
   const timePointIds = new Set(timePoints.map((item) => item.tempId))
-  const events = allowed.has('MISSING_EVENT')
+  const events = allowed.has('EVENT_TASK_CONFUSION')
     ? mergeUnique(base.events, candidate.events.filter((item) => item.evidenceIds.some((id) => evidenceIds.has(id)) && (!item.startTimePointTempId || timePointIds.has(item.startTimePointTempId)) && (!item.endTimePointTempId || timePointIds.has(item.endTimePointTempId))), (item) => `${item.title.trim().toLowerCase()}|${item.startTimePointTempId ?? ''}`)
     : base.events
-  const ambiguities = allowed.has('MISSING_TIME_AMBIGUITY') || allowed.has('FALSE_PRECISION')
+  const ambiguities = allowed.has('MISSING_AMBIGUITY') || allowed.has('POSSIBLE_FALSE_PRECISION')
     ? mergeUnique(base.ambiguities, candidate.ambiguities.filter((item) => item.evidenceIds.every((id) => evidenceIds.has(id))), (item) => `${item.field}|${item.message}`)
     : base.ambiguities
 

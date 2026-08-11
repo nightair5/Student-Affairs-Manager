@@ -1,0 +1,207 @@
+{
+  "schemaVersion": "e2.7-p7-validator-results-1.0.0",
+  "generatedAt": "2026-08-11T13:16:14.878Z",
+  "status": "PASS",
+  "scope": "80 frozen exposed diagnostic real-model outputs; no synthetic cases in metrics",
+  "validatorVersion": "recognition-quality-2.2.0",
+  "bindings": {
+    "labelsSha256": "3e75dff7e2310107d6ee8dc568ce5fd0a8f1ac5ab9d61e6139d3fe7b3d74e37f",
+    "sourceReviewPacketSha256": "9f511878d7b01d988c4f8d6ac5ce8f565e080ec276b3339fec30c8660456b158",
+    "cacheSha256": {
+      ".evaluation-cache/deepseek-production-golden-e2-7-p6-router-golden.json": "d8d2b364dff7e9bc13cde60538cc388555d860fbd82910bb5508255b43036d7f",
+      ".evaluation-cache/deepseek-production-holdout-e2-7-p6-router-holdout.json": "ce6e3c8fdea03e916b59d7f321a6135345c8f031e84b583e0209ee2d29ae1294",
+      ".evaluation-cache/deepseek-production-generalization-e2-7-p6-router-development.json": "f091c6ea7a64e60b81d3b242b8961af3ea287f05e79f752ae4ac573e5115aaab"
+    }
+  },
+  "gates": {
+    "microPrecisionAtLeast70": true,
+    "microRecallAtLeast60": true,
+    "wrongTimeRoleRecallAtLeast50": true,
+    "missingAmbiguityRecallAtLeast50": true,
+    "antiBlanketWarning": true
+  },
+  "metrics": {
+    "micro": {
+      "tp": 66,
+      "fp": 4,
+      "fn": 9,
+      "tn": 961,
+      "precision": 0.9428571428571428,
+      "recall": 0.88,
+      "falsePositiveRate": 0.004145077720207254,
+      "falseNegativeRate": 0.12
+    },
+    "macro": {
+      "precision": 0.9596153846153846,
+      "recall": 0.9015151515151515,
+      "precisionObservableClassCount": 10,
+      "recallObservableClassCount": 11
+    },
+    "caseLevel": {
+      "caseCount": 80,
+      "predictedPositiveCaseCount": 41,
+      "predictedPositiveCaseRate": 0.5125,
+      "noIssueCaseCount": 35,
+      "noIssueFalsePositiveCount": 1,
+      "noIssueFalsePositiveRate": 0.02857142857142857
+    },
+    "perClass": {
+      "MISSING_TASK": {
+        "support": 11,
+        "predicted": 12,
+        "tp": 11,
+        "fp": 1,
+        "fn": 0,
+        "tn": 68,
+        "precision": 0.9166666666666666,
+        "recall": 1,
+        "falsePositiveRate": 0.014492753623188406,
+        "falseNegativeRate": 0
+      },
+      "MISSING_MATERIAL": {
+        "support": 5,
+        "predicted": 5,
+        "tp": 5,
+        "fp": 0,
+        "fn": 0,
+        "tn": 75,
+        "precision": 1,
+        "recall": 1,
+        "falsePositiveRate": 0,
+        "falseNegativeRate": 0
+      },
+      "MISSING_TIMEPOINT": {
+        "support": 2,
+        "predicted": 2,
+        "tp": 2,
+        "fp": 0,
+        "fn": 0,
+        "tn": 78,
+        "precision": 1,
+        "recall": 1,
+        "falsePositiveRate": 0,
+        "falseNegativeRate": 0
+      },
+      "WRONG_TIME_ROLE": {
+        "support": 12,
+        "predicted": 13,
+        "tp": 11,
+        "fp": 2,
+        "fn": 1,
+        "tn": 66,
+        "precision": 0.8461538461538461,
+        "recall": 0.9166666666666666,
+        "falsePositiveRate": 0.029411764705882353,
+        "falseNegativeRate": 0.08333333333333333
+      },
+      "POSSIBLE_FALSE_PRECISION": {
+        "support": 0,
+        "predicted": 0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "tn": 80,
+        "precision": null,
+        "recall": null,
+        "falsePositiveRate": 0,
+        "falseNegativeRate": null
+      },
+      "MISSING_AMBIGUITY": {
+        "support": 12,
+        "predicted": 12,
+        "tp": 12,
+        "fp": 0,
+        "fn": 0,
+        "tn": 68,
+        "precision": 1,
+        "recall": 1,
+        "falsePositiveRate": 0,
+        "falseNegativeRate": 0
+      },
+      "EVENT_TASK_CONFUSION": {
+        "support": 7,
+        "predicted": 7,
+        "tp": 7,
+        "fp": 0,
+        "fn": 0,
+        "tn": 73,
+        "precision": 1,
+        "recall": 1,
+        "falsePositiveRate": 0,
+        "falseNegativeRate": 0
+      },
+      "MATERIAL_TASK_CONFUSION": {
+        "support": 5,
+        "predicted": 6,
+        "tp": 5,
+        "fp": 1,
+        "fn": 0,
+        "tn": 74,
+        "precision": 0.8333333333333334,
+        "recall": 1,
+        "falsePositiveRate": 0.013333333333333334,
+        "falseNegativeRate": 0
+      },
+      "POSSIBLE_FALSE_ACTION": {
+        "support": 5,
+        "predicted": 5,
+        "tp": 5,
+        "fp": 0,
+        "fn": 0,
+        "tn": 75,
+        "precision": 1,
+        "recall": 1,
+        "falsePositiveRate": 0,
+        "falseNegativeRate": 0
+      },
+      "INVALID_EVIDENCE": {
+        "support": 8,
+        "predicted": 0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 8,
+        "tn": 72,
+        "precision": null,
+        "recall": 0,
+        "falsePositiveRate": 0,
+        "falseNegativeRate": 1
+      },
+      "INVALID_REFERENCE": {
+        "support": 6,
+        "predicted": 6,
+        "tp": 6,
+        "fp": 0,
+        "fn": 0,
+        "tn": 74,
+        "precision": 1,
+        "recall": 1,
+        "falsePositiveRate": 0,
+        "falseNegativeRate": 0
+      },
+      "OVER_FRAGMENTATION": {
+        "support": 0,
+        "predicted": 0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "tn": 80,
+        "precision": null,
+        "recall": null,
+        "falsePositiveRate": 0,
+        "falseNegativeRate": null
+      },
+      "OVER_MERGING": {
+        "support": 2,
+        "predicted": 2,
+        "tp": 2,
+        "fp": 0,
+        "fn": 0,
+        "tn": 78,
+        "precision": 1,
+        "recall": 1,
+        "falsePositiveRate": 0,
+        "falseNegativeRate": 0
+      }
+    }
+  }
+}

@@ -40,7 +40,7 @@ describe('Recognition quality validator', () => {
     const report = validateRecognitionQuality(invalid, source)
     expect(report.valid).toBe(false)
     expect(report.issues.map((issue) => issue.code)).toEqual(expect.arrayContaining([
-      'EVIDENCE_NOT_SUPPORTED', 'SUBTASK_DEPTH_EXCEEDED', 'INVALID_REFERENCE',
+      'INVALID_EVIDENCE', 'SUBTASK_DEPTH_EXCEEDED', 'INVALID_REFERENCE',
     ]))
   })
 
@@ -53,7 +53,7 @@ describe('Recognition quality validator', () => {
       timePoints: [{ ...time, precision: 'vague' as const, normalizedValue: '2026-08-31', needsConfirmation: false }],
     }
     const report = validateRecognitionQuality(invalid, source)
-    expect(report.issues.some((issue) => issue.code === 'FALSE_PRECISION')).toBe(true)
+    expect(report.issues.some((issue) => issue.code === 'POSSIBLE_FALSE_PRECISION')).toBe(true)
   })
 
   it('adds transparent review reasons but does not alter canonical suggestions', () => {
@@ -63,7 +63,7 @@ describe('Recognition quality validator', () => {
     const report = validateRecognitionQuality(incomplete, source)
     const annotated = annotateRecognitionQuality(incomplete, report)
     expect(annotated.quality.needsHumanReview).toBe(true)
-    expect(annotated.quality.reviewReasons.some((reason) => reason.startsWith('MISSING_EVENT'))).toBe(true)
+    expect(annotated.quality.reviewReasons.some((reason) => reason.startsWith('EVENT_TASK_CONFUSION'))).toBe(true)
     expect(annotated.standaloneTasks).toEqual(incomplete.standaloneTasks)
   })
 
@@ -76,7 +76,7 @@ describe('Recognition quality validator', () => {
       evidence: seeded.evidence.map((item) => ({ ...item, quote: source, quotedText: source })),
       standaloneTasks: [{ ...task, title: '办理入校手续', actionVerb: '办理', actionObject: '入校手续' }],
     }
-    expect(validateRecognitionQuality(semantic, source).issues.some((issue) => issue.code === 'FALSE_ACTION')).toBe(false)
+    expect(validateRecognitionQuality(semantic, source).issues.some((issue) => issue.code === 'POSSIBLE_FALSE_ACTION')).toBe(false)
   })
 
   it('detects passive obligations and cutoff dates without inventing entities', () => {
@@ -90,7 +90,7 @@ describe('Recognition quality validator', () => {
       timePoints: [],
     }
     const report = validateRecognitionQuality(incomplete, source)
-    expect(report.issues.map((issue) => issue.code)).toEqual(expect.arrayContaining(['MISSING_ACTION', 'MISSING_TIMEPOINT']))
+    expect(report.issues.map((issue) => issue.code)).toEqual(expect.arrayContaining(['MISSING_TASK', 'MISSING_TIMEPOINT']))
     expect(incomplete.standaloneTasks).toEqual([])
     expect(incomplete.timePoints).toEqual([])
   })
@@ -106,6 +106,50 @@ describe('Recognition quality validator', () => {
 
     const reportSource = '请于周五前提交汇报材料。'
     const noEvent = { ...recognize(reportSource), events: [] }
-    expect(validateRecognitionQuality(noEvent, reportSource).issues.some((issue) => issue.code === 'MISSING_EVENT')).toBe(false)
+    expect(validateRecognitionQuality(noEvent, reportSource).issues.some((issue) => issue.code === 'EVENT_TASK_CONFUSION')).toBe(false)
+  })
+
+  it('detects wrong time roles, missing conditional ambiguity and false actions', () => {
+    const source = '请在9月1日前完成报名；入围团队9月8日参加答辩。'
+    const result = recognize(source)
+    const invalid = {
+      ...result,
+      ambiguities: [],
+      timePoints: result.timePoints.map((item, index) => index === 0 ? { ...item, type: 'task_deadline' as const } : item),
+      standaloneTasks: result.standaloneTasks.map((task, index) => index === 0 ? {
+        ...task,
+        title: '报名截止时间',
+        actionVerb: '查看',
+        actionObject: '报名截止时间',
+      } : task),
+    }
+    const codes = validateRecognitionQuality(invalid, source).issues.map((issue) => issue.code)
+    expect(codes).toEqual(expect.arrayContaining(['WRONG_TIME_ROLE', 'MISSING_AMBIGUITY', 'POSSIBLE_FALSE_ACTION']))
+  })
+
+  it('detects material/task confusion and over-merging without creating replacement tasks', () => {
+    const source = '办理设备借用需出示校园卡并提交设备借用单。'
+    const seeded = recognize('请提交设备借用单。')
+    const task = seeded.standaloneTasks[0]
+    const result = {
+      ...seeded,
+      evidence: seeded.evidence.map((item) => ({ ...item, quote: source, quotedText: source })),
+      standaloneTasks: [{ ...task, title: '办理设备借用', actionVerb: '办理', actionObject: '设备借用' }],
+      materials: seeded.materials.map((item) => ({ ...item, name: '设备借用单' })),
+    }
+    const report = validateRecognitionQuality(result, source)
+    expect(report.issues.map((issue) => issue.code)).toEqual(expect.arrayContaining(['MATERIAL_TASK_CONFUSION', 'OVER_MERGING']))
+    expect(result.standaloneTasks).toHaveLength(1)
+  })
+
+  it('detects over-fragmentation in an isolated synthetic contract case', () => {
+    const source = '请提交申请表。'
+    const seeded = recognize('请提交报名表。')
+    const task = seeded.standaloneTasks[0]
+    const fragmented = {
+      ...seeded,
+      standaloneTasks: Array.from({ length: 6 }, (_, index) => ({ ...task, tempId: `task-${index + 1}` })),
+    }
+    expect(validateRecognitionQuality(fragmented, source).issues.some((issue) => issue.code === 'OVER_FRAGMENTATION')).toBe(true)
   })
 })
