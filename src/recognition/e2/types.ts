@@ -202,7 +202,7 @@ export interface RecognitionCaseResult {
   } | null
   route: {
     level: 'simple' | 'medium' | 'complex'
-    selectedStrategy: 'single_pass' | 'fact_then_plan'
+    selectedStrategy: 'single_pass' | 'intensive_single_pass'
   } | null
   scores: {
     projectDecision: number

@@ -2,6 +2,7 @@ import { createHash } from 'node:crypto'
 import { readFile } from 'node:fs/promises'
 import path from 'node:path'
 import process from 'node:process'
+import { pathToFileURL } from 'node:url'
 import { createServer } from 'vite'
 
 const ROOT = process.cwd()
@@ -37,11 +38,12 @@ const vite = await createServer({
 })
 
 try {
-  const [golden, holdout, development, router] = await Promise.all([
+  const [golden, holdout, development, router, workerRouter] = await Promise.all([
     vite.ssrLoadModule('/src/recognition/e2/goldenDataset.ts'),
     vite.ssrLoadModule('/src/recognition/e2/holdoutDataset.ts'),
     vite.ssrLoadModule('/src/recognition/e2/generalizationDataset.ts'),
     vite.ssrLoadModule('/src/recognition/complexityRouter.ts'),
+    import(pathToFileURL(path.join(ROOT, 'cloudflare/complexity-router.mjs')).href),
   ])
   const fixtures = new Map([
     ...golden.recognitionGoldenDataset,
@@ -53,6 +55,8 @@ try {
     if (!fixture) throw new Error(`Unknown case ${entry.caseId}`)
     if (sha256(fixture.rawText) !== entry.sourceSha256) throw new Error(`Source hash drift ${entry.caseId}`)
     const route = router.routeRecognitionSource(fixture.rawText)
+    const workerRoute = workerRouter.routeRecognitionSource(fixture.rawText)
+    if (JSON.stringify(route) !== JSON.stringify(workerRoute)) throw new Error(`Browser/Worker router parity drift ${entry.caseId}`)
     return {
       caseId: entry.caseId,
       sourceSet: entry.sourceSet,
@@ -72,6 +76,8 @@ try {
     provenance: {
       labelSetSha256: sha256(labelBytes),
       routerVersion: router.RECOGNITION_ROUTER_VERSION,
+      workerRouterVersion: workerRouter.RECOGNITION_ROUTER_VERSION,
+      browserWorkerParity: true,
       evaluatedAt: '2026-08-11T00:00:00+08:00',
     },
     sample: {
