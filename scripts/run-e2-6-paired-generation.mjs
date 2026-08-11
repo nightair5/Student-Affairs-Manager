@@ -11,7 +11,7 @@ const STATUS_PATH = '/api/experiments/e2-factledger/status'
 const EXPECTED_MODEL = 'deepseek-v4-flash'
 const EXPECTED_EXPERIMENT_VERSION = 'e2.6-paired-ab-1.0.0'
 const EXPECTED_PATH_A_PROMPT = 'recognition-2.4.1'
-const EXPECTED_FACT_PROMPT = 'fact-ledger-extraction-1.0.0'
+const EXPECTED_FACT_PROMPT = 'fact-ledger-extraction-1.1.0'
 const EXPECTED_PLANNER_PROMPT = 'fact-ledger-planner-1.0.0'
 const execFileAsync = promisify(execFile)
 
