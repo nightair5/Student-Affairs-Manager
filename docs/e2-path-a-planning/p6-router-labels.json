@@ -1,0 +1,846 @@
+{
+  "schemaVersion": "e2.7-p6-router-labels-1.0.0",
+  "frozenAt": "2026-08-11T00:00:00+08:00",
+  "datasetStatus": "EXPOSED_DIAGNOSTIC_CALIBRATION_ONLY",
+  "purpose": "Router intensity allocation only; labels are not business-recognition expected answers.",
+  "constraints": {
+    "factLedgerAllowed": false,
+    "model": "deepseek-v4-flash",
+    "runtimeForbiddenFeatures": [
+      "caseId",
+      "expected answers",
+      "test phrases",
+      "Golden category"
+    ],
+    "routerMeaning": "Router only allocates recognition intensity; it does not perform business recognition."
+  },
+  "labelingPolicy": {
+    "simple": "One independent user obligation or one informational event, with at most one directly attached time and no cross-fact dependency.",
+    "medium": "Two related facts, a material or event relationship, a vague time, OCR/security noise, or one conditional branch that can still be reviewed as one compact unit.",
+    "complex": "At least three independently editable actions/times, or a correction, conditional/dependent timing, multi-stage actor flow, or event-task relationship whose facts must be related across clauses."
+  },
+  "classPolicies": {
+    "simple": {
+      "recommendedPipeline": "single_pass_light_validation",
+      "underRoutingRisk": "已是最低强度；主要风险是把信息事件遗漏为无结构输出。",
+      "overRoutingCost": "增加不必要的校验、延迟和 Token，并可能诱发过度拆分。"
+    },
+    "medium": {
+      "recommendedPipeline": "single_pass_standard_validation",
+      "underRoutingRisk": "可能遗漏第二动作、材料角色、时间歧义或事件关系。",
+      "overRoutingCost": "严格校验或 Repair 可能增加延迟，并把紧凑结构过度拆分。"
+    },
+    "complex": {
+      "recommendedPipeline": "intensive_single_pass_strict_validation_conditional_single_repair",
+      "underRoutingRisk": "可能漏掉独立动作、条件分支、时间角色或任务与事件边界。",
+      "overRoutingCost": "更高 max tokens、严格 Validator 和至多一次 Repair 会增加延迟与 Token。"
+    }
+  },
+  "distribution": {
+    "complex": 32,
+    "simple": 20,
+    "medium": 28
+  },
+  "labels": [
+    {
+      "caseId": "e2-complex_notice-01",
+      "sourceSet": "golden",
+      "sourceSha256": "99cc9c07a8d7c8217f5214497deee2f222b3df2cf9200d82d35bec0057003823",
+      "label": "complex",
+      "why": "Four actions, four times, materials, and a final event.",
+      "recommendedPipeline": "intensive_single_pass_strict_validation_conditional_single_repair",
+      "underRoutingRisk": "Four actions, four times, materials, and a final event.可能漏掉独立动作、条件分支、时间角色或任务与事件边界。",
+      "overRoutingCost": "Four actions, four times, materials, and a final event.更高 max tokens、严格 Validator 和至多一次 Repair 会增加延迟与 Token。"
+    },
+    {
+      "caseId": "e2-complex_notice-02",
+      "sourceSet": "golden",
+      "sourceSha256": "d54952591272a0d93eaa1a12751e9b1f3bf2d5c10091dacb2fc261253d4d2dd0",
+      "label": "complex",
+      "why": "Sequential submissions plus a conditional event.",
+      "recommendedPipeline": "intensive_single_pass_strict_validation_conditional_single_repair",
+      "underRoutingRisk": "Sequential submissions plus a conditional event.可能漏掉独立动作、条件分支、时间角色或任务与事件边界。",
+      "overRoutingCost": "Sequential submissions plus a conditional event.更高 max tokens、严格 Validator 和至多一次 Repair 会增加延迟与 Token。"
+    },
+    {
+      "caseId": "e2-complex_notice-03",
+      "sourceSet": "golden",
+      "sourceSha256": "0e7fd3c1ae48571d4748685e213f82c8cfe71aa08bcd72beeb19104ca92605f5",
+      "label": "complex",
+      "why": "Multi-actor preparation and final packaging workflow.",
+      "recommendedPipeline": "intensive_single_pass_strict_validation_conditional_single_repair",
+      "underRoutingRisk": "Multi-actor preparation and final packaging workflow.可能漏掉独立动作、条件分支、时间角色或任务与事件边界。",
+      "overRoutingCost": "Multi-actor preparation and final packaging workflow.更高 max tokens、严格 Validator 和至多一次 Repair 会增加延迟与 Token。"
+    },
+    {
+      "caseId": "e2-complex_notice-04",
+      "sourceSet": "golden",
+      "sourceSha256": "e7aed62c1967bc475e000de32197f4756f97761d24f216b6a83c38706a665ac5",
+      "label": "complex",
+      "why": "Registration, training, conditional onboarding, and equipment.",
+      "recommendedPipeline": "intensive_single_pass_strict_validation_conditional_single_repair",
+      "underRoutingRisk": "Registration, training, conditional onboarding, and equipment.可能漏掉独立动作、条件分支、时间角色或任务与事件边界。",
+      "overRoutingCost": "Registration, training, conditional onboarding, and equipment.更高 max tokens、严格 Validator 和至多一次 Repair 会增加延迟与 Token。"
+    },
+    {
+      "caseId": "e2-complex_notice-05",
+      "sourceSet": "golden",
+      "sourceSha256": "7bcb0a26b2cc0d67df53221ffc615d63880bcabad56d64e3db6d29b279703cf0",
+      "label": "complex",
+      "why": "Submission, result announcement, conditional interview, and preparation.",
+      "recommendedPipeline": "intensive_single_pass_strict_validation_conditional_single_repair",
+      "underRoutingRisk": "Submission, result announcement, conditional interview, and preparation.可能漏掉独立动作、条件分支、时间角色或任务与事件边界。",
+      "overRoutingCost": "Submission, result announcement, conditional interview, and preparation.更高 max tokens、严格 Validator 和至多一次 Repair 会增加延迟与 Token。"
+    },
+    {
+      "caseId": "e2-complex_notice-06",
+      "sourceSet": "golden",
+      "sourceSha256": "c42d81ff04e41cf0a70b3668450416ed8e12f3ab995e86ad06ea6f3a7774f5a7",
+      "label": "complex",
+      "why": "Submission, validation event, and conditional unknown retest.",
+      "recommendedPipeline": "intensive_single_pass_strict_validation_conditional_single_repair",
+      "underRoutingRisk": "Submission, validation event, and conditional unknown retest.可能漏掉独立动作、条件分支、时间角色或任务与事件边界。",
+      "overRoutingCost": "Submission, validation event, and conditional unknown retest.更高 max tokens、严格 Validator 和至多一次 Repair 会增加延迟与 Token。"
+    },
+    {
+      "caseId": "e2-complex_notice-07",
+      "sourceSet": "golden",
+      "sourceSha256": "e72b89a73dbf3e2b6696bb2a0614565273dea3aa9a6529b22f0323023855517a",
+      "label": "complex",
+      "why": "Submission, selection result, conditional event, and unknown location.",
+      "recommendedPipeline": "intensive_single_pass_strict_validation_conditional_single_repair",
+      "underRoutingRisk": "Submission, selection result, conditional event, and unknown location.可能漏掉独立动作、条件分支、时间角色或任务与事件边界。",
+      "overRoutingCost": "Submission, selection result, conditional event, and unknown location.更高 max tokens、严格 Validator 和至多一次 Repair 会增加延迟与 Token。"
+    },
+    {
+      "caseId": "e2-complex_notice-08",
+      "sourceSet": "golden",
+      "sourceSha256": "96156945b98d5310c392fbe1c899647af7a0189533ac15042a2f15a2eacb448c",
+      "label": "complex",
+      "why": "Two submissions, vague result timing, and conditional attendance.",
+      "recommendedPipeline": "intensive_single_pass_strict_validation_conditional_single_repair",
+      "underRoutingRisk": "Two submissions, vague result timing, and conditional attendance.可能漏掉独立动作、条件分支、时间角色或任务与事件边界。",
+      "overRoutingCost": "Two submissions, vague result timing, and conditional attendance.更高 max tokens、严格 Validator 和至多一次 Repair 会增加延迟与 Token。"
+    },
+    {
+      "caseId": "e2-complex_notice-09",
+      "sourceSet": "golden",
+      "sourceSha256": "8830890cca909f79bcb26a74753a2a44726d476205e8303e633162ebf6a83ff9",
+      "label": "complex",
+      "why": "Three actors with an explicit responsibility boundary.",
+      "recommendedPipeline": "intensive_single_pass_strict_validation_conditional_single_repair",
+      "underRoutingRisk": "Three actors with an explicit responsibility boundary.可能漏掉独立动作、条件分支、时间角色或任务与事件边界。",
+      "overRoutingCost": "Three actors with an explicit responsibility boundary.更高 max tokens、严格 Validator 和至多一次 Repair 会增加延迟与 Token。"
+    },
+    {
+      "caseId": "e2-complex_notice-10",
+      "sourceSet": "golden",
+      "sourceSha256": "426efdc005f54623aa84f82b47eaef58509e626fe6aa3d55e78e9542f287c998",
+      "label": "complex",
+      "why": "Registration, submission, date range, event, and referenced constraint.",
+      "recommendedPipeline": "intensive_single_pass_strict_validation_conditional_single_repair",
+      "underRoutingRisk": "Registration, submission, date range, event, and referenced constraint.可能漏掉独立动作、条件分支、时间角色或任务与事件边界。",
+      "overRoutingCost": "Registration, submission, date range, event, and referenced constraint.更高 max tokens、严格 Validator 和至多一次 Repair 会增加延迟与 Token。"
+    },
+    {
+      "caseId": "e2-holdout-01",
+      "sourceSet": "exposed_holdout",
+      "sourceSha256": "29f2cff3a43da73c01f65882fdd9d3744c116a1cf4971c7e51c06e1d7e069ead",
+      "label": "simple",
+      "why": "One upload obligation with one deadline.",
+      "recommendedPipeline": "single_pass_light_validation",
+      "underRoutingRisk": "One upload obligation with one deadline.已是最低强度；主要风险是把信息事件遗漏为无结构输出。",
+      "overRoutingCost": "One upload obligation with one deadline.增加不必要的校验、延迟和 Token，并可能诱发过度拆分。"
+    },
+    {
+      "caseId": "e2-holdout-02",
+      "sourceSet": "exposed_holdout",
+      "sourceSha256": "2896b07b57611d16de5394767414ceddf002a69e8c6e2611b71af7f24e6a736a",
+      "label": "medium",
+      "why": "Two related pre-class actions and a relative deadline.",
+      "recommendedPipeline": "single_pass_standard_validation",
+      "underRoutingRisk": "Two related pre-class actions and a relative deadline.可能遗漏第二动作、材料角色、时间歧义或事件关系。",
+      "overRoutingCost": "Two related pre-class actions and a relative deadline.严格校验或 Repair 可能增加延迟，并把紧凑结构过度拆分。"
+    },
+    {
+      "caseId": "e2-holdout-03",
+      "sourceSet": "exposed_holdout",
+      "sourceSha256": "3af2510b254b3ffda9fb92dbd2939511cea8565e15fe3ddf7a07bd36743545eb",
+      "label": "medium",
+      "why": "Review then submit is a two-action sequence.",
+      "recommendedPipeline": "single_pass_standard_validation",
+      "underRoutingRisk": "Review then submit is a two-action sequence.可能遗漏第二动作、材料角色、时间歧义或事件关系。",
+      "overRoutingCost": "Review then submit is a two-action sequence.严格校验或 Repair 可能增加延迟，并把紧凑结构过度拆分。"
+    },
+    {
+      "caseId": "e2-holdout-04",
+      "sourceSet": "exposed_holdout",
+      "sourceSha256": "6578502e25b80f8bc3ce3fb6692f591f51008a0fac25fdf4b4bdac1108eb654e",
+      "label": "simple",
+      "why": "Information only with no user action.",
+      "recommendedPipeline": "single_pass_light_validation",
+      "underRoutingRisk": "Information only with no user action.已是最低强度；主要风险是把信息事件遗漏为无结构输出。",
+      "overRoutingCost": "Information only with no user action.增加不必要的校验、延迟和 Token，并可能诱发过度拆分。"
+    },
+    {
+      "caseId": "e2-holdout-05",
+      "sourceSet": "exposed_holdout",
+      "sourceSha256": "4228cd1b74671e9143fea67758fda4813f28c63a97b07a360d851031625dcdc8",
+      "label": "complex",
+      "why": "Registration, two deliverables, three times, and an event.",
+      "recommendedPipeline": "intensive_single_pass_strict_validation_conditional_single_repair",
+      "underRoutingRisk": "Registration, two deliverables, three times, and an event.可能漏掉独立动作、条件分支、时间角色或任务与事件边界。",
+      "overRoutingCost": "Registration, two deliverables, three times, and an event.更高 max tokens、严格 Validator 和至多一次 Repair 会增加延迟与 Token。"
+    },
+    {
+      "caseId": "e2-holdout-06",
+      "sourceSet": "exposed_holdout",
+      "sourceSha256": "0977d0b457f3fb93a8386c22dd0188415c05763a09b169ef8920029592552656",
+      "label": "complex",
+      "why": "Submission plus a conditional selected-team event.",
+      "recommendedPipeline": "intensive_single_pass_strict_validation_conditional_single_repair",
+      "underRoutingRisk": "Submission plus a conditional selected-team event.可能漏掉独立动作、条件分支、时间角色或任务与事件边界。",
+      "overRoutingCost": "Submission plus a conditional selected-team event.更高 max tokens、严格 Validator 和至多一次 Repair 会增加延迟与 Token。"
+    },
+    {
+      "caseId": "e2-holdout-07",
+      "sourceSet": "exposed_holdout",
+      "sourceSha256": "74638bce34091ed209f075d2598fbdc6f10380b8e0d9282d71e1c8cc32f76644",
+      "label": "medium",
+      "why": "Compound deliverable with a content constraint.",
+      "recommendedPipeline": "single_pass_standard_validation",
+      "underRoutingRisk": "Compound deliverable with a content constraint.可能遗漏第二动作、材料角色、时间歧义或事件关系。",
+      "overRoutingCost": "Compound deliverable with a content constraint.严格校验或 Repair 可能增加延迟，并把紧凑结构过度拆分。"
+    },
+    {
+      "caseId": "e2-holdout-08",
+      "sourceSet": "exposed_holdout",
+      "sourceSha256": "ea8012303251fdec297a5d3f858dab36a8c913ec2b13d34a3cc63c155cf90e48",
+      "label": "medium",
+      "why": "Registration and a second submission with unknown date.",
+      "recommendedPipeline": "single_pass_standard_validation",
+      "underRoutingRisk": "Registration and a second submission with unknown date.可能遗漏第二动作、材料角色、时间歧义或事件关系。",
+      "overRoutingCost": "Registration and a second submission with unknown date.严格校验或 Repair 可能增加延迟，并把紧凑结构过度拆分。"
+    },
+    {
+      "caseId": "e2-holdout-09",
+      "sourceSet": "exposed_holdout",
+      "sourceSha256": "99e70588e1211f1ea539c17a0da2ac8aeb20961ec66afb577f604b68c32549a1",
+      "label": "simple",
+      "why": "One upload obligation with required and optional materials.",
+      "recommendedPipeline": "single_pass_light_validation",
+      "underRoutingRisk": "One upload obligation with required and optional materials.已是最低强度；主要风险是把信息事件遗漏为无结构输出。",
+      "overRoutingCost": "One upload obligation with required and optional materials.增加不必要的校验、延迟和 Token，并可能诱发过度拆分。"
+    },
+    {
+      "caseId": "e2-holdout-10",
+      "sourceSet": "exposed_holdout",
+      "sourceSha256": "592c90f3e177ad97046a15e915f53979d0d66686e06d2561dd3c6eceff548f5d",
+      "label": "medium",
+      "why": "Application action plus a scheduled review event.",
+      "recommendedPipeline": "single_pass_standard_validation",
+      "underRoutingRisk": "Application action plus a scheduled review event.可能遗漏第二动作、材料角色、时间歧义或事件关系。",
+      "overRoutingCost": "Application action plus a scheduled review event.严格校验或 Repair 可能增加延迟，并把紧凑结构过度拆分。"
+    },
+    {
+      "caseId": "e2-holdout-11",
+      "sourceSet": "exposed_holdout",
+      "sourceSha256": "5b09f0926b2cb4187b70478e31cad5251b412692c72d774893180bc587f41efb",
+      "label": "simple",
+      "why": "One submission obligation with two materials.",
+      "recommendedPipeline": "single_pass_light_validation",
+      "underRoutingRisk": "One submission obligation with two materials.已是最低强度；主要风险是把信息事件遗漏为无结构输出。",
+      "overRoutingCost": "One submission obligation with two materials.增加不必要的校验、延迟和 Token，并可能诱发过度拆分。"
+    },
+    {
+      "caseId": "e2-holdout-12",
+      "sourceSet": "exposed_holdout",
+      "sourceSha256": "e2e260011635414aed6076a2a8712e03f6c7d5d038b9501d925f1061058603ab",
+      "label": "medium",
+      "why": "Tentative opening and unknown deadline require ambiguity handling.",
+      "recommendedPipeline": "single_pass_standard_validation",
+      "underRoutingRisk": "Tentative opening and unknown deadline require ambiguity handling.可能遗漏第二动作、材料角色、时间歧义或事件关系。",
+      "overRoutingCost": "Tentative opening and unknown deadline require ambiguity handling.严格校验或 Repair 可能增加延迟，并把紧凑结构过度拆分。"
+    },
+    {
+      "caseId": "e2-holdout-13",
+      "sourceSet": "exposed_holdout",
+      "sourceSha256": "83655e43e64c4c92172452c91045b4e5bb6edcf04441c81dded50c15472c3711",
+      "label": "simple",
+      "why": "One submission obligation with a material bundle.",
+      "recommendedPipeline": "single_pass_light_validation",
+      "underRoutingRisk": "One submission obligation with a material bundle.已是最低强度；主要风险是把信息事件遗漏为无结构输出。",
+      "overRoutingCost": "One submission obligation with a material bundle.增加不必要的校验、延迟和 Token，并可能诱发过度拆分。"
+    },
+    {
+      "caseId": "e2-holdout-14",
+      "sourceSet": "exposed_holdout",
+      "sourceSha256": "a46525dab72528730f9f2ab06508ca9df6857de7fb829f78bd9c77da0450b92f",
+      "label": "medium",
+      "why": "Supplemental material correction with its own deadline.",
+      "recommendedPipeline": "single_pass_standard_validation",
+      "underRoutingRisk": "Supplemental material correction with its own deadline.可能遗漏第二动作、材料角色、时间歧义或事件关系。",
+      "overRoutingCost": "Supplemental material correction with its own deadline.严格校验或 Repair 可能增加延迟，并把紧凑结构过度拆分。"
+    },
+    {
+      "caseId": "e2-holdout-15",
+      "sourceSet": "exposed_holdout",
+      "sourceSha256": "1783b47142ff6675083b08c3ddaffc34290a89b0360ca762533927d143b860fb",
+      "label": "simple",
+      "why": "Information-only publication period.",
+      "recommendedPipeline": "single_pass_light_validation",
+      "underRoutingRisk": "Information-only publication period.已是最低强度；主要风险是把信息事件遗漏为无结构输出。",
+      "overRoutingCost": "Information-only publication period.增加不必要的校验、延迟和 Token，并可能诱发过度拆分。"
+    },
+    {
+      "caseId": "e2-holdout-16",
+      "sourceSet": "exposed_holdout",
+      "sourceSha256": "6e2e484eea02d2765a1fc145d23eb2fbd6ddfd572dbc7ae39e3e74dda2b0d1b7",
+      "label": "medium",
+      "why": "Meeting event plus reporting and carry actions.",
+      "recommendedPipeline": "single_pass_standard_validation",
+      "underRoutingRisk": "Meeting event plus reporting and carry actions.可能遗漏第二动作、材料角色、时间歧义或事件关系。",
+      "overRoutingCost": "Meeting event plus reporting and carry actions.严格校验或 Repair 可能增加延迟，并把紧凑结构过度拆分。"
+    },
+    {
+      "caseId": "e2-holdout-17",
+      "sourceSet": "exposed_holdout",
+      "sourceSha256": "fee88f7823b46a7bdcc174e9c6f2fce9a8b1ba6781f12df364f39dd0282e50b1",
+      "label": "simple",
+      "why": "One event and no preparation obligation.",
+      "recommendedPipeline": "single_pass_light_validation",
+      "underRoutingRisk": "One event and no preparation obligation.已是最低强度；主要风险是把信息事件遗漏为无结构输出。",
+      "overRoutingCost": "One event and no preparation obligation.增加不必要的校验、延迟和 Token，并可能诱发过度拆分。"
+    },
+    {
+      "caseId": "e2-holdout-18",
+      "sourceSet": "exposed_holdout",
+      "sourceSha256": "e52bf1b436d7f3842e3d97b93724658b24022774f320b040b4bce8fada4c84c8",
+      "label": "medium",
+      "why": "Vague event time and separately unknown slot.",
+      "recommendedPipeline": "single_pass_standard_validation",
+      "underRoutingRisk": "Vague event time and separately unknown slot.可能遗漏第二动作、材料角色、时间歧义或事件关系。",
+      "overRoutingCost": "Vague event time and separately unknown slot.严格校验或 Repair 可能增加延迟，并把紧凑结构过度拆分。"
+    },
+    {
+      "caseId": "e2-holdout-19",
+      "sourceSet": "exposed_holdout",
+      "sourceSha256": "4a888023c5769480f3dc047c98b0dffc1f8c0618b3f2bf4fb5e656c41d9a7af4",
+      "label": "simple",
+      "why": "One bounded event with no separate action.",
+      "recommendedPipeline": "single_pass_light_validation",
+      "underRoutingRisk": "One bounded event with no separate action.已是最低强度；主要风险是把信息事件遗漏为无结构输出。",
+      "overRoutingCost": "One bounded event with no separate action.增加不必要的校验、延迟和 Token，并可能诱发过度拆分。"
+    },
+    {
+      "caseId": "e2-holdout-20",
+      "sourceSet": "exposed_holdout",
+      "sourceSha256": "b1959d8c3f3ee0157b0496637f20af601b36c8f4a1ef7039179b9097edfb386b",
+      "label": "medium",
+      "why": "Attendance event with a credential action.",
+      "recommendedPipeline": "single_pass_standard_validation",
+      "underRoutingRisk": "Attendance event with a credential action.可能遗漏第二动作、材料角色、时间歧义或事件关系。",
+      "overRoutingCost": "Attendance event with a credential action.严格校验或 Repair 可能增加延迟，并把紧凑结构过度拆分。"
+    },
+    {
+      "caseId": "e2-holdout-21",
+      "sourceSet": "exposed_holdout",
+      "sourceSha256": "5abf3565c41e2e67b670f2efc6e0b1de912ced8ff14c284a0a66ce7ecb2aa4e3",
+      "label": "medium",
+      "why": "Vague event week and unpublished grouping schedule.",
+      "recommendedPipeline": "single_pass_standard_validation",
+      "underRoutingRisk": "Vague event week and unpublished grouping schedule.可能遗漏第二动作、材料角色、时间歧义或事件关系。",
+      "overRoutingCost": "Vague event week and unpublished grouping schedule.严格校验或 Repair 可能增加延迟，并把紧凑结构过度拆分。"
+    },
+    {
+      "caseId": "e2-holdout-22",
+      "sourceSet": "exposed_holdout",
+      "sourceSha256": "b6da0fc57dc18583cda078e16a006a08ef6c4365bba80153620fe5bc9731c8cd",
+      "label": "complex",
+      "why": "Three actions, four times, packaged materials, and an event.",
+      "recommendedPipeline": "intensive_single_pass_strict_validation_conditional_single_repair",
+      "underRoutingRisk": "Three actions, four times, packaged materials, and an event.可能漏掉独立动作、条件分支、时间角色或任务与事件边界。",
+      "overRoutingCost": "Three actions, four times, packaged materials, and an event.更高 max tokens、严格 Validator 和至多一次 Repair 会增加延迟与 Token。"
+    },
+    {
+      "caseId": "e2-holdout-23",
+      "sourceSet": "exposed_holdout",
+      "sourceSha256": "ea59761e225219766493ccf4313085d1a0165da91fad58a6420da89ffcf1ef9a",
+      "label": "complex",
+      "why": "Topic, report, signed material, event, and unknown location.",
+      "recommendedPipeline": "intensive_single_pass_strict_validation_conditional_single_repair",
+      "underRoutingRisk": "Topic, report, signed material, event, and unknown location.可能漏掉独立动作、条件分支、时间角色或任务与事件边界。",
+      "overRoutingCost": "Topic, report, signed material, event, and unknown location.更高 max tokens、严格 Validator 和至多一次 Repair 会增加延迟与 Token。"
+    },
+    {
+      "caseId": "e2-holdout-24",
+      "sourceSet": "exposed_holdout",
+      "sourceSha256": "3463d6edce6e0791b69a72bcaba3193d96842745d147571027fddf9673bf08c5",
+      "label": "complex",
+      "why": "Registration, interview, conditional submission, and training range.",
+      "recommendedPipeline": "intensive_single_pass_strict_validation_conditional_single_repair",
+      "underRoutingRisk": "Registration, interview, conditional submission, and training range.可能漏掉独立动作、条件分支、时间角色或任务与事件边界。",
+      "overRoutingCost": "Registration, interview, conditional submission, and training range.更高 max tokens、严格 Validator 和至多一次 Repair 会增加延迟与 Token。"
+    },
+    {
+      "caseId": "e2-holdout-25",
+      "sourceSet": "exposed_holdout",
+      "sourceSha256": "4a98a9ed107fb64d0e71ad9eda8d42e199ea655135d4ce090c4aae612bb94846",
+      "label": "complex",
+      "why": "Multiple submissions and two partly vague events.",
+      "recommendedPipeline": "intensive_single_pass_strict_validation_conditional_single_repair",
+      "underRoutingRisk": "Multiple submissions and two partly vague events.可能漏掉独立动作、条件分支、时间角色或任务与事件边界。",
+      "overRoutingCost": "Multiple submissions and two partly vague events.更高 max tokens、严格 Validator 和至多一次 Repair 会增加延迟与 Token。"
+    },
+    {
+      "caseId": "e2-holdout-26",
+      "sourceSet": "exposed_holdout",
+      "sourceSha256": "c7116efc294fbee2e19af1e17702aab17a08c5d242c66816139be999c663286a",
+      "label": "complex",
+      "why": "Three ordered same-day actions with distinct times.",
+      "recommendedPipeline": "intensive_single_pass_strict_validation_conditional_single_repair",
+      "underRoutingRisk": "Three ordered same-day actions with distinct times.可能漏掉独立动作、条件分支、时间角色或任务与事件边界。",
+      "overRoutingCost": "Three ordered same-day actions with distinct times.更高 max tokens、严格 Validator 和至多一次 Repair 会增加延迟与 Token。"
+    },
+    {
+      "caseId": "e2-holdout-27",
+      "sourceSet": "exposed_holdout",
+      "sourceSha256": "596af7ff507a496442d1b33c2ceb2c3c00bbab9eb8bdbbc8c71ddc8b588952c9",
+      "label": "complex",
+      "why": "Three independently editable staged submissions.",
+      "recommendedPipeline": "intensive_single_pass_strict_validation_conditional_single_repair",
+      "underRoutingRisk": "Three independently editable staged submissions.可能漏掉独立动作、条件分支、时间角色或任务与事件边界。",
+      "overRoutingCost": "Three independently editable staged submissions.更高 max tokens、严格 Validator 和至多一次 Repair 会增加延迟与 Token。"
+    },
+    {
+      "caseId": "e2-holdout-28",
+      "sourceSet": "exposed_holdout",
+      "sourceSha256": "a9e60ab92c425ec1282d81311a53ce90ba7ca0501eb335f5b21e345437e1c980",
+      "label": "complex",
+      "why": "Superseded deadline, replacement deadline, and unchanged material deadline.",
+      "recommendedPipeline": "intensive_single_pass_strict_validation_conditional_single_repair",
+      "underRoutingRisk": "Superseded deadline, replacement deadline, and unchanged material deadline.可能漏掉独立动作、条件分支、时间角色或任务与事件边界。",
+      "overRoutingCost": "Superseded deadline, replacement deadline, and unchanged material deadline.更高 max tokens、严格 Validator 和至多一次 Repair 会增加延迟与 Token。"
+    },
+    {
+      "caseId": "e2-holdout-29",
+      "sourceSet": "exposed_holdout",
+      "sourceSha256": "8041c12ebd4ec83205e63617d4fb83556ffdee608fd4ab254602928717b47dbc",
+      "label": "medium",
+      "why": "Material quantities and packaging constraint around one submission.",
+      "recommendedPipeline": "single_pass_standard_validation",
+      "underRoutingRisk": "Material quantities and packaging constraint around one submission.可能遗漏第二动作、材料角色、时间歧义或事件关系。",
+      "overRoutingCost": "Material quantities and packaging constraint around one submission.严格校验或 Repair 可能增加延迟，并把紧凑结构过度拆分。"
+    },
+    {
+      "caseId": "e2-holdout-30",
+      "sourceSet": "exposed_holdout",
+      "sourceSha256": "9e703e34703814b9735fa40dcd0b6b215ecb3ef9887866cb5d3883ed62782154",
+      "label": "medium",
+      "why": "Required versus reference-only material boundary.",
+      "recommendedPipeline": "single_pass_standard_validation",
+      "underRoutingRisk": "Required versus reference-only material boundary.可能遗漏第二动作、材料角色、时间歧义或事件关系。",
+      "overRoutingCost": "Required versus reference-only material boundary.严格校验或 Repair 可能增加延迟，并把紧凑结构过度拆分。"
+    },
+    {
+      "caseId": "e2-holdout-31",
+      "sourceSet": "exposed_holdout",
+      "sourceSha256": "5611999776747f9ee6bac6e5c85d8d9e95d2615e4cb8dbb88a8fff3bafd51b4f",
+      "label": "medium",
+      "why": "Required and optional files plus size and naming constraints.",
+      "recommendedPipeline": "single_pass_standard_validation",
+      "underRoutingRisk": "Required and optional files plus size and naming constraints.可能遗漏第二动作、材料角色、时间歧义或事件关系。",
+      "overRoutingCost": "Required and optional files plus size and naming constraints.严格校验或 Repair 可能增加延迟，并把紧凑结构过度拆分。"
+    },
+    {
+      "caseId": "e2-holdout-32",
+      "sourceSet": "exposed_holdout",
+      "sourceSha256": "dc0e65029d59ffdefc96bd80f4a0e97a721f3fb27f92b91623d78123716ff3ba",
+      "label": "medium",
+      "why": "Contact task linked to a separately negotiated event.",
+      "recommendedPipeline": "single_pass_standard_validation",
+      "underRoutingRisk": "Contact task linked to a separately negotiated event.可能遗漏第二动作、材料角色、时间歧义或事件关系。",
+      "overRoutingCost": "Contact task linked to a separately negotiated event.严格校验或 Repair 可能增加延迟，并把紧凑结构过度拆分。"
+    },
+    {
+      "caseId": "e2-holdout-33",
+      "sourceSet": "exposed_holdout",
+      "sourceSha256": "df36ee2d9a8fe6f37d07240adeed967b6dac357cb0a6a84da69c6a814e3f120e",
+      "label": "complex",
+      "why": "Conditional relative deadline depends on an unknown announcement.",
+      "recommendedPipeline": "intensive_single_pass_strict_validation_conditional_single_repair",
+      "underRoutingRisk": "Conditional relative deadline depends on an unknown announcement.可能漏掉独立动作、条件分支、时间角色或任务与事件边界。",
+      "overRoutingCost": "Conditional relative deadline depends on an unknown announcement.更高 max tokens、严格 Validator 和至多一次 Repair 会增加延迟与 Token。"
+    },
+    {
+      "caseId": "e2-holdout-34",
+      "sourceSet": "exposed_holdout",
+      "sourceSha256": "55a564ba5f3d0c01ae5af510adab777c624903d3a7e1eceab6ed614ba9661479",
+      "label": "medium",
+      "why": "Approximate deadline with later confirmation.",
+      "recommendedPipeline": "single_pass_standard_validation",
+      "underRoutingRisk": "Approximate deadline with later confirmation.可能遗漏第二动作、材料角色、时间歧义或事件关系。",
+      "overRoutingCost": "Approximate deadline with later confirmation.严格校验或 Repair 可能增加延迟，并把紧凑结构过度拆分。"
+    },
+    {
+      "caseId": "e2-holdout-35",
+      "sourceSet": "exposed_holdout",
+      "sourceSha256": "b09408b19b9984906eadd053b73d62623fd27cab133b0d574a4a928a73ffc22d",
+      "label": "simple",
+      "why": "Information-only outage window.",
+      "recommendedPipeline": "single_pass_light_validation",
+      "underRoutingRisk": "Information-only outage window.已是最低强度；主要风险是把信息事件遗漏为无结构输出。",
+      "overRoutingCost": "Information-only outage window.增加不必要的校验、延迟和 Token，并可能诱发过度拆分。"
+    },
+    {
+      "caseId": "e2-holdout-36",
+      "sourceSet": "exposed_holdout",
+      "sourceSha256": "181d23f33e3ab762ded5faed5a79b4636a7c8f4ebf4caf5f4db8cb70babc82bd",
+      "label": "simple",
+      "why": "Information-only evaluation criteria.",
+      "recommendedPipeline": "single_pass_light_validation",
+      "underRoutingRisk": "Information-only evaluation criteria.已是最低强度；主要风险是把信息事件遗漏为无结构输出。",
+      "overRoutingCost": "Information-only evaluation criteria.增加不必要的校验、延迟和 Token，并可能诱发过度拆分。"
+    },
+    {
+      "caseId": "e2-holdout-37",
+      "sourceSet": "exposed_holdout",
+      "sourceSha256": "9a45311048dfaac5e26616a31745ea7ee594aff574ddb1b913d9f212b4389155",
+      "label": "medium",
+      "why": "One submission with OCR-corrupted time requiring confirmation.",
+      "recommendedPipeline": "single_pass_standard_validation",
+      "underRoutingRisk": "One submission with OCR-corrupted time requiring confirmation.可能遗漏第二动作、材料角色、时间歧义或事件关系。",
+      "overRoutingCost": "One submission with OCR-corrupted time requiring confirmation.严格校验或 Repair 可能增加延迟，并把紧凑结构过度拆分。"
+    },
+    {
+      "caseId": "e2-holdout-38",
+      "sourceSet": "exposed_holdout",
+      "sourceSha256": "0d35d21eb700a216f61ddfa5122b893cb56428a523da3a2bd38fe13a2b186958",
+      "label": "medium",
+      "why": "OCR-corrupted event plus a carry requirement.",
+      "recommendedPipeline": "single_pass_standard_validation",
+      "underRoutingRisk": "OCR-corrupted event plus a carry requirement.可能遗漏第二动作、材料角色、时间歧义或事件关系。",
+      "overRoutingCost": "OCR-corrupted event plus a carry requirement.严格校验或 Repair 可能增加延迟，并把紧凑结构过度拆分。"
+    },
+    {
+      "caseId": "e2-holdout-39",
+      "sourceSet": "exposed_holdout",
+      "sourceSha256": "f752496d7e16d81143bef3682041d05ec4ab877620fc9723ab47e666a81d7c56",
+      "label": "medium",
+      "why": "Adversarial instruction must be isolated from one valid action.",
+      "recommendedPipeline": "single_pass_standard_validation",
+      "underRoutingRisk": "Adversarial instruction must be isolated from one valid action.可能遗漏第二动作、材料角色、时间歧义或事件关系。",
+      "overRoutingCost": "Adversarial instruction must be isolated from one valid action.严格校验或 Repair 可能增加延迟，并把紧凑结构过度拆分。"
+    },
+    {
+      "caseId": "e2-holdout-40",
+      "sourceSet": "exposed_holdout",
+      "sourceSha256": "759899dbae9e4e3a493aa95e1eb5fdc35167c2e94b5e536a646a2d51653ad644",
+      "label": "medium",
+      "why": "Adversarial instruction plus a valid submission obligation.",
+      "recommendedPipeline": "single_pass_standard_validation",
+      "underRoutingRisk": "Adversarial instruction plus a valid submission obligation.可能遗漏第二动作、材料角色、时间歧义或事件关系。",
+      "overRoutingCost": "Adversarial instruction plus a valid submission obligation.严格校验或 Repair 可能增加延迟，并把紧凑结构过度拆分。"
+    },
+    {
+      "caseId": "e2-gen-03-3",
+      "sourceSet": "development",
+      "sourceSha256": "7e21504ce86b14dd7a32860ea246d65a1ed9ec6e793df6ba7c766eb3f071df97",
+      "label": "complex",
+      "why": "Registration, delivery, conditional presentation, and role-specific times.",
+      "recommendedPipeline": "intensive_single_pass_strict_validation_conditional_single_repair",
+      "underRoutingRisk": "Registration, delivery, conditional presentation, and role-specific times.可能漏掉独立动作、条件分支、时间角色或任务与事件边界。",
+      "overRoutingCost": "Registration, delivery, conditional presentation, and role-specific times.更高 max tokens、严格 Validator 和至多一次 Repair 会增加延迟与 Token。"
+    },
+    {
+      "caseId": "e2-gen-07-1",
+      "sourceSet": "development",
+      "sourceSha256": "dbc7f01c97c9254fece128205bbd85b0deaf6eea3f702254df547a70f8d97f20",
+      "label": "complex",
+      "why": "Two events, an embedded check-in task, and eligibility condition.",
+      "recommendedPipeline": "intensive_single_pass_strict_validation_conditional_single_repair",
+      "underRoutingRisk": "Two events, an embedded check-in task, and eligibility condition.可能漏掉独立动作、条件分支、时间角色或任务与事件边界。",
+      "overRoutingCost": "Two events, an embedded check-in task, and eligibility condition.更高 max tokens、严格 Validator 和至多一次 Repair 会增加延迟与 Token。"
+    },
+    {
+      "caseId": "e2-gen-10-3",
+      "sourceSet": "development",
+      "sourceSha256": "945fbced9abaedc021ed112a6fa85df7dc522142db6ca7a26ee4c66560b9abbb",
+      "label": "complex",
+      "why": "Conditional response deadline depends on an unknown announcement.",
+      "recommendedPipeline": "intensive_single_pass_strict_validation_conditional_single_repair",
+      "underRoutingRisk": "Conditional response deadline depends on an unknown announcement.可能漏掉独立动作、条件分支、时间角色或任务与事件边界。",
+      "overRoutingCost": "Conditional response deadline depends on an unknown announcement.更高 max tokens、严格 Validator 和至多一次 Repair 会增加延迟与 Token。"
+    },
+    {
+      "caseId": "e2-gen-11-3",
+      "sourceSet": "development",
+      "sourceSha256": "7143a913f89b9736aab94e46fd3be49ce36f9d026309b02e6606f13d1b03a870",
+      "label": "complex",
+      "why": "Old and new deadline plus a separate unchanged obligation.",
+      "recommendedPipeline": "intensive_single_pass_strict_validation_conditional_single_repair",
+      "underRoutingRisk": "Old and new deadline plus a separate unchanged obligation.可能漏掉独立动作、条件分支、时间角色或任务与事件边界。",
+      "overRoutingCost": "Old and new deadline plus a separate unchanged obligation.更高 max tokens、严格 Validator 和至多一次 Repair 会增加延迟与 Token。"
+    },
+    {
+      "caseId": "e2-gen-12-1",
+      "sourceSet": "development",
+      "sourceSha256": "b9f1b7f83cdb7a79b7158d7348ff6e5404d1f7b1e39902ea30c7c91c5bcbfd17",
+      "label": "medium",
+      "why": "Two required materials and one reference-only attachment.",
+      "recommendedPipeline": "single_pass_standard_validation",
+      "underRoutingRisk": "Two required materials and one reference-only attachment.可能遗漏第二动作、材料角色、时间歧义或事件关系。",
+      "overRoutingCost": "Two required materials and one reference-only attachment.严格校验或 Repair 可能增加延迟，并把紧凑结构过度拆分。"
+    },
+    {
+      "caseId": "e2-gen-15-3",
+      "sourceSet": "development",
+      "sourceSha256": "e6652f69f9689f5525e8d3c24ce0cf169277c6a7534e200916af6c05b1966f6f",
+      "label": "medium",
+      "why": "OCR uncertainty plus a two-material bundle.",
+      "recommendedPipeline": "single_pass_standard_validation",
+      "underRoutingRisk": "OCR uncertainty plus a two-material bundle.可能遗漏第二动作、材料角色、时间歧义或事件关系。",
+      "overRoutingCost": "OCR uncertainty plus a two-material bundle.严格校验或 Repair 可能增加延迟，并把紧凑结构过度拆分。"
+    },
+    {
+      "caseId": "e2-gen-20-2",
+      "sourceSet": "development",
+      "sourceSha256": "36fef1742e72c55c2d3e362825e5fa88308d8d6312c46c88e34f93f2af6bc8bd",
+      "label": "complex",
+      "why": "Relative submission deadline depends on an event end time not stated.",
+      "recommendedPipeline": "intensive_single_pass_strict_validation_conditional_single_repair",
+      "underRoutingRisk": "Relative submission deadline depends on an event end time not stated.可能漏掉独立动作、条件分支、时间角色或任务与事件边界。",
+      "overRoutingCost": "Relative submission deadline depends on an event end time not stated.更高 max tokens、严格 Validator 和至多一次 Repair 会增加延迟与 Token。"
+    },
+    {
+      "caseId": "e2-gen-21-3",
+      "sourceSet": "development",
+      "sourceSha256": "cff426900561d934c5242a1ddb24219f942116204d0728db905eb0e9395a44d9",
+      "label": "complex",
+      "why": "Three ordered same-day actions with different time roles.",
+      "recommendedPipeline": "intensive_single_pass_strict_validation_conditional_single_repair",
+      "underRoutingRisk": "Three ordered same-day actions with different time roles.可能漏掉独立动作、条件分支、时间角色或任务与事件边界。",
+      "overRoutingCost": "Three ordered same-day actions with different time roles.更高 max tokens、严格 Validator 和至多一次 Repair 会增加延迟与 Token。"
+    },
+    {
+      "caseId": "e2-gen-22-1",
+      "sourceSet": "development",
+      "sourceSha256": "0fc0304f34217af8ec60fd1f54d2bb19d7dec8fa8f0b04fbd66b3d2db54566fa",
+      "label": "complex",
+      "why": "Three stages, multiple materials, event, and unknown location.",
+      "recommendedPipeline": "intensive_single_pass_strict_validation_conditional_single_repair",
+      "underRoutingRisk": "Three stages, multiple materials, event, and unknown location.可能漏掉独立动作、条件分支、时间角色或任务与事件边界。",
+      "overRoutingCost": "Three stages, multiple materials, event, and unknown location.更高 max tokens、严格 Validator 和至多一次 Repair 会增加延迟与 Token。"
+    },
+    {
+      "caseId": "e2-gen-22-3",
+      "sourceSet": "development",
+      "sourceSha256": "a470b14e504dfa3b5bf37ace43794581263191500d9ed3e942cc9740f53f308b",
+      "label": "complex",
+      "why": "Three stages, bundled submission, tentative event, and unknown location.",
+      "recommendedPipeline": "intensive_single_pass_strict_validation_conditional_single_repair",
+      "underRoutingRisk": "Three stages, bundled submission, tentative event, and unknown location.可能漏掉独立动作、条件分支、时间角色或任务与事件边界。",
+      "overRoutingCost": "Three stages, bundled submission, tentative event, and unknown location.更高 max tokens、严格 Validator 和至多一次 Repair 会增加延迟与 Token。"
+    },
+    {
+      "caseId": "e2-gen-05-1",
+      "sourceSet": "development",
+      "sourceSha256": "93f5ca4e28002759bbedb3ead56a5d91d3aaa8cd5b010f6de4849e977dad4ef8",
+      "label": "simple",
+      "why": "仅公示一个信息事件，正文明确无需学生操作。",
+      "recommendedPipeline": "single_pass_light_validation",
+      "underRoutingRisk": "仅公示一个信息事件，正文明确无需学生操作。已是最低强度；主要风险是把信息事件遗漏为无结构输出。",
+      "overRoutingCost": "仅公示一个信息事件，正文明确无需学生操作。增加不必要的校验、延迟和 Token，并可能诱发过度拆分。"
+    },
+    {
+      "caseId": "e2-gen-05-2",
+      "sourceSet": "development",
+      "sourceSha256": "78f5d4e06a3d2034e43f37ec203597467f0393ea9ab591c62e6e9c2edfd67ed1",
+      "label": "simple",
+      "why": "只有资助名单公示期，没有用户义务或跨事实依赖。",
+      "recommendedPipeline": "single_pass_light_validation",
+      "underRoutingRisk": "只有资助名单公示期，没有用户义务或跨事实依赖。已是最低强度；主要风险是把信息事件遗漏为无结构输出。",
+      "overRoutingCost": "只有资助名单公示期，没有用户义务或跨事实依赖。增加不必要的校验、延迟和 Token，并可能诱发过度拆分。"
+    },
+    {
+      "caseId": "e2-gen-05-3",
+      "sourceSet": "development",
+      "sourceSha256": "ee97ad018423526ff7cbcf18dbd120a4cd09a24f35cdeba2b83271df31ebd10a",
+      "label": "simple",
+      "why": "单一公示事件，且明确未要求个人提交或确认。",
+      "recommendedPipeline": "single_pass_light_validation",
+      "underRoutingRisk": "单一公示事件，且明确未要求个人提交或确认。已是最低强度；主要风险是把信息事件遗漏为无结构输出。",
+      "overRoutingCost": "单一公示事件，且明确未要求个人提交或确认。增加不必要的校验、延迟和 Token，并可能诱发过度拆分。"
+    },
+    {
+      "caseId": "e2-gen-05-4",
+      "sourceSet": "development",
+      "sourceSha256": "1391611cfddd964d1be0c1733b1fddc444721b4c77506b0df65cafc5c836626b",
+      "label": "simple",
+      "why": "单一信息通知，明确不用办理事项。",
+      "recommendedPipeline": "single_pass_light_validation",
+      "underRoutingRisk": "单一信息通知，明确不用办理事项。已是最低强度；主要风险是把信息事件遗漏为无结构输出。",
+      "overRoutingCost": "单一信息通知，明确不用办理事项。增加不必要的校验、延迟和 Token，并可能诱发过度拆分。"
+    },
+    {
+      "caseId": "e2-gen-14-1",
+      "sourceSet": "development",
+      "sourceSha256": "5f3d6660d28858928129fa58f200fde29134a7770f7aae1ba50f8850ee9d6963",
+      "label": "simple",
+      "why": "单一系统维护事件和一个时间区间，无用户动作。",
+      "recommendedPipeline": "single_pass_light_validation",
+      "underRoutingRisk": "单一系统维护事件和一个时间区间，无用户动作。已是最低强度；主要风险是把信息事件遗漏为无结构输出。",
+      "overRoutingCost": "单一系统维护事件和一个时间区间，无用户动作。增加不必要的校验、延迟和 Token，并可能诱发过度拆分。"
+    },
+    {
+      "caseId": "e2-gen-14-2",
+      "sourceSet": "development",
+      "sourceSha256": "9a99403b06a4733582ed5dcff1a548ec5c0e803a4768d7aee459268ded32b83d",
+      "label": "simple",
+      "why": "单一维护窗口，仅供知悉。",
+      "recommendedPipeline": "single_pass_light_validation",
+      "underRoutingRisk": "单一维护窗口，仅供知悉。已是最低强度；主要风险是把信息事件遗漏为无结构输出。",
+      "overRoutingCost": "单一维护窗口，仅供知悉。增加不必要的校验、延迟和 Token，并可能诱发过度拆分。"
+    },
+    {
+      "caseId": "e2-gen-14-3",
+      "sourceSet": "development",
+      "sourceSha256": "a95a5e34021a2a0269900fbed21e3d2047f09f04641cbb9582b08baa5ad3ed58",
+      "label": "simple",
+      "why": "单一维护公告，明确无读者操作。",
+      "recommendedPipeline": "single_pass_light_validation",
+      "underRoutingRisk": "单一维护公告，明确无读者操作。已是最低强度；主要风险是把信息事件遗漏为无结构输出。",
+      "overRoutingCost": "单一维护公告，明确无读者操作。增加不必要的校验、延迟和 Token，并可能诱发过度拆分。"
+    },
+    {
+      "caseId": "e2-gen-14-4",
+      "sourceSet": "development",
+      "sourceSha256": "e43e389e5710516131a341b6ca55499700872ea0fda5d8da9a39d61014823e33",
+      "label": "simple",
+      "why": "单一信息事件，不含准备、提交或确认动作。",
+      "recommendedPipeline": "single_pass_light_validation",
+      "underRoutingRisk": "单一信息事件，不含准备、提交或确认动作。已是最低强度；主要风险是把信息事件遗漏为无结构输出。",
+      "overRoutingCost": "单一信息事件，不含准备、提交或确认动作。增加不必要的校验、延迟和 Token，并可能诱发过度拆分。"
+    },
+    {
+      "caseId": "e2-gen-02-1",
+      "sourceSet": "development",
+      "sourceSha256": "13f4b4c1e2da52da29f771cefcda0c144190518f0b252275c517a762b77682e1",
+      "label": "simple",
+      "why": "一个模型作业交付义务、一个截止点和两个并列交付件。",
+      "recommendedPipeline": "single_pass_light_validation",
+      "underRoutingRisk": "一个模型作业交付义务、一个截止点和两个并列交付件。已是最低强度；主要风险是把信息事件遗漏为无结构输出。",
+      "overRoutingCost": "一个模型作业交付义务、一个截止点和两个并列交付件。增加不必要的校验、延迟和 Token，并可能诱发过度拆分。"
+    },
+    {
+      "caseId": "e2-gen-02-3",
+      "sourceSet": "development",
+      "sourceSha256": "4a7e274a58ae69a4cc76b05512e9d03f1b502e315ef1dc1e64b14ec8994ac450",
+      "label": "simple",
+      "why": "一个提交动作、一个截止时刻和一个材料包，无条件分支。",
+      "recommendedPipeline": "single_pass_light_validation",
+      "underRoutingRisk": "一个提交动作、一个截止时刻和一个材料包，无条件分支。已是最低强度；主要风险是把信息事件遗漏为无结构输出。",
+      "overRoutingCost": "一个提交动作、一个截止时刻和一个材料包，无条件分支。增加不必要的校验、延迟和 Token，并可能诱发过度拆分。"
+    },
+    {
+      "caseId": "e2-gen-01-1",
+      "sourceSet": "development",
+      "sourceSha256": "34c4af21ab885894f6a0445f49fc717c54ddeda57a1f11436c06caa27b4d9771",
+      "label": "medium",
+      "why": "阅读与准备讨论问题是两个相关动作，并共享相对时间。",
+      "recommendedPipeline": "single_pass_standard_validation",
+      "underRoutingRisk": "阅读与准备讨论问题是两个相关动作，并共享相对时间。可能遗漏第二动作、材料角色、时间歧义或事件关系。",
+      "overRoutingCost": "阅读与准备讨论问题是两个相关动作，并共享相对时间。严格校验或 Repair 可能增加延迟，并把紧凑结构过度拆分。"
+    },
+    {
+      "caseId": "e2-gen-04-1",
+      "sourceSet": "development",
+      "sourceSha256": "39563d37878e9ec8e21e31a1d33a84614fdc8a13f2565bd946d4fc9c0ef7d189",
+      "label": "medium",
+      "why": "一个申请动作含三项必需材料、一项可选材料和截止时间。",
+      "recommendedPipeline": "single_pass_standard_validation",
+      "underRoutingRisk": "一个申请动作含三项必需材料、一项可选材料和截止时间。可能遗漏第二动作、材料角色、时间歧义或事件关系。",
+      "overRoutingCost": "一个申请动作含三项必需材料、一项可选材料和截止时间。严格校验或 Repair 可能增加延迟，并把紧凑结构过度拆分。"
+    },
+    {
+      "caseId": "e2-gen-06-1",
+      "sourceSet": "development",
+      "sourceSha256": "34d2e0560cc89ee2a0152daf06a0e1eb6c3fde706c8db85fa3c1fe5de930a809",
+      "label": "medium",
+      "why": "例会事件同时关联携带材料和说明进度两个动作。",
+      "recommendedPipeline": "single_pass_standard_validation",
+      "underRoutingRisk": "例会事件同时关联携带材料和说明进度两个动作。可能遗漏第二动作、材料角色、时间歧义或事件关系。",
+      "overRoutingCost": "例会事件同时关联携带材料和说明进度两个动作。严格校验或 Repair 可能增加延迟，并把紧凑结构过度拆分。"
+    },
+    {
+      "caseId": "e2-gen-09-1",
+      "sourceSet": "development",
+      "sourceSha256": "1e408dfdf1d9e9984bdfff215dd97493722172f8201a6f23a1c89cdfef8ce763",
+      "label": "medium",
+      "why": "准备材料与日期未知的复核事件并存，需要保留时间歧义。",
+      "recommendedPipeline": "single_pass_standard_validation",
+      "underRoutingRisk": "准备材料与日期未知的复核事件并存，需要保留时间歧义。可能遗漏第二动作、材料角色、时间歧义或事件关系。",
+      "overRoutingCost": "准备材料与日期未知的复核事件并存，需要保留时间歧义。严格校验或 Repair 可能增加延迟，并把紧凑结构过度拆分。"
+    },
+    {
+      "caseId": "e2-gen-12-3",
+      "sourceSet": "development",
+      "sourceSha256": "f0bc992a5f8a99070488ef9108de299cd44db67874f35d02c94640a17c2ef961",
+      "label": "medium",
+      "why": "办理动作需区分必需材料与仅供参考附件。",
+      "recommendedPipeline": "single_pass_standard_validation",
+      "underRoutingRisk": "办理动作需区分必需材料与仅供参考附件。可能遗漏第二动作、材料角色、时间歧义或事件关系。",
+      "overRoutingCost": "办理动作需区分必需材料与仅供参考附件。严格校验或 Repair 可能增加延迟，并把紧凑结构过度拆分。"
+    },
+    {
+      "caseId": "e2-gen-13-1",
+      "sourceSet": "development",
+      "sourceSha256": "380d422f6d2a3f3fca278ca3b42e3aaaf28f4b918899cf6cb74731343ea47925",
+      "label": "medium",
+      "why": "一个资格确认动作受是否入围条件约束。",
+      "recommendedPipeline": "single_pass_standard_validation",
+      "underRoutingRisk": "一个资格确认动作受是否入围条件约束。可能遗漏第二动作、材料角色、时间歧义或事件关系。",
+      "overRoutingCost": "一个资格确认动作受是否入围条件约束。严格校验或 Repair 可能增加延迟，并把紧凑结构过度拆分。"
+    },
+    {
+      "caseId": "e2-gen-08-1",
+      "sourceSet": "development",
+      "sourceSha256": "c0baf1765b018178e22036cd440ff93954e8c2680aab69ea23197613651615d4",
+      "label": "complex",
+      "why": "表格列出三个可独立编辑的论文动作和三个不同时间节点。",
+      "recommendedPipeline": "intensive_single_pass_strict_validation_conditional_single_repair",
+      "underRoutingRisk": "表格列出三个可独立编辑的论文动作和三个不同时间节点。可能漏掉独立动作、条件分支、时间角色或任务与事件边界。",
+      "overRoutingCost": "表格列出三个可独立编辑的论文动作和三个不同时间节点。更高 max tokens、严格 Validator 和至多一次 Repair 会增加延迟与 Token。"
+    },
+    {
+      "caseId": "e2-gen-11-1",
+      "sourceSet": "development",
+      "sourceSha256": "6a9193bc6e5096ca367872941863d4dcf3642e319b5efe1f75d947c8345debe6",
+      "label": "complex",
+      "why": "更正后的截止时间必须覆盖旧时间，同时保留另一项独立材料截止。",
+      "recommendedPipeline": "intensive_single_pass_strict_validation_conditional_single_repair",
+      "underRoutingRisk": "更正后的截止时间必须覆盖旧时间，同时保留另一项独立材料截止。可能漏掉独立动作、条件分支、时间角色或任务与事件边界。",
+      "overRoutingCost": "更正后的截止时间必须覆盖旧时间，同时保留另一项独立材料截止。更高 max tokens、严格 Validator 和至多一次 Repair 会增加延迟与 Token。"
+    },
+    {
+      "caseId": "e2-gen-03-1",
+      "sourceSet": "development",
+      "sourceSha256": "8e801db31af4aaaf80147c9d50f6cc4b6ab9d1ad6dc9b7fc6b0d8f3ce2b424e8",
+      "label": "complex",
+      "why": "报名、提交方案和条件性陈述构成多阶段动作与事件关系。",
+      "recommendedPipeline": "intensive_single_pass_strict_validation_conditional_single_repair",
+      "underRoutingRisk": "报名、提交方案和条件性陈述构成多阶段动作与事件关系。可能漏掉独立动作、条件分支、时间角色或任务与事件边界。",
+      "overRoutingCost": "报名、提交方案和条件性陈述构成多阶段动作与事件关系。更高 max tokens、严格 Validator 和至多一次 Repair 会增加延迟与 Token。"
+    },
+    {
+      "caseId": "e2-gen-07-2",
+      "sourceSet": "development",
+      "sourceSha256": "1d82742af187c065aa26e1527e8e49308b7e27b16012f6d36a26e0e205395f13",
+      "label": "complex",
+      "why": "条件性人群需参加两个事件并完成签到，存在跨事件任务边界。",
+      "recommendedPipeline": "intensive_single_pass_strict_validation_conditional_single_repair",
+      "underRoutingRisk": "条件性人群需参加两个事件并完成签到，存在跨事件任务边界。可能漏掉独立动作、条件分支、时间角色或任务与事件边界。",
+      "overRoutingCost": "条件性人群需参加两个事件并完成签到，存在跨事件任务边界。更高 max tokens、严格 Validator 和至多一次 Repair 会增加延迟与 Token。"
+    }
+  ]
+}

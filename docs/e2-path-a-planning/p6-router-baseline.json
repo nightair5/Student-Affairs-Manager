@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "e2.7-p6-router-baseline-1.0.0",
+  "status": "LABELS_FROZEN_BASELINE_FAILED",
+  "labelSetSha256": "873220e59929649ab36600dd550dce2b14ab7220b64e4dba41f458e551d2f194",
+  "routerVersion": "recognition-router-1.1.0",
+  "sample": {
+    "count": 80,
+    "labelDistribution": { "simple": 20, "medium": 28, "complex": 32 },
+    "predictedDistribution": { "simple": 31, "medium": 37, "complex": 12 }
+  },
+  "metrics": {
+    "accuracy": 0.45,
+    "complexRecall": 0.375,
+    "underRoutingRate": 0.4625,
+    "complexToSimpleUnderRoutingRate": 0.03125,
+    "overRoutingRate": 0.0875,
+    "confusion": {
+      "simple->simple": 13,
+      "simple->medium": 7,
+      "medium->simple": 17,
+      "medium->medium": 11,
+      "complex->simple": 1,
+      "complex->medium": 19,
+      "complex->complex": 12
+    }
+  },
+  "gate": {
+    "required": { "accuracy": 0.75, "complexRecall": 0.85, "maxUnderRoutingRate": 0.15, "maxOverRoutingRate": 0.25 },
+    "passed": false
+  },
+  "executionMetrics": {
+    "status": "NOT_RUN",
+    "reason": "Label-freeze baseline only. Model latency, token and recognition-quality profiles will be measured from a separately version-bound Path A run after the labels are committed."
+  },
+  "limitations": [
+    "The 80 cases are exposed diagnostic calibration data, not Blind evidence.",
+    "The historical recognition-2.4.1 caches are unavailable in this worktree; no old cache is substituted and no execution metric is estimated."
+  ]
+}
