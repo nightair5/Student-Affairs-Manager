@@ -26,11 +26,17 @@
       "head_sampling_rate": 0.05
     }
   },
+  "vars": {
+    "E2_FACTLEDGER_EXPERIMENT_ENABLED": "false"
+  },
   "env": {
     "preview": {
       "name": "student-affairs-manager-preview",
       "workers_dev": true,
       "routes": [],
+      "vars": {
+        "E2_FACTLEDGER_EXPERIMENT_ENABLED": "true"
+      },
       "assets": {
         "directory": "./dist",
         "binding": "ASSETS",

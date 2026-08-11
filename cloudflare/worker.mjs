@@ -15,6 +15,11 @@ import {
 } from './recognition-repair.mjs'
 import { RECOGNITION_ROUTER_VERSION, routeRecognitionSource } from './complexity-router.mjs'
 import { RECOGNITION_PIPELINE_VERSION, createDeepSeekProvider, createModelGateway } from './model-gateway.mjs'
+import {
+  FACT_LEDGER_EXPERIMENT_VERSION,
+  runFactLedgerExperiment,
+  validateFactLedgerExperimentRequest,
+} from './factledger-experiment.mjs'
 
 const DEEPSEEK_ENDPOINT = 'https://api.deepseek.com/chat/completions'
 const DEEPSEEK_MODEL = 'deepseek-v4-flash'
@@ -24,6 +29,8 @@ const MAX_EXTRACTION_TOKENS = 6_000
 const MAX_WEB_RESPONSE_BYTES = 512 * 1024
 const MAX_WEB_REDIRECTS = 3
 const UPSTREAM_TIMEOUT_MS = 45_000
+const FACT_LEDGER_EXPERIMENT_PATH = '/api/experiments/e2-factledger/generate'
+const FACT_LEDGER_EXPERIMENT_STATUS_PATH = '/api/experiments/e2-factledger/status'
 const TASK_CATEGORIES = new Set(['比赛', '保研', '课程', '老师任务', '其他'])
 const COMMON_SECURITY_HEADERS = Object.freeze({
   'cross-origin-opener-policy': 'same-origin',
@@ -456,6 +463,78 @@ function timeoutError(error) {
   return error?.name === 'TimeoutError' || error?.name === 'AbortError'
 }
 
+function fixedTimeEqual(left, right) {
+  if (typeof left !== 'string' || typeof right !== 'string' || left.length !== right.length) return false
+  let difference = 0
+  for (let index = 0; index < left.length; index += 1) difference |= left.charCodeAt(index) ^ right.charCodeAt(index)
+  return difference === 0
+}
+
+async function runPreviewFactLedgerExperiment(request, env, fetcher, isRateLimited, acquireConcurrency, context) {
+  if (env.E2_FACTLEDGER_EXPERIMENT_ENABLED !== 'true') {
+    context.errorType = 'EXPERIMENT_DISABLED'
+    return failure('EXPERIMENT_DISABLED', '实验端点未启用。', 404, context.requestId)
+  }
+  if (!isTrustedOrigin(request, env.ALLOWED_ORIGINS)) {
+    context.errorType = 'ORIGIN_NOT_ALLOWED'
+    return failure('ORIGIN_NOT_ALLOWED', '请求来源不受信任。', 403, context.requestId)
+  }
+  const apiKey = safeText(env.DEEPSEEK_API_KEY, 512)
+  const experimentToken = safeText(env.E2_FACTLEDGER_EXPERIMENT_TOKEN, 512)
+  const authorization = request.headers.get('authorization') ?? ''
+  if (apiKey.length < 20) {
+    context.errorType = 'DEEPSEEK_NOT_CONFIGURED'
+    return failure('DEEPSEEK_NOT_CONFIGURED', 'DeepSeek 尚未配置 Preview 服务端密钥。', 503, context.requestId)
+  }
+  if (experimentToken.length < 32 || !fixedTimeEqual(authorization, `Bearer ${experimentToken}`)) {
+    context.errorType = 'EXPERIMENT_UNAUTHORIZED'
+    return failure('EXPERIMENT_UNAUTHORIZED', '实验凭据无效。', 401, context.requestId)
+  }
+  if (!isJsonRequest(request)) {
+    context.errorType = 'INVALID_CONTENT_TYPE'
+    return failure('INVALID_CONTENT_TYPE', '请求必须使用 application/json。', 415, context.requestId)
+  }
+  if (isRateLimited(`e2.6:${clientKey(request)}`)) {
+    context.errorType = 'RATE_LIMITED'
+    return failure('RATE_LIMITED', '实验请求过于频繁，请稍后再试。', 429, context.requestId)
+  }
+  const rawBody = await request.text()
+  context.inputLength = rawBody.length
+  if (new TextEncoder().encode(rawBody).byteLength > MAX_BODY_BYTES) {
+    context.errorType = 'INPUT_TOO_LARGE'
+    return failure('INPUT_TOO_LARGE', '请求内容超过允许大小。', 413, context.requestId)
+  }
+  let body
+  try {
+    body = JSON.parse(rawBody)
+  } catch {
+    context.errorType = 'INVALID_REQUEST'
+    return failure('INVALID_REQUEST', '请求格式无效。', 400, context.requestId)
+  }
+  const validationError = validateFactLedgerExperimentRequest(body)
+  if (validationError) {
+    context.errorType = validationError
+    return failure(validationError, '实验输入无效。', 400, context.requestId)
+  }
+  const release = acquireConcurrency(`e2.6:${clientKey(request)}`)
+  if (!release) {
+    context.errorType = 'RATE_LIMITED'
+    return failure('RATE_LIMITED', '实验并发请求过多，请稍后再试。', 429, context.requestId)
+  }
+  try {
+    const result = await runFactLedgerExperiment(body, apiKey, fetcher)
+    context.outputTokens = result.tokenUsage?.output ?? 0
+    return success(result, context.requestId)
+  } catch (error) {
+    const code = error instanceof Error ? error.message.split(':')[0] : 'EXPERIMENT_FAILURE'
+    context.errorType = code
+    const status = code === 'DEEPSEEK_TIMEOUT' ? 504 : code.startsWith('DEEPSEEK_') ? 502 : 422
+    return failure(code, '实验路径未能生成可验证结果。', status, context.requestId)
+  } finally {
+    release()
+  }
+}
+
 function logRequest(context, response) {
   const entry = {
     requestId: context.requestId,
@@ -771,6 +850,21 @@ export function createWorker({
         response = success({ configured: safeText(env.DEEPSEEK_API_KEY, 512).length >= 20, model: DEEPSEEK_MODEL, pipelineVersion: RECOGNITION_PIPELINE_VERSION }, context.requestId)
       } else if (request.method === 'GET' && url.pathname === '/api/source/status') {
         response = success({ configured: true, mode: 'public-https', maxRedirects: MAX_WEB_REDIRECTS }, context.requestId)
+      } else if (request.method === 'GET' && url.pathname === FACT_LEDGER_EXPERIMENT_STATUS_PATH) {
+        response = success({
+          enabled: env.E2_FACTLEDGER_EXPERIMENT_ENABLED === 'true',
+          configured: safeText(env.DEEPSEEK_API_KEY, 512).length >= 20,
+          protected: safeText(env.E2_FACTLEDGER_EXPERIMENT_TOKEN, 512).length >= 32,
+          experimentVersion: FACT_LEDGER_EXPERIMENT_VERSION,
+          model: DEEPSEEK_MODEL,
+        }, context.requestId)
+      } else if (url.pathname === FACT_LEDGER_EXPERIMENT_PATH) {
+        if (request.method !== 'POST') {
+          context.errorType = 'METHOD_NOT_ALLOWED'
+          response = failure('METHOD_NOT_ALLOWED', '该接口只接受 POST。', 405, context.requestId)
+        } else {
+          response = await runPreviewFactLedgerExperiment(request, env, fetcher, isRateLimited, acquireConcurrency, context)
+        }
       } else if (url.pathname === '/api/source/fetch') {
         if (request.method !== 'POST') {
           context.errorType = 'METHOD_NOT_ALLOWED'

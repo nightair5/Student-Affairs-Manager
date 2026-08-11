@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "e2.6-experiment-protocol-1.0.0",
+  "baselineCommit": "70dd976",
+  "branch": "codex/e2-factledger-ab-preview",
+  "sampleCount": 24,
+  "blindEligibility": false,
+  "selectionSha256": "9c9275e42e872899602c005d4d69fd378c8592db5cac553b809438c73970416e",
+  "inputManifestSha256": "77e7fbac95ac1614326de41eadbfec656058f5fe29a99fa283a4f2449036bf89",
+  "pairOrderSeed": "e2.6-paired-2026-08-11",
+  "model": "deepseek-v4-flash",
+  "parameters": {
+    "temperature": 0,
+    "maxTokens": 8192,
+    "thinking": "disabled",
+    "retries": 0
+  },
+  "versions": {
+    "pathA": "recognition-2.4.1",
+    "factLedger": "e2.5-fact-ledger-1.0.0",
+    "factExtraction": "fact-ledger-extraction-1.0.0",
+    "planner": "fact-ledger-planner-1.0.0",
+    "experiment": "e2.6-paired-ab-1.0.0"
+  },
+  "generationExpectedDataLoaded": false,
+  "routerParticipates": false,
+  "validatorParticipates": false,
+  "repairParticipates": false,
+  "productionDefaultEnabled": false,
+  "rawCacheGitIgnored": true,
+  "decisionThresholds": {
+    "taskRecallGainMinimumPercentagePoints": 8,
+    "userImpactMajorReductionMinimumPercentagePoints": 15,
+    "taskPrecisionMaximumDropPercentagePoints": 3,
+    "evidenceCoverageMinimum": 0.95,
+    "severeErrorMayIncrease": false,
+    "planningErrorMustDecrease": true
+  }
+}

@@ -3,6 +3,7 @@ import test from 'node:test'
 import { createWorker, validateDeepSeekRequest, validateExtractionRequest, validateWebFetchTarget } from './worker.mjs'
 import { createDeepSeekProvider } from './model-gateway.mjs'
 import { normalizeRecognitionResult } from './recognition.mjs'
+import { validateFactLedgerPayload } from './factledger-experiment.mjs'
 
 const baseContext = [{ kind: '任务', title: '报名材料', excerpt: '今天 18:00 截止' }]
 
@@ -28,6 +29,110 @@ function environment(overrides = {}) {
     ...overrides,
   }
 }
+
+const experimentBody = {
+  path: 'A',
+  sourceType: 'text',
+  sourceTitle: '报名通知',
+  content: '9月10日前提交报名表。',
+  referenceTime: '2026-08-08T08:00:00+08:00',
+  timezone: 'Asia/Shanghai',
+  runId: 'e2-6-test',
+  sequence: 0,
+}
+
+function experimentRequest(body = experimentBody, token = 'preview-experiment-token-with-length') {
+  return request('/api/experiments/e2-factledger/generate', {
+    headers: {
+      origin: 'https://student-affairs-manager.example',
+      'content-type': 'application/json',
+      'cf-connecting-ip': '203.0.113.10',
+      authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(body),
+  })
+}
+
+function validLedgerPayload() {
+  return {
+    schemaVersion: 'e2.5-fact-ledger-1.0.0',
+    obligations: [{
+      id: 'ob-1', actor: null, modality: 'required', actionPredicate: '提交', object: '报名表',
+      materialIds: [], timeExpressionIds: [], eventIds: [], conditionIds: [], constraintIds: [], evidenceIds: ['ev-1'],
+    }],
+    materials: [], timeExpressions: [], events: [], conditions: [], constraints: [], ambiguities: [],
+    evidence: [{ id: 'ev-1', quote: '提交报名表', start: 6, end: 11 }],
+  }
+}
+
+test('FactLedger experiment is disabled by default and never contacts upstream', async () => {
+  let contacted = false
+  const worker = createWorker({ fetcher: async () => { contacted = true } })
+  const response = await worker.fetch(experimentRequest(), environment({
+    DEEPSEEK_API_KEY: 'server-only-test-key-with-length',
+    E2_FACTLEDGER_EXPERIMENT_TOKEN: 'preview-experiment-token-with-length',
+  }))
+  assert.equal(response.status, 404)
+  assert.equal((await response.json()).error, 'EXPERIMENT_DISABLED')
+  assert.equal(contacted, false)
+})
+
+test('FactLedger experiment requires its Preview bearer token', async () => {
+  let contacted = false
+  const worker = createWorker({ fetcher: async () => { contacted = true } })
+  const response = await worker.fetch(experimentRequest(experimentBody, 'wrong-token-with-at-least-32-characters'), environment({
+    DEEPSEEK_API_KEY: 'server-only-test-key-with-length',
+    E2_FACTLEDGER_EXPERIMENT_ENABLED: 'true',
+    E2_FACTLEDGER_EXPERIMENT_TOKEN: 'preview-experiment-token-with-length',
+  }))
+  assert.equal(response.status, 401)
+  assert.equal((await response.json()).error, 'EXPERIMENT_UNAUTHORIZED')
+  assert.equal(contacted, false)
+})
+
+test('paired experiment forces equal model parameters and validates Ledger before Planner', async () => {
+  const calls = []
+  const responses = [validLedgerPayload(), {}]
+  const worker = createWorker({
+    fetcher: async (_url, options) => {
+      calls.push(JSON.parse(options.body))
+      return Response.json({
+        choices: [{ message: { content: JSON.stringify(responses.shift()) } }],
+        usage: { prompt_tokens: 100, completion_tokens: 50 },
+      })
+    },
+  })
+  const response = await worker.fetch(experimentRequest({ ...experimentBody, path: 'B' }), environment({
+    DEEPSEEK_API_KEY: 'server-only-test-key-with-length',
+    E2_FACTLEDGER_EXPERIMENT_ENABLED: 'true',
+    E2_FACTLEDGER_EXPERIMENT_TOKEN: 'preview-experiment-token-with-length',
+  }))
+  assert.equal(response.status, 422)
+  assert.equal((await response.json()).error, 'PLANNER_SCHEMA_INVALID')
+  assert.equal(calls.length, 2)
+  calls.forEach((call) => {
+    assert.equal(call.model, 'deepseek-v4-flash')
+    assert.equal(call.temperature, 0)
+    assert.equal(call.max_tokens, 8_192)
+    assert.deepEqual(call.thinking, { type: 'disabled' })
+  })
+  const plannerInput = JSON.parse(calls[1].messages[1].content)
+  assert.equal(Object.hasOwn(plannerInput.factLedger, 'sourceText'), false)
+})
+
+test('FactLedger validation rejects bad evidence spans and unsafe relative time normalization', () => {
+  const ledger = validLedgerPayload()
+  ledger.timeExpressions.push({
+    id: 'time-1', rawText: '之后', role: 'task_deadline', precision: 'relative', normalizedValue: '2026-09-10',
+    endNormalizedValue: null, timezone: 'Asia/Shanghai', needsConfirmation: false, relatedObligationIds: ['ob-1'],
+    relatedEventIds: [], supersedesTimeExpressionId: null, evidenceIds: ['ev-1'],
+  })
+  ledger.obligations[0].timeExpressionIds.push('time-1')
+  ledger.evidence[0].start = 0
+  const issues = validateFactLedgerPayload(ledger, experimentBody.content)
+  assert.ok(issues.includes('INVALID_EVIDENCE_SPAN'))
+  assert.ok(issues.includes('UNSAFE_TIME_NORMALIZATION'))
+})
 
 test('status honestly reports a missing Cloudflare secret', async () => {
   const worker = createWorker()
