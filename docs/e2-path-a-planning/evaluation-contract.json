@@ -1,0 +1,88 @@
+{
+  "schemaVersion": "e2.7-evaluation-contract-1.0.0",
+  "status": "FROZEN_FOR_E2_7",
+  "historicalStrictScorer": {
+    "version": "recognition-e2-scoring@70dd976",
+    "policy": "PRESERVE_AND_REPORT_SEPARATELY",
+    "expectedAnswersMutable": false
+  },
+  "semanticEquivalence": {
+    "version": "e2.7-semantic-equivalence-1.0.0",
+    "sourceOfTruth": "reviewed_case_level_decisions",
+    "categories": [
+      "TASK_TITLE_ALIAS",
+      "TASK_GROUPING_EQUIVALENT",
+      "TASK_SPLIT_EQUIVALENT",
+      "MILESTONE_ALIAS",
+      "MILESTONE_GROUPING_EQUIVALENT",
+      "MATERIAL_ALIAS",
+      "EVENT_TITLE_ALIAS",
+      "DATE_ONLY_EQUIVALENT",
+      "CHANNEL_ALIAS"
+    ],
+    "alwaysPreserve": [
+      "actionPredicate",
+      "object",
+      "actor",
+      "modality",
+      "condition",
+      "deadline",
+      "channel",
+      "independentCompletion",
+      "eventTaskBoundary",
+      "literalEvidence",
+      "taskCoverage",
+      "timePointCoverage",
+      "eventCoverage",
+      "order",
+      "timeRole",
+      "timeValue",
+      "uncertainty",
+      "relation"
+    ],
+    "forbiddenEquivalence": [
+      "different_deadlines",
+      "different_actors",
+      "different_conditions",
+      "different_modalities",
+      "independent_completion_collapsed",
+      "ordered_steps_collapsed",
+      "event_task_substitution",
+      "unsupported_evidence"
+    ]
+  },
+  "userImpactMajorCorrection": {
+    "version": "e2.7-user-impact-major-1.0.0",
+    "sourceOfTruth": "independent_blind_human_label",
+    "majorWhen": [
+      "missing_required_action",
+      "wrong_action_predicate",
+      "wrong_actor",
+      "wrong_modality",
+      "wrong_applicability_condition",
+      "wrong_time_value_affecting_schedule",
+      "wrong_time_role_affecting_workflow",
+      "false_precision",
+      "missing_required_event",
+      "unsupported_evidence_affecting_trust",
+      "severe_or_safety_failure"
+    ],
+    "notMajorWhen": [
+      "equivalent_task_merge_or_split",
+      "title_alias_only",
+      "milestone_granularity_without_fact_loss",
+      "project_container_choice_without_action_loss",
+      "evidence_fragmentation_with_literal_coverage",
+      "informational_event_without_action_invention",
+      "cosmetic_wording_only"
+    ],
+    "labels": ["MAJOR", "NOT_MAJOR", "INSUFFICIENT_INFORMATION"]
+  },
+  "reporting": {
+    "strictStructural": true,
+    "semanticEquivalent": true,
+    "userImpactMajor": true,
+    "strictMajorNeverRenamed": true,
+    "historicalMetricsNeverOverwritten": true
+  }
+}
