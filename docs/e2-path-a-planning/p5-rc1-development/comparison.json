@@ -1,0 +1,312 @@
+{
+  "schemaVersion": "e2-7-p5-iteration-summary-1.0.0",
+  "iteration": "RC1",
+  "baseline": {
+    "runId": "deepseek-production-2026-08-09T07-40-32-969Z",
+    "provider": "deepseek-production",
+    "label": "g8-after-2-4-1",
+    "datasetName": "generalization",
+    "datasetVersion": "e2-generalization-development-1.0.0",
+    "localPromptVersion": "recognition-2.4.1",
+    "expectedPromptVersion": "recognition-2.4.1",
+    "observedPromptVersions": [
+      "recognition-2.4.1"
+    ],
+    "modelName": "deepseek-v4-flash",
+    "promptSourceSha256": "9d958e3e3073eec2c9de66f6921c9b8aeecd0eb926d0b5386ca3886e6238ec31",
+    "startedAt": "2026-08-09T07:12:25.743Z",
+    "completedAt": "2026-08-09T07:40:32.969Z",
+    "endpoint": "https://student-affairs-manager-preview.nightsdell.workers.dev/api/deepseek",
+    "transport": "python-session",
+    "tokenAndCostObservation": "Token usage is the sum of real Worker execution metadata.",
+    "evaluationNotes": []
+  },
+  "candidate": {
+    "runId": "deepseek-production-2026-08-11T11-10-34-384Z",
+    "provider": "deepseek-production",
+    "label": "e2-7-p5-rc1-development",
+    "datasetName": "generalization",
+    "datasetVersion": "e2-generalization-development-1.0.0",
+    "localPromptVersion": "recognition-2.5.0-rc.1",
+    "expectedPromptVersion": "recognition-2.5.0-rc.1",
+    "observedPromptVersions": [
+      "recognition-2.5.0-rc.1"
+    ],
+    "modelName": "deepseek-v4-flash",
+    "promptSourceSha256": "de5afa6afad5ed2171f35ab60cb4dc311dd04367eb33fb1d1383cf9aa4de5eaf",
+    "startedAt": "2026-08-11T10:41:12.868Z",
+    "completedAt": "2026-08-11T11:10:34.384Z",
+    "endpoint": "https://student-affairs-manager-preview.nightsdell.workers.dev/api/deepseek",
+    "transport": "curl",
+    "tokenAndCostObservation": "Token usage is the sum of real Worker execution metadata.",
+    "evaluationNotes": []
+  },
+  "pairedIntegrity": {
+    "checkpointSha256": "172f878015e9d3497fa919e393a1a0dbed03901a6b64ced29a93b269faa6f451",
+    "rowCount": 108,
+    "uniqueCaseIds": 108,
+    "duplicateCaseIds": 0,
+    "statuses": {
+      "ok": 108
+    },
+    "models": [
+      "deepseek-v4-flash"
+    ],
+    "prompts": [
+      "recognition-2.5.0-rc.1"
+    ],
+    "sourceHashMissing": 0,
+    "inputHashMissing": 0,
+    "tokenUsageMissing": 0
+  },
+  "metrics": {
+    "projectDecisionAccuracy": {
+      "baseline": 0.9074074074074074,
+      "candidate": 0.9629629629629629,
+      "delta": 0.05555555555555547
+    },
+    "milestonePrecision": {
+      "baseline": 0.32941176470588235,
+      "candidate": 0.4098360655737705,
+      "delta": 0.08042430086788815
+    },
+    "milestoneRecall": {
+      "baseline": 0.5833333333333334,
+      "candidate": 0.5208333333333334,
+      "delta": -0.0625
+    },
+    "taskPrecision": {
+      "baseline": 0.8217054263565892,
+      "candidate": 0.7916666666666666,
+      "delta": -0.030038759689922534
+    },
+    "taskRecall": {
+      "baseline": 0.7571428571428571,
+      "candidate": 0.8142857142857143,
+      "delta": 0.05714285714285716
+    },
+    "materialPrecision": {
+      "baseline": 0.9787234042553191,
+      "candidate": 0.9714285714285714,
+      "delta": -0.007294832826747699
+    },
+    "materialRecall": {
+      "baseline": 0.9324324324324325,
+      "candidate": 0.918918918918919,
+      "delta": -0.013513513513513487
+    },
+    "timePointPrecision": {
+      "baseline": 0.9210526315789473,
+      "candidate": 0.9161290322580645,
+      "delta": -0.004923599320882821
+    },
+    "timePointRecall": {
+      "baseline": 0.9459459459459459,
+      "candidate": 0.9594594594594594,
+      "delta": 0.013513513513513487
+    },
+    "timePointTypeAccuracy": {
+      "baseline": 0.7884615384615384,
+      "candidate": 0.7677419354838709,
+      "delta": -0.020719602977667506
+    },
+    "timePointValueAccuracy": {
+      "baseline": 0.7435897435897436,
+      "candidate": 0.7806451612903226,
+      "delta": 0.03705541770057896
+    },
+    "timePointAccuracy": {
+      "baseline": 0.75,
+      "candidate": 0.7419354838709677,
+      "delta": -0.008064516129032251
+    },
+    "eventAccuracy": {
+      "baseline": 0.9393939393939394,
+      "candidate": 0.6470588235294118,
+      "delta": -0.29233511586452765
+    },
+    "evidenceCoverage": {
+      "baseline": 0.9871794871794872,
+      "candidate": 0.9893162393162394,
+      "delta": 0.002136752136752129
+    },
+    "evidenceValidity": {
+      "baseline": 1,
+      "candidate": 1,
+      "delta": 0
+    },
+    "ambiguityPrecision": {
+      "baseline": 0.6078431372549019,
+      "candidate": 0.5737704918032787,
+      "delta": -0.03407264545162325
+    },
+    "ambiguityRecall": {
+      "baseline": 0.5166666666666667,
+      "candidate": 0.5833333333333334,
+      "delta": 0.06666666666666665
+    },
+    "majorCorrectionRate": {
+      "baseline": 0.6759259259259259,
+      "candidate": 0.6296296296296297,
+      "delta": -0.04629629629629628
+    },
+    "severeErrorRate": {
+      "baseline": 0,
+      "candidate": 0,
+      "delta": 0
+    },
+    "invalidOutputRate": {
+      "baseline": 0,
+      "candidate": 0,
+      "delta": 0
+    },
+    "requestFailureRate": {
+      "baseline": 0,
+      "candidate": 0,
+      "delta": 0
+    },
+    "repairTriggerRate": {
+      "baseline": 0.09259259259259259,
+      "candidate": 0.10185185185185185,
+      "delta": 0.009259259259259259
+    },
+    "repairHarmRate": {
+      "baseline": 0,
+      "candidate": 0,
+      "delta": 0
+    },
+    "duplicateRate": {
+      "baseline": 0,
+      "candidate": 0,
+      "delta": 0
+    },
+    "overFragmentationRate": {
+      "baseline": 0,
+      "candidate": 0,
+      "delta": 0
+    }
+  },
+  "strictMajorTransitions": {
+    "improved": 10,
+    "worsened": 5,
+    "unchangedMajor": 61,
+    "unchangedNotMajor": 32
+  },
+  "categoryDeltas": {
+    "ambiguity_missing": {
+      "baseline": 29,
+      "candidate": 25,
+      "delta": -4
+    },
+    "ambiguity_spurious": {
+      "baseline": 19,
+      "candidate": 22,
+      "delta": 3
+    },
+    "event_missing": {
+      "baseline": 1,
+      "candidate": 10,
+      "delta": 9
+    },
+    "event_spurious": {
+      "baseline": 1,
+      "candidate": 2,
+      "delta": 1
+    },
+    "evidence_missing": {
+      "baseline": 6,
+      "candidate": 5,
+      "delta": -1
+    },
+    "material_missing": {
+      "baseline": 10,
+      "candidate": 12,
+      "delta": 2
+    },
+    "material_spurious": {
+      "baseline": 3,
+      "candidate": 4,
+      "delta": 1
+    },
+    "milestone_missing": {
+      "baseline": 20,
+      "candidate": 23,
+      "delta": 3
+    },
+    "milestone_spurious": {
+      "baseline": 10,
+      "candidate": 6,
+      "delta": -4
+    },
+    "project_decision": {
+      "baseline": 11,
+      "candidate": 5,
+      "delta": -6
+    },
+    "task_missing": {
+      "baseline": 34,
+      "candidate": 26,
+      "delta": -8
+    },
+    "task_spurious": {
+      "baseline": 22,
+      "candidate": 27,
+      "delta": 5
+    },
+    "time_incorrect": {
+      "baseline": 23,
+      "candidate": 27,
+      "delta": 4
+    },
+    "time_missing": {
+      "baseline": 8,
+      "candidate": 6,
+      "delta": -2
+    },
+    "time_spurious": {
+      "baseline": 10,
+      "candidate": 11,
+      "delta": 1
+    }
+  },
+  "performance": {
+    "latencyMs": {
+      "baseline": {
+        "mean": 7670.648148148148,
+        "p50": 7351,
+        "p95": 11788
+      },
+      "candidate": {
+        "mean": 8358.888888888889,
+        "p50": 7959,
+        "p95": 12396
+      },
+      "meanRatio": 1.0897239356372899
+    },
+    "tokens": {
+      "baseline": {
+        "input": 291508,
+        "output": 157438
+      },
+      "candidate": {
+        "input": 330435,
+        "output": 154820
+      },
+      "inputRatio": 1.1335366439343002,
+      "outputRatio": 0.9833712318499981
+    },
+    "costUsd": "NOT OBSERVABLE"
+  },
+  "decision": {
+    "status": "RC2_REQUIRED",
+    "reasons": [
+      "Task Recall improved by less than the eight-point internal target.",
+      "Task Precision fell to 79.17%, below the 82% candidate gate.",
+      "Event Accuracy regressed materially to 64.71%.",
+      "TimePoint Type and Value Accuracy remain below the 80% candidate gates.",
+      "Strict Major Correction remains above the calibrated candidate gate; candidate user-impact adjudication has not run."
+    ],
+    "userImpactMajorCorrection": "NOT RUN FOR RC1"
+  },
+  "generatedAt": "2026-08-11T11:14:22.044Z"
+}
