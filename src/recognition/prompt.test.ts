@@ -7,17 +7,16 @@ import {
   recognitionSystemPrompt,
 } from './prompt'
 
-describe('Recognition 2.5 RC2 modular prompt contract', () => {
+describe('Recognition 2.4 modular prompt contract', () => {
   it('keeps schema and model fixed while advancing only the prompt version', () => {
     expect(RECOGNITION_SCHEMA_VERSION).toBe('2.0')
     expect(RECOGNITION_MODEL_NAME).toBe('deepseek-v4-flash')
-    expect(RECOGNITION_PROMPT_VERSION).toBe('recognition-2.5.0-rc.2')
+    expect(RECOGNITION_PROMPT_VERSION).toBe('recognition-2.4.1')
   })
 
-  it('composes nine unique, auditable prompt modules', () => {
-    expect(recognitionPromptModules).toHaveLength(9)
-    expect(new Set(recognitionPromptModules.map((module) => module.id)).size).toBe(9)
-    expect(recognitionPromptModules.map((module) => module.id)).toContain('planning-contract')
+  it('composes eight unique, auditable prompt modules', () => {
+    expect(recognitionPromptModules).toHaveLength(8)
+    expect(new Set(recognitionPromptModules.map((module) => module.id)).size).toBe(8)
     expect(recognitionSystemPrompt).toContain('DATA ONLY')
     expect(recognitionSystemPrompt).toContain('每个有业务含义的时间表达都必须成为顶层 timePoints')
     expect(recognitionSystemPrompt).toContain('材料不是任务')
@@ -29,10 +28,6 @@ describe('Recognition 2.5 RC2 modular prompt contract', () => {
     expect(recognitionSystemPrompt).toContain('逐字存在的片段')
     expect(recognitionSystemPrompt).toContain('禁止用顶层 tasks 替代 standaloneTasks')
     expect(recognitionSystemPrompt).toContain('Ambiguity={id,field,message,options,evidenceIds}')
-    expect(recognitionSystemPrompt).toContain('明确义务覆盖表')
-    expect(recognitionSystemPrompt).toContain('不能用更宽泛的动作替换原谓词')
-    expect(recognitionSystemPrompt).toContain('用完成标准区分 Task 与 Event')
-    expect(recognitionSystemPrompt).toContain('公示期、开放窗口、维护时段或结果发布时间本身不是 Event')
     expect(recognitionSystemPrompt).toContain('禁止“阶段 1”“阶段 2”占位')
     expect(recognitionSystemPrompt).toContain('一次提交动作可以关联多个 Material')
     expect(recognitionSystemPrompt).toContain('先找出约束整个分句的谓词')

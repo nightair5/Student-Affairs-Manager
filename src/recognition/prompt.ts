@@ -1,6 +1,6 @@
 import { composeRecognitionSystemPrompt, recognitionPromptModules } from './promptModules'
 
-export const RECOGNITION_PROMPT_VERSION = 'recognition-2.5.0-rc.2'
+export const RECOGNITION_PROMPT_VERSION = 'recognition-2.4.1'
 export const RECOGNITION_SCHEMA_VERSION = '2.0' as const
 export const RECOGNITION_MODEL_NAME = 'deepseek-v4-flash'
 
@@ -16,5 +16,5 @@ export const recognitionPromptMetadata = Object.freeze({
   promptVersion: RECOGNITION_PROMPT_VERSION,
   schemaVersion: RECOGNITION_SCHEMA_VERSION,
   modelName: RECOGNITION_MODEL_NAME,
-  createdAt: '2026-08-11T11:20:00.000Z',
+  createdAt: '2026-08-09T07:15:00.000Z',
 })
