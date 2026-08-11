@@ -37,7 +37,9 @@ Case order is sorted by SHA-256 of `seed:case:caseId`. Within each adjacent pair
 - per-operation and total observed input/output tokens
 - operation list and zero-retry parameters
 
-Raw source, Ledger and RecognitionResult payloads remain under `.evaluation-cache/` and are Git ignored. Committed results contain aggregate metrics and anonymized paired counts only.
+Raw model completions, source, Ledger and RecognitionResult payloads remain under `.evaluation-cache/` and are Git ignored. Committed results contain aggregate metrics and anonymized paired counts only.
+
+FactLedger Validation may correct an evidence offset only when the model-provided `quote` occurs exactly once in the source; it sets the canonical JavaScript UTF-16 `[start,end)` span and records the adjustment. Missing or repeated quotes remain validation failures. This deterministic step cannot add, delete or rewrite a fact.
 
 ## Scoring contract
 

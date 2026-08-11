@@ -9,7 +9,7 @@ const ROOT = process.cwd()
 const EXPERIMENT_PATH = '/api/experiments/e2-factledger/generate'
 const STATUS_PATH = '/api/experiments/e2-factledger/status'
 const EXPECTED_MODEL = 'deepseek-v4-flash'
-const EXPECTED_EXPERIMENT_VERSION = 'e2.6-paired-ab-1.0.0'
+const EXPECTED_EXPERIMENT_VERSION = 'e2.6-paired-ab-1.1.0'
 const EXPECTED_PATH_A_PROMPT = 'recognition-2.4.1'
 const EXPECTED_FACT_PROMPT = 'fact-ledger-extraction-1.1.0'
 const EXPECTED_PLANNER_PROMPT = 'fact-ledger-planner-1.0.0'
@@ -76,6 +76,8 @@ function verifyResponse(entry, scheduled, fixture) {
   if (entry.versions?.pathAPromptVersion !== EXPECTED_PATH_A_PROMPT || entry.versions?.factExtractionPromptVersion !== EXPECTED_FACT_PROMPT || entry.versions?.plannerPromptVersion !== EXPECTED_PLANNER_PROMPT) throw new Error(`Prompt version drift for ${fixture.caseId}/${scheduled.path}`)
   if (entry.hashes?.sourceSha256 !== fixture.sourceSha256 || entry.hashes?.inputSha256 !== fixture.inputSha256) throw new Error(`Input binding drift for ${fixture.caseId}/${scheduled.path}`)
   if (hash(JSON.stringify(entry.result)) !== entry.hashes?.resultSha256) throw new Error(`Result hash mismatch for ${fixture.caseId}/${scheduled.path}`)
+  if (scheduled.path === 'A' && hash(entry.rawModelOutputs?.recognize ?? '') !== entry.hashes?.rawRecognizeSha256) throw new Error(`Raw A output hash mismatch for ${fixture.caseId}`)
+  if (scheduled.path === 'B' && (hash(entry.rawModelOutputs?.extractFacts ?? '') !== entry.hashes?.rawFactExtractionSha256 || hash(entry.rawModelOutputs?.plan ?? '') !== entry.hashes?.rawPlanSha256)) throw new Error(`Raw B output hash mismatch for ${fixture.caseId}`)
   if (scheduled.path === 'B' && hash(JSON.stringify(entry.ledger)) !== entry.hashes?.ledgerSha256) throw new Error(`Ledger hash mismatch for ${fixture.caseId}/${scheduled.path}`)
   if (scheduled.path === 'A' && entry.ledger !== null) throw new Error(`Unexpected Ledger on Path A for ${fixture.caseId}`)
   const expectedOperations = scheduled.path === 'A' ? ['recognize'] : ['extractFacts', 'plan']

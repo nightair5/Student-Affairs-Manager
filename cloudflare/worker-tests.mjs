@@ -3,7 +3,7 @@ import test from 'node:test'
 import { createWorker, validateDeepSeekRequest, validateExtractionRequest, validateWebFetchTarget } from './worker.mjs'
 import { createDeepSeekProvider } from './model-gateway.mjs'
 import { normalizeRecognitionResult } from './recognition.mjs'
-import { validateFactLedgerPayload } from './factledger-experiment.mjs'
+import { canonicalizeFactLedgerEvidence, validateFactLedgerPayload } from './factledger-experiment.mjs'
 
 const baseContext = [{ kind: '任务', title: '报名材料', excerpt: '今天 18:00 截止' }]
 
@@ -122,7 +122,7 @@ test('paired experiment forces equal model parameters and validates Ledger befor
 
 test('FactLedger validation failures return authenticated raw diagnostics without entering Planner', async () => {
   const invalid = validLedgerPayload()
-  invalid.evidence[0].start = 0
+  invalid.evidence[0] = { id: 'ev-1', quote: '原文不存在的片段', start: 0, end: 8 }
   let calls = 0
   const worker = createWorker({
     fetcher: async () => {
@@ -145,6 +145,16 @@ test('FactLedger validation failures return authenticated raw diagnostics withou
   assert.ok(payload.diagnostic.issues.includes('INVALID_EVIDENCE_SPAN'))
   assert.equal(payload.diagnostic.rawOutput, JSON.stringify(invalid))
   assert.equal(calls, 1)
+})
+
+test('FactLedger validation deterministically reanchors only a unique literal quote', () => {
+  const ledger = validLedgerPayload()
+  ledger.evidence[0].start = 0
+  ledger.evidence[0].end = 5
+  const canonicalized = canonicalizeFactLedgerEvidence(ledger, experimentBody.content)
+  assert.deepEqual(canonicalized.ledger.evidence[0], { id: 'ev-1', quote: '提交报名表', start: 6, end: 11 })
+  assert.equal(canonicalized.adjustments.length, 1)
+  assert.deepEqual(validateFactLedgerPayload(canonicalized.ledger, experimentBody.content), [])
 })
 
 test('FactLedger validation rejects bad evidence spans and unsafe relative time normalization', () => {

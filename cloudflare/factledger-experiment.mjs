@@ -6,7 +6,7 @@ import {
   recognitionSystemPrompt,
 } from './recognition.mjs'
 
-export const FACT_LEDGER_EXPERIMENT_VERSION = 'e2.6-paired-ab-1.0.0'
+export const FACT_LEDGER_EXPERIMENT_VERSION = 'e2.6-paired-ab-1.1.0'
 export const FACT_LEDGER_SCHEMA_VERSION = 'e2.5-fact-ledger-1.0.0'
 export const FACT_EXTRACTION_PROMPT_VERSION = 'fact-ledger-extraction-1.1.0'
 export const FACT_PLANNER_PROMPT_VERSION = 'fact-ledger-planner-1.0.0'
@@ -163,6 +163,23 @@ export function validateFactLedgerPayload(payload, sourceText) {
   return [...new Set(issues)]
 }
 
+export function canonicalizeFactLedgerEvidence(payload, sourceText) {
+  if (!validateShape(payload)) return { ledger: payload, adjustments: [] }
+  const ledger = structuredClone(payload)
+  const adjustments = []
+  for (const evidence of ledger.evidence) {
+    if (evidence.start >= 0 && evidence.end > evidence.start && sourceText.slice(evidence.start, evidence.end) === evidence.quote) continue
+    if (!evidence.quote) continue
+    const first = sourceText.indexOf(evidence.quote)
+    const second = first < 0 ? -1 : sourceText.indexOf(evidence.quote, first + 1)
+    if (first < 0 || second >= 0) continue
+    adjustments.push({ id: evidence.id, from: { start: evidence.start, end: evidence.end }, to: { start: first, end: first + evidence.quote.length } })
+    evidence.start = first
+    evidence.end = first + evidence.quote.length
+  }
+  return { ledger, adjustments }
+}
+
 function canonicalInput(body) {
   return JSON.stringify({
     sourceType: body.sourceType,
@@ -231,8 +248,10 @@ export async function runFactLedgerExperiment(body, apiKey, fetcher = fetch) {
   const sourceSha256 = await sha256(body.content)
   const startedAt = Date.now()
   const operations = []
+  const rawModelOutputs = {}
   let result
   let ledger = null
+  let factLedgerValidation = null
   if (body.path === 'A') {
     const operation = await complete({
       apiKey,
@@ -242,6 +261,7 @@ export async function runFactLedgerExperiment(body, apiKey, fetcher = fetch) {
       userPrompt: `参考时间：${body.referenceTime}\n时区：${body.timezone}\n来源类型：${body.sourceType}\n来源标题：${body.sourceTitle || '未提供'}\n可选已有项目（仅供匹配建议）：[]\n已有未完成任务（仅供重复检测）：[]\n来源正文：\n${body.content}`,
     })
     operations.push(operation)
+    rawModelOutputs.recognize = operation.content
     result = normalizeRecognitionResult(parseJson(operation.content, 'RECOGNITION_INVALID_JSON'), body.content, body.referenceTime)
     if (!result) throw new Error('RECOGNITION_SCHEMA_INVALID')
   } else {
@@ -260,7 +280,10 @@ export async function runFactLedgerExperiment(body, apiKey, fetcher = fetch) {
       }),
     })
     operations.push(extraction)
-    ledger = parseJson(extraction.content, 'FACT_LEDGER_INVALID_JSON')
+    rawModelOutputs.extractFacts = extraction.content
+    const rawLedger = parseJson(extraction.content, 'FACT_LEDGER_INVALID_JSON')
+    const canonicalized = canonicalizeFactLedgerEvidence(rawLedger, body.content)
+    ledger = canonicalized.ledger
     const ledgerIssues = validateFactLedgerPayload(ledger, body.content)
     if (ledgerIssues.length) {
       throw new FactLedgerExperimentError('FACT_LEDGER_VALIDATION_FAILED', {
@@ -270,6 +293,12 @@ export async function runFactLedgerExperiment(body, apiKey, fetcher = fetch) {
         rawOutput: extraction.content,
         operation: { operation: extraction.operation, durationMs: extraction.durationMs, tokenUsage: extraction.tokenUsage },
       })
+    }
+    factLedgerValidation = {
+      status: 'valid',
+      evidenceOffsetAdjustments: canonicalized.adjustments,
+      rawLedgerSha256: await sha256(extraction.content),
+      canonicalLedgerSha256: await sha256(JSON.stringify(ledger)),
     }
     const planning = await complete({
       apiKey,
@@ -282,6 +311,7 @@ export async function runFactLedgerExperiment(body, apiKey, fetcher = fetch) {
       }),
     })
     operations.push(planning)
+    rawModelOutputs.plan = planning.content
     result = normalizeRecognitionResult(parseJson(planning.content, 'PLANNER_INVALID_JSON'), body.content, body.referenceTime)
     if (!result) throw new Error('PLANNER_SCHEMA_INVALID')
   }
@@ -306,12 +336,17 @@ export async function runFactLedgerExperiment(body, apiKey, fetcher = fetch) {
       pathAPromptSha256: await sha256(recognitionSystemPrompt()),
       factExtractionPromptSha256: await sha256(factExtractionSystemPrompt),
       plannerPromptSha256: await sha256(factPlannerSystemPrompt),
+      rawRecognizeSha256: rawModelOutputs.recognize ? await sha256(rawModelOutputs.recognize) : null,
+      rawFactExtractionSha256: rawModelOutputs.extractFacts ? await sha256(rawModelOutputs.extractFacts) : null,
+      rawPlanSha256: rawModelOutputs.plan ? await sha256(rawModelOutputs.plan) : null,
       ledgerSha256: ledger ? await sha256(JSON.stringify(ledger)) : null,
       resultSha256: await sha256(JSON.stringify(result)),
     },
     latencyMs: Date.now() - startedAt,
     tokenUsage: totalUsage,
     operations: operations.map(({ operation, durationMs, tokenUsage }) => ({ operation, durationMs, tokenUsage })),
+    factLedgerValidation,
+    rawModelOutputs,
     ledger,
     result,
   }
