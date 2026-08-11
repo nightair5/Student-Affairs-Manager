@@ -1,0 +1,26 @@
+{
+  "schemaVersion": "e2.7-p8-repair-input-manifest-1.0.0",
+  "status": "FROZEN_BEFORE_GENERATION",
+  "generatedAt": "2026-08-11T13:28:11.676Z",
+  "inputArtifact": ".evaluation-cache/e2-7/p8-repair-inputs.json",
+  "inputArtifactSha256": "71bb93ebe90b8fcfa961b65f6e63b3fd62287b42f2abdb5d50897c6f68e412c4",
+  "caseCount": 80,
+  "triggeredCaseCount": 22,
+  "callCountPlanned": 44,
+  "validatorVersion": "recognition-quality-2.2.0",
+  "model": "deepseek-v4-flash",
+  "arms": [
+    "R0_REPAIR_DISABLED",
+    "R1_CURRENT_REPAIR",
+    "R2_OPTIMIZED_ISSUE_SCOPED_REPAIR"
+  ],
+  "issueSupport": {
+    "INVALID_EVIDENCE": 0,
+    "MISSING_TIMEPOINT": 2,
+    "POSSIBLE_FALSE_PRECISION": 0,
+    "MISSING_AMBIGUITY": 12,
+    "MISSING_MATERIAL": 5,
+    "EVENT_TASK_CONFUSION": 7
+  },
+  "generationIsolation": "Generation script reads only the stripped input artifact; it does not load fixtures, expected answers, P7 labels, or scoring code."
+}
