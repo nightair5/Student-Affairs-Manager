@@ -1,0 +1,175 @@
+{
+  "schemaVersion": "e2.7-p10-final-gate-1.0.0",
+  "status": "E2_BLOCKED",
+  "evaluatedHead": "2d669e81135ed93a1c6c9687f1bdd38b009c8d59",
+  "branch": "codex/e2-path-a-planning-v2",
+  "baselineCommit": "70dd976e1de03d03e4e6fec8b6d7e872945eda27",
+  "candidate": null,
+  "candidateFreeze": {
+    "permitted": false,
+    "reason": "The best evaluated output-changing arm fails strict Task Precision, strict Task Recall, and Time Value gates; changed outputs have no entity-level semantic score or independent user-impact adjudication.",
+    "bestEvaluatedArm": "P8_R2_EXPOSED_DIAGNOSTIC_ONLY",
+    "bestEvaluatedArmIsDefaultRuntime": false
+  },
+  "internalGate": {
+    "taskStrictPrecision": {
+      "value": 0.8,
+      "threshold": 0.82,
+      "passed": false
+    },
+    "taskStrictRecall": {
+      "value": 0.6779661016949152,
+      "threshold": 0.8,
+      "passed": false
+    },
+    "taskSemanticPrecision": {
+      "value": "NOT RUN",
+      "threshold": 0.85,
+      "passed": false
+    },
+    "taskSemanticRecall": {
+      "value": "NOT RUN",
+      "threshold": 0.85,
+      "passed": false
+    },
+    "materialRecall": {
+      "value": 1,
+      "threshold": 0.85,
+      "passed": true
+    },
+    "timeRoleAccuracy": {
+      "value": 0.8,
+      "threshold": 0.8,
+      "passed": true
+    },
+    "timeValueAccuracy": {
+      "value": 0.7642857142857142,
+      "threshold": 0.8,
+      "passed": false
+    },
+    "eventAccuracy": {
+      "value": 0.8974358974358975,
+      "threshold": 0.88,
+      "passed": true
+    },
+    "evidenceCoverage": {
+      "value": 0.9793510324483776,
+      "threshold": 0.95,
+      "passed": true
+    },
+    "evidenceValidity": {
+      "value": 1,
+      "threshold": 0.98,
+      "passed": true
+    },
+    "userImpactMajorCorrection": {
+      "value": "NOT RUN",
+      "thresholdMaximum": 0.3,
+      "passed": false
+    },
+    "severeError": {
+      "value": 0,
+      "thresholdMaximum": 0.02,
+      "passed": true
+    },
+    "duplicateRate": {
+      "value": 0,
+      "thresholdMaximum": 0.03,
+      "passed": true
+    },
+    "overFragmentationRate": {
+      "value": 0,
+      "thresholdMaximum": 0.05,
+      "passed": true
+    },
+    "normalizerHarmRate": {
+      "value": 0,
+      "thresholdMaximum": 0.03,
+      "passed": true
+    },
+    "repairHarmRate": {
+      "value": 0,
+      "thresholdMaximum": 0.03,
+      "passed": true
+    },
+    "transportFailureRate": {
+      "value": 0,
+      "thresholdMaximum": 0.02,
+      "passed": true
+    }
+  },
+  "candidatePrerequisites": {
+    "developmentAtGate": false,
+    "goldenNoRegression": "NOT RUN_FOR_ACCEPTED_CANDIDATE",
+    "exposedHoldoutSubstantiveImprovement": "NOT PROVEN",
+    "userImpactMajorAtGate": "NOT RUN_ON_CHANGED_OUTPUTS",
+    "severeErrorAtGate": true,
+    "normalizerHarmAtGate": true,
+    "repairHarmAtGate": true,
+    "routerAtGate": true,
+    "validatorAtGate": true,
+    "engineeringTestsPassed": true
+  },
+  "p11Blind": {
+    "status": "NOT RUN",
+    "reason": "P10 Candidate internal gate failed; protocol forbids creating a formal Blind."
+  },
+  "p12BrowserAJ": {
+    "status": "NOT RUN",
+    "reason": "P11 Blind was not created or passed."
+  },
+  "engineeringVerification": {
+    "npmCi": "PASS_WITH_ALLOW_SCRIPTS_WARNING",
+    "lint": "PASS",
+    "typecheck": "PASS",
+    "testUtc": {
+      "status": "PASS",
+      "vitestFiles": 50,
+      "vitestTests": 213
+    },
+    "testAsiaShanghai": {
+      "status": "PASS",
+      "vitestFiles": 50,
+      "vitestTests": 213
+    },
+    "serverTests": {
+      "status": "PASS",
+      "tests": 8
+    },
+    "workerTests": {
+      "status": "PASS",
+      "tests": 26
+    },
+    "functionsTests": {
+      "status": "PASS",
+      "tests": 5
+    },
+    "build": "PASS",
+    "securityScan": {
+      "status": "PASS",
+      "scannedFiles": 381
+    },
+    "npmAuditHigh": {
+      "status": "PASS",
+      "vulnerabilities": 0
+    },
+    "cloudflareCheck": {
+      "status": "PASS",
+      "productionDryRunOnly": true,
+      "previewDryRunOnly": true,
+      "previewRepairExperimentEnabled": false
+    }
+  },
+  "deployment": {
+    "previewCleanupVersion": "1a5a360f-fc22-47b2-a8c3-020094b6c3ca",
+    "previewRepairExperimentEnabled": false,
+    "previewExperimentBearerSecretDeleted": true,
+    "productionDeploymentPerformed": false,
+    "studentAffairsSiteModified": false
+  },
+  "finalState": {
+    "e2": "E2 BLOCKED",
+    "e3": "E3 NOT READY",
+    "production": "PRODUCTION NOT READY"
+  }
+}
