@@ -43,7 +43,7 @@ async function curlJson(url, { method = 'GET', token = '', origin = '', body = n
   while (transportAttempts < 3) {
     transportAttempts += 1
     try {
-      ({ stdout } = await execFileAsync('curl.exe', args, { encoding: 'utf8', maxBuffer: 20 * 1024 * 1024, timeout: 310_000 }))
+      ({ stdout } = await execFileAsync('wsl.exe', ['curl', ...args], { encoding: 'utf8', maxBuffer: 20 * 1024 * 1024, timeout: 310_000 }))
       break
     } catch (error) {
       const code = typeof error?.code === 'number' || typeof error?.code === 'string' ? String(error.code) : 'UNKNOWN'
@@ -198,7 +198,7 @@ async function main() {
       schemaVersion: 'e2.6-paired-raw-1.0.0',
       label,
       endpoint,
-      transport: 'curl-tls-handshake-retry-only',
+      transport: 'wsl-curl-openssl-tls-handshake-retry-only',
       seed,
       model: EXPECTED_MODEL,
       manifestSha256,
