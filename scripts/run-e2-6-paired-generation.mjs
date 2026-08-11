@@ -9,9 +9,9 @@ const ROOT = process.cwd()
 const EXPERIMENT_PATH = '/api/experiments/e2-factledger/generate'
 const STATUS_PATH = '/api/experiments/e2-factledger/status'
 const EXPECTED_MODEL = 'deepseek-v4-flash'
-const EXPECTED_EXPERIMENT_VERSION = 'e2.6-paired-ab-1.1.0'
+const EXPECTED_EXPERIMENT_VERSION = 'e2.6-paired-ab-1.2.0'
 const EXPECTED_PATH_A_PROMPT = 'recognition-2.4.1'
-const EXPECTED_FACT_PROMPT = 'fact-ledger-extraction-1.1.0'
+const EXPECTED_FACT_PROMPT = 'fact-ledger-extraction-1.2.0'
 const EXPECTED_PLANNER_PROMPT = 'fact-ledger-planner-1.0.0'
 const execFileAsync = promisify(execFile)
 
@@ -34,7 +34,7 @@ async function readJson(file) {
 
 async function curlJson(url, { method = 'GET', token = '', origin = '', body = null } = {}) {
   const statusMarker = '__E2_HTTP_STATUS__'
-  const args = ['-sS', '--max-time', '300', '--write-out', `${statusMarker}%{http_code}`, '--request', method]
+  const args = ['-sS', '--http1.1', '--max-time', '300', '--write-out', `${statusMarker}%{http_code}`, '--request', method]
   if (token) args.push('--header', `Authorization: Bearer ${token}`)
   if (origin) args.push('--header', `Origin: ${origin}`)
   if (body !== null) args.push('--header', 'Content-Type: application/json', '--data-binary', JSON.stringify(body))

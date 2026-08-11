@@ -39,7 +39,7 @@ function hasKeys(value: JsonRecord, keys: readonly string[]): boolean {
 
 const modalities: FactLedgerModality[] = ['required', 'conditional', 'optional', 'prohibited', 'informational']
 const materialRoles: FactLedgerMaterialRole[] = ['deliverable', 'required_input', 'carry_item', 'reference']
-const timeRoles: FactLedgerTimeRole[] = ['registration_deadline', 'submission_deadline', 'task_deadline', 'planned_start', 'event_start', 'event_end', 'result_announcement', 'superseded_deadline', 'other']
+const timeRoles: FactLedgerTimeRole[] = ['registration_deadline', 'submission_deadline', 'task_deadline', 'planned_start', 'planned_end', 'event_start', 'event_end', 'result_announcement', 'superseded_deadline', 'other']
 const timePrecisions: FactLedgerTimePrecision[] = ['exact', 'date_only', 'range', 'relative', 'vague', 'unknown']
 const conditionKinds: FactLedgerConditionKind[] = ['eligibility', 'prerequisite', 'trigger', 'exception', 'sequence']
 const constraintKinds: FactLedgerConstraintKind[] = ['format', 'naming', 'quantity', 'channel', 'location', 'dependency', 'other']

@@ -9,6 +9,7 @@ export type FactLedgerTimeRole =
   | 'submission_deadline'
   | 'task_deadline'
   | 'planned_start'
+  | 'planned_end'
   | 'event_start'
   | 'event_end'
   | 'result_announcement'

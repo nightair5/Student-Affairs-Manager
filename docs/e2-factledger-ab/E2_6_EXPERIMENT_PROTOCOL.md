@@ -13,7 +13,7 @@
 
 The experiment endpoint is `/api/experiments/e2-factledger/generate`. It is usable only when `E2_FACTLEDGER_EXPERIMENT_ENABLED=true` and a separate bearer Secret is present. The default/Production Wrangler environment sets the flag to `false`; Preview sets it to `true` and has no custom-domain route.
 
-Path A is one direct `recognition-2.4.1` call. Path B is `fact-ledger-extraction-1.1.0` → deterministic FactLedger validation → `fact-ledger-planner-1.0.0`. Router, production Validator and Repair do not participate. Both paths use `deepseek-v4-flash`, temperature 0, disabled thinking, `max_tokens=8192`, JSON mode and zero harness retries.
+Path A is one direct `recognition-2.4.1` call. Path B is `fact-ledger-extraction-1.2.0` → deterministic FactLedger validation → `fact-ledger-planner-1.0.0`. Router, production Validator and Repair do not participate. Both paths use `deepseek-v4-flash`, temperature 0, disabled thinking, `max_tokens=8192`, JSON mode and zero harness retries. The backward-compatible E2.6 FactLedger time-role extension adds `planned_end` alongside `planned_start`.
 
 ## Frozen inputs and generation firewall
 
