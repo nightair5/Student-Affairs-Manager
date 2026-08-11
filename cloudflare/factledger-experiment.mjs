@@ -13,6 +13,15 @@ export const FACT_PLANNER_PROMPT_VERSION = 'fact-ledger-planner-1.0.0'
 export const FACT_LEDGER_EXPERIMENT_TEMPERATURE = 0
 export const FACT_LEDGER_EXPERIMENT_MAX_TOKENS = 8_192
 
+export class FactLedgerExperimentError extends Error {
+  constructor(code, diagnostic = null) {
+    super(code)
+    this.name = 'FactLedgerExperimentError'
+    this.code = code
+    this.diagnostic = diagnostic
+  }
+}
+
 const DEEPSEEK_ENDPOINT = 'https://api.deepseek.com/chat/completions'
 const REQUEST_FIELDS = new Set(['path', 'sourceType', 'sourceTitle', 'content', 'referenceTime', 'timezone', 'runId', 'sequence'])
 const TOP_LEVEL_FIELDS = ['schemaVersion', 'obligations', 'materials', 'timeExpressions', 'events', 'conditions', 'constraints', 'ambiguities', 'evidence']
@@ -249,7 +258,15 @@ export async function runFactLedgerExperiment(body, apiKey, fetcher = fetch) {
     operations.push(extraction)
     ledger = parseJson(extraction.content, 'FACT_LEDGER_INVALID_JSON')
     const ledgerIssues = validateFactLedgerPayload(ledger, body.content)
-    if (ledgerIssues.length) throw new Error(`FACT_LEDGER_VALIDATION_FAILED:${ledgerIssues.join(',')}`)
+    if (ledgerIssues.length) {
+      throw new FactLedgerExperimentError('FACT_LEDGER_VALIDATION_FAILED', {
+        stage: 'factLedgerValidation',
+        issues: ledgerIssues,
+        outputSha256: await sha256(extraction.content),
+        rawOutput: extraction.content,
+        operation: { operation: extraction.operation, durationMs: extraction.durationMs, tokenUsage: extraction.tokenUsage },
+      })
+    }
     const planning = await complete({
       apiKey,
       fetcher,

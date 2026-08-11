@@ -120,6 +120,33 @@ test('paired experiment forces equal model parameters and validates Ledger befor
   assert.equal(Object.hasOwn(plannerInput.factLedger, 'sourceText'), false)
 })
 
+test('FactLedger validation failures return authenticated raw diagnostics without entering Planner', async () => {
+  const invalid = validLedgerPayload()
+  invalid.evidence[0].start = 0
+  let calls = 0
+  const worker = createWorker({
+    fetcher: async () => {
+      calls += 1
+      return Response.json({
+        choices: [{ message: { content: JSON.stringify(invalid) } }],
+        usage: { prompt_tokens: 100, completion_tokens: 50 },
+      })
+    },
+  })
+  const response = await worker.fetch(experimentRequest({ ...experimentBody, path: 'B' }), environment({
+    DEEPSEEK_API_KEY: 'server-only-test-key-with-length',
+    E2_FACTLEDGER_EXPERIMENT_ENABLED: 'true',
+    E2_FACTLEDGER_EXPERIMENT_TOKEN: 'preview-experiment-token-with-length',
+  }))
+  assert.equal(response.status, 422)
+  const payload = await response.json()
+  assert.equal(payload.error, 'FACT_LEDGER_VALIDATION_FAILED')
+  assert.equal(payload.diagnostic.stage, 'factLedgerValidation')
+  assert.ok(payload.diagnostic.issues.includes('INVALID_EVIDENCE_SPAN'))
+  assert.equal(payload.diagnostic.rawOutput, JSON.stringify(invalid))
+  assert.equal(calls, 1)
+})
+
 test('FactLedger validation rejects bad evidence spans and unsafe relative time normalization', () => {
   const ledger = validLedgerPayload()
   ledger.timeExpressions.push({

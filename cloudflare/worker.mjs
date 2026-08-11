@@ -526,10 +526,17 @@ async function runPreviewFactLedgerExperiment(request, env, fetcher, isRateLimit
     context.outputTokens = result.tokenUsage?.output ?? 0
     return success(result, context.requestId)
   } catch (error) {
-    const code = error instanceof Error ? error.message.split(':')[0] : 'EXPERIMENT_FAILURE'
+    const code = typeof error?.code === 'string'
+      ? error.code
+      : error instanceof Error ? error.message.split(':')[0] : 'EXPERIMENT_FAILURE'
     context.errorType = code
     const status = code === 'DEEPSEEK_TIMEOUT' ? 504 : code.startsWith('DEEPSEEK_') ? 502 : 422
-    return failure(code, '实验路径未能生成可验证结果。', status, context.requestId)
+    return json({
+      error: code,
+      message: '实验路径未能生成可验证结果。',
+      diagnostic: error?.diagnostic ?? null,
+      requestId: context.requestId,
+    }, status, context.requestId)
   } finally {
     release()
   }

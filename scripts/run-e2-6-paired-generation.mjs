@@ -119,17 +119,30 @@ async function main() {
         body: JSON.stringify(requestBody),
       })
       const payload = await response.json().catch(() => ({}))
-      if (!response.ok) throw new Error(`PREVIEW_HTTP_${response.status}:${payload.error ?? 'UNKNOWN'}`)
-      verifyResponse(payload, scheduled, fixture)
-      observation = {
-        caseId: fixture.caseId,
-        group: fixture.group,
-        sourceSet: fixture.sourceSet,
-        path: scheduled.path,
-        sequence: scheduled.sequence,
-        status: 'ok',
-        roundTripLatencyMs: Date.now() - startedAt,
-        response: payload,
+      if (!response.ok) {
+        observation = {
+          caseId: fixture.caseId,
+          group: fixture.group,
+          sourceSet: fixture.sourceSet,
+          path: scheduled.path,
+          sequence: scheduled.sequence,
+          status: 'failed',
+          roundTripLatencyMs: Date.now() - startedAt,
+          error: `PREVIEW_HTTP_${response.status}:${payload.error ?? 'UNKNOWN'}`,
+          failureResponse: payload,
+        }
+      } else {
+        verifyResponse(payload, scheduled, fixture)
+        observation = {
+          caseId: fixture.caseId,
+          group: fixture.group,
+          sourceSet: fixture.sourceSet,
+          path: scheduled.path,
+          sequence: scheduled.sequence,
+          status: 'ok',
+          roundTripLatencyMs: Date.now() - startedAt,
+          response: payload,
+        }
       }
     } catch (error) {
       observation = {
