@@ -38,7 +38,14 @@ async function curlJson(url, { method = 'GET', token = '', origin = '', body = n
   if (origin) args.push('--header', `Origin: ${origin}`)
   if (body !== null) args.push('--header', 'Content-Type: application/json', '--data-binary', JSON.stringify(body))
   args.push(url)
-  const { stdout } = await execFileAsync('curl.exe', args, { encoding: 'utf8', maxBuffer: 20 * 1024 * 1024, timeout: 310_000 })
+  let stdout
+  try {
+    ({ stdout } = await execFileAsync('curl.exe', args, { encoding: 'utf8', maxBuffer: 20 * 1024 * 1024, timeout: 310_000 }))
+  } catch (error) {
+    const code = typeof error?.code === 'number' || typeof error?.code === 'string' ? String(error.code) : 'UNKNOWN'
+    const stderr = typeof error?.stderr === 'string' ? error.stderr.trim().slice(0, 240) : ''
+    throw new Error(`CURL_TRANSPORT_FAILURE:${code}${stderr ? `:${stderr}` : ''}`)
+  }
   const separator = stdout.lastIndexOf('\n')
   if (separator < 0) throw new Error('CURL_STATUS_MISSING')
   const status = Number(stdout.slice(separator + 1).trim())
