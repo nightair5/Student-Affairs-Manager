@@ -16,7 +16,10 @@ const manifest = JSON.parse(await readFile(MANIFEST_PATH, 'utf8'))
 if (sha256(inputBytes) !== manifest.inputArtifactSha256) throw new Error('P8 input artifact hash mismatch')
 const input = JSON.parse(inputBytes.toString('utf8'))
 let rows = []
-try { rows = JSON.parse(await readFile(CHECKPOINT_PATH, 'utf8')).rows ?? [] } catch {}
+try {
+  const checkpoint = JSON.parse(await readFile(CHECKPOINT_PATH, 'utf8'))
+  if (checkpoint.inputArtifactSha256 === manifest.inputArtifactSha256) rows = checkpoint.rows ?? []
+} catch {}
 const completed = new Map(rows.filter((row) => row.status === 'ok').map((row) => [`${row.caseId}:${row.mode}`, row]))
 
 for (const entry of input.inputs.filter((item) => item.issues.length > 0)) {

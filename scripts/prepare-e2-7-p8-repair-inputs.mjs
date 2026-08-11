@@ -27,15 +27,17 @@ try {
     const cached = cacheById.get(entry.caseId)
     if (!cached?.result || cached.status !== 'ok') throw new Error(`Missing base result ${entry.caseId}`)
     if (cached.sourceSha256 !== entry.sourceSha256 || cached.resultSha256 !== entry.resultSha256) throw new Error(`Binding mismatch ${entry.caseId}`)
-    const report = validator.validateRecognitionQuality(cached.result, entry.source)
+    const baseResult = cached.repair?.beforeResult ?? cached.result
+    const baseResultSha256 = sha256(JSON.stringify(baseResult))
+    const report = validator.validateRecognitionQuality(baseResult, entry.source)
     const issues = report.issues.filter((issue) => issue.repairable && REPAIRABLE.has(issue.code))
     return {
       caseId: entry.caseId,
       sourceSha256: entry.sourceSha256,
-      baseResultSha256: entry.resultSha256,
+      baseResultSha256,
       sourceContent: entry.source,
       referenceTime: cached.result.createdAt,
-      baseResult: cached.result,
+      baseResult,
       issues,
     }
   })
@@ -58,6 +60,7 @@ try {
     arms: ['R0_REPAIR_DISABLED', 'R1_CURRENT_REPAIR', 'R2_OPTIMIZED_ISSUE_SCOPED_REPAIR'],
     issueSupport,
     generationIsolation: 'Generation script reads only the stripped input artifact; it does not load fixtures, expected answers, P7 labels, or scoring code.',
+    r0Definition: 'Exact first-pass RecognitionResult: cached repair.beforeResult when old repair was attempted, otherwise cached result.',
   }
   await writeFile(MANIFEST_PATH, `${JSON.stringify(manifest, null, 2)}\n`, 'utf8')
   process.stdout.write(`${INPUT_PATH}\n${MANIFEST_PATH}\n${JSON.stringify({ cases: inputs.length, triggered: triggered.length, calls: triggered.length * 2, issueSupport })}\n`)
