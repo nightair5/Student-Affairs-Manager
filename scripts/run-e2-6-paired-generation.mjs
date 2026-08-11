@@ -39,19 +39,29 @@ async function curlJson(url, { method = 'GET', token = '', origin = '', body = n
   if (body !== null) args.push('--header', 'Content-Type: application/json', '--data-binary', JSON.stringify(body))
   args.push(url)
   let stdout
-  try {
-    ({ stdout } = await execFileAsync('curl.exe', args, { encoding: 'utf8', maxBuffer: 20 * 1024 * 1024, timeout: 310_000 }))
-  } catch (error) {
-    const code = typeof error?.code === 'number' || typeof error?.code === 'string' ? String(error.code) : 'UNKNOWN'
-    const stderr = typeof error?.stderr === 'string' ? error.stderr.trim().slice(0, 240) : ''
-    throw new Error(`CURL_TRANSPORT_FAILURE:${code}${stderr ? `:${stderr}` : ''}`)
+  let transportAttempts = 0
+  while (transportAttempts < 3) {
+    transportAttempts += 1
+    try {
+      ({ stdout } = await execFileAsync('curl.exe', args, { encoding: 'utf8', maxBuffer: 20 * 1024 * 1024, timeout: 310_000 }))
+      break
+    } catch (error) {
+      const code = typeof error?.code === 'number' || typeof error?.code === 'string' ? String(error.code) : 'UNKNOWN'
+      const stderr = typeof error?.stderr === 'string' ? error.stderr.trim().slice(0, 240) : ''
+      const tlsHandshakeFailedBeforeRequest = code === '35'
+      if (tlsHandshakeFailedBeforeRequest && transportAttempts < 3) {
+        await delay(2_000)
+        continue
+      }
+      throw new Error(`CURL_TRANSPORT_FAILURE:${code}${stderr ? `:${stderr}` : ''}:attempts=${transportAttempts}`)
+    }
   }
   const separator = stdout.lastIndexOf('\n')
   if (separator < 0) throw new Error('CURL_STATUS_MISSING')
   const status = Number(stdout.slice(separator + 1).trim())
   const text = stdout.slice(0, separator)
   if (!Number.isInteger(status)) throw new Error('CURL_STATUS_INVALID')
-  return { status, payload: JSON.parse(text) }
+  return { status, payload: JSON.parse(text), transportAttempts }
 }
 
 function scheduleFor(cases, seed) {
@@ -151,6 +161,7 @@ async function main() {
           path: scheduled.path,
           sequence: scheduled.sequence,
           status: 'failed',
+          localTransportAttempts: response.transportAttempts,
           roundTripLatencyMs: Date.now() - startedAt,
           error: `PREVIEW_HTTP_${response.status}:${payload.error ?? 'UNKNOWN'}`,
           failureResponse: payload,
@@ -164,6 +175,7 @@ async function main() {
           path: scheduled.path,
           sequence: scheduled.sequence,
           status: 'ok',
+          localTransportAttempts: response.transportAttempts,
           roundTripLatencyMs: Date.now() - startedAt,
           response: payload,
         }
@@ -186,7 +198,7 @@ async function main() {
       schemaVersion: 'e2.6-paired-raw-1.0.0',
       label,
       endpoint,
-      transport: 'curl-no-retry',
+      transport: 'curl-tls-handshake-retry-only',
       seed,
       model: EXPECTED_MODEL,
       manifestSha256,

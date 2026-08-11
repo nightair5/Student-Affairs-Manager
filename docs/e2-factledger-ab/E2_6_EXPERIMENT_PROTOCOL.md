@@ -23,7 +23,7 @@ Path A is one direct `recognition-2.4.1` call. Path B is `fact-ledger-extraction
 
 `scripts/prepare-e2-6-inputs.mjs` is the only preparation step that loads dataset modules. It writes source-only inputs and hashes to `.evaluation-cache/e2-6/input-manifest.json`. `scripts/run-e2-6-paired-generation.mjs` reads only that ignored manifest and the Preview response; it does not import dataset or scoring modules. Expected answers are loaded only by the later scoring command after all 48 scheduled observations finish.
 
-Case order is sorted by SHA-256 of `seed:case:caseId`. Within each adjacent pair, the first path is chosen from SHA-256 of `seed:path:caseId`; the other path runs second. The schedule is immutable within a labeled checkpoint. A failed observation is retained and is not silently retried; a retry requires a new run label.
+Case order is sorted by SHA-256 of `seed:case:caseId`. Within each adjacent pair, the first path is chosen from SHA-256 of `seed:path:caseId`; the other path runs second. The schedule is immutable within a labeled checkpoint. The model endpoint has zero retries. The local transport may retry curl code 35 (TLS handshake failure before an HTTP request is sent) at most twice and records the attempt count; any failure that might have reached the endpoint is retained and requires a new run label.
 
 ## Provenance captured per observation
 
