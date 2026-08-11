@@ -74,12 +74,20 @@ function assertCacheEntry(entry, fixture, sourceSet) {
 async function main() {
   const cacheRoot = option('cache-root')
   const createdAt = option('created-at', new Date().toISOString())
-  const packetPath = path.resolve(ROOT, option('packet', DEFAULT_PACKET))
-  const manifestPath = path.resolve(ROOT, option('manifest', DEFAULT_MANIFEST))
-  const labelsPath = path.resolve(ROOT, option('labels', DEFAULT_LABELS))
-  const keyPath = path.resolve(ROOT, option('key', DEFAULT_KEY))
+  const packetRelative = option('packet', DEFAULT_PACKET).replaceAll('\\', '/')
+  const manifestRelative = option('manifest', DEFAULT_MANIFEST).replaceAll('\\', '/')
+  const labelsRelative = option('labels', DEFAULT_LABELS).replaceAll('\\', '/')
+  const keyRelative = option('key', DEFAULT_KEY).replaceAll('\\', '/')
+  const packetSchema = option('schema-version', SCHEMA_VERSION)
+  const selectionVersion = option('selection-version', SELECTION_VERSION)
+  const observationPrefix = option('observation-prefix', 'E2P2')
+  const packetPath = path.resolve(ROOT, packetRelative)
+  const manifestPath = path.resolve(ROOT, manifestRelative)
+  const labelsPath = path.resolve(ROOT, labelsRelative)
+  const keyPath = path.resolve(ROOT, keyRelative)
   if (!cacheRoot) throw new Error('--cache-root is required')
   if (Number.isNaN(Date.parse(createdAt))) throw new Error('--created-at must be ISO-8601')
+  if (!/^[A-Z0-9]+$/u.test(observationPrefix)) throw new Error('--observation-prefix must be uppercase alphanumeric')
   for (const [label, file] of [['packet', packetPath], ['manifest', manifestPath], ['labels', labelsPath], ['reveal key', keyPath]]) {
     if (await exists(file)) throw new Error(`${label} already exists; refusing to overwrite blind chronology: ${file}`)
   }
@@ -117,8 +125,8 @@ async function main() {
         return assertCacheEntry(entry, fixture, sourceSet) ? [{ entry, fixture }] : []
       })
       if (completed.length < PER_SET) throw new Error(`Not enough completed ${sourceSet} rows`)
-      completed.sort((left, right) => sha256(`${SELECTION_VERSION}\0${sourceSet}\0${left.fixture.rawText}`)
-        .localeCompare(sha256(`${SELECTION_VERSION}\0${sourceSet}\0${right.fixture.rawText}`)))
+      completed.sort((left, right) => sha256(`${selectionVersion}\0${sourceSet}\0${left.fixture.rawText}`)
+        .localeCompare(sha256(`${selectionVersion}\0${sourceSet}\0${right.fixture.rawText}`)))
       selected.push(...completed.slice(0, PER_SET).map(({ entry, fixture }) => ({ sourceSet, entry, fixture })))
       cacheProvenance[sourceSet] = {
         file: contract.file,
@@ -130,12 +138,12 @@ async function main() {
       }
     }
 
-    selected.sort((left, right) => sha256(`${SELECTION_VERSION}\0all\0${left.fixture.rawText}`)
-      .localeCompare(sha256(`${SELECTION_VERSION}\0all\0${right.fixture.rawText}`)))
+    selected.sort((left, right) => sha256(`${selectionVersion}\0all\0${left.fixture.rawText}`)
+      .localeCompare(sha256(`${selectionVersion}\0all\0${right.fixture.rawText}`)))
     const observations = selected.map(({ entry, fixture }, index) => {
       const recognition = publicRecognition(entry.result)
       return {
-        observationId: `E2P2-${String(index + 1).padStart(3, '0')}`,
+        observationId: `${observationPrefix}-${String(index + 1).padStart(3, '0')}`,
         source: {
           title: fixture.sourceTitle,
           type: fixture.sourceType,
@@ -148,16 +156,17 @@ async function main() {
       }
     })
     const packet = {
-      schemaVersion: SCHEMA_VERSION,
+      schemaVersion: packetSchema,
       evaluationContractVersion: 'e2.7-evaluation-contract-1.0.0',
       rubricVersion: 'e2.7-user-impact-major-1.0.0',
       createdAt,
       blindedFields: ['caseId', 'sourceSet', 'expected', 'strictScores', 'failures', 'route', 'repair', 'revealKey'],
       instructions: {
-        task: 'Judge whether a real user must make a major correction before relying on this recognition output.',
+        task: 'Judge whether a real user must make a major correction and separately label every required P2 error dimension before relying on this recognition output.',
         labels: ['MAJOR', 'NOT_MAJOR', 'INSUFFICIENT_INFORMATION'],
         rubricPath: 'docs/e2-path-a-planning/P1_EVALUATION_CONTRACT.md',
         doNotInspect: ['frozen expected answers', 'case IDs', 'strict scores', 'reveal mapping'],
+        requiredDimensions: ['userImpactMajor', 'planningError', 'factMissing', 'reasonableEquivalent', 'timeRoleError', 'eventTaskError', 'materialTaskError', 'ambiguityMissing'],
       },
       sampleCount: observations.length,
       observations,
@@ -166,10 +175,10 @@ async function main() {
     const manifest = {
       schemaVersion: 'e2.7-blind-packet-manifest-1.0.0',
       status: 'PACKET_FROZEN_KEY_NOT_CREATED',
-      selectionVersion: SELECTION_VERSION,
+      selectionVersion,
       createdAt,
       packet: {
-        ignoredPath: DEFAULT_PACKET,
+        ignoredPath: packetRelative,
         sha256: sha256(packetBytes),
         sampleCount: observations.length,
         distribution: { golden: PER_SET, exposed_holdout: PER_SET, development: PER_SET },
@@ -181,7 +190,7 @@ async function main() {
         labelsStatus: 'NOT_STARTED',
         labelsFrozenCommit: null,
         revealKeyStatus: 'NOT_CREATED',
-        revealKeyPath: DEFAULT_KEY,
+        revealKeyPath: keyRelative,
       },
       limitations: [
         'Legacy recognition-2.4.1 caches do not contain generation-time source/input/result hashes.',

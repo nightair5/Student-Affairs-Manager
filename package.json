@@ -28,7 +28,10 @@
     "eval:recognition:e2:p2:prepare": "node scripts/prepare-e2-7-blind-adjudication.mjs",
     "eval:recognition:e2:p2:verify": "node scripts/verify-e2-7-blind-adjudication.mjs",
     "eval:recognition:e2:p2:reveal": "node scripts/reveal-e2-7-blind-adjudication.mjs",
-    "eval:recognition:e2:p2:summarize": "node scripts/summarize-e2-7-p2.mjs"
+    "eval:recognition:e2:p2:summarize": "node scripts/summarize-e2-7-p2.mjs",
+    "eval:recognition:e2:p2b:prepare": "node scripts/prepare-e2-7-blind-adjudication.mjs --packet=.evaluation-cache/e2-7/p2b-full-packet.json --manifest=docs/e2-path-a-planning/p2b-full-packet-manifest.json --labels=docs/e2-path-a-planning/p2b-full-labels.json --key=docs/e2-path-a-planning/p2b-reveal-key.json --schema-version=e2.7-blind-packet-1.1.0 --selection-version=e2.7-p2-source-hash-stratified-1.1.0 --observation-prefix=E2P2B",
+    "eval:recognition:e2:p2b:verify": "node scripts/verify-e2-7-blind-adjudication-v2.mjs",
+    "eval:recognition:e2:p2b:reveal": "node scripts/reveal-e2-7-blind-adjudication.mjs --packet=.evaluation-cache/e2-7/p2b-full-packet.json --manifest=docs/e2-path-a-planning/p2b-full-packet-manifest.json --labels=docs/e2-path-a-planning/p2b-full-labels.json --key=docs/e2-path-a-planning/p2b-reveal-key.json"
   },
   "dependencies": {
     "lucide-react": "^0.468.0",

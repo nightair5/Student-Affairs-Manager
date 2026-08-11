@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "e2.7-p2b-full-labels-1.0.0",
+  "type": "object",
+  "required": ["schemaVersion", "packetSha256", "reviewer", "labels"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": "e2.7-p2b-full-labels-1.0.0" },
+    "packetSha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "reviewer": {
+      "type": "object",
+      "required": ["reviewerId", "reviewerType", "independence", "startedAt", "completedAt"],
+      "additionalProperties": false,
+      "properties": {
+        "reviewerId": { "type": "string", "minLength": 1 },
+        "reviewerType": { "const": "ISOLATED_CODEX_REVIEWER" },
+        "independence": { "const": "NO_EXPECTED_NO_CASE_ID_NO_STRICT_SCORE_NO_REVEAL_KEY" },
+        "startedAt": { "type": "string", "format": "date-time" },
+        "completedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "labels": {
+      "type": "array",
+      "minItems": 60,
+      "items": {
+        "type": "object",
+        "required": [
+          "observationId",
+          "userImpactMajor",
+          "planningError",
+          "factMissing",
+          "reasonableEquivalent",
+          "timeRoleError",
+          "eventTaskError",
+          "materialTaskError",
+          "ambiguityMissing",
+          "taskGroupingEquivalent",
+          "milestoneAliasOnly",
+          "rationale"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "observationId": { "type": "string", "pattern": "^E2P2B-[0-9]{3}$" },
+          "userImpactMajor": { "enum": ["MAJOR", "NOT_MAJOR", "INSUFFICIENT_INFORMATION"] },
+          "planningError": { "$ref": "#/$defs/ternary" },
+          "factMissing": { "$ref": "#/$defs/ternary" },
+          "reasonableEquivalent": { "$ref": "#/$defs/ternary" },
+          "timeRoleError": { "$ref": "#/$defs/ternary" },
+          "eventTaskError": { "$ref": "#/$defs/ternary" },
+          "materialTaskError": { "$ref": "#/$defs/ternary" },
+          "ambiguityMissing": { "$ref": "#/$defs/ternary" },
+          "taskGroupingEquivalent": { "$ref": "#/$defs/ternary" },
+          "milestoneAliasOnly": { "$ref": "#/$defs/ternary" },
+          "rationale": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "ternary": { "enum": ["YES", "NO", "INSUFFICIENT_INFORMATION"] }
+  }
+}
