@@ -1,5 +1,5 @@
 export interface RecognitionPromptModule {
-  id: 'role-safety' | 'output-contract' | 'facts-first' | 'time' | 'materials' | 'structure' | 'evidence-ambiguity' | 'quality'
+  id: 'role-safety' | 'output-contract' | 'facts-first' | 'planning-contract' | 'time' | 'materials' | 'structure' | 'evidence-ambiguity' | 'quality'
   content: string
 }
 
@@ -10,7 +10,7 @@ export const recognitionPromptModules: readonly RecognitionPromptModule[] = Obje
   },
   {
     id: 'output-contract',
-    content: `只输出一个符合 RecognitionResult 2.0 的严格 JSON 对象，不得输出 Markdown、前言、注释或未声明字段。schemaVersion 固定为 "2.0"，promptVersion 固定为 "recognition-2.4.1"，modelName 固定为 "deepseek-v4-flash"。顶层字段必须且只能是 schemaVersion,promptVersion,modelName,createdAt,sourceSummary,projectMatch,projectSuggestion,milestones,standaloneTasks,materials,timePoints,events,evidence,conflicts,ambiguities,ignoredContent,quality，所有数组即使为空也必须输出。
+    content: `只输出一个符合 RecognitionResult 2.0 的严格 JSON 对象，不得输出 Markdown、前言、注释或未声明字段。schemaVersion 固定为 "2.0"，promptVersion 固定为 "recognition-2.5.0-rc.1"，modelName 固定为 "deepseek-v4-flash"。顶层字段必须且只能是 schemaVersion,promptVersion,modelName,createdAt,sourceSummary,projectMatch,projectSuggestion,milestones,standaloneTasks,materials,timePoints,events,evidence,conflicts,ambiguities,ignoredContent,quality，所有数组即使为空也必须输出。
 字段形状必须严格使用以下名字，禁止自创别名：sourceSummary={title,sourceType,notificationType,summary,requiresAction,actionReason}；projectMatch={decision,matchedProjectId,suggestedProjectTitle,confidence,reasons}；projectSuggestion 为 null 或 {title,category,objective,description}，其中每个字段都是 {value,evidenceIds,confidence,inferenceLevel}，不能直接写字符串。
 Milestone={tempId,title,objective,order,evidenceIds,workPackages,tasks}；WorkPackage={tempId,title,objective,order,evidenceIds,tasks}；Task={tempId,parentTempId,hierarchyType,title,actionVerb,actionObject,description,completionCriteria,estimatedMinutes,statusSuggestion,prioritySuggestion,dependencyTempIds,materialTempIds,timePointTempIds,evidenceIds,confidence,inferenceLevel,userConfirmationRequired}。所有明确动作必须恰好进入一次 standaloneTasks、Milestone.tasks 或 WorkPackage.tasks；禁止用顶层 tasks 替代 standaloneTasks，禁止只输出 Material/TimePoint 而遗漏对应明确动作。
 Material={tempId,name,required,formatRequirements,namingRequirements,quantity,submissionChannel,relatedTaskTempIds,evidenceIds,confidence}；TimePoint={tempId,type,rawText,normalizedValue,timezone,isAllDay,precision,needsConfirmation,relatedTaskTempIds,relatedMaterialTempIds,evidenceIds,confidence}；Event={tempId,title,description,startTimePointTempId,endTimePointTempId,location,evidenceIds,confidence,inferenceLevel}。
@@ -20,6 +20,10 @@ Evidence={id,sourceId,quotedText,field,extractionMethod,confidence}；Conflict={
   {
     id: 'facts-first',
     content: `先在内部完成事实清单，再做结构规划；不要输出中间清单，也不要因为先决定了任务层级而遗漏事实。事实清单逐段覆盖：涉及主体；明确或被动表达的义务/动作及对象；需准备、获取、填写、制作、携带、提交或核验的对象及其用途；每个时间表达及其业务角色；发生型事件；条件、适用范围、渠道、格式与约束；冲突、模糊和逐字证据。完成后执行一次完整性核对：每个事实只进入合适的 Task、Material、TimePoint、Event、Ambiguity 或 IgnoredContent，不重复、不凭常识补齐。最后才组织 Project、Milestone、WorkPackage 和关联关系。Simple/Medium 仍在单次调用内完成此流程。`,
+  },
+  {
+    id: 'planning-contract',
+    content: `结构化前先在内部建立“明确义务覆盖表”，逐项保留原文的行动谓词、对象、适用主体、条件、强制性、时间角色和证据；最终每个明确义务必须恰好映射为一条可执行 Task 或一个明确属于发生型安排的 Event，不能用更宽泛的动作替换原谓词，也不能让 Material、TimePoint、Milestone 或说明文字代替义务。Material 是动作作用或交付的对象：同一谓词统领的并列材料通常关联同一 Task；只有不同截止、渠道、条件、依赖或可独立完成状态才拆分。Event 表示外部发生的安排，准备产出仍是 Task，二者分别保留且不得互换。每个有业务意义的时间表达都保留为 TimePoint，并按它实际约束的报名、提交、任务、事件、结果或计划角色分类，不能因已关联 Task 就统一写成 task_deadline。适用范围、前置条件、暂定、待通知、未知主体和无法可靠归一的内容必须保留在 description/completionCriteria，并建立可回看的 Ambiguity；不得静默删除或猜测。Milestone 只表示原文可解释的真实阶段，简单通知不造阶段，阶段标题差异不能造成义务丢失。输出前逐项反查：所有关键 Task、Material、TimePoint、Event、Ambiguity 均存在，引用一致，且各有逐字 Evidence。`,
   },
   {
     id: 'time',

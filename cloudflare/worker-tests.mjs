@@ -122,7 +122,7 @@ test('structured extraction uses V4 Flash JSON mode and returns bounded suggesti
   const payload = await response.json()
   assert.equal(payload.model, 'deepseek-v4-flash')
   assert.equal(payload.result.schemaVersion, '2.0')
-  assert.equal(payload.result.promptVersion, 'recognition-2.4.1')
+  assert.equal(payload.result.promptVersion, 'recognition-2.5.0-rc.1')
   assert.equal(payload.result.milestones[0].tasks[0].title, '提交报名表')
   assert.equal(payload.result.evidence[0].quotedText, '8月10日18:00提交报名表')
   assert.equal(payload.validation.validatorVersion, 'recognition-quality-2.1.0')
