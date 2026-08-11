@@ -1,0 +1,241 @@
+{
+  "schemaVersion": "e2.7-p9-component-ablation-1.0.0",
+  "status": "COMPLETE_NO_CANDIDATE",
+  "scope": "Exposed development and diagnostic evidence only; no Blind evidence",
+  "referenceArm": {
+    "id": "A0",
+    "name": "current_path_a_repair_disabled",
+    "sampleCount": 80,
+    "metrics": {
+      "taskPrecision": 0.8,
+      "taskRecall": 0.6779661016949152,
+      "materialRecall": 0.9553571428571429,
+      "timeRoleAccuracy": 0.8,
+      "timeValueAccuracy": 0.7357142857142858,
+      "eventAccuracy": 0.8461538461538461,
+      "evidenceCoverage": 0.9734513274336283,
+      "evidenceValidity": 1,
+      "ambiguityPrecision": 0.7380952380952381,
+      "ambiguityRecall": 0.6595744680851063,
+      "strictMajorCorrection": 0.6625,
+      "userImpactMajorCorrection": "NOT RUN",
+      "severeError": 0,
+      "duplicateRate": 0,
+      "overFragmentationRate": 0
+    },
+    "latencyMs": {
+      "mean": 7726.7625,
+      "p95": 13013
+    },
+    "tokens": {
+      "input": 189215,
+      "output": 121108
+    }
+  },
+  "components": [
+    {
+      "id": "A1",
+      "component": "strict_semantic_user_impact_evaluation_contract",
+      "outputChanged": false,
+      "incrementalBenefit": "Separates strict structure, semantic equivalence, and user-impact judgments; prevents strict Major from being relabeled as user impact.",
+      "incrementalRisk": "No runtime risk; calibration remains exposed diagnostic evidence.",
+      "latencyMs": 0,
+      "tokens": {
+        "input": 0,
+        "output": 0
+      },
+      "userImpactMajorDelta": 0,
+      "decision": "KEEP_EVALUATION_ONLY",
+      "candidateRuntimeComponent": false
+    },
+    {
+      "id": "A2",
+      "component": "planning_normalizer_1.0.0",
+      "evaluationSampleCount": 72,
+      "outputChanged": false,
+      "changedRows": 0,
+      "incrementalBenefit": "No observed metric or user-impact benefit.",
+      "incrementalRisk": "Adds a transformation boundary without changing any evaluated output.",
+      "latencyMs": {
+        "mean": 0.09399722222221858,
+        "max": 1.0077999999999747
+      },
+      "tokens": {
+        "input": 0,
+        "output": 0
+      },
+      "normalizerHarmRate": 0,
+      "userImpactMajorDelta": 0,
+      "decision": "DO_NOT_RETAIN_AS_CANDIDATE_COMPONENT",
+      "candidateRuntimeComponent": false
+    },
+    {
+      "id": "A3",
+      "component": "prompt_planning_contract",
+      "evaluationSampleCount": 108,
+      "outputChanged": false,
+      "retainedPromptVersion": "recognition-2.4.1",
+      "iterations": [
+        {
+          "promptVersion": "recognition-2.5.0-rc.1",
+          "decision": "REJECT",
+          "taskPrecisionDelta": -0.0300387596899226,
+          "taskRecallDelta": 0.0571428571428572,
+          "eventAccuracyDelta": -0.2923351158645276,
+          "severeErrorDelta": 0,
+          "transportFailureDelta": 0
+        },
+        {
+          "promptVersion": "recognition-2.5.0-rc.2",
+          "decision": "REJECT",
+          "taskPrecisionDelta": -0.0421778673014711,
+          "taskRecallDelta": -0.05,
+          "eventAccuracyDelta": -0.1268939393939394,
+          "severeErrorDelta": 0.0833333333333333,
+          "transportFailureDelta": 0.0740740740740741
+        }
+      ],
+      "incrementalBenefit": "No accepted prompt change; the frozen baseline prompt remains active.",
+      "incrementalRisk": "Both candidates caused material regressions; RC2 also had severe and transport failures.",
+      "latencyMs": "NO_INCREMENT_ON_RETAINED_PATH",
+      "tokens": "NO_INCREMENT_ON_RETAINED_PATH",
+      "userImpactMajorDelta": "NOT RUN",
+      "decision": "REJECT",
+      "candidateRuntimeComponent": false
+    },
+    {
+      "id": "A4",
+      "component": "router_calibration_1.2.0",
+      "evaluationSampleCount": 80,
+      "outputChanged": false,
+      "routingMetrics": {
+        "accuracy": 0.975,
+        "complexRecall": 1,
+        "underRoutingRate": 0,
+        "overRoutingRate": 0.025
+      },
+      "selectedStrategyDistribution": {
+        "single_pass": 80
+      },
+      "incrementalBenefit": "Routing labels are accurately reproduced, but no alternate recognition strategy was selected and no quality gain is causal to Router.",
+      "incrementalRisk": "Exposed diagnostic calibration may not generalize; enabling an intensive route remains untested.",
+      "latencyMs": "NOT OBSERVABLE_SEPARATELY",
+      "tokens": {
+        "input": 0,
+        "output": 0
+      },
+      "userImpactMajorDelta": 0,
+      "decision": "KEEP_DIAGNOSTIC_CLASSIFIER_ONLY",
+      "candidateRuntimeComponent": false
+    },
+    {
+      "id": "A5",
+      "component": "validator_2.2.0",
+      "evaluationSampleCount": 80,
+      "outputChanged": false,
+      "validatorMetrics": {
+        "microPrecision": 0.9428571428571428,
+        "microRecall": 0.88,
+        "wrongTimeRoleRecall": 0.9166666666666666,
+        "missingAmbiguityRecall": 1,
+        "invalidEvidenceRecall": 0
+      },
+      "incrementalBenefit": "Substantially improves issue detection and is safe as a non-mutating warning layer.",
+      "incrementalRisk": "INVALID_EVIDENCE remains undetected and no end-to-end user-impact improvement is caused without Repair.",
+      "latencyMs": "NOT OBSERVABLE_SEPARATELY",
+      "tokens": {
+        "input": 0,
+        "output": 0
+      },
+      "userImpactMajorDelta": 0,
+      "decision": "KEEP_NON_MUTATING_DIAGNOSTIC_ONLY",
+      "candidateRuntimeComponent": false
+    },
+    {
+      "id": "A6",
+      "component": "repair_optimized_r2",
+      "evaluationSampleCount": 80,
+      "outputChanged": true,
+      "metricDeltaFromA0": {
+        "taskPrecision": 0,
+        "taskRecall": 0,
+        "materialRecall": 0.0446428571428571,
+        "timeRoleAccuracy": 0,
+        "timeValueAccuracy": 0.0285714285714284,
+        "eventAccuracy": 0.0512820512820514,
+        "evidenceCoverage": 0.0058997050147493,
+        "evidenceValidity": 0,
+        "ambiguityPrecision": -0.0073260073260074,
+        "ambiguityRecall": 0.148936170212766,
+        "strictMajorCorrection": -0.0625,
+        "severeError": 0,
+        "duplicateRate": 0,
+        "overFragmentationRate": 0
+      },
+      "resultMetrics": {
+        "taskPrecision": 0.8,
+        "taskRecall": 0.6779661016949152,
+        "materialRecall": 1,
+        "timeRoleAccuracy": 0.8,
+        "timeValueAccuracy": 0.7642857142857142,
+        "eventAccuracy": 0.8974358974358975,
+        "evidenceCoverage": 0.9793510324483776,
+        "evidenceValidity": 1,
+        "ambiguityPrecision": 0.7307692307692307,
+        "ambiguityRecall": 0.8085106382978723,
+        "strictMajorCorrection": 0.6,
+        "userImpactMajorCorrection": "NOT RUN",
+        "severeError": 0,
+        "duplicateRate": 0,
+        "overFragmentationRate": 0,
+        "repairHarmRate": 0
+      },
+      "incrementalBenefit": "Improves Material, Time Value, Event, Evidence, Ambiguity Recall, and strict Major on exposed diagnostics.",
+      "incrementalRisk": "Does not improve the dominant Task gap; Ambiguity Precision falls slightly; changed outputs were not independently re-adjudicated for user impact.",
+      "latencyMs": {
+        "repairMean": 2605.875,
+        "repairP95": 3917,
+        "fullPathMeanDelta": 781.7625
+      },
+      "tokens": {
+        "addedInput": 94034,
+        "addedOutput": 5380
+      },
+      "userImpactMajorDelta": "NOT RUN",
+      "decision": "DO_NOT_RETAIN_AS_CANDIDATE_COMPONENT",
+      "candidateRuntimeComponent": false
+    }
+  ],
+  "candidateGatePreview": {
+    "taskStrictPrecisionAtLeast82": false,
+    "taskStrictRecallAtLeast80": false,
+    "taskSemanticPrecisionAtLeast85": "NOT RUN_ON_A6",
+    "taskSemanticRecallAtLeast85": "NOT RUN_ON_A6",
+    "materialRecallAtLeast85": true,
+    "timeRoleAtLeast80": true,
+    "timeValueAtLeast80": false,
+    "eventAtLeast88": true,
+    "evidenceCoverageAtLeast95": true,
+    "evidenceValidityAtLeast98": true,
+    "userImpactMajorAtMost30": "NOT RUN_ON_A6",
+    "severeErrorAtMost2": true,
+    "duplicateAtMost3": true,
+    "overFragmentationAtMost5": true,
+    "normalizerHarmAtMost3": true,
+    "repairHarmAtMost3": true,
+    "transportFailureAtMost2": true
+  },
+  "decision": {
+    "candidateComponentCount": 0,
+    "candidateFreezePermitted": false,
+    "newBlindPermitted": false,
+    "reason": "A6 fails strict Task Precision, strict Task Recall, and Time Value gates; semantic and user-impact metrics were not rerun for changed outputs. No output-changing component satisfies the net-benefit contract."
+  },
+  "sourceArtifacts": [
+    "p4-planning-normalizer-results.json",
+    "p5-prompt-iteration-results.json",
+    "p6-router-results.json",
+    "p7-validator-results.json",
+    "p8-repair-results.json"
+  ]
+}
