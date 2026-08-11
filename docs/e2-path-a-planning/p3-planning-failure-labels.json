@@ -1,0 +1,487 @@
+{
+  "schemaVersion": "e2.7-p3-planning-failure-labels-1.0.0",
+  "packetSha256": "c92855a66d6410ac2d6b90109e6e40b5f0e9a7c713dec4c27d29d128793667c1",
+  "reviewer": "primary-manual-source-expected-prediction-review",
+  "rows": [
+    {
+      "caseId": "e2-gen-03-3",
+      "primaryCategory": "WRONG_TIME_ROLE",
+      "secondaryCategories": ["MISSING_AMBIGUITY", "MILESTONE_ALIAS_ONLY", "REASONABLE_EQUIVALENT_STRUCTURE", "EVALUATION_MISMATCH"],
+      "sourceEvidence": ["报名受理至10月3日17:00", "作品交付期限为10月18日", "入围陈述定于10月27日14:00"],
+      "attributionReason": "报名与作品交付事实、值和 Event 均已发现，但前两项被统一规划为 task_deadline；Task 合并与 Milestone 标题基本等价，条件歧义未单独保留。",
+      "userActionImpact": "MINOR"
+    },
+    {
+      "caseId": "e2-gen-03-4",
+      "primaryCategory": "FACT_PRESENT_PLANNING_WRONG",
+      "secondaryCategories": ["TASK_MISSING", "WRONG_TIME_ROLE", "MISSING_AMBIGUITY", "VALIDATOR_MISSED"],
+      "sourceEvidence": ["10月3日17:00报名就关", "入围后10月27日14:00去设计楼陈述"],
+      "attributionReason": "模型看到报名截止和入围条件，却把报名动作改成泛化的“参加导视赛”，并把报名截止标成 task_deadline，且没有保留入围条件歧义。",
+      "userActionImpact": "MAJOR"
+    },
+    {
+      "caseId": "e2-gen-06-2",
+      "primaryCategory": "TASK_MISSING",
+      "secondaryCategories": ["FACT_PRESENT_PLANNING_WRONG", "ROUTER_UNDER_ROUTED", "VALIDATOR_MISSED", "EVALUATION_MISMATCH"],
+      "sourceEvidence": ["材料先准备上月安全巡查记录", "需要说明整改进度"],
+      "attributionReason": "准备巡查记录被保留，但明确的“说明整改进度”行动完全没有形成 Task；expected 的“携带”较原文更强，属于附带合同偏差。",
+      "userActionImpact": "MAJOR"
+    },
+    {
+      "caseId": "e2-gen-07-2",
+      "primaryCategory": "EVENT_TASK_CONFUSION",
+      "secondaryCategories": ["TASK_MISSING", "MISSING_AMBIGUITY", "VALIDATOR_MISSED"],
+      "sourceEvidence": ["仅已录用志愿者", "参加岗前集合并签到"],
+      "attributionReason": "两个 Event 与时间均存在，但可完成的签到义务没有形成 Task；适用对象条件也未正确记录。",
+      "userActionImpact": "MAJOR"
+    },
+    {
+      "caseId": "e2-gen-08-4",
+      "primaryCategory": "WRONG_TIME_ROLE",
+      "secondaryCategories": ["MILESTONE_ALIAS_ONLY", "EVALUATION_MISMATCH"],
+      "sourceEvidence": ["9月19日17:00交文献综述", "10月8日中午交研究设计表"],
+      "attributionReason": "三项 Task、材料、日期值均完整；两项提交截止仅被标为 task_deadline，Project/Milestone strict 差异不损失行动。",
+      "userActionImpact": "MINOR"
+    },
+    {
+      "caseId": "e2-gen-09-4",
+      "primaryCategory": "EVENT_TASK_CONFUSION",
+      "secondaryCategories": ["WRONG_TIME_ROLE", "EVALUATION_MISMATCH"],
+      "sourceEvidence": ["导师近期会复核", "哪天到时群里说"],
+      "attributionReason": "准备选题说明 Task 正确；导师复核的 Event 被遗漏，“近期”被错误关联为用户 Task 截止并拆出冗余时间。",
+      "userActionImpact": "MINOR"
+    },
+    {
+      "caseId": "e2-gen-10-1",
+      "primaryCategory": "FACT_PRESENT_PLANNING_WRONG",
+      "secondaryCategories": ["TASK_MISSING", "MISSING_AMBIGUITY", "VALIDATOR_MISSED"],
+      "sourceEvidence": ["回复是否参加", "结果发布日期目前未知"],
+      "attributionReason": "回复义务被识别成“参加”，丢失关键动作谓词；未知结果发布时间没有形成独立 result_announcement，相关歧义被压缩。",
+      "userActionImpact": "MAJOR"
+    },
+    {
+      "caseId": "e2-gen-10-2",
+      "primaryCategory": "FACT_PRESENT_PLANNING_WRONG",
+      "secondaryCategories": ["TASK_MISSING", "MISSING_AMBIGUITY", "VALIDATOR_MISSED"],
+      "sourceEvidence": ["须在发布后48小时内回复参加意向", "结果发布日期目前未知"],
+      "attributionReason": "模型保留了相对截止，却把“回复参加意向”规划成“参加意向/参加”任务，并漏掉结果发布时间 TimePoint。",
+      "userActionImpact": "MAJOR"
+    },
+    {
+      "caseId": "e2-gen-10-3",
+      "primaryCategory": "FACT_PRESENT_PLANNING_WRONG",
+      "secondaryCategories": ["TASK_MISSING", "REASONABLE_EQUIVALENT_STRUCTURE", "EVALUATION_MISMATCH"],
+      "sourceEvidence": ["48小时内回复是否参加", "发布时间尚未确定"],
+      "attributionReason": "两个 TimePoint 与两项语义等价歧义均完整，Repair 也未造成伤害；真正错误是把“回复”改成“参加”。",
+      "userActionImpact": "MAJOR"
+    },
+    {
+      "caseId": "e2-gen-10-4",
+      "primaryCategory": "FACT_PRESENT_PLANNING_WRONG",
+      "secondaryCategories": ["TASK_MISSING", "MISSING_AMBIGUITY", "VALIDATOR_MISSED"],
+      "sourceEvidence": ["发布后48小时内回复去不去", "结果啥时候发还不知道"],
+      "attributionReason": "回复动作被改成参加，结果发布时间 TimePoint 缺失，导致依赖关系只以说明文本存在。",
+      "userActionImpact": "MAJOR"
+    },
+    {
+      "caseId": "e2-gen-11-1",
+      "primaryCategory": "WRONG_TIME_VALUE",
+      "secondaryCategories": ["MISSING_AMBIGUITY", "WRONG_MILESTONE", "EVALUATION_MISMATCH"],
+      "sourceEvidence": ["原收件日为9月20日", "现更正为9月23日18:00"],
+      "attributionReason": "新旧日期和值都存在且当前 Task 关联新值，但旧日期未标记 superseded/需确认，更正关系歧义被替换成材料范围歧义。",
+      "userActionImpact": "MINOR"
+    },
+    {
+      "caseId": "e2-gen-11-3",
+      "primaryCategory": "TASK_MISSING",
+      "secondaryCategories": ["FACT_PRESENT_PLANNING_WRONG", "MATERIAL_TASK_CONFUSION", "MISSING_AMBIGUITY", "VALIDATOR_MISSED"],
+      "sourceEvidence": ["其余材料截止保持9月26日", "实践报告截止由9月20日调整至9月23日18:00"],
+      "attributionReason": "9月26日被发现为时间，但“其余材料”没有形成 Task 或 Material；旧截止也未保留为 TimePoint。",
+      "userActionImpact": "MAJOR"
+    },
+    {
+      "caseId": "e2-gen-11-4",
+      "primaryCategory": "WRONG_TIME_VALUE",
+      "secondaryCategories": ["MISSING_AMBIGUITY", "WRONG_MILESTONE", "EVALUATION_MISMATCH"],
+      "sourceEvidence": ["原来9月20日", "现在是9月23日18:00"],
+      "attributionReason": "行动和三个日期都完整，但旧日期被当作普通确定截止，未表达已被新日期取代；生成的材料身份歧义不能替代更正关系。",
+      "userActionImpact": "MINOR"
+    },
+    {
+      "caseId": "e2-gen-12-1",
+      "primaryCategory": "REASONABLE_EQUIVALENT_STRUCTURE",
+      "secondaryCategories": ["TASK_OVER_MERGED", "EVALUATION_MISMATCH"],
+      "sourceEvidence": ["办理设备借用需出示校园卡并交设备借用单"],
+      "attributionReason": "一个“办理设备借用”Task 通过材料引用完整覆盖同一办理动作下的校园卡与借用单；strict 将其误判为两个 Task 缺失。",
+      "userActionImpact": "NONE"
+    },
+    {
+      "caseId": "e2-gen-12-2",
+      "primaryCategory": "EVALUATION_MISMATCH",
+      "secondaryCategories": ["REASONABLE_EQUIVALENT_STRUCTURE"],
+      "sourceEvidence": ["校园卡、设备借用单是办理所需", "仅供查询"],
+      "attributionReason": "原文只列办理所需材料，没有明确“出示/提交”谓词；预测保留材料并标注动作不明，比冻结 expected 的具体动作更保守。",
+      "userActionImpact": "NONE"
+    },
+    {
+      "caseId": "e2-gen-18-2",
+      "primaryCategory": "TASK_OVER_SPLIT",
+      "secondaryCategories": ["TASK_FALSE_POSITIVE", "WRONG_TIME_ROLE", "EVALUATION_MISMATCH"],
+      "sourceEvidence": ["困难补助复核所需材料", "办理期限9月29日前"],
+      "attributionReason": "原文只明确办理复核，预测额外拆成准备与提交两个义务并把办理截止改成 submission_deadline；提交渠道本身未说明。",
+      "userActionImpact": "MINOR"
+    },
+    {
+      "caseId": "e2-gen-21-2",
+      "primaryCategory": "WRONG_TIME_VALUE",
+      "secondaryCategories": ["MISSING_AMBIGUITY", "VALIDATOR_MISSED"],
+      "sourceEvidence": ["同日17:20上传", "审批单10月14日8:40领取"],
+      "attributionReason": "“同日/当日”应由同句明确的10月14日解析，预测却锚定为参考日8月8日，两个关键时间值错误。",
+      "userActionImpact": "MAJOR"
+    },
+    {
+      "caseId": "e2-gen-21-3",
+      "primaryCategory": "TASK_MISSING",
+      "secondaryCategories": ["WRONG_TIME_ROLE", "ROUTER_UNDER_ROUTED", "VALIDATOR_MISSED"],
+      "sourceEvidence": ["领取审批单", "完成导师签字", "上传扫描版"],
+      "attributionReason": "三个明确动作均未形成 Task；首个时间还被规划为 Event，上传时间被标成普通 task_deadline。",
+      "userActionImpact": "MAJOR"
+    },
+    {
+      "caseId": "e2-gen-21-4",
+      "primaryCategory": "EVALUATION_MISMATCH",
+      "secondaryCategories": ["ROUTER_UNDER_ROUTED", "REASONABLE_EQUIVALENT_STRUCTURE"],
+      "sourceEvidence": ["14号一天三步", "17:20前传扫描版"],
+      "attributionReason": "三项行动与同日顺序完整；独立原文只写“14号”，按参考时间解析为8月14日合理，冻结 expected 的10月14日缺少本条文本依据。",
+      "userActionImpact": "NONE"
+    },
+    {
+      "caseId": "e2-gen-22-4",
+      "primaryCategory": "REASONABLE_EQUIVALENT_STRUCTURE",
+      "secondaryCategories": ["MILESTONE_ALIAS_ONLY", "MISSING_AMBIGUITY", "EVALUATION_MISMATCH"],
+      "sourceEvidence": ["10月9日18:00前交调查报告、匿名化访谈记录、知情同意书", "教室后面说"],
+      "attributionReason": "三个行动、三份提交材料、四个时间和 Event 均完整；Milestone 合并与“制作/弄好”为等价表达，仅地点待通知歧义遗漏。",
+      "userActionImpact": "MINOR"
+    },
+    {
+      "caseId": "e2-holdout-02",
+      "primaryCategory": "FACT_PRESENT_PLANNING_WRONG",
+      "secondaryCategories": ["TASK_MISSING", "ROUTER_UNDER_ROUTED", "VALIDATOR_MISSED"],
+      "sourceEvidence": ["带一页纸的问题清单到课堂"],
+      "attributionReason": "材料与截止已发现，但“带到课堂”被改成“准备”，丢失交付/携带动作。",
+      "userActionImpact": "MAJOR"
+    },
+    {
+      "caseId": "e2-holdout-03",
+      "primaryCategory": "TASK_OVER_MERGED",
+      "secondaryCategories": ["TASK_MISSING", "ROUTER_UNDER_ROUTED", "VALIDATOR_MISSED"],
+      "sourceEvidence": ["复核第三次实验数据并提交修订版Excel"],
+      "attributionReason": "预测只保留提交修订版 Excel，明确且可独立完成的复核步骤没有被保留。",
+      "userActionImpact": "MAJOR"
+    },
+    {
+      "caseId": "e2-holdout-05",
+      "primaryCategory": "REASONABLE_EQUIVALENT_STRUCTURE",
+      "secondaryCategories": ["TASK_OVER_MERGED", "MILESTONE_ALIAS_ONLY", "EVALUATION_MISMATCH"],
+      "sourceEvidence": ["提交源代码和技术报告"],
+      "attributionReason": "同一动作、截止和渠道下的两份材料合并成一个 Task，材料与证据均保留；Milestone 标题亦为合理同义。",
+      "userActionImpact": "NONE"
+    },
+    {
+      "caseId": "e2-holdout-06",
+      "primaryCategory": "MISSING_AMBIGUITY",
+      "secondaryCategories": ["MILESTONE_ALIAS_ONLY", "EVALUATION_MISMATCH"],
+      "sourceEvidence": ["入围团队9月14日晚七点线上路演"],
+      "attributionReason": "提交与路演事实正确，但未结构化“仅入围团队”适用条件，反而增加了不必要的日期具体时刻歧义。",
+      "userActionImpact": "MAJOR"
+    },
+    {
+      "caseId": "e2-holdout-08",
+      "primaryCategory": "EVALUATION_MISMATCH",
+      "secondaryCategories": ["REASONABLE_EQUIVALENT_STRUCTURE"],
+      "sourceEvidence": ["9月18日前完成报名", "书状提交时间预计为10月中旬"],
+      "attributionReason": "预测完整保留报名与书状提交；冻结 expected 要求原文未出现的“模拟法庭竞赛”对象，造成 strict Task 假阴性。",
+      "userActionImpact": "NONE"
+    },
+    {
+      "caseId": "e2-holdout-11",
+      "primaryCategory": "REASONABLE_EQUIVALENT_STRUCTURE",
+      "secondaryCategories": ["TASK_OVER_MERGED", "EVALUATION_MISMATCH"],
+      "sourceEvidence": ["提交延期住宿申请和家长知情书"],
+      "attributionReason": "同一提交动作、同一截止下两份材料合并为一个 Task，材料引用完整；strict 一对一匹配误报缺失。",
+      "userActionImpact": "NONE"
+    },
+    {
+      "caseId": "e2-holdout-12",
+      "primaryCategory": "WRONG_TIME_VALUE",
+      "secondaryCategories": ["MISSING_AMBIGUITY", "FACT_PRESENT_PLANNING_WRONG", "VALIDATOR_MISSED"],
+      "sourceEvidence": ["暂定9月1日开放", "截止时间另行通知"],
+      "attributionReason": "开放日期被去掉“暂定”并标为确定值；任务标题也错误吸收成“报名截止通知”，开放时间的不确定性未保留。",
+      "userActionImpact": "MAJOR"
+    },
+    {
+      "caseId": "e2-holdout-13",
+      "primaryCategory": "EVALUATION_MISMATCH",
+      "secondaryCategories": ["REASONABLE_EQUIVALENT_STRUCTURE", "MILESTONE_ALIAS_ONLY"],
+      "sourceEvidence": ["提交励志奖学金申请表、成绩单和家庭经济困难认定证明"],
+      "attributionReason": "一个提交 Task 完整覆盖三份材料；冻结 expected 的泛化对象和额外“资料准备”Milestone 在原文没有独立义务。",
+      "userActionImpact": "NONE"
+    },
+    {
+      "caseId": "e2-holdout-14",
+      "primaryCategory": "FACT_PRESENT_PLANNING_WRONG",
+      "secondaryCategories": ["TASK_MISSING", "WRONG_TIME_ROLE", "MISSING_AMBIGUITY", "VALIDATOR_MISSED"],
+      "sourceEvidence": ["补交截止为9月22日17:00", "新增一份本人签字的诚信承诺书"],
+      "attributionReason": "明确的“补交”被改成“准备”，截止被标成 task_deadline；补充通知的原申请归属未保留。",
+      "userActionImpact": "MAJOR"
+    },
+    {
+      "caseId": "e2-holdout-18",
+      "primaryCategory": "FACT_MISSING",
+      "secondaryCategories": ["EVENT_TASK_CONFUSION", "MISSING_AMBIGUITY", "VALIDATOR_MISSED"],
+      "sourceEvidence": ["导师面谈预计下周进行", "具体时段由助教单独通知"],
+      "attributionReason": "Event、模糊时间和待通知歧义全部缺失；Repair 仅改 evidence，未恢复任何业务实体。",
+      "userActionImpact": "MAJOR"
+    },
+    {
+      "caseId": "e2-holdout-21",
+      "primaryCategory": "FACT_MISSING",
+      "secondaryCategories": ["EVENT_TASK_CONFUSION", "MISSING_AMBIGUITY", "VALIDATOR_MISSED"],
+      "sourceEvidence": ["体育测试安排在10月第三周", "分组时间表尚未公布"],
+      "attributionReason": "体育测试 Event、第三周时间和分组未公布歧义全部被丢弃；Repair 触发后仍只改 evidence。",
+      "userActionImpact": "MAJOR"
+    },
+    {
+      "caseId": "e2-holdout-22",
+      "primaryCategory": "REASONABLE_EQUIVALENT_STRUCTURE",
+      "secondaryCategories": ["TASK_OVER_MERGED", "MILESTONE_ALIAS_ONLY", "EVALUATION_MISMATCH"],
+      "sourceEvidence": ["打包上传中期报告、经费明细和阶段成果"],
+      "attributionReason": "三项行动、四份材料、四个时间与检查汇报完整；上位“中期材料”与具体清单、Milestone 合并造成 strict 假错。",
+      "userActionImpact": "NONE"
+    },
+    {
+      "caseId": "e2-holdout-24",
+      "primaryCategory": "MISSING_AMBIGUITY",
+      "secondaryCategories": ["WRONG_TIME_ROLE", "MILESTONE_ALIAS_ONLY", "VALIDATOR_MISSED"],
+      "sourceEvidence": ["录用者8月18日前提交护照信息页", "8月13日12:00前填写报名问卷"],
+      "attributionReason": "后续护照与培训仅适用于录用者，但条件未结构化；报名问卷时间也被标为普通 task_deadline。",
+      "userActionImpact": "MAJOR"
+    },
+    {
+      "caseId": "e2-holdout-25",
+      "primaryCategory": "REASONABLE_EQUIVALENT_STRUCTURE",
+      "secondaryCategories": ["TASK_OVER_MERGED", "MILESTONE_ALIAS_ONLY", "EVALUATION_MISMATCH"],
+      "sourceEvidence": ["提交伴奏音频和舞台需求表", "正式演出时间暂定9月18日晚"],
+      "attributionReason": "同截止提交两份材料合并合理；两个 Event、不确定时间和全部材料均保留，strict 主要来自 Milestone/一对一结构。",
+      "userActionImpact": "NONE"
+    },
+    {
+      "caseId": "e2-holdout-28",
+      "primaryCategory": "WRONG_TIME_VALUE",
+      "secondaryCategories": ["MISSING_AMBIGUITY", "MILESTONE_ALIAS_ONLY", "EVALUATION_MISMATCH"],
+      "sourceEvidence": ["原报名截止9月5日", "现延长到9月8日18:00"],
+      "attributionReason": "当前报名与材料提交行动、日期正确；旧截止未标记已失效/需确认，更正关系歧义缺失，部分 strict raw 匹配也属合同问题。",
+      "userActionImpact": "MINOR"
+    },
+    {
+      "caseId": "e2-holdout-29",
+      "primaryCategory": "FACT_MISSING",
+      "secondaryCategories": ["TASK_FALSE_POSITIVE", "MATERIAL_TASK_CONFUSION", "VALIDATOR_MISSED"],
+      "sourceEvidence": ["统一装入档案袋", "蓝底证件照一张"],
+      "attributionReason": "档案袋包装要求未形成 Material/完成条件，同时预测无依据地加入“入党积极分子”语境。",
+      "userActionImpact": "MAJOR"
+    },
+    {
+      "caseId": "e2-holdout-30",
+      "primaryCategory": "EVALUATION_MISMATCH",
+      "secondaryCategories": ["REASONABLE_EQUIVALENT_STRUCTURE"],
+      "sourceEvidence": ["携带发票原件、付款截图和获奖证书复印件"],
+      "attributionReason": "行动与三份凭证完全保留，预测具体对象优于 expected 的泛化“报销凭证”；额外项目归属歧义不影响行动。",
+      "userActionImpact": "NONE"
+    },
+    {
+      "caseId": "e2-holdout-32",
+      "primaryCategory": "REASONABLE_EQUIVALENT_STRUCTURE",
+      "secondaryCategories": ["TASK_OVER_MERGED", "EVALUATION_MISMATCH"],
+      "sourceEvidence": ["联系指导老师预约访谈", "时间双方商定"],
+      "attributionReason": "“联系老师预约访谈”是一个自然可完成动作，时间待商定歧义已保留；冻结 expected 把联系与预约强拆并预建未排期 Event。",
+      "userActionImpact": "NONE"
+    },
+    {
+      "caseId": "e2-holdout-33",
+      "primaryCategory": "FACT_PRESENT_PLANNING_WRONG",
+      "secondaryCategories": ["TASK_MISSING", "REASONABLE_EQUIVALENT_STRUCTURE", "EVALUATION_MISMATCH"],
+      "sourceEvidence": ["回复是否参加", "名单发布时间暂未确定"],
+      "attributionReason": "时间与依赖歧义完整且 Repair 没有伤害，但“回复”被错误改为“参加”。",
+      "userActionImpact": "MAJOR"
+    },
+    {
+      "caseId": "e2-holdout-34",
+      "primaryCategory": "EVALUATION_MISMATCH",
+      "secondaryCategories": ["REASONABLE_EQUIVALENT_STRUCTURE"],
+      "sourceEvidence": ["初稿大约月底交", "再确认具体日期"],
+      "attributionReason": "提交 Task、模糊截止和待确认歧义均正确；初稿作为 Task 对象而非独立 Material、rawText 省略“大约”不构成重大事实损失。",
+      "userActionImpact": "NONE"
+    },
+    {
+      "caseId": "e2-competition-03",
+      "primaryCategory": "EVALUATION_MISMATCH",
+      "secondaryCategories": ["WRONG_TIME_ROLE", "MILESTONE_ALIAS_ONLY"],
+      "sourceEvidence": ["报名截止8月19日", "报名需提交演讲稿"],
+      "attributionReason": "Task 标题、材料与日期完整；registration_deadline 与 expected submission_deadline 都有文本依据，额外准备 Milestone 不是独立原文阶段。",
+      "userActionImpact": "NONE"
+    },
+    {
+      "caseId": "e2-complex_notice-01",
+      "primaryCategory": "FACT_MISSING",
+      "secondaryCategories": ["TASK_OVER_MERGED", "MILESTONE_ALIAS_ONLY", "REASONABLE_EQUIVALENT_STRUCTURE"],
+      "sourceEvidence": ["组队并提交成员表", "提交调研报告PDF和原始访谈记录"],
+      "attributionReason": "报告与记录同批提交的合并合理，但“组队”独立动作未保留，只有成员表提交；Milestone 多为标题同义。",
+      "userActionImpact": "MAJOR"
+    },
+    {
+      "caseId": "e2-complex_notice-02",
+      "primaryCategory": "MISSING_AMBIGUITY",
+      "secondaryCategories": ["WRONG_TIME_ROLE", "TASK_OVER_MERGED", "MILESTONE_ALIAS_ONLY"],
+      "sourceEvidence": ["优秀团队须在9月3日晚7点参加线上交流", "填写报名信息"],
+      "attributionReason": "总结与照片同批上传合并合理，但“仅优秀团队”条件未保留，报名截止也被标为普通 task_deadline。",
+      "userActionImpact": "MAJOR"
+    },
+    {
+      "caseId": "e2-complex_notice-03",
+      "primaryCategory": "REASONABLE_EQUIVALENT_STRUCTURE",
+      "secondaryCategories": ["MILESTONE_ALIAS_ONLY", "EVALUATION_MISMATCH"],
+      "sourceEvidence": ["先汇总经费表", "成员9月5日前完成个人总结"],
+      "attributionReason": "四个明确行动、三组截止和材料关系全部保留；flat Task 与 expected subtask 只是一层层级偏好，Milestone 合并不损失顺序。",
+      "userActionImpact": "NONE"
+    },
+    {
+      "caseId": "e2-complex_notice-04",
+      "primaryCategory": "MATERIAL_TASK_CONFUSION",
+      "secondaryCategories": ["TASK_MISSING", "VALIDATOR_MISSED"],
+      "sourceEvidence": ["请自备志愿者马甲", "培训通过后"],
+      "attributionReason": "马甲作为 Material 被发现，但明确“自备”义务没有形成 Task 或关联；报名、培训、上岗 Event 均存在。",
+      "userActionImpact": "MAJOR"
+    },
+    {
+      "caseId": "e2-complex_notice-07",
+      "primaryCategory": "REASONABLE_EQUIVALENT_STRUCTURE",
+      "secondaryCategories": ["TASK_OVER_MERGED", "MILESTONE_ALIAS_ONLY", "EVALUATION_MISMATCH"],
+      "sourceEvidence": ["提交作品链接和授权书", "入围结果9月6日公布"],
+      "attributionReason": "同批提交两项材料合并合理；结果以 TimePoint 保留而未单设 Milestone，不损失用户事实。Validator 误报缺时点但 Repair 未应用。",
+      "userActionImpact": "NONE"
+    },
+    {
+      "caseId": "e2-complex_notice-09",
+      "primaryCategory": "REASONABLE_EQUIVALENT_STRUCTURE",
+      "secondaryCategories": ["TASK_OVER_MERGED", "MILESTONE_ALIAS_ONLY", "EVALUATION_MISMATCH"],
+      "sourceEvidence": ["学生上传实习鉴定表和周记", "学生只需负责第一步"],
+      "attributionReason": "同一学生上传动作合并两份材料正确；老师评分与学院归档仅作为无关联 TimePoint 保留，未错误创建用户 Task。",
+      "userActionImpact": "NONE"
+    },
+    {
+      "caseId": "e2-complex_notice-10",
+      "primaryCategory": "FACT_PRESENT_PLANNING_WRONG",
+      "secondaryCategories": ["TASK_MISSING", "WRONG_TIME_ROLE", "VALIDATOR_MISSED"],
+      "sourceEvidence": ["8月16日前报名", "8月25日至27日布置"],
+      "attributionReason": "报名被改成泛化“参加”，报名截止与布置区间的时间角色错误；其余方案提交、评比 Event 和时间均存在。",
+      "userActionImpact": "MAJOR"
+    },
+    {
+      "caseId": "e2-course-06",
+      "primaryCategory": "EVALUATION_MISMATCH",
+      "secondaryCategories": ["MILESTONE_ALIAS_ONLY", "REASONABLE_EQUIVALENT_STRUCTURE"],
+      "sourceEvidence": ["进行小组展示", "提前准备PPT"],
+      "attributionReason": "PPT Task、展示 Event、时间与材料完全正确；strict 仅因 Project 容器和未生成非必要 Milestone 判错。",
+      "userActionImpact": "NONE"
+    },
+    {
+      "caseId": "e2-course-08",
+      "primaryCategory": "TASK_OVER_MERGED",
+      "secondaryCategories": ["TASK_MISSING", "ROUTER_UNDER_ROUTED", "VALIDATOR_MISSED"],
+      "sourceEvidence": ["完成读书报告并在系统提交"],
+      "attributionReason": "只保留“提交”，明确且可独立完成的报告撰写/完成步骤被合并丢失。",
+      "userActionImpact": "MAJOR"
+    },
+    {
+      "caseId": "e2-event-05",
+      "primaryCategory": "EVALUATION_MISMATCH",
+      "secondaryCategories": ["REASONABLE_EQUIVALENT_STRUCTURE", "ROUTER_OVER_ROUTED"],
+      "sourceEvidence": ["参加团日活动"],
+      "attributionReason": "预测标题逐字来自原文；冻结 expected 额外要求“班级”导致 event missing+spurious 双报。",
+      "userActionImpact": "NONE"
+    },
+    {
+      "caseId": "e2-material-10",
+      "primaryCategory": "EVALUATION_MISMATCH",
+      "secondaryCategories": ["REASONABLE_EQUIVALENT_STRUCTURE"],
+      "sourceEvidence": ["12月3日前上传附件压缩包"],
+      "attributionReason": "任务、材料、命名和日期均正确；expected 同时用 null 日期和 needsConfirmation=false，且 strict Project 要求与单句通知不一致。",
+      "userActionImpact": "NONE"
+    },
+    {
+      "caseId": "e2-ocr_noise-10",
+      "primaryCategory": "FACT_PRESENT_PLANNING_WRONG",
+      "secondaryCategories": ["TASK_MISSING", "MATERIAL_TASK_CONFUSION", "WRONG_TIME_ROLE", "VALIDATOR_MISSED"],
+      "sourceEvidence": ["回 复确认函", "IO月2日l6:OO前"],
+      "attributionReason": "OCR 时间被安全识别并要求确认，但“回复”被改成“确认”，确认函 Material 也未建立，截止角色不一致。",
+      "userActionImpact": "MAJOR"
+    },
+    {
+      "caseId": "e2-vague_time-01",
+      "primaryCategory": "EVALUATION_MISMATCH",
+      "secondaryCategories": ["REASONABLE_EQUIVALENT_STRUCTURE"],
+      "sourceEvidence": ["本月底前提交实践总结"],
+      "attributionReason": "预测正确保留提交实践总结与模糊时间；冻结 expected 把时间短语“月底”当作 Task 对象，造成 task/time 假错。",
+      "userActionImpact": "NONE"
+    },
+    {
+      "caseId": "e2-vague_time-02",
+      "primaryCategory": "EVALUATION_MISMATCH",
+      "secondaryCategories": ["REASONABLE_EQUIVALENT_STRUCTURE"],
+      "sourceEvidence": ["开学前准备好课程教材"],
+      "attributionReason": "预测正确使用“课程教材”为对象并保留待确认时间；expected 错把“开学前”作为对象。",
+      "userActionImpact": "NONE"
+    },
+    {
+      "caseId": "e2-vague_time-03",
+      "primaryCategory": "EVALUATION_MISMATCH",
+      "secondaryCategories": ["REASONABLE_EQUIVALENT_STRUCTURE"],
+      "sourceEvidence": ["答辩当天下午带纸质论文到场"],
+      "attributionReason": "预测正确把纸质论文作为携带对象并保留模糊时间；expected 错把时间短语作为对象。",
+      "userActionImpact": "NONE"
+    },
+    {
+      "caseId": "e2-vague_time-04",
+      "primaryCategory": "EVALUATION_MISMATCH",
+      "secondaryCategories": ["WRONG_TIME_ROLE", "REASONABLE_EQUIVALENT_STRUCTURE"],
+      "sourceEvidence": ["完成报名", "截止时间另行通知"],
+      "attributionReason": "预测正确以“报名”为对象并使用 registration_deadline；expected 错把“另行通知”作为对象并要求通用 task_deadline。",
+      "userActionImpact": "NONE"
+    },
+    {
+      "caseId": "e2-vague_time-05",
+      "primaryCategory": "FACT_MISSING",
+      "secondaryCategories": ["EVENT_TASK_CONFUSION", "MISSING_AMBIGUITY", "VALIDATOR_MISSED"],
+      "sourceEvidence": ["预计9月下旬进行项目汇报"],
+      "attributionReason": "项目汇报 Event、9月下旬 TimePoint 与预计/具体时间歧义全部缺失。",
+      "userActionImpact": "MAJOR"
+    },
+    {
+      "caseId": "e2-vague_time-06",
+      "primaryCategory": "EVALUATION_MISMATCH",
+      "secondaryCategories": ["WRONG_TIME_ROLE", "REASONABLE_EQUIVALENT_STRUCTURE"],
+      "sourceEvidence": ["近期提交个人信息表"],
+      "attributionReason": "预测正确以个人信息表为对象、保留近期模糊截止；expected 错把“近期”作为对象，submission/task 角色差异不影响行动。",
+      "userActionImpact": "NONE"
+    },
+    {
+      "caseId": "e2-vague_time-10",
+      "primaryCategory": "FACT_PRESENT_PLANNING_WRONG",
+      "secondaryCategories": ["TASK_MISSING", "VALIDATOR_MISSED", "EVALUATION_MISMATCH"],
+      "sourceEvidence": ["反馈是否参加", "这个周末前"],
+      "attributionReason": "模糊截止正确，但明确“反馈/回复”义务被改成“参加”，并添加无必要的 Project 歧义。",
+      "userActionImpact": "MAJOR"
+    }
+  ]
+}
