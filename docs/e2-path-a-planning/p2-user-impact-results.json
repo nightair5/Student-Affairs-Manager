@@ -1,0 +1,135 @@
+{
+  "schemaVersion": "e2.7-p2-user-impact-results-1.0.0",
+  "status": "ROUND1_USER_IMPACT_ONLY_INCOMPLETE_FOR_P2_GATE",
+  "scorer": {
+    "strict": "recognition-e2-scoring@70dd976-rescored",
+    "userImpact": "e2.7-user-impact-major-1.0.0-independent-blind"
+  },
+  "provenance": {
+    "packetSha256": "cd8272da8df707fdc1252f08e5ebf31f33ecf7a564efd2901c64840085909021",
+    "labelsSha256": "976fd792bec88984ccd87a25dc1f2e1f0b7080378064704f1532723f2d02ad12",
+    "revealKeySha256": "2745e79a3c8d75eaaabbdc3171af8846b432b8671f6b91f33b7682f347bda746",
+    "labelsFrozenCommit": "4fa2106392a9a11e1b443fd3ebdcf0f3b7fdf380",
+    "labelsFrozenCommitTime": "2026-08-11T17:29:39+08:00",
+    "revealedAt": "2026-08-11T09:29:55.880Z",
+    "chronologyValid": true
+  },
+  "totals": {
+    "sampleCount": 72,
+    "determinateCount": 71,
+    "majorCount": 8,
+    "notMajorCount": 63,
+    "insufficientCount": 1,
+    "primaryRateExcludingInsufficient": 0.11267605633802817,
+    "lowerBoundRate": 0.1111111111111111,
+    "upperBoundRate": 0.125,
+    "strictMajorCount": 40,
+    "strictMajorRate": 0.5555555555555556,
+    "strictSevereCount": 0,
+    "confusion": {
+      "truePositive": 8,
+      "falsePositive": 31,
+      "falseNegative": 0,
+      "trueNegative": 32
+    },
+    "strictAsUserImpactPrecision": 0.20512820512820512,
+    "strictAsUserImpactRecall": 1
+  },
+  "bySourceSet": {
+    "golden": {
+      "sampleCount": 24,
+      "determinateCount": 23,
+      "majorCount": 1,
+      "notMajorCount": 22,
+      "insufficientCount": 1,
+      "primaryRateExcludingInsufficient": 0.043478260869565216,
+      "lowerBoundRate": 0.041666666666666664,
+      "upperBoundRate": 0.08333333333333333,
+      "strictMajorCount": 9,
+      "strictMajorRate": 0.375
+    },
+    "exposed_holdout": {
+      "sampleCount": 24,
+      "determinateCount": 24,
+      "majorCount": 3,
+      "notMajorCount": 21,
+      "insufficientCount": 0,
+      "primaryRateExcludingInsufficient": 0.125,
+      "lowerBoundRate": 0.125,
+      "upperBoundRate": 0.125,
+      "strictMajorCount": 17,
+      "strictMajorRate": 0.7083333333333334
+    },
+    "development": {
+      "sampleCount": 24,
+      "determinateCount": 24,
+      "majorCount": 4,
+      "notMajorCount": 20,
+      "insufficientCount": 0,
+      "primaryRateExcludingInsufficient": 0.16666666666666666,
+      "lowerBoundRate": 0.16666666666666666,
+      "upperBoundRate": 0.16666666666666666,
+      "strictMajorCount": 14,
+      "strictMajorRate": 0.5833333333333334
+    }
+  },
+  "userImpactReasonCounts": {
+    "cosmetic_wording_only": 2,
+    "equivalent_task_merge_or_split": 6,
+    "false_precision": 1,
+    "informational_event_without_action_invention": 10,
+    "insufficient_information": 1,
+    "missing_required_action": 1,
+    "missing_required_event": 2,
+    "no_major_user_change_required": 45,
+    "unsupported_evidence_affecting_trust": 1,
+    "wrong_action_predicate": 2,
+    "wrong_applicability_condition": 2,
+    "wrong_time_value_affecting_schedule": 1
+  },
+  "disagreements": {
+    "strictMajorHumanNotMajor": [
+      "E2P2-001",
+      "E2P2-002",
+      "E2P2-003",
+      "E2P2-007",
+      "E2P2-008",
+      "E2P2-009",
+      "E2P2-011",
+      "E2P2-014",
+      "E2P2-019",
+      "E2P2-021",
+      "E2P2-022",
+      "E2P2-023",
+      "E2P2-024",
+      "E2P2-027",
+      "E2P2-031",
+      "E2P2-032",
+      "E2P2-036",
+      "E2P2-037",
+      "E2P2-042",
+      "E2P2-045",
+      "E2P2-047",
+      "E2P2-050",
+      "E2P2-055",
+      "E2P2-056",
+      "E2P2-057",
+      "E2P2-059",
+      "E2P2-060",
+      "E2P2-064",
+      "E2P2-065",
+      "E2P2-069",
+      "E2P2-072"
+    ],
+    "strictNotMajorHumanMajor": [],
+    "insufficient": [
+      "E2P2-051"
+    ]
+  },
+  "limitations": [
+    "The 72 sources come from already exposed diagnostic datasets and are not a new Blind Set.",
+    "The reviewer was blind to expected answers and strict scores; the primary rate excludes INSUFFICIENT_INFORMATION and bounds are also reported.",
+    "Legacy cache generation-time source/input/result hash binding is unavailable; E2.7 binds frozen cache files and recomputed per-observation hashes after generation.",
+    "Round 1 labels did not include all separately required P2 dimensions (Planning Error, Fact Missing, Reasonable Equivalent, Time Role, Event/Task, Material/Task, Ambiguity Missing), so this round cannot satisfy the complete P2 gate."
+  ]
+}
