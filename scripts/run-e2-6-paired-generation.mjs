@@ -33,7 +33,8 @@ async function readJson(file) {
 }
 
 async function curlJson(url, { method = 'GET', token = '', origin = '', body = null } = {}) {
-  const args = ['-sS', '--max-time', '300', '--write-out', '\n%{http_code}', '--request', method]
+  const statusMarker = '__E2_HTTP_STATUS__'
+  const args = ['-sS', '--max-time', '300', '--write-out', `${statusMarker}%{http_code}`, '--request', method]
   if (token) args.push('--header', `Authorization: Bearer ${token}`)
   if (origin) args.push('--header', `Origin: ${origin}`)
   if (body !== null) args.push('--header', 'Content-Type: application/json', '--data-binary', JSON.stringify(body))
@@ -56,9 +57,9 @@ async function curlJson(url, { method = 'GET', token = '', origin = '', body = n
       throw new Error(`CURL_TRANSPORT_FAILURE:${code}${stderr ? `:${stderr}` : ''}:attempts=${transportAttempts}`)
     }
   }
-  const separator = stdout.lastIndexOf('\n')
+  const separator = stdout.lastIndexOf(statusMarker)
   if (separator < 0) throw new Error('CURL_STATUS_MISSING')
-  const status = Number(stdout.slice(separator + 1).trim())
+  const status = Number(stdout.slice(separator + statusMarker.length).trim())
   const text = stdout.slice(0, separator)
   if (!Number.isInteger(status)) throw new Error('CURL_STATUS_INVALID')
   return { status, payload: JSON.parse(text), transportAttempts }
