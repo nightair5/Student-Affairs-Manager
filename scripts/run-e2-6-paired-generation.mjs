@@ -1,7 +1,9 @@
 import { createHash } from 'node:crypto'
+import { execFile } from 'node:child_process'
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import process from 'node:process'
+import { promisify } from 'node:util'
 
 const ROOT = process.cwd()
 const EXPERIMENT_PATH = '/api/experiments/e2-factledger/generate'
@@ -11,6 +13,7 @@ const EXPECTED_EXPERIMENT_VERSION = 'e2.6-paired-ab-1.0.0'
 const EXPECTED_PATH_A_PROMPT = 'recognition-2.4.1'
 const EXPECTED_FACT_PROMPT = 'fact-ledger-extraction-1.0.0'
 const EXPECTED_PLANNER_PROMPT = 'fact-ledger-planner-1.0.0'
+const execFileAsync = promisify(execFile)
 
 function option(name, fallback = '') {
   const prefix = `--${name}=`
@@ -27,6 +30,21 @@ function delay(ms) {
 
 async function readJson(file) {
   return JSON.parse(await readFile(file, 'utf8'))
+}
+
+async function curlJson(url, { method = 'GET', token = '', origin = '', body = null } = {}) {
+  const args = ['-sS', '--max-time', '300', '--write-out', '\n%{http_code}', '--request', method]
+  if (token) args.push('--header', `Authorization: Bearer ${token}`)
+  if (origin) args.push('--header', `Origin: ${origin}`)
+  if (body !== null) args.push('--header', 'Content-Type: application/json', '--data-binary', JSON.stringify(body))
+  args.push(url)
+  const { stdout } = await execFileAsync('curl.exe', args, { encoding: 'utf8', maxBuffer: 20 * 1024 * 1024, timeout: 310_000 })
+  const separator = stdout.lastIndexOf('\n')
+  if (separator < 0) throw new Error('CURL_STATUS_MISSING')
+  const status = Number(stdout.slice(separator + 1).trim())
+  const text = stdout.slice(0, separator)
+  if (!Number.isInteger(status)) throw new Error('CURL_STATUS_INVALID')
+  return { status, payload: JSON.parse(text) }
 }
 
 function scheduleFor(cases, seed) {
@@ -97,9 +115,9 @@ async function main() {
   if (checkpoint && (checkpoint.manifestSha256 !== manifestSha256 || checkpoint.scheduleSha256 !== scheduleSha256 || checkpoint.endpoint !== endpoint || checkpoint.seed !== seed)) throw new Error('Checkpoint provenance drift')
   const observations = checkpoint?.observations ?? []
   const keyed = new Map(observations.map((entry) => [`${entry.caseId}:${entry.path}`, entry]))
-  const statusResponse = await fetch(`${endpoint}${STATUS_PATH}`)
-  const status = await statusResponse.json().catch(() => ({}))
-  if (!statusResponse.ok || status.enabled !== true || status.configured !== true || status.protected !== true || status.model !== EXPECTED_MODEL || status.experimentVersion !== EXPECTED_EXPERIMENT_VERSION) throw new Error(`Preview status not ready: ${JSON.stringify(status)}`)
+  const statusResponse = await curlJson(`${endpoint}${STATUS_PATH}`)
+  const status = statusResponse.payload
+  if (statusResponse.status !== 200 || status.enabled !== true || status.configured !== true || status.protected !== true || status.model !== EXPECTED_MODEL || status.experimentVersion !== EXPECTED_EXPERIMENT_VERSION) throw new Error(`Preview status not ready: ${JSON.stringify(status)}`)
   const byCaseId = new Map(manifest.cases.map((entry) => [entry.caseId, entry]))
   for (const scheduled of schedule) {
     const key = `${scheduled.caseId}:${scheduled.path}`
@@ -109,17 +127,14 @@ async function main() {
     const startedAt = Date.now()
     let observation
     try {
-      const response = await fetch(`${endpoint}${EXPERIMENT_PATH}`, {
+      const response = await curlJson(`${endpoint}${EXPERIMENT_PATH}`, {
         method: 'POST',
-        headers: {
-          authorization: `Bearer ${token}`,
-          'content-type': 'application/json',
-          origin: new URL(endpoint).origin,
-        },
-        body: JSON.stringify(requestBody),
+        token,
+        origin: new URL(endpoint).origin,
+        body: requestBody,
       })
-      const payload = await response.json().catch(() => ({}))
-      if (!response.ok) {
+      const payload = response.payload
+      if (response.status < 200 || response.status >= 300) {
         observation = {
           caseId: fixture.caseId,
           group: fixture.group,
@@ -162,6 +177,7 @@ async function main() {
       schemaVersion: 'e2.6-paired-raw-1.0.0',
       label,
       endpoint,
+      transport: 'curl-no-retry',
       seed,
       model: EXPECTED_MODEL,
       manifestSha256,
