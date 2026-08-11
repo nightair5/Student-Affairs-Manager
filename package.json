@@ -25,7 +25,8 @@
     "eval:recognition:e2:factledger:d5": "node scripts/summarize-factledger-d5.mjs",
     "eval:recognition:e2:factledger:d6": "node scripts/audit-factledger-d6.mjs",
     "eval:recognition:e2:factledger:e2.6:prepare": "node scripts/prepare-e2-6-inputs.mjs",
-    "eval:recognition:e2:factledger:e2.6:generate": "node scripts/run-e2-6-paired-generation.mjs"
+    "eval:recognition:e2:factledger:e2.6:generate": "node scripts/run-e2-6-paired-generation.mjs",
+    "eval:recognition:e2:factledger:e2.6:score": "node scripts/score-e2-6-paired.mjs"
   },
   "dependencies": {
     "lucide-react": "^0.468.0",

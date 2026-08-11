@@ -1,0 +1,252 @@
+{
+  "schemaVersion": "e2.6-paired-results-1.0.0",
+  "status": "SCORED_INTENT_TO_TREAT_WITH_PARTIAL_OUTPUTS",
+  "conclusion": "FACTLEDGER NOT SUPPORTED",
+  "sampleCount": 24,
+  "completePairCount": 20,
+  "evaluationType": "exposed diagnostic; strict scorer; failed invocations included as severe/major",
+  "raw": {
+    "label": "e2-6-paired-c35429c-20260811",
+    "sha256": "60b959d4bb7aa5a8079e5f0253ec45b03743618621b74fcd3669d42c6b5e835c",
+    "manifestSha256": "77e7fbac95ac1614326de41eadbfec656058f5fe29a99fa283a4f2449036bf89",
+    "scheduleSha256": "ce7fd2cbf855e9958615db7123be12bc3d93b8132b654e0bcbb6167f3274aa51",
+    "generationExpectedDataLoaded": false
+  },
+  "versions": {
+    "model": "deepseek-v4-flash",
+    "experiment": "e2.6-paired-ab-1.2.0",
+    "pathA": "recognition-2.4.1",
+    "factExtraction": "fact-ledger-extraction-1.2.0",
+    "planner": "fact-ledger-planner-1.0.0"
+  },
+  "pathA": {
+    "invocationCount": 24,
+    "completedOutputCount": 23,
+    "failedOutputCount": 1,
+    "failureCodes": [
+      {
+        "code": "CURL_TRANSPORT_FAILURE:35",
+        "count": 1
+      }
+    ],
+    "factRecall": {
+      "value": 0.820627802690583,
+      "matched": 183,
+      "expected": 223,
+      "definition": "final-output proxy over Task+Material+detected TimePoint+Event+Ambiguity fact units"
+    },
+    "metrics": {
+      "taskPrecision": 0.8604651162790697,
+      "taskRecall": 0.6491228070175439,
+      "materialPrecision": 0.9795918367346939,
+      "materialRecall": 0.9411764705882353,
+      "timeRoleAccuracy": 0.8082191780821918,
+      "timeValueAccuracy": 0.7671232876712328,
+      "milestonePrecision": 0.525,
+      "milestoneRecall": 0.40384615384615385,
+      "eventAccuracy": 0.9523809523809523,
+      "ambiguityPrecision": 0.7894736842105263,
+      "ambiguityRecall": 0.6521739130434783,
+      "evidenceCoverage": 0.9784172661870504,
+      "evidenceValidity": 1,
+      "strictMajorCorrectionRate": 0.8333333333333334,
+      "severeErrorRate": 0.041666666666666664,
+      "invalidOutputRate": 0,
+      "requestFailureRate": 0.041666666666666664
+    },
+    "latencyMs": {
+      "mean": 9596.916666666666,
+      "p50": 9296,
+      "p95": 12690
+    },
+    "tokenUsage": {
+      "observedCount": 23,
+      "missingCount": 1,
+      "total": {
+        "input": 54678,
+        "output": 50660
+      },
+      "meanPerInvocation": {
+        "input": 2377.304347826087,
+        "output": 2202.608695652174
+      }
+    }
+  },
+  "pathB": {
+    "invocationCount": 24,
+    "completedOutputCount": 20,
+    "failedOutputCount": 4,
+    "failureCodes": [
+      {
+        "code": "PREVIEW_HTTP_422:FACT_LEDGER_VALIDATION_FAILED",
+        "count": 2
+      },
+      {
+        "code": "CURL_TRANSPORT_FAILURE:35",
+        "count": 2
+      }
+    ],
+    "factRecall": {
+      "value": 0.31390134529147984,
+      "matched": 70,
+      "expected": 223,
+      "definition": "final-output proxy over Task+Material+detected TimePoint+Event+Ambiguity fact units"
+    },
+    "metrics": {
+      "taskPrecision": 0.8571428571428571,
+      "taskRecall": 0.21052631578947367,
+      "materialPrecision": 0.8666666666666667,
+      "materialRecall": 0.7647058823529411,
+      "timeRoleAccuracy": 0,
+      "timeValueAccuracy": 0,
+      "milestonePrecision": 0.5,
+      "milestoneRecall": 0.5192307692307693,
+      "eventAccuracy": 0.8636363636363636,
+      "ambiguityPrecision": 1,
+      "ambiguityRecall": 0,
+      "evidenceCoverage": 0.8489208633093526,
+      "evidenceValidity": 1,
+      "strictMajorCorrectionRate": 1,
+      "severeErrorRate": 0.16666666666666666,
+      "invalidOutputRate": 0.08333333333333333,
+      "requestFailureRate": 0.08333333333333333
+    },
+    "latencyMs": {
+      "mean": 10252.958333333334,
+      "p50": 10119,
+      "p95": 13297
+    },
+    "tokenUsage": {
+      "observedCount": 22,
+      "missingCount": 2,
+      "total": {
+        "input": 45386,
+        "output": 48477
+      },
+      "meanPerInvocation": {
+        "input": 2063,
+        "output": 2203.5
+      }
+    },
+    "factLedgerExtractionDiagnostic": {
+      "evaluationType": "post-generation read-only projection of validated Ledger facts through the frozen scorer; failures count as empty ledgers; not the Path B final output",
+      "factRecall": {
+        "value": 0.6995515695067265,
+        "matched": 156,
+        "expected": 223,
+        "definition": "final-output proxy over Task+Material+detected TimePoint+Event+Ambiguity fact units"
+      },
+      "metrics": {
+        "taskPrecision": 0.6607142857142857,
+        "taskRecall": 0.6491228070175439,
+        "materialPrecision": 0.9512195121951219,
+        "materialRecall": 0.7647058823529411,
+        "timeRoleAccuracy": 0.7361111111111112,
+        "timeValueAccuracy": 0.75,
+        "milestonePrecision": 1,
+        "milestoneRecall": 0,
+        "eventAccuracy": 0.6363636363636364,
+        "ambiguityPrecision": 0.7272727272727273,
+        "ambiguityRecall": 0.34782608695652173,
+        "evidenceCoverage": 0.8489208633093526,
+        "evidenceValidity": 1,
+        "strictMajorCorrectionRate": 0.9583333333333334,
+        "severeErrorRate": 0,
+        "invalidOutputRate": 0,
+        "requestFailureRate": 0
+      }
+    }
+  },
+  "deltaBMinusA": {
+    "factRecall": -0.5067264573991032,
+    "taskPrecision": -0.0033222591362126463,
+    "taskRecall": -0.4385964912280702,
+    "materialPrecision": -0.11292517006802716,
+    "materialRecall": -0.17647058823529416,
+    "timeRoleAccuracy": -0.8082191780821918,
+    "timeValueAccuracy": -0.7671232876712328,
+    "milestonePrecision": -0.025000000000000022,
+    "milestoneRecall": 0.11538461538461542,
+    "eventAccuracy": -0.08874458874458868,
+    "ambiguityPrecision": 0.21052631578947367,
+    "ambiguityRecall": -0.6521739130434783,
+    "evidenceCoverage": -0.1294964028776978,
+    "evidenceValidity": 0,
+    "strictMajorCorrectionRate": 0.16666666666666663,
+    "severeErrorRate": 0.125,
+    "invalidOutputRate": 0.08333333333333333,
+    "requestFailureRate": 0.041666666666666664,
+    "latencyMeanMs": 656.0416666666679,
+    "observedMeanInputTokens": -314.304347826087,
+    "observedMeanOutputTokens": 0.8913043478260079
+  },
+  "humanImpact": {
+    "status": "COMPLETE_PATH_BLINDED",
+    "labelsSha256": "65929eda0ef3ec0bb60155803681997d0741611863baa51b7848a8b547718dda",
+    "definitions": {
+      "planningError": "Source facts are represented or inferable in the generated structure, but task, milestone, time-role, event, or relationship organization needs correction.",
+      "userImpactMajor": "A user must add, remove, or materially reclassify an actionable obligation, required material, consequential time role/value, or event/task distinction. Equivalent grouping alone is not major."
+    },
+    "planningError": {
+      "pathA": {
+        "count": 6,
+        "total": 24,
+        "rate": 0.25
+      },
+      "pathB": {
+        "count": 20,
+        "total": 24,
+        "rate": 0.8333333333333334
+      },
+      "deltaBMinusA": 0.5833333333333334,
+      "pairedExactMcNemar": {
+        "improved": 1,
+        "worsened": 15,
+        "discordant": 16,
+        "twoSidedPValue": 0.000518798828125
+      }
+    },
+    "planningOrGenerationFailure": {
+      "A": {
+        "count": 7,
+        "total": 24,
+        "rate": 0.2916666666666667
+      },
+      "B": {
+        "count": 24,
+        "total": 24,
+        "rate": 1
+      },
+      "deltaBMinusA": 0.7083333333333333
+    },
+    "userImpactMajorCorrection": {
+      "pathA": {
+        "count": 3,
+        "total": 24,
+        "rate": 0.125
+      },
+      "pathB": {
+        "count": 24,
+        "total": 24,
+        "rate": 1
+      },
+      "deltaBMinusA": 0.875,
+      "pairedExactMcNemar": {
+        "improved": 0,
+        "worsened": 21,
+        "discordant": 21,
+        "twoSidedPValue": 9.5367431640625e-7
+      }
+    }
+  },
+  "thresholdDecision": {
+    "status": "FAIL",
+    "gates": {
+      "primaryGain": false,
+      "taskPrecisionDeltaAtLeastMinusThreePoints": true,
+      "evidenceCoverageAtLeast95Percent": false,
+      "severeErrorDoesNotIncrease": false,
+      "planningErrorActuallyDecreases": false
+    }
+  }
+}

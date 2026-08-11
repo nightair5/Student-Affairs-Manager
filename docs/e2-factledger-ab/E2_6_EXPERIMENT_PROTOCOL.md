@@ -59,7 +59,9 @@ Fact Recall is a declared final-output proxy because Path A has no intermediate 
 
 Planning Error and User-impact Major Correction require a post-generation, path-blinded adjudication. Planning Error means relevant source facts are present in the output evidence/facts but their Task, Milestone, Time role, Event or relationship organization requires correction. User-impact Major means a user must add, remove or materially reclassify an actionable obligation, required material, consequential time role/value, or event/task distinction. Reasonable equivalent task grouping alone is not major. Strict Major remains the unchanged scorer result.
 
-Paired differences are reported with case-level counts and a deterministic paired bootstrap interval where applicable. With only 24 exposed cases, intervals are descriptive and do not convert the experiment into Blind evidence.
+Path-blinded binary adjudication differences are reported with paired discordance counts and a two-sided exact McNemar test. With only 24 exposed cases, the test is descriptive and does not convert the experiment into Blind evidence.
+
+After the primary Path B output is scored, the validated intermediate Ledger is projected read-only into the same frozen scorer to localize extraction-versus-planning loss. This diagnostic is not substituted for the Path B final-output score and cannot satisfy the architecture gate by itself.
 
 ## Decision rule
 

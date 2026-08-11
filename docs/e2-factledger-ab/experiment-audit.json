@@ -1,0 +1,149 @@
+{
+  "audit_skill": "experiment-audit",
+  "verdict": "WARN",
+  "reason_code": "unprovable_blind_chronology_invalid_run_start_and_live_production_unverified",
+  "summary": "The end-to-end conclusion, corrected intermediate-Ledger diagnostic, and current report qualifications are verified. Only inherent key-opening chronology, invalid run-start timestamp, and unavailable live Production-state verification remain warnings.",
+  "audited_snapshot": {
+    "branch": "codex/e2-factledger-ab-preview",
+    "head": "c35429c",
+    "working_tree_had_uncommitted_experiment_artifacts": true
+  },
+  "audited_input_hashes": {
+    ".evaluation-cache/e2-6/input-manifest.json": "sha256:77e7fbac95ac1614326de41eadbfec656058f5fe29a99fa283a4f2449036bf89",
+    ".evaluation-cache/e2-6/e2-6-paired-c35429c-20260811-raw.json": "sha256:60b959d4bb7aa5a8079e5f0253ec45b03743618621b74fcd3669d42c6b5e835c",
+    ".evaluation-cache/e2-6/e2-6-paired-c35429c-20260811-adjudication-labels.json": "sha256:65929eda0ef3ec0bb60155803681997d0741611863baa51b7848a8b547718dda",
+    "docs/e2-factledger/d5-complex-selection.json": "sha256:9c9275e42e872899602c005d4d69fd378c8592db5cac553b809438c73970416e",
+    "docs/e2-factledger-ab/e2-6-results.json": "sha256:bee234c2b283883027669e2d2b9e999245870efba78a63690266fd75efcaa617",
+    "docs/e2-factledger-ab/E2_6_PAIRED_AB_REPORT.md": "sha256:08f279ec551b724b409afd7b2c5e07d3bd372ad7a23790c0429bb6a443e28d99",
+    "scripts/score-e2-6-paired.mjs": "sha256:7f9866047c3f0b7ea5ca4425c1d1bbadcd8cca3300a2c73148a055b0aac31e9a",
+    "src/recognition/e2/scoring.ts": "sha256:fe3e2c211d8ed13f75913fad3131d449c4f7bf243c43c6e5fdedbd83b485ec82",
+    "src/recognition/e2/goldenDataset.ts": "sha256:661b49fc0032932641137fc13af6dcb8e6fba6833c40538ba56e0b7a2a8ae1ec",
+    "src/recognition/e2/holdoutDataset.ts": "sha256:cfd26f68bf1e655e4c046c497da2374d85343a76f61670729743ad01d562ec4c",
+    "src/recognition/e2/generalizationDataset.ts": "sha256:d488d6ce9c901497566eb657199b1600c3e81661a4df976be877d44ef3daa89c"
+  },
+  "trace_path": "docs/e2-factledger-ab/EXPERIMENT_AUDIT.md#evidence-trace",
+  "agent_id": "/root/e2_6_independent_audit",
+  "verdict_id": "e2-6-audit-2026-08-11-c35429c",
+  "executor_model": "codex-gpt-5-family",
+  "executor_family": "openai",
+  "reviewer_model": "codex-gpt-5-family",
+  "reviewer_family": "openai",
+  "reviewer_reasoning": "inherited",
+  "review_independence": "same-family",
+  "acceptance_status": "provisional",
+  "generated_at": "2026-08-11T08:15:11.4730126Z",
+  "date": "2026-08-11",
+  "auditor": "fresh-codex-same-family-read-only",
+  "overall_verdict": "warn",
+  "integrity_status": "warn",
+  "checks": {
+    "gt_provenance": {
+      "status": "pass",
+      "details": "Frozen dataset expected records are loaded only by scoring; the generation manifest is source-only and contains no expected-answer keys."
+    },
+    "score_normalization": {
+      "status": "pass",
+      "details": "Primary metrics are micro counts against dataset expected records; no prediction-derived normalization denominator was found."
+    },
+    "result_existence": {
+      "status": "warn",
+      "details": "All 48 schedule cells and candidate raw/results files exist and primary arithmetic matches. The report now accurately describes failed-cell metadata and human masking. The recorded run-start time remains invalid and exact key-opening chronology is unprovable."
+    },
+    "dead_code": {
+      "status": "pass",
+      "details": "Primary scoring is called, and the corrected FactLedger ambiguity projection uses targetFactIds and message and reproduces the updated diagnostic values."
+    },
+    "scope": {
+      "status": "pass_with_limitations",
+      "details": "The report correctly limits claims to one exposed 24-case diagnostic with 20 complete pairs; intent-to-treat and complete-pair sensitivity both reject Path B."
+    },
+    "eval_type": [
+      "real_gt",
+      "human_eval_provisional",
+      "diagnostic_proxy"
+    ],
+    "generation_firewall": {
+      "status": "pass",
+      "details": "Generation imports only the source-only manifest; expected answers enter after raw generation in the scorer."
+    },
+    "paired_execution": {
+      "status": "pass",
+      "details": "48 unique interleaved A/B cells; 43 successes verified against model, parameter, input, prompt, raw-output, Ledger, result, and version hashes."
+    },
+    "no_mock_fallback": {
+      "status": "pass",
+      "details": "No mock/fallback provider or cache-substitution marker was found; failures are retained rather than replaced."
+    },
+    "preview_isolation": {
+      "status": "warn",
+      "details": "Config/tests prove default-off, Preview-on, no Preview routes, and bearer/server-secret checks. The report now correctly distinguishes code deployment 4f320b6f from later secret-change deployment 6af56989; live default/Production deployment listing failed twice due network fetch."
+    },
+    "scope_boundaries": {
+      "status": "pass",
+      "details": "No baseline diff in datasets/scorer or protected Workspace/Repository/Migration/DomainCommitPlan paths; no E3/E4 diff found."
+    },
+    "resolved_findings": {
+      "W1": {
+        "status": "resolved",
+        "details": "FactLedger ambiguity projection now maps targetFactIds and message; updated diagnostics independently match 72.73% precision, 34.78% recall, and 69.96% Fact Recall proxy."
+      }
+    }
+  },
+  "independent_recomputation": {
+    "primary_metrics_match_report": true,
+    "human_counts_and_p_values_match_report": true,
+    "path_a": {
+      "task_precision": 0.8604651162790697,
+      "task_recall": 0.6491228070175439,
+      "evidence_coverage": 0.9784172661870504,
+      "strict_major_correction": 0.8333333333333334,
+      "severe_error": 0.041666666666666664
+    },
+    "path_b": {
+      "task_precision": 0.8571428571428571,
+      "task_recall": 0.21052631578947367,
+      "evidence_coverage": 0.8489208633093526,
+      "strict_major_correction": 1,
+      "severe_error": 0.16666666666666666
+    },
+    "complete_pair_sensitivity": {
+      "sample_count": 20,
+      "path_a_task_recall": 0.7021276595744681,
+      "path_b_task_recall": 0.2553191489361702,
+      "path_a_time_role_accuracy": 0.8709677419354839,
+      "path_b_time_role_accuracy": 0,
+      "path_a_ambiguity_recall": 0.65,
+      "path_b_ambiguity_recall": 0
+    },
+    "corrected_ledger_projection": {
+      "ambiguities_in_successful_ledgers": 11,
+      "ambiguity_precision": 0.7272727272727273,
+      "ambiguity_recall": 0.34782608695652173,
+      "fact_recall_proxy": 0.6995515695067265,
+      "matched": 156,
+      "expected": 223
+    }
+  },
+  "claims": [
+    {
+      "id": "C1",
+      "claim": "FACTLEDGER NOT SUPPORTED",
+      "impact": "supported"
+    },
+    {
+      "id": "C2",
+      "claim": "Updated intermediate-Ledger ambiguity and Fact Recall values",
+      "impact": "supported"
+    },
+    {
+      "id": "C3",
+      "claim": "Human endpoints are path-masked corroboration whose blind independence cannot be proven",
+      "impact": "supported_with_inherent_chronology_limitation"
+    },
+    {
+      "id": "C4",
+      "claim": "Preview-only default-off code boundary",
+      "impact": "supported_by_config_and_tests_external_production_state_unverified"
+    }
+  ]
+}
