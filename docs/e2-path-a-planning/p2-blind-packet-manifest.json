@@ -1,0 +1,54 @@
+{
+  "schemaVersion": "e2.7-blind-packet-manifest-1.0.0",
+  "status": "PACKET_FROZEN_KEY_NOT_CREATED",
+  "selectionVersion": "e2.7-p2-source-hash-stratified-1.0.0",
+  "createdAt": "2026-08-11T09:18:54.051Z",
+  "packet": {
+    "ignoredPath": ".evaluation-cache/e2-7/p2-user-impact-packet.json",
+    "sha256": "cd8272da8df707fdc1252f08e5ebf31f33ecf7a564efd2901c64840085909021",
+    "sampleCount": 72,
+    "distribution": {
+      "golden": 24,
+      "exposed_holdout": 24,
+      "development": 24
+    },
+    "containsExpected": false,
+    "containsCaseId": false
+  },
+  "cacheProvenance": {
+    "golden": {
+      "file": "deepseek-production-golden-g8-regression-2-4-1.json",
+      "sha256": "b41145a89ea7ec170624285d396708c90dd6681d133b5e4c386a8ab438fc056c",
+      "rowCount": 110,
+      "completedCount": 109,
+      "selectedCount": 24,
+      "generationTimeBinding": "NOT_OBSERVABLE_IN_LEGACY_CACHE"
+    },
+    "exposed_holdout": {
+      "file": "deepseek-production-holdout-g8-regression-2-4-1.json",
+      "sha256": "15c14c0c709ebc0f4939a023d97af1575093b66f1fa2cb61ffbf8d7c1c83a545",
+      "rowCount": 40,
+      "completedCount": 40,
+      "selectedCount": 24,
+      "generationTimeBinding": "NOT_OBSERVABLE_IN_LEGACY_CACHE"
+    },
+    "development": {
+      "file": "deepseek-production-generalization-g8-after-2-4-1.json",
+      "sha256": "440524fcb27d07256df78ed41565170987c09069fd8b7979f5a51fa305d5a46c",
+      "rowCount": 108,
+      "completedCount": 108,
+      "selectedCount": 24,
+      "generationTimeBinding": "NOT_OBSERVABLE_IN_LEGACY_CACHE"
+    }
+  },
+  "chronology": {
+    "labelsStatus": "NOT_STARTED",
+    "labelsFrozenCommit": null,
+    "revealKeyStatus": "NOT_CREATED",
+    "revealKeyPath": "docs/e2-path-a-planning/p2-reveal-key.json"
+  },
+  "limitations": [
+    "Legacy recognition-2.4.1 caches do not contain generation-time source/input/result hashes.",
+    "Cache file hashes are frozen here; per-observation source/result hashes are calculated during E2.7 packet preparation."
+  ]
+}

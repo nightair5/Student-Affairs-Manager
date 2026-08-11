@@ -24,7 +24,10 @@
     "eval:recognition:e2": "node scripts/run-recognition-e2.mjs",
     "eval:recognition:e2:factledger": "node scripts/run-factledger-ab.mjs",
     "eval:recognition:e2:factledger:d5": "node scripts/summarize-factledger-d5.mjs",
-    "eval:recognition:e2:factledger:d6": "node scripts/audit-factledger-d6.mjs"
+    "eval:recognition:e2:factledger:d6": "node scripts/audit-factledger-d6.mjs",
+    "eval:recognition:e2:p2:prepare": "node scripts/prepare-e2-7-blind-adjudication.mjs",
+    "eval:recognition:e2:p2:verify": "node scripts/verify-e2-7-blind-adjudication.mjs",
+    "eval:recognition:e2:p2:reveal": "node scripts/reveal-e2-7-blind-adjudication.mjs"
   },
   "dependencies": {
     "lucide-react": "^0.468.0",

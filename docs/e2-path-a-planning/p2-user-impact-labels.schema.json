@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "e2.7-user-impact-labels-1.0.0",
+  "type": "object",
+  "required": ["schemaVersion", "packetSha256", "reviewer", "labels"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": "e2.7-user-impact-labels-1.0.0" },
+    "packetSha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "reviewer": {
+      "type": "object",
+      "required": ["reviewerId", "independence", "startedAt", "completedAt"],
+      "additionalProperties": false,
+      "properties": {
+        "reviewerId": { "type": "string", "minLength": 1 },
+        "independence": { "const": "NO_EXPECTED_NO_CASE_ID_NO_STRICT_SCORE_NO_REVEAL_KEY" },
+        "startedAt": { "type": "string", "format": "date-time" },
+        "completedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "labels": {
+      "type": "array",
+      "minItems": 60,
+      "items": {
+        "type": "object",
+        "required": ["observationId", "label", "reasons", "rationale"],
+        "additionalProperties": false,
+        "properties": {
+          "observationId": { "type": "string", "pattern": "^E2P2-[0-9]{3}$" },
+          "label": { "enum": ["MAJOR", "NOT_MAJOR", "INSUFFICIENT_INFORMATION"] },
+          "reasons": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "enum": [
+                "missing_required_action",
+                "wrong_action_predicate",
+                "wrong_actor",
+                "wrong_modality",
+                "wrong_applicability_condition",
+                "wrong_time_value_affecting_schedule",
+                "wrong_time_role_affecting_workflow",
+                "false_precision",
+                "missing_required_event",
+                "unsupported_evidence_affecting_trust",
+                "severe_or_safety_failure",
+                "equivalent_task_merge_or_split",
+                "title_alias_only",
+                "milestone_granularity_without_fact_loss",
+                "project_container_choice_without_action_loss",
+                "evidence_fragmentation_with_literal_coverage",
+                "informational_event_without_action_invention",
+                "cosmetic_wording_only",
+                "no_major_user_change_required",
+                "insufficient_information"
+              ]
+            }
+          },
+          "rationale": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  }
+}
