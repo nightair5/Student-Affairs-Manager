@@ -1,0 +1,68 @@
+{
+  "schemaVersion": "e2.7-path-a-baseline-1.0.0",
+  "generatedAt": "2026-08-11T09:04:54.3491503Z",
+  "branch": "codex/e2-path-a-planning-v2",
+  "commit": "70dd976e1de03d03e4e6fec8b6d7e872945eda27",
+  "rejectedFactLedger": {
+    "conclusion": "FACTLEDGER NOT SUPPORTED",
+    "tag": "v2-e2-factledger-rejected",
+    "taggedCommit": "f32053a794d0898cb737b02835449a2f0c03e4ff",
+    "previewCleanupCommit": "c9ad5e8",
+    "productionEligible": false
+  },
+  "pathA": {
+    "model": "deepseek-v4-flash",
+    "promptVersion": "recognition-2.4.1",
+    "schemaVersion": "2.0",
+    "pipelineVersion": "recognition-pipeline-2.2.1",
+    "validatorVersion": "recognition-quality-2.1.0",
+    "repairVersion": "recognition-repair-1.1.0",
+    "repairPatchVersion": "recognition-repair-patch-1.0.0",
+    "routerVersion": "recognition-router-1.1.0"
+  },
+  "datasetFreeze": {
+    "golden": {
+      "role": "exposed-regression",
+      "sampleCount": 110,
+      "sourceFile": "src/recognition/e2/goldenDataset.ts",
+      "canonicalLfSha256": "e6bf49d61e6e489bafea78e12ead6079d992c51211fe66c490d3fd87a2a0cd63"
+    },
+    "exposedHoldout": {
+      "role": "exposed-regression",
+      "sampleCount": 40,
+      "sourceFile": "src/recognition/e2/holdoutDataset.ts",
+      "canonicalLfSha256": "e5719bce8f70eaecc7743e98f3816f7ce543ca57f5e3cc0c2aab5c987c6181e3"
+    },
+    "generalizationDevelopment": {
+      "role": "exposed-development",
+      "sampleCount": 108,
+      "sourceFile": "src/recognition/e2/generalizationDataset.ts",
+      "canonicalLfSha256": "6919cd89e81521beaf993ebcd8b23a752c01bbc0f5aa4559e29ff25e0c5b2659"
+    },
+    "e26ComplexDiagnostic": {
+      "role": "exposed-diagnostic",
+      "sampleCount": 24,
+      "sourceFile": "docs/e2-factledger/d5-complex-selection.json",
+      "canonicalLfSha256": "9c9275e42e872899602c005d4d69fd378c8592db5cac553b809438c73970416e"
+    }
+  },
+  "baselineSourceHashes": {
+    "src/recognition/e2/scoring.ts": "031c029580d50308e4f108dfa9d50be0929b98f45ccef903c17761bf587f7a85",
+    "cloudflare/recognition-prompt.mjs": "c925f1dc27971e4fcaf7ad185b729f016fa7af966cd7992337d9eaa94c97e6fd",
+    "cloudflare/model-gateway.mjs": "335406e6f789aee5a209b36d165441ce976c8de17d5d2c634d7a523c17c47765",
+    "cloudflare/recognition-quality.mjs": "d03437cf8fe11ef23e78a431fefeb451de2a87c6e47118b1a822016562a11e29",
+    "cloudflare/recognition-repair.mjs": "d7ccd58eb8bff02d419a5bed382e2b8e6b074e66419bbfa5925316172ee4d46f",
+    "cloudflare/complexity-router.mjs": "00a5a459740e8f0f0be9aa1107cdf1614c7d8e4abbcd95c95df6a2f479dac5a8"
+  },
+  "preview": {
+    "url": "https://student-affairs-manager-preview.nightsdell.workers.dev",
+    "deploymentVersion": "a130fa30-a737-40f9-b7aa-2010e5420537",
+    "sourceCommit": "70dd976e1de03d03e4e6fec8b6d7e872945eda27",
+    "factLedgerEndpointPresent": false,
+    "factLedgerBearerSecretPresent": false,
+    "deepSeekConfigured": true,
+    "routes": []
+  },
+  "blindEligibility": false,
+  "productionDeploymentPerformed": false
+}
