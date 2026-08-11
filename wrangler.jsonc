@@ -31,6 +31,9 @@
       "name": "student-affairs-manager-preview",
       "workers_dev": true,
       "routes": [],
+      "vars": {
+        "E2_PATH_A_REPAIR_EXPERIMENT_ENABLED": "true"
+      },
       "assets": {
         "directory": "./dist",
         "binding": "ASSETS",

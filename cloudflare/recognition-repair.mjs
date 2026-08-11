@@ -1,6 +1,6 @@
 export const RECOGNITION_REPAIR_VERSION = 'recognition-repair-1.1.0'
 export const RECOGNITION_REPAIR_PATCH_VERSION = 'recognition-repair-patch-1.0.0'
-const REPAIRABLE_CODES = new Set(['MISSING_EVIDENCE', 'MISSING_TIMEPOINT', 'FALSE_PRECISION', 'MISSING_TIME_AMBIGUITY', 'MISSING_MATERIAL', 'MISSING_EVENT'])
+const REPAIRABLE_CODES = new Set(['MISSING_EVIDENCE', 'INVALID_EVIDENCE', 'MISSING_TIMEPOINT', 'FALSE_PRECISION', 'POSSIBLE_FALSE_PRECISION', 'MISSING_TIME_AMBIGUITY', 'MISSING_AMBIGUITY', 'MISSING_MATERIAL', 'MISSING_EVENT', 'EVENT_TASK_CONFUSION'])
 const PATCH_FIELDS = new Set(['contractVersion', 'issueCodes', 'evidence', 'materials', 'timePoints', 'events', 'ambiguities', 'taskReferenceUpdates'])
 const PATCH_ARRAY_FIELDS = ['issueCodes', 'evidence', 'materials', 'timePoints', 'events', 'ambiguities', 'taskReferenceUpdates']
 
@@ -31,7 +31,7 @@ function mergeUnique(base, candidate, key) { const keys = new Set(base.map(key))
 
 export function mergeRecognitionRepair(base, candidate, report, sourceContent) {
   const allowed = new Set(report.issues.filter((issue) => issue.repairable && REPAIRABLE_CODES.has(issue.code)).map((issue) => issue.code))
-  const evidence = allowed.has('MISSING_EVIDENCE') || allowed.has('MISSING_TIMEPOINT') || allowed.has('MISSING_MATERIAL') || allowed.has('MISSING_EVENT') ? mergeUnique(base.evidence, candidate.evidence.filter((item) => sourceContent.includes(item.quotedText || item.quote || '')), (item) => item.id) : base.evidence
+  const evidence = allowed.has('MISSING_EVIDENCE') || allowed.has('INVALID_EVIDENCE') || allowed.has('MISSING_TIMEPOINT') || allowed.has('MISSING_MATERIAL') || allowed.has('MISSING_EVENT') || allowed.has('EVENT_TASK_CONFUSION') ? mergeUnique(base.evidence, candidate.evidence.filter((item) => sourceContent.includes(item.quotedText || item.quote || '')), (item) => item.id) : base.evidence
   const evidenceIds = new Set(evidence.map((item) => item.id))
   const baseTaskMap = taskMap(base)
   const candidateTaskMap = taskMap(candidate)
@@ -40,10 +40,10 @@ export function mergeRecognitionRepair(base, candidate, report, sourceContent) {
   const materialIds = new Set(materials.map((item) => item.tempId))
   const safeCandidateTimes = candidate.timePoints.filter((item) => item.evidenceIds.some((id) => evidenceIds.has(id)) && item.relatedTaskTempIds.every((id) => validTaskIds.has(id)) && item.relatedMaterialTempIds.every((id) => materialIds.has(id)))
   let timePoints = allowed.has('MISSING_TIMEPOINT') ? mergeUnique(base.timePoints, safeCandidateTimes, (item) => item.rawText.replace(/\s/gu, '').toLowerCase()) : [...base.timePoints]
-  if (allowed.has('FALSE_PRECISION')) { const replacement = new Map(safeCandidateTimes.filter((item) => (item.precision === 'vague' || item.precision === 'relative') && item.normalizedValue === null && item.needsConfirmation).map((item) => [item.tempId, item])); timePoints = timePoints.map((item) => replacement.get(item.tempId) ?? item) }
+  if (allowed.has('FALSE_PRECISION') || allowed.has('POSSIBLE_FALSE_PRECISION')) { const replacement = new Map(safeCandidateTimes.filter((item) => (item.precision === 'vague' || item.precision === 'relative') && item.normalizedValue === null && item.needsConfirmation).map((item) => [item.tempId, item])); timePoints = timePoints.map((item) => replacement.get(item.tempId) ?? item) }
   const timePointIds = new Set(timePoints.map((item) => item.tempId))
-  const events = allowed.has('MISSING_EVENT') ? mergeUnique(base.events, candidate.events.filter((item) => item.evidenceIds.some((id) => evidenceIds.has(id)) && (!item.startTimePointTempId || timePointIds.has(item.startTimePointTempId)) && (!item.endTimePointTempId || timePointIds.has(item.endTimePointTempId))), (item) => `${item.title.trim().toLowerCase()}|${item.startTimePointTempId ?? ''}`) : base.events
-  const ambiguities = allowed.has('MISSING_TIME_AMBIGUITY') || allowed.has('FALSE_PRECISION') ? mergeUnique(base.ambiguities, candidate.ambiguities.filter((item) => item.evidenceIds.every((id) => evidenceIds.has(id))), (item) => `${item.field}|${item.message}`) : base.ambiguities
+  const events = allowed.has('MISSING_EVENT') || allowed.has('EVENT_TASK_CONFUSION') ? mergeUnique(base.events, candidate.events.filter((item) => item.evidenceIds.some((id) => evidenceIds.has(id)) && (!item.startTimePointTempId || timePointIds.has(item.startTimePointTempId)) && (!item.endTimePointTempId || timePointIds.has(item.endTimePointTempId))), (item) => `${item.title.trim().toLowerCase()}|${item.startTimePointTempId ?? ''}`) : base.events
+  const ambiguities = allowed.has('MISSING_TIME_AMBIGUITY') || allowed.has('MISSING_AMBIGUITY') || allowed.has('FALSE_PRECISION') || allowed.has('POSSIBLE_FALSE_PRECISION') ? mergeUnique(base.ambiguities, candidate.ambiguities.filter((item) => item.evidenceIds.every((id) => evidenceIds.has(id))), (item) => `${item.field}|${item.message}`) : base.ambiguities
   let milestones = base.milestones
   let standaloneTasks = base.standaloneTasks
   if (allowed.has('MISSING_MILESTONE') && base.milestones.length === 0 && candidate.milestones.length > 0) {

@@ -549,3 +549,21 @@ test('invalid AI schema and impossible dates never create suggestions', async ()
   assert.equal(response.status, 502)
   assert.equal((await response.json()).error, 'INVALID_AI_RESPONSE')
 })
+
+test('repair experiment endpoint is preview-only, flagged and bearer protected', async () => {
+  const worker = createWorker()
+  const productionResponse = await worker.fetch(new Request('https://student-affairs.site/api/experiments/e2-7/repair', {
+    method: 'POST', headers: { 'content-type': 'application/json' }, body: '{}',
+  }), environment({ E2_PATH_A_REPAIR_EXPERIMENT_ENABLED: 'true', E2_PATH_A_REPAIR_EXPERIMENT_TOKEN: 'x'.repeat(40) }))
+  assert.equal(productionResponse.status, 404)
+
+  const disabledResponse = await worker.fetch(new Request('https://student-affairs-manager-preview.example/api/experiments/e2-7/repair', {
+    method: 'POST', headers: { 'content-type': 'application/json' }, body: '{}',
+  }), environment({ E2_PATH_A_REPAIR_EXPERIMENT_TOKEN: 'x'.repeat(40) }))
+  assert.equal(disabledResponse.status, 404)
+
+  const unauthorizedResponse = await worker.fetch(new Request('https://student-affairs-manager-preview.example/api/experiments/e2-7/repair', {
+    method: 'POST', headers: { 'content-type': 'application/json' }, body: '{}',
+  }), environment({ E2_PATH_A_REPAIR_EXPERIMENT_ENABLED: 'true', E2_PATH_A_REPAIR_EXPERIMENT_TOKEN: 'x'.repeat(40) }))
+  assert.equal(unauthorizedResponse.status, 401)
+})

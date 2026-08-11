@@ -44,6 +44,9 @@ const EXTRACTION_REQUEST_FIELDS = new Set([
 const WEB_FETCH_REQUEST_FIELDS = new Set(['url'])
 const PROJECT_CANDIDATE_FIELDS = new Set(['projectId', 'title', 'category', 'keywords', 'activeMilestones', 'recentSourceTitles', 'dateRange'])
 const EXISTING_TASK_FIELDS = new Set(['id', 'projectId', 'title', 'deadline'])
+const REPAIR_EXPERIMENT_FIELDS = new Set(['mode', 'sourceContent', 'referenceTime', 'baseResult', 'issues'])
+const REPAIR_EXPERIMENT_ISSUE_FIELDS = new Set(['code', 'severity', 'repairable', 'message', 'entityId', 'evidence'])
+const REPAIR_EXPERIMENT_CODES = new Set(['INVALID_EVIDENCE', 'MISSING_TIMEPOINT', 'POSSIBLE_FALSE_PRECISION', 'MISSING_AMBIGUITY', 'MISSING_MATERIAL', 'EVENT_TASK_CONFUSION'])
 
 function safeText(value, limit) {
   return typeof value === 'string'
@@ -738,6 +741,131 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
   }
 }
 
+async function runRepairExperiment(request, env, fetcher, acquireConcurrency, context, retrySleep, retryRandom) {
+  const url = new URL(request.url)
+  if (env.E2_PATH_A_REPAIR_EXPERIMENT_ENABLED !== 'true' || !url.hostname.includes('preview')) {
+    context.errorType = 'NOT_FOUND'
+    return failure('NOT_FOUND', 'Not found.', 404, context.requestId)
+  }
+  const expectedToken = safeText(env.E2_PATH_A_REPAIR_EXPERIMENT_TOKEN, 512)
+  const authorization = request.headers.get('authorization') ?? ''
+  if (expectedToken.length < 32 || authorization !== `Bearer ${expectedToken}`) {
+    context.errorType = 'EXPERIMENT_UNAUTHORIZED'
+    return failure('EXPERIMENT_UNAUTHORIZED', 'Unauthorized.', 401, context.requestId)
+  }
+  if (!isJsonRequest(request)) {
+    context.errorType = 'INVALID_CONTENT_TYPE'
+    return failure('INVALID_CONTENT_TYPE', 'JSON required.', 415, context.requestId)
+  }
+  const rawBody = await request.text()
+  context.inputLength = rawBody.length
+  if (new TextEncoder().encode(rawBody).byteLength > MAX_BODY_BYTES) {
+    context.errorType = 'INPUT_TOO_LARGE'
+    return failure('INPUT_TOO_LARGE', 'Input too large.', 413, context.requestId)
+  }
+  let body
+  try {
+    body = JSON.parse(rawBody)
+  } catch {
+    context.errorType = 'INVALID_REQUEST'
+    return failure('INVALID_REQUEST', 'Invalid JSON.', 400, context.requestId)
+  }
+  const validIssues = Array.isArray(body?.issues)
+    && body.issues.length > 0
+    && body.issues.length <= 20
+    && body.issues.every((issue) => hasOnlyFields(issue, REPAIR_EXPERIMENT_ISSUE_FIELDS)
+      && REPAIR_EXPERIMENT_CODES.has(issue.code)
+      && issue.repairable === true
+      && ['warning', 'error'].includes(issue.severity)
+      && isBoundedString(issue.message, 500)
+      && (issue.entityId === null || isBoundedString(issue.entityId, 160))
+      && (issue.evidence === null || isBoundedString(issue.evidence, 2_000)))
+  if (!hasOnlyFields(body, REPAIR_EXPERIMENT_FIELDS)
+    || !['R1', 'R2'].includes(body.mode)
+    || !isBoundedString(body.sourceContent, 24_000)
+    || !isBoundedString(body.referenceTime, 80)
+    || Number.isNaN(new Date(body.referenceTime).getTime())
+    || !body.baseResult
+    || typeof body.baseResult !== 'object'
+    || !validIssues) {
+    context.errorType = 'INVALID_REQUEST'
+    return failure('INVALID_REQUEST', 'Invalid repair experiment request.', 400, context.requestId)
+  }
+  const sourceContent = safeText(body.sourceContent, 24_000)
+  const normalizedBase = normalizeRecognitionResult(body.baseResult, sourceContent, body.referenceTime)
+  if (!normalizedBase) {
+    context.errorType = 'INVALID_AI_RESPONSE'
+    return failure('INVALID_AI_RESPONSE', 'Invalid base result.', 400, context.requestId)
+  }
+  const report = {
+    validatorVersion: RECOGNITION_VALIDATOR_VERSION,
+    valid: !body.issues.some((issue) => issue.severity === 'error'),
+    repairRecommended: true,
+    issues: body.issues,
+  }
+  if (!shouldAttemptRecognitionRepair(report)) {
+    context.errorType = 'NO_REPAIRABLE_ISSUE'
+    return failure('NO_REPAIRABLE_ISSUE', 'No repairable issue.', 400, context.requestId)
+  }
+  const release = acquireConcurrency(clientKey(request))
+  if (!release) {
+    context.errorType = 'RATE_LIMITED'
+    return failure('RATE_LIMITED', 'Too many concurrent requests.', 429, context.requestId)
+  }
+  try {
+    const gateway = createModelGateway(createDeepSeekProvider({ fetcher, endpoint: DEEPSEEK_ENDPOINT, apiKey: env.DEEPSEEK_API_KEY, model: DEEPSEEK_MODEL, timeoutMs: UPSTREAM_TIMEOUT_MS, sleep: retrySleep, random: retryRandom }))
+    const optimizedInstruction = body.mode === 'R2'
+      ? '\n实验 R2 限定：仅返回真正新增或降精度后的字段，不复制未变化实体。每个新增实体必须引用 sourceContent 中连续逐字 evidence；MISSING_AMBIGUITY 只补 Ambiguity；MISSING_MATERIAL 只补 Material 及既有 Task 引用；MISSING_TIMEPOINT 只补 TimePoint 及既有引用；EVENT_TASK_CONFUSION 仅在首轮没有对应 Event 时补 Event。若无法在允许字段内安全修复，返回所有数组为空的合法 patch。'
+      : ''
+    const repairCall = await gateway.repair({
+      systemPrompt: `${recognitionSystemPrompt()}\n\n${buildRecognitionRepairInstruction(report)}${optimizedInstruction}`,
+      userPrompt: `来源正文：\n${sourceContent}\n\n首轮 RecognitionResult：\n${JSON.stringify(normalizedBase)}`,
+      maxTokens: MAX_EXTRACTION_TOKENS,
+      temperature: 0,
+    })
+    if (!repairCall.ok) {
+      context.errorType = repairCall.status ? `REPAIR_UPSTREAM_${repairCall.status}` : repairCall.errorCode
+      return failure(context.errorType, 'Repair upstream failed.', repairCall.status === 429 ? 429 : 502, context.requestId)
+    }
+    let rawPatch
+    try {
+      rawPatch = JSON.parse(safeText(repairCall.content, 30_000))
+    } catch {
+      context.errorType = 'REPAIR_INVALID_OUTPUT'
+      return failure('REPAIR_INVALID_OUTPUT', 'Repair returned invalid JSON.', 502, context.requestId)
+    }
+    const scopedCandidate = createRecognitionRepairCandidate(normalizedBase, rawPatch, report)
+    const repairCandidate = scopedCandidate ? normalizeRecognitionResult(scopedCandidate, sourceContent, body.referenceTime) : null
+    if (!repairCandidate) {
+      context.errorType = 'REPAIR_INVALID_OUTPUT'
+      return failure('REPAIR_INVALID_OUTPUT', 'Repair patch failed validation.', 502, context.requestId)
+    }
+    const result = mergeRecognitionRepair(normalizedBase, repairCandidate, report, sourceContent)
+    const execution = gateway.executionMetadata({
+      promptVersion: RECOGNITION_PROMPT_VERSION,
+      schemaVersion: RECOGNITION_SCHEMA_VERSION,
+      pipelineVersion: RECOGNITION_PIPELINE_VERSION,
+      validatorVersion: RECOGNITION_VALIDATOR_VERSION,
+      repairVersion: body.mode === 'R2' ? 'recognition-repair-1.2.0-experiment' : RECOGNITION_REPAIR_VERSION,
+      routerVersion: RECOGNITION_ROUTER_VERSION,
+    })
+    context.outputTokens = execution.tokenUsage?.output ?? 0
+    return success({
+      mode: body.mode,
+      model: DEEPSEEK_MODEL,
+      result,
+      applied: JSON.stringify(result) !== JSON.stringify(normalizedBase),
+      issueCodes: body.issues.map((issue) => issue.code),
+      execution,
+    }, context.requestId)
+  } catch (error) {
+    context.errorType = timeoutError(error) ? 'REPAIR_TIMEOUT' : 'REPAIR_FAILURE'
+    return failure(context.errorType, 'Repair experiment failed.', context.errorType === 'REPAIR_TIMEOUT' ? 504 : 502, context.requestId)
+  } finally {
+    release()
+  }
+}
+
 export function createWorker({
   fetcher = fetch,
   resolveHostname = resolvePublicHostname,
@@ -784,6 +912,13 @@ export function createWorker({
           response = failure('METHOD_NOT_ALLOWED', '该接口只接受 POST。', 405, context.requestId)
         } else {
           response = await extractTasks(request, env, fetcher, isRateLimited, acquireConcurrency, context, retrySleep, retryRandom)
+        }
+      } else if (url.pathname === '/api/experiments/e2-7/repair') {
+        if (request.method !== 'POST') {
+          context.errorType = 'METHOD_NOT_ALLOWED'
+          response = failure('METHOD_NOT_ALLOWED', 'Method not allowed.', 405, context.requestId)
+        } else {
+          response = await runRepairExperiment(request, env, fetcher, acquireConcurrency, context, retrySleep, retryRandom)
         }
       } else if (url.pathname === '/api/deepseek') {
         if (request.method !== 'POST') {
