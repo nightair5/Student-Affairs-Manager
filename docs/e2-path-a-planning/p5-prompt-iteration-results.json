@@ -1,0 +1,82 @@
+{
+  "schemaVersion": "e2-7-p5-prompt-iterations-1.0.0",
+  "status": "P5_STOP_NO_CANDIDATE",
+  "frozenBaselinePromptVersion": "recognition-2.4.1",
+  "iterationsUsed": 2,
+  "maximumIterations": 2,
+  "thirdIterationPermitted": false,
+  "model": "deepseek-v4-flash",
+  "schema": "2.0",
+  "dataset": {
+    "name": "generalization",
+    "version": "e2-generalization-development-1.0.0",
+    "sampleCount": 108,
+    "sha256": "6919cd89e81521beaf993ebcd8b23a752c01bbc0f5aa4559e29ff25e0c5b2659"
+  },
+  "baseline": {
+    "promptVersion": "recognition-2.4.1",
+    "completed": 108,
+    "taskPrecision": 0.8217054263565892,
+    "taskRecall": 0.7571428571428571,
+    "timeRoleAccuracy": 0.7884615384615384,
+    "timeValueAccuracy": 0.7435897435897436,
+    "eventAccuracy": 0.9393939393939394,
+    "evidenceCoverage": 0.9871794871794872,
+    "strictMajorCorrection": 0.6759259259259259,
+    "severeError": 0,
+    "transportFailure": 0
+  },
+  "rc1": {
+    "promptVersion": "recognition-2.5.0-rc.1",
+    "promptBundleSha256": "8644f0289ca96a567e916279127a1323ad6f82c549e841fc8cd7c9d2bba865c5",
+    "checkpointSha256": "172f878015e9d3497fa919e393a1a0dbed03901a6b64ced29a93b269faa6f451",
+    "completed": 108,
+    "taskPrecision": 0.7916666666666666,
+    "taskRecall": 0.8142857142857143,
+    "timeRoleAccuracy": 0.7677419354838709,
+    "timeValueAccuracy": 0.7806451612903226,
+    "eventAccuracy": 0.6470588235294118,
+    "evidenceCoverage": 0.9893162393162394,
+    "strictMajorCorrection": 0.6296296296296297,
+    "severeError": 0,
+    "transportFailure": 0,
+    "userImpactMajorCorrection": "NOT RUN",
+    "decision": "REJECT"
+  },
+  "rc2": {
+    "promptVersion": "recognition-2.5.0-rc.2",
+    "promptBundleSha256": "b289983e25a9c03812bbfd5ee521c0e284281a69e1ed60322422c3a8fb4706d1",
+    "checkpointSha256": "ae570de5c7c088072a9267f15d621bd06ac24cacd020ec16e59e6bf474851199",
+    "completed": 100,
+    "taskPrecision": 0.7795275590551181,
+    "taskRecall": 0.7071428571428572,
+    "timeRoleAccuracy": 0.6962025316455697,
+    "timeValueAccuracy": 0.6835443037974683,
+    "eventAccuracy": 0.8125,
+    "evidenceCoverage": 0.8760683760683761,
+    "strictMajorCorrection": 0.6574074074074074,
+    "severeError": 0.08333333333333333,
+    "transportFailure": 0.07407407407407407,
+    "userImpactMajorCorrection": "NOT RUN",
+    "decision": "REJECT"
+  },
+  "integrityCorrection": {
+    "historicalField": "promptSourceSha256",
+    "historicalActualFile": "cloudflare/recognition.mjs",
+    "historicalActualSha256": "de5afa6afad5ed2171f35ab60cb4dc311dd04367eb33fb1d1383cf9aa4de5eaf",
+    "historicalClaim": "MISNAMED_NOT_PROMPT_HASH",
+    "futureHarnessBinding": "cloudflare/recognition-prompt.mjs",
+    "futureResultHash": "SHA256_OF_RESULT_JSON"
+  },
+  "componentDecision": {
+    "planningPromptContract": "REJECT",
+    "retainedPromptVersionForP6P9": "recognition-2.4.1",
+    "candidateFreezePermitted": false,
+    "newBlindPermitted": false
+  },
+  "preview": {
+    "rc1VersionId": "e8fbc3a8-a7fd-4b36-ba52-f048b581cc4d",
+    "rc2VersionId": "dd0f35ea-2496-4479-adc5-a29e14c3f88d",
+    "productionDeployed": false
+  }
+}

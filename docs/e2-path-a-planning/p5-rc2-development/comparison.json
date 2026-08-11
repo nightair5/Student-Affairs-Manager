@@ -1,0 +1,355 @@
+{
+  "schemaVersion": "e2-7-p5-iteration-summary-1.0.0",
+  "iteration": "RC2",
+  "baseline": {
+    "runId": "deepseek-production-2026-08-09T07-40-32-969Z",
+    "provider": "deepseek-production",
+    "label": "g8-after-2-4-1",
+    "datasetName": "generalization",
+    "datasetVersion": "e2-generalization-development-1.0.0",
+    "localPromptVersion": "recognition-2.4.1",
+    "expectedPromptVersion": "recognition-2.4.1",
+    "observedPromptVersions": [
+      "recognition-2.4.1"
+    ],
+    "modelName": "deepseek-v4-flash",
+    "promptSourceSha256": "9d958e3e3073eec2c9de66f6921c9b8aeecd0eb926d0b5386ca3886e6238ec31",
+    "startedAt": "2026-08-09T07:12:25.743Z",
+    "completedAt": "2026-08-09T07:40:32.969Z",
+    "endpoint": "https://student-affairs-manager-preview.nightsdell.workers.dev/api/deepseek",
+    "transport": "python-session",
+    "tokenAndCostObservation": "Token usage is the sum of real Worker execution metadata.",
+    "evaluationNotes": []
+  },
+  "candidate": {
+    "runId": "deepseek-production-2026-08-11T11-48-55-880Z",
+    "provider": "deepseek-production",
+    "label": "e2-7-p5-rc2-development",
+    "datasetName": "generalization",
+    "datasetVersion": "e2-generalization-development-1.0.0",
+    "localPromptVersion": "recognition-2.5.0-rc.2",
+    "expectedPromptVersion": "recognition-2.5.0-rc.2",
+    "observedPromptVersions": [
+      "recognition-2.5.0-rc.2"
+    ],
+    "modelName": "deepseek-v4-flash",
+    "promptSourceSha256": "de5afa6afad5ed2171f35ab60cb4dc311dd04367eb33fb1d1383cf9aa4de5eaf",
+    "startedAt": "2026-08-11T11:20:05.082Z",
+    "completedAt": "2026-08-11T11:48:55.880Z",
+    "endpoint": "https://student-affairs-manager-preview.nightsdell.workers.dev/api/deepseek",
+    "transport": "curl",
+    "tokenAndCostObservation": "Token usage or cost is incomplete; no estimate is substituted for observed data.",
+    "evaluationNotes": []
+  },
+  "pairedIntegrity": {
+    "checkpointSha256": "ae570de5c7c088072a9267f15d621bd06ac24cacd020ec16e59e6bf474851199",
+    "rowCount": 108,
+    "uniqueCaseIds": 108,
+    "duplicateCaseIds": 0,
+    "statuses": {
+      "ok": 100,
+      "request_failure": 8
+    },
+    "models": [
+      "deepseek-v4-flash"
+    ],
+    "prompts": [
+      "recognition-2.5.0-rc.2"
+    ],
+    "sourceHashMissing": 0,
+    "inputHashMissing": 0,
+    "tokenUsageMissing": 8,
+    "resultHashMissing": 100,
+    "failedCaseIds": [
+      "e2-gen-09-3",
+      "e2-gen-15-3",
+      "e2-gen-16-3",
+      "e2-gen-18-3",
+      "e2-gen-20-4",
+      "e2-gen-21-3",
+      "e2-gen-21-4",
+      "e2-gen-22-3"
+    ]
+  },
+  "metrics": {
+    "projectDecisionAccuracy": {
+      "baseline": 0.9074074074074074,
+      "candidate": 0.8796296296296297,
+      "delta": -0.02777777777777779
+    },
+    "milestonePrecision": {
+      "baseline": 0.32941176470588235,
+      "candidate": 0.5094339622641509,
+      "delta": 0.1800221975582686
+    },
+    "milestoneRecall": {
+      "baseline": 0.5833333333333334,
+      "candidate": 0.5625,
+      "delta": -0.02083333333333337
+    },
+    "taskPrecision": {
+      "baseline": 0.8217054263565892,
+      "candidate": 0.7795275590551181,
+      "delta": -0.042177867301471106
+    },
+    "taskRecall": {
+      "baseline": 0.7571428571428571,
+      "candidate": 0.7071428571428572,
+      "delta": -0.04999999999999993
+    },
+    "materialPrecision": {
+      "baseline": 0.9787234042553191,
+      "candidate": 0.9769230769230769,
+      "delta": -0.0018003273322422242
+    },
+    "materialRecall": {
+      "baseline": 0.9324324324324325,
+      "candidate": 0.8581081081081081,
+      "delta": -0.07432432432432434
+    },
+    "timePointPrecision": {
+      "baseline": 0.9210526315789473,
+      "candidate": 0.8936170212765957,
+      "delta": -0.027435610302351643
+    },
+    "timePointRecall": {
+      "baseline": 0.9459459459459459,
+      "candidate": 0.8513513513513513,
+      "delta": -0.09459459459459463
+    },
+    "timePointTypeAccuracy": {
+      "baseline": 0.7884615384615384,
+      "candidate": 0.6962025316455697,
+      "delta": -0.09225900681596877
+    },
+    "timePointValueAccuracy": {
+      "baseline": 0.7435897435897436,
+      "candidate": 0.6835443037974683,
+      "delta": -0.06004543979227528
+    },
+    "timePointAccuracy": {
+      "baseline": 0.75,
+      "candidate": 0.6518987341772152,
+      "delta": -0.09810126582278478
+    },
+    "eventAccuracy": {
+      "baseline": 0.9393939393939394,
+      "candidate": 0.8125,
+      "delta": -0.12689393939393945
+    },
+    "evidenceCoverage": {
+      "baseline": 0.9871794871794872,
+      "candidate": 0.8760683760683761,
+      "delta": -0.11111111111111116
+    },
+    "evidenceValidity": {
+      "baseline": 1,
+      "candidate": 1,
+      "delta": 0
+    },
+    "ambiguityPrecision": {
+      "baseline": 0.6078431372549019,
+      "candidate": 0.5192307692307693,
+      "delta": -0.08861236802413264
+    },
+    "ambiguityRecall": {
+      "baseline": 0.5166666666666667,
+      "candidate": 0.45,
+      "delta": -0.06666666666666671
+    },
+    "majorCorrectionRate": {
+      "baseline": 0.6759259259259259,
+      "candidate": 0.6574074074074074,
+      "delta": -0.01851851851851849
+    },
+    "severeErrorRate": {
+      "baseline": 0,
+      "candidate": 0.08333333333333333,
+      "delta": 0.08333333333333333
+    },
+    "invalidOutputRate": {
+      "baseline": 0,
+      "candidate": 0,
+      "delta": 0
+    },
+    "requestFailureRate": {
+      "baseline": 0,
+      "candidate": 0.07407407407407407,
+      "delta": 0.07407407407407407
+    },
+    "repairTriggerRate": {
+      "baseline": 0.09259259259259259,
+      "candidate": 0.1,
+      "delta": 0.007407407407407418
+    },
+    "repairHarmRate": {
+      "baseline": 0,
+      "candidate": 0,
+      "delta": 0
+    },
+    "duplicateRate": {
+      "baseline": 0,
+      "candidate": 0,
+      "delta": 0
+    },
+    "overFragmentationRate": {
+      "baseline": 0,
+      "candidate": 0.009259259259259259,
+      "delta": 0.009259259259259259
+    }
+  },
+  "strictMajorTransitions": {
+    "improved": 14,
+    "worsened": 4,
+    "unchangedMajor": 57,
+    "unchangedNotMajor": 33
+  },
+  "categoryDeltas": {
+    "ambiguity_missing": {
+      "baseline": 29,
+      "candidate": 28,
+      "delta": -1
+    },
+    "ambiguity_spurious": {
+      "baseline": 19,
+      "candidate": 21,
+      "delta": 2
+    },
+    "event_missing": {
+      "baseline": 1,
+      "candidate": 3,
+      "delta": 2
+    },
+    "event_spurious": {
+      "baseline": 1,
+      "candidate": 0,
+      "delta": -1
+    },
+    "evidence_missing": {
+      "baseline": 6,
+      "candidate": 8,
+      "delta": 2
+    },
+    "material_missing": {
+      "baseline": 10,
+      "candidate": 6,
+      "delta": -4
+    },
+    "material_spurious": {
+      "baseline": 3,
+      "candidate": 3,
+      "delta": 0
+    },
+    "milestone_missing": {
+      "baseline": 20,
+      "candidate": 17,
+      "delta": -3
+    },
+    "milestone_spurious": {
+      "baseline": 10,
+      "candidate": 4,
+      "delta": -6
+    },
+    "over_fragmentation": {
+      "baseline": 0,
+      "candidate": 1,
+      "delta": 1
+    },
+    "project_decision": {
+      "baseline": 11,
+      "candidate": 11,
+      "delta": 0
+    },
+    "request_failure": {
+      "baseline": 0,
+      "candidate": 8,
+      "delta": 8
+    },
+    "task_missing": {
+      "baseline": 34,
+      "candidate": 27,
+      "delta": -7
+    },
+    "task_spurious": {
+      "baseline": 22,
+      "candidate": 23,
+      "delta": 1
+    },
+    "time_incorrect": {
+      "baseline": 23,
+      "candidate": 23,
+      "delta": 0
+    },
+    "time_missing": {
+      "baseline": 8,
+      "candidate": 6,
+      "delta": -2
+    },
+    "time_spurious": {
+      "baseline": 10,
+      "candidate": 12,
+      "delta": 2
+    }
+  },
+  "performance": {
+    "latencyMs": {
+      "baseline": {
+        "mean": 7670.648148148148,
+        "p50": 7351,
+        "p95": 11788
+      },
+      "candidate": {
+        "mean": 8076.4537037037035,
+        "p50": 7809,
+        "p95": 12075
+      },
+      "meanRatio": 1.0529036852842124
+    },
+    "tokens": null,
+    "observedOperationTokens": {
+      "recognize": {
+        "input": 278660,
+        "output": 136586
+      },
+      "repair": {
+        "input": 38827,
+        "output": 4403
+      },
+      "extractFacts": null
+    },
+    "costUsd": "NOT OBSERVABLE"
+  },
+  "completedOnlySensitivity": {
+    "sampleCount": 100,
+    "projectDecisionAccuracy": 0.95,
+    "milestonePrecision": 0.5094339622641509,
+    "milestoneRecall": 0.6136363636363636,
+    "taskPrecision": 0.7795275590551181,
+    "taskRecall": 0.7857142857142857,
+    "materialPrecision": 0.9769230769230769,
+    "materialRecall": 0.9548872180451128,
+    "timePointPrecision": 0.8936170212765957,
+    "timePointRecall": 0.9545454545454546,
+    "timePointTypeAccuracy": 0.7746478873239436,
+    "timePointValueAccuracy": 0.7605633802816901,
+    "eventAccuracy": 0.896551724137931,
+    "evidenceCoverage": 0.9761904761904762,
+    "evidenceValidity": 1,
+    "ambiguityPrecision": 0.5192307692307693,
+    "ambiguityRecall": 0.4909090909090909,
+    "duplicateRate": 0,
+    "overFragmentationRate": 0.01,
+    "majorCorrectionRate": 0.63,
+    "severeErrorRate": 0.01
+  },
+  "decision": {
+    "status": "P5_STOP_NO_CANDIDATE",
+    "reasons": [
+      "The second and final prompt iteration misses the structural, evidence, severe-error, and transport gates.",
+      "No third prompt iteration is permitted.",
+      "Neither RC1 nor RC2 is eligible for Candidate Freeze; retain the frozen 2.4.1 prompt for later component ablations."
+    ],
+    "userImpactMajorCorrection": "NOT RUN FOR RC2"
+  },
+  "generatedAt": "2026-08-11T11:52:55.769Z"
+}

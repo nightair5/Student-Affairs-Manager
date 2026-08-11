@@ -1,0 +1,1840 @@
+{
+  "run": {
+    "runId": "deepseek-production-2026-08-11T11-48-55-880Z",
+    "provider": "deepseek-production",
+    "label": "e2-7-p5-rc2-development",
+    "datasetName": "generalization",
+    "datasetVersion": "e2-generalization-development-1.0.0",
+    "localPromptVersion": "recognition-2.5.0-rc.2",
+    "expectedPromptVersion": "recognition-2.5.0-rc.2",
+    "observedPromptVersions": [
+      "recognition-2.5.0-rc.2"
+    ],
+    "modelName": "deepseek-v4-flash",
+    "promptSourceSha256": "de5afa6afad5ed2171f35ab60cb4dc311dd04367eb33fb1d1383cf9aa4de5eaf",
+    "startedAt": "2026-08-11T11:20:05.082Z",
+    "completedAt": "2026-08-11T11:48:55.880Z",
+    "endpoint": "https://student-affairs-manager-preview.nightsdell.workers.dev/api/deepseek",
+    "transport": "curl",
+    "tokenAndCostObservation": "Token usage or cost is incomplete; no estimate is substituted for observed data.",
+    "evaluationNotes": []
+  },
+  "metrics": {
+    "provider": "deepseek-production",
+    "sampleCount": 108,
+    "completedCount": 100,
+    "projectDecisionAccuracy": 0.8796296296296297,
+    "milestonePrecision": 0.5094339622641509,
+    "milestoneRecall": 0.5625,
+    "taskPrecision": 0.7795275590551181,
+    "taskRecall": 0.7071428571428572,
+    "materialPrecision": 0.9769230769230769,
+    "materialRecall": 0.8581081081081081,
+    "timePointPrecision": 0.8936170212765957,
+    "timePointRecall": 0.8513513513513513,
+    "timePointTypeAccuracy": 0.6962025316455697,
+    "timePointValueAccuracy": 0.6835443037974683,
+    "timePointAccuracy": 0.6518987341772152,
+    "eventAccuracy": 0.8125,
+    "evidenceCoverage": 0.8760683760683761,
+    "evidenceValidity": 1,
+    "ambiguityPrecision": 0.5192307692307693,
+    "ambiguityRecall": 0.45,
+    "duplicateRate": 0,
+    "overFragmentationRate": 0.009259259259259259,
+    "majorCorrectionRate": 0.6574074074074074,
+    "severeErrorRate": 0.08333333333333333,
+    "invalidOutputRate": 0,
+    "requestFailureRate": 0.07407407407407407,
+    "repairTriggerRate": 0.1,
+    "repairAppliedRate": 1,
+    "repairSuccessRate": 0,
+    "repairHarmRate": 0,
+    "repairLatencyMs": {
+      "mean": 2629,
+      "p95": 3253
+    },
+    "retryRate": 0,
+    "complexityDistribution": {
+      "simple": 66,
+      "medium": 33,
+      "complex": 1,
+      "unknown": 8
+    },
+    "complexityProfiles": {
+      "simple": {
+        "sampleCount": 66,
+        "latencyMs": {
+          "mean": 7555.772727272727,
+          "p50": 7711,
+          "p95": 10131
+        },
+        "tokenUsage": {
+          "input": 208390,
+          "output": 79764
+        }
+      },
+      "medium": {
+        "sampleCount": 33,
+        "latencyMs": {
+          "mean": 9677.636363636364,
+          "p50": 10232,
+          "p95": 12976
+        },
+        "tokenUsage": {
+          "input": 100842,
+          "output": 57660
+        }
+      },
+      "complex": {
+        "sampleCount": 1,
+        "latencyMs": {
+          "mean": 13958,
+          "p50": 13958,
+          "p95": 13958
+        },
+        "tokenUsage": {
+          "input": 8255,
+          "output": 3565
+        }
+      },
+      "unknown": {
+        "sampleCount": 8,
+        "latencyMs": {
+          "mean": 5032,
+          "p50": 5030,
+          "p95": 5043
+        },
+        "tokenUsage": null
+      }
+    },
+    "operationTokenUsage": {
+      "recognize": {
+        "input": 278660,
+        "output": 136586
+      },
+      "repair": {
+        "input": 38827,
+        "output": 4403
+      },
+      "extractFacts": null
+    },
+    "latencyMs": {
+      "mean": 8076.4537037037035,
+      "p50": 7809,
+      "p95": 12075
+    },
+    "tokenUsage": null,
+    "costUsd": null,
+    "errorTaxonomy": [
+      {
+        "category": "ambiguity_missing",
+        "count": 28
+      },
+      {
+        "category": "task_missing",
+        "count": 27
+      },
+      {
+        "category": "task_spurious",
+        "count": 23
+      },
+      {
+        "category": "time_incorrect",
+        "count": 23
+      },
+      {
+        "category": "ambiguity_spurious",
+        "count": 21
+      },
+      {
+        "category": "milestone_missing",
+        "count": 17
+      },
+      {
+        "category": "time_spurious",
+        "count": 12
+      },
+      {
+        "category": "project_decision",
+        "count": 11
+      },
+      {
+        "category": "evidence_missing",
+        "count": 8
+      },
+      {
+        "category": "request_failure",
+        "count": 8
+      },
+      {
+        "category": "material_missing",
+        "count": 6
+      },
+      {
+        "category": "time_missing",
+        "count": 6
+      },
+      {
+        "category": "milestone_spurious",
+        "count": 4
+      },
+      {
+        "category": "event_missing",
+        "count": 3
+      },
+      {
+        "category": "material_spurious",
+        "count": 3
+      },
+      {
+        "category": "over_fragmentation",
+        "count": 1
+      }
+    ]
+  },
+  "groupMetrics": {
+    "course": {
+      "provider": "deepseek-production",
+      "sampleCount": 16,
+      "completedCount": 16,
+      "projectDecisionAccuracy": 1,
+      "milestonePrecision": 0,
+      "milestoneRecall": 1,
+      "taskPrecision": 0.88,
+      "taskRecall": 0.9166666666666666,
+      "materialPrecision": 1,
+      "materialRecall": 0.8333333333333334,
+      "timePointPrecision": 0.9411764705882353,
+      "timePointRecall": 1,
+      "timePointTypeAccuracy": 0.8823529411764706,
+      "timePointValueAccuracy": 0.7058823529411765,
+      "timePointAccuracy": 0.8823529411764706,
+      "eventAccuracy": 1,
+      "evidenceCoverage": 0.96875,
+      "evidenceValidity": 1,
+      "ambiguityPrecision": 0.6666666666666666,
+      "ambiguityRecall": 0.75,
+      "duplicateRate": 0,
+      "overFragmentationRate": 0,
+      "majorCorrectionRate": 0.5,
+      "severeErrorRate": 0,
+      "invalidOutputRate": 0,
+      "requestFailureRate": 0,
+      "repairTriggerRate": 0,
+      "repairAppliedRate": null,
+      "repairSuccessRate": null,
+      "repairHarmRate": null,
+      "repairLatencyMs": null,
+      "retryRate": 0,
+      "complexityDistribution": {
+        "simple": 12,
+        "medium": 4,
+        "complex": 0,
+        "unknown": 0
+      },
+      "complexityProfiles": {
+        "simple": {
+          "sampleCount": 12,
+          "latencyMs": {
+            "mean": 7441.25,
+            "p50": 7147,
+            "p95": 11134
+          },
+          "tokenUsage": {
+            "input": 33370,
+            "output": 14886
+          }
+        },
+        "medium": {
+          "sampleCount": 4,
+          "latencyMs": {
+            "mean": 8877.75,
+            "p50": 8243,
+            "p95": 11924
+          },
+          "tokenUsage": {
+            "input": 11136,
+            "output": 5581
+          }
+        },
+        "complex": {
+          "sampleCount": 0,
+          "latencyMs": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0
+          },
+          "tokenUsage": null
+        },
+        "unknown": {
+          "sampleCount": 0,
+          "latencyMs": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0
+          },
+          "tokenUsage": null
+        }
+      },
+      "operationTokenUsage": {
+        "recognize": {
+          "input": 44506,
+          "output": 20467
+        },
+        "repair": null,
+        "extractFacts": null
+      },
+      "latencyMs": {
+        "mean": 7800.375,
+        "p50": 7482,
+        "p95": 11924
+      },
+      "tokenUsage": {
+        "input": 44506,
+        "output": 20467
+      },
+      "costUsd": null,
+      "errorTaxonomy": [
+        {
+          "category": "material_missing",
+          "count": 4
+        },
+        {
+          "category": "task_spurious",
+          "count": 3
+        },
+        {
+          "category": "ambiguity_missing",
+          "count": 2
+        },
+        {
+          "category": "ambiguity_spurious",
+          "count": 2
+        },
+        {
+          "category": "evidence_missing",
+          "count": 2
+        },
+        {
+          "category": "task_missing",
+          "count": 2
+        },
+        {
+          "category": "time_incorrect",
+          "count": 1
+        },
+        {
+          "category": "time_spurious",
+          "count": 1
+        }
+      ]
+    },
+    "competition": {
+      "provider": "deepseek-production",
+      "sampleCount": 8,
+      "completedCount": 8,
+      "projectDecisionAccuracy": 1,
+      "milestonePrecision": 0.8181818181818182,
+      "milestoneRecall": 0.75,
+      "taskPrecision": 0.8333333333333334,
+      "taskRecall": 0.8333333333333334,
+      "materialPrecision": 1,
+      "materialRecall": 1,
+      "timePointPrecision": 1,
+      "timePointRecall": 1,
+      "timePointTypeAccuracy": 0.875,
+      "timePointValueAccuracy": 1,
+      "timePointAccuracy": 0.875,
+      "eventAccuracy": 1,
+      "evidenceCoverage": 1,
+      "evidenceValidity": 1,
+      "ambiguityPrecision": 0.42857142857142855,
+      "ambiguityRecall": 0.375,
+      "duplicateRate": 0,
+      "overFragmentationRate": 0,
+      "majorCorrectionRate": 0.75,
+      "severeErrorRate": 0,
+      "invalidOutputRate": 0,
+      "requestFailureRate": 0,
+      "repairTriggerRate": 0,
+      "repairAppliedRate": null,
+      "repairSuccessRate": null,
+      "repairHarmRate": null,
+      "repairLatencyMs": null,
+      "retryRate": 0,
+      "complexityDistribution": {
+        "simple": 3,
+        "medium": 5,
+        "complex": 0,
+        "unknown": 0
+      },
+      "complexityProfiles": {
+        "simple": {
+          "sampleCount": 3,
+          "latencyMs": {
+            "mean": 6663.333333333333,
+            "p50": 7105,
+            "p95": 8139
+          },
+          "tokenUsage": {
+            "input": 8346,
+            "output": 2807
+          }
+        },
+        "medium": {
+          "sampleCount": 5,
+          "latencyMs": {
+            "mean": 11047.4,
+            "p50": 11704,
+            "p95": 12422
+          },
+          "tokenUsage": {
+            "input": 14005,
+            "output": 10177
+          }
+        },
+        "complex": {
+          "sampleCount": 0,
+          "latencyMs": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0
+          },
+          "tokenUsage": null
+        },
+        "unknown": {
+          "sampleCount": 0,
+          "latencyMs": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0
+          },
+          "tokenUsage": null
+        }
+      },
+      "operationTokenUsage": {
+        "recognize": {
+          "input": 22351,
+          "output": 12984
+        },
+        "repair": null,
+        "extractFacts": null
+      },
+      "latencyMs": {
+        "mean": 9403.375,
+        "p50": 8139,
+        "p95": 12422
+      },
+      "tokenUsage": {
+        "input": 22351,
+        "output": 12984
+      },
+      "costUsd": null,
+      "errorTaxonomy": [
+        {
+          "category": "ambiguity_missing",
+          "count": 5
+        },
+        {
+          "category": "ambiguity_spurious",
+          "count": 4
+        },
+        {
+          "category": "milestone_missing",
+          "count": 3
+        },
+        {
+          "category": "task_missing",
+          "count": 2
+        },
+        {
+          "category": "task_spurious",
+          "count": 2
+        },
+        {
+          "category": "time_incorrect",
+          "count": 2
+        }
+      ]
+    },
+    "application": {
+      "provider": "deepseek-production",
+      "sampleCount": 12,
+      "completedCount": 11,
+      "projectDecisionAccuracy": 0.9166666666666666,
+      "milestonePrecision": 0.4,
+      "milestoneRecall": 0.25,
+      "taskPrecision": 0.5,
+      "taskRecall": 0.6666666666666666,
+      "materialPrecision": 1,
+      "materialRecall": 0.8928571428571429,
+      "timePointPrecision": 1,
+      "timePointRecall": 0.9166666666666666,
+      "timePointTypeAccuracy": 0.6666666666666666,
+      "timePointValueAccuracy": 0.9166666666666666,
+      "timePointAccuracy": 0.6666666666666666,
+      "eventAccuracy": 1,
+      "evidenceCoverage": 0.9038461538461539,
+      "evidenceValidity": 1,
+      "ambiguityPrecision": 0,
+      "ambiguityRecall": 0,
+      "duplicateRate": 0,
+      "overFragmentationRate": 0.08333333333333333,
+      "majorCorrectionRate": 0.8333333333333334,
+      "severeErrorRate": 0.08333333333333333,
+      "invalidOutputRate": 0,
+      "requestFailureRate": 0.08333333333333333,
+      "repairTriggerRate": 0,
+      "repairAppliedRate": null,
+      "repairSuccessRate": null,
+      "repairHarmRate": null,
+      "repairLatencyMs": null,
+      "retryRate": 0,
+      "complexityDistribution": {
+        "simple": 9,
+        "medium": 2,
+        "complex": 0,
+        "unknown": 1
+      },
+      "complexityProfiles": {
+        "simple": {
+          "sampleCount": 9,
+          "latencyMs": {
+            "mean": 7813.555555555556,
+            "p50": 8379,
+            "p95": 10704
+          },
+          "tokenUsage": {
+            "input": 25074,
+            "output": 12249
+          }
+        },
+        "medium": {
+          "sampleCount": 2,
+          "latencyMs": {
+            "mean": 10519,
+            "p50": 8062,
+            "p95": 12976
+          },
+          "tokenUsage": {
+            "input": 5588,
+            "output": 4352
+          }
+        },
+        "complex": {
+          "sampleCount": 0,
+          "latencyMs": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0
+          },
+          "tokenUsage": null
+        },
+        "unknown": {
+          "sampleCount": 1,
+          "latencyMs": {
+            "mean": 5030,
+            "p50": 5030,
+            "p95": 5030
+          },
+          "tokenUsage": null
+        }
+      },
+      "operationTokenUsage": {
+        "recognize": {
+          "input": 30662,
+          "output": 16601
+        },
+        "repair": null,
+        "extractFacts": null
+      },
+      "latencyMs": {
+        "mean": 8032.5,
+        "p50": 8062,
+        "p95": 12976
+      },
+      "tokenUsage": null,
+      "costUsd": null,
+      "errorTaxonomy": [
+        {
+          "category": "milestone_missing",
+          "count": 6
+        },
+        {
+          "category": "ambiguity_missing",
+          "count": 4
+        },
+        {
+          "category": "task_missing",
+          "count": 3
+        },
+        {
+          "category": "task_spurious",
+          "count": 3
+        },
+        {
+          "category": "time_incorrect",
+          "count": 3
+        },
+        {
+          "category": "ambiguity_spurious",
+          "count": 2
+        },
+        {
+          "category": "over_fragmentation",
+          "count": 1
+        },
+        {
+          "category": "request_failure",
+          "count": 1
+        }
+      ]
+    },
+    "scholarship": {
+      "provider": "deepseek-production",
+      "sampleCount": 4,
+      "completedCount": 4,
+      "projectDecisionAccuracy": 1,
+      "milestonePrecision": 1,
+      "milestoneRecall": 1,
+      "taskPrecision": 1,
+      "taskRecall": 1,
+      "materialPrecision": 1,
+      "materialRecall": 1,
+      "timePointPrecision": 0,
+      "timePointRecall": 1,
+      "timePointTypeAccuracy": 0,
+      "timePointValueAccuracy": 0,
+      "timePointAccuracy": 0,
+      "eventAccuracy": 1,
+      "evidenceCoverage": 1,
+      "evidenceValidity": 1,
+      "ambiguityPrecision": 1,
+      "ambiguityRecall": 1,
+      "duplicateRate": 0,
+      "overFragmentationRate": 0,
+      "majorCorrectionRate": 0.5,
+      "severeErrorRate": 0,
+      "invalidOutputRate": 0,
+      "requestFailureRate": 0,
+      "repairTriggerRate": 0.5,
+      "repairAppliedRate": 1,
+      "repairSuccessRate": 0,
+      "repairHarmRate": 0,
+      "repairLatencyMs": {
+        "mean": 3124.5,
+        "p95": 3253
+      },
+      "retryRate": 0,
+      "complexityDistribution": {
+        "simple": 1,
+        "medium": 3,
+        "complex": 0,
+        "unknown": 0
+      },
+      "complexityProfiles": {
+        "simple": {
+          "sampleCount": 1,
+          "latencyMs": {
+            "mean": 9183,
+            "p50": 9183,
+            "p95": 9183
+          },
+          "tokenUsage": {
+            "input": 6144,
+            "output": 1259
+          }
+        },
+        "medium": {
+          "sampleCount": 3,
+          "latencyMs": {
+            "mean": 6219.666666666667,
+            "p50": 5691,
+            "p95": 8136
+          },
+          "tokenUsage": {
+            "input": 11707,
+            "output": 2793
+          }
+        },
+        "complex": {
+          "sampleCount": 0,
+          "latencyMs": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0
+          },
+          "tokenUsage": null
+        },
+        "unknown": {
+          "sampleCount": 0,
+          "latencyMs": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0
+          },
+          "tokenUsage": null
+        }
+      },
+      "operationTokenUsage": {
+        "recognize": {
+          "input": 11135,
+          "output": 3015
+        },
+        "repair": {
+          "input": 6716,
+          "output": 1037
+        },
+        "extractFacts": null
+      },
+      "latencyMs": {
+        "mean": 6960.5,
+        "p50": 5691,
+        "p95": 9183
+      },
+      "tokenUsage": {
+        "input": 17851,
+        "output": 4052
+      },
+      "costUsd": null,
+      "errorTaxonomy": [
+        {
+          "category": "time_spurious",
+          "count": 2
+        }
+      ]
+    },
+    "meeting": {
+      "provider": "deepseek-production",
+      "sampleCount": 4,
+      "completedCount": 4,
+      "projectDecisionAccuracy": 1,
+      "milestonePrecision": 1,
+      "milestoneRecall": 1,
+      "taskPrecision": 0.6,
+      "taskRecall": 0.375,
+      "materialPrecision": 1,
+      "materialRecall": 1,
+      "timePointPrecision": 1,
+      "timePointRecall": 1,
+      "timePointTypeAccuracy": 1,
+      "timePointValueAccuracy": 1,
+      "timePointAccuracy": 1,
+      "eventAccuracy": 1,
+      "evidenceCoverage": 1,
+      "evidenceValidity": 1,
+      "ambiguityPrecision": 0,
+      "ambiguityRecall": 1,
+      "duplicateRate": 0,
+      "overFragmentationRate": 0,
+      "majorCorrectionRate": 0.75,
+      "severeErrorRate": 0,
+      "invalidOutputRate": 0,
+      "requestFailureRate": 0,
+      "repairTriggerRate": 0,
+      "repairAppliedRate": null,
+      "repairSuccessRate": null,
+      "repairHarmRate": null,
+      "repairLatencyMs": null,
+      "retryRate": 0,
+      "complexityDistribution": {
+        "simple": 4,
+        "medium": 0,
+        "complex": 0,
+        "unknown": 0
+      },
+      "complexityProfiles": {
+        "simple": {
+          "sampleCount": 4,
+          "latencyMs": {
+            "mean": 7646.75,
+            "p50": 7748,
+            "p95": 8377
+          },
+          "tokenUsage": {
+            "input": 11150,
+            "output": 4973
+          }
+        },
+        "medium": {
+          "sampleCount": 0,
+          "latencyMs": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0
+          },
+          "tokenUsage": null
+        },
+        "complex": {
+          "sampleCount": 0,
+          "latencyMs": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0
+          },
+          "tokenUsage": null
+        },
+        "unknown": {
+          "sampleCount": 0,
+          "latencyMs": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0
+          },
+          "tokenUsage": null
+        }
+      },
+      "operationTokenUsage": {
+        "recognize": {
+          "input": 11150,
+          "output": 4973
+        },
+        "repair": null,
+        "extractFacts": null
+      },
+      "latencyMs": {
+        "mean": 7646.75,
+        "p50": 7748,
+        "p95": 8377
+      },
+      "tokenUsage": {
+        "input": 11150,
+        "output": 4973
+      },
+      "costUsd": null,
+      "errorTaxonomy": [
+        {
+          "category": "task_missing",
+          "count": 5
+        },
+        {
+          "category": "task_spurious",
+          "count": 2
+        },
+        {
+          "category": "ambiguity_spurious",
+          "count": 1
+        }
+      ]
+    },
+    "event": {
+      "provider": "deepseek-production",
+      "sampleCount": 12,
+      "completedCount": 11,
+      "projectDecisionAccuracy": 0.9166666666666666,
+      "milestonePrecision": 0,
+      "milestoneRecall": 1,
+      "taskPrecision": 0.8333333333333334,
+      "taskRecall": 0.625,
+      "materialPrecision": 1,
+      "materialRecall": 0.75,
+      "timePointPrecision": 1,
+      "timePointRecall": 0.9,
+      "timePointTypeAccuracy": 0.85,
+      "timePointValueAccuracy": 0.75,
+      "timePointAccuracy": 0.75,
+      "eventAccuracy": 0.875,
+      "evidenceCoverage": 0.8653846153846154,
+      "evidenceValidity": 1,
+      "ambiguityPrecision": 0.5,
+      "ambiguityRecall": 0.16666666666666666,
+      "duplicateRate": 0,
+      "overFragmentationRate": 0,
+      "majorCorrectionRate": 0.8333333333333334,
+      "severeErrorRate": 0.16666666666666666,
+      "invalidOutputRate": 0,
+      "requestFailureRate": 0.08333333333333333,
+      "repairTriggerRate": 0,
+      "repairAppliedRate": null,
+      "repairSuccessRate": null,
+      "repairHarmRate": null,
+      "repairLatencyMs": null,
+      "retryRate": 0,
+      "complexityDistribution": {
+        "simple": 6,
+        "medium": 5,
+        "complex": 0,
+        "unknown": 1
+      },
+      "complexityProfiles": {
+        "simple": {
+          "sampleCount": 6,
+          "latencyMs": {
+            "mean": 7065,
+            "p50": 6169,
+            "p95": 9101
+          },
+          "tokenUsage": {
+            "input": 16726,
+            "output": 6805
+          }
+        },
+        "medium": {
+          "sampleCount": 5,
+          "latencyMs": {
+            "mean": 8254.2,
+            "p50": 7812,
+            "p95": 11097
+          },
+          "tokenUsage": {
+            "input": 13951,
+            "output": 6686
+          }
+        },
+        "complex": {
+          "sampleCount": 0,
+          "latencyMs": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0
+          },
+          "tokenUsage": null
+        },
+        "unknown": {
+          "sampleCount": 1,
+          "latencyMs": {
+            "mean": 5030,
+            "p50": 5030,
+            "p95": 5030
+          },
+          "tokenUsage": null
+        }
+      },
+      "operationTokenUsage": {
+        "recognize": {
+          "input": 30677,
+          "output": 13491
+        },
+        "repair": null,
+        "extractFacts": null
+      },
+      "latencyMs": {
+        "mean": 7390.916666666667,
+        "p50": 6712,
+        "p95": 11097
+      },
+      "tokenUsage": null,
+      "costUsd": null,
+      "errorTaxonomy": [
+        {
+          "category": "ambiguity_missing",
+          "count": 9
+        },
+        {
+          "category": "milestone_spurious",
+          "count": 3
+        },
+        {
+          "category": "time_incorrect",
+          "count": 3
+        },
+        {
+          "category": "ambiguity_spurious",
+          "count": 2
+        },
+        {
+          "category": "evidence_missing",
+          "count": 2
+        },
+        {
+          "category": "project_decision",
+          "count": 2
+        },
+        {
+          "category": "task_missing",
+          "count": 2
+        },
+        {
+          "category": "event_missing",
+          "count": 1
+        },
+        {
+          "category": "material_missing",
+          "count": 1
+        },
+        {
+          "category": "request_failure",
+          "count": 1
+        },
+        {
+          "category": "task_spurious",
+          "count": 1
+        }
+      ]
+    },
+    "multi_deadline": {
+      "provider": "deepseek-production",
+      "sampleCount": 12,
+      "completedCount": 10,
+      "projectDecisionAccuracy": 0.6666666666666666,
+      "milestonePrecision": 0.9230769230769231,
+      "milestoneRecall": 1,
+      "taskPrecision": 0.9615384615384616,
+      "taskRecall": 0.78125,
+      "materialPrecision": 1,
+      "materialRecall": 0.7916666666666666,
+      "timePointPrecision": 0.8666666666666667,
+      "timePointRecall": 0.7222222222222222,
+      "timePointTypeAccuracy": 0.6111111111111112,
+      "timePointValueAccuracy": 0.5555555555555556,
+      "timePointAccuracy": 0.4722222222222222,
+      "eventAccuracy": 1,
+      "evidenceCoverage": 0.8043478260869565,
+      "evidenceValidity": 1,
+      "ambiguityPrecision": 0.16666666666666666,
+      "ambiguityRecall": 0.25,
+      "duplicateRate": 0,
+      "overFragmentationRate": 0,
+      "majorCorrectionRate": 0.9166666666666666,
+      "severeErrorRate": 0.16666666666666666,
+      "invalidOutputRate": 0,
+      "requestFailureRate": 0.16666666666666666,
+      "repairTriggerRate": 0,
+      "repairAppliedRate": null,
+      "repairSuccessRate": null,
+      "repairHarmRate": null,
+      "repairLatencyMs": null,
+      "retryRate": 0,
+      "complexityDistribution": {
+        "simple": 1,
+        "medium": 9,
+        "complex": 0,
+        "unknown": 2
+      },
+      "complexityProfiles": {
+        "simple": {
+          "sampleCount": 1,
+          "latencyMs": {
+            "mean": 9241,
+            "p50": 9241,
+            "p95": 9241
+          },
+          "tokenUsage": {
+            "input": 2790,
+            "output": 1813
+          }
+        },
+        "medium": {
+          "sampleCount": 9,
+          "latencyMs": {
+            "mean": 10529.888888888889,
+            "p50": 11001,
+            "p95": 11486
+          },
+          "tokenUsage": {
+            "input": 25120,
+            "output": 18418
+          }
+        },
+        "complex": {
+          "sampleCount": 0,
+          "latencyMs": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0
+          },
+          "tokenUsage": null
+        },
+        "unknown": {
+          "sampleCount": 2,
+          "latencyMs": {
+            "mean": 5031,
+            "p50": 5030,
+            "p95": 5032
+          },
+          "tokenUsage": null
+        }
+      },
+      "operationTokenUsage": {
+        "recognize": {
+          "input": 27910,
+          "output": 20231
+        },
+        "repair": null,
+        "extractFacts": null
+      },
+      "latencyMs": {
+        "mean": 9506,
+        "p50": 10294,
+        "p95": 11486
+      },
+      "tokenUsage": null,
+      "costUsd": null,
+      "errorTaxonomy": [
+        {
+          "category": "time_incorrect",
+          "count": 9
+        },
+        {
+          "category": "project_decision",
+          "count": 6
+        },
+        {
+          "category": "ambiguity_spurious",
+          "count": 5
+        },
+        {
+          "category": "time_missing",
+          "count": 4
+        },
+        {
+          "category": "time_spurious",
+          "count": 4
+        },
+        {
+          "category": "ambiguity_missing",
+          "count": 3
+        },
+        {
+          "category": "request_failure",
+          "count": 2
+        },
+        {
+          "category": "evidence_missing",
+          "count": 1
+        },
+        {
+          "category": "material_missing",
+          "count": 1
+        },
+        {
+          "category": "task_missing",
+          "count": 1
+        },
+        {
+          "category": "task_spurious",
+          "count": 1
+        }
+      ]
+    },
+    "vague_time": {
+      "provider": "deepseek-production",
+      "sampleCount": 8,
+      "completedCount": 7,
+      "projectDecisionAccuracy": 0.875,
+      "milestonePrecision": 1,
+      "milestoneRecall": 1,
+      "taskPrecision": 0.42857142857142855,
+      "taskRecall": 0.375,
+      "materialPrecision": 1,
+      "materialRecall": 0.75,
+      "timePointPrecision": 0.8181818181818182,
+      "timePointRecall": 0.75,
+      "timePointTypeAccuracy": 0.5384615384615384,
+      "timePointValueAccuracy": 0.46153846153846156,
+      "timePointAccuracy": 0.5384615384615384,
+      "eventAccuracy": 0.25,
+      "evidenceCoverage": 0.75,
+      "evidenceValidity": 1,
+      "ambiguityPrecision": 0.7,
+      "ambiguityRecall": 0.5833333333333334,
+      "duplicateRate": 0,
+      "overFragmentationRate": 0,
+      "majorCorrectionRate": 0.875,
+      "severeErrorRate": 0.125,
+      "invalidOutputRate": 0,
+      "requestFailureRate": 0.125,
+      "repairTriggerRate": 0.2857142857142857,
+      "repairAppliedRate": 1,
+      "repairSuccessRate": 0,
+      "repairHarmRate": 0,
+      "repairLatencyMs": {
+        "mean": 2051.5,
+        "p95": 2055
+      },
+      "retryRate": 0,
+      "complexityDistribution": {
+        "simple": 5,
+        "medium": 2,
+        "complex": 0,
+        "unknown": 1
+      },
+      "complexityProfiles": {
+        "simple": {
+          "sampleCount": 5,
+          "latencyMs": {
+            "mean": 7661,
+            "p50": 7027,
+            "p95": 9078
+          },
+          "tokenUsage": {
+            "input": 21450,
+            "output": 5594
+          }
+        },
+        "medium": {
+          "sampleCount": 2,
+          "latencyMs": {
+            "mean": 7412,
+            "p50": 7015,
+            "p95": 7809
+          },
+          "tokenUsage": {
+            "input": 5555,
+            "output": 2190
+          }
+        },
+        "complex": {
+          "sampleCount": 0,
+          "latencyMs": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0
+          },
+          "tokenUsage": null
+        },
+        "unknown": {
+          "sampleCount": 1,
+          "latencyMs": {
+            "mean": 5031,
+            "p50": 5031,
+            "p95": 5031
+          },
+          "tokenUsage": null
+        }
+      },
+      "operationTokenUsage": {
+        "recognize": {
+          "input": 19429,
+          "output": 7361
+        },
+        "repair": {
+          "input": 7576,
+          "output": 423
+        },
+        "extractFacts": null
+      },
+      "latencyMs": {
+        "mean": 7270,
+        "p50": 7015,
+        "p95": 9078
+      },
+      "tokenUsage": null,
+      "costUsd": null,
+      "errorTaxonomy": [
+        {
+          "category": "ambiguity_missing",
+          "count": 4
+        },
+        {
+          "category": "task_missing",
+          "count": 4
+        },
+        {
+          "category": "task_spurious",
+          "count": 4
+        },
+        {
+          "category": "ambiguity_spurious",
+          "count": 3
+        },
+        {
+          "category": "event_missing",
+          "count": 2
+        },
+        {
+          "category": "evidence_missing",
+          "count": 2
+        },
+        {
+          "category": "time_incorrect",
+          "count": 2
+        },
+        {
+          "category": "time_missing",
+          "count": 2
+        },
+        {
+          "category": "time_spurious",
+          "count": 2
+        },
+        {
+          "category": "request_failure",
+          "count": 1
+        }
+      ]
+    },
+    "material": {
+      "provider": "deepseek-production",
+      "sampleCount": 12,
+      "completedCount": 12,
+      "projectDecisionAccuracy": 1,
+      "milestonePrecision": 0,
+      "milestoneRecall": 1,
+      "taskPrecision": 0.6,
+      "taskRecall": 0.5625,
+      "materialPrecision": 1,
+      "materialRecall": 1,
+      "timePointPrecision": 1,
+      "timePointRecall": 1,
+      "timePointTypeAccuracy": 1,
+      "timePointValueAccuracy": 1,
+      "timePointAccuracy": 1,
+      "eventAccuracy": 1,
+      "evidenceCoverage": 1,
+      "evidenceValidity": 1,
+      "ambiguityPrecision": 0,
+      "ambiguityRecall": 1,
+      "duplicateRate": 0,
+      "overFragmentationRate": 0,
+      "majorCorrectionRate": 0.3333333333333333,
+      "severeErrorRate": 0,
+      "invalidOutputRate": 0,
+      "requestFailureRate": 0,
+      "repairTriggerRate": 0,
+      "repairAppliedRate": null,
+      "repairSuccessRate": null,
+      "repairHarmRate": null,
+      "repairLatencyMs": null,
+      "retryRate": 0,
+      "complexityDistribution": {
+        "simple": 11,
+        "medium": 1,
+        "complex": 0,
+        "unknown": 0
+      },
+      "complexityProfiles": {
+        "simple": {
+          "sampleCount": 11,
+          "latencyMs": {
+            "mean": 7926.454545454545,
+            "p50": 8147,
+            "p95": 9511
+          },
+          "tokenUsage": {
+            "input": 30635,
+            "output": 14069
+          }
+        },
+        "medium": {
+          "sampleCount": 1,
+          "latencyMs": {
+            "mean": 7478,
+            "p50": 7478,
+            "p95": 7478
+          },
+          "tokenUsage": {
+            "input": 2785,
+            "output": 901
+          }
+        },
+        "complex": {
+          "sampleCount": 0,
+          "latencyMs": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0
+          },
+          "tokenUsage": null
+        },
+        "unknown": {
+          "sampleCount": 0,
+          "latencyMs": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0
+          },
+          "tokenUsage": null
+        }
+      },
+      "operationTokenUsage": {
+        "recognize": {
+          "input": 33420,
+          "output": 14970
+        },
+        "repair": null,
+        "extractFacts": null
+      },
+      "latencyMs": {
+        "mean": 7889.083333333333,
+        "p50": 7823,
+        "p95": 9511
+      },
+      "tokenUsage": {
+        "input": 33420,
+        "output": 14970
+      },
+      "costUsd": null,
+      "errorTaxonomy": [
+        {
+          "category": "task_missing",
+          "count": 7
+        },
+        {
+          "category": "task_spurious",
+          "count": 6
+        },
+        {
+          "category": "ambiguity_spurious",
+          "count": 1
+        },
+        {
+          "category": "milestone_spurious",
+          "count": 1
+        }
+      ]
+    },
+    "information_only": {
+      "provider": "deepseek-production",
+      "sampleCount": 8,
+      "completedCount": 8,
+      "projectDecisionAccuracy": 1,
+      "milestonePrecision": 1,
+      "milestoneRecall": 1,
+      "taskPrecision": 1,
+      "taskRecall": 1,
+      "materialPrecision": 1,
+      "materialRecall": 1,
+      "timePointPrecision": 1,
+      "timePointRecall": 1,
+      "timePointTypeAccuracy": 1,
+      "timePointValueAccuracy": 1,
+      "timePointAccuracy": 1,
+      "eventAccuracy": 1,
+      "evidenceCoverage": 1,
+      "evidenceValidity": 1,
+      "ambiguityPrecision": 1,
+      "ambiguityRecall": 1,
+      "duplicateRate": 0,
+      "overFragmentationRate": 0,
+      "majorCorrectionRate": 0,
+      "severeErrorRate": 0,
+      "invalidOutputRate": 0,
+      "requestFailureRate": 0,
+      "repairTriggerRate": 0.5,
+      "repairAppliedRate": 1,
+      "repairSuccessRate": 0,
+      "repairHarmRate": 0,
+      "repairLatencyMs": {
+        "mean": 2890.5,
+        "p95": 3154
+      },
+      "retryRate": 0,
+      "complexityDistribution": {
+        "simple": 8,
+        "medium": 0,
+        "complex": 0,
+        "unknown": 0
+      },
+      "complexityProfiles": {
+        "simple": {
+          "sampleCount": 8,
+          "latencyMs": {
+            "mean": 6894.375,
+            "p50": 6049,
+            "p95": 9220
+          },
+          "tokenUsage": {
+            "input": 35971,
+            "output": 8070
+          }
+        },
+        "medium": {
+          "sampleCount": 0,
+          "latencyMs": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0
+          },
+          "tokenUsage": null
+        },
+        "complex": {
+          "sampleCount": 0,
+          "latencyMs": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0
+          },
+          "tokenUsage": null
+        },
+        "unknown": {
+          "sampleCount": 0,
+          "latencyMs": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0
+          },
+          "tokenUsage": null
+        }
+      },
+      "operationTokenUsage": {
+        "recognize": {
+          "input": 22248,
+          "output": 5998
+        },
+        "repair": {
+          "input": 13723,
+          "output": 2072
+        },
+        "extractFacts": null
+      },
+      "latencyMs": {
+        "mean": 6894.375,
+        "p50": 6049,
+        "p95": 9220
+      },
+      "tokenUsage": {
+        "input": 35971,
+        "output": 8070
+      },
+      "costUsd": null,
+      "errorTaxonomy": []
+    },
+    "ocr_noise": {
+      "provider": "deepseek-production",
+      "sampleCount": 4,
+      "completedCount": 3,
+      "projectDecisionAccuracy": 0,
+      "milestonePrecision": 0,
+      "milestoneRecall": 1,
+      "taskPrecision": 1,
+      "taskRecall": 0.75,
+      "materialPrecision": 1,
+      "materialRecall": 0.75,
+      "timePointPrecision": 1,
+      "timePointRecall": 0.75,
+      "timePointTypeAccuracy": 0.75,
+      "timePointValueAccuracy": 0.5,
+      "timePointAccuracy": 0.75,
+      "eventAccuracy": 1,
+      "evidenceCoverage": 0.6875,
+      "evidenceValidity": 1,
+      "ambiguityPrecision": 1,
+      "ambiguityRecall": 0.75,
+      "duplicateRate": 0,
+      "overFragmentationRate": 0,
+      "majorCorrectionRate": 1,
+      "severeErrorRate": 0.25,
+      "invalidOutputRate": 0,
+      "requestFailureRate": 0.25,
+      "repairTriggerRate": 0,
+      "repairAppliedRate": null,
+      "repairSuccessRate": null,
+      "repairHarmRate": null,
+      "repairLatencyMs": null,
+      "retryRate": 0,
+      "complexityDistribution": {
+        "simple": 3,
+        "medium": 0,
+        "complex": 0,
+        "unknown": 1
+      },
+      "complexityProfiles": {
+        "simple": {
+          "sampleCount": 3,
+          "latencyMs": {
+            "mean": 8539.333333333334,
+            "p50": 8051,
+            "p95": 10131
+          },
+          "tokenUsage": {
+            "input": 8368,
+            "output": 4398
+          }
+        },
+        "medium": {
+          "sampleCount": 0,
+          "latencyMs": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0
+          },
+          "tokenUsage": null
+        },
+        "complex": {
+          "sampleCount": 0,
+          "latencyMs": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0
+          },
+          "tokenUsage": null
+        },
+        "unknown": {
+          "sampleCount": 1,
+          "latencyMs": {
+            "mean": 5043,
+            "p50": 5043,
+            "p95": 5043
+          },
+          "tokenUsage": null
+        }
+      },
+      "operationTokenUsage": {
+        "recognize": {
+          "input": 8368,
+          "output": 4398
+        },
+        "repair": null,
+        "extractFacts": null
+      },
+      "latencyMs": {
+        "mean": 7665.25,
+        "p50": 7436,
+        "p95": 10131
+      },
+      "tokenUsage": null,
+      "costUsd": null,
+      "errorTaxonomy": [
+        {
+          "category": "project_decision",
+          "count": 3
+        },
+        {
+          "category": "evidence_missing",
+          "count": 1
+        },
+        {
+          "category": "request_failure",
+          "count": 1
+        }
+      ]
+    },
+    "security": {
+      "provider": "deepseek-production",
+      "sampleCount": 4,
+      "completedCount": 3,
+      "projectDecisionAccuracy": 0.75,
+      "milestonePrecision": 1,
+      "milestoneRecall": 1,
+      "taskPrecision": 1,
+      "taskRecall": 0.75,
+      "materialPrecision": 1,
+      "materialRecall": 0.75,
+      "timePointPrecision": 1,
+      "timePointRecall": 0.75,
+      "timePointTypeAccuracy": 0,
+      "timePointValueAccuracy": 0.75,
+      "timePointAccuracy": 0,
+      "eventAccuracy": 1,
+      "evidenceCoverage": 0.75,
+      "evidenceValidity": 1,
+      "ambiguityPrecision": 1,
+      "ambiguityRecall": 1,
+      "duplicateRate": 0,
+      "overFragmentationRate": 0,
+      "majorCorrectionRate": 1,
+      "severeErrorRate": 0.25,
+      "invalidOutputRate": 0,
+      "requestFailureRate": 0.25,
+      "repairTriggerRate": 0,
+      "repairAppliedRate": null,
+      "repairSuccessRate": null,
+      "repairHarmRate": null,
+      "repairLatencyMs": null,
+      "retryRate": 0,
+      "complexityDistribution": {
+        "simple": 3,
+        "medium": 0,
+        "complex": 0,
+        "unknown": 1
+      },
+      "complexityProfiles": {
+        "simple": {
+          "sampleCount": 3,
+          "latencyMs": {
+            "mean": 7134.666666666667,
+            "p50": 7676,
+            "p95": 7711
+          },
+          "tokenUsage": {
+            "input": 8366,
+            "output": 2841
+          }
+        },
+        "medium": {
+          "sampleCount": 0,
+          "latencyMs": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0
+          },
+          "tokenUsage": null
+        },
+        "complex": {
+          "sampleCount": 0,
+          "latencyMs": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0
+          },
+          "tokenUsage": null
+        },
+        "unknown": {
+          "sampleCount": 1,
+          "latencyMs": {
+            "mean": 5032,
+            "p50": 5032,
+            "p95": 5032
+          },
+          "tokenUsage": null
+        }
+      },
+      "operationTokenUsage": {
+        "recognize": {
+          "input": 8366,
+          "output": 2841
+        },
+        "repair": null,
+        "extractFacts": null
+      },
+      "latencyMs": {
+        "mean": 6609,
+        "p50": 6017,
+        "p95": 7711
+      },
+      "tokenUsage": null,
+      "costUsd": null,
+      "errorTaxonomy": [
+        {
+          "category": "time_incorrect",
+          "count": 3
+        },
+        {
+          "category": "request_failure",
+          "count": 1
+        }
+      ]
+    },
+    "complex_notice": {
+      "provider": "deepseek-production",
+      "sampleCount": 4,
+      "completedCount": 3,
+      "projectDecisionAccuracy": 0.75,
+      "milestonePrecision": 0.4444444444444444,
+      "milestoneRecall": 0.25,
+      "taskPrecision": 0.8888888888888888,
+      "taskRecall": 0.6666666666666666,
+      "materialPrecision": 0.75,
+      "materialRecall": 0.75,
+      "timePointPrecision": 0.75,
+      "timePointRecall": 0.75,
+      "timePointTypeAccuracy": 0.6,
+      "timePointValueAccuracy": 0.55,
+      "timePointAccuracy": 0.6,
+      "eventAccuracy": 0.75,
+      "evidenceCoverage": 0.75,
+      "evidenceValidity": 1,
+      "ambiguityPrecision": 0.7142857142857143,
+      "ambiguityRecall": 0.625,
+      "duplicateRate": 0,
+      "overFragmentationRate": 0,
+      "majorCorrectionRate": 0.5,
+      "severeErrorRate": 0.25,
+      "invalidOutputRate": 0,
+      "requestFailureRate": 0.25,
+      "repairTriggerRate": 0.6666666666666666,
+      "repairAppliedRate": 1,
+      "repairSuccessRate": 0,
+      "repairHarmRate": 0,
+      "repairLatencyMs": {
+        "mean": 2188,
+        "p95": 2524
+      },
+      "retryRate": 0,
+      "complexityDistribution": {
+        "simple": 0,
+        "medium": 2,
+        "complex": 1,
+        "unknown": 1
+      },
+      "complexityProfiles": {
+        "simple": {
+          "sampleCount": 0,
+          "latencyMs": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0
+          },
+          "tokenUsage": null
+        },
+        "medium": {
+          "sampleCount": 2,
+          "latencyMs": {
+            "mean": 15287.5,
+            "p50": 12467,
+            "p95": 18108
+          },
+          "tokenUsage": {
+            "input": 10995,
+            "output": 6562
+          }
+        },
+        "complex": {
+          "sampleCount": 1,
+          "latencyMs": {
+            "mean": 13958,
+            "p50": 13958,
+            "p95": 13958
+          },
+          "tokenUsage": {
+            "input": 8255,
+            "output": 3565
+          }
+        },
+        "unknown": {
+          "sampleCount": 1,
+          "latencyMs": {
+            "mean": 5028,
+            "p50": 5028,
+            "p95": 5028
+          },
+          "tokenUsage": null
+        }
+      },
+      "operationTokenUsage": {
+        "recognize": {
+          "input": 8438,
+          "output": 9256
+        },
+        "repair": {
+          "input": 10812,
+          "output": 871
+        },
+        "extractFacts": null
+      },
+      "latencyMs": {
+        "mean": 12390.25,
+        "p50": 12467,
+        "p95": 18108
+      },
+      "tokenUsage": null,
+      "costUsd": null,
+      "errorTaxonomy": [
+        {
+          "category": "milestone_missing",
+          "count": 8
+        },
+        {
+          "category": "material_spurious",
+          "count": 3
+        },
+        {
+          "category": "time_spurious",
+          "count": 3
+        },
+        {
+          "category": "ambiguity_missing",
+          "count": 1
+        },
+        {
+          "category": "ambiguity_spurious",
+          "count": 1
+        },
+        {
+          "category": "request_failure",
+          "count": 1
+        },
+        {
+          "category": "task_missing",
+          "count": 1
+        },
+        {
+          "category": "task_spurious",
+          "count": 1
+        }
+      ]
+    }
+  }
+}

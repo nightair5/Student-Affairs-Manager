@@ -8,6 +8,21 @@ import { createServer } from 'vite'
 
 const ROOT = process.cwd()
 
+const USAGE = `Usage: node scripts/run-recognition-e2.mjs [options]
+
+Key options:
+  --provider=local-fallback|deepseek-production
+  --dataset=golden|holdout|generalization
+  --label=<unique-run-label>
+  --case-ids=<comma-separated-case-ids>
+  --limit=<positive-number>
+  --expected-prompt=<prompt-version>
+  --endpoint=<preview-api-endpoint>
+  --origin=<allowed-origin>
+  --transport=fetch|curl|python-session
+  --write-dir=<tracked-aggregate-output-directory>
+  --resume=true|false`
+
 function option(name, fallback = '') {
   const prefix = `--${name}=`
   return process.argv.find((argument) => argument.startsWith(prefix))?.slice(prefix.length) ?? fallback
@@ -199,6 +214,10 @@ function renderMarkdown(run, metrics, groupMetrics) {
 }
 
 async function main() {
+  if (process.argv.includes('--help')) {
+    console.log(USAGE)
+    return
+  }
   const provider = option('provider', 'local-fallback')
   if (!['local-fallback', 'deepseek-production'].includes(provider)) throw new Error(`Unsupported provider: ${provider}`)
   const endpoint = option('endpoint', 'https://student-affairs.site/api/deepseek')
@@ -250,7 +269,7 @@ async function main() {
       throw new Error(`Unknown case IDs: ${requestedCaseIds.filter((id) => !foundIds.has(id)).join(', ')}`)
     }
     const dataset = limit > 0 ? filteredDataset.slice(0, limit) : filteredDataset
-    const promptSource = await readFile(path.join(ROOT, 'cloudflare', 'recognition.mjs'))
+    const promptSource = await readFile(path.join(ROOT, 'cloudflare', 'recognition-prompt.mjs'))
     const promptSourceSha256 = createHash('sha256').update(promptSource).digest('hex')
     const cacheDir = path.join(ROOT, '.evaluation-cache')
     await mkdir(cacheDir, { recursive: true })
@@ -378,6 +397,7 @@ async function main() {
         ...scored,
         sourceSha256: createHash('sha256').update(fixture.rawText).digest('hex'),
         inputSha256: fixtureInputSha256(fixture),
+        resultSha256: scored.result ? createHash('sha256').update(JSON.stringify(scored.result)).digest('hex') : null,
       })
       await writeFile(checkpointFile, `${JSON.stringify([...byId.values()], null, 2)}\n`, 'utf8')
       console.log(`[${index + 1}/${dataset.length}] ${fixture.id} ${scored.status} ${scored.latencyMs}ms failures=${scored.failures.length}`)
