@@ -34,7 +34,8 @@
     "eval:recognition:e2:p2b:reveal": "node scripts/reveal-e2-7-blind-adjudication.mjs --packet=.evaluation-cache/e2-7/p2b-full-packet.json --manifest=docs/e2-path-a-planning/p2b-full-packet-manifest.json --labels=docs/e2-path-a-planning/p2b-full-labels.json --key=docs/e2-path-a-planning/p2b-reveal-key.json",
     "eval:recognition:e2:p2b:summarize": "node scripts/summarize-e2-7-p2b.mjs",
     "eval:recognition:e2:p3:prepare": "node scripts/prepare-e2-7-p3-audit.mjs",
-    "eval:recognition:e2:p3:summarize": "node scripts/summarize-e2-7-p3-audit.mjs"
+    "eval:recognition:e2:p3:summarize": "node scripts/summarize-e2-7-p3-audit.mjs",
+    "eval:recognition:e2:p4": "node scripts/evaluate-e2-7-p4-normalizer.mjs"
   },
   "dependencies": {
     "lucide-react": "^0.468.0",

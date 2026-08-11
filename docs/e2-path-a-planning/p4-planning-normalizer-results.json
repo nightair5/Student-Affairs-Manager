@@ -1,0 +1,376 @@
+{
+  "schemaVersion": "e2.7-p4-planning-normalizer-results-1.0.0",
+  "status": "COMPLETE_EXPOSED_DIAGNOSTIC_ONLY",
+  "provenance": {
+    "inputPacketSha256": "0ad91dc4bb5a7d7ee6c88e749b731044e20dfc19c23e4cc69a94839a0eadda7d",
+    "revealKeySha256": "e4a6086600654a90854d88a05b223f8b1a1a966d77a1ec1e470eef1743422a3e",
+    "normalizerVersion": "path-a-planning-normalizer-1.0.0",
+    "promptVersion": "recognition-2.4.1",
+    "modelName": "deepseek-v4-flash",
+    "schemaVersion": "2.0",
+    "rawIgnoredPath": ".evaluation-cache/e2-7/p4-planning-normalizer-evaluation.json",
+    "rawSha256": "126470d6e06df00c9b3eecfdf6bb99615443dd51e021005f0c4f46600b37018f"
+  },
+  "sample": {
+    "count": 72,
+    "source": "P2B frozen exposed diagnostic sample",
+    "changedRowCount": 0,
+    "changedRowRate": 0,
+    "changeTypeCounts": {}
+  },
+  "strictMetrics": {
+    "before": {
+      "provider": "deepseek-production",
+      "sampleCount": 72,
+      "completedCount": 72,
+      "projectDecisionAccuracy": 0.9444444444444444,
+      "milestonePrecision": 0.40384615384615385,
+      "milestoneRecall": 0.4666666666666667,
+      "taskPrecision": 0.8641975308641975,
+      "taskRecall": 0.7777777777777778,
+      "materialPrecision": 0.9761904761904762,
+      "materialRecall": 0.9761904761904762,
+      "timePointPrecision": 0.9326923076923077,
+      "timePointRecall": 0.9326923076923077,
+      "timePointTypeAccuracy": 0.8598130841121495,
+      "timePointValueAccuracy": 0.794392523364486,
+      "timePointAccuracy": 0.8598130841121495,
+      "eventAccuracy": 0.8275862068965517,
+      "evidenceCoverage": 0.9742647058823529,
+      "evidenceValidity": 1,
+      "ambiguityPrecision": 0.6764705882352942,
+      "ambiguityRecall": 0.6388888888888888,
+      "duplicateRate": 0,
+      "overFragmentationRate": 0,
+      "majorCorrectionRate": 0.5694444444444444,
+      "severeErrorRate": 0,
+      "invalidOutputRate": 0,
+      "requestFailureRate": 0,
+      "repairTriggerRate": 0,
+      "repairAppliedRate": null,
+      "repairSuccessRate": null,
+      "repairHarmRate": null,
+      "repairLatencyMs": null,
+      "retryRate": 0,
+      "complexityDistribution": {
+        "simple": 0,
+        "medium": 0,
+        "complex": 0,
+        "unknown": 72
+      },
+      "complexityProfiles": {
+        "simple": {
+          "sampleCount": 0,
+          "latencyMs": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0
+          },
+          "tokenUsage": null
+        },
+        "medium": {
+          "sampleCount": 0,
+          "latencyMs": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0
+          },
+          "tokenUsage": null
+        },
+        "complex": {
+          "sampleCount": 0,
+          "latencyMs": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0
+          },
+          "tokenUsage": null
+        },
+        "unknown": {
+          "sampleCount": 72,
+          "latencyMs": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0
+          },
+          "tokenUsage": null
+        }
+      },
+      "operationTokenUsage": {
+        "recognize": null,
+        "repair": null,
+        "extractFacts": null
+      },
+      "latencyMs": {
+        "mean": 0,
+        "p50": 0,
+        "p95": 0
+      },
+      "tokenUsage": null,
+      "costUsd": null,
+      "errorTaxonomy": [
+        {
+          "category": "milestone_missing",
+          "count": 24
+        },
+        {
+          "category": "task_missing",
+          "count": 20
+        },
+        {
+          "category": "ambiguity_missing",
+          "count": 13
+        },
+        {
+          "category": "ambiguity_spurious",
+          "count": 11
+        },
+        {
+          "category": "task_spurious",
+          "count": 11
+        },
+        {
+          "category": "project_decision",
+          "count": 8
+        },
+        {
+          "category": "evidence_missing",
+          "count": 7
+        },
+        {
+          "category": "time_missing",
+          "count": 7
+        },
+        {
+          "category": "milestone_spurious",
+          "count": 6
+        },
+        {
+          "category": "time_spurious",
+          "count": 6
+        },
+        {
+          "category": "event_missing",
+          "count": 5
+        },
+        {
+          "category": "time_incorrect",
+          "count": 5
+        },
+        {
+          "category": "material_missing",
+          "count": 2
+        },
+        {
+          "category": "material_spurious",
+          "count": 2
+        },
+        {
+          "category": "event_spurious",
+          "count": 1
+        }
+      ]
+    },
+    "after": {
+      "provider": "deepseek-production",
+      "sampleCount": 72,
+      "completedCount": 72,
+      "projectDecisionAccuracy": 0.9444444444444444,
+      "milestonePrecision": 0.40384615384615385,
+      "milestoneRecall": 0.4666666666666667,
+      "taskPrecision": 0.8641975308641975,
+      "taskRecall": 0.7777777777777778,
+      "materialPrecision": 0.9761904761904762,
+      "materialRecall": 0.9761904761904762,
+      "timePointPrecision": 0.9326923076923077,
+      "timePointRecall": 0.9326923076923077,
+      "timePointTypeAccuracy": 0.8598130841121495,
+      "timePointValueAccuracy": 0.794392523364486,
+      "timePointAccuracy": 0.8598130841121495,
+      "eventAccuracy": 0.8275862068965517,
+      "evidenceCoverage": 0.9742647058823529,
+      "evidenceValidity": 1,
+      "ambiguityPrecision": 0.6764705882352942,
+      "ambiguityRecall": 0.6388888888888888,
+      "duplicateRate": 0,
+      "overFragmentationRate": 0,
+      "majorCorrectionRate": 0.5694444444444444,
+      "severeErrorRate": 0,
+      "invalidOutputRate": 0,
+      "requestFailureRate": 0,
+      "repairTriggerRate": 0,
+      "repairAppliedRate": null,
+      "repairSuccessRate": null,
+      "repairHarmRate": null,
+      "repairLatencyMs": null,
+      "retryRate": 0,
+      "complexityDistribution": {
+        "simple": 0,
+        "medium": 0,
+        "complex": 0,
+        "unknown": 72
+      },
+      "complexityProfiles": {
+        "simple": {
+          "sampleCount": 0,
+          "latencyMs": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0
+          },
+          "tokenUsage": null
+        },
+        "medium": {
+          "sampleCount": 0,
+          "latencyMs": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0
+          },
+          "tokenUsage": null
+        },
+        "complex": {
+          "sampleCount": 0,
+          "latencyMs": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0
+          },
+          "tokenUsage": null
+        },
+        "unknown": {
+          "sampleCount": 72,
+          "latencyMs": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0
+          },
+          "tokenUsage": null
+        }
+      },
+      "operationTokenUsage": {
+        "recognize": null,
+        "repair": null,
+        "extractFacts": null
+      },
+      "latencyMs": {
+        "mean": 0,
+        "p50": 0,
+        "p95": 0
+      },
+      "tokenUsage": null,
+      "costUsd": null,
+      "errorTaxonomy": [
+        {
+          "category": "milestone_missing",
+          "count": 24
+        },
+        {
+          "category": "task_missing",
+          "count": 20
+        },
+        {
+          "category": "ambiguity_missing",
+          "count": 13
+        },
+        {
+          "category": "ambiguity_spurious",
+          "count": 11
+        },
+        {
+          "category": "task_spurious",
+          "count": 11
+        },
+        {
+          "category": "project_decision",
+          "count": 8
+        },
+        {
+          "category": "evidence_missing",
+          "count": 7
+        },
+        {
+          "category": "time_missing",
+          "count": 7
+        },
+        {
+          "category": "milestone_spurious",
+          "count": 6
+        },
+        {
+          "category": "time_spurious",
+          "count": 6
+        },
+        {
+          "category": "event_missing",
+          "count": 5
+        },
+        {
+          "category": "time_incorrect",
+          "count": 5
+        },
+        {
+          "category": "material_missing",
+          "count": 2
+        },
+        {
+          "category": "material_spurious",
+          "count": 2
+        },
+        {
+          "category": "event_spurious",
+          "count": 1
+        }
+      ]
+    },
+    "delta": {
+      "projectDecisionAccuracy": 0,
+      "milestonePrecision": 0,
+      "milestoneRecall": 0,
+      "taskPrecision": 0,
+      "taskRecall": 0,
+      "materialPrecision": 0,
+      "materialRecall": 0,
+      "timePointPrecision": 0,
+      "timePointRecall": 0,
+      "timePointTypeAccuracy": 0,
+      "timePointValueAccuracy": 0,
+      "timePointAccuracy": 0,
+      "eventAccuracy": 0,
+      "evidenceCoverage": 0,
+      "evidenceValidity": 0,
+      "ambiguityPrecision": 0,
+      "ambiguityRecall": 0,
+      "duplicateRate": 0,
+      "overFragmentationRate": 0,
+      "majorCorrectionRate": 0,
+      "severeErrorRate": 0
+    }
+  },
+  "pairedSafety": {
+    "strictMajorImproved": 0,
+    "strictMajorHarmed": 0,
+    "severeImproved": 0,
+    "severeHarmed": 0
+  },
+  "runtime": {
+    "addedModelCalls": 0,
+    "addedInputTokens": 0,
+    "addedOutputTokens": 0,
+    "normalizerLatencyMs": {
+      "mean": 0.09399722222221858,
+      "max": 1.0077999999999747
+    }
+  },
+  "userImpactMajor": {
+    "status": "UNCHANGED_BY_IDENTITY",
+    "reason": "Normalizer made no semantic output changes."
+  },
+  "conclusion": "P4_NO_STRICT_GAIN",
+  "limitations": [
+    "This evaluation uses already exposed P2B diagnostics and cannot serve as a new Blind.",
+    "The public P2B packet omits four fixed metadata fields; they are restored to their frozen P0 values and are not consumed by the normalizer or scorer.",
+    "Generation latency and model tokens are unchanged; reported latency is only local deterministic normalization overhead.",
+    "No changed output is assigned a new user-impact label without a separate frozen review."
+  ]
+}
