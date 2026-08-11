@@ -1,0 +1,215 @@
+{
+  "schemaVersion": "e2.7-p6-router-results-1.0.0",
+  "status": "P6_ROUTER_GATE_PASSED_EXPOSED_DIAGNOSTIC",
+  "provenance": {
+    "labelSetSha256": "873220e59929649ab36600dd550dce2b14ab7220b64e4dba41f458e551d2f194",
+    "routerVersion": "recognition-router-1.2.0",
+    "promptVersion": "recognition-2.4.1",
+    "modelName": "deepseek-v4-flash",
+    "schemaVersion": "2.0",
+    "pipelineVersion": "recognition-pipeline-2.2.1",
+    "previewUrl": "https://student-affairs-manager-preview.nightsdell.workers.dev",
+    "previewVersionId": "23a2769c-b787-467a-bd7e-614de0211852",
+    "cacheFiles": {
+      "golden": {
+        "ignoredPath": ".evaluation-cache/deepseek-production-golden-e2-7-p6-router-golden.json",
+        "sha256": "d8d2b364dff7e9bc13cde60538cc388555d860fbd82910bb5508255b43036d7f",
+        "rowCount": 10
+      },
+      "exposed_holdout": {
+        "ignoredPath": ".evaluation-cache/deepseek-production-holdout-e2-7-p6-router-holdout.json",
+        "sha256": "ce6e3c8fdea03e916b59d7f321a6135345c8f031e84b583e0209ee2d29ae1294",
+        "rowCount": 40
+      },
+      "development": {
+        "ignoredPath": ".evaluation-cache/deepseek-production-generalization-e2-7-p6-router-development.json",
+        "sha256": "f091c6ea7a64e60b81d3b242b8961af3ea287f05e79f752ae4ac573e5115aaab",
+        "rowCount": 30
+      }
+    }
+  },
+  "sample": {
+    "count": 80,
+    "completedCount": 80,
+    "labelDistribution": {
+      "complex": 32,
+      "simple": 20,
+      "medium": 28
+    },
+    "predictedDistribution": {
+      "complex": 33,
+      "simple": 19,
+      "medium": 28
+    },
+    "selectedStrategyDistribution": {
+      "single_pass": 80
+    }
+  },
+  "routingMetrics": {
+    "accuracy": 0.975,
+    "complexRecall": 1,
+    "underRoutingRate": 0,
+    "complexToSimpleUnderRoutingRate": 0,
+    "overRoutingRate": 0.025,
+    "confusion": {
+      "complex->complex": 32,
+      "simple->simple": 19,
+      "medium->medium": 27,
+      "simple->medium": 1,
+      "medium->complex": 1
+    }
+  },
+  "gate": {
+    "required": {
+      "accuracy": 0.75,
+      "complexRecall": 0.85,
+      "maxUnderRoutingRate": 0.15,
+      "maxOverRoutingRate": 0.25
+    },
+    "passed": true
+  },
+  "recognitionQualityOverall": {
+    "sampleCount": 80,
+    "completedCount": 80,
+    "taskPrecision": 0.8,
+    "taskRecall": 0.6779661016949152,
+    "materialPrecision": 0.981651376146789,
+    "materialRecall": 0.9553571428571429,
+    "timePointTypeAccuracy": 0.7887323943661971,
+    "timePointValueAccuracy": 0.7605633802816901,
+    "eventAccuracy": 0.8461538461538461,
+    "evidenceCoverage": 0.9734513274336283,
+    "evidenceValidity": 1,
+    "ambiguityPrecision": 0.7272727272727273,
+    "ambiguityRecall": 0.6808510638297872,
+    "strictMajorCorrectionRate": 0.6625,
+    "severeErrorRate": 0,
+    "transportFailureRate": 0,
+    "invalidOutputRate": 0,
+    "repairTriggerRate": 0.2875,
+    "repairHarmRate": 0,
+    "latencyMs": {
+      "mean": 8884.225,
+      "p50": 8174,
+      "p95": 15615
+    },
+    "tokenUsage": {
+      "input": 271535,
+      "output": 129149
+    },
+    "averageTokensPerCase": {
+      "input": 3394.1875,
+      "output": 1614.3625
+    }
+  },
+  "recognitionQualityByPredictedRoute": {
+    "simple": {
+      "sampleCount": 19,
+      "completedCount": 19,
+      "taskPrecision": 0.8,
+      "taskRecall": 0.8,
+      "materialPrecision": 1,
+      "materialRecall": 1,
+      "timePointTypeAccuracy": 0.6666666666666666,
+      "timePointValueAccuracy": 0.6666666666666666,
+      "eventAccuracy": 0.5,
+      "evidenceCoverage": 0.9259259259259259,
+      "evidenceValidity": 1,
+      "ambiguityPrecision": 1,
+      "ambiguityRecall": 1,
+      "strictMajorCorrectionRate": 0.21052631578947367,
+      "severeErrorRate": 0,
+      "transportFailureRate": 0,
+      "invalidOutputRate": 0,
+      "repairTriggerRate": 0.47368421052631576,
+      "repairHarmRate": 0,
+      "latencyMs": {
+        "mean": 6903.315789473684,
+        "p50": 7173,
+        "p95": 8584
+      },
+      "tokenUsage": {
+        "input": 71511,
+        "output": 22255
+      },
+      "averageTokensPerCase": {
+        "input": 3763.7368421052633,
+        "output": 1171.3157894736842
+      }
+    },
+    "medium": {
+      "sampleCount": 28,
+      "completedCount": 28,
+      "taskPrecision": 0.6551724137931034,
+      "taskRecall": 0.5277777777777778,
+      "materialPrecision": 1,
+      "materialRecall": 0.9210526315789473,
+      "timePointTypeAccuracy": 0.6428571428571429,
+      "timePointValueAccuracy": 0.5714285714285714,
+      "eventAccuracy": 0.5,
+      "evidenceCoverage": 0.9541284403669725,
+      "evidenceValidity": 1,
+      "ambiguityPrecision": 0.8666666666666667,
+      "ambiguityRecall": 0.7647058823529411,
+      "strictMajorCorrectionRate": 0.8571428571428571,
+      "severeErrorRate": 0,
+      "transportFailureRate": 0,
+      "invalidOutputRate": 0,
+      "repairTriggerRate": 0.07142857142857142,
+      "repairHarmRate": 0,
+      "latencyMs": {
+        "mean": 6947.035714285715,
+        "p50": 6767,
+        "p95": 8795
+      },
+      "tokenUsage": {
+        "input": 71925,
+        "output": 33698
+      },
+      "averageTokensPerCase": {
+        "input": 2568.75,
+        "output": 1203.5
+      }
+    },
+    "complex": {
+      "sampleCount": 33,
+      "completedCount": 33,
+      "taskPrecision": 0.8636363636363636,
+      "taskRecall": 0.7402597402597403,
+      "materialPrecision": 0.967741935483871,
+      "materialRecall": 0.967741935483871,
+      "timePointTypeAccuracy": 0.8431372549019608,
+      "timePointValueAccuracy": 0.8235294117647058,
+      "eventAccuracy": 1,
+      "evidenceCoverage": 0.9901477832512315,
+      "evidenceValidity": 1,
+      "ambiguityPrecision": 0.6551724137931034,
+      "ambiguityRecall": 0.6333333333333333,
+      "strictMajorCorrectionRate": 0.7575757575757576,
+      "severeErrorRate": 0,
+      "transportFailureRate": 0,
+      "invalidOutputRate": 0,
+      "repairTriggerRate": 0.36363636363636365,
+      "repairHarmRate": 0,
+      "latencyMs": {
+        "mean": 11668.424242424242,
+        "p50": 10832,
+        "p95": 16449
+      },
+      "tokenUsage": {
+        "input": 128099,
+        "output": 73196
+      },
+      "averageTokensPerCase": {
+        "input": 3881.787878787879,
+        "output": 2218.060606060606
+      }
+    }
+  },
+  "interpretation": [
+    "Router metrics are calibration results on exposed diagnostic labels and are not Blind evidence.",
+    "All 80 model calls used selectedStrategy=single_pass. Per-route quality, latency and tokens are descriptive complexity profiles, not a causal comparison of different execution strategies.",
+    "The complex intensive candidate remains disabled; no FactLedger or two-stage Planner was called.",
+    "User-impact Major Correction was not re-adjudicated for this P6 run; strict Major Correction is reported and must not be relabeled as user impact."
+  ]
+}
