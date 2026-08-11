@@ -17,7 +17,7 @@ if (sha256(inputBytes) !== manifest.inputArtifactSha256) throw new Error('P8 inp
 const input = JSON.parse(inputBytes.toString('utf8'))
 let rows = []
 try { rows = JSON.parse(await readFile(CHECKPOINT_PATH, 'utf8')).rows ?? [] } catch {}
-const completed = new Map(rows.map((row) => [`${row.caseId}:${row.mode}`, row]))
+const completed = new Map(rows.filter((row) => row.status === 'ok').map((row) => [`${row.caseId}:${row.mode}`, row]))
 
 for (const entry of input.inputs.filter((item) => item.issues.length > 0)) {
   const modes = Number.parseInt(entry.sourceSha256.slice(-2), 16) % 2 === 0 ? ['R1', 'R2'] : ['R2', 'R1']
@@ -58,6 +58,7 @@ for (const entry of input.inputs.filter((item) => item.issues.length > 0)) {
         error: error instanceof Error ? error.message : 'UNKNOWN',
       }
     }
+    rows = rows.filter((existing) => `${existing.caseId}:${existing.mode}` !== key)
     rows.push(row)
     completed.set(key, row)
     await writeFile(CHECKPOINT_PATH, `${JSON.stringify({ schemaVersion: 'e2.7-p8-repair-ablation-1.0.0', inputArtifactSha256: manifest.inputArtifactSha256, endpoint, rows }, null, 2)}\n`, 'utf8')
