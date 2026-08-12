@@ -1,5 +1,6 @@
 /* global console, fetch, process */
 import { createHash } from 'node:crypto'
+import { spawn } from 'node:child_process'
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 
@@ -36,6 +37,36 @@ async function fileExists(file) {
     if (error && typeof error === 'object' && 'code' in error && error.code === 'ENOENT') return false
     throw error
   }
+}
+
+function curlJson(url, { headers, body }) {
+  return new Promise((resolve, reject) => {
+    const command = process.platform === 'win32' ? 'curl.exe' : 'curl'
+    const args = ['--silent', '--show-error', '--connect-timeout', '20', '--max-time', '150', '--request', 'POST']
+    Object.entries(headers).forEach(([name, value]) => args.push('--header', `${name}: ${value}`))
+    args.push('--data-binary', '@-', '--write-out', '\n%{http_code}', url)
+    const child = spawn(command, args, { stdio: ['pipe', 'pipe', 'pipe'], windowsHide: true })
+    const stdout = []
+    child.stdout.on('data', (chunk) => stdout.push(chunk))
+    child.on('error', reject)
+    child.on('close', (code) => {
+      const output = Buffer.concat(stdout).toString('utf8')
+      if (code !== 0) return reject(new Error(`curl_exit_${code}`))
+      const match = output.match(/\n(\d{3})$/u)
+      if (!match) return reject(new Error('curl_missing_http_status'))
+      const status = Number(match[1])
+      let payload = null
+      try { payload = JSON.parse(output.slice(0, -match[0].length)) } catch { /* caller records invalid payload */ }
+      resolve({ ok: status >= 200 && status < 300, status, payload })
+    })
+    child.stdin.end(body)
+  })
+}
+
+async function requestJson(transport, url, options) {
+  if (transport === 'curl') return curlJson(url, options)
+  const response = await fetch(url, options)
+  return { ok: response.ok, status: response.status, payload: await response.json().catch(() => null) }
 }
 
 function orderFor(cases) {
@@ -75,12 +106,15 @@ async function main() {
   const label = option('label')
   const endpoint = option('endpoint', 'https://student-affairs-manager-preview.nightsdell.workers.dev/api/experiments/e2-9/v4-pro-benchmark')
   const origin = option('origin', new URL(endpoint).origin)
+  const transport = option('transport', 'fetch')
+  const resume = option('resume', 'false') === 'true'
   const token = process.env.E2_V4_PRO_BENCHMARK_TOKEN ?? ''
   const sourceManifestPath = path.resolve(ROOT, option('source-manifest', '.evaluation-cache/e2-9/source-only-manifest.json'))
   if (!['smoke', 'screening', 'selection-remaining'].includes(phase)) throw new Error('phase must be smoke, screening, or selection-remaining')
   if (!/^[a-z0-9][a-z0-9._-]{2,80}$/u.test(label)) throw new Error('A unique --label is required')
   if (token.length < 32) throw new Error('E2_V4_PRO_BENCHMARK_TOKEN is required in process environment')
   if (!origin.includes('preview') || !new URL(endpoint).hostname.includes('preview')) throw new Error('Preview endpoint and origin are required')
+  if (!['fetch', 'curl'].includes(transport)) throw new Error('transport must be fetch or curl')
 
   const sourceManifest = JSON.parse(await readFile(sourceManifestPath, 'utf8'))
   assertFirewall(sourceManifest)
@@ -95,12 +129,36 @@ async function main() {
   ))
   const checkpointDir = path.join(ROOT, '.evaluation-cache', 'e2-9', phase)
   const checkpointPath = path.join(checkpointDir, `${label}.json`)
-  if (await fileExists(checkpointPath)) throw new Error(`Checkpoint already exists: ${checkpointPath}`)
+  const checkpointExists = await fileExists(checkpointPath)
+  if (checkpointExists && !resume) throw new Error(`Checkpoint already exists: ${checkpointPath}`)
   await mkdir(checkpointDir, { recursive: true })
-  const observations = []
-  const startedAt = new Date().toISOString()
+  const previousCheckpoint = checkpointExists ? JSON.parse(await readFile(checkpointPath, 'utf8')) : null
+  if (previousCheckpoint && (previousCheckpoint.phase !== phase || previousCheckpoint.label !== label || previousCheckpoint.sourceOnlyManifestSha256 !== sha256(JSON.stringify(sourceManifest)))) {
+    throw new Error('Checkpoint provenance mismatch')
+  }
+  const observations = previousCheckpoint?.observations ?? []
+  const byObservation = new Map(observations.map((item) => [`${item.caseId}:${item.modelAlias}`, item]))
+  const startedAt = previousCheckpoint?.startedAt ?? new Date().toISOString()
   const runOrder = orderFor(cases)
   for (const [index, { fixture, modelAlias }] of runOrder.entries()) {
+    const observationKey = `${fixture.caseId}:${modelAlias}`
+    const previous = byObservation.get(observationKey)
+    if (previous && previous.status !== 'transport_failure') {
+      console.log(`[${index + 1}/${runOrder.length}] ${fixture.caseId} ${modelAlias} preserved_${previous.status}`)
+      continue
+    }
+    const previousAttempts = previous?.clientAttempts ?? (previous ? [{
+      attempt: 1,
+      transport: 'fetch',
+      invokedAt: previous.invokedAt,
+      status: previous.status,
+      error: previous.error,
+      clientDurationMs: previous.clientDurationMs,
+    }] : [])
+    if (previousAttempts.length >= 2) {
+      console.log(`[${index + 1}/${runOrder.length}] ${fixture.caseId} ${modelAlias} retry_exhausted`)
+      continue
+    }
     const requestBody = {
       modelAlias,
       sourceType: fixture.sourceType,
@@ -114,12 +172,12 @@ async function main() {
     const clientStartedAt = Date.now()
     let observation
     try {
-      const response = await fetch(`${endpoint}/generate`, {
+      const response = await requestJson(transport, `${endpoint}/generate`, {
         method: 'POST',
         headers: { origin, authorization: `Bearer ${token}`, 'content-type': 'application/json', accept: 'application/json' },
         body: JSON.stringify(requestBody),
       })
-      const payload = await response.json().catch(() => null)
+      const payload = response.payload
       const clientDurationMs = Date.now() - clientStartedAt
       if (!response.ok) {
         observation = { status: 'request_failure', httpStatus: response.status, error: payload?.error ?? 'INVALID_HTTP_RESPONSE', payload: payload ?? null, clientDurationMs }
@@ -134,7 +192,16 @@ async function main() {
     } catch (error) {
       observation = { status: 'transport_failure', httpStatus: null, error: error instanceof Error ? error.name : 'TRANSPORT_FAILURE', clientDurationMs: Date.now() - clientStartedAt }
     }
-    observations.push({
+    const clientAttempt = {
+      attempt: previousAttempts.length + 1,
+      transport,
+      invokedAt,
+      status: observation.status,
+      httpStatus: observation.httpStatus,
+      error: observation.error ?? null,
+      clientDurationMs: observation.clientDurationMs,
+    }
+    const persisted = {
       observationIndex: index + 1,
       caseId: fixture.caseId,
       sourceSet: fixture.sourceSet,
@@ -145,13 +212,18 @@ async function main() {
       inputSha256: fixture.inputSha256,
       invokedAt,
       ...observation,
-    })
+      clientAttempts: [...previousAttempts, clientAttempt],
+    }
+    byObservation.set(observationKey, persisted)
+    const existingIndex = observations.findIndex((item) => item.caseId === fixture.caseId && item.modelAlias === modelAlias)
+    if (existingIndex >= 0) observations[existingIndex] = persisted
+    else observations.push(persisted)
     await writeFile(checkpointPath, `${JSON.stringify({
       schemaVersion: 'e2.9-paired-checkpoint-1.0.0', phase, label, startedAt,
       sourceOnlyManifestSha256: sha256(JSON.stringify(sourceManifest)),
       observations,
     }, null, 2)}\n`, 'utf8')
-    console.log(`[${index + 1}/${runOrder.length}] ${fixture.caseId} ${modelAlias} ${observation.status}`)
+    console.log(`[${index + 1}/${runOrder.length}] ${fixture.caseId} ${modelAlias} ${observation.status} client_attempt=${clientAttempt.attempt}`)
   }
   const complete = observations.filter((item) => item.status === 'complete').length
   const summary = {
@@ -160,6 +232,8 @@ async function main() {
     complete,
     failed: observations.length - complete,
     callBudgetConsumed: observations.length,
+    clientAttemptCount: observations.reduce((sum, item) => sum + (item.clientAttempts?.length ?? 1), 0),
+    transport,
     modelCounts: Object.fromEntries(Object.keys(MODEL_BY_ALIAS).map((alias) => [alias, observations.filter((item) => item.modelAlias === alias).length])),
     checkpointPath: path.relative(ROOT, checkpointPath),
     checkpointSha256: sha256(await readFile(checkpointPath, 'utf8')),
