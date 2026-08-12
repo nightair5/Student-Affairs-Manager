@@ -11,6 +11,6 @@
 | R1-S4 | Selection v2 | remaining 16 × 2 | 32 | NOT RUN | blocked by S3; zero calls |
 | R1-S5 | Candidate Freeze | immutable candidate manifest | 0 | NOT CREATED | blocked by S3 |
 | R1-S6 | New Blind | 24 × 2 | 48 | NOT RUN | zero calls |
-| R1-S8 | Audit/cleanup | tests、Preview disable、secret cleanup、fresh audit | 0 | IN PROGRESS | cleanup PASS; fresh audit pending |
+| R1-S8 | Audit/cleanup | tests、Preview disable、secret cleanup、fresh audit | 0 | COMPLETE | cleanup PASS; audit FAIL (same-family provisional protocol integrity) |
 
 Final status: `V4_PRO_SCREENING_V2_FAIL`. Quality conclusion: `NOT AVAILABLE`.

@@ -52,7 +52,16 @@
     "proFailure": "BASIC_CONTENT_EMPTY",
     "failureClassification": "HARNESS_PROTOCOL_DEFECT",
     "scoring": "NOT RUN",
-    "pathMaskedReview": "NOT RUN"
+    "pathMaskedReview": "NOT RUN",
+    "normalizedPureInformationResult": "0 business entities + 1 evidence + requiresAction=false",
+    "rawPureInformationOutputPerArm": "2 timePoints + 1 event + 1 evidence"
+  },
+  "resultLineage": {
+    "proObservationCount": 13,
+    "executionIdentityPro": 13,
+    "resultModelNameMislabeledFlash": 13,
+    "upstreamFallback": false,
+    "status": "FAIL"
   },
   "observedPerformance": {
     "smoke": {
@@ -78,5 +87,12 @@
     "e2": "READY WITH BLOCKERS",
     "e3": "NOT READY",
     "production": "NOT READY"
+  },
+  "independentAudit": {
+    "overallVerdict": "FAIL",
+    "provisional": true,
+    "reviewIndependence": "same-family",
+    "reasonCode": "protocol_integrity_failure_with_fail_closed_stop",
+    "changesFinalStatus": false
   }
 }

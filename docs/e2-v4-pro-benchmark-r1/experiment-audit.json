@@ -1,0 +1,377 @@
+{
+  "schemaVersion": "e2.9-r1-experiment-audit-1.0.0",
+  "auditSkill": "experiment-audit",
+  "generatedAt": "2026-08-12T18:14:20.579Z",
+  "date": "2026-08-13",
+  "overallVerdict": "FAIL",
+  "integrityStatus": "fail",
+  "reasonCode": "protocol_integrity_failure_with_fail_closed_stop",
+  "provisional": true,
+  "reviewIndependence": "same-family",
+  "acceptanceStatus": "provisional",
+  "fullyIndependent": false,
+  "auditor": "Codex fresh same-family reviewer",
+  "scope": {
+    "readOnlyAudit": true,
+    "modelCallsRun": false,
+    "experimentRunnerRun": false,
+    "deploymentMutation": false,
+    "secretMutation": false,
+    "gitMutation": false,
+    "allowedWrites": [
+      "docs/e2-v4-pro-benchmark-r1/EXPERIMENT_AUDIT.md",
+      "docs/e2-v4-pro-benchmark-r1/experiment-audit.json"
+    ],
+    "traceWritten": false,
+    "traceOmissionReason": "User limited all writes to the two audit artifacts."
+  },
+  "auditedState": {
+    "branch": "codex/e2-9-v4-pro-protocol-rerun",
+    "baselineCommit": "b2ea4a4b27bf543f77a3c3a9cd5439b92a950720",
+    "baselineTag": "v2-e2-9-protocol-blocked",
+    "baselineTagResolvedCommit": "b2ea4a4b27bf543f77a3c3a9cd5439b92a950720",
+    "baselineTagObject": "c84d4781d10e76ef53c32b7c260fa2d24c7d25de",
+    "protocolFreezeCommit": "578aad5a1bfc8ba523246dce8a7344cb4155bd3a",
+    "reportCommit": "1c6b69e77d88e10c21cd2e2430ae6b1ad3c22513",
+    "frozenInputDiffFromFreezeToReport": "NONE"
+  },
+  "claims": [
+    {
+      "id": "C1_PRO_QUALITY_GAIN",
+      "status": "UNSUPPORTED_NOT_RUN",
+      "impact": "No model-quality conclusion is available because scoring, path-masked review, Selection and Blind did not run."
+    },
+    {
+      "id": "C2_ONLY_MODEL_SELECTION_VARIES",
+      "status": "PARTIALLY_SUPPORTED_WITH_PROVENANCE_DEFECT",
+      "impact": "Execution metadata shows frozen versions and parameters with requested/returned identity matching, but every Pro result.modelName is mislabeled as Flash and global no-rerun is not ledger-proven."
+    },
+    {
+      "id": "BASIC_CONTENT_EMPTY_IS_MODEL_FAILURE",
+      "status": "REJECTED",
+      "impact": "The failure is a Screening harness role-propagation defect on the normalized pure-information result."
+    },
+    {
+      "id": "V4_PRO_SCREENING_V2_FAIL",
+      "status": "SUPPORTED_AS_PROTOCOL_INTEGRITY_STOP",
+      "impact": "The terminal status remains valid, but it is not a Pro quality failure."
+    },
+    {
+      "id": "DOWNSTREAM_STAGES_NOT_RUN",
+      "status": "SUPPORTED_AND_REQUIRED",
+      "impact": "Scorer, path-masked review, Screening Gate, Selection, Candidate Freeze and New Blind must remain NOT RUN or NOT CREATED."
+    },
+    {
+      "id": "CLEANUP_AND_PRODUCTION_BOUNDARY",
+      "status": "SUPPORTED_CURRENTLY",
+      "impact": "Live read-only Cloudflare evidence shows Preview disabled and cleaned up, and no R1 Production deployment."
+    }
+  ],
+  "findings": [
+    {
+      "id": "F-01",
+      "severity": "HIGH",
+      "status": "FAIL",
+      "title": "Screening pure-information role is lost and BASIC_CONTENT_EMPTY is a harness protocol defect",
+      "evidence": [
+        "docs/e2-v4-pro-benchmark-r1/screening-v2-manifest.json:66-78",
+        ".evaluation-cache/e2-9-r1/protocol-2.0.0/source-only-manifest.json:43-52,102-110",
+        "scripts/prepare-e2-9-r1-manifests.mjs:105-119",
+        "scripts/run-e2-9-r1.mjs:91-106,192-205",
+        ".evaluation-cache/e2-9-r1/protocol-2.0.0/screening/r1-screening-v2-20260813-a.json:5022-5035,5065-5083,5154-5167,5198-5217"
+      ],
+      "changesFinalStatus": false,
+      "finalStatusImpact": "Confirms V4_PRO_SCREENING_V2_FAIL is a protocol-integrity stop, not a model-quality failure."
+    },
+    {
+      "id": "F-02",
+      "severity": "HIGH",
+      "status": "FAIL",
+      "title": "Checkpoint gateStatus COMPLETE conflicts with two integrity_failure observations",
+      "evidence": [
+        ".evaluation-cache/e2-9-r1/protocol-2.0.0/screening/r1-screening-v2-20260813-a.json:1-15,5022-5030,5154-5162",
+        "scripts/run-e2-9-r1.mjs:191-215"
+      ],
+      "changesFinalStatus": false,
+      "finalStatusImpact": "Downstream observation-level guards correctly fail closed."
+    },
+    {
+      "id": "F-03",
+      "severity": "HIGH",
+      "status": "FAIL",
+      "title": "All 13 Pro results carry modelName deepseek-v4-flash",
+      "evidence": [
+        ".evaluation-cache/e2-9-r1/protocol-2.0.0/screening/r1-screening-v2-20260813-a.json:5173-5179,5247-5251",
+        "JSON recomputation: 13/13 Pro observations have execution requestedModel=returnedModel=deepseek-v4-pro while rawOutput/result.modelName=deepseek-v4-flash",
+        "scripts/run-e2-9-r1.mjs:91-102"
+      ],
+      "upstreamFallback": false,
+      "changesFinalStatus": false,
+      "finalStatusImpact": "Execution identity remains Pro, but result-level model lineage is unreliable and must not support attribution."
+    },
+    {
+      "id": "F-04",
+      "severity": "MEDIUM",
+      "status": "WARN",
+      "title": "No-rerun is proven only for recorded observations",
+      "evidence": [
+        "cloudflare/e2-v4-pro-benchmark.mjs:89-139",
+        "scripts/run-e2-9-r1.mjs:29-39,172-180,185-188,218-229",
+        "Recorded evidence: 26 unique case-arm observations, one attempt each, 26 unique response request IDs"
+      ],
+      "changesFinalStatus": false,
+      "finalStatusImpact": "No visible rerun was found, but unrecorded external calls cannot be excluded without an append-only server ledger."
+    },
+    {
+      "id": "F-05",
+      "severity": "MEDIUM",
+      "status": "WARN",
+      "title": "Freeze and stage prerequisites are not fully enforced by the runner",
+      "evidence": [
+        "docs/e2-v4-pro-benchmark-r1/baseline-manifest.json:2-30",
+        "scripts/prepare-e2-9-r1-manifests.mjs:160-164",
+        "scripts/run-e2-9-r1.mjs:172-184,233-237",
+        "Git chronology: freeze commit 578aad5 precedes readiness and frozen inputs have no later diff"
+      ],
+      "changesFinalStatus": false,
+      "finalStatusImpact": "Actual chronology is consistent, but tooling alone cannot establish the strongest anti-tampering claim."
+    },
+    {
+      "id": "F-06",
+      "severity": "MEDIUM",
+      "status": "WARN",
+      "title": "Gate evaluator does not enforce recorded checkpoint hash relationships",
+      "evidence": [
+        "scripts/score-e2-9-r1.mjs:100-105",
+        "scripts/prepare-e2-9-r1-adjudication.mjs:84-88",
+        "scripts/reveal-e2-9-r1-adjudication.mjs:52-68",
+        "scripts/evaluate-e2-9-r1-gate.mjs:35-40"
+      ],
+      "changesFinalStatus": false,
+      "finalStatusImpact": "Not exercised because the Gate did not run; future runs could mix unrelated checkpoint artifacts unless fixed."
+    },
+    {
+      "id": "F-07",
+      "severity": "LOW",
+      "status": "WARN",
+      "title": "Zero business entities applies only to the normalized result",
+      "evidence": [
+        "JSON fields observations[14|15].response.payload.rawOutput versus .result in the Screening checkpoint",
+        "Raw output per arm: 2 timePoints, 1 event, 1 evidence; normalized result per arm: 0 business entities, 1 evidence"
+      ],
+      "changesFinalStatus": false,
+      "finalStatusImpact": "Report wording needs qualification but the harness-defect classification remains correct."
+    },
+    {
+      "id": "F-08",
+      "severity": "LOW",
+      "status": "WARN",
+      "title": "Protocol implementation bundle does not cover the entire deployment chain",
+      "evidence": [
+        "docs/e2-v4-pro-benchmark-r1/bundle-hash-manifest.json:141-210"
+      ],
+      "changesFinalStatus": false,
+      "finalStatusImpact": "The recorded bundle hash is correct for its listed inputs, but cannot alone prove worker routing and deployment configuration freeze."
+    }
+  ],
+  "hashVerification": {
+    "status": "PASS_WITH_SCOPE_LIMIT",
+    "canonicalManifests": {
+      "sourceOnly": {
+        "sha256": "0cf63c1c0aae2bccfb69278a15d9b5b1c4b4b64b9e7fb0dcc6c6b988544160fb",
+        "baselineMatch": true,
+        "rawFileSha256": "c9c0aa127b816130fd3943ab6d8f2f086d4d600c6c713973b994bca1d76f1b81"
+      },
+      "smokeManifest": {
+        "sha256": "6cbf5802d2c3b31737d4c3ac4d2b09bc6ce99469f9ed6d8c5b87f762c30839ea",
+        "baselineMatch": true
+      },
+      "screeningManifest": {
+        "sha256": "fdea46d3c2bc9b85e8b36dc46908568fd09840cc674e0c19442aa540a1999cac",
+        "baselineMatch": true
+      },
+      "selectionManifest": {
+        "sha256": "1a0342e0d0ac9a462d5cc560f317bd81457b8624919b1f291966596501201038",
+        "baselineMatch": true
+      },
+      "bundleManifest": {
+        "sha256": "e26ba454acb316ad246b3ba825b064405278b5652ef93601cda4241731d59684",
+        "baselineMatch": true
+      }
+    },
+    "bundleVerification": {
+      "protocolImplementation": {
+        "sha256": "10b777dc9e114bcfc7bc1d807bce1656929d98780f49b1402c42879a65e8aa05",
+        "recomputedFromAllowedInputs": true,
+        "match": true
+      },
+      "otherBundles": {
+        "schema": "4118ad2ae2ebdeb4e30f63578d591d269fc4f430d85b323bc9ea934bc3b2aa7b",
+        "scoring": "2ac2cf270791a99394d95fd345c38f3afcb9e8d5f46993b6d44d0026b4758798",
+        "pipeline": "d61b0c4dd26a5f173afe6c0b5ec2745250c1eb5597e6320863326ba675be213a",
+        "datasets": "76c03f8c7ecd75941021eaf12e168625181a47fe6d0fc00744c37c57617affb3",
+        "verification": "Manifest values were checked for internal consistency; source files outside the exact audit path scope were not used as acceptance evidence."
+      }
+    },
+    "rawCheckpointSha256": {
+      "readiness": "019f3f1feba3605e2e250da144665ea946af78b7ee79bcd5347486803e6b9550",
+      "s0": "91224f04736b03f8164bec6cf41e183cc4cfb77925d44463b5ee44e301e2554d",
+      "smoke": "fd75939abe97a4edd4c9fe0ca5aa7dec123d6f781050f0747484e9df601c2813",
+      "screening": "52b315bf11e9f9f860a383d00ade331016695903c87b8e4f1d3514b411fd3d7d",
+      "allRunSummaryMatches": true
+    },
+    "s0RawSha256": {
+      "models": "4639cce8329d73d60082b99787c8ba9d8f1c0caf0b6d7d8266bd308ed05b68dc",
+      "flashMinimal": "de7368cd55e3b547b08e2ffc58745b4f5173032fd6b07685979b9c440294f23f",
+      "proMinimal": "5582393305f9cf44a49a4673fde4e753f608bde6923c54914f8e25dce9133bce",
+      "allContentMatches": true
+    },
+    "observationProvenance": {
+      "observationCount": 26,
+      "sourceInputRawResultHashChecks": 104,
+      "sourceInputRawResultHashMatches": 104,
+      "responseBodyHeaderHashChecks": 52,
+      "responseBodyHeaderHashMatches": 52
+    }
+  },
+  "callVerification": {
+    "status": "PASS_RECORDED_OBSERVATIONS_ONLY",
+    "authReadinessCompletions": 6,
+    "s0Completions": 2,
+    "s0ModelsRequests": 1,
+    "smokeCompletions": 10,
+    "screeningCompletions": 16,
+    "selectionCompletions": 0,
+    "blindCompletions": 0,
+    "totalCompletions": 34,
+    "formalObservationCount": 26,
+    "formalUpstreamAttempts": 26,
+    "uniqueCaseArmCount": 26,
+    "uniqueResponseRequestIdCount": 26,
+    "http401": 0,
+    "transportFailures": 0,
+    "modelFallbacks": 0,
+    "globalNoRerunProven": false,
+    "globalNoRerunLimitation": "Runner labels are mutable choices and no append-only server ledger excludes calls outside the checkpoint."
+  },
+  "screeningDefectVerification": {
+    "status": "CONFIRMED_HARNESS_PROTOCOL_DEFECT",
+    "caseId": "e2-gen-14-2",
+    "arms": {
+      "flash": {
+        "httpStatus": 200,
+        "attempts": 1,
+        "normalizedBusinessEntityCount": 0,
+        "normalizedEvidenceCount": 1,
+        "rawTimePointCount": 2,
+        "rawEventCount": 1,
+        "status": "integrity_failure",
+        "error": "BASIC_CONTENT_EMPTY"
+      },
+      "pro": {
+        "httpStatus": 200,
+        "attempts": 1,
+        "normalizedBusinessEntityCount": 0,
+        "normalizedEvidenceCount": 1,
+        "rawTimePointCount": 2,
+        "rawEventCount": 1,
+        "status": "integrity_failure",
+        "error": "BASIC_CONTENT_EMPTY"
+      }
+    },
+    "checkpointGateStatus": "COMPLETE",
+    "checkpointGateStatusConsistent": false,
+    "modelQualityFailureProven": false
+  },
+  "reportNumberVerification": {
+    "status": "PASS",
+    "smoke": {
+      "flash": {
+        "meanLatencyMs": 9025.4,
+        "p50LatencyMs": 6338,
+        "p95LatencyMs": 14473,
+        "inputTokens": 11874,
+        "outputTokens": 8489,
+        "totalTokens": 20363
+      },
+      "pro": {
+        "meanLatencyMs": 15617.8,
+        "p50LatencyMs": 9932,
+        "p95LatencyMs": 28640,
+        "inputTokens": 11874,
+        "outputTokens": 8466,
+        "totalTokens": 20340
+      }
+    },
+    "screening": {
+      "flash": {
+        "meanLatencyMs": 10636.25,
+        "p50LatencyMs": 10666,
+        "p95LatencyMs": 15713,
+        "inputTokens": 19008,
+        "outputTokens": 15583,
+        "totalTokens": 34591
+      },
+      "pro": {
+        "meanLatencyMs": 15689.5,
+        "p50LatencyMs": 11070,
+        "p95LatencyMs": 23186,
+        "inputTokens": 19008,
+        "outputTokens": 14631,
+        "totalTokens": 33639
+      }
+    },
+    "combinedProLatencyHigherPct": 56.35823279602508,
+    "combinedProTotalTokensLowerPct": 1.774211158423411,
+    "qualityMetric": false
+  },
+  "cleanupVerification": {
+    "status": "PASS",
+    "verifiedAt": "2026-08-12T18:14:20.579Z",
+    "sourcePreviewFlag": false,
+    "endpointProbe": {
+      "url": "https://student-affairs-manager-preview.nightsdell.workers.dev/api/experiments/e2-9/v4-pro-benchmark/models",
+      "withoutBearerHttpStatus": 404,
+      "dummyBearerHttpStatus": 404
+    },
+    "previewSecretNames": [
+      "DEEPSEEK_API_KEY"
+    ],
+    "benchmarkBearerPresent": false,
+    "previewEnabledCodeVersion": "c892c6a9-57b1-48a4-9a0a-00aad885446a",
+    "secretActiveVersion": "8e685729-fdf0-4c91-bc44-f1d90fc90c44",
+    "secretActiveAt": "2026-08-12T17:45:39.449881Z",
+    "readinessStartedAt": "2026-08-12T17:46:27.112Z",
+    "readinessStartedAfterSecretActiveMs": 47663,
+    "previewDisabledCodeVersion": "1b095ec8-1878-4c13-95a6-e6bc358a98af",
+    "postDeleteSecretVersion": "fa5b793b-57eb-4923-a7c5-16b8f901bfb9",
+    "productionDeploymentVersion": "3b6d6ba2-e21f-495c-80e4-c4bac62366be",
+    "productionDeploymentCreatedAt": "2026-08-08T08:55:40.370263Z",
+    "r1ProductionDeployed": false
+  },
+  "stopRuleVerification": {
+    "status": "PASS_ACTUAL_EXECUTION_WITH_TOOLING_WARNINGS",
+    "scorer": "NOT RUN",
+    "pathMaskedReview": "NOT RUN",
+    "screeningGate": "NOT RUN",
+    "selection": "NOT RUN",
+    "candidateFreeze": "NOT CREATED",
+    "newBlind": "NOT RUN",
+    "selectionCalls": 0,
+    "blindCalls": 0,
+    "reason": "Two Screening observations are not complete; scorer, packet preparation and Gate guards reject the checkpoint, and preregistered stop rules forbid later stages."
+  },
+  "conclusion": {
+    "auditVerdict": "FAIL",
+    "experimentStatus": "V4_PRO_SCREENING_V2_FAIL",
+    "qualityConclusion": "NOT_AVAILABLE",
+    "changesFinalStatus": false,
+    "proQualityGainSupported": false,
+    "proQualityFailureSupported": false,
+    "e2Status": "READY_WITH_BLOCKERS",
+    "e3Status": "NOT_READY",
+    "productionStatus": "NOT_READY",
+    "productionDeployed": false,
+    "requiredBoundary": "Fix role propagation, checkpoint state, Pro result lineage, stage prerequisites, no-rerun ledger and Gate hash linkage under a new protocol version and fresh labels; do not resume, patch-run or selectively rerun current formal observations."
+  }
+}
