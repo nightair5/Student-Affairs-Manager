@@ -8,3 +8,4 @@
 | `e2-9-baseline-manifest.json` | 1.0.0 | S0 版本、参数、数据与代码哈希 | FROZEN_AVAILABILITY_PASS |
 | `S0_BASELINE_FREEZE.md` | 1.0.0 | 基线核对、模型可用性与 Secret 轮换记录 | COMPLETE |
 | `S1_PREVIEW_ENDPOINT.md` | 1.0.0 | Preview-only 安全边界与验证 | COMPLETE |
+| `s2-smoke-manifest.json` | 1.0.0 | 3 条 source-only 冒烟选择与顺序 | FROZEN_BEFORE_GENERATION |

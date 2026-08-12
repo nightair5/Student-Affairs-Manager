@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "e2.9-smoke-manifest-1.0.0",
+  "frozenBeforeGeneration": true,
+  "qualityConclusionEligible": false,
+  "sourceOnlyManifestSha256": "64f0effc410890e816afcf54fb17089e9de7a0fdce0cbe50da86a256121b8f80",
+  "promptSha256": "c925f1dc27971e4fcaf7ad185b729f016fa7af966cd7992337d9eaa94c97e6fd",
+  "orderPolicy": "fixed alternating: odd case Flash then Pro; even case Pro then Flash",
+  "cases": [
+    {
+      "caseId": "e2-complex_notice-01",
+      "sourceSet": "golden",
+      "role": "multi_task_multi_material",
+      "sourceSha256": "99cc9c07a8d7c8217f5214497deee2f222b3df2cf9200d82d35bec0057003823",
+      "inputSha256": "2b582c67565b3ba4720dfef15ae2fa380270fad04639200c1a39b21324148eeb"
+    },
+    {
+      "caseId": "e2-holdout-22",
+      "sourceSet": "exposed_holdout",
+      "role": "multi_timepoint_event",
+      "sourceSha256": "b6da0fc57dc18583cda078e16a006a08ef6c4365bba80153620fe5bc9731c8cd",
+      "inputSha256": "b309ffda467c1decbbeb2716f78ecc11eb9eaaaa0345fa9b574857f0f3a365ea"
+    },
+    {
+      "caseId": "e2-gen-16-1",
+      "sourceSet": "development",
+      "role": "prompt_injection_trust_boundary",
+      "sourceSha256": "29653c643f3bc81aca3d699ccb473104f03105e4417f91b0d5396969cc744143",
+      "inputSha256": "1e057ada54eb7623e931c94cad2ab4376166cb58d088eaad2bde6db4e5df774f"
+    }
+  ]
+}
