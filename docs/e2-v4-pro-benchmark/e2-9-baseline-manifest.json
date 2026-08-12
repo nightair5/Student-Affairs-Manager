@@ -11,7 +11,7 @@
     "candidate": "deepseek-v4-pro",
     "provider": "deepseek",
     "api": "POST /chat/completions",
-    "availability": "PENDING_PREVIEW_SERVER_CHECK"
+    "availability": "PASS_EXACT_IDS_AND_PRO_COMPLETION"
   },
   "versions": {
     "prompt": "recognition-2.4.1",
@@ -119,6 +119,30 @@
     "benchmarkEndpointPresent": false,
     "benchmarkFlag": false,
     "productionDeploymentPerformed": false
+  },
+  "s0Availability": {
+    "status": "PASS",
+    "formalExperimentCalls": 0,
+    "compatibilityCalls": 1,
+    "previewCodeVersion": "780a12fc-47d8-46e6-aad7-cab12f2b386e",
+    "activeVersionAfterBearerRotation": "383119dd-0c44-434e-8154-bd71b8c066d2",
+    "requiredModels": [
+      "deepseek-v4-flash",
+      "deepseek-v4-pro"
+    ],
+    "returnedModel": "deepseek-v4-pro",
+    "systemFingerprint": "fp_v4pro_20260812_prod0820_fp8_kvcache_20260402",
+    "finishReason": "stop",
+    "usage": {
+      "input": 44,
+      "output": 5,
+      "total": 49
+    },
+    "durationMs": 1095,
+    "attempts": 1,
+    "validJsonObject": true,
+    "rawOutputSha256": "4062edaf750fb8074e7e83e0c9028c94e32468a8b6f1614774328ef045150f93",
+    "bearerRotation": "RESOLVED_BEFORE_FORMAL_SAMPLE_CALLS"
   },
   "scope": {
     "promptChanged": false,

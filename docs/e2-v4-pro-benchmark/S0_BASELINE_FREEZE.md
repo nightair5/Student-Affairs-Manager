@@ -2,7 +2,7 @@
 
 ## Goal
 
-冻结 E2.9 的唯一变量：`deepseek-v4-flash` 与 `deepseek-v4-pro` 的 model ID。模型可用性将在 Preview-only 服务端端点部署后完成验证。
+冻结 E2.9 的唯一变量：`deepseek-v4-flash` 与 `deepseek-v4-pro` 的 model ID。模型可用性已通过 Preview-only 服务端端点验证。
 
 ## Git baseline
 
@@ -33,7 +33,21 @@ Golden 110、Exposed Holdout 40、Development 108 和复杂 Selection 24 均保�
 
 ## Security boundary
 
-S0 尚未创建或读取任何 Secret，没有模型调用，没有 Production 部署。未来 availability 只通过 Preview server Secret 完成。
+S0 只通过 Cloudflare Preview server Secret 调用 DeepSeek；没有 Secret 写入本地文件、日志或 Git，没有 Production 部署。首次 PowerShell 随机数 API 不兼容，导致新建 Bearer 未获得预期随机字节，但无用户数据 compatibility probe 已成功；发现后立即用兼容的 CSPRNG API 轮换 Secret。该首次 Bearer 不用于后续正式样例调用。
+
+## Availability result
+
+- Preview code deployment：`780a12fc-47d8-46e6-aad7-cab12f2b386e`
+- Active version after Secret rotation：`383119dd-0c44-434e-8154-bd71b8c066d2`
+- `GET /models`：同时包含精确 ID `deepseek-v4-flash`、`deepseek-v4-pro`
+- 最小 Pro completion requested/returned model：`deepseek-v4-pro` / `deepseek-v4-pro`
+- `system_fingerprint`：`fp_v4pro_20260812_prod0820_fp8_kvcache_20260402`
+- JSON object：valid
+- finish reason：`stop`
+- usage：input 44 / output 5 / total 49
+- latency：1095 ms；attempts：1
+- raw output SHA-256：`4062edaf750fb8074e7e83e0c9028c94e32468a8b6f1614774328ef045150f93`
+- S0 gate：PASS
 
 ## Scope check
 
@@ -47,4 +61,4 @@ S0 尚未创建或读取任何 Secret，没有模型调用，没有 Production �
 
 ## Next Gate
 
-实现 S1 Preview-only endpoint，通过 `/models` 与最小 Pro completion 验证 availability 和模型身份；失败立即输出 `V4_PRO_NOT_AVAILABLE` 或 `V4_PRO_SMOKE_FAILED`。
+执行 S2 三条配对冒烟；任一模型身份、JSON、Schema、Evidence、fallback 或安全边界失败即停止。
