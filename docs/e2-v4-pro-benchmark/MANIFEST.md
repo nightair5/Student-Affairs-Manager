@@ -9,3 +9,7 @@
 | `S0_BASELINE_FREEZE.md` | 1.0.0 | 基线核对、模型可用性与 Secret 轮换记录 | COMPLETE |
 | `S1_PREVIEW_ENDPOINT.md` | 1.0.0 | Preview-only 安全边界与验证 | COMPLETE |
 | `s2-smoke-manifest.json` | 1.0.0 | 3 条 source-only 冒烟选择与顺序 | FROZEN_BEFORE_GENERATION |
+| `s2-smoke-aggregate.json` | 1.0.0 | 匿名冒烟状态、身份、延迟与 Token | COMPLETE_EARLY_STOP |
+| `S2_SMOKE_RESULTS.md` | 1.0.0 | 冒烟审计与早停理由 | COMPLETE |
+| `s3-screening-coverage-audit.json` | 1.0.0 | 冻结 24 条结构标签覆盖审计 | BLOCKED_PRE_CALL |
+| `S3_SCREENING_PRECONDITION.md` | 1.0.0 | S3 合规选样不可满足说明 | COMPLETE |

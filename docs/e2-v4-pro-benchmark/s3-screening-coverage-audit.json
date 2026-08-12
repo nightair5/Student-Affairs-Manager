@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "e2.9-screening-coverage-audit-1.0.0",
+  "frozenSelectionCount": 24,
+  "selectionManifestSha256": "9c9275e42e872899602c005d4d69fd378c8592db5cac553b809438c73970416e",
+  "structureLabelsSha256": "714cebbbf2a3645d08c1387b87ac7ba5861cc26d898fb57acaef97df8908bcc8",
+  "groups": {
+    "competition": 1,
+    "event": 2,
+    "vague_time": 1,
+    "multi_deadline": 2,
+    "material": 1,
+    "ocr_noise": 1,
+    "complex_notice": 16
+  },
+  "observedDimensions": [
+    "conditional",
+    "conflicting_time",
+    "disordered",
+    "event_task_mixed",
+    "formal_notice",
+    "long_notice",
+    "materials_first",
+    "materials_in_attachment",
+    "multi_paragraph",
+    "multiple_deadlines",
+    "multiple_events",
+    "ocr_noise",
+    "relative_time",
+    "time_first",
+    "time_in_note"
+  ],
+  "informationOnlyOrPromptInjectionCases": [],
+  "requiredBoundaryCoverage": 1,
+  "gate": "BLOCKED_NO_COMPLIANT_EIGHT_CASE_MANIFEST",
+  "modelCalls": 0
+}

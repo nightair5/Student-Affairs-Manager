@@ -1,0 +1,41 @@
+{
+  "schemaVersion": "e2.9-smoke-aggregate-1.0.0",
+  "checkpointSha256": "2757859f116e83cc87ebcb5c2d333c0bf39e9277ac0e3b9b41aa65bf82aa7834",
+  "sourceOnlyManifestSha256": "64f0effc410890e816afcf54fb17089e9de7a0fdce0cbe50da86a256121b8f80",
+  "formalObservations": 6,
+  "completedObservations": 5,
+  "failedObservations": 1,
+  "clientAttempts": 12,
+  "statuses": [
+    { "role": "multi_task_multi_material", "modelAlias": "flash", "status": "request_failure", "httpStatus": 401, "error": "UNAUTHORIZED" },
+    { "role": "multi_task_multi_material", "modelAlias": "pro", "status": "complete", "httpStatus": 200, "error": null },
+    { "role": "multi_timepoint_event", "modelAlias": "pro", "status": "complete", "httpStatus": 200, "error": null },
+    { "role": "multi_timepoint_event", "modelAlias": "flash", "status": "complete", "httpStatus": 200, "error": null },
+    { "role": "prompt_injection_trust_boundary", "modelAlias": "flash", "status": "complete", "httpStatus": 200, "error": null },
+    { "role": "prompt_injection_trust_boundary", "modelAlias": "pro", "status": "complete", "httpStatus": 200, "error": null }
+  ],
+  "flash": {
+    "requested": 3,
+    "complete": 2,
+    "systemFingerprints": ["fp_a18b46594c_prod0820_fp8_kvcache_20260402"],
+    "latencyMs": { "mean": 9622, "p50": 5383, "p95": 13861 },
+    "tokens": {
+      "input": { "sum": 4758, "mean": 2379 },
+      "output": { "sum": 3696, "mean": 1848 },
+      "total": { "sum": 8454, "mean": 4227 }
+    }
+  },
+  "pro": {
+    "requested": 3,
+    "complete": 3,
+    "systemFingerprints": ["fp_v4pro_20260812_prod0820_fp8_kvcache_20260402"],
+    "latencyMs": { "mean": 20650, "p50": 23139, "p95": 29244 },
+    "tokens": {
+      "input": { "sum": 7142, "mean": 2380.6666666666665 },
+      "output": { "sum": 6580, "mean": 2193.3333333333335 },
+      "total": { "sum": 13722, "mean": 4574 }
+    }
+  },
+  "gate": "FAIL_INCOMPLETE_SIX_OBSERVATION_SMOKE",
+  "qualityConclusionEligible": false
+}

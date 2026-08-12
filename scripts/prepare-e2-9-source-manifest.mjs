@@ -7,6 +7,7 @@ import { createServer } from 'vite'
 const ROOT = process.cwd()
 const SELECTION_PATH = path.join(ROOT, 'docs', 'e2-factledger', 'd5-complex-selection.json')
 const OUTPUT_PATH = path.join(ROOT, '.evaluation-cache', 'e2-9', 'source-only-manifest.json')
+const LABEL_OUTPUT_PATH = path.join(ROOT, '.evaluation-cache', 'e2-9', 'selection-structure-labels.json')
 const SMOKE_CASES = Object.freeze([
   { caseId: 'e2-complex_notice-01', role: 'multi_task_multi_material' },
   { caseId: 'e2-holdout-22', role: 'multi_timepoint_event' },
@@ -69,6 +70,16 @@ async function main() {
       if (!found || found.sourceSet !== sourceSet) throw new Error(`Selection source mismatch: ${caseId}`)
       return sourceRecord(found.fixture, sourceSet)
     })
+    const selectionLabels = selection.cases.map(({ caseId, sourceSet, reason }) => {
+      const found = allFixtures.get(caseId)
+      return {
+        caseId,
+        sourceSet,
+        group: found.fixture.group,
+        dimensions: found.fixture.generalization?.dimensions ?? [],
+        frozenSelectionReason: reason,
+      }
+    })
     const smokeCases = SMOKE_CASES.map(({ caseId, role }) => {
       const found = allFixtures.get(caseId)
       if (!found) throw new Error(`Unknown smoke case: ${caseId}`)
@@ -84,12 +95,20 @@ async function main() {
     assertFirewall(output)
     await mkdir(path.dirname(OUTPUT_PATH), { recursive: true })
     await writeFile(OUTPUT_PATH, `${JSON.stringify(output, null, 2)}\n`, 'utf8')
+    const labelOutput = {
+      schemaVersion: 'e2.9-selection-structure-labels-1.0.0',
+      selectionCount: selectionLabels.length,
+      cases: selectionLabels,
+    }
+    await writeFile(LABEL_OUTPUT_PATH, `${JSON.stringify(labelOutput, null, 2)}\n`, 'utf8')
     console.log(JSON.stringify({
       output: path.relative(ROOT, OUTPUT_PATH),
       smokeCount: smokeCases.length,
       selectionCount: selectionCases.length,
       smokeCaseIds: smokeCases.map((item) => item.caseId),
       sourceOnlyManifestSha256: sha256(JSON.stringify(output)),
+      selectionLabelsSha256: sha256(JSON.stringify(labelOutput)),
+      informationOnlyOrPromptInjectionCount: selectionLabels.filter((item) => item.dimensions.includes('information_only') || item.dimensions.includes('prompt_injection') || item.group === 'information_only' || item.group === 'security').length,
       firewall: 'PASS',
     }, null, 2))
   } finally {
