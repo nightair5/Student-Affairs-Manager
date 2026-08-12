@@ -1,0 +1,82 @@
+{
+  "schemaVersion": "e2.9-r1-run-summary-1.0.0",
+  "protocolVersion": "e2-9-v4-pro-reduced-protocol-2.0.0",
+  "finalStatus": "V4_PRO_SCREENING_V2_FAIL",
+  "qualityConclusion": "NOT_AVAILABLE",
+  "baselineCommit": "b2ea4a4b27bf543f77a3c3a9cd5439b92a950720",
+  "protocolFreezeCommit": "578aad5",
+  "sourceOnlySha256": "0cf63c1c0aae2bccfb69278a15d9b5b1c4b4b64b9e7fb0dcc6c6b988544160fb",
+  "rawEvidence": {
+    "readinessCheckpointSha256": "019f3f1feba3605e2e250da144665ea946af78b7ee79bcd5347486803e6b9550",
+    "s0CheckpointSha256": "91224f04736b03f8164bec6cf41e183cc4cfb77925d44463b5ee44e301e2554d",
+    "smokeCheckpointSha256": "fd75939abe97a4edd4c9fe0ca5aa7dec123d6f781050f0747484e9df601c2813",
+    "screeningCheckpointSha256": "52b315bf11e9f9f860a383d00ade331016695903c87b8e4f1d3514b411fd3d7d",
+    "modelsRawSha256": "4639cce8329d73d60082b99787c8ba9d8f1c0caf0b6d7d8266bd308ed05b68dc",
+    "flashMinimalRawSha256": "de7368cd55e3b547b08e2ffc58745b4f5173032fd6b07685979b9c440294f23f",
+    "proMinimalRawSha256": "5582393305f9cf44a49a4673fde4e753f608bde6923c54914f8e25dce9133bce"
+  },
+  "calls": {
+    "authReadinessCompletions": 6,
+    "s0Completions": 2,
+    "s0ModelsRequests": 1,
+    "smokeCompletions": 10,
+    "screeningCompletions": 16,
+    "selectionCompletions": 0,
+    "blindCompletions": 0,
+    "totalCompletions": 34,
+    "http401": 0,
+    "transportFailures": 0,
+    "modelFallbacks": 0
+  },
+  "authReadiness": {
+    "status": "PASS",
+    "flash": "3/3",
+    "pro": "3/3",
+    "secretChangeVersion": "8e685729-fdf0-4c91-bc44-f1d90fc90c44",
+    "secretActiveAt": "2026-08-12T17:45:39.449Z",
+    "startedAt": "2026-08-12T17:46:27.112Z",
+    "completedAt": "2026-08-12T17:46:36.342Z"
+  },
+  "smokeV2": {
+    "status": "PASS",
+    "completeObservations": 10,
+    "expectedObservations": 10
+  },
+  "screeningV2": {
+    "status": "FAIL",
+    "completeHarnessObservations": 14,
+    "expectedObservations": 16,
+    "http200Observations": 16,
+    "failureCase": "e2-gen-14-2",
+    "flashFailure": "BASIC_CONTENT_EMPTY",
+    "proFailure": "BASIC_CONTENT_EMPTY",
+    "failureClassification": "HARNESS_PROTOCOL_DEFECT",
+    "scoring": "NOT RUN",
+    "pathMaskedReview": "NOT RUN"
+  },
+  "observedPerformance": {
+    "smoke": {
+      "flash": { "meanLatencyMs": 9025.4, "p50LatencyMs": 6338, "p95LatencyMs": 14473, "inputTokens": 11874, "outputTokens": 8489, "totalTokens": 20363 },
+      "pro": { "meanLatencyMs": 15617.8, "p50LatencyMs": 9932, "p95LatencyMs": 28640, "inputTokens": 11874, "outputTokens": 8466, "totalTokens": 20340 }
+    },
+    "screeningAllHttp200": {
+      "flash": { "meanLatencyMs": 10636.25, "p50LatencyMs": 10666, "p95LatencyMs": 15713, "inputTokens": 19008, "outputTokens": 15583, "totalTokens": 34591 },
+      "pro": { "meanLatencyMs": 15689.5, "p50LatencyMs": 11070, "p95LatencyMs": 23186, "inputTokens": 19008, "outputTokens": 14631, "totalTokens": 33639 }
+    }
+  },
+  "cleanup": {
+    "previewFlag": "false",
+    "endpointHttpStatus": 404,
+    "benchmarkBearer": "DELETED",
+    "remainingPreviewSecretNames": ["DEEPSEEK_API_KEY"],
+    "disabledCodeDeploymentVersion": "1b095ec8-1878-4c13-95a6-e6bc358a98af",
+    "postDeleteSecretChangeVersion": "fa5b793b-57eb-4923-a7c5-16b8f901bfb9",
+    "productionDeploymentVersion": "3b6d6ba2-e21f-495c-80e4-c4bac62366be",
+    "productionDeploymentCreatedAt": "2026-08-08T08:55:40.370Z"
+  },
+  "stageStatus": {
+    "e2": "READY WITH BLOCKERS",
+    "e3": "NOT READY",
+    "production": "NOT READY"
+  }
+}
