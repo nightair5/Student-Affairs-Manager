@@ -9,7 +9,7 @@
 | `screening-manifest.json` | 8-case role-aware Screening plan | GENERATED BEFORE CALLS |
 | `bundle-hash-manifest.json` | prompt/schema/scorer/protocol/deployment bundle bindings | GENERATED BEFORE CALLS |
 | `run-manifest.json` | fresh run labels, observation IDs and state machine | GENERATED BEFORE CALLS |
-| `preview-activation.json` | deployed version binding | PENDING DEPLOYMENT |
+| `preview-activation.json` | deployed version binding | ACTIVE BEFORE CALLS |
 | `screening-aggregate.json` | anonymous aggregate | NOT RUN |
 | `SCREENING_REPORT.md` | final Screening report | NOT RUN |
 
