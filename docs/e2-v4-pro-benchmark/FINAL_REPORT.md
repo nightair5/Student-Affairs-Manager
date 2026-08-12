@@ -1,0 +1,5 @@
+# E2.9 Final Report
+
+固定入口：[`2026-08-13_FINAL_REPORT.md`](./2026-08-13_FINAL_REPORT.md)
+
+当前结论：`EXPERIMENT BLOCKED`。

@@ -4,13 +4,15 @@
 
 FAIL：6 个冻结 observation 中 5 个完成、1 个失败。按 E2.9 提前停止条件，三条完整配对冒烟未全部通过，不能进入正式筛选。
 
+覆盖也存在一项明确偏差：Smoke 3 使用的是 Prompt Injection + trust-boundary 样例，但该 source 没有冻结的 Ambiguity 结构标签，不能宣称完整覆盖“Ambiguity + Prompt Injection”。因此即使没有 401，S2 manifest 仍不足以证明规范要求的组合覆盖。
+
 Pro 本身 3/3 完成，均满足：精确 `response.model=deepseek-v4-pro`、非空 `system_fingerprint`、合法 JSON、RecognitionResult 2.0、Prompt/Pipeline/Validator 版本一致、thinking disabled、usage 可观测、Evidence 非空、无 fallback。
 
-失败项为第一个 Flash observation：Secret 刚轮换后返回 HTTP 401 `UNAUTHORIZED`。401 被协议列为不可重试，因此没有补跑或替换。后续 5 个 observation 使用同一轮换 Secret 成功，说明这是 Preview Secret 生效时序问题，不是 Pro 模型失败；但它仍使 S2 整体不完整。
+失败项为第一个 Flash observation：Secret Change 版本激活时序附近返回 HTTP 401 `UNAUTHORIZED`。401 被协议列为不可重试，因此没有补跑或替换。后续 5 个 observation 成功；现有证据只支持“与认证/Secret 激活时序相关”，不能证明具体根因，也不能证明失败请求与后续成功请求看到的是同一已激活 Secret 版本。它不是 Pro 模型输出失败，但仍使 S2 整体不完整。
 
 ## Transport chronology
 
-初次 Node `fetch` 在当前代理环境下对 6 个 observation 均发生发送前 transport failure。原失败完整保留；依据协议允许对发送前 TLS/transport failure 重试一次，随后用 curl transport 追加第二次 client attempt。没有删除原记录。第二次 attempt 产生 5 个成功和 1 个不可重试 401。
+初次 Node `fetch` 在当前代理环境下对 6 个 observation 均记录 `TypeError` transport failure。结合代理警告推断失败发生在服务端生成前，但 checkpoint 没有 socket-level 证据，不能把“发送前”表述为已证明事实。原失败完整保留；依据该有界 transport 诊断追加一次 curl client attempt，没有删除原记录。第二次 attempt 产生 5 个成功和 1 个不可重试 401。
 
 - formal observations：6
 - client attempts：12（6 个 pre-send transport failure + 6 个 curl attempts）
@@ -41,4 +43,4 @@ UNKNOWN。本阶段因早停未进行官方当日价格审计，不根据记忆�
 
 ## Gate
 
-`FAIL_INCOMPLETE_SIX_OBSERVATION_SMOKE`。不运行 S3 模型调用。
+`FAIL_INCOMPLETE_SIX_OBSERVATION_SMOKE_AND_COVERAGE`。不运行 S3 模型调用。

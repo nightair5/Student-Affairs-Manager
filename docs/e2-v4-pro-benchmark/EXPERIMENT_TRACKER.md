@@ -9,4 +9,4 @@
 | S4 | S4 | 完整 Selection | Flash+Pro / 剩余16 exposed | 0 | NOT RUN | early stop |
 | S6 | S6 | 新 Blind | Flash+Pro / 24 new blind | 0 | NOT RUN | early stop; Blind not created |
 | S7 | S7 | Preview Browser B1–B4 | Pro candidate | 0 | NOT RUN | early stop |
-| S8 | S8 | 独立完整性审计 | 已产生 S0–S3 产物 | 0 | READY | integrity |
+| S8 | S8 | 独立完整性审计 | 已产生 S0–S3 产物 | 0 | WARN_PROVISIONAL | supports EXPERIMENT BLOCKED |

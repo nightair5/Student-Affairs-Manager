@@ -13,3 +13,7 @@
 | `S2_SMOKE_RESULTS.md` | 1.0.0 | 冒烟审计与早停理由 | COMPLETE |
 | `s3-screening-coverage-audit.json` | 1.0.0 | 冻结 24 条结构标签覆盖审计 | BLOCKED_PRE_CALL |
 | `S3_SCREENING_PRECONDITION.md` | 1.0.0 | S3 合规选样不可满足说明 | COMPLETE |
+| `2026-08-13_FINAL_REPORT.md` | 2026-08-13 | 45 项要求的早停最终报告 | COMPLETE |
+| `FINAL_REPORT.md` | current | 最终报告固定入口 | CURRENT |
+| `EXPERIMENT_AUDIT.md` | 1.0.0 | 独立只读完整性审计 | WARN_PROVISIONAL |
+| `experiment-audit.json` | 1.0.0 | 可机读审计结论与重算值 | COMPLETE |

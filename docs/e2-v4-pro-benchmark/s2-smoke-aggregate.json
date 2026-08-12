@@ -36,6 +36,7 @@
       "total": { "sum": 13722, "mean": 4574 }
     }
   },
-  "gate": "FAIL_INCOMPLETE_SIX_OBSERVATION_SMOKE",
+  "coverageCaveat": "Smoke 3 covers prompt injection and a trust boundary, but not a frozen Ambiguity label.",
+  "gate": "FAIL_INCOMPLETE_SIX_OBSERVATION_SMOKE_AND_COVERAGE",
   "qualityConclusionEligible": false
 }

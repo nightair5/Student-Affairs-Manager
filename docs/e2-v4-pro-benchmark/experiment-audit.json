@@ -1,0 +1,56 @@
+{
+  "schemaVersion": "e2.9-independent-audit-1.0.0",
+  "verdict": "WARN",
+  "independence": "SAME_FAMILY_PROVISIONAL",
+  "supportsFinalStatus": "EXPERIMENT BLOCKED",
+  "doesNotSupport": [
+    "PRO_OUTPERFORMS_FLASH",
+    "CANDIDATE_FREEZE",
+    "E2_READY",
+    "PRODUCTION_MODEL_SWITCH"
+  ],
+  "counts": {
+    "observations": 6,
+    "complete": 5,
+    "flash401": 1,
+    "clientAttempts": 12,
+    "confirmedUpstreamCompletions": 5,
+    "s3ModelCalls": 0,
+    "selectionModelCalls": 0,
+    "blindModelCalls": 0
+  },
+  "recomputed": {
+    "flash": { "complete": 2, "totalTokens": 8454, "meanTotalTokens": 4227, "meanServerLatencyMs": 9622 },
+    "pro": { "complete": 3, "totalTokens": 13722, "meanTotalTokens": 4574, "meanServerLatencyMs": 20650 }
+  },
+  "hashes": {
+    "sourceOnlyManifestCanonicalSha256": "64f0effc410890e816afcf54fb17089e9de7a0fdce0cbe50da86a256121b8f80",
+    "sourceOnlyManifestRawSha256": "75063fafe3de64d489d5ec8c2ffa7a433e5a219f19f668ed66cf8b31a5692314",
+    "structureLabelsCanonicalSha256": "714cebbbf2a3645d08c1387b87ac7ba5861cc26d898fb57acaef97df8908bcc8",
+    "smokeCheckpointRawSha256": "2757859f116e83cc87ebcb5c2d333c0bf39e9277ac0e3b9b41aa65bf82aa7834",
+    "promptCanonicalSha256": "c925f1dc27971e4fcaf7ad185b729f016fa7af966cd7992337d9eaa94c97e6fd",
+    "semanticScorerCanonicalSha256": "45a57048c7a6e0f6935219c0b1cd48717c92e6e3fd394f1460e69deee5c5f0a0",
+    "evaluationContractCanonicalSha256": "b5e80beff3b637e13a7baafc887f39174f21bd2f23d105c042c0a7d5b16bc438"
+  },
+  "liveIsolation": {
+    "previewFlag": false,
+    "previewDisabledCodeDeploymentVersion": "cf5477b6-31d1-45cc-9a04-794834e6dbb5",
+    "previewEndpointStatus": 404,
+    "benchmarkBearerSecretPresent": false,
+    "activeSecretChangeVersionAfterDeletion": "dc95d63b-0d92-4863-965b-e54f804db31b",
+    "productionLatestDeploymentDate": "2026-08-08",
+    "productionE29Deployment": false
+  },
+  "blockingFindings": [
+    "S2_INCOMPLETE_ONE_FLASH_401",
+    "S2_SMOKE3_MISSING_AMBIGUITY_LABEL",
+    "S3_FROZEN_24_MISSING_INFORMATION_ONLY_OR_PROMPT_INJECTION"
+  ],
+  "limitations": [
+    "S0_RAW_RESPONSE_NOT_PERSISTED",
+    "SCHEMA_BUNDLE_HASH_AGGREGATION_ALGORITHM_NOT_RECORDED",
+    "NODE_TYPEERROR_HAS_NO_SOCKET_LEVEL_PRE_SEND_PROOF",
+    "SAME_FAMILY_AUDIT_PROVISIONAL",
+    "QUALITY_COMPARISON_NOT_RUN"
+  ]
+}
