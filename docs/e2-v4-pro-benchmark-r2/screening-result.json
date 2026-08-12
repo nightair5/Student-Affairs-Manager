@@ -1,0 +1,78 @@
+{
+  "schemaVersion": "e2.9-r2-screening-result-3.0.0",
+  "protocolVersion": "e2-9-v4-pro-protocol-3.0.0",
+  "runLabel": "e29r2-20260813-a",
+  "status": "EXPERIMENT_BLOCKED",
+  "reason": "SCREENING_INTEGRITY_FAILURE",
+  "qualityConclusion": "NOT_AVAILABLE",
+  "r1QualityEvidencePolicy": "INVALID_AND_NOT_REUSED",
+  "generation": {
+    "readiness": {
+      "expected": 2,
+      "completed": 2,
+      "gateStatus": "GENERATION_COMPLETE",
+      "checkpointSha256": "3e890722bf0da6774e05916a07c8c2080390a0453ece196620e2a9bc1a2aaf0e"
+    },
+    "smoke": {
+      "expected": 10,
+      "completed": 10,
+      "gateStatus": "GENERATION_COMPLETE",
+      "checkpointSha256": "118d49f2109d92d017d8af2136289dc87f83f4374412a8d020cf5c1b4a09db6f"
+    },
+    "screening": {
+      "expected": 16,
+      "attempted": 4,
+      "completed": 3,
+      "failed": 1,
+      "gateStatus": "INTEGRITY_FAILURE",
+      "checkpointSha256": "c692c4ac4e88f46c5e9ebb14cc3a039e4aedfa635b568cac469d85774f207998"
+    },
+    "totalFinalizedObservations": 16,
+    "totalCompletedObservations": 15,
+    "totalFailedObservations": 1,
+    "ledgerSha256": "9f03c67e9e57a1742fd8b234fafbddc33da09fe77bc030b2e01be7ea29c7316d"
+  },
+  "failure": {
+    "phase": "screening",
+    "observationId": "e29r2-8c2a5bf193747fb266f1aa042b904b48",
+    "caseId": "e2-holdout-25",
+    "modelAlias": "flash",
+    "httpStatus": 502,
+    "error": "UPSTREAM_JSON_INVALID",
+    "retryCount": 0,
+    "overwritten": false
+  },
+  "harnessIntegrity": {
+    "pureInformationRoleEndToEnd": "PASS_IN_SMOKE",
+    "zeroEntityPureInformationAllowed": "PASS_IN_SMOKE",
+    "fourWayModelLineage": "PASS_FOR_ALL_13_COMPLETE_GENERATION_OBSERVATIONS",
+    "readinessModelLineage": "PASS_REQUESTED_RETURNED_EXECUTION_ONLY",
+    "integrityFailureCannotComplete": "PASS",
+    "stagePrerequisites": "PASS",
+    "observationIdNoRerun": "PASS",
+    "failureImmutable": "PASS",
+    "scorerBindings": "TESTED_NOT_EXECUTED_BECAUSE_SCREENING_INCOMPLETE",
+    "protocolBundleSha256": "e2a1a90db3aad7f4055b01a760d400a3649366712f51ecc6f4d040116146bfeb"
+  },
+  "observedOperations": {
+    "readiness": {
+      "flash": { "completed": 1, "latencyMeanMs": 1500, "inputTokens": 44, "outputTokens": 5, "totalTokens": 49 },
+      "pro": { "completed": 1, "latencyMeanMs": 1127, "inputTokens": 44, "outputTokens": 5, "totalTokens": 49 }
+    },
+    "smoke": {
+      "flash": { "completed": 5, "latencyMeanMs": 8448.4, "inputTokens": 11874, "outputTokens": 8348, "totalTokens": 20222 },
+      "pro": { "completed": 5, "latencyMeanMs": 13873.2, "inputTokens": 11874, "outputTokens": 8483, "totalTokens": 20357 }
+    },
+    "screeningPartialNotComparable": {
+      "flash": { "completed": 1, "latencyMeanMs": 10815, "inputTokens": 2372, "outputTokens": 2222, "totalTokens": 4594 },
+      "pro": { "completed": 2, "latencyMeanMs": 19942.5, "inputTokens": 4747, "outputTokens": 4949, "totalTokens": 9696 }
+    }
+  },
+  "scoring": "NOT_RUN",
+  "freshLabels": "NOT_CREATED_BECAUSE_SCREENING_INCOMPLETE",
+  "selection": "NOT_RUN",
+  "blind": "NOT_CREATED",
+  "modelQualityInference": "PROHIBITED",
+  "previewCleanup": "COMPLETE",
+  "productionTouched": false
+}

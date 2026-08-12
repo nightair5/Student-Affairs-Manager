@@ -10,7 +10,10 @@
 | `bundle-hash-manifest.json` | prompt/schema/scorer/protocol/deployment bundle bindings | GENERATED BEFORE CALLS |
 | `run-manifest.json` | fresh run labels, observation IDs and state machine | GENERATED BEFORE CALLS |
 | `preview-activation.json` | deployed version binding | ACTIVE BEFORE CALLS |
-| `screening-aggregate.json` | anonymous aggregate | NOT RUN |
-| `SCREENING_REPORT.md` | final Screening report | NOT RUN |
+| `preview-deactivation.json` | flag/secret cleanup evidence | COMPLETE |
+| `screening-result.json` | anonymous integrity result | EXPERIMENT BLOCKED |
+| `screening-aggregate.json` | anonymous quality aggregate | NOT RUN |
+| `SCREENING_REPORT.md` | final Screening report | COMPLETE |
+| `EXPERIMENT_AUDIT.md` / `experiment-audit.json` | fresh same-family read-only audit | WARN / PROVISIONAL |
 
 原始输入、响应、逐例评分及 checkpoints 均保留在 Git ignored `.evaluation-cache/e2-9-r2/protocol-3.0.0/`。

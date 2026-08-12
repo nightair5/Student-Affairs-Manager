@@ -1,0 +1,173 @@
+{
+  "schemaVersion": "e2.9-r2-experiment-audit-1.0.0",
+  "audit_skill": "experiment-audit",
+  "date": "2026-08-13",
+  "project": "Student Affairs Manager E2.9-R2",
+  "protocolVersion": "e2-9-v4-pro-protocol-3.0.0",
+  "runLabel": "e29r2-20260813-a",
+  "auditor": "fresh-codex-same-family-reviewer",
+  "review_independence": "same-family",
+  "acceptance_status": "provisional",
+  "overall_verdict": "WARN",
+  "integrity_status": "warn",
+  "reason_code": "external_state_evidence_limited_and_readiness_lineage_qualified",
+  "summary": "Core integrity controls support EXPERIMENT_BLOCKED and quality NOT_AVAILABLE. Warnings qualify Readiness four-way lineage wording and the local-only evidence boundary for Preview cleanup and Production non-touch.",
+  "experiment_status_supported": true,
+  "experiment_status": "EXPERIMENT_BLOCKED",
+  "quality_conclusion_supported": true,
+  "quality_conclusion": "NOT_AVAILABLE",
+  "model_quality_inference": "PROHIBITED",
+  "implementationCommits": [
+    "da49a85755ba2f40221ff86ba87efb0309b4040e",
+    "a3f4fb60545e36d1a1cd332fe8edce8f19eda64a"
+  ],
+  "audited_input_hashes": {
+    "protocolBundle": "sha256:e2a1a90db3aad7f4055b01a760d400a3649366712f51ecc6f4d040116146bfeb",
+    "sourceOnlyManifest": "sha256:cf76acd2033f9c83eaa52527f8cc5ee7fee3d8dcf343a364db6d606624c4f445",
+    "readinessCheckpoint": "sha256:3e890722bf0da6774e05916a07c8c2080390a0453ece196620e2a9bc1a2aaf0e",
+    "smokeCheckpoint": "sha256:118d49f2109d92d017d8af2136289dc87f83f4374412a8d020cf5c1b4a09db6f",
+    "screeningCheckpoint": "sha256:c692c4ac4e88f46c5e9ebb14cc3a039e4aedfa635b568cac469d85774f207998",
+    "finalLedger": "sha256:9f03c67e9e57a1742fd8b234fafbddc33da09fe77bc030b2e01be7ea29c7316d"
+  },
+  "blocking_findings": [
+    {
+      "id": "B1",
+      "severity": "blocking",
+      "code": "SCREENING_INTEGRITY_FAILURE",
+      "observationId": "e29r2-8c2a5bf193747fb266f1aa042b904b48",
+      "caseId": "e2-holdout-25",
+      "modelAlias": "flash",
+      "httpStatus": 502,
+      "error": "UPSTREAM_JSON_INVALID",
+      "impact": "Screening remained incomplete; Scoring, Selection and Blind were unreachable."
+    },
+    {
+      "id": "B2",
+      "severity": "blocking_for_quality_claims",
+      "code": "NO_SCORABLE_COMPLETE_SCREENING_CHECKPOINT",
+      "impact": "No Pro versus Flash quality claim is supported."
+    }
+  ],
+  "observed_execution": {
+    "readiness": {
+      "expected": 2,
+      "completed": 2,
+      "failed": 0,
+      "gateStatus": "GENERATION_COMPLETE"
+    },
+    "smoke": {
+      "expected": 10,
+      "completed": 10,
+      "failed": 0,
+      "gateStatus": "GENERATION_COMPLETE"
+    },
+    "screening": {
+      "expected": 16,
+      "attempted": 4,
+      "completed": 3,
+      "failed": 1,
+      "gateStatus": "INTEGRITY_FAILURE",
+      "stoppedAfterFailure": true
+    },
+    "ledgerStage": "SCREENING_OPEN",
+    "totalFinalized": 16,
+    "totalCompleted": 15,
+    "totalFailed": 1,
+    "scoring": "NOT_RUN",
+    "selection": "NOT_RUN",
+    "blind": "NOT_CREATED"
+  },
+  "checks": {
+    "r1_non_reuse": {
+      "status": "PASS",
+      "details": "R1 was declared invalid for model quality, source-only inputs excluded R1 observations and prior outputs, and the R2 plan used fresh unique e29r2 observation IDs."
+    },
+    "protocol_and_labels_frozen_before_calls": {
+      "status": "PASS",
+      "details": "Protocol artifacts, labels, bindings, observation plan and Preview activation preceded the first Readiness call; the preparer refuses overwrite."
+    },
+    "pure_information_end_to_end": {
+      "status": "PASS",
+      "details": "Both Smoke arms preserved information_only through plan, request, execution and result, with requiresAction false and zero business entities."
+    },
+    "four_way_model_lineage": {
+      "status": "WARN",
+      "details": "All 13 completed generation observations had matching requested, returned, execution and result model identity. Ledger fields also match for all 15 completed records, but Readiness has no real RecognitionResult and its resultModelName is populated from returnedModel."
+    },
+    "integrity_failure_cannot_complete_checkpoint": {
+      "status": "PASS",
+      "details": "Checkpoint derivation requires exact expected count and all complete statuses; the actual Screening failure produced INTEGRITY_FAILURE."
+    },
+    "machine_stage_prerequisites": {
+      "status": "PASS",
+      "details": "The Durable Object enforces monotonic stage transitions and complete preregistered phase observations. Actual history stopped at SCREENING_OPEN."
+    },
+    "scorer_hash_bindings": {
+      "status": "PASS",
+      "details": "The scorer recomputes manifest, Prompt/Pipeline, Schema, scorer semantics, protocol/deployment, activation, checkpoint and observation bindings and fails closed before Expected loading."
+    },
+    "scorer_execution": {
+      "status": "PASS",
+      "details": "Scoring was not run because the Screening checkpoint was incomplete; no scoring directory or screening aggregate was present in the audited scope."
+    },
+    "durable_object_idempotency": {
+      "status": "PASS",
+      "details": "Observation IDs are reserved before upstream execution, duplicates are rejected, and finalized records cannot be finalized again or overwritten."
+    },
+    "deployment_chain_bundle_coverage": {
+      "status": "PASS",
+      "details": "The frozen protocol bundle covers the main Worker route, R2 wrapper, frozen R1 call implementation, ledger Worker, Preview binding and flag, ledger config, package lock, preparer, runner and scorer."
+    },
+    "actual_run_stop_rule": {
+      "status": "PASS",
+      "details": "Readiness completed 2, Smoke completed 10, and Screening stopped after 3 complete plus 1 immutable failure."
+    },
+    "cache_git_ignored": {
+      "status": "PASS",
+      "details": "The protocol cache is Git ignored and its raw responses, checkpoints and ledger are not tracked."
+    },
+    "preview_cleanup_and_production_boundary": {
+      "status": "WARN",
+      "details": "Local evidence records a false Preview flag, bearer Secret deletion and no Production touch, but no live Cloudflare verification was permitted in this audit."
+    },
+    "hash_token_latency_arithmetic": {
+      "status": "PASS",
+      "details": "Checkpoint and ledger hashes, observation counts, token sums and reported latency means match the audited cache snapshot."
+    }
+  },
+  "limitations": [
+    "Fresh same-family review is provisional rather than cross-family accepted.",
+    "No model call, network access, deployment or live Cloudflare verification was performed.",
+    "Git-ignored local cache consistency does not establish a remote immutable audit trail or exclude out-of-scope operations.",
+    "Readiness is a minimum provider request and has no real RecognitionResult result.modelName.",
+    "Incomplete Screening and unread Expected fixtures make accuracy, generalization and cost-effectiveness unavailable."
+  ],
+  "claims": [
+    {
+      "id": "C1",
+      "claim": "EXPERIMENT_BLOCKED",
+      "impact": "SUPPORTED"
+    },
+    {
+      "id": "C2",
+      "claim": "qualityConclusion is NOT_AVAILABLE",
+      "impact": "SUPPORTED"
+    },
+    {
+      "id": "C3",
+      "claim": "Pro is better or worse than Flash",
+      "impact": "UNSUPPORTED_AND_PROHIBITED"
+    },
+    {
+      "id": "C4",
+      "claim": "All 15 completed ledger records have matching four model fields",
+      "impact": "SUPPORTED_WITH_READINESS_QUALIFIER"
+    },
+    {
+      "id": "C5",
+      "claim": "Preview cleanup completed and Production was untouched",
+      "impact": "SUPPORTED_WITH_LOCAL_EVIDENCE_QUALIFIER"
+    }
+  ],
+  "required_disposition": "Keep EXPERIMENT_BLOCKED and quality NOT_AVAILABLE. Do not score partial Screening, reuse R1, or proceed to Selection, Blind, E3, E4 or Production. Any restart requires a new protocol authorization, run label and observation IDs from Readiness."
+}
