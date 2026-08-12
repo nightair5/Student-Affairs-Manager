@@ -3,6 +3,7 @@ import test from 'node:test'
 import { createWorker, validateDeepSeekRequest, validateExtractionRequest, validateWebFetchTarget } from './worker.mjs'
 import { createDeepSeekProvider } from './model-gateway.mjs'
 import { normalizeRecognitionResult } from './recognition.mjs'
+import { E2_V4_PRO_BENCHMARK_MAX_TOKENS } from './e2-v4-pro-benchmark.mjs'
 
 const baseContext = [{ kind: '任务', title: '报名材料', excerpt: '今天 18:00 截止' }]
 
@@ -26,6 +27,45 @@ function environment(overrides = {}) {
     ALLOWED_ORIGINS: '',
     ASSETS: { fetch: async () => new Response('asset') },
     ...overrides,
+  }
+}
+
+function benchmarkRequest(path, body, overrides = {}) {
+  const url = `https://student-affairs-manager-preview.example/api/experiments/e2-9/v4-pro-benchmark/${path}`
+  return new Request(url, {
+    method: body === undefined ? 'GET' : 'POST',
+    headers: {
+      origin: 'https://student-affairs-manager-preview.example',
+      authorization: `Bearer ${'b'.repeat(40)}`,
+      ...(body === undefined ? {} : { 'content-type': 'application/json' }),
+      ...overrides.headers,
+    },
+    ...(body === undefined ? {} : { body: JSON.stringify(body) }),
+    ...overrides,
+  })
+}
+
+function benchmarkEnvironment(overrides = {}) {
+  return environment({
+    DEEPSEEK_API_KEY: 'server-only-test-key-with-length',
+    E2_V4_PRO_BENCHMARK_ENABLED: 'true',
+    E2_V4_PRO_BENCHMARK_TOKEN: 'b'.repeat(40),
+    ...overrides,
+  })
+}
+
+function minimalRecognitionOutput() {
+  return {
+    schemaVersion: '2.0',
+    createdAt: '2026-08-13T00:00:00.000Z',
+    sourceSummary: { title: '通知', sourceType: 'text', notificationType: 'material_submission', summary: '提交材料', requiresAction: true, actionReason: '原文要求提交' },
+    projectMatch: { decision: 'standalone_task', matchedProjectId: null, suggestedProjectTitle: null, confidence: 0.9, reasons: [] },
+    projectSuggestion: null,
+    milestones: [],
+    standaloneTasks: [{ tempId: 'task-1', title: '提交材料', actionVerb: '提交', actionObject: '材料', evidenceIds: ['ev-1'], inferenceLevel: 'explicit' }],
+    materials: [], timePoints: [], events: [], conflicts: [], ambiguities: [], ignoredContent: [],
+    evidence: [{ id: 'ev-1', quotedText: '提交材料', field: 'description', confidence: 0.9 }],
+    quality: {},
   }
 }
 
@@ -566,4 +606,143 @@ test('repair experiment endpoint is preview-only, flagged and bearer protected',
     method: 'POST', headers: { 'content-type': 'application/json' }, body: '{}',
   }), environment({ E2_PATH_A_REPAIR_EXPERIMENT_ENABLED: 'true', E2_PATH_A_REPAIR_EXPERIMENT_TOKEN: 'x'.repeat(40) }))
   assert.equal(unauthorizedResponse.status, 401)
+})
+
+test('E2.9 benchmark endpoint is preview-only, feature-flagged, same-origin and independently authenticated', async () => {
+  const worker = createWorker()
+  const production = await worker.fetch(new Request('https://student-affairs.site/api/experiments/e2-9/v4-pro-benchmark/models', {
+    headers: { origin: 'https://student-affairs.site', authorization: `Bearer ${'b'.repeat(40)}` },
+  }), benchmarkEnvironment())
+  assert.equal(production.status, 404)
+
+  const disabled = await worker.fetch(benchmarkRequest('models'), benchmarkEnvironment({ E2_V4_PRO_BENCHMARK_ENABLED: 'false' }))
+  assert.equal(disabled.status, 404)
+
+  const wrongOrigin = await worker.fetch(benchmarkRequest('models', undefined, {
+    headers: { origin: 'https://attacker.example', authorization: `Bearer ${'b'.repeat(40)}` },
+  }), benchmarkEnvironment())
+  assert.equal(wrongOrigin.status, 403)
+
+  const wrongToken = await worker.fetch(benchmarkRequest('models', undefined, {
+    headers: { origin: 'https://student-affairs-manager-preview.example', authorization: `Bearer ${'x'.repeat(40)}` },
+  }), benchmarkEnvironment())
+  assert.equal(wrongToken.status, 401)
+})
+
+test('E2.9 availability verifies exact model IDs and a minimum Pro JSON completion', async () => {
+  const upstream = []
+  const worker = createWorker({
+    retrySleep: async () => {},
+    fetcher: async (url, options) => {
+      upstream.push({ url, options })
+      if (url.endsWith('/models')) return Response.json({ data: [{ id: 'deepseek-v4-flash' }, { id: 'deepseek-v4-pro' }, { id: 'unrelated' }] })
+      return Response.json({
+        model: 'deepseek-v4-pro', system_fingerprint: 'fp-pro',
+        choices: [{ finish_reason: 'stop', message: { content: '{"ok":true}' } }],
+        usage: { prompt_tokens: 12, completion_tokens: 5, total_tokens: 17 },
+      })
+    },
+  })
+  const response = await worker.fetch(benchmarkRequest('models'), benchmarkEnvironment())
+  assert.equal(response.status, 200)
+  const payload = await response.json()
+  assert.deepEqual(payload.availableRequiredModels, ['deepseek-v4-flash', 'deepseek-v4-pro'])
+  assert.equal(payload.compatibility.returnedModel, 'deepseek-v4-pro')
+  assert.equal(payload.compatibility.systemFingerprint, 'fp-pro')
+  assert.equal(payload.compatibility.validJsonObject, true)
+  assert.equal(upstream[0].options.method, 'GET')
+  const chatBody = JSON.parse(upstream[1].options.body)
+  assert.equal(chatBody.model, 'deepseek-v4-pro')
+  assert.equal(chatBody.temperature, 0)
+  assert.equal(chatBody.stream, false)
+  assert.deepEqual(chatBody.thinking, { type: 'disabled' })
+  assert.deepEqual(chatBody.response_format, { type: 'json_object' })
+  assert.equal(Object.hasOwn(chatBody, 'tools'), false)
+  assert.equal(Object.hasOwn(chatBody, 'top_p'), false)
+  assert.equal(Object.hasOwn(chatBody, 'reasoning_effort'), false)
+})
+
+test('E2.9 generation changes only the server-selected model and records paired provenance', async () => {
+  const upstreamBodies = []
+  const worker = createWorker({
+    retrySleep: async () => {},
+    fetcher: async (_url, options) => {
+      const upstreamBody = JSON.parse(options.body)
+      upstreamBodies.push(upstreamBody)
+      return Response.json({
+        model: upstreamBody.model,
+        system_fingerprint: `fp-${upstreamBody.model}`,
+        choices: [{ finish_reason: 'stop', message: { content: JSON.stringify(minimalRecognitionOutput()) } }],
+        usage: { prompt_tokens: 100, completion_tokens: 50, total_tokens: 150 },
+      })
+    },
+  })
+  const source = {
+    sourceType: 'text', sourceTitle: '通知', content: '请提交材料',
+    referenceTime: '2026-08-13T00:00:00.000Z', timezone: 'Asia/Shanghai',
+  }
+  const flash = await worker.fetch(benchmarkRequest('generate', { ...source, modelAlias: 'flash' }), benchmarkEnvironment())
+  const pro = await worker.fetch(benchmarkRequest('generate', { ...source, modelAlias: 'pro' }), benchmarkEnvironment())
+  assert.equal(flash.status, 200)
+  assert.equal(pro.status, 200)
+  const flashPayload = await flash.json()
+  const proPayload = await pro.json()
+  assert.equal(flashPayload.execution.returnedModel, 'deepseek-v4-flash')
+  assert.equal(proPayload.execution.returnedModel, 'deepseek-v4-pro')
+  assert.equal(flashPayload.execution.promptVersion, 'recognition-2.4.1')
+  assert.equal(flashPayload.execution.validatorVersion, 'recognition-quality-2.1.0')
+  assert.equal(flashPayload.execution.router, 'BYPASSED')
+  assert.equal(flashPayload.execution.repair, 'DISABLED')
+  assert.equal(flashPayload.execution.normalizer, 'DISABLED')
+  assert.match(flashPayload.execution.sourceSha256, /^[a-f0-9]{64}$/u)
+  assert.match(flashPayload.execution.rawOutputSha256, /^[a-f0-9]{64}$/u)
+  assert.match(flashPayload.execution.resultSha256, /^[a-f0-9]{64}$/u)
+  assert.equal(JSON.parse(flashPayload.rawOutput).schemaVersion, '2.0')
+  assert.equal(flashPayload.result.standaloneTasks[0].title, '提交材料')
+  assert.equal(upstreamBodies[0].max_tokens, E2_V4_PRO_BENCHMARK_MAX_TOKENS)
+  assert.equal(upstreamBodies[0].temperature, 0)
+  assert.equal(upstreamBodies[0].stream, false)
+  assert.deepEqual(upstreamBodies[0].thinking, { type: 'disabled' })
+  assert.deepEqual(upstreamBodies[0].response_format, { type: 'json_object' })
+  assert.deepEqual({ ...upstreamBodies[0], model: '<MODEL>' }, { ...upstreamBodies[1], model: '<MODEL>' })
+})
+
+test('E2.9 generation firewall rejects expected answers and arbitrary model IDs before upstream', async () => {
+  let contacted = false
+  const worker = createWorker({ fetcher: async () => { contacted = true } })
+  const source = {
+    modelAlias: 'flash', sourceType: 'text', sourceTitle: '通知', content: '提交材料',
+    referenceTime: '2026-08-13T00:00:00.000Z', timezone: 'Asia/Shanghai',
+  }
+  const expected = await worker.fetch(benchmarkRequest('generate', { ...source, expected: { tasks: [] } }), benchmarkEnvironment())
+  assert.equal(expected.status, 400)
+  assert.equal((await expected.json()).error, 'GENERATION_FIREWALL_REJECTED')
+  const model = await worker.fetch(benchmarkRequest('generate', { ...source, modelAlias: 'deepseek-v4-pro' }), benchmarkEnvironment())
+  assert.equal(model.status, 400)
+  assert.equal((await model.json()).error, 'MODEL_ALIAS_INVALID')
+  assert.equal(contacted, false)
+})
+
+test('E2.9 generation fails closed on model fallback or missing fingerprint', async () => {
+  const source = {
+    modelAlias: 'pro', sourceType: 'text', sourceTitle: '通知', content: '提交材料',
+    referenceTime: '2026-08-13T00:00:00.000Z', timezone: 'Asia/Shanghai',
+  }
+  const fallbackWorker = createWorker({ fetcher: async () => Response.json({
+    model: 'deepseek-v4-flash', system_fingerprint: 'fp-flash',
+    choices: [{ finish_reason: 'stop', message: { content: JSON.stringify(minimalRecognitionOutput()) } }],
+    usage: { prompt_tokens: 100, completion_tokens: 50, total_tokens: 150 },
+  }) })
+  const fallback = await fallbackWorker.fetch(benchmarkRequest('generate', source), benchmarkEnvironment())
+  assert.equal(fallback.status, 502)
+  assert.equal((await fallback.json()).error, 'MODEL_FALLBACK_DETECTED')
+
+  const fingerprintWorker = createWorker({ fetcher: async () => Response.json({
+    model: 'deepseek-v4-pro',
+    choices: [{ finish_reason: 'stop', message: { content: JSON.stringify(minimalRecognitionOutput()) } }],
+    usage: { prompt_tokens: 100, completion_tokens: 50, total_tokens: 150 },
+  }) })
+  const fingerprint = await fingerprintWorker.fetch(benchmarkRequest('generate', source), benchmarkEnvironment())
+  assert.equal(fingerprint.status, 502)
+  assert.equal((await fingerprint.json()).error, 'SYSTEM_FINGERPRINT_MISSING')
 })
