@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "e2.9-r1-baseline-2.0.0",
+  "protocolVersion": "e2-9-v4-pro-reduced-protocol-2.0.0",
+  "baselineCommit": "b2ea4a4b27bf543f77a3c3a9cd5439b92a950720",
+  "baselineTag": "v2-e2-9-protocol-blocked",
+  "models": [
+    "deepseek-v4-flash",
+    "deepseek-v4-pro"
+  ],
+  "onlyAllowedRecognitionVariable": "modelName",
+  "frozen": {
+    "prompt": "recognition-2.4.1",
+    "schema": "2.0",
+    "pipeline": "recognition-pipeline-2.2.1",
+    "router": "BYPASSED",
+    "validator": "recognition-quality-2.1.0",
+    "repair": "DISABLED",
+    "planningNormalizer": "DISABLED",
+    "temperature": 0,
+    "thinking": "disabled",
+    "maxTokens": 6000,
+    "responseFormat": "json_object",
+    "stream": false,
+    "tools": "none"
+  },
+  "sourceOnlySha256": "0cf63c1c0aae2bccfb69278a15d9b5b1c4b4b64b9e7fb0dcc6c6b988544160fb",
+  "smokeManifestSha256": "6cbf5802d2c3b31737d4c3ac4d2b09bc6ce99469f9ed6d8c5b87f762c30839ea",
+  "screeningManifestSha256": "fdea46d3c2bc9b85e8b36dc46908568fd09840cc674e0c19442aa540a1999cac",
+  "selectionManifestSha256": "1a0342e0d0ac9a462d5cc560f317bd81457b8624919b1f291966596501201038",
+  "bundleManifestSha256": "e26ba454acb316ad246b3ba825b064405278b5652ef93601cda4241731d59684"
+}

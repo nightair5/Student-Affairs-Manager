@@ -1,0 +1,440 @@
+{
+  "schemaVersion": "e2.9-r1-selection-v2-manifest-2.0.0",
+  "protocolVersion": "e2-9-v4-pro-reduced-protocol-2.0.0",
+  "role": "EXPOSED_SELECTION",
+  "frozenBeforeModelCalls": true,
+  "sourceOnlySha256": "0cf63c1c0aae2bccfb69278a15d9b5b1c4b4b64b9e7fb0dcc6c6b988544160fb",
+  "preservesScreeningCasesWithoutRerun": true,
+  "cases": [
+    {
+      "caseId": "e2-gen-22-1",
+      "sourceSet": "development",
+      "dimensions": [
+        "complex_multi_stage",
+        "multi_task",
+        "multi_timepoint",
+        "multi_material",
+        "event_task",
+        "ambiguity",
+        "formal_notice"
+      ],
+      "originTags": [
+        "development",
+        "e2_6_diagnostic"
+      ],
+      "sourceSha256": "0fc0304f34217af8ec60fd1f54d2bb19d7dec8fa8f0b04fbd66b3d2db54566fa",
+      "inputSha256": "e8c40bcbbefe86c70fe008282b8340b7a5636d39a5cdbc1cc7383dd7717ffcbc",
+      "labelSha256": "66d7bb59c19575ded9096e298a72c70a312d41a9482b56a2e2961fb41e114cc3"
+    },
+    {
+      "caseId": "e2-holdout-25",
+      "sourceSet": "exposed_holdout",
+      "dimensions": [
+        "multi_stage",
+        "multi_task",
+        "multi_timepoint",
+        "multi_material",
+        "event_task",
+        "ambiguity"
+      ],
+      "originTags": [
+        "exposed_holdout",
+        "e2_6_diagnostic"
+      ],
+      "sourceSha256": "4a98a9ed107fb64d0e71ad9eda8d42e199ea655135d4ce090c4aae612bb94846",
+      "inputSha256": "686a743542df554f9d0dc2856c03a741eddc6768ac521ec6051565c3feb7413e",
+      "labelSha256": "aa347cc2d44505814cd38a5cf1fd948c385351ef72add12eee6f4ed9b2d1e128"
+    },
+    {
+      "caseId": "e2-gen-10-3",
+      "sourceSet": "development",
+      "dimensions": [
+        "ambiguity",
+        "vague_time",
+        "relative_time",
+        "conditional"
+      ],
+      "originTags": [
+        "development",
+        "e2_6_diagnostic"
+      ],
+      "sourceSha256": "945fbced9abaedc021ed112a6fa85df7dc522142db6ca7a26ee4c66560b9abbb",
+      "inputSha256": "6e1ea42d1f0dda784505d80a9fd7fd4ccb01b95ba270b340c27fe81ac7277950",
+      "labelSha256": "341ef8aaed7839ecd726274e6a1153a1fe13d0c4f9c5f4ed35b623ddf70969fc"
+    },
+    {
+      "caseId": "e2-gen-14-2",
+      "sourceSet": "development",
+      "dimensions": [
+        "pure_information",
+        "information_only",
+        "no_action"
+      ],
+      "originTags": [
+        "development"
+      ],
+      "sourceSha256": "9a99403b06a4733582ed5dcff1a548ec5c0e803a4768d7aee459268ded32b83d",
+      "inputSha256": "60387c6e06aa7a193b62df07bd03b4ee3e68d9e051d54ac9dea7ab03169f6f0b",
+      "labelSha256": "ca31192fd39c10fd58d29f49b489ddf9ea8fe5afaf39e51d635511e9143a4f36"
+    },
+    {
+      "caseId": "e2-gen-16-2",
+      "sourceSet": "development",
+      "dimensions": [
+        "prompt_injection",
+        "security"
+      ],
+      "originTags": [
+        "development"
+      ],
+      "sourceSha256": "245c5071371df724ee3ccfc1a04e367cfd323ca04dc8ad75379b67fa158a2789",
+      "inputSha256": "125b2bba034e59d4f741352f5c3caa0e2cc5e51b1405ddc4e23734d400f33d86",
+      "labelSha256": "c2af02ca02ef71011ae42892ae8fbd47eb0cd2dd0e21e0512a752459ed2ef67a"
+    },
+    {
+      "caseId": "e2-complex_notice-03",
+      "sourceSet": "golden",
+      "dimensions": [
+        "complex_multi_stage",
+        "multi_task",
+        "multi_timepoint",
+        "multi_material"
+      ],
+      "originTags": [
+        "golden",
+        "e2_6_diagnostic"
+      ],
+      "sourceSha256": "0e7fd3c1ae48571d4748685e213f82c8cfe71aa08bcd72beeb19104ca92605f5",
+      "inputSha256": "f2eefbc295ff0215841c05fe73a8345b236f2b15183b6a83253e5bc0ddf5c37b",
+      "labelSha256": "f1245062e811f2a806f613587fb84647a1a84f07be8a28bad88921ba7c04167f"
+    },
+    {
+      "caseId": "e2-gen-08-2",
+      "sourceSet": "development",
+      "dimensions": [
+        "multi_stage",
+        "multi_task",
+        "multi_timepoint",
+        "multi_material",
+        "table"
+      ],
+      "originTags": [
+        "development"
+      ],
+      "sourceSha256": "4d26d56a3b88634f70f8238b19813208146c48aa69c76c277fda2e9cc91762d2",
+      "inputSha256": "9f02ff8487aae499d1c0911b88bd76f357a5055eaaff0fe2f98fb77d6539b374",
+      "labelSha256": "6e66a5d902a90d5031b82b5c514291042e25ac0a0ef3466d227d8a5deeeac6a6"
+    },
+    {
+      "caseId": "e2-gen-07-1",
+      "sourceSet": "development",
+      "dimensions": [
+        "event_task",
+        "multi_timepoint",
+        "ambiguity",
+        "conditional"
+      ],
+      "originTags": [
+        "development",
+        "e2_6_diagnostic"
+      ],
+      "sourceSha256": "dbc7f01c97c9254fece128205bbd85b0deaf6eea3f702254df547a70f8d97f20",
+      "inputSha256": "8fb0bcfe5172950b185c139f4bf6c4744b56f224a99969a221232b2f5e2bae3f",
+      "labelSha256": "5da881dd7468932f1b8bb39f630f361364a89a169fee53bac06e00436a7773ca"
+    },
+    {
+      "caseId": "e2-complex_notice-01",
+      "sourceSet": "golden",
+      "dimensions": [
+        "complex_multi_stage",
+        "multi_task",
+        "multi_timepoint",
+        "multi_material",
+        "event_task"
+      ],
+      "originTags": [
+        "golden",
+        "e2_6_diagnostic"
+      ],
+      "sourceSha256": "99cc9c07a8d7c8217f5214497deee2f222b3df2cf9200d82d35bec0057003823",
+      "inputSha256": "224185ef124f3c1321d63b7cc19809a8f9741212d67710238f81c1537ed35cfd",
+      "labelSha256": "df7e5a9962be3d158f6523387cf680fefe238e6c9abc7f315e0aa945076edb2d"
+    },
+    {
+      "caseId": "e2-complex_notice-02",
+      "sourceSet": "golden",
+      "dimensions": [
+        "multi_stage",
+        "multi_task",
+        "multi_timepoint",
+        "multi_material",
+        "event_task",
+        "conditional"
+      ],
+      "originTags": [
+        "golden",
+        "e2_6_diagnostic"
+      ],
+      "sourceSha256": "d54952591272a0d93eaa1a12751e9b1f3bf2d5c10091dacb2fc261253d4d2dd0",
+      "inputSha256": "4d1e4924c46b29f258185c34a42069639fba7e593da6541442c8895d5d8f1a60",
+      "labelSha256": "0b2f5143aabd33844316f4dd9ae6ff2b09a5cc66fe2872cd655a6313a8deb8cc"
+    },
+    {
+      "caseId": "e2-complex_notice-04",
+      "sourceSet": "golden",
+      "dimensions": [
+        "multi_stage",
+        "multi_task",
+        "multi_timepoint",
+        "event_task"
+      ],
+      "originTags": [
+        "golden",
+        "e2_6_diagnostic"
+      ],
+      "sourceSha256": "e7aed62c1967bc475e000de32197f4756f97761d24f216b6a83c38706a665ac5",
+      "inputSha256": "0b0ee55bfa72647c8086618ce1c2ae70b226e5e94aeac7723265c3a413e469eb",
+      "labelSha256": "c193892337f1e65773ac4280c1cb79b5cf486bab67de71b850411a91e0a602f3"
+    },
+    {
+      "caseId": "e2-complex_notice-05",
+      "sourceSet": "golden",
+      "dimensions": [
+        "multi_stage",
+        "multi_task",
+        "multi_timepoint",
+        "multi_material",
+        "event_task",
+        "conditional"
+      ],
+      "originTags": [
+        "golden",
+        "e2_6_diagnostic"
+      ],
+      "sourceSha256": "7bcb0a26b2cc0d67df53221ffc615d63880bcabad56d64e3db6d29b279703cf0",
+      "inputSha256": "74b91818096721f6c315f7c1fe6fd3ea65d1fcb7e8d0189d04586d6f5d371704",
+      "labelSha256": "b3b49a1d4fc401a8a7fc34c5d416f8a0f373a309e1208150bc413ae90ab29b8c"
+    },
+    {
+      "caseId": "e2-complex_notice-06",
+      "sourceSet": "golden",
+      "dimensions": [
+        "complex_course",
+        "multi_stage",
+        "multi_task",
+        "multi_timepoint",
+        "multi_material",
+        "event_task",
+        "ambiguity"
+      ],
+      "originTags": [
+        "golden",
+        "e2_6_diagnostic"
+      ],
+      "sourceSha256": "c42d81ff04e41cf0a70b3668450416ed8e12f3ab995e86ad06ea6f3a7774f5a7",
+      "inputSha256": "8ee523c8b3508d54c7217e1575100345646bd021b5fb268d4b20e99626c73396",
+      "labelSha256": "7bc3efa420ad6d1a4a508eb84e2c006c34fa2391bf3d2809b1887c3408bafdc8"
+    },
+    {
+      "caseId": "e2-complex_notice-07",
+      "sourceSet": "golden",
+      "dimensions": [
+        "formal_notice",
+        "multi_stage",
+        "multi_task",
+        "multi_timepoint",
+        "multi_material",
+        "event_task",
+        "ambiguity"
+      ],
+      "originTags": [
+        "golden",
+        "e2_6_diagnostic"
+      ],
+      "sourceSha256": "e72b89a73dbf3e2b6696bb2a0614565273dea3aa9a6529b22f0323023855517a",
+      "inputSha256": "20ad97946b2f96e68e869698ae238b895919ac831c47421c55b613e33fa6f613",
+      "labelSha256": "e59b3555c0c654b485d934f29531bdacda057a5b5bba1756afe070591919bad7"
+    },
+    {
+      "caseId": "e2-complex_notice-10",
+      "sourceSet": "golden",
+      "dimensions": [
+        "formal_notice",
+        "multi_stage",
+        "multi_task",
+        "multi_timepoint",
+        "event_task",
+        "ambiguity"
+      ],
+      "originTags": [
+        "golden",
+        "e2_6_diagnostic"
+      ],
+      "sourceSha256": "426efdc005f54623aa84f82b47eaef58509e626fe6aa3d55e78e9542f287c998",
+      "inputSha256": "ef2c4142907f98131cef98bf554dab59ac7f4b4bd96aa2399d4b8053e67da173",
+      "labelSha256": "9f5fb9fc07477a3b5394741be2593333c78c36ff514fffc43fbb4a00cc6d9f0c"
+    },
+    {
+      "caseId": "e2-holdout-22",
+      "sourceSet": "exposed_holdout",
+      "dimensions": [
+        "complex_multi_stage",
+        "multi_task",
+        "multi_timepoint",
+        "multi_material",
+        "event_task"
+      ],
+      "originTags": [
+        "exposed_holdout",
+        "e2_6_diagnostic"
+      ],
+      "sourceSha256": "b6da0fc57dc18583cda078e16a006a08ef6c4365bba80153620fe5bc9731c8cd",
+      "inputSha256": "8568b12b0e97e5474ded35fb03d89351a3c9696e358bfed83b517628e384bc2e",
+      "labelSha256": "42cdfe5a53ef799920d97d9d55843b49938bac07dfc916d3c9deeaa2024bae5c"
+    },
+    {
+      "caseId": "e2-holdout-23",
+      "sourceSet": "exposed_holdout",
+      "dimensions": [
+        "complex_multi_stage",
+        "multi_task",
+        "multi_timepoint",
+        "multi_material",
+        "event_task",
+        "ambiguity"
+      ],
+      "originTags": [
+        "exposed_holdout",
+        "e2_6_diagnostic"
+      ],
+      "sourceSha256": "ea59761e225219766493ccf4313085d1a0165da91fad58a6420da89ffcf1ef9a",
+      "inputSha256": "b2c3766ca620fc9758a89d4b07e78679b197ab6cb1e7e1ce79277a38d5a23076",
+      "labelSha256": "f11556de4889e8459efb54d8b3785a4d2c7a007f65089a9984a1d114349a6e40"
+    },
+    {
+      "caseId": "e2-holdout-24",
+      "sourceSet": "exposed_holdout",
+      "dimensions": [
+        "complex_multi_stage",
+        "multi_task",
+        "multi_timepoint",
+        "multi_material",
+        "event_task",
+        "ambiguity",
+        "conditional"
+      ],
+      "originTags": [
+        "exposed_holdout",
+        "e2_6_diagnostic"
+      ],
+      "sourceSha256": "3463d6edce6e0791b69a72bcaba3193d96842745d147571027fddf9673bf08c5",
+      "inputSha256": "0a0822df00fc2ba5f920a49ce55b2fc67fd04296f4ab4cd1ce8e1044aa61fcf0",
+      "labelSha256": "7f40a05395c1a9f4601c016433d99a9817294fe663fa82cf35519e5ed7859ad5"
+    },
+    {
+      "caseId": "e2-gen-03-3",
+      "sourceSet": "development",
+      "dimensions": [
+        "formal_notice",
+        "multi_stage",
+        "multi_task",
+        "multi_timepoint",
+        "multi_material",
+        "event_task",
+        "ambiguity"
+      ],
+      "originTags": [
+        "development",
+        "e2_6_diagnostic"
+      ],
+      "sourceSha256": "7e21504ce86b14dd7a32860ea246d65a1ed9ec6e793df6ba7c766eb3f071df97",
+      "inputSha256": "558574d36b1509244510100c9e0f782471c2acc8a700d63f1058a8feb06c33e6",
+      "labelSha256": "fc73acd6d3cad8e6128ec7132b97caacace4b7431f660b6a9ffaf620653bbe9d"
+    },
+    {
+      "caseId": "e2-gen-11-3",
+      "sourceSet": "development",
+      "dimensions": [
+        "multi_task",
+        "multi_timepoint",
+        "multi_material",
+        "changed_deadline",
+        "ambiguity"
+      ],
+      "originTags": [
+        "development",
+        "e2_6_diagnostic"
+      ],
+      "sourceSha256": "7143a913f89b9736aab94e46fd3be49ce36f9d026309b02e6606f13d1b03a870",
+      "inputSha256": "01bf0f7ebdb08bd3946e7760c7cb06a4dfaf7d5f4091a98c33767b7a77ab9dc4",
+      "labelSha256": "556bc5473e8513919b86648fe9098319c6f11eac63ddbf070242933862ecb462"
+    },
+    {
+      "caseId": "e2-gen-15-3",
+      "sourceSet": "development",
+      "dimensions": [
+        "ocr",
+        "table_ocr",
+        "multi_material",
+        "ambiguity"
+      ],
+      "originTags": [
+        "development",
+        "e2_6_diagnostic"
+      ],
+      "sourceSha256": "e6652f69f9689f5525e8d3c24ce0cf169277c6a7534e200916af6c05b1966f6f",
+      "inputSha256": "f454b5a6242f14888509cc62a134a0b005dfa3db2107554f81825b84fcfa4204",
+      "labelSha256": "3e5cbdab79f8483bfb464ce76bddce8c08e58e168ed0166c2ab69df1b94bed96"
+    },
+    {
+      "caseId": "e2-gen-20-2",
+      "sourceSet": "development",
+      "dimensions": [
+        "event_task",
+        "relative_time",
+        "ambiguity"
+      ],
+      "originTags": [
+        "development",
+        "e2_6_diagnostic"
+      ],
+      "sourceSha256": "36fef1742e72c55c2d3e362825e5fa88308d8d6312c46c88e34f93f2af6bc8bd",
+      "inputSha256": "353aad0ca2b3827c678ac955b46a5b3a9a8bda6d64ec13e455a0a57ffcc6d290",
+      "labelSha256": "51a696fae020845e4bebea5975bf40f9b16aa3006999a2e1b71b208e6ffcbce9"
+    },
+    {
+      "caseId": "e2-gen-21-3",
+      "sourceSet": "development",
+      "dimensions": [
+        "multi_task",
+        "multi_timepoint",
+        "ordered_steps",
+        "table"
+      ],
+      "originTags": [
+        "development",
+        "e2_6_diagnostic"
+      ],
+      "sourceSha256": "cff426900561d934c5242a1ddb24219f942116204d0728db905eb0e9395a44d9",
+      "inputSha256": "937357dbbb409012834183b4f57ad784a10c9056e8248dd28f7e5b07b2d8ceed",
+      "labelSha256": "23289c67ff9f4a876e1038838e1ebca86ea96f75d17abba345873f25408cb7dc"
+    },
+    {
+      "caseId": "e2-gen-09-3",
+      "sourceSet": "development",
+      "dimensions": [
+        "chat",
+        "group_chat_colloquial",
+        "vague_time",
+        "ambiguity",
+        "event_task"
+      ],
+      "originTags": [
+        "development"
+      ],
+      "sourceSha256": "0d3d6c4ec467f8ff67c73089d6f35c2df1ea660192aafebe10001cd149bc1889",
+      "inputSha256": "56bd78e4ff544e4ad044285e5b4137b387b5aaf9d4e0bbf3c9c0a741fc914de9",
+      "labelSha256": "68ae4432011de34851113cf289fb59cf03c5f06f004c195768b5d67fc354851e"
+    }
+  ]
+}

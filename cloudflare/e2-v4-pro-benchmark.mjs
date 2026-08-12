@@ -11,7 +11,7 @@ import {
 } from './recognition-quality.mjs'
 import { RECOGNITION_PIPELINE_VERSION } from './model-gateway.mjs'
 
-export const E2_V4_PRO_BENCHMARK_VERSION = 'e2-v4-pro-benchmark-1.0.0'
+export const E2_V4_PRO_BENCHMARK_VERSION = 'e2-v4-pro-benchmark-2.0.0'
 export const E2_V4_PRO_BENCHMARK_PROMPT_SHA256 = 'c925f1dc27971e4fcaf7ad185b729f016fa7af966cd7992337d9eaa94c97e6fd'
 export const E2_V4_PRO_BENCHMARK_MAX_TOKENS = 6_000
 
@@ -19,9 +19,9 @@ const CHAT_COMPLETIONS_ENDPOINT = 'https://api.deepseek.com/chat/completions'
 const MODELS_ENDPOINT = 'https://api.deepseek.com/models'
 const TIMEOUT_MS = 45_000
 const MAX_BODY_BYTES = 100_000
-const RETRYABLE_STATUS = new Set([429, 502, 503])
 const REQUEST_FIELDS = new Set(['modelAlias', 'sourceType', 'sourceTitle', 'content', 'referenceTime', 'timezone'])
 const MODEL_BY_ALIAS = Object.freeze({ flash: 'deepseek-v4-flash', pro: 'deepseek-v4-pro' })
+const SAFE_UPSTREAM_HEADERS = Object.freeze(['content-type', 'date', 'request-id', 'x-request-id', 'cf-ray', 'server'])
 
 function safeText(value, limit) {
   return typeof value === 'string'
@@ -79,20 +79,17 @@ function usageFrom(payload) {
   return { input: prompt, output: completion, total }
 }
 
-function retryAfterMs(response) {
-  if (response.status !== 429) return null
-  const raw = response.headers.get('retry-after')
-  if (!raw) return null
-  const seconds = Number(raw)
-  if (Number.isFinite(seconds)) return Math.max(0, Math.min(30_000, seconds * 1_000))
-  const date = Date.parse(raw)
-  return Number.isNaN(date) ? null : Math.max(0, Math.min(30_000, date - Date.now()))
+function safeHeaders(headers) {
+  return Object.fromEntries(SAFE_UPSTREAM_HEADERS.flatMap((name) => {
+    const value = headers.get(name)
+    return value ? [[name, safeText(value, 500)]] : []
+  }))
 }
 
-async function callChat({ fetcher, apiKey, model, systemPrompt, userPrompt, maxTokens, sleep }) {
+async function callChat({ fetcher, apiKey, model, systemPrompt, userPrompt, maxTokens }) {
   const attempts = []
   const startedAt = Date.now()
-  for (let attempt = 1; attempt <= 2; attempt += 1) {
+  for (let attempt = 1; attempt <= 1; attempt += 1) {
     const attemptStartedAt = Date.now()
     try {
       const response = await fetcher(CHAT_COMPLETIONS_ENDPOINT, {
@@ -113,15 +110,14 @@ async function callChat({ fetcher, apiKey, model, systemPrompt, userPrompt, maxT
         signal: AbortSignal.timeout(TIMEOUT_MS),
       })
       const durationMs = Date.now() - attemptStartedAt
+      const upstreamHeaders = safeHeaders(response.headers)
+      const rawResponse = await response.text()
       if (!response.ok) {
         attempts.push({ attempt, status: response.status, transportStatus: `http_${response.status}`, durationMs })
-        if (attempt < 2 && RETRYABLE_STATUS.has(response.status)) {
-          await sleep(retryAfterMs(response) ?? 250)
-          continue
-        }
-        return { ok: false, error: `UPSTREAM_${response.status}`, status: response.status, attempts, durationMs: Date.now() - startedAt }
+        return { ok: false, error: `UPSTREAM_${response.status}`, status: response.status, attempts, durationMs: Date.now() - startedAt, upstreamHeaders, rawResponse }
       }
-      const payload = await response.json()
+      let payload
+      try { payload = JSON.parse(rawResponse) } catch { return { ok: false, error: 'UPSTREAM_JSON_INVALID', status: 502, attempts, durationMs: Date.now() - startedAt, upstreamHeaders, rawResponse } }
       const content = typeof payload?.choices?.[0]?.message?.content === 'string' ? payload.choices[0].message.content : ''
       const returnedModel = safeText(payload?.model, 100)
       const systemFingerprint = safeText(payload?.system_fingerprint, 200)
@@ -132,36 +128,49 @@ async function callChat({ fetcher, apiKey, model, systemPrompt, userPrompt, maxT
       if (returnedModel !== model) return { ok: false, error: 'MODEL_FALLBACK_DETECTED', status: 502, requestedModel: model, returnedModel, attempts, durationMs: Date.now() - startedAt }
       if (!systemFingerprint) return { ok: false, error: 'SYSTEM_FINGERPRINT_MISSING', status: 502, requestedModel: model, returnedModel, attempts, durationMs: Date.now() - startedAt }
       if (!usage) return { ok: false, error: 'TOKEN_USAGE_MISSING', status: 502, requestedModel: model, returnedModel, systemFingerprint, attempts, durationMs: Date.now() - startedAt }
-      return { ok: true, content, requestedModel: model, returnedModel, systemFingerprint, finishReason, usage, attempts, durationMs: Date.now() - startedAt }
+      return { ok: true, content, requestedModel: model, returnedModel, systemFingerprint, finishReason, usage, attempts, durationMs: Date.now() - startedAt, upstreamHeaders, rawResponse }
     } catch (error) {
       const durationMs = Date.now() - attemptStartedAt
       const timeout = error instanceof Error && (error.name === 'TimeoutError' || error.name === 'AbortError')
       attempts.push({ attempt, status: null, transportStatus: timeout ? 'timeout' : 'network_error', durationMs })
-      if (attempt < 2) {
-        await sleep(250)
-        continue
-      }
       return { ok: false, error: timeout ? 'UPSTREAM_TIMEOUT' : 'UPSTREAM_NETWORK_ERROR', status: timeout ? 504 : 502, attempts, durationMs: Date.now() - startedAt }
     }
   }
   return { ok: false, error: 'UPSTREAM_UNAVAILABLE', status: 502, attempts, durationMs: Date.now() - startedAt }
 }
 
-async function handleModels(env, fetcher, sleep) {
+async function fetchModelsRaw(env, fetcher) {
   const modelsResponse = await fetcher(MODELS_ENDPOINT, {
     method: 'GET',
     headers: { authorization: `Bearer ${env.DEEPSEEK_API_KEY}` },
     signal: AbortSignal.timeout(TIMEOUT_MS),
   })
-  if (!modelsResponse.ok) return failure(`MODELS_UPSTREAM_${modelsResponse.status}`, 502)
-  const modelsPayload = await modelsResponse.json()
+  const rawResponse = await modelsResponse.text()
+  let modelsPayload
+  try { modelsPayload = JSON.parse(rawResponse) } catch { return { ok: false, error: 'MODELS_UPSTREAM_JSON_INVALID', status: 502, rawResponse, upstreamHeaders: safeHeaders(modelsResponse.headers) } }
+  if (!modelsResponse.ok) return { ok: false, error: `MODELS_UPSTREAM_${modelsResponse.status}`, status: 502, rawResponse, upstreamHeaders: safeHeaders(modelsResponse.headers) }
   const modelIds = Array.isArray(modelsPayload?.data)
     ? modelsPayload.data.map((item) => safeText(item?.id, 100)).filter(Boolean)
     : []
   const requiredModels = Object.values(MODEL_BY_ALIAS)
-  if (!requiredModels.every((model) => modelIds.includes(model))) {
-    return failure('REQUIRED_MODELS_UNAVAILABLE', 412, { requiredModels, availableRequiredModels: requiredModels.filter((model) => modelIds.includes(model)) })
-  }
+  if (!requiredModels.every((model) => modelIds.includes(model))) return { ok: false, error: 'REQUIRED_MODELS_UNAVAILABLE', status: 412, rawResponse, upstreamHeaders: safeHeaders(modelsResponse.headers), requiredModels, availableRequiredModels: requiredModels.filter((model) => modelIds.includes(model)) }
+  return { ok: true, modelsPayload, modelIds, requiredModels, rawResponse, upstreamHeaders: safeHeaders(modelsResponse.headers) }
+}
+
+async function minimumCompletion(fetcher, env, modelAlias) {
+  return callChat({
+    fetcher,
+    apiKey: env.DEEPSEEK_API_KEY,
+    model: MODEL_BY_ALIAS[modelAlias],
+    systemPrompt: 'Return one JSON object only. Do not include personal or user data.',
+    userPrompt: 'Return {"ok":true}.',
+    maxTokens: 32,
+  })
+}
+
+async function handleModels(env, fetcher) {
+  const models = await fetchModelsRaw(env, fetcher)
+  if (!models.ok) return failure(models.error, models.status, { requiredModels: models.requiredModels, availableRequiredModels: models.availableRequiredModels })
   const compatibility = await callChat({
     fetcher,
     apiKey: env.DEEPSEEK_API_KEY,
@@ -169,15 +178,14 @@ async function handleModels(env, fetcher, sleep) {
     systemPrompt: 'Return one JSON object only. Do not include personal or user data.',
     userPrompt: 'Return {"ok":true}.',
     maxTokens: 32,
-    sleep,
   })
   if (!compatibility.ok) return failure(compatibility.error, compatibility.status ?? 502, { compatibility })
   let parsed
   try { parsed = JSON.parse(compatibility.content) } catch { return failure('MINIMUM_PRO_JSON_INVALID', 502) }
   return json({
     benchmarkVersion: E2_V4_PRO_BENCHMARK_VERSION,
-    requiredModels,
-    availableRequiredModels: requiredModels,
+    requiredModels: models.requiredModels,
+    availableRequiredModels: models.requiredModels,
     compatibility: {
       requestedModel: compatibility.requestedModel,
       returnedModel: compatibility.returnedModel,
@@ -192,7 +200,53 @@ async function handleModels(env, fetcher, sleep) {
   })
 }
 
-async function handleGenerate(request, env, fetcher, sleep) {
+async function handleReadiness(request, env, fetcher) {
+  const startedAt = new Date().toISOString()
+  const requestId = crypto.randomUUID()
+  const modelAlias = new URL(request.url).searchParams.get('modelAlias')
+  if (!Object.hasOwn(MODEL_BY_ALIAS, modelAlias)) return failure('MODEL_ALIAS_INVALID', 400, { requestId, startedAt })
+  const completion = await minimumCompletion(fetcher, env, modelAlias)
+  if (!completion.ok) return failure(completion.error, completion.status ?? 502, { requestId, startedAt, completedAt: new Date().toISOString(), execution: completion })
+  let parsed
+  try { parsed = JSON.parse(completion.content) } catch { return failure('MINIMUM_JSON_INVALID', 502, { requestId, startedAt, completedAt: new Date().toISOString() }) }
+  return json({
+    benchmarkVersion: E2_V4_PRO_BENCHMARK_VERSION,
+    requestId,
+    startedAt,
+    completedAt: new Date().toISOString(),
+    modelAlias,
+    requestedModel: completion.requestedModel,
+    returnedModel: completion.returnedModel,
+    systemFingerprint: completion.systemFingerprint,
+    usage: completion.usage,
+    durationMs: completion.durationMs,
+    validJsonObject: Boolean(parsed && typeof parsed === 'object' && !Array.isArray(parsed)),
+    rawOutputSha256: await sha256(completion.content),
+    upstreamHeaders: completion.upstreamHeaders,
+  })
+}
+
+async function handleS0Evidence(env, fetcher) {
+  const requestId = crypto.randomUUID()
+  const startedAt = new Date().toISOString()
+  const models = await fetchModelsRaw(env, fetcher)
+  if (!models.ok) return failure(models.error, models.status, { requestId, startedAt, models })
+  const flash = await minimumCompletion(fetcher, env, 'flash')
+  if (!flash.ok) return failure(flash.error, flash.status ?? 502, { requestId, startedAt, phase: 'flash', execution: flash })
+  const pro = await minimumCompletion(fetcher, env, 'pro')
+  if (!pro.ok) return failure(pro.error, pro.status ?? 502, { requestId, startedAt, phase: 'pro', execution: pro })
+  return json({
+    benchmarkVersion: E2_V4_PRO_BENCHMARK_VERSION,
+    requestId,
+    startedAt,
+    completedAt: new Date().toISOString(),
+    models: { rawResponse: models.rawResponse, upstreamHeaders: models.upstreamHeaders, rawResponseSha256: await sha256(models.rawResponse) },
+    flash: { rawResponse: flash.rawResponse, upstreamHeaders: flash.upstreamHeaders, requestedModel: flash.requestedModel, returnedModel: flash.returnedModel, systemFingerprint: flash.systemFingerprint, usage: flash.usage, rawResponseSha256: await sha256(flash.rawResponse) },
+    pro: { rawResponse: pro.rawResponse, upstreamHeaders: pro.upstreamHeaders, requestedModel: pro.requestedModel, returnedModel: pro.returnedModel, systemFingerprint: pro.systemFingerprint, usage: pro.usage, rawResponseSha256: await sha256(pro.rawResponse) },
+  })
+}
+
+async function handleGenerate(request, env, fetcher) {
   if (!/^application\/json(?:\s*;|$)/iu.test(request.headers.get('content-type') ?? '')) return failure('INVALID_CONTENT_TYPE', 415)
   const declaredSize = Number(request.headers.get('content-length'))
   if (Number.isFinite(declaredSize) && declaredSize > MAX_BODY_BYTES) return failure('INPUT_TOO_LARGE', 413)
@@ -210,7 +264,7 @@ async function handleGenerate(request, env, fetcher, sleep) {
   const model = MODEL_BY_ALIAS[body.modelAlias]
   const systemPrompt = recognitionSystemPrompt()
   const userPrompt = `参考时间：${referenceTime}\n时区：${timezone}\n来源类型：${body.sourceType}\n来源标题：${sourceTitle || '未提供'}\n可选已有项目（仅供匹配建议）：[]\n已有未完成任务（仅供重复检测）：[]\n来源正文：\n${sourceContent}`
-  const completion = await callChat({ fetcher, apiKey: env.DEEPSEEK_API_KEY, model, systemPrompt, userPrompt, maxTokens: E2_V4_PRO_BENCHMARK_MAX_TOKENS, sleep })
+  const completion = await callChat({ fetcher, apiKey: env.DEEPSEEK_API_KEY, model, systemPrompt, userPrompt, maxTokens: E2_V4_PRO_BENCHMARK_MAX_TOKENS })
   if (!completion.ok) return failure(completion.error, completion.status ?? 502, { execution: completion })
 
   let parsed
@@ -251,7 +305,7 @@ async function handleGenerate(request, env, fetcher, sleep) {
   })
 }
 
-export async function runE2V4ProBenchmark(request, env, fetcher = fetch, sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))) {
+export async function runE2V4ProBenchmark(request, env, fetcher = fetch) {
   const authorizationError = isPreviewAuthorized(request, env)
   if (authorizationError === 'NOT_FOUND') return failure(authorizationError, 404)
   if (authorizationError === 'ORIGIN_NOT_ALLOWED') return failure(authorizationError, 403)
@@ -261,11 +315,19 @@ export async function runE2V4ProBenchmark(request, env, fetcher = fetch, sleep =
   const path = new URL(request.url).pathname
   if (path.endsWith('/models')) {
     if (request.method !== 'GET') return failure('METHOD_NOT_ALLOWED', 405)
-    return handleModels(env, fetcher, sleep)
+    return handleModels(env, fetcher)
+  }
+  if (path.endsWith('/readiness')) {
+    if (request.method !== 'GET') return failure('METHOD_NOT_ALLOWED', 405)
+    return handleReadiness(request, env, fetcher)
+  }
+  if (path.endsWith('/s0-evidence')) {
+    if (request.method !== 'GET') return failure('METHOD_NOT_ALLOWED', 405)
+    return handleS0Evidence(env, fetcher)
   }
   if (path.endsWith('/generate')) {
     if (request.method !== 'POST') return failure('METHOD_NOT_ALLOWED', 405)
-    return handleGenerate(request, env, fetcher, sleep)
+    return handleGenerate(request, env, fetcher)
   }
   return failure('NOT_FOUND', 404)
 }

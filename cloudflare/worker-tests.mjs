@@ -662,6 +662,56 @@ test('E2.9 availability verifies exact model IDs and a minimum Pro JSON completi
   assert.equal(Object.hasOwn(chatBody, 'reasoning_effort'), false)
 })
 
+test('E2.9 readiness probes one exact model without user content or retry', async () => {
+  const upstreamBodies = []
+  const worker = createWorker({
+    fetcher: async (_url, options) => {
+      const body = JSON.parse(options.body)
+      upstreamBodies.push(body)
+      return Response.json({
+        model: body.model, system_fingerprint: `fp-${body.model}`,
+        choices: [{ finish_reason: 'stop', message: { content: '{"ok":true}' } }],
+        usage: { prompt_tokens: 12, completion_tokens: 5, total_tokens: 17 },
+      }, { headers: { 'x-request-id': 'upstream-ready-1' } })
+    },
+  })
+  const response = await worker.fetch(benchmarkRequest('readiness?modelAlias=flash'), benchmarkEnvironment())
+  assert.equal(response.status, 200)
+  const payload = await response.json()
+  assert.equal(payload.requestedModel, 'deepseek-v4-flash')
+  assert.equal(payload.returnedModel, 'deepseek-v4-flash')
+  assert.equal(payload.validJsonObject, true)
+  assert.equal(payload.upstreamHeaders['x-request-id'], 'upstream-ready-1')
+  assert.equal(upstreamBodies.length, 1)
+  assert.equal(upstreamBodies[0].messages[1].content, 'Return {"ok":true}.')
+})
+
+test('E2.9 S0 evidence returns raw models plus Flash and Pro responses', async () => {
+  let call = 0
+  const worker = createWorker({
+    fetcher: async (url, options) => {
+      call += 1
+      if (url.endsWith('/models')) return Response.json({ data: [{ id: 'deepseek-v4-flash' }, { id: 'deepseek-v4-pro' }] }, { headers: { 'x-request-id': 'models-raw' } })
+      const body = JSON.parse(options.body)
+      return Response.json({
+        model: body.model, system_fingerprint: `fp-${body.model}`,
+        choices: [{ finish_reason: 'stop', message: { content: '{"ok":true}' } }],
+        usage: { prompt_tokens: 12, completion_tokens: 5, total_tokens: 17 },
+      }, { headers: { 'x-request-id': `completion-${call}` } })
+    },
+  })
+  const response = await worker.fetch(benchmarkRequest('s0-evidence'), benchmarkEnvironment())
+  assert.equal(response.status, 200)
+  const payload = await response.json()
+  assert.equal(call, 3)
+  assert.match(payload.models.rawResponse, /deepseek-v4-flash/u)
+  assert.match(payload.flash.rawResponse, /deepseek-v4-flash/u)
+  assert.match(payload.pro.rawResponse, /deepseek-v4-pro/u)
+  assert.equal(payload.flash.returnedModel, 'deepseek-v4-flash')
+  assert.equal(payload.pro.returnedModel, 'deepseek-v4-pro')
+  assert.match(payload.models.rawResponseSha256, /^[a-f0-9]{64}$/u)
+})
+
 test('E2.9 generation changes only the server-selected model and records paired provenance', async () => {
   const upstreamBodies = []
   const worker = createWorker({
@@ -745,4 +795,16 @@ test('E2.9 generation fails closed on model fallback or missing fingerprint', as
   const fingerprint = await fingerprintWorker.fetch(benchmarkRequest('generate', source), benchmarkEnvironment())
   assert.equal(fingerprint.status, 502)
   assert.equal((await fingerprint.json()).error, 'SYSTEM_FINGERPRINT_MISSING')
+})
+
+test('E2.9 formal generation does not retry an upstream HTTP failure', async () => {
+  let calls = 0
+  const worker = createWorker({ fetcher: async () => { calls += 1; return Response.json({ error: 'busy' }, { status: 503 }) } })
+  const response = await worker.fetch(benchmarkRequest('generate', {
+    modelAlias: 'pro', sourceType: 'text', sourceTitle: '通知', content: '提交材料',
+    referenceTime: '2026-08-13T00:00:00.000Z', timezone: 'Asia/Shanghai',
+  }), benchmarkEnvironment())
+  assert.equal(response.status, 503)
+  assert.equal(calls, 1)
+  assert.equal((await response.json()).execution.attempts.length, 1)
 })

@@ -1,0 +1,213 @@
+{
+  "schemaVersion": "e2.9-r1-bundle-manifest-1.0.0",
+  "protocolVersion": "e2-9-v4-pro-reduced-protocol-2.0.0",
+  "bundles": {
+    "schema": {
+      "contractVersion": "e2-9-r1-bundle-hash-1.0.0",
+      "algorithm": "SHA-256",
+      "encoding": "UTF-8",
+      "pathOrder": "ascending JavaScript UTF-16 code-unit order after slash normalization",
+      "lineEndings": "CRLF and CR canonicalized to LF before hashing",
+      "jsonCanonicalization": "recursive object-key sort; arrays preserve order; no insignificant whitespace",
+      "entryFraming": "<pathUtf8Bytes>:<normalizedPath>\\n<contentUtf8Bytes>:<canonicalContent>",
+      "entrySeparator": "\n--E2-9-R1-BUNDLE-ENTRY--\n",
+      "inputFiles": [
+        "src/recognition/schema.ts",
+        "src/recognition/types.ts"
+      ],
+      "entries": [
+        {
+          "path": "src/recognition/schema.ts",
+          "canonicalSha256": "be47cef4e3a1ebf075869521245a8453c104d89a28fa45f0117e564d2430b1b6",
+          "canonicalByteLength": 10024
+        },
+        {
+          "path": "src/recognition/types.ts",
+          "canonicalSha256": "c15dfe32bc5bc7a300f94f3a1aa1df9d14e7bb30a070d2f2fc5e5359facd22c3",
+          "canonicalByteLength": 4588
+        }
+      ],
+      "sha256": "4118ad2ae2ebdeb4e30f63578d591d269fc4f430d85b323bc9ea934bc3b2aa7b"
+    },
+    "scoring": {
+      "contractVersion": "e2-9-r1-bundle-hash-1.0.0",
+      "algorithm": "SHA-256",
+      "encoding": "UTF-8",
+      "pathOrder": "ascending JavaScript UTF-16 code-unit order after slash normalization",
+      "lineEndings": "CRLF and CR canonicalized to LF before hashing",
+      "jsonCanonicalization": "recursive object-key sort; arrays preserve order; no insignificant whitespace",
+      "entryFraming": "<pathUtf8Bytes>:<normalizedPath>\\n<contentUtf8Bytes>:<canonicalContent>",
+      "entrySeparator": "\n--E2-9-R1-BUNDLE-ENTRY--\n",
+      "inputFiles": [
+        "docs/e2-path-a-planning/evaluation-contract.json",
+        "src/recognition/e2/scoring.ts",
+        "src/recognition/e2/semanticEquivalence.ts"
+      ],
+      "entries": [
+        {
+          "path": "docs/e2-path-a-planning/evaluation-contract.json",
+          "canonicalSha256": "4a847a9b294ab84565c323539ec6746f60c72d48663f3846aadf90744e05f108",
+          "canonicalByteLength": 1960
+        },
+        {
+          "path": "src/recognition/e2/scoring.ts",
+          "canonicalSha256": "031c029580d50308e4f108dfa9d50be0929b98f45ccef903c17761bf587f7a85",
+          "canonicalByteLength": 26224
+        },
+        {
+          "path": "src/recognition/e2/semanticEquivalence.ts",
+          "canonicalSha256": "45a57048c7a6e0f6935219c0b1cd48717c92e6e3fd394f1460e69deee5c5f0a0",
+          "canonicalByteLength": 7717
+        }
+      ],
+      "sha256": "2ac2cf270791a99394d95fd345c38f3afcb9e8d5f46993b6d44d0026b4758798"
+    },
+    "pipeline": {
+      "contractVersion": "e2-9-r1-bundle-hash-1.0.0",
+      "algorithm": "SHA-256",
+      "encoding": "UTF-8",
+      "pathOrder": "ascending JavaScript UTF-16 code-unit order after slash normalization",
+      "lineEndings": "CRLF and CR canonicalized to LF before hashing",
+      "jsonCanonicalization": "recursive object-key sort; arrays preserve order; no insignificant whitespace",
+      "entryFraming": "<pathUtf8Bytes>:<normalizedPath>\\n<contentUtf8Bytes>:<canonicalContent>",
+      "entrySeparator": "\n--E2-9-R1-BUNDLE-ENTRY--\n",
+      "inputFiles": [
+        "cloudflare/model-gateway.mjs",
+        "cloudflare/recognition-prompt.mjs",
+        "cloudflare/recognition-quality.mjs",
+        "cloudflare/recognition.mjs"
+      ],
+      "entries": [
+        {
+          "path": "cloudflare/model-gateway.mjs",
+          "canonicalSha256": "335406e6f789aee5a209b36d165441ce976c8de17d5d2c634d7a523c17c47765",
+          "canonicalByteLength": 5250
+        },
+        {
+          "path": "cloudflare/recognition-prompt.mjs",
+          "canonicalSha256": "c925f1dc27971e4fcaf7ad185b729f016fa7af966cd7992337d9eaa94c97e6fd",
+          "canonicalByteLength": 10474
+        },
+        {
+          "path": "cloudflare/recognition-quality.mjs",
+          "canonicalSha256": "d03437cf8fe11ef23e78a431fefeb451de2a87c6e47118b1a822016562a11e29",
+          "canonicalByteLength": 11060
+        },
+        {
+          "path": "cloudflare/recognition.mjs",
+          "canonicalSha256": "3f507412647824f0f586053365d975771c0d90c5e17af27403bdf39dfdb7132a",
+          "canonicalByteLength": 23805
+        }
+      ],
+      "sha256": "d61b0c4dd26a5f173afe6c0b5ec2745250c1eb5597e6320863326ba675be213a"
+    },
+    "datasets": {
+      "contractVersion": "e2-9-r1-bundle-hash-1.0.0",
+      "algorithm": "SHA-256",
+      "encoding": "UTF-8",
+      "pathOrder": "ascending JavaScript UTF-16 code-unit order after slash normalization",
+      "lineEndings": "CRLF and CR canonicalized to LF before hashing",
+      "jsonCanonicalization": "recursive object-key sort; arrays preserve order; no insignificant whitespace",
+      "entryFraming": "<pathUtf8Bytes>:<normalizedPath>\\n<contentUtf8Bytes>:<canonicalContent>",
+      "entrySeparator": "\n--E2-9-R1-BUNDLE-ENTRY--\n",
+      "inputFiles": [
+        "src/recognition/e2/generalizationDataset.ts",
+        "src/recognition/e2/goldenDataset.ts",
+        "src/recognition/e2/holdoutDataset.ts"
+      ],
+      "entries": [
+        {
+          "path": "src/recognition/e2/generalizationDataset.ts",
+          "canonicalSha256": "6919cd89e81521beaf993ebcd8b23a752c01bbc0f5aa4559e29ff25e0c5b2659",
+          "canonicalByteLength": 36667
+        },
+        {
+          "path": "src/recognition/e2/goldenDataset.ts",
+          "canonicalSha256": "e6bf49d61e6e489bafea78e12ead6079d992c51211fe66c490d3fd87a2a0cd63",
+          "canonicalByteLength": 41351
+        },
+        {
+          "path": "src/recognition/e2/holdoutDataset.ts",
+          "canonicalSha256": "e5719bce8f70eaecc7743e98f3816f7ce543ca57f5e3cc0c2aab5c987c6181e3",
+          "canonicalByteLength": 27728
+        }
+      ],
+      "sha256": "76c03f8c7ecd75941021eaf12e168625181a47fe6d0fc00744c37c57617affb3"
+    },
+    "protocolImplementation": {
+      "contractVersion": "e2-9-r1-bundle-hash-1.0.0",
+      "algorithm": "SHA-256",
+      "encoding": "UTF-8",
+      "pathOrder": "ascending JavaScript UTF-16 code-unit order after slash normalization",
+      "lineEndings": "CRLF and CR canonicalized to LF before hashing",
+      "jsonCanonicalization": "recursive object-key sort; arrays preserve order; no insignificant whitespace",
+      "entryFraming": "<pathUtf8Bytes>:<normalizedPath>\\n<contentUtf8Bytes>:<canonicalContent>",
+      "entrySeparator": "\n--E2-9-R1-BUNDLE-ENTRY--\n",
+      "inputFiles": [
+        "cloudflare/e2-v4-pro-benchmark.mjs",
+        "scripts/e2-9-r1-hash.mjs",
+        "scripts/e2-9-r1-protocol.node.mjs",
+        "scripts/evaluate-e2-9-r1-gate.mjs",
+        "scripts/merge-e2-9-r1-checkpoints.mjs",
+        "scripts/prepare-e2-9-r1-adjudication.mjs",
+        "scripts/prepare-e2-9-r1-manifests.mjs",
+        "scripts/reveal-e2-9-r1-adjudication.mjs",
+        "scripts/run-e2-9-r1.mjs",
+        "scripts/score-e2-9-r1.mjs"
+      ],
+      "entries": [
+        {
+          "path": "cloudflare/e2-v4-pro-benchmark.mjs",
+          "canonicalSha256": "d7df2457b00ffb993767a7f00d7385c128635c664eeb989939900e4a74f4fc88",
+          "canonicalByteLength": 17703
+        },
+        {
+          "path": "scripts/e2-9-r1-hash.mjs",
+          "canonicalSha256": "b33d0612ea2db46ec3bf0432cf63ff572730d96ec2d32a370929090271da1059",
+          "canonicalByteLength": 2466
+        },
+        {
+          "path": "scripts/e2-9-r1-protocol.node.mjs",
+          "canonicalSha256": "45ebe7384824010e286161857b4156900f64fb86d0ea52737adaa217dae952bb",
+          "canonicalByteLength": 1369
+        },
+        {
+          "path": "scripts/evaluate-e2-9-r1-gate.mjs",
+          "canonicalSha256": "e97e81492169c153e0512b46a97f7b72507b9bd2744e8d46cb3f5fa65737d1ad",
+          "canonicalByteLength": 6735
+        },
+        {
+          "path": "scripts/merge-e2-9-r1-checkpoints.mjs",
+          "canonicalSha256": "43766fa8237eef2393212bc646a44f175fb62b000abb35105f8491a1630a7b4a",
+          "canonicalByteLength": 3165
+        },
+        {
+          "path": "scripts/prepare-e2-9-r1-adjudication.mjs",
+          "canonicalSha256": "8f14b14fad2b21310003e5fa89ce09449b79bfa238cf74751828b9519ca1bc70",
+          "canonicalByteLength": 5831
+        },
+        {
+          "path": "scripts/prepare-e2-9-r1-manifests.mjs",
+          "canonicalSha256": "ce286c49f92184c1c2b0fda7a8d4ee4f6a37a71eaeef97c8828a4943c75b75b6",
+          "canonicalByteLength": 14311
+        },
+        {
+          "path": "scripts/reveal-e2-9-r1-adjudication.mjs",
+          "canonicalSha256": "aa15550c3ca09324496a5c81f823a067b6241d96e7eccf734517498ee9897368",
+          "canonicalByteLength": 6911
+        },
+        {
+          "path": "scripts/run-e2-9-r1.mjs",
+          "canonicalSha256": "ca66d0618dfc7e66de3853cd98fc9ab9b0c67f179e6ceb72e04f240a89ca30ee",
+          "canonicalByteLength": 17969
+        },
+        {
+          "path": "scripts/score-e2-9-r1.mjs",
+          "canonicalSha256": "a03b97e6ccb73b111c2d359e752320d5a12255b1391577fcd68f3bb0c836eabb",
+          "canonicalByteLength": 7369
+        }
+      ],
+      "sha256": "10b777dc9e114bcfc7bc1d807bce1656929d98780f49b1402c42879a65e8aa05"
+    }
+  }
+}
