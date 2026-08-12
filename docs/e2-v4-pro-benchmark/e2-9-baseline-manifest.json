@@ -1,0 +1,132 @@
+{
+  "schemaVersion": "e2.9-reduced-benchmark-baseline-1.0.0",
+  "createdAt": "2026-08-12T16:18:42.5175216Z",
+  "git": {
+    "branch": "codex/e2-9-v4-pro-small-benchmark",
+    "commit": "9c86661e9320a182f3043115cd50389514a508f6",
+    "tag": "v2-e2-7-blocked"
+  },
+  "models": {
+    "baseline": "deepseek-v4-flash",
+    "candidate": "deepseek-v4-pro",
+    "provider": "deepseek",
+    "api": "POST /chat/completions",
+    "availability": "PENDING_PREVIEW_SERVER_CHECK"
+  },
+  "versions": {
+    "prompt": "recognition-2.4.1",
+    "schema": "2.0",
+    "pipeline": "recognition-pipeline-2.2.1",
+    "modelGateway": "model-gateway-1.0.0",
+    "retryPolicy": "recognition-retry-1.0.0",
+    "router": "recognition-router-1.2.0",
+    "validator": "recognition-quality-2.1.0",
+    "repair": "recognition-repair-1.1.0",
+    "repairPatch": "recognition-repair-patch-1.0.0",
+    "normalizer": "path-a-planning-normalizer-1.0.0",
+    "scorer": "recognition-e2-scoring@9c86661",
+    "semanticContract": "e2.7-semantic-equivalence-1.0.0",
+    "rubric": "e2.7-user-impact-major-1.0.0"
+  },
+  "benchmarkSettings": {
+    "router": "BYPASSED_FORCED_SINGLE_PASS",
+    "validator": "ENABLED_NON_MUTATING",
+    "repair": "DISABLED_TO_PRESERVE_ONE_CALL_PER_OBSERVATION",
+    "normalizer": "DISABLED_NOT_IN_FROZEN_DEFAULT_WORKER_PATH",
+    "temperature": 0,
+    "thinking": {
+      "type": "disabled"
+    },
+    "max_tokens": 6000,
+    "response_format": {
+      "type": "json_object"
+    },
+    "stream": false,
+    "tools": "none",
+    "top_p": "UNSET",
+    "reasoning_effort": "UNSET"
+  },
+  "baselineVersionReconciliation": {
+    "manifestAt70dd976": {
+      "router": "recognition-router-1.1.0",
+      "validator": "recognition-quality-2.1.0",
+      "repair": "recognition-repair-1.1.0"
+    },
+    "codeAt9c86661": {
+      "router": "recognition-router-1.2.0",
+      "validator": "recognition-quality-2.1.0",
+      "repair": "recognition-repair-1.1.0"
+    },
+    "localDiagnosticOnly": {
+      "validator": "recognition-quality-2.2.0",
+      "normalizer": "path-a-planning-normalizer-1.0.0"
+    },
+    "adoptedForBenchmark": "CURRENT_FROZEN_WORKER_CODE_AT_9c86661",
+    "notes": [
+      "The E2.7 baseline manifest describes commit 70dd976 and therefore predates Router 1.2.0.",
+      "The Cloudflare default recognition path at 9c86661 still uses Validator 2.1.0 and Repair 1.1.0.",
+      "The local Validator 2.2.0 and PlanningNormalizer are diagnostic prototypes and are not silently inserted into this model-only benchmark.",
+      "Production recognition uses temperature 0.1; the E2.9 protocol explicitly freezes both benchmark arms at temperature 0."
+    ]
+  },
+  "hashes": {
+    "promptSha256": "c925f1dc27971e4fcaf7ad185b729f016fa7af966cd7992337d9eaa94c97e6fd",
+    "schemaBundleSha256": "d04dfd5f5175ae229a8601e6c6ce5d3d9e9b3a958233a6e250eb5f9becbee53e",
+    "schemaFiles": {
+      "src/recognition/types.ts": "c15dfe32bc5bc7a300f94f3a1aa1df9d14e7bb30a070d2f2fc5e5359facd22c3",
+      "src/recognition/schema.ts": "be47cef4e3a1ebf075869521245a8453c104d89a28fa45f0117e564d2430b1b6"
+    },
+    "scorerSha256": "031c029580d50308e4f108dfa9d50be0929b98f45ccef903c17761bf587f7a85",
+    "semanticScorerSha256": "45a57048c7a6e0f6935219c0b1cd48717c92e6e3fd394f1460e69deee5c5f0a0",
+    "semanticAndRubricContractSha256": "b5e80beff3b637e13a7baafc887f39174f21bd2f23d105c042c0a7d5b16bc438",
+    "routerSha256": "1b851febd9d03d17a437d90a45bef3f87a9428e40c015241e6a60ec7990d2fdf",
+    "validatorSha256": "d03437cf8fe11ef23e78a431fefeb451de2a87c6e47118b1a822016562a11e29",
+    "repairSha256": "6968160ab33b32c2788d1506d673939cd7e32b241f92157066df399b1f81fc55",
+    "normalizerSha256": "fd10efc41c1e3e202ee63ad7020fa479bb153f76a814fedfdd868663bfd69189",
+    "modelGatewayAdapterSha256": "335406e6f789aee5a209b36d165441ce976c8de17d5d2c634d7a523c17c47765"
+  },
+  "datasets": {
+    "golden": {
+      "count": 110,
+      "role": "EXPOSED_REGRESSION",
+      "canonicalLfSha256": "e6bf49d61e6e489bafea78e12ead6079d992c51211fe66c490d3fd87a2a0cd63"
+    },
+    "exposedHoldout": {
+      "count": 40,
+      "role": "EXPOSED_REGRESSION",
+      "canonicalLfSha256": "e5719bce8f70eaecc7743e98f3816f7ce543ca57f5e3cc0c2aab5c987c6181e3"
+    },
+    "generalizationDevelopment": {
+      "count": 108,
+      "role": "EXPOSED_DEVELOPMENT",
+      "canonicalLfSha256": "6919cd89e81521beaf993ebcd8b23a752c01bbc0f5aa4559e29ff25e0c5b2659"
+    },
+    "complexSelection": {
+      "count": 24,
+      "role": "EXPOSED_MODEL_SELECTION",
+      "canonicalLfSha256": "9c9275e42e872899602c005d4d69fd378c8592db5cac553b809438c73970416e"
+    },
+    "newBlind": {
+      "count": 24,
+      "role": "NOT_CREATED_UNTIL_SELECTION_PASS",
+      "inputManifestSha256": null,
+      "answerManifestSha256": null
+    }
+  },
+  "previewBeforeBenchmark": {
+    "url": "https://student-affairs-manager-preview.nightsdell.workers.dev",
+    "latestObservedVersion": "87155f28-58e4-4d0b-a080-576efef88af1",
+    "benchmarkEndpointPresent": false,
+    "benchmarkFlag": false,
+    "productionDeploymentPerformed": false
+  },
+  "scope": {
+    "promptChanged": false,
+    "schemaChanged": false,
+    "scorerChanged": false,
+    "expectedChanged": false,
+    "workspaceV8Changed": false,
+    "e3e4Started": false,
+    "productionDeployed": false
+  }
+}
