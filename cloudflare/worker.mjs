@@ -16,6 +16,7 @@ import {
 import { RECOGNITION_ROUTER_VERSION, routeRecognitionSource } from './complexity-router.mjs'
 import { RECOGNITION_PIPELINE_VERSION, createDeepSeekProvider, createModelGateway } from './model-gateway.mjs'
 import { runE2V4ProBenchmark } from './e2-v4-pro-benchmark.mjs'
+import { runE2R2Benchmark } from './e2-r2-benchmark.mjs'
 
 const DEEPSEEK_ENDPOINT = 'https://api.deepseek.com/chat/completions'
 const DEEPSEEK_MODEL = 'deepseek-v4-flash'
@@ -923,6 +924,8 @@ export function createWorker({
         }
       } else if (url.pathname.startsWith('/api/experiments/e2-9/v4-pro-benchmark/')) {
         response = await runE2V4ProBenchmark(request, env, fetcher, retrySleep)
+      } else if (url.pathname.startsWith('/api/experiments/e2-9/r2/benchmark/')) {
+        response = await runE2R2Benchmark(request, env, fetcher)
       } else if (url.pathname === '/api/deepseek') {
         if (request.method !== 'POST') {
           context.errorType = 'METHOD_NOT_ALLOWED'

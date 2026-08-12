@@ -1,0 +1,74 @@
+{
+  "schemaVersion": "e2.9-r2-smoke-manifest-3.0.0",
+  "protocolVersion": "e2-9-v4-pro-protocol-3.0.0",
+  "frozenBeforeCalls": true,
+  "sourceOnlySha256": "cf76acd2033f9c83eaa52527f8cc5ee7fee3d8dcf343a364db6d606624c4f445",
+  "pairedModels": [
+    "deepseek-v4-flash",
+    "deepseek-v4-pro"
+  ],
+  "router": "BYPASSED",
+  "cases": [
+    {
+      "caseId": "e2-complex_notice-01",
+      "sourceSet": "golden",
+      "semanticRole": "action_required",
+      "dimensions": [
+        "multi_task",
+        "multi_material",
+        "multi_stage"
+      ],
+      "sourceSha256": "99cc9c07a8d7c8217f5214497deee2f222b3df2cf9200d82d35bec0057003823",
+      "inputSha256": "224185ef124f3c1321d63b7cc19809a8f9741212d67710238f81c1537ed35cfd"
+    },
+    {
+      "caseId": "e2-holdout-22",
+      "sourceSet": "exposed_holdout",
+      "semanticRole": "action_required",
+      "dimensions": [
+        "multi_task",
+        "multi_timepoint",
+        "event_task"
+      ],
+      "sourceSha256": "b6da0fc57dc18583cda078e16a006a08ef6c4365bba80153620fe5bc9731c8cd",
+      "inputSha256": "8568b12b0e97e5474ded35fb03d89351a3c9696e358bfed83b517628e384bc2e"
+    },
+    {
+      "caseId": "e2-gen-10-3",
+      "sourceSet": "development",
+      "semanticRole": "action_required",
+      "dimensions": [
+        "relative_time",
+        "vague_time",
+        "ambiguity",
+        "conditional"
+      ],
+      "sourceSha256": "945fbced9abaedc021ed112a6fa85df7dc522142db6ca7a26ee4c66560b9abbb",
+      "inputSha256": "6e1ea42d1f0dda784505d80a9fd7fd4ccb01b95ba270b340c27fe81ac7277950"
+    },
+    {
+      "caseId": "e2-gen-14-2",
+      "sourceSet": "development",
+      "semanticRole": "information_only",
+      "dimensions": [
+        "pure_information",
+        "information_only",
+        "no_action"
+      ],
+      "sourceSha256": "9a99403b06a4733582ed5dcff1a548ec5c0e803a4768d7aee459268ded32b83d",
+      "inputSha256": "60387c6e06aa7a193b62df07bd03b4ee3e68d9e051d54ac9dea7ab03169f6f0b"
+    },
+    {
+      "caseId": "e2-gen-16-2",
+      "sourceSet": "development",
+      "semanticRole": "prompt_injection",
+      "dimensions": [
+        "prompt_injection",
+        "security",
+        "multi_paragraph"
+      ],
+      "sourceSha256": "245c5071371df724ee3ccfc1a04e367cfd323ca04dc8ad75379b67fa158a2789",
+      "inputSha256": "125b2bba034e59d4f741352f5c3caa0e2cc5e51b1405ddc4e23734d400f33d86"
+    }
+  ]
+}

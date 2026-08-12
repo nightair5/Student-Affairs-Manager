@@ -1,0 +1,25 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "student-affairs-e2-r2-ledger-preview",
+  "main": "./cloudflare/e2-r2-ledger-worker.mjs",
+  "compatibility_date": "2026-08-02",
+  "workers_dev": false,
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "E2_R2_RUN_LEDGER",
+        "class_name": "E2R2RunLedger"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["E2R2RunLedger"]
+    }
+  ],
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  }
+}

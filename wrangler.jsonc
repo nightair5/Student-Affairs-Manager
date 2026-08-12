@@ -33,8 +33,16 @@
       "routes": [],
       "vars": {
         "E2_PATH_A_REPAIR_EXPERIMENT_ENABLED": "false",
-        "E2_V4_PRO_BENCHMARK_ENABLED": "false"
+        "E2_V4_PRO_BENCHMARK_ENABLED": "false",
+        "E2_R2_BENCHMARK_ENABLED": "true",
+        "E2_R2_PREVIEW_ORIGIN": "https://student-affairs-manager-preview.nightsdell.workers.dev"
       },
+      "services": [
+        {
+          "binding": "E2_R2_LEDGER",
+          "service": "student-affairs-e2-r2-ledger-preview"
+        }
+      ],
       "assets": {
         "directory": "./dist",
         "binding": "ASSETS",
