@@ -197,13 +197,15 @@ async function handleGenerate(request, env, fetcher) {
   const reservation = await reserve(env, body)
   if (!reservation.response.ok) return json(reservation.payload, reservation.response.status)
   const token = reservation.payload.reservationToken
+  const maxAttempts = reservation.payload.maxAttempts
+  if (![1, 2].includes(maxAttempts)) return json({ error: 'OBSERVATION_ATTEMPT_BUDGET_INVALID' }, 412)
   const expectedModel = MODEL_BY_ALIAS[body.modelAlias]
   const upstreamBody = { modelAlias: body.modelAlias, sourceType: body.sourceType, sourceTitle: body.sourceTitle, content: source, referenceTime: body.referenceTime, timezone: body.timezone }
   let lastEvidence = null
   let currentAttemptNumber = 0
   let recordedAttemptNumber = 0
   try {
-    for (let attemptNumber = 1; attemptNumber <= 2; attemptNumber += 1) {
+    for (let attemptNumber = 1; attemptNumber <= maxAttempts; attemptNumber += 1) {
       currentAttemptNumber = attemptNumber
       const upstream = await runE2V4ProBenchmark(r1Request(request, 'generate', 'POST', upstreamBody), r1Environment(env), fetcher)
       const payload = await upstream.json().catch(() => null)
@@ -219,7 +221,7 @@ async function handleGenerate(request, env, fetcher) {
           responseSha256: evidence.providerResponseSha256, durationMs: evidence.providerDurationMs, transportEvidence: evidence,
         })
         recordedAttemptNumber = attemptNumber
-        if (attemptNumber === 1 && evidence.retryEligible) continue
+        if (attemptNumber < maxAttempts && evidence.retryEligible) continue
         const finalized = await finalize(env, body, token, {
           sourceSha256: body.sourceSha256,
           requestedModel: payload?.execution?.requestedModel ?? expectedModel,

@@ -107,6 +107,13 @@ test('R5 fresh run namespace isolates public artifacts, cache, labels and observ
   assert.throws(() => resolveR5RunContext({ root, argv: ['node', 'script', '--run=unknown'] }), /Unsupported R5 run namespace/u)
 })
 
+test('R5 strict provider-call run freezes one attempt per observation', () => {
+  const strict = resolveR5RunContext({ root: path.join('C:', 'repo'), argv: ['node', 'script', '--run=e29r5-20260813-c'] })
+  assert.equal(strict.strictProviderCallBudget, true)
+  assert.equal(strict.runId, 'e29r5-run-20260813-c')
+  assert.ok(Object.values(strict.labels).every((label) => label.endsWith('20260813-c')))
+})
+
 test('R5 manifest preparation checks cleanliness before freezing commit or artifacts', async () => {
   const source = await readFile(path.join(process.cwd(), 'scripts', 'prepare-e2-9-r5-manifests.mjs'), 'utf8')
   const status = source.indexOf("execFileSync('git', ['status'")

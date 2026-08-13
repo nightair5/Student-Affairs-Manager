@@ -10,6 +10,7 @@ import { resolveR5RunContext } from './e2-9-r5-run-context.mjs'
 const ROOT = process.cwd()
 const CONTEXT = resolveR5RunContext({ root: ROOT })
 const { docs: DOCS, schemaDocs: SCHEMA_DOCS, cache: CACHE, protocolVersion: PROTOCOL_VERSION, runId: RUN_ID, runLabel: RUN_LABEL, seed: SEED } = CONTEXT
+const FORMAL_MAX_ATTEMPTS = CONTEXT.strictProviderCallBudget ? 1 : 2
 const MODELS = ['flash', 'pro']
 
 const SMOKE = Object.freeze([
@@ -55,7 +56,7 @@ function interleaved(specs, phase, records, phaseManifestSha256) {
         observationId: `e29r5-${sha256(`${RUN_ID}:${caseAlias}:${modelAlias}`).slice(0, 32)}`,
         phase, caseAlias, caseId: spec.caseId, modelAlias, semanticRole: spec.semanticRole,
         sourceSha256: record.sourceSha256, inputSha256: record.inputSha256,
-        phaseManifestSha256, maxAttempts: 2,
+        phaseManifestSha256, maxAttempts: FORMAL_MAX_ATTEMPTS,
       }
     })
   })
@@ -100,7 +101,7 @@ async function main() {
     const phaseManifest = (phase, specs) => ({
       schemaVersion: `e2.9-r5-${phase}-manifest-3.3.0`, protocolVersion: PROTOCOL_VERSION, frozenBeforeCalls: true,
       sourceOnlySha256, pairedModels: ['deepseek-v4-flash', 'deepseek-v4-pro'], router: 'BYPASSED',
-      retryPolicy: { eligibleError: 'UPSTREAM_JSON_TRUNCATED', maxAttemptsPerObservation: 2, firstFailureRetained: true, bestOfN: false },
+      retryPolicy: { eligibleError: FORMAL_MAX_ATTEMPTS === 1 ? 'NONE' : 'UPSTREAM_JSON_TRUNCATED', maxAttemptsPerObservation: FORMAL_MAX_ATTEMPTS, firstFailureRetained: true, bestOfN: false },
       cases: specs.map((item) => ({ caseId: item.caseId, sourceSet: records.get(item.caseId).sourceSet, semanticRole: item.semanticRole, dimensions: item.dimensions, sourceSha256: records.get(item.caseId).sourceSha256, inputSha256: records.get(item.caseId).inputSha256 })),
     })
     const smokeManifest = phaseManifest('smoke', SMOKE)
@@ -189,12 +190,16 @@ async function main() {
         adjudicationRubricSha256: sha256(adjudicationRubricSource),
       },
       retryPolicy: {
-        version: 'e2-9-r5-transport-policy-3.3.0', eligibleError: 'UPSTREAM_JSON_TRUNCATED', maxProtocolRetries: 1, maxAttemptsPerFormalObservation: 2,
+        version: 'e2-9-r5-transport-policy-3.3.0', eligibleError: FORMAL_MAX_ATTEMPTS === 1 ? 'NONE' : 'UPSTREAM_JSON_TRUNCATED', maxProtocolRetries: FORMAL_MAX_ATTEMPTS - 1, maxAttemptsPerFormalObservation: FORMAL_MAX_ATTEMPTS,
         readinessMaxAttempts: 1, firstFailureRetained: true, finalAttemptOnlyScored: true, newObservationOnRetry: false, bestOfN: false,
         truncationEvidence: ['provider_http_200', 'application_json', 'expected_model_in_envelope', 'json_structure_ends_mid_document'],
         forbiddenRetry: ['MODEL_JSON_INVALID', '401', '403', 'MODEL_FALLBACK_DETECTED', 'MODEL_IDENTITY_UNVERIFIABLE', 'MODEL_LINEAGE_MISMATCH', 'INVALID_OUTPUT', 'SEMANTIC_FAILURE', 'SCORING_FAILURE'],
       },
       pairComparison: { method: 'FRESH_SOURCE_AND_OUTPUT_PATH_MASKED_REVIEW', labels: ['X', 'Y', 'TIE', 'INSUFFICIENT_INFORMATION'], revealAfterLabelsFrozen: true },
+      providerCallBudget: {
+        maximum: 6 + (26 * FORMAL_MAX_ATTEMPTS), observationCount: 32,
+        maxAttemptsPerFormalObservation: FORMAL_MAX_ATTEMPTS, enforced: CONTEXT.strictProviderCallBudget,
+      },
       qualityGate: { taskRecallNotBelowFlash: true, taskPrecisionMaxDropPp: 5, evidenceCoverageMinimum: 0.9, severeErrorNotAboveFlash: true, promptInjectionPass: true, proImprovedMinimumPairs: 2, proWorsenedMaximumPairs: 1, modelFallbackMaximum: 0 },
       bindings, observationPlan: observations,
       stageMachine: [...R5_STAGE_MACHINE],

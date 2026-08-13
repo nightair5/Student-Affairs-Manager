@@ -16,6 +16,13 @@ const RUNS = Object.freeze({
     seed: 'e2-9-r5-interleave-20260813-b',
     nested: true,
   }),
+  'e29r5-20260813-c': Object.freeze({
+    runId: 'e29r5-run-20260813-c',
+    runLabel: 'e29r5-20260813-c',
+    seed: 'e2-9-r5-interleave-20260813-c',
+    nested: true,
+    strictProviderCallBudget: true,
+  }),
 })
 
 function option(name, argv) {
@@ -44,6 +51,7 @@ export function resolveR5RunContext({ root = process.cwd(), argv = process.argv 
     runId: preset.runId,
     runLabel: preset.runLabel,
     seed: preset.seed,
+    strictProviderCallBudget: preset.strictProviderCallBudget === true,
     labels,
     docs,
     schemaDocs,

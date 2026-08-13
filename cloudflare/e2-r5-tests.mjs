@@ -146,14 +146,14 @@ function buildRegistration(runLabel, target) {
   return { runLabel, protocolVersion: E2_R5_PROTOCOL_VERSION, runManifestSha256: HASH, bindings: { ...REGISTRATION_BINDINGS }, observations: [...readiness, ...smoke, ...screening] }
 }
 
-async function primeSmoke({ runLabel, modelAlias = 'flash', semanticRole = 'information_only' }) {
+async function primeSmoke({ runLabel, modelAlias = 'flash', semanticRole = 'information_only', maxAttempts = 2 }) {
   const ledger = ledgerService()
   const env = environment(ledger)
   const content = 'The library will be closed for maintenance this Friday. No student action is required.'
   const input = { sourceType: 'text', sourceTitle: 'Library notice', content, referenceTime: '2026-08-13T09:00:00+08:00', timezone: 'Asia/Shanghai' }
   const canonicalInput = JSON.stringify(Object.fromEntries(Object.entries(input).sort()))
   const sourceSha256 = await digest(content)
-  const target = { observationId: `${runLabel}-target`, phase: 'smoke', caseId: `${runLabel}-target-case`, modelAlias, semanticRole, sourceSha256, inputSha256: await digest(canonicalInput), phaseManifestSha256: HASH, maxAttempts: 2 }
+  const target = { observationId: `${runLabel}-target`, phase: 'smoke', caseId: `${runLabel}-target-case`, modelAlias, semanticRole, sourceSha256, inputSha256: await digest(canonicalInput), phaseManifestSha256: HASH, maxAttempts }
   const registration = buildRegistration(runLabel, target)
   const registered = await runE2R5Benchmark(request('/api/experiments/e2-9/r5/benchmark/register', registration), env)
   assert.equal(registered.status, 201, JSON.stringify(await registered.clone().json()))
@@ -201,6 +201,22 @@ test('first truncated response and second valid response retain both attempts', 
   assert.deepEqual(payload.protocolAttempts.map((item) => item.status), ['upstream_json_truncated', 'complete'])
   const record = ledger.instances.get(body.runLabel).state.storage.values.get('run').observations[body.observationId]
   assert.deepEqual(record.attempts.map((item) => item.status), ['upstream_json_truncated', 'complete'])
+})
+
+test('strict provider-call budget permits one formal attempt and never retries truncation', async () => {
+  const { ledger, env, body } = await primeSmoke({ runLabel: 'r5-strict-budget', maxAttempts: 1 })
+  let calls = 0
+  const response = await runE2R5Benchmark(request('/api/experiments/e2-9/r5/benchmark/generate', body), env, async (_url, init) => {
+    calls += 1
+    return truncatedProviderResponse(JSON.parse(init.body).model)
+  })
+  assert.equal(response.status, 502)
+  const payload = await response.json()
+  assert.equal(payload.protocolStatus, 'transport_integrity_failure')
+  assert.equal(calls, 1)
+  const record = ledger.instances.get(body.runLabel).state.storage.values.get('run').observations[body.observationId]
+  assert.equal(record.maxAttempts, 1)
+  assert.deepEqual(record.attempts.map((item) => item.status), ['upstream_json_truncated'])
 })
 
 test('model JSON invalid is terminal and is not retried', async () => {

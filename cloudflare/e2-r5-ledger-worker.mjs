@@ -105,9 +105,9 @@ export class E2R5RunLedger {
       const expectedByPhase = { readiness: [], smoke: [], screening: [] }
       const expectedObservations = {}
       for (const item of body.observations) {
-        const expectedMaxAttempts = item.phase === 'readiness' ? 1 : 2
+        const expectedMaxAttempts = item.phase === 'readiness' ? 1 : item.maxAttempts
         if (!onlyFields(item, OBSERVATION_PLAN_FIELDS) || !/^[a-z0-9][a-z0-9._-]{7,120}$/u.test(item.observationId ?? '') || !Object.hasOwn(expectedByPhase, item.phase)
-          || ids.has(item.observationId) || item.maxAttempts !== expectedMaxAttempts || !Object.hasOwn(MODEL_BY_ALIAS, item.modelAlias)
+          || ids.has(item.observationId) || ![1, 2].includes(expectedMaxAttempts) || item.maxAttempts !== expectedMaxAttempts || !Object.hasOwn(MODEL_BY_ALIAS, item.modelAlias)
           || !validSha256(item.inputSha256) || !validSha256(item.phaseManifestSha256)) return json({ error: 'INVALID_OBSERVATION_PLAN' }, 400)
         if (item.phase === 'readiness') {
           if (!Number.isInteger(item.probeIndex) || item.probeIndex < 1 || item.probeIndex > 3 || item.caseId !== null
@@ -169,7 +169,7 @@ export class E2R5RunLedger {
         modelAlias: body.modelAlias, semanticRole: expected.semanticRole,
       }
       await this.state.storage.put(RUN_KEY, run)
-      return json({ observationId, reservationToken }, 201)
+      return json({ observationId, reservationToken, maxAttempts: expected.maxAttempts }, 201)
     }
 
     if (url.pathname === '/attempt' && request.method === 'POST') {
