@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "e2.9-r5-preview-activation-3.3.0",
+  "protocolVersion": "e2-9-v4-pro-protocol-3.3.0",
+  "runId": "e29r5-run-20260813-c",
+  "runLabel": "e29r5-20260813-c",
+  "runManifestSha256": "5511e58b7754480caa97d47548289b6e67459e47d5e32dd7d2fd2b6af1656a0e",
+  "protocolBundleSha256": "ef6962b903da41f1131d92c7752b0112111e9a1dd848693d9a2e1798872e6501",
+  "deploymentSourceCommit": "9a077161c2e691d11accc59f3cd36781c330ced6",
+  "mainWorker": "student-affairs-manager-preview",
+  "ledgerWorker": "student-affairs-e2-r5-ledger-preview",
+  "previewOrigin": "https://student-affairs-manager-preview.nightsdell.workers.dev",
+  "ledgerDeploymentVersion": "d90efcbc-432b-4895-8544-a1ff9f6bd179",
+  "disabledCodeDeploymentVersion": "311883d7-be36-45f2-b330-44d9f0576d0d",
+  "secretChangeVersion": "e6f28397-ed21-4a26-869d-e558fbe84ef0",
+  "mainDeploymentVersion": "580d151b-9be5-4c26-8ce6-2405629c9827",
+  "deploymentChain": [
+    {
+      "kind": "R5_LEDGER_UPLOAD",
+      "version": "d90efcbc-432b-4895-8544-a1ff9f6bd179",
+      "createdAt": "2026-08-13T15:32:50.628697Z"
+    },
+    {
+      "kind": "R5_PREVIEW_DISABLED_CODE_DEPLOYMENT",
+      "version": "311883d7-be36-45f2-b330-44d9f0576d0d",
+      "createdAt": "2026-08-13T15:33:19.543343Z"
+    },
+    {
+      "kind": "R5_TEMP_BEARER_SECRET_CHANGE",
+      "version": "e6f28397-ed21-4a26-869d-e558fbe84ef0",
+      "createdAt": "2026-08-13T15:34:56.439593Z"
+    },
+    {
+      "kind": "R5_PREVIEW_ACTIVATION_DEPLOYMENT",
+      "version": "580d151b-9be5-4c26-8ce6-2405629c9827",
+      "createdAt": "2026-08-13T15:35:19.712796Z"
+    }
+  ],
+  "featureFlag": true,
+  "productionFeatureFlag": false,
+  "productionBaselineVersion": "3b6d6ba2-e21f-495c-80e4-c4bac62366be",
+  "secretName": "E2_R5_BENCHMARK_TOKEN",
+  "secretPolicy": "Random 256-bit bearer held only in process memory; never written to disk or Git.",
+  "activatedAt": "2026-08-13T15:37:58.1597721Z",
+  "status": "READINESS_AUTHORIZED"
+}
