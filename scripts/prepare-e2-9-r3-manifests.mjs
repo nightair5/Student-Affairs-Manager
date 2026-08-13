@@ -120,6 +120,7 @@ async function main() {
         'scripts/e2-9-r3-hash.mjs', 'scripts/e2-9-r3-integrity.mjs', 'scripts/e2-9-r3-protocol.node.mjs',
         'scripts/prepare-e2-9-r3-manifests.mjs', 'scripts/run-e2-9-r3.mjs', 'scripts/score-e2-9-r3.mjs',
         'scripts/prepare-e2-9-r3-adjudication.mjs', 'scripts/reveal-e2-9-r3-adjudication.mjs', 'scripts/evaluate-e2-9-r3-gate.mjs',
+        'docs/e2-v4-pro-benchmark-r3/EXPERIMENT_PLAN.md',
       ]),
     }
     const bundleManifest = {
