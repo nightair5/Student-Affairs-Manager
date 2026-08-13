@@ -1,0 +1,20 @@
+{
+  "schemaVersion": "e2.9-r5-path-mask-dry-review-1.0.0",
+  "protocolVersion": "e2-9-v4-pro-protocol-3.3.0",
+  "runId": "e29r5-run-20260813-c",
+  "runManifestSha256": "5511e58b7754480caa97d47548289b6e67459e47d5e32dd7d2fd2b6af1656a0e",
+  "checkpointSha256": "48fbc438efa9a70709253e596defc654de8c0a967cfe14e95c17d86579bc0bae",
+  "packetPreviewSha256": "1cb3b0e4d50ef25ad178b608d9c79cef0cc6639d895cd0d6abe455d4e011dd03",
+  "reviewerKind": "independent_fresh_read_only",
+  "reviewProcessId": "r5fresh57a9-20260813-c",
+  "allowedInputs": [
+    "packet-preview.json",
+    "adjudication-packet.schema.json",
+    "adjudication-rubric.json"
+  ],
+  "reviewedAt": "2026-08-13T15:52:59.396Z",
+  "canIdentifyEitherPath": false,
+  "suspectedLeakPaths": [],
+  "verdict": "PASS",
+  "reason": "在仅限三份 allowedInputs 的威胁模型下，sideXHash、sideYHash 不携带 Flash/Pro 标签，带未知高熵 reveal secret 的 assignmentCommitmentHash 也无法还原映射，因此不能识别任一路径。纵深风险仍然存在：若违规取得外部候选原始输出，确定性 side hash 可被重新计算并用于关联，但该攻击依赖允许输入之外的信息。"
+}

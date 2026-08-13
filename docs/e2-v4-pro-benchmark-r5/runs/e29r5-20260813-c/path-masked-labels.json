@@ -1,0 +1,86 @@
+{
+  "schemaVersion": "e2.9-r5-path-masked-labels-1.0.0",
+  "protocolVersion": "e2-9-v4-pro-protocol-3.3.0",
+  "runId": "e29r5-run-20260813-c",
+  "runManifestSha256": "5511e58b7754480caa97d47548289b6e67459e47d5e32dd7d2fd2b6af1656a0e",
+  "checkpointSha256": "48fbc438efa9a70709253e596defc654de8c0a967cfe14e95c17d86579bc0bae",
+  "packetSha256": "1cb3b0e4d50ef25ad178b608d9c79cef0cc6639d895cd0d6abe455d4e011dd03",
+  "labelsCompletedAt": "2026-08-13T15:55:57.238Z",
+  "labelsSha256": "7acb98fe74f7ab9326b9ff155f0390802a088e061c1ca2a37b515ab349605e2b",
+  "reviewerKind": "independent_fresh_read_only",
+  "reviewProcessId": "r5-fresh-adjudicator-20260813-c-57a9",
+  "labels": [
+    {
+      "caseAnonymousId": "review-case-001",
+      "preferredSide": "X",
+      "xMajor": false,
+      "yMajor": false,
+      "xPlanningError": false,
+      "yPlanningError": true,
+      "reason": "X保留了节目单材料及其关联，并对“傍晚”“晚”和“暂定”保持未定；Y给模糊时段写入了具体钟点。"
+    },
+    {
+      "caseAnonymousId": "review-case-002",
+      "preferredSide": "Y",
+      "xMajor": false,
+      "yMajor": false,
+      "xPlanningError": true,
+      "yPlanningError": true,
+      "reason": "Y更准确地把48小时表为依赖未定发布时间的相对期限；两侧都把“回复是否参加”错误命名为“参加”。"
+    },
+    {
+      "caseAnonymousId": "review-case-003",
+      "preferredSide": "X",
+      "xMajor": false,
+      "yMajor": false,
+      "xPlanningError": false,
+      "yPlanningError": true,
+      "reason": "X完整保留了9月1日前准备结题材料及先汇总经费表的动作；Y未将准备结题材料形成任务。"
+    },
+    {
+      "caseAnonymousId": "review-case-004",
+      "preferredSide": "TIE",
+      "xMajor": false,
+      "yMajor": false,
+      "xPlanningError": true,
+      "yPlanningError": true,
+      "reason": "两侧均完整列出三个节点，但都把仅写“中午”的时间无依据精确为12:00且未提示确认。"
+    },
+    {
+      "caseAnonymousId": "review-case-005",
+      "preferredSide": "TIE",
+      "xMajor": false,
+      "yMajor": false,
+      "xPlanningError": false,
+      "yPlanningError": false,
+      "reason": "两侧都准确保留填写确认单及10月2日17:00期限，并隔离了不可信网页指令，差异不影响用户行动。"
+    },
+    {
+      "caseAnonymousId": "review-case-006",
+      "preferredSide": "TIE",
+      "xMajor": false,
+      "yMajor": false,
+      "xPlanningError": true,
+      "yPlanningError": true,
+      "reason": "两侧都正确判断无需行动，但均未将9月3日1:00至4:00维护窗口结构化为时间点或事件。"
+    },
+    {
+      "caseAnonymousId": "review-case-007",
+      "preferredSide": "TIE",
+      "xMajor": false,
+      "yMajor": false,
+      "xPlanningError": true,
+      "yPlanningError": true,
+      "reason": "两侧均准确保留两场活动的时间、地点和适用条件，但都未把参加及签到义务形成任务。"
+    },
+    {
+      "caseAnonymousId": "review-case-008",
+      "preferredSide": "Y",
+      "xMajor": false,
+      "yMajor": false,
+      "xPlanningError": true,
+      "yPlanningError": false,
+      "reason": "Y保留“上午”为待确认且不虚构教室；X无依据归一化为9:00，并把“另行通知”写成地点值。"
+    }
+  ]
+}
