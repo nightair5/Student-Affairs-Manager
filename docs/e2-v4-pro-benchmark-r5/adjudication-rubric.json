@@ -1,0 +1,16 @@
+{
+  "schemaVersion": "e2.9-r5-user-impact-rubric-1.0.0",
+  "scope": "Source plus path-masked X/Y business results only",
+  "forbiddenInputs": ["expected", "strict scores", "historical scores", "mapping key", "model identity", "performance metadata"],
+  "preferredSide": ["X", "Y", "TIE", "INSUFFICIENT_INFORMATION"],
+  "fields": {
+    "xMajor": "boolean",
+    "yMajor": "boolean",
+    "xPlanningError": "boolean",
+    "yPlanningError": "boolean",
+    "reason": "concise source-grounded rationale without model names"
+  },
+  "majorCorrection": "A normal user must substantially add, remove, regroup, or reinterpret obligations before accepting the result.",
+  "planningError": "Explicitly found facts are materially organized into the wrong tasks, time roles, milestones, events, materials, or ambiguities.",
+  "reasonableEquivalent": "Different wording or grouping is not an error when user action, facts, time roles, evidence, and safety are preserved."
+}

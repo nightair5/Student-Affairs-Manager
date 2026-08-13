@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "e2.9-r5-preview-activation-3.3.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion", "protocolVersion", "runId", "runLabel", "runManifestSha256",
+    "protocolBundleSha256", "deploymentSourceCommit", "mainWorker", "ledgerWorker",
+    "previewOrigin", "ledgerDeploymentVersion", "disabledCodeDeploymentVersion",
+    "secretChangeVersion", "mainDeploymentVersion", "deploymentChain", "featureFlag",
+    "productionFeatureFlag", "productionBaselineVersion", "secretName", "secretPolicy",
+    "activatedAt", "status"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "e2.9-r5-preview-activation-3.3.0" },
+    "protocolVersion": { "const": "e2-9-v4-pro-protocol-3.3.0" },
+    "runId": { "type": "string", "minLength": 3 },
+    "runLabel": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]{2,100}$" },
+    "runManifestSha256": { "$ref": "#/$defs/sha256" },
+    "protocolBundleSha256": { "$ref": "#/$defs/sha256" },
+    "deploymentSourceCommit": { "type": "string", "pattern": "^[a-f0-9]{40}$" },
+    "mainWorker": { "const": "student-affairs-manager-preview" },
+    "ledgerWorker": { "const": "student-affairs-e2-r5-ledger-preview" },
+    "previewOrigin": { "const": "https://student-affairs-manager-preview.nightsdell.workers.dev" },
+    "ledgerDeploymentVersion": { "$ref": "#/$defs/version" },
+    "disabledCodeDeploymentVersion": { "$ref": "#/$defs/version" },
+    "secretChangeVersion": { "$ref": "#/$defs/version" },
+    "mainDeploymentVersion": { "$ref": "#/$defs/version" },
+    "deploymentChain": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "prefixItems": [
+        { "$ref": "#/$defs/ledgerUpload" },
+        { "$ref": "#/$defs/disabledCode" },
+        { "$ref": "#/$defs/secretChange" },
+        { "$ref": "#/$defs/activationDeploy" }
+      ]
+    },
+    "featureFlag": { "const": true },
+    "productionFeatureFlag": { "const": false },
+    "productionBaselineVersion": { "$ref": "#/$defs/version" },
+    "secretName": { "const": "E2_R5_BENCHMARK_TOKEN" },
+    "secretPolicy": { "type": "string", "minLength": 20 },
+    "activatedAt": { "type": "string", "format": "date-time" },
+    "status": { "const": "READINESS_AUTHORIZED" }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "version": { "type": "string", "pattern": "^[A-Fa-f0-9-]{16,100}$" },
+    "chainItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "version", "createdAt"],
+      "properties": {
+        "kind": { "type": "string" },
+        "version": { "$ref": "#/$defs/version" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "ledgerUpload": { "allOf": [{ "$ref": "#/$defs/chainItem" }, { "properties": { "kind": { "const": "R5_LEDGER_UPLOAD" } } }] },
+    "disabledCode": { "allOf": [{ "$ref": "#/$defs/chainItem" }, { "properties": { "kind": { "const": "R5_PREVIEW_DISABLED_CODE_DEPLOYMENT" } } }] },
+    "secretChange": { "allOf": [{ "$ref": "#/$defs/chainItem" }, { "properties": { "kind": { "const": "R5_TEMP_BEARER_SECRET_CHANGE" } } }] },
+    "activationDeploy": { "allOf": [{ "$ref": "#/$defs/chainItem" }, { "properties": { "kind": { "const": "R5_PREVIEW_ACTIVATION_DEPLOYMENT" } } }] }
+  }
+}

@@ -42,7 +42,9 @@
         "E2_R3_BENCHMARK_ENABLED": "false",
         "E2_R3_PREVIEW_ORIGIN": "https://student-affairs-manager-preview.nightsdell.workers.dev",
         "E2_R4_BENCHMARK_ENABLED": "false",
-        "E2_R4_PREVIEW_ORIGIN": "https://student-affairs-manager-preview.nightsdell.workers.dev"
+        "E2_R4_PREVIEW_ORIGIN": "https://student-affairs-manager-preview.nightsdell.workers.dev",
+        "E2_R5_BENCHMARK_ENABLED": "false",
+        "E2_R5_PREVIEW_ORIGIN": "https://student-affairs-manager-preview.nightsdell.workers.dev"
       },
       "services": [
         {
@@ -56,6 +58,10 @@
         {
           "binding": "E2_R4_LEDGER",
           "service": "student-affairs-e2-r4-ledger-preview"
+        },
+        {
+          "binding": "E2_R5_LEDGER",
+          "service": "student-affairs-e2-r5-ledger-preview"
         }
       ],
       "assets": {

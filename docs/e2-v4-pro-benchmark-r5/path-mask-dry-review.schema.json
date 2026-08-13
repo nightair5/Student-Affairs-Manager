@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "e2.9-r5-path-mask-dry-review-1.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "protocolVersion", "runId", "runManifestSha256", "checkpointSha256", "packetPreviewSha256", "reviewerKind", "reviewProcessId", "allowedInputs", "reviewedAt", "canIdentifyEitherPath", "suspectedLeakPaths", "verdict", "reason"],
+  "properties": {
+    "schemaVersion": { "const": "e2.9-r5-path-mask-dry-review-1.0.0" },
+    "protocolVersion": { "const": "e2-9-v4-pro-protocol-3.3.0" },
+    "runId": { "type": "string", "minLength": 3 },
+    "runManifestSha256": { "$ref": "#/$defs/sha256" },
+    "checkpointSha256": { "$ref": "#/$defs/sha256" },
+    "packetPreviewSha256": { "$ref": "#/$defs/sha256" },
+    "reviewerKind": { "const": "independent_fresh_read_only" },
+    "reviewProcessId": { "type": "string", "minLength": 8 },
+    "allowedInputs": {
+      "type": "array",
+      "const": ["packet-preview.json", "adjudication-packet.schema.json", "adjudication-rubric.json"]
+    },
+    "reviewedAt": { "type": "string", "format": "date-time" },
+    "canIdentifyEitherPath": { "const": false },
+    "suspectedLeakPaths": { "type": "array", "maxItems": 0 },
+    "verdict": { "const": "PASS" },
+    "reason": { "type": "string", "minLength": 20 }
+  },
+  "$defs": { "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" } }
+}

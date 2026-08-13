@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "e2.9-r5-adjudication-packet-3.3.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "pathMaskVersion", "rubric", "pairs"],
+  "properties": {
+    "schemaVersion": { "const": "e2.9-r5-adjudication-packet-3.3.0" },
+    "pathMaskVersion": { "const": "e2-9-r5-path-mask-3.3.0" },
+    "rubric": { "type": "object" },
+    "pairs": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["caseAnonymousId", "source", "X", "Y", "sideXHash", "sideYHash", "assignmentCommitmentHash"],
+        "properties": {
+          "caseAnonymousId": { "pattern": "^review-case-[0-9]{3}$" },
+          "source": { "type": "object" },
+          "X": { "type": "object" },
+          "Y": { "type": "object" },
+          "sideXHash": { "pattern": "^[a-f0-9]{64}$" },
+          "sideYHash": { "pattern": "^[a-f0-9]{64}$" },
+          "assignmentCommitmentHash": { "pattern": "^[a-f0-9]{64}$" }
+        }
+      }
+    }
+  }
+}

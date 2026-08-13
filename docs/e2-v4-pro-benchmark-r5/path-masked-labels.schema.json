@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "e2.9-r5-path-masked-labels-1.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "protocolVersion", "runId", "runManifestSha256", "checkpointSha256", "packetSha256", "labelsCompletedAt", "labelsSha256", "reviewerKind", "reviewProcessId", "labels"],
+  "properties": {
+    "schemaVersion": { "const": "e2.9-r5-path-masked-labels-1.0.0" },
+    "protocolVersion": { "const": "e2-9-v4-pro-protocol-3.3.0" },
+    "runId": { "type": "string", "minLength": 3 },
+    "runManifestSha256": { "$ref": "#/$defs/sha256" },
+    "checkpointSha256": { "$ref": "#/$defs/sha256" },
+    "packetSha256": { "$ref": "#/$defs/sha256" },
+    "labelsCompletedAt": { "type": "string", "format": "date-time" },
+    "labelsSha256": { "$ref": "#/$defs/sha256" },
+    "reviewerKind": { "const": "independent_fresh_read_only" },
+    "reviewProcessId": { "type": "string", "minLength": 8 },
+    "labels": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["caseAnonymousId", "preferredSide", "xMajor", "yMajor", "xPlanningError", "yPlanningError", "reason"],
+        "properties": {
+          "caseAnonymousId": { "type": "string", "pattern": "^review-case-[0-9]{3}$" },
+          "preferredSide": { "enum": ["X", "Y", "TIE", "INSUFFICIENT_INFORMATION"] },
+          "xMajor": { "type": "boolean" },
+          "yMajor": { "type": "boolean" },
+          "xPlanningError": { "type": "boolean" },
+          "yPlanningError": { "type": "boolean" },
+          "reason": { "type": "string", "minLength": 8 }
+        }
+      }
+    }
+  },
+  "$defs": { "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" } }
+}
