@@ -1,0 +1,88 @@
+{
+  "schemaVersion": "e2.9-r5-screening-report-1.0.0",
+  "protocolVersion": "e2-9-v4-pro-protocol-3.3.0",
+  "runId": "e29r5-run-20260813-c",
+  "runLabel": "e29r5-20260813-c",
+  "runManifestSha256": "5511e58b7754480caa97d47548289b6e67459e47d5e32dd7d2fd2b6af1656a0e",
+  "implementationCommit": "9a077161c2e691d11accc59f3cd36781c330ced6",
+  "providerCallBudget": {
+    "authorizedMaximum": 32,
+    "actual": 32,
+    "retry": 0,
+    "withinBudget": true
+  },
+  "execution": {
+    "readiness": { "observations": 6, "complete": 6, "attempts": 6, "retry": 0 },
+    "smoke": { "observations": 10, "complete": 10, "attempts": 10, "retry": 0 },
+    "screening": { "observations": 16, "complete": 16, "attempts": 16, "retry": 0 },
+    "totalObservations": 32,
+    "totalAttempts": 32,
+    "fallback": 0,
+    "lineageMismatch": 0,
+    "observationOverwrite": 0,
+    "finalLedgerStage": "PATH_MASK_PREVIEW_OPEN",
+    "finalLedgerStatus": "COMPLETE"
+  },
+  "diagnostics": {
+    "flash": { "inputTokens": 31014, "outputTokens": 23838, "totalTokens": 54852, "providerLatencyMs": 127706, "clientLatencyMs": 139959 },
+    "pro": { "inputTokens": 31014, "outputTokens": 23185, "totalTokens": 54199, "providerLatencyMs": 196429, "clientLatencyMs": 210545 },
+    "screeningOnly": {
+      "flash": { "inputTokens": 19008, "outputTokens": 15340, "totalTokens": 34348, "providerLatencyMs": 80151, "clientLatencyMs": 86493 },
+      "pro": { "inputTokens": 19008, "outputTokens": 14561, "totalTokens": 33569, "providerLatencyMs": 121484, "clientLatencyMs": 129434 }
+    },
+    "interpretation": "Observed performance diagnostics only; not model-quality evidence."
+  },
+  "pathMasking": {
+    "previewGate": "PASS",
+    "pairCount": 8,
+    "directModelIdentityLeaks": 0,
+    "performanceLeaks": 0,
+    "freshDryReview": "PASS_WITH_RESIDUAL_RISK",
+    "residualRisk": "Deterministic side hashes could be correlated only if the reviewer violated the allowed-input boundary and obtained external candidate outputs.",
+    "formalPacketOpened": true,
+    "mappingKeyCreated": false
+  },
+  "blindAdjudication": {
+    "status": "FROZEN_UNREVEALED",
+    "pairs": 8,
+    "anonymousPreferences": { "X": 2, "Y": 2, "TIE": 4, "INSUFFICIENT_INFORMATION": 0 },
+    "anonymousMajor": { "X": 0, "Y": 0 },
+    "anonymousPlanningError": { "X": 5, "Y": 6 },
+    "modelAttributedCounts": "NOT AVAILABLE"
+  },
+  "protocolFailure": {
+    "stage": "MAPPING_REVEAL",
+    "error": "LABEL_LINEAGE_LEAK_DETECTED",
+    "falsePositivePath": "$.protocolVersion",
+    "cause": "The required protocolVersion value contains v4-pro and is scanned as if it were reviewer-authored label content.",
+    "repairApplied": false
+  },
+  "strictMetrics": "NOT RUN",
+  "modelQualityGate": "NOT RUN",
+  "qualityConclusion": "NOT_AVAILABLE",
+  "artifactHashes": {
+    "activationSha256": "3bc30d990dd55c4742bfd01dd64bfe9a5a3d8fd9d764639412494546110039d8",
+    "readinessCheckpointSha256": "2b9046fa62df03e4aba43da4af70f9a84001d7b817462419028bcfef273642d2",
+    "smokeCheckpointSha256": "c451d2ba7f1972647ae1f2b65bed3fd48f7e68fe8d4dcd307204970b1bc8cdf8",
+    "screeningCheckpointSha256": "48fbc438efa9a70709253e596defc654de8c0a967cfe14e95c17d86579bc0bae",
+    "packetSha256": "1cb3b0e4d50ef25ad178b608d9c79cef0cc6639d895cd0d6abe455d4e011dd03",
+    "labelsSha256": "7acb98fe74f7ab9326b9ff155f0390802a088e061c1ca2a37b515ab349605e2b"
+  },
+  "tests": {
+    "lint": "PASS",
+    "unitAndIntegration": "PASS",
+    "build": "PASS",
+    "cloudflareDryRun": "PASS",
+    "securityScan": "PASS"
+  },
+  "securityCleanup": "PASS",
+  "selectionReadiness": "NOT READY",
+  "selection": "NOT RUN",
+  "blind": "NOT CREATED",
+  "e2Status": "BLOCKED",
+  "e3Status": "NOT READY",
+  "productionStatus": "NOT READY",
+  "finalStatus": "EXPERIMENT BLOCKED",
+  "recommendation": "Benchmark infrastructure needs a new protocol-level reveal-scanner repair before any further model calls.",
+  "generatedAt": "2026-08-13T15:59:10.3556085Z"
+}

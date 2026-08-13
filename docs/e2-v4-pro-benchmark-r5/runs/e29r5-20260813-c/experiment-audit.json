@@ -1,0 +1,478 @@
+{
+  "schemaVersion": "e2.9-r5-fresh-integrity-audit-1.0.0",
+  "auditSkill": "experiment-audit",
+  "reviewFreshness": "fresh",
+  "reviewIndependence": "same-family",
+  "acceptanceStatus": "provisional",
+  "runId": "e29r5-run-20260813-c",
+  "runLabel": "e29r5-20260813-c",
+  "protocolVersion": "e2-9-v4-pro-protocol-3.3.0",
+  "generatedAt": "2026-08-13T16:20:24.9404407Z",
+  "scope": {
+    "mode": "read-only-integrity-audit",
+    "modelCallsMade": 0,
+    "observationsRerun": 0,
+    "selectionRun": false,
+    "blindRun": false,
+    "productionRun": false,
+    "revealRerun": false,
+    "scoreRun": false,
+    "gateRun": false,
+    "deploymentChanged": false,
+    "secretsChanged": false,
+    "secretValuesRead": false,
+    "authorizedWrites": [
+      "docs/e2-v4-pro-benchmark-r5/runs/e29r5-20260813-c/EXPERIMENT_AUDIT.md",
+      "docs/e2-v4-pro-benchmark-r5/runs/e29r5-20260813-c/experiment-audit.json"
+    ]
+  },
+  "hashAlgorithm": "SHA-256 over raw file bytes unless a canonical hash is explicitly named",
+  "inputFileHashes": {
+    "codeAndConfiguration": {
+      "cloudflare/e2-r5-benchmark.mjs": "dc4001c3f53533b2d230b196492aca8b69edf6445487e920c14573216b59cb6e",
+      "cloudflare/e2-r5-ledger-worker.mjs": "119e8f13d9e1d52f19d6f200385828b4dcde2e6b99adcd684fb74a973061ea2e",
+      "cloudflare/e2-r5-transport-policy.mjs": "4299b7b8f0af5bd8dd8c1c48dabae8e548b0b72150a12bbd5d295e486b4c0e45",
+      "cloudflare/e2-r5-tests.mjs": "d82c35267ddd4f1787dd333b130a9fcb5a9a730c6a8fdb9a9c3191d86db0f4e3",
+      "cloudflare/worker.mjs": "a0d4f0bca719a7e30e4b6c9157ff8bfb197dd743d89fd9545fa7548c4023f4c2",
+      "cloudflare/e2-v4-pro-benchmark.mjs": "d6acfd695c83909a0ecc88d9f03cbbbec0b394ec4bf380781e4876c128e20b6e",
+      "cloudflare/recognition.mjs": "de5afa6afad5ed2171f35ab60cb4dc311dd04367eb33fb1d1383cf9aa4de5eaf",
+      "cloudflare/recognition-prompt.mjs": "ea34279883db218db77a262bebe3403bde2691a8b5adcf771c9e3e4bef9b7ef3",
+      "cloudflare/recognition-quality.mjs": "d9ba1cd537003797148c0fd684c2d1cb2155f3e649d37fe59d047094017b5a3f",
+      "cloudflare/recognition-repair.mjs": "bdf1b845c5534ccaeb48062d2d72bd2c023a901dee51e96ad84a5edc488490b4",
+      "cloudflare/model-gateway.mjs": "0434fe13690038d6a5bd1ba17c2194d72add43d1f99f1ecc8267f12313476db0",
+      "cloudflare/e2-r2-benchmark.mjs": "8a74b1d8d19af684f5ab98190fc9c96037f2fa2294bd1a2eb76350ef1b86308d",
+      "wrangler.jsonc": "568a1187417a6a5d806b8ca178417394a1bd0d81c848bb71a078d31a0e7e711f",
+      "wrangler.e2-r5-preview.jsonc": "aa0b02f58b93a3ca7964704885f855775527a2940dfbaaa8b3cd6ed95850f24b",
+      "wrangler.e2-r5-ledger.jsonc": "41f9f2cfeaf2a32155d3f3bc45dcb5f0f1b728990a685d52b7cfbd85ae7874b1",
+      "scripts/e2-9-r5-entrypoint-preflight.mjs": "6dcf5e1b162c4d1054361cf6cecf164962186e349f43feed673595e23ace1e81",
+      "scripts/e2-9-r5-hash.mjs": "e1935c8e2ffba35fd18905223d843fdb8374613f2b9dfd2deb8808a092b3ed36",
+      "scripts/e2-9-r5-integrity.mjs": "a7e2d9281ef032df112bacf3270fee3a8ce34efb62f6fe20e30ca5c094c1f941",
+      "scripts/e2-9-r5-path-mask.mjs": "92a7e7294acf46755d483ff58896687b8e72fcb3fc8743b522fc5c9f4c635277",
+      "scripts/e2-9-r5-path-mask.node.mjs": "e4f47cf6b36ff748f76995745bedf140982fa4eaa99fd01bf47f4ba1267bf7d3",
+      "scripts/e2-9-r5-protocol.node.mjs": "50f878b5fc23b9b7717a2481fc65e2f72f52f5917f911fbe9cb2a4334de068de",
+      "scripts/e2-9-r5-run-context.mjs": "187e9ee599ee63f52c32e596b7299487364dafe460b0c903f7bd086c9ed96694",
+      "scripts/verify-e2-9-r5-activation.mjs": "76447146d7ec1fa7f07cfd22eec77332d831f50e7614f3ae16d16136753fe7ca",
+      "scripts/prepare-e2-9-r5-manifests.mjs": "42a826155e6d6fdd4fa2a871d65c552b0cbb123dec892081eeac3ec87e6e5729",
+      "scripts/run-e2-9-r5.mjs": "6baad96090f4b49382c73896b2fdcc14e0fc89970db22714ec33a0d4a4574924",
+      "scripts/prepare-e2-9-r5-packet-preview.mjs": "a5468192f9d13d7d95677377183b6a800deb1da926dede935635c2735a0deb92",
+      "scripts/finalize-e2-9-r5-packet.mjs": "91d2a2554b640787a0ac8982391d6fad30931c4e6bd3f762084848d8b598c7c9",
+      "scripts/reveal-e2-9-r5-adjudication.mjs": "2b7fa9b64710d0f06a6468aa674d8975a754e134cc89d2f9e14d1c4a2ae64a13",
+      "scripts/score-e2-9-r5.mjs": "e07134553d6e51d3c1409432c8c455d56622195448330f622081ac3387a49b3f",
+      "scripts/evaluate-e2-9-r5-gate.mjs": "3da38d7d876f68384e919bd345f7711af2dd3b435b29e03e436dfe203cde4b59",
+      "scripts/scan-secrets.mjs": "82efa635b52f8392c55f4a58f2ee72d468d5f2b1938bf3508d1c23465bc8392d",
+      "package.json": "e0ad1d1857f302078df20be4a849dc666071129a62270dd25299dd8cf94e2644",
+      "package-lock.json": "b7b820a928d22738978480c640f144b3e1f12be92b8e25604d6663ca5536464c"
+    },
+    "foundationalPublicMaterials": {
+      "docs/e2-v4-pro-benchmark-r5/adjudication-packet.schema.json": "ce8a936c58813017cba0a6bbe2e7ffee18cee4cf492dc5d5f5c1ca00acf4f221",
+      "docs/e2-v4-pro-benchmark-r5/adjudication-rubric.json": "4fe601c89dd804f47c489554739667920e7832eb42c284029afb1b4ddd659ba0",
+      "docs/e2-v4-pro-benchmark-r5/bundle-hash-manifest.json": "221eb52921685b132b849e5906daadeb8bbfdb0795f1000b4c24a86f1e2ac86f",
+      "docs/e2-v4-pro-benchmark-r5/EXPERIMENT_PLAN.md": "7528de0133a82f08286bf6254726f74a529b5f3950724544fbb8d6b66ad5a713",
+      "docs/e2-v4-pro-benchmark-r5/path-mask-dry-review.schema.json": "683c60baf99223bd6ac9e42c3223703a9ee6e4c9193b56b43cb868cdffecce41",
+      "docs/e2-v4-pro-benchmark-r5/path-masked-labels.schema.json": "5c718625b689aa9115ed3b263651caea206aead58fa9e1b6d16ba6784ad0c655",
+      "docs/e2-v4-pro-benchmark-r5/preview-activation.schema.json": "a1ff6ed721a27a36b4bf0e637421f0881454395fd30469c20ed0b6835701231e"
+    },
+    "currentRunPublicMaterials": {
+      "docs/e2-v4-pro-benchmark-r5/runs/e29r5-20260813-c/adjudication-packet-manifest.json": "beadbf3b27c2c4590c9f59a2789aeab9e82e417daf73ac65da3773d380ec64da",
+      "docs/e2-v4-pro-benchmark-r5/runs/e29r5-20260813-c/bundle-hash-manifest.json": "e6f63aa224ddb202ef8053a3ba762f9615adfe0ac9ce7d5943c9df3565564c10",
+      "docs/e2-v4-pro-benchmark-r5/runs/e29r5-20260813-c/packet-preview-manifest.json": "1ae2fa1955da0668687066cb93db5c7031dc65442ccdfe42a108adbc326d4207",
+      "docs/e2-v4-pro-benchmark-r5/runs/e29r5-20260813-c/path-mask-dry-review.json": "32c45648a35ade53c8e3f9244d4653e5826f505ceb2af74b13b5525431594a3a",
+      "docs/e2-v4-pro-benchmark-r5/runs/e29r5-20260813-c/path-masked-labels.json": "14444c13c289345cdd1dfe78552f0a8363fc7f8895b5fe069df9017cd594143b",
+      "docs/e2-v4-pro-benchmark-r5/runs/e29r5-20260813-c/preview-activation.json": "3bc30d990dd55c4742bfd01dd64bfe9a5a3d8fd9d764639412494546110039d8",
+      "docs/e2-v4-pro-benchmark-r5/runs/e29r5-20260813-c/preview-cleanup.json": "71d5d7c4832c09bfbf18553ad71d1c86bb0ea14d35ca4357b9b8aa746578a727",
+      "docs/e2-v4-pro-benchmark-r5/runs/e29r5-20260813-c/protocol-failure.json": "0bd12980014b72471be930439b79c620ac76c2904f766310b6e8016af13760fc",
+      "docs/e2-v4-pro-benchmark-r5/runs/e29r5-20260813-c/readiness-manifest.json": "2fa91fb1138a2899f5740cf24a1dffc2e1a4a0b344d8cde02225a5d657e4896c",
+      "docs/e2-v4-pro-benchmark-r5/runs/e29r5-20260813-c/run-manifest.json": "5b28ef69099199865259089c08e0b28785905dea69ee6ed516f3e024657d6a46",
+      "docs/e2-v4-pro-benchmark-r5/runs/e29r5-20260813-c/SCREENING_REPORT.md": "d697c2aedc4be126669db894aaad8f5056907e43679c697918513485fc3b8bc3",
+      "docs/e2-v4-pro-benchmark-r5/runs/e29r5-20260813-c/screening-manifest.json": "2d0a9feb4c8b479243512ae12e63cb98c738855a9bca945723a731566a3d696f",
+      "docs/e2-v4-pro-benchmark-r5/runs/e29r5-20260813-c/screening-report.json": "46afbf5572a62a6323f8a73d7f6d94880ad499635167ecd26a48358df9c849bb",
+      "docs/e2-v4-pro-benchmark-r5/runs/e29r5-20260813-c/smoke-manifest.json": "72edfdbd9babb49e4f1a342b3e868d5ab59764e92f8553acc1d14ba4956083aa"
+    },
+    "ignoredRawEvidence": {
+      ".evaluation-cache/e2-9-r5/protocol-3.3.0/e29r5-20260813-c/source-only-manifest.json": "360d1d2d60acee164ce53f03b76a679d029c840bc46d20419ebc6fb025912944",
+      ".evaluation-cache/e2-9-r5/protocol-3.3.0/e29r5-20260813-c/checkpoints/e29r5-readiness-20260813-c.json": "2b9046fa62df03e4aba43da4af70f9a84001d7b817462419028bcfef273642d2",
+      ".evaluation-cache/e2-9-r5/protocol-3.3.0/e29r5-20260813-c/checkpoints/e29r5-smoke-20260813-c.json": "c451d2ba7f1972647ae1f2b65bed3fd48f7e68fe8d4dcd307204970b1bc8cdf8",
+      ".evaluation-cache/e2-9-r5/protocol-3.3.0/e29r5-20260813-c/checkpoints/e29r5-screening-20260813-c.json": "48fbc438efa9a70709253e596defc654de8c0a967cfe14e95c17d86579bc0bae",
+      ".evaluation-cache/e2-9-r5/protocol-3.3.0/e29r5-20260813-c/ledger-readiness.json": "e68b9c68aec1473a2cc639fd731c1783e81067111c08a7ff4a742322bfc2fed1",
+      ".evaluation-cache/e2-9-r5/protocol-3.3.0/e29r5-20260813-c/ledger-smoke.json": "d556d431bff43a6f5e6e55bd8f69c386f12367e0a0caaa92a585f5354ad129f9",
+      ".evaluation-cache/e2-9-r5/protocol-3.3.0/e29r5-20260813-c/ledger-screening.json": "97543c18a43478a199415b77c9ffc1d90b240d59dd3d3e54fd58280a422493a0",
+      ".evaluation-cache/e2-9-r5/protocol-3.3.0/e29r5-20260813-c/adjudication/packet-preview.json": "1cb3b0e4d50ef25ad178b608d9c79cef0cc6639d895cd0d6abe455d4e011dd03",
+      ".evaluation-cache/e2-9-r5/protocol-3.3.0/e29r5-20260813-c/adjudication/adjudication-packet.json": "1cb3b0e4d50ef25ad178b608d9c79cef0cc6639d895cd0d6abe455d4e011dd03"
+    }
+  },
+  "recalculation": {
+    "canonicalHashes": {
+      "runManifestSelfSha256": "5511e58b7754480caa97d47548289b6e67459e47d5e32dd7d2fd2b6af1656a0e",
+      "sourceOnlySha256": "5a83d7c4da7378c0caf7088f1b6e0bb5a113492f80dab152b7214ca71106d0a1",
+      "readinessManifestSha256": "b620bf447c2c17ffb02a1a79ab2723d3deaca544c7d947c0401e6c752c075869",
+      "smokeManifestSha256": "211e8a015fed364509d3311b06e1de7f761fc286216f9e9c2635dbfe65a2191d",
+      "screeningManifestSha256": "869a495b587c15f1e73a8aad161bf69bced8c247385963a5759238cb4b1d63e8",
+      "bundleManifestSha256": "559f905cfa3605d9b39822495bd0c7c0fbd2816bbc67ccaeb67fea382e826618"
+    },
+    "bundleHashes": {
+      "schema": {
+        "entryCount": 2,
+        "sha256": "bb78d92662e5039668f0f739074c83402500cda6170aa231b30ae26b6e58857f",
+        "entriesAndByteLengthsVerified": true,
+        "status": "PASS"
+      },
+      "promptAndPipeline": {
+        "entryCount": 4,
+        "sha256": "b23ea83ab214e3f0c74a7fcfb8f7806f512cb86f2130ab3ca185fbdee3e48be8",
+        "entriesAndByteLengthsVerified": true,
+        "status": "PASS"
+      },
+      "scorerSemantics": {
+        "entryCount": 3,
+        "sha256": "b548468400d0a8917215caa6e4040402cde1d80873f821cf569bbaed1c78a56a",
+        "entriesAndByteLengthsVerified": true,
+        "status": "PASS"
+      },
+      "datasets": {
+        "entryCount": 3,
+        "sha256": "acc4c4784eb1c80263bd64625cef98c2bbc25f09448069d5629c8df3292e086b",
+        "entriesAndByteLengthsVerified": true,
+        "status": "PASS"
+      },
+      "protocolAndDeployment": {
+        "entryCount": 50,
+        "sha256": "ef6962b903da41f1131d92c7752b0112111e9a1dd848693d9a2e1798872e6501",
+        "entriesAndByteLengthsVerified": true,
+        "status": "PASS"
+      }
+    },
+    "promptHashSemantics": {
+      "frozenPromptSha256": "c925f1dc27971e4fcaf7ad185b729f016fa7af966cd7992337d9eaa94c97e6fd",
+      "meaning": "SHA-256 of the entire recognition-prompt.mjs source after CRLF-to-LF normalization",
+      "rawSourceFileSha256": "ea34279883db218db77a262bebe3403bde2691a8b5adcf771c9e3e4bef9b7ef3",
+      "runtimePromptStringSha256": "382fa23ac1e8da82436c8a99f0d100112955ba687a122bb8529940694a29150e",
+      "bundleDriftDetected": false,
+      "status": "WARN"
+    },
+    "sourceOnly": {
+      "recordCount": 13,
+      "uniqueCaseCount": 10,
+      "sourceAndInputHashMismatches": 0,
+      "forbiddenExpectedGoldScoreLabelOrMappingPaths": 0,
+      "status": "PASS"
+    },
+    "observationPlan": {
+      "seed": "e2-9-r5-interleave-20260813-c",
+      "count": 32,
+      "uniqueIds": 32,
+      "orderingMatchesFrozenPlan": true,
+      "phaseCounts": {
+        "readiness": 6,
+        "smoke": 10,
+        "screening": 16
+      },
+      "modelAliasCounts": {
+        "flash": 16,
+        "pro": 16
+      },
+      "orderedObservationIds": [
+        "e29r5-9b554b767eafc74c2c30cd7b72a48c67",
+        "e29r5-8ba4654592b96599dd4dfffd3d7830fc",
+        "e29r5-81584ff96767e3255cc6c9486f2ec16b",
+        "e29r5-7b0a0631c7f23a8679219428960e3978",
+        "e29r5-03eb1979fa4fcff9dc5253e06715cad4",
+        "e29r5-12c2f7240622b6fe29734e42260ba609",
+        "e29r5-a2a9376ed291e6d62b560602cae1f4cc",
+        "e29r5-775158ab834e2e20c1ab6ddeddeb511b",
+        "e29r5-0b5b264be5d42799f428ea0129b8a51c",
+        "e29r5-757f99534791bb5ca1f6640dc3963308",
+        "e29r5-0f3e1d73010f6e381f2a4bec7a3ad6ab",
+        "e29r5-77f35c2a99a2a8bf18c2974a62987625",
+        "e29r5-60d3defed4e638bdee767bdd11727529",
+        "e29r5-ad19e62571593b9f2e6d1b279ca2ac94",
+        "e29r5-745c27712832af1a44551d6009c5ce3e",
+        "e29r5-2ae547babb43b1e5c0ff2e9e790a78b0",
+        "e29r5-7a33eb9c022c90405eba9f8ec2968d3e",
+        "e29r5-67faf1c0c911d77d4b794365b57787da",
+        "e29r5-69ed324f18f341dda857d248676c35b0",
+        "e29r5-8a1cc9ead5295ea2df3681045b789b41",
+        "e29r5-7134845a1fbcf21d09bc13e57ef86ee0",
+        "e29r5-62454b1c3b1f4e35cf5683d2403b25af",
+        "e29r5-ff92f7d56c718dee726812cf65c5863c",
+        "e29r5-12ed250d44e49a41374624e4c770a58e",
+        "e29r5-bcd7f15f4a129ae9e2b8d7b7c598f68f",
+        "e29r5-8369343c547060a190dc4280835b036a",
+        "e29r5-ce2ee744d2e037da0c5415b7df9eb9be",
+        "e29r5-1510b64b2e4d44ba2fc90ecf0df7dcb3",
+        "e29r5-ba28ebfda29082f7a1969c2055453ed7",
+        "e29r5-d89a2d1d1575cd99a9e6927499d2dd12",
+        "e29r5-ddd98234f922a9ee10a10407cea74b6b",
+        "e29r5-b853860d214c13de3acb04316c5edc13"
+      ],
+      "status": "PASS"
+    },
+    "generationEvidence": {
+      "completeObservations": 32,
+      "protocolAttempts": 32,
+      "oneAttemptObservations": 32,
+      "retryCount": 0,
+      "fallbackCount": 0,
+      "overwriteCount": 0,
+      "lineageMismatchCount": 0,
+      "sourceInputResultAndRawHashMismatchCount": 0,
+      "businessSemanticRoleMatches": 26,
+      "businessSemanticRoleExpected": 26,
+      "readinessNullSourceAndRoleMatches": 6,
+      "deploymentVersions": [
+        "580d151b-9be5-4c26-8ce6-2405629c9827"
+      ],
+      "fourWayLineageFields": [
+        "requestedModel",
+        "returnedModel",
+        "executionModel",
+        "resultMetadata.modelName"
+      ],
+      "status": "PASS"
+    },
+    "checkpointAndLedgerBindings": {
+      "checkpointCount": 3,
+      "ledgerSnapshotCount": 3,
+      "runPhaseBundleActivationBindingsMatch": true,
+      "ledgerRecordCounts": [
+        6,
+        16,
+        32
+      ],
+      "earlierRecordsUnchangedAcrossSnapshots": true,
+      "finalCompleteRecords": 32,
+      "finalStage": "PATH_MASK_PREVIEW_OPEN",
+      "status": "PASS"
+    },
+    "activation": {
+      "activationFileSha256": "3bc30d990dd55c4742bfd01dd64bfe9a5a3d8fd9d764639412494546110039d8",
+      "ledgerDeploymentVersion": "d90efcbc-432b-4895-8544-a1ff9f6bd179",
+      "disabledCodeVersion": "311883d7-be36-45f2-b330-44d9f0576d0d",
+      "secretChangeVersion": "e6f28397-ed21-4a26-869d-e558fbe84ef0",
+      "enabledMainVersion": "580d151b-9be5-4c26-8ce6-2405629c9827",
+      "chronologyMatches": true,
+      "featureEnabled": true,
+      "productionUnchanged": true,
+      "status": "PASS"
+    },
+    "usageAndLatency": {
+      "allObservations": {
+        "flash": {
+          "inputTokens": 31014,
+          "outputTokens": 23838,
+          "totalTokens": 54852,
+          "providerLatencyMs": 127706,
+          "clientLatencyMs": 139959
+        },
+        "pro": {
+          "inputTokens": 31014,
+          "outputTokens": 23185,
+          "totalTokens": 54199,
+          "providerLatencyMs": 196429,
+          "clientLatencyMs": 210545
+        }
+      },
+      "screeningOnly": {
+        "flash": {
+          "inputTokens": 19008,
+          "outputTokens": 15340,
+          "totalTokens": 34348,
+          "providerLatencyMs": 80151,
+          "clientLatencyMs": 86493
+        },
+        "pro": {
+          "inputTokens": 19008,
+          "outputTokens": 14561,
+          "totalTokens": 33569,
+          "providerLatencyMs": 121484,
+          "clientLatencyMs": 129434
+        }
+      },
+      "matchesExistingReport": true,
+      "qualityMeaning": "NONE",
+      "status": "PASS"
+    },
+    "pathMaskAndLabels": {
+      "packetPreviewSha256": "1cb3b0e4d50ef25ad178b608d9c79cef0cc6639d895cd0d6abe455d4e011dd03",
+      "formalPacketSha256": "1cb3b0e4d50ef25ad178b608d9c79cef0cc6639d895cd0d6abe455d4e011dd03",
+      "packetBytesIdentical": true,
+      "pairCount": 8,
+      "orderedAnonPairCount": 8,
+      "sideHashMismatchCount": 0,
+      "uniqueCommitmentCount": 8,
+      "packetLeakCount": 0,
+      "previewCreatedAt": "2026-08-13T15:49:22.625Z",
+      "dryReviewCompletedAt": "2026-08-13T15:52:59.396Z",
+      "formalPacketOpenedAt": "2026-08-13T15:53:36.995Z",
+      "labelsCompletedAt": "2026-08-13T15:55:57.238Z",
+      "chronologyMatches": true,
+      "labelsFileSha256": "14444c13c289345cdd1dfe78552f0a8363fc7f8895b5fe069df9017cd594143b",
+      "labelsArraySha256": "7acb98fe74f7ab9326b9ff155f0390802a088e061c1ca2a37b515ab349605e2b",
+      "labelCount": 8,
+      "uniqueLabelCount": 8,
+      "anonymousPreferences": {
+        "X": 2,
+        "Y": 2,
+        "TIE": 4,
+        "INSUFFICIENT_INFORMATION": 0
+      },
+      "planningScores": {
+        "xMajor": 0,
+        "yMajor": 0,
+        "xPlanning": 5,
+        "yPlanning": 6
+      },
+      "labelsArrayLeakCount": 0,
+      "wholeDocumentLeakCount": 1,
+      "status": "PASS"
+    },
+    "revealFailure": {
+      "status": "FAIL",
+      "scannerTarget": "whole labels document",
+      "leakCount": 1,
+      "path": "$.protocolVersion",
+      "category": "FORBIDDEN_VALUE",
+      "failingValue": "e2-9-v4-pro-protocol-3.3.0",
+      "isProtocolFalsePositive": true,
+      "happensBeforeMappingKeyWrite": true,
+      "bypassPermitted": false
+    },
+    "requiredAbsences": {
+      ".evaluation-cache/e2-9-r5/protocol-3.3.0/e29r5-20260813-c/private/mapping-key.json": true,
+      ".evaluation-cache/e2-9-r5/protocol-3.3.0/e29r5-20260813-c/path-masked-result.json": true,
+      ".evaluation-cache/e2-9-r5/protocol-3.3.0/e29r5-20260813-c/screening-aggregate.json": true,
+      ".evaluation-cache/e2-9-r5/protocol-3.3.0/e29r5-20260813-c/screening-gate.json": true,
+      "expectedScoringAndGateNotRun": true,
+      "status": "PASS"
+    }
+  },
+  "liveCloudflareVerification": {
+    "checkedAt": "2026-08-13T16:09:00Z",
+    "networkAvailable": true,
+    "previewSecretNames": [
+      "DEEPSEEK_API_KEY"
+    ],
+    "previewSecretCount": 1,
+    "secretValuesRead": false,
+    "temporaryBearerSecretAbsent": true,
+    "previewLatestDeploymentVersion": "c7d80efe-1566-4a0a-b7b4-422dc13b1b9f",
+    "previewLatestDeploymentCreatedAt": "2026-08-13T15:47:43Z",
+    "previewFeatureFlag": false,
+    "previewR5EndpointHttpStatus": 404,
+    "productionLatestDeploymentVersion": "3b6d6ba2-e21f-495c-80e4-c4bac62366be",
+    "productionLatestDeploymentCreatedAt": "2026-08-08T08:55:40Z",
+    "productionR5DeploymentFound": false,
+    "productionSamePathHttpObservation": "HTTP 200 HTML static SPA fallback from pre-R5 production; not an R5 API response",
+    "status": "PASS"
+  },
+  "readOnlyChecks": [
+    {
+      "check": "R5 path-mask, protocol, and Cloudflare unit tests",
+      "result": "56/56 passed",
+      "status": "PASS"
+    },
+    {
+      "check": "R5 entrypoint preflight",
+      "result": "5/5 passed",
+      "status": "PASS"
+    },
+    {
+      "check": "R5 activation verifier",
+      "result": "passed",
+      "status": "PASS"
+    },
+    {
+      "check": "repository secret scanner",
+      "result": "581 scanned, 0 findings",
+      "status": "PASS",
+      "limitation": "assigned-secret regex omits the two R5 temporary secret names"
+    },
+    {
+      "check": "independent literal assignment scan for R5 temporary secret names",
+      "result": "564 candidate text files, 0 matching files",
+      "status": "PASS"
+    },
+    {
+      "check": "lint/build/npm audit",
+      "result": "not rerun in this audit",
+      "status": "NOT_VERIFIED"
+    }
+  ],
+  "findings": [
+    {
+      "id": "F-01",
+      "severity": "critical",
+      "status": "FAIL",
+      "title": "Frozen reveal protocol rejects its own required protocolVersion",
+      "evidence": "scanPathMaskedPacket(labels) scans the whole document before mapping-key creation and reports the sole leak path $.protocolVersion as FORBIDDEN_VALUE.",
+      "impact": "Reveal, expected reconstruction, scoring, aggregate, and gate are blocked; experiment protocol integrity fails.",
+      "qualityImpact": "No model-quality conclusion can be computed."
+    },
+    {
+      "id": "W-01",
+      "severity": "warning",
+      "status": "WARN",
+      "title": "promptSha256 semantics are source-file canonical, not runtime-prompt bytes",
+      "evidence": "c925f1dc... is the LF-normalized module-source hash; runtime recognitionSystemPrompt() bytes hash to 382fa23a....",
+      "impact": "No bundle drift was found, but the field/report wording overstates what the echoed constant proves."
+    },
+    {
+      "id": "W-02",
+      "severity": "warning",
+      "status": "WARN",
+      "title": "Repository secret scanner does not name both R5 temporary secrets",
+      "evidence": "The assigned-secret regex omits E2_R5_BENCHMARK_TOKEN and E2_R5_PATH_MASK_REVEAL_SECRET; an independent current-state literal assignment scan found zero matching files.",
+      "impact": "Scanner PASS has a coverage limitation even though no current repository assignment was found."
+    },
+    {
+      "id": "W-03",
+      "severity": "warning",
+      "status": "RESOLVED",
+      "title": "Screening report mapping-material wording was corrected",
+      "evidence": "The prior wording could imply that mapping-key.json existed. The execution-side report now explicitly states that packet/commitments were retained and mapping-key.json was never created.",
+      "impact": "Resolved documentation precision issue; stop-rule evidence and audit verdict are unchanged.",
+      "resolvedAt": "2026-08-13T16:20:24.9404407Z",
+      "refreshedInputSha256": "d697c2aedc4be126669db894aaad8f5056907e43679c697918513485fc3b8bc3"
+    },
+    {
+      "id": "W-04",
+      "severity": "warning",
+      "status": "WARN",
+      "title": "Path mask retains documented residual correlation risk",
+      "evidence": "Explicit model/path strings are absent, but deterministic side hashes and response shape cannot establish perfect blindness.",
+      "impact": "Engineering leak scan passes but is not equivalent to a validated human blinding design."
+    }
+  ],
+  "limitations": [
+    {
+      "status": "WARN",
+      "text": "Same-family reviewer: this is provisional integrity evidence, not cross-family acceptance."
+    },
+    {
+      "status": "WARN",
+      "text": "The experiment-audit skill's shared-references dependencies are absent in the local skill package; core skill rules were followed without those supplemental references."
+    },
+    {
+      "status": "NOT_VERIFIED",
+      "text": "Commitment identities cannot be opened or independently mapped because the reveal secret was not read and mapping-key.json does not exist."
+    },
+    {
+      "status": "NOT_VERIFIED",
+      "text": "Cloudflare observations are a point-in-time snapshot and do not establish future state."
+    },
+    {
+      "status": "NOT_VERIFIED",
+      "text": "Model quality, cultural validity, product acceptance, lint/build, and package vulnerability status are outside the fresh evidence established here."
+    }
+  ],
+  "conclusions": {
+    "generationIntegrity": "PASS",
+    "postGenerationProtocolIntegrity": "FAIL",
+    "blindingEngineeringCheck": "PASS_WITH_RESIDUAL_RISK",
+    "documentationIntegrity": "WARN",
+    "securityScannerCoverage": "WARN",
+    "cloudflareIsolationAtAuditTime": "PASS"
+  },
+  "overallVerdict": "FAIL",
+  "qualityConclusion": "NOT_AVAILABLE",
+  "finalStatus": "EXPERIMENT_BLOCKED"
+}
