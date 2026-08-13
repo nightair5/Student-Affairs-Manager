@@ -7,12 +7,13 @@
   "protocolBundleSha256": "954e48c627f4a584e0678a2da7e4c34591197df52da4ea0bb3d34541b2751067",
   "deploymentSourceCommit": "d81d7d56038360b72434f2cb2b40a079043f685b",
   "mainWorker": "student-affairs-manager-preview",
-  "mainDeploymentVersion": "451ea9f6-f419-46f7-8cef-e0e58998dd90",
+  "mainDeploymentVersion": "40c0db73-1b12-4948-80c2-76480e19031f",
   "ledgerWorker": "student-affairs-e2-r3-ledger-preview",
   "ledgerDeploymentVersion": "ee89ac5a-50c4-481d-a042-39ad5001a414",
   "previewOrigin": "https://student-affairs-manager-preview.nightsdell.workers.dev",
   "r3FeatureFlag": true,
   "productionFeatureFlag": false,
   "productionBaselineVersion": "3b6d6ba2-e21f-495c-80e4-c4bac62366be",
-  "activatedAt": "2026-08-13T07:05:54.5826279Z"
+  "activatedAt": "2026-08-13T07:07:54.0000000Z",
+  "activationNote": "Final code deployment after the usable temporary Preview secret was installed; earlier pre-call deployments and the initial empty-secret compatibility failure are excluded from execution."
 }
