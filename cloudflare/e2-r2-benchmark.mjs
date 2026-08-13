@@ -1,4 +1,5 @@
 import { runE2V4ProBenchmark } from './e2-v4-pro-benchmark.mjs'
+import { diagnoseR2UpstreamFailure } from './e2-r2-transport-integrity.mjs'
 
 export const E2_R2_PROTOCOL_VERSION = 'e2-9-v4-pro-protocol-3.0.0'
 export const E2_R2_BENCHMARK_VERSION = 'e2-9-r2-benchmark-3.0.0'
@@ -166,9 +167,11 @@ async function handleGenerate(request, env, fetcher) {
     const upstream = await runE2V4ProBenchmark(r1Request(request, 'generate', 'POST', upstreamBody), r1Environment(env), fetcher)
     const payload = await upstream.json().catch(() => null)
     if (!upstream.ok || !payload?.result || !payload?.execution) {
-      finalDetails = { ...finalDetails, error: payload?.error ?? `HTTP_${upstream.status}`, requestedModel: payload?.execution?.requestedModel, returnedModel: payload?.execution?.returnedModel }
+      const failureError = payload?.error ?? `HTTP_${upstream.status}`
+      const transportEvidence = await diagnoseR2UpstreamFailure(failureError, payload?.execution)
+      finalDetails = { ...finalDetails, error: failureError, requestedModel: payload?.execution?.requestedModel, returnedModel: payload?.execution?.returnedModel, transportEvidence }
       await finalize(env, body, token, finalDetails)
-      return json({ ...payload, protocolVersion: E2_R2_PROTOCOL_VERSION, benchmarkVersion: E2_R2_BENCHMARK_VERSION, observationId: body.observationId }, upstream.status)
+      return json({ ...payload, protocolVersion: E2_R2_PROTOCOL_VERSION, benchmarkVersion: E2_R2_BENCHMARK_VERSION, observationId: body.observationId, transportEvidence }, upstream.status)
     }
     const executionModel = payload.execution.returnedModel
     const result = normalizeR2BenchmarkResult(payload.result, body.semanticRole, executionModel)

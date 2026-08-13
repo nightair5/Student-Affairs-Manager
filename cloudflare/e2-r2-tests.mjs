@@ -9,6 +9,7 @@ import {
   validateR2Result,
 } from './e2-r2-benchmark.mjs'
 import { createWorker } from './worker.mjs'
+import { diagnoseR2UpstreamFailure } from './e2-r2-transport-integrity.mjs'
 
 class MemoryStorage {
   constructor() { this.values = new Map() }
@@ -50,6 +51,11 @@ function environment(ledger) {
   }
 }
 
+async function digest(value) {
+  const bytes = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(value))
+  return [...new Uint8Array(bytes)].map((byte) => byte.toString(16).padStart(2, '0')).join('')
+}
+
 test('role-aware benchmark normalizer injects actual model and accepts zero-entity pure information', () => {
   const result = normalizeR2BenchmarkResult({ sourceSummary: { requiresAction: false }, standaloneTasks: [], milestones: [], materials: [], timePoints: [], events: [], evidence: [] }, 'information_only', 'deepseek-v4-pro')
   assert.equal(result.modelName, 'deepseek-v4-pro')
@@ -62,6 +68,21 @@ test('pure information and model lineage violations fail closed', () => {
   const invalidInformation = { sourceSummary: { requiresAction: false }, standaloneTasks: [{ tempId: 'task' }], milestones: [], materials: [], timePoints: [], events: [], evidence: [] }
   assert.equal(validateR2Result(invalidInformation, 'information_only'), 'PURE_INFORMATION_SPURIOUS_ENTITY')
   assert.equal(validateR2Lineage({ execution: { requestedModel: 'deepseek-v4-pro', returnedModel: 'deepseek-v4-pro', executionModel: 'deepseek-v4-pro' }, result: { modelName: 'deepseek-v4-flash' } }, 'pro'), 'MODEL_LINEAGE_MISMATCH')
+})
+
+test('transport diagnostics classify truncated provider JSON without retaining body text', async () => {
+  const rawResponse = '{"model":"deepseek-v4-flash","choices":[{"message":{"content":"unfinished'
+  const evidence = await diagnoseR2UpstreamFailure('UPSTREAM_JSON_INVALID', {
+    rawResponse,
+    attempts: [],
+    upstreamHeaders: { 'content-type': 'application/json' },
+  })
+  assert.equal(evidence.classification, 'TRUNCATED_JSON_BODY')
+  assert.equal(evidence.wrapperUpstreamInvocationCount, 1)
+  assert.equal(evidence.providerAttemptRecords, 0)
+  assert.equal(evidence.providerResponseBytes, Buffer.byteLength(rawResponse))
+  assert.match(evidence.providerResponseSha256, /^[a-f0-9]{64}$/u)
+  assert.equal(JSON.stringify(evidence).includes('unfinished'), false)
 })
 
 test('main Worker route keeps the R2 endpoint hidden while the Preview flag is off', async () => {
@@ -148,4 +169,56 @@ test('Worker integration preserves information role and blocks duplicate before 
   const duplicate = await runE2R2Benchmark(request('/api/experiments/e2-9/r2/benchmark/generate', TOKEN, body), env, fetcher)
   assert.equal(duplicate.status, 409)
   assert.equal(upstreamCalls, callsAfterFirst)
+})
+
+test('Worker records one immutable truncated-JSON failure with hash-only transport evidence', async () => {
+  const ledger = ledgerService()
+  const env = environment(ledger)
+  const readinessInputSha = await digest('{"kind":"readiness","modelAlias":"flash","protocolVersion":"e2-9-v4-pro-protocol-3.0.0"}')
+  const content = 'Please submit the form by Friday.'
+  const input = '{"content":"Please submit the form by Friday.","referenceTime":"2026-08-13T09:00:00+08:00","sourceTitle":"Form notice","sourceType":"text","timezone":"Asia/Shanghai"}'
+  const inputSha = await digest(input)
+  const registration = {
+    runLabel: 'r2-truncated-json-test', protocolVersion: E2_R2_PROTOCOL_VERSION, bindings: { protocolBundleSha256: HASH },
+    observations: [
+      { observationId: 'ready-flash', phase: 'readiness', modelAlias: 'flash', inputSha256: readinessInputSha, phaseManifestSha256: HASH },
+      { observationId: 'smoke-flash', phase: 'smoke', modelAlias: 'flash', inputSha256: inputSha, phaseManifestSha256: HASH },
+      { observationId: 'screen-flash', phase: 'screening', modelAlias: 'flash', inputSha256: HASH, phaseManifestSha256: HASH },
+    ],
+  }
+  assert.equal((await runE2R2Benchmark(request('/api/experiments/e2-9/r2/benchmark/register', TOKEN, registration), env)).status, 201)
+  let providerCalls = 0
+  const truncated = '{"model":"deepseek-v4-flash","choices":[{"message":{"content":"unfinished'
+  const fetcher = async (_url, init) => {
+    providerCalls += 1
+    if (providerCalls === 1) {
+      return Response.json({
+        model: JSON.parse(init.body).model,
+        system_fingerprint: 'readiness-fingerprint',
+        usage: { prompt_tokens: 3, completion_tokens: 2, total_tokens: 5 },
+        choices: [{ finish_reason: 'stop', message: { content: '{"ok":true}' } }],
+      })
+    }
+    return new Response(truncated, { status: 200, headers: { 'content-type': 'application/json', 'x-request-id': 'truncated-request' } })
+  }
+  const readiness = await runE2R2Benchmark(request('/api/experiments/e2-9/r2/benchmark/readiness', TOKEN, { runLabel: registration.runLabel, observationId: 'ready-flash', modelAlias: 'flash', inputSha256: readinessInputSha, phaseManifestSha256: HASH, protocolVersion: E2_R2_PROTOCOL_VERSION }), env, fetcher)
+  assert.equal(readiness.status, 200)
+  assert.equal((await runE2R2Benchmark(request('/api/experiments/e2-9/r2/benchmark/advance', TOKEN, { runLabel: registration.runLabel, nextStage: 'SMOKE_OPEN' }), env, fetcher)).status, 200)
+  const generationBody = { runLabel: registration.runLabel, observationId: 'smoke-flash', phase: 'smoke', modelAlias: 'flash', semanticRole: 'action_required', sourceType: 'text', sourceTitle: 'Form notice', content, referenceTime: '2026-08-13T09:00:00+08:00', timezone: 'Asia/Shanghai', sourceSha256: await digest(content), inputSha256: inputSha, phaseManifestSha256: HASH, protocolVersion: E2_R2_PROTOCOL_VERSION }
+  const failed = await runE2R2Benchmark(request('/api/experiments/e2-9/r2/benchmark/generate', TOKEN, generationBody), env, fetcher)
+  assert.equal(failed.status, 502)
+  const payload = await failed.json()
+  assert.equal(payload.error, 'UPSTREAM_JSON_INVALID')
+  assert.equal(payload.transportEvidence.classification, 'TRUNCATED_JSON_BODY')
+  assert.equal(payload.transportEvidence.wrapperUpstreamInvocationCount, 1)
+  assert.equal(payload.transportEvidence.providerAttemptRecords, 1)
+  assert.equal(providerCalls, 2)
+  const state = ledger.instances.get(registration.runLabel).state.storage.values.get('run')
+  const record = state.observations['smoke-flash']
+  assert.equal(record.state, 'final')
+  assert.equal(record.outcome, 'failure')
+  assert.equal(record.transportEvidence.classification, 'TRUNCATED_JSON_BODY')
+  assert.equal(record.transportEvidence.providerAttemptRecords, 1)
+  assert.equal(record.transportEvidence.providerResponseSha256, await digest(truncated))
+  assert.equal(JSON.stringify(record.transportEvidence).includes('unfinished'), false)
 })

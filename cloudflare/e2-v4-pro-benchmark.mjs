@@ -112,8 +112,14 @@ async function callChat({ fetcher, apiKey, model, systemPrompt, userPrompt, maxT
       const durationMs = Date.now() - attemptStartedAt
       const upstreamHeaders = safeHeaders(response.headers)
       const rawResponse = await response.text()
+      const attemptRecord = {
+        attempt,
+        status: response.status,
+        transportStatus: response.ok ? 'response_received' : `http_${response.status}`,
+        durationMs,
+      }
+      attempts.push(attemptRecord)
       if (!response.ok) {
-        attempts.push({ attempt, status: response.status, transportStatus: `http_${response.status}`, durationMs })
         return { ok: false, error: `UPSTREAM_${response.status}`, status: response.status, attempts, durationMs: Date.now() - startedAt, upstreamHeaders, rawResponse }
       }
       let payload
@@ -123,7 +129,7 @@ async function callChat({ fetcher, apiKey, model, systemPrompt, userPrompt, maxT
       const systemFingerprint = safeText(payload?.system_fingerprint, 200)
       const finishReason = safeText(payload?.choices?.[0]?.finish_reason, 80)
       const usage = usageFrom(payload)
-      attempts.push({ attempt, status: response.status, transportStatus: 'ok', durationMs })
+      attemptRecord.transportStatus = 'ok'
       if (!content) return { ok: false, error: 'EMPTY_RESPONSE', status: 502, attempts, durationMs: Date.now() - startedAt }
       if (returnedModel !== model) return { ok: false, error: 'MODEL_FALLBACK_DETECTED', status: 502, requestedModel: model, returnedModel, attempts, durationMs: Date.now() - startedAt }
       if (!systemFingerprint) return { ok: false, error: 'SYSTEM_FINGERPRINT_MISSING', status: 502, requestedModel: model, returnedModel, attempts, durationMs: Date.now() - startedAt }

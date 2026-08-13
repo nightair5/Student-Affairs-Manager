@@ -102,6 +102,7 @@ export class E2R2RunLedger {
         returnedModel: body.returnedModel ?? null,
         executionModel: body.executionModel ?? null,
         resultModelName: body.resultModelName ?? null,
+        transportEvidence: body.transportEvidence ?? null,
         finalizedAt: new Date().toISOString(),
       }
       delete run.observations[body.observationId].reservationToken
