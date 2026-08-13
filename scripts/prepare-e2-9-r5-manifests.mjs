@@ -5,14 +5,11 @@ import path from 'node:path'
 import { createServer } from 'vite'
 import { canonicalJson, hashBundle, sha256 } from './e2-9-r5-hash.mjs'
 import { assertProtocolFreezeClean, R5_STAGE_MACHINE } from './e2-9-r5-integrity.mjs'
+import { resolveR5RunContext } from './e2-9-r5-run-context.mjs'
 
 const ROOT = process.cwd()
-const DOCS = path.join(ROOT, 'docs', 'e2-v4-pro-benchmark-r5')
-const CACHE = path.join(ROOT, '.evaluation-cache', 'e2-9-r5', 'protocol-3.3.0')
-const PROTOCOL_VERSION = 'e2-9-v4-pro-protocol-3.3.0'
-const RUN_ID = 'e29r5-run-20260813-a'
-const RUN_LABEL = 'e29r5-20260813-a'
-const SEED = 'e2-9-r5-interleave-20260813-a'
+const CONTEXT = resolveR5RunContext({ root: ROOT })
+const { docs: DOCS, schemaDocs: SCHEMA_DOCS, cache: CACHE, protocolVersion: PROTOCOL_VERSION, runId: RUN_ID, runLabel: RUN_LABEL, seed: SEED } = CONTEXT
 const MODELS = ['flash', 'pro']
 
 const SMOKE = Object.freeze([
@@ -127,7 +124,7 @@ async function main() {
         'wrangler.e2-r4-preview.jsonc', 'wrangler.e2-r4-ledger.jsonc',
         'wrangler.e2-r5-preview.jsonc', 'wrangler.e2-r5-ledger.jsonc',
         'package.json', 'package-lock.json', 'scripts/scan-secrets.mjs',
-        'scripts/e2-9-r5-hash.mjs', 'scripts/e2-9-r5-integrity.mjs', 'scripts/e2-9-r5-protocol.node.mjs',
+        'scripts/e2-9-r5-hash.mjs', 'scripts/e2-9-r5-integrity.mjs', 'scripts/e2-9-r5-run-context.mjs', 'scripts/e2-9-r5-protocol.node.mjs',
         'scripts/e2-9-r5-entrypoint-preflight.mjs',
         'scripts/verify-e2-9-r5-activation.mjs',
         'scripts/e2-9-r5-path-mask.mjs', 'scripts/e2-9-r5-path-mask.node.mjs',
@@ -169,16 +166,16 @@ async function main() {
     }
     const [pathMaskSource, packetSchemaSource, activationSchemaSource, dryReviewSchemaSource, labelsSchemaSource, adjudicationRubricSource] = await Promise.all([
       readFile(path.join(ROOT, 'scripts', 'e2-9-r5-path-mask.mjs'), 'utf8'),
-      readFile(path.join(DOCS, 'adjudication-packet.schema.json'), 'utf8'),
-      readFile(path.join(DOCS, 'preview-activation.schema.json'), 'utf8'),
-      readFile(path.join(DOCS, 'path-mask-dry-review.schema.json'), 'utf8'),
-      readFile(path.join(DOCS, 'path-masked-labels.schema.json'), 'utf8'),
-      readFile(path.join(DOCS, 'adjudication-rubric.json'), 'utf8'),
+      readFile(path.join(SCHEMA_DOCS, 'adjudication-packet.schema.json'), 'utf8'),
+      readFile(path.join(SCHEMA_DOCS, 'preview-activation.schema.json'), 'utf8'),
+      readFile(path.join(SCHEMA_DOCS, 'path-mask-dry-review.schema.json'), 'utf8'),
+      readFile(path.join(SCHEMA_DOCS, 'path-masked-labels.schema.json'), 'utf8'),
+      readFile(path.join(SCHEMA_DOCS, 'adjudication-rubric.json'), 'utf8'),
     ])
     const runManifestCore = {
       schemaVersion: 'e2.9-r5-run-manifest-3.3.0', protocolVersion: PROTOCOL_VERSION, runId: RUN_ID, runLabel: RUN_LABEL,
       createdAt: new Date().toISOString(), implementationCommit,
-      labels: { readiness: 'e29r5-readiness-20260813-a', smoke: 'e29r5-smoke-20260813-a', screening: 'e29r5-screening-20260813-a', scoring: 'e29r5-scoring-20260813-a', adjudication: 'e29r5-adjudication-20260813-a' },
+      labels: CONTEXT.labels,
       priorRunEvidencePolicy: 'R1_R2_R3_R4_HISTORICAL_PROTOCOL_EVIDENCE_ONLY_NEVER_REUSED_OR_REINTERPRETED',
       frozen: {
         models: ['deepseek-v4-flash', 'deepseek-v4-pro'], promptVersion: 'recognition-2.4.1', promptSha256: 'c925f1dc27971e4fcaf7ad185b729f016fa7af966cd7992337d9eaa94c97e6fd',

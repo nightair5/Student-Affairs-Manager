@@ -5,11 +5,11 @@ import { createServer } from 'vite'
 import { canonicalJson, hashBundle, sha256 } from './e2-9-r5-hash.mjs'
 import { assertArtifactRunBindings, assertFourWayModelLineage, assertR5ActivationBinding, assertR5StagePrerequisite, assertRunManifestBinding, assertScoringInputHashes, assertScoringRunComplete, scorableFinalPayload, summarizeProtocolRetries } from './e2-9-r5-integrity.mjs'
 import { assignmentCommitment, deriveSideAssignment, verifyRevealChronology } from './e2-9-r5-path-mask.mjs'
+import { resolveR5RunContext } from './e2-9-r5-run-context.mjs'
 
 const ROOT = process.cwd()
-const DOCS = path.join(ROOT, 'docs', 'e2-v4-pro-benchmark-r5')
-const CACHE = path.join(ROOT, '.evaluation-cache', 'e2-9-r5', 'protocol-3.3.0')
-const PROTOCOL_VERSION = 'e2-9-v4-pro-protocol-3.3.0'
+const CONTEXT = resolveR5RunContext({ root: ROOT })
+const { docs: DOCS, cache: CACHE, protocolVersion: PROTOCOL_VERSION } = CONTEXT
 const MODELS = Object.freeze({ flash: 'deepseek-v4-flash', pro: 'deepseek-v4-pro' })
 
 function ratio(numerator, denominator, empty = 1) { return denominator ? numerator / denominator : empty }
@@ -63,7 +63,7 @@ async function main() {
     readFile(path.join(DOCS, 'run-manifest.json'), 'utf8'), readFile(path.join(CACHE, 'source-only-manifest.json'), 'utf8'),
     readFile(path.join(DOCS, 'screening-manifest.json'), 'utf8'), readFile(path.join(DOCS, 'bundle-hash-manifest.json'), 'utf8'),
     readFile(path.join(DOCS, 'preview-activation.json'), 'utf8'),
-    readFile(path.join(CACHE, 'checkpoints', 'e29r5-screening-20260813-a.json'), 'utf8'),
+    readFile(path.join(CACHE, 'checkpoints', `${CONTEXT.labels.screening}.json`), 'utf8'),
     readFile(path.join(CACHE, 'ledger-screening.json'), 'utf8'),
     readFile(path.join(CACHE, 'adjudication', 'adjudication-packet.json'), 'utf8'),
     readFile(path.join(DOCS, 'adjudication-packet-manifest.json'), 'utf8'),

@@ -4,10 +4,11 @@ import path from 'node:path'
 import { buildPathMaskedPair, assertPathMaskedPacketSafe, PATH_MASK_VERSION, PACKET_SCHEMA_VERSION } from './e2-9-r5-path-mask.mjs'
 import { hashBundle, sha256 } from './e2-9-r5-hash.mjs'
 import { assertCanonicalBinding, assertR5ActivationBinding, assertR5StagePrerequisite, assertRunManifestBinding, completeObservationStatus } from './e2-9-r5-integrity.mjs'
+import { resolveR5RunContext } from './e2-9-r5-run-context.mjs'
 
 const ROOT = process.cwd()
-const DOCS = path.join(ROOT, 'docs', 'e2-v4-pro-benchmark-r5')
-const CACHE = path.join(ROOT, '.evaluation-cache', 'e2-9-r5', 'protocol-3.3.0')
+const CONTEXT = resolveR5RunContext({ root: ROOT })
+const { docs: DOCS, schemaDocs: SCHEMA_DOCS, cache: CACHE } = CONTEXT
 const PACKET = path.join(CACHE, 'adjudication', 'packet-preview.json')
 const MANIFEST = path.join(DOCS, 'packet-preview-manifest.json')
 const secret = process.env.E2_R5_PATH_MASK_REVEAL_SECRET ?? ''
@@ -24,12 +25,12 @@ await Promise.all([mustNotExist(PACKET), mustNotExist(MANIFEST), mustNotExist(pa
 const [runRaw, sourceRaw, checkpointRaw, ledgerRaw, bundleRaw, activationRaw, rubricRaw, schemaRaw] = await Promise.all([
   readFile(path.join(DOCS, 'run-manifest.json'), 'utf8'),
   readFile(path.join(CACHE, 'source-only-manifest.json'), 'utf8'),
-  readFile(path.join(CACHE, 'checkpoints', 'e29r5-screening-20260813-a.json'), 'utf8'),
+  readFile(path.join(CACHE, 'checkpoints', `${CONTEXT.labels.screening}.json`), 'utf8'),
   readFile(path.join(CACHE, 'ledger-screening.json'), 'utf8'),
   readFile(path.join(DOCS, 'bundle-hash-manifest.json'), 'utf8'),
   readFile(path.join(DOCS, 'preview-activation.json'), 'utf8'),
-  readFile(path.join(DOCS, 'adjudication-rubric.json'), 'utf8'),
-  readFile(path.join(DOCS, 'adjudication-packet.schema.json'), 'utf8'),
+  readFile(path.join(SCHEMA_DOCS, 'adjudication-rubric.json'), 'utf8'),
+  readFile(path.join(SCHEMA_DOCS, 'adjudication-packet.schema.json'), 'utf8'),
 ])
 const run = JSON.parse(runRaw)
 const source = JSON.parse(sourceRaw)

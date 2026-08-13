@@ -4,10 +4,10 @@ import path from 'node:path'
 import { assertPathMaskedPacketSafe } from './e2-9-r5-path-mask.mjs'
 import { sha256 } from './e2-9-r5-hash.mjs'
 import { assertR5StagePrerequisite, assertRunManifestBinding } from './e2-9-r5-integrity.mjs'
+import { resolveR5RunContext } from './e2-9-r5-run-context.mjs'
 
 const ROOT = process.cwd()
-const DOCS = path.join(ROOT, 'docs', 'e2-v4-pro-benchmark-r5')
-const CACHE = path.join(ROOT, '.evaluation-cache', 'e2-9-r5', 'protocol-3.3.0')
+const { docs: DOCS, cache: CACHE } = resolveR5RunContext({ root: ROOT })
 const previewPath = path.join(CACHE, 'adjudication', 'packet-preview.json')
 const packetPath = path.join(CACHE, 'adjudication', 'adjudication-packet.json')
 const keyPath = path.join(CACHE, 'private', 'mapping-key.json')

@@ -4,8 +4,9 @@ import path from 'node:path'
 import { assignmentCommitment, deriveSideAssignment, scanPathMaskedPacket, verifyRevealChronology } from './e2-9-r5-path-mask.mjs'
 import { sha256 } from './e2-9-r5-hash.mjs'
 import { assertR5StagePrerequisite, assertRunManifestBinding } from './e2-9-r5-integrity.mjs'
+import { resolveR5RunContext } from './e2-9-r5-run-context.mjs'
 
-const ROOT = process.cwd(), DOCS = path.join(ROOT, 'docs', 'e2-v4-pro-benchmark-r5'), CACHE = path.join(ROOT, '.evaluation-cache', 'e2-9-r5', 'protocol-3.3.0')
+const ROOT = process.cwd(), CONTEXT = resolveR5RunContext({ root: ROOT }), DOCS = CONTEXT.docs, CACHE = CONTEXT.cache
 const secret = process.env.E2_R5_PATH_MASK_REVEAL_SECRET ?? ''
 if (secret.length < 64) throw new Error('PATH_MASK_REVEAL_SECRET_INVALID')
 const keyPath = path.join(CACHE, 'private', 'mapping-key.json')
@@ -13,7 +14,7 @@ try { await readFile(keyPath); throw new Error('MAPPING_KEY_ALREADY_EXISTS') } c
 const [runRaw, packetRaw, packetManifestRaw, labelsRaw, checkpointRaw] = await Promise.all([
   readFile(path.join(DOCS, 'run-manifest.json'), 'utf8'), readFile(path.join(CACHE, 'adjudication', 'adjudication-packet.json'), 'utf8'),
   readFile(path.join(DOCS, 'adjudication-packet-manifest.json'), 'utf8'), readFile(path.join(DOCS, 'path-masked-labels.json'), 'utf8'),
-  readFile(path.join(CACHE, 'checkpoints', 'e29r5-screening-20260813-a.json'), 'utf8'),
+  readFile(path.join(CACHE, 'checkpoints', `${CONTEXT.labels.screening}.json`), 'utf8'),
 ])
 const run = JSON.parse(runRaw), packet = JSON.parse(packetRaw), packetManifest = JSON.parse(packetManifestRaw), labels = JSON.parse(labelsRaw), checkpoint = JSON.parse(checkpointRaw)
 assertRunManifestBinding(run)

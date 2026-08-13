@@ -6,11 +6,11 @@ import path from 'node:path'
 import { canonicalJson, sha256 } from './e2-9-r5-hash.mjs'
 import { verifyEntrypointImportContracts } from './e2-9-r5-entrypoint-preflight.mjs'
 import { assertCanonicalBinding, assertR5ActivationBinding, assertRunManifestBinding, deriveCheckpointGateStatus, R5_COMPLETE_STATUSES } from './e2-9-r5-integrity.mjs'
+import { resolveR5RunContext } from './e2-9-r5-run-context.mjs'
 
 const ROOT = process.cwd()
-const DOCS = path.join(ROOT, 'docs', 'e2-v4-pro-benchmark-r5')
-const CACHE = path.join(ROOT, '.evaluation-cache', 'e2-9-r5', 'protocol-3.3.0')
-const PROTOCOL_VERSION = 'e2-9-v4-pro-protocol-3.3.0'
+const CONTEXT = resolveR5RunContext({ root: ROOT })
+const { docs: DOCS, cache: CACHE, protocolVersion: PROTOCOL_VERSION } = CONTEXT
 const ENDPOINT = 'https://student-affairs-manager-preview.nightsdell.workers.dev/api/experiments/e2-9/r5/benchmark'
 const MODELS = Object.freeze({ flash: 'deepseek-v4-flash', pro: 'deepseek-v4-pro' })
 

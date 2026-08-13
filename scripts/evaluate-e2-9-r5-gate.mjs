@@ -3,15 +3,16 @@ import { readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { canonicalJson, sha256 } from './e2-9-r5-hash.mjs'
 import { assertRunManifestBinding } from './e2-9-r5-integrity.mjs'
+import { resolveR5RunContext } from './e2-9-r5-run-context.mjs'
 
 const ROOT = process.cwd()
-const DOCS = path.join(ROOT, 'docs', 'e2-v4-pro-benchmark-r5')
-const PROTOCOL_VERSION = 'e2-9-v4-pro-protocol-3.3.0'
+const CONTEXT = resolveR5RunContext({ root: ROOT })
+const { docs: DOCS, cache: CACHE, protocolVersion: PROTOCOL_VERSION } = CONTEXT
 
 async function main() {
   const [runRaw, bundleRaw, checkpointRaw, aggregateRaw, reviewRaw] = await Promise.all([
     readFile(path.join(DOCS, 'run-manifest.json'), 'utf8'), readFile(path.join(DOCS, 'bundle-hash-manifest.json'), 'utf8'),
-    readFile(path.join(ROOT, '.evaluation-cache', 'e2-9-r5', 'protocol-3.3.0', 'checkpoints', 'e29r5-screening-20260813-a.json'), 'utf8'),
+    readFile(path.join(CACHE, 'checkpoints', `${CONTEXT.labels.screening}.json`), 'utf8'),
     readFile(path.join(DOCS, 'screening-aggregate.json'), 'utf8'), readFile(path.join(DOCS, 'path-masked-result.json'), 'utf8'),
   ])
   const run = JSON.parse(runRaw)

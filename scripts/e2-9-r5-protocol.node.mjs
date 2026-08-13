@@ -22,6 +22,7 @@ import {
   R5_STAGE_MACHINE,
 } from './e2-9-r5-integrity.mjs'
 import { R5_POST_GENERATION_ENTRYPOINTS, verifyEntrypointImportContracts } from './e2-9-r5-entrypoint-preflight.mjs'
+import { resolveR5RunContext } from './e2-9-r5-run-context.mjs'
 
 test('R5 canonical JSON, text and bundle hashing are reproducible', async () => {
   assert.equal(canonicalJson({ z: 1, a: { y: 2, x: [3, 4] } }), canonicalJson({ a: { x: [3, 4], y: 2 }, z: 1 }))
@@ -91,6 +92,19 @@ test('R5 protocol freeze requires a clean worktree and records the complete stag
     'SCORING_OPEN',
     'COMPLETE',
   ])
+})
+
+test('R5 fresh run namespace isolates public artifacts, cache, labels and observation seed', () => {
+  const root = path.join('C:', 'repo')
+  const prior = resolveR5RunContext({ root, argv: ['node', 'script', '--run=e29r5-20260813-a'] })
+  const fresh = resolveR5RunContext({ root, argv: ['node', 'script', '--run=e29r5-20260813-b'] })
+  assert.notEqual(fresh.runId, prior.runId)
+  assert.notEqual(fresh.runLabel, prior.runLabel)
+  assert.notEqual(fresh.seed, prior.seed)
+  assert.notEqual(fresh.docs, prior.docs)
+  assert.notEqual(fresh.cache, prior.cache)
+  assert.ok(Object.values(fresh.labels).every((label) => label.endsWith('20260813-b')))
+  assert.throws(() => resolveR5RunContext({ root, argv: ['node', 'script', '--run=unknown'] }), /Unsupported R5 run namespace/u)
 })
 
 test('R5 manifest preparation checks cleanliness before freezing commit or artifacts', async () => {

@@ -2,9 +2,10 @@
 import { readFile } from 'node:fs/promises'
 import path from 'node:path'
 import { assertR5ActivationBinding, assertRunManifestBinding } from './e2-9-r5-integrity.mjs'
+import { resolveR5RunContext } from './e2-9-r5-run-context.mjs'
 
 const ROOT = process.cwd()
-const DOCS = path.join(ROOT, 'docs', 'e2-v4-pro-benchmark-r5')
+const { docs: DOCS } = resolveR5RunContext({ root: ROOT })
 const [runRaw, bundleRaw, activationRaw] = await Promise.all([
   readFile(path.join(DOCS, 'run-manifest.json'), 'utf8'),
   readFile(path.join(DOCS, 'bundle-hash-manifest.json'), 'utf8'),
