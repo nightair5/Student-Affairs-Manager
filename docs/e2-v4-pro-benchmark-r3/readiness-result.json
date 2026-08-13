@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "e2.9-r3-readiness-result-3.1.0",
+  "protocolVersion": "e2-9-v4-pro-protocol-3.1.0",
+  "runManifestSha256": "4396344a76d596bfc0eaa649894e0cb7bb6cd494edaf4193dbc40ba723d584da",
+  "activationSha256": "e92c0695ac91ceadce5b8ad0afebe1db82679d3d55ef0932721590c54679c189",
+  "checkpointSha256": "3085b8125aa1e293554d568a53dbf15d2668410fe452b1ea77bb566699e116ca6",
+  "ledgerStateSha256": "4187fa7edf6c1ab6981a9d40bc84d677de2380804d4270fc4d8dc2a18e0cc6aa",
+  "deploymentVersion": "40c0db73-1b12-4948-80c2-76480e19031f",
+  "startedAt": "2026-08-13T07:08:40.578Z",
+  "completedAt": "2026-08-13T07:08:52.132Z",
+  "status": "PASS",
+  "gateStatus": "GENERATION_COMPLETE",
+  "nextLedgerStage": "SMOKE_OPEN",
+  "summary": {
+    "expected": 6,
+    "complete": 6,
+    "flash": "3/3",
+    "pro": "3/3",
+    "protocolRetries": 0,
+    "lineageMismatches": 0,
+    "modelFallbacks": 0
+  },
+  "observations": [
+    { "observationId": "e29r3-39001fd52e715a43cf9b1d1bad44a4a9", "modelAlias": "flash", "status": "complete", "fingerprint": "fp_a18b46594c_prod0820_fp8_kvcache_20260402", "requestId": "ef891fc5-7ebc-4400-997f-70d8b10ac3ca", "durationMs": 1290, "tokens": 49, "rawOutputSha256": "4062edaf750fb8074e7e83e0c9028c94e32468a8b6f1614774328ef045150f93" },
+    { "observationId": "e29r3-14ffbccc4632a860fa4c891ae50fe3cc", "modelAlias": "flash", "status": "complete", "fingerprint": "fp_a18b46594c_prod0820_fp8_kvcache_20260402", "requestId": "0aa257ca-e197-4949-80d9-35c6bee45d44", "durationMs": 1144, "tokens": 49, "rawOutputSha256": "4062edaf750fb8074e7e83e0c9028c94e32468a8b6f1614774328ef045150f93" },
+    { "observationId": "e29r3-0c974a55773d27a8182a890c0c717cff", "modelAlias": "flash", "status": "complete", "fingerprint": "fp_a18b46594c_prod0820_fp8_kvcache_20260402", "requestId": "85e1d588-c64c-4469-827d-ae4d650bfcae", "durationMs": 1255, "tokens": 49, "rawOutputSha256": "4062edaf750fb8074e7e83e0c9028c94e32468a8b6f1614774328ef045150f93" },
+    { "observationId": "e29r3-3760915d4f9ee55229d449e8b0e097b8", "modelAlias": "pro", "status": "complete", "fingerprint": "fp_v4pro_20260812_prod0820_fp8_kvcache_20260402", "requestId": "f424e82d-3123-4b08-a343-a39ec07fe706", "durationMs": 1366, "tokens": 49, "rawOutputSha256": "4062edaf750fb8074e7e83e0c9028c94e32468a8b6f1614774328ef045150f93" },
+    { "observationId": "e29r3-3bd122f5f30841aea2a38505465b4065", "modelAlias": "pro", "status": "complete", "fingerprint": "fp_v4pro_20260812_prod0820_fp8_kvcache_20260402", "requestId": "762c0b96-3d2d-41a8-aa7f-cd07b9d2cef4", "durationMs": 685, "tokens": 49, "rawOutputSha256": "4062edaf750fb8074e7e83e0c9028c94e32468a8b6f1614774328ef045150f93" },
+    { "observationId": "e29r3-b55cdf2a497c7aba03b2fe653cad95ac", "modelAlias": "pro", "status": "complete", "fingerprint": "fp_v4pro_20260812_prod0820_fp8_kvcache_20260402", "requestId": "40449999-9a66-4559-98bb-98aacd1cfc3b", "durationMs": 1345, "tokens": 49, "rawOutputSha256": "4062edaf750fb8074e7e83e0c9028c94e32468a8b6f1614774328ef045150f93" }
+  ]
+}
