@@ -18,6 +18,7 @@ import { RECOGNITION_PIPELINE_VERSION, createDeepSeekProvider, createModelGatewa
 import { runE2V4ProBenchmark } from './e2-v4-pro-benchmark.mjs'
 import { runE2R2Benchmark } from './e2-r2-benchmark.mjs'
 import { runE2R3Benchmark } from './e2-r3-benchmark.mjs'
+import { runE2R4Benchmark } from './e2-r4-benchmark.mjs'
 
 const DEEPSEEK_ENDPOINT = 'https://api.deepseek.com/chat/completions'
 const DEEPSEEK_MODEL = 'deepseek-v4-flash'
@@ -929,6 +930,8 @@ export function createWorker({
         response = await runE2R2Benchmark(request, env, fetcher)
       } else if (url.pathname.startsWith('/api/experiments/e2-9/r3/benchmark/')) {
         response = await runE2R3Benchmark(request, env, fetcher)
+      } else if (url.pathname.startsWith('/api/experiments/e2-9/r4/benchmark/')) {
+        response = await runE2R4Benchmark(request, env, fetcher)
       } else if (url.pathname === '/api/deepseek') {
         if (request.method !== 'POST') {
           context.errorType = 'METHOD_NOT_ALLOWED'
