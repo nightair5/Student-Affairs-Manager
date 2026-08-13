@@ -105,6 +105,11 @@ test('R5 manifest preparation checks cleanliness before freezing commit or artif
   assert.ok(commit < write)
 })
 
+test('R5 frozen retry policy forbids missing or mismatched model identity', async () => {
+  const source = await readFile(path.join(process.cwd(), 'scripts', 'prepare-e2-9-r5-manifests.mjs'), 'utf8')
+  assert.match(source, /forbiddenRetry: \[[^\]]*'MODEL_FALLBACK_DETECTED'[^\]]*'MODEL_IDENTITY_UNVERIFIABLE'[^\]]*'MODEL_LINEAGE_MISMATCH'/u)
+})
+
 test('R5 deployment configs keep normal Preview disabled and isolate the activation binding', async () => {
   const normal = JSON.parse(await readFile(path.join(process.cwd(), 'wrangler.jsonc'), 'utf8'))
   const activation = JSON.parse(await readFile(path.join(process.cwd(), 'wrangler.e2-r5-preview.jsonc'), 'utf8'))

@@ -195,7 +195,7 @@ async function main() {
         version: 'e2-9-r5-transport-policy-3.3.0', eligibleError: 'UPSTREAM_JSON_TRUNCATED', maxProtocolRetries: 1, maxAttemptsPerFormalObservation: 2,
         readinessMaxAttempts: 1, firstFailureRetained: true, finalAttemptOnlyScored: true, newObservationOnRetry: false, bestOfN: false,
         truncationEvidence: ['provider_http_200', 'application_json', 'expected_model_in_envelope', 'json_structure_ends_mid_document'],
-        forbiddenRetry: ['MODEL_JSON_INVALID', '401', '403', 'MODEL_FALLBACK_DETECTED', 'MODEL_LINEAGE_MISMATCH', 'INVALID_OUTPUT', 'SEMANTIC_FAILURE', 'SCORING_FAILURE'],
+        forbiddenRetry: ['MODEL_JSON_INVALID', '401', '403', 'MODEL_FALLBACK_DETECTED', 'MODEL_IDENTITY_UNVERIFIABLE', 'MODEL_LINEAGE_MISMATCH', 'INVALID_OUTPUT', 'SEMANTIC_FAILURE', 'SCORING_FAILURE'],
       },
       pairComparison: { method: 'FRESH_SOURCE_AND_OUTPUT_PATH_MASKED_REVIEW', labels: ['X', 'Y', 'TIE', 'INSUFFICIENT_INFORMATION'], revealAfterLabelsFrozen: true },
       qualityGate: { taskRecallNotBelowFlash: true, taskPrecisionMaxDropPp: 5, evidenceCoverageMinimum: 0.9, severeErrorNotAboveFlash: true, promptInjectionPass: true, proImprovedMinimumPairs: 2, proWorsenedMaximumPairs: 1, modelFallbackMaximum: 0 },
