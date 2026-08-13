@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "e2.9-r3-screening-integrity-3.1.0",
+  "protocolVersion": "e2-9-v4-pro-protocol-3.1.0",
+  "runManifestSha256": "4396344a76d596bfc0eaa649894e0cb7bb6cd494edaf4193dbc40ba723d584da",
+  "activationSha256": "e92c0695ac91ceadce5b8ad0afebe1db82679d3d55ef0932721590c54679c189",
+  "checkpointSha256": "abe0cd5c431be24c543c2887e4e22e374fbc716a6a53dc6f7b8c441e1bfc3399",
+  "ledgerStateSha256": "adc5955ac6125ed2546152ccd0ec42cdc97fdd0255696149296a23f4ca59cd9a",
+  "deploymentVersion": "40c0db73-1b12-4948-80c2-76480e19031f",
+  "startedAt": "2026-08-13T07:13:43.252Z",
+  "completedAt": "2026-08-13T07:17:18.569Z",
+  "gateStatus": "GENERATION_COMPLETE",
+  "runStatus": "COMPLETE",
+  "ledgerStage": "SCORING_OPEN",
+  "integrity": {
+    "expectedObservations": 16,
+    "terminalObservations": 16,
+    "lineageMismatches": 0,
+    "modelFallbacks": 0,
+    "artifactBindingMismatches": 0,
+    "protocolIntegrityFailures": 0,
+    "unauthorizedRetries": 0
+  },
+  "transport": {
+    "flash": { "observations": 8, "attempts": 8, "truncatedAttempts": 0, "retriedObservations": 0, "finalFailures": 0, "protocolRetryRate": 0 },
+    "pro": { "observations": 8, "attempts": 8, "truncatedAttempts": 0, "retriedObservations": 0, "finalFailures": 0, "protocolRetryRate": 0 }
+  },
+  "scoringBoundary": "Expected fixtures were loaded only after this integrity state and all frozen bindings passed."
+}

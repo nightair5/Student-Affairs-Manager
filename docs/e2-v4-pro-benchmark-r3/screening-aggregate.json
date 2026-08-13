@@ -1,0 +1,127 @@
+{
+  "schemaVersion": "e2.9-r3-anonymous-screening-aggregate-3.1.0",
+  "protocolVersion": "e2-9-v4-pro-protocol-3.1.0",
+  "phase": "screening",
+  "runId": "e29r3-run-20260813-a",
+  "runLabel": "e29r3-20260813-a",
+  "runManifestSha256": "4396344a76d596bfc0eaa649894e0cb7bb6cd494edaf4193dbc40ba723d584da",
+  "scoredAfterGenerationAt": "2026-08-13T07:17:45.042Z",
+  "expectedReadBoundary": "Expected fixtures loaded only after all paired outputs, ledger attempts and integrity bindings passed.",
+  "bindings": {
+    "sourceOnlySha256": "c5d1079d0c6143170b4179834cf9601e05d01fa2c8968b15d04ad930527a83d6",
+    "screeningManifestSha256": "6acfd891a7009823e5f7faef9bcbe6ba11a3f9d81372a07fbd00669bf187206b",
+    "bundleManifestSha256": "8b6c902d3cfc5f7bbc5b3338b87c74ea30018773c13290bbad1bb1001d421e13",
+    "runManifestSha256": "4396344a76d596bfc0eaa649894e0cb7bb6cd494edaf4193dbc40ba723d584da",
+    "activationSha256": "e92c0695ac91ceadce5b8ad0afebe1db82679d3d55ef0932721590c54679c189",
+    "checkpointSha256": "abe0cd5c431be24c543c2887e4e22e374fbc716a6a53dc6f7b8c441e1bfc3399",
+    "ledgerSha256": "adc5955ac6125ed2546152ccd0ec42cdc97fdd0255696149296a23f4ca59cd9a",
+    "protocolBundleSha256": "954e48c627f4a584e0678a2da7e4c34591197df52da4ea0bb3d34541b2751067"
+  },
+  "integrity": {
+    "checkedObservationCount": 16,
+    "modelFallbackCount": 0
+  },
+  "arms": {
+    "flash": {
+      "modelAlias": "flash",
+      "modelName": "deepseek-v4-flash",
+      "sampleCount": 8,
+      "strict": {
+        "taskPrecision": 0.9333333333333333,
+        "taskRecall": 0.875,
+        "milestonePrecision": 0.38461538461538464,
+        "milestoneRecall": 0.38461538461538464,
+        "materialPrecision": 0.9166666666666666,
+        "materialRecall": 0.8461538461538461,
+        "timePointTypeAccuracy": 0.8947368421052632,
+        "timePointValueAccuracy": 0.7894736842105263,
+        "eventAccuracy": 1,
+        "ambiguityPrecision": 1,
+        "ambiguityRecall": 0.7142857142857143,
+        "evidenceCoverage": 1,
+        "evidenceValidity": 1,
+        "strictMajorCorrectionRate": 0.75,
+        "severeErrorRate": 0,
+        "planningErrorRate": 0.875,
+        "invalidOutputRate": 0,
+        "promptInjectionPass": true
+      },
+      "finalAttemptLatencyMs": {
+        "mean": 9012.375,
+        "p50": 9311,
+        "p95": 13184
+      },
+      "observedProtocolAttemptLatencyMs": 72099,
+      "tokens": {
+        "input": 19008,
+        "output": 15447,
+        "total": 34455,
+        "meanTotal": 4306.875,
+        "truncatedAttemptTokens": "NOT_OBSERVABLE"
+      },
+      "transport": {
+        "observations": 8,
+        "attempts": 8,
+        "truncatedAttempts": 0,
+        "retriedObservations": 0,
+        "finalFailures": 0,
+        "protocolRetryRate": 0,
+        "observedAttemptLatencyMs": 72099
+      },
+      "semantic": "PENDING_FRESH_PATH_MASKED_REVIEW"
+    },
+    "pro": {
+      "modelAlias": "pro",
+      "modelName": "deepseek-v4-pro",
+      "sampleCount": 8,
+      "strict": {
+        "taskPrecision": 0.9285714285714286,
+        "taskRecall": 0.8125,
+        "milestonePrecision": 0.5833333333333334,
+        "milestoneRecall": 0.5384615384615384,
+        "materialPrecision": 0.9230769230769231,
+        "materialRecall": 0.9230769230769231,
+        "timePointTypeAccuracy": 0.8947368421052632,
+        "timePointValueAccuracy": 0.9473684210526315,
+        "eventAccuracy": 1,
+        "ambiguityPrecision": 1,
+        "ambiguityRecall": 0.7142857142857143,
+        "evidenceCoverage": 1,
+        "evidenceValidity": 1,
+        "strictMajorCorrectionRate": 0.625,
+        "severeErrorRate": 0,
+        "planningErrorRate": 0.75,
+        "invalidOutputRate": 0,
+        "promptInjectionPass": true
+      },
+      "finalAttemptLatencyMs": {
+        "mean": 16190,
+        "p50": 11445,
+        "p95": 25582
+      },
+      "observedProtocolAttemptLatencyMs": 129520,
+      "tokens": {
+        "input": 19008,
+        "output": 14954,
+        "total": 33962,
+        "meanTotal": 4245.25,
+        "truncatedAttemptTokens": "NOT_OBSERVABLE"
+      },
+      "transport": {
+        "observations": 8,
+        "attempts": 8,
+        "truncatedAttempts": 0,
+        "retriedObservations": 0,
+        "finalFailures": 0,
+        "protocolRetryRate": 0,
+        "observedAttemptLatencyMs": 129520
+      },
+      "semantic": "PENDING_FRESH_PATH_MASKED_REVIEW"
+    }
+  },
+  "pairComparison": "PENDING_FRESH_PATH_MASKED_REVIEW",
+  "qualityConclusion": "PENDING_FRESH_PATH_MASKED_REVIEW",
+  "selectionStatus": "NOT_RUN",
+  "candidateFreeze": "NOT_CREATED",
+  "blindStatus": "NOT_CREATED"
+}
