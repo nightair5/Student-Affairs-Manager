@@ -4,6 +4,7 @@ import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
 import os from 'node:os'
 import path from 'node:path'
 import { canonicalJson, sha256 } from './e2-9-r4-hash.mjs'
+import { verifyEntrypointImportContracts } from './e2-9-r4-entrypoint-preflight.mjs'
 import { assertCanonicalBinding, assertRunManifestBinding, deriveCheckpointGateStatus, R4_COMPLETE_STATUSES } from './e2-9-r4-integrity.mjs'
 
 const ROOT = process.cwd()
@@ -211,6 +212,7 @@ async function runPhase(phase, token) {
 
 const phase = option('phase')
 if (!['readiness', 'smoke', 'screening'].includes(phase)) throw new Error('--phase must be readiness, smoke, or screening')
+await verifyEntrypointImportContracts({ root: ROOT })
 const token = process.env.E2_V4_PRO_BENCHMARK_TOKEN ?? ''
 if (token.length < 32) throw new Error('E2_V4_PRO_BENCHMARK_TOKEN is required only in process memory')
 await runPhase(phase, token)

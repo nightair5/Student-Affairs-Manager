@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { mkdtemp, writeFile } from 'node:fs/promises'
+import { mkdtemp, readFile, writeFile } from 'node:fs/promises'
 import os from 'node:os'
 import path from 'node:path'
 import { canonicalJson, canonicalizeFileContent, hashBundle, normalizeLf, sha256 } from './e2-9-r4-hash.mjs'
@@ -13,7 +13,9 @@ import {
   scorableFinalPayload,
   summarizeProtocolRetries,
   assertR4StagePrerequisite,
+  completeObservationStatus,
 } from './e2-9-r4-integrity.mjs'
+import { R4_POST_GENERATION_ENTRYPOINTS, verifyEntrypointImportContracts } from './e2-9-r4-entrypoint-preflight.mjs'
 
 test('R4 canonical JSON, text and bundle hashing are reproducible', async () => {
   assert.equal(canonicalJson({ z: 1, a: { y: 2, x: [3, 4] } }), canonicalJson({ a: { x: [3, 4], y: 2 }, z: 1 }))
@@ -38,8 +40,37 @@ test('R4 run manifest self-binding and artifact bindings fail closed', () => {
 })
 
 test('R4 complete-after-retry is complete but failures cannot complete a checkpoint', () => {
+  assert.equal(completeObservationStatus('complete'), true)
+  assert.equal(completeObservationStatus('complete_after_protocol_retry'), true)
+  assert.equal(completeObservationStatus('transport_integrity_failure'), false)
   assert.equal(deriveCheckpointGateStatus([{ status: 'complete' }, { status: 'complete_after_protocol_retry' }], 2), 'GENERATION_COMPLETE')
   assert.equal(deriveCheckpointGateStatus([{ status: 'complete' }, { status: 'transport_integrity_failure' }], 2), 'INTEGRITY_FAILURE')
+})
+
+test('R4 post-generation entrypoint import contracts resolve before model calls', async () => {
+  const result = await verifyEntrypointImportContracts({ root: process.cwd() })
+  assert.equal(result.status, 'PASS')
+  assert.equal(result.entrypoints, R4_POST_GENERATION_ENTRYPOINTS.length)
+})
+
+test('R4 entrypoint preflight fails closed on a missing named export', async () => {
+  const root = await mkdtemp(path.join(os.tmpdir(), 'e2-9-r4-entrypoint-'))
+  await writeFile(path.join(root, 'dependency.mjs'), 'export const present = true\n', 'utf8')
+  await writeFile(path.join(root, 'entry.mjs'), "import { missing } from './dependency.mjs'\n", 'utf8')
+  await assert.rejects(
+    verifyEntrypointImportContracts({ root, entryFiles: ['entry.mjs'] }),
+    /ENTRYPOINT_IMPORT_MISSING_EXPORT:entry\.mjs:\.\/dependency\.mjs:missing/u,
+  )
+})
+
+test('R4 runner enforces entrypoint preflight before token access and network phase', async () => {
+  const source = await readFile(path.join(process.cwd(), 'scripts', 'run-e2-9-r4.mjs'), 'utf8')
+  const preflight = source.lastIndexOf('await verifyEntrypointImportContracts')
+  const token = source.lastIndexOf("const token = process.env.E2_V4_PRO_BENCHMARK_TOKEN")
+  const networkPhase = source.lastIndexOf('await runPhase(phase, token)')
+  assert.ok(preflight > 0)
+  assert.ok(preflight < token)
+  assert.ok(token < networkPhase)
 })
 
 test('T09 scorer reads only the final protocol result', () => {

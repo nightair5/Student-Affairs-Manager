@@ -118,6 +118,7 @@ async function main() {
         'cloudflare/e2-r4-benchmark.mjs', 'cloudflare/e2-r4-transport-policy.mjs', 'cloudflare/e2-r4-ledger-worker.mjs', 'cloudflare/e2-r4-tests.mjs',
         'wrangler.jsonc', 'wrangler.e2-r4-preview.jsonc', 'wrangler.e2-r4-ledger.jsonc', 'package.json', 'package-lock.json', 'scripts/scan-secrets.mjs',
         'scripts/e2-9-r4-hash.mjs', 'scripts/e2-9-r4-integrity.mjs', 'scripts/e2-9-r4-protocol.node.mjs',
+        'scripts/e2-9-r4-entrypoint-preflight.mjs',
         'scripts/e2-9-r4-path-mask.mjs', 'scripts/e2-9-r4-path-mask.node.mjs',
         'scripts/prepare-e2-9-r4-manifests.mjs', 'scripts/run-e2-9-r4.mjs', 'scripts/score-e2-9-r4.mjs',
         'scripts/prepare-e2-9-r4-packet-preview.mjs', 'scripts/finalize-e2-9-r4-packet.mjs',

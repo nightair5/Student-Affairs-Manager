@@ -2,6 +2,10 @@ import { canonicalJson, sha256 } from './e2-9-r4-hash.mjs'
 
 export const R4_COMPLETE_STATUSES = new Set(['complete', 'complete_after_protocol_retry'])
 
+export function completeObservationStatus(status) {
+  return R4_COMPLETE_STATUSES.has(status)
+}
+
 export function assertR4StagePrerequisite(stage, evidence = {}) {
   if (stage === 'readiness') return true
   if (stage === 'smoke' && evidence.readinessComplete === true) return true
@@ -14,7 +18,7 @@ export function assertR4StagePrerequisite(stage, evidence = {}) {
 }
 
 export function deriveCheckpointGateStatus(observations, expectedCount) {
-  return observations.length === expectedCount && observations.every((item) => R4_COMPLETE_STATUSES.has(item.status))
+  return observations.length === expectedCount && observations.every((item) => completeObservationStatus(item.status))
     ? 'GENERATION_COMPLETE'
     : 'INTEGRITY_FAILURE'
 }

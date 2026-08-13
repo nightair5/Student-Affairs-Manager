@@ -46,6 +46,7 @@
     ,"eval:recognition:e2:r3:reveal": "node scripts/reveal-e2-9-r3-adjudication.mjs"
     ,"eval:recognition:e2:r3:gate": "node scripts/evaluate-e2-9-r3-gate.mjs"
     ,"eval:recognition:e2:r4:prepare": "node scripts/prepare-e2-9-r4-manifests.mjs"
+    ,"eval:recognition:e2:r4:preflight": "node scripts/e2-9-r4-entrypoint-preflight.mjs"
     ,"eval:recognition:e2:r4:run": "node scripts/run-e2-9-r4.mjs"
     ,"eval:recognition:e2:r4:score": "node scripts/score-e2-9-r4.mjs"
     ,"eval:recognition:e2:r4:gate": "node scripts/evaluate-e2-9-r4-gate.mjs"
