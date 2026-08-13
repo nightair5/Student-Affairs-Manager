@@ -1,0 +1,76 @@
+{
+  "schemaVersion": "e2.9-r4-screening-report-1.0.0",
+  "protocolVersion": "e2-9-v4-pro-protocol-3.2.0",
+  "runId": "e29r4-run-20260813-a",
+  "runManifestSha256": "3a0ba146ecd11145e30475cd90f87a5f65c378505a32603badca427b17c52823",
+  "r3Failure": "Path-masked packet exposed result.modelName; R3 quality is NOT_AVAILABLE.",
+  "protocol32": {
+    "pathMaskVersion": "e2-9-r4-path-mask-3.2.0",
+    "explicitAllowlist": true,
+    "recursiveKeyAndValueScanner": true,
+    "performanceSideChannelsRemoved": true,
+    "anonymousCaseIds": true,
+    "delayedMappingReveal": true,
+    "commitmentVersion": "e2-9-r4-assignment-commitment-1.0.0",
+    "chronologyVersion": "e2-9-r4-adjudication-chronology-1.0.0"
+  },
+  "tests": {
+    "pm01ToPm12": "PASS",
+    "syntheticPairs": 100,
+    "syntheticBalance": "PASS",
+    "utcSuite": "PASS",
+    "asiaShanghaiSuite": "PASS",
+    "workerSuite": "PASS",
+    "build": "PASS",
+    "securityScan": "PASS",
+    "npmAuditHigh": "PASS"
+  },
+  "execution": {
+    "readiness": { "observations": 6, "complete": 6, "retry": 0 },
+    "smoke": { "observations": 10, "complete": 10, "retry": 0 },
+    "screening": { "observations": 16, "complete": 16, "retry": 0 },
+    "totalObservations": 32,
+    "totalAttempts": 32,
+    "fallback": 0,
+    "lineageMismatch": 0,
+    "observationOverwrite": 0
+  },
+  "diagnostics": {
+    "flash": { "inputTokens": 31014, "outputTokens": 23836, "totalTokens": 54850, "providerLatencyMs": 115264 },
+    "pro": { "inputTokens": 31014, "outputTokens": 23433, "totalTokens": 54447, "providerLatencyMs": 205173 },
+    "screeningOnly": {
+      "flash": { "totalTokens": 34356, "providerLatencyMs": 72086 },
+      "pro": { "totalTokens": 33729, "providerLatencyMs": 124925 }
+    }
+  },
+  "pathMaskDryRun": {
+    "status": "FAIL",
+    "failure": "MODULE_EXPORT_BINDING_FAILURE",
+    "packetPreviewCreated": false,
+    "leakCount": "NOT_EVALUATED",
+    "freshReviewer": "NOT_RUN"
+  },
+  "strictMetrics": "NOT RUN",
+  "humanAdjudication": "NOT RUN",
+  "pairWinsLosses": "NOT RUN",
+  "modelQualityGate": "NOT RUN",
+  "qualityConclusion": "NOT_AVAILABLE",
+  "securityCleanup": "PASS",
+  "independentAudit": {
+    "verdict": "FAIL",
+    "qualityConclusion": "NOT_AVAILABLE",
+    "reviewIndependence": "same-family",
+    "acceptanceStatus": "provisional",
+    "generatedAt": "2026-08-13T08:53:00.528Z",
+    "report": "EXPERIMENT_AUDIT.md",
+    "reason": "The frozen packet-preview module cannot load, so no masked packet, labels, reveal key, strict scoring, or quality gate exists."
+  },
+  "selectionReadiness": "NOT READY",
+  "selection": "NOT RUN",
+  "blind": "NOT CREATED",
+  "e2Status": "BLOCKED",
+  "e3Status": "NOT READY",
+  "productionStatus": "NOT READY",
+  "finalStatus": "EXPERIMENT BLOCKED",
+  "recommendation": "Benchmark infrastructure needs redesign before further model calls."
+}

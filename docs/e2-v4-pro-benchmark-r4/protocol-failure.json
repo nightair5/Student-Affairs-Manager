@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "e2.9-r4-protocol-failure-1.0.0",
+  "protocolVersion": "e2-9-v4-pro-protocol-3.2.0",
+  "runManifestSha256": "3a0ba146ecd11145e30475cd90f87a5f65c378505a32603badca427b17c52823",
+  "stage": "PATH_MASK_PREVIEW",
+  "error": "MODULE_EXPORT_BINDING_FAILURE",
+  "sanitizedMessage": "prepare-e2-9-r4-packet-preview.mjs imports completeObservationStatus, but the frozen integrity module does not export that symbol.",
+  "packetPreviewCreated": false,
+  "formalPacketCreated": false,
+  "labelsCreated": false,
+  "mappingKeyCreated": false,
+  "expectedLoaded": false,
+  "strictScoringRun": false,
+  "modelCallsAfterFailure": 0,
+  "repairApplied": false,
+  "repairReason": "Changing a file covered by the frozen protocol bundle after generation would invalidate Protocol 3.2.0.",
+  "status": "EXPERIMENT BLOCKED",
+  "recommendation": "Benchmark infrastructure needs redesign before further model calls."
+}

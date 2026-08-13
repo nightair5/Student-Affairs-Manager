@@ -1,0 +1,136 @@
+{
+  "audit_skill": "experiment-audit",
+  "verdict": "FAIL",
+  "reason_code": "frozen_packet_preview_module_export_failure",
+  "summary": "Generation integrity rechecks pass, but the frozen packet-preview entry point cannot load; adjudication and scoring never occurred, so model quality is NOT_AVAILABLE.",
+  "audited_input_hashes": {
+    "docs/e2-v4-pro-benchmark-r4/run-manifest.json": "sha256:96c0a65871aa51afb92147b33caa213ee8424c3d591a300c0e4daf8323ea9fe6",
+    "docs/e2-v4-pro-benchmark-r4/bundle-hash-manifest.json": "sha256:21d2f63828177a425b6ef412c6e7718183e3a535a92dcbda782e19ebda111245",
+    "docs/e2-v4-pro-benchmark-r4/preview-activation.json": "sha256:a3fbf74998b738135c694424aa2d169ba183c8d59f63bb490976554ce04bbe93",
+    "docs/e2-v4-pro-benchmark-r4/readiness-result.json": "sha256:36a084acd624780a2a518fa328e59592588fba4488119fb08d31cec1f35a3d6b",
+    "docs/e2-v4-pro-benchmark-r4/smoke-result.json": "sha256:7bfa4ac371798895b07cb60b239a9db6b2da831f9ca8122267197a922d9832dc",
+    "docs/e2-v4-pro-benchmark-r4/screening-integrity.json": "sha256:4812eeded4ddbd60868a978db39617793e657386da41e8f23318aa5fe83a00a1",
+    "docs/e2-v4-pro-benchmark-r4/protocol-failure.json": "sha256:56c4998012a15eb27ac701a5b1caa53891a76f6951843118bc3939a62523ec96",
+    "docs/e2-v4-pro-benchmark-r4/security-cleanup.json": "sha256:30f58e99108981577ab962d5bf45f858b3ceabf96123f297e4fc9da1f78ef578",
+    "docs/e2-v4-pro-benchmark-r4/SCREENING_REPORT.md": "sha256:1f89de3e24e1835cbc4ece15cbf659214c59011059ae43535d5f694823570b8d",
+    "docs/e2-v4-pro-benchmark-r4/screening-report.json": "sha256:1b910ddad41d5e6a021861beea71ef689a6f8d730c2fc59c7d3f0389bbabeb81",
+    ".evaluation-cache/e2-9-r4/protocol-3.2.0/checkpoints/e29r4-readiness-20260813-a.json": "sha256:2a2cdcb427452f324055fd9d6c74d7b550a9d7b747f4a3791da3f79a986ff747",
+    ".evaluation-cache/e2-9-r4/protocol-3.2.0/checkpoints/e29r4-smoke-20260813-a.json": "sha256:5c011ccd4087d546512209eb751c7649200eb442ae509bb926f6b65c442fffc3",
+    ".evaluation-cache/e2-9-r4/protocol-3.2.0/checkpoints/e29r4-screening-20260813-a.json": "sha256:c8f547b220fef5b87d0903dcc77eaeb825c8b17144fb6d29fe80ce0128d0ebfb",
+    ".evaluation-cache/e2-9-r4/protocol-3.2.0/ledger-screening.json": "sha256:53e33db4c9cba80c1e8c6852891738b7f951221f836aebe2768e45aea24dfee9",
+    "scripts/prepare-e2-9-r4-packet-preview.mjs": "sha256:b407616c5e1d945ebe62c5734139c391c49e9eae7e0ad813d02443796032ca95",
+    "scripts/e2-9-r4-integrity.mjs": "sha256:46db1190f95c959d1e00f2433a23f9e89f6db660892b7cf770de0114a0c11df1"
+  },
+  "binding_checks": {
+    "r3_tag_commit": "73b507e48df999d0a83026c9fc9b623782c769a2",
+    "r3_tag_local_remote_match": true,
+    "r4_merge_base_matches_r3": true,
+    "fresh_run_and_labels": true,
+    "fresh_observation_ids": true,
+    "run_manifest_self_hash": "PASS",
+    "bundle_hashes": "PASS",
+    "source_and_phase_manifest_hashes": "PASS",
+    "summary_hash_transcription": "PASS_AFTER_CORRECTION"
+  },
+  "generation_integrity": {
+    "planned_observations": 32,
+    "recorded_observations": 32,
+    "unique_observation_ids": 32,
+    "total_attempts": 32,
+    "protocol_retries": 0,
+    "observation_overwrites": 0,
+    "fallback": 0,
+    "lineage_mismatch": 0,
+    "response_hash_mismatch": 0,
+    "ledger_stage": "PATH_MASK_PREVIEW_OPEN"
+  },
+  "post_generation_integrity": {
+    "packet_preview": "NOT_CREATED",
+    "formal_packet": "NOT_CREATED",
+    "fresh_path_reviewer": "NOT_RUN",
+    "human_labels": "NOT_CREATED",
+    "mapping_key": "NOT_CREATED",
+    "expected_loaded": false,
+    "strict_scoring": "NOT_RUN",
+    "quality_gate": "NOT_RUN",
+    "quality_conclusion": "NOT_AVAILABLE"
+  },
+  "preview_cleanup": {
+    "live_checked_at": "2026-08-13T08:53:00.528Z",
+    "endpoint_http_status": 404,
+    "remaining_secret_names": ["DEEPSEEK_API_KEY"],
+    "temporary_bearer_present": false,
+    "production_latest_deployment": "3b6d6ba2-e21f-495c-80e4-c4bac62366be",
+    "production_changed_by_r4": false
+  },
+  "temporary_bearer_incident": {
+    "invalid_version_created_at": "2026-08-13T08:30:52.278Z",
+    "code_deployed_at": "2026-08-13T08:31:10.233Z",
+    "csprng_replacement_at": "2026-08-13T08:31:31.066Z",
+    "post_code_exposure_window_seconds": 20.833,
+    "readiness_started_at": "2026-08-13T08:32:55.843Z",
+    "invalid_bearer_call_count": 0,
+    "recorded_run_impact": "NONE_FOUND",
+    "remaining_risk": "Deployment-order exposure window; enable only after a cryptographic bearer is provisioned and verified."
+  },
+  "trace_path": "NOT_CREATED_SCOPE_RESTRICTED",
+  "agent_id": "/root/r4_fresh_integrity_audit",
+  "verdict_id": "r4-fresh-audit-20260813T085300Z",
+  "executor_model": "codex-current",
+  "executor_family": "openai",
+  "reviewer_model": "codex-current",
+  "reviewer_family": "openai",
+  "reviewer_reasoning": "inherited",
+  "review_independence": "same-family",
+  "acceptance_status": "provisional",
+  "generated_at": "2026-08-13T08:53:00.528Z",
+  "date": "2026-08-13",
+  "auditor": "fresh-codex-same-family-read-only",
+  "overall_verdict": "fail",
+  "integrity_status": "fail",
+  "checks": {
+    "gt_provenance": {
+      "status": "pass",
+      "details": "Frozen repository fixtures are loaded only after all generation and adjudication bindings; scoring was not reached."
+    },
+    "score_normalization": {
+      "status": "pass",
+      "details": "No self-max normalization found; scoring was not executed."
+    },
+    "result_existence": {
+      "status": "fail",
+      "details": "Generation diagnostics exist and match, but packet, labels, reveal and quality results do not exist."
+    },
+    "dead_code": {
+      "status": "fail",
+      "details": "Frozen packet-preview entry point cannot instantiate, making adjudication and scoring unreachable for this run."
+    },
+    "scope": {
+      "status": "pass",
+      "details": "Claims remain bounded to 32 observations and explicitly exclude Selection, Blind, E3/E4 and Production readiness."
+    },
+    "eval_type": "planned_real_gt_but_generation_only_incomplete"
+  },
+  "claims": [
+    {
+      "id": "C1_generation_integrity",
+      "impact": "supported"
+    },
+    {
+      "id": "C2_performance_diagnostics",
+      "impact": "supported"
+    },
+    {
+      "id": "C3_model_quality_comparison",
+      "impact": "unsupported"
+    },
+    {
+      "id": "C4_preview_cleanup_and_production_unchanged",
+      "impact": "supported"
+    }
+  ],
+  "final_status": "EXPERIMENT BLOCKED",
+  "selection": "NOT_RUN",
+  "blind": "NOT_CREATED",
+  "recommendation": "Benchmark infrastructure needs redesign before further model calls; do not start R5 automatically."
+}
