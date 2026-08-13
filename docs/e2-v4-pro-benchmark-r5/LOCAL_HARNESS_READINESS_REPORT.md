@@ -7,9 +7,9 @@ Status: `PROTOCOL 3.3.0 MANIFESTS FROZEN — PREVIEW NOT ACTIVATED`
 
 ## Scope and conclusion
 
-The R5 local Harness scaffold is implemented and passes local engineering checks. This is not a model-quality result, a Preview activation, or permission to run Readiness, Smoke, Screening, Selection, or Blind.
+The R5 local Harness scaffold is implemented, frozen, and passes local engineering checks. The isolated R5 Ledger and a disabled-code Preview baseline are deployed, but the R5 experiment is not activated. This is not a model-quality result or permission to run Readiness, Smoke, Screening, Selection, or Blind.
 
-No DeepSeek request was made. No Cloudflare deployment was performed. Production and the normal Preview configuration keep the R5 endpoint disabled.
+No DeepSeek request was made. Production and the normal Preview configuration keep the R5 endpoint disabled.
 
 ## Implemented controls
 
@@ -57,6 +57,11 @@ No DeepSeek request was made. No Cloudflare deployment was performed. Production
 - Frozen run-manifest SHA-256: `590373a478a266df0440c9005b58718686d8dc3c47ad677d24e66ced82a5a8ab`.
 - Frozen protocol/deployment bundle SHA-256: `d6b4729b4a80582363cd112d2143d24a347d96dc635e8dca7ac4400b2b7c0b1b`.
 - Independent local recomputation passed every manifest, bundle, cardinality, pairing, semantic-role, retry-policy, and Selection-stop check.
+- Isolated R5 Ledger upload: `df36beb2-f825-47a1-ad49-df588a2960b7`, created `2026-08-13T13:38:11.354Z`.
+- Disabled-code normal Preview deployment: `272d4970-8355-494a-ae30-76c338586b5c`, created `2026-08-13T13:38:53.424Z`.
+- Live R5 endpoint probe returned JSON HTTP 404 with `E2_R5_BENCHMARK_ENABLED=false`.
+- Preview Secret inventory contains only `DEEPSEEK_API_KEY`; no `E2_R5_BENCHMARK_TOKEN` exists.
+- Production latest deployment remains `3b6d6ba2-e21f-495c-80e4-c4bac62366be`, created `2026-08-08T08:55:39.744Z`; Production was not deployed.
 - No Preview activation record exists.
 - No Cloudflare Secret was created or changed.
 - No Readiness, Smoke, or Screening observation exists for R5.
@@ -66,7 +71,6 @@ No DeepSeek request was made. No Cloudflare deployment was performed. Production
 
 ## Next gated actions
 
-1. Commit and push the frozen public manifests and updated readiness report; keep the source-only input manifest in Git-ignored cache.
-2. Re-run local checks against the committed frozen bundle.
-3. Only after explicit model-run authorization: deploy the isolated R5 Preview and ledger, configure a fresh temporary `E2_R5_BENCHMARK_TOKEN` Secret, create and verify the activation record, and run Readiness.
-4. Smoke may run only after Readiness passes; Screening may run only after Smoke passes. Stop after the Screening report. Selection and Blind remain unauthorized.
+1. Commit and push this disabled-code deployment evidence.
+2. Only after explicit model-run authorization: configure a fresh temporary `E2_R5_BENCHMARK_TOKEN` Secret, deploy the isolated R5 activation config, create and verify the four-step activation record, and run six Readiness probes.
+3. Smoke may run only after Readiness passes; Screening may run only after Smoke passes. Stop after the Screening report. Selection and Blind remain unauthorized.
