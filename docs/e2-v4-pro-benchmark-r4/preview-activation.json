@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "e2.9-r4-preview-activation-3.2.0",
+  "protocolVersion": "e2-9-v4-pro-protocol-3.2.0",
+  "runManifestSha256": "3a0ba146ecd11145e30475cd90f87a5f65c378505a32603badca427b17c52823",
+  "protocolBundleSha256": "b0a54dab7f0cb0e989e9771fc5fdd99ba8aa1a486f38dd26d55ac061e741f3da",
+  "previewOrigin": "https://student-affairs-manager-preview.nightsdell.workers.dev",
+  "ledgerDeploymentVersion": "1df669fa-b4d1-40fd-90d6-94f8081d0d38",
+  "codeDeploymentVersion": "42bd2896-37a3-4838-a57e-128c0c841e1c",
+  "mainDeploymentVersion": "867d0842-c51a-4ec0-8de4-b8a8bc1101eb",
+  "deploymentChain": [
+    {
+      "version": "1df669fa-b4d1-40fd-90d6-94f8081d0d38",
+      "kind": "R4_LEDGER_UPLOAD",
+      "createdAt": "2026-08-13T08:30:24.215Z"
+    },
+    {
+      "version": "7ab91ff4-b930-4265-8a6f-324beb51c9bf",
+      "kind": "TEMP_BEARER_INITIALIZATION_INVALID_AND_UNUSED",
+      "createdAt": "2026-08-13T08:30:52.278Z"
+    },
+    {
+      "version": "42bd2896-37a3-4838-a57e-128c0c841e1c",
+      "kind": "R4_PREVIEW_CODE_DEPLOYMENT",
+      "createdAt": "2026-08-13T08:31:10.233Z"
+    },
+    {
+      "version": "867d0842-c51a-4ec0-8de4-b8a8bc1101eb",
+      "kind": "CRYPTOGRAPHIC_TEMP_BEARER_REPAIR_ACTIVE",
+      "createdAt": "2026-08-13T08:31:31.066Z"
+    }
+  ],
+  "invalidTemporarySecretCallCount": 0,
+  "featureFlag": true,
+  "productionFeatureFlag": false,
+  "productionLatestDeploymentBeforeRun": "3b6d6ba2-e21f-495c-80e4-c4bac62366be",
+  "productionLatestDeploymentCreatedAt": "2026-08-08T08:55:40.370Z",
+  "secretPolicy": "Temporary bearer exists only in Cloudflare Secret storage and the live runner process. No secret value is recorded.",
+  "status": "READINESS_AUTHORIZED"
+}
