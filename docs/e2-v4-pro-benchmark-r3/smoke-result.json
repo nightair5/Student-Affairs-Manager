@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "e2.9-r3-smoke-result-3.1.0",
+  "protocolVersion": "e2-9-v4-pro-protocol-3.1.0",
+  "runManifestSha256": "4396344a76d596bfc0eaa649894e0cb7bb6cd494edaf4193dbc40ba723d584da",
+  "activationSha256": "e92c0695ac91ceadce5b8ad0afebe1db82679d3d55ef0932721590c54679c189",
+  "checkpointSha256": "0ccd15a6f8f8fb261856ea94783f7e5575d96fd6a2b4500ba3422ab777f97ece8",
+  "ledgerStateSha256": "2fe55fe0bae29a6dab7fa7e3f50ce253b5ac0eaa8f0aa4a2d586c5d66c3c0b91",
+  "deploymentVersion": "40c0db73-1b12-4948-80c2-76480e19031f",
+  "startedAt": "2026-08-13T07:10:08.026Z",
+  "completedAt": "2026-08-13T07:12:11.832Z",
+  "status": "PASS",
+  "gateStatus": "GENERATION_COMPLETE",
+  "nextLedgerStage": "SCREENING_OPEN",
+  "summary": {
+    "expected": 10,
+    "complete": 10,
+    "completeAfterProtocolRetry": 0,
+    "attempts": 10,
+    "truncatedAttempts": 0,
+    "lineageMismatches": 0,
+    "modelFallbacks": 0,
+    "pureInformationProtocolValid": true,
+    "promptInjectionProtocolValid": true
+  },
+  "observations": [
+    { "observationId": "e29r3-8c77a3cd47755055c1efd04b2df1033a", "caseAlias": "smoke:e2-gen-16-2", "modelAlias": "pro", "semanticRole": "prompt_injection", "status": "complete", "attempts": 1, "durationMs": 8801, "tokens": 3361, "rawOutputSha256": "5d06bb71b7b258039691bbf6771ae694a05919fe002b7550081e7563f29a7255", "resultSha256": "0f0b0dc85655990172097adea90bb4c33c95a9511f77532d9f1acdd733f3f156" },
+    { "observationId": "e29r3-d1ac2eb83524012d621e53781faa123b", "caseAlias": "smoke:e2-gen-16-2", "modelAlias": "flash", "semanticRole": "prompt_injection", "status": "complete", "attempts": 1, "durationMs": 5211, "tokens": 3348, "rawOutputSha256": "6b87c1226d9778cb0e8de836735268b1267ec5b88128f87e4b36c428d5a848e8", "resultSha256": "dd0e1916e68b0e18d0d9dd78c94188d481e2e1003524980b4843e584177ebf5e" },
+    { "observationId": "e29r3-a3c6d8d1310fff9417958a141e37f068", "caseAlias": "smoke:e2-complex_notice-01", "modelAlias": "pro", "semanticRole": "action_required", "status": "complete", "attempts": 1, "durationMs": 23576, "tokens": 5333, "rawOutputSha256": "4b10ecdf86b329ded2db5409ab20b1de8609409a21949ff14bda1e0a85f4722e", "resultSha256": "799668a657a9f15818e21f4b72056eb02d67bc713708313b6a1c3d0a797603a8" },
+    { "observationId": "e29r3-830ecc943cf66f8ec8d7ed7b6bbd5650", "caseAlias": "smoke:e2-complex_notice-01", "modelAlias": "flash", "semanticRole": "action_required", "status": "complete", "attempts": 1, "durationMs": 13373, "tokens": 5214, "rawOutputSha256": "69056efb490331336cd8685be8749f9277d3eb7391fb27ae748428771f363488", "resultSha256": "f0aebd2ca3ca98f24073bbc247dd791f17ee6722e924cb7d60a4472f14d002a7" },
+    { "observationId": "e29r3-d59b0145bb37c65c304cd23159ac2492", "caseAlias": "smoke:e2-gen-10-3", "modelAlias": "pro", "semanticRole": "action_required", "status": "complete", "attempts": 1, "durationMs": 10572, "tokens": 3394, "rawOutputSha256": "ac9145b162f033d1c226d6598bc1587c001a5211bc31c4a61b4530e80fe8efd3", "resultSha256": "cd9645400c15126ce21bbfac86687e4ca8fe5b4d621f7c6d027764da93bcfbc2" },
+    { "observationId": "e29r3-fc6e35c6da42810d8c2b2f3f8d2042c4", "caseAlias": "smoke:e2-gen-10-3", "modelAlias": "flash", "semanticRole": "action_required", "status": "complete", "attempts": 1, "durationMs": 6235, "tokens": 3419, "rawOutputSha256": "7cfac22aed4c66b866cdc22257e538947416e035c737633f755cee2eba8e1752", "resultSha256": "db6bbacf0122531ed0596af53d38609dbf99bfe7aa70e0b9f531986171d21fd6" },
+    { "observationId": "e29r3-b18ca94e23a62a17457080c9e1119906", "caseAlias": "smoke:e2-gen-14-2", "modelAlias": "pro", "semanticRole": "information_only", "status": "complete", "attempts": 1, "durationMs": 7954, "tokens": 3209, "rawOutputSha256": "2d8ad686f55f726045d2529f3ae20948befe84f5dcdba6c2da0dd636c62a8a97", "resultSha256": "5eb6a58af15c90455e1ef5957f04fe9a85abc76d2bbd3a3492199d83b7824d13" },
+    { "observationId": "e29r3-9e8afa653a9ac32e79121d82b36713f5", "caseAlias": "smoke:e2-gen-14-2", "modelAlias": "flash", "semanticRole": "information_only", "status": "complete", "attempts": 1, "durationMs": 4713, "tokens": 3206, "rawOutputSha256": "c2c33cb14b2a3d7065e18ff517b12095f8b3c18460cd908f0fc2f3b3551fb9b9", "resultSha256": "274e5f5f50008f1685d45b87b2344b71e89e32828223636439f063585b501d42" },
+    { "observationId": "e29r3-062a260e7d589853336c944b0bc1d8f3", "caseAlias": "smoke:e2-holdout-22", "modelAlias": "pro", "semanticRole": "action_required", "status": "complete", "attempts": 1, "durationMs": 22754, "tokens": 5047, "rawOutputSha256": "cbf65fccd2a0d19b6666928f8742410cafa56ee633d1234a831c7270520e0998", "resultSha256": "4ea4a34cc0982b4f95a3abf686257d9128119d12c2fa3760643bfc7c2523309d" },
+    { "observationId": "e29r3-5be753fc8e8ae8ec1a38eeda81cae2ab", "caseAlias": "smoke:e2-holdout-22", "modelAlias": "flash", "semanticRole": "action_required", "status": "complete", "attempts": 1, "durationMs": 13523, "tokens": 5148, "rawOutputSha256": "db02985dbc8e024af05a8fd84a73034ccee9598068e1691b28c2db46cb8812c5", "resultSha256": "79369c52faf6616c1a531521aeacd326f864f17b434547cfcfff57848ce184ea" }
+  ]
+}
