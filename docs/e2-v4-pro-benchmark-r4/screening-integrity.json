@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "e2.9-r4-screening-integrity-3.2.0",
+  "protocolVersion": "e2-9-v4-pro-protocol-3.2.0",
+  "runManifestSha256": "3a0ba146ecd11145e30475cd90f87a5f65c378505a32603badca427b17c52823",
+  "checkpointSha256": "c8f547b220fef5b87d0903dcc77eaeb825c8b17144fb6d29fe80ce01228d0ebfb",
+  "ledgerSha256": "53e33db4c9cba80c1e8c6852891738b7f951221f836aebe2768e45aea24dffee9",
+  "deploymentVersion": "867d0842-c51a-4ec0-8de4-b8a8bc1101eb",
+  "startedAt": "2026-08-13T08:37:21.116Z",
+  "completedAt": "2026-08-13T08:40:48.451Z",
+  "observations": 16,
+  "uniqueObservationIds": 16,
+  "complete": 16,
+  "protocolRetries": 0,
+  "lineageMismatch": 0,
+  "fallback": 0,
+  "integrityFailure": 0,
+  "flash": {
+    "observations": 8,
+    "inputTokens": 19008,
+    "outputTokens": 15348,
+    "totalTokens": 34356,
+    "providerLatencyMs": 72086
+  },
+  "pro": {
+    "observations": 8,
+    "inputTokens": 19008,
+    "outputTokens": 14721,
+    "totalTokens": 33729,
+    "providerLatencyMs": 124925
+  },
+  "gateStatus": "GENERATION_COMPLETE",
+  "ledgerStage": "PATH_MASK_PREVIEW_OPEN",
+  "modelCallsStopped": true,
+  "selection": "NOT_RUN",
+  "blind": "NOT_CREATED"
+}
