@@ -1,0 +1,427 @@
+{
+  "schemaVersion": "e2.9-r5-bundle-manifest-3.3.0",
+  "protocolVersion": "e2-9-v4-pro-protocol-3.3.0",
+  "pathRule": "Repository-relative forward-slash paths sorted lexicographically.",
+  "textRule": "CRLF and CR canonicalized to LF; JSON parsed and recursively key-sorted.",
+  "framingRule": "UTF-8 byte length framed path and content joined by the frozen R5 separator.",
+  "algorithm": "SHA-256",
+  "coverage": "Worker route/security, frozen provider adapter, complete R2-R5 benchmark/transport/ledger chain, immutable ledger, Preview flags/bindings, deployment configs, runner, scorer, tests, package lock and secret scanner.",
+  "bundles": {
+    "schema": {
+      "contractVersion": "e2-9-r5-bundle-hash-3.3.0",
+      "separator": "\n--E2-9-R5-BUNDLE-ENTRY--\n",
+      "inputFiles": [
+        "src/recognition/schema.ts",
+        "src/recognition/types.ts"
+      ],
+      "entries": [
+        {
+          "path": "src/recognition/schema.ts",
+          "canonicalSha256": "be47cef4e3a1ebf075869521245a8453c104d89a28fa45f0117e564d2430b1b6",
+          "canonicalByteLength": 10024
+        },
+        {
+          "path": "src/recognition/types.ts",
+          "canonicalSha256": "c15dfe32bc5bc7a300f94f3a1aa1df9d14e7bb30a070d2f2fc5e5359facd22c3",
+          "canonicalByteLength": 4588
+        }
+      ],
+      "sha256": "bb78d92662e5039668f0f739074c83402500cda6170aa231b30ae26b6e58857f",
+      "canonicalByteLength": 14706
+    },
+    "promptAndPipeline": {
+      "contractVersion": "e2-9-r5-bundle-hash-3.3.0",
+      "separator": "\n--E2-9-R5-BUNDLE-ENTRY--\n",
+      "inputFiles": [
+        "cloudflare/model-gateway.mjs",
+        "cloudflare/recognition-prompt.mjs",
+        "cloudflare/recognition-quality.mjs",
+        "cloudflare/recognition.mjs"
+      ],
+      "entries": [
+        {
+          "path": "cloudflare/model-gateway.mjs",
+          "canonicalSha256": "335406e6f789aee5a209b36d165441ce976c8de17d5d2c634d7a523c17c47765",
+          "canonicalByteLength": 5250
+        },
+        {
+          "path": "cloudflare/recognition-prompt.mjs",
+          "canonicalSha256": "c925f1dc27971e4fcaf7ad185b729f016fa7af966cd7992337d9eaa94c97e6fd",
+          "canonicalByteLength": 10474
+        },
+        {
+          "path": "cloudflare/recognition-quality.mjs",
+          "canonicalSha256": "d03437cf8fe11ef23e78a431fefeb451de2a87c6e47118b1a822016562a11e29",
+          "canonicalByteLength": 11060
+        },
+        {
+          "path": "cloudflare/recognition.mjs",
+          "canonicalSha256": "3f507412647824f0f586053365d975771c0d90c5e17af27403bdf39dfdb7132a",
+          "canonicalByteLength": 23805
+        }
+      ],
+      "sha256": "b23ea83ab214e3f0c74a7fcfb8f7806f512cb86f2130ab3ca185fbdee3e48be8",
+      "canonicalByteLength": 50827
+    },
+    "scorerSemantics": {
+      "contractVersion": "e2-9-r5-bundle-hash-3.3.0",
+      "separator": "\n--E2-9-R5-BUNDLE-ENTRY--\n",
+      "inputFiles": [
+        "docs/e2-path-a-planning/evaluation-contract.json",
+        "src/recognition/e2/scoring.ts",
+        "src/recognition/e2/semanticEquivalence.ts"
+      ],
+      "entries": [
+        {
+          "path": "docs/e2-path-a-planning/evaluation-contract.json",
+          "canonicalSha256": "4a847a9b294ab84565c323539ec6746f60c72d48663f3846aadf90744e05f108",
+          "canonicalByteLength": 1960
+        },
+        {
+          "path": "src/recognition/e2/scoring.ts",
+          "canonicalSha256": "031c029580d50308e4f108dfa9d50be0929b98f45ccef903c17761bf587f7a85",
+          "canonicalByteLength": 26224
+        },
+        {
+          "path": "src/recognition/e2/semanticEquivalence.ts",
+          "canonicalSha256": "45a57048c7a6e0f6935219c0b1cd48717c92e6e3fd394f1460e69deee5c5f0a0",
+          "canonicalByteLength": 7717
+        }
+      ],
+      "sha256": "b548468400d0a8917215caa6e4040402cde1d80873f821cf569bbaed1c78a56a",
+      "canonicalByteLength": 36099
+    },
+    "datasets": {
+      "contractVersion": "e2-9-r5-bundle-hash-3.3.0",
+      "separator": "\n--E2-9-R5-BUNDLE-ENTRY--\n",
+      "inputFiles": [
+        "src/recognition/e2/generalizationDataset.ts",
+        "src/recognition/e2/goldenDataset.ts",
+        "src/recognition/e2/holdoutDataset.ts"
+      ],
+      "entries": [
+        {
+          "path": "src/recognition/e2/generalizationDataset.ts",
+          "canonicalSha256": "6919cd89e81521beaf993ebcd8b23a752c01bbc0f5aa4559e29ff25e0c5b2659",
+          "canonicalByteLength": 36667
+        },
+        {
+          "path": "src/recognition/e2/goldenDataset.ts",
+          "canonicalSha256": "e6bf49d61e6e489bafea78e12ead6079d992c51211fe66c490d3fd87a2a0cd63",
+          "canonicalByteLength": 41351
+        },
+        {
+          "path": "src/recognition/e2/holdoutDataset.ts",
+          "canonicalSha256": "e5719bce8f70eaecc7743e98f3816f7ce543ca57f5e3cc0c2aab5c987c6181e3",
+          "canonicalByteLength": 27728
+        }
+      ],
+      "sha256": "acc4c4784eb1c80263bd64625cef98c2bbc25f09448069d5629c8df3292e086b",
+      "canonicalByteLength": 105942
+    },
+    "protocolAndDeployment": {
+      "contractVersion": "e2-9-r5-bundle-hash-3.3.0",
+      "separator": "\n--E2-9-R5-BUNDLE-ENTRY--\n",
+      "inputFiles": [
+        "cloudflare/e2-r2-benchmark.mjs",
+        "cloudflare/e2-r2-ledger-worker.mjs",
+        "cloudflare/e2-r2-tests.mjs",
+        "cloudflare/e2-r3-benchmark.mjs",
+        "cloudflare/e2-r3-ledger-worker.mjs",
+        "cloudflare/e2-r3-tests.mjs",
+        "cloudflare/e2-r3-transport-policy.mjs",
+        "cloudflare/e2-r4-benchmark.mjs",
+        "cloudflare/e2-r4-ledger-worker.mjs",
+        "cloudflare/e2-r4-tests.mjs",
+        "cloudflare/e2-r4-transport-policy.mjs",
+        "cloudflare/e2-r5-benchmark.mjs",
+        "cloudflare/e2-r5-ledger-worker.mjs",
+        "cloudflare/e2-r5-tests.mjs",
+        "cloudflare/e2-r5-transport-policy.mjs",
+        "cloudflare/e2-v4-pro-benchmark.mjs",
+        "cloudflare/worker-tests.mjs",
+        "cloudflare/worker.mjs",
+        "docs/e2-v4-pro-benchmark-r5/EXPERIMENT_PLAN.md",
+        "docs/e2-v4-pro-benchmark-r5/adjudication-packet.schema.json",
+        "docs/e2-v4-pro-benchmark-r5/adjudication-rubric.json",
+        "docs/e2-v4-pro-benchmark-r5/path-mask-dry-review.schema.json",
+        "docs/e2-v4-pro-benchmark-r5/path-masked-labels.schema.json",
+        "docs/e2-v4-pro-benchmark-r5/preview-activation.schema.json",
+        "package-lock.json",
+        "package.json",
+        "scripts/e2-9-r5-entrypoint-preflight.mjs",
+        "scripts/e2-9-r5-hash.mjs",
+        "scripts/e2-9-r5-integrity.mjs",
+        "scripts/e2-9-r5-path-mask.mjs",
+        "scripts/e2-9-r5-path-mask.node.mjs",
+        "scripts/e2-9-r5-protocol.node.mjs",
+        "scripts/evaluate-e2-9-r5-gate.mjs",
+        "scripts/finalize-e2-9-r5-packet.mjs",
+        "scripts/prepare-e2-9-r5-manifests.mjs",
+        "scripts/prepare-e2-9-r5-packet-preview.mjs",
+        "scripts/reveal-e2-9-r5-adjudication.mjs",
+        "scripts/run-e2-9-r5.mjs",
+        "scripts/scan-secrets.mjs",
+        "scripts/score-e2-9-r5.mjs",
+        "scripts/verify-e2-9-r5-activation.mjs",
+        "wrangler.e2-r2-ledger.jsonc",
+        "wrangler.e2-r3-ledger.jsonc",
+        "wrangler.e2-r3-preview.jsonc",
+        "wrangler.e2-r4-ledger.jsonc",
+        "wrangler.e2-r4-preview.jsonc",
+        "wrangler.e2-r5-ledger.jsonc",
+        "wrangler.e2-r5-preview.jsonc",
+        "wrangler.jsonc"
+      ],
+      "entries": [
+        {
+          "path": "cloudflare/e2-r2-benchmark.mjs",
+          "canonicalSha256": "8a74b1d8d19af684f5ab98190fc9c96037f2fa2294bd1a2eb76350ef1b86308d",
+          "canonicalByteLength": 13723
+        },
+        {
+          "path": "cloudflare/e2-r2-ledger-worker.mjs",
+          "canonicalSha256": "c53685bbe1493b9f76ccf8f98e380066610129880c1f42b3430aa7661f719a22",
+          "canonicalByteLength": 7277
+        },
+        {
+          "path": "cloudflare/e2-r2-tests.mjs",
+          "canonicalSha256": "88ba791eb2503a046440e32d0f050f7a149ba874ac713ca448968586c6442772",
+          "canonicalByteLength": 15156
+        },
+        {
+          "path": "cloudflare/e2-r3-benchmark.mjs",
+          "canonicalSha256": "0ca14a2023e31e3bf86515e998f8c0ed099f1f770d0d1f84d488e954434c84fc",
+          "canonicalByteLength": 16524
+        },
+        {
+          "path": "cloudflare/e2-r3-ledger-worker.mjs",
+          "canonicalSha256": "4e5eed89071ff76c3e03f65cce0bf18f81bc783b6c65224a4668b55c296e9f9d",
+          "canonicalByteLength": 10166
+        },
+        {
+          "path": "cloudflare/e2-r3-tests.mjs",
+          "canonicalSha256": "e87f41f249fa4f1c40ad2216a8bcd121face608fcb2bcea4bbe2e413e7a5e318",
+          "canonicalByteLength": 15941
+        },
+        {
+          "path": "cloudflare/e2-r3-transport-policy.mjs",
+          "canonicalSha256": "01d6c85b7c81c4e49bd641a07bafe7313fd8096ac7895244668c8c14c3c5b9d3",
+          "canonicalByteLength": 4471
+        },
+        {
+          "path": "cloudflare/e2-r4-benchmark.mjs",
+          "canonicalSha256": "9a6115dce60a505eb0e4833b88a9661f927f219ef6695db45d1a88a26304b74f",
+          "canonicalByteLength": 16524
+        },
+        {
+          "path": "cloudflare/e2-r4-ledger-worker.mjs",
+          "canonicalSha256": "d0873587d0cd0b66c68b64aae327c236e1ad66b3f2ae1eb35bbd15b702da07f8",
+          "canonicalByteLength": 10176
+        },
+        {
+          "path": "cloudflare/e2-r4-tests.mjs",
+          "canonicalSha256": "e1751168b2158ab6e3f8721ce218cc6e711e048682b37900822589ea329b829b",
+          "canonicalByteLength": 15941
+        },
+        {
+          "path": "cloudflare/e2-r4-transport-policy.mjs",
+          "canonicalSha256": "38382273e70a23c4d16c402b4711545e44bf8eeee2ed336949d4aac7dab5efaa",
+          "canonicalByteLength": 4471
+        },
+        {
+          "path": "cloudflare/e2-r5-benchmark.mjs",
+          "canonicalSha256": "c267504b65d9147207631f0567f0ad0f573ad5ccf747f64b3c019cbb3ed00961",
+          "canonicalByteLength": 18242
+        },
+        {
+          "path": "cloudflare/e2-r5-ledger-worker.mjs",
+          "canonicalSha256": "3024baefa87b20f5f52e0db604c9b23a6928889cfe29eb83a3d434203bc16f40",
+          "canonicalByteLength": 14673
+        },
+        {
+          "path": "cloudflare/e2-r5-tests.mjs",
+          "canonicalSha256": "cfd0bf8feafdfee8a38860465d335692d398374caa2c83ec86820756e83d28c7",
+          "canonicalByteLength": 23018
+        },
+        {
+          "path": "cloudflare/e2-r5-transport-policy.mjs",
+          "canonicalSha256": "4299b7b8f0af5bd8dd8c1c48dabae8e548b0b72150a12bbd5d295e486b4c0e45",
+          "canonicalByteLength": 4838
+        },
+        {
+          "path": "cloudflare/e2-v4-pro-benchmark.mjs",
+          "canonicalSha256": "d6acfd695c83909a0ecc88d9f03cbbbec0b394ec4bf380781e4876c128e20b6e",
+          "canonicalByteLength": 17768
+        },
+        {
+          "path": "cloudflare/worker-tests.mjs",
+          "canonicalSha256": "e4de7454c4fdd35e1223d133b37ba211a08977e18cba3f4190d91d6f051679c3",
+          "canonicalByteLength": 49664
+        },
+        {
+          "path": "cloudflare/worker.mjs",
+          "canonicalSha256": "681776f0fad2703bfb2e89b64afd3b47507d646df7efb27da7f3e887ce2fd64e",
+          "canonicalByteLength": 43939
+        },
+        {
+          "path": "docs/e2-v4-pro-benchmark-r5/EXPERIMENT_PLAN.md",
+          "canonicalSha256": "7528de0133a82f08286bf6254726f74a529b5f3950724544fbb8d6b66ad5a713",
+          "canonicalByteLength": 3530
+        },
+        {
+          "path": "docs/e2-v4-pro-benchmark-r5/adjudication-packet.schema.json",
+          "canonicalSha256": "936064fa4340accb1f372cde600bb393001f9412d5050fe6ea112d38b9dadee4",
+          "canonicalByteLength": 851
+        },
+        {
+          "path": "docs/e2-v4-pro-benchmark-r5/adjudication-rubric.json",
+          "canonicalSha256": "b451a9ab2fc554ff43a2901afa77a1e94f3bfe11e3b1a3ec1724452a3acd358a",
+          "canonicalByteLength": 882
+        },
+        {
+          "path": "docs/e2-v4-pro-benchmark-r5/path-mask-dry-review.schema.json",
+          "canonicalSha256": "a45b75da7b4aa3cec56af05f44d87012daabd2fde73698241533b82c288849cd",
+          "canonicalByteLength": 1209
+        },
+        {
+          "path": "docs/e2-v4-pro-benchmark-r5/path-masked-labels.schema.json",
+          "canonicalSha256": "0272c66f19d4c68903cede67fdfd868b64b2b3a71c89a1e4547f6c49844ef083",
+          "canonicalByteLength": 1442
+        },
+        {
+          "path": "docs/e2-v4-pro-benchmark-r5/preview-activation.schema.json",
+          "canonicalSha256": "fcc7e1962fc965ff4bf100389c7b0ccc13ac88dec0397fb656595b1b83911783",
+          "canonicalByteLength": 2759
+        },
+        {
+          "path": "package-lock.json",
+          "canonicalSha256": "225eed73abfb830cda461176c0d1b3285f25834fca498a7edb85a9a0347a4043",
+          "canonicalByteLength": 140921
+        },
+        {
+          "path": "package.json",
+          "canonicalSha256": "287b1ef4ecd220c5d012b0026e71262d8e311dbdee182a14494a56e07daa1518",
+          "canonicalByteLength": 6435
+        },
+        {
+          "path": "scripts/e2-9-r5-entrypoint-preflight.mjs",
+          "canonicalSha256": "6dcf5e1b162c4d1054361cf6cecf164962186e349f43feed673595e23ace1e81",
+          "canonicalByteLength": 2422
+        },
+        {
+          "path": "scripts/e2-9-r5-hash.mjs",
+          "canonicalSha256": "e1935c8e2ffba35fd18905223d843fdb8374613f2b9dfd2deb8808a092b3ed36",
+          "canonicalByteLength": 2084
+        },
+        {
+          "path": "scripts/e2-9-r5-integrity.mjs",
+          "canonicalSha256": "a7e2d9281ef032df112bacf3270fee3a8ce34efb62f6fe20e30ca5c094c1f941",
+          "canonicalByteLength": 7595
+        },
+        {
+          "path": "scripts/e2-9-r5-path-mask.mjs",
+          "canonicalSha256": "92a7e7294acf46755d483ff58896687b8e72fcb3fc8743b522fc5c9f4c635277",
+          "canonicalByteLength": 7268
+        },
+        {
+          "path": "scripts/e2-9-r5-path-mask.node.mjs",
+          "canonicalSha256": "e4f47cf6b36ff748f76995745bedf140982fa4eaa99fd01bf47f4ba1267bf7d3",
+          "canonicalByteLength": 5175
+        },
+        {
+          "path": "scripts/e2-9-r5-protocol.node.mjs",
+          "canonicalSha256": "8e08d8451704f48e7e245947ea6caae3fddca5c972f7bb01851d10fe6cdb540f",
+          "canonicalByteLength": 15335
+        },
+        {
+          "path": "scripts/evaluate-e2-9-r5-gate.mjs",
+          "canonicalSha256": "10f4038100b45e8968dc4a6bd81d518ff437c1666a6d1b6210589f79a91880ca",
+          "canonicalByteLength": 3403
+        },
+        {
+          "path": "scripts/finalize-e2-9-r5-packet.mjs",
+          "canonicalSha256": "d202c213b1d5fc3f3b08a5f72577851bc302f5b3c75667c8bf5f10df592de3e5",
+          "canonicalByteLength": 4151
+        },
+        {
+          "path": "scripts/prepare-e2-9-r5-manifests.mjs",
+          "canonicalSha256": "e8f04fa041f48874d9bea8e9815d8b111b797a3af2c29657d7a6ee641829e96a",
+          "canonicalByteLength": 17274
+        },
+        {
+          "path": "scripts/prepare-e2-9-r5-packet-preview.mjs",
+          "canonicalSha256": "1bf8cf7f4824be695e981e94fc5f99ef39fd7f587ca528911fd67e78e5026948",
+          "canonicalByteLength": 6771
+        },
+        {
+          "path": "scripts/reveal-e2-9-r5-adjudication.mjs",
+          "canonicalSha256": "4f10ad0cd2d464b254ed8f829fd778597037390a51fac7276eae806e16ded2ce",
+          "canonicalByteLength": 6789
+        },
+        {
+          "path": "scripts/run-e2-9-r5.mjs",
+          "canonicalSha256": "efba43777f12aad7d0fcda1869a26f0b826433e5ca5da45ea2e47bb942e06a50",
+          "canonicalByteLength": 16549
+        },
+        {
+          "path": "scripts/scan-secrets.mjs",
+          "canonicalSha256": "7addceb13b162b883f3bcd569bd40a1bf37674cad8bc1857dfd10205a1781cda",
+          "canonicalByteLength": 2406
+        },
+        {
+          "path": "scripts/score-e2-9-r5.mjs",
+          "canonicalSha256": "9372beaebf44334e3751edbaa7502b45b21f644bdb41cb629a9c07b6a16f79b2",
+          "canonicalByteLength": 16602
+        },
+        {
+          "path": "scripts/verify-e2-9-r5-activation.mjs",
+          "canonicalSha256": "3ce9bba19fdb1ca18cf89d633a99e97c27d4835facd148ed3931d338d8da2dc1",
+          "canonicalByteLength": 981
+        },
+        {
+          "path": "wrangler.e2-r2-ledger.jsonc",
+          "canonicalSha256": "27485c46fdf01a4c8b96395af5f360e02fdb1a0132bc077cdfe92cb531e07ff9",
+          "canonicalByteLength": 541
+        },
+        {
+          "path": "wrangler.e2-r3-ledger.jsonc",
+          "canonicalSha256": "6543caeb508be0cdf4c15d95985d3e86bfb8ab8d3191f6e27cfa7c4050b8c88b",
+          "canonicalByteLength": 607
+        },
+        {
+          "path": "wrangler.e2-r3-preview.jsonc",
+          "canonicalSha256": "c4ec9a192adc3b4abb9757264734d8c0c6a5c814eda678e26c7595fb0d8dde5c",
+          "canonicalByteLength": 1212
+        },
+        {
+          "path": "wrangler.e2-r4-ledger.jsonc",
+          "canonicalSha256": "0226b9fec01eaa2ba78293e952dbfffbe5222ccff6be1addb72d394ff6941b25",
+          "canonicalByteLength": 607
+        },
+        {
+          "path": "wrangler.e2-r4-preview.jsonc",
+          "canonicalSha256": "d0461fc925070894af9ea8bc3e8c0879190f15e461680c5fb8836b7178de3af3",
+          "canonicalByteLength": 1212
+        },
+        {
+          "path": "wrangler.e2-r5-ledger.jsonc",
+          "canonicalSha256": "41f9f2cfeaf2a32155d3f3bc45dcb5f0f1b728990a685d52b7cfbd85ae7874b1",
+          "canonicalByteLength": 607
+        },
+        {
+          "path": "wrangler.e2-r5-preview.jsonc",
+          "canonicalSha256": "aa0b02f58b93a3ca7964704885f855775527a2940dfbaaa8b3cd6ed95850f24b",
+          "canonicalByteLength": 1096
+        },
+        {
+          "path": "wrangler.jsonc",
+          "canonicalSha256": "fe121e4982da4ebc6176c97a8aed937d4a51004bf58725bd2c358ed647ec9c88",
+          "canonicalByteLength": 2418
+        }
+      ],
+      "sha256": "d6b4729b4a80582363cd112d2143d24a347d96dc635e8dca7ac4400b2b7c0b1b",
+      "canonicalByteLength": 586953
+    }
+  }
+}

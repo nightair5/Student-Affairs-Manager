@@ -3,7 +3,7 @@
 Date: 2026-08-13
 Branch: `codex/e2-9-r5-harness-preflight`
 Starting commit: `e6bb4fe`
-Status: `LOCAL HARNESS READY FOR CLEAN COMMIT AND PROTOCOL FREEZE`
+Status: `PROTOCOL 3.3.0 MANIFESTS FROZEN — PREVIEW NOT ACTIVATED`
 
 ## Scope and conclusion
 
@@ -53,7 +53,10 @@ No DeepSeek request was made. No Cloudflare deployment was performed. Production
 
 ## Current boundaries
 
-- Protocol manifests are not frozen yet because the implementation and status DOCX are not committed; the clean-worktree guard is intentionally blocking freeze.
+- Protocol 3.3.0 manifests were frozen from clean implementation commit `2c91384515ac559fc943628b22179d8b3884c003`.
+- Frozen run-manifest SHA-256: `590373a478a266df0440c9005b58718686d8dc3c47ad677d24e66ced82a5a8ab`.
+- Frozen protocol/deployment bundle SHA-256: `d6b4729b4a80582363cd112d2143d24a347d96dc635e8dca7ac4400b2b7c0b1b`.
+- Independent local recomputation passed every manifest, bundle, cardinality, pairing, semantic-role, retry-policy, and Selection-stop check.
 - No Preview activation record exists.
 - No Cloudflare Secret was created or changed.
 - No Readiness, Smoke, or Screening observation exists for R5.
@@ -63,8 +66,7 @@ No DeepSeek request was made. No Cloudflare deployment was performed. Production
 
 ## Next gated actions
 
-1. Review and commit the local Harness implementation and the separate status document using approved commit messages, then push the branch.
-2. From the resulting clean commit, freeze the Protocol 3.3.0 manifests and protocol bundle.
-3. Re-run local checks against the frozen bundle.
-4. Only after explicit model-run authorization: deploy the isolated R5 Preview and ledger, configure a fresh temporary `E2_R5_BENCHMARK_TOKEN` Secret, create and verify the activation record, and run Readiness.
-5. Smoke may run only after Readiness passes; Screening may run only after Smoke passes. Stop after the Screening report. Selection and Blind remain unauthorized.
+1. Commit and push the frozen public manifests and updated readiness report; keep the source-only input manifest in Git-ignored cache.
+2. Re-run local checks against the committed frozen bundle.
+3. Only after explicit model-run authorization: deploy the isolated R5 Preview and ledger, configure a fresh temporary `E2_R5_BENCHMARK_TOKEN` Secret, create and verify the activation record, and run Readiness.
+4. Smoke may run only after Readiness passes; Screening may run only after Smoke passes. Stop after the Screening report. Selection and Blind remain unauthorized.
