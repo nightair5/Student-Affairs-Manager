@@ -1,0 +1,79 @@
+{
+  "schemaVersion": "e2.9-r3-independent-audit-3.1.0",
+  "protocolVersion": "e2-9-v4-pro-protocol-3.1.0",
+  "auditMode": "fresh-independent-read-only",
+  "artifactRecording": "Structured by the primary executor from the independent auditor's returned final result after the auditor was interrupted before file output.",
+  "overallVerdict": "FAIL",
+  "finalExperimentState": "EXPERIMENT BLOCKED",
+  "qualityConclusion": "NOT_AVAILABLE",
+  "modelComparisonInferenceAllowed": false,
+  "criticalFindings": [
+    {
+      "code": "PATH_MASK_MODEL_IDENTITY_EXPOSED",
+      "severity": "CRITICAL",
+      "status": "CONFIRMED",
+      "evidence": {
+        "pairCount": 8,
+        "exposedResultObjects": 16,
+        "field": "modelName",
+        "labels": { "INSUFFICIENT_INFORMATION": 8 }
+      },
+      "impact": "Path-masked adjudication and pair-preference gate are invalid; no model-quality conclusion is permitted."
+    }
+  ],
+  "checks": {
+    "protocolFrozenBeforeCalls": "PASS",
+    "runManifestSelfHash": "PASS",
+    "sourceAndPhaseManifestBindings": "PASS",
+    "schemaBundleHash": "PASS",
+    "promptPipelineBundleHash": "PASS",
+    "scorerBundleHash": "PASS",
+    "datasetBundleHash": "PASS",
+    "protocolDeploymentBundleHash": "PASS",
+    "observationPlanUniqueIds": 32,
+    "phaseCardinality": { "readiness": 6, "smoke": 10, "screening": 16 },
+    "actualObservations": 32,
+    "actualAttempts": 32,
+    "protocolRetries": 0,
+    "thirdAttempts": 0,
+    "observationIdReplacements": 0,
+    "fourWayLineage": "PASS",
+    "semanticRoleAndVersionBindings": "PASS",
+    "checkpointLedgerActivationBindings": "PASS",
+    "generationFirewall": "PASS",
+    "expectedLoadedAfterIntegrity": "PASS",
+    "strictMetricsReproduced": "PASS",
+    "r3FocusedProtocolTests": "18/18 PASS",
+    "pathMaskedReview": "FAIL",
+    "previewEndpoint": "HTTP 404",
+    "previewFeatureFlag": false,
+    "temporaryBearerPresent": false,
+    "remainingSecretNames": ["DEEPSEEK_API_KEY"],
+    "productionLatestVersion": "3b6d6ba2-e21f-495c-80e4-c4bac62366be",
+    "productionDeployedByR3": false
+  },
+  "reproducedTotals": {
+    "flashTokens": 34455,
+    "proTokens": 33962,
+    "flashFinalAttemptLatencyMs": 72099,
+    "proFinalAttemptLatencyMs": 129520
+  },
+  "machineGateQualification": {
+    "recordedStatus": "V4_PRO_SCREENING_V3_FAIL",
+    "authoritativeModelQualityConclusion": false,
+    "reason": "The pair-preference input is invalid because model identity was visible."
+  },
+  "limitations": [
+    "Cloudflare Secret verification is name-only; plaintext was not read.",
+    "The independent audit reran the focused R3 18-test suite, not the full npm suite.",
+    "No model was called and no deployment, Secret mutation, or observation rerun was performed by the auditor."
+  ],
+  "disposition": {
+    "selection": "NOT RUN",
+    "candidateFreeze": "NOT CREATED",
+    "blind": "NOT CREATED",
+    "e3": "NOT READY",
+    "production": "NOT READY / NOT DEPLOYED",
+    "stop": "STOP BEFORE SELECTION"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "e2.9-r3-path-masked-labels-3.1.0",
+  "protocolVersion": "e2-9-v4-pro-protocol-3.1.0",
+  "runManifestSha256": "4396344a76d596bfc0eaa649894e0cb7bb6cd494edaf4193dbc40ba723d584da",
+  "packetSha256": "cb3e8b2c8eded06d5ff33817c76a3b36217b3cae7b806ad9f90c07de004ed1c2",
+  "labelsCompletedAt": "2026-08-13T07:21:04.035Z",
+  "labels": [
+    {
+      "pairId": "E29R3-P01",
+      "preferred": "INSUFFICIENT_INFORMATION",
+      "rationale": "该对的 X 与 Y 结果对象均直接保留 modelName，匿名路径在评审前已失效；评审者已暴露于模型身份，无法给出符合独立盲评要求的有效偏好。"
+    },
+    {
+      "pairId": "E29R3-P02",
+      "preferred": "INSUFFICIENT_INFORMATION",
+      "rationale": "该对的 X 与 Y 结果对象均直接保留 modelName，匿名路径在评审前已失效；即使输出内容可比较，比较结果也不能再作为未受模型身份影响的盲评标签。"
+    },
+    {
+      "pairId": "E29R3-P03",
+      "preferred": "INSUFFICIENT_INFORMATION",
+      "rationale": "该对的 X 与 Y 结果对象均直接保留 modelName，模型身份泄漏破坏了预先要求的路径掩码；因此无法生成协议有效的 X、Y 或 TIE 偏好。"
+    },
+    {
+      "pairId": "E29R3-P04",
+      "preferred": "INSUFFICIENT_INFORMATION",
+      "rationale": "该对的 X 与 Y 结果对象均直接保留 modelName，评审输入并非匿名；为避免将已知模型身份后的判断冒充盲评，本对必须按完整性失败处理。"
+    },
+    {
+      "pairId": "E29R3-P05",
+      "preferred": "INSUFFICIENT_INFORMATION",
+      "rationale": "该对的 X 与 Y 结果对象均直接保留 modelName，盲评条件在读取输出时已不可逆丧失；现有输入不足以支持协议所要求的独立匿名偏好。"
+    },
+    {
+      "pairId": "E29R3-P06",
+      "preferred": "INSUFFICIENT_INFORMATION",
+      "rationale": "该对的 X 与 Y 结果对象均直接保留 modelName，路径掩码没有隐藏模型身份；任何内容偏好都会受到不可排除的身份暴露影响，不能作为有效盲评。"
+    },
+    {
+      "pairId": "E29R3-P07",
+      "preferred": "INSUFFICIENT_INFORMATION",
+      "rationale": "该对的 X 与 Y 结果对象均直接保留 modelName，匿名比较的核心前提不成立；因此不能用 X、Y 或 TIE 表示一个合规的盲评结论。"
+    },
+    {
+      "pairId": "E29R3-P08",
+      "preferred": "INSUFFICIENT_INFORMATION",
+      "rationale": "该对的 X 与 Y 结果对象均直接保留 modelName，模型身份在评审前可见，导致独立路径掩码评审失效；本对只能报告信息不足而不能给出偏好。"
+    }
+  ]
+}

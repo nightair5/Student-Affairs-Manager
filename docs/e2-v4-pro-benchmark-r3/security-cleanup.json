@@ -1,0 +1,21 @@
+{
+  "schemaVersion": "e2.9-r3-security-cleanup-3.1.0",
+  "protocolVersion": "e2-9-v4-pro-protocol-3.1.0",
+  "checkedAt": "2026-08-13T07:25:00.9704059Z",
+  "preview": {
+    "worker": "student-affairs-manager-preview",
+    "featureFlag": false,
+    "disabledDeploymentVersion": "379b1841-d3dc-4bfa-b913-95a010691aba",
+    "secretRemovalVersion": "5649b24c-9258-4a85-8763-5c43b1e51bec",
+    "endpointHttpStatus": 404,
+    "remainingSecretNames": ["DEEPSEEK_API_KEY"],
+    "temporaryBearerPresent": false
+  },
+  "production": {
+    "deployed": false,
+    "unchangedLatestVersion": "3b6d6ba2-e21f-495c-80e4-c4bac62366be",
+    "unchangedLatestCreatedAt": "2026-08-08T08:55:39.744Z"
+  },
+  "secretScan": "PASS",
+  "secretScanFileCount": 486
+}

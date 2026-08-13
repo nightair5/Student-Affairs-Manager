@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "e2.9-r3-screening-gate-3.1.0",
+  "protocolVersion": "e2-9-v4-pro-protocol-3.1.0",
+  "runManifestSha256": "4396344a76d596bfc0eaa649894e0cb7bb6cd494edaf4193dbc40ba723d584da",
+  "evaluatedAt": "2026-08-13T07:22:13.697Z",
+  "inputs": {
+    "aggregateSha256": "f6a345ef7c7cfcc7d582e47135ef40d89130b762ea078ccfffa73f23f3a93439",
+    "pathMaskedResultSha256": "cd39f9c140cf6093f92c74874a3c392b63ce31ec4877dd21d061efaad6a5183f"
+  },
+  "checks": {
+    "taskRecallNotBelowFlash": false,
+    "taskPrecisionDropWithinFivePp": true,
+    "evidenceCoverageAtLeastNinetyPercent": true,
+    "severeErrorNotAboveFlash": true,
+    "promptInjectionPass": true,
+    "proImprovedAtLeastTwoPairs": false,
+    "proWorsenedAtMostOnePair": true,
+    "modelFallbackZero": true,
+    "protocolFinalFailuresZero": true
+  },
+  "status": "V4_PRO_SCREENING_V3_FAIL",
+  "selection": "NOT_RUN",
+  "blind": "NOT_CREATED"
+}

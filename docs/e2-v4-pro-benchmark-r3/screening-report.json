@@ -1,0 +1,97 @@
+{
+  "schemaVersion": "e2.9-r3-successor-screening-report-3.1.0",
+  "protocolVersion": "e2-9-v4-pro-protocol-3.1.0",
+  "runId": "e29r3-run-20260813-a",
+  "runLabel": "e29r3-20260813-a",
+  "gitBaseline": "a16cf67",
+  "runManifestSha256": "4396344a76d596bfc0eaa649894e0cb7bb6cd494edaf4193dbc40ba723d584da",
+  "protocolBundleSha256": "954e48c627f4a584e0678a2da7e4c34591197df52da4ea0bb3d34541b2751067",
+  "generation": {
+    "readiness": { "complete": 6, "expected": 6 },
+    "smoke": { "complete": 10, "expected": 10 },
+    "screening": { "complete": 16, "expected": 16 },
+    "totalObservations": 32,
+    "totalAttempts": 32,
+    "protocolRetries": 0,
+    "truncatedAttempts": 0,
+    "lineageMismatches": 0,
+    "modelFallbacks": 0
+  },
+  "screening": {
+    "flash": {
+      "taskPrecision": 0.9333333333333333,
+      "taskRecall": 0.875,
+      "milestonePrecision": 0.38461538461538464,
+      "milestoneRecall": 0.38461538461538464,
+      "materialPrecision": 0.9166666666666666,
+      "materialRecall": 0.8461538461538461,
+      "timePointTypeAccuracy": 0.8947368421052632,
+      "timePointValueAccuracy": 0.7894736842105263,
+      "eventAccuracy": 1,
+      "ambiguityPrecision": 1,
+      "ambiguityRecall": 0.7142857142857143,
+      "evidenceCoverage": 1,
+      "severeErrorRate": 0,
+      "strictMajorCorrectionRate": 0.75,
+      "planningErrorRate": 0.875,
+      "meanLatencyMs": 9012.375,
+      "totalTokens": 34455,
+      "meanTokens": 4306.875
+    },
+    "pro": {
+      "taskPrecision": 0.9285714285714286,
+      "taskRecall": 0.8125,
+      "milestonePrecision": 0.5833333333333334,
+      "milestoneRecall": 0.5384615384615384,
+      "materialPrecision": 0.9230769230769231,
+      "materialRecall": 0.9230769230769231,
+      "timePointTypeAccuracy": 0.8947368421052632,
+      "timePointValueAccuracy": 0.9473684210526315,
+      "eventAccuracy": 1,
+      "ambiguityPrecision": 1,
+      "ambiguityRecall": 0.7142857142857143,
+      "evidenceCoverage": 1,
+      "severeErrorRate": 0,
+      "strictMajorCorrectionRate": 0.625,
+      "planningErrorRate": 0.75,
+      "meanLatencyMs": 16190,
+      "totalTokens": 33962,
+      "meanTokens": 4245.25
+    },
+    "proMinusFlash": {
+      "taskPrecisionPp": -0.4761904761904716,
+      "taskRecallPp": -6.25,
+      "meanLatencyMs": 7177.625,
+      "meanLatencyPercent": 79.642926806455,
+      "totalTokens": -493,
+      "totalTokensPercent": -1.4308518357277608
+    }
+  },
+  "pathMaskedReview": {
+    "status": "INVALID_MODEL_IDENTITY_VISIBLE",
+    "packetSha256": "cb3e8b2c8eded06d5ff33817c76a3b36217b3cae7b806ad9f90c07de004ed1c2",
+    "labelsSha256": "842c8af73cf9c55be4775e0f7da0225a95f1ef0773f53a89bdc825921039d8b8",
+    "proPreferred": "NOT_AVAILABLE",
+    "flashPreferred": "NOT_AVAILABLE",
+    "insufficientInformation": 8,
+    "reason": "Both anonymous arms retained result.modelName, so the independent reviewer was exposed to model identity before judgment."
+  },
+  "qualityGate": {
+    "authoritative": false,
+    "machineOutput": "V4_PRO_SCREENING_V3_FAIL",
+    "failedChecks": ["taskRecallNotBelowFlash", "proImprovedAtLeastTwoPairs"],
+    "qualification": "The pair-preference check is invalid rather than evidence of zero Pro improvements. Protocol integrity failure takes precedence over model-quality classification."
+  },
+  "final": {
+    "experiment": "EXPERIMENT BLOCKED",
+    "qualityConclusion": "NOT_AVAILABLE",
+    "e2": "BLOCKED",
+    "selection": "NOT READY / NOT RUN",
+    "candidateFreeze": "NOT CREATED",
+    "blind": "NOT CREATED",
+    "e3": "NOT READY",
+    "e4": "NOT RUN",
+    "production": "NOT READY / NOT DEPLOYED",
+    "stop": "STOP BEFORE SELECTION"
+  }
+}
