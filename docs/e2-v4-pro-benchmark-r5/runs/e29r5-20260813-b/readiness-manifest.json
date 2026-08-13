@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "e2.9-r5-readiness-manifest-3.3.0",
+  "protocolVersion": "e2-9-v4-pro-protocol-3.3.0",
+  "frozenBeforeCalls": true,
+  "models": [
+    "deepseek-v4-flash",
+    "deepseek-v4-pro"
+  ],
+  "probesPerModel": 3,
+  "probeCount": 6,
+  "retryPolicy": "NO_RETRY_IN_READINESS"
+}
