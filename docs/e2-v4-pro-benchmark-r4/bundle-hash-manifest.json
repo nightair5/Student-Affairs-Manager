@@ -1,0 +1,301 @@
+{
+  "schemaVersion": "e2.9-r4-bundle-manifest-3.2.0",
+  "protocolVersion": "e2-9-v4-pro-protocol-3.2.0",
+  "pathRule": "Repository-relative forward-slash paths sorted lexicographically.",
+  "textRule": "CRLF and CR canonicalized to LF; JSON parsed and recursively key-sorted.",
+  "framingRule": "UTF-8 byte length framed path and content joined by the frozen R4 separator.",
+  "algorithm": "SHA-256",
+  "coverage": "Worker route/security, frozen provider adapter, R4 transport policy, benchmark wrapper, immutable ledger, Preview flags/binding, deployment configs, runner, scorer, tests, package lock and secret scanner.",
+  "bundles": {
+    "schema": {
+      "contractVersion": "e2-9-r4-bundle-hash-3.2.0",
+      "separator": "\n--E2-9-R4-BUNDLE-ENTRY--\n",
+      "inputFiles": [
+        "src/recognition/schema.ts",
+        "src/recognition/types.ts"
+      ],
+      "entries": [
+        {
+          "path": "src/recognition/schema.ts",
+          "canonicalSha256": "be47cef4e3a1ebf075869521245a8453c104d89a28fa45f0117e564d2430b1b6",
+          "canonicalByteLength": 10024
+        },
+        {
+          "path": "src/recognition/types.ts",
+          "canonicalSha256": "c15dfe32bc5bc7a300f94f3a1aa1df9d14e7bb30a070d2f2fc5e5359facd22c3",
+          "canonicalByteLength": 4588
+        }
+      ],
+      "sha256": "a89ac90f66f545ce5de43881be69c3fdf5dbf958760eb5b88055f8bc1f8ef4d3",
+      "canonicalByteLength": 14706
+    },
+    "promptAndPipeline": {
+      "contractVersion": "e2-9-r4-bundle-hash-3.2.0",
+      "separator": "\n--E2-9-R4-BUNDLE-ENTRY--\n",
+      "inputFiles": [
+        "cloudflare/model-gateway.mjs",
+        "cloudflare/recognition-prompt.mjs",
+        "cloudflare/recognition-quality.mjs",
+        "cloudflare/recognition.mjs"
+      ],
+      "entries": [
+        {
+          "path": "cloudflare/model-gateway.mjs",
+          "canonicalSha256": "335406e6f789aee5a209b36d165441ce976c8de17d5d2c634d7a523c17c47765",
+          "canonicalByteLength": 5250
+        },
+        {
+          "path": "cloudflare/recognition-prompt.mjs",
+          "canonicalSha256": "c925f1dc27971e4fcaf7ad185b729f016fa7af966cd7992337d9eaa94c97e6fd",
+          "canonicalByteLength": 10474
+        },
+        {
+          "path": "cloudflare/recognition-quality.mjs",
+          "canonicalSha256": "d03437cf8fe11ef23e78a431fefeb451de2a87c6e47118b1a822016562a11e29",
+          "canonicalByteLength": 11060
+        },
+        {
+          "path": "cloudflare/recognition.mjs",
+          "canonicalSha256": "3f507412647824f0f586053365d975771c0d90c5e17af27403bdf39dfdb7132a",
+          "canonicalByteLength": 23805
+        }
+      ],
+      "sha256": "f888949af6f45404f7ff8706f2058e860b9096a3855287262b3c5d12122ae8f0",
+      "canonicalByteLength": 50827
+    },
+    "scorerSemantics": {
+      "contractVersion": "e2-9-r4-bundle-hash-3.2.0",
+      "separator": "\n--E2-9-R4-BUNDLE-ENTRY--\n",
+      "inputFiles": [
+        "docs/e2-path-a-planning/evaluation-contract.json",
+        "src/recognition/e2/scoring.ts",
+        "src/recognition/e2/semanticEquivalence.ts"
+      ],
+      "entries": [
+        {
+          "path": "docs/e2-path-a-planning/evaluation-contract.json",
+          "canonicalSha256": "4a847a9b294ab84565c323539ec6746f60c72d48663f3846aadf90744e05f108",
+          "canonicalByteLength": 1960
+        },
+        {
+          "path": "src/recognition/e2/scoring.ts",
+          "canonicalSha256": "031c029580d50308e4f108dfa9d50be0929b98f45ccef903c17761bf587f7a85",
+          "canonicalByteLength": 26224
+        },
+        {
+          "path": "src/recognition/e2/semanticEquivalence.ts",
+          "canonicalSha256": "45a57048c7a6e0f6935219c0b1cd48717c92e6e3fd394f1460e69deee5c5f0a0",
+          "canonicalByteLength": 7717
+        }
+      ],
+      "sha256": "e9d7ed8cd1fd3acd066deebb437c0e41c7906d93d85fb129f0eb56dfe0932e7a",
+      "canonicalByteLength": 36099
+    },
+    "datasets": {
+      "contractVersion": "e2-9-r4-bundle-hash-3.2.0",
+      "separator": "\n--E2-9-R4-BUNDLE-ENTRY--\n",
+      "inputFiles": [
+        "src/recognition/e2/generalizationDataset.ts",
+        "src/recognition/e2/goldenDataset.ts",
+        "src/recognition/e2/holdoutDataset.ts"
+      ],
+      "entries": [
+        {
+          "path": "src/recognition/e2/generalizationDataset.ts",
+          "canonicalSha256": "6919cd89e81521beaf993ebcd8b23a752c01bbc0f5aa4559e29ff25e0c5b2659",
+          "canonicalByteLength": 36667
+        },
+        {
+          "path": "src/recognition/e2/goldenDataset.ts",
+          "canonicalSha256": "e6bf49d61e6e489bafea78e12ead6079d992c51211fe66c490d3fd87a2a0cd63",
+          "canonicalByteLength": 41351
+        },
+        {
+          "path": "src/recognition/e2/holdoutDataset.ts",
+          "canonicalSha256": "e5719bce8f70eaecc7743e98f3816f7ce543ca57f5e3cc0c2aab5c987c6181e3",
+          "canonicalByteLength": 27728
+        }
+      ],
+      "sha256": "e528a47c7a7212a272bd00df80b6e59ddf5f7a16d2eb7cba057a4c82ac3c725d",
+      "canonicalByteLength": 105942
+    },
+    "protocolAndDeployment": {
+      "contractVersion": "e2-9-r4-bundle-hash-3.2.0",
+      "separator": "\n--E2-9-R4-BUNDLE-ENTRY--\n",
+      "inputFiles": [
+        "cloudflare/e2-r2-benchmark.mjs",
+        "cloudflare/e2-r4-benchmark.mjs",
+        "cloudflare/e2-r4-ledger-worker.mjs",
+        "cloudflare/e2-r4-tests.mjs",
+        "cloudflare/e2-r4-transport-policy.mjs",
+        "cloudflare/e2-v4-pro-benchmark.mjs",
+        "cloudflare/worker.mjs",
+        "docs/e2-v4-pro-benchmark-r4/EXPERIMENT_PLAN.md",
+        "docs/e2-v4-pro-benchmark-r4/adjudication-packet.schema.json",
+        "docs/e2-v4-pro-benchmark-r4/adjudication-rubric.json",
+        "package-lock.json",
+        "package.json",
+        "scripts/e2-9-r4-hash.mjs",
+        "scripts/e2-9-r4-integrity.mjs",
+        "scripts/e2-9-r4-path-mask.mjs",
+        "scripts/e2-9-r4-path-mask.node.mjs",
+        "scripts/e2-9-r4-protocol.node.mjs",
+        "scripts/evaluate-e2-9-r4-gate.mjs",
+        "scripts/finalize-e2-9-r4-packet.mjs",
+        "scripts/prepare-e2-9-r4-manifests.mjs",
+        "scripts/prepare-e2-9-r4-packet-preview.mjs",
+        "scripts/reveal-e2-9-r4-adjudication.mjs",
+        "scripts/run-e2-9-r4.mjs",
+        "scripts/scan-secrets.mjs",
+        "scripts/score-e2-9-r4.mjs",
+        "wrangler.e2-r4-ledger.jsonc",
+        "wrangler.e2-r4-preview.jsonc",
+        "wrangler.jsonc"
+      ],
+      "entries": [
+        {
+          "path": "cloudflare/e2-r2-benchmark.mjs",
+          "canonicalSha256": "8a74b1d8d19af684f5ab98190fc9c96037f2fa2294bd1a2eb76350ef1b86308d",
+          "canonicalByteLength": 13723
+        },
+        {
+          "path": "cloudflare/e2-r4-benchmark.mjs",
+          "canonicalSha256": "9a6115dce60a505eb0e4833b88a9661f927f219ef6695db45d1a88a26304b74f",
+          "canonicalByteLength": 16524
+        },
+        {
+          "path": "cloudflare/e2-r4-ledger-worker.mjs",
+          "canonicalSha256": "d0873587d0cd0b66c68b64aae327c236e1ad66b3f2ae1eb35bbd15b702da07f8",
+          "canonicalByteLength": 10176
+        },
+        {
+          "path": "cloudflare/e2-r4-tests.mjs",
+          "canonicalSha256": "e1751168b2158ab6e3f8721ce218cc6e711e048682b37900822589ea329b829b",
+          "canonicalByteLength": 15941
+        },
+        {
+          "path": "cloudflare/e2-r4-transport-policy.mjs",
+          "canonicalSha256": "38382273e70a23c4d16c402b4711545e44bf8eeee2ed336949d4aac7dab5efaa",
+          "canonicalByteLength": 4471
+        },
+        {
+          "path": "cloudflare/e2-v4-pro-benchmark.mjs",
+          "canonicalSha256": "d6acfd695c83909a0ecc88d9f03cbbbec0b394ec4bf380781e4876c128e20b6e",
+          "canonicalByteLength": 17768
+        },
+        {
+          "path": "cloudflare/worker.mjs",
+          "canonicalSha256": "1da715d758948dcf24c6af439915ee6dc3b2ab6e00e6f3503abaf98242bd270e",
+          "canonicalByteLength": 43734
+        },
+        {
+          "path": "docs/e2-v4-pro-benchmark-r4/EXPERIMENT_PLAN.md",
+          "canonicalSha256": "4cff785f9b572e8967ac4ee3e4b8095a9ccd3dbe067ccc9bcf04332af3bb860e",
+          "canonicalByteLength": 3053
+        },
+        {
+          "path": "docs/e2-v4-pro-benchmark-r4/adjudication-packet.schema.json",
+          "canonicalSha256": "61ac00d36c7ddf4c815267973d7b89cd925893f6d08cb7b52e613fd1c3f47ac0",
+          "canonicalByteLength": 851
+        },
+        {
+          "path": "docs/e2-v4-pro-benchmark-r4/adjudication-rubric.json",
+          "canonicalSha256": "86ddbbc5343ab73467cc57166232d91f6a928ded6ad004ea48ecd10ad79a62db",
+          "canonicalByteLength": 882
+        },
+        {
+          "path": "package-lock.json",
+          "canonicalSha256": "225eed73abfb830cda461176c0d1b3285f25834fca498a7edb85a9a0347a4043",
+          "canonicalByteLength": 140921
+        },
+        {
+          "path": "package.json",
+          "canonicalSha256": "6c91c9ec5aafa0eeae06cf17e3aec88db595f2045f3bdd8571b1ed78389de3ac",
+          "canonicalByteLength": 5399
+        },
+        {
+          "path": "scripts/e2-9-r4-hash.mjs",
+          "canonicalSha256": "28e3b382791eed39af39385b0d6c5056c675987ff682fd8a5d5714a044de99c6",
+          "canonicalByteLength": 2085
+        },
+        {
+          "path": "scripts/e2-9-r4-integrity.mjs",
+          "canonicalSha256": "46db1190f95c959d1e00f2433a23f9e89f6db660892b7cf770de0114a0c11df1",
+          "canonicalByteLength": 3323
+        },
+        {
+          "path": "scripts/e2-9-r4-path-mask.mjs",
+          "canonicalSha256": "975a1badce53e97120813331d5f65a45c1e7daa14f51ec3d109640210ae2ab64",
+          "canonicalByteLength": 7268
+        },
+        {
+          "path": "scripts/e2-9-r4-path-mask.node.mjs",
+          "canonicalSha256": "f9a596316ab4c353fc51f9baa37ea735ed0d09bdd1b55b0f63d20f7ccea2b3f2",
+          "canonicalByteLength": 5069
+        },
+        {
+          "path": "scripts/e2-9-r4-protocol.node.mjs",
+          "canonicalSha256": "10443095ba605bed0d6b1d997a4f4de46a7165caa07e6dcaa416ac4e2339d534",
+          "canonicalByteLength": 4651
+        },
+        {
+          "path": "scripts/evaluate-e2-9-r4-gate.mjs",
+          "canonicalSha256": "edfcb92a98aad6775de0a4c87542f154f79811e3cacc5214cd28d36c4f2bb193",
+          "canonicalByteLength": 2398
+        },
+        {
+          "path": "scripts/finalize-e2-9-r4-packet.mjs",
+          "canonicalSha256": "8a8ba5edb00ed4d4c42211176096c7136f0663a7c1dbc63e626c7858daf023cb",
+          "canonicalByteLength": 2462
+        },
+        {
+          "path": "scripts/prepare-e2-9-r4-manifests.mjs",
+          "canonicalSha256": "8ddd5ad72ea6f1dff52c3e47f14d3b42585399ef80ec7ff52e9956aa5b8386a1",
+          "canonicalByteLength": 15617
+        },
+        {
+          "path": "scripts/prepare-e2-9-r4-packet-preview.mjs",
+          "canonicalSha256": "b407616c5e1d945ebe62c5734139c391c49e9eae7e0ad813d02443796032ca95",
+          "canonicalByteLength": 4575
+        },
+        {
+          "path": "scripts/reveal-e2-9-r4-adjudication.mjs",
+          "canonicalSha256": "37bb0807eb72623af58fb2f4b5bd6153597a6da75e8977171b4d28c284fc12a0",
+          "canonicalByteLength": 4385
+        },
+        {
+          "path": "scripts/run-e2-9-r4.mjs",
+          "canonicalSha256": "f4eea119ef2e0366be6eba6ad141e16240e614d72b268adade20f0dcbbed7c91",
+          "canonicalByteLength": 16465
+        },
+        {
+          "path": "scripts/scan-secrets.mjs",
+          "canonicalSha256": "7addceb13b162b883f3bcd569bd40a1bf37674cad8bc1857dfd10205a1781cda",
+          "canonicalByteLength": 2406
+        },
+        {
+          "path": "scripts/score-e2-9-r4.mjs",
+          "canonicalSha256": "dab0333d5337f0d9b0c80bab09ac248812a8a7a5c902076d1e72023ef54eb747",
+          "canonicalByteLength": 12772
+        },
+        {
+          "path": "wrangler.e2-r4-ledger.jsonc",
+          "canonicalSha256": "0226b9fec01eaa2ba78293e952dbfffbe5222ccff6be1addb72d394ff6941b25",
+          "canonicalByteLength": 607
+        },
+        {
+          "path": "wrangler.e2-r4-preview.jsonc",
+          "canonicalSha256": "d0461fc925070894af9ea8bc3e8c0879190f15e461680c5fb8836b7178de3af3",
+          "canonicalByteLength": 1212
+        },
+        {
+          "path": "wrangler.jsonc",
+          "canonicalSha256": "9d2f2bce86c1a5aa3894671b5ca56d411bba49bf8db09d60ce7999e6b1925f87",
+          "canonicalByteLength": 2158
+        }
+      ],
+      "sha256": "b0a54dab7f0cb0e989e9771fc5fdd99ba8aa1a486f38dd26d55ac061e741f3da",
+      "canonicalByteLength": 362732
+    }
+  }
+}
