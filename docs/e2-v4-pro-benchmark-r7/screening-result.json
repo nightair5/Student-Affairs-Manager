@@ -65,8 +65,29 @@
     }
   },
   "machineGate": "PASS",
-  "independentPathMaskedReview": "NOT_RUN",
-  "overallScreeningGate": "PENDING_INDEPENDENT_PATH_MASKED_REVIEW",
+  "independentPathMaskedReview": {
+    "status": "PASS",
+    "independence": "same-family provisional",
+    "packetSha256": "5717f68ae72f6346fb3c6d066ab29c8a1a7a0fc79c860cd2b8bea30f2cbdd159",
+    "labelsSha256": "f90f0b6232a550cba2910323fe0966aa8a8ada77ec46b6eb3c8b6bf7598e901a",
+    "identityDisclosureCount": 0,
+    "deterministicCorrelatorCount": 0,
+    "counts": {
+      "proPreferred": 3,
+      "flashPreferred": 2,
+      "tie": 3,
+      "insufficient": 0,
+      "proMajor": 4,
+      "flashMajor": 3,
+      "proPlanningError": 5,
+      "flashPlanningError": 3
+    }
+  },
+  "overallScreeningGate": "V4_PRO_SCREENING_R7_FAIL",
+  "failedGateChecks": [
+    "humanPlanningErrorNotWorse",
+    "proClearlyDegradesAtMostOnePair"
+  ],
   "selection": "NOT_RUN",
   "blind": "NOT_CREATED",
   "production": "NOT_DEPLOYED",

@@ -2,9 +2,9 @@
 
 ## 结论
 
-R7 的 **严格评分部分通过**：Pro 相比 Flash 的 Strict Planning Error 实际下降 12.5 个百分点，Strict Major Correction 同样下降 12.5 个百分点；Task Precision/Recall、Evidence Coverage 和 Severe Error 均未变差。
+R7 的 **机器严格评分部分通过**：Pro 相比 Flash 的 Strict Planning Error 实际下降 12.5 个百分点，Strict Major Correction 同样下降 12.5 个百分点；Task Precision/Recall、Evidence Coverage 和 Severe Error 均未变差。
 
-但完整 Screening Gate 仍为 **PENDING_INDEPENDENT_PATH_MASKED_REVIEW**。执行者已接触模型身份，不能自行补写“独立盲评”标签。当前不得申请或执行 Selection，不得创建 Blind，不得部署 Production。
+独立 path-masked 盲评完成后，完整 Screening Gate 为 **V4_PRO_SCREENING_R7_FAIL**。人工盲评发现 Pro Planning Error 为 5 对、Flash 为 3 对，且 Pro 明显退化 2 对，分别违反“人工规划错误不得更差”和“明显退化不超过 1 对”。当前不得申请或执行 Selection，不得创建 Blind，不得部署 Production。
 
 ## 六条案例只读诊断
 
@@ -71,6 +71,22 @@ Pro 真正表现较好的通用能力是：不把“傍晚/上午/暂定”等�
 
 Pro 的质量改善没有依赖更高 Token，但延迟代价明显，必须在后续 Selection 中单独评估；当前尚未获得运行 Selection 的资格。
 
+## 独立 path-masked 盲评
+
+- Reviewer packet 机器扫描与独立审阅均未发现模型身份、Token、延迟、哈希、版本或可确定关联器；
+- Packet SHA-256: `5717f68ae72f6346fb3c6d066ab29c8a1a7a0fc79c860cd2b8bea30f2cbdd159`；
+- Labels SHA-256: `f90f0b6232a550cba2910323fe0966aa8a8ada77ec46b6eb3c8b6bf7598e901a`；
+- 标签冻结后才在等待进程内揭盲；reveal secret 从未落盘；
+- 审阅者为全新只读同家族 agent，因此独立性状态为 `same-family provisional`，不冒充跨家族审阅。
+
+| 人工结果 | Pro | Flash |
+|---|---:|---:|
+| 明显更优 | 3 对 | 2 对 |
+| User-impact Major Correction | 4 对 | 3 对 |
+| Planning Error | 5 对 | 3 对 |
+
+另有 3 对为平局、0 对证据不足。
+
 ## Gate 状态
 
 已通过的机器检查：
@@ -84,14 +100,14 @@ Pro 的质量改善没有依赖更高 Token，但延迟代价明显，必须在�
 - Prompt Injection 两臂通过；
 - 四向模型 lineage、Prompt/Pipeline/Normalizer/Planner 版本、单次调用和结果哈希完整。
 
-尚未运行：
+人工检查中：
 
-- 独立 path-masked 偏好标签；
-- User-impact Major Correction；
-- 人工 Planning Error 对比；
-- “Pro 至少改善 2 对、明显退化不超过 1 对”的人工 Gate。
+- `Pro 至少改善 2 对`：PASS（3 对）；
+- `人工 Planning Error 不得更差`：FAIL（Pro 5 对，Flash 3 对）；
+- `Pro 明显退化不超过 1 对`：FAIL（实际 2 对）；
+- User-impact Major Correction：Pro 4 对，Flash 3 对，未显示用户修改成本下降。
 
-因此总 Gate 不是 PASS，只能是 `PENDING_INDEPENDENT_PATH_MASKED_REVIEW`。
+因此总 Gate 为 `V4_PRO_SCREENING_R7_FAIL`。
 
 ## 审计与清理
 
@@ -107,4 +123,4 @@ Pro 的质量改善没有依赖更高 Token，但延迟代价明显，必须在�
 
 ## 下一步
 
-只允许把 8 对业务结果投影为不含模型身份、Token、延迟、哈希或版本信息的 path-masked packet，交给未接触 mapping 的独立只读审阅者生成全新标签。揭盲后运行人工 Gate：若通过，才可另行申请 Selection；若失败，停止并报告，不得针对这 8 条继续调参。
+本轮已经按失败即停规则停止。不得申请 Selection，不得选择性补跑或继续针对这 8 条调参。若要继续，只能另行授权分析人工 Gate 与严格 Scorer 分歧的通用原因，并在冻结新协议后使用全新标签重新运行小规模 Screening。

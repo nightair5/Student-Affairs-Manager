@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "e2.9-r7-public-path-masked-review-1.0.0",
+  "protocolVersion": "e2-9-v4-pro-protocol-3.6.2",
+  "runId": "e29r7-screening-review-20260821-a",
+  "reviewIndependence": "same-family provisional",
+  "packetAudit": {
+    "status": "PASS",
+    "packetSha256": "5717f68ae72f6346fb3c6d066ab29c8a1a7a0fc79c860cd2b8bea30f2cbdd159",
+    "directIdentityDisclosures": 0,
+    "deterministicCorrelators": 0
+  },
+  "labelsSha256": "f90f0b6232a550cba2910323fe0966aa8a8ada77ec46b6eb3c8b6bf7598e901a",
+  "counts": {
+    "proPreferred": 3,
+    "flashPreferred": 2,
+    "tie": 3,
+    "insufficient": 0,
+    "proMajor": 4,
+    "flashMajor": 3,
+    "proPlanningError": 5,
+    "flashPlanningError": 3
+  },
+  "failedGateChecks": [
+    "humanPlanningErrorNotWorse",
+    "proClearlyDegradesAtMostOnePair"
+  ],
+  "status": "V4_PRO_SCREENING_R7_FAIL",
+  "selection": "NOT_RUN",
+  "blind": "NOT_CREATED",
+  "production": "NOT_DEPLOYED"
+}
