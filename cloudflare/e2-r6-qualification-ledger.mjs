@@ -1,7 +1,8 @@
 const RECORD_KEY = 'qualification'
 const PROTOCOL_VERSION = 'e2-9-v4-pro-protocol-3.4.0'
 const REGISTRATION_FIELDS = new Set([
-  'runLabel', 'protocolVersion', 'qualificationBundleSha256', 'qualificationResultSha256', 'qualificationResult',
+  'runLabel', 'protocolVersion', 'expectedWorkerVersionId', 'qualificationBundleSha256',
+  'qualificationResultSha256', 'qualificationResult',
 ])
 
 function json(value, status = 200) {
@@ -18,6 +19,11 @@ function onlyFields(value, fields) {
 
 function validSha256(value) {
   return typeof value === 'string' && /^[a-f0-9]{64}$/u.test(value)
+}
+
+function validWorkerVersionId(value) {
+  return typeof value === 'string'
+    && /^[a-f0-9]{8}-[a-f0-9]{4}-[1-5][a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/iu.test(value)
 }
 
 function canonicalJson(value) {
@@ -45,6 +51,7 @@ export class E2R6QualificationLedger {
       try { body = await request.json() } catch { return json({ error: 'INVALID_REQUEST' }, 400) }
       if (!onlyFields(body, REGISTRATION_FIELDS) || body.protocolVersion !== PROTOCOL_VERSION
         || !/^[a-z0-9][a-z0-9._-]{2,100}$/u.test(body.runLabel ?? '')
+        || !validWorkerVersionId(body.expectedWorkerVersionId)
         || !validSha256(body.qualificationBundleSha256) || !validSha256(body.qualificationResultSha256)
         || !safeObject(body.qualificationResult)) return json({ error: 'QUALIFICATION_RECORD_INVALID' }, 400)
       if (body.qualificationResult.protocolVersion !== PROTOCOL_VERSION
@@ -57,6 +64,7 @@ export class E2R6QualificationLedger {
       if (existing) {
         const identical = existing.qualificationBundleSha256 === body.qualificationBundleSha256
           && existing.qualificationResultSha256 === body.qualificationResultSha256
+          && existing.expectedWorkerVersionId === body.expectedWorkerVersionId
         return json({ error: identical ? 'QUALIFICATION_ALREADY_RECORDED' : 'QUALIFICATION_IMMUTABLE' }, 409)
       }
       const record = {

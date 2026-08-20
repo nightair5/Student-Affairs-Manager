@@ -1,8 +1,9 @@
 export const E2_R6_PROTOCOL_VERSION = 'e2-9-v4-pro-protocol-3.4.0'
-export const E2_R6_PREVIEW_HARNESS_VERSION = 'e2-9-r6-preview-harness-1.0.0'
+export const E2_R6_PREVIEW_HARNESS_VERSION = 'e2-9-r6-preview-harness-1.1.0'
 
 const QUALIFICATION_FIELDS = new Set([
-  'runLabel', 'protocolVersion', 'qualificationBundleSha256', 'qualificationResultSha256', 'qualificationResult',
+  'runLabel', 'protocolVersion', 'expectedWorkerVersionId', 'qualificationBundleSha256',
+  'qualificationResultSha256', 'qualificationResult',
 ])
 const RESULT_FIELDS = new Set([
   'schemaVersion', 'protocolVersion', 'runId', 'modelCalls', 'networkCalls', 'expectedAnswersLoaded',
@@ -32,6 +33,11 @@ function onlyFields(value, fields) {
 
 function validSha256(value) {
   return typeof value === 'string' && /^[a-f0-9]{64}$/u.test(value)
+}
+
+function workerVersionId(env) {
+  const value = safeText(env.CF_VERSION_METADATA?.id, 64)
+  return /^[a-f0-9]{8}-[a-f0-9]{4}-[1-5][a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/iu.test(value) ? value : ''
 }
 
 function canonicalJson(value) {
@@ -93,12 +99,27 @@ export async function runE2R6Harness(request, env, _providerFetcher = fetch) {
   if (authError) return json({ error: authError }, authError === 'NOT_FOUND' ? 404 : authError === 'ORIGIN_NOT_ALLOWED' ? 403 : authError === 'UNAUTHORIZED' ? 401 : 503)
   const url = new URL(request.url)
   const suffix = url.pathname.split('/').at(-1)
+  const versionId = workerVersionId(env)
+  if (!versionId) return json({ error: 'VERSION_METADATA_NOT_CONFIGURED', modelCalls: 0 }, 503)
+
+  if (suffix === 'activation' && request.method === 'GET') {
+    return json({
+      status: 'QUALIFICATION_ENDPOINT_ACTIVE_MODEL_PHASES_LOCKED',
+      protocolVersion: E2_R6_PROTOCOL_VERSION,
+      harnessVersion: E2_R6_PREVIEW_HARNESS_VERSION,
+      workerVersionId: versionId,
+      qualificationBundleSha256: safeText(env.E2_R6_QUALIFICATION_BUNDLE_SHA256, 64),
+      qualificationResultSha256: safeText(env.E2_R6_QUALIFICATION_RESULT_SHA256, 64),
+      modelCalls: 0,
+    })
+  }
 
   if (LOCKED_PATHS.has(suffix)) {
     return json({
       error: 'MODEL_PHASE_NOT_AUTHORIZED',
       protocolVersion: E2_R6_PROTOCOL_VERSION,
       harnessVersion: E2_R6_PREVIEW_HARNESS_VERSION,
+      workerVersionId: versionId,
       modelCalls: 0,
     }, 412)
   }
@@ -109,19 +130,20 @@ export async function runE2R6Harness(request, env, _providerFetcher = fetch) {
     const body = parsed.body
     const expectedBundle = safeText(env.E2_R6_QUALIFICATION_BUNDLE_SHA256, 64)
     const expectedResult = safeText(env.E2_R6_QUALIFICATION_RESULT_SHA256, 64)
-    if (body.protocolVersion !== E2_R6_PROTOCOL_VERSION || !qualificationShapeValid(body.qualificationResult)
+    if (body.protocolVersion !== E2_R6_PROTOCOL_VERSION || body.expectedWorkerVersionId !== versionId
+      || !qualificationShapeValid(body.qualificationResult)
       || body.qualificationBundleSha256 !== expectedBundle || body.qualificationResult.qualificationBundleSha256 !== expectedBundle
       || body.qualificationResultSha256 !== expectedResult || await sha256(canonicalJson(body.qualificationResult)) !== expectedResult) {
       return json({ error: 'QUALIFICATION_BINDING_INVALID' }, 412)
     }
     const ledger = await ledgerRequest(env, body.runLabel, '/record', { body })
-    return json(ledger.payload, ledger.response.status)
+    return json(safeObject(ledger.payload) ? { ...ledger.payload, workerVersionId: versionId } : ledger.payload, ledger.response.status)
   }
 
   if (suffix === 'state' && request.method === 'GET') {
     const runLabel = url.searchParams.get('runLabel') ?? ''
     const ledger = await ledgerRequest(env, runLabel, '/state', { method: 'GET' })
-    return json(ledger.payload, ledger.response.status)
+    return json(safeObject(ledger.payload) ? { ...ledger.payload, workerVersionId: versionId } : ledger.payload, ledger.response.status)
   }
   return json({ error: 'NOT_FOUND' }, 404)
 }
