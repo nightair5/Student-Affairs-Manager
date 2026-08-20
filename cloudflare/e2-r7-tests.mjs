@@ -99,3 +99,23 @@ test('R7 dedicated endpoint remains Preview-only and disabled by default', async
   assert.equal((await runE2R7Benchmark(request(body, 'https://student-affairs.site'), environment(), async () => { throw new Error('not called') })).status, 404)
   assert.equal((await runE2R7Benchmark(request(body), environment({ E2_V4_PRO_BENCHMARK_ENABLED: 'false' }), async () => { throw new Error('not called') })).status, 404)
 })
+
+test('R7 readiness response is bound to benchmark 2.2.0 without changing the probe', async () => {
+  let upstreamBody
+  const fetcher = async (_url, options) => {
+    upstreamBody = JSON.parse(options.body)
+    return Response.json({
+      model: upstreamBody.model, system_fingerprint: 'fp-ready',
+      choices: [{ finish_reason: 'stop', message: { content: '{"ok":true}' } }],
+      usage: { prompt_tokens: 10, completion_tokens: 4, total_tokens: 14 },
+    })
+  }
+  const ready = new Request(`${ORIGIN}/api/experiments/e2-9/v4-pro-benchmark/readiness?modelAlias=flash`, {
+    headers: { origin: ORIGIN, authorization: `Bearer ${TOKEN}` },
+  })
+  const response = await runE2R7Benchmark(ready, environment(), fetcher)
+  const payload = await response.json()
+  assert.equal(payload.benchmarkVersion, 'e2-v4-pro-benchmark-2.2.0')
+  assert.equal(payload.returnedModel, 'deepseek-v4-flash')
+  assert.equal(upstreamBody.messages[1].content, 'Return {"ok":true}.')
+})

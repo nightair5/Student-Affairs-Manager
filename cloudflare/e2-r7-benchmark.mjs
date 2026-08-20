@@ -36,7 +36,11 @@ export async function runE2R7Benchmark(request, env, fetcher = fetch) {
   const generationRequest = url.pathname.endsWith('/generate') && request.method === 'POST'
   const requestBody = generationRequest ? await request.clone().json().catch(() => null) : null
   const baseResponse = await runE2V4ProBenchmark(request, env, r7Fetcher(fetcher))
-  if (!generationRequest || baseResponse.status !== 200 || !requestBody) return baseResponse
+  if (baseResponse.status !== 200) return baseResponse
+  if (!generationRequest || !requestBody) {
+    const payload = await baseResponse.json()
+    return Response.json({ ...payload, benchmarkVersion: E2_R7_BENCHMARK_VERSION }, { headers: { 'cache-control': 'no-store' } })
+  }
 
   const payload = await baseResponse.json()
   let raw
