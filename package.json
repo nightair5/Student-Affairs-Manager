@@ -18,7 +18,7 @@
     "deploy:cloudflare": "npm run build && npm run cloudflare:check && wrangler deploy",
     "lint": "eslint .",
     "typecheck": "tsc -b --pretty false",
-    "test": "vitest run && node --test scripts/recognition-e2-dataset-freeze.mjs scripts/factledger-d6-labels.node.mjs scripts/e2-7-baseline-freeze.node.mjs scripts/e2-9-r1-protocol.node.mjs scripts/e2-9-r2-protocol.node.mjs scripts/e2-9-r3-protocol.node.mjs scripts/e2-9-r4-path-mask.node.mjs scripts/e2-9-r4-protocol.node.mjs scripts/e2-9-r5-path-mask.node.mjs scripts/e2-9-r5-protocol.node.mjs scripts/e2-9-r6-harness-qualification.node.mjs scripts/e2-9-r6-screening-review.node.mjs && node --test server/server-tests.mjs && node --test cloudflare/worker-tests.mjs cloudflare/e2-r2-tests.mjs cloudflare/e2-r3-tests.mjs cloudflare/e2-r4-tests.mjs cloudflare/e2-r5-tests.mjs cloudflare/e2-r6-tests.mjs cloudflare/e2-r7-tests.mjs && npm --prefix functions test",
+    "test": "vitest run && node --test scripts/recognition-e2-dataset-freeze.mjs scripts/factledger-d6-labels.node.mjs scripts/e2-7-baseline-freeze.node.mjs scripts/e2-9-r1-protocol.node.mjs scripts/e2-9-r2-protocol.node.mjs scripts/e2-9-r3-protocol.node.mjs scripts/e2-9-r4-path-mask.node.mjs scripts/e2-9-r4-protocol.node.mjs scripts/e2-9-r5-path-mask.node.mjs scripts/e2-9-r5-protocol.node.mjs scripts/e2-9-r6-harness-qualification.node.mjs scripts/e2-9-r6-screening-review.node.mjs scripts/e2-9-r7-screening-review.node.mjs && node --test server/server-tests.mjs && node --test cloudflare/worker-tests.mjs cloudflare/e2-r2-tests.mjs cloudflare/e2-r3-tests.mjs cloudflare/e2-r4-tests.mjs cloudflare/e2-r5-tests.mjs cloudflare/e2-r6-tests.mjs cloudflare/e2-r7-tests.mjs && npm --prefix functions test",
     "test:e2.7:baseline": "node --test scripts/e2-7-baseline-freeze.node.mjs",
     "eval:recognition": "vitest run src/recognition/evaluation.test.ts",
     "eval:recognition:e2": "node scripts/run-recognition-e2.mjs",
@@ -63,6 +63,7 @@
     ,"eval:recognition:e2:r6:preview-preflight": "node scripts/run-e2-9-r6-preview-preflight.mjs --phase=qualification --dry-run=true --run-label=e29r6-local-preflight"
     ,"eval:recognition:e2:r7:run": "node scripts/run-e2-9-r7.mjs"
     ,"eval:recognition:e2:r7:score": "node scripts/score-e2-9-r7.mjs"
+    ,"eval:recognition:e2:r7:path-review": "node scripts/run-e2-9-r7-path-masked-review.mjs"
   },
   "dependencies": {
     "lucide-react": "^0.468.0",
