@@ -1,5 +1,7 @@
 /* global console, process */
-import { mkdir, readFile, writeFile } from 'node:fs/promises'
+import { spawn } from 'node:child_process'
+import { mkdir, mkdtemp, readFile, rmdir, unlink, writeFile } from 'node:fs/promises'
+import os from 'node:os'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { canonicalJson, sha256 } from './e2-9-r1-hash.mjs'
@@ -43,36 +45,45 @@ function assertFirewall(value, location = '$') {
 }
 
 async function requestJson(url, { token, method = 'GET', body } = {}) {
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'e2-9-r7-curl-'))
+  const bodyPath = path.join(tempDir, 'body.bin')
+  const headersPath = path.join(tempDir, 'headers.txt')
+  const requestPath = path.join(tempDir, 'request.json')
   const startedAt = new Date().toISOString()
   const startedMs = Date.now()
-  let response
+  if (body !== undefined) await writeFile(requestPath, body, 'utf8')
   try {
-    response = await fetch(url, {
-      method,
-      headers: {
-        origin: new URL(url).origin,
-        authorization: `Bearer ${token}`,
-        accept: 'application/json',
-        ...(body === undefined ? {} : { 'content-type': 'application/json' }),
-      },
-      ...(body === undefined ? {} : { body }),
-      signal: AbortSignal.timeout(150_000),
+    const command = process.platform === 'win32' ? 'curl.exe' : 'curl'
+    const args = ['--silent', '--show-error', '--connect-timeout', '20', '--max-time', '150', '--request', method, '--output', bodyPath, '--dump-header', headersPath, '--write-out', '%{http_code}', url]
+    if (body !== undefined) args.push('--data-binary', `@${requestPath}`)
+    const config = [
+      `header = "Origin: ${new URL(url).origin}"`,
+      `header = "Authorization: Bearer ${token}"`,
+      'header = "Accept: application/json"',
+      ...(body === undefined ? [] : ['header = "Content-Type: application/json"']),
+    ].join('\n')
+    const statusText = await new Promise((resolve, reject) => {
+      const child = spawn(command, ['--config', '-', ...args], { stdio: ['pipe', 'pipe', 'pipe'], windowsHide: true })
+      const stdout = []
+      const stderr = []
+      child.stdout.on('data', (chunk) => stdout.push(chunk))
+      child.stderr.on('data', (chunk) => stderr.push(chunk))
+      child.on('error', reject)
+      child.on('close', (code) => code === 0
+        ? resolve(Buffer.concat(stdout).toString('utf8'))
+        : reject(new Error(`curl_exit_${code}:${Buffer.concat(stderr).toString('utf8').slice(0, 300)}`)))
+      child.stdin.end(config)
     })
+    const rawBody = await readFile(bodyPath, 'utf8')
+    const rawHeaders = await readFile(headersPath, 'utf8')
+    let payload = null
+    try { payload = JSON.parse(rawBody) } catch { /* raw response retained */ }
+    return { startedAt, completedAt: new Date().toISOString(), clientDurationMs: Date.now() - startedMs, httpStatus: Number(statusText), rawHeadersSha256: sha256(rawHeaders), rawBody, rawBodySha256: sha256(rawBody), payload }
   } catch (error) {
-    return { startedAt, completedAt: new Date().toISOString(), clientDurationMs: Date.now() - startedMs, httpStatus: null, rawBody: '', rawBodySha256: sha256(''), payload: null, transportError: error instanceof Error ? error.message : 'TRANSPORT_FAILURE' }
-  }
-  const rawBody = await response.text()
-  let payload = null
-  try { payload = JSON.parse(rawBody) } catch { /* raw response retained */ }
-  return {
-    startedAt,
-    completedAt: new Date().toISOString(),
-    clientDurationMs: Date.now() - startedMs,
-    httpStatus: response.status,
-    responseHeaders: Object.fromEntries([...response.headers.entries()].filter(([name]) => ['content-type', 'date', 'request-id', 'x-request-id', 'cf-ray'].includes(name))),
-    rawBody,
-    rawBodySha256: sha256(rawBody),
-    payload,
+    return { startedAt, completedAt: new Date().toISOString(), clientDurationMs: Date.now() - startedMs, httpStatus: null, rawHeadersSha256: sha256(''), rawBody: '', rawBodySha256: sha256(''), payload: null, transportError: error instanceof Error ? error.message : 'TRANSPORT_FAILURE' }
+  } finally {
+    for (const file of [bodyPath, headersPath, requestPath]) if (await exists(file)) await unlink(file)
+    await rmdir(tempDir)
   }
 }
 
