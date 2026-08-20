@@ -1,0 +1,79 @@
+{
+  "schemaVersion": "e2.9-r7-screening-public-result-1.0.0",
+  "protocolVersion": "e2-9-v4-pro-protocol-3.6.2",
+  "runLabel": "e29r7-screening-20260821-d",
+  "generation": {
+    "status": "COMPLETE",
+    "pairCount": 8,
+    "observationCount": 16,
+    "completeObservationCount": 16,
+    "attemptsPerObservation": 1,
+    "workerVersion": "c2ff42d0-1050-490d-ace9-e1aff7ac9062"
+  },
+  "artifacts": {
+    "readinessCheckpointSha256": "87b8ba8009bf47add617348b41ced4db95e35b2f5f6cd10ce43435ec316ed9a6",
+    "screeningCheckpointSha256": "0886afb941eeb74d80d9ed35601ee50447c0e4b464310ac197fd39df006fa336",
+    "strictScoreSha256": "d32cfc3811c6e1ff90ed29c11e22a7a54c5e3bc7f6d0489b651dfc05c27c27c5",
+    "anonymousAggregateSha256": "6736c09cf680ffad380b40b4e7a6b29bfadc95d1c83714668ca141d908639cae"
+  },
+  "arms": {
+    "flash": {
+      "taskPrecision": 0.875,
+      "taskRecall": 0.875,
+      "milestonePrecision": 0.5,
+      "milestoneRecall": 0.5384615384615384,
+      "materialPrecision": 0.9230769230769231,
+      "materialRecall": 0.9230769230769231,
+      "timePointTypeAccuracy": 0.8947368421052632,
+      "timePointValueAccuracy": 0.7368421052631579,
+      "eventAccuracy": 1,
+      "ambiguityPrecision": 0.625,
+      "ambiguityRecall": 0.7142857142857143,
+      "evidenceCoverage": 1,
+      "evidenceValidity": 1,
+      "strictMajorCorrectionRate": 0.75,
+      "severeErrorRate": 0,
+      "planningErrorRate": 0.875,
+      "latencyMeanMs": 10075.125,
+      "latencyP50Ms": 9981,
+      "latencyP95Ms": 14578,
+      "totalTokens": 36000,
+      "meanTokens": 4500
+    },
+    "pro": {
+      "taskPrecision": 0.875,
+      "taskRecall": 0.875,
+      "milestonePrecision": 0.5384615384615384,
+      "milestoneRecall": 0.5384615384615384,
+      "materialPrecision": 0.9230769230769231,
+      "materialRecall": 0.9230769230769231,
+      "timePointTypeAccuracy": 0.8421052631578947,
+      "timePointValueAccuracy": 0.8947368421052632,
+      "eventAccuracy": 1,
+      "ambiguityPrecision": 0.7142857142857143,
+      "ambiguityRecall": 0.7142857142857143,
+      "evidenceCoverage": 1,
+      "evidenceValidity": 1,
+      "strictMajorCorrectionRate": 0.625,
+      "severeErrorRate": 0,
+      "planningErrorRate": 0.75,
+      "latencyMeanMs": 18285.25,
+      "latencyP50Ms": 19211,
+      "latencyP95Ms": 33529,
+      "totalTokens": 35750,
+      "meanTokens": 4468.75
+    }
+  },
+  "machineGate": "PASS",
+  "independentPathMaskedReview": "NOT_RUN",
+  "overallScreeningGate": "PENDING_INDEPENDENT_PATH_MASKED_REVIEW",
+  "selection": "NOT_RUN",
+  "blind": "NOT_CREATED",
+  "production": "NOT_DEPLOYED",
+  "cleanup": {
+    "stablePreviewVersion": "e7ad94ae-af13-41bd-954b-0c2daf738d69",
+    "stableEndpointHttpStatus": 404,
+    "deployedSecretNames": ["DEEPSEEK_API_KEY"],
+    "temporaryBearerPresent": false
+  }
+}
