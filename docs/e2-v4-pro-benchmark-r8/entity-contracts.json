@@ -1,0 +1,64 @@
+{
+  "schemaVersion": "e2.9-r8-entity-contract-freeze-1.0.0",
+  "status": "FROZEN_FOR_ZERO_MODEL_REPLAY",
+  "contracts": {
+    "Fact": {
+      "version": "e2-r8-fact-1.0.0",
+      "authority": "extractor",
+      "required": ["id", "kind", "evidenceIds"],
+      "rule": "只记录原文明示事实或有标记的强推断，不决定 Workspace 结构"
+    },
+    "Task": {
+      "version": "e2-r8-task-1.0.0",
+      "authority": "planner",
+      "required": ["actionPredicate", "object", "obligationId", "evidenceIds"],
+      "rule": "动作加明确对象；不得脱离 obligation 创建任务"
+    },
+    "Event": {
+      "version": "e2-r8-event-1.0.0",
+      "authority": "extractor",
+      "required": ["title", "evidenceIds"],
+      "rule": "表达发生的事情；可与参加该事件的 Task 共存"
+    },
+    "Material": {
+      "version": "e2-r8-material-1.0.0",
+      "authority": "extractor",
+      "required": ["name", "role", "evidenceIds"],
+      "rule": "材料不是 Task；通过 obligationIds 建立关系"
+    },
+    "TimePoint": {
+      "version": "e2-r8-timepoint-1.0.0",
+      "authority": "extractor",
+      "required": ["rawText", "role", "precision", "needsConfirmation", "evidenceIds"],
+      "rule": "role 与事实关系绑定；relative/vague 禁止伪精确"
+    },
+    "Condition": {
+      "version": "e2-r8-condition-1.0.0",
+      "authority": "extractor",
+      "required": ["kind", "text", "appliesToFactIds", "evidenceIds"],
+      "rule": "资格、前置、触发、例外和顺序独立表达"
+    },
+    "Ambiguity": {
+      "version": "e2-r8-ambiguity-1.0.0",
+      "authority": "extractor",
+      "required": ["code", "message", "targetFactIds", "evidenceIds"],
+      "rule": "只表达原文未决且影响执行的内容；不得替模型补造事实"
+    }
+  },
+  "normalizerPermissions": {
+    "mayAddOrDeleteFacts": false,
+    "mayChangeActionPredicateOrObject": false,
+    "mayChangeTimeRoleOrValue": false,
+    "mayChangeConditionOrAmbiguityMeaning": false,
+    "mayDeduplicateReferences": true,
+    "mayDropDanglingReferences": true,
+    "mayCloseExistingBidirectionalRelations": true
+  },
+  "plannerPostconditions": [
+    "all frozen facts are represented",
+    "all planned tasks map to a frozen obligation",
+    "relative or vague time is not made concrete",
+    "information-only input may have zero tasks while preserving event and time"
+  ],
+  "productionIntegration": "FORBIDDEN"
+}

@@ -1,0 +1,88 @@
+{
+  "schemaVersion": "e2.9-r8-general-failure-map-1.0.0",
+  "scope": "isolated_planner_repair",
+  "principle": "Preserve explicit source facts before deciding their Workspace structure.",
+  "nodes": [
+    {
+      "code": "FACT_DISCOVERY_MISSING",
+      "layer": "extractor",
+      "symptom": "原文明示动作、材料、时间、事件、条件或歧义未进入事实层",
+      "invariant": "每个事实必须有逐字 evidence span",
+      "detection": "source fact inventory has no matching fact node",
+      "repairBoundary": "extractor only",
+      "genericRegression": "同义动作、并列动作、跨段动作和条件动作"
+    },
+    {
+      "code": "FACT_PRESENT_NORMALIZER_DELETION",
+      "layer": "normalizer",
+      "symptom": "模型原始输出已有事实，但规范化结果删除或改写事实",
+      "invariant": "Normalizer 不得增加、删除或改变事实语义",
+      "detection": "raw FactGraph fact exists but normalized graph/result does not",
+      "repairBoundary": "reference repair only",
+      "genericRegression": "动词词面不同、同一事件多种动作表达"
+    },
+    {
+      "code": "EVENT_TASK_BOUNDARY_COLLAPSE",
+      "layer": "planner",
+      "symptom": "把事件本身与用户参加、签到、走台等义务互相吞并",
+      "invariant": "Event 表达发生了什么，Task 表达用户必须做什么；两者可同时存在并显式关联",
+      "detection": "event exists with explicit obligation but only one side is planned",
+      "repairBoundary": "planner relations",
+      "genericRegression": "会议、演出、培训、报到、维护通知"
+    },
+    {
+      "code": "PURE_INFORMATION_FACT_ERASURE",
+      "layer": "normalizer",
+      "symptom": "requiresAction=false 时连同明确 Event/TimePoint 一并清空",
+      "invariant": "纯信息可无 Task，但不得丢失明确 Event、TimePoint 和 Evidence",
+      "detection": "information-only source has explicit event/time but result arrays are empty",
+      "repairBoundary": "normalizer and planner",
+      "genericRegression": "系统维护、结果公示、场地变更、停课通知"
+    },
+    {
+      "code": "TIME_FALSE_PRECISION",
+      "layer": "normalizer",
+      "symptom": "傍晚、稍后、近期等模糊时间被转换为确定时间",
+      "invariant": "relative/vague 必须 normalizedValue=null 且 needsConfirmation=true",
+      "detection": "precision is relative/vague with a concrete normalized value or no confirmation",
+      "repairBoundary": "extractor contract; normalizer cannot override",
+      "genericRegression": "模糊时段、相对日期、跨午夜表达"
+    },
+    {
+      "code": "TIME_ROLE_DRIFT",
+      "layer": "planner",
+      "symptom": "报名截止、提交截止、任务截止与事件开始混淆",
+      "invariant": "TimePoint role belongs to the fact relation, not to a title keyword rewrite",
+      "detection": "same time fact changes role between FactGraph and planned result",
+      "repairBoundary": "fact adapter relation binding",
+      "genericRegression": "报名、报送、提交、到场与结果公布"
+    },
+    {
+      "code": "CONDITION_SCOPE_LOSS",
+      "layer": "extractor_planner_boundary",
+      "symptom": "适用资格、前置条件或触发条件未进入歧义确认",
+      "invariant": "Condition 独立成事实；用户是否满足条件未知时必须产生 Ambiguity",
+      "detection": "condition exists without a represented ambiguity or target relation",
+      "repairBoundary": "fact contract and planner projection",
+      "genericRegression": "仅限、如果、若、通过后、未满足时"
+    },
+    {
+      "code": "PLANNER_UNSUPPORTED_TASK",
+      "layer": "planner",
+      "symptom": "Planner 创建了无对应 obligation 或无逐字证据的任务",
+      "invariant": "每个 Task 必须映射到且只映射到已冻结 obligation",
+      "detection": "planned task cannot be matched to a FactGraph obligation",
+      "repairBoundary": "planner fail-closed",
+      "genericRegression": "背景材料、联系方式、地址、格式说明不冒充任务"
+    },
+    {
+      "code": "EVALUATION_CONTRACT_MISMATCH",
+      "layer": "evaluation",
+      "symptom": "冻结 Expected 将盲评认为合理或必要的结构判为 spurious",
+      "invariant": "严格分与语义等价/用户影响分并列报告，禁止修改 Expected 刷分",
+      "detection": "contract preservation improves while frozen strict score regresses on the same fact",
+      "repairBoundary": "independent adjudication and scorer contract, never expected rewriting",
+      "genericRegression": "纯信息事件、事件义务双表示、合理任务分组"
+    }
+  ]
+}

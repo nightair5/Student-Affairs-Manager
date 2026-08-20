@@ -1,0 +1,15 @@
+{
+  "schemaVersion": "e2.9-r8-screening-request-1.0.0",
+  "status": "NOT_REQUESTED",
+  "reason": "Architecture fact-preservation replay passed, but the frozen strict-score gate failed and the evaluation-contract mismatch has not received an independent path-masked adjudication.",
+  "modelCallsAuthorized": 0,
+  "selection": "NOT_RUN",
+  "blind": "NOT_CREATED",
+  "production": "NOT_DEPLOYED",
+  "requiredBeforeRequest": [
+    "create a model-identity-free and expected-free R8 before/after replay packet",
+    "obtain independent path-masked user-impact adjudication",
+    "pass the replay adjudication Gate",
+    "freeze a fresh protocol, run label, and labels"
+  ]
+}
