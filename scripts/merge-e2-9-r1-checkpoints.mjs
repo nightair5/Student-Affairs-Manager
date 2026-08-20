@@ -4,7 +4,7 @@ import path from 'node:path'
 import { sha256 } from './e2-9-r1-hash.mjs'
 
 const ROOT = process.cwd()
-const PROTOCOL_VERSION = 'e2-9-v4-pro-reduced-protocol-2.0.0'
+const PROTOCOL_VERSION = 'e2-9-v4-pro-protocol-3.5.0'
 
 function option(name) {
   const prefix = `--${name}=`
@@ -31,7 +31,7 @@ async function main() {
   const keys = observations.map((item) => `${item.caseId}:${item.modelAlias}`)
   if (observations.length !== 48 || new Set(keys).size !== 48 || new Set(observations.map((item) => item.caseId)).size !== 24) throw new Error('Selection merge must contain 24 complete pairs exactly once')
   const merged = {
-    schemaVersion: 'e2.9-r1-merged-checkpoint-2.0.0', protocolVersion: PROTOCOL_VERSION, phase: 'selection',
+    schemaVersion: 'e2.9-r6-merged-checkpoint-1.0.0', protocolVersion: PROTOCOL_VERSION, phase: 'selection',
     labels: { screening: screening.label, remaining: remaining.label }, seed: { screening: screening.seed, remaining: remaining.seed },
     deploymentVersion: screening.deploymentVersion, readinessLabel: screening.readinessLabel, readinessSha256: screening.readinessSha256,
     sourceOnlySha256: screening.sourceOnlySha256, startedAt: screening.startedAt, completedAt: remaining.completedAt,

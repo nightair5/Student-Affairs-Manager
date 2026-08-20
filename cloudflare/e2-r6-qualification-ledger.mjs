@@ -1,5 +1,5 @@
 const RECORD_KEY = 'qualification'
-const PROTOCOL_VERSION = 'e2-9-v4-pro-protocol-3.4.0'
+const PROTOCOL_VERSION = 'e2-9-v4-pro-protocol-3.5.0'
 const REGISTRATION_FIELDS = new Set([
   'runLabel', 'protocolVersion', 'expectedWorkerVersionId', 'qualificationBundleSha256',
   'qualificationResultSha256', 'qualificationResult',

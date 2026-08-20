@@ -206,7 +206,7 @@ test('recognition normalization preserves near-schema model output without dropp
   })
 })
 
-test('recognition normalization removes format-only, duplicate event, and information-only pseudo tasks', () => {
+test('recognition normalization removes format-only and information-only pseudo tasks while preserving explicit event actions', () => {
   const evidence = [
     { id: 'ev-submit', quotedText: '提交课程反思，PDF格式，文件命名为学号+姓名', field: 'description', confidence: 0.9 },
     { id: 'ev-event', quotedText: '下午3点参加学术讲座', field: 'event', confidence: 0.9 },
@@ -227,7 +227,7 @@ test('recognition normalization removes format-only, duplicate event, and inform
     evidence, conflicts: [], ambiguities: [], ignoredContent: [], quality: {},
   }
   const result = normalizeRecognitionResult(base, '提交课程反思，PDF格式，文件命名为学号+姓名；下午3点参加学术讲座', '2026-08-09T00:00:00.000Z')
-  assert.deepEqual(result.standaloneTasks.map((task) => task.title), ['提交课程反思'])
+  assert.deepEqual(result.standaloneTasks.map((task) => task.title), ['提交课程反思', '参加学术讲座'])
   assert.equal(result.events.length, 1)
 
   const informationOnly = normalizeRecognitionResult({
@@ -316,7 +316,7 @@ test('recognition normalization discards prompt-injection tasks before an explic
   assert.deepEqual(result.standaloneTasks.map((task) => task.title), ['提交报名表'])
 })
 
-test('recognition normalization removes unsupported passive result tasks and event duplicates', () => {
+test('recognition normalization removes unsupported passive result tasks and preserves required event actions', () => {
   const source = '9月6日公布入围结果；入围作者9月10日晚八点参加展映交流。'
   const result = normalizeRecognitionResult({
     schemaVersion: '2.0', createdAt: '2026-08-09T00:00:00.000Z',
@@ -331,7 +331,55 @@ test('recognition normalization removes unsupported passive result tasks and eve
       { id: 'event-evidence', quotedText: '参加展映交流', field: 'event', confidence: 0.9 },
     ], conflicts: [], ambiguities: [], ignoredContent: [], quality: {},
   }, source, '2026-08-09T00:00:00.000Z')
-  assert.deepEqual(result.standaloneTasks, [])
+  assert.deepEqual(result.standaloneTasks.map((task) => task.title), ['参加展映交流'])
+})
+
+test('recognition normalization keeps milestone Tasks for mandatory attendance and sign-in Events', () => {
+  const source = '志愿者9月1日7:30在东门参加岗前集合，完成签到；13:00在体育馆参加说明会。'
+  const result = normalizeRecognitionResult({
+    schemaVersion: '2.0',
+    sourceSummary: { title: '志愿安排', sourceType: 'text', notificationType: 'event_notice', summary: source, requiresAction: true, actionReason: '明确要求参加并签到' },
+    projectMatch: { decision: 'new_project', matchedProjectId: null, suggestedProjectTitle: '志愿服务', confidence: 0.9, reasons: [] },
+    projectSuggestion: null,
+    milestones: [
+      { tempId: 'ms-1', title: '集合签到', objective: '完成签到', evidenceIds: ['ev-1'], workPackages: [], tasks: [{ tempId: 'task-1', title: '参加岗前集合并签到', actionVerb: '参加', actionObject: '岗前集合并签到', evidenceIds: ['ev-1'], timePointTempIds: ['tp-1'], inferenceLevel: 'explicit' }] },
+      { tempId: 'ms-2', title: '说明会', objective: '参加说明会', evidenceIds: ['ev-2'], workPackages: [], tasks: [{ tempId: 'task-2', title: '参加说明会', actionVerb: '参加', actionObject: '说明会', evidenceIds: ['ev-2'], timePointTempIds: ['tp-2'], inferenceLevel: 'explicit' }] },
+    ],
+    standaloneTasks: [], materials: [],
+    timePoints: [
+      { tempId: 'tp-1', type: 'event_start', rawText: '9月1日7:30', normalizedValue: '2026-09-01T07:30:00+08:00', precision: 'exact', needsConfirmation: false, relatedTaskTempIds: ['task-1'], evidenceIds: ['ev-1'] },
+      { tempId: 'tp-2', type: 'event_start', rawText: '13:00', normalizedValue: '2026-09-01T13:00:00+08:00', precision: 'exact', needsConfirmation: false, relatedTaskTempIds: ['task-2'], evidenceIds: ['ev-2'] },
+    ],
+    events: [
+      { tempId: 'event-1', title: '岗前集合并签到', startTimePointTempId: 'tp-1', evidenceIds: ['ev-1'], inferenceLevel: 'explicit' },
+      { tempId: 'event-2', title: '说明会', startTimePointTempId: 'tp-2', evidenceIds: ['ev-2'], inferenceLevel: 'explicit' },
+    ],
+    evidence: [
+      { id: 'ev-1', quotedText: '参加岗前集合，完成签到', field: 'event' },
+      { id: 'ev-2', quotedText: '参加说明会', field: 'event' },
+    ],
+    conflicts: [], ambiguities: [], ignoredContent: [], quality: {},
+  }, source, '2026-08-20T00:00:00.000Z')
+  assert.deepEqual(result.milestones.flatMap((milestone) => milestone.tasks.map((task) => task.title)), ['参加岗前集合并签到', '参加说明会'])
+  assert.equal(result.events.length, 2)
+})
+
+test('recognition normalization does not invent a Task for optional event attendance', () => {
+  const source = '同学可自愿参加9月1日13:00的说明会。'
+  const result = normalizeRecognitionResult({
+    schemaVersion: '2.0',
+    sourceSummary: { title: '说明会通知', sourceType: 'text', notificationType: 'event_notice', summary: source, requiresAction: false, actionReason: '自愿参加' },
+    projectMatch: { decision: 'standalone_task', matchedProjectId: null, suggestedProjectTitle: null, confidence: 0.9, reasons: [] },
+    projectSuggestion: null, milestones: [],
+    standaloneTasks: [{ tempId: 'task-1', title: '参加说明会', actionVerb: '参加', actionObject: '说明会', evidenceIds: ['ev-1'], inferenceLevel: 'explicit' }],
+    materials: [], timePoints: [],
+    events: [{ tempId: 'event-1', title: '说明会', startTimePointTempId: null, evidenceIds: ['ev-1'], inferenceLevel: 'explicit' }],
+    evidence: [{ id: 'ev-1', quotedText: '可自愿参加9月1日13:00的说明会', field: 'event' }],
+    conflicts: [], ambiguities: [], ignoredContent: [], quality: {},
+  }, source, '2026-08-20T00:00:00.000Z')
+  assert.equal(result.sourceSummary.requiresAction, false)
+  assert.equal(result.standaloneTasks.length, 0)
+  assert.equal(result.events.length, 1)
 })
 
 test('conditional repair runs at most once and keeps the first valid result when repair fails', async () => {
@@ -728,7 +776,7 @@ test('E2.9 generation changes only the server-selected model and records paired 
     },
   })
   const source = {
-    sourceType: 'text', sourceTitle: '通知', content: '请提交材料',
+    semanticRole: 'action_required', sourceType: 'text', sourceTitle: '通知', content: '请提交材料',
     referenceTime: '2026-08-13T00:00:00.000Z', timezone: 'Asia/Shanghai',
   }
   const flash = await worker.fetch(benchmarkRequest('generate', { ...source, modelAlias: 'flash' }), benchmarkEnvironment())
@@ -739,11 +787,17 @@ test('E2.9 generation changes only the server-selected model and records paired 
   const proPayload = await pro.json()
   assert.equal(flashPayload.execution.returnedModel, 'deepseek-v4-flash')
   assert.equal(proPayload.execution.returnedModel, 'deepseek-v4-pro')
+  assert.deepEqual(
+    [proPayload.execution.requestedModel, proPayload.execution.returnedModel, proPayload.execution.executionModel, proPayload.result.modelName],
+    Array(4).fill('deepseek-v4-pro'),
+  )
+  assert.equal(proPayload.semanticRole, 'action_required')
+  assert.equal(proPayload.execution.semanticRole, 'action_required')
   assert.equal(flashPayload.execution.promptVersion, 'recognition-2.4.1')
   assert.equal(flashPayload.execution.validatorVersion, 'recognition-quality-2.1.0')
   assert.equal(flashPayload.execution.router, 'BYPASSED')
   assert.equal(flashPayload.execution.repair, 'DISABLED')
-  assert.equal(flashPayload.execution.normalizer, 'DISABLED')
+  assert.equal(flashPayload.execution.normalizer, 'e2-v4-pro-benchmark-normalizer-2.1.0')
   assert.match(flashPayload.execution.sourceSha256, /^[a-f0-9]{64}$/u)
   assert.match(flashPayload.execution.rawOutputSha256, /^[a-f0-9]{64}$/u)
   assert.match(flashPayload.execution.resultSha256, /^[a-f0-9]{64}$/u)
@@ -754,6 +808,7 @@ test('E2.9 generation changes only the server-selected model and records paired 
   assert.equal(upstreamBodies[0].stream, false)
   assert.deepEqual(upstreamBodies[0].thinking, { type: 'disabled' })
   assert.deepEqual(upstreamBodies[0].response_format, { type: 'json_object' })
+  assert.doesNotMatch(JSON.stringify(upstreamBodies[0].messages), /semanticRole|action_required|information_only|prompt_injection/u)
   assert.deepEqual({ ...upstreamBodies[0], model: '<MODEL>' }, { ...upstreamBodies[1], model: '<MODEL>' })
 })
 
@@ -761,7 +816,7 @@ test('E2.9 generation firewall rejects expected answers and arbitrary model IDs 
   let contacted = false
   const worker = createWorker({ fetcher: async () => { contacted = true } })
   const source = {
-    modelAlias: 'flash', sourceType: 'text', sourceTitle: '通知', content: '提交材料',
+    modelAlias: 'flash', semanticRole: 'action_required', sourceType: 'text', sourceTitle: '通知', content: '提交材料',
     referenceTime: '2026-08-13T00:00:00.000Z', timezone: 'Asia/Shanghai',
   }
   const expected = await worker.fetch(benchmarkRequest('generate', { ...source, expected: { tasks: [] } }), benchmarkEnvironment())
@@ -775,7 +830,7 @@ test('E2.9 generation firewall rejects expected answers and arbitrary model IDs 
 
 test('E2.9 generation fails closed on model fallback or missing fingerprint', async () => {
   const source = {
-    modelAlias: 'pro', sourceType: 'text', sourceTitle: '通知', content: '提交材料',
+    modelAlias: 'pro', semanticRole: 'action_required', sourceType: 'text', sourceTitle: '通知', content: '提交材料',
     referenceTime: '2026-08-13T00:00:00.000Z', timezone: 'Asia/Shanghai',
   }
   const fallbackWorker = createWorker({ fetcher: async () => Response.json({
@@ -801,7 +856,7 @@ test('E2.9 formal generation does not retry an upstream HTTP failure', async () 
   let calls = 0
   const worker = createWorker({ fetcher: async () => { calls += 1; return Response.json({ error: 'busy' }, { status: 503 }) } })
   const response = await worker.fetch(benchmarkRequest('generate', {
-    modelAlias: 'pro', sourceType: 'text', sourceTitle: '通知', content: '提交材料',
+    modelAlias: 'pro', semanticRole: 'action_required', sourceType: 'text', sourceTitle: '通知', content: '提交材料',
     referenceTime: '2026-08-13T00:00:00.000Z', timezone: 'Asia/Shanghai',
   }), benchmarkEnvironment())
   assert.equal(response.status, 503)

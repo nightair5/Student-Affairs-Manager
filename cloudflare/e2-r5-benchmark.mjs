@@ -200,7 +200,7 @@ async function handleGenerate(request, env, fetcher) {
   const maxAttempts = reservation.payload.maxAttempts
   if (![1, 2].includes(maxAttempts)) return json({ error: 'OBSERVATION_ATTEMPT_BUDGET_INVALID' }, 412)
   const expectedModel = MODEL_BY_ALIAS[body.modelAlias]
-  const upstreamBody = { modelAlias: body.modelAlias, sourceType: body.sourceType, sourceTitle: body.sourceTitle, content: source, referenceTime: body.referenceTime, timezone: body.timezone }
+  const upstreamBody = { modelAlias: body.modelAlias, semanticRole: body.semanticRole, sourceType: body.sourceType, sourceTitle: body.sourceTitle, content: source, referenceTime: body.referenceTime, timezone: body.timezone }
   let lastEvidence = null
   let currentAttemptNumber = 0
   let recordedAttemptNumber = 0

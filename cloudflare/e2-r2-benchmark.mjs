@@ -163,7 +163,7 @@ async function handleGenerate(request, env, fetcher) {
   const token = reservation.payload.reservationToken
   let finalDetails = { outcome: 'failure', error: 'HARNESS_FAILURE', sourceSha256: body.sourceSha256 }
   try {
-    const upstreamBody = { modelAlias: body.modelAlias, sourceType: body.sourceType, sourceTitle: body.sourceTitle, content: source, referenceTime: body.referenceTime, timezone: body.timezone }
+    const upstreamBody = { modelAlias: body.modelAlias, semanticRole: body.semanticRole, sourceType: body.sourceType, sourceTitle: body.sourceTitle, content: source, referenceTime: body.referenceTime, timezone: body.timezone }
     const upstream = await runE2V4ProBenchmark(r1Request(request, 'generate', 'POST', upstreamBody), r1Environment(env), fetcher)
     const payload = await upstream.json().catch(() => null)
     if (!upstream.ok || !payload?.result || !payload?.execution) {

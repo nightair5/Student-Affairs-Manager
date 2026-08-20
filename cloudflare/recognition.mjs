@@ -212,12 +212,17 @@ export function normalizeRecognitionResult(raw, sourceContent, nowIso) {
   const sharesContext = (left, right) => left.evidenceIds.some((id) => right.evidenceIds.includes(id))
     || left.materialTempIds.some((id) => right.materialTempIds.includes(id))
     || left.timePointTempIds.some((id) => right.timePointTempIds.includes(id))
-  const eventSupportsTask = (task) => EVENT_ONLY_VERBS.has(task.actionVerb) && events.some((event) =>
+  const eventMirrorsTask = (task) => EVENT_ONLY_VERBS.has(task.actionVerb) && events.some((event) =>
     event.evidenceIds.some((id) => task.evidenceIds.includes(id))
       || event.title.includes(task.actionObject)
       || task.actionObject.includes(event.title))
+  const explicitRequiredEventTask = (task) => EVENT_ONLY_VERBS.has(task.actionVerb)
+    && sourceSummaryRaw.requiresAction === true
+    && task.inferenceLevel === 'explicit'
+    && hasSupportedAction(task)
   const keepTask = (task) => {
-    if (informationOnly || !hasTrustedEvidence(task) || FORMAT_ONLY_VERBS.has(task.actionVerb) || eventSupportsTask(task)) return false
+    if (informationOnly || !hasTrustedEvidence(task) || FORMAT_ONLY_VERBS.has(task.actionVerb)
+      || (eventMirrorsTask(task) && !explicitRequiredEventTask(task))) return false
     if (PASSIVE_RESULT_VERBS.has(task.actionVerb) && PASSIVE_RESULT_OBJECT.test(task.actionObject) && !hasSupportedAction(task)) return false
     if (hasSupportedAction(task)) return true
     return !currentTasks.some((candidate) => candidate.tempId !== task.tempId

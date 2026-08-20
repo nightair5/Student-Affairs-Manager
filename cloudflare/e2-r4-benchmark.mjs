@@ -190,7 +190,7 @@ async function handleGenerate(request, env, fetcher) {
   if (!reservation.response.ok) return json(reservation.payload, reservation.response.status)
   const token = reservation.payload.reservationToken
   const expectedModel = MODEL_BY_ALIAS[body.modelAlias]
-  const upstreamBody = { modelAlias: body.modelAlias, sourceType: body.sourceType, sourceTitle: body.sourceTitle, content: source, referenceTime: body.referenceTime, timezone: body.timezone }
+  const upstreamBody = { modelAlias: body.modelAlias, semanticRole: body.semanticRole, sourceType: body.sourceType, sourceTitle: body.sourceTitle, content: source, referenceTime: body.referenceTime, timezone: body.timezone }
   let lastEvidence = null
   try {
     for (let attemptNumber = 1; attemptNumber <= 2; attemptNumber += 1) {

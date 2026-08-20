@@ -6,6 +6,7 @@ import path from 'node:path'
 import { canonicalJson, canonicalizeFileContent, hashBundle, normalizeLf, sha256 } from './e2-9-r1-hash.mjs'
 import { semanticRoleFor, sourceCase } from './prepare-e2-9-r1-manifests.mjs'
 import { validateGeneration } from './run-e2-9-r1.mjs'
+import { assertR6ScoringInput } from './score-e2-9-r1.mjs'
 
 test('R1 canonical JSON is stable across object key order', () => {
   assert.equal(canonicalJson({ z: 1, a: { y: 2, x: [3, 4] } }), canonicalJson({ a: { x: [3, 4], y: 2 }, z: 1 }))
@@ -39,14 +40,16 @@ test('R1 source projection preserves semantic role for every benchmark phase', (
 
 function generationPayload(result, sourceSha256) {
   const rawOutput = '{"synthetic":true}'
+  const boundResult = { ...result, modelName: 'deepseek-v4-flash' }
   return {
+    benchmarkVersion: 'e2-v4-pro-benchmark-2.1.0', semanticRole: 'information_only',
     rawOutput,
-    result,
+    result: boundResult,
     execution: {
-      requestedModel: 'deepseek-v4-flash', returnedModel: 'deepseek-v4-flash', systemFingerprint: 'synthetic-fingerprint',
-      promptVersion: 'recognition-2.4.1', schemaVersion: '2.0', pipelineVersion: 'recognition-pipeline-2.2.1', validatorVersion: 'recognition-quality-2.1.0',
-      router: 'BYPASSED', repair: 'DISABLED', normalizer: 'DISABLED', temperature: 0, maxTokens: 6000, thinking: 'disabled',
-      attempts: [{}], sourceSha256, rawOutputSha256: sha256(rawOutput), resultSha256: sha256(JSON.stringify(result)), tokenUsage: { input: 1, output: 1, total: 2 },
+      requestedModel: 'deepseek-v4-flash', returnedModel: 'deepseek-v4-flash', executionModel: 'deepseek-v4-flash', semanticRole: 'information_only', systemFingerprint: 'synthetic-fingerprint',
+      promptVersion: 'recognition-2.4.1', promptSha256: 'c925f1dc27971e4fcaf7ad185b729f016fa7af966cd7992337d9eaa94c97e6fd', schemaVersion: '2.0', pipelineVersion: 'recognition-pipeline-2.2.1', validatorVersion: 'recognition-quality-2.1.0',
+      router: 'BYPASSED', repair: 'DISABLED', normalizer: 'e2-v4-pro-benchmark-normalizer-2.1.0', temperature: 0, maxTokens: 6000, thinking: 'disabled',
+      attempts: [{}], sourceSha256, rawOutputSha256: sha256(rawOutput), resultSha256: sha256(JSON.stringify(boundResult)), tokenUsage: { input: 1, output: 1, total: 2 },
     },
   }
 }
@@ -66,4 +69,38 @@ test('R1 Gate fails closed when semantic role is missing or information-only act
   const sourceSha256 = sha256('停电公告')
   assert.throws(() => validateGeneration(generationPayload(informationOnlyResult(false), sourceSha256), { sourceSha256 }, 'flash'), /SEMANTIC_ROLE_MISSING_OR_INVALID/u)
   assert.throws(() => validateGeneration(generationPayload(informationOnlyResult(true), sourceSha256), { sourceSha256, semanticRole: 'information_only' }, 'flash'), /PURE_INFORMATION_REQUIRES_ACTION_DRIFT/u)
+})
+
+test('R6 scorer binds source manifest, prompt, schema, protocol, checkpoint and model lineage', () => {
+  const content = '停电公告'
+  const source = {
+    protocolVersion: 'e2-9-v4-pro-reduced-protocol-2.0.0',
+    smokeCases: [], selectionCases: [],
+    screeningCases: [{ caseId: 'info-1', content, semanticRole: 'information_only' }],
+  }
+  const fixture = { sourceSha256: sha256(content), semanticRole: 'information_only' }
+  const observations = ['flash', 'pro'].map((alias) => {
+    const payload = generationPayload(informationOnlyResult(false), fixture.sourceSha256)
+    const model = `deepseek-v4-${alias}`
+    payload.result.modelName = model
+    payload.execution.requestedModel = model
+    payload.execution.returnedModel = model
+    payload.execution.executionModel = model
+    payload.execution.resultSha256 = sha256(JSON.stringify(payload.result))
+    return { caseId: 'info-1', modelAlias: alias, semanticRole: 'information_only', requestedModel: model, status: 'complete', response: { payload } }
+  })
+  const checkpoint = { protocolVersion: 'e2-9-v4-pro-protocol-3.5.0', phase: 'screening', gateStatus: 'COMPLETE', expectedObservations: 2, sourceOnlySha256: sha256(canonicalJson(source)), observations }
+  const raw = JSON.stringify(checkpoint)
+  assert.doesNotThrow(() => assertR6ScoringInput(checkpoint, raw, source))
+  const drifted = structuredClone(checkpoint)
+  drifted.observations[0].response.payload.execution.promptSha256 = '0'.repeat(64)
+  assert.throws(() => assertR6ScoringInput(drifted, raw, source), /R6 scorer prompt/u)
+  const roleDrift = structuredClone(checkpoint)
+  roleDrift.observations[0].semanticRole = 'action_required'
+  roleDrift.observations[0].response.payload.semanticRole = 'action_required'
+  roleDrift.observations[0].response.payload.execution.semanticRole = 'action_required'
+  assert.throws(() => assertR6ScoringInput(roleDrift, raw, source), /R6 scorer prompt/u)
+  const aliasDrift = structuredClone(checkpoint)
+  aliasDrift.observations[0].modelAlias = 'experimental'
+  assert.throws(() => assertR6ScoringInput(aliasDrift, raw, source), /R6 scorer prompt/u)
 })

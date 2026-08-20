@@ -11,7 +11,8 @@ import {
 } from './recognition-quality.mjs'
 import { RECOGNITION_PIPELINE_VERSION } from './model-gateway.mjs'
 
-export const E2_V4_PRO_BENCHMARK_VERSION = 'e2-v4-pro-benchmark-2.0.0'
+export const E2_V4_PRO_BENCHMARK_VERSION = 'e2-v4-pro-benchmark-2.1.0'
+export const E2_V4_PRO_BENCHMARK_NORMALIZER_VERSION = 'e2-v4-pro-benchmark-normalizer-2.1.0'
 export const E2_V4_PRO_BENCHMARK_PROMPT_SHA256 = 'c925f1dc27971e4fcaf7ad185b729f016fa7af966cd7992337d9eaa94c97e6fd'
 export const E2_V4_PRO_BENCHMARK_MAX_TOKENS = 6_000
 
@@ -19,7 +20,7 @@ const CHAT_COMPLETIONS_ENDPOINT = 'https://api.deepseek.com/chat/completions'
 const MODELS_ENDPOINT = 'https://api.deepseek.com/models'
 const TIMEOUT_MS = 45_000
 const MAX_BODY_BYTES = 100_000
-const REQUEST_FIELDS = new Set(['modelAlias', 'sourceType', 'sourceTitle', 'content', 'referenceTime', 'timezone'])
+const REQUEST_FIELDS = new Set(['modelAlias', 'semanticRole', 'sourceType', 'sourceTitle', 'content', 'referenceTime', 'timezone'])
 const MODEL_BY_ALIAS = Object.freeze({ flash: 'deepseek-v4-flash', pro: 'deepseek-v4-pro' })
 const SAFE_UPSTREAM_HEADERS = Object.freeze(['content-type', 'date', 'request-id', 'x-request-id', 'cf-ray', 'server'])
 
@@ -57,6 +58,7 @@ function isPreviewAuthorized(request, env) {
 function validateRequest(body) {
   if (!onlyFields(body, REQUEST_FIELDS)) return 'GENERATION_FIREWALL_REJECTED'
   if (!Object.hasOwn(MODEL_BY_ALIAS, body.modelAlias)) return 'MODEL_ALIAS_INVALID'
+  if (!['action_required', 'information_only', 'prompt_injection'].includes(body.semanticRole)) return 'SEMANTIC_ROLE_INVALID'
   if (!['text', 'file', 'image', 'link'].includes(body.sourceType)) return 'SOURCE_TYPE_INVALID'
   if (typeof body.content !== 'string' || !body.content.trim() || body.content.length > 24_000) return 'CONTENT_INVALID'
   if (body.sourceTitle !== undefined && (typeof body.sourceTitle !== 'string' || body.sourceTitle.length > 160)) return 'SOURCE_TITLE_INVALID'
@@ -278,9 +280,10 @@ async function handleGenerate(request, env, fetcher) {
   const normalized = normalizeRecognitionResult(parsed, sourceContent, referenceTime)
   if (!normalized) return failure('INVALID_AI_RESPONSE_SCHEMA', 502, { execution: completion })
   const validation = validateRecognitionQuality(normalized, sourceContent)
-  const result = annotateRecognitionQuality(normalized, validation)
+  const result = { ...annotateRecognitionQuality(normalized, validation), modelName: completion.returnedModel }
   return json({
     benchmarkVersion: E2_V4_PRO_BENCHMARK_VERSION,
+    semanticRole: body.semanticRole,
     rawOutput: completion.content,
     result,
     validation,
@@ -288,6 +291,8 @@ async function handleGenerate(request, env, fetcher) {
       provider: 'deepseek',
       requestedModel: completion.requestedModel,
       returnedModel: completion.returnedModel,
+      executionModel: completion.returnedModel,
+      semanticRole: body.semanticRole,
       systemFingerprint: completion.systemFingerprint,
       finishReason: completion.finishReason,
       tokenUsage: completion.usage,
@@ -300,7 +305,7 @@ async function handleGenerate(request, env, fetcher) {
       validatorVersion: RECOGNITION_VALIDATOR_VERSION,
       router: 'BYPASSED',
       repair: 'DISABLED',
-      normalizer: 'DISABLED',
+      normalizer: E2_V4_PRO_BENCHMARK_NORMALIZER_VERSION,
       temperature: 0,
       maxTokens: E2_V4_PRO_BENCHMARK_MAX_TOKENS,
       thinking: 'disabled',

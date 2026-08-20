@@ -1,11 +1,17 @@
 /* global console, process */
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { createServer } from 'vite'
 import { canonicalJson, sha256 } from './e2-9-r1-hash.mjs'
 
 const ROOT = process.cwd()
-const PROTOCOL_VERSION = 'e2-9-v4-pro-reduced-protocol-2.0.0'
+const PROTOCOL_VERSION = 'e2-9-v4-pro-protocol-3.5.0'
+const SCORER_VERSION = 'e2-9-r6-strict-scorer-1.0.0'
+const RECOGNITION_SCHEMA_VERSION = '2.0'
+const SOURCE_PROTOCOL_VERSION = 'e2-9-v4-pro-reduced-protocol-2.0.0'
+const PROMPT_VERSION = 'recognition-2.4.1'
+const PROMPT_SHA256 = 'c925f1dc27971e4fcaf7ad185b729f016fa7af966cd7992337d9eaa94c97e6fd'
 
 function option(name, fallback = '') {
   const prefix = `--${name}=`
@@ -64,15 +70,43 @@ function compactMetrics(alias, results, observations, aggregate) {
   }
 }
 
+export function assertR6ScoringInput(checkpoint, checkpointRaw, source) {
+  if (checkpoint.protocolVersion !== PROTOCOL_VERSION || checkpoint.gateStatus !== 'COMPLETE') throw new Error('Only a complete R6 checkpoint can be scored')
+  if (source.protocolVersion !== SOURCE_PROTOCOL_VERSION || checkpoint.sourceOnlySha256 !== sha256(canonicalJson(source))) throw new Error('R6 source manifest binding mismatch')
+  if (checkpoint.observations.length !== checkpoint.expectedObservations || checkpoint.observations.some((item) => item.status !== 'complete')) throw new Error('Incomplete observations cannot be scored as model quality')
+  const phaseCases = checkpoint.phase === 'screening' ? source.screeningCases
+    : checkpoint.phase === 'selection-remaining' ? source.selectionCases.filter((item) => !source.screeningCases.some((screening) => screening.caseId === item.caseId))
+      : checkpoint.phase === 'selection' ? source.selectionCases : checkpoint.phase === 'smoke' ? source.smokeCases : null
+  if (!phaseCases) throw new Error('R6 scorer phase invalid')
+  const expectedIds = new Set(phaseCases.map((item) => item.caseId))
+  const sourceByCase = new Map(phaseCases.map((item) => [item.caseId, item]))
+  const modelByAlias = { flash: 'deepseek-v4-flash', pro: 'deepseek-v4-pro' }
+  if (new Set(checkpoint.observations.map((item) => item.caseId)).size !== expectedIds.size
+    || checkpoint.observations.some((item) => !expectedIds.has(item.caseId))) throw new Error('R6 checkpoint case set is not bound to the source manifest')
+  for (const item of checkpoint.observations) {
+    const payload = item.response?.payload
+    const execution = payload?.execution
+    if (!Object.hasOwn(modelByAlias, item.modelAlias) || item.requestedModel !== modelByAlias[item.modelAlias]
+      || item.semanticRole !== sourceByCase.get(item.caseId)?.semanticRole
+      || execution?.promptVersion !== PROMPT_VERSION || execution?.promptSha256 !== PROMPT_SHA256
+      || execution?.schemaVersion !== RECOGNITION_SCHEMA_VERSION || payload?.result?.schemaVersion !== RECOGNITION_SCHEMA_VERSION
+      || item.semanticRole !== payload?.semanticRole || item.semanticRole !== execution?.semanticRole
+      || item.requestedModel !== execution?.requestedModel || item.requestedModel !== execution?.returnedModel
+      || item.requestedModel !== execution?.executionModel || item.requestedModel !== payload?.result?.modelName) throw new Error('R6 scorer prompt, schema, role or model lineage drift')
+  }
+  return { checkpointSha256: sha256(checkpointRaw), sourceOnlySha256: checkpoint.sourceOnlySha256 }
+}
+
 async function main() {
   const checkpointPath = path.resolve(ROOT, option('checkpoint'))
+  const sourceManifestPath = path.resolve(ROOT, option('source-manifest'))
   const outputPath = path.resolve(ROOT, option('output'))
   const aggregatePath = path.resolve(ROOT, option('aggregate'))
-  if (!option('checkpoint') || !option('output') || !option('aggregate')) throw new Error('--checkpoint, --output and --aggregate are required')
-  const checkpointRaw = await readFile(checkpointPath, 'utf8')
+  if (!option('checkpoint') || !option('source-manifest') || !option('output') || !option('aggregate')) throw new Error('--checkpoint, --source-manifest, --output and --aggregate are required')
+  const [checkpointRaw, sourceRaw] = await Promise.all([readFile(checkpointPath, 'utf8'), readFile(sourceManifestPath, 'utf8')])
   const checkpoint = JSON.parse(checkpointRaw)
-  if (checkpoint.protocolVersion !== PROTOCOL_VERSION || checkpoint.gateStatus !== 'COMPLETE') throw new Error('Only a complete R1 checkpoint can be scored')
-  if (checkpoint.observations.length !== checkpoint.expectedObservations || checkpoint.observations.some((item) => item.status !== 'complete')) throw new Error('Incomplete observations cannot be scored as model quality')
+  const source = JSON.parse(sourceRaw)
+  assertR6ScoringInput(checkpoint, checkpointRaw, source)
   const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'error', optimizeDeps: { noDiscovery: true }, server: { middlewareMode: true } })
   try {
     const [goldenModule, holdoutModule, developmentModule, scoringModule] = await Promise.all([
@@ -97,9 +131,9 @@ async function main() {
       const aggregate = scoringModule.aggregateRecognitionMetrics('deepseek-production', scores)
       perAlias[alias] = compactMetrics(alias, scores, checkpoint.observations, aggregate)
     }
-    const result = { schemaVersion: 'e2.9-r1-strict-score-1.0.0', protocolVersion: PROTOCOL_VERSION, phase: checkpoint.phase, checkpointSha256: sha256(checkpointRaw), scoredAfterGenerationAt: new Date().toISOString(), rawScores }
+    const result = { schemaVersion: 'e2.9-r6-strict-score-1.0.0', protocolVersion: PROTOCOL_VERSION, scorerVersion: SCORER_VERSION, recognitionSchemaVersion: RECOGNITION_SCHEMA_VERSION, phase: checkpoint.phase, sourceOnlySha256: checkpoint.sourceOnlySha256, checkpointSha256: sha256(checkpointRaw), scoredAfterGenerationAt: new Date().toISOString(), rawScores }
     const aggregate = {
-      schemaVersion: 'e2.9-r1-anonymous-aggregate-1.0.0', protocolVersion: PROTOCOL_VERSION, phase: checkpoint.phase,
+      schemaVersion: 'e2.9-r6-anonymous-aggregate-1.0.0', protocolVersion: PROTOCOL_VERSION, scorerVersion: SCORER_VERSION, recognitionSchemaVersion: RECOGNITION_SCHEMA_VERSION, phase: checkpoint.phase,
       sourceOnlySha256: checkpoint.sourceOnlySha256, checkpointSha256: sha256(checkpointRaw), scorerInputSha256: sha256(canonicalJson({ checkpointSha256: sha256(checkpointRaw), phase: checkpoint.phase })),
       expectedReadBoundary: 'Expected fixtures loaded only by this scorer after all paired outputs were complete.', arms: perAlias,
     }
@@ -111,4 +145,4 @@ async function main() {
   } finally { await vite.close() }
 }
 
-await main()
+if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.argv[1])) await main()

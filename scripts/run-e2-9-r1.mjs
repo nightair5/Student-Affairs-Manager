@@ -7,10 +7,13 @@ import { fileURLToPath } from 'node:url'
 import { canonicalJson, sha256 } from './e2-9-r1-hash.mjs'
 
 const ROOT = process.cwd()
-const PROTOCOL_VERSION = 'e2-9-v4-pro-reduced-protocol-2.0.0'
-const CACHE = path.join(ROOT, '.evaluation-cache', 'e2-9-r1', 'protocol-2.0.0')
+const PROTOCOL_VERSION = 'e2-9-v4-pro-protocol-3.5.0'
+const SOURCE_PROTOCOL_VERSION = 'e2-9-v4-pro-reduced-protocol-2.0.0'
+const CACHE = path.join(ROOT, '.evaluation-cache', 'e2-9-r6', 'protocol-3.5.0')
 const DEFAULT_ENDPOINT = 'https://student-affairs-manager-preview.nightsdell.workers.dev/api/experiments/e2-9/v4-pro-benchmark'
 const MODEL_BY_ALIAS = Object.freeze({ flash: 'deepseek-v4-flash', pro: 'deepseek-v4-pro' })
+const BENCHMARK_VERSION = 'e2-v4-pro-benchmark-2.1.0'
+const NORMALIZER_VERSION = 'e2-v4-pro-benchmark-normalizer-2.1.0'
 const FORBIDDEN_KEYS = /^(?:expected|answer|answers|gold|golden|target|targets|label|labels|score|scores|forbidden)$/iu
 
 function option(name, fallback = '') {
@@ -95,10 +98,11 @@ export function validateGeneration(payload, fixture, alias) {
   if (!['action_required', 'information_only', 'prompt_injection'].includes(semanticRole)) throw new Error('SEMANTIC_ROLE_MISSING_OR_INVALID')
   if (!payload || typeof payload.rawOutput !== 'string' || !payload.result || !payload.execution) throw new Error('INCOMPLETE_ENDPOINT_PAYLOAD')
   const execution = payload.execution
-  if (execution.requestedModel !== model || execution.returnedModel !== model) throw new Error('MODEL_FALLBACK_DETECTED')
+  if (payload.benchmarkVersion !== BENCHMARK_VERSION || payload.semanticRole !== semanticRole || execution.semanticRole !== semanticRole) throw new Error('BENCHMARK_OR_ROLE_DRIFT')
+  if (execution.requestedModel !== model || execution.returnedModel !== model || execution.executionModel !== model || payload.result.modelName !== model) throw new Error('MODEL_FALLBACK_DETECTED')
   if (!execution.systemFingerprint) throw new Error('SYSTEM_FINGERPRINT_MISSING')
   if (execution.promptVersion !== 'recognition-2.4.1' || execution.schemaVersion !== '2.0' || payload.result.schemaVersion !== '2.0' || execution.pipelineVersion !== 'recognition-pipeline-2.2.1' || execution.validatorVersion !== 'recognition-quality-2.1.0') throw new Error('FROZEN_VERSION_DRIFT')
-  if (execution.router !== 'BYPASSED' || execution.repair !== 'DISABLED' || execution.normalizer !== 'DISABLED') throw new Error('PIPELINE_COMPONENT_DRIFT')
+  if (execution.router !== 'BYPASSED' || execution.repair !== 'DISABLED' || execution.normalizer !== NORMALIZER_VERSION) throw new Error('PIPELINE_COMPONENT_DRIFT')
   if (execution.temperature !== 0 || execution.maxTokens !== 6000 || execution.thinking !== 'disabled') throw new Error('PARAMETER_DRIFT')
   if (!Array.isArray(execution.attempts) || execution.attempts.length !== 1) throw new Error('UPSTREAM_CALL_COUNT_NOT_ONE')
   if (execution.sourceSha256 !== fixture.sourceSha256 || execution.rawOutputSha256 !== sha256(payload.rawOutput) || execution.resultSha256 !== sha256(JSON.stringify(payload.result))) throw new Error('RESULT_PROVENANCE_MISMATCH')
@@ -179,7 +183,7 @@ async function runScored({ phase, label, endpoint, origin, token, deploymentVers
   const sourceRaw = await readFile(sourceManifestPath, 'utf8')
   const source = JSON.parse(sourceRaw)
   assertFirewall(source)
-  if (source.protocolVersion !== PROTOCOL_VERSION) throw new Error('Source protocol version mismatch')
+  if (source.protocolVersion !== SOURCE_PROTOCOL_VERSION) throw new Error('Frozen source manifest protocol version mismatch')
   const pool = phase === 'smoke' ? source.smokeCases : phase === 'screening' ? source.screeningCases : source.selectionCases.filter((item) => !source.screeningCases.some((screening) => screening.caseId === item.caseId))
   const requested = caseIds.length ? caseIds.map((id) => pool.find((item) => item.caseId === id)) : pool
   if (requested.some((item) => !item) || new Set(requested.map((item) => item.caseId)).size !== requested.length) throw new Error('Unknown or duplicate case IDs')
@@ -196,7 +200,7 @@ async function runScored({ phase, label, endpoint, origin, token, deploymentVers
   const observations = []
   let gateStatus = 'COMPLETE'
   for (const [index, { fixture, modelAlias }] of seededOrder(requested, seed).entries()) {
-    const body = canonicalJson({ modelAlias, sourceType: fixture.sourceType, sourceTitle: fixture.sourceTitle, content: fixture.content, referenceTime: fixture.referenceTime, timezone: fixture.timezone })
+    const body = canonicalJson({ modelAlias, semanticRole: fixture.semanticRole, sourceType: fixture.sourceType, sourceTitle: fixture.sourceTitle, content: fixture.content, referenceTime: fixture.referenceTime, timezone: fixture.timezone })
     let response
     try { response = await curlRequest(`${endpoint}/generate`, { method: 'POST', origin, token, body }) } catch (error) {
       response = { startedAt: new Date().toISOString(), completedAt: new Date().toISOString(), clientDurationMs: null, httpStatus: null, rawHeaders: '', rawHeadersSha256: sha256(''), rawBody: '', rawBodySha256: sha256(''), payload: null, transportError: error instanceof Error ? error.message : 'TRANSPORT_FAILURE' }

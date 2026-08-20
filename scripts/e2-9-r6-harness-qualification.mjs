@@ -10,6 +10,7 @@ import {
 } from './e2-9-r6-path-mask.mjs'
 import { createHash } from 'node:crypto'
 import { hashBundle } from './e2-9-r5-hash.mjs'
+import { buildR6DeploymentProjection } from './e2-9-r6-deployment-contract.mjs'
 
 const sha256 = (value) => createHash('sha256').update(value, 'utf8').digest('hex')
 
@@ -18,13 +19,33 @@ const RUN_ID = 'e29r6-synthetic-qualification'
 const LABELS_COMPLETED_AT = '2026-08-20T00:00:01.000Z'
 const KEY_REVEALED_AT = '2026-08-20T00:00:02.000Z'
 export const R6_QUALIFICATION_BUNDLE_FILES = Object.freeze([
+  'cloudflare/recognition-prompt.mjs',
+  'cloudflare/recognition.mjs',
+  'cloudflare/recognition-quality.mjs',
+  'cloudflare/model-gateway.mjs',
+  'cloudflare/e2-v4-pro-benchmark.mjs',
+  'cloudflare/worker.mjs',
+  'cloudflare/e2-r6-harness.mjs',
+  'cloudflare/e2-r6-qualification-worker.mjs',
+  'cloudflare/e2-r6-qualification-ledger.mjs',
   'scripts/e2-9-r5-hash.mjs',
   'scripts/e2-9-r6-path-mask.mjs',
   'scripts/e2-9-r6-harness-qualification.mjs',
   'scripts/e2-9-r6-harness-qualification.node.mjs',
+  'scripts/e2-9-r6-deployment-contract.mjs',
+  'scripts/e2-9-r6-screening-review.node.mjs',
+  'scripts/run-e2-9-r1.mjs',
+  'scripts/score-e2-9-r1.mjs',
+  'scripts/merge-e2-9-r1-checkpoints.mjs',
+  'scripts/run-e2-9-r6-path-masked-review.mjs',
+  'scripts/run-e2-9-r6-preview-preflight.mjs',
   'docs/e2-v4-pro-benchmark-r6/reviewer-packet.schema.json',
   'docs/e2-v4-pro-benchmark-r6/private-binding-manifest.schema.json',
   'docs/e2-v4-pro-benchmark-r6/path-masked-labels.schema.json',
+  'docs/e2-v4-pro-benchmark-r6/preview-deployment-contract.json',
+  'src/recognition/e2/scoring.ts',
+  'src/recognition/e2/semanticEquivalence.ts',
+  'wrangler.e2-r6-ledger.jsonc',
 ])
 
 const baseResult = (title, actionObject) => ({
@@ -63,7 +84,7 @@ const baseResult = (title, actionObject) => ({
   quality: { needsHumanReview: false, reviewReasons: [] },
 })
 
-export function runZeroModelHarnessQualification({ qualificationBundleSha256 = 'UNBOUND' } = {}) {
+export function runZeroModelHarnessQualification({ qualificationBundleSha256 = 'UNBOUND', deploymentConfigProjectionSha256 = 'UNBOUND' } = {}) {
   const cases = [
     { caseId: 'synthetic-001', title: '材料提交通知', content: '请提交申请表', object: '申请表' },
     { caseId: 'synthetic-002', title: '证明提交通知', content: '请提交在读证明', object: '在读证明' },
@@ -136,6 +157,7 @@ export function runZeroModelHarnessQualification({ qualificationBundleSha256 = '
     networkCalls: 0,
     expectedAnswersLoaded: false,
     qualificationBundleSha256,
+    deploymentConfigProjectionSha256,
     reviewerPacketSha256: sha256(canonicalJson(reviewerPacket)),
     privateManifestSha256: sha256(canonicalJson(privateManifest)),
     labelsSha256: labelsEnvelope.labelsSha256,
@@ -158,8 +180,11 @@ export function runZeroModelHarnessQualification({ qualificationBundleSha256 = '
 }
 
 export async function runBoundZeroModelHarnessQualification({ root = process.cwd() } = {}) {
-  const bundle = await hashBundle(root, R6_QUALIFICATION_BUNDLE_FILES)
-  return runZeroModelHarnessQualification({ qualificationBundleSha256: bundle.sha256 })
+  const [bundle, deployment] = await Promise.all([
+    hashBundle(root, R6_QUALIFICATION_BUNDLE_FILES),
+    buildR6DeploymentProjection({ root }),
+  ])
+  return runZeroModelHarnessQualification({ qualificationBundleSha256: bundle.sha256, deploymentConfigProjectionSha256: deployment.sha256 })
 }
 
 export function assertFutureModelRunQualification(record, expectedQualificationSha256, expectedBundleSha256) {

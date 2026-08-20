@@ -1,8 +1,9 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { readFile } from 'node:fs/promises'
+import { mkdir, mkdtemp, readFile, writeFile } from 'node:fs/promises'
 import { spawnSync } from 'node:child_process'
 import { createHash } from 'node:crypto'
+import os from 'node:os'
 import path from 'node:path'
 import { createWorker } from './worker.mjs'
 import { E2R6QualificationLedger } from './e2-r6-qualification-ledger.mjs'
@@ -12,11 +13,12 @@ import {
   R6_PREVIEW_ORIGIN, awaitR6StableActivation, buildR6QualificationRegistration,
   r6VersionedPreviewEndpoint, runR6QualificationPreflight,
 } from '../scripts/run-e2-9-r6-preview-preflight.mjs'
+import { buildR6DeploymentProjection } from '../scripts/e2-9-r6-deployment-contract.mjs'
 
 const TOKEN = 'test-only-r6-preview-bearer-token-material-000000000000000000'
 const ORIGIN = 'https://student-affairs-manager-preview.nightsdell.workers.dev'
-const RESULT_SHA256 = '7bb513ee810e2daa996e2dcaa0ecfb70d5ec8eb79bf7024ecb410f0d303b3c2a'
-const BUNDLE_SHA256 = 'e3e10c2e9acf6418ca6184ed4260b0d9e6985d2f63d4266ae6be51d07d362413'
+const RESULT_SHA256 = '9cb941991570a924b75532a796502e91d849cba3586bb2fe59a7c37a4b776d16'
+const BUNDLE_SHA256 = 'e204369f0bea06463d86988aa7be6ce44f2b663567c0d4483241eb1f096c6565'
 const WORKER_VERSION_ID = '11111111-1111-4111-8111-111111111111'
 const OTHER_WORKER_VERSION_ID = '22222222-2222-4222-8222-222222222222'
 const TOKEN_SHA256 = createHash('sha256').update(TOKEN, 'utf8').digest('hex')
@@ -329,7 +331,23 @@ test('R6 configs keep Production absent, normal Preview disabled and activation 
   assert.equal(activation.vars.E2_R6_QUALIFICATION_BUNDLE_SHA256, BUNDLE_SHA256)
   assert.equal(activation.vars.E2_R6_QUALIFICATION_RESULT_SHA256, RESULT_SHA256)
   assert.deepEqual(activation.services, [{ binding: 'E2_R6_QUALIFICATION_LEDGER', service: 'student-affairs-e2-r6-qualification-ledger-preview' }])
-  assert.equal(E2_R6_PROTOCOL_VERSION, 'e2-9-v4-pro-protocol-3.4.0')
+  assert.equal(E2_R6_PROTOCOL_VERSION, 'e2-9-v4-pro-protocol-3.5.0')
   assert.equal(activation.vars.E2_R6_BENCHMARK_TOKEN_SHA256, undefined)
-  assert.equal(E2_R6_PREVIEW_HARNESS_VERSION, 'e2-9-r6-preview-harness-1.3.0')
+  assert.equal(E2_R6_PREVIEW_HARNESS_VERSION, 'e2-9-r6-preview-harness-1.4.0')
+})
+
+test('R6 deployment projection binds both Preview configs and rejects feature-flag drift', async () => {
+  const current = await buildR6DeploymentProjection({ root: process.cwd() })
+  assert.match(current.sha256, /^[a-f0-9]{64}$/u)
+  assert.equal(current.projection.production.experimentalFlagsAbsent, true)
+  const root = await mkdtemp(path.join(os.tmpdir(), 'e2-r6-deployment-drift-'))
+  await mkdir(path.join(root, 'docs', 'e2-v4-pro-benchmark-r6'), { recursive: true })
+  const contractRaw = await readFile(new URL('../docs/e2-v4-pro-benchmark-r6/preview-deployment-contract.json', import.meta.url), 'utf8')
+  const qualificationRaw = await readFile(new URL('../wrangler.e2-r6-preview.jsonc', import.meta.url), 'utf8')
+  const main = JSON.parse(await readFile(new URL('../wrangler.jsonc', import.meta.url), 'utf8'))
+  main.env.preview.vars.E2_V4_PRO_BENCHMARK_ENABLED = 'true'
+  await writeFile(path.join(root, 'docs', 'e2-v4-pro-benchmark-r6', 'preview-deployment-contract.json'), contractRaw, 'utf8')
+  await writeFile(path.join(root, 'wrangler.e2-r6-preview.jsonc'), qualificationRaw, 'utf8')
+  await writeFile(path.join(root, 'wrangler.jsonc'), JSON.stringify(main), 'utf8')
+  await assert.rejects(() => buildR6DeploymentProjection({ root }), /R6_DEPLOYMENT_CONTRACT_INVALID/u)
 })

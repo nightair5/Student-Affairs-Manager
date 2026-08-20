@@ -8,7 +8,7 @@ import { canonicalJson, R6_PROTOCOL_VERSION } from './e2-9-r6-path-mask.mjs'
 
 export const R6_PREVIEW_ORIGIN = 'https://student-affairs-e2-r6-qualification-preview.nightsdell.workers.dev'
 export const R6_PREVIEW_ENDPOINT = `${R6_PREVIEW_ORIGIN}/api/experiments/e2-9/r6/harness`
-export const R6_EXPECTED_PREVIEW_HARNESS_VERSION = 'e2-9-r6-preview-harness-1.3.0'
+export const R6_EXPECTED_PREVIEW_HARNESS_VERSION = 'e2-9-r6-preview-harness-1.4.0'
 export const R6_PREVIEW_WORKER_NAME = 'student-affairs-e2-r6-qualification-preview'
 export const R6_STABLE_ACTIVATION_RESPONSES = 3
 export const R6_MAX_ACTIVATION_PROBES = 12

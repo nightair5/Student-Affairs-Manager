@@ -33,20 +33,38 @@ async function refuseOverwrite(files) {
   for (const file of files) if (await exists(file)) throw new Error(`REFUSING_TO_OVERWRITE:${file}`)
 }
 
-function assertCompleteCheckpoint(checkpoint, source, checkpointRaw, aggregate) {
-  if (checkpoint.phase !== 'screening' || checkpoint.gateStatus !== 'COMPLETE'
+export function assertR6CompleteCheckpoint(checkpoint, source, checkpointRaw, aggregate) {
+  if (checkpoint.protocolVersion !== R6_PROTOCOL_VERSION || aggregate.protocolVersion !== R6_PROTOCOL_VERSION
+    || checkpoint.phase !== 'screening' || checkpoint.gateStatus !== 'COMPLETE'
     || checkpoint.expectedObservations !== 16 || checkpoint.observations?.length !== 16
     || checkpoint.observations.some((item) => item.status !== 'complete')) throw new Error('R6_SCREENING_CHECKPOINT_INCOMPLETE')
   const pairKeys = checkpoint.observations.map((item) => `${item.caseId}:${item.modelAlias}`)
   if (new Set(pairKeys).size !== 16 || new Set(checkpoint.observations.map((item) => item.caseId)).size !== 8) throw new Error('R6_SCREENING_PAIR_CARDINALITY_INVALID')
+  const sourceByCase = new Map(source.screeningCases?.map((item) => [item.caseId, item]) ?? [])
+  const modelByAlias = { flash: 'deepseek-v4-flash', pro: 'deepseek-v4-pro' }
   for (const item of checkpoint.observations) {
-    if (!['action_required', 'information_only', 'prompt_injection'].includes(item.semanticRole)
-      || item.requestedModel !== item.response?.payload?.execution?.requestedModel
-      || item.requestedModel !== item.response?.payload?.execution?.returnedModel
-      || item.response?.payload?.execution?.attempts?.length !== 1) throw new Error('R6_SCREENING_OBSERVATION_INTEGRITY_INVALID')
+    const payload = item.response?.payload
+    const execution = payload?.execution
+    if (!Object.hasOwn(modelByAlias, item.modelAlias) || item.requestedModel !== modelByAlias[item.modelAlias]
+      || item.semanticRole !== sourceByCase.get(item.caseId)?.semanticRole
+      || !['action_required', 'information_only', 'prompt_injection'].includes(item.semanticRole)
+      || item.semanticRole !== payload?.semanticRole || item.semanticRole !== execution?.semanticRole
+      || item.requestedModel !== execution?.requestedModel
+      || item.requestedModel !== execution?.returnedModel
+      || item.requestedModel !== execution?.executionModel
+      || item.requestedModel !== payload?.result?.modelName
+      || payload?.benchmarkVersion !== 'e2-v4-pro-benchmark-2.1.0'
+      || execution?.normalizer !== 'e2-v4-pro-benchmark-normalizer-2.1.0'
+      || execution?.attempts?.length !== 1) throw new Error('R6_SCREENING_OBSERVATION_INTEGRITY_INVALID')
   }
   if (checkpoint.sourceOnlySha256 !== sha256(canonicalJson(source))
-    || aggregate.phase !== 'screening' || aggregate.checkpointSha256 !== sha256(checkpointRaw)) throw new Error('R6_SCREENING_INPUT_BINDING_INVALID')
+    || aggregate.schemaVersion !== 'e2.9-r6-anonymous-aggregate-1.0.0'
+    || aggregate.phase !== 'screening' || aggregate.checkpointSha256 !== sha256(checkpointRaw)
+    || aggregate.sourceOnlySha256 !== checkpoint.sourceOnlySha256
+    || aggregate.scorerInputSha256 !== sha256(canonicalJson({ checkpointSha256: sha256(checkpointRaw), phase: 'screening' }))
+    || aggregate.expectedReadBoundary !== 'Expected fixtures loaded only by this scorer after all paired outputs were complete.'
+    || aggregate.scorerVersion !== 'e2-9-r6-strict-scorer-1.0.0'
+    || aggregate.recognitionSchemaVersion !== '2.0') throw new Error('R6_SCREENING_INPUT_BINDING_INVALID')
 }
 
 export function validatePacketAudit(audit, packetSha256) {
@@ -103,6 +121,10 @@ export function evaluateR6ScreeningGate({ aggregate, counts, checkpoint }) {
     modelIdentityAndAttemptsValid: checkpoint.observations.every((item) => item.status === 'complete'
       && item.requestedModel === item.response?.payload?.execution?.requestedModel
       && item.requestedModel === item.response?.payload?.execution?.returnedModel
+      && item.requestedModel === item.response?.payload?.execution?.executionModel
+      && item.requestedModel === item.response?.payload?.result?.modelName
+      && item.semanticRole === item.response?.payload?.semanticRole
+      && item.semanticRole === item.response?.payload?.execution?.semanticRole
       && item.response?.payload?.execution?.attempts?.length === 1),
   }
   return { checks, pass: Object.values(checks).every(Boolean) }
@@ -141,7 +163,7 @@ async function main() {
   const checkpoint = JSON.parse(checkpointRaw)
   const source = JSON.parse(sourceRaw)
   const aggregate = JSON.parse(aggregateRaw)
-  assertCompleteCheckpoint(checkpoint, source, checkpointRaw, aggregate)
+  assertR6CompleteCheckpoint(checkpoint, source, checkpointRaw, aggregate)
 
   const revealSecret = randomBytes(64).toString('base64url')
   const sourceByCase = new Map(source.screeningCases.map((item) => [item.caseId, item]))
@@ -163,6 +185,8 @@ async function main() {
       majorDefinition: '若用户必须新增、删除、合并或重写关键任务，纠正关键时间角色、条件、材料或事件边界，则标记重大修改。',
       planningErrorDefinition: '事实基本可见，但任务边界、里程碑、材料、时间角色、事件或歧义组织错误。',
       evidenceRule: '理由必须引用原文中的具体事实，不得使用运行元数据。',
+      deterministicTimeEquivalence: '按冻结中文时间契约，单独出现“中午”可规范化为当地时间12:00；精确12:00与保守待确认均可接受，单凭这一差异不得判为重大修改或路径优劣。',
+      eventTaskRule: '原文明示用户必须参加、集合、到场、签到或出席时，Event 表达日程事实，Task 表达用户行动；只保留 Event 而没有 Task 属于规划遗漏。',
     },
     reviewerPairs: separated.map((item) => item.reviewerPair),
   })

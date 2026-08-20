@@ -1,5 +1,5 @@
-export const E2_R6_PROTOCOL_VERSION = 'e2-9-v4-pro-protocol-3.4.0'
-export const E2_R6_PREVIEW_HARNESS_VERSION = 'e2-9-r6-preview-harness-1.3.0'
+export const E2_R6_PROTOCOL_VERSION = 'e2-9-v4-pro-protocol-3.5.0'
+export const E2_R6_PREVIEW_HARNESS_VERSION = 'e2-9-r6-preview-harness-1.4.0'
 
 const QUALIFICATION_FIELDS = new Set([
   'runLabel', 'protocolVersion', 'expectedWorkerVersionId', 'qualificationBundleSha256',
@@ -7,7 +7,7 @@ const QUALIFICATION_FIELDS = new Set([
 ])
 const RESULT_FIELDS = new Set([
   'schemaVersion', 'protocolVersion', 'runId', 'modelCalls', 'networkCalls', 'expectedAnswersLoaded',
-  'qualificationBundleSha256', 'reviewerPacketSha256', 'privateManifestSha256', 'labelsSha256',
+  'qualificationBundleSha256', 'deploymentConfigProjectionSha256', 'reviewerPacketSha256', 'privateManifestSha256', 'labelsSha256',
   'publicPacketFields', 'privateOnlyFields', 'protocolMetadataExcludedFromLabelLeakScan', 'failureTaxonomy',
   'stageSequence', 'syntheticScore', 'status', 'nextStagesAuthorized',
 ])
@@ -98,6 +98,7 @@ function qualificationShapeValid(result) {
     && Object.keys(result.nextStagesAuthorized).sort().join(',') === 'blind,modelReadiness,production,screening,selection,smoke'
     && Object.values(result.nextStagesAuthorized).every((value) => value === false)
     && validSha256(result.qualificationBundleSha256)
+    && validSha256(result.deploymentConfigProjectionSha256)
 }
 
 async function ledgerRequest(env, runLabel, path, { method = 'POST', body } = {}) {

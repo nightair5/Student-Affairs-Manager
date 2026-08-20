@@ -1,0 +1,40 @@
+{
+  "schemaVersion": "e2.9-r6-preview-deployment-contract-1.0.0",
+  "protocolVersion": "e2-9-v4-pro-protocol-3.5.0",
+  "qualificationWorker": {
+    "name": "student-affairs-e2-r6-qualification-preview",
+    "main": "./cloudflare/e2-r6-qualification-worker.mjs",
+    "workersDev": true,
+    "previewUrls": true,
+    "routes": [],
+    "versionMetadataBinding": "CF_VERSION_METADATA"
+  },
+  "qualificationFlags": {
+    "E2_R6_HARNESS_ENABLED": "true",
+    "E2_R6_VERSIONED_PREVIEW_ONLY": "true"
+  },
+  "dynamicBindings": [
+    "E2_R6_BENCHMARK_TOKEN_SHA256",
+    "E2_R6_QUALIFICATION_BUNDLE_SHA256",
+    "E2_R6_QUALIFICATION_RESULT_SHA256"
+  ],
+  "ledgerServiceBinding": "E2_R6_QUALIFICATION_LEDGER",
+  "modelPreviewWorker": {
+    "name": "student-affairs-manager-preview",
+    "main": "./cloudflare/worker.mjs",
+    "workersDev": true,
+    "routes": [],
+    "versionMetadataBinding": "CF_VERSION_METADATA"
+  },
+  "modelPreviewDisabledFlags": [
+    "E2_PATH_A_REPAIR_EXPERIMENT_ENABLED",
+    "E2_V4_PRO_BENCHMARK_ENABLED",
+    "E2_R2_BENCHMARK_ENABLED",
+    "E2_R3_BENCHMARK_ENABLED",
+    "E2_R4_BENCHMARK_ENABLED",
+    "E2_R5_BENCHMARK_ENABLED",
+    "E2_R6_HARNESS_ENABLED"
+  ],
+  "modelPhaseRoutes": "locked",
+  "productionRoutes": "absent"
+}

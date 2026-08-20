@@ -1,6 +1,6 @@
 import { createHash, createHmac } from 'node:crypto'
 
-export const R6_PROTOCOL_VERSION = 'e2-9-v4-pro-protocol-3.4.0'
+export const R6_PROTOCOL_VERSION = 'e2-9-v4-pro-protocol-3.5.0'
 export const PATH_MASK_VERSION = 'e2-9-r6-path-mask-1.0.0'
 export const REVIEWER_PACKET_SCHEMA_VERSION = 'e2.9-r6-reviewer-packet-1.0.0'
 export const PRIVATE_BINDING_SCHEMA_VERSION = 'e2.9-r6-private-binding-manifest-1.0.0'
