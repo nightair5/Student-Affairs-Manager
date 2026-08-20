@@ -2,6 +2,7 @@ import assert from 'node:assert/strict'
 import test from 'node:test'
 import { readFile } from 'node:fs/promises'
 import { spawnSync } from 'node:child_process'
+import { createHash } from 'node:crypto'
 import path from 'node:path'
 import { createWorker } from './worker.mjs'
 import { E2R6QualificationLedger } from './e2-r6-qualification-ledger.mjs'
@@ -16,6 +17,7 @@ const RESULT_SHA256 = '7bb513ee810e2daa996e2dcaa0ecfb70d5ec8eb79bf7024ecb410f0d3
 const BUNDLE_SHA256 = 'e3e10c2e9acf6418ca6184ed4260b0d9e6985d2f63d4266ae6be51d07d362413'
 const WORKER_VERSION_ID = '11111111-1111-4111-8111-111111111111'
 const OTHER_WORKER_VERSION_ID = '22222222-2222-4222-8222-222222222222'
+const TOKEN_SHA256 = createHash('sha256').update(TOKEN, 'utf8').digest('hex')
 
 class MemoryStorage {
   constructor() { this.values = new Map() }
@@ -40,7 +42,7 @@ function environment(ledger = ledgerService()) {
   return {
     E2_R6_HARNESS_ENABLED: 'true',
     E2_R6_PREVIEW_ORIGIN: ORIGIN,
-    E2_R6_BENCHMARK_TOKEN: TOKEN,
+    E2_R6_BENCHMARK_TOKEN_SHA256: TOKEN_SHA256,
     E2_R6_QUALIFICATION_BUNDLE_SHA256: BUNDLE_SHA256,
     E2_R6_QUALIFICATION_RESULT_SHA256: RESULT_SHA256,
     E2_R6_QUALIFICATION_LEDGER: ledger,
@@ -78,6 +80,17 @@ test('R6 qualification firewall rejects origin and bearer failures before ledger
   assert.equal(ledger.instances.size, 0)
 })
 
+test('R6 qualification firewall requires a hash commitment and never stores the bearer', async () => {
+  const ledger = ledgerService()
+  const env = environment(ledger)
+  delete env.E2_R6_BENCHMARK_TOKEN_SHA256
+  env.E2_R6_BENCHMARK_TOKEN = TOKEN
+  const response = await runE2R6Harness(request('activation'), env)
+  assert.equal(response.status, 401)
+  assert.equal((await response.json()).error, 'UNAUTHORIZED')
+  assert.equal(ledger.instances.size, 0)
+})
+
 test('R6 runner to Worker to append-only ledger completes with zero model calls', async () => {
   const ledger = ledgerService()
   const env = environment(ledger)
@@ -86,6 +99,7 @@ test('R6 runner to Worker to append-only ledger completes with zero model calls'
   const result = await runR6QualificationPreflight({
     runLabel: 'r6-zero-model-e2e',
     token: TOKEN,
+    expectedWorkerVersionId: WORKER_VERSION_ID,
     sleeper: async () => {},
     probeDelayMs: 0,
     fetcher: async (url, init) => {
@@ -179,9 +193,12 @@ test('R6 activation must stabilize on one version before qualification registrat
   const versions = [OTHER_WORKER_VERSION_ID, WORKER_VERSION_ID, WORKER_VERSION_ID, WORKER_VERSION_ID]
   let calls = 0
   const result = await runR6QualificationPreflight({
-    runLabel: 'r6-version-stability', token: TOKEN, sleeper: async () => {}, probeDelayMs: 0,
+    runLabel: 'r6-version-stability', token: TOKEN, expectedWorkerVersionId: WORKER_VERSION_ID,
+    sleeper: async () => {}, probeDelayMs: 0,
     fetcher: async (url, init) => {
       calls += 1
+      assert.equal(new Headers(init.headers).get('Cloudflare-Workers-Version-Overrides'),
+        `student-affairs-manager-preview="${WORKER_VERSION_ID}"`)
       if (url.endsWith('/activation')) {
         const versionId = versions.shift()
         return Response.json({
@@ -230,7 +247,8 @@ test('R6 missing Worker version metadata fails closed before ledger or provider 
 test('R6 activation stability rejects mixed or unavailable versions without registration', async () => {
   let calls = 0
   await assert.rejects(() => awaitR6StableActivation({
-    token: TOKEN, maxProbes: 4, requiredStableResponses: 3, probeDelayMs: 0, sleeper: async () => {},
+    token: TOKEN, expectedWorkerVersionId: WORKER_VERSION_ID,
+    maxProbes: 4, requiredStableResponses: 3, probeDelayMs: 0, sleeper: async () => {},
     fetcher: async () => {
       calls += 1
       const workerVersionId = calls % 2 === 0 ? WORKER_VERSION_ID : OTHER_WORKER_VERSION_ID
@@ -246,7 +264,8 @@ test('R6 activation stability rejects mixed or unavailable versions without regi
 
 test('R6 activation stability rejects response-shape or harness-version drift', async () => {
   await assert.rejects(() => awaitR6StableActivation({
-    token: TOKEN, maxProbes: 3, requiredStableResponses: 3, probeDelayMs: 0, sleeper: async () => {},
+    token: TOKEN, expectedWorkerVersionId: WORKER_VERSION_ID,
+    maxProbes: 3, requiredStableResponses: 3, probeDelayMs: 0, sleeper: async () => {},
     fetcher: async () => Response.json({
       status: 'QUALIFICATION_ENDPOINT_ACTIVE_MODEL_PHASES_LOCKED', protocolVersion: E2_R6_PROTOCOL_VERSION,
       harnessVersion: 'e2-9-r6-preview-harness-1.0.0', workerVersionId: WORKER_VERSION_ID,
@@ -287,5 +306,6 @@ test('R6 configs keep Production absent, normal Preview disabled and activation 
   assert.equal(activation.vars.E2_R6_QUALIFICATION_RESULT_SHA256, RESULT_SHA256)
   assert.deepEqual(activation.services, [{ binding: 'E2_R6_QUALIFICATION_LEDGER', service: 'student-affairs-e2-r6-qualification-ledger-preview' }])
   assert.equal(E2_R6_PROTOCOL_VERSION, 'e2-9-v4-pro-protocol-3.4.0')
-  assert.equal(E2_R6_PREVIEW_HARNESS_VERSION, 'e2-9-r6-preview-harness-1.1.0')
+  assert.equal(activation.vars.E2_R6_BENCHMARK_TOKEN_SHA256, undefined)
+  assert.equal(E2_R6_PREVIEW_HARNESS_VERSION, 'e2-9-r6-preview-harness-1.2.0')
 })

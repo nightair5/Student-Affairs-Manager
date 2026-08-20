@@ -7,7 +7,8 @@ import { assertFutureModelRunQualification, runBoundZeroModelHarnessQualificatio
 import { canonicalJson, R6_PROTOCOL_VERSION } from './e2-9-r6-path-mask.mjs'
 
 export const R6_PREVIEW_ENDPOINT = 'https://student-affairs-manager-preview.nightsdell.workers.dev/api/experiments/e2-9/r6/harness'
-export const R6_EXPECTED_PREVIEW_HARNESS_VERSION = 'e2-9-r6-preview-harness-1.1.0'
+export const R6_EXPECTED_PREVIEW_HARNESS_VERSION = 'e2-9-r6-preview-harness-1.2.0'
+export const R6_PREVIEW_WORKER_NAME = 'student-affairs-manager-preview'
 export const R6_STABLE_ACTIVATION_RESPONSES = 3
 export const R6_MAX_ACTIVATION_PROBES = 12
 const ACTIVATION_FIELDS = new Set([
@@ -51,11 +52,13 @@ export async function buildR6QualificationRegistration({ root = process.cwd(), r
 }
 
 export async function awaitR6StableActivation({
-  token, endpoint = R6_PREVIEW_ENDPOINT, fetcher = fetch, sleeper = (delayMs) => new Promise((resolve) => setTimeout(resolve, delayMs)),
+  token, expectedWorkerVersionId, endpoint = R6_PREVIEW_ENDPOINT, fetcher = fetch,
+  sleeper = (delayMs) => new Promise((resolve) => setTimeout(resolve, delayMs)),
   requiredStableResponses = R6_STABLE_ACTIVATION_RESPONSES, maxProbes = R6_MAX_ACTIVATION_PROBES, probeDelayMs = 1000,
 }) {
   if (endpoint !== R6_PREVIEW_ENDPOINT) throw new Error('R6_PREVIEW_ENDPOINT_REQUIRED')
   if (typeof token !== 'string' || token.length < 32) throw new Error('E2_R6_BENCHMARK_TOKEN_REQUIRED_IN_PROCESS_MEMORY')
+  if (!validWorkerVersionId(expectedWorkerVersionId)) throw new Error('R6_WORKER_VERSION_ID_INVALID')
   if (!Number.isInteger(requiredStableResponses) || requiredStableResponses < 2 || requiredStableResponses > 5
     || !Number.isInteger(maxProbes) || maxProbes < requiredStableResponses || maxProbes > 30
     || !Number.isInteger(probeDelayMs) || probeDelayMs < 0 || probeDelayMs > 5000) {
@@ -67,7 +70,12 @@ export async function awaitR6StableActivation({
   for (let probe = 1; probe <= maxProbes; probe += 1) {
     const response = await fetcher(`${endpoint}/activation`, {
       method: 'GET',
-      headers: { origin: new URL(endpoint).origin, authorization: `Bearer ${token}`, 'cache-control': 'no-cache' },
+      headers: {
+        origin: new URL(endpoint).origin,
+        authorization: `Bearer ${token}`,
+        'cache-control': 'no-cache',
+        'Cloudflare-Workers-Version-Overrides': `${R6_PREVIEW_WORKER_NAME}="${expectedWorkerVersionId}"`,
+      },
     })
     const payload = await response.json().catch(() => null)
     const valid = response.status === 200
@@ -78,6 +86,7 @@ export async function awaitR6StableActivation({
       && payload.protocolVersion === R6_PROTOCOL_VERSION
       && payload.harnessVersion === R6_EXPECTED_PREVIEW_HARNESS_VERSION
       && validWorkerVersionId(payload.workerVersionId)
+      && payload.workerVersionId === expectedWorkerVersionId
       && payload.modelCalls === 0
       && validSha256(payload.qualificationBundleSha256)
       && validSha256(payload.qualificationResultSha256)
@@ -106,7 +115,7 @@ export async function awaitR6StableActivation({
 
 export async function runR6QualificationPreflight({
   root = process.cwd(), runLabel, dryRun = false, token = '', endpoint = R6_PREVIEW_ENDPOINT, fetcher = fetch,
-  sleeper, requiredStableResponses, maxActivationProbes, probeDelayMs,
+  expectedWorkerVersionId, sleeper, requiredStableResponses, maxActivationProbes, probeDelayMs,
 }) {
   if (dryRun) {
     const registration = await buildR6QualificationRegistration({
@@ -117,13 +126,13 @@ export async function runR6QualificationPreflight({
   if (endpoint !== R6_PREVIEW_ENDPOINT) throw new Error('R6_PREVIEW_ENDPOINT_REQUIRED')
   if (typeof token !== 'string' || token.length < 32) throw new Error('E2_R6_BENCHMARK_TOKEN_REQUIRED_IN_PROCESS_MEMORY')
   const activation = await awaitR6StableActivation({
-    token, endpoint, fetcher, ...(sleeper ? { sleeper } : {}),
+    token, expectedWorkerVersionId, endpoint, fetcher, ...(sleeper ? { sleeper } : {}),
     ...(requiredStableResponses === undefined ? {} : { requiredStableResponses }),
     ...(maxActivationProbes === undefined ? {} : { maxProbes: maxActivationProbes }),
     ...(probeDelayMs === undefined ? {} : { probeDelayMs }),
   })
   const registration = await buildR6QualificationRegistration({
-    root, runLabel, expectedWorkerVersionId: activation.workerVersionId,
+    root, runLabel, expectedWorkerVersionId,
   })
   if (registration.qualificationBundleSha256 !== activation.qualificationBundleSha256
     || registration.qualificationResultSha256 !== activation.qualificationResultSha256) {
@@ -135,6 +144,7 @@ export async function runR6QualificationPreflight({
       origin: new URL(endpoint).origin,
       authorization: `Bearer ${token}`,
       'content-type': 'application/json',
+      'Cloudflare-Workers-Version-Overrides': `${R6_PREVIEW_WORKER_NAME}="${expectedWorkerVersionId}"`,
     },
     body: canonicalJson(registration),
   })
@@ -153,11 +163,13 @@ async function main() {
   const phase = option(process.argv, 'phase')
   const dryRun = option(process.argv, 'dry-run') === 'true'
   const runLabel = option(process.argv, 'run-label')
+  const expectedWorkerVersionId = option(process.argv, 'expected-worker-version')
   if (phase !== 'qualification') throw new Error('R6_MODEL_PHASE_NOT_AUTHORIZED')
   const result = await runR6QualificationPreflight({
     runLabel,
     dryRun,
     token: process.env.E2_R6_BENCHMARK_TOKEN ?? '',
+    expectedWorkerVersionId,
   })
   console.log(JSON.stringify(result, null, 2))
 }

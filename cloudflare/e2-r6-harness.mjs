@@ -1,5 +1,5 @@
 export const E2_R6_PROTOCOL_VERSION = 'e2-9-v4-pro-protocol-3.4.0'
-export const E2_R6_PREVIEW_HARNESS_VERSION = 'e2-9-r6-preview-harness-1.1.0'
+export const E2_R6_PREVIEW_HARNESS_VERSION = 'e2-9-r6-preview-harness-1.2.0'
 
 const QUALIFICATION_FIELDS = new Set([
   'runLabel', 'protocolVersion', 'expectedWorkerVersionId', 'qualificationBundleSha256',
@@ -51,14 +51,22 @@ async function sha256(value) {
   return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, '0')).join('')
 }
 
-function authorizationError(request, env) {
+function constantTimeEqual(left, right) {
+  if (typeof left !== 'string' || typeof right !== 'string' || left.length !== right.length) return false
+  let difference = 0
+  for (let index = 0; index < left.length; index += 1) difference |= left.charCodeAt(index) ^ right.charCodeAt(index)
+  return difference === 0
+}
+
+async function authorizationError(request, env) {
   const url = new URL(request.url)
   const expectedOrigin = safeText(env.E2_R6_PREVIEW_ORIGIN, 300)
   if (env.E2_R6_HARNESS_ENABLED !== 'true' || !expectedOrigin || url.origin !== expectedOrigin) return 'NOT_FOUND'
   if (request.headers.get('origin') !== expectedOrigin) return 'ORIGIN_NOT_ALLOWED'
-  const expected = safeText(env.E2_R6_BENCHMARK_TOKEN, 512)
+  const expectedHash = safeText(env.E2_R6_BENCHMARK_TOKEN_SHA256, 64)
   const supplied = safeText(request.headers.get('authorization'), 600)
-  if (expected.length < 32 || supplied !== `Bearer ${expected}`) return 'UNAUTHORIZED'
+  const token = supplied.startsWith('Bearer ') ? supplied.slice(7) : ''
+  if (!validSha256(expectedHash) || token.length < 32 || !constantTimeEqual(await sha256(token), expectedHash)) return 'UNAUTHORIZED'
   if (!env.E2_R6_QUALIFICATION_LEDGER || typeof env.E2_R6_QUALIFICATION_LEDGER.fetch !== 'function') return 'LEDGER_NOT_CONFIGURED'
   return null
 }
@@ -95,7 +103,7 @@ async function ledgerRequest(env, runLabel, path, { method = 'POST', body } = {}
 }
 
 export async function runE2R6Harness(request, env, _providerFetcher = fetch) {
-  const authError = authorizationError(request, env)
+  const authError = await authorizationError(request, env)
   if (authError) return json({ error: authError }, authError === 'NOT_FOUND' ? 404 : authError === 'ORIGIN_NOT_ALLOWED' ? 403 : authError === 'UNAUTHORIZED' ? 401 : 503)
   const url = new URL(request.url)
   const suffix = url.pathname.split('/').at(-1)
