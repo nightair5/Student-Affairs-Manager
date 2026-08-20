@@ -49,11 +49,13 @@ function assertCompleteCheckpoint(checkpoint, source, checkpointRaw, aggregate) 
     || aggregate.phase !== 'screening' || aggregate.checkpointSha256 !== sha256(checkpointRaw)) throw new Error('R6_SCREENING_INPUT_BINDING_INVALID')
 }
 
-function validateAudit(audit, packetSha256) {
+export function validatePacketAudit(audit, packetSha256) {
   const keys = ['canIdentifyEitherPath', 'deterministicCorrelators', 'directIdentityDisclosures', 'packetSha256', 'reason', 'reviewProcessId', 'reviewedAt', 'reviewerKind', 'verdict']
   if (!audit || Object.keys(audit).sort().join(',') !== keys.sort().join(',')
     || audit.verdict !== 'PASS' || audit.packetSha256 !== packetSha256
-    || audit.canIdentifyEitherPath !== false || audit.directIdentityDisclosures !== 0 || audit.deterministicCorrelators !== 0
+    || audit.canIdentifyEitherPath !== false
+    || !Array.isArray(audit.directIdentityDisclosures) || audit.directIdentityDisclosures.length !== 0
+    || !Array.isArray(audit.deterministicCorrelators) || audit.deterministicCorrelators.length !== 0
     || audit.reviewerKind !== 'independent_fresh_read_only' || typeof audit.reviewProcessId !== 'string' || audit.reviewProcessId.length < 8
     || !Number.isFinite(Date.parse(audit.reviewedAt)) || typeof audit.reason !== 'string' || audit.reason.length < 16) throw new Error('R6_PATH_MASK_AUDIT_FAILED')
 }
@@ -182,7 +184,7 @@ async function main() {
   console.log(JSON.stringify({ status: 'R6_REVIEW_PACKET_READY', packetPath, statePath, auditPath, draftPath, packetSha256 }, null, 2))
 
   const audit = await waitForJson(auditPath, 'R6_PACKET_AUDIT')
-  validateAudit(audit, packetSha256)
+  validatePacketAudit(audit, packetSha256)
   if (Date.parse(audit.reviewedAt) <= Date.parse(packetCreatedAt)) throw new Error('R6_PATH_MASK_AUDIT_CHRONOLOGY_INVALID')
   console.log(JSON.stringify({ status: 'R6_PACKET_AUDIT_PASS', reviewProcessId: audit.reviewProcessId }, null, 2))
 

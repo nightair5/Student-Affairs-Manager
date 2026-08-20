@@ -1,6 +1,23 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { evaluateR6ScreeningGate, summarizePathMaskedLabels } from './run-e2-9-r6-path-masked-review.mjs'
+import { evaluateR6ScreeningGate, summarizePathMaskedLabels, validatePacketAudit } from './run-e2-9-r6-path-masked-review.mjs'
+
+test('R6 packet audit contract preserves empty forensic finding arrays', () => {
+  const audit = {
+    canIdentifyEitherPath: false,
+    deterministicCorrelators: [],
+    directIdentityDisclosures: [],
+    packetSha256: 'a'.repeat(64),
+    reason: 'No identity disclosures or deterministic correlators were found.',
+    reviewProcessId: 'fresh-review-001',
+    reviewedAt: '2026-08-20T00:00:00.000Z',
+    reviewerKind: 'independent_fresh_read_only',
+    verdict: 'PASS',
+  }
+  assert.doesNotThrow(() => validatePacketAudit(audit, audit.packetSha256))
+  audit.directIdentityDisclosures.push('modelName')
+  assert.throws(() => validatePacketAudit(audit, audit.packetSha256), /R6_PATH_MASK_AUDIT_FAILED/u)
+})
 
 test('R6 Screening review summary maps anonymous sides only after reveal', () => {
   const labels = [
