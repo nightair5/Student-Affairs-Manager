@@ -1,6 +1,7 @@
 /* global console, process */
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { createServer } from 'vite'
 import { canonicalJson, hashBundle, normalizeLf, sha256 } from './e2-9-r1-hash.mjs'
 
@@ -70,15 +71,27 @@ function sourceRecord(fixture, sourceSet) {
   return { caseId: fixture.id, sourceSet, ...input, sourceSha256: sha256(content), inputSha256: sha256(canonicalJson(input)) }
 }
 
+export function semanticRoleFor(spec) {
+  if (spec.dimensions.includes('pure_information') || spec.dimensions.includes('information_only') || spec.dimensions.includes('no_action')) return 'information_only'
+  if (spec.dimensions.includes('prompt_injection') || spec.dimensions.includes('security')) return 'prompt_injection'
+  return 'action_required'
+}
+
+export function sourceCase(record, spec) {
+  return { ...record, semanticRole: semanticRoleFor(spec) }
+}
+
 function manifestCase(record, spec) {
+  const semanticRole = semanticRoleFor(spec)
   return {
     caseId: record.caseId,
     sourceSet: record.sourceSet,
+    semanticRole,
     dimensions: spec.dimensions,
     originTags: spec.originTags ?? [record.sourceSet],
     sourceSha256: record.sourceSha256,
     inputSha256: record.inputSha256,
-    labelSha256: sha256(canonicalJson({ caseId: record.caseId, dimensions: spec.dimensions, originTags: spec.originTags ?? [record.sourceSet] })),
+    labelSha256: sha256(canonicalJson({ caseId: record.caseId, semanticRole, dimensions: spec.dimensions, originTags: spec.originTags ?? [record.sourceSet] })),
   }
 }
 
@@ -102,10 +115,10 @@ async function main() {
       if (!found) throw new Error(`Unknown case: ${caseId}`)
       return [caseId, sourceRecord(found.fixture, found.sourceSet)]
     }))
-    const smokeCases = SMOKE.map((spec) => ({ ...records.get(spec.caseId), smokeRole: spec.role }))
-    const screeningCases = SCREENING.map((spec) => records.get(spec.caseId))
+    const smokeCases = SMOKE.map((spec) => ({ ...sourceCase(records.get(spec.caseId), spec), smokeRole: spec.role }))
+    const screeningCases = SCREENING.map((spec) => sourceCase(records.get(spec.caseId), spec))
     const selectionSpecs = [...SCREENING, ...SELECTION_ADDITIONS]
-    const selectionCases = selectionSpecs.map((spec) => records.get(spec.caseId))
+    const selectionCases = selectionSpecs.map((spec) => sourceCase(records.get(spec.caseId), spec))
     if (new Set(selectionCases.map((item) => item.caseId)).size !== 24) throw new Error('Selection must contain 24 unique cases')
     if (new Set(selectionCases.map((item) => item.sourceSha256)).size !== 24) throw new Error('Selection contains duplicate source text')
 
@@ -169,4 +182,4 @@ async function main() {
   }
 }
 
-await main()
+if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.argv[1])) await main()
