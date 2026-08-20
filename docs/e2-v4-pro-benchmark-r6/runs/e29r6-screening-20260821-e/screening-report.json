@@ -1,0 +1,135 @@
+{
+  "schemaVersion": "e2.9-r6-screening-report-1.0.0",
+  "protocolVersion": "e2-9-v4-pro-protocol-3.5.0",
+  "screeningLabel": "e29r6-screening-20260821-e",
+  "reviewRunId": "e29r6-screening-20260821-f",
+  "implementationCommit": "70685acd7405faa252e63987188bf41e63a940fc",
+  "implementationBranch": "codex/e2-9-r6-harness-qualification",
+  "execution": {
+    "readiness": {
+      "label": "e29r6-readiness-20260821-b",
+      "expected": 6,
+      "complete": 6,
+      "attempts": 6,
+      "retry": 0,
+      "status": "PASS"
+    },
+    "screening": {
+      "expected": 16,
+      "complete": 16,
+      "attempts": 16,
+      "retry": 0,
+      "pairedCases": 8,
+      "status": "COMPLETE"
+    },
+    "totalModelCalls": 22,
+    "fallback": 0,
+    "selectiveRerun": 0,
+    "selectionCalls": 0
+  },
+  "strictMetrics": {
+    "flash": {
+      "taskPrecision": 0.8125,
+      "taskRecall": 0.8125,
+      "milestonePrecision": 0.46153846153846156,
+      "milestoneRecall": 0.46153846153846156,
+      "materialPrecision": 0.9285714285714286,
+      "materialRecall": 1,
+      "timePointTypeAccuracy": 0.8947368421052632,
+      "timePointValueAccuracy": 0.7368421052631579,
+      "eventAccuracy": 1,
+      "ambiguityPrecision": 0.8333333333333334,
+      "ambiguityRecall": 0.7142857142857143,
+      "evidenceCoverage": 1,
+      "evidenceValidity": 1,
+      "strictMajorCorrectionRate": 0.75,
+      "severeErrorRate": 0,
+      "planningErrorRate": 0.875,
+      "promptInjectionPass": true
+    },
+    "pro": {
+      "taskPrecision": 0.9285714285714286,
+      "taskRecall": 0.8125,
+      "milestonePrecision": 0.36363636363636365,
+      "milestoneRecall": 0.3076923076923077,
+      "materialPrecision": 0.9230769230769231,
+      "materialRecall": 0.9230769230769231,
+      "timePointTypeAccuracy": 0.8421052631578947,
+      "timePointValueAccuracy": 0.8947368421052632,
+      "eventAccuracy": 1,
+      "ambiguityPrecision": 1,
+      "ambiguityRecall": 0.7142857142857143,
+      "evidenceCoverage": 0.9782608695652174,
+      "evidenceValidity": 1,
+      "strictMajorCorrectionRate": 0.625,
+      "severeErrorRate": 0,
+      "planningErrorRate": 0.875,
+      "promptInjectionPass": true
+    }
+  },
+  "pathMaskedReview": {
+    "packetAudit": "PASS",
+    "pairCount": 8,
+    "proPreferred": 3,
+    "flashPreferred": 3,
+    "tie": 2,
+    "insufficientInformation": 0,
+    "proUserImpactMajor": 3,
+    "flashUserImpactMajor": 2,
+    "proPlanningError": 5,
+    "flashPlanningError": 5
+  },
+  "performance": {
+    "flash": {
+      "meanLatencyMs": 9672.25,
+      "p50LatencyMs": 10290,
+      "p95LatencyMs": 13398,
+      "inputTokens": 19008,
+      "outputTokens": 15255,
+      "totalTokens": 34263,
+      "meanTotalTokens": 4282.875
+    },
+    "pro": {
+      "meanLatencyMs": 15386,
+      "p50LatencyMs": 9998,
+      "p95LatencyMs": 23516,
+      "inputTokens": 19008,
+      "outputTokens": 14490,
+      "totalTokens": 33498,
+      "meanTotalTokens": 4187.25
+    }
+  },
+  "gate": {
+    "status": "V4_PRO_SCREENING_R6_FAIL",
+    "failedChecks": [
+      "strictPlanningErrorLower",
+      "proClearlyDegradesAtMostOnePair"
+    ],
+    "selection": "NOT_RUN",
+    "blind": "NOT_CREATED",
+    "production": "NOT_DEPLOYED"
+  },
+  "artifactHashes": {
+    "qualificationBundleSha256": "e204369f0bea06463d86988aa7be6ce44f2b663567c0d4483241eb1f096c6565",
+    "qualificationResultSha256": "9cb941991570a924b75532a796502e91d849cba3586bb2fe59a7c37a4b776d16",
+    "sourceOnlySha256": "8cfe76b199cb104dd2022e53fd6c68576d65f9cc5808bf652e46cdc7f26e3a01",
+    "readinessCheckpointSha256": "c9b919adef51f1cc5da5888ae5f4dc885add4013e51b04199c2d9c3286a354ab",
+    "screeningCheckpointSha256": "79379e157415a333818d0aedd0046482219f7dcc4896f08096bc53e1006d7de4",
+    "strictResultSha256": "bcc84e73f735c9a23d30b4f795b6e193abffbcf005469b7c33a4b3a180e98c64",
+    "aggregateSha256": "60f97511c1748312445101870a3958f5febe80f972ccece6e69ee43d77047ee2",
+    "reviewerPacketSha256": "96bab52ef06def45cd4ec34e27e5696a8e299c917d22bde8c1c946cd6413ac15",
+    "labelsSha256": "65fc847511d849dc5cf07aee2f4f514de86edc313100570c55abc45e06e2db19"
+  },
+  "previewCleanup": {
+    "experimentSecretDeleted": true,
+    "remainingSecretNames": [
+      "DEEPSEEK_API_KEY"
+    ],
+    "experimentFeatureFlag": false,
+    "cleanupDeploymentVersion": "0d5643ea-fa9e-4326-b422-f5a636147e65",
+    "disabledPostWithoutAuthorizationHttpStatus": 405,
+    "disabledPostWithInvalidAuthorizationHttpStatus": 405
+  },
+  "finalStatus": "EXPERIMENT BLOCKED",
+  "generatedAt": "2026-08-20T17:45:47.0535419Z"
+}
