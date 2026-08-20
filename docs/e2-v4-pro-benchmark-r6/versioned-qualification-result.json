@@ -1,0 +1,66 @@
+{
+  "schemaVersion": "e2.9-r6-versioned-qualification-result-1.0.0",
+  "generatedAt": "2026-08-20T13:45:09.7369368Z",
+  "sourceCommit": "d1a0c59a5f490d835e6e18f4c550b69b31f6477a",
+  "protocolVersion": "e2-9-v4-pro-protocol-3.4.0",
+  "harnessVersion": "e2-9-r6-preview-harness-1.3.0",
+  "status": "R6_VERSIONED_QUALIFICATION_PASS_MODEL_PHASES_LOCKED",
+  "qualityConclusion": "NOT_AVAILABLE",
+  "run": {
+    "runLabel": "e29r6-qualification-20260820-f",
+    "workerName": "student-affairs-e2-r6-qualification-preview",
+    "initializationDeploymentVersionId": "a018c247-aae9-40ff-bf4c-9bc1e6a7f1eb",
+    "qualificationVersionId": "682a84a1-a35a-47e3-8421-e72a5c1337c4",
+    "qualificationVersionDeployed": false,
+    "versionedPreviewOrigin": "https://682a84a1-student-affairs-e2-r6-qualification-preview.nightsdell.workers.dev",
+    "activationProbes": 3,
+    "stableActivationResponses": 3,
+    "ledgerStatus": "QUALIFICATION_RECORDED_MODEL_PHASES_LOCKED",
+    "recordedAt": "2026-08-20T13:43:03.099Z",
+    "stateHttpStatus": 200,
+    "modelCalls": 0,
+    "expectedAnswersLoaded": false,
+    "qualificationBundleSha256": "e3e10c2e9acf6418ca6184ed4260b0d9e6985d2f63d4266ae6be51d07d362413",
+    "qualificationResultSha256": "7bb513ee810e2daa996e2dcaa0ecfb70d5ec8eb79bf7024ecb410f0d303b3c2a"
+  },
+  "gates": {
+    "readinessHttpStatus": 412,
+    "generateHttpStatus": 412,
+    "selectionHttpStatus": 412,
+    "blindHttpStatus": 412,
+    "gateError": "MODEL_PHASE_NOT_AUTHORIZED",
+    "unrelatedDeepSeekRouteHttpStatus": 404,
+    "canonicalEndpointHttpStatus": 404,
+    "unauthenticatedActivationHttpStatus": 404
+  },
+  "isolation": {
+    "bindingCount": 8,
+    "deepSeekBindingPresent": false,
+    "assetsBindingPresent": false,
+    "cloudflareSecretCount": 0,
+    "bearerStored": false,
+    "hashCommitmentOnly": true,
+    "mainPreviewTrafficChanged": false,
+    "productionTrafficChanged": false
+  },
+  "externalState": {
+    "mainPreviewVersionId": "9cb3eda7-bfd0-48f7-9313-398f2d8d26cc",
+    "mainPreviewR6HarnessEnabled": false,
+    "productionVersionId": "3b6d6ba2-e21f-495c-80e4-c4bac62366be",
+    "productionVersionCreatedOn": "2026-08-08T08:55:40.370263Z"
+  },
+  "attemptIntegrity": {
+    "eInitialAttemptRecorded": false,
+    "eRetried": false,
+    "fallbackFreshLabelUsed": true,
+    "fallbackLabel": "e29r6-qualification-20260820-f"
+  },
+  "authorizedNextStages": {
+    "readiness": false,
+    "smoke": false,
+    "screening": false,
+    "selection": false,
+    "blind": false,
+    "production": false
+  }
+}
