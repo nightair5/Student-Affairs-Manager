@@ -118,11 +118,11 @@ function seededOrder(cases, seed) {
   })
 }
 
-async function loadReadiness(label, deploymentVersion) {
+async function loadReadiness(label, readinessDeploymentVersion) {
   const file = path.join(CACHE, 'readiness', `${label}.json`)
   const raw = await readFile(file, 'utf8')
   const readiness = JSON.parse(raw)
-  if (readiness.status !== 'PASS' || readiness.protocolVersion !== PROTOCOL_VERSION || readiness.deploymentVersion !== deploymentVersion) throw new Error('Readiness provenance mismatch')
+  if (readiness.status !== 'PASS' || readiness.protocolVersion !== PROTOCOL_VERSION || readiness.deploymentVersion !== readinessDeploymentVersion) throw new Error('Readiness provenance mismatch')
   return { file, raw, readiness }
 }
 
@@ -169,8 +169,8 @@ async function runS0({ label, endpoint, origin, token, deploymentVersion, readin
   if (status !== 'PASS') process.exitCode = 2
 }
 
-async function runScored({ phase, label, endpoint, origin, token, deploymentVersion, readinessLabel, seed, sourceManifestPath, caseIds }) {
-  const readiness = await loadReadiness(readinessLabel, deploymentVersion)
+async function runScored({ phase, label, endpoint, origin, token, deploymentVersion, readinessDeploymentVersion, readinessLabel, seed, sourceManifestPath, caseIds }) {
+  const readiness = await loadReadiness(readinessLabel, readinessDeploymentVersion)
   const sourceRaw = await readFile(sourceManifestPath, 'utf8')
   const source = JSON.parse(sourceRaw)
   assertFirewall(source)
@@ -203,13 +203,13 @@ async function runScored({ phase, label, endpoint, origin, token, deploymentVers
       try { validateGeneration(response.payload, fixture, modelAlias, fixture.smokeRole ?? null) } catch (caught) { status = 'integrity_failure'; error = caught instanceof Error ? caught.message : 'INTEGRITY_FAILURE' }
     }
     observations.push({ observationIndex: index + 1, caseId: fixture.caseId, sourceSet: fixture.sourceSet, smokeRole: fixture.smokeRole ?? null, modelAlias, requestedModel: MODEL_BY_ALIAS[modelAlias], sourceSha256: fixture.sourceSha256, inputSha256: fixture.inputSha256, status, error, response })
-    await writeFile(file, `${JSON.stringify({ schemaVersion: 'e2.9-r1-scored-checkpoint-2.0.0', protocolVersion: PROTOCOL_VERSION, phase, label, seed, deploymentVersion, readinessLabel, readinessSha256: sha256(readiness.raw), sourceOnlySha256: sha256(canonicalJson(source)), startedAt, gateStatus, observations }, null, 2)}\n`, 'utf8')
+    await writeFile(file, `${JSON.stringify({ schemaVersion: 'e2.9-r1-scored-checkpoint-2.0.0', protocolVersion: PROTOCOL_VERSION, phase, label, seed, deploymentVersion, readinessDeploymentVersion, readinessLabel, readinessSha256: sha256(readiness.raw), sourceOnlySha256: sha256(canonicalJson(source)), startedAt, gateStatus, observations }, null, 2)}\n`, 'utf8')
     console.log(`[${index + 1}/${requested.length * 2}] ${phase} ${fixture.caseId} ${modelAlias} ${status}`)
     if (gateStatus === 'AUTH_PROTOCOL_FAILURE' || (phase === 'smoke' && status !== 'complete')) break
   }
   if (phase === 'smoke' && observations.length !== requested.length * 2) gateStatus = gateStatus === 'AUTH_PROTOCOL_FAILURE' ? gateStatus : 'SMOKE_V2_FAILED'
   if (phase === 'smoke' && observations.some((item) => item.status !== 'complete')) gateStatus = gateStatus === 'AUTH_PROTOCOL_FAILURE' ? gateStatus : 'SMOKE_V2_FAILED'
-  const checkpoint = { schemaVersion: 'e2.9-r1-scored-checkpoint-2.0.0', protocolVersion: PROTOCOL_VERSION, phase, label, seed, deploymentVersion, readinessLabel, readinessSha256: sha256(readiness.raw), sourceOnlySha256: sha256(canonicalJson(source)), startedAt, completedAt: new Date().toISOString(), gateStatus, expectedObservations: requested.length * 2, observations }
+  const checkpoint = { schemaVersion: 'e2.9-r1-scored-checkpoint-2.0.0', protocolVersion: PROTOCOL_VERSION, phase, label, seed, deploymentVersion, readinessDeploymentVersion, readinessLabel, readinessSha256: sha256(readiness.raw), sourceOnlySha256: sha256(canonicalJson(source)), startedAt, completedAt: new Date().toISOString(), gateStatus, expectedObservations: requested.length * 2, observations }
   await writeFile(file, `${JSON.stringify(checkpoint, null, 2)}\n`, 'utf8')
   console.log(JSON.stringify({ phase, label, gateStatus, expected: requested.length * 2, attempted: observations.length, complete: observations.filter((item) => item.status === 'complete').length, file: path.relative(ROOT, file), sha256: sha256(await readFile(file, 'utf8')) }, null, 2))
   if (gateStatus !== 'COMPLETE' || observations.some((item) => item.status !== 'complete')) process.exitCode = 2
@@ -222,6 +222,7 @@ async function main() {
   const origin = option('origin', new URL(endpoint).origin)
   const token = process.env.E2_V4_PRO_BENCHMARK_TOKEN ?? ''
   const deploymentVersion = option('deployment-version')
+  const readinessDeploymentVersion = option('readiness-deployment-version', deploymentVersion)
   const activeAt = option('active-at')
   const readinessLabel = option('readiness-label')
   const seed = option('seed', 'e2-9-r1-fixed-seed-20260813')
@@ -230,11 +231,12 @@ async function main() {
   if (token.length < 32) throw new Error('E2_V4_PRO_BENCHMARK_TOKEN is required in process memory')
   if (!new URL(endpoint).hostname.includes('preview') || origin !== new URL(endpoint).origin) throw new Error('Exact Preview endpoint and same origin are required')
   if (!deploymentVersion || !/^[a-f0-9-]{20,}$/u.test(deploymentVersion)) throw new Error('A verified --deployment-version is required')
+  if (!readinessDeploymentVersion || !/^[a-f0-9-]{20,}$/u.test(readinessDeploymentVersion)) throw new Error('A verified --readiness-deployment-version is required')
   if (phase === 'readiness') return runReadiness({ label, endpoint, origin, token, deploymentVersion, activeAt })
   if (!readinessLabel) throw new Error('--readiness-label is required after readiness')
   if (phase === 's0') return runS0({ label, endpoint, origin, token, deploymentVersion, readinessLabel })
   if (!['smoke', 'screening', 'selection-remaining'].includes(phase)) throw new Error('phase must be readiness, s0, smoke, screening, or selection-remaining')
-  return runScored({ phase, label, endpoint, origin, token, deploymentVersion, readinessLabel, seed, sourceManifestPath, caseIds })
+  return runScored({ phase, label, endpoint, origin, token, deploymentVersion, readinessDeploymentVersion, readinessLabel, seed, sourceManifestPath, caseIds })
 }
 
 await main()
