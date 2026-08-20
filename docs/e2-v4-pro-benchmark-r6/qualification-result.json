@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "e2.9-r6-harness-qualification-result-1.0.0",
+  "protocolVersion": "e2-9-v4-pro-protocol-3.4.0",
+  "runId": "e29r6-synthetic-qualification",
+  "modelCalls": 0,
+  "networkCalls": 0,
+  "expectedAnswersLoaded": false,
+  "qualificationBundleSha256": "e3e10c2e9acf6418ca6184ed4260b0d9e6985d2f63d4266ae6be51d07d362413",
+  "reviewerPacketSha256": "be2350ad7f2ab4257c18770efee8486c61f1348f649c3ab809c8ca6b39c7925b",
+  "privateManifestSha256": "0b70cdb62a993a734c4d2785301342433158f1edc53ef01f5c70e4300fcef257",
+  "labelsSha256": "d1e3170a5a070e45a5e26c9daaf4630cac29c7ee7bb75ba9969fb1173594dc33",
+  "publicPacketFields": [
+    "schemaVersion",
+    "pathMaskVersion",
+    "rubric",
+    "pairs[].caseAnonymousId",
+    "pairs[].source",
+    "pairs[].X",
+    "pairs[].Y"
+  ],
+  "privateOnlyFields": [
+    "caseId",
+    "XAlias",
+    "YAlias",
+    "sideXHash",
+    "sideYHash",
+    "assignmentCommitmentHash"
+  ],
+  "protocolMetadataExcludedFromLabelLeakScan": true,
+  "failureTaxonomy": [
+    "DIRECT_IDENTITY_DISCLOSURE",
+    "LINKABILITY_RISK",
+    "REVIEWER_PACKET_SCHEMA_VIOLATION",
+    "LABEL_PAYLOAD_DISCLOSURE",
+    "PRIVATE_BINDING_MISMATCH",
+    "CHRONOLOGY_INVALID",
+    "HARNESS_INTEGRATION_FAILURE"
+  ],
+  "stageSequence": [
+    "SYNTHETIC_GENERATION",
+    "PUBLIC_PROJECTION",
+    "LABEL_FREEZE",
+    "PRIVATE_REVEAL",
+    "SYNTHETIC_SCORING",
+    "QUALIFICATION_GATE"
+  ],
+  "syntheticScore": {
+    "pairCount": 2,
+    "ties": 2,
+    "mappingCount": 2
+  },
+  "status": "HARNESS_QUALIFIED_FOR_FUTURE_PREFLIGHT",
+  "nextStagesAuthorized": {
+    "modelReadiness": false,
+    "smoke": false,
+    "screening": false,
+    "selection": false,
+    "blind": false,
+    "production": false
+  }
+}

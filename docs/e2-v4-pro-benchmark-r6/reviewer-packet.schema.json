@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "e2.9-r6-reviewer-packet-1.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "pathMaskVersion", "rubric", "pairs"],
+  "properties": {
+    "schemaVersion": { "const": "e2.9-r6-reviewer-packet-1.0.0" },
+    "pathMaskVersion": { "const": "e2-9-r6-path-mask-1.0.0" },
+    "rubric": { "type": "object" },
+    "pairs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["caseAnonymousId", "source", "X", "Y"],
+        "properties": {
+          "caseAnonymousId": { "type": "string", "pattern": "^review-case-[0-9]{3}$" },
+          "source": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["sourceType", "sourceTitle", "text", "referenceTime", "timezone"],
+            "properties": {
+              "sourceType": { "type": "string" },
+              "sourceTitle": { "type": "string" },
+              "text": { "type": "string" },
+              "referenceTime": { "type": "string" },
+              "timezone": { "type": "string" }
+            }
+          },
+          "X": { "type": "object" },
+          "Y": { "type": "object" }
+        }
+      }
+    }
+  }
+}

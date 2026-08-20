@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "e2.9-r6-path-masked-labels-1.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "protocolVersion", "runId", "reviewerPacketSha256", "labelsCompletedAt", "labelsSha256", "reviewerKind", "reviewProcessId", "labels"],
+  "properties": {
+    "schemaVersion": { "const": "e2.9-r6-path-masked-labels-1.0.0" },
+    "protocolVersion": { "type": "string" },
+    "runId": { "type": "string" },
+    "reviewerPacketSha256": { "$ref": "#/$defs/sha256" },
+    "labelsCompletedAt": { "type": "string", "format": "date-time" },
+    "labelsSha256": { "$ref": "#/$defs/sha256" },
+    "reviewerKind": { "const": "independent_fresh_read_only" },
+    "reviewProcessId": { "type": "string", "minLength": 8 },
+    "labels": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["caseAnonymousId", "preferredSide", "xMajor", "yMajor", "xPlanningError", "yPlanningError", "reason"],
+        "properties": {
+          "caseAnonymousId": { "type": "string", "pattern": "^review-case-[0-9]{3}$" },
+          "preferredSide": { "enum": ["X", "Y", "TIE", "INSUFFICIENT_INFORMATION"] },
+          "xMajor": { "type": "boolean" },
+          "yMajor": { "type": "boolean" },
+          "xPlanningError": { "type": "boolean" },
+          "yPlanningError": { "type": "boolean" },
+          "reason": { "type": "string", "minLength": 8 }
+        }
+      }
+    }
+  },
+  "$defs": { "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" } }
+}

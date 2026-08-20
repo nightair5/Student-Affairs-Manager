@@ -9,7 +9,7 @@ const allowedPlaceholder = /example|placeholder|replace[-_ ]?me|your[-_ ]|server
 const rules = [
   { name: 'private key', pattern: /-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----/ },
   { name: 'DeepSeek-style API key', pattern: /\bsk-[A-Za-z0-9_-]{20,}\b/ },
-  { name: 'assigned server secret', pattern: /\b(?:DEEPSEEK_API_KEY|CLOUDFLARE_API_TOKEN|FIREBASE_TOKEN|SAM_SYNC_TOKEN|SAM_EMAIL_PROVIDER_TOKEN)\s*[:=]\s*["']?[^\s"']{12,}/i },
+  { name: 'assigned server secret', pattern: /\b(?:DEEPSEEK_API_KEY|CLOUDFLARE_API_TOKEN|FIREBASE_TOKEN|SAM_SYNC_TOKEN|SAM_EMAIL_PROVIDER_TOKEN|E2_R5_BENCHMARK_TOKEN|E2_R5_PATH_MASK_REVEAL_SECRET|E2_R6_BENCHMARK_TOKEN|E2_R6_PATH_MASK_REVEAL_SECRET)\s*[:=]\s*["']?[^\s"']{12,}/i },
   { name: 'service account private key', pattern: /"private_key"\s*:\s*"-----BEGIN/i },
 ]
 
