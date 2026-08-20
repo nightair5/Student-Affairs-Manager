@@ -1,0 +1,28 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "student-affairs-e2-r6-qualification-ledger-preview",
+  "main": "./cloudflare/e2-r6-qualification-ledger.mjs",
+  "compatibility_date": "2026-08-02",
+  "workers_dev": false,
+  "version_metadata": {
+    "binding": "CF_VERSION_METADATA"
+  },
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "E2_R6_QUALIFICATION_LEDGER",
+        "class_name": "E2R6QualificationLedger"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["E2R6QualificationLedger"]
+    }
+  ],
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "schemaVersion": "e2.9-r6-preview-integration-result-1.0.0",
+  "protocolVersion": "e2-9-v4-pro-protocol-3.4.0",
+  "qualificationBundleSha256": "e3e10c2e9acf6418ca6184ed4260b0d9e6985d2f63d4266ae6be51d07d362413",
+  "qualificationResultSha256": "7bb513ee810e2daa996e2dcaa0ecfb70d5ec8eb79bf7024ecb410f0d303b3c2a",
+  "previewIntegrationBundleSha256": "baba2db426cdf923b6d634764faa03786aa437dbf49b6ce081e40bd9d311d6d7",
+  "runnerMode": "qualification_only",
+  "normalPreviewFeatureFlag": false,
+  "dedicatedActivationConfigPresent": true,
+  "appendOnlyQualificationLedger": true,
+  "qualificationHashRecomputedByWorker": true,
+  "qualificationHashRecomputedByLedger": true,
+  "zeroModelWorkerE2E": {
+    "status": "PASS",
+    "tests": 10,
+    "simulatedWorkerRequests": 1,
+    "externalNetworkCalls": 0,
+    "providerCalls": 0
+  },
+  "lockedEndpoints": [
+    "readiness",
+    "generate",
+    "selection",
+    "blind"
+  ],
+  "cloudflareDryRun": {
+    "status": "PASS",
+    "configurationCount": 11,
+    "uploaded": false,
+    "deployed": false
+  },
+  "previewDeployment": "NOT_RUN",
+  "productionDeployment": "NOT_RUN",
+  "modelQuality": "NOT_AVAILABLE",
+  "nextStagesAuthorized": {
+    "modelReadiness": false,
+    "smoke": false,
+    "screening": false,
+    "selection": false,
+    "blind": false,
+    "production": false
+  },
+  "status": "R6_PREVIEW_INTEGRATION_LOCALLY_QUALIFIED_MODEL_PHASES_LOCKED"
+}

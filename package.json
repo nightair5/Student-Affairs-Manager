@@ -12,13 +12,13 @@
     "firebase:serve": "npm run build:firebase && npx --yes firebase-tools emulators:start --only hosting",
     "deploy:firebase": "npm run build:firebase && npm --prefix functions run check && npx --yes firebase-tools deploy --only functions,hosting",
     "cloudflare:dev": "npm run build && wrangler dev",
-    "cloudflare:check": "node --test cloudflare/worker-tests.mjs cloudflare/e2-r2-tests.mjs cloudflare/e2-r3-tests.mjs cloudflare/e2-r4-tests.mjs cloudflare/e2-r5-tests.mjs && wrangler deploy --dry-run --config wrangler.e2-r2-ledger.jsonc && wrangler deploy --dry-run --config wrangler.e2-r3-ledger.jsonc && wrangler deploy --dry-run --config wrangler.e2-r3-preview.jsonc && wrangler deploy --dry-run --config wrangler.e2-r4-ledger.jsonc && wrangler deploy --dry-run --config wrangler.e2-r4-preview.jsonc && wrangler deploy --dry-run --config wrangler.e2-r5-ledger.jsonc && wrangler deploy --dry-run --config wrangler.e2-r5-preview.jsonc && wrangler deploy --dry-run --env=\"\" && wrangler deploy --dry-run --env preview",
+    "cloudflare:check": "node --test cloudflare/worker-tests.mjs cloudflare/e2-r2-tests.mjs cloudflare/e2-r3-tests.mjs cloudflare/e2-r4-tests.mjs cloudflare/e2-r5-tests.mjs cloudflare/e2-r6-tests.mjs && wrangler deploy --dry-run --config wrangler.e2-r2-ledger.jsonc && wrangler deploy --dry-run --config wrangler.e2-r3-ledger.jsonc && wrangler deploy --dry-run --config wrangler.e2-r3-preview.jsonc && wrangler deploy --dry-run --config wrangler.e2-r4-ledger.jsonc && wrangler deploy --dry-run --config wrangler.e2-r4-preview.jsonc && wrangler deploy --dry-run --config wrangler.e2-r5-ledger.jsonc && wrangler deploy --dry-run --config wrangler.e2-r5-preview.jsonc && wrangler deploy --dry-run --config wrangler.e2-r6-ledger.jsonc && wrangler deploy --dry-run --config wrangler.e2-r6-preview.jsonc && wrangler deploy --dry-run --env=\"\" && wrangler deploy --dry-run --env preview",
     "security:scan": "node scripts/scan-secrets.mjs",
     "deploy:cloudflare:preview": "npm run build && npm run cloudflare:check && wrangler deploy --env preview",
     "deploy:cloudflare": "npm run build && npm run cloudflare:check && wrangler deploy",
     "lint": "eslint .",
     "typecheck": "tsc -b --pretty false",
-    "test": "vitest run && node --test scripts/recognition-e2-dataset-freeze.mjs scripts/factledger-d6-labels.node.mjs scripts/e2-7-baseline-freeze.node.mjs scripts/e2-9-r1-protocol.node.mjs scripts/e2-9-r2-protocol.node.mjs scripts/e2-9-r3-protocol.node.mjs scripts/e2-9-r4-path-mask.node.mjs scripts/e2-9-r4-protocol.node.mjs scripts/e2-9-r5-path-mask.node.mjs scripts/e2-9-r5-protocol.node.mjs scripts/e2-9-r6-harness-qualification.node.mjs && node --test server/server-tests.mjs && node --test cloudflare/worker-tests.mjs cloudflare/e2-r2-tests.mjs cloudflare/e2-r3-tests.mjs cloudflare/e2-r4-tests.mjs cloudflare/e2-r5-tests.mjs && npm --prefix functions test",
+    "test": "vitest run && node --test scripts/recognition-e2-dataset-freeze.mjs scripts/factledger-d6-labels.node.mjs scripts/e2-7-baseline-freeze.node.mjs scripts/e2-9-r1-protocol.node.mjs scripts/e2-9-r2-protocol.node.mjs scripts/e2-9-r3-protocol.node.mjs scripts/e2-9-r4-path-mask.node.mjs scripts/e2-9-r4-protocol.node.mjs scripts/e2-9-r5-path-mask.node.mjs scripts/e2-9-r5-protocol.node.mjs scripts/e2-9-r6-harness-qualification.node.mjs && node --test server/server-tests.mjs && node --test cloudflare/worker-tests.mjs cloudflare/e2-r2-tests.mjs cloudflare/e2-r3-tests.mjs cloudflare/e2-r4-tests.mjs cloudflare/e2-r5-tests.mjs cloudflare/e2-r6-tests.mjs && npm --prefix functions test",
     "test:e2.7:baseline": "node --test scripts/e2-7-baseline-freeze.node.mjs",
     "eval:recognition": "vitest run src/recognition/evaluation.test.ts",
     "eval:recognition:e2": "node scripts/run-recognition-e2.mjs",
@@ -60,6 +60,7 @@
     ,"eval:recognition:e2:r5:score": "node scripts/score-e2-9-r5.mjs"
     ,"eval:recognition:e2:r5:gate": "node scripts/evaluate-e2-9-r5-gate.mjs"
     ,"eval:recognition:e2:r6:qualify": "node scripts/e2-9-r6-harness-qualification.mjs"
+    ,"eval:recognition:e2:r6:preview-preflight": "node scripts/run-e2-9-r6-preview-preflight.mjs --phase=qualification --dry-run=true --run-label=e29r6-local-preflight"
   },
   "dependencies": {
     "lucide-react": "^0.468.0",
