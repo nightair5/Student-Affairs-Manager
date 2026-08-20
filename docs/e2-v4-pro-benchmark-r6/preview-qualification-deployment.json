@@ -1,0 +1,57 @@
+{
+  "schemaVersion": "e2.9-r6-preview-qualification-deployment-1.0.0",
+  "generatedAt": "2026-08-20T13:12:04.1551760Z",
+  "branch": "codex/e2-9-r6-harness-qualification",
+  "sourceCommit": "ced7ded",
+  "protocolVersion": "e2-9-v4-pro-protocol-3.4.0",
+  "status": "QUALIFICATION_ONLY_PREVIEW_DEPLOYED_AND_RELOCKED",
+  "modelCalls": 0,
+  "qualification": {
+    "failedTransportLabel": "e29r6-qualification-20260820-a",
+    "recordedRunLabel": "e29r6-qualification-20260820-b",
+    "registrationHttpStatus": 201,
+    "stateHttpStatus": 200,
+    "recordStatus": "QUALIFICATION_RECORDED_MODEL_PHASES_LOCKED",
+    "recordedAt": "2026-08-20T13:08:03.881Z",
+    "bundleSha256": "e3e10c2e9acf6418ca6184ed4260b0d9e6985d2f63d4266ae6be51d07d362413",
+    "resultSha256": "7bb513ee810e2daa996e2dcaa0ecfb70d5ec8eb79bf7024ecb410f0d303b3c2a"
+  },
+  "lockedEndpointProbes": [
+    { "endpoint": "readiness", "httpStatus": 412, "error": "MODEL_PHASE_NOT_AUTHORIZED", "modelCalls": 0 },
+    { "endpoint": "generate", "httpStatus": 412, "error": "MODEL_PHASE_NOT_AUTHORIZED", "modelCalls": 0 },
+    { "endpoint": "selection", "httpStatus": 412, "error": "MODEL_PHASE_NOT_AUTHORIZED", "modelCalls": 0 },
+    { "endpoint": "blind", "httpStatus": 412, "error": "MODEL_PHASE_NOT_AUTHORIZED", "modelCalls": 0 }
+  ],
+  "deploymentChain": [
+    { "purpose": "internal_qualification_ledger", "versionId": "c746adc1-589f-4878-9b91-80f8a3743a87" },
+    { "purpose": "initial_preview_disabled", "versionId": "3c1fea3e-869e-490d-8611-ad306495cee3" },
+    { "purpose": "activation_transport_failure_label_a", "versionId": "c98710e6-ad45-4cd5-aa67-5e0ea4fe1561" },
+    { "purpose": "restore_disabled_after_label_a", "versionId": "058911c0-7530-4f3b-b7ef-432a45fd19e7" },
+    { "purpose": "qualification_registration_label_b", "versionId": "7b8bdd57-3e9c-4989-b2e3-578e8d2eb4f7" },
+    { "purpose": "restore_disabled_after_registration", "versionId": "0bb23c7a-0e02-4d07-8946-226d0ae2ac6a" },
+    { "purpose": "locked_endpoint_probe_activation", "versionId": "6ddc4bd4-d021-4475-835a-ba3057d6bea2" },
+    { "purpose": "final_preview_disabled", "versionId": "00b759ca-d188-41cd-b9e3-5743e4f5ad94" },
+    { "purpose": "final_secret_delete", "versionId": "fe780dbb-07b2-4c8f-86ca-9419192d03c4" }
+  ],
+  "finalState": {
+    "previewFlagEnabled": false,
+    "r6BearerPresent": false,
+    "previewUnauthenticatedStateHttpStatus": 404,
+    "productionDeploymentId": "bc1719b0-2fcf-4f26-b8d1-fc3261588300",
+    "productionVersionId": "3b6d6ba2-e21f-495c-80e4-c4bac62366be",
+    "productionUnchanged": true
+  },
+  "phases": {
+    "readiness": "NOT_RUN",
+    "smoke": "NOT_RUN",
+    "screening": "NOT_RUN",
+    "selection": "NOT_RUN",
+    "blind": "NOT_CREATED_NOT_RUN",
+    "production": "NOT_DEPLOYED",
+    "e3e4": "NOT_ENTERED"
+  },
+  "warnings": [
+    "NODE_FETCH_TRANSPORT_TIMEOUT_FOR_FIRST_FRESH_LABEL_NOT_OVERWRITTEN",
+    "CLOUDFLARE_VERSION_PROPAGATION_WINDOW_RETURNED_FAIL_CLOSED_404_BETWEEN_ACTIVE_PROBES"
+  ]
+}
