@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 import { runE2R7Benchmark } from './e2-r7-benchmark.mjs'
+import worker from './e2-r7-preview-worker.mjs'
 import {
   E2_V4_PRO_BENCHMARK_PIPELINE_VERSION,
   E2_V4_PRO_BENCHMARK_PLANNER_VERSION,
@@ -118,4 +119,17 @@ test('R7 readiness response is bound to benchmark 2.2.0 without changing the pro
   assert.equal(payload.benchmarkVersion, 'e2-v4-pro-benchmark-2.2.0')
   assert.equal(payload.returnedModel, 'deepseek-v4-flash')
   assert.equal(upstreamBody.messages[1].content, 'Return {"ok":true}.')
+})
+
+test('R7 zero-model contract binds three-stage activation to the exact Worker version', async () => {
+  const deploymentVersion = '12345678-1234-1234-1234-123456789abc'
+  const contractRequest = new Request(`${ORIGIN}/api/experiments/e2-9/v4-pro-benchmark/contract`, {
+    headers: { origin: ORIGIN, authorization: `Bearer ${TOKEN}` },
+  })
+  const response = await worker.fetch(contractRequest, environment({ CF_VERSION_METADATA: { id: deploymentVersion } }))
+  const payload = await response.json()
+  assert.equal(payload.protocolVersion, 'e2-9-v4-pro-protocol-3.6.1')
+  assert.equal(payload.deploymentVersion, deploymentVersion)
+  assert.equal(payload.modelCalls, 0)
+  assert.equal((await worker.fetch(contractRequest, environment({ E2_V4_PRO_BENCHMARK_ENABLED: 'false', CF_VERSION_METADATA: { id: deploymentVersion } }))).status, 404)
 })

@@ -6,7 +6,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { canonicalJson, sha256 } from './e2-9-r1-hash.mjs'
 
-export const R7_PROTOCOL_VERSION = 'e2-9-v4-pro-protocol-3.6.0'
+export const R7_PROTOCOL_VERSION = 'e2-9-v4-pro-protocol-3.6.1'
 const SOURCE_PROTOCOL_VERSION = 'e2-9-v4-pro-reduced-protocol-2.0.0'
 const BENCHMARK_VERSION = 'e2-v4-pro-benchmark-2.2.0'
 const PROMPT_VERSION = 'recognition-2.4.1-r7-preview'
@@ -14,7 +14,7 @@ const PIPELINE_VERSION = 'recognition-pipeline-2.2.2-r7-preview'
 const NORMALIZER_VERSION = 'e2-v4-pro-benchmark-normalizer-2.2.0'
 const PLANNER_VERSION = 'e2-v4-pro-benchmark-planner-1.0.0'
 const MODEL_BY_ALIAS = Object.freeze({ flash: 'deepseek-v4-flash', pro: 'deepseek-v4-pro' })
-const CACHE = path.join(process.cwd(), '.evaluation-cache', 'e2-9-r7', 'protocol-3.6.0')
+const CACHE = path.join(process.cwd(), '.evaluation-cache', 'e2-9-r7', 'protocol-3.6.1')
 const DEFAULT_ENDPOINT = 'https://student-affairs-manager-preview.nightsdell.workers.dev/api/experiments/e2-9/v4-pro-benchmark'
 const FORBIDDEN_KEYS = /^(?:expected|answer|answers|gold|golden|target|targets|label|labels|score|scores|forbidden)$/iu
 
@@ -94,6 +94,25 @@ function validateReadiness(payload, alias) {
   if (!payload.usage || !['input', 'output', 'total'].every((key) => Number.isFinite(payload.usage[key]))) throw new Error('READINESS_USAGE_MISSING')
 }
 
+async function stabilizeActivation(endpoint, token, deploymentVersion) {
+  const attempts = []
+  let consecutiveMatches = 0
+  for (let sequence = 1; sequence <= 20; sequence += 1) {
+    const response = await requestJson(`${endpoint}/contract`, { token })
+    const matches = response.httpStatus === 200
+      && response.payload?.protocolVersion === R7_PROTOCOL_VERSION
+      && response.payload?.benchmarkVersion === BENCHMARK_VERSION
+      && response.payload?.deploymentVersion === deploymentVersion
+      && response.payload?.enabled === true
+      && response.payload?.modelCalls === 0
+    consecutiveMatches = matches ? consecutiveMatches + 1 : 0
+    attempts.push({ sequence, matches, httpStatus: response.httpStatus, responseError: response.payload?.error ?? null, deploymentVersion: response.payload?.deploymentVersion ?? null, rawBodySha256: response.rawBodySha256 })
+    if (consecutiveMatches === 3) return { status: 'PASS', requiredConsecutiveMatches: 3, attempts }
+    await new Promise((resolve) => setTimeout(resolve, 500))
+  }
+  return { status: 'FAILED', requiredConsecutiveMatches: 3, attempts }
+}
+
 export function validateR7Generation(payload, fixture, alias) {
   const model = MODEL_BY_ALIAS[alias]
   const execution = payload?.execution
@@ -129,8 +148,9 @@ async function runReadiness({ label, endpoint, token, deploymentVersion }) {
   if (await exists(file)) throw new Error(`REFUSING_TO_OVERWRITE:${file}`)
   await mkdir(dir, { recursive: true })
   const probes = []
-  let error = null
-  for (const alias of ['flash', 'pro']) {
+  const activation = await stabilizeActivation(endpoint, token, deploymentVersion)
+  let error = activation.status === 'PASS' ? null : 'ACTIVATION_NOT_STABLE'
+  for (const alias of error ? [] : ['flash', 'pro']) {
     for (let sequence = 1; sequence <= 3; sequence += 1) {
       const response = await requestJson(`${endpoint}/readiness?modelAlias=${alias}`, { token })
       try {
@@ -145,7 +165,7 @@ async function runReadiness({ label, endpoint, token, deploymentVersion }) {
     }
     if (error) break
   }
-  const result = { schemaVersion: 'e2.9-r7-readiness-1.0.0', protocolVersion: R7_PROTOCOL_VERSION, label, deploymentVersion, completedAt: new Date().toISOString(), expectedProbeCount: 6, probes, status: !error && probes.length === 6 ? 'PASS' : 'FAILED', error }
+  const result = { schemaVersion: 'e2.9-r7-readiness-1.1.0', protocolVersion: R7_PROTOCOL_VERSION, label, deploymentVersion, completedAt: new Date().toISOString(), activation, expectedProbeCount: 6, probes, status: !error && probes.length === 6 ? 'PASS' : 'FAILED', error }
   await writeFile(file, `${JSON.stringify(result, null, 2)}\n`, 'utf8')
   console.log(JSON.stringify({ phase: 'readiness', label, status: result.status, probes: probes.length, checkpoint: file, sha256: sha256(await readFile(file, 'utf8')) }, null, 2))
   if (result.status !== 'PASS') process.exitCode = 2
