@@ -6,7 +6,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { canonicalJson, sha256 } from './e2-9-r1-hash.mjs'
 
-export const R7_PROTOCOL_VERSION = 'e2-9-v4-pro-protocol-3.6.1'
+export const R7_PROTOCOL_VERSION = 'e2-9-v4-pro-protocol-3.6.2'
 const SOURCE_PROTOCOL_VERSION = 'e2-9-v4-pro-reduced-protocol-2.0.0'
 const BENCHMARK_VERSION = 'e2-v4-pro-benchmark-2.2.0'
 const PROMPT_VERSION = 'recognition-2.4.1-r7-preview'
@@ -14,8 +14,7 @@ const PIPELINE_VERSION = 'recognition-pipeline-2.2.2-r7-preview'
 const NORMALIZER_VERSION = 'e2-v4-pro-benchmark-normalizer-2.2.0'
 const PLANNER_VERSION = 'e2-v4-pro-benchmark-planner-1.0.0'
 const MODEL_BY_ALIAS = Object.freeze({ flash: 'deepseek-v4-flash', pro: 'deepseek-v4-pro' })
-const CACHE = path.join(process.cwd(), '.evaluation-cache', 'e2-9-r7', 'protocol-3.6.1')
-const DEFAULT_ENDPOINT = 'https://student-affairs-manager-preview.nightsdell.workers.dev/api/experiments/e2-9/v4-pro-benchmark'
+const CACHE = path.join(process.cwd(), '.evaluation-cache', 'e2-9-r7', 'protocol-3.6.2')
 const FORBIDDEN_KEYS = /^(?:expected|answer|answers|gold|golden|target|targets|label|labels|score|scores|forbidden)$/iu
 
 function option(name, fallback = '') {
@@ -226,11 +225,13 @@ async function runScreening({ label, endpoint, token, deploymentVersion, readine
 async function main() {
   const phase = option('phase')
   const label = ensureLabel(option('label'))
-  const endpoint = option('endpoint', DEFAULT_ENDPOINT)
+  const endpoint = option('endpoint')
   const deploymentVersion = option('deployment-version')
   const token = process.env.E2_V4_PRO_BENCHMARK_TOKEN ?? ''
   if (!['readiness', 'screening'].includes(phase)) throw new Error('R7 permits only readiness or screening; Selection, Blind and Production are blocked')
-  if (!new URL(endpoint).hostname.includes('preview')) throw new Error('PREVIEW_ENDPOINT_REQUIRED')
+  if (!endpoint) throw new Error('VERSIONED_PREVIEW_ENDPOINT_REQUIRED')
+  const endpointHostname = new URL(endpoint).hostname
+  if (!endpointHostname.includes('preview') || !endpointHostname.startsWith(`${deploymentVersion.slice(0, 8)}-`)) throw new Error('ENDPOINT_MUST_BIND_EXACT_WORKER_VERSION_PREFIX')
   if (!/^[a-f0-9-]{20,}$/u.test(deploymentVersion)) throw new Error('VERIFIED_DEPLOYMENT_VERSION_REQUIRED')
   if (token.length < 32) throw new Error('E2_V4_PRO_BENCHMARK_TOKEN must exist only in process memory')
   if (phase === 'readiness') return runReadiness({ label, endpoint, token, deploymentVersion })

@@ -10,7 +10,7 @@ import {
   validateBenchmarkPlannerContract,
 } from './e2-v4-pro-benchmark-planner.mjs'
 
-export const E2_R7_PROTOCOL_VERSION = 'e2-9-v4-pro-protocol-3.6.1'
+export const E2_R7_PROTOCOL_VERSION = 'e2-9-v4-pro-protocol-3.6.2'
 export const E2_R7_BENCHMARK_VERSION = 'e2-v4-pro-benchmark-2.2.0'
 
 async function sha256(value) {

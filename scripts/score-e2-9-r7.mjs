@@ -7,7 +7,7 @@ import { benchmarkPlannerSystemPrompt } from '../cloudflare/e2-v4-pro-benchmark-
 import { canonicalJson, sha256 } from './e2-9-r1-hash.mjs'
 
 export const R7_SCORER_VERSION = 'e2-9-r7-strict-scorer-1.0.0'
-const PROTOCOL_VERSION = 'e2-9-v4-pro-protocol-3.6.1'
+const PROTOCOL_VERSION = 'e2-9-v4-pro-protocol-3.6.2'
 const SOURCE_PROTOCOL_VERSION = 'e2-9-v4-pro-reduced-protocol-2.0.0'
 const PROMPT_VERSION = 'recognition-2.4.1-r7-preview'
 const PIPELINE_VERSION = 'recognition-pipeline-2.2.2-r7-preview'

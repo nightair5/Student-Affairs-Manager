@@ -128,7 +128,7 @@ test('R7 zero-model contract binds three-stage activation to the exact Worker ve
   })
   const response = await worker.fetch(contractRequest, environment({ CF_VERSION_METADATA: { id: deploymentVersion } }))
   const payload = await response.json()
-  assert.equal(payload.protocolVersion, 'e2-9-v4-pro-protocol-3.6.1')
+  assert.equal(payload.protocolVersion, 'e2-9-v4-pro-protocol-3.6.2')
   assert.equal(payload.deploymentVersion, deploymentVersion)
   assert.equal(payload.modelCalls, 0)
   assert.equal((await worker.fetch(contractRequest, environment({ E2_V4_PRO_BENCHMARK_ENABLED: 'false', CF_VERSION_METADATA: { id: deploymentVersion } }))).status, 404)
