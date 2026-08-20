@@ -205,10 +205,11 @@ async function runScored({ phase, label, endpoint, origin, token, deploymentVers
     observations.push({ observationIndex: index + 1, caseId: fixture.caseId, sourceSet: fixture.sourceSet, smokeRole: fixture.smokeRole ?? null, modelAlias, requestedModel: MODEL_BY_ALIAS[modelAlias], sourceSha256: fixture.sourceSha256, inputSha256: fixture.inputSha256, status, error, response })
     await writeFile(file, `${JSON.stringify({ schemaVersion: 'e2.9-r1-scored-checkpoint-2.0.0', protocolVersion: PROTOCOL_VERSION, phase, label, seed, deploymentVersion, readinessDeploymentVersion, readinessLabel, readinessSha256: sha256(readiness.raw), sourceOnlySha256: sha256(canonicalJson(source)), startedAt, gateStatus, observations }, null, 2)}\n`, 'utf8')
     console.log(`[${index + 1}/${requested.length * 2}] ${phase} ${fixture.caseId} ${modelAlias} ${status}`)
-    if (gateStatus === 'AUTH_PROTOCOL_FAILURE' || (phase === 'smoke' && status !== 'complete')) break
+    if (status !== 'complete') break
   }
-  if (phase === 'smoke' && observations.length !== requested.length * 2) gateStatus = gateStatus === 'AUTH_PROTOCOL_FAILURE' ? gateStatus : 'SMOKE_V2_FAILED'
-  if (phase === 'smoke' && observations.some((item) => item.status !== 'complete')) gateStatus = gateStatus === 'AUTH_PROTOCOL_FAILURE' ? gateStatus : 'SMOKE_V2_FAILED'
+  if (observations.length !== requested.length * 2 || observations.some((item) => item.status !== 'complete')) {
+    gateStatus = gateStatus === 'AUTH_PROTOCOL_FAILURE' ? gateStatus : `${phase.toUpperCase().replaceAll('-', '_')}_FAILED`
+  }
   const checkpoint = { schemaVersion: 'e2.9-r1-scored-checkpoint-2.0.0', protocolVersion: PROTOCOL_VERSION, phase, label, seed, deploymentVersion, readinessDeploymentVersion, readinessLabel, readinessSha256: sha256(readiness.raw), sourceOnlySha256: sha256(canonicalJson(source)), startedAt, completedAt: new Date().toISOString(), gateStatus, expectedObservations: requested.length * 2, observations }
   await writeFile(file, `${JSON.stringify(checkpoint, null, 2)}\n`, 'utf8')
   console.log(JSON.stringify({ phase, label, gateStatus, expected: requested.length * 2, attempted: observations.length, complete: observations.filter((item) => item.status === 'complete').length, file: path.relative(ROOT, file), sha256: sha256(await readFile(file, 'utf8')) }, null, 2))
