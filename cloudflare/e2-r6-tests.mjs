@@ -6,9 +6,11 @@ import { createHash } from 'node:crypto'
 import path from 'node:path'
 import { createWorker } from './worker.mjs'
 import { E2R6QualificationLedger } from './e2-r6-qualification-ledger.mjs'
+import qualificationWorker from './e2-r6-qualification-worker.mjs'
 import { E2_R6_PREVIEW_HARNESS_VERSION, E2_R6_PROTOCOL_VERSION, runE2R6Harness } from './e2-r6-harness.mjs'
 import {
-  awaitR6StableActivation, buildR6QualificationRegistration, runR6QualificationPreflight,
+  R6_PREVIEW_ORIGIN, awaitR6StableActivation, buildR6QualificationRegistration,
+  r6VersionedPreviewEndpoint, runR6QualificationPreflight,
 } from '../scripts/run-e2-9-r6-preview-preflight.mjs'
 
 const TOKEN = 'test-only-r6-preview-bearer-token-material-000000000000000000'
@@ -18,6 +20,7 @@ const BUNDLE_SHA256 = 'e3e10c2e9acf6418ca6184ed4260b0d9e6985d2f63d4266ae6be51d07
 const WORKER_VERSION_ID = '11111111-1111-4111-8111-111111111111'
 const OTHER_WORKER_VERSION_ID = '22222222-2222-4222-8222-222222222222'
 const TOKEN_SHA256 = createHash('sha256').update(TOKEN, 'utf8').digest('hex')
+const VERSIONED_ORIGIN = new URL(r6VersionedPreviewEndpoint(WORKER_VERSION_ID)).origin
 
 class MemoryStorage {
   constructor() { this.values = new Map() }
@@ -38,10 +41,11 @@ function ledgerService() {
   }
 }
 
-function environment(ledger = ledgerService()) {
+function environment(ledger = ledgerService(), { versionedOnly = false } = {}) {
   return {
     E2_R6_HARNESS_ENABLED: 'true',
-    E2_R6_PREVIEW_ORIGIN: ORIGIN,
+    E2_R6_PREVIEW_ORIGIN: versionedOnly ? R6_PREVIEW_ORIGIN : ORIGIN,
+    ...(versionedOnly ? { E2_R6_VERSIONED_PREVIEW_ONLY: 'true' } : {}),
     E2_R6_BENCHMARK_TOKEN_SHA256: TOKEN_SHA256,
     E2_R6_QUALIFICATION_BUNDLE_SHA256: BUNDLE_SHA256,
     E2_R6_QUALIFICATION_RESULT_SHA256: RESULT_SHA256,
@@ -50,8 +54,8 @@ function environment(ledger = ledgerService()) {
   }
 }
 
-function request(suffix, { method = 'GET', body, token = TOKEN, origin = ORIGIN } = {}) {
-  return new Request(`${ORIGIN}/api/experiments/e2-9/r6/harness/${suffix}`, {
+function request(suffix, { method = 'GET', body, token = TOKEN, origin = ORIGIN, baseOrigin = ORIGIN } = {}) {
+  return new Request(`${baseOrigin}/api/experiments/e2-9/r6/harness/${suffix}`, {
     method,
     headers: { origin, authorization: `Bearer ${token}`, ...(body === undefined ? {} : { 'content-type': 'application/json' }) },
     ...(body === undefined ? {} : { body: JSON.stringify(body) }),
@@ -93,7 +97,7 @@ test('R6 qualification firewall requires a hash commitment and never stores the 
 
 test('R6 runner to Worker to append-only ledger completes with zero model calls', async () => {
   const ledger = ledgerService()
-  const env = environment(ledger)
+  const env = environment(ledger, { versionedOnly: true })
   let workerCalls = 0
   let providerCalls = 0
   const result = await runR6QualificationPreflight({
@@ -113,7 +117,9 @@ test('R6 runner to Worker to append-only ledger completes with zero model calls'
   assert.equal(result.activation.workerVersionId, WORKER_VERSION_ID)
   assert.equal(result.activation.consecutiveStableResponses, 3)
   assert.equal(result.networkCalls, 4)
-  const state = await runE2R6Harness(request('state?runLabel=r6-zero-model-e2e'), env)
+  const state = await runE2R6Harness(request('state?runLabel=r6-zero-model-e2e', {
+    origin: VERSIONED_ORIGIN, baseOrigin: VERSIONED_ORIGIN,
+  }), env)
   assert.equal(state.status, 200)
   assert.equal((await state.json()).qualificationResultSha256, RESULT_SHA256)
 })
@@ -189,7 +195,7 @@ test('R6 activation proof exposes only frozen hashes and server version with zer
 })
 
 test('R6 activation must stabilize on one version before qualification registration', async () => {
-  const env = environment()
+  const env = environment(undefined, { versionedOnly: true })
   const versions = [OTHER_WORKER_VERSION_ID, WORKER_VERSION_ID, WORKER_VERSION_ID, WORKER_VERSION_ID]
   let calls = 0
   const result = await runR6QualificationPreflight({
@@ -197,8 +203,7 @@ test('R6 activation must stabilize on one version before qualification registrat
     sleeper: async () => {}, probeDelayMs: 0,
     fetcher: async (url, init) => {
       calls += 1
-      assert.equal(new Headers(init.headers).get('Cloudflare-Workers-Version-Overrides'),
-        `student-affairs-manager-preview="${WORKER_VERSION_ID}"`)
+      assert.equal(new Headers(init.headers).get('Cloudflare-Workers-Version-Overrides'), null)
       if (url.endsWith('/activation')) {
         const versionId = versions.shift()
         return Response.json({
@@ -218,6 +223,20 @@ test('R6 activation must stabilize on one version before qualification registrat
   assert.equal(result.activation.probes, 4)
   assert.equal(result.activation.workerVersionId, WORKER_VERSION_ID)
   assert.equal(result.payload.expectedWorkerVersionId, WORKER_VERSION_ID)
+})
+
+test('R6 dedicated qualification Worker exposes no unrelated route or provider path', async () => {
+  const env = environment(undefined, { versionedOnly: true })
+  const unrelated = await qualificationWorker.fetch(new Request(`${VERSIONED_ORIGIN}/api/deepseek`, {
+    method: 'POST', headers: { origin: VERSIONED_ORIGIN, authorization: `Bearer ${TOKEN}` },
+  }), env)
+  assert.equal(unrelated.status, 404)
+  assert.equal((await unrelated.json()).error, 'NOT_FOUND')
+  const activation = await qualificationWorker.fetch(request('activation', {
+    origin: VERSIONED_ORIGIN, baseOrigin: VERSIONED_ORIGIN,
+  }), env)
+  assert.equal(activation.status, 200)
+  assert.equal((await activation.json()).workerVersionId, WORKER_VERSION_ID)
 })
 
 test('R6 Worker rejects a qualification request that drifts to another active version', async () => {
@@ -300,12 +319,17 @@ test('R6 configs keep Production absent, normal Preview disabled and activation 
   const activation = JSON.parse(await readFile(new URL('../wrangler.e2-r6-preview.jsonc', import.meta.url), 'utf8'))
   assert.equal(normal.vars?.E2_R6_HARNESS_ENABLED, undefined)
   assert.equal(normal.env.preview.vars.E2_R6_HARNESS_ENABLED, 'false')
-  assert.equal(activation.name, 'student-affairs-manager-preview')
+  assert.equal(activation.name, 'student-affairs-e2-r6-qualification-preview')
+  assert.equal(activation.main, './cloudflare/e2-r6-qualification-worker.mjs')
+  assert.equal(activation.preview_urls, true)
+  assert.equal(activation.assets, undefined)
   assert.equal(activation.vars.E2_R6_HARNESS_ENABLED, 'true')
+  assert.equal(activation.vars.E2_R6_VERSIONED_PREVIEW_ONLY, 'true')
+  assert.equal(activation.vars.E2_R6_PREVIEW_ORIGIN, R6_PREVIEW_ORIGIN)
   assert.equal(activation.vars.E2_R6_QUALIFICATION_BUNDLE_SHA256, BUNDLE_SHA256)
   assert.equal(activation.vars.E2_R6_QUALIFICATION_RESULT_SHA256, RESULT_SHA256)
   assert.deepEqual(activation.services, [{ binding: 'E2_R6_QUALIFICATION_LEDGER', service: 'student-affairs-e2-r6-qualification-ledger-preview' }])
   assert.equal(E2_R6_PROTOCOL_VERSION, 'e2-9-v4-pro-protocol-3.4.0')
   assert.equal(activation.vars.E2_R6_BENCHMARK_TOKEN_SHA256, undefined)
-  assert.equal(E2_R6_PREVIEW_HARNESS_VERSION, 'e2-9-r6-preview-harness-1.2.0')
+  assert.equal(E2_R6_PREVIEW_HARNESS_VERSION, 'e2-9-r6-preview-harness-1.3.0')
 })

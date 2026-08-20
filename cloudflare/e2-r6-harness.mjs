@@ -1,5 +1,5 @@
 export const E2_R6_PROTOCOL_VERSION = 'e2-9-v4-pro-protocol-3.4.0'
-export const E2_R6_PREVIEW_HARNESS_VERSION = 'e2-9-r6-preview-harness-1.2.0'
+export const E2_R6_PREVIEW_HARNESS_VERSION = 'e2-9-r6-preview-harness-1.3.0'
 
 const QUALIFICATION_FIELDS = new Set([
   'runLabel', 'protocolVersion', 'expectedWorkerVersionId', 'qualificationBundleSha256',
@@ -61,8 +61,16 @@ function constantTimeEqual(left, right) {
 async function authorizationError(request, env) {
   const url = new URL(request.url)
   const expectedOrigin = safeText(env.E2_R6_PREVIEW_ORIGIN, 300)
-  if (env.E2_R6_HARNESS_ENABLED !== 'true' || !expectedOrigin || url.origin !== expectedOrigin) return 'NOT_FOUND'
-  if (request.headers.get('origin') !== expectedOrigin) return 'ORIGIN_NOT_ALLOWED'
+  if (env.E2_R6_HARNESS_ENABLED !== 'true' || !expectedOrigin) return 'NOT_FOUND'
+  let requestOrigin = expectedOrigin
+  if (env.E2_R6_VERSIONED_PREVIEW_ONLY === 'true') {
+    const versionId = workerVersionId(env)
+    if (!versionId) return 'VERSION_METADATA_NOT_CONFIGURED'
+    const canonical = new URL(expectedOrigin)
+    requestOrigin = `${canonical.protocol}//${versionId.slice(0, 8)}-${canonical.host}`
+  }
+  if (url.origin !== requestOrigin) return 'NOT_FOUND'
+  if (request.headers.get('origin') !== requestOrigin) return 'ORIGIN_NOT_ALLOWED'
   const expectedHash = safeText(env.E2_R6_BENCHMARK_TOKEN_SHA256, 64)
   const supplied = safeText(request.headers.get('authorization'), 600)
   const token = supplied.startsWith('Bearer ') ? supplied.slice(7) : ''
@@ -104,7 +112,11 @@ async function ledgerRequest(env, runLabel, path, { method = 'POST', body } = {}
 
 export async function runE2R6Harness(request, env, _providerFetcher = fetch) {
   const authError = await authorizationError(request, env)
-  if (authError) return json({ error: authError }, authError === 'NOT_FOUND' ? 404 : authError === 'ORIGIN_NOT_ALLOWED' ? 403 : authError === 'UNAUTHORIZED' ? 401 : 503)
+  if (authError) {
+    const hidden = env.E2_R6_VERSIONED_PREVIEW_ONLY === 'true'
+      && ['NOT_FOUND', 'ORIGIN_NOT_ALLOWED', 'UNAUTHORIZED'].includes(authError)
+    return json({ error: hidden ? 'NOT_FOUND' : authError }, hidden || authError === 'NOT_FOUND' ? 404 : authError === 'ORIGIN_NOT_ALLOWED' ? 403 : authError === 'UNAUTHORIZED' ? 401 : 503)
+  }
   const url = new URL(request.url)
   const suffix = url.pathname.split('/').at(-1)
   const versionId = workerVersionId(env)

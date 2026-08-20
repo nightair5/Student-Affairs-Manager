@@ -6,9 +6,10 @@ import { createHash } from 'node:crypto'
 import { assertFutureModelRunQualification, runBoundZeroModelHarnessQualification } from './e2-9-r6-harness-qualification.mjs'
 import { canonicalJson, R6_PROTOCOL_VERSION } from './e2-9-r6-path-mask.mjs'
 
-export const R6_PREVIEW_ENDPOINT = 'https://student-affairs-manager-preview.nightsdell.workers.dev/api/experiments/e2-9/r6/harness'
-export const R6_EXPECTED_PREVIEW_HARNESS_VERSION = 'e2-9-r6-preview-harness-1.2.0'
-export const R6_PREVIEW_WORKER_NAME = 'student-affairs-manager-preview'
+export const R6_PREVIEW_ORIGIN = 'https://student-affairs-e2-r6-qualification-preview.nightsdell.workers.dev'
+export const R6_PREVIEW_ENDPOINT = `${R6_PREVIEW_ORIGIN}/api/experiments/e2-9/r6/harness`
+export const R6_EXPECTED_PREVIEW_HARNESS_VERSION = 'e2-9-r6-preview-harness-1.3.0'
+export const R6_PREVIEW_WORKER_NAME = 'student-affairs-e2-r6-qualification-preview'
 export const R6_STABLE_ACTIVATION_RESPONSES = 3
 export const R6_MAX_ACTIVATION_PROBES = 12
 const ACTIVATION_FIELDS = new Set([
@@ -32,6 +33,12 @@ function validSha256(value) {
   return typeof value === 'string' && /^[a-f0-9]{64}$/u.test(value)
 }
 
+export function r6VersionedPreviewEndpoint(workerVersionId) {
+  if (!validWorkerVersionId(workerVersionId)) throw new Error('R6_WORKER_VERSION_ID_INVALID')
+  const origin = new URL(R6_PREVIEW_ORIGIN)
+  return `${origin.protocol}//${workerVersionId.slice(0, 8)}-${origin.host}/api/experiments/e2-9/r6/harness`
+}
+
 export async function buildR6QualificationRegistration({ root = process.cwd(), runLabel, expectedWorkerVersionId }) {
   if (!/^[a-z0-9][a-z0-9._-]{2,100}$/u.test(runLabel ?? '')) throw new Error('R6_RUN_LABEL_INVALID')
   if (!validWorkerVersionId(expectedWorkerVersionId)) throw new Error('R6_WORKER_VERSION_ID_INVALID')
@@ -52,13 +59,14 @@ export async function buildR6QualificationRegistration({ root = process.cwd(), r
 }
 
 export async function awaitR6StableActivation({
-  token, expectedWorkerVersionId, endpoint = R6_PREVIEW_ENDPOINT, fetcher = fetch,
+  token, expectedWorkerVersionId, endpoint = '', fetcher = fetch,
   sleeper = (delayMs) => new Promise((resolve) => setTimeout(resolve, delayMs)),
   requiredStableResponses = R6_STABLE_ACTIVATION_RESPONSES, maxProbes = R6_MAX_ACTIVATION_PROBES, probeDelayMs = 1000,
 }) {
-  if (endpoint !== R6_PREVIEW_ENDPOINT) throw new Error('R6_PREVIEW_ENDPOINT_REQUIRED')
   if (typeof token !== 'string' || token.length < 32) throw new Error('E2_R6_BENCHMARK_TOKEN_REQUIRED_IN_PROCESS_MEMORY')
   if (!validWorkerVersionId(expectedWorkerVersionId)) throw new Error('R6_WORKER_VERSION_ID_INVALID')
+  const resolvedEndpoint = endpoint || r6VersionedPreviewEndpoint(expectedWorkerVersionId)
+  if (resolvedEndpoint !== r6VersionedPreviewEndpoint(expectedWorkerVersionId)) throw new Error('R6_VERSIONED_PREVIEW_ENDPOINT_REQUIRED')
   if (!Number.isInteger(requiredStableResponses) || requiredStableResponses < 2 || requiredStableResponses > 5
     || !Number.isInteger(maxProbes) || maxProbes < requiredStableResponses || maxProbes > 30
     || !Number.isInteger(probeDelayMs) || probeDelayMs < 0 || probeDelayMs > 5000) {
@@ -68,13 +76,12 @@ export async function awaitR6StableActivation({
   let consecutive = 0
   const observations = []
   for (let probe = 1; probe <= maxProbes; probe += 1) {
-    const response = await fetcher(`${endpoint}/activation`, {
+    const response = await fetcher(`${resolvedEndpoint}/activation`, {
       method: 'GET',
       headers: {
-        origin: new URL(endpoint).origin,
+        origin: new URL(resolvedEndpoint).origin,
         authorization: `Bearer ${token}`,
         'cache-control': 'no-cache',
-        'Cloudflare-Workers-Version-Overrides': `${R6_PREVIEW_WORKER_NAME}="${expectedWorkerVersionId}"`,
       },
     })
     const payload = await response.json().catch(() => null)
@@ -114,7 +121,7 @@ export async function awaitR6StableActivation({
 }
 
 export async function runR6QualificationPreflight({
-  root = process.cwd(), runLabel, dryRun = false, token = '', endpoint = R6_PREVIEW_ENDPOINT, fetcher = fetch,
+  root = process.cwd(), runLabel, dryRun = false, token = '', endpoint = '', fetcher = fetch,
   expectedWorkerVersionId, sleeper, requiredStableResponses, maxActivationProbes, probeDelayMs,
 }) {
   if (dryRun) {
@@ -123,10 +130,11 @@ export async function runR6QualificationPreflight({
     })
     return { status: 'R6_QUALIFICATION_DRY_RUN_PASS', networkCalls: 0, registration }
   }
-  if (endpoint !== R6_PREVIEW_ENDPOINT) throw new Error('R6_PREVIEW_ENDPOINT_REQUIRED')
   if (typeof token !== 'string' || token.length < 32) throw new Error('E2_R6_BENCHMARK_TOKEN_REQUIRED_IN_PROCESS_MEMORY')
+  const resolvedEndpoint = endpoint || r6VersionedPreviewEndpoint(expectedWorkerVersionId)
+  if (resolvedEndpoint !== r6VersionedPreviewEndpoint(expectedWorkerVersionId)) throw new Error('R6_VERSIONED_PREVIEW_ENDPOINT_REQUIRED')
   const activation = await awaitR6StableActivation({
-    token, expectedWorkerVersionId, endpoint, fetcher, ...(sleeper ? { sleeper } : {}),
+    token, expectedWorkerVersionId, endpoint: resolvedEndpoint, fetcher, ...(sleeper ? { sleeper } : {}),
     ...(requiredStableResponses === undefined ? {} : { requiredStableResponses }),
     ...(maxActivationProbes === undefined ? {} : { maxProbes: maxActivationProbes }),
     ...(probeDelayMs === undefined ? {} : { probeDelayMs }),
@@ -138,13 +146,12 @@ export async function runR6QualificationPreflight({
     || registration.qualificationResultSha256 !== activation.qualificationResultSha256) {
     throw new Error('R6_ACTIVATION_QUALIFICATION_HASH_DRIFT')
   }
-  const response = await fetcher(`${endpoint}/qualification`, {
+  const response = await fetcher(`${resolvedEndpoint}/qualification`, {
     method: 'POST',
     headers: {
-      origin: new URL(endpoint).origin,
+      origin: new URL(resolvedEndpoint).origin,
       authorization: `Bearer ${token}`,
       'content-type': 'application/json',
-      'Cloudflare-Workers-Version-Overrides': `${R6_PREVIEW_WORKER_NAME}="${expectedWorkerVersionId}"`,
     },
     body: canonicalJson(registration),
   })
