@@ -1,0 +1,52 @@
+{
+  "schemaVersion": "e2.9-r8-path-masked-gate-1.0.0",
+  "protocolVersion": "e2-9-r8-zero-model-review-1.0.0",
+  "runId": "e29r8-replay-review-20260821-d",
+  "evaluatedAt": "2026-08-20T21:19:30.523Z",
+  "inputs": {
+    "packetSha256": "dec24a3191b9e0e79c8d063710062d16f741c8f72830353af5b9db79aeafa019",
+    "labelsSha256": "03759c58f63c0f049e0514d9b29b8e5805a27bbd07f6196947a69e5b4ac4833f",
+    "checkpointSha256": "0886afb941eeb74d80d9ed35601ee50447c0e4b464310ac197fd39df006fa336",
+    "sourceManifestSha256": "115b43f98d0ca56cac522d0272ed10894fa0cc2a185562d0c10ce4bff7aca12f"
+  },
+  "integrity": {
+    "packetAudit": "PASS",
+    "automaticCorrelatorScan": "PASS",
+    "modelCalls": 0,
+    "expectedAnswersRead": false,
+    "evaluationKeyFirewallPassed": true,
+    "mappingCommitmentPersistedBeforeLabels": true,
+    "gatePolicySha256": "a459470bff84bbc38436b44e79aad9acb9488a4da9f1e6c18e976cc6bcda6ccc",
+    "commitmentSha256": "b7cbe45cedeb64ff5f25704a55da4743e07376439635a76bae09d67da00e5515",
+    "labelsFrozenBeforeReveal": true
+  },
+  "counts": {
+    "candidatePreferred": 9,
+    "baselinePreferred": 1,
+    "tie": 6,
+    "insufficient": 0,
+    "candidateMajor": 3,
+    "baselineMajor": 10,
+    "candidatePlanningError": 6,
+    "baselinePlanningError": 10,
+    "candidateFactLoss": 0,
+    "baselineFactLoss": 0,
+    "candidateOverSplit": 1,
+    "baselineOverSplit": 0
+  },
+  "checks": {
+    "sixteenPairs": true,
+    "minimumDeterminatePairs": true,
+    "candidateWinMarginAtLeast3": true,
+    "baselinePreferredAtMost3": true,
+    "candidateMajorNotWorse": true,
+    "candidatePlanningErrorLower": true,
+    "candidateFactLossLower": false,
+    "candidateOverSplitNotWorse": false
+  },
+  "status": "R8_REPLAY_ADJUDICATION_FAIL",
+  "screeningRequest": "NOT_REQUESTED",
+  "selection": "NOT_RUN",
+  "blind": "NOT_CREATED",
+  "production": "NOT_DEPLOYED"
+}

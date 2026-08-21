@@ -1,0 +1,58 @@
+{
+  "schemaVersion": "e2.9-r8-path-masked-review-protocol-freeze-1.0.0",
+  "protocolVersion": "e2-9-r8-zero-model-review-1.0.0",
+  "runId": "e29r8-replay-review-20260821-d",
+  "gatePolicyFrozenBeforeLabels": true,
+  "publicManifestGeneratedPostReveal": true,
+  "freezeEvidence": "pre-label review-state.json and mapping-commitments.json bind gatePolicySha256; this public manifest is not itself a pre-label byte-level artifact",
+  "scope": {
+    "pairs": 16,
+    "pathXAndY": "randomized per observation by an in-memory HMAC secret",
+    "modelCalls": 0,
+    "modelCallScope": "no new production recognition or generation calls inside the replay harness",
+    "reviewer": "same-family LLM-as-judge outside the generation harness",
+    "expectedAnswersRead": false,
+    "selection": "FORBIDDEN",
+    "blind": "FORBIDDEN",
+    "production": "FORBIDDEN"
+  },
+  "inputBindings": {
+    "checkpointSha256": "0886afb941eeb74d80d9ed35601ee50447c0e4b464310ac197fd39df006fa336",
+    "sourceManifestSha256": "115b43f98d0ca56cac522d0272ed10894fa0cc2a185562d0c10ce4bff7aca12f",
+    "reviewerPacketCanonicalSha256": "dec24a3191b9e0e79c8d063710062d16f741c8f72830353af5b9db79aeafa019",
+    "labelsCanonicalSha256": "03759c58f63c0f049e0514d9b29b8e5805a27bbd07f6196947a69e5b4ac4833f",
+    "gatePolicySha256": "a459470bff84bbc38436b44e79aad9acb9488a4da9f1e6c18e976cc6bcda6ccc",
+    "mappingCommitmentSha256": "b7cbe45cedeb64ff5f25704a55da4743e07376439635a76bae09d67da00e5515"
+  },
+  "reviewerIsolation": {
+    "freshReadOnlyReviewer": true,
+    "allowedInput": "reviewer-packet.json only",
+    "mappingUnavailableToReviewerUntilLabelsFrozen": true,
+    "mappingCreatedInExecutorMemoryBeforeLabels": true,
+    "mappingCommitmentPersistedBeforeLabels": true,
+    "packetLeakScanRequired": true,
+    "reviewClass": "same-family provisional"
+  },
+  "labels": [
+    "preferredSide",
+    "majorCorrectionPerSide",
+    "planningErrorPerSide",
+    "factLossPerSide",
+    "overSplitPerSide",
+    "source-grounded reason"
+  ],
+  "gate": {
+    "pairCount": 16,
+    "minimumDeterminatePairs": 14,
+    "minimumCandidateWinMargin": 3,
+    "maximumBaselinePreferred": 3,
+    "candidateMajorNotWorse": true,
+    "candidatePlanningErrorLower": true,
+    "candidateFactLossLower": true,
+    "candidateOverSplitNotWorse": true
+  },
+  "postGate": {
+    "pass": "eligible to request, but not automatically run, a fresh small Screening",
+    "fail": "Screening remains not requested; return to generic Planner repair"
+  }
+}

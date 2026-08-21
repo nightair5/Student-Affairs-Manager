@@ -1,15 +1,19 @@
 {
   "schemaVersion": "e2.9-r8-screening-request-1.0.0",
   "status": "NOT_REQUESTED",
-  "reason": "Architecture fact-preservation replay passed, but the frozen strict-score gate failed and the evaluation-contract mismatch has not received an independent path-masked adjudication.",
+  "reason": "The valid independent 16-observation/8-source path-masked replay favored the candidate 9 to 1 with 6 ties, but the pre-frozen Gate still failed because Fact Loss was tied at 0 rather than strictly lower and candidate Over-splitting was 1 versus 0.",
   "modelCallsAuthorized": 0,
   "selection": "NOT_RUN",
   "blind": "NOT_CREATED",
   "production": "NOT_DEPLOYED",
+  "pathMaskedReviewStatus": "R8_REPLAY_ADJUDICATION_FAIL",
+  "pathMaskedReviewResult": "path-masked-review-result-d.json",
   "requiredBeforeRequest": [
-    "create a model-identity-free and expected-free R8 before/after replay packet",
-    "obtain independent path-masked user-impact adjudication",
-    "pass the replay adjudication Gate",
-    "freeze a fresh protocol, run label, and labels"
+    "diagnose the single candidate Over-splitting judgment using only the revealed labels",
+    "pre-register a new Gate that handles a zero Fact-Loss ceiling without changing this result",
+    "apply any justified minimal isolated Planner repair without changing Expected",
+    "repeat zero-model review with a fresh packet and labels only if a repair or protocol change is approved",
+    "pass a newly frozen replay adjudication Gate",
+    "freeze a fresh Screening protocol, run label, and labels"
   ]
 }

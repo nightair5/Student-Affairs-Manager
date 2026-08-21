@@ -1,0 +1,44 @@
+{
+  "audit_skill": "experiment-audit",
+  "verdict": "WARN",
+  "reason_code": "same_family_proxy_externally_unattested",
+  "summary": "Run D is internally reproducible and its Gate FAIL is supported, but the adjudication is a same-family LLM proxy with local mutable evidence and no externally reopenable HMAC secret.",
+  "agent_id": "/root/r8_path_review_d_integrity_audit",
+  "verdict_id": "/root/r8_path_review_d_integrity_audit",
+  "executor_model": "codex-gpt-5.6-sol",
+  "executor_family": "openai",
+  "reviewer_model": "gpt-5.6-sol",
+  "reviewer_family": "openai",
+  "reviewer_reasoning": "ultra",
+  "review_independence": "same-family",
+  "acceptance_status": "provisional",
+  "trace_path": "NOT_AVAILABLE_IN_CURRENT_RUNTIME",
+  "generated_at": "2026-08-21T05:52:41.3645329+08:00",
+  "date": "2026-08-21",
+  "auditor": "gpt-5.6-sol-ultra",
+  "overall_verdict": "warn",
+  "integrity_status": "warn",
+  "evaluation_type": "synthetic_proxy_same_family_llm_as_judge",
+  "checks": {
+    "frozen_inputs": { "status": "pass", "details": "16 unique observations from 8 unique source cases; frozen raw hashes match." },
+    "expected_and_generation_boundary": { "status": "pass_with_qualification", "details": "Expected-key firewall passed and no new production recognition/generation call occurred; reviewer LLM call is separate." },
+    "path_mask": { "status": "pass_within_defined_scanner", "details": "Run D direct identity and non-business correlator scans are empty; three prior runs were invalidated." },
+    "labels_and_chronology": { "status": "pass_with_local_evidence", "details": "16 unique labels, file chronology packet then labels then reveal." },
+    "commitment": { "status": "warn", "details": "Pre-label commitments exist, but secret/private bindings were not persisted for external reopening." },
+    "counts_and_gate": { "status": "pass", "details": "Candidate/baseline preferred 9/1; Gate 6/8 and overall FAIL independently reproduced." }
+  },
+  "claims": [
+    { "id": "C1", "claim": "D-run counts and Gate FAIL", "impact": "supported" },
+    { "id": "C2", "claim": "Candidate favored 9 to 1 in same-family proxy review", "impact": "needs_scope_qualifier" },
+    { "id": "C3", "claim": "Eligible for fresh Screening", "impact": "unsupported" },
+    { "id": "C4", "claim": "Externally attested blind human evaluation", "impact": "unsupported" }
+  ],
+  "audited_input_hashes": {
+    "checkpoint_raw_sha256": "0886afb941eeb74d80d9ed35601ee50447c0e4b464310ac197fd39df006fa336",
+    "source_manifest_raw_sha256": "115b43f98d0ca56cac522d0272ed10894fa0cc2a185562d0c10ce4bff7aca12f",
+    "reviewer_packet_canonical_sha256": "dec24a3191b9e0e79c8d063710062d16f741c8f72830353af5b9db79aeafa019",
+    "labels_array_canonical_sha256": "03759c58f63c0f049e0514d9b29b8e5805a27bbd07f6196947a69e5b4ac4833f",
+    "gate_policy_canonical_sha256": "a459470bff84bbc38436b44e79aad9acb9488a4da9f1e6c18e976cc6bcda6ccc",
+    "commitment_list_canonical_sha256": "b7cbe45cedeb64ff5f25704a55da4743e07376439635a76bae09d67da00e5515"
+  }
+}
