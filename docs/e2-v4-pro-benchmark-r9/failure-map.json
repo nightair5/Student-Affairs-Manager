@@ -1,0 +1,67 @@
+{
+  "schemaVersion": "e2.9-r9-failure-map-1.0.0",
+  "sourceRun": "e29r8-replay-review-20260821-d",
+  "scope": {
+    "observations": 16,
+    "uniqueSources": 8,
+    "candidatePlanningErrors": 6,
+    "candidateMajorCorrections": 3,
+    "candidateOverSplits": 1,
+    "expectedAnswersRead": false,
+    "productionRecognitionGenerationCalls": 0
+  },
+  "generalFailureModes": [
+    {
+      "id": "R9-FM-01",
+      "categories": ["DUPLICATE_TASK_SEMANTICS", "SINGLE_ACTION_WRONGLY_SPLIT"],
+      "layer": "planner_projection",
+      "observations": 1,
+      "rootCause": "Equivalent obligations that differ only by non-semantic conjunctions are projected as separate Tasks.",
+      "repairableInR9": true,
+      "guard": "Require equal action predicate plus normalized object equivalence and overlapping event or literal evidence; map both obligations to one Task without deleting either Fact."
+    },
+    {
+      "id": "R9-FM-02",
+      "categories": ["AMBIGUITY_SCOPE_ERROR"],
+      "layer": "planner_projection",
+      "observations": 1,
+      "rootCause": "A raw applicability ambiguity and a condition-derived applicability ambiguity use different Evidence IDs and survive as duplicate user prompts.",
+      "repairableInR9": true,
+      "guard": "Merge only equivalent applicability prompts with overlapping literal source spans; preserve the union of Evidence IDs."
+    },
+    {
+      "id": "R9-FM-03",
+      "categories": ["OTHER:INFERENCE_LEVEL_DEMOTION"],
+      "layer": "planner_projection",
+      "observations": 1,
+      "rootCause": "An action predicate and object copied from a literal source span is marked strong_inference solely because it was recovered by the adapter.",
+      "repairableInR9": true,
+      "guard": "Literal-source actions with exact evidence are explicit; no new action may be inferred."
+    },
+    {
+      "id": "R9-FM-04",
+      "categories": ["OTHER:FALSE_TIME_PRECISION"],
+      "layer": "fact_extraction_input",
+      "observations": 2,
+      "rootCause": "Frozen raw TimePoint treats a vague day period as an exact normalized clock value.",
+      "repairableInR9": false,
+      "guard": "Do not let Planner or Normalizer mutate extractor-owned time facts; carry as an explicit upstream risk."
+    },
+    {
+      "id": "R9-FM-05",
+      "categories": ["OTHER:MATERIAL_FACT_MISSING"],
+      "layer": "fact_discovery_input",
+      "observations": 2,
+      "rootCause": "Frozen raw facts contain the completion Task but do not register its deliverable as a Material fact.",
+      "repairableInR9": false,
+      "guard": "Planner must not manufacture a Material from a Task object."
+    }
+  ],
+  "positiveControls": [
+    "Pure-information Event and TimePoint preservation without Task invention",
+    "Required attendance represented as Task while retaining Event",
+    "Vague event times remain null and require confirmation when the frozen Fact is already vague",
+    "Literal multi-material upload object remains explicit and directly checkable"
+  ]
+}
+

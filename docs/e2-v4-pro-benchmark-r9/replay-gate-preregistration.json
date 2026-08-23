@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "e2.9-r9-replay-gate-preregistration-1.0.0",
+  "protocolVersion": "e2-9-r9-zero-model-review-1.0.0",
+  "status": "PRE_REGISTERED_BEFORE_R9_PACKET_MAPPING_AND_LABELS",
+  "preservesR8Outcome": "R8_REPLAY_ADJUDICATION_FAIL",
+  "inputs": {
+    "checkpointSha256": "0886afb941eeb74d80d9ed35601ee50447c0e4b464310ac197fd39df006fa336",
+    "sourceManifestSha256": "115b43f98d0ca56cac522d0272ed10894fa0cc2a185562d0c10ce4bff7aca12f",
+    "observations": 16,
+    "uniqueSourceCases": 8
+  },
+  "gate": {
+    "pairCount": 16,
+    "minimumDeterminatePairs": 14,
+    "minimumCandidateWinMargin": 3,
+    "maximumBaselinePreferred": 3,
+    "candidateMajorNotWorse": true,
+    "candidatePlanningErrorLower": true,
+    "candidateFactLossNotWorse": true,
+    "zeroFactLossTiePasses": true,
+    "candidateOverSplitNotWorse": true,
+    "candidateEvidenceCoverageNotWorse": true,
+    "candidateSevereErrorNotWorse": true,
+    "labelsFrozenBeforeReveal": true,
+    "expectedAnswersExcluded": true,
+    "productionRecognitionGenerationCalls": 0
+  },
+  "postGate": {
+    "pass": "R9_REPLAY_GATE_PASS_SCREENING_REQUESTABLE",
+    "fail": "R9_REPLAY_GATE_FAIL",
+    "inconclusive": "R9_DIAGNOSTIC_INCONCLUSIVE",
+    "screeningMayRunAutomatically": false,
+    "selection": "FORBIDDEN",
+    "blind": "FORBIDDEN",
+    "production": "FORBIDDEN"
+  }
+}

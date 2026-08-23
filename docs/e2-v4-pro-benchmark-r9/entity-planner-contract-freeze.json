@@ -1,0 +1,51 @@
+{
+  "schemaVersion": "e2.9-r9-entity-planner-contract-freeze-1.0.0",
+  "frozenBeforePlannerRepair": true,
+  "inherits": {
+    "factContract": "e2-r8-fact-contract-1.0.0",
+    "planContract": "e2-r8-plan-contract-1.0.0"
+  },
+  "task": {
+    "requiresUserAction": true,
+    "requiresActionPredicate": true,
+    "requiresExplicitObject": true,
+    "requiresObligationAndEvidence": true,
+    "forbiddenStandaloneObjects": ["material_name", "time", "location", "contact", "format_rule", "background"],
+    "equivalentObligationsMayShareOneTask": true,
+    "equivalenceRequirements": ["same_action_predicate", "normalized_object_equivalence", "overlapping_event_or_literal_evidence"]
+  },
+  "eventTask": {
+    "informationalEventMayHaveNoTask": true,
+    "requiredAttendanceMayHaveTask": true,
+    "eventAndTaskMayCoexistWithDistinctBusinessRoles": true,
+    "duplicateTasksForOneAttendanceObligationForbidden": true
+  },
+  "material": {
+    "materialNameAloneIsNotTask": true,
+    "submitMaterialMayBeTask": true,
+    "plannerMayInventMissingMaterial": false
+  },
+  "timePoint": {
+    "extractorAuthority": true,
+    "plannerMayChangeRoleOrValue": false,
+    "vagueOrRelativeMustRemainNullAndNeedConfirmation": true,
+    "timePointAloneMayNotCreateTask": true
+  },
+  "conditionAmbiguity": {
+    "conditionScopeMustRemainLocal": true,
+    "plannerMayGuessApplicability": false,
+    "equivalentUserPromptsMayMerge": true,
+    "mergedPromptMustPreserveEvidenceUnion": true
+  },
+  "normalizerPermissions": {
+    "mayAddOrDeleteFacts": false,
+    "mayChangeActionPredicateOrObject": false,
+    "mayChangeTimeRoleOrValue": false,
+    "mayChangeConditionOrAmbiguityMeaning": false,
+    "mayDeduplicateReferences": true,
+    "mayDropDanglingReferences": true,
+    "mayCloseExistingBidirectionalRelations": true
+  },
+  "productionIntegration": false
+}
+
