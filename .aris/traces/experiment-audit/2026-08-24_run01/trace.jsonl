@@ -1,0 +1,6 @@
+{"event":"request","date":"2026-08-24","auditor":"/root/r9_experiment_auditor","model":"gpt-5.6-sol","reasoning":"ultra","mode":"fresh_same_family_read_only","scope":"E2.9-R9 replay and path-masked Gate integrity"}
+{"event":"finding","severity":"HIGH","id":"PHANTOM_AUDIT_ARTIFACTS","status":"resolved_before_final_snapshot","detail":"The main report initially referenced audit artifacts before they existed; the final snapshot includes both artifacts."}
+{"event":"finding","severity":"MEDIUM","id":"PROCESS_ONLY_REVIEW_ISOLATION","status":"open_nonblocking"}
+{"event":"finding","severity":"MEDIUM","id":"UNREOPENABLE_MAPPING_SECRET","status":"open_nonblocking"}
+{"event":"finding","severity":"LOW","id":"TAUTOLOGICAL_ZERO_FACT_LOSS_POLICY_CHECK","status":"open_nonblocking"}
+{"event":"verdict","value":"WARN","blockingIntegrityDefect":false,"gate":"R9_REPLAY_GATE_PASS_SCREENING_REQUESTABLE","acceptance":"provisional_not_human_not_ground_truth"}

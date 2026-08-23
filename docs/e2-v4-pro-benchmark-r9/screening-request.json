@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "e2.9-r9-screening-request-1.0.0",
+  "status": "REQUESTABLE_NOT_RUN",
+  "basis": {
+    "replayGateStatus": "R9_REPLAY_GATE_PASS_SCREENING_REQUESTABLE",
+    "reviewRunId": "e29r9-replay-review-20260824-a",
+    "reviewResult": "path-masked-review-result.json",
+    "candidatePreferred": 8,
+    "baselinePreferred": 1,
+    "tie": 7,
+    "candidatePlanningError": 4,
+    "baselinePlanningError": 9,
+    "candidateMajorCorrection": 3,
+    "baselineMajorCorrection": 9,
+    "candidateFactLoss": 0,
+    "baselineFactLoss": 2,
+    "candidateOverSplit": 0,
+    "baselineOverSplit": 0
+  },
+  "proposedProtocolVersion": "e2-9-r9-fresh-screening-1.0.0",
+  "proposedRunLabel": "e29r9-fresh-screening-proposed-20260824-a",
+  "proposedObservationLabels": {
+    "format": "e29r9-screening-{caseOrdinal}-{armOrdinal}",
+    "caseCount": 8,
+    "armsPerCase": 2,
+    "armIdentity": "sealed until scoring and path-masked adjudication are frozen",
+    "rerunPolicy": "failed observations remain immutable and may not be overwritten or selectively rerun"
+  },
+  "proposedDesign": {
+    "freshExposedComplexCases": 8,
+    "pairedArms": 2,
+    "sameModel": true,
+    "sameParameters": true,
+    "sameInput": true,
+    "routerBypassed": true,
+    "interleavedOrder": true,
+    "expectedFirewallUntilGenerationFrozen": true,
+    "freshPathMaskedReviewRequired": true,
+    "gateMustBeFrozenBeforeCalls": true
+  },
+  "suggestedProductionRecognitionGenerationCallCap": 16,
+  "modelCallsAuthorizedByThisFile": 0,
+  "requiredBeforeExecution": [
+    "explicit user authorization for the new call cap",
+    "freeze the exact manifest, cases, models, parameters, Prompt, Schema, pipeline, Gate, protocol bundle and hashes",
+    "verify Preview-only feature flag, server-side Secret and no Production route",
+    "create new run and observation labels without reusing R9 replay labels",
+    "pass zero-call local and Preview harness integrity checks"
+  ],
+  "selection": "NOT_RUN",
+  "blind": "NOT_CREATED",
+  "production": "NOT_DEPLOYED"
+}

@@ -1,0 +1,62 @@
+{
+  "schemaVersion": "e2.9-r9-path-masked-gate-1.0.0",
+  "protocolVersion": "e2-9-r9-zero-model-review-1.0.0",
+  "runId": "e29r9-replay-review-20260824-a",
+  "evaluatedAt": "2026-08-23T17:32:11.182Z",
+  "inputs": {
+    "packetSha256": "280277fb9d6538beca4bf8650fe6149b1f21a848647d2234f0606d5aa7dd284a",
+    "labelsSha256": "d2b98781469f5bcf1ce73f49232ec53589ab67379ba2bffbf99eaeb58e77fec9",
+    "checkpointSha256": "0886afb941eeb74d80d9ed35601ee50447c0e4b464310ac197fd39df006fa336",
+    "sourceManifestSha256": "115b43f98d0ca56cac522d0272ed10894fa0cc2a185562d0c10ce4bff7aca12f",
+    "candidateCheckpointSha256": "f8a7ea4d138ecb7effd42ae239b6962feb4a0633d9b896c2534d96d2085df608",
+    "replayPublicSha256": "f92f8345468b35d2b90f1d84a4c8d8d07b48b0254458b7470f2de990ad513181",
+    "gatePreregistrationSha256": "2a78229a4b33e51635aa01f1a1d1c68f09751ada8e91917445539e79894723ae",
+    "gatePolicySha256": "cb7de1d8b08a7548b69b8a84062509e407851d526fdb3e25a80859153b0ef73d"
+  },
+  "integrity": {
+    "packetAudit": "PASS",
+    "automaticCorrelatorScan": "PASS",
+    "productionRecognitionGenerationCalls": 0,
+    "expectedAnswersReadByReview": false,
+    "evaluationKeyFirewallPassed": true,
+    "mappingCommitmentPersistedBeforeLabels": true,
+    "labelsFrozenBeforeReveal": true,
+    "reviewerClass": "same-family LLM-as-judge provisional unless independently replaced by a human reviewer"
+  },
+  "counts": {
+    "candidatePreferred": 8,
+    "baselinePreferred": 1,
+    "tie": 7,
+    "insufficient": 0,
+    "candidateMajor": 3,
+    "baselineMajor": 9,
+    "candidatePlanningError": 4,
+    "baselinePlanningError": 9,
+    "candidateFactLoss": 0,
+    "baselineFactLoss": 2,
+    "candidateOverSplit": 0,
+    "baselineOverSplit": 0,
+    "candidateEvidenceGap": 0,
+    "baselineEvidenceGap": 0,
+    "candidateSevereError": 0,
+    "baselineSevereError": 0
+  },
+  "checks": {
+    "sixteenPairs": true,
+    "minimumDeterminatePairs": true,
+    "candidateWinMarginAtLeast3": true,
+    "baselinePreferredAtMost3": true,
+    "candidateMajorNotWorse": true,
+    "candidatePlanningErrorLower": true,
+    "candidateFactLossNotWorse": true,
+    "zeroFactLossTiePasses": true,
+    "candidateOverSplitNotWorse": true,
+    "candidateEvidenceCoverageNotWorse": true,
+    "candidateSevereErrorNotWorse": true
+  },
+  "status": "R9_REPLAY_GATE_PASS_SCREENING_REQUESTABLE",
+  "screeningRequest": "REQUESTABLE_NOT_RUN",
+  "selection": "NOT_RUN",
+  "blind": "NOT_CREATED",
+  "production": "NOT_DEPLOYED"
+}

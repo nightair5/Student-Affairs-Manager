@@ -1,0 +1,103 @@
+{
+  "auditSkill": "experiment-audit",
+  "verdict": "WARN",
+  "reasonCode": "same_family_proxy_externally_unattested",
+  "summary": "The final local snapshot has no blocking integrity defect: candidate freeze, scoring order, packet masking, label chronology and Gate arithmetic are internally reproducible. The reviewer is a same-family provisional proxy and the local evidence has no external attestation.",
+  "auditor": {
+    "agentId": "/root/r9_experiment_auditor",
+    "model": "gpt-5.6-sol",
+    "family": "openai",
+    "reasoning": "ultra",
+    "independence": "fresh_same_family_read_only",
+    "acceptanceStatus": "provisional_not_human_not_ground_truth"
+  },
+  "runs": {
+    "replay": "e29r9-cache-replay-20260824-a",
+    "review": "e29r9-replay-review-20260824-a"
+  },
+  "checks": {
+    "frozenInputsAndHashes": "PASS",
+    "candidateFrozenBeforeScoring": "PASS",
+    "expectedFirewallDuringGeneration": "PASS",
+    "expectedFirewallDuringReview": "PASS_WITH_PROCESS_ONLY_ISOLATION",
+    "strictScorerSemanticsUnchanged": "PASS",
+    "observations16AndSources8x2": "PASS",
+    "packetScanner": "PASS_WITHIN_DEFINED_SCANNERS",
+    "labelsBeforeReveal": "PASS_WITH_LOCAL_TIMESTAMPS",
+    "mappingCommitment": "WARN_SECRET_NOT_PERSISTED_FOR_EXTERNAL_REOPEN",
+    "gateArithmetic": "PASS",
+    "r8FailureUnchanged": "PASS",
+    "productionRecognitionGenerationCalls": "ZERO_WITH_REVIEWER_LLM_EXCLUDED_AND_DISCLOSED",
+    "rawCacheGitIgnored": "PASS",
+    "secretScan": "PASS",
+    "stageBoundaries": "PASS"
+  },
+  "gateRecalculation": {
+    "determinatePairs": 16,
+    "candidatePreferred": 8,
+    "baselinePreferred": 1,
+    "netCandidateWins": 7,
+    "candidateMajor": 3,
+    "baselineMajor": 9,
+    "candidatePlanningError": 4,
+    "baselinePlanningError": 9,
+    "candidateFactLoss": 0,
+    "baselineFactLoss": 2,
+    "candidateOverSplit": 0,
+    "baselineOverSplit": 0,
+    "candidateEvidenceGap": 0,
+    "baselineEvidenceGap": 0,
+    "candidateSevereError": 0,
+    "baselineSevereError": 0,
+    "status": "R9_REPLAY_GATE_PASS_SCREENING_REQUESTABLE"
+  },
+  "findings": [
+    {
+      "severity": "MEDIUM",
+      "id": "REVIEW_PROCESS_ISOLATION_NOT_TECHNICALLY_ATTESTED",
+      "impact": "The packet is masked, but OS-level access isolation and reviewer access logs are unavailable."
+    },
+    {
+      "severity": "MEDIUM",
+      "id": "MAPPING_SECRET_NOT_EXTERNALLY_REOPENABLE",
+      "impact": "The same live process verifies and reveals the mapping; third parties cannot reconstruct the commitment from a persisted secret."
+    },
+    {
+      "severity": "LOW",
+      "id": "ZERO_FACT_LOSS_POLICY_CHECK_TAUTOLOGICAL",
+      "impact": "The field is a policy assertion, not independent performance evidence; the 0 versus 2 not-worse check passes independently."
+    },
+    {
+      "severity": "LOW",
+      "id": "FACT_COVERAGE_IS_INTERNAL_PROXY",
+      "impact": "FactGraph preservation is not independent source-text Fact Recall."
+    },
+    {
+      "severity": "LOW",
+      "id": "LOCAL_MUTABLE_EVIDENCE",
+      "impact": "Cache hashes and timestamps lack an external immutable witness."
+    }
+  ],
+  "claims": [
+    { "claim": "R9 Gate passes within the local evidence boundary", "impact": "SUPPORTED" },
+    { "claim": "Candidate wins 8 to 1 in same-family masked proxy review", "impact": "SUPPORTED_WITH_SCOPE_QUALIFIER" },
+    { "claim": "Fresh Screening may be requested but has not run", "impact": "SUPPORTED" },
+    { "claim": "Human or Ground Truth blind acceptance", "impact": "UNSUPPORTED" },
+    { "claim": "Completely model-free experiment", "impact": "UNSUPPORTED" }
+  ],
+  "inputHashes": {
+    "checkpointRawSha256": "0886afb941eeb74d80d9ed35601ee50447c0e4b464310ac197fd39df006fa336",
+    "sourceManifestRawSha256": "115b43f98d0ca56cac522d0272ed10894fa0cc2a185562d0c10ce4bff7aca12f",
+    "candidateCheckpointCanonicalSha256": "f8a7ea4d138ecb7effd42ae239b6962feb4a0633d9b896c2534d96d2085df608",
+    "reviewerPacketCanonicalSha256": "280277fb9d6538beca4bf8650fe6149b1f21a848647d2234f0606d5aa7dd284a",
+    "labelsCanonicalSha256": "d2b98781469f5bcf1ce73f49232ec53589ab67379ba2bffbf99eaeb58e77fec9",
+    "gatePreregistrationCanonicalSha256": "2a78229a4b33e51635aa01f1a1d1c68f09751ada8e91917445539e79894723ae",
+    "gatePolicyCanonicalSha256": "cb7de1d8b08a7548b69b8a84062509e407851d526fdb3e25a80859153b0ef73d"
+  },
+  "stageStatus": {
+    "screening": "REQUESTABLE_NOT_RUN",
+    "selection": "NOT_RUN",
+    "blind": "NOT_CREATED",
+    "production": "NOT_DEPLOYED"
+  }
+}
