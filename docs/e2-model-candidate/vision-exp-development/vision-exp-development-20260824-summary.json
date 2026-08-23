@@ -1,0 +1,290 @@
+{
+  "schemaVersion": "model-candidate-evaluation-summary-1.0.0",
+  "label": "vision-exp-development-20260824",
+  "datasetName": "generalization",
+  "datasetVersion": "e2-generalization-development-1.0.0",
+  "startedAt": "2026-08-23T17:39:15.467Z",
+  "completedAt": "2026-08-23T17:55:42.349Z",
+  "models": [
+    "deepseek-v4-flash-vision-exp"
+  ],
+  "sampleCountPerModel": 108,
+  "metricsByModel": {
+    "deepseek-v4-flash-vision-exp": {
+      "provider": "deepseek-v4-flash-vision-exp",
+      "sampleCount": 108,
+      "completedCount": 107,
+      "projectDecisionAccuracy": 0.9259259259259259,
+      "milestonePrecision": 0.4,
+      "milestoneRecall": 0.4583333333333333,
+      "taskPrecision": 0.7651515151515151,
+      "taskRecall": 0.7214285714285714,
+      "materialPrecision": 0.9705882352941176,
+      "materialRecall": 0.8918918918918919,
+      "timePointPrecision": 0.9183673469387755,
+      "timePointRecall": 0.9121621621621622,
+      "timePointTypeAccuracy": 0.7161290322580646,
+      "timePointValueAccuracy": 0.7677419354838709,
+      "timePointAccuracy": 0.6709677419354839,
+      "eventAccuracy": 0.65625,
+      "evidenceCoverage": 0.9572649572649573,
+      "evidenceValidity": 1,
+      "ambiguityPrecision": 0.9032258064516129,
+      "ambiguityRecall": 0.4666666666666667,
+      "duplicateRate": 0,
+      "overFragmentationRate": 0,
+      "majorCorrectionRate": 0.7314814814814815,
+      "severeErrorRate": 0.009259259259259259,
+      "invalidOutputRate": 0,
+      "requestFailureRate": 0.009259259259259259,
+      "repairTriggerRate": 0.11214953271028037,
+      "repairAppliedRate": 0.9166666666666666,
+      "repairSuccessRate": null,
+      "repairHarmRate": null,
+      "repairLatencyMs": {
+        "mean": 2717.3333333333335,
+        "p95": 4658
+      },
+      "retryRate": 0,
+      "complexityDistribution": {
+        "simple": 31,
+        "medium": 48,
+        "complex": 28,
+        "unknown": 1
+      },
+      "complexityProfiles": {
+        "simple": {
+          "sampleCount": 31,
+          "latencyMs": {
+            "mean": 6162.032258064516,
+            "p50": 6197,
+            "p95": 8719
+          },
+          "tokenUsage": {
+            "input": 97105,
+            "output": 23597
+          }
+        },
+        "medium": {
+          "sampleCount": 48,
+          "latencyMs": {
+            "mean": 6742.75,
+            "p50": 6393,
+            "p95": 10017
+          },
+          "tokenUsage": {
+            "input": 113928,
+            "output": 41181
+          }
+        },
+        "complex": {
+          "sampleCount": 28,
+          "latencyMs": {
+            "mean": 11703.107142857143,
+            "p50": 10073,
+            "p95": 24022
+          },
+          "tokenUsage": {
+            "input": 83951,
+            "output": 42738
+          }
+        },
+        "unknown": {
+          "sampleCount": 1,
+          "latencyMs": {
+            "mean": 12728,
+            "p50": 12728,
+            "p95": 12728
+          },
+          "tokenUsage": null
+        }
+      },
+      "operationTokenUsage": {
+        "recognize": {
+          "input": 254102,
+          "output": 104310
+        },
+        "repair": {
+          "input": 40882,
+          "output": 3206
+        },
+        "extractFacts": null
+      },
+      "latencyMs": {
+        "mean": 7917.5,
+        "p50": 6805,
+        "p95": 14019
+      },
+      "tokenUsage": null,
+      "costUsd": null,
+      "errorTaxonomy": [
+        {
+          "category": "task_missing",
+          "count": 37
+        },
+        {
+          "category": "ambiguity_missing",
+          "count": 31
+        },
+        {
+          "category": "time_incorrect",
+          "count": 31
+        },
+        {
+          "category": "task_spurious",
+          "count": 28
+        },
+        {
+          "category": "milestone_missing",
+          "count": 23
+        },
+        {
+          "category": "project_decision",
+          "count": 20
+        },
+        {
+          "category": "material_missing",
+          "count": 14
+        },
+        {
+          "category": "event_missing",
+          "count": 10
+        },
+        {
+          "category": "evidence_missing",
+          "count": 10
+        },
+        {
+          "category": "time_missing",
+          "count": 10
+        },
+        {
+          "category": "time_spurious",
+          "count": 10
+        },
+        {
+          "category": "material_spurious",
+          "count": 4
+        },
+        {
+          "category": "ambiguity_spurious",
+          "count": 3
+        },
+        {
+          "category": "milestone_spurious",
+          "count": 1
+        },
+        {
+          "category": "request_failure",
+          "count": 1
+        }
+      ]
+    }
+  },
+  "gatesByModel": {
+    "deepseek-v4-flash-vision-exp": {
+      "gateVersion": "e2-quality-gate-1.0.0",
+      "passed": false,
+      "checks": [
+        {
+          "metric": "projectDecisionAccuracy",
+          "actual": 0.9259259259259259,
+          "threshold": 0.88,
+          "direction": "min",
+          "passed": true
+        },
+        {
+          "metric": "taskPrecision",
+          "actual": 0.7651515151515151,
+          "threshold": 0.85,
+          "direction": "min",
+          "passed": false
+        },
+        {
+          "metric": "taskRecall",
+          "actual": 0.7214285714285714,
+          "threshold": 0.82,
+          "direction": "min",
+          "passed": false
+        },
+        {
+          "metric": "materialRecall",
+          "actual": 0.8918918918918919,
+          "threshold": 0.75,
+          "direction": "min",
+          "passed": true
+        },
+        {
+          "metric": "timePointAccuracy",
+          "actual": 0.6709677419354839,
+          "threshold": 0.75,
+          "direction": "min",
+          "passed": false
+        },
+        {
+          "metric": "eventAccuracy",
+          "actual": 0.65625,
+          "threshold": 0.8696,
+          "direction": "min",
+          "passed": false
+        },
+        {
+          "metric": "evidenceCoverage",
+          "actual": 0.9572649572649573,
+          "threshold": 0.9533,
+          "direction": "min",
+          "passed": true
+        },
+        {
+          "metric": "duplicateRate",
+          "actual": 0,
+          "threshold": 0.03,
+          "direction": "max",
+          "passed": true
+        },
+        {
+          "metric": "overFragmentationRate",
+          "actual": 0,
+          "threshold": 0.05,
+          "direction": "max",
+          "passed": true
+        },
+        {
+          "metric": "majorCorrectionRate",
+          "actual": 0.7314814814814815,
+          "threshold": 0.35,
+          "direction": "max",
+          "passed": false
+        },
+        {
+          "metric": "severeErrorRate",
+          "actual": 0.009259259259259259,
+          "threshold": 0.02,
+          "direction": "max",
+          "passed": true
+        },
+        {
+          "metric": "invalidOutputRate",
+          "actual": 0,
+          "threshold": 0.01,
+          "direction": "max",
+          "passed": true
+        },
+        {
+          "metric": "requestFailureRate",
+          "actual": 0.009259259259259259,
+          "threshold": 0.01,
+          "direction": "max",
+          "passed": true
+        }
+      ]
+    }
+  },
+  "comparison": null,
+  "privacy": {
+    "imageUploads": 0,
+    "fileBodyUploads": 0,
+    "apiKeyPersisted": false,
+    "authorizationHeadersPersisted": false
+  }
+}

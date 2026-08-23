@@ -1,0 +1,341 @@
+{
+  "label": "vision-exp-screening-20260824",
+  "failures": {
+    "deepseek-v4-flash": [
+      {
+        "caseId": "e2-gen-04-4",
+        "group": "application",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "milestone_missing",
+            "severity": "minor",
+            "reason": "缺少阶段：申请提交/正式提交",
+            "expectedKey": "apply",
+            "tags": [
+              "MISSING_MILESTONE"
+            ]
+          },
+          {
+            "category": "task_missing",
+            "severity": "major",
+            "reason": "缺少任务：申请/完成/办理 交换生补录申请",
+            "expectedKey": "apply",
+            "tags": [
+              "MISSING_TASK"
+            ]
+          },
+          {
+            "category": "task_spurious",
+            "severity": "minor",
+            "reason": "存在 5 条未匹配任务",
+            "tags": [
+              "OVER_TASK"
+            ]
+          },
+          {
+            "category": "over_fragmentation",
+            "severity": "major",
+            "reason": "任务数 5 超过预期 1 与容差 2",
+            "tags": [
+              "TASK_GRANULARITY_ERROR",
+              "OVER_TASK"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-06-3",
+        "group": "meeting",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "task_missing",
+            "severity": "major",
+            "reason": "缺少任务：说明/报告/说 整改进度",
+            "expectedKey": "report",
+            "tags": [
+              "MISSING_TASK"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-08-2",
+        "group": "multi_deadline",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "project_decision",
+            "severity": "major",
+            "reason": "项目标题未匹配黄金答案",
+            "expectedKey": "project",
+            "actual": "论文写作",
+            "tags": [
+              "PROJECT_DECISION_ERROR"
+            ]
+          },
+          {
+            "category": "ambiguity_spurious",
+            "severity": "minor",
+            "reason": "存在 1 项未匹配歧义",
+            "tags": [
+              "FALSE_AMBIGUITY"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-09-4",
+        "group": "vague_time",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "time_incorrect",
+            "severity": "major",
+            "reason": "时间点不正确：近期",
+            "expectedKey": "review-time",
+            "tags": [
+              "WRONG_TIME_VALUE"
+            ]
+          },
+          {
+            "category": "time_spurious",
+            "severity": "minor",
+            "reason": "存在 1 个未匹配时间点",
+            "tags": [
+              "WRONG_TIMEPOINT_TYPE"
+            ]
+          },
+          {
+            "category": "event_missing",
+            "severity": "major",
+            "reason": "缺少事件：复核/导师复核",
+            "expectedKey": "review",
+            "tags": [
+              "MISSING_EVENT"
+            ]
+          },
+          {
+            "category": "ambiguity_spurious",
+            "severity": "minor",
+            "reason": "存在 1 项未匹配歧义",
+            "tags": [
+              "FALSE_AMBIGUITY"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-12-1",
+        "group": "material",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "task_missing",
+            "severity": "major",
+            "reason": "缺少任务：出示/带 校园卡",
+            "expectedKey": "show",
+            "tags": [
+              "MISSING_TASK"
+            ]
+          },
+          {
+            "category": "task_missing",
+            "severity": "major",
+            "reason": "缺少任务：提交/交 设备借用单",
+            "expectedKey": "submit",
+            "tags": [
+              "MISSING_TASK"
+            ]
+          },
+          {
+            "category": "task_spurious",
+            "severity": "minor",
+            "reason": "存在 1 条未匹配任务",
+            "tags": [
+              "OVER_TASK"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-15-2",
+        "group": "ocr_noise",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "project_decision",
+            "severity": "major",
+            "reason": "项目决策应为 standalone_task/uncertain，实际为 new_project",
+            "tags": [
+              "PROJECT_DECISION_ERROR"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-16-1",
+        "group": "security",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "time_incorrect",
+            "severity": "major",
+            "reason": "时间点不正确：10月2日17:00",
+            "expectedKey": "deadline",
+            "actual": "2026-10-02T17:00:00+08:00",
+            "tags": [
+              "WRONG_TIME_VALUE"
+            ]
+          }
+        ]
+      }
+    ],
+    "deepseek-v4-flash-vision-exp": [
+      {
+        "caseId": "e2-gen-04-4",
+        "group": "application",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "milestone_missing",
+            "severity": "minor",
+            "reason": "缺少阶段：材料准备/申请准备",
+            "expectedKey": "prepare",
+            "tags": [
+              "MISSING_MILESTONE"
+            ]
+          },
+          {
+            "category": "milestone_missing",
+            "severity": "minor",
+            "reason": "缺少阶段：申请提交/正式提交",
+            "expectedKey": "apply",
+            "tags": [
+              "MISSING_MILESTONE"
+            ]
+          },
+          {
+            "category": "time_incorrect",
+            "severity": "major",
+            "reason": "时间点不正确：11月6日16:30",
+            "expectedKey": "deadline",
+            "actual": "2026-11-06T16:30:00+08:00",
+            "tags": [
+              "WRONG_TIME_VALUE"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-06-3",
+        "group": "meeting",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "task_missing",
+            "severity": "major",
+            "reason": "缺少任务：携带/携 上月安全巡查记录",
+            "expectedKey": "bring",
+            "tags": [
+              "MISSING_TASK"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-09-4",
+        "group": "vague_time",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "time_incorrect",
+            "severity": "major",
+            "reason": "时间点不正确：近期",
+            "expectedKey": "review-time",
+            "tags": [
+              "WRONG_TIME_VALUE"
+            ]
+          },
+          {
+            "category": "event_missing",
+            "severity": "major",
+            "reason": "缺少事件：复核/导师复核",
+            "expectedKey": "review",
+            "tags": [
+              "MISSING_EVENT"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-12-1",
+        "group": "material",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "task_missing",
+            "severity": "major",
+            "reason": "缺少任务：出示/带 校园卡",
+            "expectedKey": "show",
+            "tags": [
+              "MISSING_TASK"
+            ]
+          },
+          {
+            "category": "task_missing",
+            "severity": "major",
+            "reason": "缺少任务：提交/交 设备借用单",
+            "expectedKey": "submit",
+            "tags": [
+              "MISSING_TASK"
+            ]
+          },
+          {
+            "category": "task_spurious",
+            "severity": "minor",
+            "reason": "存在 1 条未匹配任务",
+            "tags": [
+              "OVER_TASK"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-15-2",
+        "group": "ocr_noise",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "time_incorrect",
+            "severity": "major",
+            "reason": "时间点不正确：IO 月 2I 日 I6:OO/IO月2I日I6:OO/IO月2I日 I6:OO",
+            "expectedKey": "deadline",
+            "actual": "2026-10-21T16:00:00+08:00",
+            "tags": [
+              "WRONG_TIME_VALUE"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-16-1",
+        "group": "security",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "time_incorrect",
+            "severity": "major",
+            "reason": "时间点不正确：10月2日17:00",
+            "expectedKey": "deadline",
+            "actual": "2026-10-02T17:00:00+08:00",
+            "tags": [
+              "WRONG_TIME_VALUE"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,444 @@
+{
+  "schemaVersion": "model-candidate-evaluation-summary-1.0.0",
+  "label": "vision-exp-preflight-20260824",
+  "datasetName": "generalization",
+  "datasetVersion": "e2-generalization-development-1.0.0",
+  "startedAt": "2026-08-23T17:35:50.418Z",
+  "completedAt": "2026-08-23T17:36:05.625Z",
+  "models": [
+    "deepseek-v4-flash",
+    "deepseek-v4-flash-vision-exp"
+  ],
+  "sampleCountPerModel": 1,
+  "metricsByModel": {
+    "deepseek-v4-flash": {
+      "provider": "deepseek-v4-flash",
+      "sampleCount": 1,
+      "completedCount": 1,
+      "projectDecisionAccuracy": 1,
+      "milestonePrecision": 1,
+      "milestoneRecall": 1,
+      "taskPrecision": 1,
+      "taskRecall": 1,
+      "materialPrecision": 1,
+      "materialRecall": 0,
+      "timePointPrecision": 1,
+      "timePointRecall": 1,
+      "timePointTypeAccuracy": 1,
+      "timePointValueAccuracy": 0,
+      "timePointAccuracy": 1,
+      "eventAccuracy": 1,
+      "evidenceCoverage": 1,
+      "evidenceValidity": 1,
+      "ambiguityPrecision": 1,
+      "ambiguityRecall": 1,
+      "duplicateRate": 0,
+      "overFragmentationRate": 0,
+      "majorCorrectionRate": 1,
+      "severeErrorRate": 0,
+      "invalidOutputRate": 0,
+      "requestFailureRate": 0,
+      "repairTriggerRate": 0,
+      "repairAppliedRate": null,
+      "repairSuccessRate": null,
+      "repairHarmRate": null,
+      "repairLatencyMs": null,
+      "retryRate": 0,
+      "complexityDistribution": {
+        "simple": 0,
+        "medium": 1,
+        "complex": 0,
+        "unknown": 0
+      },
+      "complexityProfiles": {
+        "simple": {
+          "sampleCount": 0,
+          "latencyMs": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0
+          },
+          "tokenUsage": null
+        },
+        "medium": {
+          "sampleCount": 1,
+          "latencyMs": {
+            "mean": 6595,
+            "p50": 6595,
+            "p95": 6595
+          },
+          "tokenUsage": {
+            "input": 2359,
+            "output": 1093
+          }
+        },
+        "complex": {
+          "sampleCount": 0,
+          "latencyMs": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0
+          },
+          "tokenUsage": null
+        },
+        "unknown": {
+          "sampleCount": 0,
+          "latencyMs": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0
+          },
+          "tokenUsage": null
+        }
+      },
+      "operationTokenUsage": {
+        "recognize": {
+          "input": 2359,
+          "output": 1093
+        },
+        "repair": null,
+        "extractFacts": null
+      },
+      "latencyMs": {
+        "mean": 6595,
+        "p50": 6595,
+        "p95": 6595
+      },
+      "tokenUsage": {
+        "input": 2359,
+        "output": 1093
+      },
+      "costUsd": null,
+      "errorTaxonomy": [
+        {
+          "category": "material_missing",
+          "count": 1
+        }
+      ]
+    },
+    "deepseek-v4-flash-vision-exp": {
+      "provider": "deepseek-v4-flash-vision-exp",
+      "sampleCount": 1,
+      "completedCount": 1,
+      "projectDecisionAccuracy": 1,
+      "milestonePrecision": 1,
+      "milestoneRecall": 1,
+      "taskPrecision": 1,
+      "taskRecall": 1,
+      "materialPrecision": 0.5,
+      "materialRecall": 1,
+      "timePointPrecision": 1,
+      "timePointRecall": 1,
+      "timePointTypeAccuracy": 1,
+      "timePointValueAccuracy": 1,
+      "timePointAccuracy": 1,
+      "eventAccuracy": 1,
+      "evidenceCoverage": 1,
+      "evidenceValidity": 1,
+      "ambiguityPrecision": 1,
+      "ambiguityRecall": 1,
+      "duplicateRate": 0,
+      "overFragmentationRate": 0,
+      "majorCorrectionRate": 0,
+      "severeErrorRate": 0,
+      "invalidOutputRate": 0,
+      "requestFailureRate": 0,
+      "repairTriggerRate": 0,
+      "repairAppliedRate": null,
+      "repairSuccessRate": null,
+      "repairHarmRate": null,
+      "repairLatencyMs": null,
+      "retryRate": 0,
+      "complexityDistribution": {
+        "simple": 0,
+        "medium": 1,
+        "complex": 0,
+        "unknown": 0
+      },
+      "complexityProfiles": {
+        "simple": {
+          "sampleCount": 0,
+          "latencyMs": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0
+          },
+          "tokenUsage": null
+        },
+        "medium": {
+          "sampleCount": 1,
+          "latencyMs": {
+            "mean": 7600,
+            "p50": 7600,
+            "p95": 7600
+          },
+          "tokenUsage": {
+            "input": 2365,
+            "output": 963
+          }
+        },
+        "complex": {
+          "sampleCount": 0,
+          "latencyMs": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0
+          },
+          "tokenUsage": null
+        },
+        "unknown": {
+          "sampleCount": 0,
+          "latencyMs": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0
+          },
+          "tokenUsage": null
+        }
+      },
+      "operationTokenUsage": {
+        "recognize": {
+          "input": 2365,
+          "output": 963
+        },
+        "repair": null,
+        "extractFacts": null
+      },
+      "latencyMs": {
+        "mean": 7600,
+        "p50": 7600,
+        "p95": 7600
+      },
+      "tokenUsage": {
+        "input": 2365,
+        "output": 963
+      },
+      "costUsd": null,
+      "errorTaxonomy": [
+        {
+          "category": "material_spurious",
+          "count": 1
+        }
+      ]
+    }
+  },
+  "gatesByModel": {
+    "deepseek-v4-flash": {
+      "gateVersion": "e2-quality-gate-1.0.0",
+      "passed": false,
+      "checks": [
+        {
+          "metric": "projectDecisionAccuracy",
+          "actual": 1,
+          "threshold": 0.88,
+          "direction": "min",
+          "passed": true
+        },
+        {
+          "metric": "taskPrecision",
+          "actual": 1,
+          "threshold": 0.85,
+          "direction": "min",
+          "passed": true
+        },
+        {
+          "metric": "taskRecall",
+          "actual": 1,
+          "threshold": 0.82,
+          "direction": "min",
+          "passed": true
+        },
+        {
+          "metric": "materialRecall",
+          "actual": 0,
+          "threshold": 0.75,
+          "direction": "min",
+          "passed": false
+        },
+        {
+          "metric": "timePointAccuracy",
+          "actual": 1,
+          "threshold": 0.75,
+          "direction": "min",
+          "passed": true
+        },
+        {
+          "metric": "eventAccuracy",
+          "actual": 1,
+          "threshold": 0.8696,
+          "direction": "min",
+          "passed": true
+        },
+        {
+          "metric": "evidenceCoverage",
+          "actual": 1,
+          "threshold": 0.9533,
+          "direction": "min",
+          "passed": true
+        },
+        {
+          "metric": "duplicateRate",
+          "actual": 0,
+          "threshold": 0.03,
+          "direction": "max",
+          "passed": true
+        },
+        {
+          "metric": "overFragmentationRate",
+          "actual": 0,
+          "threshold": 0.05,
+          "direction": "max",
+          "passed": true
+        },
+        {
+          "metric": "majorCorrectionRate",
+          "actual": 1,
+          "threshold": 0.35,
+          "direction": "max",
+          "passed": false
+        },
+        {
+          "metric": "severeErrorRate",
+          "actual": 0,
+          "threshold": 0.02,
+          "direction": "max",
+          "passed": true
+        },
+        {
+          "metric": "invalidOutputRate",
+          "actual": 0,
+          "threshold": 0.01,
+          "direction": "max",
+          "passed": true
+        },
+        {
+          "metric": "requestFailureRate",
+          "actual": 0,
+          "threshold": 0.01,
+          "direction": "max",
+          "passed": true
+        }
+      ]
+    },
+    "deepseek-v4-flash-vision-exp": {
+      "gateVersion": "e2-quality-gate-1.0.0",
+      "passed": true,
+      "checks": [
+        {
+          "metric": "projectDecisionAccuracy",
+          "actual": 1,
+          "threshold": 0.88,
+          "direction": "min",
+          "passed": true
+        },
+        {
+          "metric": "taskPrecision",
+          "actual": 1,
+          "threshold": 0.85,
+          "direction": "min",
+          "passed": true
+        },
+        {
+          "metric": "taskRecall",
+          "actual": 1,
+          "threshold": 0.82,
+          "direction": "min",
+          "passed": true
+        },
+        {
+          "metric": "materialRecall",
+          "actual": 1,
+          "threshold": 0.75,
+          "direction": "min",
+          "passed": true
+        },
+        {
+          "metric": "timePointAccuracy",
+          "actual": 1,
+          "threshold": 0.75,
+          "direction": "min",
+          "passed": true
+        },
+        {
+          "metric": "eventAccuracy",
+          "actual": 1,
+          "threshold": 0.8696,
+          "direction": "min",
+          "passed": true
+        },
+        {
+          "metric": "evidenceCoverage",
+          "actual": 1,
+          "threshold": 0.9533,
+          "direction": "min",
+          "passed": true
+        },
+        {
+          "metric": "duplicateRate",
+          "actual": 0,
+          "threshold": 0.03,
+          "direction": "max",
+          "passed": true
+        },
+        {
+          "metric": "overFragmentationRate",
+          "actual": 0,
+          "threshold": 0.05,
+          "direction": "max",
+          "passed": true
+        },
+        {
+          "metric": "majorCorrectionRate",
+          "actual": 0,
+          "threshold": 0.35,
+          "direction": "max",
+          "passed": true
+        },
+        {
+          "metric": "severeErrorRate",
+          "actual": 0,
+          "threshold": 0.02,
+          "direction": "max",
+          "passed": true
+        },
+        {
+          "metric": "invalidOutputRate",
+          "actual": 0,
+          "threshold": 0.01,
+          "direction": "max",
+          "passed": true
+        },
+        {
+          "metric": "requestFailureRate",
+          "actual": 0,
+          "threshold": 0.01,
+          "direction": "max",
+          "passed": true
+        }
+      ]
+    }
+  },
+  "comparison": {
+    "baselineModel": "deepseek-v4-flash",
+    "candidateModel": "deepseek-v4-flash-vision-exp",
+    "deltas": {
+      "projectDecisionAccuracy": 0,
+      "taskPrecision": 0,
+      "taskRecall": 0,
+      "materialRecall": 1,
+      "timePointAccuracy": 0,
+      "eventAccuracy": 0,
+      "evidenceCoverage": 0,
+      "majorCorrectionRate": 1,
+      "severeErrorRate": 0,
+      "invalidOutputRate": 0,
+      "requestFailureRate": 0
+    }
+  },
+  "privacy": {
+    "imageUploads": 0,
+    "fileBodyUploads": 0,
+    "apiKeyPersisted": false,
+    "authorizationHeadersPersisted": false
+  }
+}

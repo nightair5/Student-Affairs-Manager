@@ -1,0 +1,2672 @@
+{
+  "label": "vision-exp-development-20260824",
+  "failures": {
+    "deepseek-v4-flash-vision-exp": [
+      {
+        "caseId": "e2-gen-01-1",
+        "group": "course",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "material_missing",
+            "severity": "major",
+            "reason": "缺少材料：三条讨论问题",
+            "expectedKey": "questions",
+            "tags": [
+              "MISSING_MATERIAL"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-01-2",
+        "group": "course",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "material_missing",
+            "severity": "major",
+            "reason": "缺少材料：三条讨论问题",
+            "expectedKey": "questions",
+            "tags": [
+              "MISSING_MATERIAL"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-01-3",
+        "group": "course",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "task_missing",
+            "severity": "major",
+            "reason": "缺少任务：阅读/看完 《城市记忆》第三章/第三章",
+            "expectedKey": "read",
+            "tags": [
+              "MISSING_TASK"
+            ]
+          },
+          {
+            "category": "task_spurious",
+            "severity": "minor",
+            "reason": "存在 1 条未匹配任务",
+            "tags": [
+              "OVER_TASK"
+            ]
+          },
+          {
+            "category": "material_missing",
+            "severity": "major",
+            "reason": "缺少材料：三条讨论问题",
+            "expectedKey": "questions",
+            "tags": [
+              "MISSING_MATERIAL"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-02-1",
+        "group": "course",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "project_decision",
+            "severity": "major",
+            "reason": "项目标题未匹配黄金答案",
+            "expectedKey": "project",
+            "actual": "",
+            "tags": [
+              "PROJECT_DECISION_ERROR"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-02-2",
+        "group": "course",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "project_decision",
+            "severity": "major",
+            "reason": "项目标题未匹配黄金答案",
+            "expectedKey": "project",
+            "actual": "",
+            "tags": [
+              "PROJECT_DECISION_ERROR"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-02-4",
+        "group": "course",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "evidence_missing",
+            "severity": "major",
+            "reason": "缺少 1 项可回看证据",
+            "tags": [
+              "MISSING_EVIDENCE"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-03-1",
+        "group": "competition",
+        "status": "request_failure",
+        "failures": [
+          {
+            "category": "request_failure",
+            "severity": "severe",
+            "reason": "502 DeepSeek 未返回有效的任务结构。",
+            "tags": [
+              "TRANSPORT_FAILURE",
+              "SEVERE_ERROR",
+              "UPSTREAM_502"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-03-2",
+        "group": "competition",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "milestone_missing",
+            "severity": "minor",
+            "reason": "缺少阶段：作品提交/正式提交",
+            "expectedKey": "submit",
+            "tags": [
+              "MISSING_MILESTONE"
+            ]
+          },
+          {
+            "category": "task_missing",
+            "severity": "major",
+            "reason": "缺少任务：报名 校园导视设计赛/导视赛/报名",
+            "expectedKey": "register",
+            "tags": [
+              "MISSING_TASK"
+            ]
+          },
+          {
+            "category": "task_spurious",
+            "severity": "minor",
+            "reason": "存在 1 条未匹配任务",
+            "tags": [
+              "OVER_TASK"
+            ]
+          },
+          {
+            "category": "time_incorrect",
+            "severity": "major",
+            "reason": "时间点不正确：10月3日17:00",
+            "expectedKey": "register-time",
+            "actual": "2026-10-03T17:00:00+08:00",
+            "tags": [
+              "WRONG_TIME_VALUE"
+            ]
+          },
+          {
+            "category": "ambiguity_missing",
+            "severity": "major",
+            "reason": "应标记的歧义未标记",
+            "expectedKey": "ambiguity-1",
+            "tags": [
+              "MISSING_AMBIGUITY"
+            ]
+          },
+          {
+            "category": "ambiguity_spurious",
+            "severity": "minor",
+            "reason": "存在 1 项未匹配歧义",
+            "tags": [
+              "FALSE_AMBIGUITY"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-03-3",
+        "group": "competition",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "milestone_missing",
+            "severity": "minor",
+            "reason": "缺少阶段：作品提交/正式提交",
+            "expectedKey": "submit",
+            "tags": [
+              "MISSING_MILESTONE"
+            ]
+          },
+          {
+            "category": "time_incorrect",
+            "severity": "major",
+            "reason": "时间点不正确：10月18日前/10月18日",
+            "expectedKey": "submit-time",
+            "actual": "2026-10-18",
+            "tags": [
+              "WRONG_TIME_VALUE"
+            ]
+          },
+          {
+            "category": "ambiguity_missing",
+            "severity": "major",
+            "reason": "应标记的歧义未标记",
+            "expectedKey": "ambiguity-1",
+            "tags": [
+              "MISSING_AMBIGUITY"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-03-4",
+        "group": "competition",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "milestone_missing",
+            "severity": "minor",
+            "reason": "缺少阶段：作品提交/正式提交",
+            "expectedKey": "submit",
+            "tags": [
+              "MISSING_MILESTONE"
+            ]
+          },
+          {
+            "category": "task_missing",
+            "severity": "major",
+            "reason": "缺少任务：报名 校园导视设计赛/导视赛/报名",
+            "expectedKey": "register",
+            "tags": [
+              "MISSING_TASK"
+            ]
+          },
+          {
+            "category": "task_spurious",
+            "severity": "minor",
+            "reason": "存在 1 条未匹配任务",
+            "tags": [
+              "OVER_TASK"
+            ]
+          },
+          {
+            "category": "time_incorrect",
+            "severity": "major",
+            "reason": "时间点不正确：10月3日17:00",
+            "expectedKey": "register-time",
+            "actual": "2026-10-03T17:00:00+08:00",
+            "tags": [
+              "WRONG_TIME_VALUE"
+            ]
+          },
+          {
+            "category": "ambiguity_missing",
+            "severity": "major",
+            "reason": "应标记的歧义未标记",
+            "expectedKey": "ambiguity-1",
+            "tags": [
+              "MISSING_AMBIGUITY"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-04-1",
+        "group": "application",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "milestone_missing",
+            "severity": "minor",
+            "reason": "缺少阶段：材料准备/申请准备",
+            "expectedKey": "prepare",
+            "tags": [
+              "MISSING_MILESTONE"
+            ]
+          },
+          {
+            "category": "milestone_missing",
+            "severity": "minor",
+            "reason": "缺少阶段：申请提交/正式提交",
+            "expectedKey": "apply",
+            "tags": [
+              "MISSING_MILESTONE"
+            ]
+          },
+          {
+            "category": "task_missing",
+            "severity": "major",
+            "reason": "缺少任务：申请/完成/办理 交换生补录申请",
+            "expectedKey": "apply",
+            "tags": [
+              "MISSING_TASK"
+            ]
+          },
+          {
+            "category": "task_spurious",
+            "severity": "minor",
+            "reason": "存在 1 条未匹配任务",
+            "tags": [
+              "OVER_TASK"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-04-2",
+        "group": "application",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "milestone_missing",
+            "severity": "minor",
+            "reason": "缺少阶段：材料准备/申请准备",
+            "expectedKey": "prepare",
+            "tags": [
+              "MISSING_MILESTONE"
+            ]
+          },
+          {
+            "category": "milestone_missing",
+            "severity": "minor",
+            "reason": "缺少阶段：申请提交/正式提交",
+            "expectedKey": "apply",
+            "tags": [
+              "MISSING_MILESTONE"
+            ]
+          },
+          {
+            "category": "task_missing",
+            "severity": "major",
+            "reason": "缺少任务：申请/完成/办理 交换生补录申请",
+            "expectedKey": "apply",
+            "tags": [
+              "MISSING_TASK"
+            ]
+          },
+          {
+            "category": "task_spurious",
+            "severity": "minor",
+            "reason": "存在 1 条未匹配任务",
+            "tags": [
+              "OVER_TASK"
+            ]
+          },
+          {
+            "category": "evidence_missing",
+            "severity": "major",
+            "reason": "缺少 1 项可回看证据",
+            "tags": [
+              "MISSING_EVIDENCE"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-04-3",
+        "group": "application",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "milestone_missing",
+            "severity": "minor",
+            "reason": "缺少阶段：材料准备/申请准备",
+            "expectedKey": "prepare",
+            "tags": [
+              "MISSING_MILESTONE"
+            ]
+          },
+          {
+            "category": "milestone_missing",
+            "severity": "minor",
+            "reason": "缺少阶段：申请提交/正式提交",
+            "expectedKey": "apply",
+            "tags": [
+              "MISSING_MILESTONE"
+            ]
+          },
+          {
+            "category": "task_missing",
+            "severity": "major",
+            "reason": "缺少任务：申请/完成/办理 交换生补录申请",
+            "expectedKey": "apply",
+            "tags": [
+              "MISSING_TASK"
+            ]
+          },
+          {
+            "category": "task_spurious",
+            "severity": "minor",
+            "reason": "存在 1 条未匹配任务",
+            "tags": [
+              "OVER_TASK"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-04-4",
+        "group": "application",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "milestone_missing",
+            "severity": "minor",
+            "reason": "缺少阶段：材料准备/申请准备",
+            "expectedKey": "prepare",
+            "tags": [
+              "MISSING_MILESTONE"
+            ]
+          },
+          {
+            "category": "milestone_missing",
+            "severity": "minor",
+            "reason": "缺少阶段：申请提交/正式提交",
+            "expectedKey": "apply",
+            "tags": [
+              "MISSING_MILESTONE"
+            ]
+          },
+          {
+            "category": "time_incorrect",
+            "severity": "major",
+            "reason": "时间点不正确：11月6日16:30",
+            "expectedKey": "deadline",
+            "actual": "2026-11-06T16:30:00+08:00",
+            "tags": [
+              "WRONG_TIME_VALUE"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-05-1",
+        "group": "scholarship",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "time_spurious",
+            "severity": "minor",
+            "reason": "存在 2 个未匹配时间点",
+            "tags": [
+              "WRONG_TIMEPOINT_TYPE"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-05-3",
+        "group": "scholarship",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "time_spurious",
+            "severity": "minor",
+            "reason": "存在 2 个未匹配时间点",
+            "tags": [
+              "WRONG_TIMEPOINT_TYPE"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-06-1",
+        "group": "meeting",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "task_missing",
+            "severity": "major",
+            "reason": "缺少任务：携带/携 上月安全巡查记录",
+            "expectedKey": "bring",
+            "tags": [
+              "MISSING_TASK"
+            ]
+          },
+          {
+            "category": "task_missing",
+            "severity": "major",
+            "reason": "缺少任务：说明/报告/说 整改进度",
+            "expectedKey": "report",
+            "tags": [
+              "MISSING_TASK"
+            ]
+          },
+          {
+            "category": "task_spurious",
+            "severity": "minor",
+            "reason": "存在 1 条未匹配任务",
+            "tags": [
+              "OVER_TASK"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-06-2",
+        "group": "meeting",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "task_missing",
+            "severity": "major",
+            "reason": "缺少任务：携带/携 上月安全巡查记录",
+            "expectedKey": "bring",
+            "tags": [
+              "MISSING_TASK"
+            ]
+          },
+          {
+            "category": "task_missing",
+            "severity": "major",
+            "reason": "缺少任务：说明/报告/说 整改进度",
+            "expectedKey": "report",
+            "tags": [
+              "MISSING_TASK"
+            ]
+          },
+          {
+            "category": "task_spurious",
+            "severity": "minor",
+            "reason": "存在 1 条未匹配任务",
+            "tags": [
+              "OVER_TASK"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-06-3",
+        "group": "meeting",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "task_missing",
+            "severity": "major",
+            "reason": "缺少任务：携带/携 上月安全巡查记录",
+            "expectedKey": "bring",
+            "tags": [
+              "MISSING_TASK"
+            ]
+          },
+          {
+            "category": "task_missing",
+            "severity": "major",
+            "reason": "缺少任务：说明/报告/说 整改进度",
+            "expectedKey": "report",
+            "tags": [
+              "MISSING_TASK"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-06-4",
+        "group": "meeting",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "task_missing",
+            "severity": "major",
+            "reason": "缺少任务：说明/报告/说 整改进度",
+            "expectedKey": "report",
+            "tags": [
+              "MISSING_TASK"
+            ]
+          },
+          {
+            "category": "task_spurious",
+            "severity": "minor",
+            "reason": "存在 1 条未匹配任务",
+            "tags": [
+              "OVER_TASK"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-07-1",
+        "group": "event",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "project_decision",
+            "severity": "major",
+            "reason": "项目标题未匹配黄金答案",
+            "expectedKey": "project",
+            "actual": "",
+            "tags": [
+              "PROJECT_DECISION_ERROR"
+            ]
+          },
+          {
+            "category": "task_missing",
+            "severity": "major",
+            "reason": "缺少任务：签到/完成 签到",
+            "expectedKey": "check-in",
+            "tags": [
+              "MISSING_TASK"
+            ]
+          },
+          {
+            "category": "task_spurious",
+            "severity": "minor",
+            "reason": "存在 2 条未匹配任务",
+            "tags": [
+              "OVER_TASK"
+            ]
+          },
+          {
+            "category": "time_incorrect",
+            "severity": "major",
+            "reason": "时间点不正确：9月1日7:30",
+            "expectedKey": "gather-time",
+            "actual": "2026-09-01T07:30:00+08:00",
+            "tags": [
+              "WRONG_TIME_VALUE"
+            ]
+          },
+          {
+            "category": "time_incorrect",
+            "severity": "major",
+            "reason": "时间点不正确：当日13:00/13:00",
+            "expectedKey": "briefing-time",
+            "actual": "2026-09-01T13:00:00+08:00",
+            "tags": [
+              "WRONG_TIME_VALUE"
+            ]
+          },
+          {
+            "category": "event_missing",
+            "severity": "major",
+            "reason": "缺少事件：岗前集合/集合",
+            "expectedKey": "gather",
+            "tags": [
+              "MISSING_EVENT"
+            ]
+          },
+          {
+            "category": "event_missing",
+            "severity": "major",
+            "reason": "缺少事件：岗位轮换说明会",
+            "expectedKey": "briefing",
+            "tags": [
+              "MISSING_EVENT"
+            ]
+          },
+          {
+            "category": "ambiguity_missing",
+            "severity": "major",
+            "reason": "应标记的歧义未标记",
+            "expectedKey": "ambiguity-1",
+            "tags": [
+              "MISSING_AMBIGUITY"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-07-2",
+        "group": "event",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "project_decision",
+            "severity": "major",
+            "reason": "项目标题未匹配黄金答案",
+            "expectedKey": "project",
+            "actual": "",
+            "tags": [
+              "PROJECT_DECISION_ERROR"
+            ]
+          },
+          {
+            "category": "task_missing",
+            "severity": "major",
+            "reason": "缺少任务：签到/完成 签到",
+            "expectedKey": "check-in",
+            "tags": [
+              "MISSING_TASK"
+            ]
+          },
+          {
+            "category": "task_spurious",
+            "severity": "minor",
+            "reason": "存在 2 条未匹配任务",
+            "tags": [
+              "OVER_TASK"
+            ]
+          },
+          {
+            "category": "ambiguity_missing",
+            "severity": "major",
+            "reason": "应标记的歧义未标记",
+            "expectedKey": "ambiguity-1",
+            "tags": [
+              "MISSING_AMBIGUITY"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-07-3",
+        "group": "event",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "task_missing",
+            "severity": "major",
+            "reason": "缺少任务：签到/完成 签到",
+            "expectedKey": "check-in",
+            "tags": [
+              "MISSING_TASK"
+            ]
+          },
+          {
+            "category": "task_spurious",
+            "severity": "minor",
+            "reason": "存在 2 条未匹配任务",
+            "tags": [
+              "OVER_TASK"
+            ]
+          },
+          {
+            "category": "time_incorrect",
+            "severity": "major",
+            "reason": "时间点不正确：9月1日7:30",
+            "expectedKey": "gather-time",
+            "actual": "2026-09-01T07:30:00+08:00",
+            "tags": [
+              "WRONG_TIME_VALUE"
+            ]
+          },
+          {
+            "category": "time_incorrect",
+            "severity": "major",
+            "reason": "时间点不正确：当日13:00/13:00",
+            "expectedKey": "briefing-time",
+            "actual": "2026-09-01T13:00:00+08:00",
+            "tags": [
+              "WRONG_TIME_VALUE"
+            ]
+          },
+          {
+            "category": "event_missing",
+            "severity": "major",
+            "reason": "缺少事件：岗前集合/集合",
+            "expectedKey": "gather",
+            "tags": [
+              "MISSING_EVENT"
+            ]
+          },
+          {
+            "category": "event_missing",
+            "severity": "major",
+            "reason": "缺少事件：岗位轮换说明会",
+            "expectedKey": "briefing",
+            "tags": [
+              "MISSING_EVENT"
+            ]
+          },
+          {
+            "category": "ambiguity_missing",
+            "severity": "major",
+            "reason": "应标记的歧义未标记",
+            "expectedKey": "ambiguity-1",
+            "tags": [
+              "MISSING_AMBIGUITY"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-07-4",
+        "group": "event",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "project_decision",
+            "severity": "major",
+            "reason": "项目标题未匹配黄金答案",
+            "expectedKey": "project",
+            "actual": "",
+            "tags": [
+              "PROJECT_DECISION_ERROR"
+            ]
+          },
+          {
+            "category": "task_spurious",
+            "severity": "minor",
+            "reason": "存在 1 条未匹配任务",
+            "tags": [
+              "OVER_TASK"
+            ]
+          },
+          {
+            "category": "time_incorrect",
+            "severity": "major",
+            "reason": "时间点不正确：9月1日7:30",
+            "expectedKey": "gather-time",
+            "actual": "2026-09-01T07:30:00+08:00",
+            "tags": [
+              "WRONG_TIME_VALUE"
+            ]
+          },
+          {
+            "category": "time_incorrect",
+            "severity": "major",
+            "reason": "时间点不正确：当日13:00/13:00",
+            "expectedKey": "briefing-time",
+            "actual": "2026-09-01T13:00:00+08:00",
+            "tags": [
+              "WRONG_TIME_VALUE"
+            ]
+          },
+          {
+            "category": "event_missing",
+            "severity": "major",
+            "reason": "缺少事件：岗前集合/集合",
+            "expectedKey": "gather",
+            "tags": [
+              "MISSING_EVENT"
+            ]
+          },
+          {
+            "category": "event_missing",
+            "severity": "major",
+            "reason": "缺少事件：岗位轮换说明会",
+            "expectedKey": "briefing",
+            "tags": [
+              "MISSING_EVENT"
+            ]
+          },
+          {
+            "category": "ambiguity_missing",
+            "severity": "major",
+            "reason": "应标记的歧义未标记",
+            "expectedKey": "ambiguity-1",
+            "tags": [
+              "MISSING_AMBIGUITY"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-08-2",
+        "group": "multi_deadline",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "project_decision",
+            "severity": "major",
+            "reason": "项目标题未匹配黄金答案",
+            "expectedKey": "project",
+            "actual": "论文写作",
+            "tags": [
+              "PROJECT_DECISION_ERROR"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-08-3",
+        "group": "multi_deadline",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "time_incorrect",
+            "severity": "major",
+            "reason": "时间点不正确：9月19日17:00",
+            "expectedKey": "review-time",
+            "actual": "2026-09-19T17:00:00+08:00",
+            "tags": [
+              "WRONG_TIME_VALUE"
+            ]
+          },
+          {
+            "category": "time_incorrect",
+            "severity": "major",
+            "reason": "时间点不正确：10月8日中午",
+            "expectedKey": "design-time",
+            "actual": "2026-10-08T12:00:00+08:00",
+            "tags": [
+              "WRONG_TIME_VALUE"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-09-1",
+        "group": "vague_time",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "time_incorrect",
+            "severity": "major",
+            "reason": "时间点不正确：近期",
+            "expectedKey": "review-time",
+            "tags": [
+              "WRONG_TIME_VALUE"
+            ]
+          },
+          {
+            "category": "event_missing",
+            "severity": "major",
+            "reason": "缺少事件：复核/导师复核",
+            "expectedKey": "review",
+            "tags": [
+              "MISSING_EVENT"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-09-2",
+        "group": "vague_time",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "time_incorrect",
+            "severity": "major",
+            "reason": "时间点不正确：近期",
+            "expectedKey": "review-time",
+            "tags": [
+              "WRONG_TIME_VALUE"
+            ]
+          },
+          {
+            "category": "event_missing",
+            "severity": "major",
+            "reason": "缺少事件：复核/导师复核",
+            "expectedKey": "review",
+            "tags": [
+              "MISSING_EVENT"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-09-3",
+        "group": "vague_time",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "time_incorrect",
+            "severity": "major",
+            "reason": "时间点不正确：近期",
+            "expectedKey": "review-time",
+            "tags": [
+              "WRONG_TIME_VALUE"
+            ]
+          },
+          {
+            "category": "time_spurious",
+            "severity": "minor",
+            "reason": "存在 1 个未匹配时间点",
+            "tags": [
+              "WRONG_TIMEPOINT_TYPE"
+            ]
+          },
+          {
+            "category": "event_missing",
+            "severity": "major",
+            "reason": "缺少事件：复核/导师复核",
+            "expectedKey": "review",
+            "tags": [
+              "MISSING_EVENT"
+            ]
+          },
+          {
+            "category": "evidence_missing",
+            "severity": "major",
+            "reason": "缺少 1 项可回看证据",
+            "tags": [
+              "MISSING_EVIDENCE"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-09-4",
+        "group": "vague_time",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "time_missing",
+            "severity": "major",
+            "reason": "时间点不正确：近期",
+            "expectedKey": "review-time",
+            "tags": [
+              "MISSING_TIMEPOINT"
+            ]
+          },
+          {
+            "category": "time_spurious",
+            "severity": "minor",
+            "reason": "存在 1 个未匹配时间点",
+            "tags": [
+              "WRONG_TIMEPOINT_TYPE"
+            ]
+          },
+          {
+            "category": "event_missing",
+            "severity": "major",
+            "reason": "缺少事件：复核/导师复核",
+            "expectedKey": "review",
+            "tags": [
+              "MISSING_EVENT"
+            ]
+          },
+          {
+            "category": "evidence_missing",
+            "severity": "major",
+            "reason": "缺少 2 项可回看证据",
+            "tags": [
+              "MISSING_EVIDENCE"
+            ]
+          },
+          {
+            "category": "ambiguity_missing",
+            "severity": "major",
+            "reason": "应标记的歧义未标记",
+            "expectedKey": "ambiguity-1",
+            "tags": [
+              "MISSING_AMBIGUITY"
+            ]
+          },
+          {
+            "category": "ambiguity_spurious",
+            "severity": "minor",
+            "reason": "存在 1 项未匹配歧义",
+            "tags": [
+              "FALSE_AMBIGUITY"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-10-1",
+        "group": "vague_time",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "task_missing",
+            "severity": "major",
+            "reason": "缺少任务：回复 是否参加/参加意向/去不去",
+            "expectedKey": "reply",
+            "tags": [
+              "MISSING_TASK"
+            ]
+          },
+          {
+            "category": "task_spurious",
+            "severity": "minor",
+            "reason": "存在 1 条未匹配任务",
+            "tags": [
+              "OVER_TASK"
+            ]
+          },
+          {
+            "category": "time_missing",
+            "severity": "major",
+            "reason": "时间点不正确：发布日期目前未知/发布时间尚未确定/啥时候发还不知道",
+            "expectedKey": "result-time",
+            "tags": [
+              "MISSING_TIMEPOINT"
+            ]
+          },
+          {
+            "category": "ambiguity_missing",
+            "severity": "major",
+            "reason": "应标记的歧义未标记",
+            "expectedKey": "ambiguity-2",
+            "tags": [
+              "MISSING_AMBIGUITY"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-10-2",
+        "group": "vague_time",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "task_missing",
+            "severity": "major",
+            "reason": "缺少任务：回复 是否参加/参加意向/去不去",
+            "expectedKey": "reply",
+            "tags": [
+              "MISSING_TASK"
+            ]
+          },
+          {
+            "category": "task_spurious",
+            "severity": "minor",
+            "reason": "存在 1 条未匹配任务",
+            "tags": [
+              "OVER_TASK"
+            ]
+          },
+          {
+            "category": "time_missing",
+            "severity": "major",
+            "reason": "时间点不正确：发布日期目前未知/发布时间尚未确定/啥时候发还不知道",
+            "expectedKey": "result-time",
+            "tags": [
+              "MISSING_TIMEPOINT"
+            ]
+          },
+          {
+            "category": "evidence_missing",
+            "severity": "major",
+            "reason": "缺少 1 项可回看证据",
+            "tags": [
+              "MISSING_EVIDENCE"
+            ]
+          },
+          {
+            "category": "ambiguity_missing",
+            "severity": "major",
+            "reason": "应标记的歧义未标记",
+            "expectedKey": "ambiguity-2",
+            "tags": [
+              "MISSING_AMBIGUITY"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-10-3",
+        "group": "vague_time",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "task_missing",
+            "severity": "major",
+            "reason": "缺少任务：回复 是否参加/参加意向/去不去",
+            "expectedKey": "reply",
+            "tags": [
+              "MISSING_TASK"
+            ]
+          },
+          {
+            "category": "task_spurious",
+            "severity": "minor",
+            "reason": "存在 1 条未匹配任务",
+            "tags": [
+              "OVER_TASK"
+            ]
+          },
+          {
+            "category": "time_missing",
+            "severity": "major",
+            "reason": "时间点不正确：发布日期目前未知/发布时间尚未确定/啥时候发还不知道",
+            "expectedKey": "result-time",
+            "tags": [
+              "MISSING_TIMEPOINT"
+            ]
+          },
+          {
+            "category": "ambiguity_missing",
+            "severity": "major",
+            "reason": "应标记的歧义未标记",
+            "expectedKey": "ambiguity-2",
+            "tags": [
+              "MISSING_AMBIGUITY"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-10-4",
+        "group": "vague_time",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "task_missing",
+            "severity": "major",
+            "reason": "缺少任务：回复 是否参加/参加意向/去不去",
+            "expectedKey": "reply",
+            "tags": [
+              "MISSING_TASK"
+            ]
+          },
+          {
+            "category": "task_spurious",
+            "severity": "minor",
+            "reason": "存在 1 条未匹配任务",
+            "tags": [
+              "OVER_TASK"
+            ]
+          },
+          {
+            "category": "time_missing",
+            "severity": "major",
+            "reason": "时间点不正确：发布日期目前未知/发布时间尚未确定/啥时候发还不知道",
+            "expectedKey": "result-time",
+            "tags": [
+              "MISSING_TIMEPOINT"
+            ]
+          },
+          {
+            "category": "evidence_missing",
+            "severity": "major",
+            "reason": "缺少 1 项可回看证据",
+            "tags": [
+              "MISSING_EVIDENCE"
+            ]
+          },
+          {
+            "category": "ambiguity_missing",
+            "severity": "major",
+            "reason": "应标记的歧义未标记",
+            "expectedKey": "ambiguity-2",
+            "tags": [
+              "MISSING_AMBIGUITY"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-11-1",
+        "group": "multi_deadline",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "project_decision",
+            "severity": "major",
+            "reason": "项目决策应为 new_project/uncertain，实际为 standalone_task",
+            "tags": [
+              "PROJECT_DECISION_ERROR"
+            ]
+          },
+          {
+            "category": "project_decision",
+            "severity": "major",
+            "reason": "项目标题未匹配黄金答案",
+            "expectedKey": "project",
+            "actual": "",
+            "tags": [
+              "PROJECT_DECISION_ERROR"
+            ]
+          },
+          {
+            "category": "time_missing",
+            "severity": "major",
+            "reason": "时间点不正确：原收件日为9月20日/不是9月20日/由9月20日/原来9月20日",
+            "expectedKey": "old",
+            "tags": [
+              "MISSING_TIMEPOINT"
+            ]
+          },
+          {
+            "category": "time_spurious",
+            "severity": "minor",
+            "reason": "存在 1 个未匹配时间点",
+            "tags": [
+              "WRONG_TIMEPOINT_TYPE"
+            ]
+          },
+          {
+            "category": "ambiguity_missing",
+            "severity": "major",
+            "reason": "应标记的歧义未标记",
+            "expectedKey": "ambiguity-1",
+            "tags": [
+              "MISSING_AMBIGUITY"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-11-2",
+        "group": "multi_deadline",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "task_missing",
+            "severity": "major",
+            "reason": "缺少任务：提交/交 其他材料/其余材料/别的材料",
+            "expectedKey": "other",
+            "tags": [
+              "MISSING_TASK"
+            ]
+          },
+          {
+            "category": "material_missing",
+            "severity": "major",
+            "reason": "缺少材料：其他材料/其余材料/别的材料",
+            "expectedKey": "other",
+            "tags": [
+              "MISSING_MATERIAL"
+            ]
+          },
+          {
+            "category": "time_missing",
+            "severity": "major",
+            "reason": "时间点不正确：原收件日为9月20日/不是9月20日/由9月20日/原来9月20日",
+            "expectedKey": "old",
+            "tags": [
+              "MISSING_TIMEPOINT"
+            ]
+          },
+          {
+            "category": "time_spurious",
+            "severity": "minor",
+            "reason": "存在 1 个未匹配时间点",
+            "tags": [
+              "WRONG_TIMEPOINT_TYPE"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-11-3",
+        "group": "multi_deadline",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "project_decision",
+            "severity": "major",
+            "reason": "项目决策应为 new_project/uncertain，实际为 standalone_task",
+            "tags": [
+              "PROJECT_DECISION_ERROR"
+            ]
+          },
+          {
+            "category": "project_decision",
+            "severity": "major",
+            "reason": "项目标题未匹配黄金答案",
+            "expectedKey": "project",
+            "actual": "",
+            "tags": [
+              "PROJECT_DECISION_ERROR"
+            ]
+          },
+          {
+            "category": "task_missing",
+            "severity": "major",
+            "reason": "缺少任务：提交/交 其他材料/其余材料/别的材料",
+            "expectedKey": "other",
+            "tags": [
+              "MISSING_TASK"
+            ]
+          },
+          {
+            "category": "material_missing",
+            "severity": "major",
+            "reason": "缺少材料：其他材料/其余材料/别的材料",
+            "expectedKey": "other",
+            "tags": [
+              "MISSING_MATERIAL"
+            ]
+          },
+          {
+            "category": "time_missing",
+            "severity": "major",
+            "reason": "时间点不正确：原收件日为9月20日/不是9月20日/由9月20日/原来9月20日",
+            "expectedKey": "old",
+            "tags": [
+              "MISSING_TIMEPOINT"
+            ]
+          },
+          {
+            "category": "ambiguity_missing",
+            "severity": "major",
+            "reason": "应标记的歧义未标记",
+            "expectedKey": "ambiguity-1",
+            "tags": [
+              "MISSING_AMBIGUITY"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-11-4",
+        "group": "multi_deadline",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "project_decision",
+            "severity": "major",
+            "reason": "项目决策应为 new_project/uncertain，实际为 standalone_task",
+            "tags": [
+              "PROJECT_DECISION_ERROR"
+            ]
+          },
+          {
+            "category": "project_decision",
+            "severity": "major",
+            "reason": "项目标题未匹配黄金答案",
+            "expectedKey": "project",
+            "actual": "",
+            "tags": [
+              "PROJECT_DECISION_ERROR"
+            ]
+          },
+          {
+            "category": "time_incorrect",
+            "severity": "major",
+            "reason": "时间点不正确：原收件日为9月20日/不是9月20日/由9月20日/原来9月20日",
+            "expectedKey": "old",
+            "actual": "2026-09-20",
+            "tags": [
+              "WRONG_TIME_VALUE"
+            ]
+          },
+          {
+            "category": "evidence_missing",
+            "severity": "major",
+            "reason": "缺少 2 项可回看证据",
+            "tags": [
+              "MISSING_EVIDENCE"
+            ]
+          },
+          {
+            "category": "ambiguity_missing",
+            "severity": "major",
+            "reason": "应标记的歧义未标记",
+            "expectedKey": "ambiguity-1",
+            "tags": [
+              "MISSING_AMBIGUITY"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-12-1",
+        "group": "material",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "task_missing",
+            "severity": "major",
+            "reason": "缺少任务：出示/带 校园卡",
+            "expectedKey": "show",
+            "tags": [
+              "MISSING_TASK"
+            ]
+          },
+          {
+            "category": "task_missing",
+            "severity": "major",
+            "reason": "缺少任务：提交/交 设备借用单",
+            "expectedKey": "submit",
+            "tags": [
+              "MISSING_TASK"
+            ]
+          },
+          {
+            "category": "task_spurious",
+            "severity": "minor",
+            "reason": "存在 1 条未匹配任务",
+            "tags": [
+              "OVER_TASK"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-12-2",
+        "group": "material",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "task_missing",
+            "severity": "major",
+            "reason": "缺少任务：出示/带 校园卡",
+            "expectedKey": "show",
+            "tags": [
+              "MISSING_TASK"
+            ]
+          },
+          {
+            "category": "task_missing",
+            "severity": "major",
+            "reason": "缺少任务：提交/交 设备借用单",
+            "expectedKey": "submit",
+            "tags": [
+              "MISSING_TASK"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-12-3",
+        "group": "material",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "task_missing",
+            "severity": "major",
+            "reason": "缺少任务：出示/带 校园卡",
+            "expectedKey": "show",
+            "tags": [
+              "MISSING_TASK"
+            ]
+          },
+          {
+            "category": "task_missing",
+            "severity": "major",
+            "reason": "缺少任务：提交/交 设备借用单",
+            "expectedKey": "submit",
+            "tags": [
+              "MISSING_TASK"
+            ]
+          },
+          {
+            "category": "task_spurious",
+            "severity": "minor",
+            "reason": "存在 1 条未匹配任务",
+            "tags": [
+              "OVER_TASK"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-12-4",
+        "group": "material",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "task_missing",
+            "severity": "major",
+            "reason": "缺少任务：出示/带 校园卡",
+            "expectedKey": "show",
+            "tags": [
+              "MISSING_TASK"
+            ]
+          },
+          {
+            "category": "task_missing",
+            "severity": "major",
+            "reason": "缺少任务：提交/交 设备借用单",
+            "expectedKey": "submit",
+            "tags": [
+              "MISSING_TASK"
+            ]
+          },
+          {
+            "category": "task_spurious",
+            "severity": "minor",
+            "reason": "存在 1 条未匹配任务",
+            "tags": [
+              "OVER_TASK"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-13-1",
+        "group": "competition",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "task_missing",
+            "severity": "major",
+            "reason": "缺少任务：确认/办理 参赛资格",
+            "expectedKey": "confirm",
+            "tags": [
+              "MISSING_TASK"
+            ]
+          },
+          {
+            "category": "task_spurious",
+            "severity": "minor",
+            "reason": "存在 1 条未匹配任务",
+            "tags": [
+              "OVER_TASK"
+            ]
+          },
+          {
+            "category": "ambiguity_missing",
+            "severity": "major",
+            "reason": "应标记的歧义未标记",
+            "expectedKey": "ambiguity-1",
+            "tags": [
+              "MISSING_AMBIGUITY"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-13-3",
+        "group": "competition",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "ambiguity_missing",
+            "severity": "major",
+            "reason": "应标记的歧义未标记",
+            "expectedKey": "ambiguity-1",
+            "tags": [
+              "MISSING_AMBIGUITY"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-13-4",
+        "group": "competition",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "ambiguity_missing",
+            "severity": "major",
+            "reason": "应标记的歧义未标记",
+            "expectedKey": "ambiguity-1",
+            "tags": [
+              "MISSING_AMBIGUITY"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-15-1",
+        "group": "ocr_noise",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "time_incorrect",
+            "severity": "major",
+            "reason": "时间点不正确：IO 月 2I 日 I6:OO/IO月2I日I6:OO/IO月2I日 I6:OO",
+            "expectedKey": "deadline",
+            "actual": "2026-10-21T16:00:00+08:00",
+            "tags": [
+              "WRONG_TIME_VALUE"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-15-2",
+        "group": "ocr_noise",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "time_incorrect",
+            "severity": "major",
+            "reason": "时间点不正确：IO 月 2I 日 I6:OO/IO月2I日I6:OO/IO月2I日 I6:OO",
+            "expectedKey": "deadline",
+            "actual": "2026-10-21T16:00:00+08:00",
+            "tags": [
+              "WRONG_TIME_VALUE"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-15-3",
+        "group": "ocr_noise",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "task_missing",
+            "severity": "major",
+            "reason": "缺少任务：上传/提交/交 田野调查登记表/田野调 查登记 表/登记表和保险凭证/登记 表和保 险凭证",
+            "expectedKey": "submit",
+            "tags": [
+              "MISSING_TASK"
+            ]
+          },
+          {
+            "category": "task_spurious",
+            "severity": "minor",
+            "reason": "存在 1 条未匹配任务",
+            "tags": [
+              "OVER_TASK"
+            ]
+          },
+          {
+            "category": "time_incorrect",
+            "severity": "major",
+            "reason": "时间点不正确：IO 月 2I 日 I6:OO/IO月2I日I6:OO/IO月2I日 I6:OO",
+            "expectedKey": "deadline",
+            "actual": "2026-10-21T16:00:00+08:00",
+            "tags": [
+              "WRONG_TIME_VALUE"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-16-1",
+        "group": "security",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "time_incorrect",
+            "severity": "major",
+            "reason": "时间点不正确：10月2日17:00",
+            "expectedKey": "deadline",
+            "actual": "2026-10-02T17:00:00+08:00",
+            "tags": [
+              "WRONG_TIME_VALUE"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-16-2",
+        "group": "security",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "time_incorrect",
+            "severity": "major",
+            "reason": "时间点不正确：10月2日17:00",
+            "expectedKey": "deadline",
+            "actual": "2026-10-02T17:00:00+08:00",
+            "tags": [
+              "WRONG_TIME_VALUE"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-16-3",
+        "group": "security",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "time_incorrect",
+            "severity": "major",
+            "reason": "时间点不正确：10月2日17:00",
+            "expectedKey": "deadline",
+            "actual": "2026-10-02T17:00:00+08:00",
+            "tags": [
+              "WRONG_TIME_VALUE"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-16-4",
+        "group": "security",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "time_incorrect",
+            "severity": "major",
+            "reason": "时间点不正确：10月2日17:00",
+            "expectedKey": "deadline",
+            "actual": "2026-10-02T17:00:00+08:00",
+            "tags": [
+              "WRONG_TIME_VALUE"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-17-1",
+        "group": "course",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "task_spurious",
+            "severity": "minor",
+            "reason": "存在 1 条未匹配任务",
+            "tags": [
+              "OVER_TASK"
+            ]
+          },
+          {
+            "category": "material_missing",
+            "severity": "major",
+            "reason": "缺少材料：数据来源说明",
+            "expectedKey": "source",
+            "tags": [
+              "MISSING_MATERIAL"
+            ]
+          },
+          {
+            "category": "material_spurious",
+            "severity": "minor",
+            "reason": "存在 1 项未匹配材料",
+            "tags": [
+              "WRONG_MATERIAL"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-17-2",
+        "group": "course",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "task_missing",
+            "severity": "major",
+            "reason": "缺少任务：提交/附/加 数据来源说明",
+            "expectedKey": "submit-source",
+            "tags": [
+              "MISSING_TASK"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-17-4",
+        "group": "course",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "task_missing",
+            "severity": "major",
+            "reason": "缺少任务：提交/附/加 数据来源说明",
+            "expectedKey": "submit-source",
+            "tags": [
+              "MISSING_TASK"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-18-1",
+        "group": "application",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "project_decision",
+            "severity": "major",
+            "reason": "项目决策应为 new_project，实际为 standalone_task",
+            "tags": [
+              "PROJECT_DECISION_ERROR"
+            ]
+          },
+          {
+            "category": "project_decision",
+            "severity": "major",
+            "reason": "项目标题未匹配黄金答案",
+            "expectedKey": "project",
+            "actual": "",
+            "tags": [
+              "PROJECT_DECISION_ERROR"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-18-2",
+        "group": "application",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "project_decision",
+            "severity": "major",
+            "reason": "项目决策应为 new_project，实际为 standalone_task",
+            "tags": [
+              "PROJECT_DECISION_ERROR"
+            ]
+          },
+          {
+            "category": "project_decision",
+            "severity": "major",
+            "reason": "项目标题未匹配黄金答案",
+            "expectedKey": "project",
+            "actual": "",
+            "tags": [
+              "PROJECT_DECISION_ERROR"
+            ]
+          },
+          {
+            "category": "task_missing",
+            "severity": "major",
+            "reason": "缺少任务：办理/完成 困难补助复核/补助复核",
+            "expectedKey": "review",
+            "tags": [
+              "MISSING_TASK"
+            ]
+          },
+          {
+            "category": "task_spurious",
+            "severity": "minor",
+            "reason": "存在 1 条未匹配任务",
+            "tags": [
+              "OVER_TASK"
+            ]
+          },
+          {
+            "category": "time_incorrect",
+            "severity": "major",
+            "reason": "时间点不正确：9月29日前",
+            "expectedKey": "deadline",
+            "actual": "2026-09-29",
+            "tags": [
+              "WRONG_TIME_VALUE"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-18-3",
+        "group": "application",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "project_decision",
+            "severity": "major",
+            "reason": "项目决策应为 new_project，实际为 standalone_task",
+            "tags": [
+              "PROJECT_DECISION_ERROR"
+            ]
+          },
+          {
+            "category": "project_decision",
+            "severity": "major",
+            "reason": "项目标题未匹配黄金答案",
+            "expectedKey": "project",
+            "actual": "",
+            "tags": [
+              "PROJECT_DECISION_ERROR"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-18-4",
+        "group": "application",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "project_decision",
+            "severity": "major",
+            "reason": "项目决策应为 new_project，实际为 standalone_task",
+            "tags": [
+              "PROJECT_DECISION_ERROR"
+            ]
+          },
+          {
+            "category": "project_decision",
+            "severity": "major",
+            "reason": "项目标题未匹配黄金答案",
+            "expectedKey": "project",
+            "actual": "",
+            "tags": [
+              "PROJECT_DECISION_ERROR"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-19-1",
+        "group": "application",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "ambiguity_missing",
+            "severity": "major",
+            "reason": "应标记的歧义未标记",
+            "expectedKey": "ambiguity-1",
+            "tags": [
+              "MISSING_AMBIGUITY"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-19-2",
+        "group": "application",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "ambiguity_missing",
+            "severity": "major",
+            "reason": "应标记的歧义未标记",
+            "expectedKey": "ambiguity-1",
+            "tags": [
+              "MISSING_AMBIGUITY"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-19-3",
+        "group": "application",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "ambiguity_missing",
+            "severity": "major",
+            "reason": "应标记的歧义未标记",
+            "expectedKey": "ambiguity-1",
+            "tags": [
+              "MISSING_AMBIGUITY"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-19-4",
+        "group": "application",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "ambiguity_missing",
+            "severity": "major",
+            "reason": "应标记的歧义未标记",
+            "expectedKey": "ambiguity-1",
+            "tags": [
+              "MISSING_AMBIGUITY"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-20-1",
+        "group": "event",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "task_spurious",
+            "severity": "minor",
+            "reason": "存在 1 条未匹配任务",
+            "tags": [
+              "OVER_TASK"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-20-2",
+        "group": "event",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "milestone_spurious",
+            "severity": "minor",
+            "reason": "预测阶段数量明显超过黄金答案",
+            "actual": "2",
+            "tags": [
+              "OVER_MILESTONE"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-20-3",
+        "group": "event",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "task_spurious",
+            "severity": "minor",
+            "reason": "存在 1 条未匹配任务",
+            "tags": [
+              "OVER_TASK"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-20-4",
+        "group": "event",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "time_missing",
+            "severity": "major",
+            "reason": "时间点不正确：讲座结束后的次日中午前/活动结束后次日中午前/听完后第二天中午前",
+            "expectedKey": "reflection-time",
+            "tags": [
+              "MISSING_TIMEPOINT"
+            ]
+          },
+          {
+            "category": "time_spurious",
+            "severity": "minor",
+            "reason": "存在 1 个未匹配时间点",
+            "tags": [
+              "WRONG_TIMEPOINT_TYPE"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-21-1",
+        "group": "multi_deadline",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "task_missing",
+            "severity": "major",
+            "reason": "缺少任务：签字/完成 导师签字",
+            "expectedKey": "sign",
+            "tags": [
+              "MISSING_TASK"
+            ]
+          },
+          {
+            "category": "task_spurious",
+            "severity": "minor",
+            "reason": "存在 1 条未匹配任务",
+            "tags": [
+              "OVER_TASK"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-21-2",
+        "group": "multi_deadline",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "material_missing",
+            "severity": "major",
+            "reason": "缺少材料：审批单",
+            "expectedKey": "form",
+            "tags": [
+              "MISSING_MATERIAL"
+            ]
+          },
+          {
+            "category": "time_incorrect",
+            "severity": "major",
+            "reason": "时间点不正确：10月14日8:40/14号一天三步：8:40",
+            "expectedKey": "collect-time",
+            "actual": "2026-10-14T08:40:00+08:00",
+            "tags": [
+              "WRONG_TIME_VALUE"
+            ]
+          },
+          {
+            "category": "time_incorrect",
+            "severity": "major",
+            "reason": "时间点不正确：当日11:30/11:30前",
+            "expectedKey": "sign-time",
+            "actual": "2026-08-08T11:30:00+08:00",
+            "tags": [
+              "WRONG_TIME_VALUE"
+            ]
+          },
+          {
+            "category": "time_incorrect",
+            "severity": "major",
+            "reason": "时间点不正确：同日17:20/17:20前",
+            "expectedKey": "upload-time",
+            "actual": "2026-08-08T17:20:00+08:00",
+            "tags": [
+              "WRONG_TIME_VALUE"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-21-3",
+        "group": "multi_deadline",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "material_missing",
+            "severity": "major",
+            "reason": "缺少材料：扫描版",
+            "expectedKey": "scan",
+            "tags": [
+              "MISSING_MATERIAL"
+            ]
+          },
+          {
+            "category": "time_incorrect",
+            "severity": "major",
+            "reason": "时间点不正确：10月14日8:40/14号一天三步：8:40",
+            "expectedKey": "collect-time",
+            "actual": "2026-10-14T08:40:00+08:00",
+            "tags": [
+              "WRONG_TIME_VALUE"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-21-4",
+        "group": "multi_deadline",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "time_missing",
+            "severity": "major",
+            "reason": "时间点不正确：10月14日8:40/14号一天三步：8:40",
+            "expectedKey": "collect-time",
+            "tags": [
+              "MISSING_TIMEPOINT"
+            ]
+          },
+          {
+            "category": "time_incorrect",
+            "severity": "major",
+            "reason": "时间点不正确：当日11:30/11:30前",
+            "expectedKey": "sign-time",
+            "actual": "2026-08-14T11:30:00+08:00",
+            "tags": [
+              "WRONG_TIME_VALUE"
+            ]
+          },
+          {
+            "category": "time_incorrect",
+            "severity": "major",
+            "reason": "时间点不正确：同日17:20/17:20前",
+            "expectedKey": "upload-time",
+            "actual": "2026-08-14T17:20:00+08:00",
+            "tags": [
+              "WRONG_TIME_VALUE"
+            ]
+          },
+          {
+            "category": "time_spurious",
+            "severity": "minor",
+            "reason": "存在 1 个未匹配时间点",
+            "tags": [
+              "WRONG_TIMEPOINT_TYPE"
+            ]
+          },
+          {
+            "category": "evidence_missing",
+            "severity": "major",
+            "reason": "缺少 1 项可回看证据",
+            "tags": [
+              "MISSING_EVIDENCE"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-22-1",
+        "group": "complex_notice",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "milestone_missing",
+            "severity": "minor",
+            "reason": "缺少阶段：调查准备/确定对象",
+            "expectedKey": "topic",
+            "tags": [
+              "MISSING_MILESTONE"
+            ]
+          },
+          {
+            "category": "milestone_missing",
+            "severity": "minor",
+            "reason": "缺少阶段：访谈准备",
+            "expectedKey": "interview",
+            "tags": [
+              "MISSING_MILESTONE"
+            ]
+          },
+          {
+            "category": "milestone_missing",
+            "severity": "minor",
+            "reason": "缺少阶段：正式提交",
+            "expectedKey": "submit",
+            "tags": [
+              "MISSING_MILESTONE"
+            ]
+          },
+          {
+            "category": "material_spurious",
+            "severity": "minor",
+            "reason": "存在 1 项未匹配材料",
+            "tags": [
+              "WRONG_MATERIAL"
+            ]
+          },
+          {
+            "category": "time_spurious",
+            "severity": "minor",
+            "reason": "存在 1 个未匹配时间点",
+            "tags": [
+              "WRONG_TIMEPOINT_TYPE"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-22-2",
+        "group": "complex_notice",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "milestone_missing",
+            "severity": "minor",
+            "reason": "缺少阶段：调查准备/确定对象",
+            "expectedKey": "topic",
+            "tags": [
+              "MISSING_MILESTONE"
+            ]
+          },
+          {
+            "category": "milestone_missing",
+            "severity": "minor",
+            "reason": "缺少阶段：访谈准备",
+            "expectedKey": "interview",
+            "tags": [
+              "MISSING_MILESTONE"
+            ]
+          },
+          {
+            "category": "milestone_missing",
+            "severity": "minor",
+            "reason": "缺少阶段：正式提交",
+            "expectedKey": "submit",
+            "tags": [
+              "MISSING_MILESTONE"
+            ]
+          },
+          {
+            "category": "material_spurious",
+            "severity": "minor",
+            "reason": "存在 1 项未匹配材料",
+            "tags": [
+              "WRONG_MATERIAL"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-22-3",
+        "group": "complex_notice",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "milestone_missing",
+            "severity": "minor",
+            "reason": "缺少阶段：调查准备/确定对象",
+            "expectedKey": "topic",
+            "tags": [
+              "MISSING_MILESTONE"
+            ]
+          },
+          {
+            "category": "milestone_missing",
+            "severity": "minor",
+            "reason": "缺少阶段：访谈准备",
+            "expectedKey": "interview",
+            "tags": [
+              "MISSING_MILESTONE"
+            ]
+          },
+          {
+            "category": "milestone_missing",
+            "severity": "minor",
+            "reason": "缺少阶段：正式提交",
+            "expectedKey": "submit",
+            "tags": [
+              "MISSING_MILESTONE"
+            ]
+          },
+          {
+            "category": "time_spurious",
+            "severity": "minor",
+            "reason": "存在 1 个未匹配时间点",
+            "tags": [
+              "WRONG_TIMEPOINT_TYPE"
+            ]
+          },
+          {
+            "category": "ambiguity_missing",
+            "severity": "major",
+            "reason": "应标记的歧义未标记",
+            "expectedKey": "ambiguity-2",
+            "tags": [
+              "MISSING_AMBIGUITY"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-22-4",
+        "group": "complex_notice",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "milestone_missing",
+            "severity": "minor",
+            "reason": "缺少阶段：调查准备/确定对象",
+            "expectedKey": "topic",
+            "tags": [
+              "MISSING_MILESTONE"
+            ]
+          },
+          {
+            "category": "milestone_missing",
+            "severity": "minor",
+            "reason": "缺少阶段：访谈准备",
+            "expectedKey": "interview",
+            "tags": [
+              "MISSING_MILESTONE"
+            ]
+          },
+          {
+            "category": "milestone_missing",
+            "severity": "minor",
+            "reason": "缺少阶段：正式提交",
+            "expectedKey": "submit",
+            "tags": [
+              "MISSING_MILESTONE"
+            ]
+          },
+          {
+            "category": "material_spurious",
+            "severity": "minor",
+            "reason": "存在 1 项未匹配材料",
+            "tags": [
+              "WRONG_MATERIAL"
+            ]
+          },
+          {
+            "category": "ambiguity_missing",
+            "severity": "major",
+            "reason": "应标记的歧义未标记",
+            "expectedKey": "ambiguity-2",
+            "tags": [
+              "MISSING_AMBIGUITY"
+            ]
+          },
+          {
+            "category": "ambiguity_spurious",
+            "severity": "minor",
+            "reason": "存在 1 项未匹配歧义",
+            "tags": [
+              "FALSE_AMBIGUITY"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-23-2",
+        "group": "material",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "task_missing",
+            "severity": "major",
+            "reason": "缺少任务：办理/完成/办结/办 校外实习备案",
+            "expectedKey": "file",
+            "tags": [
+              "MISSING_TASK"
+            ]
+          },
+          {
+            "category": "task_spurious",
+            "severity": "minor",
+            "reason": "存在 1 条未匹配任务",
+            "tags": [
+              "OVER_TASK"
+            ]
+          },
+          {
+            "category": "time_incorrect",
+            "severity": "major",
+            "reason": "时间点不正确：10月12日前",
+            "expectedKey": "deadline",
+            "actual": "2026-10-12",
+            "tags": [
+              "WRONG_TIME_VALUE"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-24-1",
+        "group": "course",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "material_missing",
+            "severity": "major",
+            "reason": "缺少材料：登记表/表",
+            "expectedKey": "sheet",
+            "tags": [
+              "MISSING_MATERIAL"
+            ]
+          },
+          {
+            "category": "ambiguity_missing",
+            "severity": "major",
+            "reason": "应标记的歧义未标记",
+            "expectedKey": "ambiguity-1",
+            "tags": [
+              "MISSING_AMBIGUITY"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-24-2",
+        "group": "course",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "material_missing",
+            "severity": "major",
+            "reason": "缺少材料：登记表/表",
+            "expectedKey": "sheet",
+            "tags": [
+              "MISSING_MATERIAL"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-24-3",
+        "group": "course",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "material_missing",
+            "severity": "major",
+            "reason": "缺少材料：登记表/表",
+            "expectedKey": "sheet",
+            "tags": [
+              "MISSING_MATERIAL"
+            ]
+          },
+          {
+            "category": "ambiguity_missing",
+            "severity": "major",
+            "reason": "应标记的歧义未标记",
+            "expectedKey": "ambiguity-1",
+            "tags": [
+              "MISSING_AMBIGUITY"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-24-4",
+        "group": "course",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "material_missing",
+            "severity": "major",
+            "reason": "缺少材料：登记表/表",
+            "expectedKey": "sheet",
+            "tags": [
+              "MISSING_MATERIAL"
+            ]
+          },
+          {
+            "category": "ambiguity_missing",
+            "severity": "major",
+            "reason": "应标记的歧义未标记",
+            "expectedKey": "ambiguity-1",
+            "tags": [
+              "MISSING_AMBIGUITY"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-25-1",
+        "group": "event",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "evidence_missing",
+            "severity": "major",
+            "reason": "缺少 1 项可回看证据",
+            "tags": [
+              "MISSING_EVIDENCE"
+            ]
+          },
+          {
+            "category": "ambiguity_missing",
+            "severity": "major",
+            "reason": "应标记的歧义未标记",
+            "expectedKey": "ambiguity-1",
+            "tags": [
+              "MISSING_AMBIGUITY"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-25-2",
+        "group": "event",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "material_missing",
+            "severity": "major",
+            "reason": "缺少材料：练习数据",
+            "expectedKey": "data",
+            "tags": [
+              "MISSING_MATERIAL"
+            ]
+          },
+          {
+            "category": "ambiguity_missing",
+            "severity": "major",
+            "reason": "应标记的歧义未标记",
+            "expectedKey": "ambiguity-1",
+            "tags": [
+              "MISSING_AMBIGUITY"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-25-3",
+        "group": "event",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "ambiguity_missing",
+            "severity": "major",
+            "reason": "应标记的歧义未标记",
+            "expectedKey": "ambiguity-1",
+            "tags": [
+              "MISSING_AMBIGUITY"
+            ]
+          }
+        ]
+      },
+      {
+        "caseId": "e2-gen-25-4",
+        "group": "event",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "material_missing",
+            "severity": "major",
+            "reason": "缺少材料：练习数据",
+            "expectedKey": "data",
+            "tags": [
+              "MISSING_MATERIAL"
+            ]
+          },
+          {
+            "category": "evidence_missing",
+            "severity": "major",
+            "reason": "缺少 1 项可回看证据",
+            "tags": [
+              "MISSING_EVIDENCE"
+            ]
+          },
+          {
+            "category": "ambiguity_missing",
+            "severity": "major",
+            "reason": "应标记的歧义未标记",
+            "expectedKey": "ambiguity-1",
+            "tags": [
+              "MISSING_AMBIGUITY"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

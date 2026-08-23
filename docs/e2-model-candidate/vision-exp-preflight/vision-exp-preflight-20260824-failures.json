@@ -1,0 +1,40 @@
+{
+  "label": "vision-exp-preflight-20260824",
+  "failures": {
+    "deepseek-v4-flash": [
+      {
+        "caseId": "e2-gen-01-1",
+        "group": "course",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "material_missing",
+            "severity": "major",
+            "reason": "缺少材料：三条讨论问题",
+            "expectedKey": "questions",
+            "tags": [
+              "MISSING_MATERIAL"
+            ]
+          }
+        ]
+      }
+    ],
+    "deepseek-v4-flash-vision-exp": [
+      {
+        "caseId": "e2-gen-01-1",
+        "group": "course",
+        "status": "ok",
+        "failures": [
+          {
+            "category": "material_spurious",
+            "severity": "minor",
+            "reason": "存在 1 项未匹配材料",
+            "tags": [
+              "WRONG_MATERIAL"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
