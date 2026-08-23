@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "e2.9-r9.1-cache-integrity-public-1.0.0",
+  "generatedAt": "2026-08-23T18:02:25.540Z",
+  "observationCount": 16,
+  "uniqueSourceCases": 8,
+  "modelCalls": 0,
+  "networkRequests": 0,
+  "expectedAnswersRead": false,
+  "inputs": {
+    "checkpointSha256": "0886afb941eeb74d80d9ed35601ee50447c0e4b464310ac197fd39df006fa336",
+    "sourceManifestSha256": "115b43f98d0ca56cac522d0272ed10894fa0cc2a185562d0c10ce4bff7aca12f",
+    "candidateCheckpointSha256": "f8a7ea4d138ecb7effd42ae239b6962feb4a0633d9b896c2534d96d2085df608"
+  },
+  "checks": {
+    "sixteenObservations": true,
+    "eightSourcesPaired": true,
+    "deterministicReplan": true,
+    "factGraphImmutable": true,
+    "semanticProjectionExactWithinDeclaredEquivalence": true,
+    "productionRecognitionGenerationCallsZero": true,
+    "expectedAnswersRead": false,
+    "networkRequests": 0
+  },
+  "issueCounts": {
+    "graphMutation": 0,
+    "semanticProjection": 0
+  },
+  "scope": "harness integrity hardening only; R9 frozen Gate and model quality results are unchanged",
+  "runStatus": "INVALID_HARNESS_CHECK_TYPE_FAILURE",
+  "invalidReason": "The first verifier mixed observed false/zero values into a boolean-only Gate. All semantic checks passed, but the process correctly remained failed and this result is not used as the successor proof.",
+  "screening": "NOT_RUN",
+  "selection": "NOT_RUN",
+  "blind": "NOT_CREATED",
+  "production": "NOT_DEPLOYED"
+}

@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "e2.9-r9.1-cache-integrity-public-1.0.0",
+  "generatedAt": "2026-08-23T18:02:55.367Z",
+  "observationCount": 16,
+  "uniqueSourceCases": 8,
+  "modelCalls": 0,
+  "networkRequests": 0,
+  "expectedAnswersRead": false,
+  "inputs": {
+    "checkpointSha256": "0886afb941eeb74d80d9ed35601ee50447c0e4b464310ac197fd39df006fa336",
+    "sourceManifestSha256": "115b43f98d0ca56cac522d0272ed10894fa0cc2a185562d0c10ce4bff7aca12f",
+    "candidateCheckpointSha256": "f8a7ea4d138ecb7effd42ae239b6962feb4a0633d9b896c2534d96d2085df608"
+  },
+  "checks": {
+    "sixteenObservations": true,
+    "eightSourcesPaired": true,
+    "deterministicReplan": true,
+    "factGraphImmutable": true,
+    "semanticProjectionExactWithinDeclaredEquivalence": true,
+    "productionRecognitionGenerationCallsZero": true,
+    "expectedAnswersExcluded": true,
+    "zeroNetworkRequests": true
+  },
+  "issueCounts": {
+    "graphMutation": 0,
+    "semanticProjection": 0
+  },
+  "scope": "harness integrity hardening only; R9 frozen Gate and model quality results are unchanged",
+  "runStatus": "PASS_WITH_INCOMPLETE_CANDIDATE_BINDING",
+  "qualification": "The full 16-observation semantic replay passed, but this verifier revision did not yet fail closed on the whole candidate canonical hash and each stored resultSha256. It is preserved but superseded by the C run.",
+  "screening": "NOT_RUN",
+  "selection": "NOT_RUN",
+  "blind": "NOT_CREATED",
+  "production": "NOT_DEPLOYED"
+}
