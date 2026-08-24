@@ -1,8 +1,8 @@
 {
   "schemaVersion": "e2.9-r10-screening-plan-1.0.0",
-  "protocolVersion": "e2-9-r10-facts-first-protocol-1.1.4",
+  "protocolVersion": "e2-9-r10-facts-first-protocol-1.1.5",
   "status": "NOT_AUTHORIZED",
-  "proposedRunLabel": "e29r10-facts-first-screening-proposed-20260824-f",
+  "proposedRunLabel": "e29r10-facts-first-screening-proposed-20260824-g",
   "observationIdFormat": "e29r10-screening-{caseOrdinal}-{armOrdinal}",
   "caseCount": 8,
   "arms": [
@@ -22,7 +22,7 @@
   "requiredBeforeAuthorization": [
     "local zero-model qualification passes",
     "independent qualification-only Preview passes",
-    "protocol bundle and Gate hashes are frozen and equal to the qualified F artifacts",
+    "protocol bundle and Gate hashes are frozen and equal to the qualified G artifacts",
     "local result, Preview evidence, deployment versions and independent PASS review are hash-bound",
     "case manifest and both request schemas are frozen",
     "explicit user authorization for at most 16 generation calls"

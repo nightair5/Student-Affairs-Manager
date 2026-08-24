@@ -457,10 +457,10 @@ test('R10 Wrangler configs keep the audit ledger private and runtime hashes fail
     assert.equal(ledger.vars.E2_R10_LEDGER_WORKER_CONFIG_SHA256, zeroHash)
   } else {
     const qualificationResult = JSON.parse(await readFile(
-      new URL('../docs/e2-v4-pro-benchmark-r10/qualification-result-f.json', import.meta.url), 'utf8',
+      new URL('../docs/e2-v4-pro-benchmark-r10/qualification-result-g.json', import.meta.url), 'utf8',
     ))
     const qualificationEvidence = JSON.parse(await readFile(
-      new URL('../docs/e2-v4-pro-benchmark-r10/qualification-evidence-f.json', import.meta.url), 'utf8',
+      new URL('../docs/e2-v4-pro-benchmark-r10/qualification-evidence-g.json', import.meta.url), 'utf8',
     ))
     const deploymentArtifacts = await buildR10QualificationDeploymentArtifacts(path.resolve(import.meta.dirname, '..'))
     assert.deepEqual(qualificationEvidence.deploymentArtifacts, deploymentArtifacts)
@@ -501,4 +501,7 @@ test('R10 deployment uploads private Ledger code before Secret rotation and veri
   assert.match(source, /\$qualificationStableTraffic -ne 0/u)
   assert.match(source, /\$stableTrafficTotal -ne 100/u)
   assert.match(source, /deploymentEvidence = \$contract\.deploymentEvidence/u)
+  assert.match(source, /RandomNumberGenerator\]::Create\(\)/u)
+  assert.match(source, /\$generator\.GetBytes\(\$bytes\)/u)
+  assert.doesNotMatch(source, /RandomNumberGenerator\]::Fill/u)
 })

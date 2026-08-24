@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "e2.9-r10-qualification-deployment-attempt-1.0.0",
+  "runLabel": "e29r10-zero-model-qualification-20260824-f",
+  "protocolVersion": "e2-9-r10-facts-first-protocol-1.1.4",
+  "sourceCommit": "ac2c864bc06fcbc78ca0251fc8de36ae683126ff",
+  "protocolBundleSha256": "6dcec948914a022996e8a9ac91656e63165c7512943f134708f897e027f2241a",
+  "qualificationResultSha256": "55b3500674761a3bf073c459d890f134b47b70ae3fb989bcaf637351f54cf678",
+  "status": "DEPLOYMENT_PREFLIGHT_RUNTIME_FAILURE",
+  "failedStage": "LOCAL_CRYPTOGRAPHIC_TOKEN_GENERATION",
+  "errorCode": "POWERSHELL_RANDOM_NUMBER_GENERATOR_FILL_UNAVAILABLE",
+  "errorMessage": "System.Security.Cryptography.RandomNumberGenerator does not contain a method named Fill in the active Windows PowerShell runtime.",
+  "remoteUploadAttempted": false,
+  "secretRotationAttempted": false,
+  "ledgerRecordAttempted": false,
+  "modelCalls": 0,
+  "upstreamQualificationRequests": 0,
+  "expectedAnswerReads": 0,
+  "screeningEligible": false,
+  "selectionAuthorized": false,
+  "blindAuthorized": false,
+  "productionAuthorized": false,
+  "requiredNextAction": "Preserve F, use a new G protocol and run label, replace the unavailable static Fill call with RandomNumberGenerator.Create().GetBytes(), and rerun the complete zero-model qualification chain."
+}

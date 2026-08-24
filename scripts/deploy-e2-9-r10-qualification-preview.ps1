@@ -4,8 +4,13 @@ $ErrorActionPreference = 'Stop'
 
 function New-R10Token {
   $bytes = [byte[]]::new(48)
-  [System.Security.Cryptography.RandomNumberGenerator]::Fill($bytes)
-  [Convert]::ToBase64String($bytes)
+  $generator = [System.Security.Cryptography.RandomNumberGenerator]::Create()
+  try {
+    $generator.GetBytes($bytes)
+    [Convert]::ToBase64String($bytes)
+  } finally {
+    $generator.Dispose()
+  }
 }
 
 function Get-R10Sha256([string]$Value) {
@@ -47,8 +52,8 @@ function Invoke-R10Request {
 
 $qualificationConfig = 'wrangler.e2-r10-qualification-preview.jsonc'
 $ledgerConfig = 'wrangler.e2-r10-qualification-ledger.jsonc'
-$qualificationResultPath = 'docs/e2-v4-pro-benchmark-r10/qualification-result-f.json'
-$qualificationEvidencePath = 'docs/e2-v4-pro-benchmark-r10/qualification-evidence-f.json'
+$qualificationResultPath = 'docs/e2-v4-pro-benchmark-r10/qualification-result-g.json'
+$qualificationEvidencePath = 'docs/e2-v4-pro-benchmark-r10/qualification-evidence-g.json'
 $qualificationConfigValue = Get-Content -Raw -LiteralPath $qualificationConfig | ConvertFrom-Json
 $ledgerConfigValue = Get-Content -Raw -LiteralPath $ledgerConfig | ConvertFrom-Json
 $qualificationResult = Get-Content -Raw -LiteralPath $qualificationResultPath | ConvertFrom-Json

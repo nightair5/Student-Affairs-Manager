@@ -2,8 +2,8 @@
 
 ## 1. Status and purpose
 
-- Protocol version: `e2-9-r10-facts-first-protocol-1.1.4`
-- Current phase: `F_ZERO_MODEL_IMPLEMENTATION_NOT_YET_QUALIFIED`
+- Protocol version: `e2-9-r10-facts-first-protocol-1.1.5`
+- Current phase: `G_ZERO_MODEL_IMPLEMENTATION_NOT_YET_QUALIFIED`
 - Production recognition/generation calls authorized by this protocol: `0`
 - Production deployment: prohibited
 - Selection: prohibited until Screening Gate passes
@@ -24,9 +24,9 @@ Frozen component versions for this protocol are:
 | Ledger-to-Planner bridge | `e2-r10-ledger-planner-bridge-1.1.0` |
 | Isolated Planner | `e2-r10-isolated-planner-1.1.0` |
 | Ledger-to-Plan Validator | `e2-r10-ledger-plan-validator-1.1.0` |
-| Qualification contract | `e2.9-r10-qualification-contract-1.2.4` |
-| Qualification Worker | `e2-r10-qualification-worker-1.1.4` |
-| Private qualification ledger | `e2-r10-qualification-ledger-1.1.4` |
+| Qualification contract | `e2.9-r10-qualification-contract-1.2.5` |
+| Qualification Worker | `e2-r10-qualification-worker-1.1.5` |
+| Private qualification ledger | `e2-r10-qualification-ledger-1.1.5` |
 
 ## 2. Paired architecture
 
@@ -301,8 +301,16 @@ authorization checker could validate a newly recomputed disk hash without
 requiring it to equal the E qualification result and Preview evidence. No model
 call occurred, but E is permanently ineligible to authorize Screening.
 
-Protocol 1.1.4 uses the new run label
-`e29r10-zero-model-qualification-20260824-f`. Before any future Screening
+Protocol 1.1.4 used the new run label
+`e29r10-zero-model-qualification-20260824-f` and passed local zero-model
+qualification. Its deployment script then stopped before the first remote
+operation because the active Windows PowerShell runtime did not implement the
+static `RandomNumberGenerator.Fill` API. No upload, Secret rotation, ledger
+record, model call or Expected read occurred. F is preserved and never retried.
+
+Protocol 1.1.5 uses the new run label
+`e29r10-zero-model-qualification-20260824-g` and generates tokens through the
+portable `RandomNumberGenerator.Create().GetBytes()` API. Before any future Screening
 authorization is accepted, code must recompute and cross-bind all of the
 following instead of trusting an authorization file alone:
 
@@ -314,9 +322,9 @@ following instead of trusting an authorization file alone:
 - zero stable traffic for the qualification version and one 100% active Ledger version;
 - the independent read-only review artifact and its canonical hash.
 
-The F protocol bundle is immutable after local qualification. F status updates,
+The G protocol bundle is immutable after local qualification. G status updates,
 Preview evidence and independent-review results are written only to separate,
-non-bundled append-only artifacts. Any bundled-file drift invalidates F and
+non-bundled append-only artifacts. Any bundled-file drift invalidates G and
 requires another protocol version and run label. Merely supplying syntactically
 valid or mutually consistent hashes is insufficient.
 

@@ -8,16 +8,16 @@ import {
   E2_R10_REQUIRED_COMPONENT_VERSIONS,
 } from '../cloudflare/e2-r10-qualification-contract.mjs'
 
-export const R10_PROTOCOL_VERSION = 'e2-9-r10-facts-first-protocol-1.1.4'
-export const R10_QUALIFICATION_RESULT_VERSION = 'e2-9-r10-zero-model-qualification-1.1.4'
-export const R10_QUALIFICATION_RUN_LABEL = 'e29r10-zero-model-qualification-20260824-f'
+export const R10_PROTOCOL_VERSION = 'e2-9-r10-facts-first-protocol-1.1.5'
+export const R10_QUALIFICATION_RESULT_VERSION = 'e2-9-r10-zero-model-qualification-1.1.5'
+export const R10_QUALIFICATION_RUN_LABEL = 'e29r10-zero-model-qualification-20260824-g'
 export const R10_PRODUCTION_BASELINE_COMMIT = 'ef52d6b572e89faaaa9a18823df41b526aef3b8d'
 
 export const R10_QUALIFICATION_ARTIFACT_PATHS = Object.freeze({
-  result: 'docs/e2-v4-pro-benchmark-r10/qualification-result-f.json',
-  evidence: 'docs/e2-v4-pro-benchmark-r10/qualification-evidence-f.json',
-  preview: 'docs/e2-v4-pro-benchmark-r10/preview-qualification-f.json',
-  independentReview: 'docs/e2-v4-pro-benchmark-r10/independent-review-f.json',
+  result: 'docs/e2-v4-pro-benchmark-r10/qualification-result-g.json',
+  evidence: 'docs/e2-v4-pro-benchmark-r10/qualification-evidence-g.json',
+  preview: 'docs/e2-v4-pro-benchmark-r10/preview-qualification-g.json',
+  independentReview: 'docs/e2-v4-pro-benchmark-r10/independent-review-g.json',
   gate: 'docs/e2-v4-pro-benchmark-r10/screening-gate.json',
 })
 
