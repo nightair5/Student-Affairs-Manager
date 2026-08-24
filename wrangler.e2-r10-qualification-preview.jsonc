@@ -1,0 +1,35 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "student-affairs-e2-r10-facts-first-qualification-preview",
+  "main": "./cloudflare/e2-r10-qualification-worker.mjs",
+  "compatibility_date": "2026-08-24",
+  "workers_dev": true,
+  "preview_urls": true,
+  "routes": [],
+  "version_metadata": {
+    "binding": "CF_VERSION_METADATA"
+  },
+  "vars": {
+    "E2_R10_QUALIFICATION_ENABLED": "true",
+    "E2_R10_VERSIONED_PREVIEW_ONLY": "true",
+    "E2_R10_QUALIFICATION_PREVIEW_ORIGIN": "https://student-affairs-e2-r10-facts-first-qualification-preview.nightsdell.workers.dev",
+    "E2_R10_PROTOCOL_BUNDLE_SHA256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "E2_R10_QUALIFICATION_RESULT_SHA256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "E2_R10_QUALIFICATION_WORKER_BYTES_SHA256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "E2_R10_QUALIFICATION_WORKER_CONFIG_SHA256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "E2_R10_LEDGER_WORKER_VERSION_ID": "00000000-0000-4000-8000-000000000000",
+    "E2_R10_LEDGER_WORKER_BYTES_SHA256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "E2_R10_LEDGER_WORKER_CONFIG_SHA256": "0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "services": [
+    {
+      "binding": "E2_R10_QUALIFICATION_LEDGER",
+      "service": "student-affairs-e2-r10-facts-first-qualification-ledger-preview"
+    }
+  ],
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1,
+    "traces": { "enabled": true, "head_sampling_rate": 1 }
+  }
+}

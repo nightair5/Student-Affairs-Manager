@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "e2.9-r10-screening-gate-1.0.0",
+  "protocolVersion": "e2-9-r10-facts-first-protocol-1.0.0",
+  "status": "FROZEN_BEFORE_MODEL_CALLS",
+  "pairedDesign": {
+    "caseCount": 8,
+    "armsPerCase": 2,
+    "generationCallCap": 16,
+    "sameSource": true,
+    "sameModel": true,
+    "sameParameters": true,
+    "routerBypassed": true,
+    "interleavedOrder": true,
+    "expectedAnswersAvailableDuringGeneration": false
+  },
+  "integrityRequirements": {
+    "allObservationsImmutable": true,
+    "failedObservationOverwriteCount": 0,
+    "modelIdentityMismatchCount": 0,
+    "sourceHashMismatchCount": 0,
+    "protocolHashMismatchCount": 0,
+    "generationExpectedReadCount": 0,
+    "anonymousPacketIdentityLeakCount": 0,
+    "separatePostGenerationScoring": true,
+    "postLabelReveal": true
+  },
+  "qualityRequirements": {
+    "candidateTaskRecallDeltaPercentagePointsAtLeast": 8,
+    "orCandidateUserImpactMajorCorrectionDeltaPercentagePointsAtMost": -15,
+    "candidateTaskPrecisionDeltaPercentagePointsAtLeast": -3,
+    "candidateEvidenceCoverageAtLeast": 0.95,
+    "candidateSevereErrorNotGreaterThanBaseline": true,
+    "candidatePlanningErrorStrictlyLessThanBaseline": true,
+    "candidateFactLossNotGreaterThanBaseline": true
+  },
+  "performanceReportingRequired": {
+    "latency": true,
+    "inputTokens": true,
+    "outputTokens": true,
+    "notObservableAllowedWithoutEstimation": true
+  },
+  "onAnyFailure": "STOP",
+  "selectionAutomaticallyAuthorized": false,
+  "blindAutomaticallyAuthorized": false,
+  "productionAutomaticallyAuthorized": false
+}
