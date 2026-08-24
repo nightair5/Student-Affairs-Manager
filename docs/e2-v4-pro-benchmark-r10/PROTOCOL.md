@@ -2,8 +2,8 @@
 
 ## 1. Status and purpose
 
-- Protocol version: `e2-9-r10-facts-first-protocol-1.1.3`
-- Current phase: `PREVIEW_QUALIFIED_INDEPENDENT_REVIEW_PENDING`
+- Protocol version: `e2-9-r10-facts-first-protocol-1.1.4`
+- Current phase: `F_ZERO_MODEL_IMPLEMENTATION_NOT_YET_QUALIFIED`
 - Production recognition/generation calls authorized by this protocol: `0`
 - Production deployment: prohibited
 - Selection: prohibited until Screening Gate passes
@@ -24,9 +24,9 @@ Frozen component versions for this protocol are:
 | Ledger-to-Planner bridge | `e2-r10-ledger-planner-bridge-1.1.0` |
 | Isolated Planner | `e2-r10-isolated-planner-1.1.0` |
 | Ledger-to-Plan Validator | `e2-r10-ledger-plan-validator-1.1.0` |
-| Qualification contract | `e2.9-r10-qualification-contract-1.2.3` |
-| Qualification Worker | `e2-r10-qualification-worker-1.1.3` |
-| Private qualification ledger | `e2-r10-qualification-ledger-1.1.3` |
+| Qualification contract | `e2.9-r10-qualification-contract-1.2.4` |
+| Qualification Worker | `e2-r10-qualification-worker-1.1.4` |
+| Private qualification ledger | `e2-r10-qualification-ledger-1.1.4` |
 
 ## 2. Paired architecture
 
@@ -293,9 +293,32 @@ must be present in the uploaded Worker environment, the registration and the
 ledger's own version metadata. Placeholder, zero, stale or mismatched values
 fail closed.
 
-Before any future Screening authorization is accepted, code recomputes the
-protocol bundle and frozen Screening Gate hashes from disk. Merely supplying
-two syntactically valid or arbitrary SHA-256 strings is insufficient.
+Run `e29r10-zero-model-qualification-20260824-e` is preserved as an independent
+integrity failure. Its Preview behavior and internal evidence chain were valid,
+but this bundled protocol document was changed after qualification. The E
+bundle hash therefore no longer matched the current protocol, while the former
+authorization checker could validate a newly recomputed disk hash without
+requiring it to equal the E qualification result and Preview evidence. No model
+call occurred, but E is permanently ineligible to authorize Screening.
+
+Protocol 1.1.4 uses the new run label
+`e29r10-zero-model-qualification-20260824-f`. Before any future Screening
+authorization is accepted, code must recompute and cross-bind all of the
+following instead of trusting an authorization file alone:
+
+- the current protocol bundle and frozen Screening Gate;
+- the exact local qualification result and its canonical hash;
+- the local qualification evidence and its canonical hash;
+- the complete sanitized Preview qualification evidence and its canonical hash;
+- the deployment evidence hash, qualification Worker version and private Ledger version;
+- zero stable traffic for the qualification version and one 100% active Ledger version;
+- the independent read-only review artifact and its canonical hash.
+
+The F protocol bundle is immutable after local qualification. F status updates,
+Preview evidence and independent-review results are written only to separate,
+non-bundled append-only artifacts. Any bundled-file drift invalidates F and
+requires another protocol version and run label. Merely supplying syntactically
+valid or mutually consistent hashes is insufficient.
 
 The qualification ledger is an experiment audit record only. It is not FactLedger, Workspace v8 or a business database.
 

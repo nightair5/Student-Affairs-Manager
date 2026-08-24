@@ -8,10 +8,18 @@ import {
   E2_R10_REQUIRED_COMPONENT_VERSIONS,
 } from '../cloudflare/e2-r10-qualification-contract.mjs'
 
-export const R10_PROTOCOL_VERSION = 'e2-9-r10-facts-first-protocol-1.1.3'
-export const R10_QUALIFICATION_RESULT_VERSION = 'e2-9-r10-zero-model-qualification-1.1.3'
-export const R10_QUALIFICATION_RUN_LABEL = 'e29r10-zero-model-qualification-20260824-e'
+export const R10_PROTOCOL_VERSION = 'e2-9-r10-facts-first-protocol-1.1.4'
+export const R10_QUALIFICATION_RESULT_VERSION = 'e2-9-r10-zero-model-qualification-1.1.4'
+export const R10_QUALIFICATION_RUN_LABEL = 'e29r10-zero-model-qualification-20260824-f'
 export const R10_PRODUCTION_BASELINE_COMMIT = 'ef52d6b572e89faaaa9a18823df41b526aef3b8d'
+
+export const R10_QUALIFICATION_ARTIFACT_PATHS = Object.freeze({
+  result: 'docs/e2-v4-pro-benchmark-r10/qualification-result-f.json',
+  evidence: 'docs/e2-v4-pro-benchmark-r10/qualification-evidence-f.json',
+  preview: 'docs/e2-v4-pro-benchmark-r10/preview-qualification-f.json',
+  independentReview: 'docs/e2-v4-pro-benchmark-r10/independent-review-f.json',
+  gate: 'docs/e2-v4-pro-benchmark-r10/screening-gate.json',
+})
 
 export const R10_STAGE_ORDER = Object.freeze([
   'ZERO_MODEL_IMPLEMENTATION',
@@ -61,11 +69,51 @@ const SCREENING_AUTHORIZATION_FIELDS = Object.freeze([
   'authorized',
   'blindAuthorized',
   'callCap',
+  'deploymentEvidenceSha256',
   'gateSha256',
+  'independentReviewSha256',
+  'ledgerWorkerVersionId',
+  'previewQualificationSha256',
   'productionAuthorized',
+  'productionIsolationManifestSha256',
   'protocolBundleSha256',
   'protocolVersion',
+  'qualificationEvidenceSha256',
+  'qualificationResultSha256',
+  'qualificationRunLabel',
+  'qualificationWorkerVersionId',
+  'qualifiedSourceCommit',
+  'qualifiedSourceManifestSha256',
+  'qualifiedSourceTree',
   'selectionAuthorized',
+])
+
+const LOCKED_MODEL_STAGE_NAMES = Object.freeze([
+  'readiness',
+  'smoke',
+  'screening',
+  'selection',
+  'blind',
+  'production',
+])
+
+export const R10_INDEPENDENT_REVIEW_CHECK_NAMES = Object.freeze([
+  'reviewerDidNotReceivePathMapping',
+  'reviewerDidNotModifyArtifacts',
+  'protocolBundleMatchesQualifiedBundle',
+  'screeningGateMatchesFrozenGate',
+  'qualificationResultHashMatches',
+  'qualificationEvidenceHashMatches',
+  'previewQualificationHashMatches',
+  'deploymentEvidenceHashMatches',
+  'qualificationWorkerVersionMatches',
+  'ledgerWorkerVersionMatches',
+  'frontQualificationVersionHasZeroStableTraffic',
+  'ledgerQualifiedVersionIsSoleActiveVersion',
+  'allLaterStagesRemainLocked',
+  'zeroModelCallsObserved',
+  'zeroExpectedAnswerReadsObserved',
+  'productionRemainsUndeployed',
 ])
 
 export function canonicalJson(value) {
@@ -434,23 +482,202 @@ export function assertR10AppendOnlyObservation(existing, candidate) {
   throw new Error('R10_OBSERVATION_ALREADY_RECORDED')
 }
 
-export async function assertR10ScreeningAuthorization(value, { root } = {}) {
-  if (!root || !exactKeys(value, SCREENING_AUTHORIZATION_FIELDS)
-    || value.protocolVersion !== R10_PROTOCOL_VERSION || value.authorized !== true || value.callCap !== 16
+function everyBooleanFalse(value, keys) {
+  return value && exactKeys(value, keys) && keys.every((key) => value[key] === false)
+}
+
+function everyStatus(value, keys, expectedStatus) {
+  return value && exactKeys(value, keys) && keys.every((key) => value[key] === expectedStatus)
+}
+
+function assertR10ScreeningAuthorizationShape(value) {
+  const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/u
+  if (!exactKeys(value, SCREENING_AUTHORIZATION_FIELDS)
+    || value.protocolVersion !== R10_PROTOCOL_VERSION
+    || value.qualificationRunLabel !== R10_QUALIFICATION_RUN_LABEL
+    || value.authorized !== true || value.callCap !== 16
     || value.selectionAuthorized !== false || value.blindAuthorized !== false || value.productionAuthorized !== false
-    || !validBoundSha256(value.protocolBundleSha256) || !validBoundSha256(value.gateSha256)) {
+    || !/^[a-f0-9]{40}$/u.test(value.qualifiedSourceCommit)
+    || !/^[a-f0-9]{40}$/u.test(value.qualifiedSourceTree)
+    || !uuidPattern.test(value.qualificationWorkerVersionId)
+    || !uuidPattern.test(value.ledgerWorkerVersionId)
+    || [
+      value.protocolBundleSha256,
+      value.gateSha256,
+      value.qualificationResultSha256,
+      value.qualificationEvidenceSha256,
+      value.previewQualificationSha256,
+      value.deploymentEvidenceSha256,
+      value.independentReviewSha256,
+      value.qualifiedSourceManifestSha256,
+      value.productionIsolationManifestSha256,
+    ].some((item) => !validBoundSha256(item))) {
     throw new Error('R10_SCREENING_NOT_AUTHORIZED')
   }
-  const [protocolBundle, gateRaw] = await Promise.all([
-    buildR10ProtocolBundle(root),
-    readFile(path.join(root, 'docs', 'e2-v4-pro-benchmark-r10', 'screening-gate.json'), 'utf8'),
-  ])
-  const recomputedGateSha256 = sha256(canonicalJson(JSON.parse(gateRaw)))
-  if (!safeHashEqual(value.protocolBundleSha256, protocolBundle.bundleSha256)
-    || !safeHashEqual(value.gateSha256, recomputedGateSha256)) {
-    throw new Error('R10_SCREENING_BINDING_MISMATCH')
+}
+
+export function assertR10ScreeningQualificationBinding(value, artifacts) {
+  assertR10ScreeningAuthorizationShape(value)
+  const {
+    protocolBundle,
+    gate,
+    qualificationResult,
+    qualificationEvidence,
+    previewQualification,
+    independentReview,
+  } = artifacts ?? {}
+  if (!protocolBundle || !gate || !qualificationResult || !qualificationEvidence
+    || !previewQualification || !previewQualification.deploymentEvidence || !independentReview) {
+    throw new Error('R10_SCREENING_QUALIFICATION_ARTIFACT_MISSING')
+  }
+
+  const recomputedGateSha256 = sha256(canonicalJson(gate))
+  const recomputedResultSha256 = sha256(canonicalJson(qualificationResult))
+  const recomputedEvidenceSha256 = sha256(canonicalJson(qualificationEvidence))
+  const recomputedPreviewSha256 = sha256(canonicalJson(previewQualification))
+  const recomputedReviewSha256 = sha256(canonicalJson(independentReview))
+  const recomputedDeploymentEvidenceSha256 = sha256(canonicalJson(previewQualification.deploymentEvidence))
+  const sharedProtocolValues = [
+    protocolBundle.protocolVersion,
+    qualificationResult.protocolVersion,
+    qualificationEvidence.protocolVersion,
+    previewQualification.protocolVersion,
+    independentReview.protocolVersion,
+  ]
+  const sharedRunLabels = [
+    qualificationResult.runLabel,
+    qualificationEvidence.runLabel,
+    previewQualification.runLabel,
+    independentReview.runLabel,
+  ]
+  const sharedBundleHashes = [
+    protocolBundle.bundleSha256,
+    qualificationResult.protocolBundleSha256,
+    qualificationEvidence.protocolBundleSha256,
+    previewQualification.protocolBundleSha256,
+    independentReview.protocolBundleSha256,
+  ]
+  const independentChecksPass = independentReview.checks
+    && exactKeys(independentReview.checks, R10_INDEPENDENT_REVIEW_CHECK_NAMES)
+    && R10_INDEPENDENT_REVIEW_CHECK_NAMES.every((name) => independentReview.checks[name] === 'PASS')
+  const bindingsMatch = [
+    [value.protocolBundleSha256, protocolBundle.bundleSha256],
+    [value.gateSha256, recomputedGateSha256],
+    [value.qualificationResultSha256, recomputedResultSha256],
+    [value.qualificationEvidenceSha256, recomputedEvidenceSha256],
+    [value.previewQualificationSha256, recomputedPreviewSha256],
+    [value.independentReviewSha256, recomputedReviewSha256],
+    [qualificationEvidence.qualificationResultSha256, recomputedResultSha256],
+    [qualificationEvidence.screeningGateSha256, recomputedGateSha256],
+    [previewQualification.qualificationResultSha256, recomputedResultSha256],
+    [previewQualification.deploymentEvidenceSha256, value.deploymentEvidenceSha256],
+    [previewQualification.deploymentEvidenceSha256, recomputedDeploymentEvidenceSha256],
+    [independentReview.qualificationResultSha256, recomputedResultSha256],
+    [independentReview.qualificationEvidenceSha256, recomputedEvidenceSha256],
+    [independentReview.previewQualificationSha256, recomputedPreviewSha256],
+    [independentReview.deploymentEvidenceSha256, value.deploymentEvidenceSha256],
+    [independentReview.screeningGateSha256, recomputedGateSha256],
+  ].every(([left, right]) => safeHashEqual(left, right))
+
+  const qualificationCountersZero = qualificationResult.modelCalls === 0
+    && qualificationResult.upstreamNetworkCalls === 0
+    && qualificationResult.expectedAnswersLoaded === false
+    && qualificationResult.accessCounters?.modelCalls === 0
+    && qualificationResult.accessCounters?.upstreamNetworkCalls === 0
+    && qualificationResult.accessCounters?.expectedAnswerReads === 0
+    && qualificationEvidence.modelCalls === 0
+    && qualificationEvidence.upstreamNetworkCalls === 0
+    && qualificationEvidence.expectedAnswersLoaded === false
+    && qualificationEvidence.accessCounters?.modelCalls === 0
+    && qualificationEvidence.accessCounters?.upstreamNetworkCalls === 0
+    && qualificationEvidence.accessCounters?.expectedAnswerReads === 0
+    && previewQualification.modelCalls === 0
+    && previewQualification.upstreamNetworkCalls === 0
+    && previewQualification.expectedAnswerReads === 0
+    && independentReview.modelCalls === 0
+    && independentReview.expectedAnswerReads === 0
+
+  const qualificationIsClosed = qualificationResult.status === 'LOCAL_QUALIFIED_PREVIEW_UPLOAD_REQUESTABLE'
+    && everyBooleanFalse(qualificationResult.nextStages, LOCKED_MODEL_STAGE_NAMES)
+    && everyStatus(previewQualification.lockedStageStatuses, LOCKED_MODEL_STAGE_NAMES, 412)
+    && previewQualification.recordStatus === 201
+    && previewQualification.idempotentReplayStatus === 200
+    && previewQualification.stateStatus === 200
+    && previewQualification.wrongOriginStatus === 403
+    && previewQualification.wrongAuthenticationStatus === 401
+    && previewQualification.contractStableReads >= 3
+    && previewQualification.qualificationWorkerStableTrafficPercentage === 0
+    && previewQualification.ledgerWorkerActiveTrafficPercentage === 100
+    && previewQualification.productionSiteConfigChanged === false
+    && previewQualification.productionDeployment === 'NOT_DEPLOYED'
+    && previewQualification.screeningAuthorization === 'NOT_AUTHORIZED'
+
+  const reviewIsIndependent = independentReview.schemaVersion === 'e2.9-r10-independent-qualification-review-1.0.0'
+    && independentReview.overallStatus === 'PASS'
+    && Array.isArray(independentReview.findings) && independentReview.findings.length === 0
+    && independentReview.reviewer?.forkTurns === 'none'
+    && independentReview.reviewer?.receivedPathMapping === false
+    && independentReview.reviewer?.modifiedArtifacts === false
+    && independentReview.reviewer?.readOnly === true
+    && independentChecksPass
+
+  const identityMatches = value.qualifiedSourceCommit === qualificationResult.sourceCommit
+    && value.qualifiedSourceTree === qualificationResult.sourceTree
+    && value.qualifiedSourceManifestSha256 === qualificationResult.sourceManifestSha256
+    && value.productionIsolationManifestSha256 === qualificationResult.productionIsolationManifestSha256
+    && qualificationEvidence.sourceCommit === qualificationResult.sourceCommit
+    && qualificationEvidence.sourceTree === qualificationResult.sourceTree
+    && qualificationEvidence.sourceManifestSha256 === qualificationResult.sourceManifestSha256
+    && qualificationEvidence.productionIsolationManifestSha256 === qualificationResult.productionIsolationManifestSha256
+    && previewQualification.sourceCommit === qualificationResult.sourceCommit
+    && independentReview.sourceCommit === qualificationResult.sourceCommit
+    && independentReview.sourceTree === qualificationResult.sourceTree
+    && independentReview.sourceManifestSha256 === qualificationResult.sourceManifestSha256
+    && independentReview.productionIsolationManifestSha256 === qualificationResult.productionIsolationManifestSha256
+    && value.qualificationWorkerVersionId === previewQualification.qualificationWorkerVersionId
+    && value.qualificationWorkerVersionId === independentReview.qualificationWorkerVersionId
+    && value.qualificationWorkerVersionId === previewQualification.deploymentEvidence?.qualificationWorkerVersionId
+    && value.ledgerWorkerVersionId === previewQualification.ledgerWorkerVersionId
+    && value.ledgerWorkerVersionId === independentReview.ledgerWorkerVersionId
+    && value.ledgerWorkerVersionId === previewQualification.deploymentEvidence?.ledgerWorkerVersionId
+    && qualificationEvidence.deploymentArtifacts?.qualificationWorkerBytesSha256
+      === previewQualification.deploymentEvidence?.qualificationWorkerBytesSha256
+    && qualificationEvidence.deploymentArtifacts?.qualificationWorkerConfigSha256
+      === previewQualification.deploymentEvidence?.qualificationWorkerConfigSha256
+    && qualificationEvidence.deploymentArtifacts?.ledgerWorkerBytesSha256
+      === previewQualification.deploymentEvidence?.ledgerWorkerBytesSha256
+    && qualificationEvidence.deploymentArtifacts?.ledgerWorkerConfigSha256
+      === previewQualification.deploymentEvidence?.ledgerWorkerConfigSha256
+    && sharedProtocolValues.every((item) => item === R10_PROTOCOL_VERSION)
+    && sharedRunLabels.every((item) => item === R10_QUALIFICATION_RUN_LABEL)
+    && sharedBundleHashes.every((item) => safeHashEqual(item, value.protocolBundleSha256))
+
+  if (!bindingsMatch || !qualificationCountersZero || !qualificationIsClosed
+    || !reviewIsIndependent || !identityMatches) {
+    throw new Error('R10_SCREENING_QUALIFICATION_BINDING_MISMATCH')
   }
   return value
+}
+
+export async function assertR10ScreeningAuthorization(value, { root } = {}) {
+  if (!root) throw new Error('R10_SCREENING_NOT_AUTHORIZED')
+  assertR10ScreeningAuthorizationShape(value)
+  const [protocolBundle, gateRaw, resultRaw, evidenceRaw, previewRaw, reviewRaw] = await Promise.all([
+    buildR10ProtocolBundle(root),
+    readFile(path.join(root, R10_QUALIFICATION_ARTIFACT_PATHS.gate), 'utf8'),
+    readFile(path.join(root, R10_QUALIFICATION_ARTIFACT_PATHS.result), 'utf8'),
+    readFile(path.join(root, R10_QUALIFICATION_ARTIFACT_PATHS.evidence), 'utf8'),
+    readFile(path.join(root, R10_QUALIFICATION_ARTIFACT_PATHS.preview), 'utf8'),
+    readFile(path.join(root, R10_QUALIFICATION_ARTIFACT_PATHS.independentReview), 'utf8'),
+  ]).catch(() => { throw new Error('R10_SCREENING_QUALIFICATION_ARTIFACT_MISSING') })
+  return assertR10ScreeningQualificationBinding(value, {
+    protocolBundle,
+    gate: JSON.parse(gateRaw),
+    qualificationResult: JSON.parse(resultRaw),
+    qualificationEvidence: JSON.parse(evidenceRaw),
+    previewQualification: JSON.parse(previewRaw),
+    independentReview: JSON.parse(reviewRaw),
+  })
 }
 
 export function createR10AccessInstrumentation() {

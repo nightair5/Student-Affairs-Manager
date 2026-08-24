@@ -10,11 +10,14 @@ import {
 import {
   R10_PRODUCTION_BASELINE_COMMIT,
   R10_PROTOCOL_VERSION,
+  R10_QUALIFICATION_RUN_LABEL,
+  R10_INDEPENDENT_REVIEW_CHECK_NAMES,
   assertR10AppendOnlyObservation,
   assertR10ImmutableArtifact,
   assertR10ModelIdentity,
   assertR10ProductionIsolation,
   assertR10ScreeningAuthorization,
+  assertR10ScreeningQualificationBinding,
   assertR10StageTransition,
   buildR10ProtocolBundle,
   buildR10QualificationDeploymentArtifacts,
@@ -71,26 +74,226 @@ test('R10 local qualification artifacts are create-once and content immutable', 
   )
 })
 
-test('R10 Screening authorization recomputes protocol and Gate hashes', async () => {
-  const bundle = await buildR10ProtocolBundle(root)
-  const gate = JSON.parse(await readFile(path.join(root, 'docs', 'e2-v4-pro-benchmark-r10', 'screening-gate.json'), 'utf8'))
+function screeningQualificationFixture() {
+  const protocolBundle = { protocolVersion: R10_PROTOCOL_VERSION, bundleSha256: '1'.repeat(64) }
+  const gate = { schemaVersion: 'gate', protocolVersion: R10_PROTOCOL_VERSION, status: 'FROZEN_BEFORE_MODEL_CALLS' }
+  const sourceCommit = '2'.repeat(40)
+  const sourceTree = '6'.repeat(40)
+  const sourceManifestSha256 = '7'.repeat(64)
+  const productionIsolationManifestSha256 = '8'.repeat(64)
+  const qualificationWorkerVersionId = '11111111-1111-4111-8111-111111111111'
+  const ledgerWorkerVersionId = '22222222-2222-4222-8222-222222222222'
+  const qualificationResult = {
+    schemaVersion: 'e2-9-r10-zero-model-qualification-1.1.4',
+    protocolVersion: R10_PROTOCOL_VERSION,
+    runLabel: R10_QUALIFICATION_RUN_LABEL,
+    status: 'LOCAL_QUALIFIED_PREVIEW_UPLOAD_REQUESTABLE',
+    sourceCommit,
+    sourceTree,
+    sourceManifestSha256,
+    productionIsolationManifestSha256,
+    protocolBundleSha256: protocolBundle.bundleSha256,
+    accessCounters: { modelCalls: 0, upstreamNetworkCalls: 0, expectedAnswerReads: 0 },
+    modelCalls: 0,
+    upstreamNetworkCalls: 0,
+    expectedAnswersLoaded: false,
+    nextStages: {
+      readiness: false, smoke: false, screening: false,
+      selection: false, blind: false, production: false,
+    },
+  }
+  const qualificationResultSha256 = sha256(canonicalJson(qualificationResult))
+  const screeningGateSha256 = sha256(canonicalJson(gate))
+  const qualificationEvidence = {
+    schemaVersion: 'e2.9-r10-zero-model-evidence-1.2.4',
+    protocolVersion: R10_PROTOCOL_VERSION,
+    runLabel: R10_QUALIFICATION_RUN_LABEL,
+    sourceCommit,
+    sourceTree,
+    sourceManifestSha256,
+    productionIsolationManifestSha256,
+    protocolBundleSha256: protocolBundle.bundleSha256,
+    qualificationResultSha256,
+    screeningGateSha256,
+    accessCounters: { modelCalls: 0, upstreamNetworkCalls: 0, expectedAnswerReads: 0 },
+    modelCalls: 0,
+    upstreamNetworkCalls: 0,
+    expectedAnswersLoaded: false,
+    deploymentArtifacts: {
+      qualificationWorkerBytesSha256: '9'.repeat(64),
+      qualificationWorkerConfigSha256: 'a'.repeat(64),
+      ledgerWorkerBytesSha256: 'b'.repeat(64),
+      ledgerWorkerConfigSha256: 'c'.repeat(64),
+    },
+  }
+  const deploymentEvidence = {
+    qualificationWorkerVersionId,
+    qualificationWorkerBytesSha256: qualificationEvidence.deploymentArtifacts.qualificationWorkerBytesSha256,
+    qualificationWorkerConfigSha256: qualificationEvidence.deploymentArtifacts.qualificationWorkerConfigSha256,
+    ledgerWorkerVersionId,
+    ledgerWorkerBytesSha256: qualificationEvidence.deploymentArtifacts.ledgerWorkerBytesSha256,
+    ledgerWorkerConfigSha256: qualificationEvidence.deploymentArtifacts.ledgerWorkerConfigSha256,
+  }
+  const recomputedDeploymentEvidenceSha256 = sha256(canonicalJson(deploymentEvidence))
+  const previewQualification = {
+    schemaVersion: 'e2.9-r10-preview-qualification-evidence-1.0.0',
+    protocolVersion: R10_PROTOCOL_VERSION,
+    runLabel: R10_QUALIFICATION_RUN_LABEL,
+    sourceCommit,
+    qualificationStatus: 'LOCAL_QUALIFIED_PREVIEW_UPLOAD_REQUESTABLE',
+    protocolBundleSha256: protocolBundle.bundleSha256,
+    qualificationResultSha256,
+    deploymentEvidenceSha256: recomputedDeploymentEvidenceSha256,
+    deploymentEvidence,
+    qualificationWorkerVersionId,
+    qualificationWorkerStableTrafficPercentage: 0,
+    ledgerWorkerVersionId,
+    ledgerWorkerActiveTrafficPercentage: 100,
+    contractStableReads: 3,
+    recordStatus: 201,
+    idempotentReplayStatus: 200,
+    stateStatus: 200,
+    lockedStageStatuses: {
+      readiness: 412, smoke: 412, screening: 412,
+      selection: 412, blind: 412, production: 412,
+    },
+    wrongOriginStatus: 403,
+    wrongAuthenticationStatus: 401,
+    modelCalls: 0,
+    upstreamNetworkCalls: 0,
+    expectedAnswerReads: 0,
+    productionSiteConfigChanged: false,
+    productionDeployment: 'NOT_DEPLOYED',
+    screeningAuthorization: 'NOT_AUTHORIZED',
+  }
+  const qualificationEvidenceSha256 = sha256(canonicalJson(qualificationEvidence))
+  const previewQualificationSha256 = sha256(canonicalJson(previewQualification))
+  const independentReview = {
+    schemaVersion: 'e2.9-r10-independent-qualification-review-1.0.0',
+    reviewId: 'e29r10-f-independent-review-fixture',
+    protocolVersion: R10_PROTOCOL_VERSION,
+    runLabel: R10_QUALIFICATION_RUN_LABEL,
+    sourceCommit,
+    sourceTree,
+    sourceManifestSha256,
+    productionIsolationManifestSha256,
+    protocolBundleSha256: protocolBundle.bundleSha256,
+    screeningGateSha256,
+    qualificationResultSha256,
+    qualificationEvidenceSha256,
+    previewQualificationSha256,
+    deploymentEvidenceSha256: recomputedDeploymentEvidenceSha256,
+    qualificationWorkerVersionId,
+    ledgerWorkerVersionId,
+    reviewer: {
+      taskName: '/independent-fixture', forkTurns: 'none', receivedPathMapping: false,
+      modifiedArtifacts: false, readOnly: true,
+    },
+    checks: Object.fromEntries(R10_INDEPENDENT_REVIEW_CHECK_NAMES.map((name) => [name, 'PASS'])),
+    findings: [],
+    overallStatus: 'PASS',
+    modelCalls: 0,
+    expectedAnswerReads: 0,
+  }
   const authorization = {
     protocolVersion: R10_PROTOCOL_VERSION,
+    qualificationRunLabel: R10_QUALIFICATION_RUN_LABEL,
     authorized: true,
     callCap: 16,
-    protocolBundleSha256: bundle.bundleSha256,
-    gateSha256: sha256(canonicalJson(gate)),
+    qualifiedSourceCommit: sourceCommit,
+    qualifiedSourceTree: sourceTree,
+    qualifiedSourceManifestSha256: sourceManifestSha256,
+    productionIsolationManifestSha256,
+    protocolBundleSha256: protocolBundle.bundleSha256,
+    gateSha256: screeningGateSha256,
+    qualificationResultSha256,
+    qualificationEvidenceSha256,
+    previewQualificationSha256,
+    deploymentEvidenceSha256: recomputedDeploymentEvidenceSha256,
+    independentReviewSha256: sha256(canonicalJson(independentReview)),
+    qualificationWorkerVersionId,
+    ledgerWorkerVersionId,
     selectionAuthorized: false,
     blindAuthorized: false,
     productionAuthorized: false,
   }
-  assert.equal((await assertR10ScreeningAuthorization(authorization, { root })).callCap, 16)
-  await assert.rejects(() => assertR10ScreeningAuthorization({
-    ...authorization, protocolBundleSha256: '0'.repeat(64),
-  }, { root }), /R10_SCREENING_NOT_AUTHORIZED/u)
-  await assert.rejects(() => assertR10ScreeningAuthorization({
-    ...authorization, gateSha256: '9'.repeat(64),
-  }, { root }), /R10_SCREENING_BINDING_MISMATCH/u)
+  return {
+    authorization,
+    artifacts: { protocolBundle, gate, qualificationResult, qualificationEvidence, previewQualification, independentReview },
+  }
+}
+
+test('R10 Screening authorization binds the exact qualified Preview and independent review', () => {
+  const fixture = screeningQualificationFixture()
+  assert.equal(assertR10ScreeningQualificationBinding(fixture.authorization, fixture.artifacts).callCap, 16)
+})
+
+test('R10 Screening authorization rejects current bundle drift and stale qualification labels', () => {
+  const fixture = screeningQualificationFixture()
+  assert.throws(() => assertR10ScreeningQualificationBinding(fixture.authorization, {
+    ...fixture.artifacts,
+    protocolBundle: { ...fixture.artifacts.protocolBundle, bundleSha256: '4'.repeat(64) },
+  }), /R10_SCREENING_QUALIFICATION_BINDING_MISMATCH/u)
+  assert.throws(() => assertR10ScreeningQualificationBinding({
+    ...fixture.authorization, qualificationRunLabel: 'e29r10-zero-model-qualification-20260824-e',
+  }, fixture.artifacts), /R10_SCREENING_NOT_AUTHORIZED/u)
+  const driftedBundleSha256 = 'd'.repeat(64)
+  assert.throws(() => assertR10ScreeningQualificationBinding({
+    ...fixture.authorization, protocolBundleSha256: driftedBundleSha256,
+  }, {
+    ...fixture.artifacts,
+    protocolBundle: { ...fixture.artifacts.protocolBundle, bundleSha256: driftedBundleSha256 },
+  }), /R10_SCREENING_QUALIFICATION_BINDING_MISMATCH/u)
+})
+
+test('R10 Screening authorization rejects result, Preview and deployment evidence drift', () => {
+  const fixture = screeningQualificationFixture()
+  for (const mutation of [
+    { qualificationResult: { ...fixture.artifacts.qualificationResult, status: 'FAILED' } },
+    { previewQualification: { ...fixture.artifacts.previewQualification, recordStatus: 200 } },
+    { previewQualification: { ...fixture.artifacts.previewQualification, deploymentEvidenceSha256: '5'.repeat(64) } },
+  ]) {
+    assert.throws(() => assertR10ScreeningQualificationBinding(
+      fixture.authorization,
+      { ...fixture.artifacts, ...mutation },
+    ), /R10_SCREENING_QUALIFICATION_BINDING_MISMATCH/u)
+  }
+})
+
+test('R10 Screening authorization rejects missing, pending or failed independent review', () => {
+  const fixture = screeningQualificationFixture()
+  assert.throws(() => assertR10ScreeningQualificationBinding(
+    fixture.authorization,
+    { ...fixture.artifacts, independentReview: null },
+  ), /R10_SCREENING_QUALIFICATION_ARTIFACT_MISSING/u)
+  assert.throws(() => assertR10ScreeningQualificationBinding(
+    fixture.authorization,
+    { ...fixture.artifacts, previewQualification: { ...fixture.artifacts.previewQualification, deploymentEvidence: null } },
+  ), /R10_SCREENING_QUALIFICATION_ARTIFACT_MISSING/u)
+  for (const overallStatus of ['PENDING', 'FAIL']) {
+    assert.throws(() => assertR10ScreeningQualificationBinding(
+      fixture.authorization,
+      { ...fixture.artifacts, independentReview: { ...fixture.artifacts.independentReview, overallStatus } },
+    ), /R10_SCREENING_QUALIFICATION_BINDING_MISMATCH/u)
+  }
+})
+
+test('R10 Screening authorization rejects extra authorization fields and over-broad stage grants', () => {
+  const fixture = screeningQualificationFixture()
+  assert.throws(() => assertR10ScreeningQualificationBinding(
+    { ...fixture.authorization, extra: true }, fixture.artifacts,
+  ), /R10_SCREENING_NOT_AUTHORIZED/u)
+  assert.throws(() => assertR10ScreeningQualificationBinding(
+    { ...fixture.authorization, selectionAuthorized: true }, fixture.artifacts,
+  ), /R10_SCREENING_NOT_AUTHORIZED/u)
+})
+
+test('R10 disk authorization fails closed without the exact F qualification binding', async () => {
+  const fixture = screeningQualificationFixture()
+  await assert.rejects(
+    () => assertR10ScreeningAuthorization(fixture.authorization, { root }),
+    /R10_SCREENING_(?:QUALIFICATION_ARTIFACT_MISSING|QUALIFICATION_BINDING_MISMATCH)/u,
+  )
 })
 
 test('R10 qualification result constructs both pass and failure from exact frozen sets', () => {

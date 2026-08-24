@@ -47,8 +47,8 @@ function Invoke-R10Request {
 
 $qualificationConfig = 'wrangler.e2-r10-qualification-preview.jsonc'
 $ledgerConfig = 'wrangler.e2-r10-qualification-ledger.jsonc'
-$qualificationResultPath = 'docs/e2-v4-pro-benchmark-r10/qualification-result-e.json'
-$qualificationEvidencePath = 'docs/e2-v4-pro-benchmark-r10/qualification-evidence-e.json'
+$qualificationResultPath = 'docs/e2-v4-pro-benchmark-r10/qualification-result-f.json'
+$qualificationEvidencePath = 'docs/e2-v4-pro-benchmark-r10/qualification-evidence-f.json'
 $qualificationConfigValue = Get-Content -Raw -LiteralPath $qualificationConfig | ConvertFrom-Json
 $ledgerConfigValue = Get-Content -Raw -LiteralPath $ledgerConfig | ConvertFrom-Json
 $qualificationResult = Get-Content -Raw -LiteralPath $qualificationResultPath | ConvertFrom-Json
@@ -114,6 +114,20 @@ $null = $frontSecrets | npx wrangler versions secret bulk --config $qualificatio
 if ($LASTEXITCODE -ne 0) { throw 'R10_QUALIFICATION_SECRET_INSTALL_FAILED' }
 
 $frontVersionId = Get-LatestR10Version $qualificationConfig
+$frontDeploymentRaw = npx wrangler deployments status --config $qualificationConfig --json 2>$null
+if ($LASTEXITCODE -ne 0) { throw 'R10_QUALIFICATION_DEPLOYMENT_STATUS_FAILED' }
+$frontDeployment = $frontDeploymentRaw | ConvertFrom-Json
+$activeFrontVersions = @($frontDeployment.versions | Where-Object { $_.percentage -gt 0 })
+$qualificationStableTraffic = @($activeFrontVersions | Where-Object { $_.version_id -eq $frontVersionId } |
+  Measure-Object -Property percentage -Sum).Sum
+if ($null -eq $qualificationStableTraffic) { $qualificationStableTraffic = 0 }
+$stableTrafficTotal = @($activeFrontVersions | Measure-Object -Property percentage -Sum).Sum
+if ($qualificationStableTraffic -ne 0 -or $stableTrafficTotal -ne 100) {
+  throw 'R10_QUALIFICATION_VERSION_STABLE_TRAFFIC_FORBIDDEN'
+}
+$stableFrontVersions = @($activeFrontVersions | ForEach-Object {
+  [ordered]@{ versionId = $_.version_id; percentage = $_.percentage }
+})
 $baseHost = 'sa-e2-r10-facts-first-qual-preview.nightsdell.workers.dev'
 $origin = "https://$($frontVersionId.Substring(0, 8))-$baseHost"
 $prefix = "$origin/api/experiments/e2-9/r10/qualification/"
@@ -199,10 +213,14 @@ if ($wrongOrigin.StatusCode -ne 403 -or $wrongAuthentication.StatusCode -ne 401)
   protocolBundleSha256 = $qualificationResult.protocolBundleSha256
   qualificationResultSha256 = $contract.qualificationResultSha256
   deploymentEvidenceSha256 = $deploymentHash
+  deploymentEvidence = $contract.deploymentEvidence
   qualificationWorkerVersionId = $frontVersionId
   qualificationWorkerUploadedAt = $contract.deploymentEvidence.qualificationWorkerUploadedAt
   qualificationWorkerVersionedOrigin = $origin
+  qualificationWorkerStableTrafficPercentage = $qualificationStableTraffic
+  stableWorkerVersions = $stableFrontVersions
   ledgerWorkerVersionId = $ledgerVersionId
+  ledgerWorkerActiveTrafficPercentage = 100
   contractStableReads = 3
   recordStatus = $record.StatusCode
   idempotentReplayStatus = $duplicate.StatusCode
@@ -213,6 +231,7 @@ if ($wrongOrigin.StatusCode -ne 403 -or $wrongAuthentication.StatusCode -ne 401)
   modelCalls = 0
   upstreamNetworkCalls = 0
   expectedAnswerReads = 0
+  productionSiteConfigChanged = $false
   productionDeployment = 'NOT_DEPLOYED'
   screeningAuthorization = 'NOT_AUTHORIZED'
 } | ConvertTo-Json -Depth 20
