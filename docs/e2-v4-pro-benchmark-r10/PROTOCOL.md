@@ -2,7 +2,7 @@
 
 ## 1. Status and purpose
 
-- Protocol version: `e2-9-r10-facts-first-protocol-1.1.1`
+- Protocol version: `e2-9-r10-facts-first-protocol-1.1.2`
 - Current phase: `ZERO_MODEL_IMPLEMENTATION`
 - Production recognition/generation calls authorized by this protocol: `0`
 - Production deployment: prohibited
@@ -24,9 +24,9 @@ Frozen component versions for this protocol are:
 | Ledger-to-Planner bridge | `e2-r10-ledger-planner-bridge-1.1.0` |
 | Isolated Planner | `e2-r10-isolated-planner-1.1.0` |
 | Ledger-to-Plan Validator | `e2-r10-ledger-plan-validator-1.1.0` |
-| Qualification contract | `e2.9-r10-qualification-contract-1.2.1` |
-| Qualification Worker | `e2-r10-qualification-worker-1.1.1` |
-| Private qualification ledger | `e2-r10-qualification-ledger-1.1.1` |
+| Qualification contract | `e2.9-r10-qualification-contract-1.2.2` |
+| Qualification Worker | `e2-r10-qualification-worker-1.1.2` |
+| Private qualification ledger | `e2-r10-qualification-ledger-1.1.2` |
 
 ## 2. Paired architecture
 
@@ -225,6 +225,16 @@ runtime error `1042`. The caller had used the loose `fetch(url, init)` form on
 a Service binding. Protocol 1.1.1 preserves that failure, moves to run label
 `c`, and requires the documented `fetch(Request)` Service Binding interface;
 the Worker test double rejects the former two-argument call.
+
+Run `e29r10-zero-model-qualification-20260824-c` passed the initial local
+qualification, then the bound-config preflight exposed a Harness test that
+incorrectly required runtime hashes to remain zero after exact frozen hashes
+were installed. No remote upload, Secret rotation, ledger record or model call
+occurred. Protocol 1.1.2 preserves C as an integrity failure, moves to run label
+`d`, and accepts only two complete config states: every runtime hash is the
+fail-closed zero placeholder, or every runtime hash exactly matches the frozen
+qualification evidence and recomputed deployment artifacts. Partial or
+arbitrary nonzero bindings fail.
 
 The qualification Worker:
 

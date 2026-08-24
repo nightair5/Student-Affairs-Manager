@@ -21,6 +21,7 @@ import {
 } from './e2-r10-qualification-contract.mjs'
 import ledgerWorker, { E2R10QualificationLedger } from './e2-r10-qualification-ledger.mjs'
 import qualificationWorker from './e2-r10-qualification-worker.mjs'
+import { buildR10QualificationDeploymentArtifacts } from '../scripts/e2-9-r10-protocol.mjs'
 
 const TOKEN = 'test-only-r10-qualification-token-material-000000000000000000'
 const TOKEN_SHA256 = createHash('sha256').update(TOKEN, 'utf8').digest('hex')
@@ -421,7 +422,7 @@ test('R10 qualification Worker module graph contains no model/provider module', 
   assert.equal(importedModules.some((specifier) => /(?:deepseek|model|provider|recognition)/iu.test(specifier)), false)
 })
 
-test('R10 Wrangler configs keep the audit ledger private and all runtime hashes fail-closed', async () => {
+test('R10 Wrangler configs keep the audit ledger private and runtime hashes fail-closed or exactly frozen', async () => {
   const preview = JSON.parse(await readFile(new URL('../wrangler.e2-r10-qualification-preview.jsonc', import.meta.url), 'utf8'))
   const ledger = JSON.parse(await readFile(new URL('../wrangler.e2-r10-qualification-ledger.jsonc', import.meta.url), 'utf8'))
   assert.equal(preview.name, 'sa-e2-r10-facts-first-qual-preview')
@@ -437,16 +438,41 @@ test('R10 Wrangler configs keep the audit ledger private and all runtime hashes 
   assert.equal(Object.hasOwn(preview.vars, 'E2_R10_QUALIFICATION_TOKEN_SHA256'), false)
   assert.equal(Object.hasOwn(preview.vars, 'E2_R10_LEDGER_CALLER_TOKEN'), false)
   assert.equal(Object.hasOwn(ledger.vars, 'E2_R10_LEDGER_CALLER_TOKEN_SHA256'), false)
-  for (const key of [
+  const runtimeHashKeys = [
     'E2_R10_PROTOCOL_BUNDLE_SHA256',
     'E2_R10_QUALIFICATION_RESULT_SHA256',
     'E2_R10_QUALIFICATION_WORKER_BYTES_SHA256',
     'E2_R10_QUALIFICATION_WORKER_CONFIG_SHA256',
     'E2_R10_LEDGER_WORKER_BYTES_SHA256',
     'E2_R10_LEDGER_WORKER_CONFIG_SHA256',
-  ]) assert.equal(preview.vars[key], '0'.repeat(64))
-  assert.equal(ledger.vars.E2_R10_LEDGER_WORKER_BYTES_SHA256, '0'.repeat(64))
-  assert.equal(ledger.vars.E2_R10_LEDGER_WORKER_CONFIG_SHA256, '0'.repeat(64))
+  ]
+  const zeroHash = '0'.repeat(64)
+  const previewHashes = runtimeHashKeys.map((key) => preview.vars[key])
+  const allHashesUnbound = previewHashes.every((value) => value === zeroHash)
+  const allHashesBound = previewHashes.every((value) => /^[0-9a-f]{64}$/u.test(value) && value !== zeroHash)
+  assert.equal(allHashesUnbound || allHashesBound, true)
+
+  if (allHashesUnbound) {
+    assert.equal(ledger.vars.E2_R10_LEDGER_WORKER_BYTES_SHA256, zeroHash)
+    assert.equal(ledger.vars.E2_R10_LEDGER_WORKER_CONFIG_SHA256, zeroHash)
+  } else {
+    const qualificationResult = JSON.parse(await readFile(
+      new URL('../docs/e2-v4-pro-benchmark-r10/qualification-result-d.json', import.meta.url), 'utf8',
+    ))
+    const qualificationEvidence = JSON.parse(await readFile(
+      new URL('../docs/e2-v4-pro-benchmark-r10/qualification-evidence-d.json', import.meta.url), 'utf8',
+    ))
+    const deploymentArtifacts = await buildR10QualificationDeploymentArtifacts(path.resolve(import.meta.dirname, '..'))
+    assert.deepEqual(qualificationEvidence.deploymentArtifacts, deploymentArtifacts)
+    assert.equal(preview.vars.E2_R10_PROTOCOL_BUNDLE_SHA256, qualificationResult.protocolBundleSha256)
+    assert.equal(preview.vars.E2_R10_QUALIFICATION_RESULT_SHA256, qualificationEvidence.qualificationResultSha256)
+    assert.equal(preview.vars.E2_R10_QUALIFICATION_WORKER_BYTES_SHA256, deploymentArtifacts.qualificationWorkerBytesSha256)
+    assert.equal(preview.vars.E2_R10_QUALIFICATION_WORKER_CONFIG_SHA256, deploymentArtifacts.qualificationWorkerConfigSha256)
+    assert.equal(preview.vars.E2_R10_LEDGER_WORKER_BYTES_SHA256, deploymentArtifacts.ledgerWorkerBytesSha256)
+    assert.equal(preview.vars.E2_R10_LEDGER_WORKER_CONFIG_SHA256, deploymentArtifacts.ledgerWorkerConfigSha256)
+    assert.equal(ledger.vars.E2_R10_LEDGER_WORKER_BYTES_SHA256, deploymentArtifacts.ledgerWorkerBytesSha256)
+    assert.equal(ledger.vars.E2_R10_LEDGER_WORKER_CONFIG_SHA256, deploymentArtifacts.ledgerWorkerConfigSha256)
+  }
 
   const configNames = []
   for (const filename of await readdir(new URL('..', import.meta.url))) {
