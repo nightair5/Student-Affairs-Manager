@@ -1,0 +1,106 @@
+{
+  "schemaVersion": "e2.9-r10-screening-case-manifest-1.0.0",
+  "protocolVersion": "e2-9-r10-screening-protocol-1.0.0",
+  "runLabel": "e29r10-screening-20260824-a",
+  "status": "FROZEN_BEFORE_MODEL_CALLS",
+  "sourceOnlyParent": {
+    "protocolVersion": "e2-9-v4-pro-reduced-protocol-2.0.0",
+    "rawSha256": "115b43f98d0ca56cac522d0272ed10894fa0cc2a185562d0c10ce4bff7aca12f",
+    "r10PrivateCanonicalSha256": "5bffd51396bc6b437f9d139f2f7cb1321480f413396c46432631cb1ebd046748"
+  },
+  "generationBoundary": {
+    "expectedAnswersAvailable": false,
+    "router": "BYPASSED",
+    "repair": "DISABLED",
+    "selection": "NOT_AUTHORIZED",
+    "blind": "NOT_CREATED",
+    "production": "NOT_DEPLOYED"
+  },
+  "interleaveSeed": "e2-9-r10-screening-interleave-20260824-a",
+  "caseCount": 8,
+  "observationCount": 16,
+  "cases": [
+    {
+      "caseId": "e2-gen-16-2",
+      "sourceSet": "development",
+      "semanticRole": "prompt_injection",
+      "sourceType": "link",
+      "sourceSha256": "245c5071371df724ee3ccfc1a04e367cfd323ca04dc8ad75379b67fa158a2789",
+      "inputSha256": "125b2bba034e59d4f741352f5c3caa0e2cc5e51b1405ddc4e23734d400f33d86"
+    },
+    {
+      "caseId": "e2-gen-08-2",
+      "sourceSet": "development",
+      "semanticRole": "action_required",
+      "sourceType": "text",
+      "sourceSha256": "4d26d56a3b88634f70f8238b19813208146c48aa69c76c277fda2e9cc91762d2",
+      "inputSha256": "9f02ff8487aae499d1c0911b88bd76f357a5055eaaff0fe2f98fb77d6539b374"
+    },
+    {
+      "caseId": "e2-gen-07-1",
+      "sourceSet": "development",
+      "semanticRole": "action_required",
+      "sourceType": "text",
+      "sourceSha256": "dbc7f01c97c9254fece128205bbd85b0deaf6eea3f702254df547a70f8d97f20",
+      "inputSha256": "8fb0bcfe5172950b185c139f4bf6c4744b56f224a99969a221232b2f5e2bae3f"
+    },
+    {
+      "caseId": "e2-gen-14-2",
+      "sourceSet": "development",
+      "semanticRole": "information_only",
+      "sourceType": "text",
+      "sourceSha256": "9a99403b06a4733582ed5dcff1a548ec5c0e803a4768d7aee459268ded32b83d",
+      "inputSha256": "60387c6e06aa7a193b62df07bd03b4ee3e68d9e051d54ac9dea7ab03169f6f0b"
+    },
+    {
+      "caseId": "e2-holdout-25",
+      "sourceSet": "exposed_holdout",
+      "semanticRole": "action_required",
+      "sourceType": "text",
+      "sourceSha256": "4a98a9ed107fb64d0e71ad9eda8d42e199ea655135d4ce090c4aae612bb94846",
+      "inputSha256": "686a743542df554f9d0dc2856c03a741eddc6768ac521ec6051565c3feb7413e"
+    },
+    {
+      "caseId": "e2-gen-10-3",
+      "sourceSet": "development",
+      "semanticRole": "action_required",
+      "sourceType": "text",
+      "sourceSha256": "945fbced9abaedc021ed112a6fa85df7dc522142db6ca7a26ee4c66560b9abbb",
+      "inputSha256": "6e1ea42d1f0dda784505d80a9fd7fd4ccb01b95ba270b340c27fe81ac7277950"
+    },
+    {
+      "caseId": "e2-complex_notice-03",
+      "sourceSet": "golden",
+      "semanticRole": "action_required",
+      "sourceType": "text",
+      "sourceSha256": "0e7fd3c1ae48571d4748685e213f82c8cfe71aa08bcd72beeb19104ca92605f5",
+      "inputSha256": "f2eefbc295ff0215841c05fe73a8345b236f2b15183b6a83253e5bc0ddf5c37b"
+    },
+    {
+      "caseId": "e2-gen-22-1",
+      "sourceSet": "development",
+      "semanticRole": "action_required",
+      "sourceType": "text",
+      "sourceSha256": "0fc0304f34217af8ec60fd1f54d2bb19d7dec8fa8f0b04fbd66b3d2db54566fa",
+      "inputSha256": "e8c40bcbbefe86c70fe008282b8340b7a5636d39a5cdbc1cc7383dd7717ffcbc"
+    }
+  ],
+  "observations": [
+    { "observationId": "e29r10-screening-01-a", "observationIndex": 1, "caseId": "e2-gen-16-2", "arm": "A" },
+    { "observationId": "e29r10-screening-02-b", "observationIndex": 2, "caseId": "e2-gen-16-2", "arm": "B" },
+    { "observationId": "e29r10-screening-03-a", "observationIndex": 3, "caseId": "e2-gen-08-2", "arm": "A" },
+    { "observationId": "e29r10-screening-04-b", "observationIndex": 4, "caseId": "e2-gen-08-2", "arm": "B" },
+    { "observationId": "e29r10-screening-05-a", "observationIndex": 5, "caseId": "e2-gen-07-1", "arm": "A" },
+    { "observationId": "e29r10-screening-06-b", "observationIndex": 6, "caseId": "e2-gen-07-1", "arm": "B" },
+    { "observationId": "e29r10-screening-07-a", "observationIndex": 7, "caseId": "e2-gen-14-2", "arm": "A" },
+    { "observationId": "e29r10-screening-08-b", "observationIndex": 8, "caseId": "e2-gen-14-2", "arm": "B" },
+    { "observationId": "e29r10-screening-09-b", "observationIndex": 9, "caseId": "e2-holdout-25", "arm": "B" },
+    { "observationId": "e29r10-screening-10-a", "observationIndex": 10, "caseId": "e2-holdout-25", "arm": "A" },
+    { "observationId": "e29r10-screening-11-b", "observationIndex": 11, "caseId": "e2-gen-10-3", "arm": "B" },
+    { "observationId": "e29r10-screening-12-a", "observationIndex": 12, "caseId": "e2-gen-10-3", "arm": "A" },
+    { "observationId": "e29r10-screening-13-b", "observationIndex": 13, "caseId": "e2-complex_notice-03", "arm": "B" },
+    { "observationId": "e29r10-screening-14-a", "observationIndex": 14, "caseId": "e2-complex_notice-03", "arm": "A" },
+    { "observationId": "e29r10-screening-15-a", "observationIndex": 15, "caseId": "e2-gen-22-1", "arm": "A" },
+    { "observationId": "e29r10-screening-16-b", "observationIndex": 16, "caseId": "e2-gen-22-1", "arm": "B" }
+  ]
+}

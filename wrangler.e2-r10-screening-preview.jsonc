@@ -1,0 +1,26 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "sa-e2-r10-screening-preview",
+  "main": "./cloudflare/e2-r10-screening-worker.mjs",
+  "compatibility_date": "2026-08-24",
+  "workers_dev": true,
+  "preview_urls": true,
+  "routes": [],
+  "version_metadata": { "binding": "CF_VERSION_METADATA" },
+  "vars": {
+    "E2_R10_SCREENING_ENABLED": "true",
+    "E2_R10_SCREENING_PREVIEW_ORIGIN": "https://sa-e2-r10-screening-preview.nightsdell.workers.dev",
+    "E2_R10_SCREENING_PROTOCOL_BUNDLE_SHA256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "E2_R10_SCREENING_CASE_MANIFEST_SHA256": "6425ab6667a8ed93f3d6491a24a12058b203c2119e4bc66850109130ee6f9177",
+    "E2_R10_QUALIFICATION_AUDIT_SHA256": "630b3a22c49e972e04a21f59930628b8c8b35859d0afd2e2a9cf4070832f64ee"
+  },
+  "services": [{
+    "binding": "E2_R10_SCREENING_LEDGER",
+    "service": "student-affairs-e2-r10-screening-ledger-preview"
+  }],
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1,
+    "traces": { "enabled": true, "head_sampling_rate": 1 }
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "e2.9-r10-screening-request-contracts-1.0.0",
+  "protocolVersion": "e2-9-r10-screening-protocol-1.0.0",
+  "status": "FROZEN_BEFORE_MODEL_CALLS",
+  "shared": {
+    "model": "deepseek-v4-flash",
+    "temperature": 0,
+    "maxTokens": 6000,
+    "thinking": "disabled",
+    "responseFormat": "json_object",
+    "stream": false,
+    "attemptsPerObservation": 1,
+    "timeoutMs": 45000,
+    "sameSource": true,
+    "sameInputEnvelope": true,
+    "router": "BYPASSED",
+    "repair": "DISABLED"
+  },
+  "pathA": {
+    "arm": "A",
+    "modelCallsPerCase": 1,
+    "promptVersion": "recognition-2.4.1",
+    "pipelineVersion": "recognition-pipeline-2.2.1",
+    "outputSchemaVersion": "2.0",
+    "description": "Frozen single-pass recognition path."
+  },
+  "pathB": {
+    "arm": "B",
+    "modelCallsPerCase": 1,
+    "promptVersion": "fact-ledger-extraction-1.1.0-r10-screening",
+    "pipelineVersion": "e2-r10-facts-first-pipeline-1.0.0",
+    "modelOutputSchemaVersion": "e2.5-fact-ledger-1.0.0",
+    "finalOutputSchemaVersion": "2.0",
+    "deterministicPlannerVersion": "e2-r10-isolated-planner-1.1.0",
+    "deterministicValidatorVersion": "e2-r10-ledger-plan-validator-1.1.0",
+    "description": "One FactLedger extraction call followed by deterministic Planner and Validator."
+  },
+  "httpRequestFields": [
+    "protocolVersion", "protocolBundleSha256", "runLabel", "observationId", "observationIndex",
+    "caseId", "arm", "semanticRole", "sourceType", "sourceTitle", "content", "referenceTime",
+    "timezone", "sourceSha256", "inputSha256", "caseManifestSha256"
+  ],
+  "forbiddenGenerationKeys": [
+    "expected", "answer", "answers", "gold", "golden", "target", "targets", "label", "labels", "score", "scores", "forbidden"
+  ]
+}

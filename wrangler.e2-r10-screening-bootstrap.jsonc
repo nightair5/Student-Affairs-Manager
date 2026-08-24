@@ -1,0 +1,10 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "sa-e2-r10-screening-preview",
+  "main": "./cloudflare/e2-r10-screening-bootstrap.mjs",
+  "compatibility_date": "2026-08-24",
+  "workers_dev": true,
+  "preview_urls": true,
+  "routes": [],
+  "observability": { "enabled": true, "head_sampling_rate": 1 }
+}

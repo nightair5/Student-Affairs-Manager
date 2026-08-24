@@ -1,0 +1,26 @@
+{
+  "schemaVersion": "e2.9-r10-screening-review-contract-1.0.0",
+  "protocolVersion": "e2-9-r10-screening-protocol-1.0.0",
+  "pathMaskVersion": "e2-r10-path-mask-1.0.0",
+  "status": "FROZEN_BEFORE_MODEL_CALLS",
+  "reviewerEligibility": {
+    "hasNotSeenMapping": true,
+    "mustNotReadGenerationCheckpoint": true,
+    "mustNotReadStrictScores": true,
+    "mustNotReadHistoricalPathConclusions": true,
+    "mustAttestBeforeReview": true
+  },
+  "packetExcludes": [
+    "model identity", "path identity", "arm identity", "Prompt/Pipeline versions", "scores", "Expected answers", "historical conclusions", "FactLedger/Planner identifiers"
+  ],
+  "perOptionLabels": [
+    "userImpactMajor", "factMissing", "planningError", "overFragmented", "unsupportedFact", "evidenceAdequate"
+  ],
+  "pairLabel": "preferred",
+  "revealPrerequisites": [
+    "packet audit PASS", "independent reviewer eligibility attested", "all 8 labels complete", "labels frozen with hash"
+  ],
+  "selectionAutomaticallyAuthorized": false,
+  "blindAutomaticallyAuthorized": false,
+  "productionAutomaticallyAuthorized": false
+}
