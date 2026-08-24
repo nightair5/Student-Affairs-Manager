@@ -47,8 +47,8 @@ function Invoke-R10Request {
 
 $qualificationConfig = 'wrangler.e2-r10-qualification-preview.jsonc'
 $ledgerConfig = 'wrangler.e2-r10-qualification-ledger.jsonc'
-$qualificationResultPath = 'docs/e2-v4-pro-benchmark-r10/qualification-result-b.json'
-$qualificationEvidencePath = 'docs/e2-v4-pro-benchmark-r10/qualification-evidence-b.json'
+$qualificationResultPath = 'docs/e2-v4-pro-benchmark-r10/qualification-result-c.json'
+$qualificationEvidencePath = 'docs/e2-v4-pro-benchmark-r10/qualification-evidence-c.json'
 $qualificationConfigValue = Get-Content -Raw -LiteralPath $qualificationConfig | ConvertFrom-Json
 $ledgerConfigValue = Get-Content -Raw -LiteralPath $ledgerConfig | ConvertFrom-Json
 $qualificationResult = Get-Content -Raw -LiteralPath $qualificationResultPath | ConvertFrom-Json

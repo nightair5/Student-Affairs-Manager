@@ -1,6 +1,6 @@
-export const E2_R10_PROTOCOL_VERSION = 'e2-9-r10-facts-first-protocol-1.1.0'
-export const E2_R10_QUALIFICATION_VERSION = 'e2-9-r10-zero-model-qualification-1.1.0'
-export const E2_R10_CONTRACT_SCHEMA_VERSION = 'e2.9-r10-qualification-contract-1.2.0'
+export const E2_R10_PROTOCOL_VERSION = 'e2-9-r10-facts-first-protocol-1.1.1'
+export const E2_R10_QUALIFICATION_VERSION = 'e2-9-r10-zero-model-qualification-1.1.1'
+export const E2_R10_CONTRACT_SCHEMA_VERSION = 'e2.9-r10-qualification-contract-1.2.1'
 export const E2_R10_RESULT_SCHEMA_VERSION = E2_R10_QUALIFICATION_VERSION
 export const E2_R10_REGISTRATION_SCHEMA_VERSION = 'e2.9-r10-qualification-registration-1.1.0'
 export const E2_R10_DEPLOYMENT_EVIDENCE_SCHEMA_VERSION = 'e2.9-r10-deployment-evidence-1.0.0'
@@ -14,8 +14,8 @@ export const E2_R10_REQUIRED_COMPONENT_VERSIONS = Object.freeze({
   validator: 'e2-r10-ledger-plan-validator-1.1.0',
   qualification: E2_R10_QUALIFICATION_VERSION,
   qualificationContract: E2_R10_CONTRACT_SCHEMA_VERSION,
-  qualificationWorker: 'e2-r10-qualification-worker-1.1.0',
-  qualificationLedger: 'e2-r10-qualification-ledger-1.1.0',
+  qualificationWorker: 'e2-r10-qualification-worker-1.1.1',
+  qualificationLedger: 'e2-r10-qualification-ledger-1.1.1',
   protocol: E2_R10_PROTOCOL_VERSION,
 })
 
@@ -359,7 +359,7 @@ async function readRegistration(request) {
 }
 
 async function ledgerRequest(env, runLabel, pathname, { method = 'GET', body, ledgerCallerToken } = {}) {
-  const response = await env.E2_R10_QUALIFICATION_LEDGER.fetch(`https://e2-r10-qualification-ledger.internal${pathname}`, {
+  const serviceRequest = new Request(`https://e2-r10-qualification-ledger.internal${pathname}`, {
     method,
     headers: {
       authorization: `Bearer ${ledgerCallerToken}`,
@@ -368,6 +368,7 @@ async function ledgerRequest(env, runLabel, pathname, { method = 'GET', body, le
     },
     ...(body === undefined ? {} : { body: JSON.stringify(body) }),
   })
+  const response = await env.E2_R10_QUALIFICATION_LEDGER.fetch(serviceRequest)
   return {
     response,
     payload: await response.json().catch(() => ({ error: 'LEDGER_RESPONSE_INVALID', modelCalls: 0 })),

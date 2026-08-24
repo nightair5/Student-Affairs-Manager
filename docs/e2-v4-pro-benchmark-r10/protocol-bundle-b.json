@@ -1,0 +1,106 @@
+{
+  "protocolVersion": "e2-9-r10-facts-first-protocol-1.1.0",
+  "files": [
+    {
+      "path": "cloudflare/e2-r10-factledger-contract.mjs",
+      "sha256": "70a401d99dae43a3830e83f6b851a265c90f1241eb7d20aabb10e4f2213fc691",
+      "projectionRule": "raw-bytes"
+    },
+    {
+      "path": "cloudflare/e2-r10-ledger-planner-bridge.mjs",
+      "sha256": "2d4e9b1b16994492d3903e773d7d832445705b3dd86b1f0c52f7166995cd1ba3",
+      "projectionRule": "raw-bytes"
+    },
+    {
+      "path": "cloudflare/e2-r10-isolated-planner.mjs",
+      "sha256": "1cf8853d30048a4953ad3b6a16f841a1f61a9de2f75da0d8568203d2bd6a79e7",
+      "projectionRule": "raw-bytes"
+    },
+    {
+      "path": "cloudflare/e2-r10-ledger-plan-validator.mjs",
+      "sha256": "625b65c7272ba80df5adf7851c278d72c198be8cf8a06f1e121387c238cd24ae",
+      "projectionRule": "raw-bytes"
+    },
+    {
+      "path": "cloudflare/e2-r10-qualification-contract.mjs",
+      "sha256": "c625aab8a15c19fbaefc21acba43eb28db0495eacecda5d736cb446f7b611a78",
+      "projectionRule": "raw-bytes"
+    },
+    {
+      "path": "cloudflare/e2-r10-qualification-worker.mjs",
+      "sha256": "a35af25e53e332f9fc5dfe7cacfd224091f6bf71b9b4492f164288d50ee4aa0e",
+      "projectionRule": "raw-bytes"
+    },
+    {
+      "path": "cloudflare/e2-r10-qualification-ledger.mjs",
+      "sha256": "76edb0eb825865da1117d69ca8619f1e16810aa6939df671279547b3ea27a3a6",
+      "projectionRule": "raw-bytes"
+    },
+    {
+      "path": "cloudflare/e2-r10-pipeline-tests.mjs",
+      "sha256": "8327a932810ecf45542bed2a023765379fbea86c3554a8f2cac71181c16128a3",
+      "projectionRule": "raw-bytes"
+    },
+    {
+      "path": "cloudflare/e2-r10-validator-tests.mjs",
+      "sha256": "0983d4912c9d938496b677a5ff323eec9727d799587b1faf8aa86ea98b4413b0",
+      "projectionRule": "raw-bytes"
+    },
+    {
+      "path": "cloudflare/e2-r10-qualification-tests.mjs",
+      "sha256": "fbd0985491ad578f9966967e4d47ca59e13766e7e954b235ca6894880871e9a0",
+      "projectionRule": "raw-bytes"
+    },
+    {
+      "path": "scripts/e2-9-r10-protocol.mjs",
+      "sha256": "dc8b7db383a91cf3127657248d20e877979338d421184b7da5a2d1e90d5dde12",
+      "projectionRule": "raw-bytes"
+    },
+    {
+      "path": "scripts/e2-9-r10-protocol.node.mjs",
+      "sha256": "3cd1fe882cfb092696cde10bbb012e0ff56410f520d38d8a3b45048b2b891b30",
+      "projectionRule": "raw-bytes"
+    },
+    {
+      "path": "scripts/run-e2-9-r10-zero-model-qualification.mjs",
+      "sha256": "b339e6bc6b198562a00750c4ba18c116e5013334829075c6286a00358cc0be8d",
+      "projectionRule": "raw-bytes"
+    },
+    {
+      "path": "scripts/deploy-e2-9-r10-qualification-preview.ps1",
+      "sha256": "b543c21f1b0ad02916a430a4e93c3b1536cd26c4f83f089f82ed323c64202b94",
+      "projectionRule": "raw-bytes"
+    },
+    {
+      "path": "wrangler.e2-r10-qualification-preview.jsonc",
+      "sha256": "f4d25c2218558b2e2ded89e17a6fd086e06228faceff773143236cf035f22ef4",
+      "projectionRule": "canonical-config-with-version-upload-bindings-redacted"
+    },
+    {
+      "path": "wrangler.e2-r10-qualification-ledger.jsonc",
+      "sha256": "739f9235efc29e6fab662a81cc5ff46b71939d471e23005387f97fe2f57b589a",
+      "projectionRule": "canonical-config-with-version-upload-bindings-redacted"
+    },
+    {
+      "path": "docs/e2-v4-pro-benchmark-r10/PROTOCOL.md",
+      "sha256": "f43b5ad31541c876802125345d34c71fda80907a71a429ae954354e863d28bdc",
+      "projectionRule": "raw-bytes"
+    },
+    {
+      "path": "docs/e2-v4-pro-benchmark-r10/screening-gate.json",
+      "sha256": "31983a11b5127ef1e766c34e7ed38512e02df86ce8bf507482136cb874aa2498",
+      "projectionRule": "raw-bytes"
+    },
+    {
+      "path": "docs/e2-v4-pro-benchmark-r10/screening-plan.json",
+      "sha256": "bce9cfdfd3c8cd40e4e6d17846c284957f052f05fbc44b45b3adfbb84bfcaf7d",
+      "projectionRule": "raw-bytes"
+    },
+    {
+      "path": "package.json",
+      "sha256": "7232e03185c35bc72c912f375ea46f46e4edcf7cf6862afa6142419eb86c119c",
+      "projectionRule": "raw-bytes"
+    }
+  ],
+  "bundleSha256": "ac11cdef77f308b826272f8c31aee69181a7947788affc82db69a633fe27accf"
+}

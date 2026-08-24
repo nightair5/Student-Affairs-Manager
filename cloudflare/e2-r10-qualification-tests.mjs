@@ -108,9 +108,11 @@ function createLedgerService({ transactionDelayMs = 0 } = {}) {
   return {
     instances,
     get calls() { return calls },
-    async fetch(url, init) {
+    async fetch(request, init) {
       calls += 1
-      return ledgerWorker.fetch(new Request(url, init), ledgerEnv)
+      assert.equal(request instanceof Request, true)
+      assert.equal(init, undefined)
+      return ledgerWorker.fetch(request, ledgerEnv)
     },
   }
 }
@@ -312,13 +314,13 @@ test('R10 ledger caller boundary rejects missing or wrong internal credentials',
   delete missingFrontSecret.E2_R10_LEDGER_CALLER_TOKEN
   assert.equal((await runE2R10Qualification(endpoint('state?runLabel=e29r10-caller'), missingFrontSecret)).status, 503)
 
-  const direct = await ledger.fetch('https://ledger.internal/state', {
+  const direct = await ledger.fetch(new Request('https://ledger.internal/state', {
     method: 'GET',
     headers: {
       authorization: 'Bearer wrong-ledger-token-material-000000000000000000',
       'x-e2-r10-run-label': 'e29r10-caller',
     },
-  })
+  }))
   assert.equal(direct.status, 401)
 })
 

@@ -2,7 +2,7 @@
 
 ## 1. Status and purpose
 
-- Protocol version: `e2-9-r10-facts-first-protocol-1.1.0`
+- Protocol version: `e2-9-r10-facts-first-protocol-1.1.1`
 - Current phase: `ZERO_MODEL_IMPLEMENTATION`
 - Production recognition/generation calls authorized by this protocol: `0`
 - Production deployment: prohibited
@@ -24,9 +24,9 @@ Frozen component versions for this protocol are:
 | Ledger-to-Planner bridge | `e2-r10-ledger-planner-bridge-1.1.0` |
 | Isolated Planner | `e2-r10-isolated-planner-1.1.0` |
 | Ledger-to-Plan Validator | `e2-r10-ledger-plan-validator-1.1.0` |
-| Qualification contract | `e2.9-r10-qualification-contract-1.2.0` |
-| Qualification Worker | `e2-r10-qualification-worker-1.1.0` |
-| Private qualification ledger | `e2-r10-qualification-ledger-1.1.0` |
+| Qualification contract | `e2.9-r10-qualification-contract-1.2.1` |
+| Qualification Worker | `e2-r10-qualification-worker-1.1.1` |
+| Private qualification ledger | `e2-r10-qualification-ledger-1.1.1` |
 
 ## 2. Paired architecture
 
@@ -218,6 +218,13 @@ Preview-enabled Worker name exceeded 54 characters. No Preview qualification
 record or model call was created. Protocol 1.1.0 preserves that failed attempt,
 uses a new run label, and adds a machine-enforced name/origin compatibility
 check before any Secret rotation or upload.
+
+Run `e29r10-zero-model-qualification-20260824-b` reached the versioned
+qualification Worker but failed before ledger registration with Cloudflare
+runtime error `1042`. The caller had used the loose `fetch(url, init)` form on
+a Service binding. Protocol 1.1.1 preserves that failure, moves to run label
+`c`, and requires the documented `fetch(Request)` Service Binding interface;
+the Worker test double rejects the former two-argument call.
 
 The qualification Worker:
 

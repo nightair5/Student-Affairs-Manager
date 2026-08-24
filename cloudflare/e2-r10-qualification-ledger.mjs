@@ -9,7 +9,7 @@ import {
   validateQualificationRegistration,
 } from './e2-r10-qualification-contract.mjs'
 
-export const E2_R10_QUALIFICATION_LEDGER_VERSION = 'e2-r10-qualification-ledger-1.1.0'
+export const E2_R10_QUALIFICATION_LEDGER_VERSION = 'e2-r10-qualification-ledger-1.1.1'
 
 const RECORD_KEY = 'qualification-record-v1'
 const INTERNAL_VERSION_HEADER = 'x-e2-r10-ledger-worker-version-id'

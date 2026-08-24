@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "e2.9-r10-deployment-attempt-1.0.0",
+  "runLabel": "e29r10-zero-model-qualification-20260824-b",
+  "protocolVersion": "e2-9-r10-facts-first-protocol-1.1.0",
+  "status": "PREVIEW_QUALIFICATION_FAILED",
+  "failureLayer": "qualification-worker-to-private-ledger-service-binding",
+  "providerErrorCode": 1042,
+  "reason": "The runtime treated the loose two-argument Service Binding fetch as a same-zone fetch.",
+  "qualificationWorkerVersionId": "59d1ba88-255a-4f01-ae60-994b9ed27937",
+  "ledgerWorkerVersionId": "aa98e9ea-bd4f-40dd-b8ea-c6a08662cba6",
+  "contractStableReads": 3,
+  "qualificationRecordCreated": false,
+  "modelCalls": 0,
+  "expectedAnswerReads": 0,
+  "selection": "NOT_AUTHORIZED",
+  "blind": "NOT_CREATED",
+  "production": "NOT_DEPLOYED",
+  "repair": {
+    "newProtocolRequired": true,
+    "newRunLabelRequired": true,
+    "selectiveRerunAllowed": false,
+    "serviceBindingCall": "fetch(Request)"
+  }
+}
