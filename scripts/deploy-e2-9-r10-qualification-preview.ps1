@@ -1,4 +1,6 @@
-param()
+#Requires -Version 7.0
+
+param([switch]$LocalRuntimePreflightOnly)
 
 $ErrorActionPreference = 'Stop'
 
@@ -30,6 +32,22 @@ function Get-LatestR10Version([string]$ConfigPath) {
   $latest.id
 }
 
+if ($LocalRuntimePreflightOnly) {
+  $preflightToken = New-R10Token
+  $preflightHash = Get-R10Sha256 $preflightToken
+  if ($preflightToken.Length -lt 64 -or $preflightHash -notmatch '^[0-9a-f]{64}$') {
+    throw 'R10_LOCAL_RUNTIME_PREFLIGHT_FAILED'
+  }
+  [ordered]@{
+    status = 'R10_LOCAL_RUNTIME_PREFLIGHT_PASSED'
+    powerShellMajor = $PSVersionTable.PSVersion.Major
+    tokenLengthAtLeast64 = $true
+    sha256ShapeValid = $true
+    remoteCalls = 0
+  } | ConvertTo-Json -Compress
+  exit 0
+}
+
 function Invoke-R10Request {
   param(
     [Parameter(Mandatory)] [string]$Uri,
@@ -52,8 +70,8 @@ function Invoke-R10Request {
 
 $qualificationConfig = 'wrangler.e2-r10-qualification-preview.jsonc'
 $ledgerConfig = 'wrangler.e2-r10-qualification-ledger.jsonc'
-$qualificationResultPath = 'docs/e2-v4-pro-benchmark-r10/qualification-result-g.json'
-$qualificationEvidencePath = 'docs/e2-v4-pro-benchmark-r10/qualification-evidence-g.json'
+$qualificationResultPath = 'docs/e2-v4-pro-benchmark-r10/qualification-result-h.json'
+$qualificationEvidencePath = 'docs/e2-v4-pro-benchmark-r10/qualification-evidence-h.json'
 $qualificationConfigValue = Get-Content -Raw -LiteralPath $qualificationConfig | ConvertFrom-Json
 $ledgerConfigValue = Get-Content -Raw -LiteralPath $ledgerConfig | ConvertFrom-Json
 $qualificationResult = Get-Content -Raw -LiteralPath $qualificationResultPath | ConvertFrom-Json

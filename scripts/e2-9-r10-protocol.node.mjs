@@ -84,7 +84,7 @@ function screeningQualificationFixture() {
   const qualificationWorkerVersionId = '11111111-1111-4111-8111-111111111111'
   const ledgerWorkerVersionId = '22222222-2222-4222-8222-222222222222'
   const qualificationResult = {
-    schemaVersion: 'e2-9-r10-zero-model-qualification-1.1.5',
+    schemaVersion: 'e2-9-r10-zero-model-qualification-1.1.6',
     protocolVersion: R10_PROTOCOL_VERSION,
     runLabel: R10_QUALIFICATION_RUN_LABEL,
     status: 'LOCAL_QUALIFIED_PREVIEW_UPLOAD_REQUESTABLE',
@@ -105,7 +105,7 @@ function screeningQualificationFixture() {
   const qualificationResultSha256 = sha256(canonicalJson(qualificationResult))
   const screeningGateSha256 = sha256(canonicalJson(gate))
   const qualificationEvidence = {
-    schemaVersion: 'e2.9-r10-zero-model-evidence-1.2.5',
+    schemaVersion: 'e2.9-r10-zero-model-evidence-1.2.6',
     protocolVersion: R10_PROTOCOL_VERSION,
     runLabel: R10_QUALIFICATION_RUN_LABEL,
     sourceCommit,
@@ -235,7 +235,7 @@ test('R10 Screening authorization rejects current bundle drift and stale qualifi
     protocolBundle: { ...fixture.artifacts.protocolBundle, bundleSha256: '4'.repeat(64) },
   }), /R10_SCREENING_QUALIFICATION_BINDING_MISMATCH/u)
   assert.throws(() => assertR10ScreeningQualificationBinding({
-    ...fixture.authorization, qualificationRunLabel: 'e29r10-zero-model-qualification-20260824-f',
+    ...fixture.authorization, qualificationRunLabel: 'e29r10-zero-model-qualification-20260824-g',
   }, fixture.artifacts), /R10_SCREENING_NOT_AUTHORIZED/u)
   const driftedBundleSha256 = 'd'.repeat(64)
   assert.throws(() => assertR10ScreeningQualificationBinding({
@@ -288,7 +288,7 @@ test('R10 Screening authorization rejects extra authorization fields and over-br
   ), /R10_SCREENING_NOT_AUTHORIZED/u)
 })
 
-test('R10 disk authorization fails closed without the exact G qualification binding', async () => {
+test('R10 disk authorization fails closed without the exact H qualification binding', async () => {
   const fixture = screeningQualificationFixture()
   await assert.rejects(
     () => assertR10ScreeningAuthorization(fixture.authorization, { root }),

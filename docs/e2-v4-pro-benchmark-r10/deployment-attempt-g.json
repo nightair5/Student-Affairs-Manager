@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "e2.9-r10-qualification-deployment-attempt-1.0.0",
+  "runLabel": "e29r10-zero-model-qualification-20260824-g",
+  "protocolVersion": "e2-9-r10-facts-first-protocol-1.1.5",
+  "sourceCommit": "89632badc2d9e6d148cc05046187e4ff476da8a8",
+  "protocolBundleSha256": "0a73a8f72285ef00f1e66a5d800d7607d3d4129b66e370ece0f4d233d1626c3c",
+  "qualificationResultSha256": "a1891a0b3674f422241bd69a8520141929ee44d0fa8a3ad60cb342bd30bf05ad",
+  "status": "DEPLOYMENT_PREFLIGHT_RUNTIME_FAILURE",
+  "failedStage": "LOCAL_CRYPTOGRAPHIC_HASH_GENERATION",
+  "errorCode": "WINDOWS_POWERSHELL_SHA256_HASHDATA_UNAVAILABLE",
+  "errorMessage": "The script was invoked through Windows PowerShell 5.1, whose .NET runtime does not implement the static SHA256.HashData API required by the script.",
+  "remoteUploadAttempted": false,
+  "secretRotationAttempted": false,
+  "ledgerRecordAttempted": false,
+  "modelCalls": 0,
+  "upstreamQualificationRequests": 0,
+  "expectedAnswerReads": 0,
+  "screeningEligible": false,
+  "selectionAuthorized": false,
+  "blindAuthorized": false,
+  "productionAuthorized": false,
+  "requiredNextAction": "Preserve G, require PowerShell 7 explicitly, add a local runtime-only preflight, and use a new H protocol and run label."
+}

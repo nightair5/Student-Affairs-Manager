@@ -478,7 +478,7 @@ async function main() {
     instrumentation.recordFileRead(gateRelativePath)
     const gateRaw = await readFile(path.join(root, gateRelativePath), 'utf8')
   const evidence = {
-      schemaVersion: 'e2.9-r10-zero-model-evidence-1.2.5',
+      schemaVersion: 'e2.9-r10-zero-model-evidence-1.2.6',
     protocolVersion: R10_PROTOCOL_VERSION,
     runLabel: R10_QUALIFICATION_RUN_LABEL,
       sourceCommit: sourceBinding.sourceCommit,
@@ -504,9 +504,9 @@ async function main() {
       }
     await mkdir(docsDir, { recursive: true })
     await writeR10ImmutableArtifacts([
-      { path: path.join(docsDir, 'protocol-bundle-g.json'), contents: `${JSON.stringify(protocolBundle, null, 2)}\n` },
-      { path: path.join(docsDir, 'qualification-result-g.json'), contents: `${JSON.stringify(qualificationResult, null, 2)}\n` },
-      { path: path.join(docsDir, 'qualification-evidence-g.json'), contents: `${JSON.stringify(evidence, null, 2)}\n` },
+      { path: path.join(docsDir, 'protocol-bundle-h.json'), contents: `${JSON.stringify(protocolBundle, null, 2)}\n` },
+      { path: path.join(docsDir, 'qualification-result-h.json'), contents: `${JSON.stringify(qualificationResult, null, 2)}\n` },
+      { path: path.join(docsDir, 'qualification-evidence-h.json'), contents: `${JSON.stringify(evidence, null, 2)}\n` },
     ])
   }
   process.stdout.write(`${JSON.stringify({ qualificationResult, evidence }, null, 2)}\n`)
