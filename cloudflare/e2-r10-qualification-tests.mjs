@@ -36,8 +36,8 @@ const WORKER_VERSION_ID = '11111111-1111-4111-8111-111111111111'
 const OTHER_WORKER_VERSION_ID = '33333333-3333-4333-8333-333333333333'
 const LEDGER_VERSION_ID = '22222222-2222-4222-8222-222222222222'
 const WORKER_UPLOADED_AT = '2026-08-24T00:00:00.000Z'
-const BASE_ORIGIN = 'https://student-affairs-e2-r10-facts-first-qualification-preview.nightsdell.workers.dev'
-const VERSIONED_ORIGIN = 'https://11111111-student-affairs-e2-r10-facts-first-qualification-preview.nightsdell.workers.dev'
+const BASE_ORIGIN = 'https://sa-e2-r10-facts-first-qual-preview.nightsdell.workers.dev'
+const VERSIONED_ORIGIN = 'https://11111111-sa-e2-r10-facts-first-qual-preview.nightsdell.workers.dev'
 
 class TransactionalMemoryStorage {
   constructor({ transactionDelayMs = 0 } = {}) {
@@ -422,7 +422,9 @@ test('R10 qualification Worker module graph contains no model/provider module', 
 test('R10 Wrangler configs keep the audit ledger private and all runtime hashes fail-closed', async () => {
   const preview = JSON.parse(await readFile(new URL('../wrangler.e2-r10-qualification-preview.jsonc', import.meta.url), 'utf8'))
   const ledger = JSON.parse(await readFile(new URL('../wrangler.e2-r10-qualification-ledger.jsonc', import.meta.url), 'utf8'))
-  assert.equal(preview.name, 'student-affairs-e2-r10-facts-first-qualification-preview')
+  assert.equal(preview.name, 'sa-e2-r10-facts-first-qual-preview')
+  assert.equal(preview.name.length <= 54, true)
+  assert.equal(new URL(preview.vars.E2_R10_QUALIFICATION_PREVIEW_ORIGIN).hostname.startsWith(`${preview.name}.`), true)
   assert.equal(ledger.name, 'student-affairs-e2-r10-facts-first-qualification-ledger-preview')
   assert.deepEqual(preview.routes, [])
   assert.deepEqual(ledger.routes, [])

@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "e2.9-r10-deployment-attempt-1.0.0",
+  "runLabel": "e29r10-zero-model-qualification-20260824-a",
+  "protocolVersion": "e2-9-r10-facts-first-protocol-1.0.0",
+  "status": "PREVIEW_UPLOAD_FAILED",
+  "failureLayer": "cloudflare-preview-name-validation",
+  "providerErrorCode": 100315,
+  "reason": "Preview-enabled Worker names cannot exceed 54 characters.",
+  "scriptUploadObserved": true,
+  "previewActivationCompleted": false,
+  "qualificationRecordCreated": false,
+  "modelCalls": 0,
+  "expectedAnswerReads": 0,
+  "selection": "NOT_AUTHORIZED",
+  "blind": "NOT_CREATED",
+  "production": "NOT_DEPLOYED",
+  "repair": {
+    "newProtocolRequired": true,
+    "newRunLabelRequired": true,
+    "selectiveRerunAllowed": false,
+    "machineCheckAdded": "qualificationWorkerPreviewNameCompatible"
+  }
+}

@@ -22,6 +22,7 @@ import {
   canonicalJson,
   createR10AccessInstrumentation,
   inspectR10TrackedSource,
+  r10PreviewWorkerNameCompatible,
   safeHashEqual,
   sha256,
 } from './e2-9-r10-protocol.mjs'
@@ -34,6 +35,14 @@ test('R10 canonical JSON and non-placeholder hash comparison are deterministic',
   assert.equal(sha256('facts-first'), sha256('facts-first'))
   assert.equal(safeHashEqual(HASH, HASH), true)
   assert.equal(safeHashEqual('0'.repeat(64), '0'.repeat(64)), false)
+})
+
+test('R10 Preview Worker name and origin satisfy Cloudflare version-preview limits', () => {
+  const validName = 'sa-e2-r10-facts-first-qual-preview'
+  assert.equal(r10PreviewWorkerNameCompatible(validName, `https://${validName}.example.workers.dev`), true)
+  assert.equal(r10PreviewWorkerNameCompatible('x'.repeat(55), `https://${'x'.repeat(55)}.example.workers.dev`), false)
+  assert.equal(r10PreviewWorkerNameCompatible(validName, 'https://different.example.workers.dev'), false)
+  assert.equal(r10PreviewWorkerNameCompatible(validName, `https://${validName}.example.workers.dev/path`), false)
 })
 
 test('R10 stage machine forbids skips and reverse transitions', () => {

@@ -8,9 +8,9 @@ import {
   E2_R10_REQUIRED_COMPONENT_VERSIONS,
 } from '../cloudflare/e2-r10-qualification-contract.mjs'
 
-export const R10_PROTOCOL_VERSION = 'e2-9-r10-facts-first-protocol-1.0.0'
-export const R10_QUALIFICATION_RESULT_VERSION = 'e2-9-r10-zero-model-qualification-1.0.0'
-export const R10_QUALIFICATION_RUN_LABEL = 'e29r10-zero-model-qualification-20260824-a'
+export const R10_PROTOCOL_VERSION = 'e2-9-r10-facts-first-protocol-1.1.0'
+export const R10_QUALIFICATION_RESULT_VERSION = 'e2-9-r10-zero-model-qualification-1.1.0'
+export const R10_QUALIFICATION_RUN_LABEL = 'e29r10-zero-model-qualification-20260824-b'
 export const R10_PRODUCTION_BASELINE_COMMIT = 'ef52d6b572e89faaaa9a18823df41b526aef3b8d'
 
 export const R10_STAGE_ORDER = Object.freeze([
@@ -38,6 +38,7 @@ export const R10_PROTOCOL_BUNDLE_FILES = Object.freeze([
   'scripts/e2-9-r10-protocol.mjs',
   'scripts/e2-9-r10-protocol.node.mjs',
   'scripts/run-e2-9-r10-zero-model-qualification.mjs',
+  'scripts/deploy-e2-9-r10-qualification-preview.ps1',
   'wrangler.e2-r10-qualification-preview.jsonc',
   'wrangler.e2-r10-qualification-ledger.jsonc',
   'docs/e2-v4-pro-benchmark-r10/PROTOCOL.md',
@@ -86,6 +87,20 @@ export function validBoundSha256(value) {
 export function safeHashEqual(left, right) {
   if (!validBoundSha256(left) || !validBoundSha256(right)) return false
   return timingSafeEqual(Buffer.from(left, 'hex'), Buffer.from(right, 'hex'))
+}
+
+export function r10PreviewWorkerNameCompatible(name, origin) {
+  if (typeof name !== 'string' || name.length === 0 || name.length > 54 || !/^[a-z0-9-]+$/u.test(name)) return false
+  try {
+    const parsed = new URL(origin)
+    return parsed.protocol === 'https:'
+      && parsed.pathname === '/'
+      && parsed.search === ''
+      && parsed.hash === ''
+      && parsed.hostname.startsWith(`${name}.`)
+  } catch {
+    return false
+  }
 }
 
 export function assertR10ImmutableArtifact(existing, candidate, artifactPath = 'artifact') {

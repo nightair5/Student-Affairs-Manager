@@ -2,7 +2,7 @@
 
 ## 1. Status and purpose
 
-- Protocol version: `e2-9-r10-facts-first-protocol-1.0.0`
+- Protocol version: `e2-9-r10-facts-first-protocol-1.1.0`
 - Current phase: `ZERO_MODEL_IMPLEMENTATION`
 - Production recognition/generation calls authorized by this protocol: `0`
 - Production deployment: prohibited
@@ -24,9 +24,9 @@ Frozen component versions for this protocol are:
 | Ledger-to-Planner bridge | `e2-r10-ledger-planner-bridge-1.1.0` |
 | Isolated Planner | `e2-r10-isolated-planner-1.1.0` |
 | Ledger-to-Plan Validator | `e2-r10-ledger-plan-validator-1.1.0` |
-| Qualification contract | `e2.9-r10-qualification-contract-1.1.0` |
-| Qualification Worker | `e2-r10-qualification-worker-1.0.0` |
-| Private qualification ledger | `e2-r10-qualification-ledger-1.0.0` |
+| Qualification contract | `e2.9-r10-qualification-contract-1.2.0` |
+| Qualification Worker | `e2-r10-qualification-worker-1.1.0` |
+| Private qualification ledger | `e2-r10-qualification-ledger-1.1.0` |
 
 ## 2. Paired architecture
 
@@ -212,9 +212,17 @@ Any failed condition stops the protocol. Selection is not automatically authoriz
 
 ## 10. Qualification-only deployment
 
+Run `e29r10-zero-model-qualification-20260824-a` passed local checks but its
+first remote upload was rejected by Cloudflare error `100315` because the
+Preview-enabled Worker name exceeded 54 characters. No Preview qualification
+record or model call was created. Protocol 1.1.0 preserves that failed attempt,
+uses a new run label, and adds a machine-enforced name/origin compatibility
+check before any Secret rotation or upload.
+
 The qualification Worker:
 
 - has a unique Worker name and no custom-domain route;
+- keeps the Preview-enabled Worker name within Cloudflare's 54-character limit and binds the configured origin host to that exact name;
 - exposes no provider import, API key binding or model gateway;
 - accepts only the exact versioned Preview origin;
 - uses a server-side token hash and constant-time comparison;

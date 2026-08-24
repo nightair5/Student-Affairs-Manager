@@ -51,6 +51,7 @@ import {
   createR10AccessInstrumentation,
   inspectR10ProductionIsolation,
   inspectR10TrackedSource,
+  r10PreviewWorkerNameCompatible,
   sha256,
   writeR10ImmutableArtifacts,
 } from './e2-9-r10-protocol.mjs'
@@ -236,7 +237,7 @@ async function qualificationRoutesLocked(protocolBundleSha256) {
   const ledgerCallerToken = 'r10-zero-model-ledger-caller-token-material-000000000000000000'
   const versionId = '11111111-1111-4111-8111-111111111111'
   const ledgerVersionId = '22222222-2222-4222-8222-222222222222'
-  const baseOrigin = 'https://student-affairs-e2-r10-facts-first-qualification-preview.example.workers.dev'
+  const baseOrigin = 'https://sa-e2-r10-facts-first-qual-preview.example.workers.dev'
   const versionedOrigin = `https://${versionId.slice(0, 8)}-${new URL(baseOrigin).host}`
   let ledgerCalls = 0
   const env = {
@@ -318,7 +319,7 @@ function localDeploymentEvidence(artifacts = {}) {
     schemaVersion: E2_R10_DEPLOYMENT_EVIDENCE_SCHEMA_VERSION,
     qualificationWorkerVersionId,
     qualificationWorkerUploadedAt: '2026-08-24T00:00:00.000Z',
-    qualificationWorkerVersionedOrigin: `https://${qualificationWorkerVersionId.slice(0, 8)}-student-affairs-e2-r10-facts-first-qualification-preview.example.workers.dev`,
+    qualificationWorkerVersionedOrigin: `https://${qualificationWorkerVersionId.slice(0, 8)}-sa-e2-r10-facts-first-qual-preview.example.workers.dev`,
     qualificationWorkerBytesSha256: artifacts.qualificationWorkerBytesSha256 ?? 'b'.repeat(64),
     qualificationWorkerConfigSha256: artifacts.qualificationWorkerConfigSha256 ?? 'c'.repeat(64),
     ledgerWorkerVersionId: '22222222-2222-4222-8222-222222222222',
@@ -383,6 +384,10 @@ async function qualificationConfigChecks(instrumentation) {
     readFile(path.join(root, ledgerPath), 'utf8').then(JSON.parse),
   ])
   return {
+    qualificationWorkerPreviewNameCompatible: r10PreviewWorkerNameCompatible(
+      preview.name,
+      preview.vars?.E2_R10_QUALIFICATION_PREVIEW_ORIGIN,
+    ),
     qualificationWorkerRouteIsolated: preview.workers_dev === true
       && preview.preview_urls === true && Array.isArray(preview.routes) && preview.routes.length === 0,
     qualificationLedgerPrivate: ledger.workers_dev === false
@@ -473,7 +478,7 @@ async function main() {
     instrumentation.recordFileRead(gateRelativePath)
     const gateRaw = await readFile(path.join(root, gateRelativePath), 'utf8')
   const evidence = {
-      schemaVersion: 'e2.9-r10-zero-model-evidence-1.1.0',
+      schemaVersion: 'e2.9-r10-zero-model-evidence-1.2.0',
     protocolVersion: R10_PROTOCOL_VERSION,
     runLabel: R10_QUALIFICATION_RUN_LABEL,
       sourceCommit: sourceBinding.sourceCommit,
@@ -499,9 +504,9 @@ async function main() {
       }
     await mkdir(docsDir, { recursive: true })
     await writeR10ImmutableArtifacts([
-      { path: path.join(docsDir, 'protocol-bundle.json'), contents: `${JSON.stringify(protocolBundle, null, 2)}\n` },
-      { path: path.join(docsDir, 'qualification-result.json'), contents: `${JSON.stringify(qualificationResult, null, 2)}\n` },
-      { path: path.join(docsDir, 'qualification-evidence.json'), contents: `${JSON.stringify(evidence, null, 2)}\n` },
+      { path: path.join(docsDir, 'protocol-bundle-b.json'), contents: `${JSON.stringify(protocolBundle, null, 2)}\n` },
+      { path: path.join(docsDir, 'qualification-result-b.json'), contents: `${JSON.stringify(qualificationResult, null, 2)}\n` },
+      { path: path.join(docsDir, 'qualification-evidence-b.json'), contents: `${JSON.stringify(evidence, null, 2)}\n` },
     ])
   }
   process.stdout.write(`${JSON.stringify({ qualificationResult, evidence }, null, 2)}\n`)

@@ -1,6 +1,6 @@
 import { E2_R10_ENDPOINT_PREFIX, runE2R10Qualification } from './e2-r10-qualification-contract.mjs'
 
-export const E2_R10_QUALIFICATION_WORKER_VERSION = 'e2-r10-qualification-worker-1.0.0'
+export const E2_R10_QUALIFICATION_WORKER_VERSION = 'e2-r10-qualification-worker-1.1.0'
 
 export default {
   async fetch(request, env) {

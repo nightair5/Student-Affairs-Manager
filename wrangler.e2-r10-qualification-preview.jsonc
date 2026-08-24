@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
-  "name": "student-affairs-e2-r10-facts-first-qualification-preview",
+  "name": "sa-e2-r10-facts-first-qual-preview",
   "main": "./cloudflare/e2-r10-qualification-worker.mjs",
   "compatibility_date": "2026-08-24",
   "workers_dev": true,
@@ -12,7 +12,7 @@
   "vars": {
     "E2_R10_QUALIFICATION_ENABLED": "true",
     "E2_R10_VERSIONED_PREVIEW_ONLY": "true",
-    "E2_R10_QUALIFICATION_PREVIEW_ORIGIN": "https://student-affairs-e2-r10-facts-first-qualification-preview.nightsdell.workers.dev",
+    "E2_R10_QUALIFICATION_PREVIEW_ORIGIN": "https://sa-e2-r10-facts-first-qual-preview.nightsdell.workers.dev",
     "E2_R10_PROTOCOL_BUNDLE_SHA256": "0000000000000000000000000000000000000000000000000000000000000000",
     "E2_R10_QUALIFICATION_RESULT_SHA256": "0000000000000000000000000000000000000000000000000000000000000000",
     "E2_R10_QUALIFICATION_WORKER_BYTES_SHA256": "0000000000000000000000000000000000000000000000000000000000000000",
