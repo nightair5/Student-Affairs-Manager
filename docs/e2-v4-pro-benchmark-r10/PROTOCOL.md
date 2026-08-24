@@ -3,7 +3,7 @@
 ## 1. Status and purpose
 
 - Protocol version: `e2-9-r10-facts-first-protocol-1.1.3`
-- Current phase: `ZERO_MODEL_IMPLEMENTATION`
+- Current phase: `PREVIEW_QUALIFIED_INDEPENDENT_REVIEW_PENDING`
 - Production recognition/generation calls authorized by this protocol: `0`
 - Production deployment: prohibited
 - Selection: prohibited until Screening Gate passes
@@ -246,6 +246,20 @@ code. Protocol 1.1.3 preserves D as an integrity failure, moves to run label
 post-rotation Ledger version to be the only active version at 100 percent before
 the qualification Worker can be uploaded. No D qualification record or model
 call was created.
+
+Run `e29r10-zero-model-qualification-20260824-e` completed the isolated
+qualification-only Preview. The exact versioned Worker returned the same
+contract three times, created one immutable record (`201`), returned an
+idempotent replay (`200`), and returned the stored state (`200`). Wrong Origin
+and authentication checks returned `403` and `401`; Readiness, Smoke,
+Screening, Selection, Blind and Production each returned `412` with zero model
+calls. The qualification version receives no stable Worker traffic, the
+private Ledger is the sole active ledger version, and Production files and
+deployment remain unchanged. Evidence is frozen in `preview-qualification-e.json`.
+
+The same-process read-only audit passes, but it is not an independent review.
+Screening remains unauthorized until a separate reviewer approves the frozen E
+artifacts and the user explicitly authorizes at most 16 Screening calls.
 
 The qualification Worker:
 
