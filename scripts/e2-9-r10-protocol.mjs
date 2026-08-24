@@ -8,9 +8,9 @@ import {
   E2_R10_REQUIRED_COMPONENT_VERSIONS,
 } from '../cloudflare/e2-r10-qualification-contract.mjs'
 
-export const R10_PROTOCOL_VERSION = 'e2-9-r10-facts-first-protocol-1.1.2'
-export const R10_QUALIFICATION_RESULT_VERSION = 'e2-9-r10-zero-model-qualification-1.1.2'
-export const R10_QUALIFICATION_RUN_LABEL = 'e29r10-zero-model-qualification-20260824-d'
+export const R10_PROTOCOL_VERSION = 'e2-9-r10-facts-first-protocol-1.1.3'
+export const R10_QUALIFICATION_RESULT_VERSION = 'e2-9-r10-zero-model-qualification-1.1.3'
+export const R10_QUALIFICATION_RUN_LABEL = 'e29r10-zero-model-qualification-20260824-e'
 export const R10_PRODUCTION_BASELINE_COMMIT = 'ef52d6b572e89faaaa9a18823df41b526aef3b8d'
 
 export const R10_STAGE_ORDER = Object.freeze([

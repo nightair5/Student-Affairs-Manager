@@ -1,6 +1,6 @@
-export const E2_R10_PROTOCOL_VERSION = 'e2-9-r10-facts-first-protocol-1.1.2'
-export const E2_R10_QUALIFICATION_VERSION = 'e2-9-r10-zero-model-qualification-1.1.2'
-export const E2_R10_CONTRACT_SCHEMA_VERSION = 'e2.9-r10-qualification-contract-1.2.2'
+export const E2_R10_PROTOCOL_VERSION = 'e2-9-r10-facts-first-protocol-1.1.3'
+export const E2_R10_QUALIFICATION_VERSION = 'e2-9-r10-zero-model-qualification-1.1.3'
+export const E2_R10_CONTRACT_SCHEMA_VERSION = 'e2.9-r10-qualification-contract-1.2.3'
 export const E2_R10_RESULT_SCHEMA_VERSION = E2_R10_QUALIFICATION_VERSION
 export const E2_R10_REGISTRATION_SCHEMA_VERSION = 'e2.9-r10-qualification-registration-1.1.0'
 export const E2_R10_DEPLOYMENT_EVIDENCE_SCHEMA_VERSION = 'e2.9-r10-deployment-evidence-1.0.0'
@@ -14,8 +14,8 @@ export const E2_R10_REQUIRED_COMPONENT_VERSIONS = Object.freeze({
   validator: 'e2-r10-ledger-plan-validator-1.1.0',
   qualification: E2_R10_QUALIFICATION_VERSION,
   qualificationContract: E2_R10_CONTRACT_SCHEMA_VERSION,
-  qualificationWorker: 'e2-r10-qualification-worker-1.1.2',
-  qualificationLedger: 'e2-r10-qualification-ledger-1.1.2',
+  qualificationWorker: 'e2-r10-qualification-worker-1.1.3',
+  qualificationLedger: 'e2-r10-qualification-ledger-1.1.3',
   protocol: E2_R10_PROTOCOL_VERSION,
 })
 

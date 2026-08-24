@@ -457,10 +457,10 @@ test('R10 Wrangler configs keep the audit ledger private and runtime hashes fail
     assert.equal(ledger.vars.E2_R10_LEDGER_WORKER_CONFIG_SHA256, zeroHash)
   } else {
     const qualificationResult = JSON.parse(await readFile(
-      new URL('../docs/e2-v4-pro-benchmark-r10/qualification-result-d.json', import.meta.url), 'utf8',
+      new URL('../docs/e2-v4-pro-benchmark-r10/qualification-result-e.json', import.meta.url), 'utf8',
     ))
     const qualificationEvidence = JSON.parse(await readFile(
-      new URL('../docs/e2-v4-pro-benchmark-r10/qualification-evidence-d.json', import.meta.url), 'utf8',
+      new URL('../docs/e2-v4-pro-benchmark-r10/qualification-evidence-e.json', import.meta.url), 'utf8',
     ))
     const deploymentArtifacts = await buildR10QualificationDeploymentArtifacts(path.resolve(import.meta.dirname, '..'))
     assert.deepEqual(qualificationEvidence.deploymentArtifacts, deploymentArtifacts)
@@ -483,4 +483,18 @@ test('R10 Wrangler configs keep the audit ledger private and runtime hashes fail
   }
   assert.equal(configNames.filter((name) => name === preview.name).length, 1)
   assert.equal(configNames.filter((name) => name === ledger.name).length, 1)
+})
+
+test('R10 deployment uploads private Ledger code before Secret rotation and verifies the active version', async () => {
+  const source = await readFile(new URL('../scripts/deploy-e2-9-r10-qualification-preview.ps1', import.meta.url), 'utf8')
+  const codeDeploy = source.indexOf('$ledgerDeployOutput = npx wrangler deploy --config $ledgerConfig')
+  const secretRotation = source.indexOf('wrangler secret put E2_R10_LEDGER_CALLER_TOKEN_SHA256')
+  const versionRead = source.indexOf('$ledgerVersionId = Get-LatestR10Version $ledgerConfig')
+  const activeVersionCheck = source.indexOf('R10_LEDGER_ACTIVE_VERSION_MISMATCH')
+  assert.equal(codeDeploy >= 0, true)
+  assert.equal(codeDeploy < secretRotation, true)
+  assert.equal(secretRotation < versionRead, true)
+  assert.equal(versionRead < activeVersionCheck, true)
+  assert.match(source, /wrangler deployments status --config \$ledgerConfig --json/u)
+  assert.match(source, /\.percentage -eq 100/u)
 })

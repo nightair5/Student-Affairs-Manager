@@ -47,8 +47,8 @@ function Invoke-R10Request {
 
 $qualificationConfig = 'wrangler.e2-r10-qualification-preview.jsonc'
 $ledgerConfig = 'wrangler.e2-r10-qualification-ledger.jsonc'
-$qualificationResultPath = 'docs/e2-v4-pro-benchmark-r10/qualification-result-d.json'
-$qualificationEvidencePath = 'docs/e2-v4-pro-benchmark-r10/qualification-evidence-d.json'
+$qualificationResultPath = 'docs/e2-v4-pro-benchmark-r10/qualification-result-e.json'
+$qualificationEvidencePath = 'docs/e2-v4-pro-benchmark-r10/qualification-evidence-e.json'
 $qualificationConfigValue = Get-Content -Raw -LiteralPath $qualificationConfig | ConvertFrom-Json
 $ledgerConfigValue = Get-Content -Raw -LiteralPath $ledgerConfig | ConvertFrom-Json
 $qualificationResult = Get-Content -Raw -LiteralPath $qualificationResultPath | ConvertFrom-Json
@@ -77,9 +77,18 @@ $ledgerCallerToken = New-R10Token
 $qualificationHash = Get-R10Sha256 $qualificationToken
 $ledgerCallerHash = Get-R10Sha256 $ledgerCallerToken
 
+$ledgerDeployOutput = npx wrangler deploy --config $ledgerConfig 2>&1
+if ($LASTEXITCODE -ne 0) { throw "R10_LEDGER_CODE_DEPLOY_FAILED:$($ledgerDeployOutput -join ' ')" }
 $null = $ledgerCallerHash | npx wrangler secret put E2_R10_LEDGER_CALLER_TOKEN_SHA256 --config $ledgerConfig 2>&1
 if ($LASTEXITCODE -ne 0) { throw 'R10_LEDGER_SECRET_INSTALL_FAILED' }
 $ledgerVersionId = Get-LatestR10Version $ledgerConfig
+$ledgerDeploymentRaw = npx wrangler deployments status --config $ledgerConfig --json 2>$null
+if ($LASTEXITCODE -ne 0) { throw 'R10_LEDGER_DEPLOYMENT_STATUS_FAILED' }
+$ledgerDeployment = $ledgerDeploymentRaw | ConvertFrom-Json
+$activeLedgerVersions = @($ledgerDeployment.versions | Where-Object { $_.percentage -eq 100 })
+if ($activeLedgerVersions.Count -ne 1 -or $activeLedgerVersions[0].version_id -ne $ledgerVersionId) {
+  throw 'R10_LEDGER_ACTIVE_VERSION_MISMATCH'
+}
 
 Write-Output "R10_LEDGER_VERSION_ID=$ledgerVersionId"
 Write-Output 'Patch E2_R10_LEDGER_WORKER_VERSION_ID with this value, then press Enter.'

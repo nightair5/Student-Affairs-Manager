@@ -2,7 +2,7 @@
 
 ## 1. Status and purpose
 
-- Protocol version: `e2-9-r10-facts-first-protocol-1.1.2`
+- Protocol version: `e2-9-r10-facts-first-protocol-1.1.3`
 - Current phase: `ZERO_MODEL_IMPLEMENTATION`
 - Production recognition/generation calls authorized by this protocol: `0`
 - Production deployment: prohibited
@@ -24,9 +24,9 @@ Frozen component versions for this protocol are:
 | Ledger-to-Planner bridge | `e2-r10-ledger-planner-bridge-1.1.0` |
 | Isolated Planner | `e2-r10-isolated-planner-1.1.0` |
 | Ledger-to-Plan Validator | `e2-r10-ledger-plan-validator-1.1.0` |
-| Qualification contract | `e2.9-r10-qualification-contract-1.2.2` |
-| Qualification Worker | `e2-r10-qualification-worker-1.1.2` |
-| Private qualification ledger | `e2-r10-qualification-ledger-1.1.2` |
+| Qualification contract | `e2.9-r10-qualification-contract-1.2.3` |
+| Qualification Worker | `e2-r10-qualification-worker-1.1.3` |
+| Private qualification ledger | `e2-r10-qualification-ledger-1.1.3` |
 
 ## 2. Paired architecture
 
@@ -235,6 +235,17 @@ occurred. Protocol 1.1.2 preserves C as an integrity failure, moves to run label
 fail-closed zero placeholder, or every runtime hash exactly matches the frozen
 qualification evidence and recomputed deployment artifacts. Partial or
 arbitrary nonzero bindings fail.
+
+Run `e29r10-zero-model-qualification-20260824-d` uploaded the D qualification
+Worker and rotated the private Ledger caller Secret, but the Ledger rejected the
+registration with `412 QUALIFICATION_RECORD_INVALID`. The deployment chain had
+not uploaded D Ledger code before `wrangler secret put`; that command creates
+and immediately deploys a new version from the Worker's currently deployed
+code. Protocol 1.1.3 preserves D as an integrity failure, moves to run label
+`e`, deploys the private Ledger code before Secret rotation, and requires the
+post-rotation Ledger version to be the only active version at 100 percent before
+the qualification Worker can be uploaded. No D qualification record or model
+call was created.
 
 The qualification Worker:
 

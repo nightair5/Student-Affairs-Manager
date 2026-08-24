@@ -1,0 +1,33 @@
+{
+  "schemaVersion": "e2.9-r10-qualification-deployment-attempt-1.0.0",
+  "attempt": "d",
+  "runLabel": "e29r10-zero-model-qualification-20260824-d",
+  "protocolVersion": "e2-9-r10-facts-first-protocol-1.1.2",
+  "recordedAt": "2026-08-24T07:01:05.2505214Z",
+  "phase": "preview-ledger-registration",
+  "status": "INTEGRITY_FAILURE",
+  "failureClass": "DEPLOYMENT_CHAIN_CODE_VERSION_DRIFT",
+  "failureCode": "LEDGER_SECRET_VERSION_INHERITED_PREVIOUSLY_DEPLOYED_CODE",
+  "responseStatus": 412,
+  "responseError": "QUALIFICATION_RECORD_INVALID",
+  "sourceCommit": "35bfd02905e93a6bf95ef6a2b9943dbe253f3fab",
+  "protocolBundleSha256": "79915c9654db0142b89fff2070728236935c6bb399a42bd5122dc94c122bbd34",
+  "qualificationResultSha256": "7132df68805d8d62e8a40d64ff8224e55e8690263d3ba6d636203c4a35b0ffb7",
+  "qualificationWorkerVersionId": "2b5bbd77-af85-446d-a051-fa3dfb271e7c",
+  "ledgerWorkerVersionId": "9f7b6789-3c66-4621-a547-f1a9ecad22aa",
+  "localQualificationPassed": true,
+  "contractStableReads": 3,
+  "remoteUploadAttempted": true,
+  "cloudflareSecretsRotated": true,
+  "previewQualificationRecordCreated": false,
+  "modelProviderCalls": 0,
+  "expectedAnswerReads": 0,
+  "productionDeployment": "NOT_DEPLOYED",
+  "screeningAuthorization": "NOT_AUTHORIZED",
+  "rootCauseEvidence": {
+    "deploymentScriptUploadedLedgerCodeBeforeSecretRotation": false,
+    "secretCommandCreatedAndImmediatelyDeployedANewVersion": true,
+    "frontAndLedgerProtocolValidationAgreed": false
+  },
+  "nextAction": "Preserve attempt D; upload the private Ledger code before rotating its Secret, assert the resulting version is the sole 100 percent deployment, and use a new protocol and run label."
+}
