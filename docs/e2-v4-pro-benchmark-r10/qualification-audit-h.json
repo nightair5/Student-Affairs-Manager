@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "e2.9-r10-qualification-audit-1.1.0",
+  "runLabel": "e29r10-zero-model-qualification-20260824-h",
+  "protocolVersion": "e2-9-r10-facts-first-protocol-1.1.6",
+  "overallStatus": "PREVIEW_QUALIFIED_INDEPENDENT_REVIEW_PASS_AWAITING_USER_AUTHORIZATION",
+  "bindings": {
+    "sourceCommit": "3a26aa35cb41670c8d9e2abe0563e0a510eb88fc",
+    "protocolBundleSha256": "411492acd49bad08dff70992cf268463e822ea5b0bafdaaf1dd877c5e58abb65",
+    "screeningGateSha256": "a88d0c74dac0af4b185e4da9b7838b08a3d642772f76afeabdd547b9adf24a88",
+    "qualificationResultSha256": "1f105fbeb6e5666f6e0e3d90a2782af0c3097d510343934e79ba752a384dbf5a",
+    "qualificationEvidenceSha256": "202875582277ca2dba30e91ebc748afec92ad523893199fd026ff1892d06ba33",
+    "previewQualificationSha256": "826956ec0b206b5dab11aa2e764f5757cee4a2b5eeb89c41e088a1c28ffb0e1b",
+    "deploymentEvidenceSha256": "680e7f90c3c317ec92607fdb0880e3d534ea91a75504ffa29ebffe272fbe4ebe",
+    "independentReviewSha256": "878b39c72da7647d70142a2af35e58adc0c391429807c8f1a1f705f2a31db65c",
+    "qualificationWorkerVersionId": "75282b79-77a4-460d-abf5-2cd890a8510e",
+    "ledgerWorkerVersionId": "84682e6e-fb74-4aba-92f5-33b7dd91bc7e"
+  },
+  "checks": {
+    "localZeroModelQualification": "PASS",
+    "qualificationOnlyPreview": "PASS",
+    "protocolBundleStillFrozen": "PASS",
+    "screeningGateStillFrozen": "PASS",
+    "independentReadOnlyReview": "PASS",
+    "machineCrossBindingDryCheck": "PASS",
+    "modelCalls": 0,
+    "upstreamModelNetworkCalls": 0,
+    "expectedAnswerReads": 0,
+    "productionDeployment": "NOT_DEPLOYED"
+  },
+  "engineeringDryCheckUsesInMemoryCandidateOnly": true,
+  "persistedScreeningAuthorizationCreated": false,
+  "screeningEligibleForSeparateAuthorization": true,
+  "screeningAuthorized": false,
+  "screeningCallCapIfSeparatelyAuthorized": 16,
+  "selectionAuthorized": false,
+  "blindAuthorized": false,
+  "productionAuthorized": false,
+  "requiredNextAction": "Obtain explicit user authorization for one H paired Screening with at most 16 model calls. Stop immediately on any Gate failure. Selection, Blind and Production remain forbidden."
+}
