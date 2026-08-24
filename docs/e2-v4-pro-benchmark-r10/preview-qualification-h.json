@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "e2.9-r10-preview-qualification-evidence-1.0.0",
+  "runLabel": "e29r10-zero-model-qualification-20260824-h",
+  "protocolVersion": "e2-9-r10-facts-first-protocol-1.1.6",
+  "sourceCommit": "3a26aa35cb41670c8d9e2abe0563e0a510eb88fc",
+  "qualificationStatus": "LOCAL_QUALIFIED_PREVIEW_UPLOAD_REQUESTABLE",
+  "protocolBundleSha256": "411492acd49bad08dff70992cf268463e822ea5b0bafdaaf1dd877c5e58abb65",
+  "qualificationResultSha256": "1f105fbeb6e5666f6e0e3d90a2782af0c3097d510343934e79ba752a384dbf5a",
+  "deploymentEvidenceSha256": "680e7f90c3c317ec92607fdb0880e3d534ea91a75504ffa29ebffe272fbe4ebe",
+  "deploymentEvidence": {
+    "schemaVersion": "e2.9-r10-deployment-evidence-1.0.0",
+    "qualificationWorkerVersionId": "75282b79-77a4-460d-abf5-2cd890a8510e",
+    "qualificationWorkerUploadedAt": "2026-08-24T07:36:48.434139Z",
+    "qualificationWorkerVersionedOrigin": "https://75282b79-sa-e2-r10-facts-first-qual-preview.nightsdell.workers.dev",
+    "qualificationWorkerBytesSha256": "4cb94c79b89b5b81916dc51ad9b2395ca1485e9b0eab8ebdfdb1277fd35001a1",
+    "qualificationWorkerConfigSha256": "f4d25c2218558b2e2ded89e17a6fd086e06228faceff773143236cf035f22ef4",
+    "ledgerWorkerVersionId": "84682e6e-fb74-4aba-92f5-33b7dd91bc7e",
+    "ledgerWorkerBytesSha256": "0903c47a38bb11aa14757891d56024278d91502b23ae600ea8f7ded2d8dc3a8e",
+    "ledgerWorkerConfigSha256": "739f9235efc29e6fab662a81cc5ff46b71939d471e23005387f97fe2f57b589a"
+  },
+  "qualificationWorkerVersionId": "75282b79-77a4-460d-abf5-2cd890a8510e",
+  "qualificationWorkerUploadedAt": "2026-08-24T07:36:48.434139Z",
+  "qualificationWorkerVersionedOrigin": "https://75282b79-sa-e2-r10-facts-first-qual-preview.nightsdell.workers.dev",
+  "qualificationWorkerStableTrafficPercentage": 0,
+  "stableWorkerVersions": [
+    {
+      "versionId": "ec793f3c-4c37-40d0-bbcc-224d2b2230cf",
+      "percentage": 100
+    }
+  ],
+  "ledgerWorkerVersionId": "84682e6e-fb74-4aba-92f5-33b7dd91bc7e",
+  "ledgerWorkerActiveTrafficPercentage": 100,
+  "contractStableReads": 3,
+  "recordStatus": 201,
+  "idempotentReplayStatus": 200,
+  "stateStatus": 200,
+  "lockedStageStatuses": {
+    "readiness": 412,
+    "smoke": 412,
+    "screening": 412,
+    "selection": 412,
+    "blind": 412,
+    "production": 412
+  },
+  "wrongOriginStatus": 403,
+  "wrongAuthenticationStatus": 401,
+  "modelCalls": 0,
+  "upstreamNetworkCalls": 0,
+  "expectedAnswerReads": 0,
+  "productionSiteConfigChanged": false,
+  "productionDeployment": "NOT_DEPLOYED",
+  "screeningAuthorization": "NOT_AUTHORIZED"
+}
