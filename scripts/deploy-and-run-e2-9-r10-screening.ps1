@@ -29,6 +29,30 @@ function Get-R10ScreeningFileSha256([string]$Path) {
   (Get-FileHash -Algorithm SHA256 -LiteralPath $Path).Hash.ToLowerInvariant()
 }
 
+function Get-R10ScreeningCanonicalTextSha256([string]$Path) {
+  $text = [IO.File]::ReadAllText((Resolve-Path -LiteralPath $Path))
+  Get-R10ScreeningSha256 ($text.Replace("`r`n", "`n").Replace("`r", "`n"))
+}
+
+function Write-R10ScreeningCreateOnceJson([string]$Path, [object]$Value) {
+  $absolute = [IO.Path]::GetFullPath($Path)
+  $directory = [IO.Path]::GetDirectoryName($absolute)
+  [IO.Directory]::CreateDirectory($directory) | Out-Null
+  $stream = [IO.FileStream]::new($absolute, [IO.FileMode]::CreateNew, [IO.FileAccess]::Write, [IO.FileShare]::None)
+  try {
+    $writer = [IO.StreamWriter]::new($stream, [Text.UTF8Encoding]::new($false))
+    try {
+      $writer.Write(($Value | ConvertTo-Json -Depth 30))
+      $writer.Write("`n")
+      $writer.Flush()
+    } finally {
+      $writer.Dispose()
+    }
+  } finally {
+    $stream.Dispose()
+  }
+}
+
 function Get-LatestR10ScreeningVersion([string]$ConfigPath) {
   $raw = npx wrangler versions list --config $ConfigPath --json 2>$null
   if ($LASTEXITCODE -ne 0) { throw "R10_SCREENING_VERSION_LIST_FAILED:$ConfigPath" }
@@ -80,20 +104,21 @@ if ([string]::IsNullOrWhiteSpace($env:DEEPSEEK_API_KEY) -or $env:DEEPSEEK_API_KE
   throw 'DEEPSEEK_API_KEY_MUST_BE_PRESENT_ONLY_IN_PROCESS_ENVIRONMENT'
 }
 
-$protocolBundlePath = 'docs/e2-v4-pro-benchmark-r10/screening-protocol-1.0.0/protocol-bundle.json'
-$caseManifestPath = 'docs/e2-v4-pro-benchmark-r10/screening-protocol-1.0.0/case-manifest.json'
-$qualificationAuditPath = 'docs/e2-v4-pro-benchmark-r10/qualification-audit-h.json'
+$protocolBundlePath = 'docs/e2-v4-pro-benchmark-r10/screening-protocol-1.1.0/protocol-bundle.json'
+$caseManifestPath = 'docs/e2-v4-pro-benchmark-r10/screening-protocol-1.1.0/case-manifest.json'
+$readinessReviewPath = 'docs/e2-v4-pro-benchmark-r10/screening-protocol-1.1.0/independent-readiness-review.json'
 $bootstrapConfig = 'wrangler.e2-r10-screening-bootstrap.jsonc'
 $screeningConfig = 'wrangler.e2-r10-screening-preview.jsonc'
 $ledgerConfig = 'wrangler.e2-r10-screening-ledger.jsonc'
-$protocolBundleHash = Get-R10ScreeningFileSha256 $protocolBundlePath
-$caseManifestHash = Get-R10ScreeningFileSha256 $caseManifestPath
-$qualificationAuditHash = Get-R10ScreeningFileSha256 $qualificationAuditPath
+$protocolBundleHash = Get-R10ScreeningCanonicalTextSha256 $protocolBundlePath
+$caseManifestHash = Get-R10ScreeningCanonicalTextSha256 $caseManifestPath
+if (-not (Test-Path -LiteralPath $readinessReviewPath -PathType Leaf)) { throw 'INDEPENDENT_READINESS_REVIEW_REQUIRED' }
+$readinessReviewHash = Get-R10ScreeningFileSha256 $readinessReviewPath
 $screeningConfigValue = Get-Content -Raw -LiteralPath $screeningConfig | ConvertFrom-Json
 
 $screeningConfigChecks = @(
   $screeningConfigValue.vars.E2_R10_SCREENING_CASE_MANIFEST_SHA256 -eq $caseManifestHash
-  $screeningConfigValue.vars.E2_R10_QUALIFICATION_AUDIT_SHA256 -eq $qualificationAuditHash
+  $screeningConfigValue.vars.E2_R10_SCREENING_READINESS_REVIEW_SHA256 -eq ('0' * 64)
   $screeningConfigValue.vars.E2_R10_SCREENING_PROTOCOL_BUNDLE_SHA256 -eq ('0' * 64)
   $screeningConfigValue.routes.Count -eq 0
   $screeningConfigValue.name -eq 'sa-e2-r10-screening-preview'
@@ -102,13 +127,34 @@ if ($screeningConfigChecks -contains $false) {
   throw 'SCREENING_CONFIG_FROZEN_BINDINGS_INVALID'
 }
 
+$gitStatus = git status --porcelain
+if ($LASTEXITCODE -ne 0 -or -not [string]::IsNullOrWhiteSpace(($gitStatus -join ''))) { throw 'CLEAN_WORKTREE_REQUIRED_FOR_DEPLOYMENT' }
+$sourceCommit = (git rev-parse HEAD).Trim()
+$sourceTree = (git rev-parse 'HEAD^{tree}').Trim()
+$branch = (git branch --show-current).Trim()
+if ($sourceCommit -notmatch '^[0-9a-f]{40}$' -or $sourceTree -notmatch '^[0-9a-f]{40}$' -or [string]::IsNullOrWhiteSpace($branch)) {
+  throw 'GIT_SOURCE_BINDING_FAILED'
+}
+$readinessReview = Get-Content -Raw -LiteralPath $readinessReviewPath | ConvertFrom-Json
+if ($readinessReview.status -ne 'PASS' -or
+  $readinessReview.protocolVersion -ne 'e2-9-r10-screening-protocol-1.1.0' -or
+  $readinessReview.runLabel -ne 'e29r10-screening-20260825-b' -or
+  $readinessReview.protocolBundleSha256 -ne $protocolBundleHash -or
+  $readinessReview.reviewedCommit -notmatch '^[0-9a-f]{40}$') {
+  throw 'INDEPENDENT_READINESS_REVIEW_INVALID'
+}
+$postReviewChanges = @(git diff --name-only "$($readinessReview.reviewedCommit)..HEAD")
+if ($LASTEXITCODE -ne 0 -or $postReviewChanges.Count -ne 1 -or $postReviewChanges[0] -ne $readinessReviewPath) {
+  throw 'POST_REVIEW_CODE_DRIFT'
+}
+
 node scripts/run-e2-9-r10-screening.mjs --phase=preflight
 if ($LASTEXITCODE -ne 0) { throw 'R10_SCREENING_LOCAL_PREFLIGHT_FAILED' }
 npx wrangler deploy --dry-run --config $bootstrapConfig | Out-Null
 if ($LASTEXITCODE -ne 0) { throw 'R10_SCREENING_BOOTSTRAP_DRY_RUN_FAILED' }
 npx wrangler deploy --dry-run --config $ledgerConfig | Out-Null
 if ($LASTEXITCODE -ne 0) { throw 'R10_SCREENING_LEDGER_DRY_RUN_FAILED' }
-npx wrangler versions upload --dry-run --config $screeningConfig --var "E2_R10_SCREENING_PROTOCOL_BUNDLE_SHA256:$protocolBundleHash" | Out-Null
+npx wrangler versions upload --dry-run --config $screeningConfig --var "E2_R10_SCREENING_PROTOCOL_BUNDLE_SHA256:$protocolBundleHash" --var "E2_R10_SCREENING_READINESS_REVIEW_SHA256:$readinessReviewHash" | Out-Null
 if ($LASTEXITCODE -ne 0) { throw 'R10_SCREENING_WORKER_DRY_RUN_FAILED' }
 
 $screeningToken = New-R10ScreeningToken
@@ -133,7 +179,7 @@ if ($activeLedgerVersions.Count -ne 1 -or $activeLedgerVersions[0].version_id -n
   throw 'R10_SCREENING_LEDGER_ACTIVE_VERSION_MISMATCH'
 }
 
-$uploadOutput = npx wrangler versions upload --config $screeningConfig --var "E2_R10_SCREENING_PROTOCOL_BUNDLE_SHA256:$protocolBundleHash" 2>&1
+$uploadOutput = npx wrangler versions upload --config $screeningConfig --var "E2_R10_SCREENING_PROTOCOL_BUNDLE_SHA256:$protocolBundleHash" --var "E2_R10_SCREENING_READINESS_REVIEW_SHA256:$readinessReviewHash" 2>&1
 if ($LASTEXITCODE -ne 0) { throw "R10_SCREENING_VERSION_UPLOAD_FAILED:$($uploadOutput -join ' ')" }
 $screeningSecrets = @{
   DEEPSEEK_API_KEY = $env:DEEPSEEK_API_KEY
@@ -166,7 +212,7 @@ if (($contracts | Where-Object {
   $_.workerVersionId -ne $screeningVersionId -or
   $_.protocolBundleSha256 -ne $protocolBundleHash -or
   $_.caseManifestSha256 -ne $caseManifestHash -or
-  $_.qualificationAuditSha256 -ne $qualificationAuditHash -or
+  $_.readinessReviewSha256 -ne $readinessReviewHash -or
   $_.modelCalls -ne 0 -or
   $_.previewOnly -ne $true
 }).Count -ne 0) { throw 'R10_SCREENING_CONTRACT_BINDING_DRIFT' }
@@ -181,18 +227,23 @@ if ($wrongOrigin.StatusCode -ne 403 -or $wrongAuth.StatusCode -ne 401 -or
   throw 'R10_SCREENING_PREVIEW_ISOLATION_FAILED'
 }
 
-$cacheRoot = '.evaluation-cache/e2-9-r10/screening-protocol-1.0.0/e29r10-screening-20260824-a'
+$cacheRoot = '.evaluation-cache/e2-9-r10/screening-protocol-1.1.0/e29r10-screening-20260825-b'
 New-Item -ItemType Directory -Force -Path $cacheRoot | Out-Null
 $deploymentEvidence = [ordered]@{
-  schemaVersion = 'e2.9-r10-screening-deployment-evidence-1.0.0'
-  protocolVersion = 'e2-9-r10-screening-protocol-1.0.0'
-  runLabel = 'e29r10-screening-20260824-a'
+  schemaVersion = 'e2.9-r10-screening-deployment-evidence-1.1.0'
+  protocolVersion = 'e2-9-r10-screening-protocol-1.1.0'
+  runLabel = 'e29r10-screening-20260825-b'
+  status = 'PREVIEW_DEPLOYED_MODEL_VERSION_ZERO_TRAFFIC'
+  sourceCommit = $sourceCommit
+  sourceTree = $sourceTree
+  branch = $branch
   protocolBundleSha256 = $protocolBundleHash
   caseManifestSha256 = $caseManifestHash
-  qualificationAuditSha256 = $qualificationAuditHash
+  readinessReviewSha256 = $readinessReviewHash
   screeningWorkerVersionId = $screeningVersionId
-  screeningWorkerVersionedOrigin = $origin
+  versionedOrigin = $origin
   screeningVersionStableTrafficPercent = $screeningStableTraffic
+  stableTrafficTotalPercent = $stableTrafficTotal
   ledgerWorkerVersionId = $ledgerVersionId
   ledgerActiveTrafficPercent = 100
   contractReads = 3
@@ -205,8 +256,7 @@ $deploymentEvidence = [ordered]@{
   productionDeployed = $false
 }
 $deploymentEvidencePath = Join-Path $cacheRoot 'deployment-evidence.json'
-if (Test-Path -LiteralPath $deploymentEvidencePath) { throw 'REFUSING_TO_OVERWRITE_DEPLOYMENT_EVIDENCE' }
-$deploymentEvidence | ConvertTo-Json -Depth 20 | Set-Content -LiteralPath $deploymentEvidencePath -Encoding utf8NoBOM
+Write-R10ScreeningCreateOnceJson $deploymentEvidencePath $deploymentEvidence
 
 $previousToken = $env:E2_R10_SCREENING_TOKEN
 try {

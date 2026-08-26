@@ -24,6 +24,9 @@ async function authorize(request, env, { requireModel = false } = {}) {
   const versionId = safeText(env.CF_VERSION_METADATA?.id, 64)
   const configuredOrigin = safeText(env.E2_R10_SCREENING_PREVIEW_ORIGIN, 300)
   if (!validWorkerVersionId(versionId) || !configuredOrigin) return { error: 'VERSIONED_PREVIEW_NOT_CONFIGURED', status: 503 }
+  if (!validSha256(safeText(env.E2_R10_SCREENING_READINESS_REVIEW_SHA256, 64))) {
+    return { error: 'READINESS_REVIEW_NOT_CONFIGURED', status: 503 }
+  }
   let expectedOrigin
   try { expectedOrigin = versionedOrigin(configuredOrigin, versionId) } catch { return { error: 'VERSIONED_PREVIEW_NOT_CONFIGURED', status: 503 } }
   const url = new URL(request.url)
@@ -75,13 +78,21 @@ async function handleGenerate(request, env, authorization, fetcher) {
     observationIndex: body.observationIndex,
     caseId: body.caseId,
     arm: body.arm,
-    semanticRole: body.semanticRole,
     sourceSha256: body.sourceSha256,
     inputSha256: body.inputSha256,
   } })
   if (!reservation.response.ok) return json(reservation.payload, reservation.response.status)
   const reservationToken = reservation.payload.reservationToken
-  const outcome = await executeScreeningObservation(body, env, fetcher)
+  let outcome
+  try {
+    outcome = await executeScreeningObservation(body, env, fetcher)
+  } catch {
+    outcome = {
+      ok: false,
+      integrityError: 'UNHANDLED_EXECUTION_FAILURE',
+      completion: { error: 'UNHANDLED_EXECUTION_FAILURE', status: 502, durationMs: null },
+    }
+  }
   const complete = outcome.ok
   const status = complete ? 'complete' : outcome.integrityError ? 'integrity_failure'
     : ['UPSTREAM_TIMEOUT', 'UPSTREAM_NETWORK_ERROR'].includes(outcome.completion?.error) ? 'transport_failure' : 'model_failure'
@@ -128,7 +139,6 @@ async function handleGenerate(request, env, authorization, fetcher) {
     observationIndex: body.observationIndex,
     caseId: body.caseId,
     arm: body.arm,
-    semanticRole: body.semanticRole,
     rawOutput: outcome.rawOutput,
     result: outcome.result,
     ledger: outcome.ledger,

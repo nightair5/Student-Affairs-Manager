@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "e2.9-r10-screening-gate-binding-1.1.0",
+  "protocolVersion": "e2-9-r10-screening-protocol-1.1.0",
+  "status": "FROZEN_BEFORE_MODEL_CALLS",
+  "qualityRequirements": {
+    "taskRecallDeltaPercentagePointsAtLeastOrUserImpactMajorDeltaPercentagePointsAtMost": [8, -15],
+    "taskPrecisionDeltaPercentagePointsAtLeast": -3,
+    "evidenceCoverageAtLeast": 0.95,
+    "severeErrorNotGreater": true,
+    "planningErrorStrictlyLess": true,
+    "factLossNotGreater": true
+  },
+  "integrityRequirements": {
+    "observationCount": 16,
+    "allObservationsImmutable": true,
+    "failedObservationOverwriteCount": 0,
+    "fourWayModelIdentityMismatchCount": 0,
+    "generationExpectedReadCount": 0,
+    "generationSemanticRoleReadCount": 0,
+    "deploymentLedgerCheckpointScoringHashesClosed": true,
+    "packetAuditAndMappingCommitmentVerified": true,
+    "labelsFrozenBeforeReveal": true
+  },
+  "onAnyFailure": "STOP",
+  "selectionAutomaticallyAuthorized": false,
+  "blindAutomaticallyAuthorized": false,
+  "productionAutomaticallyAuthorized": false
+}

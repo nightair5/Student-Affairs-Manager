@@ -1,0 +1,29 @@
+{
+  "schemaVersion": "e2.9-r10-screening-review-contract-1.1.0",
+  "protocolVersion": "e2-9-r10-screening-protocol-1.1.0",
+  "pathMaskVersion": "paired-notice-review-1.1.0",
+  "status": "FROZEN_BEFORE_MODEL_CALLS",
+  "reviewerEligibility": {
+    "hasNotSeenMapping": true,
+    "mustNotReadGenerationCheckpoint": true,
+    "mustNotReadStrictScores": true,
+    "mustNotReadHistoricalPathConclusions": true,
+    "mustAttestBeforeReview": true
+  },
+  "publicPacketExcludes": [
+    "model identity", "path identity", "arm identity", "Prompt/Pipeline versions", "scores",
+    "Expected answers", "dataset role labels", "historical conclusions", "generation hashes"
+  ],
+  "mappingIntegrity": {
+    "commitmentPublishedInPacket": true,
+    "saltAndMappingRemainPrivateUntilReveal": true,
+    "commitmentRecomputedAfterLabelsFreeze": true
+  },
+  "revealPrerequisites": [
+    "packet audit PASS", "packet bytes hash-bound", "independent reviewer eligibility attested",
+    "all 8 labels complete", "labels frozen with hash", "mapping commitment matches"
+  ],
+  "selectionAutomaticallyAuthorized": false,
+  "blindAutomaticallyAuthorized": false,
+  "productionAutomaticallyAuthorized": false
+}

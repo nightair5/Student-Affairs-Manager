@@ -3,7 +3,9 @@
 ## 1. Status and purpose
 
 - Protocol version: `e2-9-r10-facts-first-protocol-1.1.6`
-- Current phase: `H_ZERO_MODEL_IMPLEMENTATION_NOT_YET_QUALIFIED`
+- Current phase: `ARCHIVED_RESEARCH`
+- Release eligibility: `NOT_FOR_RELEASE`
+- Archive checkpoint date: `2026-08-26`
 - Production recognition/generation calls authorized by this protocol: `0`
 - Production deployment: prohibited
 - Selection: prohibited until Screening Gate passes

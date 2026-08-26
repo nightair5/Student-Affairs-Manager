@@ -1,9 +1,13 @@
 import assert from 'node:assert/strict'
+import { readFileSync } from 'node:fs'
 import test from 'node:test'
 import {
+  E2_R10_SCREENING_BASE_ORIGIN,
+  E2_R10_SCREENING_OBSERVATION_PLAN,
   E2_R10_SCREENING_PROTOCOL_VERSION,
   E2_R10_SCREENING_RUN_LABEL,
   canonicalJson,
+  exactVersionedPreviewOrigin,
   sha256Text,
 } from './e2-r10-screening-contract.mjs'
 import screeningLedgerWorker, { E2R10ScreeningLedger } from './e2-r10-screening-ledger.mjs'
@@ -12,8 +16,8 @@ import { runE2R10ScreeningWorker } from './e2-r10-screening-worker.mjs'
 const TOKEN = 'screening-test-token-that-never-leaves-process-memory'
 const LEDGER_TOKEN = 'ledger-test-token-that-never-leaves-process-memory'
 const VERSION_ID = '11111111-1111-4111-8111-111111111111'
-const BASE_ORIGIN = 'https://sa-e2-r10-screening-preview.example'
-const VERSIONED_ORIGIN = 'https://11111111-sa-e2-r10-screening-preview.example'
+const BASE_ORIGIN = E2_R10_SCREENING_BASE_ORIGIN
+const VERSIONED_ORIGIN = 'https://11111111-sa-e2-r10-screening-preview.nightsdell.workers.dev'
 const PROTOCOL_HASH = 'a'.repeat(64)
 const MANIFEST_HASH = 'b'.repeat(64)
 
@@ -41,7 +45,7 @@ async function harnessEnvironment() {
     E2_R10_SCREENING_LEDGER_CALLER_TOKEN: LEDGER_TOKEN,
     E2_R10_SCREENING_PROTOCOL_BUNDLE_SHA256: PROTOCOL_HASH,
     E2_R10_SCREENING_CASE_MANIFEST_SHA256: MANIFEST_HASH,
-    E2_R10_QUALIFICATION_AUDIT_SHA256: 'c'.repeat(64),
+    E2_R10_SCREENING_READINESS_REVIEW_SHA256: 'c'.repeat(64),
     DEEPSEEK_API_KEY: 'server-only-test-key-for-e2-r10',
     CF_VERSION_METADATA: { id: VERSION_ID },
     E2_R10_SCREENING_LEDGER: { fetch: (request) => screeningLedgerWorker.fetch(request, ledgerEnvironment) },
@@ -60,23 +64,11 @@ function request(suffix, { method = 'GET', body, origin = VERSIONED_ORIGIN } = {
   })
 }
 
-const CASES = Array.from({ length: 8 }, (_, index) => ({
-  caseId: `case-${index + 1}`,
-  semanticRole: index === 3 ? 'information_only' : index === 4 ? 'prompt_injection' : 'action_required',
-  sourceSha256: `${index + 1}`.repeat(64),
-  inputSha256: `${8 - index}`.repeat(64),
-}))
+const SOURCE_INPUTS = JSON.parse(readFileSync(new URL('../docs/e2-v4-pro-benchmark-r10/screening-protocol-1.1.0/source-input-manifest.json', import.meta.url), 'utf8'))
+const SOURCE_BY_ID = new Map(SOURCE_INPUTS.cases.map((item) => [item.caseId, item]))
 
 function registration() {
-  const observations = CASES.flatMap((fixture, caseIndex) => ['A', 'B'].map((arm, armIndex) => ({
-    observationId: `e29r10-screening-${String(caseIndex * 2 + armIndex + 1).padStart(2, '0')}-${arm.toLowerCase()}`,
-    observationIndex: caseIndex * 2 + armIndex + 1,
-    caseId: fixture.caseId,
-    arm,
-    semanticRole: fixture.semanticRole,
-    sourceSha256: fixture.sourceSha256,
-    inputSha256: fixture.inputSha256,
-  })))
+  const observations = E2_R10_SCREENING_OBSERVATION_PLAN.map((item) => ({ ...item }))
   return {
     protocolVersion: E2_R10_SCREENING_PROTOCOL_VERSION,
     protocolBundleSha256: PROTOCOL_HASH,
@@ -90,13 +82,13 @@ function minimalRecognitionOutput() {
   return {
     schemaVersion: '2.0',
     createdAt: '2026-08-24T00:00:00.000Z',
-    sourceSummary: { title: '通知', sourceType: 'text', notificationType: 'material_submission', summary: '提交报名表', requiresAction: true, actionReason: '原文要求提交' },
+    sourceSummary: { title: '通知', sourceType: 'link', notificationType: 'material_submission', summary: '填写实验伦理确认单', requiresAction: true, actionReason: '原文要求填写' },
     projectMatch: { decision: 'standalone_task', matchedProjectId: null, suggestedProjectTitle: null, confidence: 0.9, reasons: [] },
     projectSuggestion: null,
     milestones: [],
-    standaloneTasks: [{ tempId: 'task-1', title: '提交报名表', actionVerb: '提交', actionObject: '报名表', evidenceIds: ['ev-1'], inferenceLevel: 'explicit' }],
+    standaloneTasks: [{ tempId: 'task-1', title: '填写实验伦理确认单', actionVerb: '填写', actionObject: '实验伦理确认单', evidenceIds: ['ev-1'], inferenceLevel: 'explicit' }],
     materials: [], timePoints: [], events: [], conflicts: [], ambiguities: [], ignoredContent: [],
-    evidence: [{ id: 'ev-1', quotedText: '提交报名表', field: 'description', confidence: 0.9 }],
+    evidence: [{ id: 'ev-1', quotedText: '填写实验伦理确认单', field: 'description', confidence: 0.9 }],
     quality: {},
   }
 }
@@ -105,11 +97,11 @@ function factLedgerOutput() {
   return {
     schemaVersion: 'e2.5-fact-ledger-1.0.0',
     obligations: [{
-      id: 'ob-1', actor: null, modality: 'required', actionPredicate: '提交', object: '报名表',
+      id: 'ob-1', actor: null, modality: 'required', actionPredicate: '填写', object: '实验伦理确认单',
       materialIds: [], timeExpressionIds: [], eventIds: [], conditionIds: [], constraintIds: [], evidenceIds: ['ev-1'],
     }],
     materials: [], timeExpressions: [], events: [], conditions: [], constraints: [], ambiguities: [],
-    evidence: [{ id: 'ev-1', quote: '提交报名表', start: 1, end: 6 }],
+    evidence: [{ id: 'ev-1', quote: '填写实验伦理确认单', start: 5, end: 14 }],
   }
 }
 
@@ -124,32 +116,23 @@ function upstream(content, { status = 200 } = {}) {
 }
 
 async function observationBody(arm, index = 0) {
-  const content = '请提交报名表。'
-  const input = { sourceType: 'text', sourceTitle: '报名通知', content, referenceTime: '2026-08-24T08:00:00+08:00', timezone: 'Asia/Shanghai' }
+  const plan = E2_R10_SCREENING_OBSERVATION_PLAN.filter((item) => item.caseId === E2_R10_SCREENING_OBSERVATION_PLAN[index * 2].caseId)
+    .find((item) => item.arm === arm)
+  const fixture = SOURCE_BY_ID.get(plan.caseId)
+  const input = { sourceType: fixture.sourceType, sourceTitle: fixture.sourceTitle, content: fixture.content, referenceTime: fixture.referenceTime, timezone: fixture.timezone }
   return {
     protocolVersion: E2_R10_SCREENING_PROTOCOL_VERSION,
     protocolBundleSha256: PROTOCOL_HASH,
     runLabel: E2_R10_SCREENING_RUN_LABEL,
-    observationId: `e29r10-screening-${String(index * 2 + (arm === 'A' ? 1 : 2)).padStart(2, '0')}-${arm.toLowerCase()}`,
-    observationIndex: index * 2 + (arm === 'A' ? 1 : 2),
-    caseId: CASES[index].caseId,
-    arm,
-    semanticRole: CASES[index].semanticRole,
+    observationId: plan.observationId,
+    observationIndex: plan.observationIndex,
+    caseId: plan.caseId,
+    arm: plan.arm,
     ...input,
-    sourceSha256: await sha256Text(content),
+    sourceSha256: await sha256Text(fixture.content),
     inputSha256: await sha256Text(canonicalJson(input)),
     caseManifestSha256: MANIFEST_HASH,
   }
-}
-
-function registrationForRealHashes(observations) {
-  const base = registration()
-  for (const body of observations) {
-    const item = base.observations.find((value) => value.observationId === body.observationId)
-    item.sourceSha256 = body.sourceSha256
-    item.inputSha256 = body.inputSha256
-  }
-  return base
 }
 
 test('R10 Screening contract is versioned Preview-only and makes zero model calls', async () => {
@@ -176,6 +159,9 @@ test('R10 Screening rejects stable origin, wrong origin, missing auth and later 
   assert.equal((await runE2R10ScreeningWorker(request('selection'), env, fetcher)).status, 412)
   assert.equal((await runE2R10ScreeningWorker(request('blind'), env, fetcher)).status, 412)
   assert.equal((await runE2R10ScreeningWorker(request('production'), env, fetcher)).status, 412)
+  const missingReview = { ...env }
+  delete missingReview.E2_R10_SCREENING_READINESS_REVIEW_SHA256
+  assert.equal((await runE2R10ScreeningWorker(request('contract'), missingReview, fetcher)).status, 503)
   assert.equal(calls, 0)
 })
 
@@ -203,11 +189,45 @@ test('R10 generation firewall rejects Expected-like fields before reservation or
   assert.equal(calls, 0)
 })
 
+test('R10 generation cannot consume semantic-role or dataset labels', async () => {
+  const env = await harnessEnvironment()
+  const clean = await observationBody('A')
+  let calls = 0
+  for (const extra of [{ semanticRole: 'information_only' }, { sourceSet: 'development' }]) {
+    const response = await runE2R10ScreeningWorker(request('generate', { method: 'POST', body: { ...clean, ...extra } }), env, async () => { calls += 1 })
+    assert.equal(response.status, 400)
+    assert.equal((await response.json()).error, 'GENERATION_FIREWALL_REJECTED')
+  }
+  assert.equal(calls, 0)
+})
+
+test('R10 endpoint binding rejects lookalike hosts before any Bearer request can be made', () => {
+  assert.equal(exactVersionedPreviewOrigin(VERSIONED_ORIGIN, VERSION_ID), VERSIONED_ORIGIN)
+  assert.throws(() => exactVersionedPreviewOrigin('https://11111111-evil.example', VERSION_ID), /EXACT_VERSIONED_PREVIEW_REQUIRED/u)
+  assert.throws(() => exactVersionedPreviewOrigin('http://11111111-sa-e2-r10-screening-preview.nightsdell.workers.dev', VERSION_ID), /EXACT_VERSIONED_PREVIEW_REQUIRED/u)
+})
+
+test('R10 server enforces the frozen pair hashes and strict observation order', async () => {
+  const env = await harnessEnvironment()
+  const changed = registration()
+  changed.observations[1].inputSha256 = 'd'.repeat(64)
+  assert.equal((await runE2R10ScreeningWorker(request('register', { method: 'POST', body: changed }), env)).status, 412)
+
+  const fresh = await harnessEnvironment()
+  assert.equal((await runE2R10ScreeningWorker(request('register', { method: 'POST', body: registration() }), fresh)).status, 201)
+  let calls = 0
+  const second = await observationBody('B')
+  const response = await runE2R10ScreeningWorker(request('generate', { method: 'POST', body: second }), fresh, async () => { calls += 1 })
+  assert.equal(response.status, 412)
+  assert.equal((await response.json()).error, 'OBSERVATION_SEQUENCE_VIOLATION')
+  assert.equal(calls, 0)
+})
+
 test('R10 executes paired A and B with the same one-call model parameters and injects four-way model identity', async () => {
   const env = await harnessEnvironment()
   const bodyA = await observationBody('A')
   const bodyB = await observationBody('B')
-  const registered = registrationForRealHashes([bodyA, bodyB])
+  const registered = registration()
   assert.equal((await runE2R10ScreeningWorker(request('register', { method: 'POST', body: registered }), env)).status, 201)
   const requests = []
   const fetcher = async (_url, options) => {
@@ -238,7 +258,7 @@ test('R10 executes paired A and B with the same one-call model parameters and in
   }
   assert.equal(payloadA.ledger, null)
   assert.equal(payloadB.ledger.schemaVersion, 'e2.5-fact-ledger-1.0.0')
-  assert.equal(payloadB.result.standaloneTasks[0].title, '提交报名表')
+  assert.equal(payloadB.result.standaloneTasks[0].title, '填写实验伦理确认单')
   assert.equal(payloadB.validation.status, 'NO_ISSUE')
   const duplicate = await runE2R10ScreeningWorker(request('generate', { method: 'POST', body: bodyB }), env, fetcher)
   assert.equal(duplicate.status, 409)
@@ -248,7 +268,7 @@ test('R10 executes paired A and B with the same one-call model parameters and in
 test('R10 failed observation is terminal and cannot be overwritten by a later successful retry', async () => {
   const env = await harnessEnvironment()
   const bodyA = await observationBody('A')
-  const registered = registrationForRealHashes([bodyA])
+  const registered = registration()
   assert.equal((await runE2R10ScreeningWorker(request('register', { method: 'POST', body: registered }), env)).status, 201)
   let calls = 0
   const failed = await runE2R10ScreeningWorker(request('generate', { method: 'POST', body: bodyA }), env, async () => {
@@ -265,4 +285,12 @@ test('R10 failed observation is terminal and cannot be overwritten by a later su
   const state = await (await runE2R10ScreeningWorker(request('state'), env)).json()
   assert.equal(state.runStatus, 'FAILED')
   assert.equal(state.observations[bodyA.observationId].status, 'model_failure')
+  const bodyB = await observationBody('B')
+  const blocked = await runE2R10ScreeningWorker(request('generate', { method: 'POST', body: bodyB }), env, async () => {
+    calls += 1
+    return upstream(factLedgerOutput())
+  })
+  assert.equal(blocked.status, 412)
+  assert.equal((await blocked.json()).error, 'RUN_TERMINAL_FAILURE')
+  assert.equal(calls, 1)
 })

@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "e2.9-r10-screening-request-contracts-1.1.0",
+  "protocolVersion": "e2-9-r10-screening-protocol-1.1.0",
+  "runLabel": "e29r10-screening-20260825-b",
+  "status": "FROZEN_BEFORE_MODEL_CALLS",
+  "model": "deepseek-v4-flash",
+  "parameters": {
+    "temperature": 0,
+    "maxTokens": 6000,
+    "thinking": "disabled",
+    "responseFormat": "json_object",
+    "attemptsPerObservation": 1
+  },
+  "pairedDesign": {
+    "caseCount": 8,
+    "observationCount": 16,
+    "interleaved": true,
+    "sameSourceAndInputHashesWithinPair": true,
+    "router": "BYPASSED",
+    "repair": "DISABLED"
+  },
+  "pathA": {
+    "modelCallsPerObservation": 1,
+    "pipeline": "recognition-2.4.1 single-pass"
+  },
+  "pathB": {
+    "modelCallsPerObservation": 1,
+    "modelOutput": "FactLedger only",
+    "afterModel": ["strict FactLedger validation", "deterministic bridge", "isolated deterministic Planner", "ledger-plan Validator"]
+  },
+  "generationRequestFields": [
+    "protocolVersion", "protocolBundleSha256", "runLabel", "observationId", "observationIndex",
+    "caseId", "arm", "sourceType", "sourceTitle", "content", "referenceTime",
+    "timezone", "sourceSha256", "inputSha256", "caseManifestSha256"
+  ],
+  "generationUnavailableFields": [
+    "semanticRole", "sourceSet", "expected", "answer", "gold", "target", "label", "score", "forbidden"
+  ],
+  "serverPrerequisites": {
+    "exactVersionedCloudflareOrigin": true,
+    "readinessReviewHashRequired": true,
+    "freshCreateOnceRegistration": true,
+    "strictObservationOrder": true,
+    "failureStopsLaterReservations": true
+  }
+}

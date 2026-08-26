@@ -23,18 +23,38 @@ import {
   validateR10LedgerPlan,
 } from './e2-r10-ledger-plan-validator.mjs'
 
-export const E2_R10_SCREENING_PROTOCOL_VERSION = 'e2-9-r10-screening-protocol-1.0.0'
-export const E2_R10_SCREENING_WORKER_VERSION = 'e2-r10-screening-worker-1.0.0'
-export const E2_R10_SCREENING_LEDGER_VERSION = 'e2-r10-screening-ledger-1.0.0'
-export const E2_R10_SCREENING_RUN_LABEL = 'e29r10-screening-20260824-a'
+export const E2_R10_SCREENING_PROTOCOL_VERSION = 'e2-9-r10-screening-protocol-1.1.0'
+export const E2_R10_SCREENING_WORKER_VERSION = 'e2-r10-screening-worker-1.1.0'
+export const E2_R10_SCREENING_LEDGER_VERSION = 'e2-r10-screening-ledger-1.1.0'
+export const E2_R10_SCREENING_RUN_LABEL = 'e29r10-screening-20260825-b'
 export const E2_R10_SCREENING_MODEL = 'deepseek-v4-flash'
 export const E2_R10_SCREENING_MAX_TOKENS = 6_000
 export const E2_R10_SCREENING_TIMEOUT_MS = 45_000
 export const E2_R10_SCREENING_ENDPOINT_PREFIX = '/api/experiments/e2-9/r10/screening/'
+export const E2_R10_SCREENING_BASE_ORIGIN = 'https://sa-e2-r10-screening-preview.nightsdell.workers.dev'
 export const E2_R10_FACT_EXTRACTION_PROMPT_VERSION = 'fact-ledger-extraction-1.1.0-r10-screening'
 export const E2_R10_PATH_A_PROMPT_VERSION = RECOGNITION_PROMPT_VERSION
 export const E2_R10_PATH_A_PIPELINE_VERSION = RECOGNITION_PIPELINE_VERSION
 export const E2_R10_PATH_B_PIPELINE_VERSION = 'e2-r10-facts-first-pipeline-1.0.0'
+
+export const E2_R10_SCREENING_OBSERVATION_PLAN = Object.freeze([
+  { observationId: 'e29r10-screening-01-a', observationIndex: 1, caseId: 'e2-gen-16-2', arm: 'A', sourceSha256: '245c5071371df724ee3ccfc1a04e367cfd323ca04dc8ad75379b67fa158a2789', inputSha256: '125b2bba034e59d4f741352f5c3caa0e2cc5e51b1405ddc4e23734d400f33d86' },
+  { observationId: 'e29r10-screening-02-b', observationIndex: 2, caseId: 'e2-gen-16-2', arm: 'B', sourceSha256: '245c5071371df724ee3ccfc1a04e367cfd323ca04dc8ad75379b67fa158a2789', inputSha256: '125b2bba034e59d4f741352f5c3caa0e2cc5e51b1405ddc4e23734d400f33d86' },
+  { observationId: 'e29r10-screening-03-a', observationIndex: 3, caseId: 'e2-gen-08-2', arm: 'A', sourceSha256: '4d26d56a3b88634f70f8238b19813208146c48aa69c76c277fda2e9cc91762d2', inputSha256: '9f02ff8487aae499d1c0911b88bd76f357a5055eaaff0fe2f98fb77d6539b374' },
+  { observationId: 'e29r10-screening-04-b', observationIndex: 4, caseId: 'e2-gen-08-2', arm: 'B', sourceSha256: '4d26d56a3b88634f70f8238b19813208146c48aa69c76c277fda2e9cc91762d2', inputSha256: '9f02ff8487aae499d1c0911b88bd76f357a5055eaaff0fe2f98fb77d6539b374' },
+  { observationId: 'e29r10-screening-05-a', observationIndex: 5, caseId: 'e2-gen-07-1', arm: 'A', sourceSha256: 'dbc7f01c97c9254fece128205bbd85b0deaf6eea3f702254df547a70f8d97f20', inputSha256: '8fb0bcfe5172950b185c139f4bf6c4744b56f224a99969a221232b2f5e2bae3f' },
+  { observationId: 'e29r10-screening-06-b', observationIndex: 6, caseId: 'e2-gen-07-1', arm: 'B', sourceSha256: 'dbc7f01c97c9254fece128205bbd85b0deaf6eea3f702254df547a70f8d97f20', inputSha256: '8fb0bcfe5172950b185c139f4bf6c4744b56f224a99969a221232b2f5e2bae3f' },
+  { observationId: 'e29r10-screening-07-a', observationIndex: 7, caseId: 'e2-gen-14-2', arm: 'A', sourceSha256: '9a99403b06a4733582ed5dcff1a548ec5c0e803a4768d7aee459268ded32b83d', inputSha256: '60387c6e06aa7a193b62df07bd03b4ee3e68d9e051d54ac9dea7ab03169f6f0b' },
+  { observationId: 'e29r10-screening-08-b', observationIndex: 8, caseId: 'e2-gen-14-2', arm: 'B', sourceSha256: '9a99403b06a4733582ed5dcff1a548ec5c0e803a4768d7aee459268ded32b83d', inputSha256: '60387c6e06aa7a193b62df07bd03b4ee3e68d9e051d54ac9dea7ab03169f6f0b' },
+  { observationId: 'e29r10-screening-09-b', observationIndex: 9, caseId: 'e2-holdout-25', arm: 'B', sourceSha256: '4a98a9ed107fb64d0e71ad9eda8d42e199ea655135d4ce090c4aae612bb94846', inputSha256: '686a743542df554f9d0dc2856c03a741eddc6768ac521ec6051565c3feb7413e' },
+  { observationId: 'e29r10-screening-10-a', observationIndex: 10, caseId: 'e2-holdout-25', arm: 'A', sourceSha256: '4a98a9ed107fb64d0e71ad9eda8d42e199ea655135d4ce090c4aae612bb94846', inputSha256: '686a743542df554f9d0dc2856c03a741eddc6768ac521ec6051565c3feb7413e' },
+  { observationId: 'e29r10-screening-11-b', observationIndex: 11, caseId: 'e2-gen-10-3', arm: 'B', sourceSha256: '945fbced9abaedc021ed112a6fa85df7dc522142db6ca7a26ee4c66560b9abbb', inputSha256: '6e1ea42d1f0dda784505d80a9fd7fd4ccb01b95ba270b340c27fe81ac7277950' },
+  { observationId: 'e29r10-screening-12-a', observationIndex: 12, caseId: 'e2-gen-10-3', arm: 'A', sourceSha256: '945fbced9abaedc021ed112a6fa85df7dc522142db6ca7a26ee4c66560b9abbb', inputSha256: '6e1ea42d1f0dda784505d80a9fd7fd4ccb01b95ba270b340c27fe81ac7277950' },
+  { observationId: 'e29r10-screening-13-b', observationIndex: 13, caseId: 'e2-complex_notice-03', arm: 'B', sourceSha256: '0e7fd3c1ae48571d4748685e213f82c8cfe71aa08bcd72beeb19104ca92605f5', inputSha256: 'f2eefbc295ff0215841c05fe73a8345b236f2b15183b6a83253e5bc0ddf5c37b' },
+  { observationId: 'e29r10-screening-14-a', observationIndex: 14, caseId: 'e2-complex_notice-03', arm: 'A', sourceSha256: '0e7fd3c1ae48571d4748685e213f82c8cfe71aa08bcd72beeb19104ca92605f5', inputSha256: 'f2eefbc295ff0215841c05fe73a8345b236f2b15183b6a83253e5bc0ddf5c37b' },
+  { observationId: 'e29r10-screening-15-a', observationIndex: 15, caseId: 'e2-gen-22-1', arm: 'A', sourceSha256: '0fc0304f34217af8ec60fd1f54d2bb19d7dec8fa8f0b04fbd66b3d2db54566fa', inputSha256: 'e8c40bcbbefe86c70fe008282b8340b7a5636d39a5cdbc1cc7383dd7717ffcbc' },
+  { observationId: 'e29r10-screening-16-b', observationIndex: 16, caseId: 'e2-gen-22-1', arm: 'B', sourceSha256: '0fc0304f34217af8ec60fd1f54d2bb19d7dec8fa8f0b04fbd66b3d2db54566fa', inputSha256: 'e8c40bcbbefe86c70fe008282b8340b7a5636d39a5cdbc1cc7383dd7717ffcbc' },
+])
 
 export const E2_R10_FACT_EXTRACTION_SYSTEM_PROMPT = `你是学校通知事实提取器。只回答“原文明确说了什么”，不得规划 Project、Milestone、Task 或 Workspace 实体。
 只输出严格 JSON。schemaVersion 固定为 e2.5-fact-ledger-1.0.0。顶层仅允许 schemaVersion,obligations,materials,timeExpressions,events,conditions,constraints,ambiguities,evidence。
@@ -44,11 +64,11 @@ obligation 必须保留 actor,modality,actionPredicate,object 及关系 ID；mat
 const CHAT_COMPLETIONS_ENDPOINT = 'https://api.deepseek.com/chat/completions'
 const REQUEST_FIELDS = new Set([
   'protocolVersion', 'protocolBundleSha256', 'runLabel', 'observationId', 'observationIndex',
-  'caseId', 'arm', 'semanticRole', 'sourceType', 'sourceTitle', 'content', 'referenceTime',
+  'caseId', 'arm', 'sourceType', 'sourceTitle', 'content', 'referenceTime',
   'timezone', 'sourceSha256', 'inputSha256', 'caseManifestSha256',
 ])
 const REGISTER_FIELDS = new Set(['protocolVersion', 'protocolBundleSha256', 'runLabel', 'caseManifestSha256', 'observations'])
-const FORBIDDEN_GENERATION_KEYS = /^(?:expected|answer|answers|gold|golden|target|targets|label|labels|score|scores|forbidden)$/iu
+const FORBIDDEN_GENERATION_KEYS = /^(?:expected|answer|answers|gold|golden|target|targets|label|labels|score|scores|forbidden|semanticRole|sourceSet)$/iu
 const SAFE_UPSTREAM_HEADERS = Object.freeze(['content-type', 'date', 'request-id', 'x-request-id', 'cf-ray', 'server'])
 
 function safeObject(value) {
@@ -101,7 +121,20 @@ export function constantTimeHexEqual(left, right) {
 
 export function versionedOrigin(baseOrigin, versionId) {
   const base = new URL(baseOrigin)
+  if (base.origin !== E2_R10_SCREENING_BASE_ORIGIN || base.pathname !== '/' || base.search || base.hash
+    || base.username || base.password || base.protocol !== 'https:') throw new Error('SCREENING_BASE_ORIGIN_INVALID')
   return `${base.protocol}//${versionId.slice(0, 8)}-${base.host}`
+}
+
+export function exactVersionedPreviewOrigin(endpoint, versionId) {
+  if (!validWorkerVersionId(versionId)) throw new Error('SCREENING_VERSION_ID_INVALID')
+  const expected = versionedOrigin(E2_R10_SCREENING_BASE_ORIGIN, versionId)
+  const actual = new URL(endpoint)
+  if (actual.origin !== endpoint || actual.origin !== expected || actual.protocol !== 'https:'
+    || actual.pathname !== '/' || actual.search || actual.hash || actual.username || actual.password) {
+    throw new Error('EXACT_VERSIONED_PREVIEW_REQUIRED')
+  }
+  return expected
 }
 
 function generationFirewall(value, location = '$') {
@@ -124,27 +157,19 @@ export function validateRegistration(body) {
     || !validSha256(body.caseManifestSha256)
     || !Array.isArray(body.observations)
     || body.observations.length !== 16) return 'REGISTRATION_INVALID'
-  const ids = new Set()
-  const cases = new Map()
-  for (const observation of body.observations) {
+  for (let index = 0; index < E2_R10_SCREENING_OBSERVATION_PLAN.length; index += 1) {
+    const observation = body.observations[index]
+    const frozen = E2_R10_SCREENING_OBSERVATION_PLAN[index]
     if (!safeObject(observation)
-      || !hasOnlyFields(observation, new Set(['observationId', 'observationIndex', 'caseId', 'arm', 'semanticRole', 'sourceSha256', 'inputSha256']))
-      || typeof observation.observationId !== 'string'
-      || ids.has(observation.observationId)
-      || !Number.isInteger(observation.observationIndex)
-      || observation.observationIndex < 1 || observation.observationIndex > 16
-      || typeof observation.caseId !== 'string' || !observation.caseId
-      || !['A', 'B'].includes(observation.arm)
-      || !['action_required', 'information_only', 'prompt_injection'].includes(observation.semanticRole)
+      || !hasOnlyFields(observation, new Set(['observationId', 'observationIndex', 'caseId', 'arm', 'sourceSha256', 'inputSha256']))
+      || observation.observationId !== frozen.observationId
+      || observation.observationIndex !== frozen.observationIndex
+      || observation.caseId !== frozen.caseId
+      || observation.arm !== frozen.arm
+      || observation.sourceSha256 !== frozen.sourceSha256
+      || observation.inputSha256 !== frozen.inputSha256
       || !validSha256(observation.sourceSha256)
       || !validSha256(observation.inputSha256)) return 'OBSERVATION_PLAN_INVALID'
-    ids.add(observation.observationId)
-    const arms = cases.get(observation.caseId) ?? new Set()
-    arms.add(observation.arm)
-    cases.set(observation.caseId, arms)
-  }
-  if (cases.size !== 8 || [...cases.values()].some((arms) => arms.size !== 2 || !arms.has('A') || !arms.has('B'))) {
-    return 'PAIRED_PLAN_INVALID'
   }
   return null
 }
@@ -160,13 +185,15 @@ export async function validateGenerationRequest(body, env) {
     || !Number.isInteger(body.observationIndex) || body.observationIndex < 1 || body.observationIndex > 16
     || typeof body.caseId !== 'string' || !body.caseId
     || !['A', 'B'].includes(body.arm)
-    || !['action_required', 'information_only', 'prompt_injection'].includes(body.semanticRole)
     || !['text', 'file', 'image', 'link'].includes(body.sourceType)
     || typeof body.content !== 'string' || !body.content.trim() || body.content.length > 24_000
     || typeof body.sourceTitle !== 'string' || body.sourceTitle.length > 160
     || typeof body.referenceTime !== 'string' || body.referenceTime.length > 80 || Number.isNaN(new Date(body.referenceTime).getTime())
     || typeof body.timezone !== 'string' || body.timezone.length > 80
     || !validSha256(body.sourceSha256) || !validSha256(body.inputSha256)) return 'GENERATION_REQUEST_INVALID'
+  const frozen = E2_R10_SCREENING_OBSERVATION_PLAN[body.observationIndex - 1]
+  if (!frozen || ['observationId', 'observationIndex', 'caseId', 'arm', 'sourceSha256', 'inputSha256']
+    .some((key) => body[key] !== frozen[key])) return 'OBSERVATION_PLAN_MISMATCH'
   const input = {
     sourceType: body.sourceType,
     sourceTitle: body.sourceTitle,
@@ -302,7 +329,9 @@ async function pathBResult(body, completion) {
       sourceId: `source-${body.sourceSha256.slice(0, 20)}`,
       title: body.sourceTitle || '匿名通知',
       sourceType: body.sourceType,
-      notificationType: body.semanticRole === 'information_only' ? 'information_only' : 'uncertain',
+      notificationType: ledger.obligations.some((item) => ['required', 'conditional', 'optional'].includes(item.modality))
+        ? 'uncertain'
+        : 'information_only',
       summary: '',
     },
     modelExecution,
@@ -354,7 +383,6 @@ export async function executeScreeningObservation(body, env, fetcher = fetch) {
         returnedModel: completion.returnedModel,
         executionModel: completion.returnedModel,
         resultModelName: projected.result.modelName,
-        semanticRole: body.semanticRole,
         arm: body.arm,
         systemFingerprint: completion.systemFingerprint,
         finishReason: completion.finishReason,
@@ -415,7 +443,7 @@ export function screeningContract(env) {
     blindAuthorized: false,
     protocolBundleSha256: safeText(env.E2_R10_SCREENING_PROTOCOL_BUNDLE_SHA256, 64),
     caseManifestSha256: safeText(env.E2_R10_SCREENING_CASE_MANIFEST_SHA256, 64),
-    qualificationAuditSha256: safeText(env.E2_R10_QUALIFICATION_AUDIT_SHA256, 64),
+    readinessReviewSha256: safeText(env.E2_R10_SCREENING_READINESS_REVIEW_SHA256, 64),
     modelSecretConfigured: safeText(env.DEEPSEEK_API_KEY, 512).length >= 20,
     modelCalls: 0,
   }

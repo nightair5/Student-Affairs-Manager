@@ -12,6 +12,7 @@ const RUN_KEY = 'screening-run'
 const TERMINAL_STATUSES = new Set(['complete', 'model_failure', 'transport_failure', 'integrity_failure', 'invalid_output'])
 const INTERNAL_AUTHORIZATION_HEADER = 'x-e2-r10-screening-ledger-authorized'
 const INTERNAL_AUTHORIZATION_VALUE = 'screening-ledger-service-binding-v1'
+const RESERVATION_LEASE_MS = 10 * 60 * 1000
 
 function json(value, status = 200, headers = {}) {
   return Response.json(value, { status, headers: { 'cache-control': 'no-store', ...headers } })
@@ -80,8 +81,33 @@ export class E2R10ScreeningLedger {
       const expected = run.expected[body?.observationId]
       if (!expected) return json({ error: 'OBSERVATION_NOT_PREREGISTERED' }, 400)
       if (run.observations[body.observationId]) return json({ error: 'OBSERVATION_ALREADY_EXISTS', record: run.observations[body.observationId] }, 409)
-      const bindingKeys = ['observationIndex', 'caseId', 'arm', 'semanticRole', 'sourceSha256', 'inputSha256']
+      const bindingKeys = ['observationIndex', 'caseId', 'arm', 'sourceSha256', 'inputSha256']
       if (bindingKeys.some((key) => expected[key] !== body[key])) return json({ error: 'OBSERVATION_BINDING_MISMATCH' }, 412)
+      const records = Object.values(run.observations)
+      const running = records.find((item) => item.state === 'running')
+      if (running) {
+        const reservedAt = new Date(running.reservedAt).getTime()
+        if (Number.isFinite(reservedAt) && Date.now() - reservedAt >= RESERVATION_LEASE_MS) {
+          Object.assign(running, {
+            state: 'final',
+            status: 'integrity_failure',
+            error: 'RESERVATION_LEASE_EXPIRED',
+            finalizedAt: new Date().toISOString(),
+          })
+          delete running.reservationToken
+          await this.state.storage.put(RUN_KEY, run)
+          return json({ error: 'RUN_TERMINAL_FAILURE', record: running }, 412)
+        }
+        return json({ error: 'PREVIOUS_OBSERVATION_RUNNING', record: running }, 409)
+      }
+      if (records.some((item) => item.state === 'final' && item.status !== 'complete')) {
+        return json({ error: 'RUN_TERMINAL_FAILURE' }, 412)
+      }
+      const completedIndices = new Set(records.filter((item) => item.state === 'final' && item.status === 'complete')
+        .map((item) => item.observationIndex))
+      if (body.observationIndex !== completedIndices.size + 1
+        || Array.from({ length: body.observationIndex - 1 }, (_, index) => index + 1)
+          .some((index) => !completedIndices.has(index))) return json({ error: 'OBSERVATION_SEQUENCE_VIOLATION' }, 412)
       if (Object.keys(run.observations).length >= run.generationCallCap) return json({ error: 'GENERATION_CALL_CAP_REACHED' }, 412)
       const reservationToken = crypto.randomUUID()
       run.observations[body.observationId] = {
