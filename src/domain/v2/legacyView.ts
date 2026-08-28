@@ -19,6 +19,7 @@ import type {
   WorkspaceData,
 } from '../../types'
 import { recognitionToLegacySuggestions } from '../../recognition/pipeline'
+import { isDateOnly, parseBusinessDateTime } from '../../lib/timeSemantics'
 import { createIntegrationState } from '../../lib/workspace'
 import type { JsonValue, LegacyData, WorkspaceV8 } from './types'
 
@@ -91,12 +92,46 @@ function taskMaterials(workspace: WorkspaceV8, taskId: string, sourceId?: string
 }
 
 function taskReminders(workspace: WorkspaceV8, taskId: string): Reminder[] {
-  return workspace.reminderRecords.filter((item) => item.taskId === taskId && item.scheduledAt).map((item) => ({
+  return workspace.reminderRecords.filter((item) => item.taskId === taskId).map((item) => ({
     id: item.id,
     channel: item.channel,
-    scheduledAt: item.scheduledAt!,
+    scheduledAt: item.scheduledAt ?? '',
     enabled: item.status === 'scheduled',
+    status: item.status,
+    errorMessage: item.errorCode ?? undefined,
+    sentAt: item.sentAt,
   }))
+}
+
+const MILESTONE_DUE_SENTINEL = /^(?:1900-01-01|1970-01-01|9999-12-31)(?:T|$)/u
+
+function milestoneDuePointId(milestoneId: string): string {
+  return `time:milestone:${milestoneId}:deadline`
+}
+
+function standaloneMilestoneDuePoint(
+  workspace: WorkspaceV8,
+  milestoneId: string,
+): WorkspaceV8['timePoints'][number] | undefined {
+  const candidates = workspace.timePoints.filter((point) => point.milestoneId === milestoneId
+    && point.taskId === null
+    && point.materialId === null
+    && point.eventId === null
+    && ['registration_deadline', 'submission_deadline', 'task_deadline'].includes(point.type))
+  return candidates.find((point) => point.id === milestoneDuePointId(milestoneId)) ?? candidates[0]
+}
+
+function milestoneDueTimeFields(
+  dueAt: string,
+  timezone: string,
+): Pick<WorkspaceV8['timePoints'][number], 'normalizedValue' | 'timezone' | 'isAllDay' | 'precision' | 'needsConfirmation'> {
+  if (!MILESTONE_DUE_SENTINEL.test(dueAt) && isDateOnly(dueAt)) {
+    return { normalizedValue: dueAt, timezone: null, isAllDay: true, precision: 'date_only', needsConfirmation: false }
+  }
+  if (!MILESTONE_DUE_SENTINEL.test(dueAt) && parseBusinessDateTime(dueAt, timezone)) {
+    return { normalizedValue: dueAt, timezone, isAllDay: false, precision: 'exact', needsConfirmation: false }
+  }
+  return { normalizedValue: null, timezone: null, isAllDay: false, precision: 'vague', needsConfirmation: true }
 }
 
 function taskHistory(workspace: WorkspaceV8, taskId: string): HistoryEntry[] {
@@ -213,6 +248,16 @@ export function workspaceV8ToLegacyView(workspace: WorkspaceV8): WorkspaceData {
     const accepted = new Set(item.acceptedEntityTempIds)
     const rejected = new Set(item.rejectedEntityTempIds)
     const suggestions = item.result ? recognitionToLegacySuggestions(item.result) : []
+    const recognizedTasks = item.result
+      ? [
+          ...item.result.standaloneTasks,
+          ...item.result.milestones.flatMap((milestone) => [
+            ...milestone.tasks,
+            ...milestone.workPackages.flatMap((workPackage) => workPackage.tasks),
+          ]),
+        ]
+      : []
+    const recognizedTasksById = new Map(recognizedTasks.map((task) => [task.tempId, task]))
     const legacyItems = legacy.items ?? []
     return {
       id: item.id,
@@ -227,10 +272,16 @@ export function workspaceV8ToLegacyView(workspace: WorkspaceV8): WorkspaceData {
       recognitionResult: item.result ?? undefined,
       items: suggestions.length ? suggestions.map((suggestion) => {
         const previous = legacyItems.find((candidate) => candidate.suggestion.id === suggestion.id)
+        const recognized = recognizedTasksById.get(suggestion.id)
+        const selected = accepted.has(suggestion.id)
+          ? true
+          : rejected.has(suggestion.id)
+            ? false
+            : previous?.selected ?? recognized?.selected ?? recognized?.inferenceLevel === 'explicit'
         return {
           id: previous?.id ?? `draft-item:${item.id}:${suggestion.id}`,
           suggestion: previous?.suggestion ?? suggestion,
-          selected: previous?.selected ?? !rejected.has(suggestion.id),
+          selected,
           status: accepted.has(suggestion.id) ? '已确认' : rejected.has(suggestion.id) ? '已拒绝' : '待确认',
           updatedAt: previous?.updatedAt ?? item.updatedAt,
           history: previous?.history ?? [],
@@ -250,12 +301,16 @@ export function workspaceV8ToLegacyView(workspace: WorkspaceV8): WorkspaceData {
       taskIds: projectTasks.map((task) => task.id),
       milestones: workspace.milestones.filter((milestone) => milestone.projectId === item.id).sort((a, b) => a.sortOrder - b.sortOrder).map((milestone) => {
         const old = v7Record<LegacyProject['milestones'][number]>(milestone.legacyData)
-        const dueAt = workspace.timePoints.find((point) => point.milestoneId === milestone.id && point.normalizedValue)?.normalizedValue
+        const canonicalDuePoint = standaloneMilestoneDuePoint(workspace, milestone.id)
+        const relatedFallback = workspace.timePoints.find((point) => point.milestoneId === milestone.id && point.normalizedValue)
+        const dueAt = canonicalDuePoint
+          ? canonicalDuePoint.normalizedValue ?? canonicalDuePoint.rawText
+          : old.dueAt ?? relatedFallback?.normalizedValue ?? ''
         return {
           id: milestone.id,
           projectId: item.id,
           title: milestone.title,
-          dueAt: dueAt ?? old.dueAt ?? '',
+          dueAt,
           status: milestone.status === 'completed' ? '已完成' : '待完成',
           objective: milestone.objective ?? undefined,
           order: milestone.sortOrder,
@@ -347,6 +402,7 @@ export function workspaceV8ToLegacyView(workspace: WorkspaceV8): WorkspaceData {
     enabled: item.status === 'scheduled',
     status: item.status,
     errorMessage: item.errorCode ?? undefined,
+    sentAt: item.sentAt,
   }))
 
   const workPackages: LegacyWorkPackage[] = workspace.workPackages.map((item) => ({
@@ -404,6 +460,48 @@ function withLegacyRecord(current: LegacyData | undefined, value: unknown): Lega
   return { ...(current ?? {}), v7Record: value as JsonValue }
 }
 
+function historyJsonValue(value: unknown): JsonValue {
+  if (value === undefined) return null
+  try {
+    const serialized = JSON.stringify(value)
+    return serialized === undefined ? null : JSON.parse(serialized) as JsonValue
+  } catch {
+    return String(value)
+  }
+}
+
+function canonicalHistoryEntityType(
+  type: WorkspaceData['historyRecords'][number]['entityType'],
+): WorkspaceV8['historyRecords'][number]['entityType'] {
+  if (type === 'subtask') return 'task'
+  if (type === 'draft') return 'extraction_draft'
+  return type
+}
+
+function validReminderSentAt(value: string | null | undefined): string | null {
+  return value && !Number.isNaN(new Date(value).getTime()) ? value : null
+}
+
+function mergedReminderDelivery(
+  edited: WorkspaceData['reminderRecords'][number],
+  current?: WorkspaceV8['reminderRecords'][number],
+): Pick<WorkspaceV8['reminderRecords'][number], 'status' | 'errorCode' | 'sentAt' | 'needsReview'> {
+  const sentAt = edited.sentAt === undefined
+    ? current?.sentAt ?? null
+    : validReminderSentAt(edited.sentAt)
+  const sentWithoutEvidence = edited.status === 'sent' && !sentAt
+  const status = sentWithoutEvidence ? 'failed' : edited.status
+  const errorCode = sentWithoutEvidence
+    ? 'LEGACY_SENT_AT_MISSING'
+    : edited.errorMessage ?? (current?.status === status ? current.errorCode : null)
+  return {
+    status,
+    errorCode,
+    sentAt,
+    needsReview: Boolean(current?.needsReview || sentWithoutEvidence),
+  }
+}
+
 /**
  * Explicitly applies edits made by legacy screens. Independent v8 collections
  * are updated by stable ID and are never regenerated from Task/Draft projections.
@@ -416,6 +514,118 @@ export function mergeLegacyViewIntoWorkspaceV8(workspace: WorkspaceV8, view: Wor
   const materialsById = new Map(view.materialItems.map((item) => [item.id, item]))
   const remindersById = new Map(view.reminderRecords.map((item) => [item.id, item]))
   const now = view.savedAt
+
+  const milestonesById = new Map<string, {
+    milestone: WorkspaceData['projects'][number]['milestones'][number]
+    project: WorkspaceData['projects'][number]
+    index: number
+  }>()
+  view.projects.forEach((project) => project.milestones.forEach((milestone, index) => {
+    if (!milestonesById.has(milestone.id)) milestonesById.set(milestone.id, { milestone, project, index })
+  }))
+
+  const canonicalMilestoneIds = new Set(workspace.milestones.map((item) => item.id))
+  const addedMilestones: WorkspaceV8['milestones'] = [...milestonesById.values()]
+    .filter(({ milestone }) => !canonicalMilestoneIds.has(milestone.id))
+    .map(({ milestone, project, index }) => ({
+      id: milestone.id,
+      projectId: project.id,
+      title: milestone.title,
+      objective: milestone.objective ?? null,
+      sortOrder: milestone.order ?? index + 1,
+      status: milestone.status === '已完成' ? 'completed' : 'active',
+      createdAt: milestone.createdAt,
+      updatedAt: project.updatedAt || now,
+      legacyData: withLegacyRecord(undefined, milestone),
+    }))
+
+  const canonicalReminderIds = new Set(workspace.reminderRecords.map((item) => item.id))
+  const addedReminders: WorkspaceV8['reminderRecords'] = [...remindersById.values()]
+    .filter((item) => !canonicalReminderIds.has(item.id))
+    .map((item) => {
+      const delivery = mergedReminderDelivery(item)
+      return {
+        id: item.id,
+        taskId: item.taskId,
+        channel: item.channel,
+        scheduledAt: item.scheduledAt || null,
+        ...delivery,
+        legacyData: withLegacyRecord(undefined, item),
+      }
+    })
+
+  const persistedMilestoneIds = new Set([
+    ...workspace.milestones.map((item) => item.id),
+    ...addedMilestones.map((item) => item.id),
+  ])
+  const dueEntryByPointId = new Map<string, (typeof milestonesById extends Map<string, infer T> ? T : never)>()
+  const addedMilestoneDuePoints: WorkspaceV8['timePoints'] = []
+  milestonesById.forEach((entry) => {
+    if (!persistedMilestoneIds.has(entry.milestone.id)) return
+    const existing = standaloneMilestoneDuePoint(workspace, entry.milestone.id)
+    const canonicalMilestone = workspace.milestones.find((item) => item.id === entry.milestone.id)
+    const legacyDueAt = canonicalMilestone
+      ? v7Record<LegacyProject['milestones'][number]>(canonicalMilestone.legacyData).dueAt
+      : undefined
+    const relatedFallback = workspace.timePoints.find((point) => point.milestoneId === entry.milestone.id && point.normalizedValue)?.normalizedValue ?? ''
+    const shouldPersist = Boolean(existing)
+      || !canonicalMilestone
+      || legacyDueAt !== undefined
+      || entry.milestone.dueAt !== relatedFallback
+    if (!shouldPersist) return
+    const fields = milestoneDueTimeFields(entry.milestone.dueAt, workspace.settings.defaultTimezone)
+    if (existing) {
+      dueEntryByPointId.set(existing.id, entry)
+      return
+    }
+    addedMilestoneDuePoints.push({
+      id: milestoneDuePointId(entry.milestone.id),
+      projectId: entry.project.id,
+      milestoneId: entry.milestone.id,
+      taskId: null,
+      materialId: null,
+      eventId: null,
+      relatedTaskIds: [],
+      relatedMaterialIds: [],
+      type: 'task_deadline',
+      rawText: entry.milestone.dueAt,
+      ...fields,
+      createdAt: entry.milestone.createdAt,
+      updatedAt: now,
+      legacyData: { legacyMilestoneDueAt: true },
+    })
+  })
+
+  const canonicalHistoryIds = new Set(workspace.historyRecords.map((item) => item.id))
+  const addedHistoryRecords: WorkspaceV8['historyRecords'] = []
+  const addedHistoryIds = new Set<string>()
+  view.historyRecords.forEach((item) => {
+    if (canonicalHistoryIds.has(item.id) || addedHistoryIds.has(item.id)) return
+    const entityType = canonicalHistoryEntityType(item.entityType)
+    let entityId = item.entityId
+    if (entityType === 'extraction_draft' && !workspace.extractionDrafts.some((draft) => draft.id === entityId)) {
+      entityId = view.drafts.find((draft) => draft.items.some((draftItem) => draftItem.id === item.entityId))?.id ?? entityId
+    }
+    addedHistoryIds.add(item.id)
+    addedHistoryRecords.push({
+      id: item.id,
+      entityType,
+      entityId,
+      action: item.action,
+      fieldName: item.field || null,
+      before: historyJsonValue(item.before),
+      after: historyJsonValue(item.after),
+      actor: item.actor,
+      reason: null,
+      sourceVersionId: null,
+      changedAt: item.changedAt,
+      needsReview: entityId !== item.entityId,
+      legacyData: withLegacyRecord(undefined, {
+        ...item,
+        originalEntityId: entityId !== item.entityId ? item.entityId : null,
+      }),
+    })
+  })
 
   const next: WorkspaceV8 = {
     ...workspace,
@@ -467,38 +677,92 @@ export function mergeLegacyViewIntoWorkspaceV8(workspace: WorkspaceV8, view: Wor
       const edited = projectsById.get(item.id)
       return edited ? { ...item, title: edited.title, category: edited.category, objective: edited.objective ?? null, status: edited.status ?? item.status, updatedAt: edited.updatedAt, version: item.version + (edited.updatedAt !== item.updatedAt ? 1 : 0), legacyData: withLegacyRecord(item.legacyData, edited) } : item
     }),
-    milestones: workspace.milestones.map((item) => {
-      const edited = projectsById.get(item.projectId)?.milestones.find((candidate) => candidate.id === item.id)
-      return edited ? { ...item, title: edited.title, objective: edited.objective ?? null, sortOrder: edited.order ?? item.sortOrder, status: edited.status === '已完成' ? 'completed' : 'active', legacyData: withLegacyRecord(item.legacyData, edited) } : item
-    }),
+    milestones: [
+      ...workspace.milestones.map((item) => {
+        const entry = milestonesById.get(item.id)
+        const edited = entry?.project.id === item.projectId ? entry.milestone : undefined
+        return edited ? {
+          ...item,
+          title: edited.title,
+          objective: edited.objective ?? null,
+          sortOrder: edited.order ?? item.sortOrder,
+          status: edited.status === '已完成' ? 'completed' as const : 'active' as const,
+          legacyData: withLegacyRecord(item.legacyData, edited),
+        } : item
+      }),
+      ...addedMilestones,
+    ],
     materials: workspace.materials.map((item) => {
       const edited = materialsById.get(item.id) ?? view.tasks.flatMap((task) => task.materials).find((material) => material.id === item.id)
       if (!edited) return item
       return { ...item, name: edited.name, status: edited.status ?? ('done' in edited && edited.done ? 'ready' : item.status), updatedAt: 'updatedAt' in edited ? edited.updatedAt : now, version: item.version + 1, legacyData: withLegacyRecord(item.legacyData, edited) }
     }),
-    timePoints: workspace.timePoints.map((item) => {
-      const relatedTaskId = item.taskId ?? item.relatedTaskIds[0]
-      const canonicalTask = relatedTaskId ? workspace.tasks.find((task) => task.id === relatedTaskId) : undefined
-      const editedTask = relatedTaskId ? tasksById.get(relatedTaskId) : undefined
-      const preferred = relatedTaskId ? preferredTaskDeadlinePoint(workspace, relatedTaskId) : undefined
-      if (!canonicalTask || !editedTask || preferred?.id !== item.id || editedTask.updatedAt === canonicalTask.updatedAt || !editedTask.deadline || editedTask.deadline === item.normalizedValue) return item
-      const dateOnly = /^\d{4}-\d{2}-\d{2}$/u.test(editedTask.deadline)
-      return {
-        ...item,
-        normalizedValue: editedTask.deadline,
-        timezone: dateOnly ? null : item.timezone || workspace.settings.defaultTimezone,
-        isAllDay: dateOnly,
-        precision: dateOnly ? 'date_only' : 'exact',
-        needsConfirmation: false,
-        rawText: editedTask.deadline,
-        updatedAt: now,
-        legacyData: withLegacyRecord(item.legacyData, { editedFromLegacyTaskId: editedTask.id }),
-      }
-    }),
-    reminderRecords: workspace.reminderRecords.map((item) => {
-      const edited = remindersById.get(item.id)
-      return edited ? { ...item, scheduledAt: edited.scheduledAt || null, status: edited.status, errorCode: edited.errorMessage ?? null, legacyData: withLegacyRecord(item.legacyData, edited) } : item
-    }),
+    timePoints: [
+      ...workspace.timePoints.map((item) => {
+        const dueEntry = dueEntryByPointId.get(item.id)
+        if (dueEntry) {
+          const fields = milestoneDueTimeFields(dueEntry.milestone.dueAt, workspace.settings.defaultTimezone)
+          const unchanged = item.projectId === dueEntry.project.id
+            && item.milestoneId === dueEntry.milestone.id
+            && item.taskId === null
+            && item.materialId === null
+            && item.eventId === null
+            && item.rawText === dueEntry.milestone.dueAt
+            && item.normalizedValue === fields.normalizedValue
+            && item.timezone === fields.timezone
+            && item.isAllDay === fields.isAllDay
+            && item.precision === fields.precision
+            && item.needsConfirmation === fields.needsConfirmation
+          if (unchanged) return item
+          return {
+            ...item,
+            projectId: dueEntry.project.id,
+            milestoneId: dueEntry.milestone.id,
+            taskId: null,
+            materialId: null,
+            eventId: null,
+            relatedTaskIds: [],
+            relatedMaterialIds: [],
+            rawText: dueEntry.milestone.dueAt,
+            ...fields,
+            updatedAt: now,
+            legacyData: { ...(item.legacyData ?? {}), legacyMilestoneDueAt: true },
+          }
+        }
+        const relatedTaskId = item.taskId ?? item.relatedTaskIds[0]
+        const canonicalTask = relatedTaskId ? workspace.tasks.find((task) => task.id === relatedTaskId) : undefined
+        const editedTask = relatedTaskId ? tasksById.get(relatedTaskId) : undefined
+        const preferred = relatedTaskId ? preferredTaskDeadlinePoint(workspace, relatedTaskId) : undefined
+        if (!canonicalTask || !editedTask || preferred?.id !== item.id || editedTask.updatedAt === canonicalTask.updatedAt || !editedTask.deadline || editedTask.deadline === item.normalizedValue) return item
+        const dateOnly = /^\d{4}-\d{2}-\d{2}$/u.test(editedTask.deadline)
+        return {
+          ...item,
+          normalizedValue: editedTask.deadline,
+          timezone: dateOnly ? null : item.timezone || workspace.settings.defaultTimezone,
+          isAllDay: dateOnly,
+          precision: dateOnly ? 'date_only' as const : 'exact' as const,
+          needsConfirmation: false,
+          rawText: editedTask.deadline,
+          updatedAt: now,
+          legacyData: withLegacyRecord(item.legacyData, { editedFromLegacyTaskId: editedTask.id }),
+        }
+      }),
+      ...addedMilestoneDuePoints,
+    ],
+    reminderRecords: [
+      ...workspace.reminderRecords.map((item) => {
+        const edited = remindersById.get(item.id)
+        if (!edited) return item
+        return {
+          ...item,
+          scheduledAt: edited.scheduledAt || null,
+          ...mergedReminderDelivery(edited, item),
+          legacyData: withLegacyRecord(item.legacyData, edited),
+        }
+      }),
+      ...addedReminders,
+    ],
+    historyRecords: [...workspace.historyRecords, ...addedHistoryRecords],
     preferences: {
       ...workspace.preferences,
       legacyData: {

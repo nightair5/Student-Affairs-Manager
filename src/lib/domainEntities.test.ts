@@ -35,4 +35,53 @@ describe('canonical workspace entities', () => {
       'verified',
     ])
   })
+
+  it('preserves exact reminder delivery state without inventing sent timestamps', () => {
+    const task = {
+      ...demoTasks[0],
+      reminders: [
+        {
+          id: 'sent-reminder',
+          channel: 'browser' as const,
+          scheduledAt: '2026-08-20T09:00:00+08:00',
+          enabled: false,
+          status: 'sent' as const,
+          sentAt: '2026-08-20T09:00:03+08:00',
+        },
+        {
+          id: 'failed-reminder',
+          channel: 'email' as const,
+          scheduledAt: '2026-08-21T09:00:00+08:00',
+          enabled: false,
+          status: 'failed' as const,
+          errorMessage: 'PROVIDER_REJECTED',
+          sentAt: null,
+        },
+        {
+          id: 'unverified-sent-reminder',
+          channel: 'browser' as const,
+          scheduledAt: '2026-08-22T09:00:00+08:00',
+          enabled: false,
+          status: 'sent' as const,
+        },
+      ],
+    }
+
+    const records = materializeWorkspaceEntities([task], demoSources, [], []).reminderRecords
+
+    expect(records.find((item) => item.id === 'sent-reminder')).toMatchObject({
+      status: 'sent',
+      sentAt: '2026-08-20T09:00:03+08:00',
+    })
+    expect(records.find((item) => item.id === 'failed-reminder')).toMatchObject({
+      status: 'failed',
+      errorMessage: 'PROVIDER_REJECTED',
+      sentAt: null,
+    })
+    expect(records.find((item) => item.id === 'unverified-sent-reminder')).toMatchObject({
+      status: 'failed',
+      errorMessage: 'LEGACY_SENT_AT_MISSING',
+      sentAt: null,
+    })
+  })
 })

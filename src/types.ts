@@ -58,6 +58,11 @@ export interface Reminder {
   channel: ReminderChannel
   scheduledAt: string
   enabled: boolean
+  /** Exact delivery state when projected from canonical v8. */
+  status?: ReminderDeliveryStatus
+  errorMessage?: string
+  /** Actual audited delivery time; never inferred from scheduledAt. */
+  sentAt?: string | null
 }
 
 export interface HistoryEntry {
@@ -208,6 +213,8 @@ export interface ReminderRecord {
   enabled: boolean
   status: ReminderDeliveryStatus
   errorMessage?: string
+  /** Actual audited delivery time; never inferred from scheduledAt. */
+  sentAt?: string | null
 }
 
 /**
