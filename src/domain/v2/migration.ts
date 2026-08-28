@@ -13,12 +13,15 @@ export interface WorkspaceV7Backup {
   createdAt: string
   integrityHash: string
   snapshot: WorkspaceData
+  /** Added for lineage-safe rollback. Older read-only backups may omit it. */
+  migrationId?: string
 }
 
 export interface V7ToV8MigrationPreparation {
   backup: WorkspaceV7Backup
   workspace: WorkspaceV8 | null
   metadata: MigrationMetadata
+  targetIntegrityHash: string | null
 }
 
 export interface MigrationOptions {
@@ -26,6 +29,20 @@ export interface MigrationOptions {
   migrationId?: string
   workspaceId?: string
   defaultTimezone?: string
+}
+
+export function createWorkspaceV7Backup(workspace: WorkspaceData, options: MigrationOptions = {}): WorkspaceV7Backup {
+  const now = options.now ?? new Date().toISOString()
+  const migrationId = options.migrationId ?? `migration-v7-v8-${now}`
+  const snapshot = cloneV7(workspace)
+  return {
+    id: `backup:${migrationId}`,
+    schemaVersion: 7,
+    createdAt: now,
+    integrityHash: workspaceSnapshotHash(snapshot),
+    snapshot,
+    migrationId,
+  }
 }
 
 function jsonValue(value: unknown): JsonValue {
@@ -43,7 +60,7 @@ function legacy(value: Record<string, unknown>): LegacyData {
 }
 
 function cloneV7(workspace: WorkspaceData): WorkspaceData {
-  return JSON.parse(JSON.stringify(workspace)) as WorkspaceData
+  return structuredClone(workspace)
 }
 
 export function workspaceSnapshotHash(value: unknown): string {
@@ -67,6 +84,27 @@ export function parseWorkspaceV7Snapshot(value: unknown): WorkspaceData {
     throw new Error('WORKSPACE_V7_INVALID')
   }
   return cloneV7(value as WorkspaceData)
+}
+
+export function parseWorkspaceV7Backup(value: unknown, expectedId?: string): WorkspaceV7Backup {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('MIGRATION_BACKUP_INVALID')
+  const backup = value as Partial<WorkspaceV7Backup>
+  if (typeof backup.id !== 'string'
+    || (expectedId !== undefined && backup.id !== expectedId)
+    || backup.schemaVersion !== 7
+    || typeof backup.createdAt !== 'string'
+    || typeof backup.integrityHash !== 'string'
+    || (backup.migrationId !== undefined && typeof backup.migrationId !== 'string')) {
+    throw new Error('MIGRATION_BACKUP_INVALID')
+  }
+  let snapshot: WorkspaceData
+  try {
+    snapshot = parseWorkspaceV7Snapshot(backup.snapshot)
+  } catch {
+    throw new Error('MIGRATION_BACKUP_INVALID')
+  }
+  if (workspaceSnapshotHash(snapshot) !== backup.integrityHash) throw new Error('MIGRATION_BACKUP_INVALID')
+  return structuredClone({ ...backup, snapshot } as WorkspaceV7Backup)
 }
 
 function sourceStatus(source: WorkspaceData['sources'][number]): Source['status'] {
@@ -376,17 +414,21 @@ function mapEvidence(workspace: WorkspaceData, now: string): EvidenceRef[] {
 }
 
 function mapReminders(workspace: WorkspaceData): ReminderRecord[] {
-  return workspace.reminderRecords.map((item): ReminderRecord => ({
-    id: item.id,
-    taskId: item.taskId,
-    channel: item.channel,
-    scheduledAt: validInstant(item.scheduledAt),
-    status: item.status,
-    errorCode: item.errorMessage ?? null,
-    sentAt: item.status === 'sent' ? validInstant(item.scheduledAt) : null,
-    needsReview: item.status === 'sent',
-    legacyData: legacy({ v7Record: item, enabled: item.enabled }),
-  }))
+  return workspace.reminderRecords.map((item): ReminderRecord => {
+    const sentAt = validInstant(item.sentAt ?? undefined)
+    const sentWithoutEvidence = item.status === 'sent' && !sentAt
+    return {
+      id: item.id,
+      taskId: item.taskId,
+      channel: item.channel,
+      scheduledAt: validInstant(item.scheduledAt),
+      status: sentWithoutEvidence ? 'failed' : item.status,
+      errorCode: sentWithoutEvidence ? 'LEGACY_SENT_AT_MISSING' : item.errorMessage ?? null,
+      sentAt,
+      needsReview: sentWithoutEvidence,
+      legacyData: legacy({ v7Record: item, enabled: item.enabled }),
+    }
+  })
 }
 
 function mapHistory(workspace: WorkspaceData): { records: HistoryRecord[]; orphans: WorkspaceData['historyRecords'] } {
@@ -435,87 +477,98 @@ function mapHistory(workspace: WorkspaceData): { records: HistoryRecord[]; orpha
   return { records, orphans }
 }
 
-export function prepareV7ToV8Migration(workspace: WorkspaceData, options: MigrationOptions = {}): V7ToV8MigrationPreparation {
-  const now = options.now ?? new Date().toISOString()
-  const migrationId = options.migrationId ?? `migration-v7-v8-${now}`
+export function prepareV7ToV8Migration(
+  workspace: WorkspaceData,
+  options: MigrationOptions = {},
+  persistedBackup?: WorkspaceV7Backup,
+): V7ToV8MigrationPreparation {
+  const backup = persistedBackup
+    ? parseWorkspaceV7Backup(persistedBackup, persistedBackup.id)
+    : createWorkspaceV7Backup(workspace, options)
+  const now = options.now ?? backup.createdAt
+  const migrationId = options.migrationId ?? backup.migrationId ?? `migration-v7-v8-${now}`
   const workspaceId = options.workspaceId ?? 'workspace-local'
   const timezone = options.defaultTimezone ?? DEFAULT_WORKSPACE_TIMEZONE
-  const backupSnapshot = cloneV7(workspace)
-  const backup: WorkspaceV7Backup = {
-    id: `backup:${migrationId}`,
-    schemaVersion: 7,
-    createdAt: now,
-    integrityHash: workspaceSnapshotHash(backupSnapshot),
-    snapshot: backupSnapshot,
+  if (backup.id !== `backup:${migrationId}`
+    || backup.migrationId !== migrationId
+    || backup.integrityHash !== workspaceSnapshotHash(workspace)) {
+    throw new Error('V7_MIGRATION_BACKUP_MISMATCH')
   }
   const metadata: MigrationMetadata = {
     migrationId, sourceVersion: 7, targetVersion: 8, startedAt: now, completedAt: null,
     status: 'prepared', warnings: [], errors: [], backupId: backup.id,
   }
-  const sourceMap = mapSources(workspace, workspaceId)
-  const recognitionMap = mapRecognition(workspace)
-  const projectMap = mapProjects(workspace, workspaceId)
-  const tasks = mapTasks(workspace)
-  const timePoints = mapTimePoints(workspace, timezone, now)
-  const history = mapHistory(workspace)
-  const knownTopLevelKeys = new Set([
-    'schemaVersion', 'tasks', 'sources', 'drafts', 'projects', 'evidence', 'timePoints', 'materialItems',
-    'historyRecords', 'reminderRecords', 'workPackages', 'events', 'migrationLog', 'recognitionFeedback',
-    'legacyData', 'courseBlocks', 'integrations', 'knowledgeSettings', 'savedAt',
-  ])
-  const unknownTopLevelFields = Object.fromEntries(
-    Object.entries(workspace as unknown as Record<string, unknown>).filter(([key]) => !knownTopLevelKeys.has(key)),
-  )
-  const topLevelLegacy = legacy({
-    courseBlocks: workspace.courseBlocks,
-    integrations: workspace.integrations,
-    knowledgeSettings: workspace.knowledgeSettings,
-    recognitionFeedback: workspace.recognitionFeedback,
-    v7MigrationLog: workspace.migrationLog,
-    v7LegacyData: workspace.legacyData,
-    orphanHistoryRecords: history.orphans,
-    unknownTopLevelFields,
-  })
-  const candidate: WorkspaceV8 = {
-    schemaVersion: 8,
-    workspace: { id: workspaceId, title: '学生事务管家本机工作区', createdAt: workspace.savedAt, updatedAt: now, legacyData: topLevelLegacy },
-    settings: { defaultTimezone: timezone, locale: 'zh-CN' },
-    ...sourceMap,
-    ...recognitionMap,
-    ...projectMap,
-    workPackages: workspace.workPackages.map((item) => ({
-      id: item.id, projectId: item.projectId, milestoneId: item.milestoneId, title: item.title,
-      objective: item.objective || null, sortOrder: item.order, createdAt: item.createdAt, updatedAt: item.updatedAt,
-      legacyData: legacy({ v7Record: item, taskIds: item.taskIds, evidenceIds: item.evidenceIds }),
-    })),
-    tasks,
-    materials: mapMaterials(workspace, timePoints),
-    timePoints,
-    events: mapEvents(workspace, timePoints),
-    evidenceRefs: mapEvidence(workspace, now),
-    changeProposals: [],
-    historyRecords: history.records,
-    reminderRecords: mapReminders(workspace),
-    preferences: { onboardingCompletedAt: null, legacyData: topLevelLegacy },
-    migrationMetadata: [metadata],
-    savedAt: workspace.savedAt,
-  }
-  const validation = validateWorkspaceV8(candidate)
-  if (!validation.valid) {
+  try {
+    const sourceMap = mapSources(workspace, workspaceId)
+    const recognitionMap = mapRecognition(workspace)
+    const projectMap = mapProjects(workspace, workspaceId)
+    const tasks = mapTasks(workspace)
+    const timePoints = mapTimePoints(workspace, timezone, now)
+    const history = mapHistory(workspace)
+    const knownTopLevelKeys = new Set([
+      'schemaVersion', 'tasks', 'sources', 'drafts', 'projects', 'evidence', 'timePoints', 'materialItems',
+      'historyRecords', 'reminderRecords', 'workPackages', 'events', 'migrationLog', 'recognitionFeedback',
+      'legacyData', 'courseBlocks', 'integrations', 'knowledgeSettings', 'savedAt',
+    ])
+    const unknownTopLevelFields = Object.fromEntries(
+      Object.entries(workspace as unknown as Record<string, unknown>).filter(([key]) => !knownTopLevelKeys.has(key)),
+    )
+    const topLevelLegacy = legacy({
+      courseBlocks: workspace.courseBlocks,
+      integrations: workspace.integrations,
+      knowledgeSettings: workspace.knowledgeSettings,
+      recognitionFeedback: workspace.recognitionFeedback,
+      v7MigrationLog: workspace.migrationLog,
+      v7LegacyData: workspace.legacyData,
+      orphanHistoryRecords: history.orphans,
+      unknownTopLevelFields,
+    })
+    const candidate: WorkspaceV8 = {
+      schemaVersion: 8,
+      workspace: { id: workspaceId, title: '学生事务管家本机工作区', createdAt: workspace.savedAt, updatedAt: now, legacyData: topLevelLegacy },
+      settings: { defaultTimezone: timezone, locale: 'zh-CN' },
+      ...sourceMap,
+      ...recognitionMap,
+      ...projectMap,
+      workPackages: workspace.workPackages.map((item) => ({
+        id: item.id, projectId: item.projectId, milestoneId: item.milestoneId, title: item.title,
+        objective: item.objective || null, sortOrder: item.order, createdAt: item.createdAt, updatedAt: item.updatedAt,
+        legacyData: legacy({ v7Record: item, taskIds: item.taskIds, evidenceIds: item.evidenceIds }),
+      })),
+      tasks,
+      materials: mapMaterials(workspace, timePoints),
+      timePoints,
+      events: mapEvents(workspace, timePoints),
+      evidenceRefs: mapEvidence(workspace, now),
+      changeProposals: [],
+      historyRecords: history.records,
+      reminderRecords: mapReminders(workspace),
+      preferences: { onboardingCompletedAt: null, legacyData: topLevelLegacy },
+      migrationMetadata: [metadata],
+      savedAt: workspace.savedAt,
+    }
+    const validation = validateWorkspaceV8(candidate)
+    if (!validation.valid) {
+      metadata.status = 'failed'
+      metadata.errors = validation.issues.map((item) => `${item.code}:${item.path}:${item.message}`)
+      return { backup, workspace: null, metadata, targetIntegrityHash: null }
+    }
+    const needsReview = candidate.sources.some((item) => item.needsReview)
+      || candidate.sourceVersions.some((item) => item.needsReview)
+      || candidate.extractionDrafts.some((item) => item.needsReview)
+      || candidate.timePoints.some((item) => item.needsReview || item.needsConfirmation)
+      || candidate.reminderRecords.some((item) => item.needsReview)
+    if (needsReview) metadata.warnings.push('部分旧字段无法无歧义升级，已保留 legacyData 并标记 needsReview')
+    if (history.orphans.length) metadata.warnings.push(`${history.orphans.length} 条无法定位目标的旧历史已保留在 legacyData`)
+    metadata.status = needsReview ? 'needs_review' : 'completed'
+    metadata.completedAt = now
+    candidate.migrationMetadata = [{ ...metadata }]
+    return { backup, workspace: candidate, metadata, targetIntegrityHash: workspaceSnapshotHash(candidate) }
+  } catch {
     metadata.status = 'failed'
-    metadata.errors = validation.issues.map((issue) => `${issue.code}:${issue.path}:${issue.message}`)
-    return { backup, workspace: null, metadata }
+    metadata.errors = ['WORKSPACE_V7_NESTED_INVALID']
+    return { backup, workspace: null, metadata, targetIntegrityHash: null }
   }
-  const needsReview = candidate.sources.some((item) => item.needsReview)
-    || candidate.sourceVersions.some((item) => item.needsReview)
-    || candidate.extractionDrafts.some((item) => item.needsReview)
-    || candidate.timePoints.some((item) => item.needsReview || item.needsConfirmation)
-  if (needsReview) metadata.warnings.push('部分旧字段无法无歧义升级，已保留 legacyData 并标记 needsReview')
-  if (history.orphans.length) metadata.warnings.push(`${history.orphans.length} 条无法定位目标的旧历史已保留在 legacyData`)
-  metadata.status = needsReview ? 'needs_review' : 'completed'
-  metadata.completedAt = now
-  candidate.migrationMetadata = [{ ...metadata }]
-  return { backup, workspace: candidate, metadata }
 }
 
 export function applyPreparedV8Migration(preparation: V7ToV8MigrationPreparation): WorkspaceV8 {
@@ -524,5 +577,5 @@ export function applyPreparedV8Migration(preparation: V7ToV8MigrationPreparation
 }
 
 export function rollbackPreparedV8Migration(preparation: V7ToV8MigrationPreparation): WorkspaceData {
-  return cloneV7(preparation.backup.snapshot)
+  return cloneV7(parseWorkspaceV7Backup(preparation.backup, preparation.backup.id).snapshot)
 }

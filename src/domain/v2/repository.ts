@@ -3,6 +3,8 @@ import type { WorkspaceV8 } from './types'
 import { parseWorkspaceV8 } from './workspaceSchema'
 import {
   applyPreparedV8Migration,
+  createWorkspaceV7Backup,
+  parseWorkspaceV7Backup,
   parseWorkspaceV7Snapshot,
   prepareV7ToV8Migration,
   workspaceSnapshotHash,
@@ -26,6 +28,77 @@ export interface WorkspaceRecordStore {
 
 function cloneValue<T>(value: T): T {
   return structuredClone(value)
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return Boolean(value) && typeof value === 'object' && !Array.isArray(value)
+}
+
+function errorMessage(error: unknown, fallback: string): string {
+  return error instanceof Error ? error.message : fallback
+}
+
+function migrationBackupId(value: unknown): string | null {
+  if (!isRecord(value) || !Array.isArray(value.migrationMetadata)) return null
+  for (let index = value.migrationMetadata.length - 1; index >= 0; index -= 1) {
+    const metadata = value.migrationMetadata[index]
+    if (isRecord(metadata)
+      && metadata.sourceVersion === 7
+      && metadata.targetVersion === 8
+      && typeof metadata.backupId === 'string') return metadata.backupId
+  }
+  return null
+}
+
+function hasMigrationLineage(value: unknown, backup: WorkspaceV7Backup): boolean {
+  if (!backup.migrationId || !isRecord(value) || !Array.isArray(value.migrationMetadata)) return false
+  return value.migrationMetadata.some((metadata) => isRecord(metadata)
+    && metadata.migrationId === backup.migrationId
+    && metadata.backupId === backup.id
+    && metadata.sourceVersion === 7
+    && metadata.targetVersion === 8
+    && (metadata.status === 'completed' || metadata.status === 'needs_review'))
+}
+
+interface WorkspaceMigrationLineageRecord {
+  id: string
+  kind: 'workspace_v7_v8_lineage'
+  backupId: string
+  migrationId: string
+  sourceIntegrityHash: string
+  targetIntegrityHash: string
+  createdAt: string
+}
+
+function migrationLineageKey(backupId: string): string {
+  return `lineage:${backupId}`
+}
+
+function parseMigrationLineage(value: unknown, backup: WorkspaceV7Backup): WorkspaceMigrationLineageRecord {
+  if (!isRecord(value)
+    || value.id !== migrationLineageKey(backup.id)
+    || value.kind !== 'workspace_v7_v8_lineage'
+    || value.backupId !== backup.id
+    || value.migrationId !== backup.migrationId
+    || value.sourceIntegrityHash !== backup.integrityHash
+    || typeof value.targetIntegrityHash !== 'string'
+    || typeof value.createdAt !== 'string') {
+    throw new Error('MIGRATION_LINEAGE_INVALID')
+  }
+  return cloneValue(value as unknown as WorkspaceMigrationLineageRecord)
+}
+
+function assertRollbackLineage(
+  workspace: WorkspaceV8,
+  backup: WorkspaceV7Backup,
+  lineage: WorkspaceMigrationLineageRecord,
+): void {
+  if (!backup.migrationId || !hasMigrationLineage(workspace, backup)) {
+    throw new Error('MIGRATION_ROLLBACK_LINEAGE_MISMATCH')
+  }
+  if (workspaceSnapshotHash(workspace) !== lineage.targetIntegrityHash) {
+    throw new Error('MIGRATION_ROLLBACK_WORKSPACE_CHANGED')
+  }
 }
 
 /** Test and non-browser adapter with the same single-record atomic contract. */
@@ -201,6 +274,8 @@ export interface RuntimeMigrationResult {
   errors: string[]
 }
 
+export type WorkspaceV7MigrationPreparer = typeof prepareV7ToV8Migration
+
 /**
  * Workspace v8 repository. Canonical arrays are parsed and persisted verbatim;
  * this path never invokes the v7 materializeWorkspaceEntities compatibility projection.
@@ -209,6 +284,7 @@ export class CanonicalWorkspaceRepository {
   constructor(
     private readonly store: WorkspaceRecordStore = new IndexedDbWorkspaceRecordStore(),
     private readonly recordKey = CURRENT_WORKSPACE_RECORD_KEY,
+    private readonly prepareMigration: WorkspaceV7MigrationPreparer = prepareV7ToV8Migration,
   ) {}
 
   async load(): Promise<WorkspaceV8 | null> {
@@ -242,8 +318,47 @@ export class CanonicalWorkspaceRepository {
     if (raw === undefined) {
       return { status: 'migration_required', workspace: null, backupId: null, warnings: [], errors: ['WORKSPACE_NOT_INITIALIZED'] }
     }
-    if (raw && typeof raw === 'object' && (raw as { schemaVersion?: unknown }).schemaVersion === 8) {
-      return { status: 'already_v8', workspace: cloneValue(parseWorkspaceV8(raw)), backupId: null, warnings: [], errors: [] }
+    if (isRecord(raw) && raw.schemaVersion === 8) {
+      let workspace: WorkspaceV8
+      try {
+        workspace = parseWorkspaceV8(raw)
+      } catch (error) {
+        const backupId = migrationBackupId(raw)
+        if (backupId) {
+          try {
+            const backup = parseWorkspaceV7Backup(await this.store.read(backupId), backupId)
+            parseMigrationLineage(await this.store.read(migrationLineageKey(backupId)), backup)
+            if (hasMigrationLineage(raw, backup)) {
+              return {
+                status: 'recovery_required', workspace: null, backupId, warnings: [],
+                errors: [errorMessage(error, 'WORKSPACE_V8_INVALID')],
+              }
+            }
+          } catch {
+            // The current v8 error remains authoritative when no valid recovery snapshot exists.
+          }
+        }
+        return {
+          status: 'migration_failed', workspace: null, backupId: null, warnings: [],
+          errors: [errorMessage(error, 'WORKSPACE_V8_INVALID')],
+        }
+      }
+
+      const backupId = migrationBackupId(workspace)
+      if (backupId) {
+        try {
+          const backup = parseWorkspaceV7Backup(await this.store.read(backupId), backupId)
+          const lineage = parseMigrationLineage(await this.store.read(migrationLineageKey(backupId)), backup)
+          assertRollbackLineage(workspace, backup, lineage)
+          return { status: 'backup_available', workspace: cloneValue(workspace), backupId, warnings: [], errors: [] }
+        } catch (error) {
+          return {
+            status: 'already_v8', workspace: cloneValue(workspace), backupId: null,
+            warnings: [errorMessage(error, 'MIGRATION_BACKUP_UNAVAILABLE')], errors: [],
+          }
+        }
+      }
+      return { status: 'already_v8', workspace: cloneValue(workspace), backupId: null, warnings: [], errors: [] }
     }
 
     let v7: ReturnType<typeof parseWorkspaceV7Snapshot>
@@ -254,22 +369,46 @@ export class CanonicalWorkspaceRepository {
     }
     const sourceHash = workspaceSnapshotHash(v7)
     const migrationId = options.migrationId ?? `v7_to_v8_canonical_domain_001:${sourceHash}`
-    const preparation = prepareV7ToV8Migration(v7, { ...options, migrationId })
-    const backupKey = preparation.backup.id
+    const resolvedOptions = { ...options, migrationId, now: options.now ?? new Date().toISOString() }
+    const backup = createWorkspaceV7Backup(v7, resolvedOptions)
+    const backupKey = backup.id
+    let persistedBackup: WorkspaceV7Backup
 
     try {
-      await this.store.transactionMany([this.recordKey, backupKey], (records) => {
+      const backupRecords = await this.store.transactionMany([this.recordKey, backupKey], (records) => {
         const current = parseWorkspaceV7Snapshot(records.get(this.recordKey))
         if (workspaceSnapshotHash(current) !== sourceHash) throw new Error('WORKSPACE_CHANGED_DURING_MIGRATION')
         const existing = records.get(backupKey)
-        if (existing !== undefined && workspaceSnapshotHash((existing as WorkspaceV7Backup).snapshot) !== sourceHash) {
-          throw new Error('MIGRATION_BACKUP_CONFLICT')
+        if (existing !== undefined) {
+          try {
+            const parsed = parseWorkspaceV7Backup(existing, backupKey)
+            if (parsed.integrityHash !== sourceHash) throw new Error('MIGRATION_BACKUP_CONFLICT')
+          } catch (error) {
+            if (error instanceof Error && error.message === 'MIGRATION_BACKUP_CONFLICT') throw error
+            throw new Error('MIGRATION_BACKUP_CONFLICT', { cause: error })
+          }
+        } else {
+          records.set(backupKey, cloneValue(backup))
         }
-        records.set(backupKey, cloneValue(preparation.backup))
         return records
       })
+      persistedBackup = parseWorkspaceV7Backup(backupRecords.get(backupKey), backupKey)
     } catch (error) {
-      return { status: 'migration_failed', workspace: null, backupId: null, warnings: preparation.metadata.warnings, errors: [error instanceof Error ? error.message : 'MIGRATION_BACKUP_FAILED'] }
+      return { status: 'migration_failed', workspace: null, backupId: null, warnings: [], errors: [errorMessage(error, 'MIGRATION_BACKUP_FAILED')] }
+    }
+
+    let preparation: ReturnType<WorkspaceV7MigrationPreparer>
+    try {
+      preparation = this.prepareMigration(v7, {
+        ...resolvedOptions,
+        migrationId: persistedBackup.migrationId ?? migrationId,
+        now: persistedBackup.createdAt,
+      }, persistedBackup)
+    } catch (error) {
+      return {
+        status: 'migration_failed', workspace: null, backupId: backupKey, warnings: [],
+        errors: [errorMessage(error, 'MIGRATION_PREPARE_FAILED')],
+      }
     }
 
     if (!preparation.workspace) {
@@ -279,43 +418,79 @@ export class CanonicalWorkspaceRepository {
     let candidate: WorkspaceV8
     try {
       candidate = importWorkspaceV8(exportWorkspaceV8(applyPreparedV8Migration(preparation)))
-      await this.store.transactionMany([this.recordKey, backupKey], (records) => {
+      const targetIntegrityHash = workspaceSnapshotHash(candidate)
+      const lineageKey = migrationLineageKey(backupKey)
+      const lineage: WorkspaceMigrationLineageRecord = {
+        id: lineageKey,
+        kind: 'workspace_v7_v8_lineage',
+        backupId: backupKey,
+        migrationId: persistedBackup.migrationId ?? migrationId,
+        sourceIntegrityHash: sourceHash,
+        targetIntegrityHash,
+        createdAt: preparation.metadata.completedAt ?? resolvedOptions.now,
+      }
+      await this.store.transactionMany([this.recordKey, backupKey, lineageKey], (records) => {
         const current = parseWorkspaceV7Snapshot(records.get(this.recordKey))
-        const backup = records.get(backupKey) as WorkspaceV7Backup | undefined
+        const backup = parseWorkspaceV7Backup(records.get(backupKey), backupKey)
         if (workspaceSnapshotHash(current) !== sourceHash) throw new Error('WORKSPACE_CHANGED_DURING_MIGRATION')
-        if (!backup || backup.integrityHash !== sourceHash || workspaceSnapshotHash(backup.snapshot) !== sourceHash) {
+        if (backup.integrityHash !== sourceHash
+          || backup.migrationId !== migrationId
+          || preparation.backup.id !== backupKey
+          || preparation.backup.integrityHash !== sourceHash
+          || preparation.backup.migrationId !== migrationId
+          || preparation.targetIntegrityHash !== targetIntegrityHash) {
           throw new Error('MIGRATION_BACKUP_INVALID')
+        }
+        const existingLineage = records.get(lineageKey)
+        if (existingLineage !== undefined) {
+          const parsedLineage = parseMigrationLineage(existingLineage, backup)
+          if (parsedLineage.targetIntegrityHash !== targetIntegrityHash) throw new Error('MIGRATION_LINEAGE_CONFLICT')
+        } else {
+          records.set(lineageKey, lineage)
         }
         records.set(this.recordKey, cloneValue(candidate))
         return records
       })
     } catch (error) {
-      return { status: 'migration_failed', workspace: null, backupId: backupKey, warnings: preparation.metadata.warnings, errors: [error instanceof Error ? error.message : 'MIGRATION_APPLY_FAILED'] }
+      return { status: 'migration_failed', workspace: null, backupId: backupKey, warnings: preparation.metadata.warnings, errors: [errorMessage(error, 'MIGRATION_APPLY_FAILED')] }
     }
     return { status: 'migration_success', workspace: cloneValue(candidate), backupId: backupKey, warnings: preparation.metadata.warnings, errors: [] }
   }
 
   async rollbackMigration(backupId: string): Promise<WorkspaceV7Backup> {
-    const result = await this.store.transactionMany([this.recordKey, backupId], (records) => {
-      const backup = records.get(backupId) as WorkspaceV7Backup | undefined
-      if (!backup || backup.schemaVersion !== 7 || backup.integrityHash !== workspaceSnapshotHash(backup.snapshot)) {
-        throw new Error('MIGRATION_BACKUP_INVALID')
+    const lineageKey = migrationLineageKey(backupId)
+    const result = await this.store.transactionMany([this.recordKey, backupId, lineageKey], (records) => {
+      const backup = parseWorkspaceV7Backup(records.get(backupId), backupId)
+      const current = records.get(this.recordKey)
+      if (isRecord(current) && current.schemaVersion === 7) {
+        const rolledBack = parseWorkspaceV7Snapshot(current)
+        if (workspaceSnapshotHash(rolledBack) !== backup.integrityHash) {
+          throw new Error('MIGRATION_ROLLBACK_LINEAGE_MISMATCH')
+        }
+        return records
       }
+      const lineage = parseMigrationLineage(records.get(lineageKey), backup)
+      let workspace: WorkspaceV8
+      try {
+        workspace = parseWorkspaceV8(current)
+      } catch {
+        if (migrationBackupId(current) !== backupId || !hasMigrationLineage(current, backup)) {
+          throw new Error('MIGRATION_ROLLBACK_LINEAGE_MISMATCH')
+        }
+        records.set(this.recordKey, cloneValue(backup.snapshot))
+        return records
+      }
+      assertRollbackLineage(workspace, backup, lineage)
       records.set(this.recordKey, cloneValue(backup.snapshot))
       return records
     })
-    const backup = result.get(backupId) as WorkspaceV7Backup
-    return cloneValue(backup)
+    return cloneValue(parseWorkspaceV7Backup(result.get(backupId), backupId))
   }
 
   async readMigrationBackup(backupId: string): Promise<WorkspaceV7Backup | null> {
     const raw = await this.store.read(backupId)
     if (raw === undefined) return null
-    const backup = raw as WorkspaceV7Backup
-    if (backup.schemaVersion !== 7 || backup.integrityHash !== workspaceSnapshotHash(backup.snapshot)) {
-      throw new Error('MIGRATION_BACKUP_INVALID')
-    }
-    return cloneValue(backup)
+    return cloneValue(parseWorkspaceV7Backup(raw, backupId))
   }
 
   exportJson(workspace: WorkspaceV8): string {

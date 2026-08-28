@@ -5,11 +5,12 @@ import { validateHierarchy } from './hierarchyValidator'
 import { result, type ValidationResult } from './issues'
 import { validateReferences } from './referenceValidator'
 import { validateTimes } from './timeValidator'
+import { validateWorkspaceShape } from './shapeValidator'
 
-export function validateWorkspaceV8(workspace: WorkspaceV8): ValidationResult {
-  if (workspace.schemaVersion !== 8) {
-    return result([{ code: 'INVALID_SCHEMA', path: 'schemaVersion', message: 'Workspace v8 的 schemaVersion 必须为 8' }])
-  }
+export function validateWorkspaceV8(value: unknown): ValidationResult {
+  const shapeIssues = validateWorkspaceShape(value)
+  if (shapeIssues.length) return result(shapeIssues)
+  const workspace = value as WorkspaceV8
   return result([
     ...validateEntities(workspace),
     ...validateReferences(workspace),

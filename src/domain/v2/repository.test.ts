@@ -74,6 +74,28 @@ describe('B1 canonical Workspace v8 repository', () => {
     expect(() => repository.importJson('{"schemaVersion":7}')).toThrow('WORKSPACE_V8_SCHEMA_REQUIRED')
   })
 
+  it('fails closed with deterministic errors for malformed nested arrays and enums', async () => {
+    const invalidArray = structuredClone(createGoldenWorkspaceV8()) as unknown as {
+      tasks: Array<Record<string, unknown>>
+    }
+    invalidArray.tasks[0].dependencyIds = { unexpected: true }
+    const arrayRepository = new CanonicalWorkspaceRepository(new MemoryWorkspaceRecordStore({ current: invalidArray }))
+    await expect(arrayRepository.load()).rejects.toThrow('WORKSPACE_V8_INVALID:INVALID_TYPE:tasks[0].dependencyIds')
+    expect(() => arrayRepository.importJson(JSON.stringify(invalidArray))).toThrow(
+      'WORKSPACE_V8_INVALID:INVALID_TYPE:tasks[0].dependencyIds',
+    )
+
+    const invalidEnum = structuredClone(createGoldenWorkspaceV8()) as unknown as {
+      tasks: Array<Record<string, unknown>>
+    }
+    invalidEnum.tasks[0].status = 'quietly-accepted-bogus-status'
+    const enumRepository = new CanonicalWorkspaceRepository(new MemoryWorkspaceRecordStore({ current: invalidEnum }))
+    await expect(enumRepository.load()).rejects.toThrow('WORKSPACE_V8_INVALID:INVALID_ENUM:tasks[0].status')
+    expect(() => enumRepository.importJson(JSON.stringify(invalidEnum))).toThrow(
+      'WORKSPACE_V8_INVALID:INVALID_ENUM:tasks[0].status',
+    )
+  })
+
   it('recomputes ProjectState without mutating canonical facts', () => {
     const workspace = createGoldenWorkspaceV8()
     const before = JSON.stringify(workspace)

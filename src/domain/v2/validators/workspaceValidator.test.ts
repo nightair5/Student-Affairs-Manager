@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+import { buildLocalRecognition } from '../../../recognition/pipeline'
 import { createGoldenWorkspaceV8 } from '../fixtures'
 import { validateWorkspaceV8 } from './workspaceValidator'
 
@@ -48,5 +49,77 @@ describe('Workspace v8 domain graph validation', () => {
     const issues = validateWorkspaceV8(workspace).issues
     expect(issues.some((issue) => issue.path === 'settings.defaultTimezone')).toBe(true)
     expect(issues.some((issue) => issue.path === 'tasks[0].updatedAt')).toBe(true)
+  })
+
+  it('returns shape issues instead of throwing on unknown runtime input', () => {
+    const malformed = structuredClone(createGoldenWorkspaceV8()) as unknown as {
+      materials: unknown[]
+      reminderRecords: Array<Record<string, unknown>>
+    }
+    malformed.materials[0] = null
+    malformed.reminderRecords[0].channel = 'carrier-pigeon'
+    expect(validateWorkspaceV8(malformed)).toEqual({
+      valid: false,
+      issues: expect.arrayContaining([
+        expect.objectContaining({ code: 'INVALID_TYPE', path: 'materials[0]' }),
+        expect.objectContaining({ code: 'INVALID_ENUM', path: 'reminderRecords[0].channel' }),
+      ]),
+    })
+  })
+
+  it('treats explicit undefined review metadata as absent optional fields', () => {
+    const workspace = createGoldenWorkspaceV8()
+    workspace.sources[0].legacyData = undefined
+    workspace.sources[0].needsReview = undefined
+    expect(validateWorkspaceV8(workspace)).toEqual({ valid: true, issues: [] })
+  })
+
+  it('reports stable nested RecognitionResult paths for null elements and invalid enums', () => {
+    const workspace = createGoldenWorkspaceV8()
+    const result = buildLocalRecognition({
+      sourceType: 'text', sourceTitle: '匿名比赛通知',
+      content: '8月10日前完成报名并提交报名表，9月2日下午参加答辩。',
+      referenceTime: new Date('2026-08-03T08:00:00+08:00'), timezone: 'Asia/Shanghai',
+      projects: [], tasks: [],
+    })
+    workspace.extractionDrafts[0].result = result
+    const malformed = workspace as unknown as {
+      extractionDrafts: Array<{ result: { materials: unknown[]; timePoints: Array<Record<string, unknown>> } }>
+    }
+    malformed.extractionDrafts[0].result.materials[0] = null
+    malformed.extractionDrafts[0].result.timePoints[0].precision = 'approximately'
+    const issues = validateWorkspaceV8(malformed).issues
+    expect(issues).toEqual(expect.arrayContaining([
+      expect.objectContaining({ code: 'INVALID_TYPE', path: 'extractionDrafts[0].result.materials[0]' }),
+      expect.objectContaining({ code: 'INVALID_ENUM', path: 'extractionDrafts[0].result.timePoints[0].precision' }),
+    ]))
+  })
+
+  it('rejects source, root and canonical entity ownership contradictions', () => {
+    const workspace = createGoldenWorkspaceV8()
+    workspace.sources.push({
+      ...workspace.sources[0], id: 'source-other', title: '其他来源', currentVersionId: 'source-version-other',
+    })
+    workspace.sourceVersions.push({
+      ...workspace.sourceVersions[0], id: 'source-version-other', sourceId: 'source-other', versionNo: 1,
+    })
+    workspace.sources[0].currentVersionId = 'source-version-other'
+    workspace.sources[0].workspaceId = 'workspace-other'
+    workspace.projects[0].workspaceId = 'workspace-other'
+    workspace.tasks[0].milestoneId = 'milestone-2'
+    workspace.materials[0].projectId = null
+    workspace.timePoints[0].projectId = null
+    workspace.events[0].projectId = null
+
+    const issues = validateWorkspaceV8(workspace).issues
+    expect(issues).toEqual(expect.arrayContaining([
+      expect.objectContaining({ code: 'CROSS_PROJECT_REFERENCE', path: 'sources[0].currentVersionId' }),
+      expect.objectContaining({ code: 'CROSS_PROJECT_REFERENCE', path: 'sources[0].workspaceId' }),
+      expect.objectContaining({ code: 'CROSS_PROJECT_REFERENCE', path: 'projects[0].workspaceId' }),
+      expect.objectContaining({ code: 'CROSS_PROJECT_REFERENCE', path: 'tasks[0].workPackageId' }),
+      expect.objectContaining({ code: 'CROSS_PROJECT_REFERENCE', path: 'materials[0].relatedTaskIds[0]' }),
+      expect.objectContaining({ code: 'CROSS_PROJECT_REFERENCE', path: 'timePoints[0].taskId' }),
+      expect.objectContaining({ code: 'CROSS_PROJECT_REFERENCE', path: 'events[0].startTimePointId' }),
+    ]))
   })
 })

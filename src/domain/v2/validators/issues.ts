@@ -1,5 +1,7 @@
 export type ValidationIssueCode =
   | 'INVALID_SCHEMA'
+  | 'INVALID_TYPE'
+  | 'INVALID_ENUM'
   | 'REQUIRED_FIELD'
   | 'DUPLICATE_ID'
   | 'MISSING_REFERENCE'

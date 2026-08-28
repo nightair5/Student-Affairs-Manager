@@ -89,4 +89,46 @@ describe('offline v7 to v8 migration contract', () => {
     expect(migrated.preferences.legacyData?.orphanHistoryRecords).toEqual(expect.arrayContaining([expect.objectContaining({ id: 'orphan-history' })]))
     expect(preparation.metadata.status).toBe('needs_review')
   })
+
+  it('never infers actual reminder delivery time from a legacy schedule', () => {
+    const input = createWorkspaceData(demoTasks, demoSources)
+    input.tasks[0].reminders = []
+    input.reminderRecords = [
+      {
+        id: 'legacy-sent-without-proof',
+        taskId: input.tasks[0].id,
+        channel: 'browser',
+        scheduledAt: '2026-08-20T09:00:00+08:00',
+        enabled: false,
+        status: 'sent',
+      },
+      {
+        id: 'legacy-sent-with-proof',
+        taskId: input.tasks[0].id,
+        channel: 'browser',
+        scheduledAt: '2026-08-21T09:00:00+08:00',
+        enabled: false,
+        status: 'sent',
+        sentAt: '2026-08-21T09:00:04+08:00',
+      },
+    ]
+
+    const migrated = applyPreparedV8Migration(prepareV7ToV8Migration(input, {
+      now: NOW,
+      migrationId: 'migration-reminder-delivery-proof',
+    }))
+
+    expect(migrated.reminderRecords.find((item) => item.id === 'legacy-sent-without-proof')).toMatchObject({
+      status: 'failed',
+      errorCode: 'LEGACY_SENT_AT_MISSING',
+      sentAt: null,
+      needsReview: true,
+    })
+    expect(migrated.reminderRecords.find((item) => item.id === 'legacy-sent-with-proof')).toMatchObject({
+      status: 'sent',
+      errorCode: null,
+      sentAt: '2026-08-21T09:00:04+08:00',
+      needsReview: false,
+    })
+  })
 })
