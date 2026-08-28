@@ -73,6 +73,33 @@ test('non-API routes fall through to static assets', async () => {
   assert.equal(await response.text(), 'asset')
 })
 
+test('release build denies experimental routes without touching static assets', async () => {
+  let assetRequests = 0
+  const worker = createWorker()
+  const env = environment({
+    ASSETS: { fetch: async () => { assetRequests += 1; return new Response('asset') } },
+  })
+  for (const path of ['/benchmark', '/e2/results', '/fact-ledger', '/selection', '/blind/review', '/research-preview', '/api/e2/evaluate']) {
+    const response = await worker.fetch(new Request(`https://student-affairs-manager.example${path}`), env)
+    assert.equal(response.status, 404, path)
+    const payload = await response.json()
+    assert.equal(payload.error, 'NOT_FOUND', path)
+  }
+  assert.equal(assetRequests, 0)
+})
+
+test('unknown API routes return JSON 404 without touching static assets', async () => {
+  let assetRequests = 0
+  const worker = createWorker()
+  const response = await worker.fetch(new Request('https://student-affairs-manager.example/api/unknown'), environment({
+    ASSETS: { fetch: async () => { assetRequests += 1; return new Response('asset') } },
+  }))
+  assert.equal(response.status, 404)
+  assert.equal(response.headers.get('content-type'), 'application/json')
+  assert.equal((await response.json()).error, 'API_NOT_FOUND')
+  assert.equal(assetRequests, 0)
+})
+
 test('validation requires one to four complete citations', () => {
   assert.equal(validateDeepSeekRequest({ question: '今天做什么？', context: [] }), 'DEEPSEEK_CONTEXT_INVALID')
   assert.equal(validateDeepSeekRequest({ question: '今天做什么？', context: baseContext }), null)

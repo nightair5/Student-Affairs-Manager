@@ -15,7 +15,14 @@
     "binding": "ASSETS",
     "not_found_handling": "single-page-application",
     "run_worker_first": [
-      "/api/*"
+      "/api/*",
+      "/benchmark*",
+      "/e2*",
+      "/fact-ledger*",
+      "/factledger*",
+      "/selection*",
+      "/blind*",
+      "/research-preview*"
     ]
   },
   "observability": {
@@ -36,7 +43,14 @@
         "binding": "ASSETS",
         "not_found_handling": "single-page-application",
         "run_worker_first": [
-          "/api/*"
+          "/api/*",
+          "/benchmark*",
+          "/e2*",
+          "/fact-ledger*",
+          "/factledger*",
+          "/selection*",
+          "/blind*",
+          "/research-preview*"
         ]
       },
       "observability": {

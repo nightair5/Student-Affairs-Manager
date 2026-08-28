@@ -5,6 +5,7 @@ import {
 
 const DEEPSEEK_ENDPOINT = 'https://api.deepseek.com/chat/completions'
 const DEEPSEEK_MODEL = 'deepseek-v4-flash'
+const EXPERIMENTAL_ROUTE = /^\/(?:benchmark|e2|fact-?ledger|selection|blind|research-preview)(?:\/|$)/iu
 const MAX_BODY_BYTES = 100_000
 const MAX_KNOWLEDGE_TOKENS = 2_000
 const MAX_EXTRACTION_TOKENS = 6_000
@@ -705,7 +706,11 @@ export function createWorker({
         client: anonymousClientId(clientKey(request)),
       }
       let response
-      if (request.method === 'OPTIONS' && url.pathname.startsWith('/api/')) {
+      if (EXPERIMENTAL_ROUTE.test(url.pathname)
+        || EXPERIMENTAL_ROUTE.test(url.pathname.replace(/^\/api(?=\/)/u, ''))) {
+        context.errorType = 'NOT_FOUND'
+        response = failure('NOT_FOUND', '该路径在发布版中不可用。', 404, context.requestId)
+      } else if (request.method === 'OPTIONS' && url.pathname.startsWith('/api/')) {
         if (!isTrustedOrigin(request, env.ALLOWED_ORIGINS)) {
           context.errorType = 'ORIGIN_NOT_ALLOWED'
           response = failure('ORIGIN_NOT_ALLOWED', '请求来源不受信任。', 403, context.requestId)
@@ -737,6 +742,9 @@ export function createWorker({
         } else {
           response = await askDeepSeek(request, env, fetcher, isRateLimited, acquireConcurrency, context)
         }
+      } else if (url.pathname.startsWith('/api/')) {
+        context.errorType = 'API_NOT_FOUND'
+        response = failure('API_NOT_FOUND', '未找到该服务接口。', 404, context.requestId)
       } else {
         response = await env.ASSETS.fetch(request)
       }
