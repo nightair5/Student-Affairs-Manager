@@ -1,6 +1,6 @@
 import { createSuggestions } from './parser'
-import type { ParsedSuggestion, Source, SourceType } from '../types'
-import type { FileExtractionStatus } from './fileExtraction'
+import type { ParsedSuggestion, Source, SourceReviewMetadata, SourceType } from '../types'
+import type { FileExtractionResult, FileExtractionStatus } from './fileExtraction'
 
 export type IntakeFileStatus = FileExtractionStatus | 'idle' | 'reading'
 
@@ -17,6 +17,8 @@ export interface IntakeSubmissionState {
 }
 
 export interface IntakeInput {
+  /** Stable for one visible submission, so repeated clicks cannot create duplicate Sources. */
+  operationId?: string
   sourceType: SourceType
   content: string
   sourceTitle?: string
@@ -25,6 +27,7 @@ export interface IntakeInput {
   fileSize?: number
   fileHash?: string
   url?: string
+  reviewMetadata?: SourceReviewMetadata
   manualSuggestion?: ParsedSuggestion
   now?: Date
 }
@@ -32,6 +35,33 @@ export interface IntakeInput {
 export interface IntakeResult {
   source: Source
   suggestions: ParsedSuggestion[]
+}
+
+export function fileReviewMetadataFromExtraction(
+  sourceType: 'file' | 'image',
+  mimeType: string,
+  result: FileExtractionResult,
+): SourceReviewMetadata {
+  return {
+    sourceType,
+    ...(mimeType ? { mimeType } : {}),
+    characterCount: result.text.length,
+    ...(result.pageCount !== undefined ? { pageCount: result.pageCount } : {}),
+    ...(result.extractionMethod ? { extractionMethod: result.extractionMethod } : {}),
+    ...(result.ocrConfidence !== undefined ? { ocrConfidence: result.ocrConfidence } : {}),
+    ...(result.partialExtraction !== undefined ? { partialExtraction: result.partialExtraction } : {}),
+    ...(result.qualityFlags?.length ? { qualityFlags: [...result.qualityFlags] } : {}),
+  }
+}
+
+export function canSaveLinkOnly(linkUrl: string, sourceTitle: string): boolean {
+  if (!sourceTitle.trim()) return false
+  try {
+    const url = new URL(linkUrl.trim())
+    return url.protocol === 'https:' && Boolean(url.hostname)
+  } catch {
+    return false
+  }
 }
 
 export function canSubmitIntake({
@@ -70,6 +100,7 @@ export function createIntakeResult({
   fileSize,
   fileHash,
   url,
+  reviewMetadata,
   manualSuggestion,
   now = new Date(),
 }: IntakeInput): IntakeResult {
@@ -96,6 +127,7 @@ export function createIntakeResult({
       extractionStatus: '待确认',
       extractionMethod: 'local-rules',
       parserVersion: 'local-rules-v2',
+      reviewMetadata,
     },
     suggestions: manualSuggestion ? [{ ...manualSuggestion }] : createSuggestions(cleanContent, sourceType, title, now),
   }

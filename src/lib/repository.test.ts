@@ -73,6 +73,35 @@ describe('normalizeWorkspaceData', () => {
     expect(migrated?.knowledgeSettings.localSearchAuthorizedAt).toBe('2026-08-01T00:00:00.000Z')
   })
 
+  it('preserves exact reminder delivery evidence during legacy normalization', () => {
+    const normalized = normalizeWorkspaceData({
+      schemaVersion: 3,
+      tasks: [{
+        id: 'task-reminder',
+        reminders: [{
+          id: 'reminder-failed',
+          channel: 'email',
+          scheduledAt: '2026-08-10T08:00:00.000Z',
+          enabled: true,
+          status: 'failed',
+          errorMessage: 'MAIL_NOT_CONFIGURED',
+          sentAt: null,
+        }],
+      }],
+      sources: [],
+      drafts: [],
+      projects: [],
+      savedAt: '2026-08-01T00:00:00.000Z',
+    })
+
+    expect(normalized?.tasks[0].reminders[0]).toMatchObject({
+      id: 'reminder-failed',
+      status: 'failed',
+      errorMessage: 'MAIL_NOT_CONFIGURED',
+      sentAt: null,
+    })
+  })
+
   it('拒绝缺少核心实体数组的导入', () => {
     expect(normalizeWorkspaceData({ schemaVersion: 5, tasks: [] })).toBeNull()
   })

@@ -1,4 +1,4 @@
-import type { RiskFlag, Task } from '../types'
+import type { MaterialItemEntity, RiskFlag, Task } from '../types'
 import { isMaterialSatisfied, materialStatusFromLegacy } from './domainEntities'
 
 const hour = 60 * 60 * 1000
@@ -15,6 +15,19 @@ export interface TaskPriorityResult {
   risks: RiskFlag[]
   isPinned: boolean
   isSnoozed: boolean
+}
+
+export interface DeferredExecutionTask {
+  task: Task
+  state: 'blocked' | 'waiting'
+  reason: string
+}
+
+export interface ProjectMaterialSummary {
+  total: number
+  ready: number
+  missing: number
+  latestUpdatedAt: string | null
 }
 
 function isFuture(value: string | undefined, now: Date): boolean {
@@ -70,11 +83,15 @@ export function calculateTaskPriority(
     reasons.push(`仍缺 ${missingCount} 项材料`)
   }
 
-  const unfinishedDependencies = (task.dependencyIds ?? [])
-    .map((dependencyId) => allTasks.find((candidate) => candidate.id === dependencyId))
-    .filter((dependency) => dependency && dependency.status !== '已完成').length
-  const freeTextDependencies = task.dependencies.length
-  const dependencyCount = unfinishedDependencies || freeTextDependencies
+  const canonicalDependencyIds = [...new Set(task.dependencyIds ?? [])]
+  const unfinishedDependencies = canonicalDependencyIds.filter((dependencyId) => {
+    const dependency = allTasks.find((candidate) => candidate.id === dependencyId)
+    // A broken canonical reference must fail closed instead of making the task executable.
+    return !dependency || dependency.status !== '已完成'
+  }).length
+  const dependencyCount = canonicalDependencyIds.length > 0
+    ? unfinishedDependencies
+    : task.dependencies.length
   if (dependencyCount > 0) {
     score += 18
     risks.add('有依赖')
@@ -121,36 +138,67 @@ export function getTaskScore(task: Task, now = new Date()): number {
   return calculateTaskPriority(task, [task], now).score
 }
 
+export function getExecutableTasks(
+  tasks: Task[],
+  now = new Date(),
+): Task[] {
+  return tasks.filter((task) => {
+    if (task.status === '已完成') return false
+    const priority = calculateTaskPriority(task, tasks, now)
+    return !priority.isSnoozed && !priority.risks.includes('有依赖')
+  })
+}
+
 export function getFocusTasks(
   tasks: Task[],
   now = new Date(),
   limit = 3,
 ): Task[] {
-  const ranked = [...tasks]
-    .filter((task) => task.status !== '已完成')
-    .filter((task) => {
-      const result = calculateTaskPriority(task, tasks, now)
-      return !result.isSnoozed || result.isPinned
-    })
+  const ranked = getExecutableTasks(tasks, now)
+    .slice()
     .sort((a, b) => calculateTaskPriority(b, tasks, now).score - calculateTaskPriority(a, tasks, now).score)
-  const hasReadyTask = ranked.some((task) => calculateTaskPriority(task, tasks, now).risks.every((risk) => risk !== '有依赖'))
-  const actionable = hasReadyTask
-    ? ranked.filter((task) => calculateTaskPriority(task, tasks, now).risks.every((risk) => risk !== '有依赖'))
-    : ranked
   const selected: Task[] = []
   const representedProjects = new Set<string>()
-  for (const task of actionable) {
+  for (const task of ranked) {
     const projectKey = task.projectId ?? `standalone:${task.id}`
     if (representedProjects.has(projectKey)) continue
     selected.push(task)
     representedProjects.add(projectKey)
     if (selected.length >= limit) return selected
   }
-  for (const task of actionable) {
+  for (const task of ranked) {
     if (!selected.some((candidate) => candidate.id === task.id)) selected.push(task)
     if (selected.length >= limit) break
   }
   return selected
+}
+
+export function getBlockedAndWaitingTasks(
+  tasks: Task[],
+  now = new Date(),
+): DeferredExecutionTask[] {
+  return tasks
+    .filter((task) => task.status !== '已完成')
+    .flatMap((task): DeferredExecutionTask[] => {
+      const priority = calculateTaskPriority(task, tasks, now)
+      if (priority.risks.includes('有依赖')) {
+        const reason = priority.reasons.find((item) => item.includes('前置事项'))
+          ?? '仍有前置事项未完成'
+        return [{ task, state: 'blocked', reason }]
+      }
+      if (priority.isSnoozed) {
+        return [{
+          task,
+          state: 'waiting',
+          reason: task.snoozedUntil ? `稍后到 ${formatDeadline(task.snoozedUntil)}` : '已设为稍后处理',
+        }]
+      }
+      return []
+    })
+    .sort((a, b) => {
+      if (a.state !== b.state) return a.state === 'blocked' ? -1 : 1
+      return calculateTaskPriority(b.task, tasks, now).score - calculateTaskPriority(a.task, tasks, now).score
+    })
 }
 
 export function formatDuration(minutes: number): string {
@@ -193,5 +241,36 @@ export function getMaterialProgress(task: Task): {
   return {
     done: task.materials.filter((material) => isMaterialSatisfied(material.done, material.status)).length,
     total: task.materials.length,
+  }
+}
+
+export function summarizeCanonicalProjectMaterials(
+  materials: MaterialItemEntity[],
+  projectId: string,
+): ProjectMaterialSummary {
+  const byId = new Map<string, MaterialItemEntity>()
+  for (const material of materials) {
+    if (material.projectId !== projectId) continue
+    const current = byId.get(material.id)
+    const currentTime = current ? new Date(current.updatedAt).getTime() : Number.NEGATIVE_INFINITY
+    const candidateTime = new Date(material.updatedAt).getTime()
+    if (!current || (Number.isFinite(candidateTime) && (!Number.isFinite(currentTime) || candidateTime >= currentTime))) {
+      byId.set(material.id, material)
+    }
+  }
+
+  const projectMaterials = [...byId.values()]
+  const ready = projectMaterials.filter((material) => isMaterialSatisfied(false, material.status)).length
+  const latestUpdatedAt = projectMaterials
+    .map((material) => material.updatedAt)
+    .filter((value) => Number.isFinite(new Date(value).getTime()))
+    .sort((left, right) => new Date(left).getTime() - new Date(right).getTime())
+    .at(-1) ?? null
+
+  return {
+    total: projectMaterials.length,
+    ready,
+    missing: projectMaterials.length - ready,
+    latestUpdatedAt,
   }
 }

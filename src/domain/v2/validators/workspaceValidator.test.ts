@@ -74,6 +74,62 @@ describe('Workspace v8 domain graph validation', () => {
     expect(validateWorkspaceV8(workspace)).toEqual({ valid: true, issues: [] })
   })
 
+  it('accepts nested JSON-safe review metadata in legacyData', () => {
+    const workspace = createGoldenWorkspaceV8()
+    workspace.sources[0].legacyData = {
+      reviewMetadata: {
+        sourceType: 'file',
+        mimeType: 'application/pdf',
+        characterCount: 12_345,
+        pageCount: 8,
+        extractionMethod: 'ocr',
+        ocrConfidence: 0.72,
+        partialExtraction: false,
+        qualityFlags: ['OCR 置信度偏低', '第 4 页需要人工复核'],
+        optionalObservation: null,
+      },
+    }
+
+    expect(validateWorkspaceV8(workspace)).toEqual({ valid: true, issues: [] })
+  })
+
+  it.each([
+    ['undefined', undefined],
+    ['BigInt', BigInt(1)],
+    ['function', () => 'not-json'],
+    ['non-plain object', new Date('2026-08-08T08:00:00.000Z')],
+    ['non-finite number', Number.POSITIVE_INFINITY],
+    ['sparse array', Array(2)],
+  ])('rejects nested %s values in legacyData', (_label, invalidValue) => {
+    const workspace = createGoldenWorkspaceV8() as unknown as {
+      sources: Array<Record<string, unknown>>
+    }
+    workspace.sources[0].legacyData = {
+      reviewMetadata: {
+        extractionObservation: {
+          invalidValue,
+        },
+      },
+    }
+
+    expect(validateWorkspaceV8(workspace).issues).toEqual(expect.arrayContaining([
+      expect.objectContaining({ code: 'INVALID_TYPE', path: 'sources[0].legacyData' }),
+    ]))
+  })
+
+  it('rejects cyclic legacyData without throwing', () => {
+    const workspace = createGoldenWorkspaceV8() as unknown as {
+      sources: Array<Record<string, unknown>>
+    }
+    const cyclic: Record<string, unknown> = {}
+    cyclic.self = cyclic
+    workspace.sources[0].legacyData = { reviewMetadata: cyclic }
+
+    expect(validateWorkspaceV8(workspace).issues).toEqual(expect.arrayContaining([
+      expect.objectContaining({ code: 'INVALID_TYPE', path: 'sources[0].legacyData' }),
+    ]))
+  })
+
   it('reports stable nested RecognitionResult paths for null elements and invalid enums', () => {
     const workspace = createGoldenWorkspaceV8()
     const result = buildLocalRecognition({

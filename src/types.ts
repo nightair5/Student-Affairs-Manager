@@ -43,6 +43,18 @@ export type TimePointType =
   | 'planned_start'
 export type InferenceLevel = 'explicit' | 'strong_inference' | 'optional_suggestion'
 
+export interface SourceReviewMetadata {
+  sourceType?: SourceType
+  mimeType?: string
+  characterCount?: number
+  pageCount?: number
+  extractionMethod?: 'manual' | 'parser' | 'ocr' | 'web' | 'unknown'
+  /** Normalized OCR confidence in the inclusive 0..1 range. */
+  ocrConfidence?: number
+  partialExtraction?: boolean
+  qualityFlags?: string[]
+}
+
 export interface Material {
   id: string
   name: string
@@ -120,6 +132,8 @@ export interface Task {
 
 export interface Source {
   id: string
+  /** Canonical v8 version currently represented by rawText/content. */
+  currentVersionId?: string
   type: SourceType
   title: string
   contentPreview: string
@@ -133,6 +147,7 @@ export interface Source {
   status?: CanonicalSourceStatus
   processingError?: string
   parserVersion?: string
+  reviewMetadata?: SourceReviewMetadata
   createdAt: string
   updatedAt?: string
   extractionStatus: '已识别' | '待确认' | '部分确认' | '已确认' | '已拒绝'
@@ -250,6 +265,12 @@ export interface DraftItem {
 export interface ExtractionDraft {
   id: string
   sourceId: string
+  /** Canonical v8 version used by the recognition run that produced this draft. */
+  sourceVersionId?: string
+  /** Bounded provenance metadata stored with that SourceVersion. */
+  sourceReviewMetadata?: SourceReviewMetadata
+  /** Append-only canonical attempt order; completion time never changes precedence. */
+  attemptOrder?: number
   status: '待确认' | '部分确认' | '已确认' | '已拒绝'
   items: DraftItem[]
   createdAt: string

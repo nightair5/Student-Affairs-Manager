@@ -6,18 +6,20 @@ describe('mobile application shell', () => {
     expect(coreNavigation.map((item) => item.id)).toEqual([
       'today',
       'inbox',
-      'tasks',
+      'archive',
       'calendar',
     ])
+    expect(coreNavigation.map((item) => item.label)).toEqual(['今日', '收件箱', '项目', '日历'])
   })
 
   it('keeps secondary destinations available from the mobile menu', () => {
     expect(libraryNavigation.map((item) => item.id)).toEqual([
       'library',
-      'archive',
+      'tasks',
       'knowledge',
       'reports',
     ])
+    expect(libraryNavigation.slice(0, 2).map((item) => item.label)).toEqual(['资料库', '所有任务'])
   })
 
   it('does not duplicate destinations across the mobile navigation layers', () => {

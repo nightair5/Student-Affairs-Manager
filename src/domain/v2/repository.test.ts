@@ -74,6 +74,35 @@ describe('B1 canonical Workspace v8 repository', () => {
     expect(() => repository.importJson('{"schemaVersion":7}')).toThrow('WORKSPACE_V8_SCHEMA_REQUIRED')
   })
 
+  it('round-trips JSON-safe review metadata and rejects unsafe legacyData without persisting it', async () => {
+    const repository = new CanonicalWorkspaceRepository(new MemoryWorkspaceRecordStore())
+    const workspace = createGoldenWorkspaceV8()
+    workspace.sources[0].legacyData = {
+      reviewMetadata: {
+        sourceType: 'image',
+        mimeType: 'image/png',
+        characterCount: 960,
+        extractionMethod: 'ocr',
+        ocrConfidence: 0.68,
+        partialExtraction: false,
+        qualityFlags: ['OCR 置信度偏低'],
+      },
+    }
+    await repository.save(workspace)
+    expect((await repository.load())?.sources[0].legacyData).toEqual(workspace.sources[0].legacyData)
+
+    const unsafe = structuredClone(workspace)
+    ;(unsafe.sources[0] as unknown as Record<string, unknown>).legacyData = {
+      reviewMetadata: {
+        extractionObservation: { unsafeCount: BigInt(1) },
+      },
+    }
+    await expect(repository.save(unsafe)).rejects.toThrow(
+      'WORKSPACE_V8_INVALID:INVALID_TYPE:sources[0].legacyData',
+    )
+    expect((await repository.load())?.sources[0].legacyData).toEqual(workspace.sources[0].legacyData)
+  })
+
   it('fails closed with deterministic errors for malformed nested arrays and enums', async () => {
     const invalidArray = structuredClone(createGoldenWorkspaceV8()) as unknown as {
       tasks: Array<Record<string, unknown>>

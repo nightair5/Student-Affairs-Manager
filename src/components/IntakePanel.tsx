@@ -19,24 +19,27 @@ import {
   type FormEvent,
 } from 'react'
 import {
-  extractFileContent,
+  extractFileEvidence,
 } from '../lib/fileExtraction'
 import { fetchAuthorizedLinkText } from '../lib/linkExtraction'
 import {
+  canSaveLinkOnly,
   canSubmitIntake,
+  fileReviewMetadataFromExtraction,
   type IntakeFileStatus,
   type IntakeInput,
 } from '../lib/intake'
 import { useDialogFocusTrap } from '../lib/useDialogFocusTrap'
-import type { Priority, SourceType, TaskCategory } from '../types'
+import type { Priority, SourceReviewMetadata, SourceType, TaskCategory } from '../types'
 
 interface IntakePanelProps {
   onClose: () => void
   onSubmitIntake: (input: IntakeInput) => Promise<void>
+  onSaveSource: (input: IntakeInput) => Promise<void>
   smartExtractionStatus: 'checking' | 'connected' | 'unavailable'
 }
 
-export function IntakePanel({ onClose, onSubmitIntake, smartExtractionStatus }: IntakePanelProps) {
+export function IntakePanel({ onClose, onSubmitIntake, onSaveSource, smartExtractionStatus }: IntakePanelProps) {
   const [sourceType, setSourceType] = useState<SourceType>('text')
   const [manualMode, setManualMode] = useState(false)
   const [content, setContent] = useState('')
@@ -48,12 +51,14 @@ export function IntakePanel({ onClose, onSubmitIntake, smartExtractionStatus }: 
   const [fileStatus, setFileStatus] = useState<IntakeFileStatus>('idle')
   const [fileMessage, setFileMessage] = useState('')
   const [fileProgress, setFileProgress] = useState(0)
+  const [fileReviewMetadata, setFileReviewMetadata] = useState<SourceReviewMetadata>({})
   const [linkUrl, setLinkUrl] = useState('')
   const [linkAuthorized, setLinkAuthorized] = useState(false)
   const [linkStatus, setLinkStatus] = useState<'idle' | 'reading' | 'ready' | 'error'>('idle')
   const [linkMessage, setLinkMessage] = useState('')
   const [isDragging, setIsDragging] = useState(false)
   const [isParsing, setIsParsing] = useState(false)
+  const [isSavingSource, setIsSavingSource] = useState(false)
   const [manualTitle, setManualTitle] = useState('')
   const [manualDeadline, setManualDeadline] = useState('')
   const [manualDuration, setManualDuration] = useState(30)
@@ -62,11 +67,14 @@ export function IntakePanel({ onClose, onSubmitIntake, smartExtractionStatus }: 
   const [manualPriority, setManualPriority] = useState<Priority>('中')
   const [manualMaterials, setManualMaterials] = useState('')
   const titleId = useId()
+  const operationIdRef = useRef(crypto.randomUUID())
+  const fileGenerationRef = useRef(0)
   const firstControlRef = useRef<HTMLTextAreaElement>(null)
   const panelRef = useRef<HTMLElement>(null)
   useDialogFocusTrap(panelRef, onClose, firstControlRef)
 
   const selectSourceType = (nextType: SourceType) => {
+    fileGenerationRef.current += 1
     setManualMode(false)
     setSourceType(nextType)
     setContent('')
@@ -78,6 +86,7 @@ export function IntakePanel({ onClose, onSubmitIntake, smartExtractionStatus }: 
     setFileStatus('idle')
     setFileMessage('')
     setFileProgress(0)
+    setFileReviewMetadata({})
     setLinkUrl('')
     setLinkAuthorized(false)
     setLinkStatus('idle')
@@ -85,6 +94,7 @@ export function IntakePanel({ onClose, onSubmitIntake, smartExtractionStatus }: 
   }
 
   const selectManualMode = () => {
+    fileGenerationRef.current += 1
     setManualMode(true)
     setSourceType('text')
     setContent('')
@@ -92,9 +102,13 @@ export function IntakePanel({ onClose, onSubmitIntake, smartExtractionStatus }: 
     setFileStatus('idle')
     setFileMessage('')
     setFileProgress(0)
+    setFileReviewMetadata({})
   }
 
   const processFile = async (file: File) => {
+    const generation = fileGenerationRef.current + 1
+    fileGenerationRef.current = generation
+    const isCurrent = () => fileGenerationRef.current === generation
     const isImage = file.type.startsWith('image/')
     setSourceType(isImage ? 'image' : 'file')
     setFileName(file.name)
@@ -102,24 +116,24 @@ export function IntakePanel({ onClose, onSubmitIntake, smartExtractionStatus }: 
     setFileSize(file.size)
     setSourceTitle(file.name)
     setContent('')
+    setFileHash('')
+    setFileReviewMetadata({})
     setFileStatus('reading')
     setFileMessage('正在本机读取，不会上传文件……')
     setFileProgress(0)
-    const result = await extractFileContent(file, {
+    const evidence = await extractFileEvidence(file, {
+      isCurrent,
       onProgress: ({ progress, message }) => {
+        if (!isCurrent()) return
         setFileProgress(Math.max(0, Math.min(100, Math.round(progress * 100))))
         setFileMessage(message)
       },
     })
-    if (result.status !== 'error' && globalThis.crypto?.subtle) {
-      try {
-        const digest = await globalThis.crypto.subtle.digest('SHA-256', await file.arrayBuffer())
-        setFileHash(Array.from(new Uint8Array(digest), (byte) => byte.toString(16).padStart(2, '0')).join(''))
-      } catch {
-        setFileHash('')
-      }
-    }
+    if (!evidence || !isCurrent()) return
+    const { result, fileHash: nextFileHash } = evidence
+    setFileHash(nextFileHash)
     setContent(result.text)
+    setFileReviewMetadata(fileReviewMetadataFromExtraction(isImage ? 'image' : 'file', file.type, result))
     setFileStatus(result.status)
     setFileMessage(result.message)
   }
@@ -155,6 +169,7 @@ export function IntakePanel({ onClose, onSubmitIntake, smartExtractionStatus }: 
     fileName,
     linkUrl,
   })
+  const canSaveLink = sourceType === 'link' && canSaveLinkOnly(linkUrl, sourceTitle)
 
   const handleParse = async (event: FormEvent) => {
     event.preventDefault()
@@ -164,9 +179,15 @@ export function IntakePanel({ onClose, onSubmitIntake, smartExtractionStatus }: 
       if (manualMode) {
         const evidence = `手动录入：${manualTitle.trim()}；截止 ${manualDeadline}；下一步 ${manualNextAction.trim()}`
         await onSubmitIntake({
+          operationId: operationIdRef.current,
           sourceType: 'text',
           content: evidence,
           sourceTitle: `手动任务 · ${manualTitle.trim()}`,
+          reviewMetadata: {
+            sourceType: 'text',
+            characterCount: evidence.length,
+            extractionMethod: 'manual',
+          },
           manualSuggestion: {
             id: `manual-${new Date().getTime()}`,
             title: manualTitle.trim(),
@@ -182,7 +203,20 @@ export function IntakePanel({ onClose, onSubmitIntake, smartExtractionStatus }: 
           },
         })
       } else {
-        await onSubmitIntake({ sourceType, content, sourceTitle, fileName, mimeType, fileSize, fileHash, url: linkUrl })
+        const reviewMetadata: SourceReviewMetadata = sourceType === 'file' || sourceType === 'image'
+          ? { ...fileReviewMetadata, characterCount: content.trim().length }
+          : sourceType === 'link'
+            ? {
+                sourceType: 'link',
+                characterCount: content.trim().length,
+                extractionMethod: linkStatus === 'ready' ? 'web' : 'manual',
+              }
+            : {
+                sourceType: 'text',
+                characterCount: content.trim().length,
+                extractionMethod: 'manual',
+              }
+        await onSubmitIntake({ operationId: operationIdRef.current, sourceType, content, sourceTitle, fileName, mimeType, fileSize, fileHash, url: linkUrl, reviewMetadata })
       }
     } finally {
       setIsParsing(false)
@@ -203,6 +237,31 @@ export function IntakePanel({ onClose, onSubmitIntake, smartExtractionStatus }: 
     } catch (cause) {
       setLinkStatus('error')
       setLinkMessage(cause instanceof Error ? cause.message : '网页正文读取失败，请粘贴正文后继续。')
+    }
+  }
+
+  const saveLinkOnly = async () => {
+    if (!canSaveLink) return
+    setIsSavingSource(true)
+    setLinkMessage('正在保存链接；不会读取网页正文，也不会创建识别草稿……')
+    try {
+      await onSaveSource({
+        operationId: operationIdRef.current,
+        sourceType: 'link',
+        content: '',
+        sourceTitle,
+        url: linkUrl,
+        reviewMetadata: {
+          sourceType: 'link',
+          characterCount: 0,
+          extractionMethod: 'unknown',
+        },
+      })
+    } catch (cause) {
+      setLinkStatus('error')
+      setLinkMessage(cause instanceof Error ? cause.message : '链接保存失败，请稍后重试。')
+    } finally {
+      setIsSavingSource(false)
     }
   }
 
@@ -287,6 +346,11 @@ export function IntakePanel({ onClose, onSubmitIntake, smartExtractionStatus }: 
             <>
               <label className="field"><span>网页标题</span><input type="text" value={sourceTitle} onChange={(event) => setSourceTitle(event.target.value)} placeholder="例如：学院 2026 推免预通知" required /></label>
               <label className="field"><span>网页链接</span><input type="url" value={linkUrl} onChange={(event) => { setLinkUrl(event.target.value); setContent(''); setLinkStatus('idle'); setLinkMessage('') }} placeholder="https://..." required /><small>支持任意公网 HTTPS 页面；重定向逐跳校验，不读取内网地址，也不执行页面脚本。</small></label>
+              <button className="secondary-button wide" type="button" onClick={() => void saveLinkOnly()} disabled={!canSaveLink || isSavingSource || isParsing}>
+                {isSavingSource ? <LoaderCircle className="spin" size={17} /> : <Link2 size={17} />}
+                {isSavingSource ? '正在保存链接…' : '仅保存链接，稍后整理'}
+              </button>
+              <small className="field-help">此操作只建立一个“未整理”来源，不读取网页、不调用 DeepSeek，也不创建待确认任务。</small>
               <label className="link-authorization">
                 <input type="checkbox" checked={linkAuthorized} onChange={(event) => setLinkAuthorized(event.target.checked)} />
                 <span>我确认有权读取这个公开网页，并同意把读取到的正文用于本次任务整理。</span>
@@ -323,7 +387,7 @@ export function IntakePanel({ onClose, onSubmitIntake, smartExtractionStatus }: 
                 ? ' 点击整理会发送本次粘贴或本机提取的文字，不发送文件本体；结果确认前不会创建任务。'
                 : ' DeepSeek 未连接，当前内容不会发往云端，将生成可编辑的本地规则建议。'}
           </p></div>
-          <button className="primary-button wide" type="submit" disabled={!canSubmit || isParsing}>
+          <button className="primary-button wide" type="submit" disabled={!canSubmit || isParsing || isSavingSource}>
             {isParsing ? <><LoaderCircle className="spin" size={18} />正在智能整理…</> : <><Sparkles size={18} />整理成待确认任务</>}
           </button>
         </form>

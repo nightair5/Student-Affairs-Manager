@@ -1,7 +1,7 @@
-import { ArrowRight, ClipboardPaste, Inbox, Plus, Upload } from 'lucide-react'
+import { ArrowRight, ClipboardPaste, Inbox, Link2, Plus, Upload } from 'lucide-react'
 import { useState, type FormEvent } from 'react'
 import { TaskCard } from '../components/TaskCard'
-import { getFocusTasks } from '../lib/taskLogic'
+import { getBlockedAndWaitingTasks, getFocusTasks } from '../lib/taskLogic'
 import type { Project, Task } from '../types'
 
 interface DashboardPageProps {
@@ -44,6 +44,7 @@ export function DashboardPage({
   const [quickText, setQuickText] = useState('')
   const [isParsing, setIsParsing] = useState(false)
   const focusTasks = getFocusTasks(tasks)
+  const deferredTasks = getBlockedAndWaitingTasks(tasks)
   const activeCount = tasks.filter((task) => task.status !== '已完成').length
 
   const submitQuickCapture = async (event: FormEvent) => {
@@ -100,8 +101,22 @@ export function DashboardPage({
         </div>
         {focusTasks.length
           ? <div className="focus-grid">{focusTasks.map((task, index) => { const project = projects.find((candidate) => candidate.id === task.projectId); return <TaskCard key={task.id} task={task} allTasks={tasks} projectTitle={project?.title} stageTitle={project?.milestones.find((milestone) => milestone.id === task.milestoneId)?.title} featured={index === 0} onOpen={onOpenTask} onComplete={onCompleteTask} onStart={onStartTask} onSnooze={onSnoozeTask} onTogglePin={onTogglePinTask} /> })}</div>
-          : <div className="home-empty-state"><strong>今天还没有任务</strong><p>把一段通知粘贴到上方，确认后就会出现在这里。</p></div>}
+          : <div className="home-empty-state"><strong>{deferredTasks.length ? '当前没有可立即执行的任务' : '今天还没有任务'}</strong><p>{deferredTasks.length ? '受阻和稍后事项已单独列出，不会回填到今日 Top 3。' : '把一段通知粘贴到上方，确认后就会出现在这里。'}</p></div>}
       </section>
+
+      {deferredTasks.length > 0 && <section className="deferred-execution-section" aria-labelledby="deferred-title">
+        <div className="section-heading compact">
+          <div><span className="section-index">BLOCKED / WAITING</span><h2 id="deferred-title">受阻与稍后</h2><p>这些事项暂不进入今日 Top 3；完成前置项或到达稍后时间后再重新排序。</p></div>
+          <span className="deferred-count">{deferredTasks.length} 项</span>
+        </div>
+        <div className="deferred-task-list">
+          {deferredTasks.map(({ task, state, reason }) => <button key={task.id} type="button" className="deferred-task" onClick={() => onOpenTask(task)}>
+            <span className={`deferred-state ${state}`}><Link2 size={14} />{state === 'blocked' ? '受阻' : '稍后'}</span>
+            <span className="deferred-task-copy"><strong>{task.title}</strong><small>{reason}</small></span>
+            <ArrowRight size={16} aria-hidden="true" />
+          </button>)}
+        </div>
+      </section>}
     </main>
   )
 }

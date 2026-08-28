@@ -19,8 +19,10 @@ import type {
   WorkspaceData,
 } from '../../types'
 import { recognitionToLegacySuggestions } from '../../recognition/pipeline'
+import { normalizeFocusedReviewSourceMetadata } from '../../recognition/focusedReview'
 import { isDateOnly, parseBusinessDateTime } from '../../lib/timeSemantics'
 import { createIntegrationState } from '../../lib/workspace'
+import { workspaceSnapshotHash } from './migration'
 import type { JsonValue, LegacyData, WorkspaceV8 } from './types'
 
 function record(value: JsonValue | undefined): Record<string, unknown> | null {
@@ -54,7 +56,7 @@ function legacySourceStatus(status: WorkspaceV8['sources'][number]['status']): L
   if (status === 'confirmed') return '已确认'
   if (status === 'partially_confirmed') return '部分确认'
   if (status === 'archived') return '已拒绝'
-  if (status === 'uploaded' || status === 'extracting') return '已识别'
+  if (status === 'uploaded' || status === 'extracting') return '待确认'
   return '待确认'
 }
 
@@ -101,6 +103,13 @@ function taskReminders(workspace: WorkspaceV8, taskId: string): Reminder[] {
     errorMessage: item.errorCode ?? undefined,
     sentAt: item.sentAt,
   }))
+}
+
+function safeRecognitionFailureMessage(errorCode: string | null): string {
+  if (errorCode === 'AI_TIMEOUT') return '智能整理超时，来源已保留，可重试或手动补充。'
+  if (errorCode === 'INVALID_AI_RESPONSE') return '智能整理结果无效，来源已保留，可重试或手动补充。'
+  if (errorCode === 'RECOGNITION_FAILED') return '识别失败，来源已保留，可重试或手动补充。'
+  return '识别未完成，来源已保留，请重试或手动补充。'
 }
 
 const MILESTONE_DUE_SENTINEL = /^(?:1900-01-01|1970-01-01|9999-12-31)(?:T|$)/u
@@ -169,29 +178,58 @@ export function workspaceV8ToLegacyView(workspace: WorkspaceV8): WorkspaceData {
     const legacy = v7Record<LegacySource>(item.legacyData)
     const version = workspace.sourceVersions.find((candidate) => candidate.id === item.currentVersionId)
     const rawText = version?.rawText ?? undefined
+    const runsForVersion = workspace.recognitionRuns.filter((run) => run.sourceVersionId === version?.id)
+    // Runs are append-only attempts. Completion time cannot define precedence:
+    // an older request may finish after a newer retry and must not regain ownership.
+    const latestRun = runsForVersion.at(-1)
+    const flatMimeType = typeof item.legacyData?.mimeType === 'string' ? item.legacyData.mimeType : undefined
+    const persistedReviewMetadata = normalizeFocusedReviewSourceMetadata(
+      version?.legacyData?.reviewMetadata ?? item.legacyData?.reviewMetadata ?? legacy.reviewMetadata,
+    )
+    const runQualityFlags = latestRun?.qualityFlags ?? []
+    const currentFailure = latestRun?.status === 'failed' || (item.status === 'failed' && !latestRun)
+    const reviewMetadata = normalizeFocusedReviewSourceMetadata({
+      ...persistedReviewMetadata,
+      sourceType: item.type,
+      mimeType: persistedReviewMetadata.mimeType ?? legacy.mimeType ?? flatMimeType,
+      characterCount: persistedReviewMetadata.characterCount ?? rawText?.length,
+      qualityFlags: [...(persistedReviewMetadata.qualityFlags ?? []), ...runQualityFlags],
+    })
     return {
       id: item.id,
+      currentVersionId: item.currentVersionId,
       type: item.type,
       title: item.title,
-      contentPreview: legacy.contentPreview ?? rawText?.slice(0, 240) ?? '',
+      contentPreview: legacy.contentPreview
+        ?? (typeof item.legacyData?.contentPreview === 'string' ? item.legacyData.contentPreview : undefined)
+        ?? rawText?.slice(0, 240)
+        ?? '',
       content: legacy.content ?? rawText,
       rawText,
-      url: legacy.url,
-      originalFileName: legacy.originalFileName,
-      mimeType: legacy.mimeType,
-      fileSize: legacy.fileSize,
-      fileHash: version?.contentHash ?? undefined,
+      url: legacy.url ?? (typeof item.legacyData?.url === 'string' ? item.legacyData.url : undefined),
+      originalFileName: legacy.originalFileName ?? (typeof item.legacyData?.originalFileName === 'string' ? item.legacyData.originalFileName : undefined),
+      mimeType: legacy.mimeType ?? flatMimeType,
+      fileSize: legacy.fileSize ?? (typeof item.legacyData?.fileSize === 'number' && Number.isFinite(item.legacyData.fileSize) ? item.legacyData.fileSize : undefined),
+      fileHash: legacy.fileHash ?? (typeof item.legacyData?.fileHash === 'string' ? item.legacyData.fileHash : undefined),
       status: item.status,
-      processingError: legacy.processingError,
-      parserVersion: legacy.parserVersion,
+      processingError: currentFailure
+        ? safeRecognitionFailureMessage(latestRun?.errorCode ?? null)
+        : undefined,
+      parserVersion: legacy.parserVersion ?? (typeof item.legacyData?.parserVersion === 'string' ? item.legacyData.parserVersion : undefined),
+      reviewMetadata,
       createdAt: item.createdAt,
       updatedAt: item.updatedAt,
       extractionStatus: legacySourceStatus(item.status),
-      extractionMethod: workspace.recognitionRuns.some((run) => run.sourceVersionId === version?.id && run.provider === 'deepseek')
+      extractionMethod: runsForVersion.some((run) => run.provider === 'deepseek')
         ? 'deepseek-v4-flash'
-        : 'local-rules',
-      duplicateOfSourceIds: legacy.duplicateOfSourceIds,
-      duplicateReviewStatus: legacy.duplicateReviewStatus,
+        : runsForVersion.length
+          ? 'local-rules'
+          : undefined,
+      duplicateOfSourceIds: legacy.duplicateOfSourceIds ?? stringArray(item.legacyData?.duplicateOfSourceIds),
+      duplicateReviewStatus: legacy.duplicateReviewStatus
+        ?? (item.legacyData?.duplicateReviewStatus === '待核对' || item.legacyData?.duplicateReviewStatus === '保留为独立来源'
+          ? item.legacyData.duplicateReviewStatus
+          : undefined),
     }
   })
 
@@ -241,7 +279,7 @@ export function workspaceV8ToLegacyView(workspace: WorkspaceV8): WorkspaceData {
     }
   })
 
-  const drafts: LegacyDraft[] = workspace.extractionDrafts.map((item) => {
+  const drafts: LegacyDraft[] = workspace.extractionDrafts.map((item, attemptOrder) => {
     const run = workspace.recognitionRuns.find((candidate) => candidate.id === item.recognitionRunId)
     const version = run && workspace.sourceVersions.find((candidate) => candidate.id === run.sourceVersionId)
     const legacy = v7Record<LegacyDraft>(item.legacyData)
@@ -262,6 +300,9 @@ export function workspaceV8ToLegacyView(workspace: WorkspaceV8): WorkspaceData {
     return {
       id: item.id,
       sourceId: version?.sourceId ?? legacy.sourceId ?? '',
+      sourceVersionId: run?.sourceVersionId,
+      sourceReviewMetadata: normalizeFocusedReviewSourceMetadata(version?.legacyData?.reviewMetadata),
+      attemptOrder,
       status: legacyDraftStatus(item.status),
       workflowStatus: item.status,
       createdAt: item.createdAt,
@@ -457,7 +498,17 @@ export function workspaceV8ToLegacyView(workspace: WorkspaceV8): WorkspaceData {
 }
 
 function withLegacyRecord(current: LegacyData | undefined, value: unknown): LegacyData {
-  return { ...(current ?? {}), v7Record: value as JsonValue }
+  return { ...(current ?? {}), v7Record: legacyJsonValue(value) }
+}
+
+function legacyJsonValue(value: unknown): JsonValue {
+  if (value === null || typeof value === 'string' || typeof value === 'boolean') return value
+  if (typeof value === 'number') return Number.isFinite(value) ? value : null
+  if (Array.isArray(value)) return value.map(legacyJsonValue)
+  if (value && typeof value === 'object') {
+    return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, legacyJsonValue(item)]))
+  }
+  return null
 }
 
 function historyJsonValue(value: unknown): JsonValue {
@@ -653,8 +704,15 @@ export function mergeLegacyViewIntoWorkspaceV8(workspace: WorkspaceV8, view: Wor
     }),
     sourceVersions: workspace.sourceVersions.map((item) => {
       const source = sourcesById.get(item.sourceId)
-      if (!source) return item
-      return { ...item, rawText: source.rawText ?? source.content ?? item.rawText, contentHash: source.fileHash ?? item.contentHash, legacyData: withLegacyRecord(item.legacyData, source) }
+      const canonicalSource = workspace.sources.find((candidate) => candidate.id === item.sourceId)
+      if (!source || canonicalSource?.currentVersionId !== item.id) return item
+      const rawText = source.rawText ?? source.content ?? item.rawText
+      return {
+        ...item,
+        rawText,
+        contentHash: rawText !== item.rawText ? workspaceSnapshotHash(rawText) : item.contentHash,
+        legacyData: withLegacyRecord(item.legacyData, source),
+      }
     }),
     extractionDrafts: workspace.extractionDrafts.map((item) => {
       const edited = draftsById.get(item.id)

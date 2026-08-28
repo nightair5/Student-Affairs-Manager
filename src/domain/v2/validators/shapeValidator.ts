@@ -72,25 +72,58 @@ function stringArrayField(value: UnknownRecord, key: string, path: string, issue
   })
 }
 
+function jsonValue(value: unknown, ancestors = new Set<object>()): boolean {
+  if (value === null || typeof value === 'string' || typeof value === 'boolean') return true
+  if (typeof value === 'number') return Number.isFinite(value)
+  if (typeof value !== 'object') return false
+
+  const isArray = Array.isArray(value)
+  if (!isArray && !isRecord(value)) return false
+  if (ancestors.has(value)) return false
+  ancestors.add(value)
+
+  try {
+    if (Object.getOwnPropertySymbols(value).length > 0) return false
+
+    if (isArray) {
+      const propertyNames = Object.getOwnPropertyNames(value)
+      if (propertyNames.length !== value.length + 1) return false
+      for (let index = 0; index < value.length; index += 1) {
+        const descriptor = Object.getOwnPropertyDescriptor(value, String(index))
+        if (!descriptor || !('value' in descriptor) || !jsonValue(descriptor.value, ancestors)) return false
+      }
+      return true
+    }
+
+    const propertyNames = Object.getOwnPropertyNames(value)
+    if (propertyNames.length !== Object.keys(value).length) return false
+    return propertyNames.every((key) => {
+      const descriptor = Object.getOwnPropertyDescriptor(value, key)
+      return Boolean(descriptor?.enumerable && 'value' in descriptor && jsonValue(descriptor.value, ancestors))
+    })
+  } catch {
+    return false
+  } finally {
+    ancestors.delete(value)
+  }
+}
+
 function optionalReviewFields(value: UnknownRecord, path: string, issues: ValidationIssue[]): void {
   if (value.needsReview !== undefined && typeof value.needsReview !== 'boolean') {
     issue(issues, 'INVALID_TYPE', `${path}.needsReview`, '必须是布尔值')
   }
-  if (value.legacyData !== undefined && !isRecord(value.legacyData)) {
-    issue(issues, 'INVALID_TYPE', `${path}.legacyData`, '必须是对象')
+  if (value.legacyData !== undefined) {
+    if (!isRecord(value.legacyData)) {
+      issue(issues, 'INVALID_TYPE', `${path}.legacyData`, '必须是对象')
+    } else if (!jsonValue(value.legacyData)) {
+      issue(issues, 'INVALID_TYPE', `${path}.legacyData`, '必须是可 JSON 往返的对象')
+    }
   }
 }
 
 function idAndReview(value: UnknownRecord, path: string, issues: ValidationIssue[]): void {
   stringField(value, 'id', path, issues)
   optionalReviewFields(value, path, issues)
-}
-
-function jsonValue(value: unknown): boolean {
-  if (value === null || typeof value === 'string' || typeof value === 'boolean') return true
-  if (typeof value === 'number') return Number.isFinite(value)
-  if (Array.isArray(value)) return value.every(jsonValue)
-  return isRecord(value) && Object.values(value).every(jsonValue)
 }
 
 function jsonField(value: UnknownRecord, key: string, path: string, issues: ValidationIssue[]): void {

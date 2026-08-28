@@ -1,18 +1,21 @@
-import { Archive, CheckCircle2, Clock3, Flag, PackageCheck, Plus, Trophy } from 'lucide-react'
+import { Archive, CheckCircle2, Clock3, Flag, History, PackageCheck, Plus, Trophy } from 'lucide-react'
 import { useState, type FormEvent } from 'react'
 import { WorkspaceControls } from '../components/WorkspaceControls'
-import type { Event, Project, Task, WorkPackage } from '../types'
+import { getFocusTasks, summarizeCanonicalProjectMaterials } from '../lib/taskLogic'
+import type { Event, MaterialItemEntity, Project, Task, WorkPackage } from '../types'
 
 interface ArchivePageProps {
   tasks: Task[]
   projects: Project[]
   workPackages: WorkPackage[]
   events: Event[]
+  materials?: MaterialItemEntity[]
   onExport: () => Promise<string>
   onImport: (serialized: string) => Promise<void>
   onClear: () => void
   onAddMilestone: (projectId: string, title: string, dueAt: string) => void
   onToggleMilestone: (projectId: string, milestoneId: string) => void
+  onOpenTask?: (task: Task) => void
 }
 
 interface ProjectCardProps {
@@ -20,11 +23,13 @@ interface ProjectCardProps {
   tasks: Task[]
   workPackages: WorkPackage[]
   events: Event[]
+  materials?: MaterialItemEntity[]
   onAddMilestone: ArchivePageProps['onAddMilestone']
   onToggleMilestone: ArchivePageProps['onToggleMilestone']
+  onOpenTask?: ArchivePageProps['onOpenTask']
 }
 
-function ProjectCard({ project, tasks, workPackages, events, onAddMilestone, onToggleMilestone }: ProjectCardProps) {
+function ProjectCard({ project, tasks, workPackages, events, materials, onAddMilestone, onToggleMilestone, onOpenTask }: ProjectCardProps) {
   const [adding, setAdding] = useState(false)
   const [title, setTitle] = useState('')
   const [dueAt, setDueAt] = useState('')
@@ -33,12 +38,28 @@ function ProjectCard({ project, tasks, workPackages, events, onAddMilestone, onT
   const progress = projectTasks.length ? Math.round((completed / projectTasks.length) * 100) : 0
   const milestones = project.milestones.slice().sort((a, b) => a.dueAt.localeCompare(b.dueAt))
   const currentMilestone = milestones.find((milestone) => milestone.status !== '已完成') ?? milestones.at(-1)
-  const nextTask = projectTasks.filter((task) => task.status !== '已完成' && !(task.dependencyIds ?? []).some((dependencyId) => projectTasks.find((candidate) => candidate.id === dependencyId)?.status !== '已完成')).sort((a, b) => a.deadline.localeCompare(b.deadline))[0]
+  const nextTask = getFocusTasks(projectTasks, new Date(), 1)[0]
   const nextDeadline = projectTasks.filter((task) => task.status !== '已完成').map((task) => task.deadline).sort()[0]
   const projectPackages = workPackages.filter((workPackage) => workPackage.projectId === project.id)
   const projectEvents = events.filter((event) => event.projectId === project.id)
-  const materialCount = projectTasks.reduce((count, task) => count + task.materials.length, 0)
-  const missingMaterialCount = projectTasks.reduce((count, task) => count + task.materials.filter((material) => !material.done && (!material.status || material.status === 'missing' || material.status === 'preparing')).length, 0)
+  const canonicalMaterialSummary = materials
+    ? summarizeCanonicalProjectMaterials(materials, project.id)
+    : null
+  const projectedMaterials = [...new Map(projectTasks
+    .flatMap((task) => task.materials)
+    .map((material) => [material.id, material])).values()]
+  const materialCount = canonicalMaterialSummary?.total ?? projectedMaterials.length
+  const missingMaterialCount = canonicalMaterialSummary?.missing
+    ?? projectedMaterials.filter((material) => !material.done && (!material.status || material.status === 'missing' || material.status === 'preparing')).length
+  const latestUpdatedAt = [
+    project.updatedAt,
+    ...projectTasks.map((task) => task.updatedAt),
+    ...projectPackages.map((workPackage) => workPackage.updatedAt),
+    ...projectEvents.map((event) => event.updatedAt),
+    ...(canonicalMaterialSummary?.latestUpdatedAt ? [canonicalMaterialSummary.latestUpdatedAt] : []),
+  ].filter((value) => Number.isFinite(new Date(value).getTime()))
+    .sort((a, b) => new Date(a).getTime() - new Date(b).getTime())
+    .at(-1) ?? project.updatedAt
 
   const submit = (event: FormEvent) => {
     event.preventDefault()
@@ -63,6 +84,15 @@ function ProjectCard({ project, tasks, workPackages, events, onAddMilestone, onT
       <span><small>主要风险</small><strong>{missingMaterialCount ? `缺 ${missingMaterialCount} 项材料` : '暂无明显风险'}</strong></span>
     </div>
     <div className="project-progress"><span><i style={{ width: `${progress}%` }} /></span><small>{progress}%</small></div>
+    <div className="project-execution-strip" aria-label={`${project.title} 执行摘要`}>
+      {nextTask && onOpenTask
+        ? <button type="button" onClick={() => onOpenTask(nextTask)}><Clock3 size={16} /><span><small>下一步</small><strong>{nextTask.nextAction || nextTask.title}</strong></span></button>
+        : nextTask
+          ? <div><Clock3 size={16} /><span><small>下一步</small><strong>{nextTask.nextAction || nextTask.title}</strong></span></div>
+        : <div><Clock3 size={16} /><span><small>下一步</small><strong>当前没有可执行任务</strong></span></div>}
+      <div><PackageCheck size={16} /><span><small>材料</small><strong>{materialCount ? `${materialCount - missingMaterialCount}/${materialCount} 已就绪` : '暂无材料'}</strong></span></div>
+      <div><History size={16} /><span><small>最近更新</small><strong>{new Intl.DateTimeFormat('zh-CN', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }).format(new Date(latestUpdatedAt))}</strong></span></div>
+    </div>
     {adding && <form className="milestone-form" onSubmit={submit}>
       <label className="field"><span>节点名称</span><input value={title} onChange={(event) => setTitle(event.target.value)} placeholder="例如：完成报名材料初审" required /></label>
       <label className="field"><span>节点时间</span><input type="datetime-local" value={dueAt} onChange={(event) => setDueAt(event.target.value)} required /></label>
@@ -95,10 +125,10 @@ function ProjectCard({ project, tasks, workPackages, events, onAddMilestone, onT
   </article>
 }
 
-export function ArchivePage({ tasks, projects, workPackages, events, onExport, onImport, onClear, onAddMilestone, onToggleMilestone }: ArchivePageProps) {
+export function ArchivePage({ tasks, projects, workPackages, events, materials, onExport, onImport, onClear, onAddMilestone, onToggleMilestone, onOpenTask }: ArchivePageProps) {
   return <main className="page">
-    <header className="page-header"><div><span className="eyebrow">长期成果沉淀</span><h1>项目档案</h1><p>确认的任务、材料和来源均可追溯到对应项目；里程碑由你确认和维护。</p></div><div className="header-stat"><Trophy size={20} /><span><strong>{projects.length}</strong> 个已创建项目</span></div></header>
-    {projects.length ? <div className="archive-grid">{projects.map((project) => <ProjectCard key={project.id} project={project} tasks={tasks} workPackages={workPackages} events={events} onAddMilestone={onAddMilestone} onToggleMilestone={onToggleMilestone} />)}</div> : <div className="empty-state"><Archive size={34} /><h2>还没有项目档案</h2><p>确认一份通知中的任意事项后，会自动建立可追溯项目。</p></div>}
+    <header className="page-header"><div><span className="eyebrow">项目执行与依据</span><h1>项目</h1><p>先看下一步、材料与最近更新；展开后再查看阶段、任务、事件和来源脉络。</p></div><div className="header-stat"><Trophy size={20} /><span><strong>{projects.length}</strong> 个已创建项目</span></div></header>
+    {projects.length ? <div className="archive-grid">{projects.map((project) => <ProjectCard key={project.id} project={project} tasks={tasks} workPackages={workPackages} events={events} materials={materials} onAddMilestone={onAddMilestone} onToggleMilestone={onToggleMilestone} onOpenTask={onOpenTask} />)}</div> : <div className="empty-state"><Archive size={34} /><h2>还没有项目</h2><p>确认一份通知中的任意事项后，会自动建立可追溯项目。</p></div>}
     <WorkspaceControls onExport={onExport} onImport={onImport} onClear={onClear} />
   </main>
 }

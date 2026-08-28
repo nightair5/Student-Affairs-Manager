@@ -1,9 +1,11 @@
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { DraftReviewPanel } from './components/DraftReviewPanel'
+import { EventDetailPanel } from './components/EventDetailPanel'
 import { IntakePanel } from './components/IntakePanel'
 import { OnboardingGuide } from './components/OnboardingGuide'
 import { PageLoadBoundary } from './components/PageLoadBoundary'
 import { Sidebar } from './components/Sidebar'
+import { SourceSupplementPanel } from './components/SourceSupplementPanel'
 import { TaskDetailPanel } from './components/TaskDetailPanel'
 import { WorkspaceRecoveryPanel } from './components/WorkspaceRecoveryPanel'
 import { demoSources, demoTasks } from './data/demo'
@@ -19,7 +21,7 @@ import {
 } from './lib/notifications'
 import { loadWorkspace } from './lib/storage'
 import { updateTaskWithHistory } from './lib/taskUpdates'
-import { createIntakeResult, type IntakeInput } from './lib/intake'
+import { canSaveLinkOnly, createIntakeResult, type IntakeInput } from './lib/intake'
 import { ProxyDeepSeekExtractionService } from './lib/deepseekExtraction'
 import { buildLocalRecognition } from './recognition/pipeline'
 import {
@@ -29,6 +31,9 @@ import {
 } from './lib/workspaceRecoveryUi'
 import { markOnboardingComplete, shouldShowOnboarding } from './lib/onboarding'
 import { CapturePersistenceService } from './domain/v2/capture'
+import { retryExistingSourceRecognition } from './domain/v2/sourceRetry'
+import { selectPendingReviewItems } from './lib/sourceWorkflow'
+import { materialStatusFromLegacy } from './lib/domainEntities'
 import { CanonicalWorkspaceRepository } from './domain/v2/repository'
 import {
   buildDomainCommitPlan,
@@ -45,12 +50,23 @@ import {
   syncTaskMilestone,
   updateDraftItem,
 } from './lib/workspace'
-import type { CourseBlock, Event, ExtractionDraft, IntegrationState, KnowledgeSettings, MigrationRecord, PageId, ParsedSuggestion, Project, RecognitionFeedbackRecord, Source, Task, WorkPackage, WorkspaceData } from './types'
+import type { CourseBlock, Event, ExtractionDraft, IntegrationState, KnowledgeSettings, MaterialItemEntity, MigrationRecord, PageId, ParsedSuggestion, Project, RecognitionFeedbackRecord, Source, Task, WorkPackage, WorkspaceData } from './types'
 
 const canonicalWorkspaceRepository = new CanonicalWorkspaceRepository()
 const workspaceRepository = new IndexedDbWorkspaceRepository(canonicalWorkspaceRepository)
 const capturePersistenceService = new CapturePersistenceService(canonicalWorkspaceRepository)
 const deepSeekExtractionService = new ProxyDeepSeekExtractionService()
+
+function captureActionMessage(error: unknown, fallback: string): string {
+  const code = error instanceof Error ? error.message : ''
+  const known: Record<string, string> = {
+    CAPTURE_SOURCE_VERSION_CHANGED: '来源正文已在其他页面更新；请刷新后基于最新版本重试。',
+    CAPTURE_RETRY_ALREADY_RUNNING: '当前版本仍有识别正在进行；请稍后再试，系统不会并发覆盖结果。',
+    CAPTURE_REVISION_UNCHANGED: '文字没有变化；请直接使用“本地规则重试”。',
+    CAPTURE_DUPLICATE_IN_PROGRESS: '该版本仍在处理中，请稍后从收件箱查看。',
+  }
+  return known[code] ?? (code.trim() || fallback)
+}
 
 interface WorkspaceRecoveryState {
   backupId: string
@@ -62,7 +78,7 @@ interface WorkspaceRecoveryState {
 }
 
 function persistenceRevisionForView(saved: WorkspaceData): string {
-  return workspacePersistenceRevision(createWorkspaceData(
+  const view = createWorkspaceData(
     saved.tasks,
     saved.sources,
     saved.drafts,
@@ -75,7 +91,8 @@ function persistenceRevisionForView(saved: WorkspaceData): string {
     saved.migrationLog,
     saved.recognitionFeedback,
     saved.legacyData,
-  ))
+  )
+  return workspacePersistenceRevision({ ...view, materialItems: saved.materialItems })
 }
 
 const CalendarPage = lazy(() => import('./pages/CalendarPage').then((module) => ({ default: module.CalendarPage })))
@@ -89,6 +106,7 @@ const PrivacyPage = lazy(() => import('./pages/PrivacyPage').then((module) => ({
 function App() {
   const [initialWorkspace] = useState(() => loadWorkspace(demoTasks, demoSources))
   const [currentPage, setCurrentPage] = useState<PageId>('today')
+  const [inboxView, setInboxView] = useState<'all' | 'needs_review'>('all')
   const [tasks, setTasks] = useState<Task[]>(initialWorkspace.tasks)
   const [sources, setSources] = useState<Source[]>(initialWorkspace.sources)
   const [drafts, setDrafts] = useState<ExtractionDraft[]>([])
@@ -97,6 +115,7 @@ function App() {
   const [integrations, setIntegrations] = useState<IntegrationState>(() => createIntegrationState())
   const [knowledgeSettings, setKnowledgeSettings] = useState<KnowledgeSettings>({})
   const [workPackages, setWorkPackages] = useState<WorkPackage[]>([])
+  const [materialItems, setMaterialItems] = useState<MaterialItemEntity[]>([])
   const [events, setEvents] = useState<Event[]>([])
   const [migrationLog, setMigrationLog] = useState<MigrationRecord[]>([])
   const [recognitionFeedback, setRecognitionFeedback] = useState<RecognitionFeedbackRecord[]>([])
@@ -107,7 +126,10 @@ function App() {
   const [intakeOpen, setIntakeOpen] = useState(false)
   const [guideOpen, setGuideOpen] = useState(() => shouldShowOnboarding())
   const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null)
+  const [selectedEventId, setSelectedEventId] = useState<string | null>(null)
   const [selectedDraftId, setSelectedDraftId] = useState<string | null>(null)
+  const [draftSourceSnapshot, setDraftSourceSnapshot] = useState<{ draftId: string; sourceVersionId: string; rawText: string } | null>(null)
+  const [supplementSourceId, setSupplementSourceId] = useState<string | null>(null)
   const [notice, setNotice] = useState<{ text: string; undo?: () => void } | null>(null)
   const [smartExtractionStatus, setSmartExtractionStatus] = useState<'checking' | 'connected' | 'unavailable'>('checking')
   const [notificationPermission, setNotificationPermission] =
@@ -118,19 +140,49 @@ function App() {
   const pendingWorkspaceRevision = useRef<string | null>(null)
   const selectedTask =
     tasks.find((task) => task.id === selectedTaskId) ?? null
+  const selectedEvent = events.find((event) => event.id === selectedEventId) ?? null
+  const selectedEventDrafts = selectedEvent
+    ? drafts.filter((draft) => draft.recognitionResult?.evidence.some((evidence) => selectedEvent.evidenceIds.includes(evidence.id)))
+    : []
+  const selectedEventEvidenceQuotes = selectedEvent
+    ? [...new Set(selectedEventDrafts.flatMap((draft) => draft.recognitionResult?.evidence
+        .filter((evidence) => selectedEvent.evidenceIds.includes(evidence.id))
+        .flatMap((evidence) => evidence.quotedText?.trim() || evidence.quote?.trim() ? [evidence.quotedText?.trim() || evidence.quote!.trim()] : [])
+      ?? []))]
+    : []
+  const selectedEventSourceTitles = [...new Set(selectedEventDrafts.flatMap((draft) => {
+    const source = sources.find((candidate) => candidate.id === draft.sourceId)
+    return source ? [source.title] : []
+  }))]
 
   const selectedDraft = drafts.find((draft) => draft.id === selectedDraftId) ?? null
-  const pendingReviewCount = drafts.reduce(
-    (count, draft) => count + draft.items.filter((item) => item.status === '待确认').length,
-    0,
-  )
-  const selectedDraftSource = selectedDraft
+  const supplementSource = sources.find((source) => source.id === supplementSourceId) ?? null
+  const pendingReviewCount = useMemo(() => selectPendingReviewItems(sources, drafts)
+    .reduce((count, item) => count + item.counts.pending, 0), [drafts, sources])
+  const selectedDraftCurrentSource = selectedDraft
     ? sources.find((source) => source.id === selectedDraft.sourceId) ?? null
     : null
-  const workspace = useMemo(
-    () => createWorkspaceData(tasks, sources, drafts, projects, courseBlocks, integrations, knowledgeSettings, workPackages, events, migrationLog, recognitionFeedback, legacyData),
-    [courseBlocks, drafts, events, integrations, knowledgeSettings, legacyData, migrationLog, projects, recognitionFeedback, sources, tasks, workPackages],
+  const selectedDraftNeedsHistoricalSource = Boolean(
+    selectedDraft?.sourceVersionId
+    && selectedDraftCurrentSource?.currentVersionId
+    && selectedDraft.sourceVersionId !== selectedDraftCurrentSource.currentVersionId,
   )
+  const selectedDraftSource = selectedDraftNeedsHistoricalSource
+    ? selectedDraft && selectedDraftCurrentSource && draftSourceSnapshot?.draftId === selectedDraft.id
+      && draftSourceSnapshot.sourceVersionId === selectedDraft.sourceVersionId
+      ? {
+          ...selectedDraftCurrentSource,
+          content: draftSourceSnapshot.rawText,
+          rawText: draftSourceSnapshot.rawText,
+          contentPreview: draftSourceSnapshot.rawText.slice(0, 240),
+          reviewMetadata: selectedDraft.sourceReviewMetadata,
+        }
+      : null
+    : selectedDraftCurrentSource
+  const workspace = useMemo(() => ({
+    ...createWorkspaceData(tasks, sources, drafts, projects, courseBlocks, integrations, knowledgeSettings, workPackages, events, migrationLog, recognitionFeedback, legacyData),
+    materialItems,
+  }), [courseBlocks, drafts, events, integrations, knowledgeSettings, legacyData, materialItems, migrationLog, projects, recognitionFeedback, sources, tasks, workPackages])
 
   const applyWorkspaceView = useCallback((saved: WorkspaceData) => {
     setTasks(saved.tasks)
@@ -141,6 +193,7 @@ function App() {
     setIntegrations(saved.integrations)
     setKnowledgeSettings(saved.knowledgeSettings)
     setWorkPackages(saved.workPackages)
+    setMaterialItems(saved.materialItems)
     setEvents(saved.events)
     setMigrationLog(saved.migrationLog)
     setRecognitionFeedback(saved.recognitionFeedback)
@@ -315,6 +368,37 @@ function App() {
     if (!task) return
     const nextTask = updateTaskWithHistory(task, patch)
     setTasks((current) => current.map((candidate) => candidate.id === taskId ? nextTask : candidate))
+    if (patch.materials) {
+      setMaterialItems((current) => {
+        const next = [...current]
+        patch.materials!.forEach((material) => {
+          const index = next.findIndex((candidate) => candidate.id === material.id)
+          const updated: MaterialItemEntity = index >= 0
+            ? {
+                ...next[index],
+                name: material.name,
+                status: materialStatusFromLegacy(material.done, material.status),
+                projectId: task.projectId ?? next[index].projectId,
+                taskId,
+                updatedAt: nextTask.updatedAt,
+              }
+            : {
+                id: material.id,
+                projectId: task.projectId,
+                taskId,
+                name: material.name,
+                required: true,
+                status: materialStatusFromLegacy(material.done, material.status),
+                evidenceIds: [],
+                createdAt: nextTask.updatedAt,
+                updatedAt: nextTask.updatedAt,
+              }
+          if (index >= 0) next[index] = updated
+          else next.push(updated)
+        })
+        return next
+      })
+    }
     if (task.projectId) {
       setProjects((current) => current.map((project) => project.id === task.projectId
         ? syncTaskMilestone(project, nextTask)
@@ -322,10 +406,30 @@ function App() {
     }
   }
 
+  const selectDraftForReview = async (draftId: string) => {
+    try {
+      const canonical = await canonicalWorkspaceRepository.load()
+      const canonicalDraft = canonical?.extractionDrafts.find((candidate) => candidate.id === draftId)
+      const run = canonicalDraft
+        ? canonical?.recognitionRuns.find((candidate) => candidate.id === canonicalDraft.recognitionRunId)
+        : null
+      const version = run
+        ? canonical?.sourceVersions.find((candidate) => candidate.id === run.sourceVersionId)
+        : null
+      setDraftSourceSnapshot(version?.rawText !== null && version?.rawText !== undefined
+        ? { draftId, sourceVersionId: version.id, rawText: version.rawText }
+        : null)
+    } catch {
+      setDraftSourceSnapshot(null)
+    }
+    setSelectedDraftId(draftId)
+  }
+
   const openDraftReview = (draftId: string, message: string) => {
     setIntakeOpen(false)
+    setInboxView('needs_review')
     setCurrentPage('inbox')
-    setSelectedDraftId(draftId)
+    void selectDraftForReview(draftId)
     setNotice({ text: message })
   }
 
@@ -343,22 +447,48 @@ function App() {
     const draftRecognition = input.manualSuggestion
       ? recognitionResultFromManualSuggestion(localRecognition, input.manualSuggestion)
       : localRecognition
+    const useCloudRecognition = !input.manualSuggestion && smartExtractionStatus === 'connected'
+    const reviewQualityFlags = [...new Set([
+      ...(input.reviewMetadata?.qualityFlags ?? []),
+      ...(useCloudRecognition && input.content.length > 24_000
+        ? ['DeepSeek 本次仅接收前 24,000 字，后续正文未进入模型识别']
+        : []),
+    ])]
     const captureRequest = {
-      operationId: crypto.randomUUID(),
+      operationId: input.operationId ?? crypto.randomUUID(),
       sourceType: input.sourceType,
       title: input.sourceTitle ?? input.fileName ?? localResult.source.title,
       rawText: input.content,
-      provider: input.manualSuggestion ? 'manual' as const : 'deepseek' as const,
-      modelName: input.manualSuggestion ? 'manual-entry' : 'deepseek-v4-flash',
+      provider: input.manualSuggestion
+        ? 'manual' as const
+        : useCloudRecognition
+          ? 'deepseek' as const
+          : 'local-rules' as const,
+      modelName: input.manualSuggestion
+        ? 'manual-entry'
+        : useCloudRecognition
+          ? 'deepseek-v4-flash'
+          : 'local-rules',
       promptVersion: input.manualSuggestion ? null : localRecognition.promptVersion,
-      pipelineVersion: 'source-before-ai-v1',
+      pipelineVersion: useCloudRecognition ? 'source-before-ai-v1' : 'source-before-local-rules-v1',
       sourceLegacyData: {
         contentPreview: localResult.source.contentPreview,
         url: input.url ?? null,
         originalFileName: input.fileName ?? null,
         mimeType: input.mimeType ?? null,
         fileSize: input.fileSize ?? null,
+        fileHash: input.fileHash ?? null,
         parserVersion: localResult.source.parserVersion ?? null,
+        reviewMetadata: {
+          sourceType: input.reviewMetadata?.sourceType ?? input.sourceType,
+          mimeType: input.reviewMetadata?.mimeType ?? null,
+          characterCount: input.reviewMetadata?.characterCount ?? input.content.length,
+          pageCount: input.reviewMetadata?.pageCount ?? null,
+          extractionMethod: input.reviewMetadata?.extractionMethod ?? 'manual',
+          ocrConfidence: input.reviewMetadata?.ocrConfidence ?? null,
+          partialExtraction: input.reviewMetadata?.partialExtraction ?? null,
+          qualityFlags: reviewQualityFlags,
+        },
       },
       now: input.now?.toISOString(),
     }
@@ -368,40 +498,204 @@ function App() {
         handle,
         input.manualSuggestion
           ? async () => draftRecognition
-          : async () => deepSeekExtractionService.recognize(input, { projects, tasks }),
+          : useCloudRecognition
+            ? async () => deepSeekExtractionService.recognize(input, { projects, tasks })
+            : async () => draftRecognition,
       )
       const saved = await workspaceRepository.load()
       if (saved) applyWorkspaceView(saved)
-      setSmartExtractionStatus('connected')
+      if (useCloudRecognition) setSmartExtractionStatus('connected')
       openDraftReview(
         handle.draftId,
         input.manualSuggestion
           ? '手动录入已先保存来源，再生成待确认草稿；核对后才会创建正式任务。'
-          : `${recognitionResult.modelName} 已生成可编辑建议；来源已在请求前安全保存。`,
+          : useCloudRecognition
+            ? `${recognitionResult.modelName} 已生成可编辑建议；来源已在请求前安全保存。`
+            : 'DeepSeek 当前未连接；来源已先保存，并由本地规则生成可编辑建议。',
       )
     } catch (error) {
-      setSmartExtractionStatus('unavailable')
       const reason = error instanceof Error ? error.message : 'DeepSeek 智能整理暂时不可用'
+      if (useCloudRecognition) setSmartExtractionStatus('unavailable')
       try {
         const canonical = await canonicalWorkspaceRepository.load()
         const failedSource = canonical?.sources.find((source) => source.legacyData?.captureOperationId === captureRequest.operationId)
         if (!failedSource) throw new Error('CAPTURE_SOURCE_NOT_FOUND_AFTER_FAILURE', { cause: error })
-        const retry = await capturePersistenceService.beginRetry(failedSource.id, {
-          provider: 'local-rules',
-          modelName: 'local-rules',
-          promptVersion: localRecognition.promptVersion,
-          pipelineVersion: 'source-before-ai-local-fallback-v1',
-        })
-        await capturePersistenceService.recognize(retry, async () => draftRecognition)
         const saved = await workspaceRepository.load()
         if (saved) applyWorkspaceView(saved)
-        openDraftReview(retry.draftId, `${reason}；原始来源仍已保存，现已建立一次独立的本地规则重试，请重点核对。`)
+        setIntakeOpen(false)
+        setInboxView('all')
+        setCurrentPage('inbox')
+        setSelectedDraftId(null)
+        setNotice({ text: `${reason}；原始来源已安全保存。可在收件箱重试识别、查看原文或手动整理。` })
       } catch {
         const saved = await workspaceRepository.load().catch(() => null)
         if (saved) applyWorkspaceView(saved)
         setStorageError(true)
         setNotice({ text: `${reason}；来源保存状态需要检查，请勿重复关闭页面。` })
       }
+    }
+  }
+
+  const handleSaveSourceOnly = async (input: IntakeInput) => {
+    const title = input.sourceTitle?.trim() ?? ''
+    const url = input.url?.trim() ?? ''
+    if (input.sourceType !== 'link' || !canSaveLinkOnly(url, title)) {
+      throw new Error('请填写标题和有效的公网 HTTPS 链接。')
+    }
+    try {
+      await capturePersistenceService.saveSource({
+        operationId: input.operationId ?? crypto.randomUUID(),
+        sourceType: 'link',
+        title,
+        rawText: '',
+        sourceLegacyData: {
+          contentPreview: '',
+          url,
+          parserVersion: 'source-only-v1',
+          reviewMetadata: {
+            sourceType: 'link',
+            mimeType: null,
+            characterCount: 0,
+            pageCount: null,
+            extractionMethod: 'unknown',
+            ocrConfidence: null,
+            partialExtraction: null,
+            qualityFlags: [],
+          },
+        },
+      })
+      const saved = await workspaceRepository.load()
+      if (saved) applyWorkspaceView(saved)
+      setIntakeOpen(false)
+      setInboxView('all')
+      setCurrentPage('inbox')
+      setNotice({ text: '链接已作为未整理来源保存在本机；尚未读取网页、调用 DeepSeek 或创建任务。' })
+    } catch (error) {
+      const message = error instanceof Error ? error.message : '链接保存失败，请稍后重试。'
+      setNotice({ text: message })
+      throw error
+    }
+  }
+
+  const handleRetrySource = async (sourceId: string) => {
+    const canonical = await canonicalWorkspaceRepository.load()
+    const canonicalSource = canonical?.sources.find((candidate) => candidate.id === sourceId)
+    const canonicalVersion = canonicalSource
+      ? canonical?.sourceVersions.find((candidate) => candidate.id === canonicalSource.currentVersionId)
+      : null
+    const source = sources.find((candidate) => candidate.id === sourceId)
+    const content = canonicalVersion?.rawText ?? ''
+    if (!canonicalSource || !canonicalVersion || !source || !content.trim()) {
+      throw new Error('该来源还没有可重新识别的正文，请先使用“手工补充”。')
+    }
+    const localRecognition = buildLocalRecognition({
+      sourceType: canonicalSource.type,
+      sourceTitle: canonicalSource.title,
+      content,
+      referenceTime: new Date(),
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'Asia/Shanghai',
+      projects,
+      tasks,
+    })
+    try {
+      const retried = await retryExistingSourceRecognition(
+        capturePersistenceService,
+        sourceId,
+        {
+          provider: 'local-rules',
+          modelName: 'local-rules',
+          promptVersion: localRecognition.promptVersion,
+          pipelineVersion: 'source-retry-local-rules-v1',
+          expectedSourceVersionId: canonicalVersion.id,
+        },
+        async () => localRecognition,
+      )
+      const saved = await workspaceRepository.load()
+      if (saved) applyWorkspaceView(saved)
+      openDraftReview(
+        retried.draftId,
+        '已沿用原来源与当前版本进行本地规则重试；没有发送到云端，请核对后再确认。',
+      )
+    } catch (error) {
+      const saved = await workspaceRepository.load().catch(() => null)
+      if (saved) applyWorkspaceView(saved)
+      const message = captureActionMessage(error, '重新识别未完成')
+      setInboxView('all')
+      setCurrentPage('inbox')
+      setNotice({ text: `${message}；原来源和历史版本仍保留。` })
+      throw error
+    }
+  }
+
+  const openManualSupplement = (sourceId: string) => {
+    setIntakeOpen(false)
+    setSupplementSourceId(sourceId)
+  }
+
+  const handleManualSupplement = async (sourceId: string, content: string, operationId: string) => {
+    const source = sources.find((candidate) => candidate.id === sourceId)
+    if (!source || !content.trim()) throw new Error('来源不存在或补充文字为空。')
+    const currentText = source.rawText ?? source.content ?? ''
+    if (currentText.trim() === content.trim()) throw new Error('文字没有变化；请直接使用“本地规则重试”。')
+    const localRecognition = buildLocalRecognition({
+      sourceType: source.type,
+      sourceTitle: source.title,
+      content,
+      referenceTime: new Date(),
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'Asia/Shanghai',
+      projects,
+      tasks,
+    })
+    try {
+      const handle = await capturePersistenceService.beginRevision(sourceId, {
+        operationId,
+        rawText: content,
+        provider: 'local-rules',
+        modelName: 'local-rules',
+        promptVersion: localRecognition.promptVersion,
+        pipelineVersion: 'manual-source-supplement-v1',
+        sourceLegacyData: {
+          reviewMetadata: {
+            sourceType: source.type,
+            mimeType: source.reviewMetadata?.mimeType ?? source.mimeType ?? null,
+            characterCount: content.length,
+            pageCount: null,
+            extractionMethod: 'manual',
+            ocrConfidence: null,
+            partialExtraction: false,
+            qualityFlags: ['正文已由用户手工补充，未重新读取原文件'],
+          },
+        },
+      })
+      let finalHandle = handle
+      if (handle.duplicate) {
+        const canonical = await canonicalWorkspaceRepository.load()
+        const existingDraft = canonical?.extractionDrafts.find((candidate) => candidate.id === handle.draftId)
+        if (existingDraft?.result) {
+          const saved = await workspaceRepository.load()
+          if (saved) applyWorkspaceView(saved)
+          setSupplementSourceId(null)
+          openDraftReview(handle.draftId, '该版本已经保存并形成待确认草稿，未重复创建版本。')
+          return
+        }
+        if (existingDraft?.status !== 'failed') throw new Error('该版本仍在处理中，请稍后从收件箱查看。')
+        finalHandle = await capturePersistenceService.beginRetry(sourceId, {
+          provider: 'local-rules',
+          modelName: 'local-rules',
+          promptVersion: localRecognition.promptVersion,
+          pipelineVersion: 'manual-source-supplement-retry-v1',
+          expectedSourceVersionId: handle.sourceVersionId,
+        })
+      }
+      await capturePersistenceService.recognize(finalHandle, async () => localRecognition)
+      const saved = await workspaceRepository.load()
+      if (saved) applyWorkspaceView(saved)
+      setSupplementSourceId(null)
+      openDraftReview(finalHandle.draftId, '补充文字已作为同一来源的新版本保存，并建立本地规则待确认草稿。')
+    } catch (error) {
+      const saved = await workspaceRepository.load().catch(() => null)
+      if (saved) applyWorkspaceView(saved)
+      throw new Error(captureActionMessage(error, '手工补充未完成；来源和历史版本仍保留。'), { cause: error })
     }
   }
 
@@ -726,21 +1020,28 @@ function App() {
 
   const handleExportWorkspace = async () => workspaceRepository.exportCurrentJson()
 
-  const handleClearWorkspace = () => {
-    setTasks([])
-    setSources([])
-    setDrafts([])
-    setProjects([])
-    setCourseBlocks([])
-    setIntegrations(createIntegrationState())
-    setKnowledgeSettings({})
-    setWorkPackages([])
-    setEvents([])
-    setMigrationLog([])
-    setRecognitionFeedback([])
-    setLegacyData({})
-    void workspaceRepository.clear()
-    setNotice({ text: '已清空本机工作区。' })
+  const handleClearWorkspace = async () => {
+    try {
+      await workspaceRepository.clear()
+      persistedWorkspaceRevision.current = null
+      pendingWorkspaceRevision.current = null
+      setTasks([])
+      setSources([])
+      setDrafts([])
+      setProjects([])
+      setCourseBlocks([])
+      setIntegrations(createIntegrationState())
+      setKnowledgeSettings({})
+      setWorkPackages([])
+      setMaterialItems([])
+      setEvents([])
+      setMigrationLog([])
+      setRecognitionFeedback([])
+      setLegacyData({})
+      setNotice({ text: '已清空本机工作区。' })
+    } catch {
+      setNotice({ text: '清空未完成；本机数据仍保留，请稍后重试。' })
+    }
   }
 
   const handleExportMigrationBackup = async () => {
@@ -840,7 +1141,10 @@ function App() {
             onSnoozeTask={handleSnooze}
             onTogglePinTask={handleTogglePin}
             onShowTasks={() => setCurrentPage('tasks')}
-            onShowInbox={() => setCurrentPage('inbox')}
+            onShowInbox={() => {
+              setInboxView('needs_review')
+              setCurrentPage('inbox')
+            }}
             smartExtractionStatus={smartExtractionStatus}
           />
         )
@@ -848,10 +1152,14 @@ function App() {
         return <InboxPage
           drafts={drafts}
           sources={sources}
-          onOpenDraft={setSelectedDraftId}
+          view={inboxView}
+          onChangeView={setInboxView}
+          onOpenDraft={(draftId) => { void selectDraftForReview(draftId) }}
           onConfirmDrafts={(draftIds) => draftIds.forEach(handleConfirmAll)}
           onArchiveDrafts={handleArchiveDrafts}
           onOpenManual={() => setIntakeOpen(true)}
+          onRetrySource={handleRetrySource}
+          onManualSupplementSource={openManualSupplement}
         />
       case 'tasks':
         return (
@@ -866,14 +1174,16 @@ function App() {
         return (
           <CalendarPage
             tasks={tasks}
+            events={events}
             courseBlocks={courseBlocks}
             onOpenTask={(task) => setSelectedTaskId(task.id)}
+            onOpenEvent={(event) => setSelectedEventId(event.id)}
             onAddCourseBlock={(block) => setCourseBlocks((current) => [...current, block])}
             onRemoveCourseBlock={(blockId) => setCourseBlocks((current) => current.filter((block) => block.id !== blockId))}
           />
         )
       case 'library':
-        return <LibraryPage sources={sources} onMarkIndependent={(sourceId) => {
+        return <LibraryPage sources={sources} drafts={drafts} onOpenIntake={() => setIntakeOpen(true)} onOpenDraft={(draftId) => { void selectDraftForReview(draftId) }} onRetrySource={handleRetrySource} onManualSupplementSource={openManualSupplement} onMarkIndependent={(sourceId) => {
           setSources((current) => current.map((source) => source.id === sourceId
             ? { ...source, duplicateReviewStatus: '保留为独立来源' }
             : source))
@@ -885,6 +1195,7 @@ function App() {
           projects={projects}
           workPackages={workPackages}
           events={events}
+          materials={materialItems}
           onExport={handleExportWorkspace}
           onImport={handleImportWorkspace}
           onClear={handleClearWorkspace}
@@ -899,7 +1210,8 @@ function App() {
                   : milestone),
                 updatedAt: new Date().toISOString(),
               }
-            : project))}
+              : project))}
+          onOpenTask={(task) => setSelectedTaskId(task.id)}
         />
       case 'knowledge':
         return <KnowledgePage
@@ -955,8 +1267,16 @@ function App() {
       <a className="skip-link" href="#main-content">跳到主要内容</a>
       <Sidebar
         currentPage={currentPage}
+        inboxView={inboxView}
         pendingReviewCount={pendingReviewCount}
-        onNavigate={setCurrentPage}
+        onNavigate={(page) => {
+          if (page === 'inbox') setInboxView('all')
+          setCurrentPage(page)
+        }}
+        onOpenPendingReview={() => {
+          setInboxView('needs_review')
+          setCurrentPage('inbox')
+        }}
         onOpenIntake={() => setIntakeOpen(true)}
         onOpenGuide={() => setGuideOpen(true)}
       />
@@ -990,7 +1310,15 @@ function App() {
         <IntakePanel
           onClose={() => setIntakeOpen(false)}
           onSubmitIntake={handleIntakeInput}
+          onSaveSource={handleSaveSourceOnly}
           smartExtractionStatus={smartExtractionStatus}
+        />
+      )}
+      {!workspaceRecovery && supplementSource && (
+        <SourceSupplementPanel
+          source={supplementSource}
+          onClose={() => setSupplementSourceId(null)}
+          onSubmit={(content, operationId) => handleManualSupplement(supplementSource.id, content, operationId)}
         />
       )}
       {!workspaceRecovery && selectedDraft && (
@@ -1028,6 +1356,15 @@ function App() {
           onUpdate={handleUpdateTask}
           notificationPermission={notificationPermission}
           onRequestNotificationPermission={handleRequestNotificationPermission}
+        />
+      )}
+      {!workspaceRecovery && selectedEvent && (
+        <EventDetailPanel
+          event={selectedEvent}
+          project={projects.find((project) => project.id === selectedEvent.projectId)}
+          evidenceQuotes={selectedEventEvidenceQuotes}
+          sourceTitles={selectedEventSourceTitles}
+          onClose={() => setSelectedEventId(null)}
         />
       )}
       {!workspaceRecovery && guideOpen && <OnboardingGuide onClose={() => {

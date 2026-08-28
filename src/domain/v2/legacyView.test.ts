@@ -242,4 +242,118 @@ describe('Workspace v8 legacy UI view', () => {
     const roundTripped = workspaceV8ToLegacyView(merged)
     expect(roundTripped.drafts[0].items.find((item) => item.suggestion.id === 'task:optional-default')?.selected).toBe(true)
   })
+
+  it('projects bounded source review metadata from canonical legacyData and preserves it on merge', () => {
+    const canonical = createGoldenWorkspaceV8()
+    const source = canonical.sources[0]
+    const version = canonical.sourceVersions.find((item) => item.id === source.currentVersionId)!
+    source.type = 'file'
+    source.legacyData = {
+      ...(source.legacyData ?? {}),
+      mimeType: 'application/pdf',
+      reviewMetadata: {
+        sourceType: 'file',
+        mimeType: 'application/pdf',
+        pageCount: 12,
+        characterCount: 18_400,
+        extractionMethod: 'ocr',
+        ocrConfidence: 0.72,
+        partialExtraction: true,
+        qualityFlags: ['OCR 仅识别前六页'],
+      },
+    }
+    canonical.recognitionRuns[0] = {
+      ...canonical.recognitionRuns[0],
+      sourceVersionId: version.id,
+      qualityFlags: ['日期证据覆盖不足'],
+    }
+
+    const view = workspaceV8ToLegacyView(canonical)
+    const projected = view.sources.find((item) => item.id === source.id)!
+    expect(projected.reviewMetadata).toEqual({
+      sourceType: 'file',
+      mimeType: 'application/pdf',
+      pageCount: 12,
+      characterCount: 18_400,
+      extractionMethod: 'ocr',
+      ocrConfidence: 0.72,
+      partialExtraction: true,
+      qualityFlags: ['OCR 仅识别前六页', '日期证据覆盖不足'],
+    })
+
+    const merged = mergeLegacyViewIntoWorkspaceV8(canonical, view)
+    expect(merged.sources.find((item) => item.id === source.id)?.legacyData?.reviewMetadata).toEqual(
+      source.legacyData.reviewMetadata,
+    )
+  })
+
+  it('shows a safe message for the latest failed recognition run without exposing unknown error codes', () => {
+    const canonical = createGoldenWorkspaceV8()
+    const source = canonical.sources[0]
+    const version = canonical.sourceVersions.find((item) => item.id === source.currentVersionId)!
+    const baseRun = canonical.recognitionRuns[0]
+    canonical.recognitionRuns = [
+      baseRun,
+      {
+        ...baseRun,
+        id: 'recognition-run:failed:older',
+        sourceVersionId: version.id,
+        status: 'failed',
+        startedAt: '2026-08-08T09:00:00.000Z',
+        completedAt: '2026-08-08T09:01:00.000Z',
+        errorCode: 'AI_TIMEOUT',
+      },
+      {
+        ...baseRun,
+        id: 'recognition-run:failed:latest',
+        sourceVersionId: version.id,
+        status: 'failed',
+        startedAt: '2026-08-08T10:00:00.000Z',
+        completedAt: '2026-08-08T10:01:00.000Z',
+        errorCode: 'UPSTREAM_PRIVATE_DETAIL_must_not_render',
+      },
+    ]
+
+    const safeView = workspaceV8ToLegacyView(canonical)
+    expect(safeView.sources[0].processingError).toBe('识别未完成，来源已保留，请重试或手动补充。')
+    expect(safeView.sources[0].processingError).not.toContain('UPSTREAM_PRIVATE_DETAIL')
+
+    canonical.sources[0].legacyData = {
+      ...(canonical.sources[0].legacyData ?? {}),
+      v7Record: { processingError: '旧版记录的可读失败原因' },
+    }
+    expect(workspaceV8ToLegacyView(canonical).sources[0].processingError).toBe('识别未完成，来源已保留，请重试或手动补充。')
+    expect(workspaceV8ToLegacyView(canonical).sources[0].processingError).not.toContain('旧版记录')
+
+    canonical.recognitionRuns.push({
+      ...baseRun,
+      id: 'recognition-run:succeeded:after-failure',
+      sourceVersionId: version.id,
+      status: 'succeeded',
+      startedAt: '2026-08-08T11:00:00.000Z',
+      completedAt: '2026-08-08T11:01:00.000Z',
+      errorCode: null,
+    })
+    canonical.sources[0].status = 'needs_review'
+    expect(workspaceV8ToLegacyView(canonical).sources[0].processingError).toBeUndefined()
+  })
+
+  it.each([
+    ['AI_TIMEOUT', '智能整理超时，来源已保留，可重试或手动补充。'],
+    ['INVALID_AI_RESPONSE', '智能整理结果无效，来源已保留，可重试或手动补充。'],
+    ['RECOGNITION_FAILED', '识别失败，来源已保留，可重试或手动补充。'],
+  ])('maps %s to a bounded user-facing recognition failure message', (errorCode, expectedMessage) => {
+    const canonical = createGoldenWorkspaceV8()
+    const source = canonical.sources[0]
+    const version = canonical.sourceVersions.find((item) => item.id === source.currentVersionId)!
+    canonical.recognitionRuns = [{
+      ...canonical.recognitionRuns[0],
+      id: `recognition-run:failed:${errorCode}`,
+      sourceVersionId: version.id,
+      status: 'failed',
+      errorCode,
+    }]
+
+    expect(workspaceV8ToLegacyView(canonical).sources[0].processingError).toBe(expectedMessage)
+  })
 })

@@ -3,6 +3,7 @@ import { useId, useRef, useState } from 'react'
 import { useDialogFocusTrap } from '../lib/useDialogFocusTrap'
 import type { DraftItem, ExtractionDraft, Project, Source, TaskCategory } from '../types'
 import type { InferenceLevel } from '../types'
+import { assessFocusedReview } from '../recognition/focusedReview'
 
 interface DraftReviewPanelProps {
   draft: ExtractionDraft
@@ -38,6 +39,28 @@ const inferenceLabels: Record<InferenceLevel, string> = {
   optional_suggestion: '可选建议',
 }
 
+type ReviewRecognition = NonNullable<ExtractionDraft['recognitionResult']>
+
+function firstEvidenceQuote(recognition: ReviewRecognition, evidenceIds: string[]): string {
+  for (const evidenceId of evidenceIds) {
+    const evidence = recognition.evidence.find((item) => item.id === evidenceId)
+    const quote = evidence?.quotedText ?? evidence?.quote
+    if (quote?.trim()) return quote
+  }
+  return ''
+}
+
+function EvidenceLocator({ recognition, evidenceIds, onFocusEvidence }: {
+  recognition: ReviewRecognition
+  evidenceIds: string[]
+  onFocusEvidence: (quote: string) => void
+}) {
+  const quote = firstEvidenceQuote(recognition, evidenceIds)
+  return quote
+    ? <button className="evidence-locator" type="button" onClick={() => onFocusEvidence(quote)}>在原文中定位</button>
+    : <small className="evidence-unavailable">暂无可定位依据</small>
+}
+
 export function DraftReviewPanel({ draft, source, onClose, onUpdate, onConfirm, onReject, onConfirmAll, projectWillCreate, projects, onProjectChoice, onKeepExplicit, onMoveTask, onToggleRecognitionEntity, onToggleTaskSelected, onSplitTask, onMergeTask }: DraftReviewPanelProps) {
   const titleId = useId()
   const panelRef = useRef<HTMLElement>(null)
@@ -51,6 +74,14 @@ export function DraftReviewPanel({ draft, source, onClose, onUpdate, onConfirm, 
   const sourceText = source?.content ?? source?.rawText ?? source?.contentPreview ?? '原文暂不可用'
   const evidenceIndex = activeEvidence ? sourceText.indexOf(activeEvidence) : -1
   const recognition = draft.recognitionResult
+  const focusedReview = recognition ? assessFocusedReview(recognition, {
+    ...(source?.reviewMetadata ?? {}),
+    sourceType: source?.type,
+    mimeType: source?.reviewMetadata?.mimeType ?? source?.mimeType,
+    characterCount: source?.reviewMetadata?.characterCount ?? (source ? sourceText.length : undefined),
+  }) : null
+  const needsReviewAttention = Boolean(recognition?.quality.needsHumanReview || focusedReview?.needsFocusedReview)
+  const expandTaskTree = !focusedReview?.needsFocusedReview || focusedReview.expandedSections.includes('tasks')
   const taskMeta = new Map(recognition
     ? [
         ...recognition.standaloneTasks,
@@ -103,16 +134,29 @@ export function DraftReviewPanel({ draft, source, onClose, onUpdate, onConfirm, 
               <option value="uncertain">稍后决定</option>
             </select></label>
           </div>
-          <div className={recognition.quality.needsHumanReview ? 'recognition-quality warning' : 'recognition-quality'}>
-            {recognition.quality.needsHumanReview ? <AlertTriangle size={17} /> : <ShieldCheck size={17} />}
-            <span><strong>{recognition.quality.needsHumanReview ? '需要重点核对' : '结构校验通过'}</strong><small>{recognition.quality.reviewReasons.join('；') || `证据覆盖 ${Math.round(recognition.quality.evidenceCoverage * 100)}%`}</small></span>
+          <div className={needsReviewAttention ? 'recognition-quality warning' : 'recognition-quality'}>
+            {needsReviewAttention ? <AlertTriangle size={17} /> : <ShieldCheck size={17} />}
+            <span><strong>{needsReviewAttention ? '需要重点核对' : '结构校验通过'}</strong><small>{focusedReview?.reasons.map((reason) => reason.title).join('；') || recognition.quality.reviewReasons.join('；') || `证据覆盖 ${Math.round(recognition.quality.evidenceCoverage * 100)}%`}</small></span>
             <button type="button" className="text-button" onClick={onKeepExplicit}>只保留原文明确</button>
           </div>
-          {recognition.conflicts.length > 0 && <div className="recognition-conflicts"><strong>发现 {recognition.conflicts.length} 项冲突</strong>{recognition.conflicts.map((conflict) => <p key={conflict.id}>{conflict.message}</p>)}</div>}
+          {focusedReview?.needsFocusedReview && <section className="focused-review-callout" aria-label="聚焦复核原因">
+            <header><AlertTriangle size={18} /><div><strong>这份通知包含多个时间、材料或阶段</strong><small>系统已经完成初步整理，请重点确认标记项；不会自动选择、修改或创建任何事项。</small></div></header>
+            <ul>{focusedReview.reasons.map((reason) => <li key={reason.code}><strong>{reason.title}</strong><span>{reason.detail}</span></li>)}</ul>
+            <div className="focused-source-metadata" aria-label="来源提取元数据">
+              {focusedReview.sourceMetadata.pageCount !== undefined && <span>{focusedReview.sourceMetadata.pageCount} 页</span>}
+              {focusedReview.sourceMetadata.characterCount !== undefined && <span>{focusedReview.sourceMetadata.characterCount.toLocaleString('zh-CN')} 字</span>}
+              {focusedReview.sourceMetadata.extractionMethod === 'ocr' && <span>本机 OCR</span>}
+              {focusedReview.sourceMetadata.ocrConfidence !== undefined && <span>OCR 置信度 {Math.round(focusedReview.sourceMetadata.ocrConfidence * 100)}%</span>}
+              {focusedReview.sourceMetadata.partialExtraction && <span>仅部分提取</span>}
+            </div>
+            {focusedReview.qualityFlags.length > 0 && <div className="focused-quality-flags"><strong>质量标记</strong><ul>{focusedReview.qualityFlags.map((flag) => <li key={flag}>{flag}</li>)}</ul></div>}
+          </section>}
+          {recognition.ambiguities.length > 0 && <div className="recognition-ambiguities"><strong>待澄清 {recognition.ambiguities.length} 项</strong>{recognition.ambiguities.map((ambiguity) => <article key={ambiguity.id}><p>{ambiguity.message}</p>{ambiguity.options.length > 0 && <small>可能值：{ambiguity.options.join(' / ')}</small>}<EvidenceLocator recognition={recognition} evidenceIds={ambiguity.evidenceIds} onFocusEvidence={setActiveEvidence} /></article>)}</div>}
+          {recognition.conflicts.length > 0 && <div className="recognition-conflicts"><strong>发现 {recognition.conflicts.length} 项冲突</strong>{recognition.conflicts.map((conflict) => <article key={conflict.id}><p>{conflict.message}</p><EvidenceLocator recognition={recognition} evidenceIds={conflict.evidenceIds} onFocusEvidence={setActiveEvidence} /></article>)}</div>}
         </section>}
         <details className="source-details" open><summary><FileText size={16} />原始通知与定位依据</summary><p>{evidenceIndex >= 0 ? <>{sourceText.slice(0, evidenceIndex)}<mark>{activeEvidence}</mark>{sourceText.slice(evidenceIndex + activeEvidence.length)}</> : sourceText}</p>{activeEvidence && evidenceIndex < 0 && <small>这条依据来自解析结果，但无法在当前保存的原文中精确定位，请人工核对。</small>}</details>
         <section className="review-list recognition-tree" aria-label="项目树待确认事项">
-          {recognition?.milestones.map((milestone) => <details className="recognition-stage" key={milestone.tempId} open>
+          {recognition?.milestones.map((milestone) => <details className="recognition-stage" key={milestone.tempId} open={expandTaskTree}>
             <summary><span><strong>{milestone.title}</strong><small>{milestone.objective || '阶段目标待确认'}</small></span><em>{milestone.tasks.length + milestone.workPackages.reduce((count, workPackage) => count + workPackage.tasks.length, 0)} 项</em></summary>
             {milestone.tasks.map((task) => {
               const item = draft.items.find((candidate) => candidate.suggestion.id === task.tempId)
@@ -122,9 +166,9 @@ export function DraftReviewPanel({ draft, source, onClose, onUpdate, onConfirm, 
           </details>)}
           {draft.items.filter((item) => !groupedItemIds.has(item.suggestion.id)).map((item, index) => renderItem(item, index))}
           {recognition && draft.items.length === 0 && <div className="empty-state compact"><ShieldCheck size={28} /><h3>没有识别到明确行动</h3><p>可保存为资料、关闭稍后处理，或返回录入手动创建任务。</p></div>}
-          {recognition?.materials.length ? <section className="recognition-entity-list"><h3>材料</h3>{recognition.materials.map((material) => <label key={material.tempId}><input type="checkbox" checked={material.selected !== false} onChange={(event) => onToggleRecognitionEntity('material', material.tempId, event.target.checked)} /><span><strong>{material.name}</strong><small>{material.formatRequirements.join('；') || '具体要求请回看原文'}</small></span></label>)}</section> : null}
-          {recognition?.timePoints.length ? <section className="recognition-entity-list"><h3>时间节点</h3>{recognition.timePoints.map((point) => <label key={point.tempId}><input type="checkbox" checked={point.selected !== false} onChange={(event) => onToggleRecognitionEntity('timePoint', point.tempId, event.target.checked)} /><span><strong>{point.type}</strong><small>{point.rawText}{point.needsConfirmation ? ' · 需要确认' : ''}</small></span></label>)}</section> : null}
-          {recognition?.events.length ? <section className="recognition-events"><h3>事件安排</h3>{recognition.events.map((event) => <article key={event.tempId}><label><input type="checkbox" checked={event.selected !== false} onChange={(changeEvent) => onToggleRecognitionEntity('event', event.tempId, changeEvent.target.checked)} /><strong>{event.title}</strong></label><span>{inferenceLabels[event.inferenceLevel]}</span><p>{event.description}</p></article>)}</section> : null}
+          {recognition?.materials.length ? <section className={`recognition-entity-list ${focusedReview?.expandedSections.includes('materials') ? 'focused' : ''}`}><h3>材料</h3>{recognition.materials.map((material) => <div className="recognition-entity-row" key={material.tempId}><label><input type="checkbox" checked={material.selected !== false} onChange={(event) => onToggleRecognitionEntity('material', material.tempId, event.target.checked)} /><span><strong>{material.name}</strong><small>{material.formatRequirements.join('；') || '具体要求请回看原文'}</small></span></label><EvidenceLocator recognition={recognition} evidenceIds={material.evidenceIds} onFocusEvidence={setActiveEvidence} /></div>)}</section> : null}
+          {recognition?.timePoints.length ? <section className={`recognition-entity-list ${focusedReview?.expandedSections.includes('timePoints') ? 'focused' : ''}`}><h3>时间节点</h3>{recognition.timePoints.map((point) => <div className="recognition-entity-row" key={point.tempId}><label><input type="checkbox" checked={point.selected !== false} onChange={(event) => onToggleRecognitionEntity('timePoint', point.tempId, event.target.checked)} /><span><strong>{point.type}</strong><small>{point.rawText}{point.needsConfirmation ? ' · 需要确认' : ''}</small></span></label><EvidenceLocator recognition={recognition} evidenceIds={point.evidenceIds} onFocusEvidence={setActiveEvidence} /></div>)}</section> : null}
+          {recognition?.events.length ? <section className={`recognition-events ${focusedReview?.expandedSections.includes('events') ? 'focused' : ''}`}><h3>事件安排</h3>{recognition.events.map((event) => <article key={event.tempId}><label><input type="checkbox" checked={event.selected !== false} onChange={(changeEvent) => onToggleRecognitionEntity('event', event.tempId, changeEvent.target.checked)} /><strong>{event.title}</strong></label><span>{inferenceLabels[event.inferenceLevel]}</span><p>{event.description}</p><EvidenceLocator recognition={recognition} evidenceIds={event.evidenceIds} onFocusEvidence={setActiveEvidence} /></article>)}</section> : null}
         </section>
       </div>
       <footer className="detail-footer review-footer">

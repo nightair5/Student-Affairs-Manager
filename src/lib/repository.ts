@@ -77,11 +77,22 @@ function normalizeTaskRecord(value: unknown, index: number, savedAt: string): Ta
   }) : []
   const reminders = Array.isArray(value.reminders) ? value.reminders.flatMap((item, reminderIndex) => {
     if (!isRecord(item) || !['browser', 'email', 'wechat-placeholder'].includes(stringValue(item.channel))) return []
+    const status = ['draft', 'scheduled', 'sent', 'failed', 'unsupported'].includes(stringValue(item.status))
+      ? item.status as Task['reminders'][number]['status']
+      : undefined
+    const sentAt = item.sentAt === null
+      ? null
+      : typeof item.sentAt === 'string' && !Number.isNaN(new Date(item.sentAt).getTime())
+        ? item.sentAt
+        : undefined
     return [{
       id: stringValue(item.id, `${id}-reminder-${reminderIndex}`),
       channel: item.channel as Task['reminders'][number]['channel'],
       scheduledAt: validDateValue(item.scheduledAt, deadline),
       enabled: Boolean(item.enabled),
+      status,
+      errorMessage: stringValue(item.errorMessage) || undefined,
+      sentAt,
     }]
   }) : []
   const history = Array.isArray(value.history) ? value.history.flatMap((item, historyIndex) => {
