@@ -1,5 +1,20 @@
 import { createSuggestions } from './parser'
 import type { ParsedSuggestion, Source, SourceType } from '../types'
+import type { FileExtractionStatus } from './fileExtraction'
+
+export type IntakeFileStatus = FileExtractionStatus | 'idle' | 'reading'
+
+export interface IntakeSubmissionState {
+  manualMode: boolean
+  manualTitle: string
+  manualDeadline: string
+  manualNextAction: string
+  sourceType: SourceType
+  content: string
+  fileStatus: IntakeFileStatus
+  fileName: string
+  linkUrl: string
+}
 
 export interface IntakeInput {
   sourceType: SourceType
@@ -17,6 +32,33 @@ export interface IntakeInput {
 export interface IntakeResult {
   source: Source
   suggestions: ParsedSuggestion[]
+}
+
+export function canSubmitIntake({
+  manualMode,
+  manualTitle,
+  manualDeadline,
+  manualNextAction,
+  sourceType,
+  content,
+  fileStatus,
+  fileName,
+  linkUrl,
+}: IntakeSubmissionState): boolean {
+  if (manualMode) {
+    return Boolean(manualTitle.trim() && manualDeadline && manualNextAction.trim())
+  }
+
+  if (sourceType === 'file' || sourceType === 'image') {
+    if (fileStatus === 'idle' || fileStatus === 'reading' || fileStatus === 'unsupported') return false
+    return Boolean(fileName && content.trim())
+  }
+
+  if (sourceType === 'link') {
+    return Boolean(linkUrl.trim() && content.trim())
+  }
+
+  return Boolean(content.trim())
 }
 
 export function createIntakeResult({

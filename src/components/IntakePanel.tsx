@@ -20,10 +20,13 @@ import {
 } from 'react'
 import {
   extractFileContent,
-  type FileExtractionStatus,
 } from '../lib/fileExtraction'
 import { fetchAuthorizedLinkText } from '../lib/linkExtraction'
-import type { IntakeInput } from '../lib/intake'
+import {
+  canSubmitIntake,
+  type IntakeFileStatus,
+  type IntakeInput,
+} from '../lib/intake'
 import { useDialogFocusTrap } from '../lib/useDialogFocusTrap'
 import type { Priority, SourceType, TaskCategory } from '../types'
 
@@ -32,8 +35,6 @@ interface IntakePanelProps {
   onSubmitIntake: (input: IntakeInput) => Promise<void>
   smartExtractionStatus: 'checking' | 'connected' | 'unavailable'
 }
-
-type IntakeFileStatus = FileExtractionStatus | 'idle' | 'reading'
 
 export function IntakePanel({ onClose, onSubmitIntake, smartExtractionStatus }: IntakePanelProps) {
   const [sourceType, setSourceType] = useState<SourceType>('text')
@@ -143,16 +144,17 @@ export function IntakePanel({ onClose, onSubmitIntake, smartExtractionStatus }: 
     void processFile(image)
   }
 
-  const fileNeedsContent = !manualMode && (sourceType === 'file' || sourceType === 'image')
-  const canSubmit = manualMode
-    ? Boolean(manualTitle.trim() && manualDeadline && manualNextAction.trim())
-    :
-    fileStatus !== 'reading' &&
-    fileStatus !== 'error' &&
-    fileStatus !== 'unsupported' &&
-    Boolean(content.trim()) &&
-    (sourceType !== 'link' || Boolean(linkUrl.trim())) &&
-    (!fileNeedsContent || Boolean(fileName))
+  const canSubmit = canSubmitIntake({
+    manualMode,
+    manualTitle,
+    manualDeadline,
+    manualNextAction,
+    sourceType,
+    content,
+    fileStatus,
+    fileName,
+    linkUrl,
+  })
 
   const handleParse = async (event: FormEvent) => {
     event.preventDefault()

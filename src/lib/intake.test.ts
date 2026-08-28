@@ -1,5 +1,47 @@
 import { describe, expect, it } from 'vitest'
-import { createIntakeResult } from './intake'
+import { canSubmitIntake, createIntakeResult, type IntakeSubmissionState } from './intake'
+
+const fileSubmission = (overrides: Partial<IntakeSubmissionState> = {}): IntakeSubmissionState => ({
+  manualMode: false,
+  manualTitle: '',
+  manualDeadline: '',
+  manualNextAction: '',
+  sourceType: 'file',
+  content: '',
+  fileStatus: 'idle',
+  fileName: '通知.pdf',
+  linkUrl: '',
+  ...overrides,
+})
+
+describe('intake submission gate', () => {
+  it('allows an OCR error after the user supplies non-empty source text', () => {
+    expect(canSubmitIntake(fileSubmission({
+      sourceType: 'image',
+      fileName: '截图.png',
+      fileStatus: 'error',
+      content: '  8 月 10 日前提交报名表。  ',
+    }))).toBe(true)
+  })
+
+  it('allows a scanned or damaged PDF error after the user supplies non-empty source text', () => {
+    expect(canSubmitIntake(fileSubmission({
+      fileStatus: 'error',
+      content: '请于 8 月 12 日参加说明会。',
+    }))).toBe(true)
+  })
+
+  it('keeps extraction errors blocked while the manual source text is empty', () => {
+    expect(canSubmitIntake(fileSubmission({ fileStatus: 'error', content: ' \n\t ' }))).toBe(false)
+  })
+
+  it('keeps submission blocked while local extraction is still reading', () => {
+    expect(canSubmitIntake(fileSubmission({
+      fileStatus: 'reading',
+      content: '用户提前输入的原文',
+    }))).toBe(false)
+  })
+})
 
 describe('intake result', () => {
   it('creates one traceable source and multiple independent suggestions', () => {
