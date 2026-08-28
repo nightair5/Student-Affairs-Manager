@@ -28,4 +28,15 @@ describe('mobile calendar exports', () => {
     expect(event).toContain('DTEND;VALUE=DATE:20260811')
     expect(todo).toContain('DUE;VALUE=DATE:20260810')
   })
+
+  it('preserves an explicit reminder for an all-day task', () => {
+    const task = {
+      ...demoTasks[0],
+      deadline: '2026-08-10',
+      reminders: [{ id: 'all-day-reminder', channel: 'browser' as const, scheduledAt: '2026-08-10T09:00', enabled: true }],
+    }
+    const event = buildCalendarIcs([task], new Date('2026-08-03T00:00:00Z'))
+    expect(event).toContain('BEGIN:VALARM')
+    expect(event).toContain('TRIGGER;VALUE=DATE-TIME:20260810T010000Z')
+  })
 })

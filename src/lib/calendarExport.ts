@@ -25,7 +25,7 @@ function calendarHeader(name: string): string[] {
   return ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Student Affairs Manager//CN', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH', `X-WR-CALNAME:${escapeIcs(name)}`]
 }
 
-function earliestReminder(task: Task, timeZone: string): Date {
+function explicitReminder(task: Task, timeZone: string): Date | null {
   const enabled = task.reminders
     .filter((reminder) => reminder.enabled && reminder.scheduledAt)
     .sort((left, right) => left.scheduledAt.localeCompare(right.scheduledAt))[0]
@@ -33,9 +33,25 @@ function earliestReminder(task: Task, timeZone: string): Date {
     const scheduled = parseBusinessDateTime(enabled.scheduledAt, timeZone)
     if (scheduled) return scheduled
   }
+  return null
+}
+
+function earliestReminder(task: Task, timeZone: string): Date {
+  const explicit = explicitReminder(task, timeZone)
+  if (explicit) return explicit
   const deadline = parseBusinessDateTime(task.deadline, timeZone)
   if (!deadline) throw new Error('INVALID_CALENDAR_DATE')
   return new Date(deadline.getTime() - 60 * 60 * 1000)
+}
+
+function alarmLines(reminder: Date, task: Task): string[] {
+  return [
+    'BEGIN:VALARM',
+    `TRIGGER;VALUE=DATE-TIME:${utcStamp(reminder)}`,
+    'ACTION:DISPLAY',
+    `DESCRIPTION:${escapeIcs(`该处理：${task.title}`)}`,
+    'END:VALARM',
+  ]
 }
 
 export function buildCalendarIcs(tasks: Task[], generatedAt = new Date(), options: CalendarExportOptions = {}): string {
@@ -43,6 +59,7 @@ export function buildCalendarIcs(tasks: Task[], generatedAt = new Date(), option
   const timeZone = options.defaultTimezone ?? DEFAULT_WORKSPACE_TIMEZONE
   tasks.filter((task) => task.status !== '已完成').forEach((task) => {
     if (isDateOnly(task.deadline)) {
+      const reminder = explicitReminder(task, timeZone)
       lines.push(
         'BEGIN:VEVENT',
         `UID:${escapeIcs(task.id)}@student-affairs.site`,
@@ -51,6 +68,7 @@ export function buildCalendarIcs(tasks: Task[], generatedAt = new Date(), option
         `DTEND;VALUE=DATE:${compactDateOnly(addDateOnlyDays(task.deadline, 1))}`,
         `SUMMARY:${escapeIcs(task.title)}`,
         `DESCRIPTION:${escapeIcs(`${task.nextAction}\n预计 ${task.estimatedMinutes} 分钟\n分类：${task.category}`)}`,
+        ...(reminder ? alarmLines(reminder, task) : []),
         'END:VEVENT',
       )
       return
@@ -67,11 +85,7 @@ export function buildCalendarIcs(tasks: Task[], generatedAt = new Date(), option
       `DTEND:${utcStamp(deadline)}`,
       `SUMMARY:${escapeIcs(task.title)}`,
       `DESCRIPTION:${escapeIcs(`${task.nextAction}\n预计 ${task.estimatedMinutes} 分钟\n分类：${task.category}`)}`,
-      'BEGIN:VALARM',
-      `TRIGGER;VALUE=DATE-TIME:${utcStamp(earliestReminder(task, timeZone))}`,
-      'ACTION:DISPLAY',
-      `DESCRIPTION:${escapeIcs(`该处理：${task.title}`)}`,
-      'END:VALARM',
+      ...alarmLines(earliestReminder(task, timeZone), task),
       'END:VEVENT',
     )
   })
