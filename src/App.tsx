@@ -5,11 +5,12 @@ import { OnboardingGuide } from './components/OnboardingGuide'
 import { PageLoadBoundary } from './components/PageLoadBoundary'
 import { Sidebar } from './components/Sidebar'
 import { TaskDetailPanel } from './components/TaskDetailPanel'
+import { WorkspaceRecoveryPanel } from './components/WorkspaceRecoveryPanel'
 import { demoSources, demoTasks } from './data/demo'
 import { InboxPage } from './pages/InboxPage'
 import { DashboardPage } from './pages/DashboardPage'
 import { TasksPage } from './pages/TasksPage'
-import { IndexedDbWorkspaceRepository } from './lib/repository'
+import { IndexedDbWorkspaceRepository, WorkspaceRecoveryRequiredError } from './lib/repository'
 import {
   getBrowserNotificationPermission,
   requestBrowserNotificationPermission,
@@ -21,10 +22,22 @@ import { updateTaskWithHistory } from './lib/taskUpdates'
 import { createIntakeResult, type IntakeInput } from './lib/intake'
 import { ProxyDeepSeekExtractionService } from './lib/deepseekExtraction'
 import { buildLocalRecognition } from './recognition/pipeline'
+import {
+  nextWorkspaceRecoveryAction,
+  safeWorkspaceRecoveryErrors,
+  workspacePersistenceRevision,
+} from './lib/workspaceRecoveryUi'
 import { markOnboardingComplete, shouldShowOnboarding } from './lib/onboarding'
 import { CapturePersistenceService } from './domain/v2/capture'
 import { CanonicalWorkspaceRepository } from './domain/v2/repository'
-import { buildDomainCommitPlan, commitDomainPlan, selectionFromDraftItems } from './domain/v2/domainCommit'
+import {
+  buildDomainCommitPlan,
+  commitDomainPlan,
+  mergeRecognitionTasks,
+  recognitionResultFromManualSuggestion,
+  selectionFromDraftItems,
+  splitRecognitionTask,
+} from './domain/v2/domainCommit'
 import {
   createManualMilestone,
   createIntegrationState,
@@ -38,6 +51,32 @@ const canonicalWorkspaceRepository = new CanonicalWorkspaceRepository()
 const workspaceRepository = new IndexedDbWorkspaceRepository(canonicalWorkspaceRepository)
 const capturePersistenceService = new CapturePersistenceService(canonicalWorkspaceRepository)
 const deepSeekExtractionService = new ProxyDeepSeekExtractionService()
+
+interface WorkspaceRecoveryState {
+  backupId: string
+  errorCodes: string[]
+  backupExported: boolean
+  confirmationArmed: boolean
+  busy: 'exporting' | 'recovering' | null
+  failureCode: string | null
+}
+
+function persistenceRevisionForView(saved: WorkspaceData): string {
+  return workspacePersistenceRevision(createWorkspaceData(
+    saved.tasks,
+    saved.sources,
+    saved.drafts,
+    saved.projects,
+    saved.courseBlocks,
+    saved.integrations,
+    saved.knowledgeSettings,
+    saved.workPackages,
+    saved.events,
+    saved.migrationLog,
+    saved.recognitionFeedback,
+    saved.legacyData,
+  ))
+}
 
 const CalendarPage = lazy(() => import('./pages/CalendarPage').then((module) => ({ default: module.CalendarPage })))
 const LibraryPage = lazy(() => import('./pages/LibraryPage').then((module) => ({ default: module.LibraryPage })))
@@ -64,6 +103,7 @@ function App() {
   const [legacyData, setLegacyData] = useState<Record<string, unknown>>({})
   const [workspaceReady, setWorkspaceReady] = useState(false)
   const [storageError, setStorageError] = useState(false)
+  const [workspaceRecovery, setWorkspaceRecovery] = useState<WorkspaceRecoveryState | null>(null)
   const [intakeOpen, setIntakeOpen] = useState(false)
   const [guideOpen, setGuideOpen] = useState(() => shouldShowOnboarding())
   const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null)
@@ -73,6 +113,9 @@ function App() {
   const [notificationPermission, setNotificationPermission] =
     useState<BrowserNotificationPermission>(() => getBrowserNotificationPermission())
   const deliveredNotifications = useRef(new Set<string>())
+  const hydrationPromise = useRef<Promise<WorkspaceData> | null>(null)
+  const persistedWorkspaceRevision = useRef<string | null>(null)
+  const pendingWorkspaceRevision = useRef<string | null>(null)
   const selectedTask =
     tasks.find((task) => task.id === selectedTaskId) ?? null
 
@@ -114,33 +157,58 @@ function App() {
 
   useEffect(() => {
     let active = true
-    const hydrate = async () => {
-      try {
+    if (!hydrationPromise.current) {
+      hydrationPromise.current = (async () => {
         const saved = await workspaceRepository.load()
-        if (!active) return
-        if (saved) {
-          applyWorkspaceView(saved)
-        } else {
-          await workspaceRepository.save(
-            createWorkspaceData(initialWorkspace.tasks, initialWorkspace.sources),
-          )
-        }
-      } catch {
-        if (active) setStorageError(true)
-      } finally {
-        if (active) setWorkspaceReady(true)
-      }
+        if (saved) return saved
+        const initialized = createWorkspaceData(initialWorkspace.tasks, initialWorkspace.sources)
+        await workspaceRepository.save(initialized)
+        return initialized
+      })()
     }
-    void hydrate()
+    void hydrationPromise.current.then((saved) => {
+      if (!active) return
+      persistedWorkspaceRevision.current = persistenceRevisionForView(saved)
+      pendingWorkspaceRevision.current = null
+      applyWorkspaceView(saved)
+      setStorageError(false)
+      setWorkspaceRecovery(null)
+    }).catch((error: unknown) => {
+      if (!active) return
+      if (error instanceof WorkspaceRecoveryRequiredError) {
+        setStorageError(false)
+        setWorkspaceRecovery({
+          backupId: error.backupId,
+          errorCodes: safeWorkspaceRecoveryErrors(error.errors),
+          backupExported: false,
+          confirmationArmed: false,
+          busy: null,
+          failureCode: null,
+        })
+        return
+      }
+      setStorageError(true)
+    }).finally(() => {
+      if (active) setWorkspaceReady(true)
+    })
     return () => {
       active = false
     }
   }, [applyWorkspaceView, initialWorkspace.sources, initialWorkspace.tasks])
 
   useEffect(() => {
-    if (!workspaceReady || storageError) return
-    void workspaceRepository.save(workspace).catch(() => setStorageError(true))
-  }, [storageError, workspace, workspaceReady])
+    if (!workspaceReady || storageError || workspaceRecovery) return
+    const revision = workspacePersistenceRevision(workspace)
+    if (revision === persistedWorkspaceRevision.current || revision === pendingWorkspaceRevision.current) return
+    pendingWorkspaceRevision.current = revision
+    void workspaceRepository.save(workspace).then(() => {
+      persistedWorkspaceRevision.current = revision
+      if (pendingWorkspaceRevision.current === revision) pendingWorkspaceRevision.current = null
+    }).catch(() => {
+      if (pendingWorkspaceRevision.current === revision) pendingWorkspaceRevision.current = null
+      setStorageError(true)
+    })
+  }, [storageError, workspace, workspaceReady, workspaceRecovery])
 
   useEffect(() => {
     const openIntake = (event: KeyboardEvent) => {
@@ -272,6 +340,9 @@ function App() {
       projects,
       tasks,
     })
+    const draftRecognition = input.manualSuggestion
+      ? recognitionResultFromManualSuggestion(localRecognition, input.manualSuggestion)
+      : localRecognition
     const captureRequest = {
       operationId: crypto.randomUUID(),
       sourceType: input.sourceType,
@@ -296,7 +367,7 @@ function App() {
       const recognitionResult = await capturePersistenceService.recognize(
         handle,
         input.manualSuggestion
-          ? async () => localRecognition
+          ? async () => draftRecognition
           : async () => deepSeekExtractionService.recognize(input, { projects, tasks }),
       )
       const saved = await workspaceRepository.load()
@@ -321,7 +392,7 @@ function App() {
           promptVersion: localRecognition.promptVersion,
           pipelineVersion: 'source-before-ai-local-fallback-v1',
         })
-        await capturePersistenceService.recognize(retry, async () => localRecognition)
+        await capturePersistenceService.recognize(retry, async () => draftRecognition)
         const saved = await workspaceRepository.load()
         if (saved) applyWorkspaceView(saved)
         openDraftReview(retry.draftId, `${reason}；原始来源仍已保存，现已建立一次独立的本地规则重试，请重点核对。`)
@@ -491,22 +562,31 @@ function App() {
     setDrafts((current) => current.map((draft) => {
       if (draft.id !== draftId) return draft
       const item = draft.items.find((candidate) => candidate.id === itemId)
-      if (!item || item.status !== '待确认') return draft
+      if (!item || item.status !== '待确认' || !draft.recognitionResult) return draft
       const rawParts = item.suggestion.title.split(/(?:并且|并|以及|及|和|、)/u).map((value) => value.trim()).filter(Boolean)
       const parts = rawParts.length >= 2 ? rawParts.slice(0, 2) : [item.suggestion.title, '补充步骤（请编辑）']
       const verb = item.suggestion.title.match(/^(提交|上传|填写|完成|准备|核对|确认|联系|参加|阅读|下载|打印|盖章|签字|回复|领取|整理|撰写|制作|报名)/u)?.[1] ?? '完成'
       const now = new Date().toISOString()
       const firstTitle = parts[0]
       const secondTitle = /^(提交|上传|填写|完成|准备|核对|确认|联系|参加|阅读|下载|打印|盖章|签字|回复|领取|整理|撰写|制作|报名)/u.test(parts[1]) ? parts[1] : `${verb}${parts[1]}`
+      const splitTaskTempId = `${item.suggestion.id.slice(0, 64)}-split-${Date.now().toString(36)}`
+      const recognitionResult = splitRecognitionTask(
+        draft.recognitionResult,
+        item.suggestion.id,
+        splitTaskTempId,
+        secondTitle,
+      )
       const first = updateDraftItem(draft, itemId, { title: firstTitle, nextAction: firstTitle }, undefined, now)
       return {
         ...first,
+        recognitionResult,
         items: [...first.items, {
           ...item,
-          id: `${item.id}-split-${Date.now()}`,
-          suggestion: { ...item.suggestion, id: `${item.suggestion.id}-split-${Date.now()}`, title: secondTitle, nextAction: secondTitle },
+          id: `draft-item:${draft.id}:${splitTaskTempId}`,
+          suggestion: { ...item.suggestion, id: splitTaskTempId, title: secondTitle, nextAction: secondTitle },
+          selected: true,
           updatedAt: now,
-          history: [{ id: `${item.id}-split-history-${Date.now()}`, field: '识别建议', before: item.suggestion.title, after: secondTitle, changedAt: now, actor: 'user', entityType: 'draft', entityId: item.id, action: 'split' }],
+          history: [{ id: `${item.id}-split-history-${splitTaskTempId}`, field: '识别建议', before: item.suggestion.title, after: secondTitle, changedAt: now, actor: 'user', entityType: 'draft', entityId: item.id, action: 'split' }],
         }],
         updatedAt: now,
       }
@@ -520,14 +600,27 @@ function App() {
       if (draft.id !== draftId || sourceItemId === targetItemId) return draft
       const sourceItem = draft.items.find((item) => item.id === sourceItemId)
       const targetItem = draft.items.find((item) => item.id === targetItemId)
-      if (!sourceItem || !targetItem || sourceItem.status !== '待确认' || targetItem.status !== '待确认') return draft
+      if (!sourceItem || !targetItem || sourceItem.status !== '待确认' || targetItem.status !== '待确认' || !draft.recognitionResult) return draft
       const now = new Date().toISOString()
+      const recognitionResult = mergeRecognitionTasks(
+        draft.recognitionResult,
+        sourceItem.suggestion.id,
+        targetItem.suggestion.id,
+      )
       const merged = updateDraftItem(draft, targetItemId, {
         description: [targetItem.suggestion.description, sourceItem.suggestion.description].filter(Boolean).join('；'),
         materials: [...new Set([...targetItem.suggestion.materials, ...sourceItem.suggestion.materials])],
         evidence: [targetItem.suggestion.evidence, sourceItem.suggestion.evidence].filter(Boolean).join('；'),
+        evidenceRefs: [...new Map([
+          ...(targetItem.suggestion.evidenceRefs ?? []),
+          ...(sourceItem.suggestion.evidenceRefs ?? []),
+        ].map((item) => [item.id, item])).values()],
       }, undefined, now)
-      return updateDraftItem(merged, sourceItemId, {}, '已拒绝', now)
+      return {
+        ...updateDraftItem(merged, sourceItemId, {}, '已拒绝', now),
+        recognitionResult,
+        updatedAt: now,
+      }
     }))
     setRecognitionFeedback((current) => [...current, { id: `feedback-${Date.now()}-${current.length}`, draftId, originalKind: `task:${sourceItemId}`, correctedKind: `task:${targetItemId}`, action: 'merged', createdAt: new Date().toISOString() }])
     setNotice({ text: '已合并到目标建议；原建议保留为已拒绝记录，可追溯。' })
@@ -562,9 +655,11 @@ function App() {
         setCurrentPage('today')
       }
     } catch (error) {
-      const message = error instanceof Error && error.message.startsWith('DOMAIN_COMMIT_PARENT_REQUIRED')
-        ? '该子任务依赖父任务，请先一并勾选父任务后使用“全部加入”。'
-        : '确认未写入：实体关系或时间仍需核对，现有数据未被部分修改。'
+      const message = error instanceof Error && error.message.startsWith('DOMAIN_COMMIT_PROJECT_DECISION_REQUIRED')
+        ? '请先明确选择新建项目、关联已有项目或作为独立事项；“稍后决定”不会静默创建项目。'
+        : error instanceof Error && error.message.startsWith('DOMAIN_COMMIT_PARENT_REQUIRED')
+          ? '该子任务依赖父任务，请先一并勾选父任务后使用“全部加入”。'
+          : '确认未写入：实体关系或时间仍需核对，现有数据未被部分修改。'
       setNotice({ text: message })
     }
   }
@@ -595,8 +690,12 @@ function App() {
       setSelectedDraftId(null)
       setCurrentPage('today')
       setNotice({ text: `已原子创建 ${plan.create.tasks.length} 项任务，并完整保存材料、时间与证据。` })
-    } catch {
-      setNotice({ text: '全部确认未写入：请检查父子任务、依赖和未确认时间，当前数据未被部分修改。' })
+    } catch (error) {
+      setNotice({
+        text: error instanceof Error && error.message.startsWith('DOMAIN_COMMIT_PROJECT_DECISION_REQUIRED')
+          ? '请先明确项目归属；“稍后决定”不会创建项目或正式任务。'
+          : '全部确认未写入：请检查父子任务、依赖和未确认时间，当前数据未被部分修改。',
+      })
     }
   }
 
@@ -657,6 +756,72 @@ function App() {
     anchor.click()
     URL.revokeObjectURL(url)
     setNotice({ text: '已导出迁移前备份；回滚前请先保留当前备份。' })
+  }
+
+  const handleExportRecoveryBackup = async () => {
+    const recovery = workspaceRecovery
+    if (!recovery || recovery.busy) return
+    setWorkspaceRecovery({ ...recovery, busy: 'exporting', confirmationArmed: false, failureCode: null })
+    try {
+      const serialized = await workspaceRepository.exportMigrationBackup(recovery.backupId)
+      if (!serialized) throw new Error('WORKSPACE_RECOVERY_BACKUP_MISSING')
+      const url = URL.createObjectURL(new Blob([serialized], { type: 'application/json;charset=utf-8' }))
+      const anchor = document.createElement('a')
+      const safeBackupId = recovery.backupId.replace(/[^a-z0-9_-]+/giu, '-').replace(/^-+|-+$/gu, '') || 'migration-backup'
+      anchor.href = url
+      anchor.download = `student-affairs-${safeBackupId}-${new Date().toISOString().slice(0, 10)}.json`
+      anchor.click()
+      URL.revokeObjectURL(url)
+      setWorkspaceRecovery((current) => current?.backupId === recovery.backupId
+        ? { ...current, backupExported: true, confirmationArmed: false, busy: null, failureCode: null }
+        : current)
+    } catch (error) {
+      const failureCode = safeWorkspaceRecoveryErrors(
+        [error instanceof Error ? error.message : ''],
+        'WORKSPACE_BACKUP_EXPORT_FAILED',
+      )[0]
+      setWorkspaceRecovery((current) => current?.backupId === recovery.backupId
+        ? { ...current, backupExported: false, confirmationArmed: false, busy: null, failureCode }
+        : current)
+    }
+  }
+
+  const handleRequestWorkspaceRecovery = async () => {
+    const recovery = workspaceRecovery
+    if (!recovery || recovery.busy) return
+    const action = nextWorkspaceRecoveryAction(recovery.backupExported, recovery.confirmationArmed)
+    if (action === 'blocked') return
+    if (action === 'arm') {
+      setWorkspaceRecovery({ ...recovery, confirmationArmed: true, failureCode: null })
+      return
+    }
+
+    setWorkspaceRecovery({ ...recovery, busy: 'recovering', failureCode: null })
+    try {
+      const recovered = await workspaceRepository.recoverMigration(recovery.backupId)
+      persistedWorkspaceRevision.current = persistenceRevisionForView(recovered)
+      pendingWorkspaceRevision.current = null
+      applyWorkspaceView(recovered)
+      setStorageError(false)
+      setWorkspaceRecovery(null)
+      setNotice({ text: '迁移数据已从指定备份恢复并重新校验；自动保存已恢复。' })
+    } catch (error) {
+      const nextBackupId = error instanceof WorkspaceRecoveryRequiredError ? error.backupId : recovery.backupId
+      const errorCodes = error instanceof WorkspaceRecoveryRequiredError
+        ? safeWorkspaceRecoveryErrors(error.errors)
+        : safeWorkspaceRecoveryErrors(
+            [error instanceof Error ? error.message : ''],
+            'WORKSPACE_RECOVERY_FAILED',
+          )
+      setWorkspaceRecovery({
+        backupId: nextBackupId,
+        errorCodes,
+        backupExported: nextBackupId === recovery.backupId && recovery.backupExported,
+        confirmationArmed: false,
+        busy: null,
+        failureCode: errorCodes[0],
+      })
+    }
   }
 
   const renderPage = () => {
@@ -804,17 +969,31 @@ function App() {
       </div>
 
       {!workspaceReady && <div className="workspace-status" role="status">正在恢复本机工作区…</div>}
-      {storageError && <div className="workspace-status error" role="alert">本机数据库暂不可用；本次更改可能无法在刷新后保留。</div>}
+      {storageError && <div className="workspace-status error" role="alert">本机数据库不可用；当前页面中的更改不会保存。请停止编辑并重新加载后重试。</div>}
       {notice && <div className="app-toast" role="status"><span>{notice.text}</span>{notice.undo && <button type="button" onClick={() => { notice.undo?.(); setNotice(null) }}>撤销</button>}<button type="button" onClick={() => setNotice(null)} aria-label="关闭提示">×</button></div>}
 
-      {intakeOpen && (
+      {workspaceRecovery && <WorkspaceRecoveryPanel
+        backupId={workspaceRecovery.backupId}
+        errorCodes={workspaceRecovery.errorCodes}
+        backupExported={workspaceRecovery.backupExported}
+        confirmationArmed={workspaceRecovery.confirmationArmed}
+        busy={workspaceRecovery.busy}
+        failureCode={workspaceRecovery.failureCode}
+        onExportBackup={() => void handleExportRecoveryBackup()}
+        onRequestRecovery={() => void handleRequestWorkspaceRecovery()}
+        onCancelRecovery={() => setWorkspaceRecovery((current) => current
+          ? { ...current, confirmationArmed: false }
+          : current)}
+      />}
+
+      {!workspaceRecovery && intakeOpen && (
         <IntakePanel
           onClose={() => setIntakeOpen(false)}
           onSubmitIntake={handleIntakeInput}
           smartExtractionStatus={smartExtractionStatus}
         />
       )}
-      {selectedDraft && (
+      {!workspaceRecovery && selectedDraft && (
         <DraftReviewPanel
           draft={selectedDraft}
           source={selectedDraftSource}
@@ -839,7 +1018,7 @@ function App() {
           onMergeTask={(sourceItemId, targetItemId) => handleMergeDraftItems(selectedDraft.id, sourceItemId, targetItemId)}
         />
       )}
-      {selectedTask && (
+      {!workspaceRecovery && selectedTask && (
         <TaskDetailPanel
           key={selectedTask.id}
           task={selectedTask}
@@ -851,7 +1030,7 @@ function App() {
           onRequestNotificationPermission={handleRequestNotificationPermission}
         />
       )}
-      {guideOpen && <OnboardingGuide onClose={() => {
+      {!workspaceRecovery && guideOpen && <OnboardingGuide onClose={() => {
         markOnboardingComplete()
         setGuideOpen(false)
       }} />}

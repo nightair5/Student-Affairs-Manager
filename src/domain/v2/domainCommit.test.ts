@@ -1,8 +1,17 @@
 import { describe, expect, it } from 'vitest'
-import type { EvidenceReference } from '../../types'
+import type { EvidenceReference, ParsedSuggestion } from '../../types'
 import { createWorkspaceData } from '../../lib/workspace'
 import type { RecognitionResult, TaskSuggestionV2 } from '../../recognition/types'
-import { buildDomainCommitPlan, commitDomainPlan, type DomainCommitSelection } from './domainCommit'
+import { isRecognitionResult } from '../../recognition/schema'
+import {
+  buildDomainCommitPlan,
+  commitDomainPlan,
+  mergeRecognitionTasks,
+  recognitionResultFromManualSuggestion,
+  selectionFromDraftItems,
+  splitRecognitionTask,
+  type DomainCommitSelection,
+} from './domainCommit'
 import { createGoldenWorkspaceV8 } from './fixtures'
 import { mergeLegacyViewIntoWorkspaceV8, workspaceV8ToLegacyView } from './legacyView'
 import { CanonicalWorkspaceRepository, MemoryWorkspaceRecordStore } from './repository'
@@ -10,6 +19,7 @@ import type { WorkspaceV8 } from './types'
 import { validateWorkspaceV8 } from './validators/workspaceValidator'
 
 const NOW = '2026-08-08T12:00:00.000Z'
+const LATER = '2026-08-08T13:00:00.000Z'
 
 function task(tempId: string, title: string, options: Partial<TaskSuggestionV2> = {}): TaskSuggestionV2 {
   return {
@@ -73,9 +83,8 @@ function recognitionResult(): RecognitionResult {
   }
 }
 
-function draftWorkspace(): WorkspaceV8 {
+function draftWorkspace(result = recognitionResult()): WorkspaceV8 {
   const workspace = createGoldenWorkspaceV8()
-  const result = recognitionResult()
   return {
     ...workspace,
     sources: workspace.sources.map((item) => ({ ...item, status: 'needs_review' as const })),
@@ -145,6 +154,248 @@ describe('B3 rich RecognitionResult domain atomic commit', () => {
     expect(committed.timePoints[0]).toMatchObject({ normalizedValue: '2026-08-11T09:30', timezone: 'Asia/Shanghai', precision: 'exact' })
     expect(committed.extractionDrafts[0].status).toBe('partially_confirmed')
     expect(committed.extractionDrafts[0].rejectedEntityTempIds).toEqual(expect.arrayContaining(['t2', 'mat3']))
+  })
+
+  it('allows a later partial confirmation to reference a predecessor already committed from the same draft', async () => {
+    const repository = new CanonicalWorkspaceRepository(new MemoryWorkspaceRecordStore())
+    const workspace = draftWorkspace()
+    await repository.save(workspace)
+    const first = await commitDomainPlan(repository, buildDomainCommitPlan(workspace, 'draft-rich', {
+      taskTempIds: ['t1'], materialTempIds: [], timePointTempIds: [], eventTempIds: [],
+    }, NOW), NOW)
+    const secondPlan = buildDomainCommitPlan(first, 'draft-rich', {
+      taskTempIds: ['t2'], materialTempIds: [], timePointTempIds: [], eventTempIds: [],
+    }, NOW)
+    expect(secondPlan.create.tasks[0].dependencyIds).toEqual(['task:draft-rich:t1'])
+    const second = await commitDomainPlan(repository, secondPlan, NOW)
+    expect(second.tasks.map((item) => item.id)).toEqual(expect.arrayContaining(['task:draft-rich:t1', 'task:draft-rich:t2']))
+    expect((await repository.load())?.tasks.find((item) => item.id === 'task:draft-rich:t2')?.dependencyIds)
+      .toEqual(['task:draft-rich:t1'])
+  })
+
+  it('keeps a split inside the rich draft and commits both tasks across sequential reload-safe confirmations', async () => {
+    const result = splitRecognitionTask(recognitionResult(), 't1', 't1-split', '提交报名附件')
+    expect(isRecognitionResult(result)).toBe(true)
+    const splitTask = result.milestones[0].workPackages[0].tasks.find((item) => item.tempId === 't1-split')!
+    const splitMaterialTempId = splitTask.materialTempIds[0]
+    const splitTimePointTempId = splitTask.timePointTempIds[0]
+    expect(splitMaterialTempId).not.toBe('mat1')
+    expect(splitTimePointTempId).not.toBe('tp1')
+    expect(result.materials.find((item) => item.tempId === splitMaterialTempId)?.relatedTaskTempIds).toEqual(['t1-split'])
+    expect(result.timePoints.find((item) => item.tempId === splitTimePointTempId)).toMatchObject({
+      relatedTaskTempIds: ['t1-split'], relatedMaterialTempIds: [splitMaterialTempId],
+    })
+    const repository = new CanonicalWorkspaceRepository(new MemoryWorkspaceRecordStore())
+    const workspace = draftWorkspace(result)
+    await repository.save(workspace)
+    const first = await commitDomainPlan(repository, buildDomainCommitPlan(workspace, 'draft-rich', {
+      taskTempIds: ['t1'], materialTempIds: ['mat1'], timePointTempIds: ['tp1'], eventTempIds: [],
+      taskOverrides: { t1: { deadline: '2026-08-11T09:30' } },
+    }, NOW), NOW)
+    const second = await commitDomainPlan(repository, buildDomainCommitPlan(first, 'draft-rich', {
+      taskTempIds: ['t1-split'], materialTempIds: [splitMaterialTempId], timePointTempIds: [splitTimePointTempId], eventTempIds: [],
+      taskOverrides: { 't1-split': { deadline: '2026-08-12T18:45' } },
+    }, LATER), LATER)
+    expect(second.tasks.filter((item) => ['t1', 't1-split'].includes(String(item.legacyData?.recognitionTempId)))).toHaveLength(2)
+    expect(second.materials.find((item) => item.id === 'material:draft-rich:mat1')?.relatedTaskIds).toEqual(['task:draft-rich:t1'])
+    expect(second.materials.find((item) => item.id === `material:draft-rich:${splitMaterialTempId}`)?.relatedTaskIds)
+      .toEqual(['task:draft-rich:t1-split'])
+    expect(second.timePoints.find((item) => item.id === 'time:draft-rich:tp1')).toMatchObject({
+      normalizedValue: '2026-08-11T09:30', relatedTaskIds: ['task:draft-rich:t1'],
+    })
+    expect(second.timePoints.find((item) => item.id === `time:draft-rich:${splitTimePointTempId}`)).toMatchObject({
+      normalizedValue: '2026-08-12T18:45', relatedTaskIds: ['task:draft-rich:t1-split'],
+    })
+    const reloaded = await repository.load()
+    expect(reloaded?.tasks).toHaveLength(2)
+    expect(reloaded && workspaceV8ToLegacyView(reloaded).drafts[0].items.map((item) => item.suggestion.id))
+      .toContain('t1-split')
+    expect(reloaded && workspaceV8ToLegacyView(reloaded).tasks.map((item) => [item.id, item.deadline]))
+      .toEqual(expect.arrayContaining([
+        ['task:draft-rich:t1', '2026-08-11T09:30'],
+        ['task:draft-rich:t1-split', '2026-08-12T18:45'],
+      ]))
+  })
+
+  it('merges source references into the canonical target and keeps both task evidence records', async () => {
+    const result = recognitionResult()
+    const stageTasks = result.milestones[0].workPackages[0].tasks
+    result.milestones[0].workPackages[0].tasks = stageTasks.map((item) => item.tempId === 't1s'
+      ? { ...item, materialTempIds: ['mat2'], timePointTempIds: ['tp3'] }
+      : item)
+    result.materials = result.materials.map((item) => item.tempId === 'mat2'
+      ? { ...item, relatedTaskTempIds: ['t1s'] }
+      : item)
+    result.timePoints = result.timePoints.map((item) => item.tempId === 'tp3'
+      ? { ...item, relatedTaskTempIds: ['t1s'], relatedMaterialTempIds: ['mat2'] }
+      : item)
+    const mergedResult = mergeRecognitionTasks(result, 't1s', 't1')
+    expect(isRecognitionResult(mergedResult)).toBe(true)
+    const target = mergedResult.milestones[0].workPackages[0].tasks.find((item) => item.tempId === 't1')!
+    expect(target.evidenceIds).toEqual(expect.arrayContaining(['e1', 'e2']))
+    expect(target.materialTempIds).toEqual(expect.arrayContaining(['mat1', 'mat2']))
+    expect(target.timePointTempIds).toEqual(expect.arrayContaining(['tp1', 'tp3']))
+    expect(mergedResult.materials.find((item) => item.tempId === 'mat2')?.relatedTaskTempIds).toContain('t1')
+    expect(mergedResult.timePoints.find((item) => item.tempId === 'tp3')?.relatedTaskTempIds).toContain('t1')
+
+    const workspace = draftWorkspace(mergedResult)
+    const reviewItems = workspaceV8ToLegacyView(workspace).drafts[0].items
+    const targetItem = reviewItems.find((item) => item.suggestion.id === 't1')!
+    const sourceItem = reviewItems.find((item) => item.suggestion.id === 't1s')!
+    sourceItem.status = '已拒绝'
+    const selection = selectionFromDraftItems(mergedResult, [targetItem, sourceItem])
+    const plan = buildDomainCommitPlan(workspace, 'draft-rich', selection, NOW)
+    expect(plan.create.evidenceRefs.map((item) => item.legacyData?.recognitionEvidenceId))
+      .toEqual(expect.arrayContaining(['e1', 'e2']))
+    const repository = new CanonicalWorkspaceRepository(new MemoryWorkspaceRecordStore())
+    await repository.save(workspace)
+    const committed = await commitDomainPlan(repository, plan, NOW)
+    expect(committed.tasks).toHaveLength(1)
+    expect(committed.extractionDrafts[0].rejectedEntityTempIds).toContain('t1s')
+    expect(committed.materials.find((item) => item.id === 'material:draft-rich:mat2')?.relatedTaskIds)
+      .toContain('task:draft-rich:t1')
+    expect((await repository.load())?.evidenceRefs.map((item) => item.legacyData?.recognitionEvidenceId))
+      .toEqual(expect.arrayContaining(['e1', 'e2']))
+  })
+
+  it('records unique link_added history when later confirmation extends material and time relations', async () => {
+    const result = recognitionResult()
+    result.milestones[0].workPackages[0].tasks = result.milestones[0].workPackages[0].tasks.map((item) => (
+      item.tempId === 't1s' ? { ...item, materialTempIds: ['mat1'], timePointTempIds: ['tp1'] } : item
+    ))
+    result.materials = result.materials.map((item) => item.tempId === 'mat1'
+      ? { ...item, relatedTaskTempIds: [...item.relatedTaskTempIds, 't1s'] }
+      : item)
+    result.timePoints = result.timePoints.map((item) => item.tempId === 'tp1'
+      ? { ...item, relatedTaskTempIds: [...item.relatedTaskTempIds, 't1s'] }
+      : item)
+    const repository = new CanonicalWorkspaceRepository(new MemoryWorkspaceRecordStore())
+    const workspace = draftWorkspace(result)
+    await repository.save(workspace)
+    const first = await commitDomainPlan(repository, buildDomainCommitPlan(workspace, 'draft-rich', {
+      taskTempIds: ['t1'], materialTempIds: ['mat1'], timePointTempIds: ['tp1'], eventTempIds: [],
+    }, NOW), NOW)
+    const secondPlan = buildDomainCommitPlan(first, 'draft-rich', {
+      taskTempIds: ['t1s'], materialTempIds: ['mat1'], timePointTempIds: ['tp1'], eventTempIds: [],
+    }, LATER)
+    const linkHistory = secondPlan.create.historyRecords.filter((item) => item.action === 'link_added')
+    expect(linkHistory).toHaveLength(2)
+    expect(new Set(linkHistory.map((item) => item.id)).size).toBe(2)
+    expect(linkHistory.map((item) => item.entityType)).toEqual(expect.arrayContaining(['material', 'time_point']))
+    const second = await commitDomainPlan(repository, secondPlan, LATER)
+    expect(second.materials.find((item) => item.id === 'material:draft-rich:mat1')).toMatchObject({
+      relatedTaskIds: expect.arrayContaining(['task:draft-rich:t1', 'task:draft-rich:t1s']),
+      updatedAt: LATER,
+      version: 2,
+    })
+    expect(second.timePoints.find((item) => item.id === 'time:draft-rich:tp1')).toMatchObject({
+      relatedTaskIds: expect.arrayContaining(['task:draft-rich:t1', 'task:draft-rich:t1s']),
+      updatedAt: LATER,
+    })
+    const repeated = await commitDomainPlan(repository, secondPlan, LATER)
+    expect(repeated.historyRecords.filter((item) => item.action === 'link_added')).toHaveLength(2)
+  })
+
+  it('fingerprints project choice, rejected selection and draft revision and rejects a stale plan transaction', async () => {
+    const selection: DomainCommitSelection = {
+      taskTempIds: ['t1'], materialTempIds: [], timePointTempIds: [], eventTempIds: [],
+    }
+    const workspace = draftWorkspace()
+    const originalPlan = buildDomainCommitPlan(workspace, 'draft-rich', selection, NOW)
+    const competingPlan = buildDomainCommitPlan(workspace, 'draft-rich', {
+      ...selection,
+      taskOverrides: { t1: { title: '另一标签页修改的报名任务' } },
+    }, NOW)
+    expect(competingPlan.operationId).not.toBe(originalPlan.operationId)
+    expect(competingPlan.draftRevisionHash).toBe(originalPlan.draftRevisionHash)
+    const rejectedPlan = buildDomainCommitPlan(workspace, 'draft-rich', { ...selection, rejectedTempIds: ['t2'] }, NOW)
+    expect(rejectedPlan.operationId).not.toBe(originalPlan.operationId)
+
+    const standaloneResult = recognitionResult()
+    standaloneResult.projectMatch = {
+      ...standaloneResult.projectMatch, decision: 'standalone_task', matchedProjectId: null,
+    }
+    const standaloneWorkspace = draftWorkspace(standaloneResult)
+    const standalonePlan = buildDomainCommitPlan(standaloneWorkspace, 'draft-rich', selection, NOW)
+    expect(standalonePlan.operationId).not.toBe(originalPlan.operationId)
+    expect(standalonePlan.draftRevisionHash).not.toBe(originalPlan.draftRevisionHash)
+
+    const revisedResult = recognitionResult()
+    revisedResult.milestones[0].workPackages[0].tasks[0] = {
+      ...revisedResult.milestones[0].workPackages[0].tasks[0], title: '填写新版报名表',
+    }
+    const revisedPlan = buildDomainCommitPlan(draftWorkspace(revisedResult), 'draft-rich', selection, NOW)
+    expect(revisedPlan.operationId).not.toBe(originalPlan.operationId)
+    expect(revisedPlan.draftRevisionHash).not.toBe(originalPlan.draftRevisionHash)
+
+    const competingRepository = new CanonicalWorkspaceRepository(new MemoryWorkspaceRecordStore())
+    await competingRepository.save(workspace)
+    const firstCommit = await commitDomainPlan(competingRepository, originalPlan, NOW)
+    expect((await commitDomainPlan(competingRepository, originalPlan, NOW)).extractionDrafts[0].commitOperationIds)
+      .toEqual(firstCommit.extractionDrafts[0].commitOperationIds)
+    await expect(commitDomainPlan(competingRepository, competingPlan, NOW)).rejects.toThrow('DOMAIN_COMMIT_DRAFT_STALE')
+    expect((await competingRepository.load())?.tasks[0].title).toBe('填写报名表')
+
+    const staleRepository = new CanonicalWorkspaceRepository(new MemoryWorkspaceRecordStore())
+    await staleRepository.save(standaloneWorkspace)
+    await expect(commitDomainPlan(staleRepository, originalPlan, NOW)).rejects.toThrow('DOMAIN_COMMIT_DRAFT_STALE')
+    expect((await staleRepository.load())?.tasks).toHaveLength(0)
+    expect((await staleRepository.load())?.projects).toHaveLength(0)
+  })
+
+  it('preserves manual category, duration, priority and materials through confirmation and reload', async () => {
+    const manualSuggestion: ParsedSuggestion = {
+      id: 'manual-task-1', title: '整理推免申请材料', category: '保研', deadline: '2026-08-18T20:30',
+      estimatedMinutes: 135, nextAction: '核对申请表并整理证明', description: '用户手动录入', priority: '高',
+      materials: ['申请表', '成绩证明'], evidence: '用户手动录入的任务', confidence: '高',
+    }
+    const result = recognitionResultFromManualSuggestion(recognitionResult(), manualSuggestion)
+    expect(isRecognitionResult(result)).toBe(true)
+    const workspace = draftWorkspace(result)
+    const reviewItems = workspaceV8ToLegacyView(workspace).drafts[0].items
+    expect(reviewItems[0].suggestion).toMatchObject({
+      category: '保研', estimatedMinutes: 135, priority: '高', materials: ['申请表', '成绩证明'],
+    })
+    const plan = buildDomainCommitPlan(workspace, 'draft-rich', selectionFromDraftItems(result, reviewItems), NOW)
+    const repository = new CanonicalWorkspaceRepository(new MemoryWorkspaceRecordStore())
+    await repository.save(workspace)
+    const committed = await commitDomainPlan(repository, plan, NOW)
+    expect(committed.projects).toHaveLength(0)
+    expect(committed.tasks[0]).toMatchObject({ estimatedMinutes: 135, projectId: null })
+    expect(committed.tasks[0].legacyData).toMatchObject({ category: '保研', priority: '高' })
+    expect(committed.materials.map((item) => item.name)).toEqual(['申请表', '成绩证明'])
+    const reloaded = await repository.load()
+    expect(reloaded && workspaceV8ToLegacyView(reloaded).tasks[0]).toMatchObject({
+      category: '保研', estimatedMinutes: 135, priority: '高',
+    })
+    expect(reloaded && workspaceV8ToLegacyView(reloaded).tasks[0].materials.map((item) => item.name))
+      .toEqual(['申请表', '成绩证明'])
+  })
+
+  it('creates canonical materials from task material edits and includes WorkPackage evidence', () => {
+    const workspace = draftWorkspace()
+    const result = workspace.extractionDrafts[0].result!
+    const editedItem = workspaceV8ToLegacyView(workspace).drafts[0].items.find((item) => item.suggestion.id === 't1')!
+    editedItem.suggestion = { ...editedItem.suggestion, materials: ['补充证明'] }
+    const editedPlan = buildDomainCommitPlan(workspace, 'draft-rich', selectionFromDraftItems(result, [editedItem]), NOW)
+    expect(editedPlan.create.materials).toHaveLength(1)
+    expect(editedPlan.create.materials[0]).toMatchObject({ name: '补充证明', relatedTaskIds: ['task:draft-rich:t1'] })
+
+    const evidencePlan = buildDomainCommitPlan(workspace, 'draft-rich', {
+      taskTempIds: ['t1'], materialTempIds: [], timePointTempIds: [], eventTempIds: [],
+    }, NOW)
+    expect(evidencePlan.create.evidenceRefs.map((item) => item.legacyData?.recognitionEvidenceId))
+      .toEqual(expect.arrayContaining(['e1', 'e2']))
+  })
+
+  it('requires an explicit project decision instead of creating a project for an uncertain match', () => {
+    const result = recognitionResult()
+    result.projectMatch = { ...result.projectMatch, decision: 'uncertain', matchedProjectId: null }
+    const workspace = draftWorkspace(result)
+    expect(() => buildDomainCommitPlan(workspace, 'draft-rich', {
+      taskTempIds: ['t1'], materialTempIds: [], timePointTempIds: [], eventTempIds: [],
+    }, NOW)).toThrow('DOMAIN_COMMIT_PROJECT_DECISION_REQUIRED')
+    expect(workspace.projects).toHaveLength(0)
   })
 
   it('prevents orphan subtasks, missing dependencies and missing event times', () => {
