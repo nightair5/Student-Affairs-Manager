@@ -602,7 +602,7 @@ export function buildDomainCommitPlan(
     const hasValidOverride = Boolean(overrideDeadline && (overrideIsDateOnly || !Number.isNaN(new Date(overrideDeadline).getTime())))
     return {
       id: timeIdMap.get(item.tempId)!, projectId,
-      milestoneId: selectedTasks.find((task) => item.relatedTaskTempIds.includes(task.tempId))?.milestoneTempId
+      milestoneId: projectId && selectedTasks.find((task) => item.relatedTaskTempIds.includes(task.tempId))?.milestoneTempId
         ? entityId('milestone', draftId, selectedTasks.find((task) => item.relatedTaskTempIds.includes(task.tempId))!.milestoneTempId!) : null,
       taskId: relatedTasks[0] ?? null, materialId: relatedMaterials[0] ?? null,
       eventId: event ? eventIdMap.get(event.tempId)! : null, relatedTaskIds: relatedTasks, relatedMaterialIds: relatedMaterials,

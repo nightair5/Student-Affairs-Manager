@@ -409,6 +409,28 @@ describe('B3 rich RecognitionResult domain atomic commit', () => {
       .toEqual(expect.arrayContaining(['e1', 'e2']))
   })
 
+  it('commits a project-structured suggestion as standalone without dangling milestone references', () => {
+    const result = recognitionResult()
+    result.projectMatch = { ...result.projectMatch, decision: 'standalone_task', matchedProjectId: null }
+    const workspace = draftWorkspace(result)
+    const plan = buildDomainCommitPlan(workspace, 'draft-rich', {
+      taskTempIds: ['t1'], materialTempIds: ['mat1'], timePointTempIds: ['tp1'], eventTempIds: [],
+    }, NOW)
+
+    expect(plan.create.projects).toHaveLength(0)
+    expect(plan.create.milestones).toHaveLength(0)
+    expect(plan.create.tasks[0]).toMatchObject({ projectId: null, milestoneId: null, workPackageId: null })
+    expect(plan.create.timePoints[0]).toMatchObject({ projectId: null, milestoneId: null })
+    expect(validateWorkspaceV8({
+      ...workspace,
+      tasks: plan.create.tasks,
+      materials: plan.create.materials,
+      timePoints: plan.create.timePoints,
+      evidenceRefs: plan.create.evidenceRefs,
+      historyRecords: plan.create.historyRecords,
+    }).valid).toBe(true)
+  })
+
   it('requires an explicit project decision instead of creating a project for an uncertain match', () => {
     const result = recognitionResult()
     result.projectMatch = { ...result.projectMatch, decision: 'uncertain', matchedProjectId: null }

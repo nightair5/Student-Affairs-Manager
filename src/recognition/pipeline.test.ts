@@ -33,6 +33,19 @@ describe('recognition pipeline v2', () => {
     expect(result.quality.overFragmentationRisk).toBeLessThan(0.5)
   })
 
+  it('keeps extracted PDF clauses within the canonical recognition schema', () => {
+    const result = buildLocalRecognition({
+      ...input(
+        'Student Affairs Beta - Anonymous PDF Test Course notice: submit the reading report by 2026-09-25 18:00. Required file: report.pdf Synthetic QA fixture. No personal data. 请于2026年9月20日18:00前提交匿名测试材料。',
+        'r9-h-text-layer.pdf',
+      ),
+      sourceType: 'file',
+    })
+
+    expect(result.timePoints.every((point) => point.rawText.length <= 160)).toBe(true)
+    expect(isRecognitionResult(result)).toBe(true)
+  })
+
   it('separates competition phases, materials, deadlines and attendance events', () => {
     const result = buildLocalRecognition(input('8月10日前完成报名，8月15日前提交盖章后的原创声明，8月25日前上传作品文件和作品链接，9月2日下午参加答辩。', '全国大学生广告艺术大赛'))
     expect(result.milestones.map((milestone) => milestone.title)).toEqual(expect.arrayContaining(['报名与组队', '正式提交']))

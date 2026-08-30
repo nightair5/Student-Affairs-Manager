@@ -158,6 +158,16 @@ function eventDescription(evidence: string): string {
   return `${prefix}${action}`.trim().slice(0, 180)
 }
 
+const MAX_TIME_RAW_TEXT_LENGTH = 160
+
+function timePointRawText(evidence: string): string {
+  const normalized = evidence.trim()
+  if (normalized.length <= MAX_TIME_RAW_TEXT_LENGTH) return normalized
+  const headLength = Math.floor((MAX_TIME_RAW_TEXT_LENGTH - 1) / 2)
+  const tailLength = MAX_TIME_RAW_TEXT_LENGTH - headLength - 1
+  return `${normalized.slice(0, headLength)}…${normalized.slice(-tailLength)}`
+}
+
 function preparationAction(evidence: string): { quote: string; object: string; material: string | null } | null {
   const match = evidence.match(/(?:答辩|展示|面试|宣讲|活动|会议)?前(?:请|需要|需|务必)?准备([^，,；。]+)/u)
   if (!match) return null
@@ -186,7 +196,7 @@ export function buildLocalRecognition(input: RecognitionInput): RecognitionResul
     timePoints.push({
       tempId: timePointId,
       type: isEvent ? 'event_start' : /报名/u.test(task.title) ? 'registration_deadline' : 'task_deadline',
-      rawText: item.evidence,
+      rawText: timePointRawText(item.evidence),
       normalizedValue: Number.isNaN(new Date(item.deadline).getTime()) ? null : item.deadline,
       timezone: input.timezone,
       isAllDay: false,
@@ -228,7 +238,7 @@ export function buildLocalRecognition(input: RecognitionInput): RecognitionResul
         timePoints.push({
           tempId: preparationTimePointId,
           type: 'task_deadline',
-          rawText: preparation.quote,
+          rawText: timePointRawText(preparation.quote),
           normalizedValue: Number.isNaN(new Date(item.deadline).getTime()) ? null : item.deadline,
           timezone: input.timezone,
           isAllDay: false,
