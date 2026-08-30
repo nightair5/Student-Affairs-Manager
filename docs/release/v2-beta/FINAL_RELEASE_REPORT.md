@@ -123,7 +123,7 @@ release Worker 对 `/benchmark*`、`/e2*`、`/fact-ledger*`、`/selection*`、`/
 
 ## 22. Reliability
 
-自动证据覆盖 AI 失败不丢 Source、确认单事务、迁移失败不覆盖、导入失败不替换、幂等 operation、late run ownership、Error Boundary 与手动继续；Edge 已补充 AI 失败、本地恢复、部分确认、原子提交与刷新保持证据。浏览器返回、重复确认、失败导入和完整网络中断仍需人工证据，当前判定 PARTIAL。
+自动证据覆盖 AI 失败不丢 Source、确认单事务、迁移失败不覆盖、导入失败不替换、幂等 operation、late run ownership、Error Boundary 与手动继续；Edge 已补充 AI 失败、本地恢复、部分确认、原子提交与刷新保持证据。浏览器返回已实测并形成 P2 导航问题；确认按钮重复点击、失败导入和完整网络中断仍需人工证据，当前判定 PARTIAL。
 
 ## 23. Performance
 
