@@ -4,7 +4,7 @@
 > 审计分支：`codex/v2-beta-release-audit`
 > R1：`PRODUCTION_BASELINE_IDENTIFIED`
 > R2：`BRANCH_MATRIX_FROZEN`
-> Production：保持原状，未在本阶段部署
+> Production 基线：本报告识别的历史回滚锚点；2026-08-31 经用户独立明确批准后，RC.4 已部署到 Production，当前状态见 `FINAL_RELEASE_REPORT.md`
 
 ## 1. 执行结论
 

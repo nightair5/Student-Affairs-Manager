@@ -101,7 +101,7 @@ Preview 出现 P0/P1 时：
 4. 对受影响浏览器先导出当前 JSON 和迁移备份，再验证回退版本能否读取。
 5. 修复必须独立提交、完整重跑工程门禁和受影响浏览器场景，再生成新的 RC。
 
-Production 默认不在本任务部署。若未来获得独立明确批准，回滚锚点仍为带注释标签 `v1-production-baseline` 和精确提交 `7a0af21e881dd97ee5c2247e0666a033ff53ae7e`；不得移动该标签。
+用户已于 2026-08-31 独立明确批准提前部署 Production 并接受稳定期重新计时。当前 Production 为 Deployment `b353533d-53d1-4f4f-a9eb-d62cdc028051` / Version `d245a1dc-73a7-42fe-a088-ae0b0ddc3678`；旧 Deployment `bc1719b0-2fcf-4f26-b8d1-fc3261588300` / Version `3b6d6ba2-e21f-495c-80e4-c4bac62366be` 与带注释标签 `v1-production-baseline` / 精确提交 `7a0af21e881dd97ee5c2247e0666a033ff53ae7e` 保留为回滚锚点，不得移动标签。
 
 ## 6. 当前证据状态
 
@@ -114,6 +114,7 @@ Production 默认不在本任务部署。若未来获得独立明确批准，回
 | UTC 与 Asia/Shanghai 完整测试 | PASS |
 | Preview 浏览器迁移演练 | PASS；RC.4 隔离 Edge，v7→v8、备份、故障与二次确认恢复均通过 |
 | Cloudflare Preview Version 回退演练 | PASS；RC.4 `1d6dc48e…` → RC.3 `e6da1443…` → RC.4，首页/status 均 200；最终 Deployment `8bad8cc4…` |
-| Production 回滚 | NOT AUTHORIZED / NOT RUN |
+| Production RC.4 部署 | PASS；首页/status/六条实验路径与本地制品身份初检通过 |
+| Production 回滚 | READY / NOT RUN；旧 Deployment、Version 与 Git tag 已精确记录，未实际切换流量 |
 
-Preview 浏览器迁移与 Version 回退两项均已由 RC.4 真实证据关闭，因此当前可判定 `Rollback rehearsal PASS`；Production 回滚仍未经授权且未执行。
+Preview 浏览器迁移与 Version 回退两项均已由 RC.4 真实证据关闭，因此当前可判定 `Rollback rehearsal PASS`。Production 已部署且旧锚点可定位，但 Production 实际回滚仍为 `NOT RUN`；不得用 Preview 演练冒充 Production 回滚。

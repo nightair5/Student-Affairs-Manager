@@ -3,8 +3,8 @@
 > Candidate：`v2.0.0-beta.1-rc.4`
 > Preview build commit：`2a95dba23e18ea2fcde8e1e0dd9754db4f79fce8`
 > Preview Version：`1d6dc48e-167f-491b-ae55-908a9f2f27b9`
-> 当前状态：`RELEASE CANDIDATE VALIDATION IN PROGRESS`
-> Production：未部署、未改动
+> 当前状态：`PRODUCTION DEPLOYED — 48H STABILITY IN PROGRESS`
+> Production Version：`d245a1dc-73a7-42fe-a088-ae0b0ddc3678`
 
 ## 面向用户的核心变化
 
@@ -48,8 +48,8 @@
 - 补充通知自动 diff / Apply 尚未正式开放；用户可以关联已有项目后手动编辑。
 - 部分图片 OCR 和扫描 PDF 需要人工校对；页数、文本长度和浏览器资源有限制。
 - 浏览器通知仅在页面存活期间调度；邮件计划不等于已发送；微信、跨设备同步和账号系统未接通。
-- 当前 Preview 的 Browser A–J 与真实回滚演练已通过，但 48 小时稳定期尚未完成，因此本文件不是 Production 发布批准。
-- 未改动的旧 Production 对实验样式路径仍返回 SPA HTML 200；新 Preview 返回 JSON 404。该字面 404 门槛必须在独立 Production 发布任务中经明确批准后关闭。
+- Preview 的 Browser A–J 与真实回滚演练已通过；用户随后明确批准提前部署 Production 并接受稳定期重新计时。Production 已上线，但新的 48 小时稳定期尚未完成。
+- Production 的六条实验样式路径现已实际返回 JSON 404；旧版本的 SPA HTML 200 记录保留为历史证据。
 
 ## 当前验证状态
 
@@ -64,12 +64,12 @@
 | Browser A–J | PASS；A–J 核心链 P0/P1 为 0，D 的 structured material requirements 作为 P2 披露 |
 | Preview 浏览器迁移与回滚演练 | PASS |
 | 可靠性与性能 | PASS（非付费范围）；键盘、重复确认、断网恢复和页面/保存/文件/刷新计时已记录；真实上游 AI 成功延迟按约束 NOT RUN |
-| 48 小时稳定期 | RESTARTED；RC.4 从 2026-08-30 22:13:52.399392 重新计时 |
-| Production 部署 | NOT AUTHORIZED / NOT RUN |
+| 48 小时稳定期 | RESTARTED；Production RC.4 从 2026-08-31 00:57:56.978876 重新计时，最早 2026-09-02 00:57:56.978876 判定 |
+| Production 部署 | DEPLOYED；Deployment `b353533d…` / Version `d245a1dc…`；首页/status/实验路径/制品身份初检 PASS |
 
-只有 [QA_ACCEPTANCE.md](./QA_ACCEPTANCE.md) 与 [MIGRATION_ROLLBACK.md](./MIGRATION_ROLLBACK.md) 的人工门槛全部关闭，最终报告才允许提升为：
+只有 [QA_ACCEPTANCE.md](./QA_ACCEPTANCE.md) 与 [MIGRATION_ROLLBACK.md](./MIGRATION_ROLLBACK.md) 的剩余稳定性门槛关闭，最终报告才允许提升为：
 
 ```text
 PRODUCT V2 BETA RELEASE CANDIDATE READY
-PRODUCTION RELEASE AWAITING APPROVAL
+PRODUCTION STABILITY PASS
 ```

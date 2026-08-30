@@ -4,7 +4,7 @@
 > RC：`v2.0.0-beta.1-rc.4`
 > Commit：`2a95dba23e18ea2fcde8e1e0dd9754db4f79fce8`
 > Cloudflare Version：`1d6dc48e-167f-491b-ae55-908a9f2f27b9`
-> Production：未修改
+> Production：`https://student-affairs.site/`；Deployment `b353533d-53d1-4f4f-a9eb-d62cdc028051`；Version `d245a1dc-73a7-42fe-a088-ae0b0ddc3678`
 
 ## 1. 判定规则
 
@@ -80,9 +80,9 @@ Capture → Source 先保存 → RecognitionRun → Draft → Evidence
 | SSRF、redirect 每跳复核 | Server/Worker 聚焦测试 | RC.4 私网目标拒绝探针 | PASS |
 | 文件类型、大小、页数和 50k 截断 | fileExtraction 17 tests | 场景 H | PASS |
 | Export 不含 Secret/文件本体 | secret scan、repository tests | 场景 J | PASS |
-| Preview/Production 部署隔离 | Wrangler config、独立 Worker URL | 两套 Deployment/Version 独立且 Production 未变 | PASS |
+| Preview/Production 部署隔离 | Wrangler config、独立 Worker URL | 两套 Worker 与 Deployment/Version 仍独立；Production 部署未覆盖 Preview | PASS |
 | RC 候选实验 endpoint 关闭 | Worker test | Preview 六条已知路径均为 JSON 404 | PASS |
-| 当前 Production 字面 404 | 无法由未部署 RC 代替 | 旧 Production 六条路径均为 SPA HTML 200 | OPEN；需独立 Production 批准后关闭 |
+| 当前 Production 字面 404 | RC.4 Production 上线后直接探针 | 六条路径均为 JSON 404 | PASS；旧 Production 的 SPA HTML 200 保留为历史记录 |
 
 RC.4 已部署首页及其 2 个 JS/CSS 资产共扫描 627,422 bytes：有界 Secret-like key 模式命中 0，前端资产中的 `DEEPSEEK_API_KEY` 名称命中 0。扫描仅输出计数，不输出任何疑似值；status 检查没有发送正文或调用模型。
 
@@ -229,7 +229,7 @@ P0/P1 立即停止该参与者后续操作并保留现场；先保护/导出匿�
 
 ### 6.1 R11 稳定性观测记录
 
-RC.1 因 Event 静默丢弃 P1 作废，RC.2 因 Export/Import canonical 改写 P0 作废，RC.3 因 PDF 本地规则确认 P1 作废，均不得与后续窗口拼接。RC.4 在初始部署后先完成 H/J 与计划内 Preview Version 回退演练；因此连续稳定期以恢复 RC.4 的 Deployment `8bad8cc4-ea86-4a1e-ad7a-1560e010cae2` 创建时间 `2026-08-30T14:13:52.399392Z`（Asia/Shanghai `2026-08-30 22:13:52.399392`）起算，满 48 小时的最早判定点为 `2026-09-01 22:13:52.399392`。
+RC.1 因 Event 静默丢弃 P1 作废，RC.2 因 Export/Import canonical 改写 P0 作废，RC.3 因 PDF 本地规则确认 P1 作废，均不得与后续窗口拼接。RC.4 在 Preview 完成 H/J 与 Version 回退演练后曾从 Deployment `8bad8cc4-ea86-4a1e-ad7a-1560e010cae2` 计时；用户于 2026-08-31 明确批准提前部署 Production 并接受稳定期重新计时，因此该 Preview 窗口不再作为完整 48 小时结论。新的权威稳定窗口从 Production Deployment `b353533d-53d1-4f4f-a9eb-d62cdc028051` 创建时间 `2026-08-30T16:57:56.978876Z`（Asia/Shanghai `2026-08-31 00:57:56.978876`）起算，最早判定点为 `2026-09-02 00:57:56.978876`。
 
 | 观测时间（Asia/Shanghai） | Preview 首页 | Preview status | Preview 实验路径 | Production 首页/版本 | Production 实验路径 | 结论 |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -245,10 +245,11 @@ RC.1 因 Event 静默丢弃 P1 作废，RC.2 因 Export/Import canonical 改写 
 | 2026-08-30 22:13:52（RC.4，最终恢复） | 200 HTML | 200；configured true；`deepseek-v4-flash`；仅检查状态，未调用模型 | 六条路径均为 JSON 404 | 200；Deployment `bc1719b0…` / Version `3b6d6ba2…` 未变 | 六条路径均为 SPA HTML 200 | 回退到 RC.3 后已恢复 RC.4 Version `1d6dc48e…`；最终 Deployment `8bad8cc4…`，R11 从本行重新起算 |
 | 2026-08-30 22:24:13（RC.4） | 200 HTML | 200；configured true；`deepseek-v4-flash`；仅检查状态，未调用模型 | 六条已知实验路径均为 JSON 404 | 200；Wrangler current Deployment `bc1719b0…` / Version `3b6d6ba2…` 未变 | 六条路径均为 SPA HTML 200 | Wrangler current Preview Deployment `8bad8cc4…` / Version `1d6dc48e…` 未变；连续覆盖约 10 分 21 秒，无失败窗口；Production 未被覆盖，字面 404 仍未关闭 |
 | 2026-08-30 22:32:38（RC.4） | 200 HTML | 200；configured true；`deepseek-v4-flash`；仅检查状态，未调用模型 | 六条已知实验路径均为 JSON 404 | 200；Wrangler current Deployment `bc1719b0…` / Version `3b6d6ba2…` 未变 | 六条路径均为 SPA HTML 200 | Wrangler current Preview Deployment `8bad8cc4…` / Version `1d6dc48e…` 未变；连续覆盖约 18 分 46 秒，无失败窗口；Production 未被覆盖，字面 404 仍未关闭 |
+| 2026-08-31 约 01:00（RC.4，Production 起点） | 200 HTML；Deployment `8bad8cc4…` / Version `1d6dc48e…` 未变 | 200；configured true；`deepseek-v4-flash`；仅检查状态，未调用模型 | 六条路径均为 JSON 404 | 200；Deployment `b353533d…` / Version `d245a1dc…`，100% 流量 | 六条路径均为 JSON 404 | 用户明确批准提前部署并接受重新计时；Production 首页、主 JS/CSS 与本地 RC.4 制品逐字节一致，旧 Deployment `bc1719b0…` / Version `3b6d6ba2…` 保留为回滚锚点；新 48 小时窗口从 00:57:56.978876 起算 |
 
-已创建当前任务心跳 `v2-beta-preview-48h`，每 6 小时执行只读检查，截止到满 48 小时后的首个观测点。心跳不得调用付费模型、修改 Secret、部署或改变路由。
+当前任务心跳 `v2-beta-preview-48h` 已更新为 Production RC.4 监测，每 6 小时执行只读检查，截止到新窗口满 48 小时后的首个观测点。心跳不得调用付费模型、修改 Secret、部署或改变路由。
 
-Production 的 200 响应为旧版本 SPA fallback，不是实验页面或实验 API；但附件明确要求 Production 返回 404，因此该项仍是发布前未关闭证据。未经用户独立明确批准，不得为了修正状态码部署 Production。
+旧 Production 的 SPA HTML 200 记录保留为历史证据。用户独立明确批准 Production 部署后，RC.4 已使六条实验样式路径实际返回 JSON 404，该字面门槛已关闭；本次未发送真实正文或调用付费模型。
 
 | 阶段 | 状态 | 说明 |
 | --- | --- | --- |
@@ -256,7 +257,8 @@ Production 的 200 响应为旧版本 SPA fallback，不是实验页面或实验
 | R9 Browser A–J | PASS | A–J 的核心链均通过，P0 = 0、P1 = 0；D 的 structured material requirements 作为已披露 P2 保留 |
 | R10 Alpha Test Kit | READY | 本文第 5 节；尚无真实参与者数据 |
 | R10 Alpha run | NOT RUN | 不属于 Codex 可伪造范围 |
-| R11 Preview RC deployment | DEPLOYED | RC.4 Version `1d6dc48e…` / Deployment `8bad8cc4…`；Production 未变 |
-| R11 48-hour stability | RESTARTED | 从 2026-08-30 22:13:52.399392 起连续计时；最早 2026-09-01 22:13:52.399392 判定 |
+| R11 Preview RC deployment | DEPLOYED | RC.4 Version `1d6dc48e…` / Deployment `8bad8cc4…`；仍作为隔离对照环境 |
+| Production RC.4 deployment | DEPLOYED | 用户明确批准提前部署；Version `d245a1dc…` / Deployment `b353533d…`；首页/status/实验路径与制品身份初检通过 |
+| R11 / Production 48-hour stability | RESTARTED | 从 2026-08-31 00:57:56.978876 起连续计时；最早 2026-09-02 00:57:56.978876 判定 |
 
-在 RC.4 连续稳定满 48 小时、Production 字面 404 门槛与最终 R12 审计关闭前，状态不得提升为 `PRODUCT V2 BETA RELEASE CANDIDATE READY`。
+在 Production RC.4 连续稳定满 48 小时并完成最终 R12 审计前，状态不得提升为 `PRODUCT V2 BETA RELEASE CANDIDATE READY`。Production 已上线不等于稳定性门槛已经通过。

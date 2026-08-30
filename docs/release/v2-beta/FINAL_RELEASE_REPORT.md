@@ -4,24 +4,26 @@
 > 证据检查点：`2a95dba23e18ea2fcde8e1e0dd9754db4f79fce8`
 > Preview build：`2a95dba23e18ea2fcde8e1e0dd9754db4f79fce8`
 > RC：`v2.0.0-beta.1-rc.4`
-> 报告状态：`DRAFT — RELEASE CANDIDATE NOT READY`
+> 报告状态：`PRODUCTION DEPLOYED — 48H STABILITY IN PROGRESS`
 
 ## 1. Executive Summary
 
-R1–R8 的产品与工程整合已经进入独立 `release/v2-beta`，Workspace v8、Source-first Capture、可编辑 Human Review、原子提交、核心 IA 和实验运行时隔离均已实现并通过自动门禁。R10 Alpha Test Kit 已准备。RC.1 的 Event P1、RC.2 的 Import 数据完整性 P0、RC.3 的 PDF 本地确认 P1 均按门禁停止、修复并重新生成 RC；RC.4 已通过 H/J、Preview 浏览器迁移/恢复与 Cloudflare Preview Version 回退演练，R11 从最终恢复 Deployment 重新计满 48 小时。
+R1–R8 的产品与工程整合已经进入独立 `release/v2-beta`，Workspace v8、Source-first Capture、可编辑 Human Review、原子提交、核心 IA 和实验运行时隔离均已实现并通过自动门禁。R10 Alpha Test Kit 已准备。RC.1 的 Event P1、RC.2 的 Import 数据完整性 P0、RC.3 的 PDF 本地确认 P1 均按门禁停止、修复并重新生成 RC；RC.4 已通过 H/J、Preview 浏览器迁移/恢复与 Cloudflare Preview Version 回退演练。用户于 2026-08-31 明确批准提前部署 Production 并接受稳定期重新计时；RC.4 已部署到 `student-affairs.site`，新的 48 小时窗口从 Production Deployment 创建时间起算。
 
-当前不得宣布 RC Ready：RC.4 的 48 小时稳定期尚未关闭；旧 Production 对实验样式路径仍为 SPA HTML 200。Production 未获授权且未部署。
+当前不得宣布 RC Ready：Production RC.4 的新 48 小时稳定期尚未关闭。Production 首页、状态接口、制品身份和六条实验路径初检通过，但上线成功不等于连续稳定性已经 PASS。
 
-## 2. Current Production baseline
+## 2. Production baseline and current deployment
 
 | 字段 | 值 |
 | --- | --- |
 | URL | `https://student-affairs.site/` |
-| Git commit | `7a0af21e881dd97ee5c2247e0666a033ff53ae7e` |
-| Tag | `v1-production-baseline`（带注释、不可移动） |
-| Deployment | `bc1719b0-2fcf-4f26-b8d1-fc3261588300` |
-| Version | `3b6d6ba2-e21f-495c-80e4-c4bac62366be` |
-| 本任务改动 | 无 |
+| Runtime commit | `2a95dba23e18ea2fcde8e1e0dd9754db4f79fce8` |
+| RC tag | `v2.0.0-beta.1-rc.4` |
+| Current Deployment | `b353533d-53d1-4f4f-a9eb-d62cdc028051` |
+| Current Version | `d245a1dc-73a7-42fe-a088-ae0b0ddc3678` |
+| Deployment created | `2026-08-30T16:57:56.978876Z` |
+| Rollback Git tag | `v1-production-baseline` → `7a0af21e881dd97ee5c2247e0666a033ff53ae7e`（带注释、不可移动） |
+| Rollback Deployment / Version | `bc1719b0-2fcf-4f26-b8d1-fc3261588300` / `3b6d6ba2-e21f-495c-80e4-c4bac62366be` |
 
 完整证据见 [RELEASE_SCOPE.md](./RELEASE_SCOPE.md)。
 
@@ -109,7 +111,7 @@ Top 3 只含当前可执行任务；完成、稍后、受阻、等待、置顶�
 
 ## 18. Experiment cleanup
 
-release Worker 对 `/benchmark*`、`/e2*`、`/fact-ledger*`、`/selection*`、`/blind*`、`/research-preview*` 返回 JSON 404，且没有研究 Durable Object、实验 bearer 或实验 model allowlist。Preview 实测 404；旧 Production SPA fallback 仍为 HTML 200，字面门槛未关闭。
+release Worker 对 `/benchmark*`、`/e2*`、`/fact-ledger*`、`/selection*`、`/blind*`、`/research-preview*` 返回 JSON 404，且没有研究 Durable Object、实验 bearer 或实验 model allowlist。Preview 与当前 Production 均已实测 JSON 404；旧 Production SPA fallback 的 HTML 200 保留为部署前历史证据。
 
 ## 19. Browser A–J
 
@@ -121,7 +123,7 @@ release Worker 对 `/benchmark*`、`/e2*`、`/fact-ledger*`、`/selection*`、`/
 
 ## 21. Security
 
-自动证据覆盖 Key 服务端化、Origin、Content-Type、请求体大小、Prompt injection、SSRF 与每跳 redirect 复核、安全错误、实验 route isolation 和 Secret scan。RC.4 对匿名恶意 Origin、错误 Content-Type、超限 Body 与私网 URL 的直接拒绝探针分别返回 403/415/413/400；6 个聚焦 Worker 安全测试与 1 个 recognition injection 测试通过，均未调用付费模型。已部署首页及 2 个 JS/CSS 资产共 627,422 bytes 的范围扫描中，有界 Secret-like key 与 `DEEPSEEK_API_KEY` 前端名称命中均为 0；Workspace v8 导出及两类 PDF 全链也未发现 Secret 或文件本体。RC 候选安全门槛 `PASS`。Preview/Production Deployment 与 Version 保持隔离；旧 Production 的实验样式路径字面 404 仍是独立未关闭门槛。
+自动证据覆盖 Key 服务端化、Origin、Content-Type、请求体大小、Prompt injection、SSRF 与每跳 redirect 复核、安全错误、实验 route isolation 和 Secret scan。RC.4 对匿名恶意 Origin、错误 Content-Type、超限 Body 与私网 URL 的直接拒绝探针分别返回 403/415/413/400；6 个聚焦 Worker 安全测试与 1 个 recognition injection 测试通过，均未调用付费模型。已部署首页及 2 个 JS/CSS 资产共 627,422 bytes 的范围扫描中，有界 Secret-like key 与 `DEEPSEEK_API_KEY` 前端名称命中均为 0；Workspace v8 导出及两类 PDF 全链也未发现 Secret 或文件本体。RC 候选安全门槛 `PASS`。Preview/Production Deployment 与 Version 保持隔离；当前 Production 的六条实验样式路径字面 404 已由直接探针关闭。
 
 ## 22. Reliability
 
@@ -144,7 +146,7 @@ RC.4 隔离 Edge 的用户可交互观测为：首页冷/热 1772/995 ms、Inbox
 
 5–10 名学生的说明、隐私、匿名化、五项任务、观察表、指标、AI 修改分类、反馈表、Bug 模板、退出与删除步骤已集中在 QA 文档。真实参与者运行与指标均 `NOT RUN`，不得伪造。
 
-## 26. Preview deployment
+## 26. Preview and Production deployment
 
 | 字段 | 值 |
 | --- | --- |
@@ -158,15 +160,27 @@ RC.4 隔离 Edge 的用户可交互观测为：首页冷/热 1772/995 ms、Inbox
 | Final deployment created | `2026-08-30T14:13:52.399392Z` |
 | Production routes | 无 |
 
-48 小时心跳 `v2-beta-preview-48h` 已改绑 RC.4 最终 Deployment。RC.1/RC.2/RC.3 与 RC.4 回退演练前窗口均不拼接；最早只能在 `2026-09-01 22:13:52.399392 Asia/Shanghai` 判定满期。
+Production：
+
+| 字段 | 值 |
+| --- | --- |
+| URL | `https://student-affairs.site/` |
+| Worker | `student-affairs-manager` |
+| Version | `d245a1dc-73a7-42fe-a088-ae0b0ddc3678` |
+| Deployment | `b353533d-53d1-4f4f-a9eb-d62cdc028051` |
+| Tag | `v2.0.0-beta.1-rc.4` |
+| Runtime commit | `2a95dba23e18ea2fcde8e1e0dd9754db4f79fce8` |
+| Deployment created | `2026-08-30T16:57:56.978876Z` |
+
+48 小时心跳 `v2-beta-preview-48h` 已更新为 Production RC.4 监测。所有更早 Preview 窗口均不拼接；新的最早判定点为 `2026-09-02 00:57:56.978876 Asia/Shanghai`。
 
 ## 27. Rollback procedure
 
-P0/P1 时停止新功能和 Production 准备，记录失败 Version/commit，先导出浏览器数据与迁移备份，再把 Preview 流量回退到最近通过门禁的 Version。任何 Production 回滚或部署均需独立明确批准。
+P0/P1 时停止新功能，记录失败 Version/commit，先保护浏览器数据与迁移备份，再评估把 Production 流量回退到旧 Version `3b6d6ba2-e21f-495c-80e4-c4bac62366be`。不可移动 Git 锚点仍为 `v1-production-baseline`；本次没有执行 Production 回滚演练。
 
 ## 28. Release notes
 
-用户可见变化、数据/AI 边界、限制与验证状态见 [RELEASE_NOTES.md](./RELEASE_NOTES.md)。当前文案明确“validation in progress”，没有将 Preview 当 Production。
+用户可见变化、数据/AI 边界、限制与验证状态见 [RELEASE_NOTES.md](./RELEASE_NOTES.md)。当前文案明确“Production deployed, validation in progress”，不把上线成功写成 48 小时 PASS。
 
 ## 29. Remaining P2/P3 and branch cleanup proposal
 
@@ -205,21 +219,22 @@ P2/P3 在 48 小时稳定期后处理，不得在稳定期增加功能：
 - [x] Browser A–J 通过，P0 = 0，P1 = 0
 - [x] Preview 浏览器 migration / rollback 演练通过
 - [x] 非付费范围真实性能记录完成；真实上游 AI 成功延迟按约束 NOT RUN
-- [ ] Preview 连续稳定满 48 小时
-- [ ] Production 实验样式路径实际返回 404
+- [ ] Production RC.4 连续稳定满 48 小时
+- [x] Production 实验样式路径实际返回 JSON 404
 - [ ] 最终 QA/报告状态已从 NOT RUN 更新为 PASS
-- [ ] 用户对独立 Production Release Task 明确批准
+- [x] 用户对独立 Production Release Task 明确批准，并接受稳定期重新计时
+- [x] Production RC.4 部署完成，首页/status/制品身份初检通过
 
 ### 当前最终判定
 
 ```text
-RELEASE CANDIDATE NOT READY
-PRODUCTION RELEASE NOT AUTHORIZED
+PRODUCTION DEPLOYED
+48H STABILITY IN PROGRESS
 ```
 
 只有全部未勾选门槛被当前证据关闭后，才允许把本节改为：
 
 ```text
 PRODUCT V2 BETA RELEASE CANDIDATE READY
-PRODUCTION RELEASE AWAITING APPROVAL
+PRODUCTION STABILITY PASS
 ```
