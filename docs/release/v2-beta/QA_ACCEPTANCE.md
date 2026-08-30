@@ -212,6 +212,18 @@ P0/P1 立即停止该参与者后续操作并保留现场；先保护/导出匿�
 
 ## 6. 当前 R9/R10/R11 判定
 
+### 6.1 R11 稳定性观测记录
+
+稳定期权威起点采用 Cloudflare Version 创建时间：`2026-08-30T01:45:23.994Z`（Asia/Shanghai `2026-08-30 09:45:23.994`）；满 48 小时的最早判定点为 `2026-09-01 09:45:23.994`。
+
+| 观测时间（Asia/Shanghai） | Preview 首页 | Preview status | Preview 实验路径 | Production 首页/版本 | Production 实验路径 | 结论 |
+| --- | --- | --- | --- | --- | --- | --- |
+| 2026-08-30 09:54:56 | 200 HTML | 200；configured true；`deepseek-v4-flash`；未发起模型调用 | `/benchmark`、`/e2`、`/fact-ledger`、`/selection`、`/blind`、`/research-preview` 均为 JSON 404 | 200；Deployment `bc1719b0…` / Version `3b6d6ba2…` 未变 | 相同路径均为 SPA HTML 200 | Preview 可用且隔离；旧 Production 未变，但字面 404 门槛未满足 |
+
+已创建当前任务心跳 `v2-beta-preview-48h`，每 6 小时执行只读检查，截止到满 48 小时后的首个观测点。心跳不得调用付费模型、修改 Secret、部署或改变路由。
+
+Production 的 200 响应为旧版本 SPA fallback，不是实验页面或实验 API；但附件明确要求 Production 返回 404，因此该项仍是发布前未关闭证据。未经用户独立明确批准，不得为了修正状态码部署 Production。
+
 | 阶段 | 状态 | 说明 |
 | --- | --- | --- |
 | R9 工程门禁 | PASS | 全量命令已执行 |
