@@ -1,8 +1,8 @@
 # Student Affairs Product v2 Beta Release Notes
 
-> Candidate：`v2.0.0-beta.1-rc.1`
-> Preview build commit：`5c443d40d986483b983e98ff52efedd26d9b87fc`
-> Preview Version：`64d9b827-0787-4188-9cf3-032202c672c1`
+> Candidate：`v2.0.0-beta.1-rc.2`
+> Preview build commit：`e3bdf47641b61e546380ff91db5d1b0a4266fe7e`
+> Preview Version：`8a471784-db7b-4dc9-a2b2-4337c452a5d9`
 > 当前状态：`RELEASE CANDIDATE VALIDATION IN PROGRESS`
 > Production：未部署、未改动
 
@@ -13,6 +13,7 @@
 - 多事项通知支持逐项编辑、拒绝、部分确认与全部确认；默认只勾选原文明示事项。
 - 每项建议可定位到本次 SourceVersion 的原文依据；历史 Draft 不会引用后来修改的正文。
 - 确认通过 `DomainCommitPlan` 在单个 IndexedDB 事务中写入 Workspace v8，防止半成品。
+- 已修复 Event 使用独立开始时间点时在确认计划中被过滤的问题；RC.2 浏览器复验仍在进行。
 - 收件箱区分未处理、处理中、待确认、已确认、失败、已归档和纯信息。
 - Today 只突出最多三项可执行任务，受阻和稍后事项单独展示。
 - Project、Calendar 与 Library 读取 canonical 项目、事件、时间节点和材料事实。
@@ -56,9 +57,9 @@
 | security scan / npm audit / Cloudflare dry-run | PASS |
 | Preview 部署与版本绑定 | PASS |
 | Alpha Test Kit | READY；真实参与者测试 NOT RUN |
-| Browser A–J | NOT RUN |
+| Browser A–J | PARTIAL；A/B/F/G/I 已通过，C/D/E/H/J 待关闭 |
 | Preview 浏览器迁移与回滚演练 | NOT RUN |
-| 48 小时稳定期 | IN PROGRESS |
+| 48 小时稳定期 | RESTARTED；RC.2 从 2026-08-30 19:35:00.005 重新计时 |
 | Production 部署 | NOT AUTHORIZED / NOT RUN |
 
 只有 [QA_ACCEPTANCE.md](./QA_ACCEPTANCE.md) 与 [MIGRATION_ROLLBACK.md](./MIGRATION_ROLLBACK.md) 的人工门槛全部关闭，最终报告才允许提升为：

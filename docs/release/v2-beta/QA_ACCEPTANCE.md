@@ -1,9 +1,9 @@
 # Product v2 Beta QA and Acceptance
 
 > Preview：`https://student-affairs-manager-preview.nightsdell.workers.dev/`
-> RC：`v2.0.0-beta.1-rc.1`
-> Commit：`5c443d40d986483b983e98ff52efedd26d9b87fc`
-> Cloudflare Version：`64d9b827-0787-4188-9cf3-032202c672c1`
+> RC：`v2.0.0-beta.1-rc.2`
+> Commit：`e3bdf47641b61e546380ff91db5d1b0a4266fe7e`
+> Cloudflare Version：`8a471784-db7b-4dc9-a2b2-4337c452a5d9`
 > Production：未修改
 
 ## 1. 判定规则
@@ -16,22 +16,24 @@
 
 ## 2. R9 工程门禁
 
-2026-08-30 在 `release/v2-beta@5c443d4` 执行：
+2026-08-30 在 `release/v2-beta@e3bdf47` 重新执行当前 RC 门禁；`npm ci` 来自依赖图未变化的 RC.1 基线：
 
 | 门禁 | 结果 | 证据摘要 |
 | --- | --- | --- |
 | `npm ci` | PASS | 241 packages；0 vulnerabilities |
 | `npm run lint` | PASS | ESLint 0 errors |
 | `npm run typecheck` | PASS | TypeScript build 0 errors |
-| `TZ=UTC npm run test` | PASS | Vitest 43 files / 252 tests；Server 8；Worker 19；Functions 5 |
+| `TZ=UTC npm run test` | PASS | Vitest 43 files / 253 tests；Server 8；Worker 19；Functions 5 |
 | `TZ=Asia/Shanghai npm run test` | PASS | 同上 |
 | `npm run build` | PASS | Vite 1683 modules transformed |
-| `npm run security:scan` | PASS | 201 source/build files；无 Secret 命中 |
+| `npm run security:scan` | PASS | 205 source/build files；无 Secret 命中 |
 | `npm audit --audit-level=high` | PASS | 0 vulnerabilities |
 | `npm run cloudflare:check` | PASS | Worker 19；Production/Preview dry-run 均成功 |
 | `git diff --check` | PASS | 无 whitespace error |
 
 UTC 首次运行发现 canonical 事件 `08:30+08:00` 被宿主时区显示为 `00:30`。缺陷修复并增加显式 offset、naive local datetime 回归后，两套时区完整门禁均重新通过。修复提交：`5c443d4 fix(app): stabilize calendar workspace timezone`。
+
+RC.1 浏览器 E 场景进一步发现：Event 自身的 `event_start` TimePoint 未关联 preparation Task 时，`selectionFromDraftItems` 会把该时间点过滤掉，并进一步静默丢弃用户已选 Event。该问题按 P1 停止发布，修复提交 `e3bdf47 fix(app): preserve selected event timepoints`；新增独立 Event TimePoint 回归后完整测试增至 253。RC.2 已部署，但真实 Edge 原子提交与 Calendar 刷新复核仍需补证，不能仅凭单元测试关闭 P1 验收。
 
 ## 3. 浏览器 A–J 证据矩阵
 
@@ -51,14 +53,14 @@ Capture → Source 先保存 → RecognitionRun → Draft → Evidence
 | B | 同一通知含提交选题表、联系老师、上传报告 | 多任务逐项编辑、拒绝、部分确认 | PASS | 3 项建议触发聚焦复核；取消 1 项后按钮从 3 变 2，最终仅原子创建 2 项；未静默创建被取消项 |
 | C | 报名与作品终稿两个截止日期 | 多 timePoint 正确关联，最早行动进入 Today | PARTIAL | 2 个明确截止正确关联并显著提示；选择“稍后处理”后刷新仍显示 2 项待确认；尚未确认并核对 Today 排序 |
 | D | 报名表、身份证明、承诺书、PDF 命名规则 | 材料不冒充任务；命名要求保留在材料约束 | PARTIAL | 1 Task / 4 Material / 1 TimePoint；用户可把文件名与 PDF 要求写入材料编辑字段并原子提交，但原始本地建议把 `PDF` 当作材料，canonical `namingRequirements` 未由浏览器证据证明 |
-| E | 线下答辩事件及提前准备材料 | Event 与准备 Task 分离且可追溯 | PARTIAL | 待确认摘要为 1 Event / 1 preparation Task / 2 TimePoint / 1 Material，聚焦复核和原子提交通过；尚未完成刷新后的 Calendar 事件复核 |
+| E | 线下答辩事件及提前准备材料 | Event 与准备 Task 分离且可追溯 | PARTIAL | RC.1 待确认摘要为 1 Event / 1 preparation Task / 2 TimePoint / 1 Material，但刷新后 Calendar 只有 preparation Task，确认存在 P1 静默丢弃；RC.2 已修复并通过回归，匿名 Event 图片本机 OCR 成功，但遵守“不调用付费模型”约束未继续提交，真实 Calendar 复验待补 |
 | F | “下周前”“答辩前三天”等相对时间 | 标记待确认，不猜测不可可靠归一化日期 | PASS | 2 项 ambiguity、质量标记和“需要重点核对”同时可见；两个 TimePoint 默认不选中，草稿保留待用户决定 |
 | G | 纯讲座资讯、无动作要求 | 保存 Source，但不生成伪任务 | PASS | Source 保留且正式实体计数为 0；没有伪任务。information-only 当前显示为 invalid result/识别失败，记为 P2 文案与状态改进项 |
 | H | 匿名图片、文本层 PDF、扫描 PDF | 本机 OCR/提取有进度、限制、校对与手动补充 | PARTIAL | 匿名 PNG 剪贴板录入；OCR 启动失败时明确说明图片未发送给 DeepSeek，并要求人工补充；补充后原子提交。Edge 扩展未启用 file URL 权限，PDF/扫描 PDF 直接选择 `NOT RUN` |
 | I | AI timeout、502、invalid schema | Source 不丢；显示安全错误；可用本地规则/手动继续 | PASS | 实测 DeepSeek 返回无效 RecognitionResult 2.0：Source 先保存、错误可见、同源本地规则重试成功并可确认 |
-| J | 导出、二次确认清空、导入、刷新、迁移恢复 | JSON round-trip；失败导入不破坏当前 Workspace | PARTIAL | A 的正式任务与 C/F 草稿均经关闭/刷新保留；Export → 清空 → Import 和失败导入保护尚未执行 |
+| J | 导出、二次确认清空、导入、刷新、迁移恢复 | JSON round-trip；失败导入不破坏当前 Workspace | PARTIAL | A 的正式任务与 C/F 草稿均经关闭/刷新保留；应用显示“已下载 Workspace v8 本机数据备份”；清空属于不可撤销操作，尚未取得动作时确认，因此清空 → Import 与失败导入保护未执行 |
 
-本轮截图证据已由官方 Browser 在当前任务中捕获：I 的失败 Source 卡片、B 的聚焦复核、A 刷新后的任务来源与历史、E 的 Event/Task 摘要、F 的 ambiguity、G 的 0 实体 Source、H 的人工补充确认。没有把浏览器静态可见性代替持久化证据。
+本轮截图证据已由官方 Browser 在当前任务中捕获：I 的失败 Source 卡片、B 的聚焦复核、A 刷新后的任务来源与历史、E 的 Event/Task 摘要及刷新后 Calendar 缺失、F 的 ambiguity、G 的 0 实体 Source、H 的人工补充确认、RC.2 匿名 Event 图片的本机 OCR。没有把浏览器静态可见性或修复后的单元测试代替 RC.2 正式提交与刷新证据。
 
 浏览器边界：应用内浏览器仍报告 IndexedDB 不可用，不能承担持久化验收；Edge 已能执行实际交互，但文件选择因扩展未启用 “Allow access to file URLs” 被拒绝。2026-08-30 约 19:14 一次新 Edge 页出现 `ERR_HTTP2_PING_FAILED`；同一时点 PowerShell 对 Preview 首页/status 与 Production 首页均为 HTTP 200，随后新的 Edge 页立即恢复到应用首页。该客户端瞬时失败窗口已记录，未发现 Cloudflare Version 漂移或工作区数据丢失。
 
@@ -216,13 +218,14 @@ P0/P1 立即停止该参与者后续操作并保留现场；先保护/导出匿�
 
 ### 6.1 R11 稳定性观测记录
 
-稳定期权威起点采用 Cloudflare Version 创建时间：`2026-08-30T01:45:23.994Z`（Asia/Shanghai `2026-08-30 09:45:23.994`）；满 48 小时的最早判定点为 `2026-09-01 09:45:23.994`。
+RC.1 的稳定期从 `2026-08-30T01:45:23.994Z` 起算，但因 E 场景 P1 在约 10 小时后停止并作废，不得与 RC.2 拼接。RC.2 的权威起点采用 Cloudflare Version `8a471784-db7b-4dc9-a2b2-4337c452a5d9` 创建时间：`2026-08-30T11:35:00.005Z`（Asia/Shanghai `2026-08-30 19:35:00.005`）；满 48 小时的最早判定点为 `2026-09-01 19:35:00.005`。
 
 | 观测时间（Asia/Shanghai） | Preview 首页 | Preview status | Preview 实验路径 | Production 首页/版本 | Production 实验路径 | 结论 |
 | --- | --- | --- | --- | --- | --- | --- |
-| 2026-08-30 09:54:56 | 200 HTML | 200；configured true；`deepseek-v4-flash`；未发起模型调用 | `/benchmark`、`/e2`、`/fact-ledger`、`/selection`、`/blind`、`/research-preview` 均为 JSON 404 | 200；Deployment `bc1719b0…` / Version `3b6d6ba2…` 未变 | 相同路径均为 SPA HTML 200 | Preview 可用且隔离；旧 Production 未变，但字面 404 门槛未满足 |
-| 2026-08-30 18:06:40 | 200 HTML | 200；configured true；`deepseek-v4-flash`；未发起模型调用 | 六条已知实验路径持续为 JSON 404 | 200；Production 未被 Preview 部署覆盖 | 六条路径持续为 SPA HTML 200 | 起点后约 8 小时 21 分无可用性/版本漂移；Production 字面 404 仍未关闭 |
-| 2026-08-30 约 19:14 | PowerShell 200；一页 Edge 曾 `ERR_HTTP2_PING_FAILED`，新页随即恢复 | 200；本轮浏览器 QA 曾得到 configured/unconfigured 状态，未发送真实正文 | 本次非完整六路径轮询；沿用 18:06 完整观测 | 200；未部署 Production | 本次非完整六路径轮询 | 记录一次客户端 HTTP/2 瞬时失败窗口；未见服务端中断、版本漂移或数据丢失，不替代下一次定时完整观测 |
+| 2026-08-30 09:54:56（RC.1） | 200 HTML | 200；configured true；`deepseek-v4-flash`；未发起模型调用 | `/benchmark`、`/e2`、`/fact-ledger`、`/selection`、`/blind`、`/research-preview` 均为 JSON 404 | 200；Deployment `bc1719b0…` / Version `3b6d6ba2…` 未变 | 相同路径均为 SPA HTML 200 | Preview 可用且隔离；旧 Production 未变，但字面 404 门槛未满足 |
+| 2026-08-30 18:06:40（RC.1） | 200 HTML | 200；configured true；`deepseek-v4-flash`；未发起模型调用 | 六条已知实验路径持续为 JSON 404 | 200；Production 未被 Preview 部署覆盖 | 六条路径持续为 SPA HTML 200 | 起点后约 8 小时 21 分无可用性/版本漂移；Production 字面 404 仍未关闭 |
+| 2026-08-30 约 19:14（RC.1） | PowerShell 200；一页 Edge 曾 `ERR_HTTP2_PING_FAILED`，新页随即恢复 | 200；未发送真实正文 | 本次非完整六路径轮询；沿用 18:06 完整观测 | 200；未部署 Production | 本次非完整六路径轮询 | 客户端 HTTP/2 瞬时失败；随后发现 Event 静默丢弃 P1，RC.1 稳定窗口作废 |
+| 2026-08-30 19:47:56（RC.2） | 200 HTML | 200；configured true；`deepseek-v4-flash`；仅检查状态，未调用模型 | 六条已知实验路径均为 JSON 404 | 200；Deployment `bc1719b0…` / Version `3b6d6ba2…` 未变 | 六条路径均为 SPA HTML 200 | Version `8a471784…` / Deployment `5f6441ed…` 起点后首检通过；Production 字面 404 与 RC.2 Event 浏览器复验仍未关闭 |
 
 已创建当前任务心跳 `v2-beta-preview-48h`，每 6 小时执行只读检查，截止到满 48 小时后的首个观测点。心跳不得调用付费模型、修改 Secret、部署或改变路由。
 
@@ -234,7 +237,7 @@ Production 的 200 响应为旧版本 SPA fallback，不是实验页面或实验
 | R9 Browser A–J | PARTIAL | A/B/F/G/I 通过；C/D/E/H/J 尚有未执行或未证明子项，完整门槛未关闭 |
 | R10 Alpha Test Kit | READY | 本文第 5 节；尚无真实参与者数据 |
 | R10 Alpha run | NOT RUN | 不属于 Codex 可伪造范围 |
-| R11 Preview RC deployment | DEPLOYED | Preview 独立 Worker，Production 未变 |
-| R11 48-hour stability | IN PROGRESS | 需从部署时间起真实观察满 48 小时 |
+| R11 Preview RC deployment | DEPLOYED | RC.2 Preview 独立 Worker，Production 未变 |
+| R11 48-hour stability | RESTARTED | RC.1 因 P1 作废；RC.2 从 2026-08-30 19:35:00.005 重新计时 |
 
 在 Browser A–J、回滚演练和 48 小时稳定期完成前，状态不得提升为 `PRODUCT V2 BETA RELEASE CANDIDATE READY`。

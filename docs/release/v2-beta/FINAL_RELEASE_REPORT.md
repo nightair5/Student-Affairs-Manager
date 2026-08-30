@@ -1,14 +1,14 @@
 # Product v2 Beta Release Report
 
 > 报告分支：`release/v2-beta`
-> 证据检查点：`9faaed834e2ce37cd25b53807ae84dc655a1f06a`
-> Preview build：`5c443d40d986483b983e98ff52efedd26d9b87fc`
-> RC：`v2.0.0-beta.1-rc.1`
+> 证据检查点：`e3bdf47641b61e546380ff91db5d1b0a4266fe7e`
+> Preview build：`e3bdf47641b61e546380ff91db5d1b0a4266fe7e`
+> RC：`v2.0.0-beta.1-rc.2`
 > 报告状态：`DRAFT — RELEASE CANDIDATE NOT READY`
 
 ## 1. Executive Summary
 
-R1–R8 的产品与工程整合已经进入独立 `release/v2-beta`，Workspace v8、Source-first Capture、可编辑 Human Review、原子提交、核心 IA 和实验运行时隔离均已实现并通过自动门禁。R10 Alpha Test Kit 已准备，R11 Preview 已部署并开始真实 48 小时观察。
+R1–R8 的产品与工程整合已经进入独立 `release/v2-beta`，Workspace v8、Source-first Capture、可编辑 Human Review、原子提交、核心 IA 和实验运行时隔离均已实现并通过自动门禁。R10 Alpha Test Kit 已准备。RC.1 浏览器验收发现 Event 确认静默丢弃 P1 后已停止并修复，RC.2 已重新部署，R11 48 小时观察从新版本创建时间重新计时。
 
 当前不得宣布 RC Ready：Browser A–J、Preview 浏览器迁移/回滚演练、完整性能记录与 48 小时稳定期尚未关闭；旧 Production 对实验样式路径仍为 SPA HTML 200。Production 未获授权且未部署。
 
@@ -52,6 +52,7 @@ f4d316b  manual extraction fallback
 58da10b  experimental route isolation
 69ccfe6  beta human review workflows
 5c443d4  workspace timezone stabilization
+e3bdf47  selected Event timepoint preservation
 ```
 
 发布文档提交继续位于同一分支，但未重新部署应用制品。
@@ -110,11 +111,11 @@ release Worker 对 `/benchmark*`、`/e2*`、`/fact-ledger*`、`/selection*`、`/
 
 ## 19. Browser A–J
 
-场景与合成输入冻结在 [QA_ACCEPTANCE.md](./QA_ACCEPTANCE.md)。2026-08-30 已用 Edge 对当前 RC 实测：A/B/F/G/I 为 PASS，C/D/E/H/J 为 PARTIAL；没有观察到数据丢失、静默正式提交或 Key 暴露。已形成 AI invalid schema → Source 保留 → 同源本地重试、部分确认、原子提交、刷新保持、聚焦复核、纯信息 0 实体、PNG OCR 失败后人工补充等证据。材料命名约束 canonical 字段、PDF/扫描 PDF 直接选择、Calendar 刷新复核、Export → 清空 → Import、失败导入、完整返回/重复点击/移动端链仍未关闭，因此 R9 总体仍为 `PARTIAL`，不能判定 P0 = 0 / P1 = 0 的完整门槛。
+场景与合成输入冻结在 [QA_ACCEPTANCE.md](./QA_ACCEPTANCE.md)。2026-08-30 Edge 实测中 A/B/F/G/I 为 PASS，C/D/E/H/J 为 PARTIAL。RC.1 的 E 场景确认后刷新发现 Event 未进入 Calendar，定位为确认选择过滤独立 Event TimePoint 的 P1；RC.2 已完成最小修复与 253 测试回归，但因本轮禁止付费模型，真实 Edge 提交与 Calendar 复验尚未执行。J 已出现 Workspace v8 备份下载成功状态，清空、Import、失败导入及完整返回/重复点击/移动端链仍未关闭，因此 R9 总体仍为 `PARTIAL`，不能判定 P0 = 0 / P1 = 0 的完整门槛。
 
 ## 20. Engineering tests
 
-`npm ci`、lint、typecheck、UTC/Asia-Shanghai 两套完整测试、build、security scan、npm audit high、Cloudflare dry-run 与 diff check 全部 PASS。每套完整测试包含 Vitest 43 files / 252 tests、Server 8、Worker 19、Functions 5。
+`npm ci` 基线、lint、typecheck、UTC/Asia-Shanghai 两套完整测试、build、security scan、npm audit high、Cloudflare dry-run 与 diff check 全部 PASS。当前每套完整测试包含 Vitest 43 files / 253 tests、Server 8、Worker 19、Functions 5。
 
 ## 21. Security
 
@@ -147,13 +148,14 @@ release Worker 对 `/benchmark*`、`/e2*`、`/fact-ledger*`、`/selection*`、`/
 | --- | --- |
 | URL | `https://student-affairs-manager-preview.nightsdell.workers.dev/` |
 | Worker | `student-affairs-manager-preview` |
-| Version | `64d9b827-0787-4188-9cf3-032202c672c1` |
-| Tag | `v2.0.0-beta.1-rc.1` |
-| Build commit | `5c443d40d986483b983e98ff52efedd26d9b87fc` |
-| Created | `2026-08-30T01:45:23.994Z` |
+| Version | `8a471784-db7b-4dc9-a2b2-4337c452a5d9` |
+| Deployment | `5f6441ed-cfef-4373-8a88-d1b62ada0128` |
+| Tag | `v2.0.0-beta.1-rc.2` |
+| Build commit | `e3bdf47641b61e546380ff91db5d1b0a4266fe7e` |
+| Created | `2026-08-30T11:35:00.005Z` |
 | Production routes | 无 |
 
-48 小时心跳 `v2-beta-preview-48h` 已启用。到当前已记录约 8 小时 21 分的可用性证据，尚未满期。
+48 小时心跳 `v2-beta-preview-48h` 已改绑 RC.2。RC.1 的约 10 小时窗口因 P1 作废；RC.2 最早只能在 `2026-09-01 19:35:00.005 Asia/Shanghai` 判定满期。
 
 ## 27. Rollback procedure
 
