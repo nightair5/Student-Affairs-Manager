@@ -45,7 +45,7 @@
 | 分支/提交 | 能力 | 是否在 Production | 测试证据 | 用户价值 | 风险 | Beta 决定 | 合并方式 |
 | --- | --- | ---: | --- | --- | --- | --- | --- |
 | `feature/student-affairs-mvp@7a0af21` | 当前远端默认产品线 | 是 | Production 制品与部署回执；历史 CI fail | 已上线产品基线 | v7、历史 CI 未闭合 | ALREADY IN PRODUCTION | 仅作为 release 起点 |
-| `codex/v2-beta-release-audit@7a0af21` | R1–R2 审计分支 | 内容相同 | 本报告 | 固化审计证据 | 无运行时差异 | DEFER | 只保留文档，不整体合并 |
+| `codex/v2-beta-release-audit@107e14b` | R1–R2 审计分支 | 否；相对 Production 增加两份文档 | `git cherry release/v2-beta codex/v2-beta-release-audit` 为 `- 107e14b`；release 中 patch-equivalent 为 `94361da` | 固化审计证据 | 无运行时差异 | DEFER | 补丁已等价纳入，不整体合并或重复 cherry-pick |
 | `codex/e1-phase0-green-ci@ddebe7c` | timezone + v8 contract 中间点 | 否 | 两项历史 CI success | E1 前缀 | 单独合会重复 | MUST INCLUDE | 由完整六提交顺序覆盖 |
 | `codex/e1-phase-b-canonical-persistence@3907733` | 完整 E1 canonical v8 | 否 | 六项历史 CI success | Beta 数据底座 | migration/rollback | MUST INCLUDE | 六项逐个纳入，停在 `3907733` |
 | `codex/feature/comprehensive-upgrade@9db55ba` | 智能工作流、OCR、移动端等 | 是 | 为 `7a0af21` 祖先 | 已上线能力 | 功能过宽 | ALREADY IN PRODUCTION | 不重复合并，做导航收敛 |

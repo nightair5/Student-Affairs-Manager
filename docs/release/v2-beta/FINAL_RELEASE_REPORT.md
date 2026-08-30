@@ -183,13 +183,15 @@ P2/P3 在 48 小时稳定期后处理，不得在稳定期增加功能：
 | --- | --- | --- |
 | KEEP | `feature/student-affairs-mvp` | 保留当前 Production 基线 |
 | KEEP | `release/v2-beta` | 保留 RC 与后续批准链 |
+| ARCHIVE AFTER RC | `codex/v2-beta-release-audit` | `107e14b` 已由 `94361da` patch-equivalent 纳入；当前仍绑定独立 worktree，先保留到 RC 结论固定 |
 | ARCHIVE | `codex/e2-9-r10-facts-first-preview` | 已有 `archive/e2-r10-20260826`，只保留研究证据 |
 | ARCHIVE | 其余 `codex/e2-*` / `codex/e2-9-*` | 先打归档标签，禁止合入产品 |
 | KEEP | E3/E4 prep（如单独建立） | 仅准备，不在本任务实现 |
+| DEFER / REVIEW | `dependabot/*` | 均未纳入 RC；Beta 后逐条重建并重新跑完整门禁，不批量合并或删除 |
 | DELETE AFTER APPROVAL | 已被 release 吸收的旧 E1 中间分支 | 仅用户明确批准后删除 |
 | DELETE AFTER APPROVAL | 已归档且无开放引用的失败实验分支 | 先核对 tag、PR 和 worktree，再批准删除 |
 
-本任务不删除任何远程分支，不强推，不移动归档或 Production 标签。
+本任务不删除任何远程分支，不强推，不移动归档或 Production 标签。当前仍有 7 个本地 worktree；任何候选分支在解除 worktree 绑定、核对未提交资产和远端归档标签之前均不得删除。
 
 ## 30. Production approval checklist
 
