@@ -218,7 +218,7 @@ P0/P1 立即停止该参与者后续操作并保留现场；先保护/导出匿�
 
 ### 6.1 R11 稳定性观测记录
 
-RC.1 的稳定期从 `2026-08-30T01:45:23.994Z` 起算，但因 E 场景 P1 在约 10 小时后停止并作废，不得与 RC.2 拼接。RC.2 的权威起点采用 Cloudflare Version `8a471784-db7b-4dc9-a2b2-4337c452a5d9` 创建时间：`2026-08-30T11:35:00.005Z`（Asia/Shanghai `2026-08-30 19:35:00.005`）；满 48 小时的最早判定点为 `2026-09-01 19:35:00.005`。
+RC.1 的稳定期从 `2026-08-30T01:45:23.994Z` 起算，但因 E 场景 P1 在约 10 小时后停止并作废，不得与后续 RC 拼接。RC.2 随后因 Export → 清空 → Import 后 canonical 字段被兼容 autosave 改写的数据完整性 P0 作废。RC.3 的权威起点采用 Cloudflare Version `e6da1443-12ba-49da-b787-47025a8489a4` 创建时间：`2026-08-30T13:42:03.022Z`（Asia/Shanghai `2026-08-30 21:42:03.022`）；满 48 小时的最早判定点为 `2026-09-01 21:42:03.022`。
 
 | 观测时间（Asia/Shanghai） | Preview 首页 | Preview status | Preview 实验路径 | Production 首页/版本 | Production 实验路径 | 结论 |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -228,6 +228,7 @@ RC.1 的稳定期从 `2026-08-30T01:45:23.994Z` 起算，但因 E 场景 P1 在�
 | 2026-08-30 19:47:56（RC.2） | 200 HTML | 200；configured true；`deepseek-v4-flash`；仅检查状态，未调用模型 | 六条已知实验路径均为 JSON 404 | 200；Deployment `bc1719b0…` / Version `3b6d6ba2…` 未变 | 六条路径均为 SPA HTML 200 | Version `8a471784…` / Deployment `5f6441ed…` 起点后首检通过；Production 字面 404 与 RC.2 Event 浏览器复验仍未关闭 |
 | 2026-08-30 20:42:27（RC.2） | 200 HTML | 200；configured true；`deepseek-v4-flash`；仅检查状态，未调用模型 | 六条已知实验路径均为 JSON 404 | 200；Wrangler current Version 仍为 `3b6d6ba2…` | 六条路径均为 SPA HTML 200 | Wrangler current Preview Version 仍为 `8a471784…`，起点后约 1 小时 7 分无部署漂移；Production 未被覆盖，字面 404 仍未关闭 |
 | 2026-08-30 21:13:09（RC.2） | 200 HTML | 200；configured true；`deepseek-v4-flash`；仅检查状态，未调用模型 | 六条已知实验路径均为 JSON 404 | 200；Wrangler current Version 仍为 `3b6d6ba2…` | 六条路径均为 SPA HTML 200 | Wrangler current Preview Version 仍为 `8a471784…`，起点后约 1 小时 38 分无部署漂移；Production 未被覆盖，字面 404 仍未关闭 |
+| 2026-08-30 21:51:28（RC.3） | 200 HTML | 200；configured true；`deepseek-v4-flash`；仅检查状态，未调用模型 | 六条已知实验路径均为 JSON 404 | 200；Wrangler current Version 仍为 `3b6d6ba2…` | 六条路径均为 SPA HTML 200 | Wrangler current Preview Version 为 `e6da1443…`，与 RC.3 起点一致；Deployment `efd34105…` 无意外变化。Production 未被覆盖，字面 404 仍未关闭 |
 
 已创建当前任务心跳 `v2-beta-preview-48h`，每 6 小时执行只读检查，截止到满 48 小时后的首个观测点。心跳不得调用付费模型、修改 Secret、部署或改变路由。
 
@@ -239,7 +240,7 @@ Production 的 200 响应为旧版本 SPA fallback，不是实验页面或实验
 | R9 Browser A–J | PARTIAL | A/B/C/E/F/G/I 通过；D/H/J 尚有未执行或未证明子项，完整门槛未关闭 |
 | R10 Alpha Test Kit | READY | 本文第 5 节；尚无真实参与者数据 |
 | R10 Alpha run | NOT RUN | 不属于 Codex 可伪造范围 |
-| R11 Preview RC deployment | DEPLOYED | RC.2 Preview 独立 Worker，Production 未变 |
-| R11 48-hour stability | RESTARTED | RC.1 因 P1 作废；RC.2 从 2026-08-30 19:35:00.005 重新计时 |
+| R11 Preview RC deployment | DEPLOYED | RC.3 Preview 独立 Worker，Production 未变 |
+| R11 48-hour stability | RESTARTED | RC.1 因 P1、RC.2 因 P0 作废；RC.3 从 2026-08-30 21:42:03.022 重新计时 |
 
 在 Browser A–J、回滚演练和 48 小时稳定期完成前，状态不得提升为 `PRODUCT V2 BETA RELEASE CANDIDATE READY`。
