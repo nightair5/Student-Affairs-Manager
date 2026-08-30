@@ -1,0 +1,388 @@
+{
+  "schemaVersion": "experiment-audit-1.0.0",
+  "audit_skill": "experiment-audit",
+  "experiment_id": "e2-mm-synthetic-unseen-v1",
+  "date": "2026-08-31",
+  "generated_at": "2026-08-31T02:28:02+08:00",
+  "verdict": "FAIL",
+  "overall_verdict": "fail",
+  "integrity_status": "fail",
+  "reason_codes": [
+    "ZERO_VALID_MODEL_COMPLETIONS",
+    "VACUOUS_EMPTY_SET_SCORING",
+    "IMAGE_ONLY_NOT_END_TO_END",
+    "FREEZE_METADATA_INCONSISTENT",
+    "PER_CASE_FREEZE_HASH_MISMATCH",
+    "FAILURE_TAXONOMY_COLLAPSED",
+    "RESULTS_NOT_GIT_BOUND",
+    "BROWSER_ACCEPTANCE_INCOMPLETE"
+  ],
+  "summary": "The conservative DO NOT LAUNCH decision is correct, but the experiment fails integrity acceptance because no valid predictions exist and the frozen protocol, isolation, scoring, failure taxonomy, durable result chain, and browser gates are not all valid.",
+  "launch_decision": {
+    "verdict": "DO_NOT_LAUNCH",
+    "audit_status": "PASS",
+    "mandatory": true,
+    "reason": "Zero valid predictions, no human timing, authentication failure, misleading connection state, and incomplete privacy/security/browser gates provide no basis for promotion."
+  },
+  "repository_baseline": {
+    "branch": "codex/e2-multimodal-recognition-exp",
+    "head": "607c2a2efabac37933b01fbd5d99f5b8c80afdca",
+    "remote_divergence": {
+      "ahead": 0,
+      "behind": 0
+    },
+    "preexisting_dirty": true,
+    "preexisting_untracked_results": [
+      "docs/e2-multimodal-experiment/2026-08-31_EXPERIMENT_RESULT.md",
+      "docs/e2-multimodal-experiment/SYNTHETIC_UNSEEN_V1_RUN_RESULT.json"
+    ]
+  },
+  "reviewer": {
+    "task": "/root/multimodal_experiment_audit/fresh_integrity_reviewer",
+    "model": "gpt-5.6-sol",
+    "family": "openai",
+    "reasoning": "ultra",
+    "mode": "read-only-adversarial",
+    "review_independence": "same-family",
+    "acceptance_status": "provisional"
+  },
+  "executor": {
+    "task": "/root/multimodal_experiment_audit",
+    "family": "openai"
+  },
+  "deterministic_checker": {
+    "task": "/root/multimodal_experiment_audit/artifact_consistency_checker",
+    "mode": "read-only-recompute"
+  },
+  "trace_path": ".aris/traces/experiment-audit/2026-08-31-e2-mm-audit.md",
+  "audited_input_hashes": {
+    "docs/e2-multimodal-experiment/2026-08-31_EXPERIMENT_PLAN.md": "sha256:29c0cfcce72272eed13f491203ab04fa054c161cb417e7df65a0a06ad42b9eca",
+    "docs/e2-multimodal-experiment/EXPERIMENT_PLAN.md": "sha256:73dcf0bef10c66a40ea679f9d076b8fddb134b82df9fcab5edcd7fb1d1cf24ec",
+    "docs/e2-multimodal-experiment/SYNTHETIC_UNSEEN_V1_FREEZE.json": "sha256:4e9fa0cdff324e1302f2ceb93d34597d51f428743e26855afccb0a114579dabf",
+    "docs/e2-multimodal-experiment/2026-08-31_EXPERIMENT_RESULT.md": "sha256:2682128d16c21f4433167c80eba5eba3c76aa54d4e0b3a365b468792aa2290fd",
+    "docs/e2-multimodal-experiment/SYNTHETIC_UNSEEN_V1_RUN_RESULT.json": "sha256:426994bdfe962f47da6af5f0a9837aa903bb1218605c26388dede2ebb28c305d",
+    "docs/e2-multimodal-experiment/PRIVACY_SECURITY_BROWSER_ACCEPTANCE.md": "sha256:cedb6723428f69e30f5c3ad3384678d815af2b53420283f487a06e3d936c2bb6",
+    "scripts/run-multimodal-evaluation.mjs": "sha256:178b3e87c769527c1716f3df278eca4cbe85092911bdfc666563c8675466e765",
+    "scripts/multimodal-evaluation-lib.mjs": "sha256:8934bdc4d88b983dea87fe8eb0e0ec6de8e830f7dc80a946b632b082cc97bc6d",
+    "scripts/multimodal-evaluation-lib.node-test.mjs": "sha256:089e94a09267d0479c2dc3f33252ae03450f31a245fb50b7e8fcbcaa1f851d63",
+    "cloudflare/worker.mjs": "sha256:2bbff2dd373f59dd156a7a6453d92a152f3629c8b97d3ff58e288a9489d533bb",
+    "cloudflare/worker-tests.mjs": "sha256:88c7061fd502f5579c5209c46807587817432beb320dfb055175902aec42e708",
+    ".evaluation-cache/multimodal-unseen-v1/dataset.json": "sha256:5b9dfbf9b4aad2f9c56acd42fdcd8caf3eeb063de602e22db19c7859a7566724",
+    ".evaluation-cache/multimodal-unseen-v1/ocr.json": "sha256:ecab0bd3dfd00ddd9490a48c027c205a75053db7b001e9b4d71d2cb0ee7abe2b",
+    ".evaluation-cache/multimodal-unseen-v1/runs/synthetic-unseen-v1-diagnostic-20260831c.checkpoint.json": "sha256:da80420912298b024d645da955be87e660a906c74fc1e065bb20c3470b89f16f"
+  },
+  "deterministic_recompute": {
+    "sample_count": 36,
+    "modality_counts": {
+      "screenshot": 12,
+      "photo": 12,
+      "scan": 12
+    },
+    "stable_dataset_sha256": "015aff593834471bc5f480dc6de544eef461d95a66344b21949270659372aae5",
+    "stable_ocr_bundle_sha256": "ad67306d1c620096416cb4908319f18a9503b74c58d7072007d077b83ef82491",
+    "dataset_internal_hash_matches": 36,
+    "ocr_text_hash_matches": 36,
+    "freeze_to_dataset_case_hash_matches": 35,
+    "freeze_to_dataset_case_hash_mismatches": [
+      "mmu1-23.sourceSha256"
+    ],
+    "mean_character_error_rate": 0.1938700327295,
+    "mean_character_error_rate_by_modality": {
+      "screenshot": 0.28304730073842,
+      "photo": 0.146877082889714,
+      "scan": 0.151685714560366
+    },
+    "retained_observations": 21,
+    "completed_predictions": 0,
+    "formal_36_by_3_run_exists": false,
+    "smoke_a_summary_stale": true
+  },
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "BLOCKER",
+      "title": "No scorable performance evidence",
+      "status": "FAIL",
+      "evidence": [
+        "docs/e2-multimodal-experiment/2026-08-31_EXPERIMENT_RESULT.md:21-31",
+        "docs/e2-multimodal-experiment/SYNTHETIC_UNSEEN_V1_RUN_RESULT.json:32-72",
+        ".aris/traces/experiment-audit/2026-08-31-e2-mm-audit.md:68-74"
+      ]
+    },
+    {
+      "id": "F2",
+      "severity": "BLOCKER",
+      "title": "Vacuous empty-set and empty-evidence scores",
+      "status": "FAIL",
+      "evidence": [
+        "scripts/multimodal-evaluation-lib.mjs:59-63",
+        "scripts/multimodal-evaluation-lib.mjs:141-170",
+        "scripts/multimodal-evaluation-lib.node-test.mjs:25-64"
+      ]
+    },
+    {
+      "id": "F3",
+      "severity": "BLOCKER",
+      "title": "I arm is image-only only at the upstream-message boundary",
+      "status": "FAIL",
+      "evidence": [
+        "scripts/run-multimodal-evaluation.mjs:167-193",
+        "cloudflare/worker.mjs:837-856",
+        "cloudflare/worker.mjs:896-914",
+        "cloudflare/worker-tests.mjs:252-321"
+      ]
+    },
+    {
+      "id": "F4",
+      "severity": "BLOCKER",
+      "title": "Freeze chronology and per-case manifest are inconsistent",
+      "status": "FAIL",
+      "evidence": [
+        "docs/e2-multimodal-experiment/SYNTHETIC_UNSEEN_V1_FREEZE.json:4",
+        "docs/e2-multimodal-experiment/SYNTHETIC_UNSEEN_V1_FREEZE.json:80",
+        ".evaluation-cache/multimodal-unseen-v1/ocr.json:5",
+        "scripts/run-multimodal-evaluation.mjs:241-256",
+        ".aris/traces/experiment-audit/2026-08-31-e2-mm-audit.md:48-64"
+      ]
+    },
+    {
+      "id": "F5",
+      "severity": "BLOCKER",
+      "title": "Failure taxonomy collapses transport, auth, upstream, and invalid-result conditions",
+      "status": "FAIL",
+      "evidence": [
+        "scripts/run-multimodal-evaluation.mjs:195-239",
+        "scripts/run-multimodal-evaluation.mjs:268-297",
+        "scripts/multimodal-evaluation-lib.mjs:105-124"
+      ]
+    },
+    {
+      "id": "F6",
+      "severity": "MAJOR",
+      "title": "Final results exist but are not commit-bound",
+      "status": "PASS_WITH_LIMITATIONS",
+      "evidence": [
+        ".gitignore:15",
+        "docs/e2-multimodal-experiment/MANIFEST.md:9-12",
+        ".aris/traces/experiment-audit/2026-08-31-e2-mm-audit.md:30-37",
+        ".aris/traces/experiment-audit/2026-08-31-e2-mm-audit.md:68-74"
+      ]
+    },
+    {
+      "id": "F7",
+      "severity": "BLOCKER",
+      "title": "Browser A-J is failed or incomplete",
+      "status": "FAIL",
+      "evidence": [
+        "docs/e2-multimodal-experiment/PRIVACY_SECURITY_BROWSER_ACCEPTANCE.md:3-16",
+        "docs/e2-multimodal-experiment/PRIVACY_SECURITY_BROWSER_ACCEPTANCE.md:28-41"
+      ]
+    }
+  ],
+  "checks": {
+    "A_ground_truth_provenance": {
+      "status": "PASS_WITH_LIMITATIONS",
+      "evaluation_type": "synthetic_proxy",
+      "details": "Source text and expected labels are deterministic same-author templates, not model-derived, but there is no independent annotation or adjudication chain.",
+      "evidence": [
+        "scripts/generate-multimodal-unseen.py:50-230",
+        "scripts/generate-multimodal-unseen.py:320-390"
+      ]
+    },
+    "B_freeze_before_calls": {
+      "status": "FAIL",
+      "details": "The committed freeze precedes the earliest retained checkpoint, but declared frozenAt predates OCR generation, one case hash is wrong, code changed between runs, and no provider ledger proves there were no earlier calls.",
+      "evidence": [
+        "docs/e2-multimodal-experiment/SYNTHETIC_UNSEEN_V1_FREEZE.json:4",
+        "docs/e2-multimodal-experiment/SYNTHETIC_UNSEEN_V1_FREEZE.json:80",
+        "scripts/run-multimodal-evaluation.mjs:241-256",
+        ".aris/traces/experiment-audit/2026-08-31-e2-mm-audit.md:48-64"
+      ]
+    },
+    "C_actual_arm_isolation": {
+      "status": "FAIL",
+      "details": "I excludes OCR from the upstream model prompt but not from the HTTP request or post-model normalization/evidence validation.",
+      "evidence": [
+        "scripts/run-multimodal-evaluation.mjs:167-193",
+        "cloudflare/worker.mjs:837-856",
+        "cloudflare/worker.mjs:896-914"
+      ]
+    },
+    "D_expected_hidden_ocr_leakage": {
+      "status": "PASS_WITH_LIMITATIONS",
+      "details": "No expected labels were found in inspected request construction. Hidden OCR is excluded from I upstream messages but reaches the Worker and affects postprocessing; no provider-side log was available.",
+      "evidence": [
+        "cloudflare/worker.mjs:847-890",
+        "cloudflare/worker-tests.mjs:252-321"
+      ]
+    },
+    "E_empty_completion_sets": {
+      "status": "FAIL",
+      "details": "Successful empty outputs can receive vacuous entity F1 and evidence validity of one. The all-request-failed null regression does not cover this counterexample.",
+      "evidence": [
+        "scripts/multimodal-evaluation-lib.mjs:59-63",
+        "scripts/multimodal-evaluation-lib.mjs:141-170",
+        "scripts/multimodal-evaluation-lib.node-test.mjs:57-64"
+      ]
+    },
+    "F_failure_taxonomy": {
+      "status": "FAIL",
+      "details": "Runner request_failure collapses multiple failure classes and resume treats failed observations as completed keys.",
+      "evidence": [
+        "scripts/run-multimodal-evaluation.mjs:195-239",
+        "scripts/run-multimodal-evaluation.mjs:268-297"
+      ]
+    },
+    "G_paired_statistics": {
+      "status": "PASS_WITH_LIMITATIONS",
+      "details": "Case pairing and zero numerical differences are retained, but failed asymmetric pairs are dropped, 12 scenario families are not cluster-resampled, and multiplicity is undeclared. No significance claim was made in the current result.",
+      "evidence": [
+        "scripts/multimodal-evaluation-lib.mjs:186-201",
+        "scripts/generate-multimodal-unseen.py:330-369"
+      ]
+    },
+    "H_user_modification_time": {
+      "status": "PASS",
+      "details": "Real human timing is explicitly NOT_RUN and correction operations are labeled as a proxy rather than seconds.",
+      "evidence": [
+        "docs/e2-multimodal-experiment/2026-08-31_EXPERIMENT_RESULT.md:29-31",
+        "docs/e2-multimodal-experiment/SYNTHETIC_UNSEEN_V1_RUN_RESULT.json:69-72",
+        "scripts/multimodal-evaluation-lib.mjs:165-170"
+      ]
+    },
+    "I_result_checkpoint_consistency": {
+      "status": "PASS_WITH_LIMITATIONS",
+      "details": "Current report counts, top hashes, CER, and failure codes recompute, but one freeze case hash is wrong, Smoke A summary is stale, and final results are untracked.",
+      "evidence": [
+        "docs/e2-multimodal-experiment/2026-08-31_EXPERIMENT_RESULT.md:9-27",
+        "docs/e2-multimodal-experiment/SYNTHETIC_UNSEEN_V1_RUN_RESULT.json:14-67",
+        ".aris/traces/experiment-audit/2026-08-31-e2-mm-audit.md:56-74"
+      ]
+    },
+    "J_runtime_entry_dead_code": {
+      "status": "PASS_WITH_LIMITATIONS",
+      "details": "Package CLI invokes the runner/scorer, Worker routes are reachable, and UI invokes the multimodal endpoint. I remains evaluation-CLI-only by design; UI connection status remains misleading.",
+      "evidence": [
+        "package.json:22-26",
+        "scripts/run-multimodal-evaluation.mjs:5",
+        "cloudflare/worker.mjs:994-1007",
+        "src/lib/deepseekExtraction.ts:101-116"
+      ]
+    },
+    "K_secret_raw_image_persistence": {
+      "status": "PASS_WITH_LIMITATIONS",
+      "details": "Raw binaries are confined to ignored cache and Worker logging excludes bodies/authorization. No strict DeepSeek key was found, but browser storage/export/log acceptance and provider logs were not completed.",
+      "evidence": [
+        ".gitignore:15",
+        "cloudflare/worker.mjs:558-571",
+        "docs/e2-multimodal-experiment/PRIVACY_SECURITY_BROWSER_ACCEPTANCE.md:12-16",
+        ".aris/traces/experiment-audit/2026-08-31-e2-mm-audit.md:86-94"
+      ]
+    },
+    "L_rc4_production_isolation": {
+      "status": "PASS_WITH_LIMITATIONS",
+      "details": "Repository config separates the experiment Worker with workers.dev and no routes. Current live control-plane state was not independently refreshed and formal release documentation remains RC.2-era.",
+      "evidence": [
+        "wrangler.jsonc:65-75",
+        "docs/e2-multimodal-experiment/PREVIEW_DEPLOYMENT.md:44-50",
+        "docs/release/v2-beta/FINAL_RELEASE_REPORT.md:3-13"
+      ]
+    },
+    "M_browser_acceptance": {
+      "status": "FAIL",
+      "details": "E fails and A-D/F-J remain NOT_RUN; partial observations do not include full network, storage/export, keyboard, PDF page, responsive, or cross-browser evidence.",
+      "evidence": [
+        "docs/e2-multimodal-experiment/PRIVACY_SECURITY_BROWSER_ACCEPTANCE.md:3-16",
+        "docs/e2-multimodal-experiment/PRIVACY_SECURITY_BROWSER_ACCEPTANCE.md:28-34"
+      ]
+    },
+    "N_launch_decision": {
+      "status": "PASS",
+      "details": "DO NOT LAUNCH is sufficiently conservative and mandatory. No positive model-quality or user-time inference is supported.",
+      "evidence": [
+        "docs/e2-multimodal-experiment/2026-08-31_EXPERIMENT_RESULT.md:3-7",
+        "docs/e2-multimodal-experiment/2026-08-31_EXPERIMENT_RESULT.md:44-58"
+      ]
+    },
+    "O_standard_integrity_patterns": {
+      "status": "FAIL",
+      "evaluation_type": "synthetic_proxy",
+      "details": "No model-output max/min self-normalization was found and current null metrics are honestly reported, but vacuous set/evidence scores, freeze inconsistency, clustered synthetic scope, incomplete taxonomy, and unbound results prevent acceptance.",
+      "evidence": [
+        "scripts/multimodal-evaluation-lib.mjs:59-63",
+        "scripts/multimodal-evaluation-lib.mjs:141-170",
+        "scripts/generate-multimodal-unseen.py:320-390",
+        "docs/e2-multimodal-experiment/SYNTHETIC_UNSEEN_V1_FREEZE.json:80"
+      ]
+    }
+  },
+  "claims": [
+    {
+      "id": "C1",
+      "claim": "IT is more accurate than T and I",
+      "impact": "unsupported",
+      "reason": "No valid prediction exists."
+    },
+    {
+      "id": "C2",
+      "claim": "IT reduces real user modification time without weakening privacy or confirmation",
+      "impact": "unsupported",
+      "reason": "Human timing is NOT_RUN and browser/privacy acceptance is incomplete."
+    },
+    {
+      "id": "C3",
+      "claim": "A deterministic 36-case synthetic proxy and OCR bundle exist",
+      "impact": "supported_with_limitation",
+      "reason": "Top hashes and 36 cache cases recompute, but one freeze per-case hash is wrong."
+    },
+    {
+      "id": "C4",
+      "claim": "Inputs were frozen before the first model call",
+      "impact": "needs_qualifier",
+      "reason": "Only the chronology before the earliest retained checkpoint is locally supported."
+    },
+    {
+      "id": "C5",
+      "claim": "The I arm is image-only",
+      "impact": "unsupported_end_to_end",
+      "reason": "It is image-only only in the inspected upstream model message."
+    },
+    {
+      "id": "C6",
+      "claim": "All retained calls failed and quality is noncomputable",
+      "impact": "supported"
+    },
+    {
+      "id": "C7",
+      "claim": "RC.4 and Production are currently unchanged",
+      "impact": "needs_fresh_external_verification"
+    },
+    {
+      "id": "C8",
+      "claim": "DO NOT LAUNCH",
+      "impact": "supported_and_mandatory"
+    }
+  ],
+  "required_actions": [
+    "Keep DO NOT LAUNCH and do not promote, merge, retag, or deploy from this experiment.",
+    "Create a new post-OCR immutable freeze, correct mmu1-23, validate every per-case hash, bind runner/scorer/Worker revisions, and retain a provider request ledger.",
+    "Remove OCR from the I-arm HTTP body and postprocessing or rename the arm to disclose OCR-assisted post-validation.",
+    "Make successful empty outputs invalid or denominator-aware, remove vacuous empty-evidence validity, and add adversarial regression tests.",
+    "Separate transport, auth, upstream, schema/invalid-output, semantic, scoring, and severe-error categories and freeze resume/retry policy.",
+    "Use scenario-family clustered paired inference, align micro and macro estimands, predeclare multiplicity, and collect real participant timing.",
+    "Commit durable result artifacts with source checkpoint hashes and preserve versioned historical scorer outputs.",
+    "Refresh Cloudflare control-plane isolation evidence and complete storage/export/log plus browser A-J acceptance."
+  ],
+  "audit_mutations": {
+    "product_code_changed": false,
+    "plan_changed": false,
+    "freeze_changed": false,
+    "result_changed": false,
+    "raw_cache_changed": false,
+    "files_created": [
+      "docs/e2-multimodal-experiment/EXPERIMENT_AUDIT.md",
+      "docs/e2-multimodal-experiment/EXPERIMENT_AUDIT.json",
+      ".aris/traces/experiment-audit/2026-08-31-e2-mm-audit.md"
+    ]
+  }
+}

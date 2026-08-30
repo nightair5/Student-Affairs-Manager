@@ -1,0 +1,89 @@
+{
+  "schemaVersion": "multimodal-experiment-run-result-1.0.0",
+  "experimentId": "e2-mm-synthetic-unseen-v1",
+  "recordedAt": "2026-08-31T02:10:00+08:00",
+  "branch": "codex/e2-multimodal-recognition-exp",
+  "preview": {
+    "worker": "student-affairs-manager-multimodal-exp",
+    "url": "https://student-affairs-manager-multimodal-exp.nightsdell.workers.dev/",
+    "versionId": "71f0fffb-21a1-4faa-ad29-830a443ecfd9",
+    "secretPresent": true,
+    "upstreamAuthentication": "FAILED",
+    "secretValueRecorded": false
+  },
+  "frozenInputs": {
+    "datasetId": "synthetic-unseen-v1",
+    "sampleCount": 36,
+    "datasetSha256": "015aff593834471bc5f480dc6de544eef461d95a66344b21949270659372aae5",
+    "ocrBundleSha256": "ad67306d1c620096416cb4908319f18a9503b74c58d7072007d077b83ef82491",
+    "groundTruthSentToModel": false,
+    "provenance": "anonymous deterministic synthetic proxy; not real user material"
+  },
+  "localOcr": {
+    "method": "tesseract.js-7.0.0-chi_sim+eng-local-unverified",
+    "meanCharacterErrorRate": 0.1938700327295,
+    "meanCharacterErrorRateByModality": {
+      "screenshot": 0.28304730073842,
+      "photo": 0.146877082889714,
+      "scan": 0.151685714560366
+    },
+    "interpretation": "observable OCR proxy only; not T, I, or IT task correctness"
+  },
+  "runs": [
+    {
+      "label": "synthetic-unseen-v1-smoke-20260831a",
+      "caseCount": 3,
+      "attemptedRequests": 9,
+      "completedPredictions": 0,
+      "failure": "LOCAL_PROXY_TYPE_ERROR",
+      "usedForQualityComparison": false
+    },
+    {
+      "label": "synthetic-unseen-v1-smoke-20260831b",
+      "caseCount": 3,
+      "attemptedRequests": 9,
+      "completedPredictions": 0,
+      "failure": "502 UPSTREAM_UNAVAILABLE",
+      "usedForQualityComparison": false
+    },
+    {
+      "label": "synthetic-unseen-v1-diagnostic-20260831c",
+      "caseCount": 1,
+      "attemptedRequests": 3,
+      "completedPredictions": 0,
+      "failureByArm": {
+        "T": "503 UPSTREAM_AUTH_FAILED",
+        "I": "503 UPSTREAM_AUTH_FAILED",
+        "IT": "503 UPSTREAM_AUTH_FAILED"
+      },
+      "usedForQualityComparison": false
+    }
+  ],
+  "qualityMetrics": {
+    "T": null,
+    "I": null,
+    "IT": null,
+    "pairedComparisons": null,
+    "reason": "zero completed predictions after fail-closed transport filtering"
+  },
+  "humanModificationTime": {
+    "status": "NOT_RUN",
+    "seconds": null,
+    "reason": "no human participant completed the editable confirmation flow"
+  },
+  "browserFindings": {
+    "consentDefaultOffObserved": true,
+    "consentDisclosureObserved": true,
+    "consentResetAfterFileChangeObserved": true,
+    "textFailurePreservedSourceAndCreatedZeroTasks": true,
+    "connectionStatusHonesty": "FAIL",
+    "connectionStatusEvidence": "UI displayed DeepSeek V4 Flash connected while all live T, I, and IT calls returned UPSTREAM_AUTH_FAILED",
+    "fullBrowserAcceptance": "NOT_RUN"
+  },
+  "releaseDecision": {
+    "verdict": "DO_NOT_LAUNCH",
+    "reason": "no valid quality or human-time evidence, live authentication failure, misleading connection status, and incomplete privacy/security/browser gates",
+    "rc4Changed": false,
+    "productionChanged": false
+  }
+}

@@ -8,7 +8,7 @@
 | B | 开关旁逐项展示实际发送范围与不发送范围；键盘可聚焦、切换并读取标签 | NOT RUN |
 | C | 开启图片后只发送当前 1 张原图；更换文件会撤销 consent，不能沿用 | NOT RUN |
 | D | 扫描 PDF 只能发送用户填写的 1–4 页；越界、错误页码、超限均阻止提交 | NOT RUN |
-| E | 关闭开关、云端未配置或图片格式不支持时，默认文字路径仍可用且不伪装多模态 | NOT RUN |
+| E | 关闭开关、云端未配置或图片格式不支持时，默认文字路径仍可用且不伪装多模态 | FAIL |
 | F | IndexedDB、JSON 备份、Obsidian/CSV 导出、控制台与 Worker 日志均不含 data URL、文件本体或图片字节 | NOT RUN |
 | G | Worker 拒绝无 consent、未知字段、SVG/HEIC、MIME 不匹配、超过 4 张、单张/总大小超限、跨域与缺 Secret 请求 | NOT RUN |
 | H | 多模态超时、上游错误或无效结构时，Source 已先持久化，正式任务为 0，用户可回到文字/本地路径 | NOT RUN |
@@ -24,6 +24,14 @@
 - `npm audit --audit-level=high`
 - `npm run cloudflare:check`
 - `git diff --check`
+
+## 2026-08-31 部分浏览器证据
+
+- 匿名合成图片载入后，consent 默认未选中；说明列出了本次原图、OCR 文字与必要上下文，以及整个工作区、其他文件和历史全文等不发送范围。
+- 主动选中 consent 后更换为另一张图片，开关恢复为未选中。
+- 默认文字版遇到鉴权失败时，Source 保留、正式任务为 0，并给出本地规则重试与手工补充。
+- E 判定为 `FAIL`：状态接口仅证明 Secret 存在，UI 却显示“DeepSeek V4 Flash 已连接”；同一时段 T/I/IT 真实调用均返回 `UPSTREAM_AUTH_FAILED`。
+- A、B、C、H 的上述观察仍不足以覆盖各自全部必需证据，因此保持 `NOT RUN`；尤其尚无浏览器网络载荷、存储/导出、键盘、PDF 页码与多浏览器证据。
 
 ## 发布隔离检查
 
