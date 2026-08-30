@@ -45,20 +45,22 @@ Capture → Source 先保存 → RecognitionRun → Draft → Evidence
 
 并检查错误提示、键盘操作、移动端、浏览器返回、重复点击和网络中断。证据必须为当前 RC 的截图或录屏。
 
-| 场景 | 匿名合成输入 | 关键预期 | 状态 |
-| --- | --- | --- | --- |
-| A | 简单课程通知：提交一次课程作业 | 1 个显式任务；日期、动作和依据可编辑 | NOT RUN |
-| B | 同一通知含报名、交材料、参加说明会 | 多任务逐项编辑、拒绝、部分确认 | NOT RUN |
-| C | 报名、初稿、终稿三个截止日期 | 多 timePoint 正确关联，最早行动进入 Today | NOT RUN |
-| D | 报名表、承诺书、PDF 命名规则 | 材料不冒充任务；命名要求保留在材料约束 | NOT RUN |
-| E | 线下答辩事件及提前准备材料 | Event 与准备 Task 分离且可追溯 | NOT RUN |
-| F | “下周前”“答辩前三天”等相对时间 | 标记待确认，不猜测不可可靠归一化日期 | NOT RUN |
-| G | 纯讲座资讯、无动作要求 | 保存 Source，但不生成伪任务 | NOT RUN |
-| H | 匿名图片、文本层 PDF、扫描 PDF | 本机 OCR/提取有进度、限制、校对与手动补充 | NOT RUN |
-| I | AI timeout、502、invalid schema | Source 不丢；显示安全错误；可用本地规则/手动继续 | NOT RUN |
-| J | 导出、二次确认清空、导入、刷新、迁移恢复 | JSON round-trip；失败导入不破坏当前 Workspace | NOT RUN |
+| 场景 | 匿名合成输入 | 关键预期 | 状态 | 2026-08-30 Edge 实测摘要 |
+| --- | --- | --- | --- | --- |
+| A | 简单课程通知：提交一次课程作业 | 1 个显式任务；日期、动作和依据可编辑 | PASS | AI 无效结构后复用同一 Source 本地重试；1 Task / 1 Material / 1 TimePoint 原子提交；刷新后任务、来源依据与 1 条 created 历史仍在 |
+| B | 同一通知含提交选题表、联系老师、上传报告 | 多任务逐项编辑、拒绝、部分确认 | PASS | 3 项建议触发聚焦复核；取消 1 项后按钮从 3 变 2，最终仅原子创建 2 项；未静默创建被取消项 |
+| C | 报名与作品终稿两个截止日期 | 多 timePoint 正确关联，最早行动进入 Today | PARTIAL | 2 个明确截止正确关联并显著提示；选择“稍后处理”后刷新仍显示 2 项待确认；尚未确认并核对 Today 排序 |
+| D | 报名表、身份证明、承诺书、PDF 命名规则 | 材料不冒充任务；命名要求保留在材料约束 | PARTIAL | 1 Task / 4 Material / 1 TimePoint；用户可把文件名与 PDF 要求写入材料编辑字段并原子提交，但原始本地建议把 `PDF` 当作材料，canonical `namingRequirements` 未由浏览器证据证明 |
+| E | 线下答辩事件及提前准备材料 | Event 与准备 Task 分离且可追溯 | PARTIAL | 待确认摘要为 1 Event / 1 preparation Task / 2 TimePoint / 1 Material，聚焦复核和原子提交通过；尚未完成刷新后的 Calendar 事件复核 |
+| F | “下周前”“答辩前三天”等相对时间 | 标记待确认，不猜测不可可靠归一化日期 | PASS | 2 项 ambiguity、质量标记和“需要重点核对”同时可见；两个 TimePoint 默认不选中，草稿保留待用户决定 |
+| G | 纯讲座资讯、无动作要求 | 保存 Source，但不生成伪任务 | PASS | Source 保留且正式实体计数为 0；没有伪任务。information-only 当前显示为 invalid result/识别失败，记为 P2 文案与状态改进项 |
+| H | 匿名图片、文本层 PDF、扫描 PDF | 本机 OCR/提取有进度、限制、校对与手动补充 | PARTIAL | 匿名 PNG 剪贴板录入；OCR 启动失败时明确说明图片未发送给 DeepSeek，并要求人工补充；补充后原子提交。Edge 扩展未启用 file URL 权限，PDF/扫描 PDF 直接选择 `NOT RUN` |
+| I | AI timeout、502、invalid schema | Source 不丢；显示安全错误；可用本地规则/手动继续 | PASS | 实测 DeepSeek 返回无效 RecognitionResult 2.0：Source 先保存、错误可见、同源本地规则重试成功并可确认 |
+| J | 导出、二次确认清空、导入、刷新、迁移恢复 | JSON round-trip；失败导入不破坏当前 Workspace | PARTIAL | A 的正式任务与 C/F 草稿均经关闭/刷新保留；Export → 清空 → Import 和失败导入保护尚未执行 |
 
-当前阻断证据：应用内浏览器报告 IndexedDB 不可用；Chrome 扩展未连接；官方 Windows 电脑控制因 Edge 窗口含多个页面、无法唯一确认当前 URL 而安全终止。因此本表保持 `NOT RUN`，不能宣布 R9 通过。
+本轮截图证据已由官方 Browser 在当前任务中捕获：I 的失败 Source 卡片、B 的聚焦复核、A 刷新后的任务来源与历史、E 的 Event/Task 摘要、F 的 ambiguity、G 的 0 实体 Source、H 的人工补充确认。没有把浏览器静态可见性代替持久化证据。
+
+浏览器边界：应用内浏览器仍报告 IndexedDB 不可用，不能承担持久化验收；Edge 已能执行实际交互，但文件选择因扩展未启用 “Allow access to file URLs” 被拒绝。2026-08-30 约 19:14 一次新 Edge 页出现 `ERR_HTTP2_PING_FAILED`；同一时点 PowerShell 对 Preview 首页/status 与 Production 首页均为 HTTP 200，随后新的 Edge 页立即恢复到应用首页。该客户端瞬时失败窗口已记录，未发现 Cloudflare Version 漂移或工作区数据丢失。
 
 ## 4. 安全、可靠性与性能
 
@@ -77,7 +79,7 @@ Capture → Source 先保存 → RecognitionRun → Draft → Evidence
 
 ### 4.2 可靠性
 
-AI 失败保留 Source、确认单事务、迁移失败不覆盖、导入失败不替换、幂等 operation ID、late run 不覆盖 current version、Error Boundary 与手动继续均有自动测试或代码证据；刷新、重复点击、浏览器返回和网络中断仍需 A–J 当前 RC 人工证据。
+AI 失败保留 Source、确认单事务、迁移失败不覆盖、导入失败不替换、幂等 operation ID、late run 不覆盖 current version、Error Boundary 与手动继续均有自动测试或代码证据。本轮已补充 AI invalid schema、同源本地重试、部分确认、原子提交、刷新后正式任务与待确认草稿保持的 Edge 证据；浏览器返回、确认按钮重复点击、失败导入和完整网络中断仍未关闭。
 
 ### 4.3 性能记录模板
 
@@ -89,9 +91,9 @@ AI 失败保留 Source、确认单事务、迁移失败不覆盖、导入失败�
 | Inbox 加载 | NOT RUN | NOT RUN | NOT RUN |  |
 | Project 加载 | NOT RUN | NOT RUN | NOT RUN |  |
 | 普通保存 | NOT RUN | NOT RUN | NOT RUN |  |
-| 文件上传/提取 | NOT RUN | NOT RUN | NOT RUN |  |
-| AI 请求 | NOT RUN | NOT RUN | NOT RUN | 记录成功、超时或不可观测 |
-| 刷新恢复 | NOT RUN | NOT RUN | NOT RUN |  |
+| 文件上传/提取 | NOT RUN | NOT RUN | 有反馈 | PNG 剪贴板可进入录入；OCR 失败状态可见；PDF 文件选择被扩展权限阻断 |
+| AI 请求 | NOT RUN | NOT RUN | 有反馈 | invalid schema 安全失败并保留 Source；耗时未形成可信毫秒记录 |
+| 刷新恢复 | NOT RUN | NOT RUN | 有反馈 | 正式任务与待确认草稿均已实测保留；耗时未形成可信毫秒记录 |
 
 ## 5. R10：5–10 名学生 Alpha Test Kit
 
@@ -220,6 +222,7 @@ P0/P1 立即停止该参与者后续操作并保留现场；先保护/导出匿�
 | --- | --- | --- | --- | --- | --- | --- |
 | 2026-08-30 09:54:56 | 200 HTML | 200；configured true；`deepseek-v4-flash`；未发起模型调用 | `/benchmark`、`/e2`、`/fact-ledger`、`/selection`、`/blind`、`/research-preview` 均为 JSON 404 | 200；Deployment `bc1719b0…` / Version `3b6d6ba2…` 未变 | 相同路径均为 SPA HTML 200 | Preview 可用且隔离；旧 Production 未变，但字面 404 门槛未满足 |
 | 2026-08-30 18:06:40 | 200 HTML | 200；configured true；`deepseek-v4-flash`；未发起模型调用 | 六条已知实验路径持续为 JSON 404 | 200；Production 未被 Preview 部署覆盖 | 六条路径持续为 SPA HTML 200 | 起点后约 8 小时 21 分无可用性/版本漂移；Production 字面 404 仍未关闭 |
+| 2026-08-30 约 19:14 | PowerShell 200；一页 Edge 曾 `ERR_HTTP2_PING_FAILED`，新页随即恢复 | 200；本轮浏览器 QA 曾得到 configured/unconfigured 状态，未发送真实正文 | 本次非完整六路径轮询；沿用 18:06 完整观测 | 200；未部署 Production | 本次非完整六路径轮询 | 记录一次客户端 HTTP/2 瞬时失败窗口；未见服务端中断、版本漂移或数据丢失，不替代下一次定时完整观测 |
 
 已创建当前任务心跳 `v2-beta-preview-48h`，每 6 小时执行只读检查，截止到满 48 小时后的首个观测点。心跳不得调用付费模型、修改 Secret、部署或改变路由。
 
@@ -228,7 +231,7 @@ Production 的 200 响应为旧版本 SPA fallback，不是实验页面或实验
 | 阶段 | 状态 | 说明 |
 | --- | --- | --- |
 | R9 工程门禁 | PASS | 全量命令已执行 |
-| R9 Browser A–J | NOT RUN | 等待唯一可验证的 Edge/Chrome 浏览器状态 |
+| R9 Browser A–J | PARTIAL | A/B/F/G/I 通过；C/D/E/H/J 尚有未执行或未证明子项，完整门槛未关闭 |
 | R10 Alpha Test Kit | READY | 本文第 5 节；尚无真实参与者数据 |
 | R10 Alpha run | NOT RUN | 不属于 Codex 可伪造范围 |
 | R11 Preview RC deployment | DEPLOYED | Preview 独立 Worker，Production 未变 |

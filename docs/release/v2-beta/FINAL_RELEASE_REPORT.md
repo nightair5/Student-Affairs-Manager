@@ -110,7 +110,7 @@ release Worker 对 `/benchmark*`、`/e2*`、`/fact-ledger*`、`/selection*`、`/
 
 ## 19. Browser A–J
 
-场景与合成输入已冻结在 [QA_ACCEPTANCE.md](./QA_ACCEPTANCE.md)。应用内浏览器缺少 IndexedDB；Edge 扩展可打开 Preview，但后续控件读取连续超时，未形成 Capture → Refresh 全链证据。因此 A–J 当前全部 `NOT RUN`，P0/P1 人工判定不可得。
+场景与合成输入冻结在 [QA_ACCEPTANCE.md](./QA_ACCEPTANCE.md)。2026-08-30 已用 Edge 对当前 RC 实测：A/B/F/G/I 为 PASS，C/D/E/H/J 为 PARTIAL；没有观察到数据丢失、静默正式提交或 Key 暴露。已形成 AI invalid schema → Source 保留 → 同源本地重试、部分确认、原子提交、刷新保持、聚焦复核、纯信息 0 实体、PNG OCR 失败后人工补充等证据。材料命名约束 canonical 字段、PDF/扫描 PDF 直接选择、Calendar 刷新复核、Export → 清空 → Import、失败导入、完整返回/重复点击/移动端链仍未关闭，因此 R9 总体仍为 `PARTIAL`，不能判定 P0 = 0 / P1 = 0 的完整门槛。
 
 ## 20. Engineering tests
 
@@ -122,11 +122,11 @@ release Worker 对 `/benchmark*`、`/e2*`、`/fact-ledger*`、`/selection*`、`/
 
 ## 22. Reliability
 
-自动证据覆盖 AI 失败不丢 Source、确认单事务、迁移失败不覆盖、导入失败不替换、幂等 operation、late run ownership、Error Boundary 与手动继续。刷新、浏览器返回、重复点击和网络中断仍需人工证据，当前判定 PARTIAL。
+自动证据覆盖 AI 失败不丢 Source、确认单事务、迁移失败不覆盖、导入失败不替换、幂等 operation、late run ownership、Error Boundary 与手动继续；Edge 已补充 AI 失败、本地恢复、部分确认、原子提交与刷新保持证据。浏览器返回、重复确认、失败导入和完整网络中断仍需人工证据，当前判定 PARTIAL。
 
 ## 23. Performance
 
-构建通过且页面 HTTP 可用；首页、Inbox、Project、保存、文件、AI 与刷新恢复的冷/热计时尚未实测。禁止用 Vite build 时间或 HTTP 响应代替用户可交互性能；当前状态 `NOT RUN`。
+构建通过且页面 HTTP 可用；浏览器操作中未观察到无限 Loading，AI invalid schema、OCR 失败和原子保存均有明确状态反馈，但 Browser 控制层未能给出可信的冷/热毫秒计时，连续页面计时尝试发生工具超时。禁止用 Vite build 时间或 HTTP 响应代替用户可交互性能；完整性能状态仍为 `NOT RUN`。
 
 ## 24. Known limitations
 
