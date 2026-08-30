@@ -141,10 +141,11 @@ function quantile(values, probability) {
 export function aggregateArm(arm, observations) {
   const completed = observations.filter((item) => item.status === 'completed')
   const sum = (selector) => completed.reduce((total, item) => total + selector(item), 0)
-  const task = safeF1(sum((item) => item.task.matched), sum((item) => item.task.predicted), sum((item) => item.task.expected))
-  const material = safeF1(sum((item) => item.material.matched), sum((item) => item.material.predicted), sum((item) => item.material.expected))
-  const timePoint = safeF1(sum((item) => item.timePoint.matched), sum((item) => item.timePoint.predicted), sum((item) => item.timePoint.expected))
-  const event = safeF1(sum((item) => item.event.matched), sum((item) => item.event.predicted), sum((item) => item.event.expected))
+  const unavailable = { precision: null, recall: null, f1: null }
+  const task = completed.length ? safeF1(sum((item) => item.task.matched), sum((item) => item.task.predicted), sum((item) => item.task.expected)) : unavailable
+  const material = completed.length ? safeF1(sum((item) => item.material.matched), sum((item) => item.material.predicted), sum((item) => item.material.expected)) : unavailable
+  const timePoint = completed.length ? safeF1(sum((item) => item.timePoint.matched), sum((item) => item.timePoint.predicted), sum((item) => item.timePoint.expected)) : unavailable
+  const event = completed.length ? safeF1(sum((item) => item.event.matched), sum((item) => item.event.predicted), sum((item) => item.event.expected)) : unavailable
   const latency = completed.map((item) => item.latencyMs).filter(Number.isFinite)
   const correction = completed.map((item) => item.correctionOperations)
   return {
@@ -156,11 +157,11 @@ export function aggregateArm(arm, observations) {
     material,
     timePoint,
     event,
-    completeCaseAccuracy: completed.length ? sum((item) => Number(item.completeCase)) / completed.length : 0,
-    majorCorrectionRate: completed.length ? sum((item) => Number(item.majorCorrection)) / completed.length : 1,
-    requiresActionAccuracy: completed.length ? sum((item) => Number(item.requiresActionCorrect)) / completed.length : 0,
-    forbiddenTaskRate: completed.length ? sum((item) => Number(item.forbiddenHits.length > 0)) / completed.length : 1,
-    evidenceValidity: sum((item) => item.evidence.count) ? sum((item) => item.evidence.valid) / sum((item) => item.evidence.count) : 1,
+    completeCaseAccuracy: completed.length ? sum((item) => Number(item.completeCase)) / completed.length : null,
+    majorCorrectionRate: completed.length ? sum((item) => Number(item.majorCorrection)) / completed.length : null,
+    requiresActionAccuracy: completed.length ? sum((item) => Number(item.requiresActionCorrect)) / completed.length : null,
+    forbiddenTaskRate: completed.length ? sum((item) => Number(item.forbiddenHits.length > 0)) / completed.length : null,
+    evidenceValidity: completed.length ? (sum((item) => item.evidence.count) ? sum((item) => item.evidence.valid) / sum((item) => item.evidence.count) : 1) : null,
     automatedCorrectionBurdenProxy: {
       meanOperations: completed.length ? sum((item) => item.correctionOperations) / completed.length : null,
       medianOperations: median(correction),

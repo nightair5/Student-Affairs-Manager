@@ -53,3 +53,12 @@ test('paired bootstrap reports paired deltas rather than dividing by model maxim
   assert.equal(paired.pairedCount, 1)
   assert.equal(paired.delta, 1)
 })
+
+test('reports unavailable quality metrics as null when every request failed', () => {
+  const failed = scoreCase(fixture, 'T', null, { status: 'request_failure', failureReason: 'network' })
+  const aggregate = aggregateArm('T', [failed])
+  assert.equal(aggregate.requestFailureRate, 1)
+  assert.equal(aggregate.task.f1, null)
+  assert.equal(aggregate.completeCaseAccuracy, null)
+  assert.equal(aggregate.majorCorrectionRate, null)
+})

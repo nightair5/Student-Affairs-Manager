@@ -1,11 +1,13 @@
 /* global console, fetch, process */
 import { readFile, mkdir, writeFile } from 'node:fs/promises'
 import path from 'node:path'
+import { EnvHttpProxyAgent } from 'undici'
 import { ARMS, scoreCase, sha256, summarizeEvaluation } from './multimodal-evaluation-lib.mjs'
 
 const ROOT = process.cwd()
 const DEFAULT_DATA_DIR = '.evaluation-cache/multimodal-unseen-v1'
 const DEFAULT_ENDPOINT = 'https://student-affairs-manager-multimodal-exp.nightsdell.workers.dev'
+const proxyDispatcher = process.env.HTTPS_PROXY || process.env.HTTP_PROXY ? new EnvHttpProxyAgent() : undefined
 
 function option(name, fallback = '') {
   const prefix = `--${name}=`
@@ -200,6 +202,7 @@ async function execute(endpoint, fixture, arm) {
       headers: { 'content-type': 'application/json', accept: 'application/json', origin: endpoint },
       body: JSON.stringify(requestBody(fixture, arm)),
       signal: controller.signal,
+      ...(proxyDispatcher ? { dispatcher: proxyDispatcher } : {}),
     })
     const payload = await response.json().catch(() => null)
     const latencyMs = Date.now() - started
@@ -222,9 +225,12 @@ async function execute(endpoint, fixture, arm) {
       resultSha256: sha256(stableJson(payload.result)),
     }
   } catch (error) {
+    const safeCode = error && typeof error === 'object' && error.cause && typeof error.cause === 'object'
+      ? String(error.cause.code ?? '').slice(0, 80)
+      : ''
     return scoreCase(fixture, arm, null, {
       status: 'request_failure',
-      failureReason: error instanceof Error ? error.name : 'NETWORK_FAILURE',
+      failureReason: error instanceof Error ? `${error.name}${safeCode ? `:${safeCode}` : ''}` : 'NETWORK_FAILURE',
       latencyMs: Date.now() - started,
     })
   } finally {
