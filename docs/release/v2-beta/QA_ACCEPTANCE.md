@@ -33,7 +33,7 @@
 
 UTC 首次运行发现 canonical 事件 `08:30+08:00` 被宿主时区显示为 `00:30`。缺陷修复并增加显式 offset、naive local datetime 回归后，两套时区完整门禁均重新通过。修复提交：`5c443d4 fix(app): stabilize calendar workspace timezone`。
 
-RC.1 浏览器 E 场景进一步发现：Event 自身的 `event_start` TimePoint 未关联 preparation Task 时，`selectionFromDraftItems` 会把该时间点过滤掉，并进一步静默丢弃用户已选 Event。该问题按 P1 停止发布，修复提交 `e3bdf47 fix(app): preserve selected event timepoints`；新增独立 Event TimePoint 回归后完整测试增至 253。RC.2 已部署，但真实 Edge 原子提交与 Calendar 刷新复核仍需补证，不能仅凭单元测试关闭 P1 验收。
+RC.1 浏览器 E 场景进一步发现：Event 自身的 `event_start` TimePoint 未关联 preparation Task 时，`selectionFromDraftItems` 会把该时间点过滤掉，并进一步静默丢弃用户已选 Event。该问题按 P1 停止发布，修复提交 `e3bdf47 fix(app): preserve selected event timepoints`；新增独立 Event TimePoint 回归后完整测试增至 253。RC.2 已通过真实 Edge 原子提交、刷新与 Calendar Event 复核；该缺陷已关闭，但 RC.1 稳定窗口永久作废，RC.2 必须重新累计完整 48 小时。
 
 ## 3. 浏览器 A–J 证据矩阵
 
@@ -56,11 +56,11 @@ Capture → Source 先保存 → RecognitionRun → Draft → Evidence
 | E | 线下答辩事件及提前准备材料 | Event 与准备 Task 分离且可追溯 | PASS | RC.1 的 Event 静默丢弃 P1 已修复。RC.2 使用“仅保存链接 → 手工补充 → 本地规则”避免模型调用，形成 1 Event / 1 preparation Task / 2 TimePoint / 1 Material；确认、刷新后 Calendar 明确显示 `14:00 参加课程答辩 · 事件`，重复 preparation Task 以冲突提示而未静默复制 |
 | F | “下周前”“答辩前三天”等相对时间 | 标记待确认，不猜测不可可靠归一化日期 | PASS | 2 项 ambiguity、质量标记和“需要重点核对”同时可见；两个 TimePoint 默认不选中，草稿保留待用户决定 |
 | G | 纯讲座资讯、无动作要求 | 保存 Source，但不生成伪任务 | PASS | Source 保留且正式实体计数为 0；没有伪任务。information-only 当前显示为 invalid result/识别失败，记为 P2 文案与状态改进项 |
-| H | 匿名图片、文本层 PDF、扫描 PDF | 本机 OCR/提取有进度、限制、校对与手动补充 | PARTIAL | 匿名 PNG 剪贴板录入；OCR 启动失败时明确说明图片未发送给 DeepSeek，并要求人工补充；补充后原子提交。Edge 扩展未启用 file URL 权限，PDF/扫描 PDF 直接选择 `NOT RUN` |
+| H | 匿名图片、文本层 PDF、扫描 PDF | 本机 OCR/提取有进度、限制、校对与手动补充 | PARTIAL | Edge 已验证匿名 PNG 剪贴板、OCR 失败边界、人工补充与原子提交。官方 IAB 又验证文本层 PDF 本机读取 1 页，以及扫描 PDF 本机 OCR 1 页并得到可校对文字，均明确不上传文件本体且未进入模型整理；但 IAB 显示 IndexedDB 不可用，Edge 扩展又未启用 file URL 权限，因此 PDF 的同浏览器持久化、确认与刷新全链仍未证明 |
 | I | AI timeout、502、invalid schema | Source 不丢；显示安全错误；可用本地规则/手动继续 | PASS | 实测 DeepSeek 返回无效 RecognitionResult 2.0：Source 先保存、错误可见、同源本地规则重试成功并可确认 |
 | J | 导出、二次确认清空、导入、刷新、迁移恢复 | JSON round-trip；失败导入不破坏当前 Workspace | PARTIAL | A 的正式任务与 C/F 草稿均经关闭/刷新保留；应用显示“已下载 Workspace v8 本机数据备份”；清空属于不可撤销操作，尚未取得动作时确认，因此清空 → Import 与失败导入保护未执行 |
 
-本轮截图证据已由官方 Browser 在当前任务中捕获：I 的失败 Source 卡片、B 的聚焦复核、A 刷新后的任务来源与历史、C 刷新后的 Calendar 顺序、RC.1 E 的 Calendar 缺失、F 的 ambiguity、G 的 0 实体 Source、H 的人工补充确认，以及 RC.2 E 刷新后正式 Event。没有把浏览器静态可见性或单元测试代替正式提交与刷新证据。
+本轮截图证据已由官方 Browser 在当前任务中捕获：I 的失败 Source 卡片、B 的聚焦复核、A 刷新后的任务来源与历史、C 刷新后的 Calendar 顺序、RC.1 E 的 Calendar 缺失、F 的 ambiguity、G 的 0 实体 Source、H 的人工补充确认、文本层 PDF 与扫描 PDF 本机 OCR，以及 RC.2 E 刷新后正式 Event。手机端另以 `390×844` 验证单栏壳与底部导航，以 `390×667` 验证录入面板 `overflow-y: auto`：面板 `clientHeight=666`、`scrollHeight=768`，滚动 `102.4px` 后主按钮位于视口 `582.15–630.15px`，可完整触达。IAB 同时明确显示 IndexedDB 不可用，因此这些移动端/PDF 观察没有被扩大解释为持久化全链通过。截图：`C:\Users\Winner\AppData\Local\Temp\student-affairs-r9\r9-h-scanned-pdf-ocr.png`、`C:\Users\Winner\AppData\Local\Temp\student-affairs-r9\r9-mobile-intake-390x667.png`。没有把浏览器静态可见性或单元测试代替正式提交与刷新证据。
 
 浏览器边界：应用内浏览器仍报告 IndexedDB 不可用，不能承担持久化验收；Edge 已能执行实际交互，但文件选择因扩展未启用 “Allow access to file URLs” 被拒绝。2026-08-30 约 19:14 一次新 Edge 页出现 `ERR_HTTP2_PING_FAILED`；同一时点 PowerShell 对 Preview 首页/status 与 Production 首页均为 HTTP 200，随后新的 Edge 页立即恢复到应用首页。该客户端瞬时失败窗口已记录，未发现 Cloudflare Version 漂移或工作区数据丢失。
 
@@ -93,7 +93,7 @@ AI 失败保留 Source、确认单事务、迁移失败不覆盖、导入失败�
 | Inbox 加载 | NOT RUN | NOT RUN | NOT RUN |  |
 | Project 加载 | NOT RUN | NOT RUN | NOT RUN |  |
 | 普通保存 | NOT RUN | NOT RUN | NOT RUN |  |
-| 文件上传/提取 | NOT RUN | NOT RUN | 有反馈 | PNG 剪贴板可进入录入；OCR 失败状态可见；PDF 文件选择被扩展权限阻断 |
+| 文件上传/提取 | NOT RUN | NOT RUN | 有反馈 | PNG 剪贴板可进入录入；OCR 失败状态可见；IAB 已实测文本层 PDF 读取与扫描 PDF OCR，但毫秒计时及可持久化浏览器中的 PDF 全链未关闭 |
 | AI 请求 | NOT RUN | NOT RUN | 有反馈 | invalid schema 安全失败并保留 Source；耗时未形成可信毫秒记录 |
 | 刷新恢复 | NOT RUN | NOT RUN | 有反馈 | 正式任务与待确认草稿均已实测保留；耗时未形成可信毫秒记录 |
 
