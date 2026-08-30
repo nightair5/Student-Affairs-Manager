@@ -68,6 +68,55 @@ function isJsonRequest(request) {
   return /^application\/json(?:\s*;|$)/iu.test(contentType)
 }
 
+export function classifyDeepSeekUpstreamStatus(status, multimodal = false) {
+  const subject = multimodal ? '多模态实验' : 'DeepSeek'
+  if (status === 400 || status === 422) {
+    return {
+      error: 'UPSTREAM_REQUEST_REJECTED',
+      message: `${subject} 请求契约被上游拒绝。`,
+      status: 502,
+    }
+  }
+  if (status === 401 || status === 403) {
+    return {
+      error: 'UPSTREAM_AUTH_FAILED',
+      message: `${subject} 服务端凭证未通过上游鉴权。`,
+      status: 503,
+    }
+  }
+  if (status === 402) {
+    return {
+      error: 'UPSTREAM_BILLING_BLOCKED',
+      message: `${subject} 账户当前无法承担本次调用。`,
+      status: 503,
+    }
+  }
+  if (status === 404) {
+    return {
+      error: 'UPSTREAM_MODEL_UNAVAILABLE',
+      message: `${subject} 所需模型当前不可用。`,
+      status: 502,
+    }
+  }
+  if (status === 429) {
+    return {
+      error: 'RATE_LIMITED',
+      message: `${subject} 请求频率受限。`,
+      status: 429,
+    }
+  }
+  return {
+    error: 'UPSTREAM_UNAVAILABLE',
+    message: `${subject} 上游服务暂时无法响应。`,
+    status: 502,
+  }
+}
+
+function safeUpstreamFailure(upstreamStatus, requestId, multimodal = false) {
+  const classified = classifyDeepSeekUpstreamStatus(upstreamStatus, multimodal)
+  return failure(classified.error, classified.message, classified.status, requestId)
+}
+
 function createRequestId() {
   return crypto.randomUUID()
 }
@@ -598,14 +647,9 @@ async function askDeepSeek(request, env, fetcher, isRateLimited, acquireConcurre
       signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS),
     })
     if (!upstream.ok) {
-      const limited = upstream.status === 429
-      context.errorType = limited ? 'RATE_LIMITED' : 'UPSTREAM_UNAVAILABLE'
-      return failure(
-        context.errorType,
-        limited ? 'DeepSeek 请求频率受限。' : 'DeepSeek 上游服务暂时无法响应。',
-        limited ? 429 : 502,
-        context.requestId,
-      )
+      const classified = classifyDeepSeekUpstreamStatus(upstream.status)
+      context.errorType = classified.error
+      return safeUpstreamFailure(upstream.status, context.requestId)
     }
     const payload = await upstream.json()
     context.outputTokens = Number.isFinite(payload?.usage?.completion_tokens)
@@ -713,14 +757,9 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
       signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS),
     })
     if (!upstream.ok) {
-      const limited = upstream.status === 429
-      context.errorType = limited ? 'RATE_LIMITED' : 'UPSTREAM_UNAVAILABLE'
-      return failure(
-        context.errorType,
-        limited ? 'DeepSeek 请求频率受限。' : 'DeepSeek 上游服务暂时无法响应。',
-        limited ? 429 : 502,
-        context.requestId,
-      )
+      const classified = classifyDeepSeekUpstreamStatus(upstream.status)
+      context.errorType = classified.error
+      return safeUpstreamFailure(upstream.status, context.requestId)
     }
     const payload = await upstream.json()
     context.outputTokens = Number.isFinite(payload?.usage?.completion_tokens)
@@ -850,14 +889,9 @@ async function extractMultimodalTasks(request, env, fetcher, isRateLimited, acqu
       signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS),
     })
     if (!upstream.ok) {
-      const limited = upstream.status === 429
-      context.errorType = limited ? 'RATE_LIMITED' : 'UPSTREAM_UNAVAILABLE'
-      return failure(
-        context.errorType,
-        limited ? 'DeepSeek 请求频率受限。' : '多模态实验上游暂时无法响应。',
-        limited ? 429 : 502,
-        context.requestId,
-      )
+      const classified = classifyDeepSeekUpstreamStatus(upstream.status, true)
+      context.errorType = classified.error
+      return safeUpstreamFailure(upstream.status, context.requestId, true)
     }
     const payload = await upstream.json()
     context.outputTokens = Number.isFinite(payload?.usage?.completion_tokens)

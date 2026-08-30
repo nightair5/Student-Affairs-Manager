@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 import {
+  classifyDeepSeekUpstreamStatus,
   createWorker,
   validateDeepSeekRequest,
   validateExtractionRequest,
@@ -160,6 +161,35 @@ test('structured extraction uses V4 Flash JSON mode and returns bounded suggesti
   assert.equal(upstreamBody.model, 'deepseek-v4-flash')
   assert.deepEqual(upstreamBody.response_format, { type: 'json_object' })
   assert.match(upstreamBody.messages[0].content, /不可信(?:资料|数据)/)
+})
+
+test('upstream failures are classified without relaying upstream response bodies', async () => {
+  assert.deepEqual(classifyDeepSeekUpstreamStatus(400), {
+    error: 'UPSTREAM_REQUEST_REJECTED',
+    message: 'DeepSeek 请求契约被上游拒绝。',
+    status: 502,
+  })
+  assert.equal(classifyDeepSeekUpstreamStatus(401).error, 'UPSTREAM_AUTH_FAILED')
+  assert.equal(classifyDeepSeekUpstreamStatus(402).error, 'UPSTREAM_BILLING_BLOCKED')
+  assert.equal(classifyDeepSeekUpstreamStatus(404).error, 'UPSTREAM_MODEL_UNAVAILABLE')
+  assert.equal(classifyDeepSeekUpstreamStatus(429).error, 'RATE_LIMITED')
+  assert.equal(classifyDeepSeekUpstreamStatus(503).error, 'UPSTREAM_UNAVAILABLE')
+
+  const worker = createWorker({
+    fetcher: async () => Response.json({ error: { message: 'secret upstream detail' } }, { status: 401 }),
+  })
+  const response = await worker.fetch(request('/api/deepseek/extract', {
+    body: JSON.stringify({
+      sourceType: 'text',
+      content: '9月10日18:00提交报名表',
+      referenceTime: '2026-09-01T08:00:00+08:00',
+      timezone: 'Asia/Shanghai',
+    }),
+  }), environment({ DEEPSEEK_API_KEY: 'server-only-test-key-with-length' }))
+  const payload = await response.json()
+  assert.equal(response.status, 503)
+  assert.equal(payload.error, 'UPSTREAM_AUTH_FAILED')
+  assert.doesNotMatch(JSON.stringify(payload), /secret upstream detail/iu)
 })
 
 test('multimodal extraction requires explicit consent and sends only bounded images with OCR text', async () => {
