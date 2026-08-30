@@ -81,7 +81,7 @@ Capture → Source 先保存 → RecognitionRun → Draft → Evidence
 
 ### 4.2 可靠性
 
-AI 失败保留 Source、确认单事务、迁移失败不覆盖、导入失败不替换、幂等 operation ID、late run 不覆盖 current version、Error Boundary 与手动继续均有自动测试或代码证据。本轮已补充 AI invalid schema、同源本地重试、部分确认、原子提交、刷新后正式任务与待确认草稿保持的 Edge 证据；浏览器返回、确认按钮重复点击、失败导入和完整网络中断仍未关闭。
+AI 失败保留 Source、确认单事务、迁移失败不覆盖、导入失败不替换、幂等 operation ID、late run 不覆盖 current version、Error Boundary 与手动继续均有自动测试或代码证据。本轮已补充 AI invalid schema、同源本地重试、部分确认、原子提交、刷新后正式任务与待确认草稿保持的 Edge 证据。浏览器返回已实测：从首页应用内切到 Inbox 后 URL 仍为根路径，浏览器返回直接离开到 `about:blank`，没有恢复上一应用页，记录为 P2 导航体验问题。确认按钮重复点击、失败导入和完整网络中断仍未关闭；一次匿名手动任务准备因 Browser 自动化未能向 React `datetime-local` 校验派发有效事件而停止，按钮始终 disabled，未提交或新增数据，不能据此判断产品幂等性。
 
 ### 4.3 性能记录模板
 

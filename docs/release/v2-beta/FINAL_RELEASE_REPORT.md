@@ -173,6 +173,7 @@ P2/P3 在 48 小时稳定期后处理，不得在稳定期增加功能：
 | --- | --- | --- | --- |
 | P2 | 多材料通知的本地规则会把部分格式/命名文本拼入 Material 名称，并可能额外生成 `PDF格式）` Material；真实 v8 导出中对应 structured requirements 为空 | 原始 Source、任务描述和 Evidence 仍可回看，用户确认前可取消材料；无数据丢失或静默正式任务 | 稳定期后改进确定性材料解析与结构化材料编辑，并增加匿名 D 场景回归 |
 | P2 | information-only Source 当前以 invalid result/识别失败呈现，而非专门的“仅保存资料”完成状态 | Source 已保存且正式实体计数为 0，不生成伪任务 | 稳定期后增加准确状态文案，不改变 canonical 数据 |
+| P2 | 应用内页面切换不写入浏览器 history；从 Inbox 按浏览器返回会离开 Preview，而不是回到 Today | 应用内侧栏和手机底部导航可正常返回 Today，数据不受影响 | 稳定期后增加受控 history/state 同步与返回回归 |
 
 上述 P2 不满足 P0/P1 定义，不中断 RC.2 可用性监测；但 D 场景 structured requirements 仍为 `PARTIAL`，最终 Browser A–J 门禁不得据此伪造 PASS。
 
