@@ -111,7 +111,7 @@ release Worker 对 `/benchmark*`、`/e2*`、`/fact-ledger*`、`/selection*`、`/
 
 ## 19. Browser A–J
 
-场景与合成输入冻结在 [QA_ACCEPTANCE.md](./QA_ACCEPTANCE.md)。2026-08-30 Edge 实测中 A/B/C/E/F/G/I 为 PASS，D/H/J 为 PARTIAL。RC.1 的 E 场景确认后刷新发现 Event 未进入 Calendar，定位为确认选择过滤独立 Event TimePoint 的 P1；RC.2 已完成最小修复、253 测试回归，并通过“仅保存链接 → 手工补充 → 本地规则 → 原子确认 → 刷新 → Calendar Event”真实链路复验，全程未调用付费模型。H 已补充文本层 PDF 本机读取、扫描 PDF 本机 OCR 及 `390×844`/`390×667` 移动端布局与独立滚动证据，但 IAB 不具备 IndexedDB，不能替代可持久化浏览器中的 PDF 确认/刷新全链。J 已出现 Workspace v8 备份下载成功状态，清空、Import、失败导入及完整返回/重复点击仍未关闭，因此 R9 总体仍为 `PARTIAL`。
+场景与合成输入冻结在 [QA_ACCEPTANCE.md](./QA_ACCEPTANCE.md)。2026-08-30 Edge 实测中 A/B/C/E/F/G/I 为 PASS，D/H/J 为 PARTIAL。RC.1 的 E 场景确认后刷新发现 Event 未进入 Calendar，定位为确认选择过滤独立 Event TimePoint 的 P1；RC.2 已完成最小修复、253 测试回归，并通过“仅保存链接 → 手工补充 → 本地规则 → 原子确认 → 刷新 → Calendar Event”真实链路复验，全程未调用付费模型。D 的真实 v8 导出确认命名/PDF 原文仍可追溯，但 structured requirements 为空且多出 `PDF格式）` Material，记录为 P2。H 已补充文本层 PDF 本机读取、扫描 PDF 本机 OCR 及 `390×844`/`390×667` 移动端布局与独立滚动证据，但 IAB 不具备 IndexedDB，不能替代可持久化浏览器中的 PDF 确认/刷新全链。J 的真实 339,467-byte schema v8 JSON 已解析并完成无 Secret/文件本体范围扫描；清空、Import、失败导入及完整返回/重复点击仍未关闭，因此 R9 总体仍为 `PARTIAL`。
 
 ## 20. Engineering tests
 
@@ -119,7 +119,7 @@ release Worker 对 `/benchmark*`、`/e2*`、`/fact-ledger*`、`/selection*`、`/
 
 ## 21. Security
 
-自动证据覆盖 Key 服务端化、Origin、Content-Type、请求体大小、Prompt injection、SSRF 与每跳 redirect 复核、安全错误、实验 route isolation 和 Secret scan。Preview bundle/network 与 Export 仍需 A–J 人工复核；文件输入已补充匿名 PNG、文本层 PDF 与扫描 PDF 的本机处理证据，但 PDF 持久化全链仍缺，当前判定 PARTIAL。
+自动证据覆盖 Key 服务端化、Origin、Content-Type、请求体大小、Prompt injection、SSRF 与每跳 redirect 复核、安全错误、实验 route isolation 和 Secret scan。真实 Workspace v8 导出范围扫描未发现前端 Secret 标识、私钥或 base64 文件本体；Preview bundle/network 仍需人工复核。文件输入已补充匿名 PNG、文本层 PDF 与扫描 PDF 的本机处理证据，但 PDF 持久化全链仍缺，当前判定 PARTIAL。
 
 ## 22. Reliability
 

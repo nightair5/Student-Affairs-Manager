@@ -52,13 +52,13 @@ Capture → Source 先保存 → RecognitionRun → Draft → Evidence
 | A | 简单课程通知：提交一次课程作业 | 1 个显式任务；日期、动作和依据可编辑 | PASS | AI 无效结构后复用同一 Source 本地重试；1 Task / 1 Material / 1 TimePoint 原子提交；刷新后任务、来源依据与 1 条 created 历史仍在 |
 | B | 同一通知含提交选题表、联系老师、上传报告 | 多任务逐项编辑、拒绝、部分确认 | PASS | 3 项建议触发聚焦复核；取消 1 项后按钮从 3 变 2，最终仅原子创建 2 项；未静默创建被取消项 |
 | C | 报名与作品终稿两个截止日期 | 多 timePoint 正确关联，最早行动进入 Today | PASS | RC.2 原子确认后刷新保持；Calendar“即将到来”按 9/10 12:00 完成报名、9/15 18:00 提交终稿排列。Today 继续优先既有逾期事项，没有被未来任务错误抢占 |
-| D | 报名表、身份证明、承诺书、PDF 命名规则 | 材料不冒充任务；命名要求保留在材料约束 | PARTIAL | 1 Task / 4 Material / 1 TimePoint；用户可把文件名与 PDF 要求写入材料编辑字段并原子提交，但原始本地建议把 `PDF` 当作材料，canonical `namingRequirements` 未由浏览器证据证明 |
+| D | 报名表、身份证明、承诺书、PDF 命名规则 | 材料不冒充任务；命名要求保留在材料约束 | PARTIAL | 1 Task / 4 Material / 1 TimePoint；刷新后详情仍可回看原文、命名规则及 PDF 约束。真实 Workspace v8 导出进一步证明该 Task 关联 4 个 Material，但 `namingRequirements` / `formatRequirements` 为空，且多出独立 `PDF格式）` 材料；这是无数据丢失、可人工核对的 P2 结构质量问题，不能伪装为通过 |
 | E | 线下答辩事件及提前准备材料 | Event 与准备 Task 分离且可追溯 | PASS | RC.1 的 Event 静默丢弃 P1 已修复。RC.2 使用“仅保存链接 → 手工补充 → 本地规则”避免模型调用，形成 1 Event / 1 preparation Task / 2 TimePoint / 1 Material；确认、刷新后 Calendar 明确显示 `14:00 参加课程答辩 · 事件`，重复 preparation Task 以冲突提示而未静默复制 |
 | F | “下周前”“答辩前三天”等相对时间 | 标记待确认，不猜测不可可靠归一化日期 | PASS | 2 项 ambiguity、质量标记和“需要重点核对”同时可见；两个 TimePoint 默认不选中，草稿保留待用户决定 |
 | G | 纯讲座资讯、无动作要求 | 保存 Source，但不生成伪任务 | PASS | Source 保留且正式实体计数为 0；没有伪任务。information-only 当前显示为 invalid result/识别失败，记为 P2 文案与状态改进项 |
 | H | 匿名图片、文本层 PDF、扫描 PDF | 本机 OCR/提取有进度、限制、校对与手动补充 | PARTIAL | Edge 已验证匿名 PNG 剪贴板、OCR 失败边界、人工补充与原子提交。官方 IAB 又验证文本层 PDF 本机读取 1 页，以及扫描 PDF 本机 OCR 1 页并得到可校对文字，均明确不上传文件本体且未进入模型整理；但 IAB 显示 IndexedDB 不可用，Edge 扩展又未启用 file URL 权限，因此 PDF 的同浏览器持久化、确认与刷新全链仍未证明 |
 | I | AI timeout、502、invalid schema | Source 不丢；显示安全错误；可用本地规则/手动继续 | PASS | 实测 DeepSeek 返回无效 RecognitionResult 2.0：Source 先保存、错误可见、同源本地规则重试成功并可确认 |
-| J | 导出、二次确认清空、导入、刷新、迁移恢复 | JSON round-trip；失败导入不破坏当前 Workspace | PARTIAL | A 的正式任务与 C/F 草稿均经关闭/刷新保留；应用显示“已下载 Workspace v8 本机数据备份”；清空属于不可撤销操作，尚未取得动作时确认，因此清空 → Import 与失败导入保护未执行 |
+| J | 导出、二次确认清空、导入、刷新、迁移恢复 | JSON round-trip；失败导入不破坏当前 Workspace | PARTIAL | A 的正式任务与 C/F 草稿均经关闭/刷新保留。Edge 实际生成 339,467-byte、可解析的 schema v8 JSON（12 Sources / 12 Tasks / 14 Materials / 20 TimePoints / 11 EvidenceRefs / 40 HistoryRecords；SHA-256 `A8D7953861C794460E5452B452582FB00D7AB3D3DCE29CE65FC9192F48BF2DA1`）；范围扫描未发现 `VITE_*` Key/Secret/Token、私钥或 `data:*;base64` 文件本体。浏览器控制层未完成下载事件且文件保留 `.crdownload` 后缀；清空属于不可撤销操作，尚未取得动作时确认，因此清空 → Import 与失败导入保护未执行 |
 
 本轮截图证据已由官方 Browser 在当前任务中捕获：I 的失败 Source 卡片、B 的聚焦复核、A 刷新后的任务来源与历史、C 刷新后的 Calendar 顺序、RC.1 E 的 Calendar 缺失、F 的 ambiguity、G 的 0 实体 Source、H 的人工补充确认、文本层 PDF 与扫描 PDF 本机 OCR，以及 RC.2 E 刷新后正式 Event。手机端另以 `390×844` 验证单栏壳与底部导航，以 `390×667` 验证录入面板 `overflow-y: auto`：面板 `clientHeight=666`、`scrollHeight=768`，滚动 `102.4px` 后主按钮位于视口 `582.15–630.15px`，可完整触达。IAB 同时明确显示 IndexedDB 不可用，因此这些移动端/PDF 观察没有被扩大解释为持久化全链通过。截图：`C:\Users\Winner\AppData\Local\Temp\student-affairs-r9\r9-h-scanned-pdf-ocr.png`、`C:\Users\Winner\AppData\Local\Temp\student-affairs-r9\r9-mobile-intake-390x667.png`。没有把浏览器静态可见性或单元测试代替正式提交与刷新证据。
 
@@ -75,7 +75,7 @@ Capture → Source 先保存 → RecognitionRun → Draft → Evidence
 | Prompt injection 作为不可信数据 | Worker test | 场景 I | PARTIAL |
 | SSRF、redirect 每跳复核 | Server/Worker tests | Preview URL 输入 | PARTIAL |
 | 文件类型、大小、页数和 50k 截断 | fileExtraction 17 tests | 场景 H | PARTIAL |
-| Export 不含 Secret/文件本体 | secret scan、repository tests | 场景 J | PARTIAL |
+| Export 不含 Secret/文件本体 | secret scan、repository tests | 场景 J | PASS |
 | Preview/Production 隔离 | Wrangler config、独立 Worker URL | Production 404/Preview 页面 | PARTIAL |
 | 实验 endpoint 关闭 | Worker test | `/benchmark*`、`/e2*` 等 HTTP 404 | PARTIAL |
 
