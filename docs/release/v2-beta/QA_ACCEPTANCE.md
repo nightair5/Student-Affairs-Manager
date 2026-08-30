@@ -227,6 +227,7 @@ RC.1 的稳定期从 `2026-08-30T01:45:23.994Z` 起算，但因 E 场景 P1 在�
 | 2026-08-30 约 19:14（RC.1） | PowerShell 200；一页 Edge 曾 `ERR_HTTP2_PING_FAILED`，新页随即恢复 | 200；未发送真实正文 | 本次非完整六路径轮询；沿用 18:06 完整观测 | 200；未部署 Production | 本次非完整六路径轮询 | 客户端 HTTP/2 瞬时失败；随后发现 Event 静默丢弃 P1，RC.1 稳定窗口作废 |
 | 2026-08-30 19:47:56（RC.2） | 200 HTML | 200；configured true；`deepseek-v4-flash`；仅检查状态，未调用模型 | 六条已知实验路径均为 JSON 404 | 200；Deployment `bc1719b0…` / Version `3b6d6ba2…` 未变 | 六条路径均为 SPA HTML 200 | Version `8a471784…` / Deployment `5f6441ed…` 起点后首检通过；Production 字面 404 与 RC.2 Event 浏览器复验仍未关闭 |
 | 2026-08-30 20:42:27（RC.2） | 200 HTML | 200；configured true；`deepseek-v4-flash`；仅检查状态，未调用模型 | 六条已知实验路径均为 JSON 404 | 200；Wrangler current Version 仍为 `3b6d6ba2…` | 六条路径均为 SPA HTML 200 | Wrangler current Preview Version 仍为 `8a471784…`，起点后约 1 小时 7 分无部署漂移；Production 未被覆盖，字面 404 仍未关闭 |
+| 2026-08-30 21:13:09（RC.2） | 200 HTML | 200；configured true；`deepseek-v4-flash`；仅检查状态，未调用模型 | 六条已知实验路径均为 JSON 404 | 200；Wrangler current Version 仍为 `3b6d6ba2…` | 六条路径均为 SPA HTML 200 | Wrangler current Preview Version 仍为 `8a471784…`，起点后约 1 小时 38 分无部署漂移；Production 未被覆盖，字面 404 仍未关闭 |
 
 已创建当前任务心跳 `v2-beta-preview-48h`，每 6 小时执行只读检查，截止到满 48 小时后的首个观测点。心跳不得调用付费模型、修改 Secret、部署或改变路由。
 
