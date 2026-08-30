@@ -1,0 +1,422 @@
+{
+  "schemaVersion": "multimodal-synthetic-unseen-freeze-1.1.0",
+  "status": "FROZEN_BEFORE_MODEL_CALLS",
+  "frozenAt": "2026-08-30T19:36:57.485Z",
+  "datasetId": "synthetic-unseen-v2",
+  "datasetSha256": "5acf52122015f8a46034db359b01ff40228441ed66975c797e30091e6742796f",
+  "ocrBundleSha256": "e4a8e5570728d55960422e2adcca4647bb5272082cfbd660dbf7dcece4e14f90",
+  "sampleCount": 36,
+  "modalityCounts": {
+    "screenshot": 12,
+    "photo": 12,
+    "scan": 12
+  },
+  "scenarioFamilyCounts": {
+    "scenario-01": 3,
+    "scenario-02": 3,
+    "scenario-03": 3,
+    "scenario-04": 3,
+    "scenario-05": 3,
+    "scenario-06": 3,
+    "scenario-07": 3,
+    "scenario-08": 3,
+    "scenario-09": 3,
+    "scenario-10": 3,
+    "scenario-11": 3,
+    "scenario-12": 3
+  },
+  "expectedModel": "deepseek-v4-flash-vision-exp",
+  "provenance": {
+    "materials": "deterministic anonymous synthetic templates generated after the v2 protocol amendment",
+    "groundTruth": "author-written deterministic template facts; not derived from model output",
+    "classification": "synthetic_proxy",
+    "claimBoundary": "preliminary engineering evidence only; not real unseen student material",
+    "groundTruthSentToModel": false
+  },
+  "ocr": {
+    "method": "tesseract.js-7.0.0-chi_sim+eng-local-unverified",
+    "generatedAt": "2026-08-30T19:36:50.162Z",
+    "exactTextHashesControlRun": true
+  },
+  "arms": {
+    "T": {
+      "model": "deepseek-v4-flash-vision-exp",
+      "input": "frozen local OCR text only"
+    },
+    "I": {
+      "model": "deepseek-v4-flash-vision-exp",
+      "input": "original image or selected rendered page plus bounded metadata only",
+      "ocrTextInClientRequest": false,
+      "ocrTextInWorkerPrompt": false,
+      "ocrTextInWorkerNormalization": false,
+      "offlineGroundTruthUsedAfterCallForScoring": true
+    },
+    "IT": {
+      "model": "deepseek-v4-flash-vision-exp",
+      "input": "same original image or rendered page plus the identical frozen OCR text used by T"
+    }
+  },
+  "runRules": {
+    "pairedByCase": true,
+    "inferenceCluster": "scenarioFamilyId; 12 independent template families, each rendered as screenshot/photo/scan",
+    "armOrder": "deterministic hash-balanced permutation",
+    "temperature": 0.1,
+    "evaluatorRetries": 0,
+    "anyRequestFailureInvalidatesArmQualityMetrics": true,
+    "expectedMutationAfterRun": "forbidden",
+    "semanticTuningAfterReveal": "forbidden"
+  },
+  "metrics": {
+    "primary": [
+      "taskMicroF1",
+      "majorCorrectionRate",
+      "completeCaseAccuracy"
+    ],
+    "secondary": [
+      "materialF1",
+      "timePointF1",
+      "eventF1",
+      "requiresActionAccuracy",
+      "forbiddenTaskRate",
+      "evidenceValidity"
+    ],
+    "proxyOnly": [
+      "automatedCorrectionBurdenOperations"
+    ],
+    "notObservableWithoutHumanStudy": [
+      "userModificationTimeSeconds"
+    ],
+    "noActionEmptyTaskF1": "NOT_APPLICABLE"
+  },
+  "promotionBoundary": {
+    "syntheticGate": "IT task F1 must exceed T and I by at least 0.03; IT major correction rate must be at least 0.05 lower than both; clustered paired 95% intervals must not point in the opposite direction; all 108 requests must complete with the frozen model.",
+    "launchGate": "Synthetic results can never authorize launch. Real unseen material, actual human timing, privacy/security, browser A-J and stability must still pass."
+  },
+  "firstModelCallAtAtFreeze": null,
+  "cases": [
+    {
+      "id": "mmu2-01",
+      "scenarioFamilyId": "scenario-01",
+      "modality": "screenshot",
+      "sourceSha256": "b9695f8a99cee48d5204ce97cb05cc4cad383f18df64051ef1b4d8d2f5c6bbe6",
+      "imageSha256": "42aec79fd355e06a35395c90f37c6f9ef5d12a1288429e24021ed1c8e7411235",
+      "expectedSha256": "2f8738eb7cbcd89f566cdccf9da366ace5a2e3a06453ba45bcc5309bcd497a8b",
+      "ocrTextSha256": "82b9ff382661b0d379a35954e3d5d17169eee6a0bb7fd552063988d557f7480c"
+    },
+    {
+      "id": "mmu2-02",
+      "scenarioFamilyId": "scenario-02",
+      "modality": "screenshot",
+      "sourceSha256": "9bdebb31c0092ea61d4768d0ba0fc2810fcff080ee783980825dd0cdfa6783b8",
+      "imageSha256": "2cf97643180c08fd21f1a26658ccb3227a58548a6dc29b078f4f07bff24672e2",
+      "expectedSha256": "05592590e128e30c527a1f55cc5029f9cde82c1df6edd3161e70eb02da3ff661",
+      "ocrTextSha256": "a529e625c1c94bf3e22b197ad2d45a5b82e38518ed6dc88fd7ea47726302df79"
+    },
+    {
+      "id": "mmu2-03",
+      "scenarioFamilyId": "scenario-03",
+      "modality": "screenshot",
+      "sourceSha256": "7795e10fcff3076a3ff86fb63624f7bc4d777201f2e6e6cac0fb34ecddee11b6",
+      "imageSha256": "a127bf2ebd16cf5a1ecbd5f128d6fbbd2283bfce9b9d076d0baff3eee15b8492",
+      "expectedSha256": "d0d553e9618c6064efb548658cadfe4e9defc102d8d836592e9d04071165d1d2",
+      "ocrTextSha256": "753a02ef9985d4b0770f90ccc7ed7754ad2b47453ebcaee96a7790aff01f776d"
+    },
+    {
+      "id": "mmu2-04",
+      "scenarioFamilyId": "scenario-04",
+      "modality": "screenshot",
+      "sourceSha256": "446037798f8d3614d4b0ce61768771d60a88fcfad7b6765b647384fc14750cd4",
+      "imageSha256": "92c2583768435419fde7bd4381dbaccb7e9d88d6305f1116f36279102689da63",
+      "expectedSha256": "f7055a06688dcbfc053fcb68c7274a3d2d414d56580aed486cde7e7376ecce32",
+      "ocrTextSha256": "c2cbfe45bbec1fd7b6d66425524fc890590465cf5a73ae338b481a366c18b2f1"
+    },
+    {
+      "id": "mmu2-05",
+      "scenarioFamilyId": "scenario-05",
+      "modality": "screenshot",
+      "sourceSha256": "fa923bbd8812aeb06ab084afc1eaa1ee4396e9e673b513196e17b20b9a6cdf5f",
+      "imageSha256": "10cf0a02d665190eaf9a3d7bc2affea91b58fc05cac103c3d5c67d9f70791c2e",
+      "expectedSha256": "5ae3667e86f0402ba7f7140e349a87ee10059653709a8d2f8d203a22d166b2a0",
+      "ocrTextSha256": "d3265344aca48adca8d9f98e9845bc46a58edf2a845efd241f4b4c82a95260b0"
+    },
+    {
+      "id": "mmu2-06",
+      "scenarioFamilyId": "scenario-06",
+      "modality": "screenshot",
+      "sourceSha256": "aff071662f486162b86b88f54ae9a15dc0c629050c801610d8ee91c5fe8e600c",
+      "imageSha256": "04593a5349f515aa02b252aa3ea5485cfad6104a50a8154b32c520da48ac34ff",
+      "expectedSha256": "446e5bd02da7593fbf5a9940c62630e2af1a9ba78664141b3db241cb9404cd05",
+      "ocrTextSha256": "d08ba0d12ebeb73f1acaa2d8259570229fe9b72281e97d54db86530e404c89c9"
+    },
+    {
+      "id": "mmu2-07",
+      "scenarioFamilyId": "scenario-07",
+      "modality": "screenshot",
+      "sourceSha256": "b0de514f166abe4f80a23bc22ba380bd33d675d5b4f8d1f4a2f3ad8c8f4b2d12",
+      "imageSha256": "eeb14b1240503d68880f2bdf7fc39f2ad0322578d1b43823e744ebcaac938637",
+      "expectedSha256": "c9a64bdec225b03b96d429b8d70cf13ce776fdb17b29a8a11953181b6cb769d7",
+      "ocrTextSha256": "50d506f5da16a28c2748fff3a95fc1560ef8a39f1e72e9e893775b86cd5366e1"
+    },
+    {
+      "id": "mmu2-08",
+      "scenarioFamilyId": "scenario-08",
+      "modality": "screenshot",
+      "sourceSha256": "2ec2f921ad831e002eee6901a1f47df797aba941378154515fdd4945f43a92f5",
+      "imageSha256": "1249268ee08da67213c5c9f4d1d721ee06b1a8a1e5deebf822c68a5ffcea0181",
+      "expectedSha256": "e1bf29b44bb64d5554b8fc21c268da2917de9e1dfa87f41e4c8efcf3fe2c98d6",
+      "ocrTextSha256": "164d146a3e5c582162f55c26f94dd0c1d6472b075851a9f266ab16ad3c549e2e"
+    },
+    {
+      "id": "mmu2-09",
+      "scenarioFamilyId": "scenario-09",
+      "modality": "screenshot",
+      "sourceSha256": "d340a069c3290c51adf073dedaf0290f62e793fe07c0f5599b9c60c5e02e768d",
+      "imageSha256": "2bc77db2154225a48e2f15fe51529162be457a032efeef21a5cc1d4b946c044a",
+      "expectedSha256": "71dd472e0627296114fd3c33a97ff4415835d88fda2034651eee8a3d2b071892",
+      "ocrTextSha256": "d973eb205a2ff4bd7fc495ce5a1b21aad7654ef79181b675ce7a86098d814fc7"
+    },
+    {
+      "id": "mmu2-10",
+      "scenarioFamilyId": "scenario-10",
+      "modality": "screenshot",
+      "sourceSha256": "70e3284c48c92fd216caf4bbbc501639a303968e4cc89ad9cba251fc36b4509a",
+      "imageSha256": "7eb51392c0785d86507ca4dd5005809f995bf8001ae3298bed92e437d0e6d27e",
+      "expectedSha256": "8bc33767453ff45615f396677fc6b38f7370beb947965a3c5e0151812847bf36",
+      "ocrTextSha256": "d05d36fe167dfaf962258fa78b6e9db1cc2927cfafca8e90a3b0ffe4d0f67b93"
+    },
+    {
+      "id": "mmu2-11",
+      "scenarioFamilyId": "scenario-11",
+      "modality": "screenshot",
+      "sourceSha256": "ff2d40dfba0755eb58afcf63009193bd9b58f2291bf6ba5b73f59512ca7376e1",
+      "imageSha256": "4ea0510bc484e000f143bebf56093d54d159f35102c210eb749c2ea074e05f22",
+      "expectedSha256": "96bf2ea8c48ee561006b3959093601ad39339ce5f889019d1d59ac24fcb03afe",
+      "ocrTextSha256": "d00fc44e0c6ea7f1f39c679f2a808142484208ddc8466941e1eab6e1a3f4a18e"
+    },
+    {
+      "id": "mmu2-12",
+      "scenarioFamilyId": "scenario-12",
+      "modality": "screenshot",
+      "sourceSha256": "31c1e3465181555e90d9e8ed96dc42d147d5281592732eb3c97dfaf3abe07f1a",
+      "imageSha256": "8286af00fd4f31d7db1137b55465638ad3e6df0624ef8c3f720b59a111ae9b91",
+      "expectedSha256": "2c6bcde8be18970dfb0759270657fd8e93d1e6805993bcbf19e2e83485605663",
+      "ocrTextSha256": "915716ca68c203f887503389151b5fc30f256a1aa07381646f4a33516c2d2959"
+    },
+    {
+      "id": "mmu2-13",
+      "scenarioFamilyId": "scenario-01",
+      "modality": "photo",
+      "sourceSha256": "6e14b231f3ab38885aea121d4baca8aacc15278e135ec38c03c9c90a56ac7cf4",
+      "imageSha256": "77bc620de66440b91b2288b635c420e1f632ead92aa3177c66025e938adf42e3",
+      "expectedSha256": "d04e2c38d19f78dc72d1d66d951dc2f8a9b6ad8342d453d400699a7f27820875",
+      "ocrTextSha256": "bff928745af43b6be6da76920d3d9d28496a902256bf82264db48f315370e66e"
+    },
+    {
+      "id": "mmu2-14",
+      "scenarioFamilyId": "scenario-02",
+      "modality": "photo",
+      "sourceSha256": "d769e96b9ebed7683ad8b4d420b4f336b93942232c2915ba17706ecb34d05cba",
+      "imageSha256": "a4639dc0612616291dc96b7c6a4f46f0ec3b512a076f59a02e54f4a945aa2438",
+      "expectedSha256": "0f0a2d02c9a75291b26c2dde9464704ac843a1d6597c5fc1bb1e37414bee1811",
+      "ocrTextSha256": "1a5447841c254701bde28b1212546d05be192c5fbd013f8322cb329d0e55e70c"
+    },
+    {
+      "id": "mmu2-15",
+      "scenarioFamilyId": "scenario-03",
+      "modality": "photo",
+      "sourceSha256": "383fb20c1c0cffa20ff8b97b33cf2f2d0c51f8f9a7b3d6d31b80ab23a5dac6ef",
+      "imageSha256": "5bf1d1c2a5a759b8c26943ece18290021083812a3980311e08dcbeccecb19121",
+      "expectedSha256": "dcc759864006d1f857f2f06ef867e8b5d9c91fc2c806e402d60705869184c10f",
+      "ocrTextSha256": "ebf982b31c39a72468dddb3863ae42c66b57080ddaee7c0dd73e501addcea686"
+    },
+    {
+      "id": "mmu2-16",
+      "scenarioFamilyId": "scenario-04",
+      "modality": "photo",
+      "sourceSha256": "a0b1054d23bae00ea54df0f5ae411054833d9ce79ffd9f6b629b110328eff4f6",
+      "imageSha256": "a3c3cccb6b416643b918cacf47b3e5cdbe4e9cb1500baf52f769491ce79f7646",
+      "expectedSha256": "108d0277ce20173e7f590ebee9ff6bb973bdeac44ce783cd002e2d067df0ad8f",
+      "ocrTextSha256": "6ee2cefc50316895e2470a81f55086809225de3bfdaad2f503091f78eb6b2cc7"
+    },
+    {
+      "id": "mmu2-17",
+      "scenarioFamilyId": "scenario-05",
+      "modality": "photo",
+      "sourceSha256": "b4273b0cf5fe59fbe63abb96c8c4324851f7b478a29b4232a70527dfea8add2e",
+      "imageSha256": "fa677f2e9a30b6c23754eada2f39f931da91da0f9e3abe0999f4f8727b5bf079",
+      "expectedSha256": "02f67e379f7f9ccf0149e1e383a2ef1c52163a1a77f8cfda22c89fb5e5dc544e",
+      "ocrTextSha256": "1897d2ead57bf88763ed0e8c576ffa4bd397d09f0e41bd9ab2a3671195ba2d68"
+    },
+    {
+      "id": "mmu2-18",
+      "scenarioFamilyId": "scenario-06",
+      "modality": "photo",
+      "sourceSha256": "ac0b32efb951e05ce2322a39e175f36df3b0851e0033ea1e6a4edd8e46834c09",
+      "imageSha256": "82a2bef5b7d2dd43e56a40591dcad7bf55c18c4a5736d5df4ecd70a904ee7d0f",
+      "expectedSha256": "3c80b44afe6c2221de8267700ab85fa8e583fa97db85f4d9274b39102f512b08",
+      "ocrTextSha256": "2e31a91d50ba7ac2904483be6d8c79aa8eb232b84e5d6e4986c790f6b2b4272e"
+    },
+    {
+      "id": "mmu2-19",
+      "scenarioFamilyId": "scenario-07",
+      "modality": "photo",
+      "sourceSha256": "9fb92a2dbcbdfec640f129ded03d07af36ed26e6566df8df2c3226ccfd637b83",
+      "imageSha256": "d01c03f345ecb686cab086ee1a5a7c6beba2f3abe126eeff3510fdb89bb22f03",
+      "expectedSha256": "aa35b4bc4fa0a7921d999b2ddab06ea92274ff4c9c5ec2caeeed60a382b73437",
+      "ocrTextSha256": "65bc23d7d515f170e16ebef16bb40197df6da1d705add488d0c822f4846959b2"
+    },
+    {
+      "id": "mmu2-20",
+      "scenarioFamilyId": "scenario-08",
+      "modality": "photo",
+      "sourceSha256": "4ace9d071dd2bba125f2d70027ea872dc4e44567870a78cf6a6bb5ab909a4cd6",
+      "imageSha256": "952fa8eca0ab1c9c7d41eb7919aa95539314ff6509871bf602bb932050d05909",
+      "expectedSha256": "bd91020d6e2ccb168af6419b9e61e6a921eb90efb67107350b11afc5290e23d5",
+      "ocrTextSha256": "4f9a8bed299136e352bfc0f706ed902d7a69110853e12aad77b17b219289236b"
+    },
+    {
+      "id": "mmu2-21",
+      "scenarioFamilyId": "scenario-09",
+      "modality": "photo",
+      "sourceSha256": "8827c81c3204f9b77282a5b1837b2bf0214f7ce89db94f60c27ba739d22efbbf",
+      "imageSha256": "29259214b3ac8b3a46f475962dff03a0432d6516c6139c4bc44cc28232996c24",
+      "expectedSha256": "0aa32bc0344560a0a50a1ab27fe3e7e5e91820becccfc567cc0bb03aa871ba65",
+      "ocrTextSha256": "a78a115942403dfbf66729e6e8b4a7770c48809ac4a66c1a403ed09a35384e68"
+    },
+    {
+      "id": "mmu2-22",
+      "scenarioFamilyId": "scenario-10",
+      "modality": "photo",
+      "sourceSha256": "8c9e23de2f648b5e7cd27fda76c3fac10b43c537055b075988496c0b5efeb04d",
+      "imageSha256": "3966b40559c4fad62806c05be77ee46987110c1971ec89aef07d69ec7ba41ba4",
+      "expectedSha256": "ef0455d533e650434e2b7f82f36bc53e359edc331e996f89caa46db13ea41073",
+      "ocrTextSha256": "a939d34e3440bbea017797da1654e2abdd964e71b7b51be03e017cc4956a35ef"
+    },
+    {
+      "id": "mmu2-23",
+      "scenarioFamilyId": "scenario-11",
+      "modality": "photo",
+      "sourceSha256": "cd35ade3a6cc390eda5179488c7f94022c49b02da9991b427d894cc415fb8b5d",
+      "imageSha256": "b79a6cdc5a8d60b2b1f2e45f24105353026c85286f14e5a48b0c333bcc466737",
+      "expectedSha256": "e0a02122656997a6838e35d519a49b93feb8abe733f57cd39ec39e2466438926",
+      "ocrTextSha256": "163e0540e5a2e3e3a6a3b46099c1117911c03414208bd61b2f89a992ecdabb2c"
+    },
+    {
+      "id": "mmu2-24",
+      "scenarioFamilyId": "scenario-12",
+      "modality": "photo",
+      "sourceSha256": "6c4d57f5387297c86c14d88f6d6d2bc66b4f652e0fb47fa90c8491e2f618118a",
+      "imageSha256": "eb16a657f3821e9bf93a5cca0c7a8feed6eeaaf2c7bb6bede9e8dfc97bbdfe41",
+      "expectedSha256": "2bd1e2171a67653410aec345cf566441c13e92f8d40a7cdb74c6db2f74132385",
+      "ocrTextSha256": "d212177667f373346f9b5ef6b2ac8a16e87c7e40dc27fc0f36e97d5207ca0f4a"
+    },
+    {
+      "id": "mmu2-25",
+      "scenarioFamilyId": "scenario-01",
+      "modality": "scan",
+      "sourceSha256": "f992d2ec690e2199896d52f2cfcfbac8cdc3ba923b29bb59ad5de98721236c1f",
+      "imageSha256": "5b95fd2fcc2cdc523b1447dfb6c19fc3ce15b6a688e652fa44b94b8416756ac8",
+      "expectedSha256": "65fcea3779d93b750a5912ffaa43aa100e84f43cfcd593b28649af873c0bff6d",
+      "ocrTextSha256": "ef68f6666b66fc5321acb4622e8fa7e7e9aacd1c9ac97838b8018679e3dc7512"
+    },
+    {
+      "id": "mmu2-26",
+      "scenarioFamilyId": "scenario-02",
+      "modality": "scan",
+      "sourceSha256": "3d1b8282e71540684033b2ba2a3bf027048a8e1fd7510f71e5df4c00fe8836bb",
+      "imageSha256": "f173481c515e9d8498888e399a02155fb587b0251eae62b94ee8debc6463ff68",
+      "expectedSha256": "a1877f424d80f25374b241203831d076ec38e110734b5c5cca8100e9c405c5fb",
+      "ocrTextSha256": "d6512a80353395fb1eb59334f17c8c25993ad6c34f7059949bfc7aeab27e8ede"
+    },
+    {
+      "id": "mmu2-27",
+      "scenarioFamilyId": "scenario-03",
+      "modality": "scan",
+      "sourceSha256": "460b7d5805094c2189040c8d2cc58906aeb5e8c94274b6be762528904ae7998e",
+      "imageSha256": "89d5a3646c8272888d6209e042f9c7168630c867ff6e30c431fac2d6fb81c666",
+      "expectedSha256": "6b0fbc6c751094b1ac168b8bb3abe4190c3a59cffa4844d09a7c65cc2988a7a5",
+      "ocrTextSha256": "5262902b01cf82ae280f73e93a4d341874a8f97696c0087d6288edd0f28b3a80"
+    },
+    {
+      "id": "mmu2-28",
+      "scenarioFamilyId": "scenario-04",
+      "modality": "scan",
+      "sourceSha256": "4dba8cadb7424590812a5bcab2a7e0bdbb4560aed6ed8b1456c34e934f85da90",
+      "imageSha256": "f7225ac93aaf924c2074a93686ed4d6773d3ca63f9ea0af05ba5f173969621b4",
+      "expectedSha256": "4ed777fb7d8daffca42d6d1a8aa47ed0049f8e9d8ad323d2ad6138f853f34aac",
+      "ocrTextSha256": "165f07c16e9a9e274d58701c21a50319bcfccdf58330202b575185a800a23d11"
+    },
+    {
+      "id": "mmu2-29",
+      "scenarioFamilyId": "scenario-05",
+      "modality": "scan",
+      "sourceSha256": "2bac7501863c8bf6cd6663202dd9056f356f5024618e82e68d5232f8097d5748",
+      "imageSha256": "249063950158e229ab39ea1fc3d20b4c045bedd0b1ffb5997527736365cbe416",
+      "expectedSha256": "8e07e32c0abd8c07cc1eb7aace8514c375756ad5cc063e2b8ee2ba06d4894800",
+      "ocrTextSha256": "1994746c2344690b12e3cd503e61e6ddc1dc17a70a04eeb1a9ea01f3afb69b03"
+    },
+    {
+      "id": "mmu2-30",
+      "scenarioFamilyId": "scenario-06",
+      "modality": "scan",
+      "sourceSha256": "825f7ebf0a6c1b93a8a1debe77a901d5649aab26cefc8b8a38063ff82a75a0be",
+      "imageSha256": "606dce292e7c4b87c4bc22e6fc959ff3e729ca65f64b8dd500d5bdf26554be62",
+      "expectedSha256": "3d9df785e82ac5d6b16f41aabb1d33cce9e857b9d9642b4c744c1e2e4a96d5e3",
+      "ocrTextSha256": "5923884c2cc210cf0cea83c40a846f4f87333d21960aa8bd01225fec810601bd"
+    },
+    {
+      "id": "mmu2-31",
+      "scenarioFamilyId": "scenario-07",
+      "modality": "scan",
+      "sourceSha256": "94ac747e62c0abf41e0a5e9e2ee5b9744f95f838c3e4bbb9e7229ff28dcb6f30",
+      "imageSha256": "3ed071f5dd59444a4224b917e630c6d31b30abadddc8645b7692bd1bd1688892",
+      "expectedSha256": "9bad9207746df983ef7ba2564219df9245bd2a095e8b671d5239a1021592f376",
+      "ocrTextSha256": "a979e5cb934a2b9f1602f32e2837a3a156fa08cb60d46a40b2fc0c2bc5366867"
+    },
+    {
+      "id": "mmu2-32",
+      "scenarioFamilyId": "scenario-08",
+      "modality": "scan",
+      "sourceSha256": "8aa079eebe43e18fa896d61ec4fed904e37e353ff7a9b38891fc983861e4a721",
+      "imageSha256": "d2fde97c95805e8bb8e50690b2b4d16dcad18d66e111468cd055aafbc02dcbee",
+      "expectedSha256": "ee78f0dee2406dbdddfa571b45c5ae4a1dc82d08b0cbb22564c9b8bed5ccfcd6",
+      "ocrTextSha256": "f2d241a14b8144293f2e4f32554fb1e082a90db8fd80ac44a0646278f8133d77"
+    },
+    {
+      "id": "mmu2-33",
+      "scenarioFamilyId": "scenario-09",
+      "modality": "scan",
+      "sourceSha256": "842123207dd55d2b3930305101aff3d6ed2428289f246d0236ebceb767b42452",
+      "imageSha256": "ffcd308a621aed20bb68fe16c06398c069c6130d29e28b2a5832e583ead648e6",
+      "expectedSha256": "80764f4fb2401bc54051fe739afba48077563fa5170f274fc9129fb64a0f5611",
+      "ocrTextSha256": "20a08c66d339f5e18ed935eceb6c1233901408b25a51e0e1ca33269028d2071a"
+    },
+    {
+      "id": "mmu2-34",
+      "scenarioFamilyId": "scenario-10",
+      "modality": "scan",
+      "sourceSha256": "44247b4526f5e3fc7eb5655d6d4f0703dfb41249070449613e0fa231b1bd48d2",
+      "imageSha256": "e7df2552b3deaf05b8b7abb88720f15f1e0755b3982f33dedbe29db60790cb5f",
+      "expectedSha256": "cdd88e68b9c5e61a65445acacc275e9fe887f62596884a14342f26048c8f351e",
+      "ocrTextSha256": "f413b2a55906078d654c27dc757916313d29a4ce2322f296b09b7a35ad47de6a"
+    },
+    {
+      "id": "mmu2-35",
+      "scenarioFamilyId": "scenario-11",
+      "modality": "scan",
+      "sourceSha256": "b6e8aea048bb6e03dba7649444c53954720804af0d6843c4af73499e198f976b",
+      "imageSha256": "ff46dd45e6ba8c6ab30c37e750d890aebf0f7a1ccd1c170c735560945ab7b573",
+      "expectedSha256": "4c11154ff82b65936a5a7ff9c14577298277840872306d753ba49ab9d83c7829",
+      "ocrTextSha256": "b8f6ab469ecc1c9aab48b5cb63a58eb18137cac2bfcb7f7632cdfa14692c8599"
+    },
+    {
+      "id": "mmu2-36",
+      "scenarioFamilyId": "scenario-12",
+      "modality": "scan",
+      "sourceSha256": "7b8b7c4d3d0bdfa6051bc38c914e484985256d9bfdea993d6e1da810c30c17cd",
+      "imageSha256": "bbc7d59d829b4def2b5caa0e0e84da81948feb08a8a45b577525ffdd73183023",
+      "expectedSha256": "6100f752e815b28fa72783855dcbe302f2afbee5f8c2524016b92e1a4237cf4e",
+      "ocrTextSha256": "c0e8d9ce4e1a3aa22667350c8f5caf769ecc05f0d66e0d3130bc342bc417986b"
+    }
+  ]
+}

@@ -2,7 +2,7 @@
 
 ## 结论
 
-独立多模态实验 Preview 已部署，并在 2026-08-31 01:11:40 Asia/Shanghai 从剪贴板直接配置了 Cloudflare `DEEPSEEK_API_KEY` Secret；密钥未回显、未落盘、未进入 Git。后续真实烟测证明上游鉴权失败，因此当前只能标记为 `SECRET_PRESENT_AUTH_FAILED`，不能标记“已连接”。
+独立多模态实验 Preview 已部署。2026-08-31 本轮从剪贴板重新写入 Cloudflare `DEEPSEEK_API_KEY` Secret，密钥未回显、未落盘、未进入 Git；随后 V1 单例 T/I/IT 三臂均取得真实上游有效返回，证明凭证与视觉模型当时可调用。该 V1 运行因模型混用和 I 臂 OCR 后处理泄漏只算连通性诊断，不能作为质量证据。页面与状态接口现在只显示“Secret 已配置、调用时验证”，不再把 Secret 存在表述成认证成功。
 
 ## 可复核标识
 
@@ -15,9 +15,10 @@
 - 首次部署 Version：`72d876a4-1bbd-453c-b0d9-397aef3b275b`
 - Secret Change Version：`ab4fc524-95e5-48ec-a4bb-c92a8aa61a02`
 - 安全错误分类提交：`607c2a2`
-- 当前实验 Version：`71f0fffb-21a1-4faa-ad29-830a443ecfd9`
+- V2 方法与隔离修订提交：`dcff8bd`
+- 当前实验 Version：`94567c82-af87-4827-9d58-dda69e3416f2`
 - 创建时间：`2026-08-31 01:01:29.125 Asia/Shanghai`
-- 配置状态：`SECRET_PRESENT_AUTH_FAILED`
+- 配置状态：`SECRET_PRESENT_PRIOR_CALL_VERIFIED_CURRENT_CALL_PENDING`
 
 ## 线上只读探针
 
@@ -29,10 +30,12 @@
 
 2026-08-31 01:41–01:51 Asia/Shanghai 的三次新标签运行均未产生有效预测。最终诊断 Run `synthetic-unseen-v1-diagnostic-20260831c` 对同一冻结案例各调用 T/I/IT 一次，三臂都返回 `503 UPSTREAM_AUTH_FAILED`。未继续运行 36×3，避免产生 108 次确定无效的调用。
 
+重新写入密钥后，诊断 Run `synthetic-unseen-v1-key-refresh-20260831d` 的同一 V1 案例 T/I/IT 三臂均完成；它只证明连接恢复。V2 Worker 已在 2026-08-31 03:35 Asia/Shanghai 部署，线上只读状态返回 `configured:true`、`capabilityStatus:secret-present-unverified`，且 T/I/IT 的目标模型均为 `deepseek-v4-flash-vision-exp`。
+
 ## 工程门槛
 
 - `npm run lint`：PASS。
-- `npm run test`：PASS；Vitest 44 个文件 / 260 项，Node 服务端 8 项，Cloudflare Worker 22 项，评测库 4 项，Firebase Functions 5 项。
+- `npm run test`：PASS；Vitest 44 个文件 / 260 项，Node 服务端 8 项，Cloudflare Worker 24 项，评测库 9 项，Firebase Functions 5 项。
 - `npm run build`：PASS；保留现有大 chunk 警告，不冒充性能验收。
 - `npm run security:scan`：PASS。
 - `npm audit --audit-level=high`：PASS，0 个已知漏洞。
@@ -51,6 +54,6 @@
 
 ## 未完成与阻断
 
-- Secret 已存在但鉴权失败；不得在有效凭证与 1×3 新标签烟测通过前运行完整 36×3。
+- 当前 V2 代码部署后尚未产生真实上游调用；正式 36×3 将采用零评估器重试，并把认证、计费、限流、Schema 与模型不一致分别计为失败。
 - 合成批次完成后仍需 A–J 浏览器验收，不得据此直接运行正式真实材料或切换 Production。
 - I 图片版消融入口与三臂评分器已完成工程验证；质量比较、真实用户修改时间、真实 Unseen-1/2 与替换评审均未完成。
