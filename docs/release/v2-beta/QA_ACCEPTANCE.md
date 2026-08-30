@@ -51,16 +51,16 @@ Capture → Source 先保存 → RecognitionRun → Draft → Evidence
 | --- | --- | --- | --- | --- |
 | A | 简单课程通知：提交一次课程作业 | 1 个显式任务；日期、动作和依据可编辑 | PASS | AI 无效结构后复用同一 Source 本地重试；1 Task / 1 Material / 1 TimePoint 原子提交；刷新后任务、来源依据与 1 条 created 历史仍在 |
 | B | 同一通知含提交选题表、联系老师、上传报告 | 多任务逐项编辑、拒绝、部分确认 | PASS | 3 项建议触发聚焦复核；取消 1 项后按钮从 3 变 2，最终仅原子创建 2 项；未静默创建被取消项 |
-| C | 报名与作品终稿两个截止日期 | 多 timePoint 正确关联，最早行动进入 Today | PARTIAL | 2 个明确截止正确关联并显著提示；选择“稍后处理”后刷新仍显示 2 项待确认；尚未确认并核对 Today 排序 |
+| C | 报名与作品终稿两个截止日期 | 多 timePoint 正确关联，最早行动进入 Today | PASS | RC.2 原子确认后刷新保持；Calendar“即将到来”按 9/10 12:00 完成报名、9/15 18:00 提交终稿排列。Today 继续优先既有逾期事项，没有被未来任务错误抢占 |
 | D | 报名表、身份证明、承诺书、PDF 命名规则 | 材料不冒充任务；命名要求保留在材料约束 | PARTIAL | 1 Task / 4 Material / 1 TimePoint；用户可把文件名与 PDF 要求写入材料编辑字段并原子提交，但原始本地建议把 `PDF` 当作材料，canonical `namingRequirements` 未由浏览器证据证明 |
-| E | 线下答辩事件及提前准备材料 | Event 与准备 Task 分离且可追溯 | PARTIAL | RC.1 待确认摘要为 1 Event / 1 preparation Task / 2 TimePoint / 1 Material，但刷新后 Calendar 只有 preparation Task，确认存在 P1 静默丢弃；RC.2 已修复并通过回归，匿名 Event 图片本机 OCR 成功，但遵守“不调用付费模型”约束未继续提交，真实 Calendar 复验待补 |
+| E | 线下答辩事件及提前准备材料 | Event 与准备 Task 分离且可追溯 | PASS | RC.1 的 Event 静默丢弃 P1 已修复。RC.2 使用“仅保存链接 → 手工补充 → 本地规则”避免模型调用，形成 1 Event / 1 preparation Task / 2 TimePoint / 1 Material；确认、刷新后 Calendar 明确显示 `14:00 参加课程答辩 · 事件`，重复 preparation Task 以冲突提示而未静默复制 |
 | F | “下周前”“答辩前三天”等相对时间 | 标记待确认，不猜测不可可靠归一化日期 | PASS | 2 项 ambiguity、质量标记和“需要重点核对”同时可见；两个 TimePoint 默认不选中，草稿保留待用户决定 |
 | G | 纯讲座资讯、无动作要求 | 保存 Source，但不生成伪任务 | PASS | Source 保留且正式实体计数为 0；没有伪任务。information-only 当前显示为 invalid result/识别失败，记为 P2 文案与状态改进项 |
 | H | 匿名图片、文本层 PDF、扫描 PDF | 本机 OCR/提取有进度、限制、校对与手动补充 | PARTIAL | 匿名 PNG 剪贴板录入；OCR 启动失败时明确说明图片未发送给 DeepSeek，并要求人工补充；补充后原子提交。Edge 扩展未启用 file URL 权限，PDF/扫描 PDF 直接选择 `NOT RUN` |
 | I | AI timeout、502、invalid schema | Source 不丢；显示安全错误；可用本地规则/手动继续 | PASS | 实测 DeepSeek 返回无效 RecognitionResult 2.0：Source 先保存、错误可见、同源本地规则重试成功并可确认 |
 | J | 导出、二次确认清空、导入、刷新、迁移恢复 | JSON round-trip；失败导入不破坏当前 Workspace | PARTIAL | A 的正式任务与 C/F 草稿均经关闭/刷新保留；应用显示“已下载 Workspace v8 本机数据备份”；清空属于不可撤销操作，尚未取得动作时确认，因此清空 → Import 与失败导入保护未执行 |
 
-本轮截图证据已由官方 Browser 在当前任务中捕获：I 的失败 Source 卡片、B 的聚焦复核、A 刷新后的任务来源与历史、E 的 Event/Task 摘要及刷新后 Calendar 缺失、F 的 ambiguity、G 的 0 实体 Source、H 的人工补充确认、RC.2 匿名 Event 图片的本机 OCR。没有把浏览器静态可见性或修复后的单元测试代替 RC.2 正式提交与刷新证据。
+本轮截图证据已由官方 Browser 在当前任务中捕获：I 的失败 Source 卡片、B 的聚焦复核、A 刷新后的任务来源与历史、C 刷新后的 Calendar 顺序、RC.1 E 的 Calendar 缺失、F 的 ambiguity、G 的 0 实体 Source、H 的人工补充确认，以及 RC.2 E 刷新后正式 Event。没有把浏览器静态可见性或单元测试代替正式提交与刷新证据。
 
 浏览器边界：应用内浏览器仍报告 IndexedDB 不可用，不能承担持久化验收；Edge 已能执行实际交互，但文件选择因扩展未启用 “Allow access to file URLs” 被拒绝。2026-08-30 约 19:14 一次新 Edge 页出现 `ERR_HTTP2_PING_FAILED`；同一时点 PowerShell 对 Preview 首页/status 与 Production 首页均为 HTTP 200，随后新的 Edge 页立即恢复到应用首页。该客户端瞬时失败窗口已记录，未发现 Cloudflare Version 漂移或工作区数据丢失。
 
@@ -234,7 +234,7 @@ Production 的 200 响应为旧版本 SPA fallback，不是实验页面或实验
 | 阶段 | 状态 | 说明 |
 | --- | --- | --- |
 | R9 工程门禁 | PASS | 全量命令已执行 |
-| R9 Browser A–J | PARTIAL | A/B/F/G/I 通过；C/D/E/H/J 尚有未执行或未证明子项，完整门槛未关闭 |
+| R9 Browser A–J | PARTIAL | A/B/C/E/F/G/I 通过；D/H/J 尚有未执行或未证明子项，完整门槛未关闭 |
 | R10 Alpha Test Kit | READY | 本文第 5 节；尚无真实参与者数据 |
 | R10 Alpha run | NOT RUN | 不属于 Codex 可伪造范围 |
 | R11 Preview RC deployment | DEPLOYED | RC.2 Preview 独立 Worker，Production 未变 |

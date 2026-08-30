@@ -57,7 +57,7 @@
 | security scan / npm audit / Cloudflare dry-run | PASS |
 | Preview 部署与版本绑定 | PASS |
 | Alpha Test Kit | READY；真实参与者测试 NOT RUN |
-| Browser A–J | PARTIAL；A/B/F/G/I 已通过，C/D/E/H/J 待关闭 |
+| Browser A–J | PARTIAL；A/B/C/E/F/G/I 已通过，D/H/J 待关闭 |
 | Preview 浏览器迁移与回滚演练 | NOT RUN |
 | 48 小时稳定期 | RESTARTED；RC.2 从 2026-08-30 19:35:00.005 重新计时 |
 | Production 部署 | NOT AUTHORIZED / NOT RUN |

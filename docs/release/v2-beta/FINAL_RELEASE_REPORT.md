@@ -111,7 +111,7 @@ release Worker 对 `/benchmark*`、`/e2*`、`/fact-ledger*`、`/selection*`、`/
 
 ## 19. Browser A–J
 
-场景与合成输入冻结在 [QA_ACCEPTANCE.md](./QA_ACCEPTANCE.md)。2026-08-30 Edge 实测中 A/B/F/G/I 为 PASS，C/D/E/H/J 为 PARTIAL。RC.1 的 E 场景确认后刷新发现 Event 未进入 Calendar，定位为确认选择过滤独立 Event TimePoint 的 P1；RC.2 已完成最小修复与 253 测试回归，但因本轮禁止付费模型，真实 Edge 提交与 Calendar 复验尚未执行。J 已出现 Workspace v8 备份下载成功状态，清空、Import、失败导入及完整返回/重复点击/移动端链仍未关闭，因此 R9 总体仍为 `PARTIAL`，不能判定 P0 = 0 / P1 = 0 的完整门槛。
+场景与合成输入冻结在 [QA_ACCEPTANCE.md](./QA_ACCEPTANCE.md)。2026-08-30 Edge 实测中 A/B/C/E/F/G/I 为 PASS，D/H/J 为 PARTIAL。RC.1 的 E 场景确认后刷新发现 Event 未进入 Calendar，定位为确认选择过滤独立 Event TimePoint 的 P1；RC.2 已完成最小修复、253 测试回归，并通过“仅保存链接 → 手工补充 → 本地规则 → 原子确认 → 刷新 → Calendar Event”真实链路复验，全程未调用付费模型。J 已出现 Workspace v8 备份下载成功状态，清空、Import、失败导入及完整返回/重复点击/移动端链仍未关闭，因此 R9 总体仍为 `PARTIAL`。
 
 ## 20. Engineering tests
 
