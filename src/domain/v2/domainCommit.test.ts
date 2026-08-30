@@ -372,6 +372,27 @@ describe('B3 rich RecognitionResult domain atomic commit', () => {
       .toEqual(['申请表', '成绩证明'])
   })
 
+  it('commits a selected event whose start time is independent from the accepted preparation task', () => {
+    const result = recognitionResult()
+    result.timePoints = result.timePoints.map((item) => item.tempId === 'tp5'
+      ? { ...item, relatedTaskTempIds: [] }
+      : item)
+    const workspace = draftWorkspace(result)
+    const preparationItem = workspaceV8ToLegacyView(workspace).drafts[0].items
+      .find((item) => item.suggestion.id === 't1')!
+    const selection = selectionFromDraftItems(result, [preparationItem])
+
+    expect(selection).toMatchObject({
+      taskTempIds: ['t1'],
+      timePointTempIds: expect.arrayContaining(['tp1', 'tp5']),
+      eventTempIds: ['ev1'],
+    })
+    const plan = buildDomainCommitPlan(workspace, 'draft-rich', selection, NOW)
+    expect(plan.create.events).toHaveLength(1)
+    expect(plan.create.events[0].startTimePointId).toBe('time:draft-rich:tp5')
+    expect(plan.create.timePoints.map((item) => item.id)).toContain('time:draft-rich:tp5')
+  })
+
   it('creates canonical materials from task material edits and includes WorkPackage evidence', () => {
     const workspace = draftWorkspace()
     const result = workspace.extractionDrafts[0].result!

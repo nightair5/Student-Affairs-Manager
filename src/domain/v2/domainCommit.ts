@@ -421,8 +421,14 @@ export function selectionFromDraftItems(result: RecognitionResult, items: DraftI
     item.suggestion.id,
     new Set(item.suggestion.materials.map(normalizedMaterialName)),
   ]))
+  const selectedEventTimePointIds = new Set(result.events
+    .filter((item) => item.selected !== false)
+    .flatMap((item) => [item.startTimePointTempId, item.endTimePointTempId])
+    .filter((id): id is string => Boolean(id)))
   const selectedTimePointIds = new Set(result.timePoints
-    .filter((item) => item.selected !== false && item.relatedTaskTempIds.some((id) => accepted.has(id)))
+    .filter((item) => item.selected !== false && (
+      item.relatedTaskTempIds.some((id) => accepted.has(id)) || selectedEventTimePointIds.has(item.tempId)
+    ))
     .map((item) => item.tempId))
   const recognizedMaterialTempIds = result.materials.filter((item) => item.selected !== false
     && item.relatedTaskTempIds.some((id) => accepted.has(id) && editedMaterials.get(id)?.has(normalizedMaterialName(item.name))))
