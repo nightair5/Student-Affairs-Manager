@@ -1,8 +1,8 @@
 # Student Affairs Product v2 Beta Release Notes
 
-> Candidate：`v2.0.0-beta.1-rc.2`
-> Preview build commit：`e3bdf47641b61e546380ff91db5d1b0a4266fe7e`
-> Preview Version：`8a471784-db7b-4dc9-a2b2-4337c452a5d9`
+> Candidate：`v2.0.0-beta.1-rc.4`
+> Preview build commit：`2a95dba23e18ea2fcde8e1e0dd9754db4f79fce8`
+> Preview Version：`1d6dc48e-167f-491b-ae55-908a9f2f27b9`
 > 当前状态：`RELEASE CANDIDATE VALIDATION IN PROGRESS`
 > Production：未部署、未改动
 
@@ -13,7 +13,9 @@
 - 多事项通知支持逐项编辑、拒绝、部分确认与全部确认；默认只勾选原文明示事项。
 - 每项建议可定位到本次 SourceVersion 的原文依据；历史 Draft 不会引用后来修改的正文。
 - 确认通过 `DomainCommitPlan` 在单个 IndexedDB 事务中写入 Workspace v8，防止半成品。
-- 已修复 Event 使用独立开始时间点时在确认计划中被过滤的问题；RC.2 已通过真实 Edge 原子确认、刷新与 Calendar Event 复验，RC.1 稳定窗口仍永久作废。
+- 已修复 Event 使用独立开始时间点时在确认计划中被过滤的问题；真实 Edge 已通过原子确认、刷新与 Calendar Event 复验。
+- 已修复 Workspace v8 导入后兼容 autosave 改写 canonical 材料、提醒和来源状态的数据完整性问题；RC.4 的导入与刷新保持逐值一致。
+- 已修复长 PDF 时间依据超出识别 Schema、以及把项目型建议改为独立事项后时间点残留阶段引用的问题；文本层 PDF 和扫描 PDF 均已完成本地处理、确认与刷新全链。
 - 收件箱区分未处理、处理中、待确认、已确认、失败、已归档和纯信息。
 - Today 只突出最多三项可执行任务，受阻和稍后事项单独展示。
 - Project、Calendar 与 Library 读取 canonical 项目、事件、时间节点和材料事实。
@@ -46,7 +48,7 @@
 - 补充通知自动 diff / Apply 尚未正式开放；用户可以关联已有项目后手动编辑。
 - 部分图片 OCR 和扫描 PDF 需要人工校对；页数、文本长度和浏览器资源有限制。
 - 浏览器通知仅在页面存活期间调度；邮件计划不等于已发送；微信、跨设备同步和账号系统未接通。
-- 当前 Preview 的 Browser A–J、真实回滚演练和 48 小时稳定期仍未完成，因此本文件不是 Production 发布批准。
+- 当前 Preview 的 Browser A–J 与真实回滚演练已通过，但 48 小时稳定期尚未完成，因此本文件不是 Production 发布批准。
 - 未改动的旧 Production 对实验样式路径仍返回 SPA HTML 200；新 Preview 返回 JSON 404。该字面 404 门槛必须在独立 Production 发布任务中经明确批准后关闭。
 
 ## 当前验证状态
@@ -59,9 +61,10 @@
 | security scan / npm audit / Cloudflare dry-run | PASS |
 | Preview 部署与版本绑定 | PASS |
 | Alpha Test Kit | READY；真实参与者测试 NOT RUN |
-| Browser A–J | PARTIAL；A/B/C/E/F/G/I 已通过，D/H/J 待关闭 |
-| Preview 浏览器迁移与回滚演练 | NOT RUN |
-| 48 小时稳定期 | RESTARTED；RC.2 从 2026-08-30 19:35:00.005 重新计时 |
+| Browser A–J | PASS；A–J 核心链 P0/P1 为 0，D 的 structured material requirements 作为 P2 披露 |
+| Preview 浏览器迁移与回滚演练 | PASS |
+| 可靠性与性能 | PASS（非付费范围）；键盘、重复确认、断网恢复和页面/保存/文件/刷新计时已记录；真实上游 AI 成功延迟按约束 NOT RUN |
+| 48 小时稳定期 | RESTARTED；RC.4 从 2026-08-30 22:13:52.399392 重新计时 |
 | Production 部署 | NOT AUTHORIZED / NOT RUN |
 
 只有 [QA_ACCEPTANCE.md](./QA_ACCEPTANCE.md) 与 [MIGRATION_ROLLBACK.md](./MIGRATION_ROLLBACK.md) 的人工门槛全部关闭，最终报告才允许提升为：

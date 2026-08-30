@@ -1,16 +1,16 @@
 # Product v2 Beta Release Report
 
 > 报告分支：`release/v2-beta`
-> 证据检查点：`e3bdf47641b61e546380ff91db5d1b0a4266fe7e`
-> Preview build：`e3bdf47641b61e546380ff91db5d1b0a4266fe7e`
-> RC：`v2.0.0-beta.1-rc.2`
+> 证据检查点：`2a95dba23e18ea2fcde8e1e0dd9754db4f79fce8`
+> Preview build：`2a95dba23e18ea2fcde8e1e0dd9754db4f79fce8`
+> RC：`v2.0.0-beta.1-rc.4`
 > 报告状态：`DRAFT — RELEASE CANDIDATE NOT READY`
 
 ## 1. Executive Summary
 
-R1–R8 的产品与工程整合已经进入独立 `release/v2-beta`，Workspace v8、Source-first Capture、可编辑 Human Review、原子提交、核心 IA 和实验运行时隔离均已实现并通过自动门禁。R10 Alpha Test Kit 已准备。RC.1 浏览器验收发现 Event 确认静默丢弃 P1 后已停止并修复，RC.2 已重新部署，R11 48 小时观察从新版本创建时间重新计时。
+R1–R8 的产品与工程整合已经进入独立 `release/v2-beta`，Workspace v8、Source-first Capture、可编辑 Human Review、原子提交、核心 IA 和实验运行时隔离均已实现并通过自动门禁。R10 Alpha Test Kit 已准备。RC.1 的 Event P1、RC.2 的 Import 数据完整性 P0、RC.3 的 PDF 本地确认 P1 均按门禁停止、修复并重新生成 RC；RC.4 已通过 H/J、Preview 浏览器迁移/恢复与 Cloudflare Preview Version 回退演练，R11 从最终恢复 Deployment 重新计满 48 小时。
 
-当前不得宣布 RC Ready：Browser A–J、Preview 浏览器迁移/回滚演练、完整性能记录与 48 小时稳定期尚未关闭；旧 Production 对实验样式路径仍为 SPA HTML 200。Production 未获授权且未部署。
+当前不得宣布 RC Ready：RC.4 的 48 小时稳定期尚未关闭；旧 Production 对实验样式路径仍为 SPA HTML 200。Production 未获授权且未部署。
 
 ## 2. Current Production baseline
 
@@ -53,6 +53,8 @@ f4d316b  manual extraction fallback
 69ccfe6  beta human review workflows
 5c443d4  workspace timezone stabilization
 e3bdf47  selected Event timepoint preservation
+5ed3de7  canonical facts preserved after import
+2a95dba  local PDF suggestion confirmation hardening
 ```
 
 发布文档提交继续位于同一分支，但未重新部署应用制品。
@@ -67,7 +69,7 @@ v8 是 IndexedDB 唯一事实源。顶层 canonical 数组不由 `ParsedSuggesti
 
 ## 8. Migration and rollback
 
-迁移使用“先持久化不可变 v7 备份 → 内存迁移 → 全图校验 → semantic round-trip → 单事务替换”。代码级迁移、lineage、篡改拒绝与恢复 UI 测试 PASS；Preview 浏览器迁移和 Cloudflare Version 回退演练为 NOT RUN。详见 [MIGRATION_ROLLBACK.md](./MIGRATION_ROLLBACK.md)。
+迁移使用“先持久化不可变 v7 备份 → 内存迁移 → 全图校验 → semantic round-trip → 单事务替换”。代码级迁移、lineage、篡改拒绝与恢复 UI 测试 PASS；RC.4 隔离 Edge 已通过真实 v7→v8、不可变备份下载、故障注入、二次确认恢复和刷新保持，Cloudflare Preview Version 也完成 RC.4→RC.3→RC.4 回退/恢复演练。详见 [MIGRATION_ROLLBACK.md](./MIGRATION_ROLLBACK.md)。
 
 ## 9. AI Beta policy
 
@@ -111,23 +113,23 @@ release Worker 对 `/benchmark*`、`/e2*`、`/fact-ledger*`、`/selection*`、`/
 
 ## 19. Browser A–J
 
-场景与合成输入冻结在 [QA_ACCEPTANCE.md](./QA_ACCEPTANCE.md)。2026-08-30 Edge 实测中 A/B/C/E/F/G/I 为 PASS，D/H/J 为 PARTIAL。RC.1 的 E 场景确认后刷新发现 Event 未进入 Calendar，定位为确认选择过滤独立 Event TimePoint 的 P1；RC.2 已完成最小修复、253 测试回归，并通过“仅保存链接 → 手工补充 → 本地规则 → 原子确认 → 刷新 → Calendar Event”真实链路复验，全程未调用付费模型。D 的真实 v8 导出确认命名/PDF 原文仍可追溯，但 structured requirements 为空且多出 `PDF格式）` Material，记录为 P2。H 已补充文本层 PDF 本机读取、扫描 PDF 本机 OCR 及 `390×844`/`390×667` 移动端布局与独立滚动证据，但 IAB 不具备 IndexedDB，不能替代可持久化浏览器中的 PDF 确认/刷新全链。J 的真实 339,467-byte schema v8 JSON 已解析并完成无 Secret/文件本体范围扫描；清空、Import、失败导入及完整返回/重复点击仍未关闭，因此 R9 总体仍为 `PARTIAL`。
+场景与合成输入冻结在 [QA_ACCEPTANCE.md](./QA_ACCEPTANCE.md)。2026-08-30 的当前 RC.4 已完成 A–J 核心链，P0 = 0、P1 = 0。D 的 structured material requirements 为空且多出 `PDF格式）` Material，但原始 Source/Evidence/命名要求可回看、确认前可调整，无数据丢失或静默提交，因此按附件允许的复杂通知人工调整口径判为 `PASS（P2）`，缺陷继续透明披露。RC.1 的 Event TimePoint、RC.2 的 Import canonical 改写和 RC.3 的 PDF 本地确认问题均曾按 P1/P0 作废窗口并最小修复；RC.4 以 Edge 152.0.4191.53 完成文本层 PDF、扫描 PDF、原子确认、刷新持久化、最终 `.json` round-trip、失败导入保护、v7 迁移与故障恢复，全程零付费模型调用。
 
 ## 20. Engineering tests
 
-`npm ci` 基线、lint、typecheck、UTC/Asia-Shanghai 两套完整测试、build、security scan、npm audit high、Cloudflare dry-run 与 diff check 全部 PASS。当前每套完整测试包含 Vitest 43 files / 253 tests、Server 8、Worker 19、Functions 5。
+`npm ci`、lint、typecheck、UTC/Asia-Shanghai 两套完整测试、build、security scan、npm audit high、Cloudflare dry-run 与 diff check 全部 PASS。当前每套完整测试包含 Vitest 43 files / 256 tests、Server 8、Worker 19、Functions 5；精确提交 CI run `33315897535` 为 success。
 
 ## 21. Security
 
-自动证据覆盖 Key 服务端化、Origin、Content-Type、请求体大小、Prompt injection、SSRF 与每跳 redirect 复核、安全错误、实验 route isolation 和 Secret scan。真实 Workspace v8 导出范围扫描未发现前端 Secret 标识、私钥或 base64 文件本体；Preview bundle/network 仍需人工复核。文件输入已补充匿名 PNG、文本层 PDF 与扫描 PDF 的本机处理证据，但 PDF 持久化全链仍缺，当前判定 PARTIAL。
+自动证据覆盖 Key 服务端化、Origin、Content-Type、请求体大小、Prompt injection、SSRF 与每跳 redirect 复核、安全错误、实验 route isolation 和 Secret scan。RC.4 已部署首页及 2 个 JS/CSS 资产共 627,422 bytes 的范围扫描中，有界 Secret-like key 与 `DEEPSEEK_API_KEY` 前端名称命中均为 0；Workspace v8 导出及两类 PDF 全链也未发现 Secret 或文件本体，模型调用为 0。Preview/Production Deployment 与 Version 保持隔离；旧 Production 的实验样式路径字面 404 仍是独立未关闭门槛。
 
 ## 22. Reliability
 
-自动证据覆盖 AI 失败不丢 Source、确认单事务、迁移失败不覆盖、导入失败不替换、幂等 operation、late run ownership、Error Boundary 与手动继续；Edge 已补充 AI 失败、本地恢复、部分确认、原子提交与刷新保持证据。浏览器返回已实测并形成 P2 导航问题；确认按钮重复点击、失败导入和完整网络中断仍需人工证据，当前判定 PARTIAL。
+自动证据覆盖 AI 失败不丢 Source、确认单事务、迁移失败不覆盖、导入失败不替换、幂等 operation、late run ownership、Error Boundary 与手动继续。RC.4 隔离 Edge 又通过键盘打开/焦点/Escape、连续双击确认只创建 1 Task、模拟网络中断后 Source 先保存且正式 Task 为 0、本地规则恢复与刷新保持；付费模型调用 0。浏览器返回离开根路径作为 P2 导航体验问题保留，可靠性门槛 `PASS`。
 
 ## 23. Performance
 
-构建通过且页面 HTTP 可用；浏览器操作中未观察到无限 Loading，AI invalid schema、OCR 失败和原子保存均有明确状态反馈，但 Browser 控制层未能给出可信的冷/热毫秒计时，连续页面计时尝试发生工具超时。禁止用 Vite build 时间或 HTTP 响应代替用户可交互性能；完整性能状态仍为 `NOT RUN`。
+RC.4 隔离 Edge 的用户可交互观测为：首页冷/热 1772/995 ms、Inbox 49 ms、Project 363 ms、普通确认 134 ms；文本层 PDF 提取 840 ms、扫描 PDF OCR 3379 ms；模拟断网 922 ms 出现反馈，本地恢复确认 926 ms；刷新恢复 995–1918 ms。未观察到主页面卡死、无限 Loading、20 秒无反馈或 AI 阻塞页面。真实上游 AI 成功延迟依照“不得调用付费模型”约束记为 `NOT RUN`，不以 HTTP 或构建时间替代。
 
 ## 24. Known limitations
 
@@ -136,7 +138,7 @@ release Worker 对 `/benchmark*`、`/e2*`、`/fact-ledger*`、`/selection*`、`/
 - OCR 结果可能需要校对，扫描 PDF 受页数和资源限制。
 - AI 可能遗漏或误解信息；建议不是正式任务。
 - 浏览器通知依赖页面存活；邮件、微信、跨设备与账号未接通。
-- 当前 A–J、回滚演练、性能与 RC.2 的 48 小时稳定期未完成；移动端布局与弹层独立滚动已验证，但不等于真实手机完整业务链通过。
+- 当前 RC.4 的 48 小时稳定期尚未完成；迁移/回退演练、A–J、非付费范围性能和可靠性已通过，移动端布局与弹层独立滚动已验证，但不等于真实手机完整业务链通过。
 
 ## 25. Alpha test kit
 
@@ -148,14 +150,15 @@ release Worker 对 `/benchmark*`、`/e2*`、`/fact-ledger*`、`/selection*`、`/
 | --- | --- |
 | URL | `https://student-affairs-manager-preview.nightsdell.workers.dev/` |
 | Worker | `student-affairs-manager-preview` |
-| Version | `8a471784-db7b-4dc9-a2b2-4337c452a5d9` |
-| Deployment | `5f6441ed-cfef-4373-8a88-d1b62ada0128` |
-| Tag | `v2.0.0-beta.1-rc.2` |
-| Build commit | `e3bdf47641b61e546380ff91db5d1b0a4266fe7e` |
-| Created | `2026-08-30T11:35:00.005Z` |
+| Version | `1d6dc48e-167f-491b-ae55-908a9f2f27b9` |
+| Deployment | `8bad8cc4-ea86-4a1e-ad7a-1560e010cae2`（回退演练后最终恢复） |
+| Tag | `v2.0.0-beta.1-rc.4` |
+| Build commit | `2a95dba23e18ea2fcde8e1e0dd9754db4f79fce8` |
+| Version created | `2026-08-30T14:07:11.694749Z` |
+| Final deployment created | `2026-08-30T14:13:52.399392Z` |
 | Production routes | 无 |
 
-48 小时心跳 `v2-beta-preview-48h` 已改绑 RC.2。RC.1 的约 10 小时窗口因 P1 作废；RC.2 最早只能在 `2026-09-01 19:35:00.005 Asia/Shanghai` 判定满期。
+48 小时心跳 `v2-beta-preview-48h` 已改绑 RC.4 最终 Deployment。RC.1/RC.2/RC.3 与 RC.4 回退演练前窗口均不拼接；最早只能在 `2026-09-01 22:13:52.399392 Asia/Shanghai` 判定满期。
 
 ## 27. Rollback procedure
 
@@ -174,9 +177,8 @@ P2/P3 在 48 小时稳定期后处理，不得在稳定期增加功能：
 | P2 | 多材料通知的本地规则会把部分格式/命名文本拼入 Material 名称，并可能额外生成 `PDF格式）` Material；真实 v8 导出中对应 structured requirements 为空 | 原始 Source、任务描述和 Evidence 仍可回看，用户确认前可取消材料；无数据丢失或静默正式任务 | 稳定期后改进确定性材料解析与结构化材料编辑，并增加匿名 D 场景回归 |
 | P2 | information-only Source 当前以 invalid result/识别失败呈现，而非专门的“仅保存资料”完成状态 | Source 已保存且正式实体计数为 0，不生成伪任务 | 稳定期后增加准确状态文案，不改变 canonical 数据 |
 | P2 | 应用内页面切换不写入浏览器 history；从 Inbox 按浏览器返回会离开 Preview，而不是回到 Today | 应用内侧栏和手机底部导航可正常返回 Today，数据不受影响 | 稳定期后增加受控 history/state 同步与返回回归 |
-| P2 | Browser 控制下的 Workspace JSON 已完整落盘且可解析，但文件仍保留 `.crdownload` 后缀；相关导出实现于 `click()` 后同步回收 Blob URL，尚无普通浏览器独立复现 | 已冻结同哈希安全副本，原始导出内容完整且无 Secret/文件本体；J 仍保持 PARTIAL | 稳定期后统一改为延迟回收 Blob URL，并在独立浏览器下载事件中验证最终文件名与 JSON round-trip |
 
-上述 P2 不满足 P0/P1 定义，不中断 RC.2 可用性监测；但 D 场景 structured requirements 仍为 `PARTIAL`，最终 Browser A–J 门禁不得据此伪造 PASS。
+上述 P2 不满足 P0/P1 定义，不中断 RC.4 可用性监测。D 的核心 Capture→Refresh 链按 Beta 人工调整口径通过，structured requirements 缺口仍按 P2 保留，不能据此声称结构化材料解析已完善。先前 `.crdownload` 观察已由隔离 Edge 的最终 `.json` 下载与精确 round-trip 证伪为控制扩展产物，不再列为产品缺陷。
 
 分支建议：
 
@@ -200,9 +202,9 @@ P2/P3 在 48 小时稳定期后处理，不得在稳定期增加功能：
 - [x] release 分支独立且已推送
 - [x] E1 / v8 / Human Review / experiment isolation 已整合
 - [x] 工程与安全自动门禁通过
-- [ ] Browser A–J 通过，P0 = 0，P1 = 0
-- [ ] Preview 浏览器 migration / rollback 演练通过
-- [ ] 真实性能记录完成
+- [x] Browser A–J 通过，P0 = 0，P1 = 0
+- [x] Preview 浏览器 migration / rollback 演练通过
+- [x] 非付费范围真实性能记录完成；真实上游 AI 成功延迟按约束 NOT RUN
 - [ ] Preview 连续稳定满 48 小时
 - [ ] Production 实验样式路径实际返回 404
 - [ ] 最终 QA/报告状态已从 NOT RUN 更新为 PASS

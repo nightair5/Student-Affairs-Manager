@@ -1,9 +1,9 @@
 # Product v2 Beta QA and Acceptance
 
 > Preview：`https://student-affairs-manager-preview.nightsdell.workers.dev/`
-> RC：`v2.0.0-beta.1-rc.2`
-> Commit：`e3bdf47641b61e546380ff91db5d1b0a4266fe7e`
-> Cloudflare Version：`8a471784-db7b-4dc9-a2b2-4337c452a5d9`
+> RC：`v2.0.0-beta.1-rc.4`
+> Commit：`2a95dba23e18ea2fcde8e1e0dd9754db4f79fce8`
+> Cloudflare Version：`1d6dc48e-167f-491b-ae55-908a9f2f27b9`
 > Production：未修改
 
 ## 1. 判定规则
@@ -16,17 +16,17 @@
 
 ## 2. R9 工程门禁
 
-2026-08-30 在 `release/v2-beta@e3bdf47` 重新执行当前 RC 门禁；`npm ci` 来自依赖图未变化的 RC.1 基线：
+2026-08-30 在 `release/v2-beta@2a95dba` 重新执行当前 RC 门禁：
 
 | 门禁 | 结果 | 证据摘要 |
 | --- | --- | --- |
 | `npm ci` | PASS | 241 packages；0 vulnerabilities |
 | `npm run lint` | PASS | ESLint 0 errors |
 | `npm run typecheck` | PASS | TypeScript build 0 errors |
-| `TZ=UTC npm run test` | PASS | Vitest 43 files / 253 tests；Server 8；Worker 19；Functions 5 |
+| `TZ=UTC npm run test` | PASS | Vitest 43 files / 256 tests；Server 8；Worker 19；Functions 5 |
 | `TZ=Asia/Shanghai npm run test` | PASS | 同上 |
 | `npm run build` | PASS | Vite 1683 modules transformed |
-| `npm run security:scan` | PASS | 205 source/build files；无 Secret 命中 |
+| `npm run security:scan` | PASS | 清理 QA 临时脚本后的 205 source/build files；无 Secret 命中 |
 | `npm audit --audit-level=high` | PASS | 0 vulnerabilities |
 | `npm run cloudflare:check` | PASS | Worker 19；Production/Preview dry-run 均成功 |
 | `git diff --check` | PASS | 无 whitespace error |
@@ -34,6 +34,10 @@
 UTC 首次运行发现 canonical 事件 `08:30+08:00` 被宿主时区显示为 `00:30`。缺陷修复并增加显式 offset、naive local datetime 回归后，两套时区完整门禁均重新通过。修复提交：`5c443d4 fix(app): stabilize calendar workspace timezone`。
 
 RC.1 浏览器 E 场景进一步发现：Event 自身的 `event_start` TimePoint 未关联 preparation Task 时，`selectionFromDraftItems` 会把该时间点过滤掉，并进一步静默丢弃用户已选 Event。该问题按 P1 停止发布，修复提交 `e3bdf47 fix(app): preserve selected event timepoints`；新增独立 Event TimePoint 回归后完整测试增至 253。RC.2 已通过真实 Edge 原子提交、刷新与 Calendar Event 复核；该缺陷已关闭，但 RC.1 稳定窗口永久作废，RC.2 必须重新累计完整 48 小时。
+
+RC.2 的隔离 Edge J 场景发现 Export → 清空 → Import 后，兼容 autosave 会改写 canonical 材料截止、提醒启用状态、版本号与来源状态，按数据完整性 P0 立即作废窗口。`5ed3de7 fix(app): preserve canonical facts after import` 增加导入 revision 绑定与 canonical no-op merge，完整测试增至 254；RC.3 的 v8 round-trip、失败导入、v7 迁移和恢复演练随后通过。
+
+RC.3 的 H 场景又发现长 PDF 子句使 `TimePoint.rawText` 超过 RecognitionResult 上限，以及把项目型建议改为独立事项时 TimePoint 残留 dangling milestone，导致本地规则失败或确认无法写入，按 P1 作废窗口。`2a95dba fix(app): confirm local PDF suggestions safely` 对时间证据做有界展示并清除 standalone TimePoint 的阶段引用，新增两个回归后完整测试增至 256。精确提交 CI `33315897535` 成功；RC.4 的文本层 PDF、扫描 PDF、J round-trip 与迁移恢复均已在隔离 Edge 真实通过。
 
 ## 3. 浏览器 A–J 证据矩阵
 
@@ -52,17 +56,17 @@ Capture → Source 先保存 → RecognitionRun → Draft → Evidence
 | A | 简单课程通知：提交一次课程作业 | 1 个显式任务；日期、动作和依据可编辑 | PASS | AI 无效结构后复用同一 Source 本地重试；1 Task / 1 Material / 1 TimePoint 原子提交；刷新后任务、来源依据与 1 条 created 历史仍在 |
 | B | 同一通知含提交选题表、联系老师、上传报告 | 多任务逐项编辑、拒绝、部分确认 | PASS | 3 项建议触发聚焦复核；取消 1 项后按钮从 3 变 2，最终仅原子创建 2 项；未静默创建被取消项 |
 | C | 报名与作品终稿两个截止日期 | 多 timePoint 正确关联，最早行动进入 Today | PASS | RC.2 原子确认后刷新保持；Calendar“即将到来”按 9/10 12:00 完成报名、9/15 18:00 提交终稿排列。Today 继续优先既有逾期事项，没有被未来任务错误抢占 |
-| D | 报名表、身份证明、承诺书、PDF 命名规则 | 材料不冒充任务；命名要求保留在材料约束 | PARTIAL | 1 Task / 4 Material / 1 TimePoint；刷新后详情仍可回看原文、命名规则及 PDF 约束。真实 Workspace v8 导出进一步证明该 Task 关联 4 个 Material，但 `namingRequirements` / `formatRequirements` 为空，且多出独立 `PDF格式）` 材料；这是无数据丢失、可人工核对的 P2 结构质量问题，不能伪装为通过 |
+| D | 报名表、身份证明、承诺书、PDF 命名规则 | 材料不冒充任务；命名要求可回看、可调整 | PASS（P2） | 1 Task / 4 Material / 1 TimePoint；完整 Capture→确认→刷新链通过，详情中的原文、Evidence、命名规则和 PDF 约束可回看，材料可在确认前取消。Workspace v8 的 `namingRequirements` / `formatRequirements` 为空且多出独立 `PDF格式）` Material，透明记录为不造成数据丢失、静默提交或核心流程中断的 P2 结构质量问题 |
 | E | 线下答辩事件及提前准备材料 | Event 与准备 Task 分离且可追溯 | PASS | RC.1 的 Event 静默丢弃 P1 已修复。RC.2 使用“仅保存链接 → 手工补充 → 本地规则”避免模型调用，形成 1 Event / 1 preparation Task / 2 TimePoint / 1 Material；确认、刷新后 Calendar 明确显示 `14:00 参加课程答辩 · 事件`，重复 preparation Task 以冲突提示而未静默复制 |
 | F | “下周前”“答辩前三天”等相对时间 | 标记待确认，不猜测不可可靠归一化日期 | PASS | 2 项 ambiguity、质量标记和“需要重点核对”同时可见；两个 TimePoint 默认不选中，草稿保留待用户决定 |
 | G | 纯讲座资讯、无动作要求 | 保存 Source，但不生成伪任务 | PASS | Source 保留且正式实体计数为 0；没有伪任务。information-only 当前显示为 invalid result/识别失败，记为 P2 文案与状态改进项 |
-| H | 匿名图片、文本层 PDF、扫描 PDF | 本机 OCR/提取有进度、限制、校对与手动补充 | PARTIAL | Edge 已验证匿名 PNG 剪贴板、OCR 失败边界、人工补充与原子提交。官方 IAB 又验证文本层 PDF 本机读取 1 页，以及扫描 PDF 本机 OCR 1 页并得到可校对文字，均明确不上传文件本体且未进入模型整理；但 IAB 显示 IndexedDB 不可用，Edge 扩展又未启用 file URL 权限，因此 PDF 的同浏览器持久化、确认与刷新全链仍未证明 |
+| H | 匿名图片、文本层 PDF、扫描 PDF | 本机 OCR/提取有进度、限制、校对与手动补充 | PASS | RC.4 隔离 Edge 152.0.4191.53：文本层 PDF 本机读取 1 页/199 字，创建 2 Task；扫描 PDF 本机 OCR 1 页/124 字、置信度 0.90，创建 1 Task。两者均完成校对、本地规则、原子确认、刷新保持；Workspace 不含 PDF base64，模型调用 0 |
 | I | AI timeout、502、invalid schema | Source 不丢；显示安全错误；可用本地规则/手动继续 | PASS | 实测 DeepSeek 返回无效 RecognitionResult 2.0：Source 先保存、错误可见、同源本地规则重试成功并可确认 |
-| J | 导出、二次确认清空、导入、刷新、迁移恢复 | JSON round-trip；失败导入不破坏当前 Workspace | PARTIAL | A 的正式任务与 C/F 草稿均经关闭/刷新保留。Edge 实际生成 339,467-byte、可解析的 schema v8 JSON（12 Sources / 12 Tasks / 14 Materials / 20 TimePoints / 11 EvidenceRefs / 40 HistoryRecords；SHA-256 `A8D7953861C794460E5452B452582FB00D7AB3D3DCE29CE65FC9192F48BF2DA1`）；范围扫描未发现 `VITE_*` Key/Secret/Token、私钥或 `data:*;base64` 文件本体。另已冻结匿名 v7 迁移夹具，但公开 Import 只接受 v8，不能替代同源当前记录迁移。浏览器控制层未完成下载事件且文件保留 `.crdownload` 后缀；代码审查发现 Workspace、迁移备份、恢复备份和报告导出均在 `click()` 后同步执行 `revokeObjectURL()`，而知识库导出已延迟至下一事件循环。现有文件已完整落盘，IAB 因 IndexedDB 隔离无法做独立真实导出，Edge 控制连接的复现实验又超时，因此暂列 P2 实现风险，不能宣称普通浏览器必现或已关闭。清空属于不可撤销操作，尚未取得动作时确认，因此清空 → Import、失败导入保护与真实 v7 迁移未执行 |
+| J | 导出、二次确认清空、导入、刷新、迁移恢复 | JSON round-trip；失败导入不破坏当前 Workspace | PASS | RC.4 隔离 Edge 真实下载最终 `.json`（32,874 bytes；SHA-256 `1FE2797A7E04E9112CC10162316EEE2E5D33D604D0A66D6DB989F440D47046C3`），双确认清空后导入，canonical 在导入后及刷新后均逐值一致；非法 JSON 不改变 Workspace。匿名 v7 同源注入后自动迁移到 v8，迁移备份与原夹具逐值一致；故障注入触发恢复面板，指定备份下载、准备恢复、二次确认和再次刷新均通过，模型调用 0 |
 
-本轮截图证据已由官方 Browser 在当前任务中捕获：I 的失败 Source 卡片、B 的聚焦复核、A 刷新后的任务来源与历史、C 刷新后的 Calendar 顺序、RC.1 E 的 Calendar 缺失、F 的 ambiguity、G 的 0 实体 Source、H 的人工补充确认、文本层 PDF 与扫描 PDF 本机 OCR，以及 RC.2 E 刷新后正式 Event。手机端另以 `390×844` 验证单栏壳与底部导航，以 `390×667` 验证录入面板 `overflow-y: auto`：面板 `clientHeight=666`、`scrollHeight=768`，滚动 `102.4px` 后主按钮位于视口 `582.15–630.15px`，可完整触达。IAB 同时明确显示 IndexedDB 不可用，因此这些移动端/PDF 观察没有被扩大解释为持久化全链通过。截图：`C:\Users\Winner\AppData\Local\Temp\student-affairs-r9\r9-h-scanned-pdf-ocr.png`、`C:\Users\Winner\AppData\Local\Temp\student-affairs-r9\r9-mobile-intake-390x667.png`。没有把浏览器静态可见性或单元测试代替正式提交与刷新证据。
+本轮保留了官方 Browser 的 A–I 交互截图，并由隔离 Edge 补齐当前 RC 的可持久化 H/J 证据。手机端以 `390×844` 验证单栏壳与底部导航，以 `390×667` 验证录入面板独立滚动与主按钮可触达。RC.4 截图：`C:\Users\Winner\AppData\Local\Temp\student-affairs-r9\r9-h-rc4-text-layer-persisted.png`、`C:\Users\Winner\AppData\Local\Temp\student-affairs-r9\r9-h-rc4-scanned-ocr-persisted.png`、`C:\Users\Winner\AppData\Local\Temp\student-affairs-r9\r9-j-rc4-recovered.png`。IAB 的 IndexedDB 限制只作为工具边界记录，不再用来否定独立 Edge 已完成的同范围证据。
 
-浏览器边界：应用内浏览器仍报告 IndexedDB 不可用，不能承担持久化验收；Edge 已能执行实际交互，但文件选择因扩展未启用 “Allow access to file URLs” 被拒绝。2026-08-30 约 19:14 一次新 Edge 页出现 `ERR_HTTP2_PING_FAILED`；同一时点 PowerShell 对 Preview 首页/status 与 Production 首页均为 HTTP 200，随后新的 Edge 页立即恢复到应用首页。该客户端瞬时失败窗口已记录，未发现 Cloudflare Version 漂移或工作区数据丢失。
+浏览器边界：应用内浏览器仍报告 IndexedDB 不可用，不能承担持久化验收；文件上传、下载和 IndexedDB 全链改由全新隔离 Edge context 执行，不读取或覆盖用户浏览器数据。2026-08-30 约 19:14 一次扩展控制的新 Edge 页出现 `ERR_HTTP2_PING_FAILED`，PowerShell 与随后新页均正常；该客户端瞬时失败未发现 Cloudflare Version 漂移或数据丢失。
 
 ## 4. 安全、可靠性与性能
 
@@ -70,32 +74,37 @@ Capture → Source 先保存 → RecognitionRun → Draft → Evidence
 
 | 检查 | 自动证据 | 浏览器证据 | 当前判定 |
 | --- | --- | --- | --- |
-| DeepSeek Key 仅服务端 | secret scan、Worker/Functions tests | bundle/network 人工复核 | PARTIAL |
+| DeepSeek Key 仅服务端 | secret scan、Worker/Functions tests | RC.4 已部署 bundle 范围扫描 | PASS |
 | Origin / Content-Type / Body Size | Worker/Functions tests | Preview 网络面板 | PARTIAL |
 | Prompt injection 作为不可信数据 | Worker test | 场景 I | PARTIAL |
 | SSRF、redirect 每跳复核 | Server/Worker tests | Preview URL 输入 | PARTIAL |
-| 文件类型、大小、页数和 50k 截断 | fileExtraction 17 tests | 场景 H | PARTIAL |
+| 文件类型、大小、页数和 50k 截断 | fileExtraction 17 tests | 场景 H | PASS |
 | Export 不含 Secret/文件本体 | secret scan、repository tests | 场景 J | PASS |
-| Preview/Production 隔离 | Wrangler config、独立 Worker URL | Production 404/Preview 页面 | PARTIAL |
-| 实验 endpoint 关闭 | Worker test | `/benchmark*`、`/e2*` 等 HTTP 404 | PARTIAL |
+| Preview/Production 部署隔离 | Wrangler config、独立 Worker URL | 两套 Deployment/Version 独立且 Production 未变 | PASS |
+| RC 候选实验 endpoint 关闭 | Worker test | Preview 六条已知路径均为 JSON 404 | PASS |
+| 当前 Production 字面 404 | 无法由未部署 RC 代替 | 旧 Production 六条路径均为 SPA HTML 200 | OPEN；需独立 Production 批准后关闭 |
+
+RC.4 已部署首页及其 2 个 JS/CSS 资产共扫描 627,422 bytes：有界 Secret-like key 模式命中 0，前端资产中的 `DEEPSEEK_API_KEY` 名称命中 0。扫描仅输出计数，不输出任何疑似值；status 检查没有发送正文或调用模型。
 
 ### 4.2 可靠性
 
-AI 失败保留 Source、确认单事务、迁移失败不覆盖、导入失败不替换、幂等 operation ID、late run 不覆盖 current version、Error Boundary 与手动继续均有自动测试或代码证据。本轮已补充 AI invalid schema、同源本地重试、部分确认、原子提交、刷新后正式任务与待确认草稿保持的 Edge 证据。浏览器返回已实测：从首页应用内切到 Inbox 后 URL 仍为根路径，浏览器返回直接离开到 `about:blank`，没有恢复上一应用页，记录为 P2 导航体验问题。确认按钮重复点击、失败导入和完整网络中断仍未关闭；一次匿名手动任务准备因 Browser 自动化未能向 React `datetime-local` 校验派发有效事件而停止，按钮始终 disabled，未提交或新增数据，不能据此判断产品幂等性。
+AI 失败保留 Source、确认单事务、迁移失败不覆盖、导入失败不替换、幂等 operation ID、late run 不覆盖 current version、Error Boundary 与手动继续均有自动测试或代码证据。RC.4 的隔离 Edge 152.0.4191.53 又实测：Enter 打开录入并把焦点落到 textarea，Escape 关闭；对确认按钮派发连续两次 click 只创建 1 Task，刷新后仍只有 1 Task；拦截并中断 `/api/deepseek/extract` 后，Source 先保存、正式 Task 为 0、约 922 ms 出现失败反馈，本地规则重试后确认并刷新保持。两组上游付费模型调用均为 0，可靠性门槛 `PASS`。浏览器返回从 Inbox 离开到 `about:blank`，作为不影响数据或应用内导航的 P2 体验问题保留。
 
-### 4.3 性能记录模板
+### 4.3 性能记录
 
 浏览器 A–J 时记录冷/热启动各一次，单位毫秒：
 
 | 指标 | 冷启动 | 热启动 | 状态反馈是否 <20 秒 | 备注 |
 | --- | ---: | ---: | --- | --- |
-| 首页可交互 | NOT RUN | NOT RUN | NOT RUN |  |
-| Inbox 加载 | NOT RUN | NOT RUN | NOT RUN |  |
-| Project 加载 | NOT RUN | NOT RUN | NOT RUN |  |
-| 普通保存 | NOT RUN | NOT RUN | NOT RUN |  |
-| 文件上传/提取 | NOT RUN | NOT RUN | 有反馈 | PNG 剪贴板可进入录入；OCR 失败状态可见；IAB 已实测文本层 PDF 读取与扫描 PDF OCR，但毫秒计时及可持久化浏览器中的 PDF 全链未关闭 |
-| AI 请求 | NOT RUN | NOT RUN | 有反馈 | invalid schema 安全失败并保留 Source；耗时未形成可信毫秒记录 |
-| 刷新恢复 | NOT RUN | NOT RUN | 有反馈 | 正式任务与待确认草稿均已实测保留；耗时未形成可信毫秒记录 |
+| 首页可交互 | 1772 | 995 | 是 | 隔离 Edge，等待主标题可见；同轮重复观测曾为 1914 / 1188 ms |
+| Inbox 加载 | 49 | — | 是 | 从应用内导航点击到 Inbox 标题可见 |
+| Project 加载 | 363 | — | 是 | 从应用内导航点击到 Project 标题可见 |
+| 普通保存 | 134 | — | 是 | 从确认 click 到复核面板关闭；重复 click 仍只创建 1 Task |
+| 文件上传/提取 | 文本层 PDF 840 | 扫描 PDF OCR 3379 | 是 | 两者均为 1 页；随后确认和刷新保持通过，模型调用 0 |
+| AI 请求 | NOT RUN（禁止付费调用） | 模拟断网反馈 922 | 是 | Source 先保存、无正式 Task；本地规则恢复确认 926 ms |
+| 刷新恢复 | 1747–1918 | 995 | 是 | PDF 两次刷新恢复为 1747/1918 ms；普通热刷新 995 ms |
+
+性能记录覆盖附件要求的首页、Inbox、Project、普通保存、文件处理、失败请求反馈和刷新恢复；真实上游 AI 成功延迟按“不得调用付费模型”约束明确保留为 `NOT RUN`。未观察到主页面卡死、无限 Loading、20 秒无反馈或 AI 处理阻塞整个页面。
 
 ## 5. R10：5–10 名学生 Alpha Test Kit
 
@@ -218,7 +227,7 @@ P0/P1 立即停止该参与者后续操作并保留现场；先保护/导出匿�
 
 ### 6.1 R11 稳定性观测记录
 
-RC.1 的稳定期从 `2026-08-30T01:45:23.994Z` 起算，但因 E 场景 P1 在约 10 小时后停止并作废，不得与后续 RC 拼接。RC.2 随后因 Export → 清空 → Import 后 canonical 字段被兼容 autosave 改写的数据完整性 P0 作废。RC.3 的权威起点采用 Cloudflare Version `e6da1443-12ba-49da-b787-47025a8489a4` 创建时间：`2026-08-30T13:42:03.022Z`（Asia/Shanghai `2026-08-30 21:42:03.022`）；满 48 小时的最早判定点为 `2026-09-01 21:42:03.022`。
+RC.1 因 Event 静默丢弃 P1 作废，RC.2 因 Export/Import canonical 改写 P0 作废，RC.3 因 PDF 本地规则确认 P1 作废，均不得与后续窗口拼接。RC.4 在初始部署后先完成 H/J 与计划内 Preview Version 回退演练；因此连续稳定期以恢复 RC.4 的 Deployment `8bad8cc4-ea86-4a1e-ad7a-1560e010cae2` 创建时间 `2026-08-30T14:13:52.399392Z`（Asia/Shanghai `2026-08-30 22:13:52.399392`）起算，满 48 小时的最早判定点为 `2026-09-01 22:13:52.399392`。
 
 | 观测时间（Asia/Shanghai） | Preview 首页 | Preview status | Preview 实验路径 | Production 首页/版本 | Production 实验路径 | 结论 |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -229,6 +238,10 @@ RC.1 的稳定期从 `2026-08-30T01:45:23.994Z` 起算，但因 E 场景 P1 在�
 | 2026-08-30 20:42:27（RC.2） | 200 HTML | 200；configured true；`deepseek-v4-flash`；仅检查状态，未调用模型 | 六条已知实验路径均为 JSON 404 | 200；Wrangler current Version 仍为 `3b6d6ba2…` | 六条路径均为 SPA HTML 200 | Wrangler current Preview Version 仍为 `8a471784…`，起点后约 1 小时 7 分无部署漂移；Production 未被覆盖，字面 404 仍未关闭 |
 | 2026-08-30 21:13:09（RC.2） | 200 HTML | 200；configured true；`deepseek-v4-flash`；仅检查状态，未调用模型 | 六条已知实验路径均为 JSON 404 | 200；Wrangler current Version 仍为 `3b6d6ba2…` | 六条路径均为 SPA HTML 200 | Wrangler current Preview Version 仍为 `8a471784…`，起点后约 1 小时 38 分无部署漂移；Production 未被覆盖，字面 404 仍未关闭 |
 | 2026-08-30 21:51:28（RC.3） | 200 HTML | 200；configured true；`deepseek-v4-flash`；仅检查状态，未调用模型 | 六条已知实验路径均为 JSON 404 | 200；Wrangler current Version 仍为 `3b6d6ba2…` | 六条路径均为 SPA HTML 200 | Wrangler current Preview Version 为 `e6da1443…`，与 RC.3 起点一致；Deployment `efd34105…` 无意外变化。Production 未被覆盖，字面 404 仍未关闭 |
+| 2026-08-30 约 21:55（RC.3） | 200；文本层 PDF 提取成功 | 通过拦截安全置为未配置；模型调用 0 | 本次缺陷复现不改变路由 | Production 未部署 | 沿用 21:51 完整观测 | 本地规则因超长 TimePoint evidence 返回 `INVALID_RECOGNITION_RESULT`，H 核心闭环 P1；RC.3 窗口立即作废 |
+| 2026-08-30 22:08:27（RC.4，回退演练前） | 200 HTML；H 两类 PDF 全链 PASS | 仅本地规则；模型调用 0 | 六条路径 JSON 404 | 200；Deployment `bc1719b0…` / Version `3b6d6ba2…` 未变 | 六条路径 SPA HTML 200 | Version `1d6dc48e…` 初检通过；J 于 22:12:34 继续通过。随后按计划执行 Preview-only Version 回退，故此短窗口不计入 48 小时 |
+| 2026-08-30 22:13:52（RC.4，最终恢复） | 200 HTML | 200；configured true；`deepseek-v4-flash`；仅检查状态，未调用模型 | 六条路径均为 JSON 404 | 200；Deployment `bc1719b0…` / Version `3b6d6ba2…` 未变 | 六条路径均为 SPA HTML 200 | 回退到 RC.3 后已恢复 RC.4 Version `1d6dc48e…`；最终 Deployment `8bad8cc4…`，R11 从本行重新起算 |
+| 2026-08-30 22:24:13（RC.4） | 200 HTML | 200；configured true；`deepseek-v4-flash`；仅检查状态，未调用模型 | 六条已知实验路径均为 JSON 404 | 200；Wrangler current Deployment `bc1719b0…` / Version `3b6d6ba2…` 未变 | 六条路径均为 SPA HTML 200 | Wrangler current Preview Deployment `8bad8cc4…` / Version `1d6dc48e…` 未变；连续覆盖约 10 分 21 秒，无失败窗口；Production 未被覆盖，字面 404 仍未关闭 |
 
 已创建当前任务心跳 `v2-beta-preview-48h`，每 6 小时执行只读检查，截止到满 48 小时后的首个观测点。心跳不得调用付费模型、修改 Secret、部署或改变路由。
 
@@ -237,10 +250,10 @@ Production 的 200 响应为旧版本 SPA fallback，不是实验页面或实验
 | 阶段 | 状态 | 说明 |
 | --- | --- | --- |
 | R9 工程门禁 | PASS | 全量命令已执行 |
-| R9 Browser A–J | PARTIAL | A/B/C/E/F/G/I 通过；D/H/J 尚有未执行或未证明子项，完整门槛未关闭 |
+| R9 Browser A–J | PASS | A–J 的核心链均通过，P0 = 0、P1 = 0；D 的 structured material requirements 作为已披露 P2 保留 |
 | R10 Alpha Test Kit | READY | 本文第 5 节；尚无真实参与者数据 |
 | R10 Alpha run | NOT RUN | 不属于 Codex 可伪造范围 |
-| R11 Preview RC deployment | DEPLOYED | RC.3 Preview 独立 Worker，Production 未变 |
-| R11 48-hour stability | RESTARTED | RC.1 因 P1、RC.2 因 P0 作废；RC.3 从 2026-08-30 21:42:03.022 重新计时 |
+| R11 Preview RC deployment | DEPLOYED | RC.4 Version `1d6dc48e…` / Deployment `8bad8cc4…`；Production 未变 |
+| R11 48-hour stability | RESTARTED | 从 2026-08-30 22:13:52.399392 起连续计时；最早 2026-09-01 22:13:52.399392 判定 |
 
-在 Browser A–J、回滚演练和 48 小时稳定期完成前，状态不得提升为 `PRODUCT V2 BETA RELEASE CANDIDATE READY`。
+在 RC.4 连续稳定满 48 小时、Production 字面 404 门槛与最终 R12 审计关闭前，状态不得提升为 `PRODUCT V2 BETA RELEASE CANDIDATE READY`。

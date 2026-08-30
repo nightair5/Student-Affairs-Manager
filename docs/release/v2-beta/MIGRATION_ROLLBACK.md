@@ -80,7 +80,9 @@ npx vitest run src/domain/v2/migration.test.ts src/domain/v2/runtimeMigration.te
 7. 先下载指定迁移备份，再执行二次确认恢复。
 8. 恢复后再次刷新，确认 v8 可读且无重复实体。
 
-当前状态：`NOT RUN`。现已能唯一确认权威 Preview 与持久化 Edge 工作区，并已从受测仓库夹具冻结匿名 v7 输入 `C:\Users\Winner\AppData\Local\Temp\student-affairs-r9\r9-v7-migration-fixture.json`（4,044 bytes；1 Source / 1 Task / 1 Project / 1 Material / 1 Event；SHA-256 `0F2DE94687AEF985AAA349AA39FAF9ED3E121273B4FCA45B6773BB2596FE045F`；无 Secret-like 字段或 base64 文件本体）。但公开 UI 的 JSON Import 只接受 Workspace v8，无法用它把 v7 写成当前记录；浏览器运行时又不暴露可审计的 IndexedDB 注入能力。完整演练还包含清空并重写匿名 QA 工作区，需动作时明确确认并使用受支持的同源迁移夹具入口。不得用单元测试、现有 v8 导出或 IAB 的无 IndexedDB 页面替代该浏览器演练。
+当前状态：`PASS`。2026-08-30 在 RC.4 Preview 的全新隔离 Edge 152.0.4191.53 context 中，先通过真实 UI 下载 32,874-byte schema v8 JSON，应用内双确认清空后导入；canonical 在导入后与刷新后均逐值一致，非法 JSON 导入也未改变当前 Workspace。随后将匿名 v7 夹具 `C:\Users\Winner\AppData\Local\Temp\student-affairs-r9\r9-v7-migration-fixture.json`（4,044 bytes；1 Source / 1 Task / 1 Project / 1 Material / 1 Event；SHA-256 `0F2DE94687AEF985AAA349AA39FAF9ED3E121273B4FCA45B6773BB2596FE045F`）写入同源测试 context 的当前记录，真实运行时迁移到 v8；`backup:v7_to_v8_canonical_domain_001:fnv1a32:8791e514` 的下载内容与原 v7 snapshot 逐值一致。故意制造 dangling Project 引用后，应用进入只读恢复面板；“先导出指定备份 → 准备恢复 → 确认从备份恢复 → 再次刷新”完整通过，损坏值未保留。全程使用匿名数据，付费模型调用为 0。
+
+RC.4 证据文件：`C:\Users\Winner\AppData\Local\Temp\student-affairs-r9\r9-j-rc4-workspace-export.json`、`r9-j-rc4-v7-migration-backup.json`、`r9-j-rc4-v7-recovery-backup.json` 与 `r9-j-rc4-recovered.png`。公开 JSON Import 仍只接受 v8；v7 注入仅是隔离同源工程演练入口，不是面向用户的新导入承诺。
 
 ## 5. 部署级回滚
 
@@ -110,8 +112,8 @@ Production 默认不在本任务部署。若未来获得独立明确批准，回
 | Workspace v8 semantic round-trip | PASS |
 | repository import/export 与 recovery facade | PASS |
 | UTC 与 Asia/Shanghai 完整测试 | PASS |
-| Preview 浏览器迁移演练 | NOT RUN |
-| Cloudflare Preview Version 回退演练 | NOT RUN |
+| Preview 浏览器迁移演练 | PASS；RC.4 隔离 Edge，v7→v8、备份、故障与二次确认恢复均通过 |
+| Cloudflare Preview Version 回退演练 | PASS；RC.4 `1d6dc48e…` → RC.3 `e6da1443…` → RC.4，首页/status 均 200；最终 Deployment `8bad8cc4…` |
 | Production 回滚 | NOT AUTHORIZED / NOT RUN |
 
-只有 Preview 浏览器迁移演练与 Version 回退演练也通过后，最终报告才可以写 `Rollback rehearsal PASS`。
+Preview 浏览器迁移与 Version 回退两项均已由 RC.4 真实证据关闭，因此当前可判定 `Rollback rehearsal PASS`；Production 回滚仍未经授权且未执行。
