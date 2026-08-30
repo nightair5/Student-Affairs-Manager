@@ -23,6 +23,7 @@
     "eval:recognition": "vitest run src/recognition/evaluation.test.ts",
     "eval:multimodal:lib": "node --test scripts/multimodal-evaluation-lib.node-test.mjs",
     "eval:multimodal:generate": "python scripts/generate-multimodal-unseen.py",
+    "eval:multimodal:freeze": "node scripts/freeze-multimodal-dataset.mjs",
     "eval:multimodal:run": "node scripts/run-multimodal-evaluation.mjs"
   },
   "dependencies": {

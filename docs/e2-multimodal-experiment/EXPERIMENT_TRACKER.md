@@ -17,3 +17,9 @@
 | MM-M4-01 | M4 | 用户修改时间对照 | T/I/IT | 平衡顺序 | NOT RUN | 采集工具未实现 |
 | MM-M5-01 | M5 | 第二批未见材料确认 | T/I/IT | Unseen-2 ≥36 | NOT RUN | 与 Unseen-1 不重叠 |
 | MM-M5-02 | M5 | 隐私、安全、浏览器 A–J 与稳定性 | T/IT | Preview | FAIL / INCOMPLETE | 页面误把 Secret 存在显示为“已连接”；部分 consent 行为已观察，A–J 未全跑 |
+| MM-V1-DIAG-02 | V1 诊断 | 新密钥与 vision 模型连通性 | T/I/IT | `mmu1-01` | PASS (CONNECTIVITY ONLY) | 3/3 有效返回；T 模型混用、I 后处理含 OCR，结果禁止进入质量比较 |
+| MM-V2-M0-01 | V2 M0 | 修复三臂同模型、I 臂 OCR 隔离、fail-closed 评分器 | T/I/IT | Mock | PASS (FOCUSED TESTS) | Worker 24/24、评分器 9/9；全量门槛待跑 |
+| MM-V2-M0-02 | V2 M0 | 新协议与方法冻结 | T/I/IT | 文档/代码 | IN PROGRESS | 使用 12 个情境家族 cluster bootstrap；V1 不作为正证据 |
+| MM-V2-M1-01 | V2 M1 | 生成全新匿名材料、本机 OCR 与逐例哈希冻结 | T/I/IT | Synthetic-Unseen-V2 = 36 | NOT RUN | 冻结提交前禁止 V2 模型调用 |
+| MM-V2-M2-01 | V2 M2 | 36×3 正式配对运行 | T/I/IT | Synthetic-Unseen-V2 | NOT RUN | 零评估器重试；任一请求失败使该臂质量指标失效 |
+| MM-V2-M3-01 | V2 M3 | 第一性原理与独立对抗性审查 | T/I/IT | 结果/实现/Preview | NOT RUN | Synthetic PASS 也不能授权上线；人类计时与 A–J 仍是硬门槛 |

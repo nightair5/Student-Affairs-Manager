@@ -10,7 +10,7 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageEnhance, ImageFilter, ImageFont
 
 
-GENERATOR_VERSION = "multimodal-synthetic-unseen-generator-1.0.0"
+GENERATOR_VERSION = "multimodal-synthetic-unseen-generator-1.1.0"
 REFERENCE_TIME = "2026-09-01T08:00:00+08:00"
 TIMEZONE = "Asia/Shanghai"
 FONT_PATH = Path("C:/Windows/Fonts/msyh.ttc")
@@ -25,8 +25,8 @@ def stable_json(value: object) -> bytes:
     return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
 
 
-def date_value(offset: int, hour: int = 18, minute: int = 0) -> tuple[str, str]:
-    value = datetime(2026, 9, 5, hour, minute, tzinfo=timezone(timedelta(hours=8))) + timedelta(days=offset)
+def date_value(offset: int, generation_round: int, hour: int = 18, minute: int = 0) -> tuple[str, str]:
+    value = datetime(2026, 9, 5, hour, minute, tzinfo=timezone(timedelta(hours=8))) + timedelta(days=offset + 28 * (generation_round - 1))
     text = f"{value.month}月{value.day}日{value.hour:02d}:{value.minute:02d}"
     return text, value.isoformat()
 
@@ -47,12 +47,13 @@ def event(*title_tokens: str) -> dict[str, object]:
     return {"titleTokens": list(title_tokens)}
 
 
-def build_scenario(scenario_index: int, variant: int, case_number: int) -> dict[str, object]:
-    code = f"E2MM-{case_number:02d}"
-    deadline_text, deadline_iso = date_value(scenario_index * 2 + variant)
-    second_text, second_iso = date_value(scenario_index * 2 + variant + 2, 20)
-    event_text, event_iso = date_value(scenario_index * 2 + variant + 4, 14, 30)
-    cohort = ("海韵", "凤凰", "嘉庚")[variant]
+def build_scenario(scenario_index: int, variant: int, case_number: int, generation_round: int) -> dict[str, object]:
+    code = f"E2MM-R{generation_round}-{case_number:02d}"
+    deadline_text, deadline_iso = date_value(scenario_index * 2 + variant, generation_round)
+    second_text, second_iso = date_value(scenario_index * 2 + variant + 2, generation_round, 20)
+    event_text, event_iso = date_value(scenario_index * 2 + variant + 4, generation_round, 14, 30)
+    cohort_sets = (("海韵", "凤凰", "嘉庚"), ("翔安", "芙蓉", "南光"))
+    cohort = cohort_sets[(generation_round - 1) % len(cohort_sets)][variant]
 
     if scenario_index == 0:
         title = f"{cohort}奖学金补充申报通知"
@@ -193,7 +194,7 @@ def build_scenario(scenario_index: int, variant: int, case_number: int) -> dict[
             "events": [event("校园卡", "维护")], "forbiddenTaskTokens": ["报名", "提交材料", "回复", "咨询"], "requiresAction": False,
         }
     elif scenario_index == 10:
-        old_text, _ = date_value(scenario_index * 2 + variant - 1)
+        old_text, _ = date_value(scenario_index * 2 + variant - 1, generation_round)
         title = f"关于材料截止时间的更正 {code}"
         lines = [
             f"原通知写为：{old_text}前提交年度登记表。",
@@ -319,11 +320,18 @@ def render_scan(case: dict[str, object], image_target: Path, pdf_target: Path, s
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--output", default=".evaluation-cache/multimodal-unseen-v1")
+    parser.add_argument("--output", default=".evaluation-cache/multimodal-unseen-v2")
+    parser.add_argument("--dataset-id", default="synthetic-unseen-v2")
+    parser.add_argument("--case-prefix", default="mmu2")
+    parser.add_argument("--generation-round", type=int, default=2)
     args = parser.parse_args()
+    if args.generation_round < 1 or not args.dataset_id or not args.case_prefix:
+        raise RuntimeError("dataset id, case prefix and positive generation round are required")
     if not FONT_PATH.exists():
         raise RuntimeError(f"Chinese font not found: {FONT_PATH}")
     output = Path(args.output).resolve()
+    if (output / "dataset.json").exists():
+        raise RuntimeError(f"refusing to overwrite frozen candidate dataset: {output}")
     images_dir = output / "images"
     images_dir.mkdir(parents=True, exist_ok=True)
 
@@ -331,18 +339,20 @@ def main() -> None:
     for modality_index, modality in enumerate(MODALITIES):
         for scenario_index in range(12):
             case_number = modality_index * 12 + scenario_index + 1
-            case_id = f"mmu1-{case_number:02d}"
-            built = build_scenario(scenario_index, modality_index, case_number)
+            case_id = f"{args.case_prefix}-{case_number:02d}"
+            scenario_family_id = f"scenario-{scenario_index + 1:02d}"
+            built = build_scenario(scenario_index, modality_index, case_number, args.generation_round)
+            render_seed = args.generation_round * 1000 + case_number
             if modality == "photo":
                 image_name = f"{case_id}.jpg"
                 mime_type = "image/jpeg"
-                render_photo(built, images_dir / image_name, case_number)
+                render_photo(built, images_dir / image_name, render_seed)
                 pdf_name = None
             elif modality == "scan":
                 image_name = f"{case_id}-page-1.png"
                 pdf_name = f"{case_id}.pdf"
                 mime_type = "image/png"
-                render_scan(built, images_dir / image_name, images_dir / pdf_name, case_number)
+                render_scan(built, images_dir / image_name, images_dir / pdf_name, render_seed)
             else:
                 image_name = f"{case_id}.png"
                 pdf_name = None
@@ -352,6 +362,7 @@ def main() -> None:
             image_hash = sha256_bytes(image_path.read_bytes())
             case = {
                 "id": case_id,
+                "scenarioFamilyId": scenario_family_id,
                 "modality": modality,
                 "sourceType": "file" if modality == "scan" else "image",
                 "sourceTitle": built["sourceTitle"],
@@ -370,6 +381,7 @@ def main() -> None:
 
     hash_payload = [{
         "id": case["id"],
+        "scenarioFamilyId": case["scenarioFamilyId"],
         "modality": case["modality"],
         "sourceSha256": case["sourceSha256"],
         "imageSha256": case["imageSha256"],
@@ -377,10 +389,11 @@ def main() -> None:
     } for case in cases]
     dataset_hash = sha256_bytes(stable_json(hash_payload))
     manifest = {
-        "schemaVersion": "multimodal-synthetic-unseen-dataset-1.0.0",
+        "schemaVersion": "multimodal-synthetic-unseen-dataset-1.1.0",
         "generatorVersion": GENERATOR_VERSION,
         "generatedAt": datetime.now(timezone.utc).isoformat(),
-        "datasetId": "synthetic-unseen-v1",
+        "datasetId": args.dataset_id,
+        "generationRound": args.generation_round,
         "datasetSha256": dataset_hash,
         "sampleCount": len(cases),
         "modalityCounts": {modality: sum(1 for case in cases if case["modality"] == modality) for modality in MODALITIES},

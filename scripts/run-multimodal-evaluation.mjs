@@ -5,8 +5,9 @@ import { EnvHttpProxyAgent } from 'undici'
 import { ARMS, scoreCase, sha256, summarizeEvaluation } from './multimodal-evaluation-lib.mjs'
 
 const ROOT = process.cwd()
-const DEFAULT_DATA_DIR = '.evaluation-cache/multimodal-unseen-v1'
+const DEFAULT_DATA_DIR = '.evaluation-cache/multimodal-unseen-v2'
 const DEFAULT_ENDPOINT = 'https://student-affairs-manager-multimodal-exp.nightsdell.workers.dev'
+const DEFAULT_EXPECTED_MODEL = 'deepseek-v4-flash-vision-exp'
 const proxyDispatcher = process.env.HTTPS_PROXY || process.env.HTTP_PROXY ? new EnvHttpProxyAgent() : undefined
 
 function option(name, fallback = '') {
@@ -73,22 +74,29 @@ function ocrDiagnostics(dataset, ocr) {
 }
 
 function verifyDataset(dataset, dataDir) {
-  if (dataset.schemaVersion !== 'multimodal-synthetic-unseen-dataset-1.0.0' || dataset.sampleCount !== 36) {
+  if (dataset.schemaVersion !== 'multimodal-synthetic-unseen-dataset-1.1.0' || dataset.sampleCount !== 36) {
     throw new Error('DATASET_CONTRACT_INVALID')
   }
   const hashPayload = dataset.cases.map((fixture) => ({
     id: fixture.id,
+    scenarioFamilyId: fixture.scenarioFamilyId,
     modality: fixture.modality,
     sourceSha256: fixture.sourceSha256,
     imageSha256: fixture.imageSha256,
     expectedSha256: fixture.expectedSha256,
   }))
   if (sha256(stableJson(hashPayload)) !== dataset.datasetSha256) throw new Error('DATASET_HASH_MISMATCH')
+  const scenarioFamilies = new Map()
   for (const fixture of dataset.cases) {
+    if (!/^scenario-[0-9]{2}$/u.test(fixture.scenarioFamilyId)) throw new Error(`SCENARIO_FAMILY_INVALID:${fixture.id}`)
+    scenarioFamilies.set(fixture.scenarioFamilyId, (scenarioFamilies.get(fixture.scenarioFamilyId) ?? 0) + 1)
     if (sha256(fixture.sourceText) !== fixture.sourceSha256) throw new Error(`SOURCE_HASH_MISMATCH:${fixture.id}`)
     if (sha256(stableJson(fixture.expected)) !== fixture.expectedSha256) throw new Error(`EXPECTED_HASH_MISMATCH:${fixture.id}`)
     const imagePath = path.join(dataDir, fixture.imagePath)
     fixture.absoluteImagePath = imagePath
+  }
+  if (scenarioFamilies.size !== 12 || [...scenarioFamilies.values()].some((count) => count !== 3)) {
+    throw new Error('SCENARIO_FAMILY_BALANCE_INVALID')
   }
 }
 
@@ -168,13 +176,12 @@ function requestBody(fixture, arm) {
   const base = {
     sourceType: fixture.sourceType,
     sourceTitle: fixture.sourceTitle,
-    content: fixture.ocrText,
     referenceTime: fixture.referenceTime,
     timezone: fixture.timezone,
     projectCandidates: [],
     existingTasks: [],
   }
-  if (arm === 'T') return base
+  if (arm === 'T') return { ...base, content: fixture.ocrText }
   const image = {
     dataUrl: `data:${fixture.mimeType};base64,${fixture.imageBytes.toString('base64')}`,
     mimeType: fixture.mimeType,
@@ -184,6 +191,7 @@ function requestBody(fixture, arm) {
   }
   return {
     ...base,
+    ...(arm === 'IT' ? { content: fixture.ocrText } : {}),
     consent: true,
     inputMode: fixture.modality === 'scan' ? 'pdf-pages' : 'image',
     ocrTextIncluded: arm === 'IT',
@@ -192,7 +200,19 @@ function requestBody(fixture, arm) {
   }
 }
 
-async function execute(endpoint, fixture, arm) {
+function classifyFailure(httpStatus, errorCode) {
+  if (errorCode === 'MODEL_MISMATCH') return 'model_mismatch'
+  if (errorCode === 'INVALID_AI_RESPONSE') return 'schema'
+  if (errorCode === 'UPSTREAM_AUTH_FAILED' || httpStatus === 401 || httpStatus === 403) return 'authentication'
+  if (errorCode === 'UPSTREAM_BILLING_BLOCKED' || httpStatus === 402) return 'billing'
+  if (errorCode === 'RATE_LIMITED' || httpStatus === 429) return 'rate_limit'
+  if (errorCode === 'UPSTREAM_MODEL_UNAVAILABLE') return 'model_unavailable'
+  if (httpStatus === 400 || errorCode === 'INVALID_REQUEST' || errorCode?.includes('INVALID')) return 'request_contract'
+  if (httpStatus >= 500) return 'upstream'
+  return 'transport'
+}
+
+async function execute(endpoint, fixture, arm, expectedModel) {
   const controller = new AbortController()
   const timeout = setTimeout(() => controller.abort(), 55_000)
   const started = Date.now()
@@ -207,9 +227,20 @@ async function execute(endpoint, fixture, arm) {
     const payload = await response.json().catch(() => null)
     const latencyMs = Date.now() - started
     if (!response.ok || !payload?.result) {
+      const errorCode = payload?.error ?? payload?.code ?? 'INVALID_RESPONSE'
       return scoreCase(fixture, arm, null, {
         status: 'request_failure',
-        failureReason: `${response.status} ${payload?.error ?? payload?.code ?? 'INVALID_RESPONSE'}`,
+        failureReason: `${response.status} ${errorCode}`,
+        failureCategory: classifyFailure(response.status, errorCode),
+        latencyMs,
+      })
+    }
+    const returnedModel = payload.model ?? payload.result.modelName ?? null
+    if (returnedModel !== expectedModel || payload.result.modelName !== expectedModel) {
+      return scoreCase(fixture, arm, null, {
+        status: 'request_failure',
+        failureReason: `MODEL_MISMATCH expected=${expectedModel} response=${returnedModel ?? 'missing'} result=${payload.result.modelName ?? 'missing'}`,
+        failureCategory: 'model_mismatch',
         latencyMs,
       })
     }
@@ -220,7 +251,7 @@ async function execute(endpoint, fixture, arm) {
     return {
       ...scored,
       providerRequestId: payload.requestId ?? null,
-      returnedModel: payload.model ?? payload.result.modelName ?? null,
+      returnedModel,
       promptVersion: payload.result.promptVersion ?? null,
       resultSha256: sha256(stableJson(payload.result)),
     }
@@ -231,10 +262,51 @@ async function execute(endpoint, fixture, arm) {
     return scoreCase(fixture, arm, null, {
       status: 'request_failure',
       failureReason: error instanceof Error ? `${error.name}${safeCode ? `:${safeCode}` : ''}` : 'NETWORK_FAILURE',
+      failureCategory: 'transport',
       latencyMs: Date.now() - started,
     })
   } finally {
     clearTimeout(timeout)
+  }
+}
+
+function verifyFreeze(freeze, dataset, ocr, expectedModel) {
+  if (freeze.schemaVersion !== 'multimodal-synthetic-unseen-freeze-1.1.0'
+    || freeze.status !== 'FROZEN_BEFORE_MODEL_CALLS'
+    || freeze.firstModelCallAtAtFreeze !== null) {
+    throw new Error('FREEZE_CONTRACT_INVALID')
+  }
+  if (freeze.datasetId !== dataset.datasetId
+    || freeze.datasetSha256 !== dataset.datasetSha256
+    || freeze.ocrBundleSha256 !== ocr.ocrBundleSha256
+    || freeze.sampleCount !== dataset.sampleCount) {
+    throw new Error('FROZEN_INPUT_HASH_MISMATCH')
+  }
+  if (freeze.expectedModel !== expectedModel
+    || ARMS.some((arm) => freeze.arms?.[arm]?.model !== expectedModel)) {
+    throw new Error('FROZEN_MODEL_CONTRACT_MISMATCH')
+  }
+  if (freeze.arms?.I?.ocrTextInClientRequest !== false
+    || freeze.arms?.I?.ocrTextInWorkerPrompt !== false
+    || freeze.arms?.I?.ocrTextInWorkerNormalization !== false) {
+    throw new Error('IMAGE_ONLY_ISOLATION_NOT_FROZEN')
+  }
+  if (!(Date.parse(freeze.frozenAt) > Date.parse(ocr.generatedAt))) throw new Error('FREEZE_TIMESTAMP_INVALID')
+  const ocrByCase = new Map(ocr.cases.map((item) => [item.caseId, item]))
+  const frozenByCase = new Map((freeze.cases ?? []).map((item) => [item.id, item]))
+  if (frozenByCase.size !== dataset.sampleCount) throw new Error('FREEZE_CASE_COUNT_MISMATCH')
+  for (const fixture of dataset.cases) {
+    const frozen = frozenByCase.get(fixture.id)
+    const ocrItem = ocrByCase.get(fixture.id)
+    if (!frozen || !ocrItem
+      || frozen.scenarioFamilyId !== fixture.scenarioFamilyId
+      || frozen.modality !== fixture.modality
+      || frozen.sourceSha256 !== fixture.sourceSha256
+      || frozen.imageSha256 !== fixture.imageSha256
+      || frozen.expectedSha256 !== fixture.expectedSha256
+      || frozen.ocrTextSha256 !== ocrItem.textSha256) {
+      throw new Error(`FREEZE_CASE_HASH_MISMATCH:${fixture.id}`)
+    }
   }
 }
 
@@ -250,10 +322,11 @@ async function main() {
 
   const freezeFile = option('freeze-file')
   if (!freezeFile) throw new Error('--freeze-file is required before any model call')
-  const freeze = JSON.parse(await readFile(path.resolve(ROOT, freezeFile), 'utf8'))
-  if (freeze.datasetSha256 !== dataset.datasetSha256 || freeze.ocrBundleSha256 !== ocr.ocrBundleSha256) {
-    throw new Error('FROZEN_INPUT_HASH_MISMATCH')
-  }
+  const freezeText = await readFile(path.resolve(ROOT, freezeFile), 'utf8')
+  const freeze = JSON.parse(freezeText)
+  const expectedModel = option('expected-model', DEFAULT_EXPECTED_MODEL)
+  verifyFreeze(freeze, dataset, ocr, expectedModel)
+  const freezeSha256 = sha256(freezeText)
   const endpoint = option('endpoint', DEFAULT_ENDPOINT).replace(/\/$/u, '')
   const label = option('label')
   if (!/^[a-z0-9][a-z0-9._-]{2,100}$/u.test(label)) throw new Error('A fresh lowercase --label is required')
@@ -261,6 +334,7 @@ async function main() {
   const limit = Number(option('limit', '0'))
   const resume = option('resume', 'false') === 'true'
   const selectedCases = limit > 0 ? dataset.cases.slice(0, limit) : dataset.cases
+  const selectedCaseIds = selectedCases.map((fixture) => fixture.id)
   const ocrByCase = new Map(ocr.cases.map((item) => [item.caseId, item]))
   selectedCases.forEach((fixture) => { fixture.ocrText = ocrByCase.get(fixture.id)?.text ?? '' })
   if (selectedCases.some((fixture) => !fixture.ocrText)) throw new Error('OCR_TEXT_EMPTY')
@@ -268,11 +342,33 @@ async function main() {
   const runsDir = path.join(dataDir, 'runs')
   await mkdir(runsDir, { recursive: true })
   const checkpointFile = path.join(runsDir, `${label}.checkpoint.json`)
-  let checkpoint = { schemaVersion: 'multimodal-evaluation-checkpoint-1.0.0', label, datasetSha256: dataset.datasetSha256, ocrBundleSha256: ocr.ocrBundleSha256, endpoint, startedAt: new Date().toISOString(), observations: [] }
+  let checkpoint = {
+    schemaVersion: 'multimodal-evaluation-checkpoint-1.1.0',
+    label,
+    datasetId: dataset.datasetId,
+    datasetSha256: dataset.datasetSha256,
+    ocrBundleSha256: ocr.ocrBundleSha256,
+    freezeSha256,
+    endpoint,
+    expectedModel,
+    selectedCaseIds,
+    startedAt: new Date().toISOString(),
+    observations: [],
+  }
   try {
     const existing = JSON.parse(await readFile(checkpointFile, 'utf8'))
     if (!resume) throw new Error(`REFUSING_TO_OVERWRITE:${checkpointFile}`)
-    if (existing.datasetSha256 !== dataset.datasetSha256 || existing.ocrBundleSha256 !== ocr.ocrBundleSha256) throw new Error('CHECKPOINT_HASH_MISMATCH')
+    if (existing.schemaVersion !== checkpoint.schemaVersion
+      || existing.label !== label
+      || existing.datasetId !== dataset.datasetId
+      || existing.datasetSha256 !== dataset.datasetSha256
+      || existing.ocrBundleSha256 !== ocr.ocrBundleSha256
+      || existing.freezeSha256 !== freezeSha256
+      || existing.endpoint !== endpoint
+      || existing.expectedModel !== expectedModel
+      || stableJson(existing.selectedCaseIds) !== stableJson(selectedCaseIds)) {
+      throw new Error('CHECKPOINT_CONTRACT_MISMATCH')
+    }
     checkpoint = existing
   } catch (error) {
     if (!(error && typeof error === 'object' && error.code === 'ENOENT')) throw error
@@ -286,19 +382,32 @@ async function main() {
       console.log(`[${index + 1}/${order.length}] ${fixture.id} ${arm} resumed`)
       continue
     }
-    const observation = await execute(endpoint, fixture, arm)
+    const observation = await execute(endpoint, fixture, arm, expectedModel)
     completed.set(key, observation)
     checkpoint.observations = [...completed.values()]
     await writeFile(checkpointFile, `${JSON.stringify(checkpoint, null, 2)}\n`, 'utf8')
-    console.log(`[${index + 1}/${order.length}] ${fixture.id} ${arm} ${observation.status} taskF1=${observation.task.f1.toFixed(3)} corrections=${observation.correctionOperations} latency=${observation.latencyMs}ms`)
+    const taskF1 = Number.isFinite(observation.task.f1) ? observation.task.f1.toFixed(3) : 'NOT_APPLICABLE'
+    console.log(`[${index + 1}/${order.length}] ${fixture.id} ${arm} ${observation.status} taskF1=${taskF1} corrections=${observation.correctionOperations} latency=${observation.latencyMs}ms`)
     if (delayMs > 0 && index < order.length - 1) await sleep(delayMs)
   }
 
   const observations = [...completed.values()].filter((item) => selectedCases.some((fixture) => fixture.id === item.caseId) && ARMS.includes(item.arm))
+  if (observations.length !== selectedCases.length * ARMS.length) throw new Error('OBSERVATION_MATRIX_INCOMPLETE')
+  const completedModels = [...new Set(observations.filter((item) => item.status === 'completed').map((item) => item.returnedModel))]
+  const failureCountsByCategory = observations.filter((item) => item.status !== 'completed').reduce((counts, item) => ({
+    ...counts,
+    [item.failureCategory ?? 'unknown']: (counts[item.failureCategory ?? 'unknown'] ?? 0) + 1,
+  }), {})
   const summary = {
     ...summarizeEvaluation({ ...dataset, sampleCount: selectedCases.length }, observations),
     label,
     endpoint,
+    expectedModel,
+    modelContract: {
+      completedModels,
+      allCompletedResponsesUsedExpectedModel: completedModels.length === 1 && completedModels[0] === expectedModel,
+    },
+    failureCountsByCategory,
     startedAt: checkpoint.startedAt,
     completedAt: new Date().toISOString(),
     ocrBundleSha256: ocr.ocrBundleSha256,
@@ -306,7 +415,7 @@ async function main() {
     ocrDiagnostics: diagnostics,
     inputDisclosure: {
       T: 'local OCR text only',
-      I: 'image plus title/reference metadata; OCR retained server-side only for evidence validation and not sent upstream',
+      I: 'image plus title/reference metadata only; no OCR in the client request, Worker prompt, upstream request or Worker normalization; offline scorer alone uses frozen ground truth',
       IT: 'same image plus the identical local OCR text used by T',
     },
     groundTruthSentToModel: false,

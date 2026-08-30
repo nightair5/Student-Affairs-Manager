@@ -5,7 +5,8 @@ import { aggregateArm, pairedBootstrap, scoreCase } from './multimodal-evaluatio
 // Kept outside Vitest's *.test.* glob; this file uses node:test directly.
 
 const fixture = {
-  id: 'case-1', modality: 'screenshot', ocrText: '9月5日18:00前提交报名表',
+  id: 'case-1', scenarioFamilyId: 'scenario-1', modality: 'screenshot',
+  sourceText: '9月5日18:00前提交报名表', ocrText: '9月5日18:00前提交报名表',
   expected: {
     tasks: [{ verbs: ['提交'], objectTokens: ['报名表'] }],
     materials: [{ tokens: ['报名表'] }],
@@ -51,6 +52,7 @@ test('paired bootstrap reports paired deltas rather than dividing by model maxim
   const weaker = scoreCase(fixture, 'T', { ...result, standaloneTasks: [] })
   const paired = pairedBootstrap({ T: [weaker], IT: [candidate] }, 'IT', 'T', (item) => item.task.f1, 'seed', 100)
   assert.equal(paired.pairedCount, 1)
+  assert.equal(paired.clusterCount, 1)
   assert.equal(paired.delta, 1)
 })
 
@@ -61,4 +63,58 @@ test('reports unavailable quality metrics as null when every request failed', ()
   assert.equal(aggregate.task.f1, null)
   assert.equal(aggregate.completeCaseAccuracy, null)
   assert.equal(aggregate.majorCorrectionRate, null)
+  assert.equal(aggregate.qualityMetricsEligible, false)
+})
+
+test('does not award vacuous task F1 when both expected and predicted tasks are empty', () => {
+  const noActionFixture = structuredClone(fixture)
+  noActionFixture.expected.tasks = []
+  noActionFixture.expected.materials = []
+  noActionFixture.expected.timePoints = []
+  noActionFixture.expected.requiresAction = false
+  const noActionResult = {
+    sourceSummary: { requiresAction: false }, milestones: [], standaloneTasks: [],
+    materials: [], timePoints: [], events: [], evidence: [],
+  }
+  const scored = scoreCase(noActionFixture, 'T', noActionResult)
+  assert.equal(scored.task.f1, null)
+  assert.equal(scored.completeCase, true)
+  assert.equal(scored.evidence.validity, null)
+})
+
+test('penalizes predicted entities that have no evidence', () => {
+  const withoutEvidence = { ...result, evidence: [] }
+  const scored = scoreCase(fixture, 'IT', withoutEvidence)
+  assert.equal(scored.evidence.count, 0)
+  assert.equal(scored.evidence.validity, 0)
+  assert.equal(aggregateArm('IT', [scored]).evidenceValidity, 0)
+})
+
+test('image-only evidence is checked against offline ground truth rather than OCR text', () => {
+  const noisyFixture = { ...fixture, ocrText: 'OCR 丢失截止时间' }
+  const scored = scoreCase(noisyFixture, 'I', result)
+  assert.equal(scored.evidence.validity, 1)
+})
+
+test('paired bootstrap resamples independent scenario families as clusters', () => {
+  const make = (caseId, scenarioFamilyId, arm, f1) => ({
+    caseId, scenarioFamilyId, arm, status: 'completed', task: { f1 }, correctionOperations: 0,
+  })
+  const groups = {
+    T: [make('a-shot', 'a', 'T', 0), make('a-photo', 'a', 'T', 0), make('b-shot', 'b', 'T', 1)],
+    IT: [make('a-shot', 'a', 'IT', 1), make('a-photo', 'a', 'IT', 1), make('b-shot', 'b', 'IT', 1)],
+  }
+  const comparison = pairedBootstrap(groups, 'IT', 'T', (item) => item.task.f1, 'cluster-seed', 500)
+  assert.equal(comparison.pairedCount, 3)
+  assert.equal(comparison.clusterCount, 2)
+  assert.equal(comparison.delta, 2 / 3)
+})
+
+test('a partial request failure invalidates arm-level quality metrics', () => {
+  const completed = scoreCase(fixture, 'T', result)
+  const failed = scoreCase({ ...fixture, id: 'case-2' }, 'T', null, { status: 'request_failure' })
+  const aggregate = aggregateArm('T', [completed, failed])
+  assert.equal(aggregate.requestFailureRate, 0.5)
+  assert.equal(aggregate.qualityMetricsEligible, false)
+  assert.equal(aggregate.task.f1, null)
 })

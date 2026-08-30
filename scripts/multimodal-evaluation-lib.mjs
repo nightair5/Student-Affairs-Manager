@@ -57,8 +57,9 @@ function itemText(item, fields) {
 }
 
 function safeF1(tp, predicted, expected) {
-  const precision = predicted ? tp / predicted : expected ? 0 : 1
-  const recall = expected ? tp / expected : predicted ? 0 : 1
+  if (!predicted && !expected) return { precision: null, recall: null, f1: null }
+  const precision = predicted ? tp / predicted : 0
+  const recall = expected ? tp / expected : 0
   return { precision, recall, f1: precision + recall ? (2 * precision * recall) / (precision + recall) : 0 }
 }
 
@@ -92,10 +93,15 @@ export function scoreCase(fixture, arm, result, operational = {}) {
   })
 
   const requiresActionCorrect = Boolean(result?.sourceSummary?.requiresAction) === expected.requiresAction
+  const evidenceReference = arm === 'I' ? fixture.sourceText : fixture.ocrText
   const evidenceValid = Array.isArray(result?.evidence)
-    ? result.evidence.filter((item) => typeof item?.quotedText === 'string' && fixture.ocrText.includes(item.quotedText)).length
+    ? result.evidence.filter((item) => typeof item?.quotedText === 'string' && evidenceReference.includes(item.quotedText)).length
     : 0
   const evidenceCount = Array.isArray(result?.evidence) ? result.evidence.length : 0
+  const predictedEntityCount = predictedTasks.length + predictedMaterials.length + predictedTimes.length + predictedEvents.length
+  const evidenceValidity = evidenceCount > 0
+    ? evidenceValid / evidenceCount
+    : predictedEntityCount > 0 ? 0 : null
   const correctionOperations = taskMatch.misses + taskMatch.extras + forbiddenHits.length
     + materialMatch.misses + materialMatch.extras + timeMatch.misses + timeMatch.extras
     + eventMatch.misses + eventMatch.extras + Number(!requiresActionCorrect)
@@ -104,17 +110,19 @@ export function scoreCase(fixture, arm, result, operational = {}) {
 
   return {
     caseId: fixture.id,
+    scenarioFamilyId: fixture.scenarioFamilyId ?? fixture.id,
     modality: fixture.modality,
     arm,
     status: result ? 'completed' : operational.status ?? 'request_failure',
     failureReason: result ? null : operational.failureReason ?? 'missing result',
+    failureCategory: result ? null : operational.failureCategory ?? 'unknown',
     task: { ...taskMatch, predicted: predictedTasks.length, expected: expected.tasks.length, ...taskMetric },
     material: { ...materialMatch, predicted: predictedMaterials.length, expected: expected.materials.length },
     timePoint: { ...timeMatch, predicted: predictedTimes.length, expected: expected.timePoints.length },
     event: { ...eventMatch, predicted: predictedEvents.length, expected: expected.events.length },
     forbiddenHits,
     requiresActionCorrect,
-    evidence: { valid: evidenceValid, count: evidenceCount },
+    evidence: { valid: evidenceValid, count: evidenceCount, predictedEntityCount, validity: evidenceValidity },
     completeCase: !majorCorrection,
     majorCorrection,
     correctionOperations,
@@ -140,30 +148,34 @@ function quantile(values, probability) {
 
 export function aggregateArm(arm, observations) {
   const completed = observations.filter((item) => item.status === 'completed')
-  const sum = (selector) => completed.reduce((total, item) => total + selector(item), 0)
+  const qualityMetricsEligible = observations.length > 0 && completed.length === observations.length
+  const qualityObservations = qualityMetricsEligible ? completed : []
+  const sum = (selector) => qualityObservations.reduce((total, item) => total + selector(item), 0)
   const unavailable = { precision: null, recall: null, f1: null }
-  const task = completed.length ? safeF1(sum((item) => item.task.matched), sum((item) => item.task.predicted), sum((item) => item.task.expected)) : unavailable
-  const material = completed.length ? safeF1(sum((item) => item.material.matched), sum((item) => item.material.predicted), sum((item) => item.material.expected)) : unavailable
-  const timePoint = completed.length ? safeF1(sum((item) => item.timePoint.matched), sum((item) => item.timePoint.predicted), sum((item) => item.timePoint.expected)) : unavailable
-  const event = completed.length ? safeF1(sum((item) => item.event.matched), sum((item) => item.event.predicted), sum((item) => item.event.expected)) : unavailable
+  const task = qualityObservations.length ? safeF1(sum((item) => item.task.matched), sum((item) => item.task.predicted), sum((item) => item.task.expected)) : unavailable
+  const material = qualityObservations.length ? safeF1(sum((item) => item.material.matched), sum((item) => item.material.predicted), sum((item) => item.material.expected)) : unavailable
+  const timePoint = qualityObservations.length ? safeF1(sum((item) => item.timePoint.matched), sum((item) => item.timePoint.predicted), sum((item) => item.timePoint.expected)) : unavailable
+  const event = qualityObservations.length ? safeF1(sum((item) => item.event.matched), sum((item) => item.event.predicted), sum((item) => item.event.expected)) : unavailable
   const latency = completed.map((item) => item.latencyMs).filter(Number.isFinite)
-  const correction = completed.map((item) => item.correctionOperations)
+  const correction = qualityObservations.map((item) => item.correctionOperations)
+  const evidenceValidity = qualityObservations.map((item) => item.evidence.validity).filter(Number.isFinite)
   return {
     arm,
     sampleCount: observations.length,
     completedCount: completed.length,
+    qualityMetricsEligible,
     requestFailureRate: observations.length ? (observations.length - completed.length) / observations.length : 1,
     task,
     material,
     timePoint,
     event,
-    completeCaseAccuracy: completed.length ? sum((item) => Number(item.completeCase)) / completed.length : null,
-    majorCorrectionRate: completed.length ? sum((item) => Number(item.majorCorrection)) / completed.length : null,
-    requiresActionAccuracy: completed.length ? sum((item) => Number(item.requiresActionCorrect)) / completed.length : null,
-    forbiddenTaskRate: completed.length ? sum((item) => Number(item.forbiddenHits.length > 0)) / completed.length : null,
-    evidenceValidity: completed.length ? (sum((item) => item.evidence.count) ? sum((item) => item.evidence.valid) / sum((item) => item.evidence.count) : 1) : null,
+    completeCaseAccuracy: qualityObservations.length ? sum((item) => Number(item.completeCase)) / qualityObservations.length : null,
+    majorCorrectionRate: qualityObservations.length ? sum((item) => Number(item.majorCorrection)) / qualityObservations.length : null,
+    requiresActionAccuracy: qualityObservations.length ? sum((item) => Number(item.requiresActionCorrect)) / qualityObservations.length : null,
+    forbiddenTaskRate: qualityObservations.length ? sum((item) => Number(item.forbiddenHits.length > 0)) / qualityObservations.length : null,
+    evidenceValidity: evidenceValidity.length ? evidenceValidity.reduce((total, value) => total + value, 0) / evidenceValidity.length : null,
     automatedCorrectionBurdenProxy: {
-      meanOperations: completed.length ? sum((item) => item.correctionOperations) / completed.length : null,
+      meanOperations: qualityObservations.length ? sum((item) => item.correctionOperations) / qualityObservations.length : null,
       medianOperations: median(correction),
       p95Operations: quantile(correction, 0.95),
     },
@@ -188,17 +200,28 @@ export function pairedBootstrap(observationsByArm, candidateArm, baselineArm, se
   const pairs = observationsByArm[baselineArm]
     .filter((item) => item.status === 'completed' && candidate.has(item.caseId))
     .map((baseline) => [candidate.get(baseline.caseId), baseline])
-  if (!pairs.length) return { pairedCount: 0, delta: null, ci95: [null, null] }
-  const raw = pairs.map(([candidateItem, baselineItem]) => selector(candidateItem) - selector(baselineItem))
+    .filter(([candidateItem, baselineItem]) => Number.isFinite(selector(candidateItem)) && Number.isFinite(selector(baselineItem)))
+  if (!pairs.length) return { pairedCount: 0, clusterCount: 0, delta: null, ci95: [null, null] }
+  const clustered = new Map()
+  for (const [candidateItem, baselineItem] of pairs) {
+    const clusterId = candidateItem.scenarioFamilyId ?? baselineItem.scenarioFamilyId ?? candidateItem.caseId
+    const values = clustered.get(clusterId) ?? []
+    values.push(selector(candidateItem) - selector(baselineItem))
+    clustered.set(clusterId, values)
+  }
+  const clusters = [...clustered.values()]
+  const raw = clusters.flat()
   const delta = raw.reduce((total, value) => total + value, 0) / raw.length
   const random = seededRandom(seed)
   const samples = []
   for (let iteration = 0; iteration < iterations; iteration += 1) {
-    let total = 0
-    for (let index = 0; index < raw.length; index += 1) total += raw[Math.floor(random() * raw.length)]
-    samples.push(total / raw.length)
+    const sampled = []
+    for (let index = 0; index < clusters.length; index += 1) {
+      sampled.push(...clusters[Math.floor(random() * clusters.length)])
+    }
+    samples.push(sampled.reduce((total, value) => total + value, 0) / sampled.length)
   }
-  return { pairedCount: pairs.length, delta, ci95: [quantile(samples, 0.025), quantile(samples, 0.975)] }
+  return { pairedCount: pairs.length, clusterCount: clusters.length, delta, ci95: [quantile(samples, 0.025), quantile(samples, 0.975)] }
 }
 
 export function summarizeEvaluation(dataset, observations) {
@@ -207,7 +230,7 @@ export function summarizeEvaluation(dataset, observations) {
   const taskF1 = (item) => item.task.f1
   const correctionBenefit = (item) => -item.correctionOperations
   return {
-    schemaVersion: 'multimodal-evaluation-summary-1.0.0',
+    schemaVersion: 'multimodal-evaluation-summary-1.1.0',
     datasetId: dataset.datasetId,
     datasetSha256: dataset.datasetSha256,
     sampleCountPerArm: dataset.sampleCount,

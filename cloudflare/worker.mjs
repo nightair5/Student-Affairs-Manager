@@ -2,6 +2,7 @@ import {
   MULTIMODAL_RECOGNITION_MODEL_NAME,
   MULTIMODAL_RECOGNITION_PROMPT_VERSION,
   IMAGE_ONLY_EVALUATION_PROMPT_VERSION,
+  VISION_TEXT_EVALUATION_PROMPT_VERSION,
   normalizeRecognitionResult,
   recognitionSystemPrompt,
 } from './recognition.mjs'
@@ -199,14 +200,15 @@ function inlineImageBytes(dataUrl, expectedMimeType) {
 
 export function validateMultimodalExtractionRequest(value) {
   if (!hasOnlyFields(value, MULTIMODAL_EXTRACTION_REQUEST_FIELDS)) return 'INVALID_REQUEST'
+  const imageOnlyEvaluation = value.evaluationArm === 'image_only'
+  if (!(value.evaluationArm === undefined || imageOnlyEvaluation)) return 'MULTIMODAL_EVALUATION_ARM_INVALID'
+  if (imageOnlyEvaluation && Object.hasOwn(value, 'content')) return 'MULTIMODAL_IMAGE_ONLY_TEXT_FORBIDDEN'
   const baseValue = Object.fromEntries(
     Object.entries(value).filter(([key]) => EXTRACTION_REQUEST_FIELDS.has(key)),
   )
-  const baseError = validateExtractionRequest(baseValue)
+  const baseError = validateExtractionRequest(imageOnlyEvaluation ? { ...baseValue, content: 'image-only-evaluation' } : baseValue)
   if (baseError) return baseError
   if (!['image', 'file'].includes(value.sourceType)) return 'MULTIMODAL_SOURCE_TYPE_INVALID'
-  const imageOnlyEvaluation = value.evaluationArm === 'image_only'
-  if (!(value.evaluationArm === undefined || imageOnlyEvaluation)) return 'MULTIMODAL_EVALUATION_ARM_INVALID'
   if (value.consent !== true || (imageOnlyEvaluation ? value.ocrTextIncluded !== false : value.ocrTextIncluded !== true)) {
     return 'MULTIMODAL_CONSENT_REQUIRED'
   }
@@ -233,6 +235,12 @@ export function validateMultimodalExtractionRequest(value) {
     totalBytes += actualBytes
   }
   return totalBytes <= MAX_MULTIMODAL_TOTAL_IMAGE_BYTES ? null : 'MULTIMODAL_IMAGES_TOO_LARGE'
+}
+
+function extractionModel(env) {
+  return safeText(env.ENABLE_MULTIMODAL_EVALUATION, 10) === 'true'
+    ? DEEPSEEK_MULTIMODAL_MODEL
+    : DEEPSEEK_MODEL
 }
 
 function isIpLiteral(hostname) {
@@ -726,7 +734,14 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
   const sourceTitle = safeText(body.sourceTitle, 160)
   const referenceTime = safeText(body.referenceTime, 80)
   const timezone = safeText(body.timezone, 80) || 'Asia/Shanghai'
-  const systemPrompt = recognitionSystemPrompt()
+  const selectedModel = extractionModel(env)
+  const selectedPromptVersion = selectedModel === DEEPSEEK_MULTIMODAL_MODEL
+    ? VISION_TEXT_EVALUATION_PROMPT_VERSION
+    : undefined
+  const systemPrompt = recognitionSystemPrompt({
+    modelName: selectedModel,
+    ...(selectedPromptVersion ? { promptVersion: selectedPromptVersion } : {}),
+  })
   const userText = extractionUserText(body, sourceContent, sourceTitle, referenceTime, timezone)
   const release = acquireConcurrency(clientKey(request))
   if (!release) {
@@ -741,7 +756,7 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
         'content-type': 'application/json',
       },
       body: JSON.stringify({
-        model: DEEPSEEK_MODEL,
+        model: selectedModel,
         thinking: { type: 'disabled' },
         temperature: 0.1,
         max_tokens: MAX_EXTRACTION_TOKENS,
@@ -757,9 +772,10 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
       signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS),
     })
     if (!upstream.ok) {
-      const classified = classifyDeepSeekUpstreamStatus(upstream.status)
+      const multimodalEvaluation = selectedModel === DEEPSEEK_MULTIMODAL_MODEL
+      const classified = classifyDeepSeekUpstreamStatus(upstream.status, multimodalEvaluation)
       context.errorType = classified.error
-      return safeUpstreamFailure(upstream.status, context.requestId)
+      return safeUpstreamFailure(upstream.status, context.requestId, multimodalEvaluation)
     }
     const payload = await upstream.json()
     context.outputTokens = Number.isFinite(payload?.usage?.completion_tokens)
@@ -773,12 +789,33 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
       context.errorType = 'INVALID_AI_RESPONSE'
       return failure('INVALID_AI_RESPONSE', 'DeepSeek 未返回有效的任务结构。', 502, context.requestId)
     }
-    const result = normalizeRecognitionResult(parsed, sourceContent, referenceTime)
+    const result = normalizeRecognitionResult(
+      parsed,
+      sourceContent,
+      referenceTime,
+      selectedModel,
+      selectedPromptVersion,
+    )
     if (!result) {
       context.errorType = 'INVALID_AI_RESPONSE'
       return failure('INVALID_AI_RESPONSE', 'DeepSeek 没有返回有效的 RecognitionResult 2.0。', 502, context.requestId)
     }
-    return success({ model: DEEPSEEK_MODEL, result }, context.requestId)
+    return success({
+      model: selectedModel,
+      evaluationArm: selectedModel === DEEPSEEK_MULTIMODAL_MODEL ? 'T' : undefined,
+      result,
+      execution: {
+        tokenUsage: Number.isFinite(payload?.usage?.prompt_tokens) && Number.isFinite(payload?.usage?.completion_tokens)
+          ? {
+              input: payload.usage.prompt_tokens,
+              output: payload.usage.completion_tokens,
+              total: Number.isFinite(payload?.usage?.total_tokens)
+                ? payload.usage.total_tokens
+                : payload.usage.prompt_tokens + payload.usage.completion_tokens,
+            }
+          : null,
+      },
+    }, context.requestId)
   } catch (error) {
     context.errorType = timeoutError(error) ? 'UPSTREAM_TIMEOUT' : 'UPSTREAM_UNAVAILABLE'
     return failure(
@@ -840,7 +877,7 @@ async function extractMultimodalTasks(request, env, fetcher, isRateLimited, acqu
     return failure('NOT_FOUND', '图片版评测入口未启用。', 404, context.requestId)
   }
 
-  const sourceContent = safeText(body.content, 24_000)
+  const sourceContent = imageOnlyEvaluation ? '' : safeText(body.content, 24_000)
   const sourceTitle = safeText(body.sourceTitle, 160)
   const referenceTime = safeText(body.referenceTime, 80)
   const timezone = safeText(body.timezone, 80) || 'Asia/Shanghai'
@@ -911,6 +948,7 @@ async function extractMultimodalTasks(request, env, fetcher, isRateLimited, acqu
       referenceTime,
       DEEPSEEK_MULTIMODAL_MODEL,
       imageOnlyEvaluation ? IMAGE_ONLY_EVALUATION_PROMPT_VERSION : MULTIMODAL_RECOGNITION_PROMPT_VERSION,
+      !imageOnlyEvaluation,
     )
     if (!result) {
       context.errorType = 'INVALID_AI_RESPONSE'
@@ -979,7 +1017,10 @@ export function createWorker({
       } else if (request.method === 'GET' && url.pathname === '/api/deepseek/status') {
         response = success({
           configured: safeText(env.DEEPSEEK_API_KEY, 512).length >= 20,
-          model: DEEPSEEK_MODEL,
+          capabilityStatus: safeText(env.DEEPSEEK_API_KEY, 512).length >= 20
+            ? 'secret-present-unverified'
+            : 'not-configured',
+          model: extractionModel(env),
           multimodalModel: DEEPSEEK_MULTIMODAL_MODEL,
         }, context.requestId)
       } else if (request.method === 'GET' && url.pathname === '/api/source/status') {

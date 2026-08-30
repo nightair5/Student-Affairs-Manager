@@ -40,6 +40,7 @@ test('status honestly reports a missing Cloudflare secret', async () => {
   assert.equal(response.status, 200)
   const payload = await response.json()
   assert.equal(payload.configured, false)
+  assert.equal(payload.capabilityStatus, 'not-configured')
   assert.equal(payload.model, 'deepseek-v4-flash')
   assert.equal(payload.multimodalModel, 'deepseek-v4-flash-vision-exp')
   assert.match(payload.requestId, /^[0-9a-f-]{36}$/u)
@@ -163,6 +164,58 @@ test('structured extraction uses V4 Flash JSON mode and returns bounded suggesti
   assert.match(upstreamBody.messages[0].content, /不可信(?:资料|数据)/)
 })
 
+test('multimodal Preview status names the vision model without claiming authentication', async () => {
+  const worker = createWorker()
+  const response = await worker.fetch(new Request('https://student-affairs-manager.example/api/deepseek/status'), environment({
+    DEEPSEEK_API_KEY: 'server-only-test-key-with-length',
+    ENABLE_MULTIMODAL_EVALUATION: 'true',
+  }))
+  const payload = await response.json()
+  assert.equal(payload.configured, true)
+  assert.equal(payload.capabilityStatus, 'secret-present-unverified')
+  assert.equal(payload.model, 'deepseek-v4-flash-vision-exp')
+})
+
+test('multimodal Preview text arm uses the same vision model as image arms', async () => {
+  let upstreamBody
+  const worker = createWorker({
+    fetcher: async (_url, options) => {
+      upstreamBody = JSON.parse(options.body)
+      return Response.json({
+        usage: { prompt_tokens: 70, completion_tokens: 10, total_tokens: 80 },
+        choices: [{ message: { content: JSON.stringify({
+          schemaVersion: '2.0',
+          sourceSummary: { title: '报名通知', sourceType: 'text', requiresAction: false },
+          projectMatch: { decision: 'uncertain' },
+          milestones: [], standaloneTasks: [], materials: [], timePoints: [], events: [], evidence: [],
+          conflicts: [], ambiguities: [], ignoredContent: [], quality: {},
+        }) } }],
+      })
+    },
+  })
+  const response = await worker.fetch(request('/api/deepseek/extract', {
+    body: JSON.stringify({
+      sourceType: 'text',
+      sourceTitle: '报名通知',
+      content: '本通知无需办理。',
+      referenceTime: '2026-08-02T08:00:00.000Z',
+      timezone: 'Asia/Shanghai',
+    }),
+  }), environment({
+    DEEPSEEK_API_KEY: 'server-only-test-key-with-length',
+    ENABLE_MULTIMODAL_EVALUATION: 'true',
+  }))
+
+  assert.equal(response.status, 200)
+  const payload = await response.json()
+  assert.equal(payload.model, 'deepseek-v4-flash-vision-exp')
+  assert.equal(payload.evaluationArm, 'T')
+  assert.equal(payload.result.modelName, 'deepseek-v4-flash-vision-exp')
+  assert.equal(payload.result.promptVersion, 'recognition-vision-text-eval-1.0.0')
+  assert.deepEqual(payload.execution.tokenUsage, { input: 70, output: 10, total: 80 })
+  assert.equal(upstreamBody.model, 'deepseek-v4-flash-vision-exp')
+})
+
 test('upstream failures are classified without relaying upstream response bodies', async () => {
   assert.deepEqual(classifyDeepSeekUpstreamStatus(400), {
     error: 'UPSTREAM_REQUEST_REJECTED',
@@ -260,7 +313,6 @@ test('image-only evaluation is gated and never sends the hidden OCR reference up
   const body = {
     sourceType: 'image',
     sourceTitle: '匿名未见材料',
-    content: 'HIDDEN_OCR_MARKER：9月10日18:00提交报名表',
     referenceTime: '2026-09-01T08:00:00+08:00',
     timezone: 'Asia/Shanghai',
     consent: true,
@@ -270,6 +322,10 @@ test('image-only evaluation is gated and never sends the hidden OCR reference up
     images: [image],
   }
   assert.equal(validateMultimodalExtractionRequest(body), null)
+  assert.equal(validateMultimodalExtractionRequest({
+    ...body,
+    content: 'HIDDEN_OCR_MARKER：9月10日18:00提交报名表',
+  }), 'MULTIMODAL_IMAGE_ONLY_TEXT_FORBIDDEN')
   assert.equal(validateMultimodalExtractionRequest({ ...body, ocrTextIncluded: true }), 'MULTIMODAL_CONSENT_REQUIRED')
   assert.equal(validateMultimodalExtractionRequest({ ...body, evaluationArm: 'unknown' }), 'MULTIMODAL_EVALUATION_ARM_INVALID')
 
@@ -312,9 +368,11 @@ test('image-only evaluation is gated and never sends the hidden OCR reference up
   assert.equal(enabled.status, 200)
   const payload = await enabled.json()
   assert.equal(payload.evaluationArm, 'I')
-  assert.equal(payload.result.promptVersion, 'recognition-multimodal-image-only-eval-1.0.0')
+  assert.equal(payload.result.promptVersion, 'recognition-multimodal-image-only-eval-1.1.0')
+  assert.equal(payload.result.evidence[0].quotedText, '9月10日18:00提交报名表')
   assert.deepEqual(payload.execution.tokenUsage, { input: 100, output: 20, total: 120 })
   assert.equal(upstreamBody.model, 'deepseek-v4-flash-vision-exp')
+  assert.equal(Object.hasOwn(body, 'content'), false)
   assert.doesNotMatch(JSON.stringify(upstreamBody.messages), /HIDDEN_OCR_MARKER/u)
   assert.doesNotMatch(JSON.stringify(upstreamBody.messages), /9月10日18:00提交报名表/u)
   assert.equal(upstreamBody.messages[1].content[1].type, 'image_url')

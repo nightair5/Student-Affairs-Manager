@@ -475,7 +475,7 @@ export function IntakePanel({ onClose, onSubmitIntake, onSaveSource, smartExtrac
             </fieldset>
           )}
           <div className={`privacy-note ${smartExtractionStatus === 'connected' ? 'cloud-enabled' : 'cloud-unavailable'}`}><Sparkles size={18} /><p>
-            <strong>{smartExtractionStatus === 'connected' ? 'DeepSeek V4 Flash 智能整理' : '本地规则兜底可用'}</strong>
+            <strong>{smartExtractionStatus === 'connected' ? 'DeepSeek 已配置（调用时验证）' : '本地规则兜底可用'}</strong>
             {manualMode
               ? ' 手动填写的内容只保存在本机，仍会先进入待确认。'
               : sourceType === 'link'
@@ -484,7 +484,7 @@ export function IntakePanel({ onClose, onSubmitIntake, onSaveSource, smartExtrac
                 ? multimodalConsent
                   ? ' 本次已显式允许发送当前图片/所选页面与 OCR 文字；实验模型的结果确认前不会创建任务。'
                   : ' 默认点击整理只发送本次粘贴或本机提取的文字，不发送图片或文件本体；结果确认前不会创建任务。'
-                : ' DeepSeek 未连接，当前内容不会发往云端，将生成可编辑的本地规则建议。'}
+                : ' DeepSeek 未配置，当前内容不会发往云端，将生成可编辑的本地规则建议。'}
           </p></div>
           <button className="primary-button wide" type="submit" disabled={!canSubmitWithConsent || isParsing || isSavingSource}>
             {isParsing ? <><LoaderCircle className="spin" size={18} />正在智能整理…</> : <><Sparkles size={18} />整理成待确认任务</>}
