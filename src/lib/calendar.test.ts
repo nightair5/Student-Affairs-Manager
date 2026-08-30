@@ -77,6 +77,8 @@ describe('calendar summaries', () => {
 
   it('uses local date keys without UTC day drift', () => {
     expect(localDateKey(new Date(2026, 7, 3, 0, 30))).toBe('2026-08-03')
+    expect(localDateKey('2026-08-03T00:30:00+08:00')).toBe('2026-08-03')
+    expect(localDateKey('2026-08-03T09:00')).toBe('2026-08-03')
   })
 
   it('groups canonical events and includes them in day summaries', () => {

@@ -1,4 +1,5 @@
 import type { Event, Task } from '../types'
+import { DEFAULT_WORKSPACE_TIMEZONE } from './timeSemantics'
 
 export interface MonthCell {
   date: Date
@@ -24,10 +25,40 @@ export type CalendarTimelineItem =
   | { kind: 'task'; id: string; title: string; at: string; task: Task }
   | { kind: 'event'; id: string; title: string; at: string; event: Event }
 
+const EXPLICIT_TIMEZONE_PATTERN = /(?:Z|[+-]\d{2}:\d{2})$/i
+
+function partsInWorkspaceTimezone(value: Date): Intl.DateTimeFormatPart[] {
+  return new Intl.DateTimeFormat('en-CA', {
+    timeZone: DEFAULT_WORKSPACE_TIMEZONE,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hourCycle: 'h23',
+  }).formatToParts(value)
+}
+
+function workspacePart(parts: Intl.DateTimeFormatPart[], type: Intl.DateTimeFormatPartTypes): string {
+  return parts.find((part) => part.type === type)?.value ?? ''
+}
+
+function workspaceTimeLabel(value: string): string {
+  const localMatch = value.match(/^\d{4}-\d{2}-\d{2}T(\d{2}):(\d{2})/)
+  if (localMatch && !EXPLICIT_TIMEZONE_PATTERN.test(value)) {
+    return `${localMatch[1]}:${localMatch[2]}`
+  }
+  const parts = partsInWorkspaceTimezone(new Date(value))
+  return `${workspacePart(parts, 'hour')}:${workspacePart(parts, 'minute')}`
+}
+
 export function localDateKey(value: Date | string): string {
-  const date = typeof value === 'string' ? new Date(value) : value
-  const pad = (part: number) => String(part).padStart(2, '0')
-  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`
+  if (typeof value === 'string' && !EXPLICIT_TIMEZONE_PATTERN.test(value)) {
+    const localMatch = value.match(/^(\d{4}-\d{2}-\d{2})(?:T|$)/)
+    if (localMatch) return localMatch[1]
+  }
+  const parts = partsInWorkspaceTimezone(typeof value === 'string' ? new Date(value) : value)
+  return `${workspacePart(parts, 'year')}-${workspacePart(parts, 'month')}-${workspacePart(parts, 'day')}`
 }
 
 export function buildMonthCells(viewDate: Date, today = new Date()): MonthCell[] {
@@ -135,10 +166,7 @@ export function summarizeCalendarDay(tasks: Task[], events: Event[]): DaySummary
   ].sort((a, b) => new Date(a.at).getTime() - new Date(b.at).getTime())
   const fallback = sorted.map((task) => ({ title: task.title, at: task.deadline }))
   const focus = activeItems.length ? activeItems : fallback
-  const earliest = new Date(focus[0].at)
-  const timeLabel = new Intl.DateTimeFormat('zh-CN', {
-    hour: '2-digit', minute: '2-digit', hour12: false,
-  }).format(earliest)
+  const timeLabel = workspaceTimeLabel(focus[0].at)
   const riskCount = activeTasks.filter((task) => task.riskFlags.length > 0).length
     + events.filter((event) => event.needsConfirmation).length
   const active = activeItems.length
