@@ -121,7 +121,7 @@ release Worker 对 `/benchmark*`、`/e2*`、`/fact-ledger*`、`/selection*`、`/
 
 ## 21. Security
 
-自动证据覆盖 Key 服务端化、Origin、Content-Type、请求体大小、Prompt injection、SSRF 与每跳 redirect 复核、安全错误、实验 route isolation 和 Secret scan。RC.4 已部署首页及 2 个 JS/CSS 资产共 627,422 bytes 的范围扫描中，有界 Secret-like key 与 `DEEPSEEK_API_KEY` 前端名称命中均为 0；Workspace v8 导出及两类 PDF 全链也未发现 Secret 或文件本体，模型调用为 0。Preview/Production Deployment 与 Version 保持隔离；旧 Production 的实验样式路径字面 404 仍是独立未关闭门槛。
+自动证据覆盖 Key 服务端化、Origin、Content-Type、请求体大小、Prompt injection、SSRF 与每跳 redirect 复核、安全错误、实验 route isolation 和 Secret scan。RC.4 对匿名恶意 Origin、错误 Content-Type、超限 Body 与私网 URL 的直接拒绝探针分别返回 403/415/413/400；6 个聚焦 Worker 安全测试与 1 个 recognition injection 测试通过，均未调用付费模型。已部署首页及 2 个 JS/CSS 资产共 627,422 bytes 的范围扫描中，有界 Secret-like key 与 `DEEPSEEK_API_KEY` 前端名称命中均为 0；Workspace v8 导出及两类 PDF 全链也未发现 Secret 或文件本体。RC 候选安全门槛 `PASS`。Preview/Production Deployment 与 Version 保持隔离；旧 Production 的实验样式路径字面 404 仍是独立未关闭门槛。
 
 ## 22. Reliability
 

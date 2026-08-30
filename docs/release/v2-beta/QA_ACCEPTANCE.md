@@ -75,9 +75,9 @@ Capture → Source 先保存 → RecognitionRun → Draft → Evidence
 | 检查 | 自动证据 | 浏览器证据 | 当前判定 |
 | --- | --- | --- | --- |
 | DeepSeek Key 仅服务端 | secret scan、Worker/Functions tests | RC.4 已部署 bundle 范围扫描 | PASS |
-| Origin / Content-Type / Body Size | Worker/Functions tests | Preview 网络面板 | PARTIAL |
-| Prompt injection 作为不可信数据 | Worker test | 场景 I | PARTIAL |
-| SSRF、redirect 每跳复核 | Server/Worker tests | Preview URL 输入 | PARTIAL |
+| Origin / Content-Type / Body Size | Worker/Functions tests | RC.4 匿名拒绝探针 | PASS |
+| Prompt injection 作为不可信数据 | Worker + recognition 聚焦测试 | 固定 system prompt 与不可信 user 数据分层 | PASS |
+| SSRF、redirect 每跳复核 | Server/Worker 聚焦测试 | RC.4 私网目标拒绝探针 | PASS |
 | 文件类型、大小、页数和 50k 截断 | fileExtraction 17 tests | 场景 H | PASS |
 | Export 不含 Secret/文件本体 | secret scan、repository tests | 场景 J | PASS |
 | Preview/Production 部署隔离 | Wrangler config、独立 Worker URL | 两套 Deployment/Version 独立且 Production 未变 | PASS |
@@ -85,6 +85,8 @@ Capture → Source 先保存 → RecognitionRun → Draft → Evidence
 | 当前 Production 字面 404 | 无法由未部署 RC 代替 | 旧 Production 六条路径均为 SPA HTML 200 | OPEN；需独立 Production 批准后关闭 |
 
 RC.4 已部署首页及其 2 个 JS/CSS 资产共扫描 627,422 bytes：有界 Secret-like key 模式命中 0，前端资产中的 `DEEPSEEK_API_KEY` 名称命中 0。扫描仅输出计数，不输出任何疑似值；status 检查没有发送正文或调用模型。
+
+2026-08-30 22:37 Asia/Shanghai 对 RC.4 发送四个必然在上游前终止的匿名探针：不受信任 Origin 返回 `403 ORIGIN_NOT_ALLOWED` 且无 CORS 放行头；同源错误 Content-Type 返回 `415 INVALID_CONTENT_TYPE`；同源超过 100 KB 的请求返回 `413 INPUT_TOO_LARGE`；`https://127.0.0.1/private` 返回 `400 WEB_PRIVATE_ADDRESS_FORBIDDEN`。随后 6 个聚焦 Worker 安全测试与 1 个 recognition prompt-injection 测试全部通过，覆盖固定 system prompt、unknown field、私网/IP、逐跳 redirect 和 DNS rebinding。Worker 日志只记录 requestId、路径、状态、时长、输入长度、token 数与错误类型，不记录匿名正文；本轮付费模型调用为 0。
 
 ### 4.2 可靠性
 
