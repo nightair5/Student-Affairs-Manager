@@ -497,8 +497,23 @@ export function workspaceV8ToLegacyView(workspace: WorkspaceV8): WorkspaceData {
   }
 }
 
-function withLegacyRecord(current: LegacyData | undefined, value: unknown): LegacyData {
-  return { ...(current ?? {}), v7Record: legacyJsonValue(value) }
+function sameLegacyViewValue(left: unknown, right: unknown): boolean {
+  return JSON.stringify(legacyJsonValue(left)) === JSON.stringify(legacyJsonValue(right))
+}
+
+function withLegacyRecord(current: LegacyData | undefined, value: unknown, baseline?: unknown): LegacyData {
+  const nextRecord = record(legacyJsonValue(value))
+  const currentRecord = record(current?.v7Record)
+  const baselineRecord = baseline === undefined ? null : record(legacyJsonValue(baseline))
+  if (!nextRecord || !currentRecord || !baselineRecord) {
+    return { ...(current ?? {}), v7Record: legacyJsonValue(value) }
+  }
+
+  const merged = { ...currentRecord } as Record<string, JsonValue>
+  Object.entries(nextRecord).forEach(([key, nextValue]) => {
+    if (!sameLegacyViewValue(nextValue, baselineRecord[key])) merged[key] = nextValue as JsonValue
+  })
+  return { ...(current ?? {}), v7Record: merged }
 }
 
 function legacyJsonValue(value: unknown): JsonValue {
@@ -506,7 +521,9 @@ function legacyJsonValue(value: unknown): JsonValue {
   if (typeof value === 'number') return Number.isFinite(value) ? value : null
   if (Array.isArray(value)) return value.map(legacyJsonValue)
   if (value && typeof value === 'object') {
-    return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, legacyJsonValue(item)]))
+    return Object.fromEntries(Object.entries(value)
+      .filter(([, item]) => item !== undefined)
+      .map(([key, item]) => [key, legacyJsonValue(item)]))
   }
   return null
 }
@@ -558,12 +575,20 @@ function mergedReminderDelivery(
  * are updated by stable ID and are never regenerated from Task/Draft projections.
  */
 export function mergeLegacyViewIntoWorkspaceV8(workspace: WorkspaceV8, view: WorkspaceData): WorkspaceV8 {
+  const baselineView = workspaceV8ToLegacyView(workspace)
+  if (sameLegacyViewValue(view, baselineView)) return workspace
   const tasksById = new Map(view.tasks.map((item) => [item.id, item]))
   const sourcesById = new Map(view.sources.map((item) => [item.id, item]))
   const draftsById = new Map(view.drafts.map((item) => [item.id, item]))
   const projectsById = new Map(view.projects.map((item) => [item.id, item]))
   const materialsById = new Map(view.materialItems.map((item) => [item.id, item]))
   const remindersById = new Map(view.reminderRecords.map((item) => [item.id, item]))
+  const baselineTasksById = new Map(baselineView.tasks.map((item) => [item.id, item]))
+  const baselineSourcesById = new Map(baselineView.sources.map((item) => [item.id, item]))
+  const baselineDraftsById = new Map(baselineView.drafts.map((item) => [item.id, item]))
+  const baselineProjectsById = new Map(baselineView.projects.map((item) => [item.id, item]))
+  const baselineMaterialsById = new Map(baselineView.materialItems.map((item) => [item.id, item]))
+  const baselineRemindersById = new Map(baselineView.reminderRecords.map((item) => [item.id, item]))
   const now = view.savedAt
 
   const milestonesById = new Map<string, {
@@ -574,6 +599,7 @@ export function mergeLegacyViewIntoWorkspaceV8(workspace: WorkspaceV8, view: Wor
   view.projects.forEach((project) => project.milestones.forEach((milestone, index) => {
     if (!milestonesById.has(milestone.id)) milestonesById.set(milestone.id, { milestone, project, index })
   }))
+  const baselineMilestonesById = new Map(baselineView.projects.flatMap((project) => project.milestones).map((item) => [item.id, item]))
 
   const canonicalMilestoneIds = new Set(workspace.milestones.map((item) => item.id))
   const addedMilestones: WorkspaceV8['milestones'] = [...milestonesById.values()]
@@ -683,6 +709,8 @@ export function mergeLegacyViewIntoWorkspaceV8(workspace: WorkspaceV8, view: Wor
     tasks: workspace.tasks.map((item) => {
       const edited = tasksById.get(item.id)
       if (!edited) return item
+      const baseline = baselineTasksById.get(item.id)
+      if (baseline && sameLegacyViewValue(edited, baseline)) return item
       return {
         ...item,
         title: edited.title,
@@ -695,28 +723,34 @@ export function mergeLegacyViewIntoWorkspaceV8(workspace: WorkspaceV8, view: Wor
         dependencyIds: edited.dependencyIds ?? [],
         updatedAt: edited.updatedAt,
         version: item.version + (edited.updatedAt !== item.updatedAt ? 1 : 0),
-        legacyData: withLegacyRecord(item.legacyData, edited),
+        legacyData: withLegacyRecord(item.legacyData, edited, baseline),
       }
     }),
     sources: workspace.sources.map((item) => {
       const edited = sourcesById.get(item.id)
-      return edited ? { ...item, title: edited.title, status: edited.status ?? item.status, updatedAt: edited.updatedAt ?? item.updatedAt, legacyData: withLegacyRecord(item.legacyData, edited) } : item
+      const baseline = baselineSourcesById.get(item.id)
+      return edited && !(baseline && sameLegacyViewValue(edited, baseline))
+        ? { ...item, title: edited.title, status: edited.status ?? item.status, updatedAt: edited.updatedAt ?? item.updatedAt, legacyData: withLegacyRecord(item.legacyData, edited, baseline) }
+        : item
     }),
     sourceVersions: workspace.sourceVersions.map((item) => {
       const source = sourcesById.get(item.sourceId)
+      const baseline = baselineSourcesById.get(item.sourceId)
       const canonicalSource = workspace.sources.find((candidate) => candidate.id === item.sourceId)
-      if (!source || canonicalSource?.currentVersionId !== item.id) return item
+      if (!source || canonicalSource?.currentVersionId !== item.id || (baseline && sameLegacyViewValue(source, baseline))) return item
       const rawText = source.rawText ?? source.content ?? item.rawText
       return {
         ...item,
         rawText,
         contentHash: rawText !== item.rawText ? workspaceSnapshotHash(rawText) : item.contentHash,
-        legacyData: withLegacyRecord(item.legacyData, source),
+        legacyData: withLegacyRecord(item.legacyData, source, baseline),
       }
     }),
     extractionDrafts: workspace.extractionDrafts.map((item) => {
       const edited = draftsById.get(item.id)
       if (!edited) return item
+      const baseline = baselineDraftsById.get(item.id)
+      if (baseline && sameLegacyViewValue(edited, baseline)) return item
       const accepted = edited.items.filter((candidate) => candidate.status === '已确认').map((candidate) => candidate.suggestion.id)
       const rejected = edited.items.filter((candidate) => candidate.status === '已拒绝').map((candidate) => candidate.suggestion.id)
       const status = edited.workflowStatus
@@ -728,24 +762,29 @@ export function mergeLegacyViewIntoWorkspaceV8(workspace: WorkspaceV8, view: Wor
         acceptedEntityTempIds: [...new Set([...item.acceptedEntityTempIds, ...accepted])],
         rejectedEntityTempIds: [...new Set([...item.rejectedEntityTempIds, ...rejected])],
         updatedAt: edited.updatedAt,
-        legacyData: withLegacyRecord(item.legacyData, edited),
+        legacyData: withLegacyRecord(item.legacyData, edited, baseline),
       }
     }),
     projects: workspace.projects.map((item) => {
       const edited = projectsById.get(item.id)
-      return edited ? { ...item, title: edited.title, category: edited.category, objective: edited.objective ?? null, status: edited.status ?? item.status, updatedAt: edited.updatedAt, version: item.version + (edited.updatedAt !== item.updatedAt ? 1 : 0), legacyData: withLegacyRecord(item.legacyData, edited) } : item
+      const baseline = baselineProjectsById.get(item.id)
+      return edited && !(baseline && sameLegacyViewValue(edited, baseline))
+        ? { ...item, title: edited.title, category: edited.category, objective: edited.objective ?? null, status: edited.status ?? item.status, updatedAt: edited.updatedAt, version: item.version + (edited.updatedAt !== item.updatedAt ? 1 : 0), legacyData: withLegacyRecord(item.legacyData, edited, baseline) }
+        : item
     }),
     milestones: [
       ...workspace.milestones.map((item) => {
         const entry = milestonesById.get(item.id)
         const edited = entry?.project.id === item.projectId ? entry.milestone : undefined
+        const baseline = baselineMilestonesById.get(item.id)
+        if (edited && baseline && sameLegacyViewValue(edited, baseline)) return item
         return edited ? {
           ...item,
           title: edited.title,
           objective: edited.objective ?? null,
           sortOrder: edited.order ?? item.sortOrder,
           status: edited.status === '已完成' ? 'completed' as const : 'active' as const,
-          legacyData: withLegacyRecord(item.legacyData, edited),
+          legacyData: withLegacyRecord(item.legacyData, edited, baseline),
         } : item
       }),
       ...addedMilestones,
@@ -753,7 +792,9 @@ export function mergeLegacyViewIntoWorkspaceV8(workspace: WorkspaceV8, view: Wor
     materials: workspace.materials.map((item) => {
       const edited = materialsById.get(item.id) ?? view.tasks.flatMap((task) => task.materials).find((material) => material.id === item.id)
       if (!edited) return item
-      return { ...item, name: edited.name, status: edited.status ?? ('done' in edited && edited.done ? 'ready' : item.status), updatedAt: 'updatedAt' in edited ? edited.updatedAt : now, version: item.version + 1, legacyData: withLegacyRecord(item.legacyData, edited) }
+      const baseline = baselineMaterialsById.get(item.id) ?? baselineView.tasks.flatMap((task) => task.materials).find((material) => material.id === item.id)
+      if (baseline && sameLegacyViewValue(edited, baseline)) return item
+      return { ...item, name: edited.name, status: edited.status ?? ('done' in edited && edited.done ? 'ready' : item.status), updatedAt: 'updatedAt' in edited ? edited.updatedAt : now, version: item.version + 1, legacyData: withLegacyRecord(item.legacyData, edited, baseline) }
     }),
     timePoints: [
       ...workspace.timePoints.map((item) => {
@@ -811,11 +852,13 @@ export function mergeLegacyViewIntoWorkspaceV8(workspace: WorkspaceV8, view: Wor
       ...workspace.reminderRecords.map((item) => {
         const edited = remindersById.get(item.id)
         if (!edited) return item
+        const baseline = baselineRemindersById.get(item.id)
+        if (baseline && sameLegacyViewValue(edited, baseline)) return item
         return {
           ...item,
           scheduledAt: edited.scheduledAt || null,
           ...mergedReminderDelivery(edited, item),
-          legacyData: withLegacyRecord(item.legacyData, edited),
+          legacyData: withLegacyRecord(item.legacyData, edited, baseline),
         }
       }),
       ...addedReminders,

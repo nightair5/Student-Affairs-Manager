@@ -1014,6 +1014,8 @@ function App() {
 
   const handleImportWorkspace = async (serialized: string) => {
     const imported = await workspaceRepository.importAndReplace(serialized)
+    persistedWorkspaceRevision.current = persistenceRevisionForView(imported)
+    pendingWorkspaceRevision.current = null
     applyWorkspaceView(imported)
     setNotice({ text: '已导入 JSON 备份。' })
   }

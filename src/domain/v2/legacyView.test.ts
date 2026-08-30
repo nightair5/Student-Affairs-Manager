@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest'
 import type { WorkspaceData } from '../../types'
+import { demoSources, demoTasks } from '../../data/demo'
 import { materializeWorkspaceEntities } from '../../lib/domainEntities'
+import { createWorkspaceData } from '../../lib/workspace'
 import { buildLocalRecognition } from '../../recognition/pipeline'
 import anonymousV7Copy from './fixtures/workspace-v7-anonymous-copy.json'
 import { createGoldenWorkspaceV8 } from './fixtures'
@@ -8,6 +10,15 @@ import { applyPreparedV8Migration, prepareV7ToV8Migration } from './migration'
 import { mergeLegacyViewIntoWorkspaceV8, workspaceV8ToLegacyView } from './legacyView'
 
 describe('Workspace v8 legacy UI view', () => {
+  it('keeps canonical and legacy facts byte-for-byte on a no-op compatibility autosave', () => {
+    const canonical = applyPreparedV8Migration(prepareV7ToV8Migration(createWorkspaceData(demoTasks, demoSources), {
+      now: '2026-08-08T10:00:00.000Z',
+      migrationId: 'legacy-view-no-op-test',
+    }))
+
+    expect(mergeLegacyViewIntoWorkspaceV8(canonical, workspaceV8ToLegacyView(canonical))).toEqual(canonical)
+  })
+
   it('projects canonical facts without losing rich fields when UI edits are merged', () => {
     const canonical = applyPreparedV8Migration(prepareV7ToV8Migration(anonymousV7Copy as unknown as WorkspaceData, {
       now: '2026-08-08T10:00:00.000Z',
@@ -45,6 +56,7 @@ describe('Workspace v8 legacy UI view', () => {
     expect(merged.timePoints.map((item) => item.id)).toEqual(expect.arrayContaining(canonical.timePoints.map((item) => item.id)))
     expect(merged.timePoints).toHaveLength(canonical.timePoints.length + 1)
     expect(merged.evidenceRefs).toEqual(canonical.evidenceRefs)
+    expect(merged.tasks[0].legacyData?.v7Record).toMatchObject({ legacyCustomTaskField: { reviewOwner: 'anonymous' } })
   })
 
   it('appends new legacy milestones, reminders, and history once with stable canonical references', () => {
