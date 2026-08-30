@@ -22,6 +22,7 @@ import {
 import { loadWorkspace } from './lib/storage'
 import { updateTaskWithHistory } from './lib/taskUpdates'
 import { canSaveLinkOnly, createIntakeResult, type IntakeInput } from './lib/intake'
+import { MULTIMODAL_PROMPT_VERSION } from './lib/multimodal'
 import { ProxyDeepSeekExtractionService } from './lib/deepseekExtraction'
 import { buildLocalRecognition } from './recognition/pipeline'
 import {
@@ -450,6 +451,9 @@ function App() {
     const useCloudRecognition = !input.manualSuggestion && smartExtractionStatus === 'connected'
     const reviewQualityFlags = [...new Set([
       ...(input.reviewMetadata?.qualityFlags ?? []),
+      ...(input.multimodal
+        ? [`多模态实验：本次显式发送 ${input.multimodal.images.length} 张图片/页面与 OCR 文字；图片未写入工作区`]
+        : []),
       ...(useCloudRecognition && input.content.length > 24_000
         ? ['DeepSeek 本次仅接收前 24,000 字，后续正文未进入模型识别']
         : []),
@@ -467,10 +471,16 @@ function App() {
       modelName: input.manualSuggestion
         ? 'manual-entry'
         : useCloudRecognition
-          ? 'deepseek-v4-flash'
+          ? input.multimodal
+            ? 'deepseek-v4-flash-vision-exp'
+            : 'deepseek-v4-flash'
           : 'local-rules',
-      promptVersion: input.manualSuggestion ? null : localRecognition.promptVersion,
-      pipelineVersion: useCloudRecognition ? 'source-before-ai-v1' : 'source-before-local-rules-v1',
+      promptVersion: input.manualSuggestion
+        ? null
+        : input.multimodal ? MULTIMODAL_PROMPT_VERSION : localRecognition.promptVersion,
+      pipelineVersion: useCloudRecognition
+        ? input.multimodal ? 'source-before-multimodal-ai-v1' : 'source-before-ai-v1'
+        : 'source-before-local-rules-v1',
       sourceLegacyData: {
         contentPreview: localResult.source.contentPreview,
         url: input.url ?? null,

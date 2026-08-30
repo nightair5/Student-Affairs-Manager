@@ -2,6 +2,7 @@ import {
   Camera,
   FileImage,
   FileText,
+  ImageUp,
   Link2,
   LoaderCircle,
   PenLine,
@@ -22,6 +23,11 @@ import {
   extractFileEvidence,
 } from '../lib/fileExtraction'
 import { fetchAuthorizedLinkText } from '../lib/linkExtraction'
+import {
+  isSupportedMultimodalImage,
+  parsePdfPageSelection,
+  prepareMultimodalInput,
+} from '../lib/multimodal'
 import {
   canSaveLinkOnly,
   canSubmitIntake,
@@ -52,6 +58,11 @@ export function IntakePanel({ onClose, onSubmitIntake, onSaveSource, smartExtrac
   const [fileMessage, setFileMessage] = useState('')
   const [fileProgress, setFileProgress] = useState(0)
   const [fileReviewMetadata, setFileReviewMetadata] = useState<SourceReviewMetadata>({})
+  const [selectedFile, setSelectedFile] = useState<File | null>(null)
+  const [multimodalConsent, setMultimodalConsent] = useState(false)
+  const [pdfPageSelection, setPdfPageSelection] = useState('1')
+  const [multimodalMessage, setMultimodalMessage] = useState('')
+  const [multimodalError, setMultimodalError] = useState('')
   const [linkUrl, setLinkUrl] = useState('')
   const [linkAuthorized, setLinkAuthorized] = useState(false)
   const [linkStatus, setLinkStatus] = useState<'idle' | 'reading' | 'ready' | 'error'>('idle')
@@ -87,6 +98,11 @@ export function IntakePanel({ onClose, onSubmitIntake, onSaveSource, smartExtrac
     setFileMessage('')
     setFileProgress(0)
     setFileReviewMetadata({})
+    setSelectedFile(null)
+    setMultimodalConsent(false)
+    setPdfPageSelection('1')
+    setMultimodalMessage('')
+    setMultimodalError('')
     setLinkUrl('')
     setLinkAuthorized(false)
     setLinkStatus('idle')
@@ -103,13 +119,23 @@ export function IntakePanel({ onClose, onSubmitIntake, onSaveSource, smartExtrac
     setFileMessage('')
     setFileProgress(0)
     setFileReviewMetadata({})
+    setSelectedFile(null)
+    setMultimodalConsent(false)
+    setPdfPageSelection('1')
+    setMultimodalMessage('')
+    setMultimodalError('')
   }
 
   const processFile = async (file: File) => {
     const generation = fileGenerationRef.current + 1
     fileGenerationRef.current = generation
     const isCurrent = () => fileGenerationRef.current === generation
-    const isImage = file.type.startsWith('image/')
+    const isImage = file.type.startsWith('image/') || isSupportedMultimodalImage(file)
+    setSelectedFile(file)
+    setMultimodalConsent(false)
+    setPdfPageSelection('1')
+    setMultimodalMessage('')
+    setMultimodalError('')
     setSourceType(isImage ? 'image' : 'file')
     setFileName(file.name)
     setMimeType(file.type)
@@ -169,12 +195,29 @@ export function IntakePanel({ onClose, onSubmitIntake, onSaveSource, smartExtrac
     fileName,
     linkUrl,
   })
+  const selectedFileIsPdf = Boolean(selectedFile && (
+    selectedFile.type === 'application/pdf' || selectedFile.name.toLowerCase().endsWith('.pdf')
+  ))
+  const isScannedPdf = selectedFileIsPdf && fileReviewMetadata.extractionMethod === 'ocr'
+  const isMultimodalCandidate = Boolean(selectedFile && (sourceType === 'image' || isScannedPdf))
+  const imageFormatSupported = Boolean(selectedFile && (
+    selectedFileIsPdf || isSupportedMultimodalImage(selectedFile)
+  ))
+  const pageSelection = isScannedPdf
+    ? parsePdfPageSelection(pdfPageSelection, fileReviewMetadata.pageCount ?? 0)
+    : { pages: [] as number[] }
+  const multimodalReady = isMultimodalCandidate
+    && imageFormatSupported
+    && smartExtractionStatus === 'connected'
+    && (!isScannedPdf || !pageSelection.error)
+  const canSubmitWithConsent = canSubmit && (!multimodalConsent || multimodalReady)
   const canSaveLink = sourceType === 'link' && canSaveLinkOnly(linkUrl, sourceTitle)
 
   const handleParse = async (event: FormEvent) => {
     event.preventDefault()
-    if (!canSubmit) return
+    if (!canSubmitWithConsent) return
     setIsParsing(true)
+    setMultimodalError('')
     try {
       if (manualMode) {
         const evidence = `手动录入：${manualTitle.trim()}；截止 ${manualDeadline}；下一步 ${manualNextAction.trim()}`
@@ -216,9 +259,18 @@ export function IntakePanel({ onClose, onSubmitIntake, onSaveSource, smartExtrac
                 characterCount: content.trim().length,
                 extractionMethod: 'manual',
               }
-        await onSubmitIntake({ operationId: operationIdRef.current, sourceType, content, sourceTitle, fileName, mimeType, fileSize, fileHash, url: linkUrl, reviewMetadata })
+        const multimodal = multimodalConsent && selectedFile
+          ? await prepareMultimodalInput(selectedFile, {
+              pdfPages: isScannedPdf ? pageSelection.pages : undefined,
+              onProgress: setMultimodalMessage,
+            })
+          : undefined
+        await onSubmitIntake({ operationId: operationIdRef.current, sourceType, content, sourceTitle, fileName, mimeType, fileSize, fileHash, url: linkUrl, reviewMetadata, multimodal })
       }
+    } catch (cause) {
+      setMultimodalError(cause instanceof Error ? cause.message : '本次图片准备失败，请关闭多模态开关后使用文字版。')
     } finally {
+      setMultimodalMessage('')
       setIsParsing(false)
     }
   }
@@ -270,7 +322,7 @@ export function IntakePanel({ onClose, onSubmitIntake, onSaveSource, smartExtrac
       <section ref={panelRef} className="intake-panel" role="dialog" aria-modal="true" aria-labelledby={titleId} onPaste={handlePaste}>
         <header className="intake-header">
           <div>
-            <span className="eyebrow">第 1 步 · 放入原文</span>
+            <span className="eyebrow">E2-MM 独立 Preview · 第 1 步</span>
             <h2 id={titleId}>把通知原样放进来</h2>
             <p>不用先整理。下一步会让你核对拆分结果。</p>
           </div>
@@ -337,8 +389,53 @@ export function IntakePanel({ onClose, onSubmitIntake, onSaveSource, smartExtrac
                 <label className="field manual-source-field">
                   <span>{fileStatus === 'ready' ? '已提取原文（可核对修改）' : '人工补充原文（必填）'}</span>
                   <textarea value={content} onChange={(event) => setContent(event.target.value)} rows={8} placeholder="请粘贴或输入通知中的日期、事项、材料等原文……" required />
-                  <small>图片和扫描 PDF 会在本机 OCR；只有你核对后的文字才会在点击整理时发送给 DeepSeek，文件本体不会上传。</small>
+                  <small>默认只发送你核对后的 OCR 文字。仅当你主动打开下方多模态开关时，才会额外发送本次图片或所选 PDF 页面。</small>
                 </label>
+              )}
+              {isMultimodalCandidate && selectedFile && (
+                <section className={`multimodal-consent ${multimodalConsent ? 'enabled' : ''}`} aria-labelledby="multimodal-consent-title">
+                  <label className="multimodal-switch">
+                    <input
+                      type="checkbox"
+                      checked={multimodalConsent}
+                      disabled={smartExtractionStatus !== 'connected' || !imageFormatSupported}
+                      onChange={(event) => {
+                        setMultimodalConsent(event.target.checked)
+                        setMultimodalError('')
+                        setMultimodalMessage('')
+                      }}
+                    />
+                    <span>
+                      <ImageUp size={18} aria-hidden="true" />
+                      <strong id="multimodal-consent-title">允许发送本次图片以提高识别</strong>
+                    </span>
+                  </label>
+                  <p>
+                    {isScannedPdf
+                      ? '开启后会把你选中的 PDF 页面转换为图片，并连同你核对后的 OCR 文字、来源标题、参考时间/时区，以及限量的已有项目与未完成任务摘要发送给实验模型。'
+                      : '开启后会发送这 1 张原图，并连同你核对后的 OCR 文字、来源标题、参考时间/时区，以及限量的已有项目与未完成任务摘要发送给实验模型。'}
+                    不会发送其他文件、整个工作区、历史全文或图片到本机存储/导出；输出仍只是待确认建议。
+                  </p>
+                  {isScannedPdf && (
+                    <label className="field multimodal-pages">
+                      <span>本次发送的 PDF 页码（最多 4 页）</span>
+                      <input
+                        type="text"
+                        value={pdfPageSelection}
+                        onChange={(event) => setPdfPageSelection(event.target.value)}
+                        placeholder="例如：1,3 或 2-4"
+                        disabled={!multimodalConsent}
+                        aria-invalid={multimodalConsent && Boolean(pageSelection.error)}
+                      />
+                      <small>共 {fileReviewMetadata.pageCount ?? '未知'} 页；只发送这里列出的页面，不发送 PDF 文件本体。</small>
+                    </label>
+                  )}
+                  {!imageFormatSupported && <p className="consent-error" role="alert">实验模型只接收 JPEG、PNG、GIF 或 WebP；请先转为受支持图片。</p>}
+                  {smartExtractionStatus !== 'connected' && <p className="consent-error" role="status">云端实验接口当前未连接，开关保持不可用；仍可使用默认文字版。</p>}
+                  {multimodalConsent && pageSelection.error && <p className="consent-error" role="alert">{pageSelection.error}</p>}
+                  {multimodalMessage && <p className="consent-status" role="status">{multimodalMessage}</p>}
+                  {multimodalError && <p className="consent-error" role="alert">{multimodalError}</p>}
+                </section>
               )}
             </>
           )}
@@ -384,10 +481,12 @@ export function IntakePanel({ onClose, onSubmitIntake, onSaveSource, smartExtrac
               : sourceType === 'link'
               ? ' 只有受控读取成功或你粘贴正文后才会调用 DeepSeek；裸链接不会被伪装成已读取内容。'
               : smartExtractionStatus === 'connected'
-                ? ' 点击整理会发送本次粘贴或本机提取的文字，不发送文件本体；结果确认前不会创建任务。'
+                ? multimodalConsent
+                  ? ' 本次已显式允许发送当前图片/所选页面与 OCR 文字；实验模型的结果确认前不会创建任务。'
+                  : ' 默认点击整理只发送本次粘贴或本机提取的文字，不发送图片或文件本体；结果确认前不会创建任务。'
                 : ' DeepSeek 未连接，当前内容不会发往云端，将生成可编辑的本地规则建议。'}
           </p></div>
-          <button className="primary-button wide" type="submit" disabled={!canSubmit || isParsing || isSavingSource}>
+          <button className="primary-button wide" type="submit" disabled={!canSubmitWithConsent || isParsing || isSavingSource}>
             {isParsing ? <><LoaderCircle className="spin" size={18} />正在智能整理…</> : <><Sparkles size={18} />整理成待确认任务</>}
           </button>
         </form>

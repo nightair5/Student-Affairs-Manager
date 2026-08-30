@@ -221,7 +221,9 @@ export function workspaceV8ToLegacyView(workspace: WorkspaceV8): WorkspaceData {
       updatedAt: item.updatedAt,
       extractionStatus: legacySourceStatus(item.status),
       extractionMethod: runsForVersion.some((run) => run.provider === 'deepseek')
-        ? 'deepseek-v4-flash'
+        ? runsForVersion.some((run) => run.modelName === 'deepseek-v4-flash-vision-exp')
+          ? 'deepseek-v4-flash-vision-exp'
+          : 'deepseek-v4-flash'
         : runsForVersion.length
           ? 'local-rules'
           : undefined,

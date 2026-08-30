@@ -46,7 +46,7 @@ function draftStatus(draft: ExtractionDraft): CanonicalDraftStatus {
 }
 
 function evidenceMethod(source: Source | undefined): NonNullable<EvidenceReference['extractionMethod']> {
-  if (source?.extractionMethod === 'deepseek-v4-flash') return 'ai'
+  if (source?.extractionMethod?.startsWith('deepseek-v4-flash')) return 'ai'
   return source?.type === 'text' ? 'manual' : 'parser'
 }
 
@@ -113,7 +113,7 @@ export function materializeWorkspaceEntities(
     return {
       ...draft,
       workflowStatus: draftStatus(draft),
-      modelVersion: draft.modelVersion ?? (source?.extractionMethod === 'deepseek-v4-flash' ? 'deepseek-v4-flash' : 'local-rules'),
+      modelVersion: draft.modelVersion ?? (source?.extractionMethod?.startsWith('deepseek-v4-flash') ? source.extractionMethod : 'local-rules'),
       promptVersion: draft.promptVersion ?? 'extraction-v1',
     }
   })

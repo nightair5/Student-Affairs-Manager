@@ -115,7 +115,9 @@ function projectLabel(draft: ExtractionDraft | null): string | null {
 }
 
 function modelLabel(source: Source, draft: ExtractionDraft | null): string | null {
+  if (draft?.modelName?.includes('vision-exp')) return 'DeepSeek Vision Exp 建议'
   if (draft?.modelName) return draft.modelName.includes('deepseek') ? 'DeepSeek V4 Flash 建议' : `${draft.modelName} 建议`
+  if (source.extractionMethod === 'deepseek-v4-flash-vision-exp') return 'DeepSeek Vision Exp 建议'
   if (source.extractionMethod === 'deepseek-v4-flash') return 'DeepSeek V4 Flash 建议'
   if (source.extractionMethod === 'local-rules') return '本地规则建议'
   return null

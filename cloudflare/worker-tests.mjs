@@ -1,6 +1,12 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { createWorker, validateDeepSeekRequest, validateExtractionRequest, validateWebFetchTarget } from './worker.mjs'
+import {
+  createWorker,
+  validateDeepSeekRequest,
+  validateExtractionRequest,
+  validateMultimodalExtractionRequest,
+  validateWebFetchTarget,
+} from './worker.mjs'
 
 const baseContext = [{ kind: '任务', title: '报名材料', excerpt: '今天 18:00 截止' }]
 
@@ -34,6 +40,7 @@ test('status honestly reports a missing Cloudflare secret', async () => {
   const payload = await response.json()
   assert.equal(payload.configured, false)
   assert.equal(payload.model, 'deepseek-v4-flash')
+  assert.equal(payload.multimodalModel, 'deepseek-v4-flash-vision-exp')
   assert.match(payload.requestId, /^[0-9a-f-]{36}$/u)
   assert.equal(response.headers.get('x-frame-options'), 'DENY')
   assert.equal(response.headers.get('strict-transport-security'), 'max-age=86400')
@@ -153,6 +160,63 @@ test('structured extraction uses V4 Flash JSON mode and returns bounded suggesti
   assert.equal(upstreamBody.model, 'deepseek-v4-flash')
   assert.deepEqual(upstreamBody.response_format, { type: 'json_object' })
   assert.match(upstreamBody.messages[0].content, /不可信(?:资料|数据)/)
+})
+
+test('multimodal extraction requires explicit consent and sends only bounded images with OCR text', async () => {
+  const imageBytes = Buffer.from('bounded-image')
+  const image = {
+    dataUrl: `data:image/png;base64,${imageBytes.toString('base64')}`,
+    mimeType: 'image/png',
+    label: '报名截图.png',
+    byteLength: imageBytes.byteLength,
+  }
+  const basePayload = {
+    sourceType: 'image',
+    sourceTitle: '报名截图',
+    content: '8月10日18:00提交报名表',
+    referenceTime: '2026-08-02T08:00:00.000Z',
+    timezone: 'Asia/Shanghai',
+    consent: true,
+    inputMode: 'image',
+    ocrTextIncluded: true,
+    images: [image],
+  }
+  assert.equal(validateMultimodalExtractionRequest(basePayload), null)
+  assert.equal(validateMultimodalExtractionRequest({ ...basePayload, consent: false }), 'MULTIMODAL_CONSENT_REQUIRED')
+  assert.equal(validateMultimodalExtractionRequest({
+    ...basePayload,
+    images: [{ ...image, mimeType: 'image/svg+xml' }],
+  }), 'MULTIMODAL_IMAGES_INVALID')
+
+  let upstreamBody
+  const worker = createWorker({
+    fetcher: async (_url, options) => {
+      upstreamBody = JSON.parse(options.body)
+      return Response.json({ choices: [{ message: { content: JSON.stringify({
+        schemaVersion: '2.0',
+        sourceSummary: { title: '报名截图', sourceType: 'image', requiresAction: false },
+        projectMatch: { decision: 'uncertain' },
+        milestones: [], standaloneTasks: [], materials: [], timePoints: [], events: [], evidence: [],
+        conflicts: [], ambiguities: [], ignoredContent: [], quality: {},
+      }) } }] })
+    },
+  })
+  const response = await worker.fetch(request('/api/deepseek/extract-multimodal', {
+    body: JSON.stringify(basePayload),
+  }), environment({ DEEPSEEK_API_KEY: 'server-only-test-key-with-length' }))
+
+  assert.equal(response.status, 200)
+  const payload = await response.json()
+  assert.equal(payload.model, 'deepseek-v4-flash-vision-exp')
+  assert.equal(payload.result.modelName, 'deepseek-v4-flash-vision-exp')
+  assert.equal(payload.result.promptVersion, 'recognition-multimodal-exp-1.0.0')
+  assert.equal(upstreamBody.model, 'deepseek-v4-flash-vision-exp')
+  assert.equal(upstreamBody.messages[1].content[0].type, 'text')
+  assert.match(upstreamBody.messages[1].content[0].text, /OCR 文字/u)
+  assert.deepEqual(upstreamBody.messages[1].content[1], {
+    type: 'image_url',
+    image_url: { url: image.dataUrl, detail: 'original' },
+  })
 })
 
 test('public HTTPS pages are converted to inert text before client-side DeepSeek submission', async () => {

@@ -1,12 +1,19 @@
 import {
+  MULTIMODAL_RECOGNITION_MODEL_NAME,
+  MULTIMODAL_RECOGNITION_PROMPT_VERSION,
   normalizeRecognitionResult,
   recognitionSystemPrompt,
 } from './recognition.mjs'
 
 const DEEPSEEK_ENDPOINT = 'https://api.deepseek.com/chat/completions'
 const DEEPSEEK_MODEL = 'deepseek-v4-flash'
+const DEEPSEEK_MULTIMODAL_MODEL = MULTIMODAL_RECOGNITION_MODEL_NAME
 const EXPERIMENTAL_ROUTE = /^\/(?:benchmark|e2|fact-?ledger|selection|blind|research-preview)(?:\/|$)/iu
 const MAX_BODY_BYTES = 100_000
+const MAX_MULTIMODAL_BODY_BYTES = 14 * 1024 * 1024
+const MAX_MULTIMODAL_IMAGE_BYTES = 8 * 1024 * 1024
+const MAX_MULTIMODAL_TOTAL_IMAGE_BYTES = 10 * 1024 * 1024
+const MAX_MULTIMODAL_IMAGES = 4
 const MAX_KNOWLEDGE_TOKENS = 2_000
 const MAX_EXTRACTION_TOKENS = 6_000
 const MAX_WEB_RESPONSE_BYTES = 512 * 1024
@@ -29,6 +36,12 @@ const KNOWLEDGE_CONTEXT_FIELDS = new Set(['title', 'kind', 'excerpt'])
 const EXTRACTION_REQUEST_FIELDS = new Set([
   'sourceType', 'sourceTitle', 'content', 'referenceTime', 'timezone', 'projectCandidates', 'existingTasks',
 ])
+const MULTIMODAL_EXTRACTION_REQUEST_FIELDS = new Set([
+  ...EXTRACTION_REQUEST_FIELDS,
+  'consent', 'inputMode', 'ocrTextIncluded', 'images',
+])
+const MULTIMODAL_IMAGE_FIELDS = new Set(['dataUrl', 'mimeType', 'label', 'byteLength', 'pageNumber'])
+const MULTIMODAL_IMAGE_TYPES = new Set(['image/jpeg', 'image/png', 'image/gif', 'image/webp'])
 const WEB_FETCH_REQUEST_FIELDS = new Set(['url'])
 const PROJECT_CANDIDATE_FIELDS = new Set(['projectId', 'title', 'category', 'keywords', 'activeMilestones', 'recentSourceTitles', 'dateRange'])
 const EXISTING_TASK_FIELDS = new Set(['id', 'projectId', 'title', 'deadline'])
@@ -122,6 +135,50 @@ export function validateExtractionRequest(value) {
       || !isBoundedString(item.deadline, 80))
   )) return 'DEEPSEEK_TASK_CONTEXT_INVALID'
   return null
+}
+
+function inlineImageBytes(dataUrl, expectedMimeType) {
+  if (typeof dataUrl !== 'string') return null
+  const match = dataUrl.match(/^data:(image\/(?:jpeg|png|gif|webp));base64,([A-Za-z0-9+/]+={0,2})$/u)
+  if (!match || match[1] !== expectedMimeType) return null
+  const encoded = match[2]
+  const padding = encoded.endsWith('==') ? 2 : encoded.endsWith('=') ? 1 : 0
+  const byteLength = Math.floor(encoded.length * 3 / 4) - padding
+  return Number.isSafeInteger(byteLength) && byteLength > 0 ? byteLength : null
+}
+
+export function validateMultimodalExtractionRequest(value) {
+  if (!hasOnlyFields(value, MULTIMODAL_EXTRACTION_REQUEST_FIELDS)) return 'INVALID_REQUEST'
+  const baseValue = Object.fromEntries(
+    Object.entries(value).filter(([key]) => EXTRACTION_REQUEST_FIELDS.has(key)),
+  )
+  const baseError = validateExtractionRequest(baseValue)
+  if (baseError) return baseError
+  if (!['image', 'file'].includes(value.sourceType)) return 'MULTIMODAL_SOURCE_TYPE_INVALID'
+  if (value.consent !== true || value.ocrTextIncluded !== true) return 'MULTIMODAL_CONSENT_REQUIRED'
+  if (!['image', 'pdf-pages'].includes(value.inputMode)) return 'MULTIMODAL_MODE_INVALID'
+  if ((value.sourceType === 'image') !== (value.inputMode === 'image')) return 'MULTIMODAL_MODE_INVALID'
+  if (!Array.isArray(value.images) || value.images.length < 1 || value.images.length > MAX_MULTIMODAL_IMAGES) {
+    return 'MULTIMODAL_IMAGES_INVALID'
+  }
+  let totalBytes = 0
+  for (const image of value.images) {
+    if (!hasOnlyFields(image, MULTIMODAL_IMAGE_FIELDS)
+      || !MULTIMODAL_IMAGE_TYPES.has(image.mimeType)
+      || !isBoundedString(image.label, 160)
+      || !Number.isSafeInteger(image.byteLength)
+      || image.byteLength < 1
+      || image.byteLength > MAX_MULTIMODAL_IMAGE_BYTES
+      || !(image.pageNumber === undefined || (Number.isInteger(image.pageNumber) && image.pageNumber >= 1))) {
+      return 'MULTIMODAL_IMAGES_INVALID'
+    }
+    const actualBytes = inlineImageBytes(image.dataUrl, image.mimeType)
+    if (actualBytes === null || actualBytes !== image.byteLength || actualBytes > MAX_MULTIMODAL_IMAGE_BYTES) {
+      return 'MULTIMODAL_IMAGES_INVALID'
+    }
+    totalBytes += actualBytes
+  }
+  return totalBytes <= MAX_MULTIMODAL_TOTAL_IMAGE_BYTES ? null : 'MULTIMODAL_IMAGES_TOO_LARGE'
 }
 
 function isIpLiteral(hostname) {
@@ -568,6 +625,12 @@ async function askDeepSeek(request, env, fetcher, isRateLimited, acquireConcurre
   }
 }
 
+function extractionUserText(body, sourceContent, sourceTitle, referenceTime, timezone) {
+  const projectContext = Array.isArray(body.projectCandidates) ? body.projectCandidates : []
+  const existingTaskContext = Array.isArray(body.existingTasks) ? body.existingTasks : []
+  return `参考时间：${referenceTime}\n时区：${timezone}\n来源类型：${body.sourceType}\n来源标题：${sourceTitle || '未提供'}\n可选已有项目（仅供匹配建议）：${JSON.stringify(projectContext)}\n已有未完成任务（仅供重复检测）：${JSON.stringify(existingTaskContext)}\n来源正文：\n${sourceContent}`
+}
+
 async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurrency, context) {
   if (!isTrustedOrigin(request, env.ALLOWED_ORIGINS)) {
     context.errorType = 'ORIGIN_NOT_ALLOWED'
@@ -615,8 +678,7 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
   const referenceTime = safeText(body.referenceTime, 80)
   const timezone = safeText(body.timezone, 80) || 'Asia/Shanghai'
   const systemPrompt = recognitionSystemPrompt()
-  const projectContext = Array.isArray(body.projectCandidates) ? body.projectCandidates : []
-  const existingTaskContext = Array.isArray(body.existingTasks) ? body.existingTasks : []
+  const userText = extractionUserText(body, sourceContent, sourceTitle, referenceTime, timezone)
   const release = acquireConcurrency(clientKey(request))
   if (!release) {
     context.errorType = 'RATE_LIMITED'
@@ -639,7 +701,7 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
           { role: 'system', content: systemPrompt },
           {
             role: 'user',
-            content: `参考时间：${referenceTime}\n时区：${timezone}\n来源类型：${body.sourceType}\n来源标题：${sourceTitle || '未提供'}\n可选已有项目（仅供匹配建议）：${JSON.stringify(projectContext)}\n已有未完成任务（仅供重复检测）：${JSON.stringify(existingTaskContext)}\n来源正文：\n${sourceContent}`,
+            content: userText,
           },
         ],
       }),
@@ -686,6 +748,140 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
   }
 }
 
+async function extractMultimodalTasks(request, env, fetcher, isRateLimited, acquireConcurrency, context) {
+  if (!isTrustedOrigin(request, env.ALLOWED_ORIGINS)) {
+    context.errorType = 'ORIGIN_NOT_ALLOWED'
+    return failure('ORIGIN_NOT_ALLOWED', '请求来源不受信任。', 403, context.requestId)
+  }
+  const apiKey = safeText(env.DEEPSEEK_API_KEY, 512)
+  if (apiKey.length < 20) {
+    context.errorType = 'DEEPSEEK_NOT_CONFIGURED'
+    return failure('DEEPSEEK_NOT_CONFIGURED', 'DeepSeek 尚未配置服务端密钥。', 503, context.requestId)
+  }
+  if (!isJsonRequest(request)) {
+    context.errorType = 'INVALID_CONTENT_TYPE'
+    return failure('INVALID_CONTENT_TYPE', '请求必须使用 application/json。', 415, context.requestId)
+  }
+  const declaredSize = Number(request.headers.get('content-length') ?? 0)
+  if (Number.isFinite(declaredSize) && declaredSize > MAX_MULTIMODAL_BODY_BYTES) {
+    context.errorType = 'INPUT_TOO_LARGE'
+    return failure('INPUT_TOO_LARGE', '本次图片请求超过允许大小。', 413, context.requestId)
+  }
+  if (isRateLimited(clientKey(request))) {
+    context.errorType = 'RATE_LIMITED'
+    return failure('RATE_LIMITED', '请求过于频繁，请稍后再试。', 429, context.requestId)
+  }
+  const rawBody = await request.text()
+  context.inputLength = rawBody.length
+  if (new TextEncoder().encode(rawBody).byteLength > MAX_MULTIMODAL_BODY_BYTES) {
+    context.errorType = 'INPUT_TOO_LARGE'
+    return failure('INPUT_TOO_LARGE', '本次图片请求超过允许大小。', 413, context.requestId)
+  }
+  let body
+  try {
+    body = JSON.parse(rawBody)
+  } catch {
+    context.errorType = 'INVALID_REQUEST'
+    return failure('INVALID_REQUEST', '请求格式无效。', 400, context.requestId)
+  }
+  const validationError = validateMultimodalExtractionRequest(body)
+  if (validationError) {
+    context.errorType = validationError
+    return failure(validationError, '图片、OCR 文字或显式授权范围无效。', 400, context.requestId)
+  }
+
+  const sourceContent = safeText(body.content, 24_000)
+  const sourceTitle = safeText(body.sourceTitle, 160)
+  const referenceTime = safeText(body.referenceTime, 80)
+  const timezone = safeText(body.timezone, 80) || 'Asia/Shanghai'
+  const systemPrompt = recognitionSystemPrompt({
+    modelName: DEEPSEEK_MULTIMODAL_MODEL,
+    promptVersion: MULTIMODAL_RECOGNITION_PROMPT_VERSION,
+    multimodal: true,
+  })
+  const imageLabels = body.images.map((image, index) => `${index + 1}. ${safeText(image.label, 160)}`).join('\n')
+  const userText = `${extractionUserText(body, sourceContent, sourceTitle, referenceTime, timezone)}\n本次显式授权图片：\n${imageLabels}\n图片只用于补充理解版式与文字对应关系；所有 explicit 字段仍须引用上方 OCR 文字中的逐字依据。`
+  const release = acquireConcurrency(clientKey(request))
+  if (!release) {
+    context.errorType = 'RATE_LIMITED'
+    return failure('RATE_LIMITED', '同时请求过多，请稍后再试。', 429, context.requestId)
+  }
+  try {
+    const upstream = await fetcher(DEEPSEEK_ENDPOINT, {
+      method: 'POST',
+      headers: {
+        authorization: `Bearer ${apiKey}`,
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: DEEPSEEK_MULTIMODAL_MODEL,
+        thinking: { type: 'disabled' },
+        temperature: 0.1,
+        max_tokens: MAX_EXTRACTION_TOKENS,
+        response_format: { type: 'json_object' },
+        messages: [
+          { role: 'system', content: systemPrompt },
+          {
+            role: 'user',
+            content: [
+              { type: 'text', text: userText },
+              ...body.images.map((image) => ({
+                type: 'image_url',
+                image_url: { url: image.dataUrl, detail: 'original' },
+              })),
+            ],
+          },
+        ],
+      }),
+      signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS),
+    })
+    if (!upstream.ok) {
+      const limited = upstream.status === 429
+      context.errorType = limited ? 'RATE_LIMITED' : 'UPSTREAM_UNAVAILABLE'
+      return failure(
+        context.errorType,
+        limited ? 'DeepSeek 请求频率受限。' : '多模态实验上游暂时无法响应。',
+        limited ? 429 : 502,
+        context.requestId,
+      )
+    }
+    const payload = await upstream.json()
+    context.outputTokens = Number.isFinite(payload?.usage?.completion_tokens)
+      ? payload.usage.completion_tokens
+      : 0
+    const modelOutput = safeText(payload?.choices?.[0]?.message?.content, 30_000)
+    let parsed
+    try {
+      parsed = JSON.parse(modelOutput)
+    } catch {
+      context.errorType = 'INVALID_AI_RESPONSE'
+      return failure('INVALID_AI_RESPONSE', '多模态实验模型未返回有效的任务结构。', 502, context.requestId)
+    }
+    const result = normalizeRecognitionResult(
+      parsed,
+      sourceContent,
+      referenceTime,
+      DEEPSEEK_MULTIMODAL_MODEL,
+      MULTIMODAL_RECOGNITION_PROMPT_VERSION,
+    )
+    if (!result) {
+      context.errorType = 'INVALID_AI_RESPONSE'
+      return failure('INVALID_AI_RESPONSE', '多模态实验模型没有返回有效的 RecognitionResult 2.0。', 502, context.requestId)
+    }
+    return success({ model: DEEPSEEK_MULTIMODAL_MODEL, result }, context.requestId)
+  } catch (error) {
+    context.errorType = timeoutError(error) ? 'UPSTREAM_TIMEOUT' : 'UPSTREAM_UNAVAILABLE'
+    return failure(
+      context.errorType,
+      context.errorType === 'UPSTREAM_TIMEOUT' ? '多模态实验响应超时，请稍后重试。' : '多模态实验上游暂时无法响应。',
+      context.errorType === 'UPSTREAM_TIMEOUT' ? 504 : 502,
+      context.requestId,
+    )
+  } finally {
+    release()
+  }
+}
+
 export function createWorker({
   fetcher = fetch,
   resolveHostname = resolvePublicHostname,
@@ -718,7 +914,11 @@ export function createWorker({
           response = new Response(null, { status: 204 })
         }
       } else if (request.method === 'GET' && url.pathname === '/api/deepseek/status') {
-        response = success({ configured: safeText(env.DEEPSEEK_API_KEY, 512).length >= 20, model: DEEPSEEK_MODEL }, context.requestId)
+        response = success({
+          configured: safeText(env.DEEPSEEK_API_KEY, 512).length >= 20,
+          model: DEEPSEEK_MODEL,
+          multimodalModel: DEEPSEEK_MULTIMODAL_MODEL,
+        }, context.requestId)
       } else if (request.method === 'GET' && url.pathname === '/api/source/status') {
         response = success({ configured: true, mode: 'public-https', maxRedirects: MAX_WEB_REDIRECTS }, context.requestId)
       } else if (url.pathname === '/api/source/fetch') {
@@ -734,6 +934,13 @@ export function createWorker({
           response = failure('METHOD_NOT_ALLOWED', '该接口只接受 POST。', 405, context.requestId)
         } else {
           response = await extractTasks(request, env, fetcher, isRateLimited, acquireConcurrency, context)
+        }
+      } else if (url.pathname === '/api/deepseek/extract-multimodal') {
+        if (request.method !== 'POST') {
+          context.errorType = 'METHOD_NOT_ALLOWED'
+          response = failure('METHOD_NOT_ALLOWED', '该接口只接受 POST。', 405, context.requestId)
+        } else {
+          response = await extractMultimodalTasks(request, env, fetcher, isRateLimited, acquireConcurrency, context)
         }
       } else if (url.pathname === '/api/deepseek') {
         if (request.method !== 'POST') {

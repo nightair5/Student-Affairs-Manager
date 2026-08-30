@@ -5716,6 +5716,15 @@ select:focus-visible {
     min-height: 44px;
   }
 
+  .multimodal-consent {
+    padding: 14px;
+  }
+
+  .multimodal-consent > p,
+  .multimodal-pages {
+    margin-left: 0;
+  }
+
   .mobile-capture {
     display: inline-flex !important;
   }
@@ -6204,6 +6213,75 @@ select:focus-visible {
 
 .privacy-note.cloud-unavailable strong {
   color: var(--orange);
+}
+
+.multimodal-consent {
+  margin-top: 16px;
+  padding: 16px 18px;
+  color: var(--ink-soft);
+  border: 1px solid #c8d8d0;
+  border-radius: 12px;
+  background: #f5f8f5;
+}
+
+.multimodal-consent.enabled {
+  border-color: #7fa995;
+  box-shadow: inset 3px 0 0 var(--green);
+  background: #edf5ef;
+}
+
+.multimodal-switch {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-height: 44px;
+  cursor: pointer;
+}
+
+.multimodal-switch input {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 auto;
+  accent-color: var(--green);
+}
+
+.multimodal-switch input:disabled {
+  cursor: not-allowed;
+}
+
+.multimodal-switch > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ink);
+}
+
+.multimodal-switch strong {
+  font-size: 11px;
+}
+
+.multimodal-consent > p {
+  margin: 8px 0 0 31px;
+  font-size: 10px;
+  line-height: 1.75;
+}
+
+.multimodal-pages {
+  margin: 14px 0 0 31px;
+}
+
+.multimodal-pages input {
+  min-height: 44px;
+}
+
+.multimodal-consent .consent-error {
+  color: #9b3e2d;
+  font-weight: 650;
+}
+
+.multimodal-consent .consent-status {
+  color: var(--green);
+  font-weight: 650;
 }
 
 .pending-review-banner {

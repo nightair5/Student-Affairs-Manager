@@ -6,8 +6,9 @@ import { parseRecognitionResult } from '../recognition/schema'
 import { recognitionToLegacySuggestions } from '../recognition/pipeline'
 import type { RecognitionResult } from '../recognition/types'
 import { RECOGNITION_PROMPT_VERSION } from '../recognition/prompt'
+import { MULTIMODAL_MODEL_NAME, MULTIMODAL_PROMPT_VERSION } from './multimodal'
 
-export type SmartExtractionMethod = 'deepseek-v4-flash' | 'local-rules'
+export type SmartExtractionMethod = 'deepseek-v4-flash' | 'deepseek-v4-flash-vision-exp' | 'local-rules'
 
 export interface SmartIntakeResult extends IntakeResult {
   method: SmartExtractionMethod
@@ -15,7 +16,7 @@ export interface SmartIntakeResult extends IntakeResult {
 }
 
 export interface DeepSeekExtractionService {
-  status(): Promise<{ configured: boolean; model?: string }>
+  status(): Promise<{ configured: boolean; model?: string; multimodalModel?: string }>
   extract(input: IntakeInput): Promise<ParsedSuggestion[]>
   recognize?(input: IntakeInput, context?: { projects: Project[]; tasks: Task[] }): Promise<RecognitionResult>
 }
@@ -32,16 +33,17 @@ export class ProxyDeepSeekExtractionService implements DeepSeekExtractionService
 
   constructor(private readonly endpoint = '/api/deepseek') {}
 
-  async status(): Promise<{ configured: boolean; model?: string }> {
+  async status(): Promise<{ configured: boolean; model?: string; multimodalModel?: string }> {
     try {
       const response = await fetch(`${this.endpoint}/status`, { headers: { Accept: 'application/json' } })
       if (!response.ok) return { configured: false }
       const data: unknown = await response.json()
       if (typeof data !== 'object' || data === null) return { configured: false }
-      const record = data as { configured?: unknown; model?: unknown }
+      const record = data as { configured?: unknown; model?: unknown; multimodalModel?: unknown }
       return {
         configured: record.configured === true,
         model: typeof record.model === 'string' ? record.model : undefined,
+        multimodalModel: typeof record.multimodalModel === 'string' ? record.multimodalModel : undefined,
       }
     } catch {
       return { configured: false }
@@ -79,14 +81,24 @@ export class ProxyDeepSeekExtractionService implements DeepSeekExtractionService
           title: task.title.slice(0, 160),
           deadline: task.deadline,
         })),
+        ...(input.multimodal
+          ? {
+              consent: input.multimodal.consent,
+              inputMode: input.multimodal.mode,
+              ocrTextIncluded: input.multimodal.ocrTextIncluded,
+              images: input.multimodal.images,
+            }
+          : {}),
       }
     const serialized = JSON.stringify(body)
-    const key = `${RECOGNITION_PROMPT_VERSION}:${requestHash(serialized)}`
+    const modelName = input.multimodal ? MULTIMODAL_MODEL_NAME : 'deepseek-v4-flash'
+    const promptVersion = input.multimodal ? MULTIMODAL_PROMPT_VERSION : RECOGNITION_PROMPT_VERSION
+    const key = `${promptVersion}:${modelName}:${requestHash(serialized)}`
     const cached = this.cache.get(key)
     if (cached) return structuredClone(cached)
     const running = this.inFlight.get(key)
     if (running) return running.then((result) => structuredClone(result))
-    const request = this.requestRecognition(serialized).then((result) => {
+    const request = this.requestRecognition(serialized, Boolean(input.multimodal)).then((result) => {
       this.cache.set(key, result)
       if (this.cache.size > 20) this.cache.delete(this.cache.keys().next().value ?? key)
       return result
@@ -95,11 +107,11 @@ export class ProxyDeepSeekExtractionService implements DeepSeekExtractionService
     return request.then((result) => structuredClone(result))
   }
 
-  private async requestRecognition(body: string): Promise<RecognitionResult> {
+  private async requestRecognition(body: string, multimodal: boolean): Promise<RecognitionResult> {
     const controller = new AbortController()
     const timeout = globalThis.setTimeout(() => controller.abort(), 50_000)
     try {
-      const response = await fetch(`${this.endpoint}/extract`, {
+      const response = await fetch(`${this.endpoint}/${multimodal ? 'extract-multimodal' : 'extract'}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body,
@@ -139,10 +151,11 @@ export async function createSmartIntakeResult(
   }
   try {
     const suggestions = await service.extract(input)
+    const method = input.multimodal ? MULTIMODAL_MODEL_NAME : 'deepseek-v4-flash'
     return {
-      source: { ...localResult.source, extractionMethod: 'deepseek-v4-flash' },
+      source: { ...localResult.source, extractionMethod: method },
       suggestions,
-      method: 'deepseek-v4-flash',
+      method,
     }
   } catch (error) {
     return {

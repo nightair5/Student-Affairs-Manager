@@ -1,6 +1,7 @@
 import { createSuggestions } from './parser'
 import type { ParsedSuggestion, Source, SourceReviewMetadata, SourceType } from '../types'
 import type { FileExtractionResult, FileExtractionStatus } from './fileExtraction'
+import type { MultimodalInput } from './multimodal'
 
 export type IntakeFileStatus = FileExtractionStatus | 'idle' | 'reading'
 
@@ -28,6 +29,8 @@ export interface IntakeInput {
   fileHash?: string
   url?: string
   reviewMetadata?: SourceReviewMetadata
+  /** Ephemeral, explicit-consent payload. It is used for one request and never persisted. */
+  multimodal?: MultimodalInput
   manualSuggestion?: ParsedSuggestion
   now?: Date
 }

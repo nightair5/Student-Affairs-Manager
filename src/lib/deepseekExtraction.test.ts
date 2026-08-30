@@ -101,4 +101,41 @@ describe('smart intake', () => {
       vi.unstubAllGlobals()
     }
   })
+
+  it('uses the isolated multimodal endpoint only for an explicit ephemeral image payload', async () => {
+    const recognition = buildLocalRecognition({ sourceType: 'image', sourceTitle: '报名截图', content: '8月10日18:00提交报名表', referenceTime: new Date('2026-08-02T08:00:00+08:00'), timezone: 'Asia/Shanghai', projects: [], tasks: [] })
+    let requestedUrl = ''
+    let requestedBody: Record<string, unknown> = {}
+    const fetchMock = vi.fn(async (url: string | URL | Request, options?: RequestInit) => {
+      requestedUrl = String(url)
+      requestedBody = JSON.parse(String(options?.body)) as Record<string, unknown>
+      return Response.json({ result: recognition })
+    })
+    vi.stubGlobal('fetch', fetchMock)
+    try {
+      const proxy = new ProxyDeepSeekExtractionService('/api/deepseek')
+      await proxy.recognize({
+        sourceType: 'image',
+        sourceTitle: '报名截图',
+        content: '8月10日18:00提交报名表',
+        now: new Date('2026-08-02T08:00:00+08:00'),
+        multimodal: {
+          consent: true,
+          mode: 'image',
+          ocrTextIncluded: true,
+          images: [{
+            dataUrl: 'data:image/png;base64,eA==',
+            mimeType: 'image/png',
+            label: '报名截图.png',
+            byteLength: 1,
+          }],
+        },
+      })
+      expect(requestedUrl).toBe('/api/deepseek/extract-multimodal')
+      expect(requestedBody).toMatchObject({ consent: true, inputMode: 'image', ocrTextIncluded: true })
+      expect(requestedBody.images).toHaveLength(1)
+    } finally {
+      vi.unstubAllGlobals()
+    }
+  })
 })
