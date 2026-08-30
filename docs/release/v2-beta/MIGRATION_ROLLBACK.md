@@ -80,7 +80,7 @@ npx vitest run src/domain/v2/migration.test.ts src/domain/v2/runtimeMigration.te
 7. 先下载指定迁移备份，再执行二次确认恢复。
 8. 恢复后再次刷新，确认 v8 可读且无重复实体。
 
-当前状态：`NOT RUN`。现已能唯一确认权威 Preview 与持久化 Edge 工作区，但完整步骤包含清空并重写匿名 QA 工作区，仍需动作时明确确认；此外还需准备受支持的匿名 v7 导入夹具。不得用单元测试、现有 v8 导出或 IAB 的无 IndexedDB 页面替代该浏览器演练。
+当前状态：`NOT RUN`。现已能唯一确认权威 Preview 与持久化 Edge 工作区，并已从受测仓库夹具冻结匿名 v7 输入 `C:\Users\Winner\AppData\Local\Temp\student-affairs-r9\r9-v7-migration-fixture.json`（4,044 bytes；1 Source / 1 Task / 1 Project / 1 Material / 1 Event；SHA-256 `0F2DE94687AEF985AAA349AA39FAF9ED3E121273B4FCA45B6773BB2596FE045F`；无 Secret-like 字段或 base64 文件本体）。但公开 UI 的 JSON Import 只接受 Workspace v8，无法用它把 v7 写成当前记录；浏览器运行时又不暴露可审计的 IndexedDB 注入能力。完整演练还包含清空并重写匿名 QA 工作区，需动作时明确确认并使用受支持的同源迁移夹具入口。不得用单元测试、现有 v8 导出或 IAB 的无 IndexedDB 页面替代该浏览器演练。
 
 ## 5. 部署级回滚
 
