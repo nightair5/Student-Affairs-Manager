@@ -80,7 +80,7 @@ npx vitest run src/domain/v2/migration.test.ts src/domain/v2/runtimeMigration.te
 7. 先下载指定迁移备份，再执行二次确认恢复。
 8. 恢复后再次刷新，确认 v8 可读且无重复实体。
 
-当前状态：`NOT RUN`。原因：官方电脑控制无法在当前含多个 Edge 标签页的窗口中唯一确认 URL；不得用单元测试替代该浏览器演练。
+当前状态：`NOT RUN`。现已能唯一确认权威 Preview 与持久化 Edge 工作区，但完整步骤包含清空并重写匿名 QA 工作区，仍需动作时明确确认；此外还需准备受支持的匿名 v7 导入夹具。不得用单元测试、现有 v8 导出或 IAB 的无 IndexedDB 页面替代该浏览器演练。
 
 ## 5. 部署级回滚
 
