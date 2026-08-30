@@ -242,6 +242,7 @@ RC.1 因 Event 静默丢弃 P1 作废，RC.2 因 Export/Import canonical 改写 
 | 2026-08-30 22:08:27（RC.4，回退演练前） | 200 HTML；H 两类 PDF 全链 PASS | 仅本地规则；模型调用 0 | 六条路径 JSON 404 | 200；Deployment `bc1719b0…` / Version `3b6d6ba2…` 未变 | 六条路径 SPA HTML 200 | Version `1d6dc48e…` 初检通过；J 于 22:12:34 继续通过。随后按计划执行 Preview-only Version 回退，故此短窗口不计入 48 小时 |
 | 2026-08-30 22:13:52（RC.4，最终恢复） | 200 HTML | 200；configured true；`deepseek-v4-flash`；仅检查状态，未调用模型 | 六条路径均为 JSON 404 | 200；Deployment `bc1719b0…` / Version `3b6d6ba2…` 未变 | 六条路径均为 SPA HTML 200 | 回退到 RC.3 后已恢复 RC.4 Version `1d6dc48e…`；最终 Deployment `8bad8cc4…`，R11 从本行重新起算 |
 | 2026-08-30 22:24:13（RC.4） | 200 HTML | 200；configured true；`deepseek-v4-flash`；仅检查状态，未调用模型 | 六条已知实验路径均为 JSON 404 | 200；Wrangler current Deployment `bc1719b0…` / Version `3b6d6ba2…` 未变 | 六条路径均为 SPA HTML 200 | Wrangler current Preview Deployment `8bad8cc4…` / Version `1d6dc48e…` 未变；连续覆盖约 10 分 21 秒，无失败窗口；Production 未被覆盖，字面 404 仍未关闭 |
+| 2026-08-30 22:32:38（RC.4） | 200 HTML | 200；configured true；`deepseek-v4-flash`；仅检查状态，未调用模型 | 六条已知实验路径均为 JSON 404 | 200；Wrangler current Deployment `bc1719b0…` / Version `3b6d6ba2…` 未变 | 六条路径均为 SPA HTML 200 | Wrangler current Preview Deployment `8bad8cc4…` / Version `1d6dc48e…` 未变；连续覆盖约 18 分 46 秒，无失败窗口；Production 未被覆盖，字面 404 仍未关闭 |
 
 已创建当前任务心跳 `v2-beta-preview-48h`，每 6 小时执行只读检查，截止到满 48 小时后的首个观测点。心跳不得调用付费模型、修改 Secret、部署或改变路由。
 
