@@ -66,6 +66,9 @@
       "name": "student-affairs-manager-multimodal-exp",
       "workers_dev": true,
       "routes": [],
+      "vars": {
+        "ENABLE_MULTIMODAL_EVALUATION": "true"
+      },
       "assets": {
         "directory": "./dist",
         "binding": "ASSETS",

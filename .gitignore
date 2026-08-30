@@ -1,4 +1,7 @@
 node_modules/
+__pycache__/
+*.pyc
+*.traineddata
 dist/
 coverage/
 .vite/
@@ -9,6 +12,7 @@ coverage/
 .secret.local
 .secret.*.local
 .data/
+.evaluation-cache/
 .firebase/
 .wrangler/
 .dev.vars

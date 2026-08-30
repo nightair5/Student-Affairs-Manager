@@ -2,7 +2,7 @@
 
 ## 结论
 
-独立多模态实验 Preview 已部署，但没有为该 Worker 配置 `DEEPSEEK_API_KEY`。因此页面和安全关闭路径可访问，真实多模态模型调用仍为 `NOT RUN`；这不是多模态质量、浏览器验收或替换稳定模型的通过证据。
+独立多模态实验 Preview 已部署，并在 2026-08-31 01:11:40 Asia/Shanghai 从剪贴板直接配置了 Cloudflare `DEEPSEEK_API_KEY` Secret；密钥未回显、未落盘、未进入 Git。三臂材料和 OCR 冻结前没有真实模型调用；配置成功本身不是多模态质量、浏览器验收或替换稳定模型的通过证据。
 
 ## 可复核标识
 
@@ -12,17 +12,18 @@
 - 实现提交：`aad25a6`
 - Worker：`student-affairs-manager-multimodal-exp`
 - URL：<https://student-affairs-manager-multimodal-exp.nightsdell.workers.dev/>
-- Cloudflare Version：`72d876a4-1bbd-453c-b0d9-397aef3b275b`
+- 首次部署 Version：`72d876a4-1bbd-453c-b0d9-397aef3b275b`
+- Secret Change Version：`ab4fc524-95e5-48ec-a4bb-c92a8aa61a02`
 - 创建时间：`2026-08-31 01:01:29.125 Asia/Shanghai`
-- 配置状态：`DEPLOYED_NOT_CONFIGURED`
+- 配置状态：`CONFIGURED_PRE_RUN`
 
 ## 线上只读探针
 
 2026-08-31 01:01–01:03 Asia/Shanghai：
 
 - Preview 首页返回 HTTP 200，使用独立静态资源 `index-BOp-j9c1.css` / `index-Bz7D0jKa.js`。
-- `/api/deepseek/status` 返回 HTTP 200、`configured:false`、稳定文字模型 `deepseek-v4-flash` 和实验模型 `deepseek-v4-flash-vision-exp`。
-- 未设置 Secret、未发送真实正文或图片、未调用付费模型。
+- Secret 配置前 `/api/deepseek/status` 返回 `configured:false`；配置后返回 HTTP 200、`configured:true`、稳定文字模型 `deepseek-v4-flash` 和实验模型 `deepseek-v4-flash-vision-exp`。
+- 数据冻结完成前未发送正文或图片、未调用付费模型。
 
 ## 工程门槛
 
@@ -46,6 +47,6 @@
 
 ## 未完成与阻断
 
-- 需要由有权限的维护者为独立环境执行 `wrangler secret put DEEPSEEK_API_KEY --env multimodal_preview`；密钥不得进入命令历史、Git、日志、前端或导出文件。
-- Secret 配置后仍只能先做匿名安全冒烟和 A–J 浏览器验收，不得直接运行正式未见材料或切换 Production。
+- Secret 已配置；后续只允许按冻结哈希运行匿名合成安全冒烟和三臂评测，密钥不得进入 Git、日志、前端或导出文件。
+- 合成批次完成后仍需 A–J 浏览器验收，不得据此直接运行正式真实材料或切换 Production。
 - I 图片版消融入口、三臂评分器、Unseen-1、用户修改时间、Unseen-2 与替换决策均未完成。

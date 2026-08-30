@@ -219,6 +219,77 @@ test('multimodal extraction requires explicit consent and sends only bounded ima
   })
 })
 
+test('image-only evaluation is gated and never sends the hidden OCR reference upstream', async () => {
+  const imageBytes = Buffer.from('image-only-evaluation')
+  const image = {
+    dataUrl: `data:image/png;base64,${imageBytes.toString('base64')}`,
+    mimeType: 'image/png',
+    label: '匿名未见材料.png',
+    byteLength: imageBytes.byteLength,
+  }
+  const body = {
+    sourceType: 'image',
+    sourceTitle: '匿名未见材料',
+    content: 'HIDDEN_OCR_MARKER：9月10日18:00提交报名表',
+    referenceTime: '2026-09-01T08:00:00+08:00',
+    timezone: 'Asia/Shanghai',
+    consent: true,
+    inputMode: 'image',
+    ocrTextIncluded: false,
+    evaluationArm: 'image_only',
+    images: [image],
+  }
+  assert.equal(validateMultimodalExtractionRequest(body), null)
+  assert.equal(validateMultimodalExtractionRequest({ ...body, ocrTextIncluded: true }), 'MULTIMODAL_CONSENT_REQUIRED')
+  assert.equal(validateMultimodalExtractionRequest({ ...body, evaluationArm: 'unknown' }), 'MULTIMODAL_EVALUATION_ARM_INVALID')
+
+  let contacted = false
+  const disabledWorker = createWorker({ fetcher: async () => { contacted = true } })
+  const disabled = await disabledWorker.fetch(request('/api/deepseek/extract-multimodal', {
+    body: JSON.stringify(body),
+  }), environment({ DEEPSEEK_API_KEY: 'server-only-test-key-with-length' }))
+  assert.equal(disabled.status, 404)
+  assert.equal(contacted, false)
+
+  let upstreamBody
+  const enabledWorker = createWorker({
+    fetcher: async (_url, options) => {
+      upstreamBody = JSON.parse(options.body)
+      return Response.json({
+        usage: { prompt_tokens: 100, completion_tokens: 20, total_tokens: 120 },
+        choices: [{ message: { content: JSON.stringify({
+          schemaVersion: '2.0',
+          sourceSummary: { title: '匿名未见材料', sourceType: 'image', requiresAction: true },
+          projectMatch: { decision: 'standalone_task' },
+          milestones: [],
+          standaloneTasks: [{
+            tempId: 'task-1', parentTempId: null, hierarchyType: 'task', title: '提交报名表',
+            actionVerb: '提交', actionObject: '报名表', evidenceIds: ['e-1'], inferenceLevel: 'explicit',
+          }],
+          materials: [], timePoints: [], events: [],
+          evidence: [{ id: 'e-1', quotedText: '9月10日18:00提交报名表', field: 'deadline' }],
+          conflicts: [], ambiguities: [], ignoredContent: [], quality: {},
+        }) } }],
+      })
+    },
+  })
+  const enabled = await enabledWorker.fetch(request('/api/deepseek/extract-multimodal', {
+    body: JSON.stringify(body),
+  }), environment({
+    DEEPSEEK_API_KEY: 'server-only-test-key-with-length',
+    ENABLE_MULTIMODAL_EVALUATION: 'true',
+  }))
+  assert.equal(enabled.status, 200)
+  const payload = await enabled.json()
+  assert.equal(payload.evaluationArm, 'I')
+  assert.equal(payload.result.promptVersion, 'recognition-multimodal-image-only-eval-1.0.0')
+  assert.deepEqual(payload.execution.tokenUsage, { input: 100, output: 20, total: 120 })
+  assert.equal(upstreamBody.model, 'deepseek-v4-flash-vision-exp')
+  assert.doesNotMatch(JSON.stringify(upstreamBody.messages), /HIDDEN_OCR_MARKER/u)
+  assert.doesNotMatch(JSON.stringify(upstreamBody.messages), /9月10日18:00提交报名表/u)
+  assert.equal(upstreamBody.messages[1].content[1].type, 'image_url')
+})
+
 test('public HTTPS pages are converted to inert text before client-side DeepSeek submission', async () => {
   let requestedUrl = ''
   const worker = createWorker({

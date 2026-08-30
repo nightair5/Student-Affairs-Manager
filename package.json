@@ -19,8 +19,11 @@
     "deploy:cloudflare": "npm run build && npm run cloudflare:check && wrangler deploy",
     "lint": "eslint .",
     "typecheck": "tsc -b --pretty false",
-    "test": "vitest run && node --test server/server-tests.mjs && node --test cloudflare/worker-tests.mjs && npm --prefix functions test",
-    "eval:recognition": "vitest run src/recognition/evaluation.test.ts"
+    "test": "vitest run && node --test server/server-tests.mjs && node --test cloudflare/worker-tests.mjs && node --test scripts/multimodal-evaluation-lib.node-test.mjs && npm --prefix functions test",
+    "eval:recognition": "vitest run src/recognition/evaluation.test.ts",
+    "eval:multimodal:lib": "node --test scripts/multimodal-evaluation-lib.node-test.mjs",
+    "eval:multimodal:generate": "python scripts/generate-multimodal-unseen.py",
+    "eval:multimodal:run": "node scripts/run-multimodal-evaluation.mjs"
   },
   "dependencies": {
     "lucide-react": "^0.468.0",

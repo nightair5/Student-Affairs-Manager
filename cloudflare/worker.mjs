@@ -1,6 +1,7 @@
 import {
   MULTIMODAL_RECOGNITION_MODEL_NAME,
   MULTIMODAL_RECOGNITION_PROMPT_VERSION,
+  IMAGE_ONLY_EVALUATION_PROMPT_VERSION,
   normalizeRecognitionResult,
   recognitionSystemPrompt,
 } from './recognition.mjs'
@@ -38,7 +39,7 @@ const EXTRACTION_REQUEST_FIELDS = new Set([
 ])
 const MULTIMODAL_EXTRACTION_REQUEST_FIELDS = new Set([
   ...EXTRACTION_REQUEST_FIELDS,
-  'consent', 'inputMode', 'ocrTextIncluded', 'images',
+  'consent', 'inputMode', 'ocrTextIncluded', 'images', 'evaluationArm',
 ])
 const MULTIMODAL_IMAGE_FIELDS = new Set(['dataUrl', 'mimeType', 'label', 'byteLength', 'pageNumber'])
 const MULTIMODAL_IMAGE_TYPES = new Set(['image/jpeg', 'image/png', 'image/gif', 'image/webp'])
@@ -155,7 +156,11 @@ export function validateMultimodalExtractionRequest(value) {
   const baseError = validateExtractionRequest(baseValue)
   if (baseError) return baseError
   if (!['image', 'file'].includes(value.sourceType)) return 'MULTIMODAL_SOURCE_TYPE_INVALID'
-  if (value.consent !== true || value.ocrTextIncluded !== true) return 'MULTIMODAL_CONSENT_REQUIRED'
+  const imageOnlyEvaluation = value.evaluationArm === 'image_only'
+  if (!(value.evaluationArm === undefined || imageOnlyEvaluation)) return 'MULTIMODAL_EVALUATION_ARM_INVALID'
+  if (value.consent !== true || (imageOnlyEvaluation ? value.ocrTextIncluded !== false : value.ocrTextIncluded !== true)) {
+    return 'MULTIMODAL_CONSENT_REQUIRED'
+  }
   if (!['image', 'pdf-pages'].includes(value.inputMode)) return 'MULTIMODAL_MODE_INVALID'
   if ((value.sourceType === 'image') !== (value.inputMode === 'image')) return 'MULTIMODAL_MODE_INVALID'
   if (!Array.isArray(value.images) || value.images.length < 1 || value.images.length > MAX_MULTIMODAL_IMAGES) {
@@ -790,17 +795,26 @@ async function extractMultimodalTasks(request, env, fetcher, isRateLimited, acqu
     return failure(validationError, '图片、OCR 文字或显式授权范围无效。', 400, context.requestId)
   }
 
+  const imageOnlyEvaluation = body.evaluationArm === 'image_only'
+  if (imageOnlyEvaluation && safeText(env.ENABLE_MULTIMODAL_EVALUATION, 10) !== 'true') {
+    context.errorType = 'NOT_FOUND'
+    return failure('NOT_FOUND', '图片版评测入口未启用。', 404, context.requestId)
+  }
+
   const sourceContent = safeText(body.content, 24_000)
   const sourceTitle = safeText(body.sourceTitle, 160)
   const referenceTime = safeText(body.referenceTime, 80)
   const timezone = safeText(body.timezone, 80) || 'Asia/Shanghai'
   const systemPrompt = recognitionSystemPrompt({
     modelName: DEEPSEEK_MULTIMODAL_MODEL,
-    promptVersion: MULTIMODAL_RECOGNITION_PROMPT_VERSION,
+    promptVersion: imageOnlyEvaluation ? IMAGE_ONLY_EVALUATION_PROMPT_VERSION : MULTIMODAL_RECOGNITION_PROMPT_VERSION,
     multimodal: true,
+    imageOnlyEvaluation,
   })
   const imageLabels = body.images.map((image, index) => `${index + 1}. ${safeText(image.label, 160)}`).join('\n')
-  const userText = `${extractionUserText(body, sourceContent, sourceTitle, referenceTime, timezone)}\n本次显式授权图片：\n${imageLabels}\n图片只用于补充理解版式与文字对应关系；所有 explicit 字段仍须引用上方 OCR 文字中的逐字依据。`
+  const userText = imageOnlyEvaluation
+    ? `参考时间：${referenceTime}\n时区：${timezone}\n来源类型：${body.sourceType}\n来源标题：${sourceTitle || '未提供'}\n可选已有项目（仅供匹配建议）：${JSON.stringify(body.projectCandidates ?? [])}\n已有未完成任务（仅供重复检测）：${JSON.stringify(body.existingTasks ?? [])}\n本次图片版评测材料：\n${imageLabels}\n模型未收到 OCR 正文；请只依据图片中可见文字输出待确认建议。`
+    : `${extractionUserText(body, sourceContent, sourceTitle, referenceTime, timezone)}\n本次显式授权图片：\n${imageLabels}\n图片只用于补充理解版式与文字对应关系；所有 explicit 字段仍须引用上方 OCR 文字中的逐字依据。`
   const release = acquireConcurrency(clientKey(request))
   if (!release) {
     context.errorType = 'RATE_LIMITED'
@@ -862,13 +876,28 @@ async function extractMultimodalTasks(request, env, fetcher, isRateLimited, acqu
       sourceContent,
       referenceTime,
       DEEPSEEK_MULTIMODAL_MODEL,
-      MULTIMODAL_RECOGNITION_PROMPT_VERSION,
+      imageOnlyEvaluation ? IMAGE_ONLY_EVALUATION_PROMPT_VERSION : MULTIMODAL_RECOGNITION_PROMPT_VERSION,
     )
     if (!result) {
       context.errorType = 'INVALID_AI_RESPONSE'
       return failure('INVALID_AI_RESPONSE', '多模态实验模型没有返回有效的 RecognitionResult 2.0。', 502, context.requestId)
     }
-    return success({ model: DEEPSEEK_MULTIMODAL_MODEL, result }, context.requestId)
+    return success({
+      model: DEEPSEEK_MULTIMODAL_MODEL,
+      evaluationArm: imageOnlyEvaluation ? 'I' : 'IT',
+      result,
+      execution: {
+        tokenUsage: Number.isFinite(payload?.usage?.prompt_tokens) && Number.isFinite(payload?.usage?.completion_tokens)
+          ? {
+              input: payload.usage.prompt_tokens,
+              output: payload.usage.completion_tokens,
+              total: Number.isFinite(payload?.usage?.total_tokens)
+                ? payload.usage.total_tokens
+                : payload.usage.prompt_tokens + payload.usage.completion_tokens,
+            }
+          : null,
+      },
+    }, context.requestId)
   } catch (error) {
     context.errorType = timeoutError(error) ? 'UPSTREAM_TIMEOUT' : 'UPSTREAM_UNAVAILABLE'
     return failure(
