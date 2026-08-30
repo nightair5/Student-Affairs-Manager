@@ -219,6 +219,7 @@ P0/P1 立即停止该参与者后续操作并保留现场；先保护/导出匿�
 | 观测时间（Asia/Shanghai） | Preview 首页 | Preview status | Preview 实验路径 | Production 首页/版本 | Production 实验路径 | 结论 |
 | --- | --- | --- | --- | --- | --- | --- |
 | 2026-08-30 09:54:56 | 200 HTML | 200；configured true；`deepseek-v4-flash`；未发起模型调用 | `/benchmark`、`/e2`、`/fact-ledger`、`/selection`、`/blind`、`/research-preview` 均为 JSON 404 | 200；Deployment `bc1719b0…` / Version `3b6d6ba2…` 未变 | 相同路径均为 SPA HTML 200 | Preview 可用且隔离；旧 Production 未变，但字面 404 门槛未满足 |
+| 2026-08-30 18:06:40 | 200 HTML | 200；configured true；`deepseek-v4-flash`；未发起模型调用 | 六条已知实验路径持续为 JSON 404 | 200；Production 未被 Preview 部署覆盖 | 六条路径持续为 SPA HTML 200 | 起点后约 8 小时 21 分无可用性/版本漂移；Production 字面 404 仍未关闭 |
 
 已创建当前任务心跳 `v2-beta-preview-48h`，每 6 小时执行只读检查，截止到满 48 小时后的首个观测点。心跳不得调用付费模型、修改 Secret、部署或改变路由。
 
