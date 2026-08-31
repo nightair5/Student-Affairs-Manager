@@ -23,3 +23,5 @@
 | MM-V2-M1-01 | V2 M1 | 生成全新匿名材料、本机 OCR 与逐例哈希冻结 | T/I/IT | Synthetic-Unseen-V2 = 36 | PASS | source/image 与 V1 哈希重合均为 0；冻结哈希见 V2 freeze；尚无 V2 模型调用 |
 | MM-V2-M2-01 | V2 M2 | 36×3 正式配对运行 | T/I/IT | Synthetic-Unseen-V2 | NOT RUN | 零评估器重试；任一请求失败使该臂质量指标失效 |
 | MM-V2-M3-01 | V2 M3 | 第一性原理与独立对抗性审查 | T/I/IT | 结果/实现/Preview | NOT RUN | Synthetic PASS 也不能授权上线；人类计时与 A–J 仍是硬门槛 |
+| MM-V3-M1-01 | V3 复验 | 冻结第三批全新匿名材料与本机 OCR | I | Synthetic-Unseen-V3 = 36 | PASS | 截图/照片/扫描各 12；source/image 与 V1+V2 哈希重合均为 0；冻结发生在首次 V3 模型调用前 |
+| MM-V3-M2-01 | V3 复验 | 直接图片识别独立复验 | I | Synthetic-Unseen-V3 | NOT RUN | 36 次顺序调用、零评估器重试；任何失败均使正式质量指标失效 |
