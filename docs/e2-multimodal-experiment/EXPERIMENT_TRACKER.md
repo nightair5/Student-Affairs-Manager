@@ -21,7 +21,7 @@
 | MM-V2-M0-01 | V2 M0 | 修复三臂同模型、I 臂 OCR 隔离、fail-closed 评分器 | T/I/IT | Mock | PASS (ENGINEERING) | lint/test/build/security/audit/cloudflare 全 PASS；Worker 24/24、评分器 9/9 |
 | MM-V2-M0-02 | V2 M0 | 新协议与方法冻结 | T/I/IT | 文档/代码 | PASS | 提交 `dcff8bd`；使用 12 个情境家族 cluster bootstrap；V1 不作为正证据 |
 | MM-V2-M1-01 | V2 M1 | 生成全新匿名材料、本机 OCR 与逐例哈希冻结 | T/I/IT | Synthetic-Unseen-V2 = 36 | PASS | source/image 与 V1 哈希重合均为 0；冻结哈希见 V2 freeze；尚无 V2 模型调用 |
-| MM-V2-M2-01 | V2 M2 | 36×3 正式配对运行 | T/I/IT | Synthetic-Unseen-V2 | NOT RUN | 零评估器重试；任一请求失败使该臂质量指标失效 |
+| MM-V2-M2-01 | V2 M2 | 36×3 正式配对运行 | T/I/IT | Synthetic-Unseen-V2 | FAIL / INCOMPLETE | T、I 各 36/36；IT 35/36，故 IT 正式质量指标失效；I task F1 71.58%，整份正确率 0% |
 | MM-V2-M3-01 | V2 M3 | 第一性原理与独立对抗性审查 | T/I/IT | 结果/实现/Preview | NOT RUN | Synthetic PASS 也不能授权上线；人类计时与 A–J 仍是硬门槛 |
 | MM-V3-M1-01 | V3 复验 | 冻结第三批全新匿名材料与本机 OCR | I | Synthetic-Unseen-V3 = 36 | PASS | 截图/照片/扫描各 12；source/image 与 V1+V2 哈希重合均为 0；冻结发生在首次 V3 模型调用前 |
-| MM-V3-M2-01 | V3 复验 | 直接图片识别独立复验 | I | Synthetic-Unseen-V3 | NOT RUN | 36 次顺序调用、零评估器重试；任何失败均使正式质量指标失效 |
+| MM-V3-M2-01 | V3 复验 | 直接图片识别独立复验 | I | Synthetic-Unseen-V3 | FAIL (QUALITY) | 36/36 成功；task F1 71.29%，整份正确率 0%，时间点 F1 0%，重大修改率 100%；DO NOT LAUNCH |
