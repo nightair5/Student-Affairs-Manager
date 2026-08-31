@@ -333,6 +333,10 @@ async function main() {
   const delayMs = Number(option('delay-ms', '8500'))
   const limit = Number(option('limit', '0'))
   const resume = option('resume', 'false') === 'true'
+  const selectedArms = option('arms', ARMS.join(',')).split(',').map((arm) => arm.trim()).filter(Boolean)
+  if (!selectedArms.length || new Set(selectedArms).size !== selectedArms.length || selectedArms.some((arm) => !ARMS.includes(arm))) {
+    throw new Error('ARMS_INVALID')
+  }
   const selectedCases = limit > 0 ? dataset.cases.slice(0, limit) : dataset.cases
   const selectedCaseIds = selectedCases.map((fixture) => fixture.id)
   const ocrByCase = new Map(ocr.cases.map((item) => [item.caseId, item]))
@@ -352,6 +356,7 @@ async function main() {
     endpoint,
     expectedModel,
     selectedCaseIds,
+    selectedArms,
     startedAt: new Date().toISOString(),
     observations: [],
   }
@@ -366,7 +371,8 @@ async function main() {
       || existing.freezeSha256 !== freezeSha256
       || existing.endpoint !== endpoint
       || existing.expectedModel !== expectedModel
-      || stableJson(existing.selectedCaseIds) !== stableJson(selectedCaseIds)) {
+      || stableJson(existing.selectedCaseIds) !== stableJson(selectedCaseIds)
+      || stableJson(existing.selectedArms) !== stableJson(selectedArms)) {
       throw new Error('CHECKPOINT_CONTRACT_MISMATCH')
     }
     checkpoint = existing
@@ -375,7 +381,9 @@ async function main() {
   }
 
   const completed = new Map(checkpoint.observations.map((item) => [`${item.caseId}:${item.arm}`, item]))
-  const order = selectedCases.flatMap((fixture) => armOrder(fixture.id).map((arm) => ({ fixture, arm })))
+  const order = selectedCases.flatMap((fixture) => armOrder(fixture.id)
+    .filter((arm) => selectedArms.includes(arm))
+    .map((arm) => ({ fixture, arm })))
   for (const [index, { fixture, arm }] of order.entries()) {
     const key = `${fixture.id}:${arm}`
     if (completed.has(key)) {
@@ -391,8 +399,8 @@ async function main() {
     if (delayMs > 0 && index < order.length - 1) await sleep(delayMs)
   }
 
-  const observations = [...completed.values()].filter((item) => selectedCases.some((fixture) => fixture.id === item.caseId) && ARMS.includes(item.arm))
-  if (observations.length !== selectedCases.length * ARMS.length) throw new Error('OBSERVATION_MATRIX_INCOMPLETE')
+  const observations = [...completed.values()].filter((item) => selectedCases.some((fixture) => fixture.id === item.caseId) && selectedArms.includes(item.arm))
+  if (observations.length !== selectedCases.length * selectedArms.length) throw new Error('OBSERVATION_MATRIX_INCOMPLETE')
   const completedModels = [...new Set(observations.filter((item) => item.status === 'completed').map((item) => item.returnedModel))]
   const failureCountsByCategory = observations.filter((item) => item.status !== 'completed').reduce((counts, item) => ({
     ...counts,
@@ -403,6 +411,7 @@ async function main() {
     label,
     endpoint,
     expectedModel,
+    testedArms: selectedArms,
     modelContract: {
       completedModels,
       allCompletedResponsesUsedExpectedModel: completedModels.length === 1 && completedModels[0] === expectedModel,

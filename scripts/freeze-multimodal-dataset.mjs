@@ -33,11 +33,12 @@ async function assertAbsent(file) {
 async function main() {
   const dataDir = path.resolve(ROOT, option('data-dir', DEFAULT_DATA_DIR))
   const output = path.resolve(ROOT, option('output', DEFAULT_OUTPUT))
+  const expectedDatasetId = option('expected-dataset-id', 'synthetic-unseen-v2')
   await assertAbsent(output)
   const dataset = JSON.parse(await readFile(path.join(dataDir, 'dataset.json'), 'utf8'))
   const ocr = JSON.parse(await readFile(path.join(dataDir, 'ocr.json'), 'utf8'))
   if (dataset.schemaVersion !== 'multimodal-synthetic-unseen-dataset-1.1.0'
-    || dataset.datasetId !== 'synthetic-unseen-v2'
+    || dataset.datasetId !== expectedDatasetId
     || dataset.sampleCount !== 36
     || ocr.datasetSha256 !== dataset.datasetSha256
     || ocr.cases?.length !== dataset.sampleCount) {
@@ -97,7 +98,7 @@ async function main() {
     scenarioFamilyCounts: familyCounts,
     expectedModel: MODEL,
     provenance: {
-      materials: 'deterministic anonymous synthetic templates generated after the v2 protocol amendment',
+      materials: 'deterministic anonymous synthetic templates generated after the applicable protocol amendment',
       groundTruth: 'author-written deterministic template facts; not derived from model output',
       classification: 'synthetic_proxy',
       claimBoundary: 'preliminary engineering evidence only; not real unseen student material',
