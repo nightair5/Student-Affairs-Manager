@@ -1,0 +1,338 @@
+{
+  "schemaVersion": "rco-0-reclassification-1.0.0",
+  "generatedAt": "2026-09-01T17:34:16.920Z",
+  "baselineCommit": "c0771e927772a0986b0961108af68366b8127f41",
+  "authorization": "RCO-0 only; zero model calls; protected historical evidence read-only",
+  "clientValidator": {
+    "path": "src/recognition/schema.ts",
+    "sourceSha256": "9bbf82f9bf88af6d6886ce053a3bd86841c5498a4ca59795a40f861e6fb3e27d"
+  },
+  "rco0Scorer": {
+    "path": "scripts/multimodal-evaluation-lib.mjs",
+    "sourceSha256": "c789959b6b3127b3aa2745fdd24e7ac50658d8bf599dcf78dbe02df4bf567097"
+  },
+  "protectedInputsUnchanged": true,
+  "modelCalls": 0,
+  "runs": [
+    {
+      "runId": "MM-V2-001",
+      "datasetId": "synthetic-unseen-v2",
+      "datasetClassification": "synthetic_proxy",
+      "independentSemanticFamilyCount": 12,
+      "renderedSourceCount": 36,
+      "testedArms": [
+        "T",
+        "I",
+        "IT"
+      ],
+      "protectedInputs": {
+        "dataset": {
+          "path": ".evaluation-cache/multimodal-unseen-v2/dataset.json",
+          "sha256": "464d4cd14f46f79fc908ef480a39def8b9e92463455b5131a9376855e6e9347c"
+        },
+        "ocr": {
+          "path": ".evaluation-cache/multimodal-unseen-v2/ocr.json",
+          "sha256": "365df840c775c1914bc5439457dbbaa605f26d41d6e1342acbcd65887ee94399"
+        },
+        "checkpoint": {
+          "path": ".evaluation-cache/multimodal-unseen-v2/runs/synthetic-unseen-v2-formal-20260831a.checkpoint.json",
+          "sha256": "a451d7ce9a206ba78d4b13dab5b408c17c62e636641fcb6e4664360ecf44bc39"
+        },
+        "summary": {
+          "path": ".evaluation-cache/multimodal-unseen-v2/runs/synthetic-unseen-v2-formal-20260831a.summary.json",
+          "sha256": "2c77964ea13cea47ade40aa1d63f788898bbd187f211fc0cac39075961779ec2"
+        },
+        "freeze": {
+          "path": "docs/e2-multimodal-experiment/SYNTHETIC_UNSEEN_V2_FREEZE.json",
+          "sha256": "a4790b96d4a8a68ba39dc6d8cd38cfa424545efdd092c947dcef416bc7b3361f"
+        }
+      },
+      "legacyScorerReproduction": {
+        "baselineCommit": "c0771e927772a0986b0961108af68366b8127f41",
+        "scorerSha256": "b022df3280d6b9024820824ed9a390c4b91304e3694f697b0f58bcb12fd3d365",
+        "exactCoreSummaryMatch": true
+      },
+      "clientValidatorBehaviorMatch": {
+        "baselineSha256": "04be8fa6ba28c5c715ccfdb691a306ec318f6eca2f9bbf40804d3deb0fd40343",
+        "currentSha256": "9bbf82f9bf88af6d6886ce053a3bd86841c5498a4ca59795a40f861e6fb3e27d",
+        "comparedTruthyResults": 107,
+        "mismatchCount": 0
+      },
+      "byArm": {
+        "T": {
+          "arm": "T",
+          "planned": 36,
+          "observed": 36,
+          "requestOrModelReturns": 36,
+          "clientValid": 0,
+          "requestFailures": 0,
+          "invalidResults": 36,
+          "failureCountsByCategory": {
+            "schema": 36
+          },
+          "validationIssueCounts": {
+            "SCHEMA_INVALID": 36
+          },
+          "resultsWithIgnoredContentStringArray": 36,
+          "resultsWithDanglingTaskTimeReferences": 24,
+          "danglingTaskTimeReferenceCount": 27,
+          "legacyTaskF1": 0.6373626373626374,
+          "legacyForbiddenTaskRate": 0.16666666666666666,
+          "reclassifiedRunStatus": "INVALID_RUN",
+          "reclassifiedTaskF1": null
+        },
+        "I": {
+          "arm": "I",
+          "planned": 36,
+          "observed": 36,
+          "requestOrModelReturns": 36,
+          "clientValid": 1,
+          "requestFailures": 0,
+          "invalidResults": 35,
+          "failureCountsByCategory": {
+            "schema": 35
+          },
+          "validationIssueCounts": {
+            "SCHEMA_INVALID": 35
+          },
+          "resultsWithIgnoredContentStringArray": 35,
+          "resultsWithDanglingTaskTimeReferences": 26,
+          "danglingTaskTimeReferenceCount": 31,
+          "legacyTaskF1": 0.7157894736842105,
+          "legacyForbiddenTaskRate": 0.08333333333333333,
+          "reclassifiedRunStatus": "INVALID_RUN",
+          "reclassifiedTaskF1": null
+        },
+        "IT": {
+          "arm": "IT",
+          "planned": 36,
+          "observed": 36,
+          "requestOrModelReturns": 35,
+          "clientValid": 2,
+          "requestFailures": 1,
+          "invalidResults": 33,
+          "failureCountsByCategory": {
+            "schema": 33,
+            "transport": 1
+          },
+          "validationIssueCounts": {
+            "SCHEMA_INVALID": 33
+          },
+          "resultsWithIgnoredContentStringArray": 33,
+          "resultsWithDanglingTaskTimeReferences": 24,
+          "danglingTaskTimeReferenceCount": 26,
+          "legacyTaskF1": null,
+          "legacyForbiddenTaskRate": null,
+          "reclassifiedRunStatus": "INVALID_RUN",
+          "reclassifiedTaskF1": null
+        }
+      },
+      "pairedComparisons": {
+        "IT_vs_T_taskF1": {
+          "status": "INVALID_RUN",
+          "pairedCount": 0,
+          "clusterCount": 0,
+          "delta": null,
+          "ci95": [
+            null,
+            null
+          ]
+        },
+        "IT_vs_I_taskF1": {
+          "status": "INVALID_RUN",
+          "pairedCount": 0,
+          "clusterCount": 0,
+          "delta": null,
+          "ci95": [
+            null,
+            null
+          ]
+        },
+        "IT_vs_T_correctionBurdenBenefit": {
+          "status": "INVALID_RUN",
+          "pairedCount": 0,
+          "clusterCount": 0,
+          "delta": null,
+          "ci95": [
+            null,
+            null
+          ]
+        },
+        "IT_vs_I_correctionBurdenBenefit": {
+          "status": "INVALID_RUN",
+          "pairedCount": 0,
+          "clusterCount": 0,
+          "delta": null,
+          "ci95": [
+            null,
+            null
+          ]
+        }
+      },
+      "humanTiming": {
+        "status": "NOT_RUN",
+        "reason": "No human participant completed the editable confirmation flow; automated correction operations are a proxy, not time."
+      }
+    },
+    {
+      "runId": "MM-V3-I-001",
+      "datasetId": "synthetic-unseen-v3",
+      "datasetClassification": "synthetic_proxy",
+      "independentSemanticFamilyCount": 12,
+      "renderedSourceCount": 36,
+      "testedArms": [
+        "I"
+      ],
+      "protectedInputs": {
+        "dataset": {
+          "path": ".evaluation-cache/multimodal-unseen-v3/dataset.json",
+          "sha256": "2f0e3455d7eedfb2554119ee8aa88b54da799e7d2a1f5c1434997ff4be76e5de"
+        },
+        "ocr": {
+          "path": ".evaluation-cache/multimodal-unseen-v3/ocr.json",
+          "sha256": "814150a98507f984d30e46ace8b6a41f503812bb358257de26f65d7814fbcb63"
+        },
+        "checkpoint": {
+          "path": ".evaluation-cache/multimodal-unseen-v3/runs/synthetic-unseen-v3-image-only-replication-20260831a.checkpoint.json",
+          "sha256": "d24e3fa8893f00a74221b1dc2b333f5289405bb243c9fd526b194180ee80ddd5"
+        },
+        "summary": {
+          "path": ".evaluation-cache/multimodal-unseen-v3/runs/synthetic-unseen-v3-image-only-replication-20260831a.summary.json",
+          "sha256": "154ff19a0149a9a3036826c70992019c7c826fcc8f1ed0df854b945413eb60c2"
+        },
+        "freeze": {
+          "path": "docs/e2-multimodal-experiment/SYNTHETIC_UNSEEN_V3_IMAGE_ONLY_FREEZE.json",
+          "sha256": "5b60e3dcc35b9417b40473876cc54f82734a69be7882f7e13248b0f6887a4e19"
+        }
+      },
+      "legacyScorerReproduction": {
+        "baselineCommit": "c0771e927772a0986b0961108af68366b8127f41",
+        "scorerSha256": "b022df3280d6b9024820824ed9a390c4b91304e3694f697b0f58bcb12fd3d365",
+        "exactCoreSummaryMatch": true
+      },
+      "clientValidatorBehaviorMatch": {
+        "baselineSha256": "04be8fa6ba28c5c715ccfdb691a306ec318f6eca2f9bbf40804d3deb0fd40343",
+        "currentSha256": "9bbf82f9bf88af6d6886ce053a3bd86841c5498a4ca59795a40f861e6fb3e27d",
+        "comparedTruthyResults": 36,
+        "mismatchCount": 0
+      },
+      "byArm": {
+        "T": {
+          "arm": "T",
+          "planned": 0,
+          "observed": 0,
+          "requestOrModelReturns": 0,
+          "clientValid": 0,
+          "requestFailures": 0,
+          "invalidResults": 0,
+          "failureCountsByCategory": {},
+          "validationIssueCounts": {},
+          "resultsWithIgnoredContentStringArray": 0,
+          "resultsWithDanglingTaskTimeReferences": 0,
+          "danglingTaskTimeReferenceCount": 0,
+          "legacyTaskF1": null,
+          "legacyForbiddenTaskRate": null,
+          "reclassifiedRunStatus": "NOT_RUN",
+          "reclassifiedTaskF1": null
+        },
+        "I": {
+          "arm": "I",
+          "planned": 36,
+          "observed": 36,
+          "requestOrModelReturns": 36,
+          "clientValid": 0,
+          "requestFailures": 0,
+          "invalidResults": 36,
+          "failureCountsByCategory": {
+            "schema": 36
+          },
+          "validationIssueCounts": {
+            "SCHEMA_INVALID": 36
+          },
+          "resultsWithIgnoredContentStringArray": 36,
+          "resultsWithDanglingTaskTimeReferences": 28,
+          "danglingTaskTimeReferenceCount": 37,
+          "legacyTaskF1": 0.712871287128713,
+          "legacyForbiddenTaskRate": 0.2222222222222222,
+          "reclassifiedRunStatus": "INVALID_RUN",
+          "reclassifiedTaskF1": null
+        },
+        "IT": {
+          "arm": "IT",
+          "planned": 0,
+          "observed": 0,
+          "requestOrModelReturns": 0,
+          "clientValid": 0,
+          "requestFailures": 0,
+          "invalidResults": 0,
+          "failureCountsByCategory": {},
+          "validationIssueCounts": {},
+          "resultsWithIgnoredContentStringArray": 0,
+          "resultsWithDanglingTaskTimeReferences": 0,
+          "danglingTaskTimeReferenceCount": 0,
+          "legacyTaskF1": null,
+          "legacyForbiddenTaskRate": null,
+          "reclassifiedRunStatus": "NOT_RUN",
+          "reclassifiedTaskF1": null
+        }
+      },
+      "pairedComparisons": {
+        "IT_vs_T_taskF1": {
+          "status": "NOT_RUN",
+          "pairedCount": 0,
+          "clusterCount": 0,
+          "delta": null,
+          "ci95": [
+            null,
+            null
+          ]
+        },
+        "IT_vs_I_taskF1": {
+          "status": "NOT_RUN",
+          "pairedCount": 0,
+          "clusterCount": 0,
+          "delta": null,
+          "ci95": [
+            null,
+            null
+          ]
+        },
+        "IT_vs_T_correctionBurdenBenefit": {
+          "status": "NOT_RUN",
+          "pairedCount": 0,
+          "clusterCount": 0,
+          "delta": null,
+          "ci95": [
+            null,
+            null
+          ]
+        },
+        "IT_vs_I_correctionBurdenBenefit": {
+          "status": "NOT_RUN",
+          "pairedCount": 0,
+          "clusterCount": 0,
+          "delta": null,
+          "ci95": [
+            null,
+            null
+          ]
+        }
+      },
+      "humanTiming": {
+        "status": "NOT_RUN",
+        "reason": "No human participant completed the editable confirmation flow; automated correction operations are a proxy, not time."
+      }
+    }
+  ],
+  "verdict": "NO_PROMOTION",
+  "nextGate": "RCO-1_NOT_AUTHORIZED",
+  "claimsNotSupported": [
+    "commercial correctness",
+    "real-material generalization",
+    "human edit-time benefit",
+    "browser acceptance",
+    "vision superiority",
+    "Preview readiness",
+    "Production readiness"
+  ]
+}

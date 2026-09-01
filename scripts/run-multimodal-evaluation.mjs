@@ -2,7 +2,8 @@
 import { readFile, mkdir, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { EnvHttpProxyAgent } from 'undici'
-import { ARMS, scoreCase, sha256, summarizeEvaluation } from './multimodal-evaluation-lib.mjs'
+import { ARMS, classifyHttpFailure, scoreCase, sha256, summarizeEvaluation } from './multimodal-evaluation-lib.mjs'
+import { loadClientRecognitionValidator } from './load-client-recognition-validator.mjs'
 
 const ROOT = process.cwd()
 const DEFAULT_DATA_DIR = '.evaluation-cache/multimodal-unseen-v2'
@@ -200,22 +201,11 @@ function requestBody(fixture, arm) {
   }
 }
 
-function classifyFailure(httpStatus, errorCode) {
-  if (errorCode === 'MODEL_MISMATCH') return 'model_mismatch'
-  if (errorCode === 'INVALID_AI_RESPONSE') return 'schema'
-  if (errorCode === 'UPSTREAM_AUTH_FAILED' || httpStatus === 401 || httpStatus === 403) return 'authentication'
-  if (errorCode === 'UPSTREAM_BILLING_BLOCKED' || httpStatus === 402) return 'billing'
-  if (errorCode === 'RATE_LIMITED' || httpStatus === 429) return 'rate_limit'
-  if (errorCode === 'UPSTREAM_MODEL_UNAVAILABLE') return 'model_unavailable'
-  if (httpStatus === 400 || errorCode === 'INVALID_REQUEST' || errorCode?.includes('INVALID')) return 'request_contract'
-  if (httpStatus >= 500) return 'upstream'
-  return 'transport'
-}
-
-async function execute(endpoint, fixture, arm, expectedModel) {
+async function execute(endpoint, fixture, arm, expectedModel, validateRecognitionResult) {
   const controller = new AbortController()
   const timeout = setTimeout(() => controller.abort(), 55_000)
   const started = Date.now()
+  let phase = 'request'
   try {
     const response = await fetch(`${endpoint}/api/deepseek/${arm === 'T' ? 'extract' : 'extract-multimodal'}`, {
       method: 'POST',
@@ -224,30 +214,99 @@ async function execute(endpoint, fixture, arm, expectedModel) {
       signal: controller.signal,
       ...(proxyDispatcher ? { dispatcher: proxyDispatcher } : {}),
     })
-    const payload = await response.json().catch(() => null)
+    phase = 'response_body'
     const latencyMs = Date.now() - started
-    if (!response.ok || !payload?.result) {
+    const responseText = await response.text()
+    phase = 'response_processing'
+    let payload
+    try {
+      payload = JSON.parse(responseText)
+    } catch {
+      if (!response.ok) {
+        return scoreCase(fixture, arm, null, {
+          status: 'request_failure',
+          failureReason: `${response.status} INVALID_JSON_ERROR_BODY`,
+          failureCategory: classifyHttpFailure(response.status, null),
+          latencyMs,
+        })
+      }
+      return scoreCase(fixture, arm, null, {
+        status: 'invalid_result',
+        failureReason: `${response.status} INVALID_JSON`,
+        failureCategory: 'json',
+        latencyMs,
+      })
+    }
+    if (!response.ok) {
       const errorCode = payload?.error ?? payload?.code ?? 'INVALID_RESPONSE'
       return scoreCase(fixture, arm, null, {
         status: 'request_failure',
         failureReason: `${response.status} ${errorCode}`,
-        failureCategory: classifyFailure(response.status, errorCode),
+        failureCategory: classifyHttpFailure(response.status, errorCode),
+        latencyMs,
+      })
+    }
+    if (!payload?.result) {
+      return scoreCase(fixture, arm, null, {
+        status: 'invalid_result',
+        failureReason: `${response.status} MISSING_RESULT`,
+        failureCategory: 'model',
         latencyMs,
       })
     }
     const returnedModel = payload.model ?? payload.result.modelName ?? null
     if (returnedModel !== expectedModel || payload.result.modelName !== expectedModel) {
-      return scoreCase(fixture, arm, null, {
-        status: 'request_failure',
+      return scoreCase(fixture, arm, payload.result, {
+        status: 'invalid_result',
         failureReason: `MODEL_MISMATCH expected=${expectedModel} response=${returnedModel ?? 'missing'} result=${payload.result.modelName ?? 'missing'}`,
-        failureCategory: 'model_mismatch',
+        failureCategory: 'model',
         latencyMs,
       })
     }
-    const scored = scoreCase(fixture, arm, payload.result, {
-      latencyMs,
-      tokenUsage: payload?.execution?.tokenUsage ?? null,
-    })
+    let validation
+    try {
+      validation = validateRecognitionResult(payload.result)
+    } catch (error) {
+      return scoreCase(fixture, arm, payload.result, {
+        status: 'invalid_result',
+        failureReason: error instanceof Error ? `CLIENT_VALIDATION_EXCEPTION:${error.name}` : 'CLIENT_VALIDATION_EXCEPTION',
+        failureCategory: 'scoring',
+        latencyMs,
+      })
+    }
+    if (!validation.valid) {
+      const issueCodes = [...new Set(validation.issues.map((issue) => issue.code))].sort()
+      const invalid = scoreCase(fixture, arm, payload.result, {
+        status: 'invalid_result',
+        failureReason: issueCodes.join(',') || 'CLIENT_VALIDATION_FAILED',
+        failureCategory: validation.failureCategory ?? 'schema',
+        latencyMs,
+        tokenUsage: payload?.execution?.tokenUsage ?? null,
+      })
+      return {
+        ...invalid,
+        validationIssueCodes: issueCodes,
+        providerRequestId: payload.requestId ?? null,
+        returnedModel,
+        promptVersion: payload.result.promptVersion ?? null,
+        resultSha256: sha256(stableJson(payload.result)),
+      }
+    }
+    let scored
+    try {
+      scored = scoreCase(fixture, arm, payload.result, {
+        status: 'completed',
+        latencyMs,
+        tokenUsage: payload?.execution?.tokenUsage ?? null,
+      })
+    } catch (error) {
+      return scoreCase(fixture, arm, payload.result, {
+        status: 'scoring_failure',
+        failureReason: error instanceof Error ? `SCORING_EXCEPTION:${error.name}` : 'SCORING_EXCEPTION',
+        failureCategory: 'scoring',
+        latencyMs,
+      })
+    }
     return {
       ...scored,
       providerRequestId: payload.requestId ?? null,
@@ -260,9 +319,9 @@ async function execute(endpoint, fixture, arm, expectedModel) {
       ? String(error.cause.code ?? '').slice(0, 80)
       : ''
     return scoreCase(fixture, arm, null, {
-      status: 'request_failure',
-      failureReason: error instanceof Error ? `${error.name}${safeCode ? `:${safeCode}` : ''}` : 'NETWORK_FAILURE',
-      failureCategory: 'transport',
+      status: phase === 'response_processing' ? 'scoring_failure' : 'request_failure',
+      failureReason: error instanceof Error ? `${phase.toUpperCase()}:${error.name}${safeCode ? `:${safeCode}` : ''}` : `${phase.toUpperCase()}:UNKNOWN_FAILURE`,
+      failureCategory: phase === 'response_processing' ? 'scoring' : 'transport',
       latencyMs: Date.now() - started,
     })
   } finally {
@@ -327,6 +386,7 @@ async function main() {
   const expectedModel = option('expected-model', DEFAULT_EXPECTED_MODEL)
   verifyFreeze(freeze, dataset, ocr, expectedModel)
   const freezeSha256 = sha256(freezeText)
+  const clientValidator = await loadClientRecognitionValidator()
   const endpoint = option('endpoint', DEFAULT_ENDPOINT).replace(/\/$/u, '')
   const label = option('label')
   if (!/^[a-z0-9][a-z0-9._-]{2,100}$/u.test(label)) throw new Error('A fresh lowercase --label is required')
@@ -347,7 +407,7 @@ async function main() {
   await mkdir(runsDir, { recursive: true })
   const checkpointFile = path.join(runsDir, `${label}.checkpoint.json`)
   let checkpoint = {
-    schemaVersion: 'multimodal-evaluation-checkpoint-1.1.0',
+    schemaVersion: 'multimodal-evaluation-checkpoint-1.2.0',
     label,
     datasetId: dataset.datasetId,
     datasetSha256: dataset.datasetSha256,
@@ -357,6 +417,7 @@ async function main() {
     expectedModel,
     selectedCaseIds,
     selectedArms,
+    clientValidatorSha256: clientValidator.sourceSha256,
     startedAt: new Date().toISOString(),
     observations: [],
   }
@@ -371,6 +432,7 @@ async function main() {
       || existing.freezeSha256 !== freezeSha256
       || existing.endpoint !== endpoint
       || existing.expectedModel !== expectedModel
+      || existing.clientValidatorSha256 !== clientValidator.sourceSha256
       || stableJson(existing.selectedCaseIds) !== stableJson(selectedCaseIds)
       || stableJson(existing.selectedArms) !== stableJson(selectedArms)) {
       throw new Error('CHECKPOINT_CONTRACT_MISMATCH')
@@ -387,10 +449,15 @@ async function main() {
   for (const [index, { fixture, arm }] of order.entries()) {
     const key = `${fixture.id}:${arm}`
     if (completed.has(key)) {
+      const resumed = completed.get(key)
+      if (resumed?.status === 'completed') {
+        const resumedValidation = resumed.result ? clientValidator.validateRecognitionResult(resumed.result) : null
+        if (!resumedValidation?.valid) throw new Error(`CHECKPOINT_CLIENT_VALIDATION_FAILED:${key}`)
+      }
       console.log(`[${index + 1}/${order.length}] ${fixture.id} ${arm} resumed`)
       continue
     }
-    const observation = await execute(endpoint, fixture, arm, expectedModel)
+    const observation = await execute(endpoint, fixture, arm, expectedModel, clientValidator.validateRecognitionResult)
     completed.set(key, observation)
     checkpoint.observations = [...completed.values()]
     await writeFile(checkpointFile, `${JSON.stringify(checkpoint, null, 2)}\n`, 'utf8')
@@ -407,11 +474,15 @@ async function main() {
     [item.failureCategory ?? 'unknown']: (counts[item.failureCategory ?? 'unknown'] ?? 0) + 1,
   }), {})
   const summary = {
-    ...summarizeEvaluation({ ...dataset, sampleCount: selectedCases.length }, observations),
+    ...summarizeEvaluation({ ...dataset, sampleCount: selectedCases.length }, observations, { testedArms: selectedArms }),
     label,
     endpoint,
     expectedModel,
     testedArms: selectedArms,
+    clientValidator: {
+      sourcePath: path.relative(ROOT, clientValidator.sourcePath).replaceAll('\\', '/'),
+      sourceSha256: clientValidator.sourceSha256,
+    },
     modelContract: {
       completedModels,
       allCompletedResponsesUsedExpectedModel: completedModels.length === 1 && completedModels[0] === expectedModel,

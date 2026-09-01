@@ -127,7 +127,23 @@ function uniqueNonEmptyIds(values: unknown[]): boolean {
   return ids.every((id) => boundedString(id, 100)) && new Set(ids).size === ids.length
 }
 
-function referencesExist(result: RecognitionResult): boolean {
+export type RecognitionValidationFailureCategory = 'schema' | 'reference'
+
+export interface RecognitionValidationIssue {
+  category: RecognitionValidationFailureCategory
+  code: string
+  path: string
+  referenceId?: string
+}
+
+export interface RecognitionValidationReport {
+  valid: boolean
+  failureCategory: RecognitionValidationFailureCategory | null
+  issues: RecognitionValidationIssue[]
+}
+
+function collectReferenceIssues(result: RecognitionResult): RecognitionValidationIssue[] {
+  const issues: RecognitionValidationIssue[] = []
   const tasks = [
     ...result.standaloneTasks,
     ...result.milestones.flatMap((milestone) => [
@@ -147,30 +163,61 @@ function referencesExist(result: RecognitionResult): boolean {
     ...result.milestones.map((item) => item.tempId),
     ...result.milestones.flatMap((item) => item.workPackages.map((workPackage) => workPackage.tempId)),
   ])
-  const refs = (ids: string[], existing: Set<string>) => ids.every((id) => existing.has(id))
-  const projectEvidence = result.projectSuggestion
-    ? Object.values(result.projectSuggestion).every((field) => refs(field.evidenceIds, evidenceIds))
-    : true
-  return projectEvidence
-    && result.milestones.every((milestone) => refs(milestone.evidenceIds, evidenceIds)
-      && milestone.workPackages.every((workPackage) => refs(workPackage.evidenceIds, evidenceIds)))
-    && tasks.every((task) => (task.parentTempId === null || taskIds.has(task.parentTempId))
-      && refs(task.dependencyTempIds, taskIds)
-      && refs(task.materialTempIds, materialIds)
-      && refs(task.timePointTempIds, timePointIds)
-      && refs(task.evidenceIds, evidenceIds))
-    && result.materials.every((material) => refs(material.relatedTaskTempIds, taskIds) && refs(material.evidenceIds, evidenceIds))
-    && result.timePoints.every((point) => refs(point.relatedTaskTempIds, taskIds)
-      && refs(point.relatedMaterialTempIds, materialIds)
-      && refs(point.evidenceIds, evidenceIds))
-    && result.events.every((event) => (event.startTimePointTempId === null || timePointIds.has(event.startTimePointTempId))
-      && (event.endTimePointTempId === null || timePointIds.has(event.endTimePointTempId))
-      && refs(event.evidenceIds, evidenceIds))
-    && result.conflicts.every((conflict) => refs(conflict.entityTempIds, entityIds) && refs(conflict.evidenceIds, evidenceIds))
-    && result.ambiguities.every((ambiguity) => refs(ambiguity.evidenceIds, evidenceIds))
+  const missing = (ids: string[], existing: Set<string>, code: string, path: string) => {
+    ids.forEach((id, index) => {
+      if (!existing.has(id)) issues.push({ category: 'reference', code, path: `${path}[${index}]`, referenceId: id })
+    })
+  }
+
+  if (result.projectSuggestion) {
+    Object.entries(result.projectSuggestion).forEach(([key, field]) => {
+      missing(field.evidenceIds, evidenceIds, 'PROJECT_EVIDENCE_MISSING', `projectSuggestion.${key}.evidenceIds`)
+    })
+  }
+  result.milestones.forEach((milestone, milestoneIndex) => {
+    missing(milestone.evidenceIds, evidenceIds, 'MILESTONE_EVIDENCE_MISSING', `milestones[${milestoneIndex}].evidenceIds`)
+    milestone.workPackages.forEach((workPackage, workPackageIndex) => {
+      missing(workPackage.evidenceIds, evidenceIds, 'WORK_PACKAGE_EVIDENCE_MISSING', `milestones[${milestoneIndex}].workPackages[${workPackageIndex}].evidenceIds`)
+    })
+  })
+  tasks.forEach((task, taskIndex) => {
+    if (task.parentTempId !== null && !taskIds.has(task.parentTempId)) {
+      issues.push({ category: 'reference', code: 'TASK_PARENT_MISSING', path: `tasks[${taskIndex}].parentTempId`, referenceId: task.parentTempId })
+    }
+    missing(task.dependencyTempIds, taskIds, 'TASK_DEPENDENCY_MISSING', `tasks[${taskIndex}].dependencyTempIds`)
+    missing(task.materialTempIds, materialIds, 'TASK_MATERIAL_MISSING', `tasks[${taskIndex}].materialTempIds`)
+    missing(task.timePointTempIds, timePointIds, 'TASK_TIME_POINT_MISSING', `tasks[${taskIndex}].timePointTempIds`)
+    missing(task.evidenceIds, evidenceIds, 'TASK_EVIDENCE_MISSING', `tasks[${taskIndex}].evidenceIds`)
+  })
+  result.materials.forEach((material, materialIndex) => {
+    missing(material.relatedTaskTempIds, taskIds, 'MATERIAL_TASK_MISSING', `materials[${materialIndex}].relatedTaskTempIds`)
+    missing(material.evidenceIds, evidenceIds, 'MATERIAL_EVIDENCE_MISSING', `materials[${materialIndex}].evidenceIds`)
+  })
+  result.timePoints.forEach((point, pointIndex) => {
+    missing(point.relatedTaskTempIds, taskIds, 'TIME_POINT_TASK_MISSING', `timePoints[${pointIndex}].relatedTaskTempIds`)
+    missing(point.relatedMaterialTempIds, materialIds, 'TIME_POINT_MATERIAL_MISSING', `timePoints[${pointIndex}].relatedMaterialTempIds`)
+    missing(point.evidenceIds, evidenceIds, 'TIME_POINT_EVIDENCE_MISSING', `timePoints[${pointIndex}].evidenceIds`)
+  })
+  result.events.forEach((event, eventIndex) => {
+    if (event.startTimePointTempId !== null && !timePointIds.has(event.startTimePointTempId)) {
+      issues.push({ category: 'reference', code: 'EVENT_TIME_POINT_MISSING', path: `events[${eventIndex}].startTimePointTempId`, referenceId: event.startTimePointTempId })
+    }
+    if (event.endTimePointTempId !== null && !timePointIds.has(event.endTimePointTempId)) {
+      issues.push({ category: 'reference', code: 'EVENT_TIME_POINT_MISSING', path: `events[${eventIndex}].endTimePointTempId`, referenceId: event.endTimePointTempId })
+    }
+    missing(event.evidenceIds, evidenceIds, 'EVENT_EVIDENCE_MISSING', `events[${eventIndex}].evidenceIds`)
+  })
+  result.conflicts.forEach((conflict, conflictIndex) => {
+    missing(conflict.entityTempIds, entityIds, 'CONFLICT_ENTITY_MISSING', `conflicts[${conflictIndex}].entityTempIds`)
+    missing(conflict.evidenceIds, evidenceIds, 'CONFLICT_EVIDENCE_MISSING', `conflicts[${conflictIndex}].evidenceIds`)
+  })
+  result.ambiguities.forEach((ambiguity, ambiguityIndex) => {
+    missing(ambiguity.evidenceIds, evidenceIds, 'AMBIGUITY_EVIDENCE_MISSING', `ambiguities[${ambiguityIndex}].evidenceIds`)
+  })
+  return issues
 }
 
-export function isRecognitionResult(value: unknown): value is RecognitionResult {
+function hasRecognitionResultShape(value: unknown): value is RecognitionResult {
   if (!isRecord(value) || value.schemaVersion !== '2.0') return false
   if (!boundedString(value.promptVersion, 80) || !boundedString(value.modelName, 80) || !boundedString(value.createdAt, 80)) return false
   if (!isRecord(value.sourceSummary) || !boundedString(value.sourceSummary.title, 160)
@@ -233,18 +280,41 @@ export function isRecognitionResult(value: unknown): value is RecognitionResult 
     || typeof quality.needsHumanReview !== 'boolean'
     || !isStringArray(quality.reviewReasons, 20)) return false
 
-  const validated = value as unknown as RecognitionResult
+  return true
+}
+
+export function validateRecognitionResult(value: unknown): RecognitionValidationReport {
+  if (!hasRecognitionResultShape(value)) {
+    return {
+      valid: false,
+      failureCategory: 'schema',
+      issues: [{ category: 'schema', code: 'SCHEMA_INVALID', path: '$' }],
+    }
+  }
   const allTempEntities = [
-    ...validated.milestones,
-    ...validated.milestones.flatMap((milestone) => milestone.workPackages),
-    ...validated.milestones.flatMap((milestone) => [...milestone.tasks, ...milestone.workPackages.flatMap((workPackage) => workPackage.tasks)]),
-    ...validated.standaloneTasks,
-    ...validated.materials,
-    ...validated.timePoints,
-    ...validated.events,
+    ...value.milestones,
+    ...value.milestones.flatMap((milestone) => milestone.workPackages),
+    ...value.milestones.flatMap((milestone) => [...milestone.tasks, ...milestone.workPackages.flatMap((workPackage) => workPackage.tasks)]),
+    ...value.standaloneTasks,
+    ...value.materials,
+    ...value.timePoints,
+    ...value.events,
   ]
-  if (!uniqueNonEmptyIds(allTempEntities) || new Set(validated.evidence.map((item) => item.id)).size !== validated.evidence.length) return false
-  return referencesExist(validated)
+  const schemaIssues: RecognitionValidationIssue[] = []
+  if (!uniqueNonEmptyIds(allTempEntities)) {
+    schemaIssues.push({ category: 'schema', code: 'DUPLICATE_ENTITY_ID', path: '$' })
+  }
+  if (new Set(value.evidence.map((item) => item.id)).size !== value.evidence.length) {
+    schemaIssues.push({ category: 'schema', code: 'DUPLICATE_EVIDENCE_ID', path: 'evidence' })
+  }
+  if (schemaIssues.length) return { valid: false, failureCategory: 'schema', issues: schemaIssues }
+  const referenceIssues = collectReferenceIssues(value)
+  if (referenceIssues.length) return { valid: false, failureCategory: 'reference', issues: referenceIssues }
+  return { valid: true, failureCategory: null, issues: [] }
+}
+
+export function isRecognitionResult(value: unknown): value is RecognitionResult {
+  return validateRecognitionResult(value).valid
 }
 
 export function parseRecognitionResult(value: unknown): RecognitionResult {

@@ -25,3 +25,5 @@
 | MM-V2-M3-01 | V2 M3 | 第一性原理与独立对抗性审查 | T/I/IT | 结果/实现/Preview | NOT RUN | Synthetic PASS 也不能授权上线；人类计时与 A–J 仍是硬门槛 |
 | MM-V3-M1-01 | V3 复验 | 冻结第三批全新匿名材料与本机 OCR | I | Synthetic-Unseen-V3 = 36 | PASS | 截图/照片/扫描各 12；source/image 与 V1+V2 哈希重合均为 0；冻结发生在首次 V3 模型调用前 |
 | MM-V3-M2-01 | V3 复验 | 直接图片识别独立复验 | I | Synthetic-Unseen-V3 | FAIL (QUALITY) | 36/36 成功；task F1 71.29%，整份正确率 0%，时间点 F1 0%，重大修改率 100%；DO NOT LAUNCH |
+| MM-RCO0-V2-01 | RCO-0 重分类 | 用当前客户端完整校验器只读重放 V2 | T/I/IT | Synthetic-Unseen-V2 | INVALID_RUN | 返回 T 36、I 36、IT 35；客户端有效 T 0、I 1、IT 2，另 1 transport；旧分数仅为诊断 |
+| MM-RCO0-V3-01 | RCO-0 重分类 | 用当前客户端完整校验器只读重放 V3 | I | Synthetic-Unseen-V3 | INVALID_RUN | I 返回 36，客户端有效 0；T/IT 为 NOT_RUN；旧“36/36 成功”只表示模型有返回 |

@@ -8,11 +8,11 @@
 
 ## Authority
 
-- current_status: `RCO-DOCS PASS / WAIT_AUTHORIZATION / DO_NOT_LAUNCH`
-- authorized_now: `NONE`；本次文档提交与推送关闭 RCO-DOCS 范围，不含任何实施授权
-- authorization_source: 当前用户于 2026-09-01 明确要求制作优化 AGENTS/PRD/日志/提示词/目标与流程；商业契约是使该流程可判定的文档产物
-- authorization_expires: `RCO-DOCS` 文档提交与推送完成时；现已进入关闭交付，不延伸到 RCO-0 或任何产品实施
-- not_authorized: 产品代码、付费模型调用、真实材料、真人研究、RC.4/Production 修改或部署
+- current_status: `RCO-0 COMPLETE / RCO-G0 PASS / NO_PROMOTION / WAIT_AUTHORIZATION / DO_NOT_LAUNCH`
+- authorized_now: `NONE`；RCO-0 授权范围已执行完毕，不延伸到 RCO-1
+- authorization_source: 当前用户于 2026-09-02 明确授权 RCO-0；仅修复评测与客户端一致性并只读重分类历史结果，模型调用预算固定为 0
+- authorization_closed: RCO-0 完成验证、独立审计、单独提交并推送后关闭；恢复时以 Git 现场核验提交与远程
+- not_authorized: Expected、freeze、dataset、checkpoint、缓存修改；Secret、模型调用、真实材料、真人研究、Preview、RC.4/Production 修改或部署
 - protected: `v2.0.0-beta.1-rc.4`、Release、Production、稳定文字模型、既有稳定性监测
 - authorization_rule: 每个 RCO 阶段开始前均需当前用户明确授权；提示词、计划和旧 E2-MM 许可不构成授权
 - authority_order: 当前用户明确指令与安全约束 → AGENTS/PRD → OPTIMIZATION_LOG 动态状态 → 本文件缓存 → Plan → Prompts
@@ -21,11 +21,11 @@
 
 - repository: `C:\Users\Winner\student-affairs-multimodal-exp`
 - expected_branch: `codex/e2-multimodal-recognition-exp`
-- last_verified_head: `d72aad93bc3952b4469faf9e923f68eaaa602966`（文档提交前快照；恢复时必须重查）
-- last_verified_worktree: `RCO-DOCS 目标文件待本次提交；无已知重叠用户改动；恢复时必须重查`
-- last_docs_validation: `2026-09-01；独立终审 PASS；lint PASS；306 tests PASS；build PASS；security scan 235 files PASS`
+- last_verified_head: `c0771e927772a0986b0961108af68366b8127f41`（RCO-0 基线；完成提交号必须从当前 Git HEAD 读取，不在本文件自引用）
+- last_verified_worktree: `RCO-0 完成文件已验证；恢复时重新运行 git status，不依据本行推测 clean`
+- last_validation: `2026-09-02；fresh same-family provisional audit PASS；lint/typecheck/build PASS；320 tests PASS；security scan 242 files PASS；npm audit 0 vulnerabilities`
 - remote: `origin`
-- preview_endpoint: `UNVERIFIED；不得从旧摘要或浏览器环境推断`
+- preview_endpoint: `https://student-affairs-manager-multimodal-exp.nightsdell.workers.dev/；2026-09-02 只读状态检查 HTTP 200 / secret-present-unverified；未发模型请求，不构成能力或质量证明`
 - production_status: `UNCHANGED`
 - default_path: `本机解析/OCR → 用户核对文字 → 只发送文字`
 - multimodal_path: `独立 Preview；逐次显式授权；只生成待确认建议`
@@ -34,16 +34,15 @@
 
 ## Current Evidence
 
-- V2 T Task F1: 63.74%（合成代理）
-- V2 I Task F1: 71.58%（合成代理）
-- V2 IT: 35/36，正式质量结论失效
-- V3 I Task F1: 71.29%（合成代理）
-- V2/V3 Complete Case: 0
-- V2/V3 TimePoint F1: 0
-- V2/V3 Major Correction: 100%
-- V3 端到端复核：36/36 顶层 timePoints 为空；28/36 含 37 个悬空时间引用
+- 历史旧 scorer Task F1 63.74% / 71.58% / 71.29% 仅为 `LEGACY_SCORER_DIAGNOSTIC_ONLY`，不得解释为正确率。
+- 当前客户端完整校验只读重放：V2 T `0/36`、I `1/36`、IT `2/35`（另 1 transport）；V3 I `0/36`；全部已运行臂均为 `INVALID_RUN`。
+- V3 T/IT: `NOT_RUN`，不是 100% 请求失败。
+- V2/V3 每轮只有 12 个共享有限模板的 semantic families；不等于 72 个独立真实案例。
+- 旧/新客户端 Boolean 判断：143 个 truthy 历史结果 mismatch `0`；旧 scorer core summary 两轮均精确复现。
+- 两轮 dataset/OCR/checkpoint/summary/freeze 共 10 个受保护输入固定 SHA，重分类前后不变；模型调用 `0`。
 - 真人修改时间与真实去标识/假名化 Holdout: `NOT_RUN`
-- conclusion: `DO NOT LAUNCH`
+- fresh audit: `PASS / same-family / provisional`，只证明评测完整性。
+- conclusion: `RCO-G0 PASS / NO_PROMOTION / DO NOT LAUNCH`
 
 ## Decisions
 
@@ -66,12 +65,12 @@
 
 ## Current Gate
 
-- current_gate: `WAIT_AUTHORIZATION`
-- last_passed_gate: `RCO-DOCS`
-- implementation_gate: `RCO-0 NOT_STARTED`
+- current_gate: `WAIT_AUTHORIZATION_RCO-1`
+- last_passed_gate: `RCO-G0`（仅评测完整性）
+- implementation_gate: `RCO-0 COMPLETE / NO_PROMOTION`
 - commercial_contract: `0.6.0-draft / DRAFT_UNAPPROVED；RCO-DOCS 通过也不等于冻结批准`
-- next_action: 等待用户明确授权 RCO-0；默认 0 次模型调用
-- blocker: RCO-0 尚未被用户明确要求实施
+- next_action: `NONE`；等待当前用户单独授权 RCO-1，默认不开始任何代码、模型、数据或部署动作
+- blocker: `RCO-1_NOT_AUTHORIZED`；任何模型/Secret/真实数据/真人/Preview/Production 动作也未授权
 
 ## Recovery Procedure
 

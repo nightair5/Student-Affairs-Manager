@@ -3,19 +3,19 @@ import { recognitionEvaluationDataset, type RecognitionEvaluationFixture } from 
 
 export interface RecognitionEvaluationMetrics {
   sampleCount: number
-  projectMatchAccuracy: number
-  projectNameAccuracy: number
-  stageAccuracy: number
-  taskPrecision: number
-  taskRecall: number
-  duplicateTaskRate: number
-  overFragmentationRate: number
-  materialAccuracy: number
-  timePointAccuracy: number
-  evidenceAccuracy: number
-  severeErrorRate: number
-  humanReviewAgreement: number
-  averageTaskCount: number
+  projectMatchAccuracy: number | null
+  projectNameAccuracy: number | null
+  stageAccuracy: number | null
+  taskPrecision: number | null
+  taskRecall: number | null
+  duplicateTaskRate: number | null
+  overFragmentationRate: number | null
+  materialAccuracy: number | null
+  timePointAccuracy: number | null
+  evidenceAccuracy: number | null
+  severeErrorRate: number | null
+  humanReviewAgreement: number | null
+  averageTaskCount: number | null
   averageConfirmationTimeSeconds: null
 }
 
@@ -30,8 +30,13 @@ function accepted<T extends string>(actual: T, expected: T | T[]): boolean {
   return Array.isArray(expected) ? expected.includes(actual) : expected === actual
 }
 
-function ratio(hit: number, total: number): number {
-  return total ? hit / total : 1
+function ratio(hit: number, total: number): number | null {
+  return total ? hit / total : null
+}
+
+function mean(values: Array<number | null>): number | null {
+  const observed = values.filter((value): value is number => value !== null && Number.isFinite(value))
+  return observed.length ? observed.reduce((total, value) => total + value, 0) / observed.length : null
 }
 
 function fixtureScore(fixture: RecognitionEvaluationFixture) {
@@ -69,18 +74,18 @@ export function evaluateRecognition(dataset = recognitionEvaluationDataset): Rec
   const sum = (selector: (score: typeof scores[number]) => number) => scores.reduce((total, score) => total + selector(score), 0)
   return {
     sampleCount: dataset.length,
-    projectMatchAccuracy: ratio(sum((score) => Number(score.projectMatch)), scores.length),
-    projectNameAccuracy: ratio(sum((score) => Number(score.projectName)), scores.length),
-    stageAccuracy: ratio(sum((score) => score.stage), scores.length),
-    taskPrecision: ratio(sum((score) => score.precision), scores.length),
-    taskRecall: ratio(sum((score) => score.recall), scores.length),
+    projectMatchAccuracy: mean(scores.map((score) => Number(score.projectMatch))),
+    projectNameAccuracy: mean(scores.map((score) => Number(score.projectName))),
+    stageAccuracy: mean(scores.map((score) => score.stage)),
+    taskPrecision: mean(scores.map((score) => score.precision)),
+    taskRecall: mean(scores.map((score) => score.recall)),
     duplicateTaskRate: ratio(sum((score) => score.duplicateCount), sum((score) => score.taskCount)),
-    overFragmentationRate: ratio(sum((score) => Number(score.overFragmented)), scores.length),
-    materialAccuracy: ratio(sum((score) => score.material), scores.length),
-    timePointAccuracy: ratio(sum((score) => Number(score.time)), scores.length),
-    evidenceAccuracy: ratio(sum((score) => score.evidence), scores.length),
-    severeErrorRate: ratio(sum((score) => Number(score.severe)), scores.length),
-    humanReviewAgreement: ratio(sum((score) => Number(score.reviewAgreement)), scores.length),
+    overFragmentationRate: mean(scores.map((score) => Number(score.overFragmented))),
+    materialAccuracy: mean(scores.map((score) => score.material)),
+    timePointAccuracy: mean(scores.map((score) => Number(score.time))),
+    evidenceAccuracy: mean(scores.map((score) => score.evidence)),
+    severeErrorRate: mean(scores.map((score) => Number(score.severe))),
+    humanReviewAgreement: mean(scores.map((score) => Number(score.reviewAgreement))),
     averageTaskCount: ratio(sum((score) => score.taskCount), scores.length),
     averageConfirmationTimeSeconds: null,
   }

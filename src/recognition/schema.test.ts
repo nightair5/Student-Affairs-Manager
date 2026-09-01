@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { buildLocalRecognition, type RecognitionInput } from './pipeline'
-import { isRecognitionResult } from './schema'
+import { isRecognitionResult, validateRecognitionResult } from './schema'
 
 function validResult() {
   const input: RecognitionInput = {
@@ -73,5 +73,75 @@ describe('RecognitionResult 2.0 runtime schema', () => {
     const missingEvidence = structuredClone(validResult())
     firstTask(missingEvidence).evidenceIds = ['missing-evidence']
     expect(isRecognitionResult(missingEvidence)).toBe(false)
+  })
+
+  it('reports schema and reference failures separately without changing the boolean validator', () => {
+    const invalidIgnoredContent = structuredClone(validResult()) as unknown as { ignoredContent: unknown[] }
+    invalidIgnoredContent.ignoredContent = ['背景文字']
+    expect(validateRecognitionResult(invalidIgnoredContent)).toMatchObject({
+      valid: false,
+      failureCategory: 'schema',
+    })
+
+    const duplicate = structuredClone(validResult())
+    duplicate.materials[0].tempId = duplicate.timePoints[0].tempId
+    expect(validateRecognitionResult(duplicate)).toMatchObject({
+      valid: false,
+      failureCategory: 'schema',
+      issues: expect.arrayContaining([expect.objectContaining({ code: 'DUPLICATE_ENTITY_ID' })]),
+    })
+
+    const missingTime = structuredClone(validResult())
+    firstTask(missingTime).timePointTempIds = ['missing-time']
+    expect(validateRecognitionResult(missingTime)).toMatchObject({
+      valid: false,
+      failureCategory: 'reference',
+      issues: expect.arrayContaining([expect.objectContaining({ code: 'TASK_TIME_POINT_MISSING' })]),
+    })
+
+    const missingMaterialTask = structuredClone(validResult())
+    missingMaterialTask.materials[0].relatedTaskTempIds = ['missing-task']
+    expect(validateRecognitionResult(missingMaterialTask)).toMatchObject({
+      valid: false,
+      failureCategory: 'reference',
+      issues: expect.arrayContaining([expect.objectContaining({ code: 'MATERIAL_TASK_MISSING' })]),
+    })
+
+    const missingEventTime = structuredClone(validResult())
+    missingEventTime.events[0].startTimePointTempId = 'missing-time'
+    expect(validateRecognitionResult(missingEventTime)).toMatchObject({
+      valid: false,
+      failureCategory: 'reference',
+      issues: expect.arrayContaining([expect.objectContaining({ code: 'EVENT_TIME_POINT_MISSING' })]),
+    })
+
+    const missingConflictEvidence = structuredClone(validResult())
+    missingConflictEvidence.conflicts.push({
+      id: 'conflict-1',
+      type: 'other',
+      message: '需核对',
+      entityTempIds: [firstTask(missingConflictEvidence).tempId],
+      evidenceIds: ['missing-evidence'],
+      requiresDecision: true,
+    })
+    expect(validateRecognitionResult(missingConflictEvidence)).toMatchObject({
+      valid: false,
+      failureCategory: 'reference',
+      issues: expect.arrayContaining([expect.objectContaining({ code: 'CONFLICT_EVIDENCE_MISSING' })]),
+    })
+
+    const missingAmbiguityEvidence = structuredClone(validResult())
+    missingAmbiguityEvidence.ambiguities.push({
+      id: 'ambiguity-extra',
+      field: 'timePoint',
+      message: '需核对',
+      options: [],
+      evidenceIds: ['missing-evidence'],
+    })
+    expect(validateRecognitionResult(missingAmbiguityEvidence)).toMatchObject({
+      valid: false,
+      failureCategory: 'reference',
+      issues: expect.arrayContaining([expect.objectContaining({ code: 'AMBIGUITY_EVIDENCE_MISSING' })]),
+    })
   })
 })
