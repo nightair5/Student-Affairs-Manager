@@ -8,6 +8,7 @@ import {
   summarizeEvaluation,
 } from './multimodal-evaluation-lib.mjs'
 import { loadClientRecognitionValidator } from './load-client-recognition-validator.mjs'
+import { validateRecognitionResult as validateWorkerRecognitionResult } from '../cloudflare/recognition-contract.generated.mjs'
 
 // Kept outside Vitest's *.test.* glob; this file uses node:test directly.
 
@@ -71,6 +72,32 @@ test('loads and executes the exact client validator without a duplicate schema',
   assert.match(loaded.sourceSha256, /^[a-f0-9]{64}$/u)
   assert.equal(loaded.validateRecognitionResult(fullClientResult()).valid, true)
   assert.equal(loaded.validateRecognitionResult({ schemaVersion: '2.0' }).failureCategory, 'schema')
+})
+
+test('browser, Worker generated contract, and evaluator agree on strict outcomes', async () => {
+  const evaluator = await loadClientRecognitionValidator()
+  const candidates = []
+  const valid = fullClientResult()
+  candidates.push(valid)
+  const missing = structuredClone(valid)
+  delete missing.sourceSummary.requiresAction
+  candidates.push(missing)
+  const duplicate = structuredClone(valid)
+  duplicate.materials[0].tempId = duplicate.timePoints[0].tempId
+  candidates.push(duplicate)
+  const dangling = structuredClone(valid)
+  dangling.standaloneTasks[0].timePointTempIds = ['missing-time']
+  candidates.push(dangling)
+  const impossible = structuredClone(valid)
+  impossible.timePoints[0].normalizedValue = '2026-02-30T18:00'
+  candidates.push(impossible)
+
+  for (const candidate of candidates) {
+    assert.deepEqual(
+      validateWorkerRecognitionResult(candidate),
+      evaluator.validateRecognitionResult(candidate),
+    )
+  }
 })
 
 test('penalizes missing and forbidden tasks as correction burden', () => {

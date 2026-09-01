@@ -8,11 +8,11 @@
 
 ## Authority
 
-- current_status: `RCO-0 COMPLETE / RCO-G0 PASS / NO_PROMOTION / WAIT_AUTHORIZATION / DO_NOT_LAUNCH`
-- authorized_now: `NONE`；RCO-0 授权范围已执行完毕，不延伸到 RCO-1
-- authorization_source: 当前用户于 2026-09-02 明确授权 RCO-0；仅修复评测与客户端一致性并只读重分类历史结果，模型调用预算固定为 0
-- authorization_closed: RCO-0 完成验证、独立审计、单独提交并推送后关闭；恢复时以 Git 现场核验提交与远程
-- not_authorized: Expected、freeze、dataset、checkpoint、缓存修改；Secret、模型调用、真实材料、真人研究、Preview、RC.4/Production 修改或部署
+- current_status: `RCO-1 COMPLETE / RCO-G1 PASS / NO_PROMOTION / WAIT_AUTHORIZATION / DO_NOT_LAUNCH`
+- authorized_now: `NONE`；RCO-1 授权范围已执行完毕，不延伸到 RCO-2
+- authorization_source: 当前用户于 2026-09-02 明确指令：`授权执行 RCO-1：仅统一 Worker、浏览器和评测器 Schema 契约，先做 0 次模型调用验证，不修改 Expected/freeze/checkpoint/cache，不部署。`
+- authorization_closed: `YES`；RCO-G1 完成 0 调用验证后关闭；最终提交与推送状态须从当前 Git 现场读取
+- not_authorized: RCO-2；Expected、freeze、dataset、checkpoint、缓存修改；Secret、模型调用、真实材料、真人研究、Preview、RC.4/Production 修改或部署
 - protected: `v2.0.0-beta.1-rc.4`、Release、Production、稳定文字模型、既有稳定性监测
 - authorization_rule: 每个 RCO 阶段开始前均需当前用户明确授权；提示词、计划和旧 E2-MM 许可不构成授权
 - authority_order: 当前用户明确指令与安全约束 → AGENTS/PRD → OPTIMIZATION_LOG 动态状态 → 本文件缓存 → Plan → Prompts
@@ -21,9 +21,9 @@
 
 - repository: `C:\Users\Winner\student-affairs-multimodal-exp`
 - expected_branch: `codex/e2-multimodal-recognition-exp`
-- last_verified_head: `c0771e927772a0986b0961108af68366b8127f41`（RCO-0 基线；完成提交号必须从当前 Git HEAD 读取，不在本文件自引用）
-- last_verified_worktree: `RCO-0 完成文件已验证；恢复时重新运行 git status，不依据本行推测 clean`
-- last_validation: `2026-09-02；fresh same-family provisional audit PASS；lint/typecheck/build PASS；320 tests PASS；security scan 242 files PASS；npm audit 0 vulnerabilities`
+- last_verified_head: `5d0e2488af3468b65bb3de1dccf5f232a26d5f4e`（RCO-0 完成提交；RCO-1 启动基线）
+- last_verified_worktree: `RCO-1 完成文件已验证；最终提交后仍需重新运行 git status，不依据本行推测 clean`
+- last_validation: `2026-09-02；RCO-1 自对抗审查 PASS；contract drift check、lint、typecheck、build PASS；325 tests PASS；security scan 245 files PASS；npm audit 0 vulnerabilities；Cloudflare 三环境 dry-run PASS`
 - remote: `origin`
 - preview_endpoint: `https://student-affairs-manager-multimodal-exp.nightsdell.workers.dev/；2026-09-02 只读状态检查 HTTP 200 / secret-present-unverified；未发模型请求，不构成能力或质量证明`
 - production_status: `UNCHANGED`
@@ -43,6 +43,9 @@
 - 真人修改时间与真实去标识/假名化 Holdout: `NOT_RUN`
 - fresh audit: `PASS / same-family / provisional`，只证明评测完整性。
 - conclusion: `RCO-G0 PASS / NO_PROMOTION / DO NOT LAUNCH`
+- RCO-1: 三端共用 `src/recognition/schema.ts`；Worker 生成契约源 SHA-256 `81f636bcf62a4e35221ba7e620a0410b3cc39bbf7481882e42ab1222839eab40`；缺字段、未知字段、重复 ID、悬空引用、非法日期与来源外证据均 fail-closed。
+- Repair: 只完成一次、结构限定、来源证据限定、不得新增语义实体或删除 failure 的纯契约；实际调用 `NOT_RUN`。
+- RCO-G1 conclusion: `PASS / ZERO MODEL CALLS / NO_PROMOTION / DO NOT LAUNCH`。
 
 ## Decisions
 
@@ -65,12 +68,12 @@
 
 ## Current Gate
 
-- current_gate: `WAIT_AUTHORIZATION_RCO-1`
-- last_passed_gate: `RCO-G0`（仅评测完整性）
-- implementation_gate: `RCO-0 COMPLETE / NO_PROMOTION`
+- current_gate: `WAIT_AUTHORIZATION_RCO-2`
+- last_passed_gate: `RCO-G1`（仅三端严格 Schema 技术契约）
+- implementation_gate: `RCO-1 COMPLETE / NO_PROMOTION / DO_NOT_LAUNCH`
 - commercial_contract: `0.6.0-draft / DRAFT_UNAPPROVED；RCO-DOCS 通过也不等于冻结批准`
-- next_action: `NONE`；等待当前用户单独授权 RCO-1，默认不开始任何代码、模型、数据或部署动作
-- blocker: `RCO-1_NOT_AUTHORIZED`；任何模型/Secret/真实数据/真人/Preview/Production 动作也未授权
+- next_action: `NONE`；等待当前用户单独授权 RCO-2，默认不修改时间语义、模型、数据或部署
+- blocker: `RCO-2_NOT_AUTHORIZED`；模型/Secret/真实数据/真人/Preview/Production 也仍未授权
 
 ## Recovery Procedure
 

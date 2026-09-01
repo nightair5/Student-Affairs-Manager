@@ -1,6 +1,11 @@
 import { describe, expect, it } from 'vitest'
 import { buildLocalRecognition, type RecognitionInput } from './pipeline'
-import { isRecognitionResult, validateRecognitionResult } from './schema'
+import {
+  RECOGNITION_REPAIR_CONTRACT,
+  isRecognitionResult,
+  validateRecognitionRepair,
+  validateRecognitionResult,
+} from './schema'
 
 function validResult() {
   const input: RecognitionInput = {
@@ -142,6 +147,96 @@ describe('RecognitionResult 2.0 runtime schema', () => {
       valid: false,
       failureCategory: 'reference',
       issues: expect.arrayContaining([expect.objectContaining({ code: 'AMBIGUITY_EVIDENCE_MISSING' })]),
+    })
+  })
+
+  it('reports missing critical fields and impossible calendar values without silent defaults', () => {
+    const missingRequiresAction = structuredClone(validResult()) as unknown as {
+      sourceSummary: Record<string, unknown>
+    }
+    delete missingRequiresAction.sourceSummary.requiresAction
+    expect(validateRecognitionResult(missingRequiresAction)).toMatchObject({
+      valid: false,
+      failureCategory: 'schema',
+      issues: expect.arrayContaining([
+        expect.objectContaining({ code: 'REQUIRED_FIELD_MISSING', path: 'sourceSummary.requiresAction' }),
+      ]),
+    })
+
+    const impossibleDate = structuredClone(validResult())
+    impossibleDate.timePoints[0].normalizedValue = '2026-02-30T18:00'
+    expect(validateRecognitionResult(impossibleDate)).toMatchObject({
+      valid: false,
+      failureCategory: 'semantic',
+      issues: expect.arrayContaining([
+        expect.objectContaining({ code: 'TIME_POINT_NORMALIZED_VALUE_INVALID', path: 'timePoints[0].normalizedValue' }),
+      ]),
+    })
+
+    const unknownField = structuredClone(validResult()) as unknown as Record<string, unknown>
+    unknownField.injected = true
+    expect(validateRecognitionResult(unknownField)).toMatchObject({
+      valid: false,
+      failureCategory: 'schema',
+      issues: expect.arrayContaining([
+        expect.objectContaining({ code: 'UNKNOWN_FIELD', path: 'injected' }),
+      ]),
+    })
+  })
+
+  it('can verify evidence quotes against the exact source without retaining the source', () => {
+    const result = validResult()
+    const sourceContent = result.evidence.map((item) => item.quote).join('\n')
+    expect(validateRecognitionResult(result, { sourceContent })).toMatchObject({ valid: true })
+    expect(validateRecognitionResult(result, { sourceContent: '不包含任何证据原句' })).toMatchObject({
+      valid: false,
+      failureCategory: 'semantic',
+      issues: expect.arrayContaining([
+        expect.objectContaining({ code: 'EVIDENCE_QUOTE_NOT_IN_SOURCE' }),
+      ]),
+    })
+  })
+
+  it('allows one structure-only Repair and rejects added semantic facts or repeated attempts', () => {
+    expect(RECOGNITION_REPAIR_CONTRACT).toMatchObject({
+      maxAttempts: 1,
+      allowNewSemanticEntities: false,
+      allowFailureDeletion: false,
+    })
+    const before = structuredClone(validResult()) as unknown as { sourceSummary: Record<string, unknown> }
+    delete before.sourceSummary.requiresAction
+    const after = validResult()
+    const sourceContent = after.evidence.map((item) => item.quote).join('\n')
+    expect(validateRecognitionRepair(before, after, { attempt: 1, sourceContent })).toMatchObject({
+      valid: true,
+      harm: false,
+    })
+
+    const invented = structuredClone(after)
+    invented.standaloneTasks.push({
+      ...firstTask(invented), tempId: 'invented-task', title: '向陌生账户转账',
+      actionVerb: '转账', actionObject: '陌生账户', materialTempIds: [], timePointTempIds: [],
+    })
+    expect(validateRecognitionRepair(before, invented, { attempt: 1, sourceContent })).toMatchObject({
+      valid: false,
+      harm: true,
+      validation: { issues: expect.arrayContaining([expect.objectContaining({ code: 'REPAIR_NEW_SEMANTIC_ENTITY_FORBIDDEN' })]) },
+    })
+    expect(validateRecognitionRepair(before, after, { attempt: 2, sourceContent })).toMatchObject({
+      valid: false,
+      harm: true,
+      validation: { issues: expect.arrayContaining([expect.objectContaining({ code: 'REPAIR_ATTEMPT_LIMIT_EXCEEDED' })]) },
+    })
+
+    const beforeWithConflict = structuredClone(before) as typeof before & { conflicts: unknown[] }
+    beforeWithConflict.conflicts = [{
+      id: 'conflict-1', type: 'other', message: '截止时间冲突', entityTempIds: [],
+      evidenceIds: [], requiresDecision: true,
+    }]
+    expect(validateRecognitionRepair(beforeWithConflict, after, { attempt: 1, sourceContent })).toMatchObject({
+      valid: false,
+      harm: true,
+      validation: { issues: expect.arrayContaining([expect.objectContaining({ code: 'REPAIR_FAILURE_DELETION_FORBIDDEN' })]) },
     })
   })
 })

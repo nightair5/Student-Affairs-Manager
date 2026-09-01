@@ -34,6 +34,57 @@ function environment(overrides = {}) {
   }
 }
 
+function emptyRecognitionResult({ title = '匿名通知', sourceType = 'text' } = {}) {
+  return {
+    schemaVersion: '2.0',
+    promptVersion: 'model-output',
+    modelName: 'model-output',
+    createdAt: '2026-08-02T08:00:00.000Z',
+    sourceSummary: {
+      title, sourceType, notificationType: 'information_only', summary: '无需办理',
+      requiresAction: false, actionReason: '原文没有办理要求',
+    },
+    projectMatch: {
+      decision: 'uncertain', matchedProjectId: null, suggestedProjectTitle: null,
+      confidence: 0.8, reasons: ['无需建立项目'],
+    },
+    projectSuggestion: null,
+    milestones: [], standaloneTasks: [], materials: [], timePoints: [], events: [], evidence: [],
+    conflicts: [], ambiguities: [], ignoredContent: [],
+    quality: {
+      overallConfidence: 0.8, hierarchyConfidence: 0.8, dateConfidence: 0.8,
+      evidenceCoverage: 1, duplicateRisk: 0, overFragmentationRisk: 0, missingActionRisk: 0,
+      needsHumanReview: false, reviewReasons: [],
+    },
+  }
+}
+
+function actionRecognitionResult() {
+  const result = emptyRecognitionResult({ title: '匿名未见材料', sourceType: 'image' })
+  result.sourceSummary = {
+    title: '匿名未见材料', sourceType: 'image', notificationType: 'registration_notice',
+    summary: '提交报名表', requiresAction: true, actionReason: '有明确提交要求',
+  }
+  result.projectMatch = {
+    decision: 'standalone_task', matchedProjectId: null, suggestedProjectTitle: null,
+    confidence: 0.9, reasons: ['独立事项'],
+  }
+  result.standaloneTasks = [{
+    tempId: 'task-1', parentTempId: null, hierarchyType: 'task', title: '提交报名表',
+    actionVerb: '提交', actionObject: '报名表', description: '提交报名表',
+    completionCriteria: ['报名表已提交'], estimatedMinutes: 30, statusSuggestion: 'todo',
+    prioritySuggestion: 'medium', dependencyTempIds: [], materialTempIds: [], timePointTempIds: [],
+    evidenceIds: ['e-1'], confidence: 0.9, inferenceLevel: 'explicit', userConfirmationRequired: true,
+  }]
+  result.evidence = [{
+    id: 'e-1', sourceId: 'pending-source', quote: '9月10日18:00提交报名表',
+    quotedText: '9月10日18:00提交报名表', field: 'deadline', extractionMethod: 'ai', confidence: 0.9,
+  }]
+  result.quality.needsHumanReview = true
+  result.quality.reviewReasons = ['用户确认']
+  return result
+}
+
 test('status honestly reports a missing Cloudflare secret', async () => {
   const worker = createWorker()
   const response = await worker.fetch(new Request('https://student-affairs-manager.example/api/deepseek/status'), environment())
@@ -183,13 +234,7 @@ test('multimodal Preview text arm uses the same vision model as image arms', asy
       upstreamBody = JSON.parse(options.body)
       return Response.json({
         usage: { prompt_tokens: 70, completion_tokens: 10, total_tokens: 80 },
-        choices: [{ message: { content: JSON.stringify({
-          schemaVersion: '2.0',
-          sourceSummary: { title: '报名通知', sourceType: 'text', requiresAction: false },
-          projectMatch: { decision: 'uncertain' },
-          milestones: [], standaloneTasks: [], materials: [], timePoints: [], events: [], evidence: [],
-          conflicts: [], ambiguities: [], ignoredContent: [], quality: {},
-        }) } }],
+        choices: [{ message: { content: JSON.stringify(emptyRecognitionResult({ title: '报名通知' })) } }],
       })
     },
   })
@@ -275,13 +320,9 @@ test('multimodal extraction requires explicit consent and sends only bounded ima
   const worker = createWorker({
     fetcher: async (_url, options) => {
       upstreamBody = JSON.parse(options.body)
-      return Response.json({ choices: [{ message: { content: JSON.stringify({
-        schemaVersion: '2.0',
-        sourceSummary: { title: '报名截图', sourceType: 'image', requiresAction: false },
-        projectMatch: { decision: 'uncertain' },
-        milestones: [], standaloneTasks: [], materials: [], timePoints: [], events: [], evidence: [],
-        conflicts: [], ambiguities: [], ignoredContent: [], quality: {},
-      }) } }] })
+      return Response.json({
+        choices: [{ message: { content: JSON.stringify(emptyRecognitionResult({ title: '报名截图', sourceType: 'image' })) } }],
+      })
     },
   })
   const response = await worker.fetch(request('/api/deepseek/extract-multimodal', {
@@ -343,19 +384,7 @@ test('image-only evaluation is gated and never sends the hidden OCR reference up
       upstreamBody = JSON.parse(options.body)
       return Response.json({
         usage: { prompt_tokens: 100, completion_tokens: 20, total_tokens: 120 },
-        choices: [{ message: { content: JSON.stringify({
-          schemaVersion: '2.0',
-          sourceSummary: { title: '匿名未见材料', sourceType: 'image', requiresAction: true },
-          projectMatch: { decision: 'standalone_task' },
-          milestones: [],
-          standaloneTasks: [{
-            tempId: 'task-1', parentTempId: null, hierarchyType: 'task', title: '提交报名表',
-            actionVerb: '提交', actionObject: '报名表', evidenceIds: ['e-1'], inferenceLevel: 'explicit',
-          }],
-          materials: [], timePoints: [], events: [],
-          evidence: [{ id: 'e-1', quotedText: '9月10日18:00提交报名表', field: 'deadline' }],
-          conflicts: [], ambiguities: [], ignoredContent: [], quality: {},
-        }) } }],
+        choices: [{ message: { content: JSON.stringify(actionRecognitionResult()) } }],
       })
     },
   })
@@ -578,4 +607,64 @@ test('invalid AI schema and impossible dates never create suggestions', async ()
   }), environment({ DEEPSEEK_API_KEY: 'server-only-test-key-with-length' }))
   assert.equal(response.status, 502)
   assert.equal((await response.json()).error, 'INVALID_AI_RESPONSE')
+})
+
+test('Worker fails closed with explicit shared-contract diagnostics instead of silent defaults', async () => {
+  const missingField = emptyRecognitionResult()
+  delete missingField.sourceSummary.requiresAction
+
+  const unknownField = { ...emptyRecognitionResult(), injected: '不得保留' }
+
+  const duplicateIds = emptyRecognitionResult()
+  duplicateIds.materials = [1, 2].map(() => ({
+    tempId: 'duplicate-1', name: '报名表', required: true, formatRequirements: [], namingRequirements: [],
+    quantity: 1, submissionChannel: null, relatedTaskTempIds: [], evidenceIds: [], confidence: 0.9,
+  }))
+
+  const danglingReference = actionRecognitionResult()
+  danglingReference.standaloneTasks[0].timePointTempIds = ['missing-time']
+
+  const impossibleDate = actionRecognitionResult()
+  impossibleDate.timePoints = [{
+    tempId: 'time-1', type: 'submission_deadline', rawText: '2月30日18:00',
+    normalizedValue: '2026-02-30T18:00', timezone: 'Asia/Shanghai', isAllDay: false,
+    precision: 'exact', needsConfirmation: false, relatedTaskTempIds: [], relatedMaterialTempIds: [],
+    evidenceIds: ['e-1'], confidence: 0.9,
+  }]
+
+  const unsupportedEvidence = actionRecognitionResult()
+
+  const cases = [
+    { candidate: missingField, content: '本通知无需办理。', code: 'REQUIRED_FIELD_MISSING', category: 'schema' },
+    { candidate: unknownField, content: '本通知无需办理。', code: 'UNKNOWN_FIELD', category: 'schema' },
+    { candidate: duplicateIds, content: '本通知无需办理。', code: 'DUPLICATE_ENTITY_ID', category: 'schema' },
+    { candidate: danglingReference, content: '9月10日18:00提交报名表', code: 'TASK_TIME_POINT_MISSING', category: 'reference' },
+    { candidate: impossibleDate, content: '9月10日18:00提交报名表', code: 'TIME_POINT_NORMALIZED_VALUE_INVALID', category: 'semantic' },
+    { candidate: unsupportedEvidence, content: '完全不同的正文', code: 'EVIDENCE_QUOTE_NOT_IN_SOURCE', category: 'semantic' },
+  ]
+
+  for (const current of cases) {
+    const worker = createWorker({
+      fetcher: async () => Response.json({
+        choices: [{ message: { content: JSON.stringify(current.candidate) } }],
+      }),
+    })
+    const response = await worker.fetch(request('/api/deepseek/extract', {
+      body: JSON.stringify({
+        sourceType: 'text', sourceTitle: '匿名通知', content: current.content,
+        referenceTime: '2026-08-02T08:00:00.000Z', timezone: 'Asia/Shanghai',
+      }),
+    }), environment({ DEEPSEEK_API_KEY: 'server-only-test-key-with-length' }))
+    const payload = await response.json()
+    assert.equal(response.status, 502, current.code)
+    assert.equal(payload.error, 'INVALID_AI_RESPONSE', current.code)
+    assert.equal(payload.failureCategory, current.category, current.code)
+    assert.ok(payload.validationIssues.some((issue) => issue.code === current.code), current.code)
+    assert.deepEqual(payload.repair, {
+      attempted: false,
+      maxAttempts: 1,
+      status: 'NOT_AUTHORIZED_IN_RCO_1_ZERO_CALL_VALIDATION',
+    })
+    assert.doesNotMatch(JSON.stringify(payload), /完全不同的正文|9月10日18:00提交报名表/u)
+  }
 })

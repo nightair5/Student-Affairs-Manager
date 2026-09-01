@@ -6,6 +6,7 @@
 
 | Entry | 阶段 | 唯一变量/目的 | 数据 | 调用 | 结果 | 决策 | 下一门 |
 |---|---|---|---|---:|---|---|---|
+| RCO-1-001 | RCO-1 | 统一 Worker、浏览器和评测器严格 Schema 契约 | Mock / 匿名夹具 | 0 | PASS (TECHNICAL) | NO_PROMOTION / DO_NOT_LAUNCH | RCO-2 未授权 |
 | RCO-0-001 | RCO-0 | 评测有效性与客户端严格校验一致，并重分类历史证据 | V2/V3 受保护 checkpoint 只读重放 | 0 | PASS (INTEGRITY) | NO_PROMOTION / DO_NOT_LAUNCH | RCO-1 未授权 |
 | RCO-DOC-001 | Docs | 冻结商业级识别主线、门槛、日志、上下文、提示词与验证契约 | 现有代码/报告 | 0 | PASS (DOCS) | WAIT_AUTHORIZATION | RCO-0 未授权 |
 | MM-V2-001 | 历史诊断 | T/I/IT 正式配对 | Synthetic-Unseen-V2 | 108 计划，107 完成 | IT 因 1 次失败失效 | DO_NOT_LAUNCH | 保留为诊断 |
@@ -14,7 +15,7 @@
 ## 2. 当前权威状态
 
 - program: `Recognition Commercialization Optimization`
-- status: `RCO-0 COMPLETE / RCO-G0 PASS / NO_PROMOTION / DO_NOT_LAUNCH`
+- status: `RCO-1 COMPLETE / RCO-G1 PASS / NO_PROMOTION / DO_NOT_LAUNCH`
 - branch: `codex/e2-multimodal-recognition-exp`
 - protected_release: `v2.0.0-beta.1-rc.4`
 - production_status: `UNCHANGED`
@@ -22,8 +23,8 @@
 - image_path: `逐次显式授权；Preview-only；仅待确认建议`
 - human_timing: `NOT_RUN`
 - real_deidentified_holdout: `NOT_RUN`
-- next_authorized_action: `NONE；等待当前用户单独授权 RCO-1`
-- next_implementation_gate: `RCO-G1；尚未授权，不得开始`
+- next_authorized_action: `NONE；等待当前用户单独授权 RCO-2`
+- next_implementation_gate: `RCO-G2；尚未授权，不得开始`
 - authorization_rule: `每个 RCO 阶段开始前均需当前用户明确授权；文档/提示词/旧 E2-MM 许可不构成授权`
 - docs_authorization_source: `2026-09-01 当前用户明确要求制作优化 AGENTS/PRD/日志/提示词/目标与流程；RCO-DOCS 交付范围随本次文档提交推送关闭，不延伸到 RCO-0`
 
@@ -72,7 +73,7 @@
 |---|---|---|---|---|
 | RCO-DOCS | 约束、PRD、计划、日志、上下文、提示词、验证契约 | PASS | 根 AGENTS/PRD 与本目录 | RCO-0 未授权；等待用户 |
 | RCO-G0 | 评测与产品链路一致 | PASS | shared validation/reclassification/audit | 仅评测完整性通过；NO_PROMOTION |
-| RCO-G1 | 严格 Schema | NOT_STARTED | schema/validator/repair | 未授权 |
+| RCO-G1 | 严格 Schema | PASS | schema/validator/repair contract | 仅技术契约；NO_PROMOTION |
 | RCO-G2 | 唯一时间 AST | NOT_STARTED | AST/tests/migration note | 未授权 |
 | RCO-G3 | 多格式本机提取 | NOT_STARTED | DOCX/PDF/text/OCR fixtures | 未授权 |
 | RCO-G4 | 分介质 OCR | NOT_STARTED | OCR ablation / quality routing | 未授权 |
@@ -313,3 +314,61 @@
 - evidence_bounded_conclusion: RCO-0 已让评测成功定义与客户端接受一致，并诚实重分类历史结果；旧约 71% Task F1 不再能被解释为图片直接识别正确率。
 - claims_not_supported: 多模态优于文字、商业正确率、真实材料泛化、用户提效、浏览器通过、Preview/Production 可上线。
 - next_step: `NONE；RCO-1 尚未授权，停在 RCO-G0 等待当前用户明确指令`。
+
+## 11. RCO-1-001 启动记录 — 2026-09-02T02:00:26+08:00
+
+### Context Snapshot
+
+- owner / authorization_source: 当前用户于 2026-09-02 明确指令：`授权执行 RCO-1：仅统一 Worker、浏览器和评测器 Schema 契约，先做 0 次模型调用验证，不修改 Expected/freeze/checkpoint/cache，不部署。`
+- branch / HEAD / upstream: `codex/e2-multimodal-recognition-exp` / `5d0e2488af3468b65bb3de1dccf5f232a26d5f4e` / 同一 commit。
+- working_tree_before_start: `clean`；无重叠用户改动。
+- preview_endpoint: `https://student-affairs-manager-multimodal-exp.nightsdell.workers.dev/`；只读检查 HTTP 200，状态 `secret-present-unverified`；未发模型请求。
+- current_gate / last_passed_gate: `RCO-G1 IN_PROGRESS` / `RCO-G0 PASS`。
+- hypothesis: 只有 Worker、浏览器和评测器执行同一份严格结构与引用契约，并把缺字段、非法值、重复 ID 和悬空引用显式报错，客户端有效率才不会被服务端静默默认或评测器口径差异虚高。
+- single_variable: 三端 RecognitionResult 2.0 Schema 契约、错误映射及一次 Repair 的纯验证边界；不改变 Prompt、模型、Expected、数据、时间语义、识别策略或部署。
+- allowed_actions: 新增共享或可生成的 Schema/validator/repair contract；修改 Worker、浏览器和评测器适配层；新增 Mock/匿名回归与对抗性测试；更新本日志与短上下文；验证、单独提交并推送。
+- forbidden_actions: 修改 Expected、freeze、dataset、checkpoint、`.evaluation-cache`；调用模型或 Secret；处理真实材料/真人研究；部署 Preview/Production；修改 RC.4/Release/稳定模型；进入 RCO-2。
+- model_calls / secret_access / real_data / human_study / deploy: `0 / NONE / NOT_USED / NOT_RUN / NOT_RUN`。
+- protected_inputs_sha256: V2 dataset `464d4cd14f46f79fc908ef480a39def8b9e92463455b5131a9376855e6e9347c`，OCR `365df840c775c1914bc5439457dbbaa605f26d41d6e1342acbcd65887ee94399`，checkpoint `a451d7ce9a206ba78d4b13dab5b408c17c62e636641fcb6e4664360ecf44bc39`，summary `2c77964ea13cea47ade40aa1d63f788898bbd187f211fc0cac39075961779ec2`，freeze `a4790b96d4a8a68ba39dc6d8cd38cfa424545efdd092c947dcef416bc7b3361f`；V3 dataset `2f0e3455d7eedfb2554119ee8aa88b54da799e7d2a1f5c1434997ff4be76e5de`，OCR `814150a98507f984d30e46ace8b6a41f503812bb358257de26f65d7814fbcb63`，checkpoint `d24e3fa8893f00a74221b1dc2b333f5289405bb243c9fd526b194180ee80ddd5`，summary `154ff19a0149a9a3036826c70992019c7c826fcc8f1ed0df854b945413eb60c2`，freeze `5b60e3dcc35b9417b40473876cc54f82734a69be7882f7e13248b0f6887a4e19`。
+- stop_conditions: 需要放宽 Schema、隐藏/删除失败、自动补造关键事实或引用、修改受保护输入、实际发起 Repair/模型调用、接触 Secret、改变时间解释、扩张到 RCO-2 或部署。
+- decision_before_change: `AUTHORIZED_RCO_1 / DO_NOT_LAUNCH / 0_MODEL_CALLS`。
+
+## 12. RCO-1-001 完成记录 — 2026-09-02T02:13:48+08:00
+
+### 实现与证据
+
+- single_source: `src/recognition/schema.ts` 是浏览器权威运行时契约；评测器仍在内存中转译同一文件；Worker 使用由该文件生成的 `cloudflare/recognition-contract.generated.mjs`。
+- drift_gate: `scripts/generate-recognition-contract.mjs --check` 对源与生成物逐字比较；已接入 `npm test` 与 `npm run cloudflare:check`，生成物源 SHA-256 为 `81f636bcf62a4e35221ba7e620a0410b3cc39bbf7481882e42ab1222839eab40`。
+- strict_failures: 缺失关键字段 `REQUIRED_FIELD_MISSING`、未知字段 `UNKNOWN_FIELD`、重复实体/evidence ID、全部跨引用悬空、日历上不可能的日期 `TIME_POINT_NORMALIZED_VALUE_INVALID`、文字来源外 quote `EVIDENCE_QUOTE_NOT_IN_SOURCE` 均显式失败。
+- worker_sequence: 只覆盖服务端执行信封字段后先校验，既有归一化后再校验；两次任一失败均返回安全类别、代码和路径，不把正文、图片、quote 或 referenceId 回传。
+- evaluator: 新请求和 checkpoint resume 都用同一校验器；T/IT 使用实际 OCR 文字做 evidence 逐字核验，I 保留离线冻结真值核验边界；Worker 报告的 schema/reference/semantic 类别不再被 HTTP 502 统一压成 transport。
+- repair_contract: 最多一次；Repair 后必须严格有效且 evidence 来自本次文字来源；不得新增语义实体、删除 conflict/ambiguity 或进行第二次 Repair。本阶段 Worker 明确报告 `attempted:false / NOT_AUTHORIZED_IN_RCO_1_ZERO_CALL_VALIDATION`。
+- artifact: `docs/recognition-optimization/RCO-1_SCHEMA_CONTRACT.md`。
+
+### 0 调用与对抗性验证
+
+- model_calls / repair_calls / secret_access / real_data / human_study / deploy: `0 / 0 / NONE / NOT_USED / NOT_RUN / NOT_RUN`。
+- tri_party_parity: 有效结果、缺字段、重复 ID、悬空引用和非法日期在浏览器、Worker 生成契约、评测器间完整报告一致。
+- worker_adversarial_mock: 缺字段、未知字段、重复 ID、悬空引用、非法日期、证据不在来源中全部 HTTP 502 fail-closed；响应未泄露测试正文或 evidence quote。
+- repair_adversarial_mock: 一次纯结构修复可通过；新增任务事实、删除 failure、第二次 Repair 均被拒绝并标记 harm。
+- normalization_review: 候选必须在归一化前已严格有效；归一化若删改造成坏引用或非法结果，会被第二次校验拒绝，不能静默成功。
+
+### 工程门
+
+- `npm run recognition:contract:check`: PASS。
+- `npm run lint`: PASS。
+- `npm run typecheck`: PASS。
+- `npm run test`: PASS；Vitest 265、server 8、Cloudflare Worker 25、multimodal evaluation 22、Firebase Functions 5，共 325 tests。
+- `npm run build`: PASS；保留既有 >500 kB chunk warning，不冒充性能验收。
+- `npm run security:scan`: PASS；扫描 245 个 source/build files。
+- `npm audit --audit-level=high`: PASS；0 vulnerabilities。
+- `npm run cloudflare:check`: PASS；Worker tests 与 default/preview/multimodal_preview 三套 Wrangler dry-run 通过；没有执行部署。
+- protected_inputs: RCO-0 固定的 V2/V3 dataset、OCR、checkpoint、summary、freeze 共 10 个 SHA-256 逐路径复核全部不变；Expected 随 dataset 受保护；`.evaluation-cache` 未修改。
+
+### 决策
+
+- decision: `RCO-G1 PASS / NO_PROMOTION / DO_NOT_LAUNCH`。
+- pass_scope: 只证明三端严格契约、错误可观测性和 Repair 纯护栏在 Mock/匿名测试中成立。
+- claims_not_supported: 模型正确率提升、时间识别改善、多模态胜出、真实材料泛化、真人修改时间、浏览器 A–J、Preview/Production 可上线。
+- rc4 / release / production / stable_model: `UNCHANGED`。
+- next_step: `NONE；RCO-2 尚未授权，停在 RCO-G1 等待当前用户明确指令`。

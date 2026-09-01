@@ -127,7 +127,7 @@ function uniqueNonEmptyIds(values: unknown[]): boolean {
   return ids.every((id) => boundedString(id, 100)) && new Set(ids).size === ids.length
 }
 
-export type RecognitionValidationFailureCategory = 'schema' | 'reference'
+export type RecognitionValidationFailureCategory = 'schema' | 'reference' | 'semantic'
 
 export interface RecognitionValidationIssue {
   category: RecognitionValidationFailureCategory
@@ -140,6 +140,200 @@ export interface RecognitionValidationReport {
   valid: boolean
   failureCategory: RecognitionValidationFailureCategory | null
   issues: RecognitionValidationIssue[]
+}
+
+export interface RecognitionValidationOptions {
+  sourceContent?: string
+}
+
+export const RECOGNITION_REPAIR_CONTRACT = Object.freeze({
+  maxAttempts: 1,
+  requireStrictValidationAfterRepair: true,
+  requireEvidenceQuoteInSource: true,
+  allowNewSemanticEntities: false,
+  allowFailureDeletion: false,
+})
+
+export interface RecognitionRepairValidationReport {
+  valid: boolean
+  harm: boolean
+  validation: RecognitionValidationReport
+}
+
+function requiredFieldIssues(value: unknown): RecognitionValidationIssue[] {
+  const issues: RecognitionValidationIssue[] = []
+  const requireFields = (record: unknown, path: string, fields: string[], allowedFields = fields) => {
+    if (!isRecord(record)) return
+    fields.forEach((field) => {
+      if (!Object.hasOwn(record, field)) {
+        issues.push({ category: 'schema', code: 'REQUIRED_FIELD_MISSING', path: path ? `${path}.${field}` : field })
+      }
+    })
+    Object.keys(record).forEach((field) => {
+      if (!allowedFields.includes(field)) {
+        issues.push({ category: 'schema', code: 'UNKNOWN_FIELD', path: path ? `${path}.${field}` : field })
+      }
+    })
+  }
+  requireFields(value, '', [
+    'schemaVersion', 'promptVersion', 'modelName', 'createdAt', 'sourceSummary', 'projectMatch',
+    'projectSuggestion', 'milestones', 'standaloneTasks', 'materials', 'timePoints', 'events',
+    'evidence', 'conflicts', 'ambiguities', 'ignoredContent', 'quality',
+  ])
+  if (!isRecord(value)) return issues
+  requireFields(value.sourceSummary, 'sourceSummary', [
+    'title', 'sourceType', 'notificationType', 'summary', 'requiresAction', 'actionReason',
+  ])
+  requireFields(value.projectMatch, 'projectMatch', [
+    'decision', 'matchedProjectId', 'suggestedProjectTitle', 'confidence', 'reasons',
+  ])
+  requireFields(value.quality, 'quality', [
+    'overallConfidence', 'hierarchyConfidence', 'dateConfidence', 'evidenceCoverage', 'duplicateRisk',
+    'overFragmentationRisk', 'missingActionRisk', 'needsHumanReview', 'reviewReasons',
+  ])
+  const requireArrayItems = (items: unknown, path: string, fields: string[], allowedFields = fields) => {
+    if (!Array.isArray(items)) return
+    items.forEach((item, index) => requireFields(item, `${path}[${index}]`, fields, allowedFields))
+  }
+  const taskFields = [
+    'tempId', 'parentTempId', 'hierarchyType', 'title', 'actionVerb', 'actionObject', 'description',
+    'completionCriteria', 'estimatedMinutes', 'statusSuggestion', 'prioritySuggestion',
+    'dependencyTempIds', 'materialTempIds', 'timePointTempIds', 'evidenceIds', 'confidence',
+    'inferenceLevel', 'userConfirmationRequired',
+  ]
+  requireArrayItems(value.standaloneTasks, 'standaloneTasks', taskFields, [...taskFields, 'selected'])
+  const materialFields = [
+    'tempId', 'name', 'required', 'formatRequirements', 'namingRequirements', 'quantity',
+    'submissionChannel', 'relatedTaskTempIds', 'evidenceIds', 'confidence',
+  ]
+  requireArrayItems(value.materials, 'materials', materialFields, [...materialFields, 'selected'])
+  const timePointFields = [
+    'tempId', 'type', 'rawText', 'normalizedValue', 'timezone', 'isAllDay', 'precision',
+    'needsConfirmation', 'relatedTaskTempIds', 'relatedMaterialTempIds', 'evidenceIds', 'confidence',
+  ]
+  requireArrayItems(value.timePoints, 'timePoints', timePointFields, [...timePointFields, 'selected'])
+  const eventFields = [
+    'tempId', 'title', 'description', 'startTimePointTempId', 'endTimePointTempId', 'location',
+    'evidenceIds', 'confidence', 'inferenceLevel',
+  ]
+  requireArrayItems(value.events, 'events', eventFields, [...eventFields, 'selected'])
+  requireArrayItems(
+    value.evidence,
+    'evidence',
+    ['id', 'sourceId', 'quote', 'field'],
+    ['id', 'sourceId', 'quote', 'quotedText', 'field', 'page', 'textStart', 'textEnd', 'boundingBox', 'extractionMethod', 'confidence'],
+  )
+  requireArrayItems(value.conflicts, 'conflicts', [
+    'id', 'type', 'message', 'entityTempIds', 'evidenceIds', 'requiresDecision',
+  ])
+  requireArrayItems(value.ambiguities, 'ambiguities', ['id', 'field', 'message', 'options', 'evidenceIds'])
+  requireArrayItems(value.ignoredContent, 'ignoredContent', ['text', 'reason'])
+  if (Array.isArray(value.milestones)) {
+    value.milestones.forEach((milestone, milestoneIndex) => {
+      const milestonePath = `milestones[${milestoneIndex}]`
+      requireFields(milestone, milestonePath, ['tempId', 'title', 'objective', 'order', 'evidenceIds', 'workPackages', 'tasks'])
+      if (!isRecord(milestone)) return
+      requireArrayItems(milestone.tasks, `${milestonePath}.tasks`, taskFields, [...taskFields, 'selected'])
+      if (Array.isArray(milestone.workPackages)) {
+        milestone.workPackages.forEach((workPackage, workPackageIndex) => {
+          const workPackagePath = `${milestonePath}.workPackages[${workPackageIndex}]`
+          requireFields(workPackage, workPackagePath, ['tempId', 'title', 'objective', 'order', 'evidenceIds', 'tasks'])
+          if (isRecord(workPackage)) requireArrayItems(workPackage.tasks, `${workPackagePath}.tasks`, taskFields, [...taskFields, 'selected'])
+        })
+      }
+    })
+  }
+  if (isRecord(value.projectSuggestion)) {
+    const projectSuggestion = value.projectSuggestion
+    const projectFields = ['title', 'category', 'objective', 'description']
+    requireFields(projectSuggestion, 'projectSuggestion', projectFields)
+    projectFields.forEach((field) => {
+      requireFields(projectSuggestion[field], `projectSuggestion.${field}`, [
+        'value', 'evidenceIds', 'confidence', 'inferenceLevel',
+      ])
+    })
+  }
+  return issues
+}
+
+function isValidCalendarDateTime(value: string): boolean {
+  const match = value.match(/^(\d{4})-(\d{2})-(\d{2})(?:T(\d{2}):(\d{2})(?::(\d{2})(?:\.\d{1,3})?)?(?:Z|[+-]\d{2}:\d{2})?)?$/u)
+  if (!match) return false
+  const [, yearText, monthText, dayText, hourText = '00', minuteText = '00', secondText = '00'] = match
+  const year = Number(yearText)
+  const month = Number(monthText)
+  const day = Number(dayText)
+  const hour = Number(hourText)
+  const minute = Number(minuteText)
+  const second = Number(secondText)
+  if (month < 1 || month > 12 || hour > 23 || minute > 59 || second > 59) return false
+  return day >= 1 && day <= new Date(Date.UTC(year, month, 0)).getUTCDate()
+}
+
+function collectSemanticIssues(value: RecognitionResult, options: RecognitionValidationOptions): RecognitionValidationIssue[] {
+  const issues: RecognitionValidationIssue[] = []
+  value.timePoints.forEach((point, index) => {
+    if (point.normalizedValue !== null && !isValidCalendarDateTime(point.normalizedValue)) {
+      issues.push({ category: 'semantic', code: 'TIME_POINT_NORMALIZED_VALUE_INVALID', path: `timePoints[${index}].normalizedValue` })
+    }
+  })
+  if (typeof options.sourceContent === 'string') {
+    value.evidence.forEach((evidence, index) => {
+      if (!options.sourceContent?.includes(evidence.quote)) {
+        issues.push({ category: 'semantic', code: 'EVIDENCE_QUOTE_NOT_IN_SOURCE', path: `evidence[${index}].quote`, referenceId: evidence.id })
+      }
+    })
+  }
+  return issues
+}
+
+function semanticEntitySignatures(value: unknown): Set<string> {
+  if (!isRecord(value)) return new Set()
+  const signatures = new Set<string>()
+  const add = (kind: string, item: unknown, fields: string[]) => {
+    if (!isRecord(item)) return
+    const values = fields.map((field) => typeof item[field] === 'string' ? item[field].trim() : '')
+    if (values.some(Boolean)) signatures.add(`${kind}:${values.join('|')}`)
+  }
+  const addTasks = (tasks: unknown) => {
+    if (Array.isArray(tasks)) tasks.forEach((task) => add('task', task, ['title', 'actionVerb', 'actionObject']))
+  }
+  addTasks(value.standaloneTasks)
+  if (Array.isArray(value.milestones)) {
+    value.milestones.forEach((milestone) => {
+      if (!isRecord(milestone)) return
+      add('milestone', milestone, ['title', 'objective'])
+      addTasks(milestone.tasks)
+      if (Array.isArray(milestone.workPackages)) {
+        milestone.workPackages.forEach((workPackage) => {
+          add('workPackage', workPackage, ['title', 'objective'])
+          if (isRecord(workPackage)) addTasks(workPackage.tasks)
+        })
+      }
+    })
+  }
+  if (Array.isArray(value.materials)) value.materials.forEach((item) => add('material', item, ['name']))
+  if (Array.isArray(value.timePoints)) value.timePoints.forEach((item) => add('timePoint', item, ['type', 'rawText', 'normalizedValue']))
+  if (Array.isArray(value.events)) value.events.forEach((item) => add('event', item, ['title', 'description']))
+  if (Array.isArray(value.evidence)) value.evidence.forEach((item) => add('evidence', item, ['quote', 'quotedText']))
+  return signatures
+}
+
+function failureSignatures(value: unknown): Set<string> {
+  if (!isRecord(value)) return new Set()
+  const signatures = new Set<string>()
+  const add = (kind: string, items: unknown) => {
+    if (!Array.isArray(items)) return
+    items.forEach((item) => {
+      if (!isRecord(item)) return
+      const id = typeof item.id === 'string' ? item.id.trim() : ''
+      const message = typeof item.message === 'string' ? item.message.trim() : ''
+      if (id || message) signatures.add(`${kind}:${id}|${message}`)
+    })
+  }
+  add('conflict', value.conflicts)
+  add('ambiguity', value.ambiguities)
+  return signatures
 }
 
 function collectReferenceIssues(result: RecognitionResult): RecognitionValidationIssue[] {
@@ -283,7 +477,9 @@ function hasRecognitionResultShape(value: unknown): value is RecognitionResult {
   return true
 }
 
-export function validateRecognitionResult(value: unknown): RecognitionValidationReport {
+export function validateRecognitionResult(value: unknown, options: RecognitionValidationOptions = {}): RecognitionValidationReport {
+  const missingFields = requiredFieldIssues(value)
+  if (missingFields.length) return { valid: false, failureCategory: 'schema', issues: missingFields }
   if (!hasRecognitionResultShape(value)) {
     return {
       valid: false,
@@ -310,6 +506,8 @@ export function validateRecognitionResult(value: unknown): RecognitionValidation
   if (schemaIssues.length) return { valid: false, failureCategory: 'schema', issues: schemaIssues }
   const referenceIssues = collectReferenceIssues(value)
   if (referenceIssues.length) return { valid: false, failureCategory: 'reference', issues: referenceIssues }
+  const semanticIssues = collectSemanticIssues(value, options)
+  if (semanticIssues.length) return { valid: false, failureCategory: 'semantic', issues: semanticIssues }
   return { valid: true, failureCategory: null, issues: [] }
 }
 
@@ -320,4 +518,51 @@ export function isRecognitionResult(value: unknown): value is RecognitionResult 
 export function parseRecognitionResult(value: unknown): RecognitionResult {
   if (!isRecognitionResult(value)) throw new Error('DeepSeek 返回的 RecognitionResult 2.0 结构无效')
   return value
+}
+
+export function validateRecognitionRepair(
+  before: unknown,
+  after: unknown,
+  options: RecognitionValidationOptions & { attempt: number },
+): RecognitionRepairValidationReport {
+  if (options.attempt !== 1) {
+    return {
+      valid: false,
+      harm: true,
+      validation: {
+        valid: false,
+        failureCategory: 'semantic',
+        issues: [{ category: 'semantic', code: 'REPAIR_ATTEMPT_LIMIT_EXCEEDED', path: '$' }],
+      },
+    }
+  }
+  const validation = validateRecognitionResult(after, { sourceContent: options.sourceContent })
+  if (!validation.valid) return { valid: false, harm: false, validation }
+  const beforeSignatures = semanticEntitySignatures(before)
+  const added = [...semanticEntitySignatures(after)].filter((signature) => !beforeSignatures.has(signature))
+  if (added.length) {
+    return {
+      valid: false,
+      harm: true,
+      validation: {
+        valid: false,
+        failureCategory: 'semantic',
+        issues: [{ category: 'semantic', code: 'REPAIR_NEW_SEMANTIC_ENTITY_FORBIDDEN', path: '$' }],
+      },
+    }
+  }
+  const afterFailures = failureSignatures(after)
+  const deletedFailures = [...failureSignatures(before)].filter((signature) => !afterFailures.has(signature))
+  if (deletedFailures.length) {
+    return {
+      valid: false,
+      harm: true,
+      validation: {
+        valid: false,
+        failureCategory: 'semantic',
+        issues: [{ category: 'semantic', code: 'REPAIR_FAILURE_DELETION_FORBIDDEN', path: '$' }],
+      },
+    }
+  }
+  return { valid: true, harm: false, validation }
 }

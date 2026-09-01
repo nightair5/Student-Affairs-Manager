@@ -2,10 +2,15 @@ import {
   MULTIMODAL_RECOGNITION_MODEL_NAME,
   MULTIMODAL_RECOGNITION_PROMPT_VERSION,
   IMAGE_ONLY_EVALUATION_PROMPT_VERSION,
+  RECOGNITION_PROMPT_VERSION,
   VISION_TEXT_EVALUATION_PROMPT_VERSION,
   normalizeRecognitionResult,
   recognitionSystemPrompt,
 } from './recognition.mjs'
+import {
+  RECOGNITION_REPAIR_CONTRACT,
+  validateRecognitionResult,
+} from './recognition-contract.generated.mjs'
 
 const DEEPSEEK_ENDPOINT = 'https://api.deepseek.com/chat/completions'
 const DEEPSEEK_MODEL = 'deepseek-v4-flash'
@@ -503,8 +508,42 @@ function success(payload, requestId, status = 200) {
   return json({ ...payload, requestId }, status, requestId)
 }
 
-function failure(code, message, status, requestId) {
-  return json({ error: code, message, requestId }, status, requestId)
+function failure(code, message, status, requestId, details = null) {
+  return json({ error: code, message, ...(details ?? {}), requestId }, status, requestId)
+}
+
+function recognitionCandidate(raw, createdAt, modelName, promptVersion) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return raw
+  return { ...raw, promptVersion, modelName, createdAt }
+}
+
+function safeRecognitionValidation(report) {
+  return {
+    failureCategory: report.failureCategory ?? 'schema',
+    validationIssues: report.issues.slice(0, 20).map((issue) => ({
+      category: issue.category,
+      code: issue.code,
+      path: issue.path,
+    })),
+    repair: {
+      attempted: false,
+      maxAttempts: RECOGNITION_REPAIR_CONTRACT.maxAttempts,
+      status: 'NOT_AUTHORIZED_IN_RCO_1_ZERO_CALL_VALIDATION',
+    },
+  }
+}
+
+function invalidRecognitionResponse(context, report, multimodal = false) {
+  context.errorType = 'INVALID_AI_RESPONSE'
+  return failure(
+    'INVALID_AI_RESPONSE',
+    multimodal
+      ? '多模态实验模型返回的 RecognitionResult 2.0 未通过严格契约。'
+      : 'DeepSeek 返回的 RecognitionResult 2.0 未通过严格契约。',
+    502,
+    context.requestId,
+    safeRecognitionValidation(report),
+  )
 }
 
 function isTrustedOrigin(request, allowedOrigins = '') {
@@ -789,8 +828,16 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
       context.errorType = 'INVALID_AI_RESPONSE'
       return failure('INVALID_AI_RESPONSE', 'DeepSeek 未返回有效的任务结构。', 502, context.requestId)
     }
-    const result = normalizeRecognitionResult(
+    const candidate = recognitionCandidate(
       parsed,
+      referenceTime,
+      selectedModel,
+      selectedPromptVersion ?? RECOGNITION_PROMPT_VERSION,
+    )
+    const candidateValidation = validateRecognitionResult(candidate, { sourceContent })
+    if (!candidateValidation.valid) return invalidRecognitionResponse(context, candidateValidation)
+    const result = normalizeRecognitionResult(
+      candidate,
       sourceContent,
       referenceTime,
       selectedModel,
@@ -800,6 +847,8 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
       context.errorType = 'INVALID_AI_RESPONSE'
       return failure('INVALID_AI_RESPONSE', 'DeepSeek 没有返回有效的 RecognitionResult 2.0。', 502, context.requestId)
     }
+    const resultValidation = validateRecognitionResult(result, { sourceContent })
+    if (!resultValidation.valid) return invalidRecognitionResponse(context, resultValidation)
     return success({
       model: selectedModel,
       evaluationArm: selectedModel === DEEPSEEK_MULTIMODAL_MODEL ? 'T' : undefined,
@@ -942,18 +991,37 @@ async function extractMultimodalTasks(request, env, fetcher, isRateLimited, acqu
       context.errorType = 'INVALID_AI_RESPONSE'
       return failure('INVALID_AI_RESPONSE', '多模态实验模型未返回有效的任务结构。', 502, context.requestId)
     }
-    const result = normalizeRecognitionResult(
+    const promptVersion = imageOnlyEvaluation
+      ? IMAGE_ONLY_EVALUATION_PROMPT_VERSION
+      : MULTIMODAL_RECOGNITION_PROMPT_VERSION
+    const candidate = recognitionCandidate(
       parsed,
+      referenceTime,
+      DEEPSEEK_MULTIMODAL_MODEL,
+      promptVersion,
+    )
+    const candidateValidation = validateRecognitionResult(
+      candidate,
+      imageOnlyEvaluation ? {} : { sourceContent },
+    )
+    if (!candidateValidation.valid) return invalidRecognitionResponse(context, candidateValidation, true)
+    const result = normalizeRecognitionResult(
+      candidate,
       sourceContent,
       referenceTime,
       DEEPSEEK_MULTIMODAL_MODEL,
-      imageOnlyEvaluation ? IMAGE_ONLY_EVALUATION_PROMPT_VERSION : MULTIMODAL_RECOGNITION_PROMPT_VERSION,
+      promptVersion,
       !imageOnlyEvaluation,
     )
     if (!result) {
       context.errorType = 'INVALID_AI_RESPONSE'
       return failure('INVALID_AI_RESPONSE', '多模态实验模型没有返回有效的 RecognitionResult 2.0。', 502, context.requestId)
     }
+    const resultValidation = validateRecognitionResult(
+      result,
+      imageOnlyEvaluation ? {} : { sourceContent },
+    )
+    if (!resultValidation.valid) return invalidRecognitionResponse(context, resultValidation, true)
     return success({
       model: DEEPSEEK_MULTIMODAL_MODEL,
       evaluationArm: imageOnlyEvaluation ? 'I' : 'IT',

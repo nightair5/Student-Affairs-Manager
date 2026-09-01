@@ -239,10 +239,13 @@ async function execute(endpoint, fixture, arm, expectedModel, validateRecognitio
     }
     if (!response.ok) {
       const errorCode = payload?.error ?? payload?.code ?? 'INVALID_RESPONSE'
+      const reportedCategory = ['schema', 'reference', 'semantic'].includes(payload?.failureCategory)
+        ? payload.failureCategory
+        : null
       return scoreCase(fixture, arm, null, {
         status: 'request_failure',
         failureReason: `${response.status} ${errorCode}`,
-        failureCategory: classifyHttpFailure(response.status, errorCode),
+        failureCategory: reportedCategory ?? classifyHttpFailure(response.status, errorCode),
         latencyMs,
       })
     }
@@ -265,7 +268,10 @@ async function execute(endpoint, fixture, arm, expectedModel, validateRecognitio
     }
     let validation
     try {
-      validation = validateRecognitionResult(payload.result)
+      validation = validateRecognitionResult(
+        payload.result,
+        arm === 'I' ? {} : { sourceContent: fixture.ocrText ?? fixture.sourceText },
+      )
     } catch (error) {
       return scoreCase(fixture, arm, payload.result, {
         status: 'invalid_result',
@@ -451,7 +457,12 @@ async function main() {
     if (completed.has(key)) {
       const resumed = completed.get(key)
       if (resumed?.status === 'completed') {
-        const resumedValidation = resumed.result ? clientValidator.validateRecognitionResult(resumed.result) : null
+        const resumedValidation = resumed.result
+          ? clientValidator.validateRecognitionResult(
+              resumed.result,
+              arm === 'I' ? {} : { sourceContent: fixture.ocrText ?? fixture.sourceText },
+            )
+          : null
         if (!resumedValidation?.valid) throw new Error(`CHECKPOINT_CLIENT_VALIDATION_FAILED:${key}`)
       }
       console.log(`[${index + 1}/${order.length}] ${fixture.id} ${arm} resumed`)
