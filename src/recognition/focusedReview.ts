@@ -89,7 +89,7 @@ export function normalizeFocusedReviewSourceMetadata(value: unknown): SourceRevi
   const sourceType = ['text', 'file', 'image', 'link'].includes(String(candidate.sourceType))
     ? candidate.sourceType as SourceReviewMetadata['sourceType']
     : undefined
-  const extractionMethod = ['manual', 'parser', 'ocr', 'web', 'unknown'].includes(String(candidate.extractionMethod))
+  const extractionMethod = ['manual', 'parser', 'ocr', 'mixed', 'web', 'unknown'].includes(String(candidate.extractionMethod))
     ? candidate.extractionMethod as SourceReviewMetadata['extractionMethod']
     : undefined
   const mimeType = typeof candidate.mimeType === 'string' && candidate.mimeType.length <= 200

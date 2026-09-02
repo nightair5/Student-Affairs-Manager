@@ -198,7 +198,7 @@ export function IntakePanel({ onClose, onSubmitIntake, onSaveSource, smartExtrac
   const selectedFileIsPdf = Boolean(selectedFile && (
     selectedFile.type === 'application/pdf' || selectedFile.name.toLowerCase().endsWith('.pdf')
   ))
-  const isScannedPdf = selectedFileIsPdf && fileReviewMetadata.extractionMethod === 'ocr'
+  const isScannedPdf = selectedFileIsPdf && ['ocr', 'mixed'].includes(String(fileReviewMetadata.extractionMethod))
   const isMultimodalCandidate = Boolean(selectedFile && (sourceType === 'image' || isScannedPdf))
   const imageFormatSupported = Boolean(selectedFile && (
     selectedFileIsPdf || isSupportedMultimodalImage(selectedFile)
@@ -367,10 +367,10 @@ export function IntakePanel({ onClose, onSubmitIntake, onSaveSource, smartExtrac
               >
                 {fileStatus === 'reading' ? <LoaderCircle className="spin" size={30} /> : <Upload size={30} strokeWidth={1.5} />}
                 <strong>{fileName || '拖入文件，或从设备中选择'}</strong>
-                <p>支持 20 MB 内的 TXT、Markdown、带文本层 PDF 和图片；也可直接粘贴截图。只保存提取文字与文件指纹，不保存文件本体。</p>
+                <p>支持 20 MB 内的 TXT、Markdown、DOCX、逐页混合 PDF 和图片；也可直接粘贴截图。只保存提取文字与文件指纹，不保存文件本体。</p>
                 <div className="upload-actions">
                   <label className="secondary-button file-picker">选择文件
-                    <input type="file" accept=".txt,.md,.markdown,.pdf,image/*" onChange={handleFile} />
+                    <input type="file" accept=".txt,.md,.markdown,.docx,.pdf,image/*" onChange={handleFile} />
                   </label>
                   <label className="secondary-button file-picker mobile-capture"><Camera size={16} />拍摄截图
                     <input type="file" accept="image/*" capture="environment" onChange={handleFile} />
@@ -389,7 +389,7 @@ export function IntakePanel({ onClose, onSubmitIntake, onSaveSource, smartExtrac
                 <label className="field manual-source-field">
                   <span>{fileStatus === 'ready' ? '已提取原文（可核对修改）' : '人工补充原文（必填）'}</span>
                   <textarea value={content} onChange={(event) => setContent(event.target.value)} rows={8} placeholder="请粘贴或输入通知中的日期、事项、材料等原文……" required />
-                  <small>默认只发送你核对后的 OCR 文字。仅当你主动打开下方多模态开关时，才会额外发送本次图片或所选 PDF 页面。</small>
+                  <small>默认只发送你核对后的提取文字。仅当你主动打开下方多模态开关时，才会额外发送本次图片或所选 PDF 页面。</small>
                 </label>
               )}
               {isMultimodalCandidate && selectedFile && (

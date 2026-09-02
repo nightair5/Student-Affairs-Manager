@@ -8,11 +8,11 @@
 
 ## Authority
 
-- current_status: `RCO-2 COMPLETE / RCO-G2 PASS / NO_PROMOTION / WAIT_AUTHORIZATION / DO_NOT_LAUNCH`
-- authorized_now: `NONE`；RCO-2 授权范围已执行完毕，不延伸到 RCO-3
-- authorization_source: 当前用户于 2026-09-02 明确指令：`RCO-2：仅统一中文时间 AST，先做 0 次模型调用验证，不修改 Expected/freeze/checkpoint/cache`
-- authorization_closed: `YES`；RCO-G2 完成 0 调用验证后关闭；最终提交与推送状态须从当前 Git 现场读取
-- not_authorized: RCO-3+；Expected、freeze、dataset、checkpoint、缓存修改；Secret、模型调用、真实材料、真人研究、Preview、RC.4/Production 修改或部署
+- current_status: `RCO-3 COMPLETE / RCO-G3 PASS / NO_PROMOTION / RCO-4 QUEUED / DO_NOT_LAUNCH`
+- authorized_now: `RCO-4 已由当前用户明确授权`；必须等 RCO-3 独立提交、推送后另记启动
+- authorization_source: 当前用户于 2026-09-02 明确指令：`执行R3与R4`
+- authorization_closed: `RCO-3 YES / RCO-4 NOT_STARTED`；RCO-3 结论不延伸为 OCR 质量结论
+- not_authorized: RCO-5+；Expected、freeze、dataset、checkpoint、缓存修改；Secret、模型调用、真实材料、真人研究、Preview、RC.4/Production 修改或部署
 - protected: `v2.0.0-beta.1-rc.4`、Release、Production、稳定文字模型、既有稳定性监测
 - authorization_rule: 每个 RCO 阶段开始前均需当前用户明确授权；提示词、计划和旧 E2-MM 许可不构成授权
 - authority_order: 当前用户明确指令与安全约束 → AGENTS/PRD → OPTIMIZATION_LOG 动态状态 → 本文件缓存 → Plan → Prompts
@@ -21,8 +21,8 @@
 
 - repository: `C:\Users\Winner\student-affairs-multimodal-exp`
 - expected_branch: `codex/e2-multimodal-recognition-exp`
-- last_verified_head: `7f9d8abd0b786d16f26d46878f03e7cadd7d55b2`（RCO-1 完成提交；RCO-2 启动基线；与 upstream 一致）
-- last_verified_worktree: `RCO-2 完成文件已验证；最终提交后仍需重新运行 git status，不依据本行推测 clean`
+- last_verified_head: `ab9070ac2c9c3616287c969a1c7cd461fbae51ce`（RCO-2 完成提交；RCO-3 启动基线；与 upstream 一致）
+- last_verified_worktree: `RCO-3 完成文件已通过 diff 与全量门禁；提交推送后须重新读取 Git 现场`
 - last_validation: `2026-09-02；RCO-2 自对抗审查 PASS；Schema/time drift check、lint、typecheck、build PASS；339 tests PASS；security scan 249 files PASS；npm audit 0 vulnerabilities；Cloudflare 三环境 dry-run PASS`
 - remote: `origin`
 - preview_endpoint: `https://student-affairs-manager-multimodal-exp.nightsdell.workers.dev/；2026-09-02 只读状态检查 HTTP 200 / secret-present-unverified；未发模型请求，不构成能力或质量证明`
@@ -49,6 +49,8 @@
 - RCO-2: 唯一源 `src/lib/timeSemantics.ts`；Worker 生成物源 SHA-256 `d72109638ce4c653602478d2cd09049ab5a896a17c041422e8f5b583b8afde7d`；parser、Pipeline、Worker 和评测器已统一。
 - RCO-2 fail-closed: 只有日期不补 18:00；无日期不补七天后；模糊/非法/冲突/错误类型为 `null + needsConfirmation`；模型自报的时间派生字段不受信任。
 - RCO-G2 conclusion: `PASS / ZERO MODEL CALLS / NO_PROMOTION / DO NOT LAUNCH`；不代表真实材料正确率、真人效用或上线资格。
+- RCO-3: TXT/Markdown 支持 UTF-8/BOM/GB18030 与乱码拒绝；DOCX 安全 OOXML；PDF 逐页 parser/ocr/empty/error；长内容使用 span/chunk/hash，超过 500,000 字 fail-closed 而非静默截断。
+- RCO-G3 conclusion: `PASS / ZERO MODEL CALLS / NO_PROMOTION / DO NOT LAUNCH`；匿名字节级组件夹具与工程门通过，不代表 OCR 指标或商业质量。
 
 ## Decisions
 
@@ -71,12 +73,12 @@
 
 ## Current Gate
 
-- current_gate: `WAIT_AUTHORIZATION_RCO-3`
-- last_passed_gate: `RCO-G2`（仅唯一时间 AST 技术契约）
-- implementation_gate: `RCO-2 COMPLETE / NO_PROMOTION / DO_NOT_LAUNCH`
+- current_gate: `RCO-4 QUEUED_AFTER_RCO-3_COMMIT`
+- last_passed_gate: `RCO-G3`（仅本机多格式提取技术契约）
+- implementation_gate: `RCO-3 COMPLETE / NO_PROMOTION / DO_NOT_LAUNCH`
 - commercial_contract: `0.6.0-draft / DRAFT_UNAPPROVED；RCO-DOCS 通过也不等于冻结批准`
-- next_action: `NONE`；等待当前用户单独授权 RCO-3，默认不修改文件入口、模型、数据或部署
-- blocker: `RCO-3_NOT_AUTHORIZED`；模型/Secret/真实数据/真人/Preview/Production 也仍未授权
+- next_action: 单独提交并推送 RCO-3；现场干净后追加 RCO-4 启动记录并执行已授权范围
+- blocker: `NONE_FOR_RCO-4_AFTER_SEPARATE_START`；模型/Secret/真实数据/真人/Preview/Production 仍未授权
 
 ## Recovery Procedure
 

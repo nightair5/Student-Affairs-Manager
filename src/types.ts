@@ -48,7 +48,7 @@ export interface SourceReviewMetadata {
   mimeType?: string
   characterCount?: number
   pageCount?: number
-  extractionMethod?: 'manual' | 'parser' | 'ocr' | 'web' | 'unknown'
+  extractionMethod?: 'manual' | 'parser' | 'ocr' | 'mixed' | 'web' | 'unknown'
   /** Normalized OCR confidence in the inclusive 0..1 range. */
   ocrConfidence?: number
   partialExtraction?: boolean

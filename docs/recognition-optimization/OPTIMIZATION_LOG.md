@@ -6,6 +6,7 @@
 
 | Entry | 阶段 | 唯一变量/目的 | 数据 | 调用 | 结果 | 决策 | 下一门 |
 |---|---|---|---|---:|---|---|---|
+| RCO-3-001 | RCO-3 | 本机多格式提取完整性、结构和失败回退 | Mock / 匿名组件夹具 | 0 | PASS (TECHNICAL) | NO_PROMOTION / DO_NOT_LAUNCH | RCO-4 已授权待独立启动 |
 | RCO-2-001 | RCO-2 | 统一中文时间 AST 与确定性归一化 | Mock / 匿名夹具 / 历史输出只读 | 0 | PASS (TECHNICAL) | NO_PROMOTION / DO_NOT_LAUNCH | RCO-3 未授权 |
 | RCO-1-001 | RCO-1 | 统一 Worker、浏览器和评测器严格 Schema 契约 | Mock / 匿名夹具 | 0 | PASS (TECHNICAL) | NO_PROMOTION / DO_NOT_LAUNCH | RCO-2 未授权 |
 | RCO-0-001 | RCO-0 | 评测有效性与客户端严格校验一致，并重分类历史证据 | V2/V3 受保护 checkpoint 只读重放 | 0 | PASS (INTEGRITY) | NO_PROMOTION / DO_NOT_LAUNCH | RCO-1 未授权 |
@@ -16,7 +17,7 @@
 ## 2. 当前权威状态
 
 - program: `Recognition Commercialization Optimization`
-- status: `RCO-2 COMPLETE / RCO-G2 PASS / NO_PROMOTION / DO_NOT_LAUNCH`
+- status: `RCO-3 COMPLETE / RCO-G3 PASS / NO_PROMOTION / RCO-4 QUEUED / DO_NOT_LAUNCH`
 - branch: `codex/e2-multimodal-recognition-exp`
 - protected_release: `v2.0.0-beta.1-rc.4`
 - production_status: `UNCHANGED`
@@ -24,8 +25,8 @@
 - image_path: `逐次显式授权；Preview-only；仅待确认建议`
 - human_timing: `NOT_RUN`
 - real_deidentified_holdout: `NOT_RUN`
-- next_authorized_action: `NONE；等待当前用户单独授权 RCO-3`
-- next_implementation_gate: `RCO-G3；尚未授权，不得开始`
+- next_authorized_action: `独立提交并推送 RCO-3 后启动已获授权的 RCO-4`
+- next_implementation_gate: `RCO-G4 QUEUED`
 - authorization_rule: `每个 RCO 阶段开始前均需当前用户明确授权；文档/提示词/旧 E2-MM 许可不构成授权`
 - docs_authorization_source: `2026-09-01 当前用户明确要求制作优化 AGENTS/PRD/日志/提示词/目标与流程；RCO-DOCS 交付范围随本次文档提交推送关闭，不延伸到 RCO-0`
 
@@ -76,8 +77,8 @@
 | RCO-G0 | 评测与产品链路一致 | PASS | shared validation/reclassification/audit | 仅评测完整性通过；NO_PROMOTION |
 | RCO-G1 | 严格 Schema | PASS | schema/validator/repair contract | 仅技术契约；NO_PROMOTION |
 | RCO-G2 | 唯一时间 AST | PASS | AST/tests/migration note | 仅技术契约；NO_PROMOTION |
-| RCO-G3 | 多格式本机提取 | NOT_STARTED | DOCX/PDF/text/OCR fixtures | 未授权 |
-| RCO-G4 | 分介质 OCR | NOT_STARTED | OCR ablation / quality routing | 未授权 |
+| RCO-G3 | 多格式本机提取 | PASS | DOCX/PDF/text/OCR fixtures | 仅技术契约；NO_PROMOTION |
+| RCO-G4 | 分介质 OCR | QUEUED | OCR ablation / quality routing | 已授权；待 RCO-3 独立关闭后启动 |
 | RCO-G5 | facts-first | NOT_STARTED | fact schema / task composer | 未授权 |
 | RCO-G6 | 事实级融合 | NOT_STARTED | frozen T/I/IT result | 未授权 |
 | RCO-G7 | 真实效用与浏览器 | NOT_RUN | real holdout / human timing / RCO-A…RCO-J | 需另行授权 |
@@ -429,3 +430,50 @@
 - claims_not_supported: 模型正确率提升、TimePoint F1 提升、真实材料泛化、多模态胜出、真人修改时间、浏览器 RCO-A…J、Preview/Production 可上线。
 - rc4 / release / production / stable_model: `UNCHANGED`。
 - next_step: `NONE；RCO-3 尚未授权，停在 RCO-G2 等待当前用户明确指令`。
+
+## 15. RCO-3-001 启动记录 — 2026-09-02
+
+### Context Snapshot
+
+- owner / authorization_source: 当前用户于 2026-09-02 明确指令：`执行R3与R4`；解释为依赖顺序下分别授权 RCO-3 与 RCO-4，不授权混合提交或跳门。
+- branch / HEAD / upstream: `codex/e2-multimodal-recognition-exp` / `ab9070ac2c9c3616287c969a1c7cd461fbae51ce` / 同一 commit。
+- working_tree_before_start: `clean`；无重叠用户改动。
+- preview_endpoint: `https://student-affairs-manager-multimodal-exp.nightsdell.workers.dev/`；仅根路径只读 HEAD 检查 HTTP 200；未访问 Secret、未发模型请求、未修改部署。
+- current_gate / last_passed_gate: `RCO-G3 IN_PROGRESS` / `RCO-G2 PASS`。
+- hypothesis: 如果在浏览器内按格式保留编码、结构、页序、页状态和全量 span/chunk 覆盖，并把不完整与失败显式化，下游收到的事实来源将不再因乱码、混合 PDF 漏页或静默头部截断而确定性丢失。
+- single_variable: 本机 TXT/Markdown/DOCX/PDF 提取契约、页/span/chunk 结构、错误与质量旗标及匿名组件测试；图片 OCR 的介质预处理与候选选择留给 RCO-4。
+- allowed_actions: 实现 UTF-8/BOM/GB18030 检测；保留 Markdown 结构；安全解析 DOCX OOXML 段落/标题/编号/表格；PDF 逐页 parser/ocr/empty/error 路由；长内容有序切块、哈希、有限重叠与去重；更新 UI 支持格式与质量提示；新增匿名夹具/测试/阶段报告；验证、单独提交并推送。
+- forbidden_actions: 修改 Expected、freeze、dataset、checkpoint、`.evaluation-cache`；调用模型或 Repair、接触 Secret；真实材料/真人研究；部署 Preview/Production；修改 RC.4/Release/稳定模型；进入 RCO-5。
+- model_calls / repair_calls / secret_access / real_data / human_study / deploy: `0 / 0 / NONE / NOT_USED / NOT_RUN / NOT_RUN`。
+- protected_inputs_sha256: V2 dataset `464d4cd14f46f79fc908ef480a39def8b9e92463455b5131a9376855e6e9347c`，OCR `365df840c775c1914bc5439457dbbaa605f26d41d6e1342acbcd65887ee94399`，checkpoint `a451d7ce9a206ba78d4b13dab5b408c17c62e636641fcb6e4664360ecf44bc39`，summary `2c77964ea13cea47ade40aa1d63f788898bbd187f211fc0cac39075961779ec2`，freeze `a4790b96d4a8a68ba39dc6d8cd38cfa424545efdd092c947dcef416bc7b3361f`；V3 dataset `2f0e3455d7eedfb2554119ee8aa88b54da799e7d2a1f5c1434997ff4be76e5de`，OCR `814150a98507f984d30e46ace8b6a41f503812bb358257de26f65d7814fbcb63`，checkpoint `d24e3fa8893f00a74221b1dc2b333f5289405bb243c9fd526b194180ee80ddd5`，summary `154ff19a0149a9a3036826c70992019c7c826fcc8f1ed0df854b945413eb60c2`，freeze `5b60e3dcc35b9417b40473876cc54f82734a69be7882f7e13248b0f6887a4e19`；启动时逐路径复核一致。
+- stop_conditions: 宏/外链/远程资源可能执行；页序不稳定；重复合并；必须静默丢弃尾部或解除资源上限；必须上传文件本体；触碰受保护输入或任何未授权外部动作。
+- decision_before_change: `AUTHORIZED_RCO_3 / RCO-G3_IN_PROGRESS / DO_NOT_LAUNCH / 0_MODEL_CALLS`；RCO-4 仅排队，不在本阶段实现。
+
+## 16. RCO-3-001 完成记录 — 2026-09-02
+
+### 实现与证据
+
+- text: 从原始字节区分 UTF-8、UTF-8 BOM、GB18030；不可可靠解码或乱码特征 fail-closed；Markdown 标题、列表、表格、引用、代码围栏逐字保留。
+- docx: 新增 MIT 许可轻量依赖 `fflate@0.8.3`，只在浏览器内解压 OOXML；保留标题、编号、段落与表格顺序；中央目录在解压前限制 500 条目/8 MiB，并拒绝加密、Zip64、宏、嵌入对象、外部关系与缺失主文档。
+- pdf: 每页独立 `parser/ocr/empty/error`；无文本层页才 OCR；混合 PDF 同时保留页码、路由和 partial/quality flags；超过 80 页或 6 个 OCR 页的未处理范围明确可见。
+- long_content: 完整正文形成 span、4,000 字 chunk、200 字有限重叠、字符范围与 SHA-256；500,000 字以上整体 fail-closed，禁止静默只保留头部；`createIntakeResult` 不再二次截断用户已核对正文。
+- ui: 支持选择 DOCX；混合 PDF 显示“文本层 + 本机 OCR”，仍遵守逐次授权与最多选 1–4 页的图片边界。
+- artifact: `docs/recognition-optimization/RCO-3_LOCAL_FILE_EXTRACTION.md`。
+
+### 0 调用与工程门
+
+- model_calls / repair_calls / secret_access / real_data / human_study / deploy: `0 / 0 / NONE / NOT_USED / NOT_RUN / NOT_RUN`。
+- anonymous_component_fixtures: 真实 `File` 字节级 UTF-8 BOM、GB18030、坏编码、结构化 Markdown、ZIP/OOXML DOCX、外部关系 DOCX、长文本、文本/混合/扫描 PDF 和陈旧异步任务；无真实学生材料。
+- `npm run recognition:contract:check`、`npm run lint`、`npm run typecheck`、`npm run build`: PASS；保留既有 >500 kB chunk warning。
+- `npm test`: PASS；Vitest 283、server 8、Cloudflare Worker 25、time parity 1、multimodal evaluator 23、Firebase Functions 5，共 345 tests。
+- `npm run security:scan`: PASS；250 files；`npm audit --audit-level=high`: 0 vulnerabilities。
+- `npm run cloudflare:check`: PASS；default/preview/multimodal_preview 三环境 dry-run；没有部署。
+- protected_inputs: V2/V3 dataset、OCR、checkpoint、summary、freeze 共 10 个启动 SHA 在完成时逐路径一致；Expected 随 dataset 受保护；`.evaluation-cache` 无 Git 变更。
+
+### 决策
+
+- decision: `RCO-G3 PASS / ZERO MODEL CALLS / NO_PROMOTION / DO_NOT_LAUNCH`。
+- pass_scope: 只证明匿名字节级组件夹具覆盖的多格式本机提取、顺序、页路由、资源上限与显式失败契约成立。
+- claims_not_supported: OCR CER/日期数字/下游 Task-TimePoint 改善、模型正确率、真实材料泛化、真人修改时间、浏览器 RCO-A…J、Preview/Production 上线。
+- rc4 / release / production / stable_model: `UNCHANGED`。
+- next_step: `独立提交并推送 RCO-3 后，按同一用户指令另记并启动 RCO-4；不得混合提交`。

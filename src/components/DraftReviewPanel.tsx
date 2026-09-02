@@ -146,6 +146,7 @@ export function DraftReviewPanel({ draft, source, onClose, onUpdate, onConfirm, 
               {focusedReview.sourceMetadata.pageCount !== undefined && <span>{focusedReview.sourceMetadata.pageCount} 页</span>}
               {focusedReview.sourceMetadata.characterCount !== undefined && <span>{focusedReview.sourceMetadata.characterCount.toLocaleString('zh-CN')} 字</span>}
               {focusedReview.sourceMetadata.extractionMethod === 'ocr' && <span>本机 OCR</span>}
+              {focusedReview.sourceMetadata.extractionMethod === 'mixed' && <span>文本层 + 本机 OCR</span>}
               {focusedReview.sourceMetadata.ocrConfidence !== undefined && <span>OCR 置信度 {Math.round(focusedReview.sourceMetadata.ocrConfidence * 100)}%</span>}
               {focusedReview.sourceMetadata.partialExtraction && <span>仅部分提取</span>}
             </div>

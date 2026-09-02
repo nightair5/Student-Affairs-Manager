@@ -107,7 +107,9 @@ export function createIntakeResult({
   manualSuggestion,
   now = new Date(),
 }: IntakeInput): IntakeResult {
-  const cleanContent = content.trim().slice(0, 50_000)
+  // Extraction enforces its explicit resource ceiling. Never silently discard the
+  // tail here: the editable Source must remain identical to what the user reviewed.
+  const cleanContent = content.trim()
   const title = sourceTitle?.trim()
     || fileName?.trim()
     || (sourceType === 'link' ? '网页通知链接' : '手动粘贴消息')
