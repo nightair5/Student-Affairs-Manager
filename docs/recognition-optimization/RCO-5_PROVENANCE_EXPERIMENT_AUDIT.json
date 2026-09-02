@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "rco-5-provenance-audit-1.0.0",
+  "date": "2026-09-03",
+  "stage": "RCO-5-003",
+  "evaluationClass": "contract_fixture",
+  "groundTruthClass": "simulation_only",
+  "finalCandidate": "facts-1.7",
+  "targetedTests": { "passed": 52, "failed": 0 },
+  "freshAudit": {
+    "skill": "experiment-audit",
+    "reviewerTask": "/root/rco5_003_final_audit",
+    "reviewIndependence": "same-family",
+    "acceptanceStatus": "provisional",
+    "verdict": "FAIL",
+    "decision": "REJECT_CANDIDATE",
+    "decisiveCounterexample": "请提交家庭经济困难认定表。想确认一下，家庭经济困难认定表为必交？",
+    "failure": "a question was reduced to an affirmative material-required assertion and selected"
+  },
+  "fullValidation": {
+    "vitestPassed": 395,
+    "vitestSkipped": 1,
+    "serverPassed": 8,
+    "workerPassed": 25,
+    "timeParityPassed": 1,
+    "multimodalEvaluatorPassed": 23,
+    "functionsPassed": 5,
+    "lint": "PASS",
+    "typecheck": "PASS",
+    "build": "PASS",
+    "securityScanFiles": 302,
+    "npmHighVulnerabilities": 0,
+    "cloudflareDryRun": ["default:PASS", "preview:PASS", "multimodal_preview:PASS"]
+  },
+  "protectedInputs": {
+    "currentHashMatches": "10/10",
+    "gitDiff": "NONE",
+    "claimBoundary": "current no-net-byte-drift only"
+  },
+  "modelCalls": 0,
+  "repairCalls": 0,
+  "secretAccess": "NONE",
+  "realData": "NOT_USED",
+  "humanStudy": "NOT_RUN",
+  "deployment": "NOT_RUN",
+  "stablePath": "UNCHANGED",
+  "rcoG5Quality": "NOT_RUN",
+  "rco6": "BLOCKED",
+  "promotion": "NO_PROMOTION"
+}

@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "rco-5-provenance-candidate-freeze-1.1.0",
+  "createdAt": "2026-09-03",
+  "stage": "RCO-5-003",
+  "candidateSchema": "facts-1.7",
+  "promptVersion": "recognition-facts-first-1.7.0",
+  "candidateStatusAtFreeze": "AUDIT_PENDING",
+  "baseHead": "83685d40b42be0d10b2e6f43df2a32466395b23f",
+  "scope": "isolated zero-call parser-verified spans, typed relations, definitive-context checks and conservative correction suppression",
+  "supersedesCandidate": {
+    "path": "docs/recognition-optimization/RCO-5_PROVENANCE_V2_CANDIDATE_FREEZE.json",
+    "sha256": "dd597b3418f1dd7bbb9b30b55bb94ffe6ef05601973713b2549e1c2c1403f65a",
+    "auditDisposition": "REJECT_CANDIDATE"
+  },
+  "qualityGate": "NOT_RUN",
+  "promotion": "NO_PROMOTION",
+  "modelCalls": 0,
+  "targetedContractTests": 52,
+  "files": [
+    {
+      "path": "src/recognition/factsProvenance.ts",
+      "sha256": "8b5ad3896e5a18101fd63c5c261a75c278d4a9c86982dc539c8ebae27795b53c"
+    },
+    {
+      "path": "src/recognition/factsProvenance.test.ts",
+      "sha256": "4321a0bd19207c6972cf99510800b33dc1eb65764062f682aa083ba4eee54f8b"
+    },
+    {
+      "path": "src/recognition/schema.ts",
+      "sha256": "81f636bcf62a4e35221ba7e620a0410b3cc39bbf7481882e42ab1222839eab40"
+    },
+    {
+      "path": "src/lib/timeSemantics.ts",
+      "sha256": "d72109638ce4c653602478d2cd09049ab5a896a17c041422e8f5b583b8afde7d"
+    }
+  ],
+  "protectedInputsModified": false,
+  "claimsNotSupported": [
+    "model recall or precision improvement",
+    "image or file recognition accuracy",
+    "human editing-time improvement",
+    "RCO-G5 quality pass",
+    "RCO-6 readiness",
+    "release readiness"
+  ]
+}
