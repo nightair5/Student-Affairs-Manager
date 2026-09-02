@@ -4,6 +4,7 @@ import {
   IMAGE_ONLY_EVALUATION_PROMPT_VERSION,
   RECOGNITION_PROMPT_VERSION,
   VISION_TEXT_EVALUATION_PROMPT_VERSION,
+  applyDeterministicTimeAst,
   normalizeRecognitionResult,
   recognitionSystemPrompt,
 } from './recognition.mjs'
@@ -11,6 +12,7 @@ import {
   RECOGNITION_REPAIR_CONTRACT,
   validateRecognitionResult,
 } from './recognition-contract.generated.mjs'
+import { isValidTimeZone } from './chinese-time-ast.generated.mjs'
 
 const DEEPSEEK_ENDPOINT = 'https://api.deepseek.com/chat/completions'
 const DEEPSEEK_MODEL = 'deepseek-v4-flash'
@@ -166,7 +168,7 @@ export function validateExtractionRequest(value) {
   if (!isBoundedString(value.content, 24_000)) return 'DEEPSEEK_CONTENT_INVALID'
   if (value.sourceType === 'link' && /^https?:\/\/\S+$/iu.test(value.content.trim())) return 'DEEPSEEK_LINK_TEXT_REQUIRED'
   if (value.sourceTitle !== undefined && !isBoundedString(value.sourceTitle, 160, false)) return 'DEEPSEEK_SOURCE_TITLE_INVALID'
-  if (value.timezone !== undefined && !isBoundedString(value.timezone, 80, false)) return 'DEEPSEEK_TIMEZONE_INVALID'
+  if (value.timezone !== undefined && (!isBoundedString(value.timezone, 80, false) || !isValidTimeZone(value.timezone))) return 'DEEPSEEK_TIMEZONE_INVALID'
   if (!isBoundedString(value.referenceTime, 80) || Number.isNaN(new Date(value.referenceTime).getTime())) {
     return 'DEEPSEEK_REFERENCE_TIME_INVALID'
   }
@@ -834,14 +836,17 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
       selectedModel,
       selectedPromptVersion ?? RECOGNITION_PROMPT_VERSION,
     )
-    const candidateValidation = validateRecognitionResult(candidate, { sourceContent })
+    const deterministicCandidate = applyDeterministicTimeAst(candidate, referenceTime, timezone)
+    const candidateValidation = validateRecognitionResult(deterministicCandidate, { sourceContent })
     if (!candidateValidation.valid) return invalidRecognitionResponse(context, candidateValidation)
     const result = normalizeRecognitionResult(
-      candidate,
+      deterministicCandidate,
       sourceContent,
       referenceTime,
       selectedModel,
       selectedPromptVersion,
+      true,
+      timezone,
     )
     if (!result) {
       context.errorType = 'INVALID_AI_RESPONSE'
@@ -1000,18 +1005,20 @@ async function extractMultimodalTasks(request, env, fetcher, isRateLimited, acqu
       DEEPSEEK_MULTIMODAL_MODEL,
       promptVersion,
     )
+    const deterministicCandidate = applyDeterministicTimeAst(candidate, referenceTime, timezone)
     const candidateValidation = validateRecognitionResult(
-      candidate,
+      deterministicCandidate,
       imageOnlyEvaluation ? {} : { sourceContent },
     )
     if (!candidateValidation.valid) return invalidRecognitionResponse(context, candidateValidation, true)
     const result = normalizeRecognitionResult(
-      candidate,
+      deterministicCandidate,
       sourceContent,
       referenceTime,
       DEEPSEEK_MULTIMODAL_MODEL,
       promptVersion,
       !imageOnlyEvaluation,
+      timezone,
     )
     if (!result) {
       context.errorType = 'INVALID_AI_RESPONSE'

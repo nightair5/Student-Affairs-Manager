@@ -29,7 +29,12 @@ describe('recognition pipeline v2', () => {
     expect(allTasks(result)).toHaveLength(1)
     expect(allTasks(result)[0].title).toMatch(/提交.*课程反思/u)
     expect(result.timePoints).toHaveLength(1)
-    expect(result.timePoints[0].needsConfirmation).toBe(true)
+    expect(result.timePoints[0]).toMatchObject({
+      normalizedValue: '2026-08-07',
+      precision: 'date_only',
+      isAllDay: true,
+      needsConfirmation: false,
+    })
     expect(result.quality.overFragmentationRisk).toBeLessThan(0.5)
   })
 

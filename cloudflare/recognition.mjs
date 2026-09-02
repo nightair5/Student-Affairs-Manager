@@ -1,3 +1,5 @@
+import { parseChineseTimeAst } from './chinese-time-ast.generated.mjs'
+
 export const RECOGNITION_PROMPT_VERSION = 'recognition-2.0.0'
 export const RECOGNITION_SCHEMA_VERSION = '2.0'
 export const RECOGNITION_MODEL_NAME = 'deepseek-v4-flash'
@@ -98,6 +100,29 @@ evidence 每项必须包含 id,sourceId="pending-source",quotedText,quote,field,
 软限制：最多10阶段、每阶段8工作包、每工作包12任务、每任务8子任务；超过20任务或40子任务时 quality.needsHumanReview=true、overFragmentationRisk=1，且不要默认选择。纯信息通知 requiresAction=false，不得强行创建任务。`
 }
 
+export function applyDeterministicTimeAst(raw, referenceTime, timezone = 'Asia/Shanghai') {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw) || !Array.isArray(raw.timePoints)) return raw
+  return {
+    ...raw,
+    timePoints: raw.timePoints.map((item) => {
+      if (!item || typeof item !== 'object' || Array.isArray(item) || !TIME_POINT_TYPES.has(item.type) || typeof item.rawText !== 'string') return item
+      const ast = parseChineseTimeAst(item.rawText, { referenceTime, timezone, type: item.type })
+      return {
+        ...item,
+        normalizedValue: ast.normalizedValue,
+        timezone: ast.timezone,
+        isAllDay: ast.isAllDay,
+        precision: ast.precision,
+        needsConfirmation: ast.needsConfirmation,
+        selected: Array.isArray(item.evidenceIds)
+          && item.evidenceIds.length > 0
+          && ast.normalizedValue !== null
+          && !ast.needsConfirmation,
+      }
+    }),
+  }
+}
+
 export function normalizeRecognitionResult(
   raw,
   sourceContent,
@@ -105,6 +130,7 @@ export function normalizeRecognitionResult(
   modelName = RECOGNITION_MODEL_NAME,
   promptVersion = RECOGNITION_PROMPT_VERSION,
   verifyEvidenceAgainstSource = true,
+  timezone = 'Asia/Shanghai',
 ) {
   if (!raw || typeof raw !== 'object' || Array.isArray(raw) || raw.schemaVersion !== '2.0') return null
   const rawEvidence = Array.isArray(raw.evidence) ? raw.evidence : []
@@ -144,10 +170,14 @@ export function normalizeRecognitionResult(
   })
   const timePoints = (Array.isArray(raw.timePoints) ? raw.timePoints : []).slice(0, 60).flatMap((item, index) => {
     if (!item || typeof item !== 'object' || Array.isArray(item) || !TIME_POINT_TYPES.has(item.type)) return []
-    const normalizedValue = item.normalizedValue === null || !Number.isNaN(new Date(item.normalizedValue).getTime()) ? item.normalizedValue : null
+    const ast = parseChineseTimeAst(text(item.rawText, 160), {
+      referenceTime: nowIso,
+      timezone,
+      type: item.type,
+    })
+    const normalizedValue = ast.normalizedValue
     const linkedEvidence = strings(item.evidenceIds).filter((id) => evidenceIds.has(id))
-    const needsConfirmation = Boolean(item.needsConfirmation) || normalizedValue === null
-    return [{ tempId: text(item.tempId, 100, `time-${index + 1}`), type: item.type, rawText: text(item.rawText, 160), normalizedValue, timezone: text(item.timezone, 80, 'Asia/Shanghai'), isAllDay: Boolean(item.isAllDay), precision: ['exact', 'date_only', 'relative', 'vague'].includes(item.precision) ? item.precision : 'vague', needsConfirmation, relatedTaskTempIds: strings(item.relatedTaskTempIds), relatedMaterialTempIds: strings(item.relatedMaterialTempIds), evidenceIds: linkedEvidence, confidence: number01(item.confidence), selected: linkedEvidence.length > 0 && normalizedValue !== null && !needsConfirmation }]
+    return [{ tempId: text(item.tempId, 100, `time-${index + 1}`), type: item.type, rawText: ast.rawText, normalizedValue, timezone: ast.timezone, isAllDay: ast.isAllDay, precision: ast.precision, needsConfirmation: ast.needsConfirmation, relatedTaskTempIds: strings(item.relatedTaskTempIds), relatedMaterialTempIds: strings(item.relatedMaterialTempIds), evidenceIds: linkedEvidence, confidence: number01(item.confidence), selected: linkedEvidence.length > 0 && normalizedValue !== null && !ast.needsConfirmation }]
   })
   const events = (Array.isArray(raw.events) ? raw.events : []).slice(0, 30).flatMap((item, index) => {
     if (!item || typeof item !== 'object' || Array.isArray(item) || !text(item.title, 100)) return []

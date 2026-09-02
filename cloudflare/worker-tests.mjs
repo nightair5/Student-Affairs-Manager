@@ -187,7 +187,7 @@ test('structured extraction uses V4 Flash JSON mode and returns bounded suggesti
         }] }],
         standaloneTasks: [],
         materials: [{ tempId: 'mat1', name: '报名表', required: true, formatRequirements: [], namingRequirements: [], quantity: 1, submissionChannel: null, relatedTaskTempIds: ['t1'], evidenceIds: ['e1'], confidence: 0.9 }],
-        timePoints: [{ tempId: 'time1', type: 'registration_deadline', rawText: '8月10日18:00提交报名表', normalizedValue: '2026-08-10T18:00', timezone: 'Asia/Shanghai', isAllDay: false, precision: 'exact', needsConfirmation: false, relatedTaskTempIds: ['t1'], relatedMaterialTempIds: ['mat1'], evidenceIds: ['e1'], confidence: 0.9 }],
+        timePoints: [{ tempId: 'time1', type: 'registration_deadline', rawText: '8月10日18:00提交报名表', relatedTaskTempIds: ['t1'], relatedMaterialTempIds: ['mat1'], evidenceIds: ['e1'], confidence: 0.9 }],
         events: [], evidence: [{ id: 'e1', sourceId: 'pending-source', quotedText: '8月10日18:00提交报名表', quote: '8月10日18:00提交报名表', field: 'description', extractionMethod: 'ai', confidence: 0.9 }], conflicts: [], ambiguities: [], ignoredContent: [],
         quality: { overallConfidence: 0.9, hierarchyConfidence: 0.9, dateConfidence: 0.9, evidenceCoverage: 1, duplicateRisk: 0, overFragmentationRisk: 0, missingActionRisk: 0, needsHumanReview: false, reviewReasons: [] },
       }) } }] })
@@ -210,6 +210,12 @@ test('structured extraction uses V4 Flash JSON mode and returns bounded suggesti
   assert.equal(payload.result.promptVersion, 'recognition-2.0.0')
   assert.equal(payload.result.milestones[0].tasks[0].title, '提交报名表')
   assert.equal(payload.result.evidence[0].quotedText, '8月10日18:00提交报名表')
+  assert.deepEqual(payload.result.timePoints[0], {
+    tempId: 'time1', type: 'registration_deadline', rawText: '8月10日18:00提交报名表',
+    normalizedValue: '2026-08-10T18:00', timezone: 'Asia/Shanghai', isAllDay: false,
+    precision: 'exact', needsConfirmation: false, relatedTaskTempIds: ['t1'],
+    relatedMaterialTempIds: ['mat1'], evidenceIds: ['e1'], confidence: 0.9, selected: true,
+  })
   assert.equal(upstreamBody.model, 'deepseek-v4-flash')
   assert.deepEqual(upstreamBody.response_format, { type: 'json_object' })
   assert.match(upstreamBody.messages[0].content, /不可信(?:资料|数据)/)
@@ -524,6 +530,9 @@ test('extraction validation requires local text and a valid reference time', () 
   assert.equal(validateExtractionRequest({
     sourceType: 'text', content: '8月10日提交材料', referenceTime: '2026-08-02T08:00:00.000Z', model: 'other',
   }), 'INVALID_REQUEST')
+  assert.equal(validateExtractionRequest({
+    sourceType: 'text', content: '8月10日提交材料', referenceTime: '2026-08-02T08:00:00.000Z', timezone: 'Mars/Olympus',
+  }), 'DEEPSEEK_TIMEZONE_INVALID')
 })
 
 test('API rejects GET, non-JSON bodies, and unknown request fields', async () => {
@@ -625,6 +634,8 @@ test('Worker fails closed with explicit shared-contract diagnostics instead of s
   danglingReference.standaloneTasks[0].timePointTempIds = ['missing-time']
 
   const impossibleDate = actionRecognitionResult()
+  impossibleDate.evidence[0].quote = '2月30日18:00提交报名表'
+  impossibleDate.evidence[0].quotedText = '2月30日18:00提交报名表'
   impossibleDate.timePoints = [{
     tempId: 'time-1', type: 'submission_deadline', rawText: '2月30日18:00',
     normalizedValue: '2026-02-30T18:00', timezone: 'Asia/Shanghai', isAllDay: false,
@@ -639,7 +650,6 @@ test('Worker fails closed with explicit shared-contract diagnostics instead of s
     { candidate: unknownField, content: '本通知无需办理。', code: 'UNKNOWN_FIELD', category: 'schema' },
     { candidate: duplicateIds, content: '本通知无需办理。', code: 'DUPLICATE_ENTITY_ID', category: 'schema' },
     { candidate: danglingReference, content: '9月10日18:00提交报名表', code: 'TASK_TIME_POINT_MISSING', category: 'reference' },
-    { candidate: impossibleDate, content: '9月10日18:00提交报名表', code: 'TIME_POINT_NORMALIZED_VALUE_INVALID', category: 'semantic' },
     { candidate: unsupportedEvidence, content: '完全不同的正文', code: 'EVIDENCE_QUOTE_NOT_IN_SOURCE', category: 'semantic' },
   ]
 
@@ -667,4 +677,25 @@ test('Worker fails closed with explicit shared-contract diagnostics instead of s
     })
     assert.doesNotMatch(JSON.stringify(payload), /完全不同的正文|9月10日18:00提交报名表/u)
   }
+
+  const worker = createWorker({
+    fetcher: async () => Response.json({ choices: [{ message: { content: JSON.stringify(impossibleDate) } }] }),
+  })
+  const response = await worker.fetch(request('/api/deepseek/extract', {
+    body: JSON.stringify({
+      sourceType: 'text', sourceTitle: '匿名通知', content: '2月30日18:00提交报名表',
+      referenceTime: '2026-08-02T08:00:00.000Z', timezone: 'Asia/Shanghai',
+    }),
+  }), environment({ DEEPSEEK_API_KEY: 'server-only-test-key-with-length' }))
+  const payload = await response.json()
+  assert.equal(response.status, 200)
+  assert.deepEqual(payload.result.timePoints[0], {
+    ...impossibleDate.timePoints[0],
+    normalizedValue: null,
+    timezone: 'Asia/Shanghai',
+    isAllDay: false,
+    precision: 'vague',
+    needsConfirmation: true,
+    selected: false,
+  })
 })

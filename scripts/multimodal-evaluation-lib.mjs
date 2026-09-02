@@ -1,4 +1,5 @@
 import { createHash } from 'node:crypto'
+import { isDateOnly, parseBusinessDateTime } from '../cloudflare/chinese-time-ast.generated.mjs'
 
 export const ARMS = Object.freeze(['T', 'I', 'IT'])
 
@@ -41,11 +42,12 @@ function greedyMatches(expected, actual, predicate) {
   return { matched, extras: Math.max(0, actual.length - matched), misses: Math.max(0, expected.length - matched) }
 }
 
-function localMinute(value) {
-  const parsed = new Date(value)
-  if (Number.isNaN(parsed.getTime())) return null
+function localMinute(value, timezone = 'Asia/Shanghai') {
+  if (isDateOnly(value)) return value
+  const parsed = parseBusinessDateTime(value, timezone)
+  if (!parsed) return null
   const formatter = new Intl.DateTimeFormat('sv-SE', {
-    timeZone: 'Asia/Shanghai', year: 'numeric', month: '2-digit', day: '2-digit',
+    timeZone: timezone, year: 'numeric', month: '2-digit', day: '2-digit',
     hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
   })
   const parts = Object.fromEntries(formatter.formatToParts(parsed).map((part) => [part.type, part.value]))
@@ -98,7 +100,9 @@ export function scoreCase(fixture, arm, result, operational = {}) {
 
   const predictedTimes = Array.isArray(qualityResult?.timePoints) ? qualityResult.timePoints.filter((item) => item?.selected !== false && item?.normalizedValue) : []
   const timeMatch = greedyMatches(expected.timePoints, predictedTimes, (target, prediction) => (
-    target.type === prediction.type && localMinute(target.normalizedValue) === localMinute(prediction.normalizedValue)
+    target.type === prediction.type
+    && localMinute(target.normalizedValue, target.timezone ?? 'Asia/Shanghai')
+      === localMinute(prediction.normalizedValue, prediction.timezone ?? 'Asia/Shanghai')
   ))
 
   const predictedEvents = Array.isArray(qualityResult?.events) ? qualityResult.events.filter((item) => item?.selected !== false) : []

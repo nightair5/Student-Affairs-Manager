@@ -67,6 +67,15 @@ test('scores auditable entity matches without self-normalization', () => {
   assert.equal(aggregate.observedUserModificationTimeSeconds, null)
 })
 
+test('scores local wall-clock values using the declared timezone rather than the evaluator host', () => {
+  const localResult = structuredClone(result)
+  localResult.timePoints[0].normalizedValue = '2026-09-05T18:00'
+  localResult.timePoints[0].timezone = 'Asia/Shanghai'
+  const scored = scoreCompleted(fixture, 'T', localResult)
+  assert.equal(scored.timePoint.matched, 1)
+  assert.equal(scored.completeCase, true)
+})
+
 test('loads and executes the exact client validator without a duplicate schema', async () => {
   const loaded = await loadClientRecognitionValidator()
   assert.match(loaded.sourceSha256, /^[a-f0-9]{64}$/u)

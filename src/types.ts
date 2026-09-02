@@ -249,6 +249,8 @@ export interface ParsedSuggestion {
   evidence: string
   evidenceRefs?: EvidenceReference[]
   confidence: '高' | '中' | '低'
+  /** Deterministic RCO-2 time interpretation; legacy deadline mirrors normalizedValue or ''. */
+  timePoint?: import('./lib/timeSemantics').ChineseTimeAst
 }
 
 export type DraftItemStatus = '待确认' | '已确认' | '已拒绝'

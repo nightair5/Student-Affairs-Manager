@@ -6,6 +6,7 @@
 
 | Entry | 阶段 | 唯一变量/目的 | 数据 | 调用 | 结果 | 决策 | 下一门 |
 |---|---|---|---|---:|---|---|---|
+| RCO-2-001 | RCO-2 | 统一中文时间 AST 与确定性归一化 | Mock / 匿名夹具 / 历史输出只读 | 0 | PASS (TECHNICAL) | NO_PROMOTION / DO_NOT_LAUNCH | RCO-3 未授权 |
 | RCO-1-001 | RCO-1 | 统一 Worker、浏览器和评测器严格 Schema 契约 | Mock / 匿名夹具 | 0 | PASS (TECHNICAL) | NO_PROMOTION / DO_NOT_LAUNCH | RCO-2 未授权 |
 | RCO-0-001 | RCO-0 | 评测有效性与客户端严格校验一致，并重分类历史证据 | V2/V3 受保护 checkpoint 只读重放 | 0 | PASS (INTEGRITY) | NO_PROMOTION / DO_NOT_LAUNCH | RCO-1 未授权 |
 | RCO-DOC-001 | Docs | 冻结商业级识别主线、门槛、日志、上下文、提示词与验证契约 | 现有代码/报告 | 0 | PASS (DOCS) | WAIT_AUTHORIZATION | RCO-0 未授权 |
@@ -15,7 +16,7 @@
 ## 2. 当前权威状态
 
 - program: `Recognition Commercialization Optimization`
-- status: `RCO-1 COMPLETE / RCO-G1 PASS / NO_PROMOTION / DO_NOT_LAUNCH`
+- status: `RCO-2 COMPLETE / RCO-G2 PASS / NO_PROMOTION / DO_NOT_LAUNCH`
 - branch: `codex/e2-multimodal-recognition-exp`
 - protected_release: `v2.0.0-beta.1-rc.4`
 - production_status: `UNCHANGED`
@@ -23,8 +24,8 @@
 - image_path: `逐次显式授权；Preview-only；仅待确认建议`
 - human_timing: `NOT_RUN`
 - real_deidentified_holdout: `NOT_RUN`
-- next_authorized_action: `NONE；等待当前用户单独授权 RCO-2`
-- next_implementation_gate: `RCO-G2；尚未授权，不得开始`
+- next_authorized_action: `NONE；等待当前用户单独授权 RCO-3`
+- next_implementation_gate: `RCO-G3；尚未授权，不得开始`
 - authorization_rule: `每个 RCO 阶段开始前均需当前用户明确授权；文档/提示词/旧 E2-MM 许可不构成授权`
 - docs_authorization_source: `2026-09-01 当前用户明确要求制作优化 AGENTS/PRD/日志/提示词/目标与流程；RCO-DOCS 交付范围随本次文档提交推送关闭，不延伸到 RCO-0`
 
@@ -74,7 +75,7 @@
 | RCO-DOCS | 约束、PRD、计划、日志、上下文、提示词、验证契约 | PASS | 根 AGENTS/PRD 与本目录 | RCO-0 未授权；等待用户 |
 | RCO-G0 | 评测与产品链路一致 | PASS | shared validation/reclassification/audit | 仅评测完整性通过；NO_PROMOTION |
 | RCO-G1 | 严格 Schema | PASS | schema/validator/repair contract | 仅技术契约；NO_PROMOTION |
-| RCO-G2 | 唯一时间 AST | NOT_STARTED | AST/tests/migration note | 未授权 |
+| RCO-G2 | 唯一时间 AST | PASS | AST/tests/migration note | 仅技术契约；NO_PROMOTION |
 | RCO-G3 | 多格式本机提取 | NOT_STARTED | DOCX/PDF/text/OCR fixtures | 未授权 |
 | RCO-G4 | 分介质 OCR | NOT_STARTED | OCR ablation / quality routing | 未授权 |
 | RCO-G5 | facts-first | NOT_STARTED | fact schema / task composer | 未授权 |
@@ -372,3 +373,59 @@
 - claims_not_supported: 模型正确率提升、时间识别改善、多模态胜出、真实材料泛化、真人修改时间、浏览器 A–J、Preview/Production 可上线。
 - rc4 / release / production / stable_model: `UNCHANGED`。
 - next_step: `NONE；RCO-2 尚未授权，停在 RCO-G1 等待当前用户明确指令`。
+
+## 13. RCO-2-001 启动记录 — 2026-09-02T10:33:00+08:00
+
+### Context Snapshot
+
+- owner / authorization_source: 当前用户于 2026-09-02 明确指令：`RCO-2：仅统一中文时间 AST，先做 0 次模型调用验证，不修改 Expected/freeze/checkpoint/cache`。
+- branch / HEAD / upstream: `codex/e2-multimodal-recognition-exp` / `7f9d8abd0b786d16f26d46878f03e7cadd7d55b2` / 同一 commit。
+- working_tree_before_start: `clean`；无重叠用户改动。
+- preview_endpoint: `https://student-affairs-manager-multimodal-exp.nightsdell.workers.dev/`；只读检查根路径 HTTP 200，状态 `secret-present-unverified`；未发模型请求，未修改部署。
+- current_gate / last_passed_gate: `RCO-G2 IN_PROGRESS` / `RCO-G1 PASS`。
+- hypothesis: 由一个时区感知、保留精度且 fail-closed 的中文时间 AST 独占 rawText 到 normalizedValue/precision/isAllDay/needsConfirmation 的解释，可消除 parser、pipeline、Worker 与评测器之间的时间漂移，并阻止“缺日期补七天后、缺时刻补 18:00”等虚构。
+- single_variable: 中文时间 AST、确定性解析/归一化、三端字段映射和对应匿名测试；不改变 Prompt、模型、Expected、数据、任务事实策略、Schema 外形或部署。
+- allowed_actions: 新增唯一时间 AST 及 Worker 生成物；修改 parser、timeSemantics、pipeline 和 Worker 的时间适配层；新增中文数字、半、时段、相对日期、跨午夜、范围、更正、跨年、闰年、OCR 噪声、跨时区与旧草稿兼容测试；更新日志/短上下文；验证、单独提交并推送。
+- forbidden_actions: 修改 Expected、freeze、dataset、checkpoint、`.evaluation-cache`；调用模型或 Repair、接触 Secret；处理真实材料/真人研究；部署 Preview/Production；修改 RC.4/Release/稳定模型；进入 RCO-3。
+- model_calls / repair_calls / secret_access / real_data / human_study / deploy: `0 / 0 / NONE / NOT_USED / NOT_RUN / NOT_RUN`。
+- protected_inputs_sha256: V2 dataset `464d4cd14f46f79fc908ef480a39def8b9e92463455b5131a9376855e6e9347c`，OCR `365df840c775c1914bc5439457dbbaa605f26d41d6e1342acbcd65887ee94399`，checkpoint `a451d7ce9a206ba78d4b13dab5b408c17c62e636641fcb6e4664360ecf44bc39`，summary `2c77964ea13cea47ade40aa1d63f788898bbd187f211fc0cac39075961779ec2`，freeze `a4790b96d4a8a68ba39dc6d8cd38cfa424545efdd092c947dcef416bc7b3361f`；V3 dataset `2f0e3455d7eedfb2554119ee8aa88b54da799e7d2a1f5c1434997ff4be76e5de`，OCR `814150a98507f984d30e46ace8b6a41f503812bb358257de26f65d7814fbcb63`，checkpoint `d24e3fa8893f00a74221b1dc2b333f5289405bb243c9fd526b194180ee80ddd5`，summary `154ff19a0149a9a3036826c70992019c7c826fcc8f1ed0df854b945413eb60c2`，freeze `5b60e3dcc35b9417b40473876cc54f82734a69be7882f7e13248b0f6887a4e19`；启动时逐路径复核一致。
+- stop_conditions: 需要破坏性迁移或重写旧确认数据；必须模糊时间具体化；必须修改受保护输入；实际发起模型/Repair 调用、接触 Secret、处理真实数据、扩张到 RCO-3 或部署。
+- decision_before_change: `AUTHORIZED_RCO_2 / RCO-G2_IN_PROGRESS / DO_NOT_LAUNCH / 0_MODEL_CALLS`。
+
+## 14. RCO-2-001 完成记录 — 2026-09-02T10:49:18+08:00
+
+### 实现与证据
+
+- single_source: `src/lib/timeSemantics.ts` 是浏览器、本地 Pipeline 和评测器的权威时间语义；Worker 使用 `scripts/generate-time-ast.mjs` 生成的 `cloudflare/chinese-time-ast.generated.mjs`。
+- drift_gate: `scripts/generate-time-ast.mjs --check` 已接入 `npm run recognition:contract:check`、`npm test` 与 `npm run cloudflare:check`；时间源 SHA-256 为 `d72109638ce4c653602478d2cd09049ab5a896a17c041422e8f5b583b8afde7d`。
+- deterministic_fields: 模型/旧结果只提供或保留 `rawText/type/evidenceIds` 的事实责任；Worker 在严格 Schema 校验前覆盖 `normalizedValue/timezone/isAllDay/precision/needsConfirmation/selected`，校验后再用同一 AST 复算。
+- parser_pipeline: 删除 parser 内独立数字、时段、相对日期和默认日期换算；Pipeline 直接映射 AST，事件范围生成独立 `event_end`；没有明确时间的准备建议保持未选中待确认。
+- evaluator: 带 offset 与无 offset 时间均按声明 timezone 比较，不再由评测主机本地时区解释。
+- artifact: `docs/recognition-optimization/RCO-2_TIME_AST.md`，包含字段映射、fail-closed 规则与旧草稿兼容说明。
+
+### 0 调用与对抗性验证
+
+- model_calls / repair_calls / secret_access / real_data / human_study / deploy: `0 / 0 / NONE / NOT_USED / NOT_RUN / NOT_RUN`。
+- covered_time_cases: 阿拉伯/中文数字、`半`、清晨/早上/上午/中午/下午/傍晚/晚上/夜间/夜里/凌晨、相对日期、date-only、跨午夜、范围、更正、跨年、闰年、每月合法日/溢出日、OCR 空格/全角冒号、冲突和错误类型。
+- fail_closed: 只有日期保留 `YYYY-MM-DD + all-day`；无日期、裸 `3点`、非法日期、冲突时间、无效 timezone、错误范围和“预计公布”被标为 deadline 均为 `null + needsConfirmation=true + selected=false`；不再补七天后或 18:00。
+- host_parity: 生成 Worker AST 在 `UTC`、`America/New_York`、`Asia/Shanghai` 三种宿主时区逐字一致。
+- strict_contract_regression: 模型省略派生时间字段可由 AST 安全补齐；缺少其他关键字段、未知字段、重复 ID、悬空引用和来源外 evidence 仍由 RCO-1 共享契约显式失败。
+- legacy_compatibility: `ParsedSuggestion.timePoint` 为可选字段；旧草稿无需破坏性迁移，进入新 Pipeline 时从 evidence 重算；不重写既有已确认 Workspace/Task/TimePoint。
+
+### 工程门与完整性
+
+- `npm run recognition:contract:check`: PASS；Schema 源 SHA-256 仍为 `81f636bcf62a4e35221ba7e620a0410b3cc39bbf7481882e42ab1222839eab40`，时间源为上述新 SHA。
+- `npm run lint`、`npm run typecheck`、`npm run build`: PASS；保留既有 >500 kB chunk warning，不冒充性能验收。
+- `npm test`: PASS；Vitest 277、server 8、Cloudflare Worker 25、跨主机 time AST 1、multimodal evaluator 23、Firebase Functions 5，共 339 tests。
+- `npm run security:scan`: PASS；扫描 249 个 source/build files。
+- `npm audit --audit-level=high`: PASS；0 vulnerabilities。
+- `npm run cloudflare:check`: PASS；Worker tests 与 default/preview/multimodal_preview 三套 Wrangler dry-run 通过；没有执行部署。
+- protected_inputs: RCO-0 固定的 V2/V3 dataset、OCR、checkpoint、summary、freeze 共 10 个 SHA-256 在启动与完成时逐路径一致；Expected 随 dataset 受保护；`.evaluation-cache` 无 diff、未修改。
+
+### 决策
+
+- decision: `RCO-G2 PASS / NO_PROMOTION / DO_NOT_LAUNCH`。
+- pass_scope: 只证明唯一中文时间 AST、四端映射、跨主机确定性、旧草稿兼容和匿名/Mock 对抗回归成立。
+- claims_not_supported: 模型正确率提升、TimePoint F1 提升、真实材料泛化、多模态胜出、真人修改时间、浏览器 RCO-A…J、Preview/Production 可上线。
+- rc4 / release / production / stable_model: `UNCHANGED`。
+- next_step: `NONE；RCO-3 尚未授权，停在 RCO-G2 等待当前用户明确指令`。

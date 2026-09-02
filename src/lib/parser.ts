@@ -3,16 +3,23 @@ import type {
   SourceType,
   TaskCategory,
 } from '../types'
+import {
+  DEFAULT_WORKSPACE_TIMEZONE,
+  instantToWallClock,
+  isDateOnly,
+  parseBusinessDateTime,
+  parseChineseTimeAst,
+  type ChineseTimeAst,
+} from './timeSemantics'
 
 interface TemporalContext {
-  year: number
-  month: number
-  day: number
+  dateOnly: string
 }
 
 interface TemporalMatch {
   deadline: string
   context: TemporalContext
+  ast: ChineseTimeAst
 }
 
 interface EventClause {
@@ -52,86 +59,24 @@ function inferExplicitCategory(content: string): TaskCategory | null {
   return null
 }
 
-function parseChineseNumber(value: string): number {
-  if (/^\d+$/u.test(value)) return Number(value)
-  const digits: Record<string, number> = {
-    零: 0, 〇: 0, 一: 1, 二: 2, 两: 2, 三: 3, 四: 4,
-    五: 5, 六: 6, 七: 7, 八: 8, 九: 9,
-  }
-  if (!value.includes('十')) return digits[value] ?? Number.NaN
-  const [tens, ones] = value.split('十')
-  return (tens ? digits[tens] : 1) * 10 + (ones ? digits[ones] : 0)
-}
-
-function convertHour(hour: number, period?: string): { hour: number; dayOffset: number } {
-  if (['下午', '傍晚', '晚上', '夜间', '夜里', '晚'].includes(period ?? '') && hour < 12) {
-    return { hour: hour + 12, dayOffset: 0 }
-  }
-  if (['晚上', '夜间', '夜里', '晚'].includes(period ?? '') && hour === 12) {
-    return { hour: 0, dayOffset: 1 }
-  }
-  if (period === '中午' && hour < 11) return { hour: hour + 12, dayOffset: 0 }
-  if (['凌晨', '清晨', '早晨', '早上', '上午'].includes(period ?? '') && hour === 12) {
-    return { hour: 0, dayOffset: 0 }
-  }
-  return { hour, dayOffset: 0 }
-}
-
-function contextFromRelativeDate(value: string, now: Date): TemporalContext | null {
-  const target = new Date(now.getFullYear(), now.getMonth(), now.getDate())
-  if (/^(?:今天|今日)$/.test(value)) return dateContext(target)
-  if (value === '明天' || value === '后天') {
-    target.setDate(target.getDate() + (value === '明天' ? 1 : 2))
-    return dateContext(target)
-  }
-  const week = value.match(/^(本周|这周|下周)([一二三四五六日天])$/u)
-  if (!week) return null
-  const weekdays: Record<string, number> = { 一: 1, 二: 2, 三: 3, 四: 4, 五: 5, 六: 6, 日: 7, 天: 7 }
-  const currentWeekday = now.getDay() || 7
-  const targetWeekday = weekdays[week[2]]
-  target.setDate(target.getDate() + targetWeekday - currentWeekday + (week[1] === '下周' ? 7 : 0))
-  return dateContext(target)
-}
-
-function dateContext(date: Date): TemporalContext {
-  return { year: date.getFullYear(), month: date.getMonth() + 1, day: date.getDate() }
-}
-
 function parseAnchor(
   anchor: string,
   previousContext: TemporalContext | undefined,
   now: Date,
+  timezone: string,
 ): TemporalMatch | null {
-  const absolute = anchor.match(/(?:(20\d{2})[年/-]\s*)?(\d{1,2})[月/-]\s*(\d{1,2})(?:日|号)?/u)
-  const relative = anchor.match(/今天|今日|明天|后天|(?:本周|这周|下周)[一二三四五六日天]/u)
-  let context: TemporalContext
-  let timeText = anchor
-
-  if (absolute) {
-    context = {
-      year: Number(absolute[1] ?? previousContext?.year ?? now.getFullYear()),
-      month: Number(absolute[2]),
-      day: Number(absolute[3]),
-    }
-    timeText = anchor.replace(absolute[0], '')
-  } else if (relative) {
-    const relativeContext = contextFromRelativeDate(relative[0], now)
-    if (!relativeContext) return null
-    context = relativeContext
-    timeText = anchor.replace(relative[0], '')
-  } else {
-    context = previousContext ?? dateContext(new Date(now.getFullYear(), now.getMonth(), now.getDate() + 7))
-  }
-
-  const time = timeText.match(new RegExp(`(${periodSource.slice(3, -1)})?\\s*(${hourSource})(?:(?:[:：](${minuteSource}))|(?:点|时)(?:(${minuteSource})分?|(半))?)?`, 'u'))
-  const rawHour = time ? parseChineseNumber(time[2]) : 18
-  const minute = time ? (time[5] ? 30 : parseChineseNumber(time[3] ?? time[4] ?? '0')) : 0
-  const converted = convertHour(rawHour, time?.[1])
-  if (context.month < 1 || context.month > 12 || context.day < 1 || context.day > 31 || converted.hour > 23 || minute > 59) {
-    return null
-  }
-  const target = new Date(context.year, context.month - 1, context.day + converted.dayOffset, converted.hour, minute)
-  return { deadline: toLocalDateTime(target), context }
+  const ast = parseChineseTimeAst(anchor, {
+    referenceTime: now,
+    timezone,
+    type: 'task_deadline',
+    inheritedDate: previousContext?.dateOnly,
+  })
+  const normalizedDate = ast.normalizedValue?.slice(0, 10)
+  const context = normalizedDate && isDateOnly(normalizedDate)
+    ? { dateOnly: normalizedDate }
+    : previousContext
+  if (!context) return null
+  return { deadline: ast.normalizedValue ?? '', context, ast }
 }
 
 function isRangeContinuation(content: string, index: number): boolean {
@@ -148,16 +93,10 @@ function parseTemporal(
   content: string,
   previousContext: TemporalContext | undefined,
   now: Date,
+  timezone: string,
 ): TemporalMatch | null {
   const anchor = findTemporalAnchors(content)[0]
-  return anchor ? parseAnchor(anchor.text, previousContext, now) : null
-}
-
-function toLocalDateTime(date: Date): string {
-  const pad = (value: number) => String(value).padStart(2, '0')
-  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(
-    date.getDate(),
-  )}T${pad(date.getHours())}:${pad(date.getMinutes())}`
+  return anchor ? parseAnchor(anchor.text, previousContext, now, timezone) : null
 }
 
 function inferMaterials(content: string): string[] {
@@ -286,19 +225,27 @@ function cleanTaskPhrase(value: string): string {
   return phrase.trim()
 }
 
-function fallbackDeadline(now: Date): string {
-  const fallback = new Date(now)
-  fallback.setDate(fallback.getDate() + 7)
-  fallback.setHours(18, 0, 0, 0)
-  return toLocalDateTime(fallback)
-}
-
 function inferredDuration(content: string, materials: string[]): number {
   if (/报告|论文|作品|初稿|方案/.test(content)) return 120
   if (/说明会|会议|开会|汇报|答辩|上课/.test(content)) return 60
   if (materials.length >= 2) return 90
   if (/提交|上传|发送|确认|签字|联系|回复/.test(content)) return 30
   return 60
+}
+
+function hoursUntilTimePoint(timePoint: ChineseTimeAst, now: Date): number {
+  if (!timePoint.normalizedValue) return Number.POSITIVE_INFINITY
+  if (timePoint.precision === 'exact') {
+    const instant = parseBusinessDateTime(timePoint.normalizedValue, timePoint.timezone)
+    return instant ? (instant.getTime() - now.getTime()) / 3_600_000 : Number.POSITIVE_INFINITY
+  }
+  if (timePoint.precision === 'date_only') {
+    const referenceWallClock = instantToWallClock(now, timePoint.timezone)
+    const referenceDate = Date.UTC(referenceWallClock.getUTCFullYear(), referenceWallClock.getUTCMonth(), referenceWallClock.getUTCDate())
+    const [year, month, day] = timePoint.normalizedValue.split('-').map(Number)
+    return (Date.UTC(year, month - 1, day) - referenceDate) / 3_600_000
+  }
+  return Number.POSITIVE_INFINITY
 }
 
 function buildSuggestion(
@@ -309,6 +256,7 @@ function buildSuggestion(
   index: number,
   overallCategory: TaskCategory | null,
   now: Date,
+  timePoint: ChineseTimeAst,
 ): ParsedSuggestion {
   const category = inferExplicitCategory(sourceTitle ?? '')
     ?? overallCategory
@@ -330,7 +278,7 @@ function buildSuggestion(
     老师任务: '先整理交付要求并回复老师',
     其他: '先核对截止时间与交付内容',
   }
-  const hoursUntilDeadline = (new Date(deadline).getTime() - now.getTime()) / 3_600_000
+  const hoursUntilDeadline = hoursUntilTimePoint(timePoint, now)
   const priority = /今天|今日|明天|尽快|截止/.test(eventContent) || hoursUntilDeadline <= 48
     ? '高'
     : hoursUntilDeadline <= 24 * 7 ? '中' : '低'
@@ -353,6 +301,7 @@ function buildSuggestion(
       eventContent.slice(0, 220) ||
       `来源：${sourceTitle ?? (sourceType === 'link' ? '网页链接' : '上传文件')}`,
     confidence: eventContent.length > 12 ? '中' : '低',
+    timePoint,
   }
 }
 
@@ -361,6 +310,7 @@ export function createSuggestions(
   sourceType: SourceType,
   sourceTitle?: string,
   now = new Date(),
+  timezone = DEFAULT_WORKSPACE_TIMEZONE,
 ): ParsedSuggestion[] {
   const cleanContent = content.trim()
   const clauses = splitEventClauses(cleanContent)
@@ -372,7 +322,7 @@ export function createSuggestions(
   let context: TemporalContext | undefined
 
   for (const clause of clauses) {
-    const temporal = parseTemporal(clause.text, context, now)
+    const temporal = parseTemporal(clause.text, context, now, timezone)
     if (temporal) {
       context = temporal.context
       const title = stripTemporalText(clause.text)
@@ -385,19 +335,25 @@ export function createSuggestions(
         suggestions.length,
         overallCategory,
         now,
+        temporal.ast,
       ))
       continue
     }
     if (clause.bullet && context) {
-      const deadline = toLocalDateTime(new Date(context.year, context.month - 1, context.day, 18, 0))
+      const timePoint = parseChineseTimeAst(context.dateOnly, {
+        referenceTime: now,
+        timezone,
+        type: 'task_deadline',
+      })
       suggestions.push(buildSuggestion(
         clause.text,
         sourceType,
         sourceTitle,
-        deadline,
+        timePoint.normalizedValue ?? '',
         suggestions.length,
         overallCategory,
         now,
+        timePoint,
       ))
     }
   }
@@ -409,10 +365,15 @@ export function createSuggestions(
       cleanContent,
       sourceType,
       sourceTitle,
-      fallbackDeadline(now),
+      '',
       0,
       overallCategory,
       now,
+      parseChineseTimeAst(cleanContent, {
+        referenceTime: now,
+        timezone,
+        type: 'task_deadline',
+      }),
     ),
   ]
 }
@@ -422,6 +383,7 @@ export function createSuggestion(
   sourceType: SourceType,
   sourceTitle?: string,
   now = new Date(),
+  timezone = DEFAULT_WORKSPACE_TIMEZONE,
 ): ParsedSuggestion {
-  return createSuggestions(content, sourceType, sourceTitle, now)[0]
+  return createSuggestions(content, sourceType, sourceTitle, now, timezone)[0]
 }
