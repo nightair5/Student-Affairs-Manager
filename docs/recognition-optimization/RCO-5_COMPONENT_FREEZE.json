@@ -1,0 +1,40 @@
+{
+  "schemaVersion": "rco-5-component-freeze-1.0.0",
+  "createdAt": "2026-09-02",
+  "stage": "RCO-5",
+  "scope": "isolated facts-first technical contract only",
+  "qualityGate": "NOT_RUN",
+  "promotion": "NO_PROMOTION",
+  "modelCalls": 0,
+  "files": [
+    {
+      "path": "src/recognition/facts.ts",
+      "sha256": "e6f1003d703ade7d1f55a3d62787e00855e34e591075f807cf008a1a01cf58e1"
+    },
+    {
+      "path": "src/recognition/facts.test.ts",
+      "sha256": "332b55865100868d097217a839db0e0d7ebab98ba4c4c3314ed5f168b3052c63"
+    },
+    {
+      "path": "src/recognition/schema.ts",
+      "sha256": "81f636bcf62a4e35221ba7e620a0410b3cc39bbf7481882e42ab1222839eab40"
+    },
+    {
+      "path": "src/lib/timeSemantics.ts",
+      "sha256": "d72109638ce4c653602478d2cd09049ab5a896a17c041422e8f5b583b8afde7d"
+    }
+  ],
+  "excludedFromFreeze": [
+    "reports",
+    "append-only log",
+    "current context",
+    "audit records"
+  ],
+  "claimsNotSupported": [
+    "model quality improvement",
+    "image or file recognition accuracy",
+    "human editing-time improvement",
+    "browser acceptance",
+    "release readiness"
+  ]
+}

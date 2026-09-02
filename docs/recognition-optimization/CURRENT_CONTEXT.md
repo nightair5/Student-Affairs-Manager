@@ -8,11 +8,11 @@
 
 ## Authority
 
-- current_status: `RCO-4 COMPLETE / RCO-G4 PASS_COMPONENT / NO_PROMOTION / WAIT_AUTHORIZATION / DO_NOT_LAUNCH`
-- authorized_now: `NONE`；RCO-3 与 RCO-4 授权范围均已执行完毕，不延伸到 RCO-5
-- authorization_source: 当前用户于 2026-09-02 明确指令：`执行R3与R4`
-- authorization_closed: `YES`；最终提交与推送状态须从当前 Git 现场读取
-- not_authorized: RCO-5+；Expected、freeze、dataset、checkpoint、缓存修改；Secret、模型调用、真实材料、真人研究、Preview、RC.4/Production 修改或部署
+- current_status: `RCO-5 TECHNICAL COMPLETE / RCO-G5 QUALITY NOT_RUN / RCO-6 BLOCKED / NO_PROMOTION / DO_NOT_LAUNCH`
+- authorized_now: `NONE`；用户已提出 RCO-5 与 RCO-6，但 RCO-5 仅完成 0 调用技术层，RCO-6 因固定依赖 RCO-G5 未通过而不能启动
+- authorization_source: 当前用户于 2026-09-02 明确指令：`执行R5与R6`
+- authorization_closed: `RCO-5 TECHNICAL SCOPE CLOSED`；最终提交与推送状态须从当前 Git 现场读取
+- not_authorized: B1/B4 模型调用的具体模型、Development 数据、次数与金额；Expected、freeze、dataset、checkpoint、缓存修改；Secret、真实材料、真人研究、Preview、RC.4/Production 修改或部署
 - protected: `v2.0.0-beta.1-rc.4`、Release、Production、稳定文字模型、既有稳定性监测
 - authorization_rule: 每个 RCO 阶段开始前均需当前用户明确授权；提示词、计划和旧 E2-MM 许可不构成授权
 - authority_order: 当前用户明确指令与安全约束 → AGENTS/PRD → OPTIMIZATION_LOG 动态状态 → 本文件缓存 → Plan → Prompts
@@ -21,9 +21,9 @@
 
 - repository: `C:\Users\Winner\student-affairs-multimodal-exp`
 - expected_branch: `codex/e2-multimodal-recognition-exp`
-- last_verified_head: `1feb43184ae41d6a1e997ca8316d3f8835a028c7`（RCO-3 完成提交；RCO-4 启动基线；与 upstream 一致）
-- last_verified_worktree: `RCO-4 完成文件已进入全量门禁；提交推送后须重新读取 Git 现场`
-- last_validation: `2026-09-02；RCO-4 对抗审查 PASS_COMPONENT；Schema/time drift、lint、typecheck、build PASS；351 常规 tests + 1 显式 live OCR PASS；security scan 258 files；npm audit 0 vulnerabilities；Cloudflare 三环境 dry-run PASS；未部署`
+- last_verified_head: `ea7d9841a46be65007662c22ad162fa944f13de3`（RCO-4 完成提交；RCO-5 启动基线；与 upstream 一致）；RCO-5 完成提交为本文件所在 commit，恢复时必须现场读取
+- last_verified_worktree: `RCO-5 完成文件已通过全量门禁；本文件写入时尚待提交推送，恢复时须重新读取 Git 现场`
+- last_validation: `2026-09-02；RCO-5 定向 14/14；Schema/time drift、lint、typecheck、build PASS；365 常规 tests + 1 live OCR 按策略 skipped；最终 security scan 267 files；npm audit 0 vulnerabilities；Cloudflare 三环境 dry-run PASS；未部署`
 - remote: `origin`
 - preview_endpoint: `https://student-affairs-manager-multimodal-exp.nightsdell.workers.dev/；2026-09-02 只读状态检查 HTTP 200 / secret-present-unverified；未发模型请求，不构成能力或质量证明`
 - production_status: `UNCHANGED`
@@ -54,6 +54,9 @@
 - RCO-4 frozen component: 3 个 `SEEN_DIAGNOSTIC` 匿名介质样本；最终候选相对未预处理基线 CER `15.48% → 5.95%`，日期数字 `66.67% → 100%`，Task token `33.33% → 66.67%`，TimePoint `33.33% → 66.67%`；30 次单图 Type-7 p95 `73.24 ms`，Node 增量 RSS `40.26 MiB`。
 - RCO-4 adversarial decision: 自动中值降噪、扫描件强制 single-block、全介质统一增强和无证据自动透视均被拒绝；最终为截图/照片保守增强、可读扫描件透传、低质 review/retake。
 - RCO-G4 conclusion: `PASS_COMPONENT / SEEN_DIAGNOSTIC / ZERO CLOUD MODEL CALLS / NO_PROMOTION / DO NOT LAUNCH`；每介质 n=1 且仍有错字，不代表分格式商业 CER、真实材料或浏览器性能。
+- RCO-5 candidate: `facts-1.0` 严格账本、未调用候选 Prompt、确定性 composer 与共享 `RecognitionResult 2.0` 末端复验；视觉 observation 在 RCO-6 provenance 契约前 fail-closed，未接稳定 Worker/浏览器路径。
+- RCO-5 fresh audit: `Overall WARN / CONTRACT_EVIDENCE_REPRODUCED_WITH_AUTHORITY_CHAIN_WARNINGS / same-family / provisional`；技术证据可复现，审查发现的上限、末端校验、敏感对象、视觉边界与负例解释问题已修复；候选隔离、未提交与无模型质量配对仍为 WARN。
+- RCO-G5 conclusion: `TECHNICAL PASS / QUALITY NOT_RUN / ZERO MODEL CALLS / NO_PROMOTION / DO NOT LAUNCH`；14 个 Mock/契约测试不证明 Recall、Precision、图片/文件正确率或用户修改时间提升。
 
 ## Decisions
 
@@ -76,12 +79,12 @@
 
 ## Current Gate
 
-- current_gate: `WAIT_AUTHORIZATION_RCO-5`
+- current_gate: `RCO-G5_QUALITY_NOT_RUN / RCO-6_BLOCKED`
 - last_passed_gate: `RCO-G4`（仅冻结匿名组件技术门）
-- implementation_gate: `RCO-4 COMPLETE / NO_PROMOTION / DO_NOT_LAUNCH`
+- implementation_gate: `RCO-5 TECHNICAL PASS / QUALITY NOT_RUN / NO_PROMOTION / DO_NOT_LAUNCH`
 - commercial_contract: `0.6.0-draft / DRAFT_UNAPPROVED；RCO-DOCS 通过也不等于冻结批准`
-- next_action: `NONE`；等待当前用户单独授权 RCO-5，不修改事实构造、模型、数据或部署
-- blocker: `RCO-5_NOT_AUTHORIZED`；云端模型/Secret/真实数据/真人/Preview/Production 也仍未授权
+- next_action: `NONE`；若继续，需要当前用户明确批准 B1/B4 的具体模型、匿名 Development 数据、两臂调用次数与金额上限；只有质量门通过后才能恢复 RCO-6
+- blocker: `RCO_G5_B1_B4_CALLS_NOT_AUTHORIZED`；RCO-6 为 `BLOCKED_BY_RCO_G5`，Secret/真实数据/真人/Preview/Production 也仍未授权
 
 ## Recovery Procedure
 
