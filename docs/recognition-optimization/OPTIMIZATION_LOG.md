@@ -6,6 +6,7 @@
 
 | Entry | 阶段 | 唯一变量/目的 | 数据 | 调用 | 结果 | 决策 | 下一门 |
 |---|---|---|---|---:|---|---|---|
+| RCO-4-001 | RCO-4 | 分介质预处理、质量路由与可见提示 | 匿名组件验证集 / SEEN_DIAGNOSTIC | 0 云端模型 | PASS (COMPONENT) | NO_PROMOTION / DO_NOT_LAUNCH | RCO-5 未授权 |
 | RCO-3-001 | RCO-3 | 本机多格式提取完整性、结构和失败回退 | Mock / 匿名组件夹具 | 0 | PASS (TECHNICAL) | NO_PROMOTION / DO_NOT_LAUNCH | RCO-4 已授权待独立启动 |
 | RCO-2-001 | RCO-2 | 统一中文时间 AST 与确定性归一化 | Mock / 匿名夹具 / 历史输出只读 | 0 | PASS (TECHNICAL) | NO_PROMOTION / DO_NOT_LAUNCH | RCO-3 未授权 |
 | RCO-1-001 | RCO-1 | 统一 Worker、浏览器和评测器严格 Schema 契约 | Mock / 匿名夹具 | 0 | PASS (TECHNICAL) | NO_PROMOTION / DO_NOT_LAUNCH | RCO-2 未授权 |
@@ -17,7 +18,7 @@
 ## 2. 当前权威状态
 
 - program: `Recognition Commercialization Optimization`
-- status: `RCO-3 COMPLETE / RCO-G3 PASS / NO_PROMOTION / RCO-4 QUEUED / DO_NOT_LAUNCH`
+- status: `RCO-4 COMPLETE / RCO-G4 PASS_COMPONENT / NO_PROMOTION / DO_NOT_LAUNCH`
 - branch: `codex/e2-multimodal-recognition-exp`
 - protected_release: `v2.0.0-beta.1-rc.4`
 - production_status: `UNCHANGED`
@@ -25,8 +26,8 @@
 - image_path: `逐次显式授权；Preview-only；仅待确认建议`
 - human_timing: `NOT_RUN`
 - real_deidentified_holdout: `NOT_RUN`
-- next_authorized_action: `独立提交并推送 RCO-3 后启动已获授权的 RCO-4`
-- next_implementation_gate: `RCO-G4 QUEUED`
+- next_authorized_action: `NONE；等待当前用户单独授权 RCO-5`
+- next_implementation_gate: `RCO-G5；未授权`
 - authorization_rule: `每个 RCO 阶段开始前均需当前用户明确授权；文档/提示词/旧 E2-MM 许可不构成授权`
 - docs_authorization_source: `2026-09-01 当前用户明确要求制作优化 AGENTS/PRD/日志/提示词/目标与流程；RCO-DOCS 交付范围随本次文档提交推送关闭，不延伸到 RCO-0`
 
@@ -78,7 +79,7 @@
 | RCO-G1 | 严格 Schema | PASS | schema/validator/repair contract | 仅技术契约；NO_PROMOTION |
 | RCO-G2 | 唯一时间 AST | PASS | AST/tests/migration note | 仅技术契约；NO_PROMOTION |
 | RCO-G3 | 多格式本机提取 | PASS | DOCX/PDF/text/OCR fixtures | 仅技术契约；NO_PROMOTION |
-| RCO-G4 | 分介质 OCR | QUEUED | OCR ablation / quality routing | 已授权；待 RCO-3 独立关闭后启动 |
+| RCO-G4 | 分介质 OCR | PASS (COMPONENT) | OCR ablation / quality routing | SEEN_DIAGNOSTIC；仅组件；NO_PROMOTION |
 | RCO-G5 | facts-first | NOT_STARTED | fact schema / task composer | 未授权 |
 | RCO-G6 | 事实级融合 | NOT_STARTED | frozen T/I/IT result | 未授权 |
 | RCO-G7 | 真实效用与浏览器 | NOT_RUN | real holdout / human timing / RCO-A…RCO-J | 需另行授权 |
@@ -477,3 +478,60 @@
 - claims_not_supported: OCR CER/日期数字/下游 Task-TimePoint 改善、模型正确率、真实材料泛化、真人修改时间、浏览器 RCO-A…J、Preview/Production 上线。
 - rc4 / release / production / stable_model: `UNCHANGED`。
 - next_step: `独立提交并推送 RCO-3 后，按同一用户指令另记并启动 RCO-4；不得混合提交`。
+
+## 17. RCO-4-001 启动记录 — 2026-09-02
+
+### Context Snapshot
+
+- owner / authorization_source: 当前用户于 2026-09-02 明确指令：`执行R3与R4`；RCO-3 已以 commit `1feb43184ae41d6a1e997ca8316d3f8835a028c7` 独立验证、提交、推送后关闭，现单独启动 RCO-4。
+- branch / HEAD / upstream: `codex/e2-multimodal-recognition-exp` / `1feb43184ae41d6a1e997ca8316d3f8835a028c7` / 同一 commit。
+- working_tree_before_start: `clean`；无重叠用户改动。
+- current_gate / last_passed_gate: `RCO-G4 IN_PROGRESS` / `RCO-G3 PASS`。
+- hypothesis: 按截图、照片和扫描页区分方向、裁边、透视/几何风险、对比度、噪声和放大策略，并把低质量结果路由到重拍/选页/人工校对，可同时降低字符错误、关键日期数字错误和下游任务/时间损失；只提高 OCR 自报 confidence 不足以通过。
+- single_variable: 浏览器本机媒体预处理、可观测质量特征、介质路由、用户提示及匿名组件验证；不改 Prompt、云端模型、Schema、时间 AST、任务事实策略或部署。
+- data: 新增匿名组件验证夹具；首次用于候选选择即永久标记 `SEEN_DIAGNOSTIC / NOT_RCO_G7_HOLDOUT`，不得称未见商业材料。
+- allowed_actions: 本机 Canvas 方向/裁边/灰度对比度/降噪/2–3 倍缩放与保守几何提示；按介质选择 PSM/预处理；CER、日期数字 exact、确定性下游 Task/TimePoint、延迟和内存代理测量；失败/低质提示；匿名夹具/脚本/报告；验证、单独提交并推送。
+- forbidden_actions: 修改 Expected、freeze、dataset、checkpoint、`.evaluation-cache`；云端模型/Repair 调用、Secret；真实材料/真人研究；Preview/Production 部署；RC.4/Release/稳定模型修改；RCO-5+。
+- cloud_model_calls / repair_calls / secret_access / real_data / human_study / deploy: `0 / 0 / NONE / NOT_USED / NOT_RUN / NOT_RUN`；本机 Tesseract 组件运行不属于云端模型调用，但必须单独记录样本、耗时与失败。
+- protected_inputs_sha256: 沿用 RCO-3 完成复核的 V2/V3 十个固定 SHA；开始前 `.evaluation-cache` 无 Git 变更。
+- performance_budget: 单图 p95 `≤15s`；选定 1–4 页 p95 `≤45s`；只评本机组件，不外发图片。
+- stop_conditions: 只改善 confidence；CER/日期/下游未同时净改善；严重错误增加；预处理抹掉关键字符；性能超预算；必须上传图片或放宽安全上限；触碰任何未授权动作。
+- decision_before_change: `AUTHORIZED_RCO_4 / RCO-G4_IN_PROGRESS / DO_NOT_LAUNCH / 0_CLOUD_MODEL_CALLS`。
+
+## 18. RCO-4-001 完成记录 — 2026-09-02
+
+### 实现、消融与路由
+
+- implementation: 新增 `ocrPreprocessing.ts` 的像素质量分析、EXIF 方向归一化、保守裁边、灰度/对比度、2–3 倍受限放大、介质 Profile、16M 输出像素上限和 `accept/review/retake`；`fileExtraction.ts` 在图片与 PDF OCR 前调用，低质原因进入可见 quality flags。
+- media_route: 截图使用最近邻保守增强；照片使用平滑增强且不自动裁边；可读扫描件保持原图与 AUTO PSM。透视风险只提示重拍/校对，不自动拉伸。
+- rejected_candidates: 自动中值降噪首轮使 CER 从 `0%` 恶化至 `19.05%`；扫描件强制 single-block 破坏晚间时间；全介质统一增强增加照片/扫描错字；均已从最终路由剔除。
+- confidence_rule: 自报 OCR confidence 只能增加 review 信号，不能覆盖像素质量；高 confidence + 低分辨率/低对比度的对抗测试必须进入 retake。
+- dev_dependency: `@napi-rs/canvas@1.0.8`（MIT）仅生成可复现匿名图片；生产仍为原生 Canvas。
+
+### 冻结组件验证
+
+- freeze: `docs/recognition-optimization/RCO-4_COMPONENT_FREEZE.json`；fixture、live test、preprocessor、evaluator 四个 SHA 在最终运行前全部匹配。
+- data_status: `SEEN_DIAGNOSTIC / NOT_RCO_G7_HOLDOUT`；截图/照片/扫描件各 1 个匿名固定样本，无真实材料。
+- live_command: PowerShell 设置 `RUN_LIVE_OCR_COMPONENT=1` 后运行 `npx vitest run src/lib/ocrLiveComponent.test.ts --reporter=verbose`；PASS。
+- baseline_to_candidate: CER `15.48% → 5.95%`；关键日期数字 exact `66.67% → 100%`；任务动作/对象 token exact `33.33% → 66.67%`；确定性 TimePoint exact `33.33% → 66.67%`。
+- runtime: 30 次候选 OCR，Type-7 单图 p95 `73.24 ms`；3 选页逐介质 p95 保守相加上界 `180.11 ms`；Node 组件增量 RSS `40.26 MiB`；只证明当前匿名组件代理低于 `15s / 45s / 512MiB`，不是浏览器/手机验收。
+- residual_errors: 截图仍有“荣学金/成结单”，照片仍有“这写/正件聊”；每介质 n=1，不能声称商业正确率或分格式阈值达标。
+- artifact: `docs/recognition-optimization/RCO-4_OCR_QUALITY_ROUTING.md`。
+
+### 工程门与完整性
+
+- cloud_model_calls / repair_calls / secret_access / real_data / human_study / deploy: `0 / 0 / NONE / NOT_USED / NOT_RUN / NOT_RUN`；本机 Tesseract 实跑单列，不计云端模型调用。
+- regular_test_policy: live OCR 默认 skip，必须显式环境变量运行，避免 CI 隐式联网或把可变组件运行伪装成固定单测。
+- `npm run recognition:contract:check`、`npm run lint`、`npm run typecheck`、`npm run build`: PASS；保留既有 >500 kB 主 chunk warning。
+- `npm test`: PASS；Vitest 289 passed / 1 live OCR skipped、server 8、Cloudflare Worker 25、time parity 1、multimodal evaluator 23、Firebase Functions 5，共 351 个常规测试通过；live OCR 另行显式 1 test PASS。
+- `npm run security:scan`: PASS；258 files；`npm audit --audit-level=high`: 0 vulnerabilities。
+- `npm run cloudflare:check`: PASS；default/preview/multimodal_preview 三环境 dry-run；没有部署。
+- protected_inputs: V2/V3 dataset、OCR、checkpoint、summary、freeze 十个固定 SHA 在完成门禁后逐路径一致；Expected 与 `.evaluation-cache` 无 Git 变更。
+
+### 决策
+
+- decision: `RCO-G4 PASS_COMPONENT / SEEN_DIAGNOSTIC / NO_PROMOTION / DO_NOT_LAUNCH`。
+- pass_scope: 只证明冻结匿名组件上的字符/日期/下游代理同时净改善、伤害候选被淘汰、质量提示和组件性能代理通过。
+- claims_not_supported: 分格式商业 CER、模型正确率、真实材料泛化、真人修改时间、Chrome/Edge/手机、RCO-A…J、Commercial Preview 或 Production。
+- rc4 / release / production / stable_model: `UNCHANGED`。
+- next_step: `NONE；RCO-5 尚未授权，停在 RCO-G4 等待当前用户明确指令`。

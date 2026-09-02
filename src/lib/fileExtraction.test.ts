@@ -16,7 +16,7 @@ const getDocument = vi.fn()
 type OcrLogger = (event: { status: string; progress: number }) => void
 let ocrLogger: OcrLogger | undefined
 const createWorker = vi.fn(async (
-  _languages: string[],
+  _languages: string | string[],
   _oem: number,
   options?: { logger?: OcrLogger },
 ) => {
@@ -199,6 +199,7 @@ describe('file safety limits', () => {
       ocrConfidence: 0.72,
     })
     expect(messages[0]).toContain('OCR 模型')
+    expect(createWorker).toHaveBeenCalledWith('chi_sim+eng', 1, expect.objectContaining({ logger: expect.any(Function) }))
     expect(recognize).toHaveBeenCalledWith(file)
     expect(terminate).toHaveBeenCalled()
   })

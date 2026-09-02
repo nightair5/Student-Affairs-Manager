@@ -1,0 +1,30 @@
+{
+  "fixtureVersion": "ocr-component-seen-v1",
+  "status": "SEEN_DIAGNOSTIC",
+  "commercialHoldoutEligible": false,
+  "firstUsedAt": "2026-09-02",
+  "scope": "anonymous component proxy; never RCO-G7 holdout",
+  "fixtures": [
+    {
+      "id": "screenshot-deadline-01",
+      "mediaKind": "screenshot",
+      "expectedText": "请于2026年9月18日下午3点前提交奖学金申请表和成绩单。",
+      "expectedTaskTokens": ["提交", "成绩单"],
+      "expectedTime": "2026-09-18T15:00"
+    },
+    {
+      "id": "photo-event-01",
+      "mediaKind": "photo",
+      "expectedText": "请在9月20日上午9点前填写志愿服务报名表并上传证件照。",
+      "expectedTaskTokens": ["志愿服务报名表", "上传"],
+      "expectedTime": "2026-09-20T09:00"
+    },
+    {
+      "id": "scan-late-deadline-01",
+      "mediaKind": "scan",
+      "expectedText": "材料请于2026年10月3日晚上11点半前发送至学院邮箱。",
+      "expectedTaskTokens": ["材料", "发送", "学院邮箱"],
+      "expectedTime": "2026-10-03T23:30"
+    }
+  ]
+}

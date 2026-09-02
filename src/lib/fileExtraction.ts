@@ -1,3 +1,11 @@
+import {
+  prepareCanvasForOcr,
+  prepareFileImageForOcr,
+  routeOcrQuality,
+  type OcrMediaKind,
+  type OcrPreprocessProfile,
+} from './ocrPreprocessing'
+
 export type SupportedFileKind = 'text' | 'docx' | 'pdf' | 'image' | 'unsupported'
 export type FileExtractionStatus = 'ready' | 'needs-input' | 'unsupported' | 'error'
 export type PageExtractionRoute = 'parser' | 'ocr' | 'empty' | 'error'
@@ -13,6 +21,7 @@ export interface FileExtractionResult {
   extractionMethod?: 'parser' | 'ocr' | 'mixed'
   encoding?: 'utf-8' | 'utf-8-bom' | 'gb18030'
   ocrConfidence?: number
+  ocrQualityRoute?: 'accept' | 'review' | 'retake'
   partialExtraction?: boolean
   qualityFlags?: string[]
   pages?: ExtractedPage[]
@@ -21,7 +30,7 @@ export interface FileExtractionResult {
   contentHash?: string
 }
 export interface FileExtractionProgress { phase: 'reading' | 'loading-ocr' | 'recognizing'; progress: number; message: string }
-export interface FileExtractionOptions { onProgress?: (progress: FileExtractionProgress) => void }
+export interface FileExtractionOptions { onProgress?: (progress: FileExtractionProgress) => void; mediaKind?: OcrMediaKind }
 export interface FileExtractionEvidence { result: FileExtractionResult; fileHash: string }
 export interface FileExtractionEvidenceOptions extends FileExtractionOptions { isCurrent?: () => boolean }
 
@@ -209,7 +218,7 @@ async function extractDocxText(file: File): Promise<FileExtractionResult> {
 async function createOcrWorker(options: FileExtractionOptions, pageTotal = 1) {
   const { createWorker, OEM } = await import('tesseract.js')
   let pageIndex = 0
-  const worker = await createWorker(['chi_sim', 'eng'], OEM.LSTM_ONLY, {
+  const worker = await createWorker('chi_sim+eng', OEM.LSTM_ONLY, {
     logger: (event) => {
       if (event.status === 'recognizing text') options.onProgress?.({
         phase: 'recognizing', progress: (pageIndex + event.progress) / pageTotal,
@@ -220,15 +229,45 @@ async function createOcrWorker(options: FileExtractionOptions, pageTotal = 1) {
   return { worker, setPageIndex: (value: number) => { pageIndex = value } }
 }
 
+async function configureOcrWorker(worker: Awaited<ReturnType<typeof createOcrWorker>>['worker'], profile?: OcrPreprocessProfile) {
+  if (!profile) return
+  const psm = profile.pageSegmentationMode === 'sparse' ? '11' : profile.pageSegmentationMode === 'single-block' ? '6' : '3'
+  await worker.setParameters({ tessedit_pageseg_mode: psm as never, preserve_interword_spaces: '1' })
+}
+
+function inferredMediaKind(file: File, requested?: OcrMediaKind): OcrMediaKind {
+  if (requested) return requested
+  if (/(?:截图|screenshot|screen[-_ ]?shot)/iu.test(file.name)) return 'screenshot'
+  return /jpe?g$/iu.test(file.type) || /\.jpe?g$/iu.test(file.name) ? 'photo' : 'screenshot'
+}
+
 async function extractImageText(file: File, options: FileExtractionOptions): Promise<FileExtractionResult> {
   options.onProgress?.({ phase: 'loading-ocr', progress: 0, message: '正在加载中文 OCR 模型（首次使用需要联网下载模型）……' })
   try {
+    const mediaKind = inferredMediaKind(file, options.mediaKind)
+    let prepared: Awaited<ReturnType<typeof prepareFileImageForOcr>> | undefined
+    try { prepared = await prepareFileImageForOcr(file, mediaKind) } catch { prepared = undefined }
     const { worker } = await createOcrWorker(options)
     try {
-      const recognition = await worker.recognize(file)
+      await configureOcrWorker(worker, prepared?.profile)
+      const recognition = await worker.recognize(prepared?.canvas ?? file)
       const ocrConfidence = normalizedOcrConfidence(recognition.data.confidence)
-      return readyResult(recognition.data.text, { extractionMethod: 'ocr', ...(ocrConfidence !== undefined ? { ocrConfidence } : {}), message: '已在本机完成 OCR。图片本体不会上传或保存；请核对识别文字后再整理。' })
-    } finally { await worker.terminate() }
+      const decision = prepared ? routeOcrQuality(prepared.before, { text: recognition.data.text, confidence: ocrConfidence }) : undefined
+      const qualityFlags = [...(prepared?.qualityFlags ?? []), ...(decision?.reasons ?? [])]
+      return readyResult(recognition.data.text, {
+        extractionMethod: 'ocr',
+        ...(ocrConfidence !== undefined ? { ocrConfidence } : {}),
+        ...(decision ? { ocrQualityRoute: decision.route } : {}),
+        ...(qualityFlags.length ? { qualityFlags } : {}),
+        ...(decision && decision.route !== 'accept' ? { partialExtraction: true } : {}),
+        message: decision
+          ? `已在本机按${mediaKind === 'screenshot' ? '截图' : mediaKind === 'photo' ? '照片' : '扫描件'}策略完成 OCR。${decision.guidance} 图片本体不会上传或保存。`
+          : '已在本机完成 OCR。图片本体不会上传或保存；预处理不可用，请重点核对日期和数字。',
+      })
+    } finally {
+      if (prepared) { prepared.canvas.width = 1; prepared.canvas.height = 1 }
+      await worker.terminate()
+    }
   } catch {
     return { status: 'error', text: '', message: '本机 OCR 启动失败。请检查网络后重试，或人工补充原文；图片没有发送给 DeepSeek。' }
   }
@@ -284,15 +323,26 @@ async function extractPdfText(file: File, options: FileExtractionOptions): Promi
           setPageIndex(index)
           const page = pageObjects.get(extractedPage.pageNumber)
           if (!page) continue
+          let canvas: HTMLCanvasElement | undefined
+          let prepared: Awaited<ReturnType<typeof prepareCanvasForOcr>> | undefined
           try {
-            const canvas = await renderPdfPageForOcr(page)
-            const recognition = await worker.recognize(canvas)
+            canvas = await renderPdfPageForOcr(page)
+            try { prepared = await prepareCanvasForOcr(canvas, canvas.width, canvas.height, 'scan') } catch { prepared = undefined }
+            await configureOcrWorker(worker, prepared?.profile)
+            const recognition = await worker.recognize(prepared?.canvas ?? canvas)
             extractedPage.text = normalizeExtractedText(recognition.data.text)
             extractedPage.route = extractedPage.text ? 'ocr' : 'empty'
             const confidence = normalizedOcrConfidence(recognition.data.confidence)
             if (confidence !== undefined) confidences.push(confidence)
-            canvas.width = 1; canvas.height = 1
+            if (prepared) {
+              const decision = routeOcrQuality(prepared.before, { text: extractedPage.text, confidence })
+              extractedPage.qualityFlags.push(...prepared.qualityFlags, ...decision.reasons)
+            }
           } catch { extractedPage.route = 'error'; extractedPage.qualityFlags.push('该页 OCR 失败') }
+          finally {
+            if (prepared) { prepared.canvas.width = 1; prepared.canvas.height = 1 }
+            if (canvas) { canvas.width = 1; canvas.height = 1 }
+          }
         }
       } finally { await worker.terminate() }
     }
@@ -302,6 +352,7 @@ async function extractPdfText(file: File, options: FileExtractionOptions): Promi
       ...(pages.some((page) => page.route === 'empty') ? [`${pages.filter((page) => page.route === 'empty').length} 页为空或未识别到文字`] : []),
       ...(pages.some((page) => page.route === 'error') ? [`${pages.filter((page) => page.route === 'error').length} 页提取失败`] : []),
       ...(emptyBeforeOcr.length > MAX_OCR_PDF_PAGES ? [`扫描页超过 ${MAX_OCR_PDF_PAGES} 页 OCR 安全上限`] : []),
+      ...pages.flatMap((page) => page.qualityFlags.map((flag) => `第 ${page.pageNumber} 页：${flag}`)),
     ]
     const text = pages.filter((page) => page.text).map((page) => `--- 第 ${page.pageNumber} 页 [${page.route}] ---\n${page.text}`).join('\n\n')
     const methods = new Set(pages.filter((page) => page.text).map((page) => page.route))
@@ -336,7 +387,10 @@ export async function extractFileContent(file: File, options: FileExtractionOpti
 /** Collects the persisted text fingerprint together with extraction output. */
 export async function extractFileEvidence(file: File, options: FileExtractionEvidenceOptions = {}): Promise<FileExtractionEvidence | null> {
   const isCurrent = options.isCurrent ?? (() => true)
-  const result = await extractFileContent(file, { onProgress: (progress) => { if (isCurrent()) options.onProgress?.(progress) } })
+  const result = await extractFileContent(file, {
+    ...(options.mediaKind ? { mediaKind: options.mediaKind } : {}),
+    onProgress: (progress) => { if (isCurrent()) options.onProgress?.(progress) },
+  })
   if (!isCurrent()) return null
   let fileHash = ''
   if (result.status !== 'error' && globalThis.crypto?.subtle) {
