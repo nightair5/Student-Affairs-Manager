@@ -8,10 +8,10 @@
 
 ## Authority
 
-- current_status: `RCO-5 TECHNICAL COMPLETE / RCO-G5 QUALITY NOT_RUN / RCO-6 BLOCKED / NO_PROMOTION / DO_NOT_LAUNCH`
-- authorized_now: `NONE`；用户已提出 RCO-5 与 RCO-6，但 RCO-5 仅完成 0 调用技术层，RCO-6 因固定依赖 RCO-G5 未通过而不能启动
-- authorization_source: 当前用户于 2026-09-02 明确指令：`执行R5与R6`
-- authorization_closed: `RCO-5 TECHNICAL SCOPE CLOSED`；最终提交与推送状态须从当前 Git 现场读取
+- current_status: `RCO-5-002 TECHNICAL REPAIR FAIL / REJECT_CANDIDATE / ZERO MODEL CALLS / RCO-G5 QUALITY NOT_RUN / RCO-6 BLOCKED / DO_NOT_LAUNCH`
+- authorized_now: `RCO-5-002 修补轮`；仅字段证据、跨状态、sourceId、动作归一化、记录订正、全量验证与新鲜审查
+- authorization_source: 当前用户于 2026-09-02 明确要求先执行一次“RCO-5 修补轮”，并列明 6 项工作；保持 0 次模型调用
+- authorization_closed: `YES_BY_THIS_DELIVERY`；RCO-5-002 已按失败候选封存，除提交和推送本交付外不再授权继续修补、运行 B1 或启动 RCO-6
 - not_authorized: B1/B4 模型调用的具体模型、Development 数据、次数与金额；Expected、freeze、dataset、checkpoint、缓存修改；Secret、真实材料、真人研究、Preview、RC.4/Production 修改或部署
 - protected: `v2.0.0-beta.1-rc.4`、Release、Production、稳定文字模型、既有稳定性监测
 - authorization_rule: 每个 RCO 阶段开始前均需当前用户明确授权；提示词、计划和旧 E2-MM 许可不构成授权
@@ -21,9 +21,9 @@
 
 - repository: `C:\Users\Winner\student-affairs-multimodal-exp`
 - expected_branch: `codex/e2-multimodal-recognition-exp`
-- last_verified_head: `ea7d9841a46be65007662c22ad162fa944f13de3`（RCO-4 完成提交；RCO-5 启动基线；与 upstream 一致）；RCO-5 完成提交为本文件所在 commit，恢复时必须现场读取
-- last_verified_worktree: `RCO-5 完成文件已通过全量门禁；本文件写入时尚待提交推送，恢复时须重新读取 Git 现场`
-- last_validation: `2026-09-02；RCO-5 定向 14/14；Schema/time drift、lint、typecheck、build PASS；365 常规 tests + 1 live OCR 按策略 skipped；最终 security scan 267 files；npm audit 0 vulnerabilities；Cloudflare 三环境 dry-run PASS；未部署`
+- last_verified_head: `a016d51e5f4ad244efbbc5942810572a890975ab`（RCO-5-001 完成提交；与 upstream 一致；RCO-5-002 启动基线）
+- last_verified_worktree: `RCO-5-002 失败封存交付提交前仅含本轮受控改动；交付后仍须重新读取 Git 现场与 upstream`
+- last_validation: `2026-09-02；facts-1.4 定向 54/54；Vitest 343 passed + 1 live OCR 按策略 skipped，另 server 8、Worker 25、time parity 1、multimodal evaluator 23、Functions 5，共 405 个常规测试；Schema/time drift、lint、typecheck、build PASS；最终 security scan 286 files；npm audit 0 vulnerabilities；Cloudflare default/preview/multimodal_preview 三环境 dry-run PASS；未部署`
 - remote: `origin`
 - preview_endpoint: `https://student-affairs-manager-multimodal-exp.nightsdell.workers.dev/；2026-09-02 只读状态检查 HTTP 200 / secret-present-unverified；未发模型请求，不构成能力或质量证明`
 - production_status: `UNCHANGED`
@@ -41,7 +41,7 @@
 - 旧/新客户端 Boolean 判断：143 个 truthy 历史结果 mismatch `0`；旧 scorer core summary 两轮均精确复现。
 - 两轮 dataset/OCR/checkpoint/summary/freeze 共 10 个受保护输入固定 SHA，重分类前后不变；模型调用 `0`。
 - 真人修改时间与真实去标识/假名化 Holdout: `NOT_RUN`
-- fresh audit: `PASS / same-family / provisional`，只证明评测完整性。
+- RCO-0 fresh audit: `PASS / same-family / provisional`，只证明评测完整性；RCO-5-002 的四轮 fresh audit 均为 `FAIL`，不得混写。
 - conclusion: `RCO-G0 PASS / NO_PROMOTION / DO NOT LAUNCH`
 - RCO-1: 三端共用 `src/recognition/schema.ts`；Worker 生成契约源 SHA-256 `81f636bcf62a4e35221ba7e620a0410b3cc39bbf7481882e42ab1222839eab40`；缺字段、未知字段、重复 ID、悬空引用、非法日期与来源外证据均 fail-closed。
 - Repair: 只完成一次、结构限定、来源证据限定、不得新增语义实体或删除 failure 的纯契约；实际调用 `NOT_RUN`。
@@ -54,9 +54,9 @@
 - RCO-4 frozen component: 3 个 `SEEN_DIAGNOSTIC` 匿名介质样本；最终候选相对未预处理基线 CER `15.48% → 5.95%`，日期数字 `66.67% → 100%`，Task token `33.33% → 66.67%`，TimePoint `33.33% → 66.67%`；30 次单图 Type-7 p95 `73.24 ms`，Node 增量 RSS `40.26 MiB`。
 - RCO-4 adversarial decision: 自动中值降噪、扫描件强制 single-block、全介质统一增强和无证据自动透视均被拒绝；最终为截图/照片保守增强、可读扫描件透传、低质 review/retake。
 - RCO-G4 conclusion: `PASS_COMPONENT / SEEN_DIAGNOSTIC / ZERO CLOUD MODEL CALLS / NO_PROMOTION / DO NOT LAUNCH`；每介质 n=1 且仍有错字，不代表分格式商业 CER、真实材料或浏览器性能。
-- RCO-5 candidate: `facts-1.0` 严格账本、未调用候选 Prompt、确定性 composer 与共享 `RecognitionResult 2.0` 末端复验；视觉 observation 在 RCO-6 provenance 契约前 fail-closed，未接稳定 Worker/浏览器路径。
-- RCO-5 fresh audit: `Overall WARN / CONTRACT_EVIDENCE_REPRODUCED_WITH_AUTHORITY_CHAIN_WARNINGS / same-family / provisional`；技术证据可复现，审查发现的上限、末端校验、敏感对象、视觉边界与负例解释问题已修复；候选隔离、未提交与无模型质量配对仍为 WARN。
-- RCO-G5 conclusion: `TECHNICAL PASS / QUALITY NOT_RUN / ZERO MODEL CALLS / NO_PROMOTION / DO NOT LAUNCH`；14 个 Mock/契约测试不证明 Recall、Precision、图片/文件正确率或用户修改时间提升。
+- RCO-5 repair: `facts-1.1` 至 `facts-1.4` 均由 fresh same-family/provisional 审查拒绝；轨迹为 `.aris/traces/experiment-audit/2026-09-02_run03/` 至 `run06/`。最终 54 个已注册契约案例通过仍不能封闭测试外语义归属绕过。
+- reproduced_limit: 词面存在/同句/受控正则不能证明字段属于同一动作、材料或事件；并列实体、回指取消、扩张 rawText、实体子串仍可制造 selected 错误事实。
+- RCO-G5 conclusion: `REJECT_CANDIDATE / QUALITY NOT_RUN / ZERO MODEL CALLS / NO_PROMOTION / DO NOT LAUNCH`；在基础契约失败时不运行付费 B1，也不启动 RCO-6。
 
 ## Decisions
 
@@ -79,12 +79,12 @@
 
 ## Current Gate
 
-- current_gate: `RCO-G5_QUALITY_NOT_RUN / RCO-6_BLOCKED`
+- current_gate: `RCO-G5_CONTRACT_REPAIR_FAIL / REJECT_CANDIDATE / QUALITY_NOT_RUN / RCO-6_BLOCKED`
 - last_passed_gate: `RCO-G4`（仅冻结匿名组件技术门）
-- implementation_gate: `RCO-5 TECHNICAL PASS / QUALITY NOT_RUN / NO_PROMOTION / DO_NOT_LAUNCH`
+- implementation_gate: `RCO-5-002 TECHNICAL REPAIR FAIL / REJECT_CANDIDATE / NO_PROMOTION / DO_NOT_LAUNCH`
 - commercial_contract: `0.6.0-draft / DRAFT_UNAPPROVED；RCO-DOCS 通过也不等于冻结批准`
-- next_action: `NONE`；若继续，需要当前用户明确批准 B1/B4 的具体模型、匿名 Development 数据、两臂调用次数与金额上限；只有质量门通过后才能恢复 RCO-6
-- blocker: `RCO_G5_B1_B4_CALLS_NOT_AUTHORIZED`；RCO-6 为 `BLOCKED_BY_RCO_G5`，Secret/真实数据/真人/Preview/Production 也仍未授权
+- next_action: `NONE`；先由用户另行授权 parser-verified span 与 typed relation assertion Schema，再做新的零调用门；通过前不讨论 B1 执行
+- blocker: `RCO_G5_CONTRACT_PROVENANCE_NOT_PROVEN`；B1/B4、RCO-6、Secret、真实数据、真人、Preview/Production 均未进入
 
 ## Recovery Procedure
 

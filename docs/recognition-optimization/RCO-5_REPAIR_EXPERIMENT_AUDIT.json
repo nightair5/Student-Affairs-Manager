@@ -1,0 +1,25 @@
+{
+  "schemaVersion": "rco-5-repair-audit-1.0.0",
+  "date": "2026-09-02",
+  "verdict": "FAIL",
+  "integrityStatus": "FAIL_CONTROLLED_RELATION_GROUNDING_BYPASSES_REPRODUCED",
+  "candidateDisposition": "REJECT_CANDIDATE",
+  "reviewIndependence": "same-family",
+  "acceptanceStatus": "provisional",
+  "evaluations": ["contract_fixture", "simulation_only"],
+  "modelCalls": 0,
+  "repairCalls": 0,
+  "realGroundTruth": "NOT_RUN",
+  "humanEvaluation": "NOT_RUN",
+  "rcoG5Quality": "NOT_RUN",
+  "rco6": "BLOCKED_BY_RCO_G5",
+  "promotion": "NO_PROMOTION",
+  "deployment": "NOT_RUN",
+  "reviewedCandidates": [
+    { "schema": "facts-1.1", "verdict": "FAIL", "trace": ".aris/traces/experiment-audit/2026-09-02_run03/" },
+    { "schema": "facts-1.2", "verdict": "FAIL", "trace": ".aris/traces/experiment-audit/2026-09-02_run04/" },
+    { "schema": "facts-1.3", "verdict": "FAIL", "trace": ".aris/traces/experiment-audit/2026-09-02_run05/" },
+    { "schema": "facts-1.4", "verdict": "FAIL", "trace": ".aris/traces/experiment-audit/2026-09-02_run06/" }
+  ],
+  "nextArchitectureGate": "parser-verified spans and typed relation assertions; ambiguous relations remain unlinked and unselected"
+}

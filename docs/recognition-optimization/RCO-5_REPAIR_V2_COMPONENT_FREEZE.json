@@ -1,0 +1,41 @@
+{
+  "schemaVersion": "rco-5-repair-component-freeze-1.0.0",
+  "createdAt": "2026-09-02",
+  "stage": "RCO-5-002",
+  "candidateSchema": "facts-1.2",
+  "promptVersion": "recognition-facts-first-1.2.0",
+  "candidateStatus": "REJECT_CANDIDATE",
+  "rejectionReason": "fresh audit reproduced cross-sentence single-quote and related grounding bypasses",
+  "scope": "isolated zero-call facts-first provenance repair",
+  "qualityGate": "NOT_RUN",
+  "promotion": "NO_PROMOTION",
+  "modelCalls": 0,
+  "targetedFactsTests": 40,
+  "files": [
+    {
+      "path": "src/recognition/facts.ts",
+      "sha256": "f4f2e0175cd724d9b21beca559609c3bf17aac1707a886ec46119f9c76e163e8"
+    },
+    {
+      "path": "src/recognition/facts.test.ts",
+      "sha256": "283ae15f829aacef04f98355cb34a98ece6044dcbab483e77b999679e122c871"
+    },
+    {
+      "path": "src/recognition/schema.ts",
+      "sha256": "81f636bcf62a4e35221ba7e620a0410b3cc39bbf7481882e42ab1222839eab40"
+    },
+    {
+      "path": "src/lib/timeSemantics.ts",
+      "sha256": "d72109638ce4c653602478d2cd09049ab5a896a17c041422e8f5b583b8afde7d"
+    }
+  ],
+  "protectedInputsModified": false,
+  "claimsNotSupported": [
+    "model recall or precision improvement",
+    "image or file recognition accuracy",
+    "human editing-time improvement",
+    "RCO-G5 quality pass",
+    "RCO-6 readiness",
+    "release readiness"
+  ]
+}

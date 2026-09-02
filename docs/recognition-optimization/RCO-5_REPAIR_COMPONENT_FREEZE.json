@@ -1,0 +1,40 @@
+{
+  "schemaVersion": "rco-5-repair-component-freeze-1.0.0",
+  "createdAt": "2026-09-02",
+  "stage": "RCO-5-002",
+  "candidateSchema": "facts-1.1",
+  "promptVersion": "recognition-facts-first-1.1.0",
+  "candidateStatus": "REJECT_CANDIDATE",
+  "rejectionReason": "fresh audit reproduced six contract provenance-laundering paths",
+  "scope": "isolated zero-call facts-first contract repair",
+  "qualityGate": "NOT_RUN",
+  "promotion": "NO_PROMOTION",
+  "modelCalls": 0,
+  "files": [
+    {
+      "path": "src/recognition/facts.ts",
+      "sha256": "ae94df292c70df9a801908d5e54a52c1cde847eaab3ef18c5018aa97c759212c"
+    },
+    {
+      "path": "src/recognition/facts.test.ts",
+      "sha256": "b51b2ef8b0b4790c38cf7c273f8de937f81a26428117259b83c2b7b2a01eb891"
+    },
+    {
+      "path": "src/recognition/schema.ts",
+      "sha256": "81f636bcf62a4e35221ba7e620a0410b3cc39bbf7481882e42ab1222839eab40"
+    },
+    {
+      "path": "src/lib/timeSemantics.ts",
+      "sha256": "d72109638ce4c653602478d2cd09049ab5a896a17c041422e8f5b583b8afde7d"
+    }
+  ],
+  "protectedInputsModified": false,
+  "claimsNotSupported": [
+    "model recall or precision improvement",
+    "image or file recognition accuracy",
+    "human editing-time improvement",
+    "RCO-G5 quality pass",
+    "RCO-6 readiness",
+    "release readiness"
+  ]
+}
