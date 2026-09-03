@@ -29,7 +29,7 @@
 - 命令时态：面向收件人的待办命令统一为 `future`；描述已发生事实为 `past`；纯说明为 `present`。
 - 修订关系：旧要求保留但标为 `superseded/cancelled`；新要求单独形成当前任务。
 - 说明归属：紧邻任务且含“该/上述/两项/本次”等回指的时间、材料、地点或限制，附着到对应任务；不得独立冒充任务。
-- 默认勾选：只允许 `explicit + addressee + directive + affirmative + future + pending + active + required`，且效果仅为本地改变或实体动作；外发、付款、联系、条件、否定、已完成、已作废和不确定项一律不默认。
+- 默认勾选：只允许 `explicit + addressee + directive + affirmative + future + pending + active + required`，且动作必须进入受控白名单；签名、参加及所有外发、付款、联系、条件、否定、已完成、已作废和不确定项一律不默认。
 
 ## 4. 声明、反声明与证据
 
@@ -61,4 +61,3 @@
 - scorer 和所有参与评分的本地依赖均有 SHA-256，运行前后匹配。
 - 受保护文件 SHA-256 前后完全一致。
 - 无论分数是否提高，结论最多为“可申请新的未见数据验证”，不得接稳定路径、不得启动 RCO-6、不得部署。
-
