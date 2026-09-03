@@ -837,3 +837,17 @@
 - unsupported_claims: 模型 scope 选择质量、主体/否定/修订/动作效果语义正确率、图片或文件正确率、真实材料泛化、真人修改时间、独立 verifier 净收益、浏览器验收或商业上线资格。
 - final_decision: `RCO-5-006 CLOSED / TECHNICAL_PASS_ZERO_MODEL_CALLS / RCO-G5 QUALITY NOT_RUN / NO_PROMOTION / RCO-6 BLOCKED / DO_NOT_LAUNCH`；稳定路径、RC.4、Production 不变。
 - next_step: `NONE / WAIT_AUTHORIZATION`。若继续，先冻结一批与 B02 不重复的新匿名 Development 输入与 Expected；再另行批准模型、最大调用次数和人民币硬上限，验证模型能否正确选择 scope 与语义标签。本轮不得自动继续。
+
+## 37. RCO-5-006-B1 新匿名数据冻结 — 2026-09-03
+
+- authorization: 当前用户要求“冻结一批与 B02 不重复的新匿名数据，然后付费验证模型能否正确选择 scope 和语义标签”。依照费用与运行硬门，本节先完成可独立封闭的零调用数据冻结；旧 B02 的模型、36 次和 10 元许可不自动续用。
+- data: `RCO-5-006-B1_DEVELOPMENT_DATASET.json`，12 个匿名合成 Codex-authored Development、12 个不复用 B02 的 semantic family、22 个指令命题、12 个事件/信息观察、4 个 requiresAction=false、10 个安全默认和 12 个不得默认指令；dataset SHA `e9379259ffe23879f25fecc70318dc8049c3c9e7b054d5a25f47aeb593b32170`。
+- first_failed_check: 首次自检没有通过且未冻结；原因是 RCO-5-006 已封存 index 把 `19:30` 的冒号切成 scope 边界。未修改旧冻结件，新增隔离 `scope-index-1.1`，只让数字—冒号—数字留在同一范围，标题冒号仍切分，并将 index version 纳入 scope hash。
+- experiment_design: 主张 C1 为模型 scope 引用 micro-F1 ≥90% 且 12/12 Schema；C2 为 requiresAction ≥95%、关键语义轴 ≥90%、完整 semantic bundle ≥85%、Forbidden Default=0；反主张通过不复用 B02、Expected 不进请求、冻结后不改题、Repair/retry=0 排除。
+- proposed_paid_run_not_authorized: `deepseek-v4-flash-vision-exp` / temperature 0 / 12 candidate + 最多 12 verifier / 最大 24 次 / Repair 0 / retry 0；人民币硬上限仍需用户明确给值。任何 candidate Schema 失败使对应 verifier 0 dispatch 跳过但仍留在逻辑分母。
+- validation: scope index `3/3`、dataset/Expected/request projection `7/7`、freeze `6/6`；所有 Expected 均可构造为合法 scope-reference candidate，source/family 与 B02 不重复且逐例字符 bigram Jaccard <0.55，Expected/forbidden/default label 不进入未来请求投影。
+- full_gate: lint、typecheck、全量 test（Vitest `510 passed / 1 live OCR skipped`，另 server `8`、Worker `25`、time parity `1`、multimodal evaluator `23`、Functions `5`）、build、security scan `377 files`、npm audit `0 vulnerabilities` 全部 PASS；保留既有 >500 kB chunk warning。
+- integrity: B02 dataset SHA 仍为 `e58f73a...62c85`；既有 Expected/freeze/dataset/checkpoint/result/validator/cache 与稳定路径无 Git diff；冻结提交 `7b19bb000383ac8d9acdec35d11db79b0cf72e24` 已推送。
+- model_calls / network_dispatches / repair_calls / secret_access / real_data / browser / deploy: `0 / 0 / 0 / NONE / NOT_USED / NOT_RUN / NOT_RUN`。
+- decision: `DATA_AND_PLAN_FROZEN / PAID_RUN_PARAMETERS_REQUIRED / RCO-G5 QUALITY NOT_RUN / RCO-6 BLOCKED / DO_NOT_LAUNCH`。数据是单一作者合成 Development，不是独立人工 GT、Holdout、真实材料或上线证据。
+- next_step: 用户需明确批准本次模型、最大调用次数和人民币硬上限；之后才能新增并冻结联网 runner/checkpoint，读取 Secret，并执行固定的 12 candidate + 最多 12 verifier。
