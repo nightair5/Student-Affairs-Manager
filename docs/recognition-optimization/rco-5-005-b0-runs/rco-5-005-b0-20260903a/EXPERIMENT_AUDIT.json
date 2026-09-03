@@ -1,0 +1,45 @@
+{
+  "audit_skill": "experiment-audit",
+  "verdict": "FAIL",
+  "reason_code": "INVALID_RUN_SCHEMA_CONTRACT_FAILURE_WITH_SCORER_AND_AUTHORITY_STATE_DEFECTS",
+  "summary": "The preregistered INVALID_RUN is correct: facts-first was 10/12 schema-valid and graph/verifier pipeline were 0/12; scorer and authority-state defects prevent quality claims.",
+  "audited_input_hashes": {
+    "docs/recognition-optimization/RCO-5-005-B0_DEVELOPMENT_DATASET.json": "sha256:f80abd495c3075e59055a17e0298c5393556e52b6fb3ba797638c5be19c94a99",
+    "docs/recognition-optimization/RCO-5-005-B0_FREEZE.json": "sha256:8d40070fc25928c7cdd4e5e4f40d408b7785dee18a87ce0b398d848c4310b5af",
+    "docs/recognition-optimization/RCO-5-005-B0_PLAN.md": "sha256:49945c9c1402cc96782497fa7720ee742709b6ac34470bd2b7c8ddea197ac222",
+    "scripts/run-rco-5-005-b0.mjs": "sha256:98b3a3406962210a39d4d81853954252db94be3872fd4bbefc60a10d89cfe5d3",
+    "checkpoint.json": "sha256:e144e7e68ecb02e9273eb50bbe0afcb3e74524b966a7931f2bf6ee8b7b56dcce",
+    "result.json": "sha256:cb822e1aee3fd0ca008100a0c8ad8858cdceac3886ad2c8275ecdac18aac78ab",
+    "REPORT.md": "sha256:4ab1c679e7e95c8cd058d35e96e2d6cd9ae383e669e44a6db69c9bbf543bbd53"
+  },
+  "trace_path": ".aris/traces/experiment-audit/2026-09-03_run15/",
+  "agent_id": "/root/rco5_005_b0_integrity_audit",
+  "verdict_id": "/root/rco5_005_b0_integrity_audit",
+  "executor_model": "codex-gpt-5.6-sol",
+  "executor_family": "openai",
+  "reviewer_model": "gpt-5.6-sol",
+  "reviewer_family": "openai",
+  "reviewer_reasoning": "ultra",
+  "review_independence": "same-family",
+  "acceptance_status": "provisional",
+  "generated_at": "2026-09-03T04:40:00Z",
+  "date": "2026-09-03",
+  "auditor": "gpt-5.6-sol-ultra",
+  "overall_verdict": "fail",
+  "integrity_status": "fail",
+  "checks": {
+    "gt_provenance": { "status": "pass", "details": "Expected was frozen before calls and excluded from requests; labels are manually authored anonymous synthetic Development, not real GT." },
+    "score_normalization": { "status": "fail", "details": "Arithmetic reproduces, but requiresAction is task-derived, invalid empty arms get 25 percent credit, and missed safe defaults are omitted from Complete/decision/report." },
+    "result_existence": { "status": "fail", "details": "Core files and hashes exist and recompute, but authority status was stale and the automatic report omitted a preregistered metric." },
+    "dead_code": { "status": "warn", "details": "Evaluation paths run, but verifier calls are made before graph schema validation and verifier schema is reported only as a composite pipeline value." },
+    "scope": { "status": "pass", "details": "Claims remain limited to 12 synthetic Development cases and do not assert commercial or release readiness." },
+    "eval_type": "simulation_only / manually labeled anonymous synthetic Development proxy"
+  },
+  "claims": [
+    { "id": "36_http_json_returns", "impact": "supported" },
+    { "id": "invalid_run", "impact": "supported" },
+    { "id": "verifier_schema_0_of_12", "impact": "needs_qualifier_composite_pipeline_metric" },
+    { "id": "quality_or_safety_gain", "impact": "unsupported" },
+    { "id": "commercial_or_launch_readiness", "impact": "unsupported" }
+  ]
+}

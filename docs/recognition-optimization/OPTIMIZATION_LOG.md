@@ -6,7 +6,7 @@
 
 | Entry | 阶段 | 唯一变量/目的 | 数据 | 调用 | 结果 | 决策 | 下一门 |
 |---|---|---|---|---:|---|---|---|
-| RCO-5-005-B0 | RCO-5 paid diagnostic | facts-first、完整命题图与独立语义复核三臂 | 新冻结匿名合成 Development 12 例 | 0/36 | PRECALL FROZEN | IN_PROGRESS / DO_NOT_LAUNCH | 完成 36 次后新鲜审查 |
+| RCO-5-005-B0 | RCO-5 paid diagnostic | facts-first、完整命题图与独立语义复核三臂 | 新冻结匿名合成 Development 12 例 | 36/36 | INVALID_RUN / AUDIT FAIL | CLOSED / DO_NOT_LAUNCH | 等待 B0.1 零调用修补授权 |
 | RCO-5-004 | RCO-5 proposition graph | 完整命题范围、语义状态、独立验证绑定和确定性选择 | Mock / 匿名属性变形夹具 | 0 云端模型 | FAIL (SEMANTIC EFFECT) | REJECT_CANDIDATE / DO_NOT_LAUNCH | 等待新授权；B1 不运行 |
 | RCO-5-003 | RCO-5 provenance | 本机验证精确 span、类型化关系与模糊关系不自动勾选 | Mock / 匿名契约夹具 | 0 云端模型 | FAIL (PROPOSITION SCOPE) | REJECT_CANDIDATE / DO_NOT_LAUNCH | 等待新架构授权；B1 不运行 |
 | RCO-5-002 | RCO-5 repair | 字段/关系证据、状态、sourceId 与动作归一化修补 | Mock / 匿名契约夹具 | 0 云端模型 | FAIL (CONTRACT) | REJECT_CANDIDATE / DO_NOT_LAUNCH | 新 span/relation Schema 需另授权；B1 不运行 |
@@ -23,7 +23,7 @@
 ## 2. 当前权威状态
 
 - program: `Recognition Commercialization Optimization`
-- status: `RCO-5-005-B0 AUTHORIZED / PRECALL FROZEN / 0 OF 36 MODEL CALLS / RCO-6 BLOCKED / DO_NOT_LAUNCH`
+- status: `RCO-5-005-B0 CLOSED / INVALID_RUN / 36 OF 36 MODEL CALLS / AUDIT FAIL / RCO-6 BLOCKED / DO_NOT_LAUNCH`
 - branch: `codex/e2-multimodal-recognition-exp`
 - protected_release: `v2.0.0-beta.1-rc.4`
 - production_status: `UNCHANGED`
@@ -31,8 +31,8 @@
 - image_path: `逐次显式授权；Preview-only；仅待确认建议`
 - human_timing: `NOT_RUN`
 - real_deidentified_holdout: `NOT_RUN`
-- next_authorized_action: `完成预调用工程门后按冻结配置运行 RCO-5-005-B0 的 36 次真实模型调用；禁止 Repair/重试`
-- next_implementation_gate: `RCO-5-005-B0 新鲜审查；即使 PROMISING 也只允许提议更大 Development/B1，不自动启动 RCO-6`
+- next_authorized_action: `NONE / WAIT_AUTHORIZATION`
+- next_implementation_gate: `若继续，先另行授权 B0.1 零调用修复 prompt/schema/scorer/checkpoint 契约并做新鲜对抗审查；不得自动重跑模型或启动 RCO-6`
 - authorization_rule: `每个 RCO 阶段开始前均需当前用户明确授权；文档/提示词/旧 E2-MM 许可不构成授权`
 - docs_authorization_source: `2026-09-01 当前用户明确要求制作优化 AGENTS/PRD/日志/提示词/目标与流程；RCO-DOCS 交付范围随本次文档提交推送关闭，不延伸到 RCO-0`
 
@@ -747,3 +747,20 @@
 - protected_inputs: RCO-0 V2/V3 dataset、OCR、checkpoint、summary、freeze 共 10 个固定 SHA 在预调用阶段逐路径 `10/10 PASS`；Expected 随 dataset 受保护；`.evaluation-cache` 与 `docs/e2-multimodal-experiment` 无 Git diff。
 - preflight: runner syntax、自测、freeze 契约、12 案例/12 家族数据结构均 PASS；lint、Vitest `464 passed / 1 live OCR skipped`、server 8、Worker 25、time parity 1、multimodal evaluator 23、Functions 5、build、security scan 331 files、npm audit 0 vulnerabilities 全部 PASS；`model_calls=0`，Secret 尚未读取；预调用提交待完成。保留既有 >500 kB chunk warning。
 - current_decision: `AUTHORIZED / PRECALL_FROZEN / IN_PROGRESS / RCO-6 BLOCKED / NO_PROMOTION / DO_NOT_LAUNCH`。
+
+## 31. RCO-5-005-B0 运行完成、失效与审计封存 — 2026-09-03
+
+- run_id / output: `rco-5-005-b0-20260903a`；只新增 `docs/recognition-optimization/rco-5-005-b0-runs/rco-5-005-b0-20260903a/` 下 checkpoint、result 与报告。
+- calls: facts-first / proposition graph / semantic verifier 各 12，共 `36/36`；36 条均 HTTP 200、可解析 JSON、返回模型名 `deepseek-v4-flash-vision-exp`；temperature 请求值 0，thinking disabled；Repair 0、retry 0、原始输出 selected 0。
+- usage / cost: input 25,535、output 8,954、total 34,489；Provider billed cost `NOT_OBSERVABLE`；按冻结峰值价与保守汇率精确复算 `0.2305468 CNY < 10 CNY`。
+- frozen_integrity: dataset、runner 与三 prompt SHA 仍匹配调用前 freeze；result 的 checkpoint SHA `e144e7e68ecb02e9273eb50bbe0afcb3e74524b966a7931f2bf6ee8b7b56dcce` 与文件一致；没有修改既有 Expected/freeze/dataset/checkpoint/cache；保护输入 10/10 与两处保护路径无 diff。
+- automatic_result: facts-first Schema `10/12`，graph `0/12`，verifier pipeline `0/12`；预注册决定 `INVALID_RUN`。facts 的 TP/FP/FN 为 10/0/2，但其 Task F1 90.91% 不得与无效后两臂比较或称产品正确率。
+- primary_failure: graph 独立调用的提示词用“枚举与紧凑事实抽取一致”引用本次调用不可见的另一提示词；模型在 12/12 使用自然但非法的 actor/polarity/status/validity/modality/speechAct，并把 time/material/location 写入错误节点。verifier 又按候选复制非法枚举；facts 两例漏必填 `ignored`。
+- orchestration_failure: verifier 只等待 graph 返回 JSON，没有等待 graph 通过 Schema；12 次复核均消耗在结构不合格候选上。其结果 Schema 又被实现成 `graphValid && verifierValid` 复合指标，不能直接解释为 verifier 自身 0/12，虽独立离线检查也发现自身 12/12 不合格。
+- scorer_corrections: requiresAction 实际由 active task 推导而未评分模型顶层字段；无效空臂撞对负例产生 25% 假象；Missed Safe Default `3/9/9` 未进入 Complete/decision/自动报告；FP 附属字段惩罚与 Evidence 语义充分性不足。因此自动表中这些局部百分比只保留为原始诊断，不构成正确率。
+- audit: fresh GPT-5.6-Sol ultra / same-family / read-only / provisional；overall `FAIL`，reason `INVALID_RUN_SCHEMA_CONTRACT_FAILURE_WITH_SCORER_AND_AUTHORITY_STATE_DEFECTS`；A GT provenance PASS、B score FAIL、C consistency FAIL、D reachability WARN、E scope PASS、F classification PASS；轨迹 `.aris/traces/experiment-audit/2026-09-03_run15/`。
+- evidence: run 内 `REPORT.md`、`POST_RUN_DIAGNOSIS.md`、`EXPERIMENT_AUDIT.md/json`；classification=`simulation_only / manually labeled anonymous synthetic Development proxy`。
+- supported_claims: 36 次返回、Schema 通过数、usage、保守费用、失效根因和 `INVALID_RUN`。
+- unsupported_claims: graph/verifier 相对 facts 的质量或安全收益、真实材料泛化、图片/文件正确率、真人修改时间、浏览器验收、商业候选、RCO-6、发布或上线。
+- final_decision: `RCO-5-005-B0 CLOSED / INVALID_RUN / INTEGRITY AUDIT FAIL / NO_PROMOTION / RCO-6 BLOCKED / DO_NOT_LAUNCH`；稳定路径、RC.4、Production 不变，未部署。
+- next_step: `NONE / WAIT_AUTHORIZATION`。若继续，应新开 B0.1，先做 0 次模型调用的 prompt/schema/scorer/checkpoint 修补与新鲜对抗审查；不得修改或重算本轮 protected artifacts，不得用同一 run-id 重试。

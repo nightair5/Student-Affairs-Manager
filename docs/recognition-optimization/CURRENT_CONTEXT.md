@@ -8,11 +8,11 @@
 
 ## Authority
 
-- current_status: `RCO-5-005-B0 AUTHORIZED / PRECALL FROZEN / 0 OF 36 MODEL CALLS / RCO-6 BLOCKED / DO_NOT_LAUNCH`
-- authorized_now: `RCO-5-005-B0 ONLY`；12 个新冻结匿名 Development 案例，facts-first、完整命题图、独立语义复核各 12 次，共 36 次，`deepseek-v4-flash-vision-exp`、temperature 0、禁止 Repair、人民币上限 10 元
+- current_status: `RCO-5-005-B0 CLOSED / INVALID_RUN / 36 OF 36 MODEL CALLS / AUDIT FAIL / RCO-6 BLOCKED / DO_NOT_LAUNCH`
+- authorized_now: `NONE / WAIT_AUTHORIZATION`
 - authorization_source: 当前用户于 2026-09-03 原文明确授权 RCO-5-005-B0，并限定只生成新的实验数据、checkpoint 和报告，不修改既有 Expected/freeze/dataset/checkpoint/cache，不接稳定路径，不部署
-- authorization_closed: `NO`；预调用冻结已完成，尚未开始真实模型调用
-- not_authorized: 改动既有 Expected/freeze/dataset/checkpoint/cache；重试或 Repair；真实材料、真人研究、浏览器验收；RCO-6、稳定路径、Preview/RC.4/Production 修改或部署
+- authorization_closed: `YES`；36 次调用、结果生成、运行后诊断与新鲜完整性审查均已完成；本轮不能用同一 run-id 重试或修改冻结输入追分
+- not_authorized: 新模型调用或 B0.1/B1；改动既有 Expected/freeze/dataset/checkpoint/cache/result；重试或 Repair；真实材料、真人研究、浏览器验收；RCO-6、稳定路径、Preview/RC.4/Production 修改或部署
 - protected: `v2.0.0-beta.1-rc.4`、Release、Production、稳定文字模型、既有稳定性监测
 - authorization_rule: 每个 RCO 阶段开始前均需当前用户明确授权；提示词、计划和旧 E2-MM 许可不构成授权
 - authority_order: 当前用户明确指令与安全约束 → AGENTS/PRD → OPTIMIZATION_LOG 动态状态 → 本文件缓存 → Plan → Prompts
@@ -21,9 +21,9 @@
 
 - repository: `C:\Users\Winner\student-affairs-multimodal-exp`
 - expected_branch: `codex/e2-multimodal-recognition-exp`
-- last_verified_head: `d0686c441cca6708c45b69e0c692f750f0315534`（RCO-5-004 失败封存提交，与 upstream 一致）
-- last_verified_worktree: `2026-09-03 RCO-5-005-B0 新数据、执行器、冻结与预注册文档待预调用提交；既有受保护输入 10/10 SHA 一致，两处保护路径无 Git diff`
-- last_validation: `2026-09-03；B0 runner syntax、自测、freeze 契约与 12 案例/12 语义家族结构 PASS；lint、Vitest 464 passed + 1 live OCR skipped、server 8、Worker 25、time parity 1、multimodal evaluator 23、Functions 5、build、security scan 331 files、npm audit 0 vulnerabilities 全部 PASS；0 次模型调用`
+- last_verified_head: `b49f4af88f6ea278720e928e3b36b9d6ba2ef367`（B0 预调用冻结提交，与 upstream 一致；运行结果与审计文件待封存提交）
+- last_verified_worktree: `2026-09-03 只新增 B0 run checkpoint/result/reports 与状态文档；既有受保护输入 10/10 SHA 一致，dataset/runner 与调用前 freeze 一致，两处保护路径无 Git diff`
+- last_validation: `2026-09-03；36/36 HTTP 200 + JSON，facts/graph/verifier pipeline Schema=10/12、0/12、0/12；token 34,489，保守费用 0.2305468 CNY；fresh same-family/provisional integrity audit FAIL；lint、全量 test、build、security scan 339 files、npm audit 0 vulnerabilities 全部 PASS；未 Repair、未重试、未部署`
 - remote: `origin`
 - preview_endpoint: `https://student-affairs-manager-multimodal-exp.nightsdell.workers.dev/；2026-09-02 只读状态检查 HTTP 200 / secret-present-unverified；未发模型请求，不构成能力或质量证明`
 - production_status: `UNCHANGED`
@@ -66,6 +66,9 @@
 - RCO-5-005-B0 freeze: 新建 12 个匿名合成 Development 案例与三臂执行器；dataset SHA-256 `f80abd495c3075e59055a17e0298c5393556e52b6fb3ba797638c5be19c94a99`，runner SHA-256 `98b3a3406962210a39d4d81853954252db94be3872fd4bbefc60a10d89cfe5d3`；36 次调用尚未开始。
 - RCO-5-005-B0 cap: 每次 prompt 最多 16,384 bytes、output 最多 2,000 token；按冻结保守口径最大理论费用 `3.545626 CNY < 10 CNY`；provider billed cost 只能实报或 `NOT_OBSERVABLE`。
 - RCO-5-005-B0 scoring: Task P/R/F1、requiresAction、effect、time、material、event、location、Evidence、Complete Case、Major Correction、Forbidden、Missed Safe Default；失败与 Schema 无效保留在分母。
+- RCO-5-005-B0 result: 36/36 均返回 HTTP 200 和可解析 JSON；facts-first Schema `10/12`，graph `0/12`，verifier pipeline `0/12`；按预注册为 `INVALID_RUN`，不能比较质量优劣。
+- RCO-5-005-B0 audit: `FAIL / INVALID_RUN_SCHEMA_CONTRACT_FAILURE_WITH_SCORER_AND_AUTHORITY_STATE_DEFECTS`。graph 独立调用未拿到完整枚举并系统性违约；verifier 复制非法枚举；scorer 的 requiresAction、无效臂 25% 假象、Missed Safe Default 和 composite verifier Schema 需修复。
+- RCO-5-005-B0 claims: 仅支持调用/Schema/usage/费用与失效原因；facts 的 90.91% F1、graph/verifier 的 0% 或 25% 均不得称产品正确率；真实材料、真人时间、浏览器和商业质量仍 NOT_RUN。
 
 ## Decisions
 
@@ -88,12 +91,12 @@
 
 ## Current Gate
 
-- current_gate: `RCO-5-005-B0 PRECALL_FROZEN / MODEL_QUALITY_IN_PROGRESS / RCO-6_BLOCKED`
+- current_gate: `RCO-5-005-B0 INVALID_RUN / INTEGRITY_AUDIT_FAIL / RCO-6_BLOCKED`
 - last_passed_gate: `RCO-G4`（仅冻结匿名组件技术门）
 - implementation_gate: `RCO-5-004 SEMANTIC_ACTION_EFFECT FAIL / REJECT_CANDIDATE / NO_PROMOTION / DO_NOT_LAUNCH`
 - commercial_contract: `0.6.0-draft / DRAFT_UNAPPROVED；RCO-DOCS 通过也不等于冻结批准`
-- next_action: 预调用提交与全门通过后，从进程环境临时读取 Secret，按冻结顺序执行 36 次；只新增本轮 run checkpoint/result/report，随后做新鲜同系列只读审查
-- blocker: 当前唯一外部前置是可用的 DeepSeek API Key；不得把聊天文本、部署 Secret 状态或旧调用当作本轮密钥验证
+- next_action: `NONE / WAIT_AUTHORIZATION`。若继续，应先授权 B0.1 的 0 调用 evaluator/prompt/schema 修补与对抗测试；通过后才可另行冻结新数据、预算与模型调用
+- blocker: `B0_SCHEMA_CONTRACT_AND_SCORER_INVALID`；必须完整内联每次独立调用的 canonical 枚举、graph-valid 前置复核门、requiresAction/Safe Default/无效臂计分与 verifier-own/pipeline Schema 分层，不能事后重算本轮冒充有效
 
 ## Recovery Procedure
 
