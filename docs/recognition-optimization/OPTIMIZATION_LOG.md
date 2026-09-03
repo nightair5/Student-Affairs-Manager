@@ -851,3 +851,27 @@
 - model_calls / network_dispatches / repair_calls / secret_access / real_data / browser / deploy: `0 / 0 / 0 / NONE / NOT_USED / NOT_RUN / NOT_RUN`。
 - decision: `DATA_AND_PLAN_FROZEN / PAID_RUN_PARAMETERS_REQUIRED / RCO-G5 QUALITY NOT_RUN / RCO-6 BLOCKED / DO_NOT_LAUNCH`。数据是单一作者合成 Development，不是独立人工 GT、Holdout、真实材料或上线证据。
 - next_step: 用户需明确批准本次模型、最大调用次数和人民币硬上限；之后才能新增并冻结联网 runner/checkpoint，读取 Secret，并执行固定的 12 candidate + 最多 12 verifier。
+
+## 38. RCO-5-006-B1-M1 真实模型运行与失效裁定 — 2026-09-03
+
+- authorization: 用户明确批准 `deepseek-v4-flash-vision-exp`、12 candidate + 最多 12 verifier、总调用不超过 24、temperature 0、Repair/retry 0、人民币硬上限 10 元；只新增隔离运行证据，不改保护件、不接稳定路径、不启动 RCO-6、不部署。
+- accounting: 12 candidate 均完成；10 verifier 完成，2 个因 candidate 本地不合格而 0 dispatch 跳过；确认调用共 22，Repair/retry 0。Provider usage `83,797 total tokens`；真实账单不可观测，冻结保守口径 `0.5514036 CNY < 10 CNY`。
+- quality: candidate 严格契约 `10/12`，verifier `9/10`；Scope F1 `63.4%`，requiresAction `83.3%`，semantic bundle `8.8%`，Complete Case `0%`，Safe Default Recall `70%`，Forbidden Default `0`。
+- diagnosis: 复合动作过拆、否定状态和命令时态漂移、说明归属碎裂、条件命令误判为当前动作；同模型 verifier 没有独立纠正系统性错误。评分器依赖图当时未完全哈希绑定。
+- integrity_boundary: 没有伪造或归一化模型输出，但 B1 Expected 是单一 Codex 作者合成标签，不是独立人工 GT；准确百分比只属 Development 诊断。
+- decision: `INVALID_RUN / NO_PROMOTION / RCO-G5 NOT PASSED / RCO-6 BLOCKED / DO_NOT_LAUNCH`。
+
+## 39. RCO-5-007 本机任务形成、安全决策与零调用回放 — 2026-09-03
+
+- authorization: 用户明确授权统一复合动作、否定状态、命令时态和说明归属，缩小模型职责并建立本机任务形成/安全层，修复评分依赖哈希，用 B1 旧结果 0 调用回放；禁止修改既有 Expected/freeze/dataset/checkpoint/cache、稳定路径、RCO-6 和部署。
+- responsibility_split: `reduceModelCandidate` 主动丢弃模型 requiresAction、semantics、inferenceLevel、effect、revisionRefs、selected；本机确定任务边界、语义、requiresAction、说明归属和 selected。签名、参加、外传、联系、报名、付款及所有否定/条件/历史/不确定项不默认。
+- compound_policy: 只合并同 scope 的受控本地链（主动作+保存）、携带+核验或完全重复锚点；新鲜反例“核对名单并发送群聊”保持两项，外发不得默认。
+- replay_isolation: 从冻结 B1 派生不含 Expected 的 source-only 输入；预测器只读该输入和旧 raw candidate，评分器后置读取 Expected。模型/网络/Repair/retry/Secret 为 `0/0/0/0/NONE`。
+- integrity: 预测器、评分器及传递依赖、B1 输入与保护件共 23 路径 SHA-256 绑定；预测/评分前复核，任一漂移停止。保护路径无 Git diff。
+- replay_metrics: 12/12 新契约有效；Task P/R/F1 `100%/100%/100%`，动作+对象 `100%`，requiresAction `100%`，任务边界整例 `100%`，语义字段 `98.1%`，Complete Task Case `83.3%`，Safe Default Recall `100%`，Forbidden Default `0`。
+- policy_differences: 3 个完整语义组合与旧 Expected 不同：B1-01 暂勿从 pending 统一为 cancelled；B1-04 两个否定命令从 present 统一为 future。未修改 Expected，差异进入失败分母。
+- adversarial_limit: 这是针对已知 B1 故障的 `SEEN_DIAGNOSTIC_REPLAY`；100% 任务 F1 不代表新材料、图片/文件、真人修改时间或商业正确率。有限动作表会对未知表达失败关闭，模型完全漏锚仍无法由本机层恢复。
+- full_gate: lint PASS；Vitest `522 passed / 1 live OCR skipped`，另 server 8、Worker 25、time parity 1、multimodal evaluator 23、RCO-5-007 integrity 4、Functions 5；build PASS；security scan 409 files；npm audit 0 vulnerabilities；保留既有 >500 kB chunk warning。
+- commits: 计划冻结 `7bcd0a0`，实现与回放 `a912165`，均已推送。
+- decision: `RCO-5-007 CLOSED / TECHNICAL_PASS_ZERO_CALL_REPLAY / ELIGIBLE_FOR_NEW_UNSEEN_VALIDATION_ONLY / NO_PROMOTION / RCO-6 BLOCKED / DO_NOT_LAUNCH`。
+- next_step: `NONE / WAIT_AUTHORIZATION`。下一步需单独授权创建并冻结未参与定规则的新匿名挑战集，再单独冻结同模型调用数与人民币上限；只有新数据上质量稳定提升且 Forbidden=0，才可申请 RCO-6。

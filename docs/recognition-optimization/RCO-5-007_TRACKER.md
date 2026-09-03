@@ -8,6 +8,6 @@
 | M3 | 评分依赖组件冻结 | COMPLETE | 0 |
 | M4 | B1 只读预测回放 | COMPLETE | 0 |
 | M5 | 独立评分与报告 | COMPLETE | 0 |
-| M6 | 全量验证、短上下文、追加日志 | IN_PROGRESS | 0 |
+| M6 | 全量验证、短上下文、追加日志 | COMPLETE | 0 |
 
-当前门禁：`RCO-5-007 TECHNICAL_PASS_PENDING_FULL_GATE / ZERO_CALL / RCO-6 BLOCKED / DO_NOT_LAUNCH`
+当前门禁：`RCO-5-007 CLOSED / TECHNICAL_PASS_ZERO_CALL_REPLAY / NO_PROMOTION / RCO-6 BLOCKED / DO_NOT_LAUNCH`
