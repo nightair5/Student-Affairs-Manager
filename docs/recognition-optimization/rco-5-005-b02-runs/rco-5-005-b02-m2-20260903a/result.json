@@ -1,0 +1,1224 @@
+{
+  "schemaVersion": "rco-5-005-b02-m2-result-1.0.0",
+  "runId": "rco-5-005-b02-m2-20260903a",
+  "authorizationId": "RCO-5-005-B02-M2",
+  "generatedAt": "2026-09-03T08:17:17.727Z",
+  "runStatus": "FINISHED",
+  "stopReason": null,
+  "datasetId": "rco-5-005-b02-development-20260903",
+  "datasetClassification": "anonymous_synthetic_codex_authored_development",
+  "labelProvenance": "Codex-authored reference labels; not independent human ground truth",
+  "model": "deepseek-v4-flash-vision-exp",
+  "endpoint": "https://api.deepseek.com/responses",
+  "apiStyle": "responses-v1-json-schema",
+  "temperature": 0,
+  "thinking": "none",
+  "maxOutputTokens": 2000,
+  "plannedLogicalUnits": 36,
+  "maximumRequestDispatches": 36,
+  "repairCalls": 0,
+  "retryCalls": 0,
+  "cnyCap": 10,
+  "maximumTheoreticalCostCny": 8.7360768,
+  "requestAccounting": {
+    "logicalEntries": 36,
+    "requestDispatches": 25,
+    "confirmedResponses": 25,
+    "dispatchUnknown": 0,
+    "skippedBeforeDispatch": 11,
+    "safeToDispatchReserved": 0
+  },
+  "usage": {
+    "complete": true,
+    "dispatchedRecords": 25,
+    "observedRecords": 25,
+    "inputTokens": 59061,
+    "outputTokens": 13017,
+    "totalTokens": 72078
+  },
+  "providerBilledCost": "NOT_OBSERVABLE",
+  "observedConservativePeakPriceCostCny": 0.4316928,
+  "evaluation": {
+    "schemaLayers": [
+      {
+        "caseId": "rco-b02-01",
+        "factsSchemaValid": true,
+        "factsSchemaIssues": [],
+        "graphSchemaValid": true,
+        "graphSchemaIssues": [],
+        "verifierOwnSchemaValid": false,
+        "verifierOwnSchemaIssues": [
+          "verifier.nodeAssessments[0].evidence",
+          "verifier.nodeAssessments[1].evidence",
+          "verifier.nodeAssessments[2].evidence",
+          "verifier.nodeAssessments[3].evidence",
+          "verifier.nodeAssessments[4].evidence"
+        ],
+        "verifierDispatchEligible": true,
+        "verifierSkippedReason": null,
+        "pipelineSchemaValid": false
+      },
+      {
+        "caseId": "rco-b02-02",
+        "factsSchemaValid": true,
+        "factsSchemaIssues": [],
+        "graphSchemaValid": false,
+        "graphSchemaIssues": [
+          "graph.nodes[1].scope",
+          "graph.nodes[2].scope",
+          "graph.nodes[3].scope",
+          "graph.nodes[4].scope",
+          "graph.nodes[5].scope",
+          "graph.nodes[6].scope",
+          "graph.nodes[7].scope"
+        ],
+        "verifierOwnSchemaValid": null,
+        "verifierOwnSchemaIssues": [],
+        "verifierDispatchEligible": false,
+        "verifierSkippedReason": "UPSTREAM_GRAPH_SCHEMA_INVALID",
+        "pipelineSchemaValid": false
+      },
+      {
+        "caseId": "rco-b02-03",
+        "factsSchemaValid": true,
+        "factsSchemaIssues": [],
+        "graphSchemaValid": false,
+        "graphSchemaIssues": [
+          "graph.nodes[0].scope",
+          "graph.nodes[1].scope",
+          "graph.nodes[2].scope",
+          "graph.nodes[3].scope",
+          "graph.nodes[4].scope",
+          "graph.nodes[5].scope",
+          "graph.relations[2].nodeKinds",
+          "graph.relations[2].endpointEvidence"
+        ],
+        "verifierOwnSchemaValid": null,
+        "verifierOwnSchemaIssues": [],
+        "verifierDispatchEligible": false,
+        "verifierSkippedReason": "UPSTREAM_GRAPH_SCHEMA_INVALID",
+        "pipelineSchemaValid": false
+      },
+      {
+        "caseId": "rco-b02-04",
+        "factsSchemaValid": true,
+        "factsSchemaIssues": [],
+        "graphSchemaValid": false,
+        "graphSchemaIssues": [
+          "graph.nodes[1].scope",
+          "graph.nodes[2].scope",
+          "graph.nodes[4].scope",
+          "graph.nodes[6].scope",
+          "graph.nodes[7].scope",
+          "graph.relations[4].endpointEvidence",
+          "graph.relations[5].endpointEvidence",
+          "graph.relations[6].nodeKinds",
+          "graph.relations[6].endpointEvidence"
+        ],
+        "verifierOwnSchemaValid": null,
+        "verifierOwnSchemaIssues": [],
+        "verifierDispatchEligible": false,
+        "verifierSkippedReason": "UPSTREAM_GRAPH_SCHEMA_INVALID",
+        "pipelineSchemaValid": false
+      },
+      {
+        "caseId": "rco-b02-05",
+        "factsSchemaValid": true,
+        "factsSchemaIssues": [],
+        "graphSchemaValid": false,
+        "graphSchemaIssues": [
+          "graph.relations[3].nodeKinds"
+        ],
+        "verifierOwnSchemaValid": null,
+        "verifierOwnSchemaIssues": [],
+        "verifierDispatchEligible": false,
+        "verifierSkippedReason": "UPSTREAM_GRAPH_SCHEMA_INVALID",
+        "pipelineSchemaValid": false
+      },
+      {
+        "caseId": "rco-b02-06",
+        "factsSchemaValid": true,
+        "factsSchemaIssues": [],
+        "graphSchemaValid": false,
+        "graphSchemaIssues": [
+          "graph.nodes[1].scope",
+          "graph.nodes[3].scope",
+          "graph.relations[1].nodeKinds"
+        ],
+        "verifierOwnSchemaValid": null,
+        "verifierOwnSchemaIssues": [],
+        "verifierDispatchEligible": false,
+        "verifierSkippedReason": "UPSTREAM_GRAPH_SCHEMA_INVALID",
+        "pipelineSchemaValid": false
+      },
+      {
+        "caseId": "rco-b02-07",
+        "factsSchemaValid": true,
+        "factsSchemaIssues": [],
+        "graphSchemaValid": false,
+        "graphSchemaIssues": [
+          "graph.nodes[1].scope",
+          "graph.nodes[2].scope",
+          "graph.nodes[3].scope",
+          "graph.nodes[4].scope",
+          "graph.nodes[5].scope",
+          "graph.relations[2].nodeKinds"
+        ],
+        "verifierOwnSchemaValid": null,
+        "verifierOwnSchemaIssues": [],
+        "verifierDispatchEligible": false,
+        "verifierSkippedReason": "UPSTREAM_GRAPH_SCHEMA_INVALID",
+        "pipelineSchemaValid": false
+      },
+      {
+        "caseId": "rco-b02-08",
+        "factsSchemaValid": true,
+        "factsSchemaIssues": [],
+        "graphSchemaValid": false,
+        "graphSchemaIssues": [
+          "graph.relations[2].endpointEvidence"
+        ],
+        "verifierOwnSchemaValid": null,
+        "verifierOwnSchemaIssues": [],
+        "verifierDispatchEligible": false,
+        "verifierSkippedReason": "UPSTREAM_GRAPH_SCHEMA_INVALID",
+        "pipelineSchemaValid": false
+      },
+      {
+        "caseId": "rco-b02-09",
+        "factsSchemaValid": true,
+        "factsSchemaIssues": [],
+        "graphSchemaValid": false,
+        "graphSchemaIssues": [
+          "graph.nodes[1].scope",
+          "graph.nodes[2].scope",
+          "graph.nodes[4].scope",
+          "graph.nodes[5].scope",
+          "graph.nodes[6].scope",
+          "graph.relations[3].nodeKinds"
+        ],
+        "verifierOwnSchemaValid": null,
+        "verifierOwnSchemaIssues": [],
+        "verifierDispatchEligible": false,
+        "verifierSkippedReason": "UPSTREAM_GRAPH_SCHEMA_INVALID",
+        "pipelineSchemaValid": false
+      },
+      {
+        "caseId": "rco-b02-10",
+        "factsSchemaValid": true,
+        "factsSchemaIssues": [],
+        "graphSchemaValid": false,
+        "graphSchemaIssues": [
+          "graph.nodes[1].scope",
+          "graph.nodes[3].scope",
+          "graph.nodes[4].scope",
+          "graph.relations[2].nodeKinds"
+        ],
+        "verifierOwnSchemaValid": null,
+        "verifierOwnSchemaIssues": [],
+        "verifierDispatchEligible": false,
+        "verifierSkippedReason": "UPSTREAM_GRAPH_SCHEMA_INVALID",
+        "pipelineSchemaValid": false
+      },
+      {
+        "caseId": "rco-b02-11",
+        "factsSchemaValid": true,
+        "factsSchemaIssues": [],
+        "graphSchemaValid": false,
+        "graphSchemaIssues": [
+          "graph.nodes[1].scope",
+          "graph.nodes[2].scope",
+          "graph.nodes[3].scope",
+          "graph.nodes[5].scope",
+          "graph.nodes[7].scope",
+          "graph.relations[2].nodeKinds"
+        ],
+        "verifierOwnSchemaValid": null,
+        "verifierOwnSchemaIssues": [],
+        "verifierDispatchEligible": false,
+        "verifierSkippedReason": "UPSTREAM_GRAPH_SCHEMA_INVALID",
+        "pipelineSchemaValid": false
+      },
+      {
+        "caseId": "rco-b02-12",
+        "factsSchemaValid": true,
+        "factsSchemaIssues": [],
+        "graphSchemaValid": false,
+        "graphSchemaIssues": [
+          "graph.nodes[1].scope",
+          "graph.nodes[2].scope",
+          "graph.nodes[3].scope",
+          "graph.nodes[4].scope",
+          "graph.nodes[5].scope"
+        ],
+        "verifierOwnSchemaValid": null,
+        "verifierOwnSchemaIssues": [],
+        "verifierDispatchEligible": false,
+        "verifierSkippedReason": "UPSTREAM_GRAPH_SCHEMA_INVALID",
+        "pipelineSchemaValid": false
+      }
+    ],
+    "scores": {
+      "facts_first": [
+        {
+          "caseId": "rco-b02-01",
+          "qualityEligible": true,
+          "status": "completed",
+          "schemaValid": true,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0,
+          "requiresActionCorrect": true,
+          "fields": {
+            "effect": {
+              "correct": 1,
+              "total": 1
+            },
+            "time": {
+              "correct": 0,
+              "total": 0
+            },
+            "materials": {
+              "correct": 0,
+              "total": 1
+            },
+            "event": {
+              "correct": 0,
+              "total": 0
+            },
+            "location": {
+              "correct": 0,
+              "total": 1
+            }
+          },
+          "evidenceSpanValid": 1,
+          "evidenceSpanTotal": 1,
+          "forbiddenDefaultSelections": 0,
+          "safeDefaultCorrect": 1,
+          "safeDefaultTotal": 1,
+          "missedSafeDefaults": 0,
+          "completeCase": false,
+          "majorCorrectionProxy": true
+        },
+        {
+          "caseId": "rco-b02-02",
+          "qualityEligible": true,
+          "status": "completed",
+          "schemaValid": true,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "requiresActionCorrect": true,
+          "fields": {
+            "effect": {
+              "correct": 0,
+              "total": 0
+            },
+            "time": {
+              "correct": 0,
+              "total": 0
+            },
+            "materials": {
+              "correct": 0,
+              "total": 0
+            },
+            "event": {
+              "correct": 0,
+              "total": 0
+            },
+            "location": {
+              "correct": 0,
+              "total": 0
+            }
+          },
+          "evidenceSpanValid": 0,
+          "evidenceSpanTotal": 0,
+          "forbiddenDefaultSelections": 0,
+          "safeDefaultCorrect": 0,
+          "safeDefaultTotal": 0,
+          "missedSafeDefaults": 0,
+          "completeCase": true,
+          "majorCorrectionProxy": false
+        },
+        {
+          "caseId": "rco-b02-03",
+          "qualityEligible": true,
+          "status": "completed",
+          "schemaValid": true,
+          "tp": 0,
+          "fp": 1,
+          "fn": 1,
+          "requiresActionCorrect": true,
+          "fields": {
+            "effect": {
+              "correct": 0,
+              "total": 2
+            },
+            "time": {
+              "correct": 0,
+              "total": 0
+            },
+            "materials": {
+              "correct": 0,
+              "total": 0
+            },
+            "event": {
+              "correct": 0,
+              "total": 0
+            },
+            "location": {
+              "correct": 0,
+              "total": 0
+            }
+          },
+          "evidenceSpanValid": 1,
+          "evidenceSpanTotal": 1,
+          "forbiddenDefaultSelections": 1,
+          "safeDefaultCorrect": 0,
+          "safeDefaultTotal": 1,
+          "missedSafeDefaults": 1,
+          "completeCase": false,
+          "majorCorrectionProxy": true
+        },
+        {
+          "caseId": "rco-b02-04",
+          "qualityEligible": true,
+          "status": "completed",
+          "schemaValid": true,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0,
+          "requiresActionCorrect": true,
+          "fields": {
+            "effect": {
+              "correct": 0,
+              "total": 1
+            },
+            "time": {
+              "correct": 1,
+              "total": 1
+            },
+            "materials": {
+              "correct": 1,
+              "total": 1
+            },
+            "event": {
+              "correct": 1,
+              "total": 1
+            },
+            "location": {
+              "correct": 1,
+              "total": 1
+            }
+          },
+          "evidenceSpanValid": 1,
+          "evidenceSpanTotal": 1,
+          "forbiddenDefaultSelections": 0,
+          "safeDefaultCorrect": 1,
+          "safeDefaultTotal": 1,
+          "missedSafeDefaults": 0,
+          "completeCase": false,
+          "majorCorrectionProxy": true
+        },
+        {
+          "caseId": "rco-b02-05",
+          "qualityEligible": true,
+          "status": "completed",
+          "schemaValid": true,
+          "tp": 0,
+          "fp": 1,
+          "fn": 1,
+          "requiresActionCorrect": true,
+          "fields": {
+            "effect": {
+              "correct": 0,
+              "total": 2
+            },
+            "time": {
+              "correct": 0,
+              "total": 1
+            },
+            "materials": {
+              "correct": 0,
+              "total": 0
+            },
+            "event": {
+              "correct": 0,
+              "total": 0
+            },
+            "location": {
+              "correct": 0,
+              "total": 1
+            }
+          },
+          "evidenceSpanValid": 1,
+          "evidenceSpanTotal": 1,
+          "forbiddenDefaultSelections": 1,
+          "safeDefaultCorrect": 0,
+          "safeDefaultTotal": 1,
+          "missedSafeDefaults": 1,
+          "completeCase": false,
+          "majorCorrectionProxy": true
+        },
+        {
+          "caseId": "rco-b02-06",
+          "qualityEligible": true,
+          "status": "completed",
+          "schemaValid": true,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "requiresActionCorrect": true,
+          "fields": {
+            "effect": {
+              "correct": 0,
+              "total": 0
+            },
+            "time": {
+              "correct": 0,
+              "total": 0
+            },
+            "materials": {
+              "correct": 0,
+              "total": 0
+            },
+            "event": {
+              "correct": 0,
+              "total": 0
+            },
+            "location": {
+              "correct": 0,
+              "total": 0
+            }
+          },
+          "evidenceSpanValid": 0,
+          "evidenceSpanTotal": 0,
+          "forbiddenDefaultSelections": 0,
+          "safeDefaultCorrect": 0,
+          "safeDefaultTotal": 0,
+          "missedSafeDefaults": 0,
+          "completeCase": true,
+          "majorCorrectionProxy": false
+        },
+        {
+          "caseId": "rco-b02-07",
+          "qualityEligible": true,
+          "status": "completed",
+          "schemaValid": true,
+          "tp": 0,
+          "fp": 1,
+          "fn": 1,
+          "requiresActionCorrect": true,
+          "fields": {
+            "effect": {
+              "correct": 0,
+              "total": 2
+            },
+            "time": {
+              "correct": 0,
+              "total": 2
+            },
+            "materials": {
+              "correct": 0,
+              "total": 2
+            },
+            "event": {
+              "correct": 0,
+              "total": 2
+            },
+            "location": {
+              "correct": 0,
+              "total": 2
+            }
+          },
+          "evidenceSpanValid": 1,
+          "evidenceSpanTotal": 1,
+          "forbiddenDefaultSelections": 1,
+          "safeDefaultCorrect": 0,
+          "safeDefaultTotal": 1,
+          "missedSafeDefaults": 1,
+          "completeCase": false,
+          "majorCorrectionProxy": true
+        },
+        {
+          "caseId": "rco-b02-08",
+          "qualityEligible": true,
+          "status": "completed",
+          "schemaValid": true,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "requiresActionCorrect": true,
+          "fields": {
+            "effect": {
+              "correct": 0,
+              "total": 0
+            },
+            "time": {
+              "correct": 0,
+              "total": 0
+            },
+            "materials": {
+              "correct": 0,
+              "total": 0
+            },
+            "event": {
+              "correct": 0,
+              "total": 0
+            },
+            "location": {
+              "correct": 0,
+              "total": 0
+            }
+          },
+          "evidenceSpanValid": 0,
+          "evidenceSpanTotal": 0,
+          "forbiddenDefaultSelections": 0,
+          "safeDefaultCorrect": 0,
+          "safeDefaultTotal": 0,
+          "missedSafeDefaults": 0,
+          "completeCase": true,
+          "majorCorrectionProxy": false
+        },
+        {
+          "caseId": "rco-b02-09",
+          "qualityEligible": true,
+          "status": "completed",
+          "schemaValid": true,
+          "tp": 0,
+          "fp": 1,
+          "fn": 1,
+          "requiresActionCorrect": true,
+          "fields": {
+            "effect": {
+              "correct": 0,
+              "total": 2
+            },
+            "time": {
+              "correct": 0,
+              "total": 2
+            },
+            "materials": {
+              "correct": 0,
+              "total": 0
+            },
+            "event": {
+              "correct": 0,
+              "total": 0
+            },
+            "location": {
+              "correct": 0,
+              "total": 1
+            }
+          },
+          "evidenceSpanValid": 1,
+          "evidenceSpanTotal": 1,
+          "forbiddenDefaultSelections": 1,
+          "safeDefaultCorrect": 0,
+          "safeDefaultTotal": 1,
+          "missedSafeDefaults": 1,
+          "completeCase": false,
+          "majorCorrectionProxy": true
+        },
+        {
+          "caseId": "rco-b02-10",
+          "qualityEligible": true,
+          "status": "completed",
+          "schemaValid": true,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0,
+          "requiresActionCorrect": true,
+          "fields": {
+            "effect": {
+              "correct": 2,
+              "total": 2
+            },
+            "time": {
+              "correct": 2,
+              "total": 2
+            },
+            "materials": {
+              "correct": 0,
+              "total": 2
+            },
+            "event": {
+              "correct": 0,
+              "total": 0
+            },
+            "location": {
+              "correct": 0,
+              "total": 1
+            }
+          },
+          "evidenceSpanValid": 2,
+          "evidenceSpanTotal": 2,
+          "forbiddenDefaultSelections": 0,
+          "safeDefaultCorrect": 2,
+          "safeDefaultTotal": 2,
+          "missedSafeDefaults": 0,
+          "completeCase": false,
+          "majorCorrectionProxy": true
+        },
+        {
+          "caseId": "rco-b02-11",
+          "qualityEligible": true,
+          "status": "completed",
+          "schemaValid": true,
+          "tp": 0,
+          "fp": 2,
+          "fn": 2,
+          "requiresActionCorrect": true,
+          "fields": {
+            "effect": {
+              "correct": 0,
+              "total": 4
+            },
+            "time": {
+              "correct": 0,
+              "total": 3
+            },
+            "materials": {
+              "correct": 0,
+              "total": 1
+            },
+            "event": {
+              "correct": 0,
+              "total": 0
+            },
+            "location": {
+              "correct": 0,
+              "total": 0
+            }
+          },
+          "evidenceSpanValid": 2,
+          "evidenceSpanTotal": 2,
+          "forbiddenDefaultSelections": 1,
+          "safeDefaultCorrect": 0,
+          "safeDefaultTotal": 1,
+          "missedSafeDefaults": 1,
+          "completeCase": false,
+          "majorCorrectionProxy": true
+        },
+        {
+          "caseId": "rco-b02-12",
+          "qualityEligible": true,
+          "status": "completed",
+          "schemaValid": true,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "requiresActionCorrect": true,
+          "fields": {
+            "effect": {
+              "correct": 0,
+              "total": 0
+            },
+            "time": {
+              "correct": 0,
+              "total": 0
+            },
+            "materials": {
+              "correct": 0,
+              "total": 0
+            },
+            "event": {
+              "correct": 0,
+              "total": 0
+            },
+            "location": {
+              "correct": 0,
+              "total": 0
+            }
+          },
+          "evidenceSpanValid": 0,
+          "evidenceSpanTotal": 0,
+          "forbiddenDefaultSelections": 0,
+          "safeDefaultCorrect": 0,
+          "safeDefaultTotal": 0,
+          "missedSafeDefaults": 0,
+          "completeCase": true,
+          "majorCorrectionProxy": false
+        }
+      ],
+      "proposition_graph": [
+        {
+          "caseId": "rco-b02-01",
+          "qualityEligible": true,
+          "status": "completed",
+          "schemaValid": true,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0,
+          "requiresActionCorrect": true,
+          "fields": {
+            "effect": {
+              "correct": 1,
+              "total": 2
+            },
+            "time": {
+              "correct": 0,
+              "total": 0
+            },
+            "materials": {
+              "correct": 0,
+              "total": 1
+            },
+            "event": {
+              "correct": 0,
+              "total": 0
+            },
+            "location": {
+              "correct": 0,
+              "total": 0
+            }
+          },
+          "evidenceSpanValid": 2,
+          "evidenceSpanTotal": 2,
+          "forbiddenDefaultSelections": 0,
+          "safeDefaultCorrect": 0,
+          "safeDefaultTotal": 1,
+          "missedSafeDefaults": 1,
+          "completeCase": false,
+          "majorCorrectionProxy": true
+        },
+        {
+          "caseId": "rco-b02-02",
+          "qualityEligible": false,
+          "status": "completed",
+          "schemaValid": false,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "requiresActionCorrect": null,
+          "forbiddenDefaultSelections": null,
+          "safeDefaultCorrect": 0,
+          "safeDefaultTotal": 0,
+          "missedSafeDefaults": null,
+          "completeCase": false,
+          "majorCorrectionProxy": true
+        },
+        {
+          "caseId": "rco-b02-03",
+          "qualityEligible": false,
+          "status": "completed",
+          "schemaValid": false,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "requiresActionCorrect": null,
+          "forbiddenDefaultSelections": null,
+          "safeDefaultCorrect": 0,
+          "safeDefaultTotal": 1,
+          "missedSafeDefaults": null,
+          "completeCase": false,
+          "majorCorrectionProxy": true
+        },
+        {
+          "caseId": "rco-b02-04",
+          "qualityEligible": false,
+          "status": "completed",
+          "schemaValid": false,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "requiresActionCorrect": null,
+          "forbiddenDefaultSelections": null,
+          "safeDefaultCorrect": 0,
+          "safeDefaultTotal": 1,
+          "missedSafeDefaults": null,
+          "completeCase": false,
+          "majorCorrectionProxy": true
+        },
+        {
+          "caseId": "rco-b02-05",
+          "qualityEligible": false,
+          "status": "completed",
+          "schemaValid": false,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "requiresActionCorrect": null,
+          "forbiddenDefaultSelections": null,
+          "safeDefaultCorrect": 0,
+          "safeDefaultTotal": 1,
+          "missedSafeDefaults": null,
+          "completeCase": false,
+          "majorCorrectionProxy": true
+        },
+        {
+          "caseId": "rco-b02-06",
+          "qualityEligible": false,
+          "status": "completed",
+          "schemaValid": false,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "requiresActionCorrect": null,
+          "forbiddenDefaultSelections": null,
+          "safeDefaultCorrect": 0,
+          "safeDefaultTotal": 0,
+          "missedSafeDefaults": null,
+          "completeCase": false,
+          "majorCorrectionProxy": true
+        },
+        {
+          "caseId": "rco-b02-07",
+          "qualityEligible": false,
+          "status": "completed",
+          "schemaValid": false,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "requiresActionCorrect": null,
+          "forbiddenDefaultSelections": null,
+          "safeDefaultCorrect": 0,
+          "safeDefaultTotal": 1,
+          "missedSafeDefaults": null,
+          "completeCase": false,
+          "majorCorrectionProxy": true
+        },
+        {
+          "caseId": "rco-b02-08",
+          "qualityEligible": false,
+          "status": "completed",
+          "schemaValid": false,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "requiresActionCorrect": null,
+          "forbiddenDefaultSelections": null,
+          "safeDefaultCorrect": 0,
+          "safeDefaultTotal": 0,
+          "missedSafeDefaults": null,
+          "completeCase": false,
+          "majorCorrectionProxy": true
+        },
+        {
+          "caseId": "rco-b02-09",
+          "qualityEligible": false,
+          "status": "completed",
+          "schemaValid": false,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "requiresActionCorrect": null,
+          "forbiddenDefaultSelections": null,
+          "safeDefaultCorrect": 0,
+          "safeDefaultTotal": 1,
+          "missedSafeDefaults": null,
+          "completeCase": false,
+          "majorCorrectionProxy": true
+        },
+        {
+          "caseId": "rco-b02-10",
+          "qualityEligible": false,
+          "status": "completed",
+          "schemaValid": false,
+          "tp": 0,
+          "fp": 0,
+          "fn": 2,
+          "requiresActionCorrect": null,
+          "forbiddenDefaultSelections": null,
+          "safeDefaultCorrect": 0,
+          "safeDefaultTotal": 2,
+          "missedSafeDefaults": null,
+          "completeCase": false,
+          "majorCorrectionProxy": true
+        },
+        {
+          "caseId": "rco-b02-11",
+          "qualityEligible": false,
+          "status": "completed",
+          "schemaValid": false,
+          "tp": 0,
+          "fp": 0,
+          "fn": 2,
+          "requiresActionCorrect": null,
+          "forbiddenDefaultSelections": null,
+          "safeDefaultCorrect": 0,
+          "safeDefaultTotal": 1,
+          "missedSafeDefaults": null,
+          "completeCase": false,
+          "majorCorrectionProxy": true
+        },
+        {
+          "caseId": "rco-b02-12",
+          "qualityEligible": false,
+          "status": "completed",
+          "schemaValid": false,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "requiresActionCorrect": null,
+          "forbiddenDefaultSelections": null,
+          "safeDefaultCorrect": 0,
+          "safeDefaultTotal": 0,
+          "missedSafeDefaults": null,
+          "completeCase": false,
+          "majorCorrectionProxy": true
+        }
+      ],
+      "semantic_verifier": [
+        {
+          "caseId": "rco-b02-01",
+          "qualityEligible": false,
+          "status": "completed",
+          "schemaValid": false,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "requiresActionCorrect": null,
+          "forbiddenDefaultSelections": null,
+          "safeDefaultCorrect": 0,
+          "safeDefaultTotal": 1,
+          "missedSafeDefaults": null,
+          "completeCase": false,
+          "majorCorrectionProxy": true
+        },
+        {
+          "caseId": "rco-b02-02",
+          "qualityEligible": false,
+          "status": "skipped_upstream_invalid",
+          "schemaValid": false,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "requiresActionCorrect": null,
+          "forbiddenDefaultSelections": null,
+          "safeDefaultCorrect": 0,
+          "safeDefaultTotal": 0,
+          "missedSafeDefaults": null,
+          "completeCase": false,
+          "majorCorrectionProxy": true
+        },
+        {
+          "caseId": "rco-b02-03",
+          "qualityEligible": false,
+          "status": "skipped_upstream_invalid",
+          "schemaValid": false,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "requiresActionCorrect": null,
+          "forbiddenDefaultSelections": null,
+          "safeDefaultCorrect": 0,
+          "safeDefaultTotal": 1,
+          "missedSafeDefaults": null,
+          "completeCase": false,
+          "majorCorrectionProxy": true
+        },
+        {
+          "caseId": "rco-b02-04",
+          "qualityEligible": false,
+          "status": "skipped_upstream_invalid",
+          "schemaValid": false,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "requiresActionCorrect": null,
+          "forbiddenDefaultSelections": null,
+          "safeDefaultCorrect": 0,
+          "safeDefaultTotal": 1,
+          "missedSafeDefaults": null,
+          "completeCase": false,
+          "majorCorrectionProxy": true
+        },
+        {
+          "caseId": "rco-b02-05",
+          "qualityEligible": false,
+          "status": "skipped_upstream_invalid",
+          "schemaValid": false,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "requiresActionCorrect": null,
+          "forbiddenDefaultSelections": null,
+          "safeDefaultCorrect": 0,
+          "safeDefaultTotal": 1,
+          "missedSafeDefaults": null,
+          "completeCase": false,
+          "majorCorrectionProxy": true
+        },
+        {
+          "caseId": "rco-b02-06",
+          "qualityEligible": false,
+          "status": "skipped_upstream_invalid",
+          "schemaValid": false,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "requiresActionCorrect": null,
+          "forbiddenDefaultSelections": null,
+          "safeDefaultCorrect": 0,
+          "safeDefaultTotal": 0,
+          "missedSafeDefaults": null,
+          "completeCase": false,
+          "majorCorrectionProxy": true
+        },
+        {
+          "caseId": "rco-b02-07",
+          "qualityEligible": false,
+          "status": "skipped_upstream_invalid",
+          "schemaValid": false,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "requiresActionCorrect": null,
+          "forbiddenDefaultSelections": null,
+          "safeDefaultCorrect": 0,
+          "safeDefaultTotal": 1,
+          "missedSafeDefaults": null,
+          "completeCase": false,
+          "majorCorrectionProxy": true
+        },
+        {
+          "caseId": "rco-b02-08",
+          "qualityEligible": false,
+          "status": "skipped_upstream_invalid",
+          "schemaValid": false,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "requiresActionCorrect": null,
+          "forbiddenDefaultSelections": null,
+          "safeDefaultCorrect": 0,
+          "safeDefaultTotal": 0,
+          "missedSafeDefaults": null,
+          "completeCase": false,
+          "majorCorrectionProxy": true
+        },
+        {
+          "caseId": "rco-b02-09",
+          "qualityEligible": false,
+          "status": "skipped_upstream_invalid",
+          "schemaValid": false,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "requiresActionCorrect": null,
+          "forbiddenDefaultSelections": null,
+          "safeDefaultCorrect": 0,
+          "safeDefaultTotal": 1,
+          "missedSafeDefaults": null,
+          "completeCase": false,
+          "majorCorrectionProxy": true
+        },
+        {
+          "caseId": "rco-b02-10",
+          "qualityEligible": false,
+          "status": "skipped_upstream_invalid",
+          "schemaValid": false,
+          "tp": 0,
+          "fp": 0,
+          "fn": 2,
+          "requiresActionCorrect": null,
+          "forbiddenDefaultSelections": null,
+          "safeDefaultCorrect": 0,
+          "safeDefaultTotal": 2,
+          "missedSafeDefaults": null,
+          "completeCase": false,
+          "majorCorrectionProxy": true
+        },
+        {
+          "caseId": "rco-b02-11",
+          "qualityEligible": false,
+          "status": "skipped_upstream_invalid",
+          "schemaValid": false,
+          "tp": 0,
+          "fp": 0,
+          "fn": 2,
+          "requiresActionCorrect": null,
+          "forbiddenDefaultSelections": null,
+          "safeDefaultCorrect": 0,
+          "safeDefaultTotal": 1,
+          "missedSafeDefaults": null,
+          "completeCase": false,
+          "majorCorrectionProxy": true
+        },
+        {
+          "caseId": "rco-b02-12",
+          "qualityEligible": false,
+          "status": "skipped_upstream_invalid",
+          "schemaValid": false,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "requiresActionCorrect": null,
+          "forbiddenDefaultSelections": null,
+          "safeDefaultCorrect": 0,
+          "safeDefaultTotal": 0,
+          "missedSafeDefaults": null,
+          "completeCase": false,
+          "majorCorrectionProxy": true
+        }
+      ]
+    },
+    "metrics": {
+      "facts_first": {
+        "runStatus": "VALID",
+        "plannedCases": 12,
+        "completedCases": 12,
+        "schemaValidCases": 12,
+        "rawTaskCounts": {
+          "tp": 4,
+          "fp": 6,
+          "fn": 6
+        },
+        "qualityMetrics": {
+          "taskPrecision": 0.4,
+          "taskRecall": 0.4,
+          "taskF1": 0.4000000000000001,
+          "requiresActionAccuracy": 1,
+          "effectAccuracy": 0.1875,
+          "timeAccuracy": 0.2727272727272727,
+          "materialsAccuracy": 0.14285714285714285,
+          "eventAccuracy": 0.3333333333333333,
+          "locationAccuracy": 0.14285714285714285,
+          "evidenceSpanValidity": 1,
+          "completeCaseAccuracy": 0.3333333333333333,
+          "majorCorrectionProxyRate": 0.6666666666666666,
+          "forbiddenDefaultSelections": 5,
+          "safeDefaultRecall": 0.4444444444444444,
+          "missedSafeDefaults": 5
+        }
+      },
+      "proposition_graph": {
+        "runStatus": "INVALID_RUN",
+        "plannedCases": 12,
+        "completedCases": 12,
+        "schemaValidCases": 1,
+        "qualityMetrics": null,
+        "rawTaskCounts": {
+          "tp": 1,
+          "fp": 1,
+          "fn": 9
+        },
+        "invalidReason": "ONE_OR_MORE_CASES_NOT_COMPLETED_OR_SCHEMA_VALID"
+      },
+      "semantic_verifier": {
+        "runStatus": "INVALID_RUN",
+        "plannedCases": 12,
+        "completedCases": 1,
+        "schemaValidCases": 0,
+        "qualityMetrics": null,
+        "rawTaskCounts": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 10
+        },
+        "invalidReason": "ONE_OR_MORE_CASES_NOT_COMPLETED_OR_SCHEMA_VALID"
+      }
+    },
+    "decision": {
+      "code": "INVALID_RUN",
+      "reason": "至少一臂未达到全部计划案例完成且 Schema 合格。"
+    }
+  },
+  "checkpointSha256": "ba5724e25e726e7cb5bb7104eeabe40fd23b190cd8d6950da57aa556fd6ac4f0",
+  "rawResultsSha256": "8a0a1b68224d3b71db088ae2476291adb8c63fe995815b16024c0775c82cf498",
+  "protectedArtifactsModified": false,
+  "stablePath": "UNCHANGED",
+  "deployment": "NOT_RUN",
+  "evidenceBoundary": "Synthetic Development only; not independent human ground truth, real-material accuracy, user modification time, browser acceptance, release evidence or production authorization"
+}
