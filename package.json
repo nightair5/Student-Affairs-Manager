@@ -31,7 +31,8 @@
     "eval:multimodal:run": "node scripts/run-multimodal-evaluation.mjs",
     "eval:multimodal:reclassify": "node scripts/reclassify-multimodal-checkpoints.mjs",
     "eval:rco5:b01:verify": "node --test scripts/rco-5-005-b01.node-test.mjs scripts/rco-5-005-b01-fresh-adversarial.node-test.mjs && node scripts/verify-rco-5-005-b01.mjs --verify-only",
-    "eval:rco5:b02:data-check": "node --test scripts/rco-5-005-b02-dataset.node-test.mjs scripts/rco-5-005-b02-freeze.node-test.mjs"
+    "eval:rco5:b02:data-check": "node --test scripts/rco-5-005-b02-dataset.node-test.mjs scripts/rco-5-005-b02-freeze.node-test.mjs",
+    "eval:rco5:scope-b1:data-check": "vitest run src/recognition/scopeIndexV11.test.ts src/recognition/scopeReferenceB1Dataset.test.ts && node --test scripts/rco-5-006-b1-freeze.node-test.mjs"
   },
   "dependencies": {
     "fflate": "^0.8.3",
