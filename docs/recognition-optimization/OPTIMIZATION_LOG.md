@@ -6,6 +6,7 @@
 
 | Entry | 阶段 | 唯一变量/目的 | 数据 | 调用 | 结果 | 决策 | 下一门 |
 |---|---|---|---|---:|---|---|---|
+| RCO-5-005-B0 | RCO-5 paid diagnostic | facts-first、完整命题图与独立语义复核三臂 | 新冻结匿名合成 Development 12 例 | 0/36 | PRECALL FROZEN | IN_PROGRESS / DO_NOT_LAUNCH | 完成 36 次后新鲜审查 |
 | RCO-5-004 | RCO-5 proposition graph | 完整命题范围、语义状态、独立验证绑定和确定性选择 | Mock / 匿名属性变形夹具 | 0 云端模型 | FAIL (SEMANTIC EFFECT) | REJECT_CANDIDATE / DO_NOT_LAUNCH | 等待新授权；B1 不运行 |
 | RCO-5-003 | RCO-5 provenance | 本机验证精确 span、类型化关系与模糊关系不自动勾选 | Mock / 匿名契约夹具 | 0 云端模型 | FAIL (PROPOSITION SCOPE) | REJECT_CANDIDATE / DO_NOT_LAUNCH | 等待新架构授权；B1 不运行 |
 | RCO-5-002 | RCO-5 repair | 字段/关系证据、状态、sourceId 与动作归一化修补 | Mock / 匿名契约夹具 | 0 云端模型 | FAIL (CONTRACT) | REJECT_CANDIDATE / DO_NOT_LAUNCH | 新 span/relation Schema 需另授权；B1 不运行 |
@@ -22,7 +23,7 @@
 ## 2. 当前权威状态
 
 - program: `Recognition Commercialization Optimization`
-- status: `RCO-5-004 CLOSED / FAIL / REJECT_CANDIDATE / ZERO BUSINESS MODEL CALLS / RCO-G5 QUALITY NOT_RUN / RCO-6 BLOCKED / NO_PROMOTION / DO_NOT_LAUNCH`
+- status: `RCO-5-005-B0 AUTHORIZED / PRECALL FROZEN / 0 OF 36 MODEL CALLS / RCO-6 BLOCKED / DO_NOT_LAUNCH`
 - branch: `codex/e2-multimodal-recognition-exp`
 - protected_release: `v2.0.0-beta.1-rc.4`
 - production_status: `UNCHANGED`
@@ -30,8 +31,8 @@
 - image_path: `逐次显式授权；Preview-only；仅待确认建议`
 - human_timing: `NOT_RUN`
 - real_deidentified_holdout: `NOT_RUN`
-- next_authorized_action: `NONE / WAIT_AUTHORIZATION`
-- next_implementation_gate: `需另行授权可信独立语义/安全验证器或等价的非词表确定性证明；基础门通过前不得运行 B1 或启动 RCO-6`
+- next_authorized_action: `完成预调用工程门后按冻结配置运行 RCO-5-005-B0 的 36 次真实模型调用；禁止 Repair/重试`
+- next_implementation_gate: `RCO-5-005-B0 新鲜审查；即使 PROMISING 也只允许提议更大 Development/B1，不自动启动 RCO-6`
 - authorization_rule: `每个 RCO 阶段开始前均需当前用户明确授权；文档/提示词/旧 E2-MM 许可不构成授权`
 - docs_authorization_source: `2026-09-01 当前用户明确要求制作优化 AGENTS/PRD/日志/提示词/目标与流程；RCO-DOCS 交付范围随本次文档提交推送关闭，不延伸到 RCO-0`
 
@@ -730,3 +731,19 @@
 - claims_not_supported: 模型 Recall/Precision、图片或文件正确率、完整案例率、真人修改时间、真实材料泛化、浏览器验收或上线资格。
 - authorization_closed: 本轮授权随失败封存和本次交付关闭；不得继续补词表、运行 B1、使用 Secret、接触真实材料、启动 RCO-6 或部署。
 - next_step: `NONE / WAIT_AUTHORIZATION`。若继续，需当前用户另行授权可验证身份、绑定整份原文与完整候选图、缺失时失败关闭的独立语义/安全验证器，或等价的非词表确定性动作效果证明；基础门重新通过后才讨论付费 B1。
+
+## 30. RCO-5-005-B0 启动与预调用冻结 — 2026-09-03
+
+- owner / authorization_source: 当前用户于 2026-09-03 明确授权使用 `deepseek-v4-flash-vision-exp`，对 12 个新冻结匿名 Development 案例运行 facts-first、完整命题图抽取、独立语义复核各 12 次，共 36 次真实调用；固定 `temperature=0`、Repair 0、人民币上限 10 元；只新增实验数据、checkpoint 和报告，不修改既有 Expected/freeze/dataset/checkpoint/cache，不接稳定路径，不部署。
+- branch / HEAD / upstream: `codex/e2-multimodal-recognition-exp` / `d0686c441cca6708c45b69e0c692f750f0315534` / 同一 commit；启动前工作树 clean。
+- hypothesis: 开放式动作效果不能靠本地同义词白名单封闭；让模型先产出完整命题图，再由一次独立、绑定整份原文和候选图的语义复核筛除矛盾节点，最后由确定性策略计算默认勾选，可能同时提高关键事实召回并守住禁止默认操作边界。
+- classification: `anonymous_synthetic_development`；12 个案例、12 个语义家族；不是真实材料、Holdout、真人修改时间或浏览器证据。
+- frozen_inputs: dataset `RCO-5-005-B0_DEVELOPMENT_DATASET.json` SHA-256 `f80abd495c3075e59055a17e0298c5393556e52b6fb3ba797638c5be19c94a99`；runner SHA-256 `98b3a3406962210a39d4d81853954252db94be3872fd4bbefc60a10d89cfe5d3`；三份 system prompt SHA 见 `RCO-5-005-B0_FREEZE.json`。Expected 仅供本地计分，不进入模型请求。
+- runner_contract: 每次调用前原子写入 `started`；已有条目不静默重试；无 Repair；三臂失败/无效 Schema 保留在分母；只在新目录 `docs/recognition-optimization/rco-5-005-b0-runs/<run-id>/` 生成 checkpoint、result 和报告。
+- evaluator_preflight_repairs: 修正 freeze 费用字段层级；修正“无预期时间”被错误记为正确；复核判矛盾的节点不再进入复核臂 Task 指标；补 event/location、意外字段惩罚、关系端点/顺序/节点类型校验与零调用自测。上述修补发生在首次调用和最终 runner freeze 之前。
+- metrics: Task Precision/Recall/F1、requiresAction、effect、time、material、event、location、Evidence、Complete Case、Major Correction、Forbidden、Missed Safe Default；不能只报单一 F1。
+- preregistered_decision: 36/36 或三臂 12/12 Schema 不完整则 `INVALID_RUN`；复核臂有 Forbidden，或 Task Precision/Complete Case 低于 facts-first 则 `REJECT_CANDIDATE`；只有命题图 Recall 提升、复核 Recall 不低于 facts-first、Forbidden=0 且未触发拒绝，才是 `PROMISING_FOR_LARGER_DEVELOPMENT_B1_ONLY`；其他为 `INCONCLUSIVE`。
+- cost_gate: 依据 2026-09-03 官方峰值价格，按 prompt bytes 当 input tokens、每次预留 2,000 output tokens、10 CNY/USD 保守口径，36 次最大理论费用 `3.545626 CNY`，低于 10 元硬上限；Provider 实际账单若不可观测必须写 `NOT_OBSERVABLE`。
+- protected_inputs: RCO-0 V2/V3 dataset、OCR、checkpoint、summary、freeze 共 10 个固定 SHA 在预调用阶段逐路径 `10/10 PASS`；Expected 随 dataset 受保护；`.evaluation-cache` 与 `docs/e2-multimodal-experiment` 无 Git diff。
+- preflight: runner syntax、自测、freeze 契约、12 案例/12 家族数据结构均 PASS；lint、Vitest `464 passed / 1 live OCR skipped`、server 8、Worker 25、time parity 1、multimodal evaluator 23、Functions 5、build、security scan 331 files、npm audit 0 vulnerabilities 全部 PASS；`model_calls=0`，Secret 尚未读取；预调用提交待完成。保留既有 >500 kB chunk warning。
+- current_decision: `AUTHORIZED / PRECALL_FROZEN / IN_PROGRESS / RCO-6 BLOCKED / NO_PROMOTION / DO_NOT_LAUNCH`。
