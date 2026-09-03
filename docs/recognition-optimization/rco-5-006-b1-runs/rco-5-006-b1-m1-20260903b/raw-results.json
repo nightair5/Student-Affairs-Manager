@@ -1,5 +1,2935 @@
 {
   "schemaVersion": "rco-5-006-b1-m1-raw-results-1.0.0",
   "runId": "rco-5-006-b1-m1-20260903b",
-  "records": []
+  "records": [
+    {
+      "key": "rco-scope-b1-01:candidate",
+      "caseId": "rco-scope-b1-01",
+      "role": "candidate",
+      "dispatched": true,
+      "attemptNo": 1,
+      "startedAt": "2026-09-03T09:29:50.774Z",
+      "completedAt": "2026-09-03T09:30:02.397Z",
+      "latencyMs": 11624,
+      "requestSha256": "f0cc5040d762dee71efcd574b3481671587b13bfcc006a863ad778815fd1dae4",
+      "requestBytes": 8550,
+      "httpStatus": 200,
+      "providerRequestId": "a9bb15df-e465-40ae-801f-599b159d3826",
+      "returnedModel": "deepseek-v4-flash-vision-exp",
+      "responseSha256": "4510ca1a5c5fe423700a8d35450726115c3f2cb85ac28c1db7946448da7fd4ae",
+      "status": "completed",
+      "failureCode": null,
+      "content": "{\"schemaVersion\":\"scope-reference-candidate-1.0\",\"sourceId\":\"rco-scope-b1-01\",\"sourceVersionId\":\"source-v1\",\"sourceFingerprint\":\"sha256:a1c573dca42f5c39ac0f4461f894d35821ca12c1289937d288abe50fa5defbf3\",\"producerRunId\":\"candidate-rco-5-006-b1-m1-20260903b-rco-scope-b1-01\",\"requiresAction\":true,\"directives\":[{\"id\":\"dir-1\",\"propositionScopeIds\":[\"scope-0002-bd009859b5e5b1911ac4648ce3719073dd075a18d26d4b7d4ae115134142ca52\"],\"semantics\":{\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\"},\"inferenceLevel\":\"explicit\",\"actionType\":\"save\",\"action\":{\"scopeId\":\"scope-0002-bd009859b5e5b1911ac4648ce3719073dd075a18d26d4b7d4ae115134142ca52\",\"surface\":\"保存预约草稿\"},\"object\":{\"scopeId\":\"scope-0002-bd009859b5e5b1911ac4648ce3719073dd075a18d26d4b7d4ae115134142ca52\",\"surface\":\"预约草稿\"},\"effect\":\"local_change\",\"timeRefs\":[{\"scopeId\":\"scope-0002-bd009859b5e5b1911ac4648ce3719073dd075a18d26d4b7d4ae115134142ca52\",\"surface\":\"本周四\",\"type\":\"task_deadline\"}],\"materialRefs\":[],\"eventRef\":null,\"locationRef\":{\"scopeId\":\"scope-0002-bd009859b5e5b1911ac4648ce3719073dd075a18d26d4b7d4ae115134142ca52\",\"surface\":\"本机\"},\"revisionRefs\":[]},{\"id\":\"dir-2\",\"propositionScopeIds\":[\"scope-0002-bd009859b5e5b1911ac4648ce3719073dd075a18d26d4b7d4ae115134142ca52\"],\"semantics\":{\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\"},\"inferenceLevel\":\"explicit\",\"actionType\":\"review\",\"action\":{\"scopeId\":\"scope-0002-bd009859b5e5b1911ac4648ce3719073dd075a18d26d4b7d4ae115134142ca52\",\"surface\":\"检查乘车日期\"},\"object\":{\"scopeId\":\"scope-0002-bd009859b5e5b1911ac4648ce3719073dd075a18d26d4b7d4ae115134142ca52\",\"surface\":\"乘车日期\"},\"effect\":\"local_change\",\"timeRefs\":[{\"scopeId\":\"scope-0002-bd009859b5e5b1911ac4648ce3719073dd075a18d26d4b7d4ae115134142ca52\",\"surface\":\"本周四\",\"type\":\"task_deadline\"}],\"materialRefs\":[],\"eventRef\":null,\"locationRef\":{\"scopeId\":\"scope-0002-bd009859b5e5b1911ac4648ce3719073dd075a18d26d4b7d4ae115134142ca52\",\"surface\":\"本机\"},\"revisionRefs\":[]},{\"id\":\"dir-3\",\"propositionScopeIds\":[\"scope-0003-212195f4d52cff4e972dc8365fb182063295fd2f8bc206f99bd910f9973f0ec0\"],\"semantics\":{\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"negative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\"},\"inferenceLevel\":\"explicit\",\"actionType\":\"submit\",\"action\":{\"scopeId\":\"scope-0003-212195f4d52cff4e972dc8365fb182063295fd2f8bc206f99bd910f9973f0ec0\",\"surface\":\"提交\"},\"object\":{\"scopeId\":\"scope-0003-212195f4d52cff4e972dc8365fb182063295fd2f8bc206f99bd910f9973f0ec0\",\"surface\":\"预约草稿\"},\"effect\":\"external_transfer\",\"timeRefs\":[],\"materialRefs\":[],\"eventRef\":null,\"locationRef\":null,\"revisionRefs\":[]}],\"observations\":[{\"id\":\"obs-1\",\"kind\":\"information\",\"propositionScopeIds\":[\"scope-0001-4a70e9f853a180ee22acf9e4b32a8d64ad4007368b78e4679888292bd73bf18a\"],\"semantics\":{\"actor\":\"issuer\",\"speechAct\":\"assertive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"informational\"},\"inferenceLevel\":\"explicit\",\"subject\":{\"scopeId\":\"scope-0001-4a70e9f853a180ee22acf9e4b32a8d64ad4007368b78e4679888292bd73bf18a\",\"surface\":\"校车预约页面\"},\"timeRefs\":[{\"scopeId\":\"scope-0001-4a70e9f853a180ee22acf9e4b32a8d64ad4007368b78e4679888292bd73bf18a\",\"surface\":\"9月12日\",\"type\":\"registration_deadline\"}],\"locationRef\":null}],\"ignoredScopeIds\":[]}",
+      "contentSha256": "3ee6d8c21e4ace9935a0d26c32e8074c6ab8b45a8c6f25ef3cce082f05f3f69d",
+      "parsed": {
+        "schemaVersion": "scope-reference-candidate-1.0",
+        "sourceId": "rco-scope-b1-01",
+        "sourceVersionId": "source-v1",
+        "sourceFingerprint": "sha256:a1c573dca42f5c39ac0f4461f894d35821ca12c1289937d288abe50fa5defbf3",
+        "producerRunId": "candidate-rco-5-006-b1-m1-20260903b-rco-scope-b1-01",
+        "requiresAction": true,
+        "directives": [
+          {
+            "id": "dir-1",
+            "propositionScopeIds": [
+              "scope-0002-bd009859b5e5b1911ac4648ce3719073dd075a18d26d4b7d4ae115134142ca52"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "save",
+            "action": {
+              "scopeId": "scope-0002-bd009859b5e5b1911ac4648ce3719073dd075a18d26d4b7d4ae115134142ca52",
+              "surface": "保存预约草稿"
+            },
+            "object": {
+              "scopeId": "scope-0002-bd009859b5e5b1911ac4648ce3719073dd075a18d26d4b7d4ae115134142ca52",
+              "surface": "预约草稿"
+            },
+            "effect": "local_change",
+            "timeRefs": [
+              {
+                "scopeId": "scope-0002-bd009859b5e5b1911ac4648ce3719073dd075a18d26d4b7d4ae115134142ca52",
+                "surface": "本周四",
+                "type": "task_deadline"
+              }
+            ],
+            "materialRefs": [],
+            "eventRef": null,
+            "locationRef": {
+              "scopeId": "scope-0002-bd009859b5e5b1911ac4648ce3719073dd075a18d26d4b7d4ae115134142ca52",
+              "surface": "本机"
+            },
+            "revisionRefs": []
+          },
+          {
+            "id": "dir-2",
+            "propositionScopeIds": [
+              "scope-0002-bd009859b5e5b1911ac4648ce3719073dd075a18d26d4b7d4ae115134142ca52"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "review",
+            "action": {
+              "scopeId": "scope-0002-bd009859b5e5b1911ac4648ce3719073dd075a18d26d4b7d4ae115134142ca52",
+              "surface": "检查乘车日期"
+            },
+            "object": {
+              "scopeId": "scope-0002-bd009859b5e5b1911ac4648ce3719073dd075a18d26d4b7d4ae115134142ca52",
+              "surface": "乘车日期"
+            },
+            "effect": "local_change",
+            "timeRefs": [
+              {
+                "scopeId": "scope-0002-bd009859b5e5b1911ac4648ce3719073dd075a18d26d4b7d4ae115134142ca52",
+                "surface": "本周四",
+                "type": "task_deadline"
+              }
+            ],
+            "materialRefs": [],
+            "eventRef": null,
+            "locationRef": {
+              "scopeId": "scope-0002-bd009859b5e5b1911ac4648ce3719073dd075a18d26d4b7d4ae115134142ca52",
+              "surface": "本机"
+            },
+            "revisionRefs": []
+          },
+          {
+            "id": "dir-3",
+            "propositionScopeIds": [
+              "scope-0003-212195f4d52cff4e972dc8365fb182063295fd2f8bc206f99bd910f9973f0ec0"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "negative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "submit",
+            "action": {
+              "scopeId": "scope-0003-212195f4d52cff4e972dc8365fb182063295fd2f8bc206f99bd910f9973f0ec0",
+              "surface": "提交"
+            },
+            "object": {
+              "scopeId": "scope-0003-212195f4d52cff4e972dc8365fb182063295fd2f8bc206f99bd910f9973f0ec0",
+              "surface": "预约草稿"
+            },
+            "effect": "external_transfer",
+            "timeRefs": [],
+            "materialRefs": [],
+            "eventRef": null,
+            "locationRef": null,
+            "revisionRefs": []
+          }
+        ],
+        "observations": [
+          {
+            "id": "obs-1",
+            "kind": "information",
+            "propositionScopeIds": [
+              "scope-0001-4a70e9f853a180ee22acf9e4b32a8d64ad4007368b78e4679888292bd73bf18a"
+            ],
+            "semantics": {
+              "actor": "issuer",
+              "speechAct": "assertive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "informational"
+            },
+            "inferenceLevel": "explicit",
+            "subject": {
+              "scopeId": "scope-0001-4a70e9f853a180ee22acf9e4b32a8d64ad4007368b78e4679888292bd73bf18a",
+              "surface": "校车预约页面"
+            },
+            "timeRefs": [
+              {
+                "scopeId": "scope-0001-4a70e9f853a180ee22acf9e4b32a8d64ad4007368b78e4679888292bd73bf18a",
+                "surface": "9月12日",
+                "type": "registration_deadline"
+              }
+            ],
+            "locationRef": null
+          }
+        ],
+        "ignoredScopeIds": []
+      },
+      "providerUsage": {
+        "inputTokens": 2651,
+        "outputTokens": 1322,
+        "totalTokens": 3973
+      }
+    },
+    {
+      "key": "rco-scope-b1-02:candidate",
+      "caseId": "rco-scope-b1-02",
+      "role": "candidate",
+      "dispatched": true,
+      "attemptNo": 1,
+      "startedAt": "2026-09-03T09:30:02.407Z",
+      "completedAt": "2026-09-03T09:30:12.159Z",
+      "latencyMs": 9752,
+      "requestSha256": "7dab2945f13fb02f2385c11ac8048da0a660fc81a778a78c0d8bfb9c0f6f92fe",
+      "requestBytes": 8970,
+      "httpStatus": 200,
+      "providerRequestId": "f5d3e9c6-d1bb-4c97-961f-21d52e404d31",
+      "returnedModel": "deepseek-v4-flash-vision-exp",
+      "responseSha256": "e9fd632473901f491956b11e15f66fe5854b484c3252a4c44ef1576bfea582bf",
+      "status": "completed",
+      "failureCode": null,
+      "content": "{\"schemaVersion\":\"scope-reference-candidate-1.0\",\"sourceId\":\"rco-scope-b1-02\",\"sourceVersionId\":\"source-v1\",\"sourceFingerprint\":\"sha256:fa94e3cf3d360f209cfc81f4869469115fcd376bd0fda2b34c58f5abbbdd6d75\",\"producerRunId\":\"candidate-rco-5-006-b1-m1-20260903b-rco-scope-b1-02\",\"requiresAction\":true,\"directives\":[{\"id\":\"dir-1\",\"propositionScopeIds\":[\"scope-0005-cf09cb16b59501f57b58c844b755b1dd33de148ca90254e928a52a31169e8e2d\"],\"semantics\":{\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\"},\"inferenceLevel\":\"explicit\",\"actionType\":\"print\",\"action\":{\"scopeId\":\"scope-0005-cf09cb16b59501f57b58c844b755b1dd33de148ca90254e928a52a31169e8e2d\",\"surface\":\"打印\"},\"object\":{\"scopeId\":\"scope-0005-cf09cb16b59501f57b58c844b755b1dd33de148ca90254e928a52a31169e8e2d\",\"surface\":\"空白承诺书\"},\"effect\":\"physical_action\",\"timeRefs\":[],\"materialRefs\":[{\"scopeId\":\"scope-0005-cf09cb16b59501f57b58c844b755b1dd33de148ca90254e928a52a31169e8e2d\",\"surface\":\"空白承诺书\",\"required\":true}],\"eventRef\":null,\"locationRef\":null,\"revisionRefs\":[]},{\"id\":\"dir-2\",\"propositionScopeIds\":[\"scope-0006-0b6b83815fcfe692b567066a8532de9bc8bec93b12907ae8785c0c8cc0a7c11d\"],\"semantics\":{\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\"},\"inferenceLevel\":\"explicit\",\"actionType\":\"sign\",\"action\":{\"scopeId\":\"scope-0006-0b6b83815fcfe692b567066a8532de9bc8bec93b12907ae8785c0c8cc0a7c11d\",\"surface\":\"签名\"},\"object\":{\"scopeId\":\"scope-0006-0b6b83815fcfe692b567066a8532de9bc8bec93b12907ae8785c0c8cc0a7c11d\",\"surface\":\"纸面\"},\"effect\":\"physical_action\",\"timeRefs\":[],\"materialRefs\":[],\"eventRef\":null,\"locationRef\":null,\"revisionRefs\":[]}],\"observations\":[{\"id\":\"obs-1\",\"kind\":\"information\",\"propositionScopeIds\":[\"scope-0001-84a2f5824b9ffe57e79cfcd22d0d399f624f5fbb8ff380af1142aa20d7516a57\",\"scope-0002-ac81968dc8ba4c29f3c9cc71e1ef080176e6d040b2eef5af2f3a9638cb314bcc\"],\"semantics\":{\"actor\":\"unknown\",\"speechAct\":\"assertive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"unknown\",\"validity\":\"active\",\"modality\":\"informational\"},\"inferenceLevel\":\"explicit\",\"subject\":{\"scopeId\":\"scope-0002-ac81968dc8ba4c29f3c9cc71e1ef080176e6d040b2eef5af2f3a9638cb314bcc\",\"surface\":\"上传身份证照片后点击确认\"},\"timeRefs\":[],\"locationRef\":null},{\"id\":\"obs-2\",\"kind\":\"information\",\"propositionScopeIds\":[\"scope-0003-ce84057fac32d08d56b48430ca592777bdcc8daa40a1521ea6eafad60f042f5e\",\"scope-0004-a93c33c74568a1b4861ea7ac4bfb3ffcf3fff1893395d14ea21119d529ece04e\"],\"semantics\":{\"actor\":\"issuer\",\"speechAct\":\"assertive\",\"polarity\":\"negative\",\"tense\":\"present\",\"status\":\"unknown\",\"validity\":\"active\",\"modality\":\"informational\"},\"inferenceLevel\":\"explicit\",\"subject\":{\"scopeId\":\"scope-0004-a93c33c74568a1b4861ea7ac4bfb3ffcf3fff1893395d14ea21119d529ece04e\",\"surface\":\"不是本次要求\"},\"timeRefs\":[],\"locationRef\":null}],\"ignoredScopeIds\":[]}",
+      "contentSha256": "e8b1b2b31947145555055035d932f02673d8b18826471012417644b576dd7606",
+      "parsed": {
+        "schemaVersion": "scope-reference-candidate-1.0",
+        "sourceId": "rco-scope-b1-02",
+        "sourceVersionId": "source-v1",
+        "sourceFingerprint": "sha256:fa94e3cf3d360f209cfc81f4869469115fcd376bd0fda2b34c58f5abbbdd6d75",
+        "producerRunId": "candidate-rco-5-006-b1-m1-20260903b-rco-scope-b1-02",
+        "requiresAction": true,
+        "directives": [
+          {
+            "id": "dir-1",
+            "propositionScopeIds": [
+              "scope-0005-cf09cb16b59501f57b58c844b755b1dd33de148ca90254e928a52a31169e8e2d"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "present",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "print",
+            "action": {
+              "scopeId": "scope-0005-cf09cb16b59501f57b58c844b755b1dd33de148ca90254e928a52a31169e8e2d",
+              "surface": "打印"
+            },
+            "object": {
+              "scopeId": "scope-0005-cf09cb16b59501f57b58c844b755b1dd33de148ca90254e928a52a31169e8e2d",
+              "surface": "空白承诺书"
+            },
+            "effect": "physical_action",
+            "timeRefs": [],
+            "materialRefs": [
+              {
+                "scopeId": "scope-0005-cf09cb16b59501f57b58c844b755b1dd33de148ca90254e928a52a31169e8e2d",
+                "surface": "空白承诺书",
+                "required": true
+              }
+            ],
+            "eventRef": null,
+            "locationRef": null,
+            "revisionRefs": []
+          },
+          {
+            "id": "dir-2",
+            "propositionScopeIds": [
+              "scope-0006-0b6b83815fcfe692b567066a8532de9bc8bec93b12907ae8785c0c8cc0a7c11d"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "present",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "sign",
+            "action": {
+              "scopeId": "scope-0006-0b6b83815fcfe692b567066a8532de9bc8bec93b12907ae8785c0c8cc0a7c11d",
+              "surface": "签名"
+            },
+            "object": {
+              "scopeId": "scope-0006-0b6b83815fcfe692b567066a8532de9bc8bec93b12907ae8785c0c8cc0a7c11d",
+              "surface": "纸面"
+            },
+            "effect": "physical_action",
+            "timeRefs": [],
+            "materialRefs": [],
+            "eventRef": null,
+            "locationRef": null,
+            "revisionRefs": []
+          }
+        ],
+        "observations": [
+          {
+            "id": "obs-1",
+            "kind": "information",
+            "propositionScopeIds": [
+              "scope-0001-84a2f5824b9ffe57e79cfcd22d0d399f624f5fbb8ff380af1142aa20d7516a57",
+              "scope-0002-ac81968dc8ba4c29f3c9cc71e1ef080176e6d040b2eef5af2f3a9638cb314bcc"
+            ],
+            "semantics": {
+              "actor": "unknown",
+              "speechAct": "assertive",
+              "polarity": "affirmative",
+              "tense": "present",
+              "status": "unknown",
+              "validity": "active",
+              "modality": "informational"
+            },
+            "inferenceLevel": "explicit",
+            "subject": {
+              "scopeId": "scope-0002-ac81968dc8ba4c29f3c9cc71e1ef080176e6d040b2eef5af2f3a9638cb314bcc",
+              "surface": "上传身份证照片后点击确认"
+            },
+            "timeRefs": [],
+            "locationRef": null
+          },
+          {
+            "id": "obs-2",
+            "kind": "information",
+            "propositionScopeIds": [
+              "scope-0003-ce84057fac32d08d56b48430ca592777bdcc8daa40a1521ea6eafad60f042f5e",
+              "scope-0004-a93c33c74568a1b4861ea7ac4bfb3ffcf3fff1893395d14ea21119d529ece04e"
+            ],
+            "semantics": {
+              "actor": "issuer",
+              "speechAct": "assertive",
+              "polarity": "negative",
+              "tense": "present",
+              "status": "unknown",
+              "validity": "active",
+              "modality": "informational"
+            },
+            "inferenceLevel": "explicit",
+            "subject": {
+              "scopeId": "scope-0004-a93c33c74568a1b4861ea7ac4bfb3ffcf3fff1893395d14ea21119d529ece04e",
+              "surface": "不是本次要求"
+            },
+            "timeRefs": [],
+            "locationRef": null
+          }
+        ],
+        "ignoredScopeIds": []
+      },
+      "providerUsage": {
+        "inputTokens": 2813,
+        "outputTokens": 1129,
+        "totalTokens": 3942
+      }
+    },
+    {
+      "key": "rco-scope-b1-03:candidate",
+      "caseId": "rco-scope-b1-03",
+      "role": "candidate",
+      "dispatched": true,
+      "attemptNo": 1,
+      "startedAt": "2026-09-03T09:30:12.167Z",
+      "completedAt": "2026-09-03T09:30:23.404Z",
+      "latencyMs": 11237,
+      "requestSha256": "d1d7cbd4ed9245ac7e9f8e438ecc1ba8e1934ba73a52d9fb1dac7f001a1b6593",
+      "requestBytes": 8725,
+      "httpStatus": 200,
+      "providerRequestId": "bf8018d7-3cb5-48bb-b53d-86c027e6e019",
+      "returnedModel": "deepseek-v4-flash-vision-exp",
+      "responseSha256": "c533ce0fc8e47d9cfd5cca59cf59a83b5a1e7bba136e4edb9d43de03eeec0044",
+      "status": "completed",
+      "failureCode": null,
+      "content": "{\"schemaVersion\":\"scope-reference-candidate-1.0\",\"sourceId\":\"rco-scope-b1-03\",\"sourceVersionId\":\"source-v1\",\"sourceFingerprint\":\"sha256:977838c9687e8c16c42acc405a4529a89b1ef5b7f77cd151a60417068322f235\",\"producerRunId\":\"candidate-rco-5-006-b1-m1-20260903b-rco-scope-b1-03\",\"requiresAction\":true,\"directives\":[{\"id\":\"dir-1\",\"propositionScopeIds\":[\"scope-0004-5e10bc223e33c907e0a0e89eb151939915cc15f3f453b567a20b21a3fc70761d\"],\"semantics\":{\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\"},\"inferenceLevel\":\"explicit\",\"actionType\":\"fill\",\"action\":{\"scopeId\":\"scope-0004-5e10bc223e33c907e0a0e89eb151939915cc15f3f453b567a20b21a3fc70761d\",\"surface\":\"填写\"},\"object\":{\"scopeId\":\"scope-0004-5e10bc223e33c907e0a0e89eb151939915cc15f3f453b567a20b21a3fc70761d\",\"surface\":\"延期申请\"},\"effect\":\"local_change\",\"timeRefs\":[{\"scopeId\":\"scope-0004-5e10bc223e33c907e0a0e89eb151939915cc15f3f453b567a20b21a3fc70761d\",\"surface\":\"周四上午\",\"type\":\"task_deadline\"}],\"materialRefs\":[],\"eventRef\":null,\"locationRef\":{\"scopeId\":\"scope-0004-5e10bc223e33c907e0a0e89eb151939915cc15f3f453b567a20b21a3fc70761d\",\"surface\":\"本机\"},\"revisionRefs\":[]},{\"id\":\"dir-2\",\"propositionScopeIds\":[\"scope-0004-5e10bc223e33c907e0a0e89eb151939915cc15f3f453b567a20b21a3fc70761d\"],\"semantics\":{\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\"},\"inferenceLevel\":\"explicit\",\"actionType\":\"save\",\"action\":{\"scopeId\":\"scope-0004-5e10bc223e33c907e0a0e89eb151939915cc15f3f453b567a20b21a3fc70761d\",\"surface\":\"保存\"},\"object\":{\"scopeId\":\"scope-0004-5e10bc223e33c907e0a0e89eb151939915cc15f3f453b567a20b21a3fc70761d\",\"surface\":\"草稿\"},\"effect\":\"local_change\",\"timeRefs\":[{\"scopeId\":\"scope-0004-5e10bc223e33c907e0a0e89eb151939915cc15f3f453b567a20b21a3fc70761d\",\"surface\":\"周四上午\",\"type\":\"task_deadline\"}],\"materialRefs\":[],\"eventRef\":null,\"locationRef\":{\"scopeId\":\"scope-0004-5e10bc223e33c907e0a0e89eb151939915cc15f3f453b567a20b21a3fc70761d\",\"surface\":\"本机\"},\"revisionRefs\":[]}],\"observations\":[{\"id\":\"obs-1\",\"kind\":\"information\",\"propositionScopeIds\":[\"scope-0001-430449e6360bed38aeb504397b114486a33bc5368691834de0c1a52b92acf641\"],\"semantics\":{\"actor\":\"issuer\",\"speechAct\":\"assertive\",\"polarity\":\"affirmative\",\"tense\":\"past\",\"status\":\"completed\",\"validity\":\"superseded\",\"modality\":\"required\"},\"inferenceLevel\":\"explicit\",\"subject\":{\"scopeId\":\"scope-0001-430449e6360bed38aeb504397b114486a33bc5368691834de0c1a52b92acf641\",\"surface\":\"旧通知\"},\"timeRefs\":[{\"scopeId\":\"scope-0001-430449e6360bed38aeb504397b114486a33bc5368691834de0c1a52b92acf641\",\"surface\":\"周三\",\"type\":\"task_deadline\"}],\"locationRef\":{\"scopeId\":\"scope-0001-430449e6360bed38aeb504397b114486a33bc5368691834de0c1a52b92acf641\",\"surface\":\"服务大厅\"}},{\"id\":\"obs-2\",\"kind\":\"information\",\"propositionScopeIds\":[\"scope-0003-62e7e57b52c08374637b80f250687f98333e2356b73ed212e2a2969d89251a8b\"],\"semantics\":{\"actor\":\"issuer\",\"speechAct\":\"assertive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"completed\",\"validity\":\"active\",\"modality\":\"informational\"},\"inferenceLevel\":\"explicit\",\"subject\":{\"scopeId\":\"scope-0003-62e7e57b52c08374637b80f250687f98333e2356b73ed212e2a2969d89251a8b\",\"surface\":\"该安排\"},\"timeRefs\":[],\"locationRef\":null}],\"ignoredScopeIds\":[\"scope-0002-dddfffb5da3332fe4aec7df0abd0468f4c235fa888cedd980810294ae14e54d4\"]}",
+      "contentSha256": "f844eda57ffc137c4f6958f87b98ccc752c5ee3ce68bc357f58ceb665e0462eb",
+      "parsed": {
+        "schemaVersion": "scope-reference-candidate-1.0",
+        "sourceId": "rco-scope-b1-03",
+        "sourceVersionId": "source-v1",
+        "sourceFingerprint": "sha256:977838c9687e8c16c42acc405a4529a89b1ef5b7f77cd151a60417068322f235",
+        "producerRunId": "candidate-rco-5-006-b1-m1-20260903b-rco-scope-b1-03",
+        "requiresAction": true,
+        "directives": [
+          {
+            "id": "dir-1",
+            "propositionScopeIds": [
+              "scope-0004-5e10bc223e33c907e0a0e89eb151939915cc15f3f453b567a20b21a3fc70761d"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "fill",
+            "action": {
+              "scopeId": "scope-0004-5e10bc223e33c907e0a0e89eb151939915cc15f3f453b567a20b21a3fc70761d",
+              "surface": "填写"
+            },
+            "object": {
+              "scopeId": "scope-0004-5e10bc223e33c907e0a0e89eb151939915cc15f3f453b567a20b21a3fc70761d",
+              "surface": "延期申请"
+            },
+            "effect": "local_change",
+            "timeRefs": [
+              {
+                "scopeId": "scope-0004-5e10bc223e33c907e0a0e89eb151939915cc15f3f453b567a20b21a3fc70761d",
+                "surface": "周四上午",
+                "type": "task_deadline"
+              }
+            ],
+            "materialRefs": [],
+            "eventRef": null,
+            "locationRef": {
+              "scopeId": "scope-0004-5e10bc223e33c907e0a0e89eb151939915cc15f3f453b567a20b21a3fc70761d",
+              "surface": "本机"
+            },
+            "revisionRefs": []
+          },
+          {
+            "id": "dir-2",
+            "propositionScopeIds": [
+              "scope-0004-5e10bc223e33c907e0a0e89eb151939915cc15f3f453b567a20b21a3fc70761d"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "save",
+            "action": {
+              "scopeId": "scope-0004-5e10bc223e33c907e0a0e89eb151939915cc15f3f453b567a20b21a3fc70761d",
+              "surface": "保存"
+            },
+            "object": {
+              "scopeId": "scope-0004-5e10bc223e33c907e0a0e89eb151939915cc15f3f453b567a20b21a3fc70761d",
+              "surface": "草稿"
+            },
+            "effect": "local_change",
+            "timeRefs": [
+              {
+                "scopeId": "scope-0004-5e10bc223e33c907e0a0e89eb151939915cc15f3f453b567a20b21a3fc70761d",
+                "surface": "周四上午",
+                "type": "task_deadline"
+              }
+            ],
+            "materialRefs": [],
+            "eventRef": null,
+            "locationRef": {
+              "scopeId": "scope-0004-5e10bc223e33c907e0a0e89eb151939915cc15f3f453b567a20b21a3fc70761d",
+              "surface": "本机"
+            },
+            "revisionRefs": []
+          }
+        ],
+        "observations": [
+          {
+            "id": "obs-1",
+            "kind": "information",
+            "propositionScopeIds": [
+              "scope-0001-430449e6360bed38aeb504397b114486a33bc5368691834de0c1a52b92acf641"
+            ],
+            "semantics": {
+              "actor": "issuer",
+              "speechAct": "assertive",
+              "polarity": "affirmative",
+              "tense": "past",
+              "status": "completed",
+              "validity": "superseded",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "subject": {
+              "scopeId": "scope-0001-430449e6360bed38aeb504397b114486a33bc5368691834de0c1a52b92acf641",
+              "surface": "旧通知"
+            },
+            "timeRefs": [
+              {
+                "scopeId": "scope-0001-430449e6360bed38aeb504397b114486a33bc5368691834de0c1a52b92acf641",
+                "surface": "周三",
+                "type": "task_deadline"
+              }
+            ],
+            "locationRef": {
+              "scopeId": "scope-0001-430449e6360bed38aeb504397b114486a33bc5368691834de0c1a52b92acf641",
+              "surface": "服务大厅"
+            }
+          },
+          {
+            "id": "obs-2",
+            "kind": "information",
+            "propositionScopeIds": [
+              "scope-0003-62e7e57b52c08374637b80f250687f98333e2356b73ed212e2a2969d89251a8b"
+            ],
+            "semantics": {
+              "actor": "issuer",
+              "speechAct": "assertive",
+              "polarity": "affirmative",
+              "tense": "present",
+              "status": "completed",
+              "validity": "active",
+              "modality": "informational"
+            },
+            "inferenceLevel": "explicit",
+            "subject": {
+              "scopeId": "scope-0003-62e7e57b52c08374637b80f250687f98333e2356b73ed212e2a2969d89251a8b",
+              "surface": "该安排"
+            },
+            "timeRefs": [],
+            "locationRef": null
+          }
+        ],
+        "ignoredScopeIds": [
+          "scope-0002-dddfffb5da3332fe4aec7df0abd0468f4c235fa888cedd980810294ae14e54d4"
+        ]
+      },
+      "providerUsage": {
+        "inputTokens": 2698,
+        "outputTokens": 1329,
+        "totalTokens": 4027
+      }
+    },
+    {
+      "key": "rco-scope-b1-04:candidate",
+      "caseId": "rco-scope-b1-04",
+      "role": "candidate",
+      "dispatched": true,
+      "attemptNo": 1,
+      "startedAt": "2026-09-03T09:30:23.413Z",
+      "completedAt": "2026-09-03T09:30:33.439Z",
+      "latencyMs": 10026,
+      "requestSha256": "8648b50b1fc53409a849492d3801898deb4bc63c69b680016045491eb180da43",
+      "requestBytes": 8828,
+      "httpStatus": 200,
+      "providerRequestId": "8752c9d1-ae49-49b6-b476-70f2c2674ca1",
+      "returnedModel": "deepseek-v4-flash-vision-exp",
+      "responseSha256": "b9a2946803bd2d49b53f4ca7c238de104af5b91c9e8b04c6f5c030499a0dcc4d",
+      "status": "completed",
+      "failureCode": null,
+      "content": "{\"schemaVersion\":\"scope-reference-candidate-1.0\",\"sourceId\":\"rco-scope-b1-04\",\"sourceVersionId\":\"source-v1\",\"sourceFingerprint\":\"sha256:a1ee856d19e0ce9b254cc4286dd02679bfb79b24fdc3439ddd43a73fd4604c19\",\"producerRunId\":\"candidate-rco-5-006-b1-m1-20260903b-rco-scope-b1-04\",\"requiresAction\":false,\"directives\":[{\"id\":\"dir-1\",\"propositionScopeIds\":[\"scope-0001-2ba8cb221931abfc36cb39951ab6220eeef6dea3af1eaea6f98c5537b96fb85a\",\"scope-0002-c6ca69b155a68413a931eeb83539ff90f506b7ed8205fc60491bfb8e2835c042\"],\"semantics\":{\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\"},\"inferenceLevel\":\"explicit\",\"actionType\":\"contact\",\"action\":{\"scopeId\":\"scope-0002-c6ca69b155a68413a931eeb83539ff90f506b7ed8205fc60491bfb8e2835c042\",\"surface\":\"联系\"},\"object\":{\"scopeId\":\"scope-0002-c6ca69b155a68413a931eeb83539ff90f506b7ed8205fc60491bfb8e2835c042\",\"surface\":\"财务处\"},\"effect\":\"external_interaction\",\"timeRefs\":[],\"materialRefs\":[],\"eventRef\":null,\"locationRef\":null,\"revisionRefs\":[]},{\"id\":\"dir-2\",\"propositionScopeIds\":[\"scope-0004-c9de6f59f6f3eb129203d71c4a3688487df05795fc05e08fd60183acb09a68a2\"],\"semantics\":{\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"negative\",\"tense\":\"present\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\"},\"inferenceLevel\":\"explicit\",\"actionType\":\"contact\",\"action\":{\"scopeId\":\"scope-0004-c9de6f59f6f3eb129203d71c4a3688487df05795fc05e08fd60183acb09a68a2\",\"surface\":\"无需联系\"},\"object\":{\"scopeId\":\"scope-0004-c9de6f59f6f3eb129203d71c4a3688487df05795fc05e08fd60183acb09a68a2\",\"surface\":\"联系\"},\"effect\":\"external_interaction\",\"timeRefs\":[{\"scopeId\":\"scope-0004-c9de6f59f6f3eb129203d71c4a3688487df05795fc05e08fd60183acb09a68a2\",\"surface\":\"今天\",\"type\":\"task_deadline\"}],\"materialRefs\":[],\"eventRef\":null,\"locationRef\":null,\"revisionRefs\":[]},{\"id\":\"dir-3\",\"propositionScopeIds\":[\"scope-0005-b7a49dd80870e72e85f7c7c56e3e5ed24c222bc08c86ae29292850156a481d2e\"],\"semantics\":{\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"negative\",\"tense\":\"present\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\"},\"inferenceLevel\":\"explicit\",\"actionType\":\"pay\",\"action\":{\"scopeId\":\"scope-0005-b7a49dd80870e72e85f7c7c56e3e5ed24c222bc08c86ae29292850156a481d2e\",\"surface\":\"付款\"},\"object\":{\"scopeId\":\"scope-0005-b7a49dd80870e72e85f7c7c56e3e5ed24c222bc08c86ae29292850156a481d2e\",\"surface\":\"付款\"},\"effect\":\"external_transfer\",\"timeRefs\":[],\"materialRefs\":[],\"eventRef\":null,\"locationRef\":null,\"revisionRefs\":[]}],\"observations\":[{\"id\":\"obs-1\",\"kind\":\"information\",\"propositionScopeIds\":[\"scope-0003-66af66c171db38034cfcfe8b767c4cfc1ce0398fa0cde01ff48dca537ab57e64\"],\"semantics\":{\"actor\":\"issuer\",\"speechAct\":\"assertive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"completed\",\"validity\":\"active\",\"modality\":\"informational\"},\"inferenceLevel\":\"explicit\",\"subject\":{\"scopeId\":\"scope-0003-66af66c171db38034cfcfe8b767c4cfc1ce0398fa0cde01ff48dca537ab57e64\",\"surface\":\"当前页面显示“费用已结清”\"},\"timeRefs\":[],\"locationRef\":null}],\"ignoredScopeIds\":[]}",
+      "contentSha256": "b8b2d654bc94764e72f225114b1adc0d8f9d2a6abb8472fe9e097cf4ea4d109b",
+      "parsed": {
+        "schemaVersion": "scope-reference-candidate-1.0",
+        "sourceId": "rco-scope-b1-04",
+        "sourceVersionId": "source-v1",
+        "sourceFingerprint": "sha256:a1ee856d19e0ce9b254cc4286dd02679bfb79b24fdc3439ddd43a73fd4604c19",
+        "producerRunId": "candidate-rco-5-006-b1-m1-20260903b-rco-scope-b1-04",
+        "requiresAction": false,
+        "directives": [
+          {
+            "id": "dir-1",
+            "propositionScopeIds": [
+              "scope-0001-2ba8cb221931abfc36cb39951ab6220eeef6dea3af1eaea6f98c5537b96fb85a",
+              "scope-0002-c6ca69b155a68413a931eeb83539ff90f506b7ed8205fc60491bfb8e2835c042"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "present",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "contact",
+            "action": {
+              "scopeId": "scope-0002-c6ca69b155a68413a931eeb83539ff90f506b7ed8205fc60491bfb8e2835c042",
+              "surface": "联系"
+            },
+            "object": {
+              "scopeId": "scope-0002-c6ca69b155a68413a931eeb83539ff90f506b7ed8205fc60491bfb8e2835c042",
+              "surface": "财务处"
+            },
+            "effect": "external_interaction",
+            "timeRefs": [],
+            "materialRefs": [],
+            "eventRef": null,
+            "locationRef": null,
+            "revisionRefs": []
+          },
+          {
+            "id": "dir-2",
+            "propositionScopeIds": [
+              "scope-0004-c9de6f59f6f3eb129203d71c4a3688487df05795fc05e08fd60183acb09a68a2"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "negative",
+              "tense": "present",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "contact",
+            "action": {
+              "scopeId": "scope-0004-c9de6f59f6f3eb129203d71c4a3688487df05795fc05e08fd60183acb09a68a2",
+              "surface": "无需联系"
+            },
+            "object": {
+              "scopeId": "scope-0004-c9de6f59f6f3eb129203d71c4a3688487df05795fc05e08fd60183acb09a68a2",
+              "surface": "联系"
+            },
+            "effect": "external_interaction",
+            "timeRefs": [
+              {
+                "scopeId": "scope-0004-c9de6f59f6f3eb129203d71c4a3688487df05795fc05e08fd60183acb09a68a2",
+                "surface": "今天",
+                "type": "task_deadline"
+              }
+            ],
+            "materialRefs": [],
+            "eventRef": null,
+            "locationRef": null,
+            "revisionRefs": []
+          },
+          {
+            "id": "dir-3",
+            "propositionScopeIds": [
+              "scope-0005-b7a49dd80870e72e85f7c7c56e3e5ed24c222bc08c86ae29292850156a481d2e"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "negative",
+              "tense": "present",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "pay",
+            "action": {
+              "scopeId": "scope-0005-b7a49dd80870e72e85f7c7c56e3e5ed24c222bc08c86ae29292850156a481d2e",
+              "surface": "付款"
+            },
+            "object": {
+              "scopeId": "scope-0005-b7a49dd80870e72e85f7c7c56e3e5ed24c222bc08c86ae29292850156a481d2e",
+              "surface": "付款"
+            },
+            "effect": "external_transfer",
+            "timeRefs": [],
+            "materialRefs": [],
+            "eventRef": null,
+            "locationRef": null,
+            "revisionRefs": []
+          }
+        ],
+        "observations": [
+          {
+            "id": "obs-1",
+            "kind": "information",
+            "propositionScopeIds": [
+              "scope-0003-66af66c171db38034cfcfe8b767c4cfc1ce0398fa0cde01ff48dca537ab57e64"
+            ],
+            "semantics": {
+              "actor": "issuer",
+              "speechAct": "assertive",
+              "polarity": "affirmative",
+              "tense": "present",
+              "status": "completed",
+              "validity": "active",
+              "modality": "informational"
+            },
+            "inferenceLevel": "explicit",
+            "subject": {
+              "scopeId": "scope-0003-66af66c171db38034cfcfe8b767c4cfc1ce0398fa0cde01ff48dca537ab57e64",
+              "surface": "当前页面显示“费用已结清”"
+            },
+            "timeRefs": [],
+            "locationRef": null
+          }
+        ],
+        "ignoredScopeIds": []
+      },
+      "providerUsage": {
+        "inputTokens": 2753,
+        "outputTokens": 1156,
+        "totalTokens": 3909
+      }
+    },
+    {
+      "key": "rco-scope-b1-05:candidate",
+      "caseId": "rco-scope-b1-05",
+      "role": "candidate",
+      "dispatched": true,
+      "attemptNo": 1,
+      "startedAt": "2026-09-03T09:30:33.449Z",
+      "completedAt": "2026-09-03T09:30:40.290Z",
+      "latencyMs": 6841,
+      "requestSha256": "086ef81d185e51fe22587d86902a63d599ef843b686bfefecea46d44ec09132b",
+      "requestBytes": 8554,
+      "httpStatus": 200,
+      "providerRequestId": "85e22bc7-462b-44d6-8493-53ec36563a68",
+      "returnedModel": "deepseek-v4-flash-vision-exp",
+      "responseSha256": "09c4a3c20292000d2415727b0904fa14753a57dfccc4799089adafadefd01838",
+      "status": "completed",
+      "failureCode": null,
+      "content": "{\"schemaVersion\":\"scope-reference-candidate-1.0\",\"sourceId\":\"rco-scope-b1-05\",\"sourceVersionId\":\"source-v1\",\"sourceFingerprint\":\"sha256:5c36467194d14958c1a28bdc27fc6d5ce842af07150da3edf679f175396adeaf\",\"producerRunId\":\"candidate-rco-5-006-b1-m1-20260903b-rco-scope-b1-05\",\"requiresAction\":false,\"directives\":[],\"observations\":[{\"id\":\"obs-1\",\"kind\":\"event\",\"propositionScopeIds\":[\"scope-0001-4fa5d8574c1b441de42284cd7e4e1aece47c26c9a87383586f57dba75cced13a\"],\"semantics\":{\"actor\":\"issuer\",\"speechAct\":\"assertive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"informational\"},\"inferenceLevel\":\"explicit\",\"subject\":{\"scopeId\":\"scope-0001-4fa5d8574c1b441de42284cd7e4e1aece47c26c9a87383586f57dba75cced13a\",\"surface\":\"校史馆夜间开放说明会\"},\"timeRefs\":[{\"scopeId\":\"scope-0001-4fa5d8574c1b441de42284cd7e4e1aece47c26c9a87383586f57dba75cced13a\",\"surface\":\"9月20日19:30\",\"type\":\"event_start\"}],\"locationRef\":{\"scopeId\":\"scope-0001-4fa5d8574c1b441de42284cd7e4e1aece47c26c9a87383586f57dba75cced13a\",\"surface\":\"南门报告厅\"}},{\"id\":\"obs-2\",\"kind\":\"information\",\"propositionScopeIds\":[\"scope-0002-c3b7d382968b75ff7e7ddb214db8d5f2e6e849462e4f9ee08017bfd9edf83b68\"],\"semantics\":{\"actor\":\"issuer\",\"speechAct\":\"assertive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"unknown\",\"validity\":\"active\",\"modality\":\"informational\"},\"inferenceLevel\":\"explicit\",\"subject\":{\"scopeId\":\"scope-0002-c3b7d382968b75ff7e7ddb214db8d5f2e6e849462e4f9ee08017bfd9edf83b68\",\"surface\":\"该信息\"},\"timeRefs\":[],\"locationRef\":null},{\"id\":\"obs-3\",\"kind\":\"information\",\"propositionScopeIds\":[\"scope-0003-b2d244f449ce14908e04cdade60ada69b9b3951665d401aaeac46d7738046454\"],\"semantics\":{\"actor\":\"issuer\",\"speechAct\":\"assertive\",\"polarity\":\"negative\",\"tense\":\"present\",\"status\":\"unknown\",\"validity\":\"active\",\"modality\":\"informational\"},\"inferenceLevel\":\"explicit\",\"subject\":{\"scopeId\":\"scope-0003-b2d244f449ce14908e04cdade60ada69b9b3951665d401aaeac46d7738046454\",\"surface\":\"不要求报名\"},\"timeRefs\":[],\"locationRef\":null}],\"ignoredScopeIds\":[]}",
+      "contentSha256": "52180916f317ae1dd04d6fb8a95962896dec39e54929b695214e239f53b4685d",
+      "parsed": {
+        "schemaVersion": "scope-reference-candidate-1.0",
+        "sourceId": "rco-scope-b1-05",
+        "sourceVersionId": "source-v1",
+        "sourceFingerprint": "sha256:5c36467194d14958c1a28bdc27fc6d5ce842af07150da3edf679f175396adeaf",
+        "producerRunId": "candidate-rco-5-006-b1-m1-20260903b-rco-scope-b1-05",
+        "requiresAction": false,
+        "directives": [],
+        "observations": [
+          {
+            "id": "obs-1",
+            "kind": "event",
+            "propositionScopeIds": [
+              "scope-0001-4fa5d8574c1b441de42284cd7e4e1aece47c26c9a87383586f57dba75cced13a"
+            ],
+            "semantics": {
+              "actor": "issuer",
+              "speechAct": "assertive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "informational"
+            },
+            "inferenceLevel": "explicit",
+            "subject": {
+              "scopeId": "scope-0001-4fa5d8574c1b441de42284cd7e4e1aece47c26c9a87383586f57dba75cced13a",
+              "surface": "校史馆夜间开放说明会"
+            },
+            "timeRefs": [
+              {
+                "scopeId": "scope-0001-4fa5d8574c1b441de42284cd7e4e1aece47c26c9a87383586f57dba75cced13a",
+                "surface": "9月20日19:30",
+                "type": "event_start"
+              }
+            ],
+            "locationRef": {
+              "scopeId": "scope-0001-4fa5d8574c1b441de42284cd7e4e1aece47c26c9a87383586f57dba75cced13a",
+              "surface": "南门报告厅"
+            }
+          },
+          {
+            "id": "obs-2",
+            "kind": "information",
+            "propositionScopeIds": [
+              "scope-0002-c3b7d382968b75ff7e7ddb214db8d5f2e6e849462e4f9ee08017bfd9edf83b68"
+            ],
+            "semantics": {
+              "actor": "issuer",
+              "speechAct": "assertive",
+              "polarity": "affirmative",
+              "tense": "present",
+              "status": "unknown",
+              "validity": "active",
+              "modality": "informational"
+            },
+            "inferenceLevel": "explicit",
+            "subject": {
+              "scopeId": "scope-0002-c3b7d382968b75ff7e7ddb214db8d5f2e6e849462e4f9ee08017bfd9edf83b68",
+              "surface": "该信息"
+            },
+            "timeRefs": [],
+            "locationRef": null
+          },
+          {
+            "id": "obs-3",
+            "kind": "information",
+            "propositionScopeIds": [
+              "scope-0003-b2d244f449ce14908e04cdade60ada69b9b3951665d401aaeac46d7738046454"
+            ],
+            "semantics": {
+              "actor": "issuer",
+              "speechAct": "assertive",
+              "polarity": "negative",
+              "tense": "present",
+              "status": "unknown",
+              "validity": "active",
+              "modality": "informational"
+            },
+            "inferenceLevel": "explicit",
+            "subject": {
+              "scopeId": "scope-0003-b2d244f449ce14908e04cdade60ada69b9b3951665d401aaeac46d7738046454",
+              "surface": "不要求报名"
+            },
+            "timeRefs": [],
+            "locationRef": null
+          }
+        ],
+        "ignoredScopeIds": []
+      },
+      "providerUsage": {
+        "inputTokens": 2658,
+        "outputTokens": 778,
+        "totalTokens": 3436
+      }
+    },
+    {
+      "key": "rco-scope-b1-06:candidate",
+      "caseId": "rco-scope-b1-06",
+      "role": "candidate",
+      "dispatched": true,
+      "attemptNo": 1,
+      "startedAt": "2026-09-03T09:30:40.308Z",
+      "completedAt": "2026-09-03T09:30:47.057Z",
+      "latencyMs": 6749,
+      "requestSha256": "e94f14abf853d321a9e201b7c326f1f824f38fd795f97a29ed5ece8a3bb15b3e",
+      "requestBytes": 8511,
+      "httpStatus": 200,
+      "providerRequestId": "0521c68b-b202-41e8-8cce-451a15143cd9",
+      "returnedModel": "deepseek-v4-flash-vision-exp",
+      "responseSha256": "1cff8342960eb845a38a3dd7c4998f08c413fbe47abd3bf359c7f255a0542122",
+      "status": "completed",
+      "failureCode": null,
+      "content": "{\"schemaVersion\":\"scope-reference-candidate-1.0\",\"sourceId\":\"rco-scope-b1-06\",\"sourceVersionId\":\"source-v1\",\"sourceFingerprint\":\"sha256:e431478273ecac797f2b650912277d9f2b6ab268d4fd7ed174ab34d9f46a8e92\",\"producerRunId\":\"candidate-rco-5-006-b1-m1-20260903b-rco-scope-b1-06\",\"requiresAction\":false,\"directives\":[{\"id\":\"dir-1\",\"propositionScopeIds\":[\"scope-0001-96a026d4aaa1d6ffdb9354a5f4070d85dfce7f607bdd7d75196a93e67334da42\"],\"semantics\":{\"actor\":\"addressed_group\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"optional\"},\"inferenceLevel\":\"explicit\",\"actionType\":\"print\",\"action\":{\"scopeId\":\"scope-0001-96a026d4aaa1d6ffdb9354a5f4070d85dfce7f607bdd7d75196a93e67334da42\",\"surface\":\"打印\"},\"object\":{\"scopeId\":\"scope-0001-96a026d4aaa1d6ffdb9354a5f4070d85dfce7f607bdd7d75196a93e67334da42\",\"surface\":\"成绩单\"},\"effect\":\"physical_action\",\"timeRefs\":[],\"materialRefs\":[],\"eventRef\":null,\"locationRef\":null,\"revisionRefs\":[]}],\"observations\":[{\"id\":\"obs-1\",\"kind\":\"information\",\"propositionScopeIds\":[\"scope-0002-b2bd98724ae6f0a71e9df1c80d26f1aee5528d95b23a2dc8259a97d866917a97\"],\"semantics\":{\"actor\":\"issuer\",\"speechAct\":\"assertive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"unknown\",\"validity\":\"active\",\"modality\":\"informational\"},\"inferenceLevel\":\"explicit\",\"subject\":{\"scopeId\":\"scope-0002-b2bd98724ae6f0a71e9df1c80d26f1aee5528d95b23a2dc8259a97d866917a97\",\"surface\":\"电子版\"},\"timeRefs\":[],\"locationRef\":null},{\"id\":\"obs-2\",\"kind\":\"information\",\"propositionScopeIds\":[\"scope-0003-c63b6c85cbf267403ab6eb078e6b035c6c53c03c2c28babfe22e7acf02c42e9a\"],\"semantics\":{\"actor\":\"issuer\",\"speechAct\":\"assertive\",\"polarity\":\"negative\",\"tense\":\"present\",\"status\":\"unknown\",\"validity\":\"active\",\"modality\":\"informational\"},\"inferenceLevel\":\"explicit\",\"subject\":{\"scopeId\":\"scope-0003-c63b6c85cbf267403ab6eb078e6b035c6c53c03c2c28babfe22e7acf02c42e9a\",\"surface\":\"不强制操作\"},\"timeRefs\":[],\"locationRef\":null}],\"ignoredScopeIds\":[]}",
+      "contentSha256": "aa6eebc796b33b84ca21065138a1e5793fd324baf23895b4c5168a926493051c",
+      "parsed": {
+        "schemaVersion": "scope-reference-candidate-1.0",
+        "sourceId": "rco-scope-b1-06",
+        "sourceVersionId": "source-v1",
+        "sourceFingerprint": "sha256:e431478273ecac797f2b650912277d9f2b6ab268d4fd7ed174ab34d9f46a8e92",
+        "producerRunId": "candidate-rco-5-006-b1-m1-20260903b-rco-scope-b1-06",
+        "requiresAction": false,
+        "directives": [
+          {
+            "id": "dir-1",
+            "propositionScopeIds": [
+              "scope-0001-96a026d4aaa1d6ffdb9354a5f4070d85dfce7f607bdd7d75196a93e67334da42"
+            ],
+            "semantics": {
+              "actor": "addressed_group",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "present",
+              "status": "pending",
+              "validity": "active",
+              "modality": "optional"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "print",
+            "action": {
+              "scopeId": "scope-0001-96a026d4aaa1d6ffdb9354a5f4070d85dfce7f607bdd7d75196a93e67334da42",
+              "surface": "打印"
+            },
+            "object": {
+              "scopeId": "scope-0001-96a026d4aaa1d6ffdb9354a5f4070d85dfce7f607bdd7d75196a93e67334da42",
+              "surface": "成绩单"
+            },
+            "effect": "physical_action",
+            "timeRefs": [],
+            "materialRefs": [],
+            "eventRef": null,
+            "locationRef": null,
+            "revisionRefs": []
+          }
+        ],
+        "observations": [
+          {
+            "id": "obs-1",
+            "kind": "information",
+            "propositionScopeIds": [
+              "scope-0002-b2bd98724ae6f0a71e9df1c80d26f1aee5528d95b23a2dc8259a97d866917a97"
+            ],
+            "semantics": {
+              "actor": "issuer",
+              "speechAct": "assertive",
+              "polarity": "affirmative",
+              "tense": "present",
+              "status": "unknown",
+              "validity": "active",
+              "modality": "informational"
+            },
+            "inferenceLevel": "explicit",
+            "subject": {
+              "scopeId": "scope-0002-b2bd98724ae6f0a71e9df1c80d26f1aee5528d95b23a2dc8259a97d866917a97",
+              "surface": "电子版"
+            },
+            "timeRefs": [],
+            "locationRef": null
+          },
+          {
+            "id": "obs-2",
+            "kind": "information",
+            "propositionScopeIds": [
+              "scope-0003-c63b6c85cbf267403ab6eb078e6b035c6c53c03c2c28babfe22e7acf02c42e9a"
+            ],
+            "semantics": {
+              "actor": "issuer",
+              "speechAct": "assertive",
+              "polarity": "negative",
+              "tense": "present",
+              "status": "unknown",
+              "validity": "active",
+              "modality": "informational"
+            },
+            "inferenceLevel": "explicit",
+            "subject": {
+              "scopeId": "scope-0003-c63b6c85cbf267403ab6eb078e6b035c6c53c03c2c28babfe22e7acf02c42e9a",
+              "surface": "不强制操作"
+            },
+            "timeRefs": [],
+            "locationRef": null
+          }
+        ],
+        "ignoredScopeIds": []
+      },
+      "providerUsage": {
+        "inputTokens": 2641,
+        "outputTokens": 747,
+        "totalTokens": 3388
+      }
+    },
+    {
+      "key": "rco-scope-b1-07:candidate",
+      "caseId": "rco-scope-b1-07",
+      "role": "candidate",
+      "dispatched": true,
+      "attemptNo": 1,
+      "startedAt": "2026-09-03T09:30:47.069Z",
+      "completedAt": "2026-09-03T09:30:54.926Z",
+      "latencyMs": 7857,
+      "requestSha256": "b8bc708a0f5e111dfa6be74ced81751e60c9326a46c292165558800504bc276c",
+      "requestBytes": 8598,
+      "httpStatus": 200,
+      "providerRequestId": "e62f04c2-7253-4ce1-a195-9ccb97d2070e",
+      "returnedModel": "deepseek-v4-flash-vision-exp",
+      "responseSha256": "ce7bff09c62a6a19c1db7d8aa2365dd863d9eda4d230d368bc62bdf169f2821a",
+      "status": "completed",
+      "failureCode": null,
+      "content": "{\"schemaVersion\":\"scope-reference-candidate-1.0\",\"sourceId\":\"rco-scope-b1-07\",\"sourceVersionId\":\"source-v1\",\"sourceFingerprint\":\"sha256:a774d670e82158a628ebcd56a006c8907811afcc3c4bef2439a9f841b846cd7f\",\"producerRunId\":\"candidate-rco-5-006-b1-m1-20260903b-rco-scope-b1-07\",\"requiresAction\":true,\"directives\":[{\"id\":\"dir-1\",\"propositionScopeIds\":[\"scope-0001-f372741c4c38e53adf2270644ac778756fb412b72926d1b9c36eb2af1d74c94b\"],\"semantics\":{\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\"},\"inferenceLevel\":\"explicit\",\"actionType\":\"review\",\"action\":{\"scopeId\":\"scope-0001-f372741c4c38e53adf2270644ac778756fb412b72926d1b9c36eb2af1d74c94b\",\"surface\":\"核对\"},\"object\":{\"scopeId\":\"scope-0001-f372741c4c38e53adf2270644ac778756fb412b72926d1b9c36eb2af1d74c94b\",\"surface\":\"社团名单中的负责人姓名\"},\"effect\":\"local_change\",\"timeRefs\":[],\"materialRefs\":[],\"eventRef\":null,\"locationRef\":null,\"revisionRefs\":[]},{\"id\":\"dir-2\",\"propositionScopeIds\":[\"scope-0002-0ee028335f22da0c24121d87dac75cadb2b2f21fbb18fdfc82a9a250dabe4929\"],\"semantics\":{\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"negative\",\"tense\":\"present\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\"},\"inferenceLevel\":\"explicit\",\"actionType\":\"other\",\"action\":{\"scopeId\":\"scope-0002-0ee028335f22da0c24121d87dac75cadb2b2f21fbb18fdfc82a9a250dabe4929\",\"surface\":\"照做\"},\"object\":{\"scopeId\":\"scope-0002-0ee028335f22da0c24121d87dac75cadb2b2f21fbb18fdfc82a9a250dabe4929\",\"surface\":\"输入账号口令\"},\"effect\":\"unknown\",\"timeRefs\":[],\"materialRefs\":[],\"eventRef\":null,\"locationRef\":null,\"revisionRefs\":[]},{\"id\":\"dir-3\",\"propositionScopeIds\":[\"scope-0003-4f1f937ac06ad596ad675b4f12f3c4559fe60d3f19d8b8755c9907d3cc8d1769\"],\"semantics\":{\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"negative\",\"tense\":\"present\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\"},\"inferenceLevel\":\"explicit\",\"actionType\":\"send\",\"action\":{\"scopeId\":\"scope-0003-4f1f937ac06ad596ad675b4f12f3c4559fe60d3f19d8b8755c9907d3cc8d1769\",\"surface\":\"发给\"},\"object\":{\"scopeId\":\"scope-0003-4f1f937ac06ad596ad675b4f12f3c4559fe60d3f19d8b8755c9907d3cc8d1769\",\"surface\":\"名单\"},\"effect\":\"external_transfer\",\"timeRefs\":[],\"materialRefs\":[],\"eventRef\":null,\"locationRef\":null,\"revisionRefs\":[]}],\"observations\":[],\"ignoredScopeIds\":[]}",
+      "contentSha256": "8aa1499a2d280b60ce81ea8443679e27b0e8e58a08584c5c3f4eefba55406cac",
+      "parsed": {
+        "schemaVersion": "scope-reference-candidate-1.0",
+        "sourceId": "rco-scope-b1-07",
+        "sourceVersionId": "source-v1",
+        "sourceFingerprint": "sha256:a774d670e82158a628ebcd56a006c8907811afcc3c4bef2439a9f841b846cd7f",
+        "producerRunId": "candidate-rco-5-006-b1-m1-20260903b-rco-scope-b1-07",
+        "requiresAction": true,
+        "directives": [
+          {
+            "id": "dir-1",
+            "propositionScopeIds": [
+              "scope-0001-f372741c4c38e53adf2270644ac778756fb412b72926d1b9c36eb2af1d74c94b"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "present",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "review",
+            "action": {
+              "scopeId": "scope-0001-f372741c4c38e53adf2270644ac778756fb412b72926d1b9c36eb2af1d74c94b",
+              "surface": "核对"
+            },
+            "object": {
+              "scopeId": "scope-0001-f372741c4c38e53adf2270644ac778756fb412b72926d1b9c36eb2af1d74c94b",
+              "surface": "社团名单中的负责人姓名"
+            },
+            "effect": "local_change",
+            "timeRefs": [],
+            "materialRefs": [],
+            "eventRef": null,
+            "locationRef": null,
+            "revisionRefs": []
+          },
+          {
+            "id": "dir-2",
+            "propositionScopeIds": [
+              "scope-0002-0ee028335f22da0c24121d87dac75cadb2b2f21fbb18fdfc82a9a250dabe4929"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "negative",
+              "tense": "present",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "other",
+            "action": {
+              "scopeId": "scope-0002-0ee028335f22da0c24121d87dac75cadb2b2f21fbb18fdfc82a9a250dabe4929",
+              "surface": "照做"
+            },
+            "object": {
+              "scopeId": "scope-0002-0ee028335f22da0c24121d87dac75cadb2b2f21fbb18fdfc82a9a250dabe4929",
+              "surface": "输入账号口令"
+            },
+            "effect": "unknown",
+            "timeRefs": [],
+            "materialRefs": [],
+            "eventRef": null,
+            "locationRef": null,
+            "revisionRefs": []
+          },
+          {
+            "id": "dir-3",
+            "propositionScopeIds": [
+              "scope-0003-4f1f937ac06ad596ad675b4f12f3c4559fe60d3f19d8b8755c9907d3cc8d1769"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "negative",
+              "tense": "present",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "send",
+            "action": {
+              "scopeId": "scope-0003-4f1f937ac06ad596ad675b4f12f3c4559fe60d3f19d8b8755c9907d3cc8d1769",
+              "surface": "发给"
+            },
+            "object": {
+              "scopeId": "scope-0003-4f1f937ac06ad596ad675b4f12f3c4559fe60d3f19d8b8755c9907d3cc8d1769",
+              "surface": "名单"
+            },
+            "effect": "external_transfer",
+            "timeRefs": [],
+            "materialRefs": [],
+            "eventRef": null,
+            "locationRef": null,
+            "revisionRefs": []
+          }
+        ],
+        "observations": [],
+        "ignoredScopeIds": []
+      },
+      "providerUsage": {
+        "inputTokens": 2655,
+        "outputTokens": 897,
+        "totalTokens": 3552
+      }
+    },
+    {
+      "key": "rco-scope-b1-08:candidate",
+      "caseId": "rco-scope-b1-08",
+      "role": "candidate",
+      "dispatched": true,
+      "attemptNo": 1,
+      "startedAt": "2026-09-03T09:30:54.939Z",
+      "completedAt": "2026-09-03T09:31:03.241Z",
+      "latencyMs": 8302,
+      "requestSha256": "acaca64351a381e39d784b1898c10899bf05c2a7f27df0cb86c67e66fe024eec",
+      "requestBytes": 8570,
+      "httpStatus": 200,
+      "providerRequestId": "cbca4558-2cc0-4c0a-91d5-15f817a86aa2",
+      "returnedModel": "deepseek-v4-flash-vision-exp",
+      "responseSha256": "4a8cb67ab6cfd190dfa5e72d568f58df5db1e1c1128dfaae4587d80fcbebb63d",
+      "status": "completed",
+      "failureCode": null,
+      "content": "{\"schemaVersion\":\"scope-reference-candidate-1.0\",\"sourceId\":\"rco-scope-b1-08\",\"sourceVersionId\":\"source-v1\",\"sourceFingerprint\":\"sha256:b6107fbfaab2e2c5ecbce267d4c8a2471fc988998fbe1278c385e832fc0f7cbf\",\"producerRunId\":\"candidate-rco-5-006-b1-m1-20260903b-rco-scope-b1-08\",\"requiresAction\":true,\"directives\":[{\"id\":\"dir-1\",\"propositionScopeIds\":[\"scope-0001-9611c80e628284957d6c6646a75a1f31641dcb92cfb23f87ef1d734c3fceccfe\"],\"semantics\":{\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\"},\"inferenceLevel\":\"explicit\",\"actionType\":\"prepare\",\"action\":{\"scopeId\":\"scope-0001-9611c80e628284957d6c6646a75a1f31641dcb92cfb23f87ef1d734c3fceccfe\",\"surface\":\"整理\"},\"object\":{\"scopeId\":\"scope-0001-9611c80e628284957d6c6646a75a1f31641dcb92cfb23f87ef1d734c3fceccfe\",\"surface\":\"访谈提纲\"},\"effect\":\"local_change\",\"timeRefs\":[{\"scopeId\":\"scope-0001-9611c80e628284957d6c6646a75a1f31641dcb92cfb23f87ef1d734c3fceccfe\",\"surface\":\"周三12:00前\",\"type\":\"task_deadline\"}],\"materialRefs\":[],\"eventRef\":null,\"locationRef\":null,\"revisionRefs\":[]},{\"id\":\"dir-2\",\"propositionScopeIds\":[\"scope-0002-5fb7dbc3ad2d08f1fcd2b753d3c59b297f7cf344175c8fb5f740d4f6d2076e70\"],\"semantics\":{\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\"},\"inferenceLevel\":\"explicit\",\"actionType\":\"send\",\"action\":{\"scopeId\":\"scope-0002-5fb7dbc3ad2d08f1fcd2b753d3c59b297f7cf344175c8fb5f740d4f6d2076e70\",\"surface\":\"发送\"},\"object\":{\"scopeId\":\"scope-0002-5fb7dbc3ad2d08f1fcd2b753d3c59b297f7cf344175c8fb5f740d4f6d2076e70\",\"surface\":\"最终版\"},\"effect\":\"external_transfer\",\"timeRefs\":[{\"scopeId\":\"scope-0002-5fb7dbc3ad2d08f1fcd2b753d3c59b297f7cf344175c8fb5f740d4f6d2076e70\",\"surface\":\"周五16:00前\",\"type\":\"submission_deadline\"}],\"materialRefs\":[],\"eventRef\":null,\"locationRef\":null,\"revisionRefs\":[]}],\"observations\":[{\"id\":\"obs-1\",\"kind\":\"information\",\"propositionScopeIds\":[\"scope-0003-1af75d665cbce779d5539cad120d206841c72a1a643028284f21112bb442b539\"],\"semantics\":{\"actor\":\"issuer\",\"speechAct\":\"assertive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"informational\"},\"inferenceLevel\":\"explicit\",\"subject\":{\"scopeId\":\"scope-0003-1af75d665cbce779d5539cad120d206841c72a1a643028284f21112bb442b539\",\"surface\":\"两项任务\"},\"timeRefs\":[],\"locationRef\":null}],\"ignoredScopeIds\":[]}",
+      "contentSha256": "0c4b31d2a1ed1ae9282fa8cc66038fc7753604e4e7e29f5d4bc778d9ccebda95",
+      "parsed": {
+        "schemaVersion": "scope-reference-candidate-1.0",
+        "sourceId": "rco-scope-b1-08",
+        "sourceVersionId": "source-v1",
+        "sourceFingerprint": "sha256:b6107fbfaab2e2c5ecbce267d4c8a2471fc988998fbe1278c385e832fc0f7cbf",
+        "producerRunId": "candidate-rco-5-006-b1-m1-20260903b-rco-scope-b1-08",
+        "requiresAction": true,
+        "directives": [
+          {
+            "id": "dir-1",
+            "propositionScopeIds": [
+              "scope-0001-9611c80e628284957d6c6646a75a1f31641dcb92cfb23f87ef1d734c3fceccfe"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "present",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "prepare",
+            "action": {
+              "scopeId": "scope-0001-9611c80e628284957d6c6646a75a1f31641dcb92cfb23f87ef1d734c3fceccfe",
+              "surface": "整理"
+            },
+            "object": {
+              "scopeId": "scope-0001-9611c80e628284957d6c6646a75a1f31641dcb92cfb23f87ef1d734c3fceccfe",
+              "surface": "访谈提纲"
+            },
+            "effect": "local_change",
+            "timeRefs": [
+              {
+                "scopeId": "scope-0001-9611c80e628284957d6c6646a75a1f31641dcb92cfb23f87ef1d734c3fceccfe",
+                "surface": "周三12:00前",
+                "type": "task_deadline"
+              }
+            ],
+            "materialRefs": [],
+            "eventRef": null,
+            "locationRef": null,
+            "revisionRefs": []
+          },
+          {
+            "id": "dir-2",
+            "propositionScopeIds": [
+              "scope-0002-5fb7dbc3ad2d08f1fcd2b753d3c59b297f7cf344175c8fb5f740d4f6d2076e70"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "present",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "send",
+            "action": {
+              "scopeId": "scope-0002-5fb7dbc3ad2d08f1fcd2b753d3c59b297f7cf344175c8fb5f740d4f6d2076e70",
+              "surface": "发送"
+            },
+            "object": {
+              "scopeId": "scope-0002-5fb7dbc3ad2d08f1fcd2b753d3c59b297f7cf344175c8fb5f740d4f6d2076e70",
+              "surface": "最终版"
+            },
+            "effect": "external_transfer",
+            "timeRefs": [
+              {
+                "scopeId": "scope-0002-5fb7dbc3ad2d08f1fcd2b753d3c59b297f7cf344175c8fb5f740d4f6d2076e70",
+                "surface": "周五16:00前",
+                "type": "submission_deadline"
+              }
+            ],
+            "materialRefs": [],
+            "eventRef": null,
+            "locationRef": null,
+            "revisionRefs": []
+          }
+        ],
+        "observations": [
+          {
+            "id": "obs-1",
+            "kind": "information",
+            "propositionScopeIds": [
+              "scope-0003-1af75d665cbce779d5539cad120d206841c72a1a643028284f21112bb442b539"
+            ],
+            "semantics": {
+              "actor": "issuer",
+              "speechAct": "assertive",
+              "polarity": "affirmative",
+              "tense": "present",
+              "status": "pending",
+              "validity": "active",
+              "modality": "informational"
+            },
+            "inferenceLevel": "explicit",
+            "subject": {
+              "scopeId": "scope-0003-1af75d665cbce779d5539cad120d206841c72a1a643028284f21112bb442b539",
+              "surface": "两项任务"
+            },
+            "timeRefs": [],
+            "locationRef": null
+          }
+        ],
+        "ignoredScopeIds": []
+      },
+      "providerUsage": {
+        "inputTokens": 2656,
+        "outputTokens": 949,
+        "totalTokens": 3605
+      }
+    },
+    {
+      "key": "rco-scope-b1-09:candidate",
+      "caseId": "rco-scope-b1-09",
+      "role": "candidate",
+      "dispatched": true,
+      "attemptNo": 1,
+      "startedAt": "2026-09-03T09:31:03.254Z",
+      "completedAt": "2026-09-03T09:31:15.191Z",
+      "latencyMs": 11938,
+      "requestSha256": "38ad8c8a4bf5dcd3413044193545547cc2f9065d5f5e3989c21f2bfcf3275215",
+      "requestBytes": 8934,
+      "httpStatus": 200,
+      "providerRequestId": "eb0a094f-16b9-4c43-a085-b15826cf81b0",
+      "returnedModel": "deepseek-v4-flash-vision-exp",
+      "responseSha256": "ab9212f96ac67fae17638c7474bbfc9b0a8217050d0d09fc442c9a507337f672",
+      "status": "completed",
+      "failureCode": null,
+      "content": "{\"schemaVersion\":\"scope-reference-candidate-1.0\",\"sourceId\":\"rco-scope-b1-09\",\"sourceVersionId\":\"source-v1\",\"sourceFingerprint\":\"sha256:b6a0eb8caad3421f3e2efce44e5bd1ae276248d532bcd52ec58cc7fd4d68a9c3\",\"producerRunId\":\"candidate-rco-5-006-b1-m1-20260903b-rco-scope-b1-09\",\"requiresAction\":true,\"directives\":[{\"id\":\"dir-1\",\"propositionScopeIds\":[\"scope-0003-0512f07a14fe10c82911ac684b9b96a39b789fd0dd7d45e922ef518b830dc3f2\"],\"semantics\":{\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\"},\"inferenceLevel\":\"explicit\",\"actionType\":\"print\",\"action\":{\"scopeId\":\"scope-0003-0512f07a14fe10c82911ac684b9b96a39b789fd0dd7d45e922ef518b830dc3f2\",\"surface\":\"打印\"},\"object\":{\"scopeId\":\"scope-0003-0512f07a14fe10c82911ac684b9b96a39b789fd0dd7d45e922ef518b830dc3f2\",\"surface\":\"课程变更单\"},\"effect\":\"physical_action\",\"timeRefs\":[],\"materialRefs\":[{\"scopeId\":\"scope-0003-0512f07a14fe10c82911ac684b9b96a39b789fd0dd7d45e922ef518b830dc3f2\",\"surface\":\"课程变更单\",\"required\":true}],\"eventRef\":null,\"locationRef\":null,\"revisionRefs\":[]},{\"id\":\"dir-2\",\"propositionScopeIds\":[\"scope-0005-4bddd805eae00e0f40acd54720ed3d968bf41ef690f69d6aae95cf7e3daf258a\"],\"semantics\":{\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\"},\"inferenceLevel\":\"explicit\",\"actionType\":\"carry\",\"action\":{\"scopeId\":\"scope-0005-4bddd805eae00e0f40acd54720ed3d968bf41ef690f69d6aae95cf7e3daf258a\",\"surface\":\"携带\"},\"object\":{\"scopeId\":\"scope-0005-4bddd805eae00e0f40acd54720ed3d968bf41ef690f69d6aae95cf7e3daf258a\",\"surface\":\"校园卡\"},\"effect\":\"physical_action\",\"timeRefs\":[],\"materialRefs\":[{\"scopeId\":\"scope-0005-4bddd805eae00e0f40acd54720ed3d968bf41ef690f69d6aae95cf7e3daf258a\",\"surface\":\"校园卡\",\"required\":true}],\"eventRef\":null,\"locationRef\":{\"scopeId\":\"scope-0005-4bddd805eae00e0f40acd54720ed3d968bf41ef690f69d6aae95cf7e3daf258a\",\"surface\":\"教务窗口\"},\"revisionRefs\":[]},{\"id\":\"dir-3\",\"propositionScopeIds\":[\"scope-0005-4bddd805eae00e0f40acd54720ed3d968bf41ef690f69d6aae95cf7e3daf258a\"],\"semantics\":{\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\"},\"inferenceLevel\":\"explicit\",\"actionType\":\"review\",\"action\":{\"scopeId\":\"scope-0005-4bddd805eae00e0f40acd54720ed3d968bf41ef690f69d6aae95cf7e3daf258a\",\"surface\":\"核验\"},\"object\":{\"scopeId\":\"scope-0005-4bddd805eae00e0f40acd54720ed3d968bf41ef690f69d6aae95cf7e3daf258a\",\"surface\":\"身份\"},\"effect\":\"external_interaction\",\"timeRefs\":[],\"materialRefs\":[],\"eventRef\":null,\"locationRef\":{\"scopeId\":\"scope-0005-4bddd805eae00e0f40acd54720ed3d968bf41ef690f69d6aae95cf7e3daf258a\",\"surface\":\"教务窗口\"},\"revisionRefs\":[]}],\"observations\":[{\"id\":\"obs-1\",\"kind\":\"information\",\"propositionScopeIds\":[\"scope-0006-8bc5b21bc34431a451888de89e80a7540fd5838693803d12c140cfa63e200c16\"],\"semantics\":{\"actor\":\"issuer\",\"speechAct\":\"assertive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"informational\"},\"inferenceLevel\":\"explicit\",\"subject\":{\"scopeId\":\"scope-0006-8bc5b21bc34431a451888de89e80a7540fd5838693803d12c140cfa63e200c16\",\"surface\":\"受理时间\"},\"timeRefs\":[],\"locationRef\":null}],\"ignoredScopeIds\":[\"scope-0001-07fabd181b8ae7309062fd1450fab8212c5a5e17a19c4efb70b71e835316deef\",\"scope-0002-658834f380d323a1d80f811ec385f042a7d5ef55b1e867c7ae272c2fa0b4d4e5\",\"scope-0004-f766cc8d5ee91c2930ddde23352b70fc340f2285c1dcd6d03202e6755a6ef256\"]}",
+      "contentSha256": "983cfc55323ceaa8688bd60a30f3cd8aacc1cb4073c69a3b6d589fae61f37e5f",
+      "parsed": {
+        "schemaVersion": "scope-reference-candidate-1.0",
+        "sourceId": "rco-scope-b1-09",
+        "sourceVersionId": "source-v1",
+        "sourceFingerprint": "sha256:b6a0eb8caad3421f3e2efce44e5bd1ae276248d532bcd52ec58cc7fd4d68a9c3",
+        "producerRunId": "candidate-rco-5-006-b1-m1-20260903b-rco-scope-b1-09",
+        "requiresAction": true,
+        "directives": [
+          {
+            "id": "dir-1",
+            "propositionScopeIds": [
+              "scope-0003-0512f07a14fe10c82911ac684b9b96a39b789fd0dd7d45e922ef518b830dc3f2"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "present",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "print",
+            "action": {
+              "scopeId": "scope-0003-0512f07a14fe10c82911ac684b9b96a39b789fd0dd7d45e922ef518b830dc3f2",
+              "surface": "打印"
+            },
+            "object": {
+              "scopeId": "scope-0003-0512f07a14fe10c82911ac684b9b96a39b789fd0dd7d45e922ef518b830dc3f2",
+              "surface": "课程变更单"
+            },
+            "effect": "physical_action",
+            "timeRefs": [],
+            "materialRefs": [
+              {
+                "scopeId": "scope-0003-0512f07a14fe10c82911ac684b9b96a39b789fd0dd7d45e922ef518b830dc3f2",
+                "surface": "课程变更单",
+                "required": true
+              }
+            ],
+            "eventRef": null,
+            "locationRef": null,
+            "revisionRefs": []
+          },
+          {
+            "id": "dir-2",
+            "propositionScopeIds": [
+              "scope-0005-4bddd805eae00e0f40acd54720ed3d968bf41ef690f69d6aae95cf7e3daf258a"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "present",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "carry",
+            "action": {
+              "scopeId": "scope-0005-4bddd805eae00e0f40acd54720ed3d968bf41ef690f69d6aae95cf7e3daf258a",
+              "surface": "携带"
+            },
+            "object": {
+              "scopeId": "scope-0005-4bddd805eae00e0f40acd54720ed3d968bf41ef690f69d6aae95cf7e3daf258a",
+              "surface": "校园卡"
+            },
+            "effect": "physical_action",
+            "timeRefs": [],
+            "materialRefs": [
+              {
+                "scopeId": "scope-0005-4bddd805eae00e0f40acd54720ed3d968bf41ef690f69d6aae95cf7e3daf258a",
+                "surface": "校园卡",
+                "required": true
+              }
+            ],
+            "eventRef": null,
+            "locationRef": {
+              "scopeId": "scope-0005-4bddd805eae00e0f40acd54720ed3d968bf41ef690f69d6aae95cf7e3daf258a",
+              "surface": "教务窗口"
+            },
+            "revisionRefs": []
+          },
+          {
+            "id": "dir-3",
+            "propositionScopeIds": [
+              "scope-0005-4bddd805eae00e0f40acd54720ed3d968bf41ef690f69d6aae95cf7e3daf258a"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "present",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "review",
+            "action": {
+              "scopeId": "scope-0005-4bddd805eae00e0f40acd54720ed3d968bf41ef690f69d6aae95cf7e3daf258a",
+              "surface": "核验"
+            },
+            "object": {
+              "scopeId": "scope-0005-4bddd805eae00e0f40acd54720ed3d968bf41ef690f69d6aae95cf7e3daf258a",
+              "surface": "身份"
+            },
+            "effect": "external_interaction",
+            "timeRefs": [],
+            "materialRefs": [],
+            "eventRef": null,
+            "locationRef": {
+              "scopeId": "scope-0005-4bddd805eae00e0f40acd54720ed3d968bf41ef690f69d6aae95cf7e3daf258a",
+              "surface": "教务窗口"
+            },
+            "revisionRefs": []
+          }
+        ],
+        "observations": [
+          {
+            "id": "obs-1",
+            "kind": "information",
+            "propositionScopeIds": [
+              "scope-0006-8bc5b21bc34431a451888de89e80a7540fd5838693803d12c140cfa63e200c16"
+            ],
+            "semantics": {
+              "actor": "issuer",
+              "speechAct": "assertive",
+              "polarity": "affirmative",
+              "tense": "present",
+              "status": "pending",
+              "validity": "active",
+              "modality": "informational"
+            },
+            "inferenceLevel": "explicit",
+            "subject": {
+              "scopeId": "scope-0006-8bc5b21bc34431a451888de89e80a7540fd5838693803d12c140cfa63e200c16",
+              "surface": "受理时间"
+            },
+            "timeRefs": [],
+            "locationRef": null
+          }
+        ],
+        "ignoredScopeIds": [
+          "scope-0001-07fabd181b8ae7309062fd1450fab8212c5a5e17a19c4efb70b71e835316deef",
+          "scope-0002-658834f380d323a1d80f811ec385f042a7d5ef55b1e867c7ae272c2fa0b4d4e5",
+          "scope-0004-f766cc8d5ee91c2930ddde23352b70fc340f2285c1dcd6d03202e6755a6ef256"
+        ]
+      },
+      "providerUsage": {
+        "inputTokens": 2816,
+        "outputTokens": 1413,
+        "totalTokens": 4229
+      }
+    },
+    {
+      "key": "rco-scope-b1-10:candidate",
+      "caseId": "rco-scope-b1-10",
+      "role": "candidate",
+      "dispatched": true,
+      "attemptNo": 1,
+      "startedAt": "2026-09-03T09:31:15.204Z",
+      "completedAt": "2026-09-03T09:31:24.888Z",
+      "latencyMs": 9684,
+      "requestSha256": "c5453570566604c839be6b637798a75b332452cfcf74a9dd09c60882fdc8a211",
+      "requestBytes": 8743,
+      "httpStatus": 200,
+      "providerRequestId": "41f9209f-b798-447a-8871-0945bd978332",
+      "returnedModel": "deepseek-v4-flash-vision-exp",
+      "responseSha256": "f1391ffedb06bbe620c81837e78fd9b41cb37bade211871d8b2d9edd4455fca7",
+      "status": "completed",
+      "failureCode": null,
+      "content": "{\"schemaVersion\":\"scope-reference-candidate-1.0\",\"sourceId\":\"rco-scope-b1-10\",\"sourceVersionId\":\"source-v1\",\"sourceFingerprint\":\"sha256:3356d5d11e8ebaf34e3916dd2c82b86cb70bc2c7006840b3c2d1489780acf613\",\"producerRunId\":\"candidate-rco-5-006-b1-m1-20260903b-rco-scope-b1-10\",\"requiresAction\":true,\"directives\":[{\"id\":\"dir-1\",\"propositionScopeIds\":[\"scope-0002-cc28a82127261d578c1612a93dcd4e4b2a8f26dcfa41de4edd8c2b1e73b112ed\"],\"semantics\":{\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\"},\"inferenceLevel\":\"explicit\",\"actionType\":\"review\",\"action\":{\"scopeId\":\"scope-0002-cc28a82127261d578c1612a93dcd4e4b2a8f26dcfa41de4edd8c2b1e73b112ed\",\"surface\":\"核对\"},\"object\":{\"scopeId\":\"scope-0002-cc28a82127261d578c1612a93dcd4e4b2a8f26dcfa41de4edd8c2b1e73b112ed\",\"surface\":\"清单中的仪器编号\"},\"effect\":\"local_change\",\"timeRefs\":[{\"scopeId\":\"scope-0002-cc28a82127261d578c1612a93dcd4e4b2a8f26dcfa41de4edd8c2b1e73b112ed\",\"surface\":\"今天下午\",\"type\":\"task_deadline\"}],\"materialRefs\":[],\"eventRef\":null,\"locationRef\":null,\"revisionRefs\":[]},{\"id\":\"dir-2\",\"propositionScopeIds\":[\"scope-0003-419e1de9b0d64b597520b3d5336de5426eb68f127573cc55c06a07cb6be8bebb\"],\"semantics\":{\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\"},\"inferenceLevel\":\"explicit\",\"actionType\":\"save\",\"action\":{\"scopeId\":\"scope-0003-419e1de9b0d64b597520b3d5336de5426eb68f127573cc55c06a07cb6be8bebb\",\"surface\":\"保存\"},\"object\":{\"scopeId\":\"scope-0003-419e1de9b0d64b597520b3d5336de5426eb68f127573cc55c06a07cb6be8bebb\",\"surface\":\"批注\"},\"effect\":\"local_change\",\"timeRefs\":[],\"materialRefs\":[],\"eventRef\":null,\"locationRef\":null,\"revisionRefs\":[]},{\"id\":\"dir-3\",\"propositionScopeIds\":[\"scope-0004-f2db3b2f0e649efc66aab725bba5bd8d56c44c1bb7445d798480eeaf106c9e95\"],\"semantics\":{\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"negative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\"},\"inferenceLevel\":\"explicit\",\"actionType\":\"upload\",\"action\":{\"scopeId\":\"scope-0004-f2db3b2f0e649efc66aab725bba5bd8d56c44c1bb7445d798480eeaf106c9e95\",\"surface\":\"上传\"},\"object\":{\"scopeId\":\"scope-0004-f2db3b2f0e649efc66aab725bba5bd8d56c44c1bb7445d798480eeaf106c9e95\",\"surface\":\"再次\"},\"effect\":\"external_transfer\",\"timeRefs\":[],\"materialRefs\":[],\"eventRef\":null,\"locationRef\":null,\"revisionRefs\":[]}],\"observations\":[{\"id\":\"obs-1\",\"kind\":\"event\",\"propositionScopeIds\":[\"scope-0001-3a35705ae2d1a95d6bf469e4c6d0dc1341d6a9fb50f21b43cecfeca213829f08\"],\"semantics\":{\"actor\":\"third_party\",\"speechAct\":\"assertive\",\"polarity\":\"affirmative\",\"tense\":\"past\",\"status\":\"completed\",\"validity\":\"active\",\"modality\":\"informational\"},\"inferenceLevel\":\"explicit\",\"subject\":{\"scopeId\":\"scope-0001-3a35705ae2d1a95d6bf469e4c6d0dc1341d6a9fb50f21b43cecfeca213829f08\",\"surface\":\"设备管理员\"},\"timeRefs\":[],\"locationRef\":null}],\"ignoredScopeIds\":[]}",
+      "contentSha256": "859c869a90343c4cd1c2f7be94b5062c8c365adbeb39c7420d8d53595bfa6a18",
+      "parsed": {
+        "schemaVersion": "scope-reference-candidate-1.0",
+        "sourceId": "rco-scope-b1-10",
+        "sourceVersionId": "source-v1",
+        "sourceFingerprint": "sha256:3356d5d11e8ebaf34e3916dd2c82b86cb70bc2c7006840b3c2d1489780acf613",
+        "producerRunId": "candidate-rco-5-006-b1-m1-20260903b-rco-scope-b1-10",
+        "requiresAction": true,
+        "directives": [
+          {
+            "id": "dir-1",
+            "propositionScopeIds": [
+              "scope-0002-cc28a82127261d578c1612a93dcd4e4b2a8f26dcfa41de4edd8c2b1e73b112ed"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "review",
+            "action": {
+              "scopeId": "scope-0002-cc28a82127261d578c1612a93dcd4e4b2a8f26dcfa41de4edd8c2b1e73b112ed",
+              "surface": "核对"
+            },
+            "object": {
+              "scopeId": "scope-0002-cc28a82127261d578c1612a93dcd4e4b2a8f26dcfa41de4edd8c2b1e73b112ed",
+              "surface": "清单中的仪器编号"
+            },
+            "effect": "local_change",
+            "timeRefs": [
+              {
+                "scopeId": "scope-0002-cc28a82127261d578c1612a93dcd4e4b2a8f26dcfa41de4edd8c2b1e73b112ed",
+                "surface": "今天下午",
+                "type": "task_deadline"
+              }
+            ],
+            "materialRefs": [],
+            "eventRef": null,
+            "locationRef": null,
+            "revisionRefs": []
+          },
+          {
+            "id": "dir-2",
+            "propositionScopeIds": [
+              "scope-0003-419e1de9b0d64b597520b3d5336de5426eb68f127573cc55c06a07cb6be8bebb"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "save",
+            "action": {
+              "scopeId": "scope-0003-419e1de9b0d64b597520b3d5336de5426eb68f127573cc55c06a07cb6be8bebb",
+              "surface": "保存"
+            },
+            "object": {
+              "scopeId": "scope-0003-419e1de9b0d64b597520b3d5336de5426eb68f127573cc55c06a07cb6be8bebb",
+              "surface": "批注"
+            },
+            "effect": "local_change",
+            "timeRefs": [],
+            "materialRefs": [],
+            "eventRef": null,
+            "locationRef": null,
+            "revisionRefs": []
+          },
+          {
+            "id": "dir-3",
+            "propositionScopeIds": [
+              "scope-0004-f2db3b2f0e649efc66aab725bba5bd8d56c44c1bb7445d798480eeaf106c9e95"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "negative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "upload",
+            "action": {
+              "scopeId": "scope-0004-f2db3b2f0e649efc66aab725bba5bd8d56c44c1bb7445d798480eeaf106c9e95",
+              "surface": "上传"
+            },
+            "object": {
+              "scopeId": "scope-0004-f2db3b2f0e649efc66aab725bba5bd8d56c44c1bb7445d798480eeaf106c9e95",
+              "surface": "再次"
+            },
+            "effect": "external_transfer",
+            "timeRefs": [],
+            "materialRefs": [],
+            "eventRef": null,
+            "locationRef": null,
+            "revisionRefs": []
+          }
+        ],
+        "observations": [
+          {
+            "id": "obs-1",
+            "kind": "event",
+            "propositionScopeIds": [
+              "scope-0001-3a35705ae2d1a95d6bf469e4c6d0dc1341d6a9fb50f21b43cecfeca213829f08"
+            ],
+            "semantics": {
+              "actor": "third_party",
+              "speechAct": "assertive",
+              "polarity": "affirmative",
+              "tense": "past",
+              "status": "completed",
+              "validity": "active",
+              "modality": "informational"
+            },
+            "inferenceLevel": "explicit",
+            "subject": {
+              "scopeId": "scope-0001-3a35705ae2d1a95d6bf469e4c6d0dc1341d6a9fb50f21b43cecfeca213829f08",
+              "surface": "设备管理员"
+            },
+            "timeRefs": [],
+            "locationRef": null
+          }
+        ],
+        "ignoredScopeIds": []
+      },
+      "providerUsage": {
+        "inputTokens": 2715,
+        "outputTokens": 1145,
+        "totalTokens": 3860
+      }
+    },
+    {
+      "key": "rco-scope-b1-11:candidate",
+      "caseId": "rco-scope-b1-11",
+      "role": "candidate",
+      "dispatched": true,
+      "attemptNo": 1,
+      "startedAt": "2026-09-03T09:31:24.898Z",
+      "completedAt": "2026-09-03T09:31:34.426Z",
+      "latencyMs": 9528,
+      "requestSha256": "a59bd9974809030aadebfd83761d16d9f294be100d7b238ab74d917fefb2165b",
+      "requestBytes": 8532,
+      "httpStatus": 200,
+      "providerRequestId": "d4ea2d54-1f5b-456b-a093-d0c23040e807",
+      "returnedModel": "deepseek-v4-flash-vision-exp",
+      "responseSha256": "e2802c173705c0b85f8afaf8fc65e0c5682ec52950cd4c72f54f7ba933dff901",
+      "status": "completed",
+      "failureCode": null,
+      "content": "{\"schemaVersion\":\"scope-reference-candidate-1.0\",\"sourceId\":\"rco-scope-b1-11\",\"sourceVersionId\":\"source-v1\",\"sourceFingerprint\":\"sha256:68611c70b8043c0873079df78cb18350784d8c4e07c7637a7fede6c2d196ddf8\",\"producerRunId\":\"candidate-rco-5-006-b1-m1-20260903b-rco-scope-b1-11\",\"requiresAction\":true,\"directives\":[{\"id\":\"dir-1\",\"propositionScopeIds\":[\"scope-0002-1b01b11704cf882b11a0e1d983373b5822079faab757fba3453b3457cec9be93\"],\"semantics\":{\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\"},\"inferenceLevel\":\"explicit\",\"actionType\":\"prepare\",\"action\":{\"scopeId\":\"scope-0002-1b01b11704cf882b11a0e1d983373b5822079faab757fba3453b3457cec9be93\",\"surface\":\"重写\"},\"object\":{\"scopeId\":\"scope-0002-1b01b11704cf882b11a0e1d983373b5822079faab757fba3453b3457cec9be93\",\"surface\":\"个人陈述\"},\"effect\":\"local_change\",\"timeRefs\":[{\"scopeId\":\"scope-0002-1b01b11704cf882b11a0e1d983373b5822079faab757fba3453b3457cec9be93\",\"surface\":\"明天中午前\",\"type\":\"task_deadline\"}],\"materialRefs\":[],\"eventRef\":null,\"locationRef\":null,\"revisionRefs\":[]},{\"id\":\"dir-2\",\"propositionScopeIds\":[\"scope-0002-1b01b11704cf882b11a0e1d983373b5822079faab757fba3453b3457cec9be93\"],\"semantics\":{\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\"},\"inferenceLevel\":\"explicit\",\"actionType\":\"save\",\"action\":{\"scopeId\":\"scope-0002-1b01b11704cf882b11a0e1d983373b5822079faab757fba3453b3457cec9be93\",\"surface\":\"保存\"},\"object\":{\"scopeId\":\"scope-0002-1b01b11704cf882b11a0e1d983373b5822079faab757fba3453b3457cec9be93\",\"surface\":\"个人陈述\"},\"effect\":\"local_change\",\"timeRefs\":[],\"materialRefs\":[],\"eventRef\":null,\"locationRef\":null,\"revisionRefs\":[]},{\"id\":\"dir-3\",\"propositionScopeIds\":[\"scope-0003-1e4ee2b16bd714c1120cdfadf9511b2cdafa2b15d09adb5b0c06725f0e6e104e\"],\"semantics\":{\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"negative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\"},\"inferenceLevel\":\"explicit\",\"actionType\":\"submit\",\"action\":{\"scopeId\":\"scope-0003-1e4ee2b16bd714c1120cdfadf9511b2cdafa2b15d09adb5b0c06725f0e6e104e\",\"surface\":\"提交\"},\"object\":{\"scopeId\":\"scope-0003-1e4ee2b16bd714c1120cdfadf9511b2cdafa2b15d09adb5b0c06725f0e6e104e\",\"surface\":\"新版本\"},\"effect\":\"external_transfer\",\"timeRefs\":[],\"materialRefs\":[],\"eventRef\":null,\"locationRef\":null,\"revisionRefs\":[]}],\"observations\":[{\"id\":\"obs-1\",\"kind\":\"information\",\"propositionScopeIds\":[\"scope-0001-c5fa8463b9422ada7feb3857b864098672db5b9c21ef8cdc3deaa782341e52a8\"],\"semantics\":{\"actor\":\"issuer\",\"speechAct\":\"assertive\",\"polarity\":\"affirmative\",\"tense\":\"past\",\"status\":\"completed\",\"validity\":\"active\",\"modality\":\"informational\"},\"inferenceLevel\":\"explicit\",\"subject\":{\"scopeId\":\"scope-0001-c5fa8463b9422ada7feb3857b864098672db5b9c21ef8cdc3deaa782341e52a8\",\"surface\":\"系统\"},\"timeRefs\":[],\"locationRef\":null}],\"ignoredScopeIds\":[]}",
+      "contentSha256": "075ff780c32db7e2193acfc144b4674da2c39c09739e9c6903388ce5f5ff57ec",
+      "parsed": {
+        "schemaVersion": "scope-reference-candidate-1.0",
+        "sourceId": "rco-scope-b1-11",
+        "sourceVersionId": "source-v1",
+        "sourceFingerprint": "sha256:68611c70b8043c0873079df78cb18350784d8c4e07c7637a7fede6c2d196ddf8",
+        "producerRunId": "candidate-rco-5-006-b1-m1-20260903b-rco-scope-b1-11",
+        "requiresAction": true,
+        "directives": [
+          {
+            "id": "dir-1",
+            "propositionScopeIds": [
+              "scope-0002-1b01b11704cf882b11a0e1d983373b5822079faab757fba3453b3457cec9be93"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "prepare",
+            "action": {
+              "scopeId": "scope-0002-1b01b11704cf882b11a0e1d983373b5822079faab757fba3453b3457cec9be93",
+              "surface": "重写"
+            },
+            "object": {
+              "scopeId": "scope-0002-1b01b11704cf882b11a0e1d983373b5822079faab757fba3453b3457cec9be93",
+              "surface": "个人陈述"
+            },
+            "effect": "local_change",
+            "timeRefs": [
+              {
+                "scopeId": "scope-0002-1b01b11704cf882b11a0e1d983373b5822079faab757fba3453b3457cec9be93",
+                "surface": "明天中午前",
+                "type": "task_deadline"
+              }
+            ],
+            "materialRefs": [],
+            "eventRef": null,
+            "locationRef": null,
+            "revisionRefs": []
+          },
+          {
+            "id": "dir-2",
+            "propositionScopeIds": [
+              "scope-0002-1b01b11704cf882b11a0e1d983373b5822079faab757fba3453b3457cec9be93"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "save",
+            "action": {
+              "scopeId": "scope-0002-1b01b11704cf882b11a0e1d983373b5822079faab757fba3453b3457cec9be93",
+              "surface": "保存"
+            },
+            "object": {
+              "scopeId": "scope-0002-1b01b11704cf882b11a0e1d983373b5822079faab757fba3453b3457cec9be93",
+              "surface": "个人陈述"
+            },
+            "effect": "local_change",
+            "timeRefs": [],
+            "materialRefs": [],
+            "eventRef": null,
+            "locationRef": null,
+            "revisionRefs": []
+          },
+          {
+            "id": "dir-3",
+            "propositionScopeIds": [
+              "scope-0003-1e4ee2b16bd714c1120cdfadf9511b2cdafa2b15d09adb5b0c06725f0e6e104e"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "negative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "submit",
+            "action": {
+              "scopeId": "scope-0003-1e4ee2b16bd714c1120cdfadf9511b2cdafa2b15d09adb5b0c06725f0e6e104e",
+              "surface": "提交"
+            },
+            "object": {
+              "scopeId": "scope-0003-1e4ee2b16bd714c1120cdfadf9511b2cdafa2b15d09adb5b0c06725f0e6e104e",
+              "surface": "新版本"
+            },
+            "effect": "external_transfer",
+            "timeRefs": [],
+            "materialRefs": [],
+            "eventRef": null,
+            "locationRef": null,
+            "revisionRefs": []
+          }
+        ],
+        "observations": [
+          {
+            "id": "obs-1",
+            "kind": "information",
+            "propositionScopeIds": [
+              "scope-0001-c5fa8463b9422ada7feb3857b864098672db5b9c21ef8cdc3deaa782341e52a8"
+            ],
+            "semantics": {
+              "actor": "issuer",
+              "speechAct": "assertive",
+              "polarity": "affirmative",
+              "tense": "past",
+              "status": "completed",
+              "validity": "active",
+              "modality": "informational"
+            },
+            "inferenceLevel": "explicit",
+            "subject": {
+              "scopeId": "scope-0001-c5fa8463b9422ada7feb3857b864098672db5b9c21ef8cdc3deaa782341e52a8",
+              "surface": "系统"
+            },
+            "timeRefs": [],
+            "locationRef": null
+          }
+        ],
+        "ignoredScopeIds": []
+      },
+      "providerUsage": {
+        "inputTokens": 2646,
+        "outputTokens": 1125,
+        "totalTokens": 3771
+      }
+    },
+    {
+      "key": "rco-scope-b1-12:candidate",
+      "caseId": "rco-scope-b1-12",
+      "role": "candidate",
+      "dispatched": true,
+      "attemptNo": 1,
+      "startedAt": "2026-09-03T09:31:34.437Z",
+      "completedAt": "2026-09-03T09:31:41.696Z",
+      "latencyMs": 7259,
+      "requestSha256": "5d92bb095d4408ed7ab7a4dc97478a38fd50814e0b3a968743301933b27c1adf",
+      "requestBytes": 8659,
+      "httpStatus": 200,
+      "providerRequestId": "78488764-1dbe-4d3f-b61e-9f8d90002956",
+      "returnedModel": "deepseek-v4-flash-vision-exp",
+      "responseSha256": "833d5841585ec6dcce0a9c0199ca4bf939323688b318796bb5c3a28a550626c5",
+      "status": "completed",
+      "failureCode": null,
+      "content": "{\"schemaVersion\":\"scope-reference-candidate-1.0\",\"sourceId\":\"rco-scope-b1-12\",\"sourceVersionId\":\"source-v1\",\"sourceFingerprint\":\"sha256:a908cecd9fe355b034d93670599d210a01dc1d6b768f38020fdd1071af905c5d\",\"producerRunId\":\"candidate-rco-5-006-b1-m1-20260903b-rco-scope-b1-12\",\"requiresAction\":false,\"directives\":[],\"observations\":[{\"id\":\"obs-1\",\"kind\":\"information\",\"propositionScopeIds\":[\"scope-0001-ad0175a1672843c5912515c758b45e6bc0170cd3accd84eceef36844e568da22\"],\"semantics\":{\"actor\":\"third_party\",\"speechAct\":\"interrogative\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"unknown\",\"validity\":\"active\",\"modality\":\"informational\"},\"inferenceLevel\":\"explicit\",\"subject\":{\"scopeId\":\"scope-0001-ad0175a1672843c5912515c758b45e6bc0170cd3accd84eceef36844e568da22\",\"surface\":\"有人询问周日是否需要到图书馆参加培训\"},\"timeRefs\":[],\"locationRef\":null},{\"id\":\"obs-2\",\"kind\":\"information\",\"propositionScopeIds\":[\"scope-0002-30316b5623f1ce9f42e5e6a3b5450e181f3d6a7552b1f55a680654baebfa5b49\"],\"semantics\":{\"actor\":\"issuer\",\"speechAct\":\"assertive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"unknown\",\"validity\":\"active\",\"modality\":\"informational\"},\"inferenceLevel\":\"explicit\",\"subject\":{\"scopeId\":\"scope-0002-30316b5623f1ce9f42e5e6a3b5450e181f3d6a7552b1f55a680654baebfa5b49\",\"surface\":\"这只是征询\"},\"timeRefs\":[],\"locationRef\":null},{\"id\":\"obs-3\",\"kind\":\"information\",\"propositionScopeIds\":[\"scope-0003-3101034a65138373f226ccbdf0d3870e994de712ac05cff2fa754e84b8a7b0df\"],\"semantics\":{\"actor\":\"issuer\",\"speechAct\":\"assertive\",\"polarity\":\"negative\",\"tense\":\"present\",\"status\":\"unknown\",\"validity\":\"active\",\"modality\":\"informational\"},\"inferenceLevel\":\"explicit\",\"subject\":{\"scopeId\":\"scope-0003-3101034a65138373f226ccbdf0d3870e994de712ac05cff2fa754e84b8a7b0df\",\"surface\":\"不是正式安排\"},\"timeRefs\":[],\"locationRef\":null},{\"id\":\"obs-4\",\"kind\":\"information\",\"propositionScopeIds\":[\"scope-0004-4ba595bef2d9441235e07549808b2021f81043e48934947878ac332537916b62\"],\"semantics\":{\"actor\":\"issuer\",\"speechAct\":\"assertive\",\"polarity\":\"negative\",\"tense\":\"present\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"informational\"},\"inferenceLevel\":\"explicit\",\"subject\":{\"scopeId\":\"scope-0004-4ba595bef2d9441235e07549808b2021f81043e48934947878ac332537916b62\",\"surface\":\"最终通知尚未发布\"},\"timeRefs\":[],\"locationRef\":null}],\"ignoredScopeIds\":[]}",
+      "contentSha256": "f50c2ced7fc60faff4b8e84dbd8ba91f4043c0f9f8dad395cfde40bb216282e6",
+      "parsed": {
+        "schemaVersion": "scope-reference-candidate-1.0",
+        "sourceId": "rco-scope-b1-12",
+        "sourceVersionId": "source-v1",
+        "sourceFingerprint": "sha256:a908cecd9fe355b034d93670599d210a01dc1d6b768f38020fdd1071af905c5d",
+        "producerRunId": "candidate-rco-5-006-b1-m1-20260903b-rco-scope-b1-12",
+        "requiresAction": false,
+        "directives": [],
+        "observations": [
+          {
+            "id": "obs-1",
+            "kind": "information",
+            "propositionScopeIds": [
+              "scope-0001-ad0175a1672843c5912515c758b45e6bc0170cd3accd84eceef36844e568da22"
+            ],
+            "semantics": {
+              "actor": "third_party",
+              "speechAct": "interrogative",
+              "polarity": "affirmative",
+              "tense": "present",
+              "status": "unknown",
+              "validity": "active",
+              "modality": "informational"
+            },
+            "inferenceLevel": "explicit",
+            "subject": {
+              "scopeId": "scope-0001-ad0175a1672843c5912515c758b45e6bc0170cd3accd84eceef36844e568da22",
+              "surface": "有人询问周日是否需要到图书馆参加培训"
+            },
+            "timeRefs": [],
+            "locationRef": null
+          },
+          {
+            "id": "obs-2",
+            "kind": "information",
+            "propositionScopeIds": [
+              "scope-0002-30316b5623f1ce9f42e5e6a3b5450e181f3d6a7552b1f55a680654baebfa5b49"
+            ],
+            "semantics": {
+              "actor": "issuer",
+              "speechAct": "assertive",
+              "polarity": "affirmative",
+              "tense": "present",
+              "status": "unknown",
+              "validity": "active",
+              "modality": "informational"
+            },
+            "inferenceLevel": "explicit",
+            "subject": {
+              "scopeId": "scope-0002-30316b5623f1ce9f42e5e6a3b5450e181f3d6a7552b1f55a680654baebfa5b49",
+              "surface": "这只是征询"
+            },
+            "timeRefs": [],
+            "locationRef": null
+          },
+          {
+            "id": "obs-3",
+            "kind": "information",
+            "propositionScopeIds": [
+              "scope-0003-3101034a65138373f226ccbdf0d3870e994de712ac05cff2fa754e84b8a7b0df"
+            ],
+            "semantics": {
+              "actor": "issuer",
+              "speechAct": "assertive",
+              "polarity": "negative",
+              "tense": "present",
+              "status": "unknown",
+              "validity": "active",
+              "modality": "informational"
+            },
+            "inferenceLevel": "explicit",
+            "subject": {
+              "scopeId": "scope-0003-3101034a65138373f226ccbdf0d3870e994de712ac05cff2fa754e84b8a7b0df",
+              "surface": "不是正式安排"
+            },
+            "timeRefs": [],
+            "locationRef": null
+          },
+          {
+            "id": "obs-4",
+            "kind": "information",
+            "propositionScopeIds": [
+              "scope-0004-4ba595bef2d9441235e07549808b2021f81043e48934947878ac332537916b62"
+            ],
+            "semantics": {
+              "actor": "issuer",
+              "speechAct": "assertive",
+              "polarity": "negative",
+              "tense": "present",
+              "status": "pending",
+              "validity": "active",
+              "modality": "informational"
+            },
+            "inferenceLevel": "explicit",
+            "subject": {
+              "scopeId": "scope-0004-4ba595bef2d9441235e07549808b2021f81043e48934947878ac332537916b62",
+              "surface": "最终通知尚未发布"
+            },
+            "timeRefs": [],
+            "locationRef": null
+          }
+        ],
+        "ignoredScopeIds": []
+      },
+      "providerUsage": {
+        "inputTokens": 2680,
+        "outputTokens": 821,
+        "totalTokens": 3501
+      }
+    },
+    {
+      "key": "rco-scope-b1-01:verifier",
+      "caseId": "rco-scope-b1-01",
+      "role": "verifier",
+      "dispatched": false,
+      "attemptNo": 1,
+      "status": "skipped_upstream_invalid",
+      "failureCode": "UPSTREAM_CANDIDATE_SCHEMA_INVALID",
+      "schemaIssues": [
+        "surface:SURFACE_NOT_IN_SCOPE:candidate.directives[2].object.surface"
+      ],
+      "providerUsage": null
+    },
+    {
+      "key": "rco-scope-b1-02:verifier",
+      "caseId": "rco-scope-b1-02",
+      "role": "verifier",
+      "dispatched": true,
+      "attemptNo": 1,
+      "startedAt": "2026-09-03T09:31:41.717Z",
+      "completedAt": "2026-09-03T09:31:50.414Z",
+      "latencyMs": 8697,
+      "requestSha256": "cec0400eead7b7fa5f7cd4e351fd3971824130550d81d459860dea5347e5858e",
+      "requestBytes": 10323,
+      "httpStatus": 200,
+      "providerRequestId": "7ad180b9-427b-473b-bcfa-0aee0f436393",
+      "returnedModel": "deepseek-v4-flash-vision-exp",
+      "responseSha256": "a10c9b79d6d8859aa2bd87c5c6236be92eef64286418b8ef24b35d36c4ae1134",
+      "status": "completed",
+      "failureCode": null,
+      "content": "{\"schemaVersion\":\"scope-reference-verification-1.0\",\"method\":\"independent_semantic_verifier\",\"verifierRunId\":\"verifier-rco-5-006-b1-m1-20260903b-rco-scope-b1-02\",\"sourceId\":\"rco-scope-b1-02\",\"sourceVersionId\":\"source-v1\",\"sourceFingerprint\":\"sha256:fa94e3cf3d360f209cfc81f4869469115fcd376bd0fda2b34c58f5abbbdd6d75\",\"candidateFingerprint\":\"sha256:9c686a202eeb39b0a68c24eae429cf1d13c5def6abfe9bc989e8c0366cdf7a39\",\"graphCoverage\":\"complete\",\"revisionCoverage\":\"complete\",\"consideredScopeIds\":[\"scope-0001-84a2f5824b9ffe57e79cfcd22d0d399f624f5fbb8ff380af1142aa20d7516a57\",\"scope-0002-ac81968dc8ba4c29f3c9cc71e1ef080176e6d040b2eef5af2f3a9638cb314bcc\",\"scope-0003-ce84057fac32d08d56b48430ca592777bdcc8daa40a1521ea6eafad60f042f5e\",\"scope-0004-a93c33c74568a1b4861ea7ac4bfb3ffcf3fff1893395d14ea21119d529ece04e\",\"scope-0005-cf09cb16b59501f57b58c844b755b1dd33de148ca90254e928a52a31169e8e2d\",\"scope-0006-0b6b83815fcfe692b567066a8532de9bc8bec93b12907ae8785c0c8cc0a7c11d\"],\"assessments\":[{\"directiveId\":\"dir-1\",\"verdict\":\"entailed\",\"semantics\":{\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\"},\"inferenceLevel\":\"explicit\",\"actionType\":\"print\",\"effect\":\"physical_action\",\"evidenceScopeIds\":[\"scope-0005-cf09cb16b59501f57b58c844b755b1dd33de148ca90254e928a52a31169e8e2d\"]},{\"directiveId\":\"dir-2\",\"verdict\":\"entailed\",\"semantics\":{\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\"},\"inferenceLevel\":\"explicit\",\"actionType\":\"sign\",\"effect\":\"physical_action\",\"evidenceScopeIds\":[\"scope-0006-0b6b83815fcfe692b567066a8532de9bc8bec93b12907ae8785c0c8cc0a7c11d\"]}],\"observationAssessments\":[{\"observationId\":\"obs-1\",\"verdict\":\"entailed\",\"semantics\":{\"actor\":\"unknown\",\"speechAct\":\"assertive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"unknown\",\"validity\":\"active\",\"modality\":\"informational\"},\"inferenceLevel\":\"explicit\",\"evidenceScopeIds\":[\"scope-0001-84a2f5824b9ffe57e79cfcd22d0d399f624f5fbb8ff380af1142aa20d7516a57\",\"scope-0002-ac81968dc8ba4c29f3c9cc71e1ef080176e6d040b2eef5af2f3a9638cb314bcc\"]},{\"observationId\":\"obs-2\",\"verdict\":\"entailed\",\"semantics\":{\"actor\":\"issuer\",\"speechAct\":\"assertive\",\"polarity\":\"negative\",\"tense\":\"present\",\"status\":\"unknown\",\"validity\":\"active\",\"modality\":\"informational\"},\"inferenceLevel\":\"explicit\",\"evidenceScopeIds\":[\"scope-0003-ce84057fac32d08d56b48430ca592777bdcc8daa40a1521ea6eafad60f042f5e\",\"scope-0004-a93c33c74568a1b4861ea7ac4bfb3ffcf3fff1893395d14ea21119d529ece04e\"]}],\"missingDirectiveScopeIds\":[]}",
+      "contentSha256": "1de59cec2d24d1178ac0ea5db5bae5e26ea0d7176400f51611d5ec7ad50b7586",
+      "parsed": {
+        "schemaVersion": "scope-reference-verification-1.0",
+        "method": "independent_semantic_verifier",
+        "verifierRunId": "verifier-rco-5-006-b1-m1-20260903b-rco-scope-b1-02",
+        "sourceId": "rco-scope-b1-02",
+        "sourceVersionId": "source-v1",
+        "sourceFingerprint": "sha256:fa94e3cf3d360f209cfc81f4869469115fcd376bd0fda2b34c58f5abbbdd6d75",
+        "candidateFingerprint": "sha256:9c686a202eeb39b0a68c24eae429cf1d13c5def6abfe9bc989e8c0366cdf7a39",
+        "graphCoverage": "complete",
+        "revisionCoverage": "complete",
+        "consideredScopeIds": [
+          "scope-0001-84a2f5824b9ffe57e79cfcd22d0d399f624f5fbb8ff380af1142aa20d7516a57",
+          "scope-0002-ac81968dc8ba4c29f3c9cc71e1ef080176e6d040b2eef5af2f3a9638cb314bcc",
+          "scope-0003-ce84057fac32d08d56b48430ca592777bdcc8daa40a1521ea6eafad60f042f5e",
+          "scope-0004-a93c33c74568a1b4861ea7ac4bfb3ffcf3fff1893395d14ea21119d529ece04e",
+          "scope-0005-cf09cb16b59501f57b58c844b755b1dd33de148ca90254e928a52a31169e8e2d",
+          "scope-0006-0b6b83815fcfe692b567066a8532de9bc8bec93b12907ae8785c0c8cc0a7c11d"
+        ],
+        "assessments": [
+          {
+            "directiveId": "dir-1",
+            "verdict": "entailed",
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "present",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "print",
+            "effect": "physical_action",
+            "evidenceScopeIds": [
+              "scope-0005-cf09cb16b59501f57b58c844b755b1dd33de148ca90254e928a52a31169e8e2d"
+            ]
+          },
+          {
+            "directiveId": "dir-2",
+            "verdict": "entailed",
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "present",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "sign",
+            "effect": "physical_action",
+            "evidenceScopeIds": [
+              "scope-0006-0b6b83815fcfe692b567066a8532de9bc8bec93b12907ae8785c0c8cc0a7c11d"
+            ]
+          }
+        ],
+        "observationAssessments": [
+          {
+            "observationId": "obs-1",
+            "verdict": "entailed",
+            "semantics": {
+              "actor": "unknown",
+              "speechAct": "assertive",
+              "polarity": "affirmative",
+              "tense": "present",
+              "status": "unknown",
+              "validity": "active",
+              "modality": "informational"
+            },
+            "inferenceLevel": "explicit",
+            "evidenceScopeIds": [
+              "scope-0001-84a2f5824b9ffe57e79cfcd22d0d399f624f5fbb8ff380af1142aa20d7516a57",
+              "scope-0002-ac81968dc8ba4c29f3c9cc71e1ef080176e6d040b2eef5af2f3a9638cb314bcc"
+            ]
+          },
+          {
+            "observationId": "obs-2",
+            "verdict": "entailed",
+            "semantics": {
+              "actor": "issuer",
+              "speechAct": "assertive",
+              "polarity": "negative",
+              "tense": "present",
+              "status": "unknown",
+              "validity": "active",
+              "modality": "informational"
+            },
+            "inferenceLevel": "explicit",
+            "evidenceScopeIds": [
+              "scope-0003-ce84057fac32d08d56b48430ca592777bdcc8daa40a1521ea6eafad60f042f5e",
+              "scope-0004-a93c33c74568a1b4861ea7ac4bfb3ffcf3fff1893395d14ea21119d529ece04e"
+            ]
+          }
+        ],
+        "missingDirectiveScopeIds": []
+      },
+      "providerUsage": {
+        "inputTokens": 3279,
+        "outputTokens": 1019,
+        "totalTokens": 4298
+      }
+    },
+    {
+      "key": "rco-scope-b1-03:verifier",
+      "caseId": "rco-scope-b1-03",
+      "role": "verifier",
+      "dispatched": true,
+      "attemptNo": 1,
+      "startedAt": "2026-09-03T09:31:50.426Z",
+      "completedAt": "2026-09-03T09:31:57.786Z",
+      "latencyMs": 7360,
+      "requestSha256": "44a910d3e77dabc53f4e33ed19c7410e1d96a09546dfb61567ab86a5d9c18c1a",
+      "requestBytes": 10591,
+      "httpStatus": 200,
+      "providerRequestId": "32299ab0-1ac2-4322-8b5e-aced85ff1e88",
+      "returnedModel": "deepseek-v4-flash-vision-exp",
+      "responseSha256": "1733ac40d39eefba440b141310a1782fb23f8843fee3b235471e5dec89491028",
+      "status": "completed",
+      "failureCode": null,
+      "content": "{\"schemaVersion\":\"scope-reference-verification-1.0\",\"method\":\"independent_semantic_verifier\",\"verifierRunId\":\"verifier-rco-5-006-b1-m1-20260903b-rco-scope-b1-03\",\"sourceId\":\"rco-scope-b1-03\",\"sourceVersionId\":\"source-v1\",\"sourceFingerprint\":\"sha256:977838c9687e8c16c42acc405a4529a89b1ef5b7f77cd151a60417068322f235\",\"candidateFingerprint\":\"sha256:9ab15ebbf3ef84769cf56449bd1cd95f5efb267ae58cb7dccad72c9f0785f9f3\",\"graphCoverage\":\"complete\",\"revisionCoverage\":\"complete\",\"consideredScopeIds\":[\"scope-0001-430449e6360bed38aeb504397b114486a33bc5368691834de0c1a52b92acf641\",\"scope-0002-dddfffb5da3332fe4aec7df0abd0468f4c235fa888cedd980810294ae14e54d4\",\"scope-0003-62e7e57b52c08374637b80f250687f98333e2356b73ed212e2a2969d89251a8b\",\"scope-0004-5e10bc223e33c907e0a0e89eb151939915cc15f3f453b567a20b21a3fc70761d\"],\"assessments\":[{\"directiveId\":\"dir-1\",\"verdict\":\"entailed\",\"semantics\":{\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\"},\"inferenceLevel\":\"explicit\",\"actionType\":\"fill\",\"effect\":\"local_change\",\"evidenceScopeIds\":[\"scope-0004-5e10bc223e33c907e0a0e89eb151939915cc15f3f453b567a20b21a3fc70761d\"]},{\"directiveId\":\"dir-2\",\"verdict\":\"entailed\",\"semantics\":{\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\"},\"inferenceLevel\":\"explicit\",\"actionType\":\"save\",\"effect\":\"local_change\",\"evidenceScopeIds\":[\"scope-0004-5e10bc223e33c907e0a0e89eb151939915cc15f3f453b567a20b21a3fc70761d\"]}],\"observationAssessments\":[{\"observationId\":\"obs-1\",\"verdict\":\"entailed\",\"semantics\":{\"actor\":\"issuer\",\"speechAct\":\"assertive\",\"polarity\":\"affirmative\",\"tense\":\"past\",\"status\":\"completed\",\"validity\":\"superseded\",\"modality\":\"required\"},\"inferenceLevel\":\"explicit\",\"evidenceScopeIds\":[\"scope-0001-430449e6360bed38aeb504397b114486a33bc5368691834de0c1a52b92acf641\"]},{\"observationId\":\"obs-2\",\"verdict\":\"entailed\",\"semantics\":{\"actor\":\"issuer\",\"speechAct\":\"assertive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"completed\",\"validity\":\"active\",\"modality\":\"informational\"},\"inferenceLevel\":\"explicit\",\"evidenceScopeIds\":[\"scope-0003-62e7e57b52c08374637b80f250687f98333e2356b73ed212e2a2969d89251a8b\"]}],\"missingDirectiveScopeIds\":[]}",
+      "contentSha256": "ffbb215f6d870f5e88032ca31cc271449c243fc1cb36a9590b9a43235d7f1527",
+      "parsed": {
+        "schemaVersion": "scope-reference-verification-1.0",
+        "method": "independent_semantic_verifier",
+        "verifierRunId": "verifier-rco-5-006-b1-m1-20260903b-rco-scope-b1-03",
+        "sourceId": "rco-scope-b1-03",
+        "sourceVersionId": "source-v1",
+        "sourceFingerprint": "sha256:977838c9687e8c16c42acc405a4529a89b1ef5b7f77cd151a60417068322f235",
+        "candidateFingerprint": "sha256:9ab15ebbf3ef84769cf56449bd1cd95f5efb267ae58cb7dccad72c9f0785f9f3",
+        "graphCoverage": "complete",
+        "revisionCoverage": "complete",
+        "consideredScopeIds": [
+          "scope-0001-430449e6360bed38aeb504397b114486a33bc5368691834de0c1a52b92acf641",
+          "scope-0002-dddfffb5da3332fe4aec7df0abd0468f4c235fa888cedd980810294ae14e54d4",
+          "scope-0003-62e7e57b52c08374637b80f250687f98333e2356b73ed212e2a2969d89251a8b",
+          "scope-0004-5e10bc223e33c907e0a0e89eb151939915cc15f3f453b567a20b21a3fc70761d"
+        ],
+        "assessments": [
+          {
+            "directiveId": "dir-1",
+            "verdict": "entailed",
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "fill",
+            "effect": "local_change",
+            "evidenceScopeIds": [
+              "scope-0004-5e10bc223e33c907e0a0e89eb151939915cc15f3f453b567a20b21a3fc70761d"
+            ]
+          },
+          {
+            "directiveId": "dir-2",
+            "verdict": "entailed",
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "save",
+            "effect": "local_change",
+            "evidenceScopeIds": [
+              "scope-0004-5e10bc223e33c907e0a0e89eb151939915cc15f3f453b567a20b21a3fc70761d"
+            ]
+          }
+        ],
+        "observationAssessments": [
+          {
+            "observationId": "obs-1",
+            "verdict": "entailed",
+            "semantics": {
+              "actor": "issuer",
+              "speechAct": "assertive",
+              "polarity": "affirmative",
+              "tense": "past",
+              "status": "completed",
+              "validity": "superseded",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "evidenceScopeIds": [
+              "scope-0001-430449e6360bed38aeb504397b114486a33bc5368691834de0c1a52b92acf641"
+            ]
+          },
+          {
+            "observationId": "obs-2",
+            "verdict": "entailed",
+            "semantics": {
+              "actor": "issuer",
+              "speechAct": "assertive",
+              "polarity": "affirmative",
+              "tense": "present",
+              "status": "completed",
+              "validity": "active",
+              "modality": "informational"
+            },
+            "inferenceLevel": "explicit",
+            "evidenceScopeIds": [
+              "scope-0003-62e7e57b52c08374637b80f250687f98333e2356b73ed212e2a2969d89251a8b"
+            ]
+          }
+        ],
+        "missingDirectiveScopeIds": []
+      },
+      "providerUsage": {
+        "inputTokens": 3362,
+        "outputTokens": 837,
+        "totalTokens": 4199
+      }
+    },
+    {
+      "key": "rco-scope-b1-04:verifier",
+      "caseId": "rco-scope-b1-04",
+      "role": "verifier",
+      "dispatched": false,
+      "attemptNo": 1,
+      "status": "skipped_upstream_invalid",
+      "failureCode": "UPSTREAM_CANDIDATE_SCHEMA_INVALID",
+      "schemaIssues": [
+        "semantic:REQUIRES_ACTION_INCONSISTENT:candidate.requiresAction"
+      ],
+      "providerUsage": null
+    },
+    {
+      "key": "rco-scope-b1-05:verifier",
+      "caseId": "rco-scope-b1-05",
+      "role": "verifier",
+      "dispatched": true,
+      "attemptNo": 1,
+      "startedAt": "2026-09-03T09:31:57.801Z",
+      "completedAt": "2026-09-03T09:32:03.789Z",
+      "latencyMs": 5988,
+      "requestSha256": "978e47b6906d7a41221463a69452c485a734b94e93de4333fe09ad70c305ee34",
+      "requestBytes": 8884,
+      "httpStatus": 200,
+      "providerRequestId": "e6057ca2-12d2-4e6e-ae00-03d4665de073",
+      "returnedModel": "deepseek-v4-flash-vision-exp",
+      "responseSha256": "c0b393c518a48167c9f7a5e927bdd0e55faf8cec3ce2331a3734e7def3326cec",
+      "status": "completed",
+      "failureCode": null,
+      "content": "{\"schemaVersion\":\"scope-reference-verification-1.0\",\"method\":\"independent_semantic_verifier\",\"verifierRunId\":\"verifier-rco-5-006-b1-m1-20260903b-rco-scope-b1-05\",\"sourceId\":\"rco-scope-b1-05\",\"sourceVersionId\":\"source-v1\",\"sourceFingerprint\":\"sha256:5c36467194d14958c1a28bdc27fc6d5ce842af07150da3edf679f175396adeaf\",\"candidateFingerprint\":\"sha256:f0865c996837639c577c2c6cdb90ed57a004c0a50025f4cb7eaee2949463ca2b\",\"graphCoverage\":\"complete\",\"revisionCoverage\":\"complete\",\"consideredScopeIds\":[\"scope-0001-4fa5d8574c1b441de42284cd7e4e1aece47c26c9a87383586f57dba75cced13a\",\"scope-0002-c3b7d382968b75ff7e7ddb214db8d5f2e6e849462e4f9ee08017bfd9edf83b68\",\"scope-0003-b2d244f449ce14908e04cdade60ada69b9b3951665d401aaeac46d7738046454\"],\"assessments\":[],\"observationAssessments\":[{\"observationId\":\"obs-1\",\"verdict\":\"entailed\",\"semantics\":{\"actor\":\"issuer\",\"speechAct\":\"assertive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"informational\"},\"inferenceLevel\":\"explicit\",\"evidenceScopeIds\":[\"scope-0001-4fa5d8574c1b441de42284cd7e4e1aece47c26c9a87383586f57dba75cced13a\"]},{\"observationId\":\"obs-2\",\"verdict\":\"entailed\",\"semantics\":{\"actor\":\"issuer\",\"speechAct\":\"assertive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"unknown\",\"validity\":\"active\",\"modality\":\"informational\"},\"inferenceLevel\":\"explicit\",\"evidenceScopeIds\":[\"scope-0002-c3b7d382968b75ff7e7ddb214db8d5f2e6e849462e4f9ee08017bfd9edf83b68\"]},{\"observationId\":\"obs-3\",\"verdict\":\"entailed\",\"semantics\":{\"actor\":\"issuer\",\"speechAct\":\"assertive\",\"polarity\":\"negative\",\"tense\":\"present\",\"status\":\"unknown\",\"validity\":\"active\",\"modality\":\"informational\"},\"inferenceLevel\":\"explicit\",\"evidenceScopeIds\":[\"scope-0003-b2d244f449ce14908e04cdade60ada69b9b3951665d401aaeac46d7738046454\"]}],\"missingDirectiveScopeIds\":[]}",
+      "contentSha256": "3fa0b3dc7465f72e6c7ec6eca2f374bc5a36005734e5ca8adc2a06638797cee8",
+      "parsed": {
+        "schemaVersion": "scope-reference-verification-1.0",
+        "method": "independent_semantic_verifier",
+        "verifierRunId": "verifier-rco-5-006-b1-m1-20260903b-rco-scope-b1-05",
+        "sourceId": "rco-scope-b1-05",
+        "sourceVersionId": "source-v1",
+        "sourceFingerprint": "sha256:5c36467194d14958c1a28bdc27fc6d5ce842af07150da3edf679f175396adeaf",
+        "candidateFingerprint": "sha256:f0865c996837639c577c2c6cdb90ed57a004c0a50025f4cb7eaee2949463ca2b",
+        "graphCoverage": "complete",
+        "revisionCoverage": "complete",
+        "consideredScopeIds": [
+          "scope-0001-4fa5d8574c1b441de42284cd7e4e1aece47c26c9a87383586f57dba75cced13a",
+          "scope-0002-c3b7d382968b75ff7e7ddb214db8d5f2e6e849462e4f9ee08017bfd9edf83b68",
+          "scope-0003-b2d244f449ce14908e04cdade60ada69b9b3951665d401aaeac46d7738046454"
+        ],
+        "assessments": [],
+        "observationAssessments": [
+          {
+            "observationId": "obs-1",
+            "verdict": "entailed",
+            "semantics": {
+              "actor": "issuer",
+              "speechAct": "assertive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "informational"
+            },
+            "inferenceLevel": "explicit",
+            "evidenceScopeIds": [
+              "scope-0001-4fa5d8574c1b441de42284cd7e4e1aece47c26c9a87383586f57dba75cced13a"
+            ]
+          },
+          {
+            "observationId": "obs-2",
+            "verdict": "entailed",
+            "semantics": {
+              "actor": "issuer",
+              "speechAct": "assertive",
+              "polarity": "affirmative",
+              "tense": "present",
+              "status": "unknown",
+              "validity": "active",
+              "modality": "informational"
+            },
+            "inferenceLevel": "explicit",
+            "evidenceScopeIds": [
+              "scope-0002-c3b7d382968b75ff7e7ddb214db8d5f2e6e849462e4f9ee08017bfd9edf83b68"
+            ]
+          },
+          {
+            "observationId": "obs-3",
+            "verdict": "entailed",
+            "semantics": {
+              "actor": "issuer",
+              "speechAct": "assertive",
+              "polarity": "negative",
+              "tense": "present",
+              "status": "unknown",
+              "validity": "active",
+              "modality": "informational"
+            },
+            "inferenceLevel": "explicit",
+            "evidenceScopeIds": [
+              "scope-0003-b2d244f449ce14908e04cdade60ada69b9b3951665d401aaeac46d7738046454"
+            ]
+          }
+        ],
+        "missingDirectiveScopeIds": []
+      },
+      "providerUsage": {
+        "inputTokens": 2769,
+        "outputTokens": 669,
+        "totalTokens": 3438
+      }
+    },
+    {
+      "key": "rco-scope-b1-06:verifier",
+      "caseId": "rco-scope-b1-06",
+      "role": "verifier",
+      "dispatched": true,
+      "attemptNo": 1,
+      "startedAt": "2026-09-03T09:32:03.802Z",
+      "completedAt": "2026-09-03T09:32:10.307Z",
+      "latencyMs": 6505,
+      "requestSha256": "e7668ef65e770b04811564210254e883be14bd3cb00793eeb2e098f7709dec10",
+      "requestBytes": 8776,
+      "httpStatus": 200,
+      "providerRequestId": "019445d1-a534-4bca-8c75-ec899dd5d16a",
+      "returnedModel": "deepseek-v4-flash-vision-exp",
+      "responseSha256": "8cb8d07d71ab7588fcb1ee1ee7c250983546fddccb4966d61bb1c8661f763fbf",
+      "status": "completed",
+      "failureCode": null,
+      "content": "{\"schemaVersion\":\"scope-reference-verification-1.0\",\"method\":\"independent_semantic_verifier\",\"verifierRunId\":\"verifier-rco-5-006-b1-m1-20260903b-rco-scope-b1-06\",\"sourceId\":\"rco-scope-b1-06\",\"sourceVersionId\":\"source-v1\",\"sourceFingerprint\":\"sha256:e431478273ecac797f2b650912277d9f2b6ab268d4fd7ed174ab34d9f46a8e92\",\"candidateFingerprint\":\"sha256:0156a6d03c4f7bd2a36f6ec72d6218321d3ca287a55c023022c632121fe59769\",\"graphCoverage\":\"complete\",\"revisionCoverage\":\"complete\",\"consideredScopeIds\":[\"scope-0001-96a026d4aaa1d6ffdb9354a5f4070d85dfce7f607bdd7d75196a93e67334da42\",\"scope-0002-b2bd98724ae6f0a71e9df1c80d26f1aee5528d95b23a2dc8259a97d866917a97\",\"scope-0003-c63b6c85cbf267403ab6eb078e6b035c6c53c03c2c28babfe22e7acf02c42e9a\"],\"assessments\":[{\"directiveId\":\"dir-1\",\"verdict\":\"entailed\",\"semantics\":{\"actor\":\"addressed_group\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"optional\"},\"inferenceLevel\":\"explicit\",\"actionType\":\"print\",\"effect\":\"physical_action\",\"evidenceScopeIds\":[\"scope-0001-96a026d4aaa1d6ffdb9354a5f4070d85dfce7f607bdd7d75196a93e67334da42\"]}],\"observationAssessments\":[{\"observationId\":\"obs-1\",\"verdict\":\"entailed\",\"semantics\":{\"actor\":\"issuer\",\"speechAct\":\"assertive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"unknown\",\"validity\":\"active\",\"modality\":\"informational\"},\"inferenceLevel\":\"explicit\",\"evidenceScopeIds\":[\"scope-0002-b2bd98724ae6f0a71e9df1c80d26f1aee5528d95b23a2dc8259a97d866917a97\"]},{\"observationId\":\"obs-2\",\"verdict\":\"entailed\",\"semantics\":{\"actor\":\"issuer\",\"speechAct\":\"assertive\",\"polarity\":\"negative\",\"tense\":\"present\",\"status\":\"unknown\",\"validity\":\"active\",\"modality\":\"informational\"},\"inferenceLevel\":\"explicit\",\"evidenceScopeIds\":[\"scope-0003-c63b6c85cbf267403ab6eb078e6b035c6c53c03c2c28babfe22e7acf02c42e9a\"]}],\"missingDirectiveScopeIds\":[]}",
+      "contentSha256": "1d1d17afac7eaa77d61b6c7b2d64d7e327c82fc56f138a535e4a4c4c876c9380",
+      "parsed": {
+        "schemaVersion": "scope-reference-verification-1.0",
+        "method": "independent_semantic_verifier",
+        "verifierRunId": "verifier-rco-5-006-b1-m1-20260903b-rco-scope-b1-06",
+        "sourceId": "rco-scope-b1-06",
+        "sourceVersionId": "source-v1",
+        "sourceFingerprint": "sha256:e431478273ecac797f2b650912277d9f2b6ab268d4fd7ed174ab34d9f46a8e92",
+        "candidateFingerprint": "sha256:0156a6d03c4f7bd2a36f6ec72d6218321d3ca287a55c023022c632121fe59769",
+        "graphCoverage": "complete",
+        "revisionCoverage": "complete",
+        "consideredScopeIds": [
+          "scope-0001-96a026d4aaa1d6ffdb9354a5f4070d85dfce7f607bdd7d75196a93e67334da42",
+          "scope-0002-b2bd98724ae6f0a71e9df1c80d26f1aee5528d95b23a2dc8259a97d866917a97",
+          "scope-0003-c63b6c85cbf267403ab6eb078e6b035c6c53c03c2c28babfe22e7acf02c42e9a"
+        ],
+        "assessments": [
+          {
+            "directiveId": "dir-1",
+            "verdict": "entailed",
+            "semantics": {
+              "actor": "addressed_group",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "present",
+              "status": "pending",
+              "validity": "active",
+              "modality": "optional"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "print",
+            "effect": "physical_action",
+            "evidenceScopeIds": [
+              "scope-0001-96a026d4aaa1d6ffdb9354a5f4070d85dfce7f607bdd7d75196a93e67334da42"
+            ]
+          }
+        ],
+        "observationAssessments": [
+          {
+            "observationId": "obs-1",
+            "verdict": "entailed",
+            "semantics": {
+              "actor": "issuer",
+              "speechAct": "assertive",
+              "polarity": "affirmative",
+              "tense": "present",
+              "status": "unknown",
+              "validity": "active",
+              "modality": "informational"
+            },
+            "inferenceLevel": "explicit",
+            "evidenceScopeIds": [
+              "scope-0002-b2bd98724ae6f0a71e9df1c80d26f1aee5528d95b23a2dc8259a97d866917a97"
+            ]
+          },
+          {
+            "observationId": "obs-2",
+            "verdict": "entailed",
+            "semantics": {
+              "actor": "issuer",
+              "speechAct": "assertive",
+              "polarity": "negative",
+              "tense": "present",
+              "status": "unknown",
+              "validity": "active",
+              "modality": "informational"
+            },
+            "inferenceLevel": "explicit",
+            "evidenceScopeIds": [
+              "scope-0003-c63b6c85cbf267403ab6eb078e6b035c6c53c03c2c28babfe22e7acf02c42e9a"
+            ]
+          }
+        ],
+        "missingDirectiveScopeIds": []
+      },
+      "providerUsage": {
+        "inputTokens": 2722,
+        "outputTokens": 695,
+        "totalTokens": 3417
+      }
+    },
+    {
+      "key": "rco-scope-b1-07:verifier",
+      "caseId": "rco-scope-b1-07",
+      "role": "verifier",
+      "dispatched": true,
+      "attemptNo": 1,
+      "startedAt": "2026-09-03T09:32:10.319Z",
+      "completedAt": "2026-09-03T09:32:16.610Z",
+      "latencyMs": 6291,
+      "requestSha256": "c2ee33463669348f9b2460ea76b94a75d17a2f3bba28cc9d3300cfb6f0e2ec72",
+      "requestBytes": 9297,
+      "httpStatus": 200,
+      "providerRequestId": "adeb6bc6-2711-4f00-a28c-a423ea051ca4",
+      "returnedModel": "deepseek-v4-flash-vision-exp",
+      "responseSha256": "d8f3702f9ea5d618962c959be80d0d080f351d8af0a1eac5140d8a09248330d8",
+      "status": "completed",
+      "failureCode": null,
+      "content": "{\"schemaVersion\":\"scope-reference-verification-1.0\",\"method\":\"independent_semantic_verifier\",\"verifierRunId\":\"verifier-rco-5-006-b1-m1-20260903b-rco-scope-b1-07\",\"sourceId\":\"rco-scope-b1-07\",\"sourceVersionId\":\"source-v1\",\"sourceFingerprint\":\"sha256:a774d670e82158a628ebcd56a006c8907811afcc3c4bef2439a9f841b846cd7f\",\"candidateFingerprint\":\"sha256:3cf62c2ac8d5eaf5913f20bcd75236f4f954663843ff85a4334d96850c20c1f0\",\"graphCoverage\":\"complete\",\"revisionCoverage\":\"complete\",\"consideredScopeIds\":[\"scope-0001-f372741c4c38e53adf2270644ac778756fb412b72926d1b9c36eb2af1d74c94b\",\"scope-0002-0ee028335f22da0c24121d87dac75cadb2b2f21fbb18fdfc82a9a250dabe4929\",\"scope-0003-4f1f937ac06ad596ad675b4f12f3c4559fe60d3f19d8b8755c9907d3cc8d1769\"],\"assessments\":[{\"directiveId\":\"dir-1\",\"verdict\":\"entailed\",\"semantics\":{\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\"},\"inferenceLevel\":\"explicit\",\"actionType\":\"review\",\"effect\":\"local_change\",\"evidenceScopeIds\":[\"scope-0001-f372741c4c38e53adf2270644ac778756fb412b72926d1b9c36eb2af1d74c94b\"]},{\"directiveId\":\"dir-2\",\"verdict\":\"entailed\",\"semantics\":{\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"negative\",\"tense\":\"present\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\"},\"inferenceLevel\":\"explicit\",\"actionType\":\"other\",\"effect\":\"unknown\",\"evidenceScopeIds\":[\"scope-0002-0ee028335f22da0c24121d87dac75cadb2b2f21fbb18fdfc82a9a250dabe4929\"]},{\"directiveId\":\"dir-3\",\"verdict\":\"entailed\",\"semantics\":{\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"negative\",\"tense\":\"present\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\"},\"inferenceLevel\":\"explicit\",\"actionType\":\"send\",\"effect\":\"external_transfer\",\"evidenceScopeIds\":[\"scope-0003-4f1f937ac06ad596ad675b4f12f3c4559fe60d3f19d8b8755c9907d3cc8d1769\"]}],\"observationAssessments\":[],\"missingDirectiveScopeIds\":[]}",
+      "contentSha256": "f0eb5468b27782f9a774ed1ab9cfda58303c8d813ed7a0686deb024a9c30a16c",
+      "parsed": {
+        "schemaVersion": "scope-reference-verification-1.0",
+        "method": "independent_semantic_verifier",
+        "verifierRunId": "verifier-rco-5-006-b1-m1-20260903b-rco-scope-b1-07",
+        "sourceId": "rco-scope-b1-07",
+        "sourceVersionId": "source-v1",
+        "sourceFingerprint": "sha256:a774d670e82158a628ebcd56a006c8907811afcc3c4bef2439a9f841b846cd7f",
+        "candidateFingerprint": "sha256:3cf62c2ac8d5eaf5913f20bcd75236f4f954663843ff85a4334d96850c20c1f0",
+        "graphCoverage": "complete",
+        "revisionCoverage": "complete",
+        "consideredScopeIds": [
+          "scope-0001-f372741c4c38e53adf2270644ac778756fb412b72926d1b9c36eb2af1d74c94b",
+          "scope-0002-0ee028335f22da0c24121d87dac75cadb2b2f21fbb18fdfc82a9a250dabe4929",
+          "scope-0003-4f1f937ac06ad596ad675b4f12f3c4559fe60d3f19d8b8755c9907d3cc8d1769"
+        ],
+        "assessments": [
+          {
+            "directiveId": "dir-1",
+            "verdict": "entailed",
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "present",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "review",
+            "effect": "local_change",
+            "evidenceScopeIds": [
+              "scope-0001-f372741c4c38e53adf2270644ac778756fb412b72926d1b9c36eb2af1d74c94b"
+            ]
+          },
+          {
+            "directiveId": "dir-2",
+            "verdict": "entailed",
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "negative",
+              "tense": "present",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "other",
+            "effect": "unknown",
+            "evidenceScopeIds": [
+              "scope-0002-0ee028335f22da0c24121d87dac75cadb2b2f21fbb18fdfc82a9a250dabe4929"
+            ]
+          },
+          {
+            "directiveId": "dir-3",
+            "verdict": "entailed",
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "negative",
+              "tense": "present",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "send",
+            "effect": "external_transfer",
+            "evidenceScopeIds": [
+              "scope-0003-4f1f937ac06ad596ad675b4f12f3c4559fe60d3f19d8b8755c9907d3cc8d1769"
+            ]
+          }
+        ],
+        "observationAssessments": [],
+        "missingDirectiveScopeIds": []
+      },
+      "providerUsage": {
+        "inputTokens": 2888,
+        "outputTokens": 709,
+        "totalTokens": 3597
+      }
+    },
+    {
+      "key": "rco-scope-b1-08:verifier",
+      "caseId": "rco-scope-b1-08",
+      "role": "verifier",
+      "dispatched": true,
+      "attemptNo": 1,
+      "startedAt": "2026-09-03T09:32:16.623Z",
+      "completedAt": "2026-09-03T09:32:22.947Z",
+      "latencyMs": 6324,
+      "requestSha256": "8f29a554a3eda65c1ad69498736061661fa46a44ec8822abc1e535c449ab1f81",
+      "requestBytes": 9353,
+      "httpStatus": 200,
+      "providerRequestId": "b569d49b-b444-4535-8924-bf9406392d8d",
+      "returnedModel": "deepseek-v4-flash-vision-exp",
+      "responseSha256": "19895decdfa791d04c94827c046f2c01b9e983195e4800566cdbdd46ea30655c",
+      "status": "completed",
+      "failureCode": null,
+      "content": "{\"schemaVersion\":\"scope-reference-verification-1.0\",\"method\":\"independent_semantic_verifier\",\"verifierRunId\":\"verifier-rco-5-006-b1-m1-20260903b-rco-scope-b1-08\",\"sourceId\":\"rco-scope-b1-08\",\"sourceVersionId\":\"source-v1\",\"sourceFingerprint\":\"sha256:b6107fbfaab2e2c5ecbce267d4c8a2471fc988998fbe1278c385e832fc0f7cbf\",\"candidateFingerprint\":\"sha256:759c84eff4371e30e774a8400f5e885f1d0ad41d4bba76d45313823bb929e94e\",\"graphCoverage\":\"complete\",\"revisionCoverage\":\"complete\",\"consideredScopeIds\":[\"scope-0001-9611c80e628284957d6c6646a75a1f31641dcb92cfb23f87ef1d734c3fceccfe\",\"scope-0002-5fb7dbc3ad2d08f1fcd2b753d3c59b297f7cf344175c8fb5f740d4f6d2076e70\",\"scope-0003-1af75d665cbce779d5539cad120d206841c72a1a643028284f21112bb442b539\"],\"assessments\":[{\"directiveId\":\"dir-1\",\"verdict\":\"entailed\",\"semantics\":{\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\"},\"inferenceLevel\":\"explicit\",\"actionType\":\"prepare\",\"effect\":\"local_change\",\"evidenceScopeIds\":[\"scope-0001-9611c80e628284957d6c6646a75a1f31641dcb92cfb23f87ef1d734c3fceccfe\"]},{\"directiveId\":\"dir-2\",\"verdict\":\"entailed\",\"semantics\":{\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\"},\"inferenceLevel\":\"explicit\",\"actionType\":\"send\",\"effect\":\"external_transfer\",\"evidenceScopeIds\":[\"scope-0002-5fb7dbc3ad2d08f1fcd2b753d3c59b297f7cf344175c8fb5f740d4f6d2076e70\"]}],\"observationAssessments\":[{\"observationId\":\"obs-1\",\"verdict\":\"entailed\",\"semantics\":{\"actor\":\"issuer\",\"speechAct\":\"assertive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"informational\"},\"inferenceLevel\":\"explicit\",\"evidenceScopeIds\":[\"scope-0003-1af75d665cbce779d5539cad120d206841c72a1a643028284f21112bb442b539\"]}],\"missingDirectiveScopeIds\":[]}",
+      "contentSha256": "62670767460d0c4ea8761a1d1bfdf2311a6681a79ec3966f70e10fc7dad60e3c",
+      "parsed": {
+        "schemaVersion": "scope-reference-verification-1.0",
+        "method": "independent_semantic_verifier",
+        "verifierRunId": "verifier-rco-5-006-b1-m1-20260903b-rco-scope-b1-08",
+        "sourceId": "rco-scope-b1-08",
+        "sourceVersionId": "source-v1",
+        "sourceFingerprint": "sha256:b6107fbfaab2e2c5ecbce267d4c8a2471fc988998fbe1278c385e832fc0f7cbf",
+        "candidateFingerprint": "sha256:759c84eff4371e30e774a8400f5e885f1d0ad41d4bba76d45313823bb929e94e",
+        "graphCoverage": "complete",
+        "revisionCoverage": "complete",
+        "consideredScopeIds": [
+          "scope-0001-9611c80e628284957d6c6646a75a1f31641dcb92cfb23f87ef1d734c3fceccfe",
+          "scope-0002-5fb7dbc3ad2d08f1fcd2b753d3c59b297f7cf344175c8fb5f740d4f6d2076e70",
+          "scope-0003-1af75d665cbce779d5539cad120d206841c72a1a643028284f21112bb442b539"
+        ],
+        "assessments": [
+          {
+            "directiveId": "dir-1",
+            "verdict": "entailed",
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "present",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "prepare",
+            "effect": "local_change",
+            "evidenceScopeIds": [
+              "scope-0001-9611c80e628284957d6c6646a75a1f31641dcb92cfb23f87ef1d734c3fceccfe"
+            ]
+          },
+          {
+            "directiveId": "dir-2",
+            "verdict": "entailed",
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "present",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "send",
+            "effect": "external_transfer",
+            "evidenceScopeIds": [
+              "scope-0002-5fb7dbc3ad2d08f1fcd2b753d3c59b297f7cf344175c8fb5f740d4f6d2076e70"
+            ]
+          }
+        ],
+        "observationAssessments": [
+          {
+            "observationId": "obs-1",
+            "verdict": "entailed",
+            "semantics": {
+              "actor": "issuer",
+              "speechAct": "assertive",
+              "polarity": "affirmative",
+              "tense": "present",
+              "status": "pending",
+              "validity": "active",
+              "modality": "informational"
+            },
+            "inferenceLevel": "explicit",
+            "evidenceScopeIds": [
+              "scope-0003-1af75d665cbce779d5539cad120d206841c72a1a643028284f21112bb442b539"
+            ]
+          }
+        ],
+        "missingDirectiveScopeIds": []
+      },
+      "providerUsage": {
+        "inputTokens": 2938,
+        "outputTokens": 697,
+        "totalTokens": 3635
+      }
+    },
+    {
+      "key": "rco-scope-b1-09:verifier",
+      "caseId": "rco-scope-b1-09",
+      "role": "verifier",
+      "dispatched": true,
+      "attemptNo": 1,
+      "startedAt": "2026-09-03T09:32:22.962Z",
+      "completedAt": "2026-09-03T09:32:30.824Z",
+      "latencyMs": 7862,
+      "requestSha256": "8575c85d09afbee01a31e3198b5f08d0fe3f041786aa1a66c2e82929b9d7c09f",
+      "requestBytes": 10929,
+      "httpStatus": 200,
+      "providerRequestId": "1c2cae2b-2c4d-4074-97cb-dab2c5fd3530",
+      "returnedModel": "deepseek-v4-flash-vision-exp",
+      "responseSha256": "8f65e973882fbd4e025f15f68caa285baed307fe370098f2b6c98f46475c6020",
+      "status": "completed",
+      "failureCode": null,
+      "content": "{\"schemaVersion\":\"scope-reference-verification-1.0\",\"method\":\"independent_semantic_verifier\",\"verifierRunId\":\"verifier-rco-5-006-b1-m1-20260903b-rco-scope-b1-09\",\"sourceId\":\"rco-scope-b1-09\",\"sourceVersionId\":\"source-v1\",\"sourceFingerprint\":\"sha256:b6a0eb8caad3421f3e2efce44e5bd1ae276248d532bcd52ec58cc7fd4d68a9c3\",\"candidateFingerprint\":\"sha256:3a8766f5d1be6b0b3ca7450f0fb815af1acca4ed74bf8cbfd23d712ff43d19df\",\"graphCoverage\":\"complete\",\"revisionCoverage\":\"complete\",\"consideredScopeIds\":[\"scope-0003-0512f07a14fe10c82911ac684b9b96a39b789fd0dd7d45e922ef518b830dc3f2\",\"scope-0005-4bddd805eae00e0f40acd54720ed3d968bf41ef690f69d6aae95cf7e3daf258a\",\"scope-0006-8bc5b21bc34431a451888de89e80a7540fd5838693803d12c140cfa63e200c16\"],\"assessments\":[{\"directiveId\":\"dir-1\",\"verdict\":\"entailed\",\"semantics\":{\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\"},\"inferenceLevel\":\"explicit\",\"actionType\":\"print\",\"effect\":\"physical_action\",\"evidenceScopeIds\":[\"scope-0003-0512f07a14fe10c82911ac684b9b96a39b789fd0dd7d45e922ef518b830dc3f2\"]},{\"directiveId\":\"dir-2\",\"verdict\":\"entailed\",\"semantics\":{\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\"},\"inferenceLevel\":\"explicit\",\"actionType\":\"carry\",\"effect\":\"physical_action\",\"evidenceScopeIds\":[\"scope-0005-4bddd805eae00e0f40acd54720ed3d968bf41ef690f69d6aae95cf7e3daf258a\"]},{\"directiveId\":\"dir-3\",\"verdict\":\"entailed\",\"semantics\":{\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\"},\"inferenceLevel\":\"explicit\",\"actionType\":\"review\",\"effect\":\"external_interaction\",\"evidenceScopeIds\":[\"scope-0005-4bddd805eae00e0f40acd54720ed3d968bf41ef690f69d6aae95cf7e3daf258a\"]}],\"observationAssessments\":[{\"observationId\":\"obs-1\",\"verdict\":\"entailed\",\"semantics\":{\"actor\":\"issuer\",\"speechAct\":\"assertive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"informational\"},\"inferenceLevel\":\"explicit\",\"evidenceScopeIds\":[\"scope-0006-8bc5b21bc34431a451888de89e80a7540fd5838693803d12c140cfa63e200c16\"]}],\"missingDirectiveScopeIds\":[]}",
+      "contentSha256": "ef30db8e7fbee216f342a4166f00fe2f3400be2665360e1f30ab5297c378c692",
+      "parsed": {
+        "schemaVersion": "scope-reference-verification-1.0",
+        "method": "independent_semantic_verifier",
+        "verifierRunId": "verifier-rco-5-006-b1-m1-20260903b-rco-scope-b1-09",
+        "sourceId": "rco-scope-b1-09",
+        "sourceVersionId": "source-v1",
+        "sourceFingerprint": "sha256:b6a0eb8caad3421f3e2efce44e5bd1ae276248d532bcd52ec58cc7fd4d68a9c3",
+        "candidateFingerprint": "sha256:3a8766f5d1be6b0b3ca7450f0fb815af1acca4ed74bf8cbfd23d712ff43d19df",
+        "graphCoverage": "complete",
+        "revisionCoverage": "complete",
+        "consideredScopeIds": [
+          "scope-0003-0512f07a14fe10c82911ac684b9b96a39b789fd0dd7d45e922ef518b830dc3f2",
+          "scope-0005-4bddd805eae00e0f40acd54720ed3d968bf41ef690f69d6aae95cf7e3daf258a",
+          "scope-0006-8bc5b21bc34431a451888de89e80a7540fd5838693803d12c140cfa63e200c16"
+        ],
+        "assessments": [
+          {
+            "directiveId": "dir-1",
+            "verdict": "entailed",
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "present",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "print",
+            "effect": "physical_action",
+            "evidenceScopeIds": [
+              "scope-0003-0512f07a14fe10c82911ac684b9b96a39b789fd0dd7d45e922ef518b830dc3f2"
+            ]
+          },
+          {
+            "directiveId": "dir-2",
+            "verdict": "entailed",
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "present",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "carry",
+            "effect": "physical_action",
+            "evidenceScopeIds": [
+              "scope-0005-4bddd805eae00e0f40acd54720ed3d968bf41ef690f69d6aae95cf7e3daf258a"
+            ]
+          },
+          {
+            "directiveId": "dir-3",
+            "verdict": "entailed",
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "present",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "review",
+            "effect": "external_interaction",
+            "evidenceScopeIds": [
+              "scope-0005-4bddd805eae00e0f40acd54720ed3d968bf41ef690f69d6aae95cf7e3daf258a"
+            ]
+          }
+        ],
+        "observationAssessments": [
+          {
+            "observationId": "obs-1",
+            "verdict": "entailed",
+            "semantics": {
+              "actor": "issuer",
+              "speechAct": "assertive",
+              "polarity": "affirmative",
+              "tense": "present",
+              "status": "pending",
+              "validity": "active",
+              "modality": "informational"
+            },
+            "inferenceLevel": "explicit",
+            "evidenceScopeIds": [
+              "scope-0006-8bc5b21bc34431a451888de89e80a7540fd5838693803d12c140cfa63e200c16"
+            ]
+          }
+        ],
+        "missingDirectiveScopeIds": []
+      },
+      "providerUsage": {
+        "inputTokens": 3566,
+        "outputTokens": 823,
+        "totalTokens": 4389
+      }
+    },
+    {
+      "key": "rco-scope-b1-10:verifier",
+      "caseId": "rco-scope-b1-10",
+      "role": "verifier",
+      "dispatched": true,
+      "attemptNo": 1,
+      "startedAt": "2026-09-03T09:32:30.840Z",
+      "completedAt": "2026-09-03T09:32:38.667Z",
+      "latencyMs": 7828,
+      "requestSha256": "cfa30170bbe1cc1098a187987e661a5269a5aec253aaccebc4ae48e69d4f73ea",
+      "requestBytes": 10124,
+      "httpStatus": 200,
+      "providerRequestId": "1ccb8aa9-8dd2-4edd-af98-1d7c7953c66e",
+      "returnedModel": "deepseek-v4-flash-vision-exp",
+      "responseSha256": "bc67fc8d6917db0ff9d1803104a16c5ab059d95d67e39826c3dabee585aced92",
+      "status": "completed",
+      "failureCode": null,
+      "content": "{\"schemaVersion\":\"scope-reference-verification-1.0\",\"method\":\"independent_semantic_verifier\",\"verifierRunId\":\"verifier-rco-5-006-b1-m1-20260903b-rco-scope-b1-10\",\"sourceId\":\"rco-scope-b1-10\",\"sourceVersionId\":\"source-v1\",\"sourceFingerprint\":\"sha256:3356d5d11e8ebaf34e3916dd2c82b86cb70bc2c7006840b3c2d1489780acf613\",\"candidateFingerprint\":\"sha256:04d856660dada1925f869203cd831ceb2403581fb3d03da912aff2130e2ce9da\",\"graphCoverage\":\"complete\",\"revisionCoverage\":\"complete\",\"consideredScopeIds\":[\"scope-0001-3a35705ae2d1a95d6bf469e4c6d0dc1341d6a9fb50f21b43cecfeca213829f08\",\"scope-0002-cc28a82127261d578c1612a93dcd4e4b2a8f26dcfa41de4edd8c2b1e73b112ed\",\"scope-0003-419e1de9b0d64b597520b3d5336de5426eb68f127573cc55c06a07cb6be8bebb\",\"scope-0004-f2db3b2f0e649efc66aab725bba5bd8d56c44c1bb7445d798480eeaf106c9e95\"],\"assessments\":[{\"directiveId\":\"dir-1\",\"verdict\":\"entailed\",\"semantics\":{\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\"},\"inferenceLevel\":\"explicit\",\"actionType\":\"review\",\"effect\":\"local_change\",\"evidenceScopeIds\":[\"scope-0002-cc28a82127261d578c1612a93dcd4e4b2a8f26dcfa41de4edd8c2b1e73b112ed\"]},{\"directiveId\":\"dir-2\",\"verdict\":\"entailed\",\"semantics\":{\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\"},\"inferenceLevel\":\"explicit\",\"actionType\":\"save\",\"effect\":\"local_change\",\"evidenceScopeIds\":[\"scope-0003-419e1de9b0d64b597520b3d5336de5426eb68f127573cc55c06a07cb6be8bebb\"]},{\"directiveId\":\"dir-3\",\"verdict\":\"entailed\",\"semantics\":{\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"negative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\"},\"inferenceLevel\":\"explicit\",\"actionType\":\"upload\",\"effect\":\"external_transfer\",\"evidenceScopeIds\":[\"scope-0004-f2db3b2f0e649efc66aab725bba5bd8d56c44c1bb7445d798480eeaf106c9e95\"]}],\"observationAssessments\":[{\"observationId\":\"obs-1\",\"verdict\":\"entailed\",\"semantics\":{\"actor\":\"third_party\",\"speechAct\":\"assertive\",\"polarity\":\"affirmative\",\"tense\":\"past\",\"status\":\"completed\",\"validity\":\"active\",\"modality\":\"informational\"},\"inferenceLevel\":\"explicit\",\"evidenceScopeIds\":[\"scope-0001-3a35705ae2d1a95d6bf469e4c6d0dc1341d6a9fb50f21b43cecfeca213829f08\"]}],\"missingDirectiveScopeIds\":[]}",
+      "contentSha256": "367dbbe019543e3a2c6954bf98f87834842dfa2f05cc37bf2aeaee188bcf237d",
+      "parsed": {
+        "schemaVersion": "scope-reference-verification-1.0",
+        "method": "independent_semantic_verifier",
+        "verifierRunId": "verifier-rco-5-006-b1-m1-20260903b-rco-scope-b1-10",
+        "sourceId": "rco-scope-b1-10",
+        "sourceVersionId": "source-v1",
+        "sourceFingerprint": "sha256:3356d5d11e8ebaf34e3916dd2c82b86cb70bc2c7006840b3c2d1489780acf613",
+        "candidateFingerprint": "sha256:04d856660dada1925f869203cd831ceb2403581fb3d03da912aff2130e2ce9da",
+        "graphCoverage": "complete",
+        "revisionCoverage": "complete",
+        "consideredScopeIds": [
+          "scope-0001-3a35705ae2d1a95d6bf469e4c6d0dc1341d6a9fb50f21b43cecfeca213829f08",
+          "scope-0002-cc28a82127261d578c1612a93dcd4e4b2a8f26dcfa41de4edd8c2b1e73b112ed",
+          "scope-0003-419e1de9b0d64b597520b3d5336de5426eb68f127573cc55c06a07cb6be8bebb",
+          "scope-0004-f2db3b2f0e649efc66aab725bba5bd8d56c44c1bb7445d798480eeaf106c9e95"
+        ],
+        "assessments": [
+          {
+            "directiveId": "dir-1",
+            "verdict": "entailed",
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "review",
+            "effect": "local_change",
+            "evidenceScopeIds": [
+              "scope-0002-cc28a82127261d578c1612a93dcd4e4b2a8f26dcfa41de4edd8c2b1e73b112ed"
+            ]
+          },
+          {
+            "directiveId": "dir-2",
+            "verdict": "entailed",
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "save",
+            "effect": "local_change",
+            "evidenceScopeIds": [
+              "scope-0003-419e1de9b0d64b597520b3d5336de5426eb68f127573cc55c06a07cb6be8bebb"
+            ]
+          },
+          {
+            "directiveId": "dir-3",
+            "verdict": "entailed",
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "negative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "upload",
+            "effect": "external_transfer",
+            "evidenceScopeIds": [
+              "scope-0004-f2db3b2f0e649efc66aab725bba5bd8d56c44c1bb7445d798480eeaf106c9e95"
+            ]
+          }
+        ],
+        "observationAssessments": [
+          {
+            "observationId": "obs-1",
+            "verdict": "entailed",
+            "semantics": {
+              "actor": "third_party",
+              "speechAct": "assertive",
+              "polarity": "affirmative",
+              "tense": "past",
+              "status": "completed",
+              "validity": "active",
+              "modality": "informational"
+            },
+            "inferenceLevel": "explicit",
+            "evidenceScopeIds": [
+              "scope-0001-3a35705ae2d1a95d6bf469e4c6d0dc1341d6a9fb50f21b43cecfeca213829f08"
+            ]
+          }
+        ],
+        "missingDirectiveScopeIds": []
+      },
+      "providerUsage": {
+        "inputTokens": 3189,
+        "outputTokens": 872,
+        "totalTokens": 4061
+      }
+    },
+    {
+      "key": "rco-scope-b1-11:verifier",
+      "caseId": "rco-scope-b1-11",
+      "role": "verifier",
+      "dispatched": true,
+      "attemptNo": 1,
+      "startedAt": "2026-09-03T09:32:38.682Z",
+      "completedAt": "2026-09-03T09:32:45.834Z",
+      "latencyMs": 7152,
+      "requestSha256": "03456e522eeb19eb3a09eb89878c2d95e1eccb61c06539ce8a32df7a76e5369d",
+      "requestBytes": 9906,
+      "httpStatus": 200,
+      "providerRequestId": "c923113d-b7c4-4860-9c78-ceb57519a7e2",
+      "returnedModel": "deepseek-v4-flash-vision-exp",
+      "responseSha256": "f7b25e1095ac09e4359e0e7593ed33e362893b991ce3553a33aed68fc7cf2b7b",
+      "status": "completed",
+      "failureCode": null,
+      "content": "{\"schemaVersion\":\"scope-reference-verification-1.0\",\"method\":\"independent_semantic_verifier\",\"verifierRunId\":\"verifier-rco-5-006-b1-m1-20260903b-rco-scope-b1-11\",\"sourceId\":\"rco-scope-b1-11\",\"sourceVersionId\":\"source-v1\",\"sourceFingerprint\":\"sha256:68611c70b8043c0873079df78cb18350784d8c4e07c7637a7fede6c2d196ddf8\",\"candidateFingerprint\":\"sha256:cec76726cafecd0e1e8fe4c243ef0da12fb219572e01840f9e3c74bd1df0d43e\",\"graphCoverage\":\"complete\",\"revisionCoverage\":\"complete\",\"consideredScopeIds\":[\"scope-0001-c5fa8463b9422ada7feb3857b864098672db5b9c21ef8cdc3deaa782341e52a8\",\"scope-0002-1b01b11704cf882b11a0e1d983373b5822079faab757fba3453b3457cec9be93\",\"scope-0003-1e4ee2b16bd714c1120cdfadf9511b2cdafa2b15d09adb5b0c06725f0e6e104e\"],\"assessments\":[{\"directiveId\":\"dir-1\",\"verdict\":\"entailed\",\"semantics\":{\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\"},\"inferenceLevel\":\"explicit\",\"actionType\":\"prepare\",\"effect\":\"local_change\",\"evidenceScopeIds\":[\"scope-0002-1b01b11704cf882b11a0e1d983373b5822079faab757fba3453b3457cec9be93\"]},{\"directiveId\":\"dir-2\",\"verdict\":\"entailed\",\"semantics\":{\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\"},\"inferenceLevel\":\"explicit\",\"actionType\":\"save\",\"effect\":\"local_change\",\"evidenceScopeIds\":[\"scope-0002-1b01b11704cf882b11a0e1d983373b5822079faab757fba3453b3457cec9be93\"]},{\"directiveId\":\"dir-3\",\"verdict\":\"entailed\",\"semantics\":{\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"negative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\"},\"inferenceLevel\":\"explicit\",\"actionType\":\"submit\",\"effect\":\"external_transfer\",\"evidenceScopeIds\":[\"scope-0003-1e4ee2b16bd714c1120cdfadf9511b2cdafa2b15d09adb5b0c06725f0e6e104e\"]}],\"observationAssessments\":[{\"observationId\":\"obs-1\",\"verdict\":\"entailed\",\"semantics\":{\"actor\":\"issuer\",\"speechAct\":\"assertive\",\"polarity\":\"affirmative\",\"tense\":\"past\",\"status\":\"completed\",\"validity\":\"active\",\"modality\":\"informational\"},\"inferenceLevel\":\"explicit\",\"evidenceScopeIds\":[\"scope-0001-c5fa8463b9422ada7feb3857b864098672db5b9c21ef8cdc3deaa782341e52a8\"]}],\"missingDirectiveScopeIds\":[]}",
+      "contentSha256": "3fed3bb9e6336a6010608158319388a7b3417888e6b2fdfa307f02339dd839bd",
+      "parsed": {
+        "schemaVersion": "scope-reference-verification-1.0",
+        "method": "independent_semantic_verifier",
+        "verifierRunId": "verifier-rco-5-006-b1-m1-20260903b-rco-scope-b1-11",
+        "sourceId": "rco-scope-b1-11",
+        "sourceVersionId": "source-v1",
+        "sourceFingerprint": "sha256:68611c70b8043c0873079df78cb18350784d8c4e07c7637a7fede6c2d196ddf8",
+        "candidateFingerprint": "sha256:cec76726cafecd0e1e8fe4c243ef0da12fb219572e01840f9e3c74bd1df0d43e",
+        "graphCoverage": "complete",
+        "revisionCoverage": "complete",
+        "consideredScopeIds": [
+          "scope-0001-c5fa8463b9422ada7feb3857b864098672db5b9c21ef8cdc3deaa782341e52a8",
+          "scope-0002-1b01b11704cf882b11a0e1d983373b5822079faab757fba3453b3457cec9be93",
+          "scope-0003-1e4ee2b16bd714c1120cdfadf9511b2cdafa2b15d09adb5b0c06725f0e6e104e"
+        ],
+        "assessments": [
+          {
+            "directiveId": "dir-1",
+            "verdict": "entailed",
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "prepare",
+            "effect": "local_change",
+            "evidenceScopeIds": [
+              "scope-0002-1b01b11704cf882b11a0e1d983373b5822079faab757fba3453b3457cec9be93"
+            ]
+          },
+          {
+            "directiveId": "dir-2",
+            "verdict": "entailed",
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "save",
+            "effect": "local_change",
+            "evidenceScopeIds": [
+              "scope-0002-1b01b11704cf882b11a0e1d983373b5822079faab757fba3453b3457cec9be93"
+            ]
+          },
+          {
+            "directiveId": "dir-3",
+            "verdict": "entailed",
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "negative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "submit",
+            "effect": "external_transfer",
+            "evidenceScopeIds": [
+              "scope-0003-1e4ee2b16bd714c1120cdfadf9511b2cdafa2b15d09adb5b0c06725f0e6e104e"
+            ]
+          }
+        ],
+        "observationAssessments": [
+          {
+            "observationId": "obs-1",
+            "verdict": "entailed",
+            "semantics": {
+              "actor": "issuer",
+              "speechAct": "assertive",
+              "polarity": "affirmative",
+              "tense": "past",
+              "status": "completed",
+              "validity": "active",
+              "modality": "informational"
+            },
+            "inferenceLevel": "explicit",
+            "evidenceScopeIds": [
+              "scope-0001-c5fa8463b9422ada7feb3857b864098672db5b9c21ef8cdc3deaa782341e52a8"
+            ]
+          }
+        ],
+        "missingDirectiveScopeIds": []
+      },
+      "providerUsage": {
+        "inputTokens": 3107,
+        "outputTokens": 823,
+        "totalTokens": 3930
+      }
+    },
+    {
+      "key": "rco-scope-b1-12:verifier",
+      "caseId": "rco-scope-b1-12",
+      "role": "verifier",
+      "dispatched": true,
+      "attemptNo": 1,
+      "startedAt": "2026-09-03T09:32:45.846Z",
+      "completedAt": "2026-09-03T09:32:53.094Z",
+      "latencyMs": 7248,
+      "requestSha256": "70ca263687a644f4199bbcf8b18f9b47d58f539ab84c7342ce254568cfae41a2",
+      "requestBytes": 9325,
+      "httpStatus": 200,
+      "providerRequestId": "e0e39445-372c-4d29-a54b-ef87d398f4cc",
+      "returnedModel": "deepseek-v4-flash-vision-exp",
+      "responseSha256": "0b566c4ffc0d206322ef9932a216135199de5b82f42319be180fe233d6a1efeb",
+      "status": "completed",
+      "failureCode": null,
+      "content": "{\"schemaVersion\":\"scope-reference-verification-1.0\",\"method\":\"independent_semantic_verifier\",\"verifierRunId\":\"verifier-rco-5-006-b1-m1-20260903b-rco-scope-b1-12\",\"sourceId\":\"rco-scope-b1-12\",\"sourceVersionId\":\"source-v1\",\"sourceFingerprint\":\"sha256:a908cecd9fe355b034d93670599d210a01dc1d6b768f38020fdd1071af905c5d\",\"candidateFingerprint\":\"sha256:aca7503203c0b0ffc7432668ffb4dd69c693010c00dca4db7251832849aa6a8d\",\"graphCoverage\":\"complete\",\"revisionCoverage\":\"complete\",\"consideredScopeIds\":[\"scope-0001-ad0175a1672843c5912515c758b45e6bc0170cd3accd84eceef36844e568da22\",\"scope-0002-30316b5623f1ce9f42e5e6a3b5450e181f3d6a7552b1f55a680654baebfa5b49\",\"scope-0003-3101034a65138373f226ccbdf0d3870e994de712ac05cff2fa754e84b8a7b0df\",\"scope-0004-4ba595bef2d9441235e07549808b2021f81043e48934947878ac332537916b62\"],\"assessments\":[],\"observationAssessments\":[{\"observationId\":\"obs-1\",\"verdict\":\"entailed\",\"semantics\":{\"actor\":\"third_party\",\"speechAct\":\"interrogative\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"unknown\",\"validity\":\"active\",\"modality\":\"informational\"},\"inferenceLevel\":\"explicit\",\"evidenceScopeIds\":[\"scope-0001-ad0175a1672843c5912515c758b45e6bc0170cd3accd84eceef36844e568da22\"]},{\"observationId\":\"obs-2\",\"verdict\":\"entailed\",\"semantics\":{\"actor\":\"issuer\",\"speechAct\":\"assertive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"unknown\",\"validity\":\"active\",\"modality\":\"informational\"},\"inferenceLevel\":\"explicit\",\"evidenceScopeIds\":[\"scope-0002-30316b5623f1ce9f42e5e6a3b5450e181f3d6a7552b1f55a680654baebfa5b49\"]},{\"observationId\":\"obs-3\",\"verdict\":\"entailed\",\"semantics\":{\"actor\":\"issuer\",\"speechAct\":\"assertive\",\"polarity\":\"negative\",\"tense\":\"present\",\"status\":\"unknown\",\"validity\":\"active\",\"modality\":\"informational\"},\"inferenceLevel\":\"explicit\",\"evidenceScopeIds\":[\"scope-0003-3101034a65138373f226ccbdf0d3870e994de712ac05cff2fa754e84b8a7b0df\"]},{\"observationId\":\"obs-4\",\"verdict\":\"entailed\",\"semantics\":{\"actor\":\"issuer\",\"speechAct\":\"assertive\",\"polarity\":\"negative\",\"tense\":\"present\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"informational\"},\"inferenceLevel\":\"explicit\",\"evidenceScopeIds\":[\"scope-0004-4ba595bef2d9441235e07549808b2021f81043e48934947878ac332537916b62\"]}],\"missingDirectiveScopeIds\":[]}",
+      "contentSha256": "06a96b778e6b6e4728b6f91c2623e2eca37b3f76e8dd3244d8dc7186659fdb85",
+      "parsed": {
+        "schemaVersion": "scope-reference-verification-1.0",
+        "method": "independent_semantic_verifier",
+        "verifierRunId": "verifier-rco-5-006-b1-m1-20260903b-rco-scope-b1-12",
+        "sourceId": "rco-scope-b1-12",
+        "sourceVersionId": "source-v1",
+        "sourceFingerprint": "sha256:a908cecd9fe355b034d93670599d210a01dc1d6b768f38020fdd1071af905c5d",
+        "candidateFingerprint": "sha256:aca7503203c0b0ffc7432668ffb4dd69c693010c00dca4db7251832849aa6a8d",
+        "graphCoverage": "complete",
+        "revisionCoverage": "complete",
+        "consideredScopeIds": [
+          "scope-0001-ad0175a1672843c5912515c758b45e6bc0170cd3accd84eceef36844e568da22",
+          "scope-0002-30316b5623f1ce9f42e5e6a3b5450e181f3d6a7552b1f55a680654baebfa5b49",
+          "scope-0003-3101034a65138373f226ccbdf0d3870e994de712ac05cff2fa754e84b8a7b0df",
+          "scope-0004-4ba595bef2d9441235e07549808b2021f81043e48934947878ac332537916b62"
+        ],
+        "assessments": [],
+        "observationAssessments": [
+          {
+            "observationId": "obs-1",
+            "verdict": "entailed",
+            "semantics": {
+              "actor": "third_party",
+              "speechAct": "interrogative",
+              "polarity": "affirmative",
+              "tense": "present",
+              "status": "unknown",
+              "validity": "active",
+              "modality": "informational"
+            },
+            "inferenceLevel": "explicit",
+            "evidenceScopeIds": [
+              "scope-0001-ad0175a1672843c5912515c758b45e6bc0170cd3accd84eceef36844e568da22"
+            ]
+          },
+          {
+            "observationId": "obs-2",
+            "verdict": "entailed",
+            "semantics": {
+              "actor": "issuer",
+              "speechAct": "assertive",
+              "polarity": "affirmative",
+              "tense": "present",
+              "status": "unknown",
+              "validity": "active",
+              "modality": "informational"
+            },
+            "inferenceLevel": "explicit",
+            "evidenceScopeIds": [
+              "scope-0002-30316b5623f1ce9f42e5e6a3b5450e181f3d6a7552b1f55a680654baebfa5b49"
+            ]
+          },
+          {
+            "observationId": "obs-3",
+            "verdict": "entailed",
+            "semantics": {
+              "actor": "issuer",
+              "speechAct": "assertive",
+              "polarity": "negative",
+              "tense": "present",
+              "status": "unknown",
+              "validity": "active",
+              "modality": "informational"
+            },
+            "inferenceLevel": "explicit",
+            "evidenceScopeIds": [
+              "scope-0003-3101034a65138373f226ccbdf0d3870e994de712ac05cff2fa754e84b8a7b0df"
+            ]
+          },
+          {
+            "observationId": "obs-4",
+            "verdict": "entailed",
+            "semantics": {
+              "actor": "issuer",
+              "speechAct": "assertive",
+              "polarity": "negative",
+              "tense": "present",
+              "status": "pending",
+              "validity": "active",
+              "modality": "informational"
+            },
+            "inferenceLevel": "explicit",
+            "evidenceScopeIds": [
+              "scope-0004-4ba595bef2d9441235e07549808b2021f81043e48934947878ac332537916b62"
+            ]
+          }
+        ],
+        "missingDirectiveScopeIds": []
+      },
+      "providerUsage": {
+        "inputTokens": 2834,
+        "outputTokens": 806,
+        "totalTokens": 3640
+      }
+    }
+  ]
 }

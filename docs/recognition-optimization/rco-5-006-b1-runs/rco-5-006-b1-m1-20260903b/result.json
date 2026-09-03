@@ -1,0 +1,1397 @@
+{
+  "schemaVersion": "rco-5-006-b1-m1-result-1.0.0",
+  "runId": "rco-5-006-b1-m1-20260903b",
+  "authorizationId": "RCO-5-006-B1-M1",
+  "generatedAt": "2026-09-03T09:36:51.943Z",
+  "runStatus": "FINISHED",
+  "stopReason": null,
+  "datasetId": "rco-5-006-b1-development-20260903",
+  "datasetClassification": "anonymous_synthetic_codex_authored_development",
+  "labelProvenance": "Codex-authored reference labels; not independent human ground truth",
+  "model": "deepseek-v4-flash-vision-exp",
+  "endpoint": "https://api.deepseek.com/responses",
+  "apiStyle": "responses-v1-json-schema",
+  "temperature": 0,
+  "maxOutputTokens": 5000,
+  "plannedCandidateCalls": 12,
+  "maximumVerifierCalls": 12,
+  "maximumRequestDispatches": 24,
+  "repairCalls": 0,
+  "retryCalls": 0,
+  "cnyHardCap": 10,
+  "maximumTheoreticalCostCny": 8.5046016,
+  "providerBilledCost": "NOT_OBSERVABLE",
+  "observedConservativePeakPriceCostCny": 0.5514036,
+  "requestAccounting": {
+    "logicalEntries": 24,
+    "requestDispatches": 22,
+    "candidateDispatches": 12,
+    "verifierDispatches": 10,
+    "confirmedResponses": 22,
+    "dispatchUnknown": 0,
+    "skippedBeforeDispatch": 2,
+    "completed": 22
+  },
+  "usage": {
+    "complete": true,
+    "dispatchedRecords": 22,
+    "observedRecords": 22,
+    "inputTokens": 63036,
+    "outputTokens": 20761,
+    "totalTokens": 83797
+  },
+  "evaluation": {
+    "cases": [
+      {
+        "caseId": "rco-scope-b1-01",
+        "candidateStatus": "completed",
+        "candidateSchemaValid": false,
+        "candidateSchemaIssues": [
+          "surface:SURFACE_NOT_IN_SCOPE:candidate.directives[2].object.surface"
+        ],
+        "verifierStatus": "skipped_upstream_invalid",
+        "verifierSchemaValid": false,
+        "verifierSchemaIssues": [
+          "verification:VERIFIER_NOT_COMPLETED:verification"
+        ],
+        "compositionSucceeded": false,
+        "score": {
+          "requiresActionCorrect": false,
+          "expectedNodes": 3,
+          "predictedNodes": 0,
+          "matchedNodes": 0,
+          "nodePrecision": null,
+          "nodeRecall": 0,
+          "nodeF1": null,
+          "scopeCounts": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3
+          },
+          "scopePrecision": null,
+          "scopeRecall": 0,
+          "scopeF1": null,
+          "fields": {
+            "action": {
+              "correct": 0,
+              "total": 2
+            },
+            "object": {
+              "correct": 0,
+              "total": 2
+            },
+            "time": {
+              "correct": 0,
+              "total": 3
+            },
+            "material": {
+              "correct": 0,
+              "total": 2
+            },
+            "event": {
+              "correct": 0,
+              "total": 2
+            },
+            "location": {
+              "correct": 0,
+              "total": 3
+            },
+            "revision": {
+              "correct": 0,
+              "total": 2
+            }
+          },
+          "axes": {
+            "actor": {
+              "correct": 0,
+              "total": 3
+            },
+            "speechAct": {
+              "correct": 0,
+              "total": 3
+            },
+            "polarity": {
+              "correct": 0,
+              "total": 3
+            },
+            "tense": {
+              "correct": 0,
+              "total": 3
+            },
+            "status": {
+              "correct": 0,
+              "total": 3
+            },
+            "validity": {
+              "correct": 0,
+              "total": 3
+            },
+            "modality": {
+              "correct": 0,
+              "total": 3
+            },
+            "inferenceLevel": {
+              "correct": 0,
+              "total": 3
+            },
+            "actionType": {
+              "correct": 0,
+              "total": 2
+            },
+            "effect": {
+              "correct": 0,
+              "total": 2
+            }
+          },
+          "semanticBundleCorrect": 0,
+          "semanticBundleTotal": 3,
+          "ignoredScopeExact": false,
+          "completeCase": false,
+          "forbiddenDefaultSelections": 0,
+          "safeDefaultCorrect": 0,
+          "safeDefaultTotal": 1,
+          "missedSafeDefaults": 1
+        }
+      },
+      {
+        "caseId": "rco-scope-b1-02",
+        "candidateStatus": "completed",
+        "candidateSchemaValid": true,
+        "candidateSchemaIssues": [],
+        "verifierStatus": "completed",
+        "verifierSchemaValid": true,
+        "verifierSchemaIssues": [],
+        "compositionSucceeded": true,
+        "score": {
+          "requiresActionCorrect": true,
+          "expectedNodes": 4,
+          "predictedNodes": 4,
+          "matchedNodes": 4,
+          "nodePrecision": 1,
+          "nodeRecall": 1,
+          "nodeF1": 1,
+          "scopeCounts": {
+            "tp": 6,
+            "fp": 0,
+            "fn": 0
+          },
+          "scopePrecision": 1,
+          "scopeRecall": 1,
+          "scopeF1": 1,
+          "fields": {
+            "action": {
+              "correct": 2,
+              "total": 2
+            },
+            "object": {
+              "correct": 2,
+              "total": 2
+            },
+            "time": {
+              "correct": 4,
+              "total": 4
+            },
+            "material": {
+              "correct": 1,
+              "total": 2
+            },
+            "event": {
+              "correct": 2,
+              "total": 2
+            },
+            "location": {
+              "correct": 4,
+              "total": 4
+            },
+            "revision": {
+              "correct": 2,
+              "total": 2
+            }
+          },
+          "axes": {
+            "actor": {
+              "correct": 4,
+              "total": 4
+            },
+            "speechAct": {
+              "correct": 3,
+              "total": 4
+            },
+            "polarity": {
+              "correct": 4,
+              "total": 4
+            },
+            "tense": {
+              "correct": 1,
+              "total": 4
+            },
+            "status": {
+              "correct": 3,
+              "total": 4
+            },
+            "validity": {
+              "correct": 3,
+              "total": 4
+            },
+            "modality": {
+              "correct": 4,
+              "total": 4
+            },
+            "inferenceLevel": {
+              "correct": 4,
+              "total": 4
+            },
+            "actionType": {
+              "correct": 2,
+              "total": 2
+            },
+            "effect": {
+              "correct": 2,
+              "total": 2
+            }
+          },
+          "semanticBundleCorrect": 0,
+          "semanticBundleTotal": 4,
+          "ignoredScopeExact": true,
+          "completeCase": false,
+          "forbiddenDefaultSelections": 0,
+          "safeDefaultCorrect": 1,
+          "safeDefaultTotal": 1,
+          "missedSafeDefaults": 0
+        }
+      },
+      {
+        "caseId": "rco-scope-b1-03",
+        "candidateStatus": "completed",
+        "candidateSchemaValid": true,
+        "candidateSchemaIssues": [],
+        "verifierStatus": "completed",
+        "verifierSchemaValid": true,
+        "verifierSchemaIssues": [],
+        "compositionSucceeded": true,
+        "score": {
+          "requiresActionCorrect": true,
+          "expectedNodes": 2,
+          "predictedNodes": 4,
+          "matchedNodes": 1,
+          "nodePrecision": 0.25,
+          "nodeRecall": 0.5,
+          "nodeF1": 0.3333333333333333,
+          "scopeCounts": {
+            "tp": 1,
+            "fp": 3,
+            "fn": 2
+          },
+          "scopePrecision": 0.25,
+          "scopeRecall": 0.3333333333333333,
+          "scopeF1": 0.28571428571428575,
+          "fields": {
+            "action": {
+              "correct": 1,
+              "total": 2
+            },
+            "object": {
+              "correct": 1,
+              "total": 2
+            },
+            "time": {
+              "correct": 1,
+              "total": 2
+            },
+            "material": {
+              "correct": 1,
+              "total": 2
+            },
+            "event": {
+              "correct": 1,
+              "total": 2
+            },
+            "location": {
+              "correct": 1,
+              "total": 2
+            },
+            "revision": {
+              "correct": 0,
+              "total": 2
+            }
+          },
+          "axes": {
+            "actor": {
+              "correct": 1,
+              "total": 2
+            },
+            "speechAct": {
+              "correct": 1,
+              "total": 2
+            },
+            "polarity": {
+              "correct": 1,
+              "total": 2
+            },
+            "tense": {
+              "correct": 1,
+              "total": 2
+            },
+            "status": {
+              "correct": 1,
+              "total": 2
+            },
+            "validity": {
+              "correct": 1,
+              "total": 2
+            },
+            "modality": {
+              "correct": 1,
+              "total": 2
+            },
+            "inferenceLevel": {
+              "correct": 1,
+              "total": 2
+            },
+            "actionType": {
+              "correct": 1,
+              "total": 2
+            },
+            "effect": {
+              "correct": 1,
+              "total": 2
+            }
+          },
+          "semanticBundleCorrect": 1,
+          "semanticBundleTotal": 2,
+          "ignoredScopeExact": true,
+          "completeCase": false,
+          "forbiddenDefaultSelections": 0,
+          "safeDefaultCorrect": 1,
+          "safeDefaultTotal": 1,
+          "missedSafeDefaults": 0
+        }
+      },
+      {
+        "caseId": "rco-scope-b1-04",
+        "candidateStatus": "completed",
+        "candidateSchemaValid": false,
+        "candidateSchemaIssues": [
+          "semantic:REQUIRES_ACTION_INCONSISTENT:candidate.requiresAction"
+        ],
+        "verifierStatus": "skipped_upstream_invalid",
+        "verifierSchemaValid": false,
+        "verifierSchemaIssues": [
+          "verification:VERIFIER_NOT_COMPLETED:verification"
+        ],
+        "compositionSucceeded": false,
+        "score": {
+          "requiresActionCorrect": false,
+          "expectedNodes": 4,
+          "predictedNodes": 0,
+          "matchedNodes": 0,
+          "nodePrecision": null,
+          "nodeRecall": 0,
+          "nodeF1": null,
+          "scopeCounts": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 5
+          },
+          "scopePrecision": null,
+          "scopeRecall": 0,
+          "scopeF1": null,
+          "fields": {
+            "action": {
+              "correct": 0,
+              "total": 3
+            },
+            "object": {
+              "correct": 0,
+              "total": 3
+            },
+            "time": {
+              "correct": 0,
+              "total": 4
+            },
+            "material": {
+              "correct": 0,
+              "total": 3
+            },
+            "event": {
+              "correct": 0,
+              "total": 3
+            },
+            "location": {
+              "correct": 0,
+              "total": 4
+            },
+            "revision": {
+              "correct": 0,
+              "total": 3
+            }
+          },
+          "axes": {
+            "actor": {
+              "correct": 0,
+              "total": 4
+            },
+            "speechAct": {
+              "correct": 0,
+              "total": 4
+            },
+            "polarity": {
+              "correct": 0,
+              "total": 4
+            },
+            "tense": {
+              "correct": 0,
+              "total": 4
+            },
+            "status": {
+              "correct": 0,
+              "total": 4
+            },
+            "validity": {
+              "correct": 0,
+              "total": 4
+            },
+            "modality": {
+              "correct": 0,
+              "total": 4
+            },
+            "inferenceLevel": {
+              "correct": 0,
+              "total": 4
+            },
+            "actionType": {
+              "correct": 0,
+              "total": 3
+            },
+            "effect": {
+              "correct": 0,
+              "total": 3
+            }
+          },
+          "semanticBundleCorrect": 0,
+          "semanticBundleTotal": 4,
+          "ignoredScopeExact": false,
+          "completeCase": false,
+          "forbiddenDefaultSelections": 0,
+          "safeDefaultCorrect": 0,
+          "safeDefaultTotal": 0,
+          "missedSafeDefaults": 0
+        }
+      },
+      {
+        "caseId": "rco-scope-b1-05",
+        "candidateStatus": "completed",
+        "candidateSchemaValid": true,
+        "candidateSchemaIssues": [],
+        "verifierStatus": "completed",
+        "verifierSchemaValid": true,
+        "verifierSchemaIssues": [],
+        "compositionSucceeded": true,
+        "score": {
+          "requiresActionCorrect": true,
+          "expectedNodes": 2,
+          "predictedNodes": 3,
+          "matchedNodes": 2,
+          "nodePrecision": 0.6666666666666666,
+          "nodeRecall": 1,
+          "nodeF1": 0.8,
+          "scopeCounts": {
+            "tp": 2,
+            "fp": 1,
+            "fn": 1
+          },
+          "scopePrecision": 0.6666666666666666,
+          "scopeRecall": 0.6666666666666666,
+          "scopeF1": 0.6666666666666666,
+          "fields": {
+            "action": {
+              "correct": 0,
+              "total": 0
+            },
+            "object": {
+              "correct": 0,
+              "total": 0
+            },
+            "time": {
+              "correct": 2,
+              "total": 2
+            },
+            "material": {
+              "correct": 0,
+              "total": 0
+            },
+            "event": {
+              "correct": 0,
+              "total": 0
+            },
+            "location": {
+              "correct": 2,
+              "total": 2
+            },
+            "revision": {
+              "correct": 0,
+              "total": 0
+            }
+          },
+          "axes": {
+            "actor": {
+              "correct": 0,
+              "total": 2
+            },
+            "speechAct": {
+              "correct": 2,
+              "total": 2
+            },
+            "polarity": {
+              "correct": 1,
+              "total": 2
+            },
+            "tense": {
+              "correct": 1,
+              "total": 2
+            },
+            "status": {
+              "correct": 1,
+              "total": 2
+            },
+            "validity": {
+              "correct": 2,
+              "total": 2
+            },
+            "modality": {
+              "correct": 2,
+              "total": 2
+            },
+            "inferenceLevel": {
+              "correct": 2,
+              "total": 2
+            },
+            "actionType": {
+              "correct": 0,
+              "total": 0
+            },
+            "effect": {
+              "correct": 0,
+              "total": 0
+            }
+          },
+          "semanticBundleCorrect": 0,
+          "semanticBundleTotal": 2,
+          "ignoredScopeExact": true,
+          "completeCase": false,
+          "forbiddenDefaultSelections": 0,
+          "safeDefaultCorrect": 0,
+          "safeDefaultTotal": 0,
+          "missedSafeDefaults": 0
+        }
+      },
+      {
+        "caseId": "rco-scope-b1-06",
+        "candidateStatus": "completed",
+        "candidateSchemaValid": true,
+        "candidateSchemaIssues": [],
+        "verifierStatus": "completed",
+        "verifierSchemaValid": true,
+        "verifierSchemaIssues": [],
+        "compositionSucceeded": true,
+        "score": {
+          "requiresActionCorrect": true,
+          "expectedNodes": 2,
+          "predictedNodes": 3,
+          "matchedNodes": 2,
+          "nodePrecision": 0.6666666666666666,
+          "nodeRecall": 1,
+          "nodeF1": 0.8,
+          "scopeCounts": {
+            "tp": 2,
+            "fp": 1,
+            "fn": 1
+          },
+          "scopePrecision": 0.6666666666666666,
+          "scopeRecall": 0.6666666666666666,
+          "scopeF1": 0.6666666666666666,
+          "fields": {
+            "action": {
+              "correct": 1,
+              "total": 1
+            },
+            "object": {
+              "correct": 1,
+              "total": 1
+            },
+            "time": {
+              "correct": 2,
+              "total": 2
+            },
+            "material": {
+              "correct": 1,
+              "total": 1
+            },
+            "event": {
+              "correct": 1,
+              "total": 1
+            },
+            "location": {
+              "correct": 2,
+              "total": 2
+            },
+            "revision": {
+              "correct": 1,
+              "total": 1
+            }
+          },
+          "axes": {
+            "actor": {
+              "correct": 1,
+              "total": 2
+            },
+            "speechAct": {
+              "correct": 2,
+              "total": 2
+            },
+            "polarity": {
+              "correct": 2,
+              "total": 2
+            },
+            "tense": {
+              "correct": 1,
+              "total": 2
+            },
+            "status": {
+              "correct": 1,
+              "total": 2
+            },
+            "validity": {
+              "correct": 2,
+              "total": 2
+            },
+            "modality": {
+              "correct": 2,
+              "total": 2
+            },
+            "inferenceLevel": {
+              "correct": 2,
+              "total": 2
+            },
+            "actionType": {
+              "correct": 1,
+              "total": 1
+            },
+            "effect": {
+              "correct": 1,
+              "total": 1
+            }
+          },
+          "semanticBundleCorrect": 0,
+          "semanticBundleTotal": 2,
+          "ignoredScopeExact": true,
+          "completeCase": false,
+          "forbiddenDefaultSelections": 0,
+          "safeDefaultCorrect": 0,
+          "safeDefaultTotal": 0,
+          "missedSafeDefaults": 0
+        }
+      },
+      {
+        "caseId": "rco-scope-b1-07",
+        "candidateStatus": "completed",
+        "candidateSchemaValid": true,
+        "candidateSchemaIssues": [],
+        "verifierStatus": "completed",
+        "verifierSchemaValid": true,
+        "verifierSchemaIssues": [],
+        "compositionSucceeded": true,
+        "score": {
+          "requiresActionCorrect": true,
+          "expectedNodes": 3,
+          "predictedNodes": 3,
+          "matchedNodes": 2,
+          "nodePrecision": 0.6666666666666666,
+          "nodeRecall": 0.6666666666666666,
+          "nodeF1": 0.6666666666666666,
+          "scopeCounts": {
+            "tp": 2,
+            "fp": 1,
+            "fn": 1
+          },
+          "scopePrecision": 0.6666666666666666,
+          "scopeRecall": 0.6666666666666666,
+          "scopeF1": 0.6666666666666666,
+          "fields": {
+            "action": {
+              "correct": 2,
+              "total": 3
+            },
+            "object": {
+              "correct": 1,
+              "total": 3
+            },
+            "time": {
+              "correct": 2,
+              "total": 3
+            },
+            "material": {
+              "correct": 1,
+              "total": 3
+            },
+            "event": {
+              "correct": 2,
+              "total": 3
+            },
+            "location": {
+              "correct": 1,
+              "total": 3
+            },
+            "revision": {
+              "correct": 2,
+              "total": 3
+            }
+          },
+          "axes": {
+            "actor": {
+              "correct": 2,
+              "total": 3
+            },
+            "speechAct": {
+              "correct": 2,
+              "total": 3
+            },
+            "polarity": {
+              "correct": 2,
+              "total": 3
+            },
+            "tense": {
+              "correct": 0,
+              "total": 3
+            },
+            "status": {
+              "correct": 1,
+              "total": 3
+            },
+            "validity": {
+              "correct": 2,
+              "total": 3
+            },
+            "modality": {
+              "correct": 2,
+              "total": 3
+            },
+            "inferenceLevel": {
+              "correct": 2,
+              "total": 3
+            },
+            "actionType": {
+              "correct": 2,
+              "total": 3
+            },
+            "effect": {
+              "correct": 2,
+              "total": 3
+            }
+          },
+          "semanticBundleCorrect": 0,
+          "semanticBundleTotal": 3,
+          "ignoredScopeExact": true,
+          "completeCase": false,
+          "forbiddenDefaultSelections": 0,
+          "safeDefaultCorrect": 1,
+          "safeDefaultTotal": 1,
+          "missedSafeDefaults": 0
+        }
+      },
+      {
+        "caseId": "rco-scope-b1-08",
+        "candidateStatus": "completed",
+        "candidateSchemaValid": true,
+        "candidateSchemaIssues": [],
+        "verifierStatus": "completed",
+        "verifierSchemaValid": true,
+        "verifierSchemaIssues": [],
+        "compositionSucceeded": true,
+        "score": {
+          "requiresActionCorrect": true,
+          "expectedNodes": 2,
+          "predictedNodes": 3,
+          "matchedNodes": 2,
+          "nodePrecision": 0.6666666666666666,
+          "nodeRecall": 1,
+          "nodeF1": 0.8,
+          "scopeCounts": {
+            "tp": 2,
+            "fp": 1,
+            "fn": 2
+          },
+          "scopePrecision": 0.6666666666666666,
+          "scopeRecall": 0.5,
+          "scopeF1": 0.5714285714285715,
+          "fields": {
+            "action": {
+              "correct": 2,
+              "total": 2
+            },
+            "object": {
+              "correct": 2,
+              "total": 2
+            },
+            "time": {
+              "correct": 0,
+              "total": 2
+            },
+            "material": {
+              "correct": 0,
+              "total": 2
+            },
+            "event": {
+              "correct": 2,
+              "total": 2
+            },
+            "location": {
+              "correct": 2,
+              "total": 2
+            },
+            "revision": {
+              "correct": 2,
+              "total": 2
+            }
+          },
+          "axes": {
+            "actor": {
+              "correct": 2,
+              "total": 2
+            },
+            "speechAct": {
+              "correct": 2,
+              "total": 2
+            },
+            "polarity": {
+              "correct": 2,
+              "total": 2
+            },
+            "tense": {
+              "correct": 0,
+              "total": 2
+            },
+            "status": {
+              "correct": 2,
+              "total": 2
+            },
+            "validity": {
+              "correct": 2,
+              "total": 2
+            },
+            "modality": {
+              "correct": 2,
+              "total": 2
+            },
+            "inferenceLevel": {
+              "correct": 2,
+              "total": 2
+            },
+            "actionType": {
+              "correct": 2,
+              "total": 2
+            },
+            "effect": {
+              "correct": 2,
+              "total": 2
+            }
+          },
+          "semanticBundleCorrect": 0,
+          "semanticBundleTotal": 2,
+          "ignoredScopeExact": true,
+          "completeCase": false,
+          "forbiddenDefaultSelections": 0,
+          "safeDefaultCorrect": 1,
+          "safeDefaultTotal": 1,
+          "missedSafeDefaults": 0
+        }
+      },
+      {
+        "caseId": "rco-scope-b1-09",
+        "candidateStatus": "completed",
+        "candidateSchemaValid": true,
+        "candidateSchemaIssues": [],
+        "verifierStatus": "completed",
+        "verifierSchemaValid": false,
+        "verifierSchemaIssues": [
+          "verification:GRAPH_COMPLETE_SCOPE_COVERAGE_INVALID:verification.consideredScopeIds"
+        ],
+        "compositionSucceeded": false,
+        "score": {
+          "requiresActionCorrect": true,
+          "expectedNodes": 3,
+          "predictedNodes": 4,
+          "matchedNodes": 3,
+          "nodePrecision": 0.75,
+          "nodeRecall": 1,
+          "nodeF1": 0.8571428571428571,
+          "scopeCounts": {
+            "tp": 3,
+            "fp": 1,
+            "fn": 0
+          },
+          "scopePrecision": 0.75,
+          "scopeRecall": 1,
+          "scopeF1": 0.8571428571428571,
+          "fields": {
+            "action": {
+              "correct": 2,
+              "total": 2
+            },
+            "object": {
+              "correct": 2,
+              "total": 2
+            },
+            "time": {
+              "correct": 3,
+              "total": 3
+            },
+            "material": {
+              "correct": 1,
+              "total": 2
+            },
+            "event": {
+              "correct": 2,
+              "total": 2
+            },
+            "location": {
+              "correct": 3,
+              "total": 3
+            },
+            "revision": {
+              "correct": 2,
+              "total": 2
+            }
+          },
+          "axes": {
+            "actor": {
+              "correct": 3,
+              "total": 3
+            },
+            "speechAct": {
+              "correct": 3,
+              "total": 3
+            },
+            "polarity": {
+              "correct": 2,
+              "total": 3
+            },
+            "tense": {
+              "correct": 0,
+              "total": 3
+            },
+            "status": {
+              "correct": 2,
+              "total": 3
+            },
+            "validity": {
+              "correct": 3,
+              "total": 3
+            },
+            "modality": {
+              "correct": 3,
+              "total": 3
+            },
+            "inferenceLevel": {
+              "correct": 3,
+              "total": 3
+            },
+            "actionType": {
+              "correct": 2,
+              "total": 2
+            },
+            "effect": {
+              "correct": 2,
+              "total": 2
+            }
+          },
+          "semanticBundleCorrect": 0,
+          "semanticBundleTotal": 3,
+          "ignoredScopeExact": true,
+          "completeCase": false,
+          "forbiddenDefaultSelections": 0,
+          "safeDefaultCorrect": 0,
+          "safeDefaultTotal": 2,
+          "missedSafeDefaults": 2
+        }
+      },
+      {
+        "caseId": "rco-scope-b1-10",
+        "candidateStatus": "completed",
+        "candidateSchemaValid": true,
+        "candidateSchemaIssues": [],
+        "verifierStatus": "completed",
+        "verifierSchemaValid": true,
+        "verifierSchemaIssues": [],
+        "compositionSucceeded": true,
+        "score": {
+          "requiresActionCorrect": true,
+          "expectedNodes": 4,
+          "predictedNodes": 4,
+          "matchedNodes": 3,
+          "nodePrecision": 0.75,
+          "nodeRecall": 0.75,
+          "nodeF1": 0.75,
+          "scopeCounts": {
+            "tp": 3,
+            "fp": 1,
+            "fn": 1
+          },
+          "scopePrecision": 0.75,
+          "scopeRecall": 0.75,
+          "scopeF1": 0.75,
+          "fields": {
+            "action": {
+              "correct": 3,
+              "total": 3
+            },
+            "object": {
+              "correct": 1,
+              "total": 3
+            },
+            "time": {
+              "correct": 3,
+              "total": 4
+            },
+            "material": {
+              "correct": 3,
+              "total": 3
+            },
+            "event": {
+              "correct": 3,
+              "total": 3
+            },
+            "location": {
+              "correct": 2,
+              "total": 4
+            },
+            "revision": {
+              "correct": 3,
+              "total": 3
+            }
+          },
+          "axes": {
+            "actor": {
+              "correct": 3,
+              "total": 4
+            },
+            "speechAct": {
+              "correct": 3,
+              "total": 4
+            },
+            "polarity": {
+              "correct": 3,
+              "total": 4
+            },
+            "tense": {
+              "correct": 3,
+              "total": 4
+            },
+            "status": {
+              "correct": 2,
+              "total": 4
+            },
+            "validity": {
+              "correct": 3,
+              "total": 4
+            },
+            "modality": {
+              "correct": 3,
+              "total": 4
+            },
+            "inferenceLevel": {
+              "correct": 3,
+              "total": 4
+            },
+            "actionType": {
+              "correct": 3,
+              "total": 3
+            },
+            "effect": {
+              "correct": 3,
+              "total": 3
+            }
+          },
+          "semanticBundleCorrect": 2,
+          "semanticBundleTotal": 4,
+          "ignoredScopeExact": true,
+          "completeCase": false,
+          "forbiddenDefaultSelections": 0,
+          "safeDefaultCorrect": 2,
+          "safeDefaultTotal": 2,
+          "missedSafeDefaults": 0
+        }
+      },
+      {
+        "caseId": "rco-scope-b1-11",
+        "candidateStatus": "completed",
+        "candidateSchemaValid": true,
+        "candidateSchemaIssues": [],
+        "verifierStatus": "completed",
+        "verifierSchemaValid": true,
+        "verifierSchemaIssues": [],
+        "compositionSucceeded": true,
+        "score": {
+          "requiresActionCorrect": true,
+          "expectedNodes": 3,
+          "predictedNodes": 4,
+          "matchedNodes": 3,
+          "nodePrecision": 0.75,
+          "nodeRecall": 1,
+          "nodeF1": 0.8571428571428571,
+          "scopeCounts": {
+            "tp": 3,
+            "fp": 1,
+            "fn": 0
+          },
+          "scopePrecision": 0.75,
+          "scopeRecall": 1,
+          "scopeF1": 0.8571428571428571,
+          "fields": {
+            "action": {
+              "correct": 2,
+              "total": 2
+            },
+            "object": {
+              "correct": 2,
+              "total": 2
+            },
+            "time": {
+              "correct": 2,
+              "total": 3
+            },
+            "material": {
+              "correct": 1,
+              "total": 2
+            },
+            "event": {
+              "correct": 2,
+              "total": 2
+            },
+            "location": {
+              "correct": 3,
+              "total": 3
+            },
+            "revision": {
+              "correct": 2,
+              "total": 2
+            }
+          },
+          "axes": {
+            "actor": {
+              "correct": 3,
+              "total": 3
+            },
+            "speechAct": {
+              "correct": 3,
+              "total": 3
+            },
+            "polarity": {
+              "correct": 3,
+              "total": 3
+            },
+            "tense": {
+              "correct": 2,
+              "total": 3
+            },
+            "status": {
+              "correct": 1,
+              "total": 3
+            },
+            "validity": {
+              "correct": 3,
+              "total": 3
+            },
+            "modality": {
+              "correct": 3,
+              "total": 3
+            },
+            "inferenceLevel": {
+              "correct": 3,
+              "total": 3
+            },
+            "actionType": {
+              "correct": 1,
+              "total": 2
+            },
+            "effect": {
+              "correct": 2,
+              "total": 2
+            }
+          },
+          "semanticBundleCorrect": 0,
+          "semanticBundleTotal": 3,
+          "ignoredScopeExact": true,
+          "completeCase": false,
+          "forbiddenDefaultSelections": 0,
+          "safeDefaultCorrect": 1,
+          "safeDefaultTotal": 1,
+          "missedSafeDefaults": 0
+        }
+      },
+      {
+        "caseId": "rco-scope-b1-12",
+        "candidateStatus": "completed",
+        "candidateSchemaValid": true,
+        "candidateSchemaIssues": [],
+        "verifierStatus": "completed",
+        "verifierSchemaValid": true,
+        "verifierSchemaIssues": [],
+        "compositionSucceeded": true,
+        "score": {
+          "requiresActionCorrect": true,
+          "expectedNodes": 2,
+          "predictedNodes": 4,
+          "matchedNodes": 2,
+          "nodePrecision": 0.5,
+          "nodeRecall": 1,
+          "nodeF1": 0.6666666666666666,
+          "scopeCounts": {
+            "tp": 2,
+            "fp": 2,
+            "fn": 2
+          },
+          "scopePrecision": 0.5,
+          "scopeRecall": 0.5,
+          "scopeF1": 0.5,
+          "fields": {
+            "action": {
+              "correct": 0,
+              "total": 0
+            },
+            "object": {
+              "correct": 0,
+              "total": 0
+            },
+            "time": {
+              "correct": 1,
+              "total": 2
+            },
+            "material": {
+              "correct": 0,
+              "total": 0
+            },
+            "event": {
+              "correct": 0,
+              "total": 0
+            },
+            "location": {
+              "correct": 1,
+              "total": 2
+            },
+            "revision": {
+              "correct": 0,
+              "total": 0
+            }
+          },
+          "axes": {
+            "actor": {
+              "correct": 2,
+              "total": 2
+            },
+            "speechAct": {
+              "correct": 2,
+              "total": 2
+            },
+            "polarity": {
+              "correct": 0,
+              "total": 2
+            },
+            "tense": {
+              "correct": 1,
+              "total": 2
+            },
+            "status": {
+              "correct": 2,
+              "total": 2
+            },
+            "validity": {
+              "correct": 1,
+              "total": 2
+            },
+            "modality": {
+              "correct": 2,
+              "total": 2
+            },
+            "inferenceLevel": {
+              "correct": 2,
+              "total": 2
+            },
+            "actionType": {
+              "correct": 0,
+              "total": 0
+            },
+            "effect": {
+              "correct": 0,
+              "total": 0
+            }
+          },
+          "semanticBundleCorrect": 0,
+          "semanticBundleTotal": 2,
+          "ignoredScopeExact": true,
+          "completeCase": false,
+          "forbiddenDefaultSelections": 0,
+          "safeDefaultCorrect": 0,
+          "safeDefaultTotal": 0,
+          "missedSafeDefaults": 0
+        }
+      }
+    ],
+    "metrics": {
+      "completedCases": 12,
+      "candidateSchemaValidCases": 10,
+      "verifierCompletedCases": 10,
+      "verifierSchemaValidCases": 9,
+      "requiresActionAccuracy": 0.8333333333333334,
+      "nodePrecision": 0.6666666666666666,
+      "nodeRecall": 0.7058823529411765,
+      "nodeF1": 0.6857142857142857,
+      "scopePrecision": 0.6842105263157895,
+      "scopeRecall": 0.5909090909090909,
+      "scopeF1": 0.6341463414634148,
+      "semanticAxes": {
+        "actor": 0.6176470588235294,
+        "speechAct": 0.6764705882352942,
+        "polarity": 0.5882352941176471,
+        "tense": 0.29411764705882354,
+        "status": 0.47058823529411764,
+        "validity": 0.6470588235294118,
+        "modality": 0.7058823529411765,
+        "inferenceLevel": 0.7058823529411765,
+        "actionType": 0.6363636363636364,
+        "effect": 0.6818181818181818
+      },
+      "semanticBundleAccuracy": 0.08823529411764706,
+      "fieldAccuracy": {
+        "action": 0.6818181818181818,
+        "object": 0.5454545454545454,
+        "time": 0.5882352941176471,
+        "material": 0.4090909090909091,
+        "event": 0.6818181818181818,
+        "location": 0.6176470588235294,
+        "revision": 0.6363636363636364
+      },
+      "ignoredScopeExactAccuracy": 0.8333333333333334,
+      "completeCaseAccuracy": 0,
+      "forbiddenDefaultSelections": 0,
+      "safeDefaultRecall": 0.7,
+      "missedSafeDefaults": 3
+    },
+    "criticalSemanticMinimum": 0.29411764705882354,
+    "decision": {
+      "code": "INVALID_RUN",
+      "reason": "candidate 未达到 12/12 Schema 合格，或应调用 verifier 未全部完成且 Schema 合格。"
+    }
+  },
+  "checkpointSha256": "481f86a9cee3d67a4c41fc417388cf75c437d844afb61ff542e02f7b568b80c6",
+  "rawResultsSha256": "9b564d24ffd5cda03a4d68731652d370ca59dab50a1e7d8cef889f4329f9f93a",
+  "requestRunnerSha256": "f86cfd9c2ad46234e9e76be6e4bcc9996931c87af35428407e0b06be294dd5d6",
+  "scoringRunnerSha256": "f00d308bd7afb0c3b3bef81338e2876ef4684e0e58a600ebee55b5fb5a1b0df5",
+  "scoringCorrection": "DerivedSuggestion.action/object are strings; scorer now checks them directly instead of reading a nonexistent surface child.",
+  "protectedArtifactsModified": false,
+  "stablePath": "UNCHANGED",
+  "rco6": "BLOCKED",
+  "deployment": "NOT_RUN",
+  "secretPersistence": "NONE",
+  "evidenceBoundary": "Synthetic Development only; not independent human ground truth, real-material accuracy, user modification time, browser acceptance, release evidence or production authorization"
+}

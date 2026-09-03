@@ -730,8 +730,8 @@ function scoreCandidate(expected, predicted, composition) {
     }
   }
   for (const suggestion of composition?.suggestions ?? []) {
-    if (suggestion.selected && expected.forbiddenDefaultSurfaces.some((surface) => suggestion.action.surface.includes(surface)
-      || suggestion.object.surface.includes(surface))) forbiddenDefaultSelections += 1
+    if (suggestion.selected && expected.forbiddenDefaultSurfaces.some((surface) => suggestion.action.includes(surface)
+      || suggestion.object.includes(surface))) forbiddenDefaultSelections += 1
   }
   const nodePrecision = ratio(matchedNodes, predicted.directives.length + predicted.observations.length)
   const nodeRecall = ratio(matchedNodes, expectedNodes)
@@ -769,6 +769,19 @@ function scoreCandidate(expected, predicted, composition) {
     safeDefaultTotal,
     missedSafeDefaults,
   }
+}
+
+function failClosedScore(expected) {
+  const score = scoreCandidate(expected, {
+    requiresAction: false,
+    directives: [],
+    observations: [],
+    ignoredScopeIds: [],
+  }, null)
+  score.requiresActionCorrect = false
+  score.ignoredScopeExact = false
+  score.completeCase = false
+  return score
 }
 
 function aggregateScores(caseScores) {
@@ -818,7 +831,7 @@ function aggregateScores(caseScores) {
   }
 }
 
-async function buildEvaluation(dataset, records) {
+export async function buildEvaluation(dataset, records) {
   const cases = []
   for (const fixture of dataset.cases) {
     const index = await indexFor(fixture)
@@ -851,7 +864,7 @@ async function buildEvaluation(dataset, records) {
         if (composed.ok) composition = composed.value
       }
     }
-    const score = candidateValidation.valid ? scoreCandidate(expected, candidateRecord.parsed, composition) : null
+    const score = candidateValidation.valid ? scoreCandidate(expected, candidateRecord.parsed, composition) : failClosedScore(expected)
     cases.push({
       caseId: fixture.id,
       candidateStatus: candidateRecord?.status ?? 'missing',
@@ -879,7 +892,7 @@ async function buildEvaluation(dataset, records) {
   return { cases, metrics, criticalSemanticMinimum, decision }
 }
 
-function renderReport(result) {
+export function renderReport(result) {
   const metrics = result.evaluation.metrics
   const semanticRows = Object.entries(metrics.semanticAxes).map(([axis, value]) => `| ${axis} | ${percent(value)} |`).join('\n')
   const fieldRows = Object.entries(metrics.fieldAccuracy).map(([field, value]) => `| ${field} | ${percent(value)} |`).join('\n')
