@@ -764,3 +764,22 @@
 - unsupported_claims: graph/verifier 相对 facts 的质量或安全收益、真实材料泛化、图片/文件正确率、真人修改时间、浏览器验收、商业候选、RCO-6、发布或上线。
 - final_decision: `RCO-5-005-B0 CLOSED / INVALID_RUN / INTEGRITY AUDIT FAIL / NO_PROMOTION / RCO-6 BLOCKED / DO_NOT_LAUNCH`；稳定路径、RC.4、Production 不变，未部署。
 - next_step: `NONE / WAIT_AUTHORIZATION`。若继续，应新开 B0.1，先做 0 次模型调用的 prompt/schema/scorer/checkpoint 修补与新鲜对抗审查；不得修改或重算本轮 protected artifacts，不得用同一 run-id 重试。
+
+## 32. RCO-5-005-B0.1 零调用契约修补与对抗审查 — 2026-09-03
+
+- owner / authorization_source: 当前用户明确要求完整内联枚举、使用严格 JSON Schema、graph 不合格就不调用复核器，并修正 scorer 与 checkpoint；要求修好并通过对抗测试后，再新冻结数据申请下一轮付费调用。
+- branch / start_head / upstream: `codex/e2-multimodal-recognition-exp` / `ea5ce76ed542f19de78a2c7c231053c0146b4f63` / 同一 commit；启动前工作树 clean。
+- scope: 只新增隔离的 B0.1 library、零调用验证入口、定向/新鲜对抗测试、候选 manifest 与文档；不修改 B0 或更早 Expected/freeze/dataset/checkpoint/result/cache，不接稳定路径，不部署。
+- prompt/schema: 三个独立 prompt 各自完整携带 canonical 枚举；候选请求从 Chat `json_object` 改为 DeepSeek Responses API `text.format.type=json_schema`，所有对象 `additionalProperties:false`，命题图按节点 kind 使用 `oneOf`。官方文档能力只作为候选构造依据，本轮未做真实在线请求。
+- orchestration: graph 必须先通过本地 Schema 和 producer run 绑定才可构造 verifier 请求；失败以 `skipped_upstream_invalid` 记账，request dispatch 为 0。verifier-own Schema 和完整 pipeline Schema 分开报告。
+- selection: 所有模型输出 Schema 均无 `selected`；命题图单臂永不默认勾选。只有 verifier 报告图/修订完整、无 missing directive、动作及所有关联节点都 entailed 且语义一致，再由确定性策略对 `local_change/physical_action` 生成默认勾选；外传、外部交互和 unknown 永不默认勾选。
+- scorer: facts 顶层 `requiresAction` 直接计分并做交叉状态一致性校验；无效臂 quality metrics 为 N/A；Missed Safe Default 进入 Complete Case、aggregate 和 decision；FP 的时间、材料、事件、地点进入分母；任务匹配只看 action/object，不借 evidence 关键词；决策检查全部预注册指标而非单一 F1。
+- checkpoint: 绑定 run/dataset/freeze/plan/runner/prompts/schemas/provider/endpoint/model/temperature/output cap/plan counts/createdAt；状态级严格字段；真实 dispatch 由 request SHA 和 dispatchedAt 证明，成功回执还需 HTTP 200、Provider response ID、返回模型和 response SHA；每个 `case × role` 固定 attempt 1，已发回执未知或任何终态都不自动重试。
+- adversarial: 实现期定向 `28/28 PASS`；实现完成后新写 `11/11 PASS`。新鲜样例第一版的正控 offset 错误会造成假绿，发现后未接受结果，修正并增加“未改图/复核必须先 PASS”的正控，再全量重跑至 `39/39 PASS`。
+- full_gate_before_final_docs: lint PASS；Vitest `464 passed / 1 live OCR skipped`；server `8/8`、Worker `25/25`、time parity `1/1`、multimodal evaluator `23/23`、Functions `5/5`；build PASS，保留既有 >500 kB chunk warning。
+- final_gate: 文档完成后再次运行 B0.1 `39/39`、lint、同一套全量 test 与 build，全部 PASS；security scan PASS（346 files），`npm audit --audit-level=high` 为 0 vulnerabilities；未运行部署命令。
+- protected_inputs: B0 及更早 Expected/freeze/dataset/checkpoint/result/cache 路径无 Git diff；本轮候选 manifest 是组件清单，不是下一轮 dataset freeze。
+- model_calls / network_dispatches / repair_calls / secret_access / new_dataset / real_data / human_study / browser_acceptance / deploy: `0 / 0 / 0 / NONE / NOT_CREATED_NOT_FROZEN / NOT_USED / NOT_RUN / NOT_RUN / NOT_RUN`。
+- evidence: `RCO-5-005-B01_CONTRACT.md`、`RCO-5-005-B01_ADVERSARIAL_REPORT.md`、`RCO-5-005-B01_CANDIDATE_MANIFEST.json` 和 `npm run eval:rco5:b01:verify`。
+- decision: `TECHNICAL_PASS_ZERO_MODEL_CALLS / READY_TO_REQUEST_NEW_DATA_FREEZE_AUTHORIZATION_ONLY / NO_PROMOTION / RCO-6_BLOCKED / DO_NOT_LAUNCH`。这不证明模型正确率或上线资格。
+- next_step: `NONE / WAIT_AUTHORIZATION`。下一步先由用户另行授权创建并冻结新的未见匿名 Development 数据和新计划；数据冻结后再另行批准付费调用次数与人民币上限。

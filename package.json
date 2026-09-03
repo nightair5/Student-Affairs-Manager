@@ -29,7 +29,8 @@
     "eval:multimodal:generate": "python scripts/generate-multimodal-unseen.py",
     "eval:multimodal:freeze": "node scripts/freeze-multimodal-dataset.mjs",
     "eval:multimodal:run": "node scripts/run-multimodal-evaluation.mjs",
-    "eval:multimodal:reclassify": "node scripts/reclassify-multimodal-checkpoints.mjs"
+    "eval:multimodal:reclassify": "node scripts/reclassify-multimodal-checkpoints.mjs",
+    "eval:rco5:b01:verify": "node --test scripts/rco-5-005-b01.node-test.mjs scripts/rco-5-005-b01-fresh-adversarial.node-test.mjs && node scripts/verify-rco-5-005-b01.mjs --verify-only"
   },
   "dependencies": {
     "fflate": "^0.8.3",
