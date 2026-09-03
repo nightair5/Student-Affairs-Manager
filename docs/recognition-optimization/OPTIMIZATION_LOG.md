@@ -797,3 +797,27 @@
 - calls / network / repair / secret / real_data / browser / deploy: `0 / 0 / 0 / NONE / NOT_USED / NOT_RUN / NOT_RUN`。
 - decision: `DATA_AND_PLAN_FROZEN / PAID_RUN_NOT_AUTHORIZED / RCO-6 BLOCKED / NO_PROMOTION / DO_NOT_LAUNCH`。数据是单一 Codex 作者参考答案，不是独立人工 GT、Holdout、真实材料或上线证据。
 - next_step: 用户需另行明确批准模型、最大调用次数和人民币硬上限；批准后才创建并冻结联网 runner、读取 Secret，并先用首个请求验证在线 Responses/JSON Schema 兼容性。
+
+## 34. RCO-5-005-B02-M2 真实运行完成与失败封存 — 2026-09-03
+
+- owner / authorization_source: 当前用户明确授权 `deepseek-v4-flash-vision-exp` 对已冻结 B02 的 12 个案例运行 facts-first、命题图各 12 次、复核最多 12 次；temperature 0、Repair/retry 0、最多 36 次、10 CNY 硬上限；只新增隔离 runner/checkpoint/result/report，不修改冻结数据、Expected、plan、validator、cache，不接稳定路径、不部署。
+- runner_freeze: 调用前新增并推送 `RCO-5-005-B02_M2_RUN_FREEZE.json`、联网 runner 与 7 个零调用测试；Run ID 固定 `rco-5-005-b02-m2-20260903a`，调用前提交 `b0ae8d9`。首次剪贴板内容只有 6 字符，运行器在读取有效 Secret 和联网前拒绝，调用/费用为 0；用户重新复制后才启动冻结 Run ID。
+- request_accounting: 36 个逻辑单元全部终态；实际 dispatch 25、确认 HTTP 回执 25、未知回执 0、graph 本地不合格后 verifier 零调用跳过 11；25 个请求均 completed，request/transport failure 0，Repair/retry `0/0`。
+- usage / cost: Provider usage `59,061 input / 13,017 output / 72,078 total tokens`；Provider billed cost `NOT_OBSERVABLE`；按冻结峰值单价与保守汇率折算 `0.4316928 CNY < 10 CNY`，不是供应商账单。
+- frozen_primary_metrics: facts Schema `12/12`；Task P/R/F1 `40%/40%/40%`（TP/FP/FN `4/6/6`），requiresAction `100%`，effect/time/materials/event/location `18.8%/27.3%/14.3%/33.3%/14.3%`，Evidence `100%`，Complete Case `33.3%` 且仅四个负例通过，Major Correction `66.7%`，Forbidden Default `5`，Safe Default Recall `44.4%`、Missed Safe Default `5`。
+- graph / verifier: 12 个 graph 均返回 completed，但仅 `1/12` 通过本地契约；11 个不合格图共 56 个问题（43 scope/text/start/end、8 relation nodeKinds、5 endpointEvidence）。唯一 verifier 调用返回 completed，但 5 个节点均用自由改写说明替代原文连续 evidence，自身 Schema 不合格；两臂质量均为 `INVALID_RUN / N/A`。
+- interpretation: 事后把 action/object/evidence 合并搜索可找到 10/10 预期动作，只用于定位“粗语义在、结构落位失败”，不得替代冻结 40% 主指标或作为追分。模型不应负责字符 offset、重复原文、自由证据、确定性关系或 selected。
+- integrity: checkpoint 独立重验 PASS，result 的 checkpoint/raw SHA 绑定 PASS；B02 dataset/Expected/plan/validator/freeze 和更早保护输入未改；结果提交 `3440069` 已推送。后验证 lint、全量 test（Vitest 464 passed / 1 live OCR skipped，另 server 8、Worker 25、time parity 1、multimodal evaluator 23、Functions 5）、build、security scan 362 files、npm audit 0 vulnerabilities 全部 PASS。
+- decision: `RCO-5-005-B02-M2 CLOSED / INVALID_RUN / NO_PROMOTION / RCO-G5 NOT PASSED / RCO-6 BLOCKED / DO_NOT_LAUNCH`；真实材料、真人时间、浏览器、隐私合规和商业上线仍 `NOT_RUN`。
+
+## 35. RCO-5-006 引用式语义契约启动 — 2026-09-03
+
+- owner / authorization_source: 当前用户明确授权：先更新 B02 动态状态与追加日志，再建立基于不可变 scope ID 的引用式语义契约；字符位置、逐字证据、确定性关系和 selected 均由本机构造，模型不得输出原文位置、自由证据或 selected；仅做 0 次模型调用的 Schema、composer、属性变形和新鲜对抗测试。
+- start_branch / head / upstream / worktree: `codex/e2-multimodal-recognition-exp` / `3440069b29fa35a592a4bf5ef84031c4364c6ab5` / 同一 commit / clean。
+- primary_claim: 模型只引用预先存在的 scope ID 时，本机可唯一重建原文、offset、证据与允许的关系，不再依赖模型手工复制或计数字符。
+- supporting_claim: 不存在、跨来源、歧义、冲突、非法类型或敏感外部动作不能产生默认勾选；模型尝试输出原文位置、自由 evidence 或 selected 必须被严格 Schema 拒绝。
+- anti_claim: 不用放宽 evidence/offset/关系门槛，也不靠针对 B02 的 Prompt 追分；B02 只作已见故障回归，不作新质量成绩。
+- allowed_actions: 更新本节和短上下文；新增隔离 candidate Schema、scope composer、匿名 contract/metamorphic/fresh adversarial fixtures、组件冻结和报告；运行本机 lint/test/build/security/audit；独立 Git 提交并推送。
+- forbidden_actions: 修改任何既有 Expected、freeze、dataset、checkpoint、result、validator、cache；接入稳定 Worker/浏览器/服务端/Workspace 路径；任何 Secret、模型/Repair/retry 调用、真实材料、真人研究、RCO-6、Preview/RC.4/Production 或部署。
+- stop_conditions: 模型字段仍能伪造位置或证据；scope ID 可跨 source/version 重放；关系可跨实体串借；歧义输出仍能 selected；为了通过测试修改保护输入、降低 Schema/安全门或需要模型/真实数据/部署。
+- status_before_implementation: `AUTHORIZED / ZERO_MODEL_CALLS / IN_PROGRESS / RCO-G5 NOT PASSED / RCO-6 BLOCKED / DO_NOT_LAUNCH`。
