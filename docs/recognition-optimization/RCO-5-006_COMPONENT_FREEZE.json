@@ -1,0 +1,43 @@
+{
+  "schemaVersion": "rco-5-006-scope-reference-component-freeze-1.0.0",
+  "createdAt": "2026-09-03",
+  "stage": "RCO-5-006",
+  "baseHead": "5b9c877df7bd8b5ac35e4573e9bf74addf3b3fde",
+  "candidateSchema": "scope-reference-candidate-1.0",
+  "verificationSchema": "scope-reference-verification-1.0",
+  "promptVersion": "recognition-scope-reference-1.0.0",
+  "status": "TECHNICAL_PASS_ZERO_MODEL_CALLS",
+  "classification": "anonymous_synthetic_contract_and_adversarial_fixtures_only",
+  "componentSha256": {
+    "src/recognition/scopeReferenceContract.ts": "2f3b12b464991d8ea57fe08cad1217050485ddc69b310f13b489f6dcaae71cf2",
+    "src/recognition/scopeReferenceContract.test.ts": "f695be7ddd5b325df1c95784e0fc630e2620e325ad63ddfb025522b3cd5d8b5b",
+    "src/recognition/scopeReferenceContract.metamorphic.test.ts": "740260c2871463d08e1d334a9de6d65f95ffe8c350697c7450c6dddb3614fe90",
+    "src/recognition/scopeReferenceContract.fresh.test.ts": "e3d5312418ace35bedb78d22ffa8120b1d08679bb448fc8f4e391af93a0c5010"
+  },
+  "targetedContractTests": 13,
+  "metamorphicTests": 9,
+  "freshAdversarialTests": 14,
+  "targetedTotalTests": 36,
+  "modelCalls": 0,
+  "networkDispatches": 0,
+  "repairCalls": 0,
+  "secretAccess": "NONE",
+  "realData": "NOT_USED",
+  "humanStudy": "NOT_RUN",
+  "browserAcceptance": "NOT_RUN",
+  "stablePath": "UNCHANGED_NOT_IMPORTED",
+  "deployment": "NOT_RUN",
+  "protectedInputsModified": false,
+  "qualityGate": "NOT_RUN",
+  "decision": "NO_PROMOTION_RCO6_BLOCKED_DO_NOT_LAUNCH",
+  "claimsNotSupported": [
+    "model or product accuracy",
+    "model scope selection quality",
+    "image or file recognition quality",
+    "human editing-time improvement",
+    "RCO-G5 quality pass",
+    "RCO-6 readiness",
+    "browser or commercial acceptance",
+    "release readiness"
+  ]
+}
