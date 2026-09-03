@@ -783,3 +783,17 @@
 - evidence: `RCO-5-005-B01_CONTRACT.md`、`RCO-5-005-B01_ADVERSARIAL_REPORT.md`、`RCO-5-005-B01_CANDIDATE_MANIFEST.json` 和 `npm run eval:rco5:b01:verify`。
 - decision: `TECHNICAL_PASS_ZERO_MODEL_CALLS / READY_TO_REQUEST_NEW_DATA_FREEZE_AUTHORIZATION_ONLY / NO_PROMOTION / RCO-6_BLOCKED / DO_NOT_LAUNCH`。这不证明模型正确率或上线资格。
 - next_step: `NONE / WAIT_AUTHORIZATION`。下一步先由用户另行授权创建并冻结新的未见匿名 Development 数据和新计划；数据冻结后再另行批准付费调用次数与人民币上限。
+
+## 33. RCO-5-005-B0.2 新 Development 数据与计划冻结 — 2026-09-03
+
+- owner / authorization_source: 当前用户明确要求“创建并冻结一批全新的未见匿名 Development 数据，然后进行测试”。依照上一门已明确的分段授权，本记录只完成零调用数据/计划冻结；付费测试仍等待新的调用次数和人民币上限批准。
+- method: 使用实验设计规范收敛为两个主张：先证明结构稳定可计分，再证明命题图+复核提高 Recall 且其他关键质量/安全指标不退化；反主张是排除改题、偷看 Expected 和无效臂假分。技能引用的通用 output protocol 文件在本机不存在，改用本项目固定版本文件、冻结清单、追加日志和短上下文。
+- data: 新建 `RCO-5-005-B02_DEVELOPMENT_DATASET.json`，12 个匿名合成 Codex-authored Development 案例、12 个不重复语义家族，原文与 B0 无重复；4 个 requiresAction=false、10 个预期当前任务、9 个安全默认项、1 个不得默认的 external interaction。
+- label_review: 首轮写完后发现“携带材料”可能被误当主动作、个人备忘录位置可能被强塞进 object；在任何模型调用和最终冻结前修正为核心动作/对象，再重算哈希。冻结后禁止继续改题或改 Expected。
+- dataset_sha256: `e58f73a519e5763ed3ed9100af215a8b2cc5af5d0688e4ea6a631336dc862c85`；完整绑定见 `RCO-5-005-B02_FREEZE.json`。
+- validation: data/freeze `13/13 PASS`；身份、唯一性、原文依据、覆盖、明显个人标识/凭证模式、Expected 不外发、费用上限算术、B0 受保护文件哈希和冻结组件哈希全部通过。
+- final_gate: B01 契约/对抗 `39/39`、lint、全量 test（Vitest `464 passed / 1 live OCR skipped`，另 server 8、Worker 25、time parity 1、multimodal evaluator 23、Functions 5）、build、security scan 353 files 与 npm audit 0 vulnerabilities 全部 PASS；保留既有 >500 kB chunk warning，未部署。
+- proposed_paid_run: `deepseek-v4-flash-vision-exp`，Responses API JSON Schema，temperature 0，thinking none，Repair/retry 0，最多 36 次；49,152 request bytes 与 2,000 output tokens 上限，按官方峰值价和 10 CNY/USD 保守计算最大 `8.7360768 CNY`，拟申请硬上限 10 CNY。
+- calls / network / repair / secret / real_data / browser / deploy: `0 / 0 / 0 / NONE / NOT_USED / NOT_RUN / NOT_RUN`。
+- decision: `DATA_AND_PLAN_FROZEN / PAID_RUN_NOT_AUTHORIZED / RCO-6 BLOCKED / NO_PROMOTION / DO_NOT_LAUNCH`。数据是单一 Codex 作者参考答案，不是独立人工 GT、Holdout、真实材料或上线证据。
+- next_step: 用户需另行明确批准模型、最大调用次数和人民币硬上限；批准后才创建并冻结联网 runner、读取 Secret，并先用首个请求验证在线 Responses/JSON Schema 兼容性。
