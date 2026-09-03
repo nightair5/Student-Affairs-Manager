@@ -1,0 +1,55 @@
+{
+  "schemaVersion": "rco-5-proposition-graph-candidate-freeze-1.4.0",
+  "createdAt": "2026-09-03",
+  "stage": "RCO-5-004",
+  "candidateSchema": "propositions-1.0",
+  "verificationSchema": "proposition-verification-1.0",
+  "promptVersion": "recognition-proposition-graph-1.0.0",
+  "candidateStatusAtFreeze": "FINAL_AUDIT_PENDING",
+  "baseHead": "b71e27283c3583d97c7397df02c352f0b6593b5d",
+  "scope": "v4 plus action-effect semantics bound to complete proposition scope, expanded question punctuation and task-event evidence propagation",
+  "supersedesCandidate": {
+    "path": "docs/recognition-optimization/RCO-5_PROPOSITION_GRAPH_V4_CANDIDATE_FREEZE.json",
+    "auditDisposition": "REJECT_CANDIDATE",
+    "failure": "outbound transfer behavior hidden in action object bypassed a verb-only gate"
+  },
+  "qualityGate": "NOT_RUN",
+  "promotion": "NO_PROMOTION",
+  "stablePath": "UNCHANGED",
+  "deployment": "NOT_RUN",
+  "modelCalls": 0,
+  "repairCalls": 0,
+  "targetedContractTests": 69,
+  "files": [
+    {
+      "path": "src/recognition/propositionGraph.ts",
+      "sha256": "d8096e242a3fb26477d607a5d24e5f0c8e5a527c01e70cda5c8f4e41f9ce1cfd"
+    },
+    {
+      "path": "src/recognition/propositionGraph.test.ts",
+      "sha256": "29c073fbf9dbedbe70e1420465a08ad3406f056d5c91415acc29d586808fc936"
+    },
+    {
+      "path": "src/recognition/schema.ts",
+      "sha256": "81f636bcf62a4e35221ba7e620a0410b3cc39bbf7481882e42ab1222839eab40"
+    },
+    {
+      "path": "src/lib/timeSemantics.ts",
+      "sha256": "d72109638ce4c653602478d2cd09049ab5a896a17c041422e8f5b583b8afde7d"
+    }
+  ],
+  "deterministicSafetyPolicy": "complete-scope transfer surfaces must agree with action.effect; external_transfer and unknown effects are never default-selected",
+  "fixtureVerifierBoundary": "contract_fixture_oracle requires explicit local opt-in; independent_semantic_verifier is rejected until a trusted verifier is connected",
+  "fingerprintBoundary": "FNV-1a fingerprints bind fixture inputs against accidental drift only and are not a cryptographic trust mechanism",
+  "protectedInputsModified": false,
+  "claimsNotSupported": [
+    "model recall or precision improvement",
+    "independent verifier availability",
+    "image or file recognition accuracy",
+    "human editing-time improvement",
+    "RCO-G5 quality pass",
+    "RCO-6 readiness",
+    "browser acceptance",
+    "release readiness"
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "schemaVersion": "rco-5-proposition-graph-candidate-freeze-1.3.0",
+  "createdAt": "2026-09-03",
+  "stage": "RCO-5-004",
+  "candidateSchema": "propositions-1.0",
+  "verificationSchema": "proposition-verification-1.0",
+  "promptVersion": "recognition-proposition-graph-1.0.0",
+  "candidateStatusAtFreeze": "FINAL_AUDIT_PENDING",
+  "baseHead": "b71e27283c3583d97c7397df02c352f0b6593b5d",
+  "scope": "v3 plus behavior-level manual confirmation gate for every outbound transfer directive",
+  "supersedesCandidate": {
+    "path": "docs/recognition-optimization/RCO-5_PROPOSITION_GRAPH_V3_CANDIDATE_FREEZE.json",
+    "auditDisposition": "REJECT_CANDIDATE",
+    "failure": "Access Token file passed the filename allowlist and became a selected upload task"
+  },
+  "qualityGate": "NOT_RUN",
+  "promotion": "NO_PROMOTION",
+  "stablePath": "UNCHANGED",
+  "deployment": "NOT_RUN",
+  "modelCalls": 0,
+  "repairCalls": 0,
+  "targetedContractTests": 62,
+  "files": [
+    {
+      "path": "src/recognition/propositionGraph.ts",
+      "sha256": "85010544d6f28c5630e821c45639cd723f6f7ece0153ed13c8458e8f9e6559eb"
+    },
+    {
+      "path": "src/recognition/propositionGraph.test.ts",
+      "sha256": "1400e719ccdd1557646171847c89b566b2e9c8fcc6eb17fc9bca3bf82373abbd"
+    },
+    {
+      "path": "src/recognition/schema.ts",
+      "sha256": "81f636bcf62a4e35221ba7e620a0410b3cc39bbf7481882e42ab1222839eab40"
+    },
+    {
+      "path": "src/lib/timeSemantics.ts",
+      "sha256": "d72109638ce4c653602478d2cd09049ab5a896a17c041422e8f5b583b8afde7d"
+    }
+  ],
+  "deterministicSafetyPolicy": "submit, upload, send and deliver suggestions are never default-selected, regardless of object wording",
+  "fixtureVerifierBoundary": "contract_fixture_oracle requires explicit local opt-in; independent_semantic_verifier is rejected until a trusted verifier is connected",
+  "fingerprintBoundary": "FNV-1a fingerprints bind fixture inputs against accidental drift only and are not a cryptographic trust mechanism",
+  "protectedInputsModified": false,
+  "claimsNotSupported": [
+    "model recall or precision improvement",
+    "independent verifier availability",
+    "image or file recognition accuracy",
+    "human editing-time improvement",
+    "RCO-G5 quality pass",
+    "RCO-6 readiness",
+    "browser acceptance",
+    "release readiness"
+  ]
+}

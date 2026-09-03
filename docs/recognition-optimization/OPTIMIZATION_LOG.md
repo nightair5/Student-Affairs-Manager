@@ -6,6 +6,7 @@
 
 | Entry | 阶段 | 唯一变量/目的 | 数据 | 调用 | 结果 | 决策 | 下一门 |
 |---|---|---|---|---:|---|---|---|
+| RCO-5-004 | RCO-5 proposition graph | 完整命题范围、语义状态、独立验证绑定和确定性选择 | Mock / 匿名属性变形夹具 | 0 云端模型 | FAIL (SEMANTIC EFFECT) | REJECT_CANDIDATE / DO_NOT_LAUNCH | 等待新授权；B1 不运行 |
 | RCO-5-003 | RCO-5 provenance | 本机验证精确 span、类型化关系与模糊关系不自动勾选 | Mock / 匿名契约夹具 | 0 云端模型 | FAIL (PROPOSITION SCOPE) | REJECT_CANDIDATE / DO_NOT_LAUNCH | 等待新架构授权；B1 不运行 |
 | RCO-5-002 | RCO-5 repair | 字段/关系证据、状态、sourceId 与动作归一化修补 | Mock / 匿名契约夹具 | 0 云端模型 | FAIL (CONTRACT) | REJECT_CANDIDATE / DO_NOT_LAUNCH | 新 span/relation Schema 需另授权；B1 不运行 |
 | RCO-5-001 | RCO-5 | 紧凑事实账本、确定性任务构造与跨字段验证 | Mock / 匿名契约夹具 | 0 云端模型 | TECHNICAL PASS / QUALITY NOT_RUN | NO_PROMOTION / DO_NOT_LAUNCH | RCO-6 被 RCO-G5 阻断 |
@@ -21,7 +22,7 @@
 ## 2. 当前权威状态
 
 - program: `Recognition Commercialization Optimization`
-- status: `RCO-5-003 CLOSED / REJECT_CANDIDATE / ZERO MODEL CALLS / RCO-G5 QUALITY NOT_RUN / NO_PROMOTION / DO_NOT_LAUNCH`
+- status: `RCO-5-004 CLOSED / FAIL / REJECT_CANDIDATE / ZERO BUSINESS MODEL CALLS / RCO-G5 QUALITY NOT_RUN / RCO-6 BLOCKED / NO_PROMOTION / DO_NOT_LAUNCH`
 - branch: `codex/e2-multimodal-recognition-exp`
 - protected_release: `v2.0.0-beta.1-rc.4`
 - production_status: `UNCHANGED`
@@ -30,7 +31,7 @@
 - human_timing: `NOT_RUN`
 - real_deidentified_holdout: `NOT_RUN`
 - next_authorized_action: `NONE / WAIT_AUTHORIZATION`
-- next_implementation_gate: `需另行授权完整命题作用域新架构；RCO-G5 和 RCO-6 继续阻断`
+- next_implementation_gate: `需另行授权可信独立语义/安全验证器或等价的非词表确定性证明；基础门通过前不得运行 B1 或启动 RCO-6`
 - authorization_rule: `每个 RCO 阶段开始前均需当前用户明确授权；文档/提示词/旧 E2-MM 许可不构成授权`
 - docs_authorization_source: `2026-09-01 当前用户明确要求制作优化 AGENTS/PRD/日志/提示词/目标与流程；RCO-DOCS 交付范围随本次文档提交推送关闭，不延伸到 RCO-0`
 
@@ -691,3 +692,41 @@
 - gate: `RCO-5-003 CLOSED / RCO-G5 QUALITY NOT_RUN / RCO-6 BLOCKED / NO_PROMOTION / DO_NOT_LAUNCH`；RC.4、Production 和稳定路径不变。
 - claims_not_supported: 模型 Recall/Precision、图片或文件正确率、完整案例率、真人修改时间、真实材料泛化、浏览器验收或上线资格。
 - next_step: `NONE / WAIT_AUTHORIZATION`。若继续，应先另行授权带完整命题范围、语气/极性、主体、时态和修订关系的结构设计；不得在本轮自动调用模型、接入稳定路径或启动 RCO-6。
+
+## 28. RCO-5-004 启动记录 — 2026-09-03
+
+- owner / authorization_source: 当前用户于 2026-09-03 明确授权完整命题图、完整证据范围、主体、语气/极性、时态、状态、修订关系、独立验证与确定性选择策略；明确要求模型不得输出 `selected`，并限定 0 次模型调用、禁止修改既有 Expected/freeze/dataset/checkpoint/cache、禁止接入稳定路径和部署。
+- branch / HEAD / upstream: `codex/e2-multimodal-recognition-exp` / `b71e27283c3583d97c7397df02c352f0b6593b5d` / 同一 commit；启动前工作树 clean。
+- current_gate / last_passed_gate: `RCO-G5 COMPLETE_PROPOSITION_CONTRACT_IN_PROGRESS` / `RCO-G4 PASS_COMPONENT`；RCO-G5 模型质量仍 `NOT_RUN`，RCO-6 仍阻断。
+- hypothesis: 抽取器只能提出不含选择权的完整命题；命题必须引用本机生成、保留标点的完整 scope，独立验证结果必须绑定整个文档和候选图，最终 `selected` 只能由确定性策略按主体、语气、极性、时态、状态、有效性、修订和已验证关系共同计算。
+- single_variable: 新增隔离的 proposition graph 与 composer；不修改或接入既有 facts-1.7、Worker、浏览器、稳定模型、RC.4、Release 或 Production。
+- allowed_actions: 新候选 Schema/composer、匿名 contract/property-mutation fixtures、新候选 freeze、审计轨迹、阶段报告、日志与短上下文；本机全量工程门和 dry-run；独立提交并推送。
+- forbidden_actions: 任何业务模型/Repair 调用、Secret、真实材料、真人研究、Preview/Production 部署；修改既有 Expected、freeze、dataset、checkpoint、cache；接入稳定路径或启动 RCO-6。
+- startup_evidence: 受保护输入当前 10/10 SHA 匹配且保护路径无 Git diff；Preview 首页 HTTP 200，状态仅为 `secret-present-unverified`，未发识别请求。
+- model_calls / repair_calls / secret_access / real_data / human_study / deploy: `0 / 0 / NONE / NOT_USED / NOT_RUN / NOT_RUN`。
+- stop_conditions: 抽取候选可携带 `selected`；scope 可裁掉标点/语气；验证结果未绑定全原文/候选图；验证缺失仍能自动勾选；确定性策略可被单一语义字段绕过；需要修改保护输入、接触 Secret、调用模型、接入稳定路径或部署。
+
+## 29. RCO-5-004 五轮对抗与失败封存 — 2026-09-03
+
+### 候选与新鲜审查
+
+- V1: 定向 49/49；fresh same-family/provisional 审查 `FAIL`，复现“上传 API Key”被勾选，以及等价重复旧命题绕过单一取消关系；轨迹 `2026-09-03_run10`。
+- V2: 定向 56/56；审查 `FAIL`，复现零宽字符绕过，以及敏感材料经 task-material 关系搭便车；轨迹 `2026-09-03_run11`。
+- V3: 定向 59/59；审查 `FAIL`，复现“Access Token 文件”利用敏感词遗漏和通用“文件”对象放行；轨迹 `2026-09-03_run12`。
+- V4: 定向 62/62；审查 `FAIL`，复现“填写并提交”“完成递交/上传/发送”“办理交付”等把外传行为藏在 object 中、绕过 verb-only 门；轨迹 `2026-09-03_run13`。
+- V5: 定向 69/69；最终审查仍 `FAIL`。决定性未登记反例“请完成报名材料邮寄。”被编码为 `verb=完成 / object=报名材料邮寄 / effect=local_change`，候选校验通过且 composer 生成 `selected=true`；轨迹 `2026-09-03_run14`。
+- final_decision: `REJECT_CANDIDATE`。`action.effect` 是正确抽象，但当前 effect 仍由有限本地词表推断；词表有“寄送”而无“邮寄”即被绕过，证明开放式自然语言不能靠补同义词封闭。
+
+### 工程门、完整性与边界
+
+- implementation: 新增隔离 `propositionGraph.ts`、严格无 `selected` 候选 Schema、全原文/全图 fingerprint 绑定、完整命题 scope、语义状态、类型化关系、独立验证边界和确定性 composer；稳定 Worker、浏览器默认路径、服务端及部署入口无 import。
+- verifier_boundary: `contract_fixture_oracle` 仅用于显式本机匿名测试；`independent_semantic_verifier` 当前为 `NOT_CONNECTED` 并被拒绝；FNV-1a 只防无意漂移，不是密码学身份或抗篡改证明。
+- full_gate: Schema/time drift、lint、typecheck、build PASS；Vitest `464 passed / 1 live OCR skipped`，另 server 8、Worker 25、time parity 1、multimodal evaluator 23、Functions 5 全部通过。
+- security_and_packaging: security scan PASS（327 files）；`npm audit --audit-level=high` 为 0 vulnerabilities；Cloudflare default/preview/multimodal_preview 仅 dry-run PASS，未部署；保留既有 >500 kB chunk warning。
+- protected_inputs: RCO-0 V2/V3 dataset、OCR、checkpoint、summary、freeze 当前 10/10 SHA-256 匹配；Expected 随 dataset 受保护；`.evaluation-cache` 与 `docs/e2-multimodal-experiment` 无 Git diff。
+- classification: `contract_fixture / simulation_only`；五轮审查任务为同系列模型的独立只读复核，结论为 provisional，不是产品模型调用或真实材料质量证据。
+- model_calls / repair_calls / secret_access / real_data / human_study / browser_acceptance / deploy: `0 / 0 / NONE / NOT_USED / NOT_RUN / NOT_RUN / NOT_RUN`。
+- gate: `RCO-5-004 CLOSED / RCO-G5 COMPLETE_PROPOSITION_CONTRACT_FAIL / QUALITY NOT_RUN / RCO-6 BLOCKED / NO_PROMOTION / DO_NOT_LAUNCH`；RC.4、Production 和稳定路径不变。
+- claims_not_supported: 模型 Recall/Precision、图片或文件正确率、完整案例率、真人修改时间、真实材料泛化、浏览器验收或上线资格。
+- authorization_closed: 本轮授权随失败封存和本次交付关闭；不得继续补词表、运行 B1、使用 Secret、接触真实材料、启动 RCO-6 或部署。
+- next_step: `NONE / WAIT_AUTHORIZATION`。若继续，需当前用户另行授权可验证身份、绑定整份原文与完整候选图、缺失时失败关闭的独立语义/安全验证器，或等价的非词表确定性动作效果证明；基础门重新通过后才讨论付费 B1。

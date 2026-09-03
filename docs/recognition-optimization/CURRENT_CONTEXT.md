@@ -8,10 +8,10 @@
 
 ## Authority
 
-- current_status: `RCO-5-003 CLOSED / REJECT_CANDIDATE / ZERO MODEL CALLS / RCO-G5 QUALITY NOT_RUN / RCO-6 BLOCKED / DO_NOT_LAUNCH`
-- authorized_now: `NONE`；RCO-5-003 已完成实现、三轮新鲜对抗审查和失败封存，不创造下一阶段授权
-- authorization_source: 当前用户于 2026-09-03 原文明确授权 RCO-5-003，并明确禁止修改 Expected、freeze、dataset、checkpoint、cache，禁止接入稳定路径和部署
-- authorization_closed: `YES`；RCO-5-003 以 `REJECT_CANDIDATE` 关闭；不创造 B1、RCO-6 或部署授权
+- current_status: `RCO-5-004 CLOSED / FAIL / REJECT_CANDIDATE / ZERO BUSINESS MODEL CALLS / RCO-G5 QUALITY NOT_RUN / RCO-6 BLOCKED / DO_NOT_LAUNCH`
+- authorized_now: `NONE / WAIT_AUTHORIZATION`
+- authorization_source: 当前用户于 2026-09-03 原文明确授权 RCO-5-004，并明确禁止修改既有 Expected、freeze、dataset、checkpoint、cache，禁止接入稳定路径和部署
+- authorization_closed: `YES`；RCO-5-004 已在五轮新鲜审查后失败封存；不创造 B1、RCO-6 或部署授权
 - not_authorized: B1/B4 模型调用的具体模型、Development 数据、次数与金额；Expected、freeze、dataset、checkpoint、缓存修改；Secret、真实材料、真人研究、Preview、RC.4/Production 修改或部署
 - protected: `v2.0.0-beta.1-rc.4`、Release、Production、稳定文字模型、既有稳定性监测
 - authorization_rule: 每个 RCO 阶段开始前均需当前用户明确授权；提示词、计划和旧 E2-MM 许可不构成授权
@@ -21,9 +21,9 @@
 
 - repository: `C:\Users\Winner\student-affairs-multimodal-exp`
 - expected_branch: `codex/e2-multimodal-recognition-exp`
-- last_verified_head: `83685d40b42be0d10b2e6f43df2a32466395b23f`（RCO-5-002 失败封存提交；RCO-5-003 启动时与 upstream 一致）
-- last_verified_worktree: `2026-09-03 RCO-5-003 收口前仅本阶段候选、测试、冻结、报告、审计轨迹和状态文档；受保护输入当前 10/10 哈希一致且两处保护路径无 Git diff`
-- last_validation: `2026-09-03；facts-1.7 定向 52/52，但 final fresh audit FAIL；Vitest 395 passed + 1 live OCR 按策略 skipped，另 server 8、Worker 25、time parity 1、multimodal evaluator 23、Functions 5；Schema/time drift、lint、typecheck、build PASS；security scan 302 files；npm audit 0 vulnerabilities；Cloudflare 三环境 dry-run PASS；未部署`
+- last_verified_head: `b71e27283c3583d97c7397df02c352f0b6593b5d`（RCO-5-003 失败封存提交；RCO-5-004 启动时与 upstream 一致）
+- last_verified_worktree: `2026-09-03 RCO-5-004 最终候选与审计文件待本阶段提交；受保护输入 10/10 哈希一致且两处保护路径无 Git diff；静态搜索无稳定路径 import`
+- last_validation: `2026-09-03；proposition graph V5 定向 69/69，但 final fresh audit FAIL；Vitest 464 passed + 1 live OCR 按策略 skipped，另 server 8、Worker 25、time parity 1、multimodal evaluator 23、Functions 5；Schema/time drift、lint、typecheck、build PASS；security scan 327 files；npm audit 0 vulnerabilities；Cloudflare 三环境 dry-run PASS；未部署`
 - remote: `origin`
 - preview_endpoint: `https://student-affairs-manager-multimodal-exp.nightsdell.workers.dev/；2026-09-02 只读状态检查 HTTP 200 / secret-present-unverified；未发模型请求，不构成能力或质量证明`
 - production_status: `UNCHANGED`
@@ -59,6 +59,10 @@
 - RCO-G5 conclusion: `REJECT_CANDIDATE / QUALITY NOT_RUN / ZERO MODEL CALLS / NO_PROMOTION / DO NOT LAUNCH`；在基础契约失败时不运行付费 B1，也不启动 RCO-6。
 - RCO-5-003: `facts-1.5`、`1.6`、`1.7` 三轮 fresh audit 均 FAIL；最终 52/52 已登记夹具通过，但“想确认一下，材料为必交？”仍可被裁成肯定关系并自动勾选。精确字符位置只证明词在哪里，不证明完整命题的疑问、否定、主体、时态与修订作用域。
 - RCO-5-003 evidence: `RCO-5_PROVENANCE_RELATION_CONTRACT.md`、`RCO-5_PROVENANCE_EXPERIMENT_AUDIT.json` 与 `.aris/traces/experiment-audit/2026-09-03_run07/` 至 `run09/`；classification=`contract_fixture / simulation_only`。
+- RCO-5-004: 五个冻结候选的登记测试依次为 49、56、59、62、69；五轮 fresh same-family/provisional 审查全部 `FAIL`。V5 的决定性未登记反例“请完成报名材料邮寄。”被编码为 `verb=完成 / object=报名材料邮寄 / effect=local_change`，校验通过并生成默认勾选建议。
+- first_principles_limit: 完整命题图和 `action.effect` 是正确抽象，但当前 effect 一致性仍依赖有限词表；开放式同义表达无法由枚举封闭。可信独立语义/安全验证器为 `NOT_CONNECTED`，因此没有组件能证明动作效果。
+- RCO-5-004 evidence: `RCO-5_PROPOSITION_GRAPH_CONTRACT.md`、`RCO-5_PROPOSITION_GRAPH_EXPERIMENT_AUDIT.json` 与 `.aris/traces/experiment-audit/2026-09-03_run10/` 至 `run14/`；classification=`contract_fixture / simulation_only`。
+- RCO-5-004 conclusion: `CLOSED / FAIL / REJECT_CANDIDATE / ZERO BUSINESS MODEL CALLS / RCO-G5 QUALITY NOT_RUN / RCO-6 BLOCKED / NO_PROMOTION / DO_NOT_LAUNCH`；稳定路径、RC.4、Production 不变。
 
 ## Decisions
 
@@ -81,12 +85,12 @@
 
 ## Current Gate
 
-- current_gate: `RCO-G5_PROVENANCE_CONTRACT_FAIL / REJECT_CANDIDATE / QUALITY_NOT_RUN / RCO-6_BLOCKED`
+- current_gate: `RCO-G5_COMPLETE_PROPOSITION_CONTRACT_FAIL / REJECT_CANDIDATE / QUALITY_NOT_RUN / RCO-6_BLOCKED`
 - last_passed_gate: `RCO-G4`（仅冻结匿名组件技术门）
-- implementation_gate: `RCO-5-003 PROPOSITION_SCOPE FAIL / REJECT_CANDIDATE / NO_PROMOTION / DO_NOT_LAUNCH`
+- implementation_gate: `RCO-5-004 SEMANTIC_ACTION_EFFECT FAIL / REJECT_CANDIDATE / NO_PROMOTION / DO_NOT_LAUNCH`
 - commercial_contract: `0.6.0-draft / DRAFT_UNAPPROVED；RCO-DOCS 通过也不等于冻结批准`
-- next_action: `NONE / WAIT_AUTHORIZATION`；若继续，需另行批准完整命题作用域、语气/极性、主体、时态与修订关系的新设计，不能把继续堆词表当成通过
-- blocker: `RCO_G5_PROPOSITION_SCOPE_NOT_PROVEN`；B1/B4、RCO-6、Secret、真实数据、真人、Preview/Production 均未进入
+- next_action: `NONE / WAIT_AUTHORIZATION`；不得继续补词表、运行 B1、启动 RCO-6、接入稳定路径或部署
+- blocker: `RCO_G5_TRUSTED_SEMANTIC_EFFECT_VERIFIER_NOT_CONNECTED`；若继续，需新授权先建立可信独立语义/安全验证器或等价的非词表确定性证明；B1/B4、RCO-6、Secret、真实数据、真人、Preview/Production 均未进入
 
 ## Recovery Procedure
 

@@ -1,0 +1,57 @@
+{
+  "schemaVersion": "rco-5-proposition-graph-candidate-freeze-1.1.0",
+  "createdAt": "2026-09-03",
+  "stage": "RCO-5-004",
+  "candidateSchema": "propositions-1.0",
+  "verificationSchema": "proposition-verification-1.0",
+  "promptVersion": "recognition-proposition-graph-1.0.0",
+  "candidateStatusAtFreeze": "AUDIT_PENDING",
+  "baseHead": "b71e27283c3583d97c7397df02c352f0b6593b5d",
+  "scope": "v1 plus deterministic sensitive-directive rejection and revision suppression across semantically equivalent propositions",
+  "supersedesCandidate": {
+    "path": "docs/recognition-optimization/RCO-5_PROPOSITION_GRAPH_CANDIDATE_FREEZE.json",
+    "auditDisposition": "REJECT_CANDIDATE",
+    "failures": [
+      "credential exfiltration directive could be selected",
+      "revision target could be bypassed by an equivalent duplicate node"
+    ]
+  },
+  "qualityGate": "NOT_RUN",
+  "promotion": "NO_PROMOTION",
+  "stablePath": "UNCHANGED",
+  "deployment": "NOT_RUN",
+  "modelCalls": 0,
+  "repairCalls": 0,
+  "targetedContractTests": 56,
+  "files": [
+    {
+      "path": "src/recognition/propositionGraph.ts",
+      "sha256": "0aa99930b6d5ba4fa0baaae45108a17ee605399cf2824ee95f411c0c92e49108"
+    },
+    {
+      "path": "src/recognition/propositionGraph.test.ts",
+      "sha256": "9fe4a84db340d37351dc247aee88701fd5db14049463c80dfc8d28ab99d4e94c"
+    },
+    {
+      "path": "src/recognition/schema.ts",
+      "sha256": "81f636bcf62a4e35221ba7e620a0410b3cc39bbf7481882e42ab1222839eab40"
+    },
+    {
+      "path": "src/lib/timeSemantics.ts",
+      "sha256": "d72109638ce4c653602478d2cd09049ab5a896a17c041422e8f5b583b8afde7d"
+    }
+  ],
+  "fixtureVerifierBoundary": "contract_fixture_oracle requires explicit local opt-in; independent_semantic_verifier is rejected until a trusted verifier is connected",
+  "fingerprintBoundary": "FNV-1a fingerprints bind fixture inputs against accidental drift only and are not a cryptographic trust mechanism",
+  "protectedInputsModified": false,
+  "claimsNotSupported": [
+    "model recall or precision improvement",
+    "independent verifier availability",
+    "image or file recognition accuracy",
+    "human editing-time improvement",
+    "RCO-G5 quality pass",
+    "RCO-6 readiness",
+    "browser acceptance",
+    "release readiness"
+  ]
+}

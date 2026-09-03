@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "rco-5-proposition-graph-candidate-freeze-1.0.0",
+  "createdAt": "2026-09-03",
+  "stage": "RCO-5-004",
+  "candidateSchema": "propositions-1.0",
+  "verificationSchema": "proposition-verification-1.0",
+  "promptVersion": "recognition-proposition-graph-1.0.0",
+  "candidateStatusAtFreeze": "AUDIT_PENDING",
+  "baseHead": "b71e27283c3583d97c7397df02c352f0b6593b5d",
+  "scope": "isolated zero-call complete proposition graph, full-scope evidence, semantic state, revision relations, independent-verification boundary and deterministic selection",
+  "supersedesCandidate": {
+    "path": "docs/recognition-optimization/RCO-5_PROVENANCE_V3_CANDIDATE_FREEZE.json",
+    "auditDisposition": "REJECT_CANDIDATE"
+  },
+  "qualityGate": "NOT_RUN",
+  "promotion": "NO_PROMOTION",
+  "stablePath": "UNCHANGED",
+  "deployment": "NOT_RUN",
+  "modelCalls": 0,
+  "repairCalls": 0,
+  "targetedContractTests": 49,
+  "files": [
+    {
+      "path": "src/recognition/propositionGraph.ts",
+      "sha256": "6ea3c292b58a76ba2422925b6690829e6f57f13cfbb395a98d611baa811792ca"
+    },
+    {
+      "path": "src/recognition/propositionGraph.test.ts",
+      "sha256": "64ef0f95446ba861dd081af1fe42e3f31a1b45cd84efadd47628e4e741462211"
+    },
+    {
+      "path": "src/recognition/schema.ts",
+      "sha256": "81f636bcf62a4e35221ba7e620a0410b3cc39bbf7481882e42ab1222839eab40"
+    },
+    {
+      "path": "src/lib/timeSemantics.ts",
+      "sha256": "d72109638ce4c653602478d2cd09049ab5a896a17c041422e8f5b583b8afde7d"
+    }
+  ],
+  "fixtureVerifierBoundary": "contract_fixture_oracle requires explicit local opt-in; independent_semantic_verifier is rejected until a trusted verifier is connected",
+  "fingerprintBoundary": "FNV-1a fingerprints bind fixture inputs against accidental drift only and are not a cryptographic trust mechanism",
+  "protectedInputsModified": false,
+  "claimsNotSupported": [
+    "model recall or precision improvement",
+    "independent verifier availability",
+    "image or file recognition accuracy",
+    "human editing-time improvement",
+    "RCO-G5 quality pass",
+    "RCO-6 readiness",
+    "browser acceptance",
+    "release readiness"
+  ]
+}

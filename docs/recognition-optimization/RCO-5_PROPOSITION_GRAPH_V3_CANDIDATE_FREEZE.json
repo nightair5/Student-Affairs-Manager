@@ -1,0 +1,63 @@
+{
+  "schemaVersion": "rco-5-proposition-graph-candidate-freeze-1.2.0",
+  "createdAt": "2026-09-03",
+  "stage": "RCO-5-004",
+  "candidateSchema": "propositions-1.0",
+  "verificationSchema": "proposition-verification-1.0",
+  "promptVersion": "recognition-proposition-graph-1.0.0",
+  "candidateStatusAtFreeze": "AUDIT_PENDING",
+  "baseHead": "b71e27283c3583d97c7397df02c352f0b6593b5d",
+  "scope": "v2 plus NFKC and invisible-character normalization, controlled transfer-object routing, and safety validation across every output-bearing proposition",
+  "supersedesCandidate": {
+    "path": "docs/recognition-optimization/RCO-5_PROPOSITION_GRAPH_V2_CANDIDATE_FREEZE.json",
+    "auditDisposition": "REJECT_CANDIDATE",
+    "failures": [
+      "zero-width characters bypassed credential detection",
+      "sensitive material could ride through a harmless attachment task relation"
+    ]
+  },
+  "qualityGate": "NOT_RUN",
+  "promotion": "NO_PROMOTION",
+  "stablePath": "UNCHANGED",
+  "deployment": "NOT_RUN",
+  "modelCalls": 0,
+  "repairCalls": 0,
+  "targetedContractTests": 59,
+  "files": [
+    {
+      "path": "src/recognition/propositionGraph.ts",
+      "sha256": "fb3219a8272314d6aa71af4f895aa602c90711df13e6c8a6a9c612eee27b0d4c"
+    },
+    {
+      "path": "src/recognition/propositionGraph.test.ts",
+      "sha256": "8f792cde0cb63e09f8bb36e01950d0ac3a57244e332c3c7f7b544c993a705dd5"
+    },
+    {
+      "path": "src/recognition/schema.ts",
+      "sha256": "81f636bcf62a4e35221ba7e620a0410b3cc39bbf7481882e42ab1222839eab40"
+    },
+    {
+      "path": "src/lib/timeSemantics.ts",
+      "sha256": "d72109638ce4c653602478d2cd09049ab5a896a17c041422e8f5b583b8afde7d"
+    }
+  ],
+  "excludedFromFreeze": [
+    "reports",
+    "append-only log",
+    "current context",
+    "audit records"
+  ],
+  "fixtureVerifierBoundary": "contract_fixture_oracle requires explicit local opt-in; independent_semantic_verifier is rejected until a trusted verifier is connected",
+  "fingerprintBoundary": "FNV-1a fingerprints bind fixture inputs against accidental drift only and are not a cryptographic trust mechanism",
+  "protectedInputsModified": false,
+  "claimsNotSupported": [
+    "model recall or precision improvement",
+    "independent verifier availability",
+    "image or file recognition accuracy",
+    "human editing-time improvement",
+    "RCO-G5 quality pass",
+    "RCO-6 readiness",
+    "browser acceptance",
+    "release readiness"
+  ]
+}
