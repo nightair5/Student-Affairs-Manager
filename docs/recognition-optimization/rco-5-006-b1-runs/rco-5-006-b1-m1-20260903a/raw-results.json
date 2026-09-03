@@ -1,5 +1,28 @@
 {
   "schemaVersion": "rco-5-006-b1-m1-raw-results-1.0.0",
   "runId": "rco-5-006-b1-m1-20260903a",
-  "records": []
+  "records": [
+    {
+      "key": "rco-scope-b1-01:candidate",
+      "caseId": "rco-scope-b1-01",
+      "role": "candidate",
+      "dispatched": true,
+      "attemptNo": 1,
+      "startedAt": "2026-09-03T09:24:55.559Z",
+      "completedAt": "2026-09-03T09:24:55.560Z",
+      "latencyMs": 1,
+      "requestSha256": "d973abcc0bcfdc432d043ed9c7a3e9db7e595a07efa8a6bc5cf171297524d272",
+      "requestBytes": 8550,
+      "httpStatus": null,
+      "providerRequestId": null,
+      "returnedModel": null,
+      "responseSha256": null,
+      "status": "transport_failure",
+      "failureCode": "TypeError",
+      "content": "",
+      "contentSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "parsed": null,
+      "providerUsage": null
+    }
+  ]
 }

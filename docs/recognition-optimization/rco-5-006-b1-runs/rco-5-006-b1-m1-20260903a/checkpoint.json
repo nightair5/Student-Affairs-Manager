@@ -46,5 +46,23 @@
   "repairCalls": 0,
   "retryCalls": 0,
   "createdAt": "2026-09-03T09:23:31.604Z",
-  "entries": []
+  "entries": [
+    {
+      "key": "rco-scope-b1-01:candidate",
+      "caseId": "rco-scope-b1-01",
+      "role": "candidate",
+      "attemptNo": 1,
+      "state": "transport_failure",
+      "reservedAt": "2026-09-03T09:24:55.553Z",
+      "dispatchedAt": "2026-09-03T09:24:55.557Z",
+      "requestSha256": "d973abcc0bcfdc432d043ed9c7a3e9db7e595a07efa8a6bc5cf171297524d272",
+      "requestBytes": 8550,
+      "completedAt": "2026-09-03T09:24:55.560Z",
+      "httpStatus": null,
+      "providerRequestId": null,
+      "returnedModel": null,
+      "responseSha256": null,
+      "failureCode": "TypeError"
+    }
+  ]
 }

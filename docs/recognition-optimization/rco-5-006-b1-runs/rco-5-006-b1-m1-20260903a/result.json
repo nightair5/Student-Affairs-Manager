@@ -1,0 +1,280 @@
+{
+  "schemaVersion": "rco-5-006-b1-m1-result-1.0.0",
+  "runId": "rco-5-006-b1-m1-20260903a",
+  "authorizationId": "RCO-5-006-B1-M1",
+  "generatedAt": "2026-09-03T09:24:55.569Z",
+  "runStatus": "STOPPED_FAIL_CLOSED",
+  "stopReason": "FIRST_REQUEST_NOT_COMPLETED:TypeError",
+  "datasetId": "rco-5-006-b1-development-20260903",
+  "datasetClassification": "anonymous_synthetic_codex_authored_development",
+  "labelProvenance": "Codex-authored reference labels; not independent human ground truth",
+  "model": "deepseek-v4-flash-vision-exp",
+  "endpoint": "https://api.deepseek.com/responses",
+  "apiStyle": "responses-v1-json-schema",
+  "temperature": 0,
+  "maxOutputTokens": 5000,
+  "plannedCandidateCalls": 12,
+  "maximumVerifierCalls": 12,
+  "maximumRequestDispatches": 24,
+  "repairCalls": 0,
+  "retryCalls": 0,
+  "cnyHardCap": 10,
+  "maximumTheoreticalCostCny": 8.5046016,
+  "providerBilledCost": "NOT_OBSERVABLE",
+  "observedConservativePeakPriceCostCny": null,
+  "requestAccounting": {
+    "logicalEntries": 1,
+    "requestDispatches": 1,
+    "confirmedResponses": 0,
+    "dispatchUnknown": 1,
+    "skippedBeforeDispatch": 0,
+    "completed": 0,
+    "candidateDispatches": 1,
+    "verifierDispatches": 0
+  },
+  "usage": {
+    "complete": false,
+    "dispatchedRecords": 1,
+    "observedRecords": 0,
+    "inputTokens": 0,
+    "outputTokens": 0,
+    "totalTokens": 0
+  },
+  "evaluation": {
+    "cases": [
+      {
+        "caseId": "rco-scope-b1-01",
+        "candidateStatus": "transport_failure",
+        "candidateSchemaValid": false,
+        "candidateSchemaIssues": [
+          "schema:CANDIDATE_NOT_COMPLETED:candidate"
+        ],
+        "verifierStatus": "missing",
+        "verifierSchemaValid": false,
+        "verifierSchemaIssues": [
+          "verification:VERIFIER_NOT_COMPLETED:verification"
+        ],
+        "compositionSucceeded": false,
+        "score": null
+      },
+      {
+        "caseId": "rco-scope-b1-02",
+        "candidateStatus": "missing",
+        "candidateSchemaValid": false,
+        "candidateSchemaIssues": [
+          "schema:CANDIDATE_NOT_COMPLETED:candidate"
+        ],
+        "verifierStatus": "missing",
+        "verifierSchemaValid": false,
+        "verifierSchemaIssues": [
+          "verification:VERIFIER_NOT_COMPLETED:verification"
+        ],
+        "compositionSucceeded": false,
+        "score": null
+      },
+      {
+        "caseId": "rco-scope-b1-03",
+        "candidateStatus": "missing",
+        "candidateSchemaValid": false,
+        "candidateSchemaIssues": [
+          "schema:CANDIDATE_NOT_COMPLETED:candidate"
+        ],
+        "verifierStatus": "missing",
+        "verifierSchemaValid": false,
+        "verifierSchemaIssues": [
+          "verification:VERIFIER_NOT_COMPLETED:verification"
+        ],
+        "compositionSucceeded": false,
+        "score": null
+      },
+      {
+        "caseId": "rco-scope-b1-04",
+        "candidateStatus": "missing",
+        "candidateSchemaValid": false,
+        "candidateSchemaIssues": [
+          "schema:CANDIDATE_NOT_COMPLETED:candidate"
+        ],
+        "verifierStatus": "missing",
+        "verifierSchemaValid": false,
+        "verifierSchemaIssues": [
+          "verification:VERIFIER_NOT_COMPLETED:verification"
+        ],
+        "compositionSucceeded": false,
+        "score": null
+      },
+      {
+        "caseId": "rco-scope-b1-05",
+        "candidateStatus": "missing",
+        "candidateSchemaValid": false,
+        "candidateSchemaIssues": [
+          "schema:CANDIDATE_NOT_COMPLETED:candidate"
+        ],
+        "verifierStatus": "missing",
+        "verifierSchemaValid": false,
+        "verifierSchemaIssues": [
+          "verification:VERIFIER_NOT_COMPLETED:verification"
+        ],
+        "compositionSucceeded": false,
+        "score": null
+      },
+      {
+        "caseId": "rco-scope-b1-06",
+        "candidateStatus": "missing",
+        "candidateSchemaValid": false,
+        "candidateSchemaIssues": [
+          "schema:CANDIDATE_NOT_COMPLETED:candidate"
+        ],
+        "verifierStatus": "missing",
+        "verifierSchemaValid": false,
+        "verifierSchemaIssues": [
+          "verification:VERIFIER_NOT_COMPLETED:verification"
+        ],
+        "compositionSucceeded": false,
+        "score": null
+      },
+      {
+        "caseId": "rco-scope-b1-07",
+        "candidateStatus": "missing",
+        "candidateSchemaValid": false,
+        "candidateSchemaIssues": [
+          "schema:CANDIDATE_NOT_COMPLETED:candidate"
+        ],
+        "verifierStatus": "missing",
+        "verifierSchemaValid": false,
+        "verifierSchemaIssues": [
+          "verification:VERIFIER_NOT_COMPLETED:verification"
+        ],
+        "compositionSucceeded": false,
+        "score": null
+      },
+      {
+        "caseId": "rco-scope-b1-08",
+        "candidateStatus": "missing",
+        "candidateSchemaValid": false,
+        "candidateSchemaIssues": [
+          "schema:CANDIDATE_NOT_COMPLETED:candidate"
+        ],
+        "verifierStatus": "missing",
+        "verifierSchemaValid": false,
+        "verifierSchemaIssues": [
+          "verification:VERIFIER_NOT_COMPLETED:verification"
+        ],
+        "compositionSucceeded": false,
+        "score": null
+      },
+      {
+        "caseId": "rco-scope-b1-09",
+        "candidateStatus": "missing",
+        "candidateSchemaValid": false,
+        "candidateSchemaIssues": [
+          "schema:CANDIDATE_NOT_COMPLETED:candidate"
+        ],
+        "verifierStatus": "missing",
+        "verifierSchemaValid": false,
+        "verifierSchemaIssues": [
+          "verification:VERIFIER_NOT_COMPLETED:verification"
+        ],
+        "compositionSucceeded": false,
+        "score": null
+      },
+      {
+        "caseId": "rco-scope-b1-10",
+        "candidateStatus": "missing",
+        "candidateSchemaValid": false,
+        "candidateSchemaIssues": [
+          "schema:CANDIDATE_NOT_COMPLETED:candidate"
+        ],
+        "verifierStatus": "missing",
+        "verifierSchemaValid": false,
+        "verifierSchemaIssues": [
+          "verification:VERIFIER_NOT_COMPLETED:verification"
+        ],
+        "compositionSucceeded": false,
+        "score": null
+      },
+      {
+        "caseId": "rco-scope-b1-11",
+        "candidateStatus": "missing",
+        "candidateSchemaValid": false,
+        "candidateSchemaIssues": [
+          "schema:CANDIDATE_NOT_COMPLETED:candidate"
+        ],
+        "verifierStatus": "missing",
+        "verifierSchemaValid": false,
+        "verifierSchemaIssues": [
+          "verification:VERIFIER_NOT_COMPLETED:verification"
+        ],
+        "compositionSucceeded": false,
+        "score": null
+      },
+      {
+        "caseId": "rco-scope-b1-12",
+        "candidateStatus": "missing",
+        "candidateSchemaValid": false,
+        "candidateSchemaIssues": [
+          "schema:CANDIDATE_NOT_COMPLETED:candidate"
+        ],
+        "verifierStatus": "missing",
+        "verifierSchemaValid": false,
+        "verifierSchemaIssues": [
+          "verification:VERIFIER_NOT_COMPLETED:verification"
+        ],
+        "compositionSucceeded": false,
+        "score": null
+      }
+    ],
+    "metrics": {
+      "completedCases": 0,
+      "candidateSchemaValidCases": 0,
+      "verifierCompletedCases": 0,
+      "verifierSchemaValidCases": 0,
+      "requiresActionAccuracy": 0,
+      "nodePrecision": null,
+      "nodeRecall": null,
+      "nodeF1": null,
+      "scopePrecision": null,
+      "scopeRecall": null,
+      "scopeF1": null,
+      "semanticAxes": {
+        "actor": null,
+        "speechAct": null,
+        "polarity": null,
+        "tense": null,
+        "status": null,
+        "validity": null,
+        "modality": null,
+        "inferenceLevel": null,
+        "actionType": null,
+        "effect": null
+      },
+      "semanticBundleAccuracy": null,
+      "fieldAccuracy": {
+        "action": null,
+        "object": null,
+        "time": null,
+        "material": null,
+        "event": null,
+        "location": null,
+        "revision": null
+      },
+      "ignoredScopeExactAccuracy": 0,
+      "completeCaseAccuracy": 0,
+      "forbiddenDefaultSelections": 0,
+      "safeDefaultRecall": null,
+      "missedSafeDefaults": 0
+    },
+    "criticalSemanticMinimum": 0,
+    "decision": {
+      "code": "INVALID_RUN",
+      "reason": "candidate 未达到 12/12 Schema 合格，或应调用 verifier 未全部完成且 Schema 合格。"
+    }
+  },
+  "checkpointSha256": "e955b131b6b97c1e79755f81a84fba847b025c33664383ed7149637b41a33dd1",
+  "rawResultsSha256": "166c96f71ca6de5f687cfd1540783fa86ba0a965e3acac7c31d5d5516413e10e",
+  "protectedArtifactsModified": false,
+  "stablePath": "UNCHANGED",
+  "rco6": "BLOCKED",
+  "deployment": "NOT_RUN",
+  "secretPersistence": "NONE",
+  "evidenceBoundary": "Synthetic Development only; not independent human ground truth, real-material accuracy, user modification time, browser acceptance, release evidence or production authorization"
+}
