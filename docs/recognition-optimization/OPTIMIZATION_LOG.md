@@ -821,3 +821,19 @@
 - forbidden_actions: 修改任何既有 Expected、freeze、dataset、checkpoint、result、validator、cache；接入稳定 Worker/浏览器/服务端/Workspace 路径；任何 Secret、模型/Repair/retry 调用、真实材料、真人研究、RCO-6、Preview/RC.4/Production 或部署。
 - stop_conditions: 模型字段仍能伪造位置或证据；scope ID 可跨 source/version 重放；关系可跨实体串借；歧义输出仍能 selected；为了通过测试修改保护输入、降低 Schema/安全门或需要模型/真实数据/部署。
 - status_before_implementation: `AUTHORIZED / ZERO_MODEL_CALLS / IN_PROGRESS / RCO-G5 NOT PASSED / RCO-6 BLOCKED / DO_NOT_LAUNCH`。
+
+## 36. RCO-5-006 零调用实现、对抗审查与封存 — 2026-09-03
+
+- implementation_commit: `56abf79c32cfe9759ea7ef6f16c51fcd9b2e3af3`，已推送 `origin/codex/e2-multimodal-recognition-exp`；只新增隔离候选和报告，没有稳定路径 import。
+- immutable_binding: 本机以 SHA-256 绑定 source ID、version ID、完整原文字节、scope 顺序、位置和逐字内容；同一输入可复算，来源、版本或任一字节变化后旧引用拒绝。
+- model_boundary: 严格候选/复核 Schema 均 `additionalProperties:false`；模型不能输出 `start/end/text/quote/free evidence/selected/relations/fromId/toId`，只能引用已有 scope ID、唯一原文 surface 和受控语义标签。
+- local_composer: offset、逐字 evidence、task-time/material/event/location、event-time/location、revision 关系及 selected 均由本机生成；纯事件保留为 `selected=false` 的观察，不制造用户任务。
+- verifier_trust: producer 与 verifier run ID 必须不同；输出自称 independent 不构成信任，只有本机预注册的 verifier run ID 才可进入默认勾选判定；测试 oracle 仍需显式开关。
+- adversarial_repairs: 初版审查发现并修正三项主线缺口：复核器身份可由输出自证、task-location 关系遗漏、纯事件只能 ignored 而丢失。最终核心 `13/13`、属性变形 `9/9`、实现后新增同作者 fresh `14/14`，合计 `36/36 PASS`。
+- full_gate: B02 dataset/freeze `13/13`，B01 旧契约 `39/39`；lint、typecheck、全量 test（Vitest `500 passed / 1 live OCR skipped`，另 server `8`、Worker `25`、time parity `1`、multimodal evaluator `23`、Functions `5`）、build、security scan `369 files`、npm audit `0 vulnerabilities` 全部 PASS；保留既有 >500 kB chunk warning。
+- integrity: 组件 freeze SHA `4/4 PASS`；B02 runner `--help` 只运行 verify-only，报告 `modelCalls=0 / networkDispatches=0 / secretAccess=NONE`；B02 既有 dataset/Expected/plan/validator/freeze/checkpoint/result/cache 与更早保护路径无 Git diff。
+- model_calls / network_dispatches / repair_calls / secret_access / real_data / human_study / browser_acceptance / deploy: `0 / 0 / 0 / NONE / NOT_USED / NOT_RUN / NOT_RUN / NOT_RUN`；未运行 Cloudflare dry-run 或部署命令。
+- supported_claim: 本轮只证明基于 scope 引用的机械绑定和本机构造责任边界，在 36 个已登记匿名测试上可执行且失败关闭。
+- unsupported_claims: 模型 scope 选择质量、主体/否定/修订/动作效果语义正确率、图片或文件正确率、真实材料泛化、真人修改时间、独立 verifier 净收益、浏览器验收或商业上线资格。
+- final_decision: `RCO-5-006 CLOSED / TECHNICAL_PASS_ZERO_MODEL_CALLS / RCO-G5 QUALITY NOT_RUN / NO_PROMOTION / RCO-6 BLOCKED / DO_NOT_LAUNCH`；稳定路径、RC.4、Production 不变。
+- next_step: `NONE / WAIT_AUTHORIZATION`。若继续，先冻结一批与 B02 不重复的新匿名 Development 输入与 Expected；再另行批准模型、最大调用次数和人民币硬上限，验证模型能否正确选择 scope 与语义标签。本轮不得自动继续。

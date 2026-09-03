@@ -8,8 +8,8 @@
 
 ## Authority
 
-- current_status: `RCO-5-006 AUTHORIZED / ZERO-CALL IMMUTABLE-SCOPE CONTRACT IN PROGRESS / RCO-G5 NOT PASSED / RCO-6 BLOCKED / DO_NOT_LAUNCH`
-- authorized_now: 更新 B02 动态状态与追加日志；隔离实现基于不可变 scope ID 的引用式语义 Schema、确定性 composer、属性变形和新鲜对抗测试；模型不得输出原文位置、自由证据或 selected；模型调用固定为 0
+- current_status: `RCO-5-006 CLOSED / ZERO-CALL CONTRACT TECHNICAL_PASS / RCO-G5 QUALITY NOT_RUN / RCO-6 BLOCKED / NO_PROMOTION / DO_NOT_LAUNCH`
+- authorized_now: 本轮授权已完成并关闭；当前没有继续模型调用、数据冻结、稳定接入、RCO-6 或部署授权
 - authorization_source: 当前用户于 2026-09-03 明确授权 RCO-5-006，范围与禁止项见追加日志第 35 节
 - authorization_closed: `RCO-5-005-B02-M2 CLOSED / INVALID_RUN`；B02 结果已冻结并推送，不得用同一 run ID 重试或修改其数据、Expected、plan、validator、checkpoint、result、cache
 - not_authorized: 任何新模型/Repair/retry 调用、Secret、真实材料、真人研究、浏览器验收、RCO-6、稳定路径接入、Preview/RC.4/Production 或部署；修改既有 Expected、freeze、dataset、checkpoint、result、validator、cache
@@ -21,9 +21,9 @@
 
 - repository: `C:\Users\Winner\student-affairs-multimodal-exp`
 - expected_branch: `codex/e2-multimodal-recognition-exp`
-- last_verified_head: `3440069b29fa35a592a4bf5ef84031c4364c6ab5` 与 upstream 同步；恢复时仍以现场 `git rev-parse HEAD` 为准
-- last_verified_worktree: `2026-09-03 B02 运行结果已单独提交；开始本次文档更新前 clean，冻结数据与稳定路径无 Git diff`
-- last_validation: `2026-09-03 B02 后验证；checkpoint 契约与 result/raw 哈希绑定 PASS；lint、全量 test（Vitest 464 passed / 1 live OCR skipped，另 server 8、Worker 25、time parity 1、multimodal evaluator 23、Functions 5）、build、security scan 362 files、npm audit 0 vulnerabilities 全部 PASS`
+- last_verified_head: `56abf79c32cfe9759ea7ef6f16c51fcd9b2e3af3`（RCO-5-006 隔离实现提交）与 upstream 同步；最终状态日志提交在其后，恢复时以现场 `git rev-parse HEAD` 为准
+- last_verified_worktree: `2026-09-03 RCO-5-006 实现提交并推送后 clean；冻结数据与稳定路径无 Git diff`
+- last_validation: `2026-09-03 RCO-5-006；定向 contract/metamorphic/fresh 36/36，B02 freeze 13/13，B01 39/39；lint、typecheck、全量 test（Vitest 500 passed / 1 live OCR skipped，另 server 8、Worker 25、time parity 1、multimodal evaluator 23、Functions 5）、build、security scan 369 files、npm audit 0 vulnerabilities 全部 PASS；未运行部署或 Cloudflare dry-run`
 - remote: `origin`
 - preview_endpoint: `https://student-affairs-manager-multimodal-exp.nightsdell.workers.dev/；2026-09-02 只读状态检查 HTTP 200 / secret-present-unverified；未发模型请求，不构成能力或质量证明`
 - production_status: `UNCHANGED`
@@ -45,6 +45,8 @@
 - RCO-5-005-B02 quality: facts Schema `12/12`，Task P/R/F1 `40%/40%/40%`，requiresAction `100%`，Complete Case `33.3%`（仅 4 个负例），Major Correction `66.7%`，Forbidden Default `5`，Safe Default Recall `44.4%`；graph Schema `1/12`，唯一 verifier 自身因自由改写 evidence 失效。
 - RCO-5-005-B02 diagnosis: 11 个 graph 共 56 个契约错误，其中 scope/text/start/end 43、关系端点类型 8、关系证据端点覆盖 5；模型能粗略识别动作，但不能稳定承担精确位置、字段分工、关系和逐字证据生成。
 - RCO-5-005-B02 decision: `CLOSED / INVALID_RUN / NO_PROMOTION / RCO-G5 NOT PASSED / RCO-6 BLOCKED / DO_NOT_LAUNCH`；证据只属匿名合成 Development，不支持真实材料、真人修改时间、浏览器或商业结论。
+- RCO-5-006: 新候选只允许模型引用本机生成的 source/version-bound scope ID 与受控语义；offset、逐字 evidence、关系记录和 selected 全由本机 composer 生成。核心 13/13、属性变形 9/9、新鲜同作者对抗 14/14，共 36/36；审查中修复了“复核身份可自证”、遗漏 task-location 关系和纯事件被丢弃三项主线问题。
+- RCO-5-006 boundary: 技术门只证明已登记匿名夹具能失败关闭；真实可信 verifier 尚未接入，模型选 scope 和语义标签的质量、真实材料、真人时间与浏览器均 `NOT_RUN`，不能把 36/36 当识别正确率。
 
 ## Decisions
 
@@ -67,12 +69,12 @@
 
 ## Current Gate
 
-- current_gate: `RCO-5-006 IMMUTABLE_SCOPE_REFERENCE_CONTRACT IN_PROGRESS / ZERO MODEL CALLS / RCO-6 BLOCKED`
+- current_gate: `RCO-5-006 ZERO_CALL_CONTRACT TECHNICAL_PASS / CLOSED / RCO-G5 QUALITY NOT_RUN / RCO-6 BLOCKED`
 - last_passed_gate: `RCO-G4`（仅冻结匿名组件技术门）
-- implementation_gate: `B02 INVALID_RUN CONFIRMS MODEL-WRITTEN OFFSETS/EVIDENCE/RELATIONS ARE NOT STABLE；RCO-5-006 MUST PASS NEW ZERO-CALL GATE`
+- implementation_gate: `PASS：source/version-bound scope、严格 Schema、本机 offset/evidence/relation/selected 与失败关闭对抗 36/36；不等于模型质量 PASS`
 - commercial_contract: `0.6.0-draft / DRAFT_UNAPPROVED；RCO-DOCS 通过也不等于冻结批准`
-- next_action: 只实现隔离的 immutable scope ID Schema、composer、属性变形和新鲜对抗审查；完成后封存结果并停止
-- blocker: `RCO-G5 NOT PASSED`；RCO-5-006 若不能证明确定性证据重建和模糊输出 fail-closed，则继续拒绝候选；无论技术结果如何本轮不调用模型、不进入 RCO-6
+- next_action: `NONE / WAIT_AUTHORIZATION`。若继续，应先另行授权冻结一批与 B02 不重复的新匿名 Development 数据和对应 Expected；之后再单独审批模型、调用次数与人民币上限
+- blocker: `RCO-G5 QUALITY NOT_RUN`；当前只消除了模型手工写 offset/evidence/relation/selected 的机械失败面，尚未证明模型能正确选择 scope 和语义标签；RCO-6 继续阻断
 
 ## Recovery Procedure
 
