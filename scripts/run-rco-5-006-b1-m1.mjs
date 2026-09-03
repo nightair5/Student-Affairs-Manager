@@ -17,7 +17,7 @@ import { SCOPE_INDEX_VERSION, indexImmutableScopesV11 } from '../src/recognition
 
 const ROOT = process.cwd()
 const AUTHORIZATION_ID = 'RCO-5-006-B1-M1'
-const RUN_ID = 'rco-5-006-b1-m1-20260903a'
+const RUN_ID = 'rco-5-006-b1-m1-20260903b'
 const MODEL = 'deepseek-v4-flash-vision-exp'
 const ENDPOINT = 'https://api.deepseek.com/responses'
 const PROVIDER = 'deepseek'
@@ -179,6 +179,15 @@ function parseResponsesPayload(payload) {
 function safeFailureCode(payload, fallback) {
   const value = payload?.error?.type ?? payload?.error?.code ?? fallback
   return String(value ?? 'UNKNOWN').replace(/[^a-zA-Z0-9_.:-]/gu, '_').slice(0, 180) || 'UNKNOWN'
+}
+
+function validateApiKey(apiKey) {
+  if (!/^sk-[A-Za-z0-9._~+/-]{16,253}$/u.test(apiKey)) throw new Error('API_KEY_FORMAT_INVALID')
+  try {
+    new Headers({ authorization: `Bearer ${apiKey}`, 'content-type': 'application/json' })
+  } catch {
+    throw new Error('API_KEY_HEADER_CONSTRUCTION_INVALID')
+  }
 }
 
 async function indexFor(fixture) {
@@ -889,7 +898,7 @@ async function initialize() {
   const contract = await withContractHashes(immutableCheckpointContract(verified, new Date().toISOString()))
   const checkpoint = createCheckpoint(contract)
   await saveState(checkpoint, [])
-  await atomicWrite(PRECALL_REPORT_PATH, `# RCO-5-006-B1-M1 联网前冻结报告\n\n- authorization：\`${AUTHORIZATION_ID}\`\n- model：\`${MODEL}\`\n- candidate：12 次；verifier：最多 12 次；总调用：最多 24 次。\n- temperature：0；Repair / retry：0 / 0。\n- 人民币硬上限：10 CNY；理论最坏代理成本：${verified.maximumTheoreticalCostCny.toFixed(6)} CNY。\n- Dataset、Expected、scopeIndex、plan、validator、cache：未修改。\n- 模型调用 / 网络请求 / Secret access：0 / 0 / NONE。\n- 密钥策略：只从当前进程环境读取一次，仅驻留内存，不写 checkpoint、result、report、日志或 Git。\n- 稳定路径 / RCO-6 / 部署：UNCHANGED / BLOCKED / NOT_RUN。\n`)
+  await atomicWrite(PRECALL_REPORT_PATH, `# RCO-5-006-B1-M1 联网前冻结报告\n\n- authorization：\`${AUTHORIZATION_ID}\`\n- run：\`${RUN_ID}\`；前一 run \`rco-5-006-b1-m1-20260903a\` 因剪贴板不是密钥而在本机构造请求头前终止，裁定为 0 次真实模型调用。\n- model：\`${MODEL}\`\n- candidate：12 次；verifier：最多 12 次；总调用：最多 24 次。\n- temperature：0；Repair / retry：0 / 0。\n- 人民币硬上限：10 CNY；理论最坏代理成本：${verified.maximumTheoreticalCostCny.toFixed(6)} CNY。\n- Dataset、Expected、scopeIndex、plan、validator、cache：未修改。\n- 模型调用 / 网络请求 / Secret access：0 / 0 / NONE。\n- 密钥策略：先验证单行 Bearer-safe 格式和 Headers 可构造性，再写 dispatch；密钥只从当前进程环境读取一次，仅驻留内存，不写 checkpoint、result、report、日志或 Git。\n- 稳定路径 / RCO-6 / 部署：UNCHANGED / BLOCKED / NOT_RUN。\n`)
   return { verified, checkpoint }
 }
 
@@ -1023,6 +1032,9 @@ async function selfTest() {
   if (!hasForbiddenRequestKey({ nested: { expected: true } }) || hasForbiddenRequestKey({ sourceText: 'expected 是原文普通单词' })) {
     throw new Error('REQUEST_LEAK_GUARD_INVALID')
   }
+  let invalidCredentialRejected = false
+  try { validateApiKey('这不是密钥\n也不能进入请求头') } catch { invalidCredentialRejected = true }
+  if (!invalidCredentialRejected) throw new Error('CREDENTIAL_PREFLIGHT_SELF_TEST_INVALID')
   const fixture = verified.dataset.cases[0]
   const built = await buildRequest('candidate', fixture)
   if (hasForbiddenRequestKey(JSON.parse(built.body.input[0].content[0].text))) throw new Error('EXPECTED_LEAK_IN_REAL_REQUEST')
@@ -1078,7 +1090,8 @@ async function main() {
   const cnyCap = Number(process.argv.find((item) => item.startsWith('--cny-cap='))?.split('=')[1])
   if (authorization !== AUTHORIZATION_ID || runId !== RUN_ID || cnyCap !== CNY_CAP) throw new Error('PAID_AUTHORIZATION_ARGUMENT_MISMATCH')
   const apiKey = String(process.env.RCO_SCOPE_B1_DEEPSEEK_API_KEY ?? '').trim()
-  if (apiKey.length < 20) throw new Error('RCO_SCOPE_B1_DEEPSEEK_API_KEY_REQUIRED')
+  if (!apiKey) throw new Error('RCO_SCOPE_B1_DEEPSEEK_API_KEY_REQUIRED')
+  validateApiKey(apiKey)
   const result = await execute(apiKey, process.argv.includes('--resume'))
   console.log(JSON.stringify({
     status: result.runStatus,
