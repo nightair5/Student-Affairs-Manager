@@ -1,0 +1,55 @@
+{
+  "schemaVersion": "rco-5-007-b3-result-freeze-1.0.0",
+  "stage": "RCO-5-007-B3-FIRST-ORACLE",
+  "status": "FIRST_RUN_FAILED_SEEN_DEVELOPMENT_NO_TUNING",
+  "frozenAt": "2026-09-04T18:30:00+08:00",
+  "authorizationId": "RCO-5-007-B3",
+  "datasetId": "rco-5-007-b3-challenge-20260904",
+  "firstRunAgainstFrozenCommit": "e52e76b3cbfc7e8b760e91b5cde033fedab1c9af",
+  "componentPaths": [
+    "docs/recognition-optimization/RCO-5-007-B3_DATA_FREEZE.json",
+    "scripts/run-rco-5-007-b3-oracle.ts",
+    "docs/recognition-optimization/rco-5-007-b3-oracle/result.json",
+    "docs/recognition-optimization/rco-5-007-b3-oracle/REPORT.md",
+    "docs/recognition-optimization/rco-5-007-b3-oracle/ADVERSARIAL_AUDIT.md",
+    "scripts/rco-5-007-b3-oracle.node-test.mjs"
+  ],
+  "componentSha256": {
+    "docs/recognition-optimization/RCO-5-007-B3_DATA_FREEZE.json": "736f00e105bd1e6eb4d136e2a14fe52b8749b0264c47b7a77619c2b26e35e51b",
+    "scripts/run-rco-5-007-b3-oracle.ts": "369a120e9b1d9661f5bf220d8609d8be0b6c4a1205d1925156bd58ca7203d3e5",
+    "docs/recognition-optimization/rco-5-007-b3-oracle/result.json": "25bbe2d4f89840f935a4a9cfaa1fa966b73fe8dabea1d3e25c47a55c4b7dc331",
+    "docs/recognition-optimization/rco-5-007-b3-oracle/REPORT.md": "92cebee57cfe483b942323bc1f040a866663d728b8d4b09e6e4f2d6ab863e8f6",
+    "docs/recognition-optimization/rco-5-007-b3-oracle/ADVERSARIAL_AUDIT.md": "7d5f07c7e3a3eb3d4cc8982ec12fe4410690fe8ed7f73cc85726fe9f69fe8e3f",
+    "scripts/rco-5-007-b3-oracle.node-test.mjs": "34ff4e255a61529a514c92421d54512e04632b66c479826c23950ad2ed2a60af"
+  },
+  "accounting": {
+    "modelCalls": 0,
+    "networkRequests": 0,
+    "repairCalls": 0,
+    "retryCalls": 0,
+    "secretAccess": "NONE"
+  },
+  "metrics": {
+    "caseCount": 16,
+    "scoreableCases": 16,
+    "taskPrecision": 0.96,
+    "taskRecall": 0.96,
+    "taskF1": 0.96,
+    "requiresActionAccuracy": 0.9375,
+    "semanticFieldAccuracy": 0.9583333333333334,
+    "exactTaskBoundaryAccuracy": 0.9375,
+    "completeTaskCaseAccuracy": 0.6875,
+    "majorCorrectionRate": 0.3125,
+    "safeDefaultRecall": 1,
+    "forbiddenDefaultSelections": 0
+  },
+  "gate": "FAIL",
+  "decision": "B3_ORACLE_FAIL_P1_GENERALIZATION_NOT_ESTABLISHED_PAID_MODEL_BLOCKED",
+  "protectedMutation": "NONE",
+  "rerunAuthorized": false,
+  "paidRunAuthorized": false,
+  "stablePath": "UNCHANGED",
+  "rco6": "BLOCKED",
+  "deployment": "NOT_RUN",
+  "nextAuthorization": "NEW_LOCAL_POLICY_VERSION_USING_B3_REGRESSION_THEN_NEW_B4_ZERO_CALL_GATE"
+}
