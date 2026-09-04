@@ -8,8 +8,8 @@
 
 ## Current Authority
 
-- current_status: `RCO-5-007-B3 AUTHORIZED / DATA_FREEZE_THEN_ZERO-CALL ORACLE IN_PROGRESS / PAID MODEL BLOCKED / RCO-6 BLOCKED / DO_NOT_LAUNCH`
-- current_authorization: 创建并冻结一批未参与 P1 设计的全新匿名 B3 Development 挑战数据，再对冻结 P1 进行一次 0 次模型调用的理想锚点门和新鲜对抗审查。
+- current_status: `RCO-5-007-B3 CLOSED / FIRST-RUN ORACLE FAIL / P1 GENERALIZATION NOT ESTABLISHED / PAID MODEL BLOCKED / RCO-6 BLOCKED / DO_NOT_LAUNCH`
+- authorization_completed: 已先冻结并推送全新匿名 B3 Development 数据与 Expected，再对冻结 P1 完成唯一一次 0 次模型调用理想锚点门、新鲜对抗审查和结果冻结。
 - model/network/repair/retry/secret: `0 / 0 / 0 / 0 / NONE`
 - protected: 既有 Expected、freeze、dataset、checkpoint、cache；稳定路径、RC.4、Release、Production 均未修改。
 - not_authorized: 修改 P1、B3 首次冻结后的 Expected/dataset/freeze、B2 或任何既有 Expected/freeze/dataset/checkpoint/cache；模型/Secret/网络；真实材料、真人研究、浏览器验收、RCO-6、稳定路径接入、Preview/Production 部署。
@@ -19,7 +19,7 @@
 
 - repository: `C:\Users\Winner\student-affairs-multimodal-exp`
 - branch: `codex/e2-multimodal-recognition-exp`
-- last_implementation_commit: `501eb46`，已推送；恢复时重新核对 HEAD/upstream/worktree。
+- last_experiment_commit: `d1b581f`，已推送；恢复时重新核对 HEAD/upstream/worktree。
 - production/default path: 不变；仍为本机解析/OCR → 用户核对文字 → 只发送文字。
 - multimodal: 仍是独立实验 Preview；RCO-6 未启动。
 
@@ -57,6 +57,14 @@
 - 最终定向/对抗 16/16；B2 16/16 合同有效。旧策略指标原样复现；P1 Task P/R/F1、requiresAction、语义、任务边界、Complete Task Case、Safe Default 均 100%，Major Correction 0，Forbidden 0。
 - 这是 `SEEN_B2_DEVELOPMENT_DIAGNOSTIC_REPLAY`，不是模型正确率或未见泛化。P1 实验 runner 无模型调用、网络请求、Repair/retry 或 Secret；常规 Git 推送不计入实验调用。
 
+### B3 首次未见理想锚点门
+
+- B3 在 commit `e52e76b` 先冻结并推送：16 个全新匿名合成 Development 案例、25 个指令和 6 个观察；source text 和 semantic family 不复用 B0/B02/B1/B2。
+- 随后只运行一次冻结 P1。16/16 可评分；Task P/R/F1 `96.0%/96.0%/96.0%`，requiresAction `93.75%`，语义字段 `95.83%`，任务边界 `93.75%`，Complete Task Case `68.75%`，Major Correction `31.25%`，Safe Default Recall `100%`，Forbidden `0`。
+- 预登记门槛要求 Task F1 ≥90%、requiresAction ≥95%、Complete ≥80%、Forbidden=0；因此结论为 FAIL。B3 现已见，不得修改 P1 后用本集追分。
+- 结构性原因：条件事实仍被“无”字误作否定；受控 actionType 反向改写原文动作；对象里的“成员”污染主体；旧要求修订状态与命令时态/极性没有完全分层。一处群体默认标签存在单作者口径争议，但即使按最有利敏感性处理，Complete 仍只有 75%，requiresAction 仍只有 93.75%，不改变失败。
+- 本轮模型/网络/Repair/retry/Secret 为 `0/0/0/0/NONE`；这不是模型正确率、真实材料、真人效率、浏览器或上线证据。
+
 ### 完整性与工程门
 
 - B2 原冻结的 12 个组件仍逐项 SHA-256 匹配；P1 组件冻结另绑定 16 个计划、代码、测试、runner、结果和依赖路径。
@@ -64,6 +72,7 @@
 - 全量 PASS：lint；Vitest 551 passed / 1 live OCR skipped；server 8、Worker 25、time parity 1、multimodal evaluator 23、RCO-5-007 integrity 4、Functions 5；build；security scan 435 files。
 - `npm audit --audit-level=high` 连续两次在官方 advisory endpoint 网络超时，记录为 `NOT_COMPLETED_EXTERNAL_NETWORK`；不得写成 0 vulnerabilities，也没有证据表明发现漏洞。
 - 未部署；保留既有 >500 kB chunk warning。
+- B3 新增定向完整性检查 `13/13 PASS`；全量 lint PASS，Vitest `558 passed / 1 live OCR skipped`，server 8、Worker 25、time parity 1、multimodal evaluator 23、Functions 5、build PASS、security scan 451 files PASS。B3 阶段 npm audit 两次仍在官方 endpoint 超时。
 
 ## Evidence Files
 
@@ -76,17 +85,19 @@
 - B2 result/report/audit: `docs/recognition-optimization/rco-5-007-b2-oracle/`
 - P1 plan/freeze: `docs/recognition-optimization/RCO-5-007-P1_PLAN.md` and `RCO-5-007-P1_COMPONENT_FREEZE.json`
 - P1 result/report/audit: `docs/recognition-optimization/rco-5-007-p1-b2-replay/`
+- B3 data/result freeze: `docs/recognition-optimization/RCO-5-007-B3_DATA_FREEZE.json` and `RCO-5-007-B3_RESULT_FREEZE.json`
+- B3 result/report/audit: `docs/recognition-optimization/rco-5-007-b3-oracle/`
 - append-only history: `docs/recognition-optimization/OPTIMIZATION_LOG.md`
 
 ## First-Principles Interpretation
 
-P1 已让完美输入在已见 B2 上稳定形成正确任务，同时保持外部动作不默认。下一问题不再是继续追 B2，而是检验四层机制能否应对未用于设计它的新表达。必须先用全新 B3 做零调用理想锚点门，避免把已见 100% 当成泛化。
+B3 证明 P1 的安全底线仍在，但商业主线“完整且少改”没有过门。即使上游模型给出完美 scope/action/object，当前本机层仍会在条件、动作保真、主体和修订语义上制造重要修改；此时付费测模型只会把上游误差叠加到已知本机瓶颈上。
 
 ## Current Gate / Next Action
 
-- gate: `ELIGIBLE_FOR_NEW_B3_DATA_AND_ZERO_CALL_ORACLE_GATE_ONLY / PAID MODEL BLOCKED`
-- next: 完成 B3 数据的首次运行前冻结，然后只运行一次冻结 P1 理想锚点门；若失败只审计并停止，不得用 B3 反向调 P1。
-- after_b3: B3 通过后，才能另行批准同模型、固定调用数与人民币上限的付费配对测试。
+- gate: `B3 FIRST-RUN ORACLE FAIL / PAID MODEL BLOCKED / RCO-6 BLOCKED`
+- next: 等待另行授权新版本本机语义层：结构化比较条件命题；原文动作 surface 与 actionType/effect 解耦；主体只用显式执行者证据；修订状态独立表达。B3 只能作故障回归，新版本须再用全新 B4 首次零调用门。
+- after_b4: 只有 B4 通过后，才能另行批准同模型、固定调用数与人民币上限的付费配对测试。
 - promotion rule: 付费新数据仍稳定提升且 Forbidden=0，才可申请 RCO-6；之后仍需真实去标识材料、真人修改时间、Chrome/Edge/手机、隐私安全和 Commercial Preview，才能讨论上线。
 
 ## Recovery
@@ -94,4 +105,4 @@ P1 已让完美输入在已见 B2 上稳定形成正确任务，同时保持外�
 1. 读根 `AGENTS.md`、`PRD.md`、本文件和日志最后两节。
 2. 重新核对 branch、HEAD、upstream、worktree；任何差异先当用户资产。
 3. 只读取当前任务必要文件；大结果用路径、哈希、计数和结论，不灌入上下文。
-4. P1 授权已关闭；未有新授权时不得创建 B3、修改 P1、调用模型、启动 RCO-6 或部署。
+4. B3 授权已关闭且首次门失败；未有新授权时不得修改 P1/B3、创建 B4、调用模型、启动 RCO-6 或部署。

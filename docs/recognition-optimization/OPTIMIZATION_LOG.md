@@ -937,3 +937,20 @@
 - forbidden: 模型、Secret、网络、P1 修改、既有保护件修改、稳定路径、RCO-6、浏览器验收或部署。
 - accounting_at_start: `model_calls=0 / network=0 / repair=0 / retry=0 / secret_access=NONE`。
 - status: `AUTHORIZED / DATA_AND_PRE-RUN FREEZE IN_PROGRESS / PAID MODEL BLOCKED / DO_NOT_LAUNCH`。
+
+## 44. RCO-5-007-B3 首次理想锚点门失败与封存 — 2026-09-04
+
+- pre_run_freeze: B3 数据、Expected、生成器、验证器、P1、评分器和传递依赖先形成 10 路径 SHA-256 冻结，并在 commit `e52e76b` 推送后才首次运行；冻结检查 `3/3 PASS`。
+- data: 16 个全新匿名合成 Codex-authored Development，25 个指令、6 个观察、2 个 requiresAction=false；source text 和 semantic family 不复用 B0/B02/B1/B2，逐例 bigram Jaccard <0.55。不是独立人工 GT、真实材料或 Holdout。
+- first_and_only_run: 对冻结 P1 只运行一次 Expected-derived 理想 scope/action/object 锚点；运行后 B3 标记为 `FIRST_RUN_B3_ORACLE_NOW_SEEN_DEVELOPMENT`。模型/网络/Repair/retry/Secret 为 `0/0/0/0/NONE`。
+- metrics: 16/16 可评分；Task P/R/F1 `96.0%/96.0%/96.0%`，requiresAction `93.75%`，semantic fields `95.83%`，exact boundary `93.75%`，Complete Task Case `68.75%`，Major Correction `31.25%`，Safe Default Recall `100%`，Forbidden `0`。
+- fixed_gate: F1 和 Forbidden 过线；requiresAction 未达 95%，Complete 未达 80%，所以总体 FAIL。没有用单一高 F1 或 Forbidden=0 掩盖整例失败。
+- root_causes: B3-06 把条件内容“无法闭合”的肯定发生事实误作否定，造成唯一 requiresAction 错误；B3-10 用词典把已验证动作“办理”改写成“缴费”，造成 1 FP + 1 FN；B3-03 对象词“成员名单”污染 actor；B3-01 修订状态与原命令时态/极性未完全分层。
+- label_sensitivity: B3-04 的群体必做动作与 expectedDefaultSelected 存在单作者标签口径争议，冻结后未改。即便按最有利方式处理该例，Complete 仅 75%、requiresAction 仍 93.75%，失败结论不变。
+- adversarial_decision: 不能继续堆关键词，也不能拿 B3 调 P1 后复测。下一机制应结构化比较条件命题、分离原文 action surface 与受控类型、主体仅接受显式证据、修订状态独立表达；B3 只作回归，未见泛化必须另建 B4。
+- integrity: B3 数据/结果冻结、oracle 与 P1 共 `13/13 PASS`；P1/B2 保护件无漂移；P1 只由隔离测试/runner import，稳定路径未接入。结果冻结 commit `d1b581f` 已推送。
+- full_gate: lint PASS；Vitest `558 passed / 1 live OCR skipped`，server 8、Worker 25、time parity 1、multimodal evaluator 23、Functions 5；build PASS；security scan `451 files` PASS；保留既有 >500 kB chunk warning。
+- npm_audit: 两次受限 `npm audit --audit-level=high` 均在 npm 官方 advisory endpoint 网络超时，状态 `NOT_COMPLETED_EXTERNAL_NETWORK`，不是 PASS，也没有已发现漏洞证据。
+- protected_boundary: 未修改 P1、B3 首次冻结后的 dataset/Expected/data freeze、任何既有 Expected/freeze/dataset/checkpoint/cache、package 或稳定路径；未调用模型、未运行 RCO-6、浏览器验收、Cloudflare check 或部署。
+- decision: `RCO-5-007-B3 CLOSED / FIRST-RUN ORACLE FAIL / P1 GENERALIZATION NOT ESTABLISHED / PAID MODEL BLOCKED / RCO-6 BLOCKED / DO_NOT_LAUNCH`。
+- next_step: `NONE / WAIT_AUTHORIZATION`。若继续，应创建隔离的新本机语义策略版本，用已见 B3 回归后另冻全新 B4 首次零调用门；B4 过门前不申请付费模型调用。
