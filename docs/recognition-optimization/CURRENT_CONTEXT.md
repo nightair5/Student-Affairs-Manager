@@ -8,11 +8,11 @@
 
 ## Current Authority
 
-- current_status: `RCO-5-007-B3 CLOSED / FIRST-RUN ORACLE FAIL / P1 GENERALIZATION NOT ESTABLISHED / PAID MODEL BLOCKED / RCO-6 BLOCKED / DO_NOT_LAUNCH`
-- authorization_completed: 已先冻结并推送全新匿名 B3 Development 数据与 Expected，再对冻结 P1 完成唯一一次 0 次模型调用理想锚点门、新鲜对抗审查和结果冻结。
+- current_status: `RCO-5-007-P2 AUTHORIZED / STRUCTURED SEMANTICS AND B4 ZERO-CALL PATH IN_PROGRESS / PAID MODEL BLOCKED / RCO-6 BLOCKED / DO_NOT_LAUNCH`
+- current_authorization: 新建隔离 P2，结构化处理完整条件命题、动作保真、显式主体和修订状态；用已见 B3 回归，通过后创建并冻结全新 B4，再只运行一次零调用盲测。
 - model/network/repair/retry/secret: `0 / 0 / 0 / 0 / NONE`
 - protected: 既有 Expected、freeze、dataset、checkpoint、cache；稳定路径、RC.4、Release、Production 均未修改。
-- not_authorized: 修改 P1、B3 首次冻结后的 Expected/dataset/freeze、B2 或任何既有 Expected/freeze/dataset/checkpoint/cache；模型/Secret/网络；真实材料、真人研究、浏览器验收、RCO-6、稳定路径接入、Preview/Production 部署。
+- not_authorized: 修改 P1/B3 或任何既有 Expected/freeze/dataset/checkpoint/cache；模型/Secret/网络；真实材料、真人研究、浏览器验收、RCO-6、稳定路径接入、Preview/Production 部署。
 - authority_rule: 新阶段、付费调用、真实数据、浏览器验收和部署分别需要当前用户明确授权；旧授权不自动续用。
 
 ## Workspace
@@ -95,8 +95,8 @@ B3 证明 P1 的安全底线仍在，但商业主线“完整且少改”没有�
 
 ## Current Gate / Next Action
 
-- gate: `B3 FIRST-RUN ORACLE FAIL / PAID MODEL BLOCKED / RCO-6 BLOCKED`
-- next: 等待另行授权新版本本机语义层：结构化比较条件命题；原文动作 surface 与 actionType/effect 解耦；主体只用显式执行者证据；修订状态独立表达。B3 只能作故障回归，新版本须再用全新 B4 首次零调用门。
+- gate: `P2 IMPLEMENTATION AND SEEN-B3 REGRESSION IN_PROGRESS / B4 BLOCKED UNTIL P2 FREEZE / PAID MODEL BLOCKED`
+- next: 先完成并冻结 P2 与 B3 满分故障回归；只有该门通过，才创建全新 B4 并执行一次零调用盲测。
 - after_b4: 只有 B4 通过后，才能另行批准同模型、固定调用数与人民币上限的付费配对测试。
 - promotion rule: 付费新数据仍稳定提升且 Forbidden=0，才可申请 RCO-6；之后仍需真实去标识材料、真人修改时间、Chrome/Edge/手机、隐私安全和 Commercial Preview，才能讨论上线。
 

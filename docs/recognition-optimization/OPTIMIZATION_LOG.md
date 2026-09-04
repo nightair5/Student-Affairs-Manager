@@ -954,3 +954,14 @@
 - protected_boundary: 未修改 P1、B3 首次冻结后的 dataset/Expected/data freeze、任何既有 Expected/freeze/dataset/checkpoint/cache、package 或稳定路径；未调用模型、未运行 RCO-6、浏览器验收、Cloudflare check 或部署。
 - decision: `RCO-5-007-B3 CLOSED / FIRST-RUN ORACLE FAIL / P1 GENERALIZATION NOT ESTABLISHED / PAID MODEL BLOCKED / RCO-6 BLOCKED / DO_NOT_LAUNCH`。
 - next_step: `NONE / WAIT_AUTHORIZATION`。若继续，应创建隔离的新本机语义策略版本，用已见 B3 回归后另冻全新 B4 首次零调用门；B4 过门前不申请付费模型调用。
+
+## 45. RCO-5-007-P2 结构化语义层与 B4 路径启动 — 2026-09-04
+
+- authorization: 用户明确指定五项主线：完整条件命题、动作与风险解耦、显式执行人证据、旧要求/新要求分层，以及 B3 回归后全新 B4 首次盲测。
+- branch / start_head / upstream / worktree: `codex/e2-multimodal-recognition-exp` / `d633e17` / 同一 commit / clean。
+- unique_variable: 新增隔离 `task-formation-policy-2.2.0-p2`；P1、B3 和评分器保持冻结字节。
+- sequencing: P2 和已见 B3 回归先冻结、验证、提交；未通过不得创建 B4。B4 数据必须在首次运行前冻结，首次运行后即转为已见，失败不得追分。
+- gates: B3 已见回归要求全部主要指标 100%、Major=0、Forbidden=0；B4 首次门要求 F1≥90%、requiresAction≥95%、Complete≥80%、Forbidden=0。
+- forbidden: 修改既有保护件、模型/Secret/网络、稳定路径、RCO-6、浏览器验收和部署。
+- accounting_at_start: `model_calls=0 / network=0 / repair=0 / retry=0 / secret_access=NONE`。
+- status: `AUTHORIZED / P2 IN_PROGRESS / B4 BLOCKED_BY_P2 / PAID MODEL BLOCKED / DO_NOT_LAUNCH`。
