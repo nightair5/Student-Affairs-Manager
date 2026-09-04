@@ -1,0 +1,1299 @@
+{
+  "schemaVersion": "rco-5-007-b5-challenge-1.0.0",
+  "datasetId": "rco-5-007-b5-challenge-20260904",
+  "split": "Development-Challenge",
+  "classification": "anonymous_synthetic_codex_authored_pre_oracle_p2_challenge",
+  "seenStatus": "UNSEEN_BY_P2_AT_FREEZE_AND_UNSEEN_BY_DEEPSEEK",
+  "createdAt": "2026-09-04T20:45:00+08:00",
+  "labelProvenance": "Codex-authored reference labels; not independent human ground truth",
+  "contractSchemaVersion": "scope-reference-candidate-1.0",
+  "scopeIndexVersion": "scope-index-1.1",
+  "taskFormationPolicyVersion": "task-formation-policy-2.2.0-p2",
+  "sampleCount": 16,
+  "cases": [
+    {
+      "id": "rco-task-b5-01",
+      "semanticFamilyId": "cold-cabinet-negative-condition-confirmed",
+      "coverageTags": [
+        "conditional",
+        "complete_proposition",
+        "external_interaction"
+      ],
+      "sourceTitle": "冷藏柜异常处理",
+      "sourceText": "若冷藏柜仍未降温，请联系实验室管理员。事实是冷藏柜仍未降温。",
+      "referenceTime": "2026-09-04T20:45:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": {
+        "requiresAction": true,
+        "directives": [
+          {
+            "expectedId": "d-contact-lab-admin",
+            "propositionScopeTexts": [
+              "若冷藏柜仍未降温，",
+              "请联系实验室管理员。",
+              "事实是冷藏柜仍未降温。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "contact",
+            "action": {
+              "scopeText": "请联系实验室管理员。",
+              "surface": "联系"
+            },
+            "object": {
+              "scopeText": "请联系实验室管理员。",
+              "surface": "实验室管理员"
+            },
+            "effect": "external_interaction",
+            "timeRefs": [],
+            "materialRefs": [],
+            "eventRef": null,
+            "locationRef": null,
+            "revisionRefs": [],
+            "expectedDefaultSelected": false
+          }
+        ],
+        "observations": [],
+        "ignoredScopeTexts": [],
+        "forbiddenDefaultSurfaces": [
+          "联系实验室管理员"
+        ]
+      }
+    },
+    {
+      "id": "rco-task-b5-02",
+      "semanticFamilyId": "approval-condition-explicitly-denied",
+      "coverageTags": [
+        "conditional",
+        "complete_proposition",
+        "requires_action_false"
+      ],
+      "sourceTitle": "场地审批状态",
+      "sourceText": "如果预约表完成审批，再上传场地确认页。已确认预约表没有完成审批。",
+      "referenceTime": "2026-09-04T20:45:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": {
+        "requiresAction": false,
+        "directives": [
+          {
+            "expectedId": "d-upload-venue-confirmation",
+            "propositionScopeTexts": [
+              "如果预约表完成审批，",
+              "再上传场地确认页。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "hypothetical",
+              "polarity": "uncertain",
+              "tense": "future",
+              "status": "unknown",
+              "validity": "uncertain",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "upload",
+            "action": {
+              "scopeText": "再上传场地确认页。",
+              "surface": "上传"
+            },
+            "object": {
+              "scopeText": "再上传场地确认页。",
+              "surface": "场地确认页"
+            },
+            "effect": "external_transfer",
+            "timeRefs": [],
+            "materialRefs": [],
+            "eventRef": null,
+            "locationRef": null,
+            "revisionRefs": [],
+            "expectedDefaultSelected": false
+          }
+        ],
+        "observations": [
+          {
+            "expectedId": "o-approval-denied",
+            "kind": "information",
+            "propositionScopeTexts": [
+              "已确认预约表没有完成审批。"
+            ],
+            "semantics": {
+              "actor": "issuer",
+              "speechAct": "assertive",
+              "polarity": "negative",
+              "tense": "present",
+              "status": "unknown",
+              "validity": "active",
+              "modality": "informational"
+            },
+            "inferenceLevel": "explicit",
+            "subject": {
+              "scopeText": "已确认预约表没有完成审批。",
+              "surface": "预约表"
+            },
+            "timeRefs": [],
+            "locationRef": null
+          }
+        ],
+        "ignoredScopeTexts": [],
+        "forbiddenDefaultSurfaces": [
+          "上传场地确认页"
+        ]
+      }
+    },
+    {
+      "id": "rco-task-b5-03",
+      "semanticFamilyId": "volunteer-object-words-not-actor",
+      "coverageTags": [
+        "actor",
+        "object_fidelity",
+        "compound_action"
+      ],
+      "sourceTitle": "志愿者记录整理",
+      "sourceText": "请检查新生志愿者名册，再保存缺勤情况说明。",
+      "referenceTime": "2026-09-04T20:45:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": {
+        "requiresAction": true,
+        "directives": [
+          {
+            "expectedId": "d-review-volunteer-roster",
+            "propositionScopeTexts": [
+              "请检查新生志愿者名册，"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "review",
+            "action": {
+              "scopeText": "请检查新生志愿者名册，",
+              "surface": "检查"
+            },
+            "object": {
+              "scopeText": "请检查新生志愿者名册，",
+              "surface": "新生志愿者名册"
+            },
+            "effect": "local_change",
+            "timeRefs": [],
+            "materialRefs": [],
+            "eventRef": null,
+            "locationRef": null,
+            "revisionRefs": [],
+            "expectedDefaultSelected": true
+          },
+          {
+            "expectedId": "d-save-absence-note",
+            "propositionScopeTexts": [
+              "再保存缺勤情况说明。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "save",
+            "action": {
+              "scopeText": "再保存缺勤情况说明。",
+              "surface": "保存"
+            },
+            "object": {
+              "scopeText": "再保存缺勤情况说明。",
+              "surface": "缺勤情况说明"
+            },
+            "effect": "local_change",
+            "timeRefs": [],
+            "materialRefs": [],
+            "eventRef": null,
+            "locationRef": null,
+            "revisionRefs": [],
+            "expectedDefaultSelected": true
+          }
+        ],
+        "observations": [],
+        "ignoredScopeTexts": [],
+        "forbiddenDefaultSurfaces": []
+      }
+    },
+    {
+      "id": "rco-task-b5-04",
+      "semanticFamilyId": "duty-staff-explicit-group-subject",
+      "coverageTags": [
+        "actor",
+        "addressed_group",
+        "safe_default"
+      ],
+      "sourceTitle": "设备交接登记",
+      "sourceText": "值守人员须填写设备交接表。",
+      "referenceTime": "2026-09-04T20:45:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": {
+        "requiresAction": true,
+        "directives": [
+          {
+            "expectedId": "d-fill-handover-form",
+            "propositionScopeTexts": [
+              "值守人员须填写设备交接表。"
+            ],
+            "semantics": {
+              "actor": "addressed_group",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "fill",
+            "action": {
+              "scopeText": "值守人员须填写设备交接表。",
+              "surface": "填写"
+            },
+            "object": {
+              "scopeText": "值守人员须填写设备交接表。",
+              "surface": "设备交接表"
+            },
+            "effect": "local_change",
+            "timeRefs": [],
+            "materialRefs": [],
+            "eventRef": null,
+            "locationRef": null,
+            "revisionRefs": [],
+            "expectedDefaultSelected": false
+          }
+        ],
+        "observations": [],
+        "ignoredScopeTexts": [],
+        "forbiddenDefaultSurfaces": []
+      }
+    },
+    {
+      "id": "rco-task-b5-05",
+      "semanticFamilyId": "surface-complete-classified-as-submit",
+      "coverageTags": [
+        "action_surface",
+        "external_transfer",
+        "time"
+      ],
+      "sourceTitle": "纸质申请递交",
+      "sourceText": "请于下周一前完成纸质申请递交。",
+      "referenceTime": "2026-09-04T20:45:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": {
+        "requiresAction": true,
+        "directives": [
+          {
+            "expectedId": "d-complete-paper-delivery",
+            "propositionScopeTexts": [
+              "请于下周一前完成纸质申请递交。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "submit",
+            "action": {
+              "scopeText": "请于下周一前完成纸质申请递交。",
+              "surface": "完成"
+            },
+            "object": {
+              "scopeText": "请于下周一前完成纸质申请递交。",
+              "surface": "纸质申请递交"
+            },
+            "effect": "external_transfer",
+            "timeRefs": [
+              {
+                "scopeText": "请于下周一前完成纸质申请递交。",
+                "surface": "下周一",
+                "type": "submission_deadline"
+              }
+            ],
+            "materialRefs": [],
+            "eventRef": null,
+            "locationRef": null,
+            "revisionRefs": [],
+            "expectedDefaultSelected": false
+          }
+        ],
+        "observations": [],
+        "ignoredScopeTexts": [],
+        "forbiddenDefaultSurfaces": [
+          "纸质申请递交"
+        ]
+      }
+    },
+    {
+      "id": "rco-task-b5-06",
+      "semanticFamilyId": "surface-handle-classified-as-pay",
+      "coverageTags": [
+        "action_surface",
+        "external_interaction",
+        "requires_action_without_default"
+      ],
+      "sourceTitle": "培训费用处理",
+      "sourceText": "请在9月18日前处理培训费支付。",
+      "referenceTime": "2026-09-04T20:45:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": {
+        "requiresAction": true,
+        "directives": [
+          {
+            "expectedId": "d-handle-training-payment",
+            "propositionScopeTexts": [
+              "请在9月18日前处理培训费支付。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "pay",
+            "action": {
+              "scopeText": "请在9月18日前处理培训费支付。",
+              "surface": "处理"
+            },
+            "object": {
+              "scopeText": "请在9月18日前处理培训费支付。",
+              "surface": "培训费支付"
+            },
+            "effect": "external_interaction",
+            "timeRefs": [
+              {
+                "scopeText": "请在9月18日前处理培训费支付。",
+                "surface": "9月18日",
+                "type": "task_deadline"
+              }
+            ],
+            "materialRefs": [],
+            "eventRef": null,
+            "locationRef": null,
+            "revisionRefs": [],
+            "expectedDefaultSelected": false
+          }
+        ],
+        "observations": [],
+        "ignoredScopeTexts": [],
+        "forbiddenDefaultSurfaces": [
+          "培训费支付"
+        ]
+      }
+    },
+    {
+      "id": "rco-task-b5-07",
+      "semanticFamilyId": "old-schedule-cancelled-new-local-rule",
+      "coverageTags": [
+        "revision",
+        "superseded",
+        "local_replacement"
+      ],
+      "sourceTitle": "彩排要求更新",
+      "sourceText": "旧安排要求上传彩排录像，该安排已经取消。现行要求是整理彩排问题清单。",
+      "referenceTime": "2026-09-04T20:45:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": {
+        "requiresAction": true,
+        "directives": [
+          {
+            "expectedId": "d-old-upload-rehearsal",
+            "propositionScopeTexts": [
+              "旧安排要求上传彩排录像，",
+              "该安排已经取消。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "negative",
+              "tense": "past",
+              "status": "cancelled",
+              "validity": "superseded",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "upload",
+            "action": {
+              "scopeText": "旧安排要求上传彩排录像，",
+              "surface": "上传"
+            },
+            "object": {
+              "scopeText": "旧安排要求上传彩排录像，",
+              "surface": "彩排录像"
+            },
+            "effect": "external_transfer",
+            "timeRefs": [],
+            "materialRefs": [],
+            "eventRef": null,
+            "locationRef": null,
+            "revisionRefs": [],
+            "expectedDefaultSelected": false
+          },
+          {
+            "expectedId": "d-prepare-rehearsal-list",
+            "propositionScopeTexts": [
+              "现行要求是整理彩排问题清单。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "prepare",
+            "action": {
+              "scopeText": "现行要求是整理彩排问题清单。",
+              "surface": "整理"
+            },
+            "object": {
+              "scopeText": "现行要求是整理彩排问题清单。",
+              "surface": "彩排问题清单"
+            },
+            "effect": "local_change",
+            "timeRefs": [],
+            "materialRefs": [],
+            "eventRef": null,
+            "locationRef": null,
+            "revisionRefs": [],
+            "expectedDefaultSelected": true
+          }
+        ],
+        "observations": [],
+        "ignoredScopeTexts": [],
+        "forbiddenDefaultSurfaces": [
+          "上传彩排录像"
+        ]
+      }
+    },
+    {
+      "id": "rco-task-b5-08",
+      "semanticFamilyId": "prior-rule-invalid-new-check-rule",
+      "coverageTags": [
+        "revision",
+        "lexical_novelty",
+        "stale_task"
+      ],
+      "sourceTitle": "宿舍表要求变更",
+      "sourceText": "先前规定须发送宿舍分配表，现声明该规定不再有效。新的要求是核对房间编号。",
+      "referenceTime": "2026-09-04T20:45:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": {
+        "requiresAction": true,
+        "directives": [
+          {
+            "expectedId": "d-old-send-room-table",
+            "propositionScopeTexts": [
+              "先前规定须发送宿舍分配表，",
+              "现声明该规定不再有效。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "negative",
+              "tense": "past",
+              "status": "cancelled",
+              "validity": "superseded",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "send",
+            "action": {
+              "scopeText": "先前规定须发送宿舍分配表，",
+              "surface": "发送"
+            },
+            "object": {
+              "scopeText": "先前规定须发送宿舍分配表，",
+              "surface": "宿舍分配表"
+            },
+            "effect": "external_transfer",
+            "timeRefs": [],
+            "materialRefs": [],
+            "eventRef": null,
+            "locationRef": null,
+            "revisionRefs": [],
+            "expectedDefaultSelected": false
+          },
+          {
+            "expectedId": "d-review-room-number",
+            "propositionScopeTexts": [
+              "新的要求是核对房间编号。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "review",
+            "action": {
+              "scopeText": "新的要求是核对房间编号。",
+              "surface": "核对"
+            },
+            "object": {
+              "scopeText": "新的要求是核对房间编号。",
+              "surface": "房间编号"
+            },
+            "effect": "local_change",
+            "timeRefs": [],
+            "materialRefs": [],
+            "eventRef": null,
+            "locationRef": null,
+            "revisionRefs": [],
+            "expectedDefaultSelected": true
+          }
+        ],
+        "observations": [],
+        "ignoredScopeTexts": [],
+        "forbiddenDefaultSurfaces": [
+          "发送宿舍分配表"
+        ]
+      }
+    },
+    {
+      "id": "rco-task-b5-09",
+      "semanticFamilyId": "quoted-deposit-example-plus-local-note",
+      "coverageTags": [
+        "quoted",
+        "security_decoy",
+        "local_action"
+      ],
+      "sourceTitle": "防骗培训提示",
+      "sourceText": "培训材料举例：“请注册平台并支付押金”。此句仅为示例。请保存防骗提示。",
+      "referenceTime": "2026-09-04T20:45:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": {
+        "requiresAction": true,
+        "directives": [
+          {
+            "expectedId": "d-save-fraud-warning",
+            "propositionScopeTexts": [
+              "请保存防骗提示。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "save",
+            "action": {
+              "scopeText": "请保存防骗提示。",
+              "surface": "保存"
+            },
+            "object": {
+              "scopeText": "请保存防骗提示。",
+              "surface": "防骗提示"
+            },
+            "effect": "local_change",
+            "timeRefs": [],
+            "materialRefs": [],
+            "eventRef": null,
+            "locationRef": null,
+            "revisionRefs": [],
+            "expectedDefaultSelected": true
+          }
+        ],
+        "observations": [
+          {
+            "expectedId": "o-deposit-example",
+            "kind": "information",
+            "propositionScopeTexts": [
+              "培训材料举例：",
+              "“请注册平台并支付押金”。"
+            ],
+            "semantics": {
+              "actor": "third_party",
+              "speechAct": "quoted",
+              "polarity": "affirmative",
+              "tense": "present",
+              "status": "unknown",
+              "validity": "uncertain",
+              "modality": "informational"
+            },
+            "inferenceLevel": "explicit",
+            "subject": {
+              "scopeText": "“请注册平台并支付押金”。",
+              "surface": "注册平台并支付押金"
+            },
+            "timeRefs": [],
+            "locationRef": null
+          }
+        ],
+        "ignoredScopeTexts": [
+          "此句仅为示例。"
+        ],
+        "forbiddenDefaultSurfaces": [
+          "注册平台",
+          "支付押金"
+        ]
+      }
+    },
+    {
+      "id": "rco-task-b5-10",
+      "semanticFamilyId": "optional-map-and-required-badge",
+      "coverageTags": [
+        "optional",
+        "physical_action",
+        "mixed_modality"
+      ],
+      "sourceTitle": "开放日入场准备",
+      "sourceText": "校园地图可以自行打印；入场时请携带访客证。",
+      "referenceTime": "2026-09-04T20:45:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": {
+        "requiresAction": true,
+        "directives": [
+          {
+            "expectedId": "d-optional-print-map",
+            "propositionScopeTexts": [
+              "校园地图可以自行打印；"
+            ],
+            "semantics": {
+              "actor": "addressed_group",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "optional"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "print",
+            "action": {
+              "scopeText": "校园地图可以自行打印；",
+              "surface": "打印"
+            },
+            "object": {
+              "scopeText": "校园地图可以自行打印；",
+              "surface": "校园地图"
+            },
+            "effect": "physical_action",
+            "timeRefs": [],
+            "materialRefs": [],
+            "eventRef": null,
+            "locationRef": null,
+            "revisionRefs": [],
+            "expectedDefaultSelected": false
+          },
+          {
+            "expectedId": "d-carry-visitor-pass",
+            "propositionScopeTexts": [
+              "入场时请携带访客证。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "carry",
+            "action": {
+              "scopeText": "入场时请携带访客证。",
+              "surface": "携带"
+            },
+            "object": {
+              "scopeText": "入场时请携带访客证。",
+              "surface": "访客证"
+            },
+            "effect": "physical_action",
+            "timeRefs": [],
+            "materialRefs": [
+              {
+                "scopeText": "入场时请携带访客证。",
+                "surface": "访客证",
+                "required": true
+              }
+            ],
+            "eventRef": null,
+            "locationRef": null,
+            "revisionRefs": [],
+            "expectedDefaultSelected": true
+          }
+        ],
+        "observations": [],
+        "ignoredScopeTexts": [],
+        "forbiddenDefaultSurfaces": []
+      }
+    },
+    {
+      "id": "rco-task-b5-11",
+      "semanticFamilyId": "same-object-fill-and-sign-loan-form",
+      "coverageTags": [
+        "compound_action",
+        "mixed_effect",
+        "same_scope"
+      ],
+      "sourceTitle": "器材借用确认",
+      "sourceText": "请填写器材借用单并签名。",
+      "referenceTime": "2026-09-04T20:45:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": {
+        "requiresAction": true,
+        "directives": [
+          {
+            "expectedId": "d-fill-loan-form",
+            "propositionScopeTexts": [
+              "请填写器材借用单并签名。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "fill",
+            "action": {
+              "scopeText": "请填写器材借用单并签名。",
+              "surface": "填写"
+            },
+            "object": {
+              "scopeText": "请填写器材借用单并签名。",
+              "surface": "器材借用单"
+            },
+            "effect": "local_change",
+            "timeRefs": [],
+            "materialRefs": [],
+            "eventRef": null,
+            "locationRef": null,
+            "revisionRefs": [],
+            "expectedDefaultSelected": true
+          },
+          {
+            "expectedId": "d-sign-loan-form",
+            "propositionScopeTexts": [
+              "请填写器材借用单并签名。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "sign",
+            "action": {
+              "scopeText": "请填写器材借用单并签名。",
+              "surface": "签名"
+            },
+            "object": {
+              "scopeText": "请填写器材借用单并签名。",
+              "surface": "器材借用单"
+            },
+            "effect": "physical_action",
+            "timeRefs": [],
+            "materialRefs": [],
+            "eventRef": null,
+            "locationRef": null,
+            "revisionRefs": [],
+            "expectedDefaultSelected": false
+          }
+        ],
+        "observations": [],
+        "ignoredScopeTexts": [],
+        "forbiddenDefaultSurfaces": [
+          "签名"
+        ]
+      }
+    },
+    {
+      "id": "rco-task-b5-12",
+      "semanticFamilyId": "defense-event-and-file-deadline",
+      "coverageTags": [
+        "event",
+        "time_role",
+        "external_transfer"
+      ],
+      "sourceTitle": "答辩材料安排",
+      "sourceText": "项目答辩于10月9日14:30在综合楼举行。展示文件须在10月7日18:00前上传。",
+      "referenceTime": "2026-09-04T20:45:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": {
+        "requiresAction": true,
+        "directives": [
+          {
+            "expectedId": "d-upload-presentation",
+            "propositionScopeTexts": [
+              "展示文件须在10月7日18:00前上传。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "upload",
+            "action": {
+              "scopeText": "展示文件须在10月7日18:00前上传。",
+              "surface": "上传"
+            },
+            "object": {
+              "scopeText": "展示文件须在10月7日18:00前上传。",
+              "surface": "展示文件"
+            },
+            "effect": "external_transfer",
+            "timeRefs": [
+              {
+                "scopeText": "展示文件须在10月7日18:00前上传。",
+                "surface": "10月7日18:00",
+                "type": "submission_deadline"
+              }
+            ],
+            "materialRefs": [],
+            "eventRef": null,
+            "locationRef": null,
+            "revisionRefs": [],
+            "expectedDefaultSelected": false
+          }
+        ],
+        "observations": [
+          {
+            "expectedId": "o-defense-event",
+            "kind": "event",
+            "propositionScopeTexts": [
+              "项目答辩于10月9日14:30在综合楼举行。"
+            ],
+            "semantics": {
+              "actor": "unknown",
+              "speechAct": "assertive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "informational"
+            },
+            "inferenceLevel": "explicit",
+            "subject": {
+              "scopeText": "项目答辩于10月9日14:30在综合楼举行。",
+              "surface": "项目答辩"
+            },
+            "timeRefs": [
+              {
+                "scopeText": "项目答辩于10月9日14:30在综合楼举行。",
+                "surface": "10月9日14:30",
+                "type": "event_start"
+              }
+            ],
+            "locationRef": {
+              "scopeText": "项目答辩于10月9日14:30在综合楼举行。",
+              "surface": "综合楼"
+            }
+          }
+        ],
+        "ignoredScopeTexts": [],
+        "forbiddenDefaultSurfaces": [
+          "上传展示文件"
+        ]
+      }
+    },
+    {
+      "id": "rco-task-b5-13",
+      "semanticFamilyId": "archive-condition-currently-true",
+      "coverageTags": [
+        "conditional",
+        "complete_proposition",
+        "external_transfer"
+      ],
+      "sourceTitle": "借用记录归档",
+      "sourceText": "当借用记录未归档时，请发送设备清单。目前借用记录未归档。",
+      "referenceTime": "2026-09-04T20:45:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": {
+        "requiresAction": true,
+        "directives": [
+          {
+            "expectedId": "d-send-equipment-list",
+            "propositionScopeTexts": [
+              "当借用记录未归档时，",
+              "请发送设备清单。",
+              "目前借用记录未归档。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "send",
+            "action": {
+              "scopeText": "请发送设备清单。",
+              "surface": "发送"
+            },
+            "object": {
+              "scopeText": "请发送设备清单。",
+              "surface": "设备清单"
+            },
+            "effect": "external_transfer",
+            "timeRefs": [],
+            "materialRefs": [],
+            "eventRef": null,
+            "locationRef": null,
+            "revisionRefs": [],
+            "expectedDefaultSelected": false
+          }
+        ],
+        "observations": [],
+        "ignoredScopeTexts": [],
+        "forbiddenDefaultSurfaces": [
+          "发送设备清单"
+        ]
+      }
+    },
+    {
+      "id": "rco-task-b5-14",
+      "semanticFamilyId": "third-party-cleaner-contact-own-check",
+      "coverageTags": [
+        "third_party",
+        "reported_speech",
+        "actor"
+      ],
+      "sourceTitle": "会场清洁分工",
+      "sourceText": "物业要求保洁人员联系场馆主管，这项事务与你无关。你须检查自己的离场时间。",
+      "referenceTime": "2026-09-04T20:45:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": {
+        "requiresAction": true,
+        "directives": [
+          {
+            "expectedId": "d-review-departure-time",
+            "propositionScopeTexts": [
+              "你须检查自己的离场时间。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "review",
+            "action": {
+              "scopeText": "你须检查自己的离场时间。",
+              "surface": "检查"
+            },
+            "object": {
+              "scopeText": "你须检查自己的离场时间。",
+              "surface": "离场时间"
+            },
+            "effect": "local_change",
+            "timeRefs": [],
+            "materialRefs": [],
+            "eventRef": null,
+            "locationRef": null,
+            "revisionRefs": [],
+            "expectedDefaultSelected": true
+          }
+        ],
+        "observations": [
+          {
+            "expectedId": "o-cleaner-contact",
+            "kind": "information",
+            "propositionScopeTexts": [
+              "物业要求保洁人员联系场馆主管，",
+              "这项事务与你无关。"
+            ],
+            "semantics": {
+              "actor": "third_party",
+              "speechAct": "assertive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "informational"
+            },
+            "inferenceLevel": "explicit",
+            "subject": {
+              "scopeText": "物业要求保洁人员联系场馆主管，",
+              "surface": "保洁人员联系场馆主管"
+            },
+            "timeRefs": [],
+            "locationRef": null
+          }
+        ],
+        "ignoredScopeTexts": [],
+        "forbiddenDefaultSurfaces": [
+          "联系场馆主管"
+        ]
+      }
+    },
+    {
+      "id": "rco-task-b5-15",
+      "semanticFamilyId": "shared-guide-for-two-separated-local-tasks",
+      "coverageTags": [
+        "multi_task",
+        "shared_material_subset",
+        "explanation_ownership"
+      ],
+      "sourceTitle": "参访记录处理",
+      "sourceText": "请整理参访纪要。请打印座位图。另请填写观察表。纪要和观察表都依据讲解手册。",
+      "referenceTime": "2026-09-04T20:45:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": {
+        "requiresAction": true,
+        "directives": [
+          {
+            "expectedId": "d-prepare-visit-notes",
+            "propositionScopeTexts": [
+              "请整理参访纪要。",
+              "纪要和观察表都依据讲解手册。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "prepare",
+            "action": {
+              "scopeText": "请整理参访纪要。",
+              "surface": "整理"
+            },
+            "object": {
+              "scopeText": "请整理参访纪要。",
+              "surface": "参访纪要"
+            },
+            "effect": "local_change",
+            "timeRefs": [],
+            "materialRefs": [
+              {
+                "scopeText": "纪要和观察表都依据讲解手册。",
+                "surface": "讲解手册",
+                "required": true
+              }
+            ],
+            "eventRef": null,
+            "locationRef": null,
+            "revisionRefs": [],
+            "expectedDefaultSelected": true
+          },
+          {
+            "expectedId": "d-print-seat-map",
+            "propositionScopeTexts": [
+              "请打印座位图。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "print",
+            "action": {
+              "scopeText": "请打印座位图。",
+              "surface": "打印"
+            },
+            "object": {
+              "scopeText": "请打印座位图。",
+              "surface": "座位图"
+            },
+            "effect": "physical_action",
+            "timeRefs": [],
+            "materialRefs": [],
+            "eventRef": null,
+            "locationRef": null,
+            "revisionRefs": [],
+            "expectedDefaultSelected": true
+          },
+          {
+            "expectedId": "d-fill-observation-form",
+            "propositionScopeTexts": [
+              "另请填写观察表。",
+              "纪要和观察表都依据讲解手册。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "fill",
+            "action": {
+              "scopeText": "另请填写观察表。",
+              "surface": "填写"
+            },
+            "object": {
+              "scopeText": "另请填写观察表。",
+              "surface": "观察表"
+            },
+            "effect": "local_change",
+            "timeRefs": [],
+            "materialRefs": [
+              {
+                "scopeText": "纪要和观察表都依据讲解手册。",
+                "surface": "讲解手册",
+                "required": true
+              }
+            ],
+            "eventRef": null,
+            "locationRef": null,
+            "revisionRefs": [],
+            "expectedDefaultSelected": true
+          }
+        ],
+        "observations": [],
+        "ignoredScopeTexts": [],
+        "forbiddenDefaultSurfaces": []
+      }
+    },
+    {
+      "id": "rco-task-b5-16",
+      "semanticFamilyId": "lecture-event-plus-explicit-recording-ban",
+      "coverageTags": [
+        "event_only",
+        "negative",
+        "requires_action_false"
+      ],
+      "sourceTitle": "专题讲座说明",
+      "sourceText": "专题讲座将在周日下午于图书馆报告区开始。本场禁止发送现场录音。",
+      "referenceTime": "2026-09-04T20:45:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": {
+        "requiresAction": false,
+        "directives": [
+          {
+            "expectedId": "d-no-send-recording",
+            "propositionScopeTexts": [
+              "本场禁止发送现场录音。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "negative",
+              "tense": "future",
+              "status": "cancelled",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "send",
+            "action": {
+              "scopeText": "本场禁止发送现场录音。",
+              "surface": "发送"
+            },
+            "object": {
+              "scopeText": "本场禁止发送现场录音。",
+              "surface": "现场录音"
+            },
+            "effect": "external_transfer",
+            "timeRefs": [],
+            "materialRefs": [],
+            "eventRef": null,
+            "locationRef": null,
+            "revisionRefs": [],
+            "expectedDefaultSelected": false
+          }
+        ],
+        "observations": [
+          {
+            "expectedId": "o-lecture-event",
+            "kind": "event",
+            "propositionScopeTexts": [
+              "专题讲座将在周日下午于图书馆报告区开始。"
+            ],
+            "semantics": {
+              "actor": "unknown",
+              "speechAct": "assertive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "informational"
+            },
+            "inferenceLevel": "explicit",
+            "subject": {
+              "scopeText": "专题讲座将在周日下午于图书馆报告区开始。",
+              "surface": "专题讲座"
+            },
+            "timeRefs": [
+              {
+                "scopeText": "专题讲座将在周日下午于图书馆报告区开始。",
+                "surface": "周日下午",
+                "type": "event_start"
+              }
+            ],
+            "locationRef": {
+              "scopeText": "专题讲座将在周日下午于图书馆报告区开始。",
+              "surface": "图书馆报告区"
+            }
+          }
+        ],
+        "ignoredScopeTexts": [],
+        "forbiddenDefaultSurfaces": [
+          "发送现场录音"
+        ]
+      }
+    }
+  ]
+}
