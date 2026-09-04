@@ -1180,3 +1180,14 @@
 - evidence_boundary: 唯一 skip 是需显式环境变量的 live OCR；上述工程绿灯不改变 B9 质量 gate FAIL，也不构成模型、OCR、浏览器、真人效率或商业上线证据。
 - protection: 没有改 B9 或任何既有 Expected/freeze/dataset/checkpoint/cache；没有重跑 B9 成功门，未接稳定路径，RCO-6 未启动，未部署。
 - decision: `B9 FIRST RESULT IMMUTABLY FROZEN / OVERALL FAIL / NEXT RCO-5-010 ZERO_CALL / PAID MODEL BLOCKED / DO_NOT_LAUNCH`。
+
+## 63. RCO-5-010 完整命题与三值行动性根治启动 — 2026-09-05
+
+- authorization_interpretation: 用户要求从第一性原理彻底根治并持续优化；当前只延续 0 次模型调用的隔离本机修复和已见 B9 诊断，不扩大到付费调用、稳定接入、RCO-6 或部署。
+- root_problem: 动作词不等于动作命题；`selected=false` 不等于无需行动；`false` 与 `null` 分别代表完成排除证明和证据不足。B9 还暴露了 JSON 对象键顺序造成的计分假失败。
+- architecture: 新增完整 scope 命题裁决，只做可证明的本机非任务降级；新增独立三值行动性决策与理由码；新增对象键顺序无关、数组顺序敏感的结构比较。旧 B9 链和结果不改。
+- label_authority: 后续数据分离 `semanticTruth`、`implementationExpectation`、`reviewStatus` 和完整证据范围；B9-12 保留为不可用于语义正确率的实现边界标签。
+- validation: 先做定向/属性变形/新鲜对抗，再做 `SEEN_B9_DIAGNOSTIC_REPLAY`。全门与独立审查通过才允许创建 B10；B10 必须先双路无上下文复核并冻结。
+- accounting: model/network/verifier/Repair/retry/Secret=`0/0/0/0/0/NONE`。
+- protection: 不修改任何既有 Expected/freeze/dataset/checkpoint/cache/B9 运行产物，不接稳定路径，不启动 RCO-6，不部署。
+- status: `RCO-5-010 PLAN_READY / IMPLEMENTATION_PENDING / B9_READONLY / PAID_MODEL_BLOCKED / DO_NOT_LAUNCH`。

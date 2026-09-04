@@ -8,8 +8,8 @@
 
 ## Current Authority
 
-- current_status: `RCO-5-009-B9 FIRST_ZERO_CALL_RESULT_FROZEN / OVERALL_FAIL / B9_SEEN_NO_RERUN / PAID_MODEL_BLOCKED / RCO-6 BLOCKED / DO_NOT_LAUNCH`
-- current_authorization: 持续做 0 次模型调用的本机根因修补与全新匿名 Development 盲测；不得把旧 B8 回归说成模型提升，也不得调用付费模型。
+- current_status: `RCO-5-010 ZERO_CALL ROOT_FIX PLAN_READY / IMPLEMENTATION_PENDING / B9_SEEN_READONLY / PAID_MODEL_BLOCKED / RCO-6 BLOCKED / DO_NOT_LAUNCH`
+- current_authorization: 持续做 0 次模型调用的本机根因修补与全新匿名 Development 盲测；当前落实为 RCO-5-010 完整命题、三值行动性和计分器根治。不得把 B9 回归说成未见或模型提升，也不得调用付费模型。
 - model/network/verifier/repair/retry/secret: `0 / 0 / 0 / 0 / 0 / NONE`；B9 本机 pipeline 1 次、案例执行 12 次。
 - protected: 既有 Expected、freeze、dataset、checkpoint、cache；稳定路径、RC.4、Release、Production 均未修改。
 - not_authorized: 修改任何既有 Expected/freeze/dataset/checkpoint/cache；模型/Secret/实验网络；真实材料、真人研究、浏览器验收、RCO-6、稳定路径接入、Preview/Production 部署。
@@ -151,8 +151,8 @@
 
 ## Current Gate / Next Action
 
-- gate: `RCO-5-009-B9 RESULT_FROZEN / OVERALL_FAIL / B9_SEEN_NO_RERUN / PAID MODEL BLOCKED / RCO-6 BLOCKED / DO_NOT_LAUNCH`
-- next: 先提交推送 B9 唯一失败结果；随后执行 RCO-5-010 零调用根治，修正计数映射的顺序无关比较，并建立独立的三值 `requiresAction` 与完整命题语义裁决。
+- gate: `RCO-5-010 PLAN_READY / ZERO_CALL IMPLEMENTATION_PENDING / B9 READONLY / PAID MODEL BLOCKED / RCO-6 BLOCKED / DO_NOT_LAUNCH`
+- next: 实现并对抗测试顺序无关结构比较、完整命题裁决和独立三值行动性；随后只读回放已见 B9。全门与独立审查通过前不创建 B10。
 - after_b9: 只可把 B9 当已见诊断集。修复后必须创建全新 B10，经独立无上下文双重标注、数据冻结和唯一零调用本机门；B10 通过后才可另行申请付费模型测试。
 - promotion rule: 付费新数据仍稳定提升且 Forbidden=0，才可申请 RCO-6；之后仍需真实去标识材料、真人修改时间、Chrome/Edge/手机、隐私安全和 Commercial Preview，才能讨论上线。
 
