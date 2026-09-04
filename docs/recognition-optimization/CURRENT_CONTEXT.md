@@ -160,3 +160,14 @@ P3 已把 B5 暴露的词面共现问题升级为“状态声明 → 旧任务 �
 2. 重新核对 branch、HEAD、upstream、worktree；任何差异先当用户资产。
 3. 只读取当前任务必要文件；大结果用路径、哈希、计数和结论，不灌入上下文。
 4. 当前只执行 P3/B6 零调用链路；不得修改 P2/B5 保护件、调用模型、启动 RCO-6 或部署。
+
+## RCO-5-008 最新状态补充 — 2026-09-04
+
+- B7 真实模型原始结果保持原封不动；原判定仍为 `NO_PROMOTION_PAID_REPLICATION_BLOCKED`。
+- 新增隔离 composer v2：从版本化受控动作表提取最小动作头；动作候选同时命中多个受控动作时失败关闭。
+- 条件事实只在完整命题唯一匹配时本机挂接；冲突候选保持 unknown。
+- 新增隔离 P4：从完整命题和本机动作头计算否定、可选、条件、主体、时态与 selected，不读取模型语义权限。
+- 新评分器按 scope + object 映射任务/关系，动作边界独立计分；新增 unsafe-default false-positive 硬指标。
+- 已见 B7 原始输出 0 调用回放：scope/action/object、Task F1、requiresAction、Complete、三类修订、旧要求失效、新要求生效、unresolved 均 100%；unsafe/Forbidden/stale/selected stale 均 0。
+- 该结果只证明已知接口故障已修，不是模型新数据泛化。下一步仅允许冻结全新 B8，付费调用仍需单独授权。
+- 稳定路径未接入，RCO-6 未启动，未部署。

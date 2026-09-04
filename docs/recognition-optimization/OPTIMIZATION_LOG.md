@@ -1072,3 +1072,15 @@
 - engineering: B7 定向契约/数据 10/10、B7 freeze 3/3、P3/B6 保护完整性 6/6；全量 lint PASS，Vitest `607 passed / 1 live OCR skipped`，另 server 8、Worker 25、time parity 1、multimodal evaluator 23、RCO base integrity 4、Functions 5；build PASS，security scan `543 files` PASS；保留既有 >500 kB chunk warning。
 - accounting: model/network/Repair/retry/Secret=`0/0/0/0/NONE`；runner/checkpoint 尚未创建；P3/B6 和既有 Expected/freeze/dataset/checkpoint/cache 未改，稳定路径/RCO-6/部署未触碰。
 - status: `B7 DATA_CONTRACT_P3_CEILING FROZEN_IN_THIS_COMMIT / PAID RUN NOT_AUTHORIZED / WAIT_EXPLICIT_MAX_12_CALLS_AND_10_CNY_APPROVAL / DO_NOT_LAUNCH`。
+
+## 54. RCO-5-008 本机接口根治与已见 B7 零调用回归 — 2026-09-04
+
+- authorization: 用户要求先执行 0 次模型调用的 RCO-5-008，覆盖受控动作头、完整命题语义、确定性条件归属、scope/ID 修订评分和 unsafe-default 独立指标；B7 通过后才冻结 B8。
+- protection: 没有修改 B7 dataset、Expected、data/result freeze、checkpoint、raw result、旧 score、旧 model contract、P3 或 cache。旧 B7 失败判定保持有效。
+- implementation: 新增 `model-anchor-local-composer-2.0.0`，只从受控校园动作表得到最小动作头；复合动作歧义失败关闭。唯一匹配的条件事实由本机挂接，冲突事实保持 unknown。
+- p4: 新增 `task-formation-policy-2.4.0-p4`，以完整命题和本机动作头推导否定、可选、条件、主体、时态和安全默认；修订关系仍由冻结 P3 生成后以更严格语义投影。
+- evaluator: 新增 `task-formation-evaluator-2.0.0`，任务/修订按 proposition scope + object 对齐，动作逐字正确率单列；任何 Expected-default-false 却 selected=true 的任务计 unsafe false positive。
+- adversarial: 10/10 定向测试通过，覆盖语气词吞入 action、禁止本地动作、可选动作、条件真/假/冲突、复合动作歧义、对象词不污染主体、修订关系不依赖动作拼写。
+- seen_b7_replay: 复用冻结 B7 raw output，模型/网络/verifier/Repair/retry/Secret=`0/0/0/0/0/NONE`。12/12 P4 合同有效；scope/action/object、Task F1、requiresAction、Complete、cancels/supersedes/amends、旧要求失效、新要求生效、unresolved 均 100%；unsafe/Forbidden/stale/selected stale 均 0。
+- evidence_boundary: B7 已见；满分只说明本机接口覆盖已知错误，不说明模型正确率提高、未见泛化、真实材料或上线资格。
+- decision: `RCO-5-008 B7 SEEN REGRESSION PASS / ELIGIBLE_TO_FREEZE_NEW_B8_ONLY / PAID CALLS NOT_AUTHORIZED / RCO-6 BLOCKED / DO_NOT_LAUNCH`。
