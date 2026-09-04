@@ -8,11 +8,11 @@
 
 ## Current Authority
 
-- current_status: `RCO-5-007-P2-E1/B5 CLOSED / E1 PASS / B5 FIRST-RUN FAIL / PAID MODEL BLOCKED / RCO-6 BLOCKED / DO_NOT_LAUNCH`
-- current_authorization: 已完成 B4 TS2352 类型等价修补、已见 B4 回归、全新 B5 冻结和唯一一次零调用门；当前没有继续修改 P2、创建 B6 或调用模型的授权。
+- current_status: `RCO-5-007-P3/B6 AUTHORIZED / LOCAL REVISION RELATIONS IN_PROGRESS / B6 BLOCKED_BY_P3 / PAID MODEL BLOCKED / RCO-6 BLOCKED / DO_NOT_LAUNCH`
+- current_authorization: 新增隔离本机修订关系解析器，明确构造撤销/替代/修改边；用已见 B5 只做回归，通过并冻结 P3 后创建、冻结全新 B6，再运行一次零调用门。
 - model/network/repair/retry/secret: `0 / 0 / 0 / 0 / NONE`
 - protected: 既有 Expected、freeze、dataset、checkpoint、cache；稳定路径、RC.4、Release、Production 均未修改。
-- not_authorized: 修改 B4 Expected/dataset/freeze、P2 语义实现或任何既有 checkpoint/cache；模型/Secret/网络；真实材料、真人研究、浏览器验收、RCO-6、稳定路径接入、Preview/Production 部署。
+- not_authorized: 修改 P2、B5 Expected/dataset/freeze/result 或任何既有 checkpoint/cache；模型/Secret/网络；真实材料、真人研究、浏览器验收、RCO-6、稳定路径接入、Preview/Production 部署。
 - authority_rule: 新阶段、付费调用、真实数据、浏览器验收和部署分别需要当前用户明确授权；旧授权不自动续用。
 
 ## Workspace
@@ -121,8 +121,8 @@ E1 已证明 B4 的工程失败只是类型夹具问题；B5 又证明 P2 在普
 
 ## Current Gate / Next Action
 
-- gate: `E1 PASS / B5 FIRST-RUN FAIL / PAID MODEL BLOCKED / RCO-6 BLOCKED / DO_NOT_LAUNCH`
-- next: 等待新授权；建议新增隔离的本机修订关系解析器，用已见 B5 只做故障回归，再冻结全新 B6 做唯一首次零调用门。
+- gate: `P3 IN_PROGRESS / B6 BLOCKED UNTIL P3 SEEN-B5 PASS AND FREEZE / PAID MODEL BLOCKED / RCO-6 BLOCKED / DO_NOT_LAUNCH`
+- next: 实现并验证本机修订关系边，用已见 B5 回归；P3 冻结、工程门和推送完成前不得创建 B6。
 - after_b6: 只有 B6 的总体质量、旧要求失效、新要求生效、陈旧任务和工程门全部通过后，才能另行批准固定模型、调用数和人民币上限的付费测试。
 - promotion rule: 付费新数据仍稳定提升且 Forbidden=0，才可申请 RCO-6；之后仍需真实去标识材料、真人修改时间、Chrome/Edge/手机、隐私安全和 Commercial Preview，才能讨论上线。
 
@@ -131,4 +131,4 @@ E1 已证明 B4 的工程失败只是类型夹具问题；B5 又证明 P2 在普
 1. 读根 `AGENTS.md`、`PRD.md`、本文件和日志最后两节。
 2. 重新核对 branch、HEAD、upstream、worktree；任何差异先当用户资产。
 3. 只读取当前任务必要文件；大结果用路径、哈希、计数和结论，不灌入上下文。
-4. P2-E1/B5 授权已关闭；未有新授权时不得修改 P2 或 B5、创建 B6、调用模型、启动 RCO-6 或部署。
+4. 当前只执行 P3/B6 零调用链路；不得修改 P2/B5 保护件、调用模型、启动 RCO-6 或部署。

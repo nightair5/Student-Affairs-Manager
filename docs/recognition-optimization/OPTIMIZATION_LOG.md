@@ -1016,3 +1016,14 @@
 - protected_boundary: 未修改冻结 B5 dataset/Expected/data freeze、P2、既有 Expected/freeze/dataset/checkpoint/cache 或稳定路径；未启动 RCO-6、浏览器验收或部署。
 - decision: `B5 FIRST-RUN FAIL / P2 GENERALIZATION NOT ESTABLISHED / PAID MODEL BLOCKED / RCO-6 BLOCKED / DO_NOT_LAUNCH`。
 - next_step: `NONE / WAIT_AUTHORIZATION`。若继续，应新增隔离本机修订关系解析器，用已见 B5 只回归，再冻结全新 B6 做一次零调用门；B6 通过前不申请付费模型调用。
+
+## 50. RCO-5-007-P3/B6 本机修订关系阶段启动 — 2026-09-04
+
+- authorization: 当前持续目标明确要求新增独立本机修订关系解析器，构造撤销/替代/修改关系；B5 只作已见回归，再冻结全新 B6 做首次新数据检验。
+- branch / start_head / upstream / worktree: `codex/e2-multimodal-recognition-exp` / `ca2de70` / 同一 commit / clean。
+- primary_claim: 先构造“状态声明指向旧任务”的证据边，再投影任务状态，可以跨词面解决修订，而不是继续扩历史关键词表。
+- unique_variable: 新增隔离 `revision-relation-resolver-1.0.0` 与 `task-formation-policy-2.3.0-p3`；P2 与 B5 保护件保持字节不变。
+- sequencing: P3 定向/变形与已见 B5 回归通过、组件冻结、全量工程门、提交推送前不得创建 B6；B6 首次运行前必须冻结并推送。
+- fixed_revision_gate: cancels/supersedes/amends 均有覆盖；旧要求完整失效=100%、新要求生效=100%、stale=0、Forbidden=0。
+- accounting_at_start: 模型/实验网络/Repair/retry/Secret=`0/0/0/0/NONE`；稳定路径、RCO-6、部署不在授权范围。
+- status: `AUTHORIZED / P3 IN_PROGRESS / B6 BLOCKED / PAID MODEL BLOCKED / DO_NOT_LAUNCH`。
