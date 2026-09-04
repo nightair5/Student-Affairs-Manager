@@ -8,18 +8,18 @@
 
 ## Current Authority
 
-- current_status: `RCO-5-007-P1 AUTHORIZED / ZERO CALL / IN_PROGRESS / PAID MODEL BLOCKED / RCO-6 BLOCKED / DO_NOT_LAUNCH`
-- authorization_active: 仅修复 `requiresAction` 与 `selected` 解耦、对象感知复合动作边界、条件触发状态、对象保真和受控效果/风险分类；用已见 B2 做 0 次模型调用回归。
+- current_status: `RCO-5-007-P1 CLOSED / TECHNICAL_PASS_SEEN_B2 / NEW_B3 ZERO-CALL GATE REQUIRED / PAID MODEL BLOCKED / RCO-6 BLOCKED / DO_NOT_LAUNCH`
+- authorization_completed: 隔离修复 `requiresAction` 与 `selected` 解耦、对象感知复合动作边界、条件触发状态、对象保真和受控效果/风险分类；完成已见 B2 零调用回归、对抗审计与组件冻结。
 - model/network/repair/retry/secret: `0 / 0 / 0 / 0 / NONE`
 - protected: 既有 Expected、freeze、dataset、checkpoint、cache；稳定路径、RC.4、Release、Production 均未修改。
-- not_authorized: 修改 B2 Expected/freeze/dataset 或既有 checkpoint/cache；创建 B3；模型/Secret/网络；真实材料、真人研究、浏览器验收、RCO-6、稳定路径接入、Preview/Production 部署。
+- not_authorized: 修改 B2 Expected/freeze/dataset 或既有 checkpoint/cache；继续修改 P1；创建 B3；模型/Secret；真实材料、真人研究、浏览器验收、RCO-6、稳定路径接入、Preview/Production 部署。
 - authority_rule: 新阶段、付费调用、真实数据、浏览器验收和部署分别需要当前用户明确授权；旧授权不自动续用。
 
 ## Workspace
 
 - repository: `C:\Users\Winner\student-affairs-multimodal-exp`
 - branch: `codex/e2-multimodal-recognition-exp`
-- last_implementation_commit: `cacdb6c`，已推送；恢复时重新核对 HEAD/upstream/worktree。
+- last_implementation_commit: `501eb46`，已推送；恢复时重新核对 HEAD/upstream/worktree。
 - production/default path: 不变；仍为本机解析/OCR → 用户核对文字 → 只发送文字。
 - multimodal: 仍是独立实验 Preview；RCO-6 未启动。
 
@@ -49,11 +49,20 @@
 - 决定性失败：`requiresAction` 被错误地从 `selected` 反推。外发、上传、联系等任务因为安全原因不默认勾选，却被错误说成“无需行动”。另有不同对象复合动作误合并、已触发条件未激活、对象表面词被过度清洗、否定/可选/例外组不足和安全动作分类依赖有限动词表。
 - gate: `PAID_MODEL_TEST_BLOCKED_LOCAL_POLICY_CEILING`。即使模型锚点完美，本机层也过不了门，所以当前不得付费测模型。
 
+### RCO-5-007-P1 已见故障修补
+
+- 新增隔离 `task-formation-policy-2.1.0-p1`，未修改或接入冻结的 v2 策略和稳定路径。
+- 四层职责为：当前义务 → 对象感知任务边界 → 效果/风险 → 默认选择；`requiresAction` 不再读取 `selected`。
+- 首轮对抗测试发现“同时篡改语义与 requiresAction 可互相证明”，已改为从原文 scope 重新计算；首轮 B2 回放 15/16，发现“联系电话”被关键词误判为外部联系，已改为有边界的动作/对象末尾分类。
+- 最终定向/对抗 16/16；B2 16/16 合同有效。旧策略指标原样复现；P1 Task P/R/F1、requiresAction、语义、任务边界、Complete Task Case、Safe Default 均 100%，Major Correction 0，Forbidden 0。
+- 这是 `SEEN_B2_DEVELOPMENT_DIAGNOSTIC_REPLAY`，不是模型正确率或未见泛化。P1 实验 runner 无模型调用、网络请求、Repair/retry 或 Secret；常规 Git 推送不计入实验调用。
+
 ### 完整性与工程门
 
-- B2 Expected/标签不进入未来请求投影；冻结件绑定数据、计划、生成器、理想锚点 runner、评分器、策略与传递契约共 12 个路径 SHA-256，不匹配即停止。
-- 定向 PASS：B2 数据/评分 13/13、冻结 3/3、理想锚点结果完整性 4/4、typecheck。
-- 全量 PASS：lint；Vitest 535 passed / 1 live OCR skipped；server 8、Worker 25、time parity 1、multimodal evaluator 23、RCO-5-007 integrity 4、Functions 5；build；security scan 424 files；npm audit 0 vulnerabilities。
+- B2 原冻结的 12 个组件仍逐项 SHA-256 匹配；P1 组件冻结另绑定 16 个计划、代码、测试、runner、结果和依赖路径。
+- 定向 PASS：P1 策略/对抗 16/16、P1/B2 完整性 4/4、typecheck。
+- 全量 PASS：lint；Vitest 551 passed / 1 live OCR skipped；server 8、Worker 25、time parity 1、multimodal evaluator 23、RCO-5-007 integrity 4、Functions 5；build；security scan 435 files。
+- `npm audit --audit-level=high` 连续两次在官方 advisory endpoint 网络超时，记录为 `NOT_COMPLETED_EXTERNAL_NETWORK`；不得写成 0 vulnerabilities，也没有证据表明发现漏洞。
 - 未部署；保留既有 >500 kB chunk warning。
 
 ## Evidence Files
@@ -65,17 +74,19 @@
 - adversarial audit: `docs/recognition-optimization/rco-5-007-replay/ADVERSARIAL_AUDIT.md`
 - B2 dataset/freeze: `docs/recognition-optimization/RCO-5-007-B2_CHALLENGE_DATASET.json` and `RCO-5-007-B2_FREEZE.json`
 - B2 result/report/audit: `docs/recognition-optimization/rco-5-007-b2-oracle/`
+- P1 plan/freeze: `docs/recognition-optimization/RCO-5-007-P1_PLAN.md` and `RCO-5-007-P1_COMPONENT_FREEZE.json`
+- P1 result/report/audit: `docs/recognition-optimization/rco-5-007-p1-b2-replay/`
 - append-only history: `docs/recognition-optimization/OPTIMIZATION_LOG.md`
 
 ## First-Principles Interpretation
 
-RCO-5-007 修复了“谁负责作决定”，但 B2 证明决定流程内部仍混淆了两个问题：“是否有事要做”和“是否可以安全默认勾选”。主线不是继续堆同义词，而是分层处理当前义务、任务边界与对象、效果风险和默认选择。先让完美输入能稳定产生正确任务，之后再花钱测模型是否能提供足够好的输入。
+P1 已让完美输入在已见 B2 上稳定形成正确任务，同时保持外部动作不默认。下一问题不再是继续追 B2，而是检验四层机制能否应对未用于设计它的新表达。必须先用全新 B3 做零调用理想锚点门，避免把已见 100% 当成泛化。
 
 ## Current Gate / Next Action
 
-- gate: `P1_ZERO_CALL_IMPLEMENTATION_IN_PROGRESS / PAID MODEL BLOCKED`
-- next: 新增隔离策略与测试，保持所有 B2 保护件和旧策略不变，再运行 B2 零调用回放。
-- after_patch: 修补通过后必须另冻全新 B3 未见匿名集并先跑理想锚点门。B3 通过后，才能另行批准同模型、固定调用数与人民币上限的付费配对测试。
+- gate: `ELIGIBLE_FOR_NEW_B3_DATA_AND_ZERO_CALL_ORACLE_GATE_ONLY / PAID MODEL BLOCKED`
+- next: 等待用户另行授权创建并冻结全新 B3 匿名挑战集，再用冻结 P1 跑 0 次模型调用理想锚点门；不得用 B2 证明泛化。
+- after_b3: B3 通过后，才能另行批准同模型、固定调用数与人民币上限的付费配对测试。
 - promotion rule: 付费新数据仍稳定提升且 Forbidden=0，才可申请 RCO-6；之后仍需真实去标识材料、真人修改时间、Chrome/Edge/手机、隐私安全和 Commercial Preview，才能讨论上线。
 
 ## Recovery
@@ -83,4 +94,4 @@ RCO-5-007 修复了“谁负责作决定”，但 B2 证明决定流程内部仍
 1. 读根 `AGENTS.md`、`PRD.md`、本文件和日志最后两节。
 2. 重新核对 branch、HEAD、upstream、worktree；任何差异先当用户资产。
 3. 只读取当前任务必要文件；大结果用路径、哈希、计数和结论，不灌入上下文。
-4. 当前只可完成 P1 授权内容；不得创建 B3、调用模型、启动 RCO-6 或部署。
+4. P1 授权已关闭；未有新授权时不得创建 B3、修改 P1、调用模型、启动 RCO-6 或部署。

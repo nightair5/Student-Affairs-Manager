@@ -907,3 +907,22 @@
 - forbidden: 修改 B2 Expected/freeze/dataset、评分器、旧策略、既有 checkpoint/cache；接稳定路径；创建 B3；任何模型/Secret/网络、真实材料、真人、浏览器验收、RCO-6 或部署。
 - accounting_at_start: `model_calls=0 / network=0 / repair=0 / retry=0 / secret_access=NONE`。
 - status: `AUTHORIZED / ZERO CALL / IN_PROGRESS / PAID MODEL BLOCKED / RCO-6 BLOCKED / DO_NOT_LAUNCH`。
+
+## 42. RCO-5-007-P1 实现、对抗审计与封存 — 2026-09-04
+
+- implementation: 新增隔离 `task-formation-policy-2.1.0-p1`，按“当前义务 → 对象感知边界 → 效果/风险 → 默认选择”分层；`requiresAction` 由当前有效、肯定、未完成、必做命题独立计算，外部动作可保持 `requiresAction=true / selected=false`。
+- boundary_and_object: 同 scope 复合动作只有对象一致时保留受控合并，不同对象拆成独立任务；合法且在命题 scope 内的模型对象表面词原样保留，不再按任意“的”字截断。
+- condition_and_actor: 条件只在后续绑定 scope 明确肯定满足时激活，否定触发保持 uncertain；群体 actor 只从动作之前的义务前缀判断，不把“同学名单”等对象内容误作执行主体。
+- effect_and_selection: action/actionType 优先，只有对象以动作性词语结尾时才作为隐含外部操作；本机 `complete` 可默认，在线确认、提交、上传、联系、报名、支付、材料邮寄等不默认。
+- adversarial_failure_1: 首轮 12 个定向测试中 1 个失败，暴露同时篡改 task semantics 与顶层 `requiresAction` 可互相证明。校验器随后改为从绑定原文重新计算 semantics/effect/selected/requiresAction；最终原测试通过。
+- adversarial_failure_2: 首轮 P1 B2 回放为 15/16、Complete 93.75%、Safe Default 92.31%；“联系电话”中的“联系”被无边界关键词误判为外部动作。修正为动作优先和对象末尾动作性判定，并新增“联系人清单”“在线报名”“否定条件”和主体位置反例；最终 16/16 定向/变形测试通过。
+- b2_replay: 冻结旧策略结果逐字段原样复现；P1 16/16 contract valid，Task P/R/F1、requiresAction、semantic fields、exact task boundary、Complete Task Case、Safe Default Recall 均 `100%`，Major Correction `0%`，Forbidden Default `0`。
+- classification: `SEEN_B2_DEVELOPMENT_DIAGNOSTIC_REPLAY`；Expected-derived 完美锚点只隔离本机层。不是模型正确率、未见泛化、真实材料、真人修改时间、浏览器或发布证据。
+- integrity: P1 组件 freeze 绑定 16 个路径，node 完整性 4/4；B2 旧 freeze 的 12 个组件仍匹配；P1 只被测试与隔离 runner 引用，稳定 `src/cloudflare/server/functions` 路径无 import。
+- accounting: `model_calls=0 / experiment_network_requests=0 / repair=0 / retry=0 / secret_access=NONE / real_data=NOT_USED / browser=NOT_RUN / deploy=NOT_RUN`。
+- full_gate: lint PASS；Vitest `551 passed / 1 live OCR skipped`，另 server 8、Worker 25、time parity 1、multimodal evaluator 23、RCO-5-007 integrity 4、Functions 5；build PASS；security scan 435 files PASS；保留既有 >500 kB chunk warning。
+- npm_audit: `npm audit --audit-level=high` 与一次受限重试均在 `https://registry.npmjs.org/-/npm/v1/security/advisories/bulk` 网络超时；状态 `NOT_COMPLETED_EXTERNAL_NETWORK`，不得报告 0 vulnerabilities，亦无已发现漏洞证据。该项不是本隔离非发布阶段的最低提交门，但必须在后续阶段重新运行。
+- protected_boundary: B2 Expected/freeze/dataset、旧策略/评分器/scope 依赖、既有 checkpoint/cache、package、稳定路径均无 Git diff；未创建 B3，未运行 Cloudflare check 或部署。
+- commits: 计划冻结 `4d6b270`、实现与组件冻结 `501eb46`，均已推送。
+- decision: `RCO-5-007-P1 CLOSED / TECHNICAL_PASS_SEEN_B2 / ELIGIBLE_FOR_NEW_B3_ZERO_CALL_GATE_ONLY / PAID MODEL BLOCKED / NO_PROMOTION / RCO-6 BLOCKED / DO_NOT_LAUNCH`。
+- next_step: `NONE / WAIT_AUTHORIZATION`。下一步只能先另行授权创建并冻结全新 B3 匿名挑战集并运行零调用理想锚点门；B3 通过后才讨论付费模型验证。
