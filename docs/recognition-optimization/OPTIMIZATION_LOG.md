@@ -981,3 +981,14 @@
 - protected_boundary: 未修改 P1/P2 freeze、B3/B4 dataset/Expected/data freeze 或任何既有 checkpoint/cache；未接稳定路径、未调用模型、未启动 RCO-6 或部署。结果/失败状态 commit `441285f` 已推送。
 - decision: `RCO-5-007-P2/B4 CLOSED_WITH_ENGINEERING_FAILURE / B4 ORACLE QUALITY PASS / OVERALL INVALID / PAID MODEL BLOCKED / RCO-6 BLOCKED / DO_NOT_LAUNCH`。
 - next_step: `NONE / WAIT_AUTHORIZATION`。若继续，先授权类型夹具修复与已见 B4 回归，再新建 B5 首次零调用门；B5 同时通过质量和工程门后才可另行申请付费模型测试。
+
+## 47. RCO-5-007-P2-E1/B5 启动 — 2026-09-04
+
+- authorization: 用户明确授权仅修 B4 数据测试 TS2352 类型夹具，B4 只作已见回归；lint/test/build/security 通过后创建并冻结全新匿名 B5，再运行一次 0 模型调用门。
+- branch / start_head / upstream / worktree: `codex/e2-multimodal-recognition-exp` / `ee6d857` / 同一 commit / clean。
+- unique_variable_e1: 仅把测试类型 `revisionRefs: []` 改为契约数组类型；原 B4 Expected/dataset/freeze、P2 语义、评分器和旧结果不改。
+- equivalence_requirement: 记录 before/after SHA，且 TypeScript 转译 JavaScript 前后逐字哈希一致；B4 回归逐字段等于原结果。
+- sequencing: E1 四项工程门通过前不创建 B5；B5 首次运行前冻结并提交，运行后不得追分。
+- forbidden: 模型/Secret/网络、既有 checkpoint/cache、稳定路径、RCO-6 和部署。
+- accounting_at_start: `model_calls=0 / network=0 / repair=0 / retry=0 / secret_access=NONE`。
+- status: `AUTHORIZED / E1 IN_PROGRESS / B5 BLOCKED / PAID MODEL BLOCKED / DO_NOT_LAUNCH`。

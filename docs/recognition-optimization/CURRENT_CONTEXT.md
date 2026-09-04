@@ -8,11 +8,11 @@
 
 ## Current Authority
 
-- current_status: `RCO-5-007-P2/B4 CLOSED_WITH_ENGINEERING_FAILURE / B4 ORACLE QUALITY PASS BUT OVERALL INVALID / PAID MODEL BLOCKED / RCO-6 BLOCKED / DO_NOT_LAUNCH`
-- authorization_completed: 新建并冻结隔离 P2；完成已见 B3 满分回归；先冻结全新 B4 后完成唯一一次零调用盲测和对抗审查。B4 质量门通过，但全量 build 发现冻结测试的 TS2352，按预登记规则总体失败。
+- current_status: `RCO-5-007-P2-E1/B5 AUTHORIZED / TYPE-FIX THEN NEW B5 ZERO-CALL PATH IN_PROGRESS / PAID MODEL BLOCKED / RCO-6 BLOCKED / DO_NOT_LAUNCH`
+- current_authorization: 只修 B4 数据测试 TS2352 类型夹具，B4 仅作已见回归；lint/test/build/security 通过后创建并冻结全新 B5，再对冻结 P2 运行一次 0 模型调用门。
 - model/network/repair/retry/secret: `0 / 0 / 0 / 0 / NONE`
 - protected: 既有 Expected、freeze、dataset、checkpoint、cache；稳定路径、RC.4、Release、Production 均未修改。
-- not_authorized: 修改 P1/B3 或任何既有 Expected/freeze/dataset/checkpoint/cache；模型/Secret/网络；真实材料、真人研究、浏览器验收、RCO-6、稳定路径接入、Preview/Production 部署。
+- not_authorized: 修改 B4 Expected/dataset/freeze、P2 语义实现或任何既有 checkpoint/cache；模型/Secret/网络；真实材料、真人研究、浏览器验收、RCO-6、稳定路径接入、Preview/Production 部署。
 - authority_rule: 新阶段、付费调用、真实数据、浏览器验收和部署分别需要当前用户明确授权；旧授权不自动续用。
 
 ## Workspace
@@ -107,8 +107,8 @@ P2 的机制改造让理想上游输入在新 B4 上跨过质量门，说明主�
 
 ## Current Gate / Next Action
 
-- gate: `B4 ORACLE QUALITY PASS / ENGINEERING BUILD FAIL / OVERALL FAIL / PAID MODEL BLOCKED`
-- next: 等待另行授权：只修复 B4 测试的类型声明，用已见 B4 做回归并重新通过 lint/test/build/security；随后必须创建全新 B5 并做一次零调用门，不能重跑 B4 冒充未见。
+- gate: `E1 TYPE-ONLY CORRECTION IN_PROGRESS / B5 BLOCKED UNTIL E1 ENGINEERING PASS / PAID MODEL BLOCKED`
+- next: 生成受控类型订正和已见 B4 等价回归；通过 lint/test/build/security 后才创建全新 B5。
 - after_b5: 只有 B5 质量与工程门同时通过后，才能另行批准固定模型、调用数、人民币上限和 revision/stale-task 指标的付费测试。
 - promotion rule: 付费新数据仍稳定提升且 Forbidden=0，才可申请 RCO-6；之后仍需真实去标识材料、真人修改时间、Chrome/Edge/手机、隐私安全和 Commercial Preview，才能讨论上线。
 
