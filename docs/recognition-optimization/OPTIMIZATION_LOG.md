@@ -1111,3 +1111,13 @@
 - usage_cost: provider usage `12407 input / 5178 output / 17585 total`；provider billed CNY=`NOT_OBSERVABLE`；冻结价格上界代理成本 `0.1229404 CNY`，理论全轮上限 `2.2053504 CNY`，均不得冒充实扣账单。
 - integrity: 原 B8 data freeze 和 RCO-5-008 component freeze 继续匹配；结果完整性 4/4；Secret 未落盘；数据、Expected、contract、RCO-5-008 组件和 cache 无修改。
 - decision: `NO_PROMOTION_PAID_REPLICATION_BLOCKED / WAIT_SEPARATE_ZERO_CALL_CONTRACT_REDESIGN_AUTHORIZATION / RCO-6_BLOCKED / DO_NOT_LAUNCH`。
+
+## 57. RCO-5-009 本机候选契约根治阶段启动 — 2026-09-04
+
+- authorization_interpretation: 用户要求从第一性原理彻底根治并持续优化；本轮仅扩展为 0 次模型调用的隔离候选 index/contract/composer、已见 B8 回归和通过后全新 B9 首次本机门。没有再次付费、Secret、稳定接入、RCO-6 或部署授权。
+- primary_claim: 本机枚举不可变动作/对象 candidate ID，模型只能逐候选分类和引用对象；不能自由写 action、创建 directive 或通过遗漏删除本机候选。
+- failure_isolation: 单候选结构/分类错误只 quarantine 自身且不得 selected；来源绑定、目录指纹或覆盖账目失真才整例拒绝。
+- sequencing: 计划先冻结提交；实现与已见 B8 回归全门通过并独立提交后才能创建 B9；B9 首次运行前必须冻结并推送。
+- protected: B8 与既有 Expected/freeze/dataset/checkpoint/cache、RCO-5-008 组件和稳定路径不得修改。
+- accounting_at_start: model/network/Repair/retry/Secret=`0/0/0/0/NONE`。
+- status: `AUTHORIZED_ZERO_CALL_RCO-5-009 / IMPLEMENTATION_PENDING / B9_BLOCKED / PAID_MODEL_BLOCKED / RCO-6_BLOCKED / DO_NOT_LAUNCH`。
