@@ -1,0 +1,84 @@
+{
+  "schemaVersion": "rco-5-007-p2-e1-component-freeze-1.0.0",
+  "stage": "RCO-5-007-P2-E1-SEEN-B4-TYPE-CORRECTION",
+  "status": "TECHNICAL_PASS_SEEN_B4_ELIGIBLE_TO_CREATE_AND_FREEZE_NEW_B5",
+  "frozenAt": "2026-09-04T20:34:00+08:00",
+  "authorizationId": "RCO-5-007-P2-E1/B5",
+  "policyVersion": "task-formation-policy-2.2.0-p2",
+  "datasetId": "rco-5-007-b4-challenge-20260904",
+  "datasetClassification": "SEEN_B4_TYPE_FIX_REGRESSION",
+  "componentPaths": [
+    "docs/recognition-optimization/RCO-5-007-P2-E1-B5_PLAN.md",
+    "src/recognition/taskFormationB4Dataset.test.ts",
+    "scripts/record-rco-5-007-p2-e1-correction.mjs",
+    "docs/recognition-optimization/RCO-5-007-P2-E1_TYPE_CORRECTION.json",
+    "scripts/rco-5-007-p2-e1-correction.node-test.mjs",
+    "scripts/run-rco-5-007-p2-e1-b4-replay.ts",
+    "docs/recognition-optimization/rco-5-007-p2-e1-b4-replay/result.json",
+    "docs/recognition-optimization/rco-5-007-p2-e1-b4-replay/REPORT.md",
+    "scripts/rco-5-007-p2-e1-b4-replay.node-test.mjs",
+    "docs/recognition-optimization/RCO-5-007-P2_COMPONENT_FREEZE.json",
+    "docs/recognition-optimization/RCO-5-007-B4_DATA_FREEZE.json",
+    "docs/recognition-optimization/RCO-5-007-B4_RESULT_FREEZE.json"
+  ],
+  "componentSha256": {
+    "docs/recognition-optimization/RCO-5-007-P2-E1-B5_PLAN.md": "b612ac5e056614e9e2ad8d807022b3dd65adddee0857d3ba01fe1ffc58c33dbe",
+    "src/recognition/taskFormationB4Dataset.test.ts": "a481f588e5dae6fb6a447c4705899ad613749ceb23a398bbe47a5d9e0388ad3b",
+    "scripts/record-rco-5-007-p2-e1-correction.mjs": "e0a482d39e1ee21116bbff9a7341c6b36131466710075ac846cd081ac0fe9a3a",
+    "docs/recognition-optimization/RCO-5-007-P2-E1_TYPE_CORRECTION.json": "04168692795f93dfc7e39b0f97e220b2db26fd5582dd524ecb3f3dc9bf501f94",
+    "scripts/rco-5-007-p2-e1-correction.node-test.mjs": "e4cba90760ccf6a371f7e2153fa394dc35602e7cc755f3656a6459489d173f65",
+    "scripts/run-rco-5-007-p2-e1-b4-replay.ts": "3236eafeed5b115421cdab2634d896ae531ef23e98fa59bf1cc14cfd4e059eda",
+    "docs/recognition-optimization/rco-5-007-p2-e1-b4-replay/result.json": "6052fef5c89c62072d21d26f92c4032955904ae1f8bfeee519622250218b17b7",
+    "docs/recognition-optimization/rco-5-007-p2-e1-b4-replay/REPORT.md": "0885dedde847cf6fd8c2264e93a769e939331e8eb573323e92670e9924249fa3",
+    "scripts/rco-5-007-p2-e1-b4-replay.node-test.mjs": "186995e6ce3a3b71bfa58675899eefba9b90eeae933dfeca62c1fe6dcdd05745",
+    "docs/recognition-optimization/RCO-5-007-P2_COMPONENT_FREEZE.json": "94a4b1dda715b28a8c8282b450a3fe51dd1e394a51da33b6d1490379c8a63f53",
+    "docs/recognition-optimization/RCO-5-007-B4_DATA_FREEZE.json": "b860f7c70ce0fe31cf33d6c992d7869f36e29b6c94e550cf31f84b3941f105eb",
+    "docs/recognition-optimization/RCO-5-007-B4_RESULT_FREEZE.json": "ad548db60210ab575830429d6c71c996db9494e68fe76162c66c31e7e8672f0a"
+  },
+  "correction": {
+    "correctedPath": "src/recognition/taskFormationB4Dataset.test.ts",
+    "beforeSourceSha256": "945f94b30d8bf6370b044e6c302324435639c1268ad1edf9dd7df465bf1e93af",
+    "afterSourceSha256": "a481f588e5dae6fb6a447c4705899ad613749ceb23a398bbe47a5d9e0388ad3b",
+    "beforeJavaScriptSha256": "d1ebd153824ea1cf0e8859cd3dcfe08b6d9c5554bcf38ea94ae0edce65aa3c62",
+    "afterJavaScriptSha256": "d1ebd153824ea1cf0e8859cd3dcfe08b6d9c5554bcf38ea94ae0edce65aa3c62",
+    "runtimeEquivalent": true,
+    "frozenDriftCount": 1
+  },
+  "replay": {
+    "replayCasesEqual": true,
+    "metricsEqual": true,
+    "metrics": {
+      "caseCount": 16,
+      "scoreableCases": 16,
+      "taskPrecision": 1,
+      "taskRecall": 1,
+      "taskF1": 1,
+      "requiresActionAccuracy": 1,
+      "semanticFieldAccuracy": 0.9751552795031055,
+      "exactTaskBoundaryAccuracy": 1,
+      "completeTaskCaseAccuracy": 0.9375,
+      "majorCorrectionRate": 0.0625,
+      "safeDefaultRecall": 1,
+      "forbiddenDefaultSelections": 0
+    }
+  },
+  "engineeringGate": {
+    "lint": "PASS",
+    "test": "PASS_573_PLUS_1_LIVE_OCR_SKIPPED",
+    "build": "PASS_WITH_EXISTING_CHUNK_WARNING",
+    "securityScan": "PASS_486_FILES"
+  },
+  "accounting": {
+    "modelCalls": 0,
+    "networkRequests": 0,
+    "repairCalls": 0,
+    "retryCalls": 0,
+    "secretAccess": "NONE"
+  },
+  "interpretation": "Type-only fixture correction and seen B4 regression. Not unseen evidence, model accuracy, real-data evidence, browser acceptance, or release evidence.",
+  "protectedMutation": "ONLY_AUTHORIZED_B4_TEST_TYPE_DECLARATION",
+  "stablePath": "UNCHANGED",
+  "rco6": "NOT_STARTED",
+  "deployment": "NOT_RUN",
+  "nextAuthorization": "ALREADY_AUTHORIZED_CREATE_AND_FREEZE_NEW_B5_THEN_RUN_ONCE_ZERO_CALL"
+}
