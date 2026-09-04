@@ -8,18 +8,18 @@
 
 ## Current Authority
 
-- current_status: `RCO-5-007-P3/B6 AUTHORIZED / LOCAL REVISION RELATIONS IN_PROGRESS / B6 BLOCKED_BY_P3 / PAID MODEL BLOCKED / RCO-6 BLOCKED / DO_NOT_LAUNCH`
-- current_authorization: 新增隔离本机修订关系解析器，明确构造撤销/替代/修改边；用已见 B5 只做回归，通过并冻结 P3 后创建、冻结全新 B6，再运行一次零调用门。
+- current_status: `RCO-5-007-P3/B6 COMPLETE / B6 FIRST-RUN LOCAL GATE PASS / PAID MODEL TEST ELIGIBLE_BUT_NOT_AUTHORIZED / RCO-6 BLOCKED / DO_NOT_LAUNCH`
+- current_authorization: 已完成隔离本机修订关系解析器、已见 B5 回归、P3 冻结和全新 B6 唯一首次零调用门；当前没有继续付费模型、RCO-6、稳定接入或部署的授权。
 - model/network/repair/retry/secret: `0 / 0 / 0 / 0 / NONE`
 - protected: 既有 Expected、freeze、dataset、checkpoint、cache；稳定路径、RC.4、Release、Production 均未修改。
-- not_authorized: 修改 P2、B5 Expected/dataset/freeze/result 或任何既有 checkpoint/cache；模型/Secret/网络；真实材料、真人研究、浏览器验收、RCO-6、稳定路径接入、Preview/Production 部署。
+- not_authorized: 修改 P2/P3、B5/B6 Expected/dataset/freeze/result 或任何既有 checkpoint/cache；模型/Secret/实验网络；真实材料、真人研究、浏览器验收、RCO-6、稳定路径接入、Preview/Production 部署。
 - authority_rule: 新阶段、付费调用、真实数据、浏览器验收和部署分别需要当前用户明确授权；旧授权不自动续用。
 
 ## Workspace
 
 - repository: `C:\Users\Winner\student-affairs-multimodal-exp`
 - branch: `codex/e2-multimodal-recognition-exp`
-- last_prefreeze_commit: `578d2a3`，B5 数据在首次运行前已冻结并推送；结果提交完成后恢复时仍须重新核对 HEAD/upstream/worktree。
+- last_prefreeze_commit: `ee7ffc9`，B6 数据与 P3 在首次运行前已冻结并推送；B6 已运行且变为已见，禁止再次用于首次泛化声明。
 - production/default path: 不变；仍为本机解析/OCR → 用户核对文字 → 只发送文字。
 - multimodal: 仍是独立实验 Preview；RCO-6 未启动。
 
@@ -91,6 +91,14 @@
 - 定向/变形 10/10；六种失效表面表达关系不变，三类修订、歧义失败关闭、证据绑定和篡改检测均通过。
 - 已见 B5 回归 16/16：Task P/R/F1、requiresAction、semantic、boundary、Complete、Safe Default、旧要求失效、新要求生效均 100%；Major 0、Forbidden 0、stale 0、selected stale 0、unresolved 0。
 - P3 16 路径组件冻结；只被隔离测试和 runner 引用，未接稳定路径。这仍不是新数据泛化或模型正确率。
+
+### B6 首次未见 P3 本机门
+
+- B6 在 commit `ee7ffc9` 先冻结并推送：16 个全新匿名合成 Development，三类修订关系各 2 条、歧义/非任务取消 2 条；与 B0–B5 原文和语义家族不重复，逐例 bigram Jaccard <0.55。
+- 冻结 P3 随后只运行一次；B6 立即标为已见。16/16 可评分；Task P/R/F1、requiresAction、semantic、boundary、Complete、Safe Default 均 100%，Major=0、Forbidden=0。
+- cancels/supersedes/amends 精确率各 100%；旧要求完整失效、新要求生效、歧义保持未解析、修订整例均 100%；stale=0、selected stale=0。
+- 结果是 `PASS_LOCAL_P3_ONLY`：只证明 Expected-derived 理想 scope/action/object 锚点进入 P3 后的本机上限，不是模型、OCR、图片/文件、真实材料、真人修改时间、浏览器或上线证据。
+- 下一步仅具备“另行申请付费上游模型测试”的资格；当前没有付费授权，RCO-6、稳定路径和部署继续阻塞。
 
 ### 完整性与工程门
 

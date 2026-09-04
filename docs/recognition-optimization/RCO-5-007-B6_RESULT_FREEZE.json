@@ -1,0 +1,87 @@
+{
+  "schemaVersion": "rco-5-007-b6-result-freeze-1.0.0",
+  "stage": "RCO-5-007-B6-FIRST-P3-ORACLE",
+  "status": "FIRST_RUN_PASS_NOW_SEEN_DEVELOPMENT",
+  "frozenAt": "2026-09-04T20:07:00+08:00",
+  "authorizationId": "RCO-5-007-P3/B6",
+  "datasetId": "rco-5-007-b6-challenge-20260904",
+  "firstRunAgainstFrozenCommit": "ee7ffc9",
+  "componentPaths": [
+    "docs/recognition-optimization/RCO-5-007-B6_DATA_FREEZE.json",
+    "scripts/run-rco-5-007-b6-oracle.ts",
+    "docs/recognition-optimization/rco-5-007-b6-oracle/result.json",
+    "docs/recognition-optimization/rco-5-007-b6-oracle/REPORT.md",
+    "docs/recognition-optimization/rco-5-007-b6-oracle/ADVERSARIAL_AUDIT.md",
+    "docs/recognition-optimization/rco-5-007-b6-oracle/EXECUTION_STATUS.md",
+    "scripts/rco-5-007-b6-oracle.node-test.mjs"
+  ],
+  "componentSha256": {
+    "docs/recognition-optimization/RCO-5-007-B6_DATA_FREEZE.json": "66a6ebffb16794a9d496029c217364355c7aefaff15ebf7aa89fb14c85a33195",
+    "scripts/run-rco-5-007-b6-oracle.ts": "0b124e7fbf247b28d08e98603ebba5972a29e0c9efaadd72d771d0a3cfb17dd0",
+    "docs/recognition-optimization/rco-5-007-b6-oracle/result.json": "1dbfc9f73e97f8881004966bfdb740fcae3e94c839d6d462e4cb580d697354d0",
+    "docs/recognition-optimization/rco-5-007-b6-oracle/REPORT.md": "b6a0bb6ae0a75b2a3da576b3a494b82e07c853a9b99fd7baa306f4b109e4dc3b",
+    "docs/recognition-optimization/rco-5-007-b6-oracle/ADVERSARIAL_AUDIT.md": "d996d9a4107bd165bd20038318b98f53f15567f18fce196caf487cca7ba54235",
+    "docs/recognition-optimization/rco-5-007-b6-oracle/EXECUTION_STATUS.md": "9d49aa9e8522bac59342c002d18d6a1099066d072008d54a4d4aa2487b01c0db",
+    "scripts/rco-5-007-b6-oracle.node-test.mjs": "aa2879d55043cef0fa3f111b5d2c1d5aa6ff4c420efff50bbc065355fab4b22c"
+  },
+  "accounting": {
+    "modelCalls": 0,
+    "networkRequests": 0,
+    "repairCalls": 0,
+    "retryCalls": 0,
+    "secretAccess": "NONE"
+  },
+  "metrics": {
+    "caseCount": 16,
+    "scoreableCases": 16,
+    "taskPrecision": 1,
+    "taskRecall": 1,
+    "taskF1": 1,
+    "requiresActionAccuracy": 1,
+    "semanticFieldAccuracy": 1,
+    "exactTaskBoundaryAccuracy": 1,
+    "completeTaskCaseAccuracy": 1,
+    "majorCorrectionRate": 0,
+    "safeDefaultRecall": 1,
+    "forbiddenDefaultSelections": 0
+  },
+  "revisionMetrics": {
+    "revisionCaseCount": 8,
+    "expectedRelationCount": 6,
+    "actualRelationCount": 6,
+    "exactRelationCount": 6,
+    "relationPrecision": 1,
+    "relationRecall": 1,
+    "relationExactAccuracyByKind": {
+      "cancels": 1,
+      "supersedes": 1,
+      "amends": 1
+    },
+    "revisionCaseCompleteAccuracy": 1,
+    "supersededTaskExactAccuracy": 1,
+    "activeReplacementRecall": 1,
+    "staleTaskCount": 0,
+    "selectedStaleTaskCount": 0,
+    "unresolvedRevisionExactAccuracy": 1,
+    "staleTasks": []
+  },
+  "qualityGate": "PASS",
+  "engineeringGate": {
+    "lint": "PASS",
+    "test": "PASS_597_PLUS_1_LIVE_OCR_SKIPPED",
+    "b6AndP3Integrity": "PASS_10_OF_10",
+    "build": "PASS_WITH_EXISTING_CHUNK_WARNING",
+    "securityScan": "PASS"
+  },
+  "overallGate": "PASS_LOCAL_P3_ONLY",
+  "decision": "B6_ORACLE_PASS_ELIGIBLE_FOR_SEPARATE_PAID_MODEL_AUTHORIZATION",
+  "rerunAuthorized": false,
+  "eligibleForSeparatePaidModelAuthorization": true,
+  "paidRunAuthorized": false,
+  "evidenceBoundary": "Synthetic single-author Development with Expected-derived ideal upstream anchors; not model, OCR, real-data, human-time, browser, privacy, security acceptance or release evidence.",
+  "protectedMutation": "NONE_AFTER_B6_FREEZE",
+  "stablePath": "UNCHANGED",
+  "rco6": "BLOCKED",
+  "deployment": "NOT_RUN",
+  "nextAuthorization": "NEW_FROZEN_DATA_PAID_MODEL_SCOPE_ACTION_OBJECT_SELECTION_INTO_FROZEN_P3"
+}

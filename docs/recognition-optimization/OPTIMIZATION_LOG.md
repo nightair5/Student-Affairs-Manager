@@ -1040,3 +1040,19 @@
 - full_gate: lint PASS；Vitest `590 passed / 1 live OCR skipped`，另 server 8、Worker 25、time parity 1、multimodal evaluator 23、RCO-5-007 integrity 4、Functions 5；build PASS；security scan 518 files PASS；保留既有 >500 kB chunk warning。
 - isolation: P3 只由隔离测试/runner import；P2、B5 Expected/dataset/freeze/result、既有 checkpoint/cache 与稳定路径无修改。模型/实验网络/Repair/retry/Secret=`0/0/0/0/NONE`；RCO-6 和部署未启动。
 - decision: `P3 TECHNICAL_PASS_SEEN_B5 / ELIGIBLE_FOR_NEW_B6_ZERO_CALL_GATE_ONLY / PAID MODEL BLOCKED / DO_NOT_LAUNCH`。
+
+## 52. RCO-5-007-B6 唯一首次零调用门通过与结果封存 — 2026-09-04
+
+- sequencing: P3 提交 `07a056e` 推送后才创建 B6；B6 数据、Expected、生成器、数据测试、P3 组件、评分器和契约共 10 路径 SHA-256 绑定，并在 commit `ee7ffc9` 推送后才首次运行 P3。
+- prefreeze_correction: 首次预冻结校验发现 B6-01 的修订状态 scope 没有计入候选覆盖账目；在冻结和运行 P3 前，仅把修订/歧义状态 scope 登记为 ignored context，未改语义、P3 或评分门槛。随后数据测试 7/7 和冻结检查 3/3 通过。
+- data: 16 个全新匿名合成 Codex-authored Development；6 条明确关系（cancels/supersedes/amends 各 2）、2 条 unresolved；与 B0–B5 source/family 不重复，逐例 bigram Jaccard <0.55。不是独立人工 GT、真实材料或 Holdout。
+- first_and_only_run: 冻结 P3 对 Expected-derived 理想 scope/action/object 锚点只运行一次；B6 随即转为 `FIRST_RUN_B6_ORACLE_NOW_SEEN_DEVELOPMENT`，runner 在结果已存在时拒绝再次运行。
+- task_metrics: 16/16 可评分；Task P/R/F1、requiresAction、semantic fields、exact boundary、Complete Task Case、Safe Default Recall 均 `100%`；Major Correction `0%`，Forbidden `0`。
+- revision_metrics: 期望/实际/精确关系均 6；relation precision/recall 100%；三类关系分别 100%；修订整例、旧要求完整失效、新要求生效、unresolved 精确率均 100%；stale=0、selected stale=0。
+- adversarial_audit: Expected 修订关系和 unresolved 标签只在结果产生后评分，不进入 P3 candidate；candidate revisionRefs 为空，模型权威字段由 reducer 丢弃。冻结与结果完整性共 13/13 PASS。
+- engineering: lint PASS；Vitest `597 passed / 1 live OCR skipped`，另 server 8、Worker 25、time parity 1、multimodal evaluator 23、RCO base integrity 4、Functions 5；build PASS；security scan `533 files` PASS；保留既有 >500 kB chunk warning。
+- tooling_note: 单文件 tsc 静态检查因仓库未安装 Node type definitions 报 TS2688；未新增依赖，改用现有 esbuild 成功完成只编译不执行检查。项目正式 tsc/build 随后完整通过。
+- accounting: 模型/实验网络/Repair/retry/Secret=`0/0/0/0/NONE`；未修改 B6 freeze 后的任何保护件，稳定路径未变，RCO-6 与部署未启动。
+- evidence_boundary: 本轮只建立本机 P3 在理想上游锚点下的新数据证据；不代表 DeepSeek/OCR/图片/文件正确率，也没有真实材料、真人修改时间、浏览器、隐私安全验收或商业上线证据。
+- decision: `RCO-5-007-P3/B6 COMPLETE / B6 FIRST-RUN LOCAL PASS / ELIGIBLE_TO_REQUEST_SEPARATE_PAID_MODEL_TEST / PAID RUN NOT_AUTHORIZED / RCO-6 BLOCKED / DO_NOT_LAUNCH`。
+- next_step: `NONE / WAIT_AUTHORIZATION`。若继续，应先新冻一批不复用 B6 的匿名数据，用指定模型只选择 scope/action/object，再送入冻结 P3；必须预锁调用次数、人民币上限、无 Repair/retry 和完整失败停止条件。
