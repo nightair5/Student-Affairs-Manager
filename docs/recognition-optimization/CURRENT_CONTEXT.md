@@ -8,18 +8,18 @@
 
 ## Current Authority
 
-- current_status: `RCO-5-007-B7 DATA/CONTRACT FROZEN / PROPOSED 12 CALLS AND 10 CNY NOT_YET_AUTHORIZED / RCO-6 BLOCKED / DO_NOT_LAUNCH`
-- current_authorization: 仅完成全新 B7 匿名数据、模型锚点选择契约、冻结 P3 理想上限和付费参数预注册；尚未获得“最多 12 次、人民币硬上限 10 元”的明确付费调用授权。
+- current_status: `RCO-5-009A DIRECT_CANDIDATE_MATERIALIZATION ADVERSARIAL_PASS / FULL_GATES_AND_FREEZE_PENDING / B9 NOT_CREATED / PAID_MODEL_BLOCKED / RCO-6 BLOCKED / DO_NOT_LAUNCH`
+- current_authorization: 持续做 0 次模型调用的本机根因修补与全新匿名 Development 盲测；不得把旧 B8 回归说成模型提升，也不得调用付费模型。
 - model/network/repair/retry/secret: `0 / 0 / 0 / 0 / NONE`
 - protected: 既有 Expected、freeze、dataset、checkpoint、cache；稳定路径、RC.4、Release、Production 均未修改。
-- not_authorized: 修改 P2/P3、B5/B6 或冻结后的 B7 Expected/dataset/freeze、任何既有 checkpoint/cache；当前模型/Secret/实验网络；真实材料、真人研究、浏览器验收、RCO-6、稳定路径接入、Preview/Production 部署。
+- not_authorized: 修改任何既有 Expected/freeze/dataset/checkpoint/cache；模型/Secret/实验网络；真实材料、真人研究、浏览器验收、RCO-6、稳定路径接入、Preview/Production 部署。
 - authority_rule: 新阶段、付费调用、真实数据、浏览器验收和部署分别需要当前用户明确授权；旧授权不自动续用。
 
 ## Workspace
 
 - repository: `C:\Users\Winner\student-affairs-multimodal-exp`
 - branch: `codex/e2-multimodal-recognition-exp`
-- last_prefreeze_commit: `ee7ffc9`，B6 数据与 P3 在首次运行前已冻结并推送；B6 已运行且变为已见，禁止再次用于首次泛化声明。
+- last_prefreeze_commit: `00e3656`，RCO-5-009A 计划已提交推送；当前直接物化实现尚待全量门、组件冻结与独立提交。
 - production/default path: 不变；仍为本机解析/OCR → 用户核对文字 → 只发送文字。
 - multimodal: 仍是独立实验 Preview；RCO-6 未启动。
 
@@ -145,13 +145,13 @@
 
 ## First-Principles Interpretation
 
-P3 已把 B5 暴露的词面共现问题升级为“状态声明 → 旧任务 → 可选替代任务”的可审计关系边，并在歧义时失败关闭。已见 B5 满分只证明机制修复方向成立；是否真正跨表达泛化，必须由冻结后全新 B6 的唯一首次运行决定。
+真正的产品单位不是“模型写出的一整张清单”，而是“原文中每一个可追溯的动作 occurrence”。动作一旦有不可变 ID，模型只能在闭集里分类；本机必须沿同一 ID 生成对象、语义、修订和默认状态。任何单条不确定只能影响自己或相关修订窗口，不能删除或压住无关任务。B8 已证明这套本机架构能消除连坐，但 B8 没有真实 needs_model，因此模型能力必须由冻结后的全新 B9 首次盲测决定。
 
 ## Current Gate / Next Action
 
-- gate: `P3 TECHNICAL_PASS_PENDING_COMMIT / B6 BLOCKED UNTIL P3 COMMIT / PAID MODEL BLOCKED / RCO-6 BLOCKED / DO_NOT_LAUNCH`
-- next: 提交并推送 P3 冻结件；之后才创建、冻结并推送全新 B6，再唯一运行一次。
-- after_b6: 只有 B6 的总体质量、旧要求失效、新要求生效、陈旧任务和工程门全部通过后，才能另行批准固定模型、调用数和人民币上限的付费测试。
+- gate: `RCO-5-009A ADVERSARIAL_PASS / FULL_GATES_AND_COMPONENT_FREEZE_PENDING / B9 BLOCKED_UNTIL_FREEZE_COMMIT / PAID MODEL BLOCKED / RCO-6 BLOCKED / DO_NOT_LAUNCH`
+- next: 跑全量 lint/test/build/security，冻结并提交推送 RCO-5-009A；之后才创建并冻结包含真实 needs_model 的全新 B9，再做唯一一次 0 调用本机上限。
+- after_b9: B9 过本机门只说明合同可表达；若要测 DeepSeek classifier，仍需另行锁定调用数、人民币上限和停止条件并获得授权。
 - promotion rule: 付费新数据仍稳定提升且 Forbidden=0，才可申请 RCO-6；之后仍需真实去标识材料、真人修改时间、Chrome/Edge/手机、隐私安全和 Commercial Preview，才能讨论上线。
 
 ## Recovery
@@ -159,7 +159,15 @@ P3 已把 B5 暴露的词面共现问题升级为“状态声明 → 旧任务 �
 1. 读根 `AGENTS.md`、`PRD.md`、本文件和日志最后两节。
 2. 重新核对 branch、HEAD、upstream、worktree；任何差异先当用户资产。
 3. 只读取当前任务必要文件；大结果用路径、哈希、计数和结论，不灌入上下文。
-4. 当前只执行 P3/B6 零调用链路；不得修改 P2/B5 保护件、调用模型、启动 RCO-6 或部署。
+4. 当前只执行 RCO-5-009A/B9 零调用链路；不得修改既有保护件、调用模型、启动 RCO-6 或部署。
+
+## RCO-5-009A 最新状态补充 — 2026-09-04
+
+- 已停止从 P4 task 反查 candidate；task 直接从 accepted ledger 和 owned object 形成，ID 与 UTF-16 原文位置贯穿到底。
+- 从句角色、当前/历史/已完成、条件事实真值与修订关系由本机确定；模型没有 selected、requiresAction、语义或自由证据权限。
+- 聚焦测试 49/49，独立对抗复审 PASS；单候选 quarantine 不再删除或压住无关安全任务。
+- 已见 B8 Task F1/动作对象边界 100%，旧模型候选 F1 仍为 90%；B8-12 有一个不改 Expected 的历史标签冲突，Complete 11/12。
+- B8 无真实 needs_model，不能作为新分类器证据。B9 尚未创建；必须在 RCO-5-009A 全量门、freeze、提交和推送后再建立。
 
 ## RCO-5-008 最新状态补充 — 2026-09-04
 

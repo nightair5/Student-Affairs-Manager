@@ -1,0 +1,287 @@
+{
+  "schemaVersion": "rco-5-009a-b8-replay-2.0.0",
+  "authorizationId": "RCO-5-009A",
+  "classification": "SEEN_B8_DIRECT_CANDIDATE_MATERIALIZATION_ZERO_CALL_NOT_MODEL_REPLICATION",
+  "datasetId": "rco-5-008-b8-development-20260904",
+  "protectedInputFreezes": [
+    "docs/recognition-optimization/RCO-5-008-B8_DATA_FREEZE.json",
+    "docs/recognition-optimization/RCO-5-008-B8-M1_RESULT_FREEZE.json",
+    "docs/recognition-optimization/RCO-5-009_COMPONENT_FREEZE.json"
+  ],
+  "originalB8DecisionPreserved": "NO_PROMOTION_PAID_REPLICATION_BLOCKED",
+  "accounting": {
+    "modelCalls": 0,
+    "networkRequests": 0,
+    "verifierCalls": 0,
+    "repairCalls": 0,
+    "retryCalls": 0,
+    "secretAccess": "NONE"
+  },
+  "evidenceBoundary": {
+    "oracle": "Expected-derived classifications prove only that the local contract can represent the frozen answers.",
+    "legacy": "Frozen raw output proves classifier precision/recall and local salvage separately; local recovery is not credited to the model.",
+    "frozenLabelConflict": "B8-12 labels historical requirements as future/pending/active. The new fail-closed policy reports this conflict without modifying frozen Expected.",
+    "generalization": "B8 is seen and cannot support an unseen or commercial-readiness claim."
+  },
+  "frozenHistoricalLabelConflicts": [
+    "rco-task-b8-12"
+  ],
+  "candidateLedgerMetrics": {
+    "catalogCandidates": 22,
+    "expectedCandidateCoverage": 1,
+    "localNonTaskCandidates": 2,
+    "modelMissesRecoveredLocally": 2,
+    "quarantinedCandidates": 0,
+    "legacyLegalSiblingCollateralLoss": 0
+  },
+  "frozenLegacyClassifierDiagnostics": {
+    "expectedCandidates": 20,
+    "rawExpectedHits": 18,
+    "rawExpectedMisses": 2,
+    "rawExtraDirectives": 2,
+    "precision": 0.9,
+    "recall": 0.9,
+    "f1": 0.9,
+    "missedCases": [
+      {
+        "caseId": "rco-task-b8-07",
+        "expectedIds": [
+          "d-completed-index"
+        ]
+      },
+      {
+        "caseId": "rco-task-b8-11",
+        "expectedIds": [
+          "d-old-fill-paper"
+        ]
+      }
+    ],
+    "extraCases": [
+      {
+        "caseId": "rco-task-b8-09",
+        "directiveIds": [
+          "dir-2"
+        ]
+      },
+      {
+        "caseId": "rco-task-b8-12",
+        "directiveIds": [
+          "d3"
+        ]
+      }
+    ]
+  },
+  "oracleMetrics": {
+    "task": {
+      "caseCount": 12,
+      "scoreableCases": 12,
+      "taskPrecision": 1,
+      "taskRecall": 1,
+      "taskF1": 1,
+      "requiresActionAccuracy": 0.9166666666666666,
+      "semanticFieldAccuracy": 0.9571428571428572,
+      "exactTaskBoundaryAccuracy": 1,
+      "completeTaskCaseAccuracy": 0.9166666666666666,
+      "majorCorrectionRate": 0.08333333333333333,
+      "safeDefaultRecall": 1,
+      "forbiddenDefaultSelections": 0
+    },
+    "unsafeDefaultFalsePositives": 0,
+    "contractIssueCount": 0,
+    "completeRelationCases": 12,
+    "revision": {
+      "relationExactAccuracyByKind": {
+        "cancels": 1,
+        "supersedes": 1,
+        "amends": 1
+      },
+      "oldRequirementInvalidation": 1,
+      "activeReplacementRecall": 1,
+      "unresolvedRevisionExactAccuracy": 1,
+      "staleTaskCount": 0,
+      "selectedStaleTaskCount": 0
+    }
+  },
+  "legacyProductMetrics": {
+    "task": {
+      "caseCount": 12,
+      "scoreableCases": 12,
+      "taskPrecision": 1,
+      "taskRecall": 1,
+      "taskF1": 1,
+      "requiresActionAccuracy": 0.9166666666666666,
+      "semanticFieldAccuracy": 0.9571428571428572,
+      "exactTaskBoundaryAccuracy": 1,
+      "completeTaskCaseAccuracy": 0.9166666666666666,
+      "majorCorrectionRate": 0.08333333333333333,
+      "safeDefaultRecall": 1,
+      "forbiddenDefaultSelections": 0
+    },
+    "unsafeDefaultFalsePositives": 0,
+    "contractIssueCount": 0,
+    "completeRelationCases": 12,
+    "revision": {
+      "relationExactAccuracyByKind": {
+        "cancels": 1,
+        "supersedes": 1,
+        "amends": 1
+      },
+      "oldRequirementInvalidation": 1,
+      "activeReplacementRecall": 1,
+      "unresolvedRevisionExactAccuracy": 1,
+      "staleTaskCount": 0,
+      "selectedStaleTaskCount": 0
+    }
+  },
+  "gate": "PASS",
+  "decision": "B8_DIRECT_LEDGER_ARCHITECTURE_PASS_WITH_ONE_FROZEN_HISTORICAL_LABEL_CONFLICT_ELIGIBLE_FOR_NEW_B9_ZERO_CALL_ONLY",
+  "diagnostics": [
+    {
+      "caseId": "rco-task-b8-01",
+      "catalogCandidates": 2,
+      "expectedCandidates": 2,
+      "localNonTasks": 0,
+      "rawExpectedHits": 2,
+      "rawExpectedMisses": [],
+      "unmatchedLegacyDirectiveIds": [],
+      "recoveredLocalMisses": [],
+      "quarantinedCandidateIds": []
+    },
+    {
+      "caseId": "rco-task-b8-02",
+      "catalogCandidates": 2,
+      "expectedCandidates": 1,
+      "localNonTasks": 1,
+      "rawExpectedHits": 1,
+      "rawExpectedMisses": [],
+      "unmatchedLegacyDirectiveIds": [],
+      "recoveredLocalMisses": [],
+      "quarantinedCandidateIds": []
+    },
+    {
+      "caseId": "rco-task-b8-03",
+      "catalogCandidates": 2,
+      "expectedCandidates": 1,
+      "localNonTasks": 1,
+      "rawExpectedHits": 1,
+      "rawExpectedMisses": [],
+      "unmatchedLegacyDirectiveIds": [],
+      "recoveredLocalMisses": [],
+      "quarantinedCandidateIds": []
+    },
+    {
+      "caseId": "rco-task-b8-04",
+      "catalogCandidates": 1,
+      "expectedCandidates": 1,
+      "localNonTasks": 0,
+      "rawExpectedHits": 1,
+      "rawExpectedMisses": [],
+      "unmatchedLegacyDirectiveIds": [],
+      "recoveredLocalMisses": [],
+      "quarantinedCandidateIds": []
+    },
+    {
+      "caseId": "rco-task-b8-05",
+      "catalogCandidates": 2,
+      "expectedCandidates": 2,
+      "localNonTasks": 0,
+      "rawExpectedHits": 2,
+      "rawExpectedMisses": [],
+      "unmatchedLegacyDirectiveIds": [],
+      "recoveredLocalMisses": [],
+      "quarantinedCandidateIds": []
+    },
+    {
+      "caseId": "rco-task-b8-06",
+      "catalogCandidates": 2,
+      "expectedCandidates": 2,
+      "localNonTasks": 0,
+      "rawExpectedHits": 2,
+      "rawExpectedMisses": [],
+      "unmatchedLegacyDirectiveIds": [],
+      "recoveredLocalMisses": [],
+      "quarantinedCandidateIds": []
+    },
+    {
+      "caseId": "rco-task-b8-07",
+      "catalogCandidates": 2,
+      "expectedCandidates": 2,
+      "localNonTasks": 0,
+      "rawExpectedHits": 1,
+      "rawExpectedMisses": [
+        "d-completed-index"
+      ],
+      "unmatchedLegacyDirectiveIds": [],
+      "recoveredLocalMisses": [
+        "action:local-action-candidate-policy-1.2.0:8bdf7ec58195:6:8"
+      ],
+      "quarantinedCandidateIds": []
+    },
+    {
+      "caseId": "rco-task-b8-08",
+      "catalogCandidates": 2,
+      "expectedCandidates": 2,
+      "localNonTasks": 0,
+      "rawExpectedHits": 2,
+      "rawExpectedMisses": [],
+      "unmatchedLegacyDirectiveIds": [],
+      "recoveredLocalMisses": [],
+      "quarantinedCandidateIds": []
+    },
+    {
+      "caseId": "rco-task-b8-09",
+      "catalogCandidates": 1,
+      "expectedCandidates": 1,
+      "localNonTasks": 0,
+      "rawExpectedHits": 1,
+      "rawExpectedMisses": [],
+      "unmatchedLegacyDirectiveIds": [
+        "dir-2"
+      ],
+      "recoveredLocalMisses": [],
+      "quarantinedCandidateIds": []
+    },
+    {
+      "caseId": "rco-task-b8-10",
+      "catalogCandidates": 2,
+      "expectedCandidates": 2,
+      "localNonTasks": 0,
+      "rawExpectedHits": 2,
+      "rawExpectedMisses": [],
+      "unmatchedLegacyDirectiveIds": [],
+      "recoveredLocalMisses": [],
+      "quarantinedCandidateIds": []
+    },
+    {
+      "caseId": "rco-task-b8-11",
+      "catalogCandidates": 2,
+      "expectedCandidates": 2,
+      "localNonTasks": 0,
+      "rawExpectedHits": 1,
+      "rawExpectedMisses": [
+        "d-old-fill-paper"
+      ],
+      "unmatchedLegacyDirectiveIds": [],
+      "recoveredLocalMisses": [
+        "action:local-action-candidate-policy-1.2.0:63a94bc61c0f:5:7"
+      ],
+      "quarantinedCandidateIds": []
+    },
+    {
+      "caseId": "rco-task-b8-12",
+      "catalogCandidates": 2,
+      "expectedCandidates": 2,
+      "localNonTasks": 0,
+      "rawExpectedHits": 2,
+      "rawExpectedMisses": [],
+      "unmatchedLegacyDirectiveIds": [
+        "d3"
+      ],
+      "recoveredLocalMisses": [],
+      "quarantinedCandidateIds": []
+    }
+  ],
+  "stablePath": "UNCHANGED",
+  "rco6": "NOT_STARTED",
+  "deployment": "NOT_RUN"
+}

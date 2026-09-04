@@ -1142,3 +1142,17 @@
 - first_principles: 三项都是本机边界规则错误，继续调 Prompt 或直接创建 B9 只会把盲测当调试器。B9 保持未创建，先在新版本组件中修复，旧 v1 freeze 不修改。
 - accounting: 模型/网络/verifier/Repair/retry/Secret=0/0/0/0/0/NONE；稳定路径、RCO-6、部署未触碰。
 - status: RCO-5-009A ZERO-CALL PATCH AUTHORIZED_BY_CONTINUOUS_OPTIMIZATION / IN_PROGRESS / B9 BLOCKED / PAID MODEL BLOCKED。
+
+## 60. RCO-5-009A 直接候选物化与局部修订安全门 — 2026-09-04
+
+- second_root_cause: 修复最初三项边界后，独立审查仍判 BLOCK。原因是旧 P5 把候选交给 P4 后再按 `scopeId + action.surface` 反查；同 scope 同动作、条件前件、历史状态和对象 occurrence 会丢失。这是身份链断裂，不是再补几个关键词能解决的问题。
+- direct_materialization: 新 P5 直接从 accepted candidate ledger 形成 `task:${candidateId}`；保留 origin candidate/occurrence ID、action/object 精确 span、clause role、currentness、condition truth/status。accepted candidate 与 owned object/task 强制双射，缺失时失败关闭。
+- revision_locality: 新增 candidate-aware revision resolver，以原文 offset 和 currentness 解析关系；quarantine 只降低相关修订窗口的确定性，未决历史修订不再阻断后置独立当前任务。
+- three_valued_actionability: 明确当前义务为 true；仍可能是义务但条件/动作/对象未决为 null；历史、已完成、否定、可选或第三方且覆盖完整时为 false。selected 仅由本机在当前、肯定、待办、有效、必需、收件人、安全动作和条件 true/none 时生成。
+- adversarial: 聚焦 Vitest 49/49；独立复审 PASS。历史要求、条件前件、同 scope 条件真值、重复同字动作、sibling quarantine、修订歧义局部影响、模型未知 ID 和双射篡改均通过。
+- b8_seen_replay: 20/20 expected action 可表达；Task P/R/F1 与动作对象边界 100%，合法 sibling collateral loss=0，三类修订/unresolved 精确，unsafe/Forbidden/stale/selected-stale=0。冻结旧模型 candidate P/R/F1 仍为 90%/90%/90%，2 漏、2 多造，不把本机挽救记作模型准确率。
+- frozen_label_conflict: B8-12 冻结 Expected 把“旧任务/原任务……上述任务取消”仍记为 future/pending/active 和 requiresAction=true；新安全策略将两项保留为历史审计项、状态/有效性未知且不选。Expected 未修改，冲突显式列账，所以 Complete=11/12；不为凑分恢复不安全语义。
+- experiment_limit: B8 全部 20 个 expected action 都是 local_proposition，没有真实 needs_model；本轮只能证明本机架构，不能证明 classifier 泛化。B9 必须覆盖 needs_model、多对象闭集、重复 occurrence、局部坏响应、修订窗口和 OOV。
+- engineering: lint PASS；build PASS，仅保留既有大于 500 kB chunk warning；security scan 617 files PASS；完整 npm test 合计 763 passed、1 skipped、0 failed，另有 contract checks 2/2。唯一 skip 是需显式环境变量的 live OCR，因此本轮不构成真实 OCR 证据。
+- accounting: model/network/verifier/Repair/retry/Secret=0/0/0/0/0/NONE；既有 Expected/freeze/dataset/checkpoint/cache 与稳定路径未改，RCO-6 和部署未启动。
+- status: RCO-5-009A ADVERSARIAL_PASS / B8_SEEN_ARCHITECTURE_PASS_WITH_FROZEN_LABEL_CONFLICT / PENDING_FULL_GATES_AND_COMPONENT_FREEZE / PAID_MODEL_BLOCKED / DO_NOT_LAUNCH。
