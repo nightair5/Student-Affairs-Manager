@@ -1,0 +1,165 @@
+{
+  "schemaVersion": "rco-5-009-b9-data-freeze-1.0.0",
+  "stage": "RCO-5-009-B9-PRE-ZERO-CALL",
+  "status": "DATA_EXPECTED_RESPONSE_FIXTURES_AND_009A_CHAIN_FROZEN_BEFORE_FIRST_PIPELINE_RUN",
+  "frozenAt": "2026-09-04T23:15:00+08:00",
+  "authorizationId": "RCO-5-009-B9-ZERO-CALL",
+  "datasetId": "rco-5-009-b9-development-20260904",
+  "datasetPath": "docs/recognition-optimization/RCO-5-009-B9_DEVELOPMENT_DATASET.json",
+  "datasetClassification": "anonymous_synthetic_codex_authored_candidate_classification_development",
+  "seenStatusAtFreeze": "UNSEEN_BY_DEEPSEEK_AT_FREEZE_LOCAL_DESIGN_PREFLIGHT_ONLY",
+  "labelProvenance": "Codex-authored reference labels; not independent human ground truth",
+  "sampleCount": 12,
+  "semanticFamilyCount": 12,
+  "expectedCandidateCount": 19,
+  "expectedCandidateDispositionCounts": {
+    "local_non_task": 1,
+    "local_proposition": 12,
+    "needs_model": 6
+  },
+  "expectedLedgerCounts": {
+    "accepted_local": 11,
+    "accepted_model": 2,
+    "ignored_model": 2,
+    "ignored_local": 1,
+    "quarantined": 3
+  },
+  "expectedTaskCount": 13,
+  "safeDefaultExpectedCount": 7,
+  "expectedRevisionRelationCount": 1,
+  "expectedRequiresActionVector": [
+    null,
+    false,
+    true,
+    null,
+    true,
+    true,
+    false,
+    true,
+    null,
+    true,
+    true,
+    null
+  ],
+  "expectedResponsePartialCaseIds": [
+    "rco-task-b9-06"
+  ],
+  "expectedSemanticPartialCaseIds": [
+    "rco-task-b9-04",
+    "rco-task-b9-06",
+    "rco-task-b9-07",
+    "rco-task-b9-09"
+  ],
+  "multipleObjectChoiceStatus": "NOT_EXPRESSIBLE_BY_POLICY_1.2.0",
+  "freshnessReview": {
+    "comparedDatasetCount": 10,
+    "comparedCaseCount": 140,
+    "maximumBigramJaccard": 0.16,
+    "maximumAllowedBigramJaccard": 0.55,
+    "maximumSimilarityPair": {
+      "freshCaseId": "rco-task-b9-06",
+      "priorCaseId": "rco-task-b8-01"
+    },
+    "exactSourceReuseCount": 0,
+    "semanticFamilyReuseCount": 0
+  },
+  "componentPaths": [
+    "docs/recognition-optimization/RCO-5-009-B9_DEVELOPMENT_DATASET.json",
+    "docs/recognition-optimization/RCO-5-009-B9_PLAN.md",
+    "scripts/generate-rco-5-009-b9-dataset.mjs",
+    "scripts/freeze-rco-5-009-b9-data.mjs",
+    "scripts/rco-5-009-b9-data-freeze.node-test.mjs",
+    "src/recognition/actionCandidateB9DataFreeze.test.ts",
+    "docs/recognition-optimization/RCO-5-009A_COMPONENT_FREEZE.json"
+  ],
+  "componentSha256": {
+    "docs/recognition-optimization/RCO-5-009-B9_DEVELOPMENT_DATASET.json": "3531b0f45f3e81410cdf4029e7d6d25a9bb68c5e6e7f30fe090e2591afe61b29",
+    "docs/recognition-optimization/RCO-5-009-B9_PLAN.md": "d5f175a83ba201803731c5fca3cfb4147c3d448b234b951eb68023bd654fad0f",
+    "scripts/generate-rco-5-009-b9-dataset.mjs": "653f09eacab6c4d06b80688416f2f443a7eb98147dd874faf812342e2cf0f456",
+    "scripts/freeze-rco-5-009-b9-data.mjs": "8d7abe23a134bbdbd6ca06b3c329f332fd6466f0ccacedda9e72c2c3f6e07882",
+    "scripts/rco-5-009-b9-data-freeze.node-test.mjs": "6dac5e7c5463b50737b8b9e314a033a55e0dffa39bbd1f714cd75c0581038a1f",
+    "src/recognition/actionCandidateB9DataFreeze.test.ts": "880e0d98aff567f59d0c29a89db2563bbde1b0b281394e9d60d10cb4b6c353fa",
+    "docs/recognition-optimization/RCO-5-009A_COMPONENT_FREEZE.json": "6808a51a7bc74ea8a478822b85c724a5303b0c1e136568e2a51bf1b5745560ee"
+  },
+  "comparisonDatasetPaths": [
+    "docs/recognition-optimization/RCO-5-005-B0_DEVELOPMENT_DATASET.json",
+    "docs/recognition-optimization/RCO-5-005-B02_DEVELOPMENT_DATASET.json",
+    "docs/recognition-optimization/RCO-5-006-B1_DEVELOPMENT_DATASET.json",
+    "docs/recognition-optimization/RCO-5-007-B2_CHALLENGE_DATASET.json",
+    "docs/recognition-optimization/RCO-5-007-B3_CHALLENGE_DATASET.json",
+    "docs/recognition-optimization/RCO-5-007-B4_CHALLENGE_DATASET.json",
+    "docs/recognition-optimization/RCO-5-007-B5_CHALLENGE_DATASET.json",
+    "docs/recognition-optimization/RCO-5-007-B6_CHALLENGE_DATASET.json",
+    "docs/recognition-optimization/RCO-5-007-B7_DEVELOPMENT_DATASET.json",
+    "docs/recognition-optimization/RCO-5-008-B8_DEVELOPMENT_DATASET.json"
+  ],
+  "comparisonDatasetSha256": {
+    "docs/recognition-optimization/RCO-5-005-B0_DEVELOPMENT_DATASET.json": "f80abd495c3075e59055a17e0298c5393556e52b6fb3ba797638c5be19c94a99",
+    "docs/recognition-optimization/RCO-5-005-B02_DEVELOPMENT_DATASET.json": "e58f73a519e5763ed3ed9100af215a8b2cc5af5d0688e4ea6a631336dc862c85",
+    "docs/recognition-optimization/RCO-5-006-B1_DEVELOPMENT_DATASET.json": "e9379259ffe23879f25fecc70318dc8049c3c9e7b054d5a25f47aeb593b32170",
+    "docs/recognition-optimization/RCO-5-007-B2_CHALLENGE_DATASET.json": "1a28b91ca4d10c73b86178d686f53887347afc01f063c7b01917b117d7bcbce2",
+    "docs/recognition-optimization/RCO-5-007-B3_CHALLENGE_DATASET.json": "eeffc0d8a746ec6b5e770c523f61923213eca72198c0d898198bd4e9557d234e",
+    "docs/recognition-optimization/RCO-5-007-B4_CHALLENGE_DATASET.json": "ba88df11c66fcae93632766b394598a8cd309b4ffa628f81d8243f85ac19771c",
+    "docs/recognition-optimization/RCO-5-007-B5_CHALLENGE_DATASET.json": "7b6ea0225440e60654dde9a3091a710542ab3fc88d3f9265f8bfae16c82269d2",
+    "docs/recognition-optimization/RCO-5-007-B6_CHALLENGE_DATASET.json": "c557f77814ffd42349f69def8111bbbeafc2d414a4c5ad6738e6cfddf53c9978",
+    "docs/recognition-optimization/RCO-5-007-B7_DEVELOPMENT_DATASET.json": "0ec1c182129c28c321f3673aaefd34e9ab417ec349976ef25ed486fce019bd10",
+    "docs/recognition-optimization/RCO-5-008-B8_DEVELOPMENT_DATASET.json": "380750fa92984f093d14a138e499bcfc5cf17fbcf4e7b60bd5b66936244594fc"
+  },
+  "activeFreezeLayerIntegrity": "RCO-5-009A_AND_RCO-5-009_DIRECT_MANIFESTS_MUST_VERIFY_EXACTLY",
+  "historicalTransitiveFreezeAudit": {
+    "status": "KNOWN_ANCESTRY_DRIFT_RECORDED_ACTIVE_009A_AND_009_DIRECT_LAYERS_INTACT",
+    "visitedManifestCount": 20,
+    "mismatchCount": 3,
+    "mismatches": [
+      {
+        "manifestPath": "docs/recognition-optimization/RCO-5-007-B4_DATA_FREEZE.json",
+        "path": "src/recognition/taskFormationB4Dataset.test.ts",
+        "expectedSha256": "945f94b30d8bf6370b044e6c302324435639c1268ad1edf9dd7df465bf1e93af",
+        "actualSha256": "a481f588e5dae6fb6a447c4705899ad613749ceb23a398bbe47a5d9e0388ad3b",
+        "classification": "HISTORICAL_COMPONENT_CHANGED_AFTER_FREEZE"
+      },
+      {
+        "manifestPath": "docs/recognition-optimization/RCO-5-008-B8-M1_RUNNER_FREEZE.json",
+        "path": "docs/recognition-optimization/rco-5-008-b8-runs/rco-5-008-b8-m1-20260904a/checkpoint.json",
+        "expectedSha256": "a01232210f27bdf403c091f03dfd7771c711a2de28b29ae35c546903a877de6d",
+        "actualSha256": "f93c60a82066ad0ce9a2a39c246000d36922bfb53981924218e9ec13179c524b",
+        "classification": "MUTABLE_RUN_OUTPUT_HASHED_BY_PRE_RUN_MANIFEST"
+      },
+      {
+        "manifestPath": "docs/recognition-optimization/RCO-5-008-B8-M1_RUNNER_FREEZE.json",
+        "path": "docs/recognition-optimization/rco-5-008-b8-runs/rco-5-008-b8-m1-20260904a/raw-results.json",
+        "expectedSha256": "3f4c1ea8ece6374734f2a22b7f7d31d9abed143a9310d26737b9d6703f6afa76",
+        "actualSha256": "8b1e9285313765e28adbb29a83b8325e77d3219e8b3394516c1b84211fee906b",
+        "classification": "MUTABLE_RUN_OUTPUT_HASHED_BY_PRE_RUN_MANIFEST"
+      }
+    ]
+  },
+  "firstRunPolicy": "Commit and push this data freeze, then create, freeze, commit and push a new runner/evaluator before running the RCO-5-009A candidate pipeline exactly once. B9 becomes seen immediately; failures are retained and may only be fixed against B10 or later unseen data.",
+  "fixedZeroCallGate": {
+    "candidateIdentityExact": 1,
+    "actionSpanExact": 1,
+    "singletonOrEmptyObjectSpanExact": 1,
+    "ledgerDispositionExact": 1,
+    "acceptedCandidateTaskBijectionExact": 1,
+    "taskSemanticExact": 1,
+    "taskSelectedExact": 1,
+    "requiresActionExact": 1,
+    "responseContractCompletenessExact": 1,
+    "semanticCoverageCompletenessExact": 1,
+    "revisionUncertaintyExact": 1,
+    "resolvedRevisionRelationExact": 1,
+    "safeDefaultRecall": 1,
+    "unsafeDefaultSelectionsMaximum": 0,
+    "siblingSurvivalRate": 1
+  },
+  "paidRunAuthorized": false,
+  "modelCalls": 0,
+  "networkDispatches": 0,
+  "secretAccess": "NONE",
+  "mutationPolicy": "B9 dataset, Expected, response fixtures, plan, freeze-bound files and the RCO-5-009A component chain are immutable after this freeze commit.",
+  "expectedDataPolicy": "Expected, semantic labels, response fixtures, requiresAction and selected must never enter a future model request.",
+  "stablePath": "UNCHANGED",
+  "rco6": "NOT_STARTED",
+  "deployment": "NOT_RUN",
+  "nextGate": "COMMIT_AND_PUSH_DATA_FREEZE_THEN_CREATE_FREEZE_COMMIT_AND_PUSH_RUNNER_EVALUATOR_BEFORE_ONE_ZERO_CALL_RUN"
+}

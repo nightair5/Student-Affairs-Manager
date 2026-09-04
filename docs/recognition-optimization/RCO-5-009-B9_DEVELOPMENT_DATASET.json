@@ -1,0 +1,602 @@
+{
+  "schemaVersion": "rco-5-009-b9-development-1.0.0",
+  "datasetId": "rco-5-009-b9-development-20260904",
+  "split": "Development",
+  "classification": "anonymous_synthetic_codex_authored_candidate_classification_development",
+  "seenStatus": "UNSEEN_BY_DEEPSEEK_AT_FREEZE_LOCAL_DESIGN_PREFLIGHT_ONLY",
+  "createdAt": "2026-09-04T23:05:00+08:00",
+  "labelProvenance": "Codex-authored reference labels; not independent human ground truth",
+  "scopeIndexVersion": "scope-index-1.1",
+  "candidatePolicyVersion": "local-action-candidate-policy-1.2.0",
+  "composerVersion": "action-candidate-composer-1.2.0",
+  "taskSafetySchemaVersion": "candidate-task-safety-result-2.0.0",
+  "taskSafetyPolicyVersion": "candidate-task-safety-policy-2.0.0",
+  "multipleObjectChoiceStatus": "NOT_EXPRESSIBLE_BY_POLICY_1.2.0",
+  "sampleCount": 12,
+  "cases": [
+    {
+      "id": "rco-task-b9-01",
+      "semanticFamilyId": "bare-imperative-needs-model-proposition",
+      "coverageTags": [
+        "needs_model",
+        "proposition"
+      ],
+      "sourceTitle": "纸质值班簿保存",
+      "sourceText": "保存纸质值班簿。",
+      "referenceTime": "2026-09-04T23:05:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": {
+        "candidates": [
+          {
+            "key": "b9-01-save",
+            "action": "保存",
+            "occurrence": 1,
+            "object": "纸质值班簿",
+            "localDisposition": "needs_model",
+            "responseVerdict": "proposition",
+            "responseObject": "own"
+          }
+        ],
+        "tasks": [
+          {
+            "candidateKey": "b9-01-save",
+            "action": "保存",
+            "object": "纸质值班簿",
+            "semanticLabel": "UNKNOWN",
+            "selected": false
+          }
+        ],
+        "requiresAction": null,
+        "responseContractComplete": true,
+        "semanticCoverageComplete": true,
+        "expectedIssueCodes": [],
+        "revisionRelations": [],
+        "unresolvedRevisionScopeTexts": [],
+        "suppressedRevisionScopeTexts": []
+      }
+    },
+    {
+      "id": "rco-task-b9-02",
+      "semanticFamilyId": "reported-operation-needs-model-mention",
+      "coverageTags": [
+        "needs_model",
+        "mention_only"
+      ],
+      "sourceTitle": "会议记录操作说明",
+      "sourceText": "会议记录提到保存纸质值班簿这一操作。",
+      "referenceTime": "2026-09-04T23:05:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": {
+        "candidates": [
+          {
+            "key": "b9-02-save",
+            "action": "保存",
+            "occurrence": 1,
+            "object": "纸质值班簿这一操作",
+            "localDisposition": "needs_model",
+            "responseVerdict": "mention_only",
+            "responseObject": null
+          }
+        ],
+        "tasks": [],
+        "requiresAction": false,
+        "responseContractComplete": true,
+        "semanticCoverageComplete": true,
+        "expectedIssueCodes": [],
+        "revisionRelations": [],
+        "unresolvedRevisionScopeTexts": [],
+        "suppressedRevisionScopeTexts": []
+      }
+    },
+    {
+      "id": "rco-task-b9-03",
+      "semanticFamilyId": "adjacent-prepare-submit-model-disambiguation",
+      "coverageTags": [
+        "compound_action",
+        "needs_model",
+        "external_effect"
+      ],
+      "sourceTitle": "场地申请包准备",
+      "sourceText": "请准备提交场地申请包。",
+      "referenceTime": "2026-09-04T23:05:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": {
+        "candidates": [
+          {
+            "key": "b9-03-prepare",
+            "action": "准备",
+            "occurrence": 1,
+            "object": "场地申请包",
+            "localDisposition": "local_proposition",
+            "responseVerdict": "proposition",
+            "responseObject": "own"
+          },
+          {
+            "key": "b9-03-submit",
+            "action": "提交",
+            "occurrence": 1,
+            "object": "场地申请包",
+            "localDisposition": "needs_model",
+            "responseVerdict": "proposition",
+            "responseObject": "own"
+          }
+        ],
+        "tasks": [
+          {
+            "candidateKey": "b9-03-prepare",
+            "action": "准备",
+            "object": "场地申请包",
+            "semanticLabel": "CURRENT",
+            "selected": true
+          },
+          {
+            "candidateKey": "b9-03-submit",
+            "action": "提交",
+            "object": "场地申请包",
+            "semanticLabel": "UNKNOWN",
+            "selected": false
+          }
+        ],
+        "requiresAction": true,
+        "responseContractComplete": true,
+        "semanticCoverageComplete": true,
+        "expectedIssueCodes": [],
+        "revisionRelations": [],
+        "unresolvedRevisionScopeTexts": [],
+        "suppressedRevisionScopeTexts": []
+      }
+    },
+    {
+      "id": "rco-task-b9-04",
+      "semanticFamilyId": "empty-object-closed-set-quarantine",
+      "coverageTags": [
+        "empty_object_set",
+        "quarantine"
+      ],
+      "sourceTitle": "空对象保存要求",
+      "sourceText": "请保存。",
+      "referenceTime": "2026-09-04T23:05:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": {
+        "candidates": [
+          {
+            "key": "b9-04-save",
+            "action": "保存",
+            "occurrence": 1,
+            "object": null,
+            "localDisposition": "local_proposition",
+            "responseVerdict": "uncertain",
+            "responseObject": null
+          }
+        ],
+        "tasks": [],
+        "requiresAction": null,
+        "responseContractComplete": true,
+        "semanticCoverageComplete": false,
+        "expectedIssueCodes": [],
+        "revisionRelations": [],
+        "unresolvedRevisionScopeTexts": [],
+        "suppressedRevisionScopeTexts": []
+      }
+    },
+    {
+      "id": "rco-task-b9-05",
+      "semanticFamilyId": "same-scope-same-verb-distinct-occurrences",
+      "coverageTags": [
+        "same_action_repeated",
+        "occurrence_identity"
+      ],
+      "sourceTitle": "南北柜号核对",
+      "sourceText": "请核对北区柜号再核对南区柜号。",
+      "referenceTime": "2026-09-04T23:05:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": {
+        "candidates": [
+          {
+            "key": "b9-05-review-north",
+            "action": "核对",
+            "occurrence": 1,
+            "object": "北区柜号",
+            "localDisposition": "local_proposition",
+            "responseVerdict": "proposition",
+            "responseObject": "own"
+          },
+          {
+            "key": "b9-05-review-south",
+            "action": "核对",
+            "occurrence": 2,
+            "object": "南区柜号",
+            "localDisposition": "local_proposition",
+            "responseVerdict": "proposition",
+            "responseObject": "own"
+          }
+        ],
+        "tasks": [
+          {
+            "candidateKey": "b9-05-review-north",
+            "action": "核对",
+            "object": "北区柜号",
+            "semanticLabel": "CURRENT",
+            "selected": true
+          },
+          {
+            "candidateKey": "b9-05-review-south",
+            "action": "核对",
+            "object": "南区柜号",
+            "semanticLabel": "CURRENT",
+            "selected": true
+          }
+        ],
+        "requiresAction": true,
+        "responseContractComplete": true,
+        "semanticCoverageComplete": true,
+        "expectedIssueCodes": [],
+        "revisionRelations": [],
+        "unresolvedRevisionScopeTexts": [],
+        "suppressedRevisionScopeTexts": []
+      }
+    },
+    {
+      "id": "rco-task-b9-06",
+      "semanticFamilyId": "bad-object-response-sibling-survival",
+      "coverageTags": [
+        "bad_owned_object",
+        "sibling_survival",
+        "needs_model"
+      ],
+      "sourceTitle": "器材摘要与箱号",
+      "sourceText": "请整理器材交接摘要。核对备用箱序号。",
+      "referenceTime": "2026-09-04T23:05:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": {
+        "candidates": [
+          {
+            "key": "b9-06-prepare",
+            "action": "整理",
+            "occurrence": 1,
+            "object": "器材交接摘要",
+            "localDisposition": "local_proposition",
+            "responseVerdict": "proposition",
+            "responseObject": "own"
+          },
+          {
+            "key": "b9-06-review",
+            "action": "核对",
+            "occurrence": 1,
+            "object": "备用箱序号",
+            "localDisposition": "needs_model",
+            "responseVerdict": "proposition",
+            "responseObject": "b9-06-prepare"
+          }
+        ],
+        "tasks": [
+          {
+            "candidateKey": "b9-06-prepare",
+            "action": "整理",
+            "object": "器材交接摘要",
+            "semanticLabel": "CURRENT",
+            "selected": true
+          }
+        ],
+        "requiresAction": true,
+        "responseContractComplete": false,
+        "semanticCoverageComplete": false,
+        "expectedIssueCodes": [
+          "OBJECT_CANDIDATE_INVALID"
+        ],
+        "revisionRelations": [],
+        "unresolvedRevisionScopeTexts": [],
+        "suppressedRevisionScopeTexts": []
+      }
+    },
+    {
+      "id": "rco-task-b9-07",
+      "semanticFamilyId": "uncertain-membership-blocks-old-process-revision",
+      "coverageTags": [
+        "needs_model",
+        "historical",
+        "revision_quarantine"
+      ],
+      "sourceTitle": "旧门签流程归属不明",
+      "sourceText": "档案载明旧流程要求保存红色门签。核对蓝色门签是否属于该流程尚未说明。该流程后来作废。",
+      "referenceTime": "2026-09-04T23:05:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": {
+        "candidates": [
+          {
+            "key": "b9-07-save-red",
+            "action": "保存",
+            "occurrence": 1,
+            "object": "红色门签",
+            "localDisposition": "local_proposition",
+            "responseVerdict": "proposition",
+            "responseObject": "own"
+          },
+          {
+            "key": "b9-07-review-blue",
+            "action": "核对",
+            "occurrence": 1,
+            "object": "蓝色门签是否属于该流程尚未说明",
+            "localDisposition": "needs_model",
+            "responseVerdict": "uncertain",
+            "responseObject": null
+          }
+        ],
+        "tasks": [
+          {
+            "candidateKey": "b9-07-save-red",
+            "action": "保存",
+            "object": "红色门签",
+            "semanticLabel": "HISTORICAL",
+            "selected": false
+          }
+        ],
+        "requiresAction": false,
+        "responseContractComplete": true,
+        "semanticCoverageComplete": false,
+        "expectedIssueCodes": [],
+        "revisionRelations": [],
+        "unresolvedRevisionScopeTexts": [
+          "该流程后来作废。"
+        ],
+        "suppressedRevisionScopeTexts": [
+          "该流程后来作废。"
+        ]
+      }
+    },
+    {
+      "id": "rco-task-b9-08",
+      "semanticFamilyId": "resolved-rule-amendment-with-independent-current-save",
+      "coverageTags": [
+        "historical",
+        "resolved_amendment",
+        "local_revision_window"
+      ],
+      "sourceTitle": "路线规则修订与门岗记录",
+      "sourceText": "旧规则要求发送东组路线表。该规则调整为上传西组值守表。请保存今日门岗记录。",
+      "referenceTime": "2026-09-04T23:05:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": {
+        "candidates": [
+          {
+            "key": "b9-08-send-east",
+            "action": "发送",
+            "occurrence": 1,
+            "object": "东组路线表",
+            "localDisposition": "local_proposition",
+            "responseVerdict": "proposition",
+            "responseObject": "own"
+          },
+          {
+            "key": "b9-08-upload-west",
+            "action": "上传",
+            "occurrence": 1,
+            "object": "西组值守表",
+            "localDisposition": "local_proposition",
+            "responseVerdict": "proposition",
+            "responseObject": "own"
+          },
+          {
+            "key": "b9-08-save-today",
+            "action": "保存",
+            "occurrence": 1,
+            "object": "今日门岗记录",
+            "localDisposition": "local_proposition",
+            "responseVerdict": "proposition",
+            "responseObject": "own"
+          }
+        ],
+        "tasks": [
+          {
+            "candidateKey": "b9-08-send-east",
+            "action": "发送",
+            "object": "东组路线表",
+            "semanticLabel": "SUPERSEDED",
+            "selected": false
+          },
+          {
+            "candidateKey": "b9-08-upload-west",
+            "action": "上传",
+            "object": "西组值守表",
+            "semanticLabel": "CURRENT",
+            "selected": false
+          },
+          {
+            "candidateKey": "b9-08-save-today",
+            "action": "保存",
+            "object": "今日门岗记录",
+            "semanticLabel": "CURRENT",
+            "selected": true
+          }
+        ],
+        "requiresAction": true,
+        "responseContractComplete": true,
+        "semanticCoverageComplete": true,
+        "expectedIssueCodes": [],
+        "revisionRelations": [
+          {
+            "kind": "amends",
+            "targetCandidateKey": "b9-08-send-east",
+            "replacementCandidateKeys": [
+              "b9-08-upload-west"
+            ],
+            "evidenceScopeTexts": [
+              "旧规则要求发送东组路线表。",
+              "该规则调整为上传西组值守表。"
+            ],
+            "resolution": "adjacent_unique_referent"
+          }
+        ],
+        "unresolvedRevisionScopeTexts": [],
+        "suppressedRevisionScopeTexts": []
+      }
+    },
+    {
+      "id": "rco-task-b9-09",
+      "semanticFamilyId": "out-of-vocabulary-temperature-transcription",
+      "coverageTags": [
+        "out_of_vocabulary",
+        "requires_action_unknown"
+      ],
+      "sourceTitle": "会场温度抄录",
+      "sourceText": "请抄录会场温度。",
+      "referenceTime": "2026-09-04T23:05:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": {
+        "candidates": [],
+        "tasks": [],
+        "requiresAction": null,
+        "responseContractComplete": true,
+        "semanticCoverageComplete": false,
+        "expectedIssueCodes": [],
+        "revisionRelations": [],
+        "unresolvedRevisionScopeTexts": [],
+        "suppressedRevisionScopeTexts": []
+      }
+    },
+    {
+      "id": "rco-task-b9-10",
+      "semanticFamilyId": "document-title-needs-model-mention-plus-fire-door-review",
+      "coverageTags": [
+        "needs_model",
+        "mention_only",
+        "separate_scope_decoy"
+      ],
+      "sourceTitle": "标题文字与消防门检查",
+      "sourceText": "资料标题是“上传调试包”。请检查消防门编号。",
+      "referenceTime": "2026-09-04T23:05:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": {
+        "candidates": [
+          {
+            "key": "b9-10-upload-decoy",
+            "action": "上传",
+            "occurrence": 1,
+            "object": "调试包",
+            "localDisposition": "needs_model",
+            "responseVerdict": "mention_only",
+            "responseObject": null
+          },
+          {
+            "key": "b9-10-review-door",
+            "action": "检查",
+            "occurrence": 1,
+            "object": "消防门编号",
+            "localDisposition": "local_proposition",
+            "responseVerdict": "proposition",
+            "responseObject": "own"
+          }
+        ],
+        "tasks": [
+          {
+            "candidateKey": "b9-10-review-door",
+            "action": "检查",
+            "object": "消防门编号",
+            "semanticLabel": "CURRENT",
+            "selected": true
+          }
+        ],
+        "requiresAction": true,
+        "responseContractComplete": true,
+        "semanticCoverageComplete": true,
+        "expectedIssueCodes": [],
+        "revisionRelations": [],
+        "unresolvedRevisionScopeTexts": [],
+        "suppressedRevisionScopeTexts": []
+      }
+    },
+    {
+      "id": "rco-task-b9-11",
+      "semanticFamilyId": "relative-clause-action-contained-in-object",
+      "coverageTags": [
+        "relative_clause",
+        "object_fidelity",
+        "local_non_task"
+      ],
+      "sourceTitle": "晚班记录保存",
+      "sourceText": "请保存已经检查的晚班记录。",
+      "referenceTime": "2026-09-04T23:05:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": {
+        "candidates": [
+          {
+            "key": "b9-11-save",
+            "action": "保存",
+            "occurrence": 1,
+            "object": "已经检查的晚班记录",
+            "localDisposition": "local_proposition",
+            "responseVerdict": "proposition",
+            "responseObject": "own"
+          },
+          {
+            "key": "b9-11-review-contained",
+            "action": "检查",
+            "occurrence": 1,
+            "object": "的晚班记录",
+            "localDisposition": "local_non_task",
+            "responseVerdict": "mention_only",
+            "responseObject": null
+          }
+        ],
+        "tasks": [
+          {
+            "candidateKey": "b9-11-save",
+            "action": "保存",
+            "object": "已经检查的晚班记录",
+            "semanticLabel": "CURRENT",
+            "selected": true
+          }
+        ],
+        "requiresAction": true,
+        "responseContractComplete": true,
+        "semanticCoverageComplete": true,
+        "expectedIssueCodes": [],
+        "revisionRelations": [],
+        "unresolvedRevisionScopeTexts": [],
+        "suppressedRevisionScopeTexts": []
+      }
+    },
+    {
+      "id": "rco-task-b9-12",
+      "semanticFamilyId": "distant-condition-fact-blocked-by-ui-scope",
+      "coverageTags": [
+        "condition_unknown",
+        "adjacency_boundary",
+        "external_effect"
+      ],
+      "sourceTitle": "门卡异常联系",
+      "sourceText": "若门卡颜色异常，请联系服务席。页面按钮名为“返回”。当前门卡颜色异常。",
+      "referenceTime": "2026-09-04T23:05:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": {
+        "candidates": [
+          {
+            "key": "b9-12-contact",
+            "action": "联系",
+            "occurrence": 1,
+            "object": "服务席",
+            "localDisposition": "local_proposition",
+            "responseVerdict": "proposition",
+            "responseObject": "own"
+          }
+        ],
+        "tasks": [
+          {
+            "candidateKey": "b9-12-contact",
+            "action": "联系",
+            "object": "服务席",
+            "semanticLabel": "CONDITION_UNKNOWN",
+            "selected": false
+          }
+        ],
+        "requiresAction": null,
+        "responseContractComplete": true,
+        "semanticCoverageComplete": true,
+        "expectedIssueCodes": [],
+        "revisionRelations": [],
+        "unresolvedRevisionScopeTexts": [],
+        "suppressedRevisionScopeTexts": []
+      }
+    }
+  ]
+}
