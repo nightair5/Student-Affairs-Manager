@@ -965,3 +965,19 @@
 - forbidden: 修改既有保护件、模型/Secret/网络、稳定路径、RCO-6、浏览器验收和部署。
 - accounting_at_start: `model_calls=0 / network=0 / repair=0 / retry=0 / secret_access=NONE`。
 - status: `AUTHORIZED / P2 IN_PROGRESS / B4 BLOCKED_BY_P2 / PAID MODEL BLOCKED / DO_NOT_LAUNCH`。
+
+## 46. RCO-5-007-P2 实现、B4 首次门与工程失败裁定 — 2026-09-04
+
+- p2_implementation: 新增隔离 `task-formation-policy-2.2.0-p2`。条件先比较完整命题关系；合法原文 action surface 不被 actionType/effect 改写；actor 只取命令标记前显式主语；历史命令与当前 cancelled/superseded 分层。
+- initial_adversarial_failure: 首轮 8 项定向测试有 1 项失败；“没有获得资格”因先做包含判断被误作条件成立。修正为先判断对完整命题的显式否定，再判断肯定同一命题；最终 8/8 PASS。
+- seen_b3_replay: 16/16 contract valid；Task P/R/F1、requiresAction、semantic fields、boundary、Complete、Safe Default 均 100%，Major=0、Forbidden=0。只属已见 B3 故障回归，不是泛化。
+- p2_freeze: P2 代码、测试、B3 回归与传递依赖共 14 路径 SHA-256 冻结；完整性 3/3；实现 commit `d92b621` 已推送。稳定路径无 P2 import。
+- b4_prefreeze: P2 冻结后才创建 B4；16 个匿名合成 Codex-authored Development、23 指令、5 观察，与 B0–B3 的 source/family 不重复，逐例 bigram Jaccard <0.55；7/7 数据测试和 8 路径 freeze 通过，commit `fc2aeb7` 推送后才首次运行。
+- b4_first_run: 16/16 可评分；Task P/R/F1 `100%/100%/100%`，requiresAction `100%`，semantic fields `97.52%`，boundary `100%`，Complete `93.75%`，Major `6.25%`，Safe Default `100%`，Forbidden `0`。模型/网络/Repair/retry/Secret=`0/0/0/0/NONE`。
+- known_quality_limit: B4-07 的“此前通知……停止执行”未进入修订识别，留下一个未选陈旧外发任务，语义错 4 字段；不造成默认危险，但产生删除成本。
+- engineering_stop: 最终 lint 与 `npm test` 通过（Vitest `573 passed / 1 live OCR skipped`，另 server 8、Worker 25、time parity 1、multimodal evaluator 23、Functions 5）；`npm run build` 因冻结 B4 数据测试的 `revisionRefs: []` tuple 声明与 JSON 一般数组触发 TypeScript `TS2352` 而失败。
+- freeze_rule_application: 该测试已在 B4 首次运行前进入 freeze；按“任一冻结 hash 变化 STOP”，本轮没有修复或重跑 B4。oracle quality 保留 PASS，但 overall gate 降级 FAIL，付费模型继续阻塞。
+- independent_checks: B4/P2/result node 完整性 `12/12 PASS`；security scan `477 files PASS`；npm audit 在官方 advisory endpoint 网络超时，`NOT_COMPLETED_EXTERNAL_NETWORK`。build 未过，不得表述为工程完成。
+- protected_boundary: 未修改 P1/P2 freeze、B3/B4 dataset/Expected/data freeze 或任何既有 checkpoint/cache；未接稳定路径、未调用模型、未启动 RCO-6 或部署。结果/失败状态 commit `441285f` 已推送。
+- decision: `RCO-5-007-P2/B4 CLOSED_WITH_ENGINEERING_FAILURE / B4 ORACLE QUALITY PASS / OVERALL INVALID / PAID MODEL BLOCKED / RCO-6 BLOCKED / DO_NOT_LAUNCH`。
+- next_step: `NONE / WAIT_AUTHORIZATION`。若继续，先授权类型夹具修复与已见 B4 回归，再新建 B5 首次零调用门；B5 同时通过质量和工程门后才可另行申请付费模型测试。

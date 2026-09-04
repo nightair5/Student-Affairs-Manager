@@ -8,8 +8,8 @@
 
 ## Current Authority
 
-- current_status: `RCO-5-007-P2 AUTHORIZED / STRUCTURED SEMANTICS AND B4 ZERO-CALL PATH IN_PROGRESS / PAID MODEL BLOCKED / RCO-6 BLOCKED / DO_NOT_LAUNCH`
-- current_authorization: 新建隔离 P2，结构化处理完整条件命题、动作保真、显式主体和修订状态；用已见 B3 回归，通过后创建并冻结全新 B4，再只运行一次零调用盲测。
+- current_status: `RCO-5-007-P2/B4 CLOSED_WITH_ENGINEERING_FAILURE / B4 ORACLE QUALITY PASS BUT OVERALL INVALID / PAID MODEL BLOCKED / RCO-6 BLOCKED / DO_NOT_LAUNCH`
+- authorization_completed: 新建并冻结隔离 P2；完成已见 B3 满分回归；先冻结全新 B4 后完成唯一一次零调用盲测和对抗审查。B4 质量门通过，但全量 build 发现冻结测试的 TS2352，按预登记规则总体失败。
 - model/network/repair/retry/secret: `0 / 0 / 0 / 0 / NONE`
 - protected: 既有 Expected、freeze、dataset、checkpoint、cache；稳定路径、RC.4、Release、Production 均未修改。
 - not_authorized: 修改 P1/B3 或任何既有 Expected/freeze/dataset/checkpoint/cache；模型/Secret/网络；真实材料、真人研究、浏览器验收、RCO-6、稳定路径接入、Preview/Production 部署。
@@ -19,7 +19,7 @@
 
 - repository: `C:\Users\Winner\student-affairs-multimodal-exp`
 - branch: `codex/e2-multimodal-recognition-exp`
-- last_experiment_commit: `d1b581f`，已推送；恢复时重新核对 HEAD/upstream/worktree。
+- last_experiment_commit: `441285f`，已推送；恢复时重新核对 HEAD/upstream/worktree。
 - production/default path: 不变；仍为本机解析/OCR → 用户核对文字 → 只发送文字。
 - multimodal: 仍是独立实验 Preview；RCO-6 未启动。
 
@@ -65,6 +65,15 @@
 - 结构性原因：条件事实仍被“无”字误作否定；受控 actionType 反向改写原文动作；对象里的“成员”污染主体；旧要求修订状态与命令时态/极性没有完全分层。一处群体默认标签存在单作者口径争议，但即使按最有利敏感性处理，Complete 仍只有 75%，requiresAction 仍只有 93.75%，不改变失败。
 - 本轮模型/网络/Repair/retry/Secret 为 `0/0/0/0/NONE`；这不是模型正确率、真实材料、真人效率、浏览器或上线证据。
 
+### P2 与 B4
+
+- P2 `task-formation-policy-2.2.0-p2` 把完整条件命题、原文动作 surface、受控 actionType/effect、显式主体证据和修订状态分层；只存在于隔离测试/runner，未接稳定路径。
+- P2 定向/变形测试 8/8；已见 B3 回归所有主要指标 100%、Major=0、Forbidden=0。P2 组件 14 路径冻结于 commit `d92b621`。
+- B4 在 commit `fc2aeb7` 先冻结并推送，再唯一运行一次。16/16 可评分；Task P/R/F1 100%，requiresAction 100%，semantic fields 97.52%，boundary 100%，Complete 93.75%，Major 6.25%，Safe Default 100%，Forbidden 0。
+- B4-07 的“此前通知……停止执行”仍留下一个未勾选的陈旧外发任务；安全不退化，但会增加删除成本，后续必须单报 revision 与 stale-task 指标。
+- 全量 `npm test` 通过（Vitest 573 passed / 1 live OCR skipped，另 server 8、Worker 25、time parity 1、multimodal evaluator 23、Functions 5），lint 通过；但 `npm run build` 在冻结的 `taskFormationB4Dataset.test.ts` 报 TS2352：`revisionRefs` 被声明为空 tuple，JSON 推断为一般数组。
+- 该测试已进入 B4 首次运行前 freeze，不能事后修改再把 B4 说成有效未见通过。因此 oracle quality=`PASS`，overall=`FAIL`，付费模型继续阻塞。security scan 477 files PASS；npm audit 官方 endpoint 网络超时。
+
 ### 完整性与工程门
 
 - B2 原冻结的 12 个组件仍逐项 SHA-256 匹配；P1 组件冻结另绑定 16 个计划、代码、测试、runner、结果和依赖路径。
@@ -87,17 +96,20 @@
 - P1 result/report/audit: `docs/recognition-optimization/rco-5-007-p1-b2-replay/`
 - B3 data/result freeze: `docs/recognition-optimization/RCO-5-007-B3_DATA_FREEZE.json` and `RCO-5-007-B3_RESULT_FREEZE.json`
 - B3 result/report/audit: `docs/recognition-optimization/rco-5-007-b3-oracle/`
+- P2 component freeze/result: `docs/recognition-optimization/RCO-5-007-P2_COMPONENT_FREEZE.json` and `rco-5-007-p2-b3-replay/`
+- B4 data/result freeze: `docs/recognition-optimization/RCO-5-007-B4_DATA_FREEZE.json` and `RCO-5-007-B4_RESULT_FREEZE.json`
+- B4 result/report/audit/status: `docs/recognition-optimization/rco-5-007-b4-oracle/`
 - append-only history: `docs/recognition-optimization/OPTIMIZATION_LOG.md`
 
 ## First-Principles Interpretation
 
-B3 证明 P1 的安全底线仍在，但商业主线“完整且少改”没有过门。即使上游模型给出完美 scope/action/object，当前本机层仍会在条件、动作保真、主体和修订语义上制造重要修改；此时付费测模型只会把上游误差叠加到已知本机瓶颈上。
+P2 的机制改造让理想上游输入在新 B4 上跨过质量门，说明主线方向有效；但冻结测试自身不能通过正式构建，实验整体仍不可晋级。工程可复现性与质量分数同属门槛，不能选一个好看的结果忽略另一个。
 
 ## Current Gate / Next Action
 
-- gate: `P2 IMPLEMENTATION AND SEEN-B3 REGRESSION IN_PROGRESS / B4 BLOCKED UNTIL P2 FREEZE / PAID MODEL BLOCKED`
-- next: 先完成并冻结 P2 与 B3 满分故障回归；只有该门通过，才创建全新 B4 并执行一次零调用盲测。
-- after_b4: 只有 B4 通过后，才能另行批准同模型、固定调用数与人民币上限的付费配对测试。
+- gate: `B4 ORACLE QUALITY PASS / ENGINEERING BUILD FAIL / OVERALL FAIL / PAID MODEL BLOCKED`
+- next: 等待另行授权：只修复 B4 测试的类型声明，用已见 B4 做回归并重新通过 lint/test/build/security；随后必须创建全新 B5 并做一次零调用门，不能重跑 B4 冒充未见。
+- after_b5: 只有 B5 质量与工程门同时通过后，才能另行批准固定模型、调用数、人民币上限和 revision/stale-task 指标的付费测试。
 - promotion rule: 付费新数据仍稳定提升且 Forbidden=0，才可申请 RCO-6；之后仍需真实去标识材料、真人修改时间、Chrome/Edge/手机、隐私安全和 Commercial Preview，才能讨论上线。
 
 ## Recovery
@@ -105,4 +117,4 @@ B3 证明 P1 的安全底线仍在，但商业主线“完整且少改”没有�
 1. 读根 `AGENTS.md`、`PRD.md`、本文件和日志最后两节。
 2. 重新核对 branch、HEAD、upstream、worktree；任何差异先当用户资产。
 3. 只读取当前任务必要文件；大结果用路径、哈希、计数和结论，不灌入上下文。
-4. B3 授权已关闭且首次门失败；未有新授权时不得修改 P1/B3、创建 B4、调用模型、启动 RCO-6 或部署。
+4. P2/B4 授权已关闭；未有新授权时不得修改冻结 B4 测试、创建 B5、调用模型、启动 RCO-6 或部署。
