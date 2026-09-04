@@ -1056,3 +1056,19 @@
 - evidence_boundary: 本轮只建立本机 P3 在理想上游锚点下的新数据证据；不代表 DeepSeek/OCR/图片/文件正确率，也没有真实材料、真人修改时间、浏览器、隐私安全验收或商业上线证据。
 - decision: `RCO-5-007-P3/B6 COMPLETE / B6 FIRST-RUN LOCAL PASS / ELIGIBLE_TO_REQUEST_SEPARATE_PAID_MODEL_TEST / PAID RUN NOT_AUTHORIZED / RCO-6 BLOCKED / DO_NOT_LAUNCH`。
 - next_step: `NONE / WAIT_AUTHORIZATION`。若继续，应先新冻一批不复用 B6 的匿名数据，用指定模型只选择 scope/action/object，再送入冻结 P3；必须预锁调用次数、人民币上限、无 Repair/retry 和完整失败停止条件。
+
+## 53. RCO-5-007-B7 模型锚点数据、契约与付费参数预冻结 — 2026-09-04
+
+- authorization_interpretation: 用户要求冻结全新数据，让 `deepseek-v4-flash-vision-exp` 只选择 scope/action/object 并接入冻结 P3，同时要求运行前锁定调用次数、人民币上限和停止条件。因消息未明确给出金额与次数，本阶段只执行 0 调用的数据/契约冻结，付费 dispatch 等待再次明确确认。
+- primary_claim: 单独检验模型能否从 sourceText + immutable scope catalog 找对完整命题范围、原文动作和原文对象；模型不得决定语义、风险、requiresAction、修订关系或 selected。
+- proposed_paid_parameters: 12 案例 × candidate 1 次，maximum dispatches 12；model `deepseek-v4-flash-vision-exp`；temperature 0、thinking none、Repair 0、retry 0、verifier 0；32,768 request bytes/call、3,000 output tokens/call、CNY hard cap 10。以上已预注册但未获得明确付费授权。
+- stop_policy: 冻结漂移、Secret/模型/请求泄漏/费用包络异常在调用前停止；unknown receipt、非 2xx、认证/余额/限流/模型错误立即停止余下 dispatch；HTTP 成功但 Schema/绑定失败不修复不重试，继续其余案例但整轮结构门失败。
+- contract: 新增 `model-anchor-selection-1.0.0` 严格 JSON Schema；只允许来源绑定、directive scope IDs、action/object 引用和 ignored scope IDs。composer 只生成 reduced anchors，再由冻结 P3 形成所有本机权威字段。
+- adversarial_failure_1: 首轮契约测试把动作“保存”因对象“核对记录”错误分类成 review；修为动作表面词优先、对象仅在动作未知时兜底，并保留回归测试。
+- prefreeze_label_correction: B7-07 的状态 scope“现变更为”没有明示 referent type，人工 Expected 从“任务”纠正为 null；B7-08 原设计的“要求/安排”可被类型消歧，改为两个同类型“要求”后才构成真实 unresolved。两项均发生在冻结/模型调用前。
+- data: 12 个全新匿名合成 Codex-authored Development、18 个动作锚点；source text/semantic family 不复用 B0–B6，逐例 bigram Jaccard <0.55；不是独立人工 GT、真实材料或 Holdout。
+- p3_oracle_preflight: 理想锚点 12/12 selection valid、12/12 P3 contract valid、12/12 Complete Task Case；cancels/supersedes/amends 各 1 条和 unresolved 1 条均精确。
+- fixed_quality_gate: 12/12 明确终态与严格 Schema；scope F1≥90%、action/object exact 各≥90%、complete anchor≥80%；P3 Task F1≥90%、requiresAction≥95%、Complete≥80%、Forbidden=0；修订三类、旧要求失效、新要求生效、unresolved 各100%，stale/selected stale=0。
+- engineering: B7 定向契约/数据 10/10、B7 freeze 3/3、P3/B6 保护完整性 6/6；全量 lint PASS，Vitest `607 passed / 1 live OCR skipped`，另 server 8、Worker 25、time parity 1、multimodal evaluator 23、RCO base integrity 4、Functions 5；build PASS，security scan `543 files` PASS；保留既有 >500 kB chunk warning。
+- accounting: model/network/Repair/retry/Secret=`0/0/0/0/NONE`；runner/checkpoint 尚未创建；P3/B6 和既有 Expected/freeze/dataset/checkpoint/cache 未改，稳定路径/RCO-6/部署未触碰。
+- status: `B7 DATA_CONTRACT_P3_CEILING FROZEN_IN_THIS_COMMIT / PAID RUN NOT_AUTHORIZED / WAIT_EXPLICIT_MAX_12_CALLS_AND_10_CNY_APPROVAL / DO_NOT_LAUNCH`。

@@ -8,11 +8,11 @@
 
 ## Current Authority
 
-- current_status: `RCO-5-007-P3/B6 COMPLETE / B6 FIRST-RUN LOCAL GATE PASS / PAID MODEL TEST ELIGIBLE_BUT_NOT_AUTHORIZED / RCO-6 BLOCKED / DO_NOT_LAUNCH`
-- current_authorization: 已完成隔离本机修订关系解析器、已见 B5 回归、P3 冻结和全新 B6 唯一首次零调用门；当前没有继续付费模型、RCO-6、稳定接入或部署的授权。
+- current_status: `RCO-5-007-B7 DATA/CONTRACT FROZEN / PROPOSED 12 CALLS AND 10 CNY NOT_YET_AUTHORIZED / RCO-6 BLOCKED / DO_NOT_LAUNCH`
+- current_authorization: 仅完成全新 B7 匿名数据、模型锚点选择契约、冻结 P3 理想上限和付费参数预注册；尚未获得“最多 12 次、人民币硬上限 10 元”的明确付费调用授权。
 - model/network/repair/retry/secret: `0 / 0 / 0 / 0 / NONE`
 - protected: 既有 Expected、freeze、dataset、checkpoint、cache；稳定路径、RC.4、Release、Production 均未修改。
-- not_authorized: 修改 P2/P3、B5/B6 Expected/dataset/freeze/result 或任何既有 checkpoint/cache；模型/Secret/实验网络；真实材料、真人研究、浏览器验收、RCO-6、稳定路径接入、Preview/Production 部署。
+- not_authorized: 修改 P2/P3、B5/B6 或冻结后的 B7 Expected/dataset/freeze、任何既有 checkpoint/cache；当前模型/Secret/实验网络；真实材料、真人研究、浏览器验收、RCO-6、稳定路径接入、Preview/Production 部署。
 - authority_rule: 新阶段、付费调用、真实数据、浏览器验收和部署分别需要当前用户明确授权；旧授权不自动续用。
 
 ## Workspace
@@ -99,6 +99,14 @@
 - cancels/supersedes/amends 精确率各 100%；旧要求完整失效、新要求生效、歧义保持未解析、修订整例均 100%；stale=0、selected stale=0。
 - 结果是 `PASS_LOCAL_P3_ONLY`：只证明 Expected-derived 理想 scope/action/object 锚点进入 P3 后的本机上限，不是模型、OCR、图片/文件、真实材料、真人修改时间、浏览器或上线证据。
 - 下一步仅具备“另行申请付费上游模型测试”的资格；当前没有付费授权，RCO-6、稳定路径和部署继续阻塞。
+
+### B7 模型 scope/action/object 数据与契约冻结
+
+- 新建 12 个匿名合成 Development 案例、18 个期望动作锚点；与 B0–B6 source/family 不重复，逐例 bigram Jaccard <0.55，DeepSeek 尚未见。
+- 模型输出被缩到 scope ID、原文 action/object surface 和 ignored scope；严格 Schema 不含 requiresAction、semantics、effect、actionType、revisionRefs 或 selected。
+- 本机 composer 采用“动作表面词优先、对象仅兜底”的受控分类，再交给冻结 P3；预冻结对抗测试发现并修复了对象“核对记录”污染“保存”分类的问题。
+- P3 理想锚点上限 12/12 合同有效、12/12 Complete Task Case，3 条明确修订关系与 1 条 unresolved 均精确；因此后续真实失败可主要定位到模型锚点选择。
+- 拟议但未授权的 M1：`deepseek-v4-flash-vision-exp`，每案 1 次、最多 12 次、temperature 0、thinking none、Repair/retry 0、人民币硬上限 10 元；无 verifier。
 
 ### 完整性与工程门
 
