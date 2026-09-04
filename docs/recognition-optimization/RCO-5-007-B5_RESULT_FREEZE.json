@@ -1,0 +1,90 @@
+{
+  "schemaVersion": "rco-5-007-b5-result-freeze-1.0.0",
+  "stage": "RCO-5-007-B5-FIRST-ORACLE",
+  "status": "FIRST_RUN_FAIL_NOW_SEEN_DEVELOPMENT",
+  "frozenAt": "2026-09-04T21:03:00+08:00",
+  "authorizationId": "RCO-5-007-P2-E1/B5",
+  "datasetId": "rco-5-007-b5-challenge-20260904",
+  "firstRunAgainstFrozenCommit": "578d2a3789eaa4f7af252b7587e3b0414ead1746",
+  "componentPaths": [
+    "docs/recognition-optimization/RCO-5-007-B5_DATA_FREEZE.json",
+    "scripts/run-rco-5-007-b5-oracle.ts",
+    "docs/recognition-optimization/rco-5-007-b5-oracle/result.json",
+    "docs/recognition-optimization/rco-5-007-b5-oracle/REPORT.md",
+    "docs/recognition-optimization/rco-5-007-b5-oracle/ADVERSARIAL_AUDIT.md",
+    "docs/recognition-optimization/rco-5-007-b5-oracle/EXECUTION_STATUS.md",
+    "scripts/rco-5-007-b5-oracle.node-test.mjs"
+  ],
+  "componentSha256": {
+    "docs/recognition-optimization/RCO-5-007-B5_DATA_FREEZE.json": "a694032654750318c6fec9ffb66291bddb2923dc5c3a2580b4847514c6d193f1",
+    "scripts/run-rco-5-007-b5-oracle.ts": "b8e3825ff28f893584eacd27138fbeee78ff582ef2051c6074da187c287c6ef3",
+    "docs/recognition-optimization/rco-5-007-b5-oracle/result.json": "d0eb203185eadbfc46121ee8ce1e2aa15ecebf92d2d8e25f42bb2b90c533134e",
+    "docs/recognition-optimization/rco-5-007-b5-oracle/REPORT.md": "f8da94b69e24a8267cf6cad42e10d847d0663cacde5bf4f03444fc46a428ebd2",
+    "docs/recognition-optimization/rco-5-007-b5-oracle/ADVERSARIAL_AUDIT.md": "b8db53afa507c514ce32066bb6cc08218791e265daa60d4c64e6397f8758f46e",
+    "docs/recognition-optimization/rco-5-007-b5-oracle/EXECUTION_STATUS.md": "4fe474f46e85397a0ecee39e1b10dbd60c069c9b120ed53f12b6414dfe784e0a",
+    "scripts/rco-5-007-b5-oracle.node-test.mjs": "1555a9fc0674765ceb619d451da4101dc9461cd3f8a3e802550ade3f8729b44b"
+  },
+  "accounting": {
+    "modelCalls": 0,
+    "networkRequests": 0,
+    "repairCalls": 0,
+    "retryCalls": 0,
+    "secretAccess": "NONE"
+  },
+  "metrics": {
+    "caseCount": 16,
+    "scoreableCases": 16,
+    "taskPrecision": 1,
+    "taskRecall": 1,
+    "taskF1": 1,
+    "requiresActionAccuracy": 1,
+    "semanticFieldAccuracy": 0.9751552795031055,
+    "exactTaskBoundaryAccuracy": 1,
+    "completeTaskCaseAccuracy": 0.9375,
+    "majorCorrectionRate": 0.0625,
+    "safeDefaultRecall": 1,
+    "forbiddenDefaultSelections": 0
+  },
+  "revisionMetrics": {
+    "revisionCaseCount": 2,
+    "revisionCaseCompleteAccuracy": 0.5,
+    "supersededTaskExactAccuracy": 0.5,
+    "activeReplacementRecall": 1,
+    "staleTaskCount": 1,
+    "selectedStaleTaskCount": 0,
+    "staleTasks": [
+      {
+        "caseId": "rco-task-b5-08",
+        "action": "发送",
+        "object": "宿舍分配表",
+        "selected": false,
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        }
+      }
+    ]
+  },
+  "qualityGate": "FAIL",
+  "engineeringGate": {
+    "lint": "PASS",
+    "test": "PASS_580_PLUS_1_LIVE_OCR_SKIPPED",
+    "build": "PASS_WITH_EXISTING_CHUNK_WARNING",
+    "securityScan": "PASS_504_FILES"
+  },
+  "overallGate": "FAIL",
+  "decision": "B5_ORACLE_FAIL_P2_GENERALIZATION_NOT_ESTABLISHED_PAID_MODEL_BLOCKED",
+  "rootCause": "P2 uses lexical co-occurrence for revision instead of a locally constructed referential relation from the revocation proposition to the superseded directive.",
+  "protectedMutation": "NONE_AFTER_B5_FREEZE",
+  "rerunAuthorized": false,
+  "paidRunAuthorized": false,
+  "stablePath": "UNCHANGED",
+  "rco6": "BLOCKED",
+  "deployment": "NOT_RUN",
+  "nextAuthorization": "LOCAL_REVISION_RELATION_RESOLVER_SEEN_B5_REGRESSION_THEN_NEW_B6_ZERO_CALL_GATE"
+}

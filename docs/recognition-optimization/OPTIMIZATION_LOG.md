@@ -992,3 +992,27 @@
 - forbidden: 模型/Secret/网络、既有 checkpoint/cache、稳定路径、RCO-6 和部署。
 - accounting_at_start: `model_calls=0 / network=0 / repair=0 / retry=0 / secret_access=NONE`。
 - status: `AUTHORIZED / E1 IN_PROGRESS / B5 BLOCKED / PAID MODEL BLOCKED / DO_NOT_LAUNCH`。
+
+## 48. RCO-5-007-P2-E1 类型等价修补封存 — 2026-09-04
+
+- correction: B4 数据测试中的 `revisionRefs: []` 仅改为 `ScopeReferenceDirective['revisionRefs']` 类型；运行时仍输出空数组。修补前后 TypeScript 转译 JavaScript SHA-256 均为 `d1ebd153...3c62`，`runtimeEquivalent=true`。
+- protection: 原 B4 freeze SHA 不变，唯一允许漂移是该测试类型声明；B4 dataset、Expected、P2、评分器和其他冻结组件均保持原 SHA。
+- seen_b4_replay: 16 个案例逐例 prediction/score 与原结果完全一致；所有指标逐项相等。分类严格为已见 B4 回归，不重新声称未见。
+- engineering: lint PASS；Vitest `573 passed / 1 live OCR skipped`，另 server 8、Worker 25、time parity 1、multimodal evaluator 23、RCO-5-007 integrity 4、Functions 5；build PASS；security scan 486 files PASS。保留既有 >500 kB chunk warning。
+- accounting: 模型/实验网络/Repair/retry/Secret=`0/0/0/0/NONE`；稳定路径、RCO-6 和部署未触碰。
+- freeze/commit: E1 12 路径冻结；提交 `6c025c4` 已推送。
+- decision: `E1 TECHNICAL_PASS / ELIGIBLE_TO_CREATE_AND_FREEZE_NEW_B5_ONLY`。
+
+## 49. RCO-5-007-B5 首次零调用门失败与封存 — 2026-09-04
+
+- prefreeze: 仅在 E1 提交推送后创建 B5。首次自检发现引号前说明与引文被 scope index 分成两段；在冻结和运行 P2 前把 Expected 证据范围改为实际两段，不改变语义。最终 7/7 数据测试通过。
+- data: 16 个全新匿名合成 Codex-authored Development、23 个指令、5 个观察、2 个 requiresAction=false、2 个修订案例；与 B0–B4 原文/语义家族不重复，逐例 bigram Jaccard <0.55。不是独立人工 GT、真实材料或 Holdout。
+- pre_run_freeze: 数据、Expected、生成器、测试、E1/P2 freeze、评分器和契约共 9 路径 SHA-256 绑定；提交 `578d2a3` 已推送后才运行 P2。
+- first_and_only_run: 冻结 P2 只运行一次 Expected-derived 理想 scope/action/object 锚点，B5 随即转为已见。模型/实验网络/Repair/retry/Secret=`0/0/0/0/NONE`。
+- metrics: 16/16 可评分；Task P/R/F1 100%，requiresAction 100%，semantic fields 97.52%，boundary 100%，Complete 93.75%，Major 6.25%，Safe Default 100%，Forbidden 0。
+- revision_gate: 修订案例整例 50%，旧要求完整失效表达 50%，新要求生效召回 100%，陈旧任务 1，被默认勾选的陈旧任务 0。预登记要求旧要求完整失效 100%，因此总体 FAIL。
+- root_cause: P2 仍用历史词和撤销词的封闭共现推断修订，没有解析“该规定”指向哪条旧指令，也没有构造 `cancels/supersedes/amends` 关系。继续补“先前”等同义词无法根治开放语言。
+- engineering: lint PASS；Vitest `580 passed / 1 live OCR skipped`，另 server 8、Worker 25、time parity 1、multimodal evaluator 23、RCO-5-007 integrity 4、Functions 5；build PASS；security scan 504 files PASS。工程全绿不能覆盖质量失败。
+- protected_boundary: 未修改冻结 B5 dataset/Expected/data freeze、P2、既有 Expected/freeze/dataset/checkpoint/cache 或稳定路径；未启动 RCO-6、浏览器验收或部署。
+- decision: `B5 FIRST-RUN FAIL / P2 GENERALIZATION NOT ESTABLISHED / PAID MODEL BLOCKED / RCO-6 BLOCKED / DO_NOT_LAUNCH`。
+- next_step: `NONE / WAIT_AUTHORIZATION`。若继续，应新增隔离本机修订关系解析器，用已见 B5 只回归，再冻结全新 B6 做一次零调用门；B6 通过前不申请付费模型调用。

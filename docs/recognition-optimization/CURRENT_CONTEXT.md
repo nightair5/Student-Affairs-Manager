@@ -8,8 +8,8 @@
 
 ## Current Authority
 
-- current_status: `RCO-5-007-P2-E1/B5 AUTHORIZED / TYPE-FIX THEN NEW B5 ZERO-CALL PATH IN_PROGRESS / PAID MODEL BLOCKED / RCO-6 BLOCKED / DO_NOT_LAUNCH`
-- current_authorization: 只修 B4 数据测试 TS2352 类型夹具，B4 仅作已见回归；lint/test/build/security 通过后创建并冻结全新 B5，再对冻结 P2 运行一次 0 模型调用门。
+- current_status: `RCO-5-007-P2-E1/B5 CLOSED / E1 PASS / B5 FIRST-RUN FAIL / PAID MODEL BLOCKED / RCO-6 BLOCKED / DO_NOT_LAUNCH`
+- current_authorization: 已完成 B4 TS2352 类型等价修补、已见 B4 回归、全新 B5 冻结和唯一一次零调用门；当前没有继续修改 P2、创建 B6 或调用模型的授权。
 - model/network/repair/retry/secret: `0 / 0 / 0 / 0 / NONE`
 - protected: 既有 Expected、freeze、dataset、checkpoint、cache；稳定路径、RC.4、Release、Production 均未修改。
 - not_authorized: 修改 B4 Expected/dataset/freeze、P2 语义实现或任何既有 checkpoint/cache；模型/Secret/网络；真实材料、真人研究、浏览器验收、RCO-6、稳定路径接入、Preview/Production 部署。
@@ -19,7 +19,7 @@
 
 - repository: `C:\Users\Winner\student-affairs-multimodal-exp`
 - branch: `codex/e2-multimodal-recognition-exp`
-- last_experiment_commit: `441285f`，已推送；恢复时重新核对 HEAD/upstream/worktree。
+- last_prefreeze_commit: `578d2a3`，B5 数据在首次运行前已冻结并推送；结果提交完成后恢复时仍须重新核对 HEAD/upstream/worktree。
 - production/default path: 不变；仍为本机解析/OCR → 用户核对文字 → 只发送文字。
 - multimodal: 仍是独立实验 Preview；RCO-6 未启动。
 
@@ -74,6 +74,15 @@
 - 全量 `npm test` 通过（Vitest 573 passed / 1 live OCR skipped，另 server 8、Worker 25、time parity 1、multimodal evaluator 23、Functions 5），lint 通过；但 `npm run build` 在冻结的 `taskFormationB4Dataset.test.ts` 报 TS2352：`revisionRefs` 被声明为空 tuple，JSON 推断为一般数组。
 - 该测试已进入 B4 首次运行前 freeze，不能事后修改再把 B4 说成有效未见通过。因此 oracle quality=`PASS`，overall=`FAIL`，付费模型继续阻塞。security scan 477 files PASS；npm audit 官方 endpoint 网络超时。
 
+### E1 类型等价修补与 B5 首次门
+
+- E1 只把 B4 测试中的 `revisionRefs: []` 类型声明改为契约数组类型，运行时代码仍构造空数组；修补前后 TypeScript 转译 JavaScript SHA-256 完全相同，原 B4 数据、Expected、freeze、P2 和评分器字节不变。
+- 已见 B4 回归的 16 个逐例 prediction/score 和全部指标与原结果完全一致；E1 lint/test/build/security 全通过，提交 `6c025c4` 已推送。
+- B5 在提交 `578d2a3` 先冻结并推送：16 个全新匿名合成 Development、23 个指令、5 个观察；原文和语义家族不复用 B0–B4，逐例 bigram Jaccard <0.55。预先加入 revision/stale-task 硬门。
+- 冻结 P2 对 B5 只运行一次。16/16 可评分；Task P/R/F1、requiresAction、boundary、Safe Default 都是 100%，semantic fields 97.52%，Complete 93.75%，Major 6.25%，Forbidden 0。
+- 决定性失败是 B5-08：“先前规定……该规定不再有效”没有把旧“发送宿舍分配表”标为 `past/cancelled/superseded`；修订整例 50%、旧要求完整失效表达 50%、新要求生效召回 100%、陈旧任务 1、被默认勾选的陈旧任务 0。
+- 总体 `FAIL`：安全默认没有退化，但用户仍要删除陈旧建议。B5 已见，不得修改 P2 后重跑追分；付费模型继续阻塞。
+
 ### 完整性与工程门
 
 - B2 原冻结的 12 个组件仍逐项 SHA-256 匹配；P1 组件冻结另绑定 16 个计划、代码、测试、runner、结果和依赖路径。
@@ -82,6 +91,8 @@
 - `npm audit --audit-level=high` 连续两次在官方 advisory endpoint 网络超时，记录为 `NOT_COMPLETED_EXTERNAL_NETWORK`；不得写成 0 vulnerabilities，也没有证据表明发现漏洞。
 - 未部署；保留既有 >500 kB chunk warning。
 - B3 新增定向完整性检查 `13/13 PASS`；全量 lint PASS，Vitest `558 passed / 1 live OCR skipped`，server 8、Worker 25、time parity 1、multimodal evaluator 23、Functions 5、build PASS、security scan 451 files PASS。B3 阶段 npm audit 两次仍在官方 endpoint 超时。
+- E1 全量 lint/test/build/security PASS：Vitest `573 passed / 1 live OCR skipped`，security scan 486 files；构建仅保留既有 >500 kB chunk warning。
+- B5 最终全量 lint/test/build/security PASS：Vitest `580 passed / 1 live OCR skipped`，另 server 8、Worker 25、time parity 1、multimodal evaluator 23、RCO-5-007 integrity 4、Functions 5；security scan 504 files。工程通过不能覆盖 B5 修订质量门失败。
 
 ## Evidence Files
 
@@ -99,17 +110,20 @@
 - P2 component freeze/result: `docs/recognition-optimization/RCO-5-007-P2_COMPONENT_FREEZE.json` and `rco-5-007-p2-b3-replay/`
 - B4 data/result freeze: `docs/recognition-optimization/RCO-5-007-B4_DATA_FREEZE.json` and `RCO-5-007-B4_RESULT_FREEZE.json`
 - B4 result/report/audit/status: `docs/recognition-optimization/rco-5-007-b4-oracle/`
+- E1 correction/freeze/replay: `docs/recognition-optimization/RCO-5-007-P2-E1_TYPE_CORRECTION.json`, `RCO-5-007-P2-E1_COMPONENT_FREEZE.json` and `rco-5-007-p2-e1-b4-replay/`
+- B5 data/result freeze: `docs/recognition-optimization/RCO-5-007-B5_DATA_FREEZE.json` and `RCO-5-007-B5_RESULT_FREEZE.json`
+- B5 result/report/audit/status: `docs/recognition-optimization/rco-5-007-b5-oracle/`
 - append-only history: `docs/recognition-optimization/OPTIMIZATION_LOG.md`
 
 ## First-Principles Interpretation
 
-P2 的机制改造让理想上游输入在新 B4 上跨过质量门，说明主线方向有效；但冻结测试自身不能通过正式构建，实验整体仍不可晋级。工程可复现性与质量分数同属门槛，不能选一个好看的结果忽略另一个。
+E1 已证明 B4 的工程失败只是类型夹具问题；B5 又证明 P2 在普通任务、条件、动作保真、主体和安全默认上已达到较高上限，但修订仍靠“旧安排 + 取消”之类词面共现，没有表示“哪条状态声明撤销哪条旧指令”的关系。根治方向不是继续补同义词，而是本机构造可审计的修订边和指称关系，让旧任务保留历史但退出当前待办，新要求独立生效。
 
 ## Current Gate / Next Action
 
-- gate: `E1 TYPE-ONLY CORRECTION IN_PROGRESS / B5 BLOCKED UNTIL E1 ENGINEERING PASS / PAID MODEL BLOCKED`
-- next: 生成受控类型订正和已见 B4 等价回归；通过 lint/test/build/security 后才创建全新 B5。
-- after_b5: 只有 B5 质量与工程门同时通过后，才能另行批准固定模型、调用数、人民币上限和 revision/stale-task 指标的付费测试。
+- gate: `E1 PASS / B5 FIRST-RUN FAIL / PAID MODEL BLOCKED / RCO-6 BLOCKED / DO_NOT_LAUNCH`
+- next: 等待新授权；建议新增隔离的本机修订关系解析器，用已见 B5 只做故障回归，再冻结全新 B6 做唯一首次零调用门。
+- after_b6: 只有 B6 的总体质量、旧要求失效、新要求生效、陈旧任务和工程门全部通过后，才能另行批准固定模型、调用数和人民币上限的付费测试。
 - promotion rule: 付费新数据仍稳定提升且 Forbidden=0，才可申请 RCO-6；之后仍需真实去标识材料、真人修改时间、Chrome/Edge/手机、隐私安全和 Commercial Preview，才能讨论上线。
 
 ## Recovery
@@ -117,4 +131,4 @@ P2 的机制改造让理想上游输入在新 B4 上跨过质量门，说明主�
 1. 读根 `AGENTS.md`、`PRD.md`、本文件和日志最后两节。
 2. 重新核对 branch、HEAD、upstream、worktree；任何差异先当用户资产。
 3. 只读取当前任务必要文件；大结果用路径、哈希、计数和结论，不灌入上下文。
-4. P2/B4 授权已关闭；未有新授权时不得修改冻结 B4 测试、创建 B5、调用模型、启动 RCO-6 或部署。
+4. P2-E1/B5 授权已关闭；未有新授权时不得修改 P2 或 B5、创建 B6、调用模型、启动 RCO-6 或部署。
