@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "rco-5-007-b7-m1-result-freeze-1.0.0",
+  "stage": "RCO-5-007-B7-M1-RESULT",
+  "status": "PAID_RUN_COMPLETE_NO_PROMOTION",
+  "frozenAt": "2026-09-04T12:39:50Z",
+  "authorizationId": "RCO-5-007-B7-M1",
+  "runId": "rco-5-007-b7-m1-20260904a",
+  "model": "deepseek-v4-flash-vision-exp",
+  "datasetId": "rco-5-007-b7-development-20260904",
+  "accounting": {
+    "candidateCalls": 12,
+    "terminalResponses": 12,
+    "strictSchemaValid": 12,
+    "verifierCalls": 0,
+    "repairCalls": 0,
+    "retryCalls": 0
+  },
+  "providerUsage": {
+    "inputTokens": 12518,
+    "outputTokens": 4921,
+    "totalTokens": 17439
+  },
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "observedConservativePeakPriceCostCny": 0.1200364,
+  "cnyHardCap": 10,
+  "decision": "NO_PROMOTION_PAID_REPLICATION_BLOCKED",
+  "componentPaths": [
+    "docs/recognition-optimization/rco-5-007-b7-runs/rco-5-007-b7-m1-20260904a/checkpoint.json",
+    "docs/recognition-optimization/rco-5-007-b7-runs/rco-5-007-b7-m1-20260904a/raw-results.json",
+    "docs/recognition-optimization/rco-5-007-b7-runs/rco-5-007-b7-m1-20260904a/score.json",
+    "docs/recognition-optimization/rco-5-007-b7-runs/rco-5-007-b7-m1-20260904a/REPORT.md",
+    "docs/recognition-optimization/rco-5-007-b7-runs/rco-5-007-b7-m1-20260904a/ADVERSARIAL_AUDIT.md",
+    "scripts/rco-5-007-b7-m1-result.node-test.mjs"
+  ],
+  "componentSha256": {
+    "docs/recognition-optimization/rco-5-007-b7-runs/rco-5-007-b7-m1-20260904a/checkpoint.json": "55ac92af17fd40abd0c31564d2176f7ffa5fb1a97a5d2918846f3324ff7092c7",
+    "docs/recognition-optimization/rco-5-007-b7-runs/rco-5-007-b7-m1-20260904a/raw-results.json": "1c55601078b61e86774606562b889598a92d95c3624cb876740b683583d2befb",
+    "docs/recognition-optimization/rco-5-007-b7-runs/rco-5-007-b7-m1-20260904a/score.json": "5c60c7e950bf02d08445c91710d69776053664a82bea67fd654941a214ae7584",
+    "docs/recognition-optimization/rco-5-007-b7-runs/rco-5-007-b7-m1-20260904a/REPORT.md": "965fcddc9817043702f367b105f5484b219d87c157dffeb82c370e4f188ea838",
+    "docs/recognition-optimization/rco-5-007-b7-runs/rco-5-007-b7-m1-20260904a/ADVERSARIAL_AUDIT.md": "25b79a68f464790ec75a2f5cc46630ac5b11057c1ad303b8ae5a7774f0e34c35",
+    "scripts/rco-5-007-b7-m1-result.node-test.mjs": "6f4920c0e1ee748441e64342fbc7571627ba629bda30fa9a5af5a91ab5f7afb7"
+  },
+  "protectedArtifactsModified": false,
+  "stablePath": "UNCHANGED",
+  "rco6": "NOT_STARTED",
+  "deployment": "NOT_RUN",
+  "nextGate": "ZERO_CALL_RCO_5_008_CONTRACT_AND_SAFETY_FIX_BEFORE_ANY_NEW_PAID_RUN"
+}

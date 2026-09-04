@@ -2,7 +2,7 @@
   "schemaVersion": "rco-5-007-b7-m1-checkpoint-1.0.0",
   "runId": "rco-5-007-b7-m1-20260904a",
   "authorizationId": "RCO-5-007-B7-M1",
-  "status": "READY_FROZEN_NO_DISPATCH",
+  "status": "FINISHED",
   "datasetId": "rco-5-007-b7-development-20260904",
   "model": "deepseek-v4-flash-vision-exp",
   "temperature": 0,
@@ -12,7 +12,116 @@
   "repairCalls": 0,
   "retryCalls": 0,
   "cnyHardCap": 10,
-  "dispatches": [],
+  "dispatches": [
+    {
+      "key": "rco-task-b7-01:candidate",
+      "caseId": "rco-task-b7-01",
+      "attemptNo": 1,
+      "requestSha256": "44e24199a4325c5b4d97d365376e57aea15f621b81f819fb5308eb49e7b4b43e",
+      "state": "completed_valid",
+      "dispatchStartedAt": "2026-09-04T12:35:32.549Z",
+      "completedAt": "2026-09-04T12:35:37.133Z"
+    },
+    {
+      "key": "rco-task-b7-02:candidate",
+      "caseId": "rco-task-b7-02",
+      "attemptNo": 1,
+      "requestSha256": "3f09112cabca65b676b108d5d4994e06ac529493b3d1de74b486566b17807446",
+      "state": "completed_valid",
+      "dispatchStartedAt": "2026-09-04T12:35:37.137Z",
+      "completedAt": "2026-09-04T12:35:41.322Z"
+    },
+    {
+      "key": "rco-task-b7-03:candidate",
+      "caseId": "rco-task-b7-03",
+      "attemptNo": 1,
+      "requestSha256": "ea5eaf566c707d34c88d894b7dcc459ed2caed9d6b55e38c423e2b6156a4751f",
+      "state": "completed_valid",
+      "dispatchStartedAt": "2026-09-04T12:35:41.326Z",
+      "completedAt": "2026-09-04T12:35:44.961Z"
+    },
+    {
+      "key": "rco-task-b7-04:candidate",
+      "caseId": "rco-task-b7-04",
+      "attemptNo": 1,
+      "requestSha256": "9fa66f20f7cc96d6f90d9ec3321f6e4407f032c9eb5ea42f5205c726a30da26e",
+      "state": "completed_valid",
+      "dispatchStartedAt": "2026-09-04T12:35:44.965Z",
+      "completedAt": "2026-09-04T12:35:48.729Z"
+    },
+    {
+      "key": "rco-task-b7-05:candidate",
+      "caseId": "rco-task-b7-05",
+      "attemptNo": 1,
+      "requestSha256": "7393b59ce27045925c7d4de840fd11ead80bb07bc16b3efee4f59962b2aa5de9",
+      "state": "completed_valid",
+      "dispatchStartedAt": "2026-09-04T12:35:48.733Z",
+      "completedAt": "2026-09-04T12:35:52.020Z"
+    },
+    {
+      "key": "rco-task-b7-06:candidate",
+      "caseId": "rco-task-b7-06",
+      "attemptNo": 1,
+      "requestSha256": "5added9458aa6d70d4facf0943a2f1c33c4cc96299e56f9ea083062000084d38",
+      "state": "completed_valid",
+      "dispatchStartedAt": "2026-09-04T12:35:52.023Z",
+      "completedAt": "2026-09-04T12:35:56.524Z"
+    },
+    {
+      "key": "rco-task-b7-07:candidate",
+      "caseId": "rco-task-b7-07",
+      "attemptNo": 1,
+      "requestSha256": "dfe041fa2741de626fcc81e21683cece83c41f0986ff4bdbe5cce5ebc560b75c",
+      "state": "completed_valid",
+      "dispatchStartedAt": "2026-09-04T12:35:56.528Z",
+      "completedAt": "2026-09-04T12:36:00.939Z"
+    },
+    {
+      "key": "rco-task-b7-08:candidate",
+      "caseId": "rco-task-b7-08",
+      "attemptNo": 1,
+      "requestSha256": "9a5ef8daeac7d8e922c686e07c77eac65d6baa5d56f7765b29d00546804c64a7",
+      "state": "completed_valid",
+      "dispatchStartedAt": "2026-09-04T12:36:00.942Z",
+      "completedAt": "2026-09-04T12:36:05.527Z"
+    },
+    {
+      "key": "rco-task-b7-09:candidate",
+      "caseId": "rco-task-b7-09",
+      "attemptNo": 1,
+      "requestSha256": "7e3357be347acbab42afb4b627a518586472bc88a420e244f9739c723fa89d90",
+      "state": "completed_valid",
+      "dispatchStartedAt": "2026-09-04T12:36:05.531Z",
+      "completedAt": "2026-09-04T12:36:10.331Z"
+    },
+    {
+      "key": "rco-task-b7-10:candidate",
+      "caseId": "rco-task-b7-10",
+      "attemptNo": 1,
+      "requestSha256": "6238a3267751364b7082415875d272c92821d82b39730a52104ebc7f872c6073",
+      "state": "completed_valid",
+      "dispatchStartedAt": "2026-09-04T12:36:10.334Z",
+      "completedAt": "2026-09-04T12:36:13.920Z"
+    },
+    {
+      "key": "rco-task-b7-11:candidate",
+      "caseId": "rco-task-b7-11",
+      "attemptNo": 1,
+      "requestSha256": "4fd1b3291ef7fe30e04fa72a0b3f7f8d8a15f1583667eae04b4378acfaeba5f6",
+      "state": "completed_valid",
+      "dispatchStartedAt": "2026-09-04T12:36:13.923Z",
+      "completedAt": "2026-09-04T12:36:17.072Z"
+    },
+    {
+      "key": "rco-task-b7-12:candidate",
+      "caseId": "rco-task-b7-12",
+      "attemptNo": 1,
+      "requestSha256": "c523b8d681cc3ea1b4aef4668d5e654acc7ddf1677d573b4b73bf7e049d93285",
+      "state": "completed_valid",
+      "dispatchStartedAt": "2026-09-04T12:36:17.076Z",
+      "completedAt": "2026-09-04T12:36:21.757Z"
+    }
+  ],
   "stopReason": null,
-  "completedAt": null
+  "completedAt": "2026-09-04T12:36:21.760Z"
 }
