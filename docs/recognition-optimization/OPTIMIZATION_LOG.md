@@ -1027,3 +1027,16 @@
 - fixed_revision_gate: cancels/supersedes/amends 均有覆盖；旧要求完整失效=100%、新要求生效=100%、stale=0、Forbidden=0。
 - accounting_at_start: 模型/实验网络/Repair/retry/Secret=`0/0/0/0/NONE`；稳定路径、RCO-6、部署不在授权范围。
 - status: `AUTHORIZED / P3 IN_PROGRESS / B6 BLOCKED / PAID MODEL BLOCKED / DO_NOT_LAUNCH`。
+
+## 51. RCO-5-007-P3 实现、已见 B5 回归与组件冻结 — 2026-09-04
+
+- implementation: 新增 `revision-relation-resolver-1.0.0`，关系包含 kind、旧任务、替代任务、证据 scope、指称类型和解析方式；P3 再将关系投影到旧任务状态与替代任务引用。
+- relation_policy: 优先使用任务绑定的状态 scope；否则只接受唯一、相邻且 referent type 一致的候选。歧义返回 unresolved。旧任务保留审计但设为 `past/cancelled/superseded` 且 selected=false；新任务独立处理。
+- coverage: 定向/变形 10/10，覆盖 cancels/supersedes/amends、六种失效表面、同句修改、跨句指称、歧义失败关闭、证据 scope 绑定、动作/对象/actor/effect 保真和篡改重算检测。
+- tooling_failure_1: 首次已见 B5 runner 在加载阶段因报告模板反引号未转义而终止，没有业务计算或结果写入；只修报告字符串。
+- tooling_failure_2: 修后实际指标全部满分，但 gate 把 Major Correction 错当成应等于 1，错误输出 FAIL；改为逐项显式方向，随后同一已见 B5 回归正确裁定 PASS。B5 已见，允许故障回归，不构成首次盲测重跑。
+- seen_b5_replay: 16/16；Task P/R/F1、requiresAction、semantic、boundary、Complete、Safe Default、修订整例、旧要求失效、新要求生效均 100%；Major=0、Forbidden=0、stale=0、selected stale=0、unresolved=0。
+- freeze: P3 代码、测试、B5 回归、B5/P2 保护件和传递依赖共 16 路径 SHA-256 绑定；完整性 3/3。
+- full_gate: lint PASS；Vitest `590 passed / 1 live OCR skipped`，另 server 8、Worker 25、time parity 1、multimodal evaluator 23、RCO-5-007 integrity 4、Functions 5；build PASS；security scan 518 files PASS；保留既有 >500 kB chunk warning。
+- isolation: P3 只由隔离测试/runner import；P2、B5 Expected/dataset/freeze/result、既有 checkpoint/cache 与稳定路径无修改。模型/实验网络/Repair/retry/Secret=`0/0/0/0/NONE`；RCO-6 和部署未启动。
+- decision: `P3 TECHNICAL_PASS_SEEN_B5 / ELIGIBLE_FOR_NEW_B6_ZERO_CALL_GATE_ONLY / PAID MODEL BLOCKED / DO_NOT_LAUNCH`。

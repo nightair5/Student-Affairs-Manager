@@ -83,6 +83,15 @@
 - 决定性失败是 B5-08：“先前规定……该规定不再有效”没有把旧“发送宿舍分配表”标为 `past/cancelled/superseded`；修订整例 50%、旧要求完整失效表达 50%、新要求生效召回 100%、陈旧任务 1、被默认勾选的陈旧任务 0。
 - 总体 `FAIL`：安全默认没有退化，但用户仍要删除陈旧建议。B5 已见，不得修改 P2 后重跑追分；付费模型继续阻塞。
 
+### P3 本机修订关系解析与已见 B5 回归
+
+- 新增隔离 `revision-relation-resolver-1.0.0` 与 `task-formation-policy-2.3.0-p3`，显式输出 `cancels`、`supersedes`、`amends`、旧任务 ID、替代任务 ID、证据 scope ID、指称类型和解析方式。
+- 解析优先使用任务已绑定的状态 scope；否则仅接受唯一、相邻且指称类型一致的旧任务。两个候选时返回 unresolved，不猜测。
+- 旧任务保留审计但投影为 `past/cancelled/superseded` 且不默认；替代任务独立按当前义务与安全策略处理。动作、对象、执行人、actionType 和 effect 不因修订分类改写。
+- 定向/变形 10/10；六种失效表面表达关系不变，三类修订、歧义失败关闭、证据绑定和篡改检测均通过。
+- 已见 B5 回归 16/16：Task P/R/F1、requiresAction、semantic、boundary、Complete、Safe Default、旧要求失效、新要求生效均 100%；Major 0、Forbidden 0、stale 0、selected stale 0、unresolved 0。
+- P3 16 路径组件冻结；只被隔离测试和 runner 引用，未接稳定路径。这仍不是新数据泛化或模型正确率。
+
 ### 完整性与工程门
 
 - B2 原冻结的 12 个组件仍逐项 SHA-256 匹配；P1 组件冻结另绑定 16 个计划、代码、测试、runner、结果和依赖路径。
@@ -93,6 +102,7 @@
 - B3 新增定向完整性检查 `13/13 PASS`；全量 lint PASS，Vitest `558 passed / 1 live OCR skipped`，server 8、Worker 25、time parity 1、multimodal evaluator 23、Functions 5、build PASS、security scan 451 files PASS。B3 阶段 npm audit 两次仍在官方 endpoint 超时。
 - E1 全量 lint/test/build/security PASS：Vitest `573 passed / 1 live OCR skipped`，security scan 486 files；构建仅保留既有 >500 kB chunk warning。
 - B5 最终全量 lint/test/build/security PASS：Vitest `580 passed / 1 live OCR skipped`，另 server 8、Worker 25、time parity 1、multimodal evaluator 23、RCO-5-007 integrity 4、Functions 5；security scan 504 files。工程通过不能覆盖 B5 修订质量门失败。
+- P3 全量 lint/test/build/security PASS：Vitest `590 passed / 1 live OCR skipped`，另 server 8、Worker 25、time parity 1、multimodal evaluator 23、RCO-5-007 integrity 4、Functions 5；security scan 518 files。保留既有 >500 kB chunk warning。
 
 ## Evidence Files
 
@@ -113,16 +123,18 @@
 - E1 correction/freeze/replay: `docs/recognition-optimization/RCO-5-007-P2-E1_TYPE_CORRECTION.json`, `RCO-5-007-P2-E1_COMPONENT_FREEZE.json` and `rco-5-007-p2-e1-b4-replay/`
 - B5 data/result freeze: `docs/recognition-optimization/RCO-5-007-B5_DATA_FREEZE.json` and `RCO-5-007-B5_RESULT_FREEZE.json`
 - B5 result/report/audit/status: `docs/recognition-optimization/rco-5-007-b5-oracle/`
+- P3 plan/component freeze: `docs/recognition-optimization/RCO-5-007-P3-B6_PLAN.md` and `RCO-5-007-P3_COMPONENT_FREEZE.json`
+- P3 seen-B5 result/report/audit: `docs/recognition-optimization/rco-5-007-p3-b5-replay/`
 - append-only history: `docs/recognition-optimization/OPTIMIZATION_LOG.md`
 
 ## First-Principles Interpretation
 
-E1 已证明 B4 的工程失败只是类型夹具问题；B5 又证明 P2 在普通任务、条件、动作保真、主体和安全默认上已达到较高上限，但修订仍靠“旧安排 + 取消”之类词面共现，没有表示“哪条状态声明撤销哪条旧指令”的关系。根治方向不是继续补同义词，而是本机构造可审计的修订边和指称关系，让旧任务保留历史但退出当前待办，新要求独立生效。
+P3 已把 B5 暴露的词面共现问题升级为“状态声明 → 旧任务 → 可选替代任务”的可审计关系边，并在歧义时失败关闭。已见 B5 满分只证明机制修复方向成立；是否真正跨表达泛化，必须由冻结后全新 B6 的唯一首次运行决定。
 
 ## Current Gate / Next Action
 
-- gate: `P3 IN_PROGRESS / B6 BLOCKED UNTIL P3 SEEN-B5 PASS AND FREEZE / PAID MODEL BLOCKED / RCO-6 BLOCKED / DO_NOT_LAUNCH`
-- next: 实现并验证本机修订关系边，用已见 B5 回归；P3 冻结、工程门和推送完成前不得创建 B6。
+- gate: `P3 TECHNICAL_PASS_PENDING_COMMIT / B6 BLOCKED UNTIL P3 COMMIT / PAID MODEL BLOCKED / RCO-6 BLOCKED / DO_NOT_LAUNCH`
+- next: 提交并推送 P3 冻结件；之后才创建、冻结并推送全新 B6，再唯一运行一次。
 - after_b6: 只有 B6 的总体质量、旧要求失效、新要求生效、陈旧任务和工程门全部通过后，才能另行批准固定模型、调用数和人民币上限的付费测试。
 - promotion rule: 付费新数据仍稳定提升且 Forbidden=0，才可申请 RCO-6；之后仍需真实去标识材料、真人修改时间、Chrome/Edge/手机、隐私安全和 Commercial Preview，才能讨论上线。
 
