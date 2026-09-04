@@ -1,0 +1,189 @@
+{
+  "schemaVersion": "rco-5-009-b9-zero-call-runner-freeze-1.0.0",
+  "stage": "RCO-5-009-B9-PRE-FIRST-ZERO-CALL",
+  "status": "RUNNER_EVALUATOR_AND_RESULT_FREEZE_METHOD_FROZEN_AWAITING_COMMIT_AND_PUSH",
+  "frozenAt": "2026-09-04T16:00:23.219Z",
+  "authorizationId": "RCO-5-009-B9-ZERO-CALL",
+  "executionAuthorizationAtFreeze": "NOT_GRANTED_RUNNER_MUST_BE_COMMITTED_AND_PUSHED_FIRST",
+  "executionMode": "DETERMINISTIC_RESPONSE_FIXTURE_ZERO_CALL",
+  "runId": "rco-5-009-b9-zero-call-20260904a",
+  "datasetId": "rco-5-009-b9-development-20260904",
+  "datasetPath": "docs/recognition-optimization/RCO-5-009-B9_DEVELOPMENT_DATASET.json",
+  "datasetIdentity": {
+    "sampleCount": 12,
+    "expectedCandidateCount": 19,
+    "expectedCandidateDispositionCounts": {
+      "local_non_task": 1,
+      "local_proposition": 12,
+      "needs_model": 6
+    },
+    "expectedLedgerCounts": {
+      "accepted_local": 11,
+      "accepted_model": 2,
+      "ignored_model": 2,
+      "ignored_local": 1,
+      "quarantined": 3
+    },
+    "expectedTaskCount": 13,
+    "safeDefaultExpectedCount": 7,
+    "expectedRevisionRelationCount": 1,
+    "expectedRequiresActionVector": [
+      null,
+      false,
+      true,
+      null,
+      true,
+      true,
+      false,
+      true,
+      null,
+      true,
+      true,
+      null
+    ],
+    "expectedResponsePartialCaseIds": [
+      "rco-task-b9-06"
+    ],
+    "expectedSemanticPartialCaseIds": [
+      "rco-task-b9-04",
+      "rco-task-b9-06",
+      "rco-task-b9-07",
+      "rco-task-b9-09"
+    ]
+  },
+  "fixedZeroCallGate": {
+    "candidateIdentityExact": 1,
+    "actionSpanExact": 1,
+    "singletonOrEmptyObjectSpanExact": 1,
+    "ledgerDispositionExact": 1,
+    "acceptedCandidateTaskBijectionExact": 1,
+    "taskSemanticExact": 1,
+    "taskSelectedExact": 1,
+    "requiresActionExact": 1,
+    "responseContractCompletenessExact": 1,
+    "semanticCoverageCompletenessExact": 1,
+    "revisionUncertaintyExact": 1,
+    "resolvedRevisionRelationExact": 1,
+    "safeDefaultRecall": 1,
+    "unsafeDefaultSelectionsMaximum": 0,
+    "siblingSurvivalRate": 1
+  },
+  "dataFreezePath": "docs/recognition-optimization/RCO-5-009-B9_DATA_FREEZE.json",
+  "dataFreezeCommit": "9812382",
+  "dataFreezeCommitFull": "98123829e763b804eb6ed8669c7f0e483aed49dd",
+  "upstreamContainingDataFreezeAtFreeze": "98123829e763b804eb6ed8669c7f0e483aed49dd",
+  "componentPaths": [
+    "scripts/rco-5-009-b9-evaluation.ts",
+    "scripts/rco-5-009-b9-evaluation.test.ts",
+    "scripts/run-rco-5-009-b9-zero-call.ts",
+    "scripts/rco-5-009-b9-zero-call-result.node-test.mjs",
+    "docs/recognition-optimization/RCO-5-009-B9_DATA_FREEZE.json",
+    "scripts/freeze-rco-5-009-b9-zero-call-result.mjs",
+    "scripts/rco-5-009-b9-zero-call-result-freeze.node-test.mjs",
+    "scripts/freeze-rco-5-009-b9-zero-call-runner.mjs",
+    "scripts/rco-5-009-b9-zero-call-runner-freeze.node-test.mjs"
+  ],
+  "componentSha256": {
+    "scripts/rco-5-009-b9-evaluation.ts": "8c62d26aee159a762827b8dca7fb222ac3d6bb70e0a60cfada12f1ed397b5f19",
+    "scripts/rco-5-009-b9-evaluation.test.ts": "f63f702bcd93719f5524648d6d01cc5d3496a34923ee6b4723962466ce2f6ba9",
+    "scripts/run-rco-5-009-b9-zero-call.ts": "e7e441cb43a427472c86d144af1b38d0bdbe3a6d52f9446c0c156898fc18e1b2",
+    "scripts/rco-5-009-b9-zero-call-result.node-test.mjs": "f7d75bfb44b53c4648177cd0e25113ef59aec7a6f20605aed5185c163ef53d23",
+    "docs/recognition-optimization/RCO-5-009-B9_DATA_FREEZE.json": "f1f303746007487318ce00375159be21e19bb730860e6d585a9fe9334c3fed16",
+    "scripts/freeze-rco-5-009-b9-zero-call-result.mjs": "0a6a82231f19ba55e471e2033883f66ecec89718510513559189059d7cb93d23",
+    "scripts/rco-5-009-b9-zero-call-result-freeze.node-test.mjs": "5e43050617e12da54eb75117348ee28441b30efc98bd52788632c7c87b81f5ca",
+    "scripts/freeze-rco-5-009-b9-zero-call-runner.mjs": "e58764967c3e66c121aa174a4e9dad7c81b79664276180b980dda6b04d076637",
+    "scripts/rco-5-009-b9-zero-call-runner-freeze.node-test.mjs": "dbe44428aface1118ae98974c36f38011372b7b6659760ec79c85c191147793a"
+  },
+  "outputPaths": [
+    "docs/recognition-optimization/rco-5-009-b9-runs/rco-5-009-b9-zero-call-20260904a/checkpoint.json",
+    "docs/recognition-optimization/rco-5-009-b9-runs/rco-5-009-b9-zero-call-20260904a/result.json",
+    "docs/recognition-optimization/rco-5-009-b9-runs/rco-5-009-b9-zero-call-20260904a/REPORT.md"
+  ],
+  "lockPath": "docs/recognition-optimization/rco-5-009-b9-runs/rco-5-009-b9-zero-call-20260904a/checkpoint.json",
+  "outputStateAtFreeze": {
+    "docs/recognition-optimization/rco-5-009-b9-runs/rco-5-009-b9-zero-call-20260904a/checkpoint.json": "ABSENT_AT_FREEZE",
+    "docs/recognition-optimization/rco-5-009-b9-runs/rco-5-009-b9-zero-call-20260904a/result.json": "ABSENT_AT_FREEZE",
+    "docs/recognition-optimization/rco-5-009-b9-runs/rco-5-009-b9-zero-call-20260904a/REPORT.md": "ABSENT_AT_FREEZE"
+  },
+  "outputHashPolicy": "CHECKPOINT_RESULT_AND_REPORT_ARE_FORBIDDEN_FROM_PRE_RUN_COMPONENT_HASHES",
+  "resultFreezePath": "docs/recognition-optimization/RCO-5-009-B9_ZERO_CALL_RESULT_FREEZE.json",
+  "resultFreezeStateAtFreeze": "ABSENT_AT_FREEZE",
+  "postRunFrozenRecordPaths": [
+    "docs/recognition-optimization/RCO-5-009-B9_TRACKER.md"
+  ],
+  "mutableMirrorsRecordedNotHashed": [
+    "docs/recognition-optimization/OPTIMIZATION_LOG.md",
+    "docs/recognition-optimization/CURRENT_CONTEXT.md"
+  ],
+  "postRunHashPolicy": "ONLY_THE_PRE_FROZEN_RESULT_FREEZER_MAY_HASH_OUTPUTS_AND_THE_STAGE_SPECIFIC_TRACKER_AFTER_COMPLETION; GLOBAL_LOG_AND_CONTEXT_ARE_NON_AUTHORITATIVE_MUTABLE_MIRRORS",
+  "exactAccountingContract": {
+    "modelCalls": 0,
+    "networkRequests": 0,
+    "verifierCalls": 0,
+    "repairCalls": 0,
+    "retryCalls": 0,
+    "secretAccess": "NONE",
+    "pipelineRuns": 1,
+    "casePipelineExecutions": 12
+  },
+  "maximumRuns": 1,
+  "maximumCasePipelineExecutions": 12,
+  "staticSafetyReview": {
+    "inspectedPaths": [
+      "scripts/rco-5-009-b9-evaluation.ts",
+      "scripts/run-rco-5-009-b9-zero-call.ts"
+    ],
+    "forbiddenSurfaceIds": [
+      "FETCH",
+      "HTTP_URL",
+      "NODE_HTTP_IMPORT",
+      "PROCESS_ENV",
+      "DEEPSEEK_OR_API_KEY",
+      "BROWSER_NETWORK",
+      "CLIPBOARD",
+      "NETWORK_COMMAND",
+      "OLD_TASK_FORMATION_P4",
+      "OLD_TASK_FORMATION_EVALUATOR_V2",
+      "OLD_LEGACY_CLASSIFICATION_PROJECTION",
+      "OLD_SCOPE_REVISION_MATERIALIZER",
+      "DIRECT_OLD_REVISION_RESOLVER_IMPORT"
+    ],
+    "requiredRunnerMarkers": [
+      "wx",
+      "98123829e763b804eb6ed8669c7f0e483aed49dd",
+      "runnerFreezeCommit",
+      "pipelineRuns",
+      "casePipelineExecutions",
+      "indexLocalActionCandidatesV2",
+      "composeActionCandidatesV2",
+      "formCandidateSafeTaskSuggestions",
+      "validateCandidateSafeTaskSuggestions",
+      "evaluateB9ZeroCall"
+    ],
+    "resultAssertionTestPolicy": "SYNTAX_CHECKED_AND_HASHED_BUT_NOT_EXECUTED_AT_RUNNER_FREEZE",
+    "resultFreezePolicy": "SYNTAX_CHECKED_AND_HASHED_BEFORE_RESULTS_EXIST"
+  },
+  "oneShotPolicy": "After this manifest and every bound component are committed and pushed, the runner may execute exactly once. It must atomically claim the absent checkpoint path with wx before evaluating all 12 cases and must refuse every rerun.",
+  "mutationPolicy": "Runner, evaluator, tests, B9 data freeze and the result-freeze method are immutable after this runner freeze; PASS, semantic FAIL and runtime FAILED first-run outcomes all produce retained result and report evidence.",
+  "evidenceBoundary": "This gate is deterministic Codex-authored Development evidence only. It is not a model, OCR, real-material, human-edit-time or commercial-release result. B9-12 is a frozen implementation-boundary label, not independently adjudicated semantic truth.",
+  "runPreconditions": {
+    "runnerFreezeCommitRequired": true,
+    "runnerFreezePushRequired": true,
+    "cleanWorktreeRequired": true,
+    "headEqualsUpstreamRequired": true,
+    "componentHashesMustMatch": true,
+    "outputPathsMustBeAbsent": true,
+    "atomicCheckpointClaimRequired": true
+  },
+  "runtimeCommand": "npx --no-install vite-node scripts/run-rco-5-009-b9-zero-call.ts",
+  "paidRunAuthorized": false,
+  "modelCallsAtFreeze": 0,
+  "networkRequestsAtFreeze": 0,
+  "secretAccessAtFreeze": "NONE",
+  "pipelineRunsAtFreeze": 0,
+  "casePipelineExecutionsAtFreeze": 0,
+  "stablePath": "UNCHANGED",
+  "rco6": "NOT_STARTED",
+  "deployment": "NOT_RUN",
+  "nextGate": "COMMIT_AND_PUSH_RUNNER_FREEZE_THEN_AUTHORIZE_ONE_SHOT_ZERO_CALL_RUN"
+}
