@@ -1,0 +1,60 @@
+{
+  "schemaVersion": "rco-5-007-b4-result-freeze-1.0.0",
+  "stage": "RCO-5-007-B4-FIRST-ORACLE",
+  "status": "ORACLE_QUALITY_PASS_ENGINEERING_GATE_FAIL_NOW_SEEN_DEVELOPMENT",
+  "frozenAt": "2026-09-04T19:55:00+08:00",
+  "authorizationId": "RCO-5-007-P2-B4",
+  "datasetId": "rco-5-007-b4-challenge-20260904",
+  "firstRunAgainstFrozenCommit": "fc2aeb78f8d01f06a4c14be6c31bfdb91073d5be",
+  "componentPaths": [
+    "docs/recognition-optimization/RCO-5-007-B4_DATA_FREEZE.json",
+    "scripts/run-rco-5-007-b4-oracle.ts",
+    "docs/recognition-optimization/rco-5-007-b4-oracle/result.json",
+    "docs/recognition-optimization/rco-5-007-b4-oracle/REPORT.md",
+    "docs/recognition-optimization/rco-5-007-b4-oracle/ADVERSARIAL_AUDIT.md",
+    "docs/recognition-optimization/rco-5-007-b4-oracle/EXECUTION_STATUS.md",
+    "scripts/rco-5-007-b4-oracle.node-test.mjs"
+  ],
+  "componentSha256": {
+    "docs/recognition-optimization/RCO-5-007-B4_DATA_FREEZE.json": "b860f7c70ce0fe31cf33d6c992d7869f36e29b6c94e550cf31f84b3941f105eb",
+    "scripts/run-rco-5-007-b4-oracle.ts": "2b9effa67d631a6cb06c994522366e5b7efff77e87a0d19dc08b80e8df8a6fc9",
+    "docs/recognition-optimization/rco-5-007-b4-oracle/result.json": "bfefe60d94d7ca744614bdefd99017263dcb41cc974ea89a2c383553658b184a",
+    "docs/recognition-optimization/rco-5-007-b4-oracle/REPORT.md": "d8d0c83750a832ff760638e20f914054b1783aaae3fdbcfb560a0db73975de4a",
+    "docs/recognition-optimization/rco-5-007-b4-oracle/ADVERSARIAL_AUDIT.md": "663b1ea569653c3af157e372d9174b2bbfdc6ec4a0e7d40f87bc95fdbef29ee8",
+    "docs/recognition-optimization/rco-5-007-b4-oracle/EXECUTION_STATUS.md": "5e6aa9e67472b42e5efc78ccbb9806fb8f910e1cd5f16065c490bd6072ae7d20",
+    "scripts/rco-5-007-b4-oracle.node-test.mjs": "ce403aeaa966f9143a33c328ff8b371085194a92e0ecb2d5c3e7daf418d166d5"
+  },
+  "accounting": {
+    "modelCalls": 0,
+    "networkRequests": 0,
+    "repairCalls": 0,
+    "retryCalls": 0,
+    "secretAccess": "NONE"
+  },
+  "metrics": {
+    "caseCount": 16,
+    "scoreableCases": 16,
+    "taskPrecision": 1,
+    "taskRecall": 1,
+    "taskF1": 1,
+    "requiresActionAccuracy": 1,
+    "semanticFieldAccuracy": 0.9751552795031055,
+    "exactTaskBoundaryAccuracy": 1,
+    "completeTaskCaseAccuracy": 0.9375,
+    "majorCorrectionRate": 0.0625,
+    "safeDefaultRecall": 1,
+    "forbiddenDefaultSelections": 0
+  },
+  "oracleQualityGate": "PASS",
+  "engineeringGate": "FAIL_TS2352_FROZEN_B4_DATASET_TEST",
+  "overallGate": "FAIL",
+  "decision": "INVALID_FOR_PAID_PROMOTION_ENGINEERING_GATE_FAIL",
+  "knownLimitation": "B4-07 leaves an unselected stale external task for an unrecognized revision surface; revision-specific quality must remain explicit in later evaluation.",
+  "protectedMutation": "NONE",
+  "rerunAuthorized": false,
+  "paidRunAuthorized": false,
+  "stablePath": "UNCHANGED",
+  "rco6": "BLOCKED",
+  "deployment": "NOT_RUN",
+  "nextAuthorization": "TYPE_FIX_SEEN_B4_REGRESSION_THEN_NEW_B5_ZERO_CALL_GATE"
+}
