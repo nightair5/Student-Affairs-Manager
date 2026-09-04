@@ -1,5 +1,661 @@
 {
   "schemaVersion": "rco-5-008-b8-m1-raw-1.0.0",
   "runId": "rco-5-008-b8-m1-20260904a",
-  "records": []
+  "records": [
+    {
+      "key": "rco-task-b8-01:candidate",
+      "caseId": "rco-task-b8-01",
+      "role": "candidate",
+      "dispatched": true,
+      "attemptNo": 1,
+      "status": "completed_valid",
+      "httpStatus": 200,
+      "responseId": "e74e6097-c131-4036-8f08-4a92d73681a8",
+      "responseModel": "deepseek-v4-flash-vision-exp",
+      "responseStatus": "completed",
+      "requestSha256": "0934079dc3779d545eeeb62a8bf8e3d1271b28ba127413cd6a385f807246909a",
+      "providerUsage": {
+        "inputTokens": 957,
+        "outputTokens": 460,
+        "totalTokens": 1417
+      },
+      "schemaIssues": [],
+      "parsed": {
+        "schemaVersion": "model-anchor-selection-1.0.0",
+        "sourceId": "rco-task-b8-01",
+        "sourceVersionId": "source-v1",
+        "sourceFingerprint": "sha256:72942cfa5fe4a615567681520a288cb8f067db79003d754e381d9a39b57c3cc1",
+        "producerRunId": "candidate-rco-5-008-b8-m1-20260904a-rco-task-b8-01",
+        "directives": [
+          {
+            "id": "d1",
+            "propositionScopeIds": [
+              "scope-0001-5bbc2d9b7401a8a2c187401e120b2ab6e1adec04e2f7010841509348d07fe04d"
+            ],
+            "action": {
+              "scopeId": "scope-0001-5bbc2d9b7401a8a2c187401e120b2ab6e1adec04e2f7010841509348d07fe04d",
+              "surface": "整理"
+            },
+            "object": {
+              "scopeId": "scope-0001-5bbc2d9b7401a8a2c187401e120b2ab6e1adec04e2f7010841509348d07fe04d",
+              "surface": "器材清点表"
+            }
+          },
+          {
+            "id": "d2",
+            "propositionScopeIds": [
+              "scope-0001-5bbc2d9b7401a8a2c187401e120b2ab6e1adec04e2f7010841509348d07fe04d"
+            ],
+            "action": {
+              "scopeId": "scope-0001-5bbc2d9b7401a8a2c187401e120b2ab6e1adec04e2f7010841509348d07fe04d",
+              "surface": "保存"
+            },
+            "object": {
+              "scopeId": "scope-0001-5bbc2d9b7401a8a2c187401e120b2ab6e1adec04e2f7010841509348d07fe04d",
+              "surface": "归档副本"
+            }
+          }
+        ],
+        "ignoredScopeIds": []
+      },
+      "rawOutputText": "{\"schemaVersion\":\"model-anchor-selection-1.0.0\",\"sourceId\":\"rco-task-b8-01\",\"sourceVersionId\":\"source-v1\",\"sourceFingerprint\":\"sha256:72942cfa5fe4a615567681520a288cb8f067db79003d754e381d9a39b57c3cc1\",\"producerRunId\":\"candidate-rco-5-008-b8-m1-20260904a-rco-task-b8-01\",\"directives\":[{\"id\":\"d1\",\"propositionScopeIds\":[\"scope-0001-5bbc2d9b7401a8a2c187401e120b2ab6e1adec04e2f7010841509348d07fe04d\"],\"action\":{\"scopeId\":\"scope-0001-5bbc2d9b7401a8a2c187401e120b2ab6e1adec04e2f7010841509348d07fe04d\",\"surface\":\"整理\"},\"object\":{\"scopeId\":\"scope-0001-5bbc2d9b7401a8a2c187401e120b2ab6e1adec04e2f7010841509348d07fe04d\",\"surface\":\"器材清点表\"}},{\"id\":\"d2\",\"propositionScopeIds\":[\"scope-0001-5bbc2d9b7401a8a2c187401e120b2ab6e1adec04e2f7010841509348d07fe04d\"],\"action\":{\"scopeId\":\"scope-0001-5bbc2d9b7401a8a2c187401e120b2ab6e1adec04e2f7010841509348d07fe04d\",\"surface\":\"保存\"},\"object\":{\"scopeId\":\"scope-0001-5bbc2d9b7401a8a2c187401e120b2ab6e1adec04e2f7010841509348d07fe04d\",\"surface\":\"归档副本\"}}],\"ignoredScopeIds\":[]}"
+    },
+    {
+      "key": "rco-task-b8-02:candidate",
+      "caseId": "rco-task-b8-02",
+      "role": "candidate",
+      "dispatched": true,
+      "attemptNo": 1,
+      "status": "completed_valid",
+      "httpStatus": 200,
+      "responseId": "dbb019a2-a6ed-41fc-bc42-8fab3697d159",
+      "responseModel": "deepseek-v4-flash-vision-exp",
+      "responseStatus": "completed",
+      "requestSha256": "5c9e8baba855ad18b4f7030d8964b69a29b6d063e25de486e187ec6b22d1593c",
+      "providerUsage": {
+        "inputTokens": 1081,
+        "outputTokens": 387,
+        "totalTokens": 1468
+      },
+      "schemaIssues": [],
+      "parsed": {
+        "schemaVersion": "model-anchor-selection-1.0.0",
+        "sourceId": "rco-task-b8-02",
+        "sourceVersionId": "source-v1",
+        "sourceFingerprint": "sha256:c4716333f57cf61346f17d6ea39fbd00800a0370382a468751140b7518da9c99",
+        "producerRunId": "candidate-rco-5-008-b8-m1-20260904a-rco-task-b8-02",
+        "directives": [
+          {
+            "id": "directive-1",
+            "propositionScopeIds": [
+              "scope-0003-fa14f6ec013779a5d4d701b59f762a6b9eadd8bb6f9eda0cad9008dcec0cafb0"
+            ],
+            "action": {
+              "scopeId": "scope-0003-fa14f6ec013779a5d4d701b59f762a6b9eadd8bb6f9eda0cad9008dcec0cafb0",
+              "surface": "请核验"
+            },
+            "object": {
+              "scopeId": "scope-0003-fa14f6ec013779a5d4d701b59f762a6b9eadd8bb6f9eda0cad9008dcec0cafb0",
+              "surface": "设备借用编号"
+            }
+          }
+        ],
+        "ignoredScopeIds": [
+          "scope-0001-707086cdab9c00ece558a619b8f5d2dae802bd24e6b98e869ccaa631b6bf16fc",
+          "scope-0002-d2fc914991a9c4fe5d3a9d6954a354d618ea7d2d9f9bf030924ab4aa10b11c3a"
+        ]
+      },
+      "rawOutputText": "{\"schemaVersion\":\"model-anchor-selection-1.0.0\",\"sourceId\":\"rco-task-b8-02\",\"sourceVersionId\":\"source-v1\",\"sourceFingerprint\":\"sha256:c4716333f57cf61346f17d6ea39fbd00800a0370382a468751140b7518da9c99\",\"producerRunId\":\"candidate-rco-5-008-b8-m1-20260904a-rco-task-b8-02\",\"directives\":[{\"id\":\"directive-1\",\"propositionScopeIds\":[\"scope-0003-fa14f6ec013779a5d4d701b59f762a6b9eadd8bb6f9eda0cad9008dcec0cafb0\"],\"action\":{\"scopeId\":\"scope-0003-fa14f6ec013779a5d4d701b59f762a6b9eadd8bb6f9eda0cad9008dcec0cafb0\",\"surface\":\"请核验\"},\"object\":{\"scopeId\":\"scope-0003-fa14f6ec013779a5d4d701b59f762a6b9eadd8bb6f9eda0cad9008dcec0cafb0\",\"surface\":\"设备借用编号\"}}],\"ignoredScopeIds\":[\"scope-0001-707086cdab9c00ece558a619b8f5d2dae802bd24e6b98e869ccaa631b6bf16fc\",\"scope-0002-d2fc914991a9c4fe5d3a9d6954a354d618ea7d2d9f9bf030924ab4aa10b11c3a\"]}"
+    },
+    {
+      "key": "rco-task-b8-03:candidate",
+      "caseId": "rco-task-b8-03",
+      "role": "candidate",
+      "dispatched": true,
+      "attemptNo": 1,
+      "status": "completed_valid",
+      "httpStatus": 200,
+      "responseId": "472f1143-1957-453d-b685-447b735d9d39",
+      "responseModel": "deepseek-v4-flash-vision-exp",
+      "responseStatus": "completed",
+      "requestSha256": "15c107c7e46a1af96c73eef8da3648b3034b5a819fa42d61f548741007fe7d63",
+      "providerUsage": {
+        "inputTokens": 1078,
+        "outputTokens": 370,
+        "totalTokens": 1448
+      },
+      "schemaIssues": [],
+      "parsed": {
+        "schemaVersion": "model-anchor-selection-1.0.0",
+        "sourceId": "rco-task-b8-03",
+        "sourceVersionId": "source-v1",
+        "sourceFingerprint": "sha256:6f4e674541598b750812e036629b02974450e32558ee0660f1d2f717bfeeeffe",
+        "producerRunId": "candidate-rco-5-008-b8-m1-20260904a-rco-task-b8-03",
+        "directives": [
+          {
+            "id": "directive-1",
+            "propositionScopeIds": [
+              "scope-0001-0ccb38e8545a200d367a38e8e44e8b6cf2f4e9a1429383ad70330c394dafbda0",
+              "scope-0002-eb0e6b69f557f6606f1813754f3d85201fabb34d91d56f568795972630354d0d"
+            ],
+            "action": {
+              "scopeId": "scope-0002-eb0e6b69f557f6606f1813754f3d85201fabb34d91d56f568795972630354d0d",
+              "surface": "请填写"
+            },
+            "object": {
+              "scopeId": "scope-0002-eb0e6b69f557f6606f1813754f3d85201fabb34d91d56f568795972630354d0d",
+              "surface": "补充说明"
+            }
+          }
+        ],
+        "ignoredScopeIds": [
+          "scope-0003-481977cb94b6cf7397424dfe39752c5c892176d9486f8e0e8fc8dc135e44d486"
+        ]
+      },
+      "rawOutputText": "{\"schemaVersion\":\"model-anchor-selection-1.0.0\",\"sourceId\":\"rco-task-b8-03\",\"sourceVersionId\":\"source-v1\",\"sourceFingerprint\":\"sha256:6f4e674541598b750812e036629b02974450e32558ee0660f1d2f717bfeeeffe\",\"producerRunId\":\"candidate-rco-5-008-b8-m1-20260904a-rco-task-b8-03\",\"directives\":[{\"id\":\"directive-1\",\"propositionScopeIds\":[\"scope-0001-0ccb38e8545a200d367a38e8e44e8b6cf2f4e9a1429383ad70330c394dafbda0\",\"scope-0002-eb0e6b69f557f6606f1813754f3d85201fabb34d91d56f568795972630354d0d\"],\"action\":{\"scopeId\":\"scope-0002-eb0e6b69f557f6606f1813754f3d85201fabb34d91d56f568795972630354d0d\",\"surface\":\"请填写\"},\"object\":{\"scopeId\":\"scope-0002-eb0e6b69f557f6606f1813754f3d85201fabb34d91d56f568795972630354d0d\",\"surface\":\"补充说明\"}}],\"ignoredScopeIds\":[\"scope-0003-481977cb94b6cf7397424dfe39752c5c892176d9486f8e0e8fc8dc135e44d486\"]}"
+    },
+    {
+      "key": "rco-task-b8-04:candidate",
+      "caseId": "rco-task-b8-04",
+      "role": "candidate",
+      "dispatched": true,
+      "attemptNo": 1,
+      "status": "completed_valid",
+      "httpStatus": 200,
+      "responseId": "eb4375db-4366-4f8f-822f-05a93992cd2c",
+      "responseModel": "deepseek-v4-flash-vision-exp",
+      "responseStatus": "completed",
+      "requestSha256": "40c1c71559c7102f2998bdc2798ae68804ba63555fe32425eba4b41b7a0ef724",
+      "providerUsage": {
+        "inputTokens": 1081,
+        "outputTokens": 382,
+        "totalTokens": 1463
+      },
+      "schemaIssues": [],
+      "parsed": {
+        "schemaVersion": "model-anchor-selection-1.0.0",
+        "sourceId": "rco-task-b8-04",
+        "sourceVersionId": "source-v1",
+        "sourceFingerprint": "sha256:37667d5c139cba962b58b47eea26ce5a7f3e28c4d20ab887f8f189ef6865e311",
+        "producerRunId": "candidate-rco-5-008-b8-m1-20260904a-rco-task-b8-04",
+        "directives": [
+          {
+            "id": "directive-1",
+            "propositionScopeIds": [
+              "scope-0001-a2d6e90146e729454e26ec230c73cb8a29b4170fc90aa32d24046ca25e6fe371",
+              "scope-0002-1b54825d58ee9d10c1315da3db560bb19d87456b5b72307c8a37a7a333a8b789"
+            ],
+            "action": {
+              "scopeId": "scope-0002-1b54825d58ee9d10c1315da3db560bb19d87456b5b72307c8a37a7a333a8b789",
+              "surface": "请打印"
+            },
+            "object": {
+              "scopeId": "scope-0002-1b54825d58ee9d10c1315da3db560bb19d87456b5b72307c8a37a7a333a8b789",
+              "surface": "新封面"
+            }
+          }
+        ],
+        "ignoredScopeIds": [
+          "scope-0003-8a12718ccde9fd760a468a9ea9a20b664e7ef2c8f24b60bf7c63606c66c71573"
+        ]
+      },
+      "rawOutputText": "{\"schemaVersion\":\"model-anchor-selection-1.0.0\",\"sourceId\":\"rco-task-b8-04\",\"sourceVersionId\":\"source-v1\",\"sourceFingerprint\":\"sha256:37667d5c139cba962b58b47eea26ce5a7f3e28c4d20ab887f8f189ef6865e311\",\"producerRunId\":\"candidate-rco-5-008-b8-m1-20260904a-rco-task-b8-04\",\"directives\":[{\"id\":\"directive-1\",\"propositionScopeIds\":[\"scope-0001-a2d6e90146e729454e26ec230c73cb8a29b4170fc90aa32d24046ca25e6fe371\",\"scope-0002-1b54825d58ee9d10c1315da3db560bb19d87456b5b72307c8a37a7a333a8b789\"],\"action\":{\"scopeId\":\"scope-0002-1b54825d58ee9d10c1315da3db560bb19d87456b5b72307c8a37a7a333a8b789\",\"surface\":\"请打印\"},\"object\":{\"scopeId\":\"scope-0002-1b54825d58ee9d10c1315da3db560bb19d87456b5b72307c8a37a7a333a8b789\",\"surface\":\"新封面\"}}],\"ignoredScopeIds\":[\"scope-0003-8a12718ccde9fd760a468a9ea9a20b664e7ef2c8f24b60bf7c63606c66c71573\"]}"
+    },
+    {
+      "key": "rco-task-b8-05:candidate",
+      "caseId": "rco-task-b8-05",
+      "role": "candidate",
+      "dispatched": true,
+      "attemptNo": 1,
+      "status": "completed_valid",
+      "httpStatus": 200,
+      "responseId": "ad65b962-3c73-4c81-82ff-2a2ba3020a76",
+      "responseModel": "deepseek-v4-flash-vision-exp",
+      "responseStatus": "completed",
+      "requestSha256": "b26b1b55224706ef807716d372315804a8d33ff65edc7fe6365db62329470138",
+      "providerUsage": {
+        "inputTokens": 1006,
+        "outputTokens": 446,
+        "totalTokens": 1452
+      },
+      "schemaIssues": [],
+      "parsed": {
+        "schemaVersion": "model-anchor-selection-1.0.0",
+        "sourceId": "rco-task-b8-05",
+        "sourceVersionId": "source-v1",
+        "sourceFingerprint": "sha256:b5011baf8c6558255ff21db14e9335db437dfe54c96716c01950378259af572f",
+        "producerRunId": "candidate-rco-5-008-b8-m1-20260904a-rco-task-b8-05",
+        "directives": [
+          {
+            "id": "directive-1",
+            "propositionScopeIds": [
+              "scope-0001-e4979a75f75e4aa1c0a05fe67d6eaa5cced42e3fe3320f44ae83537aec499438"
+            ],
+            "action": {
+              "scopeId": "scope-0001-e4979a75f75e4aa1c0a05fe67d6eaa5cced42e3fe3320f44ae83537aec499438",
+              "surface": "禁止保存"
+            },
+            "object": {
+              "scopeId": "scope-0001-e4979a75f75e4aa1c0a05fe67d6eaa5cced42e3fe3320f44ae83537aec499438",
+              "surface": "包含身份证号的截图"
+            }
+          },
+          {
+            "id": "directive-2",
+            "propositionScopeIds": [
+              "scope-0002-2e86230a5da71df311538e332e647e4770e1cfd7cc92718d0ab091247997159c"
+            ],
+            "action": {
+              "scopeId": "scope-0002-2e86230a5da71df311538e332e647e4770e1cfd7cc92718d0ab091247997159c",
+              "surface": "请保存"
+            },
+            "object": {
+              "scopeId": "scope-0002-2e86230a5da71df311538e332e647e4770e1cfd7cc92718d0ab091247997159c",
+              "surface": "脱敏摘要"
+            }
+          }
+        ],
+        "ignoredScopeIds": []
+      },
+      "rawOutputText": "{\"schemaVersion\":\"model-anchor-selection-1.0.0\",\"sourceId\":\"rco-task-b8-05\",\"sourceVersionId\":\"source-v1\",\"sourceFingerprint\":\"sha256:b5011baf8c6558255ff21db14e9335db437dfe54c96716c01950378259af572f\",\"producerRunId\":\"candidate-rco-5-008-b8-m1-20260904a-rco-task-b8-05\",\"directives\":[{\"id\":\"directive-1\",\"propositionScopeIds\":[\"scope-0001-e4979a75f75e4aa1c0a05fe67d6eaa5cced42e3fe3320f44ae83537aec499438\"],\"action\":{\"scopeId\":\"scope-0001-e4979a75f75e4aa1c0a05fe67d6eaa5cced42e3fe3320f44ae83537aec499438\",\"surface\":\"禁止保存\"},\"object\":{\"scopeId\":\"scope-0001-e4979a75f75e4aa1c0a05fe67d6eaa5cced42e3fe3320f44ae83537aec499438\",\"surface\":\"包含身份证号的截图\"}},{\"id\":\"directive-2\",\"propositionScopeIds\":[\"scope-0002-2e86230a5da71df311538e332e647e4770e1cfd7cc92718d0ab091247997159c\"],\"action\":{\"scopeId\":\"scope-0002-2e86230a5da71df311538e332e647e4770e1cfd7cc92718d0ab091247997159c\",\"surface\":\"请保存\"},\"object\":{\"scopeId\":\"scope-0002-2e86230a5da71df311538e332e647e4770e1cfd7cc92718d0ab091247997159c\",\"surface\":\"脱敏摘要\"}}],\"ignoredScopeIds\":[]}"
+    },
+    {
+      "key": "rco-task-b8-06:candidate",
+      "caseId": "rco-task-b8-06",
+      "role": "candidate",
+      "dispatched": true,
+      "attemptNo": 1,
+      "status": "completed_valid",
+      "httpStatus": 200,
+      "responseId": "d273e335-2f2d-41eb-86e9-b63b23b982c7",
+      "responseModel": "deepseek-v4-flash-vision-exp",
+      "responseStatus": "completed",
+      "requestSha256": "30ec13e088bbc740710d9db99446f515aea97da2edac2fcaec88e9fbc9f4b7df",
+      "providerUsage": {
+        "inputTokens": 1018,
+        "outputTokens": 471,
+        "totalTokens": 1489
+      },
+      "schemaIssues": [],
+      "parsed": {
+        "schemaVersion": "model-anchor-selection-1.0.0",
+        "sourceId": "rco-task-b8-06",
+        "sourceVersionId": "source-v1",
+        "sourceFingerprint": "sha256:4824b090b50d15ec839d7016ec0c3453b7fcebe9520c7b7f2dd3b4735c83a503",
+        "producerRunId": "candidate-rco-5-008-b8-m1-20260904a-rco-task-b8-06",
+        "directives": [
+          {
+            "id": "directive-1",
+            "propositionScopeIds": [
+              "scope-0001-27b03a4585c0de99cdcf4a27612e2504e2f5e7c5bf95d9d4de1fdaa585290ff2"
+            ],
+            "action": {
+              "scopeId": "scope-0001-27b03a4585c0de99cdcf4a27612e2504e2f5e7c5bf95d9d4de1fdaa585290ff2",
+              "surface": "可以自行打印"
+            },
+            "object": {
+              "scopeId": "scope-0001-27b03a4585c0de99cdcf4a27612e2504e2f5e7c5bf95d9d4de1fdaa585290ff2",
+              "surface": "草稿"
+            }
+          },
+          {
+            "id": "directive-2",
+            "propositionScopeIds": [
+              "scope-0002-83996d782cd9c1f73bacb51c42a079d264b9fbadd6971d17cf4dbe04e2399518"
+            ],
+            "action": {
+              "scopeId": "scope-0002-83996d782cd9c1f73bacb51c42a079d264b9fbadd6971d17cf4dbe04e2399518",
+              "surface": "请提交"
+            },
+            "object": {
+              "scopeId": "scope-0002-83996d782cd9c1f73bacb51c42a079d264b9fbadd6971d17cf4dbe04e2399518",
+              "surface": "电子定稿"
+            }
+          }
+        ],
+        "ignoredScopeIds": []
+      },
+      "rawOutputText": "{\"schemaVersion\":\"model-anchor-selection-1.0.0\",\"sourceId\":\"rco-task-b8-06\",\"sourceVersionId\":\"source-v1\",\"sourceFingerprint\":\"sha256:4824b090b50d15ec839d7016ec0c3453b7fcebe9520c7b7f2dd3b4735c83a503\",\"producerRunId\":\"candidate-rco-5-008-b8-m1-20260904a-rco-task-b8-06\",\"directives\":[{\"id\":\"directive-1\",\"propositionScopeIds\":[\"scope-0001-27b03a4585c0de99cdcf4a27612e2504e2f5e7c5bf95d9d4de1fdaa585290ff2\"],\"action\":{\"scopeId\":\"scope-0001-27b03a4585c0de99cdcf4a27612e2504e2f5e7c5bf95d9d4de1fdaa585290ff2\",\"surface\":\"可以自行打印\"},\"object\":{\"scopeId\":\"scope-0001-27b03a4585c0de99cdcf4a27612e2504e2f5e7c5bf95d9d4de1fdaa585290ff2\",\"surface\":\"草稿\"}},{\"id\":\"directive-2\",\"propositionScopeIds\":[\"scope-0002-83996d782cd9c1f73bacb51c42a079d264b9fbadd6971d17cf4dbe04e2399518\"],\"action\":{\"scopeId\":\"scope-0002-83996d782cd9c1f73bacb51c42a079d264b9fbadd6971d17cf4dbe04e2399518\",\"surface\":\"请提交\"},\"object\":{\"scopeId\":\"scope-0002-83996d782cd9c1f73bacb51c42a079d264b9fbadd6971d17cf4dbe04e2399518\",\"surface\":\"电子定稿\"}}],\"ignoredScopeIds\":[]}"
+    },
+    {
+      "key": "rco-task-b8-07:candidate",
+      "caseId": "rco-task-b8-07",
+      "role": "candidate",
+      "dispatched": true,
+      "attemptNo": 1,
+      "status": "completed_valid",
+      "httpStatus": 200,
+      "responseId": "16f2c00e-e7ba-4957-8440-1cfb3a36df4b",
+      "responseModel": "deepseek-v4-flash-vision-exp",
+      "responseStatus": "completed",
+      "requestSha256": "42df38121d8c017700d0149f57181b6635e96ae9009ea6b22d150ad27dfa36a7",
+      "providerUsage": {
+        "inputTokens": 999,
+        "outputTokens": 323,
+        "totalTokens": 1322
+      },
+      "schemaIssues": [],
+      "parsed": {
+        "schemaVersion": "model-anchor-selection-1.0.0",
+        "sourceId": "rco-task-b8-07",
+        "sourceVersionId": "source-v1",
+        "sourceFingerprint": "sha256:8bdf7ec581953c53e146b64bba602184876aea6ef746caee822a8a10bb9624f9",
+        "producerRunId": "candidate-rco-5-008-b8-m1-20260904a-rco-task-b8-07",
+        "directives": [
+          {
+            "id": "dir-001",
+            "propositionScopeIds": [
+              "scope-0002-62706adcfaec9bc824ef9cb768d7b15342e8fcfbf58c3f7b40928f95189bb9d9"
+            ],
+            "action": {
+              "scopeId": "scope-0002-62706adcfaec9bc824ef9cb768d7b15342e8fcfbf58c3f7b40928f95189bb9d9",
+              "surface": "请核对"
+            },
+            "object": {
+              "scopeId": "scope-0002-62706adcfaec9bc824ef9cb768d7b15342e8fcfbf58c3f7b40928f95189bb9d9",
+              "surface": "缺失项"
+            }
+          }
+        ],
+        "ignoredScopeIds": [
+          "scope-0001-f2759702080cddc0ee03e3855738862129bde6e02f691c6a64967ab385507813"
+        ]
+      },
+      "rawOutputText": "{\"schemaVersion\":\"model-anchor-selection-1.0.0\",\"sourceId\":\"rco-task-b8-07\",\"sourceVersionId\":\"source-v1\",\"sourceFingerprint\":\"sha256:8bdf7ec581953c53e146b64bba602184876aea6ef746caee822a8a10bb9624f9\",\"producerRunId\":\"candidate-rco-5-008-b8-m1-20260904a-rco-task-b8-07\",\"directives\":[{\"id\":\"dir-001\",\"propositionScopeIds\":[\"scope-0002-62706adcfaec9bc824ef9cb768d7b15342e8fcfbf58c3f7b40928f95189bb9d9\"],\"action\":{\"scopeId\":\"scope-0002-62706adcfaec9bc824ef9cb768d7b15342e8fcfbf58c3f7b40928f95189bb9d9\",\"surface\":\"请核对\"},\"object\":{\"scopeId\":\"scope-0002-62706adcfaec9bc824ef9cb768d7b15342e8fcfbf58c3f7b40928f95189bb9d9\",\"surface\":\"缺失项\"}}],\"ignoredScopeIds\":[\"scope-0001-f2759702080cddc0ee03e3855738862129bde6e02f691c6a64967ab385507813\"]}"
+    },
+    {
+      "key": "rco-task-b8-08:candidate",
+      "caseId": "rco-task-b8-08",
+      "role": "candidate",
+      "dispatched": true,
+      "attemptNo": 1,
+      "status": "completed_valid",
+      "httpStatus": 200,
+      "responseId": "b44527e3-d217-429c-ac40-9fc70e99ca34",
+      "responseModel": "deepseek-v4-flash-vision-exp",
+      "responseStatus": "completed",
+      "requestSha256": "bc151ec9753bbf2f2af33c876d33a7c763e425d747dd2cbee4a52a40a048cd06",
+      "providerUsage": {
+        "inputTokens": 1010,
+        "outputTokens": 447,
+        "totalTokens": 1457
+      },
+      "schemaIssues": [],
+      "parsed": {
+        "schemaVersion": "model-anchor-selection-1.0.0",
+        "sourceId": "rco-task-b8-08",
+        "sourceVersionId": "source-v1",
+        "sourceFingerprint": "sha256:cd5c41a9fb6818f8d47cef065c05ee23024de3591c4ce1424d547ff2b7e67754",
+        "producerRunId": "candidate-rco-5-008-b8-m1-20260904a-rco-task-b8-08",
+        "directives": [
+          {
+            "id": "directive-1",
+            "propositionScopeIds": [
+              "scope-0001-bd34cfca7e73a3dff122392db3cae312f4025f0a251bc03f68afa4ea604cc412"
+            ],
+            "action": {
+              "scopeId": "scope-0001-bd34cfca7e73a3dff122392db3cae312f4025f0a251bc03f68afa4ea604cc412",
+              "surface": "上传"
+            },
+            "object": {
+              "scopeId": "scope-0001-bd34cfca7e73a3dff122392db3cae312f4025f0a251bc03f68afa4ea604cc412",
+              "surface": "设备日志"
+            }
+          },
+          {
+            "id": "directive-2",
+            "propositionScopeIds": [
+              "scope-0002-a50e8ca8344de6bad6ba6678eafdb15750e2f2d30a47f4f507545c50852fded6"
+            ],
+            "action": {
+              "scopeId": "scope-0002-a50e8ca8344de6bad6ba6678eafdb15750e2f2d30a47f4f507545c50852fded6",
+              "surface": "保存"
+            },
+            "object": {
+              "scopeId": "scope-0002-a50e8ca8344de6bad6ba6678eafdb15750e2f2d30a47f4f507545c50852fded6",
+              "surface": "故障编号"
+            }
+          }
+        ],
+        "ignoredScopeIds": []
+      },
+      "rawOutputText": "{\"schemaVersion\":\"model-anchor-selection-1.0.0\",\"sourceId\":\"rco-task-b8-08\",\"sourceVersionId\":\"source-v1\",\"sourceFingerprint\":\"sha256:cd5c41a9fb6818f8d47cef065c05ee23024de3591c4ce1424d547ff2b7e67754\",\"producerRunId\":\"candidate-rco-5-008-b8-m1-20260904a-rco-task-b8-08\",\"directives\":[{\"id\":\"directive-1\",\"propositionScopeIds\":[\"scope-0001-bd34cfca7e73a3dff122392db3cae312f4025f0a251bc03f68afa4ea604cc412\"],\"action\":{\"scopeId\":\"scope-0001-bd34cfca7e73a3dff122392db3cae312f4025f0a251bc03f68afa4ea604cc412\",\"surface\":\"上传\"},\"object\":{\"scopeId\":\"scope-0001-bd34cfca7e73a3dff122392db3cae312f4025f0a251bc03f68afa4ea604cc412\",\"surface\":\"设备日志\"}},{\"id\":\"directive-2\",\"propositionScopeIds\":[\"scope-0002-a50e8ca8344de6bad6ba6678eafdb15750e2f2d30a47f4f507545c50852fded6\"],\"action\":{\"scopeId\":\"scope-0002-a50e8ca8344de6bad6ba6678eafdb15750e2f2d30a47f4f507545c50852fded6\",\"surface\":\"保存\"},\"object\":{\"scopeId\":\"scope-0002-a50e8ca8344de6bad6ba6678eafdb15750e2f2d30a47f4f507545c50852fded6\",\"surface\":\"故障编号\"}}],\"ignoredScopeIds\":[]}"
+    },
+    {
+      "key": "rco-task-b8-09:candidate",
+      "caseId": "rco-task-b8-09",
+      "role": "candidate",
+      "dispatched": true,
+      "attemptNo": 1,
+      "status": "completed_valid",
+      "httpStatus": 200,
+      "responseId": "01a34125-6df6-433e-8a5c-c9b058ce4e94",
+      "responseModel": "deepseek-v4-flash-vision-exp",
+      "responseStatus": "completed",
+      "requestSha256": "1392122877ff37c1e31db98dce61f99768dcbabd357e44327d54fbb7dd12ae94",
+      "providerUsage": {
+        "inputTokens": 1018,
+        "outputTokens": 467,
+        "totalTokens": 1485
+      },
+      "schemaIssues": [],
+      "parsed": {
+        "schemaVersion": "model-anchor-selection-1.0.0",
+        "sourceId": "rco-task-b8-09",
+        "sourceVersionId": "source-v1",
+        "sourceFingerprint": "sha256:dac26cb03c2266e3b1e428064d135034503f8c55d7573cb0a9e101dddf248c7f",
+        "producerRunId": "candidate-rco-5-008-b8-m1-20260904a-rco-task-b8-09",
+        "directives": [
+          {
+            "id": "dir-1",
+            "propositionScopeIds": [
+              "scope-0001-9239f1e9dd6f2f10d1b244ddfc4d373f58edabf315dae1a4c83ea00038bfe6b3"
+            ],
+            "action": {
+              "scopeId": "scope-0001-9239f1e9dd6f2f10d1b244ddfc4d373f58edabf315dae1a4c83ea00038bfe6b3",
+              "surface": "联系"
+            },
+            "object": {
+              "scopeId": "scope-0001-9239f1e9dd6f2f10d1b244ddfc4d373f58edabf315dae1a4c83ea00038bfe6b3",
+              "surface": "校车司机"
+            }
+          },
+          {
+            "id": "dir-2",
+            "propositionScopeIds": [
+              "scope-0002-25e2b86063b74c19c247e61008be1e6195d9cac966894dfc94f250aa213fe81d"
+            ],
+            "action": {
+              "scopeId": "scope-0002-25e2b86063b74c19c247e61008be1e6195d9cac966894dfc94f250aa213fe81d",
+              "surface": "停止执行"
+            },
+            "object": {
+              "scopeId": "scope-0002-25e2b86063b74c19c247e61008be1e6195d9cac966894dfc94f250aa213fe81d",
+              "surface": "该安排"
+            }
+          }
+        ],
+        "ignoredScopeIds": []
+      },
+      "rawOutputText": "{\"schemaVersion\":\"model-anchor-selection-1.0.0\",\"sourceId\":\"rco-task-b8-09\",\"sourceVersionId\":\"source-v1\",\"sourceFingerprint\":\"sha256:dac26cb03c2266e3b1e428064d135034503f8c55d7573cb0a9e101dddf248c7f\",\"producerRunId\":\"candidate-rco-5-008-b8-m1-20260904a-rco-task-b8-09\",\"directives\":[{\"id\":\"dir-1\",\"propositionScopeIds\":[\"scope-0001-9239f1e9dd6f2f10d1b244ddfc4d373f58edabf315dae1a4c83ea00038bfe6b3\"],\"action\":{\"scopeId\":\"scope-0001-9239f1e9dd6f2f10d1b244ddfc4d373f58edabf315dae1a4c83ea00038bfe6b3\",\"surface\":\"联系\"},\"object\":{\"scopeId\":\"scope-0001-9239f1e9dd6f2f10d1b244ddfc4d373f58edabf315dae1a4c83ea00038bfe6b3\",\"surface\":\"校车司机\"}},{\"id\":\"dir-2\",\"propositionScopeIds\":[\"scope-0002-25e2b86063b74c19c247e61008be1e6195d9cac966894dfc94f250aa213fe81d\"],\"action\":{\"scopeId\":\"scope-0002-25e2b86063b74c19c247e61008be1e6195d9cac966894dfc94f250aa213fe81d\",\"surface\":\"停止执行\"},\"object\":{\"scopeId\":\"scope-0002-25e2b86063b74c19c247e61008be1e6195d9cac966894dfc94f250aa213fe81d\",\"surface\":\"该安排\"}}],\"ignoredScopeIds\":[]}"
+    },
+    {
+      "key": "rco-task-b8-10:candidate",
+      "caseId": "rco-task-b8-10",
+      "role": "candidate",
+      "dispatched": true,
+      "attemptNo": 1,
+      "status": "completed_valid",
+      "httpStatus": 200,
+      "responseId": "4b5725d7-112d-4f9b-9446-1bc590db7770",
+      "responseModel": "deepseek-v4-flash-vision-exp",
+      "responseStatus": "completed",
+      "requestSha256": "0526173b4a8919e369309131255a06dcc42dec8de47eb6c9dfc947d0f94f0479",
+      "providerUsage": {
+        "inputTokens": 1071,
+        "outputTokens": 494,
+        "totalTokens": 1565
+      },
+      "schemaIssues": [],
+      "parsed": {
+        "schemaVersion": "model-anchor-selection-1.0.0",
+        "sourceId": "rco-task-b8-10",
+        "sourceVersionId": "source-v1",
+        "sourceFingerprint": "sha256:4630c928cec20ab2c07ee65de657432ec7d4d25afc72733e88889bd2102e071c",
+        "producerRunId": "candidate-rco-5-008-b8-m1-20260904a-rco-task-b8-10",
+        "directives": [
+          {
+            "id": "directive-1",
+            "propositionScopeIds": [
+              "scope-0001-0b739b175f582aab107232ad5cab15a0a009b4d660bb8b63e916f2242f66707c"
+            ],
+            "action": {
+              "scopeId": "scope-0001-0b739b175f582aab107232ad5cab15a0a009b4d660bb8b63e916f2242f66707c",
+              "surface": "打印"
+            },
+            "object": {
+              "scopeId": "scope-0001-0b739b175f582aab107232ad5cab15a0a009b4d660bb8b63e916f2242f66707c",
+              "surface": "旧凭证"
+            }
+          },
+          {
+            "id": "directive-2",
+            "propositionScopeIds": [
+              "scope-0003-282b258ab6d191fc5c3463e8fa0b1d43e8e8f59694e7ad7ca4fb22116271cd22"
+            ],
+            "action": {
+              "scopeId": "scope-0003-282b258ab6d191fc5c3463e8fa0b1d43e8e8f59694e7ad7ca4fb22116271cd22",
+              "surface": "保存"
+            },
+            "object": {
+              "scopeId": "scope-0003-282b258ab6d191fc5c3463e8fa0b1d43e8e8f59694e7ad7ca4fb22116271cd22",
+              "surface": "电子凭证"
+            }
+          }
+        ],
+        "ignoredScopeIds": [
+          "scope-0002-da818cf30adc5b7e6f9a3881ed078a59e21de8f597a269418ea76ad0268984ef"
+        ]
+      },
+      "rawOutputText": "{\"schemaVersion\":\"model-anchor-selection-1.0.0\",\"sourceId\":\"rco-task-b8-10\",\"sourceVersionId\":\"source-v1\",\"sourceFingerprint\":\"sha256:4630c928cec20ab2c07ee65de657432ec7d4d25afc72733e88889bd2102e071c\",\"producerRunId\":\"candidate-rco-5-008-b8-m1-20260904a-rco-task-b8-10\",\"directives\":[{\"id\":\"directive-1\",\"propositionScopeIds\":[\"scope-0001-0b739b175f582aab107232ad5cab15a0a009b4d660bb8b63e916f2242f66707c\"],\"action\":{\"scopeId\":\"scope-0001-0b739b175f582aab107232ad5cab15a0a009b4d660bb8b63e916f2242f66707c\",\"surface\":\"打印\"},\"object\":{\"scopeId\":\"scope-0001-0b739b175f582aab107232ad5cab15a0a009b4d660bb8b63e916f2242f66707c\",\"surface\":\"旧凭证\"}},{\"id\":\"directive-2\",\"propositionScopeIds\":[\"scope-0003-282b258ab6d191fc5c3463e8fa0b1d43e8e8f59694e7ad7ca4fb22116271cd22\"],\"action\":{\"scopeId\":\"scope-0003-282b258ab6d191fc5c3463e8fa0b1d43e8e8f59694e7ad7ca4fb22116271cd22\",\"surface\":\"保存\"},\"object\":{\"scopeId\":\"scope-0003-282b258ab6d191fc5c3463e8fa0b1d43e8e8f59694e7ad7ca4fb22116271cd22\",\"surface\":\"电子凭证\"}}],\"ignoredScopeIds\":[\"scope-0002-da818cf30adc5b7e6f9a3881ed078a59e21de8f597a269418ea76ad0268984ef\"]}"
+    },
+    {
+      "key": "rco-task-b8-11:candidate",
+      "caseId": "rco-task-b8-11",
+      "role": "candidate",
+      "dispatched": true,
+      "attemptNo": 1,
+      "status": "completed_valid",
+      "httpStatus": 200,
+      "responseId": "6890cfae-a9dc-4146-8d9b-163b9abf83eb",
+      "responseModel": "deepseek-v4-flash-vision-exp",
+      "responseStatus": "completed",
+      "requestSha256": "55486421fa72b96baabdd0386428fec65ffa337127dcd53c4e941d2cd61765fe",
+      "providerUsage": {
+        "inputTokens": 1014,
+        "outputTokens": 327,
+        "totalTokens": 1341
+      },
+      "schemaIssues": [],
+      "parsed": {
+        "schemaVersion": "model-anchor-selection-1.0.0",
+        "sourceId": "rco-task-b8-11",
+        "sourceVersionId": "source-v1",
+        "sourceFingerprint": "sha256:63a94bc61c0f8fd820f69332f64d31e0ab511c7ebf91ec9df267358d8b60ba48",
+        "producerRunId": "candidate-rco-5-008-b8-m1-20260904a-rco-task-b8-11",
+        "directives": [
+          {
+            "id": "directive-1",
+            "propositionScopeIds": [
+              "scope-0002-f35056c3c54148187f199e05726ea20ae2a924d6bcbf105d7af05bfbda1fc6c0"
+            ],
+            "action": {
+              "scopeId": "scope-0002-f35056c3c54148187f199e05726ea20ae2a924d6bcbf105d7af05bfbda1fc6c0",
+              "surface": "填写"
+            },
+            "object": {
+              "scopeId": "scope-0002-f35056c3c54148187f199e05726ea20ae2a924d6bcbf105d7af05bfbda1fc6c0",
+              "surface": "在线登记表"
+            }
+          }
+        ],
+        "ignoredScopeIds": [
+          "scope-0001-bb895bd46cc621af63903be2f2a61ef85b8ff13f367a583673bcd434d71a2d94"
+        ]
+      },
+      "rawOutputText": "{\"schemaVersion\":\"model-anchor-selection-1.0.0\",\"sourceId\":\"rco-task-b8-11\",\"sourceVersionId\":\"source-v1\",\"sourceFingerprint\":\"sha256:63a94bc61c0f8fd820f69332f64d31e0ab511c7ebf91ec9df267358d8b60ba48\",\"producerRunId\":\"candidate-rco-5-008-b8-m1-20260904a-rco-task-b8-11\",\"directives\":[{\"id\":\"directive-1\",\"propositionScopeIds\":[\"scope-0002-f35056c3c54148187f199e05726ea20ae2a924d6bcbf105d7af05bfbda1fc6c0\"],\"action\":{\"scopeId\":\"scope-0002-f35056c3c54148187f199e05726ea20ae2a924d6bcbf105d7af05bfbda1fc6c0\",\"surface\":\"填写\"},\"object\":{\"scopeId\":\"scope-0002-f35056c3c54148187f199e05726ea20ae2a924d6bcbf105d7af05bfbda1fc6c0\",\"surface\":\"在线登记表\"}}],\"ignoredScopeIds\":[\"scope-0001-bb895bd46cc621af63903be2f2a61ef85b8ff13f367a583673bcd434d71a2d94\"]}"
+    },
+    {
+      "key": "rco-task-b8-12:candidate",
+      "caseId": "rco-task-b8-12",
+      "role": "candidate",
+      "dispatched": true,
+      "attemptNo": 1,
+      "status": "completed_valid",
+      "httpStatus": 200,
+      "responseId": "dccfc89b-5f68-45bc-8292-f34016bedd3d",
+      "responseModel": "deepseek-v4-flash-vision-exp",
+      "responseStatus": "completed",
+      "requestSha256": "0de6f09e410a6a4d0677015f3a11b0b5d33eb8a1fcd90d02e4889246a4a6e6a2",
+      "providerUsage": {
+        "inputTokens": 1074,
+        "outputTokens": 604,
+        "totalTokens": 1678
+      },
+      "schemaIssues": [],
+      "parsed": {
+        "schemaVersion": "model-anchor-selection-1.0.0",
+        "sourceId": "rco-task-b8-12",
+        "sourceVersionId": "source-v1",
+        "sourceFingerprint": "sha256:3d8501f8f243105f31fe3477ed4dd92f664054a8abd0af0a3a4ae77e3d72e2ca",
+        "producerRunId": "candidate-rco-5-008-b8-m1-20260904a-rco-task-b8-12",
+        "directives": [
+          {
+            "id": "d1",
+            "propositionScopeIds": [
+              "scope-0001-5d8833572b762edf0aded25749b249ba6f8f235ab053b2afa0f8733d02065be4"
+            ],
+            "action": {
+              "scopeId": "scope-0001-5d8833572b762edf0aded25749b249ba6f8f235ab053b2afa0f8733d02065be4",
+              "surface": "要求发送"
+            },
+            "object": {
+              "scopeId": "scope-0001-5d8833572b762edf0aded25749b249ba6f8f235ab053b2afa0f8733d02065be4",
+              "surface": "甲清单"
+            }
+          },
+          {
+            "id": "d2",
+            "propositionScopeIds": [
+              "scope-0002-da632e210eee982b17bfa4605b839649ee2abf8f5a99aa8b22c39ab3e0075897"
+            ],
+            "action": {
+              "scopeId": "scope-0002-da632e210eee982b17bfa4605b839649ee2abf8f5a99aa8b22c39ab3e0075897",
+              "surface": "要求发送"
+            },
+            "object": {
+              "scopeId": "scope-0002-da632e210eee982b17bfa4605b839649ee2abf8f5a99aa8b22c39ab3e0075897",
+              "surface": "乙清单"
+            }
+          },
+          {
+            "id": "d3",
+            "propositionScopeIds": [
+              "scope-0003-c82eddef36950a80c6dc88490615c38ab91e5e5e51706b9e8fcebb11b9ef7544"
+            ],
+            "action": {
+              "scopeId": "scope-0003-c82eddef36950a80c6dc88490615c38ab91e5e5e51706b9e8fcebb11b9ef7544",
+              "surface": "取消"
+            },
+            "object": {
+              "scopeId": "scope-0003-c82eddef36950a80c6dc88490615c38ab91e5e5e51706b9e8fcebb11b9ef7544",
+              "surface": "上述任务"
+            }
+          }
+        ],
+        "ignoredScopeIds": []
+      },
+      "rawOutputText": "{\"schemaVersion\":\"model-anchor-selection-1.0.0\",\"sourceId\":\"rco-task-b8-12\",\"sourceVersionId\":\"source-v1\",\"sourceFingerprint\":\"sha256:3d8501f8f243105f31fe3477ed4dd92f664054a8abd0af0a3a4ae77e3d72e2ca\",\"producerRunId\":\"candidate-rco-5-008-b8-m1-20260904a-rco-task-b8-12\",\"directives\":[{\"id\":\"d1\",\"propositionScopeIds\":[\"scope-0001-5d8833572b762edf0aded25749b249ba6f8f235ab053b2afa0f8733d02065be4\"],\"action\":{\"scopeId\":\"scope-0001-5d8833572b762edf0aded25749b249ba6f8f235ab053b2afa0f8733d02065be4\",\"surface\":\"要求发送\"},\"object\":{\"scopeId\":\"scope-0001-5d8833572b762edf0aded25749b249ba6f8f235ab053b2afa0f8733d02065be4\",\"surface\":\"甲清单\"}},{\"id\":\"d2\",\"propositionScopeIds\":[\"scope-0002-da632e210eee982b17bfa4605b839649ee2abf8f5a99aa8b22c39ab3e0075897\"],\"action\":{\"scopeId\":\"scope-0002-da632e210eee982b17bfa4605b839649ee2abf8f5a99aa8b22c39ab3e0075897\",\"surface\":\"要求发送\"},\"object\":{\"scopeId\":\"scope-0002-da632e210eee982b17bfa4605b839649ee2abf8f5a99aa8b22c39ab3e0075897\",\"surface\":\"乙清单\"}},{\"id\":\"d3\",\"propositionScopeIds\":[\"scope-0003-c82eddef36950a80c6dc88490615c38ab91e5e5e51706b9e8fcebb11b9ef7544\"],\"action\":{\"scopeId\":\"scope-0003-c82eddef36950a80c6dc88490615c38ab91e5e5e51706b9e8fcebb11b9ef7544\",\"surface\":\"取消\"},\"object\":{\"scopeId\":\"scope-0003-c82eddef36950a80c6dc88490615c38ab91e5e5e51706b9e8fcebb11b9ef7544\",\"surface\":\"上述任务\"}}],\"ignoredScopeIds\":[]}"
+    }
+  ]
 }

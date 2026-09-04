@@ -1,0 +1,1717 @@
+{
+  "schemaVersion": "rco-5-008-b8-m1-score-1.0.0",
+  "runId": "rco-5-008-b8-m1-20260904a",
+  "authorizationId": "RCO-5-008-B8-M1",
+  "generatedAt": "2026-09-04T13:21:16.900Z",
+  "runStatus": "FINISHED",
+  "stopReason": null,
+  "datasetId": "rco-5-008-b8-development-20260904",
+  "datasetClassification": "anonymous_synthetic_codex_authored_model_anchor_selection_development",
+  "labelProvenance": "Codex-authored reference labels; not independent human ground truth",
+  "model": "deepseek-v4-flash-vision-exp",
+  "endpoint": "https://api.deepseek.com/responses",
+  "apiStyle": "responses-v1-strict-json-schema",
+  "temperature": 0,
+  "thinking": "none",
+  "maximumOutputTokens": 3000,
+  "plannedCandidateCalls": 12,
+  "maximumDispatches": 12,
+  "verifierCalls": 0,
+  "repairCalls": 0,
+  "retryCalls": 0,
+  "cnyHardCap": 10,
+  "maximumTheoreticalCostCny": 2.2053504000000004,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "observedConservativePeakPriceCostCny": 0.1229404,
+  "accounting": {
+    "dispatches": 12,
+    "terminalResponses": 12,
+    "strictSchemaValid": 12,
+    "candidateCalls": 12,
+    "verifierCalls": 0,
+    "repairCalls": 0,
+    "retryCalls": 0
+  },
+  "usage": {
+    "complete": true,
+    "dispatchedRecords": 12,
+    "observedRecords": 12,
+    "inputTokens": 12407,
+    "outputTokens": 5178,
+    "totalTokens": 17585
+  },
+  "evaluation": {
+    "cases": [
+      {
+        "caseId": "rco-task-b8-01",
+        "coverageTags": [
+          "compound_action",
+          "same_scope"
+        ],
+        "modelStatus": "completed_valid",
+        "schemaIssues": [],
+        "anchorScore": {
+          "scope": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0
+          },
+          "actionExact": {
+            "correct": 2,
+            "total": 2
+          },
+          "objectExact": {
+            "correct": 2,
+            "total": 2
+          },
+          "completeAnchorCase": true
+        },
+        "composerIssues": [],
+        "composerWarnings": [],
+        "actionNormalizations": [
+          {
+            "directiveId": "d1",
+            "scopeId": "scope-0001-5bbc2d9b7401a8a2c187401e120b2ab6e1adec04e2f7010841509348d07fe04d",
+            "originalSurface": "整理",
+            "canonicalSurface": "整理",
+            "status": "unchanged",
+            "candidates": [
+              "整理"
+            ]
+          },
+          {
+            "directiveId": "d2",
+            "scopeId": "scope-0001-5bbc2d9b7401a8a2c187401e120b2ab6e1adec04e2f7010841509348d07fe04d",
+            "originalSurface": "保存",
+            "canonicalSurface": "保存",
+            "status": "unchanged",
+            "candidates": [
+              "保存"
+            ]
+          }
+        ],
+        "conditionAttachments": [],
+        "contractIssues": [],
+        "prediction": {
+          "caseId": "rco-task-b8-01",
+          "status": "completed",
+          "requiresAction": true,
+          "tasks": [
+            {
+              "id": "task-1",
+              "propositionScopeTexts": [
+                "请整理器材清点表并保存归档副本。"
+              ],
+              "semantics": {
+                "actor": "addressee",
+                "speechAct": "directive",
+                "polarity": "affirmative",
+                "tense": "future",
+                "status": "pending",
+                "validity": "active",
+                "modality": "required"
+              },
+              "inferenceLevel": "explicit",
+              "actionType": "prepare",
+              "action": "整理",
+              "object": "器材清点表",
+              "effect": "local_change",
+              "selected": true
+            },
+            {
+              "id": "task-2",
+              "propositionScopeTexts": [
+                "请整理器材清点表并保存归档副本。"
+              ],
+              "semantics": {
+                "actor": "addressee",
+                "speechAct": "directive",
+                "polarity": "affirmative",
+                "tense": "future",
+                "status": "pending",
+                "validity": "active",
+                "modality": "required"
+              },
+              "inferenceLevel": "explicit",
+              "actionType": "save",
+              "action": "保存",
+              "object": "归档副本",
+              "effect": "local_change",
+              "selected": true
+            }
+          ]
+        },
+        "taskScore": {
+          "caseId": "rco-task-b8-01",
+          "scoreable": true,
+          "taskCounts": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0
+          },
+          "taskPrecision": 1,
+          "taskRecall": 1,
+          "taskF1": 1,
+          "requiresActionCorrect": true,
+          "exactTaskBoundary": true,
+          "semanticFields": {
+            "correct": 14,
+            "total": 14
+          },
+          "safeDefaults": {
+            "correct": 2,
+            "total": 2
+          },
+          "forbiddenDefaultSelections": 0,
+          "completeTaskCase": true,
+          "majorCorrection": false
+        },
+        "safetyScore": {
+          "matchedTasks": 2,
+          "expectedTasks": 2,
+          "predictedTasks": 2,
+          "actionSurfaceExact": 1,
+          "objectSurfaceExact": 1,
+          "unsafeDefaultFalsePositives": 0,
+          "unsafeDefaultFalsePositiveRate": null,
+          "unsafeDefaultTaskIds": []
+        },
+        "relationScore": {
+          "expected": [],
+          "actual": [],
+          "exact": true
+        },
+        "expectedRelations": [],
+        "actualRelations": [],
+        "relationExact": true,
+        "expectedUnresolvedScopeTexts": [],
+        "actualUnresolvedScopeTexts": [],
+        "unresolvedExact": true
+      },
+      {
+        "caseId": "rco-task-b8-02",
+        "coverageTags": [
+          "quoted_instruction",
+          "object_fidelity"
+        ],
+        "modelStatus": "completed_valid",
+        "schemaIssues": [],
+        "anchorScore": {
+          "scope": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0
+          },
+          "actionExact": {
+            "correct": 0,
+            "total": 1
+          },
+          "objectExact": {
+            "correct": 1,
+            "total": 1
+          },
+          "completeAnchorCase": false
+        },
+        "composerIssues": [],
+        "composerWarnings": [],
+        "actionNormalizations": [
+          {
+            "directiveId": "directive-1",
+            "scopeId": "scope-0003-fa14f6ec013779a5d4d701b59f762a6b9eadd8bb6f9eda0cad9008dcec0cafb0",
+            "originalSurface": "请核验",
+            "canonicalSurface": "核验",
+            "status": "normalized",
+            "candidates": [
+              "核验"
+            ]
+          }
+        ],
+        "conditionAttachments": [],
+        "contractIssues": [],
+        "prediction": {
+          "caseId": "rco-task-b8-02",
+          "status": "completed",
+          "requiresAction": true,
+          "tasks": [
+            {
+              "id": "task-1",
+              "propositionScopeTexts": [
+                "请核验设备借用编号。"
+              ],
+              "semantics": {
+                "actor": "addressee",
+                "speechAct": "directive",
+                "polarity": "affirmative",
+                "tense": "future",
+                "status": "pending",
+                "validity": "active",
+                "modality": "required"
+              },
+              "inferenceLevel": "explicit",
+              "actionType": "review",
+              "action": "核验",
+              "object": "设备借用编号",
+              "effect": "local_change",
+              "selected": true
+            }
+          ]
+        },
+        "taskScore": {
+          "caseId": "rco-task-b8-02",
+          "scoreable": true,
+          "taskCounts": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0
+          },
+          "taskPrecision": 1,
+          "taskRecall": 1,
+          "taskF1": 1,
+          "requiresActionCorrect": true,
+          "exactTaskBoundary": true,
+          "semanticFields": {
+            "correct": 7,
+            "total": 7
+          },
+          "safeDefaults": {
+            "correct": 1,
+            "total": 1
+          },
+          "forbiddenDefaultSelections": 0,
+          "completeTaskCase": true,
+          "majorCorrection": false
+        },
+        "safetyScore": {
+          "matchedTasks": 1,
+          "expectedTasks": 1,
+          "predictedTasks": 1,
+          "actionSurfaceExact": 1,
+          "objectSurfaceExact": 1,
+          "unsafeDefaultFalsePositives": 0,
+          "unsafeDefaultFalsePositiveRate": null,
+          "unsafeDefaultTaskIds": []
+        },
+        "relationScore": {
+          "expected": [],
+          "actual": [],
+          "exact": true
+        },
+        "expectedRelations": [],
+        "actualRelations": [],
+        "relationExact": true,
+        "expectedUnresolvedScopeTexts": [],
+        "actualUnresolvedScopeTexts": [],
+        "unresolvedExact": true
+      },
+      {
+        "caseId": "rco-task-b8-03",
+        "coverageTags": [
+          "condition_true",
+          "cross_scope"
+        ],
+        "modelStatus": "completed_valid",
+        "schemaIssues": [],
+        "anchorScore": {
+          "scope": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 1
+          },
+          "actionExact": {
+            "correct": 0,
+            "total": 1
+          },
+          "objectExact": {
+            "correct": 1,
+            "total": 1
+          },
+          "completeAnchorCase": false
+        },
+        "composerIssues": [],
+        "composerWarnings": [],
+        "actionNormalizations": [
+          {
+            "directiveId": "directive-1",
+            "scopeId": "scope-0002-eb0e6b69f557f6606f1813754f3d85201fabb34d91d56f568795972630354d0d",
+            "originalSurface": "请填写",
+            "canonicalSurface": "填写",
+            "status": "normalized",
+            "candidates": [
+              "填写"
+            ]
+          }
+        ],
+        "conditionAttachments": [
+          {
+            "directiveId": "directive-1",
+            "conditionScopeId": "scope-0001-0ccb38e8545a200d367a38e8e44e8b6cf2f4e9a1429383ad70330c394dafbda0",
+            "attachedScopeIds": [
+              "scope-0003-481977cb94b6cf7397424dfe39752c5c892176d9486f8e0e8fc8dc135e44d486"
+            ],
+            "truth": "true",
+            "status": "attached_unique"
+          }
+        ],
+        "contractIssues": [],
+        "prediction": {
+          "caseId": "rco-task-b8-03",
+          "status": "completed",
+          "requiresAction": true,
+          "tasks": [
+            {
+              "id": "task-1",
+              "propositionScopeTexts": [
+                "如果回执编号仍为空，",
+                "请填写补充说明。",
+                "经确认回执编号仍为空。"
+              ],
+              "semantics": {
+                "actor": "addressee",
+                "speechAct": "directive",
+                "polarity": "affirmative",
+                "tense": "future",
+                "status": "pending",
+                "validity": "active",
+                "modality": "required"
+              },
+              "inferenceLevel": "explicit",
+              "actionType": "fill",
+              "action": "填写",
+              "object": "补充说明",
+              "effect": "local_change",
+              "selected": true
+            }
+          ]
+        },
+        "taskScore": {
+          "caseId": "rco-task-b8-03",
+          "scoreable": true,
+          "taskCounts": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0
+          },
+          "taskPrecision": 1,
+          "taskRecall": 1,
+          "taskF1": 1,
+          "requiresActionCorrect": true,
+          "exactTaskBoundary": true,
+          "semanticFields": {
+            "correct": 7,
+            "total": 7
+          },
+          "safeDefaults": {
+            "correct": 1,
+            "total": 1
+          },
+          "forbiddenDefaultSelections": 0,
+          "completeTaskCase": true,
+          "majorCorrection": false
+        },
+        "safetyScore": {
+          "matchedTasks": 1,
+          "expectedTasks": 1,
+          "predictedTasks": 1,
+          "actionSurfaceExact": 1,
+          "objectSurfaceExact": 1,
+          "unsafeDefaultFalsePositives": 0,
+          "unsafeDefaultFalsePositiveRate": null,
+          "unsafeDefaultTaskIds": []
+        },
+        "relationScore": {
+          "expected": [],
+          "actual": [],
+          "exact": true
+        },
+        "expectedRelations": [],
+        "actualRelations": [],
+        "relationExact": true,
+        "expectedUnresolvedScopeTexts": [],
+        "actualUnresolvedScopeTexts": [],
+        "unresolvedExact": true
+      },
+      {
+        "caseId": "rco-task-b8-04",
+        "coverageTags": [
+          "condition_false",
+          "requires_action_false"
+        ],
+        "modelStatus": "completed_valid",
+        "schemaIssues": [],
+        "anchorScore": {
+          "scope": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 1
+          },
+          "actionExact": {
+            "correct": 0,
+            "total": 1
+          },
+          "objectExact": {
+            "correct": 1,
+            "total": 1
+          },
+          "completeAnchorCase": false
+        },
+        "composerIssues": [],
+        "composerWarnings": [],
+        "actionNormalizations": [
+          {
+            "directiveId": "directive-1",
+            "scopeId": "scope-0002-1b54825d58ee9d10c1315da3db560bb19d87456b5b72307c8a37a7a333a8b789",
+            "originalSurface": "请打印",
+            "canonicalSurface": "打印",
+            "status": "normalized",
+            "candidates": [
+              "打印"
+            ]
+          }
+        ],
+        "conditionAttachments": [
+          {
+            "directiveId": "directive-1",
+            "conditionScopeId": "scope-0001-a2d6e90146e729454e26ec230c73cb8a29b4170fc90aa32d24046ca25e6fe371",
+            "attachedScopeIds": [
+              "scope-0003-8a12718ccde9fd760a468a9ea9a20b664e7ef2c8f24b60bf7c63606c66c71573"
+            ],
+            "truth": "false",
+            "status": "attached_unique"
+          }
+        ],
+        "contractIssues": [],
+        "prediction": {
+          "caseId": "rco-task-b8-04",
+          "status": "completed",
+          "requiresAction": false,
+          "tasks": [
+            {
+              "id": "task-1",
+              "propositionScopeTexts": [
+                "若封面仍有污损，",
+                "请打印新封面。",
+                "目前并未出现封面仍有污损。"
+              ],
+              "semantics": {
+                "actor": "addressee",
+                "speechAct": "hypothetical",
+                "polarity": "uncertain",
+                "tense": "future",
+                "status": "unknown",
+                "validity": "uncertain",
+                "modality": "required"
+              },
+              "inferenceLevel": "explicit",
+              "actionType": "print",
+              "action": "打印",
+              "object": "新封面",
+              "effect": "physical_action",
+              "selected": false
+            }
+          ]
+        },
+        "taskScore": {
+          "caseId": "rco-task-b8-04",
+          "scoreable": true,
+          "taskCounts": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0
+          },
+          "taskPrecision": 1,
+          "taskRecall": 1,
+          "taskF1": 1,
+          "requiresActionCorrect": true,
+          "exactTaskBoundary": true,
+          "semanticFields": {
+            "correct": 7,
+            "total": 7
+          },
+          "safeDefaults": {
+            "correct": 0,
+            "total": 0
+          },
+          "forbiddenDefaultSelections": 0,
+          "completeTaskCase": true,
+          "majorCorrection": false
+        },
+        "safetyScore": {
+          "matchedTasks": 1,
+          "expectedTasks": 1,
+          "predictedTasks": 1,
+          "actionSurfaceExact": 1,
+          "objectSurfaceExact": 1,
+          "unsafeDefaultFalsePositives": 0,
+          "unsafeDefaultFalsePositiveRate": 0,
+          "unsafeDefaultTaskIds": []
+        },
+        "relationScore": {
+          "expected": [],
+          "actual": [],
+          "exact": true
+        },
+        "expectedRelations": [],
+        "actualRelations": [],
+        "relationExact": true,
+        "expectedUnresolvedScopeTexts": [],
+        "actualUnresolvedScopeTexts": [],
+        "unresolvedExact": true
+      },
+      {
+        "caseId": "rco-task-b8-05",
+        "coverageTags": [
+          "negative",
+          "local_action",
+          "safe_default"
+        ],
+        "modelStatus": "completed_valid",
+        "schemaIssues": [],
+        "anchorScore": {
+          "scope": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0
+          },
+          "actionExact": {
+            "correct": 0,
+            "total": 2
+          },
+          "objectExact": {
+            "correct": 2,
+            "total": 2
+          },
+          "completeAnchorCase": false
+        },
+        "composerIssues": [],
+        "composerWarnings": [],
+        "actionNormalizations": [
+          {
+            "directiveId": "directive-1",
+            "scopeId": "scope-0001-e4979a75f75e4aa1c0a05fe67d6eaa5cced42e3fe3320f44ae83537aec499438",
+            "originalSurface": "禁止保存",
+            "canonicalSurface": "保存",
+            "status": "normalized",
+            "candidates": [
+              "保存"
+            ]
+          },
+          {
+            "directiveId": "directive-2",
+            "scopeId": "scope-0002-2e86230a5da71df311538e332e647e4770e1cfd7cc92718d0ab091247997159c",
+            "originalSurface": "请保存",
+            "canonicalSurface": "保存",
+            "status": "normalized",
+            "candidates": [
+              "保存"
+            ]
+          }
+        ],
+        "conditionAttachments": [],
+        "contractIssues": [],
+        "prediction": {
+          "caseId": "rco-task-b8-05",
+          "status": "completed",
+          "requiresAction": true,
+          "tasks": [
+            {
+              "id": "task-1",
+              "propositionScopeTexts": [
+                "禁止保存包含身份证号的截图。"
+              ],
+              "semantics": {
+                "actor": "addressee",
+                "speechAct": "directive",
+                "polarity": "negative",
+                "tense": "future",
+                "status": "cancelled",
+                "validity": "active",
+                "modality": "required"
+              },
+              "inferenceLevel": "explicit",
+              "actionType": "save",
+              "action": "保存",
+              "object": "包含身份证号的截图",
+              "effect": "local_change",
+              "selected": false
+            },
+            {
+              "id": "task-2",
+              "propositionScopeTexts": [
+                "请保存脱敏摘要。"
+              ],
+              "semantics": {
+                "actor": "addressee",
+                "speechAct": "directive",
+                "polarity": "affirmative",
+                "tense": "future",
+                "status": "pending",
+                "validity": "active",
+                "modality": "required"
+              },
+              "inferenceLevel": "explicit",
+              "actionType": "save",
+              "action": "保存",
+              "object": "脱敏摘要",
+              "effect": "local_change",
+              "selected": true
+            }
+          ]
+        },
+        "taskScore": {
+          "caseId": "rco-task-b8-05",
+          "scoreable": true,
+          "taskCounts": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0
+          },
+          "taskPrecision": 1,
+          "taskRecall": 1,
+          "taskF1": 1,
+          "requiresActionCorrect": true,
+          "exactTaskBoundary": true,
+          "semanticFields": {
+            "correct": 14,
+            "total": 14
+          },
+          "safeDefaults": {
+            "correct": 1,
+            "total": 1
+          },
+          "forbiddenDefaultSelections": 0,
+          "completeTaskCase": true,
+          "majorCorrection": false
+        },
+        "safetyScore": {
+          "matchedTasks": 2,
+          "expectedTasks": 2,
+          "predictedTasks": 2,
+          "actionSurfaceExact": 1,
+          "objectSurfaceExact": 1,
+          "unsafeDefaultFalsePositives": 0,
+          "unsafeDefaultFalsePositiveRate": 0,
+          "unsafeDefaultTaskIds": []
+        },
+        "relationScore": {
+          "expected": [],
+          "actual": [],
+          "exact": true
+        },
+        "expectedRelations": [],
+        "actualRelations": [],
+        "relationExact": true,
+        "expectedUnresolvedScopeTexts": [],
+        "actualUnresolvedScopeTexts": [],
+        "unresolvedExact": true
+      },
+      {
+        "caseId": "rco-task-b8-06",
+        "coverageTags": [
+          "mixed_modality",
+          "external_effect"
+        ],
+        "modelStatus": "completed_valid",
+        "schemaIssues": [],
+        "anchorScore": {
+          "scope": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0
+          },
+          "actionExact": {
+            "correct": 0,
+            "total": 2
+          },
+          "objectExact": {
+            "correct": 2,
+            "total": 2
+          },
+          "completeAnchorCase": false
+        },
+        "composerIssues": [],
+        "composerWarnings": [],
+        "actionNormalizations": [
+          {
+            "directiveId": "directive-1",
+            "scopeId": "scope-0001-27b03a4585c0de99cdcf4a27612e2504e2f5e7c5bf95d9d4de1fdaa585290ff2",
+            "originalSurface": "可以自行打印",
+            "canonicalSurface": "打印",
+            "status": "normalized",
+            "candidates": [
+              "打印"
+            ]
+          },
+          {
+            "directiveId": "directive-2",
+            "scopeId": "scope-0002-83996d782cd9c1f73bacb51c42a079d264b9fbadd6971d17cf4dbe04e2399518",
+            "originalSurface": "请提交",
+            "canonicalSurface": "提交",
+            "status": "normalized",
+            "candidates": [
+              "提交"
+            ]
+          }
+        ],
+        "conditionAttachments": [],
+        "contractIssues": [],
+        "prediction": {
+          "caseId": "rco-task-b8-06",
+          "status": "completed",
+          "requiresAction": true,
+          "tasks": [
+            {
+              "id": "task-1",
+              "propositionScopeTexts": [
+                "草稿可以自行打印；"
+              ],
+              "semantics": {
+                "actor": "addressed_group",
+                "speechAct": "directive",
+                "polarity": "affirmative",
+                "tense": "future",
+                "status": "pending",
+                "validity": "active",
+                "modality": "optional"
+              },
+              "inferenceLevel": "explicit",
+              "actionType": "print",
+              "action": "打印",
+              "object": "草稿",
+              "effect": "physical_action",
+              "selected": false
+            },
+            {
+              "id": "task-2",
+              "propositionScopeTexts": [
+                "请提交电子定稿。"
+              ],
+              "semantics": {
+                "actor": "addressee",
+                "speechAct": "directive",
+                "polarity": "affirmative",
+                "tense": "future",
+                "status": "pending",
+                "validity": "active",
+                "modality": "required"
+              },
+              "inferenceLevel": "explicit",
+              "actionType": "submit",
+              "action": "提交",
+              "object": "电子定稿",
+              "effect": "external_transfer",
+              "selected": false
+            }
+          ]
+        },
+        "taskScore": {
+          "caseId": "rco-task-b8-06",
+          "scoreable": true,
+          "taskCounts": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0
+          },
+          "taskPrecision": 1,
+          "taskRecall": 1,
+          "taskF1": 1,
+          "requiresActionCorrect": true,
+          "exactTaskBoundary": true,
+          "semanticFields": {
+            "correct": 14,
+            "total": 14
+          },
+          "safeDefaults": {
+            "correct": 0,
+            "total": 0
+          },
+          "forbiddenDefaultSelections": 0,
+          "completeTaskCase": true,
+          "majorCorrection": false
+        },
+        "safetyScore": {
+          "matchedTasks": 2,
+          "expectedTasks": 2,
+          "predictedTasks": 2,
+          "actionSurfaceExact": 1,
+          "objectSurfaceExact": 1,
+          "unsafeDefaultFalsePositives": 0,
+          "unsafeDefaultFalsePositiveRate": 0,
+          "unsafeDefaultTaskIds": []
+        },
+        "relationScore": {
+          "expected": [],
+          "actual": [],
+          "exact": true
+        },
+        "expectedRelations": [],
+        "actualRelations": [],
+        "relationExact": true,
+        "expectedUnresolvedScopeTexts": [],
+        "actualUnresolvedScopeTexts": [],
+        "unresolvedExact": true
+      },
+      {
+        "caseId": "rco-task-b8-07",
+        "coverageTags": [
+          "completed",
+          "safe_default"
+        ],
+        "modelStatus": "completed_valid",
+        "schemaIssues": [],
+        "anchorScore": {
+          "scope": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 1
+          },
+          "actionExact": {
+            "correct": 0,
+            "total": 2
+          },
+          "objectExact": {
+            "correct": 1,
+            "total": 2
+          },
+          "completeAnchorCase": false
+        },
+        "composerIssues": [],
+        "composerWarnings": [],
+        "actionNormalizations": [
+          {
+            "directiveId": "dir-001",
+            "scopeId": "scope-0002-62706adcfaec9bc824ef9cb768d7b15342e8fcfbf58c3f7b40928f95189bb9d9",
+            "originalSurface": "请核对",
+            "canonicalSurface": "核对",
+            "status": "normalized",
+            "candidates": [
+              "核对"
+            ]
+          }
+        ],
+        "conditionAttachments": [],
+        "contractIssues": [],
+        "prediction": {
+          "caseId": "rco-task-b8-07",
+          "status": "completed",
+          "requiresAction": true,
+          "tasks": [
+            {
+              "id": "task-1",
+              "propositionScopeTexts": [
+                "请核对缺失项。"
+              ],
+              "semantics": {
+                "actor": "addressee",
+                "speechAct": "directive",
+                "polarity": "affirmative",
+                "tense": "future",
+                "status": "pending",
+                "validity": "active",
+                "modality": "required"
+              },
+              "inferenceLevel": "explicit",
+              "actionType": "review",
+              "action": "核对",
+              "object": "缺失项",
+              "effect": "local_change",
+              "selected": true
+            }
+          ]
+        },
+        "taskScore": {
+          "caseId": "rco-task-b8-07",
+          "scoreable": true,
+          "taskCounts": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 1
+          },
+          "taskPrecision": 1,
+          "taskRecall": 0.5,
+          "taskF1": 0.6666666666666666,
+          "requiresActionCorrect": true,
+          "exactTaskBoundary": false,
+          "semanticFields": {
+            "correct": 7,
+            "total": 7
+          },
+          "safeDefaults": {
+            "correct": 1,
+            "total": 1
+          },
+          "forbiddenDefaultSelections": 0,
+          "completeTaskCase": false,
+          "majorCorrection": true
+        },
+        "safetyScore": {
+          "matchedTasks": 1,
+          "expectedTasks": 2,
+          "predictedTasks": 1,
+          "actionSurfaceExact": 0.5,
+          "objectSurfaceExact": 0.5,
+          "unsafeDefaultFalsePositives": 0,
+          "unsafeDefaultFalsePositiveRate": 0,
+          "unsafeDefaultTaskIds": []
+        },
+        "relationScore": {
+          "expected": [],
+          "actual": [],
+          "exact": true
+        },
+        "expectedRelations": [],
+        "actualRelations": [],
+        "relationExact": true,
+        "expectedUnresolvedScopeTexts": [],
+        "actualUnresolvedScopeTexts": [],
+        "unresolvedExact": true
+      },
+      {
+        "caseId": "rco-task-b8-08",
+        "coverageTags": [
+          "actor",
+          "third_party",
+          "object_fidelity"
+        ],
+        "modelStatus": "completed_valid",
+        "schemaIssues": [],
+        "anchorScore": {
+          "scope": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0
+          },
+          "actionExact": {
+            "correct": 2,
+            "total": 2
+          },
+          "objectExact": {
+            "correct": 2,
+            "total": 2
+          },
+          "completeAnchorCase": true
+        },
+        "composerIssues": [],
+        "composerWarnings": [],
+        "actionNormalizations": [
+          {
+            "directiveId": "directive-1",
+            "scopeId": "scope-0001-bd34cfca7e73a3dff122392db3cae312f4025f0a251bc03f68afa4ea604cc412",
+            "originalSurface": "上传",
+            "canonicalSurface": "上传",
+            "status": "unchanged",
+            "candidates": [
+              "上传"
+            ]
+          },
+          {
+            "directiveId": "directive-2",
+            "scopeId": "scope-0002-a50e8ca8344de6bad6ba6678eafdb15750e2f2d30a47f4f507545c50852fded6",
+            "originalSurface": "保存",
+            "canonicalSurface": "保存",
+            "status": "unchanged",
+            "candidates": [
+              "保存"
+            ]
+          }
+        ],
+        "conditionAttachments": [],
+        "contractIssues": [],
+        "prediction": {
+          "caseId": "rco-task-b8-08",
+          "status": "completed",
+          "requiresAction": true,
+          "tasks": [
+            {
+              "id": "task-1",
+              "propositionScopeTexts": [
+                "技术人员须上传设备日志；"
+              ],
+              "semantics": {
+                "actor": "addressed_group",
+                "speechAct": "directive",
+                "polarity": "affirmative",
+                "tense": "future",
+                "status": "pending",
+                "validity": "active",
+                "modality": "required"
+              },
+              "inferenceLevel": "explicit",
+              "actionType": "upload",
+              "action": "上传",
+              "object": "设备日志",
+              "effect": "external_transfer",
+              "selected": false
+            },
+            {
+              "id": "task-2",
+              "propositionScopeTexts": [
+                "你只需保存故障编号。"
+              ],
+              "semantics": {
+                "actor": "addressee",
+                "speechAct": "directive",
+                "polarity": "affirmative",
+                "tense": "future",
+                "status": "pending",
+                "validity": "active",
+                "modality": "required"
+              },
+              "inferenceLevel": "explicit",
+              "actionType": "save",
+              "action": "保存",
+              "object": "故障编号",
+              "effect": "local_change",
+              "selected": true
+            }
+          ]
+        },
+        "taskScore": {
+          "caseId": "rco-task-b8-08",
+          "scoreable": true,
+          "taskCounts": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0
+          },
+          "taskPrecision": 1,
+          "taskRecall": 1,
+          "taskF1": 1,
+          "requiresActionCorrect": true,
+          "exactTaskBoundary": true,
+          "semanticFields": {
+            "correct": 14,
+            "total": 14
+          },
+          "safeDefaults": {
+            "correct": 1,
+            "total": 1
+          },
+          "forbiddenDefaultSelections": 0,
+          "completeTaskCase": true,
+          "majorCorrection": false
+        },
+        "safetyScore": {
+          "matchedTasks": 2,
+          "expectedTasks": 2,
+          "predictedTasks": 2,
+          "actionSurfaceExact": 1,
+          "objectSurfaceExact": 1,
+          "unsafeDefaultFalsePositives": 0,
+          "unsafeDefaultFalsePositiveRate": 0,
+          "unsafeDefaultTaskIds": []
+        },
+        "relationScore": {
+          "expected": [],
+          "actual": [],
+          "exact": true
+        },
+        "expectedRelations": [],
+        "actualRelations": [],
+        "relationExact": true,
+        "expectedUnresolvedScopeTexts": [],
+        "actualUnresolvedScopeTexts": [],
+        "unresolvedExact": true
+      },
+      {
+        "caseId": "rco-task-b8-09",
+        "coverageTags": [
+          "revision",
+          "cancels"
+        ],
+        "modelStatus": "completed_valid",
+        "schemaIssues": [],
+        "anchorScore": {
+          "scope": {
+            "tp": 1,
+            "fp": 1,
+            "fn": 0
+          },
+          "actionExact": {
+            "correct": 1,
+            "total": 1
+          },
+          "objectExact": {
+            "correct": 1,
+            "total": 1
+          },
+          "completeAnchorCase": false
+        },
+        "composerIssues": [
+          "ACTION_HEAD_NOT_CONTROLLED:directives[1].action"
+        ],
+        "composerWarnings": [],
+        "actionNormalizations": [],
+        "conditionAttachments": [],
+        "contractIssues": [
+          "LOCAL_COMPOSITION_INVALID"
+        ],
+        "prediction": {
+          "caseId": "rco-task-b8-09",
+          "status": "invalid",
+          "requiresAction": null,
+          "tasks": []
+        },
+        "taskScore": {
+          "caseId": "rco-task-b8-09",
+          "scoreable": false,
+          "taskCounts": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "taskPrecision": null,
+          "taskRecall": 0,
+          "taskF1": null,
+          "requiresActionCorrect": false,
+          "exactTaskBoundary": false,
+          "semanticFields": {
+            "correct": 0,
+            "total": 7
+          },
+          "safeDefaults": {
+            "correct": 0,
+            "total": 0
+          },
+          "forbiddenDefaultSelections": 0,
+          "completeTaskCase": false,
+          "majorCorrection": true
+        },
+        "safetyScore": {
+          "matchedTasks": 0,
+          "expectedTasks": 1,
+          "predictedTasks": 0,
+          "actionSurfaceExact": 0,
+          "objectSurfaceExact": 0,
+          "unsafeDefaultFalsePositives": 0,
+          "unsafeDefaultFalsePositiveRate": 0,
+          "unsafeDefaultTaskIds": []
+        },
+        "relationScore": {
+          "expected": [
+            {
+              "kind": "cancels",
+              "targetExpectedId": "d-old-contact-driver",
+              "replacementExpectedIds": [],
+              "evidenceScopeTexts": [
+                "先前安排要求联系校车司机。",
+                "该安排停止执行。"
+              ],
+              "resolution": "adjacent_unique_referent",
+              "referentType": "安排"
+            }
+          ],
+          "actual": [],
+          "exact": false
+        },
+        "expectedRelations": [
+          {
+            "kind": "cancels",
+            "targetExpectedId": "d-old-contact-driver",
+            "replacementExpectedIds": [],
+            "evidenceScopeTexts": [
+              "先前安排要求联系校车司机。",
+              "该安排停止执行。"
+            ],
+            "resolution": "adjacent_unique_referent",
+            "referentType": "安排"
+          }
+        ],
+        "actualRelations": [],
+        "relationExact": false,
+        "expectedUnresolvedScopeTexts": [],
+        "actualUnresolvedScopeTexts": [],
+        "unresolvedExact": true
+      },
+      {
+        "caseId": "rco-task-b8-10",
+        "coverageTags": [
+          "revision",
+          "supersedes"
+        ],
+        "modelStatus": "completed_valid",
+        "schemaIssues": [],
+        "anchorScore": {
+          "scope": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0
+          },
+          "actionExact": {
+            "correct": 2,
+            "total": 2
+          },
+          "objectExact": {
+            "correct": 2,
+            "total": 2
+          },
+          "completeAnchorCase": true
+        },
+        "composerIssues": [],
+        "composerWarnings": [],
+        "actionNormalizations": [
+          {
+            "directiveId": "directive-1",
+            "scopeId": "scope-0001-0b739b175f582aab107232ad5cab15a0a009b4d660bb8b63e916f2242f66707c",
+            "originalSurface": "打印",
+            "canonicalSurface": "打印",
+            "status": "unchanged",
+            "candidates": [
+              "打印"
+            ]
+          },
+          {
+            "directiveId": "directive-2",
+            "scopeId": "scope-0003-282b258ab6d191fc5c3463e8fa0b1d43e8e8f59694e7ad7ca4fb22116271cd22",
+            "originalSurface": "保存",
+            "canonicalSurface": "保存",
+            "status": "unchanged",
+            "candidates": [
+              "保存"
+            ]
+          }
+        ],
+        "conditionAttachments": [],
+        "contractIssues": [],
+        "prediction": {
+          "caseId": "rco-task-b8-10",
+          "status": "completed",
+          "requiresAction": true,
+          "tasks": [
+            {
+              "id": "task-1",
+              "propositionScopeTexts": [
+                "原通知要求打印旧凭证。"
+              ],
+              "semantics": {
+                "actor": "addressee",
+                "speechAct": "directive",
+                "polarity": "negative",
+                "tense": "past",
+                "status": "cancelled",
+                "validity": "superseded",
+                "modality": "required"
+              },
+              "inferenceLevel": "explicit",
+              "actionType": "print",
+              "action": "打印",
+              "object": "旧凭证",
+              "effect": "physical_action",
+              "selected": false
+            },
+            {
+              "id": "task-2",
+              "propositionScopeTexts": [
+                "从现在起保存电子凭证。"
+              ],
+              "semantics": {
+                "actor": "addressee",
+                "speechAct": "directive",
+                "polarity": "affirmative",
+                "tense": "future",
+                "status": "pending",
+                "validity": "active",
+                "modality": "required"
+              },
+              "inferenceLevel": "explicit",
+              "actionType": "save",
+              "action": "保存",
+              "object": "电子凭证",
+              "effect": "local_change",
+              "selected": true
+            }
+          ]
+        },
+        "taskScore": {
+          "caseId": "rco-task-b8-10",
+          "scoreable": true,
+          "taskCounts": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0
+          },
+          "taskPrecision": 1,
+          "taskRecall": 1,
+          "taskF1": 1,
+          "requiresActionCorrect": true,
+          "exactTaskBoundary": true,
+          "semanticFields": {
+            "correct": 14,
+            "total": 14
+          },
+          "safeDefaults": {
+            "correct": 1,
+            "total": 1
+          },
+          "forbiddenDefaultSelections": 0,
+          "completeTaskCase": true,
+          "majorCorrection": false
+        },
+        "safetyScore": {
+          "matchedTasks": 2,
+          "expectedTasks": 2,
+          "predictedTasks": 2,
+          "actionSurfaceExact": 1,
+          "objectSurfaceExact": 1,
+          "unsafeDefaultFalsePositives": 0,
+          "unsafeDefaultFalsePositiveRate": 0,
+          "unsafeDefaultTaskIds": []
+        },
+        "relationScore": {
+          "expected": [
+            {
+              "kind": "supersedes",
+              "targetExpectedId": "d-old-print-proof",
+              "replacementExpectedIds": [
+                "d-save-electronic-proof"
+              ],
+              "evidenceScopeTexts": [
+                "原通知要求打印旧凭证。",
+                "该通知作废。",
+                "从现在起保存电子凭证。"
+              ],
+              "resolution": "adjacent_unique_referent",
+              "referentType": "通知"
+            }
+          ],
+          "actual": [
+            {
+              "kind": "supersedes",
+              "targetExpectedId": "d-old-print-proof",
+              "replacementExpectedIds": [
+                "d-save-electronic-proof"
+              ],
+              "evidenceScopeTexts": [
+                "原通知要求打印旧凭证。",
+                "该通知作废。",
+                "从现在起保存电子凭证。"
+              ],
+              "resolution": "adjacent_unique_referent",
+              "referentType": "通知"
+            }
+          ],
+          "exact": true
+        },
+        "expectedRelations": [
+          {
+            "kind": "supersedes",
+            "targetExpectedId": "d-old-print-proof",
+            "replacementExpectedIds": [
+              "d-save-electronic-proof"
+            ],
+            "evidenceScopeTexts": [
+              "原通知要求打印旧凭证。",
+              "该通知作废。",
+              "从现在起保存电子凭证。"
+            ],
+            "resolution": "adjacent_unique_referent",
+            "referentType": "通知"
+          }
+        ],
+        "actualRelations": [
+          {
+            "kind": "supersedes",
+            "targetExpectedId": "d-old-print-proof",
+            "replacementExpectedIds": [
+              "d-save-electronic-proof"
+            ],
+            "evidenceScopeTexts": [
+              "原通知要求打印旧凭证。",
+              "该通知作废。",
+              "从现在起保存电子凭证。"
+            ],
+            "resolution": "adjacent_unique_referent",
+            "referentType": "通知"
+          }
+        ],
+        "relationExact": true,
+        "expectedUnresolvedScopeTexts": [],
+        "actualUnresolvedScopeTexts": [],
+        "unresolvedExact": true
+      },
+      {
+        "caseId": "rco-task-b8-11",
+        "coverageTags": [
+          "revision",
+          "amends",
+          "same_scope"
+        ],
+        "modelStatus": "completed_valid",
+        "schemaIssues": [],
+        "anchorScore": {
+          "scope": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 1
+          },
+          "actionExact": {
+            "correct": 1,
+            "total": 2
+          },
+          "objectExact": {
+            "correct": 1,
+            "total": 2
+          },
+          "completeAnchorCase": false
+        },
+        "composerIssues": [],
+        "composerWarnings": [],
+        "actionNormalizations": [
+          {
+            "directiveId": "directive-1",
+            "scopeId": "scope-0002-f35056c3c54148187f199e05726ea20ae2a924d6bcbf105d7af05bfbda1fc6c0",
+            "originalSurface": "填写",
+            "canonicalSurface": "填写",
+            "status": "unchanged",
+            "candidates": [
+              "填写"
+            ]
+          }
+        ],
+        "conditionAttachments": [],
+        "contractIssues": [],
+        "prediction": {
+          "caseId": "rco-task-b8-11",
+          "status": "completed",
+          "requiresAction": true,
+          "tasks": [
+            {
+              "id": "task-1",
+              "propositionScopeTexts": [
+                "现改为填写在线登记表。"
+              ],
+              "semantics": {
+                "actor": "addressee",
+                "speechAct": "directive",
+                "polarity": "affirmative",
+                "tense": "future",
+                "status": "pending",
+                "validity": "active",
+                "modality": "required"
+              },
+              "inferenceLevel": "explicit",
+              "actionType": "fill",
+              "action": "填写",
+              "object": "在线登记表",
+              "effect": "local_change",
+              "selected": true
+            }
+          ]
+        },
+        "taskScore": {
+          "caseId": "rco-task-b8-11",
+          "scoreable": true,
+          "taskCounts": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 1
+          },
+          "taskPrecision": 1,
+          "taskRecall": 0.5,
+          "taskF1": 0.6666666666666666,
+          "requiresActionCorrect": true,
+          "exactTaskBoundary": false,
+          "semanticFields": {
+            "correct": 7,
+            "total": 7
+          },
+          "safeDefaults": {
+            "correct": 1,
+            "total": 1
+          },
+          "forbiddenDefaultSelections": 0,
+          "completeTaskCase": false,
+          "majorCorrection": true
+        },
+        "safetyScore": {
+          "matchedTasks": 1,
+          "expectedTasks": 2,
+          "predictedTasks": 1,
+          "actionSurfaceExact": 0.5,
+          "objectSurfaceExact": 0.5,
+          "unsafeDefaultFalsePositives": 0,
+          "unsafeDefaultFalsePositiveRate": 0,
+          "unsafeDefaultTaskIds": []
+        },
+        "relationScore": {
+          "expected": [
+            {
+              "kind": "amends",
+              "targetExpectedId": "d-old-fill-paper",
+              "replacementExpectedIds": [
+                "d-fill-online"
+              ],
+              "evidenceScopeTexts": [
+                "原任务要求填写纸质登记表，",
+                "现改为填写在线登记表。"
+              ],
+              "resolution": "adjacent_unique_referent",
+              "referentType": null
+            }
+          ],
+          "actual": [],
+          "exact": false
+        },
+        "expectedRelations": [
+          {
+            "kind": "amends",
+            "targetExpectedId": "d-old-fill-paper",
+            "replacementExpectedIds": [
+              "d-fill-online"
+            ],
+            "evidenceScopeTexts": [
+              "原任务要求填写纸质登记表，",
+              "现改为填写在线登记表。"
+            ],
+            "resolution": "adjacent_unique_referent",
+            "referentType": null
+          }
+        ],
+        "actualRelations": [],
+        "relationExact": false,
+        "expectedUnresolvedScopeTexts": [],
+        "actualUnresolvedScopeTexts": [
+          "现改为填写在线登记表。"
+        ],
+        "unresolvedExact": false
+      },
+      {
+        "caseId": "rco-task-b8-12",
+        "coverageTags": [
+          "revision",
+          "ambiguous"
+        ],
+        "modelStatus": "completed_valid",
+        "schemaIssues": [],
+        "anchorScore": {
+          "scope": {
+            "tp": 2,
+            "fp": 1,
+            "fn": 0
+          },
+          "actionExact": {
+            "correct": 0,
+            "total": 2
+          },
+          "objectExact": {
+            "correct": 2,
+            "total": 2
+          },
+          "completeAnchorCase": false
+        },
+        "composerIssues": [
+          "ACTION_HEAD_NOT_CONTROLLED:directives[2].action"
+        ],
+        "composerWarnings": [],
+        "actionNormalizations": [],
+        "conditionAttachments": [],
+        "contractIssues": [
+          "LOCAL_COMPOSITION_INVALID"
+        ],
+        "prediction": {
+          "caseId": "rco-task-b8-12",
+          "status": "invalid",
+          "requiresAction": null,
+          "tasks": []
+        },
+        "taskScore": {
+          "caseId": "rco-task-b8-12",
+          "scoreable": false,
+          "taskCounts": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 2
+          },
+          "taskPrecision": null,
+          "taskRecall": 0,
+          "taskF1": null,
+          "requiresActionCorrect": false,
+          "exactTaskBoundary": false,
+          "semanticFields": {
+            "correct": 0,
+            "total": 14
+          },
+          "safeDefaults": {
+            "correct": 0,
+            "total": 0
+          },
+          "forbiddenDefaultSelections": 0,
+          "completeTaskCase": false,
+          "majorCorrection": true
+        },
+        "safetyScore": {
+          "matchedTasks": 0,
+          "expectedTasks": 2,
+          "predictedTasks": 0,
+          "actionSurfaceExact": 0,
+          "objectSurfaceExact": 0,
+          "unsafeDefaultFalsePositives": 0,
+          "unsafeDefaultFalsePositiveRate": 0,
+          "unsafeDefaultTaskIds": []
+        },
+        "relationScore": {
+          "expected": [],
+          "actual": [],
+          "exact": true
+        },
+        "expectedRelations": [],
+        "actualRelations": [],
+        "relationExact": true,
+        "expectedUnresolvedScopeTexts": [
+          "上述任务取消。"
+        ],
+        "actualUnresolvedScopeTexts": [],
+        "unresolvedExact": false
+      }
+    ],
+    "anchorMetrics": {
+      "scopeCounts": {
+        "tp": 20,
+        "fp": 2,
+        "fn": 4
+      },
+      "scopePrecision": 0.9090909090909091,
+      "scopeRecall": 0.8333333333333334,
+      "scopeF1": 0.8695652173913043,
+      "actionSurfaceExact": 0.4,
+      "objectSurfaceExact": 0.9,
+      "completeAnchorCaseAccuracy": 0.25
+    },
+    "taskMetrics": {
+      "caseCount": 12,
+      "scoreableCases": 10,
+      "taskPrecision": 1,
+      "taskRecall": 0.75,
+      "taskF1": 0.8571428571428571,
+      "requiresActionAccuracy": 0.8333333333333334,
+      "semanticFieldAccuracy": 0.8333333333333334,
+      "exactTaskBoundaryAccuracy": 0.6666666666666666,
+      "completeTaskCaseAccuracy": 0.6666666666666666,
+      "majorCorrectionRate": 0.3333333333333333,
+      "safeDefaultRecall": 1,
+      "forbiddenDefaultSelections": 0
+    },
+    "unsafeDefaultFalsePositives": 0,
+    "revisionMetrics": {
+      "relationExactAccuracyByKind": {
+        "cancels": 0,
+        "supersedes": 1,
+        "amends": 0
+      },
+      "oldRequirementInvalidation": 0.3333333333333333,
+      "activeReplacementRecall": 1,
+      "unresolvedRevisionExactAccuracy": 0,
+      "staleTaskCount": 0,
+      "selectedStaleTaskCount": 0
+    }
+  },
+  "decision": {
+    "code": "NO_PROMOTION_PAID_REPLICATION_BLOCKED",
+    "reason": "至少一项预注册的锚点、端到端任务、危险误勾或修订安全门槛未通过。"
+  },
+  "protectedArtifactsModified": false,
+  "stablePath": "UNCHANGED",
+  "rco6": "NOT_STARTED",
+  "deployment": "NOT_RUN",
+  "secretPersistence": "NONE",
+  "evidenceBoundary": "Anonymous synthetic Development only; not independent human truth, real-material accuracy, modification-time, browser acceptance, release or commercial evidence"
+}

@@ -1096,3 +1096,18 @@
 - paid_boundary: `deepseek-v4-flash-vision-exp`、12 次 candidate、temperature 0、thinking none、verifier/Repair/retry 0、CNY hard cap 10 只是预注册参数，`paidRunAuthorized=false`；联网 runner 和 checkpoint 均未创建。
 - accounting: 模型/实验网络/Repair/retry/Secret=`0/0/0/0/NONE`；没有修改既有 Expected/freeze/dataset/checkpoint/cache，没有接稳定路径，RCO-6 和部署未启动。
 - decision: `B8 DATA_AND_P4_CEILING FROZEN / UNSEEN_BY_DEEPSEEK / WAIT_EXPLICIT_PAID_AUTHORIZATION / RCO-6 BLOCKED / DO_NOT_LAUNCH`。
+
+## 56. RCO-5-008-B8-M1 真实模型盲测失败与结果冻结 — 2026-09-04
+
+- authorization: `deepseek-v4-flash-vision-exp`；冻结 B8 12 案例各 1 次 candidate；temperature 0、thinking none；verifier/Repair/retry 0；人民币硬上限 10；仅实验 runner/result，不接稳定路径、RCO-6 或部署。
+- sequencing: 一次性 runner、空 checkpoint/raw、费用包络和调用前审查先通过 0 调用自检与全量工程门，并在 commit `e6f3b60` 推送后才读取剪贴板密钥并正式 dispatch。
+- transport: 12/12 dispatch 有明确终态，12/12 严格 Schema/来源绑定有效，12 个唯一 response ID，attemptNo 均为 1；未触发 verifier、Repair、retry 或停止异常。
+- model_anchor_metrics: scope P/R/F1 `90.9%/83.3%/87.0%`；action exact `40.0%`；object exact `90.0%`；complete anchor case `25.0%`。
+- end_to_end_metrics: Task P/R/F1 `100.0%/75.0%/85.7%`；requiresAction `83.3%`；semantic fields `83.3%`；exact boundary/Complete `66.7%/66.7%`；Major Correction `33.3%`。
+- safety_metrics: unsafe-default false positive `0`；Forbidden `0`；safe-default recall `100%`；stale/selected stale `0/0`。安全失败关闭有效，但不能覆盖召回和整例失败。
+- revision_metrics: cancels/supersedes/amends `0%/100%/0%`；旧要求失效 `33.3%`；新要求生效 `100%`；unresolved exact `0%`。
+- failure_direction: B8-02/03/04/05/06 的动作携带语气前缀，但 P4 归一化后任务正确；B8-07 漏历史完成动作；B8-09/12 将修订状态另建为不可控动作并触发整例拒绝；B8-11 漏修订旧侧动作。
+- first_principles: 下一机制不应继续堆提示词或放宽动作表，而应由本机枚举受控 action candidate ID，模型只分类候选和选择对象；修订状态由本机关系层消费；可证明的单候选错误局部隔离，来源绑定/覆盖失真才整例拒绝。
+- usage_cost: provider usage `12407 input / 5178 output / 17585 total`；provider billed CNY=`NOT_OBSERVABLE`；冻结价格上界代理成本 `0.1229404 CNY`，理论全轮上限 `2.2053504 CNY`，均不得冒充实扣账单。
+- integrity: 原 B8 data freeze 和 RCO-5-008 component freeze 继续匹配；结果完整性 4/4；Secret 未落盘；数据、Expected、contract、RCO-5-008 组件和 cache 无修改。
+- decision: `NO_PROMOTION_PAID_REPLICATION_BLOCKED / WAIT_SEPARATE_ZERO_CALL_CONTRACT_REDESIGN_AUTHORIZATION / RCO-6_BLOCKED / DO_NOT_LAUNCH`。

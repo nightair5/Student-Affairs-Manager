@@ -182,3 +182,14 @@ P3 已把 B5 暴露的词面共现问题升级为“状态声明 → 旧任务 �
 - 后续 12 次 candidate、10 元硬上限只是预注册参数，不构成付费授权；必须另行明确授权并先冻结新的单次 runner 和空 checkpoint。
 - 最终工程门：RCO-5-008/B8 完整性 7/7，lint PASS，Vitest `624 passed / 1 live OCR skipped`，server 8、Worker 25、time parity 1、multimodal evaluator 23、RCO base integrity 4、Functions 5，build PASS，security scan 575 files PASS；仅保留既有 >500 kB chunk warning。
 - gate: `RCO-5-008 COMPLETE / B8 DATA_AND_P4_CEILING_FROZEN / PAID RUN NOT_AUTHORIZED / RCO-6 BLOCKED / DO_NOT_LAUNCH`。
+
+## RCO-5-008-B8-M1 付费盲测补充 — 2026-09-04
+
+- 一次性 runner 在 commit `e6f3b60` 冻结并推送后才执行；12/12 candidate 获得明确终态且严格 Schema 有效，verifier/Repair/retry=`0/0/0`，密钥仅存在于当前子进程内存。
+- 模型结果：scope P/R/F1=`90.9%/83.3%/87.0%`，动作逐字=`40.0%`，对象逐字=`90.0%`，完整锚点案例=`25.0%`。
+- 冻结 P4 端到端：Task P/R/F1=`100.0%/75.0%/85.7%`，requiresAction=`83.3%`，Complete=`66.7%`，Major Correction=`33.3%`。
+- 安全方向守住：unsafe-default false positive、Forbidden、stale、selected stale 均为 0；但 cancels/amends/unresolved 未通过，旧要求失效仅 33.3%。
+- 主因：模型给动作加“请/禁止/可自行”等前缀；漏掉历史或修订旧侧动作；把“停止执行/取消”状态句冒充任务。P4 能纠正前缀和条件，但当前单条不可控动作会使整例失败。
+- 费用：usage 12,407 input + 5,178 output；服务商人民币实扣 `NOT_OBSERVABLE`，冻结价格上界代理成本 `0.1229404 CNY`，不是账单。
+- decision: `NO_PROMOTION_PAID_REPLICATION_BLOCKED / RCO-6 BLOCKED / NO_STABLE_INTEGRATION / DO_NOT_LAUNCH`。
+- next: 等待另行授权 0 调用的候选枚举/分类契约轮；B8 只能作为已见回归，后续泛化必须使用全新 B9。
