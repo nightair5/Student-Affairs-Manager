@@ -25,9 +25,11 @@
 ## 已见 B8 回归门
 
 - 使用冻结 B8 source、Expected 和 raw result，仅做 0 调用回放；B8 在本轮始终标为已见。
-- scope/action/object、Task F1、requiresAction、Complete、三类修订、旧要求失效、新要求生效、unresolved 均为 100%。
-- unsafe-default false positive、Forbidden、stale、selected stale 均为 0。
+- 证据拆成两条，禁止混分：
+  - Expected-derived oracle 只证明新合同可表达既有正确答案，要求 scope/action/object、Task F1、requiresAction、Complete、三类修订、旧要求失效、新要求生效和 unresolved 均为 100%，unsafe/Forbidden/stale 均为 0。
+  - frozen legacy raw 只报告旧模型真正找对、漏掉和多造的候选，再单列本机兜底后的产品输出；本机恢复不得计入模型正确率。
 - 单条伪动作、缺失分类、重复分类、未知 ID、对象篡改均不得让其他合法候选消失或变为默认勾选。
+- B8 的旧模型分类不要求被包装成 100%；只有候选账本覆盖、合法兄弟存活率和本机安全合成接受满分门。
 
 ## 全新 B9 首次本机门
 
@@ -42,6 +44,6 @@
 - B8 或任何既有 Expected/freeze/dataset/checkpoint/cache 漂移。
 - 为追分修改已运行数据或降低门槛。
 - 出现模型、网络、Secret、稳定路径 import、RCO-6 或部署行为。
-- 候选目录无法完整解释来源、对象候选不唯一却被默认采用、或 quarantine 候选产生 selected task。
+- 候选目录无法完整解释来源、对象候选不唯一却被默认采用、表外明确要求被静默记为“无任务”，或 quarantine 候选产生 selected task。
 
 本计划沿用项目的计划—跟踪表—冻结清单—追加日志体系；通用实验模板不替代项目现有权威链。

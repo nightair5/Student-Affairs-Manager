@@ -1121,3 +1121,16 @@
 - protected: B8 与既有 Expected/freeze/dataset/checkpoint/cache、RCO-5-008 组件和稳定路径不得修改。
 - accounting_at_start: model/network/Repair/retry/Secret=`0/0/0/0/NONE`。
 - status: `AUTHORIZED_ZERO_CALL_RCO-5-009 / IMPLEMENTATION_PENDING / B9_BLOCKED / PAID_MODEL_BLOCKED / RCO-6_BLOCKED / DO_NOT_LAUNCH`。
+
+## 58. RCO-5-009 候选账本实现与已见 B8 分层回归 — 2026-09-04
+
+- root_cause: B8 的 20 个真实动作中旧模型找对 18 个、漏 2 个，并多造 2 个修订状态动作。最终 5 个 Task FN 中，2 个来自模型漏项，3 个来自旧 composer 因单条坏动作整案清空；主因是“开放式枚举 + 整案连坐”，不是 API 或 temperature。
+- contract_change: 本机生成绑定 source fingerprint、scope 和 UTF-16 位置的 action/object candidate ID；模型只能返回 candidateId + proposition/mention_only/uncertain + owned objectCandidateId，不能写 action、位置、语义、修订、requiresAction、effect 或 selected。
+- object_policy: 复合/重复动作逐位置编号；共享前置或后置对象可由多个动作引用同一不可变 object span；同文不同位置不去重；只有对象候选唯一时才给本机默认。动作词嵌在对象名中时保留审计但不形成任务。
+- failure_isolation: 来源/目录根绑定损坏才拒绝整例；missing、duplicate、unknown ID、坏 verdict、跨候选对象和越权字段只影响对应候选。quarantine 不进入 P4、不 selected；表外明确要求进入 unresolved scope，requiresAction 返回 unknown 而不是假 false。
+- directed_tests: 新增 21 个候选目录/严格合同/composer 对抗测试及 3 个 B8 分层回归测试，覆盖稳定 ID、字符位置、复合/重复动作、前后共享对象、引号/断言诱饵、对象内动作词、空目录、目录篡改、缺失/重复/未知 ID、对象借用、模型越权、局部隔离、未知覆盖和本机修订。
+- b8_oracle: 22 个本机候选中 20/20 Expected 动作可表达，2/2 明确诱饵为 non-task；Task F1/Complete 100%，unsafe/Forbidden/stale=0，三类修订与 unresolved 均准确。此项只证明已见答案在新合同下可表达。
+- b8_legacy_diagnostic: 冻结 raw 的候选 Precision/Recall/F1 均 90%，漏项为 B8-07 已完成动作和 B8-11 修订旧侧，多造项为 B8-09“停止执行”和 B8-12“取消”。本机明确语法恢复 2/2 漏项，合法兄弟连带损失降为 0，最终产品层 Task F1/Complete 100%；恢复量不计入模型正确率。
+- engineering: 定向 Vitest 24/24、RCO/B8 完整性 10/10、全量 lint PASS；Vitest 648 passed / 1 live OCR skipped，另 server 8、Worker 25、time parity 1、multimodal evaluator 23、RCO base integrity 4、Functions 5；build PASS；security scan 601 files PASS。保留既有大于 500 kB chunk warning。
+- accounting: 模型/网络/verifier/Repair/retry/Secret=0/0/0/0/0/NONE；B8 旧失败结论保持，既有 Expected/freeze/dataset/checkpoint/cache 与稳定路径无修改，RCO-6 和部署未启动。
+- decision: B8 SEEN ARCHITECTURE REGRESSION PASS / MODEL CLASSIFIER STILL 90% ON B8 / ELIGIBLE_TO_FREEZE_NEW_B9_AFTER_COMPONENT_COMMIT / PAID MODEL BLOCKED / DO_NOT_LAUNCH。
