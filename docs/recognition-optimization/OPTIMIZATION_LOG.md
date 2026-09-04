@@ -1134,3 +1134,11 @@
 - engineering: 定向 Vitest 24/24、RCO/B8 完整性 10/10、全量 lint PASS；Vitest 648 passed / 1 live OCR skipped，另 server 8、Worker 25、time parity 1、multimodal evaluator 23、RCO base integrity 4、Functions 5；build PASS；security scan 601 files PASS。保留既有大于 500 kB chunk warning。
 - accounting: 模型/网络/verifier/Repair/retry/Secret=0/0/0/0/0/NONE；B8 旧失败结论保持，既有 Expected/freeze/dataset/checkpoint/cache 与稳定路径无修改，RCO-6 和部署未启动。
 - decision: B8 SEEN ARCHITECTURE REGRESSION PASS / MODEL CLASSIFIER STILL 90% ON B8 / ELIGIBLE_TO_FREEZE_NEW_B9_AFTER_COMPONENT_COMMIT / PAID MODEL BLOCKED / DO_NOT_LAUNCH。
+
+## 59. RCO-5-009A 新鲜对抗发现三项本机边界漏洞 — 2026-09-04
+
+- sequencing: RCO-5-009 v1 已在 commit a618126 独立提交并推送；B9 尚未创建。随后使用不属于 B9 的四个新通用对抗夹具做首次审查。
+- first_run: 4 个夹具 1 PASS / 3 FAIL。失败分别为同 scope 界面诱饵连坐真任务、对象内“已经核对”的动作词被拆成第二任务、条件事实跨过普通信息被远距离绑定；权威引文与示例引文对照通过。
+- first_principles: 三项都是本机边界规则错误，继续调 Prompt 或直接创建 B9 只会把盲测当调试器。B9 保持未创建，先在新版本组件中修复，旧 v1 freeze 不修改。
+- accounting: 模型/网络/verifier/Repair/retry/Secret=0/0/0/0/0/NONE；稳定路径、RCO-6、部署未触碰。
+- status: RCO-5-009A ZERO-CALL PATCH AUTHORIZED_BY_CONTINUOUS_OPTIMIZATION / IN_PROGRESS / B9 BLOCKED / PAID MODEL BLOCKED。
