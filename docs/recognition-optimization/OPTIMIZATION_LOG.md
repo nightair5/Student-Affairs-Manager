@@ -926,3 +926,14 @@
 - commits: 计划冻结 `4d6b270`、实现与组件冻结 `501eb46`，均已推送。
 - decision: `RCO-5-007-P1 CLOSED / TECHNICAL_PASS_SEEN_B2 / ELIGIBLE_FOR_NEW_B3_ZERO_CALL_GATE_ONLY / PAID MODEL BLOCKED / NO_PROMOTION / RCO-6 BLOCKED / DO_NOT_LAUNCH`。
 - next_step: `NONE / WAIT_AUTHORIZATION`。下一步只能先另行授权创建并冻结全新 B3 匿名挑战集并运行零调用理想锚点门；B3 通过后才讨论付费模型验证。
+
+## 43. RCO-5-007-B3 全新挑战集与零调用门启动 — 2026-09-04
+
+- authorization_interpretation: 用户“继续执行”承接上一阶段唯一明确下一步，仅授权创建并冻结全新 B3 匿名 Development 数据，再运行冻结 P1 的一次 0 模型调用理想锚点门和新鲜对抗审查。
+- branch / start_head / upstream / worktree: `codex/e2-multimodal-recognition-exp` / `bef21a6` / 同一 commit / clean；P1 冻结完整性启动检查 `4/4 PASS`。
+- claim: 检验“当前义务 → 对象感知边界 → 效果风险 → 默认选择”能否在未参与 P1 设计的新结构上工作，而不是重复证明已见 B2。
+- fixed_gate: 16/16 可评分、Task F1 ≥90%、requiresAction ≥95%、Complete Task Case ≥80%、Forbidden=0；同时报告全部预登记指标与逐例错误。
+- sequencing: 数据与 Expected 必须在首次 P1 运行前冻结并提交；首次运行后 B3 立即变为已见。失败后只审计和停止，不允许修改 P1 或 B3 追分。
+- forbidden: 模型、Secret、网络、P1 修改、既有保护件修改、稳定路径、RCO-6、浏览器验收或部署。
+- accounting_at_start: `model_calls=0 / network=0 / repair=0 / retry=0 / secret_access=NONE`。
+- status: `AUTHORIZED / DATA_AND_PRE-RUN FREEZE IN_PROGRESS / PAID MODEL BLOCKED / DO_NOT_LAUNCH`。
