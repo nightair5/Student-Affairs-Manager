@@ -1084,3 +1084,15 @@
 - seen_b7_replay: 复用冻结 B7 raw output，模型/网络/verifier/Repair/retry/Secret=`0/0/0/0/0/NONE`。12/12 P4 合同有效；scope/action/object、Task F1、requiresAction、Complete、cancels/supersedes/amends、旧要求失效、新要求生效、unresolved 均 100%；unsafe/Forbidden/stale/selected stale 均 0。
 - evidence_boundary: B7 已见；满分只说明本机接口覆盖已知错误，不说明模型正确率提高、未见泛化、真实材料或上线资格。
 - decision: `RCO-5-008 B7 SEEN REGRESSION PASS / ELIGIBLE_TO_FREEZE_NEW_B8_ONLY / PAID CALLS NOT_AUTHORIZED / RCO-6 BLOCKED / DO_NOT_LAUNCH`。
+
+## 55. RCO-5-008-B8 全新模型锚点数据与本机上限冻结 — 2026-09-04
+
+- sequencing: RCO-5-008 实现、已见 B7 回归、组件冻结和提交 `c841e5b` 推送完成后才创建 B8；没有把 B8 用于继续修改 composer、P4 或评分器。
+- data: 12 个全新匿名合成 Codex-authored Development 案例、20 个期望选择、2 个 `requiresAction=false`、3 条明确修订关系和 1 条 unresolved；与 B0–B7 source/family 不复用，逐例 bigram Jaccard `<0.55`。不是独立人工 GT、真实材料或 Holdout。
+- prefreeze_correction: 首轮冻结前测试发现 B8-10 的“新通知要求保存电子凭证”不在冻结修订解析器的替代提示范围，因而只形成旧任务撤销和独立新任务。模型调用、冻结和首次盲测前将测试句改为解析器已登记的“从现在起保存电子凭证”；这是样例设计与实现能力对齐，不是看过模型结果后改 Expected。
+- p4_oracle_preflight: 12/12 selection valid、12/12 locally composable、12/12 P4 contract valid、12/12 Complete Task Case；unsafe default false positive=0；cancels/supersedes/amends 各 1 条及 unresolved 1 条全部精确。
+- freeze: B8 dataset、plan、generator、dataset test 与 RCO-5-008 component freeze 共 5 条路径用 SHA-256 绑定；数据测试 7/7、冻结测试 3/3。
+- engineering: RCO-5-008/B8 完整性合计 7/7；lint PASS；Vitest `624 passed / 1 live OCR skipped`，另 server 8、Worker 25、time parity 1、multimodal evaluator 23、RCO base integrity 4、Functions 5；build PASS；security scan `575 files` PASS；保留既有 >500 kB chunk warning。
+- paid_boundary: `deepseek-v4-flash-vision-exp`、12 次 candidate、temperature 0、thinking none、verifier/Repair/retry 0、CNY hard cap 10 只是预注册参数，`paidRunAuthorized=false`；联网 runner 和 checkpoint 均未创建。
+- accounting: 模型/实验网络/Repair/retry/Secret=`0/0/0/0/NONE`；没有修改既有 Expected/freeze/dataset/checkpoint/cache，没有接稳定路径，RCO-6 和部署未启动。
+- decision: `B8 DATA_AND_P4_CEILING FROZEN / UNSEEN_BY_DEEPSEEK / WAIT_EXPLICIT_PAID_AUTHORIZATION / RCO-6 BLOCKED / DO_NOT_LAUNCH`。

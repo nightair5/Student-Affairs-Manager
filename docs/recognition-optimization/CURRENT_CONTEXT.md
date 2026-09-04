@@ -171,3 +171,14 @@ P3 已把 B5 暴露的词面共现问题升级为“状态声明 → 旧任务 �
 - 已见 B7 原始输出 0 调用回放：scope/action/object、Task F1、requiresAction、Complete、三类修订、旧要求失效、新要求生效、unresolved 均 100%；unsafe/Forbidden/stale/selected stale 均 0。
 - 该结果只证明已知接口故障已修，不是模型新数据泛化。下一步仅允许冻结全新 B8，付费调用仍需单独授权。
 - 稳定路径未接入，RCO-6 未启动，未部署。
+
+## RCO-5-008-B8 数据冻结补充 — 2026-09-04
+
+- 仅在已见 B7 零调用回归通过后创建 B8；12 个全新匿名合成 Development 案例、20 个期望选择，与 B0–B7 的 source/family 不重复，逐例 bigram Jaccard `<0.55`。
+- 冻结前唯一修正：B8-10 的替代提示由未被当前冻结解析器识别的“新通知要求”改为已登记的“从现在起”；发生在数据冻结和任何模型调用前，已记录，未用于追逐模型结果。
+- 冻结前 P4 理想上游检查：12/12 selection valid、12/12 locally composable、12/12 contract valid、12/12 Complete Task Case；unsafe default false positive=0；三类修订与 1 条 unresolved 全部精确。
+- 数据、计划、生成器、数据测试和 RCO-5-008 组件 freeze 已用 SHA-256 绑定；冻结测试 3/3、数据/对抗测试 7/7。
+- B8 仍未被 DeepSeek 看见；模型/网络/Repair/retry/Secret=`0/0/0/0/NONE`，未创建付费 runner 或 checkpoint。
+- 后续 12 次 candidate、10 元硬上限只是预注册参数，不构成付费授权；必须另行明确授权并先冻结新的单次 runner 和空 checkpoint。
+- 最终工程门：RCO-5-008/B8 完整性 7/7，lint PASS，Vitest `624 passed / 1 live OCR skipped`，server 8、Worker 25、time parity 1、multimodal evaluator 23、RCO base integrity 4、Functions 5，build PASS，security scan 575 files PASS；仅保留既有 >500 kB chunk warning。
+- gate: `RCO-5-008 COMPLETE / B8 DATA_AND_P4_CEILING_FROZEN / PAID RUN NOT_AUTHORIZED / RCO-6 BLOCKED / DO_NOT_LAUNCH`。
