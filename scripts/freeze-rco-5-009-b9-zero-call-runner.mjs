@@ -153,7 +153,7 @@ async function assertDataFreezeIntegrity() {
   for (const relativePath of dataFreeze.componentPaths) {
     assert.equal(await sha(relativePath), dataFreeze.componentSha256[relativePath], `data freeze component drift: ${relativePath}`)
   }
-  return { dataFreeze, upstream }
+  return { dataFreeze }
 }
 
 async function assertZeroCallSourceBoundary() {
@@ -193,7 +193,7 @@ assert.equal(new Set(outputPaths).size, outputPaths.length, 'duplicate output pa
 assert.deepEqual(componentPaths.filter((relativePath) => outputPaths.includes(relativePath)), [])
 assert.equal(componentPaths.includes(resultFreezePath), false)
 
-const { dataFreeze, upstream } = await assertDataFreezeIntegrity()
+const { dataFreeze } = await assertDataFreezeIntegrity()
 await assertZeroCallSourceBoundary()
 await assertResultTestsAreSyntaxReadable()
 const componentSha256 = Object.fromEntries(await Promise.all(componentPaths.map(async (relativePath) => [relativePath, await sha(relativePath)])))
@@ -231,7 +231,7 @@ const output = {
   dataFreezePath,
   dataFreezeCommit,
   dataFreezeCommitFull,
-  upstreamContainingDataFreezeAtFreeze: upstream,
+  upstreamContainingDataFreezeAtFreeze: dataFreezeCommitFull,
   componentPaths,
   componentSha256,
   outputPaths,

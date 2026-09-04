@@ -68,6 +68,7 @@ test('B9 runner freeze binds the exact zero-call inputs and pre-frozen result me
   assert.equal(freeze.datasetPath, 'docs/recognition-optimization/RCO-5-009-B9_DEVELOPMENT_DATASET.json')
   assert.equal(freeze.dataFreezeCommit, '9812382')
   assert.equal(freeze.dataFreezeCommitFull, dataFreezeCommitFull)
+  assert.equal(freeze.upstreamContainingDataFreezeAtFreeze, dataFreezeCommitFull)
   assert.deepEqual(freeze.componentPaths, [
     ...expectedExecutablePaths,
     dataFreezePath,
