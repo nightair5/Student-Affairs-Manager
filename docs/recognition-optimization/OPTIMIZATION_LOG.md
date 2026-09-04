@@ -875,3 +875,22 @@
 - commits: 计划冻结 `7bcd0a0`，实现与回放 `a912165`，均已推送。
 - decision: `RCO-5-007 CLOSED / TECHNICAL_PASS_ZERO_CALL_REPLAY / ELIGIBLE_FOR_NEW_UNSEEN_VALIDATION_ONLY / NO_PROMOTION / RCO-6 BLOCKED / DO_NOT_LAUNCH`。
 - next_step: `NONE / WAIT_AUTHORIZATION`。下一步需单独授权创建并冻结未参与定规则的新匿名挑战集，再单独冻结同模型调用数与人民币上限；只有新数据上质量稳定提升且 Forbidden=0，才可申请 RCO-6。
+
+## 40. RCO-5-007-B2 新挑战集、评分冻结与理想锚点上限失败 — 2026-09-04
+
+- authorization_interpretation: 当前用户“继续执行”只用于承接上一轮已明确的下一步，完成新匿名 Development 数据、Expected、scorer 与零调用上限门；没有继承或新增付费模型、Secret、RCO-6、稳定路径或部署权限。
+- branch / start_head / upstream: `codex/e2-multimodal-recognition-exp` / `7f7ee764db9f7c7fb831b588effe395c088f56a0` / 同一 commit；启动时工作树 clean。
+- data: 冻结 `RCO-5-007-B2_CHALLENGE_DATASET.json`；16 个匿名合成、Codex-authored post-policy Development 案例，27 个指令、9 个观察、2 个 `requiresAction=false`、13 个安全默认、14 个不得默认指令。来源与语义家族不复用 B0/B02/B1，逐例字符 bigram Jaccard <0.55；不是真实材料、独立人工 GT 或 Holdout。
+- scorer: 新增 `task-formation-evaluator-1.0.0`，同时报告 Task P/R/F1、requiresAction、语义字段、任务边界、Complete Task Case、Major Correction、Safe Default 与 Forbidden；无效臂留在分母，动作+对象精确配对，不以共享证据词替代任务内容。
+- prefreeze_correction: 首个未提交冻结候选把共享证据范围中的外部动作词误当作被选任务自身的 Forbidden，导致 B2-02 假阳性。冻结前改为只检查被选任务的 action/object 并补测试；dataset 与 Expected 字节未改。最终冻结显式记录该修正。
+- freeze: 数据、计划、生成器、理想锚点 runner、评分器/测试、既有 task policy、scope 契约/index 和 RCO-5-007 component freeze 共 12 个路径 SHA-256 绑定；模型候选只记录为未来提案，人民币上限仍 `REQUIRES_USER_VALUE`，`paidRunAuthorized=false`。
+- oracle_design: 把 Expected 转成模型完美锚点，仅隔离运行本机任务形成/安全层；模型、网络、Repair、retry、Secret 为 `0/0/0/0/NONE`。这不是模型正确率，运行后 B2 对策略修补已是已见 Development。
+- first_local_run_failure: 首次启动 oracle runner 因新输出目录尚不存在而在写文件前失败；没有模型、网络或数据变化。创建该隔离目录后，用同一冻结 runner 重跑成功；没有修改 runner、dataset、Expected 或 freeze。
+- oracle_metrics: 16/16 可评分；Task P/R/F1 `96.2%/92.6%/94.3%`，requiresAction `56.3%`，semantic field `94.3%`，exact task boundary `87.5%`，Complete Task Case `37.5%`，Major Correction `62.5%`，Safe Default Recall `76.9%`，Forbidden Default `0`。
+- primary_root_cause: 本机把 `requiresAction` 从 `tasks.some(selected)` 反推，混淆“当前有必做动作”和“动作可安全默认勾选”。外部提交、上传、联系等任务虽然被识别且正确保持未勾选，却被错误归为无需行动。其他结构性缺口为不同对象复合动作误合并、条件触发事实未闭环、对象清洗破坏完整词、否定/可选/例外组组合不足和默认策略依赖有限动词表。
+- adversarial_interpretation: 主线应改为当前义务判定、对象感知任务边界、效果/风险分类、默认选择四层职责；继续补同义词会陷入开放语言的无穷追赶。B2 只能作下一轮故障回归，修补后必须用全新 B3 做未见检验。
+- validation: B2 数据/评分 Vitest `13/13`、freeze/oracle node tests `7/7`、typecheck PASS；全量 lint PASS、Vitest `535 passed / 1 live OCR skipped`、server 8、Worker 25、time parity 1、multimodal evaluator 23、RCO-5-007 integrity 4、Functions 5、build PASS、security scan 424 files、npm audit 0 vulnerabilities。保留既有 >500 kB chunk warning。
+- protected_boundary: 既有 Expected/freeze/dataset/checkpoint/cache、`package.json`、稳定 Worker/浏览器/服务端路径均无 Git diff；未运行 Cloudflare check 或部署。
+- implementation_commit: `cacdb6c`，已推送 `origin/codex/e2-multimodal-recognition-exp`。
+- decision: `RCO-5-007-B2 CLOSED / ZERO_CALL_ORACLE_FAIL / PAID MODEL TEST BLOCKED / NO_PROMOTION / RCO-6 BLOCKED / DO_NOT_LAUNCH`。
+- next_step: `NONE / WAIT_AUTHORIZATION`。若继续，先执行 RCO-5-007-P1 零调用本机策略修补；B2 回归通过后另冻 B3，再决定是否申请付费模型测试。
