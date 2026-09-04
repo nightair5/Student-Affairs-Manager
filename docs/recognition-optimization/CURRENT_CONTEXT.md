@@ -8,11 +8,11 @@
 
 ## Current Authority
 
-- current_status: `RCO-5-007-B2 CLOSED / ZERO_CALL_ORACLE_FAIL / PAID MODEL BLOCKED / NO_PROMOTION / RCO-6 BLOCKED / DO_NOT_LAUNCH`
-- authorization_completed: 创建并冻结 16 个未参与 RCO-5-007 定规则的匿名挑战案例、Expected、评分器和理想锚点零调用上限测试；完成对抗审计。
+- current_status: `RCO-5-007-P1 AUTHORIZED / ZERO CALL / IN_PROGRESS / PAID MODEL BLOCKED / RCO-6 BLOCKED / DO_NOT_LAUNCH`
+- authorization_active: 仅修复 `requiresAction` 与 `selected` 解耦、对象感知复合动作边界、条件触发状态、对象保真和受控效果/风险分类；用已见 B2 做 0 次模型调用回归。
 - model/network/repair/retry/secret: `0 / 0 / 0 / 0 / NONE`
 - protected: 既有 Expected、freeze、dataset、checkpoint、cache；稳定路径、RC.4、Release、Production 均未修改。
-- not_authorized: 修补当前冻结策略、创建下一批 B3 数据、模型调用、真实材料、真人研究、浏览器验收、RCO-6、稳定路径接入、Preview/Production 部署。
+- not_authorized: 修改 B2 Expected/freeze/dataset 或既有 checkpoint/cache；创建 B3；模型/Secret/网络；真实材料、真人研究、浏览器验收、RCO-6、稳定路径接入、Preview/Production 部署。
 - authority_rule: 新阶段、付费调用、真实数据、浏览器验收和部署分别需要当前用户明确授权；旧授权不自动续用。
 
 ## Workspace
@@ -73,8 +73,8 @@ RCO-5-007 修复了“谁负责作决定”，但 B2 证明决定流程内部仍
 
 ## Current Gate / Next Action
 
-- gate: `LOCAL_POLICY_REPAIR_REQUIRED / PAID MODEL BLOCKED`
-- next: 等待用户另行授权 RCO-5-007-P1，只修复 `requiresAction` 与 `selected` 解耦、对象感知复合动作、条件触发、对象保真以及受控效果/风险分类；用已见 B2 做 0 次模型调用故障回归，不修改 B2 保护件。
+- gate: `P1_ZERO_CALL_IMPLEMENTATION_IN_PROGRESS / PAID MODEL BLOCKED`
+- next: 新增隔离策略与测试，保持所有 B2 保护件和旧策略不变，再运行 B2 零调用回放。
 - after_patch: 修补通过后必须另冻全新 B3 未见匿名集并先跑理想锚点门。B3 通过后，才能另行批准同模型、固定调用数与人民币上限的付费配对测试。
 - promotion rule: 付费新数据仍稳定提升且 Forbidden=0，才可申请 RCO-6；之后仍需真实去标识材料、真人修改时间、Chrome/Edge/手机、隐私安全和 Commercial Preview，才能讨论上线。
 
@@ -83,4 +83,4 @@ RCO-5-007 修复了“谁负责作决定”，但 B2 证明决定流程内部仍
 1. 读根 `AGENTS.md`、`PRD.md`、本文件和日志最后两节。
 2. 重新核对 branch、HEAD、upstream、worktree；任何差异先当用户资产。
 3. 只读取当前任务必要文件；大结果用路径、哈希、计数和结论，不灌入上下文。
-4. 未有新授权时停在 `WAIT_AUTHORIZATION`；不得修补冻结策略、创建 B3、调用模型、启动 RCO-6 或部署。
+4. 当前只可完成 P1 授权内容；不得创建 B3、调用模型、启动 RCO-6 或部署。

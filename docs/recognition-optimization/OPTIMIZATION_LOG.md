@@ -894,3 +894,16 @@
 - implementation_commit: `cacdb6c`，已推送 `origin/codex/e2-multimodal-recognition-exp`。
 - decision: `RCO-5-007-B2 CLOSED / ZERO_CALL_ORACLE_FAIL / PAID MODEL TEST BLOCKED / NO_PROMOTION / RCO-6 BLOCKED / DO_NOT_LAUNCH`。
 - next_step: `NONE / WAIT_AUTHORIZATION`。若继续，先执行 RCO-5-007-P1 零调用本机策略修补；B2 回归通过后另冻 B3，再决定是否申请付费模型测试。
+
+## 41. RCO-5-007-P1 零调用本机策略修补启动 — 2026-09-04
+
+- authorization: 当前用户明确授权只修复 `requiresAction` 与 `selected` 解耦、对象感知复合动作边界、条件触发状态、对象保真和受控效果/风险分类；使用已见 B2 做 0 次模型调用回归。
+- branch / start_head / upstream / worktree: `codex/e2-multimodal-recognition-exp` / `9811d0e` / 同一 commit / clean。
+- primary_claim: 当前义务、安全默认选择、任务边界与效果风险分层后，完美 scope/action/object 锚点能够稳定形成完整、可确认且不越权的任务建议。
+- anti_claim: 不通过修改 B2 Expected/freeze/dataset、放宽外部默认操作、复用模型权威字段或堆叠 B2 原句补丁追分。
+- unique_variable: 新增隔离 `task-formation-policy-2.1.0-p1`；旧 `task-formation-policy-2.0.0` 及其 B2 freeze 绑定字节保持不变。
+- success_gate: B2 已见回归 16/16 有效；Task P/R/F1、requiresAction、语义、任务边界、Complete Task Case、Safe Default 均 100%，Forbidden=0；全量工程与保护件检查通过。
+- allowed: 新增隔离策略、定向/变形/对抗测试、B2 零调用 runner/result/report、P1 组件冻结和状态文档；运行本机测试与安全扫描；提交并推送。
+- forbidden: 修改 B2 Expected/freeze/dataset、评分器、旧策略、既有 checkpoint/cache；接稳定路径；创建 B3；任何模型/Secret/网络、真实材料、真人、浏览器验收、RCO-6 或部署。
+- accounting_at_start: `model_calls=0 / network=0 / repair=0 / retry=0 / secret_access=NONE`。
+- status: `AUTHORIZED / ZERO CALL / IN_PROGRESS / PAID MODEL BLOCKED / RCO-6 BLOCKED / DO_NOT_LAUNCH`。
