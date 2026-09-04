@@ -8,9 +8,9 @@
 
 ## Current Authority
 
-- current_status: `RCO-5-009A DIRECT_CANDIDATE_MATERIALIZATION ADVERSARIAL_PASS / FULL_GATES_AND_FREEZE_PENDING / B9 NOT_CREATED / PAID_MODEL_BLOCKED / RCO-6 BLOCKED / DO_NOT_LAUNCH`
+- current_status: `RCO-5-009-B9 FIRST_ZERO_CALL_RESULT_FROZEN / OVERALL_FAIL / B9_SEEN_NO_RERUN / PAID_MODEL_BLOCKED / RCO-6 BLOCKED / DO_NOT_LAUNCH`
 - current_authorization: 持续做 0 次模型调用的本机根因修补与全新匿名 Development 盲测；不得把旧 B8 回归说成模型提升，也不得调用付费模型。
-- model/network/repair/retry/secret: `0 / 0 / 0 / 0 / NONE`
+- model/network/verifier/repair/retry/secret: `0 / 0 / 0 / 0 / 0 / NONE`；B9 本机 pipeline 1 次、案例执行 12 次。
 - protected: 既有 Expected、freeze、dataset、checkpoint、cache；稳定路径、RC.4、Release、Production 均未修改。
 - not_authorized: 修改任何既有 Expected/freeze/dataset/checkpoint/cache；模型/Secret/实验网络；真实材料、真人研究、浏览器验收、RCO-6、稳定路径接入、Preview/Production 部署。
 - authority_rule: 新阶段、付费调用、真实数据、浏览器验收和部署分别需要当前用户明确授权；旧授权不自动续用。
@@ -19,7 +19,7 @@
 
 - repository: `C:\Users\Winner\student-affairs-multimodal-exp`
 - branch: `codex/e2-multimodal-recognition-exp`
-- last_prefreeze_commit: `00e3656`，RCO-5-009A 计划已提交推送；当前直接物化实现尚待全量门、组件冻结与独立提交。
+- last_prefreeze_commit: `053e3ede62376eaef185cec408712d15a55e0ed5`，包含已推送且通过复现检查的 B9 单次零调用 runner 冻结；B9 随后只运行一次。
 - production/default path: 不变；仍为本机解析/OCR → 用户核对文字 → 只发送文字。
 - multimodal: 仍是独立实验 Preview；RCO-6 未启动。
 
@@ -141,6 +141,8 @@
 - B5 result/report/audit/status: `docs/recognition-optimization/rco-5-007-b5-oracle/`
 - P3 plan/component freeze: `docs/recognition-optimization/RCO-5-007-P3-B6_PLAN.md` and `RCO-5-007-P3_COMPONENT_FREEZE.json`
 - P3 seen-B5 result/report/audit: `docs/recognition-optimization/rco-5-007-p3-b5-replay/`
+- B9 plan/data/runner/result freezes: `docs/recognition-optimization/RCO-5-009-B9_PLAN.md`, `RCO-5-009-B9_DATA_FREEZE.json`, `RCO-5-009-B9_ZERO_CALL_RUNNER_FREEZE.json`, and `RCO-5-009-B9_ZERO_CALL_RESULT_FREEZE.json`
+- B9 immutable result/tracker: `docs/recognition-optimization/rco-5-009-b9-runs/rco-5-009-b9-zero-call-20260904a/` and `RCO-5-009-B9_TRACKER.md`
 - append-only history: `docs/recognition-optimization/OPTIMIZATION_LOG.md`
 
 ## First-Principles Interpretation
@@ -149,9 +151,9 @@
 
 ## Current Gate / Next Action
 
-- gate: `RCO-5-009A ADVERSARIAL_PASS / FULL_GATES_AND_COMPONENT_FREEZE_PENDING / B9 BLOCKED_UNTIL_FREEZE_COMMIT / PAID MODEL BLOCKED / RCO-6 BLOCKED / DO_NOT_LAUNCH`
-- next: 跑全量 lint/test/build/security，冻结并提交推送 RCO-5-009A；之后才创建并冻结包含真实 needs_model 的全新 B9，再做唯一一次 0 调用本机上限。
-- after_b9: B9 过本机门只说明合同可表达；若要测 DeepSeek classifier，仍需另行锁定调用数、人民币上限和停止条件并获得授权。
+- gate: `RCO-5-009-B9 RESULT_FROZEN / OVERALL_FAIL / B9_SEEN_NO_RERUN / PAID MODEL BLOCKED / RCO-6 BLOCKED / DO_NOT_LAUNCH`
+- next: 先提交推送 B9 唯一失败结果；随后执行 RCO-5-010 零调用根治，修正计数映射的顺序无关比较，并建立独立的三值 `requiresAction` 与完整命题语义裁决。
+- after_b9: 只可把 B9 当已见诊断集。修复后必须创建全新 B10，经独立无上下文双重标注、数据冻结和唯一零调用本机门；B10 通过后才可另行申请付费模型测试。
 - promotion rule: 付费新数据仍稳定提升且 Forbidden=0，才可申请 RCO-6；之后仍需真实去标识材料、真人修改时间、Chrome/Edge/手机、隐私安全和 Commercial Preview，才能讨论上线。
 
 ## Recovery
@@ -159,7 +161,7 @@
 1. 读根 `AGENTS.md`、`PRD.md`、本文件和日志最后两节。
 2. 重新核对 branch、HEAD、upstream、worktree；任何差异先当用户资产。
 3. 只读取当前任务必要文件；大结果用路径、哈希、计数和结论，不灌入上下文。
-4. 当前只执行 RCO-5-009A/B9 零调用链路；不得修改既有保护件、调用模型、启动 RCO-6 或部署。
+4. 当前先冻结 B9 失败证据，再执行 RCO-5-010 零调用根治；不得重跑或修改 B9、调用模型、启动 RCO-6 或部署。
 
 ## RCO-5-009A 最新状态补充 — 2026-09-04
 
@@ -167,7 +169,19 @@
 - 从句角色、当前/历史/已完成、条件事实真值与修订关系由本机确定；模型没有 selected、requiresAction、语义或自由证据权限。
 - 聚焦测试 49/49，独立对抗复审 PASS；单候选 quarantine 不再删除或压住无关安全任务。
 - 已见 B8 Task F1/动作对象边界 100%，旧模型候选 F1 仍为 90%；B8-12 有一个不改 Expected 的历史标签冲突，Complete 11/12。
-- B8 无真实 needs_model，不能作为新分类器证据。B9 尚未创建；必须在 RCO-5-009A 全量门、freeze、提交和推送后再建立。
+- B8 无真实 needs_model，不能作为新分类器证据。B9 已在后续完成冻结和唯一零调用，结果见本文件末尾补充。
+
+## RCO-5-009-B9 首次零调用结果补充 — 2026-09-05
+
+- B9 数据先冻结于 `9812382`；runner 冻结于 `3ffe3fd`。推送后的复现检查在运行前发现动态上游 HEAD 绑定错误，因此没有运行 B9；修正并推送 `053e3ed` 后才执行唯一一次。
+- 12/12 案例完成；模型/网络/verifier/Repair/retry/Secret=`0/0/0/0/0/NONE`，pipeline 1 次、案例执行 12 次。B9 已见，禁止重跑追分。
+- 候选身份/位置/处置/对象 19/19，任务双射/语义/selected 13/13，安全默认 7/7，unsafe/extra default 均 0，兄弟任务连坐损失 0；`requiresAction` 11/12。
+- 业务差异仅在 B9-07：冻结 `false`，安全策略因未决命题和未决修订返回 `null`。这暴露的是“确定没有”与“目前无法确定”的语义裁决口径，不能靠关键词补丁或改 Expected 追分。
+- 第二条 gate failure 是计分器错误：期望与实际计数逐项相同，但对象键顺序不同被 `JSON.stringify` 误判。B9 结果不改，顺序无关结构比较转到 RCO-5-010。
+- B9-12 是已登记的实现边界标签：原文说明条件已经发生，Expected 仍按条件未知记账；不能把该例满分当成语义正确率。
+- 本轮只是单作者匿名合成 Development 的闭集 oracle 架构检查，不是 DeepSeek、OCR、图片/文件、真实材料、真人修改时间、浏览器或商业化证据。
+- result_freeze: 5 个不可变证据路径已 SHA-256 绑定；结果 freeze 复现检查与 4 项结果完整性测试通过。全量 lint/test/build/security/audit 均通过；Vitest 711 passed / 1 live OCR skipped，secret scan 639 files，npm audit 0 vulnerabilities；build 仅保留既有大包 warning。
+- decision: `B9 ZERO_CALL FAIL / RESULT_FROZEN / NEXT RCO-5-010 ZERO_CALL / PAID MODEL BLOCKED / RCO-6 BLOCKED / DO_NOT_LAUNCH`。
 
 ## RCO-5-008 最新状态补充 — 2026-09-04
 

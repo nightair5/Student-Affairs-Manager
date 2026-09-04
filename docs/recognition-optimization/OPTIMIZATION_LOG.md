@@ -1156,3 +1156,27 @@
 - engineering: lint PASS；build PASS，仅保留既有大于 500 kB chunk warning；security scan 617 files PASS；完整 npm test 合计 763 passed、1 skipped、0 failed，另有 contract checks 2/2。唯一 skip 是需显式环境变量的 live OCR，因此本轮不构成真实 OCR 证据。
 - accounting: model/network/verifier/Repair/retry/Secret=0/0/0/0/0/NONE；既有 Expected/freeze/dataset/checkpoint/cache 与稳定路径未改，RCO-6 和部署未启动。
 - status: RCO-5-009A ADVERSARIAL_PASS / B8_SEEN_ARCHITECTURE_PASS_WITH_FROZEN_LABEL_CONFLICT / PENDING_FULL_GATES_AND_COMPONENT_FREEZE / PAID_MODEL_BLOCKED / DO_NOT_LAUNCH。
+
+## 61. RCO-5-009-B9 首次零调用失败、根因分账与后续门 — 2026-09-05
+
+- sequencing: B9 数据先在 commit `9812382` 冻结；runner 在 `3ffe3fd` 冻结并推送。运行前复现检查发现 manifest 错把动态上游 HEAD 当固定条件，因此保持 0 次运行；修复来源提交绑定并推送 `053e3ed` 后，才执行唯一一次 B9。
+- terminal: run `rco-5-009-b9-zero-call-20260904a` 为 `COMPLETED / gate FAIL`；12/12 案例各执行一次。自运行开始 B9 已见，禁止重跑或修改 B9 追分。
+- accounting: model/network/verifier/Repair/retry/Secret=`0/0/0/0/0/NONE`；pipeline 1，case executions 12。
+- observed: 19/19 候选身份、位置、处置和对象精确；13/13 任务双射、语义和 selected 精确；safe default 7/7，unsafe/extra default 0，sibling survival 1；`requiresAction` 11/12。
+- semantic_failure: B9-07 冻结要求 `requiresAction=false`，实际为 `null`。旧任务未默认勾选，但“不确定归属”命题和“流程作废”修订均未完整解决；`false` 表示确定无当前义务，`null` 表示仍不能安全判定，两者不能为了分数互换。另需在完整命题层判断“核对 X 是否……尚未说明”到底是信息缺失陈述还是指令。
+- evaluator_failure: 冻结和实际计数逐项一致，却因 ledger count 对象的键插入顺序不同被 `JSON.stringify` 误报 `EXPECTED_COUNTS_DO_NOT_MATCH_DATA_FREEZE`。这是计分器 bug，不是识别错误；旧结果原样保留，修复只能进入新版本/B10。
+- label_limit: B9-12 原文明确条件已经发生，冻结 Expected 却保留 condition unknown 以测试实现边界；该标签不是独立语义真值，禁止据此宣称语义准确。
+- result_verifier: 首次检查 7 项中 6 项通过；唯一失败是预登记 `gate === PASS` 断言与实际 FAIL 一致。不得再次运行该成功门追分。
+- evidence_boundary: 单作者匿名合成 Development + 冻结本机闭集 oracle fixture；不构成模型准确率、OCR、图片/文件、真实去标识材料、独立人工 GT、真人修改时间、浏览器或商业上线证据。
+- protection: 既有 Expected/freeze/dataset/checkpoint/cache、B9 原始运行产物和稳定路径不改；RCO-6 未启动，未部署。
+- next: 先冻结本次结果；随后执行 RCO-5-010 零调用根治：顺序无关结构比较、三值 actionability 充分条件、完整命题语法、语义真值/实现边界双标签。已见 B9 只作回归；新 B10 必须独立无上下文双审后冻结，首次本机门通过才可申请付费模型。
+- decision: `B9 FAIL / RETAIN_RESULT / NO_RERUN / NEXT RCO-5-010 ZERO_CALL / PAID_MODEL_BLOCKED / RCO-6_BLOCKED / DO_NOT_LAUNCH`。
+
+## 62. RCO-5-009-B9 唯一失败结果冻结与工程复核 — 2026-09-05
+
+- result_freeze: runner freeze、checkpoint、result、report 和阶段 tracker 共 5 个不可变路径已写入 `RCO-5-009-B9_ZERO_CALL_RESULT_FREEZE.json` 并逐项 SHA-256 绑定；全局 context/log 明确列为可更新镜像，不进入递归哈希。
+- integrity: freeze 生成后复现检查 PASS；结果冻结 4/4，B9 数据/runner/result与 RCO-5-009/009A 组件联合完整性 19/19 PASS。
+- engineering: lint PASS；全量测试 Vitest `711 passed / 1 live OCR skipped`，另 server 8、Worker 25、time parity 1、multimodal evaluator 23、RCO base integrity 4、Functions 5；build PASS，仅保留既有大于 500 kB chunk warning；security scan `639 files` PASS；npm audit `0 vulnerabilities`。
+- evidence_boundary: 唯一 skip 是需显式环境变量的 live OCR；上述工程绿灯不改变 B9 质量 gate FAIL，也不构成模型、OCR、浏览器、真人效率或商业上线证据。
+- protection: 没有改 B9 或任何既有 Expected/freeze/dataset/checkpoint/cache；没有重跑 B9 成功门，未接稳定路径，RCO-6 未启动，未部署。
+- decision: `B9 FIRST RESULT IMMUTABLY FROZEN / OVERALL FAIL / NEXT RCO-5-010 ZERO_CALL / PAID MODEL BLOCKED / DO_NOT_LAUNCH`。
