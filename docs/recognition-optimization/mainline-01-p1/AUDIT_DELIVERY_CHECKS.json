@@ -1,0 +1,35 @@
+{
+  "deliveryType": "audit-only rejected implementation evidence",
+  "sourceSecurityScan": {
+    "status": "PASS",
+    "filesScanned": 700
+  },
+  "protectedFiles": {
+    "checked": 666,
+    "changed": 0
+  },
+  "rejectedSourceSnapshot": {
+    "checked": 8,
+    "changedAfterStop": 0
+  },
+  "oldLogAppendOnly": true,
+  "patch": {
+    "parsed": true,
+    "files": 8,
+    "highValueSecretPatternFindings": 0
+  },
+  "currentContext": {
+    "bytes": 4960,
+    "lines": 57
+  },
+  "fullEngineeringGates": "NOT RUN due to explicit stop condition",
+  "componentFreeze": "NOT CREATED",
+  "stableEntry": "UNCHANGED",
+  "deployment": "NOT RUN",
+  "localServer": {
+    "port": 9551,
+    "listeners": 0
+  },
+  "businessCodeCommit": "NOT STAGED; retained local",
+  "gitVerification": "See final handoff and actual Git; no self-referential commit hash"
+}

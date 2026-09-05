@@ -1,0 +1,96 @@
+{
+  "status": "REJECTED_STOPPED_WAIT_AUTHORIZATION",
+  "baseline": "fbd6c4b67c9a9c30b9301f6648e7bca82b6aeb64",
+  "files": [
+    {
+      "path": "src/domain/v2/domainCommit.ts",
+      "sha256": "01b3369c48de22ce3da95f2673ea6c1658bc9da08ef629c39db0cd8f57c0448f"
+    },
+    {
+      "path": "src/components/DraftReviewPanel.tsx",
+      "sha256": "9938bec751ad1a7220e57ec9d10147a2a653ea0770197456d698b308dfdff747"
+    },
+    {
+      "path": "src/domain/v2/confirmationV2.ts",
+      "sha256": "c5c49c25235e4b4d2f7e27b46ac21b0a393e470f0b1558622653fb77ab7aedb9"
+    },
+    {
+      "path": "src/domain/v2/confirmationV2.test.ts",
+      "sha256": "0ad83fb4dafd95c48e8192a7ebe4aa0e68bb8b4d722aa15c0760f5746fd2ae9a"
+    },
+    {
+      "path": "src/experiments/mainline01p1/confirmationHarness.ts",
+      "sha256": "74efa979c7a1934b145c4d1054e8fc25f767b0c1ebaa1bbdddc7a392c10fd984"
+    },
+    {
+      "path": "src/experiments/mainline01p1/confirmationHarness.test.ts",
+      "sha256": "7b2fff9a9a30ca36a373d3d001c221516d921abf5e08677813715b9caeba9b4c"
+    },
+    {
+      "path": "src/experiments/mainline01p1/browser.tsx",
+      "sha256": "6417b5245d678756dacc96f2f9ed07ce00f494673c62e49925df6e11f1be1264"
+    },
+    {
+      "path": "scripts/serve-mainline-01-p1.mjs",
+      "sha256": "ab3b341d38cebc885d6b6c28f7a24b352a7350a317ef94e74e8c439c26cf067b"
+    }
+  ],
+  "targeted": {
+    "passed": 45,
+    "failed": 0,
+    "unchangedOldTests": 17,
+    "newTests": 28
+  },
+  "fidelity": {
+    "old": "40/42",
+    "v2": "42/42",
+    "scope": "same old handcrafted dual-task response; not model accuracy"
+  },
+  "review": {
+    "agent": "/root/p1_v2_independent_review",
+    "blockingGroups": 5,
+    "wrongDefaultSelectionCounterexamples": 1,
+    "populationErrorRate": "NOT MEASURED"
+  },
+  "browser": {
+    "status": "STOPPED_PARTIAL",
+    "database": "rco-mainline-01-p1-630ececc-7534-4b39-a90d-860e368a6fa1-multi",
+    "verified": [
+      "initialize with 0 tasks",
+      "open real editor",
+      "whole-string time edit persisted and read back"
+    ],
+    "unverified": [
+      "character-by-character editing",
+      "confirmation+reload",
+      "duplicate confirmation",
+      "IndexedDB rollback",
+      "undated confirmation"
+    ],
+    "formalTaskWrites": 0
+  },
+  "engineering": {
+    "appTypecheck": "PASS",
+    "fullLint": "NOT RUN",
+    "fullTest": "NOT RUN",
+    "build": "NOT RUN",
+    "dependencyAudit": "NOT RUN",
+    "freeze": "NOT CREATED"
+  },
+  "protection": {
+    "originalTracked": 670,
+    "protectedUnchanged": 666,
+    "allowedExisting": 4,
+    "oldLogPrefixUnchanged": true
+  },
+  "accounting": {
+    "externalModelCalls": 0,
+    "verifier": 0,
+    "repair": 0,
+    "retry": 0,
+    "keyAccess": false,
+    "CNY": 0,
+    "modelAccuracy": "本轮未测量"
+  },
+  "delivery": "audit and rejected source patch only; active implementation remains uncommitted"
+}

@@ -1281,3 +1281,20 @@
 - artifacts: mainline-01-p1/PLAN.md、NEXT_PROMPT.md、SCOPE_AUDIT.md、SCOPE_CHECKS.json；AGENTS12.6固化每轮Git/审计/下一步理由/提示词交付，短交接指向精确计划。
 - boundary: 仅完成P1范围/文档，未实施两个公共文件修改；旧40/42、unknown缺口、旧App拦截和历史FAIL不变。0产品模型调用、0密钥访问、0模型费用、不接稳定路径、不部署；未写全局记忆。
 - delivery: 单独文档提交并推送当前分支；最终SHA/远程结果以Git及答复核验为准。状态`DOC_SCOPE_REVIEWED / P1_IMPLEMENTATION_WAIT_AUTHORIZATION / NO_PROMOTION`，交付后停止。
+
+## 73. MAINLINE-01-P1 实施授权与保护快照 — 2026-09-05
+
+- authority: 用户明确批准已提交PLAN白名单；公共代码仅domainCommit.ts、DraftReviewPanel.tsx显式V2增量；默认行为、历史40/42和FAIL保持。
+- baseline: HEAD=fbd6c4b67c9a9c30b9301f6648e7bca82b6aeb64；起始干净，670原tracked实际字节SHA-256已存新IMPLEMENTATION_BASELINE.json；666个原文件只读，日志旧前缀保护。
+- scope: 沿用旧人工工程响应和42字段，不新建dataset，不运行旧一次性runner，不读密钥，不接稳定入口，不部署。产品模型调用/费用=0；当前只开始实施，不预报测试通过。
+
+## 74. P1 V2 独立审查失败与立即停止 — 2026-09-05
+
+- targeted: 旧17不改、新28，共45通过；新V2同口径42/42，旧40/42与历史FAIL保持。首轮未知条件异常接收测试失败，仅补明确拒绝与失败状态断言后通过；app类型检查通过。
+- review: 无上下文审查者/root/p1_v2_independent_review复跑45通过；5组阻断：材料/事件时间归属丢失、相关实体冲突漏拦、非explicit错误默认勾选、时区显示/保存不一致、逐字编辑缓冲缺失。前4组程序反例，第5组静态审查；不把未执行逐键测试算实测。
+- stop: 可选建议保留selected=true时仍默认勾选且可确认，至少1反例，触发PLAN停止条件；REJECTED_STOPPED_WAIT_AUTHORIZATION/NO_PROMOTION。停止后不再功能修补，不跑后续全量门、不建立组件freeze；解除须用户新授权，仅恢复原P1确认边界，不晋级。
+- browser: 仅初始化0正式任务、展开真实面板、整串时间修改独立持久化读回；确认/刷新/重复/回滚/无日期验收未完成。测试页和9551本机服务关闭，测试库保留不删除。
+- protection: 670原tracked中4个获准变化，其余666实际字节SHA-256不变，日志旧前缀不变；旧Expected/freeze/dataset/checkpoint/cache、组件、MAINLINE-01、历史runner/result不改。
+- artifacts: mainline-01-p1/IMPLEMENTATION_AUDIT.md、INDEPENDENT_REVIEW_IMPLEMENTATION.md、REJECTED_SNAPSHOT.json、FAILED_IMPLEMENTATION.patch、NEXT_REPAIR_PROMPT.md。失败源码补丁仅是恢复/审计证据，不是已验证功能。
+- delivery: 只将失败审计、保护/源码快照证据和交接文档检查后提交推送；活动业务代码留本机未提交，工作区预期非干净，禁止重复应用补丁或回滚。最终审计SHA/远程状态以Git与交付答复为准。
+- accounting: 外部识别模型/模型网络/verifier/Repair/retry/密钥访问/CNY=0/0/0/0/0/0/0，模型准确率本轮未测量；不新建数据、不接稳定入口、不启动RCO-6、不部署。本轮停止，不自动执行P1-R1。
