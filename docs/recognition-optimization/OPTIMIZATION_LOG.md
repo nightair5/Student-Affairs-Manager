@@ -1338,3 +1338,20 @@
 - boundary: ISOLATED_V2_VERIFIED/MAINLINE_PRODUCT_NOT_INTEGRATED/NO_G5_PROMOTION；旧App日期拦截、任务中心/日历/提醒无日期承接未改。unknown条件、事件和不安全关系编辑仍明确受限。不宣布产品商用或模型准确率提高。
 - next: 完成后停止；下一建议MAINLINE-02-SCOPE仅定向审计实际入口/无日期下游和精确白名单，再申请接入实施。详R2_NEXT_PROMPT.md，不自动执行、不再新建数据或换模型。
 - accounting: 外部产品模型/模型网络/verifier/Repair/retry/密钥与剪贴板访问/CNY=0/0/0/0/0/0/0；模型准确率本轮未测量，开发Codex用量另计。无人类数据/真实材料/新盲测/B10/RCO-6/稳定入口或部署。
+
+## 79. MAINLINE-02-SCOPE 定向只读审计授权 — 2026-09-05
+
+- authority: 当前用户只授权实际App接入确认V2及无日期下游的源码审计、精确实施白名单和验收设计；不授权代码实现。仅新增本阶段文档，更新短交接及追加日志。
+- baseline: 起始HEAD与远端均为9c5ec0bc5c85c9ce339defd100c6d6958e94776e，工作区干净；R2九源码匹配，原683保护检查通过。本阶段705原tracked，除两个动态文档外703只读，见mainline-02-scope/BASELINE.json。
+- scope: 从R2交付继续，追踪实际App、确认交接与无日期下游，不重审历史RCO，不改Expected/freeze/dataset/checkpoint/cache、Schema/repository/validator或历史结果。
+- accounting: 外部产品模型/模型网络/密钥与剪贴板访问/部署=0/0/0/0，产品模型费用0元；模型识别准确率本轮未测量。状态AUDIT_IN_PROGRESS / IMPLEMENTATION_NOT_AUTHORIZED / NO_G5_PROMOTION。
+
+## 80. MAINLINE-02-SCOPE 定向审计与实施白名单交付 — 2026-09-05
+
+- outcome: 实际App未传V2面板props，单项/面板批量/收件箱批量均走旧确认，真正无日期也被拦；旧视图自动保存不能承担V2首次响应与编辑交接。本轮只读定位，无源码修改。
+- downstream: 无日期任务能进任务中心但被标待核对、首页有异常加分；日历无独立任务列表；详情日期必填、提醒默认与ICS依赖deadline；v8/JSON本身可保留0时间。静态风险不是已误发/已丢失，也不是本轮浏览器测量。
+- proposal: 唯一下一包MAINLINE-02-I1，真实App+显式实验runtime+新测试库，9已有文件、8新源码/测试及2脚本精确列名；旧默认不变，不改repository/Schema/迁移/validator或R2确认器。核心主链须成功，正式任务编辑/执行/真实提醒/ICS等明确未纳入，不能靠全禁用通过。
+- review: 新无上下文/root/mainline02_scope_review只读复核；两项文档阻断（白名单外UI不能预禁用、下一提示词缺绝对仓库）已改并复核闭合；提交称谓小错也更正。无剩余文档/范围阻断，不是实现审查或产品验收。
+- protection: 705原tracked中703源码/既有文档与证据实际字节SHA-256不变；R2九源码匹配、旧日志前缀保持、越权路径0。CURRENT_CONTEXT80行；文档diff/敏感信息检查见CHECKS.json。未重跑全量工程或浏览器、不运行旧runner。
+- delivery: 仅新mainline-02-scope范围报告/白名单/检查设计/提示词/保护与复核证据，以及短交接/追加日志；单独docs(product)提交推送并核对远端，最终SHA以Git回执为准。完成后停止，MAINLINE-02-I1等待授权。
+- accounting: 模型/模型网络/verifier/Repair/retry/密钥与剪贴板访问/人民币费用均0；模型识别准确率本轮未测量。没有真实用户材料、真人研究、新数据集、RCO-6或部署；Codex开发用量另计。

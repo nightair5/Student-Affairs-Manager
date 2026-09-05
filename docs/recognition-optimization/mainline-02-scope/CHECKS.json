@@ -1,0 +1,52 @@
+{
+  "stage": "RCO-5-MAINLINE-02-SCOPE",
+  "status": "DOCUMENT_SCOPE_VERIFIED",
+  "startHead": "9c5ec0bc5c85c9ce339defd100c6d6958e94776e",
+  "branch": "codex/e2-multimodal-recognition-exp",
+  "initialRemoteMatch": true,
+  "initialWorktree": "clean",
+  "protection": {
+    "existingTracked": 705,
+    "protected": 703,
+    "changed": 0,
+    "r2SourceSnapshotMatched": 9,
+    "r2OriginalProtectedMatched": 683,
+    "logOldPrefixUnchanged": true,
+    "outOfScopeChanges": 0
+  },
+  "documents": {
+    "whitelistPaths": 19,
+    "whitelistExisting": 9,
+    "whitelistNewSourcesAndTests": 8,
+    "whitelistNewScripts": 2,
+    "currentContextLines": 80,
+    "independentReview": "two documentation blockers corrected and rechecked closed; commit-label correction applied; no remaining scope blockers",
+    "newEvidenceFiles": 7
+  },
+  "checks": {
+    "diffCheck": "PASS",
+    "secretScan": "PASS across 730 source/build files, including final evidence files",
+    "engineeringTests": "NOT_RUN: documentation-only scope",
+    "browser": "NOT_RUN: read-only code audit",
+    "modelAccuracy": "本轮未测量"
+  },
+  "accounting": {
+    "externalRecognitionModelCalls": 0,
+    "modelNetworkRequests": 0,
+    "modelCostCny": 0,
+    "credentialOrClipboardAccess": 0,
+    "deployments": 0
+  },
+  "diagnosticToolNotes": [
+    "Initial protection-check parser trimmed leading Git status whitespace, yielding false 'ocs/...' out-of-scope path. Corrected to trimEnd; 703 unchanged, outOfScope=[]; no product file changed.",
+    "Some targeted source reads used nonexistent basename guesses; corrected with rg file inventory, not treated as product faults or validation evidence.",
+    "One document patch anchor did not match and applied no edit; corrected with exact current text."
+  ],
+  "delivery": {
+    "intendedCommitMessage": "docs(product): scope real App V2 confirmation integration",
+    "commit": "created after these checks; exact SHA is this scope document delivery commit, resolved by Git log and final delivery receipt",
+    "remote": "must verify exact HEAD after push; final delivery receipt is authoritative, no preclaimed push success",
+    "stableProductIntegration": "NOT_IMPLEMENTED",
+    "next": "MAINLINE-02-I1 WAIT_AUTHORIZATION"
+  }
+}
