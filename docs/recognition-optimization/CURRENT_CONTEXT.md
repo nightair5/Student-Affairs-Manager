@@ -5,23 +5,29 @@
 ## 当前目标与授权
 
 - 北极星：整份通知正确完整→少修改、快确认→可靠保存，不只看动作匹配或安全勾选。
-- 当前：RCO-DOCS-002 文档重整已完成读者复核；交付提交/推送以Git为准；后续实现、模型、真实数据、真人与部署均未授权。
-- 本轮允许AGENTS/PRD、总计划、提示词、短交接、追加日志及文档检查报告。
+- 当前：RCO-5-MAINLINE-01隔离链路已建立，产品验收FAIL；独立审查允许诊断交付，全量门通过，等待Git提交推送核实。模型识别准确率本轮未测量。
+- 本轮只新增隔离适配、工程夹具、测试入口、测量设计与报告，更新本文件并追加日志；不改现有产品组件。
 - 识别模型/外部模型请求/verifier/Repair/retry/Secret/实验费用：0/0/0/0/0/NONE/0 CNY。
 - 禁止修改既有Expected/freeze/dataset/checkpoint/cache、冻结组件、商业契约与历史runner/result。
 - 不运行旧B9 runner、不创建B10、不接稳定路径、不启动RCO-6、不部署。
-- 文档检查见RCO_DOCS_002_REVIEW.md与RCO_DOCS_002_CHECKS.json：8问读者通过，1处旧证据措辞冲突已修正；提交/远程状态须核对Git。
+- 最新交付证据：mainline-01/REPORT.md、FIDELITY_OBSERVATION.json、BROWSER_OBSERVATION.md、INDEPENDENT_REVIEW.md、MEASUREMENT_DESIGN.md、ENGINEERING_CHECKS.json。
 
 ## 工作区与当前代码
 
 - repository: C:\Users\Winner\student-affairs-multimodal-exp
 - branch: codex/e2-multimodal-recognition-exp
-- 本轮开始HEAD/upstream tracking：60332e16ebb062c4af0fa85531212286ab020a23，工作区干净。
-- 该代码提交：fix(app): verify source and proposition scope before safe selection。
+- 本轮开始HEAD/upstream tracking：282fd99dde1ca4f31fa3170bcdf57450e9c49b46，工作区干净。
+- 本轮开始646个tracked文件已保存SHA-256；仅本文件和追加日志允许变化，其余原文件必须不变。
 - 本次文档交付提交以Git为准，不把当前提交SHA递归写入自身。
 - RC.4/Release/Production、稳定文字模型、既有监测均未由本轮改变。
 
 ## 证据摘要与主缺口
+
+- MAINLINE-01：8人工场景；7响应完整保存、1 unknown显式不可表达；来源8/8保留。定向17/17含1诊断复现，不是17项产品验收。
+- 同一双任务42字段：直接domain42/42；真实客户端投影40/42，未编辑的时间rawText改写2处；完整案例0/1，不达100%。
+- 浏览器真实DraftReviewPanel→隔离IndexedDB：1场景7步，部分确认/重复/刷新/确认编辑/失败回滚读回；非App或发布浏览器验收。
+- 新增适配unknown纠正1轮；不改公共代码。下一步先申请确认边界P1；不要调模型、创建新数据或绕过已发现FAIL。
+- 本轮工程916 passed/1 live OCR skipped/0 failed；lint/类型/构建/源码与新产物扫描/audit通过。644/644原保护文件不变、旧日志仅追加；未执行cloudflare:check或部署。
 
 - RCO-0…4有技术/组件验证，不能称全格式商业通过。
 - 010-E1本机组件结项记录：定向122/122，全量899 passed/1 live OCR skipped；不是模型正确率。
@@ -38,8 +44,8 @@
 
 ## 下一建议，不是授权
 
-1. RCO-5-MAINLINE-01：0调用隔离端到端上限验证，先证明正确人工响应可被真实组件承接。
-2. 允许范围/场景/交付/通过线见RECOGNITION_OPTIMIZATION_PLAN.md第4节；待用户明确授权。
+1. MAINLINE-01完成诊断交付后停止；先申请MAINLINE-01-P1，隔离新版本修正显示投影≠用户修改、时间原文保真及无日期确认。
+2. 具体允许改哪些公共文件/新版本、是否接入口需另批，旧组件不能默认解冻；本轮不实施。
 3. 后续MAINLINE-02才设计新候选职责/表达，MAINLINE-03才申请付费配对。
 4. G5完整事实净收益通过后才申请RCO-6，之后按原门做真实效用与发布审批。
 5. 首批高频场景只是开发排序；缩小商业范围或提前真人探索须另批，不豁免原商业契约。

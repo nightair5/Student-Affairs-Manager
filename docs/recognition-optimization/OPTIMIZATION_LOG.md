@@ -1240,3 +1240,26 @@
 - accounting: product_model_calls/model_network/verifier/Repair/retry/Secret/experiment_CNY=`0/0/0/0/0/NONE/0`；未采集真实材料/真人数据，未启动RCO-6，未部署。Codex读写文档与辅助审查用量不混作产品模型实验费用。
 - delivery: 计划单独提交`docs(product): refocus recognition roadmap on complete task outcomes`并推送；实际SHA/远程结果以Git及交付答复为准，不预报成功。
 - decision: `DOCS_READER_VERIFIED / NO_PRODUCT_PROMOTION / NEXT RCO-5-MAINLINE-01 WAIT_AUTHORIZATION / DO_NOT_LAUNCH`；本次文档交付后停止，不自动执行可复制提示词。
+
+## 69. RCO-5-MAINLINE-01 隔离端到端启动 — 2026-09-05
+
+- authority: 用户明确授权人工工程响应→真实客户端组件→确认→新建测试数据库/内存repository；不测模型正确率，不宣称G5通过。
+- baseline: HEAD/upstream=`282fd99dde1ca4f31fa3170bcdf57450e9c49b46`；分支`codex/e2-multimodal-recognition-exp`；起始干净，646个tracked文件已保存实际字节SHA-256。
+- scope: 仅新增隔离适配、夹具、测试入口、测量设计和报告；CURRENT_CONTEXT更新、本日志追加。其余原tracked文件644个必须不变。
+- chain: 复用CapturePersistenceService、RecognitionResult 2.0校验、legacyView、DraftReviewPanel、DomainCommitPlan和CanonicalWorkspaceRepository；不导入App或线上识别服务。人工响应显式标记，不声称产品整体已接新研究链。
+- stop: 冻结/公共组件缺口只报告；最多两轮本轮新增代码局部修补；不得为PASS绕过冻结契约。旧B9 runner/result、Expected/freeze/dataset/checkpoint/cache、稳定路径不动。
+- accounting: model/model-network/verifier/Repair/retry/Secret/CNY=`0/0/0/0/0/NONE/0`；真人数据0；不创建B10、不启动RCO-6、不部署。开发协作审查不是被测识别API。
+- status: `IN_PROGRESS / MODEL_ACCURACY_NOT_MEASURED / NO_PROMOTION`。
+
+## 70. RCO-5-MAINLINE-01 隔离链路验证与失败诊断交付 — 2026-09-05
+
+- changes: 只新增人工工程夹具、真实capture/legacyView/domainCommit/repository编排、DraftReviewPanel测试入口、新前缀IndexedDB适配、定向/字段对照、保护/工程门脚本及测量/审查/报告；既有产品和研究代码未改。
+- outcome: `ISOLATED_CHAIN_ESTABLISHED / ACCEPTANCE_FAIL / NO_PROMOTION`。8人工场景：来源8/8保留、7/7可构造响应持久化完全一致、1 unknown因契约不可表达明确失败。不是模型正确率或新盲测。
+- main_cause: 同一双任务42字段，直接domain42/42，经真实客户端投影40/42；两处未编辑时间rawText被标准值覆盖，完整案例0/1。浏览器实际读回同样改写。公共代码不在本轮修改范围，未绕过掩盖。
+- browser: 真实DraftReviewPanel确认→隔离IndexedDB，1场景7步覆盖部分确认/重复确认/刷新读回/工程编辑/剩余确认/事务失败；正式记录未确认写入0、重复0、已确认任务覆盖0、原文与记录丢失0，但时间字段改写2，不能笼统宣称丢失0。额外执行依据定位检查。非完整App、Chrome/Edge/手机或真人验收。
+- independent_review: 无上下文只读审查者`/root/mainline01_independent_review`独立17/17，重跑字段对照42/42与40/42；提出unknown不能填false，新增夹具修补1轮，改为显式失败且保留分母。解除诊断交付阻断，不解除产品验收FAIL。另补新构建产物扫描，审计CLI必填不再可静默省略。
+- engineering: lint、app/node类型、Schema/时间契约检查通过；Vitest850 passed/1 live OCR skipped，6适配器组66 passed，共916 passed/1 skipped/0 failed；新临时构建、源码安全扫描、新构建扫描/隔离检查、npm audit通过（0漏洞）。已有>500 kB chunk警告保留。使用不加载.env、不用旧实验缓存的等价工程门；cloudflare:check不适用且未运行，不读取Wrangler凭证。
+- protection: 644/644非本轮可改原tracked文件实际字节SHA-256未变；旧日志前缀字节不变。Expected/freeze/dataset/checkpoint/冻结组件/契约/历史runner/result未改；旧实验cache未调用/重写。长日志、新build和工程审计临时缓存留在独立临时目录，见mainline-01/ENGINEERING_CHECKS.json。
+- accounting: model/model-network/verifier/Repair/retry/Secret/CNY=`0/0/0/0/0/NONE/0`；真人数据0；模型识别准确率=本轮未测量；未创建B10、未启动RCO-6、未接稳定路径、未部署。
+- delivery: 计划单独提交`test(app): establish isolated recognition confirmation diagnostics`并推送当前分支；实际提交SHA/远程结果以Git和交付答复为准。
+- next: 完成诊断交付后停止。最小下一授权为MAINLINE-01-P1：明确新版本/公共文件范围，仅修确认边界（显示值与实际编辑区分、时间原文保真、无日期与模糊时间分离）；随后才讨论MAINLINE-02条件/修订表达。不自动申请或执行付费模型。

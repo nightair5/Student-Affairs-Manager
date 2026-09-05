@@ -1,0 +1,30 @@
+{
+  "kind": "delivery-working-byte-manifest-not-new-experiment-freeze",
+  "baseline": "282fd99dde1ca4f31fa3170bcdf57450e9c49b46",
+  "excludes": [
+    "this manifest",
+    "CURRENT_CONTEXT.md",
+    "OPTIMIZATION_LOG.md"
+  ],
+  "files": {
+    "docs/recognition-optimization/mainline-01/BROWSER_OBSERVATION.md": "83889923f49c23976a4e8c7a07a9aa4ff31cd76e924683a86b5f4029b4daf89e",
+    "docs/recognition-optimization/mainline-01/ENGINEERING_CHECKS.json": "a12b40c57f6e15f8ad6914b94b50c93b87fcdf669b8361dda8774a7a06482063",
+    "docs/recognition-optimization/mainline-01/FIDELITY_OBSERVATION.json": "72484f2e6e23d0bbe2466c6ec668b735b82ed4fd53da9138f78db692b05dc7d5",
+    "docs/recognition-optimization/mainline-01/INDEPENDENT_REVIEW.md": "3442af3bc69ea4cf2bac104e1d86ae6677fc2428204048ee961306ac5c3eae24",
+    "docs/recognition-optimization/mainline-01/MEASUREMENT_DESIGN.md": "154c0205ae23831d5d8736241111ee1a4a2e149991b40def0bd19dc7e90c9eb4",
+    "docs/recognition-optimization/mainline-01/PROTECTION_BASELINE.json": "541b67283942f91322c6a91452483d0a90a549fbcbc7a205cc4fd5663ca3368c",
+    "docs/recognition-optimization/mainline-01/REPORT.md": "e43f68ff3aded43c17e6beb72015f7f1a87112d77beb3d4cdbe818fa81177fca",
+    "scripts/check-mainline-01.mjs": "eb3329c60484999e614c8cb6cc608c23034762966134cb3e96e0348e0f146e56",
+    "scripts/diagnose-mainline-01.mjs": "1c1f5fb671733266f3a5ec74756c5dbdfc290cb44f8561c6d1aceaafa10504b8",
+    "scripts/mainline-01.vitest.config.mts": "e8877dbe7a603595c7031495337fc16f712ccc706f07b52b07896bf3e679865f",
+    "scripts/protect-mainline-01.mjs": "2af7b1ac4f1216404b9c4f48e87e8ed4418067529db4da3426665a7a3e199271",
+    "scripts/serve-mainline-01.mjs": "a6fe7e72fa99e48520ff18927303027f8fa0dc3ac4588cb2f23469bfb29fa058",
+    "src/experiments/mainline01/browser.tsx": "4bb4e022cb347f1af733b6e7d64718c08717520048a273ee390c7662a38caad9",
+    "src/experiments/mainline01/chain.test.ts": "b2bb3e3f9b1c3f4eeabab22981f83058bb48bb71191feaa86544eb43fc6efdb0",
+    "src/experiments/mainline01/chain.ts": "07e54e889297562e0a1bab509a5e42a530b7207cfd6ed89a6bfdde357a94ea75",
+    "src/experiments/mainline01/fidelity.test.ts": "8276b7586c3a2cb68b7f5e788ffad31c3af2e08b77b3acfc5b8db4b993b26bb0",
+    "src/experiments/mainline01/fidelity.ts": "fae79539e60cd28d2263a3d5a56b9c49c7f4c1f1001a545626d52a8690b7cc9b",
+    "src/experiments/mainline01/fixtures.ts": "e2d7b1c2b71c462b72f1efb9168ca57be375de3a3c0a71ce5f77e96383fa76dc",
+    "src/experiments/mainline01/isolatedStore.ts": "893e750e379bc9c38c5d7cef273eac55717d46147e4f2146222607b08ad97f64"
+  }
+}
