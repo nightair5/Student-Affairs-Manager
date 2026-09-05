@@ -1191,3 +1191,31 @@
 - accounting: model/network/verifier/Repair/retry/Secret=`0/0/0/0/0/NONE`。
 - protection: 不修改任何既有 Expected/freeze/dataset/checkpoint/cache/B9 运行产物，不接稳定路径，不启动 RCO-6，不部署。
 - status: `RCO-5-010 PLAN_READY / IMPLEMENTATION_PENDING / B9_READONLY / PAID_MODEL_BLOCKED / DO_NOT_LAUNCH`。
+
+## 64. RCO-5-010-E1 审查失败后恢复 — 2026-09-05
+
+- authority: 用户明确“继续执行”，恢复 E1 零调用修补；只在本轮门内恢复，不创建 B10，不付费、不接稳定路径、不部署。
+- start_snapshot: branch `codex/e2-multimodal-recognition-exp`，HEAD/upstream `c67e59e`；RCO-5-010 新增实现/测试/已见诊断未提交，tracked 受保护文件无修改。
+- prior_failures: 前轮审查发现词内请、外层转述/问句、多字符要求与名词化冲突、候选对象篡改可自证。93 项定向通过未证明这些反例通过；前轮 FAIL 原样记录。
+- stop_level: `REJECT_CANDIDATE`；用户恢复仅允许在原门修补，定向与独立审查通过之后才做全量工程门。
+- changes: 正向 governor 逐位置解析；外层问句/冒号语境与名词化竞争保持未知；从原文重建 scope/catalog 逐项比对；异步前快照。selected 与行动性继续分离。
+- directed: 6 文件 107/107；独立审查进行中；全量工程门、冻结、提交未开始。
+- accounting: model/model-network/verifier/Repair/retry/Secret/CNY=`0/0/0/0/0/NONE/0`。Git 与依赖审计网络不属于模型实验请求。
+- protection: 既有 Expected/freeze/dataset/checkpoint/cache、旧 B9 runner/结果不变；B9 FAIL，已见数据仅回归；RCO-6 与部署未启动。
+
+## 65. RCO-5-010-E1 机制复核与全量门通过 — 2026-09-05
+
+- review_history: 新鲜审查发现未证明多字governor回退放行、整窗问号连坐；相邻变形进一步发现吗+逗号失配。统一未证明标记隔离、原文绝对slice/换行边界和分句语气终止符后，独立内存攻击复核PASS；先前FAIL保留，不删除或弱化测试。
+- independent_review: `/root/e1_resumed_review` 初始无上下文、只读；最终相关三文件108/108，报告 `RCO-5-010_E1_AUDIT.md`。仅为同系列代码机制复核，不是跨模型或人工语义真值。
+- directed: 六文件122/122；遍历20,992个基本汉字bridge，四个明确允许单字另有正例；不能当成20,992份语义材料。
+- engineering: 一次完整lint/test/build通过；Vitest833 passed/1 live OCR skipped，适配器66 passed，合计899 passed/1 skipped/0 failed。安全扫描PASS，依赖audit0漏洞。保留已有>500 kB chunk提示。
+- safety_supplement: 全门后增加已见B9额外默认和内部违规断言并通过3/3，类型/lint再次通过；原文、动作、对象和条件的篡改拒绝及异步快照均有测试。
+- protected: B9/009/009A联合保护检查19/19；原B9与此前诊断产物均未重写，旧一次性runner没有运行。B9行动性11/12，额外/内部违规默认0；历史FAIL和B9-07/B9-12标签边界保留。
+- next: 生成新组件冻结并核验，独立提交推送后停止。正式提交SHA以Git为准；不创建B10，不付费，不接稳定路径、不启动RCO-6、不部署。
+- accounting: model/model-network/verifier/Repair/retry/Secret/CNY=`0/0/0/0/0/NONE/0`。
+
+## 66. RCO-5-010-E1 组件冻结与交付准备 — 2026-09-05
+
+- freeze: `RCO-5-010_COMPONENT_FREEZE.json` 新建后只读核验25路径SHA-256，联合旧B9/009/009A保护检查20/20。动态context/log不进入递归哈希。
+- delivery_message: `fix(app): verify source and proposition scope before safe selection`。提交与推送结果以该Git提交及upstream为准；本日志不预报远程成功。
+- status: `LOCAL_VERIFIED_AND_FROZEN / NO_PRODUCT_PROMOTION`。交付后停止；B10/付费模型/RCO-6/稳定接入/部署未授权且未执行。
