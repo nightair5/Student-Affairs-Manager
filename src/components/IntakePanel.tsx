@@ -39,13 +39,14 @@ import { useDialogFocusTrap } from '../lib/useDialogFocusTrap'
 import type { Priority, SourceReviewMetadata, SourceType, TaskCategory } from '../types'
 
 interface IntakePanelProps {
+  textOnly?: boolean
   onClose: () => void
   onSubmitIntake: (input: IntakeInput) => Promise<void>
   onSaveSource: (input: IntakeInput) => Promise<void>
   smartExtractionStatus: 'checking' | 'connected' | 'unavailable'
 }
 
-export function IntakePanel({ onClose, onSubmitIntake, onSaveSource, smartExtractionStatus }: IntakePanelProps) {
+export function IntakePanel({ textOnly, onClose, onSubmitIntake, onSaveSource, smartExtractionStatus }: IntakePanelProps) {
   const [sourceType, setSourceType] = useState<SourceType>('text')
   const [manualMode, setManualMode] = useState(false)
   const [content, setContent] = useState('')
@@ -85,6 +86,7 @@ export function IntakePanel({ onClose, onSubmitIntake, onSaveSource, smartExtrac
   useDialogFocusTrap(panelRef, onClose, firstControlRef)
 
   const selectSourceType = (nextType: SourceType) => {
+    if (textOnly && nextType !== 'text') return
     fileGenerationRef.current += 1
     setManualMode(false)
     setSourceType(nextType)
@@ -110,6 +112,7 @@ export function IntakePanel({ onClose, onSubmitIntake, onSaveSource, smartExtrac
   }
 
   const selectManualMode = () => {
+    if (textOnly) return
     fileGenerationRef.current += 1
     setManualMode(true)
     setSourceType('text')
@@ -127,6 +130,7 @@ export function IntakePanel({ onClose, onSubmitIntake, onSaveSource, smartExtrac
   }
 
   const processFile = async (file: File) => {
+    if (textOnly) return
     const generation = fileGenerationRef.current + 1
     fileGenerationRef.current = generation
     const isCurrent = () => fileGenerationRef.current === generation
@@ -178,6 +182,7 @@ export function IntakePanel({ onClose, onSubmitIntake, onSaveSource, smartExtrac
   }
 
   const handlePaste = (event: ClipboardEvent<HTMLElement>) => {
+    if (textOnly) return
     const image = Array.from(event.clipboardData.files).find((file) => file.type.startsWith('image/'))
     if (!image) return
     event.preventDefault()
@@ -214,6 +219,7 @@ export function IntakePanel({ onClose, onSubmitIntake, onSaveSource, smartExtrac
   const canSaveLink = sourceType === 'link' && canSaveLinkOnly(linkUrl, sourceTitle)
 
   const handleParse = async (event: FormEvent) => {
+    if (textOnly && (sourceType !== 'text' || manualMode)) { event.preventDefault(); return }
     event.preventDefault()
     if (!canSubmitWithConsent) return
     setIsParsing(true)
@@ -276,6 +282,7 @@ export function IntakePanel({ onClose, onSubmitIntake, onSaveSource, smartExtrac
   }
 
   const readLink = async () => {
+    if (textOnly) return
     if (!linkAuthorized || !linkUrl.trim()) return
     setLinkStatus('reading')
     setLinkMessage('正在通过受控服务读取网页正文，不执行页面脚本……')
@@ -293,6 +300,7 @@ export function IntakePanel({ onClose, onSubmitIntake, onSaveSource, smartExtrac
   }
 
   const saveLinkOnly = async () => {
+    if (textOnly) return
     if (!canSaveLink) return
     setIsSavingSource(true)
     setLinkMessage('正在保存链接；不会读取网页正文，也不会创建识别草稿……')
@@ -330,19 +338,20 @@ export function IntakePanel({ onClose, onSubmitIntake, onSaveSource, smartExtrac
             <X size={20} />
           </button>
         </header>
+        {textOnly && <p>仅测试旧匿名工程通知文字；文件、图片、链接、手动任务本轮未测量。</p>}
         <form className="intake-body" onSubmit={handleParse}>
           <div className="intake-steps" aria-label="录入流程"><span className="active">1 放入原文</span><span>2 核对拆分</span><span>3 回到今日</span></div>
           <div className="source-tabs" role="tablist" aria-label="选择来源">
             <button type="button" className={!manualMode && sourceType === 'text' ? 'active' : ''} onClick={() => selectSourceType('text')}>
               <FileText size={17} />粘贴消息
             </button>
-            <button type="button" className={!manualMode && (sourceType === 'file' || sourceType === 'image') ? 'active' : ''} onClick={() => selectSourceType('file')}>
+            <button type="button" className={!manualMode && (sourceType === 'file' || sourceType === 'image') ? 'active' : ''} disabled={textOnly} onClick={() => selectSourceType('file')}>
               <FileImage size={17} />上传文件
             </button>
-            <button type="button" className={!manualMode && sourceType === 'link' ? 'active' : ''} onClick={() => selectSourceType('link')}>
+            <button type="button" className={!manualMode && sourceType === 'link' ? 'active' : ''} disabled={textOnly} onClick={() => selectSourceType('link')}>
               <Link2 size={17} />网页链接
             </button>
-            <button type="button" className={manualMode ? 'active' : ''} onClick={selectManualMode}>
+            <button type="button" className={manualMode ? 'active' : ''} disabled={textOnly} onClick={selectManualMode}>
               <PenLine size={17} />手动建任务
             </button>
           </div>
@@ -351,7 +360,7 @@ export function IntakePanel({ onClose, onSubmitIntake, onSaveSource, smartExtrac
               <span>粘贴老师消息、群通知或网页正文</span>
               <textarea ref={firstControlRef} value={content} onChange={(event) => setContent(event.target.value)} rows={7} placeholder="例如：8 月 4 日 18:00 前提交报名表；8 月 6 日上午 9 点参加说明会……" required />
               <small>包含多个时间也没关系，系统会逐条拆开。</small>
-              {!content && <button className="example-fill" type="button" onClick={() => setContent('比赛通知：8月4日18:00提交报名表和确认函；8月6日上午9点参加说明会；8月8日20:00上传作品初稿。')}>不会填？放入一段示例</button>}
+              {!textOnly && !content && <button className="example-fill" type="button" onClick={() => setContent('比赛通知：8月4日18:00提交报名表和确认函；8月6日上午9点参加说明会；8月8日20:00上传作品初稿。')}>不会填？放入一段示例</button>}
             </label>
           )}
           {!manualMode && (sourceType === 'file' || sourceType === 'image') && (
@@ -475,8 +484,8 @@ export function IntakePanel({ onClose, onSubmitIntake, onSaveSource, smartExtrac
             </fieldset>
           )}
           <div className={`privacy-note ${smartExtractionStatus === 'connected' ? 'cloud-enabled' : 'cloud-unavailable'}`}><Sparkles size={18} /><p>
-            <strong>{smartExtractionStatus === 'connected' ? 'DeepSeek 已配置（调用时验证）' : '本地规则兜底可用'}</strong>
-            {manualMode
+            <strong>{textOnly ? '人工工程响应（非模型预测）' : smartExtractionStatus === 'connected' ? 'DeepSeek 已配置（调用时验证）' : '本地规则兜底可用'}</strong>
+            {textOnly ? ' 只在本机测试库承接旧匿名工程通知；不调用模型，不回退识别规则，确认前不会创建任务。' : manualMode
               ? ' 手动填写的内容只保存在本机，仍会先进入待确认。'
               : sourceType === 'link'
               ? ' 只有受控读取成功或你粘贴正文后才会调用 DeepSeek；裸链接不会被伪装成已读取内容。'

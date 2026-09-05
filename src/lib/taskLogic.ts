@@ -1,3 +1,4 @@
+import type { TaskDateViews } from '../experiments/mainline02/taskDateView'
 import type { MaterialItemEntity, RiskFlag, Task } from '../types'
 import { isMaterialSatisfied, materialStatusFromLegacy } from './domainEntities'
 
@@ -40,6 +41,7 @@ export function calculateTaskPriority(
   task: Task,
   allTasks: Task[] = [task],
   now = new Date(),
+  dateViews?: TaskDateViews,
 ): TaskPriorityResult {
   if (task.status === '已完成') {
     return { score: -1, reasons: ['任务已完成'], risks: [], isPinned: false, isSnoozed: false }
@@ -53,7 +55,9 @@ export function calculateTaskPriority(
   const hoursLeft = (deadline - now.getTime()) / hour
   let score = priorityWeight[task.priority]
 
-  if (!Number.isFinite(deadline)) {
+  if (!Number.isFinite(deadline) && dateViews?.[task.id]?.noDeadlineProven) {
+    reasons.push('原文未说明截止时间，不自动排期')
+  } else if (!Number.isFinite(deadline)) {
     score += 65
     risks.add('待确认')
     reasons.push('截止时间需要核对')
@@ -98,7 +102,7 @@ export function calculateTaskPriority(
     reasons.push(`有 ${dependencyCount} 项前置事项未完成`)
   }
 
-  if (task.riskFlags.includes('待确认')) {
+  if (task.riskFlags.includes('待确认') && !dateViews?.[task.id]?.projectedPendingOnly) {
     score += 12
     risks.add('待确认')
     reasons.push('关键信息需要核对')
@@ -141,10 +145,11 @@ export function getTaskScore(task: Task, now = new Date()): number {
 export function getExecutableTasks(
   tasks: Task[],
   now = new Date(),
+  dateViews?: TaskDateViews,
 ): Task[] {
   return tasks.filter((task) => {
     if (task.status === '已完成') return false
-    const priority = calculateTaskPriority(task, tasks, now)
+    const priority = calculateTaskPriority(task, tasks, now, dateViews)
     return !priority.isSnoozed && !priority.risks.includes('有依赖')
   })
 }
@@ -153,10 +158,11 @@ export function getFocusTasks(
   tasks: Task[],
   now = new Date(),
   limit = 3,
+  dateViews?: TaskDateViews,
 ): Task[] {
-  const ranked = getExecutableTasks(tasks, now)
+  const ranked = getExecutableTasks(tasks, now, dateViews)
     .slice()
-    .sort((a, b) => calculateTaskPriority(b, tasks, now).score - calculateTaskPriority(a, tasks, now).score)
+    .sort((a, b) => calculateTaskPriority(b, tasks, now, dateViews).score - calculateTaskPriority(a, tasks, now, dateViews).score)
   const selected: Task[] = []
   const representedProjects = new Set<string>()
   for (const task of ranked) {
@@ -176,11 +182,12 @@ export function getFocusTasks(
 export function getBlockedAndWaitingTasks(
   tasks: Task[],
   now = new Date(),
+  dateViews?: TaskDateViews,
 ): DeferredExecutionTask[] {
   return tasks
     .filter((task) => task.status !== '已完成')
     .flatMap((task): DeferredExecutionTask[] => {
-      const priority = calculateTaskPriority(task, tasks, now)
+      const priority = calculateTaskPriority(task, tasks, now, dateViews)
       if (priority.risks.includes('有依赖')) {
         const reason = priority.reasons.find((item) => item.includes('前置事项'))
           ?? '仍有前置事项未完成'
@@ -197,7 +204,7 @@ export function getBlockedAndWaitingTasks(
     })
     .sort((a, b) => {
       if (a.state !== b.state) return a.state === 'blocked' ? -1 : 1
-      return calculateTaskPriority(b.task, tasks, now).score - calculateTaskPriority(a.task, tasks, now).score
+      return calculateTaskPriority(b.task, tasks, now, dateViews).score - calculateTaskPriority(a.task, tasks, now, dateViews).score
     })
 }
 

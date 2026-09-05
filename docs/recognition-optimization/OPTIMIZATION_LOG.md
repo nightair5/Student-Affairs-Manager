@@ -1376,3 +1376,22 @@
 - accounting: 外部识别模型/verifier/Repair/retry/模型网络/人民币费用0，模型准确率本轮未测量；无稳定接线/真实用户库/材料/真人/RCO-6/部署。Git与npm审计联网不计模型请求。
 
 - cleanup: 两个本轮测试标签已关闭；核对命令行后停止本轮server PID46028，12998端口无监听；隔离数据库与临时证据保留，未清理用户数据。最终701保护/19实现哈希匹配、CURRENT_CONTEXT80行；Git只暂存审计文档。
+
+## 83. MAINLINE-02-I1-R1 下载与登记浏览器缺口授权 — 2026-09-05
+
+- authority: 当前用户批准恢复19本机实现，先诊断实际JSON下载，补面板批量/保存与确认故障/跨标签过期/date-only；源码允许职责严格限App实验导出、browser工程工具、mainlineAcceptance及两脚本。0模型、密钥、剪贴板、数据集、部署。
+- baseline: HEAD/远端54e8f15ad7426ed37339bea56f19da33751aca2d；19源码与拒收快照完全匹配，701保护不变，无重叠修改。不回切/不套补丁。R1_BASELINE另绑定旧I1报告和本轮追加日志前缀。
+- runtime: 官方Edge新标签与新空v8库；新origin http://127.0.0.1:11829，run a95225c8-344b-4dbc-baee-1c140a0fa84a。旧12998 origin及库保留，未访问/删除，不将新端口当旧库恢复。
+- status: IN_PROGRESS；I1历史NOT_ACCEPTED不改。先保持源码不变检查下载，尚无新通过结论。模型准确率本轮未测量。
+
+## 84. MAINLINE-02-I1-R1 本机隔离工程通过 — 2026-09-05
+
+- outcome: ACCEPTED_ISOLATED_ENGINEERING；闭合I1登记浏览器缺口，旧I1 NOT_ACCEPTED/40/42/旧17/历史FAIL保持。R1源码改动0，19实现与拒收快照一致，成功后提交此前获准实现，不套FAILED补丁。
+- diagnosis: Edge下载监听3次超时，但取得(2)/(3)/(4)实际文件；最终34166字节、现行v8 validator无issues、canonical摘要与实际库相同。两份旧下载文件仅核对身份，不计本轮成绩。不臆断监听/message-channel根因，不改导出代码。
+- browser: 面板双项0→2；保存故障全库回滚/缓冲保留；保存2条编辑后确认故障全库不变；跨标签STALE零写入/核对后主动确认；逐字date-only日历不造时刻。最终3来源3草稿4任务3时间3用户编辑0提醒，文件42/42；真无日期1任务0时间0提醒/真实jobs0，刷新与工程门后全库全等。
+- gates: 新99/99；新无上下文独立PASS后一次新全量998通过/1原live OCR跳过；lint/双类型/契约/构建/安全通过，依赖0漏洞。全量日志nWXYwl，定向Lcfq08。大chunk警告保留。
+- limitations: message-channel非零无确定归因，下载监听不可靠；辅助工程工具遮挡未验收鼠标布局。正式执行/编辑/ICS/真实提醒/模型识别/稳定入口/商业效果不属通过范围。
+- protection: 701受保护/17旧报告/19源码SHA匹配，日志追加前缀保持，未写旧cache/数据。R1_IMPLEMENTATION_SNAPSHOT与R1_FINAL_CHECKS绑定证据。模型/识别网络/verifier/Repair/retry/费用/密钥/剪贴板0。
+- cleanup: 本轮Edge三标签已关闭；仅本轮server PID42292停止、11829无监听；新旧测试库/下载文件/临时证据保留，不访问真实库。
+- delivery: 通过后精确暂存获准19实现、新R1报告及2动态文档，单独feat(app)提交推送并核对远端；最终SHA以Git回执为准。无部署/RCO-6/新数据/真人。
+- next: 唯一建议MAINLINE-03-SCOPE只读查清真实识别输出到V2的交接，待新授权；不再反复造人工数据或直接换模型。模型准确率本轮未测量。完成后停止。

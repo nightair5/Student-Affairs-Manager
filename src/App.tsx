@@ -1,3 +1,5 @@
+import { assertMainlineRuntime, type MainlineRuntime } from './experiments/mainline02/runtime'
+import type { WorkspaceV8 } from './domain/v2/types'
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { DraftReviewPanel } from './components/DraftReviewPanel'
 import { EventDetailPanel } from './components/EventDetailPanel'
@@ -104,8 +106,15 @@ const ReportsPage = lazy(() => import('./pages/ReportsPage').then((module) => ({
 const ServicesPage = lazy(() => import('./pages/ServicesPage').then((module) => ({ default: module.ServicesPage })))
 const PrivacyPage = lazy(() => import('./pages/PrivacyPage').then((module) => ({ default: module.PrivacyPage })))
 
-function App() {
-  const [initialWorkspace] = useState(() => loadWorkspace(demoTasks, demoSources))
+function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
+  if (runtime !== undefined) assertMainlineRuntime(runtime)
+  const [boundRuntime] = useState(runtime)
+  if (runtime !== boundRuntime) throw new Error('MAINLINE_RUNTIME_CHANGE_FORBIDDEN')
+  const [initialWorkspace] = useState(() => runtime ? runtime.view(runtime.initial) : loadWorkspace(demoTasks, demoSources))
+  const [isolatedSnapshot, setIsolatedSnapshot] = useState<WorkspaceV8 | null>(runtime?.initial ?? null)
+  const [isolatedChoices, setIsolatedChoices] = useState<Record<string, Record<string, boolean>>>({})
+  const [isolatedBusy, setIsolatedBusy] = useState(false)
+  const isolatedLock = useRef(false)
   const [currentPage, setCurrentPage] = useState<PageId>('today')
   const [inboxView, setInboxView] = useState<'all' | 'needs_review'>('all')
   const [tasks, setTasks] = useState<Task[]>(initialWorkspace.tasks)
@@ -125,7 +134,7 @@ function App() {
   const [storageError, setStorageError] = useState(false)
   const [workspaceRecovery, setWorkspaceRecovery] = useState<WorkspaceRecoveryState | null>(null)
   const [intakeOpen, setIntakeOpen] = useState(false)
-  const [guideOpen, setGuideOpen] = useState(() => shouldShowOnboarding())
+  const [guideOpen, setGuideOpen] = useState(() => runtime ? false : shouldShowOnboarding())
   const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null)
   const [selectedEventId, setSelectedEventId] = useState<string | null>(null)
   const [selectedDraftId, setSelectedDraftId] = useState<string | null>(null)
@@ -134,7 +143,7 @@ function App() {
   const [notice, setNotice] = useState<{ text: string; undo?: () => void } | null>(null)
   const [smartExtractionStatus, setSmartExtractionStatus] = useState<'checking' | 'connected' | 'unavailable'>('checking')
   const [notificationPermission, setNotificationPermission] =
-    useState<BrowserNotificationPermission>(() => getBrowserNotificationPermission())
+    useState<BrowserNotificationPermission>(() => runtime ? 'unsupported' : getBrowserNotificationPermission())
   const deliveredNotifications = useRef(new Set<string>())
   const hydrationPromise = useRef<Promise<WorkspaceData> | null>(null)
   const persistedWorkspaceRevision = useRef<string | null>(null)
@@ -156,7 +165,12 @@ function App() {
     return source ? [source.title] : []
   }))]
 
-  const selectedDraft = drafts.find((draft) => draft.id === selectedDraftId) ?? null
+  const experimentalReview = useMemo(() => {
+    if (!runtime || !isolatedSnapshot || !selectedDraftId) return null
+    try { return runtime.review(isolatedSnapshot, selectedDraftId, isolatedChoices[selectedDraftId]) } catch { return null }
+  }, [runtime, isolatedSnapshot, selectedDraftId, isolatedChoices])
+  const dateViews = useMemo(() => runtime && isolatedSnapshot ? runtime.dates(isolatedSnapshot) : undefined, [runtime, isolatedSnapshot])
+  const selectedDraft = experimentalReview?.draft ?? drafts.find((draft) => draft.id === selectedDraftId) ?? null
   const supplementSource = sources.find((source) => source.id === supplementSourceId) ?? null
   const pendingReviewCount = useMemo(() => selectPendingReviewItems(sources, drafts)
     .reduce((count, item) => count + item.counts.pending, 0), [drafts, sources])
@@ -202,15 +216,20 @@ function App() {
   }, [])
 
   useEffect(() => {
+    if (runtime) return
     let active = true
     void deepSeekExtractionService.status().then((status) => {
       if (active) setSmartExtractionStatus(status.configured ? 'connected' : 'unavailable')
     })
     return () => { active = false }
-  }, [])
+  }, [runtime])
 
   useEffect(() => {
     let active = true
+    if (runtime) {
+      void runtime.load().then(saved => { if (active) { setIsolatedSnapshot(saved); applyWorkspaceView(runtime.view(saved)); setWorkspaceReady(true) } }).catch(() => { if (active) { setStorageError(true); setWorkspaceReady(true) } })
+      return () => { active = false }
+    }
     if (!hydrationPromise.current) {
       hydrationPromise.current = (async () => {
         const saved = await workspaceRepository.load()
@@ -248,10 +267,10 @@ function App() {
     return () => {
       active = false
     }
-  }, [applyWorkspaceView, initialWorkspace.sources, initialWorkspace.tasks])
+  }, [applyWorkspaceView, initialWorkspace.sources, initialWorkspace.tasks, runtime])
 
   useEffect(() => {
-    if (!workspaceReady || storageError || workspaceRecovery) return
+    if (runtime || !workspaceReady || storageError || workspaceRecovery) return
     const revision = workspacePersistenceRevision(workspace)
     if (revision === persistedWorkspaceRevision.current || revision === pendingWorkspaceRevision.current) return
     pendingWorkspaceRevision.current = revision
@@ -262,7 +281,7 @@ function App() {
       if (pendingWorkspaceRevision.current === revision) pendingWorkspaceRevision.current = null
       setStorageError(true)
     })
-  }, [storageError, workspace, workspaceReady, workspaceRecovery])
+  }, [storageError, workspace, workspaceReady, workspaceRecovery, runtime])
 
   useEffect(() => {
     const openIntake = (event: KeyboardEvent) => {
@@ -281,13 +300,14 @@ function App() {
   }, [])
 
   useEffect(() => {
-    if (notificationPermission !== 'granted') return
+    if (runtime || notificationPermission !== 'granted') return
     return scheduleBrowserNotifications(tasks, deliveredNotifications.current, () => {
       setNotice({ text: '浏览器通知发送失败，请检查网站通知权限。' })
     })
-  }, [notificationPermission, tasks])
+  }, [notificationPermission, tasks, runtime])
 
   useEffect(() => {
+    if (runtime) return
     const refreshPermission = () => {
       setNotificationPermission(getBrowserNotificationPermission())
     }
@@ -297,15 +317,50 @@ function App() {
       window.removeEventListener('focus', refreshPermission)
       document.removeEventListener('visibilitychange', refreshPermission)
     }
-  }, [])
+  }, [runtime])
 
+  const rejectExperimentAction = () => { setNotice({ text: '本隔离轮未支持该操作；未写入或发送。草稿仍可稍后核对。' }) }
+  const refreshExperiment = async () => {
+    if (!runtime) return
+    const saved = await runtime.load()
+    const view = runtime.view(saved)
+    setIsolatedSnapshot(saved)
+    applyWorkspaceView(view)
+    persistedWorkspaceRevision.current = persistenceRevisionForView(view)
+    pendingWorkspaceRevision.current = null
+  }
+  const performExperiment = async (action: () => Promise<void>) => {
+    if (!runtime || storageError || !workspaceReady || isolatedLock.current) return
+    isolatedLock.current = true
+    setIsolatedBusy(true)
+    try { await action(); await refreshExperiment() }
+    catch (error) {
+      setNotice({ text: '操作未完成：' + (error instanceof Error ? error.message : '需重新核对') + '。请查看收件箱；没有自动重试。' })
+      try { await refreshExperiment() } catch { setStorageError(true) }
+    } finally { isolatedLock.current = false; setIsolatedBusy(false) }
+  }
+  const confirmExperiment = async (draftIds: string[], itemId?: string) => {
+    if (!runtime || !isolatedSnapshot) return
+    await performExperiment(async () => {
+      let current = isolatedSnapshot
+      for (const draftId of draftIds) {
+        const reviewed = runtime.review(current, draftId, isolatedChoices[draftId])
+        const items = reviewed.draft.items.filter(item => item.status === '待确认' && (itemId ? item.id === itemId : item.selected !== false))
+        if (!items.length) continue
+        current = await runtime.confirm({ draftId, revision: reviewed.revision, taskTempIds: items.map(item => item.suggestion.id) })
+        setNotice({ text: '已确认并保存；可在任务中心查找。其他未选建议仍保留。' })
+      }
+    })
+  }
   const handleRequestNotificationPermission = async () => {
+    if (runtime) { rejectExperimentAction(); return 'unsupported' as const }
     const permission = await requestBrowserNotificationPermission()
     setNotificationPermission(permission)
     return permission
   }
 
   const handleComplete = (taskId: string) => {
+    if (runtime) { rejectExperimentAction(); return }
     const task = tasks.find((candidate) => candidate.id === taskId)
     if (!task) return
     const nextTask = updateTaskWithHistory(task, { status: '已完成' })
@@ -333,6 +388,7 @@ function App() {
   }
 
   const handleStart = (taskId: string) => {
+    if (runtime) { rejectExperimentAction(); return }
     const task = tasks.find((candidate) => candidate.id === taskId)
     if (!task || task.status !== '待开始') return
     handleUpdateTask(taskId, { status: '进行中' })
@@ -340,6 +396,7 @@ function App() {
   }
 
   const handleSnooze = (taskId: string) => {
+    if (runtime) { rejectExperimentAction(); return }
     const task = tasks.find((candidate) => candidate.id === taskId)
     if (!task) return
     const nextMorning = new Date()
@@ -353,6 +410,7 @@ function App() {
   }
 
   const handleTogglePin = (taskId: string) => {
+    if (runtime) { rejectExperimentAction(); return }
     const task = tasks.find((candidate) => candidate.id === taskId)
     if (!task) return
     const now = new Date()
@@ -365,6 +423,7 @@ function App() {
   }
 
   const handleUpdateTask = (taskId: string, patch: Partial<Task>) => {
+    if (runtime) { rejectExperimentAction(); return }
     const task = tasks.find((candidate) => candidate.id === taskId)
     if (!task) return
     const nextTask = updateTaskWithHistory(task, patch)
@@ -409,7 +468,7 @@ function App() {
 
   const selectDraftForReview = async (draftId: string) => {
     try {
-      const canonical = await canonicalWorkspaceRepository.load()
+      const canonical = await (runtime ? runtime.load() : canonicalWorkspaceRepository.load())
       const canonicalDraft = canonical?.extractionDrafts.find((candidate) => candidate.id === draftId)
       const run = canonicalDraft
         ? canonical?.recognitionRuns.find((candidate) => candidate.id === canonicalDraft.recognitionRunId)
@@ -435,6 +494,15 @@ function App() {
   }
 
   const handleIntakeInput = async (input: IntakeInput) => {
+    if (runtime) {
+      await performExperiment(async () => {
+        const draftId = await runtime.capture(input)
+        setIntakeOpen(false)
+        setSelectedDraftId(draftId)
+        setNotice({ text: '人工工程响应（非模型预测）；请核对后确认。' })
+      })
+      return
+    }
     const localResult = createIntakeResult(input)
     const localRecognition = buildLocalRecognition({
       sourceType: input.sourceType,
@@ -547,6 +615,7 @@ function App() {
   }
 
   const handleSaveSourceOnly = async (input: IntakeInput) => {
+    if (runtime) { rejectExperimentAction(); return }
     const title = input.sourceTitle?.trim() ?? ''
     const url = input.url?.trim() ?? ''
     if (input.sourceType !== 'link' || !canSaveLinkOnly(url, title)) {
@@ -588,6 +657,7 @@ function App() {
   }
 
   const handleRetrySource = async (sourceId: string) => {
+    if (runtime) { rejectExperimentAction(); return }
     const canonical = await canonicalWorkspaceRepository.load()
     const canonicalSource = canonical?.sources.find((candidate) => candidate.id === sourceId)
     const canonicalVersion = canonicalSource
@@ -638,11 +708,13 @@ function App() {
   }
 
   const openManualSupplement = (sourceId: string) => {
+    if (runtime) { rejectExperimentAction(); return }
     setIntakeOpen(false)
     setSupplementSourceId(sourceId)
   }
 
   const handleManualSupplement = async (sourceId: string, content: string, operationId: string) => {
+    if (runtime) { rejectExperimentAction(); return }
     const source = sources.find((candidate) => candidate.id === sourceId)
     if (!source || !content.trim()) throw new Error('来源不存在或补充文字为空。')
     const currentText = source.rawText ?? source.content ?? ''
@@ -719,6 +791,19 @@ function App() {
     patch: Partial<ParsedSuggestion>,
     status?: '待确认' | '已确认' | '已拒绝',
   ) => {
+    if (runtime) {
+      if (status || !experimentalReview) { rejectExperimentAction(); return }
+      const entries = Object.entries(patch)
+      const item = experimentalReview.draft.items.find(candidate => candidate.id === itemId)
+      if (!item || entries.length !== 1 || !['title', 'deadline'].includes(entries[0][0]) || typeof entries[0][1] !== 'string') { rejectExperimentAction(); return }
+      const [field, value] = entries[0]
+      void performExperiment(async () => {
+        await runtime.edit({ draftId, taskTempId: item.suggestion.id, revision: experimentalReview.revision,
+          operationId: crypto.randomUUID(), field: field as 'title' | 'deadline', value: value as string })
+        setNotice({ text: '修改已明确保存；尚未创建任务。' })
+      })
+      return
+    }
     setDrafts((current) => current.map((draft) =>
       draft.id === draftId ? updateDraftItem(draft, itemId, patch, status) : draft,
     ))
@@ -736,6 +821,7 @@ function App() {
   }
 
   const handleProjectChoice = (draftId: string, value: string) => {
+    if (runtime) { rejectExperimentAction(); return }
     setDrafts((current) => current.map((draft) => {
       if (draft.id !== draftId || !draft.recognitionResult) return draft
       const existingProjectId = value.startsWith('existing:') ? value.slice('existing:'.length) : null
@@ -762,6 +848,7 @@ function App() {
   }
 
   const handleKeepExplicit = (draftId: string) => {
+    if (runtime) { rejectExperimentAction(); return }
     setDrafts((current) => current.map((draft) => {
       if (draft.id !== draftId || !draft.recognitionResult) return draft
       const recognizedTasks = [
@@ -784,6 +871,7 @@ function App() {
   }
 
   const handleMoveRecognizedTask = (draftId: string, taskTempId: string, milestoneTempId: string) => {
+    if (runtime) { rejectExperimentAction(); return }
     setDrafts((current) => current.map((draft) => {
       if (draft.id !== draftId || !draft.recognitionResult) return draft
       let movedTask = draft.recognitionResult.standaloneTasks.find((task) => task.tempId === taskTempId)
@@ -824,6 +912,7 @@ function App() {
   }
 
   const handleToggleRecognitionEntity = (draftId: string, kind: 'event' | 'material' | 'timePoint', tempId: string, selected: boolean) => {
+    if (runtime) { rejectExperimentAction(); return }
     setDrafts((current) => current.map((draft) => {
       if (draft.id !== draftId || !draft.recognitionResult) return draft
       const material = kind === 'material' ? draft.recognitionResult.materials.find((item) => item.tempId === tempId) : undefined
@@ -855,6 +944,11 @@ function App() {
   }
 
   const handleToggleDraftItemSelection = (draftId: string, itemId: string, selected: boolean) => {
+    if (runtime) {
+      if (isolatedLock.current || experimentalReview?.states[itemId]?.blockedReason) return
+      setIsolatedChoices(previous => ({ ...previous, [draftId]: { ...previous[draftId], [itemId]: selected } }))
+      return
+    }
     setDrafts((current) => current.map((draft) => draft.id !== draftId ? draft : {
       ...draft,
       items: draft.items.map((item) => item.id === itemId ? { ...item, selected, updatedAt: new Date().toISOString() } : item),
@@ -863,6 +957,7 @@ function App() {
   }
 
   const handleSplitDraftItem = (draftId: string, itemId: string) => {
+    if (runtime) { rejectExperimentAction(); return }
     setDrafts((current) => current.map((draft) => {
       if (draft.id !== draftId) return draft
       const item = draft.items.find((candidate) => candidate.id === itemId)
@@ -900,6 +995,7 @@ function App() {
   }
 
   const handleMergeDraftItems = (draftId: string, sourceItemId: string, targetItemId: string) => {
+    if (runtime) { rejectExperimentAction(); return }
     setDrafts((current) => current.map((draft) => {
       if (draft.id !== draftId || sourceItemId === targetItemId) return draft
       const sourceItem = draft.items.find((item) => item.id === sourceItemId)
@@ -931,6 +1027,7 @@ function App() {
   }
 
   const handleConfirmDraftItem = async (draftId: string, itemId: string) => {
+    if (runtime) { await confirmExperiment([draftId], itemId); return }
     const draft = drafts.find((item) => item.id === draftId)
     const item = draft?.items.find((candidate) => candidate.id === itemId)
     if (!draft || !item || item.status !== '待确认' || !draft.recognitionResult) return
@@ -969,6 +1066,7 @@ function App() {
   }
 
   const handleConfirmAll = async (draftId: string) => {
+    if (runtime) { await confirmExperiment([draftId]); return }
     const draft = drafts.find((item) => item.id === draftId)
     if (!draft?.recognitionResult) return
     const pending = draft.items.filter((item) => item.status === '待确认' && item.selected !== false)
@@ -1004,6 +1102,7 @@ function App() {
   }
 
   const handleArchiveDrafts = (draftIds: string[]) => {
+    if (runtime) { rejectExperimentAction(); return }
     const archivedDrafts = drafts.filter((draft) => draftIds.includes(draft.id))
     const sourceIds = archivedDrafts.map((draft) => draft.sourceId)
     const archivedSources = sources.filter((source) => sourceIds.includes(source.id))
@@ -1023,6 +1122,7 @@ function App() {
   }
 
   const handleImportWorkspace = async (serialized: string) => {
+    if (runtime) { rejectExperimentAction(); return }
     const imported = await workspaceRepository.importAndReplace(serialized)
     persistedWorkspaceRevision.current = persistenceRevisionForView(imported)
     pendingWorkspaceRevision.current = null
@@ -1033,6 +1133,7 @@ function App() {
   const handleExportWorkspace = async () => workspaceRepository.exportCurrentJson()
 
   const handleClearWorkspace = async () => {
+    if (runtime) { rejectExperimentAction(); return }
     try {
       await workspaceRepository.clear()
       persistedWorkspaceRevision.current = null
@@ -1057,6 +1158,7 @@ function App() {
   }
 
   const handleExportMigrationBackup = async () => {
+    if (runtime) { rejectExperimentAction(); return }
     const serialized = await workspaceRepository.exportLatestMigrationBackup()
     if (!serialized) {
       setNotice({ text: '当前没有可导出的 Schema 迁移前备份。' })
@@ -1072,6 +1174,7 @@ function App() {
   }
 
   const handleExportRecoveryBackup = async () => {
+    if (runtime) { rejectExperimentAction(); return }
     const recovery = workspaceRecovery
     if (!recovery || recovery.busy) return
     setWorkspaceRecovery({ ...recovery, busy: 'exporting', confirmationArmed: false, failureCode: null })
@@ -1100,6 +1203,7 @@ function App() {
   }
 
   const handleRequestWorkspaceRecovery = async () => {
+    if (runtime) { rejectExperimentAction(); return }
     const recovery = workspaceRecovery
     if (!recovery || recovery.busy) return
     const action = nextWorkspaceRecoveryAction(recovery.backupExported, recovery.confirmationArmed)
@@ -1142,6 +1246,8 @@ function App() {
       case 'today':
         return (
           <DashboardPage
+            dateViews={dateViews}
+            readOnly={Boolean(runtime)}
             tasks={tasks}
             projects={projects}
             pendingReviewCount={pendingReviewCount}
@@ -1167,7 +1273,7 @@ function App() {
           view={inboxView}
           onChangeView={setInboxView}
           onOpenDraft={(draftId) => { void selectDraftForReview(draftId) }}
-          onConfirmDrafts={(draftIds) => draftIds.forEach(handleConfirmAll)}
+          onConfirmDrafts={(draftIds) => { if (runtime) void confirmExperiment(draftIds); else draftIds.forEach(handleConfirmAll) }}
           onArchiveDrafts={handleArchiveDrafts}
           onOpenManual={() => setIntakeOpen(true)}
           onRetrySource={handleRetrySource}
@@ -1176,6 +1282,8 @@ function App() {
       case 'tasks':
         return (
           <TasksPage
+            dateViews={dateViews}
+            readOnly={Boolean(runtime)}
             tasks={tasks}
             projects={projects}
             onOpenTask={(task) => setSelectedTaskId(task.id)}
@@ -1185,6 +1293,7 @@ function App() {
       case 'calendar':
         return (
           <CalendarPage
+            dateViews={dateViews}
             tasks={tasks}
             events={events}
             courseBlocks={courseBlocks}
@@ -1282,6 +1391,7 @@ function App() {
         inboxView={inboxView}
         pendingReviewCount={pendingReviewCount}
         onNavigate={(page) => {
+          if (runtime && !['today', 'inbox', 'tasks', 'calendar'].includes(page)) { rejectExperimentAction(); return }
           if (page === 'inbox') setInboxView('all')
           setCurrentPage(page)
         }}
@@ -1290,9 +1400,18 @@ function App() {
           setCurrentPage('inbox')
         }}
         onOpenIntake={() => setIntakeOpen(true)}
-        onOpenGuide={() => setGuideOpen(true)}
+        onOpenGuide={() => runtime ? rejectExperimentAction() : setGuideOpen(true)}
       />
       <div id="main-content" className="content-shell" tabIndex={-1}>
+        {runtime && <section aria-label="隔离实验状态">
+          <p>人工工程响应（非模型预测） · 独立测试库 · 无模型/通知外发</p>
+          <p>仅本轮录入、核对、确认、查询与JSON备份可用；未纳入操作会明确阻断。</p>
+          <button type="button" disabled={isolatedBusy || !workspaceReady || storageError} onClick={() => void performExperiment(async () => {
+            const json = await runtime.exportJson()
+            const url = URL.createObjectURL(new Blob([json], { type: 'application/json' }))
+            const link = document.createElement('a'); link.href = url; link.download = 'mainline-02-i1-workspace.json'; link.click(); URL.revokeObjectURL(url)
+          })}>导出完整测试库 JSON</button>
+        </section>}
         <PageLoadBoundary key={currentPage} onRetry={() => window.location.reload()}>
           <Suspense fallback={<main className="page page-loading" role="status">正在打开页面…</main>}>
             {renderPage()}
@@ -1320,6 +1439,7 @@ function App() {
 
       {!workspaceRecovery && intakeOpen && (
         <IntakePanel
+          textOnly={Boolean(runtime)}
           onClose={() => setIntakeOpen(false)}
           onSubmitIntake={handleIntakeInput}
           onSaveSource={handleSaveSourceOnly}
@@ -1333,14 +1453,18 @@ function App() {
           onSubmit={(content, operationId) => handleManualSupplement(supplementSource.id, content, operationId)}
         />
       )}
-      {!workspaceRecovery && selectedDraft && (
+      {!workspaceRecovery && selectedDraft && (!runtime || experimentalReview) && (
         <DraftReviewPanel
+          key={runtime ? selectedDraft.id : undefined}
+          isolatedCapabilities={Boolean(runtime)}
+          confirmationV2={runtime && experimentalReview ? { busy: isolatedBusy || storageError, items: experimentalReview.states } : undefined}
           draft={selectedDraft}
           source={selectedDraftSource}
           onClose={() => setSelectedDraftId(null)}
           onUpdate={(itemId, patch) => handleUpdateDraft(selectedDraft.id, itemId, patch)}
           onConfirm={(itemId) => handleConfirmDraftItem(selectedDraft.id, itemId)}
           onReject={(itemId) => {
+            if (runtime) { rejectExperimentAction(); return }
             handleUpdateDraft(selectedDraft.id, itemId, {}, '已拒绝')
             setNotice({ text: '已拒绝该建议，不会创建任务。', undo: () => handleUpdateDraft(selectedDraft.id, itemId, {}, '待确认') })
           }}
@@ -1360,6 +1484,8 @@ function App() {
       )}
       {!workspaceRecovery && selectedTask && (
         <TaskDetailPanel
+          readOnly={Boolean(runtime)}
+          dateView={dateViews?.[selectedTask.id]}
           key={selectedTask.id}
           task={selectedTask}
           sources={sources}

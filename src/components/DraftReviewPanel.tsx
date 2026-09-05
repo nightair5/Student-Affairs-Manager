@@ -6,6 +6,7 @@ import type { InferenceLevel } from '../types'
 import { assessFocusedReview } from '../recognition/focusedReview'
 
 interface DraftReviewPanelProps {
+  isolatedCapabilities?: boolean
   confirmationV2?: { busy: boolean; items: Record<string, { dateLabel: string; blockedReason?: string; dateEditBlockedReason?: string; materialTempIds?: string[]; timePointTempIds?: string[] }> }
   draft: ExtractionDraft
   source: Source | null
@@ -62,7 +63,7 @@ function EvidenceLocator({ recognition, evidenceIds, onFocusEvidence }: {
     : <small className="evidence-unavailable">暂无可定位依据</small>
 }
 
-export function DraftReviewPanel({ draft, source, onClose, onUpdate, onConfirm, onReject, onConfirmAll, projectWillCreate, projects, onProjectChoice, onKeepExplicit, onMoveTask, onToggleRecognitionEntity, onToggleTaskSelected, onSplitTask, onMergeTask, confirmationV2 }: DraftReviewPanelProps) {
+export function DraftReviewPanel({ isolatedCapabilities, draft, source, onClose, onUpdate, onConfirm, onReject, onConfirmAll, projectWillCreate, projects, onProjectChoice, onKeepExplicit, onMoveTask, onToggleRecognitionEntity, onToggleTaskSelected, onSplitTask, onMergeTask, confirmationV2 }: DraftReviewPanelProps) {
   const titleId = useId()
   const panelRef = useRef<HTMLElement>(null)
   const [editingId, setEditingId] = useState<string | null>(null)
@@ -102,6 +103,7 @@ export function DraftReviewPanel({ draft, source, onClose, onUpdate, onConfirm, 
     const metadata = taskMeta.get(item.suggestion.id)
     return <DraftItemReview
       key={item.id}
+      isolatedCapabilities={isolatedCapabilities}
       index={index}
       item={confirmationV2 ? { ...item, suggestion: { ...item.suggestion, ...editBuffer[item.id] } } : item}
       confirmationV2={confirmationV2 ? {
@@ -133,7 +135,7 @@ export function DraftReviewPanel({ draft, source, onClose, onUpdate, onConfirm, 
   return <div className="modal-backdrop detail-backdrop" role="presentation">
     <aside ref={panelRef} className="detail-panel review-panel" role="dialog" aria-modal="true" aria-labelledby={titleId}>
       <header className="detail-header review-header">
-        <div><span className="category-label">第 2 步 · {draft.modelName?.includes('deepseek') ? 'DeepSeek 建议' : '本地规则建议'}</span><h2 id={titleId}>识别出 {draft.items.length} 件事</h2><p>先看标题和时间；不准确时再点“编辑”。</p></div>
+        <div><span className="category-label">第 2 步 · {isolatedCapabilities ? '人工工程响应（非模型预测）' : draft.modelName?.includes('deepseek') ? 'DeepSeek 建议' : '本地规则建议'}</span><h2 id={titleId}>识别出 {draft.items.length} 件事</h2><p>先看标题和时间；不准确时再点“编辑”。</p></div>
         <button className="icon-button" type="button" onClick={onClose} aria-label="稍后处理并关闭"><X size={20} /></button>
       </header>
       <div className="detail-body review-body">
@@ -141,7 +143,7 @@ export function DraftReviewPanel({ draft, source, onClose, onUpdate, onConfirm, 
         {recognition && <section className="recognition-overview" aria-label="项目匹配与识别质量">
           <div className="recognition-project-choice">
             <div><FolderTree size={18} /><span><strong>项目归属建议</strong><small>{recognition.projectMatch.reasons.join('；') || '请人工选择项目归属'}</small></span></div>
-            <label><span className="sr-only">选择项目归属</span><select value={recognition.projectMatch.decision === 'existing_project' && recognition.projectMatch.matchedProjectId ? `existing:${recognition.projectMatch.matchedProjectId}` : recognition.projectMatch.decision} onChange={(event) => onProjectChoice(event.target.value)}>
+            <label><span className="sr-only">选择项目归属</span><select disabled={isolatedCapabilities} value={recognition.projectMatch.decision === 'existing_project' && recognition.projectMatch.matchedProjectId ? `existing:${recognition.projectMatch.matchedProjectId}` : recognition.projectMatch.decision} onChange={(event) => { if (!isolatedCapabilities) onProjectChoice(event.target.value) }}>
               <option value="new_project">新建项目</option>
               {projects.map((project) => <option key={project.id} value={`existing:${project.id}`}>关联：{project.title}</option>)}
               <option value="standalone_task">作为独立事项</option>
@@ -151,7 +153,7 @@ export function DraftReviewPanel({ draft, source, onClose, onUpdate, onConfirm, 
           <div className={needsReviewAttention ? 'recognition-quality warning' : 'recognition-quality'}>
             {needsReviewAttention ? <AlertTriangle size={17} /> : <ShieldCheck size={17} />}
             <span><strong>{needsReviewAttention ? '需要重点核对' : '结构校验通过'}</strong><small>{focusedReview?.reasons.map((reason) => reason.title).join('；') || recognition.quality.reviewReasons.join('；') || `证据覆盖 ${Math.round(recognition.quality.evidenceCoverage * 100)}%`}</small></span>
-            <button type="button" className="text-button" onClick={onKeepExplicit}>只保留原文明确</button>
+            <button type="button" className="text-button" disabled={isolatedCapabilities} onClick={() => { if (!isolatedCapabilities) onKeepExplicit() }}>只保留原文明确</button>
           </div>
           {focusedReview?.needsFocusedReview && <section className="focused-review-callout" aria-label="聚焦复核原因">
             <header><AlertTriangle size={18} /><div><strong>这份通知包含多个时间、材料或阶段</strong><small>系统已经完成初步整理，请重点确认标记项；不会自动选择、修改或创建任何事项。</small></div></header>
@@ -181,8 +183,8 @@ export function DraftReviewPanel({ draft, source, onClose, onUpdate, onConfirm, 
           </details>)}
           {draft.items.filter((item) => !groupedItemIds.has(item.suggestion.id)).map((item, index) => renderItem(item, index))}
           {recognition && draft.items.length === 0 && <div className="empty-state compact"><ShieldCheck size={28} /><h3>没有识别到明确行动</h3><p>可保存为资料、关闭稍后处理，或返回录入手动创建任务。</p></div>}
-          {recognition?.materials.length ? <section className={`recognition-entity-list ${focusedReview?.expandedSections.includes('materials') ? 'focused' : ''}`}><h3>材料</h3>{recognition.materials.map((material) => <div className="recognition-entity-row" key={material.tempId}><label><input type="checkbox" checked={material.selected !== false} onChange={(event) => onToggleRecognitionEntity('material', material.tempId, event.target.checked)} /><span><strong>{material.name}</strong><small>{material.formatRequirements.join('；') || '具体要求请回看原文'}</small></span></label><EvidenceLocator recognition={recognition} evidenceIds={material.evidenceIds} onFocusEvidence={setActiveEvidence} /></div>)}</section> : null}
-          {recognition?.timePoints.length ? <section className={`recognition-entity-list ${focusedReview?.expandedSections.includes('timePoints') ? 'focused' : ''}`}><h3>时间节点</h3>{recognition.timePoints.map((point) => <div className="recognition-entity-row" key={point.tempId}><label><input type="checkbox" checked={point.selected !== false} onChange={(event) => onToggleRecognitionEntity('timePoint', point.tempId, event.target.checked)} /><span><strong>{point.type}</strong><small>{point.rawText}{point.needsConfirmation ? ' · 需要确认' : ''}</small></span></label><EvidenceLocator recognition={recognition} evidenceIds={point.evidenceIds} onFocusEvidence={setActiveEvidence} /></div>)}</section> : null}
+          {recognition?.materials.length ? <section className={`recognition-entity-list ${focusedReview?.expandedSections.includes('materials') ? 'focused' : ''}`}><h3>材料</h3>{recognition.materials.map((material) => <div className="recognition-entity-row" key={material.tempId}><label><input type="checkbox" disabled={isolatedCapabilities} checked={material.selected !== false} onChange={(event) => { if (!isolatedCapabilities) onToggleRecognitionEntity('material', material.tempId, event.target.checked) }} /><span><strong>{material.name}</strong><small>{material.formatRequirements.join('；') || '具体要求请回看原文'}</small></span></label><EvidenceLocator recognition={recognition} evidenceIds={material.evidenceIds} onFocusEvidence={setActiveEvidence} /></div>)}</section> : null}
+          {recognition?.timePoints.length ? <section className={`recognition-entity-list ${focusedReview?.expandedSections.includes('timePoints') ? 'focused' : ''}`}><h3>时间节点</h3>{recognition.timePoints.map((point) => <div className="recognition-entity-row" key={point.tempId}><label><input type="checkbox" disabled={isolatedCapabilities} checked={point.selected !== false} onChange={(event) => { if (!isolatedCapabilities) onToggleRecognitionEntity('timePoint', point.tempId, event.target.checked) }} /><span><strong>{point.type}</strong><small>{point.rawText}{point.needsConfirmation ? ' · 需要确认' : ''}</small></span></label><EvidenceLocator recognition={recognition} evidenceIds={point.evidenceIds} onFocusEvidence={setActiveEvidence} /></div>)}</section> : null}
           {recognition?.events.length ? <section className={`recognition-events ${focusedReview?.expandedSections.includes('events') ? 'focused' : ''}`}><h3>事件安排</h3>{confirmationV2 && <p>本轮仅保留事件供核对，不会随任务确认写入；与事件共享时间的任务将明确阻断。</p>}{recognition.events.map((event) => <article key={event.tempId}><label><input type="checkbox" disabled={Boolean(confirmationV2)} checked={confirmationV2 ? false : event.selected !== false} onChange={(changeEvent) => onToggleRecognitionEntity('event', event.tempId, changeEvent.target.checked)} /><strong>{event.title}</strong></label><span>{inferenceLabels[event.inferenceLevel]}</span><p>{event.description}</p><EvidenceLocator recognition={recognition} evidenceIds={event.evidenceIds} onFocusEvidence={setActiveEvidence} /></article>)}</section> : null}
         </section>
       </div>
@@ -203,6 +205,7 @@ export function DraftReviewPanel({ draft, source, onClose, onUpdate, onConfirm, 
 }
 
 interface DraftItemReviewProps {
+  isolatedCapabilities?: boolean
   confirmationV2?: { dateLabel?: string; blockedReason?: string; dateEditBlockedReason?: string; busy: boolean; unsaved: boolean
     titleDirty: boolean; deadlineDirty: boolean; onSave: (field: 'title' | 'deadline') => void }
   index: number
@@ -223,7 +226,7 @@ interface DraftItemReviewProps {
   onMergeTask: DraftReviewPanelProps['onMergeTask']
 }
 
-function DraftItemReview({ index, item, editing, onToggleEdit, onUpdate, onConfirm, onReject, onToggleSelected, onFocusEvidence, inferenceLevel, milestones, milestoneTempId, onMoveTask, mergeTargets, onSplitTask, onMergeTask, confirmationV2 }: DraftItemReviewProps) {
+function DraftItemReview({ isolatedCapabilities, index, item, editing, onToggleEdit, onUpdate, onConfirm, onReject, onToggleSelected, onFocusEvidence, inferenceLevel, milestones, milestoneTempId, onMoveTask, mergeTargets, onSplitTask, onMergeTask, confirmationV2 }: DraftItemReviewProps) {
   const suggestion = item.suggestion
   const [mergeTargetId, setMergeTargetId] = useState('')
   if (item.status !== '待确认') return <article className={`review-item processed ${item.status === '已拒绝' ? 'rejected' : ''}`}>
@@ -251,10 +254,10 @@ function DraftItemReview({ index, item, editing, onToggleEdit, onUpdate, onConfi
       <label className="field"><span>预计耗时（分钟）</span><input disabled={Boolean(confirmationV2)} type="number" min="5" step="5" value={suggestion.estimatedMinutes} onChange={(event) => onUpdate(item.id, { estimatedMinutes: Number(event.target.value) })} /></label>
       <label className="field span-2"><span>下一步动作</span><input disabled={Boolean(confirmationV2)} value={suggestion.nextAction} onChange={(event) => onUpdate(item.id, { nextAction: event.target.value })} /></label>
       <label className="field span-2"><span>材料（用逗号或顿号分隔）</span><input disabled={Boolean(confirmationV2)} value={suggestion.materials.join('、')} onChange={(event) => onUpdate(item.id, { materials: event.target.value.split(/[，,、]/).map((value) => value.trim()).filter(Boolean) })} /></label>
-      {milestones.length > 0 && <label className="field span-2"><span>移动到阶段</span><select value={milestoneTempId ?? ''} onChange={(event) => onMoveTask(suggestion.id, event.target.value)}>{!milestoneTempId && <option value="">未分组</option>}{milestones.map((milestone) => <option key={milestone.id} value={milestone.id}>{milestone.title}</option>)}</select></label>}
-      <div className="review-structure-actions span-2"><button className="text-button" type="button" onClick={() => onSplitTask(item.id)}>拆成两项</button>{mergeTargets.length > 0 && <><label><span className="sr-only">选择合并目标</span><select value={mergeTargetId} onChange={(event) => setMergeTargetId(event.target.value)}><option value="">选择合并目标</option>{mergeTargets.map((target) => <option key={target.id} value={target.id}>{target.title}</option>)}</select></label><button className="text-button" type="button" disabled={!mergeTargetId} onClick={() => mergeTargetId && onMergeTask(item.id, mergeTargetId)}>合并到目标</button></>}</div>
+      {milestones.length > 0 && <label className="field span-2"><span>移动到阶段</span><select disabled={isolatedCapabilities} value={milestoneTempId ?? ''} onChange={(event) => onMoveTask(suggestion.id, event.target.value)}>{!milestoneTempId && <option value="">未分组</option>}{milestones.map((milestone) => <option key={milestone.id} value={milestone.id}>{milestone.title}</option>)}</select></label>}
+      <div className="review-structure-actions span-2"><button className="text-button" type="button" disabled={isolatedCapabilities} onClick={() => { if (!isolatedCapabilities) onSplitTask(item.id) }}>拆成两项</button>{mergeTargets.length > 0 && <><label><span className="sr-only">选择合并目标</span><select value={mergeTargetId} onChange={(event) => setMergeTargetId(event.target.value)}><option value="">选择合并目标</option>{mergeTargets.map((target) => <option key={target.id} value={target.id}>{target.title}</option>)}</select></label><button className="text-button" type="button" disabled={isolatedCapabilities || !mergeTargetId} onClick={() => !isolatedCapabilities && mergeTargetId && onMergeTask(item.id, mergeTargetId)}>合并到目标</button></>}</div>
     </div></fieldset>}
     <details className="item-evidence" open={suggestion.confidence === '低'}><summary>为什么这样拆？</summary><p>{suggestion.evidence || '原文未直接说明，需要人工确认。'}</p>{suggestion.evidenceRefs?.length ? <ul>{suggestion.evidenceRefs.map((reference) => { const quote = reference.quotedText ?? reference.quote; return <li key={reference.id}><strong>{reference.field}</strong>：{quote}<button type="button" onClick={() => onFocusEvidence(quote)}>在原文中定位</button></li> })}</ul> : <small>系统推测 · 原文未提供可定位依据</small>}</details>
-    <footer className="review-item-actions"><button className="text-button remove" type="button" onClick={() => onReject(item.id)}><Trash2 size={14} />不需要</button><button className="secondary-button" type="button" disabled={confirmationV2 && (confirmationV2.busy || confirmationV2.unsaved || !confirmationV2.dateLabel || Boolean(confirmationV2.blockedReason))} onClick={() => onConfirm(item.id)}><Check size={15} />加入任务</button></footer>
+    <footer className="review-item-actions"><button className="text-button remove" type="button" disabled={isolatedCapabilities} onClick={() => { if (!isolatedCapabilities) onReject(item.id) }}><Trash2 size={14} />不需要</button><button className="secondary-button" type="button" disabled={confirmationV2 && (confirmationV2.busy || confirmationV2.unsaved || !confirmationV2.dateLabel || Boolean(confirmationV2.blockedReason))} onClick={() => onConfirm(item.id)}><Check size={15} />加入任务</button></footer>
   </article>
 }

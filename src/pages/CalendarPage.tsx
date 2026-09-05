@@ -1,3 +1,4 @@
+import type { TaskDateViews } from '../experiments/mainline02/taskDateView'
 import { CalendarDays, ChevronLeft, ChevronRight, Clock3, Flag, Lightbulb, MapPin, Plus, Trash2 } from 'lucide-react'
 import { useMemo, useState, type FormEvent } from 'react'
 import {
@@ -11,10 +12,12 @@ import {
   type CalendarTimelineItem,
 } from '../lib/calendar'
 import { findSuggestedWorkSlot } from '../lib/scheduling'
+import { isDateOnly } from '../lib/timeSemantics'
 import { formatDuration, getExecutableTasks } from '../lib/taskLogic'
 import type { CourseBlock, Event, Task } from '../types'
 
 interface CalendarPageProps {
+  dateViews?: TaskDateViews
   tasks: Task[]
   events?: Event[]
   courseBlocks: CourseBlock[]
@@ -48,7 +51,7 @@ function itemTime(value: string): string {
     .format(new Date(value))
 }
 
-export function CalendarPage({ tasks, events = [], courseBlocks, onOpenTask, onOpenEvent, onAddCourseBlock, onRemoveCourseBlock }: CalendarPageProps) {
+export function CalendarPage({ dateViews, tasks, events = [], courseBlocks, onOpenTask, onOpenEvent, onAddCourseBlock, onRemoveCourseBlock }: CalendarPageProps) {
   const [today] = useState(() => new Date())
   const [viewDate, setViewDate] = useState(() => new Date(today.getFullYear(), today.getMonth(), 1))
   const [selectedDateKey, setSelectedDateKey] = useState(() => localDateKey(today))
@@ -60,9 +63,10 @@ export function CalendarPage({ tasks, events = [], courseBlocks, onOpenTask, onO
   const taskByDate = useMemo(() => groupTasksByDate(tasks), [tasks])
   const eventByDate = useMemo(() => groupEventsByDate(events), [events])
   const monthCells = useMemo(() => buildMonthCells(viewDate), [viewDate])
-  const executableTasks = useMemo(() => getExecutableTasks(tasks, today)
+  const executableTasks = useMemo(() => getExecutableTasks(tasks, today, dateViews)
+    .filter(task => !dateViews || dateViews[task.id]?.kind === 'dated')
     .slice()
-    .sort((a, b) => new Date(a.deadline).getTime() - new Date(b.deadline).getTime()), [tasks, today])
+    .sort((a, b) => new Date(a.deadline).getTime() - new Date(b.deadline).getTime()), [tasks, today, dateViews])
   const selectedItems = useMemo<CalendarTimelineItem[]>(() => {
     const selectedTasks = taskByDate.get(selectedDateKey) ?? []
     const selectedEvents = eventByDate.get(selectedDateKey) ?? []
@@ -104,6 +108,9 @@ export function CalendarPage({ tasks, events = [], courseBlocks, onOpenTask, onO
 
   return (
     <main className="page calendar-page">
+      {dateViews && <section aria-label="无截止日期任务"><h2>无截止日期任务</h2>
+        {tasks.filter(task => dateViews[task.id]?.noDeadlineProven).map(task => <button type="button" key={task.id} onClick={() => onOpenTask(task)}>{task.title} · {dateViews[task.id].label}</button>)}
+        <p>未自动分配日期或提醒；也可在任务中心搜索。</p></section>}
       <header className="page-header calendar-page-header">
         <div><span className="eyebrow">截止、事件与开工安排</span><h1>日历</h1><p>日期格汇总任务与正式事件；选择日期或切换“即将到来”查看不截断的完整清单。</p></div>
         <div className="legend"><span><i className="legend-dot deadline" />格内为行动摘要</span><span><i className="legend-dot start" />当前选中</span></div>
@@ -122,6 +129,10 @@ export function CalendarPage({ tasks, events = [], courseBlocks, onOpenTask, onO
               const dayTasks = taskByDate.get(cell.dateKey) ?? []
               const dayEvents = eventByDate.get(cell.dateKey) ?? []
               const summary = summarizeCalendarDay(dayTasks, dayEvents)
+              if (dateViews && summary && dayTasks.some(task => isDateOnly(task.deadline))) {
+                const timed = summarizeCalendarDay(dayTasks.filter(task => !isDateOnly(task.deadline)), dayEvents)
+                summary.timeLabel = timed ? `含仅日期事项；时刻 ${timed.timeLabel}` : '仅日期'
+              }
               const selected = cell.dateKey === selectedDateKey
               const className = [
                 'calendar-day',
@@ -159,7 +170,7 @@ export function CalendarPage({ tasks, events = [], courseBlocks, onOpenTask, onO
           {agendaItems.length
             ? <div className="calendar-agenda-list">{agendaItems.map((item) => item.kind === 'task'
                 ? <button className="agenda-item" key={`task:${item.id}`} type="button" onClick={() => onOpenTask(item.task)}>
-                    <span className="agenda-time">{itemTime(item.at)}</span>
+                    <span className="agenda-time">{dateViews && isDateOnly(item.at) ? '仅日期' : itemTime(item.at)}</span>
                     <span className="agenda-copy"><strong>{item.title}</strong><small><Clock3 size={13} />任务 · 预计 {formatDuration(item.task.estimatedMinutes)} · {item.task.status}</small></span>
                   </button>
                 : onOpenEvent
@@ -196,14 +207,14 @@ export function CalendarPage({ tasks, events = [], courseBlocks, onOpenTask, onO
         <div className="section-heading"><div><span className="section-index">PLAN</span><h2 id="schedule-title">课程表避让</h2><p>录入每周固定课程，本机规则会寻找 08:00–22:00 的连续空档。</p></div><CalendarDays size={20} /></div>
         <div className="schedule-grid">
           <div className="course-panel">
-            <form className="course-form" onSubmit={addCourse}>
-              <label className="field"><span>课程名称</span><input value={courseTitle} onChange={(event) => setCourseTitle(event.target.value)} placeholder="例如：传播学专题" required /></label>
-              <label className="field"><span>星期</span><select value={courseWeekday} onChange={(event) => setCourseWeekday(Number(event.target.value) as CourseBlock['weekday'])}>{weekdays.map((day) => <option key={day.value} value={day.value}>{day.label}</option>)}</select></label>
-              <label className="field"><span>开始</span><input type="time" value={courseStart} onChange={(event) => setCourseStart(event.target.value)} required /></label>
-              <label className="field"><span>结束</span><input type="time" value={courseEnd} onChange={(event) => setCourseEnd(event.target.value)} required /></label>
-              <button className="secondary-button" type="submit" disabled={courseStart >= courseEnd}><Plus size={15} />添加课程</button>
+            <form className="course-form" onSubmit={event => { if (dateViews) { event.preventDefault(); return } addCourse(event) }}>
+              <label className="field"><span>课程名称</span><input disabled={Boolean(dateViews)} value={courseTitle} onChange={(event) => setCourseTitle(event.target.value)} placeholder="例如：传播学专题" required /></label>
+              <label className="field"><span>星期</span><select disabled={Boolean(dateViews)} value={courseWeekday} onChange={(event) => setCourseWeekday(Number(event.target.value) as CourseBlock['weekday'])}>{weekdays.map((day) => <option key={day.value} value={day.value}>{day.label}</option>)}</select></label>
+              <label className="field"><span>开始</span><input disabled={Boolean(dateViews)} type="time" value={courseStart} onChange={(event) => setCourseStart(event.target.value)} required /></label>
+              <label className="field"><span>结束</span><input disabled={Boolean(dateViews)} type="time" value={courseEnd} onChange={(event) => setCourseEnd(event.target.value)} required /></label>
+              <button className="secondary-button" type="submit" disabled={Boolean(dateViews) || courseStart >= courseEnd}><Plus size={15} />添加课程</button>
             </form>
-            <div className="course-list">{courseBlocks.length ? courseBlocks.map((block) => <div className="course-item" key={block.id}><span><strong>{block.title}</strong><small>{weekdays.find((day) => day.value === block.weekday)?.label} · {block.startTime}–{block.endTime}</small></span><button className="icon-button" type="button" aria-label={`删除课程 ${block.title}`} onClick={() => onRemoveCourseBlock(block.id)}><Trash2 size={15} /></button></div>) : <p className="muted-copy">尚未录入课程；建议不会假设你的空闲时间。</p>}</div>
+            <div className="course-list">{courseBlocks.length ? courseBlocks.map((block) => <div className="course-item" key={block.id}><span><strong>{block.title}</strong><small>{weekdays.find((day) => day.value === block.weekday)?.label} · {block.startTime}–{block.endTime}</small></span><button className="icon-button" type="button" aria-label={`删除课程 ${block.title}`} disabled={Boolean(dateViews)} onClick={() => { if (!dateViews) onRemoveCourseBlock(block.id) }}><Trash2 size={15} /></button></div>) : <p className="muted-copy">尚未录入课程；建议不会假设你的空闲时间。</p>}</div>
           </div>
           <div className="work-slot-panel"><h3>建议开工时段</h3>{suggestions.length ? suggestions.map(({ task, slot }) => slot && <button type="button" className="work-slot" key={task.id} onClick={() => onOpenTask(task)}><span><strong>{task.title}</strong><small>{new Intl.DateTimeFormat('zh-CN', { month: 'numeric', day: 'numeric', weekday: 'short', hour: '2-digit', minute: '2-digit' }).format(new Date(slot.start))} 开始 · {formatDuration(task.estimatedMinutes)}</small></span><em>{slot.reason}</em></button>) : <p className="muted-copy">当前没有可计算的未完成任务或连续空档。</p>}</div>
         </div>

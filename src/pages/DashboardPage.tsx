@@ -1,3 +1,4 @@
+import type { TaskDateViews } from '../experiments/mainline02/taskDateView'
 import { ArrowRight, ClipboardPaste, Inbox, Link2, Plus, Upload } from 'lucide-react'
 import { useState, type FormEvent } from 'react'
 import { TaskCard } from '../components/TaskCard'
@@ -5,6 +6,8 @@ import { getBlockedAndWaitingTasks, getFocusTasks } from '../lib/taskLogic'
 import type { Project, Task } from '../types'
 
 interface DashboardPageProps {
+  dateViews?: TaskDateViews
+  readOnly?: boolean
   tasks: Task[]
   projects: Project[]
   pendingReviewCount: number
@@ -27,6 +30,7 @@ function todayLabel(): string {
 }
 
 export function DashboardPage({
+  dateViews, readOnly,
   tasks,
   projects,
   pendingReviewCount,
@@ -43,8 +47,8 @@ export function DashboardPage({
 }: DashboardPageProps) {
   const [quickText, setQuickText] = useState('')
   const [isParsing, setIsParsing] = useState(false)
-  const focusTasks = getFocusTasks(tasks)
-  const deferredTasks = getBlockedAndWaitingTasks(tasks)
+  const focusTasks = getFocusTasks(tasks, new Date(), 3, dateViews)
+  const deferredTasks = getBlockedAndWaitingTasks(tasks, new Date(), dateViews)
   const activeCount = tasks.filter((task) => task.status !== '已完成').length
 
   const submitQuickCapture = async (event: FormEvent) => {
@@ -75,17 +79,17 @@ export function DashboardPage({
           <span className="quick-capture-icon"><ClipboardPaste size={20} /></span>
           <div><strong>收到新通知？直接粘贴</strong><small>日期、事项和材料会先拆成待确认建议。</small></div>
           <span className={`ai-assist-status ${smartExtractionStatus}`}>
-            {smartExtractionStatus === 'connected' ? 'DeepSeek 已配置 · 调用时验证' : smartExtractionStatus === 'checking' ? '正在检查智能服务' : 'DeepSeek 未配置 · 本地规则可用'}
+            {dateViews ? '人工工程响应 · 不调用模型' : smartExtractionStatus === 'connected' ? 'DeepSeek 已配置 · 调用时验证' : smartExtractionStatus === 'checking' ? '正在检查智能服务' : 'DeepSeek 未配置 · 本地规则可用'}
           </span>
         </div>
         <textarea value={quickText} onChange={(event) => setQuickText(event.target.value)} rows={3} placeholder="粘贴老师消息、群通知或网页正文……" aria-label="快速粘贴通知" />
         <div className="quick-capture-actions">
-          <button className="text-button" type="button" onClick={onOpenIntake}><Upload size={15} />上传文件或链接</button>
+          <button className="text-button" type="button" onClick={onOpenIntake}><Upload size={15} />{dateViews ? '打开统一文字录入' : '上传文件或链接'}</button>
           <button className="primary-button" type="submit" disabled={!quickText.trim() || isParsing}>
-            {isParsing ? '正在智能整理…' : <><Plus size={16} />智能拆分任务</>}
+            {isParsing ? (dateViews ? '正在保存工程草稿…' : '正在智能整理…') : <><Plus size={16} />{dateViews ? '生成工程建议' : '智能拆分任务'}</>}
           </button>
         </div>
-        <small className="cloud-send-disclosure">点击整理会把当前粘贴文字发送给已配置的 DeepSeek 模型；认证与模型可用性会在本次调用时验证。结果仅为建议，确认前不会创建任务；服务不可用时自动改用本地规则。</small>
+        <small className="cloud-send-disclosure">{dateViews ? '只接受旧匿名工程通知，在独立本机测试库保存；不发送文字、不调用模型，也不回退本地识别。请核对后确认。' : '点击整理会把当前粘贴文字发送给已配置的 DeepSeek 模型；认证与模型可用性会在本次调用时验证。结果仅为建议，确认前不会创建任务；服务不可用时自动改用本地规则。'}</small>
       </form>
 
       {pendingReviewCount > 0 && <button className="pending-review-banner" type="button" onClick={onShowInbox}>
@@ -100,7 +104,7 @@ export function DashboardPage({
           <button className="text-button" type="button" onClick={onShowTasks}>全部 {activeCount} 项<ArrowRight size={16} /></button>
         </div>
         {focusTasks.length
-          ? <div className="focus-grid">{focusTasks.map((task, index) => { const project = projects.find((candidate) => candidate.id === task.projectId); return <TaskCard key={task.id} task={task} allTasks={tasks} projectTitle={project?.title} stageTitle={project?.milestones.find((milestone) => milestone.id === task.milestoneId)?.title} featured={index === 0} onOpen={onOpenTask} onComplete={onCompleteTask} onStart={onStartTask} onSnooze={onSnoozeTask} onTogglePin={onTogglePinTask} /> })}</div>
+          ? <div className="focus-grid">{focusTasks.map((task, index) => { const project = projects.find((candidate) => candidate.id === task.projectId); return <TaskCard dateView={dateViews?.[task.id]} readOnly={readOnly} key={task.id} task={task} allTasks={tasks} projectTitle={project?.title} stageTitle={project?.milestones.find((milestone) => milestone.id === task.milestoneId)?.title} featured={index === 0} onOpen={onOpenTask} onComplete={onCompleteTask} onStart={onStartTask} onSnooze={onSnoozeTask} onTogglePin={onTogglePinTask} /> })}</div>
           : <div className="home-empty-state"><strong>{deferredTasks.length ? '当前没有可立即执行的任务' : '今天还没有任务'}</strong><p>{deferredTasks.length ? '受阻和稍后事项已单独列出，不会回填到今日 Top 3。' : '把一段通知粘贴到上方，确认后就会出现在这里。'}</p></div>}
       </section>
 
