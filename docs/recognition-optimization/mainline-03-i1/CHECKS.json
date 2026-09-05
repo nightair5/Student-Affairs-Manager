@@ -1,0 +1,98 @@
+{
+  "stage": "RCO-5-MAINLINE-03-I1",
+  "date": "2026-09-06",
+  "outcome": "NOT_ACCEPTED_REVIEW_BLOCKED",
+  "git": {
+    "base": "3439a8ee6ec2f1c96932b20b86b519544af7af52",
+    "headBeforeDocsCommit": "3439a8ee6ec2f1c96932b20b86b519544af7af52",
+    "branch": "codex/e2-multimodal-recognition-exp",
+    "remoteBeforeDocsCommit": "3439a8ee6ec2f1c96932b20b86b519544af7af52",
+    "delivery": "FAILURE_DOCUMENTS_ONLY_SOURCE_UNCOMMITTED",
+    "finalReceipt": "Reported after commit/push; not preclaimed"
+  },
+  "protection": {
+    "okay": true,
+    "checked": 752,
+    "changed": [],
+    "appendOnly": true,
+    "outOfScope": [],
+    "logPrefixBytes": 195561,
+    "implementationFiles": 10,
+    "implementationChangedAfterReview": []
+  },
+  "checks": {
+    "reproduction": {
+      "passed": 1,
+      "total": 1,
+      "includedInTargeted": true
+    },
+    "targeted": {
+      "passed": 134,
+      "total": 134,
+      "files": 11,
+      "oldTests": 99,
+      "newTests": 35
+    },
+    "canonicalMemoryFidelity": {
+      "passed": 42,
+      "total": 42,
+      "notBrowser": true,
+      "notModelAccuracy": true
+    },
+    "independentReview": {
+      "status": "BLOCKED",
+      "diagnosticCases": 2,
+      "inconsistentReceiptsAccepted": 2,
+      "defaultSelectedPerCase": [
+        true,
+        true
+      ],
+      "initialTasksPerCase": [
+        0,
+        0
+      ],
+      "tasksAfterExplicitConfirmationPerCase": [
+        1,
+        1
+      ],
+      "tasksAfterCaptureBeforeConfirmation": "NOT_SEPARATELY_OBSERVED",
+      "semanticTaskMisSelection": "NOT_DEMONSTRATED",
+      "fileHashesMatched": 10
+    },
+    "isolatedBrowserBundle": "PASS_IN_MEMORY_ONLY",
+    "fullEngineering": "NOT_RUN_REVIEW_BLOCKED",
+    "actualEdge": "NOT_RUN_REVIEW_BLOCKED",
+    "actualDownload": "NOT_RUN_REVIEW_BLOCKED",
+    "scopedSensitivePatternFiles": [],
+    "sensitiveScanNote": "Initial unbounded sk pattern matched two pre-existing task identifiers at log lines 884 and 1082; safe classification confirmed task-prefix false positives. Word-boundary patterns give zero hits; no matched values disclosed."
+  },
+  "counters": {
+    "externalRecognitionModelCalls": 0,
+    "verifier": 0,
+    "repair": 0,
+    "retry": 0,
+    "modelNetworkRequests": 0,
+    "costCny": 0,
+    "keyAccess": 0,
+    "clipboardAccess": 0,
+    "userDatabaseAccess": 0,
+    "newBrowserDatabases": 0,
+    "deployment": 0
+  },
+  "logs": [
+    {
+      "path": "C:/Users/Winner/AppData/Local/Temp/rco-mainline-03-i1-PFkR6r/results.json",
+      "sha256": "d50a40d448d3f9818b19540fcea2787e0c63eb75f2add97bdf1bb40f53c0f1e1"
+    },
+    {
+      "path": "C:/Users/Winner/AppData/Local/Temp/rco-mainline-03-i1-PFkR6r/targeted.log",
+      "sha256": "990105b79e3d47357deac9181083af801b122772955dfbd7fe1918d32d9b85c5"
+    },
+    {
+      "path": "C:/Users/Winner/AppData/Local/Temp/rco-mainline-03-i1-UXMIfc/results.json",
+      "sha256": "4b4efec9105d4ece5598d2ababa7fe55373dc8c675166e18b5a96246ce8db9ce"
+    }
+  ],
+  "contextLines": 84,
+  "modelAccuracy": "本轮未测量"
+}

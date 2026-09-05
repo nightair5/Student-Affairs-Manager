@@ -1414,3 +1414,22 @@
 - paid: 后续拟12份另批新匿名Development×2臂最多24次/10元，模型deepseek-v4-flash-vision-exp；完整契约/数据/预算仍NOT_READY，未创建、未冻结、未调用，不沿用旧许可。
 - boundary: 模型/verifier/Repair/retry/模型网络/费用/密钥/剪贴板/用户库/真实材料/真人/部署/RCO-6均0。提交推送仅本目录文档及2动态文件，远端核对以Git回执为准。
 - next: 等待MAINLINE-03-I1新授权，先把来源接对并显示表达缺口；正式任务编辑/执行、ICS/真实提醒、稳定/商业接入分别审批。完成后停止。
+
+## 87. MAINLINE-03-I1 来源绑定实施授权 — 2026-09-06
+
+- authority: 当前用户明确授权SCOPE十文件白名单的零调用来源绑定/可表达性接入验证；唯一repo/branch保持，不改冻结契约/旧材料/默认入口，不访问密钥/剪贴板/模型网络/真实库，不部署。
+- baseline: HEAD与远端3439a8ee6ec2f1c96932b20b86b519544af7af52，起始干净；SCOPE原747只读与R1原19源码匹配。本轮BASELINE固定全部原文件及仅4个可修改既有路径（2源码/2动态文档），新增仅6源码测试/2脚本与本轮报告。
+- execution: 先来源断点复现→最小绑定→定向/对抗→新独立审查→一次适用完整门→真实Edge新库逐键/确认/刷新/文件读回。失败/保护变化等按授权停止；尚未有新通过结论。
+- accounting: 外部模型/verifier/Repair/retry/模型网络/费用/密钥/剪贴板0，模型识别准确率本轮未测量。没有数据制作/冻结/旧runner/稳定接入许可。
+
+## 88. MAINLINE-03-I1 来源凭据审查阻断 — 2026-09-06
+
+- outcome: NOT_ACCEPTED / REVIEW_BLOCKED；按失败分支停止，10获准实现保留本机未提交，仅上传审计证据，不重置源码。
+- implemented: 可选隔离handoff、Source匿名receipt、唯一逐字sourceId/span绑定、原始/首次/编辑分层、已见类型拒绝、新真实App本机入口；未接普通入口，不改冻结契约。
+- directed: 当前134/134、11文件（旧99+新35）；multi内存canonical确认42/42，非绑定结构断言通过；首次旧服务形状来源断点复现1/1已包含。日志PFkR6r/早期bvOBd9/复现UXMIfc，非模型准确率。
+- review: 新无上下文独立审查2例矛盾receipt（版本或rawOutputText不一致）经重新算hash仍capture成功、默认选true、明确确认后各写1项。属于来源凭据身份失守，不冒称语义任务误选；不能宣称全局错误放行0。
+- stopped: 独立BLOCKED后源码修补0；完整lint/test/build/安全/依赖与实际Edge/下载均NOT_RUN，不继承R1旧浏览器42/42。只做收尾保护/文档检查，未启动本轮server或实际浏览器库。
+- protection: 752只读SHA匹配，日志旧字节前缀保留；REVIEW_SNAPSHOT/REJECTED_SNAPSHOT绑定相同10源码。旧Expected/freeze/dataset/checkpoint/cache、旧40/42/17测试/历史FAIL不改。
+- boundary: 外部识别模型/verifier/Repair/retry/模型网络/费用/密钥/剪贴板/用户库/真实材料/真人/部署/RCO-6均0；无新数据/盲测/B10或旧runner执行。
+- delivery: docs(product)仅审计目录与两动态文档，精确暂存不含未提交源码；最终提交/推送/远端SHA以Git回执为准。
+- next: 唯一建议MAINLINE-03-I1-R1修复凭据内部一致性，复现→最小修复→独立审查→完整门→原浏览器协议；待新授权，不换模型/新数据。模型识别准确率本轮未测量。完成后停止。
