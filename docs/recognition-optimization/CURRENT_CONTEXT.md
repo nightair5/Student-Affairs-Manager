@@ -1,48 +1,53 @@
 # RCO Current Context
 
-供压缩恢复使用；以代码、冻结证据和追加日志为准。
+压缩/换开发模型时的短交接；当前用户授权、现场Git和最新追加日志优先。
 
 ## 当前目标与授权
 
-- 目标：提升文字/图片/文件到待确认任务的正确率及确认效率。模型不能直接创建正式任务。
-- 当前：`RCO-5-010-E1 LOCAL_VERIFIED_AND_FROZEN / DELIVERY_STATUS_SEE_GIT / NO_PRODUCT_PROMOTION`。
-- 用户在 E1 审查失败后明确“继续执行”；仅恢复本轮零调用修补、对抗审查、通过后全量验证、组件冻结和提交推送。
-- 模型接口/联网模型请求/verifier/Repair/retry/Secret/费用：`0/0/0/0/0/NONE/0 CNY`。
-- 禁止修改既有 Expected/freeze/dataset/checkpoint/cache、旧 B9 runner 和结果；禁止创建 B10、接稳定路径、启动 RCO-6 或部署。
+- 北极星：整份通知正确完整→少修改、快确认→可靠保存，不只看动作匹配或安全勾选。
+- 当前：RCO-DOCS-002 文档重整已完成读者复核；交付提交/推送以Git为准；后续实现、模型、真实数据、真人与部署均未授权。
+- 本轮允许AGENTS/PRD、总计划、提示词、短交接、追加日志及文档检查报告。
+- 识别模型/外部模型请求/verifier/Repair/retry/Secret/实验费用：0/0/0/0/0/NONE/0 CNY。
+- 禁止修改既有Expected/freeze/dataset/checkpoint/cache、冻结组件、商业契约与历史runner/result。
+- 不运行旧B9 runner、不创建B10、不接稳定路径、不启动RCO-6、不部署。
+- 文档检查见RCO_DOCS_002_REVIEW.md与RCO_DOCS_002_CHECKS.json：8问读者通过，1处旧证据措辞冲突已修正；提交/远程状态须核对Git。
 
-## 工作区
+## 工作区与当前代码
 
-- repository: `C:\Users\Winner\student-affairs-multimodal-exp`
-- branch: `codex/e2-multimodal-recognition-exp`
-- 恢复时 HEAD/upstream：`c67e59ee14c04c6e15cc003ef06da2c157e92f47`。
-- 本阶段交付提交消息：`fix(app): verify source and proposition scope before safe selection`；实际提交和upstream状态以Git为准。受保护tracked文件无修改。
-- RC.4、Release、Production 和默认“本机 OCR/解析后只发送文字”路径未接本轮组件。
+- repository: C:\Users\Winner\student-affairs-multimodal-exp
+- branch: codex/e2-multimodal-recognition-exp
+- 本轮开始HEAD/upstream tracking：60332e16ebb062c4af0fa85531212286ab020a23，工作区干净。
+- 该代码提交：fix(app): verify source and proposition scope before safe selection。
+- 本次文档交付提交以Git为准，不把当前提交SHA递归写入自身。
+- RC.4/Release/Production、稳定文字模型、既有监测均未由本轮改变。
 
-## 当前实现与证据
+## 证据摘要与主缺口
 
-- 对象键顺序无关的结构比较；拒绝 sparse/undefined/非有限值。
-- 完整命题裁决、三值行动性与 selected 分离。
-- E1 移除有限词内“请”黑名单，使用动作位置和受控称谓/时间/方式正向证明，逐出现位置回溯 governor。
-- 续修：完整句子的问句或冒号外层语境、名词化与命令竞争均保持未知；从原文重建 scope/catalog，异步前快照，拒绝候选/对象篡改。
-- 当前定向：6 文件 122/122；独立无上下文机制复核 PASS（同系列）。全量899 passed/1 live OCR skipped，lint/type/build/security PASS，npm audit 0漏洞。
-- B9/009/009A保护检查19/19，B9当前额外默认勾选/内部违规均0。代码测试后只补了安全断言并通过3/3、类型/lint检查。
-- 报告：`RCO-5-010_CLOSE_REPORT.md`，机器记录：`RCO-5-010_CLOSE_CHECKS.json`，审查：`RCO-5-010_E1_AUDIT.md`。
-- 这是受控规则组件，不是完整中文解析器；冒号后真实转述命令和歧义句式可能保守待确认。
+- RCO-0…4有技术/组件验证，不能称全格式商业通过。
+- 010-E1本机组件结项记录：定向122/122，全量899 passed/1 live OCR skipped；不是模型正确率。
+- 010报告：RCO-5-010_CLOSE_REPORT.md、RCO-5-010_CLOSE_CHECKS.json、RCO-5-010_E1_AUDIT.md。
+- B8：旧真实模型合成Development，任务TP/FP/FN=15/0/5，任务层完整8/12、重大修改4/12；不是独立人工真值或整份事实准确率。
+- B8评分：rco-5-008-b8-runs/rco-5-008-b8-m1-20260904a/score.json。
+- B9原始FAIL不变；已见回归11/12是实现期望一致性，B9-07/B9-12边界保留。
+- B9旧结果/010旧诊断不重写、不重跑、不改称新盲测。
+- 新候选任务层时间/材料引用仍缺完整连接；实际产品尚未接010研究链。
+- 候选动作/对象闭集可能限制正确答案表达；scope存在不能证明语义正确。
+- 本机已有提取chunks，云端仍截前24,000字并提示；未完成全篇识别闭环。
+- 修改记录不等于真人active edit time；最新模型泛化/真实材料/真人/商业证据不足。
+- 仍处RCO-G5待证；商业契约保持DRAFT_UNAPPROVED、原阈值/样本不改。
 
-## B9 历史
+## 下一建议，不是授权
 
-- 原 B9 唯一零调用结果 `FAIL`，12 案例；本轮不运行旧 runner。
-- `rco-5-010-seen-b9-replay/result.json` 是此前已见诊断产物，不覆盖，不称为本轮新盲测。
-- 当前已见回归 requiresAction 11/12；B9-07 false/null 分歧保留，B9-12 不是独立语义真值。
-- 计数键顺序假失败已解释；工程 PASS 不能说成 B9 PASS 或模型正确率。
-- 历史证据：`RCO-5-009-B9_DATA_FREEZE.json`、`RCO-5-009-B9_ZERO_CALL_RESULT_FREEZE.json`。
+1. RCO-5-MAINLINE-01：0调用隔离端到端上限验证，先证明正确人工响应可被真实组件承接。
+2. 允许范围/场景/交付/通过线见RECOGNITION_OPTIMIZATION_PLAN.md第4节；待用户明确授权。
+3. 后续MAINLINE-02才设计新候选职责/表达，MAINLINE-03才申请付费配对。
+4. G5完整事实净收益通过后才申请RCO-6，之后按原门做真实效用与发布审批。
+5. 首批高频场景只是开发排序；缩小商业范围或提前真人探索须另批，不豁免原商业契约。
 
-## 下一动作
+## 恢复读取与停机
 
-1. `RCO-5-010_COMPONENT_FREEZE.json` 已建立，25路径哈希匹配，新旧冻结检查20/20。
-2. 恢复时核对本阶段交付提交与upstream；已交付则停止，不重复实现或运行历史runner。提交SHA不递归写入冻结文件。
-3. 不自动创建B10，不调用模型，不进入RCO-6或部署；后续产品验证需要另行明确范围。
-
-## 证据边界
-
-不能据本机回归声称模型泛化、OCR/图片/文件识别、真人修改时间、浏览器验收或商业上线。详细历史见 OPTIMIZATION_LOG.md；恢复时不重复加载所有报告。
+- AGENTS → PRD第14节相关部分 → 本文件 → 日志最新追加记录 → 当前计划工作包 → 直接相关源码。
+- 日志第1/2节是旧快照；从第67条及其后追加记录恢复本次阶段，禁止重启旧B0。
+- 一轮一个主根因、最多两轮局部修补；无收益先形成决策，不继续补关键词。
+- 大输出只保留路径/计数/关键错误，约80行短交接，上限200行且12 KB。
+- 保护变化、越权或Expected泄漏立即停止；证据不足只禁止晋级，不伪造PASS。

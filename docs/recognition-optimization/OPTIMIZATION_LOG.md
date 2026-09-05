@@ -1219,3 +1219,24 @@
 - freeze: `RCO-5-010_COMPONENT_FREEZE.json` 新建后只读核验25路径SHA-256，联合旧B9/009/009A保护检查20/20。动态context/log不进入递归哈希。
 - delivery_message: `fix(app): verify source and proposition scope before safe selection`。提交与推送结果以该Git提交及upstream为准；本日志不预报远程成功。
 - status: `LOCAL_VERIFIED_AND_FROZEN / NO_PRODUCT_PROMOTION`。交付后停止；B10/付费模型/RCO-6/稳定接入/部署未授权且未执行。
+
+## 67. RCO-DOCS-002 主线重整启动 — 2026-09-05
+
+- authority: 当前用户要求重新制作优化 AGENTS/PRD、功能范围、详细路线、注意事项、优化/目标提示词及上下文流程；本次仅授权文档，不含产品实现、识别模型调用、真实材料、真人研究或部署。
+- start_snapshot: `codex/e2-multimodal-recognition-exp`；HEAD/upstream tracking=`60332e16ebb062c4af0fa85531212286ab020a23`；工作区干净。已在本轮工具会话保存644个tracked文件的SHA-256基线；只允许AGENTS、PRD、总计划、提示词、动态context与本日志变化，其余tracked文件须逐个保持原哈希。
+- authority_correction: 本日志第1/2节和旧计划的“当前”措辞是此前阶段快照，不代表最新状态；最新已完成代码阶段为010-E1。恢复时按有编号的最新追加记录核对Git，禁止根据旧索引重新启动B0或RCO-0。
+- intent: 保留安全底座，将后续RCO-5交付聚焦整份通知的时间/材料/任务/证据完整性及真实确认链路；规则覆盖与模型语义质量分开，工程/合成/真人/发布证据分开。
+- protection: 不修改既有Expected/freeze/dataset/checkpoint/cache、历史报告、一次性runner及商业验证契约；不创建B10、不进入RCO-6、不接稳定路径、不部署。
+- accounting: product_model_calls=0；model_network_requests=0；Secret_access=NONE；experiment_cost_cny=0。文档读者审查属于开发协作，不是被测识别API请求，Codex使用量不混记成产品实验账单。
+- status: `RCO-DOCS-002 IN_PROGRESS / IMPLEMENTATION_WAIT_AUTHORIZATION / DO_NOT_LAUNCH`；后续记录验证与交付，不预先宣称通过。
+
+## 68. RCO-DOCS-002 文档重整与读者复核 — 2026-09-05
+
+- changes: 更新根AGENTS与PRD v0.9，重写总计划/优化目标恢复提示词/短交接；新增12项功能清单、语义职责、确认状态、首次/最终结果与真人计时设计，后续工作包归于既有RCO-5，不从RCO-0重启。
+- priorities: 先MAINLINE-01隔离端到端上限，再MAINLINE-02候选表达/职责，最后MAINLINE-03另批付费配对；G5质量过门后才申请RCO-6。开发优先格式不缩减正式商业矩阵。
+- reader_review: doc-coauthoring无上下文辅助读者8问通过；发现PRD14.6旧“模型输出逐字证据”与新引用规则冲突，修为本机还原并获得解除确认；同系列开发审查不等于人工语义真值或商业验收。
+- validation: 初轮文档检查34/34，diff与安全扫描通过；加入报告后的最终检查见RCO_DOCS_002_CHECKS.json。638个非本轮修改范围的原tracked文件逐个哈希未变；旧日志内容仅追加。未重跑产品lint/test/build或历史runner，前轮899测试不计为本轮成绩。
+- artifacts: RCO_DOCS_002_REVIEW.md、RCO_DOCS_002_CHECKS.json；CURRENT_CONTEXT保持短交接。原商业验证契约字节不变、仍未批准，既有Expected/freeze/dataset/checkpoint/代码/runner/result不变，B9历史FAIL保留。
+- accounting: product_model_calls/model_network/verifier/Repair/retry/Secret/experiment_CNY=`0/0/0/0/0/NONE/0`；未采集真实材料/真人数据，未启动RCO-6，未部署。Codex读写文档与辅助审查用量不混作产品模型实验费用。
+- delivery: 计划单独提交`docs(product): refocus recognition roadmap on complete task outcomes`并推送；实际SHA/远程结果以Git及交付答复为准，不预报成功。
+- decision: `DOCS_READER_VERIFIED / NO_PRODUCT_PROMOTION / NEXT RCO-5-MAINLINE-01 WAIT_AUTHORIZATION / DO_NOT_LAUNCH`；本次文档交付后停止，不自动执行可复制提示词。
