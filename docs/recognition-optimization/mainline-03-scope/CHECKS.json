@@ -1,0 +1,105 @@
+{
+  "stage": "RCO-5-MAINLINE-03-SCOPE",
+  "decision": "SCOPE_DOCUMENTS_ACCEPTED_NOT_IMPLEMENTED",
+  "date": "2026-09-06",
+  "preCommitHead": "235e3650ee776277b5bdc4c6c371a9356c833a1f",
+  "remoteAtCheck": "235e3650ee776277b5bdc4c6c371a9356c833a1f",
+  "protection": {
+    "count": 747,
+    "changes": [],
+    "r1ImplementationCount": 19,
+    "r1Mismatches": [],
+    "rco5010FrozenCount": 25,
+    "rco5010Mismatches": [],
+    "logPrefixUnchanged": true,
+    "outOfScope": []
+  },
+  "documents": {
+    "contextLines": 82,
+    "contextBytes": 5008,
+    "markdownInspection": "PASS",
+    "independentReview": "PASS_AFTER_ONE_DOCUMENT_BOUNDARY_CLARIFICATION",
+    "secretScan": {
+      "scope": "new scope documents and authorized dynamic documents; credential-pattern scan; no secret files accessed",
+      "findings": [],
+      "falsePositiveResolution": "Initial unbounded sk- scan matched two embedded task- artifact names in prior log (lines 884,1082), not standalone keys. Classified without printing matched values; word-boundary credential scan found zero. No key files accessed.",
+      "scannedFiles": 8
+    },
+    "snapshots": [
+      {
+        "path": "docs/recognition-optimization/mainline-03-scope/BASELINE.json",
+        "sha256": "495ef6640fe606ee02862ce0692aecea882a6c5904043789588147b9e637c3c6"
+      },
+      {
+        "path": "docs/recognition-optimization/mainline-03-scope/IMPLEMENTATION_WHITELIST.md",
+        "sha256": "ee4d1baac670b0e94cb76d608e66a1e32a5ef6dd30a9e5d9c94b674b0b37787c"
+      },
+      {
+        "path": "docs/recognition-optimization/mainline-03-scope/NEXT_PROMPT.md",
+        "sha256": "84193d3884f1782dd36b5940aca9723908b36052d0e8888d52658679ceb75e1a"
+      },
+      {
+        "path": "docs/recognition-optimization/mainline-03-scope/REVIEW.md",
+        "sha256": "d6d754603a324b4ad856fd2cc103d82fd27e123fd534bf4fc6702e62dfef4f24"
+      },
+      {
+        "path": "docs/recognition-optimization/mainline-03-scope/SCOPE_AUDIT.md",
+        "sha256": "d72134ac1a60409551fcd3a623b875d2fcf4fdc967c44ade0892ba01299fc159"
+      },
+      {
+        "path": "docs/recognition-optimization/mainline-03-scope/VALIDATION_DESIGN.md",
+        "sha256": "56a381114bac556e08a9b7ef9a773989babc82931ea63b5c909193fcc869efe7"
+      }
+    ],
+    "diffCheck": "PASS: staged git diff --cached --check after correcting one trailing blank in new audit; rerun before commit."
+  },
+  "futureWhitelist": {
+    "total": 10,
+    "existing": [
+      "src/App.tsx",
+      "src/experiments/mainline02/runtime.ts"
+    ],
+    "notCreated": [
+      "src/experiments/mainline03/recognitionHandoff.ts",
+      "src/experiments/mainline03/recognitionHandoff.test.ts",
+      "src/experiments/mainline03/seenReplay.ts",
+      "src/experiments/mainline03/seenReplay.test.ts",
+      "src/experiments/mainline03/browser.tsx",
+      "src/experiments/mainline03/mainlineAcceptance.test.tsx",
+      "scripts/serve-mainline-03-i1.mjs",
+      "scripts/check-mainline-03-i1.mjs"
+    ]
+  },
+  "accounting": {
+    "productSourceChanges": 0,
+    "externalRecognitionCalls": 0,
+    "modelNetworkRequests": 0,
+    "verifier": 0,
+    "repair": 0,
+    "retry": 0,
+    "cny": 0,
+    "keyOrClipboardAccess": 0,
+    "newDatasets": 0,
+    "oldRunners": 0,
+    "realUserDatabaseAccess": 0,
+    "modelAccuracy": "本轮未测量"
+  },
+  "notRun": [
+    "product lint/test/build",
+    "browser acceptance",
+    "new model scoring",
+    "real materials or human timing",
+    "deployment",
+    "RCO-6"
+  ],
+  "paidProposal": {
+    "status": "NOT_READY_NOT_AUTHORIZED",
+    "model": "deepseek-v4-flash-vision-exp",
+    "inputsCreated": 0,
+    "proposedCases": 12,
+    "proposedArms": 2,
+    "proposedMaximumCalls": 24,
+    "proposedCnyHardCap": 10
+  },
+  "gitDelivery": "standalone documentation commit; final commit and remote verification reported in Git receipt"
+}

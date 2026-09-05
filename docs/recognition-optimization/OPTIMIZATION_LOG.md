@@ -1395,3 +1395,22 @@
 - cleanup: 本轮Edge三标签已关闭；仅本轮server PID42292停止、11829无监听；新旧测试库/下载文件/临时证据保留，不访问真实库。
 - delivery: 通过后精确暂存获准19实现、新R1报告及2动态文档，单独feat(app)提交推送并核对远端；最终SHA以Git回执为准。无部署/RCO-6/新数据/真人。
 - next: 唯一建议MAINLINE-03-SCOPE只读查清真实识别输出到V2的交接，待新授权；不再反复造人工数据或直接换模型。模型准确率本轮未测量。完成后停止。
+
+## 85. MAINLINE-03-SCOPE 只读交接范围授权 — 2026-09-06
+
+- authority: 当前用户仅批准识别服务/冻结候选输出到MAINLINE-02隔离V2的定向只读追踪；只新增范围报告、精确白名单、检查设计、下一提示词及保护/复核文档，更新短交接并追加日志。
+- baseline: 唯一repo C:\Users\Winner\student-affairs-multimodal-exp，branch codex/e2-multimodal-recognition-exp；HEAD与远端235e3650ee776277b5bdc4c6c371a9356c833a1f，工作区起始干净。R1实现19/19匹配；BASELINE绑定747既有只读文件和日志原字节前缀。
+- boundary: 产品源码/契约/仓储/冻结组件/旧材料与历史结果只读；不新数据、不调用旧runner，不读密钥/剪贴板，不访问用户库/模型网络/真实材料/真人，不部署/RCO-6。费用0；模型准确率本轮未测量。
+- status: IN_PROGRESS；先查实际调用链，区分字段丢失、表达缺口和模型语义错误。下一实施/付费方案仅待授权，当前不执行。
+
+## 86. MAINLINE-03-SCOPE 文档范围交付 — 2026-09-06
+
+- outcome: SCOPE_DOCUMENTS_REVIEWED；仅范围/白名单/验收/下一提示词及保护复核文档，不是识别实现或模型验证。模型准确率本轮未测量。
+- diagnosis: 普通真实识别仍走旧确认；MAINLINE02隔离V2使用人工回调。Worker返回pending-source且无span，V2要求真实来源/逐字位置；现行候选composer空置时间材料等引用，三值/条件/修订也无完整目标表达，不能强转或靠换模型修交接。
+- evidence: 仅旧人工8类及B8-01/07/09输入/raw/旧score、010已见B9摘要只读；不新评分，不改历史FAIL，不把旧fn一律归给模型。R1旧42/42/998通过等明确不是本轮新测。
+- scope: 唯一下一包MAINLINE-03-I1拟改App实验来源提示、mainline02/runtime可选handoff，新增6源码/测试与2脚本；不动Schema/repository/capture/confirmationV2/validator/冻结候选。原始receipt可走新Source的现有legacyData，未实际写库。
+- review: 新无上下文首次登记1处文档矛盾，已修正并复核PASS：完整校验失败只保留Source receipt和失败Run/Draft，不承诺无效result的局部确认；范围未扩大。
+- checks: R1源码19/19匹配，010冻结组件25/25匹配；最终747保护/日志前缀/文档与密钥扫描详见CHECKS。本轮产品lint/test/build和浏览器未运行（仅文档），0源码修改。
+- paid: 后续拟12份另批新匿名Development×2臂最多24次/10元，模型deepseek-v4-flash-vision-exp；完整契约/数据/预算仍NOT_READY，未创建、未冻结、未调用，不沿用旧许可。
+- boundary: 模型/verifier/Repair/retry/模型网络/费用/密钥/剪贴板/用户库/真实材料/真人/部署/RCO-6均0。提交推送仅本目录文档及2动态文件，远端核对以Git回执为准。
+- next: 等待MAINLINE-03-I1新授权，先把来源接对并显示表达缺口；正式任务编辑/执行、ICS/真实提醒、稳定/商业接入分别审批。完成后停止。
