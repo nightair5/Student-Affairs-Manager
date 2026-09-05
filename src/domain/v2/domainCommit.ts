@@ -456,6 +456,28 @@ export function buildDomainCommitPlan(
   selection: DomainCommitSelection,
   now = new Date().toISOString(),
 ): DomainCommitPlan {
+  return buildDomainCommitPlanInternal(workspace, draftId, selection, now, false)
+}
+
+/** Explicit opt-in only. Callers must derive overrides from validated user edit history. */
+export function supportsTimeOverrideV2(type: RecognitionResult['timePoints'][number]['type']): boolean {
+  // The positive set matches the existing compiler's supported override types.
+  switch (type) {
+    case 'registration_deadline': case 'submission_deadline': case 'task_deadline': case 'result_announcement': return true
+    default: return false
+  }
+}
+
+export function buildDomainCommitPlanV2(
+  workspace: WorkspaceV8, draftId: string, selection: DomainCommitSelection,
+  now = new Date().toISOString(),
+): DomainCommitPlan {
+  return buildDomainCommitPlanInternal(workspace, draftId, selection, now, true)
+}
+
+function buildDomainCommitPlanInternal(
+  workspace: WorkspaceV8, draftId: string, selection: DomainCommitSelection, now: string, confirmationV2: boolean,
+): DomainCommitPlan {
   const draft = workspace.extractionDrafts.find((item) => item.id === draftId)
   if (!draft?.result) throw new Error('DOMAIN_COMMIT_DRAFT_RESULT_REQUIRED')
   const result = draft.result
@@ -520,11 +542,24 @@ export function buildDomainCommitPlan(
   const materialSuggestions = [...recognizedMaterialSuggestions, ...addedMaterials.values()]
   const materialIdMap = new Map(materialSuggestions.map((item) => [item.tempId, entityId('material', draftId, item.tempId)]))
   const timeSuggestions = result.timePoints.filter((item) => selection.timePointTempIds.includes(item.tempId))
+  // An explicit user date with no source time becomes a separate, evidence-free manual point.
+  // The recognition result remains immutable; this is commit-time construction, not a source rewrite.
+  if (confirmationV2) selectedTasks.forEach((task) => {
+    const deadline = selection.taskOverrides?.[task.tempId]?.deadline
+    if (!deadline || result.timePoints.some((point) => point.relatedTaskTempIds.includes(task.tempId)
+      || point.relatedMaterialTempIds.some((id) => result.materials.some((material) => material.tempId === id && material.relatedTaskTempIds.includes(task.tempId))))) return
+    timeSuggestions.push({ tempId: `manual-deadline:${task.tempId}`, type: 'task_deadline', rawText: deadline,
+      normalizedValue: deadline, timezone: workspace.settings.defaultTimezone,
+      isAllDay: /^\d{4}-\d{2}-\d{2}$/u.test(deadline), precision: /^\d{4}-\d{2}-\d{2}$/u.test(deadline) ? 'date_only' : 'exact',
+      needsConfirmation: false, relatedTaskTempIds: [task.tempId], relatedMaterialTempIds: [], evidenceIds: [],
+      confidence: 1, selected: true })
+  })
   const timeIdMap = new Map(timeSuggestions.map((item) => [item.tempId, entityId('time', draftId, item.tempId)]))
   const primaryOverrideTimeIds = new Map<string, string>()
   selectedTasks.forEach((task) => {
     const candidates = timeSuggestions.filter((point) => point.relatedTaskTempIds.includes(task.tempId)
-      && point.type !== 'event_start' && point.type !== 'event_end' && point.type !== 'planned_start')
+      && (confirmationV2 ? supportsTimeOverrideV2(point.type)
+        : point.type !== 'event_start' && point.type !== 'event_end' && point.type !== 'planned_start'))
     const preferred = candidates.find((point) => point.type === 'task_deadline')
       ?? candidates.find((point) => point.type === 'submission_deadline')
       ?? candidates.find((point) => point.type === 'registration_deadline')
@@ -606,14 +641,16 @@ export function buildDomainCommitPlan(
         ? entityId('milestone', draftId, selectedTasks.find((task) => item.relatedTaskTempIds.includes(task.tempId))!.milestoneTempId!) : null,
       taskId: relatedTasks[0] ?? null, materialId: relatedMaterials[0] ?? null,
       eventId: event ? eventIdMap.get(event.tempId)! : null, relatedTaskIds: relatedTasks, relatedMaterialIds: relatedMaterials,
-      type: item.type, rawText: hasValidOverride ? overrideDeadline! : item.rawText,
+      type: item.type, rawText: hasValidOverride && !confirmationV2 ? overrideDeadline! : item.rawText,
       normalizedValue: hasValidOverride ? overrideDeadline! : item.normalizedValue,
-      timezone: hasValidOverride ? (overrideIsDateOnly ? null : workspace.settings.defaultTimezone) : item.precision === 'exact' ? item.timezone : null,
+      timezone: hasValidOverride ? (overrideIsDateOnly ? null : confirmationV2 ? item.timezone : workspace.settings.defaultTimezone) : item.precision === 'exact' ? item.timezone : null,
       isAllDay: hasValidOverride ? overrideIsDateOnly : item.isAllDay,
       precision: hasValidOverride ? (overrideIsDateOnly ? 'date_only' : 'exact') : item.precision,
       needsConfirmation: hasValidOverride ? false : item.needsConfirmation,
       createdAt: now, updatedAt: now,
-      legacyData: { recognitionTempId: item.tempId, evidenceIds: item.evidenceIds, confidence: item.confidence },
+      legacyData: { recognitionTempId: item.tempId, evidenceIds: item.evidenceIds, confidence: item.confidence,
+        ...(confirmationV2 && item.tempId.startsWith('manual-deadline:') && !result.timePoints.some((point) => point.tempId === item.tempId)
+          ? { extractionMethod: 'manual' } : {}) },
     }
   })
   const events: Event[] = eventSuggestions.map((item) => ({
@@ -694,7 +731,22 @@ export function buildDomainCommitPlan(
     acceptedEntityTempIds, rejectedEntityTempIds,
     create: { projects, milestones, workPackages, tasks, materials, timePoints, events, evidenceRefs, historyRecords },
   }
-  const validation = validateWorkspaceV8(applyDomainCommitPlan(workspace, plan, now))
+  const simulated = applyDomainCommitPlan(workspace, plan, now)
+  if (confirmationV2) selectedTasks.forEach((task) => {
+    const edited = selection.taskOverrides?.[task.tempId]?.deadline
+    if (!edited) return
+    const target = primaryOverrideTimeIds.get(task.tempId)
+    const planned = timePoints.find((point) => point.legacyData?.recognitionTempId === target)
+    const stored = planned && simulated.timePoints.find((point) => point.id === planned.id)
+    // Check adoption before either edit history or the confirmation transaction is persisted.
+    if (!planned || !stored || planned.normalizedValue !== edited
+      || stored.normalizedValue !== edited || stored.timezone !== planned.timezone
+      || stored.rawText !== planned.rawText || stored.type !== planned.type
+      || stored.precision !== planned.precision || stored.isAllDay !== planned.isAllDay) {
+      throw new Error('CONFIRMATION_V2_TIME_EDIT_NOT_ADOPTED')
+    }
+  })
+  const validation = validateWorkspaceV8(simulated)
   if (!validation.valid) throw new Error(`DOMAIN_COMMIT_INVALID:${validation.issues[0].code}:${validation.issues[0].path}`)
   return plan
 }

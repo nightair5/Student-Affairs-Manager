@@ -6,6 +6,7 @@ import type { InferenceLevel } from '../types'
 import { assessFocusedReview } from '../recognition/focusedReview'
 
 interface DraftReviewPanelProps {
+  confirmationV2?: { busy: boolean; items: Record<string, { dateLabel: string; blockedReason?: string; dateEditBlockedReason?: string; materialTempIds?: string[]; timePointTempIds?: string[] }> }
   draft: ExtractionDraft
   source: Source | null
   onClose: () => void
@@ -61,11 +62,15 @@ function EvidenceLocator({ recognition, evidenceIds, onFocusEvidence }: {
     : <small className="evidence-unavailable">暂无可定位依据</small>
 }
 
-export function DraftReviewPanel({ draft, source, onClose, onUpdate, onConfirm, onReject, onConfirmAll, projectWillCreate, projects, onProjectChoice, onKeepExplicit, onMoveTask, onToggleRecognitionEntity, onToggleTaskSelected, onSplitTask, onMergeTask }: DraftReviewPanelProps) {
+export function DraftReviewPanel({ draft, source, onClose, onUpdate, onConfirm, onReject, onConfirmAll, projectWillCreate, projects, onProjectChoice, onKeepExplicit, onMoveTask, onToggleRecognitionEntity, onToggleTaskSelected, onSplitTask, onMergeTask, confirmationV2 }: DraftReviewPanelProps) {
   const titleId = useId()
   const panelRef = useRef<HTMLElement>(null)
   const [editingId, setEditingId] = useState<string | null>(null)
   const [activeEvidence, setActiveEvidence] = useState('')
+  const [editBuffer, setEditBuffer] = useState<Record<string, Partial<Pick<DraftItem['suggestion'], 'title' | 'deadline'>>>>({})
+  const isDirty = (item: DraftItem, field: 'title' | 'deadline') =>
+    editBuffer[item.id]?.[field] !== undefined && editBuffer[item.id][field] !== item.suggestion[field]
+  const hasUnsaved = (item: DraftItem) => isDirty(item, 'title') || isDirty(item, 'deadline')
   const pending = draft.items.filter((item) => item.status === '待确认')
   const selectedPending = pending.filter((item) => item.selected !== false)
   const processed = draft.items.length - pending.length
@@ -98,7 +103,12 @@ export function DraftReviewPanel({ draft, source, onClose, onUpdate, onConfirm, 
     return <DraftItemReview
       key={item.id}
       index={index}
-      item={item}
+      item={confirmationV2 ? { ...item, suggestion: { ...item.suggestion, ...editBuffer[item.id] } } : item}
+      confirmationV2={confirmationV2 ? {
+        ...confirmationV2.items[item.id], busy: confirmationV2.busy, unsaved: hasUnsaved(item),
+        titleDirty: isDirty(item, 'title'), deadlineDirty: isDirty(item, 'deadline'),
+        onSave: (field) => { if (isDirty(item, field)) onUpdate(item.id, { [field]: editBuffer[item.id][field] }) },
+      } : undefined}
       editing={editingId === item.id}
       inferenceLevel={metadata?.inferenceLevel}
       milestones={recognition?.milestones.map((milestone) => ({ id: milestone.tempId, title: milestone.title })) ?? []}
@@ -108,7 +118,11 @@ export function DraftReviewPanel({ draft, source, onClose, onUpdate, onConfirm, 
       onSplitTask={onSplitTask}
       onMergeTask={onMergeTask}
       onToggleEdit={() => setEditingId((current) => current === item.id ? null : item.id)}
-      onUpdate={onUpdate}
+      onUpdate={confirmationV2 ? (id, patch) => setEditBuffer((previous) => ({
+        ...previous, [id]: { ...previous[id],
+          ...(patch.title !== undefined ? { title: patch.title } : {}),
+          ...(patch.deadline !== undefined ? { deadline: patch.deadline } : {}) },
+      })) : onUpdate}
       onConfirm={onConfirm}
       onReject={onReject}
       onToggleSelected={(selected) => onToggleTaskSelected(item.id, selected)}
@@ -169,7 +183,7 @@ export function DraftReviewPanel({ draft, source, onClose, onUpdate, onConfirm, 
           {recognition && draft.items.length === 0 && <div className="empty-state compact"><ShieldCheck size={28} /><h3>没有识别到明确行动</h3><p>可保存为资料、关闭稍后处理，或返回录入手动创建任务。</p></div>}
           {recognition?.materials.length ? <section className={`recognition-entity-list ${focusedReview?.expandedSections.includes('materials') ? 'focused' : ''}`}><h3>材料</h3>{recognition.materials.map((material) => <div className="recognition-entity-row" key={material.tempId}><label><input type="checkbox" checked={material.selected !== false} onChange={(event) => onToggleRecognitionEntity('material', material.tempId, event.target.checked)} /><span><strong>{material.name}</strong><small>{material.formatRequirements.join('；') || '具体要求请回看原文'}</small></span></label><EvidenceLocator recognition={recognition} evidenceIds={material.evidenceIds} onFocusEvidence={setActiveEvidence} /></div>)}</section> : null}
           {recognition?.timePoints.length ? <section className={`recognition-entity-list ${focusedReview?.expandedSections.includes('timePoints') ? 'focused' : ''}`}><h3>时间节点</h3>{recognition.timePoints.map((point) => <div className="recognition-entity-row" key={point.tempId}><label><input type="checkbox" checked={point.selected !== false} onChange={(event) => onToggleRecognitionEntity('timePoint', point.tempId, event.target.checked)} /><span><strong>{point.type}</strong><small>{point.rawText}{point.needsConfirmation ? ' · 需要确认' : ''}</small></span></label><EvidenceLocator recognition={recognition} evidenceIds={point.evidenceIds} onFocusEvidence={setActiveEvidence} /></div>)}</section> : null}
-          {recognition?.events.length ? <section className={`recognition-events ${focusedReview?.expandedSections.includes('events') ? 'focused' : ''}`}><h3>事件安排</h3>{recognition.events.map((event) => <article key={event.tempId}><label><input type="checkbox" checked={event.selected !== false} onChange={(changeEvent) => onToggleRecognitionEntity('event', event.tempId, changeEvent.target.checked)} /><strong>{event.title}</strong></label><span>{inferenceLabels[event.inferenceLevel]}</span><p>{event.description}</p><EvidenceLocator recognition={recognition} evidenceIds={event.evidenceIds} onFocusEvidence={setActiveEvidence} /></article>)}</section> : null}
+          {recognition?.events.length ? <section className={`recognition-events ${focusedReview?.expandedSections.includes('events') ? 'focused' : ''}`}><h3>事件安排</h3>{confirmationV2 && <p>本轮仅保留事件供核对，不会随任务确认写入；与事件共享时间的任务将明确阻断。</p>}{recognition.events.map((event) => <article key={event.tempId}><label><input type="checkbox" disabled={Boolean(confirmationV2)} checked={confirmationV2 ? false : event.selected !== false} onChange={(changeEvent) => onToggleRecognitionEntity('event', event.tempId, changeEvent.target.checked)} /><strong>{event.title}</strong></label><span>{inferenceLabels[event.inferenceLevel]}</span><p>{event.description}</p><EvidenceLocator recognition={recognition} evidenceIds={event.evidenceIds} onFocusEvidence={setActiveEvidence} /></article>)}</section> : null}
         </section>
       </div>
       <footer className="detail-footer review-footer">
@@ -177,18 +191,20 @@ export function DraftReviewPanel({ draft, source, onClose, onUpdate, onConfirm, 
           <strong>本次将创建</strong>
           <span>{projectWillCreate ? 1 : 0} 个项目</span>
           <span>{selectedPending.length} 个任务</span>
-          <span>{recognition?.timePoints.filter((item) => item.selected !== false).length ?? pending.length} 个时间节点</span>
-          <span>{pendingMaterials} 项材料</span>
-          {recognition && <span>{recognition.events.filter((item) => item.selected !== false).length} 个事件</span>}
+          <span>{confirmationV2 ? new Set(selectedPending.flatMap((item) => confirmationV2.items[item.id]?.timePointTempIds ?? [])).size : recognition?.timePoints.filter((item) => item.selected !== false).length ?? pending.length} 个时间节点</span>
+          <span>{confirmationV2 ? new Set(selectedPending.flatMap((item) => confirmationV2.items[item.id]?.materialTempIds ?? [])).size : pendingMaterials} 项材料</span>
+          {recognition && <span>{confirmationV2 ? 0 : recognition.events.filter((item) => item.selected !== false).length} 个事件</span>}
         </div>}
         <button className="secondary-button" type="button" onClick={onClose}>{pending.length ? '稍后再处理' : '完成'}</button>
-        {selectedPending.length > 0 && <button className="primary-button" type="button" onClick={onConfirmAll}><CheckCheck size={17} />加入已选任务（{selectedPending.length}）</button>}
+        {selectedPending.length > 0 && <button className="primary-button" type="button" disabled={confirmationV2 && (confirmationV2.busy || selectedPending.some((item) => !confirmationV2.items[item.id] || confirmationV2.items[item.id].blockedReason || hasUnsaved(item)))} onClick={onConfirmAll}><CheckCheck size={17} />加入已选任务（{selectedPending.length}）</button>}
       </footer>
     </aside>
   </div>
 }
 
 interface DraftItemReviewProps {
+  confirmationV2?: { dateLabel?: string; blockedReason?: string; dateEditBlockedReason?: string; busy: boolean; unsaved: boolean
+    titleDirty: boolean; deadlineDirty: boolean; onSave: (field: 'title' | 'deadline') => void }
   index: number
   item: DraftItem
   editing: boolean
@@ -207,7 +223,7 @@ interface DraftItemReviewProps {
   onMergeTask: DraftReviewPanelProps['onMergeTask']
 }
 
-function DraftItemReview({ index, item, editing, onToggleEdit, onUpdate, onConfirm, onReject, onToggleSelected, onFocusEvidence, inferenceLevel, milestones, milestoneTempId, onMoveTask, mergeTargets, onSplitTask, onMergeTask }: DraftItemReviewProps) {
+function DraftItemReview({ index, item, editing, onToggleEdit, onUpdate, onConfirm, onReject, onToggleSelected, onFocusEvidence, inferenceLevel, milestones, milestoneTempId, onMoveTask, mergeTargets, onSplitTask, onMergeTask, confirmationV2 }: DraftItemReviewProps) {
   const suggestion = item.suggestion
   const [mergeTargetId, setMergeTargetId] = useState('')
   if (item.status !== '待确认') return <article className={`review-item processed ${item.status === '已拒绝' ? 'rejected' : ''}`}>
@@ -218,22 +234,27 @@ function DraftItemReview({ index, item, editing, onToggleEdit, onUpdate, onConfi
     <header className="review-item-header">
       <label className="review-task-select"><input type="checkbox" checked={item.selected !== false} onChange={(event) => onToggleSelected(event.target.checked)} /><span className="sr-only">选择该任务</span></label>
       <span className="review-number">{index + 1}</span>
-      <div><strong>{suggestion.title}</strong><time><Clock3 size={14} />{deadlineLabel(suggestion.deadline)}</time></div>
+      <div><strong>{suggestion.title}</strong><time><Clock3 size={14} />{confirmationV2 ? confirmationV2.dateLabel ?? '日期状态未加载，暂不能确认' : deadlineLabel(suggestion.deadline)}</time></div>
       <button className={editing ? 'review-edit active' : 'review-edit'} type="button" onClick={onToggleEdit}><PencilLine size={14} />{editing ? '收起' : '编辑'}</button>
     </header>
     <div className="review-meta"><span>{suggestion.category}</span><span>约 {suggestion.estimatedMinutes} 分钟</span>{suggestion.materials.length > 0 && <span>{suggestion.materials.length} 项材料</span>}{inferenceLevel && <span className={`inference-badge ${inferenceLevel}`}>{inferenceLabels[inferenceLevel]}</span>}{suggestion.confidence === '低' && <em>请重点核对</em>}</div>
     <p className="review-next"><span>下一步</span>{suggestion.nextAction}</p>
+    {confirmationV2 && <p>隔离确认 V2：本轮支持修改名称和时间，其他编辑尚未接入。首次建议、原文和编辑记录分开保留。输入完成后点击“保存修改”；未保存输入在关闭或刷新后不保留。{confirmationV2.blockedReason && <strong role="status">需核对（{confirmationV2.blockedReason}）</strong>}</p>}
+    {confirmationV2?.unsaved && <p role="status">有未保存修改：请先保存修改，再确认该任务。</p>}
+    {confirmationV2?.dateEditBlockedReason && <p role="status">{confirmationV2.dateEditBlockedReason}</p>}
     {editing && <fieldset className="review-edit-form"><legend>修改这件事</legend><div className="form-grid">
-      <label className="field span-2"><span>任务名称</span><input value={suggestion.title} onChange={(event) => onUpdate(item.id, { title: event.target.value })} /></label>
-      <label className="field"><span>分类</span><select value={suggestion.category} onChange={(event) => onUpdate(item.id, { category: event.target.value as TaskCategory })}>{categories.map((category) => <option key={category}>{category}</option>)}</select></label>
-      <label className="field"><span>截止时间</span><input type="datetime-local" value={suggestion.deadline} onChange={(event) => onUpdate(item.id, { deadline: event.target.value })} /></label>
-      <label className="field"><span>预计耗时（分钟）</span><input type="number" min="5" step="5" value={suggestion.estimatedMinutes} onChange={(event) => onUpdate(item.id, { estimatedMinutes: Number(event.target.value) })} /></label>
-      <label className="field span-2"><span>下一步动作</span><input value={suggestion.nextAction} onChange={(event) => onUpdate(item.id, { nextAction: event.target.value })} /></label>
-      <label className="field span-2"><span>材料（用逗号或顿号分隔）</span><input value={suggestion.materials.join('、')} onChange={(event) => onUpdate(item.id, { materials: event.target.value.split(/[，,、]/).map((value) => value.trim()).filter(Boolean) })} /></label>
+      <label className="field span-2"><span>任务名称</span><input disabled={confirmationV2?.busy} value={suggestion.title} onChange={(event) => onUpdate(item.id, { title: event.target.value })} /></label>
+      {confirmationV2 && <button type="button" disabled={confirmationV2.busy || !confirmationV2.titleDirty} onClick={() => confirmationV2.onSave('title')}>保存修改：任务名称</button>}
+      <label className="field"><span>分类</span><select disabled={Boolean(confirmationV2)} value={suggestion.category} onChange={(event) => onUpdate(item.id, { category: event.target.value as TaskCategory })}>{categories.map((category) => <option key={category}>{category}</option>)}</select></label>
+      <label className="field"><span>截止时间</span><input type={confirmationV2 ? "text" : "datetime-local"} placeholder={confirmationV2 ? "YYYY-MM-DD 或 YYYY-MM-DDTHH:mm" : undefined} disabled={confirmationV2 && (confirmationV2.busy || Boolean(confirmationV2.dateEditBlockedReason))} value={suggestion.deadline} onChange={(event) => onUpdate(item.id, { deadline: event.target.value })} /></label>
+      {confirmationV2 && <button type="button" disabled={confirmationV2.busy || !confirmationV2.deadlineDirty || Boolean(confirmationV2.dateEditBlockedReason)} onClick={() => confirmationV2.onSave('deadline')}>保存修改：截止时间</button>}
+      <label className="field"><span>预计耗时（分钟）</span><input disabled={Boolean(confirmationV2)} type="number" min="5" step="5" value={suggestion.estimatedMinutes} onChange={(event) => onUpdate(item.id, { estimatedMinutes: Number(event.target.value) })} /></label>
+      <label className="field span-2"><span>下一步动作</span><input disabled={Boolean(confirmationV2)} value={suggestion.nextAction} onChange={(event) => onUpdate(item.id, { nextAction: event.target.value })} /></label>
+      <label className="field span-2"><span>材料（用逗号或顿号分隔）</span><input disabled={Boolean(confirmationV2)} value={suggestion.materials.join('、')} onChange={(event) => onUpdate(item.id, { materials: event.target.value.split(/[，,、]/).map((value) => value.trim()).filter(Boolean) })} /></label>
       {milestones.length > 0 && <label className="field span-2"><span>移动到阶段</span><select value={milestoneTempId ?? ''} onChange={(event) => onMoveTask(suggestion.id, event.target.value)}>{!milestoneTempId && <option value="">未分组</option>}{milestones.map((milestone) => <option key={milestone.id} value={milestone.id}>{milestone.title}</option>)}</select></label>}
       <div className="review-structure-actions span-2"><button className="text-button" type="button" onClick={() => onSplitTask(item.id)}>拆成两项</button>{mergeTargets.length > 0 && <><label><span className="sr-only">选择合并目标</span><select value={mergeTargetId} onChange={(event) => setMergeTargetId(event.target.value)}><option value="">选择合并目标</option>{mergeTargets.map((target) => <option key={target.id} value={target.id}>{target.title}</option>)}</select></label><button className="text-button" type="button" disabled={!mergeTargetId} onClick={() => mergeTargetId && onMergeTask(item.id, mergeTargetId)}>合并到目标</button></>}</div>
     </div></fieldset>}
     <details className="item-evidence" open={suggestion.confidence === '低'}><summary>为什么这样拆？</summary><p>{suggestion.evidence || '原文未直接说明，需要人工确认。'}</p>{suggestion.evidenceRefs?.length ? <ul>{suggestion.evidenceRefs.map((reference) => { const quote = reference.quotedText ?? reference.quote; return <li key={reference.id}><strong>{reference.field}</strong>：{quote}<button type="button" onClick={() => onFocusEvidence(quote)}>在原文中定位</button></li> })}</ul> : <small>系统推测 · 原文未提供可定位依据</small>}</details>
-    <footer className="review-item-actions"><button className="text-button remove" type="button" onClick={() => onReject(item.id)}><Trash2 size={14} />不需要</button><button className="secondary-button" type="button" onClick={() => onConfirm(item.id)}><Check size={15} />加入任务</button></footer>
+    <footer className="review-item-actions"><button className="text-button remove" type="button" onClick={() => onReject(item.id)}><Trash2 size={14} />不需要</button><button className="secondary-button" type="button" disabled={confirmationV2 && (confirmationV2.busy || confirmationV2.unsaved || !confirmationV2.dateLabel || Boolean(confirmationV2.blockedReason))} onClick={() => onConfirm(item.id)}><Check size={15} />加入任务</button></footer>
   </article>
 }

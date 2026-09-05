@@ -1,0 +1,35 @@
+{
+  "directory": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline-01-p1-r2-Lzr1ks",
+  "mode": "targeted",
+  "okay": false,
+  "results": [
+    {
+      "name": "targeted",
+      "exitCode": 1,
+      "log": "targeted.log",
+      "summary": [
+        "⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯",
+        " FAIL  src/domain/v2/confirmationV2.test.ts > P1-R2 saved time edits must be adopted > rejects planned_start edit before history; valid sibling and unedited time remain usable",
+        " FAIL  src/domain/v2/confirmationV2.test.ts > P1-R2 saved time edits must be adopted > rejects event_start edit before history; valid sibling and unedited time remain usable",
+        " FAIL  src/domain/v2/confirmationV2.test.ts > P1-R2 saved time edits must be adopted > rejects event_end edit before history; valid sibling and unedited time remain usable",
+        "AssertionError: promise resolved \"{ schemaVersion: 8, …(20) }\" instead of rejecting",
+        " FAIL  src/domain/v2/confirmationV2.test.ts > P1-R2 saved time edits must be adopted > V2 compiler refuses ignored overrides while old compiler behavior stays unchanged",
+        "AssertionError: expected [Function] to throw an error",
+        " FAIL  src/domain/v2/confirmationV2.test.ts > P1-R2 saved time edits must be adopted > an old accepted but unsupported edit cannot confirm or partially write a batch",
+        "AssertionError: expected { defaultSelected: true, …(7) } to match object { defaultSelected: false, …(1) }",
+        " FAIL  src/domain/v2/confirmationV2.test.ts > P1-R2 saved time edits must be adopted > an existing canonical time cannot silently defeat an edit; save rolls back before adding history",
+        "AssertionError: promise resolved \"{ schemaVersion: 8, …(20) }\" instead of rejecting",
+        " Test Files  1 failed | 3 passed (4)",
+        "      Tests  6 failed | 62 passed (68)"
+      ]
+    },
+    {
+      "name": "protection-after",
+      "okay": true,
+      "checked": 683,
+      "changed": [],
+      "appendOnly": true,
+      "outOfScope": []
+    }
+  ]
+}

@@ -1318,3 +1318,23 @@
 - delivery: 按固定Git要求只提交推送失败证据和短交接；业务代码、新测试与两脚本保留本机未提交，不作为通过版本上传。最终文档SHA/远端状态以Git核验与交付答复为准。
 - next: 建议P1-R2，仅修已登记时间类型/提交采用范围，先反例测试，正常路径不得一并拒绝；审查通过后才完整门与真实浏览器验收。提示词见R1_NEXT_PROMPT.md，未自动执行。
 - accounting: 外部产品模型/模型网络/verifier/Repair/retry/密钥访问/CNY=0/0/0/0/0/0/0；模型准确率本轮未测量，不读取剪贴板，不新建数据/B10，不接稳定入口，不启动RCO-6，不部署。
+
+## 77. P1-R2 时间编辑采用范围修复授权 — 2026-09-05
+
+- authority: 当前用户明确授权仅修R1登记时间类型/提交采用范围不一致；先反例测试，同根因最多两轮，新无上下文审查通过后才全量与真实浏览器验收。原PLAN白名单不扩张。
+- baseline: HEAD/远端=d45467d3cae849342dac9e6b3cc222127e650fa9；R1_REJECTED_SNAPSHOT九源码哈希全匹配，无重叠用户修改。R2_BASELINE记录687原tracked/683保护项，旧R1及更早证据只读；没有重复应用旧补丁。
+- accounting: 模型/模型网络/verifier/Repair/retry/密钥访问/CNY=0/0/0/0/0/0/0；不读剪贴板，不新建数据/盲测，不运行旧一次性runner，不接稳定路径，不启动RCO-6，不部署。
+- status: IN_PROGRESS/NO_PROMOTION；开始只写复现测试，不预先宣称通过。
+
+## 78. P1-R2 隔离V2时间编辑采用一致性验收 — 2026-09-05
+
+- implementation: 同根因1轮修补；V2共享现有提交器时间类型支持范围，拒绝planned_start/event_start/event_end编辑，真实计划试算后才写历史，正式提交检查用户值/计划/canonical一致。原接口/default、原文和首次响应不改，正常支持路径/无日期/兄弟项保留。
+- targeted: 新红测试6失败/62通过；修补后68/68（旧17+原V2 28+R1 13+R2 10），旧40/42及历史FAIL不改，新V2同人工响应同42字段为42/42。
+- independent: /root/p1r2_independent_review，fork_turns=none，只读；独立68/68，另14/14内存检查，未发现阻断。额外审查脚本空对象原型断言错误已单列，非产品失败，未改源码或弱化门槛。
+- engineering: 新鲜审查通过后完整工程只跑1次，967通过/1 live OCR跳过/0失败；lint、app/node类型、Schema/时间契约、新临时构建、源码安全、新构建隔离与依赖审计通过，0漏洞。cloudflare:check非发布未跑，原>500 kB构建警告保留。长日志见R2_ENGINEERING_CHECKS.json。
+- browser: R1协议8/8与补充双项批量确认通过，真实面板V2/真实repository/新IndexedDB；逐键输入、明确保存、部分/批量、刷新/重复/回滚/无日期/人工date-only/模糊阻断均验证。5测试页error日志0，0未确认写入/错误默认/重复/覆盖/丢失仅限实测工程场景，不推断总体率。观察脚本定位/旧标签页绑定错误在报告单列，未冒充产品结果。
+- protection: 687原tracked中683保护文件实际字节SHA-256不变，旧日志前缀保持；R1及更早Expected/freeze/dataset/checkpoint/cache、组件、旧runner/result不改；未重复应用FAILED_IMPLEMENTATION.patch。R2_IMPLEMENTATION_SNAPSHOT记录当前九源码，不改旧freeze。
+- delivery: 验收后单独提交推送业务实现及新报告，提交信息fix(app): verify isolated V2 time edit adoption，核对远端；最终SHA/工作区状态以Git回执与交付答复为准。测试页3–7和本机2623服务已关闭，五个测试库保留。
+- boundary: ISOLATED_V2_VERIFIED/MAINLINE_PRODUCT_NOT_INTEGRATED/NO_G5_PROMOTION；旧App日期拦截、任务中心/日历/提醒无日期承接未改。unknown条件、事件和不安全关系编辑仍明确受限。不宣布产品商用或模型准确率提高。
+- next: 完成后停止；下一建议MAINLINE-02-SCOPE仅定向审计实际入口/无日期下游和精确白名单，再申请接入实施。详R2_NEXT_PROMPT.md，不自动执行、不再新建数据或换模型。
+- accounting: 外部产品模型/模型网络/verifier/Repair/retry/密钥与剪贴板访问/CNY=0/0/0/0/0/0/0；模型准确率本轮未测量，开发Codex用量另计。无人类数据/真实材料/新盲测/B10/RCO-6/稳定入口或部署。
