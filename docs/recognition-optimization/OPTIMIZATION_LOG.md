@@ -1263,3 +1263,21 @@
 - accounting: model/model-network/verifier/Repair/retry/Secret/CNY=`0/0/0/0/0/NONE/0`；真人数据0；模型识别准确率=本轮未测量；未创建B10、未启动RCO-6、未接稳定路径、未部署。
 - delivery: 计划单独提交`test(app): establish isolated recognition confirmation diagnostics`并推送当前分支；实际提交SHA/远程结果以Git和交付答复为准。
 - next: 完成诊断交付后停止。最小下一授权为MAINLINE-01-P1：明确新版本/公共文件范围，仅修确认边界（显示值与实际编辑区分、时间原文保真、无日期与模糊时间分离）；随后才讨论MAINLINE-02条件/修订表达。不自动申请或执行付费模型。
+
+## 71. MAINLINE-01-P1 范围确认与固定交付规则 — 2026-09-05
+
+- authority: 用户要求先明确P1新版本/公共文件范围，以及每次执行后上传Git、提供审计、下一步及理由/提示词。本轮仅制定范围与交付文档，不把“建议P1”当作冻结组件或公共代码的无界修改许可。
+- baseline: `e67314ecb3ba42495b5f50a3732d8a59fa5a5436`已核对Git，分支`codex/e2-multimodal-recognition-exp`起始干净；666个原tracked文件实际字节SHA-256记录于本轮工具会话。
+- allowed_docs: AGENTS新增固定交付规则，CURRENT_CONTEXT更新，本日志追加，mainline-01-p1新计划/提示词/审计。本轮代码、Expected/freeze/dataset/checkpoint/cache、MAINLINE-01历史产物不改。
+- proposal: 仅拟申请domainCommit.ts与DraftReviewPanel.tsx的显式V2增量，新确认模块/隔离入口复用现有事务，旧默认行为保持；App与稳定路径仍不接。V2过门后必须再申请实际App接入及下游无日期验收，不能无限停在隔离演示。
+- fixed_delivery: 每次执行后安全单独提交推送、核验远程SHA，提供审计报告及下一步/原因/授权提示词；无持久化改动的只读咨询不制造提交。该要求写入AGENTS12.6，不写全局记忆。
+- accounting: model/model-network/verifier/Repair/retry/Secret/CNY=`0/0/0/0/0/NONE/0`；未运行产品测试或历史runner、未创建数据/真人研究、未部署。上一轮916测试与40/42是历史证据，本轮不重新计分。
+- status: `P1_SCOPE_PROPOSED / CODE_NOT_STARTED / NO_PROMOTION`；文档检查与交付将另追加，不预报完成。
+
+## 72. P1范围提案读者复核与文档交付 — 2026-09-05
+
+- review: doc-coauthoring空上下文读者`/root/p1_scope_reader`5问正确复述；澄清“模型verifier=0不禁本机校验”和“新脚本调用旧公开路径复现，不运行旧一次性runner”两处表述歧义。
+- checks: 本轮文档/diff/源码安全/保护检查；666个原tracked文件中3个获准动态规则文档变化，其余663/663实际字节SHA-256未变，旧日志前缀字节不变；未重跑上一轮916项产品测试，不创建新数据。
+- artifacts: mainline-01-p1/PLAN.md、NEXT_PROMPT.md、SCOPE_AUDIT.md、SCOPE_CHECKS.json；AGENTS12.6固化每轮Git/审计/下一步理由/提示词交付，短交接指向精确计划。
+- boundary: 仅完成P1范围/文档，未实施两个公共文件修改；旧40/42、unknown缺口、旧App拦截和历史FAIL不变。0产品模型调用、0密钥访问、0模型费用、不接稳定路径、不部署；未写全局记忆。
+- delivery: 单独文档提交并推送当前分支；最终SHA/远程结果以Git及答复核验为准。状态`DOC_SCOPE_REVIEWED / P1_IMPLEMENTATION_WAIT_AUTHORIZATION / NO_PROMOTION`，交付后停止。

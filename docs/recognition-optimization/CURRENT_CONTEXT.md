@@ -5,8 +5,8 @@
 ## 当前目标与授权
 
 - 北极星：整份通知正确完整→少修改、快确认→可靠保存，不只看动作匹配或安全勾选。
-- 当前：RCO-5-MAINLINE-01隔离链路已建立，产品验收FAIL；独立审查允许诊断交付，全量门通过，等待Git提交推送核实。模型识别准确率本轮未测量。
-- 本轮只新增隔离适配、工程夹具、测试入口、测量设计与报告，更新本文件并追加日志；不改现有产品组件。
+- 当前：MAINLINE-01已提交推送e67314e，产品验收FAIL不变。本轮只制定P1精确范围、审计/提示词并固化用户交付规则；P1代码实施待明确授权。
+- 本轮允许AGENTS交付规则、mainline-01-p1新文档、本文件和追加日志；不修改业务代码或旧MAINLINE-01产物。模型识别准确率本轮未测量。
 - 识别模型/外部模型请求/verifier/Repair/retry/Secret/实验费用：0/0/0/0/0/NONE/0 CNY。
 - 禁止修改既有Expected/freeze/dataset/checkpoint/cache、冻结组件、商业契约与历史runner/result。
 - 不运行旧B9 runner、不创建B10、不接稳定路径、不启动RCO-6、不部署。
@@ -16,8 +16,8 @@
 
 - repository: C:\Users\Winner\student-affairs-multimodal-exp
 - branch: codex/e2-multimodal-recognition-exp
-- 本轮开始HEAD/upstream tracking：282fd99dde1ca4f31fa3170bcdf57450e9c49b46，工作区干净。
-- 本轮开始646个tracked文件已保存SHA-256；仅本文件和追加日志允许变化，其余原文件必须不变。
+- 本轮开始HEAD/upstream tracking：e67314ecb3ba42495b5f50a3732d8a59fa5a5436，工作区干净。
+- 本轮666个tracked文件已保存SHA-256；仅AGENTS、本文件和追加日志允许变化，其余663个原文件必须不变。旧保护快照不改写。
 - 本次文档交付提交以Git为准，不把当前提交SHA递归写入自身。
 - RC.4/Release/Production、稳定文字模型、既有监测均未由本轮改变。
 
@@ -27,7 +27,7 @@
 - 同一双任务42字段：直接domain42/42；真实客户端投影40/42，未编辑的时间rawText改写2处；完整案例0/1，不达100%。
 - 浏览器真实DraftReviewPanel→隔离IndexedDB：1场景7步，部分确认/重复/刷新/确认编辑/失败回滚读回；非App或发布浏览器验收。
 - 新增适配unknown纠正1轮；不改公共代码。下一步先申请确认边界P1；不要调模型、创建新数据或绕过已发现FAIL。
-- 本轮工程916 passed/1 live OCR skipped/0 failed；lint/类型/构建/源码与新产物扫描/audit通过。644/644原保护文件不变、旧日志仅追加；未执行cloudflare:check或部署。
+- 上轮工程916 passed/1 live OCR skipped/0 failed，不能算本轮重跑。本轮仅文档审计/读者复核/diff/安全/保护核验，结果见mainline-01-p1/SCOPE_AUDIT.md。
 
 - RCO-0…4有技术/组件验证，不能称全格式商业通过。
 - 010-E1本机组件结项记录：定向122/122，全量899 passed/1 live OCR skipped；不是模型正确率。
@@ -44,8 +44,8 @@
 
 ## 下一建议，不是授权
 
-1. MAINLINE-01完成诊断交付后停止；先申请MAINLINE-01-P1，隔离新版本修正显示投影≠用户修改、时间原文保真及无日期确认。
-2. 具体允许改哪些公共文件/新版本、是否接入口需另批，旧组件不能默认解冻；本轮不实施。
+1. 先申请MAINLINE-01-P1：按mainline-01-p1/PLAN.md新增确认V2，仅拟允许domainCommit.ts与DraftReviewPanel.tsx显式V2增量，旧默认行为不变。
+2. 完整授权段见mainline-01-p1/NEXT_PROMPT.md；App/稳定入口/冻结组件不改。V2通过后仍须另批真实App接入和下游无日期验收，不能拿隔离演示当线上修复。
 3. 后续MAINLINE-02才设计新候选职责/表达，MAINLINE-03才申请付费配对。
 4. G5完整事实净收益通过后才申请RCO-6，之后按原门做真实效用与发布审批。
 5. 首批高频场景只是开发排序；缩小商业范围或提前真人探索须另批，不豁免原商业契约。
@@ -57,3 +57,4 @@
 - 一轮一个主根因、最多两轮局部修补；无收益先形成决策，不继续补关键词。
 - 大输出只保留路径/计数/关键错误，约80行短交接，上限200行且12 KB。
 - 保护变化、越权或Expected泄漏立即停止；证据不足只禁止晋级，不伪造PASS。
+- 每轮执行固定交付：Git提交/推送与远程核验、审计报告、下一步做什么和为什么、对应提示词；只读咨询不制造空提交，提示词不自动授权。
