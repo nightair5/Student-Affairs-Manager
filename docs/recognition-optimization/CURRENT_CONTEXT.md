@@ -1,56 +1,73 @@
 # RCO Current Context
 
-## 当前结论和停止状态
+## 当前结论与停止边界
 
 - 北极星：完整通知→可核对建议→用户确认→可靠保存；少漏事、少改错、少花时间。
-- 当前阶段：RCO-5-MAINLINE-01-P1，用户已授权原PLAN白名单实施。
-- 当前结论：REJECTED_STOPPED_WAIT_AUTHORIZATION / NO_PROMOTION。不是P1完成或G5通过。
-- 停止原因：独立审查实测 optional_suggestion + selected=true 仍被默认选中并可确认，违反本轮“错误默认勾选为0”，触发PLAN立即停止条款。
-- 此后只整理失败证据、审计、短交接和Git文档交付；不再功能修补、跑全量门或创建组件冻结。
-- 解除条件：用户明确授权P1-R1修复已登记反例，仍停留原隔离确认阶段。
+- 当前阶段：RCO-5-MAINLINE-01-P1-R1，原PLAN白名单下修复已登记确认边界。
+- 状态：REJECTED_STOPPED_WAIT_AUTHORIZATION / NO_PROMOTION。
+- 定向58/58通过，但新无上下文审查发现1个新的编辑/提交一致性阻断，未通过功能验收。
+- 停止后不再修补、不跑全量门、不做浏览器确认验收、不建立组件冻结。
+- 本轮仅交付失败审计与交接；业务实现留本机未提交，不能称已交付功能。
+- 模型识别准确率：本轮未测量。
 
-## Git与受保护现场
+## Git与现场
 
-- repository: C:\Users\Winner\student-affairs-multimodal-exp
-- branch: codex/e2-multimodal-recognition-exp
-- 实施起始HEAD: fbd6c4b67c9a9c30b9301f6648e7bca82b6aeb64；起始干净。
-- 本轮仅审计/失败源码补丁证据/交接文档提交推送；最终SHA和远程状态以Git及交付答复为准。
-- 活动业务实现保留未提交：domainCommit.ts、DraftReviewPanel.tsx、新confirmationV2模块/测试、mainline01p1三个文件、serve-mainline-01-p1.mjs。
-- 工作区预期非干净，不得误删、回滚或重复应用失败补丁。
-- IMPLEMENTATION_BASELINE.json记录670原tracked实际字节SHA-256；仅两个公共文件、本文件、日志允许变，其余666不变；日志旧前缀不变。
-- REJECTED_SNAPSHOT.json记录8个失败源码文件哈希；FAILED_IMPLEMENTATION.patch保存可恢复失败证据，不是可用版本/组件freeze。
-- 既有Expected/freeze/dataset/checkpoint/cache、冻结组件、旧MAINLINE-01目录与历史runner/result不改。
-- RC.4、Release、Production、稳定入口和既有监测不改。模型/key/部署等旧许可不复用。
+- repository: C:\Users\Winner\student-affairs-multimodal-exp。
+- branch: codex/e2-multimodal-recognition-exp。
+- R1起始HEAD/upstream：644789d9be866bf5e048f3014f673b177a68be5d。
+- 开始时8个失败源码哈希与旧REJECTED_SNAPSHOT完全一致，无重叠用户修改。
+- 未重复应用FAILED_IMPLEMENTATION.patch；本机已有实现不是待重新应用的补丁。
+- R1_BASELINE.json记录677个原tracked文件；4项允许变化，其余673项受保护。
+- R1_REJECTED_SNAPSHOT.json记录当前9个代码文件的失败现场，不是组件freeze。
+- 后续恢复必须匹配R1新快照；旧snapshot/patch/审计原样保留，不能套回旧源码。
+- 当前新增验证脚本也未提交；业务源文件预期非干净，禁止回滚/删除。
+- 文档提交/远端核验以Git和最终交付答复为准；仅失败证据上传，不含业务实现。
 
-## 本轮证据
+## 本轮改动与实测
 
-- 同一旧人工双任务响应：旧客户端40/42保持，新显式V2为42/42；42字段口径相同，不代表识别准确率或完整产品通过。
-- 定向45/45：旧17、新28；独立审查复跑一致。首轮44+1异常接收失败，只修新测试接住旧unknown显式失败，随后通过。
-- app TypeScript通过；全量lint/test/build/依赖审计未运行，不能借用历史916。
-- 独立审查 /root/p1_v2_independent_review：5组阻断，见mainline-01-p1/INDEPENDENT_REVIEW_IMPLEMENTATION.md。
-- 阻断：材料/共享事件关联时间丢失；相关实体冲突漏拦；非explicit错误默认选择；date-only补时刻的时区不一致；逐字编辑缓冲缺失。
-- 错误默认勾选至少1反例，不能写0；不据此估算总体错误率。第五组交互问题为代码审查，本轮未完成逐键浏览器复现。
-- 浏览器仅验证初始化0正式任务、展开真实V2面板、整串时间修改独立持久化并读回。
-- 未完成真实面板确认/刷新/重复/回滚/无日期验收，不能称浏览器通过。
-- 测试页和本机9551服务已停止；独立测试库保留、不删除。
-- 来源/首次建议与用户编辑分离已有实现，但审查未通过，业务代码不能算可用。
-- unknown条件仍显式不可表达；历史FAIL不改，不创建新数据/盲测/B10。
-- 模型识别准确率：本轮未测量。外部识别模型/模型网络/verifier/Repair/retry/密钥访问/CNY=0/0/0/0/0/0/0。
-- 无真人数据、无真实材料、未启动RCO-6、不部署。
+- 一轮主修补：安全默认选择与用户主动确认分开；相关材料/时间/事件/冲突按引用查全。
+- 非explicit不默认勾选，不能靠selected跳过确认检查；有效兄弟项保留单独确认。
+- 材料关联时间不再冒充无日期；不能承接的事件与不安全时间编辑明确阻断。
+- 原文/首次建议/用户编辑分开；date-only补时刻的时区修补；V2正常编辑改为缓冲+显式保存。
+- 真实面板静态测试验证保存边界，逐键交互仍未验收，不冒充浏览器通过。
+- 修补前新反例：9失败、45通过，覆盖5组已登记问题。
+- 修补后：旧受保护17 + 原V2 28 + R1新增13 = 58通过/0失败。
+- 独立审查复跑58/58，另行找到1个保存一致性反例，不篡改58项结果。
+- 同一旧人工工程响应：旧40/42不改，新V2同口径42/42；不等于所有输入100%正确。
+- 初步app TypeScript通过；完整lint/test/build、安全/依赖门未运行，不能借用历史成绩。
+- 实际面板V2→新测试库→确认→刷新读回本轮未运行；R1_BROWSER_PROTOCOL仅待执行。
+- 673/673保护哈希未变，旧日志前缀保持，范围无额外文件。
+- 未修改旧17测试、Expected、freeze、dataset、checkpoint、cache、冻结组件或历史FAIL。
+- 未运行旧一次性runner，不新建盲测/B10；无真人数据、无稳定接入、无RCO-6、无部署。
+- 外部产品模型/模型网络/verifier/Repair/retry/密钥访问/CNY=0/0/0/0/0/0/0。
+- 没有读取剪贴板；“如需可调用”未用于绕过本轮零调用边界。
 
-## 恢复读取与唯一下一步
+## 唯一新阻断
 
-1. 当前授权→AGENTS→PRD当前相关节→本文件→追加日志第73/74条→mainline-01-p1/PLAN.md与IMPLEMENTATION_AUDIT.md。
-2. 再看REJECTED_SNAPSHOT.json和独立审查列出的源码片段，核对未提交文件哈希；不反复读历史报告。
-3. 下一建议P1-R1只修确认边界：实体关联闭包、安全默认选择、相关冲突、统一时区与正常编辑输入。先新测试复现，再有限修补。
-4. 授权全文见mainline-01-p1/NEXT_REPAIR_PROMPT.md。提示词不是自动执行许可；当前必须停止。
-5. 原白名单不扩大，App/Schema/repository/validator仍只读。新增相关范围必须另批。
-6. 修复后定向→新无上下文独立审查→一次适用全量门→真实面板隔离库确认读回→保护核验→业务单独提交推送。
-7. 隔离V2通过后才另申请实际入口与无日期任务/日历/提醒验收，不无限停在演示。模型、真实材料、真人研究和部署仍分别授权。
+- 旧multi仅把d0.type改成planned_start，保存deadline=2026-09-12T09:00。
+- 界面/编辑历史接受新值，无阻断且defaultSelected=true；确认后canonical仍为2026-09-10T18:00。
+- 原任务仍是explicit；这不是新非explicit误选的证明，而是保存编辑未被正式提交采用。
+- 代码根因：confirmationV2.ts编辑入口允许单个时间，domainCommit.ts覆盖集合排除planned_start/event_start/event_end。
+- 两层对可编辑/可提交范围理解不一致；不是模型错误，也不是关键词缺失。
+- 独立审查：/root/p1r1_fresh_review，fork_turns=none，只读，本机内存实测。
+- 精确复现与原始输出见R1_REPRODUCTION.md；主代理停止后未再次执行或修补。
+- R1新反例不在此前获准修复的登记范围，按授权停止，仅归档失败证据。
 
-## 上下文与交付规则
+## 最小恢复读取与下一步
 
-- 一轮一个主根因，同根因最多两轮局部修补；本轮触发停止条件后不再修补。
-- CURRENT_CONTEXT约80行，上限200行/12KB；长日志和源码留文件，不回灌全部历史。
-- 每轮交付Git状态、审计、数字、保护/缺口、下一步做什么和为什么、可复制提示词。
-- 本轮失败证据上传不等于实现验收；审计提交和业务提交明确分开，不强推，不伪造成功。
+1. 当前授权→AGENTS/PRD相关节→本文件→追加日志75/76→原mainline-01-p1/PLAN.md。
+2. 只读R1_AUDIT.md、R1_REPRODUCTION.md、R1_BASELINE.json与R1_REJECTED_SNAPSHOT.json；不要重读所有历史。
+3. 建议另批P1-R2：统一时间类型可编辑范围与提交采用范围，接受的修改必须落库，否则保存前明确拒绝。
+4. 不扩展planned_start/event编辑语义；保留普通截止时间和无日期补日期的成功路径，不能全部拒绝过门。
+5. 先反例测试→有限修补→新无上下文审查→适用全量门→真实隔离面板确认/刷新读回→保护→业务提交推送。
+6. 详细可复制授权见R1_NEXT_PROMPT.md；提示词不是自动执行许可，本轮已停止。
+7. R2真正过门后，另批实际入口与任务中心/日历/提醒对无日期任务的验收，不无限停在演示。
+8. 模型、真实材料、真人研究与部署仍需分别授权；当前不需要换模型或新建数据。
+
+## 上下文和交付控制
+
+- 只读当前权威链与失败源码片段；一轮一个根因，同根因最多两轮局部修补。
+- 发现新错误默认选择、保护变化、测试弱化或范围扩大立即停止，不用测试绿灯掩盖。
+- CURRENT_CONTEXT约80行，长日志和源码留新文件，不回灌对话。
+- 每轮给审计、数字、保护与缺口、提交/推送状态、下一步理由及提示词。
+- 失败证据提交与业务实现提交明确分开，禁止强推，不把上传文档称作产品已修好。

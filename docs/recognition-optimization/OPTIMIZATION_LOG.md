@@ -1298,3 +1298,23 @@
 - artifacts: mainline-01-p1/IMPLEMENTATION_AUDIT.md、INDEPENDENT_REVIEW_IMPLEMENTATION.md、REJECTED_SNAPSHOT.json、FAILED_IMPLEMENTATION.patch、NEXT_REPAIR_PROMPT.md。失败源码补丁仅是恢复/审计证据，不是已验证功能。
 - delivery: 只将失败审计、保护/源码快照证据和交接文档检查后提交推送；活动业务代码留本机未提交，工作区预期非干净，禁止重复应用补丁或回滚。最终审计SHA/远程状态以Git与交付答复为准。
 - accounting: 外部识别模型/模型网络/verifier/Repair/retry/密钥访问/CNY=0/0/0/0/0/0/0，模型准确率本轮未测量；不新建数据、不接稳定入口、不启动RCO-6、不部署。本轮停止，不自动执行P1-R1。
+
+## 75. P1-R1 已登记确认边界修复授权 — 2026-09-05
+
+- authority: 用户明确授权P1-R1原白名单修复5组已登记反例；先测试复现，再同根因最多两轮局部修补，新审查无阻断后才完整工程门与真实隔离存储验收。不重复应用FAILED_IMPLEMENTATION.patch。
+- baseline: HEAD/upstream=644789d9be866bf5e048f3014f673b177a68be5d；8个失败源码哈希全匹配，旧666保护项不变；现场仅预期的8源码变化。本轮677原tracked/673只读见R1_BASELINE.json。
+- boundary: “apikey在剪贴板如需可调用”不改变本轮明确0模型和不访问密钥范围；本轮不需要模型，保持0请求/0元，不读剪贴板，不改旧数据/冻结/历史结果，不接App或稳定入口，不部署。
+- status: RESUMED_FOR_REGISTERED_REPAIRS / IN_PROGRESS / NO_PROMOTION；既有失败保持，本次完成与否由新证据决定。
+
+## 76. P1-R1 新鲜审查阻断与失败证据交付 — 2026-09-05
+
+- implementation: 一轮局部修补已登记5组确认边界：非explicit安全默认选择、相关实体引用/冲突、不能承接事件显式阻断、date-only时区、正常编辑缓冲/显式保存。公共代码仍仅domainCommit.ts与DraftReviewPanel.tsx显式V2；业务实现未验收。
+- targeted: 修补前9失败/45通过；修补后58通过（旧17+原V2 28+R1新增13），新V2同旧人工响应42/42，旧40/42及历史FAIL原样保留。初步app类型通过，不代表全量工程通过。
+- review: fork_turns=none的/root/p1r1_fresh_review独立复跑58/58及673/673保护；新内存反例：d0.type=planned_start时，保存新deadline获接受且无阻断，确认后canonical仍旧值。原任务仍explicit，不把此反例误称非任务误选或估算总体误选率。
+- root_cause: 编辑入口按单个关联时间允许修改，提交器按时间类型排除planned_start/event_start/event_end的deadline覆盖；保存与提交采用范围不一致。无需模型或关键词规则，最小下一步是统一可编辑/可提交范围。
+- stop: 新反例超出本轮已登记修复范围；立即停止源码修补、全量工程门与实际浏览器验收，不建立组件freeze。状态REJECTED_STOPPED_WAIT_AUTHORIZATION/NO_PROMOTION；本轮没有完成面板→测试库确认→刷新读回。
+- artifacts: R1_BASELINE、R1_RED_TESTS、R1_TARGETED_TESTS、R1_BROWSER_PROTOCOL、R1_INDEPENDENT_REVIEW、R1_REPRODUCTION、R1_AUDIT、R1_REJECTED_SNAPSHOT、R1_NEXT_PROMPT与交付检查。旧失败patch/snapshot/审计完全保留，不重复应用。
+- protection: 677原tracked中的673保护文件实际字节SHA-256未变，旧日志前缀保持；当前9代码文件哈希保存于R1_REJECTED_SNAPSHOT，不是通过组件冻结；Expected/freeze/dataset/checkpoint/cache/历史结果/旧runner不改。
+- delivery: 按固定Git要求只提交推送失败证据和短交接；业务代码、新测试与两脚本保留本机未提交，不作为通过版本上传。最终文档SHA/远端状态以Git核验与交付答复为准。
+- next: 建议P1-R2，仅修已登记时间类型/提交采用范围，先反例测试，正常路径不得一并拒绝；审查通过后才完整门与真实浏览器验收。提示词见R1_NEXT_PROMPT.md，未自动执行。
+- accounting: 外部产品模型/模型网络/verifier/Repair/retry/密钥访问/CNY=0/0/0/0/0/0/0；模型准确率本轮未测量，不读取剪贴板，不新建数据/B10，不接稳定入口，不启动RCO-6，不部署。
