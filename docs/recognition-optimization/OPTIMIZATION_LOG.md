@@ -1355,3 +1355,24 @@
 - protection: 705原tracked中703源码/既有文档与证据实际字节SHA-256不变；R2九源码匹配、旧日志前缀保持、越权路径0。CURRENT_CONTEXT80行；文档diff/敏感信息检查见CHECKS.json。未重跑全量工程或浏览器、不运行旧runner。
 - delivery: 仅新mainline-02-scope范围报告/白名单/检查设计/提示词/保护与复核证据，以及短交接/追加日志；单独docs(product)提交推送并核对远端，最终SHA以Git回执为准。完成后停止，MAINLINE-02-I1等待授权。
 - accounting: 模型/模型网络/verifier/Repair/retry/密钥与剪贴板访问/人民币费用均0；模型识别准确率本轮未测量。没有真实用户材料、真人研究、新数据集、RCO-6或部署；Codex开发用量另计。
+
+## 81. MAINLINE-02-I1 实际App隔离接线授权 — 2026-09-05
+
+- authority: 当前用户明确批准SCOPE精确9已有+8新源码测试+2脚本，旧默认不变；只用旧人工工程响应，0模型，不改Schema/repository/确认器，不部署。
+- baseline: HEAD/远端1657fb9a5b47504e7264a841b919d4765a710233，工作区干净；R2九源码和SCOPE703保护匹配。I1_BASELINE记录712原tracked，11个现有路径获准（9代码+2动态文档），其余701保护。
+- sequence: 失败复现→同根因最多两轮局部修补→定向/对抗→新独立审查→一次全量及实际浏览器→保护/Git交付；当前IN_PROGRESS，不预先声称通过。
+- accounting: 产品模型/模型网络/费用/密钥与剪贴板访问/真实材料/真人/部署均0；模型识别准确率本轮未测量。
+
+## 82. MAINLINE-02-I1 工程通过、浏览器未完成，仅交付失败审计 — 2026-09-05
+
+- outcome: NOT_ACCEPTED / BROWSER_INCOMPLETE。19源码/脚本本机未提交保留，只有审计文档与短交接提交推送；不得宣称业务完成/G5通过。
+- implementation: 按9公共+8新源码测试+2脚本接真实App隔离runtime、真实capture/canonical/V2；真正无截止查询/显示/保存，不改默认入口与受保护契约。
+- tests: 先3红；新测试构造更正单独说明，不改旧夹具或Expected。新审查3反例先红，一轮局部修补关闭date-only误判/日历假08:00/实验文案；最终定向99/99。
+- full: 独立复核无阻断后一次完整门：Vitest932+Node66=998通过，原live OCR1跳过；lint/双类型/契约/构建/安全/依赖通过，漏洞0。日志rco-mainline-02-i1-yjIYJz。构建大chunk提示保留。
+- browser: 官方Codex内置浏览器两个新库，首页/统一录入、逐键编辑/明确保存、部分/剩余确认、双击、Inbox多草稿、真实确认事务回滚、刷新读回已验证。multi实际42/42；no-date1任务0时间0提醒/真实jobs0；八类旧通知8来源8run8草稿、4任务，预期非行动未新增任务。仅限已跑场景错误默认选/重复/覆盖/未确认写入/关键丢失0。
+- blocked: App JSON实际下载文件未取得；2次监听超时、Downloads同名文件0，但导出已进入读库链，不能确定浏览器限制或实现根因。辅助tab.content.export不支持也不等于App根因。面板双项、保存故障、已保存后确认故障、跨标签过期、date-only真实UI尚需补验，不冒充通过。
+- protection: BASELINE.json（81节I1_BASELINE即此文件）712原tracked/701保护SHA不变，追加日志前缀相同，越界路径0；旧17/40/42/历史FAIL保持。未读密钥/剪贴板、不写旧缓存。REJECTED_SNAPSHOT绑定19文件。
+- next: 唯一建议I1-R1，批准Edge新本机库先诊断实际下载并补剩余浏览器；证实根因后只改原获准导出/工程入口，不重做数据或换模型。等待授权。
+- accounting: 外部识别模型/verifier/Repair/retry/模型网络/人民币费用0，模型准确率本轮未测量；无稳定接线/真实用户库/材料/真人/RCO-6/部署。Git与npm审计联网不计模型请求。
+
+- cleanup: 两个本轮测试标签已关闭；核对命令行后停止本轮server PID46028，12998端口无监听；隔离数据库与临时证据保留，未清理用户数据。最终701保护/19实现哈希匹配、CURRENT_CONTEXT80行；Git只暂存审计文档。
