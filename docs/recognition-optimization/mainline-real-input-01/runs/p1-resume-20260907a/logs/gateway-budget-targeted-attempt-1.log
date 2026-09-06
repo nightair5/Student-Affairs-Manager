@@ -1,0 +1,322 @@
+TAP version 13
+# Subtest: conservative context envelope and integer settlement have no floating-point budget drift
+ok 1 - conservative context envelope and integer settlement have no floating-point budget drift
+  ---
+  duration_ms: 0.9048
+  type: 'test'
+  ...
+# Subtest: normal request reserves durably before completion; only complete usage releases surplus
+ok 2 - normal request reserves durably before completion; only complete usage releases surplus
+  ---
+  duration_ms: 105.0032
+  type: 'test'
+  ...
+# Subtest: all 24 logical units share one ledger across reopened browser/runner handles
+ok 3 - all 24 logical units share one ledger across reopened browser/runner handles
+  ---
+  duration_ms: 1821.6848
+  type: 'test'
+  ...
+# Subtest: 10 yuan is checked using spent upper cost plus the next full reservation
+ok 4 - 10 yuan is checked using spent upper cost plus the next full reservation
+  ---
+  duration_ms: 96.9688
+  type: 'test'
+  ...
+# Subtest: concurrent tabs cannot reserve twice; cross-instance overlap retains one pending request
+ok 5 - concurrent tabs cannot reserve twice; cross-instance overlap retains one pending request
+  ---
+  duration_ms: 36.793
+  type: 'test'
+  ...
+# Subtest: two independent Node processes cannot bypass the shared filesystem lock
+ok 6 - two independent Node processes cannot bypass the shared filesystem lock
+  ---
+  duration_ms: 114.8092
+  type: 'test'
+  ...
+# Subtest: process restart after a durable reservation never resends or releases it
+ok 7 - process restart after a durable reservation never resends or releases it
+  ---
+  duration_ms: 45.2445
+  type: 'test'
+  ...
+# Subtest: timeout/unknown failure retains full reservation and permanently stops this book
+ok 8 - timeout/unknown failure retains full reservation and permanently stops this book
+  ---
+  duration_ms: 54.0763
+  type: 'test'
+  ...
+# Subtest: missing usage cannot settle or release the reservation
+ok 9 - missing usage cannot settle or release the reservation
+  ---
+  duration_ms: 44.2717
+  type: 'test'
+  ...
+# Subtest: mismatched total cannot settle or release the reservation
+ok 10 - mismatched total cannot settle or release the reservation
+  ---
+  duration_ms: 39.4237
+  type: 'test'
+  ...
+# Subtest: zero tokens for nonempty input cannot settle or release the reservation
+ok 11 - zero tokens for nonempty input cannot settle or release the reservation
+  ---
+  duration_ms: 40.1281
+  type: 'test'
+  ...
+# Subtest: excess input cannot settle or release the reservation
+ok 12 - excess input cannot settle or release the reservation
+  ---
+  duration_ms: 41.6083
+  type: 'test'
+  ...
+# Subtest: excess output cannot settle or release the reservation
+ok 13 - excess output cannot settle or release the reservation
+  ---
+  duration_ms: 40.4941
+  type: 'test'
+  ...
+# Subtest: wrong model cannot settle or release the reservation
+ok 14 - wrong model cannot settle or release the reservation
+  ---
+  duration_ms: 38.9398
+  type: 'test'
+  ...
+# Subtest: incomplete response cannot settle or release the reservation
+ok 15 - incomplete response cannot settle or release the reservation
+  ---
+  duration_ms: 38.5927
+  type: 'test'
+  ...
+# Subtest: unsupported reasoning cannot settle or release the reservation
+ok 16 - unsupported reasoning cannot settle or release the reservation
+  ---
+  duration_ms: 43.7501
+  type: 'test'
+  ...
+# Subtest: tools cannot settle or release the reservation
+ok 17 - tools cannot settle or release the reservation
+  ---
+  duration_ms: 40.0748
+  type: 'test'
+  ...
+# Subtest: string usage cannot settle or release the reservation
+ok 18 - string usage cannot settle or release the reservation
+  ---
+  duration_ms: 40.7529
+  type: 'test'
+  ...
+# Subtest: even a parseable HTTP failure is not settled
+ok 19 - even a parseable HTTP failure is not settled
+  ---
+  duration_ms: 32.9891
+  type: 'test'
+  ...
+# Subtest: response reuse is a binding anomaly, not another cheap completed call
+ok 20 - response reuse is a binding anomaly, not another cheap completed call
+  ---
+  duration_ms: 54.6577
+  type: 'test'
+  ...
+# Subtest: price/context/protocol changes halt before dispatch; frozen requests cannot change
+ok 21 - price/context/protocol changes halt before dispatch; frozen requests cannot change
+  ---
+  duration_ms: 35.0103
+  type: 'test'
+  ...
+# Subtest: expired billing review and premature C are rejected
+ok 22 - expired billing review and premature C are rejected
+  ---
+  duration_ms: 32.9749
+  type: 'test'
+  ...
+# Subtest: returned snapshot cannot change the frozen request, including its byte length
+ok 23 - returned snapshot cannot change the frozen request, including its byte length
+  ---
+  duration_ms: 46.7884
+  type: 'test'
+  ...
+# Subtest: snapshot mutation cannot replace B inputs or permit an incompatible C candidate
+ok 24 - snapshot mutation cannot replace B inputs or permit an incompatible C candidate
+  ---
+  duration_ms: 887.9344
+  type: 'test'
+  ...
+# Subtest: a valid-prefix truncation is detected by the independent write-once receipts
+ok 25 - a valid-prefix truncation is detected by the independent write-once receipts
+  ---
+  duration_ms: 46.6746
+  type: 'test'
+  ...
+# Subtest: missing ledger and abandoned lock do not initialize a fresh allowance
+ok 26 - missing ledger and abandoned lock do not initialize a fresh allowance
+  ---
+  duration_ms: 42.6218
+  type: 'test'
+  ...
+# Subtest: recomputing row hashes does not make a mismatched settlement valid
+ok 27 - recomputing row hashes does not make a mismatched settlement valid
+  ---
+  duration_ms: 48.2475
+  type: 'test'
+  ...
+# Subtest: manifest changes and response shape tricks fail without coercion
+ok 28 - manifest changes and response shape tricks fail without coercion
+  ---
+  duration_ms: 19.9035
+  type: 'test'
+  ...
+# Subtest: the only successful path preserves raw response, binds usage and uses the fixed upstream without redirects
+ok 29 - the only successful path preserves raw response, binds usage and uses the fixed upstream without redirects
+  ---
+  duration_ms: 97.0896
+  type: 'test'
+  ...
+# Subtest: credential is not read at gateway initialization or on rejected origins and routes
+ok 30 - credential is not read at gateway initialization or on rejected origins and routes
+  ---
+  duration_ms: 31.1381
+  type: 'test'
+  ...
+# Subtest: browser cannot supply a model, endpoint, request body, usage or alternative budget book
+ok 31 - browser cannot supply a model, endpoint, request body, usage or alternative budget book
+  ---
+  duration_ms: 23.1873
+  type: 'test'
+  ...
+# Subtest: missing credentials do not consume an allowance and are never reflected
+ok 32 - missing credentials do not consume an allowance and are never reflected
+  ---
+  duration_ms: 30.877
+  type: 'test'
+  ...
+# Subtest: reserved request cannot be duplicated by a second gateway or service restart
+ok 33 - reserved request cannot be duplicated by a second gateway or service restart
+  ---
+  duration_ms: 59.2348
+  type: 'test'
+  ...
+# Subtest: concurrent browser and runner cannot dispatch the same logical request twice
+ok 34 - concurrent browser and runner cannot dispatch the same logical request twice
+  ---
+  duration_ms: 68.1294
+  type: 'test'
+  ...
+# Subtest: HTTP failure stops dispatch, retains the full reserve and returns only a safe code
+ok 35 - HTTP failure stops dispatch, retains the full reserve and returns only a safe code
+  ---
+  duration_ms: 53.0106
+  type: 'test'
+  ...
+# Subtest: redirect stops dispatch, retains the full reserve and returns only a safe code
+ok 36 - redirect stops dispatch, retains the full reserve and returns only a safe code
+  ---
+  duration_ms: 56.6537
+  type: 'test'
+  ...
+# Subtest: wrong content type stops dispatch, retains the full reserve and returns only a safe code
+ok 37 - wrong content type stops dispatch, retains the full reserve and returns only a safe code
+  ---
+  duration_ms: 53.3883
+  type: 'test'
+  ...
+# Subtest: response size exceeded stops dispatch, retains the full reserve and returns only a safe code
+ok 38 - response size exceeded stops dispatch, retains the full reserve and returns only a safe code
+  ---
+  duration_ms: 54.9175
+  type: 'test'
+  ...
+# Subtest: credential echo stops dispatch, retains the full reserve and returns only a safe code
+ok 39 - credential echo stops dispatch, retains the full reserve and returns only a safe code
+  ---
+  duration_ms: 49.9676
+  type: 'test'
+  ...
+# Subtest: usage missing stops dispatch, retains the full reserve and returns only a safe code
+ok 40 - usage missing stops dispatch, retains the full reserve and returns only a safe code
+  ---
+  duration_ms: 50.9693
+  type: 'test'
+  ...
+# Subtest: model drift stops dispatch, retains the full reserve and returns only a safe code
+ok 41 - model drift stops dispatch, retains the full reserve and returns only a safe code
+  ---
+  duration_ms: 50.1084
+  type: 'test'
+  ...
+# Subtest: timeout aborts once; late completion cannot settle or append a second response
+ok 42 - timeout aborts once; late completion cannot settle or append a second response
+  ---
+  duration_ms: 102.7496
+  type: 'test'
+  ...
+# Subtest: raw-result storage failure cannot release money or silently claim success
+ok 43 - raw-result storage failure cannot release money or silently claim success
+  ---
+  duration_ms: 44.5227
+  type: 'test'
+  ...
+# Subtest: frozen request object cannot be swapped after gateway creation
+ok 44 - frozen request object cannot be swapped after gateway creation
+  ---
+  duration_ms: 39.0069
+  type: 'test'
+  ...
+# Subtest: unapproved parameters and non-text content fail before any gateway can be created
+ok 45 - unapproved parameters and non-text content fail before any gateway can be created
+  ---
+  duration_ms: 27.8883
+  type: 'test'
+  ...
+# Subtest: JSON escaped output value cannot reach recording, response or settlement
+ok 46 - JSON escaped output value cannot reach recording, response or settlement
+  ---
+  duration_ms: 74.6189
+  type: 'test'
+  ...
+# Subtest: JSON escaped object key cannot reach recording, response or settlement
+ok 47 - JSON escaped object key cannot reach recording, response or settlement
+  ---
+  duration_ms: 73.5309
+  type: 'test'
+  ...
+# Subtest: nested model JSON value cannot reach recording, response or settlement
+ok 48 - nested model JSON value cannot reach recording, response or settlement
+  ---
+  duration_ms: 73.6686
+  type: 'test'
+  ...
+# Subtest: nested model JSON key cannot reach recording, response or settlement
+ok 49 - nested model JSON key cannot reach recording, response or settlement
+  ---
+  duration_ms: 72.9127
+  type: 'test'
+  ...
+# Subtest: twice nested model JSON cannot reach recording, response or settlement
+ok 50 - twice nested model JSON cannot reach recording, response or settlement
+  ---
+  duration_ms: 78.1522
+  type: 'test'
+  ...
+# Subtest: discarded duplicate JSON property cannot reach recording, response or settlement
+ok 51 - discarded duplicate JSON property cannot reach recording, response or settlement
+  ---
+  duration_ms: 70.2184
+  type: 'test'
+  ...
+# Subtest: normal escaped Chinese and nested JSON retain exact raw bytes and can be recorded and settled
+ok 52 - normal escaped Chinese and nested JSON retain exact raw bytes and can be recorded and settled
+  ---
+  duration_ms: 54.7308
+  type: 'test'
+  ...
+1..52
+# tests 52
+# suites 0
+# pass 52
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4013.314

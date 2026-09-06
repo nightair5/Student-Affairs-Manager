@@ -1,0 +1,70 @@
+{
+  "status": "BLOCKED_NEW_SOURCE_CORRECTION_P1",
+  "registeredCredentialP1": {
+    "status": "PASS_SCOPE_ONLY",
+    "reviewer": "real_input_p1_decoded_review",
+    "tests": {
+      "passed": 52,
+      "failed": 0,
+      "additionalMemoryProbes": 6
+    },
+    "files": {
+      "scripts/real-input-model-gateway.mjs": "c6386e89fd91fb6ed0bd05eec4b15357c06a5c2c2a4e754044e9416618bd4de1",
+      "scripts/real-input-budget.mjs": "f4b625b15762604c55718c4889b6c546ca7c928c98134334e04cc3bda0f595a1",
+      "scripts/real-input-model-gateway.node-test.mjs": "ae1dd78231be79f752011888a53dbf5c7fcd7d50c8278a35f71f4d3f38ac2b21",
+      "scripts/real-input-budget.node-test.mjs": "03d0310b02a79e7f1409a55f37a569bd6207c4e783b2d4fbbbb93486855d47d4"
+    },
+    "conclusion": "Decoded JSON values/keys, nested model JSON and discarded duplicate string properties checked before raw record/return/settlement. Actual temporary rawRecorder malicious records zero bytes. Normal successful response retained. No real model/key/network.",
+    "limitation": "Depth/work-limit dedicated regression suggested, nonblocking. Not whole-package review."
+  },
+  "core": {
+    "status": "BLOCKED",
+    "reviewer": "real_input_core_review",
+    "files": {
+      "src/experiments/mainline05/semanticState.ts": "9742c099c3109a1d4c5532045c6b55f6b71b094ccefa849752b06ca9303293d5",
+      "src/experiments/mainline05/semanticRepository.ts": "0867190caceed2f98ccaf8a1a7807597127e023360a1147399dec8a289fb444e",
+      "src/experiments/mainline05/semanticCapture.ts": "90ec39e5beef09ce8ed47e1e508b5417c8e92ea1f59888baaaab18fc8f5ed5ff",
+      "src/experiments/mainline05/semanticConfirmation.ts": "e0cc3ad8c220ff39a3aa2f66f90087adce3961324b14649fcfe801e3da6aa4fa",
+      "src/experiments/mainline05/semanticView.ts": "ef45004a5ef5978e36400e79882a10a993d5985cae104eff4c46b75a8c32c4ae",
+      "src/experiments/realInput01/modelPolicy.ts": "4c0e6d34b6c66bddbfb68e51b8e340155cfc5a47356814bb92803d180fb5283a",
+      "src/experiments/realInput01/factCorrections.ts": "c920e3bef998707450c920985ff1216c8aca450d786dcb1a62bfd3c594b6f7d7",
+      "src/experiments/realInput01/modelPolicy.test.ts": "bd8b511aede51694775c9fbdbc08dd2a0deea8611eb6b1e08a6736b0a8a1ac9b",
+      "src/experiments/realInput01/factCorrections.test.ts": "839cb8bff2d3a95850e304254874ffd3c9764e272406465e8bd80b39cfb0db4c",
+      "src/experiments/realInput01/runtime.test.ts": "1791e8389fe959bbac3259a76414f6b8c36e836206c3cd56e376e6a75f00b80b"
+    },
+    "findings": [
+      {
+        "id": "SAVED_READING_STALE_CONFIRMATION",
+        "priority": "P1",
+        "source": "Independent public-interface in-memory probe; root independently reproduced in source-correction-p1-reproduction-attempt-1.log",
+        "normal": {
+          "formalTasks": 1
+        },
+        "adversarial": {
+          "savedCancellation": true,
+          "isCurrentDraft": true,
+          "formalTasks": 1,
+          "title": "保存活动手册"
+        },
+        "cause": "saveReadingCorrection updates Source reading receipt without invalidating old unconfirmed suggestions; isCurrentDraft only compares currentVersionId and latest Run."
+      },
+      {
+        "id": "OBJECT_TITLE_DIVERGENCE",
+        "priority": "P2",
+        "source": "Independent reviewer in-memory public-interface probe; not separately rerun by root",
+        "result": "Correct object from 入场凭证 to 活动报名表; confirmed title 提交入场凭证 while nextAction 提交活动报名表.",
+        "cause": "Title values initialized from first task and not marked out of sync when object changes."
+      }
+    ],
+    "scopeLimits": "No real App/Edge/download/full engineering. Existing frozen global unresolved handling not modified. No code edits by reviewer."
+  },
+  "failureDeliveryReview": {
+    "reviewer": "real_input_core_review",
+    "status": "PASS_FAILURE_EVIDENCE_ONLY",
+    "codeCoreHashes": 10,
+    "presentPaths": 32,
+    "missingPaths": 9,
+    "logsMatched": 12,
+    "note": "Clarified Source/Version/Run/Draft first persisted only in memory validation, not real IndexedDB. Root/source P1 remains open; code and all source SHA unchanged."
+  }
+}

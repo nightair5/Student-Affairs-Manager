@@ -1,89 +1,79 @@
 # RCO Current Context
 
 ## 当前结论
-
-- MAINLINE-REAL-INPUT-01同一包尚NOT_COMPLETE；本轮在新发送安全门P1停止。
-- 预算3.30元滚动最坏预留已实现、28/28且独立复核通过；仅局部门。
-- 新网关17/17既有测试通过，但独审新增反例发现JSON转义凭据反射。
-- 假凭据模拟被返回/记录；不是实际泄露：真实密钥访问、模型网络、费用均0。
-- 已停止源码/测试修改和派发，仅提交失败审计，9实现保留未提交。
-- 真实App/OCR/PDF/用户核对/确认保存尚未接线，不是可试用版。
-- 模型识别准确率：本轮未测量。
+- MAINLINE-REAL-INPUT-01同一包NOT_COMPLETE，新增确认安全P1后停止。
+- 登记JSON转义凭据反射P1已修复；52/52与独立复核PASS_SCOPE_ONLY。
+- 继续主线已实现本机读取/事实校对/来源和隔离保存核心、App显式slot草稿。
+- 新P1：保存原文纠错后，旧未确认建议仍可经公开核对/确认接口写成任务。
+- 已停止源码/测试修改与派发；只交付失败审计，32实现保留未提交。
+- 不是发生真实用户事故：复现只用MemoryWorkspaceRecordStore。
+- 模型调用/模型网络/费用/密钥/剪贴板访问0；模型准确率本轮未测量。
 
 ## 仓库与Git
+- 唯一仓库C:\Users\Winner\student-affairs-multimodal-exp。
+- 分支codex/e2-multimodal-recognition-exp；不用默认比赛工作区。
+- 本轮起点/核验远端4d11737bc0fa38f5c4f67a205237531ae3b254a5。
+- 最新审计提交查实际Git/远端及交付答复；提交不含32源码。
+- 主计划仍56d0545fd8ffdd7b71f9feeed1ad9ac22a705dbe；不回切。
+- 不重置、重装、变基、套补丁或重复应用已有实现。
 
-- 唯一仓库 C:\Users\Winner\student-affairs-multimodal-exp。
-- 唯一分支 codex/e2-multimodal-recognition-exp；禁止默认比赛工作区实施。
-- 本轮起点与核验远端4ed0486d3137ac60b1b07c7ef276739cbc98350f。
-- 旧计划起点56d0545fd8ffdd7b71f9feeed1ad9ac22a705dbe，不回切。
-- 上一业务1ae10d8afef8c27fbf2f27ca44072a5ffa98612f，不重复应用。
-- 最新审计提交精确号查Git/远端和本轮交付答复；提交不含9源码。
-- 不强推、自动变基、重置、重装、套旧补丁。
+## 当前恢复入口
+- mainline-real-input-01/runs/p1-resume-20260907a/。
+- 先读AUDIT、STATE、IMPLEMENTATION_SNAPSHOT、REVIEW、ENGINEERING。
+- BASELINE绑定初始9源码/41路径、946保护、前run16+continuation12证据。
+- 恢复应核当前32现有SHA与9未创建路径；不是初始9旧SHA。
+- 当前41白名单/13已有显式例外/28新增职责不变。
+- AGENTS/PRD/最新授权；不重审RCO-0，不改主PLAN和历史报告。
+- 新run报告获准；CURRENT_CONTEXT约80行，OPTIMIZATION_LOG只追加。
 
-## 权威与短入口
+## 已取得局部证据
+- 旧凭据P1修前18通过/6失败；修后预算28+网关24＝52/52。
+- 检查解码键值/嵌套JSON/重复属性；记录/返回/结算前拒绝。
+- 真实临时rawRecorder反例0字节；正常中文/嵌套JSON原文保留。
+- real_input_p1_decoded_review复跑52+6额外内存探针，无P0/P1。
+- 提取新8+旧23＝31/31；依赖mock，真实OCR仍NOT_RUN。
+- 策略/纠错15/15为中途版本；后续类型窄化不冒称新样本。
+- 保存第一次70/1，第二次71/71（新12+旧MAINLINE05 59）。
+- 该普通失败为既有capture派生contentPreview的承接，限定核验后通过。
+- 类型中途2次未接完失败保留；最后type-progress-attempt-5 PASS。
+- 旧断言/42口径与历史不改；不把新wire12测试称42/42。
+- App/InputReview/FactCorrectionEditor/modelClient仅草稿类型检查，未真实挂载。
 
-- AGENTS/PRD、本轮用户41路径授权与3.30元预算补充为当前约束。
-- 主计划仍mainline-real-input-01/PLAN.md；旧计划和证据完全只读。
-- IMPLEMENTATION_WHITELIST.json：13已有显式增量、28新增，共41路径。
-- VALIDATION_AND_BUDGET.md：U01–U16、旧8输入、A8/B8/可选C8。
-- 本轮run：mainline-real-input-01/runs/continuation-20260906a/。
-- 只读AUDIT/STATE/IMPLEMENTATION_SNAPSHOT/REVIEW/ENGINEERING恢复现场。
-- BASELINE绑定原5源码、946保护、前run16证据与两个日志前缀。
-- 规则补充在新run，不重写PLAN里的原0.40方案或旧失败。
+## 新重大P1
+- 独审real_input_core_review发现，主代理只读独立复现相同结果。
+- 正常no-date工程响应：明确核对/确认→1项保存活动手册。
+- 保存更正“此前保存通知已取消，请勿再保存。”后，isCurrentDraft仍true。
+- 再经reviewSemanticFact/confirmSemantic仍创建1项旧任务，错误确认1。
+- 结果见logs/source-correction-p1-reproduction-attempt-1.log。
+- 根因：saveReadingCorrection仅更新receipt；isCurrentDraft只比version/run。
+- 已保存读取文本、本次实际发送范围、建议依据缺少一致时效检查。
+- 不是自动默认勾选；autoSelection仍NOT_ENABLED。
+- P1发现后没有自行修复。
 
-## 本轮实现和定向证据
-
-- 原inputReceipt/modelWire/seenInputs及两测试共5文件未改。
-- 这5文件沿用上轮20/20与部分复核；不计为本轮新样本。
-- 新real-input-budget.mjs及Node测试：共享持久账本/锁/独立收据。
-- 每笔预留3300000微元；合法完整请求绑定usage按最高价向上结算。
-- 已结算费用+未知完整预留+新预留不得超过10000000微元，总≤24。
-- 未知/失败/超时/崩溃不释放、不重发；未结算时停止后续派发。
-- 初次语法错误保留，不算业务反例；随后26/26。
-- 独审发现snapshot可修改内部manifest引用：两反例先失败。
-- replay复制units后28/28，正常24单元/合法C仍成功；独审PASS_SCOPE_ONLY。
-- 新gateway及Node测试：固定上游/冻结请求/Host/Origin/capability。
-- 17/17只证明原有测试；独立P1足以阻断，不能用通过数抵消。
-- 9实现SHA绑定快照，41路径还有19未创建；13已有文件未改。
-
-## 当前唯一阻断
-
-- gateway记录前只有raw.includes(secret)，看不到JSON解码后的凭据。
-- 原测试真实接口+mock Response，假值逐字Unicode转义后放行。
-- 独立实测200/返回解码命中true/内存记录回调命中true/settled。
-- 原始响应落盘NOT_RUN；只有预算临时账本持久化，不冒称磁盘泄露。
-- 390微元为模拟用量结算，不是实际消费；模型调用仍0。
-- 复现来自独审real_input_gateway_review执行36b05f，详见AUDIT。
-- 四脚本最终审核SHA在REVIEW.json；P1发现后没有自行修代码。
-- 不把此事称为服务商攻击或已发生真实泄密。
+## 普通P2与后续主线
+- 独审另见对象改为活动报名表后，title仍提交入场凭证，nextAction已更新。
+- 该探针仅独审执行，主代理未另跑；原始标题/人工编辑需区分。
+- 唯一下一建议：同包授权修复已登记P1及P2，保留正常对照与有效兄弟。
+- 先使旧输入建议失效；标题失配明确核对，不覆盖用户主动编辑。
+- 优先state/repository/confirmation/view、factCorrections和获准新测试。
+- 不需换模型、重做PLAN、新建数据或新增阶段。
+- 无阻断再继续9未创建路径和真实App→工程→Edge/下载读库→Git。
 
 ## 保护
+- 946摘要a06efdaf29b96b8da448e9caf87104f05e183bdf08465e037789d650c27a8ef5匹配。
+- 前run16+continuation12共28静态证据未改；原日志三个字节前缀匹配。
+- 原252816/前256271/本轮起始260128字节SHA见BASELINE。
+- 13获准已有文件已改，19新实现已存在，9未创建；逐字SHA见快照。
+- 全局Schema/repository/capture/validator/confirmationV2/domainCommit/AST/依赖只读。
+- Expected/freeze/dataset/checkpoint/cache/旧runner/result与历史FAIL不改。
+- 工作区逐字与Git换行SHA分开；不清库/旧缓存或碰真实工作区。
+- 新临时根C:\Users\Winner\AppData\Local\Temp\mainline-real-input-01-p1-2sxPIf。
 
-- 946原tracked逐字摘要a06efdaf29b96b8da448e9caf87104f05e183bdf08465e037789d650c27a8ef5。
-- 13已有批准例外/原5源码/前run16证据均未变；旧26/863/4计划沿保护。
-- 原日志252816字节前缀SHA802b54b14890618345e44d4bae53c4cf8b14726bac925b1905e7b61bed8c9b26。
-- 本轮起始256271字节前缀SHA d993b5f7b6061a238855b21488c77806ce11571e02003a501ca770227ac78c9c。
-- 旧Expected/freeze/dataset/checkpoint/cache/旧runner及历史FAIL不改。
-- 原42/42、40/42、17与旧环境3/1仅历史证据，不改名本轮通过。
-- Schema/repository/capture/validator/confirmationV2/domainCommit/AST/依赖只读。
-- 工作区逐字SHA与Git换行存储分开；不得放宽保护。
-- 临时根见BASELINE；只写预声明新目录，无真实库/旧缓存清理。
-
-## 唯一下一动作
-
-- 申请同包解除此登记P1的修复停止点，不另建阶段或重做计划。
-- 优先gateway/其测试：记录/返回/结算前检查JSON解码键值与模型文本。
-- 先转义/嵌套反例及正常成功对照；不能只堆原始字符串替换。
-- 拒绝时不写敏感raw/不回传/不释放未知预留/不重发。
-- 独审无阻断再连续做原41路径读取→App核对→确认→隔离保存闭环。
-- 首个模型请求前仍需全部安全门、有效价格证据、输入/候选/评分冻结。
-- 原预算/参数/批次授权保持；不用反复要求复制Key。
-- 详细可批准提示词见本run AUDIT最后一节。
-
-## 尚未验收
-
-- 完整分层工程、实际OCR、真实App/隔离库、Edge逐键/下载读库NOT_RUN。
-- 首次建议质量、字段保存/关系保真和U01–U16尚无本轮产品通过证据。
-- 模型准确率本轮未测量；真人省时/重大修改未采集。
-- 无新语义数据/真实材料/真人/依赖/真实库/稳定入口/部署/RCO-6。
-- 恢复时先核9现场SHA/远端/保护/前缀，不重复实现；未经授权不修P1。
+## 模型门与停止条件
+- 模型/温度/effort/8192输出、A8+B8可选C8/≤24次/≤10元保持。
+- 3.30元滚动最坏预留；完整合法request绑定usage才释放差额。
+- 未知/失败/崩溃/超时不释放不重发；verifier/Repair/retry0。
+- 首请求仍须全部安全门、鲜活价格、冻结输入/候选/评分依赖与共享账本。
+- 不读剪贴板，不提前读取真实密钥；无新数据/真人/真实库/稳定接入/部署/RCO-6。
+- 完整工程/真实OCR/真实App/Edge/下载/首次模型质量均NOT_RUN。
+- 新重大安全、保护/重叠修改、范围或预算问题立即停；普通范围内不拆阶段。

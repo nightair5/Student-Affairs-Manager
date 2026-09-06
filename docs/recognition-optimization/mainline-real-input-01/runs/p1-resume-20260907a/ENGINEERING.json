@@ -1,0 +1,187 @@
+{
+  "status": "NOT_COMPLETE_SAFETY_STOP",
+  "modelCalls": 0,
+  "modelNetworkRequests": 0,
+  "costCny": 0,
+  "layers": [
+    {
+      "name": "credential P1 reproduction",
+      "log": "p1-reproduction-attempt-1.log",
+      "passed": 18,
+      "failed": 6,
+      "meaning": "Pre-fix genuine public-gateway counterexamples, FAKE secret only"
+    },
+    {
+      "name": "budget and final gateway",
+      "log": "gateway-budget-targeted-attempt-1.log",
+      "passed": 52,
+      "failed": 0,
+      "finalShaBound": true
+    },
+    {
+      "name": "new and old extraction",
+      "log": "extraction-targeted-attempt-1.log",
+      "passed": 31,
+      "failed": 0,
+      "newTests": 8,
+      "oldTests": 23,
+      "actualOCR": "NOT_RUN"
+    },
+    {
+      "name": "policy and corrections",
+      "log": "policy-corrections-attempt-1.log",
+      "passed": 15,
+      "failed": 0,
+      "meaning": "Intermediate source; later correction narrowing return checked by type and storage, not count as a fresh 15"
+    },
+    {
+      "name": "storage first attempt",
+      "log": "storage-targeted-attempt-1.log",
+      "passed": 70,
+      "failed": 1,
+      "cause": "Existing capture adds derived contentPreview; joint transition initially rejected it"
+    },
+    {
+      "name": "storage second attempt",
+      "log": "storage-targeted-attempt-2.log",
+      "passed": 71,
+      "failed": 0,
+      "newTests": 12,
+      "oldMainline05Tests": 59,
+      "meaning": "Existing assertions unchanged; core semantic source SHA unchanged since pass. Later App/UI slots are not browser-tested."
+    },
+    {
+      "name": "app type",
+      "attempts": [
+        {
+          "log": "type-progress-attempt-1.log",
+          "status": "PASS"
+        },
+        {
+          "log": "type-progress-attempt-2.log",
+          "status": "FAIL_INCOMPLETE_IMPLEMENTATION",
+          "errors": 6
+        },
+        {
+          "log": "type-progress-attempt-3.log",
+          "status": "PASS"
+        },
+        {
+          "log": "type-progress-attempt-4.log",
+          "status": "FAIL_INCOMPLETE_PROP_WIRING",
+          "errors": 1
+        },
+        {
+          "log": "type-progress-attempt-5.log",
+          "status": "PASS_FINAL_STOP_SOURCE"
+        }
+      ]
+    },
+    {
+      "name": "independent core safety",
+      "status": "BLOCKED",
+      "p1": 1,
+      "p2": 1
+    },
+    {
+      "name": "full layered engineering",
+      "status": "NOT_RUN"
+    },
+    {
+      "name": "actual OCR / App / Edge / download / independent real browser repository",
+      "status": "NOT_RUN"
+    }
+  ],
+  "logs": [
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/p1-resume-20260907a/logs/extraction-targeted-attempt-1.log",
+      "bytes": 321,
+      "sha256": "bd52b7c769405263b5628946285f67a3a3dceb9c8bfb3124dc82d7939eec5b51"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/p1-resume-20260907a/logs/gateway-budget-targeted-attempt-1.log",
+      "bytes": 11682,
+      "sha256": "f3d1b040947f7581b09802079f095093f06f093ad98e55113940026b8a34c8ca"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/p1-resume-20260907a/logs/p1-reproduction-attempt-1.log",
+      "bytes": 9639,
+      "sha256": "4560c82936d6f47b232033000e68a2cf5716aea467cc609bae0669580070f2bd"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/p1-resume-20260907a/logs/policy-corrections-attempt-1.log",
+      "bytes": 398,
+      "sha256": "9c6798a6a1fbd4b6fb820b7e5e85ba9531846b0649787e030a7366ebc01b9684"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/p1-resume-20260907a/logs/source-correction-p1-reproduction-attempt-1.log",
+      "bytes": 439,
+      "sha256": "f103f05e0d8c786e8e94e8a328dd46cd29a14a3e0de93f3ef0de8e851af7f371"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/p1-resume-20260907a/logs/storage-targeted-attempt-1.log",
+      "bytes": 5028,
+      "sha256": "e391798b963980a219e44aafd46dff306b75b409872f2763b3c4f321079dd0ad"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/p1-resume-20260907a/logs/storage-targeted-attempt-2.log",
+      "bytes": 2141,
+      "sha256": "d3e09ded267556ac61c980bcf6dc4926435bc0604cef6f3d859d8e72c90f669a"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/p1-resume-20260907a/logs/type-progress-attempt-1.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/p1-resume-20260907a/logs/type-progress-attempt-2.log",
+      "bytes": 736,
+      "sha256": "888a173c9516bc93bda2858ae929001ca5418015b5da1a6004745a911257c2b5"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/p1-resume-20260907a/logs/type-progress-attempt-3.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/p1-resume-20260907a/logs/type-progress-attempt-4.log",
+      "bytes": 445,
+      "sha256": "bc5a254bba6f80a40df6d22143d80197abb57ef8a5a4c47b7083042b3e9fc6cc"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/p1-resume-20260907a/logs/type-progress-attempt-5.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "claims": {
+    "wholePackage": "NOT_COMPLETE",
+    "u01ToU16": "NOT_ACCEPTED",
+    "modelAccuracy": "本轮未测量",
+    "humanTime": "NOT_MEASURED",
+    "semanticDataset": "NOT_CREATED",
+    "stableIntegration": "NOT_RUN",
+    "deployment": "NOT_RUN"
+  },
+  "failureDeliveryReview": {
+    "reviewer": "real_input_core_review",
+    "status": "PASS_FAILURE_EVIDENCE_ONLY",
+    "codeCoreHashes": 10,
+    "presentPaths": 32,
+    "missingPaths": 9,
+    "logsMatched": 12,
+    "note": "Clarified Source/Version/Run/Draft first persisted only in memory validation, not real IndexedDB. Root/source P1 remains open; code and all source SHA unchanged."
+  },
+  "finalReadOnlyChecks": {
+    "protectedFiles": 946,
+    "protectedSha256": "a06efdaf29b96b8da448e9caf87104f05e183bdf08465e037789d650c27a8ef5",
+    "previousStaticEvidence": 28,
+    "previousStaticMatch": true,
+    "originalLogPrefixesMatch": true,
+    "implementationShaChangesAfterStop": 0,
+    "jsonReportsValid": true,
+    "sensitivePatternHits": 0,
+    "stagedSourceFiles": 0,
+    "currentContextLines": 79
+  }
+}

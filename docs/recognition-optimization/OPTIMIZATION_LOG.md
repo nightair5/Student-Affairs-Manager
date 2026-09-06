@@ -1773,3 +1773,20 @@
 - delivery: 使用git-push技能仅精确提交本run报告/日志和短交接/追加日志，九实现不暂存；核对实时远端，禁止强推/自动变基。最终Git精确号见交付答复；工作区与Git日志换行SHA分别核验。
 - next: 唯一建议仍同包修复已登记P1，优先gateway及对应测试，检查解析后的JSON键值/模型文本再决定记录/返回/结算，正常成功必须保留。独审无阻断后继续原41路径实际输入→建议核对→确认保存主线；不重做PLAN/预算，不新建授权阶段。精确批准提示词见AUDIT。
 - evidence-clarification: 独立文档复核确认数字和四SHA未变，另明确上述“记录命中”仅指测试内存recordRaw回调，未调用createRawRecorder验证原始响应落盘；只有预算账本写入预声明临时根。AUDIT/REVIEW已澄清，不能宣称磁盘实测泄露，P1停止结论不变。
+
+## 127. MAINLINE-REAL-INPUT-01已登记P1恢复 — 2026-09-07
+
+- authority: 当前用户明确解除continuation-20260906a转义凭据反射P1修复停止点，保持41路径/3.30滚动预留/24次10元/原参数，独审后同包继续闭环；不重做PLAN，不扩大职责。
+- preflight: HEAD/实时远端4d11737bc0fa38f5c4f67a205237531ae3b254a5一致；9源码、946保护、最前run16证据、前continuation12报告日志及旧前缀均匹配，无重叠修改。本轮起始日志260128字节/SHA061f889301bc7ddabbd6123853657cb8b10b8189c900b453e28bc13611484b99。
+- context: 日常编码/独立审查技能用于真实接口反例和最小修补；当前仅本机模拟假凭据，不读真实密钥/剪贴板。新run p1-resume-20260907a/BASELINE登记临时根，旧证据只读；模型调用/网络/费用0，准确率本轮未测量。
+
+## 128. MAINLINE-REAL-INPUT-01登记P1闭合后主线推进与新确认P1停止 — 2026-09-07
+
+- completed-scope: 网关先18通过/6真实反例失败，再解码JSON字符串token/嵌套文本检查，拒绝发生在recordRaw/返回/结算前；预算+网关52/52，独审另6内存探针通过。恶意假凭据经真实临时rawRecorder写入0字节、未知预留不释放；正常响应原文保真。旧登记P1 CLOSED_SCOPE_ONLY，不是整包PASS。
+- mainline: 实施fileExtraction显式本机profile、inputAcquisition、可控事实修订/逐项核对、判别state/来源版本/内存capture+CAS/联合canonical校验、App与面板slots、InputReview/FactCorrectionEditor/modelClient草稿。41路径中32已存在（13获准已有增量、19新实现）、9待建；完整runtime/launcher尚未挂载，不能称可试用。
+- tests: 提取新8+旧23为31/31（mock非真实OCR）；策略/纠错15/15为中途版本；存储第一次70/1（派生contentPreview交接）后71/71（新12+旧59），旧测试未弱化。类型两次未接完失败日志保留，最后attempt5通过。各attempt分开不累计；旧42/42、40/42、17及历史FAIL保持，新wire未冒称42/42。
+- independent-stop: real_input_core_review发现新P1：公开saveReadingCorrection保存取消原文后isCurrentDraft仍true，复核/确认仍创建旧保存任务。正常对照1项，反例错误确认1项；主代理esbuild write:false+MemoryWorkspaceRecordStore独立复现并留日志，无浏览器或用户库写入。根因是已保存读取与发送/建议依据未进入时效判断。发现后停止源码/测试修改和派发，仅审计。
+- other-finding: 独审另登记P2：动作对象已纠正但首次默认标题未更新或提示失效，title与nextAction不一致；主代理未另跑该反例。冻结composer全局unresolved处理不扩大修改。
+- protection: HEAD/远端4d11737bc0fa38f5c4f67a205237531ae3b254a5；946原保护摘要、前16+12证据、三个旧日志前缀仍匹配。32现场SHA见本run IMPLEMENTATION_SNAPSHOT；不改全局受保护组件/Expected/freeze/dataset/checkpoint/cache/依赖/历史。0模型/网络/费用/密钥/剪贴板/真实材料/真人/真实库/稳定接入/部署。
+- delivery: git-push技能仅精确提交本run失败审计/attempt日志、CURRENT_CONTEXT与追加日志；32业务实现不暂存、不强推或变基。最终提交与远端核对见交付答复。完整工程、Edge、实际OCR、下载读库NOT_RUN；模型准确率本轮未测量。
+- next: 唯一建议同包明确授权闭合登记新P1/P2，先固定公开接口反例和正常对照，使保存后的输入变更让旧未确认建议过期，并明确标题/动作对象一致性、保护主动编辑标题。无需换模型/新数据/重做PLAN；原41路径普通缺陷连续推进。独审无阻断再剩余runtime/launcher、工程、Edge和模型安全门；详细授权提示词在本run AUDIT。

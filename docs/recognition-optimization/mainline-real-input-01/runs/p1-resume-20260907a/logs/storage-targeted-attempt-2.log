@@ -1,0 +1,22 @@
+
+ RUN  v3.2.7 C:/Users/Winner/student-affairs-multimodal-exp
+
+ ✓ src/experiments/mainline05/semanticCapture.test.ts (2 tests) 59ms
+ ✓ src/experiments/mainline05/semanticRepository.test.ts (3 tests) 188ms
+ ✓ src/experiments/mainline05/semanticState.test.ts (11 tests) 465ms
+stdout | src/experiments/mainline05/semanticView.test.ts > MAINLINE05 fidelity and view ledger > all 8 human notices retain full supplied facts and explicit positive/negative user outcomes
+MAINLINE05_LEDGER=[{"kind":"multi","tasks":2,"materials":2,"timePoints":2,"wrongDefaults":0},{"kind":"no-date","tasks":1,"materials":0,"timePoints":0,"wrongDefaults":0},{"kind":"vague","tasks":0,"materials":0,"timePoints":0,"wrongDefaults":0},{"kind":"information","tasks":0,"materials":0,"timePoints":0,"wrongDefaults":0},{"kind":"condition-true","tasks":1,"materials":0,"timePoints":0,"wrongDefaults":0},{"kind":"condition-false","tasks":0,"materials":0,"timePoints":0,"wrongDefaults":0},{"kind":"condition-unknown","tasks":0,"materials":0,"timePoints":0,"wrongDefaults":0},{"kind":"revision","tasks":1,"materials":0,"timePoints":0,"wrongDefaults":0}]
+
+ ✓ src/experiments/mainline05/semanticView.test.ts (3 tests) 372ms
+   ✓ MAINLINE05 fidelity and view ledger > all 8 human notices retain full supplied facts and explicit positive/negative user outcomes  320ms
+ ✓ src/experiments/mainline05/mainlineAcceptance.test.tsx (4 tests) 183ms
+ ✓ src/experiments/realInput01/runtime.test.ts (12 tests) 1692ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > manual material repair persists exact values, keeps originals and independent brother confirmation  515ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > whole-source versions remain immutable, old pending draft is stale, confirmed task survives  300ms
+ ✓ src/experiments/mainline05/semanticConfirmation.test.ts (36 tests) 1734ms
+
+ Test Files  7 passed (7)
+      Tests  71 passed (71)
+   Start at  00:45:50
+   Duration  2.86s (transform 1.20s, setup 0ms, collect 4.08s, tests 4.69s, environment 1ms, prepare 1.73s)
+
