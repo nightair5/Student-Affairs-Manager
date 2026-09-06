@@ -1,0 +1,166 @@
+{
+  "freeze": "docs/recognition-optimization/RCO-5-007_COMPONENT_FREEZE.json",
+  "freezeSha": "07cf8f9a24e3b462b6773841f6da20a99e31a23c4e18884846c5a54d80dc8c65",
+  "frozenLock": "0712a7885770a869293149bab34cfb2d740562694d8bd30980141df9a5d2a0b1",
+  "headLock": "76165f62c3f862095ecfbe9639dc861dddcd90d535e2042e9ecabdbccd78f8a2",
+  "currentLock": "330350e448c1cd29c6c7869c7a978142d95ba84aa12658a9c9bcacdcf763bbe3",
+  "predictionIncludesLock": true,
+  "scoringIncludesLock": false,
+  "otherBoundMismatch": [
+    "package.json"
+  ],
+  "full": {
+    "stage": "RCO-5-MAINLINE-03-I1-R2",
+    "attempt": 1,
+    "directory": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline03-r2-full-zuTvS1",
+    "okay": false,
+    "results": [
+      {
+        "name": "bundle",
+        "exitCode": 0,
+        "log": "bundle.log",
+        "summary": []
+      },
+      {
+        "name": "lint",
+        "exitCode": 0,
+        "log": "lint.log",
+        "summary": []
+      },
+      {
+        "name": "typecheck-app",
+        "exitCode": 0,
+        "log": "typecheck-app.log",
+        "summary": []
+      },
+      {
+        "name": "typecheck-node",
+        "exitCode": 0,
+        "log": "typecheck-node.log",
+        "summary": []
+      },
+      {
+        "name": "schema-contract",
+        "exitCode": 0,
+        "log": "schema-contract.log",
+        "summary": []
+      },
+      {
+        "name": "time-contract",
+        "exitCode": 0,
+        "log": "time-contract.log",
+        "summary": []
+      },
+      {
+        "name": "vitest-all",
+        "exitCode": 0,
+        "log": "vitest-all.log",
+        "summary": [
+          " Test Files  97 passed | 1 skipped (98)",
+          "      Tests  986 passed | 1 skipped (987)"
+        ]
+      },
+      {
+        "name": "server",
+        "exitCode": 0,
+        "log": "server.log",
+        "summary": []
+      },
+      {
+        "name": "worker",
+        "exitCode": 0,
+        "log": "worker.log",
+        "summary": [
+          "  errorType: 'UPSTREAM_AUTH_FAILED',"
+        ]
+      },
+      {
+        "name": "time-parity",
+        "exitCode": 0,
+        "log": "time-parity.log",
+        "summary": []
+      },
+      {
+        "name": "multimodal-library",
+        "exitCode": 0,
+        "log": "multimodal-library.log",
+        "summary": []
+      },
+      {
+        "name": "seen-replay-library",
+        "exitCode": 1,
+        "log": "seen-replay-library.log",
+        "summary": [
+          "  Error: FREEZE_HASH_MISMATCH:package-lock.json"
+        ]
+      }
+    ]
+  },
+  "logs": [
+    {
+      "path": "C:/Users/Winner/AppData/Local/Temp/rco-mainline03-r2-full-zuTvS1/bundle.log",
+      "sha256": "dc4860df90d5682a874adc563bafaa88284ce73b59482db7b9506791b7fe8fba",
+      "bytes": 109
+    },
+    {
+      "path": "C:/Users/Winner/AppData/Local/Temp/rco-mainline03-r2-full-zuTvS1/lint.log",
+      "sha256": "9b9af4942857f799cf470df4f86b79edec935168e797b922a341597fe30ed4d6",
+      "bytes": 272
+    },
+    {
+      "path": "C:/Users/Winner/AppData/Local/Temp/rco-mainline03-r2-full-zuTvS1/multimodal-library.log",
+      "sha256": "37d7042def0adb23cecf1c6614a52db81e3c5702da99ef30007f32e1cb9c1b74",
+      "bytes": 2067
+    },
+    {
+      "path": "C:/Users/Winner/AppData/Local/Temp/rco-mainline03-r2-full-zuTvS1/results.json",
+      "sha256": "1b7230aca85c20f4efeaa2e9a03289425c2937510a8368b1d236791b25cb8436",
+      "bytes": 1796
+    },
+    {
+      "path": "C:/Users/Winner/AppData/Local/Temp/rco-mainline03-r2-full-zuTvS1/schema-contract.log",
+      "sha256": "ce0ae1b382cde06a1e63919a31340da2d1c90873c0f97ab059e0bdb92e37db47",
+      "bytes": 209
+    },
+    {
+      "path": "C:/Users/Winner/AppData/Local/Temp/rco-mainline03-r2-full-zuTvS1/seen-replay-library.log",
+      "sha256": "70f84b8fde8eda36a5757e642dddf4183795bc27331790f1db346a99661e292c",
+      "bytes": 1020
+    },
+    {
+      "path": "C:/Users/Winner/AppData/Local/Temp/rco-mainline03-r2-full-zuTvS1/server.log",
+      "sha256": "8d2776806ea955eb6fa7b78f2ce090f91259992f350ab53c42feb82d1a723795",
+      "bytes": 700
+    },
+    {
+      "path": "C:/Users/Winner/AppData/Local/Temp/rco-mainline03-r2-full-zuTvS1/time-contract.log",
+      "sha256": "28498056a5fc7d975a3a38ce5c128afb0c926f8f1091e901d723a767656e008f",
+      "bytes": 205
+    },
+    {
+      "path": "C:/Users/Winner/AppData/Local/Temp/rco-mainline03-r2-full-zuTvS1/time-parity.log",
+      "sha256": "96aaddb92b79f3f8d4b45aa071594d5e88eb83f1abfdb1c25a5e4926ff35258d",
+      "bytes": 186
+    },
+    {
+      "path": "C:/Users/Winner/AppData/Local/Temp/rco-mainline03-r2-full-zuTvS1/typecheck-app.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "C:/Users/Winner/AppData/Local/Temp/rco-mainline03-r2-full-zuTvS1/typecheck-node.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "C:/Users/Winner/AppData/Local/Temp/rco-mainline03-r2-full-zuTvS1/vitest-all.log",
+      "sha256": "9357125bf25b665b9129d79fc1ee81e856c106ec3bbebc6bb595af3c4e045eba",
+      "bytes": 2872
+    },
+    {
+      "path": "C:/Users/Winner/AppData/Local/Temp/rco-mainline03-r2-full-zuTvS1/worker.log",
+      "sha256": "21aa38957435a682b004414eafddb140c4a79db832d8c413cf719ab028a598fc",
+      "bytes": 10530
+    }
+  ]
+}

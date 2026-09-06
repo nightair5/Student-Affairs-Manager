@@ -1,0 +1,128 @@
+{
+  "stage": "RCO-5-MAINLINE-03-I1-R2",
+  "outcome": "NOT_ACCEPTED_HISTORICAL_ENVIRONMENT_GATE_BLOCKED",
+  "stopClass": "NO_PROMOTION_NEEDS_GATE_SCOPE_APPROVAL",
+  "base": "6534121fad9c844a825a2e9034af6f136ede79da",
+  "gitDelivery": "R2_DOCUMENTS_ONLY_12_IMPLEMENTATION_AND_DEPENDENCY_FILES_UNCOMMITTED",
+  "dependency": {
+    "node": "v24.18.0",
+    "typesNode": "24.13.3",
+    "undiciTypes": "7.18.2",
+    "devOnly": true,
+    "license": "MIT",
+    "oldNonRootLockEntries": 357,
+    "unrelatedDrift": [],
+    "packageAddedLines": 1,
+    "lockAddedLines": 18,
+    "lifecycleScripts": false,
+    "cache": "NEW_TEMP_ONLY",
+    "installAttempts": {
+      "configurationExitBeforeInstall": 2,
+      "successfulInstall": 1
+    }
+  },
+  "reproduction": {
+    "TS2307": 6,
+    "files": 3,
+    "exitCode": 2
+  },
+  "directed": {
+    "files": 11,
+    "passed": 153,
+    "total": 153,
+    "newTests": 0
+  },
+  "canonicalMemoryFidelity": {
+    "passed": 42,
+    "total": 42
+  },
+  "independentReview": "PASS_DEPENDENCY_ONLY",
+  "engineeringFollowup": "CONFIRMED_HISTORICAL_PACKAGE_HASH_CONFLICT",
+  "engineering": {
+    "attempts": 1,
+    "lint": {
+      "status": "PASS",
+      "oldWarnings": 1
+    },
+    "typeApp": "PASS",
+    "typeNode": "PASS",
+    "schemaContract": "PASS",
+    "timeContract": "PASS",
+    "vitest": {
+      "passed": 986,
+      "skipped": 1,
+      "total": 987
+    },
+    "server": {
+      "passed": 8,
+      "total": 8
+    },
+    "worker": {
+      "passed": 25,
+      "total": 25
+    },
+    "timeParity": {
+      "passed": 1,
+      "total": 1
+    },
+    "multimodalLibrary": {
+      "passed": 23,
+      "total": 23
+    },
+    "seenReplayLibrary": {
+      "passed": 3,
+      "failed": 1,
+      "total": 4,
+      "error": "FREEZE_HASH_MISMATCH:package-lock.json",
+      "additionalBoundAuthorizedChange": "package.json"
+    },
+    "functions": "NOT_RUN",
+    "build": "NOT_RUN",
+    "fullSecurityScan": "NOT_RUN",
+    "dependencyAudit": "NOT_RUN"
+  },
+  "browser": {
+    "status": "NOT_RUN_ENGINEERING_PREREQUISITE_FAILED",
+    "protocolScenarios": 12,
+    "executed": 0,
+    "passed": 0,
+    "newTabs": 0,
+    "newServers": 0,
+    "newDatabases": 0,
+    "actualDownloads": 0,
+    "canonicalBrowserReadback": "NOT_RUN",
+    "browserReminderJobs": "NOT_MEASURED"
+  },
+  "protection": {
+    "checked": 782,
+    "changed": [],
+    "sourceSnapshotMatches": 10,
+    "appendOnly": true,
+    "outOfScope": [],
+    "authorizedPackageChanges": 2,
+    "oldHistoricalFreeze": "UNCHANGED",
+    "old40of42And17AndFAIL": "UNCHANGED"
+  },
+  "counters": {
+    "externalRecognitionCalls": 0,
+    "verifier": 0,
+    "repair": 0,
+    "retry": 0,
+    "modelNetwork": 0,
+    "costCny": 0,
+    "keyAccess": 0,
+    "clipboardAccess": 0,
+    "userDatabaseAccess": 0,
+    "deployment": 0
+  },
+  "modelAccuracy": "本轮未测量",
+  "engineeringEvidence": "R2_ENGINEERING_EVIDENCE.json",
+  "closeoutOnly": {
+    "gitDiffCheck": "PASS",
+    "reportFilesIncludingContextAndLog": 17,
+    "jsonParse": "PASS",
+    "scopedDocumentSecretFindings": [],
+    "contextLines": 84,
+    "fullSecurityAndVulnerabilityAudit": "NOT_RUN"
+  }
+}

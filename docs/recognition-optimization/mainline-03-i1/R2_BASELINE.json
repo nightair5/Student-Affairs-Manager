@@ -1,0 +1,104 @@
+{
+  "stage": "RCO-5-MAINLINE-03-I1-R2",
+  "head": "6534121fad9c844a825a2e9034af6f136ede79da",
+  "parentBaseline": {
+    "path": "docs/recognition-optimization/mainline-03-i1/R1_BASELINE.json",
+    "sha256": "9647416782d61759c01d8aea4a04d34932fed29161524a02fa854b6b3a17399b"
+  },
+  "originalBaseline": {
+    "path": "docs/recognition-optimization/mainline-03-i1/BASELINE.json",
+    "sha256": "48194fadf83eca36ed97313b1a9095f08cecf2d15c59816f93dda89b82ba5af5"
+  },
+  "mutable": [
+    "package.json",
+    "package-lock.json"
+  ],
+  "initialPackageHashes": [
+    {
+      "path": "package.json",
+      "sha256": "df4c657cb2f43d2555a7d0cda93f86ac8afb15034530756bb009082dfc0a2123"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "0712a7885770a869293149bab34cfb2d740562694d8bd30980141df9a5d2a0b1"
+    }
+  ],
+  "additionalReadOnly": [
+    {
+      "path": "docs/recognition-optimization/mainline-03-i1/R1_AUDIT.md",
+      "sha256": "09635251705fa15c8237062fc7243a56730e78cdfe1a45ef011578fb3815a3ed"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-03-i1/R1_BASELINE.json",
+      "sha256": "9647416782d61759c01d8aea4a04d34932fed29161524a02fa854b6b3a17399b"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-03-i1/R1_BROWSER_RESULT.md",
+      "sha256": "439ed9822e80d78b1236a854a49681da411d15fb94c01c7b3129826cd5db6c94"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-03-i1/R1_ENGINEERING_REVIEW.md",
+      "sha256": "5d0305877e14a39cb1c4558471b36851e101d5a415ec0b64c4703d9bb011a0f5"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-03-i1/R1_ENGINEERING_REVIEW_SNAPSHOT.json",
+      "sha256": "8873d000ac35acfff78ce4b6f880ba162903c21c4c79c42936e8b2f664ea06e1"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-03-i1/R1_FINAL_CHECKS.json",
+      "sha256": "900f9748ea1a3e87eaa49b4a2b058993ea6a1ed2dc91006000e39cc22485881b"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-03-i1/R1_INDEPENDENT_REVIEW.md",
+      "sha256": "8d8170ddf5ce37a5b3f853ac39e15c43053212ec62f546e889060d8c715018af"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-03-i1/R1_NEXT_PROMPT.md",
+      "sha256": "5b2b5c74e42c3d823490ae25f993dd3cc9d7104b2563793055efd49074a047da"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-03-i1/R1_PROGRESS.md",
+      "sha256": "87e3ba65b409926d56d064b60d32e1a67afe59980b6deacd9295982b6ea079a7"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-03-i1/R1_REJECTED_SNAPSHOT.json",
+      "sha256": "712300b56bbeb8151e466bdb9bfd5759f4e7d0e8924a0c7cffabaab1971270b1"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-03-i1/R1_REVIEW_SNAPSHOT.json",
+      "sha256": "0282f287fa160b63ac963e89a9e8c073226367737a2829cf67e048cc4a727464"
+    },
+    {
+      "path": "src/experiments/mainline03/recognitionHandoff.ts",
+      "sha256": "d96cb50639849cf3437ca7f374b72a213a46c7d4029b757f163da9fba691ddeb"
+    },
+    {
+      "path": "src/experiments/mainline03/recognitionHandoff.test.ts",
+      "sha256": "72f7e5402683f5f77258862ae014f740bc2784a1d0632d63191fda37f56f52ad"
+    },
+    {
+      "path": "src/experiments/mainline03/seenReplay.ts",
+      "sha256": "e595d756468959eab01c6628d386d639625464ba50a6b37168690862a12d1950"
+    },
+    {
+      "path": "src/experiments/mainline03/seenReplay.test.ts",
+      "sha256": "bb1266d778ee83d5025252dcfa42baa2fa8931e5ce893496a571279734714f25"
+    },
+    {
+      "path": "src/experiments/mainline03/mainlineAcceptance.test.tsx",
+      "sha256": "d085ae7b3ee2552c0bb7b8bc351c4c0ebf5956d99a5b908360a9a54bd88824cd"
+    }
+  ],
+  "sourceSnapshot": {
+    "path": "docs/recognition-optimization/mainline-03-i1/R1_REJECTED_SNAPSHOT.json",
+    "sha256": "712300b56bbeb8151e466bdb9bfd5759f4e7d0e8924a0c7cffabaab1971270b1"
+  },
+  "protectedCount": 782,
+  "logBytes": 202349,
+  "logPrefixSha256": "073e2a81f5f0d35f9d90dbe53fe4224caed80486ff532746dfe5d381d3f8bc7c",
+  "initialProtection": {
+    "checked": 768,
+    "changes": [],
+    "sourceMatches": 10
+  }
+}

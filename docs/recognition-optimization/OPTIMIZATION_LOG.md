@@ -1459,3 +1459,23 @@
 - delivery: 仅R1审计/检查/快照/下一提示词和两动态文档单独docs提交推送，远端以最终Git回执为准；10业务源码保持未提交，不回滚。
 - next: 唯一建议MAINLINE-03-I1-R2，申请仅package两文件及对应开发依赖安装，先锁版本与影响→独立审查→完整门→原Edge协议。不是新语义或模型轮次。
 - boundary: 外部识别模型/verifier/Repair/retry/模型网络/费用/密钥/剪贴板/用户库/真实材料/真人/新数据/盲测/B10/部署/RCO-6均0。模型识别准确率本轮未测量。完成后停止。
+
+## 92. MAINLINE-03-I1-R2 Node开发类型依赖授权 — 2026-09-06
+
+- authority: 本轮仅新增package.json/package-lock.json精确Node开发类型依赖许可；原10实现只读，报告仅R2前缀，短交接与日志追加；不改语义/测试/配置/冻结材料。
+- baseline: 本机及远端6534121fad9c844a825a2e9034af6f136ede79da；起始原768保护无变化，10源码与R1拒收快照匹配。R2_BASELINE固定782只读文件，仅两个依赖文件从旧保护中按本轮明确授权列为可改。
+- reproduction: 新日志rco-mainline03-r2-2304f4909c7e4e9fab5be618400954b9/reproduction.log，类型检查退出2，复现三测试共6个node:fs/node:crypto TS2307，无其他类型错误。
+- execution: 最小依赖核验/安装→类型与153定向→新独立审查→一次适用完整门→原Edge实际协议。旧checker含原package保护，不修改旧checker/基线；以R2授权保护清单执行相同检查命令并保留独立日志。
+- boundary: IN_PROGRESS，无新PASS；必要公开包元数据/依赖审计及Git网络允许，其余外部识别/模型/费用/密钥/剪贴板/真实库/部署均0。模型识别准确率本轮未测量。
+
+## 93. MAINLINE-03-I1-R2 类型闭合、历史环境门阻挡 — 2026-09-06
+
+- outcome: NOT_ACCEPTED_HISTORICAL_ENVIRONMENT_GATE_BLOCKED；NO_PROMOTION / NEEDS_GATE_SCOPE_APPROVAL。已停止，不进入Edge；当前用户另批历史/当前环境分层验证后方可恢复。
+- change: 只改package.json(+1)/lock(+18)，@types/node24.13.3及undici-types7.18.2均MIT开发类型；357旧非根锁对象/运行依赖/脚本零漂移，原10实现只读。使用新npm缓存/ignore-scripts，2次配置启动失败后实际安装added2，失败日志保留。
+- checks: 6个TS2307先复现；app/node类型PASS，11文件153/153、42/42内存字段。新无上下文依赖审查PASS。完整attempt1的bundle/lint/type/contracts通过；Vitest986通过1原有跳过，server8/worker25/time1/multimodal23通过；历史回放库3通过1失败，先抛FREEZE_HASH_MISMATCH:package-lock.json。
+- cause: 旧RCO-5-007 freeze的17绑定路径中仅package.json与lock变化，两项起始SHA均等于旧freeze，变化仅本轮获准依赖增量；旧freeze本身不改。历史整体环境已非相同，不能改旧SHA/删测试/回切依赖或以当前依赖比较替代旧门。独立工程复核确认。
+- not_run: functions/build/完整安全/依赖漏洞审计及Edge12协议场景未执行；0本轮server/标签/实际库/下载，内存安全/jobs断言不冒充浏览器实测。153已包含在986，不累计。
+- protection: R2保护782与原10源码SHA不变，日志旧前缀完整；Expected/freeze/dataset/checkpoint/cache/历史40/42/17/FAIL及冻结组件保持。R2_REJECTED_SNAPSHOT保存12源码/依赖文件现场。
+- delivery: 只提交R2审计、短CURRENT_CONTEXT及日志，原10实现+2依赖保留未提交，不清理/回滚。Git提交/远端核对以回执为准，不称业务交付。
+- next: 唯一建议MAINLINE-03-I1-R3新编排：原封旧门在逐字匹配历史快照运行，当前两类型增量单列严格兼容验证，再完整工程/原Edge。提示词R2_NEXT_PROMPT，尚未授权实施，不重做识别语义或创建数据。
+- boundary: 模型/verifier/Repair/retry/模型网络/费用/密钥/剪贴板/用户库/真实材料/真人/新数据/盲测/B10/旧一次性runner/部署/RCO-6均0。模型识别准确率本轮未测量。完成后停止。
