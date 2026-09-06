@@ -1479,3 +1479,23 @@
 - delivery: 只提交R2审计、短CURRENT_CONTEXT及日志，原10实现+2依赖保留未提交，不清理/回滚。Git提交/远端核对以回执为准，不称业务交付。
 - next: 唯一建议MAINLINE-03-I1-R3新编排：原封旧门在逐字匹配历史快照运行，当前两类型增量单列严格兼容验证，再完整工程/原Edge。提示词R2_NEXT_PROMPT，尚未授权实施，不重做识别语义或创建数据。
 - boundary: 模型/verifier/Repair/retry/模型网络/费用/密钥/剪贴板/用户库/真实材料/真人/新数据/盲测/B10/旧一次性runner/部署/RCO-6均0。模型识别准确率本轮未测量。完成后停止。
+
+## 94. MAINLINE-03-I1-R3 分层验证编排授权 — 2026-09-06
+
+- authority: 当前用户仅批准新增check-mainline-03-i1-r3.mjs与R3报告、动态短交接/追加日志；现有12实现/依赖与所有旧冻结/测试只读，无模型/密钥/剪贴板/用户库/部署许可。
+- baseline: 本机/远端beae935cba642027c8222644a6e541f2c636bfb2；12现场与R2拒收匹配、原782保护通过。R3_BASELINE固定旧文件和R2报告，包含当前12现场与日志旧前缀。
+- evidence: 原17历史绑定只有2依赖变化；在内存逆转已登记R2新增行及其2上下文行CRLF，package逐字SHA与旧freeze一致；锁文件可由起始Git内容按已验证CRLF重建并须全SHA匹配，不忽略换行差异。
+- sequence: 历史快照全SHA→原封库门；当前严格两开发类型增量→变形反例→新无上下文审查→分层完整门→原Edge协议。旧R2当前3通过/1失败保留，不冒称当前与历史环境一致。
+- status: IN_PROGRESS，尚无新通过结论；模型识别准确率本轮未测量。禁止重装、扩大产品范围或自动进入后续模型阶段。
+
+## 95. MAINLINE-03-I1-R3 分层工程通过、实际下载未验收 — 2026-09-06
+
+- outcome: NOT_ACCEPTED_DOWNLOAD_UNVERIFIED / NO_PROMOTION；停止产品工作，只提交失败审计，原12与新增编排脚本保留未提交。不是工程或模型全通过交付。
+- change: 仅新增check-mainline-03-i1-r3.mjs；原12及旧checker/库测试/freeze保持逐字。20个历史快照文件与原freeze/基线全SHA匹配，原17引用完整；package保留58 CRLF/6 LF，lock保留5510 CRLF，不忽略换行。未重装/升级或执行旧一次性runner。
+- engineering: 最终定向13兼容+4原库；新无上下文独立审查PASS。一次分层完整门1HdKiX通过：Vitest986/1原跳过，server8/worker25/time1/multimodal23/functions5；lint/type/contracts/build/security通过，构建扫描18/0 findings，依赖审计0漏洞。153定向包含在986，不累计。旧R2当前环境3通过/1失败原样单列。
+- browser: 新Edge两标签/同origin12736/新空隔离v8库，实际录入、来源适配、草稿恢复、逐键/保存、部分/批量/Inbox、故障/过期/重复/刷新均有实际库证据。原12协议10 PASS/1 PARTIAL/1 BLOCKED；canonical42/42，文件侧未核验。最终5来源/5草稿/6任务/5时间/4材料/18历史（3编辑）/0提醒，真无日期0时间，实际jobs0；原文/raw/首次建议/历史分层未丢。
+- blocker: 三次真实导出按钮触发，两次下载监听超时，Downloads精确同名定位无本次新增文件；没有真实路径/大小/SHA/文件与整库比对。尚不能判定产品、浏览器或工具根因，未改App/下载生命周期或绕过权限，不用页面JSON代替文件。第二标签1条message-channel错误保留。
+- protection: 799保护/原12匹配，新增脚本仍为独立审查SHA；日志旧前缀仅追加。Expected/freeze/dataset/checkpoint/cache/旧历史不改。两新标签关闭，核对PID43692命令行与12736后停止server；测试库、旧下载与所有临时证据保留。
+- delivery: 只提交R3审计、短交接、追加日志并核对远端；原12业务/依赖与R3脚本不提交，见R3_REJECTED_SNAPSHOT。实际Git回执为准。
+- next: 唯一建议R4-DOWNLOAD-SCOPE，只读定位下载落地断点并列精确最小白名单；不重新调模型、不重做已通过主链或历史计划。提示词R3_NEXT_PROMPT，尚未授权。
+- boundary: 外部识别/verifier/Repair/retry/模型网络/费用/密钥/剪贴板/真实用户库/新数据/盲测/B10/真人/真实材料/部署/RCO-6均0。模型识别准确率本轮未测量。完成后停止。

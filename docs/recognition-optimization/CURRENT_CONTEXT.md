@@ -2,83 +2,85 @@
 
 ## 当前结论
 
-- 当前授权：RCO-5-MAINLINE-03-I1-R2，Node开发类型依赖最小闭合。
-- 状态：NOT_ACCEPTED_HISTORICAL_ENVIRONMENT_GATE_BLOCKED，已停止。
-- 类型根因已修复，定向与依赖独立审查PASS；整轮未验收。
-- 当前阻挡：历史RCO-5-007门要求两依赖文件等于旧冻结环境。
-- 本轮两依赖文件获准变化，但没有修改旧freeze/测试或改变旧门许可。
-- 只交付R2失败审计；原10实现和2依赖文件保留未提交。
-- 模型识别准确率：本轮未测量。
-- 完成后停止，不自动实施新编排、语义契约或付费实验。
+- 当前授权：RCO-5-MAINLINE-03-I1-R3。
+- 状态：NOT_ACCEPTED_DOWNLOAD_UNVERIFIED / NO_PROMOTION，已停止。
+- 分层完整工程门 PASS；实际 Edge 下载文件未取得，整轮不通过。
+- 本轮只交付审计；原 12 实现/依赖与新 R3 编排脚本保留未提交。
+- 模型识别准确率：本轮未测量；没有新模型、数据或语义能力。
+- 不自动实施下一阶段，不部署，不启动 RCO-6。
 
-## 仓库与保护
+## 仓库与基线
 
-- 唯一repo：C:\Users\Winner\student-affairs-multimodal-exp。
-- 唯一branch：codex/e2-multimodal-recognition-exp。
-- R2起始HEAD及远端：6534121fad9c844a825a2e9034af6f136ede79da。
-- 起始10实现匹配R1_REJECTED_SNAPSHOT，原768项保护全部通过。
-- R2_BASELINE只将package.json/package-lock.json列为明确可改例外。
-- R2保护782项不变、日志旧字节前缀不变、无越界新增。
-- 原10实现本轮全部只读，见R2_REJECTED_SNAPSHOT的12文件现场。
-- 旧R1报告/冻结/Expected/dataset/checkpoint/cache/result/runner保持。
-- Schema/repository/capture/confirmationV2/domainCommit/validator/时间AST不改。
-- 不回切旧提交，不套FAILED补丁，不清理未提交现场。
-- Git交付仅审计；最终提交/远端SHA以Git回执核对，不冒称业务交付。
+- 唯一 repo：C:\Users\Winner\student-affairs-multimodal-exp。
+- 唯一 branch：codex/e2-multimodal-recognition-exp。
+- R3 起始 HEAD/远端：beae935cba642027c8222644a6e541f2c636bfb2。
+- R3_BASELINE：799 项保护；原 12 与 R2_REJECTED_SNAPSHOT 匹配。
+- 原 12 本轮逐字只读；日志旧前缀仅追加；无保护变化或重叠修改。
+- Schema/repository/capture/confirmationV2/domainCommit/validator/时间 AST 不改。
+- 既有 Expected/freeze/dataset/checkpoint/cache/历史结果/runner 不改。
+- 旧 40/42、旧 17 测试、所有历史 FAIL 保持。
+- 不回切旧提交、不套 FAILED 补丁、不清理现有源码或测试库。
 
-## 本轮改动与作用
+## 本轮实施
 
-- package.json新增@types/node精确24.13.3，匹配本机Node v24.18.0。
-- 必要undici-types精确锁7.18.2；两包MIT、dev-only、无安装脚本。
-- package+1行，lock+18行；原357非根package对象零漂移。
-- 原运行依赖/脚本、产品/测试/tsconfig/DOM/strict配置均不变。
-- Node ambient类型进入两个项目；均经类型检查，无屏蔽或排除测试。
-- 新临时npm缓存，ignore-scripts，隔离空配置；不升级npm。
-- 两次npm配置解析启动失败保留日志，第三次实际安装仅added2。
-- 已解三测试6个node:fs/node:crypto TS2307，未新增识别能力。
-- R1来源凭据一致性修复只读复用，不重复修补。
-- 原文/raw/适配首次建议/真实编辑分层仍保留。
-- 历史B8三候选仍仅已见诊断，不强转完整2.0或改历史FAIL。
+- 唯一新实现：scripts/check-mainline-03-i1-r3.mjs。
+- 原 12 文件仅复用；R2 的两开发类型依赖未再安装或升级。
+- 历史层：17 freeze 引用，20 个逐字 SHA 匹配的快照文件。
+- package.json 保持原 58 CRLF/6 LF；lock 保持 5510 CRLF。
+- 只能逆转已登记 R2 增量；全 SHA 不匹配即拒绝。
+- 在精确快照执行原封 4 库测试；未执行旧一次性 runner。
+- 不是历史运行软件的全环境重装；运行 Node v24.18.0。
+- 当前层：357 原非根锁对象不变，只允许两项 MIT dev 类型及根声明。
+- @types/node 24.13.3；undici-types 7.18.2。
+- 原 package 其他字段、运行依赖、脚本、测试不变。
+- 13 项兼容检查：1 合法正例、10 依赖负例、2 历史篡改负例。
+- R2 当前历史环境 3 PASS/1 FAIL 单列保留，不改成 PASS。
+- 脚本 SHA 见 R3_REVIEW_SNAPSHOT，最终仍与新独立审查版本相同。
 
-## 新验证数字
+## 分层工程数字
 
-- 类型复现：3文件6个TS2307，退出2。
-- 安装后app/node类型均PASS，11文件153/153定向。
-- 旧42字段内存口径42/42；原40/42与旧17测试不改。
-- 无日期0时间/0提醒/jobs0属内存断言，不是新浏览器实测。
-- 新无上下文依赖审查PASS，10源码/782保护/357旧依赖独立复算。
-- 完整门attempt1：bundle/lint/app类型/node类型/Schema/时间契约PASS。
-- lint有1条原有mainline01/browser react-refresh非阻断警告。
-- 全量Vitest986通过、1原有跳过；153已包含，不能相加。
-- server8/8、worker25/25、时间一致性1/1、多模态库23/23。
-- 历史回放库3通过/1失败，FREEZE_HASH_MISMATCH:package-lock.json。
-- functions/build/完整安全扫描/依赖漏洞审计均未执行。
-- 完整门只运行1次，不重复计算尝试或遮蔽失败。
-- Edge协议12场景未执行，0新服务/标签/库/下载。
-- 真实文件/浏览器全对象读回、逐键/故障/过期/重复验收均NOT_RUN。
+- 新无上下文独立审查 PASS，无阻断。
+- 定向最终 xDNFWN：13/13 兼容，4/4 历史库；不累计重跑。
+- 完整门只运行一轮：目录 rco-mainline03-r3-1HdKiX。
+- lint/app type/node type/Schema/时间契约/build/security 均 PASS。
+- 原有 1 条 React Refresh lint warning 保留。
+- Vitest 986 通过、1 原有 opt-in 跳过；153 定向包含其中。
+- server 8/8、Worker 25/25、时间一致性 1/1、多模态库 23/23。
+- Functions 5/5；构建隔离扫描 18 文件/0 findings。
+- npm audit：0 vulnerabilities；无无关依赖漂移。
+- 历史快照 20/20 前后不变；799 保护不变、原 12 匹配。
 
-## 停机原因与未解决项
+## 本轮真实 Edge
 
-- 旧freeze同时绑定package-lock.json与package.json；只有这两项变化。
-- 两项R2起始字节SHA均与旧freeze一致，旧freeze自身未改。
-- 独立复核17个绑定路径，仅本轮授权依赖增量不匹配。
-- 不把Git原始blob换行SHA当作起始工作区SHA。
-- 未改旧哈希/断言、未跳过旧门、未回切依赖让测试变绿。
-- 停止级别NO_PROMOTION / NEEDS_GATE_SCOPE_APPROVAL。
-- 条件/三值/修订/事件完整表达、稳定识别接入仍未解决。
-- 正式任务编辑/执行、ICS/真实提醒、商业验收仍需另批。
+- 原 12 项协议：10 PASS、1 PARTIAL（第 2）、1 BLOCKED（第 11）。
+- 标签 763114512/763114513，origin http://127.0.0.1:12736。
+- run：mainline03-de61624d-c2dc-4a41-a629-0509029d2193。
+- 库：rco-mainline-01-02-i1-mainline03-de61624d-c2dc-4a41-a629-0509029d2193。
+- 真实 App 录入、来源先存、草稿恢复、两项一次批量已验。
+- canonical 42/42；实际文件侧 42 字段 NOT_RUN，不能借旧结果。
+- 无日期逐项、部分/Inbox 批量、逐键名称/日期与明确保存已验。
+- 保存故障/确认故障：整库不变，已保存历史保留。
+- 跨标签 STALE：整库不变；刷新后最新值正确入库。
+- 同确认重复：整库不变；已确认兄弟项不覆盖。
+- 最终 5 来源/5 草稿/6 任务/5 时间/4 材料/18 历史（3 编辑）。
+- 真无日期任务 0 关联时间；全部提醒 0；实际 jobs 0。
+- date-only 为 2026-09-18、无时刻，日历与无日期列表区分。
+- B8-01 已见诊断失败保留 receipt、Run/Draft failed、result=null。
+- 最终刷新整对象不变；刷新 epoch 3 读/0 写，所有外发计数 0。
+- 三次导出 UI 触发、两次监听超时；Downloads 无新增同名文件。
+- 文件路径/大小/SHA/文件与库核验均缺失，整轮不能放行。
+- 未确定下载根因；未擅改 App、下载权限或链接生命周期。
+- 第二标签 1 条 message-channel 错误；不宣称控制台零错误。
+- 两标签已关闭；PID 43692/12736 核对后停止，库和日志保留。
 
-## 唯一下一建议与证据入口
+## 下一步与交付
 
-- 待批MAINLINE-03-I1-R3：新增历史环境/当前兼容性验证编排。
-- 旧文件逐字匹配freeze的临时历史快照运行原封旧库门。
-- 当前环境严格检验仅两开发类型增量、其他依赖/实现零漂移。
-- 两层分别报告，不改旧freeze/测试、不以快照PASS覆盖R2当前FAIL。
-- 新独立审查→分层完整门→原Edge协议→保护→成功业务提交推送。
-- R2_NEXT_PROMPT：精确新增白名单、反例、验收/停止边界，尚未执行。
-- R2_AUDIT/FINAL_CHECKS：本轮分层数字、边界与状态。
-- R2_REPRODUCTION/ENGINEERING_EVIDENCE：根因及长日志绝对路径/SHA。
-- R2_INDEPENDENT_REVIEW/ENGINEERING_REVIEW：两次独立审查证据。
-- R2_REJECTED_SNAPSHOT/BASELINE：保留现场与782保护。
-- 全部新临时日志保留，无需关闭本轮服务器/标签，不清库。
-- 外部识别/模型网络/verifier/Repair/retry/费用/密钥/剪贴板/用户库0。
-- 新数据/盲测/B10/旧一次性runner/真人/真实材料/部署/RCO-6均0。
+- 唯一建议：R4-DOWNLOAD-SCOPE，仅定位下载落地断点并列最小白名单。
+- 不重做模型计划、已通过的主链或完整工程；实施变更须另批。
+- R3_AUDIT/FINAL_CHECKS/BROWSER_RESULT：结论与分层证据。
+- R3_ENGINEERING_CHECKS：全量机器结果、日志路径及 SHA。
+- R3_REJECTED_SNAPSHOT：原 12 与新编排脚本的保留现场。
+- R3_NEXT_PROMPT：下一次明确授权文字；本轮不自动执行。
+- Git 只提交审计文档；提交和远端精确 SHA 见当轮 Git 回执。
+- 0 外部识别/模型网络/verifier/Repair/retry/费用/密钥/剪贴板。
+- 0 用户真实库/真实材料/真人/新数据/盲测/B10/部署/RCO-6。
