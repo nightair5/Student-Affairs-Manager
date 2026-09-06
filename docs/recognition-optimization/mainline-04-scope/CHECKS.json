@@ -1,0 +1,281 @@
+{
+  "stage": "RCO-5-MAINLINE-04-SCOPE",
+  "status": "PASS_SCOPE_DESIGN",
+  "baseline": {
+    "head": "d97326c65d6e042c07c56d68a79d65f1ac8ed0a7",
+    "remoteAtStart": "d97326c65d6e042c07c56d68a79d65f1ac8ed0a7",
+    "branch": "codex/e2-multimodal-recognition-exp",
+    "worktreeAtStart": "CLEAN",
+    "root": "C:/Users/Winner/student-affairs-multimodal-exp",
+    "readOnlyTrackedCount": 819,
+    "readOnlyRawManifestSha256": "bee7c944318af99c2a5356210e39129e961347575ba2ac8a0d0d8beb07d0d9e0",
+    "rawManifestAlgorithm": "SHA256 UTF8 JSON.stringify sorted git-ls-tree base tracked [{path,sha256(raw working bytes)}], excluding CURRENT_CONTEXT.md and OPTIMIZATION_LOG.md; old files only.",
+    "logPrefix": {
+      "path": "docs/recognition-optimization/OPTIMIZATION_LOG.md",
+      "bytes": 213633,
+      "sha256": "2177803eb5117f38b4bc0a3cfa86c638bffef9e8adb69b41adf318cabdc97a07"
+    },
+    "legacyProtectionManifest": "docs/recognition-optimization/mainline-03-i1/R3_BASELINE.json",
+    "legacyProtectedFiles": 799,
+    "implementationSnapshot": "docs/recognition-optimization/mainline-03-i1/R3_CLOSE_IMPLEMENTATION_SNAPSHOT.json",
+    "implementationFilesMatched": 13,
+    "readEvidence": [
+      {
+        "path": "docs/recognition-optimization/RCO-5-008-B8_DEVELOPMENT_DATASET.json",
+        "sha256": "380750fa92984f093d14a138e499bcfc5cf17fbcf4e7b60bd5b66936244594fc"
+      },
+      {
+        "path": "docs/recognition-optimization/mainline-03-i1/R3_CLOSE_AUDIT.md",
+        "sha256": "6ac6932c5b4eb5a7a67b12cbe4af3b33b591be38cddab8445b4974ecce20ddad"
+      },
+      {
+        "path": "docs/recognition-optimization/mainline-03-i1/R3_CLOSE_CHECKS.json",
+        "sha256": "1546ac73ae9a19ee97e86a3c005170990baf6d8df46e744d35ba4d6e055bfffd"
+      },
+      {
+        "path": "docs/recognition-optimization/mainline-03-i1/R3_CLOSE_IMPLEMENTATION_SNAPSHOT.json",
+        "sha256": "85968e656bf8f1d8bbb8ccf190dcbab9fa6f22696ef08e5f5d49e78123127004"
+      },
+      {
+        "path": "docs/recognition-optimization/mainline-03-scope/SCOPE_AUDIT.md",
+        "sha256": "d72134ac1a60409551fcd3a623b875d2fcf4fdc967c44ade0892ba01299fc159"
+      },
+      {
+        "path": "docs/recognition-optimization/rco-5-008-b8-runs/rco-5-008-b8-m1-20260904a/raw-results.json",
+        "sha256": "8b1e9285313765e28adbb29a83b8325e77d3219e8b3394516c1b84211fee906b"
+      },
+      {
+        "path": "src/components/DraftReviewPanel.tsx",
+        "sha256": "ccb28067728fdc46972bad81199fbc2e5ed4172c0761ee572344d9beaae492b0"
+      },
+      {
+        "path": "src/domain/v2/capture.ts",
+        "sha256": "7fec6d1d5930d63786da9392f04f7bf0869a14d5c868240bbf5af9260bb80de5"
+      },
+      {
+        "path": "src/domain/v2/confirmationV2.test.ts",
+        "sha256": "997c5d4cf6407b87640adf517dd701c66f3c3b11e7b39bc25573aa81c31ce079"
+      },
+      {
+        "path": "src/domain/v2/confirmationV2.ts",
+        "sha256": "09dae9295698efb7ca04c9df4222c0ca0fd685eb9ae05148e1a000be4b2e441d"
+      },
+      {
+        "path": "src/domain/v2/domainCommit.ts",
+        "sha256": "a698bb32c1c72d764337ad429a82c7e0c6b9a8c2c6ddbf9eb70c4cf3f6cbd4fa"
+      },
+      {
+        "path": "src/domain/v2/types.ts",
+        "sha256": "000a9f5d689aad4463753aa8f0f6d1eb33843075e7a521ca6e1f7e10eef833b6"
+      },
+      {
+        "path": "src/domain/v2/validators/workspaceValidator.ts",
+        "sha256": "eedc119945961612aa09b302fb2acb484c74a6868b409b2fa7f2fa8725e4d580"
+      },
+      {
+        "path": "src/experiments/mainline01/fixtures.ts",
+        "sha256": "e2d7b1c2b71c462b72f1efb9168ca57be375de3a3c0a71ce5f77e96383fa76dc"
+      },
+      {
+        "path": "src/experiments/mainline02/runtime.ts",
+        "sha256": "e70a9a3a1580d254115d53e68c4883ec1573353365b2d74f06621dca400dfab0"
+      },
+      {
+        "path": "src/experiments/mainline03/recognitionHandoff.ts",
+        "sha256": "d96cb50639849cf3437ca7f374b72a213a46c7d4029b757f163da9fba691ddeb"
+      },
+      {
+        "path": "src/experiments/mainline03/seenReplay.ts",
+        "sha256": "e595d756468959eab01c6628d386d639625464ba50a6b37168690862a12d1950"
+      },
+      {
+        "path": "src/recognition/actionCandidateComposerV2.ts",
+        "sha256": "b2bcdbf227304ebae67f39a47bd044c5c1c5a4fc71dc12941ecad0b7e1625db7"
+      },
+      {
+        "path": "src/recognition/candidateTaskSafetyPolicyV2.ts",
+        "sha256": "f6b35237c367dc57e489424b9c8272859b2f77f4b5ddd1f761746934530001fe"
+      },
+      {
+        "path": "src/recognition/modelAnchorSelectionContract.ts",
+        "sha256": "d82f294c28bb34b70654cb8dcb670fd4c9246bae6abe4ab8b03f75c1e3c8ceac"
+      },
+      {
+        "path": "src/recognition/schema.ts",
+        "sha256": "81f636bcf62a4e35221ba7e620a0410b3cc39bbf7481882e42ab1222839eab40"
+      },
+      {
+        "path": "src/recognition/scopeReferenceContract.ts",
+        "sha256": "2f3b12b464991d8ea57fe08cad1217050485ddc69b310f13b489f6dcaae71cf2"
+      },
+      {
+        "path": "src/recognition/types.ts",
+        "sha256": "f66c6fae65455a5a5d388f369698a9ed592929cdc1caae3cbf1554d10a1f841c"
+      },
+      {
+        "path": "AGENTS.md",
+        "sha256": "e0724609050a3ac32b500c7360db4a4fadf72af1c3b9983ac4d932dac4b1573b"
+      },
+      {
+        "path": "PRD.md",
+        "sha256": "463b26202c26e955bedc58e3f78cf3a8ff2a68eb53d9338b2d1a72d9d011a678"
+      },
+      {
+        "path": "scripts/check-mainline-03-i1-r3.mjs",
+        "sha256": "1ca5298be2c9fb2ebbcf06d7df8b9e357d1d2ba0d5364fae53659d6d143d7fc4"
+      },
+      {
+        "path": "src/domain/v2/repository.ts",
+        "sha256": "98c6ebfb0a93d02f66e079266b30651a6de7023355f5c3227001ac487e43ee97"
+      },
+      {
+        "path": "src/recognition/scopeIndexV11.ts",
+        "sha256": "2706131f0c133872042761016e8ccac0487ce854be3472f2d189e5c901889515"
+      },
+      {
+        "path": "src/recognition/taskFormationPolicyV2.ts",
+        "sha256": "61d7c1d634f3e04d90ae034cf479528a6f62da5be141d06fcf6820db8c0de54d"
+      }
+    ]
+  },
+  "authorization": {
+    "newFiles": [
+      "docs/recognition-optimization/mainline-04-scope/SCOPE.md",
+      "docs/recognition-optimization/mainline-04-scope/IMPLEMENTATION_WHITELIST.md",
+      "docs/recognition-optimization/mainline-04-scope/VALIDATION_DESIGN.md",
+      "docs/recognition-optimization/mainline-04-scope/REVIEW.md",
+      "docs/recognition-optimization/mainline-04-scope/CHECKS.json",
+      "docs/recognition-optimization/mainline-04-scope/NEXT_PROMPT.md"
+    ],
+    "dynamic": [
+      "docs/recognition-optimization/CURRENT_CONTEXT.md",
+      "docs/recognition-optimization/OPTIMIZATION_LOG.md"
+    ],
+    "sourceChanges": 0,
+    "modelCalls": 0,
+    "modelNetwork": 0,
+    "feesCny": 0,
+    "keyClipboard": 0,
+    "realUserDatabase": 0,
+    "newDataset": 0,
+    "liveBrowser": 0,
+    "deploy": 0,
+    "RCO6": 0
+  },
+  "newChecks": {
+    "staticAudit": "DONE",
+    "oldEightEngineeringInputs": "READ_ONLY_NOT_RERUN",
+    "seenModelExamples": [
+      "rco-task-b8-01",
+      "rco-task-b8-07",
+      "rco-task-b8-09"
+    ],
+    "oldFixtureOrExpectedMutations": 0,
+    "independentScopeReview": {
+      "status": "PASS",
+      "freshNoContext": true,
+      "blockingFindings": 0,
+      "bodyCharacters": 457,
+      "report": "docs/recognition-optimization/mainline-04-scope/REVIEW.md",
+      "nonBlockingClarification": "linked-event location=null only; no non-null location semantic coverage claimed",
+      "clarificationApplied": true,
+      "finalReuseBoundaryReview": "PASS; reuse existing semantic/reference types, do not duplicate proposition graph; T04/T06 relations remain required"
+    },
+    "protection": {
+      "status": "PASS",
+      "readOnlyExisting": 819,
+      "legacyProtected": 799,
+      "implementation": 13,
+      "changed": 0,
+      "logPrefix": true,
+      "outOfScope": 0
+    },
+    "documents": {
+      "status": "PASS",
+      "scopeDocuments": 6,
+      "markdownManualReview": true,
+      "balancedFences": true,
+      "gitDiffCheck": true,
+      "credentialPatternFindings": 0,
+      "contextLines": 83,
+      "implementationWhitelistVerified": 8,
+      "newImplementationCreated": 0
+    },
+    "productLintTestBuild": "NOT_RUN_DOCS_ONLY",
+    "browserAcceptance": "NOT_RUN",
+    "modelAccuracy": "本轮未测量"
+  },
+  "decision": {
+    "uniqueNext": "RCO-5-MAINLINE-04-I1",
+    "status": "NOT_AUTHORIZED",
+    "newImplementationPaths": 8,
+    "scope": "Versioned task semantic package + local composition + strict legacy capability check; no real-App/new-semantic canonical integration",
+    "newSchemaRepositoryOrFrozenComponentChanges": 0,
+    "newSemanticConfirmationPersistence": "NOT_SUPPORTED_BY_I1; separate explicit authorization required",
+    "noModelInferenceClaims": true,
+    "implementationWhitelist": [
+      "src/experiments/mainline04/semanticContract.ts",
+      "src/experiments/mainline04/semanticContract.test.ts",
+      "src/experiments/mainline04/semanticComposer.ts",
+      "src/experiments/mainline04/semanticComposer.test.ts",
+      "src/experiments/mainline04/legacyHandoff.ts",
+      "src/experiments/mainline04/legacyHandoff.test.ts",
+      "src/experiments/mainline04/semanticAcceptance.test.ts",
+      "scripts/check-mainline-04-i1.mjs"
+    ],
+    "reuse": "Frozen scopeReferenceContract types/enums/refs and scopeIndexV11/time AST; new wrapper only for missing condition/coverage/full-entity/handoff semantics; frozen classifiers read-only, not rerun"
+  },
+  "history": {
+    "R3Close": "ACCEPTED_AS_PRIOR_EVIDENCE_NOT_RERUN",
+    "oldR3Failure": "PRESERVED",
+    "oldR2CurrentWorkspace": {
+      "passed": 3,
+      "failed": 1,
+      "preserved": true
+    },
+    "oldFieldResult": "40/42 preserved",
+    "oldTests17": "PRESERVED",
+    "modelAndBrowserHistoricResults": "UNCHANGED"
+  },
+  "gitDelivery": {
+    "status": "READY_FOR_DOCUMENTS_ONLY_COMMIT",
+    "exactStaging": [
+      "docs/recognition-optimization/mainline-04-scope/SCOPE.md",
+      "docs/recognition-optimization/mainline-04-scope/IMPLEMENTATION_WHITELIST.md",
+      "docs/recognition-optimization/mainline-04-scope/VALIDATION_DESIGN.md",
+      "docs/recognition-optimization/mainline-04-scope/REVIEW.md",
+      "docs/recognition-optimization/mainline-04-scope/CHECKS.json",
+      "docs/recognition-optimization/mainline-04-scope/NEXT_PROMPT.md",
+      "docs/recognition-optimization/CURRENT_CONTEXT.md",
+      "docs/recognition-optimization/OPTIMIZATION_LOG.md"
+    ],
+    "expectedFiles": 8,
+    "exactCommitAndRemote": "Reported from actual Git receipt after commit; this file cannot contain its own future commit hash.",
+    "forcePush": false,
+    "autoRebase": false,
+    "githubCI": "NOT_CLAIMED",
+    "deploy": false
+  },
+  "documentArtifacts": [
+    {
+      "path": "docs/recognition-optimization/mainline-04-scope/SCOPE.md",
+      "sha256": "6948f0ea13f7d2c4f37067ee1b0163a444bba147c7c2e65d7f913c1afa864a4f"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-04-scope/IMPLEMENTATION_WHITELIST.md",
+      "sha256": "a420a8406df1e7c569e70f854ef4ec3f4ecde0929d6e9087bae918cb44e8a6da"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-04-scope/VALIDATION_DESIGN.md",
+      "sha256": "e650fc1ff491e0e3f176476d31e25d3c3aca61cd9e4d5ab4b0d889eb97603954"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-04-scope/REVIEW.md",
+      "sha256": "9b40445492504732791f1adbe13c27deb0dbfc9cf8c76057cbb428ba537eecb7"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-04-scope/NEXT_PROMPT.md",
+      "sha256": "73244dc348f612c388cfc8f64079bf985274c97002946cb88b28c0d8bda2f1af"
+    }
+  ]
+}

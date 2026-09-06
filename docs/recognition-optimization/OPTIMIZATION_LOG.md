@@ -1520,3 +1520,24 @@
 - delivery: 仅明确暂存原13实现/依赖/编排、8份R3_CLOSE报告、短交接及追加日志，共23文件；无下载原件/临时证据/未获准文件。成功推送后核对远端，失败不强推或变基。源码本轮零修改。
 - next: 唯一待授权MAINLINE-04-SCOPE，复用既有缺口，区分模型没给/契约装不下/转换丢字段，最小化条件三值、状态、修订、事件及时间材料语义承接；不重复下载诊断、不堆关键词，提示词R3_CLOSE_NEXT_PROMPT。
 - boundary: 外部识别/verifier/Repair/retry/模型网络/费用/密钥/剪贴板/真实库/新数据/盲测/B10/真人/真实材料/稳定接入/部署/RCO-6均0。模型识别准确率本轮未测量。交付后停止，不自动进入后续实施或付费。
+
+## 98. MAINLINE-04-SCOPE 最小语义承接范围授权 — 2026-09-06
+
+- authority: 当前用户仅批准只读追踪MAINLINE-03已登记语义缺口；新增mainline-04-scope六份范围文档，CURRENT_CONTEXT短交接及日志仅追加。原源码、旧证据、冻结/Expected/dataset/checkpoint/cache只读。
+- baseline: 本机/远端d97326c65d6e042c07c56d68a79d65f1ac8ed0a7，工作区干净；R3-CLOSE原13文件SHA匹配、799保护不变。全819项既有非动态跟踪文件绑定原始SHA集合摘要bee7c944318af99c2a5356210e39129e961347575ba2ac8a0d0d8beb07d0d9e0，旧日志213633字节前缀受保护。
+- focus: 区分模型未给出、契约不可表达、转接丢字段；仅形成任务所需的条件三值/当前状态/修订/事件与时间材料关联最小包，不建设通用知识图谱，不重复下载调查或从RCO-0重审。
+- sequence: 定向源码及少量已见响应→最小结构/逐文件白名单/正反验收→无上下文范围复核→保护文档检查→明确清单提交推送。当前IN_PROGRESS，不宣称新工程、浏览器或模型能力通过。
+- boundary: 0模型/模型网络/费用/密钥/剪贴板/真实库/真人/真实材料/新数据/盲测/部署/稳定接入/RCO-6。模型识别准确率本轮未测量。完成后停止，实施需另行授权。
+
+## 99. MAINLINE-04-SCOPE 范围审计交付 — 2026-09-06
+
+- outcome: PASS_SCOPE_DESIGN，新无上下文独立范围审查无阻断；只完成范围/白名单/验收设计，不是实现、模型或实际浏览器验收。
+- finding: 研究候选/composer缺完整时间材料输入，不能自动算转换丢失；旧2.0只有整份boolean行动性，条件三值/逐项状态/修订缺等价承载；事件格式可表达但冻结V2任务确认不支持。区分MISSING_UPSTREAM、UNREPRESENTABLE_TARGET和有实际前后证据的DROPPED_IN_HANDOFF，不排除或杜撰模型语义错误。
+- evidence: 复用MAINLINE-03交接图，定向核对旧8工程类型、B8-01/07/09 sourceText/parsed及旧事件/材料关系测试。B8原分数/FAIL不改，人工工程标签非独立真值，linked-event.location=null不算非空地点识别证据。
+- decision: 唯一下一待授权MAINLINE-04-I1，新增7个语义模块/测试+1checker，已有源码只读。独立task-semantics-1/review-package-1保留条件三值/状态/修订/事件/时间材料，正向核对建议与有效兄弟必须成立；旧V2只做等价2.0的内存确认42口径。新语义实际App/正式保存仍NOT_RUN，不能靠legacyData/description或全拒绝过门。
+- permissions: 涉及confirmationV2/domainCommit/类型/校验/capture/App/面板/仓储/迁移的后续范围明确另批；不在I1暗改。新checker使用新白名单复用R3分层方法，旧环境3/1单列；不直接运行旧整轮入口规避其白名单。
+- checks: 819既有非动态文件逐字集合、799原保护、13已交付实现/依赖/编排保持；日志旧213633字节前缀仅追加。文档/路径/版本/提示词一致性及密钥模式检查通过，最终Git差异/远端以实际回执为准。
+- delivery: 仅mainline-04-scope六文档、CURRENT_CONTEXT、追加日志共8文件，明确清单提交推送；不改旧报告和缓存、不制造业务提交。R3-CLOSE既有12/12、42/42及986/1不是本轮新成绩。
+- next: 使用NEXT_PROMPT申请唯一I1；通过其新结构保真出口后再申请真实组件接入，不反复重做同类契约或新数据集。本轮不自动实施。
+- boundary: 0外部识别/verifier/Repair/retry/模型网络/费用/密钥/剪贴板/真实库/浏览器操作/真人/真实材料/新数据/盲测/B10/稳定接入/部署/RCO-6。模型识别准确率本轮未测量；Git网络仅提交推送/远端核验。
+- reuse-clarification: 最终定向核对scopeReferenceContract已有语义枚举、surface/time/material/revision引用；I1必须复用而非从零再造命题图，仅增每项条件/依据三值、覆盖状态、完整实体属性/归属及承接能力。旧boolean/轻量引用不冒充完整新结构，旧分类器不重跑；实现白名单不扩大。
