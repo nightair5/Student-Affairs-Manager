@@ -1,83 +1,79 @@
 # RCO Current Context
 
-## 当前任务
+## 当前授权与状态
 
-- 当前授权：RCO-5-MAINLINE-04-SCOPE，仅只读语义承接范围与文档。
-- 当前状态：PASS_SCOPE_DESIGN；独立范围复核通过，不代表新实现或产品能力通过。
+- 当前授权：RCO-5-MAINLINE-04-I1；新增8实现/测试/编排及本轮报告。
+- 当前状态：FAIL_INDEPENDENT_REVIEW；新错误默认选择触发硬停。
+- 仅交付失败审计，8个新实现文件保留未提交，未改拒收现场。
 - 唯一仓库：C:\Users\Winner\student-affairs-multimodal-exp。
 - 唯一分支：codex/e2-multimodal-recognition-exp。
-- 起点本机/远端：d97326c65d6e042c07c56d68a79d65f1ac8ed0a7。
-- 起点干净；没有回切、重装、补丁、代码改动或下载再诊断。
-- 本轮模型识别准确率：本轮未测量。
+- 起始本机/远端：2405cf59023511b28caa7e53e41db1af0e06d3b5。
+- 起始工作区干净；不回切、不重装、不套补丁。
+- 模型识别准确率：本轮未测量。
 
-## 保护与本轮允许写入
+## 权威与保护
 
-- R3-CLOSE的原13实现/依赖/编排SHA均匹配。
-- R3_BASELINE的799项保护无变化。
-- 新CHECKS绑定819项既有非动态跟踪文件原始字节SHA集合。
-- 旧日志213633字节完整前缀不变，仅追加98/本轮结论。
-- 仅mainline-04-scope六文档、约80行本文件、追加日志获准写入。
-- 六文档：SCOPE/IMPLEMENTATION_WHITELIST/VALIDATION_DESIGN/REVIEW/CHECKS/NEXT_PROMPT。
-- 旧源码/Schema/repository/capture/confirmationV2/domainCommit/validator/时间AST只读。
-- Expected/freeze/dataset/checkpoint/cache、旧runner、历史结果不改。
-- 旧40/42、旧17、旧R2当前环境3/1、旧R3失败原样保留。
+- 原白名单/验收：mainline-04-scope/IMPLEMENTATION_WHITELIST.md、VALIDATION_DESIGN.md、NEXT_PROMPT.md。
+- 本轮证据：mainline-04-i1/AUDIT.md、CHECKS.json、REVIEW.md、REPRODUCTION.md。
+- BASELINE.json绑定825项既有非动态文件及日志旧前缀。
+- 含799旧保护和13个R3-CLOSE实现/依赖/编排，均逐字不变。
+- 旧源码、测试、依赖、Expected/freeze/dataset/checkpoint/cache全部未改。
+- 历史FAIL、40/42、旧17、旧R2当前环境3通过/1失败均原样。
+- 日志仅追加100/101；本文件短交接。
+- 8个新增实现SHA见REJECTED_SNAPSHOT.json；这是失败快照，不是通过冻结。
+- 下一次恢复前必须逐字比对，有重叠修改或保护变化即停。
 
-## 已取得但不重复测试的前轮成果
+## 已完成但不能扩大解释
 
-- MAINLINE-03来源绑定与可表达响应到真实App/V2的隔离接线已交付。
-- R3-CLOSE补真实下载文件后原Edge协议12/12，原口径42/42。
-- 原工程986通过/1原跳过，旧环境失败单列；不是本轮新成绩。
-- 本轮不再读取下载原件、开浏览器、读用户库或重跑工程/旧runner。
-- R4-DOWNLOAD-SCOPE不是当前优先，历史建议所在报告不改。
-- 来源出处正确、保存成功，不等于模型理解正确或商业化完成。
+- 新契约组合复用scopeReferenceContract语义枚举/引用与scopeIndexV11、时间AST。
+- 新增条件三值、覆盖状态、完整材料/时间/事件及归属。
+- 新composer产出本机核对包；legacyHandoff只返回原旧2.0对象/能力账本。
+- 没有产品注册、App import、新语义正式库格式或legacyData藏存。
+- red-01：模块尚不存在，执行0项；不是旧断言实测。
+- directed-01：47/49；directed-02：48/49；directed-03：49/49。
+- 两轮修补只处理新测试对旧接口错误码/真实B8 ID的调用，不改预期语义。
+- 不累计尝试为147项；失败尝试保留ATTEMPTS及原JSON。
+- 原49集合：8类已见人工结构往返和选择断言、B8三条只读阻断通过。
+- 逐字段console账本未由JSON reporter留存，不编造总叶字段数或称完整报告已交付。
+- 原V2实测：capture→confirmV2→MemoryWorkspaceRecordStore读回42/42。
+- 真正无日期0时间/0提醒、重复幂等、事件相关项阻断及独立print内存确认已测。
+- 以上不代表新语义保存或模型正确率；B8不重评、不改旧FAIL。
 
-## 本轮有证据的主瓶颈
+## 独立审查触发的停止原因
 
-- 研究语义与客户端结果没有等价完整承载格式；不是模型品牌结论。
-- 旧RecognitionResult2.0仅整份requiresAction:boolean。
-- condition-unknown旧人工响应直接抛错；true/false靠描述/歧义承载。
-- 旧修订只存冲突文字，不等于旧/新要求的结构化关系。
-- 研究候选/composer没有完整时间材料容量，构造时置空引用。
-- 空引用不能当原文未说明；unknown不能转false。
-- 旧结果可表达事件，但V2任务意图缺事件授权并明确阻断。
-- 多重时间/材料/事件归属需独立能力判定，不能取首项静默丢失。
-- 三类原因：模型未给出；契约/确认能力不支持；实际转换丢字段。
-- 输出语义错误须有独立标签，不能把旧fn或Schema失败直接当模型错。
+- 无上下文审查者：/root/mainline04_i1_independent，最终BLOCKED。
+- 反例1：revision的supersedes关系scopeIds=[]。
+- 旧项出现MISSING_EVIDENCE，但新项issues=[]、requiresAction=true、defaultSelected=true。
+- 缺失修订依据没有传播到关联新要求；新增错误默认选择至少1。
+- 反例2：只改变multi的m0材料名称。
+- 整体数组比较令独立print也收到FULL_ENTITY_DIFFERENCE；独立兄弟误阻断1。
+- 审查者与主线程均用现有engineering()逐字映射、内存esbuild实测复现。
+- 命令与实际输出见REPRODUCTION.md；不是另写标签或新数据集。
+- 收到硬停后不再改实现/测试/checker，只补失败证据和保护检查。
+- 未继续完整checker审查及全量工程门；不得将49/49覆盖新增反例。
+- 未发现Expected/score进入运行决策链，不等于所有未审边界已证明安全。
 
-## 只读输入边界
+## 明确未运行
 
-- 旧mainline01/fixtures.ts八类人工工程通知和响应。
-- B8-01/07/09仅sourceText/parsed；已见，不重评分。
-- 旧confirmationV2事件/材料/冲突变形仅工程结构，不是自然语义真值。
-- linked-event地点为null，只能验证空值状态，不能宣称非空地点语义通过。
-- 新测试未来可做已见输入的人工内存映射，不建新数据集/新盲测。
-- Expected/score/dataset整体不得进入组合或决策链。
+- 新语义实际App：NOT_RUN。
+- 新语义正式确认/保存/刷新/导出：NOT_RUN。
+- 全量分层lint/type/test/build/安全/依赖：NOT_RUN（硬停）。
+- 新checker完整独立审查：NOT_COMPLETED（硬停）。
+- 模型、模型网络、费用、verifier/Repair/retry均0。
+- 密钥/剪贴板/用户真实库/浏览器/真人/真实材料均0。
+- 数据集/新盲测/B10/稳定入口/部署/RCO-6均0。
+- 旧R3-CLOSE浏览器12/12与工程历史不算本轮新成绩。
 
-## 唯一下一实施包（未授权）
+## 交付与唯一下一步
 
-- 名称：RCO-5-MAINLINE-04-I1，引用式语义契约、无损组合、旧V2边界验证。
-- 拟新增7个mainline04模块/测试+1个新checker，所有已有源码只读。
-- 新版本：mainline04-task-semantics-1 / mainline04-review-package-1。
-- 保留完整命题、条件三值、状态、修订、事件与时间材料关联。
-- 复用scopeReferenceContract既有语义/引用，只补条件、覆盖、完整实体与承接；不重建命题图。
-- 本机构造位置/内部引用/逐项问题；复用时间AST，不加关键词语义补丁。
-- 新核对包保真与旧V2可确认分开；不得把legacyData/description存JSON冒充支持。
-- 正向硬门：人工条件真/新要求有核对建议，未知/取消不误选，有效兄弟保留。
-- 完全等价的旧2.0通过原V2内存confirm→load，旧42口径须42/42。
-- 新条件/修订/事件的真实App和正式持久化仍NOT_RUN，不能越界宣称完成。
-- I1若只增加拒绝理由而没有新结构正向保真，应判失败。
-- 一旦表达基线通过，应申请真实组件接入，不再重做同类契约或新数据集。
-- 公共/冻结组件的后续审批候选列在WHITELIST第3节，不属于I1授权。
-- 新checker用新白名单复用R3分层方法，不能直接调用旧阶段整轮入口。
-- 下一包同根因最多两轮；定向→独立复核→适用工程→保护→提交推送。
-
-## 本轮交付与停止
-
-- 证据主报告：mainline-04-scope/SCOPE.md；精确路径见IMPLEMENTATION_WHITELIST.md。
-- 验收和指标：VALIDATION_DESIGN.md；提示词：NEXT_PROMPT.md。
-- REVIEW/CHECKS仅是范围审查和文档/保护结果，不是产品验收结果。
-- Git提交与远端精确号见实际Git回执；不强推或自动变基。
-- 0模型/verifier/Repair/retry/模型网络/费用/密钥/剪贴板。
-- 0真实库/真人/真实材料/新数据/盲测/B10/稳定接入/部署/RCO-6。
-- 正式任务编辑执行、ICS/真实提醒、图片融合、模型/真人/商业验收仍须另批。
-- 完成后停止，不自动实施MAINLINE-04-I1、语义升级或付费实验。
+- 本次只提交审计目录、CURRENT_CONTEXT和追加日志。
+- 明确暂存清单见STAGING_MANIFEST.json；8个新实现不得暂存。
+- 提交/推送及远端精确号以实际Git回执为准，不强推/自动变基。
+- 未提交源码必须保留；不自动删除、回滚或应用补丁。
+- 下一建议：另批MAINLINE-04-I1-R1，仅修已登记的关系影响范围缺口。
+- 优先修修订依据关联；再按新旧两侧完整实体并集比较，保留独立兄弟。
+- 不靠全部拒绝/删除关系过门；缺依据不能强改false，真条件/有效新要求有正例。
+- 详细待授权提示词：mainline-04-i1/NEXT_PROMPT.md。
+- 通过新定向/独立审查后才能补全工程门；需要改只读文件先申请。
+- 再往后才申请真实组件接入；不换模型、不重做契约、不建新数据。
+- 本次已停止，不自动修复、接入产品或调用付费模型。

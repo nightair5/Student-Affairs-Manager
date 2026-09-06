@@ -1,0 +1,44 @@
+{
+  "decision": "BLOCKED",
+  "reviewer": "/root/mainline04_i1_independent",
+  "files": [
+    {
+      "path": "src/experiments/mainline04/semanticContract.ts",
+      "sha256": "a08953dfdb50bf0233d603ce46669f87ed4f61c810a322275011c7075b5e578f"
+    },
+    {
+      "path": "src/experiments/mainline04/semanticContract.test.ts",
+      "sha256": "ed52c2d572b5709e49e0369c876f4356f1704c466d97439eacdb50d5dc78383a"
+    },
+    {
+      "path": "src/experiments/mainline04/semanticComposer.ts",
+      "sha256": "183bdb9f1ed79d140a62aa37bc975ffc8b973f78dda6162c54f70e4726ad31fb"
+    },
+    {
+      "path": "src/experiments/mainline04/semanticComposer.test.ts",
+      "sha256": "25aca94200b3a49663938a90a9cdec7d2babe685bbee0b42cc95a2eebe7fca0a"
+    },
+    {
+      "path": "src/experiments/mainline04/legacyHandoff.ts",
+      "sha256": "ef819778e1127c67f2e3ac837f471da93858133e262ab4b767b1293aae22a121"
+    },
+    {
+      "path": "src/experiments/mainline04/legacyHandoff.test.ts",
+      "sha256": "880ab738356affe83b041a7b1dc41a942dad760741e349c968ac371c0fb286c6"
+    },
+    {
+      "path": "src/experiments/mainline04/semanticAcceptance.test.ts",
+      "sha256": "b74d0cd7119d4f1224a96d22ad38f67699be58cfc62a331226337d2ea55c5593"
+    },
+    {
+      "path": "scripts/check-mainline-04-i1.mjs",
+      "sha256": "71e7b771393fae15a454eb3e67bc6487c2e1d54f89c7535a6c2b8d5c5fbb8958"
+    }
+  ],
+  "blockingFindings": [
+    "REVISION_EVIDENCE_NOT_PROPAGATED_TO_NEW_REQUIREMENT",
+    "GLOBAL_ENTITY_COMPARISON_BLOCKS_INDEPENDENT_SIBLING"
+  ],
+  "modelAccuracy": "本轮未测量",
+  "fullCheckerReview": "NOT_COMPLETED_STOP_CONDITION"
+}

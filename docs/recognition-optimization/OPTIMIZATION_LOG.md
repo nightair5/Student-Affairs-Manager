@@ -1541,3 +1541,22 @@
 - next: 使用NEXT_PROMPT申请唯一I1；通过其新结构保真出口后再申请真实组件接入，不反复重做同类契约或新数据集。本轮不自动实施。
 - boundary: 0外部识别/verifier/Repair/retry/模型网络/费用/密钥/剪贴板/真实库/浏览器操作/真人/真实材料/新数据/盲测/B10/稳定接入/部署/RCO-6。模型识别准确率本轮未测量；Git网络仅提交推送/远端核验。
 - reuse-clarification: 最终定向核对scopeReferenceContract已有语义枚举、surface/time/material/revision引用；I1必须复用而非从零再造命题图，仅增每项条件/依据三值、覆盖状态、完整实体属性/归属及承接能力。旧boolean/轻量引用不冒充完整新结构，旧分类器不重跑；实现白名单不扩大。
+
+## 100. MAINLINE-04-I1 零调用实施授权 — 2026-09-06
+
+- authority: 仅新增白名单8实现/测试/编排及本轮报告；原源码/测试/依赖/冻结只读。0外部识别/模型网络/费用/密钥/剪贴板，不建数据集、不接App新语义、不部署。
+- baseline: 本机/远端2405cf59023511b28caa7e53e41db1af0e06d3b5且干净；SCOPE文档SHA与13实现匹配，799旧保护通过；本轮825既有非动态文件与日志完整前缀绑定BASELINE.json。
+- sequence: 失败复现→最小契约/组合/承接边界→定向变形→新无上下文审查→适用分层工程→保护→明确清单提交推送。新错误默认选择或保护变化立即停止；同根因最多两轮局部修补。
+- boundary: 人工新结构保真与旧V2的42字段确认分表；新语义实际App/正式保存NOT_RUN；旧FAIL/40/42/17及R2旧环境3/1保持。当前IN_PROGRESS，模型识别准确率本轮未测量。
+
+## 101. MAINLINE-04-I1 独立审查失败，硬停交付 — 2026-09-06
+
+- outcome: FAIL_INDEPENDENT_REVIEW；只交付审计，8新增实现/测试/checker保持拒收SHA且未提交。未改旧源码、测试、依赖或冻结。
+- directed: red-01模块缺失执行0测试；directed-01为47/49、02为48/49、03为49/49，不累计各attempt。两轮局部修补仅修新测试对旧接口属性/完整错误码和B8真实ID的调用，未弱化断言。
+- evidence: 8类人工工程结构往返与预定选择断言、B8三条已见原输出保留和强转阻断；原42字段经真实capture/confirmV2/内存repo读回42/42。逐字段console账本未由JSON reporter保留，未编造叶字段分母或完整报告交付。模型准确率本轮未测量。
+- independent: 新无上下文审查/root/mainline04_i1_independent发现2个阻断；修订scopeIds缺失只阻断旧项，新项仍默认选（新增错误默认选择1）；m0属性差异导致独立print连坐阻断（1）。审查者和主线程均在同一未改现场内存复现，详见REVIEW/REPRODUCTION。
+- stop: 收到错误默认选择即停止实现/测试/编排修改与全量工程晋级；仅补已登记反例证据和保护/差异/文档检查。完整checker审查NOT_COMPLETED；全量分层工程、新语义实际App/正式保存均NOT_RUN。49/49不能覆盖新反例，不宣称I1通过。
+- protection: BASELINE绑定825既有非动态SHA全匹配，含799旧保护及13旧实现/依赖/编排；日志前缀不变。历史FAIL/40/42/17/旧R2环境3/1、Expected/freeze/dataset/checkpoint/cache和旧runner保持。失败8文件快照见REJECTED_SNAPSHOT，非成功组件冻结。
+- delivery: 仅暂存本轮报告、CURRENT_CONTEXT和追加日志，明确清单见STAGING_MANIFEST；推送及远端号见实际Git回执。实现未暂存、未提交，不强推/自动变基。
+- next: 仅建议另批MAINLINE-04-I1-R1，按关系真实影响范围处理修订依据与新旧两侧关联实体比较，保留有效新要求与独立兄弟；不重做契约、模型或数据。完整提示词见NEXT_PROMPT，本轮不自动执行。
+- boundary: 外部识别/模型网络/费用/密钥/剪贴板/真实库/浏览器/真人/真实材料/新数据集/盲测/B10/稳定接入/部署/RCO-6均0；必要Git交付网络不等于模型网络。

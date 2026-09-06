@@ -1,0 +1,38 @@
+{
+  "delivery": "FAILED_AUDIT_ONLY",
+  "files": [
+    "docs/recognition-optimization/CURRENT_CONTEXT.md",
+    "docs/recognition-optimization/OPTIMIZATION_LOG.md",
+    "docs/recognition-optimization/mainline-04-i1/ATTEMPTS.md",
+    "docs/recognition-optimization/mainline-04-i1/AUDIT.md",
+    "docs/recognition-optimization/mainline-04-i1/BASELINE.json",
+    "docs/recognition-optimization/mainline-04-i1/CHECKS.json",
+    "docs/recognition-optimization/mainline-04-i1/DIRECTED_03_RESULTS.json",
+    "docs/recognition-optimization/mainline-04-i1/DOCUMENT_CHECKS.json",
+    "docs/recognition-optimization/mainline-04-i1/NEXT_PROMPT.md",
+    "docs/recognition-optimization/mainline-04-i1/REJECTED_SNAPSHOT.json",
+    "docs/recognition-optimization/mainline-04-i1/REPRODUCTION.md",
+    "docs/recognition-optimization/mainline-04-i1/REVIEW.json",
+    "docs/recognition-optimization/mainline-04-i1/REVIEW.md",
+    "docs/recognition-optimization/mainline-04-i1/STAGING_MANIFEST.json",
+    "docs/recognition-optimization/mainline-04-i1/TEMP_DIRECTORY.json",
+    "docs/recognition-optimization/mainline-04-i1/directed-01.json",
+    "docs/recognition-optimization/mainline-04-i1/directed-02.json",
+    "docs/recognition-optimization/mainline-04-i1/directed-03.json",
+    "docs/recognition-optimization/mainline-04-i1/red-01.json"
+  ],
+  "excludedImplementation": [
+    "src/experiments/mainline04/semanticContract.ts",
+    "src/experiments/mainline04/semanticContract.test.ts",
+    "src/experiments/mainline04/semanticComposer.ts",
+    "src/experiments/mainline04/semanticComposer.test.ts",
+    "src/experiments/mainline04/legacyHandoff.ts",
+    "src/experiments/mainline04/legacyHandoff.test.ts",
+    "src/experiments/mainline04/semanticAcceptance.test.ts",
+    "scripts/check-mainline-04-i1.mjs"
+  ],
+  "businessCommit": false,
+  "forcePush": false,
+  "autoRebase": false,
+  "verification": "Exact index file list must match this manifest before commit; final remote SHA verified after push."
+}
