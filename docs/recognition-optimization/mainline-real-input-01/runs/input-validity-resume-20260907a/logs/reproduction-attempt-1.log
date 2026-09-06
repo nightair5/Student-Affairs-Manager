@@ -1,0 +1,1854 @@
+
+ RUN  v3.2.7 C:/Users/Winner/student-affairs-multimodal-exp
+
+ × src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > saved source correction immediately expires old suggestions, prior review=false 131ms
+   → expected true to be false // Object.is equality
+ × src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > saved source correction immediately expires old suggestions, prior review=true 59ms
+   → expected true to be false // Object.is equality
+ × src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > saved correction preserves a previously confirmed task and independent source confirmation 266ms
+   → promise resolved "{ schemaVersion: 8, …(20) }" instead of rejecting
+ × src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > object correction keeps the current default title consistent and preserves explicit user title=false 95ms
+   → expected '提交入场凭证' to be '提交活动报名表' // Object.is equality
+ × src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > object correction keeps the current default title consistent and preserves explicit user title=true 161ms
+   → expected '请查看完整事实和依据，明确点击“本项事实已核对”后再选择。' to contain '标题'
+ ✓ src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > saves real source and pending run before response; unchanged content does not create a second version 25ms
+ ✓ src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > no selected flag can skip explicit review; reviewed no-date saves with zero time/reminders and reopens 90ms
+ ✓ src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > explicit saved date/title invalidate old review and are the confirmed values; rollback is atomic 162ms
+ ✓ src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > truth/status condition-true and nonzero normal confirmations 62ms
+ ✓ src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > truth/status condition-false and nonzero normal confirmations 31ms
+ ✓ src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > truth/status condition-unknown and nonzero normal confirmations 31ms
+ ✓ src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > truth/status revision and nonzero normal confirmations 91ms
+ ✓ src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > manual material repair persists exact values, keeps originals and independent brother confirmation 419ms
+ ✓ src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > whole-source versions remain immutable, old pending draft is stale, confirmed task survives 280ms
+ ✓ src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > changed source-only reading and duplicate operation cannot silently replace original; failed save rolls back 8ms
+ ✓ src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > tampered first/effective review/raw or canonical is rejected, not repaired 67ms
+ ✓ src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > pure information is explicitly disposed with no fake task; defer does not change unknown truth 27ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > saved source correction immediately expires old suggestions, prior review=false
+ FAIL  src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > saved source correction immediately expires old suggestions, prior review=true
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ src/experiments/realInput01/runtime.test.ts:47:50
+     45|     await repo.saveReadingCorrection(handle.sourceId,corrected,semanti…
+     46|     const saved = await repo.load(), projected = semanticReview(saved,…
+     47|     expect(isCurrentDraft(saved,handle.draftId)).toBe(false)
+       |                                                  ^
+     48|     expect(projected.draft.items[0].selected).toBe(false)
+     49|     expect(Object.values(projected.states)[0].blockedReason).toContain…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > saved correction preserves a previously confirmed task and independent source confirmation
+AssertionError: promise resolved "{ schemaVersion: 8, …(20) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "changeProposals": [],
++   "events": [],
++   "evidenceRefs": [
++     {
++       "bbox": null,
++       "confidence": null,
++       "createdAt": "2026-09-06T22:57:00.398Z",
++       "extractionMethod": "manual",
++       "fieldPath": "scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb",
++       "id": "mainline05:evidence:source:bd51027e:draft:1:1:scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb",
++       "legacyData": {
++         "mainline05DraftId": "source:bd51027e:draft:1:1",
++         "recognitionTempId": "scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb",
++         "sourceId": "source:bd51027e",
++       },
++       "page": null,
++       "quotedText": "请于2026年9月10日18:00前提交活动报名表，",
++       "sourceVersionId": "source:bd51027e:version:1",
++       "textEnd": 26,
++       "textStart": 0,
++     },
++     {
++       "bbox": null,
++       "confidence": null,
++       "createdAt": "2026-09-06T22:57:00.398Z",
++       "extractionMethod": "manual",
++       "fieldPath": "scope-0002-7ac2a65b9a23d75b114277b81192b967b0088aabdd29d22482855e11fc63f172",
++       "id": "mainline05:evidence:source:bd51027e:draft:1:1:scope-0002-7ac2a65b9a23d75b114277b81192b967b0088aabdd29d22482855e11fc63f172",
++       "legacyData": {
++         "mainline05DraftId": "source:bd51027e:draft:1:1",
++         "recognitionTempId": "scope-0002-7ac2a65b9a23d75b114277b81192b967b0088aabdd29d22482855e11fc63f172",
++         "sourceId": "source:bd51027e",
++       },
++       "page": null,
++       "quotedText": "PDF格式，",
++       "sourceVersionId": "source:bd51027e:version:1",
++       "textEnd": 32,
++       "textStart": 26,
++     },
++     {
++       "bbox": null,
++       "confidence": null,
++       "createdAt": "2026-09-06T22:57:00.398Z",
++       "extractionMethod": "manual",
++       "fieldPath": "scope-0003-64b32d878671dc2e91d0b8be52aaaf5597caade49d44e58812d36cb7541f60c8",
++       "id": "mainline05:evidence:source:bd51027e:draft:1:1:scope-0003-64b32d878671dc2e91d0b8be52aaaf5597caade49d44e58812d36cb7541f60c8",
++       "legacyData": {
++         "mainline05DraftId": "source:bd51027e:draft:1:1",
++         "recognitionTempId": "scope-0003-64b32d878671dc2e91d0b8be52aaaf5597caade49d44e58812d36cb7541f60c8",
++         "sourceId": "source:bd51027e",
++       },
++       "page": null,
++       "quotedText": "文件名为组别，",
++       "sourceVersionId": "source:bd51027e:version:1",
++       "textEnd": 39,
++       "textStart": 32,
++     },
++     {
++       "bbox": null,
++       "confidence": null,
++       "createdAt": "2026-09-06T22:57:00.398Z",
++       "extractionMethod": "manual",
++       "fieldPath": "scope-0004-a5ae4278348ad849b4c282740f19ef0658564cc955edde76d95be84e4ab57319",
++       "id": "mainline05:evidence:source:bd51027e:draft:1:1:scope-0004-a5ae4278348ad849b4c282740f19ef0658564cc955edde76d95be84e4ab57319",
++       "legacyData": {
++         "mainline05DraftId": "source:bd51027e:draft:1:1",
++         "recognitionTempId": "scope-0004-a5ae4278348ad849b4c282740f19ef0658564cc955edde76d95be84e4ab57319",
++         "sourceId": "source:bd51027e",
++       },
++       "page": null,
++       "quotedText": "1份，",
++       "sourceVersionId": "source:bd51027e:version:1",
++       "textEnd": 42,
++       "textStart": 39,
++     },
++     {
++       "bbox": null,
++       "confidence": null,
++       "createdAt": "2026-09-06T22:57:00.398Z",
++       "extractionMethod": "manual",
++       "fieldPath": "scope-0005-6d75b8413d8977c82e9d97ebba7dfc937ce1fa67d70436de8288e880b0c1daf7",
++       "id": "mainline05:evidence:source:bd51027e:draft:1:1:scope-0005-6d75b8413d8977c82e9d97ebba7dfc937ce1fa67d70436de8288e880b0c1daf7",
++       "legacyData": {
++         "mainline05DraftId": "source:bd51027e:draft:1:1",
++         "recognitionTempId": "scope-0005-6d75b8413d8977c82e9d97ebba7dfc937ce1fa67d70436de8288e880b0c1daf7",
++         "sourceId": "source:bd51027e",
++       },
++       "page": null,
++       "quotedText": "交至活动平台。",
++       "sourceVersionId": "source:bd51027e:version:1",
++       "textEnd": 49,
++       "textStart": 42,
++     },
++     {
++       "bbox": null,
++       "confidence": null,
++       "createdAt": "2026-09-06T22:57:00.398Z",
++       "extractionMethod": "manual",
++       "fieldPath": "scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da",
++       "id": "mainline05:evidence:source:bd51027e:draft:1:1:scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da",
++       "legacyData": {
++         "mainline05DraftId": "source:bd51027e:draft:1:1",
++         "recognitionTempId": "scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da",
++         "sourceId": "source:bd51027e",
++       },
++       "page": null,
++       "quotedText": "请于2026年9月11日18:00前打印入场凭证，",
++       "sourceVersionId": "source:bd51027e:version:1",
++       "textEnd": 74,
++       "textStart": 49,
++     },
++     {
++       "bbox": null,
++       "confidence": null,
++       "createdAt": "2026-09-06T22:57:00.398Z",
++       "extractionMethod": "manual",
++       "fieldPath": "scope-0007-5eb928e90b32f0e6dd083ed8d5f2284a4e5c33ddd42ff6089dbeeaeef054b1c1",
++       "id": "mainline05:evidence:source:bd51027e:draft:1:1:scope-0007-5eb928e90b32f0e6dd083ed8d5f2284a4e5c33ddd42ff6089dbeeaeef054b1c1",
++       "legacyData": {
++         "mainline05DraftId": "source:bd51027e:draft:1:1",
++         "recognitionTempId": "scope-0007-5eb928e90b32f0e6dd083ed8d5f2284a4e5c33ddd42ff6089dbeeaeef054b1c1",
++         "sourceId": "source:bd51027e",
++       },
++       "page": null,
++       "quotedText": "A4格式，",
++       "sourceVersionId": "source:bd51027e:version:1",
++       "textEnd": 79,
++       "textStart": 74,
++     },
++     {
++       "bbox": null,
++       "confidence": null,
++       "createdAt": "2026-09-06T22:57:00.398Z",
++       "extractionMethod": "manual",
++       "fieldPath": "scope-0008-7ff449605d59bca1aeed452e02bfcc497c2edc7d12ecd887b79a509dbeb3cceb",
++       "id": "mainline05:evidence:source:bd51027e:draft:1:1:scope-0008-7ff449605d59bca1aeed452e02bfcc497c2edc7d12ecd887b79a509dbeb3cceb",
++       "legacyData": {
++         "mainline05DraftId": "source:bd51027e:draft:1:1",
++         "recognitionTempId": "scope-0008-7ff449605d59bca1aeed452e02bfcc497c2edc7d12ecd887b79a509dbeb3cceb",
++         "sourceId": "source:bd51027e",
++       },
++       "page": null,
++       "quotedText": "1份。",
++       "sourceVersionId": "source:bd51027e:version:1",
++       "textEnd": 82,
++       "textStart": 79,
++     },
++   ],
++   "extractionDrafts": [
++     {
++       "acceptedEntityTempIds": [
++         "submit",
++       ],
++       "commitOperationIds": [
++         "mainline05:operation:source:bd51027e:draft:1:1:219f5a97-7b25-466e-8af2-de5a84cffd11",
++       ],
++       "createdAt": "2026-09-05T08:00:00.000Z",
++       "id": "source:bd51027e:draft:1:1",
++       "legacyData": {
++         "mainline05": {
++           "adaptedResponse": {
++             "conflicts": [],
++             "events": [],
++             "informationScopeIds": [],
++             "materials": [
++               {
++                 "confidence": 1,
++                 "formatRequirements": [
++                   "PDF",
++                 ],
++                 "name": "活动报名表",
++                 "namingRequirements": [
++                   "组别",
++                 ],
++                 "quantity": 1,
++                 "relatedTaskTempIds": [
++                   "submit",
++                 ],
++                 "required": true,
++                 "scopeIds": [
++                   "scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb",
++                   "scope-0002-7ac2a65b9a23d75b114277b81192b967b0088aabdd29d22482855e11fc63f172",
++                   "scope-0003-64b32d878671dc2e91d0b8be52aaaf5597caade49d44e58812d36cb7541f60c8",
++                   "scope-0004-a5ae4278348ad849b4c282740f19ef0658564cc955edde76d95be84e4ab57319",
++                   "scope-0005-6d75b8413d8977c82e9d97ebba7dfc937ce1fa67d70436de8288e880b0c1daf7",
++                   "scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da",
++                   "scope-0007-5eb928e90b32f0e6dd083ed8d5f2284a4e5c33ddd42ff6089dbeeaeef054b1c1",
++                   "scope-0008-7ff449605d59bca1aeed452e02bfcc497c2edc7d12ecd887b79a509dbeb3cceb",
++                 ],
++                 "submissionChannel": "活动平台",
++                 "tempId": "m0",
++               },
++               {
++                 "confidence": 1,
++                 "formatRequirements": [
++                   "A4",
++                 ],
++                 "name": "入场凭证",
++                 "namingRequirements": [],
++                 "quantity": 1,
++                 "relatedTaskTempIds": [
++                   "print",
++                 ],
++                 "required": true,
++                 "scopeIds": [
++                   "scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb",
++                   "scope-0002-7ac2a65b9a23d75b114277b81192b967b0088aabdd29d22482855e11fc63f172",
++                   "scope-0003-64b32d878671dc2e91d0b8be52aaaf5597caade49d44e58812d36cb7541f60c8",
++                   "scope-0004-a5ae4278348ad849b4c282740f19ef0658564cc955edde76d95be84e4ab57319",
++                   "scope-0005-6d75b8413d8977c82e9d97ebba7dfc937ce1fa67d70436de8288e880b0c1daf7",
++                   "scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da",
++                   "scope-0007-5eb928e90b32f0e6dd083ed8d5f2284a4e5c33ddd42ff6089dbeeaeef054b1c1",
++                   "scope-0008-7ff449605d59bca1aeed452e02bfcc497c2edc7d12ecd887b79a509dbeb3cceb",
++                 ],
++                 "submissionChannel": null,
++                 "tempId": "m1",
++               },
++             ],
++             "revisions": [],
++             "schemaVersion": "mainline04-task-semantics-1",
++             "sourceFingerprint": "sha256:d29c7bce72cbbb6d33476f24662143ac015b0c879b907dba87cb9a0a21cadea9",
++             "sourceId": "source:bd51027e",
++             "sourceVersionId": "source:bd51027e:version:1",
++             "tasks": [
++               {
++                 "action": {
++                   "scopeId": "scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb",
++                   "surface": "提交",
++                 },
++                 "actionType": "submit",
++                 "condition": {
++                   "conditionScopeIds": [],
++                   "factScopeIds": [],
++                   "value": "not_applicable",
++                 },
++                 "coverage": {
++                   "event": "not_stated",
++                   "material": "present",
++                   "time": "present",
++                 },
++                 "detail": {
++                   "completionCriteria": [],
++                   "confidence": 1,
++                   "dependencyTempIds": [],
++                   "description": "提交活动报名表",
++                   "estimatedMinutes": null,
++                   "hierarchyType": "task",
++                   "materialTempIds": [
++                     "m0",
++                   ],
++                   "parentTempId": null,
++                   "prioritySuggestion": "medium",
++                   "statusSuggestion": "todo",
++                   "timePointTempIds": [
++                     "d0",
++                   ],
++                   "title": "提交活动报名表",
++                   "userConfirmationRequired": true,
++                 },
++                 "effect": "physical_action",
++                 "eventTempIds": [],
++                 "id": "submit",
++                 "inferenceLevel": "explicit",
++                 "object": {
++                   "scopeId": "scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb",
++                   "surface": "活动报名表",
++                 },
++                 "propositionScopeIds": [
++                   "scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb",
++                   "scope-0002-7ac2a65b9a23d75b114277b81192b967b0088aabdd29d22482855e11fc63f172",
++                   "scope-0003-64b32d878671dc2e91d0b8be52aaaf5597caade49d44e58812d36cb7541f60c8",
++                   "scope-0004-a5ae4278348ad849b4c282740f19ef0658564cc955edde76d95be84e4ab57319",
++                   "scope-0005-6d75b8413d8977c82e9d97ebba7dfc937ce1fa67d70436de8288e880b0c1daf7",
++                   "scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da",
++                   "scope-0007-5eb928e90b32f0e6dd083ed8d5f2284a4e5c33ddd42ff6089dbeeaeef054b1c1",
++                   "scope-0008-7ff449605d59bca1aeed452e02bfcc497c2edc7d12ecd887b79a509dbeb3cceb",
++                 ],
++                 "semantics": {
++                   "actor": "addressee",
++                   "modality": "required",
++                   "polarity": "affirmative",
++                   "speechAct": "directive",
++                   "status": "pending",
++                   "tense": "future",
++                   "validity": "active",
++                 },
++               },
++               {
++                 "action": {
++                   "scopeId": "scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da",
++                   "surface": "打印",
++                 },
++                 "actionType": "print",
++                 "condition": {
++                   "conditionScopeIds": [],
++                   "factScopeIds": [],
++                   "value": "not_applicable",
++                 },
++                 "coverage": {
++                   "event": "not_stated",
++                   "material": "present",
++                   "time": "present",
++                 },
++                 "detail": {
++                   "completionCriteria": [],
++                   "confidence": 1,
++                   "dependencyTempIds": [],
++                   "description": "打印入场凭证",
++                   "estimatedMinutes": null,
++                   "hierarchyType": "task",
++                   "materialTempIds": [
++                     "m1",
++                   ],
++                   "parentTempId": null,
++                   "prioritySuggestion": "medium",
++                   "statusSuggestion": "todo",
++                   "timePointTempIds": [
++                     "d1",
++                   ],
++                   "title": "打印入场凭证",
++                   "userConfirmationRequired": true,
++                 },
++                 "effect": "physical_action",
++                 "eventTempIds": [],
++                 "id": "print",
++                 "inferenceLevel": "explicit",
++                 "object": {
++                   "scopeId": "scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da",
++                   "surface": "入场凭证",
++                 },
++                 "propositionScopeIds": [
++                   "scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb",
++                   "scope-0002-7ac2a65b9a23d75b114277b81192b967b0088aabdd29d22482855e11fc63f172",
++                   "scope-0003-64b32d878671dc2e91d0b8be52aaaf5597caade49d44e58812d36cb7541f60c8",
++                   "scope-0004-a5ae4278348ad849b4c282740f19ef0658564cc955edde76d95be84e4ab57319",
++                   "scope-0005-6d75b8413d8977c82e9d97ebba7dfc937ce1fa67d70436de8288e880b0c1daf7",
++                   "scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da",
++                   "scope-0007-5eb928e90b32f0e6dd083ed8d5f2284a4e5c33ddd42ff6089dbeeaeef054b1c1",
++                   "scope-0008-7ff449605d59bca1aeed452e02bfcc497c2edc7d12ecd887b79a509dbeb3cceb",
++                 ],
++                 "semantics": {
++                   "actor": "addressee",
++                   "modality": "required",
++                   "polarity": "affirmative",
++                   "speechAct": "directive",
++                   "status": "pending",
++                   "tense": "future",
++                   "validity": "active",
++                 },
++               },
++             ],
++             "timePoints": [
++               {
++                 "confidence": 1,
++                 "isAllDay": false,
++                 "needsConfirmation": false,
++                 "normalizedValue": "2026-09-10T18:00",
++                 "precision": "exact",
++                 "rawText": "2026年9月10日18:00前",
++                 "relatedMaterialTempIds": [
++                   "m0",
++                 ],
++                 "relatedTaskTempIds": [
++                   "submit",
++                 ],
++                 "scopeIds": [
++                   "scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb",
++                   "scope-0002-7ac2a65b9a23d75b114277b81192b967b0088aabdd29d22482855e11fc63f172",
++                   "scope-0003-64b32d878671dc2e91d0b8be52aaaf5597caade49d44e58812d36cb7541f60c8",
++                   "scope-0004-a5ae4278348ad849b4c282740f19ef0658564cc955edde76d95be84e4ab57319",
++                   "scope-0005-6d75b8413d8977c82e9d97ebba7dfc937ce1fa67d70436de8288e880b0c1daf7",
++                   "scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da",
++                   "scope-0007-5eb928e90b32f0e6dd083ed8d5f2284a4e5c33ddd42ff6089dbeeaeef054b1c1",
++                   "scope-0008-7ff449605d59bca1aeed452e02bfcc497c2edc7d12ecd887b79a509dbeb3cceb",
++                 ],
++                 "tempId": "d0",
++                 "timezone": "Asia/Shanghai",
++                 "type": "task_deadline",
++               },
++               {
++                 "confidence": 1,
++                 "isAllDay": false,
++                 "needsConfirmation": false,
++                 "normalizedValue": "2026-09-11T18:00",
++                 "precision": "exact",
++                 "rawText": "2026年9月11日18:00前",
++                 "relatedMaterialTempIds": [
++                   "m1",
++                 ],
++                 "relatedTaskTempIds": [
++                   "print",
++                 ],
++                 "scopeIds": [
++                   "scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb",
++                   "scope-0002-7ac2a65b9a23d75b114277b81192b967b0088aabdd29d22482855e11fc63f172",
++                   "scope-0003-64b32d878671dc2e91d0b8be52aaaf5597caade49d44e58812d36cb7541f60c8",
++                   "scope-0004-a5ae4278348ad849b4c282740f19ef0658564cc955edde76d95be84e4ab57319",
++                   "scope-0005-6d75b8413d8977c82e9d97ebba7dfc937ce1fa67d70436de8288e880b0c1daf7",
++                   "scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da",
++                   "scope-0007-5eb928e90b32f0e6dd083ed8d5f2284a4e5c33ddd42ff6089dbeeaeef054b1c1",
++                   "scope-0008-7ff449605d59bca1aeed452e02bfcc497c2edc7d12ecd887b79a509dbeb3cceb",
++                 ],
++                 "tempId": "d1",
++                 "timezone": "Asia/Shanghai",
++                 "type": "task_deadline",
++               },
++             ],
++             "unresolvedScopeIds": [],
++           },
++           "bindings": {
++             "material:m0": "mainline05:material:source:bd51027e:draft:1:1:m0",
++             "material:m1": null,
++             "task:print": null,
++             "task:submit": "mainline05:task:source:bd51027e:draft:1:1:submit",
++             "time:d0": "mainline05:time:source:bd51027e:draft:1:1:d0",
++             "time:d1": null,
++           },
++           "context": {
++             "authority": "live_model_candidate",
++             "index": {
++               "scopes": [
++                 {
++                   "contentHash": "sha256:6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb",
++                   "end": 26,
++                   "id": "scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb",
++                   "order": 0,
++                   "sourceFingerprint": "sha256:d29c7bce72cbbb6d33476f24662143ac015b0c879b907dba87cb9a0a21cadea9",
++                   "sourceId": "source:bd51027e",
++                   "sourceVersionId": "source:bd51027e:version:1",
++                   "start": 0,
++                   "text": "请于2026年9月10日18:00前提交活动报名表，",
++                 },
++                 {
++                   "contentHash": "sha256:7ac2a65b9a23d75b114277b81192b967b0088aabdd29d22482855e11fc63f172",
++                   "end": 32,
++                   "id": "scope-0002-7ac2a65b9a23d75b114277b81192b967b0088aabdd29d22482855e11fc63f172",
++                   "order": 1,
++                   "sourceFingerprint": "sha256:d29c7bce72cbbb6d33476f24662143ac015b0c879b907dba87cb9a0a21cadea9",
++                   "sourceId": "source:bd51027e",
++                   "sourceVersionId": "source:bd51027e:version:1",
++                   "start": 26,
++                   "text": "PDF格式，",
++                 },
++                 {
++                   "contentHash": "sha256:64b32d878671dc2e91d0b8be52aaaf5597caade49d44e58812d36cb7541f60c8",
++                   "end": 39,
++                   "id": "scope-0003-64b32d878671dc2e91d0b8be52aaaf5597caade49d44e58812d36cb7541f60c8",
++                   "order": 2,
++                   "sourceFingerprint": "sha256:d29c7bce72cbbb6d33476f24662143ac015b0c879b907dba87cb9a0a21cadea9",
++                   "sourceId": "source:bd51027e",
++                   "sourceVersionId": "source:bd51027e:version:1",
++                   "start": 32,
++                   "text": "文件名为组别，",
++                 },
++                 {
++                   "contentHash": "sha256:a5ae4278348ad849b4c282740f19ef0658564cc955edde76d95be84e4ab57319",
++                   "end": 42,
++                   "id": "scope-0004-a5ae4278348ad849b4c282740f19ef0658564cc955edde76d95be84e4ab57319",
++                   "order": 3,
++                   "sourceFingerprint": "sha256:d29c7bce72cbbb6d33476f24662143ac015b0c879b907dba87cb9a0a21cadea9",
++                   "sourceId": "source:bd51027e",
++                   "sourceVersionId": "source:bd51027e:version:1",
++                   "start": 39,
++                   "text": "1份，",
++                 },
++                 {
++                   "contentHash": "sha256:6d75b8413d8977c82e9d97ebba7dfc937ce1fa67d70436de8288e880b0c1daf7",
++                   "end": 49,
++                   "id": "scope-0005-6d75b8413d8977c82e9d97ebba7dfc937ce1fa67d70436de8288e880b0c1daf7",
++                   "order": 4,
++                   "sourceFingerprint": "sha256:d29c7bce72cbbb6d33476f24662143ac015b0c879b907dba87cb9a0a21cadea9",
++                   "sourceId": "source:bd51027e",
++                   "sourceVersionId": "source:bd51027e:version:1",
++                   "start": 42,
++                   "text": "交至活动平台。",
++                 },
++                 {
++                   "contentHash": "sha256:84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da",
++                   "end": 74,
++                   "id": "scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da",
++                   "order": 5,
++                   "sourceFingerprint": "sha256:d29c7bce72cbbb6d33476f24662143ac015b0c879b907dba87cb9a0a21cadea9",
++                   "sourceId": "source:bd51027e",
++                   "sourceVersionId": "source:bd51027e:version:1",
++                   "start": 49,
++                   "text": "请于2026年9月11日18:00前打印入场凭证，",
++                 },
++                 {
++                   "contentHash": "sha256:5eb928e90b32f0e6dd083ed8d5f2284a4e5c33ddd42ff6089dbeeaeef054b1c1",
++                   "end": 79,
++                   "id": "scope-0007-5eb928e90b32f0e6dd083ed8d5f2284a4e5c33ddd42ff6089dbeeaeef054b1c1",
++                   "order": 6,
++                   "sourceFingerprint": "sha256:d29c7bce72cbbb6d33476f24662143ac015b0c879b907dba87cb9a0a21cadea9",
++                   "sourceId": "source:bd51027e",
++                   "sourceVersionId": "source:bd51027e:version:1",
++                   "start": 74,
++                   "text": "A4格式，",
++                 },
++                 {
++                   "contentHash": "sha256:7ff449605d59bca1aeed452e02bfcc497c2edc7d12ecd887b79a509dbeb3cceb",
++                   "end": 82,
++                   "id": "scope-0008-7ff449605d59bca1aeed452e02bfcc497c2edc7d12ecd887b79a509dbeb3cceb",
++                   "order": 7,
++                   "sourceFingerprint": "sha256:d29c7bce72cbbb6d33476f24662143ac015b0c879b907dba87cb9a0a21cadea9",
++                   "sourceId": "source:bd51027e",
++                   "sourceVersionId": "source:bd51027e:version:1",
++                   "start": 79,
++                   "text": "1份。",
++                 },
++               ],
++               "sourceContent": "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。",
++               "sourceFingerprint": "sha256:d29c7bce72cbbb6d33476f24662143ac015b0c879b907dba87cb9a0a21cadea9",
++               "sourceId": "source:bd51027e",
++               "sourceVersionId": "source:bd51027e:version:1",
++             },
++             "ownershipMode": "mainline05-own-assets-1",
++             "profile": "real-input-01",
++             "referenceTime": "2026-09-05T08:00:00.000Z",
++             "timezone": "Asia/Shanghai",
++           },
++           "draftId": "source:bd51027e:draft:1:1",
++           "execution": "seen_engineering_replay",
++           "first": {
++             "app": "NOT_RUN",
++             "canonicalPersistence": "NOT_RUN",
++             "issues": [],
++             "items": [
++               {
++                 "condition": {
++                   "conditionScopeIds": [],
++                   "factScopeIds": [],
++                   "value": "not_applicable",
++                 },
++                 "defaultSelected": false,
++                 "evidence": [
++                   {
++                     "end": 26,
++                     "quote": "请于2026年9月10日18:00前提交活动报名表，",
++                     "scopeId": "scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb",
++                     "start": 0,
++                   },
++                   {
++                     "end": 32,
++                     "quote": "PDF格式，",
++                     "scopeId": "scope-0002-7ac2a65b9a23d75b114277b81192b967b0088aabdd29d22482855e11fc63f172",
++                     "start": 26,
++                   },
++                   {
++                     "end": 39,
++                     "quote": "文件名为组别，",
++                     "scopeId": "scope-0003-64b32d878671dc2e91d0b8be52aaaf5597caade49d44e58812d36cb7541f60c8",
++                     "start": 32,
++                   },
++                   {
++                     "end": 42,
++                     "quote": "1份，",
++                     "scopeId": "scope-0004-a5ae4278348ad849b4c282740f19ef0658564cc955edde76d95be84e4ab57319",
++                     "start": 39,
++                   },
++                   {
++                     "end": 49,
++                     "quote": "交至活动平台。",
++                     "scopeId": "scope-0005-6d75b8413d8977c82e9d97ebba7dfc937ce1fa67d70436de8288e880b0c1daf7",
++                     "start": 42,
++                   },
++                   {
++                     "end": 74,
++                     "quote": "请于2026年9月11日18:00前打印入场凭证，",
++                     "scopeId": "scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da",
++                     "start": 49,
++                   },
++                   {
++                     "end": 79,
++                     "quote": "A4格式，",
++                     "scopeId": "scope-0007-5eb928e90b32f0e6dd083ed8d5f2284a4e5c33ddd42ff6089dbeeaeef054b1c1",
++                     "start": 74,
++                   },
++                   {
++                     "end": 82,
++                     "quote": "1份。",
++                     "scopeId": "scope-0008-7ff449605d59bca1aeed452e02bfcc497c2edc7d12ecd887b79a509dbeb3cceb",
++                     "start": 79,
++                   },
++                 ],
++                 "issues": [],
++                 "localId": "sha256:d29c7bce72cbbb6d33476f24662143ac015b0c879b907dba87cb9a0a21cadea9:task:submit",
++                 "requiresAction": "true",
++                 "tempId": "submit",
++               },
++               {
++                 "condition": {
++                   "conditionScopeIds": [],
++                   "factScopeIds": [],
++                   "value": "not_applicable",
++                 },
++                 "defaultSelected": false,
++                 "evidence": [
++                   {
++                     "end": 26,
++                     "quote": "请于2026年9月10日18:00前提交活动报名表，",
++                     "scopeId": "scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb",
++                     "start": 0,
++                   },
++                   {
++                     "end": 32,
++                     "quote": "PDF格式，",
++                     "scopeId": "scope-0002-7ac2a65b9a23d75b114277b81192b967b0088aabdd29d22482855e11fc63f172",
++                     "start": 26,
++                   },
++                   {
++                     "end": 39,
++                     "quote": "文件名为组别，",
++                     "scopeId": "scope-0003-64b32d878671dc2e91d0b8be52aaaf5597caade49d44e58812d36cb7541f60c8",
++                     "start": 32,
++                   },
++                   {
++                     "end": 42,
++                     "quote": "1份，",
++                     "scopeId": "scope-0004-a5ae4278348ad849b4c282740f19ef0658564cc955edde76d95be84e4ab57319",
++                     "start": 39,
++                   },
++                   {
++                     "end": 49,
++                     "quote": "交至活动平台。",
++                     "scopeId": "scope-0005-6d75b8413d8977c82e9d97ebba7dfc937ce1fa67d70436de8288e880b0c1daf7",
++                     "start": 42,
++                   },
++                   {
++                     "end": 74,
++                     "quote": "请于2026年9月11日18:00前打印入场凭证，",
++                     "scopeId": "scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da",
++                     "start": 49,
++                   },
++                   {
++                     "end": 79,
++                     "quote": "A4格式，",
++                     "scopeId": "scope-0007-5eb928e90b32f0e6dd083ed8d5f2284a4e5c33ddd42ff6089dbeeaeef054b1c1",
++                     "start": 74,
++                   },
++                   {
++                     "end": 82,
++                     "quote": "1份。",
++                     "scopeId": "scope-0008-7ff449605d59bca1aeed452e02bfcc497c2edc7d12ecd887b79a509dbeb3cceb",
++                     "start": 79,
++                   },
++                 ],
++                 "issues": [],
++                 "localId": "sha256:d29c7bce72cbbb6d33476f24662143ac015b0c879b907dba87cb9a0a21cadea9:task:print",
++                 "requiresAction": "true",
++                 "tempId": "print",
++               },
++             ],
++             "normalizedTimes": [
++               {
++                 "ast": {
++                   "correctionApplied": false,
++                   "dateKind": "absolute",
++                   "evidenceSpan": {
++                     "end": 16,
++                     "start": 0,
++                   },
++                   "isAllDay": false,
++                   "issues": [],
++                   "needsConfirmation": false,
++                   "normalizedValue": "2026-09-10T18:00",
++                   "precision": "exact",
++                   "rangeEndNormalizedValue": null,
++                   "rawText": "2026年9月10日18:00前",
++                   "timeKind": "clock",
++                   "timezone": "Asia/Shanghai",
++                   "type": "task_deadline",
++                 },
++                 "tempId": "d0",
++               },
++               {
++                 "ast": {
++                   "correctionApplied": false,
++                   "dateKind": "absolute",
++                   "evidenceSpan": {
++                     "end": 16,
++                     "start": 0,
++                   },
++                   "isAllDay": false,
++                   "issues": [],
++                   "needsConfirmation": false,
++                   "normalizedValue": "2026-09-11T18:00",
++                   "precision": "exact",
++                   "rangeEndNormalizedValue": null,
++                   "rawText": "2026年9月11日18:00前",
++                   "timeKind": "clock",
++                   "timezone": "Asia/Shanghai",
++                   "type": "task_deadline",
++                 },
++                 "tempId": "d1",
++               },
++             ],
++             "origin": "live_model_candidate",
++             "original": {
++               "conflicts": [],
++               "events": [],
++               "informationScopeIds": [],
++               "materials": [
++                 {
++                   "confidence": 1,
++                   "formatRequirements": [
++                     "PDF",
++                   ],
++                   "name": "活动报名表",
++                   "namingRequirements": [
++                     "组别",
++                   ],
++                   "quantity": 1,
++                   "relatedTaskTempIds": [
++                     "submit",
++                   ],
++                   "required": true,
++                   "scopeIds": [
++                     "scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb",
++                     "scope-0002-7ac2a65b9a23d75b114277b81192b967b0088aabdd29d22482855e11fc63f172",
++                     "scope-0003-64b32d878671dc2e91d0b8be52aaaf5597caade49d44e58812d36cb7541f60c8",
++                     "scope-0004-a5ae4278348ad849b4c282740f19ef0658564cc955edde76d95be84e4ab57319",
++                     "scope-0005-6d75b8413d8977c82e9d97ebba7dfc937ce1fa67d70436de8288e880b0c1daf7",
++                     "scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da",
++                     "scope-0007-5eb928e90b32f0e6dd083ed8d5f2284a4e5c33ddd42ff6089dbeeaeef054b1c1",
++                     "scope-0008-7ff449605d59bca1aeed452e02bfcc497c2edc7d12ecd887b79a509dbeb3cceb",
++                   ],
++                   "submissionChannel": "活动平台",
++                   "tempId": "m0",
++                 },
++                 {
++                   "confidence": 1,
++                   "formatRequirements": [
++                     "A4",
++                   ],
++                   "name": "入场凭证",
++                   "namingRequirements": [],
++                   "quantity": 1,
++                   "relatedTaskTempIds": [
++                     "print",
++                   ],
++                   "required": true,
++                   "scopeIds": [
++                     "scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb",
++                     "scope-0002-7ac2a65b9a23d75b114277b81192b967b0088aabdd29d22482855e11fc63f172",
++                     "scope-0003-64b32d878671dc2e91d0b8be52aaaf5597caade49d44e58812d36cb7541f60c8",
++                     "scope-0004-a5ae4278348ad849b4c282740f19ef0658564cc955edde76d95be84e4ab57319",
++                     "scope-0005-6d75b8413d8977c82e9d97ebba7dfc937ce1fa67d70436de8288e880b0c1daf7",
++                     "scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da",
++                     "scope-0007-5eb928e90b32f0e6dd083ed8d5f2284a4e5c33ddd42ff6089dbeeaeef054b1c1",
++                     "scope-0008-7ff449605d59bca1aeed452e02bfcc497c2edc7d12ecd887b79a509dbeb3cceb",
++                   ],
++                   "submissionChannel": null,
++                   "tempId": "m1",
++                 },
++               ],
++               "revisions": [],
++               "schemaVersion": "mainline04-task-semantics-1",
++               "sourceFingerprint": "sha256:d29c7bce72cbbb6d33476f24662143ac015b0c879b907dba87cb9a0a21cadea9",
++               "sourceId": "source:bd51027e",
++               "sourceVersionId": "source:bd51027e:version:1",
++               "tasks": [
++                 {
++                   "action": {
++                     "scopeId": "scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb",
++                     "surface": "提交",
++                   },
++                   "actionType": "submit",
++                   "condition": {
++                     "conditionScopeIds": [],
++                     "factScopeIds": [],
++                     "value": "not_applicable",
++                   },
++                   "coverage": {
++                     "event": "not_stated",
++                     "material": "present",
++                     "time": "present",
++                   },
++                   "detail": {
++                     "completionCriteria": [],
++                     "confidence": 1,
++                     "dependencyTempIds": [],
++                     "description": "提交活动报名表",
++                     "estimatedMinutes": null,
++                     "hierarchyType": "task",
++                     "materialTempIds": [
++                       "m0",
++                     ],
++                     "parentTempId": null,
++                     "prioritySuggestion": "medium",
++                     "statusSuggestion": "todo",
++                     "timePointTempIds": [
++                       "d0",
++                     ],
++                     "title": "提交活动报名表",
++                     "userConfirmationRequired": true,
++                   },
++                   "effect": "physical_action",
++                   "eventTempIds": [],
++                   "id": "submit",
++                   "inferenceLevel": "explicit",
++                   "object": {
++                     "scopeId": "scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb",
++                     "surface": "活动报名表",
++                   },
++                   "propositionScopeIds": [
++                     "scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb",
++                     "scope-0002-7ac2a65b9a23d75b114277b81192b967b0088aabdd29d22482855e11fc63f172",
++                     "scope-0003-64b32d878671dc2e91d0b8be52aaaf5597caade49d44e58812d36cb7541f60c8",
++                     "scope-0004-a5ae4278348ad849b4c282740f19ef0658564cc955edde76d95be84e4ab57319",
++                     "scope-0005-6d75b8413d8977c82e9d97ebba7dfc937ce1fa67d70436de8288e880b0c1daf7",
++                     "scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da",
++                     "scope-0007-5eb928e90b32f0e6dd083ed8d5f2284a4e5c33ddd42ff6089dbeeaeef054b1c1",
++                     "scope-0008-7ff449605d59bca1aeed452e02bfcc497c2edc7d12ecd887b79a509dbeb3cceb",
++                   ],
++                   "semantics": {
++                     "actor": "addressee",
++                     "modality": "required",
++                     "polarity": "affirmative",
++                     "speechAct": "directive",
++                     "status": "pending",
++                     "tense": "future",
++                     "validity": "active",
++                   },
++                 },
++                 {
++                   "action": {
++                     "scopeId": "scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da",
++                     "surface": "打印",
++                   },
++                   "actionType": "print",
++                   "condition": {
++                     "conditionScopeIds": [],
++                     "factScopeIds": [],
++                     "value": "not_applicable",
++                   },
++                   "coverage": {
++                     "event": "not_stated",
++                     "material": "present",
++                     "time": "present",
++                   },
++                   "detail": {
++                     "completionCriteria": [],
++                     "confidence": 1,
++                     "dependencyTempIds": [],
++                     "description": "打印入场凭证",
++                     "estimatedMinutes": null,
++                     "hierarchyType": "task",
++                     "materialTempIds": [
++                       "m1",
++                     ],
++                     "parentTempId": null,
++                     "prioritySuggestion": "medium",
++                     "statusSuggestion": "todo",
++                     "timePointTempIds": [
++                       "d1",
++                     ],
++                     "title": "打印入场凭证",
++                     "userConfirmationRequired": true,
++                   },
++                   "effect": "physical_action",
++                   "eventTempIds": [],
++                   "id": "print",
++                   "inferenceLevel": "explicit",
++                   "object": {
++                     "scopeId": "scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da",
++                     "surface": "入场凭证",
++                   },
++                   "propositionScopeIds": [
++                     "scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb",
++                     "scope-0002-7ac2a65b9a23d75b114277b81192b967b0088aabdd29d22482855e11fc63f172",
++                     "scope-0003-64b32d878671dc2e91d0b8be52aaaf5597caade49d44e58812d36cb7541f60c8",
++                     "scope-0004-a5ae4278348ad849b4c282740f19ef0658564cc955edde76d95be84e4ab57319",
++                     "scope-0005-6d75b8413d8977c82e9d97ebba7dfc937ce1fa67d70436de8288e880b0c1daf7",
++                     "scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da",
++                     "scope-0007-5eb928e90b32f0e6dd083ed8d5f2284a4e5c33ddd42ff6089dbeeaeef054b1c1",
++                     "scope-0008-7ff449605d59bca1aeed452e02bfcc497c2edc7d12ecd887b79a509dbeb3cceb",
++                   ],
++                   "semantics": {
++                     "actor": "addressee",
++                     "modality": "required",
++                     "polarity": "affirmative",
++                     "speechAct": "directive",
++                     "status": "pending",
++                     "tense": "future",
++                     "validity": "active",
++                   },
++                 },
++               ],
++               "timePoints": [
++                 {
++                   "confidence": 1,
++                   "isAllDay": false,
++                   "needsConfirmation": false,
++                   "normalizedValue": "2026-09-10T18:00",
++                   "precision": "exact",
++                   "rawText": "2026年9月10日18:00前",
++                   "relatedMaterialTempIds": [
++                     "m0",
++                   ],
++                   "relatedTaskTempIds": [
++                     "submit",
++                   ],
++                   "scopeIds": [
++                     "scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb",
++                     "scope-0002-7ac2a65b9a23d75b114277b81192b967b0088aabdd29d22482855e11fc63f172",
++                     "scope-0003-64b32d878671dc2e91d0b8be52aaaf5597caade49d44e58812d36cb7541f60c8",
++                     "scope-0004-a5ae4278348ad849b4c282740f19ef0658564cc955edde76d95be84e4ab57319",
++                     "scope-0005-6d75b8413d8977c82e9d97ebba7dfc937ce1fa67d70436de8288e880b0c1daf7",
++                     "scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da",
++                     "scope-0007-5eb928e90b32f0e6dd083ed8d5f2284a4e5c33ddd42ff6089dbeeaeef054b1c1",
++                     "scope-0008-7ff449605d59bca1aeed452e02bfcc497c2edc7d12ecd887b79a509dbeb3cceb",
++                   ],
++                   "tempId": "d0",
++                   "timezone": "Asia/Shanghai",
++                   "type": "task_deadline",
++                 },
++                 {
++                   "confidence": 1,
++                   "isAllDay": false,
++                   "needsConfirmation": false,
++                   "normalizedValue": "2026-09-11T18:00",
++                   "precision": "exact",
++                   "rawText": "2026年9月11日18:00前",
++                   "relatedMaterialTempIds": [
++                     "m1",
++                   ],
++                   "relatedTaskTempIds": [
++                     "print",
++                   ],
++                   "scopeIds": [
++                     "scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb",
++                     "scope-0002-7ac2a65b9a23d75b114277b81192b967b0088aabdd29d22482855e11fc63f172",
++                     "scope-0003-64b32d878671dc2e91d0b8be52aaaf5597caade49d44e58812d36cb7541f60c8",
++                     "scope-0004-a5ae4278348ad849b4c282740f19ef0658564cc955edde76d95be84e4ab57319",
++                     "scope-0005-6d75b8413d8977c82e9d97ebba7dfc937ce1fa67d70436de8288e880b0c1daf7",
++                     "scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da",
++                     "scope-0007-5eb928e90b32f0e6dd083ed8d5f2284a4e5c33ddd42ff6089dbeeaeef054b1c1",
++                     "scope-0008-7ff449605d59bca1aeed452e02bfcc497c2edc7d12ecd887b79a509dbeb3cceb",
++                   ],
++                   "tempId": "d1",
++                   "timezone": "Asia/Shanghai",
++                   "type": "task_deadline",
++                 },
++               ],
++               "unresolvedScopeIds": [],
++             },
++             "schemaVersion": "mainline04-review-package-1",
++             "sourceIndex": {
++               "scopes": [
++                 {
++                   "contentHash": "sha256:6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb",
++                   "end": 26,
++                   "id": "scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb",
++                   "order": 0,
++                   "sourceFingerprint": "sha256:d29c7bce72cbbb6d33476f24662143ac015b0c879b907dba87cb9a0a21cadea9",
++                   "sourceId": "source:bd51027e",
++                   "sourceVersionId": "source:bd51027e:version:1",
++                   "start": 0,
++                   "text": "请于2026年9月10日18:00前提交活动报名表，",
++                 },
++                 {
++                   "contentHash": "sha256:7ac2a65b9a23d75b114277b81192b967b0088aabdd29d22482855e11fc63f172",
++                   "end": 32,
++                   "id": "scope-0002-7ac2a65b9a23d75b114277b81192b967b0088aabdd29d22482855e11fc63f172",
++                   "order": 1,
++                   "sourceFingerprint": "sha256:d29c7bce72cbbb6d33476f24662143ac015b0c879b907dba87cb9a0a21cadea9",
++                   "sourceId": "source:bd51027e",
++                   "sourceVersionId": "source:bd51027e:version:1",
++                   "start": 26,
++                   "text": "PDF格式，",
++                 },
++                 {
++                   "contentHash": "sha256:64b32d878671dc2e91d0b8be52aaaf5597caade49d44e58812d36cb7541f60c8",
++                   "end": 39,
++                   "id": "scope-0003-64b32d878671dc2e91d0b8be52aaaf5597caade49d44e58812d36cb7541f60c8",
++                   "order": 2,
++                   "sourceFingerprint": "sha256:d29c7bce72cbbb6d33476f24662143ac015b0c879b907dba87cb9a0a21cadea9",
++                   "sourceId": "source:bd51027e",
++                   "sourceVersionId": "source:bd51027e:version:1",
++                   "start": 32,
++                   "text": "文件名为组别，",
++                 },
++                 {
++                   "contentHash": "sha256:a5ae4278348ad849b4c282740f19ef0658564cc955edde76d95be84e4ab57319",
++                   "end": 42,
++                   "id": "scope-0004-a5ae4278348ad849b4c282740f19ef0658564cc955edde76d95be84e4ab57319",
++                   "order": 3,
++                   "sourceFingerprint": "sha256:d29c7bce72cbbb6d33476f24662143ac015b0c879b907dba87cb9a0a21cadea9",
++                   "sourceId": "source:bd51027e",
++                   "sourceVersionId": "source:bd51027e:version:1",
++                   "start": 39,
++                   "text": "1份，",
++                 },
++                 {
++                   "contentHash": "sha256:6d75b8413d8977c82e9d97ebba7dfc937ce1fa67d70436de8288e880b0c1daf7",
++                   "end": 49,
++                   "id": "scope-0005-6d75b8413d8977c82e9d97ebba7dfc937ce1fa67d70436de8288e880b0c1daf7",
++                   "order": 4,
++                   "sourceFingerprint": "sha256:d29c7bce72cbbb6d33476f24662143ac015b0c879b907dba87cb9a0a21cadea9",
++                   "sourceId": "source:bd51027e",
++                   "sourceVersionId": "source:bd51027e:version:1",
++                   "start": 42,
++                   "text": "交至活动平台。",
++                 },
++                 {
++                   "contentHash": "sha256:84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da",
++                   "end": 74,
++                   "id": "scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da",
++                   "order": 5,
++                   "sourceFingerprint": "sha256:d29c7bce72cbbb6d33476f24662143ac015b0c879b907dba87cb9a0a21cadea9",
++                   "sourceId": "source:bd51027e",
++                   "sourceVersionId": "source:bd51027e:version:1",
++                   "start": 49,
++                   "text": "请于2026年9月11日18:00前打印入场凭证，",
++                 },
++                 {
++                   "contentHash": "sha256:5eb928e90b32f0e6dd083ed8d5f2284a4e5c33ddd42ff6089dbeeaeef054b1c1",
++                   "end": 79,
++                   "id": "scope-0007-5eb928e90b32f0e6dd083ed8d5f2284a4e5c33ddd42ff6089dbeeaeef054b1c1",
++                   "order": 6,
++                   "sourceFingerprint": "sha256:d29c7bce72cbbb6d33476f24662143ac015b0c879b907dba87cb9a0a21cadea9",
++                   "sourceId": "source:bd51027e",
++                   "sourceVersionId": "source:bd51027e:version:1",
++                   "start": 74,
++                   "text": "A4格式，",
++                 },
++                 {
++                   "contentHash": "sha256:7ff449605d59bca1aeed452e02bfcc497c2edc7d12ecd887b79a509dbeb3cceb",
++                   "end": 82,
++                   "id": "scope-0008-7ff449605d59bca1aeed452e02bfcc497c2edc7d12ecd887b79a509dbeb3cceb",
++                   "order": 7,
++                   "sourceFingerprint": "sha256:d29c7bce72cbbb6d33476f24662143ac015b0c879b907dba87cb9a0a21cadea9",
++                   "sourceId": "source:bd51027e",
++                   "sourceVersionId": "source:bd51027e:version:1",
++                   "start": 79,
++                   "text": "1份。",
++                 },
++               ],
++               "sourceContent": "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。",
++               "sourceFingerprint": "sha256:d29c7bce72cbbb6d33476f24662143ac015b0c879b907dba87cb9a0a21cadea9",
++               "sourceId": "source:bd51027e",
++               "sourceVersionId": "source:bd51027e:version:1",
++             },
++           },
++           "inputReceipt": {
++             "corrections": [],
++             "extractorVersion": "real-input-paste-1",
++             "file": null,
++             "inputId": "read-multi",
++             "originalSha256": "0d399802cea1ae55cfd8a66c2f34c7146b41642ac64112b5ff6c39f5241de6a0",
++             "pageCount": 1,
++             "pages": [
++               {
++                 "chunks": [
++                   "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。",
++                 ],
++                 "issues": [],
++                 "number": 1,
++                 "ocrChunks": null,
++                 "parserChunks": [
++                   "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。",
++                 ],
++                 "route": "parser",
++               },
++             ],
++             "sourceType": "text",
++             "version": "real-input-receipt-1",
++           },
++           "legacyResponse": null,
++           "operations": [
++             {
++               "at": "2026-09-06T22:57:00.354Z",
++               "before": null,
++               "field": null,
++               "id": "2f3f213a-9307-4494-8bff-4f5e37be72bd",
++               "kind": "review_task",
++               "reviewIdentity": "{\"identity\":\"{\\\"conflicts\\\":[],\\\"events\\\":[],\\\"fingerprint\\\":\\\"sha256:d29c7bce72cbbb6d33476f24662143ac015b0c879b907dba87cb9a0a21cadea9\\\",\\\"materials\\\":[{\\\"confidence\\\":1,\\\"formatRequirements\\\":[\\\"PDF\\\"],\\\"name\\\":\\\"活动报名表\\\",\\\"namingRequirements\\\":[\\\"组别\\\"],\\\"quantity\\\":1,\\\"relatedTaskTempIds\\\":[\\\"submit\\\"],\\\"required\\\":true,\\\"scopeIds\\\":[\\\"scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb\\\",\\\"scope-0002-7ac2a65b9a23d75b114277b81192b967b0088aabdd29d22482855e11fc63f172\\\",\\\"scope-0003-64b32d878671dc2e91d0b8be52aaaf5597caade49d44e58812d36cb7541f60c8\\\",\\\"scope-0004-a5ae4278348ad849b4c282740f19ef0658564cc955edde76d95be84e4ab57319\\\",\\\"scope-0005-6d75b8413d8977c82e9d97ebba7dfc937ce1fa67d70436de8288e880b0c1daf7\\\",\\\"scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da\\\",\\\"scope-0007-5eb928e90b32f0e6dd083ed8d5f2284a4e5c33ddd42ff6089dbeeaeef054b1c1\\\",\\\"scope-0008-7ff449605d59bca1aeed452e02bfcc497c2edc7d12ecd887b79a509dbeb3cceb\\\"],\\\"submissionChannel\\\":\\\"活动平台\\\",\\\"tempId\\\":\\\"m0\\\"}],\\\"revisions\\\":[],\\\"sourceId\\\":\\\"source:bd51027e\\\",\\\"sourceVersionId\\\":\\\"source:bd51027e:version:1\\\",\\\"tasks\\\":[{\\\"action\\\":{\\\"scopeId\\\":\\\"scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb\\\",\\\"surface\\\":\\\"提交\\\"},\\\"actionType\\\":\\\"submit\\\",\\\"condition\\\":{\\\"conditionScopeIds\\\":[],\\\"factScopeIds\\\":[],\\\"value\\\":\\\"not_applicable\\\"},\\\"coverage\\\":{\\\"event\\\":\\\"not_stated\\\",\\\"material\\\":\\\"present\\\",\\\"time\\\":\\\"present\\\"},\\\"detail\\\":{\\\"completionCriteria\\\":[],\\\"confidence\\\":1,\\\"dependencyTempIds\\\":[],\\\"description\\\":\\\"提交活动报名表\\\",\\\"estimatedMinutes\\\":null,\\\"hierarchyType\\\":\\\"task\\\",\\\"materialTempIds\\\":[\\\"m0\\\"],\\\"parentTempId\\\":null,\\\"prioritySuggestion\\\":\\\"medium\\\",\\\"statusSuggestion\\\":\\\"todo\\\",\\\"timePointTempIds\\\":[\\\"d0\\\"],\\\"title\\\":\\\"提交活动报名表\\\",\\\"userConfirmationRequired\\\":true},\\\"effect\\\":\\\"physical_action\\\",\\\"eventTempIds\\\":[],\\\"id\\\":\\\"submit\\\",\\\"inferenceLevel\\\":\\\"explicit\\\",\\\"object\\\":{\\\"scopeId\\\":\\\"scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb\\\",\\\"surface\\\":\\\"活动报名表\\\"},\\\"propositionScopeIds\\\":[\\\"scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb\\\",\\\"scope-0002-7ac2a65b9a23d75b114277b81192b967b0088aabdd29d22482855e11fc63f172\\\",\\\"scope-0003-64b32d878671dc2e91d0b8be52aaaf5597caade49d44e58812d36cb7541f60c8\\\",\\\"scope-0004-a5ae4278348ad849b4c282740f19ef0658564cc955edde76d95be84e4ab57319\\\",\\\"scope-0005-6d75b8413d8977c82e9d97ebba7dfc937ce1fa67d70436de8288e880b0c1daf7\\\",\\\"scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da\\\",\\\"scope-0007-5eb928e90b32f0e6dd083ed8d5f2284a4e5c33ddd42ff6089dbeeaeef054b1c1\\\",\\\"scope-0008-7ff449605d59bca1aeed452e02bfcc497c2edc7d12ecd887b79a509dbeb3cceb\\\"],\\\"semantics\\\":{\\\"actor\\\":\\\"addressee\\\",\\\"modality\\\":\\\"required\\\",\\\"polarity\\\":\\\"affirmative\\\",\\\"speechAct\\\":\\\"directive\\\",\\\"status\\\":\\\"pending\\\",\\\"tense\\\":\\\"future\\\",\\\"validity\\\":\\\"active\\\"}}],\\\"timePoints\\\":[{\\\"confidence\\\":1,\\\"isAllDay\\\":false,\\\"needsConfirmation\\\":false,\\\"normalizedValue\\\":\\\"2026-09-10T18:00\\\",\\\"precision\\\":\\\"exact\\\",\\\"rawText\\\":\\\"2026年9月10日18:00前\\\",\\\"relatedMaterialTempIds\\\":[\\\"m0\\\"],\\\"relatedTaskTempIds\\\":[\\\"submit\\\"],\\\"scopeIds\\\":[\\\"scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb\\\",\\\"scope-0002-7ac2a65b9a23d75b114277b81192b967b0088aabdd29d22482855e11fc63f172\\\",\\\"scope-0003-64b32d878671dc2e91d0b8be52aaaf5597caade49d44e58812d36cb7541f60c8\\\",\\\"scope-0004-a5ae4278348ad849b4c282740f19ef0658564cc955edde76d95be84e4ab57319\\\",\\\"scope-0005-6d75b8413d8977c82e9d97ebba7dfc937ce1fa67d70436de8288e880b0c1daf7\\\",\\\"scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da\\\",\\\"scope-0007-5eb928e90b32f0e6dd083ed8d5f2284a4e5c33ddd42ff6089dbeeaeef054b1c1\\\",\\\"scope-0008-7ff449605d59bca1aeed452e02bfcc497c2edc7d12ecd887b79a509dbeb3cceb\\\"],\\\"tempId\\\":\\\"d0\\\",\\\"timezone\\\":\\\"Asia/Shanghai\\\",\\\"type\\\":\\\"task_deadline\\\"}],\\\"unresolvedScopeIds\\\":[]}\",\"userValues\":{\"submit\":{\"deadline\":\"2026-09-10T18:00\",\"title\":\"提交活动报名表\"}}}",
++               "taskIds": [
++                 "submit",
++               ],
++               "value": null,
++             },
++             {
++               "at": "2026-09-06T22:57:00.398Z",
++               "before": null,
++               "field": null,
++               "id": "219f5a97-7b25-466e-8af2-de5a84cffd11",
++               "kind": "confirm",
++               "taskIds": [
++                 "submit",
++               ],
++               "value": null,
++             },
++             {
++               "at": "2026-09-06T22:57:00.510Z",
++               "before": null,
++               "field": null,
++               "id": "0a08650d-b1d5-4554-858a-a76bb17ff5ee",
++               "kind": "review_task",
++               "reviewIdentity": "{\"identity\":\"{\\\"conflicts\\\":[],\\\"events\\\":[],\\\"fingerprint\\\":\\\"sha256:d29c7bce72cbbb6d33476f24662143ac015b0c879b907dba87cb9a0a21cadea9\\\",\\\"materials\\\":[{\\\"confidence\\\":1,\\\"formatRequirements\\\":[\\\"A4\\\"],\\\"name\\\":\\\"入场凭证\\\",\\\"namingRequirements\\\":[],\\\"quantity\\\":1,\\\"relatedTaskTempIds\\\":[\\\"print\\\"],\\\"required\\\":true,\\\"scopeIds\\\":[\\\"scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb\\\",\\\"scope-0002-7ac2a65b9a23d75b114277b81192b967b0088aabdd29d22482855e11fc63f172\\\",\\\"scope-0003-64b32d878671dc2e91d0b8be52aaaf5597caade49d44e58812d36cb7541f60c8\\\",\\\"scope-0004-a5ae4278348ad849b4c282740f19ef0658564cc955edde76d95be84e4ab57319\\\",\\\"scope-0005-6d75b8413d8977c82e9d97ebba7dfc937ce1fa67d70436de8288e880b0c1daf7\\\",\\\"scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da\\\",\\\"scope-0007-5eb928e90b32f0e6dd083ed8d5f2284a4e5c33ddd42ff6089dbeeaeef054b1c1\\\",\\\"scope-0008-7ff449605d59bca1aeed452e02bfcc497c2edc7d12ecd887b79a509dbeb3cceb\\\"],\\\"submissionChannel\\\":null,\\\"tempId\\\":\\\"m1\\\"}],\\\"revisions\\\":[],\\\"sourceId\\\":\\\"source:bd51027e\\\",\\\"sourceVersionId\\\":\\\"source:bd51027e:version:1\\\",\\\"tasks\\\":[{\\\"action\\\":{\\\"scopeId\\\":\\\"scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da\\\",\\\"surface\\\":\\\"打印\\\"},\\\"actionType\\\":\\\"print\\\",\\\"condition\\\":{\\\"conditionScopeIds\\\":[],\\\"factScopeIds\\\":[],\\\"value\\\":\\\"not_applicable\\\"},\\\"coverage\\\":{\\\"event\\\":\\\"not_stated\\\",\\\"material\\\":\\\"present\\\",\\\"time\\\":\\\"present\\\"},\\\"detail\\\":{\\\"completionCriteria\\\":[],\\\"confidence\\\":1,\\\"dependencyTempIds\\\":[],\\\"description\\\":\\\"打印入场凭证\\\",\\\"estimatedMinutes\\\":null,\\\"hierarchyType\\\":\\\"task\\\",\\\"materialTempIds\\\":[\\\"m1\\\"],\\\"parentTempId\\\":null,\\\"prioritySuggestion\\\":\\\"medium\\\",\\\"statusSuggestion\\\":\\\"todo\\\",\\\"timePointTempIds\\\":[\\\"d1\\\"],\\\"title\\\":\\\"打印入场凭证\\\",\\\"userConfirmationRequired\\\":true},\\\"effect\\\":\\\"physical_action\\\",\\\"eventTempIds\\\":[],\\\"id\\\":\\\"print\\\",\\\"inferenceLevel\\\":\\\"explicit\\\",\\\"object\\\":{\\\"scopeId\\\":\\\"scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da\\\",\\\"surface\\\":\\\"入场凭证\\\"},\\\"propositionScopeIds\\\":[\\\"scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb\\\",\\\"scope-0002-7ac2a65b9a23d75b114277b81192b967b0088aabdd29d22482855e11fc63f172\\\",\\\"scope-0003-64b32d878671dc2e91d0b8be52aaaf5597caade49d44e58812d36cb7541f60c8\\\",\\\"scope-0004-a5ae4278348ad849b4c282740f19ef0658564cc955edde76d95be84e4ab57319\\\",\\\"scope-0005-6d75b8413d8977c82e9d97ebba7dfc937ce1fa67d70436de8288e880b0c1daf7\\\",\\\"scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da\\\",\\\"scope-0007-5eb928e90b32f0e6dd083ed8d5f2284a4e5c33ddd42ff6089dbeeaeef054b1c1\\\",\\\"scope-0008-7ff449605d59bca1aeed452e02bfcc497c2edc7d12ecd887b79a509dbeb3cceb\\\"],\\\"semantics\\\":{\\\"actor\\\":\\\"addressee\\\",\\\"modality\\\":\\\"required\\\",\\\"polarity\\\":\\\"affirmative\\\",\\\"speechAct\\\":\\\"directive\\\",\\\"status\\\":\\\"pending\\\",\\\"tense\\\":\\\"future\\\",\\\"validity\\\":\\\"active\\\"}}],\\\"timePoints\\\":[{\\\"confidence\\\":1,\\\"isAllDay\\\":false,\\\"needsConfirmation\\\":false,\\\"normalizedValue\\\":\\\"2026-09-11T18:00\\\",\\\"precision\\\":\\\"exact\\\",\\\"rawText\\\":\\\"2026年9月11日18:00前\\\",\\\"relatedMaterialTempIds\\\":[\\\"m1\\\"],\\\"relatedTaskTempIds\\\":[\\\"print\\\"],\\\"scopeIds\\\":[\\\"scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb\\\",\\\"scope-0002-7ac2a65b9a23d75b114277b81192b967b0088aabdd29d22482855e11fc63f172\\\",\\\"scope-0003-64b32d878671dc2e91d0b8be52aaaf5597caade49d44e58812d36cb7541f60c8\\\",\\\"scope-0004-a5ae4278348ad849b4c282740f19ef0658564cc955edde76d95be84e4ab57319\\\",\\\"scope-0005-6d75b8413d8977c82e9d97ebba7dfc937ce1fa67d70436de8288e880b0c1daf7\\\",\\\"scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da\\\",\\\"scope-0007-5eb928e90b32f0e6dd083ed8d5f2284a4e5c33ddd42ff6089dbeeaeef054b1c1\\\",\\\"scope-0008-7ff449605d59bca1aeed452e02bfcc497c2edc7d12ecd887b79a509dbeb3cceb\\\"],\\\"tempId\\\":\\\"d1\\\",\\\"timezone\\\":\\\"Asia/Shanghai\\\",\\\"type\\\":\\\"task_deadline\\\"}],\\\"unresolvedScopeIds\\\":[]}\",\"userValues\":{\"print\":{\"deadline\":\"2026-09-11T18:00\",\"title\":\"打印入场凭证\"}}}",
++               "taskIds": [
++                 "print",
++               ],
++               "value": null,
++             },
++           ],
++           "rawHttpText": "{\"model\":\"deepseek-v4-flash-vision-exp\",\"status\":\"completed\",\"output\":[{\"type\":\"message\",\"role\":\"assistant\",\"content\":[{\"type\":\"output_text\",\"text\":\"{\\\"schemaVersion\\\":\\\"real-input-model-wire-1\\\",\\\"tasks\\\":[{\\\"id\\\":\\\"submit\\\",\\\"propositionScopeIds\\\":[\\\"scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb\\\",\\\"scope-0002-7ac2a65b9a23d75b114277b81192b967b0088aabdd29d22482855e11fc63f172\\\",\\\"scope-0003-64b32d878671dc2e91d0b8be52aaaf5597caade49d44e58812d36cb7541f60c8\\\",\\\"scope-0004-a5ae4278348ad849b4c282740f19ef0658564cc955edde76d95be84e4ab57319\\\",\\\"scope-0005-6d75b8413d8977c82e9d97ebba7dfc937ce1fa67d70436de8288e880b0c1daf7\\\",\\\"scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da\\\",\\\"scope-0007-5eb928e90b32f0e6dd083ed8d5f2284a4e5c33ddd42ff6089dbeeaeef054b1c1\\\",\\\"scope-0008-7ff449605d59bca1aeed452e02bfcc497c2edc7d12ecd887b79a509dbeb3cceb\\\"],\\\"action\\\":{\\\"scopeId\\\":\\\"scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb\\\",\\\"surface\\\":\\\"提交\\\"},\\\"object\\\":{\\\"scopeId\\\":\\\"scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb\\\",\\\"surface\\\":\\\"活动报名表\\\"},\\\"inferenceLevel\\\":\\\"explicit\\\",\\\"semantics\\\":{\\\"actor\\\":\\\"addressee\\\",\\\"speechAct\\\":\\\"directive\\\",\\\"polarity\\\":\\\"affirmative\\\",\\\"tense\\\":\\\"future\\\",\\\"status\\\":\\\"pending\\\",\\\"validity\\\":\\\"active\\\",\\\"modality\\\":\\\"required\\\"},\\\"actionType\\\":\\\"submit\\\",\\\"effect\\\":\\\"physical_action\\\",\\\"detail\\\":{\\\"parentTempId\\\":null,\\\"hierarchyType\\\":\\\"task\\\",\\\"title\\\":\\\"提交活动报名表\\\",\\\"description\\\":\\\"提交活动报名表\\\",\\\"completionCriteria\\\":[],\\\"estimatedMinutes\\\":null,\\\"statusSuggestion\\\":\\\"todo\\\",\\\"prioritySuggestion\\\":\\\"medium\\\",\\\"dependencyTempIds\\\":[],\\\"materialTempIds\\\":[\\\"m0\\\"],\\\"timePointTempIds\\\":[\\\"d0\\\"],\\\"confidence\\\":1,\\\"userConfirmationRequired\\\":true},\\\"condition\\\":{\\\"value\\\":\\\"not_applicable\\\",\\\"conditionScopeIds\\\":[],\\\"factScopeIds\\\":[]},\\\"coverage\\\":{\\\"time\\\":\\\"present\\\",\\\"material\\\":\\\"present\\\",\\\"event\\\":\\\"not_stated\\\"},\\\"eventTempIds\\\":[]},{\\\"id\\\":\\\"print\\\",\\\"propositionScopeIds\\\":[\\\"scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb\\\",\\\"scope-0002-7ac2a65b9a23d75b114277b81192b967b0088aabdd29d22482855e11fc63f172\\\",\\\"scope-0003-64b32d878671dc2e91d0b8be52aaaf5597caade49d44e58812d36cb7541f60c8\\\",\\\"scope-0004-a5ae4278348ad849b4c282740f19ef0658564cc955edde76d95be84e4ab57319\\\",\\\"scope-0005-6d75b8413d8977c82e9d97ebba7dfc937ce1fa67d70436de8288e880b0c1daf7\\\",\\\"scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da\\\",\\\"scope-0007-5eb928e90b32f0e6dd083ed8d5f2284a4e5c33ddd42ff6089dbeeaeef054b1c1\\\",\\\"scope-0008-7ff449605d59bca1aeed452e02bfcc497c2edc7d12ecd887b79a509dbeb3cceb\\\"],\\\"action\\\":{\\\"scopeId\\\":\\\"scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da\\\",\\\"surface\\\":\\\"打印\\\"},\\\"object\\\":{\\\"scopeId\\\":\\\"scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da\\\",\\\"surface\\\":\\\"入场凭证\\\"},\\\"inferenceLevel\\\":\\\"explicit\\\",\\\"semantics\\\":{\\\"actor\\\":\\\"addressee\\\",\\\"speechAct\\\":\\\"directive\\\",\\\"polarity\\\":\\\"affirmative\\\",\\\"tense\\\":\\\"future\\\",\\\"status\\\":\\\"pending\\\",\\\"validity\\\":\\\"active\\\",\\\"modality\\\":\\\"required\\\"},\\\"actionType\\\":\\\"print\\\",\\\"effect\\\":\\\"physical_action\\\",\\\"detail\\\":{\\\"parentTempId\\\":null,\\\"hierarchyType\\\":\\\"task\\\",\\\"title\\\":\\\"打印入场凭证\\\",\\\"description\\\":\\\"打印入场凭证\\\",\\\"completionCriteria\\\":[],\\\"estimatedMinutes\\\":null,\\\"statusSuggestion\\\":\\\"todo\\\",\\\"prioritySuggestion\\\":\\\"medium\\\",\\\"dependencyTempIds\\\":[],\\\"materialTempIds\\\":[\\\"m1\\\"],\\\"timePointTempIds\\\":[\\\"d1\\\"],\\\"confidence\\\":1,\\\"userConfirmationRequired\\\":true},\\\"condition\\\":{\\\"value\\\":\\\"not_applicable\\\",\\\"conditionScopeIds\\\":[],\\\"factScopeIds\\\":[]},\\\"coverage\\\":{\\\"time\\\":\\\"present\\\",\\\"material\\\":\\\"present\\\",\\\"event\\\":\\\"not_stated\\\"},\\\"eventTempIds\\\":[]}],\\\"materials\\\":[{\\\"tempId\\\":\\\"m0\\\",\\\"name\\\":\\\"活动报名表\\\",\\\"required\\\":true,\\\"formatRequirements\\\":[\\\"PDF\\\"],\\\"namingRequirements\\\":[\\\"组别\\\"],\\\"quantity\\\":1,\\\"submissionChannel\\\":\\\"活动平台\\\",\\\"relatedTaskTempIds\\\":[\\\"submit\\\"],\\\"confidence\\\":1,\\\"scopeIds\\\":[\\\"scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb\\\",\\\"scope-0002-7ac2a65b9a23d75b114277b81192b967b0088aabdd29d22482855e11fc63f172\\\",\\\"scope-0003-64b32d878671dc2e91d0b8be52aaaf5597caade49d44e58812d36cb7541f60c8\\\",\\\"scope-0004-a5ae4278348ad849b4c282740f19ef0658564cc955edde76d95be84e4ab57319\\\",\\\"scope-0005-6d75b8413d8977c82e9d97ebba7dfc937ce1fa67d70436de8288e880b0c1daf7\\\",\\\"scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da\\\",\\\"scope-0007-5eb928e90b32f0e6dd083ed8d5f2284a4e5c33ddd42ff6089dbeeaeef054b1c1\\\",\\\"scope-0008-7ff449605d59bca1aeed452e02bfcc497c2edc7d12ecd887b79a509dbeb3cceb\\\"]},{\\\"tempId\\\":\\\"m1\\\",\\\"name\\\":\\\"入场凭证\\\",\\\"required\\\":true,\\\"formatRequirements\\\":[\\\"A4\\\"],\\\"namingRequirements\\\":[],\\\"quantity\\\":1,\\\"submissionChannel\\\":null,\\\"relatedTaskTempIds\\\":[\\\"print\\\"],\\\"confidence\\\":1,\\\"scopeIds\\\":[\\\"scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb\\\",\\\"scope-0002-7ac2a65b9a23d75b114277b81192b967b0088aabdd29d22482855e11fc63f172\\\",\\\"scope-0003-64b32d878671dc2e91d0b8be52aaaf5597caade49d44e58812d36cb7541f60c8\\\",\\\"scope-0004-a5ae4278348ad849b4c282740f19ef0658564cc955edde76d95be84e4ab57319\\\",\\\"scope-0005-6d75b8413d8977c82e9d97ebba7dfc937ce1fa67d70436de8288e880b0c1daf7\\\",\\\"scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da\\\",\\\"scope-0007-5eb928e90b32f0e6dd083ed8d5f2284a4e5c33ddd42ff6089dbeeaeef054b1c1\\\",\\\"scope-0008-7ff449605d59bca1aeed452e02bfcc497c2edc7d12ecd887b79a509dbeb3cceb\\\"]}],\\\"timePoints\\\":[{\\\"tempId\\\":\\\"d0\\\",\\\"type\\\":\\\"task_deadline\\\",\\\"rawText\\\":\\\"2026年9月10日18:00前\\\",\\\"relatedTaskTempIds\\\":[\\\"submit\\\"],\\\"relatedMaterialTempIds\\\":[\\\"m0\\\"],\\\"confidence\\\":1,\\\"scopeIds\\\":[\\\"scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb\\\",\\\"scope-0002-7ac2a65b9a23d75b114277b81192b967b0088aabdd29d22482855e11fc63f172\\\",\\\"scope-0003-64b32d878671dc2e91d0b8be52aaaf5597caade49d44e58812d36cb7541f60c8\\\",\\\"scope-0004-a5ae4278348ad849b4c282740f19ef0658564cc955edde76d95be84e4ab57319\\\",\\\"scope-0005-6d75b8413d8977c82e9d97ebba7dfc937ce1fa67d70436de8288e880b0c1daf7\\\",\\\"scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da\\\",\\\"scope-0007-5eb928e90b32f0e6dd083ed8d5f2284a4e5c33ddd42ff6089dbeeaeef054b1c1\\\",\\\"scope-0008-7ff449605d59bca1aeed452e02bfcc497c2edc7d12ecd887b79a509dbeb3cceb\\\"]},{\\\"tempId\\\":\\\"d1\\\",\\\"type\\\":\\\"task_deadline\\\",\\\"rawText\\\":\\\"2026年9月11日18:00前\\\",\\\"relatedTaskTempIds\\\":[\\\"print\\\"],\\\"relatedMaterialTempIds\\\":[\\\"m1\\\"],\\\"confidence\\\":1,\\\"scopeIds\\\":[\\\"scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb\\\",\\\"scope-0002-7ac2a65b9a23d75b114277b81192b967b0088aabdd29d22482855e11fc63f172\\\",\\\"scope-0003-64b32d878671dc2e91d0b8be52aaaf5597caade49d44e58812d36cb7541f60c8\\\",\\\"scope-0004-a5ae4278348ad849b4c282740f19ef0658564cc955edde76d95be84e4ab57319\\\",\\\"scope-0005-6d75b8413d8977c82e9d97ebba7dfc937ce1fa67d70436de8288e880b0c1daf7\\\",\\\"scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da\\\",\\\"scope-0007-5eb928e90b32f0e6dd083ed8d5f2284a4e5c33ddd42ff6089dbeeaeef054b1c1\\\",\\\"scope-0008-7ff449605d59bca1aeed452e02bfcc497c2edc7d12ecd887b79a509dbeb3cceb\\\"]}],\\\"events\\\":[],\\\"revisions\\\":[],\\\"conflicts\\\":[],\\\"informationScopeIds\\\":[],\\\"unresolvedScopeIds\\\":[]}\"}]}],\"usage\":{\"input_tokens\":0,\"output_tokens\":0}}",
++           "rawOutputText": "{\"schemaVersion\":\"real-input-model-wire-1\",\"tasks\":[{\"id\":\"submit\",\"propositionScopeIds\":[\"scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb\",\"scope-0002-7ac2a65b9a23d75b114277b81192b967b0088aabdd29d22482855e11fc63f172\",\"scope-0003-64b32d878671dc2e91d0b8be52aaaf5597caade49d44e58812d36cb7541f60c8\",\"scope-0004-a5ae4278348ad849b4c282740f19ef0658564cc955edde76d95be84e4ab57319\",\"scope-0005-6d75b8413d8977c82e9d97ebba7dfc937ce1fa67d70436de8288e880b0c1daf7\",\"scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da\",\"scope-0007-5eb928e90b32f0e6dd083ed8d5f2284a4e5c33ddd42ff6089dbeeaeef054b1c1\",\"scope-0008-7ff449605d59bca1aeed452e02bfcc497c2edc7d12ecd887b79a509dbeb3cceb\"],\"action\":{\"scopeId\":\"scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb\",\"surface\":\"提交\"},\"object\":{\"scopeId\":\"scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb\",\"surface\":\"活动报名表\"},\"inferenceLevel\":\"explicit\",\"semantics\":{\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\"},\"actionType\":\"submit\",\"effect\":\"physical_action\",\"detail\":{\"parentTempId\":null,\"hierarchyType\":\"task\",\"title\":\"提交活动报名表\",\"description\":\"提交活动报名表\",\"completionCriteria\":[],\"estimatedMinutes\":null,\"statusSuggestion\":\"todo\",\"prioritySuggestion\":\"medium\",\"dependencyTempIds\":[],\"materialTempIds\":[\"m0\"],\"timePointTempIds\":[\"d0\"],\"confidence\":1,\"userConfirmationRequired\":true},\"condition\":{\"value\":\"not_applicable\",\"conditionScopeIds\":[],\"factScopeIds\":[]},\"coverage\":{\"time\":\"present\",\"material\":\"present\",\"event\":\"not_stated\"},\"eventTempIds\":[]},{\"id\":\"print\",\"propositionScopeIds\":[\"scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb\",\"scope-0002-7ac2a65b9a23d75b114277b81192b967b0088aabdd29d22482855e11fc63f172\",\"scope-0003-64b32d878671dc2e91d0b8be52aaaf5597caade49d44e58812d36cb7541f60c8\",\"scope-0004-a5ae4278348ad849b4c282740f19ef0658564cc955edde76d95be84e4ab57319\",\"scope-0005-6d75b8413d8977c82e9d97ebba7dfc937ce1fa67d70436de8288e880b0c1daf7\",\"scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da\",\"scope-0007-5eb928e90b32f0e6dd083ed8d5f2284a4e5c33ddd42ff6089dbeeaeef054b1c1\",\"scope-0008-7ff449605d59bca1aeed452e02bfcc497c2edc7d12ecd887b79a509dbeb3cceb\"],\"action\":{\"scopeId\":\"scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da\",\"surface\":\"打印\"},\"object\":{\"scopeId\":\"scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da\",\"surface\":\"入场凭证\"},\"inferenceLevel\":\"explicit\",\"semantics\":{\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\"},\"actionType\":\"print\",\"effect\":\"physical_action\",\"detail\":{\"parentTempId\":null,\"hierarchyType\":\"task\",\"title\":\"打印入场凭证\",\"description\":\"打印入场凭证\",\"completionCriteria\":[],\"estimatedMinutes\":null,\"statusSuggestion\":\"todo\",\"prioritySuggestion\":\"medium\",\"dependencyTempIds\":[],\"materialTempIds\":[\"m1\"],\"timePointTempIds\":[\"d1\"],\"confidence\":1,\"userConfirmationRequired\":true},\"condition\":{\"value\":\"not_applicable\",\"conditionScopeIds\":[],\"factScopeIds\":[]},\"coverage\":{\"time\":\"present\",\"material\":\"present\",\"event\":\"not_stated\"},\"eventTempIds\":[]}],\"materials\":[{\"tempId\":\"m0\",\"name\":\"活动报名表\",\"required\":true,\"formatRequirements\":[\"PDF\"],\"namingRequirements\":[\"组别\"],\"quantity\":1,\"submissionChannel\":\"活动平台\",\"relatedTaskTempIds\":[\"submit\"],\"confidence\":1,\"scopeIds\":[\"scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb\",\"scope-0002-7ac2a65b9a23d75b114277b81192b967b0088aabdd29d22482855e11fc63f172\",\"scope-0003-64b32d878671dc2e91d0b8be52aaaf5597caade49d44e58812d36cb7541f60c8\",\"scope-0004-a5ae4278348ad849b4c282740f19ef0658564cc955edde76d95be84e4ab57319\",\"scope-0005-6d75b8413d8977c82e9d97ebba7dfc937ce1fa67d70436de8288e880b0c1daf7\",\"scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da\",\"scope-0007-5eb928e90b32f0e6dd083ed8d5f2284a4e5c33ddd42ff6089dbeeaeef054b1c1\",\"scope-0008-7ff449605d59bca1aeed452e02bfcc497c2edc7d12ecd887b79a509dbeb3cceb\"]},{\"tempId\":\"m1\",\"name\":\"入场凭证\",\"required\":true,\"formatRequirements\":[\"A4\"],\"namingRequirements\":[],\"quantity\":1,\"submissionChannel\":null,\"relatedTaskTempIds\":[\"print\"],\"confidence\":1,\"scopeIds\":[\"scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb\",\"scope-0002-7ac2a65b9a23d75b114277b81192b967b0088aabdd29d22482855e11fc63f172\",\"scope-0003-64b32d878671dc2e91d0b8be52aaaf5597caade49d44e58812d36cb7541f60c8\",\"scope-0004-a5ae4278348ad849b4c282740f19ef0658564cc955edde76d95be84e4ab57319\",\"scope-0005-6d75b8413d8977c82e9d97ebba7dfc937ce1fa67d70436de8288e880b0c1daf7\",\"scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da\",\"scope-0007-5eb928e90b32f0e6dd083ed8d5f2284a4e5c33ddd42ff6089dbeeaeef054b1c1\",\"scope-0008-7ff449605d59bca1aeed452e02bfcc497c2edc7d12ecd887b79a509dbeb3cceb\"]}],\"timePoints\":[{\"tempId\":\"d0\",\"type\":\"task_deadline\",\"rawText\":\"2026年9月10日18:00前\",\"relatedTaskTempIds\":[\"submit\"],\"relatedMaterialTempIds\":[\"m0\"],\"confidence\":1,\"scopeIds\":[\"scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb\",\"scope-0002-7ac2a65b9a23d75b114277b81192b967b0088aabdd29d22482855e11fc63f172\",\"scope-0003-64b32d878671dc2e91d0b8be52aaaf5597caade49d44e58812d36cb7541f60c8\",\"scope-0004-a5ae4278348ad849b4c282740f19ef0658564cc955edde76d95be84e4ab57319\",\"scope-0005-6d75b8413d8977c82e9d97ebba7dfc937ce1fa67d70436de8288e880b0c1daf7\",\"scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da\",\"scope-0007-5eb928e90b32f0e6dd083ed8d5f2284a4e5c33ddd42ff6089dbeeaeef054b1c1\",\"scope-0008-7ff449605d59bca1aeed452e02bfcc497c2edc7d12ecd887b79a509dbeb3cceb\"]},{\"tempId\":\"d1\",\"type\":\"task_deadline\",\"rawText\":\"2026年9月11日18:00前\",\"relatedTaskTempIds\":[\"print\"],\"relatedMaterialTempIds\":[\"m1\"],\"confidence\":1,\"scopeIds\":[\"scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb\",\"scope-0002-7ac2a65b9a23d75b114277b81192b967b0088aabdd29d22482855e11fc63f172\",\"scope-0003-64b32d878671dc2e91d0b8be52aaaf5597caade49d44e58812d36cb7541f60c8\",\"scope-0004-a5ae4278348ad849b4c282740f19ef0658564cc955edde76d95be84e4ab57319\",\"scope-0005-6d75b8413d8977c82e9d97ebba7dfc937ce1fa67d70436de8288e880b0c1daf7\",\"scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da\",\"scope-0007-5eb928e90b32f0e6dd083ed8d5f2284a4e5c33ddd42ff6089dbeeaeef054b1c1\",\"scope-0008-7ff449605d59bca1aeed452e02bfcc497c2edc7d12ecd887b79a509dbeb3cceb\"]}],\"events\":[],\"revisions\":[],\"conflicts\":[],\"informationScopeIds\":[],\"unresolvedScopeIds\":[]}",
++           "rawResponse": {
++             "conflicts": [],
++             "events": [],
++             "informationScopeIds": [],
++             "materials": [
++               {
++                 "confidence": 1,
++                 "formatRequirements": [
++                   "PDF",
++                 ],
++                 "name": "活动报名表",
++                 "namingRequirements": [
++                   "组别",
++                 ],
++                 "quantity": 1,
++                 "relatedTaskTempIds": [
++                   "submit",
++                 ],
++                 "required": true,
++                 "scopeIds": [
++                   "scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb",
++                   "scope-0002-7ac2a65b9a23d75b114277b81192b967b0088aabdd29d22482855e11fc63f172",
++                   "scope-0003-64b32d878671dc2e91d0b8be52aaaf5597caade49d44e58812d36cb7541f60c8",
++                   "scope-0004-a5ae4278348ad849b4c282740f19ef0658564cc955edde76d95be84e4ab57319",
++                   "scope-0005-6d75b8413d8977c82e9d97ebba7dfc937ce1fa67d70436de8288e880b0c1daf7",
++                   "scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da",
++                   "scope-0007-5eb928e90b32f0e6dd083ed8d5f2284a4e5c33ddd42ff6089dbeeaeef054b1c1",
++                   "scope-0008-7ff449605d59bca1aeed452e02bfcc497c2edc7d12ecd887b79a509dbeb3cceb",
++                 ],
++                 "submissionChannel": "活动平台",
++                 "tempId": "m0",
++               },
++               {
++                 "confidence": 1,
++                 "formatRequirements": [
++                   "A4",
++                 ],
++                 "name": "入场凭证",
++                 "namingRequirements": [],
++                 "quantity": 1,
++                 "relatedTaskTempIds": [
++                   "print",
++                 ],
++                 "required": true,
++                 "scopeIds": [
++                   "scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb",
++                   "scope-0002-7ac2a65b9a23d75b114277b81192b967b0088aabdd29d22482855e11fc63f172",
++                   "scope-0003-64b32d878671dc2e91d0b8be52aaaf5597caade49d44e58812d36cb7541f60c8",
++                   "scope-0004-a5ae4278348ad849b4c282740f19ef0658564cc955edde76d95be84e4ab57319",
++                   "scope-0005-6d75b8413d8977c82e9d97ebba7dfc937ce1fa67d70436de8288e880b0c1daf7",
++                   "scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da",
++                   "scope-0007-5eb928e90b32f0e6dd083ed8d5f2284a4e5c33ddd42ff6089dbeeaeef054b1c1",
++                   "scope-0008-7ff449605d59bca1aeed452e02bfcc497c2edc7d12ecd887b79a509dbeb3cceb",
++                 ],
++                 "submissionChannel": null,
++                 "tempId": "m1",
++               },
++             ],
++             "revisions": [],
++             "schemaVersion": "real-input-model-wire-1",
++             "tasks": [
++               {
++                 "action": {
++                   "scopeId": "scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb",
++                   "surface": "提交",
++                 },
++                 "actionType": "submit",
++                 "condition": {
++                   "conditionScopeIds": [],
++                   "factScopeIds": [],
++                   "value": "not_applicable",
++                 },
++                 "coverage": {
++                   "event": "not_stated",
++                   "material": "present",
++                   "time": "present",
++                 },
++                 "detail": {
++                   "completionCriteria": [],
++                   "confidence": 1,
++                   "dependencyTempIds": [],
++                   "description": "提交活动报名表",
++                   "estimatedMinutes": null,
++                   "hierarchyType": "task",
++                   "materialTempIds": [
++                     "m0",
++                   ],
++                   "parentTempId": null,
++                   "prioritySuggestion": "medium",
++                   "statusSuggestion": "todo",
++                   "timePointTempIds": [
++                     "d0",
++                   ],
++                   "title": "提交活动报名表",
++                   "userConfirmationRequired": true,
++                 },
++                 "effect": "physical_action",
++                 "eventTempIds": [],
++                 "id": "submit",
++                 "inferenceLevel": "explicit",
++                 "object": {
++                   "scopeId": "scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb",
++                   "surface": "活动报名表",
++                 },
++                 "propositionScopeIds": [
++                   "scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb",
++                   "scope-0002-7ac2a65b9a23d75b114277b81192b967b0088aabdd29d22482855e11fc63f172",
++                   "scope-0003-64b32d878671dc2e91d0b8be52aaaf5597caade49d44e58812d36cb7541f60c8",
++                   "scope-0004-a5ae4278348ad849b4c282740f19ef0658564cc955edde76d95be84e4ab57319",
++                   "scope-0005-6d75b8413d8977c82e9d97ebba7dfc937ce1fa67d70436de8288e880b0c1daf7",
++                   "scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da",
++                   "scope-0007-5eb928e90b32f0e6dd083ed8d5f2284a4e5c33ddd42ff6089dbeeaeef054b1c1",
++                   "scope-0008-7ff449605d59bca1aeed452e02bfcc497c2edc7d12ecd887b79a509dbeb3cceb",
++                 ],
++                 "semantics": {
++                   "actor": "addressee",
++                   "modality": "required",
++                   "polarity": "affirmative",
++                   "speechAct": "directive",
++                   "status": "pending",
++                   "tense": "future",
++                   "validity": "active",
++                 },
++               },
++               {
++                 "action": {
++                   "scopeId": "scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da",
++                   "surface": "打印",
++                 },
++                 "actionType": "print",
++                 "condition": {
++                   "conditionScopeIds": [],
++                   "factScopeIds": [],
++                   "value": "not_applicable",
++                 },
++                 "coverage": {
++                   "event": "not_stated",
++                   "material": "present",
++                   "time": "present",
++                 },
++                 "detail": {
++                   "completionCriteria": [],
++                   "confidence": 1,
++                   "dependencyTempIds": [],
++                   "description": "打印入场凭证",
++                   "estimatedMinutes": null,
++                   "hierarchyType": "task",
++                   "materialTempIds": [
++                     "m1",
++                   ],
++                   "parentTempId": null,
++                   "prioritySuggestion": "medium",
++                   "statusSuggestion": "todo",
++                   "timePointTempIds": [
++                     "d1",
++                   ],
++                   "title": "打印入场凭证",
++                   "userConfirmationRequired": true,
++                 },
++                 "effect": "physical_action",
++                 "eventTempIds": [],
++                 "id": "print",
++                 "inferenceLevel": "explicit",
++                 "object": {
++                   "scopeId": "scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da",
++                   "surface": "入场凭证",
++                 },
++                 "propositionScopeIds": [
++                   "scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb",
++                   "scope-0002-7ac2a65b9a23d75b114277b81192b967b0088aabdd29d22482855e11fc63f172",
++                   "scope-0003-64b32d878671dc2e91d0b8be52aaaf5597caade49d44e58812d36cb7541f60c8",
++                   "scope-0004-a5ae4278348ad849b4c282740f19ef0658564cc955edde76d95be84e4ab57319",
++                   "scope-0005-6d75b8413d8977c82e9d97ebba7dfc937ce1fa67d70436de8288e880b0c1daf7",
++                   "scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da",
++                   "scope-0007-5eb928e90b32f0e6dd083ed8d5f2284a4e5c33ddd42ff6089dbeeaeef054b1c1",
++                   "scope-0008-7ff449605d59bca1aeed452e02bfcc497c2edc7d12ecd887b79a509dbeb3cceb",
++                 ],
++                 "semantics": {
++                   "actor": "addressee",
++                   "modality": "required",
++                   "polarity": "affirmative",
++                   "speechAct": "directive",
++                   "status": "pending",
++                   "tense": "future",
++                   "validity": "active",
++                 },
++               },
++             ],
++             "timePoints": [
++               {
++                 "confidence": 1,
++                 "rawText": "2026年9月10日18:00前",
++                 "relatedMaterialTempIds": [
++                   "m0",
++                 ],
++                 "relatedTaskTempIds": [
++                   "submit",
++                 ],
++                 "scopeIds": [
++                   "scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb",
++                   "scope-0002-7ac2a65b9a23d75b114277b81192b967b0088aabdd29d22482855e11fc63f172",
++                   "scope-0003-64b32d878671dc2e91d0b8be52aaaf5597caade49d44e58812d36cb7541f60c8",
++                   "scope-0004-a5ae4278348ad849b4c282740f19ef0658564cc955edde76d95be84e4ab57319",
++                   "scope-0005-6d75b8413d8977c82e9d97ebba7dfc937ce1fa67d70436de8288e880b0c1daf7",
++                   "scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da",
++                   "scope-0007-5eb928e90b32f0e6dd083ed8d5f2284a4e5c33ddd42ff6089dbeeaeef054b1c1",
++                   "scope-0008-7ff449605d59bca1aeed452e02bfcc497c2edc7d12ecd887b79a509dbeb3cceb",
++                 ],
++                 "tempId": "d0",
++                 "type": "task_deadline",
++               },
++               {
++                 "confidence": 1,
++                 "rawText": "2026年9月11日18:00前",
++                 "relatedMaterialTempIds": [
++                   "m1",
++                 ],
++                 "relatedTaskTempIds": [
++                   "print",
++                 ],
++                 "scopeIds": [
++                   "scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb",
++                   "scope-0002-7ac2a65b9a23d75b114277b81192b967b0088aabdd29d22482855e11fc63f172",
++                   "scope-0003-64b32d878671dc2e91d0b8be52aaaf5597caade49d44e58812d36cb7541f60c8",
++                   "scope-0004-a5ae4278348ad849b4c282740f19ef0658564cc955edde76d95be84e4ab57319",
++                   "scope-0005-6d75b8413d8977c82e9d97ebba7dfc937ce1fa67d70436de8288e880b0c1daf7",
++                   "scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da",
++                   "scope-0007-5eb928e90b32f0e6dd083ed8d5f2284a4e5c33ddd42ff6089dbeeaeef054b1c1",
++                   "scope-0008-7ff449605d59bca1aeed452e02bfcc497c2edc7d12ecd887b79a509dbeb3cceb",
++                 ],
++                 "tempId": "d1",
++                 "type": "task_deadline",
++               },
++             ],
++             "unresolvedScopeIds": [],
++           },
++           "runId": "source:bd51027e:run:1:1",
++           "sendSnapshot": {
++             "consentAt": "2026-09-05T08:00:00.000Z",
++             "coverage": "complete_declared_range",
++             "inputId": "read-multi",
++             "pages": [
++               1,
++             ],
++             "ranges": [
++               {
++                 "end": 82,
++                 "page": 1,
++                 "pageTextSha256": "ea9d24a64fd8ed655a991de33cb1d8072cc938405e5b6b2fb8b1e285ee6666ba",
++                 "start": 0,
++               },
++             ],
++             "receiptSha256": "15595a0b44228ac13d2c45de2dd810791007079d196f5c6fbf0e410e8fa5adbd",
++             "reviewedPages": [
++               1,
++             ],
++             "text": "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。",
++             "textSha256": "ea9d24a64fd8ed655a991de33cb1d8072cc938405e5b6b2fb8b1e285ee6666ba",
++             "version": "real-input-send-1",
++           },
++           "sourceId": "source:bd51027e",
++           "sourceVersionId": "source:bd51027e:version:1",
++           "version": "mainline-real-input-state-1",
++         },
++         "realInputPending": {
++           "execution": "seen_engineering_replay",
++           "operationId": "send-multi",
++           "reading": {
++             "inputReceipt": {
++               "corrections": [],
++               "extractorVersion": "real-input-paste-1",
++               "file": null,
++               "inputId": "read-multi",
++               "originalSha256": "0d399802cea1ae55cfd8a66c2f34c7146b41642ac64112b5ff6c39f5241de6a0",
++               "pageCount": 1,
++               "pages": [
++                 {
++                   "chunks": [
++                     "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。",
++                   ],
++                   "issues": [],
++                   "number": 1,
++                   "ocrChunks": null,
++                   "parserChunks": [
++                     "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。",
++                   ],
++                   "route": "parser",
++                 },
++               ],
++               "sourceType": "text",
++               "version": "real-input-receipt-1",
++             },
++             "sendSnapshot": {
++               "consentAt": "2026-09-05T08:00:00.000Z",
++               "coverage": "complete_declared_range",
++               "inputId": "read-multi",
++               "pages": [
++                 1,
++               ],
++               "ranges": [
++                 {
++                   "end": 82,
++                   "page": 1,
++                   "pageTextSha256": "ea9d24a64fd8ed655a991de33cb1d8072cc938405e5b6b2fb8b1e285ee6666ba",
++                   "start": 0,
++                 },
++               ],
++               "receiptSha256": "15595a0b44228ac13d2c45de2dd810791007079d196f5c6fbf0e410e8fa5adbd",
++               "reviewedPages": [
++                 1,
++               ],
++               "text": "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。",
++               "textSha256": "ea9d24a64fd8ed655a991de33cb1d8072cc938405e5b6b2fb8b1e285ee6666ba",
++               "version": "real-input-send-1",
++             },
++             "version": "mainline-real-input-state-1",
++           },
++         },
++       },
++       "recognitionRunId": "source:bd51027e:run:1:1",
++       "rejectedEntityTempIds": [],
++       "result": null,
++       "status": "partially_confirmed",
++       "updatedAt": "2026-09-06T22:57:00.510Z",
++     },
++   ],
++   "historyRecords": [
++     {
++       "action": "mainline05_review_task",
++       "actor": "user",
++       "after": {
++         "kind": "review_task",
++         "reviewIdentity": "{\"identity\":\"{\\\"conflicts\\\":[],\\\"events\\\":[],\\\"fingerprint\\\":\\\"sha256:d29c7bce72cbbb6d33476f24662143ac015b0c879b907dba87cb9a0a21cadea9\\\",\\\"materials\\\":[{\\\"confidence\\\":1,\\\"formatRequirements\\\":[\\\"PDF\\\"],\\\"name\\\":\\\"活动报名表\\\",\\\"namingRequirements\\\":[\\\"组别\\\"],\\\"quantity\\\":1,\\\"relatedTaskTempIds\\\":[\\\"submit\\\"],\\\"required\\\":true,\\\"scopeIds\\\":[\\\"scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb\\\",\\\"scope-0002-7ac2a65b9a23d75b114277b81192b967b0088aabdd29d22482855e11fc63f172\\\",\\\"scope-0003-64b32d878671dc2e91d0b8be52aaaf5597caade49d44e58812d36cb7541f60c8\\\",\\\"scope-0004-a5ae4278348ad849b4c282740f19ef0658564cc955edde76d95be84e4ab57319\\\",\\\"scope-0005-6d75b8413d8977c82e9d97ebba7dfc937ce1fa67d70436de8288e880b0c1daf7\\\",\\\"scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da\\\",\\\"scope-0007-5eb928e90b32f0e6dd083ed8d5f2284a4e5c33ddd42ff6089dbeeaeef054b1c1\\\",\\\"scope-0008-7ff449605d59bca1aeed452e02bfcc497c2edc7d12ecd887b79a509dbeb3cceb\\\"],\\\"submissionChannel\\\":\\\"活动平台\\\",\\\"tempId\\\":\\\"m0\\\"}],\\\"revisions\\\":[],\\\"sourceId\\\":\\\"source:bd51027e\\\",\\\"sourceVersionId\\\":\\\"source:bd51027e:version:1\\\",\\\"tasks\\\":[{\\\"action\\\":{\\\"scopeId\\\":\\\"scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb\\\",\\\"surface\\\":\\\"提交\\\"},\\\"actionType\\\":\\\"submit\\\",\\\"condition\\\":{\\\"conditionScopeIds\\\":[],\\\"factScopeIds\\\":[],\\\"value\\\":\\\"not_applicable\\\"},\\\"coverage\\\":{\\\"event\\\":\\\"not_stated\\\",\\\"material\\\":\\\"present\\\",\\\"time\\\":\\\"present\\\"},\\\"detail\\\":{\\\"completionCriteria\\\":[],\\\"confidence\\\":1,\\\"dependencyTempIds\\\":[],\\\"description\\\":\\\"提交活动报名表\\\",\\\"estimatedMinutes\\\":null,\\\"hierarchyType\\\":\\\"task\\\",\\\"materialTempIds\\\":[\\\"m0\\\"],\\\"parentTempId\\\":null,\\\"prioritySuggestion\\\":\\\"medium\\\",\\\"statusSuggestion\\\":\\\"todo\\\",\\\"timePointTempIds\\\":[\\\"d0\\\"],\\\"title\\\":\\\"提交活动报名表\\\",\\\"userConfirmationRequired\\\":true},\\\"effect\\\":\\\"physical_action\\\",\\\"eventTempIds\\\":[],\\\"id\\\":\\\"submit\\\",\\\"inferenceLevel\\\":\\\"explicit\\\",\\\"object\\\":{\\\"scopeId\\\":\\\"scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb\\\",\\\"surface\\\":\\\"活动报名表\\\"},\\\"propositionScopeIds\\\":[\\\"scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb\\\",\\\"scope-0002-7ac2a65b9a23d75b114277b81192b967b0088aabdd29d22482855e11fc63f172\\\",\\\"scope-0003-64b32d878671dc2e91d0b8be52aaaf5597caade49d44e58812d36cb7541f60c8\\\",\\\"scope-0004-a5ae4278348ad849b4c282740f19ef0658564cc955edde76d95be84e4ab57319\\\",\\\"scope-0005-6d75b8413d8977c82e9d97ebba7dfc937ce1fa67d70436de8288e880b0c1daf7\\\",\\\"scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da\\\",\\\"scope-0007-5eb928e90b32f0e6dd083ed8d5f2284a4e5c33ddd42ff6089dbeeaeef054b1c1\\\",\\\"scope-0008-7ff449605d59bca1aeed452e02bfcc497c2edc7d12ecd887b79a509dbeb3cceb\\\"],\\\"semantics\\\":{\\\"actor\\\":\\\"addressee\\\",\\\"modality\\\":\\\"required\\\",\\\"polarity\\\":\\\"affirmative\\\",\\\"speechAct\\\":\\\"directive\\\",\\\"status\\\":\\\"pending\\\",\\\"tense\\\":\\\"future\\\",\\\"validity\\\":\\\"active\\\"}}],\\\"timePoints\\\":[{\\\"confidence\\\":1,\\\"isAllDay\\\":false,\\\"needsConfirmation\\\":false,\\\"normalizedValue\\\":\\\"2026-09-10T18:00\\\",\\\"precision\\\":\\\"exact\\\",\\\"rawText\\\":\\\"2026年9月10日18:00前\\\",\\\"relatedMaterialTempIds\\\":[\\\"m0\\\"],\\\"relatedTaskTempIds\\\":[\\\"submit\\\"],\\\"scopeIds\\\":[\\\"scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb\\\",\\\"scope-0002-7ac2a65b9a23d75b114277b81192b967b0088aabdd29d22482855e11fc63f172\\\",\\\"scope-0003-64b32d878671dc2e91d0b8be52aaaf5597caade49d44e58812d36cb7541f60c8\\\",\\\"scope-0004-a5ae4278348ad849b4c282740f19ef0658564cc955edde76d95be84e4ab57319\\\",\\\"scope-0005-6d75b8413d8977c82e9d97ebba7dfc937ce1fa67d70436de8288e880b0c1daf7\\\",\\\"scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da\\\",\\\"scope-0007-5eb928e90b32f0e6dd083ed8d5f2284a4e5c33ddd42ff6089dbeeaeef054b1c1\\\",\\\"scope-0008-7ff449605d59bca1aeed452e02bfcc497c2edc7d12ecd887b79a509dbeb3cceb\\\"],\\\"tempId\\\":\\\"d0\\\",\\\"timezone\\\":\\\"Asia/Shanghai\\\",\\\"type\\\":\\\"task_deadline\\\"}],\\\"unresolvedScopeIds\\\":[]}\",\"userValues\":{\"submit\":{\"deadline\":\"2026-09-10T18:00\",\"title\":\"提交活动报名表\"}}}",
++         "taskIds": [
++           "submit",
++         ],
++       },
++       "before": null,
++       "changedAt": "2026-09-06T22:57:00.354Z",
++       "entityId": "source:bd51027e:draft:1:1",
++       "entityType": "extraction_draft",
++       "fieldName": null,
++       "id": "mainline05:history:source:bd51027e:draft:1:1:2f3f213a-9307-4494-8bff-4f5e37be72bd",
++       "reason": "mainline-real-input-state-1",
++       "sourceVersionId": "source:bd51027e:version:1",
++     },
++     {
++       "action": "mainline05_confirm",
++       "actor": "user",
++       "after": {
++         "kind": "confirm",
++         "taskIds": [
++           "submit",
++         ],
++       },
++       "before": null,
++       "changedAt": "2026-09-06T22:57:00.398Z",
++       "entityId": "source:bd51027e:draft:1:1",
++       "entityType": "extraction_draft",
++       "fieldName": null,
++       "id": "mainline05:history:source:bd51027e:draft:1:1:219f5a97-7b25-466e-8af2-de5a84cffd11",
++       "reason": "mainline-real-input-state-1",
++       "sourceVersionId": "source:bd51027e:version:1",
++     },
++     {
++       "action": "mainline05_review_task",
++       "actor": "user",
++       "after": {
++         "kind": "review_task",
++         "reviewIdentity": "{\"identity\":\"{\\\"conflicts\\\":[],\\\"events\\\":[],\\\"fingerprint\\\":\\\"sha256:d29c7bce72cbbb6d33476f24662143ac015b0c879b907dba87cb9a0a21cadea9\\\",\\\"materials\\\":[{\\\"confidence\\\":1,\\\"formatRequirements\\\":[\\\"A4\\\"],\\\"name\\\":\\\"入场凭证\\\",\\\"namingRequirements\\\":[],\\\"quantity\\\":1,\\\"relatedTaskTempIds\\\":[\\\"print\\\"],\\\"required\\\":true,\\\"scopeIds\\\":[\\\"scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb\\\",\\\"scope-0002-7ac2a65b9a23d75b114277b81192b967b0088aabdd29d22482855e11fc63f172\\\",\\\"scope-0003-64b32d878671dc2e91d0b8be52aaaf5597caade49d44e58812d36cb7541f60c8\\\",\\\"scope-0004-a5ae4278348ad849b4c282740f19ef0658564cc955edde76d95be84e4ab57319\\\",\\\"scope-0005-6d75b8413d8977c82e9d97ebba7dfc937ce1fa67d70436de8288e880b0c1daf7\\\",\\\"scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da\\\",\\\"scope-0007-5eb928e90b32f0e6dd083ed8d5f2284a4e5c33ddd42ff6089dbeeaeef054b1c1\\\",\\\"scope-0008-7ff449605d59bca1aeed452e02bfcc497c2edc7d12ecd887b79a509dbeb3cceb\\\"],\\\"submissionChannel\\\":null,\\\"tempId\\\":\\\"m1\\\"}],\\\"revisions\\\":[],\\\"sourceId\\\":\\\"source:bd51027e\\\",\\\"sourceVersionId\\\":\\\"source:bd51027e:version:1\\\",\\\"tasks\\\":[{\\\"action\\\":{\\\"scopeId\\\":\\\"scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da\\\",\\\"surface\\\":\\\"打印\\\"},\\\"actionType\\\":\\\"print\\\",\\\"condition\\\":{\\\"conditionScopeIds\\\":[],\\\"factScopeIds\\\":[],\\\"value\\\":\\\"not_applicable\\\"},\\\"coverage\\\":{\\\"event\\\":\\\"not_stated\\\",\\\"material\\\":\\\"present\\\",\\\"time\\\":\\\"present\\\"},\\\"detail\\\":{\\\"completionCriteria\\\":[],\\\"confidence\\\":1,\\\"dependencyTempIds\\\":[],\\\"description\\\":\\\"打印入场凭证\\\",\\\"estimatedMinutes\\\":null,\\\"hierarchyType\\\":\\\"task\\\",\\\"materialTempIds\\\":[\\\"m1\\\"],\\\"parentTempId\\\":null,\\\"prioritySuggestion\\\":\\\"medium\\\",\\\"statusSuggestion\\\":\\\"todo\\\",\\\"timePointTempIds\\\":[\\\"d1\\\"],\\\"title\\\":\\\"打印入场凭证\\\",\\\"userConfirmationRequired\\\":true},\\\"effect\\\":\\\"physical_action\\\",\\\"eventTempIds\\\":[],\\\"id\\\":\\\"print\\\",\\\"inferenceLevel\\\":\\\"explicit\\\",\\\"object\\\":{\\\"scopeId\\\":\\\"scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da\\\",\\\"surface\\\":\\\"入场凭证\\\"},\\\"propositionScopeIds\\\":[\\\"scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb\\\",\\\"scope-0002-7ac2a65b9a23d75b114277b81192b967b0088aabdd29d22482855e11fc63f172\\\",\\\"scope-0003-64b32d878671dc2e91d0b8be52aaaf5597caade49d44e58812d36cb7541f60c8\\\",\\\"scope-0004-a5ae4278348ad849b4c282740f19ef0658564cc955edde76d95be84e4ab57319\\\",\\\"scope-0005-6d75b8413d8977c82e9d97ebba7dfc937ce1fa67d70436de8288e880b0c1daf7\\\",\\\"scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da\\\",\\\"scope-0007-5eb928e90b32f0e6dd083ed8d5f2284a4e5c33ddd42ff6089dbeeaeef054b1c1\\\",\\\"scope-0008-7ff449605d59bca1aeed452e02bfcc497c2edc7d12ecd887b79a509dbeb3cceb\\\"],\\\"semantics\\\":{\\\"actor\\\":\\\"addressee\\\",\\\"modality\\\":\\\"required\\\",\\\"polarity\\\":\\\"affirmative\\\",\\\"speechAct\\\":\\\"directive\\\",\\\"status\\\":\\\"pending\\\",\\\"tense\\\":\\\"future\\\",\\\"validity\\\":\\\"active\\\"}}],\\\"timePoints\\\":[{\\\"confidence\\\":1,\\\"isAllDay\\\":false,\\\"needsConfirmation\\\":false,\\\"normalizedValue\\\":\\\"2026-09-11T18:00\\\",\\\"precision\\\":\\\"exact\\\",\\\"rawText\\\":\\\"2026年9月11日18:00前\\\",\\\"relatedMaterialTempIds\\\":[\\\"m1\\\"],\\\"relatedTaskTempIds\\\":[\\\"print\\\"],\\\"scopeIds\\\":[\\\"scope-0001-6c6fac6f7891ec26721eb49bc008863f7088759309099d17d0e5de760d161aeb\\\",\\\"scope-0002-7ac2a65b9a23d75b114277b81192b967b0088aabdd29d22482855e11fc63f172\\\",\\\"scope-0003-64b32d878671dc2e91d0b8be52aaaf5597caade49d44e58812d36cb7541f60c8\\\",\\\"scope-0004-a5ae4278348ad849b4c282740f19ef0658564cc955edde76d95be84e4ab57319\\\",\\\"scope-0005-6d75b8413d8977c82e9d97ebba7dfc937ce1fa67d70436de8288e880b0c1daf7\\\",\\\"scope-0006-84464aada2659d2ce150ca8ab3cafe5476b4202212bd346dd79bc9f5d6c7d3da\\\",\\\"scope-0007-5eb928e90b32f0e6dd083ed8d5f2284a4e5c33ddd42ff6089dbeeaeef054b1c1\\\",\\\"scope-0008-7ff449605d59bca1aeed452e02bfcc497c2edc7d12ecd887b79a509dbeb3cceb\\\"],\\\"tempId\\\":\\\"d1\\\",\\\"timezone\\\":\\\"Asia/Shanghai\\\",\\\"type\\\":\\\"task_deadline\\\"}],\\\"unresolvedScopeIds\\\":[]}\",\"userValues\":{\"print\":{\"deadline\":\"2026-09-11T18:00\",\"title\":\"打印入场凭证\"}}}",
++         "taskIds": [
++           "print",
++         ],
++       },
++       "before": null,
++       "changedAt": "2026-09-06T22:57:00.510Z",
++       "entityId": "source:bd51027e:draft:1:1",
++       "entityType": "extraction_draft",
++       "fieldName": null,
++       "id": "mainline05:history:source:bd51027e:draft:1:1:0a08650d-b1d5-4554-858a-a76bb17ff5ee",
++       "reason": "mainline-real-input-state-1",
++       "sourceVersionId": "source:bd51027e:version:1",
++     },
++   ],
++   "materials": [
++     {
++       "createdAt": "2026-09-06T22:57:00.398Z",
++       "deadlineTimePointId": "mainline05:time:source:bd51027e:draft:1:1:d0",
++       "formatRequirements": [
++         "PDF",
++       ],
++       "id": "mainline05:material:source:bd51027e:draft:1:1:m0",
++       "legacyData": {
++         "mainline05DraftId": "source:bd51027e:draft:1:1",
++         "recognitionTempId": "m0",
++         "sourceId": "source:bd51027e",
++       },
++       "name": "活动报名表",
++       "namingRequirements": [
++         "组别",
++       ],
++       "projectId": null,
++       "quantity": 1,
++       "relatedTaskIds": [
++         "mainline05:task:source:bd51027e:draft:1:1:submit",
++       ],
++       "required": true,
++       "requirements": [],
++       "status": "missing",
++       "submissionChannel": "活动平台",
++       "updatedAt": "2026-09-06T22:57:00.398Z",
++       "version": 1,
++     },
++   ],
++   "migrationMetadata": [],
++   "milestones": [],
++   "preferences": {
++     "onboardingCompletedAt": null,
++   },
++   "projects": [],
++   "recognitionRuns": [
++     {
++       "completedAt": "2026-09-06T22:57:00.327Z",
++       "durationMs": null,
++       "errorCode": null,
++       "id": "source:bd51027e:run:1:1",
++       "modelName": "deepseek-v4-flash-vision-exp",
++       "pipelineVersion": "mainline-real-input-state-1",
++       "promptVersion": "real-input-source-semantics-1",
++       "provider": "manual",
++       "qualityFlags": [],
++       "schemaVersion": "mainline-real-input-state-1",
++       "sourceVersionId": "source:bd51027e:version:1",
++       "startedAt": "2026-09-05T08:00:00.000Z",
++       "status": "succeeded",
++       "tokenUsage": null,
++     },
++   ],
++   "reminderRecords": [],
++   "savedAt": "2026-09-06T22:57:00.510Z",
++   "schemaVersion": 8,
++   "settings": {
++     "defaultTimezone": "Asia/Shanghai",
++     "locale": "zh-CN",
++   },
++   "sourceVersions": [
++     {
++       "contentHash": "fnv1a32:3e34ed7c",
++       "createdAt": "2026-09-05T08:00:00.000Z",
++       "id": "source:bd51027e:version:1",
++       "legacyData": {
++         "reviewMetadata": {
++           "realInput01": {
++             "inputReceipt": {
++               "corrections": [],
++               "extractorVersion": "real-input-paste-1",
++               "file": null,
++               "inputId": "read-multi",
++               "originalSha256": "0d399802cea1ae55cfd8a66c2f34c7146b41642ac64112b5ff6c39f5241de6a0",
++               "pageCount": 1,
++               "pages": [
++                 {
++                   "chunks": [
++                     "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。",
++                   ],
++                   "issues": [],
++                   "number": 1,
++                   "ocrChunks": null,
++                   "parserChunks": [
++                     "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。",
++                   ],
++                   "route": "parser",
++                 },
++               ],
++               "sourceType": "text",
++               "version": "real-input-receipt-1",
++             },
++             "sendSnapshot": null,
++             "version": "mainline-real-input-state-1",
++           },
++         },
++       },
++       "rawText": "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。",
++       "rawTextRef": null,
++       "sourceId": "source:bd51027e",
++       "versionNo": 1,
++     },
++   ],
++   "sources": [
++     {
++       "createdAt": "2026-09-05T08:00:00.000Z",
++       "currentVersionId": "source:bd51027e:version:1",
++       "id": "source:bd51027e",
++       "legacyData": {
++         "captureOperationId": "source-multi",
++         "realInput01": {
++           "inputReceipt": {
++             "corrections": [
++               {
++                 "at": "2026-09-06T22:57:00.455Z",
++                 "beforeSha256": "ea9d24a64fd8ed655a991de33cb1d8072cc938405e5b6b2fb8b1e285ee6666ba",
++                 "chunks": [
++                   "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。
++ 旧要求已取消。",
++                 ],
++                 "id": "cancel-pending",
++                 "page": 1,
++               },
++             ],
++             "extractorVersion": "real-input-paste-1",
++             "file": null,
++             "inputId": "read-multi",
++             "originalSha256": "0d399802cea1ae55cfd8a66c2f34c7146b41642ac64112b5ff6c39f5241de6a0",
++             "pageCount": 1,
++             "pages": [
++               {
++                 "chunks": [
++                   "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。",
++                 ],
++                 "issues": [],
++                 "number": 1,
++                 "ocrChunks": null,
++                 "parserChunks": [
++                   "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。",
++                 ],
++                 "route": "parser",
++               },
++             ],
++             "sourceType": "text",
++             "version": "real-input-receipt-1",
++           },
++           "sendSnapshot": null,
++           "version": "mainline-real-input-state-1",
++         },
++         "reviewMetadata": {
++           "realInput01": {
++             "inputReceipt": {
++               "corrections": [],
++               "extractorVersion": "real-input-paste-1",
++               "file": null,
++               "inputId": "read-multi",
++               "originalSha256": "0d399802cea1ae55cfd8a66c2f34c7146b41642ac64112b5ff6c39f5241de6a0",
++               "pageCount": 1,
++               "pages": [
++                 {
++                   "chunks": [
++                     "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。",
++                   ],
++                   "issues": [],
++                   "number": 1,
++                   "ocrChunks": null,
++                   "parserChunks": [
++                     "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。",
++                   ],
++                   "route": "parser",
++                 },
++               ],
++               "sourceType": "text",
++               "version": "real-input-receipt-1",
++             },
++             "sendSnapshot": null,
++             "version": "mainline-real-input-state-1",
++           },
++         },
++       },
++       "status": "partially_confirmed",
++       "title": "已见工程通知，非预测",
++       "type": "text",
++       "updatedAt": "2026-09-06T22:57:00.510Z",
++       "workspaceId": "rco-mainline-01-02-i1-real-input-test-d8843de8-718a-4b7f-849a-b7cd33da79bf",
++     },
++   ],
++   "tasks": [
++     {
++       "createdAt": "2026-09-06T22:57:00.398Z",
++       "dependencyIds": [],
++       "description": "提交活动报名表",
++       "estimatedMinutes": null,
++       "id": "mainline05:task:source:bd51027e:draft:1:1:submit",
++       "legacyData": {
++         "mainline05DraftId": "source:bd51027e:draft:1:1",
++         "recognitionTempId": "submit",
++         "sourceId": "source:bd51027e",
++       },
++       "manualPriority": null,
++       "milestoneId": null,
++       "nextAction": "提交活动报名表",
++       "parentTaskId": null,
++       "projectId": null,
++       "snoozedUntil": null,
++       "status": "todo",
++       "title": "提交活动报名表",
++       "updatedAt": "2026-09-06T22:57:00.398Z",
++       "version": 1,
++       "workPackageId": null,
++     },
++   ],
++   "timePoints": [
++     {
++       "createdAt": "2026-09-06T22:57:00.398Z",
++       "eventId": null,
++       "id": "mainline05:time:source:bd51027e:draft:1:1:d0",
++       "isAllDay": false,
++       "legacyData": {
++         "mainline05DraftId": "source:bd51027e:draft:1:1",
++         "recognitionTempId": "d0",
++         "sourceId": "source:bd51027e",
++       },
++       "materialId": "mainline05:material:source:bd51027e:draft:1:1:m0",
++       "milestoneId": null,
++       "needsConfirmation": false,
++       "normalizedValue": "2026-09-10T18:00",
++       "precision": "exact",
++       "projectId": null,
++       "rawText": "2026年9月10日18:00前",
++       "relatedMaterialIds": [
++         "mainline05:material:source:bd51027e:draft:1:1:m0",
++       ],
++       "relatedTaskIds": [
++         "mainline05:task:source:bd51027e:draft:1:1:submit",
++       ],
++       "taskId": "mainline05:task:source:bd51027e:draft:1:1:submit",
++       "timezone": "Asia/Shanghai",
++       "type": "task_deadline",
++       "updatedAt": "2026-09-06T22:57:00.398Z",
++     },
++   ],
++   "workPackages": [],
++   "workspace": {
++     "createdAt": "2026-09-05T08:00:00.000Z",
++     "id": "rco-mainline-01-02-i1-real-input-test-d8843de8-718a-4b7f-849a-b7cd33da79bf",
++     "title": "MAINLINE-01 人工工程响应（非模型预测）",
++     "updatedAt": "2026-09-06T22:57:00.510Z",
++   },
+  }
+
+ ❯ src/experiments/realInput01/runtime.test.ts:62:53
+     60|     const before = await repo.load(), corrected = await correctReadPag…
+     61|     await repo.saveReadingCorrection(handle.sourceId,corrected,semanti…
+     62|     await expect(review(repo,handle.draftId,'print')).rejects.toThrow(…
+       |                                                     ^
+     63|     expect((await repo.load()).tasks).toEqual(before.tasks)
+     64|     const nextReceipt = await acquireText('independent-source',notices…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > object correction keeps the current default title consistent and preserves explicit user title=false
+AssertionError: expected '提交入场凭证' to be '提交活动报名表' // Object.is equality
+
+Expected: "提交活动报名表"
+Received: "提交入场凭证"
+
+ ❯ src/experiments/realInput01/runtime.test.ts:85:76
+     83|       change:{kind:'surface',taskId:'submit',field:'object',value:{sco…
+     84|     const saved=await repo.load(), expectedTitle=manualTitle?'我的报名安排':…
+     85|     expect(life(stateOfRuntime(saved,handle.draftId)).values.submit.ti…
+       |                                                                            ^
+     86|     const projected=semanticReview(saved,handle.draftId)
+     87|     expect(Object.values(projected.states)[0].blockedReason).toContain…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > object correction keeps the current default title consistent and preserves explicit user title=true
+AssertionError: expected '请查看完整事实和依据，明确点击“本项事实已核对”后再选择。' to contain '标题'
+
+Expected: "标题"
+Received: "请查看完整事实和依据，明确点击“本项事实已核对”后再选择。"
+
+ ❯ src/experiments/realInput01/runtime.test.ts:87:62
+     85|     expect(life(stateOfRuntime(saved,handle.draftId)).values.submit.ti…
+     86|     const projected=semanticReview(saved,handle.draftId)
+     87|     expect(Object.values(projected.states)[0].blockedReason).toContain…
+       |                                                              ^
+     88|     await expect(confirm(repo,handle.draftId,['submit'])).rejects.toTh…
+     89|     await review(repo,handle.draftId,'submit'); const final=await conf…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  5 failed | 12 passed (17)
+   Start at  06:56:59
+   Duration  2.96s (transform 334ms, setup 0ms, collect 461ms, tests 2.01s, environment 0ms, prepare 197ms)
+
+npm notice
+npm notice New major version of npm available! 11.16.0 -> 12.0.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.0.2
+npm notice To update run: npm install -g npm@12.0.2
+npm notice

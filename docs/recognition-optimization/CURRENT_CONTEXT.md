@@ -1,79 +1,77 @@
 # RCO Current Context
 
 ## 当前结论
-- MAINLINE-REAL-INPUT-01同一包NOT_COMPLETE，新增确认安全P1后停止。
-- 登记JSON转义凭据反射P1已修复；52/52与独立复核PASS_SCOPE_ONLY。
-- 继续主线已实现本机读取/事实校对/来源和隔离保存核心、App显式slot草稿。
-- 新P1：保存原文纠错后，旧未确认建议仍可经公开核对/确认接口写成任务。
-- 已停止源码/测试修改与派发；只交付失败审计，32实现保留未提交。
-- 不是发生真实用户事故：复现只用MemoryWorkspaceRecordStore。
-- 模型调用/模型网络/费用/密钥/剪贴板访问0；模型准确率本轮未测量。
+- MAINLINE-REAL-INPUT-01同一包NOT_COMPLETE_SCOPE_BLOCKED。
+- 登记原文纠错时效P1、对象标题P2及派生标题长度P2已独审闭合。
+- 当前需要唯一新增DashboardPage.tsx保护例外；未修改该文件。
+- 主线已推进至真实runtime接线；尚未挂载完整浏览器实验入口。
+- 34实现保留未提交，7路径待建；不把报告交付算产品完成。
+- 0模型/模型网络/费用/密钥/剪贴板/真实库；准确率本轮未测量。
 
 ## 仓库与Git
 - 唯一仓库C:\Users\Winner\student-affairs-multimodal-exp。
-- 分支codex/e2-multimodal-recognition-exp；不用默认比赛工作区。
-- 本轮起点/核验远端4d11737bc0fa38f5c4f67a205237531ae3b254a5。
-- 最新审计提交查实际Git/远端及交付答复；提交不含32源码。
-- 主计划仍56d0545fd8ffdd7b71f9feeed1ad9ac22a705dbe；不回切。
-- 不重置、重装、变基、套补丁或重复应用已有实现。
+- 唯一分支codex/e2-multimodal-recognition-exp；不用默认比赛工作区。
+- 本轮起点/实时远端d6f9bdc56b8908583a25a49d122386d3126cc2be。
+- 最新审计提交以实际Git/远端和交付答复为准；不含业务实现。
+- 主计划仍56d0545fd8ffdd7b71f9feeed1ad9ac22a705dbe。
+- 不回切/重装/变基/套补丁，不重复已在本机实现。
 
-## 当前恢复入口
-- mainline-real-input-01/runs/p1-resume-20260907a/。
-- 先读AUDIT、STATE、IMPLEMENTATION_SNAPSHOT、REVIEW、ENGINEERING。
-- BASELINE绑定初始9源码/41路径、946保护、前run16+continuation12证据。
-- 恢复应核当前32现有SHA与9未创建路径；不是初始9旧SHA。
-- 当前41白名单/13已有显式例外/28新增职责不变。
-- AGENTS/PRD/最新授权；不重审RCO-0，不改主PLAN和历史报告。
-- 新run报告获准；CURRENT_CONTEXT约80行，OPTIMIZATION_LOG只追加。
+## 当前恢复与授权
+- 当前run：mainline-real-input-01/runs/input-validity-resume-20260907a/。
+- 先读AUDIT/STATE/IMPLEMENTATION_SNAPSHOT/REVIEW/ENGINEERING。
+- 起始32存在/9缺失匹配p1-resume-20260907a失败现场。
+- 最终快照34存在/7缺失；下一轮恢复以此为准，不套旧快照。
+- 原41路径/13已有例外/28新增职责仍是有效范围，尚未扩为42。
+- 本轮只修登记根因后继续获准runtime；发现需要第42路径即停。
+- CURRENT约80行；OPTIMIZATION_LOG只追加；旧计划和报告只读。
 
-## 已取得局部证据
-- 旧凭据P1修前18通过/6失败；修后预算28+网关24＝52/52。
-- 检查解码键值/嵌套JSON/重复属性；记录/返回/结算前拒绝。
-- 真实临时rawRecorder反例0字节；正常中文/嵌套JSON原文保留。
-- real_input_p1_decoded_review复跑52+6额外内存探针，无P0/P1。
-- 提取新8+旧23＝31/31；依赖mock，真实OCR仍NOT_RUN。
-- 策略/纠错15/15为中途版本；后续类型窄化不冒称新样本。
-- 保存第一次70/1，第二次71/71（新12+旧MAINLINE05 59）。
-- 该普通失败为既有capture派生contentPreview的承接，限定核验后通过。
-- 类型中途2次未接完失败保留；最后type-progress-attempt-5 PASS。
-- 旧断言/42口径与历史不改；不把新wire12测试称42/42。
-- App/InputReview/FactCorrectionEditor/modelClient仅草稿类型检查，未真实挂载。
+## 已闭合登记问题
+- isCurrentDraft除版本/run外核对已发送页的纠错历史和有效文本。
+- 已保存相关原文改动立即使旧未确认建议过期；还原不复活旧复核。
+- 未发送页更正不连坐限定范围，独立来源和已确认任务保留。
+- 显示、核对、提交一致；raw/first/SourceVersion不改。
+- 在途旧响应转失败，保持原响应证据与Run/Draft/Source终态一致。
+- 保存动作对象修订后仅未手改默认标题跟随；手写标题不覆盖。
+- 超200字派生标题要求显式保存短标题，原文对象/nextAction不截断。
 
-## 新重大P1
-- 独审real_input_core_review发现，主代理只读独立复现相同结果。
-- 正常no-date工程响应：明确核对/确认→1项保存活动手册。
-- 保存更正“此前保存通知已取消，请勿再保存。”后，isCurrentDraft仍true。
-- 再经reviewSemanticFact/confirmSemantic仍创建1项旧任务，错误确认1。
-- 结果见logs/source-correction-p1-reproduction-attempt-1.log。
-- 根因：saveReadingCorrection仅更新receipt；isCurrentDraft只比version/run。
-- 已保存读取文本、本次实际发送范围、建议依据缺少一致时效检查。
-- 不是自动默认勾选；autoSelection仍NOT_ENABLED。
-- P1发现后没有自行修复。
+## 本轮证据
+- 修前12通过/5失败；中途16接口失配及1迟到状态失败原attempt保留。
+- 最终核心95/95＝新runtime21+policy9+corrections6+旧MAINLINE05 59。
+- 其中旧V2真实内存42/42；不冒充新wire已完成42字段验收。
+- 独审75/75为长度补验前；最终长度单项1/1，另外20有意跳过。
+- 四次类型各PASS，最后包含新runtime/acceptance；不累计样本。
+- 新运行接线6通过/1失败：失败为SSR品牌断言误写。
+- 真实品牌“事务管家”，新测试误写“学生事务管家”；不是产品故障。
+- 该断言尚未修，保留现场；不得弱化旧测试或把失败写PASS。
+- 新runtime Source/Run先存、执行、失败无retry、确认/独立内存读回已测。
+- 完整工程/真实OCR/实际App浏览器/JSON下载/模型质量NOT_RUN。
+- 旧网关52/读取31只按未变SHA引用旧证据，没有本轮重测。
 
-## 普通P2与后续主线
-- 独审另见对象改为活动报名表后，title仍提交入场凭证，nextAction已更新。
-- 该探针仅独审执行，主代理未另跑；原始标题/人工编辑需区分。
-- 唯一下一建议：同包授权修复已登记P1及P2，保留正常对照与有效兄弟。
-- 先使旧输入建议失效；标题失配明确核对，不覆盖用户主动编辑。
-- 优先state/repository/confirmation/view、factCorrections和获准新测试。
-- 不需换模型、重做PLAN、新建数据或新增阶段。
-- 无阻断再继续9未创建路径和真实App→工程→Edge/下载读库→Git。
+## 当前唯一范围缺口
+- DashboardPage.tsx在946保护中，不在原41路径内。
+- 56–60先quickText.trim后回调，App无法恢复两端原文字节。
+- 82–92按dateViews硬编码人工工程、不发送、不调用和生成工程建议。
+- 新live仍必须传dateViews保护无日期排序/展示，不能拔掉来改文案。
+- App顶部说明不能消除首页内部错误说明；不做DOM/CSS替换或复制页。
+- 第二名无上下文独审确认：最小新增仅该页可选real-input文案/保真props。
+- 省略props旧默认不变；判空可trim、传参原样；不增加网络/确认职责。
+- 详细42路径授权提示词见本run AUDIT；旧白名单本轮未改。
 
-## 保护
+## 保护与静态证据
 - 946摘要a06efdaf29b96b8da448e9caf87104f05e183bdf08465e037789d650c27a8ef5匹配。
-- 前run16+continuation12共28静态证据未改；原日志三个字节前缀匹配。
-- 原252816/前256271/本轮起始260128字节SHA见BASELINE。
-- 13获准已有文件已改，19新实现已存在，9未创建；逐字SHA见快照。
-- 全局Schema/repository/capture/validator/confirmationV2/domainCommit/AST/依赖只读。
-- Expected/freeze/dataset/checkpoint/cache/旧runner/result与历史FAIL不改。
-- 工作区逐字与Git换行SHA分开；不清库/旧缓存或碰真实工作区。
-- 新临时根C:\Users\Winner\AppData\Local\Temp\mainline-real-input-01-p1-2sxPIf。
+- 前16+12、P1的20静态文件及所有旧日志前缀未改。
+- 本轮起始日志263933字节/SHA2a692d5429116ac8bf7a4b1be9566422ee28d3017872e45b5b3a74f8b7dc94b4。
+- 工作区逐字SHA与Git换行存储分开；不忽略换行保护。
+- Schema/repository/capture/validator/confirmationV2/domainCommit/AST/依赖只读。
+- Expected/freeze/dataset/checkpoint/cache/旧runner/result/40/42/17/FAIL不改。
+- 新临时根C:\Users\Winner\AppData\Local\Temp\mainline-real-input-01-validity-UmjrkW。
 
-## 模型门与停止条件
-- 模型/温度/effort/8192输出、A8+B8可选C8/≤24次/≤10元保持。
-- 3.30元滚动最坏预留；完整合法request绑定usage才释放差额。
-- 未知/失败/崩溃/超时不释放不重发；verifier/Repair/retry0。
-- 首请求仍须全部安全门、鲜活价格、冻结输入/候选/评分依赖与共享账本。
-- 不读剪贴板，不提前读取真实密钥；无新数据/真人/真实库/稳定接入/部署/RCO-6。
-- 完整工程/真实OCR/真实App/Edge/下载/首次模型质量均NOT_RUN。
-- 新重大安全、保护/重叠修改、范围或预算问题立即停；普通范围内不拆阶段。
+## 调用门与下一动作
+- A8+B8可选C8、原模型/温度/effort/8192输出、总24次10元保持。
+- 单笔3.30元最坏滚动预留；合法request绑定usage才释放差额。
+- 未知/失败/超时/崩溃不释放不重发，verifier/Repair/retry0。
+- 首模型请求仍须发送安全门、鲜活价格、固定输入/候选/评分和持久账本。
+- 当前未访问服务端真实凭据，不要求用户重复复制密钥。
+- 批准唯一首页例外后，同包完成剩余7路径与真实完整旅程，不重做PLAN。
+- 新重大安全/保护/重叠修改/范围/预算问题立即停止申请。
+- 不新数据/真实材料/真人/用户库/稳定接入/部署/RCO-6。

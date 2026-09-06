@@ -1,0 +1,174 @@
+{
+  "status": "NOT_COMPLETE",
+  "stage": "MAINLINE-REAL-INPUT-01",
+  "runId": "input-validity-resume-20260907a",
+  "attempts": [
+    {
+      "name": "reproduction-attempt-1",
+      "passed": 12,
+      "failed": 5,
+      "classification": "registered public source/title counterexamples; no old assertions changed"
+    },
+    {
+      "name": "repair-attempt-1",
+      "passed": 1,
+      "failed": 16,
+      "classification": "implementation wiring mistake: draft has no sourceId; corrected via run->version->source, not a semantic counterexample"
+    },
+    {
+      "name": "repair-attempt-2",
+      "passed": 17,
+      "failed": 0
+    },
+    {
+      "name": "boundary-attempt-1",
+      "passed": 19,
+      "failed": 1,
+      "classification": "same input-validity root: late response failure left source status incompatible"
+    },
+    {
+      "name": "core-targeted-attempt-1",
+      "passed": 94,
+      "failed": 0
+    },
+    {
+      "name": "core-targeted-attempt-2",
+      "passed": 95,
+      "failed": 0,
+      "breakdown": {
+        "runtime": 21,
+        "policy": 9,
+        "corrections": 6,
+        "oldMainline05": 59
+      }
+    },
+    {
+      "name": "runtime-connection-attempt-1",
+      "passed": 6,
+      "failed": 1,
+      "classification": "SSR brand assertion incorrectly expected 学生事务管家; actual 事务管家. Test authoring mismatch, not product fault. Source left unchanged at scope stop."
+    },
+    {
+      "name": "type-attempt-1",
+      "status": "PASS"
+    },
+    {
+      "name": "type-attempt-2",
+      "status": "PASS"
+    },
+    {
+      "name": "type-attempt-3",
+      "status": "PASS"
+    },
+    {
+      "name": "type-attempt-4",
+      "status": "PASS"
+    }
+  ],
+  "logs": [
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/input-validity-resume-20260907a/logs/boundary-attempt-1.log",
+      "bytes": 5913,
+      "sha256": "d4ab00d208d18fc602e327abce7f34704ed9461e5f1c995a745cab8972047430"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/input-validity-resume-20260907a/logs/core-targeted-attempt-1.log",
+      "bytes": 20006,
+      "sha256": "a8ae7ad882ad268c1c3181f8c0245a20417a88f5c56e9f1c02b33b6f5ca8a45c"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/input-validity-resume-20260907a/logs/core-targeted-attempt-2.log",
+      "bytes": 20239,
+      "sha256": "782a13c4f9262f822853b0a8f28059adbdb0efcc7ffd9885cbc6f7bb00fa6057"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/input-validity-resume-20260907a/logs/repair-attempt-1.log",
+      "bytes": 20925,
+      "sha256": "3e0a07b0c8895bc9e74503a716b35fcbd0b780d25f0e7feeba2129e0bd361cab"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/input-validity-resume-20260907a/logs/repair-attempt-2.log",
+      "bytes": 4022,
+      "sha256": "2373a5aa0f45379971f529fc6f869b1f452fe09aec29f463a11fb321058919d0"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/input-validity-resume-20260907a/logs/reproduction-attempt-1.log",
+      "bytes": 126424,
+      "sha256": "8b5ca6ce77dfc4038d6f12e430ad108ddb8d73f1df370a795423901c6173aa88"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/input-validity-resume-20260907a/logs/runtime-connection-attempt-1.log",
+      "bytes": 18144,
+      "sha256": "0f5cdb62a96bbacc7b40c26958f6e6104229bd1b088ca9a88c3a2aa50e672dc3"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/input-validity-resume-20260907a/logs/type-attempt-1.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/input-validity-resume-20260907a/logs/type-attempt-2.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/input-validity-resume-20260907a/logs/type-attempt-3.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/input-validity-resume-20260907a/logs/type-attempt-4.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "fullEngineering": "NOT_RUN",
+  "actualOcr": "NOT_RUN",
+  "edge": "NOT_RUN",
+  "download": "NOT_RUN",
+  "modelCalls": 0,
+  "feesCny": 0,
+  "oldV2FieldMeasure": {
+    "checked": 42,
+    "equal": 42,
+    "source": "old semanticView.test.ts within final core95, not new wire fidelity42"
+  },
+  "newWire42": "NOT_RUN",
+  "historical40of42": "UNCHANGED",
+  "historical17": "UNCHANGED",
+  "historicalFail": "UNCHANGED",
+  "notes": [
+    "Initial first test invocation failed before launch because logs directory was absent; created only approved directory, then actual attempt1. Not counted as test results.",
+    "Initial targeted commands used cache=false and default Vite configuration; read-only metadata verified .env/.env.local/.env.test/.env.test.local absent. Subsequent commands use existing envDir:false config. No credential content read.",
+    "An invalid workdir typo caused one diagnostic command not to start; no wrong-workspace execution occurred.",
+    "Brand assertion mismatch remains unfixed under scope stop; not disguised as passing.",
+    "Prior gateway/budget52 and extraction31 only hash-referenced earlier evidence; not rerun or recounted."
+  ],
+  "auditDeliveryChecks": {
+    "status": "PASS",
+    "docReview": {
+      "reviewer": "real_input_home_scope_review",
+      "status": "NO_AUDIT_DELIVERY_BLOCKER",
+      "scope": "AUDIT/REVIEW/ENGINEERING/STATE/CURRENT_CONTEXT only"
+    },
+    "secretScan": {
+      "files": 1056,
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/input-validity-resume-20260907a/logs/audit-secret-scan-attempt-1.log",
+      "sha256": "b199d30f9922c1bdad80e61c9ad9b19b6f453d18c24adf980b618a8b88cc8538"
+    },
+    "protection": {
+      "count": 946,
+      "status": "PASS",
+      "sourceSnapshotMatches": 34,
+      "notCreatedMatches": 7,
+      "priorStaticMatches": 48,
+      "logPrefixMatches": true
+    },
+    "contextLines": 77,
+    "diffCheck": {
+      "authoredDocuments": "PASS",
+      "rawLogFormat": "6 raw test logs have a final blank line; full staged diff check reported them, original bytes retained",
+      "classification": "formatting of raw evidence only; not a weakened test or engineering PASS"
+    }
+  }
+}
