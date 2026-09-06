@@ -38,3 +38,7 @@
 正式Git交付后停止。本包证明给定人工响应的产品承接能力；后续仅在新授权中，将真实模型来源约束输出接到既有闭环并设计小批完整事实对照，不重造同义契约，不自动启动RCO-6、付费或新数据。
 
 文件侧明细见download.json；实际操作与恢复账本见browser.json；独立结论见review.md/review.json；最终保护与暂存清单见checks.json/implementation-snapshot.json。提交和远端精确号由实际Git核验，不能在提交前编造。
+
+## 实际Git交付回执
+
+业务提交1ae10d8afef8c27fbf2f27ca44072a5ffa98612f已推送到原分支，live origin精确一致，36文件清单一致。提交后本机26SHA、863保护、4计划、20静态证据、日志边界和三项审查证据保持，工作区干净。Git现有core.autocrlf=true使2项文件在Git存储中CRLF转LF：EventDetailPanel.tsx移除49个CR、domainCommit.ts移除723个CR；其余24文件Git blob逐字一致。两项另记Git blob SHA，不把存储摘要当作本机SHA、不放宽冻结检查，也不声称新检出环境天然逐字相同。首次逐字比较失败及只读确认来源详见delivery.json；本回执仅追加审计，不再次提交业务实现或改写历史。

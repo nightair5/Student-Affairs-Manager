@@ -3,7 +3,7 @@
 ## 当前结论
 
 - MAINLINE05隔离完整闭环验收通过；本次补齐J03跨时区并恢复测试设置。
-- 独立复核PASS_FOR_FINAL_DELIVERY；业务交付以本文件所在提交及远端实际核验为准。
+- 独立复核通过；业务提交1ae10d8afef8c27fbf2f27ca44072a5ffa98612f已推送且远端一致。
 - 仅证明已见人工响应的产品承接；模型识别准确率：本轮未测量。
 - 唯一仓库 C:\Users\Winner\student-affairs-multimodal-exp。
 - 分支 codex/e2-multimodal-recognition-exp；不使用默认比赛工作区。
@@ -17,6 +17,7 @@
 - 本次目录mainline-05/runs/j03-20260906a/：audit.md交付解释；browser.json操作/恢复账本。
 - download.json为真实文件和独立读库来源；review.md/json为新无上下文复核。
 - checks.json为最终保护/文件/文档检查；implementation-snapshot.json为交付清单与SHA。
+- delivery.json为Git回执：本机26SHA原样；24 Git blob逐字同，2项仅CRLF转LF，分开记录。
 - preflight.json是开始时记录，PENDING不改写；最终恢复结论见browser.json。
 - 原11旅程、工程与历史PARTIAL在browser-final-20260906a/，保持原样。
 - 最终26实现SHA数组2c9fb255df8b9baaf240ee7c443f10654a1e7b7b7560bca0a37669dd7ab5c3d5。
