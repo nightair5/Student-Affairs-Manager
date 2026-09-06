@@ -1,0 +1,34 @@
+✔ conservative context envelope and integer settlement have no floating-point budget drift (1.7688ms)
+✔ normal request reserves durably before completion; only complete usage releases surplus (97.9581ms)
+✔ all 24 logical units share one ledger across reopened browser/runner handles (2195.119ms)
+✔ 10 yuan is checked using spent upper cost plus the next full reservation (125.5895ms)
+✔ concurrent tabs cannot reserve twice; cross-instance overlap retains one pending request (48.4377ms)
+✔ two independent Node processes cannot bypass the shared filesystem lock (145.916ms)
+✔ process restart after a durable reservation never resends or releases it (54.7255ms)
+✔ timeout/unknown failure retains full reservation and permanently stops this book (60.8406ms)
+✔ missing usage cannot settle or release the reservation (53.1488ms)
+✔ mismatched total cannot settle or release the reservation (61.6007ms)
+✔ zero tokens for nonempty input cannot settle or release the reservation (50.4242ms)
+✔ excess input cannot settle or release the reservation (52.9096ms)
+✔ excess output cannot settle or release the reservation (55.2713ms)
+✔ wrong model cannot settle or release the reservation (126.3789ms)
+✔ incomplete response cannot settle or release the reservation (58.0106ms)
+✔ unsupported reasoning cannot settle or release the reservation (51.838ms)
+✔ tools cannot settle or release the reservation (52.926ms)
+✔ string usage cannot settle or release the reservation (54.27ms)
+✔ even a parseable HTTP failure is not settled (46.9123ms)
+✔ response reuse is a binding anomaly, not another cheap completed call (68.8243ms)
+✔ price/context/protocol changes halt before dispatch; frozen requests cannot change (46.6839ms)
+✔ expired billing review and same-candidate C are rejected, while valid C has positive coverage (41.5771ms)
+✔ a valid-prefix truncation is detected by the independent write-once receipts (52.1009ms)
+✔ missing ledger and abandoned lock do not initialize a fresh allowance (50.2067ms)
+✔ recomputing row hashes does not make a mismatched settlement valid (47.9962ms)
+✔ manifest changes and response shape tricks fail without coercion (22.4548ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 26
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3822.015
