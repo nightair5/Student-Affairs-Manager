@@ -1655,3 +1655,46 @@
 - delivery: 只按failure.json的8文档精确清单提交推送并核验远端；25个未通过实现留本机不提交。实际提交号以Git/交付回执核对，不预称成功、不强推/变基。
 - next: 唯一建议明确授权同包修复登记S01–S03，仍26路径，先正常/失败对照再修当前选择、信息完整性与显式关系；随后补完编排/独立/工程/Edge/Git。提示词见failure.md，未自动实施。
 - boundary: 模型/模型网络/费用/密钥/剪贴板/真实库/新数据/新依赖/稳定接入/部署0；模型识别准确率本轮未测量。
+
+## 112. MAINLINE05同包S01–S03授权恢复 — 2026-09-06
+
+- authority: 用户明确批准修复已登记S01–S03，保留26路径、原职责和composer唯一例外；范围内普通修补同包连续，新增未登记重大安全/保护/范围问题才停。
+- recovery: 本机/远端f5410d6c88ab1dfa4b90ae4346ea0b257f13ca3b，25现场SHA及1未创建路径、863保护/4计划、日志前缀一致，无重叠修改。不回切/重装/重复应用实现。
+- execution: 先登记反例/正常对照再修复选择状态、信息完整性、显式时间材料关系；完成编排后重新独立/分层工程/真实Edge/下载读库/Git。恢复记录与新临时目录见runs/safety-fix-20260906a/self-check.json。
+- boundary: 模型/模型网络/费用/密钥/剪贴板/新数据/新依赖/真实库/稳定入口/部署0，模型准确率本轮未测量。
+
+## 113. MAINLINE05暂停后同包恢复 — 2026-09-06
+
+- authority: 用户要求继续执行，仍沿用26路径/S01–S03授权，不重做PLAN或重复应用实现。
+- recovery: 本机/远端f5410d6c88ab1dfa4b90ae4346ea0b257f13ca3b；safety-fix-20260906a/targeted.json的26源码SHA、12日志SHA全匹配，863保护/4计划/20历史证据及原日志前缀通过。没有新增重叠修改。
+- review: 暂停前没有落盘完整独立结论，不能把中途消息称PASS；重新无上下文/root/mainline05_final_review收口26文件完整审查。已通过且SHA未变的定向证据复用。
+- next: 独立无阻断后完整分层工程，再真实Edge J01–J12、实际下载与独立读库/Git。当前这些仍NOT_RUN，0模型/密钥/真实库/部署。
+
+## 114. MAINLINE05最终独立审查通过并进入工程门 — 2026-09-06
+
+- review: /root/mainline05_final_review只读完整26文件，PASS无阻断；逐项SHA匹配targeted.json，数组摘要07906b12ce10eefc0811a99f211909c77f33f9640511ccc4a7d9265545dd1f53。实跑checker33/33、旧V242/42、启动器/diff/保护通过；128/128按12日志SHA复用，不当新样本。
+- evidence: safety-fix-20260906a/review.md与review.json记录结论和26SHA。首次完整分层工程run=full-20260906a，旧历史环境/当前兼容分层，未改变原freeze。
+- boundary: 此时实际Edge/J01–J12/下载读库仍NOT_RUN；仅通过实现审查，不宣称产品或模型正确率。无模型/密钥/真实库/部署。
+
+## 115. MAINLINE05分层工程与真实Edge首轮 — 2026-09-06
+
+- engineering: full-20260906a全部工程门通过；长日志目录rco-mainline05-check-full-20260906a-99XRAS，原历史环境FAIL保留。当前源码后有3项普通修补，旧工程PASS不冒充最终修补后通过。
+- browser: 新Edge标签763114631/763114632、固定origin 127.0.0.1:6627、唯一空库mainline05-688bf3e0-6e60-449a-acec-01a11d1fdfc4，真实App录入/刷新草稿/部分批量/无日期找回/逐键编辑/条件三值/修订/纯信息/坏引用/有效兄弟/S01依赖/S03共享/事件/保存与确认故障/跨标签过期/重复均已执行。确认故障前后独立读库全对象相同；无日期关联时间/提醒/实际jobs0。
+- ordinary-fixes: 收件箱两个来源批量一失败一成功的数据行为正常，但输出短ID同为: draft:1，App显式semantic结果改完整ID。工程浮层遮挡确认鼠标入口移到左上；读库清旧显示且完成摘要后发布snapshot；新增只下载独立load对象的工程证据按钮。serve仅新增显式回环--port恢复原origin，不换库或改默认。
+- evidence: runs/browser-20260906a/failure.md保留真实复现；原26SHA中23未变，3修补在原职责内。128/128定向重验、lint0错误/1既有热更新warning、--check与保护通过，等待新独立审查后新全工程和实际下载。
+- boundary: Edge工具无timezone覆盖/content.export，其他实际浏览器时区仍NOT_RUN，已非阻塞请用户手动Sensors切换，不用Node SSR代替。不新增数据集/依赖、不触及真实库/密钥/剪贴板；0模型网络/费用，准确率本轮未测量。未提交业务实现。
+
+## 116. MAINLINE05最终工程与真实文件闭合，保留单项环境缺口 — 2026-09-06
+
+- implementation: S01–S03修复保持；普通批量提示/工程读库与下载/同端口启动器经新独立审查。共享事件、取消无替代的既有关系菜单和3测试在原26路径内补齐，不新增产品语义或数据集。
+- attempts: journey-coverage首次34通过2失败仅新增测试updatedAt毫秒差；固定既有NOW参数后36/36，完整对象和原128断言不变。最终05为59+04为72，共131/131，旧V2内存42/42；独立/root/mainline05_journey_review PASS，26SHA摘要2c9fb255df8b9baaf240ee7c443f10654a1e7b7b7560bca0a37669dd7ab5c3d5。
+- engineering: full-b、最终full-c各19层PASS，不累计样本。最终Vitest1117通过/1既有live-OCR跳过；checker33/33、原历史库4/4；两类型/契约/build/安全/依赖0漏洞；16工程日志SHA一致。旧环境3/1、40/42/17及历史FAIL保持。
+- browser: 同origin6627/同隔离库，31任务/27来源；共享事件先后确认刷新仅一份并有2owner；取消旧项、独立新项确认正常。J01/J02/J04–J12 PASS，J03另一实际浏览器时区NOT_RUN；工具无覆盖能力，已请用户手动Sensors，不改系统/不用Node代验收。
+- download: 实际mainline-05-workspace (1).json为1260173字节，文件SHA e9fcf0f9481e9f1b70a2e6325448317fec3be78598ab3ac792870294a253dbc3。另一实际下载来自new repository独立load；全对象SHA03e308722c052a4e8e14b0bbe90382c851082664baaba78c8241d5a6b2ee8a9a，联合校验PASS。12:09:47.215Z真实刷新读回完全相同。7真无日期0关联时间/0提醒，实际jobs0；B8三条只读NOT_EXPRESSIBLE不改历史。
+- boundary: 整包NOT_COMPLETE，必要时区证据尚未验收，只拟提交审计、26实现保留未提交，最终证据复核另记。唯一下一动作同包补J03与最终交付；0模型网络/费用/密钥/剪贴板/真实库/部署，模型准确率本轮未测量。
+
+## 117. MAINLINE05最终证据复核与仅审计交付边界 — 2026-09-06
+
+- independent-review: /root/mainline05_delivery_evidence_review只读PASS_FOR_AUDIT，26当前SHA、16工程日志、两份下载及临时独立副本逐字/全对象核对一致；明确未重跑浏览器。11旅程PASS/J03 PARTIAL/整包NOT_COMPLETE均分开，无阻断审计的过度宣称。
+- protection: 原863保护、4计划、20静态历史证据、日志前缀通过，最终26实现仍在本机未提交；最终源码摘要2c9fb255df8b9baaf240ee7c443f10654a1e7b7b7560bca0a37669dd7ab5c3d5。
+- delivery: 仅精确本轮审计报告+CURRENT_CONTEXT+追加日志暂存，业务源码不入本次提交。最终提交/推送以实际Git核对为准；不强推/变基。缺口只为另一个实际浏览器时区，保留原库和下载，模型准确率本轮未测量。

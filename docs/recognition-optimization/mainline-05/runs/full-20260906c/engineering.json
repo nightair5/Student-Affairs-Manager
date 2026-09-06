@@ -1,0 +1,406 @@
+{
+  "stage": "MAINLINE05_FULL_PACKAGE",
+  "directory": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-check-full-20260906c-AWGGo9",
+  "okay": true,
+  "environment": {
+    "node": "v24.18.0",
+    "currentHistoricalGate": {
+      "status": "R2_FAIL_PRESERVED_NOT_RERUN",
+      "passed": 3,
+      "failed": 1
+    },
+    "historicalSnapshot": {
+      "path": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-check-full-20260906c-AWGGo9\\historical-snapshot",
+      "source": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline03-r3-1HdKiX\\historical-snapshot",
+      "manifest": [
+        {
+          "path": "scripts/run-rco-5-007-replay.ts",
+          "sha256": "981b3871385b933b71b298e802d71d756319ba5f91f403746c324940cbc9e23a"
+        },
+        {
+          "path": "scripts/rco-5-007-integrity.mjs",
+          "sha256": "9bd2cec0c405ea13fecf7d91dadee900d66d42ebeea40c53445cf8f0cef7890e"
+        },
+        {
+          "path": "src/recognition/taskFormationPolicyV2.ts",
+          "sha256": "61d7c1d634f3e04d90ae034cf479528a6f62da5be141d06fcf6820db8c0de54d"
+        },
+        {
+          "path": "src/recognition/scopeReferenceContract.ts",
+          "sha256": "2f3b12b464991d8ea57fe08cad1217050485ddc69b310f13b489f6dcaae71cf2"
+        },
+        {
+          "path": "src/recognition/scopeIndexV11.ts",
+          "sha256": "2706131f0c133872042761016e8ccac0487ce854be3472f2d189e5c901889515"
+        },
+        {
+          "path": "docs/recognition-optimization/rco-5-007-replay/b1-source-input.json",
+          "sha256": "28c681a77c730e8d120ec34f1bcee374572cf36bee2eaa44adc2d42c572ad146"
+        },
+        {
+          "path": "docs/recognition-optimization/rco-5-006-b1-runs/rco-5-006-b1-m1-20260903b/raw-results.json",
+          "sha256": "9b564d24ffd5cda03a4d68731652d370ca59dab50a1e7d8cef889f4329f9f93a"
+        },
+        {
+          "path": "package-lock.json",
+          "sha256": "0712a7885770a869293149bab34cfb2d740562694d8bd30980141df9a5d2a0b1"
+        },
+        {
+          "path": "package.json",
+          "sha256": "df4c657cb2f43d2555a7d0cda93f86ac8afb15034530756bb009082dfc0a2123"
+        },
+        {
+          "path": "scripts/score-rco-5-007-replay.mjs",
+          "sha256": "36d7adbd5788ec4b53bc56588a47f40a1a8be51b36a3eeb89539adf7b9b44007"
+        },
+        {
+          "path": "docs/recognition-optimization/RCO-5-006-B1_DEVELOPMENT_DATASET.json",
+          "sha256": "e9379259ffe23879f25fecc70318dc8049c3c9e7b054d5a25f47aeb593b32170"
+        },
+        {
+          "path": "docs/recognition-optimization/rco-5-007-replay/predictions.json",
+          "sha256": "e1351b3b3bd037218524ba21a521ffe73794ddc2515ffe84578c57570f4f7c6d"
+        },
+        {
+          "path": "docs/recognition-optimization/rco-5-006-b1-runs/rco-5-006-b1-m1-20260903b/result.json",
+          "sha256": "2e1541df0ddafaee46837d22f0a8b1b84b4fb4c92a523bb5b602199d8860f33e"
+        },
+        {
+          "path": "docs/recognition-optimization/RCO-5-006-B1_FREEZE.json",
+          "sha256": "7292a4a11d0c80d934a9203d88254dd056d24a1b07171826bdc96090bd896e48"
+        },
+        {
+          "path": "docs/recognition-optimization/RCO-5-006-B1_PLAN.md",
+          "sha256": "223caf1761e18814d26a9645c5bcdeaad089c9c057ee02cca876ab4529fbd853"
+        },
+        {
+          "path": "docs/recognition-optimization/RCO-5-006-B1_TRACKER.md",
+          "sha256": "17121afb9711f6bda8eb7a93a1f3e03748e323c9aa730ab7cf4eb99e452e2a36"
+        },
+        {
+          "path": "docs/recognition-optimization/rco-5-006-b1-runs/rco-5-006-b1-m1-20260903b/checkpoint.json",
+          "sha256": "481f86a9cee3d67a4c41fc417388cf75c437d844afb61ff542e02f7b568b80c6"
+        },
+        {
+          "path": "docs/recognition-optimization/RCO-5-007_COMPONENT_FREEZE.json",
+          "sha256": "07cf8f9a24e3b462b6773841f6da20a99e31a23c4e18884846c5a54d80dc8c65"
+        },
+        {
+          "path": "scripts/rco-5-007-replay.node-test.mjs",
+          "sha256": "a71ed325767038b2255b6da1b98989325b721a9ffc8cf92434280469ee841e74"
+        },
+        {
+          "path": "docs/recognition-optimization/rco-5-007-replay/result.json",
+          "sha256": "77031f837fba6e38fe995e8b637ef32f3b9120ab13a6e803a360b18ac07ad9f7"
+        }
+      ]
+    }
+  },
+  "checks": [
+    {
+      "name": "historical-integrity",
+      "passed": 20,
+      "failed": 0
+    },
+    {
+      "name": "current-dependency-compatibility",
+      "passed": 13,
+      "failed": 0,
+      "cases": [
+        "authorized-two-dev-types",
+        "third-package",
+        "node-version",
+        "transitive-version",
+        "runtime-dependency",
+        "production-type",
+        "old-lock-version",
+        "integrity-drift",
+        "script-drift",
+        "lock-root-drift",
+        "missing-old-package",
+        "historical-byte-tamper",
+        "historical-newline-tamper"
+      ],
+      "oldNonRootEntries": 357,
+      "additions": [
+        "node_modules/@types/node",
+        "node_modules/undici-types"
+      ]
+    },
+    {
+      "name": "historical-original-library",
+      "exitCode": 0,
+      "log": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-check-full-20260906c-AWGGo9\\historical-original-library.log",
+      "sha256": "2dbe38e47b2b73e7d41bf54e716418912eec2d41c925d33ef159d9175f67264c",
+      "summary": [
+        "ℹ tests 4",
+        "ℹ pass 4",
+        "ℹ fail 0",
+        "ℹ skipped 0"
+      ]
+    },
+    {
+      "name": "checker-self-tests",
+      "exitCode": 0,
+      "log": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-check-full-20260906c-AWGGo9\\checker-self-tests.log",
+      "sha256": "d990e0a7ae7d69d7d538a8d048c5b01b751848428df264a45960dedba8191c3f",
+      "summary": [
+        "ℹ tests 33",
+        "ℹ pass 33",
+        "ℹ fail 0",
+        "ℹ skipped 0"
+      ]
+    },
+    {
+      "name": "lint",
+      "exitCode": 0,
+      "log": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-check-full-20260906c-AWGGo9\\lint.log",
+      "sha256": "2469481711d8863f48724856f5e5f3508fe9f0eba55335c848c8f7fff864f6e0",
+      "summary": []
+    },
+    {
+      "name": "type-app",
+      "exitCode": 0,
+      "log": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-check-full-20260906c-AWGGo9\\type-app.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": []
+    },
+    {
+      "name": "type-node",
+      "exitCode": 0,
+      "log": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-check-full-20260906c-AWGGo9\\type-node.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": []
+    },
+    {
+      "name": "schema-contract",
+      "exitCode": 0,
+      "log": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-check-full-20260906c-AWGGo9\\schema-contract.log",
+      "sha256": "ce0ae1b382cde06a1e63919a31340da2d1c90873c0f97ab059e0bdb92e37db47",
+      "summary": []
+    },
+    {
+      "name": "time-contract",
+      "exitCode": 0,
+      "log": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-check-full-20260906c-AWGGo9\\time-contract.log",
+      "sha256": "28498056a5fc7d975a3a38ce5c128afb0c926f8f1091e901d723a767656e008f",
+      "summary": []
+    },
+    {
+      "name": "vitest-all",
+      "exitCode": 0,
+      "log": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-check-full-20260906c-AWGGo9\\vitest-all.log",
+      "sha256": "be196936252a707fee551a84da9a124bdaa24ddde0ca3037626f218a82c79243",
+      "summary": [
+        "\u001b[2m Test Files \u001b[22m \u001b[1m\u001b[32m107 passed\u001b[39m\u001b[22m\u001b[2m | \u001b[22m\u001b[33m1 skipped\u001b[39m\u001b[90m (108)\u001b[39m",
+        "\u001b[2m      Tests \u001b[22m \u001b[1m\u001b[32m1117 passed\u001b[39m\u001b[22m\u001b[2m | \u001b[22m\u001b[33m1 skipped\u001b[39m\u001b[90m (1118)\u001b[39m"
+      ]
+    },
+    {
+      "name": "server",
+      "exitCode": 0,
+      "log": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-check-full-20260906c-AWGGo9\\server.log",
+      "sha256": "12c84546743a78f9c84c56d1a15fd1600124e1198317bc19d95abe1a6ca3c2b4",
+      "summary": [
+        "ℹ tests 8",
+        "ℹ pass 8",
+        "ℹ fail 0",
+        "ℹ skipped 0"
+      ]
+    },
+    {
+      "name": "worker",
+      "exitCode": 0,
+      "log": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-check-full-20260906c-AWGGo9\\worker.log",
+      "sha256": "273dd716b2f1c52a5f24c967974c3b1924a72bee5fda6fb41797b7dbca7ec086",
+      "summary": [
+        "  errorType: 'UPSTREAM_AUTH_FAILED',",
+        "ℹ tests 25",
+        "ℹ pass 25",
+        "ℹ fail 0",
+        "ℹ skipped 0"
+      ]
+    },
+    {
+      "name": "time-parity",
+      "exitCode": 0,
+      "log": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-check-full-20260906c-AWGGo9\\time-parity.log",
+      "sha256": "6b82d7c68440684f9093e1db31bda9d3d529db75505f29592f84844e30991e14",
+      "summary": [
+        "ℹ tests 1",
+        "ℹ pass 1",
+        "ℹ fail 0",
+        "ℹ skipped 0"
+      ]
+    },
+    {
+      "name": "multimodal-library",
+      "exitCode": 0,
+      "log": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-check-full-20260906c-AWGGo9\\multimodal-library.log",
+      "sha256": "09b7ddf1abc8bac943b9db75fd532ce3778e09987fd532190b0da2bf664410e6",
+      "summary": [
+        "ℹ tests 23",
+        "ℹ pass 23",
+        "ℹ fail 0",
+        "ℹ skipped 0"
+      ]
+    },
+    {
+      "name": "functions",
+      "exitCode": 0,
+      "log": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-check-full-20260906c-AWGGo9\\functions.log",
+      "sha256": "b69df1dd7dc6a7ca7cba1296f46f83bc8167806eccec47b79571ee6028fe6847",
+      "summary": [
+        "ℹ tests 5",
+        "ℹ pass 5",
+        "ℹ fail 0",
+        "ℹ skipped 0"
+      ]
+    },
+    {
+      "name": "build",
+      "status": "PASS",
+      "log": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-check-full-20260906c-AWGGo9\\build.log",
+      "sha256": "acb662d528b84e1238c3be3be8d7ec3e954535aa0e3a9f79bf5f000fbc925a56"
+    },
+    {
+      "name": "stable-bundle-isolation",
+      "files": 18,
+      "findings": 0
+    },
+    {
+      "name": "security-scan",
+      "exitCode": 0,
+      "log": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-check-full-20260906c-AWGGo9\\security-scan.log",
+      "sha256": "13629cfb8396fff6d064aaca8a7ad7d25e2f00df1f110d26e5a985fe873a8df6",
+      "summary": []
+    },
+    {
+      "name": "dependency-audit",
+      "exitCode": 0,
+      "log": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-check-full-20260906c-AWGGo9\\dependency-audit.log",
+      "sha256": "6d8c5c8f3d7684adb070417bd608d01ae90aa3dc26a65af03ffda4955f38d9a3",
+      "summary": [
+        "found 0 vulnerabilities"
+      ]
+    }
+  ],
+  "protection": {
+    "status": "PASS",
+    "head": "f5410d6c88ab1dfa4b90ae4346ea0b257f13ca3b",
+    "protected": 863,
+    "planning": 4,
+    "files": [
+      {
+        "path": "src/App.tsx",
+        "sha256": "f0c14f5d95ac8d3113d4d3a30cafae38ac3e4dc4310833fef6225e51e1f1b25a"
+      },
+      {
+        "path": "src/components/DraftReviewPanel.tsx",
+        "sha256": "fd733c187352e6800125a0af02ad2c0153cccd9c78859552f662be65168b1658"
+      },
+      {
+        "path": "src/components/TaskDetailPanel.tsx",
+        "sha256": "3e395eb570182b08252f65e2cf17c32be5157641aadbf02552c292a631b9747c"
+      },
+      {
+        "path": "src/components/EventDetailPanel.tsx",
+        "sha256": "03f7edc8fcb810813ac6414dc0884e76b8fcc40d8e0b127f6147251daa618f01"
+      },
+      {
+        "path": "src/pages/CalendarPage.tsx",
+        "sha256": "c17b29098975bea9a112e2d4f698079ee766074f42d9eb957e09de35599f649f"
+      },
+      {
+        "path": "src/experiments/mainline02/runtime.ts",
+        "sha256": "2938abd12eaf3ceb6bb5794a883e634d16570e6c71c5f0f28ab5ea810cb9935b"
+      },
+      {
+        "path": "src/domain/v2/domainCommit.ts",
+        "sha256": "50e28c64001c5fc278435eede477a90feb7e5a4084eee0200f7732497f26f827"
+      },
+      {
+        "path": "src/experiments/mainline05/semanticState.ts",
+        "sha256": "4a10271c00def94754653e8e6a62993888934a2c9bdbbb72871f1ebb15048245"
+      },
+      {
+        "path": "src/experiments/mainline05/semanticRepository.ts",
+        "sha256": "dc307f3276b1874eab3533ebed325c7aac40b082d74127acc941ca8e7478e94f"
+      },
+      {
+        "path": "src/experiments/mainline05/semanticCapture.ts",
+        "sha256": "3e1d713029e11b16edab0ca9a0f681c839d20c8aba671b997c7848d68ee3212e"
+      },
+      {
+        "path": "src/experiments/mainline05/semanticConfirmation.ts",
+        "sha256": "d0e6e38ca9130f749a4b03eae02e063d5798e621f504c645d1e04dee1b7b5522"
+      },
+      {
+        "path": "src/experiments/mainline05/semanticView.ts",
+        "sha256": "359c4cb9439dc1240298ef56a4f8fcb3c40e5e62cf7197a103cbcc2b1154d165"
+      },
+      {
+        "path": "src/experiments/mainline05/runtime.ts",
+        "sha256": "37708e880ea3809b506f1e3d4a06460f56a082f522e0594071fe9c5f0f78161f"
+      },
+      {
+        "path": "src/experiments/mainline05/SemanticFacts.tsx",
+        "sha256": "120ba8a7b8e0150aea8d75ae325cffa127712f47c8720bb676c28137748352d3"
+      },
+      {
+        "path": "src/experiments/mainline05/engineeringReplay.ts",
+        "sha256": "e933f09cfd11808b20aa65060aa5c07d45eb30421a1eb3cb0ff0a0ae0f4fe243"
+      },
+      {
+        "path": "src/experiments/mainline05/browser.tsx",
+        "sha256": "77a862b67001d2c36442eb0b3ce5e8e0c833ba7f2f35774e57a93b5e8e10df4c"
+      },
+      {
+        "path": "src/experiments/mainline05/semanticState.test.ts",
+        "sha256": "4a8a25408aeb0dc5118840cb9307b7a34e4660abf3d9a2243236b89fcbfa43dd"
+      },
+      {
+        "path": "src/experiments/mainline05/semanticRepository.test.ts",
+        "sha256": "d9fd11919e62553ccec30449592cae750e719fe655d47aa1b745f29ab8ec045d"
+      },
+      {
+        "path": "src/experiments/mainline05/semanticCapture.test.ts",
+        "sha256": "b41a3dcddbfb827f82eeaf8abf439c2fbbab5cedbc79356efdaa85ca365f7e9d"
+      },
+      {
+        "path": "src/experiments/mainline05/semanticConfirmation.test.ts",
+        "sha256": "da2979c1178ee85cf04f46479c603411996d517720c04d4c2913261d1b743bc4"
+      },
+      {
+        "path": "src/experiments/mainline05/semanticView.test.ts",
+        "sha256": "5c716bebeadbdb21eacef55c7a26258c338769d945096eb91f19db0da9f69f62"
+      },
+      {
+        "path": "src/experiments/mainline05/mainlineAcceptance.test.tsx",
+        "sha256": "b79064b78acd7c4dc5662fa51f421da4f875784e7979d489943d1343ee402875"
+      },
+      {
+        "path": "scripts/serve-mainline-05.mjs",
+        "sha256": "d7e0fd8528d56d8cdffcac8d768f5ebe1ca0447f6ccbad94434aab36aa607894"
+      },
+      {
+        "path": "scripts/check-mainline-05.mjs",
+        "sha256": "c88e264761491122ace1ae93632ceb0fa1fa340f11740da8d89331d20c0d068f"
+      },
+      {
+        "path": "scripts/check-mainline-05.node-test.mjs",
+        "sha256": "016be928d0ca46562f6526762b3507003dccb1d557d7868cf206abbb87198dfb"
+      },
+      {
+        "path": "src/experiments/mainline04/semanticComposer.ts",
+        "sha256": "82db1d2ad42b340789c42ea0dc0ea3aaf1f8f5a6e7373b565eba3f687370d692"
+      }
+    ]
+  },
+  "modelCalls": 0,
+  "modelNetwork": 0,
+  "feesCny": 0,
+  "modelAccuracy": "本轮未测量",
+  "newSemanticApp": "NOT_RUN",
+  "newSemanticCanonical": "NOT_RUN"
+}
