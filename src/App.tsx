@@ -343,6 +343,25 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
     if (!runtime || !isolatedSnapshot) return
     await performExperiment(async () => {
       let current = isolatedSnapshot
+      if (runtime.semantic) {
+        const outcomes: string[] = []
+        for (const draftId of draftIds) {
+          let label = '草稿 ' + draftId
+          try {
+            const reviewed = runtime.review(current, draftId, isolatedChoices[draftId])
+            label = (current.sources.find(source => source.id === reviewed.draft.sourceId)?.title || '来源') + '（' + draftId + '）'
+            const items = reviewed.draft.items.filter(item => item.status === '待确认' && (itemId ? item.id === itemId : item.selected !== false))
+            if (!items.length) { outcomes.push(label + '：未选择可确认任务，来源仍保留'); continue }
+            current = await runtime.confirm({ draftId, revision: reviewed.revision, taskTempIds: items.map(item => item.suggestion.id) })
+            outcomes.push(label + '：已确认保存 ' + items.length + ' 项，可在任务中心查找')
+          } catch (error) {
+            outcomes.push(label + '：该草稿未确认：' + (error instanceof Error ? error.message : '需重新核对'))
+            current = await runtime.load()
+          }
+        }
+        setNotice({ text: outcomes.join('；') + '。未确认建议和已保存编辑仍保留。' })
+        return
+      }
       for (const draftId of draftIds) {
         const reviewed = runtime.review(current, draftId, isolatedChoices[draftId])
         const items = reviewed.draft.items.filter(item => item.status === '待确认' && (itemId ? item.id === itemId : item.selected !== false))
@@ -357,6 +376,23 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
     const permission = await requestBrowserNotificationPermission()
     setNotificationPermission(permission)
     return permission
+  }
+
+  const disposeExperiment = (draftId: string, kind: 'defer' | 'reject' | 'review_info', itemId?: string) => {
+    if (!runtime?.semantic || !isolatedSnapshot || !experimentalReview) return
+    const item = itemId ? experimentalReview.draft.items.find(i => i.id === itemId) : undefined
+    if (itemId && !item) return
+    const semantic = runtime.semantic
+    void performExperiment(async () => {
+      await semantic.dispose({ draftId, kind, taskTempIds: item ? [item.suggestion.id] : [],
+        revision: experimentalReview.revision, operationId: crypto.randomUUID() })
+      if (item) setIsolatedChoices(previous => {
+        const choices = { ...previous[draftId] }; delete choices[item.id]
+        return { ...previous, [draftId]: choices }
+      })
+      setNotice({ text: kind === 'review_info' ? '已标记核对完成，没有创建任务或空项目。'
+        : kind === 'defer' ? '已保存为稍后核对，可从收件箱重新打开。' : '已记录不需要；原文和首次建议仍保留。' })
+    })
   }
 
   const handleComplete = (taskId: string) => {
@@ -1294,6 +1330,7 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
         return (
           <CalendarPage
             dateViews={dateViews}
+            isolatedTimezone={runtime?.semantic?.timezone}
             tasks={tasks}
             events={events}
             courseBlocks={courseBlocks}
@@ -1406,10 +1443,15 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
         {runtime && <section aria-label="隔离实验状态">
           <p>{runtime.recognitionDescription ?? '人工工程响应（非模型预测）'} · 独立测试库 · 无模型/通知外发</p>
           <p>仅本轮录入、核对、确认、查询与JSON备份可用；未纳入操作会明确阻断。</p>
+          {runtime.semantic && <p>新语义保存在独立实验格式中，不能导入稳定入口。卡片分类与耗时仍是旧界面的兼容估计，不代表原文；完整原始属性可在详情核对，不会作为修改写回。</p>}
           <button type="button" disabled={isolatedBusy || !workspaceReady || storageError} onClick={() => void performExperiment(async () => {
             const json = await runtime.exportJson()
             const url = URL.createObjectURL(new Blob([json], { type: 'application/json' }))
-            const link = document.createElement('a'); link.href = url; link.download = 'mainline-02-i1-workspace.json'; link.click(); URL.revokeObjectURL(url)
+            const link = document.createElement('a'); link.href = url
+            if (runtime.semantic) {
+              link.download = runtime.semantic.exportName; document.body.append(link); link.click(); link.remove()
+              window.setTimeout(() => URL.revokeObjectURL(url), 1000)
+            } else { link.download = 'mainline-02-i1-workspace.json'; link.click(); URL.revokeObjectURL(url) }
           })}>导出完整测试库 JSON</button>
         </section>}
         <PageLoadBoundary key={currentPage} onRetry={() => window.location.reload()}>
@@ -1458,18 +1500,27 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
           key={runtime ? selectedDraft.id : undefined}
           isolatedCapabilities={Boolean(runtime)}
           confirmationV2={runtime && experimentalReview ? { busy: isolatedBusy || storageError, items: experimentalReview.states } : undefined}
+          semanticReview={runtime?.semantic && isolatedSnapshot && experimentalReview ? {
+            itemFacts: (taskId, onFocus) => runtime.semantic!.facts(isolatedSnapshot, selectedDraft.id, taskId, onFocus),
+            information: runtime.semantic.facts(isolatedSnapshot, selectedDraft.id),
+            informationReviewProblem: runtime.semantic.informationReviewProblem?.(isolatedSnapshot, selectedDraft.id),
+            eventCount: runtime.semantic.eventCount(isolatedSnapshot, selectedDraft.id, experimentalReview.draft.items.filter(i => i.status === '待确认' && i.selected).map(i => i.suggestion.id)),
+            onDefer: itemId => disposeExperiment(selectedDraft.id, 'defer', itemId),
+            onInformationReviewed: () => disposeExperiment(selectedDraft.id, 'review_info'),
+          } : undefined}
           draft={selectedDraft}
           source={selectedDraftSource}
           onClose={() => setSelectedDraftId(null)}
           onUpdate={(itemId, patch) => handleUpdateDraft(selectedDraft.id, itemId, patch)}
           onConfirm={(itemId) => handleConfirmDraftItem(selectedDraft.id, itemId)}
           onReject={(itemId) => {
+            if (runtime?.semantic) { disposeExperiment(selectedDraft.id, 'reject', itemId); return }
             if (runtime) { rejectExperimentAction(); return }
             handleUpdateDraft(selectedDraft.id, itemId, {}, '已拒绝')
             setNotice({ text: '已拒绝该建议，不会创建任务。', undo: () => handleUpdateDraft(selectedDraft.id, itemId, {}, '待确认') })
           }}
           onConfirmAll={() => handleConfirmAll(selectedDraft.id)}
-          projectWillCreate={selectedDraft.recognitionResult
+          projectWillCreate={runtime?.semantic ? false : selectedDraft.recognitionResult
             ? selectedDraft.recognitionResult.projectMatch.decision === 'new_project'
             : !projects.some((project) => project.sourceIds.includes(selectedDraft.sourceId))}
           projects={projects}
@@ -1484,6 +1535,7 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
       )}
       {!workspaceRecovery && selectedTask && (
         <TaskDetailPanel
+          semanticContent={runtime?.semantic && isolatedSnapshot ? runtime.semantic.taskFacts(isolatedSnapshot, selectedTask.id) : undefined}
           readOnly={Boolean(runtime)}
           dateView={dateViews?.[selectedTask.id]}
           key={selectedTask.id}
@@ -1498,6 +1550,7 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
       )}
       {!workspaceRecovery && selectedEvent && (
         <EventDetailPanel
+          isolatedFacts={runtime?.semantic && isolatedSnapshot ? runtime.semantic.eventFacts(isolatedSnapshot, selectedEvent.id) : undefined}
           event={selectedEvent}
           project={projects.find((project) => project.id === selectedEvent.projectId)}
           evidenceQuotes={selectedEventEvidenceQuotes}

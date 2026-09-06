@@ -1698,3 +1698,21 @@
 - independent-review: /root/mainline05_delivery_evidence_review只读PASS_FOR_AUDIT，26当前SHA、16工程日志、两份下载及临时独立副本逐字/全对象核对一致；明确未重跑浏览器。11旅程PASS/J03 PARTIAL/整包NOT_COMPLETE均分开，无阻断审计的过度宣称。
 - protection: 原863保护、4计划、20静态历史证据、日志前缀通过，最终26实现仍在本机未提交；最终源码摘要2c9fb255df8b9baaf240ee7c443f10654a1e7b7b7560bca0a37669dd7ab5c3d5。
 - delivery: 仅精确本轮审计报告+CURRENT_CONTEXT+追加日志暂存，业务源码不入本次提交。最终提交/推送以实际Git核对为准；不强推/变基。缺口只为另一个实际浏览器时区，保留原库和下载，模型准确率本轮未测量。
+
+## 118. MAINLINE05原包J03实际跨时区恢复 — 2026-09-06
+
+- authority: 沿用用户仅补J03、恢复设置和最终交付授权；产品源码只读，不再尝试受阻的原生电脑控制。用户手动从Sensors无替代切到America/Los_Angeles。
+- preflight: 本机/远端fe064c19e2d5d2bc418adfcf7bb744ce4bdeb8ec；26实现、863保护、4计划、20静态证据、16工程日志SHA及244561字节日志前缀匹配，无重叠修改。
+- recovery: 原服务停止，刷新显示ERR_CONNECTION_REFUSED；用未改启动器--port=6627恢复原origin，未访问新new=1地址或新建/清空库。原标签763114649刷新显示实际America/Los_Angeles、业务Asia/Shanghai。
+- baseline-read: 13:23:21.924Z实际工程按钮new repository.load读回31任务，全对象03e308722c052a4e8e14b0bbe90382c851082664baaba78c8241d5a6b2ee8a9a与原证据一致。preflight见runs/j03-20260906a/preflight.json。
+- status: 两种日期操作、刷新下载及恢复设置待完成；不提前称J03或整包PASS。模型/费用/密钥/剪贴板/真实库/部署0；模型准确率本轮未测量。
+
+## 119. MAINLINE05原包J03验收和设置恢复通过，进入精确Git交付 — 2026-09-06
+
+- browser: 原origin6627/原库/原标签实际America/Los_Angeles，已见无日期通知逐键补2026-09-15、普通截止逐键改2026-09-16T09:31，明确保存、单项/两项批量确认、刷新任务/日历通过；业务值按Asia/Shanghai保留。未保存不能确认；原文/首次/编辑分开，未增加产品规则。
+- files: 产品实际下载mainline-05-workspace (2).json为1356636字节，SHA65bcd0628e294a9cbb3d3efbdaec8d1bfcea47f8cb6e0503f79c68d69a22a531；独立new repository.load下载909769字节，全对象SHA06cb9fbbb6a3fc0c889cdb73a0de934dbe8bba96f4901953e9f82c0b79209719。全对象一致、联合validator与下载检查通过；旧335实体不变。最终34任务/29来源/27时间/0提醒，7真无日期0时间/0提醒，实际jobs0。下载监听超时保留为工具观察限制，不判产品故障。
+- restoration: 用户确认Sensors恢复无替代；原页刷新实际Asia/Shanghai。13:34:56.879Z再次独立读库全对象与测试结束完全相同，日历日期/时间不偏移；未改系统时区。
+- independent-review: 无上下文/root/mainline05_j03_close_review PASS_FOR_FINAL_DELIVERY，亲验26SHA/16工程日志/两实际文件/旧实体/联合校验；浏览器操作与恢复明确复用主代理实际记录，不编造复跑。绑定preflight/browser/download三证据SHA，见runs/j03-20260906a/review.json。
+- layers: J01–J12证据齐，11旧PASS与本次J03分开；复用同26SHA的full-c19层、131定向、旧V2内存42/42、1117通过/1既有跳过，不重复全跑或累计样本。原FAIL/PARTIAL、40/42、17与旧环境3/1不改。
+- delivery: 最终保护/文档差异检查后，精确26实现及本次8报告、CURRENT_CONTEXT与追加日志随同一业务提交交付；checks.json记录暂存清单。Git提交与远端精确号由实际命令核验，不在生成提交前伪造。本次未改26实现；失败停止不强推/变基。
+- boundary: 当前包交付后停止；模型识别准确率本轮未测量。0外部模型/模型网络/费用/密钥/剪贴板/新数据集/新依赖/真实库/稳定入口/部署；真实模型、真人和商业化验收另行授权。

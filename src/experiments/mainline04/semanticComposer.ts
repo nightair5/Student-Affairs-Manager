@@ -9,6 +9,7 @@ export interface ComposeContext {
   authority: 'human_engineering' | 'seen_model_unverified'
   referenceTime: string
   timezone: string
+  ownershipMode?: 'mainline05-own-assets-1'
 }
 export interface SemanticIssue { code: string; entityIds: string[] }
 export interface ReviewItem {
@@ -31,6 +32,7 @@ export interface ReviewPackage {
  * can enable a review default; nothing here commits or executes a task. */
 export async function composeSemantics(input: unknown, options: ComposeContext): Promise<ReviewPackage> {
   const raw = parseSemanticInput(input), context = plainJson(options)
+  if (context.ownershipMode !== undefined && context.ownershipMode !== 'mainline05-own-assets-1') throw new Error('LOCAL_OWNERSHIP_MODE_INVALID')
   if (!['human_engineering', 'seen_model_unverified'].includes(context.authority)
     || !Number.isFinite(Date.parse(context.referenceTime))) throw new Error('LOCAL_CONTEXT_INVALID')
   try { new Intl.DateTimeFormat('en', { timeZone: context.timezone }).format() } catch { throw new Error('LOCAL_TIMEZONE_INVALID') }
@@ -106,11 +108,12 @@ export async function composeSemantics(input: unknown, options: ComposeContext):
   // Follow all owned material/time/event edges, including reverse owner references.
   // Sharing an entity is not a dependency on its other owners or their private assets.
   // Only explicit task dependencies/parent links may cross into another task.
-  function related(id: string): Set<string> {
+  function related(id: string, includeDependencies = true): Set<string> {
     const found = new Set([id]), pending = [id]
     for (let next = pending.pop(); next !== undefined; next = pending.pop()) {
       for (const target of adjacency.get(next) ?? []) if (!found.has(target)) {
         if (kinds.get(target) === 'task') {
+          if (!includeDependencies) continue
           const owner = raw.tasks.find(task => task.id === next)
           if (!owner || (!owner.detail.dependencyTempIds.includes(target) && owner.detail.parentTempId !== target)) continue
         }
@@ -119,7 +122,11 @@ export async function composeSemantics(input: unknown, options: ComposeContext):
     }
     return found
   }
-  const ownership = new Map(raw.tasks.map(task => [task.id, related(task.id)]))
+  // Opt-in only: a prerequisite carries safety constraints, not ownership of its
+  // private dates/materials. The default graph remains byte-for-byte compatible
+  // in its results; the full graph still propagates issues and detects cycles.
+  const ownership = new Map(raw.tasks.map(task => [task.id, related(task.id, context.ownershipMode === undefined)]))
+  const safety = context.ownershipMode === undefined ? ownership : new Map(raw.tasks.map(task => [task.id, related(task.id)]))
   for (const task of raw.tasks) {
     const ids = ownership.get(task.id)!
     for (const kind of ['time', 'material', 'event'] as const) {
@@ -162,7 +169,7 @@ export async function composeSemantics(input: unknown, options: ComposeContext):
   if (index.scopes.some(scope => !covered.has(scope.id))) issue('UNACCOUNTED_SOURCE_SCOPE')
   if (raw.unresolvedScopeIds.length) issue('UNRESOLVED_SOURCE_SCOPE')
   const items = raw.tasks.map(task => {
-    const affected = ownership.get(task.id)!
+    const affected = safety.get(task.id)!
     const codes = [...new Set(issues.filter(i => !i.entityIds.length || i.entityIds.some(id => !id || affected.has(id))).map(i => i.code))].sort()
     const s = task.semantics
     let requiresAction: Truth = 'unknown'

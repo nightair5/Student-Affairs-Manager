@@ -9,12 +9,28 @@ import { taskDateViews } from './taskDateView'
 import { reviewAdapter } from './reviewAdapter'
 import { assertReplayHandoff, type ReplayHandoff } from '../mainline03/seenReplay'
 import { jsonCopy, verifyReceipt } from '../mainline03/recognitionHandoff'
+import type { ReactNode } from 'react'
+import type { SemanticDispositionIntent } from '../mainline05/semanticConfirmation'
+
+export interface MainlineSemanticCapabilities {
+  informationReviewProblem?(workspace: WorkspaceV8, draftId: string): string | undefined
+  facts(workspace: WorkspaceV8, draftId: string, taskId?: string, onFocus?: (quote: string) => void): ReactNode
+  taskFacts(workspace: WorkspaceV8, taskId: string): ReactNode
+  eventFacts(workspace: WorkspaceV8, eventId: string): { startLabel: string; endLabel: string; content: ReactNode }
+  eventCount(workspace: WorkspaceV8, draftId: string, taskIds: string[]): number
+  dispose(intent: SemanticDispositionIntent): Promise<WorkspaceV8>
+  readonly timezone: string
+  readonly exportName: string
+}
+export type MainlineSemanticDriver = Pick<MainlineRuntime, 'load' | 'view' | 'dates' | 'review' | 'capture' | 'edit' | 'confirm' | 'exportJson'>
+  & { semantic: MainlineSemanticCapabilities; recognitionDescription: string }
 
 export interface MainlineRuntime {
   readonly mode: 'mainline-02-i1-isolated'
   readonly databaseName: string
   readonly initial: WorkspaceV8
   readonly recognitionDescription?: string
+  readonly semantic?: MainlineSemanticCapabilities
   load(): Promise<WorkspaceV8>
   view(workspace: WorkspaceV8): ReturnType<typeof workspaceV8ToLegacyView>
   dates: typeof taskDateViews
@@ -35,6 +51,7 @@ export async function createMainlineRuntime(options: {
   name: string; store: WorkspaceRecordStore & { readonly name: string }; initialize?: WorkspaceV8
   recognize: (text: string, sourceId: string) => RecognitionResult | Promise<RecognitionResult>
   handoff?: ReplayHandoff
+  semanticDriver?: (store: WorkspaceRecordStore & { readonly name: string }) => Promise<MainlineSemanticDriver>
 }): Promise<MainlineRuntime> {
   assertDatabaseName(options.name)
   const handoff = options.handoff
@@ -63,6 +80,18 @@ export async function createMainlineRuntime(options: {
     await canonical.save(options.initialize)
   }
   const initial = await load()
+  if (options.semanticDriver) {
+    if (handoff || !options.name.startsWith('rco-mainline-01-02-i1-mainline05-')) throw Error('MAINLINE_DRIVER_SCOPE_INVALID')
+    const driver = await options.semanticDriver(Object.freeze({ ...store, name }))
+    const checked = await driver.load()
+    if (checked.workspace.id !== name || JSON.stringify(checked) !== JSON.stringify(initial)) throw Error('MAINLINE_DRIVER_INITIAL_MISMATCH')
+    const runtime: MainlineRuntime = Object.freeze({ mode: 'mainline-02-i1-isolated', databaseName: name, initial: checked,
+      recognitionDescription: driver.recognitionDescription, semantic: driver.semantic,
+      load: driver.load, view: driver.view, dates: driver.dates, review: driver.review,
+      capture: driver.capture, edit: driver.edit, confirm: driver.confirm, exportJson: driver.exportJson })
+    verified.add(runtime)
+    return runtime
+  }
   const capture = new CapturePersistenceService(canonical)
   const runtime: MainlineRuntime = Object.freeze({
     mode: 'mainline-02-i1-isolated' as const, databaseName: options.name, initial,

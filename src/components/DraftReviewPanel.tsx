@@ -4,8 +4,12 @@ import { useDialogFocusTrap } from '../lib/useDialogFocusTrap'
 import type { DraftItem, ExtractionDraft, Project, Source, TaskCategory } from '../types'
 import type { InferenceLevel } from '../types'
 import { assessFocusedReview } from '../recognition/focusedReview'
+import type { ReactNode } from 'react'
 
 interface DraftReviewPanelProps {
+  semanticReview?: { itemFacts: (taskId: string, onFocus: (quote: string) => void) => ReactNode; information: ReactNode;
+    informationReviewProblem?: string;
+    eventCount: number; onDefer: (itemId: string) => void; onInformationReviewed: () => void }
   isolatedCapabilities?: boolean
   confirmationV2?: { busy: boolean; items: Record<string, { dateLabel: string; blockedReason?: string; dateEditBlockedReason?: string; materialTempIds?: string[]; timePointTempIds?: string[] }> }
   draft: ExtractionDraft
@@ -63,7 +67,7 @@ function EvidenceLocator({ recognition, evidenceIds, onFocusEvidence }: {
     : <small className="evidence-unavailable">暂无可定位依据</small>
 }
 
-export function DraftReviewPanel({ isolatedCapabilities, draft, source, onClose, onUpdate, onConfirm, onReject, onConfirmAll, projectWillCreate, projects, onProjectChoice, onKeepExplicit, onMoveTask, onToggleRecognitionEntity, onToggleTaskSelected, onSplitTask, onMergeTask, confirmationV2 }: DraftReviewPanelProps) {
+export function DraftReviewPanel({ semanticReview, isolatedCapabilities, draft, source, onClose, onUpdate, onConfirm, onReject, onConfirmAll, projectWillCreate, projects, onProjectChoice, onKeepExplicit, onMoveTask, onToggleRecognitionEntity, onToggleTaskSelected, onSplitTask, onMergeTask, confirmationV2 }: DraftReviewPanelProps) {
   const titleId = useId()
   const panelRef = useRef<HTMLElement>(null)
   const [editingId, setEditingId] = useState<string | null>(null)
@@ -103,6 +107,8 @@ export function DraftReviewPanel({ isolatedCapabilities, draft, source, onClose,
     const metadata = taskMeta.get(item.suggestion.id)
     return <DraftItemReview
       key={item.id}
+      semanticFacts={semanticReview?.itemFacts(item.suggestion.id, setActiveEvidence)}
+      onDefer={semanticReview ? () => semanticReview.onDefer(item.id) : undefined}
       isolatedCapabilities={isolatedCapabilities}
       index={index}
       item={confirmationV2 ? { ...item, suggestion: { ...item.suggestion, ...editBuffer[item.id] } } : item}
@@ -182,6 +188,8 @@ export function DraftReviewPanel({ isolatedCapabilities, draft, source, onClose,
             {milestone.workPackages.map((workPackage) => <section className="recognition-work-package" key={workPackage.tempId}><header><strong>{workPackage.title}</strong><small>{workPackage.objective}</small></header>{workPackage.tasks.map((task) => { const item = draft.items.find((candidate) => candidate.suggestion.id === task.tempId); return item ? renderItem(item, draft.items.indexOf(item), milestone.tempId) : null })}</section>)}
           </details>)}
           {draft.items.filter((item) => !groupedItemIds.has(item.suggestion.id)).map((item, index) => renderItem(item, index))}
+          {semanticReview && draft.items.length === 0 && <div>{semanticReview.information}
+            <button type="button" disabled={confirmationV2?.busy || draft.workflowStatus === 'confirmed' || Boolean(semanticReview.informationReviewProblem)} onClick={semanticReview.onInformationReviewed}>标记已核对（不创建任务）</button></div>}
           {recognition && draft.items.length === 0 && <div className="empty-state compact"><ShieldCheck size={28} /><h3>没有识别到明确行动</h3><p>可保存为资料、关闭稍后处理，或返回录入手动创建任务。</p></div>}
           {recognition?.materials.length ? <section className={`recognition-entity-list ${focusedReview?.expandedSections.includes('materials') ? 'focused' : ''}`}><h3>材料</h3>{recognition.materials.map((material) => <div className="recognition-entity-row" key={material.tempId}><label><input type="checkbox" disabled={isolatedCapabilities} checked={material.selected !== false} onChange={(event) => { if (!isolatedCapabilities) onToggleRecognitionEntity('material', material.tempId, event.target.checked) }} /><span><strong>{material.name}</strong><small>{material.formatRequirements.join('；') || '具体要求请回看原文'}</small></span></label><EvidenceLocator recognition={recognition} evidenceIds={material.evidenceIds} onFocusEvidence={setActiveEvidence} /></div>)}</section> : null}
           {recognition?.timePoints.length ? <section className={`recognition-entity-list ${focusedReview?.expandedSections.includes('timePoints') ? 'focused' : ''}`}><h3>时间节点</h3>{recognition.timePoints.map((point) => <div className="recognition-entity-row" key={point.tempId}><label><input type="checkbox" disabled={isolatedCapabilities} checked={point.selected !== false} onChange={(event) => { if (!isolatedCapabilities) onToggleRecognitionEntity('timePoint', point.tempId, event.target.checked) }} /><span><strong>{point.type}</strong><small>{point.rawText}{point.needsConfirmation ? ' · 需要确认' : ''}</small></span></label><EvidenceLocator recognition={recognition} evidenceIds={point.evidenceIds} onFocusEvidence={setActiveEvidence} /></div>)}</section> : null}
@@ -196,6 +204,7 @@ export function DraftReviewPanel({ isolatedCapabilities, draft, source, onClose,
           <span>{confirmationV2 ? new Set(selectedPending.flatMap((item) => confirmationV2.items[item.id]?.timePointTempIds ?? [])).size : recognition?.timePoints.filter((item) => item.selected !== false).length ?? pending.length} 个时间节点</span>
           <span>{confirmationV2 ? new Set(selectedPending.flatMap((item) => confirmationV2.items[item.id]?.materialTempIds ?? [])).size : pendingMaterials} 项材料</span>
           {recognition && <span>{confirmationV2 ? 0 : recognition.events.filter((item) => item.selected !== false).length} 个事件</span>}
+          {semanticReview && <span>{semanticReview.eventCount} 个关联事件（随本次确认保存）</span>}
         </div>}
         <button className="secondary-button" type="button" onClick={onClose}>{pending.length ? '稍后再处理' : '完成'}</button>
         {selectedPending.length > 0 && <button className="primary-button" type="button" disabled={confirmationV2 && (confirmationV2.busy || selectedPending.some((item) => !confirmationV2.items[item.id] || confirmationV2.items[item.id].blockedReason || hasUnsaved(item)))} onClick={onConfirmAll}><CheckCheck size={17} />加入已选任务（{selectedPending.length}）</button>}
@@ -205,6 +214,8 @@ export function DraftReviewPanel({ isolatedCapabilities, draft, source, onClose,
 }
 
 interface DraftItemReviewProps {
+  semanticFacts?: ReactNode
+  onDefer?: () => void
   isolatedCapabilities?: boolean
   confirmationV2?: { dateLabel?: string; blockedReason?: string; dateEditBlockedReason?: string; busy: boolean; unsaved: boolean
     titleDirty: boolean; deadlineDirty: boolean; onSave: (field: 'title' | 'deadline') => void }
@@ -226,7 +237,7 @@ interface DraftItemReviewProps {
   onMergeTask: DraftReviewPanelProps['onMergeTask']
 }
 
-function DraftItemReview({ isolatedCapabilities, index, item, editing, onToggleEdit, onUpdate, onConfirm, onReject, onToggleSelected, onFocusEvidence, inferenceLevel, milestones, milestoneTempId, onMoveTask, mergeTargets, onSplitTask, onMergeTask, confirmationV2 }: DraftItemReviewProps) {
+function DraftItemReview({ semanticFacts, onDefer, isolatedCapabilities, index, item, editing, onToggleEdit, onUpdate, onConfirm, onReject, onToggleSelected, onFocusEvidence, inferenceLevel, milestones, milestoneTempId, onMoveTask, mergeTargets, onSplitTask, onMergeTask, confirmationV2 }: DraftItemReviewProps) {
   const suggestion = item.suggestion
   const [mergeTargetId, setMergeTargetId] = useState('')
   if (item.status !== '待确认') return <article className={`review-item processed ${item.status === '已拒绝' ? 'rejected' : ''}`}>
@@ -245,6 +256,11 @@ function DraftItemReview({ isolatedCapabilities, index, item, editing, onToggleE
     {confirmationV2 && <p>隔离确认 V2：本轮支持修改名称和时间，其他编辑尚未接入。首次建议、原文和编辑记录分开保留。输入完成后点击“保存修改”；未保存输入在关闭或刷新后不保留。{confirmationV2.blockedReason && <strong role="status">需核对（{confirmationV2.blockedReason}）</strong>}</p>}
     {confirmationV2?.unsaved && <p role="status">有未保存修改：请先保存修改，再确认该任务。</p>}
     {confirmationV2?.dateEditBlockedReason && <p role="status">{confirmationV2.dateEditBlockedReason}</p>}
+    {semanticFacts}
+    {onDefer && item.status === '待确认' && <div>
+      <button type="button" disabled={confirmationV2?.busy || confirmationV2?.unsaved} onClick={onDefer}>稍后核对此项</button>
+      <button type="button" disabled={confirmationV2?.busy || confirmationV2?.unsaved} onClick={() => onReject(item.id)}>记录此项不需要</button>
+    </div>}
     {editing && <fieldset className="review-edit-form"><legend>修改这件事</legend><div className="form-grid">
       <label className="field span-2"><span>任务名称</span><input disabled={confirmationV2?.busy} value={suggestion.title} onChange={(event) => onUpdate(item.id, { title: event.target.value })} /></label>
       {confirmationV2 && <button type="button" disabled={confirmationV2.busy || !confirmationV2.titleDirty} onClick={() => confirmationV2.onSave('title')}>保存修改：任务名称</button>}

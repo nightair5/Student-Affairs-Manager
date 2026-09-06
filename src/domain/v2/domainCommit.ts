@@ -784,3 +784,52 @@ export function applyDomainCommitPlan(workspace: WorkspaceV8, plan: DomainCommit
 export async function commitDomainPlan(repository: CanonicalWorkspaceRepository, plan: DomainCommitPlan, now = new Date().toISOString()): Promise<WorkspaceV8> {
   return repository.transaction((workspace) => applyDomainCommitPlan(workspace, plan, now))
 }
+
+/** Explicit isolated semantic entry. Old recognition/V2 builders and apply remain unchanged.
+ * The caller validates its versioned semantic state before and after this synchronous plan.
+ * This function only applies additive canonical facts and complete draft state atomically
+ * when called through the real canonical repository transaction.
+ */
+export interface SemanticDomainCommitPlan extends DomainCommitPlan {
+  nextDraft: WorkspaceV8['extractionDrafts'][number]
+  nextSourceStatus: WorkspaceV8['sources'][number]['status']
+}
+export function applySemanticDomainCommitPlan(workspace: WorkspaceV8, plan: SemanticDomainCommitPlan, now: string): WorkspaceV8 {
+  const canonicalJson = (value: unknown): unknown => Array.isArray(value) ? value.map(canonicalJson)
+    : value && typeof value === 'object' ? Object.fromEntries(Object.entries(value).sort(([a],[b]) => a.localeCompare(b)).map(([k,v]) => [k, canonicalJson(v)])) : value
+  const draft = workspace.extractionDrafts.find(d => d.id === plan.draftId)
+  const run = workspace.recognitionRuns.find(r => r.id === plan.recognitionRunId)
+  const version = workspace.sourceVersions.find(v => v.id === plan.sourceVersionId)
+  if (!draft || draft.result !== null || !draft.legacyData?.mainline05 || draft.recognitionRunId !== plan.recognitionRunId
+    || run?.sourceVersionId !== version?.id || version?.sourceId !== plan.sourceId
+    || workspaceSnapshotHash(draft) !== plan.draftRevisionHash || plan.nextDraft.id !== draft.id
+    || plan.nextDraft.recognitionRunId !== draft.recognitionRunId || plan.nextDraft.result !== null) throw Error('SEMANTIC_COMMIT_STALE_OR_IDENTITY')
+  if (plan.create.projects.length || plan.create.milestones.length || plan.create.workPackages.length) throw Error('SEMANTIC_PROJECT_NOT_SUPPORTED')
+  function merge<T extends { id: string }>(existing: T[], incoming: T[], mutable: string[] = []): T[] {
+    if (new Set(incoming.map(e => e.id)).size !== incoming.length) throw Error('SEMANTIC_DUPLICATE_ENTITY')
+    const byId = new Map(incoming.map(e => [e.id, e]))
+    for (const prior of existing) {
+      const next = byId.get(prior.id)
+      if (!next) continue
+      const fixed = (e: T) => Object.fromEntries(Object.entries(e).filter(([key]) => !mutable.includes(key)).sort(([a],[b]) => a.localeCompare(b)))
+      if (JSON.stringify(canonicalJson(fixed(prior))) !== JSON.stringify(canonicalJson(fixed(next)))) throw Error('SEMANTIC_CONFIRMED_ENTITY_OVERWRITE')
+      for (const key of ['relatedTaskIds','relatedMaterialIds']) {
+        const a = (prior as Record<string, unknown>)[key], b = (next as Record<string, unknown>)[key]
+        if (Array.isArray(a) && (!Array.isArray(b) || a.some(id => !b.includes(id)))) throw Error('SEMANTIC_RELATION_REMOVED')
+      }
+    }
+    return [...existing.map(e => byId.get(e.id) ?? e), ...incoming.filter(e => !existing.some(p => p.id === e.id))]
+  }
+  const next: WorkspaceV8 = { ...workspace, savedAt: now, workspace: { ...workspace.workspace, updatedAt: now },
+    tasks: merge(workspace.tasks, plan.create.tasks),
+    materials: merge(workspace.materials, plan.create.materials, ['relatedTaskIds','updatedAt']),
+    timePoints: merge(workspace.timePoints, plan.create.timePoints, ['taskId','materialId','eventId','relatedTaskIds','relatedMaterialIds','updatedAt']),
+    events: merge(workspace.events, plan.create.events, ['updatedAt']),
+    evidenceRefs: merge(workspace.evidenceRefs, plan.create.evidenceRefs),
+    historyRecords: merge(workspace.historyRecords, plan.create.historyRecords),
+    extractionDrafts: workspace.extractionDrafts.map(d => d.id === draft.id ? plan.nextDraft : d),
+    sources: workspace.sources.map(s => s.id === plan.sourceId ? { ...s, status: plan.nextSourceStatus, updatedAt: now } : s) }
+  const validation = validateWorkspaceV8(next)
+  if (!validation.valid) throw Error('SEMANTIC_COMMIT_V8_INVALID:' + validation.issues[0].code)
+  return next
+}

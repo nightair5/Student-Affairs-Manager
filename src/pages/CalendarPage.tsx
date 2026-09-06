@@ -12,11 +12,12 @@ import {
   type CalendarTimelineItem,
 } from '../lib/calendar'
 import { findSuggestedWorkSlot } from '../lib/scheduling'
-import { isDateOnly } from '../lib/timeSemantics'
+import { isDateOnly, instantToWallClock } from '../lib/timeSemantics'
 import { formatDuration, getExecutableTasks } from '../lib/taskLogic'
 import type { CourseBlock, Event, Task } from '../types'
 
 interface CalendarPageProps {
+  isolatedTimezone?: string
   dateViews?: TaskDateViews
   tasks: Task[]
   events?: Event[]
@@ -51,8 +52,9 @@ function itemTime(value: string): string {
     .format(new Date(value))
 }
 
-export function CalendarPage({ dateViews, tasks, events = [], courseBlocks, onOpenTask, onOpenEvent, onAddCourseBlock, onRemoveCourseBlock }: CalendarPageProps) {
-  const [today] = useState(() => new Date())
+export function CalendarPage({ isolatedTimezone, dateViews, tasks, events = [], courseBlocks, onOpenTask, onOpenEvent, onAddCourseBlock, onRemoveCourseBlock }: CalendarPageProps) {
+  const [today] = useState(() => isolatedTimezone ? instantToWallClock(new Date(), isolatedTimezone) : new Date())
+  const displayTime = (value: string) => isolatedTimezone ? isDateOnly(value) ? '仅日期' : value.slice(11, 16) + '（' + isolatedTimezone + '）' : itemTime(value)
   const [viewDate, setViewDate] = useState(() => new Date(today.getFullYear(), today.getMonth(), 1))
   const [selectedDateKey, setSelectedDateKey] = useState(() => localDateKey(today))
   const [agendaMode, setAgendaMode] = useState<'selected' | 'upcoming'>('upcoming')
@@ -60,8 +62,18 @@ export function CalendarPage({ dateViews, tasks, events = [], courseBlocks, onOp
   const [courseWeekday, setCourseWeekday] = useState<CourseBlock['weekday']>(1)
   const [courseStart, setCourseStart] = useState('08:00')
   const [courseEnd, setCourseEnd] = useState('10:00')
-  const taskByDate = useMemo(() => groupTasksByDate(tasks), [tasks])
-  const eventByDate = useMemo(() => groupEventsByDate(events), [events])
+  const taskByDate = useMemo(() => {
+    if (!isolatedTimezone) return groupTasksByDate(tasks)
+    const groups = new Map<string, Task[]>()
+    tasks.filter(t => t.deadline).forEach(t => { const key = t.deadline.slice(0, 10); groups.set(key, [...(groups.get(key) ?? []), t]) })
+    return groups
+  }, [tasks, isolatedTimezone])
+  const eventByDate = useMemo(() => {
+    if (!isolatedTimezone) return groupEventsByDate(events)
+    const groups = new Map<string, Event[]>()
+    events.filter(e => e.startAt).forEach(e => { const key = e.startAt!.slice(0, 10); groups.set(key, [...(groups.get(key) ?? []), e]) })
+    return groups
+  }, [events, isolatedTimezone])
   const monthCells = useMemo(() => buildMonthCells(viewDate), [viewDate])
   const executableTasks = useMemo(() => getExecutableTasks(tasks, today, dateViews)
     .filter(task => !dateViews || dateViews[task.id]?.kind === 'dated')
@@ -75,7 +87,16 @@ export function CalendarPage({ dateViews, tasks, events = [], courseBlocks, onOp
       ...selectedEvents.filter((event) => event.startAt).map((event): CalendarTimelineItem => ({ kind: 'event', id: event.id, title: event.title, at: event.startAt!, event })),
     ].sort((a, b) => new Date(a.at).getTime() - new Date(b.at).getTime())
   }, [eventByDate, selectedDateKey, taskByDate])
-  const upcomingItems = useMemo(() => buildUpcomingCalendarItems(tasks, events, today), [events, tasks, today])
+  const upcomingItems = useMemo(() => {
+    if (!isolatedTimezone) return buildUpcomingCalendarItems(tasks, events, today)
+    const day = localDateKey(today)
+    return [
+      ...tasks.filter(t => t.status !== '已完成' && t.deadline && t.deadline.slice(0, 10) >= day)
+        .map((task): CalendarTimelineItem => ({ kind: 'task', id: task.id, title: task.title, at: task.deadline, task })),
+      ...events.filter(e => e.startAt && e.startAt.slice(0, 10) >= day)
+        .map((event): CalendarTimelineItem => ({ kind: 'event', id: event.id, title: event.title, at: event.startAt!, event })),
+    ].sort((a,b) => a.at.localeCompare(b.at))
+  }, [events, tasks, today, isolatedTimezone])
   const undatedEvents = useMemo(() => getUndatedCalendarEvents(events), [events])
   const agendaItems = agendaMode === 'selected' ? selectedItems : upcomingItems
   const agendaTitle = agendaMode === 'selected'
@@ -133,6 +154,11 @@ export function CalendarPage({ dateViews, tasks, events = [], courseBlocks, onOp
                 const timed = summarizeCalendarDay(dayTasks.filter(task => !isDateOnly(task.deadline)), dayEvents)
                 summary.timeLabel = timed ? `含仅日期事项；时刻 ${timed.timeLabel}` : '仅日期'
               }
+              if (isolatedTimezone && summary) {
+                const values = [...dayTasks.filter(task => task.status !== '已完成').map(task => task.deadline), ...dayEvents.map(event => event.startAt)]
+                const clocks = values.filter((value): value is string => typeof value === 'string' && value.length > 0 && !isDateOnly(value)).map(value => value.slice(11, 16)).sort()
+                summary.timeLabel = clocks.length ? `${clocks[0]}（${isolatedTimezone}）` : '仅日期'
+              }
               const selected = cell.dateKey === selectedDateKey
               const className = [
                 'calendar-day',
@@ -170,16 +196,16 @@ export function CalendarPage({ dateViews, tasks, events = [], courseBlocks, onOp
           {agendaItems.length
             ? <div className="calendar-agenda-list">{agendaItems.map((item) => item.kind === 'task'
                 ? <button className="agenda-item" key={`task:${item.id}`} type="button" onClick={() => onOpenTask(item.task)}>
-                    <span className="agenda-time">{dateViews && isDateOnly(item.at) ? '仅日期' : itemTime(item.at)}</span>
+                    <span className="agenda-time">{dateViews && isDateOnly(item.at) ? '仅日期' : displayTime(item.at)}</span>
                     <span className="agenda-copy"><strong>{item.title}</strong><small><Clock3 size={13} />任务 · 预计 {formatDuration(item.task.estimatedMinutes)} · {item.task.status}</small></span>
                   </button>
                 : onOpenEvent
                   ? <button className="agenda-item event" key={`event:${item.id}`} type="button" onClick={() => onOpenEvent(item.event)}>
-                      <span className="agenda-time">{itemTime(item.at)}</span>
+                      <span className="agenda-time">{displayTime(item.at)}</span>
                       <span className="agenda-copy"><strong>{item.title}</strong><small><Flag size={13} />事件{item.event.location ? ` · ${item.event.location}` : ''}{item.event.needsConfirmation ? ' · 时间待核对' : ''}</small></span>
                     </button>
                   : <article className="agenda-item event" key={`event:${item.id}`}>
-                      <span className="agenda-time">{itemTime(item.at)}</span>
+                      <span className="agenda-time">{displayTime(item.at)}</span>
                       <span className="agenda-copy"><strong>{item.title}</strong><small><Flag size={13} />事件{item.event.location ? <><MapPin size={12} />{item.event.location}</> : null}{item.event.needsConfirmation ? ' · 时间待核对' : ''}</small></span>
                     </article>)}</div>
             : <div className="calendar-empty-agenda"><strong>{agendaMode === 'selected' ? '所选日期没有事项' : '没有即将到来的事项'}</strong><p>确认后的任务和事件会按日期进入这里。</p></div>}

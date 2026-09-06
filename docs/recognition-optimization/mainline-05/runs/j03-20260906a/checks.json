@@ -1,0 +1,214 @@
+{
+  "stage": "RCO-5-MAINLINE-05_J03_FINAL_DELIVERY",
+  "status": "PASS_FINAL_FILE_EVIDENCE_REVIEW_AND_PROTECTION",
+  "startHead": "fe064c19e2d5d2bc418adfcf7bb744ce4bdeb8ec",
+  "branch": "codex/e2-multimodal-recognition-exp",
+  "remoteStartMatched": true,
+  "source": {
+    "matched": 26,
+    "changedSinceFinalReview": 0,
+    "arraySha256": "2c9fb255df8b9baaf240ee7c443f10654a1e7b7b7560bca0a37669dd7ab5c3d5"
+  },
+  "protection": {
+    "matched": 863,
+    "planningMatched": 4,
+    "staticEvidenceMatched": 20,
+    "engineeringLogShaMatched": 16,
+    "unexpectedChanges": 0,
+    "oldLogBoundariesPreserved": [
+      {
+        "bytes": 237695,
+        "sha256": "7ea34bb681d59435bd861fb43ce80be74516af1910be3d3f7ad168ef3f22819b"
+      },
+      {
+        "bytes": 244561,
+        "sha256": "9a1c6d9e61196b15d6b95f7d053a7d66c79ff135ddc34a6d34fab635c9524fc3",
+        "role": "next-resume append-only prefix; original boundary also retained"
+      }
+    ],
+    "nextAppendOnlyBoundary": {
+      "bytes": 247923,
+      "sha256": "67f28de657bec3dff70316f9e74e1f1ae2f9336b76dc8fc7167672d0e0f67405"
+    }
+  },
+  "independentReview": {
+    "status": "PASS_FOR_FINAL_DELIVERY",
+    "report": "review.json",
+    "blockingFindings": 0,
+    "scope": "Evidence and delivery boundary only; source inspection/file checks performed independently; browser observations explicitly reused."
+  },
+  "reusedEngineering": {
+    "path": "../full-20260906c/engineering.json",
+    "layers": 19,
+    "passed": 19,
+    "rerun": false,
+    "targeted": {
+      "passed": 131,
+      "failed": 0,
+      "mainline05": 59,
+      "mainline04": 72
+    },
+    "oldV2MemoryFields": {
+      "passed": 42,
+      "total": 42
+    },
+    "vitest": {
+      "passed": 1117,
+      "skipped": 1,
+      "skip": "existing live-OCR"
+    },
+    "checkerPassed": 33,
+    "historicalLibraryPassed": 4,
+    "dependencyCompatibilityPassed": 13,
+    "dependencyAuditVulnerabilities": 0,
+    "lint": {
+      "errors": 0,
+      "existingWarnings": 1
+    }
+  },
+  "browser": {
+    "status": "J01_J12_REQUIRED_EVIDENCE_COMPLETE_ISOLATED_ENGINEERING_ONLY",
+    "reusedJourneys": [
+      "J01",
+      "J02",
+      "J04",
+      "J05",
+      "J06",
+      "J07",
+      "J08",
+      "J09",
+      "J10",
+      "J11",
+      "J12"
+    ],
+    "newJourney": "J03",
+    "newCasesPassed": 2,
+    "newCasesFailed": 0,
+    "actualTimezone": "America/Los_Angeles",
+    "businessTimezone": "Asia/Shanghai",
+    "restoredSensors": "无替代 (user restored)",
+    "restoredActualTimezone": "Asia/Shanghai",
+    "originalOriginAndDatabasePreserved": true,
+    "restoredFullObjectUnchanged": true,
+    "oldEntitiesUnchanged": 335,
+    "expectedNewTasks": 3,
+    "totalTasks": 34,
+    "noDateExistingTasks": 7,
+    "noDateAssociatedTimes": 0,
+    "noDateReminders": 0,
+    "realBrowserReminderJobs": 0,
+    "safety": "No newly observed erroneous default selection, unconfirmed task write, unexpected duplicate, overwrite, loss or invented reminder in this bounded acceptance; original safety journeys reused by unchanged SHA.",
+    "source": "browser.json"
+  },
+  "actualFiles": {
+    "status": "IDENTITY_AND_DEEP_EQUAL_PASS",
+    "jointValidator": "PASS",
+    "source": "download.json",
+    "independentReviewerAlsoCompared": true,
+    "fileCounts": 2,
+    "parsedObjectSha256": "06cb9fbbb6a3fc0c889cdb73a0de934dbe8bba96f4901953e9f82c0b79209719"
+  },
+  "documentation": {
+    "contextLines": 78,
+    "appendOnlyLog": true,
+    "existingJsonParsed": true,
+    "targetedCredentialPatternHits": 0,
+    "gitDiffWhitespace": "PASS_BEFORE_STAGING; repeated on exact staged manifest",
+    "checks": "JSON/schema shape parsing, evidence SHA binding, approved-path comparison, log-prefix verification; no full source engineering rerun"
+  },
+  "attempts": [
+    {
+      "name": "staged-report-whitespace",
+      "result": "Two new review reports contained an extra empty EOF line; staged diff check rejected it.",
+      "resolution": "Removed only empty EOF lines from the two new reports and rebound their delivery SHA; review substance and three reviewed evidence SHA unchanged. No implementation edit."
+    },
+    {
+      "name": "document-length-check",
+      "result": "81 lines exceeds local <=80 guard",
+      "resolution": "Compressed only CURRENT_CONTEXT to78 lines; no assertion/product/test change."
+    },
+    {
+      "name": "guard-output-decoding",
+      "result": "Git LF/CRLF warning preceded JSON; orchestration output parser failed after successful guard",
+      "resolution": "Parsed explicit final JSON line; preserved warning, no encoding/source change."
+    },
+    {
+      "name": "download-listener",
+      "result": "TIMEOUT",
+      "resolution": "Actual product and independent files exist and verified; not classified as product download failure."
+    }
+  ],
+  "historicalResults": {
+    "preserved": true,
+    "unchanged": [
+      "old 40/42",
+      "old 17 tests",
+      "B8 FAIL",
+      "old current-environment 3 pass / 1 fail",
+      "browser-final J03 PARTIAL",
+      "all historical failure attempts"
+    ],
+    "reinterpretation": "Current supplement completes missing evidence; historical records are not rewritten."
+  },
+  "stagingManifest": [
+    "src/App.tsx",
+    "src/components/DraftReviewPanel.tsx",
+    "src/components/TaskDetailPanel.tsx",
+    "src/components/EventDetailPanel.tsx",
+    "src/pages/CalendarPage.tsx",
+    "src/experiments/mainline02/runtime.ts",
+    "src/domain/v2/domainCommit.ts",
+    "src/experiments/mainline05/semanticState.ts",
+    "src/experiments/mainline05/semanticRepository.ts",
+    "src/experiments/mainline05/semanticCapture.ts",
+    "src/experiments/mainline05/semanticConfirmation.ts",
+    "src/experiments/mainline05/semanticView.ts",
+    "src/experiments/mainline05/runtime.ts",
+    "src/experiments/mainline05/SemanticFacts.tsx",
+    "src/experiments/mainline05/engineeringReplay.ts",
+    "src/experiments/mainline05/browser.tsx",
+    "src/experiments/mainline05/semanticState.test.ts",
+    "src/experiments/mainline05/semanticRepository.test.ts",
+    "src/experiments/mainline05/semanticCapture.test.ts",
+    "src/experiments/mainline05/semanticConfirmation.test.ts",
+    "src/experiments/mainline05/semanticView.test.ts",
+    "src/experiments/mainline05/mainlineAcceptance.test.tsx",
+    "scripts/serve-mainline-05.mjs",
+    "scripts/check-mainline-05.mjs",
+    "scripts/check-mainline-05.node-test.mjs",
+    "src/experiments/mainline04/semanticComposer.ts",
+    "docs/recognition-optimization/mainline-05/runs/j03-20260906a/preflight.json",
+    "docs/recognition-optimization/mainline-05/runs/j03-20260906a/browser.json",
+    "docs/recognition-optimization/mainline-05/runs/j03-20260906a/download.json",
+    "docs/recognition-optimization/mainline-05/runs/j03-20260906a/audit.md",
+    "docs/recognition-optimization/mainline-05/runs/j03-20260906a/review.md",
+    "docs/recognition-optimization/mainline-05/runs/j03-20260906a/review.json",
+    "docs/recognition-optimization/mainline-05/runs/j03-20260906a/checks.json",
+    "docs/recognition-optimization/mainline-05/runs/j03-20260906a/implementation-snapshot.json",
+    "docs/recognition-optimization/CURRENT_CONTEXT.md",
+    "docs/recognition-optimization/OPTIMIZATION_LOG.md"
+  ],
+  "delivery": {
+    "state": "READY_FOR_EXACT_STAGE_COMMIT_PUSH",
+    "mustVerify": "staged names exactly36, staged whitespace, unchanged26 working SHA, commit then push and live remote exact HEAD",
+    "startHeadNotDeliveryCommit": true
+  },
+  "remainingNotAccepted": [
+    "Real model accuracy",
+    "Images/files recognition quality",
+    "Real-user editing time and successful-unit cost",
+    "Cross-notification revision",
+    "Formal task execution/ICS/real reminders",
+    "Stable integration and commercial deployment"
+  ],
+  "modelCalls": 0,
+  "modelNetwork": 0,
+  "feesCny": 0,
+  "secretsOrClipboardAccess": 0,
+  "newDatasets": 0,
+  "newDependencies": 0,
+  "realDatabaseAccess": 0,
+  "stableIntegration": 0,
+  "deployments": 0,
+  "modelAccuracy": "本轮未测量"
+}

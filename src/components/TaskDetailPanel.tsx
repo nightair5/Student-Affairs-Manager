@@ -1,4 +1,5 @@
 import type { TaskDateView } from '../experiments/mainline02/taskDateView'
+import type { ReactNode } from 'react'
 import {
   BellRing,
   CalendarClock,
@@ -46,6 +47,7 @@ const materialStatusOptions: Array<{ value: MaterialStatus; label: string }> = [
 ]
 
 interface TaskDetailPanelProps {
+  semanticContent?: ReactNode
   readOnly?: boolean
   dateView?: TaskDateView
   task: Task
@@ -58,7 +60,7 @@ interface TaskDetailPanelProps {
 }
 
 export function TaskDetailPanel({
-  readOnly, dateView,
+  readOnly, dateView, semanticContent,
   task,
   sources,
   onClose,
@@ -228,6 +230,7 @@ export function TaskDetailPanel({
         </header>
 
         <DetailBody className="detail-body" disabled={readOnly} style={readOnly ? { border: 0, minWidth: 0 } : undefined}>
+          {semanticContent}
           {readOnly && <p>本轮仅查看；正式任务编辑、执行、提醒与ICS未支持。完整备份请使用测试库JSON导出。</p>}
           {editing && (
             <form className="task-edit-form" onSubmit={handleSave}>

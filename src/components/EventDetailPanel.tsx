@@ -2,8 +2,10 @@ import { CalendarDays, FileSearch, MapPin, X } from 'lucide-react'
 import { useId, useRef } from 'react'
 import { useDialogFocusTrap } from '../lib/useDialogFocusTrap'
 import type { Event, Project } from '../types'
+import type { ReactNode } from 'react'
 
 interface EventDetailPanelProps {
+  isolatedFacts?: { startLabel: string; endLabel: string; content: ReactNode }
   event: Event
   project?: Project
   evidenceQuotes: string[]
@@ -18,7 +20,7 @@ function dateTime(value: string | null | undefined): string {
   }).format(new Date(value))
 }
 
-export function EventDetailPanel({ event, project, evidenceQuotes, sourceTitles, onClose }: EventDetailPanelProps) {
+export function EventDetailPanel({ isolatedFacts, event, project, evidenceQuotes, sourceTitles, onClose }: EventDetailPanelProps) {
   const titleId = useId()
   const panelRef = useRef<HTMLElement>(null)
   useDialogFocusTrap(panelRef, onClose)
@@ -30,9 +32,10 @@ export function EventDetailPanel({ event, project, evidenceQuotes, sourceTitles,
         <button className="icon-button" type="button" onClick={onClose} aria-label="关闭事件详情"><X size={20} /></button>
       </header>
       <div className="detail-body">
+        {isolatedFacts?.content}
         <dl className="source-detail-facts">
-          <div><dt>开始</dt><dd>{dateTime(event.startAt)}</dd></div>
-          <div><dt>结束</dt><dd>{dateTime(event.endAt)}</dd></div>
+          <div><dt>开始</dt><dd>{isolatedFacts?.startLabel ?? dateTime(event.startAt)}</dd></div>
+          <div><dt>结束</dt><dd>{isolatedFacts?.endLabel ?? dateTime(event.endAt)}</dd></div>
           <div><dt>地点</dt><dd>{event.location || '未提供'}</dd></div>
           <div><dt>时间状态</dt><dd>{event.needsConfirmation ? '待人工确认' : '已记录'}</dd></div>
         </dl>
