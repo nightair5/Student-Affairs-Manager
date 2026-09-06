@@ -1580,3 +1580,29 @@
 - delivery: 精确暂存R1_*报告、CURRENT_CONTEXT与追加日志，清单R1_STAGING_MANIFEST；提交推送/远端精确号以实际Git回执为准，8实现不提交。无强推/回切/自动变基。
 - next: 唯一建议另批RCO-5-MAINLINE-04-I1-R2，只调整一个checker的当前基线/审查/保护/输出绑定，独立审查后继续完整分层工程；不改7语义源码/测试，不重做契约、模型或数据。完整待授权提示词R1_NEXT_PROMPT，本轮停止不自动执行。
 - boundary: 外部识别/模型网络/费用/密钥/剪贴板/真实库/浏览器/真人/真实材料/新数据集/盲测/B10/稳定接入/部署/RCO-6均0；只有必要Git交付网络。
+
+## 104. MAINLINE-04-I1-R2 检查编排获准恢复 — 2026-09-06
+
+- authority: 仅允许check-mainline-04-i1.mjs增加显式R2阶段/审核SHA/保护/报告/临时目录支持；7语义源码测试只读，旧默认与全部历史不变。新增R2_*报告、短交接、追加日志。
+- baseline: 本机/远端6b3ccc2cf9cde95f29ca7e25e5cfc5859638d05d；8实现逐字匹配R1拒收/最终审查快照，845旧保护匹配。扣除获准checker保留844，再绑定21项R1静态证据与7语义源码去重，共870保护。无重叠修改，不回切/重装/套补丁。
+- sequence: 编排内存正反验证→新无上下文审查并绑定8SHA→一次适用分层工程→保护与精确交付。工程要求额外源码/测试/依赖改变即停，仅审计保留现场；不绕类型/删门/改答案。
+- boundary: 0外部识别/模型网络/费用/密钥/剪贴板/真实库/新数据/部署/稳定入口/RCO-6；只允许Git与公开依赖审计网络。新语义App/正式保存NOT_RUN，模型准确率本轮未测量。当前IN_PROGRESS，不预称通过。
+
+## 105. MAINLINE-04-I1-R2 编排审查通过，开始一次分层工程 — 2026-09-06
+
+- directed: 内存编排22/22，原R1定向72/72；原42字段真实V2内存断言通过。JSON reporter未保留独立console明细，只报告断言证据，不补造字段文件。
+- independent: 新无上下文/root/mainline04_i1_r2_independent审查PASS；870保护/7源码/8当前SHA一致，14类错误审核/变更/越界/临时路径实际内存探针0写入0子进程拒绝，合法绑定进入full哨兵，未提前运行full。
+- scope: 唯一checker新增显式R2绑定，完整工程函数除根报告路径外保持；原历史快照20文件只读SHA匹配。R2_REVIEW记录本轮真实审核，不使用self-check模拟PASS冒充授权。
+- next: 仅启动full-01一次获准分层工程；任何工程失败保留现场、需要只读源码/测试/依赖修改立即停。未发生前不宣称工程通过；新语义App/正式保存NOT_RUN，模型准确率本轮未测量。
+
+## 106. MAINLINE-04-I1-R2 分层工程通过，准备精确交付 — 2026-09-06
+
+- outcome: PASS_ENGINEERING_WITH_DECLARED_LIVE_OCR_SKIP；只改一个checker，原7语义源码/测试匹配R1最终SHA，没有额外源码/依赖/语义修改。R1已修组件获得完整工程证据，不等于新语义App/产品/模型验收。
+- directed: 内存编排22/22、原定向72/72，原49不弱化。42字段真实V2内存确认断言passed；未伪造JSON reporter未保留的独立console字段明细。
+- independent: 新无上下文审查PASS，14类实际入口错误在0写/0子进程前置拒绝，8SHA绑定真实R2_REVIEW后才full。原fullEngineering除根报告路径外一致，不删工程门。
+- engineering: full-01一次、18层通过；历史逐字完整性20/20，当前依赖兼容13/13，原封历史库4/4；当前前端1058通过/1既有live OCR跳过/0失败，其他功能62/62；lint/type/Schema与时间契约/build/18资源稳定隔离/安全/依赖全部通过，0漏洞，日志SHA一致。不把72重复计入全量，不合并历史环境与当前成绩。
+- skipped: 原ocrLiveComponent.test.ts按既有RUN_LIVE_OCR_COMPONENT=0跳过，无测试改动或新skip；本轮不测真实OCR，不以组件工程通过宣称识别质量。旧R2环境3/1和旧I1/R1历史失败、40/42/17/B8 FAIL全部保留。
+- protection: 原844+21项R1证据+7源码去重共870文件，原始SHA/日志前缀保持；审查8SHA与实现快照一致。Expected/freeze/dataset/checkpoint/cache、旧runner和稳定入口不动。
+- delivery: 全部门通过后才按R2_STAGING_MANIFEST精确提交8实现/编排及R2报告、短交接、追加日志；提交推送/远端精确号以实际回执为准，不强推/自动变基。快照R2_IMPLEMENTATION_SNAPSHOT，审计R2_AUDIT，检查R2_CHECKS和R2_ENGINEERING_CHECKS。
+- next: 唯一建议另批MAINLINE-05-SCOPE，只读确定新语义→真实App核对确认→隔离保存的最小产品接入白名单。理由是工程结构可承接不等于用户可用；不先换模型或新造数据。提示词R2_NEXT_PROMPT，本轮不自动执行。
+- boundary: 0外部识别/verifier/Repair/retry/模型网络/识别费用/密钥/剪贴板/真实库/真实材料/真人/浏览器/新数据/盲测/B10/稳定接入/部署/RCO-6；仅Git和公开依赖审计网络。新语义App/正式保存NOT_RUN，模型准确率本轮未测量。
