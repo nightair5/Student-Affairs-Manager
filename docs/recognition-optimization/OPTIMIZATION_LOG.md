@@ -1722,3 +1722,20 @@
 - git: 精确36文件业务提交1ae10d8afef8c27fbf2f27ca44072a5ffa98612f推送原分支成功；live origin精确一致，工作区干净。未强推/变基/修改源码；提交后26本机SHA、863保护/4计划/20静态证据与三审查证据保持。
 - storage: 额外Git blob逐字检查首遇EventDetailPanel差异；只读查明core.autocrlf=true。26项中24逐字同，EventDetailPanel与domainCommit仅CRLF转LF，分别移除49/723个CR，无其他字节差异。delivery.json分别保存原工作区与Git存储SHA，原冻结/保护仍逐字核验，不把换行差异默默忽略或称源码修补。
 - receipt: 本次只追加实际交付和换行存储映射回执、短交接与审计；不amend业务提交、不重跑工程。最终远端以实际命令核验；模型识别准确率本轮未测量，完成后停止。
+
+## 121. MAINLINE-REAL-INPUT-01完整范围准备 — 2026-09-06
+
+- authority: 本轮仅5份方案文档、CURRENT_CONTEXT及追加日志；不改产品/测试/依赖/历史，不调模型、不建数据集、不部署。doc-coauthoring按已有明确需求直接共写主计划并做无上下文读者复核，不重复历史问答。
+- baseline: 实际HEAD/live远端0eedbf7fc1523d6be476c704ed02b273bdb513bf，业务1ae10d8afef8c27fbf2f27ca44072a5ffa98612f。起点干净；26实现/863保护/4计划/20静态/3审查绑定匹配。954只读tracked文件逐字快照摘要7d5c4b5fd5f66e6a04616acdd48ba340da1505bf78214cc2f3abaa39b61b1e81；原日志248835字节/SHA435f7fcd8c4d44fcf6f542a27f54c6f0a203f232f74fdb2521d84786a5d7e20d。26工作区/Git blob沿旧delivery区分，2项既有CRLF映射不放宽freeze。
+- mainline: 已追踪真实App/fileExtraction/Intake及人工capture/state/确认/仓储。拟一个41路径完整包（13已有显式增量+28新增），真实读取/校对→固定文本网关→来源绑定语义→逐项核对和有限事实纠错→原子隔离保存→下游找回/实际下载。不是新增41功能，也不新增同义语义图。
+- scope-review-fixes: 文档已明确未改文字复用SourceVersion；仅首尾空白更改保存前拒绝留buffer；旧draft绑定自身版本、Source取最新Run；新profile在内存capture构造并联合校验后CAS，避免写后才发现坏图；所有有效事实消费者统一、manual补充不伪装证据。已有App按draft版本读原文保持，不将新profile风险误判为现有错引bug。源码全程未改。
+- decisions: live模型初始不默认勾选、须逐项核对后主动选为待批准政策；自动选择NOT_ENABLED不能领取0误选质量信用，候选错漏/Forbidden仍计分且需非零真实确认正例。不能任意补建漏掉任务/编辑复杂共享时间，明确保留缺口。
+- budget: 官方公开文档已核模型/Responses参数/人民币价格，账号/Secret未访问。待批准A8+B8+可选C8新候选已见复测，共不超24次/10元；token计费上界尚未证明，预算CONDITIONAL，首请求前证据不足PAID_BLOCKED。无隐式retry/verifier/Repair；格式载体复用旧8语义，不称新盲测。0本轮模型/模型网络/费用/密钥/剪贴板/真实库。
+- pending: 方案独立范围复核、最终保护/文档检查及精确Git交付另记；模型识别准确率本轮未测量，不宣称方案等于实现或商业化通过。
+
+## 122. MAINLINE-REAL-INPUT-01方案独立复核与文档交付 — 2026-09-06
+
+- review: 无上下文/root/real_input_scope_review结论PASS_SCOPE_REVIEW，方案范围阻断0；亲验41路径/13已有SHA/28尚未创建，修订后未发现必需的额外公共文件。报告绑定三方案最终SHA，补核文件本体不保存意味着中途刷新需重新选择文件，不承诺自动续读。预算执行仍PAID_BLOCKED直至输入计费上界证明；方案通过不是产品通过。
+- checks: 954旧tracked逐字摘要、863保护/26实现/4计划/20静态/3审查来源与248835字节日志前缀匹配；CURRENT_CONTEXT 77行，41路径唯一，逐文件职责/原因/验证/回滚齐。三方案与独立审查绑定、JSON/敏感串/UTF文本与git diff检查通过；既有工程和浏览器未重跑，不新增产品验收数字。
+- delivery: 仅暂存mainline-real-input-01下PLAN/IMPLEMENTATION_WHITELIST/VALIDATION_AND_BUDGET/SCOPE_REVIEW/CHECKS五文件，加CURRENT_CONTEXT及本日志，共7文件。单独docs提交、推送原分支并live核对的精确号由Git及最终答复记录，不写循环自引用提交号；推送失败不强推/变基。提交后停止，不自动实施或付费。
+- boundary: 产品/测试/依赖改动0；外部识别/模型网络/费用/密钥/剪贴板/真实库/新数据集/真人/真实材料/部署均0。公开官方API资料查询只为方案元数据，不是认证或识别调用；模型识别准确率本轮未测量。

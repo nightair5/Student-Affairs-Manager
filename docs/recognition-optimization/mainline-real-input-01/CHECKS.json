@@ -1,0 +1,173 @@
+{
+  "stage": "MAINLINE-REAL-INPUT-01",
+  "date": "2026-09-06",
+  "status": "PASS_SCOPE_DOCUMENTS_ONLY",
+  "repo": "C:\\Users\\Winner\\student-affairs-multimodal-exp",
+  "branch": "codex/e2-multimodal-recognition-exp",
+  "baseline": {
+    "head": "0eedbf7fc1523d6be476c704ed02b273bdb513bf",
+    "liveRemoteHead": "0eedbf7fc1523d6be476c704ed02b273bdb513bf",
+    "remoteCheck": "git ls-remote origin refs/heads/codex/e2-multimodal-recognition-exp; checked at start and before document delivery",
+    "priorBusinessCommit": "1ae10d8afef8c27fbf2f27ca44072a5ffa98612f",
+    "startWorkingTree": "CLEAN",
+    "sourceEvidence": [
+      {
+        "path": "docs/recognition-optimization/mainline-05/runs/j03-20260906a/audit.md",
+        "sha256": "bbc33dd9bb1b997a1b059ee6dcadc1a60bc3e5488cc9aba6faf6666245a26653"
+      },
+      {
+        "path": "docs/recognition-optimization/mainline-05/runs/j03-20260906a/checks.json",
+        "sha256": "5ccb15276418b1faa308c37cc4c7ad61b237a3a153549c68b0185555ce6d7e5f"
+      },
+      {
+        "path": "docs/recognition-optimization/mainline-05/runs/j03-20260906a/implementation-snapshot.json",
+        "sha256": "820ce024958273b6c87e7033ba29b6bd3a8c859d7a10ab64982a14180268f09a"
+      },
+      {
+        "path": "docs/recognition-optimization/mainline-05/runs/j03-20260906a/review.json",
+        "sha256": "60f27284da688eba17c0e8c84dae0eb0dd91f72c3cbe4380910b243ecfff3653"
+      },
+      {
+        "path": "docs/recognition-optimization/mainline-05/runs/j03-20260906a/delivery.json",
+        "sha256": "ae7a3650b027c1f494844a39cbb6554cc8279ed2bf50c19b3521854ce2eb2233"
+      }
+    ]
+  },
+  "protection": {
+    "status": "PASS",
+    "originalImplementationMatched": 26,
+    "originalProtectedMatched": 863,
+    "planningMatched": 4,
+    "staticEvidenceMatched": 20,
+    "priorReviewBindingsMatched": 3,
+    "gitStorageMappingsMatched": 26,
+    "exactWorkingBytes": true,
+    "oldFreezeNotChanged": true,
+    "gitStorageExplanation": "24 exact Git blobs; EventDetailPanel/domainCommit use existing j03 delivery CRLF-to-LF mappings; no normalization of working/protected evidence",
+    "readOnlyTracked": {
+      "count": 954,
+      "sha256": "7d5c4b5fd5f66e6a04616acdd48ba340da1505bf78214cc2f3abaa39b61b1e81",
+      "algorithm": "SHA256(JSON.stringify(git ls-files -z ordered array of {path,sha256 exact working bytes}, excluding 2 mutable context/log and this new scope directory)); filenames are unquoted NUL entries",
+      "matchedAtFinalDocumentCheck": true
+    },
+    "logPrefix": {
+      "bytes": 248835,
+      "sha256": "435f7fcd8c4d44fcf6f542a27f54c6f0a203f232f74fdb2521d84786a5d7e20d"
+    },
+    "logFinalAtDocumentCreation": {
+      "bytes": 252816,
+      "sha256": "802b54b14890618345e44d4bae53c4cf8b14726bac925b1905e7b61bed8c9b26",
+      "prefixSha256": "435f7fcd8c4d44fcf6f542a27f54c6f0a203f232f74fdb2521d84786a5d7e20d"
+    },
+    "contextLines": 77
+  },
+  "proposal": {
+    "status": "PROPOSED_NOT_IMPLEMENTATION_AUTHORIZATION",
+    "uniqueCodePaths": 41,
+    "existingExceptions": 13,
+    "newCodePaths": 28,
+    "existingWorkingShaMatched": 13,
+    "newCodePathsAlreadyCreated": 0,
+    "allPerFileRolesPresent": true,
+    "allOldTestsDependenciesAndHistoricalEvidenceReadOnly": true,
+    "scope": "13 explicit new-profile deltas; 28 new source/test/script paths. Global Schema/repository/capture/validator/confirmationV2/domainCommit/time AST and dependencies remain read-only.",
+    "pathsManifest": "IMPLEMENTATION_WHITELIST.json"
+  },
+  "review": {
+    "status": "PASS_SCOPE_REVIEW",
+    "reviewer": "/root/real_input_scope_review",
+    "freshContext": true,
+    "unresolvedScopeBlockers": 0,
+    "scopeOnly": true,
+    "documents": [
+      {
+        "path": "docs/recognition-optimization/mainline-real-input-01/PLAN.md",
+        "sha256": "b2c06b066cbb1e33bbdd86f56d2cae9df4e6ebe972da8654d84b0549c2208635"
+      },
+      {
+        "path": "docs/recognition-optimization/mainline-real-input-01/IMPLEMENTATION_WHITELIST.json",
+        "sha256": "3bdd211da5adda56bc38fe9dd4b48be5c2b8c1a682f37d2404cb7dd7a156aff1"
+      },
+      {
+        "path": "docs/recognition-optimization/mainline-real-input-01/VALIDATION_AND_BUDGET.md",
+        "sha256": "a81afc9a1946550a64d0a82bbc43365e319489a28f0c87f3396b12e6e5fa4a1b"
+      },
+      {
+        "path": "docs/recognition-optimization/mainline-real-input-01/SCOPE_REVIEW.md",
+        "sha256": "08100c672c11c5a9e0ffa3311e48827affd44b3022cad9bfd51606c746c06337"
+      }
+    ],
+    "materialClarifications": [
+      "Unchanged input reuses source version; whitespace-only revision explicitly rejected before save",
+      "Historical draft identity distinct from current source aggregate",
+      "Capture staging in isolated memory + full graph validation before CAS persistence; source-only included",
+      "Single effectiveFacts consumer path, manual correction provenance distinct",
+      "Existing App historical version retrieval preserved, not reported as current defect",
+      "No binary persistence: unfinished file read needs explicit re-selection after refresh"
+    ]
+  },
+  "documentationChecks": {
+    "json": "PASS",
+    "uniqueWhitelistPaths": "PASS",
+    "existingShaAndNewPathAbsence": "PASS",
+    "perFileResponsibilityReasonDefaultValidationRollback": "PASS",
+    "reviewShaBindings": "PASS",
+    "noCredentialLikeSecretsInNewDocsAndLogDelta": "PASS",
+    "utf8NoReplacementCharacters": "PASS",
+    "gitDiffCheck": "PASS",
+    "currentContextAtMost80Lines": "PASS",
+    "allowedPathCount": 7,
+    "fullProductLintTestBuild": "NOT_RUN_DOCUMENT_ONLY",
+    "browserOcr": "NOT_RUN",
+    "modelAccuracy": "本轮未测量"
+  },
+  "executionBudget": {
+    "status": "CONDITIONAL_PROPOSAL_NOT_AUTHORIZED",
+    "paidExecutionStatus": "PAID_BLOCKED_UNTIL_AUDITABLE_BILLED_TOKEN_BOUND_OR_PROVIDER_HARD_QUOTA",
+    "model": "deepseek-v4-flash-vision-exp",
+    "accountCredentialsAvailability": "NOT_CHECKED",
+    "maxCalls": 24,
+    "maxCny": 10,
+    "batches": "A8 text + B8 extracted files + optional C8 changed-candidate seen regression",
+    "verifier": 0,
+    "repair": 0,
+    "transportRetry": 0,
+    "actualCallsThisTurn": 0,
+    "modelNetworkRequestsThisTurn": 0,
+    "actualCnyThisTurn": 0,
+    "priceMetadataOnly": true,
+    "budgetProofImplemented": false
+  },
+  "boundaries": {
+    "productCodeChanged": 0,
+    "dependenciesChanged": 0,
+    "oldTestsChanged": 0,
+    "keysOrClipboardAccess": 0,
+    "realDatabaseAccess": 0,
+    "datasetsCreated": 0,
+    "realMaterialsOrHumanMeasurements": 0,
+    "deployment": 0,
+    "stableEntryChanges": 0,
+    "scopePromotion": false
+  },
+  "delivery": {
+    "kind": "DOCUMENT_ONLY",
+    "exactStagePaths": [
+      "docs/recognition-optimization/CURRENT_CONTEXT.md",
+      "docs/recognition-optimization/OPTIMIZATION_LOG.md",
+      "docs/recognition-optimization/mainline-real-input-01/PLAN.md",
+      "docs/recognition-optimization/mainline-real-input-01/IMPLEMENTATION_WHITELIST.json",
+      "docs/recognition-optimization/mainline-real-input-01/VALIDATION_AND_BUDGET.md",
+      "docs/recognition-optimization/mainline-real-input-01/SCOPE_REVIEW.md",
+      "docs/recognition-optimization/mainline-real-input-01/CHECKS.json"
+    ],
+    "commitAndPush": "PENDING_AT_REPORT_CREATION; actual exact commit and live remote verified by Git command results and final handoff; no self-referential commit SHA",
+    "onFailure": "keep local commit; no force push, reset, auto rebase, or implementation"
+  },
+  "verificationNotes": [
+    "No business engineering counts claimed this turn; previous PASS/FAIL unchanged.",
+    "No new product or checker executed; all document computations were read-only inline commands.",
+    "Early Git path enumeration without -z failed on a quoted filename; corrected to NUL-delimited listing, no files changed.",
+    "CURRENT_CONTEXT delete/add same patch rejected by apply_patch before edits; updated using a valid single Update File patch, no protected content changed."
+  ]
+}

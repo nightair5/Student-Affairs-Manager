@@ -1,0 +1,681 @@
+{
+  "stage": "MAINLINE-REAL-INPUT-01",
+  "status": "PROPOSED_NOT_IMPLEMENTATION_AUTHORIZATION",
+  "baselineHead": "0eedbf7fc1523d6be476c704ed02b273bdb513bf",
+  "branch": "codex/e2-multimodal-recognition-exp",
+  "existingCount": 13,
+  "addedCount": 28,
+  "totalCodePaths": 41,
+  "files": [
+    {
+      "id": "E01",
+      "path": "src/App.tsx",
+      "kind": "existing",
+      "currentWorkingSha256": "f0c14f5d95ac8d3113d4d3a30cafae38ac3e4dc4310833fef6225e51e1f1b25a",
+      "requiresExplicitException": true,
+      "allowedResponsibility": "真实App显式real-input运行能力、输入草稿恢复、发送确认、事实修订回调、动态网络状态文案；按draft绑定SourceVersion传原文而非当前Source投影；不得改变无runtime默认",
+      "reason": "现有App将所有runtime锁成textOnly，无法传递文件读取凭据或真实服务状态",
+      "defaultBehavior": "unchanged unless explicit real-input-01 profile",
+      "validation": "U01/U05/U06/U07/U11/U16；旧无runtime路径断言",
+      "rollback": "关闭该runtime注入；旧App入口与MAINLINE05保持"
+    },
+    {
+      "id": "E02",
+      "path": "src/components/IntakePanel.tsx",
+      "kind": "existing",
+      "currentWorkingSha256": "89370b1921936b971ebc93f91d9a24b3a43019634d2878303a91b97edca33076",
+      "requiresExplicitException": true,
+      "allowedResponsibility": "可选本机读取/页级核对/显式保存与发送slot；live禁用URL、图片外发和旧manual入口；逐键缓冲与取消任务",
+      "reason": "现有processFile只传摘要，丢逐页读取状态且没有新发送版本的明确保存",
+      "defaultBehavior": "unchanged unless explicit real-input-01 profile",
+      "validation": "U01–U05；逐键/取消换文件/关闭刷新/未保存禁止发送",
+      "rollback": "不传新props时保持原组件"
+    },
+    {
+      "id": "E03",
+      "path": "src/components/DraftReviewPanel.tsx",
+      "kind": "existing",
+      "currentWorkingSha256": "fd733c187352e6800125a0af02ad2c0153cccd9c78859552f662be65168b1658",
+      "requiresExplicitException": true,
+      "allowedResponsibility": "可选来源核对与事实纠错slot；按绑定SourceVersion核对和定位原文；未保存缓冲禁确认；用户主动核对/勾选与默认选择分开",
+      "reason": "现有面板缺来源逐项核对和材料等事实纠错入口，不能仅改兼容显示字段",
+      "defaultBehavior": "unchanged unless explicit real-input-01 profile",
+      "validation": "U07/U08/U12；未保存、伪核对、部分与两种批量",
+      "rollback": "不传新props保持原V2/旧UI"
+    },
+    {
+      "id": "E04",
+      "path": "src/lib/fileExtraction.ts",
+      "kind": "existing",
+      "currentWorkingSha256": "206d7151306d2aae17ff3079e0b16d597650c5c39d30857e5614ca65c22e8c80",
+      "requiresExplicitException": true,
+      "allowedResponsibility": "仅显式real-input提取profile的MIME/尺寸/页级完整性/取消与超时、可注入本机OCR/PDF资源位置；旧调用默认行为不改",
+      "reason": "现有80/6页策略可返回partial且OCR资源可能外网加载，新支持范围需要显式profile",
+      "defaultBehavior": "unchanged unless explicit real-input-01 profile",
+      "validation": "U02–U04/U15；真实本机OCR、页内混合、旧参数默认正反",
+      "rollback": "省略profile回原逻辑；旧测试断言只读"
+    },
+    {
+      "id": "E05",
+      "path": "src/experiments/mainline02/runtime.ts",
+      "kind": "existing",
+      "currentWorkingSha256": "2938abd12eaf3ceb6bb5794a883e634d16570e6c71c5f0f28ab5ea810cb9935b",
+      "requiresExplicitException": true,
+      "allowedResponsibility": "仅新profile下允许real-input隔离数据库名和输入/纠错能力；WeakSet身份与仓储绑定仍校验",
+      "reason": "既有runtime验证固定隔离身份和库前缀，新库能力必须通过同一身份检查",
+      "defaultBehavior": "unchanged unless explicit real-input-01 profile",
+      "validation": "U01/U15/U16；非法库名/未验证driver拒绝",
+      "rollback": "原semanticDriver/M05限制不变"
+    },
+    {
+      "id": "E06",
+      "path": "src/experiments/mainline04/semanticComposer.ts",
+      "kind": "existing",
+      "currentWorkingSha256": "82db1d2ad42b340789c42ea0dc0ea3aaf1f8f5a6e7373b565eba3f687370d692",
+      "requiresExplicitException": true,
+      "allowedResponsibility": "唯一MAINLINE04例外：显式profile允许live_model_candidate来源身份；复用原语义/引用/时间/归属计算；不把模型升格人工",
+      "reason": "当前composer的human来源与已见模型分支不能真实表示新的live候选身份",
+      "defaultBehavior": "unchanged unless explicit real-input-01 profile",
+      "validation": "U06/U09/U10/U16；原MAINLINE04/05默认原断言与新profile成对",
+      "rollback": "原默认和原两authority行为不变；其余7项冻结只读"
+    },
+    {
+      "id": "E07",
+      "path": "src/experiments/mainline05/semanticState.ts",
+      "kind": "existing",
+      "currentWorkingSha256": "4a10271c00def94754653e8e6a62993888934a2c9bdbbb72871f1ebb15048245",
+      "requiresExplicitException": true,
+      "allowedResponsibility": "判别联合的新state版本；原始模型与适配结果分离；读取记录、逐条用户核对及受控事实修订历史；旧草稿核验自身version、Source聚合取当前最新Run，旧未确认明确过期；联合图校验和canonical重建共用旧实现",
+      "reason": "旧state精确键和manual身份无法装真实原始响应、适配结果及新增校对版本",
+      "defaultBehavior": "unchanged unless explicit real-input-01 profile",
+      "validation": "U01/U05/U06/U08/U12；联合图、跨版本、原始前缀不可变",
+      "rollback": "STATE_VERSION旧值及旧分支完整保留；新版本仅新库"
+    },
+    {
+      "id": "E08",
+      "path": "src/experiments/mainline05/semanticRepository.ts",
+      "kind": "existing",
+      "currentWorkingSha256": "dc307f3276b1874eab3533ebed325c7aac40b082d74127acc941ca8e7478e94f",
+      "requiresExplicitException": true,
+      "allowedResponsibility": "可选profile的新隔离库名、真实provider和来源阶段；既有capture在内存构造Source/版本/Run/Draft，联合校验后CAS单事务持久化；未改内容复用版本建Run、正文更正建新版本，仅首尾空白保存前拒绝；旧原文/首次/编辑前缀不可改",
+      "reason": "旧仓储前缀与Source/Run历史保护仅针对人工一次录入，需要明确新profile多版本合法增量",
+      "defaultBehavior": "unchanged unless explicit real-input-01 profile",
+      "validation": "U01/U05/U12/U13/U15；CAS回滚/来源先存/全对象独立读回",
+      "rollback": "旧open签名/default不变；新库关闭而不清库"
+    },
+    {
+      "id": "E09",
+      "path": "src/experiments/mainline05/semanticCapture.ts",
+      "kind": "existing",
+      "currentWorkingSha256": "3e1d713029e11b16edab0ca9a0f681c839d20c8aba671b997c7848d68ee3212e",
+      "requiresExplicitException": true,
+      "allowedResponsibility": "显式live输入包括text/image/file身份；保存读取/校对/发送凭据后才调用；实际rawText与parsed模型对象、适配对象分别校验并保留",
+      "reason": "当前capture只接text/human且假定rawText就是SemanticInput，不能诚实接入文件和真实wire",
+      "defaultBehavior": "unchanged unless explicit real-input-01 profile",
+      "validation": "U01/U06/U12；image/file身份、发送前持久化、失败保留",
+      "rollback": "原人工8类回调与TEXT_ONLY保持"
+    },
+    {
+      "id": "E10",
+      "path": "src/experiments/mainline05/semanticConfirmation.ts",
+      "kind": "existing",
+      "currentWorkingSha256": "d0e6e38ca9130f749a4b03eae02e063d5798e621f504c645d1e04dee1b7b5522",
+      "requiresExplicitException": true,
+      "allowedResponsibility": "新增显式用户核对/受控事实修订操作；按当前有效视图形成旧SemanticDomainCommitPlan；检查全关联、版本、未保存、共享与已确认实体保护",
+      "reason": "现有提交仅支持title/deadline编辑，需采用已保存的受控事实修订与核对记录",
+      "defaultBehavior": "unchanged unless explicit real-input-01 profile",
+      "validation": "U07–U10/U12；保存值=计划=canonical，未保存/未核对拒绝",
+      "rollback": "旧edit/confirm/dispose签名/default保持"
+    },
+    {
+      "id": "E11",
+      "path": "src/experiments/mainline05/semanticView.ts",
+      "kind": "existing",
+      "currentWorkingSha256": "359c4cb9439dc1240298ef56a4f8fcb3c40e5e62cf7197a103cbcc2b1154d165",
+      "requiresExplicitException": true,
+      "allowedResponsibility": "新版本用首次/修订后有效事实/实际用户勾选分离投影；按draft版本给原文；来源身份与日期标签真实，下游查询复用",
+      "reason": "现有视图读取首次人工结果，必须在新版本使用明确有效事实且保留首次与实际选择",
+      "defaultBehavior": "unchanged unless explicit real-input-01 profile",
+      "validation": "U07/U08/U10/U11；查询/时间标签/首次投影分离",
+      "rollback": "旧人工作图/日期输出不变"
+    },
+    {
+      "id": "E12",
+      "path": "src/experiments/mainline05/runtime.ts",
+      "kind": "existing",
+      "currentWorkingSha256": "37708e880ea3809b506f1e3d4a06460f56a082f522e0594071fe9c5f0f78161f",
+      "requiresExplicitException": true,
+      "allowedResponsibility": "可选新profile/真实recognizer和自定义核对slot，复用真实App所需driver；不新建第二套确认运行时",
+      "reason": "既有真实App driver固定人工回调，需要可选注入真实recognizer和核对slot",
+      "defaultBehavior": "unchanged unless explicit real-input-01 profile",
+      "validation": "U01/U06–U13/U16；不另建核心运行时，旧工厂调用保持",
+      "rollback": "旧createSemanticRuntime默认保持"
+    },
+    {
+      "id": "E13",
+      "path": "src/experiments/mainline05/SemanticFacts.tsx",
+      "kind": "existing",
+      "currentWorkingSha256": "120ba8a7b8e0150aea8d75ae325cffa127712f47c8720bb676c28137748352d3",
+      "requiresExplicitException": true,
+      "allowedResponsibility": "新版本显示模型身份、原始/有效事实、字段依据及用户修订；明确未完成与不支持，不把模型置信度写成已核实",
+      "reason": "现有事实卡的人工标签与编辑展示不能表达live候选和原始/修订差异",
+      "defaultBehavior": "unchanged unless explicit real-input-01 profile",
+      "validation": "U06–U10；可见依据、未知/受限解释、键盘核对",
+      "rollback": "旧人工事实展示不变"
+    },
+    {
+      "id": "N01",
+      "path": "src/experiments/realInput01/inputReceipt.ts",
+      "kind": "new",
+      "mustNotExistAtApproval": true,
+      "allowedResponsibility": "输入与范围凭据版本、页路由/原始输出/校对/发送内容/用户授权的不可变绑定；严格运行时校验",
+      "reason": "没有覆盖文件页结果到校对/发送版本的统一不可变凭据",
+      "defaultBehavior": "not imported by stable entry; explicit isolated launcher only",
+      "validation": "U01/U03–U06；伪造、错源、缺页、范围变更验证",
+      "rollback": "停止新启动器并保留新隔离库和证据；不删除旧数据/回切工作区"
+    },
+    {
+      "id": "N02",
+      "path": "src/experiments/realInput01/inputAcquisition.ts",
+      "kind": "new",
+      "mustNotExistAtApproval": true,
+      "allowedResponsibility": "复用extractFileEvidence的生命周期、显式保存、恢复、范围选择、取消和过期结果拒绝；不另写OCR/解析器",
+      "reason": "读取取消、显式保存、模型发送之间缺少可恢复的统一状态编排",
+      "defaultBehavior": "not imported by stable entry; explicit isolated launcher only",
+      "validation": "U01–U05/U12；过期异步结果不能串源",
+      "rollback": "停止新启动器并保留新隔离库和证据；不删除旧数据/回切工作区"
+    },
+    {
+      "id": "N03",
+      "path": "src/experiments/realInput01/modelWire.ts",
+      "kind": "new",
+      "mustNotExistAtApproval": true,
+      "allowedResponsibility": "由现有SemanticInput类型/枚举派生最小模型投影JSON Schema、固定Prompt、请求/响应验证及本机构造适配；不重建语义词汇",
+      "reason": "真实模型不能直接输出本机身份/位置/选框，需对已有语义字段做可校验投影",
+      "defaultBehavior": "not imported by stable entry; explicit isolated launcher only",
+      "validation": "U06/U09；内联Schema、完整映射、禁止字段与引用正反",
+      "rollback": "停止新启动器并保留新隔离库和证据；不删除旧数据/回切工作区"
+    },
+    {
+      "id": "N04",
+      "path": "src/experiments/realInput01/modelClient.ts",
+      "kind": "new",
+      "mustNotExistAtApproval": true,
+      "allowedResponsibility": "仅同origin白名单识别POST；状态/预算凭据显示；拒绝自动retry、任意URL、图片或工作区请求",
+      "reason": "旧稳定接口和05人工回放都不适合作为新的受预算隔离请求入口",
+      "defaultBehavior": "not imported by stable entry; explicit isolated launcher only",
+      "validation": "U06/U12/U15；仅同源固定POST、无重试/任意endpoint",
+      "rollback": "停止新启动器并保留新隔离库和证据；不删除旧数据/回切工作区"
+    },
+    {
+      "id": "N05",
+      "path": "src/experiments/realInput01/modelPolicy.ts",
+      "kind": "new",
+      "mustNotExistAtApproval": true,
+      "allowedResponsibility": "模型来源与逐条用户核对的本机确认策略；真/假/未知保留，不能仅信selected、模型confidence或标签",
+      "reason": "来源合法不能证明语义真实，需分离逐项人工核对与本机结构安全判断",
+      "defaultBehavior": "not imported by stable entry; explicit isolated launcher only",
+      "validation": "U07/U09/U10；未选不遮蔽错误，真实成功正例",
+      "rollback": "停止新启动器并保留新隔离库和证据；不删除旧数据/回切工作区"
+    },
+    {
+      "id": "N06",
+      "path": "src/experiments/realInput01/factCorrections.ts",
+      "kind": "new",
+      "mustNotExistAtApproval": true,
+      "allowedResponsibility": "复用SemanticInput字段的受控人工纠错delta与有效视图；不得覆写raw/first、改稳定ID或动已确认共享资产",
+      "reason": "只改标题和显示日期不能形成材料/动作等正确最终事实，需追加式有效修订",
+      "defaultBehavior": "not imported by stable entry; explicit isolated launcher only",
+      "validation": "U08/U10/U12；全实体并集影响范围、首次不改",
+      "rollback": "停止新启动器并保留新隔离库和证据；不删除旧数据/回切工作区"
+    },
+    {
+      "id": "N07",
+      "path": "src/experiments/realInput01/runtime.ts",
+      "kind": "new",
+      "mustNotExistAtApproval": true,
+      "allowedResponsibility": "显式real-input profile工厂、数据库/网络能力、Source阶段、真实App输入核对与编辑回调编排",
+      "reason": "需要把新输入、模型与旧真实App driver在一个显式profile内连起来",
+      "defaultBehavior": "not imported by stable entry; explicit isolated launcher only",
+      "validation": "U01/U05–U13/U16；复用05、关闭profile回到旧默认",
+      "rollback": "停止新启动器并保留新隔离库和证据；不删除旧数据/回切工作区"
+    },
+    {
+      "id": "N08",
+      "path": "src/experiments/realInput01/browser.tsx",
+      "kind": "new",
+      "mustNotExistAtApproval": true,
+      "allowedResponsibility": "挂载真实App到全新授权隔离库；刷新只恢复原库；工程探针与new repository独立读库/下载",
+      "reason": "需要实际App的隔离挂载及可验证独立仓储读回，不复用用户库",
+      "defaultBehavior": "not imported by stable entry; explicit isolated launcher only",
+      "validation": "U01/U11/U13/U15；同库刷新、坏库不fallback",
+      "rollback": "停止新启动器并保留新隔离库和证据；不删除旧数据/回切工作区"
+    },
+    {
+      "id": "N09",
+      "path": "src/experiments/realInput01/InputReview.tsx",
+      "kind": "new",
+      "mustNotExistAtApproval": true,
+      "allowedResponsibility": "已有IntakePanel内的页级读取/校对/范围/显式保存/发送确认UI；不做第二套录入页面",
+      "reason": "原Intake缺逐页读全与待发送范围可核对UI",
+      "defaultBehavior": "not imported by stable entry; explicit isolated launcher only",
+      "validation": "U02–U05；逐键保存、明确部分、键盘可操作",
+      "rollback": "停止新启动器并保留新隔离库和证据；不删除旧数据/回切工作区"
+    },
+    {
+      "id": "N10",
+      "path": "src/experiments/realInput01/FactCorrectionEditor.tsx",
+      "kind": "new",
+      "mustNotExistAtApproval": true,
+      "allowedResponsibility": "已有DraftReviewPanel内的事实核对/纠错UI；逐键buffer、显式save、待核对解释",
+      "reason": "用户需要实际修正模型事实而非仅看一张摘要卡",
+      "defaultBehavior": "not imported by stable entry; explicit isolated launcher only",
+      "validation": "U07/U08；逐键缓冲/明确保存/受限编辑前拒绝",
+      "rollback": "停止新启动器并保留新隔离库和证据；不删除旧数据/回切工作区"
+    },
+    {
+      "id": "N11",
+      "path": "src/experiments/realInput01/seenInputs.ts",
+      "kind": "new",
+      "mustNotExistAtApproval": true,
+      "allowedResponsibility": "仅测试/runner侧引用旧8通知与人工参考；live浏览器/服务生产请求不可导入此模块",
+      "reason": "旧8响应须复用且与live构建隔离，避免答案进入预测依赖",
+      "defaultBehavior": "not imported by stable entry; explicit isolated launcher only",
+      "validation": "U16；静态依赖禁止live导入，来源SHA只读",
+      "rollback": "停止新启动器并保留新隔离库和证据；不删除旧数据/回切工作区"
+    },
+    {
+      "id": "N12",
+      "path": "src/experiments/realInput01/evaluation.ts",
+      "kind": "new",
+      "mustNotExistAtApproval": true,
+      "allowedResponsibility": "只供评测的读取/任务/字段关系/整案/确认保存/等待/费用分层评分，Expected不得进入决策依赖",
+      "reason": "现有旧评分不能代表读取到确认的新闭环，须对全部失败层分开计分",
+      "defaultBehavior": "not imported by stable entry; explicit isolated launcher only",
+      "validation": "质量表分母/键序/空输出/部分/漏项反例；不进入生产决策",
+      "rollback": "停止新启动器并保留新隔离库和证据；不删除旧数据/回切工作区"
+    },
+    {
+      "id": "N13",
+      "path": "src/experiments/realInput01/inputReceipt.test.ts",
+      "kind": "new",
+      "mustNotExistAtApproval": true,
+      "allowedResponsibility": "输入来源、范围、校对、恢复、伪造凭据、取消/过期、UTF编码测试",
+      "reason": "新读取凭据与校对版本需要独立篡改和恢复回归",
+      "defaultBehavior": "not imported by stable entry; explicit isolated launcher only",
+      "validation": "U01–U05；正常对照及取消/错页/错source",
+      "rollback": "停止新启动器并保留新隔离库和证据；不删除旧数据/回切工作区"
+    },
+    {
+      "id": "N14",
+      "path": "src/experiments/realInput01/modelWire.test.ts",
+      "kind": "new",
+      "mustNotExistAtApproval": true,
+      "allowedResponsibility": "完整内联Schema/原始响应与身份/坏引用/稀疏数组/局部保真/模型禁写字段测试",
+      "reason": "wire是新增跨边界接口，必须证明不是仅靠JSON能解析",
+      "defaultBehavior": "not imported by stable entry; explicit isolated launcher only",
+      "validation": "U06；内联枚举/禁权威字段/错引用/键序数组",
+      "rollback": "停止新启动器并保留新隔离库和证据；不删除旧数据/回切工作区"
+    },
+    {
+      "id": "N15",
+      "path": "src/experiments/realInput01/modelPolicy.test.ts",
+      "kind": "new",
+      "mustNotExistAtApproval": true,
+      "allowedResponsibility": "主动核对/默认选/依赖传播/假阴性/正例/未知/纯信息/提示注入反例",
+      "reason": "人工核对不能被模型、selected或不完整纯信息伪造",
+      "defaultBehavior": "not imported by stable entry; explicit isolated launcher only",
+      "validation": "U07/U09/U10；未知与条件真/有效新要求/有效兄弟",
+      "rollback": "停止新启动器并保留新隔离库和证据；不删除旧数据/回切工作区"
+    },
+    {
+      "id": "N16",
+      "path": "src/experiments/realInput01/factCorrections.test.ts",
+      "kind": "new",
+      "mustNotExistAtApproval": true,
+      "allowedResponsibility": "逐字编辑/保存历史/共享和独立实体/已确认保护/全结构保真/数组重排变形",
+      "reason": "新增有限纠错可能覆盖原响应或已确认共享字段",
+      "defaultBehavior": "not imported by stable entry; explicit isolated launcher only",
+      "validation": "U08/U10/U12；逐字/关系重排/共享与独立/失败回滚",
+      "rollback": "停止新启动器并保留新隔离库和证据；不删除旧数据/回切工作区"
+    },
+    {
+      "id": "N17",
+      "path": "src/experiments/realInput01/runtime.test.ts",
+      "kind": "new",
+      "mustNotExistAtApproval": true,
+      "allowedResponsibility": "隔离新profile/provider/联合读写验证/CAS/来源先存/预算网络开关/旧默认对照",
+      "reason": "新profile的隔离库、真实provider和source-only阶段需联合验证",
+      "defaultBehavior": "not imported by stable entry; explicit isolated launcher only",
+      "validation": "U01/U05/U06/U12/U15/U16；旧默认与新版本成对",
+      "rollback": "停止新启动器并保留新隔离库和证据；不删除旧数据/回切工作区"
+    },
+    {
+      "id": "N18",
+      "path": "src/experiments/realInput01/acceptance.test.tsx",
+      "kind": "new",
+      "mustNotExistAtApproval": true,
+      "allowedResponsibility": "真实App录入→恢复→核对修改→部分批量→下游/导出与独立读库；42字段旧口径与新增差异账本",
+      "reason": "组件单测不能证明真实App全过程，需集成同仓储用户旅程",
+      "defaultBehavior": "not imported by stable entry; explicit isolated launcher only",
+      "validation": "U01/U07–U13；旧42/42与新增完整差异账本",
+      "rollback": "停止新启动器并保留新隔离库和证据；不删除旧数据/回切工作区"
+    },
+    {
+      "id": "N19",
+      "path": "src/experiments/realInput01/extraction.test.ts",
+      "kind": "new",
+      "mustNotExistAtApproval": true,
+      "allowedResponsibility": "仅新profile提取和真实本机OCR组件验收；旧断言只读；非live测试与真实OCR分开",
+      "reason": "原OCR跳过测试不能覆盖新profile实际OCR/页级失败",
+      "defaultBehavior": "not imported by stable entry; explicit isolated launcher only",
+      "validation": "U02–U04；非mock组件/本机资产身份，真实OCR另报",
+      "rollback": "停止新启动器并保留新隔离库和证据；不删除旧数据/回切工作区"
+    },
+    {
+      "id": "N20",
+      "path": "scripts/serve-mainline-real-input-01.mjs",
+      "kind": "new",
+      "mustNotExistAtApproval": true,
+      "allowedResponsibility": "新回环静态资源/真实App启动入口，默认replay、显式live；本机OCR资产白名单；仅实验内存bundle去已定位Google字体import",
+      "reason": "旧启动器固定人工/CSP拒绝网络且不可修改，需要新隔离服务启动入口",
+      "defaultBehavior": "not imported by stable entry; explicit isolated launcher only",
+      "validation": "U03/U04/U15/U16；本机worker/WASM/字体转换/静态路径白名单",
+      "rollback": "停止新启动器并保留新隔离库和证据；不删除旧数据/回切工作区"
+    },
+    {
+      "id": "N21",
+      "path": "scripts/real-input-model-gateway.mjs",
+      "kind": "new",
+      "mustNotExistAtApproval": true,
+      "allowedResponsibility": "固定DeepSeek Responses服务端桥；Host/Origin/CSRF/请求白名单/输出完整性/无重试/密钥不回显",
+      "reason": "真实识别需要服务端Secret和固定上游，不能暴露在React或复用稳定用户路由",
+      "defaultBehavior": "not imported by stable entry; explicit isolated launcher only",
+      "validation": "U06/U12/U15；Host/Origin/capability/响应大小/无重定向",
+      "rollback": "停止新启动器并保留新隔离库和证据；不删除旧数据/回切工作区"
+    },
+    {
+      "id": "N22",
+      "path": "scripts/real-input-budget.mjs",
+      "kind": "new",
+      "mustNotExistAtApproval": true,
+      "allowedResponsibility": "不可逆预留/持久调用账本/崩溃恢复/并发锁/价格与token上界门/红线停发",
+      "reason": "页面次数限制挡不住多标签或重启，必须共享原子持久预算账本",
+      "defaultBehavior": "not imported by stable entry; explicit isolated launcher only",
+      "validation": "U15；派发前预留、崩溃未知不可返还、全包次数费用锁",
+      "rollback": "停止新启动器并保留新隔离库和证据；不删除旧数据/回切工作区"
+    },
+    {
+      "id": "N23",
+      "path": "scripts/check-mainline-real-input-01.mjs",
+      "kind": "new",
+      "mustNotExistAtApproval": true,
+      "allowedResponsibility": "当前授权/白名单/工作区与Git存储SHA分层绑定、历史快照和当前兼容门、审核SHA、bundle隔离与新报告编排",
+      "reason": "旧checker硬绑定历史HEAD与保护集，不能直接当本候选当前工程门",
+      "defaultBehavior": "not imported by stable entry; explicit isolated launcher only",
+      "validation": "新编排正反+全部适用分层工程；最终41源码/审查SHA绑定",
+      "rollback": "停止新启动器并保留新隔离库和证据；不删除旧数据/回切工作区"
+    },
+    {
+      "id": "N24",
+      "path": "scripts/real-input-model-gateway.node-test.mjs",
+      "kind": "new",
+      "mustNotExistAtApproval": true,
+      "allowedResponsibility": "协议/模型参数/鉴权边界/密钥泄漏/伪造Origin/Prompt注入/超时无重试/计费异常反例",
+      "reason": "新增出站桥的安全边界必须在0真实调用下用模拟服务器复现",
+      "defaultBehavior": "not imported by stable entry; explicit isolated launcher only",
+      "validation": "U06/U12/U15；拒绝外部URL/注入/超量/重试/Secret输出",
+      "rollback": "停止新启动器并保留新隔离库和证据；不删除旧数据/回切工作区"
+    },
+    {
+      "id": "N25",
+      "path": "scripts/check-mainline-real-input-01.node-test.mjs",
+      "kind": "new",
+      "mustNotExistAtApproval": true,
+      "allowedResponsibility": "错HEAD/保护变化/审核BLOCKED/越界/非法换行归一化/历史门错归因/覆盖旧输出拒绝",
+      "reason": "编排本身曾是返修来源，需要先证明合法阶段放行和越界失败",
+      "defaultBehavior": "not imported by stable entry; explicit isolated launcher only",
+      "validation": "错HEAD/审核变化/越界/保护/旧输出覆盖正反",
+      "rollback": "停止新启动器并保留新隔离库和证据；不删除旧数据/回切工作区"
+    },
+    {
+      "id": "N26",
+      "path": "scripts/run-mainline-real-input-01.mjs",
+      "kind": "new",
+      "mustNotExistAtApproval": true,
+      "allowedResponsibility": "只调同一网关的24逻辑单元执行编排；使用同授权账本，API首次失败保留，不复用旧一次性runner",
+      "reason": "必须让批量评测与浏览器共用同一逻辑单元，不重复计算免费烟测或补发",
+      "defaultBehavior": "not imported by stable entry; explicit isolated launcher only",
+      "validation": "A/B/C固定顺序、共同账本、终态/超时/首次结果不覆盖",
+      "rollback": "停止新启动器并保留新隔离库和证据；不删除旧数据/回切工作区"
+    },
+    {
+      "id": "N27",
+      "path": "scripts/real-input-budget.node-test.mjs",
+      "kind": "new",
+      "mustNotExistAtApproval": true,
+      "allowedResponsibility": "24/10上限/预留/超界/未知用量/失败/重复/多标签/服务重启与全局共享预算检查",
+      "reason": "预算上限需要独立故障与竞争反例，而非只检查成功费用",
+      "defaultBehavior": "not imported by stable entry; explicit isolated launcher only",
+      "validation": "24/10边界、多进程/标签/重启/失败未知/价格或token越界",
+      "rollback": "停止新启动器并保留新隔离库和证据；不删除旧数据/回切工作区"
+    },
+    {
+      "id": "N28",
+      "path": "scripts/render-mainline-real-input-01-fixtures.mjs",
+      "kind": "new",
+      "mustNotExistAtApproval": true,
+      "allowedResponsibility": "只将旧8匿名通知渲染为工程PNG/JPEG/WebP和文本/扫描/混合PDF格式夹具；不新增语义案例或Expected，产物仅本轮临时目录",
+      "reason": "真实本机OCR/PDF需要文件载体，但不应再次新建语义答案集",
+      "defaultBehavior": "not imported by stable entry; explicit isolated launcher only",
+      "validation": "旧8文本逐字来源绑定；PNG/JPEG/WebP/PDF渲染、临时输出/无新Expected",
+      "rollback": "停止新启动器并保留新隔离库和证据；不删除旧数据/回切工作区"
+    }
+  ],
+  "readOnlyDependencies": [
+    {
+      "path": "src/domain/v2/types.ts",
+      "currentWorkingSha256": "000a9f5d689aad4463753aa8f0f6d1eb33843075e7a521ca6e1f7e10eef833b6",
+      "policy": "READ_ONLY; if change required stop for precise authority"
+    },
+    {
+      "path": "src/domain/v2/capture.ts",
+      "currentWorkingSha256": "7fec6d1d5930d63786da9392f04f7bf0869a14d5c868240bbf5af9260bb80de5",
+      "policy": "READ_ONLY; if change required stop for precise authority"
+    },
+    {
+      "path": "src/domain/v2/repository.ts",
+      "currentWorkingSha256": "98c6ebfb0a93d02f66e079266b30651a6de7023355f5c3227001ac487e43ee97",
+      "policy": "READ_ONLY; if change required stop for precise authority"
+    },
+    {
+      "path": "src/domain/v2/confirmationV2.ts",
+      "currentWorkingSha256": "09dae9295698efb7ca04c9df4222c0ca0fd685eb9ae05148e1a000be4b2e441d",
+      "policy": "READ_ONLY; if change required stop for precise authority"
+    },
+    {
+      "path": "src/domain/v2/domainCommit.ts",
+      "currentWorkingSha256": "50e28c64001c5fc278435eede477a90feb7e5a4084eee0200f7732497f26f827",
+      "policy": "READ_ONLY; if change required stop for precise authority"
+    },
+    {
+      "path": "src/domain/v2/legacyView.ts",
+      "currentWorkingSha256": "1051f0e344f2a9a9a615bb413607281baf4c02b992ca07e63f4472bbe5670800",
+      "policy": "READ_ONLY; if change required stop for precise authority"
+    },
+    {
+      "path": "src/domain/v2/migration.ts",
+      "currentWorkingSha256": "d7b3abc3621243515c4988a779ecf09d7f8916ea3d3949e5be62fd7593ce5eec",
+      "policy": "READ_ONLY; if change required stop for precise authority"
+    },
+    {
+      "path": "src/domain/v2/validators/workspaceValidator.ts",
+      "currentWorkingSha256": "eedc119945961612aa09b302fb2acb484c74a6868b409b2fa7f2fa8725e4d580",
+      "policy": "READ_ONLY; if change required stop for precise authority"
+    },
+    {
+      "path": "src/experiments/mainline04/semanticContract.ts",
+      "currentWorkingSha256": "a08953dfdb50bf0233d603ce46669f87ed4f61c810a322275011c7075b5e578f",
+      "policy": "READ_ONLY; if change required stop for precise authority"
+    },
+    {
+      "path": "src/experiments/mainline04/semanticContract.test.ts",
+      "currentWorkingSha256": "ed52c2d572b5709e49e0369c876f4356f1704c466d97439eacdb50d5dc78383a",
+      "policy": "READ_ONLY; if change required stop for precise authority"
+    },
+    {
+      "path": "src/experiments/mainline04/semanticComposer.test.ts",
+      "currentWorkingSha256": "2620001e2370138d82983c06ee6e81cab7ae62682faec0c3b5b3e9959d025311",
+      "policy": "READ_ONLY; if change required stop for precise authority"
+    },
+    {
+      "path": "src/experiments/mainline04/legacyHandoff.ts",
+      "currentWorkingSha256": "fad0191afdc9c52ca70b8446a3d4bb3f0dc3d283b71d7aee50a39130167fa664",
+      "policy": "READ_ONLY; if change required stop for precise authority"
+    },
+    {
+      "path": "src/experiments/mainline04/legacyHandoff.test.ts",
+      "currentWorkingSha256": "880ab738356affe83b041a7b1dc41a942dad760741e349c968ac371c0fb286c6",
+      "policy": "READ_ONLY; if change required stop for precise authority"
+    },
+    {
+      "path": "src/experiments/mainline04/semanticAcceptance.test.ts",
+      "currentWorkingSha256": "a4fe7a88ff8cc808e75ef3fe7682ca717e4e3d5cbc48b9186f70146d8cd63510",
+      "policy": "READ_ONLY; if change required stop for precise authority"
+    },
+    {
+      "path": "scripts/check-mainline-04-i1.mjs",
+      "currentWorkingSha256": "cb2a2cede40852201b537d28d40b7bbebf9e3e3c2e8931c92c5300a9ecdb9e84",
+      "policy": "READ_ONLY; if change required stop for precise authority"
+    },
+    {
+      "path": "src/experiments/mainline01/fixtures.ts",
+      "currentWorkingSha256": "e2d7b1c2b71c462b72f1efb9168ca57be375de3a3c0a71ce5f77e96383fa76dc",
+      "policy": "READ_ONLY; if change required stop for precise authority"
+    },
+    {
+      "path": "src/experiments/mainline05/engineeringReplay.ts",
+      "currentWorkingSha256": "e933f09cfd11808b20aa65060aa5c07d45eb30421a1eb3cb0ff0a0ae0f4fe243",
+      "policy": "READ_ONLY; if change required stop for precise authority"
+    },
+    {
+      "path": "src/recognition/scopeIndexV11.ts",
+      "currentWorkingSha256": "2706131f0c133872042761016e8ccac0487ce854be3472f2d189e5c901889515",
+      "policy": "READ_ONLY; if change required stop for precise authority"
+    },
+    {
+      "path": "src/recognition/schema.ts",
+      "currentWorkingSha256": "81f636bcf62a4e35221ba7e620a0410b3cc39bbf7481882e42ab1222839eab40",
+      "policy": "READ_ONLY; if change required stop for precise authority"
+    },
+    {
+      "path": "src/recognition/types.ts",
+      "currentWorkingSha256": "f66c6fae65455a5a5d388f369698a9ed592929cdc1caae3cbf1554d10a1f841c",
+      "policy": "READ_ONLY; if change required stop for precise authority"
+    },
+    {
+      "path": "src/lib/timeSemantics.ts",
+      "currentWorkingSha256": "d72109638ce4c653602478d2cd09049ab5a896a17c041422e8f5b583b8afde7d",
+      "policy": "READ_ONLY; if change required stop for precise authority"
+    },
+    {
+      "path": "src/lib/intake.ts",
+      "currentWorkingSha256": "5576c257341ba31ff12669f4fcbd8e984b413ffb942f650b4828b3fabb8056a1",
+      "policy": "READ_ONLY; if change required stop for precise authority"
+    },
+    {
+      "path": "src/lib/ocrPreprocessing.ts",
+      "currentWorkingSha256": "92a1c3a7c3846d2ae6cc08d2e6c5d056bdf7ab745a948061a3451a67bca179fb",
+      "policy": "READ_ONLY; if change required stop for precise authority"
+    },
+    {
+      "path": "src/lib/fileExtraction.test.ts",
+      "currentWorkingSha256": "c66823e161e3bec042ba9d1c1106f360aaed814819024da29d8d5fa86bc2fa66",
+      "policy": "READ_ONLY; if change required stop for precise authority"
+    },
+    {
+      "path": "src/styles.css",
+      "currentWorkingSha256": "cdf7937c7340c035223580fc578d49af642ac5f6d0f68f87f20c154c98cc4414",
+      "policy": "READ_ONLY; if change required stop for precise authority"
+    },
+    {
+      "path": "package.json",
+      "currentWorkingSha256": "04f508cc1c3609fdccdb2145f13a20c72a60f396e1dff03dd34ba8235c30c14e",
+      "policy": "READ_ONLY; if change required stop for precise authority"
+    },
+    {
+      "path": "package-lock.json",
+      "currentWorkingSha256": "330350e448c1cd29c6c7869c7a978142d95ba84aa12658a9c9bcacdcf763bbe3",
+      "policy": "READ_ONLY; if change required stop for precise authority"
+    },
+    {
+      "path": "cloudflare/recognition.mjs",
+      "currentWorkingSha256": "29ad6db86ebfe84d1b0348e501a86936b0be3d408975e30aabfc1c630905c92a",
+      "policy": "READ_ONLY; if change required stop for precise authority"
+    },
+    {
+      "path": "cloudflare/worker.mjs",
+      "currentWorkingSha256": "96284878427098a253063b12e88e68ecd151a9f7384b5aa2b641e613479d5c3a",
+      "policy": "READ_ONLY; if change required stop for precise authority"
+    },
+    {
+      "path": "scripts/check-mainline-05.mjs",
+      "currentWorkingSha256": "c88e264761491122ace1ae93632ceb0fa1fa340f11740da8d89331d20c0d068f",
+      "policy": "READ_ONLY; if change required stop for precise authority"
+    },
+    {
+      "path": "scripts/serve-mainline-05.mjs",
+      "currentWorkingSha256": "d7e0fd8528d56d8cdffcac8d768f5ebe1ca0447f6ccbad94434aab36aa607894",
+      "policy": "READ_ONLY; if change required stop for precise authority"
+    }
+  ],
+  "oldTests": "All pre-existing tests and their assertions remain read-only, including mainline05 tests. New regression assertions live only in listed new tests.",
+  "versionDecision": {
+    "workspace": "WorkspaceV8 unchanged",
+    "semanticVocabulary": "mainline04-task-semantics-1 unchanged",
+    "state": "new explicit mainline-real-input-state-1 discriminated union; old mainline05-semantic-state-1 unchanged",
+    "slot": "Reuse draft.legacyData.mainline05 with explicit state.version; not an identity claim",
+    "inputReceipt": "real-input-receipt-1 in Source legacyData and versioned draft; no binary",
+    "modelWire": "real-input-model-wire-1 projection over existing semantic fields, omits local authority/locations/IDs/normalized times",
+    "profile": "real-input-01",
+    "databasePrefix": "rco-mainline-01-02-i1-realinput01-",
+    "migration": "No old database import/migration; new empty isolated DB only"
+  },
+  "futureArtifacts": {
+    "scopeRoot": "docs/recognition-optimization/mainline-real-input-01/runs/<explicit-run-id>/",
+    "reportNames": [
+      "BASELINE.json",
+      "STATE.json",
+      "REQUEST_MANIFEST.json",
+      "CALL_LEDGER.jsonl",
+      "RAW_RESULTS.jsonl",
+      "RESULT.json",
+      "REVIEW.md",
+      "REVIEW.json",
+      "ENGINEERING.json",
+      "BROWSER.md",
+      "DOWNLOAD.json",
+      "AUDIT.md",
+      "IMPLEMENTATION_SNAPSHOT.json"
+    ],
+    "attemptLogs": "logs/<named-check>-attempt-<n>.log; append/new only; no overwrites",
+    "localOnly": "predeclared new temporary directory: engineering format files, bundle assets, downloaded-test copies, historical snapshot, audit npm cache; no repo cache writes",
+    "noNewSemanticDataset": true
+  },
+  "phaseNow": {
+    "allowedNewFiles": [
+      "docs/recognition-optimization/mainline-real-input-01/PLAN.md",
+      "docs/recognition-optimization/mainline-real-input-01/IMPLEMENTATION_WHITELIST.json",
+      "docs/recognition-optimization/mainline-real-input-01/VALIDATION_AND_BUDGET.md",
+      "docs/recognition-optimization/mainline-real-input-01/SCOPE_REVIEW.md",
+      "docs/recognition-optimization/mainline-real-input-01/CHECKS.json"
+    ],
+    "allowedExisting": [
+      "docs/recognition-optimization/CURRENT_CONTEXT.md",
+      "docs/recognition-optimization/OPTIMIZATION_LOG.md"
+    ],
+    "productEdits": 0,
+    "externalModelCalls": 0,
+    "feesCny": 0
+  }
+}
