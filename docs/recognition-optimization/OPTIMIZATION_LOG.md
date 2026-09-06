@@ -1499,3 +1499,24 @@
 - delivery: 只提交R3审计、短交接、追加日志并核对远端；原12业务/依赖与R3脚本不提交，见R3_REJECTED_SNAPSHOT。实际Git回执为准。
 - next: 唯一建议R4-DOWNLOAD-SCOPE，只读定位下载落地断点并列精确最小白名单；不重新调模型、不重做已通过主链或历史计划。提示词R3_NEXT_PROMPT，尚未授权。
 - boundary: 外部识别/verifier/Repair/retry/模型网络/费用/密钥/剪贴板/真实用户库/新数据/盲测/B10/真人/真实材料/部署/RCO-6均0。模型识别准确率本轮未测量。完成后停止。
+
+## 96. MAINLINE-03-I1-R3-CLOSE 文件补证与交付授权 — 2026-09-06
+
+- authority: 当前用户仅批准补齐实际下载文件证据、独立复核、提交此前原12文件与R3编排脚本；产品逻辑/测试/依赖/编排本轮只读，新增仅R3_CLOSE_*报告、短交接与追加日志。
+- baseline: 本机/远端40a7f13003563505be0d9408cb87149a13ca643a；799保护和原12+R3脚本SHA均匹配。R3_CLOSE_BASELINE绑定11份旧R3报告及当前日志完整前缀；旧失败不改写。
+- verification: 15份原完整门日志与SHA一致，原机器结果全对象相同，20历史快照文件全SHA不变；不重跑全量工程/浏览器。保留REPL中此前真实runtime.load读回r3final，独立于下载文件，全对象摘要98fa1768d648bf49c862fdc1433f2630e3c9bed705af68fb67d2ef26e623e75a；本轮不是新浏览器读库。
+- sequence: 文件定向/42字段/凭据→新无上下文审查→保护与明确暂存清单→成功才业务提交推送；当前IN_PROGRESS，不先宣称完成。
+- boundary: 外部识别/verifier/Repair/retry/模型网络/费用/密钥/剪贴板/用户真实库/新数据/盲测/B10/真人/真实材料/部署/RCO-6均0。模型识别准确率本轮未测量。
+
+## 97. MAINLINE-03-I1-R3-CLOSE 真实文件补证通过、获准实现交付 — 2026-09-06
+
+- outcome: PASS_ISOLATED_ACCEPTANCE_AFTER_FILE_SUPPLEMENT；新无上下文独立复核及短交接复核PASS。原协议补证后12/12，不是本轮重跑工程/Edge；Git完成状态须以随后实际提交、推送及远端精确核验回执为准。
+- evidence: 用户提供实际mainline-02-i1-workspace (7).json，96198字节；文件SHA6fddeb86ea9c975e2085d15beb66d640820d4de7863fe7c33f13952aabe1c23e；全对象SHA98fa1768d648bf49c862fdc1433f2630e3c9bed705af68fb67d2ef26e623e75a匹配前轮真实runtime.load读回且保留于REPL的r3final。来源链与源码/原操作记录核实，不是同一文件自算两次，也非本轮新读库。
+- file: 既有v8校验valid=true/0issues，原42字段文件侧42/42；5来源凭据一致、4成功响应只变获准来源/位置，3编辑历史独立保留；真无日期0时间、全部0提醒，原实际jobs0。B8-01仍失败/result=null。
+- engineering: 15日志SHA、原全量JSON与20历史快照全SHA核验不变，复用既有完整门：兼容13/历史库4/Vitest986通过1原跳过（含153定向）/server8/Worker25/time1/multimodal23/Functions5，类型/契约/build/security通过、依赖0漏洞；不机械重跑。未声称GitHubCI通过；原CI Node22/旧npm test与本机R3分层门不同。
+- review: 文件身份、全对象来源、42/42、历史保留、分层结论及12项协议完整性无阻断；CURRENT_CONTEXT旧下载缺失/R4优先项已更新。审查首次跨realm调用错误以同realm内存校验澄清，无产品修改或断言弱化。
+- protection: 799保护0变化；原12+R3脚本共13文件逐字不变、11旧R3报告不变、日志全旧前缀仅追加。原文件未改，不动旧40/42、17测试、R2当前3通过/1失败和R3原失败审计。
+- history: 原R3当时因未取得下载文件证据停止；后来通过用户提供真实文件补齐。不将监听超时写成已证实产品故障，不删除承载R4-DOWNLOAD-SCOPE建议的历史报告；该调查不再是当前优先。
+- delivery: 仅明确暂存原13实现/依赖/编排、8份R3_CLOSE报告、短交接及追加日志，共23文件；无下载原件/临时证据/未获准文件。成功推送后核对远端，失败不强推或变基。源码本轮零修改。
+- next: 唯一待授权MAINLINE-04-SCOPE，复用既有缺口，区分模型没给/契约装不下/转换丢字段，最小化条件三值、状态、修订、事件及时间材料语义承接；不重复下载诊断、不堆关键词，提示词R3_CLOSE_NEXT_PROMPT。
+- boundary: 外部识别/verifier/Repair/retry/模型网络/费用/密钥/剪贴板/真实库/新数据/盲测/B10/真人/真实材料/稳定接入/部署/RCO-6均0。模型识别准确率本轮未测量。交付后停止，不自动进入后续实施或付费。

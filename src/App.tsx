@@ -499,7 +499,7 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
         const draftId = await runtime.capture(input)
         setIntakeOpen(false)
         setSelectedDraftId(draftId)
-        setNotice({ text: '人工工程响应（非模型预测）；请核对后确认。' })
+        setNotice({ text: runtime.recognitionDescription ?? '人工工程响应（非模型预测）；请核对后确认。' })
       })
       return
     }
@@ -1404,7 +1404,7 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
       />
       <div id="main-content" className="content-shell" tabIndex={-1}>
         {runtime && <section aria-label="隔离实验状态">
-          <p>人工工程响应（非模型预测） · 独立测试库 · 无模型/通知外发</p>
+          <p>{runtime.recognitionDescription ?? '人工工程响应（非模型预测）'} · 独立测试库 · 无模型/通知外发</p>
           <p>仅本轮录入、核对、确认、查询与JSON备份可用；未纳入操作会明确阻断。</p>
           <button type="button" disabled={isolatedBusy || !workspaceReady || storageError} onClick={() => void performExperiment(async () => {
             const json = await runtime.exportJson()

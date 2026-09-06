@@ -7,11 +7,14 @@ import type { RecognitionResult } from '../../recognition/types'
 import type { IntakeInput } from '../../lib/intake'
 import { taskDateViews } from './taskDateView'
 import { reviewAdapter } from './reviewAdapter'
+import { assertReplayHandoff, type ReplayHandoff } from '../mainline03/seenReplay'
+import { jsonCopy, verifyReceipt } from '../mainline03/recognitionHandoff'
 
 export interface MainlineRuntime {
   readonly mode: 'mainline-02-i1-isolated'
   readonly databaseName: string
   readonly initial: WorkspaceV8
+  readonly recognitionDescription?: string
   load(): Promise<WorkspaceV8>
   view(workspace: WorkspaceV8): ReturnType<typeof workspaceV8ToLegacyView>
   dates: typeof taskDateViews
@@ -31,8 +34,11 @@ export function assertDatabaseName(name: string) {
 export async function createMainlineRuntime(options: {
   name: string; store: WorkspaceRecordStore & { readonly name: string }; initialize?: WorkspaceV8
   recognize: (text: string, sourceId: string) => RecognitionResult | Promise<RecognitionResult>
+  handoff?: ReplayHandoff
 }): Promise<MainlineRuntime> {
   assertDatabaseName(options.name)
+  const handoff = options.handoff
+  if (handoff) assertReplayHandoff(handoff)
   const name = options.name
   const checkKey = (key: string) => { if (options.store.name !== name) throw new Error('MAINLINE_STORE_BINDING_INVALID'); if (key !== 'current') throw new Error('MAINLINE_RECORD_INVALID') }
   const store: WorkspaceRecordStore = {
@@ -60,10 +66,37 @@ export async function createMainlineRuntime(options: {
   const capture = new CapturePersistenceService(canonical)
   const runtime: MainlineRuntime = Object.freeze({
     mode: 'mainline-02-i1-isolated' as const, databaseName: options.name, initial,
+    ...(handoff ? { recognitionDescription: handoff.description } : {}),
     load, view: workspaceV8ToLegacyView, dates: taskDateViews, review: reviewAdapter,
     async capture(input: IntakeInput) {
       await load()
       if (input.sourceType !== 'text' || input.manualSuggestion || input.multimodal || input.url || input.fileName || !input.content.trim()) throw new Error('MAINLINE_TEXT_ONLY')
+      if (handoff) {
+        const receipt = await handoff.prepare(input.content)
+        await verifyReceipt(receipt, input.content)
+        const handle = await capture.beginCapture({ operationId: input.operationId ?? crypto.randomUUID(), sourceType: 'text',
+          title: input.sourceTitle || handoff.description, rawText: input.content,
+          provider: receipt.kind === 'seen-model-candidate' ? 'legacy-unknown' : 'manual',
+          modelName: receipt.kind === 'seen-model-candidate' ? `已见回放/${receipt.originalModel}` : receipt.originalModel,
+          promptVersion: receipt.promptVersion, pipelineVersion: 'mainline-03-i1-isolated-handoff',
+          sourceLegacyData: { mainline03Handoff: jsonCopy(receipt) } })
+        if (handle.duplicate) {
+          const source = (await load()).sources.find(item => item.id === handle.sourceId)
+          if (JSON.stringify(source?.legacyData?.mainline03Handoff) !== JSON.stringify(receipt)) throw new Error('HANDOFF_DUPLICATE_INPUT_MISMATCH')
+        }
+        await capture.recognize(handle, async () => {
+          const saved = await load()
+          const source = saved.sources.find(item => item.id === handle.sourceId)
+          const version = saved.sourceVersions.find(item => item.id === handle.sourceVersionId)
+          const run = saved.recognitionRuns.find(item => item.id === handle.recognitionRunId)
+          const draft = saved.extractionDrafts.find(item => item.id === handle.draftId)
+          if (!source || source.currentVersionId !== handle.sourceVersionId || version?.sourceId !== source.id
+            || version.rawText !== input.content || run?.sourceVersionId !== version.id || draft?.recognitionRunId !== run.id
+            || JSON.stringify(source.legacyData?.mainline03Handoff) !== JSON.stringify(receipt)) throw new Error('HANDOFF_CAPTURE_BINDING_INVALID')
+          return (await handoff.recognize(receipt, input.content, handle)).result
+        })
+        return handle.draftId
+      }
       const handle = await capture.beginCapture({ operationId: input.operationId ?? crypto.randomUUID(), sourceType: 'text',
         title: input.sourceTitle || '人工工程通知（非模型预测）', rawText: input.content, provider: 'manual',
         modelName: '人工工程响应（非模型预测）', promptVersion: 'engineering-mainline-01', pipelineVersion: 'mainline-02-i1-isolated' })
