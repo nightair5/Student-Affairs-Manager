@@ -1,0 +1,265 @@
+{
+  "stage": "RCO-5-MAINLINE-05",
+  "attempt": "CONTINUE_SAME_PACKAGE_SELECTION_STOP",
+  "status": "FAIL_MAJOR_SAFETY_STOP_IMPLEMENTATION_UNCOMMITTED",
+  "date": "2026-09-06",
+  "baselineHead": "e9b87e7dc4546e91d7f5559807b83465ba857cb0",
+  "branch": "codex/e2-multimodal-recognition-exp",
+  "remoteAtProtectionCheck": "e9b87e7dc4546e91d7f5559807b83465ba857cb0\trefs/heads/codex/e2-multimodal-recognition-exp",
+  "authorization": {
+    "implementationPaths": 26,
+    "onlyAddedException": "src/experiments/mainline04/semanticComposer.ts",
+    "scopeChangedFurther": false
+  },
+  "implementationSnapshot": {
+    "created": 25,
+    "notCreated": 1,
+    "files": [
+      {
+        "path": "src/App.tsx",
+        "sha256": "7e1cd13d42d881be1712344f33d4a3e3975780ea6a64bb6a5051abd285e4bfb1",
+        "bytes": 76971
+      },
+      {
+        "path": "src/components/DraftReviewPanel.tsx",
+        "sha256": "834171f8d4c2ce4a8117b57ff2e8d39fafe8fcefde560256dd9816054a4d445e",
+        "bytes": 27962
+      },
+      {
+        "path": "src/components/TaskDetailPanel.tsx",
+        "sha256": "3e395eb570182b08252f65e2cf17c32be5157641aadbf02552c292a631b9747c",
+        "bytes": 21826
+      },
+      {
+        "path": "src/components/EventDetailPanel.tsx",
+        "sha256": "03f7edc8fcb810813ac6414dc0884e76b8fcc40d8e0b127f6147251daa618f01",
+        "bytes": 3250
+      },
+      {
+        "path": "src/pages/CalendarPage.tsx",
+        "sha256": "c17b29098975bea9a112e2d4f698079ee766074f42d9eb957e09de35599f649f",
+        "bytes": 18197
+      },
+      {
+        "path": "src/experiments/mainline02/runtime.ts",
+        "sha256": "b387b1f83b436d75ff8cd02c44522ea7fff916e650a4a69289a80a19c25e879d",
+        "bytes": 9116
+      },
+      {
+        "path": "src/domain/v2/domainCommit.ts",
+        "sha256": "e4cc0169444760ef7889be92634f9b21975b0ddc326c804fa89f09e810503ef7",
+        "bytes": 48588
+      },
+      {
+        "path": "src/experiments/mainline05/semanticState.ts",
+        "sha256": "1705c8bb82778d63b4213125f04c1637ef334540a71507117af29517422eed0b",
+        "bytes": 21615
+      },
+      {
+        "path": "src/experiments/mainline05/semanticRepository.ts",
+        "sha256": "dc307f3276b1874eab3533ebed325c7aac40b082d74127acc941ca8e7478e94f",
+        "bytes": 5030
+      },
+      {
+        "path": "src/experiments/mainline05/semanticCapture.ts",
+        "sha256": "3e1d713029e11b16edab0ca9a0f681c839d20c8aba671b997c7848d68ee3212e",
+        "bytes": 4818
+      },
+      {
+        "path": "src/experiments/mainline05/semanticConfirmation.ts",
+        "sha256": "d0e6e38ca9130f749a4b03eae02e063d5798e621f504c645d1e04dee1b7b5522",
+        "bytes": 5773
+      },
+      {
+        "path": "src/experiments/mainline05/semanticView.ts",
+        "sha256": "81ee1792c95bc909f9c3e69129af17c44f4139fd554e29f9fa87c9f2a3f7f718",
+        "bytes": 6588
+      },
+      {
+        "path": "src/experiments/mainline05/runtime.ts",
+        "sha256": "31c034a3898eef19a0d605d72dd015ae017ea8e3cedd3d70ef5866049023bf8a",
+        "bytes": 2721
+      },
+      {
+        "path": "src/experiments/mainline05/SemanticFacts.tsx",
+        "sha256": "646951c124a561627713b29c8f7632cf1be4be90b6eff3a1c0794870d9b00baa",
+        "bytes": 4626
+      },
+      {
+        "path": "src/experiments/mainline05/engineeringReplay.ts",
+        "sha256": "33576598cea9163fac4d660ccf67df71942ce2da1cd8dcb76b77d7dafb96ddea",
+        "bytes": 5213
+      },
+      {
+        "path": "src/experiments/mainline05/browser.tsx",
+        "sha256": "0755d5cc7e545d3a8ae46896eff1c864898177a700d8d4321aad151a349645e7",
+        "bytes": 8711
+      },
+      {
+        "path": "src/experiments/mainline05/semanticState.test.ts",
+        "sha256": "4a8a25408aeb0dc5118840cb9307b7a34e4660abf3d9a2243236b89fcbfa43dd",
+        "bytes": 4178
+      },
+      {
+        "path": "src/experiments/mainline05/semanticRepository.test.ts",
+        "sha256": "d9fd11919e62553ccec30449592cae750e719fe655d47aa1b745f29ab8ec045d",
+        "bytes": 3864
+      },
+      {
+        "path": "src/experiments/mainline05/semanticCapture.test.ts",
+        "sha256": "b41a3dcddbfb827f82eeaf8abf439c2fbbab5cedbc79356efdaa85ca365f7e9d",
+        "bytes": 2671
+      },
+      {
+        "path": "src/experiments/mainline05/semanticConfirmation.test.ts",
+        "sha256": "af75c518a5a4ed86bc0b3996bac30ff815b9d4f33d43470a3e5ba9be56ff3043",
+        "bytes": 14111
+      },
+      {
+        "path": "src/experiments/mainline05/semanticView.test.ts",
+        "sha256": "5c716bebeadbdb21eacef55c7a26258c338769d945096eb91f19db0da9f69f62",
+        "bytes": 4560
+      },
+      {
+        "path": "src/experiments/mainline05/mainlineAcceptance.test.tsx",
+        "sha256": "b79064b78acd7c4dc5662fa51f421da4f875784e7979d489943d1343ee402875",
+        "bytes": 5502
+      },
+      {
+        "path": "scripts/serve-mainline-05.mjs",
+        "sha256": "850607e9e6d7ab4c231a7c370854a17c8a188f5324b438d0c0d7049b93110c30",
+        "bytes": 3651
+      },
+      {
+        "path": "scripts/check-mainline-05.mjs",
+        "sha256": "a45eb90a4789707d6b76499b0feef9751f2b681b891b435464738ad32706e971",
+        "bytes": 15381
+      },
+      {
+        "path": "scripts/check-mainline-05.node-test.mjs",
+        "status": "NOT_CREATED"
+      },
+      {
+        "path": "src/experiments/mainline04/semanticComposer.ts",
+        "sha256": "82db1d2ad42b340789c42ea0dc0ea3aaf1f8f5a6e7373b565eba3f687370d692",
+        "bytes": 13107
+      }
+    ],
+    "checkerStatus": "PARTIAL_UNTESTED_NOT_REVIEWED"
+  },
+  "independentReview": {
+    "reviewer": "/root/mainline05_full_independent",
+    "context": "none",
+    "status": "BLOCKED",
+    "coreFilesReviewed": 24,
+    "completeReview": "NOT_COMPLETED",
+    "evidenceSource": "reviewer tool executions reported in current task; no invented test log or browser evidence",
+    "report": "review.md"
+  },
+  "findings": [
+    {
+      "id": "S01",
+      "severity": "MAJOR_SELECTION_SAFETY",
+      "input": "旧multi新内存变形：print依赖submit",
+      "normalControl": "两项初始可选；合法同批和依次确认已有定向正例",
+      "operation": "disposeSemantic(reject submit) -> semanticReview -> confirmSemantic(print)",
+      "expected": "前置被拒绝后，后续不再默认勾选，明确解释依赖",
+      "observed": "print.selected仍true；实际确认以MAINLINE05_DEPENDENCY_CONFIRM_FIRST拒绝，正式任务读回0",
+      "root": "semanticView.defaultSelected依赖首次defaultSelected而非当前处置",
+      "status": "REPRODUCED_BY_INDEPENDENT_REVIEWER"
+    },
+    {
+      "id": "S02",
+      "severity": "SEMANTIC_COMPLETENESS",
+      "input": "旧information新内存变形，仅informationScopeIds清空",
+      "normalControl": "完整information无issues，可review_info",
+      "operation": "captureSemantic -> disposeSemantic(review_info)",
+      "expected": "UNACCOUNTED_SOURCE_SCOPE保留待核对，不冒充正确无任务",
+      "observed": "状态变confirmed；SemanticFacts仍宣称仅供了解、没有要确认的任务；未创建正式任务",
+      "root": "life(review_info)只检查无tasks；信息级未覆盖问题未进入处置/UI结论",
+      "status": "REPRODUCED_BY_INDEPENDENT_REVIEWER"
+    },
+    {
+      "id": "S03",
+      "severity": "RELATION_FIDELITY_AND_CONFIRMED_FIELD_CHANGE",
+      "input": "已登记sharedMaterial：两个时间relatedMaterialTempIds为空",
+      "normalControl": "旧multi显式时间材料关系保留",
+      "operation": "captureSemantic -> confirmSemantic(submit) -> canonical read -> confirmSemantic(print) -> canonical read",
+      "expected": "不能凭共同任务归属新增材料截止；后续确认不改变已确认字段语义",
+      "observed": "canonical新增d0→m0、d1→m0/m1；m0.deadlineTimePointId从d0变null",
+      "root": "canonicalFacts.materialOwners推断与材料deadline投影从共同task owner生成关系",
+      "status": "REPRODUCED_BY_INDEPENDENT_REVIEWER"
+    }
+  ],
+  "journeys": {
+    "J01": {
+      "realEdge": "NOT_RUN"
+    },
+    "J02": {
+      "realEdge": "NOT_RUN"
+    },
+    "J03": {
+      "realEdge": "NOT_RUN"
+    },
+    "J04": {
+      "realEdge": "NOT_RUN"
+    },
+    "J05": {
+      "realEdge": "NOT_RUN"
+    },
+    "J06": {
+      "realEdge": "NOT_RUN"
+    },
+    "J07": {
+      "realEdge": "NOT_RUN"
+    },
+    "J08": {
+      "realEdge": "NOT_RUN"
+    },
+    "J09": {
+      "realEdge": "NOT_RUN"
+    },
+    "J10": {
+      "realEdge": "NOT_RUN"
+    },
+    "J11": {
+      "realEdge": "NOT_RUN"
+    },
+    "J12": {
+      "realEdge": "NOT_RUN"
+    }
+  },
+  "fullEngineering": "NOT_RUN",
+  "actualDownload": "NOT_RUN",
+  "independentBrowserRepositoryRead": "NOT_RUN",
+  "accuracy": "本轮未测量",
+  "boundary": {
+    "externalRecognitionCalls": 0,
+    "modelNetwork": 0,
+    "costCny": 0,
+    "keys": 0,
+    "clipboard": 0,
+    "realDatabase": 0,
+    "stableIntegration": 0,
+    "deployment": 0,
+    "newDatasets": 0,
+    "newDependencies": 0
+  },
+  "history": "原MAINLINE05失败证据、旧40/42、17测试、B8 FAIL、旧环境3/1保持；当前FAIL不改PASS",
+  "delivery": {
+    "policy": "DOCS_ONLY_ON_FAILURE",
+    "implementationCommit": "NOT_AUTHORIZED_WHILE_BLOCKED",
+    "staging": [
+      "docs/recognition-optimization/CURRENT_CONTEXT.md",
+      "docs/recognition-optimization/OPTIMIZATION_LOG.md",
+      "docs/recognition-optimization/mainline-05/runs/continue-20260906a/self-check.json",
+      "docs/recognition-optimization/mainline-05/runs/selection-stop-20260906a/failure.md",
+      "docs/recognition-optimization/mainline-05/runs/selection-stop-20260906a/failure.json",
+      "docs/recognition-optimization/mainline-05/runs/selection-stop-20260906a/review.md",
+      "docs/recognition-optimization/mainline-05/runs/selection-stop-20260906a/targeted.json",
+      "docs/recognition-optimization/mainline-05/runs/selection-stop-20260906a/protection.json"
+    ],
+    "commitAndRemote": "由本报告所在Git提交及交付回执核对；记录时尚未提交，不预填成功"
+  },
+  "next": "同包仅授权修复此处登记的S01-S03，保留26路径；完成未验收编排后重新独立审查、工程及浏览器"
+}
