@@ -1,0 +1,161 @@
+{
+  "stage": "RCO-5-MAINLINE-05",
+  "version": 1,
+  "status": "PROPOSED_REQUIRES_USER_CONFIRMATION",
+  "repository": "C:\\Users\\Winner\\student-affairs-multimodal-exp",
+  "branch": "codex/e2-multimodal-recognition-exp",
+  "productBaselineCommit": "07cbd4cf9d3f9797949ead0799965960f90b2727",
+  "implementationStartRule": "Resolve final pushed documentation delivery commit containing this exact approved whitelist; ancestor must include productBaselineCommit; verify live remote and unchanged source SHAs. Do not pin a prior phase checker to its old HEAD.",
+  "existing": [
+    {
+      "path": "src/App.tsx",
+      "sha256": "2a0b4ad5e7d350437e4466492bf0d42197cd1a98db27315e7a6ae0aec386cbb5",
+      "responsibility": "真实 App 的可选语义 runtime 接线、草稿恢复、选择/明确保存/处置/确认、下游 props、下载与失败提示；普通入口和旧 runtime 默认不变"
+    },
+    {
+      "path": "src/components/DraftReviewPanel.tsx",
+      "sha256": "ccb28067728fdc46972bad81199fbc2e5ed4172c0761ee572344d9beaae492b0",
+      "responsibility": "可选语义核对 props/内容插槽、逐键缓冲和保存、明确待核对/不需要、实体预览；原旧/V2 props 与默认不变"
+    },
+    {
+      "path": "src/components/TaskDetailPanel.tsx",
+      "sha256": "846a824952aef839a52be21635d1e562a77ee0d2bb6151e405c75139ca83a98f",
+      "responsibility": "可选只读语义事实/完整关系/证据与编辑历史插槽；正式任务编辑与执行仍关闭"
+    },
+    {
+      "path": "src/components/EventDetailPanel.tsx",
+      "sha256": "b7a48e99073ad4a13b2b4c6c5bbb859b6bd2b99c49f486c1a6503941014ad388",
+      "responsibility": "可选隔离日期/时区/来源与关联信息展示；原默认格式行为不变"
+    },
+    {
+      "path": "src/pages/CalendarPage.tsx",
+      "sha256": "1251f0c13ca57fa2b82429adb000d9a2a145327c716d4ef5e22d9244fcce2dcc",
+      "responsibility": "可选隔离日历视图与时区/仅日期/无日期展示、只读课程控制；不改通用日历函数默认算法"
+    },
+    {
+      "path": "src/experiments/mainline02/runtime.ts",
+      "sha256": "e70a9a3a1580d254115d53e68c4883ec1573353365b2d74f06621dca400dfab0",
+      "responsibility": "可选受验证语义 driver/facet 接口和委托，复用 runtime 身份与库绑定；旧 V2 工厂默认、人工入口不变，禁止静态引入语义实现/工程答案"
+    },
+    {
+      "path": "src/domain/v2/domainCommit.ts",
+      "sha256": "a698bb32c1c72d764337ad429a82c7e0c6b9a8c2c6ddbf9eb70c4cf3f6cbd4fa",
+      "responsibility": "新增显式语义 DomainCommitPlan 应用入口，复用受控实体合并，在同一事务承接已验证语义草稿及关系补丁；原 build/apply/V2 接口与分支不改"
+    }
+  ],
+  "add": [
+    {
+      "path": "src/experiments/mainline05/semanticState.ts",
+      "responsibility": "持久化扩展版本、引用/操作类型及严格状态全图校验；重用 MAINLINE04 语义词汇"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticRepository.ts",
+      "responsibility": "包装真实 canonical repository；每次读/事务/导出联合校验，单记录原子更新与显式隔离库绑定"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticCapture.ts",
+      "responsibility": "复用 beginCapture 的来源先存；接获准人工响应、原始身份/适配来源/失败保留，非旧2.0结果不伪造 result"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticConfirmation.ts",
+      "responsibility": "本机有效选择/用户意图/明确保存/暂存处置、DomainCommitPlan、全关联映射、版本/幂等/回滚；不重写识别器"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticView.ts",
+      "responsibility": "从持久化事实投影草稿/确认状态/任务日期/日历/事实详情；投影只读，不回灌确认"
+    },
+    {
+      "path": "src/experiments/mainline05/runtime.ts",
+      "responsibility": "组合上述服务为显式语义 driver，向真实 App 注入能力/展示；不新建另一个产品壳"
+    },
+    {
+      "path": "src/experiments/mainline05/SemanticFacts.tsx",
+      "responsibility": "核对面板与已确认详情共用的条件/状态/修订/事件/材料/时间/来源事实内容；不另建确认页"
+    },
+    {
+      "path": "src/experiments/mainline05/engineeringReplay.ts",
+      "responsibility": "重用旧8通知/人工响应和已登记语义映射、B8只读诊断；仅测试启动器可引用，不形成生产关键词分类器"
+    },
+    {
+      "path": "src/experiments/mainline05/browser.tsx",
+      "responsibility": "真实 App 挂载前新空库/能力封锁，工程通知/故障/存储读回工具与事件记录；不预置正式任务"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticState.test.ts",
+      "responsibility": "版本/来源/结构/缺失与空值/引用/存储篡改/关系完整性正反测试"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticRepository.test.ts",
+      "responsibility": "真实 repository 内存事务和隔离存储的联合校验、缺库/坏库/回滚/读回"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticCapture.test.ts",
+      "responsibility": "来源先存、身份一致、失败/重复恢复和原始响应分离"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticConfirmation.test.ts",
+      "responsibility": "条件/修订正反、有效兄弟/共享关系、编辑采用、部分批量/冲突/幂等/回滚"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticView.test.ts",
+      "responsibility": "字段/完整关系账本、日期/时区/事件详情投影、旧42字段、不产生假提醒"
+    },
+    {
+      "path": "src/experiments/mainline05/mainlineAcceptance.test.tsx",
+      "responsibility": "真实 App/面板/隔离 repository 联动、默认入口回归、用户完整旅程与故障"
+    },
+    {
+      "path": "scripts/serve-mainline-05.mjs",
+      "responsibility": "仅回环、无环境密钥的内存打包启动；明确 origin/库，过滤 Expected/runner 和网络能力；--check"
+    },
+    {
+      "path": "scripts/check-mainline-05.mjs",
+      "responsibility": "本包 manifest/审核SHA/保护/attempt 编排、分层工程及浏览器证据/下载文件定向校验，不改旧 checker"
+    },
+    {
+      "path": "scripts/check-mainline-05.node-test.mjs",
+      "responsibility": "当前编排的合法基线/审核放行、错误HEAD/SHA/路径/环境/保护拒绝；合成PASS不得授权工程门"
+    }
+  ],
+  "dynamicDocuments": [
+    "docs/recognition-optimization/CURRENT_CONTEXT.md",
+    "docs/recognition-optimization/OPTIMIZATION_LOG.md"
+  ],
+  "reportDirectory": "docs/recognition-optimization/mainline-05",
+  "planningDocuments": [
+    "PLAN.md",
+    "IMPLEMENTATION_WHITELIST.json",
+    "REVIEW.md",
+    "CHECKS.json"
+  ],
+  "futureReportFiles": [
+    "IMPLEMENTATION_BASELINE.json",
+    "PROTECTION.json",
+    "PROGRESS.json",
+    "AUDIT.md",
+    "BROWSER_PROTOCOL.md",
+    "BROWSER_RESULT.json",
+    "CHECKS_IMPLEMENTATION.json",
+    "REVIEW_IMPLEMENTATION.md",
+    "IMPLEMENTATION_SNAPSHOT.json",
+    "STAGING_MANIFEST.json"
+  ],
+  "futureAttemptPattern": "docs/recognition-optimization/mainline-05/runs/<run-id>/<self-check|targeted|review|engineering|browser|download|protection|failure>.<json|md>",
+  "futureAttemptRules": "new run-id each attempt, no overwrite; diagnostics only, no executable source/Expected/dataset/checkpoint/cache; raw long logs and generated outputs in recorded new temporary directory",
+  "historicalProtection": {
+    "baseline": "docs/recognition-optimization/mainline-04-i1/R2_BASELINE.json",
+    "sha256": "4ebbe389a1093b328942f0920d9f254f40c02a54c7ba158f29fba70b73497ac9",
+    "count": 870,
+    "implementation": "docs/recognition-optimization/mainline-04-i1/R2_IMPLEMENTATION_SNAPSHOT.json",
+    "implementationSha256": "6576c593402ddb248bdc0319bde061fb1d31d5dc66d6629b52ad8d22d6def057",
+    "implementationCount": 8,
+    "exceptionsAfterApproval": "Only exact paths in existing; exceptions are not permission to edit old snapshots or Expected. Protect all other baseline items and all 8 MAINLINE04 implementation files."
+  },
+  "logPrefix": {
+    "bytes": 229326,
+    "sha256": "fcdb623559273ccbf5ae20073384e75e3a16d355c38466730e9a9353805c2e1f"
+  },
+  "noModel": true,
+  "noDeployment": true,
+  "proposedDataFormat": "WorkspaceV8 + extractionDraft.legacyData.mainline05 (mainline05-semantic-state-1); joint version/reference validation mandatory; not a general v8 consumer support or migration claim"
+}

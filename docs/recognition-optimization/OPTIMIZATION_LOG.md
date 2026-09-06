@@ -1606,3 +1606,15 @@
 - delivery: 全部门通过后才按R2_STAGING_MANIFEST精确提交8实现/编排及R2报告、短交接、追加日志；提交推送/远端精确号以实际回执为准，不强推/自动变基。快照R2_IMPLEMENTATION_SNAPSHOT，审计R2_AUDIT，检查R2_CHECKS和R2_ENGINEERING_CHECKS。
 - next: 唯一建议另批MAINLINE-05-SCOPE，只读确定新语义→真实App核对确认→隔离保存的最小产品接入白名单。理由是工程结构可承接不等于用户可用；不先换模型或新造数据。提示词R2_NEXT_PROMPT，本轮不自动执行。
 - boundary: 0外部识别/verifier/Repair/retry/模型网络/识别费用/密钥/剪贴板/真实库/真实材料/真人/浏览器/新数据/盲测/B10/稳定接入/部署/RCO-6；仅Git和公开依赖审计网络。新语义App/正式保存NOT_RUN，模型准确率本轮未测量。
+
+## 107. MAINLINE-05完整用户闭环范围交付 — 2026-09-06
+
+- authority: 用户要求按完整用户闭环组织MAINLINE-05，先一次列清精确白名单与关键风险，确认后同包连续实现/修补/审查/工程/浏览器/Git；当前只做范围文档，不实施代码。
+- baseline: 本机/远端07cbd4cf9d3f9797949ead0799965960f90b2727，工作区原本干净；870保护与8项MAINLINE04实现逐字SHA一致，无重叠修改。没有回切、重装、套补丁或重读完整历史。
+- mainline: 主瓶颈是新语义到旧draft.result/V2确认和canonical关系的交接，而非缺少新关键词。计划复用MAINLINE04与真实App，以用户确认后刷新找回完整任务为一个交付目标。
+- scope: 提议7已有文件显式增量+18新源码/测试/脚本，共25路径，唯一清单mainline-05/IMPLEMENTATION_WHITELIST.json。domainCommit新应用入口与v8容器下严格版本扩展必须由用户明确批准；全局Schema/repository/validator/confirmationV2/capture/MAINLINE04及历史仍只读。
+- validation-design: PLAN的J01–J12覆盖来源先存、逐键保存、条件三值/修订/信息处置、事件/共享、部分批量、失败/过期/重复、刷新找回和实际下载对独立读库；旧42保留，新事实/关系100%、安全错误0与必要正例同时要求。不给测试数量当产品进度。
+- review: /root/mainline05_scope_reader无历史上下文只读复核PASS_SCOPE_ONLY，未发现需扩大25文件的接口阻断；提醒纯信息从全部来源恢复/处置，不伪造任务。详见REVIEW.md。本次未运行产品/工程/浏览器或模型测试。
+- delivery: 本次仅PLAN/白名单/REVIEW/CHECKS、64行CURRENT_CONTEXT及本追加记录，按精确6文件清单提交推送并核对远端；真实回执见Git，不强推/自动变基。白名单状态保持PROPOSED_REQUIRES_USER_CONFIRMATION。
+- next: 用户确认PLAN第9节后才连续执行MAINLINE-05，普通范围内修补不再拆轮；只在超范围/保护变化/重大安全问题等边界停。旧R2_NEXT_PROMPT作为历史保留，不再作为当前优先事项。
+- boundary: 本次产品源码/测试/依赖变化0，模型/模型网络/费用/密钥/剪贴板/真实库/浏览器/新数据/部署0；模型准确率本轮未测量。新语义App与正式保存依旧NOT_RUN，范围审查通过不代表功能完成。
