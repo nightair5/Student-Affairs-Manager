@@ -1,0 +1,7 @@
+# 工程格式修正独立复核
+
+PASS。两份快照仅recognitionHandoff.test.ts的SHA不同，当前10/10文件均匹配R1_ENGINEERING_REVIEW_SNAPSHOT；在内存恢复两处换行后，精确匹配原R1_REVIEW_SNAPSHOT的SHA，确认产品代码和全部断言未变。
+
+核验新定向日志为153/153（ylFLCW）。本次未运行全量、浏览器或模型，可重启已授权完整工程序列；首次lint失败及未运行后续门的记录保留。
+
+复核者：mainline03_i1_r1_independent；仅复核初审之后的两处调用换行调整，不替换R1_INDEPENDENT_REVIEW的完整审查记录。

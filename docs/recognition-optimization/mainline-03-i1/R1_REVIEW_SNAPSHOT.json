@@ -1,0 +1,59 @@
+{
+  "stage": "RCO-5-MAINLINE-03-I1-R1",
+  "base": "c30cdb760a23353af191d6f9c1ee8dbb8d19eb40",
+  "protectedCount": 768,
+  "protectedChanges": [],
+  "appendOnly": true,
+  "files": [
+    {
+      "path": "src/App.tsx",
+      "sha256": "2a0b4ad5e7d350437e4466492bf0d42197cd1a98db27315e7a6ae0aec386cbb5",
+      "modifiable": false
+    },
+    {
+      "path": "src/experiments/mainline02/runtime.ts",
+      "sha256": "e70a9a3a1580d254115d53e68c4883ec1573353365b2d74f06621dca400dfab0",
+      "modifiable": false
+    },
+    {
+      "path": "src/experiments/mainline03/recognitionHandoff.ts",
+      "sha256": "d96cb50639849cf3437ca7f374b72a213a46c7d4029b757f163da9fba691ddeb",
+      "modifiable": true
+    },
+    {
+      "path": "src/experiments/mainline03/recognitionHandoff.test.ts",
+      "sha256": "4140d8823cc8a922ac71c8514b77dfb72f6e5a47235ced1677901a0f5b03d9c3",
+      "modifiable": true
+    },
+    {
+      "path": "src/experiments/mainline03/seenReplay.ts",
+      "sha256": "e595d756468959eab01c6628d386d639625464ba50a6b37168690862a12d1950",
+      "modifiable": true
+    },
+    {
+      "path": "src/experiments/mainline03/seenReplay.test.ts",
+      "sha256": "bb1266d778ee83d5025252dcfa42baa2fa8931e5ce893496a571279734714f25",
+      "modifiable": true
+    },
+    {
+      "path": "src/experiments/mainline03/browser.tsx",
+      "sha256": "93b9d81b975183dd155dfc30848258f2f258b1d793af55ad57f7755a5d297cc1",
+      "modifiable": false
+    },
+    {
+      "path": "src/experiments/mainline03/mainlineAcceptance.test.tsx",
+      "sha256": "d085ae7b3ee2552c0bb7b8bc351c4c0ebf5956d99a5b908360a9a54bd88824cd",
+      "modifiable": true
+    },
+    {
+      "path": "scripts/serve-mainline-03-i1.mjs",
+      "sha256": "29b62003673952c4006409b8094692a0b54331a4409fbd8757ae3791c025a071",
+      "modifiable": false
+    },
+    {
+      "path": "scripts/check-mainline-03-i1.mjs",
+      "sha256": "956707b42ccde3887615d3eb570ed7b736604031f4f550db341758fae54737c4",
+      "modifiable": false
+    }
+  ]
+}

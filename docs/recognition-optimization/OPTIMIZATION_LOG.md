@@ -1433,3 +1433,29 @@
 - boundary: 外部识别模型/verifier/Repair/retry/模型网络/费用/密钥/剪贴板/用户库/真实材料/真人/部署/RCO-6均0；无新数据/盲测/B10或旧runner执行。
 - delivery: docs(product)仅审计目录与两动态文档，精确暂存不含未提交源码；最终提交/推送/远端SHA以Git回执为准。
 - next: 唯一建议MAINLINE-03-I1-R1修复凭据内部一致性，复现→最小修复→独立审查→完整门→原浏览器协议；待新授权，不换模型/新数据。模型识别准确率本轮未测量。完成后停止。
+
+## 89. MAINLINE-03-I1-R1 凭据一致性修复授权 — 2026-09-06
+
+- authority: 当前用户明确授权仅修I1登记的版本/raw身份内部一致性，恢复现有未提交实现；不重做PLAN、不运行旧runner、不调用模型/密钥/剪贴板、不部署。
+- baseline: 本机/远端c30cdb760a23353af191d6f9c1ee8dbb8d19eb40；10实现与REJECTED_SNAPSHOT全匹配、原752保护通过。R1_BASELINE追加保护I1报告及5只读实现，共768文件；日志旧字节前缀固定。
+- scope: 仅recognitionHandoff/seenReplay两实现及对应两测试/mainlineAcceptance测试可修；其余5实现只读。新文件仅R1报告、短CURRENT_CONTEXT及日志追加；不改冻结材料/Schema/仓储/V2。
+- sequence: 两个已登记反例先失败→至多两轮局部修复→新无上下文审查→无阻断再完整门/实际Edge协议→保护→成功提交推送；失败只交付证据，保留现场。
+- status: IN_PROGRESS，尚无本轮通过结论；模型识别准确率本轮未测量，外部识别请求/费用0。
+
+## 90. MAINLINE-03-I1-R1 定向与独立审查通过 — 2026-09-06
+
+- reproduction: 新2反例失败/旧134通过（XWF2mj）；第1轮局部修复后136/136，再补同根因检查最终153/153（2xMFm0），旧134保留、42/42内存口径保留。
+- fix: 原始JSON与对象结构一致，内嵌版本/模型对齐；对象键序/空白不影响，数组/缺键/类型差异拒绝。空响应版本null，已见候选仅记录已知身份；哈希不冒称服务商真实性认证。
+- review: 新无上下文PASS，独立6类矛盾拒绝/合法重排正常确认2任务；3测试去新增块后与旧拒收SHA精确匹配。10快照匹配、768保护不变；独立诊断不混入153分母。
+- next: 允许按原授权继续一轮完整工程门与实际Edge协议，尚不构成整轮验收。外部识别模型/网络/费用/密钥/剪贴板0。
+
+## 91. MAINLINE-03-I1-R1 工程依赖范围阻断 — 2026-09-06
+
+- outcome: NOT_ACCEPTED_ENGINEERING_BLOCKED；来源凭据修复/独立审查通过，但完整工程与实际浏览器未过。停机级别NO_PROMOTION / NEEDS_SCOPE_APPROVAL，须当前用户批准最小工程依赖范围才继续。
+- checks: 153/153定向、42/42内存保真；独立6类矛盾拒绝、合法重排可确认且原始/首次保留，旧三测试断言SHA回构匹配。第1工程attempt（l1TQcP）lint2处换行失败，仅在获准测试文件调整并独立复核；新定向153/153（ylFLCW）。第2attempt（Rx2qfE）lint通过，app类型6个TS2307失败，后续门/Edge未运行。
+- cause: 三I1测试原有node:fs/node:crypto导入缺@types/node，package/锁文件/安装目录均无该类型包；本机Node v24.18.0。标准修复需要新增开发依赖，package.json/package-lock.json不在本轮白名单，因此停止，不安装依赖或修改公共配置，不用屏蔽错误/删测试过门。
+- preservation: 当前10实现保持R1_REJECTED_SNAPSHOT，768保护不变、日志旧字节前缀保留。旧Expected/freeze/dataset/checkpoint/cache/40/42/17测试/历史FAIL不改；原5只读实现未变。
+- browser: 未启动本轮server/Edge/实际新库，未生成真实下载；不继承历史浏览器PASS，无需关闭服务，不清理临时/历史证据。
+- delivery: 仅R1审计/检查/快照/下一提示词和两动态文档单独docs提交推送，远端以最终Git回执为准；10业务源码保持未提交，不回滚。
+- next: 唯一建议MAINLINE-03-I1-R2，申请仅package两文件及对应开发依赖安装，先锁版本与影响→独立审查→完整门→原Edge协议。不是新语义或模型轮次。
+- boundary: 外部识别模型/verifier/Repair/retry/模型网络/费用/密钥/剪贴板/用户库/真实材料/真人/新数据/盲测/B10/部署/RCO-6均0。模型识别准确率本轮未测量。完成后停止。

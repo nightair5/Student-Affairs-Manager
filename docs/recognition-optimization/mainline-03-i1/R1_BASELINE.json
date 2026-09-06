@@ -1,0 +1,91 @@
+{
+  "stage": "RCO-5-MAINLINE-03-I1-R1",
+  "head": "c30cdb760a23353af191d6f9c1ee8dbb8d19eb40",
+  "branch": "codex/e2-multimodal-recognition-exp",
+  "parentBaseline": {
+    "path": "docs/recognition-optimization/mainline-03-i1/BASELINE.json",
+    "sha256": "48194fadf83eca36ed97313b1a9095f08cecf2d15c59816f93dda89b82ba5af5",
+    "protectedCount": 752
+  },
+  "rejectedSnapshot": {
+    "path": "docs/recognition-optimization/mainline-03-i1/REJECTED_SNAPSHOT.json",
+    "sha256": "453c3cc98e68106a10fdfeac2a633e6a766b92ed0b48ed36eeb597ebfd02aac4"
+  },
+  "mutable": [
+    "src/experiments/mainline03/recognitionHandoff.ts",
+    "src/experiments/mainline03/seenReplay.ts",
+    "src/experiments/mainline03/recognitionHandoff.test.ts",
+    "src/experiments/mainline03/seenReplay.test.ts",
+    "src/experiments/mainline03/mainlineAcceptance.test.tsx"
+  ],
+  "additionalReadOnly": [
+    {
+      "path": "docs/recognition-optimization/mainline-03-i1/AUDIT.md",
+      "sha256": "bba436e63e1e07f766049d3d32936070fe0d1b75166f2bc64574a4f4af39c87b"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-03-i1/BASELINE.json",
+      "sha256": "48194fadf83eca36ed97313b1a9095f08cecf2d15c59816f93dda89b82ba5af5"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-03-i1/BROWSER_PROTOCOL.md",
+      "sha256": "d842ca6f7ea32fd94eaf895aff8ff5b0041d277839fd5b648f86560326c3ee69"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-03-i1/BROWSER_RESULT.md",
+      "sha256": "aa5586425f747b8d35e33e6707cd49d7d5fda301146a2881b5b32d1da03c29d2"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-03-i1/CHECKS.json",
+      "sha256": "747528897ce1d871dcec8111aebd1368d4c84a776340ca1170c7bdaba36d2eed"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-03-i1/INDEPENDENT_REVIEW.md",
+      "sha256": "c8e55e8b0bf2d2fc5fb0500f2b7a6efef88a2224b84e30c8c9fbbc2d453f0296"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-03-i1/NEXT_PROMPT.md",
+      "sha256": "d73ea2aa73eddb791a4bba374358d700db0c95fa3262b68defa8f98b40b9ae8b"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-03-i1/PROGRESS.md",
+      "sha256": "d077536ef4c58694e3e8bc1e4febcc4161c33c628769ccb451c0a7a26905660d"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-03-i1/REJECTED_SNAPSHOT.json",
+      "sha256": "453c3cc98e68106a10fdfeac2a633e6a766b92ed0b48ed36eeb597ebfd02aac4"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-03-i1/REPRODUCTION.md",
+      "sha256": "09a97afa1828bcf936cc194e522cdb5a68fd5376425a7424086cd372e08d623a"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-03-i1/REVIEW_SNAPSHOT.json",
+      "sha256": "e8052edf3b9d2b60fe553e5ba89473444e8489a19b13a109b2824c63ba187fba"
+    },
+    {
+      "path": "src/App.tsx",
+      "sha256": "2a0b4ad5e7d350437e4466492bf0d42197cd1a98db27315e7a6ae0aec386cbb5"
+    },
+    {
+      "path": "src/experiments/mainline02/runtime.ts",
+      "sha256": "e70a9a3a1580d254115d53e68c4883ec1573353365b2d74f06621dca400dfab0"
+    },
+    {
+      "path": "src/experiments/mainline03/browser.tsx",
+      "sha256": "93b9d81b975183dd155dfc30848258f2f258b1d793af55ad57f7755a5d297cc1"
+    },
+    {
+      "path": "scripts/serve-mainline-03-i1.mjs",
+      "sha256": "29b62003673952c4006409b8094692a0b54331a4409fbd8757ae3791c025a071"
+    },
+    {
+      "path": "scripts/check-mainline-03-i1.mjs",
+      "sha256": "956707b42ccde3887615d3eb570ed7b736604031f4f550db341758fae54737c4"
+    }
+  ],
+  "protectedCount": 768,
+  "logBytes": 198483,
+  "logPrefixSha256": "0c1400eb9e30f87249dbe82d0a27863c29cfbef8b2a7d2382932381224ffab77",
+  "initialSnapshotChanges": []
+}
