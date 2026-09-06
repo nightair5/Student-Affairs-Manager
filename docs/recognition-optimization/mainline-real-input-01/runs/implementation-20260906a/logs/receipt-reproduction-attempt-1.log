@@ -1,0 +1,75 @@
+
+ RUN  v3.2.7 C:/Users/Winner/student-affairs-multimodal-exp
+
+·····xx
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/experiments/realInput01/inputReceipt.test.ts > input receipt and explicit send boundaries > does not coerce receipt IDs, correction IDs or file hashes to strings
+AssertionError: promise resolved "{ inputId: 42, …(8) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "corrections": [],
++   "extractorVersion": "manual-paste-1",
++   "file": null,
++   "inputId": 42,
++   "originalSha256": "af3c37ab7eab3390d90bc257b8c35e647a1d214f9095af92e515b81caef88cae",
++   "pageCount": 1,
++   "pages": [
++     {
++       "chunks": [
++         "请保存活动手册。没有截止日期要求。",
++       ],
++       "issues": [],
++       "number": 1,
++       "ocrChunks": null,
++       "parserChunks": null,
++       "route": "parser",
++     },
++   ],
++   "sourceType": "text",
++   "version": "real-input-receipt-1",
+  }
+
+ ❯ src/experiments/realInput01/inputReceipt.test.ts:58:75
+     56|     const edited = await correctReadPage(original, 1, notices['no-date…
+     57|     for (const invalid of [42, true, null, ['valid-id']]) {
+     58|       await expect(validateInputReceipt({ ...original, inputId: invali…
+       |                                                                           ^
+     59|       await expect(validateInputReceipt({ ...edited, corrections: [{ .…
+     60|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/experiments/realInput01/inputReceipt.test.ts > input receipt and explicit send boundaries > snapshots consent arrays before awaiting, so later page changes cannot alter this send
+AssertionError: expected [ 2 ] to deeply equal [ 1 ]
+
+- Expected
++ Received
+
+  [
+-   1,
++   2,
+  ]
+
+ ❯ src/experiments/realInput01/inputReceipt.test.ts:77:24
+     75|     pages[0] = 2; reviewed[0] = 2
+     76|     const sent = await pending
+     77|     expect(sent.pages).toEqual([1]); expect(sent.reviewedPages).toEqua…
+       |                        ^
+     78|     expect(sent.text).toBe(notices['no-date']); expect(sent.ranges[0].…
+     79|     expect(await validateSendSnapshot(source, sent)).toEqual(sent)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 5 passed (7)
+   Start at  23:20:44
+   Duration  615ms (transform 106ms, setup 0ms, collect 138ms, tests 28ms, environment 0ms, prepare 198ms)
+

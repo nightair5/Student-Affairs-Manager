@@ -1,0 +1,60 @@
+{
+  "status": "PASS_PARTIAL_HELPER_REVIEW",
+  "reviewer": "/root/real_input_partial_review",
+  "mode": "fresh_no_context_then_bounded_fix_recheck",
+  "sourceBinding": [
+    {
+      "path": "src/experiments/realInput01/inputReceipt.test.ts",
+      "sha256": "421e2d67fca01e07bc044c75fc935f844b357d8b08f8707a4aa463e59e28fcd6"
+    },
+    {
+      "path": "src/experiments/realInput01/inputReceipt.ts",
+      "sha256": "72b342a095d607db888a54819da80cab98fcd35b59c1d52db86157ee204a7372"
+    },
+    {
+      "path": "src/experiments/realInput01/modelWire.test.ts",
+      "sha256": "c1d30304037b8d5409db82a293dd3efaa7f8545cb3413e85d816a941c8343c19"
+    },
+    {
+      "path": "src/experiments/realInput01/modelWire.ts",
+      "sha256": "7221e249bfbb855db4142a96ce12f8bde98be3e679dc41c3ad77c7e0e8cbd526"
+    },
+    {
+      "path": "src/experiments/realInput01/seenInputs.ts",
+      "sha256": "e8c7cffc614b9be14c35657ddeb19592ddc3d8e8964423764889b46d37dd5583"
+    }
+  ],
+  "initial": {
+    "status": "REJECT_PARTIAL_HELPER_CANDIDATE",
+    "p2": 2,
+    "independentTests": 17,
+    "findings": [
+      "regex implicit coercion of IDs/hash",
+      "mutable consent arrays across asynchronous hashing"
+    ]
+  },
+  "final": {
+    "remainingBlockersInReviewedHelpers": 0,
+    "independentTests": 20,
+    "reproducedOriginalHashRace": true,
+    "additionalSameRootRegression": "request clock/context copied before asynchronous verification",
+    "fullProductApproval": false
+  },
+  "budgetReview": {
+    "reviewer": "/root/real_input_budget_review",
+    "status": "PAID_BLOCKED_UNDER_APPROVED_FIXED_RESERVATION",
+    "alternative": "Official context-window conservative envelope could support a separately approved budget policy; no model calls authorized by this review itself."
+  },
+  "restrictions": [
+    "No App/store/gateway implementation approved as complete",
+    "No model quality/browser/full engineering acceptance",
+    "Audit-only commit; partial source not committed"
+  ],
+  "actions": {
+    "models": 0,
+    "keys": 0,
+    "clipboard": 0,
+    "oldRunners": 0,
+    "fileWritesByReviewers": 0
+  }
+}

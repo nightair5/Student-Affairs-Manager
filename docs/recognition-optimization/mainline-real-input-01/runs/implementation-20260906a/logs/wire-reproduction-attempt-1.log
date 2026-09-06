@@ -1,0 +1,29 @@
+
+ RUN  v3.2.7 C:/Users/Winner/student-affairs-multimodal-exp
+
+············x
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/experiments/realInput01/modelWire.test.ts > real input wire projection (zero model calls) > binds the clock and source context before asynchronous verification starts
+AssertionError: expected 'invalid-time' to be '2026-09-05T08:00:00.000Z' // Object.is equality
+
+Expected: "2026-09-05T08:00:00.000Z"
+Received: "invalid-time"
+
+ ❯ src/experiments/realInput01/modelWire.test.ts:68:32
+     66|     const result = await pending
+     67|     const sent = JSON.parse(result.body.input[1].content[0].text)
+     68|     expect(sent.referenceTime).toBe(original.context.referenceTime)
+       |                                ^
+     69|     expect(sent.timezone).toBe(original.context.timezone)
+     70|     expect(sent.source).toBe(original.context.index.sourceContent)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 12 passed (13)
+   Start at  23:21:22
+   Duration  646ms (transform 108ms, setup 0ms, collect 142ms, tests 48ms, environment 0ms, prepare 190ms)
+

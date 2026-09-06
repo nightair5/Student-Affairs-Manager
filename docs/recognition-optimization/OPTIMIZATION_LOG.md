@@ -1739,3 +1739,19 @@
 - checks: 954旧tracked逐字摘要、863保护/26实现/4计划/20静态/3审查来源与248835字节日志前缀匹配；CURRENT_CONTEXT 77行，41路径唯一，逐文件职责/原因/验证/回滚齐。三方案与独立审查绑定、JSON/敏感串/UTF文本与git diff检查通过；既有工程和浏览器未重跑，不新增产品验收数字。
 - delivery: 仅暂存mainline-real-input-01下PLAN/IMPLEMENTATION_WHITELIST/VALIDATION_AND_BUDGET/SCOPE_REVIEW/CHECKS五文件，加CURRENT_CONTEXT及本日志，共7文件。单独docs提交、推送原分支并live核对的精确号由Git及最终答复记录，不写循环自引用提交号；推送失败不强推/变基。提交后停止，不自动实施或付费。
 - boundary: 产品/测试/依赖改动0；外部识别/模型网络/费用/密钥/剪贴板/真实库/新数据集/真人/真实材料/部署均0。公开官方API资料查询只为方案元数据，不是认证或识别调用；模型识别准确率本轮未测量。
+
+## 123. MAINLINE-REAL-INPUT-01统一实施开始 — 2026-09-06
+
+- authority: 用户明确批准41路径/限定职责与新隔离版本；同时条件批准A8+B8+可选C8最多24次/10元，预算证明前0调用。普通范围内修补同包连续；不自动部署或接真实库。
+- preflight: HEAD/live远端56d0545fd8ffdd7b71f9feeed1ad9ac22a705dbe，起点干净；26旧实现/863保护/4计划及954旧tracked摘要匹配。13已有例外之外946tracked逐字保护摘要a06efdaf29b96b8da448e9caf87104f05e183bdf08465e037789d650c27a8ef5；日志前缀252816字节/SHA802b54b14890618345e44d4bae53c4cf8b14726bac925b1905e7b61bed8c9b26。完整身份与例外见runs/implementation-20260906a/BASELINE.json。
+- focus: 先实现可恢复本机来源/真实响应身份/人工逐项核对确认的最小链路，同时独立只读复核公开计费上界。旧人工响应仅接线代理，不把模型候选标human，不重建同义契约、不读密钥/剪贴板。
+- context: 日常编码清单先读后改/最小职责；独立代码审查聚焦安全与实际操作，不为格式偏好拆包。当前模型/OCR/浏览器均未运行，准确率本轮未测量；下一动作见STATE.json。
+
+## 124. MAINLINE-REAL-INPUT-01局部实现／预算阻断审计 — 2026-09-06
+
+- result: 整包NOT_COMPLETE，仅新增inputReceipt/modelWire/seenInputs及两测试，共5文件保留未提交；13已有源码均未改。还没有真实App/OCR/模型/确认存储链路，不能称可试用版。实施现场及23未创建路径见runs/implementation-20260906a/IMPLEMENTATION_SNAPSHOT.json。
+- checks: 先17/17，独审发现字符串隐式转型及异步页码数组变化两P2；新增receipt反例5通过2失败，wire时钟同根因12通过1失败，先复现再入口复制/严格类型修复，最终20/20、当前App类型及新目录lint通过。独立复核PASS_PARTIAL_HELPER_REVIEW，原SHA绑定及失败attempt保留，不累计样本。草稿工程测试日志误绑lint已修正为targeted-attempt-2.log；完整工程/Edge/下载/存储/模型指标NOT_RUN。
+- budget: 独立公开资料审查确认原0.40元固定不可逆预留缺完整计费输入100000上界证明，PAID_BLOCKED。另据官方1M上下文保守1048576输入+8192输出推单笔3.219456元，提出3.30元最坏预留、核验usage后按最高价结算的滚动方案供批准；总24/10不变，未知/失败不释放。未修改原方案或启用此替代，不让用户重复复制密钥。
+- protection: 946只读tracked摘要与13已有例外SHA均匹配；旧26/863/4计划、历史42/42/40/42/17/FAIL及原252816字节日志前缀保留。工作区/存储换行身份不混同。首个12项试运行未显式禁用Vitest node_modules缓存，之后cache=false；旧受保护评测缓存及历史未变。
+- delivery: 仅精确暂存本run八报告/八attempt日志及CURRENT_CONTEXT/本日志共18路径，提交推送审计；5源码不暂存，保留现场。最终SHA/live远端以Git回执及答复为准，不强推/自动变基。使用git-push技能的精确清单与远端核验，用户禁止自动变基的边界优先。
+- boundary: 本轮外部识别/模型网络/费用/密钥/剪贴板/真实库/新语义数据/格式载体/依赖/真人/部署均0；公开官方资料与Git网络不是模型请求。模型识别准确率本轮未测量。下一步同一包预算规则精确批准后继续完整主线，不重做PLAN、不重复实现。
