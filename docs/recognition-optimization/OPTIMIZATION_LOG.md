@@ -1618,3 +1618,21 @@
 - delivery: 本次仅PLAN/白名单/REVIEW/CHECKS、64行CURRENT_CONTEXT及本追加记录，按精确6文件清单提交推送并核对远端；真实回执见Git，不强推/自动变基。白名单状态保持PROPOSED_REQUIRES_USER_CONFIRMATION。
 - next: 用户确认PLAN第9节后才连续执行MAINLINE-05，普通范围内修补不再拆轮；只在超范围/保护变化/重大安全问题等边界停。旧R2_NEXT_PROMPT作为历史保留，不再作为当前优先事项。
 - boundary: 本次产品源码/测试/依赖变化0，模型/模型网络/费用/密钥/剪贴板/真实库/浏览器/新数据/部署0；模型准确率本轮未测量。新语义App与正式保存依旧NOT_RUN，范围审查通过不代表功能完成。
+
+## 108. MAINLINE-05完整工作包开始实施 — 2026-09-06
+
+- authority: 用户已明确批准PLAN/25路径、domainCommit新入口、可选runtime及严格版本扩展；按J01–J12连续实现和验收，普通范围内修补不拆阶段。0模型/密钥/剪贴板/真实库/稳定入口/部署。
+- baseline: 本机/远端8ffed8746e8b270168c5d1acb2629c631de946a7，干净工作区；870历史保护及8项MAINLINE04实现均匹配。扣除7获准例外并补绑旧checker后864保护路径，另绑4计划文件。IMPLEMENTATION_BASELINE.json记录SHA、日志前缀与独立临时目录。
+- preflight: 本机Node v24.18.0，Edge安装存在；未重装依赖。浏览器连接/下载能力将在本机隔离入口建立后实测，不预称PASS。当前全部J为NOT_RUN。
+- focus: 先实现来源→版本化语义记录→严格联合读取及确认事务，再真实App接线；源语义和旧V2只读复用。模型准确率本轮未测量。
+
+## 109. MAINLINE-05现场与范围阻碍审计 — 2026-09-06
+
+- implementation: 已在获准25路径内建立23个实现/测试/启动文件，未提交；来源先存、语义状态联合校验、真实仓储原子确认/编辑/处置、App可选接线及下游事实展示。两个checker路径尚未创建，不称功能完成。
+- latest-checks: core-07为37过/1失败（38项/6文件），旧V2内存42/42；type-targeted-05存在CalendarPage.tsx:159 TS18047，属普通未修缺陷。启动器构建预检通过，不是真实页面验收；完整实现审查/分层工程/J01–J12/下载与浏览器独立读库均NOT_RUN。
+- root-cause: 只读MAINLINE04沿任务依赖把前置任务私有截止带入当前任务，产生MULTIPLE_DEADLINES。新确认层不能忽略首次问题；不同截止依赖无法同批确认。当前失败断言、原数据与时间全部保留，未通过改答案/删关系放行。
+- independent: /root/mainline05_dependency_scope_review无上下文只读复核同因，独立定向16过/1失败（不累加到38），确认当前白名单无法满足PLAN依赖承诺；最小需追加semanticComposer.ts一个保护例外，以05显式模式分离资产归属和依赖安全，旧默认不变。不是全包PASS。
+- protection: 864保护路径、4计划和8 MAINLINE04实现SHA全匹配；日志原前缀不变。旧Expected/freeze/dataset/checkpoint/cache/历史FAIL/40/42/17和runner不改，无重装/回切/补丁恢复。
+- delivery: 仅mainline-05获准审计文档/快照/检查结果、约80行CURRENT_CONTEXT和本追加日志按精确清单提交推送；23实现保留未提交。Git真实提交号与远端回执以交付核验为准，不强推/自动变基。
+- next: 等待仅一文件范围扩展，再继续同一个MAINLINE05完整包；不重做PLAN，不自动进入模型/新数据/新包。提示词在AUDIT.md末尾。
+- boundary: 外部识别模型/模型网络/费用/密钥/剪贴板/真实库/稳定入口/部署均0；浏览器只预检新Edge空白标签。模型准确率本轮未测量。

@@ -1,0 +1,209 @@
+{
+  "stage": "RCO-5-MAINLINE-05",
+  "status": "REJECTED_UNCOMMITTED_SCOPE_BLOCK",
+  "baselineHead": "8ffed8746e8b270168c5d1acb2629c631de946a7",
+  "files": [
+    {
+      "path": "src/App.tsx",
+      "sha256": "7e1cd13d42d881be1712344f33d4a3e3975780ea6a64bb6a5051abd285e4bfb1",
+      "bytes": 76971
+    },
+    {
+      "path": "src/components/DraftReviewPanel.tsx",
+      "sha256": "834171f8d4c2ce4a8117b57ff2e8d39fafe8fcefde560256dd9816054a4d445e",
+      "bytes": 27962
+    },
+    {
+      "path": "src/components/TaskDetailPanel.tsx",
+      "sha256": "3e395eb570182b08252f65e2cf17c32be5157641aadbf02552c292a631b9747c",
+      "bytes": 21826
+    },
+    {
+      "path": "src/components/EventDetailPanel.tsx",
+      "sha256": "03f7edc8fcb810813ac6414dc0884e76b8fcc40d8e0b127f6147251daa618f01",
+      "bytes": 3250
+    },
+    {
+      "path": "src/pages/CalendarPage.tsx",
+      "sha256": "3f88e3afe0224e7f6066d7843933c0040181c4e81f1266ba26c374c7aa28b5db",
+      "bytes": 18138
+    },
+    {
+      "path": "src/experiments/mainline02/runtime.ts",
+      "sha256": "b387b1f83b436d75ff8cd02c44522ea7fff916e650a4a69289a80a19c25e879d",
+      "bytes": 9116
+    },
+    {
+      "path": "src/domain/v2/domainCommit.ts",
+      "sha256": "e4cc0169444760ef7889be92634f9b21975b0ddc326c804fa89f09e810503ef7",
+      "bytes": 48588
+    },
+    {
+      "path": "src/experiments/mainline05/semanticState.ts",
+      "sha256": "c707c20ef7899d0556df6049b1cd91678dbe5b8348c24278ce2fa030e32f9c05",
+      "bytes": 21509
+    },
+    {
+      "path": "src/experiments/mainline05/semanticRepository.ts",
+      "sha256": "dc307f3276b1874eab3533ebed325c7aac40b082d74127acc941ca8e7478e94f",
+      "bytes": 5030
+    },
+    {
+      "path": "src/experiments/mainline05/semanticCapture.ts",
+      "sha256": "3e1d713029e11b16edab0ca9a0f681c839d20c8aba671b997c7848d68ee3212e",
+      "bytes": 4818
+    },
+    {
+      "path": "src/experiments/mainline05/semanticConfirmation.ts",
+      "sha256": "d0e6e38ca9130f749a4b03eae02e063d5798e621f504c645d1e04dee1b7b5522",
+      "bytes": 5773
+    },
+    {
+      "path": "src/experiments/mainline05/semanticView.ts",
+      "sha256": "81ee1792c95bc909f9c3e69129af17c44f4139fd554e29f9fa87c9f2a3f7f718",
+      "bytes": 6588
+    },
+    {
+      "path": "src/experiments/mainline05/runtime.ts",
+      "sha256": "31c034a3898eef19a0d605d72dd015ae017ea8e3cedd3d70ef5866049023bf8a",
+      "bytes": 2721
+    },
+    {
+      "path": "src/experiments/mainline05/SemanticFacts.tsx",
+      "sha256": "646951c124a561627713b29c8f7632cf1be4be90b6eff3a1c0794870d9b00baa",
+      "bytes": 4626
+    },
+    {
+      "path": "src/experiments/mainline05/engineeringReplay.ts",
+      "sha256": "00d66698479ed104ef8490f1c452452278903cfbb0633250778d516e3f27c098",
+      "bytes": 5171
+    },
+    {
+      "path": "src/experiments/mainline05/browser.tsx",
+      "sha256": "0755d5cc7e545d3a8ae46896eff1c864898177a700d8d4321aad151a349645e7",
+      "bytes": 8711
+    },
+    {
+      "path": "src/experiments/mainline05/semanticState.test.ts",
+      "sha256": "4a8a25408aeb0dc5118840cb9307b7a34e4660abf3d9a2243236b89fcbfa43dd",
+      "bytes": 4178
+    },
+    {
+      "path": "src/experiments/mainline05/semanticRepository.test.ts",
+      "sha256": "d9fd11919e62553ccec30449592cae750e719fe655d47aa1b745f29ab8ec045d",
+      "bytes": 3864
+    },
+    {
+      "path": "src/experiments/mainline05/semanticCapture.test.ts",
+      "sha256": "b41a3dcddbfb827f82eeaf8abf439c2fbbab5cedbc79356efdaa85ca365f7e9d",
+      "bytes": 2671
+    },
+    {
+      "path": "src/experiments/mainline05/semanticConfirmation.test.ts",
+      "sha256": "4cf818ceca6bee179ed54fa7cccd8e0952c7cd49d9d16bdc5d67ad5ecbdd1e96",
+      "bytes": 10759
+    },
+    {
+      "path": "src/experiments/mainline05/semanticView.test.ts",
+      "sha256": "5c716bebeadbdb21eacef55c7a26258c338769d945096eb91f19db0da9f69f62",
+      "bytes": 4560
+    },
+    {
+      "path": "src/experiments/mainline05/mainlineAcceptance.test.tsx",
+      "sha256": "6ace590b21d6f5cb19785927de6ed86b91d97cc1f101fdf95621b8c200891477",
+      "bytes": 2443
+    },
+    {
+      "path": "scripts/serve-mainline-05.mjs",
+      "sha256": "850607e9e6d7ab4c231a7c370854a17c8a188f5324b438d0c0d7049b93110c30",
+      "bytes": 3651
+    },
+    {
+      "path": "scripts/check-mainline-05.mjs",
+      "status": "NOT_CREATED"
+    },
+    {
+      "path": "scripts/check-mainline-05.node-test.mjs",
+      "status": "NOT_CREATED"
+    }
+  ],
+  "logs": [
+    {
+      "path": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-XQqQkq\\characterization-01.log",
+      "sha256": "84ef6643c5c14673c29cbae8405f598fbb6aa25349b02ae95a80a9e402fba070",
+      "bytes": 260
+    },
+    {
+      "path": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-XQqQkq\\core-01.log",
+      "sha256": "0084cce4eb321bed0b830e91e5fb1bad8e54bb0cde736a17896b8feb847de7b6",
+      "bytes": 14604
+    },
+    {
+      "path": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-XQqQkq\\core-02.log",
+      "sha256": "aa9694670aa259285b2781a47b644bb45d51cdff20afd2754f08f0a7cc29a20a",
+      "bytes": 291
+    },
+    {
+      "path": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-XQqQkq\\core-03.log",
+      "sha256": "dff035651651eff8cf1a5234c6080e31f7dbad007deba7ad5fcc0cde4017ac19",
+      "bytes": 12899
+    },
+    {
+      "path": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-XQqQkq\\core-04.log",
+      "sha256": "808621c4d75e0f02aa14259e41d3563408f7209e6531f74bde5a4445fbf3da27",
+      "bytes": 291
+    },
+    {
+      "path": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-XQqQkq\\core-05.log",
+      "sha256": "5b5834d868b98496eacd79a0d375f4450a336a8bf2649db668c16d3258d74836",
+      "bytes": 2305
+    },
+    {
+      "path": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-XQqQkq\\core-06.log",
+      "sha256": "5cb7fd2f58da9ce8ff12522c57df3f9f459720b956ac413cde771bdbbe066c61",
+      "bytes": 1172
+    },
+    {
+      "path": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-XQqQkq\\core-07.log",
+      "sha256": "5d77d2b90e4344da1c16368b23bcc4845cd8380b4509e9d701544b545e8aa142",
+      "bytes": 2217
+    },
+    {
+      "path": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-XQqQkq\\dependency-diagnostic-02.log",
+      "sha256": "872f375b6d4e17133b440fd2535ce3b2e3e077343f38557377ae426086b96594",
+      "bytes": 708
+    },
+    {
+      "path": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-XQqQkq\\serve-preflight-01.log",
+      "sha256": "2c2a1eeba02faf38ae1bc1080381110da0be199cae4cb2de56a6ce506885702f",
+      "bytes": 120
+    },
+    {
+      "path": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-XQqQkq\\type-targeted-01.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-XQqQkq\\type-targeted-02.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-XQqQkq\\type-targeted-03.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-XQqQkq\\type-targeted-04.log",
+      "sha256": "9a7d1a97aae9dcc2d7a7869f80c6651085ad6d112553b2e0c8a07ba99a4c950d",
+      "bytes": 111
+    },
+    {
+      "path": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-XQqQkq\\type-targeted-05.log",
+      "sha256": "cc3c3fcb679f6e29bf69eb59eac538d51495b98d92c2f8d0635148ba05749428",
+      "bytes": 80
+    }
+  ],
+  "reviewScope": "dependency ownership only; not full implementation approval",
+  "modelAccuracy": "本轮未测量"
+}

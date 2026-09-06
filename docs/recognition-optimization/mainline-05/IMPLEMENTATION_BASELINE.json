@@ -1,0 +1,108 @@
+{
+  "stage": "RCO-5-MAINLINE-05",
+  "status": "AUTHORIZED_IMPLEMENTATION",
+  "head": "8ffed8746e8b270168c5d1acb2629c631de946a7",
+  "branch": "codex/e2-multimodal-recognition-exp",
+  "productBaseline": "07cbd4cf9d3f9797949ead0799965960f90b2727",
+  "whitelistSha256": "2dfedb28b2eef62f0b500fb8a74f6b4da1b603442bf3801854173a682a99368c",
+  "existing": [
+    {
+      "path": "src/App.tsx",
+      "sha256": "2a0b4ad5e7d350437e4466492bf0d42197cd1a98db27315e7a6ae0aec386cbb5",
+      "responsibility": "真实 App 的可选语义 runtime 接线、草稿恢复、选择/明确保存/处置/确认、下游 props、下载与失败提示；普通入口和旧 runtime 默认不变"
+    },
+    {
+      "path": "src/components/DraftReviewPanel.tsx",
+      "sha256": "ccb28067728fdc46972bad81199fbc2e5ed4172c0761ee572344d9beaae492b0",
+      "responsibility": "可选语义核对 props/内容插槽、逐键缓冲和保存、明确待核对/不需要、实体预览；原旧/V2 props 与默认不变"
+    },
+    {
+      "path": "src/components/TaskDetailPanel.tsx",
+      "sha256": "846a824952aef839a52be21635d1e562a77ee0d2bb6151e405c75139ca83a98f",
+      "responsibility": "可选只读语义事实/完整关系/证据与编辑历史插槽；正式任务编辑与执行仍关闭"
+    },
+    {
+      "path": "src/components/EventDetailPanel.tsx",
+      "sha256": "b7a48e99073ad4a13b2b4c6c5bbb859b6bd2b99c49f486c1a6503941014ad388",
+      "responsibility": "可选隔离日期/时区/来源与关联信息展示；原默认格式行为不变"
+    },
+    {
+      "path": "src/pages/CalendarPage.tsx",
+      "sha256": "1251f0c13ca57fa2b82429adb000d9a2a145327c716d4ef5e22d9244fcce2dcc",
+      "responsibility": "可选隔离日历视图与时区/仅日期/无日期展示、只读课程控制；不改通用日历函数默认算法"
+    },
+    {
+      "path": "src/experiments/mainline02/runtime.ts",
+      "sha256": "e70a9a3a1580d254115d53e68c4883ec1573353365b2d74f06621dca400dfab0",
+      "responsibility": "可选受验证语义 driver/facet 接口和委托，复用 runtime 身份与库绑定；旧 V2 工厂默认、人工入口不变，禁止静态引入语义实现/工程答案"
+    },
+    {
+      "path": "src/domain/v2/domainCommit.ts",
+      "sha256": "a698bb32c1c72d764337ad429a82c7e0c6b9a8c2c6ddbf9eb70c4cf3f6cbd4fa",
+      "responsibility": "新增显式语义 DomainCommitPlan 应用入口，复用受控实体合并，在同一事务承接已验证语义草稿及关系补丁；原 build/apply/V2 接口与分支不改"
+    }
+  ],
+  "added": [
+    "src/experiments/mainline05/semanticState.ts",
+    "src/experiments/mainline05/semanticRepository.ts",
+    "src/experiments/mainline05/semanticCapture.ts",
+    "src/experiments/mainline05/semanticConfirmation.ts",
+    "src/experiments/mainline05/semanticView.ts",
+    "src/experiments/mainline05/runtime.ts",
+    "src/experiments/mainline05/SemanticFacts.tsx",
+    "src/experiments/mainline05/engineeringReplay.ts",
+    "src/experiments/mainline05/browser.tsx",
+    "src/experiments/mainline05/semanticState.test.ts",
+    "src/experiments/mainline05/semanticRepository.test.ts",
+    "src/experiments/mainline05/semanticCapture.test.ts",
+    "src/experiments/mainline05/semanticConfirmation.test.ts",
+    "src/experiments/mainline05/semanticView.test.ts",
+    "src/experiments/mainline05/mainlineAcceptance.test.tsx",
+    "scripts/serve-mainline-05.mjs",
+    "scripts/check-mainline-05.mjs",
+    "scripts/check-mainline-05.node-test.mjs"
+  ],
+  "protectedReferences": [
+    {
+      "path": "docs/recognition-optimization/mainline-04-i1/R2_BASELINE.json",
+      "sha256": "4ebbe389a1093b328942f0920d9f254f40c02a54c7ba158f29fba70b73497ac9"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-04-i1/R2_IMPLEMENTATION_SNAPSHOT.json",
+      "sha256": "6576c593402ddb248bdc0319bde061fb1d31d5dc66d6629b52ad8d22d6def057"
+    }
+  ],
+  "protectedCount": 864,
+  "protectedExceptions": [
+    "src/App.tsx",
+    "src/components/DraftReviewPanel.tsx",
+    "src/components/TaskDetailPanel.tsx",
+    "src/components/EventDetailPanel.tsx",
+    "src/pages/CalendarPage.tsx",
+    "src/experiments/mainline02/runtime.ts",
+    "src/domain/v2/domainCommit.ts"
+  ],
+  "planningDocuments": [
+    {
+      "path": "docs/recognition-optimization/mainline-05/PLAN.md",
+      "sha256": "532b8daa646504fada4168400829b3cbdb888087d6364f3809611273905dbd8e"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-05/IMPLEMENTATION_WHITELIST.json",
+      "sha256": "2dfedb28b2eef62f0b500fb8a74f6b4da1b603442bf3801854173a682a99368c"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-05/REVIEW.md",
+      "sha256": "a7dc3eca64673eef5b17d338a9aacf73e2539890fd34cee6ce4bb932534858fa"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-05/CHECKS.json",
+      "sha256": "9a746663651e8b1e9e9ccdd87afeefcce6f6804aebc1f39c8ccb8243c0ca8a4f"
+    }
+  ],
+  "logBytes": 231709,
+  "logPrefixSha256": "c9dfa6baba7856d4ff45dcb9c462c9db80162e1ca010f5caf5375a03b8fd8ba0",
+  "temporaryDirectory": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-XQqQkq",
+  "node": "v24.18.0",
+  "modelCalls": 0
+}
