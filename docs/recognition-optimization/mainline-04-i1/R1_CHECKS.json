@@ -1,0 +1,236 @@
+{
+  "stage": "RCO-5-MAINLINE-04-I1-R1",
+  "overall": "BLOCKED_CHECKER_SCOPE",
+  "delivery": "AUDIT_ONLY_IMPLEMENTATION_UNCOMMITTED",
+  "baseline": {
+    "head": "1d039ac8065235528b6a507244e66ef382ba6901",
+    "branch": "codex/e2-multimodal-recognition-exp",
+    "remoteHeadObserved": "1d039ac8065235528b6a507244e66ef382ba6901"
+  },
+  "directed": {
+    "status": "PASS",
+    "passed": 72,
+    "total": 72,
+    "failed": 0,
+    "oldTests": 49,
+    "addedTests": 23,
+    "fieldMeasure": {
+      "equal": 42,
+      "checked": 42,
+      "scope": "Original V2 real in-memory capture/confirmation/readback only"
+    },
+    "finalResult": "docs/recognition-optimization/mainline-04-i1/R1_TARGETED_FINAL_RESULTS.json",
+    "sha256": "8f5dbf8e499e7e3f759011483ec3804b5f32797b94499e6adc93abe0e4b8fb74"
+  },
+  "independent": {
+    "code": "PASS",
+    "stage": "BLOCKED_CHECKER_SCOPE",
+    "review": "R1_REVIEW.json",
+    "fullSuiteRerunByReviewer": false
+  },
+  "engineering": {
+    "full": "NOT_RUN",
+    "checkerPreflight": {
+      "executedBy": "Independent reviewer",
+      "command": "node scripts/check-mainline-04-i1.mjs --protect",
+      "exitCode": 1,
+      "error": "BASELINE_HEAD_CHANGED",
+      "temporaryCreated": false,
+      "productFailure": false
+    },
+    "authorizedCheckerModification": false
+  },
+  "safety": {
+    "wrongDefaultsFinalDirected": 0,
+    "independentNewWrongDefaultFound": 0,
+    "boundedEvidenceOnly": true
+  },
+  "head": "1d039ac8065235528b6a507244e66ef382ba6901",
+  "branch": "codex/e2-multimodal-recognition-exp",
+  "protection": {
+    "count": 845,
+    "changed": [],
+    "logPrefixUnchanged": true,
+    "oldTestPrefixes": [
+      {
+        "path": "src/experiments/mainline04/semanticContract.test.ts",
+        "unchanged": true
+      },
+      {
+        "path": "src/experiments/mainline04/semanticComposer.test.ts",
+        "unchanged": true
+      },
+      {
+        "path": "src/experiments/mainline04/legacyHandoff.test.ts",
+        "unchanged": true
+      },
+      {
+        "path": "src/experiments/mainline04/semanticAcceptance.test.ts",
+        "unchanged": true
+      }
+    ]
+  },
+  "implementationSnapshotChanges": [],
+  "scope": {
+    "outOfScope": [],
+    "dirty": [
+      "docs/recognition-optimization/CURRENT_CONTEXT.md",
+      "docs/recognition-optimization/OPTIMIZATION_LOG.md",
+      "docs/recognition-optimization/mainline-04-i1/R1_ATTEMPTS.md",
+      "docs/recognition-optimization/mainline-04-i1/R1_AUDIT.md",
+      "docs/recognition-optimization/mainline-04-i1/R1_BASELINE.json",
+      "docs/recognition-optimization/mainline-04-i1/R1_CHECKER_SCOPE.md",
+      "docs/recognition-optimization/mainline-04-i1/R1_HANDOFF_RED_RESULTS.json",
+      "docs/recognition-optimization/mainline-04-i1/R1_NEXT_PROMPT.md",
+      "docs/recognition-optimization/mainline-04-i1/R1_RED_RESULTS.json",
+      "docs/recognition-optimization/mainline-04-i1/R1_REJECTED_SNAPSHOT.json",
+      "docs/recognition-optimization/mainline-04-i1/R1_REPRODUCTION.md",
+      "docs/recognition-optimization/mainline-04-i1/R1_REVIEW.json",
+      "docs/recognition-optimization/mainline-04-i1/R1_REVIEW.md",
+      "docs/recognition-optimization/mainline-04-i1/R1_REVIEW_02_SNAPSHOT.json",
+      "docs/recognition-optimization/mainline-04-i1/R1_REVIEW_FINAL_SNAPSHOT.json",
+      "docs/recognition-optimization/mainline-04-i1/R1_REVIEW_RED_RESULTS.json",
+      "docs/recognition-optimization/mainline-04-i1/R1_REVIEW_SNAPSHOT.json",
+      "docs/recognition-optimization/mainline-04-i1/R1_REVISION_RESULTS.json",
+      "docs/recognition-optimization/mainline-04-i1/R1_TARGETED_02_RESULTS.json",
+      "docs/recognition-optimization/mainline-04-i1/R1_TARGETED_FINAL_RESULTS.json",
+      "docs/recognition-optimization/mainline-04-i1/R1_TARGETED_RESULTS.json",
+      "scripts/check-mainline-04-i1.mjs",
+      "src/experiments/mainline04/legacyHandoff.test.ts",
+      "src/experiments/mainline04/legacyHandoff.ts",
+      "src/experiments/mainline04/semanticAcceptance.test.ts",
+      "src/experiments/mainline04/semanticComposer.test.ts",
+      "src/experiments/mainline04/semanticComposer.ts",
+      "src/experiments/mainline04/semanticContract.test.ts",
+      "src/experiments/mainline04/semanticContract.ts"
+    ]
+  },
+  "documents": {
+    "files": 19,
+    "jsonParse": "PASS",
+    "credentialLikeFindings": [],
+    "contextLines": 76,
+    "diffCheckExit": 0,
+    "scope": "19 R1 report files at precommit check, before generated CHECKS and STAGING_MANIFEST; current context 76 lines; protected histories checked separately"
+  },
+  "evidenceFiles": [
+    {
+      "path": "docs/recognition-optimization/mainline-04-i1/R1_ATTEMPTS.md",
+      "bytes": 3595,
+      "sha256": "509bc0e6507c4345b78bea8c9363f6c9730d2b4fd0cc4f7f2bcf12040c3295f7"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-04-i1/R1_AUDIT.md",
+      "bytes": 4381,
+      "sha256": "b2eff0779aa152c192f69c6cfef56c309298a65ec28631a14361370df165fb95"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-04-i1/R1_BASELINE.json",
+      "bytes": 6679,
+      "sha256": "a9bca5e70dfbb32389a18564193ecccd9f05167555089b10dcda7faf954c38b0"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-04-i1/R1_CHECKER_SCOPE.md",
+      "bytes": 2554,
+      "sha256": "85fe847b3802b9b59f0921a45d23eee854f7442b1c4e04cf1edc1de404b11a1c"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-04-i1/R1_HANDOFF_RED_RESULTS.json",
+      "bytes": 10388,
+      "sha256": "dd43d432fe8b7a9e60d110f7fb7059b38c2577f2211ed78a617416b12c30fb38"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-04-i1/R1_NEXT_PROMPT.md",
+      "bytes": 3353,
+      "sha256": "66ec31d2eca9786bdf8bdfa2d1323315e1f1bbd6eaa949419dd4fe9a02c4ab3c"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-04-i1/R1_RED_RESULTS.json",
+      "bytes": 20526,
+      "sha256": "b9e1e11e94c2b9ca4a31edc0bac2c83c393e8454daa03c84b34ea60c88d70eaa"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-04-i1/R1_REJECTED_SNAPSHOT.json",
+      "bytes": 2198,
+      "sha256": "a07f09d469db8c83437d235fc50c27faa2f365fbcd9482dba1ce941be28d2a59"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-04-i1/R1_REPRODUCTION.md",
+      "bytes": 3202,
+      "sha256": "8a62a76136d19961226e99e8db5dee21fca27037bfe0c76425c983c2e96f8b28"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-04-i1/R1_REVIEW.json",
+      "bytes": 3052,
+      "sha256": "5fb7ab2bc8dcf9f8487626f318df8947d88fb9811a563c29a119e36209dee8a0"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-04-i1/R1_REVIEW.md",
+      "bytes": 1396,
+      "sha256": "74b555fbbc60d2658b415b745e827ef3f48ceeb7e319fe13bc33b94ade999d8e"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-04-i1/R1_REVIEW_02_SNAPSHOT.json",
+      "bytes": 2154,
+      "sha256": "a87aac98ed0333d70718a5e8414fabcf16428c28b83f315e1a5caba86d6d3d7a"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-04-i1/R1_REVIEW_FINAL_SNAPSHOT.json",
+      "bytes": 2263,
+      "sha256": "a10e8fe57ce76046c965ffdd4ac9e01ac45551c4651427668db6c76ee7c191e4"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-04-i1/R1_REVIEW_RED_RESULTS.json",
+      "bytes": 27702,
+      "sha256": "f23342d72a17dd148955bd55e9f94c499e46fe88a6ac83017298715d59b46f36"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-04-i1/R1_REVIEW_SNAPSHOT.json",
+      "bytes": 2513,
+      "sha256": "20b866705b92c515de33b35a20dbe364d2048dd8fd1364bbbde0cc41e9ff95f0"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-04-i1/R1_REVISION_RESULTS.json",
+      "bytes": 22697,
+      "sha256": "f59f977d15741d0fc8f510cdd8b9e7e0e5c5f7e702785392904f7288b86be0d2"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-04-i1/R1_TARGETED_02_RESULTS.json",
+      "bytes": 26493,
+      "sha256": "7d3f30f8b496b6bbca41fa6cd3eba06fa6dc502ab9a17605fc28e30e1de396e1"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-04-i1/R1_TARGETED_FINAL_RESULTS.json",
+      "bytes": 26494,
+      "sha256": "8f5dbf8e499e7e3f759011483ec3804b5f32797b94499e6adc93abe0e4b8fb74"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-04-i1/R1_TARGETED_RESULTS.json",
+      "bytes": 25024,
+      "sha256": "b843b227fb9b0c2d974eb56a20a629d3340e466ff461491faf6b21ba509a009b"
+    }
+  ],
+  "notRun": {
+    "newSemanticApp": "NOT_RUN",
+    "newSemanticCanonical": "NOT_RUN",
+    "externalRecognition": 0,
+    "verifier": 0,
+    "repair": 0,
+    "retry": 0,
+    "modelNetwork": 0,
+    "recognitionFeesCny": 0,
+    "keys": 0,
+    "clipboard": 0,
+    "realWorkspace": 0,
+    "browser": 0,
+    "datasets": 0,
+    "holdout": 0,
+    "deploy": 0
+  },
+  "modelAccuracy": "本轮未测量",
+  "git": {
+    "commit": "PENDING_AT_REPORT_GENERATION",
+    "push": "PENDING_AT_REPORT_GENERATION",
+    "remoteVerification": "See actual delivery Git receipt; do not infer from baseline"
+  }
+}

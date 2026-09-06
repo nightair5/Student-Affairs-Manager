@@ -1,0 +1,170 @@
+{
+  "stage": "RCO-5-MAINLINE-04-I1-R1",
+  "head": "1d039ac8065235528b6a507244e66ef382ba6901",
+  "branch": "codex/e2-multimodal-recognition-exp",
+  "parentBaseline": {
+    "path": "docs/recognition-optimization/mainline-04-i1/BASELINE.json",
+    "sha256": "b78a11e0c8f0ca90a54912a28a6b2c1afa739166f20054d3bdfd92872522f4ee",
+    "count": 825
+  },
+  "additionalProtected": [
+    {
+      "path": "docs/recognition-optimization/mainline-04-i1/ATTEMPTS.md",
+      "sha256": "12419632d5e8e5b786851d29c5428da4e7a5f8908528c3b18686ffed0daba946"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-04-i1/AUDIT.md",
+      "sha256": "6ee373219da4f16e086b271e4622fe1a54c0c496e7ccf07fda5ffa1909e58843"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-04-i1/BASELINE.json",
+      "sha256": "b78a11e0c8f0ca90a54912a28a6b2c1afa739166f20054d3bdfd92872522f4ee"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-04-i1/CHECKS.json",
+      "sha256": "d852acc7085097cce1612afafca49f92c799f7136f4ca0725e69dec440402664"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-04-i1/DIRECTED_03_RESULTS.json",
+      "sha256": "55bef4b7876cb29fb5219490a23098946d047114b0020a934b54a6f809964d9a"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-04-i1/DOCUMENT_CHECKS.json",
+      "sha256": "cf7690bc7dca89fa0aadf0355ebb125003271b71c4298d89ce45388d24b3b9da"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-04-i1/NEXT_PROMPT.md",
+      "sha256": "3d9d5c8121e8a1474a413d18bdabf5223a75f90a0460adb24c6ee4fde2de9cec"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-04-i1/REJECTED_SNAPSHOT.json",
+      "sha256": "e39eb3e830d20397cd8b2c87b7e80c9f600f1788e29b8621fe45bdf819f28729"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-04-i1/REPRODUCTION.md",
+      "sha256": "aade7a4f2b6cb0b546f26a3b9dbaa3580855a1786375e5c9bb7da0d3c8436f91"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-04-i1/REVIEW.json",
+      "sha256": "99597670f26c38594985e523730609aa95535e29ccf19b67575c8ab46d33396e"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-04-i1/REVIEW.md",
+      "sha256": "dee5b7e9fb5ee7415ca16f54fb35e05ffd3abfd088514a243f6329d61201638b"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-04-i1/STAGING_MANIFEST.json",
+      "sha256": "42472bf6fde1cd812ca131923b493e56c075ecc11331eafdea73488e0e7675a0"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-04-i1/TEMP_DIRECTORY.json",
+      "sha256": "bb3e3d6dcd7d646b8440b6fa0b928e33d50e500c640a2a5b83ffce2a5661cdae"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-04-i1/directed-01.json",
+      "sha256": "b604c9349e492cb83d338fc0604b6a41bf6c43727d68054586f9e4ea276b4789"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-04-i1/directed-02.json",
+      "sha256": "51a4ca2e397a91e4369dc0ddc88302d6bed471e0bcf357e89f5f0377d31698e1"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-04-i1/directed-03.json",
+      "sha256": "446b9661dd445d32631c23e9f05f2223c1e0b8c7ef1b5114b358c981390bf711"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-04-i1/red-01.json",
+      "sha256": "2bb4ab21d956b34f13bc3de1d9351c946711927a9ec4f78f573aef1c0fc04318"
+    },
+    {
+      "path": "src/experiments/mainline04/semanticContract.ts",
+      "sha256": "a08953dfdb50bf0233d603ce46669f87ed4f61c810a322275011c7075b5e578f"
+    },
+    {
+      "path": "src/experiments/mainline04/semanticContract.test.ts",
+      "sha256": "ed52c2d572b5709e49e0369c876f4356f1704c466d97439eacdb50d5dc78383a"
+    },
+    {
+      "path": "scripts/check-mainline-04-i1.mjs",
+      "sha256": "71e7b771393fae15a454eb3e67bc6487c2e1d54f89c7535a6c2b8d5c5fbb8958"
+    }
+  ],
+  "implementation": [
+    {
+      "path": "src/experiments/mainline04/semanticContract.ts",
+      "sha256": "a08953dfdb50bf0233d603ce46669f87ed4f61c810a322275011c7075b5e578f",
+      "bytes": 9681
+    },
+    {
+      "path": "src/experiments/mainline04/semanticContract.test.ts",
+      "sha256": "ed52c2d572b5709e49e0369c876f4356f1704c466d97439eacdb50d5dc78383a",
+      "bytes": 1920
+    },
+    {
+      "path": "src/experiments/mainline04/semanticComposer.ts",
+      "sha256": "183bdb9f1ed79d140a62aa37bc975ffc8b973f78dda6162c54f70e4726ad31fb",
+      "bytes": 11573
+    },
+    {
+      "path": "src/experiments/mainline04/semanticComposer.test.ts",
+      "sha256": "25aca94200b3a49663938a90a9cdec7d2babe685bbee0b42cc95a2eebe7fca0a",
+      "bytes": 7122
+    },
+    {
+      "path": "src/experiments/mainline04/legacyHandoff.ts",
+      "sha256": "ef819778e1127c67f2e3ac837f471da93858133e262ab4b767b1293aae22a121",
+      "bytes": 4887
+    },
+    {
+      "path": "src/experiments/mainline04/legacyHandoff.test.ts",
+      "sha256": "880ab738356affe83b041a7b1dc41a942dad760741e349c968ac371c0fb286c6",
+      "bytes": 4672
+    },
+    {
+      "path": "src/experiments/mainline04/semanticAcceptance.test.ts",
+      "sha256": "b74d0cd7119d4f1224a96d22ad38f67699be58cfc62a331226337d2ea55c5593",
+      "bytes": 14778
+    },
+    {
+      "path": "scripts/check-mainline-04-i1.mjs",
+      "sha256": "71e7b771393fae15a454eb3e67bc6487c2e1d54f89c7535a6c2b8d5c5fbb8958",
+      "bytes": 14606
+    }
+  ],
+  "writable": [
+    "src/experiments/mainline04/semanticComposer.ts",
+    "src/experiments/mainline04/legacyHandoff.ts",
+    "src/experiments/mainline04/semanticComposer.test.ts",
+    "src/experiments/mainline04/legacyHandoff.test.ts",
+    "src/experiments/mainline04/semanticAcceptance.test.ts"
+  ],
+  "allowedReportPrefix": "docs/recognition-optimization/mainline-04-i1/R1_",
+  "dynamic": [
+    "docs/recognition-optimization/CURRENT_CONTEXT.md",
+    "docs/recognition-optimization/OPTIMIZATION_LOG.md"
+  ],
+  "logBytes": 221022,
+  "logPrefixSha256": "adc5f7f7aa496f0c57e5b24480fc3c83064714ebcda3a037380ba32db7939e1d",
+  "oldTestPrefixes": [
+    {
+      "path": "src/experiments/mainline04/semanticContract.test.ts",
+      "bytes": 1920,
+      "sha256": "ed52c2d572b5709e49e0369c876f4356f1704c466d97439eacdb50d5dc78383a"
+    },
+    {
+      "path": "src/experiments/mainline04/semanticComposer.test.ts",
+      "bytes": 7122,
+      "sha256": "25aca94200b3a49663938a90a9cdec7d2babe685bbee0b42cc95a2eebe7fca0a"
+    },
+    {
+      "path": "src/experiments/mainline04/legacyHandoff.test.ts",
+      "bytes": 4672,
+      "sha256": "880ab738356affe83b041a7b1dc41a942dad760741e349c968ac371c0fb286c6"
+    },
+    {
+      "path": "src/experiments/mainline04/semanticAcceptance.test.ts",
+      "bytes": 14778,
+      "sha256": "b74d0cd7119d4f1224a96d22ad38f67699be58cfc62a331226337d2ea55c5593"
+    }
+  ]
+}

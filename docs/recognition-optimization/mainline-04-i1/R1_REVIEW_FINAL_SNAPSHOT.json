@@ -1,0 +1,69 @@
+{
+  "stage": "RCO-5-MAINLINE-04-I1-R1",
+  "status": "TEST_ISOLATION_STRENGTHENED_PENDING_FINAL_REVIEW",
+  "total": 72,
+  "passed": 72,
+  "failed": 0,
+  "resultsPath": "docs/recognition-optimization/mainline-04-i1/R1_TARGETED_FINAL_RESULTS.json",
+  "resultsSha256": "8f5dbf8e499e7e3f759011483ec3804b5f32797b94499e6adc93abe0e4b8fb74",
+  "implementation": [
+    {
+      "path": "src/experiments/mainline04/semanticContract.ts",
+      "sha256": "a08953dfdb50bf0233d603ce46669f87ed4f61c810a322275011c7075b5e578f",
+      "bytes": 9681
+    },
+    {
+      "path": "src/experiments/mainline04/semanticContract.test.ts",
+      "sha256": "ed52c2d572b5709e49e0369c876f4356f1704c466d97439eacdb50d5dc78383a",
+      "bytes": 1920
+    },
+    {
+      "path": "src/experiments/mainline04/semanticComposer.ts",
+      "sha256": "575b39a33f72ee8d4d4fe8d566207a3748a6f4935e21e3c589633e054e20f8c2",
+      "bytes": 12440
+    },
+    {
+      "path": "src/experiments/mainline04/semanticComposer.test.ts",
+      "sha256": "2620001e2370138d82983c06ee6e81cab7ae62682faec0c3b5b3e9959d025311",
+      "bytes": 8063
+    },
+    {
+      "path": "src/experiments/mainline04/legacyHandoff.ts",
+      "sha256": "fad0191afdc9c52ca70b8446a3d4bb3f0dc3d283b71d7aee50a39130167fa664",
+      "bytes": 7968
+    },
+    {
+      "path": "src/experiments/mainline04/legacyHandoff.test.ts",
+      "sha256": "880ab738356affe83b041a7b1dc41a942dad760741e349c968ac371c0fb286c6",
+      "bytes": 4672
+    },
+    {
+      "path": "src/experiments/mainline04/semanticAcceptance.test.ts",
+      "sha256": "a4fe7a88ff8cc808e75ef3fe7682ca717e4e3d5cbc48b9186f70146d8cd63510",
+      "bytes": 23323
+    },
+    {
+      "path": "scripts/check-mainline-04-i1.mjs",
+      "sha256": "71e7b771393fae15a454eb3e67bc6487c2e1d54f89c7535a6c2b8d5c5fbb8958",
+      "bytes": 14606
+    }
+  ],
+  "oldTestPrefixes": [
+    {
+      "path": "src/experiments/mainline04/semanticContract.test.ts",
+      "unchanged": true
+    },
+    {
+      "path": "src/experiments/mainline04/semanticComposer.test.ts",
+      "unchanged": true
+    },
+    {
+      "path": "src/experiments/mainline04/legacyHandoff.test.ts",
+      "unchanged": true
+    },
+    {
+      "path": "src/experiments/mainline04/semanticAcceptance.test.ts",
+      "unchanged": true
+    }
+  ]
+}

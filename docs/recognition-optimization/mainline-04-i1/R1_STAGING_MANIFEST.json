@@ -1,0 +1,40 @@
+{
+  "stage": "RCO-5-MAINLINE-04-I1-R1",
+  "delivery": "AUDIT_ONLY",
+  "paths": [
+    "docs/recognition-optimization/CURRENT_CONTEXT.md",
+    "docs/recognition-optimization/OPTIMIZATION_LOG.md",
+    "docs/recognition-optimization/mainline-04-i1/R1_ATTEMPTS.md",
+    "docs/recognition-optimization/mainline-04-i1/R1_AUDIT.md",
+    "docs/recognition-optimization/mainline-04-i1/R1_BASELINE.json",
+    "docs/recognition-optimization/mainline-04-i1/R1_CHECKER_SCOPE.md",
+    "docs/recognition-optimization/mainline-04-i1/R1_CHECKS.json",
+    "docs/recognition-optimization/mainline-04-i1/R1_HANDOFF_RED_RESULTS.json",
+    "docs/recognition-optimization/mainline-04-i1/R1_NEXT_PROMPT.md",
+    "docs/recognition-optimization/mainline-04-i1/R1_RED_RESULTS.json",
+    "docs/recognition-optimization/mainline-04-i1/R1_REJECTED_SNAPSHOT.json",
+    "docs/recognition-optimization/mainline-04-i1/R1_REPRODUCTION.md",
+    "docs/recognition-optimization/mainline-04-i1/R1_REVIEW.json",
+    "docs/recognition-optimization/mainline-04-i1/R1_REVIEW.md",
+    "docs/recognition-optimization/mainline-04-i1/R1_REVIEW_02_SNAPSHOT.json",
+    "docs/recognition-optimization/mainline-04-i1/R1_REVIEW_FINAL_SNAPSHOT.json",
+    "docs/recognition-optimization/mainline-04-i1/R1_REVIEW_RED_RESULTS.json",
+    "docs/recognition-optimization/mainline-04-i1/R1_REVIEW_SNAPSHOT.json",
+    "docs/recognition-optimization/mainline-04-i1/R1_REVISION_RESULTS.json",
+    "docs/recognition-optimization/mainline-04-i1/R1_STAGING_MANIFEST.json",
+    "docs/recognition-optimization/mainline-04-i1/R1_TARGETED_02_RESULTS.json",
+    "docs/recognition-optimization/mainline-04-i1/R1_TARGETED_FINAL_RESULTS.json",
+    "docs/recognition-optimization/mainline-04-i1/R1_TARGETED_RESULTS.json"
+  ],
+  "excludedImplementation": [
+    "src/experiments/mainline04/semanticContract.ts",
+    "src/experiments/mainline04/semanticContract.test.ts",
+    "src/experiments/mainline04/semanticComposer.ts",
+    "src/experiments/mainline04/semanticComposer.test.ts",
+    "src/experiments/mainline04/legacyHandoff.ts",
+    "src/experiments/mainline04/legacyHandoff.test.ts",
+    "src/experiments/mainline04/semanticAcceptance.test.ts",
+    "scripts/check-mainline-04-i1.mjs"
+  ],
+  "notAProductPass": true
+}

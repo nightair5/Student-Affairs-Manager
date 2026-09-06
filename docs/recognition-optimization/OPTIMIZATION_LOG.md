@@ -1560,3 +1560,23 @@
 - delivery: 仅暂存本轮报告、CURRENT_CONTEXT和追加日志，明确清单见STAGING_MANIFEST；推送及远端号见实际Git回执。实现未暂存、未提交，不强推/自动变基。
 - next: 仅建议另批MAINLINE-04-I1-R1，按关系真实影响范围处理修订依据与新旧两侧关联实体比较，保留有效新要求与独立兄弟；不重做契约、模型或数据。完整提示词见NEXT_PROMPT，本轮不自动执行。
 - boundary: 外部识别/模型网络/费用/密钥/剪贴板/真实库/浏览器/真人/真实材料/新数据集/盲测/B10/稳定接入/部署/RCO-6均0；必要Git交付网络不等于模型网络。
+
+## 102. MAINLINE-04-I1-R1 获准恢复 — 2026-09-06
+
+- authority: 仅修I1已登记的修订证据影响范围与旧V2实体比较连坐；允许原mainline04内composer/handoff及对应两测试、acceptance共5路径，契约/契约测试/checker只读；新增R1_*报告、短交接与追加日志。
+- baseline: 本机/远端1d039ac8065235528b6a507244e66ef382ba6901；原8实现与拒收/审查SHA一致，825父保护匹配，新增历史证据和3只读实现绑定R1_BASELINE。无重叠修改，不回切/重装/套补丁。
+- sequence: 核对实际接口→两条真实业务反例及正常对照→先修修订、再修实体比较，各根因最多两轮→定向与无上下文独立审查→核对只读checker、需要调整先申请→适用工程/保护/精确Git交付。
+- boundary: 不改旧49断言/Expected/freeze/dataset/checkpoint/cache和历史结果；新错误默认选择/范围扩大等立即停。0模型/模型网络/费用/密钥/剪贴板/新数据/真实库/稳定入口/部署/RCO-6，新语义App/正式保存NOT_RUN，模型准确率本轮未测量。当前IN_PROGRESS，不预称通过。
+
+## 103. MAINLINE-04-I1-R1 代码审查通过，检查编排待授权 — 2026-09-06
+
+- outcome: BLOCKED_CHECKER_SCOPE / AUDIT_ONLY_DELIVERY；两根因代码独立PASS，完整工程NOT_RUN。只交付R1审计，8新增实现保留未提交，不改旧失败结论。
+- changes: 实改composer/handoff及composer/acceptance两测试，共4文件；修订依据覆盖两端，完整相关实体在新旧两侧求并集；共享材料不再穿透兄弟私人截止时间。契约/契约测试/checker及其他源码依赖只读。
+- attempts: RED49/51→REVISION59/60→HANDOFF_RED18/23→首轮68/68；独立发现共享连坐，补4反例68/72→第二轮72/72；最后仅加强新增测试深拷贝、单侧归属和old不变断言，最终仍72/72。修订1轮、实体范围2轮业务修补，无第三轮业务修改；各JSON原样留存，不累计成绩。
+- evidence: 最终原49+23新检查；8类人工结构关系保真及B8三条已见诊断保持，原V2真实内存确认42/42，无日期0时间/0提醒、重复幂等和兄弟确认断言通过。最终定向错误默认选择0；新语义实际App/正式保存NOT_RUN，模型准确率本轮未测量。
+- independent: 新无上下文/root/mainline04_i1_r1_independent，最终代码PASS、阶段BLOCKED。真实helper内存验证修订、共有/私人材料时间、单侧归属、重排和old保真；4旧测试前缀、原49名称、8SHA与最终72报告核验。审查者未重跑整套72项，不混称独立全量通过。
+- stop: 只读checker固定旧HEAD/旧BLOCKED REVIEW/旧TEMP与非R1输出；--protect在BASELINE_HEAD_CHANGED前置失败，未创建临时目录、未执行完整门，不属于产品功能失败。主线程只读复核，未改checker/旧BASELINE/旧REVIEW，未绕过授权。
+- protection: R1_BASELINE845保护逐字核验，原4测试前缀与日志旧前缀不变；旧I1 FAIL、40/42、17、旧R2环境3/1、Expected/freeze/dataset/checkpoint/cache保持。最终证据见R1_CHECKS与R1_REJECTED_SNAPSHOT，非成功冻结。
+- delivery: 精确暂存R1_*报告、CURRENT_CONTEXT与追加日志，清单R1_STAGING_MANIFEST；提交推送/远端精确号以实际Git回执为准，8实现不提交。无强推/回切/自动变基。
+- next: 唯一建议另批RCO-5-MAINLINE-04-I1-R2，只调整一个checker的当前基线/审查/保护/输出绑定，独立审查后继续完整分层工程；不改7语义源码/测试，不重做契约、模型或数据。完整待授权提示词R1_NEXT_PROMPT，本轮停止不自动执行。
+- boundary: 外部识别/模型网络/费用/密钥/剪贴板/真实库/浏览器/真人/真实材料/新数据集/盲测/B10/稳定接入/部署/RCO-6均0；只有必要Git交付网络。
