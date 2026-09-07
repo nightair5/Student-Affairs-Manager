@@ -1,0 +1,29 @@
+
+ RUN  v3.2.7 C:/Users/Winner/student-affairs-multimodal-exp
+
+x·······
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/experiments/realInput01/acceptance.test.tsx > real App runtime and public send connection; memory/SSR not browser acceptance > real homepage retains dates and explains review before any send; old presentation remains
+AssertionError: expected '<main class="page dashboard-page"><he…' to contain '先核对输入文字'
+
+Expected: "先核对输入文字"
+Received: "<main class="page dashboard-page"><header class="simple-dashboard-header"><div><span class="date-line">9月7日星期一</span><h1>先把新通知变成清楚的下一步</h1><p>不用管理所有事情。先处理首页，再去任务中心查看其余内容。</p></div></header><form class="quick-capture"><div class="quick-capture-heading"><span class="quick-capture-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clipboard-paste"><path d="M15 2H9a1 1 0 0 0-1 1v2c0 .6.4 1 1 1h6c.6 0 1-.4 1-1V3c0-.6-.4-1-1-1Z"></path><path d="M8 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2M16 4h2a2 2 0 0 1 2 2v2M11 14h10"></path><path d="m17 10 4 4-4 4"></path></svg></span><div><strong>收到新通知？直接粘贴</strong><small>日期、事项和材料会先拆成待确认建议。</small></div><span class="ai-assist-status unavailable">人工工程响应 · 不调用模型</span></div><textarea rows="3" placeholder="粘贴老师消息、群通知或网页正文……" aria-label="快速粘贴通知"></textarea><div class="quick-capture-actions"><button class="text-button" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-upload"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" x2="12" y1="3" y2="15"></line></svg>打开统一文字录入</button><button class="primary-button" type="submit" disabled=""><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>生成工程建议</button></div><small class="cloud-send-disclosure">只接受旧匿名工程通知，在独立本机测试库保存；不发送文字、不调用模型，也不回退本地识别。请核对后确认。</small></form><section class="focus-section" aria-labelledby="focus-title"><div class="section-heading"><div><span class="section-index">TODAY</span><h2 id="focus-title">现在先做这些</h2></div><button class="text-button" type="button">全部 0 项<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></button></div><div class="home-empty-state"><strong>今天还没有任务</strong><p>把一段通知粘贴到上方，确认后就会出现在这里。</p></div></section></main>"
+
+ ❯ src/experiments/realInput01/acceptance.test.tsx:36:18
+     34|       onCompleteTask:()=>{},onStartTask:()=>{},onSnoozeTask:()=>{},onT…
+     35|     const real=renderToStaticMarkup(<DashboardPage {...props} realInpu…
+     36|     expect(real).toContain('先核对输入文字');expect(real).toContain('只有核对并同意本…
+       |                  ^
+     37|     expect(real).not.toContain('不发送文字、不调用模型');expect(real).not.toConta…
+     38|     const old=renderToStaticMarkup(<DashboardPage {...props}/>);expect…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 7 passed (8)
+   Start at  09:02:39
+   Duration  2.16s (transform 653ms, setup 0ms, collect 1.05s, tests 648ms, environment 0ms, prepare 190ms)
+

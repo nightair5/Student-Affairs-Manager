@@ -1,0 +1,21 @@
+{
+  "stage": "MAINLINE-REAL-INPUT-01",
+  "runId": "a-first-resume-20260907a",
+  "status": "STOPPED_BUDGET_P1",
+  "authorizedPaths": 42,
+  "head": "7a30e0989d514d1df11475f4860cc014db4ce09e",
+  "sourcePresent": 35,
+  "missing": 7,
+  "newFindings": [
+    "P1_DUPLICATE_USAGE_RELEASE"
+  ],
+  "implementedThisRun": [
+    "DashboardPage explicit real-input presentation and original text passthrough",
+    "App prop connection",
+    "new homepage paired regression; corrected new SSR brand assertion"
+  ],
+  "calls": 0,
+  "feesCny": 0,
+  "next": "Explicitly authorize registered ambiguous usage settlement fix; then resume same package A01-first schedule",
+  "notComplete": true
+}

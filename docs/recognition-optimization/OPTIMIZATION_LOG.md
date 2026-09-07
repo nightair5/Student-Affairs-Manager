@@ -1805,3 +1805,16 @@
 - scope-stop: 真实DashboardPage.tsx仍按dateViews硬编码人工/不发送/不调用/工程建议，且quickText.trim后回调。该页不在41路径而在946保护内；不撤日期适配、不DOM改字、不复制首页。独立范围复核确认需唯一该页例外：可选real-input文案和原文保真props，默认不变。发现后停止源码，未改保护；AUDIT给出42路径继续同包提示词，不重做计划。
 - protection: 946逐字摘要、前16+12、P1静态20、全部日志前缀匹配；完整34SHA/7缺失及11attempt日志身份见本run快照和ENGINEERING。旧Expected/freeze/dataset/checkpoint/cache/全局受保护组件/依赖/历史40/42/17/FAIL未改，无真实用户库/数据/部署。
 - delivery: git-push技能仅精确提交审计报告/attempt日志、短交接和本日志；34实现保持未提交，不强推/自动变基。实际提交与远端核验见交付答复。0模型/模型网络/费用/密钥/剪贴板，模型识别准确率本轮未测量；预算与发送门未绕过。
+
+## 131. MAINLINE-REAL-INPUT-01优先A组恢复 — 2026-09-07
+
+- authority: 用户批准DashboardPage.tsx为唯一第42路径，仅新入口准确说明与原文保真，旧默认不变；发送安全/预算/原A+B输入及候选评分绑定后先A01，符合原条件再A组；完整工程和浏览器随后同包完成，不降低最终要求。
+- preflight: HEAD与实时远端7a30e0989d514d1df11475f4860cc014db4ce09e；34现有SHA/7未创建路径、946保护与旧证据/日志前缀匹配。原日志267068字节，SHA e64d4d86df4ba50786b52743e508adb18e30df261e0c726d7121d014c26f2daa。保留旧清单，新增例外单列；模型仍0调用0元。
+- execution: 同包a-first-resume-20260907a保留新attempt；daily-coding用于最小实现，code-review-excellence用于必要独立安全审查。先最小文字真实调用准备，不重复旧实现、不扩大数据或模型预算；原始/首次/编辑分开，稳定入口/用户库不接。
+
+## 132. MAINLINE-REAL-INPUT-01首页增量与预算复核停止 — 2026-09-07
+
+- implemented: Dashboard显式realInput准确说明、仅trim判空且传原文，App可选props接线；新旧首页对照和新SSR品牌断言纠正。修前7/1，修后8/8；未做逐键浏览器，不冒称原文实际验收。35实现存在/7待建，代码保持未提交。
+- independent-stop: 无上下文独审发现P1_DUPLICATE_USAGE_RELEASE；冲突input_tokens重复键经JSON.parse后值覆盖，真实临时lease.complete从3300000预留结算390微元并持久化，正常对照也可结算。主代理独立复核函数与账本；假响应用于预算边界，不是真实模型或新语义数据。旧52项重跑全过仍不能覆盖此缺口。按预算停止条件暂停源码/派发，仅审计，未越权修复。
+- protection: 原946仅Dashboard授权例外变化，945仍逐字匹配；旧原清单/静态16+12+20及上轮日志/全部前缀保持。新旧SHA分别列IMPLEMENTATION_SNAPSHOT，不修改历史保护清单。
+- delivery: 仅本run报告与3份原始测试日志、约80行CURRENT和追加日志精确提交推送，35业务实现不暂存；不强推/自动变基。完整工程/OCR/Edge/下载未运行，A01及其余模型0次、费用0，密钥/剪贴板/用户库0；模型识别准确率本轮未测量。下一建议仅授权登记歧义用量在结算前拒绝（预算模块及Node测试），独审后恢复同包A01优先，不换模型或重做计划。

@@ -1,0 +1,29 @@
+{
+  "status": "BLOCKED",
+  "reviewer": "real_input_send_safety_review",
+  "scope": [
+    "scripts/real-input-budget.mjs",
+    "scripts/real-input-model-gateway.mjs",
+    "corresponding Node tests"
+  ],
+  "codeSha256": {
+    "budget": "f4b625b15762604c55718c4889b6c546ca7c928c98134334e04cc3bda0f595a1",
+    "gateway": "c6386e89fd91fb6ed0bd05eec4b15357c06a5c2c2a4e754044e9416618bd4de1"
+  },
+  "findings": [
+    {
+      "id": "P1_DUPLICATE_USAGE_RELEASE",
+      "severity": "P1",
+      "registeredNow": true,
+      "repair": "NOT_AUTHORIZED_AFTER_STOP"
+    }
+  ],
+  "modelCalls": 0,
+  "scopeDoesNotInclude": "unfinished launcher/runner, entire live chain, browser acceptance",
+  "auditDocumentReview": {
+    "status": "PASS_SCOPE_ONLY",
+    "reviewer": "real_input_send_safety_review",
+    "findings": [],
+    "note": "Audit facts and scope only; does not remove budget BLOCKED"
+  }
+}
