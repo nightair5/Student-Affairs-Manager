@@ -1,0 +1,72 @@
+{
+  "version": "real-input-engineering-progress-1",
+  "status": "PARTIAL_NOT_COMPLETE",
+  "modelRequests": 1,
+  "validModelResponses": 0,
+  "paidOutcome": "A01_UNKNOWN_HALTED_NO_RETRY",
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "unknownReservationMicroCny": 3300000,
+  "fullEngineering": "NOT_RUN",
+  "billing": {
+    "policy": {
+      "version": "real-input-budget-2",
+      "model": "deepseek-v4-flash-vision-exp",
+      "endpoint": "https://api.deepseek.com/responses",
+      "temperature": 0,
+      "reasoningEffort": "none",
+      "inputTokenCeiling": 1048576,
+      "outputTokenCeiling": 8192,
+      "requestByteCeiling": 65536,
+      "inputPriceMicroPerMillion": 3000000,
+      "outputPriceMicroPerMillion": 9000000,
+      "reservationMicroCny": 3300000,
+      "limitMicroCny": 10000000,
+      "maxRequests": 24
+    },
+    "checkedAt": "2026-09-07T03:31:19.602Z",
+    "validUntil": "2026-09-08T03:31:19.602Z",
+    "lockRoot": "C:\\Users\\Winner\\AppData\\Local\\Temp\\real-input-paid-lock-JzSkjA",
+    "documents": [
+      {
+        "url": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/",
+        "status": 200,
+        "path": "C:\\Users\\Winner\\AppData\\Local\\Temp\\real-input-public-billing-6bTTS4\\pricing.html",
+        "sha256": "899affbdbc33d0be620d8dea59e86f5036c11b5410b14d060b8d2874c74f38e5"
+      },
+      {
+        "url": "https://api-docs.deepseek.com/api/create-response/",
+        "status": 200,
+        "path": "C:\\Users\\Winner\\AppData\\Local\\Temp\\real-input-public-billing-6bTTS4\\responses.html",
+        "sha256": "633196e46984642a973dbd66d506ae72c9cd3c1db46e24f8d5a16f2ff0e46960"
+      }
+    ],
+    "interpretation": "直接公开HTML核验：vision-exp人民币高峰输入3/百万、输出9/百万；上下文1M保守按1048576上界；none、temperature0、max_output_tokens8192、json_schema受支持。3.219456元数学上界低于3.30预留。不是账号认证或实际扣费。",
+    "providerBilledCny": "NOT_OBSERVABLE"
+  },
+  "layers": {
+    "budgetRegisteredRepair": {
+      "pass": 54,
+      "fail": 0,
+      "review": "PASS_SCOPE_ONLY"
+    },
+    "localEntry": {
+      "pass": 6,
+      "fail": 0,
+      "review": "PASS_SCOPE_ONLY"
+    },
+    "scorer": {
+      "pass": 26,
+      "fail": 0,
+      "review": "PENDING_RECHECK"
+    },
+    "bindingAndSendGate": {
+      "pass": 8,
+      "fail": 0,
+      "review": "PENDING"
+    },
+    "type": {
+      "status": "PASS",
+      "log": "logs/type-attempt-4.log"
+    }
+  }
+}

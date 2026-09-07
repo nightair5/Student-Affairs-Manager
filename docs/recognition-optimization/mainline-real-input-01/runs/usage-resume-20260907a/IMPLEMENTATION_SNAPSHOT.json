@@ -1,0 +1,373 @@
+{
+  "head": "24c80c02cf4e7b7d9e652caf935638cd2ad1f0ba",
+  "sources": [
+    {
+      "path": "src/App.tsx",
+      "exists": true,
+      "workingSha256": "a39ef3f321926911b1c6b14e906ff8bfb803f18e790121ce15aaa442d3820843"
+    },
+    {
+      "path": "src/components/IntakePanel.tsx",
+      "exists": true,
+      "workingSha256": "92b1e9b2dd3312b380b7d01dcff3e8c9ec2c5c3d919ef2f8802b85d1d3c5418b"
+    },
+    {
+      "path": "src/components/DraftReviewPanel.tsx",
+      "exists": true,
+      "workingSha256": "fe7d30fddff3dcceb237f13914e9fa26ceb7da10fcc291266412764c67a7872b"
+    },
+    {
+      "path": "src/lib/fileExtraction.ts",
+      "exists": true,
+      "workingSha256": "83240cbd5e5a097933cc046a07c7474ab8a52449b63fd3e205c062ade61386ea"
+    },
+    {
+      "path": "src/experiments/mainline02/runtime.ts",
+      "exists": true,
+      "workingSha256": "bd7444b50b0031fcf85bc42009ae1d0556a64a05cf4d0f379628a43b780ecb91"
+    },
+    {
+      "path": "src/experiments/mainline04/semanticComposer.ts",
+      "exists": true,
+      "workingSha256": "21c38c5a10eda7446c8af941f9eecf6c9d0506e63eab954600118ec51b4ab5b8"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticState.ts",
+      "exists": true,
+      "workingSha256": "674ceed04f9f7826445ffc8f4834547fdd54d3193d9f17efcaf04943e64462fa"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticRepository.ts",
+      "exists": true,
+      "workingSha256": "0867190caceed2f98ccaf8a1a7807597127e023360a1147399dec8a289fb444e"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticCapture.ts",
+      "exists": true,
+      "workingSha256": "1240b21eb8860209b52a95b8b0b807b46fc6266e300872de24a240d4f199fb99"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticConfirmation.ts",
+      "exists": true,
+      "workingSha256": "e0cc3ad8c220ff39a3aa2f66f90087adce3961324b14649fcfe801e3da6aa4fa"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticView.ts",
+      "exists": true,
+      "workingSha256": "a603f42b0071ddc03410d17690f9acc73b9782819e2faf663b40dcf94b595487"
+    },
+    {
+      "path": "src/experiments/mainline05/runtime.ts",
+      "exists": true,
+      "workingSha256": "9d6837cf4022fb989b7122a1f39c414355ee6f8f861e4d4df814146141edf83f"
+    },
+    {
+      "path": "src/experiments/mainline05/SemanticFacts.tsx",
+      "exists": true,
+      "workingSha256": "264867de2437159eb5bda64c761dc77b5724876d3d1cef54906d80f8e1f05f76"
+    },
+    {
+      "path": "src/experiments/realInput01/inputReceipt.ts",
+      "exists": true,
+      "workingSha256": "72b342a095d607db888a54819da80cab98fcd35b59c1d52db86157ee204a7372"
+    },
+    {
+      "path": "src/experiments/realInput01/inputAcquisition.ts",
+      "exists": true,
+      "workingSha256": "38339eacc4104653a9823adc8011744920b305852e91146346a645be396a2214"
+    },
+    {
+      "path": "src/experiments/realInput01/modelWire.ts",
+      "exists": true,
+      "workingSha256": "7221e249bfbb855db4142a96ce12f8bde98be3e679dc41c3ad77c7e0e8cbd526"
+    },
+    {
+      "path": "src/experiments/realInput01/modelClient.ts",
+      "exists": true,
+      "workingSha256": "767edb637cf741d4f27a96d5059836cd7b17e8c643e9936d974e380bde21df0b"
+    },
+    {
+      "path": "src/experiments/realInput01/modelPolicy.ts",
+      "exists": true,
+      "workingSha256": "4c0e6d34b6c66bddbfb68e51b8e340155cfc5a47356814bb92803d180fb5283a"
+    },
+    {
+      "path": "src/experiments/realInput01/factCorrections.ts",
+      "exists": true,
+      "workingSha256": "c920e3bef998707450c920985ff1216c8aca450d786dcb1a62bfd3c594b6f7d7"
+    },
+    {
+      "path": "src/experiments/realInput01/runtime.ts",
+      "exists": true,
+      "workingSha256": "b1772951acefc6ef423fa3a3d9c1c7486c0862647e3c5f34358887839930250f"
+    },
+    {
+      "path": "src/experiments/realInput01/browser.tsx",
+      "exists": true,
+      "workingSha256": "36f31fa8aad526eb26f74d730739e10e216b746b8c7000aef2ebbc91d143029c"
+    },
+    {
+      "path": "src/experiments/realInput01/InputReview.tsx",
+      "exists": true,
+      "workingSha256": "e127677313b8eb66c55e154a278ca2fb7c703049e7243cd87701bc92d8b34da8"
+    },
+    {
+      "path": "src/experiments/realInput01/FactCorrectionEditor.tsx",
+      "exists": true,
+      "workingSha256": "af44576b26579845e5faa77a57dca6036d9fa1dcd86092747226ea3a0377cf91"
+    },
+    {
+      "path": "src/experiments/realInput01/seenInputs.ts",
+      "exists": true,
+      "workingSha256": "e8c7cffc614b9be14c35657ddeb19592ddc3d8e8964423764889b46d37dd5583"
+    },
+    {
+      "path": "src/experiments/realInput01/evaluation.ts",
+      "exists": true,
+      "workingSha256": "09ef0efff89c25761c721696da88de5fd73b74af0a417470e8f6af11979a6745"
+    },
+    {
+      "path": "src/experiments/realInput01/inputReceipt.test.ts",
+      "exists": true,
+      "workingSha256": "421e2d67fca01e07bc044c75fc935f844b357d8b08f8707a4aa463e59e28fcd6"
+    },
+    {
+      "path": "src/experiments/realInput01/modelWire.test.ts",
+      "exists": true,
+      "workingSha256": "dc417bf97d7cd0dedbffcdb70396cf0a915808cf423e7578b6a9c6cc1747f0ce"
+    },
+    {
+      "path": "src/experiments/realInput01/modelPolicy.test.ts",
+      "exists": true,
+      "workingSha256": "bd8b511aede51694775c9fbdbc08dd2a0deea8611eb6b1e08a6736b0a8a1ac9b"
+    },
+    {
+      "path": "src/experiments/realInput01/factCorrections.test.ts",
+      "exists": true,
+      "workingSha256": "839cb8bff2d3a95850e304254874ffd3c9764e272406465e8bd80b39cfb0db4c"
+    },
+    {
+      "path": "src/experiments/realInput01/runtime.test.ts",
+      "exists": true,
+      "workingSha256": "fd30847c08d7e0533a60588d4d79729a768c323020b7622f9c567c2815027cbf"
+    },
+    {
+      "path": "src/experiments/realInput01/acceptance.test.tsx",
+      "exists": true,
+      "workingSha256": "666e0a49e0d23e79b7dfb8abd5c75d602e0ec3953d33962c416b22d86005d2ad"
+    },
+    {
+      "path": "src/experiments/realInput01/extraction.test.ts",
+      "exists": true,
+      "workingSha256": "6cc076a1fd8c5d3cbf2cba4979b8464eb532b450e4b0faf3dd173e51b3c418eb"
+    },
+    {
+      "path": "scripts/serve-mainline-real-input-01.mjs",
+      "exists": true,
+      "workingSha256": "f5a2e6f04dfbee6fe23933c2276b68d028cb7654550cae41d8457b57c63d8af8"
+    },
+    {
+      "path": "scripts/real-input-model-gateway.mjs",
+      "exists": true,
+      "workingSha256": "c6386e89fd91fb6ed0bd05eec4b15357c06a5c2c2a4e754044e9416618bd4de1"
+    },
+    {
+      "path": "scripts/real-input-budget.mjs",
+      "exists": true,
+      "workingSha256": "34a921f06b4889e49935f26b9353e47b57e380f69783713c187caad2516b4ff8"
+    },
+    {
+      "path": "scripts/check-mainline-real-input-01.mjs",
+      "exists": true,
+      "workingSha256": "5aa9ee142eccda179cc0dde3767bc320c7a08a3b4ba5c7a86a2fc4b1bebb7271"
+    },
+    {
+      "path": "scripts/real-input-model-gateway.node-test.mjs",
+      "exists": true,
+      "workingSha256": "ae1dd78231be79f752011888a53dbf5c7fcd7d50c8278a35f71f4d3f38ac2b21"
+    },
+    {
+      "path": "scripts/check-mainline-real-input-01.node-test.mjs",
+      "exists": true,
+      "workingSha256": "9a6ad7110ab868fe7930b70d3fe564ed64f0cd805f400f8b556926fd3651ef32"
+    },
+    {
+      "path": "scripts/run-mainline-real-input-01.mjs",
+      "exists": true,
+      "workingSha256": "eb01723598db14cbaeb9d9418a7611955e5fdf48cac3a3d209ddc4fc9d31b4c6"
+    },
+    {
+      "path": "scripts/real-input-budget.node-test.mjs",
+      "exists": true,
+      "workingSha256": "9091c31ac0d37fb9398ccaadad57f7d0b17c1a6c70f2fab5df8e1b2f672ca922"
+    },
+    {
+      "path": "scripts/render-mainline-real-input-01-fixtures.mjs",
+      "exists": true,
+      "workingSha256": "a5e88226104488cb61d50ea1c2fa92544ddd58974b08d5d4f0544cccacf6aafd"
+    },
+    {
+      "path": "src/pages/DashboardPage.tsx",
+      "exists": true,
+      "workingSha256": "b0a475cb2c075fa789b360ead943c59d3b3be87da46a7adc49c9cf20be1bacec"
+    }
+  ],
+  "sourceListSha256": "f9b386d19f6e703576238c04e8d16085bbbb8786bd20243c51523d515b7302c1",
+  "protected": {
+    "count": 945,
+    "sha256": "df68e4eda47f664f9f0fbf218a74687117ac3cc9d2c14f5ee6e9965cd2c28394"
+  },
+  "priorEvidenceCount": 70,
+  "logPrefixes": 10,
+  "logBoundary": {
+    "bytes": 275356,
+    "sha256": "9e19998a108ff5869247d8b957ce1994f2a633ef626f3ce91d9add1eac4b8bcc"
+  },
+  "attemptLogs": [
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/logs/bind-inputs-attempt-1.log",
+      "bytes": 333,
+      "sha256": "14f1a1b992f725f2850dc0982731ef9a661016fdaf3bc889d5a242e33e535877"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/logs/binding-repair-attempt-1.log",
+      "bytes": 911,
+      "sha256": "67c85a887da5cf6a4f8cdb4a0f035c4139e0ef48ef539ab1471324f51bc63f1d"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/logs/launcher-attempt-1.log",
+      "bytes": 779,
+      "sha256": "7cb502ab5148435f482c9034571b95fe3f65a31b97442770e58a77bfc4476c15"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/logs/launcher-attempt-2.log",
+      "bytes": 818,
+      "sha256": "a76db2fc298a4fe075f86a69d637fda160e08213bd55385d5107cf82de2b9d24"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/logs/launcher-attempt-3.log",
+      "bytes": 104259,
+      "sha256": "1ff6b50f0c80e35eeb606489a42de8a64084f947a33b124f7aa1f5d11850293e"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/logs/local-entry-attempt-1.log",
+      "bytes": 2858,
+      "sha256": "2bf11a67da9ec0b3030fdb4582c530942d2a5b9f88f11e0934d396e04f691e9e"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/logs/local-entry-attempt-2.log",
+      "bytes": 807,
+      "sha256": "a4eb0366d84afb1ac0e18b099ea0c65b8c7c0a5f5e49474fe3a5719b50508d68"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/logs/paid-a01-attempt-1.log",
+      "bytes": 154,
+      "sha256": "f1a58719f074d140c4ce187250b847edd2f0a6db00e0beae7335460da9b5ec57"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/logs/preparation-attempt-1.log",
+      "bytes": 305,
+      "sha256": "9df656c089684abcea5621662409e82c5f3477a6a6128769ea151959614349db"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/logs/protection-attempt-1.log",
+      "bytes": 6526,
+      "sha256": "64109fe4c2f4bc59ba16f3799672b5851cbf9b9504b5188d882e5f03564aa3f8"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/logs/protection-attempt-2.log",
+      "bytes": 6648,
+      "sha256": "f7812b4ed58461c4035e6c96990ba2f137a6a2f9fa6ad9c367a11cb56b4215ba"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/logs/real-input-targeted-attempt-1.log",
+      "bytes": 433,
+      "sha256": "97c386c6a9e28cab00ce4a00176df4095f009a136a9097dea9346d09491bb1d8"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/logs/scorer-attempt-1.log",
+      "bytes": 303,
+      "sha256": "be17f906652d4ab61a502c817a4d9460fd539dd32722e77f402c7672db06873f"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/logs/scorer-repair-attempt-1.log",
+      "bytes": 310,
+      "sha256": "ae14ac459e29d1767501a53ff3a9343727f6aa80ef4982a4333298dccc7fed4e"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/logs/scorer-reproduction-attempt-1.log",
+      "bytes": 2408,
+      "sha256": "837c870f27f61c1b706ff84de09100158f29e5f590707906bc0901e0be342edf"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/logs/scorer-reproduction-attempt-2.log",
+      "bytes": 1622,
+      "sha256": "048d5030e78f5975886515d66c9efc799666e5021bcc992301617b665b77fe65"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/logs/scorer-reproduction-attempt-3.log",
+      "bytes": 2511,
+      "sha256": "613cdb7600139bc251328cfc21cf999233355563728d34863fcc3e55d1b5c2ca"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/logs/send-gate-attempt-1.log",
+      "bytes": 1053,
+      "sha256": "7c5426f847bb9e9833f5a87249d9c0ce17abd571d7b767755381d74d92ddbb08"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/logs/server-attempt-1.log",
+      "bytes": 148,
+      "sha256": "d9136e6ea77145fbd0199e86fc81430c9b2bd137ec713e574ae936d667eb4159"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/logs/server-attempt-2.log",
+      "bytes": 148,
+      "sha256": "4fb3f2158458045ae7dc976445f01d76f95e1b4874bf11e29549e67b41536fad"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/logs/server-error-attempt-1.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/logs/server-error-attempt-2.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/logs/type-attempt-1.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/logs/type-attempt-2.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/logs/type-attempt-3.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/logs/type-attempt-4.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/logs/usage-repair-attempt-1.log",
+      "bytes": 5053,
+      "sha256": "3cc5d111f40ea0bdea7a3d6b62ad22ff7010859dffa51431ae45a3df004485c8"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/logs/usage-reproduction-attempt-1.log",
+      "bytes": 5772,
+      "sha256": "4106490a5909e3bd416abb3646e868acdff86f06d864cf130d7e6c3e5de51254"
+    }
+  ],
+  "modelAttempts": 1,
+  "validModelResponses": 0,
+  "unknownReservationMicroCny": 3300000,
+  "actualBilledCny": "NOT_OBSERVABLE",
+  "businessDelivery": "NOT_COMPLETE"
+}

@@ -1,0 +1,34 @@
+
+ RUN  v3.2.7 C:/Users/Winner/student-affairs-multimodal-exp
+
+·········xxx·············
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/experiments/realInput01/modelWire.test.ts > real input wire projection (zero model calls) > scorer rejects an unsupported displayed task title while retaining the original control
+ FAIL  src/experiments/realInput01/modelWire.test.ts > real input wire projection (zero model calls) > scorer rejects an unsupported displayed task description while retaining the original control
+ FAIL  src/experiments/realInput01/modelWire.test.ts > real input wire projection (zero model calls) > scorer rejects an unsupported displayed task completionCriteria while retaining the original control
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ src/experiments/realInput01/modelWire.test.ts:34:32
+     32|     envelope.output[0].content[0].text=JSON.stringify(wire)
+     33|     const score=await scoreSeenResponse(JSON.stringify(envelope),origi…
+     34|     expect(score.completeCase).toBe(false)
+       |                                ^
+     35|     expect(score.majorCorrectionRequired).toBe(true)
+     36|     expect(score.metrics.semantic.falsePositive).toBeGreaterThan(0)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  3 failed | 22 passed (25)
+   Start at  11:23:22
+   Duration  736ms (transform 125ms, setup 0ms, collect 164ms, tests 81ms, environment 0ms, prepare 191ms)
+

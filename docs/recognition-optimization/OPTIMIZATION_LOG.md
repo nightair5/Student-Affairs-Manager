@@ -1818,3 +1818,32 @@
 - independent-stop: 无上下文独审发现P1_DUPLICATE_USAGE_RELEASE；冲突input_tokens重复键经JSON.parse后值覆盖，真实临时lease.complete从3300000预留结算390微元并持久化，正常对照也可结算。主代理独立复核函数与账本；假响应用于预算边界，不是真实模型或新语义数据。旧52项重跑全过仍不能覆盖此缺口。按预算停止条件暂停源码/派发，仅审计，未越权修复。
 - protection: 原946仅Dashboard授权例外变化，945仍逐字匹配；旧原清单/静态16+12+20及上轮日志/全部前缀保持。新旧SHA分别列IMPLEMENTATION_SNAPSHOT，不修改历史保护清单。
 - delivery: 仅本run报告与3份原始测试日志、约80行CURRENT和追加日志精确提交推送，35业务实现不暂存；不强推/自动变基。完整工程/OCR/Edge/下载未运行，A01及其余模型0次、费用0，密钥/剪贴板/用户库0；模型识别准确率本轮未测量。下一建议仅授权登记歧义用量在结算前拒绝（预算模块及Node测试），独审后恢复同包A01优先，不换模型或重做计划。
+
+## 133. MAINLINE-REAL-INPUT-01登记用量歧义恢复 — 2026-09-07
+
+- authority: 用户明确允许修P1_DUPLICATE_USAGE_RELEASE后继续同包A01优先；42路径和原24次/10元/3.30滚动预留/模型参数/零重试保持。“不用考虑模型预算问题”按同条明确后文理解为不重做预算方案，不解除硬上限或异常停发。
+- preflight: HEAD/live远端24c80c02cf4e7b7d9e652caf935638cd2ad1f0ba；35源码/7缺失、945只读与Dashboard获准SHA、前证据及日志前缀匹配。起始日志269512字节/SHA3913d2202d2f0910e1c16b78c4f51991606203bb6cd4470cd3b4d24f43d9c12a。
+- execution: daily-coding最小变更；先预算模块与Node测试的登记反例/正常对照及真实临时账本，独审后继续。新run usage-resume-20260907a仅追加记录，不是新产品阶段；模型当前0调用0元，不读剪贴板或用户库。
+
+## 134. MAINLINE-REAL-INPUT-01用量修复通过与本机配置授权 — 2026-09-07
+
+- repair: 原52断言保留；新增重复/转义同名属性的真实临时账本反例与正常对照。首次53/1，修后54/54；独立复核PASS（绑定REVIEW列明SHA），登记P1闭合，不等于整包通过。
+- continuation: 旧8通知工程格式载体已在新临时目录生成，不是新语义数据/盲测；实际OCR、A/B绑定与真实App验收待做。
+- credential-authority: 用户忘记旧配置位置后，明确批准从当前剪贴板建立新.env。仅创建仓库根.env，Git已有忽略规则、未跟踪；通过本机apply_patch进程写入，未把密钥正文送入工具输出/日志/聊天。限制文件ACL为当前用户和SYSTEM；Node服务端加载布尔检查通过。未发认证/模型探针，未修改系统环境或剪贴板，不承诺该Key已被服务商认证。
+- boundary: .env为本次单独获准本机秘密配置，永不暂存/导出；产品42路径不变。24次/10元/滚动3.30及首调门不变；本段写入时模型0请求0元，用户库0。
+
+## 135. MAINLINE-REAL-INPUT-01实际读取与校对接通 — 2026-09-07
+
+- continuation: 同包完成真实App本机入口、最小检查编排与绑定器草稿，不改变方案/42职责。失联的长运行服务等待改为可核验隐藏进程，固定6631。自动化旧标签被Edge拦截与用户标签产品初始化失败分开记录。初始化根因是空记录write被无条件禁止，修为同事务仅允许空记录初始化、禁止覆盖；原隔离库与origin保留。
+- independent: 首入口审查REJECT_CANDIDATE登记sourceContent拼接、工程工具绕开故障store、prepare重复consent冲突；范围内闭合。新无上下文real_input_browser_recheck最终PASS_SCOPE_ONLY，runtime23/23、Node入口6/6分列；不代表付费发送或完整浏览器验收。最终源码SHA见本run REVIEW补充。
+- browser: 实际用户Edge标签763114724、原run real-input-d030c507-3f7c-4a2c-a511-8cd5bd534862。B01/02图OCR有严重/局部错字，B03/04空；B05文本PDF/B06扫描PDF/B07混合PDF文字正确；B08文本层漏新要求、OCR另保留全文及警告。通过真实录入面板逐键校对B01/02/03/04/08并显式保存，原始读取不覆盖，不称OCR全对或真人省时。A8旧文字另保存；无新语义数据/Expected修改。
+- storage: 真实故障注入后A来源保存失败，独立new repository读回全对象SHA f0ce130048e760e1395792a3ca2b9e741736543c7d4ae74ca9b58ab0ef2d1d06 前后相等；正常重试来源写入成功。校对后独立读回16来源/0任务/0jobs，SHA d25779b8e47532ea6f03bbbca949c1d80d1d578da2185f24bfa1bf089ab3016d。已触发真实下载，文件验证/16输入绑定继续进行。
+- boundary: 945保护聚合、70旧静态证据及10日志前缀仍通过；42实现当前存在但部分未验收。模型0请求0费用，自动选择NOT_ENABLED；无真实库/稳定入口/部署。模型识别准确率本轮未测量，原历史失败不改。
+
+## 136. MAINLINE-REAL-INPUT-01首个真实请求尝试与停发 — 2026-09-07
+
+- pre-send: 真实App校对/准备/独立new repository读回形成3个实际下载；STATE固定16原顺序输入/请求及24评分依赖，SHA d478c58f7f44e68a852bc7712c5d3e7994f2390750f5915d65204963dff9e73b。评分与绑定普通漏洞在原白名单闭合，26/26及Node8/8，整包新定向87/87；首次误用completionCriteria类型单列，不冒充业务失败。无旧Expected/源码断言变更。
+- review: 新无上下文real_input_first_send_review PASS_SCOPE_ONLY。88个定向检查及新临时账本16个正常模拟请求分列，均不算真实模型。42源码清单SHA f9b386d19f6e703576238c04e8d16085bbbb8786bd20243c51523d515b7302c1；billing SHA 8c227e48e58a525400a713b3127ecb83211c7d317497c94f0ed43b66719e896c。官方人民币价格/Responses文档直接HTTP200及正文核验后，REVIEW.json绑定完整SHA才派发。
+- actual-attempt: 使用已获准本机.env仅由Node服务端加载，执行一次--paid=A01；无试连接/额外认证/重试。约10769ms后返回本地网关502/MODEL_CALL_STOPPED_NO_RETRY，raw为0字节，未取得可校验响应/usage；不能称上游返回502、Key无效、模型识别失败或未扣费。
+- budget: 1 reserve/0 settle，TRANSPORT_OR_CRASH_UNKNOWN停发；3300000微元完整未知预留保留，实际账单NOT_OBSERVABLE，不报已花3.30元或0元。其余15单元未跑，没有A02/重发/新run重置。独立失败证据复核确认manifest/账本链一致、本地状态与上游观测分开。
+- delivery: 整包NOT_COMPLETE，完整工程/最终模型确认和下游Edge未完成。当前仅精确提交失败审计/新证据、短交接和追加日志，42业务源码继续保留未提交，.env不暂存。下一优先是零调用安全错误分类与本机传输定位；恢复付费需保留A01未知预留/失败并明确批准，不能直接再次调用。
