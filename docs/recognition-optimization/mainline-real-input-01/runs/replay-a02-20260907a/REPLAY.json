@@ -1,0 +1,560 @@
+{
+  "version": "a02-readonly-replay-1",
+  "artifactBasis": {
+    "preparation": {
+      "path": "C:\\Users\\Winner\\Downloads\\real-input-local-evidence (1).json",
+      "sha256": "c38ed5f5c6974ee49c4b8f2f94d78eb3b243acebd17174b24633d89461ebe22f"
+    },
+    "independentRepositoryRead": {
+      "path": "C:\\Users\\Winner\\Downloads\\real-input-local-evidence (2).json",
+      "sha256": "7cc9433e30c574932615e99ee1456acb68e42ba1d02d3c6c520156faf7586e84",
+      "workspaceSha256": "b7c08ed26349a7ad5e1a67236058aa9c91ed6b678a2cf210647f5d59473b758a"
+    },
+    "unitId": "A02",
+    "handle": {
+      "sourceId": "source:00af0dfa",
+      "sourceVersionId": "source:00af0dfa:version:1",
+      "recognitionRunId": "source:00af0dfa:run:1:1",
+      "draftId": "source:00af0dfa:draft:1:1",
+      "duplicate": false
+    },
+    "requestSha": "6cbf184da3dbc6d2ab8322b29482a0686fa2657c37ae34f4c8ce84ffae54404a",
+    "responseSha": "5e201902469878c85b1e87364e6cd07be58e02bccbe509bbee0c09728457f55e"
+  },
+  "method": "Existing functions and SSR component; cloned exported preparation in MemoryWorkspaceRecordStore; no original/browser database writes",
+  "checks": [
+    {
+      "name": "A02_EXACT_REQUEST_BINDING",
+      "status": "PASS"
+    },
+    {
+      "name": "RAW_MANIFEST_RESPONSE_BINDING",
+      "status": "PASS"
+    },
+    {
+      "name": "NO_TASK_BEFORE_COMPLETION",
+      "status": "PASS"
+    },
+    {
+      "name": "NO_TASK_BEFORE_CONFIRMATION",
+      "status": "PASS"
+    },
+    {
+      "name": "LIVE_ORIGINAL_IDENTITY_PRESERVED",
+      "status": "PASS"
+    },
+    {
+      "name": "NONEMPTY_SUGGESTION_NOT_AUTO_SELECTED",
+      "status": "PASS"
+    },
+    {
+      "name": "UNREVIEWED_CONFIRMATION_REJECTED_ATOMICALLY",
+      "status": "PASS"
+    },
+    {
+      "name": "EXPLICIT_REVIEW_AND_CHOICE_ALLOWED",
+      "status": "PASS"
+    },
+    {
+      "name": "EXPLICIT_CONFIRMATION_CREATES_ONE_TASK",
+      "status": "PASS"
+    },
+    {
+      "name": "RAW_RESPONSE_FIRST_PRESERVED",
+      "status": "PASS"
+    },
+    {
+      "name": "NO_FAKE_DATE_OR_REMINDER",
+      "status": "PASS"
+    },
+    {
+      "name": "INDEPENDENT_REPOSITORY_REOPEN_AGREEMENT",
+      "status": "PASS"
+    },
+    {
+      "name": "MEMORY_JSON_EXPORT_AGREEMENT",
+      "status": "PASS"
+    },
+    {
+      "name": "DUPLICATE_CONFIRMATION_NO_CHANGE",
+      "status": "PASS"
+    },
+    {
+      "name": "ACTUAL_JOBS_FUNCTION_ZERO",
+      "status": "PASS"
+    },
+    {
+      "name": "CONTROL_NONZERO_no-date",
+      "status": "PASS"
+    },
+    {
+      "name": "CONTROL_CONFIRM_REOPEN_no-date",
+      "status": "PASS"
+    },
+    {
+      "name": "CONTROL_NONZERO_multi",
+      "status": "PASS"
+    },
+    {
+      "name": "CONTROL_CONFIRM_REOPEN_multi",
+      "status": "PASS"
+    },
+    {
+      "name": "CONTROL_NONZERO_condition-true",
+      "status": "PASS"
+    },
+    {
+      "name": "CONTROL_CONFIRM_REOPEN_condition-true",
+      "status": "PASS"
+    },
+    {
+      "name": "CONTROL_NONZERO_revision",
+      "status": "PASS"
+    },
+    {
+      "name": "CONTROL_CONFIRM_REOPEN_revision",
+      "status": "PASS"
+    },
+    {
+      "name": "ZERO_NETWORK_EXECUTIONS",
+      "status": "PASS"
+    },
+    {
+      "name": "ACTUAL_CALENDAR_COMPONENT_UNDATED_SSR",
+      "status": "PASS"
+    }
+  ],
+  "first": {
+    "execution": "live",
+    "authority": "live_model_candidate",
+    "rawResponse": {
+      "schemaVersion": "real-input-model-wire-1",
+      "tasks": [
+        {
+          "id": "task-save-handbook",
+          "propositionScopeIds": [
+            "scope-0001-44a42d4e302b117302d030a4f761ba845d7442d46a1c758ee36b7897858bf006"
+          ],
+          "semantics": {
+            "actor": "addressee",
+            "speechAct": "directive",
+            "polarity": "affirmative",
+            "tense": "present",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required"
+          },
+          "inferenceLevel": "explicit",
+          "actionType": "save",
+          "action": {
+            "scopeId": "scope-0001-44a42d4e302b117302d030a4f761ba845d7442d46a1c758ee36b7897858bf006",
+            "surface": "保存"
+          },
+          "object": {
+            "scopeId": "scope-0001-44a42d4e302b117302d030a4f761ba845d7442d46a1c758ee36b7897858bf006",
+            "surface": "活动手册"
+          },
+          "effect": "local_change",
+          "detail": {
+            "parentTempId": null,
+            "hierarchyType": "task",
+            "title": "保存活动手册",
+            "description": "请保存活动手册。",
+            "completionCriteria": [
+              "活动手册已保存"
+            ],
+            "estimatedMinutes": null,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "medium",
+            "dependencyTempIds": [],
+            "materialTempIds": [
+              "mat-handbook"
+            ],
+            "timePointTempIds": [],
+            "confidence": 0.95,
+            "userConfirmationRequired": true
+          },
+          "condition": {
+            "value": "not_applicable",
+            "conditionScopeIds": [],
+            "factScopeIds": []
+          },
+          "coverage": {
+            "time": "not_stated",
+            "material": "present",
+            "event": "not_stated"
+          },
+          "eventTempIds": []
+        }
+      ],
+      "materials": [
+        {
+          "tempId": "mat-handbook",
+          "name": "活动手册",
+          "required": true,
+          "formatRequirements": [],
+          "namingRequirements": [],
+          "quantity": null,
+          "submissionChannel": null,
+          "relatedTaskTempIds": [
+            "task-save-handbook"
+          ],
+          "scopeIds": [
+            "scope-0001-44a42d4e302b117302d030a4f761ba845d7442d46a1c758ee36b7897858bf006"
+          ],
+          "confidence": 0.95
+        }
+      ],
+      "timePoints": [],
+      "events": [],
+      "revisions": [],
+      "conflicts": [],
+      "informationScopeIds": [
+        "scope-0002-1767c989c64becf71d7de8488b6ea75a46a1304cc78055c142a6872f3c5ccf4a"
+      ],
+      "unresolvedScopeIds": []
+    },
+    "firstSha": "149b117e1d2cfc4627156ca2c5d1fb3e22745c5af3a7e0c3224b75a84ad4f4e5",
+    "issues": [
+      {
+        "id": "task-save-handbook",
+        "issues": [],
+        "requiresAction": "true"
+      }
+    ]
+  },
+  "viewBefore": {
+    "states": {
+      "draft-item:source:00af0dfa:draft:1:1:task-save-handbook": {
+        "defaultSelected": false,
+        "blockedReason": "请查看完整事实和依据，明确点击“本项事实已核对”后再选择。",
+        "materialTempIds": [
+          "mat-handbook"
+        ],
+        "timePointTempIds": [],
+        "value": "",
+        "edited": false,
+        "originalDate": "",
+        "dateLabel": "待核对：不能当作无日期确认"
+      }
+    },
+    "items": [
+      {
+        "id": "draft-item:source:00af0dfa:draft:1:1:task-save-handbook",
+        "selected": false,
+        "status": "待确认",
+        "suggestion": {
+          "id": "task-save-handbook",
+          "title": "保存活动手册",
+          "category": "其他",
+          "deadline": "",
+          "estimatedMinutes": 30,
+          "nextAction": "保存活动手册",
+          "description": "请保存活动手册。",
+          "priority": "中",
+          "materials": [
+            "活动手册"
+          ],
+          "evidence": "请保存活动手册。",
+          "confidence": "高"
+        }
+      }
+    ]
+  },
+  "viewSelected": {
+    "states": {
+      "draft-item:source:00af0dfa:draft:1:1:task-save-handbook": {
+        "defaultSelected": false,
+        "materialTempIds": [
+          "mat-handbook"
+        ],
+        "timePointTempIds": [],
+        "value": "",
+        "edited": false,
+        "originalDate": "",
+        "dateLabel": "原文未说明截止时间 · 可无日期确认"
+      }
+    },
+    "items": [
+      {
+        "id": "draft-item:source:00af0dfa:draft:1:1:task-save-handbook",
+        "selected": true,
+        "status": "待确认",
+        "suggestion": {
+          "id": "task-save-handbook",
+          "title": "保存活动手册",
+          "category": "其他",
+          "deadline": "",
+          "estimatedMinutes": 30,
+          "nextAction": "保存活动手册",
+          "description": "请保存活动手册。",
+          "priority": "中",
+          "materials": [
+            "活动手册"
+          ],
+          "evidence": "请保存活动手册。",
+          "confidence": "高"
+        }
+      }
+    ]
+  },
+  "unreviewedRejection": "MAINLINE05_ITEM_NOT_CONFIRMABLE",
+  "component": {
+    "htmlSha": "e979fda7537ffb1507caaca559af35b6b70c852944e77d26fefc068d09d9179c",
+    "visibleBeforeRawDetails": "<section aria-label=\"任务完整事实\"><div><p><strong>保存 → 活动手册</strong> · 无附加条件</p><p>原文状态：pending / active；当前处置：pending</p><p>时间：原文未说明；材料：已提取；事件：原文未说明</p><div><details><summary>原文依据 · 0–8</summary><blockquote>请保存活动手册。</blockquote></details></div><details><summary>全部原始任务属性（不是用户修改）</summary><pre>{\n  &quot;parentTempId&quot;: null,\n  &quot;hierarchyType&quot;: &quot;task&quot;,\n  &quot;title&quot;: &quot;保存活动手册&quot;,\n  &quot;description&quot;: &quot;请保存活动手册。&quot;,\n  &quot;completionCriteria&quot;: [\n    &quot;活动手册已保存&quot;\n  ],\n  &quot;estimatedMinutes&quot;: null,\n  &quot;statusSuggestion&quot;: &quot;todo&quot;,\n  &quot;prioritySuggestion&quot;: &quot;medium&quot;,\n  &quot;dependencyTempIds&quot;: [],\n  &quot;materialTempIds&quot;: [\n    &quot;mat-handbook&quot;\n  ],\n  &quot;timePointTempIds&quot;: [],\n  &quot;confidence&quot;: 0.95,\n  &quot;userConfirmationRequired&quot;: true\n}</pre></details></div><details><summary>材料：活动手册</summary><p>必须提供；格式：未说明；命名：未说明； 数量：未说明；提交渠道：未说明</p><p>关联任务：保存活动手册</p><div><details><summary>原文依据 · 0–8</summary><blockquote>请保存活动手册。</blockquote></details></div></details><p>模型建议不自动勾选。当前明细为已保存的有效事实；原始响应与首次建议保留不变。</p>",
+    "mustProvide": true,
+    "rawNoDateRetained": true
+  },
+  "canonical": {
+    "task": {
+      "id": "mainline05:task:source:00af0dfa:draft:1:1:task-save-handbook",
+      "projectId": null,
+      "milestoneId": null,
+      "workPackageId": null,
+      "parentTaskId": null,
+      "title": "保存活动手册",
+      "description": "请保存活动手册。",
+      "nextAction": "保存活动手册",
+      "status": "todo",
+      "estimatedMinutes": null,
+      "manualPriority": null,
+      "snoozedUntil": null,
+      "dependencyIds": [],
+      "createdAt": "2026-09-07T09:00:06.084Z",
+      "updatedAt": "2026-09-07T09:00:06.084Z",
+      "version": 1
+    },
+    "materials": [
+      {
+        "id": "mainline05:material:source:00af0dfa:draft:1:1:mat-handbook",
+        "projectId": null,
+        "name": "活动手册",
+        "required": true,
+        "status": "missing",
+        "requirements": [],
+        "formatRequirements": [],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": null,
+        "relatedTaskIds": [
+          "mainline05:task:source:00af0dfa:draft:1:1:task-save-handbook"
+        ],
+        "deadlineTimePointId": null,
+        "createdAt": "2026-09-07T09:00:06.084Z",
+        "updatedAt": "2026-09-07T09:00:06.084Z",
+        "version": 1,
+        "legacyData": {
+          "mainline05DraftId": "source:00af0dfa:draft:1:1",
+          "recognitionTempId": "mat-handbook",
+          "sourceId": "source:00af0dfa"
+        }
+      }
+    ],
+    "timePoints": [],
+    "reminders": [],
+    "evidence": [],
+    "operations": [
+      {
+        "id": "readonly-a02-review",
+        "kind": "review_task",
+        "at": "2026-09-07T09:00:05.977Z",
+        "taskIds": [
+          "task-save-handbook"
+        ],
+        "field": null,
+        "value": null,
+        "before": null,
+        "reviewIdentity": "{\"identity\":\"{\\\"conflicts\\\":[],\\\"events\\\":[],\\\"fingerprint\\\":\\\"sha256:7e752ddca20e2e9ce93cc47b09a62c36dfa09bb7566aa26e9ed2dca1cb08bd5f\\\",\\\"materials\\\":[{\\\"confidence\\\":0.95,\\\"formatRequirements\\\":[],\\\"name\\\":\\\"活动手册\\\",\\\"namingRequirements\\\":[],\\\"quantity\\\":null,\\\"relatedTaskTempIds\\\":[\\\"task-save-handbook\\\"],\\\"required\\\":true,\\\"scopeIds\\\":[\\\"scope-0001-44a42d4e302b117302d030a4f761ba845d7442d46a1c758ee36b7897858bf006\\\"],\\\"submissionChannel\\\":null,\\\"tempId\\\":\\\"mat-handbook\\\"}],\\\"revisions\\\":[],\\\"sourceId\\\":\\\"source:00af0dfa\\\",\\\"sourceVersionId\\\":\\\"source:00af0dfa:version:1\\\",\\\"tasks\\\":[{\\\"action\\\":{\\\"scopeId\\\":\\\"scope-0001-44a42d4e302b117302d030a4f761ba845d7442d46a1c758ee36b7897858bf006\\\",\\\"surface\\\":\\\"保存\\\"},\\\"actionType\\\":\\\"save\\\",\\\"condition\\\":{\\\"conditionScopeIds\\\":[],\\\"factScopeIds\\\":[],\\\"value\\\":\\\"not_applicable\\\"},\\\"coverage\\\":{\\\"event\\\":\\\"not_stated\\\",\\\"material\\\":\\\"present\\\",\\\"time\\\":\\\"not_stated\\\"},\\\"detail\\\":{\\\"completionCriteria\\\":[\\\"活动手册已保存\\\"],\\\"confidence\\\":0.95,\\\"dependencyTempIds\\\":[],\\\"description\\\":\\\"请保存活动手册。\\\",\\\"estimatedMinutes\\\":null,\\\"hierarchyType\\\":\\\"task\\\",\\\"materialTempIds\\\":[\\\"mat-handbook\\\"],\\\"parentTempId\\\":null,\\\"prioritySuggestion\\\":\\\"medium\\\",\\\"statusSuggestion\\\":\\\"todo\\\",\\\"timePointTempIds\\\":[],\\\"title\\\":\\\"保存活动手册\\\",\\\"userConfirmationRequired\\\":true},\\\"effect\\\":\\\"local_change\\\",\\\"eventTempIds\\\":[],\\\"id\\\":\\\"task-save-handbook\\\",\\\"inferenceLevel\\\":\\\"explicit\\\",\\\"object\\\":{\\\"scopeId\\\":\\\"scope-0001-44a42d4e302b117302d030a4f761ba845d7442d46a1c758ee36b7897858bf006\\\",\\\"surface\\\":\\\"活动手册\\\"},\\\"propositionScopeIds\\\":[\\\"scope-0001-44a42d4e302b117302d030a4f761ba845d7442d46a1c758ee36b7897858bf006\\\"],\\\"semantics\\\":{\\\"actor\\\":\\\"addressee\\\",\\\"modality\\\":\\\"required\\\",\\\"polarity\\\":\\\"affirmative\\\",\\\"speechAct\\\":\\\"directive\\\",\\\"status\\\":\\\"pending\\\",\\\"tense\\\":\\\"present\\\",\\\"validity\\\":\\\"active\\\"}}],\\\"timePoints\\\":[],\\\"unresolvedScopeIds\\\":[]}\",\"userValues\":{\"task-save-handbook\":{\"deadline\":\"\",\"title\":\"保存活动手册\"}}}"
+      },
+      {
+        "id": "ad0e4735-5a25-4adc-9529-db38e5967f1a",
+        "kind": "confirm",
+        "at": "2026-09-07T09:00:06.084Z",
+        "taskIds": [
+          "task-save-handbook"
+        ],
+        "field": null,
+        "value": null,
+        "before": null
+      }
+    ],
+    "workspaceSha": "98c94ce93040ac5cbf73390683dada2a86d867de3437cf90f67028dcfd56c3e2",
+    "sourceCount": 16
+  },
+  "downstream": {
+    "task": {
+      "id": "mainline05:task:source:00af0dfa:draft:1:1:task-save-handbook",
+      "hierarchyType": "task",
+      "completionCriteria": [],
+      "evidenceIds": [],
+      "title": "保存活动手册",
+      "category": "其他",
+      "status": "待开始",
+      "deadline": "",
+      "estimatedMinutes": 60,
+      "nextAction": "保存活动手册",
+      "description": "请保存活动手册。",
+      "priority": "中",
+      "riskFlags": [
+        "待确认"
+      ],
+      "materials": [
+        {
+          "id": "mainline05:material:source:00af0dfa:draft:1:1:mat-handbook",
+          "name": "活动手册",
+          "done": false,
+          "status": "missing",
+          "taskId": "mainline05:task:source:00af0dfa:draft:1:1:task-save-handbook",
+          "sourceId": "source:00af0dfa"
+        }
+      ],
+      "dependencies": [],
+      "dependencyIds": [],
+      "reminders": [],
+      "sourceIds": [
+        "source:00af0dfa"
+      ],
+      "priorityReason": "由当前权威实体计算并允许手动调整",
+      "timePointIds": [],
+      "materialIds": [
+        "mainline05:material:source:00af0dfa:draft:1:1:mat-handbook"
+      ],
+      "createdAt": "2026-09-07T09:00:06.084Z",
+      "updatedAt": "2026-09-07T09:00:06.084Z",
+      "history": []
+    },
+    "dates": {
+      "mainline05:task:source:00af0dfa:draft:1:1:task-save-handbook": {
+        "kind": "absent",
+        "label": "原文未说明截止时间",
+        "noDeadlineProven": true,
+        "projectedPendingOnly": true
+      }
+    },
+    "jobs": 0,
+    "priority": {
+      "score": 33,
+      "reasons": [
+        "原文未说明截止时间，不自动排期",
+        "仍缺 1 项材料"
+      ],
+      "risks": [
+        "缺材料"
+      ],
+      "isPinned": false,
+      "isSnoozed": false
+    },
+    "calendarSsr": {
+      "htmlSha": "63592f58b5d5d8e54319e8d33482bffe0b3edac9ed986d1cd8398c658c45af22",
+      "undatedVisible": true
+    }
+  },
+  "controls": [
+    {
+      "kind": "no-date",
+      "selected": [
+        "save"
+      ],
+      "confirmed": [
+        {
+          "title": "保存活动手册",
+          "id": "mainline05:task:source:8956ae2e:draft:1:1:save"
+        }
+      ],
+      "execution": "seen_engineering_replay"
+    },
+    {
+      "kind": "multi",
+      "selected": [
+        "submit",
+        "print"
+      ],
+      "confirmed": [
+        {
+          "title": "提交活动报名表",
+          "id": "mainline05:task:source:936f12cb:draft:1:1:submit"
+        },
+        {
+          "title": "打印入场凭证",
+          "id": "mainline05:task:source:936f12cb:draft:1:1:print"
+        }
+      ],
+      "execution": "seen_engineering_replay"
+    },
+    {
+      "kind": "condition-true",
+      "selected": [
+        "conditional"
+      ],
+      "confirmed": [
+        {
+          "title": "提交场地申请表",
+          "id": "mainline05:task:source:a094cb78:draft:1:1:conditional"
+        }
+      ],
+      "execution": "seen_engineering_replay"
+    },
+    {
+      "kind": "revision",
+      "selected": [
+        "new"
+      ],
+      "confirmed": [
+        {
+          "title": "提交电子报名表",
+          "id": "mainline05:task:source:158139f3:draft:1:1:new"
+        }
+      ],
+      "execution": "seen_engineering_replay"
+    }
+  ],
+  "sourceRawUnchanged": true,
+  "networkCalls": 0,
+  "modelCalls": 0,
+  "actualBrowser": "NOT_RUN",
+  "actualDownload": "NOT_RUN",
+  "humanActiveTime": "NOT_RUN",
+  "probeSource": "\nimport { readFileSync } from 'node:fs';\nimport { createHash } from 'node:crypto';\nimport { createRequire } from 'node:module';\nimport { build } from 'esbuild';\nconst require=createRequire(process.cwd()+'/package.json');\nconst entry=[\n\"export {MemoryWorkspaceRecordStore, CanonicalWorkspaceRepository} from './src/domain/v2/repository.ts'\",\n\"export {SemanticRepository} from './src/experiments/mainline05/semanticRepository.ts'\",\n\"export {completeInputRun} from './src/experiments/mainline05/semanticCapture.ts'\",\n\"export {reviewSemanticFact,confirmSemantic} from './src/experiments/mainline05/semanticConfirmation.ts'\",\n\"export {semanticReview,semanticView,semanticDates} from './src/experiments/mainline05/semanticView.ts'\",\n\"export {stateOfRuntime,semanticRevision,REAL_STATE_VERSION} from './src/experiments/mainline05/semanticState.ts'\",\n\"export {inputRunContext,emptyRealInputWorkspace} from './src/experiments/realInput01/runtime.ts'\",\n\"export {buildModelRequest} from './src/experiments/realInput01/modelWire.ts'\",\n\"export {acquireText} from './src/experiments/realInput01/inputAcquisition.ts'\",\n\"export {makeSendSnapshot} from './src/experiments/realInput01/inputReceipt.ts'\",\n\"export {seenWire,notices,NOW} from './src/experiments/realInput01/seenInputs.ts'\",\n\"export {SemanticFacts} from './src/experiments/mainline05/SemanticFacts.tsx'\",\n\"export {buildBrowserReminderJobs} from './src/lib/notifications.ts'\",\n\"export {calculateTaskPriority} from './src/lib/taskLogic.ts'\",\n\"export {CalendarPage} from './src/pages/CalendarPage.tsx'\"\n].join(';');\nconst compiled=await build({stdin:{contents:entry,resolveDir:process.cwd(),loader:'ts'},bundle:true,write:false,format:'cjs',jsx:'automatic',platform:'node',packages:'external',logLevel:'silent',define:{'import.meta.env':'{}'}});\nconst m={exports:{}};new Function('require','module','exports',compiled.outputFiles[0].text)(require,m,m.exports);\nconst api=m.exports,{createElement}=require('react'),{renderToStaticMarkup}=require('react-dom/server');\nconst sha=b=>createHash('sha256').update(b).digest('hex'),json=p=>JSON.parse(readFileSync(p,'utf8')),same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);\nlet networkCalls=0;globalThis.fetch=async()=>{networkCalls++;throw Error('READONLY_REPLAY_NETWORK_FORBIDDEN')};\nconst old='docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/';\nconst run='docs/recognition-optimization/mainline-real-input-01/runs/recovery-a02-20260907a/';\nconst binding=json(old+'STATE.json'),manifest=json(old+'REQUEST_MANIFEST.json'),row=json(run+'RAW_RESULTS.jsonl');\nfor(const x of [binding.preparation,binding.independentRepositoryRead])if(sha(readFileSync(x.path))!==x.sha256)throw Error('ORIGINAL_ARTIFACT_CHANGED');\nconst prep=json(binding.preparation.path),record=json(binding.independentRepositoryRead.path),a02=prep.preparations.find(x=>x.unitId==='A02');\nif(sha(JSON.stringify(record.workspace))!==binding.independentRepositoryRead.workspaceSha256)throw Error('WORKSPACE_BINDING');\nconst checks=[];function check(ok,name){checks.push({name,status:ok?'PASS':'FAIL'});if(!ok)throw Error(name)}\nasync function openCopy(workspace,name){const store=Object.assign(new api.MemoryWorkspaceRecordStore(),{name});await new api.CanonicalWorkspaceRepository(store).save(structuredClone(workspace));const repo=await api.SemanticRepository.open(name,store,undefined,'real-input-01');return{store,repo,name}}\nconst h=a02.handle,{store,repo,name}=await openCopy(record.workspace,record.name);\nconst context=await api.inputRunContext(repo,h), request=await api.buildModelRequest(context);\ncheck(sha(request.serialized)===row.requestSha&&sha(a02.requestText)===row.requestSha,'A02_EXACT_REQUEST_BINDING');\ncheck(row.requestSha===manifest.units.find(x=>x.unitId==='A02').requestSha&&sha(row.rawHttpText)===row.responseSha,'RAW_MANIFEST_RESPONSE_BINDING');\nconst original=await repo.load();\ncheck(original.tasks.length===0,'NO_TASK_BEFORE_COMPLETION');\nawait api.completeInputRun(repo,h,row.rawHttpText);\nconst firstWorkspace=await repo.load(),first=api.stateOfRuntime(firstWorkspace,h.draftId);\nconst firstSnapshot=JSON.stringify({raw:first.rawHttpText,response:first.rawResponse,first:first.first});\nconst items=api.semanticReview(firstWorkspace,h.draftId),taskId=first.adaptedResponse.tasks[0].id;\ncheck(firstWorkspace.tasks.length===0,'NO_TASK_BEFORE_CONFIRMATION');\ncheck(first.execution==='live'&&first.context.authority==='live_model_candidate'&&first.rawHttpText===row.rawHttpText,'LIVE_ORIGINAL_IDENTITY_PRESERVED');\ncheck(items.draft.items.length===1&&!items.draft.items[0].selected,'NONEMPTY_SUGGESTION_NOT_AUTO_SELECTED');\nconst prior=JSON.stringify(await repo.load());let refused=null;\ntry{await api.confirmSemantic(repo,{draftId:h.draftId,taskTempIds:[taskId],revision:api.semanticRevision(await repo.load())})}catch(e){refused=e.message}\ncheck(!!refused&&JSON.stringify(await repo.load())===prior,'UNREVIEWED_CONFIRMATION_REJECTED_ATOMICALLY');\nconst factsHtml=renderToStaticMarkup(createElement(api.SemanticFacts,{state:first,taskId}));\nawait api.reviewSemanticFact(repo,{draftId:h.draftId,taskId,revision:api.semanticRevision(await repo.load()),operationId:'readonly-a02-review'});\nconst reviewed=await repo.load(),selected=api.semanticReview(reviewed,h.draftId,{['draft-item:'+h.draftId+':'+taskId]:true});\ncheck(selected.draft.items[0].selected===true,'EXPLICIT_REVIEW_AND_CHOICE_ALLOWED');\nconst final=await api.confirmSemantic(repo,{draftId:h.draftId,taskTempIds:[taskId],revision:api.semanticRevision(reviewed)});\ncheck(final.tasks.length===1,'EXPLICIT_CONFIRMATION_CREATES_ONE_TASK');\nconst finalState=api.stateOfRuntime(final,h.draftId);\ncheck(firstSnapshot===JSON.stringify({raw:finalState.rawHttpText,response:finalState.rawResponse,first:finalState.first}),'RAW_RESPONSE_FIRST_PRESERVED');\ncheck(final.timePoints.length===0&&final.reminderRecords.length===0,'NO_FAKE_DATE_OR_REMINDER');\nconst reopened=await api.SemanticRepository.open(name,store,undefined,'real-input-01'),loaded=await reopened.load();\ncheck(same(final,loaded),'INDEPENDENT_REPOSITORY_REOPEN_AGREEMENT');\nconst exported=JSON.parse(await reopened.exportJson());\ncheck(same(JSON.parse(JSON.stringify(loaded)),exported),'MEMORY_JSON_EXPORT_AGREEMENT');\nconst again=await api.confirmSemantic(reopened,{draftId:h.draftId,taskTempIds:[taskId],revision:api.semanticRevision(loaded)});\ncheck(same(loaded,again),'DUPLICATE_CONFIRMATION_NO_CHANGE');\nconst view=api.semanticView(loaded),dates=api.semanticDates(loaded),jobs=api.buildBrowserReminderJobs(view.tasks,new Date());\ncheck(jobs.length===0,'ACTUAL_JOBS_FUNCTION_ZERO');\nconst controlResults=[];\nfor(const kind of ['no-date','multi','condition-true','revision']){\n const n='rco-mainline-01-02-i1-real-input-readonly-control-'+kind,{repo:c,store:cs}=await openCopy(api.emptyRealInputWorkspace(n,api.NOW),n);\n const receipt=await api.acquireText('readonly-control-'+kind,api.notices[kind]);\n const source=await c.saveReading(receipt,'旧已见人工工程对照','readonly-control-'+kind,api.NOW);\n const handle=await c.beginInputRun(source.sourceId,{version:api.REAL_STATE_VERSION,inputReceipt:receipt,sendSnapshot:await api.makeSendSnapshot(receipt,[1],[1],api.NOW)},'seen_engineering_replay','readonly-control-send-'+kind,api.semanticRevision(await c.load()),api.NOW);\n const response=await api.seenWire(kind,handle);await api.completeInputRun(c,handle,response.rawHttpText);\n const w=await c.load(),s=api.stateOfRuntime(w,handle.draftId),ids=s.first.items.filter(x=>x.requiresAction==='true'&&!x.issues.length).map(x=>x.tempId);\n check(ids.length>0,'CONTROL_NONZERO_'+kind);\n for(const id of ids)await api.reviewSemanticFact(c,{draftId:handle.draftId,taskId:id,revision:api.semanticRevision(await c.load()),operationId:'control-review-'+id});\n const f=await api.confirmSemantic(c,{draftId:handle.draftId,taskTempIds:ids,revision:api.semanticRevision(await c.load())});\n const fresh=await api.SemanticRepository.open(n,cs,undefined,'real-input-01');\n check(f.tasks.length===ids.length&&same(f,await fresh.load()),'CONTROL_CONFIRM_REOPEN_'+kind);\n controlResults.push({kind,selected:ids,confirmed:f.tasks.map(t=>({title:t.title,id:t.id})),execution:s.execution});\n}\ncheck(networkCalls===0,'ZERO_NETWORK_EXECUTIONS');\n\nconst priority=api.calculateTaskPriority(view.tasks[0],view.tasks,new Date(),dates);\nconst calendarHtml=renderToStaticMarkup(createElement(api.CalendarPage,{isolatedTimezone:'Asia/Shanghai',dateViews:dates,tasks:view.tasks,events:[],courseBlocks:[],onOpenTask:()=>{},onAddCourseBlock:()=>{},onRemoveCourseBlock:()=>{}}));\ncheck(calendarHtml.includes('无截止日期任务')&&calendarHtml.includes('保存活动手册'),'ACTUAL_CALENDAR_COMPONENT_UNDATED_SSR');\nconst compactView=value=>({states:value.states,items:value.draft.items.map(i=>({id:i.id,selected:i.selected,status:i.status,suggestion:i.suggestion}))});\nconst task=Object.fromEntries(Object.entries(loaded.tasks[0]).filter(([k])=>k!=='legacyData'));\nconst legacyTask=Object.fromEntries(Object.entries(view.tasks[0]).filter(([k])=>!['legacyData','sourceContent'].includes(k)));\nconsole.log(JSON.stringify({version:'a02-readonly-replay-1',artifactBasis:{preparation:binding.preparation,independentRepositoryRead:binding.independentRepositoryRead,unitId:'A02',handle:h,requestSha:row.requestSha,responseSha:row.responseSha},method:'Existing functions and SSR component; cloned exported preparation in MemoryWorkspaceRecordStore; no original/browser database writes',checks,first:{execution:first.execution,authority:first.context.authority,rawResponse:first.rawResponse,firstSha:sha(JSON.stringify(first.first)),issues:first.first.items.map(i=>({id:i.tempId,issues:i.issues,requiresAction:i.requiresAction}))},viewBefore:compactView(items),viewSelected:compactView(selected),unreviewedRejection:refused,component:{htmlSha:sha(factsHtml),visibleBeforeRawDetails:factsHtml.split('<details><summary>原始响应与首次建议')[0],mustProvide:factsHtml.includes('必须提供'),rawNoDateRetained:row.rawHttpText.includes('not_stated')},canonical:{task,materials:loaded.materials,timePoints:loaded.timePoints,reminders:loaded.reminderRecords,evidence:loaded.evidenceRefs.filter(e=>e.sourceId===h.sourceId),operations:finalState.operations,workspaceSha:sha(JSON.stringify(loaded)),sourceCount:loaded.sources.length},downstream:{task:legacyTask,dates,jobs:jobs.length,priority,calendarSsr:{htmlSha:sha(calendarHtml),undatedVisible:calendarHtml.includes('保存活动手册 · 原文未说明截止时间')}},controls:controlResults,sourceRawUnchanged:loaded.sourceVersions.find(v=>v.id===h.sourceVersionId).rawText===a02.context.index.sourceContent,networkCalls,modelCalls:0,actualBrowser:'NOT_RUN',actualDownload:'NOT_RUN',humanActiveTime:'NOT_RUN'}));\n",
+  "attempts": [
+    {
+      "attempt": 1,
+      "status": "PROBE_SETUP_ERROR",
+      "error": "MAINLINE05_INITIALIZATION_REJECTED",
+      "reason": "Nonempty historical snapshot cannot use empty initialization entry; corrected probe to load exact cloned snapshot into MemoryWorkspaceRecordStore through existing CanonicalWorkspaceRepository.save. No product source or original database changed."
+    },
+    {
+      "attempt": 2,
+      "status": "PROBE_BUILD_ERROR",
+      "error": "React is not defined",
+      "reason": "Probe omitted existing jsx:automatic build option; only in-memory orchestration corrected."
+    },
+    {
+      "attempt": 3,
+      "status": "OUTPUT_OBSERVATION_TRUNCATED",
+      "reason": "Large JSON output exceeded observer limit; not counted as acceptance evidence."
+    },
+    {
+      "attempt": 4,
+      "status": "PASS_INTERNAL_REPLAY",
+      "checks": 24
+    },
+    {
+      "attempt": 5,
+      "status": "PASS_INTERNAL_REPLAY_NOT_PRODUCT_ACCEPTANCE",
+      "checks": 25,
+      "note": "Added actual Calendar SSR and actual priority function diagnostics; overlapping runs not cumulative."
+    }
+  ],
+  "guardrails": {
+    "sourceChanges": 0,
+    "ledgerChanges": 0,
+    "receiptsChanges": 0,
+    "envReads": 0,
+    "modelCalls": 0,
+    "clipboardReads": 0,
+    "originalDbWrites": 0,
+    "productAcceptance": "NOT_COMPLETE",
+    "metricsModified": false
+  },
+  "classification": "Known-case response handoff diagnostic, not unseen accuracy or real user acceptance"
+}

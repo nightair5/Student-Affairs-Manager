@@ -1888,3 +1888,11 @@
 - actual: 只发A02一次，HTTP200/5651ms，输入3781/输出561/reasoning0；费用上界16392微元=0.016392元。总2次、占用3316392微元；A01未知预留3.30元不是确认消费，实扣NOT_OBSERVABLE。公开官方价格/参数HTML与旧SHA一致；合法.env仅服务端通过TLS使用，0剪贴板/代理凭据/新试连接/重试/系统修改。A02完成即停止，无A03/B/C或浏览器竞用。
 - quality: 已见匿名no-date单例，任务和requiresAction1/1匹配、无假日期；Complete Case=false、Major Correction=true原评分保持。材料实体、时态/效果、依据归属、描述/完成标准是精确差异，不一概判为理解错误或真人重大修改。独立重算与RESULT一致；总体模型准确率本轮未测量。自动选择NOT_ENABLED；未完成真实A02确认保存/Edge/省时，完整包NOT_COMPLETE。
 - integrity-delivery: 945保护、121旧证据全SHA+原账本唯一追加、14上轮证据、3旧收据、日志前缀保持；发送后独审PASS_SCOPE_ONLY。仅新审计证据、原账本追加、短交接与日志Git交付，42实现留本机未提交；下一唯一主线为现有A02零调用回放和差异裁决，不先换模型/救分/买A03。精确授权提示见本run AUDIT；无真实库/稳定接入/部署，本轮交付后停止。
+
+## 143. MAINLINE-REAL-INPUT-01 A02只读回放与差异裁决 — 2026-09-07
+
+- authorization-preflight: 起点HEAD/live远端835ae162071b7181ea5bb325b475113e5108da5d；42最终SHA/945保护/旧静态证据/原账本5事件和5收据/日志前缀一致。本轮仅历史响应只读回放、差异裁决与审计交付，不改产品、Expected/candidate/scorer或原结果；0模型/paid/recover/A03/密钥/剪贴板/原库写入。
+- replay: 按原STATE绑定preparation和真实独立repository下载，将原工作区副本载入MemoryWorkspaceRecordStore并走原联合校验；原A02请求SHA/raw/handle保持，来源仍live_model_candidate，不伪称human_engineering。现有completeInputRun/Review/Confirm链路模拟主动核对和选择后确认1条任务，新仓储实例/内存JSON一致，重复不增项，原始/首次保留，0时间0提醒0jobs。4类旧人工正常对照共5条确认，最终25/25检查，不累计重叠attempt，不称浏览器或模型25样本。
+- findings: required=true在semanticState转missing，面板“必须提供”，实际排序函数增加缺材料18分（总33），原文仅要求保存，未说明缺少或提交，属于产品事实与展示偏移。present/local_change未改变本例任务与确认；无截止原句保留但摘要粗化为“未说明”。原Complete Case=false/Major标记保留，不等同全部语义错或真人重大修改；总体模型准确率本轮未测量。
+- boundary: 实际SemanticFacts/CalendarPage仅SSR；现有launcher只生成seenWire，另一浏览器路径会真实发送，不能承接已付费A02历史响应。实际Edge/逐键/刷新/IndexedDB/下载NOT_RUN，未绕过身份/新建接口或改系统。探针初始化与JSX配置错误只修内存编排；输出截断不计验收，各attempt见新REPLAY。
+- decision-delivery: NO_PROMOTION，内部诊断可交付但完整产品NOT_COMPLETE。下一唯一建议在原42内明确批准NEXT_SCOPE的12路径，连续完成历史A02真实App回放与材料必需性/用户准备状态解耦；全局Schema/旧默认/Expected与历史保持，不能承接则精确申请。只提交新4审计文件、短交接与追加日志，42源码仍未提交；A01未知预留和A02已消费grant不动，完成后停止。
