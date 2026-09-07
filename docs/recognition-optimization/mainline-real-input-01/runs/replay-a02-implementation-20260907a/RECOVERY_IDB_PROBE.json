@@ -1,0 +1,18 @@
+{
+  "browser": "Edge extension browser 2, original tab 763114724",
+  "origin": "http://127.0.0.1:6631",
+  "name": "rco-mainline-01-02-i1-real-input-d030c507-3f7c-4a2c-a511-8cd5bd534862",
+  "probeName": "rco-mainline-01-02-i1-real-input-d030c507-3f7c-4a2c-a511-8cd5bd534862-aborted-open-probe-118a9a8d-7000-4717-86fd-872e29eec018",
+  "engine": "actual Edge IndexedDB",
+  "oldVersions": [0, 0],
+  "legacyHandlerCalls": 0,
+  "probeDatabasePersisted": false,
+  "originalRepositorySha256": "b7c08ed26349a7ad5e1a67236058aa9c91ed6b678a2cf210647f5d59473b758a",
+  "comparisonSource": "Clicked real recorded EngineeringTools probe then independent new CanonicalWorkspaceRepository(new IsolatedTestStore(name)).load; full object retained as recoveryBefore in same CUA REPL. Digest matches prior actual download (2) original workspace. Not derived by hashing one file twice.",
+  "sources": 16,
+  "tasks": 0,
+  "originalWorkspaceWrites": 0,
+  "foreignDatabase": 0,
+  "forbiddenNetwork": 0,
+  "note": "Probe name never committed: each upgrade transaction aborted before legacy handler; second open again saw oldVersion 0. Original database was neither replaced nor cleared."
+}

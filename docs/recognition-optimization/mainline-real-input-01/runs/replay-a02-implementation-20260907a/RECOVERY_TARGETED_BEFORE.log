@@ -1,0 +1,57 @@
+
+ RUN  v3.2.7 C:/Users/Winner/student-affairs-multimodal-exp
+
+x·············
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/experiments/realInput01/acceptance.test.tsx > real App runtime and public send connection; memory/SSR not browser acceptance > actual browser open wrapper rejects creation/upgrade events before legacy handlers, retains existing and old-default opens
+AssertionError: 
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: upgrade transaction must abort
+
+0 !== 1
+
+    at file:///C:/Users/Winner/student-affairs-multimodal-exp/[eval1]:19:16
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:224:26
+    at async ModuleLoader.executeModuleJob (node:internal/modules/esm/loader:221:20)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 0,
+  expected: 1,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.18.0
+: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ [eval1]:19:16
+ ❯ src/experiments/realInput01/acceptance.test.tsx:71:57
+     69|       console.log('real wrapper EventTarget contract: missing/upgrade …
+     70|     `],{encoding:'utf8',timeout:15000,maxBuffer:1024*1024})
+     71|     expect(probe.status,probe.stdout+'\n'+probe.stderr).toBe(0)
+       |                                                         ^
+     72|   })
+     73|   it('original A02 real App driver preserves provenance, material obse…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 13 passed (14)
+   Start at  18:49:48
+   Duration  5.09s (transform 700ms, setup 0ms, collect 1.11s, tests 3.40s, environment 0ms, prepare 246ms)
+
+{"actualRootEnvReadAttempts":0,"environmentFilesDisabled":true}

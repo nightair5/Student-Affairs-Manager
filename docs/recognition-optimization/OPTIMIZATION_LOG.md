@@ -1923,3 +1923,14 @@
 - execution-stop: 主代理三次npx vitest未指定隔离envDir/cacheDir，本机Vite默认从根.env读取配置，违反本轮禁止配置访问。只以实际命令/框架源码/.env元数据定位，未重新读取密钥明文；没有模型请求或明文工具输出。此边界FAIL不因定向通过而消除；发现即停止工程/浏览器，仅审计交付。
 - review: 无上下文独审12SHA匹配，BLOCKED；browser.tsx直接new IsolatedTestStore，原库缺失时依赖的升级事件会先创建空库，不能只用MemoryStore缺库拒绝证明原库恢复边界。静态可定位，未在真实浏览器触发；审查者0测试/密钥配置/浏览器访问。完整独审与工程、实际Edge/下载读库未完成。
 - delivery-boundary: 945保护、160旧证据、5收据、A01/A02账本与旧日志前缀最终核验见CONTINUATION_CHECKS；42业务实现仍未提交，仅新增审计/短交接/日志Git交付。模型准确率本轮未测量，0新增模型/费用/真实库/部署。需恢复授权后同包先隔离测试执行与缺失原库守卫，再完成用户闭环，不换模型或重做PLAN。
+
+## 148. 同包已登记环境与原库打开边界恢复 — 2026-09-07
+
+- authorization: 用户明确恢复上轮两个已登记问题，保留原12范围，产品修复只在recorded browser.tsx及acceptance职责内，旧store/仓储只读；普通范围内问题修复后继续，新的重大安全/范围/保护问题停止。
+- preflight: HEAD/live远端bccc453226d35ca50656d84add81921bbd3b768a一致；42源码、945保护、160旧证据、账本5收据与291513字节日志边界匹配。未读取实际.env，未改旧缓存/依赖/旧证据。临时目录与本轮身份见RECOVERY_BASELINE。
+- sequence: 框架启动前显式禁用env读取并加读取守卫，新临时env/cache/build，先无密钥哨兵正反验证；再原库打开升级事件正反验证、独审/完整工程/原6631真实App与下载读库。0模型及费用。
+- recovered: 仅browser recorded模式增加先于旧store的升级事务中止/非v1拒绝，acceptance新增事件反例与正常对照；定向64/64。新测试漏传必填initialText在获准路径补空值，旧断言未弱化；其余40源码匹配旧快照，42最终SHA见RECOVERY_IMPLEMENTATION_SNAPSHOT。
+- engineering: lint0错误4警告、App类型第二次及Node类型PASS；全量第一次1230/1超时/1跳过，第二次1231/0/1跳过，worker2且旧断言/timeout不变。Core Node62/62、Schema/时间两门、历史逐字20文件及原封4/4、当前依赖兼容13、build/稳定14JS隔离、安全1194文件0发现、依赖0漏洞。预算/gateway首次编排缺fixture4/80，显式新test-temp后独立83/83；旧checker历史HEAD/fixture门未完成，不混作全PASS，各attempt保留。实际根.env本轮未读取，旧默认读取FAIL不改写。
+- actual-edge: 原6631/原tab/原库，真实IndexedDB两次同名probe升级中止、oldVersion[0,0]/旧建表0；未提交probe库或清库/回退。独立new repository读原库16Source/0Task，SHA b7c08ed26349a7ad5e1a67236058aa9c91ed6b678a2cf210647f5d59473b758a。原A02真实回答回放进入同库待确认，刷新收件箱能找回并打开真实面板；非新的模型调用。
+- scope-block: 实际面板将真实A02误标人工工程响应，DraftReviewPanel.tsx:148硬编码与App.tsx:1514接线缺口，当前12路径不授权改两公共文件。原文/raw/first及live_model_candidate保留，未以标签问题推断存储篡改。独审确认最小需App/Panel两例外，当前不修且不正式确认，后续逐键/材料保存/下游/真实下载NOT_RUN。
+- delivery: 恢复差异独审PASS，最终交付BLOCKED；只RECOVERY报告/约80行交接/追加日志审计提交，42业务保留未提交。945/160/旧CONTINUATION证据/账本5收据/日志前缀按RECOVERY_CHECKS核验；0新增模型/费用/密钥/剪贴板/真实库/部署，模型准确率本轮未测量。下一步同包批准两文件来源说明接线，保留现有待确认现场，不重做PLAN或A02。
