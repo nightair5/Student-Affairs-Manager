@@ -1,0 +1,155 @@
+{
+  "version": "real-input-a02-recovery-result-1",
+  "unitId": "A02",
+  "bindingSha": "d478c58f7f44e68a852bc7712c5d3e7994f2390750f5915d65204963dff9e73b",
+  "grantSha": "718194d3293b9390f5bb2049d598044496fe936cdf25166a1f7eb22c0e356633",
+  "totalAttempts": 2,
+  "newAttempts": 1,
+  "originalA01": {
+    "status": "TRANSPORT_OR_CRASH_UNKNOWN",
+    "attempts": 1,
+    "unknownReservationMicroCny": 3300000
+  },
+  "rows": [
+    {
+      "unitId": "A02",
+      "responseSha": "5e201902469878c85b1e87364e6cd07be58e02bccbe509bbee0c09728457f55e",
+      "scorerSha": "ad76149f8a88cb4adda6dca78b210daaa4f3c800d17582767911e8ace2658e1d",
+      "score": {
+        "scorerVersion": "real-input-seen-fact-diagnostic-2",
+        "label": "已见人工工程参考的精确诊断，不是未见或商业准确率",
+        "metrics": {
+          "task": {
+            "predicted": 1,
+            "reference": 1,
+            "correct": 1,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": 1,
+            "recall": 1
+          },
+          "requiresAction": {
+            "predicted": 1,
+            "reference": 1,
+            "correct": 1,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": 1,
+            "recall": 1
+          },
+          "time": {
+            "predicted": 0,
+            "reference": 0,
+            "correct": 0,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": null,
+            "recall": null
+          },
+          "material": {
+            "predicted": 1,
+            "reference": 0,
+            "correct": 0,
+            "falsePositive": 1,
+            "falseNegative": 0,
+            "precision": 0,
+            "recall": null
+          },
+          "event": {
+            "predicted": 0,
+            "reference": 0,
+            "correct": 0,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": null,
+            "recall": null
+          },
+          "condition": {
+            "predicted": 1,
+            "reference": 1,
+            "correct": 1,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": 1,
+            "recall": 1
+          },
+          "revision": {
+            "predicted": 0,
+            "reference": 0,
+            "correct": 0,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": null,
+            "recall": null
+          },
+          "evidence": {
+            "predicted": 2,
+            "reference": 1,
+            "correct": 0,
+            "falsePositive": 2,
+            "falseNegative": 1,
+            "precision": 0,
+            "recall": 0
+          },
+          "semantic": {
+            "predicted": 1,
+            "reference": 1,
+            "correct": 0,
+            "falsePositive": 1,
+            "falseNegative": 1,
+            "precision": 0,
+            "recall": 0
+          },
+          "coverage": {
+            "predicted": 3,
+            "reference": 3,
+            "correct": 1,
+            "falsePositive": 2,
+            "falseNegative": 2,
+            "precision": 0.3333333333333333,
+            "recall": 0.3333333333333333
+          }
+        },
+        "matchingAmbiguities": [],
+        "metricStatus": "EXACT_REFERENCE_DIAGNOSTIC",
+        "schemaParsed": true,
+        "issues": [],
+        "completeCase": false,
+        "majorCorrectionRequired": true,
+        "forbidden": 0,
+        "automaticSelection": "NOT_ENABLED",
+        "humanActiveEditTime": "NOT_RUN",
+        "candidateTaskCount": 1,
+        "referenceTaskCount": 1
+      }
+    }
+  ],
+  "scoreError": null,
+  "stopped": true,
+  "automaticContinuation": false,
+  "notRun": [
+    "A03",
+    "A04",
+    "A05",
+    "A06",
+    "A07",
+    "A08",
+    "B01",
+    "B02",
+    "B03",
+    "B04",
+    "B05",
+    "B06",
+    "B07",
+    "B08"
+  ],
+  "lastHttpStatus": 200,
+  "lastDiagnostic": null,
+  "lastWaitingMs": 5651,
+  "costUpperMicroCny": 3316392,
+  "a02CostUpperMicroCny": 16392,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticSelection": "NOT_ENABLED",
+  "humanTime": "NOT_RUN",
+  "qualityClaim": "已见工程单例诊断，不是盲测或真实材料准确率"
+}
