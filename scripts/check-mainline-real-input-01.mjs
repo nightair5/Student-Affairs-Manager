@@ -17,6 +17,7 @@ const git=(...args)=>execFileSync('git',args,{encoding:'utf8',windowsHide:true})
 /** Read-only current-stage protection. This is not a replacement for full
  * engineering, historical environment, paid safety or browser acceptance. */
 export function inspectProtection({stage}={}) {
+  if(stage==='batch-14')return inspectBatchProtection()
   if(stage!==undefined){ensure(stage==='recovery-a02','STAGE');return inspectRecoveryProtection()}
   ensure(resolve(process.cwd()).toLowerCase()===root.toLowerCase(),'WORKSPACE')
   ensure(git('branch','--show-current')===branch&&git('rev-parse','HEAD')===expectedHead,'AUTHORIZED_GIT')
@@ -69,6 +70,26 @@ function inspectRecoveryProtection() {
     ensure(log.length>=item.bytes&&hash(log.subarray(0,item.bytes))===item.sha256,'RECOVERY_LOG_PREFIX')
   return {head,branch,sources,protectedCount:945,protectedSha256:hash(JSON.stringify(protectedFiles)),
     fullEngineering:'NOT_RUN',browser:'NOT_RUN',stage:'recovery-a02'}
+}
+
+export function inspectBatchProtection() {
+  const D='docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/'
+  const baseline=JSON.parse(readFileSync(D+'BATCH_BASELINE.json')),head=git('rev-parse','HEAD')
+  ensure(resolve(process.cwd()).toLowerCase()===root.toLowerCase()&&git('branch','--show-current')===branch
+    &&head==='ae78dfef255eb5344868d1b4319e486537ac6681'&&baseline.head===head,'BATCH_GIT')
+  const paths=baseline.sources.map(s=>s.path)
+  ensure(paths.length===42&&new Set(paths).size===42,'BATCH_PATHS')
+  const files=git('ls-tree','-r','--name-only','-z',baseCommit).split('\0').filter(p=>p&&!paths.includes(p)&&![contextPath,logPath].includes(p))
+    .map(path=>({path,sha256:hash(readFileSync(path))}))
+  ensure(files.length===945&&hash(JSON.stringify(files))===baseline.protected.sha256,'BATCH_PROTECTION')
+  const prior=JSON.parse(readFileSync(D+'BASELINE.json'))
+  for(const f of [...prior.old,...prior.receipts,...baseline.priorLabelEvidence,
+    ...JSON.parse(readFileSync(D+'CONTINUATION_CHECKS.json')).newFiles,...JSON.parse(readFileSync(D+'RECOVERY_CHECKS.json')).newFiles])
+    ensure(hash(readFileSync(f.path))===f.sha256,'BATCH_OLD_EVIDENCE:'+f.path)
+  const ledger=readFileSync('docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/CALL_LEDGER.jsonl')
+  ensure(hash(ledger.subarray(0,baseline.ledgerBoundary.bytes))===baseline.ledgerBoundary.sha256,'BATCH_LEDGER_PREFIX')
+  ensure(hash(readFileSync(logPath).subarray(0,baseline.logBoundary.bytes))===baseline.logBoundary.sha256,'BATCH_LOG_PREFIX')
+  return {head,branch,protectedCount:945,sources:paths.map(path=>({path,exists:existsSync(path),workingSha256:hash(readFileSync(path))}))}
 }
 
 export function verifyReviewBinding({head,expectedHead:expected,sources,review}) {

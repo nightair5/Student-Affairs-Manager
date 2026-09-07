@@ -1,0 +1,13 @@
+
+ RUN  v3.2.7 C:/Users/Winner/student-affairs-multimodal-exp
+
+ ✓ src/experiments/realInput01/acceptance.test.tsx (17 tests) 12021ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > batch actual recorded responses retain raw and first suggestions, never default select, preserve A02 and reject identity substitution  9158ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > original A02 real App driver preserves provenance, material observation and explicit edits through independent reload  958ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > recorded launcher builds real App, serves only bound A02 and rejects unauthorized endpoints without model code  732ms
+
+ Test Files  1 passed (1)
+      Tests  17 passed (17)
+   Start at  23:45:06
+   Duration  13.23s (transform 585ms, setup 0ms, collect 965ms, tests 12.02s, environment 0ms, prepare 77ms)
+

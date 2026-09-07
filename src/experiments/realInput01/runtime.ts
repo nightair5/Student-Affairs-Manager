@@ -40,10 +40,33 @@ export async function validateRecordedA02(record:RecordedA02) {
  * existing capture and validator; publish the result plus material policy in one CAS. */
 export async function replayRecordedA02(repo:SemanticRepository,record:RecordedA02) {
   record=structuredClone(record);await validateRecordedA02(record)
+  return stageRecordedResponse(repo,record)
+}
+export interface RecordedBatch extends Omit<RecordedA02,'version'> {
+  version:'recorded-batch-1'; unitId:string
+}
+export interface RecordedBatchIdentity {unitId:string;requestSha:string;responseSha:string}
+/** A settled, server-bound response; not a new prediction or an engineering answer. */
+export async function replayRecordedBatch(repo:SemanticRepository,record:RecordedBatch,identity:RecordedBatchIdentity) {
+  record=structuredClone(record);identity=structuredClone(identity)
+  exactKeys(record,['version','unitId','name','handle','context','requestSha','responseSha','rawHttpText'])
+  exactKeys(identity,['unitId','requestSha','responseSha'])
+  if(record.version!=='recorded-batch-1'||! /^(?:A0[3-8]|B0[1-8])$/.test(record.unitId)
+    ||record.name!==recordedA02Identity.name||record.unitId!==identity.unitId||record.requestSha!==identity.requestSha
+    ||record.responseSha!==identity.responseSha||await sha256Text(record.rawHttpText)!==identity.responseSha
+    ||await sha256Text((await buildModelRequest(record.context)).serialized)!==identity.requestSha)throw Error('REAL_INPUT_BATCH_RECORDED_IDENTITY')
+  return stageRecordedResponse(repo,record)
+}
+async function stageRecordedResponse(repo:SemanticRepository,record:RecordedA02|RecordedBatch) {
   if(repo.profile!=='real-input-01'||repo.name!==record.name)throw Error('REAL_INPUT_RECORDED_DATABASE')
   const before=await repo.load(),draft=before.extractionDrafts.find(d=>d.id===record.handle.draftId)
   const pending=draft?.legacyData?.realInputPending as {execution?:string}|undefined
   if(pending?.execution!=='live')throw Error('REAL_INPUT_RECORDED_PROVENANCE')
+  if(record.version==='recorded-batch-1'&&draft?.status==='failed'){
+    const failure=draft.legacyData?.mainline05Failure as {response?:unknown}|undefined
+    if(failure?.response!==record.rawHttpText)throw Error('REAL_INPUT_RECORDED_EXISTING_MISMATCH')
+    throw Error('REAL_INPUT_RECORDED_REJECTED_PRESERVED')
+  }
   if(draft?.legacyData?.mainline05){
     const state=stateOfRuntime(before,draft.id)
     if(state.version!==REAL_STATE_VERSION||state.execution!=='live'||state.rawHttpText!==record.rawHttpText||!materialReviewEnabled(state))throw Error('REAL_INPUT_RECORDED_EXISTING_MISMATCH')
@@ -53,7 +76,18 @@ export async function replayRecordedA02(repo:SemanticRepository,record:RecordedA
   const memory=Object.assign(new MemoryWorkspaceRecordStore(),{name:repo.name})
   await new CanonicalWorkspaceRepository(memory).save(before)
   const staged=await SemanticRepository.open(repo.name,memory,undefined,'real-input-01')
-  await completeInputRun(staged,record.handle,record.rawHttpText)
+  try { await completeInputRun(staged,record.handle,record.rawHttpText) }
+  catch(error){
+    if(record.version!=='recorded-batch-1')throw error
+    const failed=await staged.load(),failedDraft=failed.extractionDrafts.find(d=>d.id===record.handle.draftId)
+    const failure=failedDraft?.legacyData?.mainline05Failure as {response?:unknown}|undefined
+    if(failedDraft?.status!=='failed'||failure?.response!==record.rawHttpText)throw error
+    await repo.transaction(w=>{
+      if(semanticRevision(w)!==semanticRevision(before))throw Error('REAL_INPUT_STALE_RELOAD_REQUIRED')
+      return failed
+    })
+    throw Error('REAL_INPUT_RECORDED_REJECTED_PRESERVED',{cause:error})
+  }
   const next=await enableMaterialReview(staged,record.handle.draftId)
   return repo.transaction(w=>{
     if(semanticRevision(w)!==semanticRevision(before))throw Error('REAL_INPUT_STALE_RELOAD_REQUIRED')
@@ -143,10 +177,12 @@ export async function createRealInputRuntime(options: {
   name: string; store: WorkspaceRecordStore & {readonly name: string}; initial?: WorkspaceV8;
   execution: 'live' | 'seen_engineering_replay'; resources: LocalExtractionResources; execute: ModelExecutor;
   recordedA02?: true;
+  recordedBatch?: true;
 }) {
   options = { ...options, resources: structuredClone(options.resources) }
   if (!['live','seen_engineering_replay'].includes(options.execution)) throw Error('REAL_INPUT_EXECUTION_PROFILE')
   if(options.recordedA02&&(options.execution!=='live'||options.initial||options.name!==recordedA02Identity.name))throw Error('REAL_INPUT_RECORDED_RUNTIME')
+  if(options.recordedBatch&&(options.recordedA02||options.execution!=='live'||options.initial||options.name!==recordedA02Identity.name))throw Error('REAL_INPUT_BATCH_RECORDED_RUNTIME')
   await SemanticRepository.open(options.name,options.store,options.initial,'real-input-01')
   return createMainlineRuntime({name:options.name,store:options.store,profile:'real-input-01',
     recognize:()=>{throw Error('REAL_INPUT_OLD_RECOGNIZER_FORBIDDEN')},
@@ -156,10 +192,10 @@ export async function createRealInputRuntime(options: {
         createElement(SemanticFacts,{state:stateOfRuntime(workspace,draftId),taskId,onFocus})
       return {load:()=>repo.load(),view:semanticView,dates:semanticDates,review:semanticReview,edit:i=>editSemantic(repo,i),
         confirm:i=>confirmSemantic(repo,i),exportJson:()=>repo.exportJson(),capture:async()=>{throw Error('请先在真实输入面板保存并核对本次文字范围。')},
-        recognitionDescription:options.recordedA02?'A02历史真实模型响应回放 · 本轮零调用':options.execution==='live'?'真实模型建议 · 尚未逐项核对':'已见匿名工程回放 · 非模型预测',
-        realInput:{profile:'real-input-01',networkDescription:options.recordedA02?'只核对已记录A02响应；禁止新发送，不读取密钥，不访问模型。':options.execution==='live'
+        recognitionDescription:options.recordedBatch?'已记录真实模型批次 · 原回答核对，不再调用模型':options.recordedA02?'A02历史真实模型响应回放 · 本轮零调用':options.execution==='live'?'真实模型建议 · 尚未逐项核对':'已见匿名工程回放 · 非模型预测',
+        realInput:{profile:'real-input-01',networkDescription:options.recordedBatch?'本批14次已派发完毕；仅核对已记录响应与本机提取文字，不再发送。':options.recordedA02?'只核对已记录A02响应；禁止新发送，不读取密钥，不访问模型。':options.execution==='live'
           ?'本机读取；仅在逐次确认且预算允许时发送本次文字，不发送文件或工作区。':'本机读取与已见工程回放，无外部模型调用。',
-          inputPanel:props=>options.recordedA02?createElement('p',{role:'status'},'当前只允许A02历史响应核对，已关闭新录入和发送。请从收件箱恢复A02。'):createElement(InputReview,{...props,repo,resources:options.resources,execution:options.execution,
+          inputPanel:props=>options.recordedBatch?createElement('p',{role:'status'},'本批已调用完成；请从收件箱核对原回答。没有额外模型请求授权，新发送已关闭。'):options.recordedA02?createElement('p',{role:'status'},'当前只允许A02历史响应核对，已关闭新录入和发送。请从收件箱恢复A02。'):createElement(InputReview,{...props,repo,resources:options.resources,execution:options.execution,
             send:async(sourceId,pages,reviewed,operationId)=>sendRealInput(repo,{sourceId,pages,reviewed,operationId,revision:semanticRevision(props.workspace)},options.execution,options.execute)}),
           factEditor:props=>createElement(FactCorrectionEditor,{...props,repo})},
         semantic:{facts,timezone:'Asia/Shanghai',exportName:'mainline-real-input-01-workspace.json',

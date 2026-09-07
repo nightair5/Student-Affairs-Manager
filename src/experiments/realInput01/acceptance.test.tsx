@@ -5,7 +5,8 @@ import { DashboardPage } from '../../pages/DashboardPage'
 import { MemoryWorkspaceRecordStore } from '../../domain/v2/repository'
 import { createRealInputRuntime, emptyRealInputWorkspace, sendRealInput, inputRunContext, dispatchRealInput } from './runtime'
 import { createModelClient } from './modelClient'
-import { buildModelRequest } from './modelWire'
+import { buildModelRequest, parseModelEnvelope } from './modelWire'
+import { composeSemantics } from '../mainline04/semanticComposer'
 import { acquireText } from './inputAcquisition'
 import { makeSendSnapshot, sha256Text } from './inputReceipt'
 import { SemanticRepository } from '../mainline05/semanticRepository'
@@ -17,7 +18,7 @@ import { readFileSync } from 'node:fs'
 import { createHash } from 'node:crypto'
 import { spawnSync } from 'node:child_process'
 import { CanonicalWorkspaceRepository } from '../../domain/v2/repository'
-import { replayRecordedA02, recordedA02Identity, type RecordedA02 } from './runtime'
+import { replayRecordedA02, replayRecordedBatch, recordedA02Identity, type RecordedBatch, type RecordedA02 } from './runtime'
 import { editSemantic, reviewSemanticMaterial } from '../mainline05/semanticConfirmation'
 import { effectiveStateFacts } from '../mainline05/semanticState'
 import { SemanticFacts } from '../mainline05/SemanticFacts'
@@ -41,6 +42,58 @@ async function setup() {
   return {name,store,runtime,repo,seen}
 }
 describe('real App runtime and public send connection; memory/SSR not browser acceptance',()=>{
+  it('batch actual recorded responses retain raw and first suggestions, never default select, preserve A02 and reject identity substitution',async()=>{
+    const root='docs/recognition-optimization/mainline-real-input-01/runs/',D=root+'replay-a02-implementation-20260907a/'
+    const binding=JSON.parse(readFileSync(root+'usage-resume-20260907a/STATE.json','utf8'))
+    const prep=JSON.parse(readFileSync(binding.preparation.path,'utf8')),original=JSON.parse(readFileSync(binding.independentRepositoryRead.path,'utf8'))
+    const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:prep.name})
+    await new CanonicalWorkspaceRepository(store).save(original.workspace)
+    const repo=await SemanticRepository.open(prep.name,store,undefined,'real-input-01')
+    const execute=vi.fn(async()=>{throw Error('NO_NEW_REQUEST')})
+    const runtime=await createRealInputRuntime({name:prep.name,store,execution:'live',recordedBatch:true,resources,execute})
+    expect(renderToStaticMarkup(<App runtime={runtime}/>)).toContain('已记录真实模型批次')
+    const a02=structuredClone(original.workspace.extractionDrafts.find((d:{id:string})=>d.id===recordedA02Identity.handle.draftId))
+    let retainedValid=0,retainedRejected=0
+    for(const unit of binding.units.slice(2)){
+      const raw=JSON.parse(readFileSync(D+'BATCH_'+unit.unitId+'_RAW.jsonl','utf8'))
+      const p=prep.preparations.find((p:{unitId:string})=>p.unitId===unit.unitId)
+      const record:RecordedBatch={version:'recorded-batch-1',unitId:unit.unitId,name:prep.name,handle:p.handle,context:p.context,
+        requestSha:unit.requestSha,responseSha:raw.responseSha,rawHttpText:raw.rawHttpText}
+      const identity={unitId:unit.unitId,requestSha:unit.requestSha,responseSha:raw.responseSha},before=await repo.load()
+      await expect(replayRecordedBatch(repo,{...record,rawHttpText:record.rawHttpText+' '},identity)).rejects.toThrow('IDENTITY')
+      expect(await repo.load()).toEqual(before)
+      const context={...p.context,authority:'live_model_candidate' as const,profile:'real-input-01' as const,ownershipMode:'mainline05-own-assets-1' as const}
+      const actual=await composeSemantics(parseModelEnvelope(raw.rawHttpText,context).adaptedResponse,context)
+      // The frozen contract rejects dangling references. Such actual model outputs
+      // are negative controls, not valid drafts or repaired reference answers.
+      if(actual.issues.some(i=>['BAD_ENTITY_REFERENCE','BAD_REVISION_REFERENCE'].includes(i.code))){
+        await expect(replayRecordedBatch(repo,record,identity)).rejects.toThrow('REJECTED_PRESERVED')
+        const failed=await repo.load(),draft=failed.extractionDrafts.find(d=>d.id===p.handle.draftId)!
+        expect(draft.status).toBe('failed');expect(draft.result).toBeNull()
+        expect(draft.legacyData?.mainline05Failure).toMatchObject({response:record.rawHttpText})
+        expect(failed.tasks).toHaveLength(0);expect(failed.extractionDrafts.find(d=>d.id===a02.id)).toEqual(a02)
+        await expect(replayRecordedBatch(repo,record,identity)).rejects.toThrow('REJECTED_PRESERVED')
+        expect(await repo.load()).toEqual(failed);retainedRejected++;continue
+      }
+      const saved=await replayRecordedBatch(repo,record,identity),state=stateOfRuntime(saved,p.handle.draftId)
+      if(state.version!==REAL_STATE_VERSION)throw Error('EXPECTED_REAL_STATE')
+      expect(state.rawHttpText).toBe(raw.rawHttpText);expect(state.context.authority).toBe('live_model_candidate')
+      expect(state.first.items.every(i=>!i.defaultSelected)).toBe(true);expect(saved.tasks).toHaveLength(0)
+      expect(saved.extractionDrafts.find(d=>d.id===a02.id)).toEqual(a02)
+      expect(await replayRecordedBatch(repo,record,identity)).toEqual(saved)
+      retainedValid++
+    }
+    expect(retainedValid).toBe(12);expect(retainedRejected).toBe(2)
+    const p=prep.preparations.find((p:{unitId:string})=>p.unitId==='B02'),draftId=p.handle.draftId
+    const first=stateOfRuntime(await repo.load(),draftId),facts=effectiveStateFacts(first).facts,task=facts.tasks[0]
+    for(const material of facts.materials)await reviewSemanticMaterial(repo,{draftId,materialId:material.tempId,
+      revision:semanticRevision(await repo.load()),operationId:'batch-material-'+material.tempId,value:{required:true,status:'ready'}})
+    await reviewSemanticFact(repo,{draftId,taskId:task.id,revision:semanticRevision(await repo.load()),operationId:'batch-fact'})
+    const saved=await runtime.confirm({draftId,taskTempIds:[task.id],revision:semanticRevision(await repo.load())})
+    expect(saved.tasks).toHaveLength(1);expect(saved.timePoints).toEqual([]);expect(saved.reminderRecords).toEqual([])
+    expect(stateOfRuntime(saved,draftId).first).toEqual(first.first);expect(execute).not.toHaveBeenCalled()
+    expect(JSON.parse(await runtime.exportJson())).toEqual(JSON.parse(JSON.stringify(await new CanonicalWorkspaceRepository(store).load())))
+  },30000) // Fourteen full-graph recorded replays; no historical timeout or assertion changes.
   it('real-input source description changes only the review banner; engineering and ordinary defaults remain',async()=>{
     const {repo,runtime,seen}=await setup(), receipt=await acquireText('label-control',notices['no-date'])
     const source=await repo.saveReading(receipt,'已见工程通知','label-control',NOW)

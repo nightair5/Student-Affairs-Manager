@@ -24,14 +24,42 @@ export function loadRecordedA02() {
     requestSha:unit.requestSha,responseSha:raw.responseSha,rawHttpText:raw.rawHttpText}
 }
 
+export function loadRecordedBatch() {
+  const root='docs/recognition-optimization/mainline-real-input-01/runs/',old=root+'usage-resume-20260907a/',D=root+'replay-a02-implementation-20260907a/'
+  const stateBytes=readFileSync(old+'STATE.json');check(hash(stateBytes)==='d478c58f7f44e68a852bc7712c5d3e7994f2390750f5915d65204963dff9e73b','BATCH_STATE')
+  const state=JSON.parse(stateBytes),prepBytes=readFileSync(state.preparation.path);check(hash(prepBytes)===state.preparation.sha256,'BATCH_PREPARATION')
+  const prep=JSON.parse(prepBytes),ledger=readFileSync(old+'CALL_LEDGER.jsonl'),baseline=JSON.parse(readFileSync(D+'BATCH_BASELINE.json'))
+  check(hash(ledger.subarray(0,baseline.ledgerBoundary.bytes))===baseline.ledgerBoundary.sha256,'BATCH_OLD_PREFIX')
+  const rows=ledger.toString('utf8').trimEnd().split('\n').map(l=>JSON.parse(l)),events=rows.map(row=>row.event)
+  let previous='0'.repeat(64)
+  for(const [i,row] of rows.entries()){
+    check(row.previous===previous&&row.sequence===i&&row.hash===hash(JSON.stringify({sequence:i,previous,event:row.event})),'BATCH_LEDGER_CHAIN')
+    previous=row.hash
+  }
+  return state.units.slice(2).map(unit=>{
+    const result=JSON.parse(readFileSync(D+'BATCH_'+unit.unitId+'_RESULT.json'))
+    const raw=JSON.parse(readFileSync(D+'BATCH_'+unit.unitId+'_RAW.jsonl')),p=prep.preparations.find(p=>p.unitId===unit.unitId)
+    const settled=events.filter(e=>e.kind==='batchSettle'&&e.unitId===unit.unitId)
+    check(settled.length===1&&result.lastHttpStatus===200&&!result.stopDispatch&&result.unitId===unit.unitId
+      &&raw.unitId===unit.unitId&&raw.requestSha===unit.requestSha&&raw.candidateSha===unit.candidateSha&&raw.inputSha===unit.inputSha
+      &&hash(raw.rawHttpText)===raw.responseSha&&result.responseSha===raw.responseSha&&settled[0].responseSha===raw.responseSha
+      &&settled[0].requestSha===unit.requestSha&&p?.requestText===state.requests[unit.unitId]&&hash(p.requestText)===unit.requestSha,
+    'BATCH_RECORDED_BINDING')
+    return {version:'recorded-batch-1',unitId:unit.unitId,name:prep.name,handle:p.handle,context:p.context,
+      requestSha:unit.requestSha,responseSha:raw.responseSha,rawHttpText:raw.rawHttpText}
+  })
+}
+
 /** Fixed loopback assets only. No root/static directory serving, secret lookup,
  * upstream fetch, fallback recognizer or installation occurs in this launcher. */
-export async function createLocalApp({port,carrierManifest,checking=false,recordedA02=false}) {
+export async function createLocalApp({port,carrierManifest,checking=false,recordedA02=false,recordedBatch=false}) {
   check(Number.isSafeInteger(port)&&port>=1024&&port<=65535,'EXPLICIT_PORT')
   const origin='http://127.0.0.1:'+port, capability=randomBytes(32).toString('hex')
   check(!recordedA02||port===6631,'RECORDED_ORIGIN')
+  check(!recordedBatch||(!recordedA02&&port===6631),'BATCH_RECORDED_ORIGIN')
   const recorded=recordedA02?loadRecordedA02():null
-  const mode=recorded?'recorded_a02':'seen_engineering_replay'
+  const batch=recordedBatch?loadRecordedBatch():null
+  const mode=batch?'recorded_batch':recorded?'recorded_a02':'seen_engineering_replay'
   const manifestPath=realpathSync(carrierManifest), manifest=JSON.parse(readFileSync(manifestPath,'utf8'))
   check(manifest.version==='real-input-engineering-carriers-1'&&manifest.records?.length===8,'CARRIERS')
   check(manifest.fixturePath==='src/experiments/mainline01/fixtures.ts'
@@ -63,7 +91,8 @@ export async function createLocalApp({port,carrierManifest,checking=false,record
     langPath:origin+'/real-input-assets/lang',pdfWorkerPath:origin+'/real-input-assets/pdf.worker.min.mjs'}
   const bundle=await build({entryPoints:['src/experiments/realInput01/browser.tsx'],bundle:true,write:false,metafile:true,outdir:'memory',
     platform:'browser',format:'esm',target:'es2022',jsx:'automatic',loader:{'.svg':'dataurl'},
-    define:{'process.env.NODE_ENV':'"test"','import.meta.env':'{}',__REAL_INPUT_CONFIG__:JSON.stringify({mode,capability,resources,carriers:recorded?[]:carriers,units:[],
+    define:{'process.env.NODE_ENV':'"test"','import.meta.env':'{}',__REAL_INPUT_CONFIG__:JSON.stringify({mode,capability,resources,carriers:recorded||batch?[]:carriers,units:[],
+      ...(batch?{batch:batch.map(({unitId,requestSha,responseSha})=>({unitId,requestSha,responseSha})),recorded:{name:batch[0].name}}:{}),
       ...(recorded?{recorded:{name:recorded.name,requestSha:recorded.requestSha,responseSha:recorded.responseSha}}:{})})}})
   const parsedReferenceModules=Object.keys(bundle.metafile.inputs).filter(path=>/(?:seenInputs|engineeringReplay|fixtures\.ts|fidelity|evaluation\.ts|\.test\.|DATASET|raw-results)/i.test(path))
   const browserJs=bundle.outputFiles.find(file=>file.path.endsWith('.js')).text
@@ -99,10 +128,15 @@ export async function createLocalApp({port,carrierManifest,checking=false,record
         res.setHeader('Content-Type',path==='/'?'text/html; charset=utf-8':assets.get(path).mime)
         res.end(path==='/'?html:assets.get(path).bytes);return
       }
-      check(req.method==='POST'&&path===(recorded?'/api/real-input/recorded-a02':'/api/real-input/replay')&&!url.search,'LOCAL_ENDPOINT')
+      check(req.method==='POST'&&path===(batch?'/api/real-input/recorded-batch':recorded?'/api/real-input/recorded-a02':'/api/real-input/replay')&&!url.search,'LOCAL_ENDPOINT')
       check(req.headers.origin===origin&&req.headers['sec-fetch-site']==='same-origin'
         &&req.headers['x-real-input-capability']===capability&&req.headers['content-type']==='application/json','LOCAL_AUTH')
       const context=JSON.parse(await body(req))
+      if(batch){
+        check(Object.keys(context).sort().join(',')==='requestSha,unitId','BATCH_RECORDED_REQUEST')
+        const row=batch.find(row=>row.unitId===context.unitId&&row.requestSha===context.requestSha)
+        check(row,'BATCH_RECORDED_UNIT');res.setHeader('Content-Type','application/json');res.end(JSON.stringify(row));return
+      }
       if(recorded){
         check(Object.keys(context).sort().join(',')==='requestSha,unitId'&&context.unitId==='A02'&&context.requestSha===recorded.requestSha,'RECORDED_REQUEST')
         res.setHeader('Content-Type','application/json');res.end(JSON.stringify(recorded));return
@@ -114,15 +148,15 @@ export async function createLocalApp({port,carrierManifest,checking=false,record
       res.setHeader('Content-Type','application/json');res.end(JSON.stringify({label:'seen_engineering_replay',rawHttpText:result.rawHttpText}))
     } catch { res.writeHead(400);res.end(JSON.stringify({error:'REAL_INPUT_LOCAL_REQUEST_REJECTED'})) }
   })
-  const evidence={mode,realApp:true,upstreamEnabled:false,carriers:recorded?0:carriers.length,forbiddenBrowserInputs:forbidden,
+  const evidence={mode,realApp:true,upstreamEnabled:false,carriers:recorded||batch?0:carriers.length,forbiddenBrowserInputs:forbidden,
     parsedReferenceModules,bundleInputs:Object.keys(bundle.metafile.inputs),bundleSha256:hash(bundle.outputFiles.find(f=>f.path.endsWith('.js')).contents),assetIdentities}
   if(checking)return {evidence,server}
   await new Promise((yes,no)=>{server.once('error',no);server.listen(port,'127.0.0.1',yes)})
-  return {server,evidence,url:recorded?origin+'/?run='+recorded.name.slice('rco-mainline-01-02-i1-'.length):origin+'/?run=real-input-'+randomUUID()+'&new=1'}
+  return {server,evidence,url:batch?origin+'/?run='+batch[0].name.slice('rco-mainline-01-02-i1-'.length):recorded?origin+'/?run='+recorded.name.slice('rco-mainline-01-02-i1-'.length):origin+'/?run=real-input-'+randomUUID()+'&new=1'}
 }
 if(process.argv[1]&&resolve(process.argv[1])===resolve(import.meta.filename)){
   const args=process.argv.slice(2),pick=key=>args.find(arg=>arg.startsWith('--'+key+'='))?.slice(key.length+3)
-  check(args.every(a=>a==='--check'||a==='--recorded-a02'||/^--(?:port|carriers)=/.test(a))&&new Set(args.map(a=>a.split('=')[0])).size===args.length,'ARGS')
-  const result=await createLocalApp({port:Number(pick('port')),carrierManifest:pick('carriers'),checking:args.includes('--check'),recordedA02:args.includes('--recorded-a02')})
+  check(args.every(a=>a==='--check'||a==='--recorded-a02'||a==='--recorded-batch'||/^--(?:port|carriers)=/.test(a))&&new Set(args.map(a=>a.split('=')[0])).size===args.length,'ARGS')
+  const result=await createLocalApp({port:Number(pick('port')),carrierManifest:pick('carriers'),checking:args.includes('--check'),recordedA02:args.includes('--recorded-a02'),recordedBatch:args.includes('--recorded-batch')})
   console.log(JSON.stringify(args.includes('--check')?result.evidence:{url:result.url,mode:result.evidence.mode,upstreamEnabled:false}))
 }

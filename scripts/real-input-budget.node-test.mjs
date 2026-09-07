@@ -6,6 +6,68 @@ import { fileURLToPath } from 'node:url'
 import { spawn } from 'node:child_process'
 import { BILLING_POLICY, sha256, costUpperMicroCny, validateManifest, validateUsageEnvelope, initializeBudget, openBudget } from './real-input-budget.mjs'
 
+async function batchFixture() {
+  const f=await recoveryFixture(),r=await openBudget(f.dir,f.manifestSha,{recoveryGrant:f.grant})
+  await (await reserve(r,'A02')).complete(envelope('A02'))
+  const state=await r.snapshot(),prefix=await readFile(join(f.dir,'CALL_LEDGER.jsonl'))
+  const grant={version:'real-input-batch-grant-1',grantId:'22222222-2222-4222-8222-222222222222',
+    parentTail:state.tail,parentSequence:state.nextSequence,ledgerPrefixBytes:prefix.length,ledgerPrefixSha:sha256(prefix),
+    manifestSha:f.manifestSha,bindingSha:f.grant.bindingSha,head:'a'.repeat(40),sourcesSha:sha256('current42'),
+    reviewSha:sha256('batch review'),targets:f.manifest.units.slice(2),billingEvidence:f.manifest.billingEvidence,
+    route:f.grant.route,priorNonce:state.reservations[0].nonce,a02ResponseSha:state.reservations[1].responseSha,maxTotalRequests:16}
+  return {...f,batchGrant:grant,batchPrefix:prefix}
+}
+if(process.argv[2]!=='--reserve-child') {
+test('batch permits fourteen exact units only and preserves old unknown/settled requests',async()=>{
+  const f=await batchFixture(),b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.batchGrant})
+  for(const u of f.batchGrant.targets)await (await reserve(b,u.unitId)).complete(envelope(u.unitId))
+  const s=await b.snapshot();assert.equal(s.reservations.length,16);assert.equal(s.reservations[0].status,'held-unknown')
+  assert.equal(s.reservations[0].costUpperMicroCny,3300000);assert.equal(s.recovery.status,'settled')
+  assert.deepEqual((await readFile(join(f.dir,'CALL_LEDGER.jsonl'))).subarray(0,f.batchPrefix.length),f.batchPrefix)
+  for(const id of ['A01','A02','A03','C01'])await assert.rejects(()=>reserve(b,id))
+  await assert.rejects(()=>f.a01.complete(envelope('A01')))
+  const old=await openBudget(f.dir,f.manifestSha);await assert.rejects(()=>reserve(old,'A03'),/HALTED/)
+})
+test('batch parallel and restart cannot repeat or skip a crashed request',async()=>{
+  const f=await batchFixture(),a=await openBudget(f.dir,f.manifestSha,{batchGrant:f.batchGrant})
+  const b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.batchGrant})
+  const results=await Promise.allSettled([reserve(a,'A03'),reserve(b,'A03')])
+  assert.equal(results.filter(x=>x.status==='fulfilled').length,1)
+  const restarted=await openBudget(f.dir,f.manifestSha,{batchGrant:f.batchGrant})
+  await assert.rejects(()=>reserve(restarted,'A03'));await assert.rejects(()=>reserve(restarted,'A04'))
+  assert.equal((await restarted.snapshot()).reservations.length,3)
+})
+test('batch invalid usage or unknown failure preserves reservation and stops successors',async()=>{
+  for(const invalid of [false,true]){
+    const f=await batchFixture(),b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.batchGrant}),l=await reserve(b,'A03')
+    if(invalid)await assert.rejects(()=>l.complete(envelope('A03').replace('"usage":','"usage":{},"usage":')))
+    else await l.uncertain()
+    assert.equal((await b.snapshot()).reservations[2].costUpperMicroCny,3300000)
+    await assert.rejects(()=>reserve(b,'A04'));await assert.rejects(()=>l.complete(envelope('A03')))
+  }
+})
+test('batch changed grant, prefix, target, price expiry and order fail before dispatch',async()=>{
+  const f=await batchFixture()
+  for(const mutate of [g=>{g.targets[0].requestSha=sha256('changed')},g=>{g.parentTail=sha256('changed')},g=>{g.maxTotalRequests=24},g=>{g.ledgerPrefixSha=sha256('changed')}]){
+    const g=structuredClone(f.batchGrant);mutate(g);await assert.rejects(()=>openBudget(f.dir,f.manifestSha,{batchGrant:g}))
+  }
+  const b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.batchGrant})
+  await assert.rejects(()=>reserve(b,'A04'));await assert.rejects(()=>reserve(b,'A03',BILLING_POLICY,'2027-01-01T00:00:00.000Z'))
+  assert.deepEqual(await readFile(join(f.dir,'CALL_LEDGER.jsonl')),f.batchPrefix)
+  await (await reserve(b,'A03')).complete(envelope('A03'))
+  await assert.rejects(()=>openBudget(f.dir,f.manifestSha,{batchGrant:{...f.batchGrant,reviewSha:sha256('changed')}}))
+})
+test('batch held A01 is counted against total even after lawful new settlements',async()=>{
+  const f=await batchFixture(),b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.batchGrant})
+  for(const id of ['A03','A04']){
+    const e=JSON.parse(envelope(id));e.usage.input_tokens=1048576;e.usage.output_tokens=8192;e.usage.total_tokens=1056768
+    await (await reserve(b,id)).complete(JSON.stringify(e))
+  }
+  await assert.rejects(()=>reserve(b,'A05'),/LIMIT/);assert.equal((await b.snapshot()).reservations.length,4)
+})
+
+
+}
 async function recoveryFixture() {
   const fixture=await setup(),a01=await reserve(fixture.budget,'A01')
   await a01.uncertain()

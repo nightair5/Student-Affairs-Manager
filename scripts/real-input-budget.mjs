@@ -189,9 +189,37 @@ function replay(lines, manifestSha, manifest) {
       check(e.costUpperMicroCny===checked.costUpperMicroCny,'SETTLEMENT_AMOUNT')
       Object.assign(r,e,{status:'settled'});state.recovery.status='settled'
       // Historical halt is deliberately retained; success is not permission for another request.
+    } else if (e.kind === 'batchGrant') {
+      exact(e,['kind','grant']);const g=validateBatchGrant(e.grant,manifest,manifestSha)
+      check(!state.batch&&sequence===g.parentSequence&&prior===g.parentTail
+        &&state.halted==='TRANSPORT_OR_CRASH_UNKNOWN'&&state.recovery?.status==='settled'
+        &&state.reservations.length===2&&state.reservations[0].status==='held-unknown'
+        &&state.reservations[0].nonce===g.priorNonce&&state.reservations[1].status==='settled'
+        &&state.reservations[1].responseSha===g.a02ResponseSha,'BATCH_PARENT')
+      state.batch={grant:g,stopped:false}
+    } else if (e.kind === 'batchReserve') {
+      exact(e,['kind','unitId','requestSha','candidateSha','nonce','reservedMicroCny'])
+      const g=state.batch?.grant,u=g?.targets[state.reservations.length-2]
+      check(g&&!state.batch.stopped&&state.reservations.slice(1).every(r=>r.status==='settled')
+        &&u&&u.unitId===e.unitId&&u.requestSha===e.requestSha&&u.candidateSha===e.candidateSha
+        &&typeof e.nonce==='string'&&/^[a-f0-9-]{36}$/.test(e.nonce)
+        &&!state.reservations.some(r=>r.nonce===e.nonce)&&e.reservedMicroCny===BILLING_POLICY.reservationMicroCny,'BATCH_RESERVE')
+      check(state.reservations.length<g.maxTotalRequests
+        &&state.reservations.reduce((n,r)=>n+r.costUpperMicroCny,0)+e.reservedMicroCny<=BILLING_POLICY.limitMicroCny,'LIMIT')
+      state.reservations.push({...e,status:'pending',costUpperMicroCny:e.reservedMicroCny})
+    } else if (e.kind === 'batchSettle') {
+      exact(e,['kind','unitId','nonce','requestSha','responseSha','responseId','usage','costUpperMicroCny'])
+      const r=state.reservations.at(-1)
+      check(state.batch&&!state.batch.stopped&&r?.kind==='batchReserve'&&r.status==='pending'
+        &&r.unitId===e.unitId&&r.nonce===e.nonce&&r.requestSha===e.requestSha&&digest(e.responseSha)
+        &&!state.reservations.some(x=>x.responseId===e.responseId),'BATCH_SETTLEMENT_BINDING')
+      const v=validateUsageEnvelope(JSON.stringify({object:'response',status:'completed',model:BILLING_POLICY.model,
+        id:e.responseId,usage:e.usage,output:[{type:'message',role:'assistant',content:[{type:'output_text',text:'ledger validation'}]}]}),200)
+      check(v.costUpperMicroCny===e.costUpperMicroCny,'SETTLEMENT_AMOUNT');Object.assign(r,e,{status:'settled'})
     } else if (e.kind === 'halt') {
       exact(e, ['kind','code']); check(typeof e.code==='string' && /^[A-Z_]{1,80}$/.test(e.code), 'HALT_CODE'); state.halted=e.code
       if(state.recovery)state.recovery.status='stopped'
+      if(state.batch)state.batch.stopped=true
     } else fail('LEDGER_EVENT_KIND')
     prior=line.hash
   }
@@ -232,7 +260,7 @@ export async function initializeBudget(dir, input) {
     return manifestSha
   })
 }
-export async function openBudget(dir, expectedManifestSha, {recoveryGrant}={}) {
+export async function openBudget(dir, expectedManifestSha, {recoveryGrant,batchGrant}={}) {
   dir=resolve(dir);await directory(dir);check(digest(expectedManifestSha),'MANIFEST_HASH')
   const manifestPath=join(dir,'REQUEST_MANIFEST.json');await regular(manifestPath)
   const raw=await readFile(manifestPath);check(raw.length<=100000&&sha256(raw)===expectedManifestSha,'MANIFEST_CHANGED')
@@ -242,6 +270,8 @@ export async function openBudget(dir, expectedManifestSha, {recoveryGrant}={}) {
     return readState(dir,manifest,expectedManifestSha)
   }
   await locked(manifest.lockRoot,read)
+  check(recoveryGrant===undefined||batchGrant===undefined,'MULTIPLE_GRANTS')
+  if(batchGrant!==undefined)return batchBudget(dir,manifest,expectedManifestSha,read,batchGrant)
   if(recoveryGrant!==undefined)return recoveryBudget(dir,manifest,expectedManifestSha,read,recoveryGrant)
   return Object.freeze({
     async snapshot(){return locked(manifest.lockRoot,read)},
@@ -295,6 +325,78 @@ export async function openBudget(dir, expectedManifestSha, {recoveryGrant}={}) {
 }
 
 export const RECOVERY_ROUTE=Object.freeze({proxyHost:'127.0.0.1',proxyPort:10081,targetHost:'api.deepseek.com',targetPort:443})
+
+/** Separate opt-in batch authority; original halt and A01 unknown are never cleared. */
+function validateBatchGrant(input,manifest,manifestSha) {
+  const g=copy(input)
+  exact(g,['version','grantId','parentTail','parentSequence','ledgerPrefixBytes','ledgerPrefixSha','manifestSha',
+    'bindingSha','head','sourcesSha','reviewSha','targets','billingEvidence','route','priorNonce','a02ResponseSha','maxTotalRequests'])
+  check(g.version==='real-input-batch-grant-1'&&/^[a-f0-9-]{36}$/.test(g.grantId)
+    &&g.parentSequence===5&&g.maxTotalRequests===16&&integer(g.ledgerPrefixBytes,1048576)&&g.ledgerPrefixBytes>0
+    &&['parentTail','ledgerPrefixSha','manifestSha','bindingSha','sourcesSha','reviewSha','a02ResponseSha'].every(k=>digest(g[k]))
+    &&typeof g.head==='string'&&/^[a-f0-9]{40}$/.test(g.head)
+    &&typeof g.priorNonce==='string'&&/^[a-f0-9-]{36}$/.test(g.priorNonce),'BATCH_GRANT')
+  check(g.manifestSha===manifestSha,'BATCH_MANIFEST');same(g.targets,manifest.units.slice(2),'BATCH_TARGETS')
+  same(g.route,RECOVERY_ROUTE,'BATCH_ROUTE');exact(g.billingEvidence,['checkedAt','validUntil','evidenceSha'])
+  const {checkedAt,validUntil,evidenceSha}=g.billingEvidence
+  check(typeof checkedAt==='string'&&typeof validUntil==='string'&&digest(evidenceSha)
+    &&Number.isFinite(Date.parse(checkedAt))&&Date.parse(validUntil)>Date.parse(checkedAt)
+    &&Date.parse(validUntil)-Date.parse(checkedAt)<=86400000,'BATCH_BILLING')
+  return g
+}
+async function batchBudget(dir,manifest,manifestSha,read,input) {
+  const grant=validateBatchGrant(input,manifest,manifestSha)
+  const boundRead=async()=>{
+    const bytes=await readFile(join(dir,'CALL_LEDGER.jsonl'))
+    check(bytes.length>=grant.ledgerPrefixBytes&&sha256(bytes.subarray(0,grant.ledgerPrefixBytes))===grant.ledgerPrefixSha,'BATCH_PREFIX')
+    const state=await read()
+    if(state.batch)same(state.batch.grant,grant,'BATCH_GRANT_CHANGED')
+    else check(state.tail===grant.parentTail&&state.nextSequence===5&&state.reservations.length===2
+      &&state.recovery?.status==='settled'&&state.reservations[0].status==='held-unknown'
+      &&state.reservations[0].nonce===grant.priorNonce&&state.reservations[1].responseSha===grant.a02ResponseSha,'BATCH_PARENT')
+    return state
+  }
+  await locked(manifest.lockRoot,boundRead)
+  return Object.freeze({
+    snapshot:()=>locked(manifest.lockRoot,boundRead),
+    halt:code=>locked(manifest.lockRoot,async()=>{const s=await boundRead();check(/^[A-Z_]{1,80}$/.test(code),'HALT_CODE');await append(dir,manifest,s,{kind:'halt',code})}),
+    async reserve(unitId,requestText,policy=BILLING_POLICY,now=new Date().toISOString()) {
+      const reservation=await locked(manifest.lockRoot,async()=>{
+        let s=await boundRead();check(!s.batch?.stopped&&s.recovery?.status==='settled','BATCH_STOPPED')
+        same(copy(policy),BILLING_POLICY,'POLICY_CHANGED')
+        check(Number.isFinite(Date.parse(now))&&Date.parse(now)>=Date.parse(grant.billingEvidence.checkedAt)
+          &&Date.parse(now)<=Date.parse(grant.billingEvidence.validUntil),'BATCH_PRICE_EXPIRED')
+        const u=grant.targets[s.reservations.length-2]
+        check(s.reservations.slice(1).every(r=>r.status==='settled')&&u?.unitId===unitId,'BATCH_ORDER_OR_PENDING')
+        check(typeof requestText==='string'&&sha256(requestText)===u.requestSha&&Buffer.byteLength(requestText)===u.requestBytes,'REQUEST_NOT_FROZEN')
+        check(s.reservations.length<16&&s.reservations.reduce((n,r)=>n+r.costUpperMicroCny,0)+BILLING_POLICY.reservationMicroCny<=BILLING_POLICY.limitMicroCny,'LIMIT')
+        if(!s.batch){await append(dir,manifest,s,{kind:'batchGrant',grant});s=await boundRead()}
+        const e={kind:'batchReserve',unitId,requestSha:u.requestSha,candidateSha:u.candidateSha,nonce:randomUUID(),reservedMicroCny:BILLING_POLICY.reservationMicroCny}
+        await append(dir,manifest,s,e);return e
+      })
+      let used=false
+      const validLease=s=>check(s.batch&&!s.batch.stopped&&s.reservations.at(-1)?.nonce===reservation.nonce
+        &&s.reservations.at(-1)?.status==='pending','BATCH_LEASE_BINDING')
+      return Object.freeze({unitId,requestSha:reservation.requestSha,
+        async complete(raw,status=200){
+          check(!used,'LEASE_ALREADY_FINALIZED');used=true
+          return locked(manifest.lockRoot,async()=>{
+            const s=await boundRead();validLease(s);let value
+            try{value=validateUsageEnvelope(raw,status);check(!s.reservations.some(r=>r.responseId===value.responseId),'RESPONSE_REUSED')}
+            catch{await append(dir,manifest,s,{kind:'halt',code:'RESPONSE_OR_USAGE_INVALID'});fail('RESPONSE_OR_USAGE_INVALID')}
+            await append(dir,manifest,s,{kind:'batchSettle',unitId,nonce:reservation.nonce,requestSha:reservation.requestSha,...value})
+            return value
+          })
+        },
+        async uncertain(){
+          check(!used,'LEASE_ALREADY_FINALIZED');used=true
+          return locked(manifest.lockRoot,async()=>{const s=await boundRead();validLease(s);await append(dir,manifest,s,{kind:'halt',code:'TRANSPORT_OR_CRASH_UNKNOWN'})})
+        }
+      })
+    }
+  })
+}
+
 function validateRecoveryGrant(input,manifest,manifestSha) {
   const g=copy(input)
   exact(g,['version','grantId','parentTail','parentSequence','ledgerPrefixBytes','ledgerPrefixSha','manifestSha',

@@ -1,0 +1,142 @@
+{
+  "status": "SCOPED_REAL_BROWSER_PASS",
+  "wholePackage": "NOT_COMPLETE",
+  "browser": {
+    "family": "Edge",
+    "browserId": "2",
+    "tabId": "763114864",
+    "origin": "http://127.0.0.1:6631",
+    "url": "http://127.0.0.1:6631/?run=real-input-d030c507-3f7c-4a2c-a511-8cd5bd534862",
+    "database": "rco-mainline-01-02-i1-real-input-d030c507-3f7c-4a2c-a511-8cd5bd534862",
+    "newDatabase": false,
+    "cleared": false,
+    "timezone": "Asia/Shanghai"
+  },
+  "readback": {
+    "source": "new CanonicalWorkspaceRepository(new IsolatedTestStore(name)).load()",
+    "observation": "Primary agent clicked existing UI 独立仓储读回全对象 and parsed its 本次工程证据 text into CUA REPL deliverRead BEFORE download. Not a second calculation of the download file.",
+    "beforeBatchSha256": "cf3aa420daee3f6c66a2d206440e8f5ef67fff92c5955f8f5aecefcdb1e38770",
+    "afterTwoNewConfirmationsSha256": "95439ab35ceeba4ac6d0a55a3ec692ac3ae297e8a58bbbcf03d9caabac4415ff",
+    "finalSha256": "6d6b57a98b1ec1a241aca2065c9076e2e58c0c404b37e530ae099297d0094919",
+    "tasks": 3,
+    "materials": 3,
+    "timePoints": 0,
+    "reminderRecords": 0,
+    "realJobs": 0,
+    "finalSessionCounters": {
+      "foreignDatabase": 0,
+      "legacyStorage": 0,
+      "forbiddenNetwork": 0,
+      "writes": 2
+    },
+    "counterCaveat": "Counters reset on page reload; not the whole-turn aggregate. Earlier read after two confirmations had writes8 and the same three zero counters."
+  },
+  "newConfirmations": [
+    {
+      "unit": "A05",
+      "task": "提交场地申请表-A05",
+      "condition": "true",
+      "material": {
+        "required": true,
+        "status": "ready",
+        "origin": "user_observation"
+      },
+      "typedSuffix": "-A05",
+      "inputMethod": "pressSequentially",
+      "unsavedConfirmationEnabled": false,
+      "explicitSave": true,
+      "explicitReview": true,
+      "activeSelection": true,
+      "confirmedAt": "2026-09-07T15:48:40.300Z"
+    },
+    {
+      "unit": "B02",
+      "task": "保存活动手册-B02",
+      "inputType": "image/jpeg",
+      "rawOcrTypo": "没有蕉止日期要求",
+      "corrected": "没有截止日期要求",
+      "material": {
+        "required": true,
+        "status": "ready",
+        "origin": "user_observation"
+      },
+      "typedSuffix": "-B02",
+      "inputMethod": "pressSequentially",
+      "unsavedConfirmationEnabled": false,
+      "explicitSave": true,
+      "explicitReview": true,
+      "activeSelection": true,
+      "confirmedAt": "2026-09-07T15:58:22.235Z"
+    }
+  ],
+  "pureInformation": {
+    "unit": "A04",
+    "explicitReviewAt": "2026-09-07T16:02:24.880Z",
+    "tasksCreated": 0,
+    "projectsCreated": 0
+  },
+  "preservation": {
+    "allSourceVersionsUnchanged": true,
+    "a02Unchanged": [
+      "sources",
+      "recognitionRuns",
+      "extractionDrafts",
+      "tasks",
+      "materials",
+      "evidenceRefs",
+      "historyRecords"
+    ],
+    "a05AndB02FieldsUnchanged": [
+      "rawHttpText",
+      "rawOutputText",
+      "rawResponse",
+      "adaptedResponse",
+      "first",
+      "inputReceipt",
+      "sendSnapshot"
+    ],
+    "comparedAgainst": "CUA REPL batchBefore and stagedBatch whole objects, retained from independent UI repository reads before these edits; fields exist, not undefined equality.",
+    "duplicateA05Replay": {
+      "beforeSha256": "95439ab35ceeba4ac6d0a55a3ec692ac3ae297e8a58bbbcf03d9caabac4415ff",
+      "afterSha256": "95439ab35ceeba4ac6d0a55a3ec692ac3ae297e8a58bbbcf03d9caabac4415ff",
+      "wholeObjectUnchanged": true
+    }
+  },
+  "downstream": {
+    "refreshedOriginalDatabase": true,
+    "home": "3 confirmed tasks found",
+    "tasks": "3 confirmed tasks found",
+    "calendar": "3 in independent no-deadline list; no dated items",
+    "b02Details": "Original full text, model first response, material observation and explicit edit/confirm history visible"
+  },
+  "modelBlocked": {
+    "B01": "Both useful actions/time remain; after first material review panel exposes COVERAGE_EVENT. Not confirmed or converted into no-date.",
+    "A08": "failed draft/raw retained: BAD_REVISION_REFERENCE",
+    "B08": "failed draft/raw retained: BAD_REVISION_REFERENCE",
+    "A01": "Historical ledger failure/unknown preserved; existing source UI still extracting. No retry enabled by this batch."
+  },
+  "download": {
+    "path": "C:/Users/Winner/Downloads/mainline-real-input-01-workspace (1).json",
+    "bytes": 748141,
+    "sha256": "5417a3d5a185620972b73c6661a0b07b081df0f6e54218167857ee4ddb85b327",
+    "jsonStringifySha256": "6d6b57a98b1ec1a241aca2065c9076e2e58c0c404b37e530ae099297d0094919",
+    "independentRepositoryAgreement": true,
+    "validator": "validateSemanticWorkspace(workspace,'real-input-01') includes v8 and semantic extension; PASS",
+    "fileUnmodified": true,
+    "modelRequests": 0
+  },
+  "toolAttempts": {
+    "downloadListener": "15-second timeout retained, not product fault",
+    "resolvedCause": "Open engineering overlay covered product export button; screenshot showed overlay and a benign A04 replay receipt. Closing the overlay and clicking export produced the actual file.",
+    "selectorTimeouts": "Some 3-second locator/CDP timeouts, labels versus combobox/summary role mistakes. State inspected before retry; no model requests/retries or database resets."
+  },
+  "notRun": [
+    "whole U01-U16 real-browser matrix",
+    "real-model multi-task panel and inbox batch confirmation success",
+    "real-model valid replacement requirement confirmation success",
+    "fresh cross-timezone journey",
+    "real participant active editing time",
+    "unseen recognition accuracy"
+  ],
+  "automaticSelection": "NOT_ENABLED"
+}

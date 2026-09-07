@@ -6,11 +6,45 @@ import { createLocalApp } from './serve-mainline-real-input-01.mjs'
 import { build } from 'esbuild'
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
-import { verifyPreparedUnitIdentity, verifySendApproval, verifyRecoverySendApproval } from './run-mainline-real-input-01.mjs'
+import { verifyPreparedUnitIdentity, verifySendApproval, verifyRecoverySendApproval, compileBatchScorer, verifyBatchSendApproval } from './run-mainline-real-input-01.mjs'
 import { inspectProtection, verifyRecoveryScope } from './check-mainline-real-input-01.mjs'
 import { BILLING_POLICY, RECOVERY_ROUTE, sha256 } from './real-input-budget.mjs'
 
 const carrierManifest=process.env.REAL_INPUT_CARRIERS_MANIFEST
+test('batch gate preserves original inputs and actual scorer closure while binding current reviewed code; no credential access',async()=>{
+  const D='docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/'
+  const old='docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/'
+  const bindingBytes=readFileSync(old+'STATE.json'),binding=JSON.parse(bindingBytes),manifestBytes=readFileSync(old+'REQUEST_MANIFEST.json')
+  const baselineBytes=readFileSync(D+'BATCH_BASELINE.json'),baseline=JSON.parse(baselineBytes)
+  const protection=inspectProtection({stage:'batch-14'}),sources=protection.sources.map(s=>({path:s.path,sha256:s.workingSha256}))
+  const closure=await compileBatchScorer(binding),billing=JSON.parse(readFileSync(D+'BATCH_BILLING.json'))
+  const events=readFileSync(old+'CALL_LEDGER.jsonl','utf8').trimEnd().split('\n').map(l=>JSON.parse(l).event)
+  // In-memory review/authorization is a gate fixture, not a live dispatch approval.
+  const plan={version:'real-input-batch-authorization-1',originalRun:resolve(old),grantBasis:{version:'real-input-batch-grant-1',
+    grantId:'11111111-1111-4111-8111-111111111111',head:protection.head,sourcesSha:sha256(JSON.stringify(sources)),bindingSha:sha256(bindingBytes),
+    manifestSha:sha256(manifestBytes),parentTail:baseline.ledgerBoundary.tail,parentSequence:5,ledgerPrefixBytes:baseline.ledgerBoundary.bytes,
+    ledgerPrefixSha:baseline.ledgerBoundary.sha256,priorNonce:events[1].nonce,a02ResponseSha:events[4].responseSha,
+    targets:binding.units.slice(2),route:RECOVERY_ROUTE,maxTotalRequests:16,
+    billingEvidence:{checkedAt:billing.checkedAt,validUntil:billing.validUntil,evidenceSha:sha256(JSON.stringify(billing))}}}
+  const planBytes=Buffer.from(JSON.stringify(plan)),review={status:'PASS',scope:'REAL_INPUT_BATCH_14_SEND',head:protection.head,sources,
+    bindingSha:sha256(bindingBytes),planSha:sha256(planBytes),baselineSha:sha256(baselineBytes),billingEvidenceSha:sha256(JSON.stringify(billing)),scorerBundleSha:closure.bundleSha}
+  const args={bindingBytes,binding,manifestBytes,baselineBytes,baseline,planBytes,plan,billing,review,protection,closure}
+  assert.equal(verifyBatchSendApproval(args).targets.length,14)
+  assert.throws(()=>verifyBatchSendApproval({...args,review:{...review,status:'BLOCKED'}}),/REVIEW_STATUS/)
+  assert.throws(()=>verifyBatchSendApproval({...args,protection:{...protection,head:'0'.repeat(40)}}),/REVIEW_HEAD/)
+  const changed=structuredClone(protection);changed.sources[0].workingSha256='0'.repeat(64)
+  assert.throws(()=>verifyBatchSendApproval({...args,protection:changed}),/REVIEW_SHA/)
+  assert.throws(()=>verifyBatchSendApproval({...args,closure:{...closure,dependencies:closure.dependencies.slice(1)}}),/BATCH_SCORER_BINDING/)
+  const wrong=structuredClone(binding);wrong.requests.A03+=' '
+  assert.throws(()=>verifyBatchSendApproval({...args,binding:wrong}),/BATCH_ORIGINAL_BINDING/)
+  const rebind=mutate=>{const p=structuredClone(plan);mutate(p);const bytes=Buffer.from(JSON.stringify(p));return {...args,plan:p,planBytes:bytes,review:{...review,planSha:sha256(bytes)}}}
+  assert.throws(()=>verifyBatchSendApproval(rebind(p=>p.grantBasis.targets[0]=binding.units[0])),/BATCH_GRANT_BINDING/)
+  assert.throws(()=>verifyBatchSendApproval(rebind(p=>p.originalRun=resolve('elsewhere'))),/BATCH_POLICY/)
+  assert.throws(()=>verifyBatchSendApproval(rebind(p=>p.grantBasis.maxTotalRequests=24)),/BATCH_GRANT_BINDING/)
+  assert.throws(()=>verifyBatchSendApproval(rebind(p=>p.grantBasis.priorNonce='0'.repeat(36))),/BATCH_GRANT_BINDING/)
+  const badBilling={...billing,policy:{...billing.policy,reservationMicroCny:1}}
+  assert.throws(()=>verifyBatchSendApproval({...args,billing:badBilling,review:{...review,billingEvidenceSha:sha256(JSON.stringify(badBilling))}}),/BATCH_POLICY/)
+})
 test('A02 send gate binds new review to original input, grant, old ledger, current code and exact public evidence without sending',()=>{
   const old='docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/'
   const baselineBytes=readFileSync('docs/recognition-optimization/mainline-real-input-01/runs/recovery-a02-20260907a/BASELINE.json'),baseline=JSON.parse(baselineBytes)

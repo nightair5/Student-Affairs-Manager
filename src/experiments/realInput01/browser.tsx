@@ -8,7 +8,7 @@ import { IsolatedTestStore } from '../mainline01/isolatedStore'
 import { CanonicalWorkspaceRepository, type WorkspaceRecordStore } from '../../domain/v2/repository'
 import { SemanticRepository } from '../mainline05/semanticRepository'
 import { validateSemanticWorkspace, readingOf } from '../mainline05/semanticState'
-import { createRealInputRuntime, emptyRealInputWorkspace, prepareInputRun, replayRecordedA02, validateRecordedA02, type RecordedA02 } from './runtime'
+import { createRealInputRuntime, emptyRealInputWorkspace, prepareInputRun, replayRecordedA02, validateRecordedA02, replayRecordedBatch, type RecordedBatch, type RecordedBatchIdentity, type RecordedA02 } from './runtime'
 import { createModelClient, type ModelExecutor } from './modelClient'
 import { acquireFile, acquireText } from './inputAcquisition'
 import { makeSendSnapshot, sha256Text } from './inputReceipt'
@@ -17,14 +17,15 @@ import type { LocalExtractionResources } from '../../lib/fileExtraction'
 import { buildBrowserReminderJobs } from '../../lib/notifications'
 
 interface Carrier { unitId: string; name: string; mime: string; sha256: string; url: string; sourceText: string }
-declare const __REAL_INPUT_CONFIG__: { mode: 'seen_engineering_replay' | 'live' | 'recorded_a02'; capability: string;
+declare const __REAL_INPUT_CONFIG__: { mode: 'seen_engineering_replay' | 'live' | 'recorded_a02' | 'recorded_batch'; capability: string;
+  batch?: RecordedBatchIdentity[];
   recorded?:{name:string;requestSha:string;responseSha:string};
   units: Array<{unitId: string; requestSha: string}>; resources: LocalExtractionResources; carriers: Carrier[] }
 const config = __REAL_INPUT_CONFIG__
 const params = new URLSearchParams(location.search), run = params.get('run')
 if (location.hostname !== '127.0.0.1' || !run || !/^real-input-[a-z0-9-]{10,100}$/.test(run)) throw Error('REAL_INPUT_ISOLATED_RUN_REQUIRED')
 const name = 'rco-mainline-01-02-i1-' + run
-if(config.mode==='recorded_a02'&&(location.origin!=='http://127.0.0.1:6631'||config.recorded?.name!==name||params.has('new')))throw Error('REAL_INPUT_RECORDED_ORIGIN_OR_DATABASE')
+if((config.mode==='recorded_a02'||config.mode==='recorded_batch')&&(location.origin!=='http://127.0.0.1:6631'||config.recorded?.name!==name||params.has('new')))throw Error('REAL_INPUT_RECORDED_ORIGIN_OR_DATABASE')
 const effects = { databaseOpens: [] as string[], foreignDatabase: 0, blockedDatabaseUpgrades: 0, legacyStorage: 0, forbiddenNetwork: 0, writes: 0 }
 function preventRecordedDatabaseUpgrade(request: IDBOpenDBRequest) {
   // Register before the legacy store's onupgradeneeded property handler.
@@ -39,10 +40,10 @@ function preventRecordedDatabaseUpgrade(request: IDBOpenDBRequest) {
 const nativeOpen = indexedDB.open.bind(indexedDB), nativeFetch = window.fetch.bind(window)
 indexedDB.open = (target: string, version?: number) => {
   if (target !== name) { effects.foreignDatabase++; throw Error('REAL_INPUT_FOREIGN_DATABASE_FORBIDDEN') }
-  if (config.mode === 'recorded_a02' && version !== 1) throw Error('REAL_INPUT_RECORDED_DATABASE_VERSION_FORBIDDEN')
+  if ((config.mode === 'recorded_a02' || config.mode === 'recorded_batch') && version !== 1) throw Error('REAL_INPUT_RECORDED_DATABASE_VERSION_FORBIDDEN')
   effects.databaseOpens.push(target)
   const request = nativeOpen(target,version)
-  if (config.mode === 'recorded_a02') preventRecordedDatabaseUpgrade(request)
+  if (config.mode === 'recorded_a02' || config.mode === 'recorded_batch') preventRecordedDatabaseUpgrade(request)
   return request
 }
 for (const method of ['getItem','setItem','removeItem','clear','key'] as const) Object.defineProperty(Storage.prototype,method,
@@ -50,7 +51,7 @@ for (const method of ['getItem','setItem','removeItem','clear','key'] as const) 
 window.fetch = (input, init) => {
   const url = new URL(input instanceof Request ? input.url : String(input),location.href)
   if (url.origin !== location.origin || !(url.pathname.startsWith('/real-input-assets/') || url.pathname.startsWith('/engineering-carriers/')
-    || (config.mode==='recorded_a02'?url.pathname==='/api/real-input/recorded-a02'
+    || (config.mode==='recorded_batch'?url.pathname==='/api/real-input/recorded-batch':config.mode==='recorded_a02'?url.pathname==='/api/real-input/recorded-a02'
       :url.pathname === '/api/real-input/replay' || url.pathname === '/api/real-input/recognize'))) {
     effects.forbiddenNetwork++; throw Error('REAL_INPUT_NETWORK_FORBIDDEN')
   }
@@ -76,7 +77,7 @@ const store: WorkspaceRecordStore & {name: string} = { name,
     if(failNext){failNext=false;throw Error('INJECTED_ATOMIC_FAILURE')} return next}) }
 const execute: ModelExecutor = config.mode === 'live'
   ? createModelClient({origin:location.origin,capability:config.capability,units:config.units})
-  : config.mode==='recorded_a02'?async()=>{throw Error('REAL_INPUT_NEW_SEND_DISABLED')}
+  : config.mode==='recorded_a02'||config.mode==='recorded_batch'?async()=>{throw Error('REAL_INPUT_NEW_SEND_DISABLED')}
   : async context => {
     const response = await fetch('/api/real-input/replay',{method:'POST',headers:{'content-type':'application/json','x-real-input-capability':config.capability},
       body:JSON.stringify(context)})
@@ -102,7 +103,16 @@ function EngineeringTools() {
   const repository=()=>SemanticRepository.open(name,store,undefined,'real-input-01')
   return <details aria-label="真实输入工程工具" style={{position:'fixed',left:8,top:8,zIndex:2000,maxWidth:'min(680px,90vw)',maxHeight:'65vh',overflow:'auto',background:'white',padding:12,border:'1px solid #163b41'}}>
     <summary>真实输入工程工具（不是用户确认入口）</summary>
-    <p>{config.mode==='recorded_a02'?'A02历史真实模型响应 · 本轮零调用，不是人工预测':config.mode==='live'?'已绑定真实调用模式':'零调用工程回放模式'}。浏览器时区{Intl.DateTimeFormat().resolvedOptions().timeZone}；业务时区Asia/Shanghai。{name}</p>
+    <p>{config.mode==='recorded_batch'?'14份已记录真实模型响应 · 本页零调用，原回答不改':config.mode==='recorded_a02'?'A02历史真实模型响应 · 本轮零调用，不是人工预测':config.mode==='live'?'已绑定真实调用模式':'零调用工程回放模式'}。浏览器时区{Intl.DateTimeFormat().resolvedOptions().timeZone}；业务时区Asia/Shanghai。{name}</p>
+    {config.mode==='recorded_batch'&&config.batch?.map(identity=><button key={identity.unitId} disabled={busy} onClick={()=>void action(async()=>{
+      const response=await fetch('/api/real-input/recorded-batch',{method:'POST',headers:{'content-type':'application/json','x-real-input-capability':config.capability},
+        body:JSON.stringify({unitId:identity.unitId,requestSha:identity.requestSha})})
+      if(!response.ok)throw Error('REAL_INPUT_BATCH_RECORD_UNAVAILABLE')
+      const record=await response.json() as RecordedBatch
+      const saved=await replayRecordedBatch(await repository(),record,identity)
+      return {unitId:identity.unitId,label:'原模型响应，非新预测/人工替身',tasks:saved.tasks.length,draftId:record.handle.draftId,
+        next:'刷新后从收件箱核对；保留原答错误，未自动选择或确认'}
+    })}>载入{identity.unitId}原回答（零调用）</button>)}
     {config.mode==='recorded_a02'&&<button disabled={busy} onClick={()=>void action(async()=>{
       // A random, never-committed probe exercises the actual browser's upgrade
       // transaction. It is not a replacement workspace and never gets a store.
@@ -150,8 +160,8 @@ function EngineeringTools() {
         return {unitId:c.unitId,handle,receipt:acquired.receipt,result:acquired.result}
       })}>本机读取{c.unitId}</button>
       <details><summary>旧工程正文（校对参考，不是模型答案）</summary><p>{c.sourceText}</p></details></div>)}
-    <button disabled={busy||config.mode==='recorded_a02'} onClick={()=>void action(async()=>{
-      if(config.mode==='recorded_a02')throw Error('REAL_INPUT_NEW_SOURCE_DISABLED')
+    <button disabled={busy||config.mode==='recorded_a02'||config.mode==='recorded_batch'} onClick={()=>void action(async()=>{
+      if(config.mode==='recorded_a02'||config.mode==='recorded_batch')throw Error('REAL_INPUT_NEW_SOURCE_DISABLED')
       const repo=await repository(), handles=[]
       for(const c of config.carriers){const unitId=c.unitId.replace('B','A'),receipt=await acquireText(unitId,c.sourceText)
         handles.push({unitId,handle:await repo.saveReading(receipt,unitId+'工程文字','engineering-'+unitId)})}
@@ -166,8 +176,8 @@ function EngineeringTools() {
         realJobs:buildBrowserReminderJobs(runtime.view(value).tasks,new Date()).length}
     })}>独立仓储读回全对象</button>
     <button disabled={busy} onClick={()=>{failNext=true;setStatus('下一事务写入前失败；不影响已经保存的记录')}}>设置下一笔事务故障</button>
-    <button disabled={busy||config.mode==='recorded_a02'} onClick={()=>void action(async()=>{
-      if(config.mode==='recorded_a02')throw Error('REAL_INPUT_NEW_PREPARATION_DISABLED')
+    <button disabled={busy||config.mode==='recorded_a02'||config.mode==='recorded_batch'} onClick={()=>void action(async()=>{
+      if(config.mode==='recorded_a02'||config.mode==='recorded_batch')throw Error('REAL_INPUT_NEW_PREPARATION_DISABLED')
       const repo=await repository(), workspace=await repo.load(), preparations=[]
       const ids=['A','B'].flatMap(arm=>config.carriers.map(c=>c.unitId.replace('B',arm)))
       // Preparation is a separate engineering action, never a paid dispatch or human review claim.
@@ -189,7 +199,8 @@ function EngineeringTools() {
 }
 async function mount() {
   runtime=await createRealInputRuntime({name,store,initial:params.get('new')==='1'?emptyRealInputWorkspace(name):undefined,
-    execution:config.mode==='recorded_a02'?'live':config.mode,resources:config.resources,execute,...(config.mode==='recorded_a02'?{recordedA02:true as const}:{})})
+    execution:config.mode==='recorded_a02'||config.mode==='recorded_batch'?'live':config.mode,resources:config.resources,execute,
+    ...(config.mode==='recorded_a02'?{recordedA02:true as const}:config.mode==='recorded_batch'?{recordedBatch:true as const}:{})})
   params.delete('new');history.replaceState(null,'','/?'+params.toString())
   createRoot(document.getElementById('root')!).render(<><App runtime={runtime}/><EngineeringTools/></>)
 }

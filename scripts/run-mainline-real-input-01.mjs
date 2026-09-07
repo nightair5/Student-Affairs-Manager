@@ -265,9 +265,113 @@ export async function dispatchRecoveredA02() {
       stopped:true,costUpperMicroCny:report.costUpperMicroCny,completeCase:rows[0]?.score.completeCase??null}
   }finally{await recorder.close()}
 }
+const batchDirectory=resolve('docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a')
+const scorerEntry="export {scoreSeenResponse} from './src/experiments/realInput01/evaluation.ts';export {cases,seenWire} from './src/experiments/realInput01/seenInputs.ts'"
+/** Actual frozen scoring closure, not the larger historical preparation bundle. */
+export async function compileBatchScorer(binding) {
+  check(hash(JSON.stringify(binding.dependencies))===binding.scorerSha,'SCORER_LIST')
+  const compiled=await build({stdin:{contents:scorerEntry,resolveDir:process.cwd(),loader:'ts'},
+    bundle:true,write:false,platform:'node',format:'esm',target:'node24',metafile:true})
+  const dependencies=Object.keys(compiled.metafile.inputs).filter(p=>p!=='<stdin>')
+    .map(path=>({path,sha256:hash(readFileSync(path))}))
+  const frozen=JSON.parse(readFileSync(join(batchDirectory,'BATCH_SCORER_CLOSURE.json')))
+  check(dependencies.length===10&&isDeepStrictEqual(dependencies,frozen.usedDependencies.map(({path,sha256})=>({path,sha256})))
+    &&dependencies.every(d=>binding.dependencies.some(old=>isDeepStrictEqual(old,d)))
+    &&hash(compiled.outputFiles[0].contents)===frozen.bundleSha,'BATCH_FROZEN_SCORER')
+  return {dependencies,bundleSha:frozen.bundleSha,
+    api:await import('data:text/javascript;base64,'+Buffer.from(compiled.outputFiles[0].contents).toString('base64'))}
+}
+export function verifyBatchSendApproval({bindingBytes,binding,manifestBytes,baselineBytes,baseline,
+  planBytes,plan,billing,review,protection,closure}) {
+  check(hash(bindingBytes)==='d478c58f7f44e68a852bc7712c5d3e7994f2390750f5915d65204963dff9e73b'
+    &&isDeepStrictEqual(JSON.parse(bindingBytes),binding),'BATCH_ORIGINAL_BINDING')
+  check(hash(manifestBytes)==='7ed6c3c2054e0d101328f882e0efc5e4415d0db8d3cc1f2bc98157ce324d9a9c'
+    &&isDeepStrictEqual(JSON.parse(manifestBytes).units,binding.units),'BATCH_MANIFEST')
+  check(isDeepStrictEqual(JSON.parse(planBytes),plan)&&isDeepStrictEqual(JSON.parse(baselineBytes),baseline),'BATCH_OBJECT_BYTES')
+  verifyReviewBinding({head:protection.head,expectedHead:'ae78dfef255eb5344868d1b4319e486537ac6681',
+    sources:protection.sources.map(s=>({path:s.path,sha256:s.workingSha256})),review})
+  check(review.scope==='REAL_INPUT_BATCH_14_SEND'&&review.bindingSha===hash(bindingBytes)
+    &&review.planSha===hash(planBytes)&&review.baselineSha===hash(baselineBytes)
+    &&review.billingEvidenceSha===hash(JSON.stringify(billing))&&review.scorerBundleSha===closure.bundleSha,'BATCH_APPROVAL')
+  check(plan.version==='real-input-batch-authorization-1'&&plan.originalRun===runDirectory
+    &&isDeepStrictEqual(billing.policy,BILLING_POLICY)&&billing.lockRoot===JSON.parse(manifestBytes).lockRoot,'BATCH_POLICY')
+  const checked=Date.parse(billing.checkedAt),until=Date.parse(billing.validUntil)
+  check(Number.isFinite(checked)&&Number.isFinite(until)&&Date.now()>=checked&&Date.now()<=until
+    &&until>checked&&until-checked<=86400000,'BATCH_PRICE_VALIDITY')
+  check(billing.documents?.length===2&&new Set(billing.documents.map(d=>d.url)).size===2,'BATCH_PUBLIC_DOCUMENTS')
+  for(const d of billing.documents)check(d.status===200&&['https://api-docs.deepseek.com/zh-cn/quick_start/pricing/',
+    'https://api-docs.deepseek.com/api/create-response/'].includes(d.url)&&hash(readFileSync(d.path))===d.sha256,'BATCH_PUBLIC_EVIDENCE')
+  for(const a of [binding.preparation,binding.independentRepositoryRead,binding.carriers])
+    check(hash(readFileSync(a.path))===a.sha256,'BATCH_INPUT_ARTIFACT')
+  check(hash(JSON.stringify(binding.dependencies))===binding.scorerSha&&closure.dependencies.length===10
+    &&closure.dependencies.every(d=>binding.dependencies.some(old=>isDeepStrictEqual(old,d))
+      &&hash(readFileSync(d.path))===d.sha256),'BATCH_SCORER_BINDING')
+  for(const u of binding.units){const r=inspectRequest(binding.requests[u.unitId]);check(
+    ['requestSha','requestBytes','candidateSha','inputSha'].every(k=>r[k]===u[k])&&u.scorerSha===binding.scorerSha,'BATCH_REQUEST_BINDING')}
+  const g=plan.grantBasis,ledger=readFileSync(join(runDirectory,'CALL_LEDGER.jsonl'))
+  const events=ledger.toString('utf8').trimEnd().split('\n').map(l=>JSON.parse(l).event)
+  check(g.head===protection.head&&g.sourcesSha===hash(JSON.stringify(review.sources))&&g.bindingSha===hash(bindingBytes)
+    &&g.manifestSha===hash(manifestBytes)&&g.parentSequence===5&&g.parentTail===baseline.ledgerBoundary.tail
+    &&g.ledgerPrefixBytes===baseline.ledgerBoundary.bytes&&g.ledgerPrefixSha===baseline.ledgerBoundary.sha256
+    &&hash(ledger.subarray(0,g.ledgerPrefixBytes))===g.ledgerPrefixSha&&g.priorNonce===events[1].nonce
+    &&events[1].unitId==='A01'&&g.a02ResponseSha===events[4].responseSha&&events[4].unitId==='A02'
+    &&g.maxTotalRequests===16&&isDeepStrictEqual(g.targets,binding.units.slice(2))&&isDeepStrictEqual(g.route,RECOVERY_ROUTE)
+    &&isDeepStrictEqual(g.billingEvidence,{checkedAt:billing.checkedAt,validUntil:billing.validUntil,evidenceSha:hash(JSON.stringify(billing))}),
+  'BATCH_GRANT_BINDING')
+  return {...g,reviewSha:hash(JSON.stringify(review))}
+}
+/** Explicit one-unit command. No .env access until every immutable and review gate passes. */
+export async function dispatchBatchUnit(unitId) {
+  check(/^(?:A0[3-8]|B0[1-8])$/.test(unitId),'BATCH_UNIT')
+  const bindingBytes=readFileSync(join(runDirectory,'STATE.json')),binding=JSON.parse(bindingBytes)
+  const manifestBytes=readFileSync(join(runDirectory,'REQUEST_MANIFEST.json'))
+  const baselineBytes=readFileSync(join(batchDirectory,'BATCH_BASELINE.json')),baseline=JSON.parse(baselineBytes)
+  const planBytes=readFileSync(join(batchDirectory,'BATCH_AUTHORIZATION.json')),plan=JSON.parse(planBytes)
+  const billing=JSON.parse(readFileSync(join(batchDirectory,'BATCH_BILLING.json')))
+  const review=JSON.parse(readFileSync(join(batchDirectory,'BATCH_REVIEW.json'))).sending
+  const closure=await compileBatchScorer(binding)
+  const validate=()=>verifyBatchSendApproval({bindingBytes,binding,manifestBytes,baselineBytes,baseline,planBytes,plan,billing,review,closure,
+    protection:inspectProtection({stage:'batch-14'})})
+  const grant=validate(),budget=await openBudget(runDirectory,hash(manifestBytes),{batchGrant:grant}),before=await budget.snapshot()
+  check(!before.batch?.stopped&&before.reservations.slice(1).every(r=>r.status==='settled')
+    &&binding.units[before.reservations.length]?.unitId===unitId,'BATCH_NEXT_UNIT')
+  const output=join(batchDirectory,'BATCH_'+unitId+'_RESULT.json'),rawPath=join(batchDirectory,'BATCH_'+unitId+'_RAW.jsonl')
+  check(!existsSync(output)&&!existsSync(rawPath),'BATCH_OUTPUT_EXISTS')
+  const index=binding.units.findIndex(u=>u.unitId===unitId),item=JSON.parse(readFileSync(binding.preparation.path)).preparations[index]
+  check(item.unitId===unitId&&item.requestText===binding.requests[unitId],'BATCH_PREPARED_UNIT')
+  validate()
+  try{process.loadEnvFile(resolve('.env'))}catch{check(false,'SERVER_CONFIGURATION_UNAVAILABLE')}
+  const recorder=await createRawRecorder(rawPath),origin='http://127.0.0.1:6631',capability=randomBytes(32).toString('hex')
+  let observedRaw
+  try {
+    const gateway=await createModelGateway({origin,capability,budget,requests:binding.requests,fetchImpl:createPinnedProxyFetch(),
+      recordRaw:async row=>{check(row.unitId===unitId&&row.requestSha===binding.units[index].requestSha,'BATCH_RAW_IDENTITY')
+        await recorder.write(row);observedRaw=row}})
+    const start=Date.now(),response=await gateway.handle({method:'POST',path:'/api/real-input/recognize',
+      headers:{host:new URL(origin).host,origin,'sec-fetch-site':'same-origin','content-type':'application/json','x-real-input-capability':capability},
+      bodyText:JSON.stringify({unitId,requestSha:binding.units[index].requestSha})})
+    let score=null,scoreError=null
+    if(response.status===200)try{const ref=await closure.api.seenWire(closure.api.cases[index%8],item.handle)
+      score=await closure.api.scoreSeenResponse(observedRaw.rawHttpText,item.context,ref.original.rawResponse,ref.original.context)
+    }catch{scoreError='SCHEMA_OR_SCORER_REJECTED'}
+    const after=await budget.snapshot(),reservation=after.reservations.find(r=>r.unitId===unitId)
+    const report={version:'real-input-batch-unit-result-1',unitId,bindingSha:hash(bindingBytes),grantSha:hash(JSON.stringify(grant)),
+      scorerSha:binding.scorerSha,actualScorerBundleSha:closure.bundleSha,responseSha:observedRaw?.responseSha??null,
+      newAttempts:after.reservations.length-before.reservations.length,totalAttempts:after.reservations.length,
+      lastHttpStatus:response.status,lastDiagnostic:response.diagnostic??null,lastWaitingMs:Date.now()-start,score,scoreError,
+      unitCostUpperMicroCny:reservation?.costUpperMicroCny??0,costUpperMicroCny:after.reservations.reduce((n,r)=>n+r.costUpperMicroCny,0),
+      stopDispatch:response.status!==200||Boolean(after.batch?.stopped)||reservation?.status!=='settled',
+      originalA01UnknownMicroCny:3300000,providerBilledCny:'NOT_OBSERVABLE',automaticSelection:'NOT_ENABLED',humanTime:'NOT_RUN',
+      qualityClaim:'已见同源工程验证；首次建议原评分，不是盲测准确率。语义质量失败不伪装为安全事故。'}
+    writeFileSync(output,JSON.stringify(report,null,2)+'\n',{flag:'wx'})
+    return {unitId,http:response.status,totalAttempts:report.totalAttempts,stopDispatch:report.stopDispatch,
+      costUpperMicroCny:report.costUpperMicroCny,completeCase:score?.completeCase??null,scoreError}
+  }finally{await recorder.close()}
+}
 if(process.argv[1]&&resolve(process.argv[1])===resolve(import.meta.filename)){
   const args=process.argv.slice(2),pick=key=>args.find(a=>a.startsWith('--'+key+'='))?.slice(key.length+3)
-  if(args.length===1&&args[0]==='--recover-a02')console.log(JSON.stringify(await dispatchRecoveredA02()))
+  if(args.length===1&&/^--batch=(?:A0[3-8]|B0[1-8])$/.test(args[0]))console.log(JSON.stringify(await dispatchBatchUnit(pick('batch'))))
+  else if(args.length===1&&args[0]==='--recover-a02')console.log(JSON.stringify(await dispatchRecoveredA02()))
   else if(args.length===1&&/^--paid=[AB]0[1-8]$/.test(args[0]))console.log(JSON.stringify(await dispatchPaidUnit(pick('paid'))))
   else {
   check(args.length===4&&args.every(a=>/^--(?:preparation|repository-read|output|carriers)=/.test(a))

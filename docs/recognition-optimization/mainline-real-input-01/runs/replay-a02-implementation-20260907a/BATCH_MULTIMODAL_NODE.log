@@ -1,0 +1,31 @@
+✔ scores auditable entity matches without self-normalization (15.3362ms)
+✔ scores local wall-clock values using the declared timezone rather than the evaluator host (1.5506ms)
+✔ loads and executes the exact client validator without a duplicate schema (79.2535ms)
+✔ browser, Worker generated contract, and evaluator agree on strict outcomes (1.7987ms)
+✔ penalizes missing and forbidden tasks as correction burden (0.5201ms)
+✔ does not match forbidden tokens that exist only in task description (0.2884ms)
+✔ does not score suggestions that client safety marked unselected (0.2988ms)
+✔ excludes unselected materials, time points and events from quality scoring (0.18ms)
+✔ paired bootstrap reports paired deltas rather than dividing by model maxima (1.0988ms)
+✔ reports unavailable quality metrics as null when every request failed (0.21ms)
+✔ keeps an untested arm NOT_RUN instead of inventing request failures (0.0907ms)
+✔ rejects observations attached to an arm declared untested (0.857ms)
+✔ does not award vacuous task F1 when both expected and predicted tasks are empty (0.1327ms)
+✔ penalizes predicted entities that have no evidence (0.3198ms)
+✔ reports evidence validity separately from entity coverage (0.2659ms)
+✔ image-only evidence is checked against offline ground truth rather than OCR text (0.2332ms)
+✔ paired bootstrap resamples independent scenario families as clusters (0.6009ms)
+✔ a partial request failure invalidates arm-level quality metrics (0.2584ms)
+✔ client-invalid truthy results never become completed quality observations (0.0879ms)
+✔ scoreCase is fail-closed unless the caller explicitly marks a result completed (0.0642ms)
+✔ invalid or untested arms cannot produce paired quality claims (0.4629ms)
+✔ a scoreable comparison is not mislabeled as a promotion PASS (3.1784ms)
+✔ classifies HTTP failures without collapsing auth, billing, rate limit, model and request errors (0.0991ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 326.0701
