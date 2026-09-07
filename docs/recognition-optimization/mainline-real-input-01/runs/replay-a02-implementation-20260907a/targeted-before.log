@@ -1,0 +1,39 @@
+
+ RUN  v3.2.7 C:/Users/Winner/student-affairs-multimodal-exp
+
+xxxx·······················
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > explicit material review separates requirement and availability: ready
+ FAIL  src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > explicit material review separates requirement and availability: missing
+ FAIL  src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > explicit material review separates requirement and availability: not_required
+TypeError: (0 , enableMaterialReview) is not a function
+ ❯ src/experiments/realInput01/runtime.test.ts:47:11
+     45|     const {repo,handle,store}=await setup('multi')
+     46|     const original=stateOfRuntime(await repo.load(),handle.draftId)
+     47|     await enableMaterialReview(repo,handle.draftId)
+       |           ^
+     48|     const pending=await repo.load(), state=stateOfRuntime(pending,hand…
+     49|     const material=effectiveStateFacts(state).facts.materials[0]
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > material review save failure is atomic, stale choices refuse, independent sibling can confirm
+TypeError: (0 , enableMaterialReview) is not a function
+ ❯ src/experiments/realInput01/runtime.test.ts:66:58
+     64|   })
+     65|   it('material review save failure is atomic, stale choices refuse, in…
+     66|     const {repo,handle,store}=await setup('multi');await enableMateria…
+       |                                                          ^
+     67|     const before=await repo.load(), intent={draftId:handle.draftId,mat…
+     68|     store.fail=true;await expect(reviewSemanticMaterial(repo,intent)).…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  4 failed | 23 passed (27)
+   Start at  17:30:48
+   Duration  5.04s (transform 431ms, setup 0ms, collect 607ms, tests 3.89s, environment 0ms, prepare 231ms)
+

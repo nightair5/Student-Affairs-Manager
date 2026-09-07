@@ -1,74 +1,72 @@
 # RCO Current Context
 
-## 当前目标与结论
-- 同一 MAINLINE-REAL-INPUT-01，完整产品仍 NOT_COMPLETE。
-- 当前任务：现有A02原始响应只读回放、差异裁决与范围申请；已停止实施。
-- 0模型调用、0paid/recover/A03、0密钥/剪贴板/真实库访问。
-- 内部函数能接住A02、明确核对/选择后确认1条任务，内存读回一致。
-- 发现真实产品问题：required材料被自动记missing并显示“必须提供”。
-- 原文只要求保存手册，未说提供，也未说用户缺少手册。
-- 实际首页排序函数增加18分和“缺材料”风险；需要修的是状态混淆。
-- 浏览器启动器没有历史A02入口；本轮没有实际Edge/IndexedDB/下载验收。
-- 总体模型识别准确率本轮未测量；旧A02精确评分保持。
+## 当前目标与现场
+- 同一 MAINLINE-REAL-INPUT-01；用户批准历史A02真实App回放与材料核对。
+- 当前实际执行范围为 replay-a02-20260907a/NEXT_SCOPE.json 的12路径。
+- 当前run：mainline-real-input-01/runs/replay-a02-implementation-20260907a/。
+- 实现未完成；正式业务交付 NOT_COMPLETE，不宣称产品通过。
+- 0模型调用/模型网络/费用/paid/recover/A03/密钥/剪贴板访问。
+- 不新建数据集/依赖，不接稳定入口/真实库，不部署。
+- 官方电脑控制因无法可靠确认Windows浏览器当前网址安全停止。
+- 不通过另一控制通道绕过；本轮未改系统/浏览器设置，也未写原浏览器库。
 
-## Git与本轮交付
+## Git与保护
 - 唯一仓库 C:\Users\Winner\student-affairs-multimodal-exp。
-- 分支 codex/e2-multimodal-recognition-exp，禁止在默认比赛目录实施。
-- 起点与live远端835ae162071b7181ea5bb325b475113e5108da5d一致。
-- 本轮仅审计6文件Git交付；最新交付提交号查实际Git/远端。
-- 原42实现仍本机未提交；本轮所有42源码/测试逐字SHA不变。
-- 当前run mainline-real-input-01/runs/replay-a02-20260907a/。
-- AUDIT说明裁决；REPLAY保存原函数探针及结果；CHECKS保存最终保护。
-- NEXT_SCOPE.json为待批准12路径，不是本轮实现许可。
-- 不回切、不重装、不套补丁、不改旧计划或历史。
+- 分支 codex/e2-multimodal-recognition-exp；禁止在默认比赛目录实施。
+- 实施起点及核验远端 c1a5446f0ec58646fbace9e6c460e2c438d89554。
+- 本轮停止后只提交审计；最新审计提交以实际Git/远端核验为准。
+- 原42实现仍未提交；本轮在获准12内修改11路径，31实现逐字未变。
+- acceptance.test.tsx仍未修改，真实App新增回放接线的检查尚待补齐。
+- 42当前SHA见本run IMPLEMENTATION_SNAPSHOT.json；禁止重复应用实现。
+- 945保护聚合 df68e4eda47f664f9f0fbf218a74687117ac3cc9d2c14f5ee6e9965cd2c28394。
+- 160旧静态证据、5收据、原账本3515字节/5事件保持。
+- 原日志286643字节前缀保持；新日志仅追加。
+- 旧Expected/candidate/scorer/评分/冻结/历史FAIL不变。
 
-## 回放方法与数字
-- 原preparation与独立repository下载文件按原STATE SHA核验。
-- 只将已见匿名工作区副本载入MemoryWorkspaceRecordStore。
-- 通过原canonical和SemanticRepository全图校验，不改原浏览器库。
-- 原A02 handle、scope、consent、请求SHA和rawHttpText不重造。
-- completeInputRun→semanticReview→reviewSemanticFact→confirmSemantic。
-- execution=live/authority=live_model_candidate保留，外部报告明确历史回放。
-- 未核对直接确认被拒绝且内存不变；初始未自动勾选。
-- 模拟明确核对/主动选择后生成1条“保存活动手册”。
-- 原文/raw/first保持；重复确认不增项；新仓储实例和内存JSON全对象一致。
-- 时间点/提醒/实际jobs均0；无日期不抬高异常排序。
-- 实际CalendarPage SSR中无日期列表可找到；不是浏览器刷新验收。
-- 4类旧人工对照共5条确认：no-date1/multi2/condition-true1/revision1。
-- 最终25/25检查；重叠attempt不累计，不等于模型25例或产品通过。
-- 探针初始化/JSX配置问题只改内存编排，未改产品源码。
-- 长输出截断不计验收；全部attempt状态记录在REPLAY中。
+## 已实施但未最终验收
+- 新显式recorded-A02启动模式；原STATE/preparation/raw/request哈希绑定。
+- 只允许本机固定历史端点，未导入网关或读取.env，默认人工入口不变。
+- runtime复用completeInputRun，在内存暂存完整响应及材料模式后单次事务接入。
+- 原source/run/draft身份、live_model_candidate、raw/first保留。
+- 回放模式禁止新录入和模型发送，不重新创建来源或测试库。
+- 显式材料模式通过追加操作启用；原默认没有启用此增量。
+- 材料是否必需与用户观察的准备状态独立保存，不再自动required→missing。
+- 未核实材料挡住相关确认；已具备、确实缺少、非必备有成功对照。
+- 已确认共享材料不得重写；独立兄弟可以单独确认。
+- 用户材料核对有缓冲与保存；普通任务已核对不能绕过材料核对。
+- 原文、模型分类、首次建议和用户观察仍分开呈现。
 
-## 差异裁决
-- 材料实体并非凭空造名词；错误在required自动推缺失和“必须提供”。
-- semanticState.ts:233将required映射missing；SemanticFacts.tsx:27显示必须提供。
-- taskLogic.ts:82对missing增加18分；A02实际score33，中优先级基数15。
-- 时态present/效果local_change没有影响本例动作对象及确认。
-- 无日期第二句在information范围，原文仍完整；摘要“未说明”粒度不足。
-- 描述礼貌词无实际动作差异；完成标准留在语义明细，旧投影为空。
-- 原Complete Case=false/Major=true保留，不把精确差异全称模型错误。
-- 人工重大修改、真人操作时间、整体质量均未测。
+## 当前证据层级
+- 首次新增入口测试4失败/23通过：失败为新API尚未实现，不是新业务反例。
+- 材料实现定向27/27通过。
+- 后续3文件定向60/60通过；这些是重叠回归，不累计成87例。
+- 两次类型检查退出0；最终type-targeted-2.log绑定当前实现。
+- 精确A02历史原响应在内存确认1任务；原文/raw/first保持。
+- 无日期0时间点/0提醒；缺失材料不再被自动写入canonical。
+- 合法三种材料状态、重复、原身份篡改、原子失败及共享/独立均有测试。
+- 新无上下文独立审查 NOT_RUN。
+- 新一轮完整lint/test/build/安全/依赖/历史分层工程 NOT_RUN。
+- 新launcher构建及端点验收 NOT_RUN。
+- 新实现实际Edge核对/逐键/保存/确认/刷新/下载/独立读库 NOT_RUN。
+- 本轮只观察到原6631标签存在、旧页面原A02为queued；没有执行新版。
+- 总体模型识别准确率：本轮未测量；原A02评分不变。
 
-## 账本与保护
-- 原usage-resume账本5事件SHA及5收据均不变，本轮不允许追加。
-- A01失败/1次计数/3300000微元未知预留永久保留。
-- A02已一次完成，16392微元费用上界，累计2次/3316392微元占用。
-- 服务商实扣NOT_OBSERVABLE；未知预留不等于实际支出。
-- A02 grant已消费，不得重发、迟到结算A01、重开账本或清HALT。
-- 用户取消费用作为暂停理由，但本轮0调用，不修改既有预算实现或证据。
-- 945保护聚合df68e4eda47f664f9f0fbf218a74687117ac3cc9d2c14f5ee6e9965cd2c28394。
-- 原静态证据、旧40/42/17测试/历史3/1 FAIL、Expected/freeze/cache保持。
-- 日志只追加，原前缀和本轮起始边界见CHECKS。
+## 账本
+- A01失败/1次/3300000微元未知预留永久保留。
+- A02已一次调用，16392微元费用上界，累计2次/3316392微元占用。
+- 本轮不追加账本、不新增收据、不重发或迟到结算。
+- 实扣NOT_OBSERVABLE；费用预留不代表实际消费。
+- 用户取消费用暂停理由不改变当前明确0调用范围。
 
-## 下一唯一包（必须明确授权）
-- 同包批准NEXT_SCOPE.json的12路径，接历史A02真实App并修材料核对。
-- 入口：serve/browser/runtime；语义：State/Confirmation/View/SemanticFacts。
-- 人工核对：factCorrections/FactCorrectionEditor；对应3测试。
-- 区分材料必需性与用户观察的准备状态，不能从模型required推missing。
-- 未核验仅待核对；经用户选择后使用现有合法MaterialStatus。
-- 保留旧默认、原raw/first、独立兄弟、已确认任务和全部引用。
-- 如果必须修改全局Schema/repository或额外文件，先停止申请。
-- 原6631 origin/隔离库与待处理A02 handle先核验；不换库/清库掩盖恢复。
-- 不用seenWire冒充真实响应，不通过重新调用模型补回放入口。
-- 最终需要真实App逐键/保存/选择/确认/刷新/实际下载与独立读库。
-- 本轮已停止；不自动实施新范围，不接真实库/稳定入口/部署/RCO-6。
+## 恢复后唯一下一步
+- 恢复官方电脑控制，可靠识别原6631测试标签；失败不绕过。
+- 同包按本run最终42SHA、945保护、160旧证据及新日志边界恢复。
+- 不回切、不重做PLAN、不重复应用实现。
+- 复核剩余公开入口/材料状态正反例，补获准acceptance测试。
+- 定向通过→无上下文独审→完整适用分层工程→实际Edge闭环。
+- 保持原origin和原库；不新库/清库/伪造human_engineering。
+- 原A02历史响应载入后，主动核对材料/任务、逐键编辑保存、确认。
+- 刷新任务中心/首页/日历/详情，实际JSON下载对独立repository读回。
+- 最终证据绑定最终源码；只有全部验收完成才提交获准业务实现。
+- 超范围、保护变化、重叠用户修改或重大安全问题停止。
+- 完成后停止，不自动调用模型或进入下一包。

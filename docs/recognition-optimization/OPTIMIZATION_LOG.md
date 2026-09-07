@@ -1896,3 +1896,16 @@
 - findings: required=true在semanticState转missing，面板“必须提供”，实际排序函数增加缺材料18分（总33），原文仅要求保存，未说明缺少或提交，属于产品事实与展示偏移。present/local_change未改变本例任务与确认；无截止原句保留但摘要粗化为“未说明”。原Complete Case=false/Major标记保留，不等同全部语义错或真人重大修改；总体模型准确率本轮未测量。
 - boundary: 实际SemanticFacts/CalendarPage仅SSR；现有launcher只生成seenWire，另一浏览器路径会真实发送，不能承接已付费A02历史响应。实际Edge/逐键/刷新/IndexedDB/下载NOT_RUN，未绕过身份/新建接口或改系统。探针初始化与JSX配置错误只修内存编排；输出截断不计验收，各attempt见新REPLAY。
 - decision-delivery: NO_PROMOTION，内部诊断可交付但完整产品NOT_COMPLETE。下一唯一建议在原42内明确批准NEXT_SCOPE的12路径，连续完成历史A02真实App回放与材料必需性/用户准备状态解耦；全局Schema/旧默认/Expected与历史保持，不能承接则精确申请。只提交新4审计文件、短交接与追加日志，42源码仍未提交；A01未知预留和A02已消费grant不动，完成后停止。
+
+## 144. MAINLINE-REAL-INPUT-01 历史A02实际接线与材料核对授权 — 2026-09-07
+
+- authorization: 用户批准 replay-a02-20260907a/NEXT_SCOPE.json 的12路径限定职责；同包完成历史响应真实App回放与材料必需性/当前准备状态分离，0模型调用，不改原评分/账本/历史/旧默认。
+- preflight: 本机及远端 c1a5446f0ec58646fbace9e6c460e2c438d89554，42源码逐字SHA、945保护、160旧静态证据、5账本事件及5收据、286643字节日志前缀一致；无重叠修改。基线见 replay-a02-implementation-20260907a/BASELINE.json。
+- sequence: 先公共接口正反测试，显式隔离材料核对及原A02绑定入口；定向通过后独审、适用工程及原6631/原隔离库真实浏览器验收。所有未完成项保留NOT_RUN，不将工程结果冒充模型准确率。超范围/保护变化/重大安全问题停止。
+
+## 145. 同包历史回放实现现场与电脑控制停止 — 2026-09-07
+
+- implementation: 原12内修改11路径；显式历史A02哈希绑定接线、原capture内存暂存后原子接入；材料必需性与用户准备状态分离，旧默认/raw/first不变，未核实不能确认。其余31实现不变，acceptance新增覆盖尚未补齐。42当前SHA见本run快照，不重复应用实现。
+- checks: 新API未实现时4失败/23通过（不是业务反例）；材料定向27/27；最终3文件60/60，不累计重叠attempt。两次类型退出0。历史A02内存公开入口确认1任务，身份/raw/first保留，0日期0提醒，正常材料状态/回滚/重复/共享及独立对照通过。独立审查/完整工程/新launcher/新版Edge与下载读库NOT_RUN，模型准确率本轮未测量。
+- stop: 原6631标签可见，随后官方Windows电脑控制无法可靠确定当前浏览器URL而安全停止；未绕过，不改系统/浏览器设置、不操作原库，不称产品故障。保留现场，仅审计Git交付，业务NOT_COMPLETE。
+- integrity: 945保护、160静态证据、5收据及原A01/A02账本保持，旧日志前缀保持；0模型/费用/密钥/剪贴板/真实库/部署。恢复后同包完成独审、工程、实际App闭环；不重做PLAN或调用新模型。
