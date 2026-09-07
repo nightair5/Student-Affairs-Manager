@@ -112,6 +112,8 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
   if (runtime !== boundRuntime) throw new Error('MAINLINE_RUNTIME_CHANGE_FORBIDDEN')
   const [initialWorkspace] = useState(() => runtime ? runtime.view(runtime.initial) : loadWorkspace(demoTasks, demoSources))
   const [isolatedSnapshot, setIsolatedSnapshot] = useState<WorkspaceV8 | null>(runtime?.initial ?? null)
+  const [realInputInitialText, setRealInputInitialText] = useState('')
+  const RealInputPanel = runtime?.realInput?.inputPanel
   const [isolatedChoices, setIsolatedChoices] = useState<Record<string, Record<string, boolean>>>({})
   const [isolatedBusy, setIsolatedBusy] = useState(false)
   const isolatedLock = useRef(false)
@@ -530,6 +532,10 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
   }
 
   const handleIntakeInput = async (input: IntakeInput) => {
+    if (runtime?.realInput) {
+      if (input.sourceType !== 'text' || input.manualSuggestion || input.multimodal || input.url || input.fileName) { rejectExperimentAction(); return }
+      setRealInputInitialText(input.content); setIntakeOpen(true); return
+    }
     if (runtime) {
       await performExperiment(async () => {
         const draftId = await runtime.capture(input)
@@ -1282,6 +1288,7 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
       case 'today':
         return (
           <DashboardPage
+            realInput={runtime?.realInput}
             dateViews={dateViews}
             readOnly={Boolean(runtime)}
             tasks={tasks}
@@ -1441,7 +1448,7 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
       />
       <div id="main-content" className="content-shell" tabIndex={-1}>
         {runtime && <section aria-label="隔离实验状态">
-          <p>{runtime.recognitionDescription ?? '人工工程响应（非模型预测）'} · 独立测试库 · 无模型/通知外发</p>
+          <p>{runtime.recognitionDescription ?? '人工工程响应（非模型预测）'} · 独立测试库 · {runtime.realInput?.networkDescription ?? '无模型/通知外发'}</p>
           <p>仅本轮录入、核对、确认、查询与JSON备份可用；未纳入操作会明确阻断。</p>
           {runtime.semantic && <p>新语义保存在独立实验格式中，不能导入稳定入口。卡片分类与耗时仍是旧界面的兼容估计，不代表原文；完整原始属性可在详情核对，不会作为修改写回。</p>}
           <button type="button" disabled={isolatedBusy || !workspaceReady || storageError} onClick={() => void performExperiment(async () => {
@@ -1481,6 +1488,9 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
 
       {!workspaceRecovery && intakeOpen && (
         <IntakePanel
+          realInputPanel={RealInputPanel && isolatedSnapshot ? <RealInputPanel workspace={isolatedSnapshot}
+            initialText={realInputInitialText} onSaved={refreshExperiment}
+            onDraftReady={async id => { await refreshExperiment(); setIntakeOpen(false); setSelectedDraftId(id); setRealInputInitialText('') }} /> : undefined}
           textOnly={Boolean(runtime)}
           onClose={() => setIntakeOpen(false)}
           onSubmitIntake={handleIntakeInput}
@@ -1497,8 +1507,12 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
       )}
       {!workspaceRecovery && selectedDraft && (!runtime || experimentalReview) && (
         <DraftReviewPanel
+          factCorrection={runtime?.realInput && isolatedSnapshot ? (taskId, onDirty, unsaved) => runtime.realInput!.factEditor({
+            workspace: isolatedSnapshot, draftId: selectedDraft.id, taskId, busy: isolatedBusy || storageError || unsaved,
+            onDirty, onSaved: refreshExperiment }) : undefined}
           key={runtime ? selectedDraft.id : undefined}
           isolatedCapabilities={Boolean(runtime)}
+          recognitionDescription={runtime?.realInput ? runtime.recognitionDescription : undefined}
           confirmationV2={runtime && experimentalReview ? { busy: isolatedBusy || storageError, items: experimentalReview.states } : undefined}
           semanticReview={runtime?.semantic && isolatedSnapshot && experimentalReview ? {
             itemFacts: (taskId, onFocus) => runtime.semantic!.facts(isolatedSnapshot, selectedDraft.id, taskId, onFocus),

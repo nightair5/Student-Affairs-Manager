@@ -6,7 +6,7 @@ import { SemanticRepository } from './semanticRepository'
 import { captureSemantic, type SemanticRecognizer } from './semanticCapture'
 import { editSemantic, confirmSemantic, disposeSemantic } from './semanticConfirmation'
 import { semanticDates, semanticReview, semanticView, stateForEntity, timeLabel } from './semanticView'
-import { stateOf, relatedAssets, informationReviewProblem } from './semanticState'
+import { stateOfRuntime as stateOf, relatedAssets, informationReviewProblem, effectiveStateFacts } from './semanticState'
 import { SemanticFacts } from './SemanticFacts'
 
 export async function createSemanticRuntime(options:{name:string;store:WorkspaceRecordStore&{readonly name:string};initial?:WorkspaceV8;recognize:SemanticRecognizer}) {
@@ -34,6 +34,6 @@ export async function createSemanticRuntime(options:{name:string;store:Workspace
               endLabel:timeLabel(workspace.timePoints.find(t=>t.id===event.endTimePointId)?.normalizedValue??null,state.context.timezone),
               content:facts(workspace,state.draftId)}
           },
-          eventCount:(workspace,draftId,ids)=>relatedAssets(stateOf(workspace,draftId).rawResponse,ids).events.size}}
+          eventCount:(workspace,draftId,ids)=>relatedAssets(effectiveStateFacts(stateOf(workspace,draftId)).facts,ids).events.size}}
     }})
 }

@@ -1934,3 +1934,14 @@
 - actual-edge: 原6631/原tab/原库，真实IndexedDB两次同名probe升级中止、oldVersion[0,0]/旧建表0；未提交probe库或清库/回退。独立new repository读原库16Source/0Task，SHA b7c08ed26349a7ad5e1a67236058aa9c91ed6b678a2cf210647f5d59473b758a。原A02真实回答回放进入同库待确认，刷新收件箱能找回并打开真实面板；非新的模型调用。
 - scope-block: 实际面板将真实A02误标人工工程响应，DraftReviewPanel.tsx:148硬编码与App.tsx:1514接线缺口，当前12路径不授权改两公共文件。原文/raw/first及live_model_candidate保留，未以标签问题推断存储篡改。独审确认最小需App/Panel两例外，当前不修且不正式确认，后续逐键/材料保存/下游/真实下载NOT_RUN。
 - delivery: 恢复差异独审PASS，最终交付BLOCKED；只RECOVERY报告/约80行交接/追加日志审计提交，42业务保留未提交。945/160/旧CONTINUATION证据/账本5收据/日志前缀按RECOVERY_CHECKS核验；0新增模型/费用/密钥/剪贴板/真实库/部署，模型准确率本轮未测量。下一步同包批准两文件来源说明接线，保留现有待确认现场，不重做PLAN或A02。
+
+## 149. 同包真实模型来源说明与原库确认续作 — 2026-09-07
+
+- authorization: 用户明确批准原42内App/Panel仅来源说明接线，原12路径及全部保护保持，普通范围内缺陷连续修复；0模型/密钥/剪贴板/新数据/真实库/稳定接入/部署。
+- preflight: HEAD/live远端ef76d6e80b230398b30ef2a3b4cc490c96736b84一致；42实现、945保护、160旧证据、7 CONTINUATION及30 RECOVERY证据、账本5收据和294441字节日志前缀逐字核验通过。新临时env/cache/build目录见LABEL_BASELINE。
+- sequence: 先真实面板来源标签反例/旧默认正例，再最小修复、独审、适用工程；保留旧历史HEAD门原结论，最后原6631/原库现有A02逐键核对保存确认/刷新/实际下载与独立读库，不重复模型或重做PLAN。
+- implementation: 仅App/Panel来源说明接线及acceptance新增2回归；旧实现/断言通过独审内存逆去增量恢复SHA，其余39源码一致。Before14/2预期失败，After66/66；旧默认与能力限制不变。
+- engineering: 独立代码审查PASS，lint0错误4警告、两类型PASS、功能1233/0/1跳过、Schema/时间两门、Core Node62/62、旧checker当前7/7；历史付费HEAD三测单列NOT_RUN，不修改旧脚本救门。新build稳定14JS隔离、安全1226文件0发现；未变预算83/历史20字节文件及4库测试/依赖兼容13/旧审计0漏洞按SHA复用，不当新运行。
+- browser: 原6631/原库原A02建议恢复；真实标签正确，材料必需性和准备状态分别主动保存。两个注入故障分别在材料保存/正式确认时全对象回滚，已保存历史不丢。标题逐键追加-A02、明确保存/核对/主动选择后正常确认1Task，1用户观察ready材料，0时间/提醒/实际jobs；刷新首页/任务中心/详情/日历独立无日期列表找回。
+- export: 实际下载mainline-real-input-01-workspace.json，218242字节，文件SHA049459c4d4dd6ac5ac18a3e2966a05cb7bea136cf7bd901a315738379fefa1bf；解析全对象SHA cf3aa420daee3f6c66a2d206440e8f5ef67fff92c5955f8f5aecefcdb1e38770与实际new repository读回一致，v8/联合校验通过。原始/首次/输入/来源版本六比较不变；重复A02回放后全对象不变。
+- boundary: 本轮A02_REPLAY_LOOP_PASS，不宣称整个真实输入包或识别准确率已达标。详情旧历史占位仍未接新语义（上方完整记录可见），正式编辑/提醒/ICS未测；实际多任务/跨标签/中文IME/全格式及真人时间另列。0新增模型/费用/密钥/剪贴板/真实库/部署，A01/A02账本5收据/945保护/160旧证据保持。精确42业务及新LABEL报告交付须最终复核无阻断；若复核失败只交付审计。主线下一建议为其余已准备小批真实语义质量验证，不重测A02。

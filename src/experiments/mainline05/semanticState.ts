@@ -4,12 +4,18 @@ import { workspaceSnapshotHash } from '../../domain/v2/migration'
 import { isDateOnly, parseBusinessDateTime } from '../../lib/timeSemantics'
 import { composeSemantics, type ComposeContext, type ReviewPackage } from '../mainline04/semanticComposer'
 import { parseSemanticInput, plainJson, stableJson, type SemanticInput } from '../mainline04/semanticContract'
+import { effectiveFacts, appendCorrection, validateMaterialDecision, type MaterialDecision, type FactCorrection } from '../realInput01/factCorrections'
+import { factIdentity, itemSafety, selectLiveTasks } from '../realInput01/modelPolicy'
+import { parseModelEnvelope, MODEL_NAME, PROMPT_VERSION, type ModelWire } from '../realInput01/modelWire'
+import { validateInputReceipt, validateSendSnapshot, effectivePages, type InputReceipt, type SendSnapshot } from '../realInput01/inputReceipt'
 
 export const STATE_VERSION = 'mainline05-semantic-state-1' as const
 export type Disposition = 'pending' | 'deferred' | 'rejected' | 'confirmed'
 export interface SemanticOperation {
-  id: string; kind: 'edit' | 'confirm' | 'defer' | 'reject' | 'review_info'
+  id: string; kind: 'edit' | 'confirm' | 'defer' | 'reject' | 'review_info' | 'review_task' | 'correct_fact' | 'enable_material_review' | 'review_material'
   at: string; taskIds: string[]; field: 'title' | 'deadline' | null; value: string | null; before: string | null
+  correction?: FactCorrection; factReview?: ReviewPackage; reviewIdentity?: string
+  materialReview?: { materialId: string; identity: string; value: MaterialDecision }
 }
 export interface SemanticState {
   version: typeof STATE_VERSION
@@ -18,6 +24,27 @@ export interface SemanticState {
   context: ComposeContext; first: ReviewPackage
   operations: SemanticOperation[]
   bindings: Record<string, string | null>
+}
+export const REAL_STATE_VERSION = 'mainline-real-input-state-1' as const
+export interface RealInputState extends Omit<SemanticState, 'version' | 'rawResponse'> {
+  version: typeof REAL_STATE_VERSION
+  rawResponse: ModelWire
+  rawHttpText: string
+  adaptedResponse: SemanticInput
+  inputReceipt: InputReceipt
+  sendSnapshot: SendSnapshot
+  execution: 'live' | 'seen_engineering_replay'
+}
+export type AnySemanticState = SemanticState | RealInputState
+export function effectiveStateFacts(state: AnySemanticState) {
+  return state.version === STATE_VERSION ? { facts: state.rawResponse, sourceFacts: state.rawResponse, manualMaterials: [] as string[] }
+    : effectiveFacts(state.adaptedResponse, state.operations.filter(o => o.kind === 'correct_fact').map(o => {
+      assert(o.correction, 'CORRECTION_MISSING'); return o.correction
+    }), state.context.index)
+}
+export function effectiveReview(state: AnySemanticState) {
+  if (state.version === STATE_VERSION) return state.first
+  return state.operations.filter(o => o.kind === 'correct_fact').at(-1)?.factReview ?? state.first
 }
 export const equal = (a: unknown, b: unknown) => stableJson(a) === stableJson(b)
 export const json = (value: unknown): JsonValue => plainJson(value) as JsonValue
@@ -31,9 +58,14 @@ export function semanticId(kind: string, state: Pick<SemanticState, 'draftId'>, 
   return 'mainline05:' + kind + ':' + state.draftId + ':' + encodeURIComponent(id)
 }
 export function stateOf(workspace: WorkspaceV8, draftId: string): SemanticState {
+  const state = stateOfRuntime(workspace, draftId)
+  assert(state.version === STATE_VERSION, 'EXPLICIT_REAL_INPUT_REQUIRED')
+  return state
+}
+export function stateOfRuntime(workspace: WorkspaceV8, draftId: string): AnySemanticState {
   const value = workspace.extractionDrafts.find(d => d.id === draftId)?.legacyData?.mainline05
   assert(value && typeof value === 'object' && !Array.isArray(value), 'DRAFT_NOT_READY')
-  return value as unknown as SemanticState
+  return value as unknown as AnySemanticState
 }
 // Exact snapshot identity, not a short non-cryptographic hash used as an authorization token.
 // The identity is passed in memory only and is never embedded recursively in history.
@@ -63,32 +95,55 @@ export function relatedAssets(input: SemanticInput, ids: readonly string[]) {
   return { tasks, materials, times, events }
 }
 const deadlineType = (type: string) => ['task_deadline', 'submission_deadline', 'registration_deadline', 'result_announcement'].includes(type)
-export function editTimeSupport(state: SemanticState, id: string) {
-  const task = state.rawResponse.tasks.find(t => t.id === id)
+export function editTimeSupport(state: AnySemanticState, id: string) {
+  const input = effectiveStateFacts(state).facts
+  const task = input.tasks.find(t => t.id === id)
   assert(task, 'TASK_MISSING')
-  const assets = relatedAssets(state.rawResponse, [id]), points = state.rawResponse.timePoints.filter(t => assets.times.has(t.tempId))
-  const shared = state.rawResponse.tasks.some(t => t.id !== id
-    && [...relatedAssets(state.rawResponse, [t.id]).times].some(time => assets.times.has(time)))
+  const assets = relatedAssets(input, [id]), points = input.timePoints.filter(t => assets.times.has(t.tempId))
+  const shared = input.tasks.some(t => t.id !== id
+    && [...relatedAssets(input, [t.id]).times].some(time => assets.times.has(time)))
   return { points, allowed: assets.events.size === 0 && points.length <= 1 && !shared
     && points.every(t => deadlineType(t.type)) && (points.length > 0 || task.coverage.time === 'not_stated') }
 }
-export function canAct(state: SemanticState, id: string): boolean {
+export function canAct(state: AnySemanticState, id: string): boolean {
+  if (state.version === REAL_STATE_VERSION) return !materialReviewProblem(state,id) && itemSafety(effectiveStateFacts(state).facts, effectiveReview(state), id).length === 0
   const item = state.first.items.find(i => i.tempId === id)
   const task = state.rawResponse.tasks.find(t => t.id === id)
   return Boolean(item && task && state.context.authority === 'human_engineering' && item.requiresAction === 'true'
     && item.issues.length === 0 && ['addressee', 'addressed_group'].includes(task.semantics.actor) && task.effect !== 'unknown')
 }
+export const materialReviewEnabled = (state: AnySemanticState) => state.version===REAL_STATE_VERSION
+  && state.operations.some(o=>o.kind==='enable_material_review')
+export function materialIdentity(state: AnySemanticState, materialId: string) {
+  const input=effectiveStateFacts(state).facts, material=input.materials.find(m=>m.tempId===materialId)
+  assert(material,'MATERIAL_MISSING')
+  return stableJson({material,owners:input.tasks.filter(t=>relatedAssets(input,[t.id]).materials.has(materialId))})
+}
+export function materialDecision(state: AnySemanticState, materialId: string): MaterialDecision | undefined {
+  if (!materialReviewEnabled(state)) return undefined
+  const op=state.operations.filter(o=>o.kind==='review_material'&&o.materialReview?.materialId===materialId).at(-1)
+  return op?.materialReview?.identity===materialIdentity(state,materialId) ? validateMaterialDecision(op.materialReview.value) : undefined
+}
+export function materialReviewProblem(state: AnySemanticState,id: string): string | undefined {
+  if (!materialReviewEnabled(state)) return undefined
+  const input=effectiveStateFacts(state).facts, assets=relatedAssets(input,[id])
+  const missing=input.materials.filter(m=>assets.materials.has(m.tempId)&&!materialDecision(state,m.tempId))
+  return missing.length ? '材料必需性与当前准备状态尚待分别核对并保存：'+missing.map(m=>m.name).join('、') : undefined
+}
 function validDate(value: string, timezone: string) {
   return isDateOnly(value) || (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(value) && parseBusinessDateTime(value, timezone) !== null)
 }
-export function informationReviewProblem(state: SemanticState): string | undefined {
-  if (state.rawResponse.tasks.length) return '包含任务建议，请逐项核对。'
-  if (state.first.issues.length || state.rawResponse.unresolvedScopeIds.length) {
-    return '原文尚有未覆盖或未解决的信息，需继续核对：' + state.first.issues.map(issue => issue.code).join('、')
+export function informationReviewProblem(state: AnySemanticState): string | undefined {
+  const input = effectiveStateFacts(state).facts, review = effectiveReview(state)
+  if (input.tasks.length) return '包含任务建议，请逐项核对。'
+  if (review.issues.length || input.unresolvedScopeIds.length) {
+    return '原文尚有未覆盖或未解决的信息，需继续核对：' + review.issues.map(issue => issue.code).join('、')
   }
   return undefined
 }
-export function life(state: SemanticState) {
+export function life(state: AnySemanticState): { dispositions: Record<string, Disposition>; values: Record<string, { title: string; deadline: string }>;
+  confirmedAt: Record<string, string>; informationReviewed: boolean; accepted: string[]; reviewed?: Record<string, string> } {
+  if (state.version === REAL_STATE_VERSION) return liveLife(state)
   const input = state.rawResponse
   const dispositions: Record<string, Disposition> = Object.fromEntries(input.tasks.map(t => [t.id, 'pending']))
   const values: Record<string, { title: string; deadline: string }> = Object.fromEntries(input.tasks.map(t => {
@@ -142,14 +197,16 @@ export function life(state: SemanticState) {
   }
   return { dispositions, values, confirmedAt, informationReviewed, accepted: Object.keys(confirmedAt) }
 }
-export function operationHistory(state: SemanticState): HistoryRecord[] {
+export function operationHistory(state: AnySemanticState): HistoryRecord[] {
   return state.operations.map(op => ({ id: semanticId('history', state, op.id), entityType: 'extraction_draft', entityId: state.draftId,
     action: 'mainline05_' + op.kind, fieldName: op.field ? JSON.stringify([op.taskIds[0], op.field]) : null,
-    before: op.before, after: op.kind === 'edit' ? op.value : json({ taskIds: op.taskIds, kind: op.kind }), actor: 'user',
-    reason: STATE_VERSION, sourceVersionId: state.sourceVersionId, changedAt: op.at }))
+    before: op.before, after: op.kind === 'edit' ? op.value : json({ taskIds: op.taskIds, kind: op.kind,
+      ...(op.correction ? { correction: op.correction } : {}), ...(op.reviewIdentity ? { reviewIdentity: op.reviewIdentity } : {}),
+      ...(op.materialReview ? { materialReview: op.materialReview } : {}) }), actor: op.kind==='enable_material_review'?'system':'user',
+    reason: state.version, sourceVersionId: state.sourceVersionId, changedAt: op.at }))
 }
-export function canonicalFacts(state: SemanticState) {
-  const input = state.rawResponse, current = life(state), accepted = new Set(current.accepted)
+export function canonicalFacts(state: AnySemanticState) {
+  const effective = effectiveStateFacts(state), input = effective.facts, current = life(state), accepted = new Set(current.accepted)
   const assets = relatedAssets(input, current.accepted)
   const taskId = (id: string) => semanticId('task', state, id)
   const materialId = (id: string) => semanticId('material', state, id)
@@ -193,10 +250,14 @@ export function canonicalFacts(state: SemanticState) {
   }
   const materials: Material[] = input.materials.filter(m => assets.materials.has(m.tempId)).map(m => {
     const associated = timePoints.filter(t => deadlineType(t.type) && t.relatedMaterialIds.includes(materialId(m.tempId)))
-    return { id: materialId(m.tempId), projectId: null, name: m.name, required: m.required, status: m.required ? 'missing' : 'not_required',
+    const decision=materialDecision(state,m.tempId)
+    assert(!materialReviewEnabled(state)||decision,'MATERIAL_REVIEW_REQUIRED')
+    return { id: materialId(m.tempId), projectId: null, name: m.name, required: decision?.required??m.required, status: decision?.status??(m.required ? 'missing' : 'not_required'),
       requirements: [], formatRequirements: [...m.formatRequirements], namingRequirements: [...m.namingRequirements], quantity: m.quantity,
       submissionChannel: m.submissionChannel, relatedTaskIds: owners('materials', m.tempId).map(taskId),
-      deadlineTimePointId: associated.length === 1 ? associated[0].id : null, ...stamps(owners('materials', m.tempId)), version: 1, legacyData: pointer(m.tempId) }
+      deadlineTimePointId: associated.length === 1 ? associated[0].id : null, ...stamps(owners('materials', m.tempId)), version: 1,
+      legacyData: { ...pointer(m.tempId), ...(effective.manualMaterials.includes(m.tempId) ? { extractionMethod: 'manual' } : {}),
+        ...(decision ? {materialReviewVersion:'material-review-1',requirementAndAvailabilityOrigin:'user_observation'} : {}) } }
   })
   const events: Event[] = input.events.filter(e => assets.events.has(e.tempId)).map(e => ({ id: eventId(e.tempId), projectId: null,
     title: e.title, description: e.description, location: e.location,
@@ -217,60 +278,249 @@ export function canonicalFacts(state: SemanticState) {
   }
   return { tasks, materials, timePoints, events, evidenceRefs, historyRecords: operationHistory(state), bindings }
 }
-export function saveState(workspace: WorkspaceV8, state: SemanticState): WorkspaceV8 {
+export function liveReviewIdentity(state: RealInputState, id: string, values: Record<string, { title: string; deadline: string }>) {
+  const identity = factIdentity(effectiveStateFacts(state).facts, id)
+  const relevant = JSON.parse(identity) as { tasks: Array<{ id: string }> }
+  return stableJson({ identity, userValues: Object.fromEntries(relevant.tasks.map(t => [t.id, values[t.id]])),
+    ...(materialReviewEnabled(state)?{materialReviews:[...relatedAssets(effectiveStateFacts(state).facts,relevant.tasks.map(t=>t.id)).materials]
+      .sort().map(id=>({id,decision:materialDecision(state,id)??null}))}:{}) })
+}
+export const titleReviewProblem = (title: string) => !title.trim() || title.length > 200
+  ? '请明确编辑并保存1至200字的任务标题；原文动作和对象不会被截断。' : undefined
+function liveLife(state: RealInputState) {
+  const initial = { ...state, operations: [] }, input = effectiveStateFacts(initial).facts
+  const dispositions: Record<string, Disposition> = Object.fromEntries(input.tasks.map(t => [t.id, 'pending']))
+  const values = Object.fromEntries(input.tasks.map(t => {
+    const p = editTimeSupport(initial, t.id).points.filter(t => deadlineType(t.type))
+    return [t.id, { title: t.detail.title, deadline: p.length === 1 ? p[0].normalizedValue ?? '' : '' }]
+  }))
+  const confirmedAt: Record<string, string> = {}, reviewed: Record<string, string> = {}, ids = new Set<string>()
+  const prefix: SemanticOperation[] = []
+  let informationReviewed = false, lastAt = -Infinity
+  for (const op of state.operations) {
+    const extra = op.kind === 'correct_fact' ? ['correction', 'factReview'] : op.kind === 'review_task' ? ['reviewIdentity'] : op.kind==='review_material'?['materialReview']:[]
+    exactKeys(op, ['id', 'kind', 'at', 'taskIds', 'field', 'value', 'before', ...extra])
+    assert(typeof op.id === 'string' && /^[A-Za-z0-9-]{1,100}$/.test(op.id) && !ids.has(op.id), 'OPERATION_ID'); ids.add(op.id)
+    assert(Number.isFinite(Date.parse(op.at)) && Date.parse(op.at) >= lastAt, 'OPERATION_TIME_ORDER'); lastAt = Date.parse(op.at)
+    assert(Array.isArray(op.taskIds) && Object.keys(op.taskIds).length === op.taskIds.length
+      && new Set(op.taskIds).size === op.taskIds.length && op.taskIds.every(id => Object.hasOwn(dispositions, id)), 'OPERATION_TASKS')
+    const before = { ...state, operations: [...prefix] }, effective = effectiveStateFacts(before), review = effectiveReview(before)
+    if (op.kind==='enable_material_review') {
+      assert(prefix.length===0&&!op.taskIds.length&&op.field===null&&op.value===null&&op.before===null,'MATERIAL_MODE_ACTIVATION')
+    } else if (op.kind==='review_material') {
+      assert(materialReviewEnabled(before)&&op.materialReview&&op.field===null&&op.value===null&&op.before===null,'MATERIAL_REVIEW_SHAPE')
+      exactKeys(op.materialReview,['materialId','identity','value'])
+      validateMaterialDecision(op.materialReview.value)
+      const affected=effective.facts.tasks.filter(t=>relatedAssets(effective.facts,[t.id]).materials.has(op.materialReview!.materialId)).map(t=>t.id).sort()
+      assert(affected.length&&equal(affected,[...op.taskIds].sort())&&affected.every(id=>!['confirmed','rejected'].includes(dispositions[id])),'MATERIAL_REVIEW_AFFECTED')
+      assert(op.materialReview.identity===materialIdentity(before,op.materialReview.materialId),'MATERIAL_REVIEW_IDENTITY')
+      assert(!equal(materialDecision(before,op.materialReview.materialId)??null,op.materialReview.value),'MATERIAL_REVIEW_NO_CHANGE')
+      affected.forEach(id=>{delete reviewed[id]})
+    } else if (op.kind === 'review_info') {
+      assert(!op.taskIds.length && !informationReviewed && !informationReviewProblem(before), 'INFORMATION_REQUIRES_REVIEW')
+      assert(op.field === null && op.value === null && op.before === null, 'INFO_OPERATION')
+      informationReviewed = true
+    } else {
+      assert(op.taskIds.length && op.taskIds.every(id => dispositions[id] !== 'confirmed'), 'ALREADY_CONFIRMED')
+      if (op.kind === 'correct_fact') {
+        assert(op.correction && op.factReview && op.field === null && op.value === null && op.before === null, 'CORRECTION_SHAPE')
+        assert(op.correction.id === op.id && op.correction.at === op.at, 'CORRECTION_IDENTITY')
+        const changed = appendCorrection(state.adaptedResponse, prefix.filter(o => o.correction).map(o => o.correction!),
+          op.correction, state.context.index, Object.keys(confirmedAt))
+        assert(equal(changed.affectedTaskIds, [...op.taskIds].sort()) && op.taskIds.every(id => dispositions[id] !== 'rejected'), 'CORRECTION_AFFECTED')
+        assert(equal(op.factReview.original, changed.sourceFacts), 'CORRECTION_REVIEW_BINDING')
+        if (op.correction.change.kind === 'surface') {
+          const id = op.correction.change.taskId, task = changed.facts.tasks.find(t => t.id === id)!
+          // Only the untouched display default follows an explicitly saved fact correction.
+          // User-authored titles remain separate; raw response and first suggestion never change.
+          if (!prefix.some(o => o.kind === 'edit' && o.field === 'title' && o.taskIds[0] === id)) {
+            values[id].title = task.action.surface + task.object.surface
+          }
+        }
+        op.taskIds.forEach(id => { delete reviewed[id] })
+      } else if (op.kind === 'edit') {
+        assert(op.taskIds.length === 1 && (op.field === 'title' || op.field === 'deadline') && typeof op.value === 'string', 'EDIT_SHAPE')
+        const id = op.taskIds[0], field = op.field
+        assert(dispositions[id] !== 'rejected' && op.before === values[id][field], 'EDIT_CHAIN')
+        if (field === 'title') assert(op.value.trim() && op.value.length <= 200, 'TITLE_INVALID')
+        else {
+          const support = editTimeSupport(before, id)
+          assert(support.allowed, 'TIME_TYPE_OR_SHARED_NOT_EDITABLE')
+          assert(op.value === '' ? support.points.length === 0 : validDate(op.value, state.context.timezone), 'USER_DATE_INVALID')
+          assert(canAct(before, id), 'ITEM_REQUIRES_REVIEW')
+        }
+        values[id][field] = op.value; delete reviewed[id]
+      } else if (op.kind === 'review_task') {
+        assert(op.taskIds.length === 1 && op.field === null && op.value === null && op.before === null, 'REVIEW_SHAPE')
+        const id = op.taskIds[0]
+        assert(dispositions[id] !== 'rejected' && canAct(before, id), 'ITEM_NOT_REVIEWABLE')
+        assert(!titleReviewProblem(values[id].title), 'TITLE_REQUIRES_EDIT')
+        assert(op.reviewIdentity === liveReviewIdentity(before, id, values), 'REVIEW_FACTS_CHANGED')
+        reviewed[id] = op.reviewIdentity; dispositions[id] = 'pending'
+      } else {
+        assert(op.field === null && op.value === null && op.before === null && ['confirm','defer','reject'].includes(op.kind), 'DISPOSITION_SHAPE')
+        if (op.kind === 'confirm') {
+          assert(op.taskIds.every(id=>!materialReviewProblem(before,id)),'MATERIAL_REVIEW_REQUIRED')
+          assert(op.taskIds.every(id => !titleReviewProblem(values[id].title)), 'TITLE_REQUIRES_EDIT')
+          const checked = input.tasks.filter(t => reviewed[t.id] === liveReviewIdentity(before, t.id, values))
+            .map(t => ({ taskId: t.id, factIdentity: factIdentity(effective.facts, t.id) }))
+          const selection = selectLiveTasks(effective.facts, review, checked, dispositions, op.taskIds, effective.sourceFacts)
+          assert(op.taskIds.every(id => selection.find(t => t.taskId === id)?.selected), 'ITEM_NOT_CONFIRMABLE')
+          for (const id of op.taskIds) { dispositions[id] = 'confirmed'; confirmedAt[id] = op.at }
+        } else for (const id of op.taskIds) { dispositions[id] = op.kind === 'defer' ? 'deferred' : 'rejected'; delete reviewed[id] }
+      }
+    }
+    prefix.push(op)
+  }
+  return { dispositions, values, confirmedAt, informationReviewed, reviewed, accepted: Object.keys(confirmedAt) }
+}
+export function saveState(workspace: WorkspaceV8, state: AnySemanticState): WorkspaceV8 {
   return { ...workspace, extractionDrafts: workspace.extractionDrafts.map(d => d.id === state.draftId
     ? { ...d, legacyData: { ...d.legacyData, mainline05: json(state) } } : d) }
 }
-export async function validateSemanticWorkspace(workspace: WorkspaceV8) {
+export const realDatabaseName = (name: string) => /^rco-mainline-01-02-i1-real-input-[a-z0-9-]{10,100}$/.test(name)
+export interface RealInputReading { version: typeof REAL_STATE_VERSION; inputReceipt: InputReceipt; sendSnapshot: SendSnapshot | null }
+export function readingOf(value: unknown): RealInputReading {
+  const row = plainJson(value) as RealInputReading
+  assert(row && typeof row === 'object' && !Array.isArray(row), 'READING_MISSING')
+  exactKeys(row, ['version', 'inputReceipt', 'sendSnapshot'])
+  assert(row.version === REAL_STATE_VERSION, 'READING_VERSION')
+  return row
+}
+async function validateReading(value: unknown) {
+  const row = readingOf(value)
+  await validateInputReceipt(row.inputReceipt)
+  if (row.sendSnapshot !== null) await validateSendSnapshot(row.inputReceipt, row.sendSnapshot)
+  return row
+}
+export function isLatestDraft(workspace: WorkspaceV8, draftId: string) {
+  const draft = workspace.extractionDrafts.find(d => d.id === draftId), run = workspace.recognitionRuns.find(r => r.id === draft?.recognitionRunId)
+  const version = workspace.sourceVersions.find(v => v.id === run?.sourceVersionId), source = workspace.sources.find(s => s.id === version?.sourceId)
+  return Boolean(run && version && source?.currentVersionId === version.id
+    && workspace.recognitionRuns.filter(r => r.sourceVersionId === version.id).at(-1)?.id === run.id)
+}
+/** Currentness is an input-scope identity, not just a run/version pointer.
+ * Keep historical state readable and confirmed entities intact. An unrelated,
+ * unsent page correction does not invalidate this explicitly limited response. */
+export function isCurrentDraft(workspace: WorkspaceV8, draftId: string) {
+  if (!isLatestDraft(workspace, draftId)) return false
+  const draft = workspace.extractionDrafts.find(d => d.id === draftId)!
+  const run = workspace.recognitionRuns.find(r => r.id === draft.recognitionRunId)!
+  const version = workspace.sourceVersions.find(v => v.id === run.sourceVersionId)!
+  const source = workspace.sources.find(s => s.id === version.sourceId)!
+  if (!source.legacyData?.realInput01) return true // old explicit runtime is unchanged
+  const pending = draft.legacyData?.realInputPending as unknown as { reading?: RealInputReading } | undefined
+  if (!pending?.reading?.sendSnapshot) return false
+  const sent = pending.reading, current = readingOf(source.legacyData.realInput01)
+  const pages = new Set(sent.sendSnapshot!.pages)
+  return current.inputReceipt.inputId === sent.inputReceipt.inputId
+    && current.inputReceipt.originalSha256 === sent.inputReceipt.originalSha256
+    && equal(current.inputReceipt.corrections.filter(c => pages.has(c.page)), sent.inputReceipt.corrections.filter(c => pages.has(c.page)))
+    && equal(effectivePages(current.inputReceipt).filter(p => pages.has(p.number)), effectivePages(sent.inputReceipt).filter(p => pages.has(p.number)))
+}
+async function validateRealRoots(workspace: WorkspaceV8) {
+  for (const source of workspace.sources) {
+    const reading = await validateReading(source.legacyData?.realInput01)
+    assert(source.type === reading.inputReceipt.sourceType, 'FILE_SOURCE_TYPE')
+    const versions = workspace.sourceVersions.filter(v => v.sourceId === source.id).sort((a,b) => a.versionNo - b.versionNo)
+    assert(versions.length && versions.at(-1)?.id === source.currentVersionId, 'CURRENT_VERSION')
+    if (source.legacyData?.contentPreview !== undefined) assert(source.legacyData.contentPreview === versions.at(-1)!.rawText?.slice(0, 500), 'SOURCE_PREVIEW_MISMATCH')
+    for (const [i, version] of versions.entries()) {
+      assert(version.versionNo === i + 1 && typeof version.rawText === 'string'
+        && version.contentHash === workspaceSnapshotHash(version.rawText), 'SOURCE_VERSION_HASH')
+      const metadata = version.legacyData?.reviewMetadata
+      assert(metadata && typeof metadata === 'object' && !Array.isArray(metadata), 'VERSION_READING_MISSING')
+      const original = await validateReading(metadata.realInput01)
+      assert(original.inputReceipt.inputId === reading.inputReceipt.inputId && original.inputReceipt.originalSha256 === reading.inputReceipt.originalSha256
+        && equal(original.inputReceipt.corrections, reading.inputReceipt.corrections.slice(0, original.inputReceipt.corrections.length)), 'READING_ORIGINAL_CHANGED')
+      const originalText = original.inputReceipt.pages.map(p => p.chunks.join('')).join('\n\n')
+      assert(version.rawText === (original.sendSnapshot?.text ?? originalText), 'VERSION_TEXT_READING_MISMATCH')
+    }
+    const latest = workspace.recognitionRuns.filter(r => r.sourceVersionId === source.currentVersionId).at(-1)
+    const draft = latest && workspace.extractionDrafts.find(d => d.recognitionRunId === latest.id)
+    assert(source.status === (!latest ? 'uploaded' : draft?.status === 'processing' ? 'extracting' : draft?.status), 'SOURCE_CURRENT_RUN_STATUS')
+  }
+}
+export async function validateSemanticWorkspace(workspace: WorkspaceV8, profile?: 'real-input-01') {
   assert(validateWorkspaceV8(workspace).valid, 'V8_INVALID')
-  assert(/^rco-mainline-01-02-i1-mainline05-[a-z0-9-]{10,100}$/.test(workspace.workspace.id), 'WORKSPACE_SCOPE')
+  const real = profile === 'real-input-01'
+  assert(real ? realDatabaseName(workspace.workspace.id) : /^rco-mainline-01-02-i1-mainline05-[a-z0-9-]{10,100}$/.test(workspace.workspace.id), 'WORKSPACE_SCOPE')
+  if (real) await validateRealRoots(workspace)
   const expected = { tasks: [] as Task[], materials: [] as Material[], timePoints: [] as TimePoint[], events: [] as Event[],
     evidenceRefs: [] as EvidenceRef[], historyRecords: [] as HistoryRecord[] }
   for (const draft of workspace.extractionDrafts) {
     const run = workspace.recognitionRuns.find(r => r.id === draft.recognitionRunId)
     const version = workspace.sourceVersions.find(v => v.id === run?.sourceVersionId)
     const source = workspace.sources.find(s => s.id === version?.sourceId)
-    assert(run && version && source && source.currentVersionId === version.id && typeof version.rawText === 'string'
+    assert(run && version && source && (real || source.currentVersionId === version.id) && typeof version.rawText === 'string'
       && version.contentHash === workspaceSnapshotHash(version.rawText) && draft.result === null, 'SOURCE_CHAIN_INVALID')
-    assert(run.provider === 'manual' && run.modelName === 'human_engineering'
+    if (real) {
+      assert(run.modelName === MODEL_NAME && run.promptVersion === PROMPT_VERSION && run.pipelineVersion === REAL_STATE_VERSION, 'RUN_IDENTITY')
+      const pending = draft.legacyData?.realInputPending
+      assert(pending && typeof pending === 'object' && !Array.isArray(pending), 'SEND_RECEIPT_MISSING')
+      exactKeys(pending, ['reading', 'execution', 'operationId'])
+      assert(typeof pending.operationId === 'string' && /^[A-Za-z0-9-]{1,100}$/.test(pending.operationId), 'SEND_OPERATION_ID')
+      const reading = await validateReading(pending.reading)
+      assert(reading.sendSnapshot && reading.sendSnapshot.text === version.rawText && reading.inputReceipt.sourceType === source.type, 'SEND_VERSION_BINDING')
+      assert(['live','seen_engineering_replay'].includes(String(pending.execution))
+        && run.provider === (pending.execution === 'live' ? 'deepseek' : 'manual'), 'EXECUTION_IDENTITY')
+    } else assert(run.provider === 'manual' && run.modelName === 'human_engineering'
       && run.promptVersion === 'engineering-mainline-01' && run.pipelineVersion === STATE_VERSION, 'RUN_IDENTITY')
     const raw = draft.legacyData?.mainline05
     if (!raw) {
       assert(['queued', 'running', 'failed'].includes(run.status) && ['processing', 'failed'].includes(draft.status)
-        && source.status === (draft.status === 'failed' ? 'failed' : 'extracting') && (run.status === 'failed') === (draft.status === 'failed')
+        && (real || source.status === (draft.status === 'failed' ? 'failed' : 'extracting')) && (run.status === 'failed') === (draft.status === 'failed')
         && !draft.acceptedEntityTempIds.length && !draft.rejectedEntityTempIds.length && !draft.commitOperationIds.length, 'MISSING_SEMANTIC_STATE')
       const failure = draft.legacyData?.mainline05Failure
       if (run.status === 'failed') {
         assert(failure && typeof failure === 'object' && !Array.isArray(failure), 'FAILURE_RECEIPT_MISSING')
         exactKeys(failure, ['version', 'response', 'code'])
-        assert(failure.version === STATE_VERSION && failure.code === 'SEMANTIC_RESPONSE_REJECTED', 'FAILURE_RECEIPT_IDENTITY')
+        assert(failure.version === (real ? REAL_STATE_VERSION : STATE_VERSION) && failure.code === 'SEMANTIC_RESPONSE_REJECTED', 'FAILURE_RECEIPT_IDENTITY')
         plainJson(failure.response)
       } else assert(failure === undefined, 'UNEXPECTED_FAILURE_RECEIPT')
       continue
     }
-    const state = plainJson(raw) as unknown as SemanticState
+    const state = plainJson(raw) as unknown as AnySemanticState
     exactKeys(state, ['version', 'sourceId', 'sourceVersionId', 'runId', 'draftId', 'rawOutputText', 'rawResponse',
-      'legacyResponse', 'context', 'first', 'operations', 'bindings'])
-    assert(state.version === STATE_VERSION && state.sourceId === source.id && state.sourceVersionId === version.id
-      && state.runId === run.id && state.draftId === draft.id && run.schemaVersion === STATE_VERSION && run.status === 'succeeded', 'STATE_IDENTITY')
+      'legacyResponse', 'context', 'first', 'operations', 'bindings', ...(real ? ['rawHttpText', 'adaptedResponse', 'inputReceipt', 'sendSnapshot', 'execution'] : [])])
+    assert(state.version === (real ? REAL_STATE_VERSION : STATE_VERSION) && state.sourceId === source.id && state.sourceVersionId === version.id
+      && state.runId === run.id && state.draftId === draft.id && run.schemaVersion === state.version && run.status === 'succeeded', 'STATE_IDENTITY')
     assert(draft.legacyData?.mainline05Failure === undefined, 'FAILED_RECEIPT_WITH_SUCCESS')
     assert(typeof state.rawOutputText === 'string' && equal(JSON.parse(state.rawOutputText), state.rawResponse), 'RAW_RESPONSE_MISMATCH')
-    parseSemanticInput(state.rawResponse)
-    assert(state.context.index.sourceContent === version.rawText && state.rawResponse.sourceId === source.id
-      && state.rawResponse.sourceVersionId === version.id, 'RESPONSE_SOURCE_MISMATCH')
+    const initialFacts = state.version === STATE_VERSION ? state.rawResponse : state.adaptedResponse
+    parseSemanticInput(initialFacts)
+    assert(state.context.index.sourceContent === version.rawText && initialFacts.sourceId === source.id
+      && initialFacts.sourceVersionId === version.id, 'RESPONSE_SOURCE_MISMATCH')
+    if (state.version === REAL_STATE_VERSION) {
+      assert(state.context.profile === 'real-input-01' && state.context.authority === 'live_model_candidate' && state.legacyResponse === null, 'LIVE_AUTHORITY')
+      const parsed = parseModelEnvelope(state.rawHttpText, state.context)
+      assert(equal(parsed.rawResponse, state.rawResponse) && parsed.rawOutputText === state.rawOutputText
+        && equal(parsed.adaptedResponse, state.adaptedResponse), 'MODEL_ADAPTATION_MISMATCH')
+      const pending = draft.legacyData!.realInputPending as unknown as { reading: RealInputReading; execution: string }
+      assert(state.execution === pending.execution && equal(state.inputReceipt, pending.reading.inputReceipt)
+        && equal(state.sendSnapshot, pending.reading.sendSnapshot), 'STATE_READING_BINDING')
+    }
     assert(state.context.ownershipMode === 'mainline05-own-assets-1', 'SEMANTIC_OWNERSHIP_MODE_REQUIRED')
-    const recomposed = await composeSemantics(state.rawResponse, state.context)
+    const recomposed = await composeSemantics(initialFacts, state.context)
     assert(equal(recomposed, state.first), 'FIRST_RESPONSE_MISMATCH')
     assert(!recomposed.issues.some(i => ['BAD_ENTITY_REFERENCE', 'BAD_REVISION_REFERENCE'].includes(i.code)), 'INVALID_ENTITY_REFERENCE')
     assert(Array.isArray(state.operations), 'OPERATIONS_INVALID')
+    if (state.version === REAL_STATE_VERSION) for (let i = 0; i < state.operations.length; i++) {
+      const op = state.operations[i]
+      if (op.kind !== 'correct_fact') continue
+      const effective = effectiveStateFacts({ ...state, operations: state.operations.slice(0, i + 1) })
+      const checked = await composeSemantics(effective.sourceFacts, state.context)
+      assert(equal(op.factReview, checked), 'CORRECTION_RECOMPOSITION_MISMATCH')
+      assert(!checked.issues.some(issue => ['BAD_ENTITY_REFERENCE','BAD_REVISION_REFERENCE'].includes(issue.code)), 'INVALID_ENTITY_REFERENCE')
+    }
     const current = life(state), facts = canonicalFacts(state)
     assert(equal(state.bindings, facts.bindings), 'CANONICAL_BINDINGS')
     assert(equal([...draft.acceptedEntityTempIds].sort(), [...current.accepted].sort()), 'ACCEPTED_STATE')
     assert(equal([...draft.rejectedEntityTempIds].sort(), Object.keys(current.dispositions).filter(id => current.dispositions[id] === 'rejected').sort()), 'REJECTED_STATE')
     assert(equal(draft.commitOperationIds, state.operations.filter(o => o.kind === 'confirm').map(o => semanticId('operation', state, o.id))), 'COMMIT_OPERATIONS')
-    const terminal = current.informationReviewed || (state.rawResponse.tasks.length > 0 && Object.values(current.dispositions).every(d => ['confirmed','rejected'].includes(d)))
+    const terminal = current.informationReviewed || (initialFacts.tasks.length > 0 && Object.values(current.dispositions).every(d => ['confirmed','rejected'].includes(d)))
     const status = terminal ? 'confirmed' : current.accepted.length ? 'partially_confirmed' : 'needs_review'
-    assert(draft.status === status && source.status === status, 'LIFECYCLE_STATUS')
+    assert(draft.status === status && (real || source.status === status), 'LIFECYCLE_STATUS')
     for (const key of Object.keys(expected) as Array<keyof typeof expected>) {
       // Per-array comparison below does not rely on an unchecked union assignment.
       const values = facts[key]; (expected[key] as Array<{ id: string }>).push(...values)

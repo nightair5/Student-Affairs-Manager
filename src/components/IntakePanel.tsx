@@ -39,6 +39,7 @@ import { useDialogFocusTrap } from '../lib/useDialogFocusTrap'
 import type { Priority, SourceReviewMetadata, SourceType, TaskCategory } from '../types'
 
 interface IntakePanelProps {
+  realInputPanel?: import('react').ReactNode
   textOnly?: boolean
   onClose: () => void
   onSubmitIntake: (input: IntakeInput) => Promise<void>
@@ -46,7 +47,7 @@ interface IntakePanelProps {
   smartExtractionStatus: 'checking' | 'connected' | 'unavailable'
 }
 
-export function IntakePanel({ textOnly, onClose, onSubmitIntake, onSaveSource, smartExtractionStatus }: IntakePanelProps) {
+export function IntakePanel({ realInputPanel, textOnly, onClose, onSubmitIntake, onSaveSource, smartExtractionStatus }: IntakePanelProps) {
   const [sourceType, setSourceType] = useState<SourceType>('text')
   const [manualMode, setManualMode] = useState(false)
   const [content, setContent] = useState('')
@@ -327,7 +328,7 @@ export function IntakePanel({ textOnly, onClose, onSubmitIntake, onSaveSource, s
 
   return (
     <div className="modal-backdrop" role="presentation">
-      <section ref={panelRef} className="intake-panel" role="dialog" aria-modal="true" aria-labelledby={titleId} onPaste={handlePaste}>
+      <section ref={panelRef} className="intake-panel" role="dialog" aria-modal="true" aria-labelledby={titleId} onPaste={realInputPanel ? undefined : handlePaste}>
         <header className="intake-header">
           <div>
             <span className="eyebrow">E2-MM 独立 Preview · 第 1 步</span>
@@ -338,7 +339,7 @@ export function IntakePanel({ textOnly, onClose, onSubmitIntake, onSaveSource, s
             <X size={20} />
           </button>
         </header>
-        {textOnly && <p>仅测试旧匿名工程通知文字；文件、图片、链接、手动任务本轮未测量。</p>}
+        {realInputPanel ?? <>{textOnly && <p>仅测试旧匿名工程通知文字；文件、图片、链接、手动任务本轮未测量。</p>}
         <form className="intake-body" onSubmit={handleParse}>
           <div className="intake-steps" aria-label="录入流程"><span className="active">1 放入原文</span><span>2 核对拆分</span><span>3 回到今日</span></div>
           <div className="source-tabs" role="tablist" aria-label="选择来源">
@@ -498,7 +499,7 @@ export function IntakePanel({ textOnly, onClose, onSubmitIntake, onSaveSource, s
           <button className="primary-button wide" type="submit" disabled={!canSubmitWithConsent || isParsing || isSavingSource}>
             {isParsing ? <><LoaderCircle className="spin" size={18} />正在智能整理…</> : <><Sparkles size={18} />整理成待确认任务</>}
           </button>
-        </form>
+        </form></>}
       </section>
     </div>
   )

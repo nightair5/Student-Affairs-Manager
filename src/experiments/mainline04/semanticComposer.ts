@@ -6,7 +6,8 @@ import type { SemanticInput, SemanticTask, Truth } from './semanticContract'
 
 export interface ComposeContext {
   index: ImmutableScopeIndex
-  authority: 'human_engineering' | 'seen_model_unverified'
+  authority: 'human_engineering' | 'seen_model_unverified' | 'live_model_candidate'
+  profile?: 'real-input-01'
   referenceTime: string
   timezone: string
   ownershipMode?: 'mainline05-own-assets-1'
@@ -33,7 +34,9 @@ export interface ReviewPackage {
 export async function composeSemantics(input: unknown, options: ComposeContext): Promise<ReviewPackage> {
   const raw = parseSemanticInput(input), context = plainJson(options)
   if (context.ownershipMode !== undefined && context.ownershipMode !== 'mainline05-own-assets-1') throw new Error('LOCAL_OWNERSHIP_MODE_INVALID')
-  if (!['human_engineering', 'seen_model_unverified'].includes(context.authority)
+  if (context.profile !== undefined && context.profile !== 'real-input-01') throw new Error('LOCAL_PROFILE_INVALID')
+  if (context.authority === 'live_model_candidate' && context.profile !== 'real-input-01') throw new Error('LIVE_PROFILE_REQUIRED')
+  if (!['human_engineering', 'seen_model_unverified', 'live_model_candidate'].includes(context.authority)
     || !Number.isFinite(Date.parse(context.referenceTime))) throw new Error('LOCAL_CONTEXT_INVALID')
   try { new Intl.DateTimeFormat('en', { timeZone: context.timezone }).format() } catch { throw new Error('LOCAL_TIMEZONE_INVALID') }
   const index = context.index

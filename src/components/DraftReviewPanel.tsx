@@ -7,10 +7,12 @@ import { assessFocusedReview } from '../recognition/focusedReview'
 import type { ReactNode } from 'react'
 
 interface DraftReviewPanelProps {
+  factCorrection?: (taskId: string, onDirty: (dirty: boolean) => void, unsaved: boolean) => ReactNode
   semanticReview?: { itemFacts: (taskId: string, onFocus: (quote: string) => void) => ReactNode; information: ReactNode;
     informationReviewProblem?: string;
     eventCount: number; onDefer: (itemId: string) => void; onInformationReviewed: () => void }
   isolatedCapabilities?: boolean
+  recognitionDescription?: string
   confirmationV2?: { busy: boolean; items: Record<string, { dateLabel: string; blockedReason?: string; dateEditBlockedReason?: string; materialTempIds?: string[]; timePointTempIds?: string[] }> }
   draft: ExtractionDraft
   source: Source | null
@@ -67,15 +69,16 @@ function EvidenceLocator({ recognition, evidenceIds, onFocusEvidence }: {
     : <small className="evidence-unavailable">暂无可定位依据</small>
 }
 
-export function DraftReviewPanel({ semanticReview, isolatedCapabilities, draft, source, onClose, onUpdate, onConfirm, onReject, onConfirmAll, projectWillCreate, projects, onProjectChoice, onKeepExplicit, onMoveTask, onToggleRecognitionEntity, onToggleTaskSelected, onSplitTask, onMergeTask, confirmationV2 }: DraftReviewPanelProps) {
+export function DraftReviewPanel({ factCorrection, semanticReview, isolatedCapabilities, recognitionDescription, draft, source, onClose, onUpdate, onConfirm, onReject, onConfirmAll, projectWillCreate, projects, onProjectChoice, onKeepExplicit, onMoveTask, onToggleRecognitionEntity, onToggleTaskSelected, onSplitTask, onMergeTask, confirmationV2 }: DraftReviewPanelProps) {
   const titleId = useId()
   const panelRef = useRef<HTMLElement>(null)
   const [editingId, setEditingId] = useState<string | null>(null)
   const [activeEvidence, setActiveEvidence] = useState('')
   const [editBuffer, setEditBuffer] = useState<Record<string, Partial<Pick<DraftItem['suggestion'], 'title' | 'deadline'>>>>({})
+  const [factDirty, setFactDirty] = useState<Record<string, boolean>>({})
   const isDirty = (item: DraftItem, field: 'title' | 'deadline') =>
     editBuffer[item.id]?.[field] !== undefined && editBuffer[item.id][field] !== item.suggestion[field]
-  const hasUnsaved = (item: DraftItem) => isDirty(item, 'title') || isDirty(item, 'deadline')
+  const hasUnsaved = (item: DraftItem) => isDirty(item, 'title') || isDirty(item, 'deadline') || Boolean(factDirty[item.id])
   const pending = draft.items.filter((item) => item.status === '待确认')
   const selectedPending = pending.filter((item) => item.selected !== false)
   const processed = draft.items.length - pending.length
@@ -107,13 +110,15 @@ export function DraftReviewPanel({ semanticReview, isolatedCapabilities, draft, 
     const metadata = taskMeta.get(item.suggestion.id)
     return <DraftItemReview
       key={item.id}
-      semanticFacts={semanticReview?.itemFacts(item.suggestion.id, setActiveEvidence)}
+      semanticFacts={<>{semanticReview?.itemFacts(item.suggestion.id, setActiveEvidence)}
+        {factCorrection?.(item.suggestion.id, dirty => setFactDirty(previous => previous[item.id] === dirty ? previous : { ...previous, [item.id]: dirty }),
+          draft.items.some(candidate => isDirty(candidate, 'title') || isDirty(candidate, 'deadline')))}</>}
       onDefer={semanticReview ? () => semanticReview.onDefer(item.id) : undefined}
       isolatedCapabilities={isolatedCapabilities}
       index={index}
       item={confirmationV2 ? { ...item, suggestion: { ...item.suggestion, ...editBuffer[item.id] } } : item}
       confirmationV2={confirmationV2 ? {
-        ...confirmationV2.items[item.id], busy: confirmationV2.busy, unsaved: hasUnsaved(item),
+        ...confirmationV2.items[item.id], busy: confirmationV2.busy, unsaved: factCorrection ? draft.items.some(hasUnsaved) : hasUnsaved(item),
         titleDirty: isDirty(item, 'title'), deadlineDirty: isDirty(item, 'deadline'),
         onSave: (field) => { if (isDirty(item, field)) onUpdate(item.id, { [field]: editBuffer[item.id][field] }) },
       } : undefined}
@@ -141,7 +146,7 @@ export function DraftReviewPanel({ semanticReview, isolatedCapabilities, draft, 
   return <div className="modal-backdrop detail-backdrop" role="presentation">
     <aside ref={panelRef} className="detail-panel review-panel" role="dialog" aria-modal="true" aria-labelledby={titleId}>
       <header className="detail-header review-header">
-        <div><span className="category-label">第 2 步 · {isolatedCapabilities ? '人工工程响应（非模型预测）' : draft.modelName?.includes('deepseek') ? 'DeepSeek 建议' : '本地规则建议'}</span><h2 id={titleId}>识别出 {draft.items.length} 件事</h2><p>先看标题和时间；不准确时再点“编辑”。</p></div>
+        <div><span className="category-label">第 2 步 · {recognitionDescription ?? (isolatedCapabilities ? '人工工程响应（非模型预测）' : draft.modelName?.includes('deepseek') ? 'DeepSeek 建议' : '本地规则建议')}</span><h2 id={titleId}>识别出 {draft.items.length} 件事</h2><p>先看标题和时间；不准确时再点“编辑”。</p></div>
         <button className="icon-button" type="button" onClick={onClose} aria-label="稍后处理并关闭"><X size={20} /></button>
       </header>
       <div className="detail-body review-body">

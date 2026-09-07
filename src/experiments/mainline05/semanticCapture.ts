@@ -3,7 +3,10 @@ import type { IntakeInput } from '../../lib/intake'
 import type { RecognitionResult } from '../../recognition/types'
 import { composeSemantics, type ComposeContext } from '../mainline04/semanticComposer'
 import { parseSemanticInput, plainJson, type SemanticInput } from '../mainline04/semanticContract'
-import { STATE_VERSION, assert, equal, json, saveState, canonicalFacts, type SemanticState } from './semanticState'
+import { STATE_VERSION, REAL_STATE_VERSION, assert, equal, json, saveState, canonicalFacts, isCurrentDraft, isLatestDraft,
+  type SemanticState, type RealInputState, type RealInputReading } from './semanticState'
+import { parseModelEnvelope } from '../realInput01/modelWire'
+import { indexImmutableScopesV11 } from '../../recognition/scopeIndexV11'
 import type { SemanticRepository } from './semanticRepository'
 
 export interface SemanticReply {
@@ -60,4 +63,59 @@ export async function captureSemantic(repo: SemanticRepository, input: IntakeInp
     throw error
   }
   return handle.draftId
+}
+
+/** Explicit wire completion only; the old human callback restriction above remains intact.
+ * beginInputRun has already atomically saved Source/Version/Run/Draft before dispatch. */
+export async function completeInputRun(repo: SemanticRepository, handle: CaptureHandle, rawHttpText: string) {
+  assert(repo.profile === 'real-input-01' && !handle.duplicate, 'LIVE_COMPLETION_NOT_DISPATCHABLE')
+  const before = await repo.load(), draft = before.extractionDrafts.find(d => d.id === handle.draftId)
+  const run = before.recognitionRuns.find(r => r.id === handle.recognitionRunId)
+  const version = before.sourceVersions.find(v => v.id === handle.sourceVersionId)
+  assert(draft && run && version && run.sourceVersionId === version.id && version.sourceId === handle.sourceId
+    && draft.recognitionRunId === run.id && ['queued','running'].includes(run.status), 'LIVE_COMPLETION_CHAIN')
+  const pending = draft.legacyData!.realInputPending as unknown as { reading: RealInputReading; execution: RealInputState['execution'] }
+  const now = new Date().toISOString()
+  try {
+    assert(isCurrentDraft(before, draft.id), 'STALE_RELOAD_REQUIRED')
+    const context: ComposeContext = { index: await indexImmutableScopesV11(handle.sourceId, handle.sourceVersionId, version.rawText!),
+      authority: 'live_model_candidate', profile: 'real-input-01', referenceTime: pending.reading.sendSnapshot!.consentAt,
+      timezone: 'Asia/Shanghai', ownershipMode: 'mainline05-own-assets-1' }
+    const parsed = parseModelEnvelope(rawHttpText, context), first = await composeSemantics(parsed.adaptedResponse, context)
+    assert(!first.issues.some(i => ['BAD_ENTITY_REFERENCE','BAD_REVISION_REFERENCE'].includes(i.code)), 'INVALID_ENTITY_REFERENCE')
+    const state: RealInputState = { version: REAL_STATE_VERSION, sourceId: handle.sourceId, sourceVersionId: handle.sourceVersionId,
+      runId: run.id, draftId: draft.id, rawHttpText: parsed.rawHttpText, rawOutputText: parsed.rawOutputText,
+      rawResponse: parsed.rawResponse, adaptedResponse: parsed.adaptedResponse, legacyResponse: null, context, first,
+      inputReceipt: pending.reading.inputReceipt, sendSnapshot: pending.reading.sendSnapshot!, execution: pending.execution,
+      operations: [], bindings: {} }
+    state.bindings = canonicalFacts(state).bindings
+    await repo.transaction(w => {
+      assert(isCurrentDraft(w, draft.id), 'STALE_RELOAD_REQUIRED')
+      const current = w.recognitionRuns.find(r => r.id === run.id)
+      assert(current && ['queued','running'].includes(current.status), 'DUPLICATE_COMPLETION')
+      return saveState({ ...w,
+        recognitionRuns: w.recognitionRuns.map(r => r.id === run.id ? { ...r, status: 'succeeded', schemaVersion: REAL_STATE_VERSION, completedAt: now } : r),
+        extractionDrafts: w.extractionDrafts.map(d => d.id === draft.id ? { ...d, status: 'needs_review', updatedAt: now } : d),
+        sources: w.sources.map(s => s.id === handle.sourceId ? { ...s, status: 'needs_review', updatedAt: now } : s), savedAt: now }, state)
+    })
+  } catch (error) {
+    await failInputRun(repo, handle, rawHttpText)
+    throw error
+  }
+  return draft.id
+}
+export async function failInputRun(repo: SemanticRepository, handle: CaptureHandle, safeRawResponse: string | null = null) {
+  assert(repo.profile === 'real-input-01', 'EXPLICIT_REAL_INPUT_REQUIRED')
+  const now = new Date().toISOString()
+  await repo.transaction(w => {
+    const current = w.recognitionRuns.find(r => r.id === handle.recognitionRunId)
+    assert(current && ['queued','running'].includes(current.status), 'RUN_ALREADY_TERMINAL')
+    return { ...w,
+      recognitionRuns: w.recognitionRuns.map(r => r.id === current.id ? { ...r, status: 'failed', errorCode: 'SEMANTIC_RESPONSE_REJECTED', completedAt: now } : r),
+      extractionDrafts: w.extractionDrafts.map(d => d.id === handle.draftId ? { ...d, status: 'failed', updatedAt: now,
+        legacyData: { ...d.legacyData, mainline05Failure: { version: REAL_STATE_VERSION, response: safeRawResponse, code: 'SEMANTIC_RESPONSE_REJECTED' } } } : d),
+      // A stale input cannot yield suggestions, but its latest run must still
+      // reach a terminal failure without leaving the source "extracting".
+      sources: w.sources.map(s => s.id === handle.sourceId && isLatestDraft(w, handle.draftId) ? { ...s, status: 'failed', updatedAt: now } : s), savedAt: now }
+  })
 }

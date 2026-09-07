@@ -22,8 +22,15 @@ export interface MainlineSemanticCapabilities {
   readonly timezone: string
   readonly exportName: string
 }
+export interface MainlineRealInputCapabilities {
+  readonly profile: 'real-input-01'
+  readonly networkDescription: string
+  inputPanel(options: { workspace: WorkspaceV8; initialText: string; onSaved: () => Promise<void>; onDraftReady: (id: string) => Promise<void> }): ReactNode
+  factEditor(options: { workspace: WorkspaceV8; draftId: string; taskId: string; busy: boolean;
+    onDirty: (dirty: boolean) => void; onSaved: () => Promise<void> }): ReactNode
+}
 export type MainlineSemanticDriver = Pick<MainlineRuntime, 'load' | 'view' | 'dates' | 'review' | 'capture' | 'edit' | 'confirm' | 'exportJson'>
-  & { semantic: MainlineSemanticCapabilities; recognitionDescription: string }
+  & { semantic: MainlineSemanticCapabilities; recognitionDescription: string; realInput?: MainlineRealInputCapabilities }
 
 export interface MainlineRuntime {
   readonly mode: 'mainline-02-i1-isolated'
@@ -31,6 +38,7 @@ export interface MainlineRuntime {
   readonly initial: WorkspaceV8
   readonly recognitionDescription?: string
   readonly semantic?: MainlineSemanticCapabilities
+  readonly realInput?: MainlineRealInputCapabilities
   load(): Promise<WorkspaceV8>
   view(workspace: WorkspaceV8): ReturnType<typeof workspaceV8ToLegacyView>
   dates: typeof taskDateViews
@@ -51,9 +59,11 @@ export async function createMainlineRuntime(options: {
   name: string; store: WorkspaceRecordStore & { readonly name: string }; initialize?: WorkspaceV8
   recognize: (text: string, sourceId: string) => RecognitionResult | Promise<RecognitionResult>
   handoff?: ReplayHandoff
+  profile?: 'real-input-01'
   semanticDriver?: (store: WorkspaceRecordStore & { readonly name: string }) => Promise<MainlineSemanticDriver>
 }): Promise<MainlineRuntime> {
   assertDatabaseName(options.name)
+  if (options.profile && (options.profile !== 'real-input-01' || !options.semanticDriver || options.initialize)) throw Error('REAL_INPUT_INITIALIZE_IN_JOINT_REPOSITORY')
   const handoff = options.handoff
   if (handoff) assertReplayHandoff(handoff)
   const name = options.name
@@ -81,12 +91,15 @@ export async function createMainlineRuntime(options: {
   }
   const initial = await load()
   if (options.semanticDriver) {
-    if (handoff || !options.name.startsWith('rco-mainline-01-02-i1-mainline05-')) throw Error('MAINLINE_DRIVER_SCOPE_INVALID')
+    if (handoff || !options.name.startsWith(options.profile === 'real-input-01'
+      ? 'rco-mainline-01-02-i1-real-input-' : 'rco-mainline-01-02-i1-mainline05-')) throw Error('MAINLINE_DRIVER_SCOPE_INVALID')
     const driver = await options.semanticDriver(Object.freeze({ ...store, name }))
+    if (Boolean(driver.realInput) !== (options.profile === 'real-input-01')) throw Error('REAL_INPUT_DRIVER_PROFILE')
     const checked = await driver.load()
     if (checked.workspace.id !== name || JSON.stringify(checked) !== JSON.stringify(initial)) throw Error('MAINLINE_DRIVER_INITIAL_MISMATCH')
     const runtime: MainlineRuntime = Object.freeze({ mode: 'mainline-02-i1-isolated', databaseName: name, initial: checked,
       recognitionDescription: driver.recognitionDescription, semantic: driver.semantic,
+      ...(driver.realInput ? { realInput: driver.realInput } : {}),
       load: driver.load, view: driver.view, dates: driver.dates, review: driver.review,
       capture: driver.capture, edit: driver.edit, confirm: driver.confirm, exportJson: driver.exportJson })
     verified.add(runtime)
