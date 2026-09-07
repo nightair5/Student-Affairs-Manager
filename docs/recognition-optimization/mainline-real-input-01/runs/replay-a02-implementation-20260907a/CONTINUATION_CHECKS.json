@@ -1,0 +1,99 @@
+{
+  "status": "NOT_COMPLETE_AUDIT_ONLY",
+  "head": "9909b0c0102bf39eed21190165201922d3d2e529",
+  "sourcesMatched": 42,
+  "changedSinceResume": [
+    "src/experiments/realInput01/acceptance.test.tsx"
+  ],
+  "protected": {
+    "count": 945,
+    "sha256": "df68e4eda47f664f9f0fbf218a74687117ac3cc9d2c14f5ee6e9965cd2c28394"
+  },
+  "oldEvidenceMatched": 160,
+  "receiptsMatched": 5,
+  "ledgerSha256": "ec1edd741242b0446d096cea323a5036c7eb47fd86ee6b98f09a4f519eeebfbd",
+  "logBoundary": {
+    "bytes": 291513,
+    "sha256": "f4c9d27186846a062bb43c073cbfb29a1a212e414b57daa6ce883d06f7dbddc6"
+  },
+  "sourceSnapshot": "CONTINUATION_REVIEW_SNAPSHOT.json",
+  "targeted": {
+    "pass": 63,
+    "fail": 0,
+    "attempts": [
+      {
+        "pass": 61,
+        "fail": 2
+      },
+      {
+        "pass": 62,
+        "fail": 1
+      },
+      {
+        "pass": 63,
+        "fail": 0
+      }
+    ],
+    "note": "not cumulative; execution-isolation FAIL"
+  },
+  "independentReview": "BLOCKED_STATIC_MISSING_DATABASE_CREATION",
+  "executionIsolation": "FAIL_DEFAULT_FRAMEWORK_ENV_READ",
+  "modelCalls": 0,
+  "modelNetworkRequests": 0,
+  "newModelCost": 0,
+  "credentialConfigurationAccess": "DEFAULT_FRAMEWORK_ENV_READ_NOT_ZERO; no value inspection or output",
+  "fullEngineering": "NOT_RUN",
+  "browser": "NOT_RUN",
+  "actualFileAgreement": "NOT_RUN",
+  "modelAccuracy": "本轮未测量",
+  "newFiles": [
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/CONTINUATION_AUDIT.md",
+      "sha256": "006ae563f53a61f4dbaa863303561729209d4833e191d1a1cded454f30c2201c"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/CONTINUATION_BASELINE.json",
+      "sha256": "7ce60854ea8970f6f614ae7997c5746ea4a43cd47a52804adbdeb107cfcf7a33"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/CONTINUATION_REVIEW.md",
+      "sha256": "900fec47b14cc52944b7195e848335bccbc48e3917a02ee9240f297fa29f7ced"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/CONTINUATION_REVIEW_SNAPSHOT.json",
+      "sha256": "b6f6cac005c98902661b8e58f26e3b4e2aacaefb3e1aa7d372b84b1f7e7196bf"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/CONTINUATION_TARGETED_1.log",
+      "sha256": "d8ca4a1cc3847460d49f5d00eb8ba3467b33239aed3187d43fb93ff08152fe69"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/CONTINUATION_TARGETED_2.log",
+      "sha256": "04fc315916e4b0b28e871a9860630b483d6697aabd881df5d61db2e8d73e6cc4"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/CONTINUATION_TARGETED_3.log",
+      "sha256": "8dad54b876dc91e19656b11faba680dbec238b40e987645728c9650c1cbd86c7"
+    }
+  ],
+  "stagingWhitelist": [
+    "docs/recognition-optimization/CURRENT_CONTEXT.md",
+    "docs/recognition-optimization/OPTIMIZATION_LOG.md",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/CONTINUATION_AUDIT.md",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/CONTINUATION_BASELINE.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/CONTINUATION_REVIEW.md",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/CONTINUATION_REVIEW_SNAPSHOT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/CONTINUATION_TARGETED_1.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/CONTINUATION_TARGETED_2.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/CONTINUATION_TARGETED_3.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/CONTINUATION_CHECKS.json"
+  ],
+  "sourceFilesStaged": false,
+  "gitEvidenceHandling": "Initial add staged seven documents but .log was ignored. Only the three explicitly authorized raw logs are added with -f; no ignore rules changed. Normal documentation diff checks; raw logs allow blank-at-eof only, preserving their bytes and SHA.",
+  "contextLines": 71,
+  "credentialPatternScan": {
+    "scope": "new audit text and context/log only, no .env reading",
+    "findings": []
+  },
+  "errors": []
+}

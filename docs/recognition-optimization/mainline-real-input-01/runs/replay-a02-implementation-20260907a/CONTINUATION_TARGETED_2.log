@@ -1,0 +1,53 @@
+
+ RUN  v3.2.7 C:/Users/Winner/student-affairs-multimodal-exp
+
+·························x·····································
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/experiments/realInput01/acceptance.test.tsx > real App runtime and public send connection; memory/SSR not browser acceptance > recorded launcher builds real App, serves only bound A02 and rejects unauthorized endpoints without model code
+AssertionError: 
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+400 !== 200
+
+    at file:///C:/Users/Winner/student-affairs-multimodal-exp/[eval1]:16:92
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 400,
+  expected: 200,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.18.0
+: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ [eval1]:16:92
+ ❯ src/experiments/realInput01/acceptance.test.tsx:132:57
+    130|     `],{encoding:'utf8',timeout:60000,maxBuffer:1024*1024})
+    131|     expect(probe.error?.message??'').toBe('')
+    132|     expect(probe.status,probe.stdout+'\n'+probe.stderr).toBe(0)
+       |                                                         ^
+    133|   },65000)
+    134|   it('the input renderer is a React component retaining original text …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 2 passed (3)
+      Tests  1 failed | 62 passed (63)
+   Start at  18:31:28
+   Duration  8.43s (transform 940ms, setup 0ms, collect 1.77s, tests 10.03s, environment 1ms, prepare 711ms)
+
