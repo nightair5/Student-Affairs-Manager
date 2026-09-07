@@ -1,0 +1,37 @@
+{
+  "status": "PASS_SCOPE_ONLY",
+  "reviewer": "real_input_resume_rules_review",
+  "sources": [
+    {
+      "path": "src/App.tsx",
+      "sha256": "efc7c2c9bf852773517489571cc8696a343864cbe647f03ca83a3e2acde37ae1"
+    },
+    {
+      "path": "src/experiments/realInput01/FactCorrectionEditor.tsx",
+      "sha256": "b0c039958a3c724d1759fc96d7eb796c82a8caf373724de50b21525ff036fe4d"
+    },
+    {
+      "path": "src/experiments/realInput01/acceptance.test.tsx",
+      "sha256": "b3e89917cc4b79c4e02427db1877f60374cdd635c730c70d9c2bc01f4a78afcc"
+    }
+  ],
+  "method": "Independent read-only review; in-memory reverse removal of this increment restores all three previous source hashes. Original eight acceptance tests and business guards retained. No independent browser or effect execution.",
+  "findings": [],
+  "targetedLogObserved": {
+    "passed": 33,
+    "independentRerun": false
+  },
+  "resumeProposalReviewed": true,
+  "resumeImplemented": false,
+  "finalAuditReview": {
+    "status": "PASS_SCOPE_ONLY",
+    "reviewer": "real_input_resume_rules_review",
+    "mode": "read-only final AUDIT/RESULT/BASELINE/ENGINEERING/REVIEW consistency and proposed authorization boundaries",
+    "findings": [],
+    "extraNetworkAttempts": 0,
+    "independentEngineeringRerun": false,
+    "protectionAndGit": "primary agent final verification"
+  },
+  "paidApproved": false,
+  "remaining": "Full package and actual browser not passed; grant design needs explicit future implementation/paid authorization."
+}

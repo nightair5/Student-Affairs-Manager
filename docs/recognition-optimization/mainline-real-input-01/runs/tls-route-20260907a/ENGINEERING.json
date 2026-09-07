@@ -1,0 +1,101 @@
+{
+  "scope": "TLS comparison and in-whitelist React engineering blockers",
+  "sourceChanges": [
+    {
+      "path": "src/App.tsx",
+      "sha256": "efc7c2c9bf852773517489571cc8696a343864cbe647f03ca83a3e2acde37ae1"
+    },
+    {
+      "path": "src/experiments/realInput01/FactCorrectionEditor.tsx",
+      "sha256": "b0c039958a3c724d1759fc96d7eb796c82a8caf373724de50b21525ff036fe4d"
+    },
+    {
+      "path": "src/experiments/realInput01/acceptance.test.tsx",
+      "sha256": "b3e89917cc4b79c4e02427db1877f60374cdd635c730c70d9c2bc01f4a78afcc"
+    }
+  ],
+  "baselineLint": {
+    "reference": "../diagnostics-20260907a/logs/lint-attempt-1.log",
+    "errors": 2,
+    "warnings": 4,
+    "sourceHashesMatchedBeforeFix": true
+  },
+  "targeted": {
+    "passed": 33,
+    "failed": 0,
+    "log": "logs/targeted-attempt-1.log"
+  },
+  "independentReview": "PASS_SCOPE_ONLY before full application checks",
+  "lint": {
+    "errors": 0,
+    "warnings": 4,
+    "status": "PASS_WITH_WARNINGS",
+    "log": "logs/lint-attempt-1.log"
+  },
+  "types": {
+    "status": "PASS",
+    "projects": [
+      "tsconfig.app.json",
+      "tsconfig.node.json"
+    ],
+    "incrementalOutput": "new temporary directory",
+    "log": "logs/types-attempt-1.log"
+  },
+  "vitest": {
+    "passed": 1206,
+    "skipped": 1,
+    "failed": 0,
+    "filesPassed": 114,
+    "filesSkipped": 1,
+    "skippedPath": "src/lib/ocrLiveComponent.test.ts",
+    "skip": "Existing opt-in live OCR test; not changed or claimed PASS",
+    "log": "logs/vitest-full-attempt-1.log",
+    "envDir": "C:/Users/Winner/AppData/Local/Temp/real-input-tls-engineering-13474e7b66cc4d95849c6f618d08b46b",
+    "cacheDir": "new temp root/vitest-cache"
+  },
+  "nodeLayers": {
+    "passed": 62,
+    "failed": 0,
+    "files": [
+      "server/server-tests.mjs",
+      "cloudflare/worker-tests.mjs",
+      "scripts/time-ast-parity.node-test.mjs",
+      "scripts/multimodal-evaluation-lib.node-test.mjs",
+      "functions/functions-tests.mjs"
+    ],
+    "log": "logs/node-layers-attempt-1.log"
+  },
+  "contractChecks": {
+    "schema": "PASS",
+    "timeAst": "PASS",
+    "mode": "--check; no regeneration"
+  },
+  "security": {
+    "status": "PASS",
+    "files": 1140,
+    "log": "logs/contracts-security-attempt-1.log"
+  },
+  "build": {
+    "status": "PASS",
+    "log": "logs/build-attempt-1.log",
+    "outDir": "C:/Users/Winner/AppData/Local/Temp/real-input-tls-engineering-13474e7b66cc4d95849c6f618d08b46b/dist",
+    "envDir": "empty new temporary root",
+    "warning": "540.41kB main chunk; existing >500kB warning not disabled",
+    "deployment": false
+  },
+  "completeOriginalNpmTestChain": "NOT_RUN_AS_A_WHOLE; historical rco-5-007 replay environment/freeze layer not rerun or claimed current PASS",
+  "publicDependencyAudit": "NOT_RUN; dependencies unchanged and this turn network limited to the two TLS probes and Git",
+  "newBrowserAcceptance": "NOT_RUN; SSR does not cover effects/dirty callback lifecycle",
+  "newExternalModelCalls": 0,
+  "newModelFeesCny": 0,
+  "TLSAttemptCount": 2,
+  "modelAccuracy": "本轮未测量",
+  "businessDelivery": "NOT_COMPLETE",
+  "deliveryWhitespace": {
+    "firstStagedCheck": "4 blank-at-EOF findings: AUDIT.md and three raw logs; commit not attempted",
+    "documentation": "Removed the new AUDIT trailing blank line without semantic change",
+    "rawEvidence": "Three original log EOF blank lines retained byte-for-byte; not a product/test failure and not claimed whitespace PASS",
+    "rawLogPaths": ["logs/lint-attempt-1.log", "logs/targeted-attempt-1.log", "logs/vitest-full-attempt-1.log"],
+    "finalCheck": "Check all staged non-log documents; preserve original raw log hashes"
+  }
+}

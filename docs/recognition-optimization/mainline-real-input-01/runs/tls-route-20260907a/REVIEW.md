@@ -1,0 +1,13 @@
+# 独立范围复核：PASS_SCOPE_ONLY
+
+real_input_resume_rules_review以无上下文只读审查完成；未联网、读凭据、改源码或写原账本。
+
+三文件仅在内存反向移除本轮增量后精确恢复diagnostics快照SHA：App旧守卫、FactCorrectionEditor原dirty effect、acceptance原8项全部保留。inputPanel在runtime创建时只定义一次，App禁止换boundRuntime，别名+JSX不会每次创建新组件函数。notify更新移入前置effect，未增加确认或正式写入路径。当前完整三SHA在REVIEW.json。
+
+阅读定向33/33日志，未自行复跑；SSR不能证明实际effect、卸载/切换dirty和浏览器验收。结论限本次最小lint修补。
+
+恢复设计独审确认旧budget和runner不能直接继续：要求先前全部settled、raw数等于reserve数，且runner覆盖旧RESULT；checker仍固定历史HEAD。必须单独批准追加式单次grant、指定A01 held-unknown保留、A02一次性消费、原锁根追加收据、新结果目录和当前审核编排，不能仅修改HALT或旧STATE解锁。TLS结果不证明A01原因或服务商认证。恢复本轮未实现，A02未调用。
+
+## 补充：最终审计与恢复提示词复核
+
+同一独立审查者只读核AUDIT与RESULT/BASELINE/ENGINEERING/REVIEW，结论PASS_SCOPE_ONLY。两路线观测不过推；新增0模型/费用与A01未知预留分开；A02待批准、未实现、未运行，7文件职责、原账本前缀/锁根收据权限、一次grant与成功失败均停清楚。三源码SHA仍一致，SSR/Node模拟/实际浏览器明确分层，未将历史工程未跑项或模型质量称PASS。本次未复跑工程或新增连接；最终保护与Git由主代理核验。

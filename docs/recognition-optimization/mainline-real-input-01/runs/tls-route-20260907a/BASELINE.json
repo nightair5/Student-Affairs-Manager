@@ -1,0 +1,94 @@
+{
+  "scope": "MAINLINE-REAL-INPUT-01 bounded TLS-only diagnosis",
+  "head": "949e42415dc3bc4dd42a5aeb0697160e1f35fc7b",
+  "remote": "949e42415dc3bc4dd42a5aeb0697160e1f35fc7b",
+  "sourceSnapshot": "docs/recognition-optimization/mainline-real-input-01/runs/diagnostics-20260907a/IMPLEMENTATION_SNAPSHOT.json",
+  "sourcesUnchanged": 42,
+  "protected": {
+    "count": 945,
+    "sha256": "df68e4eda47f664f9f0fbf218a74687117ac3cc9d2c14f5ee6e9965cd2c28394"
+  },
+  "priorDiagnosticFiles": [
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/diagnostics-20260907a/AUDIT.md",
+      "sha256": "779ef71cd0c310199f0b4968e4c0a676da2c2322d3fa085d756952d900281be4"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/diagnostics-20260907a/BASELINE.json",
+      "sha256": "17b7aec676eda35d664d0625566e0b1a0cc042cacbc14784d25f2757b67cd1c2"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/diagnostics-20260907a/ENGINEERING.json",
+      "sha256": "fe59b9bc67c6691cd1bbeb5005d7ea6c8ca58be58861e3bd3bbe60451809054d"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/diagnostics-20260907a/IMPLEMENTATION_SNAPSHOT.json",
+      "sha256": "77bb3a411beaad00f861ebc902fe8263b77f54c1f2d0ea4bcb085d6fc31d8520"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/diagnostics-20260907a/REVIEW.json",
+      "sha256": "7e7187a25ca52dcc1e0d04aa82bf7145b07e0117ff08f4e622d49195f93ba6e9"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/diagnostics-20260907a/REVIEW.md",
+      "sha256": "838040c42ab382ad71b5f0e17e729e4067702c4da9e5493731dcabac19220e5b"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/diagnostics-20260907a/logs/gateway-after-attempt-1.log",
+      "sha256": "687763615bf6128a94b178e32da0febb647c15ea2919a19e1e847545e2e3235d"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/diagnostics-20260907a/logs/gateway-after-attempt-2.log",
+      "sha256": "def1dd1cfc2afd0e1eda1efc504791133c55755df7a9acc2c77fa6b0484d0dbd"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/diagnostics-20260907a/logs/gateway-before-attempt-1.log",
+      "sha256": "88f19ee5a0eb58a1ffb4fb82cad38cbd16217f43c6032e630736bea1973054d5"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/diagnostics-20260907a/logs/lint-attempt-1.log",
+      "sha256": "e4cb611819b5ef8e3c1ba597e38155c18a2989fba8b0f281283a6555217b64d7"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/diagnostics-20260907a/logs/security-attempt-1.log",
+      "sha256": "6838332ecf60ade592f97360354dcff91ef7ea78766bf178a30745e34e795a3c"
+    }
+  ],
+  "logBoundary": {
+    "bytes": 278436,
+    "sha256": "1489e6f76d0d1d4dd5430c8fee7295dcea88e4207cf8ce879dfb861e82ddf1cd"
+  },
+  "route": {
+    "proxyHost": "127.0.0.1",
+    "proxyPort": 10081,
+    "processName": "verge-mihomo",
+    "pid": 556,
+    "exe": "C:\\Program Files\\Clash Verge\\verge-mihomo.exe",
+    "coreSha256": "98986b574e41f92b22ed65aa42a61ad8cadf886cc7b3f76b722cd73a3a52d878",
+    "parent": "C:\\Program Files\\Clash Verge\\clash-verge.exe",
+    "parentSha256": "eb377ecae42b64e68b7cb9929a57f4b93d95496e193e8020e73392e848cfdafc",
+    "installedVersion": "2.5.2",
+    "windowsProxyMatches": true,
+    "signature": "NotSigned",
+    "trust": "User explicitly confirmed personally installed/trusted and approved this credential-free TLS diagnostic; not a vendor authenticity claim."
+  },
+  "limits": {
+    "target": "api.deepseek.com:443",
+    "connectionAttemptsMax": 2,
+    "modelRequests": 0,
+    "credentialRead": 0,
+    "applicationBodyBytes": 0,
+    "proxyAuthentication": false,
+    "retry": 0,
+    "certificateVerification": "required",
+    "systemSettingsChanges": 0,
+    "modelBudgetChanges": 0
+  },
+  "priorA01": {
+    "attempts": 1,
+    "settlements": 0,
+    "halt": "TRANSPORT_OR_CRASH_UNKNOWN",
+    "unknownReservationMicroCny": 3300000
+  },
+  "temporaryScriptFiles": 0
+}

@@ -1,0 +1,42 @@
+{
+  "version": "real-input-tls-diagnostic-1",
+  "state": "TWO_ATTEMPTS_COMPLETE_NO_MORE_CONNECTIONS",
+  "connectionAttemptsReserved": 2,
+  "attempts": [
+    {
+      "route": "DIRECT",
+      "status": "FAILED",
+      "reason": "LOCAL_DEADLINE_12000MS",
+      "phase": "TLS_HANDSHAKE",
+      "waitingMs": 12012,
+      "proxyConnectStatus": null,
+      "tlsAuthorized": false,
+      "protocol": null,
+      "peerFingerprint256": null,
+      "applicationBytesSent": 0,
+      "authorizationHeadersSent": 0,
+      "retries": 0
+    },
+    {
+      "route": "TRUSTED_EXISTING_PROXY",
+      "status": "TLS_VERIFIED",
+      "reason": null,
+      "phase": "TLS_HANDSHAKE",
+      "waitingMs": 293,
+      "proxyConnectStatus": 200,
+      "tlsAuthorized": true,
+      "protocol": "TLSv1.3",
+      "peerFingerprint256": "0B:11:24:76:09:05:7D:AD:78:16:91:85:2F:01:AE:2E:A5:2C:9C:47:CD:63:29:0F:32:F8:5C:BA:52:5B:47:5D",
+      "applicationBytesSent": 0,
+      "authorizationHeadersSent": 0,
+      "retries": 0
+    }
+  ],
+  "retry": 0,
+  "newModelRequests": 0,
+  "newModelFeesCny": 0,
+  "accuracy": "本轮未测量",
+  "limits": "No API HTTP request, no application body, no authorization headers. Proxy received only unauthenticated CONNECT api.deepseek.com:443 before end-to-end TLS. Phase names describe attempted steps, not proof of successful TCP connection on direct timeout. No retry.",
+  "historicalInference": "Current route comparison supports explicitly bound proxy configuration, not retrospective proof of A01 root cause or authentication/model availability.",
+  "settingsRestoration": "NOT_NEEDED_NO_SETTINGS_CHANGED"
+}

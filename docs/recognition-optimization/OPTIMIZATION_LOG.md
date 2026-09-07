@@ -1862,3 +1862,16 @@
 - transport: 当前Node24.18.0/undici7.28.0；系统用户代理启用、代理环境变量存在但当前Node未启用--use-env-proxy或NODE_USE_ENV_PROXY。只核存在性和本机help，不读代理地址/凭据、不改系统或TLS、不做网络探针；不能据此追认A01根因。
 - integrity: 原A01及上一run41文件、70旧静态证据、945保护与原日志前缀保持；原1次尝试/0完整响应/3.30元未知预留不变，本轮0新模型/费用/凭据/真实库/部署。新源码使旧发送审核SHA失效，不改旧审核/checker/账本解锁；模型识别准确率本轮未测量。
 - delivery: 使用git-push技能仅暂存新诊断报告/5原始日志、短交接和追加日志，42业务源码留本机未提交；精确Git/live远端核验，不强推/变基。下一主线是有界无凭据连接路线诊断，再经明确恢复授权继续未运行单元；不换模型、新数据或重发A01。详细边界/提示词见本run AUDIT，整包NOT_COMPLETE。
+
+## 139. MAINLINE-REAL-INPUT-01获准TLS路线核验 — 2026-09-07
+
+- authorization: 用户明确批准最多2次仅api.deepseek.com的无Key/无正文TLS诊断，原42路径/历史/预算不变。使用bug-detective先核证据；初查本机Clash Verge核心未签名，先暂停发连接；用户已明确确认主动安装并信任，允许本次诊断，不将未签名当恶意或配置存在当供应链证明。
+- preflight: HEAD/live远端949e42415dc3bc4dd42a5aeb0697160e1f35fc7b；42源码、945保护、diagnostics11文件、原A01/usage41文件、70旧静态证据和日志前缀匹配。起始日志278436字节/SHA1489e6f76d0d1d4dd5430c8fee7295dcea88e4207cf8ce879dfb861e82ddf1cd。代理127.0.0.1:10081由已核SHA的verge-mihomo启动，父进程为同目录clash-verge并来自Explorer。
+- execution: 新tls-route-20260907a仅审计记录，不是新阶段/数据/模型预算。RESULT先占用2个连接诊断名额，各路线仅1次，不重试；代理仅无认证CONNECT至固定目标后端到端TLS证书校验，0应用正文/模型/Key/代理凭据读取。系统/浏览器设置不变；不修改原账本，A01不重发，A02仍禁止。
+
+## 140. MAINLINE-REAL-INPUT-01 TLS核验及零调用工程交付 — 2026-09-07
+
+- transport: 获准两诊断完成，Node直连12012ms期限到未完成TLS验证；经用户信任的现有127.0.0.1:10081代理CONNECT200，293ms完成TLSv1.3证书和主机名验证。无API请求/Key/模型正文，仅固定无认证隧道控制头；次数2/2耗尽，不再探测。不是A01根因、Key认证或模型可用证明；系统/浏览器未改无需恢复。
+- engineering: 原42内App/FactCorrectionEditor/acceptance.test仅3文件变更，React组件正式渲染、回调ref在effect更新、新2SSR正常对照，原8断言/确认守卫保持。无上下文独审PASS_SCOPE_ONLY，反向移除本轮增量恢复三旧SHA。定向33/33，lint0错误4警告，TypeScript通过，应用1206通过1既有跳过，Node层62/62，Schema/时间检查及1140文件安全扫描通过，临时构建通过并保留块大小警告。重叠检查不累计，SSR不当浏览器。
+- remaining: 原完整npm test历史编排/历史环境/公开依赖审计未重跑，UI变化后Edge未验收；历史3/1 FAIL与旧失败保留。完整包NOT_COMPLETE，42业务源码继续未提交，本轮仅审计Git交付。旧A01/usage41、diagnostics11、70旧证据、945保护及日志前缀保持，模型识别准确率本轮未测量。
+- next: AUDIT第5节提出单次A02原账本追加式恢复，未实现/未授权发送；独立复核要求保留A01失败/1次计数/3300000微元未知预留，grant先持久化再发，A02成功失败都停，不自动后续。原账本/STATE/manifest/raw/RESULT未改；0新模型请求/费用，不把原未知预留算已支出。本轮完成后停止，待明确恢复授权；不换模型、新数据或反复索Key。
