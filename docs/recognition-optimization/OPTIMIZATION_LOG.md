@@ -1847,3 +1847,18 @@
 - actual-attempt: 使用已获准本机.env仅由Node服务端加载，执行一次--paid=A01；无试连接/额外认证/重试。约10769ms后返回本地网关502/MODEL_CALL_STOPPED_NO_RETRY，raw为0字节，未取得可校验响应/usage；不能称上游返回502、Key无效、模型识别失败或未扣费。
 - budget: 1 reserve/0 settle，TRANSPORT_OR_CRASH_UNKNOWN停发；3300000微元完整未知预留保留，实际账单NOT_OBSERVABLE，不报已花3.30元或0元。其余15单元未跑，没有A02/重发/新run重置。独立失败证据复核确认manifest/账本链一致、本地状态与上游观测分开。
 - delivery: 整包NOT_COMPLETE，完整工程/最终模型确认和下游Edge未完成。当前仅精确提交失败审计/新证据、短交接和追加日志，42业务源码继续保留未提交，.env不暂存。下一优先是零调用安全错误分类与本机传输定位；恢复付费需保留A01未知预留/失败并明确批准，不能直接再次调用。
+
+## 137. MAINLINE-REAL-INPUT-01零调用诊断续行 — 2026-09-07
+
+- scope: 同包执行下一步，使用bug-detective证据定位；不重发A01、不恢复账本、不改识别语义或原计划。只在获准gateway/对应Node测试及runner报告职责内增加固定安全诊断，原42白名单不扩张。
+- preflight: HEAD/live远端3c99268f3db53602aef4f416f729a47820a0119e一致；42源码、945保护、70旧静态证据、旧日志前缀匹配，上一run41文件另全量绑定。起始日志275356字节/SHA9e19998a108ff5869247d8b957ce1994f2a633ef626f3ce91d9add1eac4b8bcc。
+- evidence: 新diagnostics-20260907a仅为本包诊断记录，不是新阶段/数据/预算；BASELINE含独立临时根。保留原A01失败与3300000微元未知预留；0新模型请求/费用/密钥/剪贴板/真实库/部署。原调用原因尚不能追认。
+
+## 138. MAINLINE-REAL-INPUT-01安全诊断局部交付 — 2026-09-07
+
+- implemented: 原42路径仅gateway/Node测试/runner3文件变化；固定阶段与允许原因、实际上游HTTP数值、本地HTTP、预留与uncertain追加尝试分开，不回显异常message/stack/头/body/Key。浏览器error body保持，runner未来报告lastDiagnostic；旧A01不回填。零调用模拟正常成功、异常保留全额预留并拒绝后续，未改预算源码。
+- tests: 修前旧gateway24通过+新19失败；首次预算+gateway72/1为新测试误认complete已用租约还能再次uncertain，按只读真实接口明确uncertaintyAttempt及原RESPONSE_OR_USAGE_INVALID停机；最终73/73，旧54断言不弱化。原gateway测试内存去新增后逐字SHA还原匹配；各attempt留存不合并样本。无上下文独审73复跑+2附加模拟探针、两语法检查通过，3SHA绑定PASS_SCOPE_ONLY。
+- engineering: secret scan1130文件PASS；完整lint2 errors/4 warnings，App1490及FactCorrectionEditor17的react-hooks/refs。两源码本轮SHA未变，不宣称其历史lint通过，不禁用规则或扩大诊断修UI。整包test/build/浏览器仍未完成，候选不晋级、业务源码不提交。
+- transport: 当前Node24.18.0/undici7.28.0；系统用户代理启用、代理环境变量存在但当前Node未启用--use-env-proxy或NODE_USE_ENV_PROXY。只核存在性和本机help，不读代理地址/凭据、不改系统或TLS、不做网络探针；不能据此追认A01根因。
+- integrity: 原A01及上一run41文件、70旧静态证据、945保护与原日志前缀保持；原1次尝试/0完整响应/3.30元未知预留不变，本轮0新模型/费用/凭据/真实库/部署。新源码使旧发送审核SHA失效，不改旧审核/checker/账本解锁；模型识别准确率本轮未测量。
+- delivery: 使用git-push技能仅暂存新诊断报告/5原始日志、短交接和追加日志，42业务源码留本机未提交；精确Git/live远端核验，不强推/变基。下一主线是有界无凭据连接路线诊断，再经明确恢复授权继续未运行单元；不换模型、新数据或重发A01。详细边界/提示词见本run AUDIT，整包NOT_COMPLETE。

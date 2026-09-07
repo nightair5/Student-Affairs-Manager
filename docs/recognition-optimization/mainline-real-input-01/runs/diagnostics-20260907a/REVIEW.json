@@ -1,0 +1,37 @@
+{
+  "status": "PASS_SCOPE_ONLY",
+  "reviewer": "real_input_diagnostic_review",
+  "context": "No conversation fork; current instructions and bounded source/evidence review",
+  "checks": {
+    "budgetAndGateway": {
+      "passed": 73,
+      "failed": 0
+    },
+    "additionalMockProbes": {
+      "passed": 2,
+      "failed": 0
+    },
+    "syntax": 2,
+    "priorRunFilesUnchanged": 41,
+    "changedSources": 3
+  },
+  "sources": [
+    {
+      "path": "scripts/real-input-model-gateway.mjs",
+      "sha256": "5dd674163faf2fa2f5d3f5ba561c81fd10f8b099d99c458d3b0d795fa6cf7bb8"
+    },
+    {
+      "path": "scripts/real-input-model-gateway.node-test.mjs",
+      "sha256": "12f55a978568f5da33a9d53d0ec930c33ead4157d6fe15a295c3697350f495d8"
+    },
+    {
+      "path": "scripts/run-mainline-real-input-01.mjs",
+      "sha256": "d28079281e415d1096b331eb4c04dc3f8c856c31160d7fe7317557dafeb9443e"
+    }
+  ],
+  "noNetwork": true,
+  "noCredentials": true,
+  "noOriginalLedgerWrites": true,
+  "noSourceEdits": true,
+  "limits": "No old gateway text available to reviewer; current logic and source SHA reviewed, not a full textual old/new diff. No paid entry or browser run. Not whole-package approval."
+}
