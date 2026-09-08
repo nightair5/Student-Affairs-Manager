@@ -182,7 +182,7 @@ export async function createModelGateway({origin,capability,budget,requests,reco
       try {
         check(typeof bodyText==='string'&&Buffer.byteLength(bodyText)<=200,'CLIENT_LIMIT')
         const input=JSON.parse(bodyText);exact(input,['unitId','requestSha']);unitId=input.unitId;request=frozen[unitId]
-        check(typeof unitId==='string'&&/^[ABCD]0[1-8]$/.test(unitId)&&request&&request.requestSha===input.requestSha,'CLIENT_BINDING')
+        check(typeof unitId==='string'&&/^(?:[ABCD]0[1-8]|N(?:0[1-9]|1[0-2])-(?:03|04))$/.test(unitId)&&request&&request.requestSha===input.requestSha,'CLIENT_BINDING')
       } catch {return response(400,{code:'REQUEST_BINDING_REJECTED'})}
       if(inFlight)return response(409,{code:'CALL_IN_PROGRESS'})
       inFlight=true

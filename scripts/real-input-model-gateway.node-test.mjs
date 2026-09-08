@@ -106,6 +106,20 @@ test('D unit passes only when present in the exact budget snapshot; original AB 
   assert.equal((await gateway.handle({...message,bodyText:JSON.stringify({unitId:'D02',requestSha:identity.requestSha})})).status,400)
   assert.equal(fetches,1)
 })
+test('paired04 units require exact current budget membership; old gateway cannot dispatch them',async()=>{
+  const original=await setup(),unitId='N01-03',body=request(),identity=inspectRequest(body)
+  const message={...original.message(),bodyText:JSON.stringify({unitId,requestSha:identity.requestSha})}
+  assert.equal((await original.gateway.handle(message)).status,400);assert.equal(original.secretReads(),0)
+  let calls=0,reserves=0
+  const gateway=await createModelGateway({origin:ORIGIN,capability:CAP,requests:{[unitId]:body},clock:()=>NOW,
+    budget:{snapshot:async()=>({units:[{unitId,...identity}]}),reserve:async id=>{assert.equal(id,unitId);reserves++;
+      return{complete:async()=>({usage:JSON.parse(raw(unitId)).usage,costUpperMicroCny:390}),uncertain:async()=>{throw Error('UNEXPECTED')}}}},
+    readSecret:()=>FAKE_SECRET,fetchImpl:async()=>{calls++;return http(raw(unitId))},recordRaw:async row=>{assert.equal(row.unitId,unitId)}})
+  assert.equal((await gateway.handle(message)).status,200)
+  assert.equal((await gateway.handle({...message,bodyText:JSON.stringify({unitId:'N01-04',requestSha:identity.requestSha})})).status,400)
+  assert.equal(calls,1);assert.equal(reserves,1)
+})
+
 test('credential is not read at gateway initialization or on rejected origins and routes',async()=>{
   const s=await setup();assert.equal(s.secretReads(),0)
   const cases=[m=>{m.headers.origin='https://evil.test'},m=>{m.headers.host='evil.test'},m=>{delete m.headers.origin},

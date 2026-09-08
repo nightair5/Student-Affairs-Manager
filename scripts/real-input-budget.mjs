@@ -214,9 +214,17 @@ function replay(lines, manifestSha, manifest) {
         &&state.reservations.slice(1).every(r=>r.status==='settled')
         &&g.targets[0].candidateSha!==state.candidate02.grant.targets[0].candidateSha,'C03_PARENT')
       state.candidate03={grant:g,stopped:false};state.units=[...state.units,...g.targets]
+    } else if (e.kind === 'paired04Grant') {
+      exact(e,['kind','grant']);const g=validateBatchGrant(e.grant,manifest,manifestSha)
+      check(g.version==='real-input-paired04-grant-1'&&!state.paired04&&state.candidate03&&!state.candidate03.stopped
+        &&sequence===g.parentSequence&&prior===g.parentTail&&state.reservations.length===32
+        &&state.reservations[0].status==='held-unknown'&&state.reservations[0].nonce===g.priorNonce
+        &&state.reservations[1].responseSha===g.a02ResponseSha&&state.reservations.slice(1).every(r=>r.status==='settled')
+        &&g.targets.find(u=>u.unitId.endsWith('-03')).candidateSha===state.candidate03.grant.targets[0].candidateSha,'PAIRED04_PARENT')
+      state.paired04={grant:g,stopped:false};state.units=[...state.units,...g.targets]
     } else if (e.kind === 'batchReserve') {
       exact(e,['kind','unitId','requestSha','candidateSha','nonce','reservedMicroCny'])
-      const active=state.candidate03??state.candidate02??state.batch,g=active?.grant,u=g?.targets[state.reservations.length-(state.candidate03?24:state.candidate02?16:2)]
+      const active=state.paired04??state.candidate03??state.candidate02??state.batch,g=active?.grant,u=g?.targets[state.reservations.length-(state.paired04?32:state.candidate03?24:state.candidate02?16:2)]
       check(g&&!active.stopped&&state.reservations.slice(1).every(r=>r.status==='settled')
         &&u&&u.unitId===e.unitId&&u.requestSha===e.requestSha&&u.candidateSha===e.candidateSha
         &&typeof e.nonce==='string'&&/^[a-f0-9-]{36}$/.test(e.nonce)
@@ -227,7 +235,7 @@ function replay(lines, manifestSha, manifest) {
     } else if (e.kind === 'batchSettle') {
       exact(e,['kind','unitId','nonce','requestSha','responseSha','responseId','usage','costUpperMicroCny'])
       const r=state.reservations.at(-1)
-      const active=state.candidate03??state.candidate02??state.batch
+      const active=state.paired04??state.candidate03??state.candidate02??state.batch
       check(active&&!active.stopped&&r?.kind==='batchReserve'&&r.status==='pending'
         &&r.unitId===e.unitId&&r.nonce===e.nonce&&r.requestSha===e.requestSha&&digest(e.responseSha)
         &&!state.reservations.some(x=>x.responseId===e.responseId),'BATCH_SETTLEMENT_BINDING')
@@ -240,6 +248,7 @@ function replay(lines, manifestSha, manifest) {
       if(state.batch)state.batch.stopped=true
       if(state.candidate02)state.candidate02.stopped=true
       if(state.candidate03)state.candidate03.stopped=true
+      if(state.paired04)state.paired04.stopped=true
     } else fail('LEDGER_EVENT_KIND')
     prior=line.hash
   }
@@ -351,15 +360,35 @@ function validateBatchGrant(input,manifest,manifestSha) {
   const g=copy(input)
   const candidate02=g.version==='real-input-candidate02-grant-1'
   const candidate03=g.version==='real-input-candidate03-grant-1'
+  const paired04=g.version==='real-input-paired04-grant-1'
   exact(g,['version','grantId','parentTail','parentSequence','ledgerPrefixBytes','ledgerPrefixSha','manifestSha',
     'bindingSha','head','sourcesSha','reviewSha','targets','billingEvidence','route','priorNonce','a02ResponseSha','maxTotalRequests'])
-  check((candidate03||candidate02||g.version==='real-input-batch-grant-1')&&/^[a-f0-9-]{36}$/.test(g.grantId)
-    &&g.parentSequence===(candidate03?51:candidate02?34:5)&&g.maxTotalRequests===(candidate03?32:candidate02?24:16)&&integer(g.ledgerPrefixBytes,1048576)&&g.ledgerPrefixBytes>0
+  check((paired04||candidate03||candidate02||g.version==='real-input-batch-grant-1')&&/^[a-f0-9-]{36}$/.test(g.grantId)
+    &&g.parentSequence===(paired04?68:candidate03?51:candidate02?34:5)&&g.maxTotalRequests===(paired04?56:candidate03?32:candidate02?24:16)&&integer(g.ledgerPrefixBytes,1048576)&&g.ledgerPrefixBytes>0
     &&['parentTail','ledgerPrefixSha','manifestSha','bindingSha','sourcesSha','reviewSha','a02ResponseSha'].every(k=>digest(g[k]))
     &&typeof g.head==='string'&&/^[a-f0-9]{40}$/.test(g.head)
     &&typeof g.priorNonce==='string'&&/^[a-f0-9-]{36}$/.test(g.priorNonce),'BATCH_GRANT')
   check(g.manifestSha===manifestSha,'BATCH_MANIFEST')
-  if(candidate02||candidate03){
+  if(paired04){
+    check(Array.isArray(g.targets)&&g.targets.length===24,'PAIRED04_TARGETS')
+    const candidates=new Map(),inputs=new Set()
+    for(let i=0;i<12;i++){
+      const pair=g.targets.slice(i*2,i*2+2),prefix=`N${String(i+1).padStart(2,'0')}-`
+      check(new Set(pair.map(u=>u.unitId)).size===2&&pair.some(u=>u.unitId===prefix+'03')&&pair.some(u=>u.unitId===prefix+'04'),'PAIRED04_PAIR')
+      for(const u of pair){exact(u,unitKeys)
+        check(['candidateSha','requestSha','inputSha','scorerSha'].every(k=>digest(u[k]))
+          &&integer(u.requestBytes,BILLING_POLICY.requestByteCeiling)&&u.requestBytes>0
+          &&u.scorerSha===manifest.units[0].scorerSha,'PAIRED04_IDENTITY')
+        const arm=u.unitId.slice(-2)
+        if(candidates.has(arm))check(candidates.get(arm)===u.candidateSha,'PAIRED04_CANDIDATE_DRIFT')
+        candidates.set(arm,u.candidateSha)
+      }
+      check(pair[0].inputSha===pair[1].inputSha&&!inputs.has(pair[0].inputSha)
+        &&!manifest.units.some(u=>u.inputSha===pair[0].inputSha),'PAIRED04_INPUT')
+      inputs.add(pair[0].inputSha)
+    }
+    check(candidates.get('03')!==candidates.get('04'),'PAIRED04_SAME_CANDIDATE')
+  }else if(candidate02||candidate03){
     check(Array.isArray(g.targets)&&g.targets.length===8,'C02_TARGETS')
     for(const [i,u] of g.targets.entries()){
       exact(u,unitKeys)
@@ -378,13 +407,15 @@ function validateBatchGrant(input,manifest,manifestSha) {
 }
 async function batchBudget(dir,manifest,manifestSha,read,input) {
   const grant=validateBatchGrant(input,manifest,manifestSha)
-  const candidate02=grant.version==='real-input-candidate02-grant-1',candidate03=grant.version==='real-input-candidate03-grant-1'
-  const offset=candidate03?24:candidate02?16:2,newCandidate=candidate02||candidate03
-  const active=s=>candidate03?s.candidate03:candidate02?s.candidate02:s.batch
+  const candidate02=grant.version==='real-input-candidate02-grant-1',candidate03=grant.version==='real-input-candidate03-grant-1',paired04=grant.version==='real-input-paired04-grant-1'
+  const offset=paired04?32:candidate03?24:candidate02?16:2,newCandidate=paired04||candidate02||candidate03
+  const active=s=>paired04?s.paired04:candidate03?s.candidate03:candidate02?s.candidate02:s.batch
   const boundRead=async()=>{
     const bytes=await readFile(join(dir,'CALL_LEDGER.jsonl'))
     check(bytes.length>=grant.ledgerPrefixBytes&&sha256(bytes.subarray(0,grant.ledgerPrefixBytes))===grant.ledgerPrefixSha,'BATCH_PREFIX')
     const state=await read()
+    if(paired04)check(state.candidate03&&(state.paired04||!state.candidate03.stopped)
+      &&grant.targets.find(u=>u.unitId.endsWith('-03')).candidateSha===state.candidate03.grant.targets[0].candidateSha,'PAIRED04_PARENT_CANDIDATE')
     if(candidate03)check(state.candidate02&&(state.candidate03||!state.candidate02.stopped)
       &&grant.targets[0].candidateSha!==state.candidate02.grant.targets[0].candidateSha,'C03_PARENT_CANDIDATE')
     if(active(state))same(active(state).grant,grant,'BATCH_GRANT_CHANGED')
@@ -410,7 +441,7 @@ async function batchBudget(dir,manifest,manifestSha,read,input) {
         check(s.reservations.slice(1).every(r=>r.status==='settled')&&u?.unitId===unitId,'BATCH_ORDER_OR_PENDING')
         check(typeof requestText==='string'&&sha256(requestText)===u.requestSha&&Buffer.byteLength(requestText)===u.requestBytes,'REQUEST_NOT_FROZEN')
         check(s.reservations.length<grant.maxTotalRequests&&s.reservations.reduce((n,r)=>n+r.costUpperMicroCny,0)+BILLING_POLICY.reservationMicroCny<=BILLING_POLICY.limitMicroCny,'LIMIT')
-        if(!active(s)){await append(dir,manifest,s,{kind:candidate03?'candidate03Grant':candidate02?'candidate02Grant':'batchGrant',grant});s=await boundRead()}
+        if(!active(s)){await append(dir,manifest,s,{kind:paired04?'paired04Grant':candidate03?'candidate03Grant':candidate02?'candidate02Grant':'batchGrant',grant});s=await boundRead()}
         const e={kind:'batchReserve',unitId,requestSha:u.requestSha,candidateSha:u.candidateSha,nonce:randomUUID(),reservedMicroCny:BILLING_POLICY.reservationMicroCny}
         await append(dir,manifest,s,e);return e
       })

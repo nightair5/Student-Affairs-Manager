@@ -7,6 +7,7 @@ import { validateInputReceipt, validateSendSnapshot, sha256Text, type InputRecei
 import { MODEL_NAME, PROMPT_VERSION } from '../realInput01/modelWire'
 import { CANDIDATE02_VERSION } from '../realInput01/candidate02'
 import { CANDIDATE03_VERSION } from '../realInput01/candidate03'
+import { CANDIDATE04_VERSION } from '../realInput01/candidate04'
 
 export class SemanticRepository {
   private constructor(private readonly canonical: CanonicalWorkspaceRepository, readonly name: string, readonly profile?: 'real-input-01') {}
@@ -138,8 +139,8 @@ export class SemanticRepository {
     })
   }
   async beginInputRun(sourceId: string, readingInput: RealInputReading, execution: 'live' | 'seen_engineering_replay',
-    operationId: string, revision: string, now = new Date().toISOString(), promptVersion: typeof PROMPT_VERSION | typeof CANDIDATE02_VERSION | typeof CANDIDATE03_VERSION = PROMPT_VERSION): Promise<CaptureHandle> {
-    assert(promptVersion === PROMPT_VERSION || (promptVersion === CANDIDATE02_VERSION || promptVersion === CANDIDATE03_VERSION) && execution === 'live', 'CANDIDATE_IDENTITY')
+    operationId: string, revision: string, now = new Date().toISOString(), promptVersion: typeof PROMPT_VERSION | typeof CANDIDATE02_VERSION | typeof CANDIDATE03_VERSION | typeof CANDIDATE04_VERSION = PROMPT_VERSION): Promise<CaptureHandle> {
+    assert(promptVersion === PROMPT_VERSION || [CANDIDATE02_VERSION,CANDIDATE03_VERSION,CANDIDATE04_VERSION].includes(promptVersion as typeof CANDIDATE02_VERSION) && execution === 'live', 'CANDIDATE_IDENTITY')
     const reading = plainJson(readingInput)
     await validateInputReceipt(reading.inputReceipt)
     assert(reading.sendSnapshot && /^[A-Za-z0-9-]{1,100}$/.test(operationId), 'SEND_RECEIPT_REQUIRED')
@@ -173,6 +174,38 @@ export class SemanticRepository {
       recognitionRuns: candidate.recognitionRuns.map(r => r.id === handle.recognitionRunId ? { ...r, schemaVersion: REAL_STATE_VERSION } : r) }), revision)
   }
   async exportJson(): Promise<string> { return this.canonical.exportJson(await this.load()) }
+  /** A new synthetic source and an already-settled response are assembled in
+   * private memory. Only a terminal, non-dispatchable review reaches the store. */
+  async appendPairedRecordedSource(operationId: string, revision: string,
+    complete: (memory: SemanticRepository) => Promise<void>): Promise<WorkspaceV8> {
+    assert(this.profile === 'real-input-01' && /^paired04-source-N(0[1-9]|1[0-2])$/.test(operationId), 'PAIRED_RECORDED_PROFILE')
+    const before = await this.load()
+    assert(revision === semanticRevision(before), 'STALE_RELOAD_REQUIRED')
+    assert(!before.sources.some(s => s.legacyData?.captureOperationId === operationId), 'PAIRED_SOURCE_ALREADY_EXISTS')
+    const transport = Object.assign(new MemoryWorkspaceRecordStore({ current: before }), { name: this.name })
+    const memory = await SemanticRepository.open(this.name, transport, undefined, 'real-input-01')
+    await complete(memory)
+    const next = await memory.load()
+    for (const key of Object.keys(before) as Array<keyof WorkspaceV8>) {
+      const old = before[key], current = next[key]
+      if (Array.isArray(old) && Array.isArray(current)) {
+        // capture prepends sources; identity, not array position, binds old entities.
+        assert(old.every(item => item && typeof item === 'object' && 'id' in item
+          ? equal(item, current.find(x => x && typeof x === 'object' && 'id' in x && x.id === item.id))
+          : current.some(x => equal(x,item))), 'PAIRED_OLD_RECORD_CHANGED_' + key)
+        const additions = ['sources','sourceVersions','recognitionRuns','extractionDrafts'].includes(key) ? 1 : 0
+        if (!['evidenceRefs','historyRecords'].includes(key)) assert(current.length === old.length + additions, 'PAIRED_UNCONFIRMED_WRITE_' + key)
+      } else if (key === 'workspace') assert(equal(before.workspace, { ...next.workspace, updatedAt: before.workspace.updatedAt }), 'PAIRED_WORKSPACE_CHANGED')
+      else if (key !== 'savedAt') assert(equal(old, current), 'PAIRED_METADATA_CHANGED')
+    }
+    const source = next.sources.find(s => s.legacyData?.captureOperationId === operationId)!
+    const run = next.recognitionRuns.find(r => r.sourceVersionId === source?.currentVersionId)!
+    const draft = next.extractionDrafts.find(d => d.recognitionRunId === run?.id)!
+    assert(source.legacyData?.captureOperationId === operationId && run.sourceVersionId === source.currentVersionId
+      && run.status === 'succeeded' && draft.recognitionRunId === run.id && draft.status === 'needs_review'
+      && draft.legacyData?.realInputRecorded && draft.commitOperationIds.length === 0, 'PAIRED_TERMINAL_REVIEW_REQUIRED')
+    return this.commitCandidate(before, next, true)
+  }
   /** Already-received response only. A queued record exists only in private memory;
    * the actual store receives its terminal Run and review Draft in one transaction. */
   async appendRecordedInput(input: { source: CaptureHandle; reading: RealInputReading; operationId: string;

@@ -10,6 +10,21 @@ import { verifyPreparedUnitIdentity, verifySendApproval, verifyRecoverySendAppro
 import { inspectProtection, verifyRecoveryScope, verifyReadCloseIdentity } from './check-mainline-real-input-01.mjs'
 import { BILLING_POLICY, RECOVERY_ROUTE, sha256 } from './real-input-budget.mjs'
 
+test('paired04 binds both arms, new references, current reviewed SHA and unchanged price before sending',async()=>{
+  const {verifyPaired04Send}=await import('./run-mainline-real-input-01.mjs')
+  const d='docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/',read=n=>JSON.parse(readFileSync(d+n))
+  const bindingBytes=readFileSync(d+'BINDING.json'),binding=JSON.parse(bindingBytes),baseline=read('BASELINE.json'),billing=read('BILLING.json'),protection=inspectProtection({stage:'paired04'})
+  const rows=readFileSync(baseline.ledger.path,'utf8').trimEnd().split('\n').map(JSON.parse),prior=rows.find(r=>r.event.kind==='paired04Grant')?.event.grant
+  const review={head:protection.head,status:'PASS',scope:'PAIRED04_SEND',sources:protection.sources.map(s=>({path:s.path,sha256:s.workingSha256})),bindingSha:sha256(bindingBytes),billingSha:sha256(JSON.stringify(billing)),grantId:prior?.grantId??'66666666-6666-4666-8666-666666666666',...(prior?{previousGrantSha:sha256(JSON.stringify(prior))}:{})}
+  const args={bindingBytes,binding,baseline,billing,review,protection},g=verifyPaired04Send(args)
+  assert.equal(g.targets.length,24);assert.equal(g.maxTotalRequests,56);assert.equal(g.parentSequence,68)
+  for(const mutate of [a=>{a.review.status='BLOCKED'},a=>{a.review.sources[0].sha256='0'.repeat(64)},a=>{a.protection.head='a'.repeat(40)},
+    a=>{a.billing.verified=false},a=>{a.binding.units[0].inputSha='0'.repeat(64)},a=>{a.review.bindingSha='0'.repeat(64)},a=>{a.binding.referenceSha='0'.repeat(64)},
+    ...(prior?[a=>{a.review.previousGrantSha='0'.repeat(64)},a=>{a.review.grantId='66666666-6666-4666-8666-666666666666'}]:[])]){
+    const copy=structuredClone(args);copy.bindingBytes=Buffer.from(args.bindingBytes);mutate(copy);assert.throws(()=>verifyPaired04Send(copy))
+  }
+})
+
 const carrierManifest=process.env.REAL_INPUT_CARRIERS_MANIFEST
 test('read-close binds current audit and frozen candidate/ledger without calling a model',()=>{
   const b=JSON.parse(readFileSync('docs/recognition-optimization/mainline-real-input-01/runs/candidate02-20260908a/READ_CLOSE_BASELINE.json'))

@@ -4,7 +4,7 @@ import { createHash, randomBytes } from 'node:crypto'
 import { resolve, dirname, join } from 'node:path'
 import { isDeepStrictEqual } from 'node:util'
 import { build } from 'esbuild'
-import { inspectProtection, verifyReviewBinding, CANDIDATE02_DIRECTORY, CANDIDATE03_DIRECTORY } from './check-mainline-real-input-01.mjs'
+import { inspectProtection, verifyReviewBinding, CANDIDATE02_DIRECTORY, CANDIDATE03_DIRECTORY, PAIRED04_DIRECTORY } from './check-mainline-real-input-01.mjs'
 import { inspectRequest, createModelGateway, createPinnedProxyFetch, createRawRecorder } from './real-input-model-gateway.mjs'
 import { BILLING_POLICY, RECOVERY_ROUTE, initializeBudget, openBudget } from './real-input-budget.mjs'
 
@@ -578,9 +578,139 @@ export async function dispatchCandidate03(unitId) {
   }finally{await recorder.close()}
 }
 
+const pairedRead=name=>JSON.parse(readFileSync(join(PAIRED04_DIRECTORY,name)))
+async function pairedApi(){
+  const bundle=await build({stdin:{contents:`export {buildCandidate03Request} from './src/experiments/realInput01/candidate03.ts';
+    export {buildCandidate04Request} from './src/experiments/realInput01/candidate04.ts';
+    export {indexImmutableScopesV11} from './src/recognition/scopeIndexV11.ts';
+    export {adaptModelWire, WIRE_VERSION} from './src/experiments/realInput01/modelWire.ts';
+    export {workspaceSnapshotHash} from './src/domain/v2/migration.ts';`,resolveDir:process.cwd(),loader:'ts'},
+    bundle:true,write:false,platform:'node',format:'esm',metafile:true})
+  const dependencies=Object.keys(bundle.metafile.inputs).filter(p=>p!=='<stdin>').map(path=>({path,sha256:hash(readFileSync(path))}))
+  check(!dependencies.some(d=>/seenInputs|evaluation|fixture|expected/i.test(d.path)),'P04_ANSWER_IN_REQUEST_DEPENDENCIES')
+  return {dependencies,api:await import('data:text/javascript;base64,'+Buffer.from(bundle.outputFiles[0].contents).toString('base64'))}
+}
+/** Reference-only expansion. This function is not imported into a product or request builder. */
+function pairedReference(spec,context,api){
+  const all=context.index.scopes,used=new Set()
+  const scopes=quotes=>[...new Set(quotes.map(q=>{const matches=all.filter(s=>s.text.includes(q));check(matches.length===1,'P04_REFERENCE_SCOPE:'+q);used.add(matches[0].id);return matches[0].id}))]
+  const surface=(value,task)=>{const candidates=all.filter(s=>task.scopes.some(q=>s.text.includes(q))&&s.text.includes(value));check(candidates.length>0,'P04_REFERENCE_SURFACE:'+value);used.add(candidates[0].id);return{surface:value,scopeId:candidates[0].id}}
+  const actionTypes={上传:'upload',交还:'other',检查:'review',保存:'save',领取:'collect',阅读:'review',提交:'submit',确认:'review',报名:'register',递交:'submit',填写:'fill',制作:'prepare',整理:'complete',参加:'attend',发送:'send',寄送:'send',寄:'send'}
+  const effects={upload:'external_transfer',submit:'external_transfer',send:'external_transfer',collect:'physical_action',attend:'physical_action',register:'external_interaction',review:'local_change',save:'local_change',fill:'local_change',prepare:'local_change',complete:'local_change',other:'unknown'}
+  const materials=(spec.materials??[]).map(m=>({tempId:m.id,name:m.name,required:m.required!==false,formatRequirements:m.format??[],namingRequirements:m.naming??[],quantity:m.quantity??null,submissionChannel:m.channel??null,relatedTaskTempIds:m.tasks,scopeIds:scopes(m.scopes),confidence:1}))
+  const timePoints=(spec.times??[]).map(t=>({tempId:t.id,type:t.type,rawText:t.raw,relatedTaskTempIds:t.tasks,relatedMaterialTempIds:t.materials??[],scopeIds:scopes([t.raw]),confidence:1}))
+  const events=(spec.events??[]).map(e=>({tempId:e.id,title:e.title,description:'',startTimePointTempId:e.start??null,endTimePointTempId:e.end??null,location:e.location??null,scopeIds:scopes(e.scopes),confidence:1,inferenceLevel:'explicit',relatedTaskTempIds:e.tasks}))
+  const tasks=spec.tasks.map(t=>{const time=timePoints.filter(x=>x.relatedTaskTempIds.includes(t.id)).map(x=>x.tempId),mat=materials.filter(x=>x.relatedTaskTempIds.includes(t.id)).map(x=>x.tempId),ev=events.filter(x=>x.relatedTaskTempIds.includes(t.id)).map(x=>x.tempId),at=t.actionType??actionTypes[t.action];check(at,'P04_REFERENCE_ACTION')
+    return{id:t.id,propositionScopeIds:scopes(t.scopes),action:surface(t.action,t),object:surface(t.object,t),actionType:at,effect:t.effect??effects[at],inferenceLevel:'explicit',
+      semantics:{actor:'addressee',speechAct:'directive',polarity:'affirmative',tense:'future',status:t.status??'pending',validity:t.validity??'active',modality:'required'},
+      detail:{parentTempId:null,hierarchyType:'task',title:t.action+t.object,description:'',completionCriteria:[],estimatedMinutes:null,statusSuggestion:'todo',prioritySuggestion:'medium',dependencyTempIds:[],materialTempIds:mat,timePointTempIds:time,confidence:1,userConfirmationRequired:true},
+      condition:t.condition?{value:t.condition.value,conditionScopeIds:scopes(t.condition.condition),factScopeIds:scopes(t.condition.facts)}:{value:'not_applicable',conditionScopeIds:[],factScopeIds:[]},
+      coverage:{time:time.length?'present':'not_stated',material:mat.length?'present':'not_stated',event:ev.length?'present':'not_stated'},eventTempIds:ev}})
+  const revisions=(spec.revisions??[]).map(r=>({type:r.type,targetDirectiveId:r.target,fromDirectiveId:r.from,effective:'true',scopeIds:scopes(r.scopes)}))
+  const wire={schemaVersion:api.WIRE_VERSION,tasks,materials,timePoints,events,revisions,conflicts:[],informationScopeIds:all.filter(s=>!used.has(s.id)).map(s=>s.id),unresolvedScopeIds:[]}
+  return api.adaptModelWire(wire,context).adapted
+}
+export async function preparePaired04(){
+  const protection=inspectProtection({stage:'paired04'}),freeze=pairedRead('CANDIDATE_FREEZE.json'),inputs=pairedRead('INPUTS.json'),reference=pairedRead('REFERENCE_SPEC.json')
+  check(hash(readFileSync('src/experiments/realInput01/candidate04.ts'))===freeze.sourceSha256&&inputs.createdAfterCandidateFreeze===freeze.sourceSha256,'P04_CANDIDATE_FIXED')
+  check(inputs.items.length===12&&reference.items.length===12&&new Set(inputs.items.map(i=>i.text)).size===12,'P04_INPUT_COUNT')
+  for(const f of freeze.dependencies)check(hash(readFileSync(f.path))===f.sha256,'P04_FROZEN_DEPENDENCY')
+  const {api,dependencies}=await pairedApi(),old=JSON.parse(readFileSync(join(runDirectory,'STATE.json'))),closure=await compileBatchScorer(old)
+  const requests={},units=[],items=[],references=[]
+  for(const [i,item]of inputs.items.entries()){
+    check(item.id===`N${String(i+1).padStart(2,'0')}`&&reference.items[i].id===item.id,'P04_INPUT_ID')
+    const operationId='paired04-source-'+item.id,sourceId='source:'+api.workspaceSnapshotHash(operationId).slice('fnv1a32:'.length),sourceVersionId=sourceId+':version:1'
+    const context={index:await api.indexImmutableScopesV11(sourceId,sourceVersionId,item.text),referenceTime:inputs.referenceTime,timezone:inputs.timezone}
+    // Balanced order: each notification is a block; odd/even blocks reverse the two arms.
+    for(const arm of i%2?['04','03']:['03','04']){
+      const id=item.id+'-'+arm,built=await api[arm==='03'?'buildCandidate03Request':'buildCandidate04Request'](context),u=inspectRequest(built.serialized)
+      requests[id]=built.serialized;units.push({unitId:id,candidateSha:u.candidateSha,inputSha:u.inputSha,requestSha:u.requestSha,requestBytes:u.requestBytes,scorerSha:old.scorerSha})
+    }
+    items.push({id:item.id,operationId,context,title:item.text.split('\n')[0]})
+    references.push({id:item.id,context,response:pairedReference(reference.items[i],context,api)})
+  }
+  const referenceText=JSON.stringify({label:'人工参考，仅评分，不进入发送及产品',items:references},null,2)+'\n'
+  const bindings=['INPUTS.json','REFERENCE_SPEC.json','CANDIDATE_FREEZE.json'].map(name=>({path:join(PAIRED04_DIRECTORY,name),sha256:hash(readFileSync(join(PAIRED04_DIRECTORY,name)))}))
+  const binding={version:'real-input-paired04-binding-1',head:protection.head,dependencies,files:bindings,referenceSha:hash(referenceText),scorerSha:old.scorerSha,scorerBundleSha:closure.bundleSha,requests,units,items,
+    label:'12新合成通知首次开发配对验证，非独立盲测；24输出不是24独立通知',order:'N01..N12; odd 03/04, even 04/03',createdAt:new Date().toISOString()}
+  writeFileSync(join(PAIRED04_DIRECTORY,'REFERENCES.json'),referenceText,{flag:'wx'})
+  writeFileSync(join(PAIRED04_DIRECTORY,'BINDING.json'),JSON.stringify(binding,null,2)+'\n',{flag:'wx'})
+  return{inputs:12,units:24,referenceTasks:references.reduce((n,r)=>n+r.response.tasks.length,0),bindingSha:hash(JSON.stringify(binding,null,2)+'\n'),modelCalls:0}
+}
+export function verifyPaired04Send({bindingBytes,binding,baseline,billing,review,protection}){
+  check(isDeepStrictEqual(JSON.parse(bindingBytes),binding)&&binding.version==='real-input-paired04-binding-1'&&binding.units.length===24&&binding.items.length===12,'P04_BINDING')
+  check(binding.head===baseline.head&&protection.head===binding.head,'P04_HEAD')
+  const sources=protection.sources.map(s=>({path:s.path,sha256:s.workingSha256}))
+  verifyReviewBinding({head:protection.head,expectedHead:baseline.head,sources,review})
+  check(review.scope==='PAIRED04_SEND'&&review.bindingSha===hash(bindingBytes)&&review.billingSha===hash(JSON.stringify(billing)),'P04_REVIEW')
+  for(const d of [...binding.dependencies,...binding.files])check(hash(readFileSync(d.path))===d.sha256,'P04_DEPENDENCY_CHANGED')
+  check(hash(readFileSync(join(PAIRED04_DIRECTORY,'REFERENCES.json')))===binding.referenceSha,'P04_REFERENCE_CHANGED')
+  const old=JSON.parse(readFileSync(join(runDirectory,'STATE.json'))),oldD=JSON.parse(readFileSync(join(CANDIDATE03_DIRECTORY,'BINDING.json')))
+  check(binding.scorerSha===old.scorerSha&&binding.scorerBundleSha===oldD.scorerBundleSha,'P04_SCORER')
+  for(const [i,item]of binding.items.entries()){
+    const pair=binding.units.slice(i*2,i*2+2),expected=(i%2?['04','03']:['03','04']).map(a=>item.id+'-'+a)
+    check(isDeepStrictEqual(pair.map(u=>u.unitId),expected),'P04_ORDER')
+    for(const u of pair){const p=inspectRequest(binding.requests[u.unitId]);check(['candidateSha','requestSha','inputSha','requestBytes'].every(k=>p[k]===u[k])&&u.scorerSha===binding.scorerSha,'P04_REQUEST')
+      check(isDeepStrictEqual(JSON.parse(p.body.input[1].content[0].text),{source:item.context.index.sourceContent,referenceTime:item.context.referenceTime,timezone:item.context.timezone,scopes:item.context.index.scopes.map(s=>({id:s.id,text:s.text}))}),'P04_SOURCE')
+      if(u.unitId.endsWith('-03'))check(u.candidateSha===oldD.units[0].candidateSha,'P04_OLD_CANDIDATE')
+    }
+    const a=JSON.parse(binding.requests[pair[0].unitId]),b=JSON.parse(binding.requests[pair[1].unitId])
+    check(isDeepStrictEqual({...a,input:[a.input[1]]},{...b,input:[b.input[1]]}),'P04_PAIR_PARAMETERS')
+  }
+  check(billing.verified===true&&isDeepStrictEqual(billing.policy,BILLING_POLICY)&&billing.documents.length===2,'P04_BILLING')
+  check(Date.now()>=Date.parse(billing.checkedAt)&&Date.now()<=Date.parse(billing.validUntil)&&Date.parse(billing.validUntil)-Date.parse(billing.checkedAt)<=86400000,'P04_PRICE_EXPIRED')
+  for(const [i,d]of billing.documents.entries())check(d.status===200&&d.url===['https://api-docs.deepseek.com/zh-cn/quick_start/pricing/','https://api-docs.deepseek.com/api/create-response/'][i]&&hash(readFileSync(d.path))===d.sha256,'P04_PRICE_DOCUMENT')
+  const ledger=readFileSync(baseline.ledger.path),rows=ledger.toString().trimEnd().split('\n').map(JSON.parse)
+  check(baseline.ledger.sequence===68&&hash(ledger.subarray(0,baseline.ledger.bytes))===baseline.ledger.sha256,'P04_LEDGER')
+  const grant={version:'real-input-paired04-grant-1',grantId:review.grantId,parentTail:baseline.ledger.tail,parentSequence:68,ledgerPrefixBytes:baseline.ledger.bytes,ledgerPrefixSha:baseline.ledger.sha256,
+    manifestSha:hash(readFileSync(join(runDirectory,'REQUEST_MANIFEST.json'))),bindingSha:hash(bindingBytes),head:binding.head,sourcesSha:hash(JSON.stringify(sources)),reviewSha:hash(JSON.stringify(review)),
+    targets:binding.units,billingEvidence:{checkedAt:billing.checkedAt,validUntil:billing.validUntil,evidenceSha:hash(JSON.stringify(billing))},route:RECOVERY_ROUTE,priorNonce:rows[1].event.nonce,a02ResponseSha:rows[4].event.responseSha,maxTotalRequests:56}
+  const existing=rows.find(r=>r.event.kind==='paired04Grant')?.event.grant
+  if(existing){
+    // A read-only-checker correction does not rewrite the durable grant or its
+    // original code review. The new code review must explicitly bind that grant.
+    const identity=g=>Object.fromEntries(Object.entries(g).filter(([k])=>!['sourcesSha','reviewSha'].includes(k)))
+    check(isDeepStrictEqual(identity(existing),identity(grant)),'P04_DURABLE_GRANT_CHANGED')
+    check(review.previousGrantSha===hash(JSON.stringify(existing))||existing.reviewSha===hash(JSON.stringify(review)),'P04_CONTINUATION_REVIEW')
+    return existing
+  }
+  return grant
+}
+export async function dispatchPaired04(unitId){
+  check(/^N(?:0[1-9]|1[0-2])-(03|04)$/.test(unitId),'P04_UNIT')
+  const bytes=readFileSync(join(PAIRED04_DIRECTORY,'BINDING.json')),binding=JSON.parse(bytes),baseline=pairedRead('BASELINE.json'),billing=pairedRead('BILLING.json'),review=pairedRead(existsSync(join(PAIRED04_DIRECTORY,'SEND_CONTINUATION_REVIEW.json'))?'SEND_CONTINUATION_REVIEW.json':'SEND_REVIEW.json')
+  const grant=verifyPaired04Send({bindingBytes:bytes,binding,baseline,billing,review,protection:inspectProtection({stage:'paired04'})})
+  const old=JSON.parse(readFileSync(join(runDirectory,'STATE.json'))),closure=await compileBatchScorer(old)
+  const budget=await openBudget(runDirectory,grant.manifestSha,{batchGrant:grant}),before=await budget.snapshot(),index=before.reservations.length-32
+  check(binding.units[index]?.unitId===unitId&&!before.paired04?.stopped&&before.reservations.slice(1).every(r=>r.status==='settled'),'P04_NEXT')
+  check(before.reservations.reduce((n,r)=>n+r.costUpperMicroCny,0)+3300000<=10000000,'P04_BUDGET')
+  const rawPath=join(PAIRED04_DIRECTORY,unitId+'_RAW.jsonl'),resultPath=join(PAIRED04_DIRECTORY,unitId+'_RESULT.json')
+  check(!existsSync(rawPath)&&!existsSync(resultPath),'P04_ALREADY_ATTEMPTED')
+  // Only this explicit dispatch reads the server credential. No probe or retry.
+  try{process.loadEnvFile(resolve('.env'))}catch{check(false,'SERVER_CONFIGURATION_UNAVAILABLE')}
+  const recorder=await createRawRecorder(rawPath),origin='http://127.0.0.1:6631',capability=randomBytes(32).toString('hex');let observed
+  try{
+    const requests={...old.requests,...JSON.parse(readFileSync(join(CANDIDATE02_DIRECTORY,'BINDING.json'))).requests,...JSON.parse(readFileSync(join(CANDIDATE03_DIRECTORY,'BINDING.json'))).requests,...binding.requests}
+    const gateway=await createModelGateway({origin,capability,budget,requests,fetchImpl:createPinnedProxyFetch(),recordRaw:async row=>{check(row.unitId===unitId&&row.requestSha===binding.units[index].requestSha,'P04_RAW_IDENTITY');await recorder.write(row);observed=row}})
+    const start=Date.now(),response=await gateway.handle({method:'POST',path:'/api/real-input/recognize',headers:{host:new URL(origin).host,origin,'sec-fetch-site':'same-origin','content-type':'application/json','x-real-input-capability':capability},bodyText:JSON.stringify({unitId,requestSha:binding.units[index].requestSha})})
+    let score=null,scoreError=null
+    const item=binding.items.find(i=>i.id===unitId.slice(0,3)),reference=pairedRead('REFERENCES.json').items.find(i=>i.id===item.id)
+    if(response.status===200)try{score=await closure.api.scoreSeenResponse(observed.rawHttpText,item.context,reference.response,reference.context)}catch{scoreError='SCHEMA_OR_SCORER_REJECTED'}
+    const after=await budget.snapshot(),r=after.reservations.find(r=>r.unitId===unitId)
+    const result={unitId,arm:unitId.slice(-2),bindingSha:hash(bytes),requestSha:binding.units[index].requestSha,responseSha:observed?.responseSha??null,scorerSha:binding.scorerSha,referenceSha:binding.referenceSha,
+      http:response.status,diagnostic:response.diagnostic??null,waitingMs:Date.now()-start,score,scoreError,totalAttempts:after.reservations.length,newAttempts:after.reservations.length-before.reservations.length,
+      costUpperMicroCny:r?.costUpperMicroCny??0,totalCostUpperMicroCny:after.reservations.reduce((n,r)=>n+r.costUpperMicroCny,0),
+      stopDispatch:response.status!==200||Boolean(after.paired04?.stopped)||r?.status!=='settled',providerBilledCny:'NOT_OBSERVABLE',automaticSelection:'NOT_ENABLED',qualityClaim:binding.label}
+    writeFileSync(resultPath,JSON.stringify(result,null,2)+'\n',{flag:'wx'})
+    return{unitId,http:result.http,stopDispatch:result.stopDispatch,scoreError,totalAttempts:result.totalAttempts,waitingMs:result.waitingMs,costUpperMicroCny:result.costUpperMicroCny}
+  }finally{await recorder.close()}
+}
+
 if(process.argv[1]&&resolve(process.argv[1])===resolve(import.meta.filename)){
   const args=process.argv.slice(2),pick=key=>args.find(a=>a.startsWith('--'+key+'='))?.slice(key.length+3)
-  if(args.length===1&&args[0]==='--prepare-candidate03')console.log(JSON.stringify(await prepareCandidate03()))
+  if(args.length===1&&args[0]==='--prepare-paired04')console.log(JSON.stringify(await preparePaired04()))
+  else if(args.length===1&&/^--paired04=N(?:0[1-9]|1[0-2])-(03|04)$/.test(args[0]))console.log(JSON.stringify(await dispatchPaired04(pick('paired04'))))
+  else if(args.length===1&&args[0]==='--prepare-candidate03')console.log(JSON.stringify(await prepareCandidate03()))
   else if(args.length===1&&/^--candidate03=D0[1-8]$/.test(args[0]))console.log(JSON.stringify(await dispatchCandidate03(pick('candidate03'))))
   else if(args.length===1&&args[0]==='--prepare-candidate02')console.log(JSON.stringify(await prepareCandidate02()))
   else if(args.length===1&&/^--candidate02=C0[1-8]$/.test(args[0]))console.log(JSON.stringify(await dispatchCandidate02(pick('candidate02'))))

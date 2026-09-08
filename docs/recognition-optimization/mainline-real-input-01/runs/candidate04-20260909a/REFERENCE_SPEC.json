@@ -1,0 +1,837 @@
+{
+  "version": "paired04-reference-spec-1",
+  "label": "人工参考，只进入评分；不是模型输出",
+  "items": [
+    {
+      "id": "N01",
+      "tasks": [
+        {
+          "id": "upload",
+          "action": "上传",
+          "object": "设备借用清单",
+          "scopes": [
+            "请值班同学",
+            "清单须为XLSX",
+            "命名为",
+            "上传至实验室门户"
+          ]
+        },
+        {
+          "id": "return",
+          "action": "交还",
+          "object": "储物柜钥匙",
+          "actionType": "other",
+          "effect": "physical_action",
+          "scopes": [
+            "另请于",
+            "交还时须附",
+            "送至值班室"
+          ]
+        }
+      ],
+      "times": [
+        {
+          "id": "tu",
+          "raw": "2026年9月16日17:00前",
+          "type": "submission_deadline",
+          "tasks": [
+            "upload"
+          ]
+        },
+        {
+          "id": "tr",
+          "raw": "2026年9月18日12:00前",
+          "type": "task_deadline",
+          "tasks": [
+            "return"
+          ]
+        }
+      ],
+      "materials": [
+        {
+          "id": "sheet",
+          "name": "设备借用清单",
+          "tasks": [
+            "upload"
+          ],
+          "scopes": [
+            "请值班同学",
+            "清单须为XLSX",
+            "命名为",
+            "上传至实验室门户"
+          ],
+          "format": [
+            "XLSX"
+          ],
+          "naming": [
+            "房间号-借用清单"
+          ],
+          "channel": "实验室门户"
+        },
+        {
+          "id": "handover",
+          "name": "纸质交接单",
+          "tasks": [
+            "return"
+          ],
+          "scopes": [
+            "交还时须附",
+            "送至值班室"
+          ],
+          "quantity": 1,
+          "format": [
+            "纸质"
+          ],
+          "channel": "值班室"
+        }
+      ]
+    },
+    {
+      "id": "N02",
+      "tasks": [
+        {
+          "id": "inspect",
+          "action": "检查",
+          "object": "展柜照明",
+          "actionType": "review",
+          "scopes": [
+            "请近期检查",
+            "完成检查的具体日期"
+          ]
+        },
+        {
+          "id": "save",
+          "action": "保存",
+          "object": "维护说明",
+          "scopes": [
+            "请保存维护说明"
+          ]
+        }
+      ],
+      "times": [
+        {
+          "id": "window",
+          "raw": "近期",
+          "type": "task_deadline",
+          "tasks": [
+            "inspect"
+          ]
+        },
+        {
+          "id": "pending",
+          "raw": "完成检查的具体日期将在排班确定后另行通知",
+          "type": "task_deadline",
+          "tasks": [
+            "inspect"
+          ]
+        }
+      ],
+      "materials": []
+    },
+    {
+      "id": "N03",
+      "tasks": [
+        {
+          "id": "collect",
+          "action": "领取",
+          "object": "备用转接头",
+          "condition": {
+            "value": "true",
+            "condition": [
+              "如果仓库确认缺少转接头"
+            ],
+            "facts": [
+              "仓库今天已经确认缺少转接头"
+            ]
+          },
+          "scopes": [
+            "如果仓库确认缺少转接头",
+            "请领取备用转接头",
+            "仓库今天已经确认缺少转接头",
+            "领取须在",
+            "需携带借用凭证",
+            "借用凭证已由本人"
+          ]
+        },
+        {
+          "id": "read",
+          "action": "阅读",
+          "object": "新版保管须知",
+          "actionType": "review",
+          "scopes": [
+            "另请阅读新版保管须知"
+          ]
+        }
+      ],
+      "times": [
+        {
+          "id": "due",
+          "raw": "2026年9月17日16:00前",
+          "type": "task_deadline",
+          "tasks": [
+            "collect"
+          ]
+        }
+      ],
+      "materials": [
+        {
+          "id": "receipt",
+          "name": "借用凭证",
+          "format": [
+            "原件"
+          ],
+          "tasks": [
+            "collect"
+          ],
+          "scopes": [
+            "需携带借用凭证",
+            "借用凭证已由本人"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N04",
+      "tasks": [
+        {
+          "id": "apply",
+          "action": "提交",
+          "object": "增开场次申请",
+          "condition": {
+            "value": "false",
+            "condition": [
+              "如果会场容量不足"
+            ],
+            "facts": [
+              "本次会场容量充足"
+            ]
+          },
+          "scopes": [
+            "如果会场容量不足",
+            "请提交增开场次申请",
+            "本次会场容量充足",
+            "因此现在不需要"
+          ]
+        },
+        {
+          "id": "confirm",
+          "action": "确认",
+          "object": "主持人名单",
+          "actionType": "review",
+          "effect": "external_interaction",
+          "scopes": [
+            "请在2026年9月19日",
+            "确认通过协调群回复",
+            "不要求另附文件"
+          ]
+        }
+      ],
+      "times": [
+        {
+          "id": "due",
+          "raw": "2026年9月19日10:00前",
+          "type": "task_deadline",
+          "tasks": [
+            "confirm"
+          ]
+        }
+      ],
+      "materials": []
+    },
+    {
+      "id": "N05",
+      "tasks": [
+        {
+          "id": "register",
+          "action": "报名",
+          "object": "补充工作坊",
+          "condition": {
+            "value": "unknown",
+            "condition": [
+              "如候补席位获批"
+            ],
+            "facts": [
+              "席位审批尚无结论"
+            ]
+          },
+          "scopes": [
+            "如候补席位获批",
+            "请报名补充工作坊",
+            "席位审批尚无结论",
+            "获批后的报名截止",
+            "报名时须上传",
+            "文件命名为"
+          ]
+        },
+        {
+          "id": "read",
+          "action": "阅读",
+          "object": "报名规则",
+          "actionType": "review",
+          "scopes": [
+            "请先阅读报名规则",
+            "阅读本身不受"
+          ]
+        }
+      ],
+      "times": [
+        {
+          "id": "due",
+          "raw": "2026年9月21日18:00",
+          "type": "registration_deadline",
+          "tasks": [
+            "register"
+          ]
+        }
+      ],
+      "materials": [
+        {
+          "id": "plan",
+          "name": "学习计划",
+          "tasks": [
+            "register"
+          ],
+          "scopes": [
+            "报名时须上传",
+            "文件命名为"
+          ],
+          "quantity": 1,
+          "format": [
+            "PDF"
+          ],
+          "naming": [
+            "候补-学习计划"
+          ],
+          "channel": "上传"
+        }
+      ]
+    },
+    {
+      "id": "N06",
+      "tasks": [
+        {
+          "id": "old",
+          "action": "递交",
+          "object": "纸质入住登记表",
+          "actionType": "submit",
+          "status": "cancelled",
+          "validity": "superseded",
+          "scopes": [
+            "请于2026年9月20日",
+            "该要求现已作废",
+            "旧纸表无需递交"
+          ]
+        },
+        {
+          "id": "new",
+          "action": "填写",
+          "object": "在线入住登记表",
+          "scopes": [
+            "改为请于2026年9月22日",
+            "新要求自本通知发布起生效",
+            "在线表中须附",
+            "照片为JPG",
+            "不要求提供纸质照片"
+          ]
+        }
+      ],
+      "times": [
+        {
+          "id": "old_due",
+          "raw": "2026年9月20日17:00前",
+          "type": "submission_deadline",
+          "tasks": [
+            "old"
+          ]
+        },
+        {
+          "id": "new_due",
+          "raw": "2026年9月22日17:00前",
+          "type": "task_deadline",
+          "tasks": [
+            "new"
+          ]
+        }
+      ],
+      "materials": [
+        {
+          "id": "old_form",
+          "name": "纸质入住登记表",
+          "tasks": [
+            "old"
+          ],
+          "format": [
+            "纸质"
+          ],
+          "scopes": [
+            "请于2026年9月20日"
+          ]
+        },
+        {
+          "id": "photo",
+          "name": "证件照片",
+          "tasks": [
+            "new"
+          ],
+          "quantity": 1,
+          "format": [
+            "JPG"
+          ],
+          "scopes": [
+            "在线表中须附",
+            "照片为JPG"
+          ]
+        }
+      ],
+      "revisions": [
+        {
+          "type": "supersedes",
+          "target": "old",
+          "from": "new",
+          "scopes": [
+            "该要求现已作废",
+            "改为请于2026年9月22日",
+            "新要求自本通知发布起生效"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N07",
+      "tasks": [
+        {
+          "id": "old",
+          "action": "制作",
+          "object": "纸质展板",
+          "actionType": "prepare",
+          "status": "cancelled",
+          "scopes": [
+            "原定请制作纸质展板",
+            "现在取消这项要求",
+            "不设替代制作任务"
+          ]
+        },
+        {
+          "id": "list",
+          "action": "整理",
+          "object": "参展作品目录",
+          "actionType": "complete",
+          "scopes": [
+            "另请整理参展作品目录",
+            "这项整理要求继续有效",
+            "完成时间待通知",
+            "目录须包含作品编号",
+            "不规定文件格式"
+          ]
+        }
+      ],
+      "times": [
+        {
+          "id": "pending",
+          "raw": "完成时间待通知",
+          "type": "task_deadline",
+          "tasks": [
+            "list"
+          ]
+        }
+      ],
+      "materials": [
+        {
+          "id": "board",
+          "name": "纸质展板",
+          "format": [
+            "纸质"
+          ],
+          "tasks": [
+            "old"
+          ],
+          "scopes": [
+            "原定请制作纸质展板"
+          ]
+        },
+        {
+          "id": "catalogue",
+          "name": "参展作品目录",
+          "format": [
+            "包含作品编号"
+          ],
+          "tasks": [
+            "list"
+          ],
+          "scopes": [
+            "另请整理参展作品目录",
+            "目录须包含作品编号",
+            "不规定文件格式"
+          ]
+        }
+      ],
+      "revisions": [
+        {
+          "type": "cancels",
+          "target": "old",
+          "from": null,
+          "scopes": [
+            "现在取消这项要求",
+            "不设替代制作任务"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N08",
+      "tasks": [
+        {
+          "id": "attend",
+          "action": "参加",
+          "object": "技术排练",
+          "scopes": [
+            "请参加技术排练",
+            "排练于",
+            "2026年9月23日16:00结束",
+            "地点为",
+            "参加时须携带工牌"
+          ]
+        },
+        {
+          "id": "card",
+          "action": "领取",
+          "object": "出入卡",
+          "scopes": [
+            "请于2026年9月22日12:00",
+            "出入卡由前台发放",
+            "不需要申请表"
+          ]
+        }
+      ],
+      "times": [
+        {
+          "id": "start",
+          "raw": "2026年9月23日14:00",
+          "type": "event_start",
+          "tasks": [
+            "attend"
+          ]
+        },
+        {
+          "id": "end",
+          "raw": "2026年9月23日16:00",
+          "type": "event_end",
+          "tasks": [
+            "attend"
+          ]
+        },
+        {
+          "id": "card_due",
+          "raw": "2026年9月22日12:00前",
+          "type": "task_deadline",
+          "tasks": [
+            "card"
+          ]
+        }
+      ],
+      "materials": [
+        {
+          "id": "badge",
+          "name": "工牌",
+          "tasks": [
+            "attend"
+          ],
+          "scopes": [
+            "参加时须携带工牌"
+          ]
+        }
+      ],
+      "events": [
+        {
+          "id": "rehearsal",
+          "title": "技术排练",
+          "location": "北楼小剧场",
+          "tasks": [
+            "attend"
+          ],
+          "start": "start",
+          "end": "end",
+          "scopes": [
+            "请参加技术排练",
+            "排练于",
+            "2026年9月23日16:00结束",
+            "地点为"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N09",
+      "tasks": [],
+      "times": [],
+      "materials": []
+    },
+    {
+      "id": "N10",
+      "tasks": [
+        {
+          "id": "send",
+          "action": "发送",
+          "object": "经费使用说明",
+          "scopes": [
+            "请于2026年9月25日",
+            "经费使用说明须为PDF",
+            "不需要盖章"
+          ]
+        },
+        {
+          "id": "mail",
+          "action": "寄送",
+          "object": "展示海报",
+          "actionType": "send",
+          "effect": "external_transfer",
+          "scopes": [
+            "请于2026年9月26日",
+            "海报须为A3",
+            "共两张",
+            "可选附上设计草图",
+            "设计草图不是必须材料"
+          ]
+        }
+      ],
+      "times": [
+        {
+          "id": "send_due",
+          "raw": "2026年9月25日15:00前",
+          "type": "submission_deadline",
+          "tasks": [
+            "send"
+          ]
+        },
+        {
+          "id": "mail_due",
+          "raw": "2026年9月26日15:00前",
+          "type": "submission_deadline",
+          "tasks": [
+            "mail"
+          ]
+        }
+      ],
+      "materials": [
+        {
+          "id": "fund",
+          "name": "经费使用说明",
+          "format": [
+            "PDF"
+          ],
+          "channel": "评审邮箱",
+          "tasks": [
+            "send"
+          ],
+          "scopes": [
+            "请于2026年9月25日",
+            "经费使用说明须为PDF",
+            "不需要盖章"
+          ]
+        },
+        {
+          "id": "poster",
+          "name": "展示海报",
+          "format": [
+            "A3纸张"
+          ],
+          "quantity": 2,
+          "channel": "会务室",
+          "tasks": [
+            "mail"
+          ],
+          "scopes": [
+            "请于2026年9月26日",
+            "海报须为A3",
+            "共两张"
+          ]
+        },
+        {
+          "id": "sketch",
+          "name": "设计草图",
+          "required": false,
+          "tasks": [
+            "mail"
+          ],
+          "scopes": [
+            "可选附上设计草图",
+            "设计草图不是必须材料"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N11",
+      "tasks": [
+        {
+          "id": "fill",
+          "action": "填写",
+          "object": "设施问题反馈单",
+          "scopes": [
+            "请明天中午12:00前",
+            "填写时请依据",
+            "巡检记录是否已下载",
+            "本通知没有确认个人准备情况"
+          ]
+        },
+        {
+          "id": "read",
+          "action": "阅读",
+          "object": "应急联络流程",
+          "actionType": "review",
+          "scopes": [
+            "请近日阅读",
+            "阅读无需上交证明",
+            "反馈单的期限不适用于阅读"
+          ]
+        }
+      ],
+      "times": [
+        {
+          "id": "fill_due",
+          "raw": "明天中午12:00前",
+          "type": "task_deadline",
+          "tasks": [
+            "fill"
+          ]
+        },
+        {
+          "id": "read_due",
+          "raw": "近日",
+          "type": "task_deadline",
+          "tasks": [
+            "read"
+          ]
+        }
+      ],
+      "materials": [
+        {
+          "id": "inspection",
+          "name": "巡检记录",
+          "tasks": [
+            "fill"
+          ],
+          "scopes": [
+            "填写时请依据",
+            "巡检记录是否已下载",
+            "本通知没有确认个人准备情况"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N12",
+      "tasks": [
+        {
+          "id": "old",
+          "action": "寄",
+          "object": "纸质授权书",
+          "actionType": "send",
+          "status": "cancelled",
+          "validity": "superseded",
+          "condition": {
+            "value": "true",
+            "condition": [
+              "只有作品入选后"
+            ],
+            "facts": [
+              "本组作品已入选"
+            ]
+          },
+          "scopes": [
+            "原要求是请把纸质授权书寄给策展组",
+            "该替代已生效",
+            "不再寄纸质授权书",
+            "只有作品入选后",
+            "本组作品已入选"
+          ]
+        },
+        {
+          "id": "new",
+          "action": "发送",
+          "object": "电子授权书",
+          "condition": {
+            "value": "true",
+            "condition": [
+              "只有作品入选后"
+            ],
+            "facts": [
+              "本组作品已入选"
+            ]
+          },
+          "scopes": [
+            "现改为请发送电子授权书到授权平台",
+            "该替代已生效",
+            "电子授权书须为PDF",
+            "截止日期尚未确定",
+            "只有作品入选后",
+            "本组作品已入选"
+          ]
+        },
+        {
+          "id": "save",
+          "action": "保存",
+          "object": "作品编号",
+          "scopes": [
+            "另请保存作品编号",
+            "保存编号不需要等待授权完成",
+            "也没有规定日期"
+          ]
+        }
+      ],
+      "times": [
+        {
+          "id": "pending",
+          "raw": "截止日期尚未确定",
+          "type": "submission_deadline",
+          "tasks": [
+            "new"
+          ]
+        }
+      ],
+      "materials": [
+        {
+          "id": "paper",
+          "name": "纸质授权书",
+          "format": [
+            "纸质"
+          ],
+          "channel": "策展组",
+          "tasks": [
+            "old"
+          ],
+          "scopes": [
+            "原要求是请把纸质授权书寄给策展组"
+          ]
+        },
+        {
+          "id": "digital",
+          "name": "电子授权书",
+          "format": [
+            "PDF"
+          ],
+          "channel": "授权平台",
+          "tasks": [
+            "new"
+          ],
+          "scopes": [
+            "现改为请发送电子授权书到授权平台",
+            "电子授权书须为PDF"
+          ]
+        }
+      ],
+      "revisions": [
+        {
+          "type": "supersedes",
+          "target": "old",
+          "from": "new",
+          "scopes": [
+            "现改为请发送电子授权书到授权平台",
+            "该替代已生效",
+            "不再寄纸质授权书"
+          ]
+        }
+      ]
+    }
+  ]
+}

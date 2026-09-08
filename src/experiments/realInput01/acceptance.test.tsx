@@ -44,6 +44,63 @@ import { CalendarPage } from '../../pages/CalendarPage'
 import { indexImmutableScopesV11 } from '../../recognition/scopeIndexV11'
 import type { RealInputState } from '../mainline05/semanticState'
 import type { SemanticInput } from '../mainline04/semanticContract'
+import { replayRecordedPaired04, type RecordedPaired04 } from './runtime'
+
+describe('paired04 recorded source append',()=>{
+  function record(id='N01-04'):RecordedPaired04 {
+    const p='docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/'
+    const binding=JSON.parse(readFileSync(p+'BINDING.json','utf8'))
+    const item=binding.items.find((i:{id:string})=>i.id===id.slice(0,3)),raw=JSON.parse(readFileSync(p+id+'_RAW.jsonl','utf8'))
+    return {version:'recorded-paired04-1',unitId:id,name:recordedA02Identity.name,operationId:item.operationId,title:item.title,
+      context:item.context,requestSha:raw.requestSha,responseSha:raw.responseSha,rawHttpText:raw.rawHttpText}
+  }
+  async function fixture(){
+    const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:recordedA02Identity.name})
+    const repo=await SemanticRepository.open(store.name,store,emptyRealInputWorkspace(store.name),'real-input-01')
+    return {store,repo}
+  }
+  it('retains original source and response; no queued or dispatchable state, duplicate arm rejected',async()=>{
+    const {repo}=await fixture(),r=record(),identity={unitId:r.unitId,requestSha:r.requestSha,responseSha:r.responseSha}
+    const saved=await replayRecordedPaired04(repo,r,identity),d=saved.extractionDrafts[0],s=stateOfRuntime(saved,d.id)
+    expect(saved.tasks).toHaveLength(0);expect(saved.sources).toHaveLength(1)
+    expect(saved.sourceVersions[0].rawText).toBe(r.context.index.sourceContent)
+    if(s.version!==REAL_STATE_VERSION)throw Error('Expected real input state')
+    expect(s.rawHttpText).toBe(r.rawHttpText);expect(s.execution).toBe('live')
+    expect(saved.recognitionRuns[0].status).toBe('succeeded');expect(effectiveStateFacts(s).facts.tasks).toHaveLength(2)
+    expect(await replayRecordedPaired04(repo,r,identity)).toEqual(saved)
+    const other=record('N01-03')
+    await expect(replayRecordedPaired04(repo,other,{unitId:other.unitId,requestSha:other.requestSha,responseSha:other.responseSha})).rejects.toThrow('PAIRED_SOURCE_ARM_ALREADY_CHOSEN')
+    await expect(inputRunContext(repo,{sourceId:s.sourceId,sourceVersionId:s.sourceVersionId,recognitionRunId:s.runId,draftId:s.draftId,duplicate:false})).rejects.toThrow('RECORDED_NEVER_DISPATCHABLE')
+    expect(await repo.load()).toEqual(saved)
+  })
+  it('identity, request, response and recomputed source mismatch reject without writing',async()=>{
+    for(const mutate of [(r:RecordedPaired04)=>{r.responseSha='0'.repeat(64)},(r:RecordedPaired04)=>{r.context.index.sourceContent+='x'},
+      (r:RecordedPaired04)=>{r.operationId='paired04-source-N02'},(r:RecordedPaired04)=>{r.name+='-other'}]){
+      const {repo}=await fixture(),before=await repo.load(),r=record(),identity={unitId:r.unitId,requestSha:r.requestSha,responseSha:r.responseSha}
+      mutate(r);await expect(replayRecordedPaired04(repo,r,identity)).rejects.toThrow();expect(await repo.load()).toEqual(before)
+    }
+  })
+  it('atomic failure leaves no source, run, draft or task; valid response then succeeds',async()=>{
+    const {repo,store}=await fixture(),before=await repo.load(),r=record(),identity={unitId:r.unitId,requestSha:r.requestSha,responseSha:r.responseSha}
+    const actual=store.transaction!.bind(store)
+    const fault=vi.spyOn(store,'transaction').mockImplementationOnce(async()=>{throw Error('PAIRED_ATOMIC_FAILURE')})
+    await expect(replayRecordedPaired04(repo,r,identity)).rejects.toThrow('PAIRED_ATOMIC_FAILURE')
+    expect(await repo.load()).toEqual(before);fault.mockImplementation(actual)
+    expect((await replayRecordedPaired04(repo,r,identity)).extractionDrafts).toHaveLength(1)
+  })
+  it('adds distinct complex sources without changing any old record, and never confirms by loading',async()=>{
+    const {repo}=await fixture()
+    for(const id of ['N01-04','N06-04','N03-03']){
+      const before=await repo.load(),r=record(id),saved=await replayRecordedPaired04(repo,r,{unitId:r.unitId,requestSha:r.requestSha,responseSha:r.responseSha})
+      for(const key of ['sources','sourceVersions','recognitionRuns','extractionDrafts','evidenceRefs','historyRecords'] as const)
+        for(const old of before[key])expect(saved[key].find(x=>x.id===old.id)).toEqual(old)
+      expect(saved.tasks).toHaveLength(0)
+      const d=saved.extractionDrafts.find(d=>(d.legacyData?.realInputRecorded as {unitId?:string})?.unitId===id)!,state=stateOfRuntime(saved,d.id)
+      await expect(confirmSemantic(repo,{draftId:d.id,taskTempIds:effectiveStateFacts(state).facts.tasks.map(t=>t.id),revision:semanticRevision(saved)})).rejects.toThrow()
+      expect((await repo.load()).tasks).toHaveLength(0)
+    }
+  })
+})
 
 describe('explicit pending date confirmation',()=>{
   async function pendingFixture(){

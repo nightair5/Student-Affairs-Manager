@@ -1,0 +1,54 @@
+{
+  "checkedAt": "2026-09-08T16:42:04.494Z",
+  "validUntil": "2026-09-09T16:42:04.494Z",
+  "verified": true,
+  "policy": {
+    "version": "real-input-budget-2",
+    "model": "deepseek-v4-flash-vision-exp",
+    "endpoint": "https://api.deepseek.com/responses",
+    "temperature": 0,
+    "reasoningEffort": "none",
+    "inputTokenCeiling": 1048576,
+    "outputTokenCeiling": 8192,
+    "requestByteCeiling": 65536,
+    "inputPriceMicroPerMillion": 3000000,
+    "outputPriceMicroPerMillion": 9000000,
+    "reservationMicroCny": 3300000,
+    "limitMicroCny": 10000000,
+    "maxRequests": 24
+  },
+  "documents": [
+    {
+      "url": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/",
+      "status": 200,
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/PUBLIC_0.html",
+      "sha256": "39b70009b097786b103e4b6a4489c79f8772575d88a259527258b0bb1882c38a"
+    },
+    {
+      "url": "https://api-docs.deepseek.com/api/create-response/",
+      "status": 200,
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/PUBLIC_1.html",
+      "sha256": "a4788d94a47ee5d9705157d55593aa6dbf96a6c1309647b46e6a2aa8933715ad"
+    }
+  ],
+  "verification": {
+    "model": "DeepSeek-V4-Flash-Vision-Exp",
+    "context": "1M",
+    "inputPeakCnyPerMillion": 3,
+    "outputPeakCnyPerMillion": 9,
+    "reasoningNone": true,
+    "jsonSchema": true,
+    "streamFalse": true,
+    "outputLimit8192": true
+  },
+  "budget": {
+    "historicalRequests": 32,
+    "unknownHeldMicroCny": 3300000,
+    "settledUpperMicroCny": 581040,
+    "totalUpperMicroCny": 3881040,
+    "nextReservationMicroCny": 3300000,
+    "nextUpperMicroCny": 7181040,
+    "limitMicroCny": 10000000,
+    "providerBalance": "NOT_OBSERVABLE"
+  }
+}

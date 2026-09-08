@@ -90,15 +90,35 @@ export function loadRecordedCandidate03() {
       context:binding.items[i].context,requestSha:u.requestSha,responseSha:raw.responseSha,rawHttpText:raw.rawHttpText}
   })
 }
-export async function createLocalApp({port,carrierManifest,checking=false,recordedA02=false,recordedBatch=false,recordedCandidate02=false,recordedCandidate03=false}) {
+export function loadRecordedPaired04() {
+  loadRecordedCandidate03()
+  const root='docs/recognition-optimization/mainline-real-input-01/runs/',D=root+'candidate04-20260909a/'
+  const bytes=readFileSync(D+'BINDING.json'),binding=JSON.parse(bytes)
+  const rows=readFileSync(root+'usage-resume-20260907a/CALL_LEDGER.jsonl','utf8').trimEnd().split('\n').map(JSON.parse)
+  const grants=rows.filter(r=>r.event.kind==='paired04Grant')
+  check(grants.length===1&&grants[0].event.grant.bindingSha===hash(bytes),'P04_GRANT')
+  return binding.units.map(u=>{
+    const raw=JSON.parse(readFileSync(D+u.unitId+'_RAW.jsonl')),result=JSON.parse(readFileSync(D+u.unitId+'_RESULT.json'))
+    const settled=rows.filter(r=>r.event.kind==='batchSettle'&&r.event.unitId===u.unitId),item=binding.items.find(i=>i.id===u.unitId.slice(0,3))
+    check(item&&raw.unitId===u.unitId&&raw.httpStatus===200&&result.http===200&&!result.stopDispatch
+      &&hash(raw.rawHttpText)===raw.responseSha&&raw.responseSha===result.responseSha&&result.bindingSha===hash(bytes)
+      &&raw.requestSha===u.requestSha&&hash(binding.requests[u.unitId])===u.requestSha
+      &&raw.candidateSha===u.candidateSha&&raw.inputSha===u.inputSha&&settled.length===1
+      &&settled[0].event.requestSha===u.requestSha&&settled[0].event.responseSha===raw.responseSha,'P04_RECORDED_BINDING')
+    return {version:'recorded-paired04-1',unitId:u.unitId,name:loadRecordedA02().name,operationId:item.operationId,title:item.title,
+      context:item.context,requestSha:u.requestSha,responseSha:raw.responseSha,rawHttpText:raw.rawHttpText}
+  })
+}
+export async function createLocalApp({port,carrierManifest,checking=false,recordedA02=false,recordedBatch=false,recordedCandidate02=false,recordedCandidate03=false,recordedPaired04=false}) {
   check(Number.isSafeInteger(port)&&port>=1024&&port<=65535,'EXPLICIT_PORT')
   const origin='http://127.0.0.1:'+port, capability=randomBytes(32).toString('hex')
   check(!recordedA02||port===6631,'RECORDED_ORIGIN')
   check(!recordedBatch||(!recordedA02&&port===6631),'BATCH_RECORDED_ORIGIN')
   check(!recordedCandidate02||(recordedBatch&&!recordedA02&&port===6631),'C02_RECORDED_ORIGIN')
   check(!recordedCandidate03||recordedCandidate02,'C03_RECORDED_ORIGIN')
+  check(!recordedPaired04||recordedCandidate03,'P04_RECORDED_ORIGIN')
   const recorded=recordedA02?loadRecordedA02():null
-  const batch=recordedBatch?[...loadRecordedBatch(),...(recordedCandidate02?loadRecordedCandidate02():[]),...(recordedCandidate03?loadRecordedCandidate03():[])]:null
+  const batch=recordedBatch?[...loadRecordedBatch(),...(recordedCandidate02?loadRecordedCandidate02():[]),...(recordedCandidate03?loadRecordedCandidate03():[]),...(recordedPaired04?loadRecordedPaired04():[])]:null
   const mode=batch?'recorded_batch':recorded?'recorded_a02':'seen_engineering_replay'
   const manifestPath=realpathSync(carrierManifest), manifest=JSON.parse(readFileSync(manifestPath,'utf8'))
   check(manifest.version==='real-input-engineering-carriers-1'&&manifest.records?.length===8,'CARRIERS')
@@ -132,7 +152,7 @@ export async function createLocalApp({port,carrierManifest,checking=false,record
   const bundle=await build({entryPoints:['src/experiments/realInput01/browser.tsx'],bundle:true,write:false,metafile:true,outdir:'memory',
     platform:'browser',format:'esm',target:'es2022',jsx:'automatic',loader:{'.svg':'dataurl'},
     define:{'process.env.NODE_ENV':'"test"','import.meta.env':'{}',__REAL_INPUT_CONFIG__:JSON.stringify({mode,capability,resources,carriers:recorded||(batch&&!recordedCandidate02)?[]:carriers,units:[],
-      ...(batch?{batch:batch.map(({unitId,requestSha,responseSha})=>({unitId,requestSha,responseSha})),recorded:{name:batch[0].name},candidate02:recordedCandidate02,candidate03:recordedCandidate03}:{}),
+      ...(batch?{batch:batch.map(({unitId,requestSha,responseSha})=>({unitId,requestSha,responseSha})),recorded:{name:batch[0].name},candidate02:recordedCandidate02,candidate03:recordedCandidate03,paired04:recordedPaired04}:{}),
       ...(recorded?{recorded:{name:recorded.name,requestSha:recorded.requestSha,responseSha:recorded.responseSha}}:{})})}})
   const parsedReferenceModules=Object.keys(bundle.metafile.inputs).filter(path=>/(?:seenInputs|engineeringReplay|fixtures\.ts|fidelity|evaluation\.ts|\.test\.|DATASET|raw-results)/i.test(path))
   const browserJs=bundle.outputFiles.find(file=>file.path.endsWith('.js')).text
@@ -196,7 +216,7 @@ export async function createLocalApp({port,carrierManifest,checking=false,record
 }
 if(process.argv[1]&&resolve(process.argv[1])===resolve(import.meta.filename)){
   const args=process.argv.slice(2),pick=key=>args.find(arg=>arg.startsWith('--'+key+'='))?.slice(key.length+3)
-  check(args.every(a=>a==='--check'||a==='--recorded-a02'||a==='--recorded-batch'||a==='--recorded-candidate02'||a==='--recorded-candidate03'||/^--(?:port|carriers)=/.test(a))&&new Set(args.map(a=>a.split('=')[0])).size===args.length,'ARGS')
-  const result=await createLocalApp({port:Number(pick('port')),carrierManifest:pick('carriers'),checking:args.includes('--check'),recordedA02:args.includes('--recorded-a02'),recordedBatch:args.includes('--recorded-batch'),recordedCandidate02:args.includes('--recorded-candidate02'),recordedCandidate03:args.includes('--recorded-candidate03')})
+  check(args.every(a=>a==='--check'||a==='--recorded-a02'||a==='--recorded-batch'||a==='--recorded-candidate02'||a==='--recorded-candidate03'||a==='--recorded-paired04'||/^--(?:port|carriers)=/.test(a))&&new Set(args.map(a=>a.split('=')[0])).size===args.length,'ARGS')
+  const result=await createLocalApp({port:Number(pick('port')),carrierManifest:pick('carriers'),checking:args.includes('--check'),recordedA02:args.includes('--recorded-a02'),recordedBatch:args.includes('--recorded-batch'),recordedCandidate02:args.includes('--recorded-candidate02'),recordedCandidate03:args.includes('--recorded-candidate03'),recordedPaired04:args.includes('--recorded-paired04')})
   console.log(JSON.stringify(args.includes('--check')?result.evidence:{url:result.url,mode:result.evidence.mode,upstreamEnabled:false}))
 }

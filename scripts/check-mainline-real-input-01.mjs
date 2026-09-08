@@ -17,6 +17,7 @@ const git=(...args)=>execFileSync('git',args,{encoding:'utf8',windowsHide:true})
 /** Read-only current-stage protection. This is not a replacement for full
  * engineering, historical environment, paid safety or browser acceptance. */
 export function inspectProtection({stage}={}) {
+  if(stage==='paired04')return inspectPaired04Protection()
   if(stage==='candidate03')return inspectCandidate03Protection()
   if(stage==='read-close')return inspectReadCloseProtection()
   if(stage==='candidate02')return inspectCandidate02Protection()
@@ -43,6 +44,21 @@ export function inspectProtection({stage}={}) {
 
 export const CANDIDATE02_DIRECTORY='docs/recognition-optimization/mainline-real-input-01/runs/candidate02-20260908a'
 export const CANDIDATE03_DIRECTORY='docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a'
+export const PAIRED04_DIRECTORY='docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a'
+export function inspectPaired04Protection() {
+  const b=JSON.parse(readFileSync(PAIRED04_DIRECTORY+'/BASELINE.json'))
+  ensure(resolve(process.cwd()).toLowerCase()===root.toLowerCase()&&git('branch','--show-current')===branch,'P04_WORKSPACE')
+  ensure(git('rev-parse','HEAD')===b.head&&b.head==='22686cb2a04f08e26d913b97629d5ff1deb76286','P04_HEAD')
+  for(const f of [...b.protectedFiles,...b.staticEvidence])ensure(hash(readFileSync(f.path))===f.sha256,'P04_PROTECTED:'+f.path)
+  for(const f of b.sources.filter(s=>/candidate0[23]|evaluation\./.test(s.path)))ensure(hash(readFileSync(f.path))===f.workingSha256,'P04_FROZEN:'+f.path)
+  ensure(b.protectedFiles.length===944&&hash(readFileSync(logPath).subarray(0,b.log.bytes))===b.log.sha256,'P04_PREFIX')
+  ensure(hash(readFileSync(b.ledger.path).subarray(0,b.ledger.bytes))===b.ledger.sha256,'P04_LEDGER_PREFIX')
+  const paths=[...b.sources.map(s=>s.path),...b.newPaths]
+  ensure(paths.length===49&&new Set(paths).size===49,'P04_PATHS')
+  for(const path of git('diff','--name-only').split('\n').filter(Boolean))ensure(paths.includes(path)||[contextPath,logPath,b.ledger.path].includes(path),'P04_OUTSIDE:'+path)
+  return {head:b.head,branch,protectedCount:944,historyCount:b.staticEvidence.length,
+    sources:paths.map(path=>({path,exists:existsSync(path),workingSha256:existsSync(path)?hash(readFileSync(path)):null}))}
+}
 export function inspectCandidate03Protection() {
   const b=JSON.parse(readFileSync(CANDIDATE03_DIRECTORY+'/BASELINE.json'))
   ensure(resolve(process.cwd()).toLowerCase()===root.toLowerCase()&&git('branch','--show-current')===branch,'C03_WORKSPACE')

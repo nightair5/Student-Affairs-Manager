@@ -1,0 +1,248 @@
+{
+  "label": "12新合成通知首次开发配对验证；非独立盲测",
+  "bindingSha": "ecae72c8f778663a2ec1909dc15da90b860b4f30d5696cbec63c3845f772e07f",
+  "arms": {
+    "03": {
+      "notifications": 12,
+      "settledRequests": 12,
+      "schemaScoreRejected": [
+        "N04-03"
+      ],
+      "metrics": {
+        "task": {
+          "correct": 15,
+          "referenceScored": 21,
+          "predictedScored": 21
+        },
+        "requiresAction": {
+          "correct": 13,
+          "referenceScored": 22,
+          "predictedScored": 22
+        },
+        "time": {
+          "correct": 4,
+          "referenceScored": 17,
+          "predictedScored": 17
+        },
+        "material": {
+          "correct": 7,
+          "referenceScored": 15,
+          "predictedScored": 11
+        },
+        "event": {
+          "correct": 0,
+          "referenceScored": 1,
+          "predictedScored": 2
+        },
+        "condition": {
+          "correct": 12,
+          "referenceScored": 21,
+          "predictedScored": 21
+        },
+        "revision": {
+          "correct": 0,
+          "referenceScored": 3,
+          "predictedScored": 3
+        },
+        "evidence": {
+          "correct": 26,
+          "referenceScored": 54,
+          "predictedScored": 51
+        },
+        "semantic": {
+          "correct": 4,
+          "referenceScored": 26,
+          "predictedScored": 29
+        },
+        "coverage": {
+          "correct": 23,
+          "referenceScored": 43,
+          "predictedScored": 43
+        }
+      },
+      "completeCase": 0,
+      "waitingMs": 166536,
+      "costUpperMicroCny": 332787,
+      "originalResultFiles": [
+        {
+          "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N01-03_RESULT.json",
+          "sha256": "48a38fc1911a3a483e856148a85d1c231eb81323070107be37fe5a16c4c7e80a"
+        },
+        {
+          "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N02-03_RESULT.json",
+          "sha256": "89a77909d7d4c35897049e9d482d9001174e7d76ad139dfba86ceee5cd99b2ec"
+        },
+        {
+          "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N03-03_RESULT.json",
+          "sha256": "15f568311fa394ddf9e45b629725646a317d0b7abf3399a1555a8118fa6cb3f8"
+        },
+        {
+          "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N04-03_RESULT.json",
+          "sha256": "9a61bb130d5cf87810dd4d870a512381193149df5961a09d1317f02dd27ec67d"
+        },
+        {
+          "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N05-03_RESULT.json",
+          "sha256": "ceba22031b25b304c6d1dfc77939e590caf88e2723299ad1f4015904e86ff554"
+        },
+        {
+          "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N06-03_RESULT.json",
+          "sha256": "d9ccb76f6dc28e1bf502cf85f422dce1d39147e8f5cb382d861bd4ce93ff037c"
+        },
+        {
+          "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N07-03_RESULT.json",
+          "sha256": "e3a541ab8bdd5a480fbe4e57dafb0e347ea49fe61d07f08d8eb79ff085cbeb03"
+        },
+        {
+          "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N08-03_RESULT.json",
+          "sha256": "b133c48c29cfd96f2b6a29e2113b94654db93c7aa5f4857b7b8765875f3e58db"
+        },
+        {
+          "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N09-03_RESULT.json",
+          "sha256": "0dd5007745b3c6ad0a716b3afb79379c8ae791177afda18e9f4c5daf1fc2dbc1"
+        },
+        {
+          "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N10-03_RESULT.json",
+          "sha256": "5b877aad7e633d6a8ed24c2e98e23c56e2b186e8cdb7d6514935b4f3416f4165"
+        },
+        {
+          "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N11-03_RESULT.json",
+          "sha256": "cff310ae18d5d354204ee236dcd0bb8c235ba1bcab8a72ae6037d57904105168"
+        },
+        {
+          "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N12-03_RESULT.json",
+          "sha256": "ab9c4378ed9a8c17ff0c6b0d00dfe404e10471ff5319e4976ccd550f6325171c"
+        }
+      ]
+    },
+    "04": {
+      "notifications": 12,
+      "settledRequests": 12,
+      "schemaScoreRejected": [],
+      "metrics": {
+        "task": {
+          "correct": 23,
+          "referenceScored": 23,
+          "predictedScored": 23
+        },
+        "requiresAction": {
+          "correct": 23,
+          "referenceScored": 24,
+          "predictedScored": 24
+        },
+        "time": {
+          "correct": 11,
+          "referenceScored": 18,
+          "predictedScored": 21
+        },
+        "material": {
+          "correct": 7,
+          "referenceScored": 15,
+          "predictedScored": 13
+        },
+        "event": {
+          "correct": 0,
+          "referenceScored": 1,
+          "predictedScored": 2
+        },
+        "condition": {
+          "correct": 18,
+          "referenceScored": 23,
+          "predictedScored": 23
+        },
+        "revision": {
+          "correct": 3,
+          "referenceScored": 3,
+          "predictedScored": 4
+        },
+        "evidence": {
+          "correct": 28,
+          "referenceScored": 57,
+          "predictedScored": 59
+        },
+        "semantic": {
+          "correct": 4,
+          "referenceScored": 28,
+          "predictedScored": 35
+        },
+        "coverage": {
+          "correct": 27,
+          "referenceScored": 47,
+          "predictedScored": 47
+        }
+      },
+      "completeCase": 0,
+      "waitingMs": 169874,
+      "costUpperMicroCny": 343110,
+      "originalResultFiles": [
+        {
+          "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N01-04_RESULT.json",
+          "sha256": "1477534395d27dcd7476981c3d9c8cccbc91abaecb952688b281da34ca01d835"
+        },
+        {
+          "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N02-04_RESULT.json",
+          "sha256": "d518de24fad18c9038fe699546fb7504296bbcc9b107501be38e86f2220f7a79"
+        },
+        {
+          "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N03-04_RESULT.json",
+          "sha256": "e72b122d060a1e58b70a203f877092dbf2d748136d45ef902cc5285cace0aae3"
+        },
+        {
+          "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N04-04_RESULT.json",
+          "sha256": "f6c7e79cc25e7136146de36d947e1740183e6a525a284a48b44cb9500ac24b96"
+        },
+        {
+          "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N05-04_RESULT.json",
+          "sha256": "e1e7d498b0c0af5b8bc3600377d534f2aade875c35ec1758ebaba3d04afa83fa"
+        },
+        {
+          "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N06-04_RESULT.json",
+          "sha256": "8516a04eab8fa309d9e634d4ec69bae9d34bbf2391ba972be6b3c003b045696b"
+        },
+        {
+          "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N07-04_RESULT.json",
+          "sha256": "7528e79c211def63fd43ef1455d728bf1e61d0c1eb20197a36e168083c70f765"
+        },
+        {
+          "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N08-04_RESULT.json",
+          "sha256": "07a715d1cc8990b87624c71a2e679cce3b7639d525683c27267802779f3a5a63"
+        },
+        {
+          "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N09-04_RESULT.json",
+          "sha256": "f5853da802b2d74884eb06d8e6fd3b7dbd1fde912f47097600f6df1d93f9b9ce"
+        },
+        {
+          "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N10-04_RESULT.json",
+          "sha256": "9be159765cdb205c012b692b1e3037ee50e5ea904c71341a8949f42be363476c"
+        },
+        {
+          "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N11-04_RESULT.json",
+          "sha256": "b75f575e4de177756ad6380391ed5d9ce0ceeabebc37d1e0de21be43c418dda6"
+        },
+        {
+          "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N12-04_RESULT.json",
+          "sha256": "f1c4edf768f67c3d23755320a7431cd96ca579449f3e7e84b77f4187a6436d3a"
+        }
+      ]
+    }
+  },
+  "commonReference": {
+    "task": 23,
+    "time": 18,
+    "material": 15
+  },
+  "failedDenominatorPolicy": "N04-03未解析，保留在12通知及共同参考分母；原结果不改，不将缺失指标当作已评分",
+  "ledger": {
+    "lines": 117,
+    "bytes": 88517,
+    "sha256": "5e410e63be234ec4a286ecb3fc7d8490157e990b1c475e119897d7de3f7a841a",
+    "old68PrefixSha": "00a339e7e7d80c7ea5b058fd41f2602a062c1a465421b39310fcccf0d6f96b57",
+    "totalRequests": 56,
+    "heldA01MicroCny": 3300000,
+    "new24CostUpperMicroCny": 675897,
+    "totalSettledUpperMicroCny": 1256937,
+    "totalWithUnknownReserveMicroCny": 4556937
+  },
+  "automaticSelection": "NOT_ENABLED",
+  "humanActiveEditTime": "NOT_RUN",
+  "providerInvoice": "NOT_OBSERVABLE"
+}

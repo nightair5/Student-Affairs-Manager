@@ -99,6 +99,48 @@ async function candidate03Fixture() {
     targets:Array.from({length:8},(_,i)=>row(`D${String(i+1).padStart(2,'0')}`,'candidate-03',`A${String(i+1).padStart(2,'0')}`))}
   return {...f,previousGrant:f.grant,grant,prefix}
 }
+async function paired04Fixture() {
+  const f=await candidate03Fixture(),b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+  for(const u of f.grant.targets)await (await reserve(b,u.unitId)).complete(envelope(u.unitId))
+  const s=await b.snapshot(),prefix=await readFile(join(f.dir,'CALL_LEDGER.jsonl'))
+  const targets=Array.from({length:12},(_,i)=>['03','04'].map(arm=>row(`N${String(i+1).padStart(2,'0')}-${arm}`,'candidate-'+arm,'new-pair-'+i))).flat()
+  const grant={...f.grant,version:'real-input-paired04-grant-1',grantId:'55555555-5555-4555-8555-555555555555',
+    parentTail:s.tail,parentSequence:s.nextSequence,ledgerPrefixBytes:prefix.length,ledgerPrefixSha:sha256(prefix),maxTotalRequests:56,targets}
+  return {...f,grant,prefix}
+}
+if(process.argv[2]!=='--reserve-child') {
+  test('paired04: 24 interleaved new requests preserve 32 old requests and A01 unknown across reopening',async()=>{
+    const f=await paired04Fixture()
+    for(const u of f.grant.targets){const b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant});await(await reserve(b,u.unitId)).complete(envelope(u.unitId))}
+    const b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant}),s=await b.snapshot()
+    assert.equal(s.reservations.length,56);assert.equal(s.reservations[0].costUpperMicroCny,3300000)
+    assert.equal(s.reservations[0].status,'held-unknown');assert.equal(s.candidate03.grant.maxTotalRequests,32)
+    assert.deepEqual((await readFile(join(f.dir,'CALL_LEDGER.jsonl'))).subarray(0,f.prefix.length),f.prefix)
+    for(const id of ['A01','D01','N01-03','N13-04'])await assert.rejects(()=>reserve(b,id))
+  })
+  test('paired04: grant limits, pairing, old baseline, input drift and skipped order reject without mutation',async()=>{
+    const f=await paired04Fixture()
+    for(const mutate of [g=>{g.maxTotalRequests=57},g=>{g.parentTail=sha256('bad')},g=>{g.targets[0].unitId='A01'},
+      g=>{g.targets[1].inputSha=sha256('wrong')},g=>{g.targets[0].scorerSha=sha256('bad')},
+      g=>{g.targets.filter(u=>u.unitId.endsWith('-03')).forEach(u=>u.candidateSha=sha256('wrong-old'))}]){
+      const g=structuredClone(f.grant);mutate(g);await assert.rejects(()=>openBudget(f.dir,f.manifestSha,{batchGrant:g}))}
+    const b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+    await assert.rejects(()=>reserve(b,'N01-04'));await assert.rejects(()=>b.reserve('N01-03','wrong',BILLING_POLICY,NOW))
+    assert.deepEqual(await readFile(join(f.dir,'CALL_LEDGER.jsonl')),f.prefix)
+  })
+  test('paired04: concurrent crash, unknown usage and remaining monetary cap stop next dispatch',async()=>{
+    for(const mode of ['crash','usage','cost']){
+      const f=await paired04Fixture(),a=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant}),b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+      const results=await Promise.allSettled([reserve(a,'N01-03'),reserve(b,'N01-03')]);assert.equal(results.filter(r=>r.status==='fulfilled').length,1)
+      const lease=results.find(r=>r.status==='fulfilled').value
+      if(mode==='usage')await assert.rejects(()=>lease.complete(envelope('N01-03').replace('"usage":','"usage":{},"usage":')))
+      if(mode==='cost'){await lease.complete(envelope('N01-03',1048576,8192));await(await reserve(a,'N01-04')).complete(envelope('N01-04',1048576,8192))}
+      const reopened=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+      await assert.rejects(()=>reserve(reopened,mode==='cost'?'N02-03':'N01-04'))
+      assert.equal((await reopened.snapshot()).reservations[0].costUpperMicroCny,3300000)
+    }
+  })
+}
 if(process.argv[2]!=='--reserve-child') {
   test('candidate03 only appends eight D units to the original 24; restart and old prefix preserved',async()=>{
     const f=await candidate03Fixture()
