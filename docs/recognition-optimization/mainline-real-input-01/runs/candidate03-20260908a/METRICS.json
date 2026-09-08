@@ -1,0 +1,265 @@
+{
+  "label": "Same eight seen development texts, original strict scorer unchanged; not holdout accuracy",
+  "arms": {
+    "C": {
+      "cases": 8,
+      "metrics": {
+        "task": {
+          "predicted": 9,
+          "reference": 9,
+          "correct": 8,
+          "precision": 0.8888888888888888,
+          "recall": 0.8888888888888888
+        },
+        "requiresAction": {
+          "predicted": 10,
+          "reference": 10,
+          "correct": 9,
+          "precision": 0.9,
+          "recall": 0.9
+        },
+        "time": {
+          "predicted": 2,
+          "reference": 3,
+          "correct": 1,
+          "precision": 0.5,
+          "recall": 0.3333333333333333
+        },
+        "material": {
+          "predicted": 6,
+          "reference": 2,
+          "correct": 0,
+          "precision": 0,
+          "recall": 0
+        },
+        "event": {
+          "predicted": 0,
+          "reference": 0,
+          "correct": 0,
+          "precision": null,
+          "recall": null
+        },
+        "condition": {
+          "predicted": 9,
+          "reference": 9,
+          "correct": 8,
+          "precision": 0.8888888888888888,
+          "recall": 0.8888888888888888
+        },
+        "revision": {
+          "predicted": 1,
+          "reference": 1,
+          "correct": 1,
+          "precision": 1,
+          "recall": 1
+        },
+        "evidence": {
+          "predicted": 17,
+          "reference": 14,
+          "correct": 0,
+          "precision": 0,
+          "recall": 0
+        },
+        "semantic": {
+          "predicted": 11,
+          "reference": 10,
+          "correct": 0,
+          "precision": 0,
+          "recall": 0
+        },
+        "coverage": {
+          "predicted": 25,
+          "reference": 25,
+          "correct": 13,
+          "precision": 0.52,
+          "recall": 0.52
+        }
+      },
+      "complete": 1,
+      "majorCorrection": 7,
+      "forbidden": [
+        {
+          "unit": "C01",
+          "value": 0
+        },
+        {
+          "unit": "C02",
+          "value": 0
+        },
+        {
+          "unit": "C03",
+          "value": 0
+        },
+        {
+          "unit": "C04",
+          "value": 0
+        },
+        {
+          "unit": "C05",
+          "value": 0
+        },
+        {
+          "unit": "C06",
+          "value": 0
+        },
+        {
+          "unit": "C07",
+          "value": 0
+        },
+        {
+          "unit": "C08",
+          "value": 0
+        }
+      ],
+      "waitingMs": [
+        15708,
+        6190,
+        5188,
+        2823,
+        6575,
+        5679,
+        7250,
+        9357
+      ],
+      "totalWaitingMs": 58770,
+      "meanWaitingMs": 7346.25
+    },
+    "D": {
+      "cases": 8,
+      "metrics": {
+        "task": {
+          "predicted": 9,
+          "reference": 9,
+          "correct": 9,
+          "precision": 1,
+          "recall": 1
+        },
+        "requiresAction": {
+          "predicted": 10,
+          "reference": 10,
+          "correct": 10,
+          "precision": 1,
+          "recall": 1
+        },
+        "time": {
+          "predicted": 3,
+          "reference": 3,
+          "correct": 1,
+          "precision": 0.3333333333333333,
+          "recall": 0.3333333333333333
+        },
+        "material": {
+          "predicted": 4,
+          "reference": 2,
+          "correct": 1,
+          "precision": 0.25,
+          "recall": 0.5
+        },
+        "event": {
+          "predicted": 0,
+          "reference": 0,
+          "correct": 0,
+          "precision": null,
+          "recall": null
+        },
+        "condition": {
+          "predicted": 9,
+          "reference": 9,
+          "correct": 9,
+          "precision": 1,
+          "recall": 1
+        },
+        "revision": {
+          "predicted": 1,
+          "reference": 1,
+          "correct": 1,
+          "precision": 1,
+          "recall": 1
+        },
+        "evidence": {
+          "predicted": 16,
+          "reference": 14,
+          "correct": 0,
+          "precision": 0,
+          "recall": 0
+        },
+        "semantic": {
+          "predicted": 10,
+          "reference": 10,
+          "correct": 0,
+          "precision": 0,
+          "recall": 0
+        },
+        "coverage": {
+          "predicted": 25,
+          "reference": 25,
+          "correct": 19,
+          "precision": 0.76,
+          "recall": 0.76
+        }
+      },
+      "complete": 1,
+      "majorCorrection": 7,
+      "forbidden": [
+        {
+          "unit": "D01",
+          "value": 0
+        },
+        {
+          "unit": "D02",
+          "value": 0
+        },
+        {
+          "unit": "D03",
+          "value": 0
+        },
+        {
+          "unit": "D04",
+          "value": 0
+        },
+        {
+          "unit": "D05",
+          "value": 0
+        },
+        {
+          "unit": "D06",
+          "value": 0
+        },
+        {
+          "unit": "D07",
+          "value": 0
+        },
+        {
+          "unit": "D08",
+          "value": 0
+        }
+      ],
+      "waitingMs": [
+        17054,
+        5167,
+        6059,
+        3118,
+        6499,
+        5318,
+        6200,
+        9609
+      ],
+      "totalWaitingMs": 59024,
+      "meanWaitingMs": 7378
+    }
+  },
+  "calls": {
+    "new": 8,
+    "historical": 32,
+    "newSettledUpperMicroCny": 153336,
+    "totalSettledUpperMicroCny": 581040,
+    "unknownA01MicroCny": 3300000,
+    "totalAccountedUpperMicroCny": 3881040,
+    "accountInvoice": "NOT_OBSERVABLE",
+    "retry": 0,
+    "verifier": 0,
+    "repair": 0
+  },
+  "automaticSelection": "NOT_ENABLED",
+  "humanActiveEditTime": "NOT_RUN"
+}

@@ -1,73 +1,78 @@
 # RCO Current Context
 
-## 当前交付
-- 同一MAINLINE-REAL-INPUT-01；存量B08校对恢复+C08真实确认补验。
-- 本轮没有源码修改，交付原先未提交实现；不重复应用。
-- 报告candidate02-20260908a/DELIVERY_AUDIT.md与DELIVERY_CHECKS.json。
-- 原库PDF校对明确保存刷新恢复、C08确认和独立读库/实际下载已完成。
-- 新上传尝试被官方fileChooser Not allowed拒绝，不计上传PASS；未绕过。
-- 不宣称任意新输入全流程、模型质量、商业化或稳定部署完成。
-- 完成本轮业务Git交付后停止，不自动增加调用或候选。
+## 当前目标与状态
+- 同一MAINLINE-REAL-INPUT-01；首次时间/材料少错少漏，candidate03单候选D批。
+- 8次真实请求已完成，D01–D08，不再派发；历史累计32次。
+- 模型质量部分改善，联合采用标准未达到，不自动替换旧候选。
+- 产品交付：D01回放被旧A01处理中状态阻挡，尚未完成整包。
+- 原Edge刷新ERR_BLOCKED_BY_CLIENT，已一次请求手动刷新，不循环重试。
+- 保留失败正例与未提交实现，本轮只交付审计/真实结果/追加账本。
 
-## Git与范围
-- 仓库C:\Users\Winner\student-affairs-multimodal-exp。
-- 分支codex/e2-multimodal-recognition-exp；不在比赛工作区实施。
-- 本轮起点12a8087ff82ca94eacafa749cdc883b576a1e5ed，初始远端一致。
-- 最终业务提交以实际Git/远端为准，不能回切旧审计HEAD。
-- 授权44路径，实际待交付15个已跟踪修改+2个新候选文件。
-- 当前源码逐字匹配READ_CLOSE_IMPLEMENTATION_SNAPSHOT；本轮0源码变化。
-- 最终DELIVERY_IMPLEMENTATION_SNAPSHOT记录工作树SHA与Git归一化SHA。
+## 仓库与授权
+- 唯一C:\Users\Winner\student-affairs-multimodal-exp。
+- 分支codex/e2-multimodal-recognition-exp。
+- 起点c39f7e814b85acd494dc9c161ee0d24fa4e1d03f，开始/收尾前远端一致。
+- 授权44旧路径+candidate03.ts/candidate03.test.ts，共46，不回切/重复实现。
+- 报告runs/candidate03-20260908a/AUDIT.md、METRICS.json、FINAL_CHECKS.json。
+- 现场46SHA见IMPLEMENTATION_SNAPSHOT；派发时SHA单独保留在SEND_REVIEW_2。
 - 945保护聚合df68e4eda47f664f9f0fbf218a74687117ac3cc9d2c14f5ee6e9965cd2c28394。
-- 382旧证据、完整51条账本及原日志前缀不变。
-- 全局Schema/repository/capture/validator/confirmationV2/domainCommit保持只读。
-- Expected/候选请求/raw/评分/旧历史不改；不部署或接稳定入口/真实库。
-- 历史checker绑定旧HEAD，当前交付按最终SHA只读核验，不修改旧断言。
+- BASELINE保护402旧证据（原382加候选02交付）、旧候选02及日志前缀。
+- 全局Schema/repository/capture/validator/confirmationV2/domainCommit及时间AST只读。
+- 原Expected/评分器/旧回答/旧结果及冻结均未改。
 
-## 实际B08校对
-- 原Source source:653956bd已存在；本轮没有重造读取草稿或替代数据库。
-- B08-revision.pdf 5007537字节，文件SHA1d23427a358457fb001ebc5f5fd32ca42423458c0355304b3f15601ebd79bdee。
-- 文本层只有旧要求，实际OCR含旧要求和新要求，两路逐字保留。
-- InputReview恢复→采用实际OCR入缓冲→逐键整理→明确保存→刷新恢复。
-- 删除尾换行时误删句号，随后补回并保存；2条校对历史完整保留。
-- 最终：此前打印纸质报名表的要求已作废。\n\n现要求提交电子报名表。
-- sendSnapshot=null，未增加RecognitionRun，未覆盖旧A/B/C输入。
-- 模型发送UI和runtime继续关闭；未保存时明确提示。
-- 初次上传动作不是本轮观察；不能称代理本轮上传成功。
-- 补做fileChooser.setFiles时Not allowed，已停止该操作，没有第二份Source。
+## 已完成实现（尚未业务提交）
+- candidate03单套指令，不叠加同义警告；wire/索引/用户文字/参数不改。
+- 原账本追加candidate03Grant，父51行、8个D身份、累计32，不重建账本。
+- 预算49通过、网关47通过；旧断言未删。
+- 网关D身份仍须完整请求/绑定单元/预算匹配，不开放任意D请求。
+- D记录回放+原App显式candidate03模式，零新发送，不是human_engineering。
+- semanticState/semanticRepository仅承认新版本，未改pending保护或旧默认。
+- 本轮无OCR修改，没有改确认保存或导出结构。
 
-## 实际C08确认
-- 既有draft source:78c7cfc8:draft:1:2，未重复载入。
-- 旧打印要求cancelled/superseded，COVERAGE_MATERIAL原问题仍保留。
-- 有效提交要求active；人工材料决定required=true/status=missing已保存。
-- 点击本项事实已核对，仅选择新任务，明确确认1项。
-- 刷新任务中心7项，日历无日期列表、详情可找回。
-- 新id mainline05:task:source:78c7cfc8:draft:1:2:task-submit-electronic-form。
-- 原6任务与旧材料逐对象保持，新增1任务/1材料。
-- 旧打印任务binding=null，未进入待执行任务；supersedes关系保留。
-- 来源status needs_review→partially_confirmed，仅状态/操作时间按行为改变。
-- rawHttp/rawOutput/rawResponse/first/input/send及RecognitionRun/SourceVersion保持。
-- 同名电子报名表分别是旧A08和新C08不同Run；本次confirm只有1条。
-- 不宣称跨候选自动去重已验收。
+## 真实调用与费用
+- BINDING固定与C组相同的8份已见匿名文字、新指令及原评分依赖。
+- deepseek-v4-flash-vision-exp，temp0/effortnone/streamfalse/output8192。
+- verifier/Repair/retry均0，不增加试连接。
+- 初次D01_RESULT是本地400，未预留/上游发送，原样保留。
+- 实际为D01_DISPATCH至D08_DISPATCH，每个RAW/RESULT单独保留。
+- 首调前公开价格/协议通过；合法.env仅派发服务端读取，代理10081，TLS完整。
+- 新8次最高价用量结算上界153336微元=0.153336元，不是账户实扣。
+- 所有已结算0.581040元，A01 held-unknown永久3.30元，合计占用3.881040元。
+- 账本68行；旧51行38530字节逐字不变。
+- ledgerSHA00a339e7e7d80c7ea5b058fd41f2602a062c1a465421b39310fcccf0d6f96b57。
+- 等待59024ms；真人编辑时间NOT_RUN；自动选择NOT_ENABLED。
 
-## 独立读库与文件
-- 原6631，库rco-mainline-01-02-i1-real-input-d030c507-3f7c-4a2c-a511-8cd5bd534862。
-- 官方tab763114892本轮连接恢复，真实按钮操作，无用户代点校对/确认。
-- 操作前独立全对象02c4173ed3024d0b6ae941bff2a4f386ac58df481d02ac5a64e48714db7ea624。
-- 操作后独立全对象e789d9a39a15d6f11b1d449444f7def1493dd23b51ae7802e768311289baf8fe。
-- 实际new CanonicalWorkspaceRepository(new IsolatedTestStore(name)).load()按钮读回。
-- 实际导出1002971字节SHA1711a6a7027aac8e17e6b31350b24780a4008ab0641592690b4fa1da325dbff2。
-- 两份独立读库工程下载与完整库下载原文件保留；DELIVERY_BROWSER_*为逐字副本。
-- 下载与独立读库全对象深比较通过，现有v8+real-input联合validator通过。
-- 时间仍2、提醒0、实际jobs0；校对/确认均未造日期。
+## 首次质量，不混入人工纠正
+- 严格任务8/9→9/9，时间1/3→1/3，材料0/2→1/2（预测6→4）。
+- 条件8/9→9/9，修订1/1→1/1，Complete仍1/8；全表见METRICS。
+- 两处对象重复材料化减少，不等于少了两项独立错误义务。
+- D01两个实际截止与归属正确；PDF/A4文字及旧参考时间类型差异单列。
+- D03描述保留近期；新增“具体截止时间另行通知”实体，结构化仍漏近期。
+- D03须待核对，不能当没有日期或编造日期。
+- D02真无日期且不再额外手册材料；D05true/D06false/D07unknown保留。
+- D08修复旧任务材料覆盖矛盾；旧cancelled/superseded与有效替代关系保留。
+- 业务口径仍1份重大时间补正，7/8→7/8；不是未见准确率或产品转化率。
+- 最低采用条件未齐，不自动采用，不追加候选/请求。
 
-## 工程与限制
-- 复用未变READ_CLOSE 43项、类型/lint/build和1250/1旧skip，不全量重跑。
-- 文件审计初稿将来源确认状态变化错判，已精确校验合法状态转移；未改产品/旧测试。
-- 本轮0模型/费用/密钥/剪贴板/新依赖/新数据集。
-- 累计24次已消费；A01未知3.30元保留，51账本不动。
-- C任务严格P/R88.89%、Complete1/8为旧已见成绩，不是本轮新准确率。
-- C03模糊时间仍需核对，不能伪装无日期；C05/旧B02对照证据复用。
-- 收件箱旧读取摘要可能只显示原文本层/未整理，完整校对以InputReview为准。
-- 正式执行/编辑/ICS/真实提醒、任意新请求、真人时间、未见验证和商业化未验收。
-- 唯一后续主线：优先改善首次时间/材料错漏；新模型/数据授权另行提出。
-- 当前完成后停止，不自动推进后续包。
+## 工程与主要阻碍
+- 正确人工响应的模糊/明确/真无日期及材料归属前置检查通过，非模型预测。
+- 定向最后39通过1失败；最初3失败含测试环境/字段断言错误，原attempt保留。
+- 全量Vitest1261通过、1失败、1原skip，不称全量PASS。
+- 唯一D01失败：MAINLINE05_PENDING_REQUEST_NO_RETRY。
+- 同源A01在原库queued；D01已完成新候选，不能因此改写A01。
+- 外层改判后全局capture.beginRetry仍阻断或会改旧Run为CAPTURE_INTERRUPTED。
+- 需批准“已结算历史回放的非派发建Run”职责，只追加Run/Draft，旧pending不变。
+- 最小runtime.ts/semanticRepository.ts/acceptance.test.tsx，详见AUDIT。
+- D02/D05内存核对确认、独立仓储重开通过，D03负例通过。
+- 类型两配置、lint（0错4旧警告）、build/稳定隔离、Schema/时间一致性通过。
+- 测试构建configFile:false/envFile:false，新envDir/cacheDir/输出，不读根.env。
+- 安全扫描通过，依赖不变；旧依赖审计按SHA复用。
+
+## 原浏览器库与下一动作
+- 原6631/run real-input-d030c507-3f7c-4a2c-a511-8cd5bd534862，tab763114892。
+- 原库rco-mainline-01-02-i1-real-input-d030c507-3f7c-4a2c-a511-8cd5bd534862。
+- 原7任务保留；本轮仅连接/重载尝试，未进行新的浏览器写库或确认。
+- 当前launcher为只读D回放；不清库/新库/fallback，不接稳定/真实库，不部署。
+- 优先批准D01非派发回放的最小职责并补真实确认读回，不再花钱调模型。
+- 若仅恢复Edge，可继续不受影响D02/D05；不能冒充D01通过。
+- 业务实现保留未提交；审计提交/推送号以实际Git交付为准。
