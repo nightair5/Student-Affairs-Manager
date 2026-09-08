@@ -1,19 +1,20 @@
 # RCO Current Context
 
 ## 当前目标与状态
-- 同一MAINLINE-REAL-INPUT-01；首次时间/材料少错少漏，candidate03单候选D批。
+- 同一MAINLINE-REAL-INPUT-01；D01已取得回答→核对确认→刷新读回收尾，0新模型调用。
 - 8次真实请求已完成，D01–D08，不再派发；历史累计32次。
 - 模型质量部分改善，联合采用标准未达到，不自动替换旧候选。
-- 产品交付：D01回放被旧A01处理中状态阻挡，尚未完成整包。
-- 原Edge刷新ERR_BLOCKED_BY_CLIENT，已一次请求手动刷新，不循环重试。
-- 保留失败正例与未提交实现，本轮只交付审计/真实结果/追加账本。
+- 产品修复：新增非派发回放入口，私有内存完成后一次追加终态Run/Draft，A01不变。
+- D01/D02/D03/D05及身份、回滚、重复、禁止派发最终6项定向通过；本机根因已修。
+- 原Edge标签已关闭，用户打开同源原库tab763114931；控制Debugger unattached，已请求一次恢复。
+- 14原未提交实现保留；仅runtime/semanticRepository/acceptance在本轮修改，未业务交付。
 
 ## 仓库与授权
 - 唯一C:\Users\Winner\student-affairs-multimodal-exp。
 - 分支codex/e2-multimodal-recognition-exp。
-- 起点c39f7e814b85acd494dc9c161ee0d24fa4e1d03f，开始/收尾前远端一致。
+- 本轮起点f9513485b9217bf38dd8748a3600ee349ed3ea33；最初TLS失败，收尾远端已核验一致。
 - 授权44旧路径+candidate03.ts/candidate03.test.ts，共46，不回切/重复实现。
-- 报告runs/candidate03-20260908a/AUDIT.md、METRICS.json、FINAL_CHECKS.json。
+- 本轮报告runs/candidate03-20260908a/REPLAY_CLOSE_*；旧AUDIT/METRICS/FINAL_CHECKS保持。
 - 现场46SHA见IMPLEMENTATION_SNAPSHOT；派发时SHA单独保留在SEND_REVIEW_2。
 - 945保护聚合df68e4eda47f664f9f0fbf218a74687117ac3cc9d2c14f5ee6e9965cd2c28394。
 - BASELINE保护402旧证据（原382加候选02交付）、旧候选02及日志前缀。
@@ -27,7 +28,7 @@
 - 网关D身份仍须完整请求/绑定单元/预算匹配，不开放任意D请求。
 - D记录回放+原App显式candidate03模式，零新发送，不是human_engineering。
 - semanticState/semanticRepository仅承认新版本，未改pending保护或旧默认。
-- 本轮无OCR修改，没有改确认保存或导出结构。
+- 本轮无OCR/候选/预算修改；终态记录legacyData.realInputRecorded保存非派发凭据。
 
 ## 真实调用与费用
 - BINDING固定与C组相同的8份已见匿名文字、新指令及原评分依赖。
@@ -54,25 +55,29 @@
 - 业务口径仍1份重大时间补正，7/8→7/8；不是未见准确率或产品转化率。
 - 最低采用条件未齐，不自动采用，不追加候选/请求。
 
-## 工程与主要阻碍
+## 工程与主要阻碍（旧结果保留，新检查另报）
 - 正确人工响应的模糊/明确/真无日期及材料归属前置检查通过，非模型预测。
 - 定向最后39通过1失败；最初3失败含测试环境/字段断言错误，原attempt保留。
 - 全量Vitest1261通过、1失败、1原skip，不称全量PASS。
 - 唯一D01失败：MAINLINE05_PENDING_REQUEST_NO_RETRY。
 - 同源A01在原库queued；D01已完成新候选，不能因此改写A01。
 - 外层改判后全局capture.beginRetry仍阻断或会改旧Run为CAPTURE_INTERRUPTED。
-- 需批准“已结算历史回放的非派发建Run”职责，只追加Run/Draft，旧pending不变。
-- 最小runtime.ts/semanticRepository.ts/acceptance.test.tsx，详见AUDIT。
+- 本轮已批准并实现非派发建Run，复用联合验证和原子事务，旧pending完全不变。
+- 审核一次写入边界：服务端结算绑定、来源/版本/请求/响应一致、终态、旧链不变、CAS。
 - D02/D05内存核对确认、独立仓储重开通过，D03负例通过。
 - 类型两配置、lint（0错4旧警告）、build/稳定隔离、Schema/时间一致性通过。
-- 测试构建configFile:false/envFile:false，新envDir/cacheDir/输出，不读根.env。
+- 新全量1263通过1失败1旧skip：唯一失败为新增多次读库反例的默认5秒超时。
+- 新增测试设同组60秒，断言不变；最终受影响组6/0，去重合并1264通过/0未解决/1旧skip。
+- 本轮类型/lint/build及稳定bundle隔离通过；测试构建禁用根.env、新临时输出。
 - 安全扫描通过，依赖不变；旧依赖审计按SHA复用。
 
 ## 原浏览器库与下一动作
-- 原6631/run real-input-d030c507-3f7c-4a2c-a511-8cd5bd534862，tab763114892。
+- 原6631/run real-input-d030c507-3f7c-4a2c-a511-8cd5bd534862，现tab763114931。
 - 原库rco-mainline-01-02-i1-real-input-d030c507-3f7c-4a2c-a511-8cd5bd534862。
-- 原7任务保留；本轮仅连接/重载尝试，未进行新的浏览器写库或确认。
+- 成功AX观察原7任务；随后官方getTab/claimTab/DOM均Debugger unattached，没有新的浏览器写入。
 - 当前launcher为只读D回放；不清库/新库/fallback，不接稳定/真实库，不部署。
-- 优先批准D01非派发回放的最小职责并补真实确认读回，不再花钱调模型。
-- 若仅恢复Edge，可继续不受影响D02/D05；不能冒充D01通过。
-- 业务实现保留未提交；审计提交/推送号以实际Git交付为准。
+- 用户要求自行诊断：页面可达但调试通道未附着；当日日志不能确定脱开触发原因。
+- 已停止重复刷新，不改防护；需重启Codex恢复控制，再直接D01确认→刷新独立读回。
+- 服务已重启最终产品代码且upstreamEnabled=false；不再运行paid/recover或修改账本。
+- 945/402/40起点静态证据/68账本及日志前缀保持；真实旅程未完成，仅审计Git交付。
+- 原14业务实现保留未提交；审计提交/推送号以实际Git交付为准。

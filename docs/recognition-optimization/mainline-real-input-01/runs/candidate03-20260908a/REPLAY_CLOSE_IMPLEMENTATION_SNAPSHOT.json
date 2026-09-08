@@ -1,0 +1,376 @@
+{
+  "head": "f9513485b9217bf38dd8748a3600ee349ed3ea33",
+  "sources": [
+    {
+      "path": "src/App.tsx",
+      "sha256": "781a3c6d755bfd6f620b86c467aba484f7366b055489fb60fe1218ecadf9b9d0"
+    },
+    {
+      "path": "src/components/IntakePanel.tsx",
+      "sha256": "92b1e9b2dd3312b380b7d01dcff3e8c9ec2c5c3d919ef2f8802b85d1d3c5418b"
+    },
+    {
+      "path": "src/components/DraftReviewPanel.tsx",
+      "sha256": "ad0e9f72dbc8577de21abb1904d9c4c89841ce69709a7334ea20693cc1452bb1"
+    },
+    {
+      "path": "src/lib/fileExtraction.ts",
+      "sha256": "fc54f8605f86448012d4b2ab5f6679adbc95b78c94e85789ec464295cb790df3"
+    },
+    {
+      "path": "src/experiments/mainline02/runtime.ts",
+      "sha256": "be6a9bb947f232df53e52c1eb8993ed2e91448636e802b6dc032cff6be6f35fc"
+    },
+    {
+      "path": "src/experiments/mainline04/semanticComposer.ts",
+      "sha256": "21c38c5a10eda7446c8af941f9eecf6c9d0506e63eab954600118ec51b4ab5b8"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticState.ts",
+      "sha256": "75d0f7043c5a42fdaf4b249a29bed264767c8f650fc9f510abc407f4d6e14898"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticRepository.ts",
+      "sha256": "3bbee88038a05546896a05d7c901c983e35b872168ef6321bb36ae73eebcf12a"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticCapture.ts",
+      "sha256": "1a16c211639df47f484732a8e654951516e159bd9b53362caf21d9d5b5a862ed"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticConfirmation.ts",
+      "sha256": "6d3d07c8974463cb3d611c494dd939ad51e9616d7594cc2f43f3f5a73ea73ef2"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticView.ts",
+      "sha256": "68726405c2e37bf26fc184a02e9c976ba926e6cbb71af8993de79baeab7da4ad"
+    },
+    {
+      "path": "src/experiments/mainline05/runtime.ts",
+      "sha256": "9d6837cf4022fb989b7122a1f39c414355ee6f8f861e4d4df814146141edf83f"
+    },
+    {
+      "path": "src/experiments/mainline05/SemanticFacts.tsx",
+      "sha256": "6e517b727935d1c9c53a69688621cd8bfee563deb0b95d1b90bcb54778f84175"
+    },
+    {
+      "path": "src/experiments/realInput01/inputReceipt.ts",
+      "sha256": "743876df8bcc0eef0cf008f2000ad963f251ccf8cd005ae0319c968000b2b049"
+    },
+    {
+      "path": "src/experiments/realInput01/inputAcquisition.ts",
+      "sha256": "38339eacc4104653a9823adc8011744920b305852e91146346a645be396a2214"
+    },
+    {
+      "path": "src/experiments/realInput01/modelWire.ts",
+      "sha256": "7221e249bfbb855db4142a96ce12f8bde98be3e679dc41c3ad77c7e0e8cbd526"
+    },
+    {
+      "path": "src/experiments/realInput01/modelClient.ts",
+      "sha256": "767edb637cf741d4f27a96d5059836cd7b17e8c643e9936d974e380bde21df0b"
+    },
+    {
+      "path": "src/experiments/realInput01/modelPolicy.ts",
+      "sha256": "ac2606d1a0fe84d56a911797bffec7eab93be19cdd95e54150d97becd113cafd"
+    },
+    {
+      "path": "src/experiments/realInput01/factCorrections.ts",
+      "sha256": "866f3d87b17bbf6ae7f71b115ce1c3cf6cd4d4b156405f23e67be3e19e2f6964"
+    },
+    {
+      "path": "src/experiments/realInput01/runtime.ts",
+      "sha256": "ff0f52af8dc7fb8ccae9d908eb1522817e21fd88879f2206532fee331a0db75b"
+    },
+    {
+      "path": "src/experiments/realInput01/browser.tsx",
+      "sha256": "d772107ec4fcce20adf2f0b60615cf7aa9b787f4165822f4ba9b491f92e76f89"
+    },
+    {
+      "path": "src/experiments/realInput01/InputReview.tsx",
+      "sha256": "feff8078cced16316920cec1181af1d0e876830b1f4150c9f9dc710954f825ec"
+    },
+    {
+      "path": "src/experiments/realInput01/FactCorrectionEditor.tsx",
+      "sha256": "fac3ca19ddd5822499c4f71425ade44912e1129c982fa172f4357898de656088"
+    },
+    {
+      "path": "src/experiments/realInput01/seenInputs.ts",
+      "sha256": "e8c7cffc614b9be14c35657ddeb19592ddc3d8e8964423764889b46d37dd5583"
+    },
+    {
+      "path": "src/experiments/realInput01/evaluation.ts",
+      "sha256": "09ef0efff89c25761c721696da88de5fd73b74af0a417470e8f6af11979a6745"
+    },
+    {
+      "path": "src/experiments/realInput01/inputReceipt.test.ts",
+      "sha256": "421e2d67fca01e07bc044c75fc935f844b357d8b08f8707a4aa463e59e28fcd6"
+    },
+    {
+      "path": "src/experiments/realInput01/modelWire.test.ts",
+      "sha256": "dc417bf97d7cd0dedbffcdb70396cf0a915808cf423e7578b6a9c6cc1747f0ce"
+    },
+    {
+      "path": "src/experiments/realInput01/modelPolicy.test.ts",
+      "sha256": "bd8b511aede51694775c9fbdbc08dd2a0deea8611eb6b1e08a6736b0a8a1ac9b"
+    },
+    {
+      "path": "src/experiments/realInput01/factCorrections.test.ts",
+      "sha256": "5b5ad33a80d6f3226c08185fb2410b90bf3986d60c46f114ac8cfbf6e1d0440a"
+    },
+    {
+      "path": "src/experiments/realInput01/runtime.test.ts",
+      "sha256": "6859a42dfabb42206c016e035c86954b4b63e9c23da85556af9597cada73cdf1"
+    },
+    {
+      "path": "src/experiments/realInput01/acceptance.test.tsx",
+      "sha256": "205e4f16ba9eb10b83d44cebde7d289f61dc280102194f92e90859f4d2e48d4b"
+    },
+    {
+      "path": "src/experiments/realInput01/extraction.test.ts",
+      "sha256": "038e21fdf5448e5a7c859b3dd58b0b6f5b3d304f0a5515aaeb1ec00097ab4194"
+    },
+    {
+      "path": "scripts/serve-mainline-real-input-01.mjs",
+      "sha256": "c2959522839a456dd0377342a283a89a9259a9cfb9c14e5e2bab88f7cfba38e4"
+    },
+    {
+      "path": "scripts/real-input-model-gateway.mjs",
+      "sha256": "bfa49e90a54ef746f68fae0759d3932cf1c541710c975cc525f8f950a9d8c047"
+    },
+    {
+      "path": "scripts/real-input-budget.mjs",
+      "sha256": "a5cb70163a52448825cf87c6cddebc34bf6fe4073641c84c328da85fd1d06edf"
+    },
+    {
+      "path": "scripts/check-mainline-real-input-01.mjs",
+      "sha256": "9fed58c668b032a26d75c5af043458db29bfa5723a3deb1b29b7ac6b26c49c65"
+    },
+    {
+      "path": "scripts/real-input-model-gateway.node-test.mjs",
+      "sha256": "5fc578e3e8f9a60b2142a70be7c2fecb9cb47061ac2098cac2751105b9c5f8ba"
+    },
+    {
+      "path": "scripts/check-mainline-real-input-01.node-test.mjs",
+      "sha256": "205a3b8ebfa341b61441da2ec79a27425bf85f1167e37fbd1f303726cf6e4f8b"
+    },
+    {
+      "path": "scripts/run-mainline-real-input-01.mjs",
+      "sha256": "35b33ec209b9844592b30225df37d44eaa471e69c43edb8aa8b73b77a72ae3f8"
+    },
+    {
+      "path": "scripts/real-input-budget.node-test.mjs",
+      "sha256": "ea2bf456ae2a0dcf54c09c947e0d4bffd86983af186eb627fb7978abd04d4e3d"
+    },
+    {
+      "path": "scripts/render-mainline-real-input-01-fixtures.mjs",
+      "sha256": "a5e88226104488cb61d50ea1c2fa92544ddd58974b08d5d4f0544cccacf6aafd"
+    },
+    {
+      "path": "src/pages/DashboardPage.tsx",
+      "sha256": "b0a475cb2c075fa789b360ead943c59d3b3be87da46a7adc49c9cf20be1bacec"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate02.ts",
+      "sha256": "4667ebb5a949b591002f4a6c8829212e2c3d4e3f6f15ee8afb75d2a9d0fd9ca2"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate02.test.ts",
+      "sha256": "e9a2bc32ffa7e6caa7210acf54178d8e62309911f689e4530175b056d783f222"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate03.ts",
+      "sha256": "f3a2dd9358ca2a50b9b3eba8a090211666db4c0fb8dc5fc146e742c9895f9508"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate03.test.ts",
+      "sha256": "fe3cf62ffe946e0441c8f154c2941730dc2012f6f8515ae8e14fa5c772e482ba"
+    }
+  ],
+  "changedAllowed": [
+    "src/experiments/mainline05/semanticRepository.ts",
+    "src/experiments/realInput01/runtime.ts",
+    "src/experiments/realInput01/acceptance.test.tsx"
+  ],
+  "unexpectedSourceChanges": [],
+  "protectedCount": 945,
+  "protectedSha": "df68e4eda47f664f9f0fbf218a74687117ac3cc9d2c14f5ee6e9965cd2c28394",
+  "protectedMatches": true,
+  "historyCount": 402,
+  "historyChanged": [],
+  "priorStatic": [
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a/AUDIT.md",
+      "sha256": "8501b61524663d7da0e78ca5d3554feed8b01d7940d5309915ba9e959e85ee3b"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a/BASELINE.json",
+      "sha256": "71147b2544319c2bd50cb7814b4135349d56feed928a2e4ee3f6486bf7e0ef3f"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a/BILLING.json",
+      "sha256": "ffce54d5971fc50906b421af3efdd598a345bc7cdcf767b537b6e851de3500e7"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a/BINDING.json",
+      "sha256": "ac1a2cd5dfd45005522c3213902f3875ec37d464f199e58d89185e3c63ab1f40"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a/BUDGET_TEST_1.log",
+      "sha256": "b4610fd4fae12afe926312cc9d0b0372490ca65d64c271bf875cd8d236f67b76"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a/BUDGET_TEST_2.log",
+      "sha256": "ae6fb14a6ea3d5d7777d7996c916a0381da6de9d5a8bb7a870316a576086e649"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a/BUILD_CHECKS.json",
+      "sha256": "8b6c7eefe61255ad11fecf2b20911cb5663f1f5e737cf665768164e1bd33d752"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a/D01_DISPATCH_RAW.jsonl",
+      "sha256": "5d6b59c985a5a6b5a4001311a18ba8b8fddd5e3d905d02f80c9ae9b83fd8268a"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a/D01_DISPATCH_RESULT.json",
+      "sha256": "d2e1579b9d04d00033003d90cefe27d284a27b5e987f61d7a94858370cd8f444"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a/D01_RAW.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a/D01_RESULT.json",
+      "sha256": "f2432878d3afacac7fd6dc0f44309b8aa97237dd56bd8b496b431e4251116daf"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a/D02_DISPATCH_RAW.jsonl",
+      "sha256": "8a9693b317c00c07ba4936ca2c4a0b043cbe8d0398a7f20bccc61941d90b9190"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a/D02_DISPATCH_RESULT.json",
+      "sha256": "0a60afa49bb0c22ec343c32e64d1c11b36790de2d8a0761e3d382950dd3a94cb"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a/D03_DISPATCH_RAW.jsonl",
+      "sha256": "c98189a632ee1574c07f1beeb56233e689a82dba805f99f958571d0648e8ad6d"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a/D03_DISPATCH_RESULT.json",
+      "sha256": "f54f764967b77647f9006fa9bd01a86f2a05785ef6a40ef41abfc8d2f0f0da02"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a/D04_DISPATCH_RAW.jsonl",
+      "sha256": "b67643f21222e8fb0f5df19b853822f6b2e29ed6abb01dde721954dc440e0ce6"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a/D04_DISPATCH_RESULT.json",
+      "sha256": "23067c69383151168c374259923fcc55cd654027069a3b5ea210d627fe953e97"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a/D05_DISPATCH_RAW.jsonl",
+      "sha256": "871c329b7ee66df4c1b9d3b0d034a859db093cb90ed6dba0078e9949c7120be7"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a/D05_DISPATCH_RESULT.json",
+      "sha256": "27115c4a8b123c53479d5be3f4ec6275a96de2e46da111a82c28e2e59b883117"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a/D06_DISPATCH_RAW.jsonl",
+      "sha256": "31b82fe35ecaafc43a6356db445da80a8ec21aa728c45106bcf81c5844f4e4d1"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a/D06_DISPATCH_RESULT.json",
+      "sha256": "9494e3fc2465a96058e2e89faccd43c8499a8d38615a811be0d2ed8df8651bc4"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a/D07_DISPATCH_RAW.jsonl",
+      "sha256": "01cd259bd1669ca54810b828ee6991a1e7fe7d915bb8d57552ee4c5f55d49e65"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a/D07_DISPATCH_RESULT.json",
+      "sha256": "2bc2c345c013ea81c5d52544a9402ba77c406a5caf733124e3abe2bd22515f44"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a/D08_DISPATCH_RAW.jsonl",
+      "sha256": "e260d9f1b1ce71e0540fd95905738d9ce50e0e83d5b15a208808a51d7f0bc150"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a/D08_DISPATCH_RESULT.json",
+      "sha256": "f5b8dbeb43bf9a91067778a8ac02c3d8db01860182a13b70ceecd7666948b083"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a/FINAL_CHECKS.json",
+      "sha256": "f4dd117f73ddeb45ff419a6658532da4615aa993b311eb18965a4de2e4dbcd99"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a/FULL_TEST.json",
+      "sha256": "374eef870072dc0a59a67498112b5c3ecbc62c42882d03c1c7c200f9d406b4af"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a/GATEWAY_TEST.log",
+      "sha256": "026cff63b04221759e3fc28c0aa9216f5fecda5331aef97bcf955eecec1211a6"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a/GATEWAY_TEST_2.log",
+      "sha256": "b14b33de6824d826ac852604406d1524a38145ff8fb944f70ecea703ab2c1153"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a/IMPLEMENTATION_SNAPSHOT.json",
+      "sha256": "a937f42ceef12c9f0b3003ec8cffa7271eda5a5b5ca77c875bcc9a496f8d6de3"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a/INTEGRATION_ATTEMPT_1.json",
+      "sha256": "ede205a2d4a7951ec5249dfab5df1ad22ad3ae470f15c80305166000655bf473"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a/INTEGRATION_ATTEMPT_2.json",
+      "sha256": "3061fbe11aaa1cc0c5a22a285f7645375304891586baa3df2dea90755aa21b41"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a/LINT.log",
+      "sha256": "0aaee72bf38b0a7e4f3dcf155ca5377afb7971608ef9be2c9bfcbf6870196fd2"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a/METRICS.json",
+      "sha256": "52c7dbd135d6cd2e79ac2ee382c0f75a1ff3668fce47ad89f415fb6ccd8923e1"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a/SEND_CHECK.json",
+      "sha256": "7471f47b0d972f749f0141980892be1bf8781f517ece81813230de662a8333f6"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a/SEND_REVIEW.json",
+      "sha256": "b23a1a0e3d919e81e0f7ae3431993279fe424e891f370e4a96f1cd55190331d5"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a/SEND_REVIEW_2.json",
+      "sha256": "03599a93f97d37bad001569548dd604816383e34029b88b311e55745d4bf3db1"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a/TYPE_APP.log",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a/TYPE_APP_FINAL.log",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a/TYPE_NODE.log",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    }
+  ],
+  "priorStaticChanged": [],
+  "ledger": {
+    "bytes": 51632,
+    "rows": 68,
+    "sha256": "00a339e7e7d80c7ea5b058fd41f2602a062c1a465421b39310fcccf0d6f96b57",
+    "unchanged": true
+  },
+  "log": {
+    "oldPrefix": true,
+    "latestGitPrefix": true,
+    "baselineBytes": 311593,
+    "baselineSha": "c2fc2e48aa92bfb220b2bb797e1e36f181288768237d8ebaeda21c7d70189592"
+  },
+  "note": "Prior inspection attempt compared a nonexistent sha256 field; actual snapshot field is workingSha256. Prior attempt retained; original evidence unchanged."
+}
