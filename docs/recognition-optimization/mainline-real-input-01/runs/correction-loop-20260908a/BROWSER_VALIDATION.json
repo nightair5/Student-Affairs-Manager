@@ -1,0 +1,222 @@
+{
+  "validator": "PASS",
+  "independentSource": "new CanonicalWorkspaceRepository(new IsolatedTestStore(name)).load()",
+  "objectSha": "a3ea9835a6fde772efb356ebf9bce6405b0ff978257e5fdd8cb5d5b55538b883",
+  "downloadEqualsIndependent": true,
+  "oldTasksPreserved": true,
+  "oldMaterialsPreserved": true,
+  "allOldIdsUnique": true,
+  "newTasks": [
+    "提交活动报名表",
+    "提交电子报名表",
+    "打印入场凭证"
+  ],
+  "oldPaperTaskCreated": false,
+  "reminders": 0,
+  "realJobs": 0,
+  "facts": [
+    {
+      "draftId": "source:cfe2cef2:draft:revision:2:1",
+      "execution": "live",
+      "rawUnchanged": true,
+      "firstUnchanged": true,
+      "failureReceiptUnchanged": null,
+      "originalRunStatus": "succeeded",
+      "tasks": [
+        {
+          "id": "task-submit-registration-form",
+          "action": "提交",
+          "object": "活动报名表",
+          "status": "pending",
+          "validity": "active",
+          "condition": "not_applicable",
+          "coverage": {
+            "time": "present",
+            "material": "present",
+            "event": "not_stated"
+          }
+        },
+        {
+          "id": "task-print-admission-pass",
+          "action": "打印",
+          "object": "入场凭证",
+          "status": "pending",
+          "validity": "active",
+          "condition": "not_applicable",
+          "coverage": {
+            "time": "present",
+            "material": "present",
+            "event": "not_stated"
+          }
+        }
+      ],
+      "revisions": [],
+      "operations": [
+        {
+          "kind": "enable_material_review",
+          "taskIds": []
+        },
+        {
+          "kind": "review_material",
+          "taskIds": [
+            "task-submit-registration-form"
+          ]
+        },
+        {
+          "kind": "correct_fact",
+          "taskIds": [
+            "task-submit-registration-form"
+          ]
+        },
+        {
+          "kind": "review_material",
+          "taskIds": [
+            "task-submit-registration-form"
+          ]
+        },
+        {
+          "kind": "review_task",
+          "taskIds": [
+            "task-submit-registration-form"
+          ]
+        },
+        {
+          "kind": "confirm",
+          "taskIds": [
+            "task-submit-registration-form"
+          ]
+        },
+        {
+          "kind": "correct_fact",
+          "taskIds": [
+            "task-print-admission-pass"
+          ]
+        },
+        {
+          "kind": "review_material",
+          "taskIds": [
+            "task-print-admission-pass"
+          ]
+        },
+        {
+          "kind": "review_task",
+          "taskIds": [
+            "task-print-admission-pass"
+          ]
+        },
+        {
+          "kind": "confirm",
+          "taskIds": [
+            "task-print-admission-pass"
+          ]
+        }
+      ],
+      "bindings": {
+        "task:task-submit-registration-form": "mainline05:task:source:cfe2cef2:draft:revision:2:1:task-submit-registration-form",
+        "task:task-print-admission-pass": "mainline05:task:source:cfe2cef2:draft:revision:2:1:task-print-admission-pass",
+        "material:mat-registration-form": "mainline05:material:source:cfe2cef2:draft:revision:2:1:mat-registration-form",
+        "material:mat-admission-pass": "mainline05:material:source:cfe2cef2:draft:revision:2:1:mat-admission-pass",
+        "time:tp-registration-deadline": "mainline05:time:source:cfe2cef2:draft:revision:2:1:tp-registration-deadline",
+        "time:tp-print-deadline": "mainline05:time:source:cfe2cef2:draft:revision:2:1:tp-print-deadline"
+      },
+      "life": {
+        "task-submit-registration-form": "confirmed",
+        "task-print-admission-pass": "confirmed"
+      }
+    },
+    {
+      "draftId": "source:78c7cfc8:draft:1:1",
+      "execution": "live",
+      "rawUnchanged": true,
+      "firstUnchanged": "new recovery first kept separate from failed original",
+      "failureReceiptUnchanged": true,
+      "originalRunStatus": "failed",
+      "tasks": [
+        {
+          "id": "task-submit-electronic-form",
+          "action": "提交",
+          "object": "电子报名表",
+          "status": "pending",
+          "validity": "active",
+          "condition": "not_applicable",
+          "coverage": {
+            "time": "not_stated",
+            "material": "present",
+            "event": "not_stated"
+          }
+        },
+        {
+          "id": "user-25546284-cbec-43b0-927e-dfe71ea58875",
+          "action": "打印",
+          "object": "纸质报名表",
+          "status": "cancelled",
+          "validity": "superseded",
+          "condition": "not_applicable",
+          "coverage": {
+            "time": "not_stated",
+            "material": "not_stated",
+            "event": "not_stated"
+          }
+        }
+      ],
+      "revisions": [
+        {
+          "type": "supersedes",
+          "targetDirectiveId": "user-25546284-cbec-43b0-927e-dfe71ea58875",
+          "fromDirectiveId": "task-submit-electronic-form",
+          "effective": "true",
+          "scopeIds": [
+            "scope-0001-3824c327cddb30d36401530296b234394e29718833e1e4145da2b9023ebae6e3",
+            "scope-0002-7dee581cd181d1f7efb9aa179c4fe17672442a2ef0aec5eafdff433d8523c159"
+          ]
+        }
+      ],
+      "operations": [
+        {
+          "kind": "enable_material_review",
+          "taskIds": []
+        },
+        {
+          "kind": "correct_fact",
+          "taskIds": [
+            "task-submit-electronic-form",
+            "user-25546284-cbec-43b0-927e-dfe71ea58875"
+          ]
+        },
+        {
+          "kind": "reject",
+          "taskIds": [
+            "user-25546284-cbec-43b0-927e-dfe71ea58875"
+          ]
+        },
+        {
+          "kind": "review_material",
+          "taskIds": [
+            "task-submit-electronic-form"
+          ]
+        },
+        {
+          "kind": "review_task",
+          "taskIds": [
+            "task-submit-electronic-form"
+          ]
+        },
+        {
+          "kind": "confirm",
+          "taskIds": [
+            "task-submit-electronic-form"
+          ]
+        }
+      ],
+      "bindings": {
+        "task:task-submit-electronic-form": "mainline05:task:source:78c7cfc8:draft:1:1:task-submit-electronic-form",
+        "task:user-25546284-cbec-43b0-927e-dfe71ea58875": null,
+        "material:mat-electronic-form": "mainline05:material:source:78c7cfc8:draft:1:1:mat-electronic-form"
+      },
+      "life": {
+        "task-submit-electronic-form": "confirmed",
+        "user-25546284-cbec-43b0-927e-dfe71ea58875": "rejected"
+      }
+    }
+  ]
+}

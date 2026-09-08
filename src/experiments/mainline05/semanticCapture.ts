@@ -4,7 +4,7 @@ import type { RecognitionResult } from '../../recognition/types'
 import { composeSemantics, type ComposeContext } from '../mainline04/semanticComposer'
 import { parseSemanticInput, plainJson, type SemanticInput } from '../mainline04/semanticContract'
 import { STATE_VERSION, REAL_STATE_VERSION, assert, equal, json, saveState, canonicalFacts, isCurrentDraft, isLatestDraft,
-  type SemanticState, type RealInputState, type RealInputReading } from './semanticState'
+  semanticRevision, type SemanticState, type RealInputState, type RealInputReading } from './semanticState'
 import { parseModelEnvelope } from '../realInput01/modelWire'
 import { indexImmutableScopesV11 } from '../../recognition/scopeIndexV11'
 import type { SemanticRepository } from './semanticRepository'
@@ -118,4 +118,29 @@ export async function failInputRun(repo: SemanticRepository, handle: CaptureHand
       // reach a terminal failure without leaving the source "extracting".
       sources: w.sources.map(s => s.id === handle.sourceId && isLatestDraft(w, handle.draftId) ? { ...s, status: 'failed', updatedAt: now } : s), savedAt: now }
   })
+}
+
+/** User explicitly opens a failed, structurally parseable answer for correction.
+ * This never dispatches a request or upgrades the failed recognition run. */
+export async function openFailedForCorrection(repo: SemanticRepository, draftId: string, revision: string, now=new Date().toISOString()) {
+  assert(repo.profile==='real-input-01','EXPLICIT_REAL_INPUT_REQUIRED')
+  const before=await repo.load();assert(semanticRevision(before)===revision,'STALE_RELOAD_REQUIRED')
+  const draft=before.extractionDrafts.find(d=>d.id===draftId)
+  assert(draft&&draft.status==='failed'&&!draft.legacyData?.mainline05&&isCurrentDraft(before,draftId),'FAILED_RESPONSE_REQUIRED')
+  const run=before.recognitionRuns.find(r=>r.id===draft.recognitionRunId)!,version=before.sourceVersions.find(v=>v.id===run.sourceVersionId)!
+  const failure=draft.legacyData?.mainline05Failure as {response?:unknown}|undefined
+  assert(typeof failure?.response==='string','FAILED_RESPONSE_NOT_PARSEABLE')
+  const pending=draft.legacyData!.realInputPending as unknown as {reading:RealInputReading;execution:RealInputState['execution']}
+  const context:ComposeContext={index:await indexImmutableScopesV11(version.sourceId,version.id,version.rawText!),authority:'live_model_candidate',
+    profile:'real-input-01',referenceTime:pending.reading.sendSnapshot!.consentAt,timezone:'Asia/Shanghai',ownershipMode:'mainline05-own-assets-1'}
+  const parsed=parseModelEnvelope(failure.response,context),first=await composeSemantics(parsed.adaptedResponse,context)
+  const state:RealInputState={version:REAL_STATE_VERSION,sourceId:version.sourceId,sourceVersionId:version.id,runId:run.id,draftId,
+    rawHttpText:parsed.rawHttpText,rawOutputText:parsed.rawOutputText,rawResponse:parsed.rawResponse,adaptedResponse:parsed.adaptedResponse,
+    legacyResponse:null,context,first,inputReceipt:pending.reading.inputReceipt,sendSnapshot:pending.reading.sendSnapshot!,execution:pending.execution,
+    recovery:{kind:'user_opened_failed_response',at:now},operations:[{id:'material-review-mode-1',kind:'enable_material_review',at:now,taskIds:[],field:null,value:null,before:null}],bindings:{}}
+  const facts=canonicalFacts(state);state.bindings=facts.bindings
+  return repo.transaction(w=>{assert(semanticRevision(w)===revision,'STALE_RELOAD_REQUIRED');return saveState({...w,
+    historyRecords:[...w.historyRecords,...facts.historyRecords],
+    extractionDrafts:w.extractionDrafts.map(d=>d.id===draftId?{...d,status:'needs_review',updatedAt:now}:d),
+    sources:w.sources.map(s=>s.id===version.sourceId?{...s,status:'needs_review',updatedAt:now}:s),savedAt:now},state)})
 }

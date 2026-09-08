@@ -119,7 +119,14 @@ export async function reviewSemanticFact(repo: SemanticRepository, intent: { dra
 }
 export async function correctSemanticFact(repo: SemanticRepository,
   input: { draftId: string; revision: string; operationId: string; change: FactChange }, now = new Date().toISOString()) {
-  const intent = plainJson(input)
+  // revision is the exact whole-workspace CAS token, not a semantic text field.
+  // Do not pass its serialized workspace through the 100k per-fact text bound.
+  const descriptor=Object.getOwnPropertyDescriptor(input,'revision')
+  assert(descriptor&&'value' in descriptor&&typeof descriptor.value==='string','REVISION_REQUIRED')
+  assert(Object.getPrototypeOf(input)===Object.prototype&&Reflect.ownKeys(input).every(key=>{
+    const d=Object.getOwnPropertyDescriptor(input,key)!;return typeof key==='string'&&'value' in d&&d.enumerable
+  }),'INPUT_ACCESSOR')
+  const intent = {...plainJson({...input,revision:''}),revision:descriptor.value as string}
   exactKeys(intent, ['draftId','revision','operationId','change'])
   assert(repo.profile === 'real-input-01', 'EXPLICIT_REAL_INPUT_REQUIRED')
   const before = await repo.load(); assert(semanticRevision(before) === intent.revision, 'STALE_RELOAD_REQUIRED')

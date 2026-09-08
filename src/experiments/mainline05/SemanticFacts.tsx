@@ -19,10 +19,11 @@ export function SemanticFacts({state,taskId,onFocus}:{state:SemanticState;taskId
       : <p>这份通知仅供了解，没有要确认的任务；可明确标记已核对，不会创建空项目。</p>)}
     {tasks.map(t=><div key={t.id}>
       <p><strong>{t.action.surface} → {t.object.surface}</strong> · {truth[t.condition.value]}</p>
-      <p>原文状态：{t.semantics.status} / {t.semantics.validity}；当前处置：{current.dispositions[t.id]}</p>
+      {state.version===REAL_STATE_VERSION?<p>当前已保存状态：{t.semantics.status==='cancelled'?'已作废':t.semantics.status==='pending'?'待执行':t.semantics.status} / {t.semantics.validity==='superseded'?'已被替代':t.semantics.validity==='active'?'有效':t.semantics.validity}；当前处置：{current.dispositions[t.id]}</p>
+        :<p>原文状态：{t.semantics.status} / {t.semantics.validity}；当前处置：{current.dispositions[t.id]}</p>}
       <p>时间：{coverage[t.coverage.time]}；材料：{coverage[t.coverage.material]}；事件：{coverage[t.coverage.event]}</p>
       {locate([...t.propositionScopeIds,...t.condition.conditionScopeIds,...t.condition.factScopeIds])}
-      <details><summary>全部原始任务属性（不是用户修改）</summary><pre>{JSON.stringify(t.detail,null,2)}</pre></details>
+      <details><summary>{state.version===REAL_STATE_VERSION?'当前已保存任务属性（原答另行保留）':'全部原始任务属性（不是用户修改）'}</summary><pre>{JSON.stringify(t.detail,null,2)}</pre></details>
     </div>)}
     {input.materials.filter(m=>assets.materials.has(m.tempId)).map(m=><details key={m.tempId}><summary>材料：{m.name}</summary>
       <p>{materialReviewEnabled(state)?`模型原分类：${m.required?'必备':'非必备'}（不代表必须提交或当前缺少）`:m.required?'必须提供':'非必须'}；格式：{m.formatRequirements.join('、')||'未说明'}；命名：{m.namingRequirements.join('、')||'未说明'}；
@@ -42,7 +43,7 @@ export function SemanticFacts({state,taskId,onFocus}:{state:SemanticState;taskId
       <summary>旧/新要求：{r.type} · {r.effective==='true'?'已生效':r.effective==='false'?'未生效':'待核对'}</summary>
       <p>旧要求：{input.tasks.find(t=>t.id===r.targetDirectiveId)?.detail.title}；新要求：{input.tasks.find(t=>t.id===r.fromDirectiveId)?.detail.title??'无替代要求'}</p>
       {locate(r.scopeIds)}</details>)}
-    {state.operations.filter(o=>!taskId||o.taskIds.includes(taskId)).map(o=><p key={o.id}>用户操作：{o.kind} {o.field??''} {o.before??''}{o.kind==='edit'?' → '+o.value:''} · {o.at}</p>)}
+    {state.operations.filter(o=>!taskId||o.taskIds.includes(taskId)).map(o=><p key={o.id}>用户操作：{o.kind} {o.field??''} {o.before??''}{o.kind==='edit'?' → '+o.value:''} {'note' in (o.correction?.change??{})?(o.correction!.change as {note:string}).note:''} · {o.at}</p>)}
     {state.version===REAL_STATE_VERSION&&<><p>模型建议不自动勾选。当前明细为已保存的有效事实；原始响应与首次建议保留不变。</p>
       {effective.manualMaterials.length>0&&<p>人工修订材料：{effective.manualMaterials.join('、')}；人工字面值不是原文摘录。</p>}
       <details><summary>原始响应与首次建议（不含后续编辑）</summary><pre>{state.rawOutputText}</pre><pre>{JSON.stringify(state.first,null,2)}</pre></details></>}

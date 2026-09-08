@@ -1310,7 +1310,11 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
           />
         )
       case 'inbox':
-        return <InboxPage
+        return <>{runtime?.realInput?.draftEditor&&isolatedSnapshot?.extractionDrafts.some(d=>d.status==='failed'&&typeof (d.legacyData?.mainline05Failure as {response?:unknown}|undefined)?.response==='string')&&
+          <section className="page" aria-label="识别失败后的人工纠错"><h2>保留原回答，继续纠错</h2><p>以下回答有结构或关系错误。可对照完整原文修正后确认；不重新识别、不改原失败记录。</p>
+            {isolatedSnapshot.extractionDrafts.filter(d=>d.status==='failed'&&typeof (d.legacyData?.mainline05Failure as {response?:unknown}|undefined)?.response==='string').map(d=><button className="secondary-button" type="button" key={d.id} onClick={()=>void selectDraftForReview(d.id)}>
+              纠错：{sources.find(s=>s.id===drafts.find(view=>view.id===d.id)?.sourceId)?.title??'失败通知'}</button>)}</section>}
+          <InboxPage
           drafts={drafts}
           sources={sources}
           view={inboxView}
@@ -1321,7 +1325,7 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
           onOpenManual={() => setIntakeOpen(true)}
           onRetrySource={handleRetrySource}
           onManualSupplementSource={openManualSupplement}
-        />
+        /></>
       case 'tasks':
         return (
           <TasksPage
@@ -1507,6 +1511,7 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
       )}
       {!workspaceRecovery && selectedDraft && (!runtime || experimentalReview) && (
         <DraftReviewPanel
+          draftCorrection={runtime?.realInput?.draftEditor&&isolatedSnapshot?(onDirty,unsaved)=>runtime.realInput!.draftEditor!({workspace:isolatedSnapshot,draftId:selectedDraft.id,busy:isolatedBusy||storageError||unsaved,onDirty,onSaved:refreshExperiment}):undefined}
           factCorrection={runtime?.realInput && isolatedSnapshot ? (taskId, onDirty, unsaved) => runtime.realInput!.factEditor({
             workspace: isolatedSnapshot, draftId: selectedDraft.id, taskId, busy: isolatedBusy || storageError || unsaved,
             onDirty, onSaved: refreshExperiment }) : undefined}
@@ -1514,7 +1519,7 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
           isolatedCapabilities={Boolean(runtime)}
           recognitionDescription={runtime?.realInput ? runtime.recognitionDescription : undefined}
           confirmationV2={runtime && experimentalReview ? { busy: isolatedBusy || storageError, items: experimentalReview.states } : undefined}
-          semanticReview={runtime?.semantic && isolatedSnapshot && experimentalReview ? {
+          semanticReview={runtime?.semantic && isolatedSnapshot && experimentalReview && isolatedSnapshot.extractionDrafts.find(d=>d.id===selectedDraft.id)?.legacyData?.mainline05 ? {
             itemFacts: (taskId, onFocus) => runtime.semantic!.facts(isolatedSnapshot, selectedDraft.id, taskId, onFocus),
             information: runtime.semantic.facts(isolatedSnapshot, selectedDraft.id),
             informationReviewProblem: runtime.semantic.informationReviewProblem?.(isolatedSnapshot, selectedDraft.id),

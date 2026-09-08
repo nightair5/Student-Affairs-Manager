@@ -6,6 +6,39 @@ function row(input: Parameters<typeof correctionBefore>[0], change: FactChange, 
   return { id, at: NOW, change, before: correctionBefore(input, change) }
 }
 describe('controlled manual deltas, seen engineering only', () => {
+  it('condition true/false/unknown are explicit source reviews, never a checked button',async()=>{
+    const r=await engineeringReply('condition-true',handle),task=r.rawResponse.tasks[0]
+    for(const value of ['false','unknown'] as const){
+      const change:FactChange={kind:'condition',taskId:task.id,value:{...task.condition,value,factScopeIds:value==='unknown'?[]:task.condition.factScopeIds},scopeIds:[...task.condition.conditionScopeIds,...task.condition.factScopeIds],note:'用户核对完整命题'}
+      const result=appendCorrection(r.rawResponse,[],row(r.rawResponse,change),r.context.index,[])
+      expect(result.facts.tasks[0].condition.value).toBe(value);expect(task.condition.value).toBe('true')
+      if(value==='false')expect(()=>appendCorrection(r.rawResponse,[],row(r.rawResponse,{...change,value:{...change.value,factScopeIds:[]}}),r.context.index,[])).toThrow('CONDITION_EVIDENCE')
+    }
+    const bad:FactChange={kind:'condition',taskId:task.id,value:{...task.condition,value:'false'},scopeIds:[],note:'点击已核对不能证明条件'}
+    expect(()=>appendCorrection(r.rawResponse,[],row(r.rawResponse,bad),r.context.index,[])).toThrow('EVIDENCE')
+  })
+  it('event association uses explicit evidence and cannot delete existing edges or affect an independent confirmed sibling',async()=>{
+    const r=await engineeringReply('multi',handle),task=r.rawResponse.tasks[0],brother=r.rawResponse.tasks[1],scope=r.context.index.scopes.find(s=>s.id===task.object.scopeId)!
+    const change:FactChange={kind:'event',taskId:task.id,scopeIds:[scope.id],note:'用户明确关联原文活动',value:{coverage:'present',event:{tempId:'user-event-one',title:task.object.surface,description:'用户关联',location:null,startTimePointTempId:null,endTimePointTempId:null,scopeIds:[scope.id],confidence:0,inferenceLevel:'explicit',relatedTaskTempIds:[task.id]}}}
+    const result=appendCorrection(r.rawResponse,[],row(r.rawResponse,change),r.context.index,[brother.id])
+    expect(result.affectedTaskIds).toEqual([task.id]);expect(result.facts.events).toHaveLength(1)
+    const shared=structuredClone(change);shared.value.event!.relatedTaskTempIds.push(brother.id)
+    expect(()=>appendCorrection(r.rawResponse,[],row(r.rawResponse,shared),r.context.index,[brother.id])).toThrow('CONFIRMED')
+    const remove:FactChange={kind:'event',taskId:task.id,scopeIds:[scope.id],note:'不能悄悄删除',value:{coverage:'not_stated',event:null}}
+    expect(()=>appendCorrection(r.rawResponse,result.corrections,row(result.facts,remove,'correction-2'),r.context.index,[])).toThrow('EVENT_RELATION_REMOVAL')
+    const bad=structuredClone(change);bad.value.event!.title='无来源活动'
+    expect(()=>appendCorrection(r.rawResponse,[],row(r.rawResponse,bad),r.context.index,[])).toThrow('EVENT_EVIDENCE')
+  })
+  it('missing task addition is explicit and source-bound, bad source and changed history reject',async()=>{
+    const r=await engineeringReply('no-date',handle),task=structuredClone(r.rawResponse.tasks[0]);task.id='user-missing-task'
+    const original=structuredClone(r.rawResponse);original.tasks=[];original.materials=[];task.detail.materialTempIds=[];task.coverage.material='not_stated'
+    const change:FactChange={kind:'add_task',value:task,scopeIds:task.propositionScopeIds,note:'用户补充遗漏任务'}
+    expect(appendCorrection(original,[],row(original,change),r.context.index,[]).facts.tasks).toEqual([task])
+    const bad=structuredClone(change);bad.value.object.surface='不存在于原文'
+    expect(()=>appendCorrection(original,[],row(original,bad),r.context.index,[])).toThrow('NEW_TASK_SOURCE')
+    const sparse=structuredClone(change);sparse.scopeIds.length+=2
+    expect(()=>appendCorrection(original,[],row(original,sparse),r.context.index,[])).toThrow('SPARSE')
+  })
   it.each(['missing','preparing','ready','submitted','verified','not_required'])('material observation accepts explicit existing domain state %s',status=>{
     const value={required:status!=='not_required',status};expect(validateMaterialDecision(value)).toEqual(value)
     expect(validateMaterialDecision({...value,required:false}).required).toBe(false)

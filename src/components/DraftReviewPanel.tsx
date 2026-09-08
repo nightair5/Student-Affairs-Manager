@@ -8,6 +8,7 @@ import type { ReactNode } from 'react'
 
 interface DraftReviewPanelProps {
   factCorrection?: (taskId: string, onDirty: (dirty: boolean) => void, unsaved: boolean) => ReactNode
+  draftCorrection?: (onDirty:(dirty:boolean)=>void,unsaved:boolean)=>ReactNode
   semanticReview?: { itemFacts: (taskId: string, onFocus: (quote: string) => void) => ReactNode; information: ReactNode;
     informationReviewProblem?: string;
     eventCount: number; onDefer: (itemId: string) => void; onInformationReviewed: () => void }
@@ -69,16 +70,17 @@ function EvidenceLocator({ recognition, evidenceIds, onFocusEvidence }: {
     : <small className="evidence-unavailable">暂无可定位依据</small>
 }
 
-export function DraftReviewPanel({ factCorrection, semanticReview, isolatedCapabilities, recognitionDescription, draft, source, onClose, onUpdate, onConfirm, onReject, onConfirmAll, projectWillCreate, projects, onProjectChoice, onKeepExplicit, onMoveTask, onToggleRecognitionEntity, onToggleTaskSelected, onSplitTask, onMergeTask, confirmationV2 }: DraftReviewPanelProps) {
+export function DraftReviewPanel({ draftCorrection, factCorrection, semanticReview, isolatedCapabilities, recognitionDescription, draft, source, onClose, onUpdate, onConfirm, onReject, onConfirmAll, projectWillCreate, projects, onProjectChoice, onKeepExplicit, onMoveTask, onToggleRecognitionEntity, onToggleTaskSelected, onSplitTask, onMergeTask, confirmationV2 }: DraftReviewPanelProps) {
   const titleId = useId()
   const panelRef = useRef<HTMLElement>(null)
   const [editingId, setEditingId] = useState<string | null>(null)
   const [activeEvidence, setActiveEvidence] = useState('')
   const [editBuffer, setEditBuffer] = useState<Record<string, Partial<Pick<DraftItem['suggestion'], 'title' | 'deadline'>>>>({})
   const [factDirty, setFactDirty] = useState<Record<string, boolean>>({})
+  const [draftDirty,setDraftDirty]=useState(false)
   const isDirty = (item: DraftItem, field: 'title' | 'deadline') =>
     editBuffer[item.id]?.[field] !== undefined && editBuffer[item.id][field] !== item.suggestion[field]
-  const hasUnsaved = (item: DraftItem) => isDirty(item, 'title') || isDirty(item, 'deadline') || Boolean(factDirty[item.id])
+  const hasUnsaved = (item: DraftItem) => draftDirty || isDirty(item, 'title') || isDirty(item, 'deadline') || Boolean(factDirty[item.id])
   const pending = draft.items.filter((item) => item.status === '待确认')
   const selectedPending = pending.filter((item) => item.selected !== false)
   const processed = draft.items.length - pending.length
@@ -193,6 +195,7 @@ export function DraftReviewPanel({ factCorrection, semanticReview, isolatedCapab
             {milestone.workPackages.map((workPackage) => <section className="recognition-work-package" key={workPackage.tempId}><header><strong>{workPackage.title}</strong><small>{workPackage.objective}</small></header>{workPackage.tasks.map((task) => { const item = draft.items.find((candidate) => candidate.suggestion.id === task.tempId); return item ? renderItem(item, draft.items.indexOf(item), milestone.tempId) : null })}</section>)}
           </details>)}
           {draft.items.filter((item) => !groupedItemIds.has(item.suggestion.id)).map((item, index) => renderItem(item, index))}
+          {draftCorrection?.(setDraftDirty,draft.items.some(item=>isDirty(item,'title')||isDirty(item,'deadline')||Boolean(factDirty[item.id])))}
           {semanticReview && draft.items.length === 0 && <div>{semanticReview.information}
             <button type="button" disabled={confirmationV2?.busy || draft.workflowStatus === 'confirmed' || Boolean(semanticReview.informationReviewProblem)} onClick={semanticReview.onInformationReviewed}>标记已核对（不创建任务）</button></div>}
           {recognition && draft.items.length === 0 && <div className="empty-state compact"><ShieldCheck size={28} /><h3>没有识别到明确行动</h3><p>可保存为资料、关闭稍后处理，或返回录入手动创建任务。</p></div>}

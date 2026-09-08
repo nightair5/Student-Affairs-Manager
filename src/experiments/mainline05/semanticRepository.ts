@@ -60,8 +60,8 @@ export class SemanticRepository {
       const after = next.extractionDrafts.find(d => d.id === draft.id)?.legacyData?.mainline05
       assert(after && typeof old === 'object' && typeof after === 'object' && !Array.isArray(old) && !Array.isArray(after), 'STATE_REMOVED')
       for (const key of ['version','sourceId','sourceVersionId','runId','draftId','rawOutputText','rawResponse','legacyResponse','context','first',
-        ...(this.profile ? ['rawHttpText','adaptedResponse','inputReceipt','sendSnapshot','execution'] : [])]) {
-        assert(equal(old[key], after[key]), 'IMMUTABLE_RESPONSE_CHANGED')
+        ...(this.profile ? ['rawHttpText','adaptedResponse','inputReceipt','sendSnapshot','execution','recovery'] : [])]) {
+        assert(equal(old[key]??null, after[key]??null), 'IMMUTABLE_RESPONSE_CHANGED')
       }
       assert(Array.isArray(old.operations) && Array.isArray(after.operations)
         && equal(old.operations, after.operations.slice(0, old.operations.length)), 'HISTORY_PREFIX_CHANGED')
@@ -89,6 +89,10 @@ export class SemanticRepository {
     for (const draft of before.extractionDrafts) {
       const after = next.extractionDrafts.find(d => d.id === draft.id)
       assert(after && equal(draft.legacyData?.realInputPending ?? null, after.legacyData?.realInputPending ?? null), 'PENDING_SEND_CHANGED')
+      if(draft.legacyData?.mainline05Failure){
+        assert(equal(draft.legacyData.mainline05Failure,after.legacyData?.mainline05Failure),'FAILURE_EVIDENCE_CHANGED')
+        assert(equal(before.recognitionRuns.find(r=>r.id===draft.recognitionRunId),next.recognitionRuns.find(r=>r.id===draft.recognitionRunId)),'FAILED_RUN_CHANGED')
+      }
     }
     await validateSemanticWorkspace(next, this.profile)
     const saved = await this.canonical.transaction(current => {

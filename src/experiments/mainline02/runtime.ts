@@ -28,6 +28,7 @@ export interface MainlineRealInputCapabilities {
   inputPanel(options: { workspace: WorkspaceV8; initialText: string; onSaved: () => Promise<void>; onDraftReady: (id: string) => Promise<void> }): ReactNode
   factEditor(options: { workspace: WorkspaceV8; draftId: string; taskId: string; busy: boolean;
     onDirty: (dirty: boolean) => void; onSaved: () => Promise<void> }): ReactNode
+  draftEditor?(options: {workspace:WorkspaceV8;draftId:string;busy:boolean;onDirty:(dirty:boolean)=>void;onSaved:()=>Promise<void>}):ReactNode
 }
 export type MainlineSemanticDriver = Pick<MainlineRuntime, 'load' | 'view' | 'dates' | 'review' | 'capture' | 'edit' | 'confirm' | 'exportJson'>
   & { semantic: MainlineSemanticCapabilities; recognitionDescription: string; realInput?: MainlineRealInputCapabilities }

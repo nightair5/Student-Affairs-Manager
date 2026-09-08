@@ -21,6 +21,7 @@ export function factIdentity(input: SemanticInput, id: string) {
   }
   const materials = new Set<string>(), times = new Set<string>(), events = new Set<string>()
   for (const task of ids) {
+    if (!input.tasks.some(t => t.id === task)) continue // Failed raw references remain visible until explicit correction.
     const a = factAssets(input, task)
     a.materials.forEach(x => materials.add(x)); a.times.forEach(x => times.add(x)); a.events.forEach(x => events.add(x))
   }

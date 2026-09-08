@@ -25,6 +25,9 @@ export function semanticDates(workspace: WorkspaceV8): TaskDateViews {
   }))
 }
 function draftView(workspace: WorkspaceV8, draftId: string, choices: Readonly<Record<string,boolean>> = {}): ReturnType<typeof reviewAdapter> {
+  const failed=workspace.extractionDrafts.find(d=>d.id===draftId)
+  if(failed?.status==='failed'&&failed.legacyData?.realInputPending&&!failed.legacyData.mainline05)
+    return {revision:semanticRevision(workspace),states:{},draft:{...workspaceV8ToLegacyView(workspace).drafts.find(d=>d.id===draftId)!,items:[]}}
   const state = stateOf(workspace,draftId), current = life(state), base = workspaceV8ToLegacyView(workspace).drafts.find(d=>d.id===draftId)!
   const input = effectiveStateFacts(state).facts, review = effectiveReview(state)
   const live = state.version === REAL_STATE_VERSION

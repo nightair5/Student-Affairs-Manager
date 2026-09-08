@@ -34,6 +34,7 @@ export interface RealInputState extends Omit<SemanticState, 'version' | 'rawResp
   inputReceipt: InputReceipt
   sendSnapshot: SendSnapshot
   execution: 'live' | 'seen_engineering_replay'
+  recovery?: { kind: 'user_opened_failed_response'; at: string }
 }
 export type AnySemanticState = SemanticState | RealInputState
 export function effectiveStateFacts(state: AnySemanticState) {
@@ -106,6 +107,8 @@ export function editTimeSupport(state: AnySemanticState, id: string) {
     && points.every(t => deadlineType(t.type)) && (points.length > 0 || task.coverage.time === 'not_stated') }
 }
 export function canAct(state: AnySemanticState, id: string): boolean {
+  if(state.version===REAL_STATE_VERSION&&state.recovery&&(!state.operations.some(o=>o.kind==='correct_fact')
+    ||effectiveReview(state).issues.some(i=>['BAD_ENTITY_REFERENCE','BAD_REVISION_REFERENCE'].includes(i.code))))return false
   if (state.version === REAL_STATE_VERSION) return !materialReviewProblem(state,id) && itemSafety(effectiveStateFacts(state).facts, effectiveReview(state), id).length === 0
   const item = state.first.items.find(i => i.tempId === id)
   const task = state.rawResponse.tasks.find(t => t.id === id)
@@ -289,8 +292,10 @@ export const titleReviewProblem = (title: string) => !title.trim() || title.leng
   ? '请明确编辑并保存1至200字的任务标题；原文动作和对象不会被截断。' : undefined
 function liveLife(state: RealInputState) {
   const initial = { ...state, operations: [] }, input = effectiveStateFacts(initial).facts
-  const dispositions: Record<string, Disposition> = Object.fromEntries(input.tasks.map(t => [t.id, 'pending']))
-  const values = Object.fromEntries(input.tasks.map(t => {
+  const finalInput = effectiveStateFacts(state).facts
+  const dispositions: Record<string, Disposition> = Object.fromEntries(finalInput.tasks.map(t => [t.id, 'pending']))
+  const values = Object.fromEntries(finalInput.tasks.map(t => {
+    if (!input.tasks.some(old=>old.id===t.id)) return [t.id,{title:t.detail.title,deadline:''}]
     const p = editTimeSupport(initial, t.id).points.filter(t => deadlineType(t.type))
     return [t.id, { title: t.detail.title, deadline: p.length === 1 ? p[0].normalizedValue ?? '' : '' }]
   }))
@@ -305,6 +310,7 @@ function liveLife(state: RealInputState) {
     assert(Array.isArray(op.taskIds) && Object.keys(op.taskIds).length === op.taskIds.length
       && new Set(op.taskIds).size === op.taskIds.length && op.taskIds.every(id => Object.hasOwn(dispositions, id)), 'OPERATION_TASKS')
     const before = { ...state, operations: [...prefix] }, effective = effectiveStateFacts(before), review = effectiveReview(before)
+    if(op.kind!=='correct_fact')assert(op.taskIds.every(id=>effective.facts.tasks.some(t=>t.id===id)),'TASK_NOT_YET_ADDED')
     if (op.kind==='enable_material_review') {
       assert(prefix.length===0&&!op.taskIds.length&&op.field===null&&op.value===null&&op.before===null,'MATERIAL_MODE_ACTIVATION')
     } else if (op.kind==='review_material') {
@@ -360,9 +366,10 @@ function liveLife(state: RealInputState) {
       } else {
         assert(op.field === null && op.value === null && op.before === null && ['confirm','defer','reject'].includes(op.kind), 'DISPOSITION_SHAPE')
         if (op.kind === 'confirm') {
+          assert(op.taskIds.every(id=>canAct(before,id)),'ITEM_NOT_CONFIRMABLE')
           assert(op.taskIds.every(id=>!materialReviewProblem(before,id)),'MATERIAL_REVIEW_REQUIRED')
           assert(op.taskIds.every(id => !titleReviewProblem(values[id].title)), 'TITLE_REQUIRES_EDIT')
-          const checked = input.tasks.filter(t => reviewed[t.id] === liveReviewIdentity(before, t.id, values))
+          const checked = effective.facts.tasks.filter(t => reviewed[t.id] === liveReviewIdentity(before, t.id, values))
             .map(t => ({ taskId: t.id, factIdentity: factIdentity(effective.facts, t.id) }))
           const selection = selectLiveTasks(effective.facts, review, checked, dispositions, op.taskIds, effective.sourceFacts)
           assert(op.taskIds.every(id => selection.find(t => t.taskId === id)?.selected), 'ITEM_NOT_CONFIRMABLE')
@@ -481,11 +488,17 @@ export async function validateSemanticWorkspace(workspace: WorkspaceV8, profile?
       continue
     }
     const state = plainJson(raw) as unknown as AnySemanticState
+    const recovery = state.version === REAL_STATE_VERSION ? state.recovery : undefined
     exactKeys(state, ['version', 'sourceId', 'sourceVersionId', 'runId', 'draftId', 'rawOutputText', 'rawResponse',
-      'legacyResponse', 'context', 'first', 'operations', 'bindings', ...(real ? ['rawHttpText', 'adaptedResponse', 'inputReceipt', 'sendSnapshot', 'execution'] : [])])
+      'legacyResponse', 'context', 'first', 'operations', 'bindings', ...(real ? ['rawHttpText', 'adaptedResponse', 'inputReceipt', 'sendSnapshot', 'execution',...(recovery?['recovery']:[])] : [])])
     assert(state.version === (real ? REAL_STATE_VERSION : STATE_VERSION) && state.sourceId === source.id && state.sourceVersionId === version.id
-      && state.runId === run.id && state.draftId === draft.id && run.schemaVersion === state.version && run.status === 'succeeded', 'STATE_IDENTITY')
-    assert(draft.legacyData?.mainline05Failure === undefined, 'FAILED_RECEIPT_WITH_SUCCESS')
+      && state.runId === run.id && state.draftId === draft.id && run.schemaVersion === state.version && run.status === (recovery?'failed':'succeeded'), 'STATE_IDENTITY')
+    if(recovery){
+      exactKeys(recovery,['kind','at'])
+      assert(recovery.kind==='user_opened_failed_response'&&Number.isFinite(Date.parse(recovery.at)),'RECOVERY_IDENTITY')
+      const f=draft.legacyData?.mainline05Failure as {response?:unknown;code?:unknown;version?:unknown}|undefined
+      assert(f&&equal(f,{version:REAL_STATE_VERSION,response:(state as RealInputState).rawHttpText,code:'SEMANTIC_RESPONSE_REJECTED'}),'RECOVERY_RAW_BINDING')
+    } else assert(draft.legacyData?.mainline05Failure === undefined, 'FAILED_RECEIPT_WITH_SUCCESS')
     assert(typeof state.rawOutputText === 'string' && equal(JSON.parse(state.rawOutputText), state.rawResponse), 'RAW_RESPONSE_MISMATCH')
     const initialFacts = state.version === STATE_VERSION ? state.rawResponse : state.adaptedResponse
     parseSemanticInput(initialFacts)
@@ -503,7 +516,7 @@ export async function validateSemanticWorkspace(workspace: WorkspaceV8, profile?
     assert(state.context.ownershipMode === 'mainline05-own-assets-1', 'SEMANTIC_OWNERSHIP_MODE_REQUIRED')
     const recomposed = await composeSemantics(initialFacts, state.context)
     assert(equal(recomposed, state.first), 'FIRST_RESPONSE_MISMATCH')
-    assert(!recomposed.issues.some(i => ['BAD_ENTITY_REFERENCE', 'BAD_REVISION_REFERENCE'].includes(i.code)), 'INVALID_ENTITY_REFERENCE')
+    assert(recovery || !recomposed.issues.some(i => ['BAD_ENTITY_REFERENCE', 'BAD_REVISION_REFERENCE'].includes(i.code)), 'INVALID_ENTITY_REFERENCE')
     assert(Array.isArray(state.operations), 'OPERATIONS_INVALID')
     if (state.version === REAL_STATE_VERSION) for (let i = 0; i < state.operations.length; i++) {
       const op = state.operations[i]
@@ -511,7 +524,8 @@ export async function validateSemanticWorkspace(workspace: WorkspaceV8, profile?
       const effective = effectiveStateFacts({ ...state, operations: state.operations.slice(0, i + 1) })
       const checked = await composeSemantics(effective.sourceFacts, state.context)
       assert(equal(op.factReview, checked), 'CORRECTION_RECOMPOSITION_MISMATCH')
-      assert(!checked.issues.some(issue => ['BAD_ENTITY_REFERENCE','BAD_REVISION_REFERENCE'].includes(issue.code)), 'INVALID_ENTITY_REFERENCE')
+      // A saved correction may leave another item unresolved. The unchanged per-item
+      // safety policy still independently rejects that item's confirmation.
     }
     const current = life(state), facts = canonicalFacts(state)
     assert(equal(state.bindings, facts.bindings), 'CANONICAL_BINDINGS')

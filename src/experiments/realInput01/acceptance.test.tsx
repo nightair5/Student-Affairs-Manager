@@ -25,6 +25,70 @@ import { SemanticFacts } from '../mainline05/SemanticFacts'
 import { buildBrowserReminderJobs } from '../../lib/notifications'
 import { DraftReviewPanel } from '../../components/DraftReviewPanel'
 import type { ComponentProps } from 'react'
+import { correctSemanticFact, confirmSemantic, disposeSemantic } from '../mainline05/semanticConfirmation'
+import { openFailedForCorrection } from '../mainline05/semanticCapture'
+import { canAct, life, validateSemanticWorkspace } from '../mainline05/semanticState'
+import type { FactChange } from './factCorrections'
+import type { SemanticTask } from '../mainline04/semanticContract'
+
+async function correctionReplay(unitId:string){
+  const root='docs/recognition-optimization/mainline-real-input-01/runs/',D=root+'replay-a02-implementation-20260907a/'
+  const binding=JSON.parse(readFileSync(root+'usage-resume-20260907a/STATE.json','utf8'))
+  const prep=JSON.parse(readFileSync(binding.preparation.path,'utf8')),original=JSON.parse(readFileSync(binding.independentRepositoryRead.path,'utf8'))
+  const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:prep.name})
+  await new CanonicalWorkspaceRepository(store).save(original.workspace)
+  const repo=await SemanticRepository.open(prep.name,store,undefined,'real-input-01')
+  const p=prep.preparations.find((x:{unitId:string})=>x.unitId===unitId),unit=binding.units.find((x:{unitId:string})=>x.unitId===unitId)
+  const raw=JSON.parse(readFileSync(D+'BATCH_'+unitId+'_RAW.jsonl','utf8'))
+  const record:RecordedBatch={version:'recorded-batch-1',unitId,name:prep.name,handle:p.handle,context:p.context,requestSha:unit.requestSha,responseSha:raw.responseSha,rawHttpText:raw.rawHttpText}
+  try{await replayRecordedBatch(repo,record,{unitId,requestSha:unit.requestSha,responseSha:raw.responseSha})}catch(e){if(!String(e).includes('REJECTED_PRESERVED'))throw e}
+  return {repo,store,draftId:p.handle.draftId as string}
+}
+describe('complex notice correction public API, original model answers remain immutable',()=>{
+  it.each(['separate','batch'])('B01 event mismatch corrected explicitly; %s confirmation preserves two different deadlines',async mode=>{
+    const {repo,store,draftId}=await correctionReplay('B01'),first=stateOfRuntime(await repo.load(),draftId),input=effectiveStateFacts(first).facts
+    expect(input.tasks).toHaveLength(2);expect(first.first.items.every(t=>t.issues.includes('COVERAGE_EVENT'))).toBe(true)
+    for(const task of input.tasks){
+      const change:FactChange={kind:'event',taskId:task.id,value:{coverage:'not_stated',event:null},scopeIds:task.propositionScopeIds,note:'人工对照原文：说明提交和打印要求，没有独立活动事实。'}
+      await correctSemanticFact(repo,{draftId,revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID(),change})
+      for(const m of input.materials.filter(m=>m.relatedTaskTempIds.includes(task.id)))await reviewSemanticMaterial(repo,{draftId,revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID(),materialId:m.tempId,value:{required:true,status:'ready'}})
+      await reviewSemanticFact(repo,{draftId,taskId:task.id,revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID()})
+      if(mode==='separate')await confirmSemantic(repo,{draftId,taskTempIds:[task.id],revision:semanticRevision(await repo.load())})
+    }
+    if(mode==='batch')await confirmSemantic(repo,{draftId,taskTempIds:input.tasks.map(t=>t.id),revision:semanticRevision(await repo.load())})
+    const saved=await repo.load(),state=stateOfRuntime(saved,draftId)
+    expect(saved.tasks).toHaveLength(2);expect(saved.timePoints.map(t=>t.rawText).sort()).toEqual(input.timePoints.map(t=>t.rawText).sort())
+    expect(state.first).toEqual(first.first);expect(state.rawResponse).toEqual(first.rawResponse);expect(saved.reminderRecords).toEqual([])
+    expect(await new CanonicalWorkspaceRepository(store).load()).toEqual(JSON.parse(JSON.stringify(saved)))
+    const frozen=structuredClone(saved)
+    await expect(correctSemanticFact(repo,{draftId,revision:semanticRevision(saved),operationId:crypto.randomUUID(),change:{kind:'condition',taskId:input.tasks[0].id,value:{value:'unknown',conditionScopeIds:input.tasks[0].propositionScopeIds,factScopeIds:[]},scopeIds:input.tasks[0].propositionScopeIds,note:'不能改动已确认内容'}})).rejects.toThrow('CONFIRMED')
+    expect(await repo.load()).toEqual(frozen)
+  },20000)
+  it.each(['A08','B08'])('%s failed raw is retained, missing old task and revision can be explicitly corrected and new task saved',async unit=>{
+    const {repo,store,draftId}=await correctionReplay(unit),failed=await repo.load(),draft=failed.extractionDrafts.find(d=>d.id===draftId)!,run=failed.recognitionRuns.find(r=>r.id===draft.recognitionRunId)!
+    expect(draft.status).toBe('failed')
+    await openFailedForCorrection(repo,draftId,semanticRevision(failed))
+    const first=stateOfRuntime(await repo.load(),draftId),input=effectiveStateFacts(first).facts,newTask=input.tasks[0],scopes=first.context.index.scopes
+    const scope=scopes.find(s=>s.text.includes('纸质报名表'))!
+    const oldTask:SemanticTask={...structuredClone(newTask),id:'user-old-requirement',action:{scopeId:scope.id,surface:'打印'},object:{scopeId:scope.id,surface:'纸质报名表'},propositionScopeIds:[scope.id],effect:'physical_action',
+      semantics:{...newTask.semantics,tense:'past',status:'cancelled',validity:'superseded'},detail:{...newTask.detail,title:'打印纸质报名表',description:'用户依据原文补充已作废要求',completionCriteria:[],materialTempIds:[],timePointTempIds:[]},coverage:{time:'not_stated',material:'not_stated',event:'not_stated'}}
+    expect(canAct(first,newTask.id)).toBe(false)
+    await correctSemanticFact(repo,{draftId,revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID(),change:{kind:'revision',index:0,value:{addedTask:oldTask,relation:{type:'supersedes',targetDirectiveId:oldTask.id,fromDirectiveId:newTask.id,effective:'true',scopeIds:scopes.map(s=>s.id)}},scopeIds:scopes.map(s=>s.id),note:'旧打印要求已取消，现要求提交电子报名表；用户补充并核对对应关系。'}})
+    const corrected=stateOfRuntime(await repo.load(),draftId)
+    expect(canAct(corrected,oldTask.id)).toBe(false)
+    for(const m of input.materials)await reviewSemanticMaterial(repo,{draftId,revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID(),materialId:m.tempId,value:{required:true,status:'ready'}})
+    await reviewSemanticFact(repo,{draftId,taskId:newTask.id,revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID()})
+    await confirmSemantic(repo,{draftId,taskTempIds:[newTask.id],revision:semanticRevision(await repo.load())})
+    await disposeSemantic(repo,{draftId,taskTempIds:[oldTask.id],kind:'reject',revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID()})
+    const saved=await repo.load(),final=stateOfRuntime(saved,draftId)
+    expect(saved.tasks.map(t=>t.title)).toEqual(['提交电子报名表']);expect(saved.timePoints).toEqual([])
+    expect(saved.recognitionRuns.find(r=>r.id===run.id)).toEqual(run)
+    expect(saved.extractionDrafts.find(d=>d.id===draftId)!.legacyData!.mainline05Failure).toEqual(draft.legacyData!.mainline05Failure)
+    expect(final.rawResponse).toEqual(first.rawResponse);expect(final.first).toEqual(first.first);expect(life(final).accepted).toEqual([newTask.id])
+    expect(effectiveStateFacts(final).facts.revisions[0].targetDirectiveId).toBe(oldTask.id)
+    await validateSemanticWorkspace(JSON.parse(JSON.stringify(await new CanonicalWorkspaceRepository(store).load())),'real-input-01')
+  },20000)
+})
 const resources={workerPath:'http://127.0.0.1:16627/real-input-assets/worker.min.js',corePath:'http://127.0.0.1:16627/real-input-assets/core/',
   langPath:'http://127.0.0.1:16627/real-input-assets/lang/',pdfWorkerPath:'http://127.0.0.1:16627/real-input-assets/pdf.worker.mjs'}
 async function setup() {

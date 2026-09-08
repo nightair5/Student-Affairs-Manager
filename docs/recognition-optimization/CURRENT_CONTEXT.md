@@ -2,16 +2,16 @@
 
 ## 当前目标与现场
 - 同一MAINLINE-REAL-INPUT-01：复杂通知纠错到确认保存；不重做PLAN。
-- IMPLEMENTED_ENGINEERING_PASS_BROWSER_BLOCKED；整包NOT_COMPLETE。
+- CORRECTION_REPLAY_LOOP_PASS：本轮真实纠错、确认、刷新、独立读库和实际下载已通过；整包NOT_COMPLETE。
 - 0新增模型调用；模型识别准确率本轮未测量；真人主动编辑时间NOT_RUN。
 - 本轮报告mainline-real-input-01/runs/correction-loop-20260908a/。
-- 15实现/测试修改保留未提交，42最终逐字SHA在IMPLEMENTATION_SNAPSHOT.json。
-- 仅审计提交；恢复时核对实际HEAD与远端，不重新应用实现。
+- 15实现/测试已完成工程与代表性Edge验收，按精确清单业务交付；42逐字SHA仍见IMPLEMENTATION_SNAPSHOT.json。
+- 最新结论见BROWSER_AUDIT/VALIDATION/PROTECTION；核对实际Git/远端，不重新应用实现。
 
 ## Git与权限
 - 唯一仓库C:\Users\Winner\student-affairs-multimodal-exp。
 - 唯一分支codex/e2-multimodal-recognition-exp；不得在比赛工作区实施。
-- 实施起点764358554953fb8ccf2b5e714f88584365ae26a5。
+- 实施起点764358554953fb8ccf2b5e714f88584365ae26a5；本次浏览器续验起点5b8f10b91787b62fa36751ff9be328eed217878d。
 - 上次业务10b9effcbfb50dc5f1363ede1f39ec67bfe549d4，回执7643585。
 - 当前42路径及获准职责保持；没有新增产品路径或依赖。
 - 全局Schema/repository/capture/validator/confirmationV2/domainCommit、冻结候选/评分只读。
@@ -46,15 +46,21 @@
 - 旧当前环境3/1失败单列，旧原封历史快照/依赖审核按未变证据复用。
 - 未开展多轮独审；没有密钥、真实库访问或原子事务替换的变更。
 
-## 实际浏览器：唯一剩余验收
+## 实际浏览器：本轮已补验
 - 原URL http://127.0.0.1:6631/?run=real-input-d030c507-3f7c-4a2c-a511-8cd5bd534862。
 - 原库rco-mainline-01-02-i1-real-input-d030c507-3f7c-4a2c-a511-8cd5bd534862。
 - 原库未清空、未新建、未fallback；A02保持。
-- Edge browser2原tab763114892可列出，但getTab报Emulation.setFocusEmulationEnabled超时。
-- 用户置前台/关闭DevTools后仍超时；一次官方新tab763114900 ERR_BLOCKED_BY_CLIENT。
-- 不证明产品故障；禁止CDP/SendKeys绕过，停止机械工具重试。
+- 此前官方控制超时/拦截历史保持；本轮browser2/tab763114894已恢复可操作，无绕过。
+- 原服务退出导致首次刷新拒绝连接，按同一启动器恢复recorded_batch，不新建库。
+- B01逐键纠正两项事件覆盖、材料观察/完整事实核对，先确认第一项。
+- A08从失败原答恢复，逐键补旧纸质要求/理由并保存替代关系，旧项拒绝、新项可确认。
+- 只选来源未选任务的批量请求0新增；明确选择后B01剩余项+A08新要求跨草稿批量保存2项。
 - 最终源码recorded_batch本机服务仍在6631，upstreamEnabled=false。
-- 本轮真实Edge旅程0，NOT_RUN；新结构实际下载/独立读库NOT_RUN。
+- 刷新后6任务/6材料/2时间/0提醒/实际jobs0；原3任务和材料全对象保持。
+- 日历两截止分别9月10日/11日18:00上海；A08无日期列表及详情找回，旧纸质要求不生成任务。
+- 独立new repository读回后实下载，完整对象SHA a3ea9835a6fde772efb356ebf9bce6405b0ff978257e5fdd8cb5d5b55538b883一致。
+- 实际文件mainline-real-input-01-workspace (2).json 925716字节，文件SHA019eca29ab19fa96d4b303032d54e6d4fd5a7082a699768148f0769c6454909f。
+- BROWSER_READBACK/DOWNLOAD原样保留；联合全图validator通过。监听超时不等于下载失败。
 - 旧A05/B02真实正常对照和A02/时区/旧下载为历史证据，不冒充本轮新验收。
 
 ## 调用与原始结果
@@ -66,12 +72,12 @@
 - 自动选择NOT_ENABLED；无新模型/费用/密钥/剪贴板。
 
 ## 下一动作
-- 恢复官方Edge控制后继续同一授权，不新增规划或付费阶段。
-- 先核对最终42快照；源码不变则复用本机工程。
-- 原B01逐键修改理由/事件→保存→部分/批量；A08或B08修订纠错→确认新任务。
-- 刷新任务/时间/材料/修订关系，并独立new repository读回。
-- 数据结构已增量，补一次真实JSON下载与独立读回比较。
-- 实际验收通过才精确业务提交推送；当前只提交审计、保留源码现场。
+- 本轮纠错保存闭环交付后停止；不再机械重复已验收的B01/A08、下载或时区。
+- 下一主瓶颈为首次建议漏项/关系错误和读取完整性，先用现有失败账本确定一组改进，不新造同义结构。
+- 后续真实模型批次须另行授权；当前14个新增调用授权已用完。
+- B01同面板2项批量本轮仍仅本机测试；实际采用先部分、再跨草稿批量，不混报。
+- 旧界面展示债务：A08收件箱保留失败提示，详情底部旧修改区未投影语义历史；上方完整事实区有真实历史。
+- 不是任意新输入开放试用、全部U01–U16通过或商业验收。
 - 普通范围内问题修复继续；范围/保护/用户重叠/重大安全才申请。
 - 不接真实库/稳定入口、不部署；不重复A02和时区流程。
 - 额外复杂材料时间编辑、首次识别质量、OCR完整性和真人商业研究不因此已通过。
