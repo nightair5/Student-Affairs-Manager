@@ -1,7 +1,7 @@
 import type { WorkspaceV8, JsonValue, Task, Material, TimePoint, Event, EvidenceRef, HistoryRecord } from '../../domain/v2/types'
 import { validateWorkspaceV8 } from '../../domain/v2/validators/workspaceValidator'
 import { workspaceSnapshotHash } from '../../domain/v2/migration'
-import { isDateOnly, parseBusinessDateTime } from '../../lib/timeSemantics'
+import { isDateOnly, parseBusinessDateTime, parseChineseTimeAst } from '../../lib/timeSemantics'
 import { composeSemantics, type ComposeContext, type ReviewPackage } from '../mainline04/semanticComposer'
 import { parseSemanticInput, plainJson, stableJson, type SemanticInput } from '../mainline04/semanticContract'
 import { effectiveFacts, appendCorrection, validateMaterialDecision, type MaterialDecision, type FactCorrection } from '../realInput01/factCorrections'
@@ -14,10 +14,11 @@ import { validateInputReceipt, validateSendSnapshot, effectivePages, type InputR
 export const STATE_VERSION = 'mainline05-semantic-state-1' as const
 export type Disposition = 'pending' | 'deferred' | 'rejected' | 'confirmed'
 export interface SemanticOperation {
-  id: string; kind: 'edit' | 'confirm' | 'defer' | 'reject' | 'review_info' | 'review_task' | 'correct_fact' | 'enable_material_review' | 'review_material'
+  id: string; kind: 'edit' | 'confirm' | 'defer' | 'reject' | 'review_info' | 'review_task' | 'correct_fact' | 'enable_material_review' | 'review_material' | 'accept_pending_date'
   at: string; taskIds: string[]; field: 'title' | 'deadline' | null; value: string | null; before: string | null
   correction?: FactCorrection; factReview?: ReviewPackage; reviewIdentity?: string
   materialReview?: { materialId: string; identity: string; value: MaterialDecision }
+  pendingDateIdentity?: string
 }
 export interface SemanticState {
   version: typeof STATE_VERSION
@@ -50,6 +51,45 @@ export function effectiveReview(state: AnySemanticState) {
   return state.operations.filter(o => o.kind === 'correct_fact').at(-1)?.factReview ?? state.first
 }
 export const equal = (a: unknown, b: unknown) => stableJson(a) === stableJson(b)
+/** Explicit acceptance of uncertainty, not removal of the composer's findings. */
+export function pendingDateEligible(state: AnySemanticState, id: string): boolean {
+  if(state.version!==REAL_STATE_VERSION)return false
+  const input=effectiveStateFacts(state).facts,review=effectiveReview(state),task=input.tasks.find(t=>t.id===id)
+  if(!task||task.coverage.time!=='present')return false
+  const assets=relatedAssets(input,[id]),points=input.timePoints.filter(t=>assets.times.has(t.tempId))
+  const problems=itemSafety(input,review,id)
+  if(!points.length||assets.events.size||!problems.includes('TIME_NEEDS_REVIEW')||problems.some(p=>p!=='TIME_NEEDS_REVIEW'))return false
+  if(state.operations.some(o=>o.kind==='edit'&&o.field==='deadline'&&o.taskIds.includes(id)))return false
+  // Consent for this task never excuses a prerequisite's unrelated time problem.
+  const graph=JSON.parse(factIdentity(input,id)) as {timePoints:Array<{tempId:string}>}
+  if(review.issues.some(i=>i.code==='TIME_NEEDS_REVIEW'&&i.entityIds.some(x=>graph.timePoints.some(t=>t.tempId===x)&&!assets.times.has(x))))return false
+  const clocks=new Set<string>()
+  const valid=points.every(t=>{
+    const ast=parseChineseTimeAst(t.rawText,{type:t.type,referenceTime:state.context.referenceTime,timezone:state.context.timezone})
+    // Missing-date AST exits before clock validation. A probe date validates that
+    // clock only; its normalized result is NEVER saved or shown to the user.
+    const probe=parseChineseTimeAst(t.rawText,{type:t.type,referenceTime:state.context.referenceTime,timezone:state.context.timezone,inheritedDate:'2000-01-01'})
+    if(probe.normalizedValue&&!isDateOnly(probe.normalizedValue))clocks.add(stableJson([probe.normalizedValue,probe.rangeEndNormalizedValue]))
+    return deadlineType(t.type)&&t.normalizedValue===null&&t.precision==='vague'&&t.needsConfirmation&&t.isAllDay===false
+      &&t.timezone===state.context.timezone&&ast.normalizedValue===null&&ast.precision==='vague'
+      &&ast.issues.length===1&&['date_missing','time_not_found'].includes(ast.issues[0])&&probe.issues.length===0
+      &&t.scopeIds.filter(s=>state.context.index.scopes.find(x=>x.id===s)?.text.includes(t.rawText)).length===1
+  })
+  return valid&&clocks.size<=1
+}
+export function pendingDateIdentity(state: RealInputState,id:string) {
+  return stableJson({facts:factIdentity(effectiveStateFacts(state).facts,id),
+    corrections:state.operations.filter(o=>o.taskIds.includes(id)&&['correct_fact','edit'].includes(o.kind)).map(o=>o.id)})
+}
+export function hasPendingDateConsent(state: AnySemanticState,id:string): boolean {
+  return state.version===REAL_STATE_VERSION&&pendingDateEligible(state,id)&&state.operations.some(o=>o.kind==='accept_pending_date'
+    &&equal(o.taskIds,[id])&&o.pendingDateIdentity===pendingDateIdentity(state,id))
+}
+function confirmationReview(state: AnySemanticState): ReviewPackage {
+  const review=effectiveReview(state)
+  return {...review,items:review.items.map(i=>hasPendingDateConsent(state,i.tempId)
+    ?{...i,issues:i.issues.filter(code=>code!=='TIME_NEEDS_REVIEW')}:i)}
+}
 export const json = (value: unknown): JsonValue => plainJson(value) as JsonValue
 export function assert(condition: unknown, code: string): asserts condition {
   if (!condition) throw Error('MAINLINE05_' + code)
@@ -111,7 +151,7 @@ export function editTimeSupport(state: AnySemanticState, id: string) {
 export function canAct(state: AnySemanticState, id: string): boolean {
   if(state.version===REAL_STATE_VERSION&&state.recovery&&(!state.operations.some(o=>o.kind==='correct_fact')
     ||effectiveReview(state).issues.some(i=>['BAD_ENTITY_REFERENCE','BAD_REVISION_REFERENCE'].includes(i.code))))return false
-  if (state.version === REAL_STATE_VERSION) return !materialReviewProblem(state,id) && itemSafety(effectiveStateFacts(state).facts, effectiveReview(state), id).length === 0
+  if (state.version === REAL_STATE_VERSION) return !materialReviewProblem(state,id) && itemSafety(effectiveStateFacts(state).facts, confirmationReview(state), id).length === 0
   const item = state.first.items.find(i => i.tempId === id)
   const task = state.rawResponse.tasks.find(t => t.id === id)
   return Boolean(item && task && state.context.authority === 'human_engineering' && item.requiresAction === 'true'
@@ -207,7 +247,8 @@ export function operationHistory(state: AnySemanticState): HistoryRecord[] {
     action: 'mainline05_' + op.kind, fieldName: op.field ? JSON.stringify([op.taskIds[0], op.field]) : null,
     before: op.before, after: op.kind === 'edit' ? op.value : json({ taskIds: op.taskIds, kind: op.kind,
       ...(op.correction ? { correction: op.correction } : {}), ...(op.reviewIdentity ? { reviewIdentity: op.reviewIdentity } : {}),
-      ...(op.materialReview ? { materialReview: op.materialReview } : {}) }), actor: op.kind==='enable_material_review'?'system':'user',
+      ...(op.materialReview ? { materialReview: op.materialReview } : {}),
+      ...(op.pendingDateIdentity ? { pendingDateIdentity: op.pendingDateIdentity } : {}) }), actor: op.kind==='enable_material_review'?'system':'user',
     reason: state.version, sourceVersionId: state.sourceVersionId, changedAt: op.at }))
 }
 export function canonicalFacts(state: AnySemanticState) {
@@ -305,13 +346,13 @@ function liveLife(state: RealInputState) {
   const prefix: SemanticOperation[] = []
   let informationReviewed = false, lastAt = -Infinity
   for (const op of state.operations) {
-    const extra = op.kind === 'correct_fact' ? ['correction', 'factReview'] : op.kind === 'review_task' ? ['reviewIdentity'] : op.kind==='review_material'?['materialReview']:[]
+    const extra = op.kind === 'correct_fact' ? ['correction', 'factReview'] : op.kind === 'review_task' ? ['reviewIdentity'] : op.kind==='review_material'?['materialReview']:op.kind==='accept_pending_date'?['pendingDateIdentity']:[]
     exactKeys(op, ['id', 'kind', 'at', 'taskIds', 'field', 'value', 'before', ...extra])
     assert(typeof op.id === 'string' && /^[A-Za-z0-9-]{1,100}$/.test(op.id) && !ids.has(op.id), 'OPERATION_ID'); ids.add(op.id)
     assert(Number.isFinite(Date.parse(op.at)) && Date.parse(op.at) >= lastAt, 'OPERATION_TIME_ORDER'); lastAt = Date.parse(op.at)
     assert(Array.isArray(op.taskIds) && Object.keys(op.taskIds).length === op.taskIds.length
       && new Set(op.taskIds).size === op.taskIds.length && op.taskIds.every(id => Object.hasOwn(dispositions, id)), 'OPERATION_TASKS')
-    const before = { ...state, operations: [...prefix] }, effective = effectiveStateFacts(before), review = effectiveReview(before)
+    const before = { ...state, operations: [...prefix] }, effective = effectiveStateFacts(before)
     if(op.kind!=='correct_fact')assert(op.taskIds.every(id=>effective.facts.tasks.some(t=>t.id===id)),'TASK_NOT_YET_ADDED')
     if (op.kind==='enable_material_review') {
       assert(prefix.length===0&&!op.taskIds.length&&op.field===null&&op.value===null&&op.before===null,'MATERIAL_MODE_ACTIVATION')
@@ -346,6 +387,12 @@ function liveLife(state: RealInputState) {
           }
         }
         op.taskIds.forEach(id => { delete reviewed[id] })
+      } else if (op.kind === 'accept_pending_date') {
+        assert(op.taskIds.length===1&&op.field===null&&op.value===null&&op.before===null,'PENDING_DATE_SHAPE')
+        const id=op.taskIds[0]
+        assert(dispositions[id]!=='rejected'&&pendingDateEligible(before,id),'PENDING_DATE_NOT_ELIGIBLE')
+        assert(op.pendingDateIdentity===pendingDateIdentity(before,id)&&!hasPendingDateConsent(before,id),'PENDING_DATE_IDENTITY')
+        delete reviewed[id]
       } else if (op.kind === 'edit') {
         assert(op.taskIds.length === 1 && (op.field === 'title' || op.field === 'deadline') && typeof op.value === 'string', 'EDIT_SHAPE')
         const id = op.taskIds[0], field = op.field
@@ -373,7 +420,7 @@ function liveLife(state: RealInputState) {
           assert(op.taskIds.every(id => !titleReviewProblem(values[id].title)), 'TITLE_REQUIRES_EDIT')
           const checked = effective.facts.tasks.filter(t => reviewed[t.id] === liveReviewIdentity(before, t.id, values))
             .map(t => ({ taskId: t.id, factIdentity: factIdentity(effective.facts, t.id) }))
-          const selection = selectLiveTasks(effective.facts, review, checked, dispositions, op.taskIds, effective.sourceFacts)
+          const selection = selectLiveTasks(effective.facts, confirmationReview(before), checked, dispositions, op.taskIds, effective.sourceFacts)
           assert(op.taskIds.every(id => selection.find(t => t.taskId === id)?.selected), 'ITEM_NOT_CONFIRMABLE')
           for (const id of op.taskIds) { dispositions[id] = 'confirmed'; confirmedAt[id] = op.at }
         } else for (const id of op.taskIds) { dispositions[id] = op.kind === 'defer' ? 'deferred' : 'rejected'; delete reviewed[id] }

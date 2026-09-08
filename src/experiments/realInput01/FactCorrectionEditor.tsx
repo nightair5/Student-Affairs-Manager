@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import type { WorkspaceV8 } from '../../domain/v2/types'
 import type { SemanticRepository } from '../mainline05/semanticRepository'
-import { correctSemanticFact, reviewSemanticFact, reviewSemanticMaterial } from '../mainline05/semanticConfirmation'
+import { correctSemanticFact, reviewSemanticFact, reviewSemanticMaterial, acceptSemanticPendingDate } from '../mainline05/semanticConfirmation'
+import { pendingDateEligible, hasPendingDateConsent } from '../mainline05/semanticState'
 import { REAL_STATE_VERSION, stateOfRuntime, effectiveStateFacts, life, canAct, isCurrentDraft, liveReviewIdentity, semanticRevision, titleReviewProblem, materialReviewEnabled, materialDecision, materialReviewProblem } from '../mainline05/semanticState'
 import { materialEdit, factAssets, materialStatusLabels, validateMaterialDecision, type FactChange, type MaterialEdit } from './factCorrections'
 import type { SemanticTask } from '../mainline04/semanticContract'
@@ -35,6 +36,30 @@ export function FactCorrectionEditor({ repo, workspace, draftId, taskId, busy, o
     <p>请核对当前标题“{current.values[taskId].title}”与动作、对象、条件、时间、材料和来源。核对不等于勾选，也不会创建正式任务。</p>
     {titleReviewProblem(current.values[taskId].title)&&<p role="status">{titleReviewProblem(current.values[taskId].title)}</p>}
     {materialReviewProblem(state,taskId)&&<p role="status">{materialReviewProblem(state,taskId)}</p>}
+    <details><summary>核对日期待定的原文依据</summary>
+      <p>日期不明确不等于没有时间要求。请核对全部时间依据；可补充本任务遗漏的原文，不改原答或删除原有时间。</p>
+      {facts.timePoints.filter(t=>assets.times.has(t.tempId)).map(t=><p key={t.tempId}>{t.rawText} · {t.normalizedValue??'尚无具体日期'}</p>)}
+      <button type="button" disabled={blocked||relationDirty||Boolean(change||materialBuffer)} onClick={()=>choose({kind:'time',taskId,
+        scopeIds:[task.propositionScopeIds[0]],note:'用户核对补充时间原文；日期仍待定。',value:{tempId:'user-'+crypto.randomUUID(),
+          type:'task_deadline',rawText:'',normalizedValue:null,timezone:state.context.timezone,isAllDay:false,precision:'vague',needsConfirmation:true,
+          relatedTaskTempIds:[taskId],relatedMaterialTempIds:[],scopeIds:[task.propositionScopeIds[0]],confidence:1}})}>补充遗漏的时间依据</button>
+      {change?.kind==='time'&&<fieldset disabled={blocked}><legend>人工补充日期待定依据（不改模型原答）</legend>
+        <label>时间所在原文<select value={change.value.scopeIds[0]} onChange={e=>setChange({...change,scopeIds:[e.target.value],value:{...change.value,scopeIds:[e.target.value]}})}>
+          {state.context.index.scopes.filter(s=>task.propositionScopeIds.includes(s.id)||facts.timePoints.some(t=>assets.times.has(t.tempId)&&t.scopeIds.includes(s.id)))
+            .map(s=><option key={s.id} value={s.id}>{s.text}</option>)}</select></label>
+        <label>需要保留的逐字时间原文<input value={change.value.rawText} onChange={e=>setChange({...change,value:{...change.value,rawText:e.target.value}})}/></label>
+        <p>归属本任务：{task.detail.title}。这里只补充待定截止依据；明确日期用已有日期编辑，不能用此操作消除冲突。</p>
+        <button type="button" disabled={!change.value.rawText.trim()} onClick={()=>void run(()=>correctSemanticFact(repo,{draftId,revision:bufferRevision,operationId:crypto.randomUUID(),change}))}>保存时间依据</button>
+        <button type="button" onClick={()=>setChange(null)}>放弃未保存时间依据</button>
+      </fieldset>}
+      {pendingDateEligible(state,taskId)&&<>
+        <p>以下操作只记录接受日期待定，不填日期、不取消时间待核对标记，也不会自动创建或勾选任务。</p>
+        <button type="button" disabled={blocked||relationDirty||Boolean(change||materialBuffer)||hasPendingDateConsent(state,taskId)} onClick={()=>void run(()=>acceptSemanticPendingDate(repo,
+          {draftId,taskId,revision:savedRevision,operationId:crypto.randomUUID()}))}>
+          {hasPendingDateConsent(state,taskId)?'已保存：接受日期仍待定':'任务内容已核对，先加入任务；日期仍待定'}</button>
+        <p>之后再点“本项事实已核对”并主动选择加入任务；未保存的编辑不能确认。</p>
+      </>}
+    </details>
     {materialReviewEnabled(state)&&facts.materials.filter(m=>assets.materials.has(m.tempId)).map(m=><div key={m.tempId}>
       <button type="button" disabled={blocked||relationDirty||Boolean(change||materialBuffer)} onClick={()=>{
         setMaterialBuffer({id:m.tempId,required:'',status:''});setBufferRevision(savedRevision);setError('')
@@ -80,7 +105,7 @@ export function FactCorrectionEditor({ repo, workspace, draftId, taskId, busy, o
         {facts.tasks.map(t => <label key={t.id}><input type="checkbox" checked={change.value.relatedTaskTempIds.includes(t.id)} onChange={e => setChange({...change,value:{...change.value,
           relatedTaskTempIds:e.target.checked?[...change.value.relatedTaskTempIds,t.id]:change.value.relatedTaskTempIds.filter(id=>id!==t.id)}})} />{t.detail.title}</label>)}
       </fieldset>}
-      {change && <><p>有未保存的事实编辑，当前内容不会被确认。{bufferRevision!==savedRevision?'其他操作已更新版本；本次保存将明确拒绝，缓冲仍保留。':''}</p>
+      {change && change.kind!=='time' && <><p>有未保存的事实编辑，当前内容不会被确认。{bufferRevision!==savedRevision?'其他操作已更新版本；本次保存将明确拒绝，缓冲仍保留。':''}</p>
         <button type="button" disabled={blocked} onClick={() => void run(() => correctSemanticFact(repo,{draftId,revision:bufferRevision,operationId:crypto.randomUUID(),change}))}>保存事实修改</button>
         <button type="button" disabled={working} onClick={() => setChange(null)}>放弃未保存修改</button></>}
     </details>

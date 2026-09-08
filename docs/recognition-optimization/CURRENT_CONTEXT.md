@@ -1,77 +1,76 @@
 # RCO Current Context
 
-## 当前目标与状态
-- 同一MAINLINE-REAL-INPUT-01，D01已取得回答→核对确认→刷新读回收尾通过。
-- 本轮0新模型调用，未修改产品源码；此前14未提交业务实现进入本次交付。
-- D01真实Edge两项主动确认成功：原7任务变9任务，新增2时间/2材料。
-- 旧A01 Run仍queued、旧Draft仍processing，全对象不改；不是把旧失败改成功。
-- 官方控制已恢复，不再要求用户代操作；首个Failed to fetch来自6631服务未存活。
-- 恢复同origin现有只读回放服务upstreamEnabled=false后成功，无改防护/新库。
-- 本轮完成后停止，不自动增加候选、调用或数据。
+## 当前目标与结论
+- 同一MAINLINE-REAL-INPUT-01：明确任务、日期待定也能确认保存。
+- D03真实App已主动确认；原9→10任务，保留双时间原文、无假日期/提醒。
+- 0新增模型调用、0费用，不读取密钥/剪贴板，不改原32次/68行账本。
+- 本轮提升承接确认成功率，不是模型首次识别准确率。
+- 交付后停止，不自动增加候选、模型或数据。
 
 ## 仓库与授权
 - 唯一C:\Users\Winner\student-affairs-multimodal-exp。
 - 分支codex/e2-multimodal-recognition-exp。
-- 浏览器收尾起点05546aeef6aba4bb650d3575634c2f939eba1440，远端已核验。
-- 授权46路径；本轮实现SHA与REPLAY_CLOSE_IMPLEMENTATION_SNAPSHOT完全一致。
-- 交付报告runs/candidate03-20260908a/D01_BROWSER_*和D01_DELIVERY*。
-- Git精确提交与远端以本次D01_DELIVERY.json为准，不回切旧HEAD。
-- 945保护聚合df68e4eda47f664f9f0fbf218a74687117ac3cc9d2c14f5ee6e9965cd2c28394。
-- 402旧证据不变，当前目录47既有静态证据未改；日志仅追加。
-- 全局Schema/repository/capture/validator/confirmationV2/domainCommit及时间AST只读。
-- 原Expected/评分器/候选原答/旧结果及冻结未改。
+- 实施起点3519b5760d6b795666d6502cf33c34c877142daf，本机/远端核验一致。
+- 原46路径+明确第47例外src/pages/CalendarPage.tsx。
+- 实际改11个源码/测试；来源逐字前后SHA见PENDING_TIME_CHECKS。
+- 当前报告位于runs/candidate03-20260908a/PENDING_TIME_*。
+- 最终业务/回执提交见PENDING_TIME_DELIVERY，不回切历史HEAD。
+- 全局Schema/repository/capture/validator/confirmationV2/domainCommit/时间AST只读。
+- MAINLINE04、候选、Expected、评分、原答、历史结果只读。
 
-## 本次交付实现
-- candidate03单套指令与相应测试，wire/索引/用户文字/原参数不改。
-- candidate03账本授权与网关绑定等此前获准增量本次一并业务提交。
-- 非派发appendRecordedInput验证来源/版本/发送文字/请求/原响应摘要。
-- 在私有内存完成响应接入，再一次CAS追加终态Run/Draft及关联。
-- 真实库不产生可派发的新queued记录；inputRunContext拒绝recorded入口。
-- 不走全局beginRetry，不改A01旧状态，无删除pending或伪造来源。
-- rawHttp/rawOutput/rawResponse/first/用户operations分别保留。
-- 隔离分支仅承认新候选版本；旧默认不变，不部署。
+## 根因与实现
+- D03描述含近期，模型结构化时间仅给具体截止时间另行通知。
+- 已有转换没有丢该时间；旧客户端缺人工时间追加且整体阻挡确认。
+- factCorrections允许逐字原文、不可变scope、唯一新ID绑定本任务追加时间。
+- 不删除原时间，不改raw/first，不伪称模型输出。
+- explicit accept_pending_date与事实核对/selected/正式确认分离。
+- 仅real-input隔离状态可用；保存日期同意本身不建正式任务。
+- 同意绑定完整事实及修改身份；相关事实修改后须重新同意/核对。
+- 保留needsConfirmation=true、normalizedValue=null和原TIME_NEEDS_REVIEW事实。
+- 冲突、非法时刻/日期、错误时区/归属/引用、条件修订依赖仍阻挡。
+- 缺日期的时刻合法性使用内存探测值，不保存/显示探测日期。
+- 现有CAS/联合全图校验及原子事务未替换。
+- Calendar可选参数独立日期待定区域；真正无日期与明确日期旧默认保持。
 
-## 真实浏览器与文件
-- 原origin http://127.0.0.1:6631，tab763114931。
-- run real-input-d030c507-3f7c-4a2c-a511-8cd5bd534862。
+## 实际浏览器验收
+- 原origin http://127.0.0.1:6631。
+- 原run real-input-d030c507-3f7c-4a2c-a511-8cd5bd534862。
 - 原库rco-mainline-01-02-i1-real-input-d030c507-3f7c-4a2c-a511-8cd5bd534862。
-- 首先独立new repository读回7任务、无D01记录，实际下载before文件。
-- D01载入后仍7正式任务，核对面板明确候选03真实历史回答。
-- 两项材料分别选择需要/缺少并保存，保存事实核对，再主动逐项确认。
-- 准备状态是代理匿名工程验收输入，不是真实学生状态或模型预测。
-- 未保存材料时加入任务不可用；第一次确认后剩1项，第二次后0项。
-- 两截止分别2026-09-10T18:00、2026-09-11T18:00，Asia/Shanghai。
-- 报名表PDF/组别文件名/1份/活动平台；入场凭证A4/1份；归属独立。
-- 无业务纠错需要，没有为凑次数修改正确标题/时间。
-- 刷新后任务中心9项，日历日期正确，两新详情含核对和确认记录。
-- 独立读库旧任务/Run/Draft/来源版本/材料/时间/历史逐对象不变。
-- 重复D01载入前后整个workspace JSON.stringify相同，0重复增项。
-- before实际下载real-input-local-evidence (6).json，754026字节。
-- after实际下载real-input-local-evidence (7).json，850936字节。
-- after全对象SHA a3cf54895f825e0e7d5874eeb1ed7bba135527f3f7194bb5908d57871f4e7b1d。
-- 两份原字节副本和摘要进Git，与官方UI实际独立读库基准比较。
-- 产品导出按钮本轮未观测到新产品文件；不称再次PASS，旧下载证据保留。
-- 工程证据实际下载已核实；realJobs=0、reminderRecords=0。
+- D03载入原回答前独立读库9任务，SHA与D01最终基准一致。
+- 真实面板逐键输入近期；未保存状态加入任务禁用。
+- 明确保存时间依据→接受日期待定→事实核对→主动勾选→确认。
+- 新任务提交活动总结；原文近期/具体截止时间另行通知两条均保留。
+- 两时间normalizedValue=null、precision=vague、needsConfirmation=true。
+- 任务中心、日期待定日历区及详情均找到；不进入无截止列表或日期格。
+- 用户执行手动恢复/报告刷新，代理完成后续查询与独立new repository读回。
+- 重复D03载入前后全workspace相同，0重复/覆盖/丢失。
+- 原9任务/旧Run/Draft/来源版本/时间/材料/依据/历史逐对象不变。
+- 新增1任务/2时间/0材料；reminderRecords=0，实际jobs=0。
+- 下载real-input-local-evidence (8).json，907297字节，真实文件未修改。
+- 文件SHA 3db3fb699da45b6afaf66b194e49333413239de0d239cea4785493bf80877db8。
+- 全对象SHA c45f55d098e8f31e02ca2ca7cf7ef4d5f629eda38e1763c9fce72195cccfcc91。
+- 先取得UI独立仓储摘要，再核实际下载全对象，联合validator通过。
+- 同网址旧控制与用户新标签不同；自动导航仍ERR_BLOCKED_BY_CLIENT。
+- 重绑已恢复原标签成功；未改防护/系统设置，不宣称已定位具体扩展。
 
-## 工程证据复用
-- 最终定向6通过0失败；D02/D05正常对照、D03模糊时间负例保持。
-- 全量attempt1263通过1超时1旧skip原样保留。
-- 新增超时测试采用同组60秒，断言不变；最后受影响组6/0。
-- 按独立测试身份合并1264通过/0未解决/1旧skip，不是一次全绿或累加attempt。
-- 类型App/Node、lint0错4旧警告、build/稳定隔离、安全扫描通过。
-- 最终46源SHA未变；4份嵌入工程日志哈希已核验，不机械全量重跑。
-- 预算49、网关47的未变实现证据复用；旧历史HEAD检查不改。
-- 单次写入边界审核REPLAY_CLOSE_REVIEW复用，没有新增多轮审核。
+## 工程与保护
+- 受影响21文件首次260通过1失败：旧启动器缺公开载体路径配置。
+- 配置公开载体路径，原失败+最终3新测试重验4/0；旧断言不改。
+- 按独立测试身份合并261通过、0未解决，不是一次全绿或累加attempt。
+- 新测试覆盖日期真/无/待定、坏引用、冲突、条件/修订/依赖、回滚和重复。
+- 最终App类型/受影响lint通过；Node类型、契约、安全、稳定build隔离通过。
+- 框架envFile=false，env/cache/output均新临时目录，根.env不读。
+- 一次确认策略针对性实现复核通过，不冒称独立第三方审查。
+- 原945保护仅Calendar获准例外，其余944逐字SHA保持。
+- 402旧证据、53原静态证据、日志追加边界保持。
+- 旧日志按原READ_CLOSE_CHECKS逐字SHA核对，Git换行差异单列。
+- 账本68行/51632字节不变，SHA如下。
+- 00a339e7e7d80c7ea5b058fd41f2602a062c1a465421b39310fcccf0d6f96b57。
 
-## 模型与剩余主瓶颈
-- 已完成D01–D08，新8次/历史累计32，禁止继续派发。
-- 账本68行，SHA00a339e7e7d80c7ea5b058fd41f2602a062c1a465421b39310fcccf0d6f96b57。
-- 已结算最高价上界0.581040元，A01 held-unknown永久3.30元；本轮增量0。
-- 严格任务8/9→9/9，时间1/3→1/3，材料0/2→1/2，Complete仍1/8。
-- 业务重大时间补正仍1份，无重大纠正7/8→7/8，最低联合采用条件未齐。
-- D03描述保留近期，但结构化时间仍漏近期，只得待核对，不能编造日期。
-- D02真无日期/D05true/D06false/D07unknown、D08新旧修订旧证据保持。
-- 本轮只证明已取得D01能正确确认保存，不是首次准确率改善。
-- 模型识别准确率本轮未测量；真人时间NOT_RUN，自动选择NOT_ENABLED。
-- 下一主线建议仅聚焦模糊时间表达/承接，需下一授权；不自动付费。
-- 不接真实库/稳定入口，不部署；Git业务提交完成后停止。
+## 剩余边界
+- 模型识别准确率本轮未测量；首次近期遗漏仍未修复。
+- 真人主动编辑时间NOT_RUN；自动默认选择NOT_ENABLED。
+- 正式任务后续补日期/执行/真实提醒/稳定导入仍需另行授权。
+- 详情底部旧历史区与上方完整事实历史重复且文案滞后，未扩大页面范围。
+- 不接真实用户库或稳定入口，不部署。
+- 下一轮应按用户选择聚焦剩余首次识别或实际使用瓶颈，不自动开展。

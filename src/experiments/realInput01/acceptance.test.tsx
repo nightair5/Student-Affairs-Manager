@@ -37,6 +37,151 @@ import { correctReadPage } from './inputReceipt'
 import type { ReactElement } from 'react'
 import { replayRecordedCandidate03, type RecordedCandidate03 } from './runtime'
 import { CANDIDATE03_VERSION } from './candidate03'
+import { acceptSemanticPendingDate } from '../mainline05/semanticConfirmation'
+import { pendingDateEligible, hasPendingDateConsent, pendingDateIdentity, liveReviewIdentity } from '../mainline05/semanticState'
+import { semanticDates, semanticView, pendingDateTaskIds } from '../mainline05/semanticView'
+import { CalendarPage } from '../../pages/CalendarPage'
+import { indexImmutableScopesV11 } from '../../recognition/scopeIndexV11'
+import type { RealInputState } from '../mainline05/semanticState'
+import type { SemanticInput } from '../mainline04/semanticContract'
+
+describe('explicit pending date confirmation',()=>{
+  async function pendingFixture(){
+    const p='docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a/'
+    const before=JSON.parse(readFileSync(p+'D01_BROWSER_AFTER.json','utf8')).workspace
+    const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:before.workspace.id})
+    await new CanonicalWorkspaceRepository(store).save(before)
+    const repo=await SemanticRepository.open(store.name,store,undefined,'real-input-01')
+    const item=JSON.parse(readFileSync(p+'BINDING.json','utf8')).items.find((i:{unitId:string})=>i.unitId==='D03')
+    const raw=JSON.parse(readFileSync(p+'D03_DISPATCH_RAW.jsonl','utf8'))
+    const record:RecordedCandidate03={version:'recorded-candidate03-1',unitId:'D03',name:store.name,handle:item.handle,context:item.context,
+      requestSha:raw.requestSha,responseSha:raw.responseSha,rawHttpText:raw.rawHttpText}
+    const loaded=await replayRecordedCandidate03(repo,record,{unitId:'D03',requestSha:raw.requestSha,responseSha:raw.responseSha})
+    const draft=loaded.extractionDrafts.find(d=>(d.legacyData?.realInputPending as {operationId?:string})?.operationId==='recorded-candidate03-D03')!
+    const state=stateOfRuntime(loaded,draft.id),facts=effectiveStateFacts(state).facts,task=facts.tasks[0]
+    const scope=state.context.index.scopes.find(s=>s.text.includes('近期'))!
+    const change={kind:'time',taskId:task.id,scopeIds:[scope.id],note:'人工核对补充遗漏的时间原文，日期仍待定。',value:{
+      ...facts.timePoints[0],tempId:'user-pending-time',rawText:'近期',scopeIds:[scope.id],relatedTaskTempIds:[task.id],relatedMaterialTempIds:[]}}
+    return {before,store,repo,draft,state,task,change:change as FactChange,loaded}
+  }
+  it('saves source-bound missing vague time without overwriting the real answer or existing nine tasks',async()=>{
+    const {before,store,repo,draft,state,task,change,loaded}=await pendingFixture()
+    expect(canAct(state,task.id)).toBe(false)
+    await expect(confirmSemantic(repo,{draftId:draft.id,taskTempIds:[task.id],revision:semanticRevision(loaded)})).rejects.toThrow()
+    await correctSemanticFact(repo,{draftId:draft.id,revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID(),change})
+    const saved=await repo.load(),next=stateOfRuntime(saved,draft.id)
+    expect(effectiveStateFacts(next).facts.timePoints.map(t=>t.rawText)).toEqual(['具体截止时间另行通知','近期'])
+    expect(next.rawResponse).toEqual(state.rawResponse);expect(next.first).toEqual(state.first)
+    expect(saved.tasks).toEqual(before.tasks)
+    expect(canAct(next,task.id)).toBe(false)
+    expect(pendingDateEligible(next,task.id)).toBe(true)
+    await acceptSemanticPendingDate(repo,{draftId:draft.id,taskId:task.id,revision:semanticRevision(saved),operationId:crypto.randomUUID()})
+    expect((await repo.load()).tasks).toEqual(before.tasks)
+    await expect(confirmSemantic(repo,{draftId:draft.id,taskTempIds:[task.id],revision:semanticRevision(await repo.load())})).rejects.toThrow()
+    await reviewSemanticFact(repo,{draftId:draft.id,taskId:task.id,revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID()})
+    const reviewed=await repo.load()
+    vi.spyOn(store,'transaction').mockImplementationOnce(async()=>{throw Error('PENDING_DATE_SAVE_FAILURE')})
+    await expect(confirmSemantic(repo,{draftId:draft.id,taskTempIds:[task.id],revision:semanticRevision(reviewed)})).rejects.toThrow('PENDING_DATE_SAVE_FAILURE')
+    expect(await repo.load()).toEqual(reviewed)
+    const confirmed=await confirmSemantic(repo,{draftId:draft.id,taskTempIds:[task.id],revision:semanticRevision(reviewed)})
+    expect(confirmed.tasks).toHaveLength(10)
+    expect(confirmed.tasks.slice(0,9)).toEqual(before.tasks)
+    const added=confirmed.tasks[9],times=confirmed.timePoints.filter(t=>t.relatedTaskIds.includes(added.id))
+    expect(times.map(t=>t.rawText)).toEqual(['具体截止时间另行通知','近期'])
+    expect(times.every(t=>t.normalizedValue===null&&t.needsConfirmation&&t.precision==='vague')).toBe(true)
+    expect(confirmed.historyRecords.filter(h=>h.action==='mainline05_accept_pending_date')).toHaveLength(1)
+    expect(confirmed.reminderRecords).toEqual(before.reminderRecords)
+    expect(hasPendingDateConsent(stateOfRuntime(confirmed,draft.id),task.id)).toBe(true)
+    expect(semanticDates(confirmed)[added.id]).toMatchObject({kind:'review',noDeadlineProven:false})
+    expect(semanticView(confirmed).tasks.find(t=>t.id===added.id)?.deadline).toBe('')
+    const calendarProps={tasks:semanticView(confirmed).tasks,courseBlocks:[],dateViews:semanticDates(confirmed),isolatedTimezone:'Asia/Shanghai',onOpenTask:()=>{},onAddCourseBlock:()=>{},onRemoveCourseBlock:()=>{}}
+    const calendar=renderToStaticMarkup(<CalendarPage {...calendarProps} pendingDateTaskIds={pendingDateTaskIds(confirmed)}/>)
+    expect(calendar.match(/aria-label="日期待定任务"[\s\S]*?<\/section>/)?.[0]).toContain(added.title)
+    expect(calendar.match(/aria-label="无截止日期任务"[\s\S]*?<\/section>/)?.[0]).not.toContain(added.title)
+    expect(renderToStaticMarkup(<CalendarPage {...calendarProps}/>)).not.toContain('aria-label="日期待定任务"')
+    expect(await new CanonicalWorkspaceRepository(store).load()).toEqual(JSON.parse(JSON.stringify(confirmed)))
+    expect(await confirmSemantic(repo,{draftId:draft.id,taskTempIds:[task.id],revision:semanticRevision(confirmed)})).toEqual(confirmed)
+  },60000)
+  it('source, ownership, stale edits and atomic consent boundaries reject without changing the workspace',async()=>{
+    const {repo,store,draft,state,task,change,loaded}=await pendingFixture()
+    if(change.kind!=='time'||state.version!==REAL_STATE_VERSION)throw Error('TEST_SHAPE')
+    for(const bad of [{...change,value:{...change.value,rawText:'原文没有这段'}},
+      {...change,value:{...change.value,relatedTaskTempIds:['other-task']}},
+      {...change,scopeIds:['bad-scope'],value:{...change.value,scopeIds:['bad-scope']}}]){
+      await expect(correctSemanticFact(repo,{draftId:draft.id,revision:semanticRevision(loaded),operationId:crypto.randomUUID(),change:bad})).rejects.toThrow()
+      expect(await repo.load()).toEqual(loaded)
+    }
+    await expect(acceptSemanticPendingDate(repo,{draftId:draft.id,taskId:task.id,revision:'stale',operationId:crypto.randomUUID()})).rejects.toThrow('STALE')
+    vi.spyOn(store,'transaction').mockImplementationOnce(async()=>{throw Error('CONSENT_SAVE_FAILURE')})
+    await expect(acceptSemanticPendingDate(repo,{draftId:draft.id,taskId:task.id,revision:semanticRevision(loaded),operationId:crypto.randomUUID()})).rejects.toThrow('CONSENT_SAVE_FAILURE')
+    expect(await repo.load()).toEqual(loaded)
+    await acceptSemanticPendingDate(repo,{draftId:draft.id,taskId:task.id,revision:semanticRevision(loaded),operationId:crypto.randomUUID()})
+    const accepted=await repo.load()
+    await correctSemanticFact(repo,{draftId:draft.id,revision:semanticRevision(accepted),operationId:crypto.randomUUID(),change})
+    const amended=await repo.load(),amendedState=stateOfRuntime(amended,draft.id)
+    expect(hasPendingDateConsent(amendedState,task.id)).toBe(false)
+    expect(canAct(amendedState,task.id)).toBe(false)
+    await expect(confirmSemantic(repo,{draftId:draft.id,taskTempIds:[task.id],revision:semanticRevision(amended)})).rejects.toThrow()
+    const tampered=structuredClone(amended),s=stateOfRuntime(tampered,draft.id)
+    s.operations.find(o=>o.kind==='accept_pending_date')!.pendingDateIdentity='forged'
+    await expect(validateSemanticWorkspace(tampered,'real-input-01')).rejects.toThrow()
+    expect(await repo.load()).toEqual(amended)
+  },60000)
+  it('targeted safety review: only date uncertainty qualifies, never references, conflicts, conditions, revisions or dependencies',async()=>{
+    const {state,task}=await pendingFixture()
+    if(state.version!==REAL_STATE_VERSION)throw Error('TEST_REAL_STATE')
+    const withFacts=async(mutate:(input:SemanticInput)=>void)=>{
+      const next=structuredClone(state);next.operations=[];mutate(next.adaptedResponse)
+      next.first=await composeSemantics(next.adaptedResponse,next.context);return next
+    }
+    expect(pendingDateEligible(state,task.id)).toBe(true)
+    for(const mutate of [
+      (i:SemanticInput)=>{i.timePoints[0].scopeIds=['missing']},
+      (i:SemanticInput)=>{i.timePoints[0].relatedTaskTempIds=['missing']},
+      (i:SemanticInput)=>{i.timePoints[0].timezone='America/Los_Angeles'},
+      (i:SemanticInput)=>{i.timePoints[0].normalizedValue='2026-09-10'},
+      (i:SemanticInput)=>{i.tasks[0].condition.value='false'},
+      (i:SemanticInput)=>{i.tasks[0].condition.value='unknown'},
+      (i:SemanticInput)=>{i.tasks[0].semantics.validity='superseded'},
+      (i:SemanticInput)=>{i.tasks[0].detail.dependencyTempIds=['missing']},
+      (i:SemanticInput)=>{i.tasks[0].detail.dependencyTempIds=[i.tasks[0].id]},
+      (i:SemanticInput)=>{i.conflicts.push({id:'conflict',type:'deadline',message:'时间冲突',entityTempIds:[i.timePoints[0].tempId],scopeIds:i.timePoints[0].scopeIds,requiresDecision:true})},
+    ])expect(pendingDateEligible(await withFacts(mutate),task.id)).toBe(false)
+    // Source-bearing AST probes: not a fixed sentence rule, and no artificial date is saved.
+    for(const [text,expected] of [['另行安排',true],['下午3点',true],['25:88',false],['2026年2月30日',false],['9月10日、9月11日',false]] as const){
+      const next:RealInputState=structuredClone(state);next.operations=[]
+      const index=await indexImmutableScopesV11(state.sourceId,state.sourceVersionId,'请提交活动总结，'+text+'。')
+      const input=next.adaptedResponse,t=input.tasks[0],scope=index.scopes[1]
+      input.sourceFingerprint=index.sourceFingerprint;t.propositionScopeIds=[index.scopes[0].id]
+      t.action.scopeId=index.scopes[0].id;t.object.scopeId=index.scopes[0].id
+      input.timePoints[0].rawText=text;input.timePoints[0].scopeIds=[scope.id]
+      next.context.index=index;next.first=await composeSemantics(input,next.context)
+      expect(pendingDateEligible(next,t.id),text).toBe(expected)
+    }
+    const brother=await withFacts(i=>{
+      const sibling=structuredClone(i.tasks[0]);sibling.id='brother';sibling.detail.timePointTempIds=[];sibling.coverage.time='not_stated';i.tasks.push(sibling)
+    })
+    expect(canAct(brother,'brother')).toBe(true)
+    const conflicting=structuredClone(state);conflicting.operations=[]
+    const ci=await indexImmutableScopesV11(state.sourceId,state.sourceVersionId,'请提交活动总结，下午3点，下午5点。')
+    const cf=conflicting.adaptedResponse,ct=cf.tasks[0]
+    conflicting.context.index=ci;cf.sourceFingerprint=ci.sourceFingerprint;ct.propositionScopeIds=[ci.scopes[0].id]
+    ct.action.scopeId=ci.scopes[0].id;ct.object.scopeId=ci.scopes[0].id
+    cf.timePoints=[1,2].map((n)=>({...cf.timePoints[0],tempId:'clock-'+n,rawText:n===1?'下午3点':'下午5点',scopeIds:[ci.scopes[n].id]}))
+    ct.detail.timePointTempIds=cf.timePoints.map(t=>t.tempId)
+    conflicting.first=await composeSemantics(cf,conflicting.context)
+    expect(pendingDateEligible(conflicting,ct.id)).toBe(false)
+    const dependent=await withFacts(i=>{
+      const sibling=structuredClone(i.tasks[0]);sibling.id='brother';sibling.detail.timePointTempIds=[];sibling.coverage.time='not_stated';i.tasks.push(sibling);i.tasks[0].detail.dependencyTempIds=['brother']
+    })
+    dependent.operations=[{kind:'accept_pending_date',id:'consent',at:new Date().toISOString(),taskIds:[task.id],field:null,value:null,before:null,pendingDateIdentity:pendingDateIdentity(dependent,task.id)}]
+    dependent.operations.push({kind:'review_task',id:'review',at:new Date().toISOString(),taskIds:[task.id],field:null,value:null,before:null,
+      reviewIdentity:liveReviewIdentity(dependent,task.id,life(dependent).values)})
+    const attempted=structuredClone(dependent)
+    attempted.operations.push({kind:'confirm',id:'confirm',at:new Date().toISOString(),taskIds:[task.id],field:null,value:null,before:null})
+    expect(()=>life(attempted)).toThrow('ITEM_NOT_CONFIRMABLE')
+  },60000)
+})
 
 describe('candidate03 recorded response integration, no model requests',()=>{
   async function recordedFixture(){

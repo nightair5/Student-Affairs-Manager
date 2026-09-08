@@ -17,6 +17,7 @@ import { formatDuration, getExecutableTasks } from '../lib/taskLogic'
 import type { CourseBlock, Event, Task } from '../types'
 
 interface CalendarPageProps {
+  pendingDateTaskIds?: readonly string[]
   isolatedTimezone?: string
   dateViews?: TaskDateViews
   tasks: Task[]
@@ -52,7 +53,7 @@ function itemTime(value: string): string {
     .format(new Date(value))
 }
 
-export function CalendarPage({ isolatedTimezone, dateViews, tasks, events = [], courseBlocks, onOpenTask, onOpenEvent, onAddCourseBlock, onRemoveCourseBlock }: CalendarPageProps) {
+export function CalendarPage({ pendingDateTaskIds, isolatedTimezone, dateViews, tasks, events = [], courseBlocks, onOpenTask, onOpenEvent, onAddCourseBlock, onRemoveCourseBlock }: CalendarPageProps) {
   const [today] = useState(() => isolatedTimezone ? instantToWallClock(new Date(), isolatedTimezone) : new Date())
   const displayTime = (value: string) => isolatedTimezone ? isDateOnly(value) ? '仅日期' : value.slice(11, 16) + '（' + isolatedTimezone + '）' : itemTime(value)
   const [viewDate, setViewDate] = useState(() => new Date(today.getFullYear(), today.getMonth(), 1))
@@ -129,6 +130,11 @@ export function CalendarPage({ isolatedTimezone, dateViews, tasks, events = [], 
 
   return (
     <main className="page calendar-page">
+      {pendingDateTaskIds&&<section aria-label="日期待定任务"><h2>日期待定任务</h2>
+        {tasks.filter(task=>pendingDateTaskIds.includes(task.id)&&dateViews?.[task.id]?.kind==='review'&&!task.deadline).map(task=><button type="button" key={task.id} onClick={()=>onOpenTask(task)}>
+          {task.title} · {dateViews?.[task.id]?.label}</button>)}
+        <p>原文有时间要求但具体日期未定；已由用户明确接受先加入任务。未放入具体日期格，未生成提醒。</p>
+      </section>}
       {dateViews && <section aria-label="无截止日期任务"><h2>无截止日期任务</h2>
         {tasks.filter(task => dateViews[task.id]?.noDeadlineProven).map(task => <button type="button" key={task.id} onClick={() => onOpenTask(task)}>{task.title} · {dateViews[task.id].label}</button>)}
         <p>未自动分配日期或提醒；也可在任务中心搜索。</p></section>}

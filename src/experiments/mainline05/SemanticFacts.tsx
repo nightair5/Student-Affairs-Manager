@@ -1,6 +1,7 @@
 import { life, relatedAssets, informationReviewProblem, effectiveStateFacts, REAL_STATE_VERSION, materialReviewEnabled, materialDecision, type AnySemanticState as SemanticState } from './semanticState'
 import { timeLabel } from './semanticView'
 import { materialStatusLabels } from '../realInput01/factCorrections'
+import { hasPendingDateConsent } from './semanticState'
 
 const truth = {true:'条件已满足',false:'条件未满足',unknown:'条件是否满足尚不明确',not_applicable:'无附加条件'}
 const coverage = {present:'已提取',not_stated:'原文未说明',not_extracted:'尚未提取',unresolved:'需核对'}
@@ -22,6 +23,7 @@ export function SemanticFacts({state,taskId,onFocus}:{state:SemanticState;taskId
       {state.version===REAL_STATE_VERSION?<p>当前已保存状态：{t.semantics.status==='cancelled'?'已作废':t.semantics.status==='pending'?'待执行':t.semantics.status} / {t.semantics.validity==='superseded'?'已被替代':t.semantics.validity==='active'?'有效':t.semantics.validity}；当前处置：{current.dispositions[t.id]}</p>
         :<p>原文状态：{t.semantics.status} / {t.semantics.validity}；当前处置：{current.dispositions[t.id]}</p>}
       <p>时间：{coverage[t.coverage.time]}；材料：{coverage[t.coverage.material]}；事件：{coverage[t.coverage.event]}</p>
+      {hasPendingDateConsent(state,t.id)&&<p>日期待定：用户已明确接受先保存任务；时间原文和待补充状态仍保留，未分配日期或提醒。</p>}
       {locate([...t.propositionScopeIds,...t.condition.conditionScopeIds,...t.condition.factScopeIds])}
       <details><summary>{state.version===REAL_STATE_VERSION?'当前已保存任务属性（原答另行保留）':'全部原始任务属性（不是用户修改）'}</summary><pre>{JSON.stringify(t.detail,null,2)}</pre></details>
     </div>)}
@@ -34,6 +36,7 @@ export function SemanticFacts({state,taskId,onFocus}:{state:SemanticState;taskId
       <p>关联任务：{m.relatedTaskTempIds.map(id=>input.tasks.find(t=>t.id===id)?.detail.title??id).join('、')}</p>{locate(m.scopeIds)}</details>)}
     {materialReviewEnabled(state)&&<details><summary>本次完整原文（包括无截止说明）</summary><blockquote>{state.context.index.sourceContent}</blockquote></details>}
     {input.timePoints.filter(t=>assets.times.has(t.tempId)).map(t=><details key={t.tempId}><summary>原始时间：{t.rawText}</summary>
+      {state.operations.some(o=>o.correction?.change.kind==='time'&&o.correction.change.value.tempId===t.tempId)&&<p>用户人工补正，非模型首次提取；原始回答另行保留。</p>}
       <p>类型：{t.type}；{timeLabel(t.normalizedValue,state.context.timezone)}；{t.needsConfirmation?'需核对':'已表达'}</p>
       <p>任务引用：{t.relatedTaskTempIds.join('、')||'经关联实体'}；材料引用：{t.relatedMaterialTempIds.join('、')||'无直接引用'}</p>{locate(t.scopeIds)}</details>)}
     {input.events.filter(e=>assets.events.has(e.tempId)).map(e=><details key={e.tempId}><summary>随任务保存的事件：{e.title}</summary>

@@ -23,6 +23,7 @@ export interface MainlineSemanticCapabilities {
   readonly exportName: string
 }
 export interface MainlineRealInputCapabilities {
+  pendingDateTaskIds?(workspace: WorkspaceV8): string[]
   readonly profile: 'real-input-01'
   readonly networkDescription: string
   inputPanel(options: { workspace: WorkspaceV8; initialText: string; onSaved: () => Promise<void>; onDraftReady: (id: string) => Promise<void> }): ReactNode

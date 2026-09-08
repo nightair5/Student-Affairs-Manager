@@ -19,6 +19,7 @@ import type { WireContext } from './modelWire'
 import { buildModelRequest } from './modelWire'
 import { buildCandidate02Request, CANDIDATE02_VERSION } from './candidate02'
 import { buildCandidate03Request, CANDIDATE03_VERSION } from './candidate03'
+import { pendingDateTaskIds } from '../mainline05/semanticView'
 import { stableJson } from '../mainline04/semanticContract'
 import type { RealInputReading } from '../mainline05/semanticState'
 
@@ -253,7 +254,7 @@ export async function createRealInputRuntime(options: {
           inputPanel:props=>options.recordedCandidate02?createElement(InputReview,{...props,repo,resources:options.resources,execution:options.execution,localOnly:true,
             send:async()=>{throw Error('REAL_INPUT_NEW_SEND_DISABLED')}}):options.recordedBatch?createElement('p',{role:'status'},'本批已调用完成；请从收件箱核对原回答。没有额外模型请求授权，新发送已关闭。'):options.recordedA02?createElement('p',{role:'status'},'当前只允许A02历史响应核对，已关闭新录入和发送。请从收件箱恢复A02。'):createElement(InputReview,{...props,repo,resources:options.resources,execution:options.execution,
             send:async(sourceId,pages,reviewed,operationId)=>sendRealInput(repo,{sourceId,pages,reviewed,operationId,revision:semanticRevision(props.workspace)},options.execution,options.execute)}),
-          factEditor:props=>createElement(FactCorrectionEditor,{...props,repo}),draftEditor:props=>createElement(RelationCorrection,{...props,repo})},
+          pendingDateTaskIds,factEditor:props=>createElement(FactCorrectionEditor,{...props,repo}),draftEditor:props=>createElement(RelationCorrection,{...props,repo})},
         semantic:{facts,timezone:'Asia/Shanghai',exportName:'mainline-real-input-01-workspace.json',
           informationReviewProblem:(w,d)=>informationReviewProblem(stateOfRuntime(w,d)),dispose:i=>disposeSemantic(repo,i),
           taskFacts:(w,id)=>{const state=stateForEntity(w,id);return facts(w,state.draftId,String(w.tasks.find(t=>t.id===id)!.legacyData!.recognitionTempId))},

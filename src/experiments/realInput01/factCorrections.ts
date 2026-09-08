@@ -1,4 +1,4 @@
-import { parseSemanticInput, plainJson, stableJson, type SemanticInput, type SemanticMaterial, type SemanticTask, type SemanticEvent, type SemanticRevision } from '../mainline04/semanticContract'
+import { parseSemanticInput, plainJson, stableJson, type SemanticInput, type SemanticMaterial, type SemanticTask, type SemanticTime, type SemanticEvent, type SemanticRevision } from '../mainline04/semanticContract'
 import type { ImmutableScopeIndex, SurfaceReference } from '../../recognition/scopeReferenceContract'
 import type { MaterialStatus } from '../../domain/v2/types'
 
@@ -17,6 +17,7 @@ export function validateMaterialDecision(value: unknown): MaterialDecision {
 export type MaterialEdit = Pick<SemanticMaterial, 'name' | 'quantity' | 'formatRequirements' | 'namingRequirements' | 'submissionChannel' | 'relatedTaskTempIds'>
 export type FactChange = { kind: 'surface'; taskId: string; field: 'action' | 'object'; value: SurfaceReference }
   | { kind: 'material'; materialId: string; value: MaterialEdit }
+  | { kind: 'time'; taskId: string; value: SemanticTime; scopeIds: string[]; note: string }
   | { kind: 'condition'; taskId: string; value: SemanticTask['condition']; scopeIds: string[]; note: string }
   | { kind: 'event'; taskId: string; value: { coverage: SemanticTask['coverage']['event']; event: SemanticEvent | null }; scopeIds: string[]; note: string }
   | { kind: 'revision'; index: number; value: { relation: SemanticRevision; addedTask: SemanticTask | null }; scopeIds: string[]; note: string }
@@ -111,6 +112,19 @@ function apply(input: SemanticInput, change: FactChange, index: ImmutableScopeIn
       if (previous.has(task.id) || ids.includes(task.id)) task.coverage.material = factAssets(input, task.id).materials.size ? 'present' : 'not_stated'
     }
     for (const task of input.tasks) if (factAssets(input, task.id).materials.has(item.tempId) !== ids.includes(task.id)) reject('OWNER_HAS_OTHER_RELATIONS')
+  } else if (change.kind === 'time') {
+    keys(change,['kind','taskId','value','scopeIds','note'])
+    const task=input.tasks.find(t=>t.id===change.taskId);if(!task)return reject('TASK_MISSING')
+    const time=change.value,assets=factAssets(input,task.id)
+    const allowed=new Set([...task.propositionScopeIds,...input.timePoints.filter(t=>assets.times.has(t.tempId)).flatMap(t=>t.scopeIds)])
+    if(!/^user-[A-Za-z0-9-]{1,90}$/.test(time.tempId)
+      || [...input.tasks.map(t=>t.id),...input.timePoints.map(t=>t.tempId),...input.materials.map(m=>m.tempId),...input.events.map(e=>e.tempId)].includes(time.tempId))reject('NEW_TIME_ID')
+    if(!same(time.relatedTaskTempIds,[task.id])||time.relatedMaterialTempIds.length)reject('TIME_OWNER')
+    if(!time.rawText.trim()||!time.scopeIds.length||!same(time.scopeIds,change.scopeIds)||time.scopeIds.some(id=>!allowed.has(id))
+      ||time.scopeIds.filter(id=>index.scopes.find(s=>s.id===id)?.text.includes(time.rawText)).length!==1)reject('TIME_EVIDENCE')
+    if(input.timePoints.some(t=>assets.times.has(t.tempId)&&t.rawText===time.rawText&&same(t.scopeIds,time.scopeIds)))reject('DUPLICATE_TIME')
+    // Append only: existing time entities and relationships are never deleted to rescue confirmation.
+    input.timePoints.push(plainJson(time));task.detail.timePointTempIds.push(time.tempId);task.coverage.time='present'
   } else if (change.kind === 'condition') {
     keys(change,['kind','taskId','value','scopeIds','note'])
     const task=input.tasks.find(t=>t.id===change.taskId); if(!task)return reject('TASK_MISSING')
@@ -148,7 +162,7 @@ function apply(input: SemanticInput, change: FactChange, index: ImmutableScopeIn
   parseSemanticInput(input)
 }
 export function correctionBefore(input: SemanticInput, change: FactChange) {
-  if(change.kind==='add_task')return null
+  if(change.kind==='add_task'||change.kind==='time')return null
   if(change.kind==='revision')return {relation:plainJson(input.revisions[change.index]??null),addedTask:null}
   if(change.kind==='condition'||change.kind==='event'){
     const task=input.tasks.find(t=>t.id===change.taskId);if(!task)return reject('TASK_MISSING')

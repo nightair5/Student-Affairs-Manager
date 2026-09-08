@@ -4,7 +4,7 @@ import type { reviewAdapter } from '../mainline02/reviewAdapter'
 import type { TaskDateViews, TaskDateView } from '../mainline02/taskDateView'
 import { isDateOnly } from '../../lib/timeSemantics'
 import { stateOfRuntime as stateOf, life, relatedAssets, canAct, editTimeSupport, semanticRevision,
-  effectiveStateFacts, effectiveReview, REAL_STATE_VERSION, liveReviewIdentity, isCurrentDraft, titleReviewProblem, materialReviewProblem, type AnySemanticState as SemanticState } from './semanticState'
+  effectiveStateFacts, effectiveReview, REAL_STATE_VERSION, liveReviewIdentity, isCurrentDraft, titleReviewProblem, materialReviewProblem, hasPendingDateConsent, type AnySemanticState as SemanticState } from './semanticState'
 
 export const timeLabel = (value: string | null, timezone: string) => !value ? '时间待核对'
   : value + (isDateOnly(value) ? '（仅日期）' : '（' + timezone + '）')
@@ -14,15 +14,19 @@ export function semanticDates(workspace: WorkspaceV8): TaskDateViews {
     const original = effectiveStateFacts(state).facts.tasks.find(t => t.id === task.legacyData?.recognitionTempId)!
     const points = workspace.timePoints.filter(t => t.relatedTaskIds.includes(task.id))
     const deadline = points.filter(t => !['planned_start','event_start','event_end'].includes(t.type))
-      .sort((a,b) => a.normalizedValue!.localeCompare(b.normalizedValue!))
+      .sort((a,b) => (a.normalizedValue??'').localeCompare(b.normalizedValue??''))
     let view: TaskDateView
     if (points.some(t => t.needsConfirmation || !t.normalizedValue) || (!points.length && original.coverage.time !== 'not_stated')) {
-      view = {kind:'review',label:'时间尚待核对',noDeadlineProven:false,projectedPendingOnly:false}
+      view = {kind:'review',label:hasPendingDateConsent(state,original.id)
+        ? '日期待定 · '+points.map(t=>t.rawText).join('；')+'（已明确接受，仍需补充日期）':'时间尚待核对',noDeadlineProven:false,projectedPendingOnly:false}
     } else if (deadline.length) view = {kind:'dated',label:timeLabel(deadline[0].normalizedValue,state.context.timezone),noDeadlineProven:false,projectedPendingOnly:false}
     else view = {kind:points.length?'start_only':'absent',label:points.length?'原文仅说明开始/事件时间，未说明截止时间':'原文未说明截止时间',
       noDeadlineProven:true,projectedPendingOnly:true}
     return [task.id,view]
   }))
+}
+export function pendingDateTaskIds(workspace:WorkspaceV8): string[] {
+  return workspace.tasks.filter(t=>hasPendingDateConsent(stateOf(workspace,String(t.legacyData?.mainline05DraftId)),String(t.legacyData?.recognitionTempId))).map(t=>t.id)
 }
 function draftView(workspace: WorkspaceV8, draftId: string, choices: Readonly<Record<string,boolean>> = {}): ReturnType<typeof reviewAdapter> {
   const failed=workspace.extractionDrafts.find(d=>d.id===draftId)
@@ -70,7 +74,8 @@ function draftView(workspace: WorkspaceV8, draftId: string, choices: Readonly<Re
     states[id] = { defaultSelected, blockedReason, dateEditBlockedReason: support.allowed ? undefined : '本轮不支持修改开始、事件、共享或多个时间；原始时间仍完整保留。',
       materialTempIds:[...assets.materials],timePointTempIds:assets.times.size?[...assets.times]:value?['manual-deadline:'+task.id]:[],
       value,edited,originalDate:originalDate.length===1?originalDate[0].normalizedValue??'':'',
-      dateLabel:blockedReason&&!materialReviewProblem(state,task.id)?'待核对：不能当作无日期确认':value?timeLabel(value,state.context.timezone)+(edited?' · 用户修改':'')
+      dateLabel:hasPendingDateConsent(state,task.id)?'日期待定 · '+input.timePoints.filter(t=>assets.times.has(t.tempId)).map(t=>t.rawText).join('；')
+        :blockedReason&&!materialReviewProblem(state,task.id)?'待核对：不能当作无日期确认':value?timeLabel(value,state.context.timezone)+(edited?' · 用户修改':'')
         :assets.times.size?'原文仅说明开始/事件时间，完整时间见依据':'原文未说明截止时间 · 可无日期确认' }
     return {id,status:disposition==='confirmed'?'已确认' as const:disposition==='rejected'?'已拒绝' as const:'待确认' as const,
       selected:!blockedReason && choose(task.id),
@@ -90,7 +95,7 @@ export function semanticView(workspace:WorkspaceV8): ReturnType<typeof workspace
       const canonical = workspace.tasks.find(t=>t.id===task.id)!, state=stateOf(workspace,String(canonical.legacyData?.mainline05DraftId))
       const original=effectiveStateFacts(state).facts.tasks.find(t=>t.id===canonical.legacyData?.recognitionTempId)!
       const points=workspace.timePoints.filter(t=>t.relatedTaskIds.includes(task.id)&&!['planned_start','event_start','event_end'].includes(t.type))
-        .sort((a,b)=>a.normalizedValue!.localeCompare(b.normalizedValue!))
+        .sort((a,b)=>(a.normalizedValue??'').localeCompare(b.normalizedValue??''))
       return {...task,deadline:points[0]?.normalizedValue??'',priority:original.detail.prioritySuggestion==='high'||original.detail.prioritySuggestion==='urgent'?'高'
         :original.detail.prioritySuggestion==='low'?'低':'中',
         sourceIds:[state.sourceId],nextAction:canonical.nextAction??'',description:canonical.description??'',reminders:[]}

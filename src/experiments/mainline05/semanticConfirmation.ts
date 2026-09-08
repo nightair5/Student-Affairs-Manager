@@ -7,6 +7,25 @@ import { assert, exactKeys, equal, stateOfRuntime as stateOf, life, canonicalFac
   REAL_STATE_VERSION, effectiveStateFacts, liveReviewIdentity, isCurrentDraft, relatedAssets, materialIdentity, materialDecision, materialReviewEnabled, type SemanticOperation } from './semanticState'
 import { appendCorrection, correctionBefore, validateMaterialDecision, type MaterialDecision, type FactChange } from '../realInput01/factCorrections'
 import { composeSemantics } from '../mainline04/semanticComposer'
+import { pendingDateEligible, pendingDateIdentity, hasPendingDateConsent } from './semanticState'
+
+/** Records consent only. Formal tasks still require separate fact review and explicit confirmation. */
+export async function acceptSemanticPendingDate(repo: SemanticRepository, intent: {draftId:string;taskId:string;revision:string;operationId:string}) {
+  exactKeys(intent,['draftId','taskId','revision','operationId'])
+  assert(intent.operationId&&/^[A-Za-z0-9-]{1,100}$/.test(intent.operationId),'PENDING_DATE_OPERATION')
+  return repo.transaction(workspace=>{
+    assert(repo.profile==='real-input-01'&&semanticRevision(workspace)===intent.revision,'STALE_VERSION')
+    const state=stateOf(workspace,intent.draftId)
+    assert(state.version===REAL_STATE_VERSION&&isCurrentDraft(workspace,intent.draftId),'PENDING_DATE_PROFILE')
+    assert(pendingDateEligible(state,intent.taskId),'PENDING_DATE_NOT_ELIGIBLE')
+    assert(!['confirmed','rejected'].includes(life(state).dispositions[intent.taskId]),'ALREADY_CONFIRMED_OR_REJECTED')
+    if(hasPendingDateConsent(state,intent.taskId))return workspace
+    const now=new Date().toISOString()
+    return applySemanticDomainCommitPlan(workspace,planOperation(workspace,intent.draftId,{id:intent.operationId,
+      kind:'accept_pending_date',at:now,taskIds:[intent.taskId],field:null,value:null,before:null,
+      pendingDateIdentity:pendingDateIdentity(state,intent.taskId)}),now)
+  })
+}
 import type { SemanticRepository } from './semanticRepository'
 
 export interface SemanticDispositionIntent {

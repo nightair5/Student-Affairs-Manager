@@ -1340,6 +1340,7 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
       case 'calendar':
         return (
           <CalendarPage
+            pendingDateTaskIds={runtime?.realInput?.pendingDateTaskIds&&isolatedSnapshot?runtime.realInput.pendingDateTaskIds(isolatedSnapshot):undefined}
             dateViews={dateViews}
             isolatedTimezone={runtime?.semantic?.timezone}
             tasks={tasks}
