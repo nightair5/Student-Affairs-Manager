@@ -80,6 +80,54 @@ async function recoveryFixture() {
     billingEvidence:fixture.manifest.billingEvidence,route:{proxyHost:'127.0.0.1',proxyPort:10081,targetHost:'api.deepseek.com',targetPort:443}}
   return {...fixture,before,prefix,grant,a01}
 }
+
+async function candidate02Fixture() {
+  const f=await batchFixture(),b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.batchGrant})
+  for(const u of f.batchGrant.targets)await (await reserve(b,u.unitId)).complete(envelope(u.unitId))
+  const s=await b.snapshot(),prefix=await readFile(join(f.dir,'CALL_LEDGER.jsonl'))
+  const grant={...f.batchGrant,version:'real-input-candidate02-grant-1',grantId:'33333333-3333-4333-8333-333333333333',
+    parentTail:s.tail,parentSequence:s.nextSequence,ledgerPrefixBytes:prefix.length,ledgerPrefixSha:sha256(prefix),maxTotalRequests:24,
+    targets:Array.from({length:8},(_,i)=>row(`C${String(i+1).padStart(2,'0')}`,'candidate-02',`A${String(i+1).padStart(2,'0')}`))}
+  return {...f,grant,prefix}
+}
+if(process.argv[2]!=='--reserve-child') {
+  test('candidate02 appends eight original-A inputs; old unknown and all historical receipts survive',async()=>{
+    const f=await candidate02Fixture()
+    for(const u of f.grant.targets){const b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+      assert.equal((await b.snapshot()).units.length,24);await (await reserve(b,u.unitId)).complete(envelope(u.unitId))}
+    const b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant}),s=await b.snapshot()
+    assert.equal(s.reservations.length,24);assert.equal(s.reservations[0].costUpperMicroCny,3300000)
+    assert.equal(s.reservations[0].status,'held-unknown');assert.equal(s.batch.grant.maxTotalRequests,16)
+    assert.deepEqual((await readFile(join(f.dir,'CALL_LEDGER.jsonl'))).subarray(0,f.prefix.length),f.prefix)
+    for(const id of ['A01','A02','B08','C01','C09'])await assert.rejects(()=>reserve(b,id))
+  })
+  test('candidate02 validates grant/input/price/parent and cannot substitute old candidate',async()=>{
+    const f=await candidate02Fixture()
+    for(const mutate of [g=>{g.targets[0].inputSha=sha256('B01')},g=>{g.targets[0].candidateSha=f.manifest.units[0].candidateSha},
+      g=>{g.targets[1].scorerSha=sha256('other')},g=>{g.parentTail=sha256('wrong')},g=>{g.parentSequence++},g=>{g.maxTotalRequests=25}]){
+      const g=structuredClone(f.grant);mutate(g);await assert.rejects(()=>openBudget(f.dir,f.manifestSha,{batchGrant:g}))}
+    const b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+    await assert.rejects(()=>reserve(b,'C02'));await assert.rejects(()=>reserve(b,'C01',BILLING_POLICY,'2027-01-01T00:00:00Z'))
+    assert.deepEqual(await readFile(join(f.dir,'CALL_LEDGER.jsonl')),f.prefix)
+  })
+  test('candidate02 concurrent reserve, crash and invalid usage never release or retry',async()=>{
+    for(const outcome of ['crash','invalid','unknown']){
+      const f=await candidate02Fixture(),a=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant}),b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+      const results=await Promise.allSettled([reserve(a,'C01'),reserve(b,'C01')]);assert.equal(results.filter(r=>r.status==='fulfilled').length,1)
+      const lease=results.find(r=>r.status==='fulfilled').value
+      if(outcome==='invalid')await assert.rejects(()=>lease.complete(envelope('C01').replace('"usage":','"usage":{},"usage":')))
+      if(outcome==='unknown')await lease.uncertain()
+      const reopened=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+      for(const id of ['C01','C02'])await assert.rejects(()=>reserve(reopened,id))
+      assert.equal((await reopened.snapshot()).reservations[16].costUpperMicroCny,3300000)
+    }
+  })
+  test('candidate02 preserves ten yuan cap including held A01',async()=>{
+    const f=await candidate02Fixture(),b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+    for(const id of ['C01','C02'])await (await reserve(b,id)).complete(envelope(id,1048576,8192))
+    await assert.rejects(()=>reserve(b,'C03'),/LIMIT/);assert.equal((await b.snapshot()).reservations.length,18)
+  })
+}
 if(process.argv[2]!=='--reserve-child') {
   test('separate Node crash after recovery reservation cannot return the grant on reopen',async()=>{
     const f=await recoveryFixture()

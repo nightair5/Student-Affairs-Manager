@@ -1,0 +1,77 @@
+{
+  "status": "PASS_FILES_AND_INDEPENDENT_REPOSITORY",
+  "files": [
+    {
+      "path": "C:/Users/Winner/Downloads/real-input-local-evidence (4).json",
+      "bytes": 735965,
+      "sha256": "3d5eee0daf7a9e650ae1fd94e66197a0cb157f79139ddd39fb3f467eb64564ee"
+    },
+    {
+      "path": "C:/Users/Winner/Downloads/real-input-local-evidence (5).json",
+      "bytes": 754026,
+      "sha256": "e4fbf5809bc16f4097cc50fd327791df00f33dac9f91b85261951406af8c623f"
+    },
+    {
+      "path": "C:/Users/Winner/Downloads/mainline-real-input-01-workspace (3).json",
+      "bytes": 1002971,
+      "sha256": "1711a6a7027aac8e17e6b31350b24780a4008ab0641592690b4fa1da325dbff2"
+    }
+  ],
+  "beforeObjectSha": "02c4173ed3024d0b6ae941bff2a4f386ac58df481d02ac5a64e48714db7ea624",
+  "afterObjectSha": "e789d9a39a15d6f11b1d449444f7def1493dd23b51ae7802e768311289baf8fe",
+  "tasks": {
+    "before": 6,
+    "after": 7,
+    "oldPreserved": 6,
+    "new": 1,
+    "oldCancelledAdded": 0
+  },
+  "times": 2,
+  "reminders": 0,
+  "jobs": 0,
+  "pdf": {
+    "originalPreserved": true,
+    "corrections": 2,
+    "sendSnapshot": null,
+    "final": "此前打印纸质报名表的要求已作废。\n\n现要求提交电子报名表。"
+  },
+  "c08": {
+    "originalPreserved": true,
+    "confirmed": 1,
+    "materialRequired": true,
+    "materialStatus": "missing",
+    "sourceStatus": "partially_confirmed",
+    "oldTaskBinding": null,
+    "revisionPreserved": true
+  },
+  "semanticValidator": "PASS",
+  "modelCalls": 0,
+  "browser": {
+    "origin": "http://127.0.0.1:6631",
+    "tab": "763114892",
+    "savedPdfReview": "PASS_RESTORED_EXISTING_REAL_READING",
+    "newUpload": "NOT_RUN_FILE_CHOOSER_NOT_ALLOWED",
+    "C08": "PASS_REAL_APP_CONFIRM_REFRESH_TASKS_CALENDAR_DETAILS",
+    "newIndependentRead": "PASS",
+    "actualDownload": "PASS",
+    "initialUploadActor": "NOT_OBSERVED_THIS_TURN",
+    "pdfSource": "source:653956bd",
+    "C08Draft": "source:78c7cfc8:draft:1:2"
+  },
+  "reusedEngineering": {
+    "snapshot": "READ_CLOSE_IMPLEMENTATION_SNAPSHOT.json",
+    "affectedTests": 43,
+    "types": "PASS_REUSED",
+    "lint": "PASS_REUSED_WITH_OLD_WARNING",
+    "build": "PASS_REUSED",
+    "oldFullTests": 1250,
+    "oldSkip": 1,
+    "newSourceEdits": 0
+  },
+  "firstFileCheckAttempt": {
+    "status": "FAILED_AUDIT_ASSERTION_TOO_BROAD",
+    "reason": "Expected confirmed Source status/updatedAt to remain unchanged; final check explicitly requires needs_review -> partially_confirmed and confirm timestamp, all other fields unchanged.",
+    "oldTestsChanged": false
+  },
+  "validationCommand": "\nimport{readFileSync}from'node:fs';import{createHash}from'node:crypto';import assert from'node:assert/strict';import{build}from'esbuild';\nconst h=x=>createHash('sha256').update(x).digest('hex');\nconst P=['C:/Users/Winner/Downloads/real-input-local-evidence (4).json','C:/Users/Winner/Downloads/real-input-local-evidence (5).json','C:/Users/Winner/Downloads/mainline-real-input-01-workspace (3).json'];\nconst [b,i,d]=P.map(p=>JSON.parse(readFileSync(p)));\nassert.equal(b.sha256,'02c4173ed3024d0b6ae941bff2a4f386ac58df481d02ac5a64e48714db7ea624');assert.equal(i.sha256,'e789d9a39a15d6f11b1d449444f7def1493dd23b51ae7802e768311289baf8fe');\nfor(const e of[b,i]){assert.equal(e.name,'rco-mainline-01-02-i1-real-input-d030c507-3f7c-4a2c-a511-8cd5bd534862');assert.equal(e.origin,'http://127.0.0.1:6631');assert.equal(e.source,'new CanonicalWorkspaceRepository(new IsolatedTestStore(name)).load()');assert.equal(h(JSON.stringify(e.workspace)),e.sha256);assert.equal(e.realJobs,0)}\nassert.deepEqual(d,i.workspace);assert.equal(d.schemaVersion,8);\nconst bundle=await build({stdin:{contents:\"export {validateSemanticWorkspace,effectiveStateFacts} from './src/experiments/mainline05/semanticState.ts'\",resolveDir:process.cwd()},bundle:true,write:false,platform:'node',format:'esm',target:'node24'});\nconst {validateSemanticWorkspace,effectiveStateFacts}=await import('data:text/javascript;base64,'+Buffer.from(bundle.outputFiles[0].contents).toString('base64'));\nawait validateSemanticWorkspace(b.workspace,'real-input-01');await validateSemanticWorkspace(d,'real-input-01');\nassert.equal(b.workspace.tasks.length,6);assert.equal(d.tasks.length,7);\nfor(const key of ['tasks','materials'])for(const o of b.workspace[key])assert.deepEqual(d[key].find(x=>x.id===o.id),o);\nfor(const key of ['timePoints','reminderRecords','recognitionRuns','sourceVersions'])assert.deepEqual(d[key],b.workspace[key]);\nconst did='source:78c7cfc8:draft:1:2',sr='source:653956bd';\nconst old=b.workspace.extractionDrafts.find(x=>x.id===did).legacyData.mainline05,now=d.extractionDrafts.find(x=>x.id===did).legacyData.mainline05;\nfor(const k of ['rawHttpText','rawOutputText','rawResponse','first','inputReceipt','sendSnapshot'])assert.deepEqual(now[k],old[k]);\nconst f=effectiveStateFacts(now).facts,oldTask=f.tasks.find(t=>t.id==='task-print-paper-form');\nassert.equal(oldTask.semantics.status,'cancelled');assert.equal(oldTask.semantics.validity,'superseded');assert.equal(now.bindings['task:task-print-paper-form'],null);\nassert.deepEqual(f.revisions,effectiveStateFacts(old).facts.revisions);assert.equal(f.revisions[0].effective,'true');\nconst task=d.tasks.find(t=>t.id===now.bindings['task:task-submit-electronic-form']);assert.ok(task);assert.equal(task.title,'提交电子报名表');\nconst mat=d.materials.find(m=>m.id===now.bindings['material:mat-electronic-form']);assert.equal(mat.required,true);assert.equal(mat.status,'missing');assert.deepEqual(mat.relatedTaskIds,[task.id]);assert.equal(mat.deadlineTimePointId,null);\nconst confirms=now.operations.filter(o=>o.kind==='confirm');assert.equal(confirms.length,1);\nfor(const s of b.workspace.sources.filter(s=>s.id!==sr)){\nconst n=d.sources.find(x=>x.id===s.id);\nif(s.id===now.sourceId){assert.equal(s.status,'needs_review');assert.equal(n.status,'partially_confirmed');assert.equal(n.updatedAt,confirms[0].at);assert.deepEqual({...n,status:s.status,updatedAt:s.updatedAt},s)}\nelse assert.deepEqual(n,s);\n}\nconst r=d.sources.find(s=>s.id===sr).legacyData.realInput01,br=b.workspace.sources.find(s=>s.id===sr).legacyData.realInput01;\nassert.deepEqual(r.inputReceipt.pages,br.inputReceipt.pages);assert.equal(r.inputReceipt.file.sha256,'1d23427a358457fb001ebc5f5fd32ca42423458c0355304b3f15601ebd79bdee');assert.equal(br.inputReceipt.corrections.length,0);assert.equal(r.inputReceipt.corrections.length,2);assert.equal(r.inputReceipt.corrections.at(-1).chunks.join(''),'此前打印纸质报名表的要求已作废。\\n\\n现要求提交电子报名表。');assert.equal(r.sendSnapshot,null);\nconsole.log(JSON.stringify({status:'PASS_FILES_AND_INDEPENDENT_REPOSITORY',files:P.map(path=>({path,bytes:readFileSync(path).length,sha256:h(readFileSync(path))})),beforeObjectSha:b.sha256,afterObjectSha:i.sha256,tasks:{before:6,after:7,oldPreserved:6,new:1,oldCancelledAdded:0},times:d.timePoints.length,reminders:d.reminderRecords.length,jobs:0,pdf:{originalPreserved:true,corrections:2,sendSnapshot:null,final:r.inputReceipt.corrections.at(-1).chunks.join('')},c08:{originalPreserved:true,confirmed:1,materialRequired:true,materialStatus:'missing',sourceStatus:'partially_confirmed',oldTaskBinding:null,revisionPreserved:true},semanticValidator:'PASS',modelCalls:0}));\n"
+}

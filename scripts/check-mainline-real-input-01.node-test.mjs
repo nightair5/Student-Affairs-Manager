@@ -7,10 +7,18 @@ import { build } from 'esbuild'
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { verifyPreparedUnitIdentity, verifySendApproval, verifyRecoverySendApproval, compileBatchScorer, verifyBatchSendApproval } from './run-mainline-real-input-01.mjs'
-import { inspectProtection, verifyRecoveryScope } from './check-mainline-real-input-01.mjs'
+import { inspectProtection, verifyRecoveryScope, verifyReadCloseIdentity } from './check-mainline-real-input-01.mjs'
 import { BILLING_POLICY, RECOVERY_ROUTE, sha256 } from './real-input-budget.mjs'
 
 const carrierManifest=process.env.REAL_INPUT_CARRIERS_MANIFEST
+test('read-close binds current audit and frozen candidate/ledger without calling a model',()=>{
+  const b=JSON.parse(readFileSync('docs/recognition-optimization/mainline-real-input-01/runs/candidate02-20260908a/READ_CLOSE_BASELINE.json'))
+  const current=inspectProtection({stage:'read-close'});assert.equal(verifyReadCloseIdentity(b,current),true)
+  for(const [key,value]of [['head','0'.repeat(40)],['ledgerSha','0'.repeat(64)],['protectedSha','0'.repeat(64)]])assert.throws(()=>verifyReadCloseIdentity(b,{...current,[key]:value}))
+  const changed=structuredClone(current);changed.sources.find(s=>s.path.endsWith('/candidate02.ts')).workingSha256='0'.repeat(64)
+  assert.throws(()=>verifyReadCloseIdentity(b,changed),/FROZEN_SOURCE/)
+  assert.throws(()=>verifyReadCloseIdentity(b,{...current,sources:current.sources.slice(1)}),/PATHS/)
+})
 test('batch gate preserves original inputs and actual scorer closure while binding current reviewed code; no credential access',async()=>{
   const D='docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/'
   const old='docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/'
@@ -166,4 +174,21 @@ test('local real App serves exact assets, rejects secret paths and unbound endpo
     const value=await response.json();assert.equal(value.label,'seen_engineering_replay');assert.equal(typeof value.rawHttpText,'string')
     assert.equal((await send('这不是登记的旧工程通知。')).status,400)
   })
+})
+test('candidate02 binds current reviewed source, exact A inputs, readonly scorer and eight requests',async()=>{
+  const {verifyCandidate02Send}=await import('./run-mainline-real-input-01.mjs')
+  const D='docs/recognition-optimization/mainline-real-input-01/runs/candidate02-20260908a/'
+  const bindingBytes=readFileSync(D+'BINDING.json'),binding=JSON.parse(bindingBytes),baseline=JSON.parse(readFileSync(D+'BASELINE.json'))
+  const old=JSON.parse(readFileSync('docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/STATE.json'))
+  const manifestBytes=readFileSync('docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/REQUEST_MANIFEST.json')
+  const billing=JSON.parse(readFileSync(D+'BILLING.json'));billing.verified=true
+  const protection=inspectProtection({stage:'candidate02'}),sources=protection.sources.map(s=>({path:s.path,sha256:s.workingSha256}))
+  const review={head:protection.head,status:'PASS',scope:'CANDIDATE02_SEND',sources,bindingSha:sha256(bindingBytes),billingSha:sha256(JSON.stringify(billing)),grantId:'33333333-3333-4333-8333-333333333333'}
+  const args={bindingBytes,binding,baseline,old,manifestBytes,billing,review,protection}
+  assert.equal(verifyCandidate02Send(args).targets.length,8)
+  for(const mutate of [a=>{a.review.status='BLOCKED'},a=>{a.review.sources[0].sha256='0'.repeat(64)},a=>{a.protection.head='a'.repeat(40)},
+    a=>{a.billing.verified=false},a=>{a.binding.units[0].inputSha='0'.repeat(64)},a=>{a.review.bindingSha='0'.repeat(64)}]){
+    const copy=structuredClone(args);copy.bindingBytes=Buffer.from(args.bindingBytes);copy.manifestBytes=Buffer.from(args.manifestBytes);mutate(copy)
+    assert.throws(()=>verifyCandidate02Send(copy))
+  }
 })

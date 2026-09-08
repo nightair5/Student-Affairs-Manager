@@ -120,6 +120,7 @@ export async function makeSendSnapshot(input: InputReceipt, pages: number[], rev
   for (const number of pages) {
     const page = receipt.pages.find(p => p.number === number), value = effective.find(p => p.number === number)?.text
     guard(page && ['parser','ocr','empty'].includes(page.route) && value !== undefined, 'UNREAD_PAGE')
+    guard(value!.trim().length > 0, 'EMPTY_PAGE_REQUIRES_CORRECTION_OR_EXCLUSION')
     if (text) text += '\n\n'
     const start = text.length; text += value!
     ranges.push({ page: number, start, end: text.length, pageTextSha256: await sha256Text(value!) })

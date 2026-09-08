@@ -303,7 +303,8 @@ async function extractImageText(file: File, options: FileExtractionOptions): Pro
       active(options)
       const ocrConfidence = normalizedOcrConfidence(recognition.data.confidence)
       const decision = prepared ? routeOcrQuality(prepared.before, { text: recognition.data.text, confidence: ocrConfidence }) : undefined
-      const qualityFlags = [...(prepared?.qualityFlags ?? []), ...(decision?.reasons ?? [])]
+      const qualityFlags = [...(prepared?.qualityFlags ?? []), ...(decision?.reasons ?? []),
+        ...(localProfile(options) && !recognition.data.text.trim() ? ['OCR未识别到正文；不是已完整读取，请对照图片补充文字。'] : [])]
       return readyResult(recognition.data.text, {
         extractionMethod: 'ocr',
         ...(localProfile(options) ? { pageCount: 1, pages: [{ pageNumber: 1, route: recognition.data.text.trim() ? 'ocr' as const : 'empty' as const,
@@ -382,7 +383,15 @@ async function extractPdfText(file: File, options: FileExtractionOptions): Promi
     const confidences: number[] = []
     if (ocrTargets.length) {
       options.onProgress?.({ phase: 'loading-ocr', progress: 0, message: '发现无文本层页面，正在加载本机 OCR……' })
-      const { worker, setPageIndex } = await createOcrWorker(options, ocrTargets.length)
+      let session: Awaited<ReturnType<typeof createOcrWorker>> | undefined
+      try { session = await createOcrWorker(options, ocrTargets.length) }
+      catch (error) {
+        if (!localProfile(options)) throw error
+        // Keep successful text-layer pages and the exact scope of OCR failure.
+        for (const target of ocrTargets) { target.route = 'error'; target.qualityFlags.push('本机OCR资源启动失败；该页图像内容未读取，文本层结果仍保留。') }
+      }
+      if (session) {
+      const { worker, setPageIndex } = session
       try {
         for (const [index, extractedPage] of ocrTargets.entries()) {
           active(options)
@@ -399,6 +408,7 @@ async function extractPdfText(file: File, options: FileExtractionOptions): Promi
             active(options)
             const ocrText = normalizeExtractedText(recognition.data.text)
             if (localProfile(options)) extractedPage.ocrText = recognition.data.text
+            if (localProfile(options) && !ocrText) extractedPage.qualityFlags.push('OCR未识别到正文；图像内容未核实，请对照原页校对，不能仅凭文本层确认完整。')
             if (localProfile(options) && extractedPage.parserText) {
               if (extractedPage.parserText !== ocrText) extractedPage.qualityFlags.push('文本层与OCR不同，两路已保留；必须逐页核对后决定发送文字')
             } else {
@@ -418,6 +428,7 @@ async function extractPdfText(file: File, options: FileExtractionOptions): Promi
           }
         }
       } finally { await worker.terminate() }
+      }
     }
     for (const page of pageObjects.values()) page.cleanup()
     const flags = [

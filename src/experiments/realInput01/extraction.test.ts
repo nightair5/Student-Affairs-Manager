@@ -84,4 +84,21 @@ describe('explicit local extraction profile, not actual OCR accuracy',()=>{
     await expect(assertSameReselectedFile(a!.receipt!,new File([notices['no-date'].replace('手册','指南')],'notice.txt',{type:'text/plain'}))).rejects.toThrow('RESELECT_HASH')
     expect((await extractFileEvidence(file,options()))?.fileHash).toBe(a?.receipt?.file?.sha256)
   })
+  it('empty OCR cannot silently accompany another readable page as complete input',async()=>{
+    mocks.recognize.mockResolvedValue({data:{text:'',confidence:0}})
+    const result=await acquireFile('empty-scan',pdf([{text:notices.information},{text:''}]),
+      {resources,signal:new AbortController().signal,isCurrent:()=>true})
+    expect(result?.receipt?.pages[1].route).toBe('empty')
+    expect(result?.receipt?.pages[1].issues.join('')).toContain('OCR未识别到正文')
+    await expect(makeSendSnapshot(result!.receipt!,[1,2],[1,2],NOW)).rejects.toThrow('EMPTY_PAGE_REQUIRES_CORRECTION_OR_EXCLUSION')
+    expect((await makeSendSnapshot(result!.receipt!,[1],[1],NOW)).coverage).toBe('selected_partial_source')
+  })
+  it('OCR startup failure retains text-layer success and the failed page, without fake full reading',async()=>{
+    mocks.createWorker.mockRejectedValue(Error('local resource unavailable'))
+    const result=await extractFileContent(pdf([{text:notices.information},{text:notices['no-date'],image:true}]),options())
+    expect(result.pages?.[0].text).toBe(notices.information)
+    expect(result.pages?.[1]).toMatchObject({route:'error',parserText:notices['no-date']})
+    expect(result.pages?.[1].qualityFlags.join('')).toContain('OCR资源启动失败')
+    expect(result.partialExtraction).toBe(true)
+  })
 })

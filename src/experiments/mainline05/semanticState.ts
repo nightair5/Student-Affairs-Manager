@@ -7,6 +7,7 @@ import { parseSemanticInput, plainJson, stableJson, type SemanticInput } from '.
 import { effectiveFacts, appendCorrection, validateMaterialDecision, type MaterialDecision, type FactCorrection } from '../realInput01/factCorrections'
 import { factIdentity, itemSafety, selectLiveTasks } from '../realInput01/modelPolicy'
 import { parseModelEnvelope, MODEL_NAME, PROMPT_VERSION, type ModelWire } from '../realInput01/modelWire'
+import { CANDIDATE02_VERSION } from '../realInput01/candidate02'
 import { validateInputReceipt, validateSendSnapshot, effectivePages, type InputReceipt, type SendSnapshot } from '../realInput01/inputReceipt'
 
 export const STATE_VERSION = 'mainline05-semantic-state-1' as const
@@ -462,7 +463,8 @@ export async function validateSemanticWorkspace(workspace: WorkspaceV8, profile?
     assert(run && version && source && (real || source.currentVersionId === version.id) && typeof version.rawText === 'string'
       && version.contentHash === workspaceSnapshotHash(version.rawText) && draft.result === null, 'SOURCE_CHAIN_INVALID')
     if (real) {
-      assert(run.modelName === MODEL_NAME && run.promptVersion === PROMPT_VERSION && run.pipelineVersion === REAL_STATE_VERSION, 'RUN_IDENTITY')
+      assert(run.modelName === MODEL_NAME && [PROMPT_VERSION,CANDIDATE02_VERSION].includes(run.promptVersion as typeof PROMPT_VERSION)
+        && run.pipelineVersion === REAL_STATE_VERSION, 'RUN_IDENTITY')
       const pending = draft.legacyData?.realInputPending
       assert(pending && typeof pending === 'object' && !Array.isArray(pending), 'SEND_RECEIPT_MISSING')
       exactKeys(pending, ['reading', 'execution', 'operationId'])

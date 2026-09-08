@@ -1988,3 +1988,11 @@
 - 官方原Edge tab763114892选择/刷新成功后点击Runtime.evaluate超时，截图宽度0；已一次请求用户置前展开并手动刷新，不继续重复自动化。不称产品故障，未清库/fallback/改防护。
 - B08混合PDF实际校对恢复和C08实际确认刷新独立读库仍NOT_RUN；没有新浏览器写库或下载证据。本轮0模型/费用/密钥/剪贴板，账本全文不变。
 - READ_CLOSE_AUDIT/CHECKS/IMPLEMENTATION_SNAPSHOT记录现场；仅审计提交，未经验收实现保留未提交。唯一下一动作是原库补两条浏览器旅程，未变工程复用，不重做PLAN或加调用。
+
+## 2026-09-08 delivery-browser：存量PDF校对与C08真实确认补验
+- 起点12a8087ff82ca94eacafa749cdc883b576a1e5ed，44实现/945保护/382旧证据/51账本及日志前缀核验；本轮0源码修改、0模型/费用/密钥。
+- 官方Edge原tab763114892恢复。原库已有B08真实文件读取Source，代理恢复→采用实际OCR→逐键整理→2次明确保存→刷新恢复；原始文本/OCR与历史保持，sendSnapshot=null。初次上传不属于本轮观察；追加重传尝试fileChooser Not allowed，未绕过、未新建Source，不计上传PASS。
+- C08既有Run/Draft核对材料required=true/missing、事实后只选有效提交任务并确认1项；旧打印作废保持无正式绑定。刷新任务中心/日历无日期/详情找回，原6项逐对象不变，新共7项/时间2/提醒0/jobs0。
+- 操作前后真实new repository按钮读回全对象，实际下载与独立读回一致；最终全对象e789d9a39a15d6f11b1d449444f7def1493dd23b51ae7802e768311289baf8fe，文件1002971字节SHA1711a6a7027aac8e17e6b31350b24780a4008ab0641592690b4fa1da325dbff2；联合validator通过。原raw/first/input/send不改。
+- 文件审计初稿误将Source合法确认状态变化视为不变字段，最终精确验证status与确认时间转移，其余字段保持；不修改产品/旧断言。存量读取与C08补验通过，新上传自动化仍未验收。
+- 未变43项/类型/lint/build与旧1250项按SHA复用；仅精确交付已有实现及DELIVERY_*补验。旧NOT_RUN/失败和模型评分不改，C03/首次材料错漏及商业化仍未解决，完成后停止。

@@ -17,6 +17,8 @@ const git=(...args)=>execFileSync('git',args,{encoding:'utf8',windowsHide:true})
 /** Read-only current-stage protection. This is not a replacement for full
  * engineering, historical environment, paid safety or browser acceptance. */
 export function inspectProtection({stage}={}) {
+  if(stage==='read-close')return inspectReadCloseProtection()
+  if(stage==='candidate02')return inspectCandidate02Protection()
   if(stage==='batch-14')return inspectBatchProtection()
   if(stage!==undefined){ensure(stage==='recovery-a02','STAGE');return inspectRecoveryProtection()}
   ensure(resolve(process.cwd()).toLowerCase()===root.toLowerCase(),'WORKSPACE')
@@ -36,6 +38,50 @@ export function inspectProtection({stage}={}) {
   return {head:expectedHead,branch,protectedCount:945,protectedSha256:hash(JSON.stringify(protectedFiles)),
     priorEvidenceCount:baseline.priorEvidence.length,logPrefixes:baseline.logPrefixes.length+1,sources,
     fullEngineering:'NOT_RUN',browser:'NOT_RUN',modelAccuracy:'本轮未测量'}
+}
+
+export const CANDIDATE02_DIRECTORY='docs/recognition-optimization/mainline-real-input-01/runs/candidate02-20260908a'
+const readCloseMutable=['src/experiments/realInput01/runtime.ts','src/experiments/realInput01/InputReview.tsx',
+  'src/experiments/realInput01/browser.tsx','src/experiments/realInput01/acceptance.test.tsx','src/experiments/realInput01/extraction.test.ts',
+  'scripts/serve-mainline-real-input-01.mjs','scripts/check-mainline-real-input-01.mjs','scripts/check-mainline-real-input-01.node-test.mjs']
+export function verifyReadCloseIdentity(baseline,current) {
+  ensure(current.head===baseline.head&&current.head==='f3b1ed68604e3f95c25894ee4717b1eed2072ec9','READ_CLOSE_HEAD')
+  ensure(current.protectedCount===945&&current.protectedSha===baseline.protectedSha,'READ_CLOSE_PROTECTED')
+  ensure(current.ledgerSha===baseline.ledger.sha256,'READ_CLOSE_LEDGER')
+  ensure(current.sources.length===44&&new Set(current.sources.map(s=>s.path)).size===44,'READ_CLOSE_PATHS')
+  for(const s of current.sources){const old=baseline.sources.find(o=>o.path===s.path)
+    ensure(old&&s.exists&&/^[a-f0-9]{64}$/.test(s.workingSha256),'READ_CLOSE_SOURCE')
+    if(!readCloseMutable.includes(s.path))ensure(old.workingSha256===s.workingSha256,'READ_CLOSE_FROZEN_SOURCE')}
+  return true
+}
+export function inspectReadCloseProtection(){
+  ensure(resolve(process.cwd()).toLowerCase()===root.toLowerCase()&&git('branch','--show-current')===branch,'READ_CLOSE_WORKSPACE')
+  const b=JSON.parse(readFileSync(CANDIDATE02_DIRECTORY+'/READ_CLOSE_BASELINE.json'))
+  const files=git('ls-tree','-r','--name-only','-z',baseCommit).split('\0').filter(p=>p&&!b.sources.some(s=>s.path===p)&&![contextPath,logPath].includes(p))
+    .map(path=>({path,sha256:hash(readFileSync(path))}))
+  const current={head:git('rev-parse','HEAD'),protectedCount:files.length,protectedSha:hash(JSON.stringify(files)),
+    ledgerSha:hash(readFileSync(b.ledger.path)),sources:b.sources.map(s=>({path:s.path,exists:existsSync(s.path),workingSha256:hash(readFileSync(s.path))}))}
+  verifyReadCloseIdentity(b,current)
+  for(const f of b.history)ensure(hash(readFileSync(f.path))===f.sha256,'READ_CLOSE_HISTORY:'+f.path)
+  ensure(hash(readFileSync(b.log.path).subarray(0,b.log.bytes))===b.log.sha256,'READ_CLOSE_LOG')
+  return {...current,historyCount:b.history.length,modelRequests:0}
+}
+export function inspectCandidate02Protection() {
+  const baseline=JSON.parse(readFileSync(baselinePath)),head=git('rev-parse','HEAD')
+  ensure(resolve(process.cwd()).toLowerCase()===root.toLowerCase()&&git('branch','--show-current')===branch
+    &&head==='f5e2c54106b1d363eea41246a980a2f7822ff044','C02_GIT')
+  const paths=[...baseline.sources.map(s=>s.path),'src/experiments/realInput01/candidate02.ts','src/experiments/realInput01/candidate02.test.ts']
+  const files=git('ls-tree','-r','--name-only','-z',baseCommit).split('\0').filter(p=>p&&!paths.includes(p)&&![contextPath,logPath].includes(p))
+    .map(path=>({path,sha256:hash(readFileSync(path))}))
+  ensure(files.length===945&&hash(JSON.stringify(files))===baseline.protected.currentReadOnlySha256,'C02_PROTECTION')
+  for(const f of baseline.priorEvidence)ensure(hash(readFileSync(f.path))===f.sha256,'C02_STATIC_EVIDENCE')
+  const prior=JSON.parse(readFileSync(CANDIDATE02_DIRECTORY+'/BASELINE.json'))
+  for(const f of prior.evidence)ensure(hash(readFileSync(f.path))===f.sha256,'C02_PRIOR_EVIDENCE')
+  const ledger=readFileSync(prior.ledger.path),log=readFileSync(logPath)
+  ensure(hash(ledger.subarray(0,prior.ledger.bytes))===prior.ledger.sha256,'C02_LEDGER_PREFIX')
+  ensure(hash(log.subarray(0,prior.log.bytes))===prior.log.sha256,'C02_LOG_PREFIX')
+  return {head,branch,protectedCount:945,protectedSha256:hash(JSON.stringify(files)),
+    sources:paths.map(path=>({path,exists:existsSync(path),workingSha256:hash(readFileSync(path))}))}
 }
 
 export const RECOVERY_SCRIPT_PATHS=Object.freeze(['scripts/real-input-budget.mjs','scripts/real-input-budget.node-test.mjs',

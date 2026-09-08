@@ -13,12 +13,14 @@ import { createModelClient, type ModelExecutor } from './modelClient'
 import { acquireFile, acquireText } from './inputAcquisition'
 import { makeSendSnapshot, sha256Text } from './inputReceipt'
 import { buildModelRequest } from './modelWire'
+import { replayRecordedCandidate02, type RecordedCandidate02 } from './runtime'
 import type { LocalExtractionResources } from '../../lib/fileExtraction'
 import { buildBrowserReminderJobs } from '../../lib/notifications'
 
 interface Carrier { unitId: string; name: string; mime: string; sha256: string; url: string; sourceText: string }
 declare const __REAL_INPUT_CONFIG__: { mode: 'seen_engineering_replay' | 'live' | 'recorded_a02' | 'recorded_batch'; capability: string;
   batch?: RecordedBatchIdentity[];
+  candidate02?: boolean;
   recorded?:{name:string;requestSha:string;responseSha:string};
   units: Array<{unitId: string; requestSha: string}>; resources: LocalExtractionResources; carriers: Carrier[] }
 const config = __REAL_INPUT_CONFIG__
@@ -103,14 +105,19 @@ function EngineeringTools() {
   const repository=()=>SemanticRepository.open(name,store,undefined,'real-input-01')
   return <details aria-label="真实输入工程工具" style={{position:'fixed',left:8,top:8,zIndex:2000,maxWidth:'min(680px,90vw)',maxHeight:'65vh',overflow:'auto',background:'white',padding:12,border:'1px solid #163b41'}}>
     <summary>真实输入工程工具（不是用户确认入口）</summary>
-    <p>{config.mode==='recorded_batch'?'14份已记录真实模型响应 · 本页零调用，原回答不改':config.mode==='recorded_a02'?'A02历史真实模型响应 · 本轮零调用，不是人工预测':config.mode==='live'?'已绑定真实调用模式':'零调用工程回放模式'}。浏览器时区{Intl.DateTimeFormat().resolvedOptions().timeZone}；业务时区Asia/Shanghai。{name}</p>
+    <p>{config.mode==='recorded_batch'?`${config.batch?.length??0}份已记录真实模型响应 · 本页零调用，原回答不改`:config.mode==='recorded_a02'?'A02历史真实模型响应 · 本轮零调用，不是人工预测':config.mode==='live'?'已绑定真实调用模式':'零调用工程回放模式'}。浏览器时区{Intl.DateTimeFormat().resolvedOptions().timeZone}；业务时区Asia/Shanghai。{name}</p>
     {config.mode==='recorded_batch'&&config.batch?.map(identity=><button key={identity.unitId} disabled={busy} onClick={()=>void action(async()=>{
       const response=await fetch('/api/real-input/recorded-batch',{method:'POST',headers:{'content-type':'application/json','x-real-input-capability':config.capability},
         body:JSON.stringify({unitId:identity.unitId,requestSha:identity.requestSha})})
       if(!response.ok)throw Error('REAL_INPUT_BATCH_RECORD_UNAVAILABLE')
-      const record=await response.json() as RecordedBatch
-      const saved=await replayRecordedBatch(await repository(),record,identity)
-      return {unitId:identity.unitId,label:'原模型响应，非新预测/人工替身',tasks:saved.tasks.length,draftId:record.handle.draftId,
+      const record=await response.json() as RecordedBatch|RecordedCandidate02
+      const saved=record.version==='recorded-candidate02-1'&&config.candidate02
+        ?await replayRecordedCandidate02(await repository(),record,identity)
+        :await replayRecordedBatch(await repository(),record as RecordedBatch,identity)
+      const savedDraft=record.version==='recorded-candidate02-1'
+        ?saved.extractionDrafts.find(d=>{const pending=d.legacyData?.realInputPending;return pending&&typeof pending==='object'&&!Array.isArray(pending)&&pending.operationId==='recorded-candidate02-'+record.unitId})
+        :undefined
+      return {unitId:identity.unitId,label:'原模型响应，非新预测/人工替身',tasks:saved.tasks.length,...(savedDraft?{draftId:savedDraft.id}:{originalDraftId:record.handle.draftId}),
         next:'刷新后从收件箱核对；保留原答错误，未自动选择或确认'}
     })}>载入{identity.unitId}原回答（零调用）</button>)}
     {config.mode==='recorded_a02'&&<button disabled={busy} onClick={()=>void action(async()=>{
@@ -156,6 +163,8 @@ function EngineeringTools() {
         const acquired=await acquireFile(c.unitId,new File([bytes],c.name,{type:c.mime}),{resources:config.resources,signal:new AbortController().signal,isCurrent:()=>true,
           onProgress:p=>setStatus(p.message)})
         if(!acquired?.receipt)throw Error('ENGINEERING_READING_FAILED')
+        if(config.candidate02)return {unitId:c.unitId,receipt:acquired.receipt,result:acquired.result,
+          note:'新候选轮本机读取复验；没有覆盖原读取/校对/发送记录，没有写库或发送模型。'}
         const repo=await repository(), handle=await repo.saveReading(acquired.receipt,c.unitId+'工程文件','engineering-'+c.unitId)
         return {unitId:c.unitId,handle,receipt:acquired.receipt,result:acquired.result}
       })}>本机读取{c.unitId}</button>
@@ -200,7 +209,7 @@ function EngineeringTools() {
 async function mount() {
   runtime=await createRealInputRuntime({name,store,initial:params.get('new')==='1'?emptyRealInputWorkspace(name):undefined,
     execution:config.mode==='recorded_a02'||config.mode==='recorded_batch'?'live':config.mode,resources:config.resources,execute,
-    ...(config.mode==='recorded_a02'?{recordedA02:true as const}:config.mode==='recorded_batch'?{recordedBatch:true as const}:{})})
+    ...(config.mode==='recorded_a02'?{recordedA02:true as const}:config.mode==='recorded_batch'?{recordedBatch:true as const,...(config.candidate02?{recordedCandidate02:true as const}:{})}:{})})
   params.delete('new');history.replaceState(null,'','/?'+params.toString())
   createRoot(document.getElementById('root')!).render(<><App runtime={runtime}/><EngineeringTools/></>)
 }

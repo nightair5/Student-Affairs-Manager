@@ -20,7 +20,7 @@ import { spawnSync } from 'node:child_process'
 import { CanonicalWorkspaceRepository } from '../../domain/v2/repository'
 import { replayRecordedA02, replayRecordedBatch, recordedA02Identity, type RecordedBatch, type RecordedA02 } from './runtime'
 import { editSemantic, reviewSemanticMaterial } from '../mainline05/semanticConfirmation'
-import { effectiveStateFacts } from '../mainline05/semanticState'
+import { effectiveStateFacts, readingOf } from '../mainline05/semanticState'
 import { SemanticFacts } from '../mainline05/SemanticFacts'
 import { buildBrowserReminderJobs } from '../../lib/notifications'
 import { DraftReviewPanel } from '../../components/DraftReviewPanel'
@@ -30,6 +30,98 @@ import { openFailedForCorrection } from '../mainline05/semanticCapture'
 import { canAct, life, validateSemanticWorkspace } from '../mainline05/semanticState'
 import type { FactChange } from './factCorrections'
 import type { SemanticTask } from '../mainline04/semanticContract'
+import { replayRecordedCandidate02, type RecordedCandidate02 } from './runtime'
+import { CANDIDATE02_VERSION } from './candidate02'
+import { InputReview } from './InputReview'
+import { correctReadPage } from './inputReceipt'
+import type { ReactElement } from 'react'
+
+describe('read-close local review without model authorization',()=>{
+  it('real runtime opens InputReview and saves independent corrections, while its send handler rejects before any run',async()=>{
+    const initial=JSON.parse(readFileSync('docs/recognition-optimization/mainline-real-input-01/runs/correction-loop-20260908a/BROWSER_DOWNLOAD.json','utf8'))
+    const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:initial.workspace.id})
+    await new CanonicalWorkspaceRepository(store).save(initial)
+    const execute=vi.fn(async()=>{throw Error('NO_MODEL_ALLOWED')})
+    const runtime=await createRealInputRuntime({name:store.name,store,execution:'live',resources,execute,recordedBatch:true,recordedCandidate02:true})
+    const repo=await SemanticRepository.open(store.name,store,undefined,'real-input-01'),before=await repo.load()
+    const Panel=runtime.realInput!.inputPanel
+    const element=Panel({workspace:before,initialText:'',onSaved:async()=>{},onDraftReady:async()=>{}}) as ReactElement<ComponentProps<typeof InputReview>>
+    expect(element.type).toBe(InputReview);expect(element.props.localOnly).toBe(true)
+    const html=renderToStaticMarkup(element)
+    expect(html).toContain('本机读取图片或文件');expect(html).toContain('模型发送已关闭')
+    expect(html).not.toContain('生成待核对建议');expect(html).not.toContain('A08工程文字 ·')
+    await expect(element.props.send('any',[1],[1],'blocked')).rejects.toThrow('REAL_INPUT_NEW_SEND_DISABLED')
+    expect(await repo.load()).toEqual(before);expect(execute).not.toHaveBeenCalled()
+    const original=await acquireText('local-review-test',notices.revision)
+    const source=await repo.saveReading(original,'独立读取校对','local-review-test')
+    const buffered=await correctReadPage(original,1,notices.revision+'\n已核对。','local-correction',NOW)
+    expect(readingOf((await repo.load()).sources.find(s=>s.id===source.sourceId)!.legacyData?.realInput01).inputReceipt.corrections).toEqual([])
+    await repo.saveReadingCorrection(source.sourceId,buffered,semanticRevision(await repo.load()))
+    const restored=await new CanonicalWorkspaceRepository(store).load()
+    expect(restored!.tasks).toEqual(before.tasks);expect(restored!.recognitionRuns).toEqual(before.recognitionRuns)
+    expect(restored!.sources.filter(s=>s.id!==source.sourceId)).toEqual(before.sources)
+    expect(readingOf(restored!.sources.find(s=>s.id===source.sourceId)!.legacyData?.realInput01).inputReceipt).toEqual(buffered)
+    expect(execute).not.toHaveBeenCalled()
+  })
+})
+
+describe('candidate02 paid records replay without a model request',()=>{
+  it('the candidate02 launcher exposes local carriers but keeps all upstream sending disabled',()=>{
+    const result=spawnSync(process.execPath,['--input-type=module','-e',`
+      import assert from 'node:assert/strict';
+      import {createLocalApp} from './scripts/serve-mainline-real-input-01.mjs';
+      const app=await createLocalApp({port:6631,carrierManifest:process.env.REAL_INPUT_CARRIERS_MANIFEST,checking:true,recordedBatch:true,recordedCandidate02:true});
+      assert.equal(app.evidence.carriers,8);assert.equal(app.evidence.upstreamEnabled,false);
+      assert.equal(app.evidence.realApp,true);assert.deepEqual(app.evidence.forbiddenBrowserInputs,[]);
+      // The existing handoff import is parsed but tree-shaken; its emitted code,
+      // not mere parser visitation, must remain absent from the live bundle.
+      assert.deepEqual(app.evidence.parsedReferenceModules,['src/experiments/mainline01/fixtures.ts']);
+      await assert.rejects(createLocalApp({port:6632,carrierManifest:process.env.REAL_INPUT_CARRIERS_MANIFEST,checking:true,recordedBatch:true,recordedCandidate02:true}));
+      console.log('candidate02 launcher: eight local carriers, zero upstream, same required origin');
+    `],{encoding:'utf8',timeout:60000,maxBuffer:1024*1024})
+    expect(result.error?.message??'').toBe('');expect(result.status,result.stdout+'\n'+result.stderr).toBe(0)
+  },65000)
+  it.each(['C03','C05','C08'])('%s creates a separately identified run and confirms valid tasks without overwriting old work',async unitId=>{
+    const root='docs/recognition-optimization/mainline-real-input-01/runs/',D=root+'candidate02-20260908a/'
+    const initial=JSON.parse(readFileSync(root+'correction-loop-20260908a/BROWSER_DOWNLOAD.json','utf8'))
+    const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:initial.workspace.id})
+    await new CanonicalWorkspaceRepository(store).save(initial)
+    const repo=await SemanticRepository.open(store.name,store,undefined,'real-input-01'),before=await repo.load()
+    const binding=JSON.parse(readFileSync(D+'BINDING.json','utf8')),item=binding.items.find((i:{unitId:string})=>i.unitId===unitId)
+    const raw=JSON.parse(readFileSync(D+unitId+'_RAW.jsonl','utf8'))
+    const record:RecordedCandidate02={version:'recorded-candidate02-1',unitId,name:store.name,handle:item.handle,context:item.context,
+      requestSha:raw.requestSha,responseSha:raw.responseSha,rawHttpText:raw.rawHttpText}
+    const identity={unitId,requestSha:raw.requestSha,responseSha:raw.responseSha}
+    await expect(replayRecordedCandidate02(repo,{...record,responseSha:'0'.repeat(64)},identity)).rejects.toThrow('C02_IDENTITY')
+    expect(await repo.load()).toEqual(before)
+    const loaded=await replayRecordedCandidate02(repo,record,identity)
+    const draft=loaded.extractionDrafts.find(d=>(d.legacyData?.realInputPending as {operationId?:string})?.operationId==='recorded-candidate02-'+unitId)!
+    expect(loaded.recognitionRuns.find(r=>r.id===draft.recognitionRunId)?.promptVersion).toBe(CANDIDATE02_VERSION)
+    const first=stateOfRuntime(loaded,draft.id),facts=effectiveStateFacts(first).facts
+    if(unitId==='C03'){
+      expect(first.first.items.some(i=>i.issues.includes('COVERAGE_TIME'))).toBe(true)
+      expect(facts.tasks).toHaveLength(1);expect(canAct(first,facts.tasks[0].id)).toBe(false)
+      await expect(confirmSemantic(repo,{draftId:draft.id,taskTempIds:[facts.tasks[0].id],revision:semanticRevision(loaded)})).rejects.toThrow()
+      const rejected=await repo.load();expect(rejected.tasks).toEqual(before.tasks);expect(rejected.timePoints).toEqual(before.timePoints)
+      expect(stateOfRuntime(rejected,draft.id).rawResponse).toEqual(first.rawResponse)
+      return
+    }
+    const eligible=facts.tasks.filter(t=>t.semantics.validity==='active'&&t.condition.value!=='false')
+    expect(eligible).toHaveLength(1)
+    for(const m of facts.materials.filter(m=>m.relatedTaskTempIds.includes(eligible[0].id)))await reviewSemanticMaterial(repo,
+      {draftId:draft.id,revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID(),materialId:m.tempId,value:{required:m.required,status:'missing'}})
+    await reviewSemanticFact(repo,{draftId:draft.id,taskId:eligible[0].id,revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID()})
+    await confirmSemantic(repo,{draftId:draft.id,taskTempIds:[eligible[0].id],revision:semanticRevision(await repo.load())})
+    const saved=await repo.load();expect(saved.tasks.length).toBe(before.tasks.length+1)
+    expect(saved.tasks.filter(t=>before.tasks.some(x=>x.id===t.id))).toEqual(before.tasks)
+    expect(stateOfRuntime(saved,draft.id).first).toEqual(first.first)
+    expect(stateOfRuntime(saved,draft.id).rawResponse).toEqual(first.rawResponse)
+    expect(saved.timePoints).toEqual(before.timePoints);expect(saved.reminderRecords).toEqual(before.reminderRecords)
+    await replayRecordedCandidate02(repo,record,identity)
+    expect((await repo.load()).tasks).toEqual(saved.tasks)
+    expect(await new CanonicalWorkspaceRepository(store).load()).toEqual(JSON.parse(JSON.stringify(saved)))
+  },60000)
+})
 
 async function correctionReplay(unitId:string){
   const root='docs/recognition-optimization/mainline-real-input-01/runs/',D=root+'replay-a02-implementation-20260907a/'

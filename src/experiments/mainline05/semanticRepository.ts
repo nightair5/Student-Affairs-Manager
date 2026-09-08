@@ -5,6 +5,7 @@ import { assert, equal, json, realDatabaseName, readingOf, REAL_STATE_VERSION, s
 import { plainJson } from '../mainline04/semanticContract'
 import { validateInputReceipt, validateSendSnapshot, type InputReceipt } from '../realInput01/inputReceipt'
 import { MODEL_NAME, PROMPT_VERSION } from '../realInput01/modelWire'
+import { CANDIDATE02_VERSION } from '../realInput01/candidate02'
 
 export class SemanticRepository {
   private constructor(private readonly canonical: CanonicalWorkspaceRepository, readonly name: string, readonly profile?: 'real-input-01') {}
@@ -136,7 +137,8 @@ export class SemanticRepository {
     })
   }
   async beginInputRun(sourceId: string, readingInput: RealInputReading, execution: 'live' | 'seen_engineering_replay',
-    operationId: string, revision: string, now = new Date().toISOString()): Promise<CaptureHandle> {
+    operationId: string, revision: string, now = new Date().toISOString(), promptVersion: typeof PROMPT_VERSION | typeof CANDIDATE02_VERSION = PROMPT_VERSION): Promise<CaptureHandle> {
+    assert(promptVersion === PROMPT_VERSION || promptVersion === CANDIDATE02_VERSION && execution === 'live', 'CANDIDATE_IDENTITY')
     const reading = plainJson(readingInput)
     await validateInputReceipt(reading.inputReceipt)
     assert(reading.sendSnapshot && /^[A-Za-z0-9-]{1,100}$/.test(operationId), 'SEND_RECEIPT_REQUIRED')
@@ -151,12 +153,13 @@ export class SemanticRepository {
       if (duplicate) {
         assert(equal(duplicate.legacyData!.realInputPending, { reading, execution, operationId }), 'SEND_OPERATION_COLLISION')
         const run = before.recognitionRuns.find(r => r.id === duplicate.recognitionRunId)!
+        assert(run.promptVersion === promptVersion, 'SEND_CANDIDATE_COLLISION')
         return { sourceId, sourceVersionId: run.sourceVersionId, recognitionRunId: run.id, draftId: duplicate.id, duplicate: true }
       }
       assert(!before.recognitionRuns.some(r => r.sourceVersionId === version.id && ['queued','running'].includes(r.status)), 'PENDING_REQUEST_NO_RETRY')
       const rawText = reading.sendSnapshot!.text
       const request = { provider: execution === 'live' ? 'deepseek' as const : 'manual' as const, modelName: MODEL_NAME,
-        promptVersion: PROMPT_VERSION, pipelineVersion: REAL_STATE_VERSION, now,
+        promptVersion, pipelineVersion: REAL_STATE_VERSION, now,
         sourceLegacyData: { realInput01: json(reading), reviewMetadata: { realInput01: json(reading) } } }
       if (rawText !== version.rawText) {
         assert(rawText.trim() !== version.rawText?.trim(), 'WHITESPACE_ONLY_REVISION_REJECTED_BEFORE_SAVE')
