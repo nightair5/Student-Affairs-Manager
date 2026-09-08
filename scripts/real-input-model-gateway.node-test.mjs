@@ -91,6 +91,21 @@ test('the only successful path preserves raw response, binds usage and uses the 
   assert.equal(JSON.stringify(r).includes(FAKE_SECRET),false);assert.equal(JSON.stringify(s.recorded).includes(FAKE_SECRET),false)
   assert.equal((await s.budget.snapshot()).reservations[0].status,'settled')
 })
+test('D unit passes only when present in the exact budget snapshot; original AB gateway rejects it before secret access',async()=>{
+  const original=await setup(),unitId='D01',body=request(),identity=inspectRequest(body)
+  const message={...original.message(),bodyText:JSON.stringify({unitId,requestSha:identity.requestSha})}
+  assert.equal((await original.gateway.handle(message)).status,400)
+  assert.equal(original.secretReads(),0);assert.equal(original.calls.length,0)
+  let reservations=0,fetches=0,records=0
+  const gateway=await createModelGateway({origin:ORIGIN,capability:CAP,requests:{D01:body},clock:()=>NOW,
+    budget:{snapshot:async()=>({units:[{unitId,...identity}]}),reserve:async id=>{assert.equal(id,'D01');reservations++;
+      return{complete:async()=>({usage:JSON.parse(raw('D01')).usage,costUpperMicroCny:390}),uncertain:async()=>{throw Error('UNEXPECTED')}}}},
+    readSecret:()=>FAKE_SECRET,fetchImpl:async()=>{fetches++;return http(raw('D01'))},recordRaw:async r=>{assert.equal(r.unitId,'D01');records++}})
+  assert.equal((await gateway.handle(message)).status,200)
+  assert.equal(reservations,1);assert.equal(fetches,1);assert.equal(records,1)
+  assert.equal((await gateway.handle({...message,bodyText:JSON.stringify({unitId:'D02',requestSha:identity.requestSha})})).status,400)
+  assert.equal(fetches,1)
+})
 test('credential is not read at gateway initialization or on rejected origins and routes',async()=>{
   const s=await setup();assert.equal(s.secretReads(),0)
   const cases=[m=>{m.headers.origin='https://evil.test'},m=>{m.headers.host='evil.test'},m=>{delete m.headers.origin},

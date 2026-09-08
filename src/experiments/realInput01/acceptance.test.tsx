@@ -35,6 +35,95 @@ import { CANDIDATE02_VERSION } from './candidate02'
 import { InputReview } from './InputReview'
 import { correctReadPage } from './inputReceipt'
 import type { ReactElement } from 'react'
+import { replayRecordedCandidate03, type RecordedCandidate03 } from './runtime'
+import { CANDIDATE03_VERSION } from './candidate03'
+
+describe('candidate03 recorded response integration, no model requests',()=>{
+  async function recordedFixture(){
+    const root='docs/recognition-optimization/mainline-real-input-01/runs/',D=root+'candidate03-20260908a/'
+    const before=JSON.parse(readFileSync(root+'candidate02-20260908a/DELIVERY_BROWSER_DOWNLOAD.json','utf8'))
+    const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:before.workspace.id})
+    await new CanonicalWorkspaceRepository(store).save(before)
+    const repo=await SemanticRepository.open(store.name,store,undefined,'real-input-01')
+    const item=JSON.parse(readFileSync(D+'BINDING.json','utf8')).items[0]
+    const raw=JSON.parse(readFileSync(D+'D01_DISPATCH_RAW.jsonl','utf8'))
+    const record:RecordedCandidate03={version:'recorded-candidate03-1',unitId:'D01',name:store.name,handle:item.handle,context:item.context,
+      requestSha:raw.requestSha,responseSha:raw.responseSha,rawHttpText:raw.rawHttpText}
+    return {before,store,repo,record,identity:{unitId:'D01',requestSha:raw.requestSha,responseSha:raw.responseSha}}
+  }
+  it('rejects source/run/version/request/response substitution before any write',async()=>{
+    const {before,store,repo,record,identity}=await recordedFixture(),write=vi.spyOn(store,'transaction')
+    const variants=[{...record,handle:{...record.handle,sourceId:'other'}},{...record,handle:{...record.handle,sourceVersionId:'other'}},
+      {...record,handle:{...record.handle,recognitionRunId:'other'}},{...record,handle:{...record.handle,draftId:'other'}},
+      {...record,requestSha:'0'.repeat(64)},{...record,rawHttpText:record.rawHttpText+' '},
+      {...record,context:{...record.context,referenceTime:'2020-01-01T00:00:00Z'}}]
+    for(const variant of variants){await expect(replayRecordedCandidate03(repo,variant,identity)).rejects.toThrow();expect(await repo.load()).toEqual(before)}
+    expect(write).not.toHaveBeenCalled()
+  },60000)
+  it('failed transaction rolls back the entire import; successful retry of local save is terminal and duplicate-safe',async()=>{
+    const {before,store,repo,record,identity}=await recordedFixture()
+    vi.spyOn(store,'transaction').mockImplementationOnce(async()=>{throw Error('INJECTED_LOCAL_TRANSACTION_FAILURE')})
+    await expect(replayRecordedCandidate03(repo,record,identity)).rejects.toThrow('INJECTED_LOCAL_TRANSACTION_FAILURE')
+    expect(await repo.load()).toEqual(before)
+    const write=vi.spyOn(store,'transaction'),saved=await replayRecordedCandidate03(repo,record,identity)
+    const added=saved.recognitionRuns.filter(r=>!before.recognitionRuns.some((old:{id:string})=>old.id===r.id))
+    expect(added).toHaveLength(1);expect(added[0].status).toBe('succeeded')
+    expect(saved.recognitionRuns.filter(r=>before.recognitionRuns.some((old:{id:string})=>old.id===r.id))).toEqual(before.recognitionRuns)
+    expect(saved.extractionDrafts.filter(d=>before.extractionDrafts.some((old:{id:string})=>old.id===d.id))).toEqual(before.extractionDrafts)
+    expect(saved.tasks).toEqual(before.tasks);expect(saved.materials).toEqual(before.materials)
+    const draft=saved.extractionDrafts.find(d=>d.recognitionRunId===added[0].id)!
+    const handle={sourceId:record.handle.sourceId,sourceVersionId:record.handle.sourceVersionId,recognitionRunId:added[0].id,draftId:draft.id,duplicate:false}
+    const execute=vi.fn(async()=>record.rawHttpText)
+    await expect(dispatchRealInput(repo,handle,execute)).rejects.toThrow('RECORDED_NEVER_DISPATCHABLE')
+    expect(execute).not.toHaveBeenCalled();expect(await repo.load()).toEqual(saved)
+    const writes=write.mock.calls.length
+    expect(await replayRecordedCandidate03(repo,record,identity)).toEqual(saved)
+    expect(write.mock.calls).toHaveLength(writes)
+  },60000)
+  it.each(['D01','D02','D03','D05'])('%s preserves originals and confirms only reviewed expressible facts',async unitId=>{
+    const root='docs/recognition-optimization/mainline-real-input-01/runs/',D=root+'candidate03-20260908a/'
+    const before=JSON.parse(readFileSync(root+'candidate02-20260908a/DELIVERY_BROWSER_DOWNLOAD.json','utf8'))
+    const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:before.workspace.id})
+    await new CanonicalWorkspaceRepository(store).save(before)
+    const repo=await SemanticRepository.open(store.name,store,undefined,'real-input-01')
+    const binding=JSON.parse(readFileSync(D+'BINDING.json','utf8')),item=binding.items.find((i:{unitId:string})=>i.unitId===unitId)
+    const raw=JSON.parse(readFileSync(D+unitId+'_DISPATCH_RAW.jsonl','utf8'))
+    const record:RecordedCandidate03={version:'recorded-candidate03-1',unitId,name:store.name,handle:item.handle,context:item.context,
+      requestSha:raw.requestSha,responseSha:raw.responseSha,rawHttpText:raw.rawHttpText}
+    const identity={unitId,requestSha:raw.requestSha,responseSha:raw.responseSha}
+    await expect(replayRecordedCandidate03(repo,{...record,responseSha:'0'.repeat(64)},identity)).rejects.toThrow('C03_IDENTITY')
+    expect(await repo.load()).toEqual(before)
+    const loaded=await replayRecordedCandidate03(repo,record,identity)
+    const draft=loaded.extractionDrafts.find(d=>(d.legacyData?.realInputPending as {operationId?:string})?.operationId==='recorded-candidate03-'+unitId)!
+    expect(loaded.recognitionRuns.find(r=>r.id===draft.recognitionRunId)?.promptVersion).toBe(CANDIDATE03_VERSION)
+    expect(loaded.recognitionRuns.filter(r=>before.recognitionRuns.some((old:{id:string})=>old.id===r.id))).toEqual(before.recognitionRuns)
+    const first=stateOfRuntime(loaded,draft.id),facts=effectiveStateFacts(first).facts
+    expect(first.first.items.every(i=>!i.defaultSelected)).toBe(true)
+    if(unitId==='D03'){
+      expect(facts.timePoints).toHaveLength(1)
+      expect(facts.timePoints[0]).toMatchObject({normalizedValue:null,precision:'vague',needsConfirmation:true})
+      await expect(confirmSemantic(repo,{draftId:draft.id,taskTempIds:[facts.tasks[0].id],revision:semanticRevision(loaded)})).rejects.toThrow()
+      expect((await repo.load()).tasks).toEqual(before.tasks)
+      return
+    }
+    expect(facts.tasks).toHaveLength(unitId==='D01'?2:1)
+    for(const material of facts.materials)await reviewSemanticMaterial(repo,{draftId:draft.id,materialId:material.tempId,
+      revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID(),value:{required:material.required,status:'missing'}})
+    for(const task of facts.tasks)await reviewSemanticFact(repo,{draftId:draft.id,taskId:task.id,revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID()})
+    const saved=await confirmSemantic(repo,{draftId:draft.id,taskTempIds:facts.tasks.map(t=>t.id),revision:semanticRevision(await repo.load())})
+    expect(saved.tasks).toHaveLength(before.tasks.length+facts.tasks.length)
+    expect(saved.tasks.filter(t=>before.tasks.some((old:{id:string})=>old.id===t.id))).toEqual(before.tasks)
+    expect(saved.timePoints.filter(t=>!before.timePoints.some((old:{id:string})=>old.id===t.id)).map(t=>t.rawText).sort()).toEqual(facts.timePoints.map(t=>t.rawText).sort())
+    expect(saved.reminderRecords).toEqual(before.reminderRecords)
+    expect(stateOfRuntime(saved,draft.id).first).toEqual(first.first)
+    expect(stateOfRuntime(saved,draft.id).rawResponse).toEqual(first.rawResponse)
+    expect(await new CanonicalWorkspaceRepository(store).load()).toEqual(JSON.parse(JSON.stringify(saved)))
+    await replayRecordedCandidate03(repo,record,identity)
+    expect((await repo.load()).tasks).toEqual(saved.tasks)
+    await confirmSemantic(repo,{draftId:draft.id,taskTempIds:facts.tasks.map(t=>t.id),revision:semanticRevision(await repo.load())})
+    expect((await repo.load()).tasks).toEqual(saved.tasks)
+  },60000)
+})
 
 describe('read-close local review without model authorization',()=>{
   it('real runtime opens InputReview and saves independent corrections, while its send handler rejects before any run',async()=>{

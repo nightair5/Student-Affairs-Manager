@@ -3,9 +3,10 @@ import { CapturePersistenceService, type CaptureRequest, type CaptureHandle, typ
 import type { WorkspaceV8 } from '../../domain/v2/types'
 import { assert, equal, json, realDatabaseName, readingOf, REAL_STATE_VERSION, semanticRevision, validateSemanticWorkspace, type RealInputReading } from './semanticState'
 import { plainJson } from '../mainline04/semanticContract'
-import { validateInputReceipt, validateSendSnapshot, type InputReceipt } from '../realInput01/inputReceipt'
+import { validateInputReceipt, validateSendSnapshot, sha256Text, type InputReceipt } from '../realInput01/inputReceipt'
 import { MODEL_NAME, PROMPT_VERSION } from '../realInput01/modelWire'
 import { CANDIDATE02_VERSION } from '../realInput01/candidate02'
+import { CANDIDATE03_VERSION } from '../realInput01/candidate03'
 
 export class SemanticRepository {
   private constructor(private readonly canonical: CanonicalWorkspaceRepository, readonly name: string, readonly profile?: 'real-input-01') {}
@@ -137,8 +138,8 @@ export class SemanticRepository {
     })
   }
   async beginInputRun(sourceId: string, readingInput: RealInputReading, execution: 'live' | 'seen_engineering_replay',
-    operationId: string, revision: string, now = new Date().toISOString(), promptVersion: typeof PROMPT_VERSION | typeof CANDIDATE02_VERSION = PROMPT_VERSION): Promise<CaptureHandle> {
-    assert(promptVersion === PROMPT_VERSION || promptVersion === CANDIDATE02_VERSION && execution === 'live', 'CANDIDATE_IDENTITY')
+    operationId: string, revision: string, now = new Date().toISOString(), promptVersion: typeof PROMPT_VERSION | typeof CANDIDATE02_VERSION | typeof CANDIDATE03_VERSION = PROMPT_VERSION): Promise<CaptureHandle> {
+    assert(promptVersion === PROMPT_VERSION || (promptVersion === CANDIDATE02_VERSION || promptVersion === CANDIDATE03_VERSION) && execution === 'live', 'CANDIDATE_IDENTITY')
     const reading = plainJson(readingInput)
     await validateInputReceipt(reading.inputReceipt)
     assert(reading.sendSnapshot && /^[A-Za-z0-9-]{1,100}$/.test(operationId), 'SEND_RECEIPT_REQUIRED')
@@ -172,4 +173,73 @@ export class SemanticRepository {
       recognitionRuns: candidate.recognitionRuns.map(r => r.id === handle.recognitionRunId ? { ...r, schemaVersion: REAL_STATE_VERSION } : r) }), revision)
   }
   async exportJson(): Promise<string> { return this.canonical.exportJson(await this.load()) }
+  /** Already-received response only. A queued record exists only in private memory;
+   * the actual store receives its terminal Run and review Draft in one transaction. */
+  async appendRecordedInput(input: { source: CaptureHandle; reading: RealInputReading; operationId: string;
+    requestSha: string; responseSha: string; rawHttpText: string; revision: string; promptVersion: typeof CANDIDATE03_VERSION },
+    complete: (memory: SemanticRepository, handle: CaptureHandle) => Promise<unknown>): Promise<WorkspaceV8> {
+    assert(this.profile === 'real-input-01' && input.promptVersion === CANDIDATE03_VERSION, 'RECORDED_PROFILE')
+    // The optimistic revision is the serialized whole workspace, not a fact field.
+    // Keep its exact comparison outside the bounded semantic JSON payload.
+    const { revision, ...payload } = structuredClone(input)
+    const value = { ...plainJson(payload), revision }, before = await this.load()
+    assert(value.revision === semanticRevision(before), 'STALE_RELOAD_REQUIRED')
+    assert(/^recorded-candidate03-D0[1-8]$/.test(value.operationId)
+      && /^[a-f0-9]{64}$/.test(value.requestSha) && /^[a-f0-9]{64}$/.test(value.responseSha), 'RECORDED_IDENTITY')
+    assert(await sha256Text(value.rawHttpText) === value.responseSha, 'RECORDED_RESPONSE_HASH')
+    await validateInputReceipt(value.reading.inputReceipt)
+    assert(value.reading.sendSnapshot, 'SEND_RECEIPT_REQUIRED')
+    await validateSendSnapshot(value.reading.inputReceipt, value.reading.sendSnapshot)
+    const source = before.sources.find(s => s.id === value.source.sourceId)
+    const version = before.sourceVersions.find(v => v.id === value.source.sourceVersionId)
+    const oldRun = before.recognitionRuns.find(r => r.id === value.source.recognitionRunId)
+    const oldDraft = before.extractionDrafts.find(d => d.id === value.source.draftId)
+    assert(source && version && source.currentVersionId === version.id && version.sourceId === source.id
+      && oldRun?.sourceVersionId === version.id && oldDraft?.recognitionRunId === oldRun.id
+      && equal(readingOf(source.legacyData?.realInput01).inputReceipt, value.reading.inputReceipt)
+      && value.reading.sendSnapshot.text === version.rawText, 'RECORDED_SOURCE')
+    const receipt = { version: 'real-input-recorded-import-1', operationId: value.operationId,
+      sourceId: source.id, sourceVersionId: version.id, requestSha: value.requestSha,
+      responseSha: value.responseSha, promptVersion: value.promptVersion }
+    const prior = before.extractionDrafts.find(d => (d.legacyData?.realInputRecorded as {operationId?: string})?.operationId === value.operationId)
+    if (prior) {
+      assert(equal(prior.legacyData?.realInputRecorded, receipt)
+        && (prior.legacyData?.mainline05 as {rawHttpText?: string})?.rawHttpText === value.rawHttpText, 'RECORDED_COLLISION')
+      return before
+    }
+    assert(!before.extractionDrafts.some(d => (d.legacyData?.realInputPending as {operationId?: string})?.operationId === value.operationId), 'RECORDED_LEGACY_OPERATION_COLLISION')
+    const runId = source.id + ':recorded:' + value.operationId, draftId = runId + ':draft', now = new Date().toISOString()
+    assert(!before.recognitionRuns.some(r => r.id === runId) && !before.extractionDrafts.some(d => d.id === draftId), 'RECORDED_COLLISION')
+    const staged: WorkspaceV8 = { ...before,
+      sources: before.sources.map(s => s.id === source.id ? { ...s, status: 'extracting' } : s),
+      recognitionRuns: [...before.recognitionRuns, { id: runId, sourceVersionId: version.id, provider: 'deepseek', modelName: MODEL_NAME,
+        promptVersion: value.promptVersion, schemaVersion: REAL_STATE_VERSION, pipelineVersion: REAL_STATE_VERSION,
+        status: 'queued', startedAt: now, completedAt: null, durationMs: null, tokenUsage: null, qualityFlags: [], errorCode: null }],
+      extractionDrafts: [...before.extractionDrafts, { id: draftId, recognitionRunId: runId, status: 'processing', result: null,
+        commitOperationIds: [], acceptedEntityTempIds: [], rejectedEntityTempIds: [], createdAt: now, updatedAt: now,
+        legacyData: { realInputRecorded: json(receipt), realInputPending: json({ reading: value.reading, execution: 'live', operationId: value.operationId }) } }] }
+    const transport = Object.assign(new MemoryWorkspaceRecordStore({ current: staged }), { name: this.name })
+    const memory = await SemanticRepository.open(this.name, transport, undefined, 'real-input-01')
+    await complete(memory, { sourceId: source.id, sourceVersionId: version.id, recognitionRunId: runId, draftId, duplicate: false })
+    const next = await memory.load(), added = next.extractionDrafts.find(d => d.id === draftId)
+    assert(next.recognitionRuns.find(r => r.id === runId)?.status === 'succeeded' && added?.status === 'needs_review'
+      && (added.legacyData?.mainline05 as {rawHttpText?: string})?.rawHttpText === value.rawHttpText, 'RECORDED_NOT_TERMINAL')
+    assert(next.recognitionRuns.length === before.recognitionRuns.length + 1 && next.extractionDrafts.length === before.extractionDrafts.length + 1, 'RECORDED_CHAIN_ADDITION')
+    assert(equal(added.legacyData?.realInputRecorded, receipt), 'RECORDED_RECEIPT_CHANGED')
+    assert(next.sources.length === before.sources.length && before.sources.every(old => {
+      const current = next.sources.find(s => s.id === old.id)
+      return current && equal(old, old.id === source.id ? { ...current, status: old.status, updatedAt: old.updatedAt } : current)
+    }), 'RECORDED_OLD_SOURCE_CHANGED')
+    for (const key of ['evidenceRefs', 'historyRecords'] as const)
+      assert(before[key].every(old => equal(old, next[key].find(item => item.id === old.id))), 'RECORDED_OLD_EVIDENCE_CHANGED')
+    for (const key of Object.keys(before) as Array<keyof WorkspaceV8>) {
+      if (key === 'recognitionRuns' || key === 'extractionDrafts') {
+        const old = before[key], current = next[key]
+        assert(old.every(item => equal(item, current.find(x => x.id === item.id))), 'RECORDED_OLD_CHAIN_CHANGED')
+      } else if (key === 'workspace') {
+        assert(equal(before.workspace, { ...next.workspace, updatedAt: before.workspace.updatedAt }), 'RECORDED_WORKSPACE_IDENTITY')
+      } else if (!['sources', 'evidenceRefs', 'historyRecords', 'savedAt'].includes(key)) assert(equal(before[key], next[key]), 'RECORDED_UNCONFIRMED_WRITE_' + key)
+    }
+    return this.commitCandidate(before, next, true)
+  }
 }

@@ -18,6 +18,7 @@ import type { ModelExecutor } from './modelClient'
 import type { WireContext } from './modelWire'
 import { buildModelRequest } from './modelWire'
 import { buildCandidate02Request, CANDIDATE02_VERSION } from './candidate02'
+import { buildCandidate03Request, CANDIDATE03_VERSION } from './candidate03'
 import { stableJson } from '../mainline04/semanticContract'
 import type { RealInputReading } from '../mainline05/semanticState'
 
@@ -68,6 +69,33 @@ export async function replayRecordedCandidate02(repo:SemanticRepository,record:R
   if(handle.sourceVersionId!==record.handle.sourceVersionId)throw Error('REAL_INPUT_C02_SOURCE_VERSION_CHANGED')
   return stageRecordedResponse(repo,{...record,handle})
 }
+export interface RecordedCandidate03 extends Omit<RecordedBatch,'version'> { version:'recorded-candidate03-1' }
+/** Already-paid response only. New run identity; old source version and response remain intact. */
+export async function replayRecordedCandidate03(repo:SemanticRepository,record:RecordedCandidate03,identity:RecordedBatchIdentity) {
+  record=structuredClone(record);identity=structuredClone(identity)
+  exactKeys(record,['version','unitId','name','handle','context','requestSha','responseSha','rawHttpText'])
+  exactKeys(identity,['unitId','requestSha','responseSha'])
+  if(record.version!=='recorded-candidate03-1'||!/^D0[1-8]$/.test(record.unitId)||record.name!==recordedA02Identity.name
+    ||record.unitId!==identity.unitId||record.requestSha!==identity.requestSha||record.responseSha!==identity.responseSha
+    ||await sha256Text(record.rawHttpText)!==identity.responseSha
+    ||await sha256Text((await buildCandidate03Request(record.context)).serialized)!==identity.requestSha)throw Error('REAL_INPUT_C03_IDENTITY')
+  if(repo.profile!=='real-input-01'||repo.name!==record.name)throw Error('REAL_INPUT_RECORDED_DATABASE')
+  const before=await repo.load(),old=before.extractionDrafts.find(d=>d.id===record.handle.draftId)
+  const oldRun=before.recognitionRuns.find(r=>r.id===old?.recognitionRunId)
+  const pending=old?.legacyData?.realInputPending as unknown as {reading:RealInputReading;execution:string}
+  if(!pending||pending.execution!=='live'||oldRun?.sourceVersionId!==record.handle.sourceVersionId
+    ||pending.reading.sendSnapshot?.text!==record.context.index.sourceContent)throw Error('REAL_INPUT_C03_SOURCE')
+  const version=before.sourceVersions.find(v=>v.id===record.handle.sourceVersionId)
+  if(!version||version.sourceId!==record.handle.sourceId||oldRun.id!==record.handle.recognitionRunId
+    ||stableJson({index:await indexImmutableScopesV11(version.sourceId,version.id,version.rawText!),
+      referenceTime:pending.reading.sendSnapshot.consentAt,timezone:'Asia/Shanghai'})!==stableJson(record.context))throw Error('REAL_INPUT_C03_SOURCE')
+  return repo.appendRecordedInput({source:record.handle,reading:pending.reading,operationId:'recorded-candidate03-'+record.unitId,
+    requestSha:record.requestSha,responseSha:record.responseSha,rawHttpText:record.rawHttpText,
+    revision:semanticRevision(before),promptVersion:CANDIDATE03_VERSION},async(memory,handle)=>{
+    await completeInputRun(memory,handle,record.rawHttpText)
+    await enableMaterialReview(memory,handle.draftId)
+  })
+}
 /** A settled, server-bound response; not a new prediction or an engineering answer. */
 export async function replayRecordedBatch(repo:SemanticRepository,record:RecordedBatch,identity:RecordedBatchIdentity) {
   record=structuredClone(record);identity=structuredClone(identity)
@@ -79,7 +107,7 @@ export async function replayRecordedBatch(repo:SemanticRepository,record:Recorde
     ||await sha256Text((await buildModelRequest(record.context)).serialized)!==identity.requestSha)throw Error('REAL_INPUT_BATCH_RECORDED_IDENTITY')
   return stageRecordedResponse(repo,record)
 }
-async function stageRecordedResponse(repo:SemanticRepository,record:RecordedA02|RecordedBatch|RecordedCandidate02) {
+async function stageRecordedResponse(repo:SemanticRepository,record:RecordedA02|RecordedBatch|RecordedCandidate02|RecordedCandidate03) {
   if(repo.profile!=='real-input-01'||repo.name!==record.name)throw Error('REAL_INPUT_RECORDED_DATABASE')
   const before=await repo.load(),draft=before.extractionDrafts.find(d=>d.id===record.handle.draftId)
   const pending=draft?.legacyData?.realInputPending as {execution?:string}|undefined
@@ -169,6 +197,7 @@ export async function inputRunContext(repo: SemanticRepository, handle: CaptureH
   const workspace = await repo.load(), draft = workspace.extractionDrafts.find(d => d.id === handle.draftId)
   const run = workspace.recognitionRuns.find(r => r.id === handle.recognitionRunId)
   const version = workspace.sourceVersions.find(v => v.id === handle.sourceVersionId)
+  if (draft?.legacyData?.realInputRecorded) throw Error('REAL_INPUT_RECORDED_NEVER_DISPATCHABLE')
   if (!draft || !run || !version || draft.recognitionRunId !== run.id || run.sourceVersionId !== version.id
     || version.sourceId !== handle.sourceId || !['queued','running'].includes(run.status) || !isCurrentDraft(workspace,draft.id)) throw Error('REAL_INPUT_RUN_NOT_DISPATCHABLE')
   const pending = draft.legacyData?.realInputPending as unknown as { reading: { sendSnapshot: { consentAt: string } } }
@@ -201,12 +230,14 @@ export async function createRealInputRuntime(options: {
   recordedA02?: true;
   recordedBatch?: true;
   recordedCandidate02?: true;
+  recordedCandidate03?: true;
 }) {
   options = { ...options, resources: structuredClone(options.resources) }
   if (!['live','seen_engineering_replay'].includes(options.execution)) throw Error('REAL_INPUT_EXECUTION_PROFILE')
   if(options.recordedA02&&(options.execution!=='live'||options.initial||options.name!==recordedA02Identity.name))throw Error('REAL_INPUT_RECORDED_RUNTIME')
   if(options.recordedBatch&&(options.recordedA02||options.execution!=='live'||options.initial||options.name!==recordedA02Identity.name))throw Error('REAL_INPUT_BATCH_RECORDED_RUNTIME')
   if(options.recordedCandidate02&&!options.recordedBatch)throw Error('REAL_INPUT_C02_RECORDED_RUNTIME')
+  if(options.recordedCandidate03&&!options.recordedCandidate02)throw Error('REAL_INPUT_C03_RECORDED_RUNTIME')
   await SemanticRepository.open(options.name,options.store,options.initial,'real-input-01')
   return createMainlineRuntime({name:options.name,store:options.store,profile:'real-input-01',
     recognize:()=>{throw Error('REAL_INPUT_OLD_RECOGNIZER_FORBIDDEN')},
@@ -216,8 +247,8 @@ export async function createRealInputRuntime(options: {
         createElement(SemanticFacts,{state:stateOfRuntime(workspace,draftId),taskId,onFocus})
       return {load:()=>repo.load(),view:semanticView,dates:semanticDates,review:semanticReview,edit:i=>editSemantic(repo,i),
         confirm:i=>confirmSemantic(repo,i),exportJson:()=>repo.exportJson(),capture:async()=>{throw Error('请先在真实输入面板保存并核对本次文字范围。')},
-        recognitionDescription:options.recordedCandidate02?'新候选02与历史真实模型回答 · 逐项人工核对':options.recordedBatch?'已记录真实模型批次 · 原回答核对，不再调用模型':options.recordedA02?'A02历史真实模型响应回放 · 本轮零调用':options.execution==='live'?'真实模型建议 · 尚未逐项核对':'已见匿名工程回放 · 非模型预测',
-        realInput:{profile:'real-input-01',networkDescription:options.recordedCandidate02?'新候选8次已完成，本包累计24次；当前仅本机回放，不再发送。':options.recordedBatch?'本批14次已派发完毕；仅核对已记录响应与本机提取文字，不再发送。':options.recordedA02?'只核对已记录A02响应；禁止新发送，不读取密钥，不访问模型。':options.execution==='live'
+        recognitionDescription:options.recordedCandidate03?'候选03与历史真实模型回答 · 逐项人工核对':options.recordedCandidate02?'新候选02与历史真实模型回答 · 逐项人工核对':options.recordedBatch?'已记录真实模型批次 · 原回答核对，不再调用模型':options.recordedA02?'A02历史真实模型响应回放 · 本轮零调用':options.execution==='live'?'真实模型建议 · 尚未逐项核对':'已见匿名工程回放 · 非模型预测',
+        realInput:{profile:'real-input-01',networkDescription:options.recordedCandidate03?'候选03的8次已完成，本包累计32次；当前仅本机回放，不再发送。':options.recordedCandidate02?'新候选8次已完成，本包累计24次；当前仅本机回放，不再发送。':options.recordedBatch?'本批14次已派发完毕；仅核对已记录响应与本机提取文字，不再发送。':options.recordedA02?'只核对已记录A02响应；禁止新发送，不读取密钥，不访问模型。':options.execution==='live'
           ?'本机读取；仅在逐次确认且预算允许时发送本次文字，不发送文件或工作区。':'本机读取与已见工程回放，无外部模型调用。',
           inputPanel:props=>options.recordedCandidate02?createElement(InputReview,{...props,repo,resources:options.resources,execution:options.execution,localOnly:true,
             send:async()=>{throw Error('REAL_INPUT_NEW_SEND_DISABLED')}}):options.recordedBatch?createElement('p',{role:'status'},'本批已调用完成；请从收件箱核对原回答。没有额外模型请求授权，新发送已关闭。'):options.recordedA02?createElement('p',{role:'status'},'当前只允许A02历史响应核对，已关闭新录入和发送。请从收件箱恢复A02。'):createElement(InputReview,{...props,repo,resources:options.resources,execution:options.execution,

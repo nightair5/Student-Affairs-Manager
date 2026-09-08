@@ -17,6 +17,7 @@ const git=(...args)=>execFileSync('git',args,{encoding:'utf8',windowsHide:true})
 /** Read-only current-stage protection. This is not a replacement for full
  * engineering, historical environment, paid safety or browser acceptance. */
 export function inspectProtection({stage}={}) {
+  if(stage==='candidate03')return inspectCandidate03Protection()
   if(stage==='read-close')return inspectReadCloseProtection()
   if(stage==='candidate02')return inspectCandidate02Protection()
   if(stage==='batch-14')return inspectBatchProtection()
@@ -41,6 +42,22 @@ export function inspectProtection({stage}={}) {
 }
 
 export const CANDIDATE02_DIRECTORY='docs/recognition-optimization/mainline-real-input-01/runs/candidate02-20260908a'
+export const CANDIDATE03_DIRECTORY='docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a'
+export function inspectCandidate03Protection() {
+  const b=JSON.parse(readFileSync(CANDIDATE03_DIRECTORY+'/BASELINE.json'))
+  ensure(resolve(process.cwd()).toLowerCase()===root.toLowerCase()&&git('branch','--show-current')===branch,'C03_WORKSPACE')
+  ensure(git('rev-parse','HEAD')===b.head&&b.head==='c39f7e814b85acd494dc9c161ee0d24fa4e1d03f','C03_HEAD')
+  const files=git('ls-tree','-r','--name-only','-z',baseCommit).split('\0').filter(p=>p&&!b.sources.some(s=>s.path===p)&&![contextPath,logPath].includes(p))
+    .map(path=>({path,sha256:hash(readFileSync(path))}))
+  ensure(files.length===945&&hash(JSON.stringify(files))===b.protectedSha,'C03_PROTECTION')
+  for(const f of b.history)ensure(hash(readFileSync(f.path))===f.sha256,'C03_HISTORY:'+f.path)
+  for(const f of b.frozenSources)ensure(hash(readFileSync(f.path))===f.sha256,'C03_OLD_CANDIDATE:'+f.path)
+  ensure(hash(readFileSync(logPath).subarray(0,b.log.bytes))===b.log.sha256,'C03_LOG_PREFIX')
+  ensure(hash(readFileSync(b.ledger.path).subarray(0,b.ledger.bytes))===b.ledger.sha256,'C03_LEDGER_PREFIX')
+  const sources=b.sources.map(s=>({path:s.path,exists:existsSync(s.path),workingSha256:hash(readFileSync(s.path))}))
+  ensure(sources.length===46&&new Set(sources.map(s=>s.path)).size===46,'C03_PATHS')
+  return {head:b.head,branch,protectedCount:945,sources,historyCount:b.history.length}
+}
 const readCloseMutable=['src/experiments/realInput01/runtime.ts','src/experiments/realInput01/InputReview.tsx',
   'src/experiments/realInput01/browser.tsx','src/experiments/realInput01/acceptance.test.tsx','src/experiments/realInput01/extraction.test.ts',
   'scripts/serve-mainline-real-input-01.mjs','scripts/check-mainline-real-input-01.mjs','scripts/check-mainline-real-input-01.node-test.mjs']

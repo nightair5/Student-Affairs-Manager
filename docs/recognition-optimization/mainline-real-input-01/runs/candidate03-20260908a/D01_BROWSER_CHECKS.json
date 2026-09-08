@@ -1,0 +1,349 @@
+{
+  "head": "05546aeef6aba4bb650d3575634c2f939eba1440",
+  "sourceChanges": [],
+  "protectedCount": 945,
+  "protectedSha": "df68e4eda47f664f9f0fbf218a74687117ac3cc9d2c14f5ee6e9965cd2c28394",
+  "protectedMatches": true,
+  "historyCount": 402,
+  "historyChanges": [],
+  "log": {
+    "oldPrefix": true,
+    "gitLfPrefix": true,
+    "gitPrefixComparison": "Git LF normalized to worktree CRLF only; original BASELINE bytes also checked exactly"
+  },
+  "ledger": {
+    "rows": 68,
+    "sha256": "00a339e7e7d80c7ea5b058fd41f2602a062c1a465421b39310fcccf0d6f96b57"
+  },
+  "files": [
+    {
+      "path": "C:/Users/Winner/Downloads/real-input-local-evidence (6).json",
+      "bytes": 754026,
+      "sha256": "e4fbf5809bc16f4097cc50fd327791df00f33dac9f91b85261951406af8c623f",
+      "workspaceSha": "e789d9a39a15d6f11b1d449444f7def1493dd23b51ae7802e768311289baf8fe"
+    },
+    {
+      "path": "C:/Users/Winner/Downloads/real-input-local-evidence (7).json",
+      "bytes": 850936,
+      "sha256": "04cb65a36daa823d12203f754afff02a8bbe35193f984a6cb419ae3c353be2de",
+      "workspaceSha": "a3cf54895f825e0e7d5874eeb1ed7bba135527f3f7194bb5908d57871f4e7b1d"
+    }
+  ],
+  "browser": {
+    "independentSource": "new CanonicalWorkspaceRepository(new IsolatedTestStore(name)).load()",
+    "reportedShaMatches": true,
+    "beforeTasks": 7,
+    "afterTasks": 9,
+    "oldUnchanged": {
+      "tasks": true,
+      "recognitionRuns": true,
+      "extractionDrafts": true,
+      "sourceVersions": true,
+      "materials": true,
+      "timePoints": true,
+      "events": true,
+      "historyRecords": true,
+      "evidenceRefs": true,
+      "reminderRecords": true
+    },
+    "addedTasks": [
+      {
+        "id": "mainline05:task:source:72b67d35:recorded:recorded-candidate03-D01:draft:task_submit_registration_form",
+        "projectId": null,
+        "milestoneId": null,
+        "workPackageId": null,
+        "parentTaskId": null,
+        "title": "提交活动报名表",
+        "description": "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。",
+        "nextAction": "提交活动报名表",
+        "status": "todo",
+        "estimatedMinutes": null,
+        "manualPriority": null,
+        "snoozedUntil": null,
+        "dependencyIds": [],
+        "createdAt": "2026-09-08T14:47:09.606Z",
+        "updatedAt": "2026-09-08T14:47:09.606Z",
+        "version": 1,
+        "legacyData": {
+          "mainline05DraftId": "source:72b67d35:recorded:recorded-candidate03-D01:draft",
+          "recognitionTempId": "task_submit_registration_form",
+          "sourceId": "source:72b67d35"
+        }
+      },
+      {
+        "id": "mainline05:task:source:72b67d35:recorded:recorded-candidate03-D01:draft:task_print_admission_pass",
+        "projectId": null,
+        "milestoneId": null,
+        "workPackageId": null,
+        "parentTaskId": null,
+        "title": "打印入场凭证",
+        "description": "请于2026年9月11日18:00前打印入场凭证，A4格式，1份。",
+        "nextAction": "打印入场凭证",
+        "status": "todo",
+        "estimatedMinutes": null,
+        "manualPriority": null,
+        "snoozedUntil": null,
+        "dependencyIds": [],
+        "createdAt": "2026-09-08T14:47:45.885Z",
+        "updatedAt": "2026-09-08T14:47:45.885Z",
+        "version": 1,
+        "legacyData": {
+          "mainline05DraftId": "source:72b67d35:recorded:recorded-candidate03-D01:draft",
+          "recognitionTempId": "task_print_admission_pass",
+          "sourceId": "source:72b67d35"
+        }
+      }
+    ],
+    "addedTimes": [
+      {
+        "id": "mainline05:time:source:72b67d35:recorded:recorded-candidate03-D01:draft:time_submission_deadline_registration",
+        "projectId": null,
+        "milestoneId": null,
+        "taskId": "mainline05:task:source:72b67d35:recorded:recorded-candidate03-D01:draft:task_submit_registration_form",
+        "materialId": "mainline05:material:source:72b67d35:recorded:recorded-candidate03-D01:draft:material_registration_form",
+        "eventId": null,
+        "relatedTaskIds": [
+          "mainline05:task:source:72b67d35:recorded:recorded-candidate03-D01:draft:task_submit_registration_form"
+        ],
+        "relatedMaterialIds": [
+          "mainline05:material:source:72b67d35:recorded:recorded-candidate03-D01:draft:material_registration_form"
+        ],
+        "type": "submission_deadline",
+        "rawText": "2026年9月10日18:00前",
+        "normalizedValue": "2026-09-10T18:00",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "exact",
+        "needsConfirmation": false,
+        "createdAt": "2026-09-08T14:47:09.606Z",
+        "updatedAt": "2026-09-08T14:47:09.606Z",
+        "legacyData": {
+          "mainline05DraftId": "source:72b67d35:recorded:recorded-candidate03-D01:draft",
+          "recognitionTempId": "time_submission_deadline_registration",
+          "sourceId": "source:72b67d35"
+        }
+      },
+      {
+        "id": "mainline05:time:source:72b67d35:recorded:recorded-candidate03-D01:draft:time_deadline_print_pass",
+        "projectId": null,
+        "milestoneId": null,
+        "taskId": "mainline05:task:source:72b67d35:recorded:recorded-candidate03-D01:draft:task_print_admission_pass",
+        "materialId": "mainline05:material:source:72b67d35:recorded:recorded-candidate03-D01:draft:material_admission_pass",
+        "eventId": null,
+        "relatedTaskIds": [
+          "mainline05:task:source:72b67d35:recorded:recorded-candidate03-D01:draft:task_print_admission_pass"
+        ],
+        "relatedMaterialIds": [
+          "mainline05:material:source:72b67d35:recorded:recorded-candidate03-D01:draft:material_admission_pass"
+        ],
+        "type": "task_deadline",
+        "rawText": "2026年9月11日18:00前",
+        "normalizedValue": "2026-09-11T18:00",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "exact",
+        "needsConfirmation": false,
+        "createdAt": "2026-09-08T14:47:45.885Z",
+        "updatedAt": "2026-09-08T14:47:45.885Z",
+        "legacyData": {
+          "mainline05DraftId": "source:72b67d35:recorded:recorded-candidate03-D01:draft",
+          "recognitionTempId": "time_deadline_print_pass",
+          "sourceId": "source:72b67d35"
+        }
+      }
+    ],
+    "addedMaterials": [
+      {
+        "id": "mainline05:material:source:72b67d35:recorded:recorded-candidate03-D01:draft:material_registration_form",
+        "projectId": null,
+        "name": "活动报名表",
+        "required": true,
+        "status": "missing",
+        "requirements": [],
+        "formatRequirements": [
+          "PDF"
+        ],
+        "namingRequirements": [
+          "文件名为组别"
+        ],
+        "quantity": 1,
+        "submissionChannel": "活动平台",
+        "relatedTaskIds": [
+          "mainline05:task:source:72b67d35:recorded:recorded-candidate03-D01:draft:task_submit_registration_form"
+        ],
+        "deadlineTimePointId": "mainline05:time:source:72b67d35:recorded:recorded-candidate03-D01:draft:time_submission_deadline_registration",
+        "createdAt": "2026-09-08T14:47:09.606Z",
+        "updatedAt": "2026-09-08T14:47:09.606Z",
+        "version": 1,
+        "legacyData": {
+          "mainline05DraftId": "source:72b67d35:recorded:recorded-candidate03-D01:draft",
+          "recognitionTempId": "material_registration_form",
+          "sourceId": "source:72b67d35",
+          "materialReviewVersion": "material-review-1",
+          "requirementAndAvailabilityOrigin": "user_observation"
+        }
+      },
+      {
+        "id": "mainline05:material:source:72b67d35:recorded:recorded-candidate03-D01:draft:material_admission_pass",
+        "projectId": null,
+        "name": "入场凭证",
+        "required": true,
+        "status": "missing",
+        "requirements": [],
+        "formatRequirements": [
+          "A4"
+        ],
+        "namingRequirements": [],
+        "quantity": 1,
+        "submissionChannel": null,
+        "relatedTaskIds": [
+          "mainline05:task:source:72b67d35:recorded:recorded-candidate03-D01:draft:task_print_admission_pass"
+        ],
+        "deadlineTimePointId": "mainline05:time:source:72b67d35:recorded:recorded-candidate03-D01:draft:time_deadline_print_pass",
+        "createdAt": "2026-09-08T14:47:45.885Z",
+        "updatedAt": "2026-09-08T14:47:45.885Z",
+        "version": 1,
+        "legacyData": {
+          "mainline05DraftId": "source:72b67d35:recorded:recorded-candidate03-D01:draft",
+          "recognitionTempId": "material_admission_pass",
+          "sourceId": "source:72b67d35",
+          "materialReviewVersion": "material-review-1",
+          "requirementAndAvailabilityOrigin": "user_observation"
+        }
+      }
+    ],
+    "addedRunIdentity": [
+      {
+        "id": "source:72b67d35:recorded:recorded-candidate03-D01",
+        "status": "succeeded",
+        "provider": "deepseek",
+        "legacyKeys": []
+      }
+    ],
+    "addedDraftIdentity": [
+      {
+        "id": "source:72b67d35:recorded:recorded-candidate03-D01:draft",
+        "status": "confirmed",
+        "legacyKeys": [
+          "realInputRecorded",
+          "realInputPending",
+          "mainline05"
+        ]
+      }
+    ],
+    "newHistory": [
+      {
+        "action": "mainline05_enable_material_review",
+        "changedAt": "2026-09-08T14:42:38.638Z"
+      },
+      {
+        "action": "mainline05_review_material",
+        "changedAt": "2026-09-08T14:46:37.293Z"
+      },
+      {
+        "action": "mainline05_review_task",
+        "changedAt": "2026-09-08T14:46:44.583Z"
+      },
+      {
+        "action": "mainline05_confirm",
+        "changedAt": "2026-09-08T14:47:09.606Z"
+      },
+      {
+        "action": "mainline05_review_material",
+        "changedAt": "2026-09-08T14:47:30.164Z"
+      },
+      {
+        "action": "mainline05_review_task",
+        "changedAt": "2026-09-08T14:47:36.261Z"
+      },
+      {
+        "action": "mainline05_confirm",
+        "changedAt": "2026-09-08T14:47:45.885Z"
+      }
+    ],
+    "realJobs": 0,
+    "effects": {
+      "databaseOpens": [
+        "rco-mainline-01-02-i1-real-input-d030c507-3f7c-4a2c-a511-8cd5bd534862",
+        "rco-mainline-01-02-i1-real-input-d030c507-3f7c-4a2c-a511-8cd5bd534862"
+      ],
+      "foreignDatabase": 0,
+      "blockedDatabaseUpgrades": 0,
+      "legacyStorage": 0,
+      "forbiddenNetwork": 0,
+      "writes": 0
+    },
+    "reminders": 0,
+    "duplicateReplayFullObjectUnchanged": true,
+    "oldA01": {
+      "runStatus": "queued",
+      "draftStatus": "processing",
+      "allOldObjectsExactlyUnchanged": true
+    },
+    "rawHttpExactlyOriginal": true,
+    "rawObjectMatchesOriginalJson": true,
+    "firstOriginalEqualsAdapted": true,
+    "materialReview": {
+      "required": true,
+      "status": "missing",
+      "actor": "agent-operated anonymous engineering acceptance; not real student observation",
+      "modelQualityImprovement": false
+    },
+    "realAppJourney": {
+      "loaded": true,
+      "unsavedReviewBlocksConfirmation": true,
+      "explicitMaterialSaves": 2,
+      "explicitTaskReviews": 2,
+      "partialConfirmations": 2,
+      "refresh": true,
+      "taskCenter": true,
+      "calendar": true,
+      "details": 2
+    },
+    "productExport": {
+      "fileObserved": false,
+      "note": "Separate product export button clicked but no new product-named file observed. Not claimed as passed this turn. Actual independent repository evidence JSON download verified; product export implementation unchanged, prior export evidence retained."
+    },
+    "evidenceComparison": {
+      "replBefore": "beforeEvidence",
+      "replAfter": "afterEvidence",
+      "duplicate": "duplicateEvidence",
+      "source": "official Edge UI independent repository action, followed by DOM reading of its rendered full-object result and actual downloaded files; not a file hashed twice"
+    }
+  },
+  "status": "D01_RECORDED_CONFIRM_REFRESH_READBACK_PASS",
+  "engineering": {
+    "reuse": "REPLAY_CLOSE_CHECKS.json; all 46 implementation raw SHA unchanged",
+    "target": {
+      "pass": 6,
+      "fail": 0
+    },
+    "fullAttempt": {
+      "pass": 1263,
+      "fail": 1,
+      "oldSkip": 1
+    },
+    "finalUnique": {
+      "pass": 1264,
+      "unresolved": 0,
+      "oldSkip": 1
+    },
+    "method": "Reuse unchanged cases plus final six affected cases; not one full-run PASS and not sum of attempts",
+    "typeApp": "PASS",
+    "typeNode": "PASS",
+    "lintErrors": 0,
+    "oldWarnings": 4,
+    "build": "PASS",
+    "stableIsolation": "PASS",
+    "secretScan": "PASS",
+    "embeddedLogHashes": 4,
+    "priorStaticFiles": 47,
+    "priorStaticChanged": 0
+  },
+  "model": {
+    "newCalls": 0,
+    "cost": 0,
+    "historicalCalls": 32,
+    "accuracy": "本轮未测量"
+  }
+}

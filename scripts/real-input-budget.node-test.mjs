@@ -90,6 +90,49 @@ async function candidate02Fixture() {
     targets:Array.from({length:8},(_,i)=>row(`C${String(i+1).padStart(2,'0')}`,'candidate-02',`A${String(i+1).padStart(2,'0')}`))}
   return {...f,grant,prefix}
 }
+async function candidate03Fixture() {
+  const f=await candidate02Fixture(),b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+  for(const u of f.grant.targets)await (await reserve(b,u.unitId)).complete(envelope(u.unitId))
+  const s=await b.snapshot(),prefix=await readFile(join(f.dir,'CALL_LEDGER.jsonl'))
+  const grant={...f.grant,version:'real-input-candidate03-grant-1',grantId:'44444444-4444-4444-8444-444444444444',
+    parentTail:s.tail,parentSequence:s.nextSequence,ledgerPrefixBytes:prefix.length,ledgerPrefixSha:sha256(prefix),maxTotalRequests:32,
+    targets:Array.from({length:8},(_,i)=>row(`D${String(i+1).padStart(2,'0')}`,'candidate-03',`A${String(i+1).padStart(2,'0')}`))}
+  return {...f,previousGrant:f.grant,grant,prefix}
+}
+if(process.argv[2]!=='--reserve-child') {
+  test('candidate03 only appends eight D units to the original 24; restart and old prefix preserved',async()=>{
+    const f=await candidate03Fixture()
+    for(const u of f.grant.targets){const b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+      await (await reserve(b,u.unitId)).complete(envelope(u.unitId))}
+    const b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant}),s=await b.snapshot()
+    assert.equal(s.reservations.length,32);assert.equal(s.reservations[0].costUpperMicroCny,3300000)
+    assert.equal(s.reservations[0].status,'held-unknown')
+    assert.deepEqual((await readFile(join(f.dir,'CALL_LEDGER.jsonl'))).subarray(0,f.prefix.length),f.prefix)
+    for(const id of ['A01','C01','D01','D09'])await assert.rejects(()=>reserve(b,id))
+  })
+  test('candidate03 rejects altered inputs, old candidate, limits, parent and request without journal mutation',async()=>{
+    const f=await candidate03Fixture()
+    for(const change of [g=>{g.targets[0].unitId='C01'},g=>{g.targets[0].inputSha=sha256('changed')},
+      g=>{g.maxTotalRequests=33},g=>{g.parentSequence++},g=>{g.parentTail=sha256('other')},
+      g=>{g.targets.forEach(t=>{t.candidateSha=f.previousGrant.targets[0].candidateSha})}]){
+      const g=structuredClone(f.grant);change(g);await assert.rejects(()=>openBudget(f.dir,f.manifestSha,{batchGrant:g}))}
+    const b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+    await assert.rejects(()=>b.reserve('D01','different request',BILLING_POLICY,NOW))
+    assert.deepEqual(await readFile(join(f.dir,'CALL_LEDGER.jsonl')),f.prefix)
+  })
+  test('candidate03 concurrent reserve, crash, duplicate usage and reopen cannot retry or release unknown',async()=>{
+    for(const kind of ['crash','usage']){
+      const f=await candidate03Fixture(),a=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant}),b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+      const attempts=await Promise.allSettled([reserve(a,'D01'),reserve(b,'D01')])
+      assert.equal(attempts.filter(x=>x.status==='fulfilled').length,1)
+      const lease=attempts.find(x=>x.status==='fulfilled').value
+      if(kind==='usage')await assert.rejects(()=>lease.complete(envelope('D01').replace('"input_tokens":100','"input_tokens":900,"\\u0069nput_tokens":100')))
+      const reopened=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+      assert.equal(held(await reopened.snapshot()),6600000)
+      await assert.rejects(()=>reserve(reopened,'D01'));await assert.rejects(()=>reserve(reopened,'D02'))
+    }
+  })
+}
 if(process.argv[2]!=='--reserve-child') {
   test('candidate02 appends eight original-A inputs; old unknown and all historical receipts survive',async()=>{
     const f=await candidate02Fixture()

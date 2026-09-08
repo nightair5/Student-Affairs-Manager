@@ -205,9 +205,18 @@ function replay(lines, manifestSha, manifest) {
         &&state.reservations[0].nonce===g.priorNonce&&state.reservations[1].responseSha===g.a02ResponseSha
         &&state.reservations.slice(1).every(r=>r.status==='settled'),'C02_PARENT')
       state.candidate02={grant:g,stopped:false};state.units=[...state.units,...g.targets]
+    } else if (e.kind === 'candidate03Grant') {
+      exact(e,['kind','grant']);const g=validateBatchGrant(e.grant,manifest,manifestSha)
+      check(g.version==='real-input-candidate03-grant-1'&&!state.candidate03
+        &&sequence===g.parentSequence&&prior===g.parentTail&&state.candidate02&&!state.candidate02.stopped
+        &&state.reservations.length===24&&state.reservations[0].status==='held-unknown'
+        &&state.reservations[0].nonce===g.priorNonce&&state.reservations[1].responseSha===g.a02ResponseSha
+        &&state.reservations.slice(1).every(r=>r.status==='settled')
+        &&g.targets[0].candidateSha!==state.candidate02.grant.targets[0].candidateSha,'C03_PARENT')
+      state.candidate03={grant:g,stopped:false};state.units=[...state.units,...g.targets]
     } else if (e.kind === 'batchReserve') {
       exact(e,['kind','unitId','requestSha','candidateSha','nonce','reservedMicroCny'])
-      const active=state.candidate02??state.batch,g=active?.grant,u=g?.targets[state.reservations.length-(state.candidate02?16:2)]
+      const active=state.candidate03??state.candidate02??state.batch,g=active?.grant,u=g?.targets[state.reservations.length-(state.candidate03?24:state.candidate02?16:2)]
       check(g&&!active.stopped&&state.reservations.slice(1).every(r=>r.status==='settled')
         &&u&&u.unitId===e.unitId&&u.requestSha===e.requestSha&&u.candidateSha===e.candidateSha
         &&typeof e.nonce==='string'&&/^[a-f0-9-]{36}$/.test(e.nonce)
@@ -218,7 +227,7 @@ function replay(lines, manifestSha, manifest) {
     } else if (e.kind === 'batchSettle') {
       exact(e,['kind','unitId','nonce','requestSha','responseSha','responseId','usage','costUpperMicroCny'])
       const r=state.reservations.at(-1)
-      const active=state.candidate02??state.batch
+      const active=state.candidate03??state.candidate02??state.batch
       check(active&&!active.stopped&&r?.kind==='batchReserve'&&r.status==='pending'
         &&r.unitId===e.unitId&&r.nonce===e.nonce&&r.requestSha===e.requestSha&&digest(e.responseSha)
         &&!state.reservations.some(x=>x.responseId===e.responseId),'BATCH_SETTLEMENT_BINDING')
@@ -230,6 +239,7 @@ function replay(lines, manifestSha, manifest) {
       if(state.recovery)state.recovery.status='stopped'
       if(state.batch)state.batch.stopped=true
       if(state.candidate02)state.candidate02.stopped=true
+      if(state.candidate03)state.candidate03.stopped=true
     } else fail('LEDGER_EVENT_KIND')
     prior=line.hash
   }
@@ -340,19 +350,20 @@ export const RECOVERY_ROUTE=Object.freeze({proxyHost:'127.0.0.1',proxyPort:10081
 function validateBatchGrant(input,manifest,manifestSha) {
   const g=copy(input)
   const candidate02=g.version==='real-input-candidate02-grant-1'
+  const candidate03=g.version==='real-input-candidate03-grant-1'
   exact(g,['version','grantId','parentTail','parentSequence','ledgerPrefixBytes','ledgerPrefixSha','manifestSha',
     'bindingSha','head','sourcesSha','reviewSha','targets','billingEvidence','route','priorNonce','a02ResponseSha','maxTotalRequests'])
-  check((candidate02||g.version==='real-input-batch-grant-1')&&/^[a-f0-9-]{36}$/.test(g.grantId)
-    &&g.parentSequence===(candidate02?34:5)&&g.maxTotalRequests===(candidate02?24:16)&&integer(g.ledgerPrefixBytes,1048576)&&g.ledgerPrefixBytes>0
+  check((candidate03||candidate02||g.version==='real-input-batch-grant-1')&&/^[a-f0-9-]{36}$/.test(g.grantId)
+    &&g.parentSequence===(candidate03?51:candidate02?34:5)&&g.maxTotalRequests===(candidate03?32:candidate02?24:16)&&integer(g.ledgerPrefixBytes,1048576)&&g.ledgerPrefixBytes>0
     &&['parentTail','ledgerPrefixSha','manifestSha','bindingSha','sourcesSha','reviewSha','a02ResponseSha'].every(k=>digest(g[k]))
     &&typeof g.head==='string'&&/^[a-f0-9]{40}$/.test(g.head)
     &&typeof g.priorNonce==='string'&&/^[a-f0-9-]{36}$/.test(g.priorNonce),'BATCH_GRANT')
   check(g.manifestSha===manifestSha,'BATCH_MANIFEST')
-  if(candidate02){
+  if(candidate02||candidate03){
     check(Array.isArray(g.targets)&&g.targets.length===8,'C02_TARGETS')
     for(const [i,u] of g.targets.entries()){
       exact(u,unitKeys)
-      check(u.unitId===`C${String(i+1).padStart(2,'0')}`&&['candidateSha','requestSha','inputSha','scorerSha'].every(k=>digest(u[k]))
+      check(u.unitId===`${candidate03?'D':'C'}${String(i+1).padStart(2,'0')}`&&['candidateSha','requestSha','inputSha','scorerSha'].every(k=>digest(u[k]))
         &&integer(u.requestBytes,BILLING_POLICY.requestByteCeiling)&&u.requestBytes>0
         &&u.candidateSha!==manifest.units[0].candidateSha&&u.candidateSha===g.targets[0].candidateSha
         &&u.inputSha===manifest.units[i].inputSha&&u.scorerSha===manifest.units[i].scorerSha,'C02_TARGETS')
@@ -367,28 +378,31 @@ function validateBatchGrant(input,manifest,manifestSha) {
 }
 async function batchBudget(dir,manifest,manifestSha,read,input) {
   const grant=validateBatchGrant(input,manifest,manifestSha)
-  const candidate02=grant.version==='real-input-candidate02-grant-1',offset=candidate02?16:2
-  const active=s=>candidate02?s.candidate02:s.batch
+  const candidate02=grant.version==='real-input-candidate02-grant-1',candidate03=grant.version==='real-input-candidate03-grant-1'
+  const offset=candidate03?24:candidate02?16:2,newCandidate=candidate02||candidate03
+  const active=s=>candidate03?s.candidate03:candidate02?s.candidate02:s.batch
   const boundRead=async()=>{
     const bytes=await readFile(join(dir,'CALL_LEDGER.jsonl'))
     check(bytes.length>=grant.ledgerPrefixBytes&&sha256(bytes.subarray(0,grant.ledgerPrefixBytes))===grant.ledgerPrefixSha,'BATCH_PREFIX')
     const state=await read()
+    if(candidate03)check(state.candidate02&&(state.candidate03||!state.candidate02.stopped)
+      &&grant.targets[0].candidateSha!==state.candidate02.grant.targets[0].candidateSha,'C03_PARENT_CANDIDATE')
     if(active(state))same(active(state).grant,grant,'BATCH_GRANT_CHANGED')
     else check(state.tail===grant.parentTail&&state.nextSequence===grant.parentSequence&&state.reservations.length===offset
       &&state.recovery?.status==='settled'&&state.reservations[0].status==='held-unknown'
       &&state.reservations[0].nonce===grant.priorNonce&&state.reservations[1].responseSha===grant.a02ResponseSha
-      &&(!candidate02||state.batch&&!state.batch.stopped&&state.reservations.slice(1).every(r=>r.status==='settled')),'BATCH_PARENT')
+      &&(!newCandidate||state.batch&&!state.batch.stopped&&state.reservations.slice(1).every(r=>r.status==='settled')),'BATCH_PARENT')
     return state
   }
   await locked(manifest.lockRoot,boundRead)
   return Object.freeze({
     snapshot:()=>locked(manifest.lockRoot,async()=>{const s=await boundRead();
       // The gateway can bind all bodies before the first new reserve; no journal mutation here.
-      if(candidate02&&!s.candidate02)s.units=[...s.units,...copy(grant.targets)];return s}),
+      if(newCandidate&&!active(s))s.units=[...s.units,...copy(grant.targets)];return s}),
     halt:code=>locked(manifest.lockRoot,async()=>{const s=await boundRead();check(/^[A-Z_]{1,80}$/.test(code),'HALT_CODE');await append(dir,manifest,s,{kind:'halt',code})}),
     async reserve(unitId,requestText,policy=BILLING_POLICY,now=new Date().toISOString()) {
       const reservation=await locked(manifest.lockRoot,async()=>{
-        let s=await boundRead();check(!active(s)?.stopped&&s.recovery?.status==='settled'&&(!candidate02||!s.batch.stopped),'BATCH_STOPPED')
+        let s=await boundRead();check(!active(s)?.stopped&&s.recovery?.status==='settled'&&(!newCandidate||!s.batch.stopped),'BATCH_STOPPED')
         same(copy(policy),BILLING_POLICY,'POLICY_CHANGED')
         check(Number.isFinite(Date.parse(now))&&Date.parse(now)>=Date.parse(grant.billingEvidence.checkedAt)
           &&Date.parse(now)<=Date.parse(grant.billingEvidence.validUntil),'BATCH_PRICE_EXPIRED')
@@ -396,7 +410,7 @@ async function batchBudget(dir,manifest,manifestSha,read,input) {
         check(s.reservations.slice(1).every(r=>r.status==='settled')&&u?.unitId===unitId,'BATCH_ORDER_OR_PENDING')
         check(typeof requestText==='string'&&sha256(requestText)===u.requestSha&&Buffer.byteLength(requestText)===u.requestBytes,'REQUEST_NOT_FROZEN')
         check(s.reservations.length<grant.maxTotalRequests&&s.reservations.reduce((n,r)=>n+r.costUpperMicroCny,0)+BILLING_POLICY.reservationMicroCny<=BILLING_POLICY.limitMicroCny,'LIMIT')
-        if(!active(s)){await append(dir,manifest,s,{kind:candidate02?'candidate02Grant':'batchGrant',grant});s=await boundRead()}
+        if(!active(s)){await append(dir,manifest,s,{kind:candidate03?'candidate03Grant':candidate02?'candidate02Grant':'batchGrant',grant});s=await boundRead()}
         const e={kind:'batchReserve',unitId,requestSha:u.requestSha,candidateSha:u.candidateSha,nonce:randomUUID(),reservedMicroCny:BILLING_POLICY.reservationMicroCny}
         await append(dir,manifest,s,e);return e
       })

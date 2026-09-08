@@ -4,7 +4,7 @@ import { createHash, randomBytes } from 'node:crypto'
 import { resolve, dirname, join } from 'node:path'
 import { isDeepStrictEqual } from 'node:util'
 import { build } from 'esbuild'
-import { inspectProtection, verifyReviewBinding, CANDIDATE02_DIRECTORY } from './check-mainline-real-input-01.mjs'
+import { inspectProtection, verifyReviewBinding, CANDIDATE02_DIRECTORY, CANDIDATE03_DIRECTORY } from './check-mainline-real-input-01.mjs'
 import { inspectRequest, createModelGateway, createPinnedProxyFetch, createRawRecorder } from './real-input-model-gateway.mjs'
 import { BILLING_POLICY, RECOVERY_ROUTE, initializeBudget, openBudget } from './real-input-budget.mjs'
 
@@ -472,9 +472,117 @@ export async function dispatchCandidate02(unitId) {
   }finally{await recorder.close()}
 }
 
+/** New candidate text is fixed once. Original A contexts and original scorer stay read-only. */
+export async function prepareCandidate03() {
+  const oldBytes=readFileSync(join(runDirectory,'STATE.json')),old=JSON.parse(oldBytes)
+  check(hash(oldBytes)==='d478c58f7f44e68a852bc7712c5d3e7994f2390750f5915d65204963dff9e73b','C03_ORIGINAL_BINDING')
+  const closure=await compileBatchScorer(old),protection=inspectProtection({stage:'candidate03'})
+  const prepared=JSON.parse(readFileSync(old.preparation.path)).preparations
+  check(hash(readFileSync(old.preparation.path))===old.preparation.sha256,'C03_PREPARATION')
+  const bundle=await build({stdin:{contents:"export {buildCandidate03Request,CANDIDATE03_VERSION} from './src/experiments/realInput01/candidate03.ts'",resolveDir:process.cwd(),loader:'ts'},
+    bundle:true,write:false,platform:'node',format:'esm',target:'node24',metafile:true})
+  const api=await import('data:text/javascript;base64,'+Buffer.from(bundle.outputFiles[0].contents).toString('base64'))
+  const dependencies=Object.keys(bundle.metafile.inputs).filter(p=>p!=='<stdin>').map(path=>({path,sha256:hash(readFileSync(path))}))
+  check(!dependencies.some(d=>/seenInputs|evaluation|fixture|expected/i.test(d.path)),'C03_ANSWER_DEPENDENCY')
+  const requests={},units=[],items=[]
+  for(let i=0;i<8;i++){
+    const item=prepared[i],id=`D${String(i+1).padStart(2,'0')}`,built=await api.buildCandidate03Request(item.context),u=inspectRequest(built.serialized)
+    check(item.unitId===`A${String(i+1).padStart(2,'0')}`&&item.requestText===old.requests[item.unitId]
+      &&u.inputSha===old.units[i].inputSha,'C03_INPUT_DRIFT')
+    requests[id]=built.serialized;units.push({unitId:id,candidateSha:u.candidateSha,inputSha:u.inputSha,requestSha:u.requestSha,requestBytes:u.requestBytes,scorerSha:old.scorerSha})
+    items.push({unitId:id,originalUnitId:item.unitId,context:item.context,handle:item.handle})
+  }
+  check(new Set(units.map(u=>u.candidateSha)).size===1&&units[0].candidateSha!==old.units[0].candidateSha
+    &&units[0].candidateSha!==JSON.parse(readFileSync(join(CANDIDATE02_DIRECTORY,'BINDING.json'))).units[0].candidateSha,'C03_CANDIDATE')
+  const binding={version:'real-input-candidate03-binding-1',head:protection.head,promptVersion:api.CANDIDATE03_VERSION,
+    originalBindingSha:hash(oldBytes),scorerSha:old.scorerSha,scorerBundleSha:closure.bundleSha,dependencies,requests,units,items}
+  writeFileSync(join(CANDIDATE03_DIRECTORY,'BINDING.json'),JSON.stringify(binding,null,2)+'\n',{flag:'wx'})
+  return {units:units.length,candidateSha:units[0].candidateSha,modelCalls:0}
+}
+
+export function verifyCandidate03Send({bindingBytes,binding,old,baseline,manifestBytes,billing,review,protection}) {
+  check(isDeepStrictEqual(JSON.parse(bindingBytes),binding)&&binding.version==='real-input-candidate03-binding-1'
+    &&binding.promptVersion==='real-input-source-semantics-3'&&binding.units.length===8,'C03_BINDING')
+  check(binding.head===baseline.head&&protection.head===binding.head,'C03_HEAD')
+  const sources=protection.sources.map(s=>({path:s.path,sha256:s.workingSha256}))
+  verifyReviewBinding({head:protection.head,expectedHead:baseline.head,sources,review})
+  check(review.scope==='CANDIDATE03_SEND'&&review.bindingSha===hash(bindingBytes)
+    &&review.billingSha===hash(JSON.stringify(billing)),'C03_REVIEW_BINDING')
+  check(binding.originalBindingSha===hash(readFileSync(join(runDirectory,'STATE.json')))
+    &&binding.scorerSha===old.scorerSha&&binding.scorerBundleSha===JSON.parse(readFileSync(join(batchDirectory,'BATCH_SCORER_CLOSURE.json'))).bundleSha,'C03_SCORER')
+  for(const d of binding.dependencies)check(hash(readFileSync(d.path))===d.sha256,'C03_CANDIDATE_CHANGED')
+  for(const [i,u] of binding.units.entries()){
+    const item=binding.items[i],parsed=inspectRequest(binding.requests[u.unitId])
+    check(u.unitId===`D${String(i+1).padStart(2,'0')}`&&item.unitId===u.unitId
+      &&u.inputSha===old.units[i].inputSha&&u.scorerSha===old.scorerSha
+      &&['candidateSha','requestSha','inputSha','requestBytes'].every(k=>parsed[k]===u[k]),'C03_REQUEST')
+    const original=JSON.parse(old.requests[old.units[i].unitId])
+    check(isDeepStrictEqual(original.input[1],parsed.body.input[1])&&isDeepStrictEqual(original.text,parsed.body.text),'C03_TEXT_OR_SCHEMA')
+  }
+  check(isDeepStrictEqual(billing.policy,BILLING_POLICY)&&billing.verified===true&&billing.documents.length===2,'C03_BILLING')
+  check(Date.now()>=Date.parse(billing.checkedAt)&&Date.now()<=Date.parse(billing.validUntil)
+    &&Date.parse(billing.validUntil)-Date.parse(billing.checkedAt)<=86400000,'C03_BILLING_EXPIRED')
+  for(const [i,d] of billing.documents.entries())check(d.url===[
+    'https://api-docs.deepseek.com/zh-cn/quick_start/pricing/','https://api-docs.deepseek.com/api/create-response/'][i]
+    &&d.status===200&&hash(readFileSync(d.path))===d.sha256,'C03_PUBLIC_EVIDENCE')
+  const originalLedger=readFileSync(baseline.ledger.path)
+  check(hash(originalLedger.subarray(0,baseline.ledger.bytes))===baseline.ledger.sha256&&baseline.ledger.sequence===51,'C03_LEDGER')
+  const records=originalLedger.toString().trimEnd().split('\n').map(JSON.parse)
+  return {version:'real-input-candidate03-grant-1',grantId:review.grantId,parentTail:baseline.ledger.tail,parentSequence:51,
+    ledgerPrefixBytes:baseline.ledger.bytes,ledgerPrefixSha:baseline.ledger.sha256,manifestSha:hash(manifestBytes),
+    bindingSha:hash(bindingBytes),head:protection.head,sourcesSha:hash(JSON.stringify(sources)),reviewSha:hash(JSON.stringify(review)),
+    targets:binding.units,billingEvidence:{checkedAt:billing.checkedAt,validUntil:billing.validUntil,evidenceSha:hash(JSON.stringify(billing))},
+    route:RECOVERY_ROUTE,priorNonce:records[1].event.nonce,a02ResponseSha:records[4].event.responseSha,maxTotalRequests:32}
+}
+
+export async function dispatchCandidate03(unitId) {
+  check(/^D0[1-8]$/.test(unitId),'C03_UNIT')
+  const read=name=>JSON.parse(readFileSync(join(CANDIDATE03_DIRECTORY,name)))
+  const bindingBytes=readFileSync(join(CANDIDATE03_DIRECTORY,'BINDING.json')),binding=JSON.parse(bindingBytes)
+  const baseline=read('BASELINE.json'),billing=read('BILLING.json'),review=read('SEND_REVIEW_2.json')
+  const old=JSON.parse(readFileSync(join(runDirectory,'STATE.json'))),manifestBytes=readFileSync(join(runDirectory,'REQUEST_MANIFEST.json'))
+  const closure=await compileBatchScorer(old)
+  const grant=verifyCandidate03Send({bindingBytes,binding,old,baseline,manifestBytes,billing,review,protection:inspectProtection({stage:'candidate03'})})
+  const budget=await openBudget(runDirectory,hash(manifestBytes),{batchGrant:grant}),before=await budget.snapshot()
+  check(binding.units[before.reservations.length-24]?.unitId===unitId&&!before.candidate03?.stopped
+    &&before.reservations.slice(1).every(r=>r.status==='settled'),'C03_NEXT_UNIT')
+  check(before.reservations.reduce((n,r)=>n+r.costUpperMicroCny,0)+3300000<=10000000,'C03_BUDGET')
+  // Keep the local pre-reservation D01 rejection verbatim; actual dispatch uses new artifacts.
+  const out=join(CANDIDATE03_DIRECTORY,unitId+'_DISPATCH_RESULT.json'),rawPath=join(CANDIDATE03_DIRECTORY,unitId+'_DISPATCH_RAW.jsonl')
+  check(!existsSync(out)&&!existsSync(rawPath),'C03_OUTPUT_EXISTS')
+  const index=binding.units.findIndex(u=>u.unitId===unitId),item=binding.items[index]
+  // Only this explicit, reviewed one-unit dispatch reads the already authorized server configuration.
+  try{process.loadEnvFile(resolve('.env'))}catch{check(false,'SERVER_CONFIGURATION_UNAVAILABLE')}
+  const recorder=await createRawRecorder(rawPath),origin='http://127.0.0.1:6631',capability=randomBytes(32).toString('hex')
+  let observedRaw
+  try{
+    const gateway=await createModelGateway({origin,capability,budget,requests:{...old.requests,...JSON.parse(readFileSync(join(CANDIDATE02_DIRECTORY,'BINDING.json'))).requests,...binding.requests},fetchImpl:createPinnedProxyFetch(),
+      recordRaw:async row=>{check(row.unitId===unitId&&row.requestSha===binding.units[index].requestSha,'C03_RAW');await recorder.write(row);observedRaw=row}})
+    const start=Date.now(),response=await gateway.handle({method:'POST',path:'/api/real-input/recognize',
+      headers:{host:new URL(origin).host,origin,'sec-fetch-site':'same-origin','content-type':'application/json','x-real-input-capability':capability},
+      bodyText:JSON.stringify({unitId,requestSha:binding.units[index].requestSha})})
+    let score=null,scoreError=null
+    if(response.status===200)try{const reference=await closure.api.seenWire(closure.api.cases[index],item.handle)
+      score=await closure.api.scoreSeenResponse(observedRaw.rawHttpText,item.context,reference.original.rawResponse,reference.original.context)
+    }catch{scoreError='SCHEMA_OR_SCORER_REJECTED'}
+    const after=await budget.snapshot(),reservation=after.reservations.find(r=>r.unitId===unitId)
+    const result={version:'real-input-candidate03-result-1',unitId,promptVersion:binding.promptVersion,bindingSha:hash(bindingBytes),
+      requestSha:binding.units[index].requestSha,responseSha:observedRaw?.responseSha??null,scorerSha:binding.scorerSha,
+      lastHttpStatus:response.status,lastDiagnostic:response.diagnostic??null,lastWaitingMs:Date.now()-start,score,scoreError,
+      totalAttempts:after.reservations.length,newAttempts:after.reservations.length-before.reservations.length,
+      unitCostUpperMicroCny:reservation?.costUpperMicroCny??0,costUpperMicroCny:after.reservations.reduce((n,r)=>n+r.costUpperMicroCny,0),
+      stopDispatch:response.status!==200||Boolean(after.candidate03?.stopped)||reservation?.status!=='settled',
+      providerBilledCny:'NOT_OBSERVABLE',automaticSelection:'NOT_ENABLED',humanTime:'NOT_RUN',qualityClaim:'8份已见开发通知；非盲测'}
+    writeFileSync(out,JSON.stringify(result,null,2)+'\n',{flag:'wx'})
+    return {unitId,http:response.status,stopDispatch:result.stopDispatch,totalAttempts:result.totalAttempts,completeCase:score?.completeCase??null,scoreError,upper:result.costUpperMicroCny}
+  }finally{await recorder.close()}
+}
+
 if(process.argv[1]&&resolve(process.argv[1])===resolve(import.meta.filename)){
   const args=process.argv.slice(2),pick=key=>args.find(a=>a.startsWith('--'+key+'='))?.slice(key.length+3)
-  if(args.length===1&&args[0]==='--prepare-candidate02')console.log(JSON.stringify(await prepareCandidate02()))
+  if(args.length===1&&args[0]==='--prepare-candidate03')console.log(JSON.stringify(await prepareCandidate03()))
+  else if(args.length===1&&/^--candidate03=D0[1-8]$/.test(args[0]))console.log(JSON.stringify(await dispatchCandidate03(pick('candidate03'))))
+  else if(args.length===1&&args[0]==='--prepare-candidate02')console.log(JSON.stringify(await prepareCandidate02()))
   else if(args.length===1&&/^--candidate02=C0[1-8]$/.test(args[0]))console.log(JSON.stringify(await dispatchCandidate02(pick('candidate02'))))
   else if(args.length===1&&/^--batch=(?:A0[3-8]|B0[1-8])$/.test(args[0]))console.log(JSON.stringify(await dispatchBatchUnit(pick('batch'))))
   else if(args.length===1&&args[0]==='--recover-a02')console.log(JSON.stringify(await dispatchRecoveredA02()))
