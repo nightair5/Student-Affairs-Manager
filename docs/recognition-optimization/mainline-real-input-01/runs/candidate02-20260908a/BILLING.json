@@ -1,0 +1,35 @@
+{
+  "policy": {
+    "version": "real-input-budget-2",
+    "model": "deepseek-v4-flash-vision-exp",
+    "endpoint": "https://api.deepseek.com/responses",
+    "temperature": 0,
+    "reasoningEffort": "none",
+    "inputTokenCeiling": 1048576,
+    "outputTokenCeiling": 8192,
+    "requestByteCeiling": 65536,
+    "inputPriceMicroPerMillion": 3000000,
+    "outputPriceMicroPerMillion": 9000000,
+    "reservationMicroCny": 3300000,
+    "limitMicroCny": 10000000,
+    "maxRequests": 24
+  },
+  "checkedAt": "2026-09-08T05:31:27.115Z",
+  "validUntil": "2026-09-09T05:31:27.115Z",
+  "verified": true,
+  "verification": "Official current HTML inspected: vision-exp supports Responses, context 1M; peak CNY input 3/million and output 9/million. Responses effort none, temperature 0, stream false and max_output_tokens 8192 supported. Conservative 1048576 input + 8192 output upper 3219456 micro CNY remains below 3300000. Server account billed amount NOT_OBSERVABLE.",
+  "documents": [
+    {
+      "url": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/",
+      "path": "C:\\Users\\Winner\\AppData\\Local\\Temp\\candidate02-public-LgNagz\\pricing.html",
+      "status": 200,
+      "sha256": "899affbdbc33d0be620d8dea59e86f5036c11b5410b14d060b8d2874c74f38e5"
+    },
+    {
+      "url": "https://api-docs.deepseek.com/api/create-response/",
+      "path": "C:\\Users\\Winner\\AppData\\Local\\Temp\\candidate02-public-LgNagz\\responses.html",
+      "status": 200,
+      "sha256": "633196e46984642a973dbd66d506ae72c9cd3c1db46e24f8d5a16f2ff0e46960"
+    }
+  ]
+}

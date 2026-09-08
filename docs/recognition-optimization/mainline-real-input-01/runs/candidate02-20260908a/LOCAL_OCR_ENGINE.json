@@ -1,0 +1,37 @@
+Error opening data file ./ȇ����raineddata
+Please make sure the TESSDATA_PREFIX environment variable is set to your "tessdata" directory.
+Failed loading language 'ȇ����
+{
+  "kind": "actual local Node Tesseract engine, not browser acceptance",
+  "cache": "none",
+  "network": "local language files only",
+  "rows": [
+    {
+      "unitId": "B01",
+      "format": "png",
+      "carrierSha256": "5ab9b5578b5ba0e88fe1d902e9afed5178bf7e4a2e68d91176130d87b20a562f",
+      "originalOcrText": "请 于 2026 年 9 月 10 日 18:00 前 提交 活动 报名 表 ，PDF 格 式 ， 文 件 名 为 组 别 ，1\n份 ， 交 至 活动 平台 。 请 于 2026 年 9 月 11 日 18: 00 前 打印 入 场 赁 证 ，A4 格 式 ，1\n份 。\n",
+      "confidence": 91,
+      "waitingMs": 235,
+      "empty": false
+    },
+    {
+      "unitId": "B02",
+      "format": "jpeg",
+      "carrierSha256": "08969831cd0e685c21ea42377f6fc64d3dc1645eb4b97d4e83090da86e8d6c73",
+      "originalOcrText": "请 保存 活动 手册 。 没 有 截止 日 期 要 求 。\n",
+      "confidence": 92,
+      "waitingMs": 63,
+      "empty": false
+    },
+    {
+      "unitId": "B03",
+      "format": "webp",
+      "carrierSha256": "72c12b1b2687e715a703271017fb693ee15f1540f7dd875f73492f9f0431379d",
+      "originalOcrText": "请 近期 提交 活动 总 结 ， 具 体 截止 时 间 另 行 通知 。\n",
+      "confidence": 86,
+      "waitingMs": 70,
+      "empty": false
+    }
+  ]
+}
