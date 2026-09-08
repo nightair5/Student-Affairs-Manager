@@ -1,0 +1,53 @@
+TEMP C:\Users\Winner\AppData\Local\Temp\real-correction-YUrpMI
+
+ RUN  v3.2.7 C:/Users/Winner/student-affairs-multimodal-exp
+
+ ❯ src/experiments/realInput01/acceptance.test.tsx (21 tests | 2 failed | 17 skipped) 5128ms
+   ✓ complex notice correction public API, original model answers remain immutable > B01 event mismatch corrected explicitly; separate confirmation preserves two different deadlines  2448ms
+   ✓ complex notice correction public API, original model answers remain immutable > B01 event mismatch corrected explicitly; batch confirmation preserves two different deadlines  2075ms
+   × complex notice correction public API, original model answers remain immutable > A08 failed raw is retained, missing old task and revision can be explicitly corrected and new task saved 308ms
+     → MAINLINE05_CANONICAL_FIDELITY:historyRecords
+   × complex notice correction public API, original model answers remain immutable > B08 failed raw is retained, missing old task and revision can be explicitly corrected and new task saved 297ms
+     → MAINLINE05_CANONICAL_FIDELITY:historyRecords
+   ↓ real App runtime and public send connection; memory/SSR not browser acceptance > batch actual recorded responses retain raw and first suggestions, never default select, preserve A02 and reject identity substitution
+   ↓ real App runtime and public send connection; memory/SSR not browser acceptance > real-input source description changes only the review banner; engineering and ordinary defaults remain
+   ↓ real App runtime and public send connection; memory/SSR not browser acceptance > actual App forwards an existing description only for the real-input runtime
+   ↓ real App runtime and public send connection; memory/SSR not browser acceptance > actual browser open wrapper rejects creation/upgrade events before legacy handlers, retains existing and old-default opens
+   ↓ real App runtime and public send connection; memory/SSR not browser acceptance > original A02 real App driver preserves provenance, material observation and explicit edits through independent reload
+   ↓ real App runtime and public send connection; memory/SSR not browser acceptance > recorded runtime rejects replacement database initialization and missing original storage
+   ↓ real App runtime and public send connection; memory/SSR not browser acceptance > recorded launcher builds real App, serves only bound A02 and rejects unauthorized endpoints without model code
+   ↓ real App runtime and public send connection; memory/SSR not browser acceptance > the input renderer is a React component retaining original text without invoking save callbacks during render
+   ↓ real App runtime and public send connection; memory/SSR not browser acceptance > the fact editor render preserves saved facts and does not publish dirty or saved notifications during render
+   ↓ real App runtime and public send connection; memory/SSR not browser acceptance > real homepage retains dates and explains review before any send; old presentation remains
+   ↓ real App runtime and public send connection; memory/SSR not browser acceptance > mounts the actual App with isolated capabilities and does not read old storage
+   ↓ real App runtime and public send connection; memory/SSR not browser acceptance > source-first to correct confirmation and independent reload: no-date
+   ↓ real App runtime and public send connection; memory/SSR not browser acceptance > source-first to correct confirmation and independent reload: multi
+   ↓ real App runtime and public send connection; memory/SSR not browser acceptance > source-first to correct confirmation and independent reload: condition-true
+   ↓ real App runtime and public send connection; memory/SSR not browser acceptance > source-first to correct confirmation and independent reload: revision
+   ↓ real App runtime and public send connection; memory/SSR not browser acceptance > a failed executor is terminal, no retry; missing or malformed database never falls back
+   ↓ real App runtime and public send connection; memory/SSR not browser acceptance > client sends exactly the bound text request once, then refuses duplicate or changed input
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/experiments/realInput01/acceptance.test.tsx > complex notice correction public API, original model answers remain immutable > A08 failed raw is retained, missing old task and revision can be explicitly corrected and new task saved
+ FAIL  src/experiments/realInput01/acceptance.test.tsx > complex notice correction public API, original model answers remain immutable > B08 failed raw is retained, missing old task and revision can be explicitly corrected and new task saved
+Error: MAINLINE05_CANONICAL_FIDELITY:historyRecords
+ ❯ assert src/experiments/mainline05/semanticState.ts:53:25
+     51| export const json = (value: unknown): JsonValue => plainJson(value) as…
+     52| export function assert(condition: unknown, code: string): asserts cond…
+     53|   if (!condition) throw Error('MAINLINE05_' + code)
+       |                         ^
+     54| }
+     55| export function exactKeys(value: object, keys: string[]) {
+ ❯ validateSemanticWorkspace src/experiments/mainline05/semanticState.ts:544:5
+ ❯ SemanticRepository.commitCandidate src/experiments/mainline05/semanticRepository.ts:97:5
+ ❯ src/experiments/realInput01/acceptance.test.tsx:70:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 2 passed | 17 skipped (21)
+   Start at  09:41:25
+   Duration  6.52s (transform 582ms, setup 0ms, collect 933ms, tests 5.13s, environment 0ms, prepare 171ms)
+

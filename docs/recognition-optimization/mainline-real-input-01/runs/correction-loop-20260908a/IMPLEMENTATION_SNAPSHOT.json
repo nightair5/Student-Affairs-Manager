@@ -1,0 +1,243 @@
+{
+  "head": "764358554953fb8ccf2b5e714f88584365ae26a5",
+  "sources": [
+    {
+      "path": "src/App.tsx",
+      "workingSha256": "781a3c6d755bfd6f620b86c467aba484f7366b055489fb60fe1218ecadf9b9d0"
+    },
+    {
+      "path": "src/components/IntakePanel.tsx",
+      "workingSha256": "92b1e9b2dd3312b380b7d01dcff3e8c9ec2c5c3d919ef2f8802b85d1d3c5418b"
+    },
+    {
+      "path": "src/components/DraftReviewPanel.tsx",
+      "workingSha256": "ad0e9f72dbc8577de21abb1904d9c4c89841ce69709a7334ea20693cc1452bb1"
+    },
+    {
+      "path": "src/lib/fileExtraction.ts",
+      "workingSha256": "83240cbd5e5a097933cc046a07c7474ab8a52449b63fd3e205c062ade61386ea"
+    },
+    {
+      "path": "src/experiments/mainline02/runtime.ts",
+      "workingSha256": "be6a9bb947f232df53e52c1eb8993ed2e91448636e802b6dc032cff6be6f35fc"
+    },
+    {
+      "path": "src/experiments/mainline04/semanticComposer.ts",
+      "workingSha256": "21c38c5a10eda7446c8af941f9eecf6c9d0506e63eab954600118ec51b4ab5b8"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticState.ts",
+      "workingSha256": "f6ecef756abe515ee789f4f2b5bf9ffc9bde9aed8bedb6d5e018cf383c1b5d06"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticRepository.ts",
+      "workingSha256": "8e4307ffc94d4e43b5f5bb69a143fdce139e19496b5d2c094ca73c6bdc2c6bdf"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticCapture.ts",
+      "workingSha256": "1a16c211639df47f484732a8e654951516e159bd9b53362caf21d9d5b5a862ed"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticConfirmation.ts",
+      "workingSha256": "6d3d07c8974463cb3d611c494dd939ad51e9616d7594cc2f43f3f5a73ea73ef2"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticView.ts",
+      "workingSha256": "68726405c2e37bf26fc184a02e9c976ba926e6cbb71af8993de79baeab7da4ad"
+    },
+    {
+      "path": "src/experiments/mainline05/runtime.ts",
+      "workingSha256": "9d6837cf4022fb989b7122a1f39c414355ee6f8f861e4d4df814146141edf83f"
+    },
+    {
+      "path": "src/experiments/mainline05/SemanticFacts.tsx",
+      "workingSha256": "6e517b727935d1c9c53a69688621cd8bfee563deb0b95d1b90bcb54778f84175"
+    },
+    {
+      "path": "src/experiments/realInput01/inputReceipt.ts",
+      "workingSha256": "72b342a095d607db888a54819da80cab98fcd35b59c1d52db86157ee204a7372"
+    },
+    {
+      "path": "src/experiments/realInput01/inputAcquisition.ts",
+      "workingSha256": "38339eacc4104653a9823adc8011744920b305852e91146346a645be396a2214"
+    },
+    {
+      "path": "src/experiments/realInput01/modelWire.ts",
+      "workingSha256": "7221e249bfbb855db4142a96ce12f8bde98be3e679dc41c3ad77c7e0e8cbd526"
+    },
+    {
+      "path": "src/experiments/realInput01/modelClient.ts",
+      "workingSha256": "767edb637cf741d4f27a96d5059836cd7b17e8c643e9936d974e380bde21df0b"
+    },
+    {
+      "path": "src/experiments/realInput01/modelPolicy.ts",
+      "workingSha256": "ac2606d1a0fe84d56a911797bffec7eab93be19cdd95e54150d97becd113cafd"
+    },
+    {
+      "path": "src/experiments/realInput01/factCorrections.ts",
+      "workingSha256": "866f3d87b17bbf6ae7f71b115ce1c3cf6cd4d4b156405f23e67be3e19e2f6964"
+    },
+    {
+      "path": "src/experiments/realInput01/runtime.ts",
+      "workingSha256": "4c7a34d8ac2ef84dcecb584df28697d1af85ee09b3087311dfc6aa97a670cf2d"
+    },
+    {
+      "path": "src/experiments/realInput01/browser.tsx",
+      "workingSha256": "39302e9e35d06a7b86dae41df95b796aa02fb07b65bbfb37a76a85e3c9463807"
+    },
+    {
+      "path": "src/experiments/realInput01/InputReview.tsx",
+      "workingSha256": "e127677313b8eb66c55e154a278ca2fb7c703049e7243cd87701bc92d8b34da8"
+    },
+    {
+      "path": "src/experiments/realInput01/FactCorrectionEditor.tsx",
+      "workingSha256": "fac3ca19ddd5822499c4f71425ade44912e1129c982fa172f4357898de656088"
+    },
+    {
+      "path": "src/experiments/realInput01/seenInputs.ts",
+      "workingSha256": "e8c7cffc614b9be14c35657ddeb19592ddc3d8e8964423764889b46d37dd5583"
+    },
+    {
+      "path": "src/experiments/realInput01/evaluation.ts",
+      "workingSha256": "09ef0efff89c25761c721696da88de5fd73b74af0a417470e8f6af11979a6745"
+    },
+    {
+      "path": "src/experiments/realInput01/inputReceipt.test.ts",
+      "workingSha256": "421e2d67fca01e07bc044c75fc935f844b357d8b08f8707a4aa463e59e28fcd6"
+    },
+    {
+      "path": "src/experiments/realInput01/modelWire.test.ts",
+      "workingSha256": "dc417bf97d7cd0dedbffcdb70396cf0a915808cf423e7578b6a9c6cc1747f0ce"
+    },
+    {
+      "path": "src/experiments/realInput01/modelPolicy.test.ts",
+      "workingSha256": "bd8b511aede51694775c9fbdbc08dd2a0deea8611eb6b1e08a6736b0a8a1ac9b"
+    },
+    {
+      "path": "src/experiments/realInput01/factCorrections.test.ts",
+      "workingSha256": "5b5ad33a80d6f3226c08185fb2410b90bf3986d60c46f114ac8cfbf6e1d0440a"
+    },
+    {
+      "path": "src/experiments/realInput01/runtime.test.ts",
+      "workingSha256": "6859a42dfabb42206c016e035c86954b4b63e9c23da85556af9597cada73cdf1"
+    },
+    {
+      "path": "src/experiments/realInput01/acceptance.test.tsx",
+      "workingSha256": "3209c8615e701568302f40ef43022b7bf22aa21cb7059766f91b485f1b92527e"
+    },
+    {
+      "path": "src/experiments/realInput01/extraction.test.ts",
+      "workingSha256": "6cc076a1fd8c5d3cbf2cba4979b8464eb532b450e4b0faf3dd173e51b3c418eb"
+    },
+    {
+      "path": "scripts/serve-mainline-real-input-01.mjs",
+      "workingSha256": "6a9ca4308269ba1107d0c8d750474d75b02933883b50002c8a18b34976e65ae8"
+    },
+    {
+      "path": "scripts/real-input-model-gateway.mjs",
+      "workingSha256": "5c6f4aefd3ee911bd4f35629954274ab0fd8ea55f3789dfb9de0290c7df86a03"
+    },
+    {
+      "path": "scripts/real-input-budget.mjs",
+      "workingSha256": "501fcdad29bbbb76f9febcf68feaa92145d8f2413644905b39a85424f57c23ec"
+    },
+    {
+      "path": "scripts/check-mainline-real-input-01.mjs",
+      "workingSha256": "b414de7dbd47b3072c5cbf26724cdd479be103fb0b118d1431c5b0ac548892fb"
+    },
+    {
+      "path": "scripts/real-input-model-gateway.node-test.mjs",
+      "workingSha256": "fd39a73fa919204dcbb11dbcf4b79bf9172c1a07a9802020b0f90b7f788bb631"
+    },
+    {
+      "path": "scripts/check-mainline-real-input-01.node-test.mjs",
+      "workingSha256": "1385681880471740ea6b33513348b1d7a1847a75803154b9bc7f5badd31e4597"
+    },
+    {
+      "path": "scripts/run-mainline-real-input-01.mjs",
+      "workingSha256": "c6d7db60e6cc4fad384e498e6ad00800e3737450657c0517cd964ee1a0d80a90"
+    },
+    {
+      "path": "scripts/real-input-budget.node-test.mjs",
+      "workingSha256": "edad74fb054f4720e4c5ad42648c05fe3f362c60c5624221704400be8645cefd"
+    },
+    {
+      "path": "scripts/render-mainline-real-input-01-fixtures.mjs",
+      "workingSha256": "a5e88226104488cb61d50ea1c2fa92544ddd58974b08d5d4f0544cccacf6aafd"
+    },
+    {
+      "path": "src/pages/DashboardPage.tsx",
+      "workingSha256": "b0a475cb2c075fa789b360ead943c59d3b3be87da46a7adc49c9cf20be1bacec"
+    }
+  ],
+  "protected": {
+    "count": 945,
+    "sha256": "df68e4eda47f664f9f0fbf218a74687117ac3cc9d2c14f5ee6e9965cd2c28394"
+  },
+  "oldEvidence": {
+    "checked": 70,
+    "bad": []
+  },
+  "oldEngineeringLogs": {
+    "checked": 25,
+    "bad": []
+  },
+  "ledger": {
+    "path": "docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/CALL_LEDGER.jsonl",
+    "bytes": 25426,
+    "sha256": "3482e6f198acf5316d859540859685fba632af74e3b21b6204454d97b2aaedf6",
+    "records": 34,
+    "gitUnchanged": true
+  },
+  "logs": [
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/correction-loop-20260908a/logs/affected-final.log",
+      "sha256": "c0ce0a95463eb8a1b38f70d94ae0dbcbbbb93e8e925b2924a6e51c6f62bca17f"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/correction-loop-20260908a/logs/build-1.log",
+      "sha256": "2ebba907a430c3410c5047836e6678117930747729c3af5423fbeade4df23d17"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/correction-loop-20260908a/logs/build-final.log",
+      "sha256": "bfc73ac2c5f28f4af5538b95cf65e1a6a219261d7b21830e5201f502e28057be"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/correction-loop-20260908a/logs/full-test-1.log",
+      "sha256": "ce2dc0cbf239306385ea4e39b9c820e33983bd9296c0a1e7d538deff2f3aa45f"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/correction-loop-20260908a/logs/lint-1.log",
+      "sha256": "f709476deb6f05618ac2214d2a6f9fc7702df632efad2a85de4a8ab99cf8bdc8"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/correction-loop-20260908a/logs/lint-final.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/correction-loop-20260908a/logs/node-1.log",
+      "sha256": "dc6225b3fa1aa629ff926b21a0115e2b188705da399d6badc1434bd1fa3d4125"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/correction-loop-20260908a/logs/safety-1.log",
+      "sha256": "dbd9e0ce38f82a82837e7815697fba5e92cebb88b4a79af0573f9ff2370c398a"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/correction-loop-20260908a/logs/type-app-1.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/correction-loop-20260908a/logs/type-app-final.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/correction-loop-20260908a/logs/type-node-1.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "appendLog": {
+    "oldGitBytes": 301063,
+    "oldGitSha256": "4305e50839966cb365341e8b343b27bf597e3de85adf789a0b05bdb28920eb17",
+    "normalizedPrefixPreserved": true
+  }
+}
