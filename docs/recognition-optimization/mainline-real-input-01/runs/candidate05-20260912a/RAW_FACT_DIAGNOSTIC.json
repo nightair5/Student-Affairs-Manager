@@ -1,0 +1,1912 @@
+[
+  {
+    "id": "P01-03",
+    "assemblyError": null,
+    "t": [
+      {
+        "id": "task-submit-authorization",
+        "a": "提交",
+        "o": "放映授权书",
+        "sem": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "c": "not_applicable",
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "dep": []
+      },
+      {
+        "id": "task-upload-trailer",
+        "a": "上传",
+        "o": "预告片",
+        "sem": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "c": "not_applicable",
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "dep": []
+      }
+    ],
+    "time": [
+      {
+        "id": "tp-authorization-deadline",
+        "s": "2026年9月23日16:00前",
+        "type": "submission_deadline",
+        "t": [
+          "task-submit-authorization"
+        ],
+        "m": []
+      },
+      {
+        "id": "tp-trailer-deadline",
+        "s": "2026年9月25日12:00前",
+        "type": "submission_deadline",
+        "t": [
+          "task-upload-trailer"
+        ],
+        "m": []
+      }
+    ],
+    "m": [
+      {
+        "id": "mat-authorization-pdf",
+        "s": "放映授权书",
+        "required": true,
+        "t": [
+          "task-submit-authorization"
+        ],
+        "format": [
+          "签名PDF"
+        ],
+        "qty": null
+      },
+      {
+        "id": "mat-copyright-email-screenshot",
+        "s": "版权方邮件许可截图",
+        "required": true,
+        "t": [
+          "task-submit-authorization"
+        ],
+        "format": [],
+        "qty": null
+      },
+      {
+        "id": "mat-trailer-mp4",
+        "s": "预告片",
+        "required": true,
+        "t": [
+          "task-upload-trailer"
+        ],
+        "format": [
+          "MP4",
+          "时长不超过60秒"
+        ],
+        "qty": null
+      }
+    ],
+    "e": [],
+    "rev": [],
+    "unresolved": 0
+  },
+  {
+    "id": "P01-05",
+    "assemblyError": "REAL_INPUT_FACT_COVERAGE_MISSING_FACT",
+    "t": [
+      {
+        "id": "task-1",
+        "a": "提交",
+        "o": "放映授权书",
+        "sem": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "c": "not_applicable",
+        "coverage": {
+          "time": null,
+          "material": null,
+          "event": null
+        },
+        "dep": []
+      },
+      {
+        "id": "task-2",
+        "a": "上传",
+        "o": "预告片",
+        "sem": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "c": "not_applicable",
+        "coverage": {
+          "time": null,
+          "material": null,
+          "event": null
+        },
+        "dep": []
+      }
+    ],
+    "time": [
+      {
+        "id": "time-1",
+        "s": "2026年9月23日16:00前",
+        "type": "submission_deadline",
+        "t": [
+          "task-1"
+        ],
+        "m": [
+          "material-1",
+          "material-2"
+        ]
+      },
+      {
+        "id": "time-2",
+        "s": "2026年9月25日12:00前",
+        "type": "submission_deadline",
+        "t": [
+          "task-2"
+        ],
+        "m": [
+          "material-3"
+        ]
+      }
+    ],
+    "m": [
+      {
+        "id": "material-1",
+        "s": "放映授权书",
+        "required": true,
+        "t": [
+          "task-1"
+        ],
+        "format": [
+          "签名PDF"
+        ],
+        "qty": null
+      },
+      {
+        "id": "material-2",
+        "s": "版权方邮件许可截图",
+        "required": true,
+        "t": [
+          "task-1"
+        ],
+        "format": [
+          "截图"
+        ],
+        "qty": null
+      },
+      {
+        "id": "material-3",
+        "s": "预告片",
+        "required": true,
+        "t": [
+          "task-2"
+        ],
+        "format": [
+          "MP4",
+          "时长不超过60秒"
+        ],
+        "qty": null
+      }
+    ],
+    "e": [],
+    "rev": [],
+    "unresolved": 0
+  },
+  {
+    "id": "P02-03",
+    "assemblyError": null,
+    "t": [
+      {
+        "id": "task-001",
+        "a": "整理",
+        "o": "传感器异常记录",
+        "sem": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "c": "not_applicable",
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "dep": []
+      }
+    ],
+    "time": [
+      {
+        "id": "time-001",
+        "s": "近期",
+        "type": "task_deadline",
+        "t": [
+          "task-001"
+        ],
+        "m": []
+      },
+      {
+        "id": "time-002",
+        "s": "具体完成日期由实验室另行通知",
+        "type": "task_deadline",
+        "t": [
+          "task-001"
+        ],
+        "m": []
+      }
+    ],
+    "m": [
+      {
+        "id": "material-001",
+        "s": "传感器异常记录",
+        "required": true,
+        "t": [
+          "task-001"
+        ],
+        "format": [
+          "必须包含设备编号",
+          "必须包含异常出现时段"
+        ],
+        "qty": null
+      }
+    ],
+    "e": [],
+    "rev": [],
+    "unresolved": 1
+  },
+  {
+    "id": "P02-05",
+    "assemblyError": "REAL_INPUT_FACT_COVERAGE_MISSING_FACT",
+    "t": [
+      {
+        "id": "task-1",
+        "a": "整理",
+        "o": "传感器异常记录",
+        "sem": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "c": "not_applicable",
+        "coverage": {
+          "time": null,
+          "material": null,
+          "event": null
+        },
+        "dep": []
+      }
+    ],
+    "time": [
+      {
+        "id": "time-1",
+        "s": "近期",
+        "type": "task_deadline",
+        "t": [
+          "task-1"
+        ],
+        "m": []
+      },
+      {
+        "id": "time-2",
+        "s": "具体完成日期由实验室另行通知",
+        "type": "task_deadline",
+        "t": [
+          "task-1"
+        ],
+        "m": []
+      }
+    ],
+    "m": [
+      {
+        "id": "material-1",
+        "s": "传感器异常记录",
+        "required": true,
+        "t": [
+          "task-1"
+        ],
+        "format": [
+          "必须包含设备编号和异常出现时段"
+        ],
+        "qty": null
+      }
+    ],
+    "e": [],
+    "rev": [],
+    "unresolved": 0
+  },
+  {
+    "id": "P03-03",
+    "assemblyError": null,
+    "t": [
+      {
+        "id": "task-save-original-photos",
+        "a": "保存",
+        "o": "服务现场原始照片",
+        "sem": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "c": "not_applicable",
+        "coverage": {
+          "time": "not_stated",
+          "material": "not_stated",
+          "event": "not_stated"
+        },
+        "dep": []
+      }
+    ],
+    "time": [],
+    "m": [],
+    "e": [],
+    "rev": [],
+    "unresolved": 0
+  },
+  {
+    "id": "P03-05",
+    "assemblyError": "REAL_INPUT_FACT_COVERAGE_MISSING_FACT",
+    "t": [
+      {
+        "id": "task-1",
+        "a": "保存",
+        "o": "服务现场原始照片",
+        "sem": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "c": "not_applicable",
+        "coverage": {
+          "time": "not_stated",
+          "material": null,
+          "event": "not_stated"
+        },
+        "dep": []
+      }
+    ],
+    "time": [],
+    "m": [],
+    "e": [],
+    "rev": [],
+    "unresolved": 0
+  },
+  {
+    "id": "P04-03",
+    "assemblyError": null,
+    "t": [
+      {
+        "id": "task-cancel-water-sampling-reservation",
+        "a": "取消",
+        "o": "水样采集预约",
+        "sem": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "c": "false",
+        "coverage": {
+          "time": "not_stated",
+          "material": "not_stated",
+          "event": "not_stated"
+        },
+        "dep": []
+      },
+      {
+        "id": "task-check-sampling-bottle-seal",
+        "a": "检查",
+        "o": "采样瓶密封性",
+        "sem": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "c": "not_applicable",
+        "coverage": {
+          "time": "present",
+          "material": "not_stated",
+          "event": "not_stated"
+        },
+        "dep": []
+      }
+    ],
+    "time": [
+      {
+        "id": "time-check-bottle-seal-deadline",
+        "s": "2026年9月19日17:00前",
+        "type": "task_deadline",
+        "t": [
+          "task-check-sampling-bottle-seal"
+        ],
+        "m": []
+      }
+    ],
+    "m": [],
+    "e": [],
+    "rev": [],
+    "unresolved": 0
+  },
+  {
+    "id": "P04-05",
+    "assemblyError": "REAL_INPUT_FACT_COVERAGE_MISSING_FACT",
+    "t": [
+      {
+        "id": "task-1",
+        "a": "取消",
+        "o": "水样采集预约",
+        "sem": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "c": "false",
+        "coverage": {
+          "time": null,
+          "material": null,
+          "event": null
+        },
+        "dep": []
+      },
+      {
+        "id": "task-2",
+        "a": "检查",
+        "o": "采样瓶密封性",
+        "sem": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "c": "not_applicable",
+        "coverage": {
+          "time": null,
+          "material": null,
+          "event": null
+        },
+        "dep": []
+      }
+    ],
+    "time": [
+      {
+        "id": "time-1",
+        "s": "2026年9月19日17:00前",
+        "type": "task_deadline",
+        "t": [
+          "task-2"
+        ],
+        "m": []
+      }
+    ],
+    "m": [],
+    "e": [],
+    "rev": [],
+    "unresolved": 0
+  },
+  {
+    "id": "P05-03",
+    "assemblyError": null,
+    "t": [
+      {
+        "id": "task-submit-trip-proof",
+        "a": "补交",
+        "o": "行程证明",
+        "sem": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "c": "true",
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "dep": []
+      }
+    ],
+    "time": [
+      {
+        "id": "time-submission-deadline",
+        "s": "2026年9月21日15:00",
+        "type": "submission_deadline",
+        "t": [
+          "task-submit-trip-proof"
+        ],
+        "m": []
+      }
+    ],
+    "m": [
+      {
+        "id": "material-trip-proof-pdf",
+        "s": "行程证明",
+        "required": true,
+        "t": [
+          "task-submit-trip-proof"
+        ],
+        "format": [
+          "电子PDF"
+        ],
+        "qty": null
+      }
+    ],
+    "e": [],
+    "rev": [],
+    "unresolved": 0
+  },
+  {
+    "id": "P05-05",
+    "assemblyError": null,
+    "t": [
+      {
+        "id": "task-1",
+        "a": "补交",
+        "o": "行程证明",
+        "sem": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "c": "true",
+        "coverage": {
+          "time": null,
+          "material": null,
+          "event": "not_stated"
+        },
+        "dep": []
+      }
+    ],
+    "time": [
+      {
+        "id": "time-1",
+        "s": "2026年9月21日15:00",
+        "type": "submission_deadline",
+        "t": [
+          "task-1"
+        ],
+        "m": []
+      }
+    ],
+    "m": [
+      {
+        "id": "material-1",
+        "s": "行程证明",
+        "required": true,
+        "t": [
+          "task-1"
+        ],
+        "format": [
+          "电子PDF"
+        ],
+        "qty": null
+      }
+    ],
+    "e": [],
+    "rev": [],
+    "unresolved": 0
+  },
+  {
+    "id": "P06-03",
+    "assemblyError": null,
+    "t": [
+      {
+        "id": "task-pickup-projector",
+        "a": "领取",
+        "o": "投影仪",
+        "sem": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "c": "unknown",
+        "coverage": {
+          "time": "not_stated",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "dep": []
+      }
+    ],
+    "time": [],
+    "m": [
+      {
+        "id": "material-student-id",
+        "s": "学生证",
+        "required": true,
+        "t": [
+          "task-pickup-projector"
+        ],
+        "format": [],
+        "qty": null
+      }
+    ],
+    "e": [],
+    "rev": [],
+    "unresolved": 0
+  },
+  {
+    "id": "P06-05",
+    "assemblyError": "REAL_INPUT_FACT_COVERAGE_MISSING_FACT",
+    "t": [
+      {
+        "id": "task-1",
+        "a": "领取",
+        "o": "投影仪",
+        "sem": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "c": "unknown",
+        "coverage": {
+          "time": null,
+          "material": null,
+          "event": null
+        },
+        "dep": []
+      }
+    ],
+    "time": [],
+    "m": [
+      {
+        "id": "material-1",
+        "s": "学生证",
+        "required": true,
+        "t": [
+          "task-1"
+        ],
+        "format": [],
+        "qty": null
+      }
+    ],
+    "e": [],
+    "rev": [],
+    "unresolved": 0
+  },
+  {
+    "id": "P07-03",
+    "assemblyError": null,
+    "t": [
+      {
+        "id": "task-old-mail-proof",
+        "a": "寄送",
+        "o": "纸质校样",
+        "sem": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "negative",
+          "tense": "past",
+          "status": "cancelled",
+          "validity": "superseded",
+          "modality": "required"
+        },
+        "c": "not_applicable",
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "dep": []
+      },
+      {
+        "id": "task-new-upload-proof",
+        "a": "上传",
+        "o": "校样PDF",
+        "sem": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "c": "not_applicable",
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "dep": []
+      }
+    ],
+    "time": [
+      {
+        "id": "tp-old-deadline",
+        "s": "2026年9月20日17:00前",
+        "type": "submission_deadline",
+        "t": [
+          "task-old-mail-proof"
+        ],
+        "m": [
+          "mat-paper-proof"
+        ]
+      },
+      {
+        "id": "tp-new-deadline",
+        "s": "2026年9月24日10:00前",
+        "type": "submission_deadline",
+        "t": [
+          "task-new-upload-proof"
+        ],
+        "m": [
+          "mat-proof-pdf"
+        ]
+      }
+    ],
+    "m": [
+      {
+        "id": "mat-paper-proof",
+        "s": "纸质校样",
+        "required": true,
+        "t": [
+          "task-old-mail-proof"
+        ],
+        "format": [],
+        "qty": null
+      },
+      {
+        "id": "mat-proof-pdf",
+        "s": "校样PDF",
+        "required": true,
+        "t": [
+          "task-new-upload-proof"
+        ],
+        "format": [
+          "PDF"
+        ],
+        "qty": null
+      }
+    ],
+    "e": [],
+    "rev": [
+      {
+        "type": "supersedes",
+        "targetDirectiveId": "task-old-mail-proof",
+        "scopeIds": [
+          "scope-0009-cf640f5c3972f8dfd41a1d10f76fe63187268d02a762f05792c56eebe64257fa",
+          "scope-0010-e537a0b87904a01a5e35006ac1ac5facb0700d2ef70bee157ed1d8990fd2abcc"
+        ],
+        "fromDirectiveId": "task-new-upload-proof",
+        "effective": "true"
+      }
+    ],
+    "unresolved": 0
+  },
+  {
+    "id": "P07-05",
+    "assemblyError": "REAL_INPUT_FACT_COVERAGE_MISSING_FACT",
+    "t": [
+      {
+        "id": "task-old-mail",
+        "a": "寄送",
+        "o": "纸质校样",
+        "sem": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "negative",
+          "tense": "past",
+          "status": "cancelled",
+          "validity": "superseded",
+          "modality": "required"
+        },
+        "c": "not_applicable",
+        "coverage": {
+          "time": null,
+          "material": null,
+          "event": null
+        },
+        "dep": []
+      },
+      {
+        "id": "task-new-upload",
+        "a": "上传",
+        "o": "校样PDF",
+        "sem": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "c": "not_applicable",
+        "coverage": {
+          "time": null,
+          "material": null,
+          "event": null
+        },
+        "dep": []
+      }
+    ],
+    "time": [
+      {
+        "id": "time-old-deadline",
+        "s": "2026年9月20日17:00前",
+        "type": "submission_deadline",
+        "t": [
+          "task-old-mail"
+        ],
+        "m": []
+      },
+      {
+        "id": "time-new-deadline",
+        "s": "2026年9月24日10:00前",
+        "type": "submission_deadline",
+        "t": [
+          "task-new-upload"
+        ],
+        "m": []
+      }
+    ],
+    "m": [
+      {
+        "id": "material-proof-pdf",
+        "s": "校样PDF",
+        "required": true,
+        "t": [
+          "task-new-upload"
+        ],
+        "format": [
+          "PDF"
+        ],
+        "qty": null
+      }
+    ],
+    "e": [],
+    "rev": [
+      {
+        "type": "supersedes",
+        "targetDirectiveId": "task-old-mail",
+        "scopeIds": [
+          "scope-0009-cf640f5c3972f8dfd41a1d10f76fe63187268d02a762f05792c56eebe64257fa",
+          "scope-0005-abc2549748627e4528e82fb533be05b34e49cf35f2455118062d4aa039a79272"
+        ],
+        "fromDirectiveId": "task-new-upload",
+        "effective": "true"
+      },
+      {
+        "type": "cancels",
+        "targetDirectiveId": "task-old-mail",
+        "scopeIds": [
+          "scope-0003-00b5442727614d27a37a84705d8816934ec91d4e659e53180da0ece01a5e4039",
+          "scope-0004-c98244f8976a8ca9bdaea718c0a35875a9680afd641e04fdb2eb26242898380a"
+        ],
+        "fromDirectiveId": null,
+        "effective": "true"
+      }
+    ],
+    "unresolved": 0
+  },
+  {
+    "id": "P08-03",
+    "assemblyError": null,
+    "t": [
+      {
+        "id": "task-cancel-factory-visit",
+        "a": "参加",
+        "o": "工厂参访",
+        "sem": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "negative",
+          "tense": "past",
+          "status": "cancelled",
+          "validity": "superseded",
+          "modality": "required"
+        },
+        "c": "not_applicable",
+        "coverage": {
+          "time": "present",
+          "material": "not_stated",
+          "event": "present"
+        },
+        "dep": []
+      },
+      {
+        "id": "task-submit-course-reflection",
+        "a": "提交",
+        "o": "课程反思",
+        "sem": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "c": "not_applicable",
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "dep": []
+      }
+    ],
+    "time": [
+      {
+        "id": "tp-factory-visit-start",
+        "s": "2026年9月22日09:00",
+        "type": "event_start",
+        "t": [
+          "task-cancel-factory-visit"
+        ],
+        "m": []
+      },
+      {
+        "id": "tp-reflection-deadline",
+        "s": "2026年9月26日18:00前",
+        "type": "submission_deadline",
+        "t": [
+          "task-submit-course-reflection"
+        ],
+        "m": []
+      }
+    ],
+    "m": [
+      {
+        "id": "material-course-reflection",
+        "s": "课程反思",
+        "required": true,
+        "t": [
+          "task-submit-course-reflection"
+        ],
+        "format": [
+          "DOCX"
+        ],
+        "qty": null
+      }
+    ],
+    "e": [
+      {
+        "id": "event-factory-visit",
+        "t": [
+          "task-cancel-factory-visit"
+        ],
+        "start": "tp-factory-visit-start",
+        "end": null
+      }
+    ],
+    "rev": [
+      {
+        "type": "cancels",
+        "targetDirectiveId": "task-cancel-factory-visit",
+        "scopeIds": [
+          "scope-0003-ae22eedf6be452de0a80e229411f9f371c0a4cddab627c5be42e7898e27b43dc",
+          "scope-0004-7451fec7a7d9ad62b862f068ab1d68ff59209db40ce19762f2ac4d99ae4724af"
+        ],
+        "fromDirectiveId": null,
+        "effective": "true"
+      }
+    ],
+    "unresolved": 0
+  },
+  {
+    "id": "P08-05",
+    "assemblyError": "REAL_INPUT_FACT_COVERAGE_MISSING_FACT",
+    "t": [
+      {
+        "id": "task-1",
+        "a": "参加",
+        "o": "工厂参访",
+        "sem": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "negative",
+          "tense": "past",
+          "status": "cancelled",
+          "validity": "superseded",
+          "modality": "required"
+        },
+        "c": "not_applicable",
+        "coverage": {
+          "time": null,
+          "material": null,
+          "event": null
+        },
+        "dep": []
+      },
+      {
+        "id": "task-2",
+        "a": "提交",
+        "o": "课程反思",
+        "sem": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "c": "not_applicable",
+        "coverage": {
+          "time": null,
+          "material": null,
+          "event": null
+        },
+        "dep": []
+      }
+    ],
+    "time": [
+      {
+        "id": "time-1",
+        "s": "2026年9月22日09:00",
+        "type": "event_start",
+        "t": [
+          "task-1"
+        ],
+        "m": []
+      },
+      {
+        "id": "time-2",
+        "s": "2026年9月26日18:00前",
+        "type": "submission_deadline",
+        "t": [
+          "task-2"
+        ],
+        "m": [
+          "material-1"
+        ]
+      }
+    ],
+    "m": [
+      {
+        "id": "material-1",
+        "s": "课程反思",
+        "required": true,
+        "t": [
+          "task-2"
+        ],
+        "format": [
+          "DOCX"
+        ],
+        "qty": null
+      }
+    ],
+    "e": [
+      {
+        "id": "event-1",
+        "t": [
+          "task-1"
+        ],
+        "start": "time-1",
+        "end": null
+      }
+    ],
+    "rev": [
+      {
+        "type": "cancels",
+        "targetDirectiveId": "task-1",
+        "scopeIds": [
+          "scope-0003-ae22eedf6be452de0a80e229411f9f371c0a4cddab627c5be42e7898e27b43dc",
+          "scope-0004-7451fec7a7d9ad62b862f068ab1d68ff59209db40ce19762f2ac4d99ae4724af"
+        ],
+        "fromDirectiveId": null,
+        "effective": "true"
+      }
+    ],
+    "unresolved": 0
+  },
+  {
+    "id": "P09-03",
+    "assemblyError": null,
+    "t": [],
+    "time": [
+      {
+        "id": "tp-1",
+        "s": "2026年9月28日19:00开始",
+        "type": "event_start",
+        "t": [],
+        "m": []
+      },
+      {
+        "id": "tp-2",
+        "s": "于21:00结束",
+        "type": "event_end",
+        "t": [],
+        "m": []
+      }
+    ],
+    "m": [],
+    "e": [
+      {
+        "id": "ev-1",
+        "t": [],
+        "start": "tp-1",
+        "end": "tp-2"
+      }
+    ],
+    "rev": [],
+    "unresolved": 0
+  },
+  {
+    "id": "P09-05",
+    "assemblyError": null,
+    "t": [],
+    "time": [
+      {
+        "id": "t1",
+        "s": "2026年9月28日19:00开始",
+        "type": "event_start",
+        "t": [],
+        "m": []
+      },
+      {
+        "id": "t2",
+        "s": "21:00结束",
+        "type": "event_end",
+        "t": [],
+        "m": []
+      }
+    ],
+    "m": [],
+    "e": [
+      {
+        "id": "e1",
+        "t": [],
+        "start": "t1",
+        "end": "t2"
+      }
+    ],
+    "rev": [],
+    "unresolved": 0
+  },
+  {
+    "id": "P10-03",
+    "assemblyError": null,
+    "t": [
+      {
+        "id": "task-light-inventory-submit",
+        "a": "提交",
+        "o": "灯光盘点表",
+        "sem": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "c": "not_applicable",
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "dep": []
+      },
+      {
+        "id": "task-audio-inventory-submit",
+        "a": "提交",
+        "o": "音响盘点表",
+        "sem": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "c": "not_applicable",
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "dep": []
+      }
+    ],
+    "time": [
+      {
+        "id": "time-light-submit-deadline",
+        "s": "2026年9月29日16:00前",
+        "type": "submission_deadline",
+        "t": [
+          "task-light-inventory-submit"
+        ],
+        "m": []
+      },
+      {
+        "id": "time-audio-submit-deadline",
+        "s": "2026年9月30日11:00前",
+        "type": "submission_deadline",
+        "t": [
+          "task-audio-inventory-submit"
+        ],
+        "m": []
+      }
+    ],
+    "m": [
+      {
+        "id": "material-light-inventory-table",
+        "s": "灯光盘点表",
+        "required": true,
+        "t": [
+          "task-light-inventory-submit"
+        ],
+        "format": [
+          "XLSX"
+        ],
+        "qty": null
+      },
+      {
+        "id": "material-light-photos",
+        "s": "灯具现状照片",
+        "required": true,
+        "t": [
+          "task-light-inventory-submit"
+        ],
+        "format": [],
+        "qty": 2
+      },
+      {
+        "id": "material-audio-inventory-table",
+        "s": "音响盘点表",
+        "required": true,
+        "t": [
+          "task-audio-inventory-submit"
+        ],
+        "format": [
+          "PDF"
+        ],
+        "qty": null
+      },
+      {
+        "id": "material-repair-receipt",
+        "s": "维修收据",
+        "required": true,
+        "t": [
+          "task-audio-inventory-submit"
+        ],
+        "format": [],
+        "qty": null
+      }
+    ],
+    "e": [],
+    "rev": [],
+    "unresolved": 0
+  },
+  {
+    "id": "P10-05",
+    "assemblyError": "REAL_INPUT_FACT_COVERAGE_MISSING_FACT",
+    "t": [
+      {
+        "id": "task-light-inventory",
+        "a": "提交",
+        "o": "灯光盘点表",
+        "sem": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "c": "not_applicable",
+        "coverage": {
+          "time": null,
+          "material": null,
+          "event": null
+        },
+        "dep": []
+      },
+      {
+        "id": "task-audio-inventory",
+        "a": "提交",
+        "o": "音响盘点表",
+        "sem": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "c": "not_applicable",
+        "coverage": {
+          "time": null,
+          "material": null,
+          "event": null
+        },
+        "dep": []
+      }
+    ],
+    "time": [
+      {
+        "id": "tp-light-deadline",
+        "s": "2026年9月29日16:00前",
+        "type": "submission_deadline",
+        "t": [
+          "task-light-inventory"
+        ],
+        "m": []
+      },
+      {
+        "id": "tp-audio-deadline",
+        "s": "2026年9月30日11:00前",
+        "type": "submission_deadline",
+        "t": [
+          "task-audio-inventory"
+        ],
+        "m": []
+      }
+    ],
+    "m": [
+      {
+        "id": "mat-light-photos",
+        "s": "两张灯具现状照片",
+        "required": true,
+        "t": [
+          "task-light-inventory"
+        ],
+        "format": [],
+        "qty": 2
+      },
+      {
+        "id": "mat-audio-receipt",
+        "s": "维修收据",
+        "required": true,
+        "t": [
+          "task-audio-inventory"
+        ],
+        "format": [],
+        "qty": null
+      }
+    ],
+    "e": [],
+    "rev": [],
+    "unresolved": 0
+  },
+  {
+    "id": "P11-03",
+    "assemblyError": null,
+    "t": [
+      {
+        "id": "task-fill-registration-form",
+        "a": "填写",
+        "o": "送样登记单",
+        "sem": {
+          "actor": "addressed_group",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "c": "not_applicable",
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "dep": []
+      },
+      {
+        "id": "task-submit-sample",
+        "a": "提交",
+        "o": "检测样本",
+        "sem": {
+          "actor": "addressed_group",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "c": "true",
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "dep": [
+          "task-fill-registration-form"
+        ]
+      },
+      {
+        "id": "task-prepare-sealed-bags",
+        "a": "需要",
+        "o": "两个密封袋",
+        "sem": {
+          "actor": "addressed_group",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "present",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "c": "not_applicable",
+        "coverage": {
+          "time": "not_stated",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "dep": []
+      }
+    ],
+    "time": [
+      {
+        "id": "time-fill-deadline",
+        "s": "2026年9月17日14:00前",
+        "type": "task_deadline",
+        "t": [
+          "task-fill-registration-form"
+        ],
+        "m": []
+      },
+      {
+        "id": "time-submit-deadline",
+        "s": "2026年9月18日09:00前",
+        "type": "submission_deadline",
+        "t": [
+          "task-submit-sample"
+        ],
+        "m": []
+      }
+    ],
+    "m": [
+      {
+        "id": "material-registration-form",
+        "s": "送样登记单",
+        "required": true,
+        "t": [
+          "task-fill-registration-form",
+          "task-submit-sample"
+        ],
+        "format": [],
+        "qty": null
+      },
+      {
+        "id": "material-sample",
+        "s": "检测样本",
+        "required": true,
+        "t": [
+          "task-submit-sample"
+        ],
+        "format": [],
+        "qty": null
+      },
+      {
+        "id": "material-sealed-bags",
+        "s": "密封袋",
+        "required": true,
+        "t": [
+          "task-prepare-sealed-bags"
+        ],
+        "format": [],
+        "qty": 2
+      }
+    ],
+    "e": [],
+    "rev": [],
+    "unresolved": 0
+  },
+  {
+    "id": "P11-05",
+    "assemblyError": "REAL_INPUT_FACT_COVERAGE_MISSING_FACT",
+    "t": [
+      {
+        "id": "task-1",
+        "a": "填写",
+        "o": "送样登记单",
+        "sem": {
+          "actor": "addressed_group",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "c": "not_applicable",
+        "coverage": {
+          "time": null,
+          "material": null,
+          "event": null
+        },
+        "dep": []
+      },
+      {
+        "id": "task-2",
+        "a": "提交",
+        "o": "检测样本",
+        "sem": {
+          "actor": "addressed_group",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "c": "unknown",
+        "coverage": {
+          "time": null,
+          "material": null,
+          "event": null
+        },
+        "dep": [
+          "task-1"
+        ]
+      },
+      {
+        "id": "task-3",
+        "a": "需要",
+        "o": "两个密封袋",
+        "sem": {
+          "actor": "addressed_group",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "present",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "c": "not_applicable",
+        "coverage": {
+          "time": "not_stated",
+          "material": null,
+          "event": "not_stated"
+        },
+        "dep": []
+      }
+    ],
+    "time": [
+      {
+        "id": "time-1",
+        "s": "2026年9月17日14:00前",
+        "type": "task_deadline",
+        "t": [
+          "task-1"
+        ],
+        "m": []
+      },
+      {
+        "id": "time-2",
+        "s": "2026年9月18日09:00前",
+        "type": "submission_deadline",
+        "t": [
+          "task-2"
+        ],
+        "m": []
+      }
+    ],
+    "m": [
+      {
+        "id": "material-1",
+        "s": "送样登记单",
+        "required": true,
+        "t": [
+          "task-1"
+        ],
+        "format": [],
+        "qty": null
+      },
+      {
+        "id": "material-2",
+        "s": "检测样本",
+        "required": true,
+        "t": [
+          "task-2"
+        ],
+        "format": [],
+        "qty": null
+      },
+      {
+        "id": "material-3",
+        "s": "密封袋",
+        "required": true,
+        "t": [
+          "task-3"
+        ],
+        "format": [],
+        "qty": 2
+      }
+    ],
+    "e": [],
+    "rev": [],
+    "unresolved": 0
+  },
+  {
+    "id": "P12-03",
+    "assemblyError": null,
+    "t": [
+      {
+        "id": "task-make-labels",
+        "a": "制作",
+        "o": "展签",
+        "sem": {
+          "actor": "addressed_group",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "c": "not_applicable",
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "dep": []
+      },
+      {
+        "id": "task-save-final-labels",
+        "a": "保存",
+        "o": "最终版展签",
+        "sem": {
+          "actor": "addressed_group",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "c": "not_applicable",
+        "coverage": {
+          "time": "not_stated",
+          "material": "not_stated",
+          "event": "not_stated"
+        },
+        "dep": [
+          "task-make-labels"
+        ]
+      },
+      {
+        "id": "task-send-source-files-cancelled",
+        "a": "发送",
+        "o": "作品源文件",
+        "sem": {
+          "actor": "addressed_group",
+          "speechAct": "directive",
+          "polarity": "negative",
+          "tense": "past",
+          "status": "cancelled",
+          "validity": "superseded",
+          "modality": "required"
+        },
+        "c": "not_applicable",
+        "coverage": {
+          "time": "not_stated",
+          "material": "not_stated",
+          "event": "not_stated"
+        },
+        "dep": []
+      }
+    ],
+    "time": [
+      {
+        "id": "time-deadline-labels",
+        "s": "2026年9月27日17:00前",
+        "type": "task_deadline",
+        "t": [
+          "task-make-labels"
+        ],
+        "m": []
+      }
+    ],
+    "m": [
+      {
+        "id": "material-a6-label",
+        "s": "A6展签",
+        "required": true,
+        "t": [
+          "task-make-labels"
+        ],
+        "format": [
+          "A6"
+        ],
+        "qty": null
+      },
+      {
+        "id": "material-qr-code",
+        "s": "二维码",
+        "required": false,
+        "t": [
+          "task-make-labels"
+        ],
+        "format": [],
+        "qty": null
+      }
+    ],
+    "e": [],
+    "rev": [
+      {
+        "type": "cancels",
+        "targetDirectiveId": "task-send-source-files-cancelled",
+        "scopeIds": [
+          "scope-0006-df1eeda909b26604405d3932fc07222ee321929907cfca9ae8c6678906839969",
+          "scope-0007-f452ac58618177d6ebee31340e63873e7495b24a277e6344303a024da17f0266"
+        ],
+        "fromDirectiveId": null,
+        "effective": "true"
+      }
+    ],
+    "unresolved": 0
+  },
+  {
+    "id": "P12-05",
+    "assemblyError": "REAL_INPUT_FACT_REFERENCE",
+    "t": [
+      {
+        "id": "task-1",
+        "a": "制作",
+        "o": "展签",
+        "sem": {
+          "actor": "addressed_group",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "c": "not_applicable",
+        "coverage": {
+          "time": null,
+          "material": null,
+          "event": null
+        },
+        "dep": []
+      },
+      {
+        "id": "task-2",
+        "a": "保存",
+        "o": "最终版展签",
+        "sem": {
+          "actor": "addressed_group",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "c": "not_applicable",
+        "coverage": {
+          "time": "not_stated",
+          "material": null,
+          "event": null
+        },
+        "dep": []
+      }
+    ],
+    "time": [
+      {
+        "id": "time-1",
+        "s": "2026年9月27日17:00前",
+        "type": "task_deadline",
+        "t": [
+          "task-1"
+        ],
+        "m": []
+      }
+    ],
+    "m": [
+      {
+        "id": "material-1",
+        "s": "A6展签",
+        "required": true,
+        "t": [
+          "task-1"
+        ],
+        "format": [
+          "A6"
+        ],
+        "qty": null
+      },
+      {
+        "id": "material-2",
+        "s": "二维码",
+        "required": false,
+        "t": [
+          "task-1"
+        ],
+        "format": [],
+        "qty": null
+      }
+    ],
+    "e": [],
+    "rev": [
+      {
+        "type": "cancels",
+        "targetDirectiveId": "task-3",
+        "scopeIds": [
+          "scope-0006-df1eeda909b26604405d3932fc07222ee321929907cfca9ae8c6678906839969",
+          "scope-0007-f452ac58618177d6ebee31340e63873e7495b24a277e6344303a024da17f0266"
+        ],
+        "fromDirectiveId": null,
+        "effective": "true"
+      }
+    ],
+    "unresolved": 0
+  }
+]

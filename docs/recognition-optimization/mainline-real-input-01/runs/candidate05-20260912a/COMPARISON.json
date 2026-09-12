@@ -1,0 +1,476 @@
+{
+  "noticeDenominator": 12,
+  "requestCount": 24,
+  "adopt": false,
+  "arms": {
+    "03": {
+      "http200": 12,
+      "assembled": 12,
+      "assemblyFailures": [],
+      "strictScored": 12,
+      "strictUnscored": 0,
+      "strictCompleteCase": 0,
+      "strictMetricsForScoredOnly": {
+        "task": {
+          "predicted": 20,
+          "reference": 19,
+          "correct": 19,
+          "falsePositive": 1,
+          "falseNegative": 0,
+          "precision": 0.95,
+          "recall": 1
+        },
+        "requiresAction": {
+          "predicted": 21,
+          "reference": 20,
+          "correct": 19,
+          "falsePositive": 2,
+          "falseNegative": 1,
+          "precision": 0.9047619047619048,
+          "recall": 0.95
+        },
+        "time": {
+          "predicted": 17,
+          "reference": 16,
+          "correct": 5,
+          "falsePositive": 12,
+          "falseNegative": 11,
+          "precision": 0.29411764705882354,
+          "recall": 0.3125
+        },
+        "material": {
+          "predicted": 18,
+          "reference": 17,
+          "correct": 10,
+          "falsePositive": 8,
+          "falseNegative": 7,
+          "precision": 0.5555555555555556,
+          "recall": 0.5882352941176471
+        },
+        "event": {
+          "predicted": 2,
+          "reference": 1,
+          "correct": 0,
+          "falsePositive": 2,
+          "falseNegative": 1,
+          "precision": 0,
+          "recall": 0
+        },
+        "condition": {
+          "predicted": 20,
+          "reference": 19,
+          "correct": 18,
+          "falsePositive": 2,
+          "falseNegative": 1,
+          "precision": 0.9,
+          "recall": 0.9473684210526315
+        },
+        "revision": {
+          "predicted": 3,
+          "reference": 3,
+          "correct": 2,
+          "falsePositive": 1,
+          "falseNegative": 1,
+          "precision": 0.6666666666666666,
+          "recall": 0.6666666666666666
+        },
+        "evidence": {
+          "predicted": 57,
+          "reference": 53,
+          "correct": 12,
+          "falsePositive": 45,
+          "falseNegative": 41,
+          "precision": 0.21052631578947367,
+          "recall": 0.22641509433962265
+        },
+        "semantic": {
+          "predicted": 25,
+          "reference": 22,
+          "correct": 1,
+          "falsePositive": 24,
+          "falseNegative": 21,
+          "precision": 0.04,
+          "recall": 0.045454545454545456
+        },
+        "coverage": {
+          "predicted": 44,
+          "reference": 43,
+          "correct": 19,
+          "falsePositive": 25,
+          "falseNegative": 24,
+          "precision": 0.4318181818181818,
+          "recall": 0.4418604651162791
+        }
+      },
+      "waitingMs": {
+        "sum": 77224,
+        "median": 6785,
+        "min": 3981,
+        "max": 8625
+      },
+      "costUpperMicroCny": 263788
+    },
+    "05": {
+      "http200": 12,
+      "assembled": 2,
+      "assemblyFailures": [
+        {
+          "unit": "P01-05",
+          "error": "SCHEMA_OR_SCORER_REJECTED"
+        },
+        {
+          "unit": "P02-05",
+          "error": "SCHEMA_OR_SCORER_REJECTED"
+        },
+        {
+          "unit": "P03-05",
+          "error": "SCHEMA_OR_SCORER_REJECTED"
+        },
+        {
+          "unit": "P04-05",
+          "error": "SCHEMA_OR_SCORER_REJECTED"
+        },
+        {
+          "unit": "P06-05",
+          "error": "SCHEMA_OR_SCORER_REJECTED"
+        },
+        {
+          "unit": "P07-05",
+          "error": "SCHEMA_OR_SCORER_REJECTED"
+        },
+        {
+          "unit": "P08-05",
+          "error": "SCHEMA_OR_SCORER_REJECTED"
+        },
+        {
+          "unit": "P10-05",
+          "error": "SCHEMA_OR_SCORER_REJECTED"
+        },
+        {
+          "unit": "P11-05",
+          "error": "SCHEMA_OR_SCORER_REJECTED"
+        },
+        {
+          "unit": "P12-05",
+          "error": "SCHEMA_OR_SCORER_REJECTED"
+        }
+      ],
+      "strictScored": 2,
+      "strictUnscored": 10,
+      "strictCompleteCase": 0,
+      "strictMetricsForScoredOnly": {
+        "task": {
+          "predicted": 1,
+          "reference": 1,
+          "correct": 1,
+          "falsePositive": 0,
+          "falseNegative": 0,
+          "precision": 1,
+          "recall": 1
+        },
+        "requiresAction": {
+          "predicted": 2,
+          "reference": 2,
+          "correct": 2,
+          "falsePositive": 0,
+          "falseNegative": 0,
+          "precision": 1,
+          "recall": 1
+        },
+        "time": {
+          "predicted": 3,
+          "reference": 3,
+          "correct": 0,
+          "falsePositive": 3,
+          "falseNegative": 3,
+          "precision": 0,
+          "recall": 0
+        },
+        "material": {
+          "predicted": 1,
+          "reference": 1,
+          "correct": 1,
+          "falsePositive": 0,
+          "falseNegative": 0,
+          "precision": 1,
+          "recall": 1
+        },
+        "event": {
+          "predicted": 1,
+          "reference": 1,
+          "correct": 0,
+          "falsePositive": 1,
+          "falseNegative": 1,
+          "precision": 0,
+          "recall": 0
+        },
+        "condition": {
+          "predicted": 1,
+          "reference": 1,
+          "correct": 1,
+          "falsePositive": 0,
+          "falseNegative": 0,
+          "precision": 1,
+          "recall": 1
+        },
+        "revision": {
+          "predicted": 0,
+          "reference": 0,
+          "correct": 0,
+          "falsePositive": 0,
+          "falseNegative": 0,
+          "precision": null,
+          "recall": null
+        },
+        "evidence": {
+          "predicted": 6,
+          "reference": 6,
+          "correct": 0,
+          "falsePositive": 6,
+          "falseNegative": 6,
+          "precision": 0,
+          "recall": 0
+        },
+        "semantic": {
+          "predicted": 3,
+          "reference": 3,
+          "correct": 0,
+          "falsePositive": 3,
+          "falseNegative": 3,
+          "precision": 0,
+          "recall": 0
+        },
+        "coverage": {
+          "predicted": 5,
+          "reference": 5,
+          "correct": 3,
+          "falsePositive": 2,
+          "falseNegative": 2,
+          "precision": 0.6,
+          "recall": 0.6
+        }
+      },
+      "waitingMs": {
+        "sum": 71071,
+        "median": 6079.5,
+        "min": 3896,
+        "max": 7555
+      },
+      "costUpperMicroCny": 245084
+    }
+  },
+  "allCostUpperMicroCny": 508872,
+  "providerActualBill": "NOT_OBSERVABLE",
+  "automaticSelection": "NOT_ENABLED",
+  "ledger": {
+    "lines": 166,
+    "tailHash": "b5671fb4beba0db856f7a752045f45667bd0ac4f152f28e542600fbbea96b67f",
+    "lastResult": 5065809,
+    "permanentA01UnknownMicroCny": 3300000
+  },
+  "label": "12 new synthetic notices, same model paired first development validation, not independent blind accuracy",
+  "strictScoringCaution": "05 strict field metrics describe only 2 scored notices; remaining 10 stay in denominator as failed, not perfect or missing-at-random. Old exact scorer projection excludes some inactive tasks; its task denominator19 differs from raw reference21.",
+  "businessAdjudication": {
+    "method": "Same agent source-by-source adjudication following pre-dispatch COMPARISON_RULES.md; semantic major correction changes action/time/required assets/condition/ownership. Carrier omission counted conservatively even if prose keeps formats. Not an independent human quality estimate.",
+    "semanticNoMajorCorrection": {
+      "03": 11,
+      "05": 9,
+      "denominator": 12
+    },
+    "rawTaskRequirementsIncludingInactive": {
+      "reference": 21,
+      "03": {
+        "predicted": 22,
+        "matched": 21,
+        "extra": 1,
+        "missing": 0
+      },
+      "05": {
+        "predicted": 21,
+        "matched": 20,
+        "extra": 1,
+        "missing": 1
+      }
+    },
+    "noticesWithMaterialSubstantiveIssues": {
+      "03": [
+        "P11"
+      ],
+      "05": [
+        "P10",
+        "P11"
+      ]
+    },
+    "additionalMaterialNotes": "P10-05 two structured table-format carriers absent; P11-03 bag ownership missing; P11-05 bag and registration-form ownership missing. Historical cancelled material and duplicate object material are separately documented equivalences, not new preparation obligations.",
+    "rawTimeOmission": {
+      "03": 0,
+      "05": 0
+    },
+    "fabricatedConcreteDate": {
+      "03": 0,
+      "05": 0
+    },
+    "localTimeResolutionIncomplete": {
+      "03": [
+        "P09 event end"
+      ],
+      "05": [
+        "P09 event end"
+      ]
+    },
+    "conditionStateError": {
+      "03": [
+        "P11 unproven completed condition=true"
+      ],
+      "05": []
+    },
+    "cancellationRevisionError": {
+      "03": [],
+      "05": [
+        "P12 missing target old task"
+      ]
+    },
+    "references": "P03/P04/P06 and P07/P08 normal/negative controls retained. All raw facts and references remain unchanged.",
+    "rows": [
+      {
+        "id": "P01",
+        "majorSemanticCorrection": {
+          "03": false,
+          "05": false
+        },
+        "finding": "两臂动作、各自截止、PDF/截图与MP4内容正确；05把不存在事件也写null，导致完整回答被拒绝。",
+        "correction": "正常材料核对；05需另一个经授权的新候选，不能在这批改原答。"
+      },
+      {
+        "id": "P02",
+        "majorSemanticCorrection": {
+          "03": false,
+          "05": false
+        },
+        "finding": "两臂均保留近期和另行通知，无假日期。03将未指定渠道列unresolved并要求额外核对；05因event:null被拒绝。",
+        "correction": "03仍需处理待定日期和渠道未指定的提示；双时间实体属等价粒度，不算漏时间。"
+      },
+      {
+        "id": "P03",
+        "majorSemanticCorrection": {
+          "03": false,
+          "05": false
+        },
+        "finding": "两臂保存照片任务正确，均未生造日期/材料；05 material:null与空材料矛盾。",
+        "correction": "03直接按无日期核对；05整份无法进入确认。"
+      },
+      {
+        "id": "P04",
+        "majorSemanticCorrection": {
+          "03": false,
+          "05": false
+        },
+        "finding": "两臂条件false和独立检查任务正确，未把条件未成立误成永久作废；05无材料/无事件的null声明导致拒绝。",
+        "correction": "03只确认独立检查；取消任务保持未执行。"
+      },
+      {
+        "id": "P05",
+        "majorSemanticCorrection": {
+          "03": false,
+          "05": false
+        },
+        "finding": "两臂条件true、补交PDF及时间正确；05能够组装。准备状态没有被required直接当成ready。",
+        "correction": "用户独立核对需要/准备状态、事实并主动选择。"
+      },
+      {
+        "id": "P06",
+        "majorSemanticCorrection": {
+          "03": false,
+          "05": false
+        },
+        "finding": "两臂条件unknown、学生证归属正确，无排队新任务和假日期；05空时间/事件仍写null。",
+        "correction": "条件未明不能提前确认领取；待核对属正常控制，不算漏任务。"
+      },
+      {
+        "id": "P07",
+        "majorSemanticCorrection": {
+          "03": false,
+          "05": false
+        },
+        "finding": "两臂保留作废旧要求和新上传要求、不同日期。05多一条取消关系、未另建旧纸质材料，不改变当前新任务义务；但null导致整份拒绝。",
+        "correction": "新任务需核对命名和渠道；旧纸质材料不成为当前待准备事项。"
+      },
+      {
+        "id": "P08",
+        "majorSemanticCorrection": {
+          "03": false,
+          "05": false
+        },
+        "finding": "两臂取消参访且保留独立DOCX提交，没有把取消传播给兄弟。05 null覆盖矛盾导致拒绝。",
+        "correction": "仅确认独立课程反思，不确认旧活动。"
+      },
+      {
+        "id": "P09",
+        "majorSemanticCorrection": {
+          "03": false,
+          "05": false
+        },
+        "finding": "两臂原答都有19:00—21:00及场地，正确不生成任务。现有本机时间转换未将21:00绑定同日，活动独立保存链有未承接限制。",
+        "correction": "这是本机时间/事件承接缺口，不是模型漏掉21:00；不为纯信息凑任务。"
+      },
+      {
+        "id": "P10",
+        "majorSemanticCorrection": {
+          "03": false,
+          "05": true
+        },
+        "finding": "两臂动作、不同截止、照片/收据分别归属，05文字保留XLSX/PDF，但缺两项承载格式的表格材料实体；另有null拒绝。",
+        "correction": "05需要补回两项结构化材料及格式归属；不能把文字还在说成最终结构无损。准备状态仍需来源回看/用户核对。"
+      },
+      {
+        "id": "P11",
+        "majorSemanticCorrection": {
+          "03": true,
+          "05": true
+        },
+        "finding": "两臂将需要两个密封袋多造为第三任务，袋子只归第三任务，未归提交样本。03还把填写完成条件无证据标true；05改unknown但丢了登记单随样本提交的归属。",
+        "correction": "删除多余任务、把密封袋关联提交、核对前置状态；05还须补登记单→提交关系。检测样本另建材料只是等价粒度单列。"
+      },
+      {
+        "id": "P12",
+        "majorSemanticCorrection": {
+          "03": false,
+          "05": true
+        },
+        "finding": "03保留三条要求、取消关系及可选二维码；05漏掉已取消的发送要求，却引用不存在task-3，导致坏引用。",
+        "correction": "05需补齐旧要求及取消关系；不能用删除取消引用使其通过。03保存依赖于制作是推断关系，需用户核对，不称原文明示新任务。"
+      }
+    ]
+  },
+  "pipeline": {
+    "parseAndAssemble": {
+      "03": 12,
+      "05": 2,
+      "denominator": 12
+    },
+    "factAssemblyFailures": {
+      "coverageNullPresentWithNoEntity": 9,
+      "missingRevisionTarget": 1
+    },
+    "conclusion": "Semantic raw output quality and assemble success are separate; 9/12 raw semantic notices does not mean 9/12 usable 05 suggestions.",
+    "automaticDefaultSelection": "NOT_ENABLED; zero selected is design, not measured model safety",
+    "canonicalMemoryConfirmation": {
+      "notices": 3,
+      "tasks": 4,
+      "cases": [
+        "P01-03",
+        "P05-05",
+        "P03-03"
+      ],
+      "tests": 5,
+      "label": "memory engineering replay, not Edge original database acceptance"
+    },
+    "browserOriginalDatabase": "NOT_RUN; official Edge tab inventory/control connection failed",
+    "humanActiveEditingTime": "NOT_RUN"
+  },
+  "decision": {
+    "adopt": false,
+    "reason": "Usable output 12/12→2/12, raw semantic no-major-correction11/12→9/12; extra bag task persists and a cancelled requirement is newly omitted. Lower request time/cost cannot offset this.",
+    "next": "Do not auto-repair or issue additional calls. Keep03 path; subsequent authorization should remove ambiguous null-as-present encoding before any next candidate test, not weaken validation."
+  }
+}

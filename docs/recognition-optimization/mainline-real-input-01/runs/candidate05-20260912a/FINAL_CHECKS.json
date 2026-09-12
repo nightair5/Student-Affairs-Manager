@@ -1,0 +1,435 @@
+{
+  "status": "ENGINEERING_PASS_BROWSER_BLOCKED_PACKAGE_INCOMPLETE",
+  "implementationBase": "7a132355fd13bed753bb39a2f2bc96aae97c139b",
+  "functional": {
+    "firstAttempt": {
+      "passed": 1290,
+      "failed": 1,
+      "skipped": 1,
+      "total": 1292
+    },
+    "failure": "test harness omitted REAL_INPUT_CARRIERS_MANIFEST; child launcher received undefined, not product data failure",
+    "rerun": {
+      "passed": 1,
+      "failed": 0
+    },
+    "uniqueFinal": {
+      "passed": 1291,
+      "failed": 0,
+      "skipped": 1
+    },
+    "note": "No assertion or old fixture changed; one existing skip remains, not counted as PASS."
+  },
+  "focused": {
+    "wireAndAssembly": 38,
+    "budgetAndGateway": 102,
+    "newRealResponseMemoryAcceptance": 5,
+    "sendGuardNegative": 5,
+    "sendGuardPositive": 1,
+    "overlap": "Focused and full-suite counts overlap; never add them as independent samples."
+  },
+  "engineering": {
+    "lint": "PASS (0 errors; old warnings)",
+    "appType": "PASS",
+    "nodeType": "PASS",
+    "schemaContract": "PASS",
+    "timeContract": "PASS",
+    "build": "PASS",
+    "secretScan": "PASS",
+    "rootEnvReadByFramework": false,
+    "newDependency": false
+  },
+  "browser": {
+    "status": "NOT_RUN",
+    "reason": "Official control discovered Edge id2, but tab inventory repeatedly returned nodeRepl.fetch request failed; no actual tab selected; not ERR_BLOCKED_BY_CLIENT product failure.",
+    "target": "http://127.0.0.1:6631/?run=real-input-d030c507-3f7c-4a2c-a511-8cd5bd534862",
+    "currentOldTaskCount": "NOT_OBSERVED; 13 is previous delivery evidence only",
+    "actualOriginalDbRead": false,
+    "actualOriginalDbWrite": false,
+    "representatives": [
+      "P01-03 multi task/time/material",
+      "P05-05 true condition"
+    ],
+    "normalControl": "P03-03 no date (memory PASS only)",
+    "refresh": "NOT_RUN",
+    "independentOriginalDbRead": "NOT_RUN",
+    "download": "NOT_RUN; new raw wire stored requires comparison on final browser journey"
+  },
+  "protection": {
+    "protectedFiles": 944,
+    "staticEvidence": 522,
+    "approvedSources": 53,
+    "freeze": {
+      "count": 18,
+      "failures": []
+    },
+    "ledger": {
+      "lines": 166,
+      "bytes": 125822,
+      "sha256": "234bdd806d2dcbef6e6bd481fbe28a2ee8b70ee43e4fc82a854e2fcd8e00da39",
+      "tail": "b5671fb4beba0db856f7a752045f45667bd0ac4f152f28e542600fbbea96b67f",
+      "receiptCount": 166,
+      "oldPrefixBytes": 88517,
+      "oldPrefixSha256": "5e410e63be234ec4a286ecb3fc7d8490157e990b1c475e119897d7de3f7a841a",
+      "requestReservations": 80
+    },
+    "status": "PASS"
+  },
+  "finalFocusedReview": {
+    "reviewer": "implementation agent, focused self-review; not independent third-party",
+    "scope": "new fact assembly, model identity and terminal recorded-source ingestion",
+    "evidence": "38 projection/identity tests,5 new actual-response memory regressions,102 preserved budget/gateway checks; immutable old record comparisons and failed transaction positive control",
+    "finding": "No observed bypass of confirmation or atomicity. Novel null encoding failed in model use and is NOT adopted. Browser remains unverified."
+  },
+  "knownFailedAttemptsPreserved": [
+    "TEST_ATTEMPT_1 module setup",
+    "NODE_ATTEMPT_1 missing harness setup",
+    "type-attempt1 browser handle union error (fixed)",
+    "FUNCTIONAL_ATTEMPT_1 missing carrier env (rerun only failure)",
+    "COMPOSER_DIAGNOSTIC empty result from missing await/wrong authority; superseded by DIAGNOSTIC_2, not counted",
+    "final read-only chain-check initial draft used null instead of original 64-zero genesis; corrected to original algorithm without ledger writes"
+  ],
+  "evidence": [
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/ACCEPTANCE_ATTEMPT_1.json",
+      "bytes": 18621,
+      "sha256": "46689cf89edca18326811508bb446b6c68f3b881352837ae3f164bb066313d19"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/BINDING.json",
+      "bytes": 471340,
+      "sha256": "72e07981d334cb79d94585459d55e48aa0f53ac3e1feddb347ab8850f9c0bcd4"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/CANDIDATE_FREEZE.json",
+      "bytes": 2921,
+      "sha256": "10eaf4d2f5c7a27566948f603fb5d2d5e74ab874bc0c88a0f0911e8bccf7bf9a"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/contract-attempt2.log",
+      "bytes": 209,
+      "sha256": "ce0ae1b382cde06a1e63919a31340da2d1c90873c0f97ab059e0bdb92e37db47"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/ENGINEERING_ATTEMPT_2.json",
+      "bytes": 410,
+      "sha256": "73c10fa3513df5ff372b83d19a3d385f7a718abd936e21aa1efa9845299af955"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/FUNCTIONAL_ATTEMPT_1.json",
+      "bytes": 479059,
+      "sha256": "6502b76a4444b560806b2de277365945fa46e95d1e3599e1d1c086eff99dfbbf"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/INPUTS.json",
+      "bytes": 4737,
+      "sha256": "fc8692dcb883bc9db2bba623b6a73665218d59eab7a57d47f588530d2a47a5b1"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/lint-attempt1.log",
+      "bytes": 1139,
+      "sha256": "bc8d88509eb2d2c8aad28a912f3c18d15297bc9dbccdfb50c86d18e7cb609067"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/NODE_ATTEMPT_1.log",
+      "bytes": 121948,
+      "sha256": "6e2dfc8384bb93ea0794a2b410ca5e1eb12ccd494e00aa24c9fc6a71faf26660"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/NODE_ATTEMPT_2.log",
+      "bytes": 9929,
+      "sha256": "516507220b765160f2697ad2342c708cdbe3ded99c5a0f0e47a71ce029037dc2"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/NODE_ATTEMPT_3.log",
+      "bytes": 10141,
+      "sha256": "7002ad0c65e44b8cdc4d3521687c2f67b2d03fc0288ee2ed86a78ecfa409556c"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P01-03_RAW.jsonl",
+      "bytes": 20557,
+      "sha256": "618abb64b6c01f2f84be2c53ef9b8a5a9632052bc0485e3b59a5dbb0ffac14a2"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P01-03_RESULT.json",
+      "bytes": 12852,
+      "sha256": "739b7216e93253a1809dded8eeb60f8592ad27dd57a8c4d33455b9938884cd32"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P01-05_RAW.jsonl",
+      "bytes": 19492,
+      "sha256": "276511a1b4094bffb02225106ec66b3d292ea50a2d16d9fd75111e792a4a5de5"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P01-05_RESULT.json",
+      "bytes": 1171,
+      "sha256": "7117e801a0f5a64e6276a82e156697dd08c812cb40e1aba0c7d2964771c8a25c"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P02-03_RAW.jsonl",
+      "bytes": 16950,
+      "sha256": "e4141a29ef7999b361998aa7c9d08302d5cc4acfe7297fca368b6a8ca61fda1b"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P02-03_RESULT.json",
+      "bytes": 9095,
+      "sha256": "2492cf581f4b23e6a45d6ab4b0d795de3b058f2033b08d775f7142bdfadae4b0"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P02-05_RAW.jsonl",
+      "bytes": 16050,
+      "sha256": "6c676df489d251d830f76c4543e645525dbc251a289a6d6923b67c15c4415c2b"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P02-05_RESULT.json",
+      "bytes": 1171,
+      "sha256": "e5445e3b6b6bf7dde38594e7e70faaffd1025555e5d3b6fd41d9794edef9ad3b"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P03-03_RAW.jsonl",
+      "bytes": 15630,
+      "sha256": "1727ed07b85b52bc84b4435c9621b5b366aae8208d86916ffc5eb5dffd19824e"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P03-03_RESULT.json",
+      "bytes": 6873,
+      "sha256": "343f553a7dd3cc1b02e7f0464b0e0c99a3084657018a8ee126407272cae21293"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P03-05_RAW.jsonl",
+      "bytes": 14890,
+      "sha256": "ab9b65fe9034846b959865a5bef6e95f23c81e605d5c2b0bac9c8c0770485201"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P03-05_RESULT.json",
+      "bytes": 1171,
+      "sha256": "9be6ea1bc642210e8747a47f09f9528a4206ceb60ed1c35870762ea8296c819e"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P04-03_RAW.jsonl",
+      "bytes": 17707,
+      "sha256": "6a46fb7c76619e063d28f895d8fec1167697f8484dab477098310e8de51efff3"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P04-03_RESULT.json",
+      "bytes": 9421,
+      "sha256": "9456c44adc439d16725f8ba9fa20ff91af23aadaa0b5acbb83a3a3083491adc8"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P04-05_RAW.jsonl",
+      "bytes": 17125,
+      "sha256": "f7ab2a2a478c22fd363524ae9a46632593bbaf779f108a2808839eba46569380"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P04-05_RESULT.json",
+      "bytes": 1171,
+      "sha256": "660a2a506bb06910536d67235494f02c4dd9e99bf9518d28d7766f649aa3668c"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P05-03_RAW.jsonl",
+      "bytes": 16739,
+      "sha256": "3f474e265820be07ae97b1aaa8f4058c1c14a92715cd599cd9a72b69c28417bb"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P05-03_RESULT.json",
+      "bytes": 8419,
+      "sha256": "34fc89914af626029de549a065fc999baadddf3a09f3bf406fb2b78d1827418c"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P05-05_RAW.jsonl",
+      "bytes": 15907,
+      "sha256": "3313549ac408608cf1a786cb4d99d322650861cf8a05f49af6e1f6d2d3a51166"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P05-05_RESULT.json",
+      "bytes": 8106,
+      "sha256": "2945f94a2e5481ddc8020b99525d21fbaf32b55f67aeb37f291743843ad76f17"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P06-03_RAW.jsonl",
+      "bytes": 16024,
+      "sha256": "d414851ead4e72735d0535a89d9b75ac5481ef60de440acfef6af7307b570ee6"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P06-03_RESULT.json",
+      "bytes": 7398,
+      "sha256": "154802693a9b3eb80902e1429a858a44dbc6ead84c21e7d0e2e92b7c2fc179ab"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P06-05_RAW.jsonl",
+      "bytes": 15422,
+      "sha256": "afb0c984916d07f4637a10ec7d256c6fe8a62e7eeb4c5279470821d1ef3badf1"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P06-05_RESULT.json",
+      "bytes": 1171,
+      "sha256": "d9d46858cca80b91c4eacc186077fa0cc6abcd7e3bf5f1dcc6dff7075f11d6e8"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P07-03_RAW.jsonl",
+      "bytes": 19446,
+      "sha256": "0b0301c18211ed2ef903486bb7dc27fd734367dc43ea976ec080b385c86f0e22"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P07-03_RESULT.json",
+      "bytes": 11639,
+      "sha256": "da14493b51274354de6775f91e256c9844ae467e9ec6f87debf50cb50b725c3a"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P07-05_RAW.jsonl",
+      "bytes": 18352,
+      "sha256": "a16ffd30b07a40acd53c58bbb79e337c5b8dbb8a84831653492680dc620b6427"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P07-05_RESULT.json",
+      "bytes": 1171,
+      "sha256": "46fe6752dbf38aa397ed17f4582182d9ff353d6e353d9ccdb46804687eadd8b0"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P08-03_RAW.jsonl",
+      "bytes": 19802,
+      "sha256": "03f5db7515c49809abec9b3492c9fa769b9aa4d703ac1c0edd32e7af2414819b"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P08-03_RESULT.json",
+      "bytes": 11944,
+      "sha256": "bdc8e4afde57d55f17c7a40d8d59f354aa5ad9faf8bb6e17dbc1143f27fc0d09"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P08-05_RAW.jsonl",
+      "bytes": 18737,
+      "sha256": "f729d11a1f466c8f73a253383359c6dbab012ab7a4c232edb6f500759ce9c1e0"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P08-05_RESULT.json",
+      "bytes": 1171,
+      "sha256": "2f8316a587d1c25c280d665278015f38815f76d02227356df42e39c528fba309"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P09-03_RAW.jsonl",
+      "bytes": 14900,
+      "sha256": "b59e2881dab20b1699401bbe114c1b182a996ed7ba3a27bc9ec4a3c1504abd09"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P09-03_RESULT.json",
+      "bytes": 6590,
+      "sha256": "dbfcb98d97748f03e8b9ccde2f8bf6aa8361e055d6b640223558106b7fb6f4ae"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P09-05_RAW.jsonl",
+      "bytes": 14497,
+      "sha256": "bbf1a409ef1dc7f1441917d359dd499eb1574d800d1e958dfb2b7bb494aa8b7c"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P09-05_RESULT.json",
+      "bytes": 6610,
+      "sha256": "a35fdc47ae7e2934343cb545fdb0b70d8a1764e3c982752dc3c15cfaa6e03f2f"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P10-03_RAW.jsonl",
+      "bytes": 20381,
+      "sha256": "12ac08e0c09fb33528f4ba55bd5e3c535a9be6850e47fde470f2eef247ce245f"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P10-03_RESULT.json",
+      "bytes": 12685,
+      "sha256": "38f971bc686bacd76818740c91eff28701660c6bd471b865b01c08cf90ef88ad"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P10-05_RAW.jsonl",
+      "bytes": 18591,
+      "sha256": "0f386e96f40adb21a264a3226d0bbbda01b0051a9d0a1a1a7a996f67a9451b37"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P10-05_RESULT.json",
+      "bytes": 1171,
+      "sha256": "4bf499f9f8f65d18768024b99202ec85655b53c30c750642c67d41e3ba66bac2"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P11-03_RAW.jsonl",
+      "bytes": 21345,
+      "sha256": "1999dc5931464a37b8dad0ba18de168b09b3f1f7453602ba00af26f3561e3f6d"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P11-03_RESULT.json",
+      "bytes": 13889,
+      "sha256": "f515b4ab51f0f4cf94aedcd8877aa7c6d48f4a1c018ee4b3f61ee03995c7d9e9"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P11-05_RAW.jsonl",
+      "bytes": 20023,
+      "sha256": "3f5cdfc5042a9fddb2b5ab73a30c7ba910a87e5a90e2428e54c7c957f2ff2ed2"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P11-05_RESULT.json",
+      "bytes": 1171,
+      "sha256": "d3752398ce42c30055485a7c8d25521e31027a6fe408331220d91bd12fbb3e57"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P12-03_RAW.jsonl",
+      "bytes": 20354,
+      "sha256": "7092dd4ea03d06c6f2f939ecc6a8742d6bdbaf0ec9e827806b7e5e165a58de90"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P12-03_RESULT.json",
+      "bytes": 12441,
+      "sha256": "3653b8fc484545cd5624099a1437935a512479d32164dc7b15586a45c799041c"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P12-05_RAW.jsonl",
+      "bytes": 17911,
+      "sha256": "9396892702f279a1050a98aae2e6689c7783cd06cecbcf7f4fa047a5b47f7c95"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P12-05_RESULT.json",
+      "bytes": 1171,
+      "sha256": "67bbf6a3e22e89438a4b454de7a4c8a2495f97c25be361592866d10f19a9a7ec"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/REFERENCES.json",
+      "bytes": 145042,
+      "sha256": "f79e6bc9427ddeb80cfcdf5668800a85f93c8bffb7c5987b8166c031b0052326"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/secret-scan-attempt2.log",
+      "bytes": 51,
+      "sha256": "5cf44e6b1bd75e9ec779796f6ee2fe67566c5fccdd153866e3ded24ba85099bf"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/TEST_ATTEMPT_1.json",
+      "bytes": 1009,
+      "sha256": "883f340884bd9f908f1d111febf8ec91cb45df2cb6551e3f7f17a5799ae5572d"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/TEST_ATTEMPT_2.json",
+      "bytes": 5084,
+      "sha256": "c1ff627b87dad2a943f3e6ff2b2d53229dadfd3ebbc8ed62bf475e10f301a583"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/TEST_ATTEMPT_3.json",
+      "bytes": 15407,
+      "sha256": "d10bef3eb26973e8e5031b95e1274e69b3ef07044c22804932492d2372cb568e"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/time-ast-attempt2.log",
+      "bytes": 205,
+      "sha256": "28498056a5fc7d975a3a38ce5c128afb0c926f8f1091e901d723a767656e008f"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/type-app-attempt2.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/type-attempt1.log",
+      "bytes": 250,
+      "sha256": "a5ffba5da7487c4d7da8049f75eeb0f9bc2fe6cd3b7f0df6dc7203c11e04597c"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/type-node-attempt2.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "gitDisposition": "Audit/ledger/results only until real browser journeys complete; business source kept uncommitted and recorded in IMPLEMENTATION_SNAPSHOT.json"
+}

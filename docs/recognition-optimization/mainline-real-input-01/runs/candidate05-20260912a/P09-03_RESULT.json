@@ -1,0 +1,215 @@
+{
+  "unitId": "P09-03",
+  "arm": "03",
+  "bindingSha": "72e07981d334cb79d94585459d55e48aa0f53ac3e1feddb347ab8850f9c0bcd4",
+  "requestSha": "e1b8580f041daa7c6c2722f7bf5db5c9c78d92c1f7b24877369a7ca2baba0f23",
+  "responseSha": "e839b263c76fb5c58688b31f7e25a1ee8d2cfb0d9cf6d291ba937e91a3cb4bb5",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "scorerSha": "ad76149f8a88cb4adda6dca78b210daaa4f3c800d17582767911e8ace2658e1d",
+  "scorerBundleSha": "782c89b4f865d83c9a2051d9e2a6df3776b7231ad49aec87008b5c14f4e09f21",
+  "referenceSha": "f79e6bc9427ddeb80cfcdf5668800a85f93c8bffb7c5987b8166c031b0052326",
+  "scoreInput": "explicit semantic projection into byte-identical historical scorer; raw response unmodified",
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [],
+    "materials": [],
+    "timePoints": [
+      {
+        "tempId": "tp-1",
+        "type": "event_start",
+        "rawText": "2026年9月28日19:00开始",
+        "relatedTaskTempIds": [],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0002-1740495d9b644a3aec648bcaa81300f302ba2101e7a752f4bcb8ec2ef76707f3"
+        ],
+        "confidence": 0.95,
+        "normalizedValue": "2026-09-28T19:00",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "exact",
+        "needsConfirmation": false
+      },
+      {
+        "tempId": "tp-2",
+        "type": "event_end",
+        "rawText": "于21:00结束",
+        "relatedTaskTempIds": [],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0003-e1f04a92e14112720a1862bcd35516c45804f683d188c1ce3a80a4d5f031c488"
+        ],
+        "confidence": 0.95,
+        "normalizedValue": null,
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "vague",
+        "needsConfirmation": true
+      }
+    ],
+    "events": [
+      {
+        "tempId": "ev-1",
+        "title": "校园观星夜",
+        "description": "观星夜将在2026年9月28日19:00开始，于21:00结束，地点为教学楼北侧平台。",
+        "startTimePointTempId": "tp-1",
+        "endTimePointTempId": "tp-2",
+        "location": "教学楼北侧平台",
+        "scopeIds": [
+          "scope-0001-290c9c384238b78c3ea0ba7105e1728c619c96d2ebfee0e4c79a93e004caea0d",
+          "scope-0002-1740495d9b644a3aec648bcaa81300f302ba2101e7a752f4bcb8ec2ef76707f3",
+          "scope-0003-e1f04a92e14112720a1862bcd35516c45804f683d188c1ce3a80a4d5f031c488",
+          "scope-0004-6f20acd908ef88eec4a94fd8fa406a0291e52f1cea1d2e492e013cc225a86295"
+        ],
+        "confidence": 0.95,
+        "inferenceLevel": "explicit",
+        "relatedTaskTempIds": []
+      }
+    ],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0005-186c6b7be31873843715116405cdc6239fea89d2ac68b7d99cb0ee4ca91d6bd1",
+      "scope-0006-8fd9fad1f7f9970e00f0c0281aa1dc4204d4e50e5f8d044e88876abd81e3d1d5",
+      "scope-0007-d6ba4642f58dc7362e40a7380caf02813628bc9764c13458df30ffcf3562f511",
+      "scope-0008-20fd004f50ac3ec8b7a8c83a9806374a7e71cbb472e9b1de07964c4728bd2a62",
+      "scope-0009-9839bfc516dea8da22e778bc5fb279a653b5c5e76e53690961c40cdd9f740583"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "source:6d09b0d1",
+    "sourceVersionId": "source:6d09b0d1:version:1",
+    "sourceFingerprint": "sha256:4f156e419db8127a68d0b5c49e77aa756b9ffe7fed2075c20aba033163d8d337"
+  },
+  "http": 200,
+  "diagnostic": null,
+  "waitingMs": 3981,
+  "score": {
+    "scorerVersion": "real-input-seen-fact-diagnostic-2",
+    "label": "已见人工工程参考的精确诊断，不是未见或商业准确率",
+    "metrics": {
+      "task": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "requiresAction": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 1,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "time": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 0,
+        "falsePositive": 2,
+        "falseNegative": 2,
+        "precision": 0,
+        "recall": 0
+      },
+      "material": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "event": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 0,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0,
+        "recall": 0
+      },
+      "condition": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "revision": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "evidence": {
+        "predicted": 3,
+        "reference": 3,
+        "correct": 0,
+        "falsePositive": 3,
+        "falseNegative": 3,
+        "precision": 0,
+        "recall": 0
+      },
+      "semantic": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 0,
+        "falsePositive": 2,
+        "falseNegative": 2,
+        "precision": 0,
+        "recall": 0
+      },
+      "coverage": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 1,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0.5,
+        "recall": 0.5
+      }
+    },
+    "matchingAmbiguities": [],
+    "metricStatus": "EXACT_REFERENCE_DIAGNOSTIC",
+    "schemaParsed": true,
+    "issues": [
+      {
+        "code": "TIME_NEEDS_REVIEW",
+        "entityIds": [
+          "tp-2"
+        ]
+      },
+      {
+        "code": "EVENT_NOT_TASK_ASSOCIATED",
+        "entityIds": [
+          "ev-1"
+        ]
+      }
+    ],
+    "completeCase": false,
+    "majorCorrectionRequired": true,
+    "forbidden": 0,
+    "automaticSelection": "NOT_ENABLED",
+    "humanActiveEditTime": "NOT_RUN",
+    "candidateTaskCount": 0,
+    "referenceTaskCount": 0
+  },
+  "scoreError": null,
+  "totalAttempts": 74,
+  "costUpperMicroCny": 15102,
+  "totalCostUpperMicroCny": 4916225,
+  "stopDispatch": false,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticSelection": "NOT_ENABLED",
+  "qualityClaim": "12新合成通知首次开发配对验证，非独立盲测；24请求不是24独立通知"
+}

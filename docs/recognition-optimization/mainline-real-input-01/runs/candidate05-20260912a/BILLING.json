@@ -1,0 +1,27 @@
+{
+  "verified": true,
+  "method": "official-public-document-review",
+  "checkedAt": "2026-09-12T06:02:28.758Z",
+  "validUntil": "2026-09-13T06:02:28.758Z",
+  "policy": {
+    "version": "real-input-flash41-budget-1",
+    "model": "deepseek-flash",
+    "endpoint": "https://api.deepseek.com/responses",
+    "temperature": 0,
+    "reasoningEffort": "none",
+    "inputTokenCeiling": 1048576,
+    "outputTokenCeiling": 8192,
+    "requestByteCeiling": 65536,
+    "inputPriceMicroPerMillion": 2000000,
+    "outputPriceMicroPerMillion": 8000000,
+    "reservationMicroCny": 3300000,
+    "limitMicroCny": 10000000,
+    "maxRequests": 80
+  },
+  "documents": [
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/PUBLIC_VERIFICATION.md",
+      "sha256": "91c5b16b2c5f346e9fbab98f76fb1f000fedebb0aff734f94eceb9e776666ebe"
+    }
+  ]
+}

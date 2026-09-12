@@ -1,0 +1,380 @@
+{
+  "unitId": "P01-03",
+  "arm": "03",
+  "bindingSha": "72e07981d334cb79d94585459d55e48aa0f53ac3e1feddb347ab8850f9c0bcd4",
+  "requestSha": "de584153edd7773ecf845d87fe22bf1813bd1dd1e3cba136ad1429dfceea9859",
+  "responseSha": "9e7a26596607d678293ba375880810addb306bfe1dcd3b67c4c1645d7fad2d1c",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "scorerSha": "ad76149f8a88cb4adda6dca78b210daaa4f3c800d17582767911e8ace2658e1d",
+  "scorerBundleSha": "782c89b4f865d83c9a2051d9e2a6df3776b7231ad49aec87008b5c14f4e09f21",
+  "referenceSha": "f79e6bc9427ddeb80cfcdf5668800a85f93c8bffb7c5987b8166c031b0052326",
+  "scoreInput": "explicit semantic projection into byte-identical historical scorer; raw response unmodified",
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-submit-authorization",
+        "propositionScopeIds": [
+          "scope-0002-a13b520e9071e7b0934b26274d02b93b0f782054a427f65215366dfc389adce8",
+          "scope-0003-317775d7bb48a0f1ff79102b78cc49dcb0fe1c239c6b708f66c3cdcaaf16e593",
+          "scope-0004-9a1d66c499b5bf3bb18faf8e2c393ce3ed2cfbc598786a51ff9db08673a83d64",
+          "scope-0008-38f2e19c7e7efc0e6dd763ca4593dd99b63cd5972c1cf54c2bcc42af8ec5422a",
+          "scope-0010-afcc185a3b7d4d87226127d5fddb903f85683634af2972c6dfc61c0a390aa7d1",
+          "scope-0011-715ab5db83d4719d5e7d8b4a516f2ce151dcff3dccc0bf4bbe2f280d0e81920d"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "submit",
+        "action": {
+          "scopeId": "scope-0002-a13b520e9071e7b0934b26274d02b93b0f782054a427f65215366dfc389adce8",
+          "surface": "提交"
+        },
+        "object": {
+          "scopeId": "scope-0002-a13b520e9071e7b0934b26274d02b93b0f782054a427f65215366dfc389adce8",
+          "surface": "放映授权书"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "提交放映授权书",
+          "description": "各片负责人于2026年9月23日16:00前提交放映授权书，授权书须为签名PDF，并附版权方邮件许可截图，交到校内送审系统的授权区。",
+          "completionCriteria": [
+            "放映授权书已提交",
+            "授权书为签名PDF",
+            "附有版权方邮件许可截图",
+            "交到校内送审系统的授权区"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "high",
+          "dependencyTempIds": [],
+          "materialTempIds": [
+            "mat-authorization-pdf",
+            "mat-copyright-email-screenshot"
+          ],
+          "timePointTempIds": [
+            "tp-authorization-deadline"
+          ],
+          "confidence": 0.95,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      },
+      {
+        "id": "task-upload-trailer",
+        "propositionScopeIds": [
+          "scope-0005-687fb92447c4b6322ad52ab18242eb6dd3a6d8a231c1ad5d23911502c3b17c0e",
+          "scope-0006-92f08892bc8c15cec582ecd18d692d3d7fc0e04786236558f26568cc578c9d94",
+          "scope-0007-f00e23aa7e4681f8d4ed5e2ab89b6e44d613806456f510d15171c511adbe1b97",
+          "scope-0009-18ca80cd568687b2c9589bbe1811055817a0d89aa45f573ebfef975199decddc",
+          "scope-0010-afcc185a3b7d4d87226127d5fddb903f85683634af2972c6dfc61c0a390aa7d1",
+          "scope-0011-715ab5db83d4719d5e7d8b4a516f2ce151dcff3dccc0bf4bbe2f280d0e81920d"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "upload",
+        "action": {
+          "scopeId": "scope-0005-687fb92447c4b6322ad52ab18242eb6dd3a6d8a231c1ad5d23911502c3b17c0e",
+          "surface": "上传"
+        },
+        "object": {
+          "scopeId": "scope-0005-687fb92447c4b6322ad52ab18242eb6dd3a6d8a231c1ad5d23911502c3b17c0e",
+          "surface": "预告片"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "上传预告片",
+          "description": "于2026年9月25日12:00前上传预告片，预告片须为MP4，时长不超过60秒，上传到校内送审系统的视频区。",
+          "completionCriteria": [
+            "预告片已上传",
+            "预告片为MP4格式",
+            "时长不超过60秒",
+            "上传到校内送审系统的视频区"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "high",
+          "dependencyTempIds": [],
+          "materialTempIds": [
+            "mat-trailer-mp4"
+          ],
+          "timePointTempIds": [
+            "tp-trailer-deadline"
+          ],
+          "confidence": 0.95,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [
+      {
+        "tempId": "mat-authorization-pdf",
+        "name": "放映授权书",
+        "required": true,
+        "formatRequirements": [
+          "签名PDF"
+        ],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": "校内送审系统的授权区",
+        "relatedTaskTempIds": [
+          "task-submit-authorization"
+        ],
+        "scopeIds": [
+          "scope-0002-a13b520e9071e7b0934b26274d02b93b0f782054a427f65215366dfc389adce8",
+          "scope-0003-317775d7bb48a0f1ff79102b78cc49dcb0fe1c239c6b708f66c3cdcaaf16e593",
+          "scope-0008-38f2e19c7e7efc0e6dd763ca4593dd99b63cd5972c1cf54c2bcc42af8ec5422a"
+        ],
+        "confidence": 0.95
+      },
+      {
+        "tempId": "mat-copyright-email-screenshot",
+        "name": "版权方邮件许可截图",
+        "required": true,
+        "formatRequirements": [],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": "校内送审系统的授权区",
+        "relatedTaskTempIds": [
+          "task-submit-authorization"
+        ],
+        "scopeIds": [
+          "scope-0004-9a1d66c499b5bf3bb18faf8e2c393ce3ed2cfbc598786a51ff9db08673a83d64",
+          "scope-0008-38f2e19c7e7efc0e6dd763ca4593dd99b63cd5972c1cf54c2bcc42af8ec5422a"
+        ],
+        "confidence": 0.95
+      },
+      {
+        "tempId": "mat-trailer-mp4",
+        "name": "预告片",
+        "required": true,
+        "formatRequirements": [
+          "MP4",
+          "时长不超过60秒"
+        ],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": "校内送审系统的视频区",
+        "relatedTaskTempIds": [
+          "task-upload-trailer"
+        ],
+        "scopeIds": [
+          "scope-0005-687fb92447c4b6322ad52ab18242eb6dd3a6d8a231c1ad5d23911502c3b17c0e",
+          "scope-0006-92f08892bc8c15cec582ecd18d692d3d7fc0e04786236558f26568cc578c9d94",
+          "scope-0007-f00e23aa7e4681f8d4ed5e2ab89b6e44d613806456f510d15171c511adbe1b97",
+          "scope-0009-18ca80cd568687b2c9589bbe1811055817a0d89aa45f573ebfef975199decddc"
+        ],
+        "confidence": 0.95
+      }
+    ],
+    "timePoints": [
+      {
+        "tempId": "tp-authorization-deadline",
+        "type": "submission_deadline",
+        "rawText": "2026年9月23日16:00前",
+        "relatedTaskTempIds": [
+          "task-submit-authorization"
+        ],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0002-a13b520e9071e7b0934b26274d02b93b0f782054a427f65215366dfc389adce8"
+        ],
+        "confidence": 0.95,
+        "normalizedValue": "2026-09-23T16:00",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "exact",
+        "needsConfirmation": false
+      },
+      {
+        "tempId": "tp-trailer-deadline",
+        "type": "submission_deadline",
+        "rawText": "2026年9月25日12:00前",
+        "relatedTaskTempIds": [
+          "task-upload-trailer"
+        ],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0005-687fb92447c4b6322ad52ab18242eb6dd3a6d8a231c1ad5d23911502c3b17c0e"
+        ],
+        "confidence": 0.95,
+        "normalizedValue": "2026-09-25T12:00",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "exact",
+        "needsConfirmation": false
+      }
+    ],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0001-86a8decaaa1c5d29bb45c959f8ba249193d6c568c44cf8b52d3e5fe377a54f31",
+      "scope-0010-afcc185a3b7d4d87226127d5fddb903f85683634af2972c6dfc61c0a390aa7d1",
+      "scope-0011-715ab5db83d4719d5e7d8b4a516f2ce151dcff3dccc0bf4bbe2f280d0e81920d"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "source:dd1de8d9",
+    "sourceVersionId": "source:dd1de8d9:version:1",
+    "sourceFingerprint": "sha256:de08ba6eadd60b7678c98221bef52f3734835610e3d2c38eaf3fa77e9152ada4"
+  },
+  "http": 200,
+  "diagnostic": null,
+  "waitingMs": 8625,
+  "score": {
+    "scorerVersion": "real-input-seen-fact-diagnostic-2",
+    "label": "已见人工工程参考的精确诊断，不是未见或商业准确率",
+    "metrics": {
+      "task": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 2,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "requiresAction": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 2,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "time": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 0,
+        "falsePositive": 2,
+        "falseNegative": 2,
+        "precision": 0,
+        "recall": 0
+      },
+      "material": {
+        "predicted": 3,
+        "reference": 3,
+        "correct": 1,
+        "falsePositive": 2,
+        "falseNegative": 2,
+        "precision": 0.3333333333333333,
+        "recall": 0.3333333333333333
+      },
+      "event": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "condition": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 2,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "revision": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "evidence": {
+        "predicted": 7,
+        "reference": 7,
+        "correct": 0,
+        "falsePositive": 7,
+        "falseNegative": 7,
+        "precision": 0,
+        "recall": 0
+      },
+      "semantic": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 0,
+        "falsePositive": 2,
+        "falseNegative": 2,
+        "precision": 0,
+        "recall": 0
+      },
+      "coverage": {
+        "predicted": 4,
+        "reference": 4,
+        "correct": 1,
+        "falsePositive": 3,
+        "falseNegative": 3,
+        "precision": 0.25,
+        "recall": 0.25
+      }
+    },
+    "matchingAmbiguities": [],
+    "metricStatus": "EXACT_REFERENCE_DIAGNOSTIC",
+    "schemaParsed": true,
+    "issues": [],
+    "completeCase": false,
+    "majorCorrectionRequired": true,
+    "forbidden": 0,
+    "automaticSelection": "NOT_ENABLED",
+    "humanActiveEditTime": "NOT_RUN",
+    "candidateTaskCount": 2,
+    "referenceTaskCount": 2
+  },
+  "scoreError": null,
+  "totalAttempts": 57,
+  "costUpperMicroCny": 28262,
+  "totalCostUpperMicroCny": 4585199,
+  "stopDispatch": false,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticSelection": "NOT_ENABLED",
+  "qualityClaim": "12新合成通知首次开发配对验证，非独立盲测；24请求不是24独立通知"
+}
