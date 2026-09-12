@@ -58,7 +58,8 @@ export interface RecordedPaired04 {
   context:WireContext; requestSha:string; responseSha:string; rawHttpText:string
 }
 /** Server-bound paid record, not a model executor. No references or scores enter here. */
-export async function replayRecordedPaired04(repo:SemanticRepository,record:RecordedPaired04,identity:RecordedBatchIdentity) {
+export const HTTPS_PREVIEW_DATABASE = 'rco-mainline-01-02-i1-real-input-https-preview-1'
+export async function replayRecordedPaired04(repo:SemanticRepository,record:RecordedPaired04,identity:RecordedBatchIdentity, httpsPreview = false) {
   record=structuredClone(record);identity=structuredClone(identity)
   exactKeys(record,['version','unitId','name','operationId','title','context','requestSha','responseSha','rawHttpText'])
   exactKeys(identity,['unitId','requestSha','responseSha'])
@@ -70,7 +71,8 @@ export async function replayRecordedPaired04(repo:SemanticRepository,record:Reco
   if(!['recorded-paired04-1','recorded-paired05-1','recorded-paired06-1'].includes(record.version)
     ||!(newest?/^Q(0[1-9]|1[0-2])-(03|06)$/:next?/^P(0[1-9]|1[0-2])-(03|05)$/:/^N(0[1-9]|1[0-2])-(03|04)$/).test(record.unitId)
     ||record.operationId!==prefix+'-source-'+id||record.name!==recordedA02Identity.name
-    ||repo.name!==record.name||repo.profile!=='real-input-01'||record.unitId!==identity.unitId
+    ||(httpsPreview ? repo.name!==HTTPS_PREVIEW_DATABASE||!newest||!['Q01-06','Q07-06'].includes(record.unitId) : repo.name!==record.name)
+    ||repo.profile!=='real-input-01'||record.unitId!==identity.unitId
     ||record.requestSha!==identity.requestSha||record.responseSha!==identity.responseSha
     ||await sha256Text(record.rawHttpText)!==identity.responseSha
     ||await sha256Text(built.serialized)!==identity.requestSha)throw Error('REAL_INPUT_P04_IDENTITY')
@@ -280,6 +282,7 @@ export async function createRealInputRuntime(options: {
   execution: 'live' | 'seen_engineering_replay'; resources: LocalExtractionResources; execute: ModelExecutor;
   recordedA02?: true;
   recordedBatch?: true;
+  httpsPreview?: true;
   recordedCandidate02?: true;
   recordedCandidate03?: true;
   recordedPaired04?: true;
@@ -288,8 +291,11 @@ export async function createRealInputRuntime(options: {
 }) {
   options = { ...options, resources: structuredClone(options.resources) }
   if (!['live','seen_engineering_replay'].includes(options.execution)) throw Error('REAL_INPUT_EXECUTION_PROFILE')
+  if(options.httpsPreview&&(options.name!==HTTPS_PREVIEW_DATABASE||!options.recordedBatch||options.execution!=='live'
+    ||options.recordedA02||options.recordedCandidate02||options.recordedCandidate03||options.recordedPaired04
+    ||options.recordedPaired05||options.recordedPaired06))throw Error('REAL_INPUT_HTTPS_PREVIEW_PROFILE')
   if(options.recordedA02&&(options.execution!=='live'||options.initial||options.name!==recordedA02Identity.name))throw Error('REAL_INPUT_RECORDED_RUNTIME')
-  if(options.recordedBatch&&(options.recordedA02||options.execution!=='live'||options.initial||options.name!==recordedA02Identity.name))throw Error('REAL_INPUT_BATCH_RECORDED_RUNTIME')
+  if(options.recordedBatch&&!options.httpsPreview&&(options.recordedA02||options.execution!=='live'||options.initial||options.name!==recordedA02Identity.name))throw Error('REAL_INPUT_BATCH_RECORDED_RUNTIME')
   if(options.recordedCandidate02&&!options.recordedBatch)throw Error('REAL_INPUT_C02_RECORDED_RUNTIME')
   if(options.recordedCandidate03&&!options.recordedCandidate02)throw Error('REAL_INPUT_C03_RECORDED_RUNTIME')
   if(options.recordedPaired04&&!options.recordedCandidate03)throw Error('REAL_INPUT_P04_RECORDED_RUNTIME')
@@ -305,7 +311,7 @@ export async function createRealInputRuntime(options: {
       return {load:()=>repo.load(),view:semanticView,dates:semanticDates,review:semanticReview,edit:i=>editSemantic(repo,i),
         confirm:i=>confirmSemantic(repo,i),exportJson:()=>repo.exportJson(),capture:async()=>{throw Error('请先在真实输入面板保存并核对本次文字范围。')},
         recognitionDescription:options.recordedPaired06?'DeepSeek-V4.1-Flash · 03/06已记录回答 · 逐项核对':options.recordedPaired05?'DeepSeek-V4.1-Flash · 03/05已记录回答 · 逐项核对':options.recordedPaired04?'候选03/04配对真实回答 · 逐项人工核对':options.recordedCandidate03?'候选03与历史真实模型回答 · 逐项人工核对':options.recordedCandidate02?'新候选02与历史真实模型回答 · 逐项人工核对':options.recordedBatch?'已记录真实模型批次 · 原回答核对，不再调用模型':options.recordedA02?'A02历史真实模型响应回放 · 本轮零调用':options.execution==='live'?'真实模型建议 · 尚未逐项核对':'已见匿名工程回放 · 非模型预测',
-        realInput:{profile:'real-input-01',networkDescription:options.recordedPaired06?'同材料03/06开发回归；仅回放本批已取得并结算的回答，不允许新发送。首次建议和人工纠正分别保留。':options.recordedPaired05?'新模型24次配对已完成，本包累计80次；只回放已取得回答，不再发送。05未替换现有路线。':options.recordedPaired04?'24次配对已完成，本包累计56次；仅本机回放，不再发送。':options.recordedCandidate03?'候选03的8次已完成，本包累计32次；当前仅本机回放，不再发送。':options.recordedCandidate02?'新候选8次已完成，本包累计24次；当前仅本机回放，不再发送。':options.recordedBatch?'本批14次已派发完毕；仅核对已记录响应与本机提取文字，不再发送。':options.recordedA02?'只核对已记录A02响应；禁止新发送，不读取密钥，不访问模型。':options.execution==='live'
+        realInput:{profile:'real-input-01',networkDescription:options.httpsPreview?'独立HTTPS匿名回放：仅提供Q01/Q07历史回答，模型接口关闭。确认结果只保存在本域名当前浏览器，不读取本机旧库。':options.recordedPaired06?'同材料03/06开发回归；仅回放本批已取得并结算的回答，不允许新发送。首次建议和人工纠正分别保留。':options.recordedPaired05?'新模型24次配对已完成，本包累计80次；只回放已取得回答，不再发送。05未替换现有路线。':options.recordedPaired04?'24次配对已完成，本包累计56次；仅本机回放，不再发送。':options.recordedCandidate03?'候选03的8次已完成，本包累计32次；当前仅本机回放，不再发送。':options.recordedCandidate02?'新候选8次已完成，本包累计24次；当前仅本机回放，不再发送。':options.recordedBatch?'本批14次已派发完毕；仅核对已记录响应与本机提取文字，不再发送。':options.recordedA02?'只核对已记录A02响应；禁止新发送，不读取密钥，不访问模型。':options.execution==='live'
           ?'本机读取；仅在逐次确认且预算允许时发送本次文字，不发送文件或工作区。':'本机读取与已见工程回放，无外部模型调用。',
           inputPanel:props=>options.recordedCandidate02?createElement(InputReview,{...props,repo,resources:options.resources,execution:options.execution,localOnly:true,
             send:async()=>{throw Error('REAL_INPUT_NEW_SEND_DISABLED')}}):options.recordedBatch?createElement('p',{role:'status'},'本批已调用完成；请从收件箱核对原回答。没有额外模型请求授权，新发送已关闭。'):options.recordedA02?createElement('p',{role:'status'},'当前只允许A02历史响应核对，已关闭新录入和发送。请从收件箱恢复A02。'):createElement(InputReview,{...props,repo,resources:options.resources,execution:options.execution,

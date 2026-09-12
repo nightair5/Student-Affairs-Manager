@@ -46,6 +46,74 @@ import type { RealInputState } from '../mainline05/semanticState'
 import type { SemanticInput } from '../mainline04/semanticContract'
 import { replayRecordedPaired04, type RecordedPaired04 } from './runtime'
 import { buildFlash41Candidate06ComparisonRequest, CANDIDATE06_VERSION } from './candidate06'
+import { HTTPS_PREVIEW_DATABASE } from './runtime'
+
+describe('HTTPS preview',()=>{
+  function record(unitId:string):RecordedPaired04{
+    const p='docs/recognition-optimization/mainline-real-input-01/runs/candidate06-20260912a/'
+    const binding=JSON.parse(readFileSync(p+'BINDING.json','utf8'))
+    const item=binding.items.find((i:{id:string})=>i.id===unitId.slice(0,3))
+    const raw=JSON.parse(readFileSync(p+unitId+'_RAW.jsonl','utf8'))
+    return {version:'recorded-paired06-1',unitId,name:recordedA02Identity.name,operationId:item.operationId,
+      title:item.title,context:item.context,requestSha:raw.requestSha,responseSha:raw.responseSha,rawHttpText:raw.rawHttpText}
+  }
+  it.each(['Q01-06','Q07-06'])('%s preserves original identities and explicitly confirms in the new store',async unitId=>{
+    const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:HTTPS_PREVIEW_DATABASE})
+    const repo=await SemanticRepository.open(store.name,store,emptyRealInputWorkspace(store.name),'real-input-01')
+    const r=record(unitId),identity={unitId,requestSha:r.requestSha,responseSha:r.responseSha}
+    await expect(replayRecordedPaired04(repo,r,identity)).rejects.toThrow()
+    expect((await repo.load()).sources).toHaveLength(0)
+    const loaded=await replayRecordedPaired04(repo,r,identity,true),draft=loaded.extractionDrafts[0],first=stateOfRuntime(loaded,draft.id)
+    if(first.version!==REAL_STATE_VERSION)throw Error('REAL_EXPECTED')
+    const ids=unitId==='Q01-06'?['task-submit-authorization','task-upload-trailer']:['task-upload-proof-pdf']
+    expect(first.rawHttpText).toBe(r.rawHttpText);expect(loaded.tasks).toHaveLength(0)
+    await expect(confirmSemantic(repo,{draftId:draft.id,taskTempIds:ids,revision:semanticRevision(loaded)})).rejects.toThrow()
+    for(const m of effectiveStateFacts(first).facts.materials)await reviewSemanticMaterial(repo,{draftId:draft.id,materialId:m.tempId,
+      revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID(),value:{required:m.required,status:'missing'}})
+    for(const taskId of ids){
+      await reviewSemanticFact(repo,{draftId:draft.id,taskId,revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID()})
+      await confirmSemantic(repo,{draftId:draft.id,taskTempIds:[taskId],revision:semanticRevision(await repo.load())})
+    }
+    const saved=await repo.load()
+    expect(saved.tasks).toHaveLength(ids.length)
+    expect(stateOfRuntime(saved,draft.id).rawResponse).toEqual(first.rawResponse)
+    expect(stateOfRuntime(saved,draft.id).first).toEqual(first.first)
+    expect(await new CanonicalWorkspaceRepository(store).load()).toEqual(JSON.parse(JSON.stringify(saved)))
+    expect(await replayRecordedPaired04(repo,r,identity,true)).toEqual(saved)
+    expect(await confirmSemantic(repo,{draftId:draft.id,taskTempIds:ids,revision:semanticRevision(saved)})).toEqual(saved)
+    const forbidden=record('Q03-06')
+    await expect(replayRecordedPaired04(repo,forbidden,{unitId:forbidden.unitId,requestSha:forbidden.requestSha,responseSha:forbidden.responseSha},true)).rejects.toThrow()
+    await expect(replayRecordedPaired04(repo,{...r,rawHttpText:r.rawHttpText+' '},identity,true)).rejects.toThrow()
+    expect(await repo.load()).toEqual(saved)
+  })
+  it('requires explicit preview profile and retains old recorded initial/name restrictions',async()=>{
+    const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:HTTPS_PREVIEW_DATABASE}),execute=vi.fn(async()=>{throw Error('NO_DISPATCH')})
+    const options={name:store.name,store,initial:emptyRealInputWorkspace(store.name),execution:'live' as const,
+      recordedBatch:true as const,resources:{workerPath:'',corePath:'',langPath:'',pdfWorkerPath:''},execute}
+    await expect(createRealInputRuntime(options)).rejects.toThrow('REAL_INPUT_BATCH_RECORDED_RUNTIME')
+    await expect(createRealInputRuntime({...options,httpsPreview:true,recordedPaired06:true})).rejects.toThrow('REAL_INPUT_HTTPS_PREVIEW_PROFILE')
+    const runtime=await createRealInputRuntime({...options,httpsPreview:true})
+    expect(runtime).toBeDefined();expect(execute).not.toHaveBeenCalled()
+    await expect(createRealInputRuntime({...options,httpsPreview:true,name:recordedA02Identity.name})).rejects.toThrow()
+  })
+  it('Worker exposes only approved static responses and rejects all model/writing requests',()=>{
+    const result=spawnSync(process.execPath,['--input-type=module','-e',`
+      import assert from 'node:assert/strict';import worker from './cloudflare/real-input-preview.mjs';
+      let calls=0;const env={ASSETS:{fetch:async r=>{calls++;return new Response(r.url)}}};
+      for(const path of ['/','/browser.js','/browser.css','/recorded/Q01-06.json','/recorded/Q07-06.json']){
+        const r=await worker.fetch(new Request('https://preview.invalid'+path),env);assert.equal(r.status,200);
+        assert.match(r.headers.get('content-security-policy'),/connect-src 'self'/);
+      }
+      assert.equal(calls,5);
+      for(const path of ['/api/deepseek','/api/real-input/recognize','/.env','/recorded/Q03-06.json','/browser.js?x=1']){
+        assert.equal((await worker.fetch(new Request('https://preview.invalid'+path),env)).status,404);
+        assert.equal((await worker.fetch(new Request('https://preview.invalid'+path,{method:'POST'}),env)).status,405);
+      }
+      assert.equal(calls,5);assert.equal((await (await worker.fetch(new Request('https://preview.invalid/api/status'),env)).json()).modelCallsEnabled,false);
+    `],{encoding:'utf8'})
+    expect(result.status,result.stderr).toBe(0)
+  })
+})
 
 describe('paired06 existing wire recorded boundary',()=>{
   it.each([
@@ -747,11 +815,11 @@ describe('real App runtime and public send connection; memory/SSR not browser ac
       const helper=tree.statements.find(s=>ts.isFunctionDeclaration(s)&&s.name?.text==='preventRecordedDatabaseUpgrade');
       const code=ts.transpileModule((helper?helper.getText(tree).replace(/^export\\s+/,''):'')+'\\n'+assignment.getText(tree),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.CommonJS}}).outputText;
       const name='original-test-db';
-      const harness=mode=>{
+      const harness=(mode,preview=false,previewCreating=false)=>{
         let aborts=0,creates=0,opens=0;const req=new EventTarget();
         req.transaction={abort(){aborts++}};
         const indexedDB={},effects={databaseOpens:[],foreignDatabase:0,blockedDatabaseUpgrades:0};
-        runInNewContext(code,{indexedDB,name,effects,config:{mode},nativeOpen(){opens++;return req}});
+        runInNewContext(code,{indexedDB,name,effects,preview,previewCreating,config:{mode},nativeOpen(){opens++;return req}});
         return {indexedDB,req,effects,get counts(){return {aborts,creates,opens}},legacy(){req.addEventListener('upgradeneeded',()=>{creates++})}};
       };
       for(const oldVersion of [0,1]){
@@ -765,6 +833,11 @@ describe('real App runtime and public send connection; memory/SSR not browser ac
       assert.equal(existing.counts.opens,1);
       const old=harness('seen_engineering_replay');old.indexedDB.open(name,1);old.legacy();old.req.dispatchEvent(new Event('upgradeneeded'));
       assert.deepEqual(old.counts,{aborts:0,creates:1,opens:1});
+      for(const [creating,oldVersion,expectedAbort] of [[true,0,0],[true,1,1],[false,0,1]]){
+        const h=harness('recorded_batch',true,creating);h.indexedDB.open(name,1);h.legacy();
+        const event=new Event('upgradeneeded');Object.assign(event,{oldVersion});h.req.dispatchEvent(event);
+        assert.equal(h.counts.aborts,expectedAbort);assert.equal(h.counts.creates,expectedAbort?0:1);
+      }
       console.log('real wrapper EventTarget contract: missing/upgrade abort, existing success, version/foreign reject, old default retained; not real IndexedDB engine acceptance');
     `],{encoding:'utf8',timeout:15000,maxBuffer:1024*1024})
     expect(probe.status,probe.stdout+'\n'+probe.stderr).toBe(0)

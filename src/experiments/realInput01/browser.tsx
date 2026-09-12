@@ -14,12 +14,13 @@ import { acquireFile, acquireText } from './inputAcquisition'
 import { makeSendSnapshot, sha256Text } from './inputReceipt'
 import { buildModelRequest } from './modelWire'
 import { replayRecordedCandidate02, type RecordedCandidate02, replayRecordedCandidate03, type RecordedCandidate03 } from './runtime'
-import { replayRecordedPaired04, type RecordedPaired04 } from './runtime'
+import { replayRecordedPaired04, HTTPS_PREVIEW_DATABASE, type RecordedPaired04 } from './runtime'
 import type { LocalExtractionResources } from '../../lib/fileExtraction'
 import { buildBrowserReminderJobs } from '../../lib/notifications'
 
 interface Carrier { unitId: string; name: string; mime: string; sha256: string; url: string; sourceText: string }
 declare const __REAL_INPUT_CONFIG__: { mode: 'seen_engineering_replay' | 'live' | 'recorded_a02' | 'recorded_batch'; capability: string;
+  httpsPreview?: {origin: string};
   batch?: RecordedBatchIdentity[];
   candidate02?: boolean;
   candidate03?: boolean;
@@ -29,10 +30,13 @@ declare const __REAL_INPUT_CONFIG__: { mode: 'seen_engineering_replay' | 'live' 
   recorded?:{name:string;requestSha:string;responseSha:string};
   units: Array<{unitId: string; requestSha: string}>; resources: LocalExtractionResources; carriers: Carrier[] }
 const config = __REAL_INPUT_CONFIG__
+const preview = config.httpsPreview
 const params = new URLSearchParams(location.search), run = params.get('run')
-if (location.hostname !== '127.0.0.1' || !run || !/^real-input-[a-z0-9-]{10,100}$/.test(run)) throw Error('REAL_INPUT_ISOLATED_RUN_REQUIRED')
-const name = 'rco-mainline-01-02-i1-' + run
-if((config.mode==='recorded_a02'||config.mode==='recorded_batch')&&(location.origin!=='http://127.0.0.1:6631'||config.recorded?.name!==name||params.has('new')))throw Error('REAL_INPUT_RECORDED_ORIGIN_OR_DATABASE')
+if(preview&&(location.protocol!=='https:'||location.origin!==preview.origin||config.mode!=='recorded_batch'||location.search))throw Error('REAL_INPUT_HTTPS_ORIGIN')
+if (!preview&&(location.hostname !== '127.0.0.1' || !run || !/^real-input-[a-z0-9-]{10,100}$/.test(run))) throw Error('REAL_INPUT_ISOLATED_RUN_REQUIRED')
+const name = preview ? HTTPS_PREVIEW_DATABASE : 'rco-mainline-01-02-i1-' + run
+if(!preview&&(config.mode==='recorded_a02'||config.mode==='recorded_batch')&&(location.origin!=='http://127.0.0.1:6631'||config.recorded?.name!==name||params.has('new')))throw Error('REAL_INPUT_RECORDED_ORIGIN_OR_DATABASE')
+let previewCreating = false
 const effects = { databaseOpens: [] as string[], foreignDatabase: 0, blockedDatabaseUpgrades: 0, legacyStorage: 0, forbiddenNetwork: 0, writes: 0 }
 function preventRecordedDatabaseUpgrade(request: IDBOpenDBRequest) {
   // Register before the legacy store's onupgradeneeded property handler.
@@ -50,13 +54,20 @@ indexedDB.open = (target: string, version?: number) => {
   if ((config.mode === 'recorded_a02' || config.mode === 'recorded_batch') && version !== 1) throw Error('REAL_INPUT_RECORDED_DATABASE_VERSION_FORBIDDEN')
   effects.databaseOpens.push(target)
   const request = nativeOpen(target,version)
-  if (config.mode === 'recorded_a02' || config.mode === 'recorded_batch') preventRecordedDatabaseUpgrade(request)
+  if(preview&&previewCreating)request.addEventListener('upgradeneeded',event=>{
+    if(event.oldVersion!==0){event.stopImmediatePropagation();request.transaction!.abort()}
+  },{once:true})
+  else if (config.mode === 'recorded_a02' || config.mode === 'recorded_batch') preventRecordedDatabaseUpgrade(request)
   return request
 }
 for (const method of ['getItem','setItem','removeItem','clear','key'] as const) Object.defineProperty(Storage.prototype,method,
   {value:()=>{effects.legacyStorage++; throw Error('REAL_INPUT_LEGACY_STORAGE_FORBIDDEN')}})
 window.fetch = (input, init) => {
   const url = new URL(input instanceof Request ? input.url : String(input),location.href)
+  if(preview){
+    if(url.origin!==location.origin||!/^\/recorded\/Q(?:01|07)-06\.json$/.test(url.pathname)||url.search||(init?.method??'GET')!=='GET')throw Error('REAL_INPUT_PREVIEW_NETWORK_FORBIDDEN')
+    return nativeFetch(input,{...init,redirect:'error'})
+  }
   if (url.origin !== location.origin || !(url.pathname.startsWith('/real-input-assets/') || url.pathname.startsWith('/engineering-carriers/')
     || (config.mode==='recorded_batch'?url.pathname==='/api/real-input/recorded-batch':config.mode==='recorded_a02'?url.pathname==='/api/real-input/recorded-a02'
       :url.pathname === '/api/real-input/replay' || url.pathname === '/api/real-input/recognize'))) {
@@ -71,7 +82,7 @@ if ('Notification' in window) {
   window.Notification = new Proxy(Notification,{construct:()=>{throw Error('REAL_INPUT_NOTIFICATION_FORBIDDEN')}})
   Notification.requestPermission = async () => { throw Error('REAL_INPUT_NOTIFICATION_PERMISSION_FORBIDDEN') }
 }
-const actual = new IsolatedTestStore(name)
+let actual: IsolatedTestStore
 let failNext = false
 const store: WorkspaceRecordStore & {name: string} = { name,
   read:key=>actual.read(key), write:async(key,value)=>{
@@ -112,12 +123,12 @@ function EngineeringTools() {
     <summary>真实输入工程工具（不是用户确认入口）</summary>
     <p>{config.mode==='recorded_batch'?`${config.batch?.length??0}份已记录真实模型响应 · 本页零调用，原回答不改`:config.mode==='recorded_a02'?'A02历史真实模型响应 · 本轮零调用，不是人工预测':config.mode==='live'?'已绑定真实调用模式':'零调用工程回放模式'}。浏览器时区{Intl.DateTimeFormat().resolvedOptions().timeZone}；业务时区Asia/Shanghai。{name}</p>
     {config.mode==='recorded_batch'&&config.batch?.map(identity=><button key={identity.unitId} disabled={busy} onClick={()=>void action(async()=>{
-      const response=await fetch('/api/real-input/recorded-batch',{method:'POST',headers:{'content-type':'application/json','x-real-input-capability':config.capability},
+      const response=preview?await fetch('/recorded/'+identity.unitId+'.json'):await fetch('/api/real-input/recorded-batch',{method:'POST',headers:{'content-type':'application/json','x-real-input-capability':config.capability},
         body:JSON.stringify({unitId:identity.unitId,requestSha:identity.requestSha})})
       if(!response.ok)throw Error('REAL_INPUT_BATCH_RECORD_UNAVAILABLE')
       const record=await response.json() as RecordedBatch|RecordedCandidate02|RecordedCandidate03|RecordedPaired04
-      const saved=(record.version==='recorded-paired04-1'&&config.paired04||record.version==='recorded-paired05-1'&&config.paired05||record.version==='recorded-paired06-1'&&config.paired06)
-        ?await replayRecordedPaired04(await repository(),record,identity)
+      const saved=(record.version==='recorded-paired04-1'&&config.paired04||record.version==='recorded-paired05-1'&&config.paired05||record.version==='recorded-paired06-1'&&(config.paired06||preview))
+        ?await replayRecordedPaired04(await repository(),record,identity,Boolean(preview))
         :record.version==='recorded-candidate03-1'&&config.candidate03
         ?await replayRecordedCandidate03(await repository(),record,identity)
         :record.version==='recorded-candidate02-1'&&config.candidate02
@@ -215,14 +226,30 @@ function EngineeringTools() {
     <p role="status">{status}</p><pre aria-label="本次工程证据">{output?JSON.stringify(output):'尚无本次结果'}</pre>
   </details>
 }
-async function mount() {
-  runtime=await createRealInputRuntime({name,store,initial:params.get('new')==='1'?emptyRealInputWorkspace(name):undefined,
+async function mount(createPreview=false) {
+  previewCreating=Boolean(preview&&createPreview)
+  actual=new IsolatedTestStore(name)
+  runtime=await createRealInputRuntime({name,store,initial:previewCreating||params.get('new')==='1'?emptyRealInputWorkspace(name):undefined,
     execution:config.mode==='recorded_a02'||config.mode==='recorded_batch'?'live':config.mode,resources:config.resources,execute,
+    ...(preview?{httpsPreview:true as const}:{}),
     ...(config.mode==='recorded_a02'?{recordedA02:true as const}:config.mode==='recorded_batch'?{recordedBatch:true as const,...(config.candidate02?{recordedCandidate02:true as const}:{}),...(config.candidate03?{recordedCandidate03:true as const}:{}),...(config.paired04?{recordedPaired04:true as const}:{}),...(config.paired05?{recordedPaired05:true as const}:{}),...(config.paired06?{recordedPaired06:true as const}:{})}:{})})
-  params.delete('new');history.replaceState(null,'','/?'+params.toString())
-  createRoot(document.getElementById('root')!).render(<><App runtime={runtime}/><EngineeringTools/></>)
+  previewCreating=false
+  if(!preview){params.delete('new');history.replaceState(null,'','/?'+params.toString())}
+  root.render(<>{preview&&<p role="status" style={{margin:'52px 16px 12px'}}>独立HTTPS实验版 · 仅回放匿名Q01/Q07历史回答，模型调用关闭。数据只保存在本域名的此浏览器；不是本机旧库，不同步、不用于真实学生资料。候选06未采用。</p>}<App runtime={runtime}/><EngineeringTools/></>)
 }
-void mount().catch(error=>{
+const root=createRoot(document.getElementById('root')!)
+function showFailure(error:unknown){
+  previewCreating=false
   const code=error instanceof Error&&/^[A-Z][A-Z0-9_]{1,100}$/.test(error.message)?error.message:'DETAIL_NOT_EXPOSED'
-  document.getElementById('root')!.textContent='隔离入口无法加载或校验测试库；已停止，没有回退用户数据库。错误码：'+code
-})
+  root.render(<p role="alert">隔离入口无法加载或校验测试库；已停止，没有回退用户数据库。错误码：{code}</p>)
+}
+async function start(){
+  if(!preview)return mount()
+  const databases=await indexedDB.databases()
+  if(databases.some(d=>d.name===name))return mount()
+  root.render(<main style={{maxWidth:720,margin:'10vh auto',padding:24}}><h1>学生事务管家 · 独立实验版</h1>
+    <p>本页只回放两份人工合成通知的历史真实模型回答，不发送模型请求。可以核对材料、主动确认任务、刷新找回和下载。</p>
+    <p>首次使用需要创建此域名下的新实验库。不会读取或迁移本机6631旧库；数据只存在当前浏览器，不同步。请勿输入真实学生资料。</p>
+    <button onClick={event=>{event.currentTarget.disabled=true;void mount(true).catch(showFailure)}}>创建本域名实验库并进入</button></main>)
+}
+void start().catch(showFailure)

@@ -1,0 +1,45 @@
+{
+  "baselineHead": "672547416fa81f528c05b4def8bf3821f6401094",
+  "deployment": {
+    "status": "DEPLOYED_HTTP_VERIFIED_BROWSER_PENDING",
+    "url": "https://student-affairs-real-input-preview.nightsdell.workers.dev",
+    "worker": "student-affairs-real-input-preview",
+    "versionId": "a25293d5-debc-46dc-8450-60b8684be749",
+    "compatibilityDate": "2026-09-12",
+    "attempt1": "REJECTED_FUTURE_COMPATIBILITY_DATE_2026-09-13",
+    "attempt2": "DEPLOYED",
+    "bindings": ["ASSETS"], "productionRoutes": [], "secretsAdded": 0,
+    "buildDirectory": "C:/Users/Winner/AppData/Local/Temp/real-input-https-D0JQud"
+  },
+  "implementation": [
+    {"path":"src/experiments/realInput01/browser.tsx","sha256":"bca5a0ac4c3ebc95d4ea2c05652ec59b29c0e827170ca16081f849a8437e6290"},
+    {"path":"src/experiments/realInput01/runtime.ts","sha256":"6a0f7f656c7d8ff4bb3c2e3721678978a59159504b925b883c47282e5dc0e4e0"},
+    {"path":"src/experiments/realInput01/acceptance.test.tsx","sha256":"9a93483100b3260ac16a5a7bbf29246120cf5b9cccfe2218834ebf9e84a8f09c"},
+    {"path":"scripts/build-real-input-preview.mjs","sha256":"8711e8f9a806997a2f6a34d91e6b9584edf88236b228b203105f3dfd2487b924"},
+    {"path":"cloudflare/real-input-preview.mjs","sha256":"331421969550f75593be45bf4fa6f13d9279d5e05856f96deff69661a14a750a"},
+    {"path":"wrangler.real-input-preview.jsonc","sha256":"5fb21e9c63dcd6e78ad644281d3ccb79ca03397c5014faea37e6615550ae9380"}
+  ],
+  "onlineAssets": [
+    {"path":"index.html","status":200,"bytes":326,"sha256":"0c57b67f30c3e97dd1a95fbeec331b53790817806450776673256062e49439de","matchesBuild":true},
+    {"path":"browser.js","status":200,"bytes":2689444,"sha256":"73cb4620081ddd483d8fc92298dfe24a2fb78b87b5e25be48f1608531509739e","matchesBuild":true},
+    {"path":"browser.css","status":200,"bytes":167365,"sha256":"40088489b4456bd0c3c6653826c75b6a0ed1241d0f282dbea89c08486cc78fae","matchesBuild":true},
+    {"path":"recorded/Q01-06.json","status":200,"bytes":25688,"sha256":"48f2f5985b56e674d6cf39feda176609dd33cba71f10a54d63a5368844e35fd9","matchesBuild":true},
+    {"path":"recorded/Q07-06.json","status":200,"bytes":24654,"sha256":"97f3b37101e44547f736cf60fa92863165a023407486cf03d274d1c371b9f4f4","matchesBuild":true}
+  ],
+  "onlineRoutes": {"root":200,"status":200,"modelCallsEnabled":false,"postRecognize":405,"getDeepseek":404,"unapprovedRecord":404,"dotEnv":404},
+  "engineering": {
+    "firstAcceptance":{"pass":54,"fail":1,"path":"C:/Users/Winner/AppData/Local/Temp/https-preview-test-nEZ0OI/test.json","sha256":"b25b282e8e40953ef3d00e960d9dc7a7f7688fc61740517a2044ca0d36d87c2e"},
+    "finalAffected":{"pass":5,"fail":0,"skip":50,"path":"C:/Users/Winner/AppData/Local/Temp/https-preview-test-final-Pv7Kuo/test.json","sha256":"3038630ff0197978931bf82700178bb71946fe608a49c6337ff774a03604b329"},
+    "type":"PASS","changedLint":{"errors":0,"warnings":1},"build":"PASS","cloudflareDryRun":"PASS",
+    "schemaTimeContract":"PASS","secretScan":{"pass":true,"files":1711},
+    "productionDependencyAudit":{"exit":0,"vulnerabilities":0},
+    "allDependencyAudit":{"exit":1,"moderate":2,"high":3,"scope":"development toolchain","packages":["@vitest/mocker","vitest","sharp","miniflare","wrangler"],"modifiedDependencies":false},
+    "unchangedHistoricalEngineeringLogHashes":{"total":13,"changed":0},"fullEngineeringGate":"NOT_ALL_PASS"
+  },
+  "browser":{"status":"NOT_RUN","error":"nodeRepl.fetch request failed","attempts":1,"actualNewDatabaseCreated":false,"confirmation": "NOT_RUN","refresh":"NOT_RUN","independentBrowserRead":"NOT_RUN","actualDownload":"NOT_RUN","memoryConfirmationTasks":3,"memoryNotBrowser":true},
+  "protection":{"readOnly":944,"staticEvidence":607,"frozenDependencies":18,"unchangedSourcePaths":52,"mismatches":0,"oldLocalDatabaseAccessed":false,"productionModified":false,
+    "logPrefixBytes":328477,"logPrefixSha256":"56a14f2610a53e889f52b63dd5c0b7f46a6fa9ccba5ba612a5ce96ea5540ef4c",
+    "ledgerRows":215,"ledgerBytes":163134,"ledgerSha256":"9a92b6886a0a40d7300aaa02054de53fb3df5c3a5397ddea9247ea3e3783ad41"},
+  "newModelCalls":0,"modelFees":0,"modelAccuracy":"NOT_MEASURED_THIS_TURN","candidate06Adopted":false,
+  "git":{"status":"READY_FOR_EXACT_PREVIEW_SOURCE_COMMIT_NOT_FULL_ACCEPTANCE"}
+}
