@@ -1,0 +1,49 @@
+{
+  "version": "candidate06-close-connection-check-1",
+  "date": "2026-09-13",
+  "baselineHead": "aa6f985042fbf3d2277fbcba251d969f4725bff1",
+  "baselineRemote": "aa6f985042fbf3d2277fbcba251d969f4725bff1",
+  "sourceManifest": "IMPLEMENTATION_SNAPSHOT.json",
+  "sourceShaMatch": 55,
+  "protectedFilesMatch": 944,
+  "staticEvidenceMatch": 607,
+  "frozenDependenciesUnchanged": true,
+  "mismatches": [],
+  "ledger": {
+    "rows": 215,
+    "bytes": 163134,
+    "sha256": "9a92b6886a0a40d7300aaa02054de53fb3df5c3a5397ddea9247ea3e3783ad41",
+    "unchanged": true
+  },
+  "logPrefix": {
+    "bytes": 326474,
+    "sha256": "3ee2de0dedd3f62f74491b5bf838404865197342522fa2c7fed07f31f36debfa"
+  },
+  "server": {
+    "origin": "http://127.0.0.1:6631",
+    "before": "ECONNREFUSED",
+    "afterHttpStatus": 200,
+    "rootIncludesBrowserScript": true,
+    "mode": "recorded_batch",
+    "upstreamEnabled": false,
+    "survivesCodexExit": "NOT_VERIFIED"
+  },
+  "browser": {
+    "attempts": 1,
+    "operation": "cua.getState",
+    "apps": 0,
+    "browsers": 0,
+    "error": "nodeRepl.fetch request failed",
+    "uiActions": 0,
+    "q01Journey": "NOT_RUN",
+    "q07Journey": "NOT_RUN",
+    "independentDatabaseRead": "NOT_RUN",
+    "actualDownloadAgreement": "NOT_RUN"
+  },
+  "newModelCalls": 0,
+  "newCost": 0,
+  "productSourceChanged": false,
+  "businessFilesRetainedUncommitted": 21,
+  "engineering": "UNCHANGED_SOURCE_REUSE_PRIOR_EVIDENCE_NO_RERUN",
+  "delivery": "AUDIT_ONLY_BROWSER_BLOCKED"
+}

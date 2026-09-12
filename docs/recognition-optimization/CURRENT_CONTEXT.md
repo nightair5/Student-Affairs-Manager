@@ -7,12 +7,12 @@
 - 工程通过，真实Edge旅程与新下载NOT_RUN；整包未完成。
 - 审计/结果/账本已提交并推送；21业务文件仍未提交，禁止重复应用。
 - 当前报告目录mainline-real-input-01/runs/candidate06-20260912a/。
-- 先读AUDIT、FINAL_CHECKS、IMPLEMENTATION_SNAPSHOT，不重审历史。
+- 先读CLOSE_AUDIT/CLOSE_CHECKS及IMPLEMENTATION_SNAPSHOT，不重审历史。
 
 ## 仓库与授权
 - 唯一仓库C:\Users\Winner\student-affairs-multimodal-exp。
 - 唯一分支codex/e2-multimodal-recognition-exp，不在默认比赛目录实施。
-- 本轮基线/提交前远端c419aea63a1f6595cb0140cde00eb89dcc092759。
+- 最新收尾起点/远端aa6f985042fbf3d2277fbcba251d969f4725bff1，提交后以Git核验。
 - 审计交付116a3d3e86cb427eb9e07d8cf430372d3cbde2f1及远端已核验，回执见DELIVERY.json。
 - 当前55路径：原53及candidate06.ts/candidate06.test.ts。
 - 派发后仅acceptance.test.tsx补3份实际回答内存保存测试。
@@ -70,9 +70,11 @@
 - 原URL http://127.0.0.1:6631/?run=real-input-d030c507-3f7c-4a2c-a511-8cd5bd534862。
 - 原库rco-mainline-01-02-i1-real-input-d030c507-3f7c-4a2c-a511-8cd5bd534862。
 - 上次13任务，本轮未访问原库；不得清库/新库/fallback或覆盖。
-- 本次官方标签清单仍nodeRepl.fetch request failed；未能定位测试标签。
+- 2026-09-13原6631起初未运行；原recorded服务恢复后HTTP200，上游关闭。
+- 本次只调用一次官方标签枚举，仍nodeRepl.fetch request failed；0界面操作。
 - 此前官方Windows路径因不能可靠验证URL停止，不绕过或循环重试。
-- 待官方连接恢复，只补Q01-06多任务和Q07-06替代要求两条旅程。
+- 不循环重启/刷新；一次性人工操作交接见CLOSE_AUDIT，保留前后独立读库文件。
+- 仅补Q01-06多任务和Q07-06替代旅程；服务跨Codex退出存活未验证。
 - 保留无日期对照，不确认同通知两臂；主动核对/确认、刷新/详情/日历找回。
 - 取得独立new repository全对象及实际下载比较，不能用页面成功提示替代。
 - 完成真实旅程后再精确提交已有业务代码；不机械重跑未变工程/OCR/时区。
