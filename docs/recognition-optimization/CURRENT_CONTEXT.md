@@ -5,7 +5,7 @@
 - 本批24次已完成，历史104次；禁止补调用、重发或自动创建候选07。
 - candidate06不采用：没有减少重大语义纠正，材料归属及取消实体出现退化。
 - 工程通过，真实Edge旅程与新下载NOT_RUN；整包未完成。
-- 本轮只提交审计/结果/账本；21业务文件仍未提交，禁止重复应用。
+- 审计/结果/账本已提交并推送；21业务文件仍未提交，禁止重复应用。
 - 当前报告目录mainline-real-input-01/runs/candidate06-20260912a/。
 - 先读AUDIT、FINAL_CHECKS、IMPLEMENTATION_SNAPSHOT，不重审历史。
 
@@ -13,7 +13,7 @@
 - 唯一仓库C:\Users\Winner\student-affairs-multimodal-exp。
 - 唯一分支codex/e2-multimodal-recognition-exp，不在默认比赛目录实施。
 - 本轮基线/提交前远端c419aea63a1f6595cb0140cde00eb89dcc092759。
-- 最新审计提交以git log和远端为准，不回切旧HEAD。
+- 审计交付116a3d3e86cb427eb9e07d8cf430372d3cbde2f1及远端已核验，回执见DELIVERY.json。
 - 当前55路径：原53及candidate06.ts/candidate06.test.ts。
 - 派发后仅acceptance.test.tsx补3份实际回答内存保存测试。
 - 944保护、607静态证据、旧166行账本及日志前缀保持。
