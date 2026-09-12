@@ -5,14 +5,14 @@
 - 本批24次已完成，历史104次；禁止补调用、重发或自动创建候选07。
 - candidate06不采用：没有减少重大语义纠正，材料归属及取消实体出现退化。
 - 工程通过，真实Edge旅程与新下载NOT_RUN；整包未完成。
-- 审计/结果/账本已提交并推送；21业务文件仍未提交，禁止重复应用。
+- 用户新授权上传分支：21业务文件按待验收源码快照提交，不表示浏览器通过。
 - 当前报告目录mainline-real-input-01/runs/candidate06-20260912a/。
 - 先读CLOSE_AUDIT/CLOSE_CHECKS及IMPLEMENTATION_SNAPSHOT，不重审历史。
 
 ## 仓库与授权
 - 唯一仓库C:\Users\Winner\student-affairs-multimodal-exp。
 - 唯一分支codex/e2-multimodal-recognition-exp，不在默认比赛目录实施。
-- 最新收尾起点/远端aa6f985042fbf3d2277fbcba251d969f4725bff1，提交后以Git核验。
+- 本次源码上传起点32210c03fdc8ef5d650c4f58f81cbde7e743ebb0，提交后以Git核验。
 - 审计交付116a3d3e86cb427eb9e07d8cf430372d3cbde2f1及远端已核验，回执见DELIVERY.json。
 - 当前55路径：原53及candidate06.ts/candidate06.test.ts。
 - 派发后仅acceptance.test.tsx补3份实际回答内存保存测试。
@@ -77,5 +77,6 @@
 - 仅补Q01-06多任务和Q07-06替代旅程；服务跨Codex退出存活未验证。
 - 保留无日期对照，不确认同通知两臂；主动核对/确认、刷新/详情/日历找回。
 - 取得独立new repository全对象及实际下载比较，不能用页面成功提示替代。
-- 完成真实旅程后再精确提交已有业务代码；不机械重跑未变工程/OCR/时区。
-- 不接真实用户库或稳定入口、不部署；完成当前交付后停止。
+- 55源码/13工程日志SHA未变，密钥扫描1707通过；复用未变工程，不冒称新验收。
+- Cloudflare尚未部署：普通构建是旧入口，实验锁6631及旧库；六文件最小范围见GITHUB_SNAPSHOT。
+- 拟独立HTTPS匿名零调用回放，新origin新库需显式批准；不动生产/RC.4/Secret。

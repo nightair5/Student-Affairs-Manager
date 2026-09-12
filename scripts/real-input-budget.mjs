@@ -10,6 +10,11 @@ export const BILLING_POLICY = Object.freeze({ version: 'real-input-budget-2', mo
   inputPriceMicroPerMillion: 3000000, outputPriceMicroPerMillion: 9000000,
   reservationMicroCny: 3300000, limitMicroCny: 10000000, maxRequests: 24 })
 export const sha256 = value => createHash('sha256').update(value).digest('hex')
+// Explicit new-model upper-price policy; original policy and historical settlements remain unchanged.
+export const FLASH41_POLICY = Object.freeze({...BILLING_POLICY,version:'real-input-flash41-budget-1',model:'deepseek-flash',maxRequests:80,
+  inputPriceMicroPerMillion:2000000,outputPriceMicroPerMillion:8000000})
+// A new grant extends only the authorized Q comparison; prior policies remain byte-for-byte unchanged.
+export const FLASH41_PAIRED06_POLICY = Object.freeze({...FLASH41_POLICY,version:'real-input-flash41-budget-6',maxRequests:104})
 const fail = code => { throw Error('REAL_INPUT_BUDGET_' + code) }
 const check = (ok, code) => { if (!ok) fail(code) }
 const digest = value => typeof value === 'string' && /^[a-f0-9]{64}$/.test(value)
@@ -63,10 +68,10 @@ export function validateManifest(input) {
   check(typeof m.lockRoot === 'string' && resolve(m.lockRoot) === m.lockRoot, 'LOCK_ROOT')
   units(m.units, 'AB'); return m
 }
-export function costUpperMicroCny(inputTokens, outputTokens) {
+export function costUpperMicroCny(inputTokens, outputTokens, policy=BILLING_POLICY) {
   check(integer(inputTokens, BILLING_POLICY.inputTokenCeiling) && integer(outputTokens, BILLING_POLICY.outputTokenCeiling), 'TOKEN_CEILING')
-  const numerator = BigInt(inputTokens) * BigInt(BILLING_POLICY.inputPriceMicroPerMillion)
-    + BigInt(outputTokens) * BigInt(BILLING_POLICY.outputPriceMicroPerMillion)
+  const numerator = BigInt(inputTokens) * BigInt(policy.inputPriceMicroPerMillion)
+    + BigInt(outputTokens) * BigInt(policy.outputPriceMicroPerMillion)
   return Number((numerator + 999999n) / 1000000n)
 }
 /** JSON.parse checks grammar, but silently discards duplicate properties.
@@ -91,17 +96,18 @@ function unambiguousResponse(rawText) {
   }
   return value
 }
-export function validateUsageEnvelope(rawText, status) {
+export function validateUsageEnvelope(rawText, status, policy=BILLING_POLICY) {
+  check(isDeepStrictEqual(policy,BILLING_POLICY)||isDeepStrictEqual(policy,FLASH41_POLICY)||isDeepStrictEqual(policy,FLASH41_PAIRED06_POLICY),'POLICY_CHANGED')
   check(status === 200 && typeof rawText === 'string' && Buffer.byteLength(rawText) <= 524288, 'HTTP_OR_RESPONSE_LIMIT')
   let response
   try { response = unambiguousResponse(rawText) } catch { fail('RESPONSE_JSON_OR_AMBIGUOUS') }
   check(response && response.object === 'response' && response.status === 'completed' && !response.error
     && typeof response.id === 'string' && /^[a-zA-Z0-9_-]{1,200}$/.test(response.id)
-    && typeof response.model === 'string' && response.model.toLowerCase() === BILLING_POLICY.model, 'RESPONSE_IDENTITY')
+    && typeof response.model === 'string' && response.model.toLowerCase() === policy.model, 'RESPONSE_IDENTITY')
   const u = response.usage
   exact(u, ['input_tokens','input_tokens_details','output_tokens','output_tokens_details','total_tokens'])
   exact(u.input_tokens_details, ['cached_tokens']); exact(u.output_tokens_details, ['reasoning_tokens'])
-  const cost = costUpperMicroCny(u.input_tokens, u.output_tokens)
+  const cost = costUpperMicroCny(u.input_tokens, u.output_tokens,policy)
   check(u.input_tokens > 0 && u.output_tokens > 0 && integer(u.total_tokens, 2 * BILLING_POLICY.inputTokenCeiling) && u.total_tokens === u.input_tokens + u.output_tokens
     && integer(u.input_tokens_details.cached_tokens, u.input_tokens) && u.output_tokens_details.reasoning_tokens === 0, 'USAGE_INCONSISTENT')
   check(Array.isArray(response.output) && response.output.length === 1 && response.output[0]?.type === 'message'
@@ -222,9 +228,26 @@ function replay(lines, manifestSha, manifest) {
         &&state.reservations[1].responseSha===g.a02ResponseSha&&state.reservations.slice(1).every(r=>r.status==='settled')
         &&g.targets.find(u=>u.unitId.endsWith('-03')).candidateSha===state.candidate03.grant.targets[0].candidateSha,'PAIRED04_PARENT')
       state.paired04={grant:g,stopped:false};state.units=[...state.units,...g.targets]
+    } else if (e.kind === 'paired05Grant') {
+      exact(e,['kind','grant']);const g=validateBatchGrant(e.grant,manifest,manifestSha)
+      check(g.version==='real-input-paired05-grant-1'&&!state.paired05&&state.paired04&&!state.paired04.stopped
+        &&sequence===g.parentSequence&&prior===g.parentTail&&state.reservations.length===56
+        &&state.reservations[0].status==='held-unknown'&&state.reservations[0].nonce===g.priorNonce
+        &&state.reservations[1].responseSha===g.a02ResponseSha&&state.reservations.slice(1).every(r=>r.status==='settled')
+        &&g.targets.every(u=>!state.units.some(old=>old.unitId===u.unitId||old.inputSha===u.inputSha)),'PAIRED05_PARENT')
+      state.paired05={grant:g,stopped:false};state.units=[...state.units,...g.targets]
+    } else if (e.kind === 'paired06Grant') {
+      exact(e,['kind','grant']);const g=validateBatchGrant(e.grant,manifest,manifestSha)
+      check(g.version==='real-input-paired06-grant-1'&&!state.paired06&&state.paired05&&!state.paired05.stopped
+        &&sequence===g.parentSequence&&prior===g.parentTail&&state.reservations.length===80
+        &&state.reservations[0].status==='held-unknown'&&state.reservations[0].nonce===g.priorNonce
+        &&state.reservations[1].responseSha===g.a02ResponseSha&&state.reservations.slice(1).every(r=>r.status==='settled')
+        &&g.targets.every(u=>!state.units.some(old=>old.unitId===u.unitId)),'PAIRED06_PARENT')
+      validatePaired06Candidates(g,state.paired05.grant)
+      state.paired06={grant:g,stopped:false};state.units=[...state.units,...g.targets]
     } else if (e.kind === 'batchReserve') {
       exact(e,['kind','unitId','requestSha','candidateSha','nonce','reservedMicroCny'])
-      const active=state.paired04??state.candidate03??state.candidate02??state.batch,g=active?.grant,u=g?.targets[state.reservations.length-(state.paired04?32:state.candidate03?24:state.candidate02?16:2)]
+      const active=state.paired06??state.paired05??state.paired04??state.candidate03??state.candidate02??state.batch,g=active?.grant,u=g?.targets[state.reservations.length-(state.paired06?80:state.paired05?56:state.paired04?32:state.candidate03?24:state.candidate02?16:2)]
       check(g&&!active.stopped&&state.reservations.slice(1).every(r=>r.status==='settled')
         &&u&&u.unitId===e.unitId&&u.requestSha===e.requestSha&&u.candidateSha===e.candidateSha
         &&typeof e.nonce==='string'&&/^[a-f0-9-]{36}$/.test(e.nonce)
@@ -235,12 +258,13 @@ function replay(lines, manifestSha, manifest) {
     } else if (e.kind === 'batchSettle') {
       exact(e,['kind','unitId','nonce','requestSha','responseSha','responseId','usage','costUpperMicroCny'])
       const r=state.reservations.at(-1)
-      const active=state.paired04??state.candidate03??state.candidate02??state.batch
+      const active=state.paired06??state.paired05??state.paired04??state.candidate03??state.candidate02??state.batch
       check(active&&!active.stopped&&r?.kind==='batchReserve'&&r.status==='pending'
         &&r.unitId===e.unitId&&r.nonce===e.nonce&&r.requestSha===e.requestSha&&digest(e.responseSha)
         &&!state.reservations.some(x=>x.responseId===e.responseId),'BATCH_SETTLEMENT_BINDING')
-      const v=validateUsageEnvelope(JSON.stringify({object:'response',status:'completed',model:BILLING_POLICY.model,
-        id:e.responseId,usage:e.usage,output:[{type:'message',role:'assistant',content:[{type:'output_text',text:'ledger validation'}]}]}),200)
+      const policy=state.paired06?FLASH41_PAIRED06_POLICY:state.paired05?FLASH41_POLICY:BILLING_POLICY
+      const v=validateUsageEnvelope(JSON.stringify({object:'response',status:'completed',model:policy.model,
+        id:e.responseId,usage:e.usage,output:[{type:'message',role:'assistant',content:[{type:'output_text',text:'ledger validation'}]}]}),200,policy)
       check(v.costUpperMicroCny===e.costUpperMicroCny,'SETTLEMENT_AMOUNT');Object.assign(r,e,{status:'settled'})
     } else if (e.kind === 'halt') {
       exact(e, ['kind','code']); check(typeof e.code==='string' && /^[A-Z_]{1,80}$/.test(e.code), 'HALT_CODE'); state.halted=e.code
@@ -249,6 +273,8 @@ function replay(lines, manifestSha, manifest) {
       if(state.candidate02)state.candidate02.stopped=true
       if(state.candidate03)state.candidate03.stopped=true
       if(state.paired04)state.paired04.stopped=true
+      if(state.paired05)state.paired05.stopped=true
+      if(state.paired06)state.paired06.stopped=true
     } else fail('LEDGER_EVENT_KIND')
     prior=line.hash
   }
@@ -361,20 +387,25 @@ function validateBatchGrant(input,manifest,manifestSha) {
   const candidate02=g.version==='real-input-candidate02-grant-1'
   const candidate03=g.version==='real-input-candidate03-grant-1'
   const paired04=g.version==='real-input-paired04-grant-1'
+  const paired05=g.version==='real-input-paired05-grant-1'
+  const paired06=g.version==='real-input-paired06-grant-1'
   exact(g,['version','grantId','parentTail','parentSequence','ledgerPrefixBytes','ledgerPrefixSha','manifestSha',
-    'bindingSha','head','sourcesSha','reviewSha','targets','billingEvidence','route','priorNonce','a02ResponseSha','maxTotalRequests'])
-  check((paired04||candidate03||candidate02||g.version==='real-input-batch-grant-1')&&/^[a-f0-9-]{36}$/.test(g.grantId)
-    &&g.parentSequence===(paired04?68:candidate03?51:candidate02?34:5)&&g.maxTotalRequests===(paired04?56:candidate03?32:candidate02?24:16)&&integer(g.ledgerPrefixBytes,1048576)&&g.ledgerPrefixBytes>0
+    'bindingSha','head','sourcesSha','reviewSha','targets','billingEvidence','route','priorNonce','a02ResponseSha','maxTotalRequests',...(paired05||paired06?['policy']:[])])
+  if(paired05)same(g.policy,FLASH41_POLICY,'PAIRED05_POLICY')
+  if(paired06)same(g.policy,FLASH41_PAIRED06_POLICY,'PAIRED06_POLICY')
+  check((paired06||paired05||paired04||candidate03||candidate02||g.version==='real-input-batch-grant-1')&&/^[a-f0-9-]{36}$/.test(g.grantId)
+    &&g.parentSequence===(paired06?166:paired05?117:paired04?68:candidate03?51:candidate02?34:5)&&g.maxTotalRequests===(paired06?104:paired05?80:paired04?56:candidate03?32:candidate02?24:16)&&integer(g.ledgerPrefixBytes,1048576)&&g.ledgerPrefixBytes>0
     &&['parentTail','ledgerPrefixSha','manifestSha','bindingSha','sourcesSha','reviewSha','a02ResponseSha'].every(k=>digest(g[k]))
     &&typeof g.head==='string'&&/^[a-f0-9]{40}$/.test(g.head)
     &&typeof g.priorNonce==='string'&&/^[a-f0-9-]{36}$/.test(g.priorNonce),'BATCH_GRANT')
   check(g.manifestSha===manifestSha,'BATCH_MANIFEST')
-  if(paired04){
+  if(paired04||paired05||paired06){
     check(Array.isArray(g.targets)&&g.targets.length===24,'PAIRED04_TARGETS')
-    const candidates=new Map(),inputs=new Set()
+    const candidates=new Map(),inputs=new Set(),cases=new Set();let baselineFirst=0
     for(let i=0;i<12;i++){
-      const pair=g.targets.slice(i*2,i*2+2),prefix=`N${String(i+1).padStart(2,'0')}-`
-      check(new Set(pair.map(u=>u.unitId)).size===2&&pair.some(u=>u.unitId===prefix+'03')&&pair.some(u=>u.unitId===prefix+'04'),'PAIRED04_PAIR')
+      const pair=g.targets.slice(i*2,i*2+2),prefix=paired06?pair[0]?.unitId?.slice(0,4):`${paired05?'P':'N'}${String(i+1).padStart(2,'0')}-`
+      if(paired06){check(/^Q(?:0[1-9]|1[0-2])-$/.test(prefix)&&!cases.has(prefix),'PAIRED06_CASE');cases.add(prefix);if(pair[0].unitId.endsWith('-03'))baselineFirst++}
+      check(new Set(pair.map(u=>u.unitId)).size===2&&pair.some(u=>u.unitId===prefix+'03')&&pair.some(u=>u.unitId===prefix+(paired06?'06':paired05?'05':'04')),'PAIRED04_PAIR')
       for(const u of pair){exact(u,unitKeys)
         check(['candidateSha','requestSha','inputSha','scorerSha'].every(k=>digest(u[k]))
           &&integer(u.requestBytes,BILLING_POLICY.requestByteCeiling)&&u.requestBytes>0
@@ -387,7 +418,8 @@ function validateBatchGrant(input,manifest,manifestSha) {
         &&!manifest.units.some(u=>u.inputSha===pair[0].inputSha),'PAIRED04_INPUT')
       inputs.add(pair[0].inputSha)
     }
-    check(candidates.get('03')!==candidates.get('04'),'PAIRED04_SAME_CANDIDATE')
+    check(candidates.get('03')!==candidates.get(paired06?'06':paired05?'05':'04'),'PAIRED04_SAME_CANDIDATE')
+    if(paired06)check(cases.size===12&&baselineFirst===6,'PAIRED06_BALANCE')
   }else if(candidate02||candidate03){
     check(Array.isArray(g.targets)&&g.targets.length===8,'C02_TARGETS')
     for(const [i,u] of g.targets.entries()){
@@ -405,15 +437,25 @@ function validateBatchGrant(input,manifest,manifestSha) {
     &&Date.parse(validUntil)-Date.parse(checkedAt)<=86400000,'BATCH_BILLING')
   return g
 }
+function validatePaired06Candidates(grant,priorGrant) {
+  const oldBaseline=priorGrant.targets.find(u=>u.unitId.endsWith('-03'))
+  const baseline=grant.targets.find(u=>u.unitId.endsWith('-03'))
+  const candidate=grant.targets.find(u=>u.unitId.endsWith('-06'))
+  check(baseline.candidateSha===oldBaseline.candidateSha
+    &&!priorGrant.targets.some(u=>u.candidateSha===candidate.candidateSha),'PAIRED06_CANDIDATE')
+}
 async function batchBudget(dir,manifest,manifestSha,read,input) {
   const grant=validateBatchGrant(input,manifest,manifestSha)
   const candidate02=grant.version==='real-input-candidate02-grant-1',candidate03=grant.version==='real-input-candidate03-grant-1',paired04=grant.version==='real-input-paired04-grant-1'
-  const offset=paired04?32:candidate03?24:candidate02?16:2,newCandidate=paired04||candidate02||candidate03
-  const active=s=>paired04?s.paired04:candidate03?s.candidate03:candidate02?s.candidate02:s.batch
+  const paired05=grant.version==='real-input-paired05-grant-1',paired06=grant.version==='real-input-paired06-grant-1'
+  const policy=paired06?FLASH41_PAIRED06_POLICY:paired05?FLASH41_POLICY:BILLING_POLICY
+  const offset=paired06?80:paired05?56:paired04?32:candidate03?24:candidate02?16:2,newCandidate=paired06||paired05||paired04||candidate02||candidate03
+  const active=s=>paired06?s.paired06:paired05?s.paired05:paired04?s.paired04:candidate03?s.candidate03:candidate02?s.candidate02:s.batch
   const boundRead=async()=>{
     const bytes=await readFile(join(dir,'CALL_LEDGER.jsonl'))
     check(bytes.length>=grant.ledgerPrefixBytes&&sha256(bytes.subarray(0,grant.ledgerPrefixBytes))===grant.ledgerPrefixSha,'BATCH_PREFIX')
     const state=await read()
+    if(paired06){check(state.paired05&&(state.paired06||!state.paired05.stopped),'PAIRED06_PARENT');validatePaired06Candidates(grant,state.paired05.grant)}
     if(paired04)check(state.candidate03&&(state.paired04||!state.candidate03.stopped)
       &&grant.targets.find(u=>u.unitId.endsWith('-03')).candidateSha===state.candidate03.grant.targets[0].candidateSha,'PAIRED04_PARENT_CANDIDATE')
     if(candidate03)check(state.candidate02&&(state.candidate03||!state.candidate02.stopped)
@@ -431,17 +473,17 @@ async function batchBudget(dir,manifest,manifestSha,read,input) {
       // The gateway can bind all bodies before the first new reserve; no journal mutation here.
       if(newCandidate&&!active(s))s.units=[...s.units,...copy(grant.targets)];return s}),
     halt:code=>locked(manifest.lockRoot,async()=>{const s=await boundRead();check(/^[A-Z_]{1,80}$/.test(code),'HALT_CODE');await append(dir,manifest,s,{kind:'halt',code})}),
-    async reserve(unitId,requestText,policy=BILLING_POLICY,now=new Date().toISOString()) {
+    async reserve(unitId,requestText,requestedPolicy=policy,now=new Date().toISOString()) {
       const reservation=await locked(manifest.lockRoot,async()=>{
         let s=await boundRead();check(!active(s)?.stopped&&s.recovery?.status==='settled'&&(!newCandidate||!s.batch.stopped),'BATCH_STOPPED')
-        same(copy(policy),BILLING_POLICY,'POLICY_CHANGED')
+        same(copy(requestedPolicy),policy,'POLICY_CHANGED')
         check(Number.isFinite(Date.parse(now))&&Date.parse(now)>=Date.parse(grant.billingEvidence.checkedAt)
           &&Date.parse(now)<=Date.parse(grant.billingEvidence.validUntil),'BATCH_PRICE_EXPIRED')
         const u=grant.targets[s.reservations.length-offset]
         check(s.reservations.slice(1).every(r=>r.status==='settled')&&u?.unitId===unitId,'BATCH_ORDER_OR_PENDING')
         check(typeof requestText==='string'&&sha256(requestText)===u.requestSha&&Buffer.byteLength(requestText)===u.requestBytes,'REQUEST_NOT_FROZEN')
         check(s.reservations.length<grant.maxTotalRequests&&s.reservations.reduce((n,r)=>n+r.costUpperMicroCny,0)+BILLING_POLICY.reservationMicroCny<=BILLING_POLICY.limitMicroCny,'LIMIT')
-        if(!active(s)){await append(dir,manifest,s,{kind:paired04?'paired04Grant':candidate03?'candidate03Grant':candidate02?'candidate02Grant':'batchGrant',grant});s=await boundRead()}
+        if(!active(s)){await append(dir,manifest,s,{kind:paired06?'paired06Grant':paired05?'paired05Grant':paired04?'paired04Grant':candidate03?'candidate03Grant':candidate02?'candidate02Grant':'batchGrant',grant});s=await boundRead()}
         const e={kind:'batchReserve',unitId,requestSha:u.requestSha,candidateSha:u.candidateSha,nonce:randomUUID(),reservedMicroCny:BILLING_POLICY.reservationMicroCny}
         await append(dir,manifest,s,e);return e
       })
@@ -453,7 +495,7 @@ async function batchBudget(dir,manifest,manifestSha,read,input) {
           check(!used,'LEASE_ALREADY_FINALIZED');used=true
           return locked(manifest.lockRoot,async()=>{
             const s=await boundRead();validLease(s);let value
-            try{value=validateUsageEnvelope(raw,status);check(!s.reservations.some(r=>r.responseId===value.responseId),'RESPONSE_REUSED')}
+            try{value=validateUsageEnvelope(raw,status,policy);check(!s.reservations.some(r=>r.responseId===value.responseId),'RESPONSE_REUSED')}
             catch{await append(dir,manifest,s,{kind:'halt',code:'RESPONSE_OR_USAGE_INVALID'});fail('RESPONSE_OR_USAGE_INVALID')}
             await append(dir,manifest,s,{kind:'batchSettle',unitId,nonce:reservation.nonce,requestSha:reservation.requestSha,...value})
             return value

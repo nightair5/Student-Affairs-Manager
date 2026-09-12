@@ -2,9 +2,11 @@ import { SEMANTIC_JSON_SCHEMA, SEMANTIC_VERSION, parseSemanticInput, plainJson, 
 import type { ImmutableScopeIndex } from '../../recognition/scopeReferenceContract'
 import { indexImmutableScopesV11 } from '../../recognition/scopeIndexV11'
 import { parseChineseTimeAst } from '../../lib/timeSemantics'
+import { assembleFacts, FACT_WIRE_VERSION } from './factAssembly'
 
 export const WIRE_VERSION = 'real-input-model-wire-1' as const
 export const MODEL_NAME = 'deepseek-v4-flash-vision-exp' as const
+export const FLASH41_MODEL_NAME = 'deepseek-flash' as const
 export const PROMPT_VERSION = 'real-input-source-semantics-1' as const
 export const MAX_REQUEST_BYTES = 65536
 export const MAX_OUTPUT_TOKENS = 8192
@@ -101,10 +103,10 @@ export async function buildModelRequest(context: WireContext) {
   return { body, serialized }
 }
 
-export function parseModelEnvelope(rawHttpText: string, context: WireContext) {
+export function parseModelEnvelope(rawHttpText: string, context: WireContext, modelName: typeof MODEL_NAME | typeof FLASH41_MODEL_NAME = MODEL_NAME) {
   if (typeof rawHttpText !== 'string' || new TextEncoder().encode(rawHttpText).length > 524288) wireError('RESPONSE_BYTES_LIMIT')
   const envelope = record(plainJson(JSON.parse(rawHttpText)))
-  if (typeof envelope.model !== 'string' || envelope.model.toLowerCase() !== MODEL_NAME) wireError('MODEL_IDENTITY')
+  if (![MODEL_NAME, FLASH41_MODEL_NAME].includes(modelName) || typeof envelope.model !== 'string' || envelope.model.toLowerCase() !== modelName) wireError('MODEL_IDENTITY')
   if (envelope.status !== 'completed' || envelope.error || !Array.isArray(envelope.output) || envelope.output.length !== 1) return wireError('RESPONSE_INCOMPLETE')
   const message = record(envelope.output[0])
   if (message.type !== 'message' || message.role !== 'assistant' || !Array.isArray(message.content) || message.content.length !== 1) return wireError('RESPONSE_OUTPUT_KIND')
@@ -115,6 +117,10 @@ export function parseModelEnvelope(rawHttpText: string, context: WireContext) {
     || Number(usage.output_tokens) > MAX_OUTPUT_TOKENS) wireError('USAGE_INVALID')
   const rawOutputText = output.text as string
   const rawResponse: unknown = JSON.parse(rawOutputText)
+  if (modelName === FLASH41_MODEL_NAME && record(rawResponse).schemaVersion === FACT_WIRE_VERSION) {
+    const assembly = assembleFacts(rawResponse), adapted = adaptModelWire(assembly.assembledWire, context)
+    return { rawHttpText, envelope, rawOutputText, rawResponse: assembly.rawFacts, adaptedResponse: adapted.adapted }
+  }
   const adapted = adaptModelWire(rawResponse, context)
   return { rawHttpText, envelope, rawOutputText, rawResponse: adapted.wire, adaptedResponse: adapted.adapted }
 }

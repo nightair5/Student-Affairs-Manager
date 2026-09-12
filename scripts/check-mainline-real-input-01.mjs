@@ -1,4 +1,4 @@
-import { readFileSync, existsSync } from 'node:fs'
+import { readFileSync, existsSync, readdirSync, mkdirSync, writeFileSync } from 'node:fs'
 import { execFileSync } from 'node:child_process'
 import { createHash } from 'node:crypto'
 import { resolve } from 'node:path'
@@ -17,6 +17,8 @@ const git=(...args)=>execFileSync('git',args,{encoding:'utf8',windowsHide:true})
 /** Read-only current-stage protection. This is not a replacement for full
  * engineering, historical environment, paid safety or browser acceptance. */
 export function inspectProtection({stage}={}) {
+  if(stage==='paired06')return inspectPaired06Protection()
+  if(stage==='paired05')return inspectPaired05Protection()
   if(stage==='paired04')return inspectPaired04Protection()
   if(stage==='candidate03')return inspectCandidate03Protection()
   if(stage==='read-close')return inspectReadCloseProtection()
@@ -45,6 +47,55 @@ export function inspectProtection({stage}={}) {
 export const CANDIDATE02_DIRECTORY='docs/recognition-optimization/mainline-real-input-01/runs/candidate02-20260908a'
 export const CANDIDATE03_DIRECTORY='docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a'
 export const PAIRED04_DIRECTORY='docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a'
+export const PAIRED05_DIRECTORY='docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a'
+export const PAIRED06_DIRECTORY='docs/recognition-optimization/mainline-real-input-01/runs/candidate06-20260912a'
+/** New authorization snapshot, preserving the old stage and every old byte check. */
+export function initializePaired06Baseline() {
+  const head=git('rev-parse','HEAD')
+  ensure(head==='c419aea63a1f6595cb0140cde00eb89dcc092759'&&git('branch','--show-current')===branch,'P06_START')
+  const snapPath=PAIRED05_DIRECTORY+'/IMPLEMENTATION_SNAPSHOT.json',old=JSON.parse(readFileSync(PAIRED05_DIRECTORY+'/BASELINE.json'))
+  const statics=readdirSync(PAIRED05_DIRECTORY,{withFileTypes:true}).filter(e=>e.isFile()).map(e=>({path:PAIRED05_DIRECTORY+'/'+e.name,sha256:hash(readFileSync(PAIRED05_DIRECTORY+'/'+e.name))}))
+  const ledger=readFileSync(old.ledger.path),rows=ledger.toString().trimEnd().split('\n').map(JSON.parse)
+  ensure(rows.length===166&&hash(ledger)==='234bdd806d2dcbef6e6bd481fbe28a2ee8b70ee43e4fc82a854e2fcd8e00da39','P06_LEDGER_START')
+  const b={head,sourceManifest:{path:snapPath,sha256:hash(readFileSync(snapPath))},protectedManifest:old.protectedManifest,
+    staticEvidence:[...old.staticEvidence,...statics],ledger:{path:old.ledger.path,bytes:ledger.length,sha256:hash(ledger),sequence:166,tail:rows.at(-1).hash},
+    log:{path:logPath,bytes:readFileSync(logPath).length,sha256:hash(readFileSync(logPath))},
+    newPaths:['src/experiments/realInput01/candidate06.ts','src/experiments/realInput01/candidate06.test.ts'],modelCalls:80,
+    recovery:'53 working-byte SHAs were checked before any edits; 17 existing uncommitted implementations preserved',
+    frozenClosure:{path:PAIRED05_DIRECTORY+'/CANDIDATE_FREEZE.json',sha256:hash(readFileSync(PAIRED05_DIRECTORY+'/CANDIDATE_FREEZE.json'))}}
+  mkdirSync(PAIRED06_DIRECTORY,{recursive:true});writeFileSync(PAIRED06_DIRECTORY+'/BASELINE.json',JSON.stringify(b,null,2)+'\n',{flag:'wx'})
+  return {head,ledgerRows:166,oldSourceCount:53,newPaths:2}
+}
+export function inspectPaired06Protection() {
+  const b=JSON.parse(readFileSync(PAIRED06_DIRECTORY+'/BASELINE.json'))
+  ensure(resolve(process.cwd()).toLowerCase()===root.toLowerCase()&&git('branch','--show-current')===branch&&git('rev-parse','HEAD')===b.head,'P06_GIT')
+  for(const ref of [b.sourceManifest,b.protectedManifest,b.frozenClosure])ensure(hash(readFileSync(ref.path))===ref.sha256,'P06_BASELINE')
+  const s=JSON.parse(readFileSync(b.sourceManifest.path)),p=JSON.parse(readFileSync(b.protectedManifest.path)),frozen=JSON.parse(readFileSync(b.frozenClosure.path))
+  for(const f of [...p.protectedFiles,...p.staticEvidence,...b.staticEvidence,...frozen.dependencies])ensure(hash(readFileSync(f.path))===f.sha256,'P06_PROTECTED:'+f.path)
+  for(const f of s.sources.filter(s=>/candidate0[2345]|evaluation\.|factAssembly|mainline04\//.test(s.path)))ensure(hash(readFileSync(f.path))===f.workingSha256,'P06_FROZEN:'+f.path)
+  for(const prefix of [b.ledger,b.log])ensure(hash(readFileSync(prefix.path).subarray(0,prefix.bytes))===prefix.sha256,'P06_PREFIX')
+  const paths=[...s.sources.map(s=>s.path),...b.newPaths]
+  ensure(paths.length===55&&new Set(paths).size===55,'P06_PATHS')
+  for(const path of [...git('diff','--name-only').split('\n'),...git('ls-files','--others','--exclude-standard').split('\n')].filter(Boolean))
+    ensure(paths.includes(path)||[contextPath,logPath,b.ledger.path].includes(path)||path.startsWith(PAIRED06_DIRECTORY+'/'),'P06_OUTSIDE:'+path)
+  return {head:b.head,branch,protectedCount:p.protectedFiles.length,historyCount:p.staticEvidence.length+b.staticEvidence.length,
+    sources:paths.map(path=>({path,exists:existsSync(path),workingSha256:existsSync(path)?hash(readFileSync(path)):null}))}
+}
+export function inspectPaired05Protection() {
+  const b=JSON.parse(readFileSync(PAIRED05_DIRECTORY+'/BASELINE.json'))
+  ensure(resolve(process.cwd()).toLowerCase()===root.toLowerCase()&&git('branch','--show-current')===branch&&git('rev-parse','HEAD')===b.head,'P05_GIT')
+  for(const ref of [b.sourceManifest,b.protectedManifest])ensure(hash(readFileSync(ref.path))===ref.sha256,'P05_BASELINE')
+  const s=JSON.parse(readFileSync(b.sourceManifest.path)),p=JSON.parse(readFileSync(b.protectedManifest.path))
+  for(const f of [...p.protectedFiles,...p.staticEvidence,...b.staticEvidence])ensure(hash(readFileSync(f.path))===f.sha256,'P05_PROTECTED:'+f.path)
+  for(const f of s.sources.filter(s=>/candidate0[234]|evaluation\.|mainline04\//.test(s.path)))ensure(hash(readFileSync(f.path))===f.workingSha256,'P05_FROZEN:'+f.path)
+  for(const prefix of [b.ledger,b.log])ensure(hash(readFileSync(prefix.path).subarray(0,prefix.bytes))===prefix.sha256,'P05_PREFIX')
+  const paths=[...s.sources.map(s=>s.path),...b.newPaths]
+  ensure(paths.length===53&&new Set(paths).size===53,'P05_PATHS')
+  for(const path of [...git('diff','--name-only').split('\n'),...git('ls-files','--others','--exclude-standard').split('\n')].filter(Boolean))
+    ensure(paths.includes(path)||[contextPath,logPath,b.ledger.path].includes(path)||path.startsWith(PAIRED05_DIRECTORY+'/'),'P05_OUTSIDE:'+path)
+  return {head:b.head,branch,protectedCount:p.protectedFiles.length,historyCount:p.staticEvidence.length+b.staticEvidence.length,
+    sources:paths.map(path=>({path,exists:existsSync(path),workingSha256:existsSync(path)?hash(readFileSync(path)):null}))}
+}
 export function inspectPaired04Protection() {
   const b=JSON.parse(readFileSync(PAIRED04_DIRECTORY+'/BASELINE.json'))
   ensure(resolve(process.cwd()).toLowerCase()===root.toLowerCase()&&git('branch','--show-current')===branch,'P04_WORKSPACE')

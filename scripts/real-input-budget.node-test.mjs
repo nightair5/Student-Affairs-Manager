@@ -4,7 +4,7 @@ import { mkdtemp, mkdir, readFile, writeFile, unlink } from 'node:fs/promises'
 import { join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { spawn } from 'node:child_process'
-import { BILLING_POLICY, sha256, costUpperMicroCny, validateManifest, validateUsageEnvelope, initializeBudget, openBudget } from './real-input-budget.mjs'
+import { BILLING_POLICY, FLASH41_POLICY, FLASH41_PAIRED06_POLICY, sha256, costUpperMicroCny, validateManifest, validateUsageEnvelope, initializeBudget, openBudget } from './real-input-budget.mjs'
 
 async function batchFixture() {
   const f=await recoveryFixture(),r=await openBudget(f.dir,f.manifestSha,{recoveryGrant:f.grant})
@@ -107,6 +107,113 @@ async function paired04Fixture() {
   const grant={...f.grant,version:'real-input-paired04-grant-1',grantId:'55555555-5555-4555-8555-555555555555',
     parentTail:s.tail,parentSequence:s.nextSequence,ledgerPrefixBytes:prefix.length,ledgerPrefixSha:sha256(prefix),maxTotalRequests:56,targets}
   return {...f,grant,prefix}
+}
+async function paired05Fixture() {
+  const f=await paired04Fixture(),b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+  for(const u of f.grant.targets)await(await reserve(b,u.unitId)).complete(envelope(u.unitId))
+  const s=await b.snapshot(),prefix=await readFile(join(f.dir,'CALL_LEDGER.jsonl'))
+  const targets=Array.from({length:12},(_,i)=>['03','05'].map(a=>row(`P${String(i+1).padStart(2,'0')}-${a}`,'flash41-'+a,'new05-'+i))).flat()
+  return {...f,prefix,grant:{...f.grant,version:'real-input-paired05-grant-1',grantId:'66666666-6666-4666-8666-666666666666',
+    parentTail:s.tail,parentSequence:s.nextSequence,ledgerPrefixBytes:prefix.length,ledgerPrefixSha:sha256(prefix),maxTotalRequests:80,policy:FLASH41_POLICY,targets}}
+}
+const flashEnvelope=(id,...usage)=>{const e=JSON.parse(envelope(id,...usage));e.model='deepseek-flash';return JSON.stringify(e)}
+async function paired06Fixture() {
+  const f=await paired05Fixture(),b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+  for(const u of f.grant.targets)await(await reserve(b,u.unitId,FLASH41_POLICY)).complete(flashEnvelope(u.unitId))
+  const before=await b.snapshot(),prefix=await readFile(join(f.dir,'CALL_LEDGER.jsonl'))
+  // Deliberately shuffled case blocks and balanced arm order. These are budget-only placeholders.
+  const order=[7,2,11,4,1,12,3,10,5,8,6,9]
+  const targets=order.flatMap((n,i)=>(i%2?['06','03']:['03','06']).map(arm=>
+    row(`Q${String(n).padStart(2,'0')}-${arm}`,'flash41-'+arm,'new05-'+(n-1))))
+  return {...f,before,prefix,grant:{...f.grant,version:'real-input-paired06-grant-1',grantId:'77777777-7777-4777-8777-777777777777',
+    parentTail:before.tail,parentSequence:before.nextSequence,ledgerPrefixBytes:prefix.length,ledgerPrefixSha:sha256(prefix),
+    maxTotalRequests:104,policy:FLASH41_PAIRED06_POLICY,targets}}
+}
+if(process.argv[2]!=='--reserve-child') {
+  test('paired06: balanced shuffled pairs settle once through 104; original 80 and receipts stay intact',async()=>{
+    const f=await paired06Fixture();assert.equal(f.before.nextSequence,166)
+    for(const u of f.grant.targets){
+      const reopened=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+      await(await reserve(reopened,u.unitId,FLASH41_PAIRED06_POLICY)).complete(flashEnvelope(u.unitId))
+    }
+    const b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant}),s=await b.snapshot()
+    assert.equal(s.reservations.length,104);assert.equal(s.nextSequence,215)
+    assert.deepEqual(s.reservations.slice(0,80),f.before.reservations)
+    assert.equal(s.reservations[0].status,'held-unknown');assert.equal(s.reservations[0].costUpperMicroCny,3300000)
+    assert.deepEqual((await readFile(join(f.dir,'CALL_LEDGER.jsonl'))).subarray(0,f.prefix.length),f.prefix)
+    for(const id of ['Q07-03','Q09-06','Q13-06','A01','P01-03'])await assert.rejects(()=>reserve(b,id,FLASH41_PAIRED06_POLICY))
+    assert.equal(costUpperMicroCny(1048576,8192,FLASH41_PAIRED06_POLICY),2162688)
+    assert.equal(FLASH41_POLICY.maxRequests,80);assert.equal(BILLING_POLICY.maxRequests,24)
+  })
+  test('paired06: invalid parent, duplicate pair, candidate/input drift, unbalanced order and price reject before mutation',async()=>{
+    const f=await paired06Fixture()
+    const changes=[g=>{g.parentTail=sha256('wrong')},g=>{g.parentSequence=165},g=>{g.maxTotalRequests=105},
+      g=>{g.policy.maxRequests=105},g=>{g.policy.inputPriceMicroPerMillion=1},g=>{g.ledgerPrefixSha=sha256('bad')},
+      g=>{g.targets[0].unitId='P07-03'},g=>{g.targets.splice(2,2,...structuredClone(g.targets.slice(0,2)))},
+      g=>{g.targets[1].inputSha=sha256('different')},g=>{g.targets[0].scorerSha=sha256('different')},
+      g=>{g.targets.filter(u=>u.unitId.endsWith('-03')).forEach(u=>{u.candidateSha=sha256('different')})},
+      g=>{g.targets.filter(u=>u.unitId.endsWith('-06')).forEach(u=>{u.candidateSha=sha256('flash41-05')})},
+      g=>{g.targets=g.targets.flatMap((_,i,a)=>i%2?[]:a.slice(i,i+2).sort((a,b)=>a.unitId.localeCompare(b.unitId)))}]
+    for(const change of changes){const g=structuredClone(f.grant);change(g);await assert.rejects(()=>openBudget(f.dir,f.manifestSha,{batchGrant:g}))}
+    assert.deepEqual(await readFile(join(f.dir,'CALL_LEDGER.jsonl')),f.prefix)
+    const b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+    await assert.rejects(()=>reserve(b,'Q07-06',FLASH41_PAIRED06_POLICY))
+    await assert.rejects(()=>reserve(b,'Q07-03',FLASH41_POLICY))
+    assert.deepEqual(await readFile(join(f.dir,'CALL_LEDGER.jsonl')),f.prefix)
+    await(await reserve(b,'Q07-03',FLASH41_PAIRED06_POLICY)).complete(flashEnvelope('Q07-03'))
+    await assert.rejects(()=>reserve(b,'Q07-03',FLASH41_PAIRED06_POLICY))
+  })
+  test('paired06: concurrency and crash preserve full unknown reserve; restart cannot retry or dispatch successor',async()=>{
+    const f=await paired06Fixture(),a=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant}),b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+    const results=await Promise.allSettled([reserve(a,'Q07-03',FLASH41_PAIRED06_POLICY),reserve(b,'Q07-03',FLASH41_PAIRED06_POLICY)])
+    assert.equal(results.filter(r=>r.status==='fulfilled').length,1)
+    const reopened=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant}),s=await reopened.snapshot()
+    assert.equal(s.reservations.length,81);assert.equal(held(s),6600000)
+    await assert.rejects(()=>reserve(reopened,'Q07-03',FLASH41_PAIRED06_POLICY))
+    await assert.rejects(()=>reserve(reopened,'Q07-06',FLASH41_PAIRED06_POLICY))
+    await results.find(r=>r.status==='fulfilled').value.uncertain()
+    assert.equal((await reopened.snapshot()).paired06.stopped,true)
+    assert.deepEqual((await readFile(join(f.dir,'CALL_LEDGER.jsonl'))).subarray(0,f.prefix.length),f.prefix)
+  })
+  test('paired06: repeated or ambiguous response identity/usage never releases a reservation',async()=>{
+    for(const mode of ['duplicate','ambiguous']){
+      const f=await paired06Fixture(),b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+      await(await reserve(b,'Q07-03',FLASH41_PAIRED06_POLICY)).complete(flashEnvelope('Q07-03'))
+      const lease=await reserve(b,'Q07-06',FLASH41_PAIRED06_POLICY)
+      const raw=mode==='duplicate'?flashEnvelope('Q07-03'):flashEnvelope('Q07-06').replace('"usage":','"usage":{},"us\\u0061ge":')
+      await assert.rejects(()=>lease.complete(raw))
+      const reopened=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant}),s=await reopened.snapshot()
+      assert.equal(s.reservations.length,82);assert.equal(s.reservations.at(-1).costUpperMicroCny,3300000)
+      assert.equal(s.paired06.stopped,true);assert.equal(s.reservations[0].costUpperMicroCny,3300000)
+      await assert.rejects(()=>reserve(reopened,'Q02-06',FLASH41_PAIRED06_POLICY))
+    }
+  })
+}
+if(process.argv[2]!=='--reserve-child') {
+  test('paired05: new price/model, 24 bounded calls, old 56 and unknown reserve survive restart',async()=>{
+    const f=await paired05Fixture()
+    for(const u of f.grant.targets){const b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant});await(await reserve(b,u.unitId,FLASH41_POLICY)).complete(flashEnvelope(u.unitId))}
+    const b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant}),s=await b.snapshot()
+    assert.equal(s.reservations.length,80);assert.equal(s.reservations[0].costUpperMicroCny,3300000)
+    assert.deepEqual((await readFile(join(f.dir,'CALL_LEDGER.jsonl'))).subarray(0,f.prefix.length),f.prefix)
+    assert.equal(costUpperMicroCny(1048576,8192,FLASH41_POLICY),2162688)
+    await assert.rejects(()=>reserve(b,'P12-05',FLASH41_POLICY))
+  })
+  test('paired05: altered grant/policy, wrong identity and duplicate usage never release unknown reserve',async()=>{
+    const f=await paired05Fixture()
+    for(const mutate of [g=>{g.maxTotalRequests=81},g=>{g.parentTail=sha256('bad')},g=>{g.policy.inputPriceMicroPerMillion=1},g=>{g.targets[1].inputSha=sha256('bad')}]){
+      const g=structuredClone(f.grant);mutate(g);await assert.rejects(()=>openBudget(f.dir,f.manifestSha,{batchGrant:g}))}
+    assert.deepEqual(await readFile(join(f.dir,'CALL_LEDGER.jsonl')),f.prefix)
+    const b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+    await assert.rejects(()=>reserve(b,'P01-05',FLASH41_POLICY))
+    const lease=await reserve(b,'P01-03',FLASH41_POLICY)
+    await assert.rejects(()=>lease.complete(flashEnvelope('P01-03').replace('"usage":','"usage":{},"us\\u0061ge":')))
+    const r=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant}),s=await r.snapshot()
+    assert.equal(s.reservations.at(-1).costUpperMicroCny,3300000)
+    await assert.rejects(()=>reserve(r,'P01-05',FLASH41_POLICY))
+    assert.throws(()=>validateUsageEnvelope(envelope('P01-03'),200,FLASH41_POLICY))
+    assert.throws(()=>validateUsageEnvelope(flashEnvelope('P01-03'),200,BILLING_POLICY))
+  })
 }
 if(process.argv[2]!=='--reserve-child') {
   test('paired04: 24 interleaved new requests preserve 32 old requests and A01 unknown across reopening',async()=>{

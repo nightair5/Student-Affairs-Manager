@@ -24,6 +24,8 @@ declare const __REAL_INPUT_CONFIG__: { mode: 'seen_engineering_replay' | 'live' 
   candidate02?: boolean;
   candidate03?: boolean;
   paired04?: boolean;
+  paired05?: boolean;
+  paired06?: boolean;
   recorded?:{name:string;requestSha:string;responseSha:string};
   units: Array<{unitId: string; requestSha: string}>; resources: LocalExtractionResources; carriers: Carrier[] }
 const config = __REAL_INPUT_CONFIG__
@@ -114,17 +116,17 @@ function EngineeringTools() {
         body:JSON.stringify({unitId:identity.unitId,requestSha:identity.requestSha})})
       if(!response.ok)throw Error('REAL_INPUT_BATCH_RECORD_UNAVAILABLE')
       const record=await response.json() as RecordedBatch|RecordedCandidate02|RecordedCandidate03|RecordedPaired04
-      const saved=record.version==='recorded-paired04-1'&&config.paired04
+      const saved=(record.version==='recorded-paired04-1'&&config.paired04||record.version==='recorded-paired05-1'&&config.paired05||record.version==='recorded-paired06-1'&&config.paired06)
         ?await replayRecordedPaired04(await repository(),record,identity)
         :record.version==='recorded-candidate03-1'&&config.candidate03
         ?await replayRecordedCandidate03(await repository(),record,identity)
         :record.version==='recorded-candidate02-1'&&config.candidate02
         ?await replayRecordedCandidate02(await repository(),record,identity)
         :await replayRecordedBatch(await repository(),record as RecordedBatch,identity)
-      const savedDraft=record.version==='recorded-candidate02-1'||record.version==='recorded-candidate03-1'||record.version==='recorded-paired04-1'
+      const savedDraft=record.version==='recorded-candidate02-1'||record.version==='recorded-candidate03-1'||record.version==='recorded-paired04-1'||record.version==='recorded-paired05-1'||record.version==='recorded-paired06-1'
         ?saved.extractionDrafts.find(d=>{const pending=d.legacyData?.realInputPending;return pending&&typeof pending==='object'&&!Array.isArray(pending)&&pending.operationId===record.version.replace(/-1$/,'-')+record.unitId})
         :undefined
-      return {unitId:identity.unitId,label:'原模型响应，非新预测/人工替身',tasks:saved.tasks.length,...(savedDraft?{draftId:savedDraft.id}:record.version==='recorded-paired04-1'?{}:{originalDraftId:record.handle.draftId}),
+      return {unitId:identity.unitId,label:'原模型响应，非新预测/人工替身',tasks:saved.tasks.length,...(savedDraft?{draftId:savedDraft.id}:'handle' in record?{originalDraftId:record.handle.draftId}:{}),
         next:'刷新后从收件箱核对；保留原答错误，未自动选择或确认'}
     })}>载入{identity.unitId}原回答（零调用）</button>)}
     {config.mode==='recorded_a02'&&<button disabled={busy} onClick={()=>void action(async()=>{
@@ -216,7 +218,7 @@ function EngineeringTools() {
 async function mount() {
   runtime=await createRealInputRuntime({name,store,initial:params.get('new')==='1'?emptyRealInputWorkspace(name):undefined,
     execution:config.mode==='recorded_a02'||config.mode==='recorded_batch'?'live':config.mode,resources:config.resources,execute,
-    ...(config.mode==='recorded_a02'?{recordedA02:true as const}:config.mode==='recorded_batch'?{recordedBatch:true as const,...(config.candidate02?{recordedCandidate02:true as const}:{}),...(config.candidate03?{recordedCandidate03:true as const}:{}),...(config.paired04?{recordedPaired04:true as const}:{})}:{})})
+    ...(config.mode==='recorded_a02'?{recordedA02:true as const}:config.mode==='recorded_batch'?{recordedBatch:true as const,...(config.candidate02?{recordedCandidate02:true as const}:{}),...(config.candidate03?{recordedCandidate03:true as const}:{}),...(config.paired04?{recordedPaired04:true as const}:{}),...(config.paired05?{recordedPaired05:true as const}:{}),...(config.paired06?{recordedPaired06:true as const}:{})}:{})})
   params.delete('new');history.replaceState(null,'','/?'+params.toString())
   createRoot(document.getElementById('root')!).render(<><App runtime={runtime}/><EngineeringTools/></>)
 }

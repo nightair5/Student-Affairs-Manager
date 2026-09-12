@@ -6,7 +6,10 @@ import { composeSemantics, type ComposeContext, type ReviewPackage } from '../ma
 import { parseSemanticInput, plainJson, stableJson, type SemanticInput } from '../mainline04/semanticContract'
 import { effectiveFacts, appendCorrection, validateMaterialDecision, type MaterialDecision, type FactCorrection } from '../realInput01/factCorrections'
 import { factIdentity, itemSafety, selectLiveTasks } from '../realInput01/modelPolicy'
-import { parseModelEnvelope, MODEL_NAME, PROMPT_VERSION, type ModelWire } from '../realInput01/modelWire'
+import { parseModelEnvelope, MODEL_NAME, FLASH41_MODEL_NAME, PROMPT_VERSION, type ModelWire } from '../realInput01/modelWire'
+import type { FactWire } from '../realInput01/factAssembly'
+import { CANDIDATE05_VERSION } from '../realInput01/candidate05'
+import { CANDIDATE06_VERSION } from '../realInput01/candidate06'
 import { CANDIDATE02_VERSION } from '../realInput01/candidate02'
 import { CANDIDATE03_VERSION } from '../realInput01/candidate03'
 import { CANDIDATE04_VERSION } from '../realInput01/candidate04'
@@ -32,7 +35,7 @@ export interface SemanticState {
 export const REAL_STATE_VERSION = 'mainline-real-input-state-1' as const
 export interface RealInputState extends Omit<SemanticState, 'version' | 'rawResponse'> {
   version: typeof REAL_STATE_VERSION
-  rawResponse: ModelWire
+  rawResponse: ModelWire | FactWire
   rawHttpText: string
   adaptedResponse: SemanticInput
   inputReceipt: InputReceipt
@@ -512,7 +515,8 @@ export async function validateSemanticWorkspace(workspace: WorkspaceV8, profile?
     assert(run && version && source && (real || source.currentVersionId === version.id) && typeof version.rawText === 'string'
       && version.contentHash === workspaceSnapshotHash(version.rawText) && draft.result === null, 'SOURCE_CHAIN_INVALID')
     if (real) {
-      assert(run.modelName === MODEL_NAME && [PROMPT_VERSION,CANDIDATE02_VERSION,CANDIDATE03_VERSION,CANDIDATE04_VERSION].includes(run.promptVersion as typeof PROMPT_VERSION)
+      assert((run.modelName === MODEL_NAME && [PROMPT_VERSION,CANDIDATE02_VERSION,CANDIDATE03_VERSION,CANDIDATE04_VERSION].includes(run.promptVersion as typeof PROMPT_VERSION)
+        || run.modelName === FLASH41_MODEL_NAME && [CANDIDATE03_VERSION,CANDIDATE05_VERSION,CANDIDATE06_VERSION].includes(run.promptVersion as typeof CANDIDATE03_VERSION))
         && run.pipelineVersion === REAL_STATE_VERSION, 'RUN_IDENTITY')
       const pending = draft.legacyData?.realInputPending
       assert(pending && typeof pending === 'object' && !Array.isArray(pending), 'SEND_RECEIPT_MISSING')
@@ -557,7 +561,7 @@ export async function validateSemanticWorkspace(workspace: WorkspaceV8, profile?
       && initialFacts.sourceVersionId === version.id, 'RESPONSE_SOURCE_MISMATCH')
     if (state.version === REAL_STATE_VERSION) {
       assert(state.context.profile === 'real-input-01' && state.context.authority === 'live_model_candidate' && state.legacyResponse === null, 'LIVE_AUTHORITY')
-      const parsed = parseModelEnvelope(state.rawHttpText, state.context)
+      const parsed = parseModelEnvelope(state.rawHttpText, state.context, run.modelName === FLASH41_MODEL_NAME ? FLASH41_MODEL_NAME : MODEL_NAME)
       assert(equal(parsed.rawResponse, state.rawResponse) && parsed.rawOutputText === state.rawOutputText
         && equal(parsed.adaptedResponse, state.adaptedResponse), 'MODEL_ADAPTATION_MISMATCH')
       const pending = draft.legacyData!.realInputPending as unknown as { reading: RealInputReading; execution: string }

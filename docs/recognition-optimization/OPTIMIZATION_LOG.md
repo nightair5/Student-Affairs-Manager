@@ -2082,3 +2082,10 @@
 - 原6631无服务（ECONNREFUSED），恢复现有recorded-paired06回放服务后本机HTTP200，upstreamEnabled=false；无模型、密钥或数据库操作。启动会话跨Codex退出存活未验证。
 - 一次官方cua.getState仍nodeRepl.fetch request failed，apps/browsers空；未获得标签，不再循环刷新/转Windows尝试。Q01/Q07真实确认、刷新、独立读库及下载NOT_RUN，不归因于已证实的产品故障。
 - 仅新增CLOSE_AUDIT/CLOSE_CHECKS和短交接；其中集中列明可由用户一次完成的前后独立读库文件及确认步骤。复用未变1310项工程证据；21业务文件保留未提交，本次仅审计交付，不改候选/原答/评分/账本或部署。
+
+### 2026-09-13 用户授权分支源码上传与独立Cloudflare目标
+
+- 用户要求上传分支至GitHub并获得Cloudflare稳定地址；默认按独立实验预览处理，未授权覆盖生产或RC.4。起点32210c03fdc8ef5d650c4f58f81cbde7e743ebb0。
+- 55源码、944保护、607旧静态证据、冻结依赖、13原工程日志SHA及215行账本一致；新密钥扫描1707通过。本次21业务文件作为待真实页面验收的源码快照精确提交，不改candidate06不采用或浏览器NOT_RUN结论。
+- 查明普通构建未接实验runtime；实验browser/runtime锁定127.0.0.1:6631和原已存在库。HTTPS新origin不能使用本机IndexedDB，直接发布会拒绝启动或呈现旧入口。没有通过删除隔离检查发布，也没有使用绑定生产域名的默认deploy。
+- GITHUB_SNAPSHOT列出六文件最小HTTPS回放适配范围，需明确批准新预览库与两份匿名回答发布；当前未部署Cloudflare、不读密钥、0模型调用。历史证据不改，源码上传不冒充业务验收完成。

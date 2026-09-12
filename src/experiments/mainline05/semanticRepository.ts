@@ -4,7 +4,9 @@ import type { WorkspaceV8 } from '../../domain/v2/types'
 import { assert, equal, json, realDatabaseName, readingOf, REAL_STATE_VERSION, semanticRevision, validateSemanticWorkspace, type RealInputReading } from './semanticState'
 import { plainJson } from '../mainline04/semanticContract'
 import { validateInputReceipt, validateSendSnapshot, sha256Text, type InputReceipt } from '../realInput01/inputReceipt'
-import { MODEL_NAME, PROMPT_VERSION } from '../realInput01/modelWire'
+import { MODEL_NAME, FLASH41_MODEL_NAME, PROMPT_VERSION } from '../realInput01/modelWire'
+import { CANDIDATE05_VERSION } from '../realInput01/candidate05'
+import { CANDIDATE06_VERSION } from '../realInput01/candidate06'
 import { CANDIDATE02_VERSION } from '../realInput01/candidate02'
 import { CANDIDATE03_VERSION } from '../realInput01/candidate03'
 import { CANDIDATE04_VERSION } from '../realInput01/candidate04'
@@ -139,8 +141,10 @@ export class SemanticRepository {
     })
   }
   async beginInputRun(sourceId: string, readingInput: RealInputReading, execution: 'live' | 'seen_engineering_replay',
-    operationId: string, revision: string, now = new Date().toISOString(), promptVersion: typeof PROMPT_VERSION | typeof CANDIDATE02_VERSION | typeof CANDIDATE03_VERSION | typeof CANDIDATE04_VERSION = PROMPT_VERSION): Promise<CaptureHandle> {
-    assert(promptVersion === PROMPT_VERSION || [CANDIDATE02_VERSION,CANDIDATE03_VERSION,CANDIDATE04_VERSION].includes(promptVersion as typeof CANDIDATE02_VERSION) && execution === 'live', 'CANDIDATE_IDENTITY')
+    operationId: string, revision: string, now = new Date().toISOString(), promptVersion: typeof PROMPT_VERSION | typeof CANDIDATE02_VERSION | typeof CANDIDATE03_VERSION | typeof CANDIDATE04_VERSION | typeof CANDIDATE05_VERSION | typeof CANDIDATE06_VERSION = PROMPT_VERSION,
+    modelName: typeof MODEL_NAME | typeof FLASH41_MODEL_NAME = MODEL_NAME): Promise<CaptureHandle> {
+    assert(modelName === MODEL_NAME ? promptVersion === PROMPT_VERSION || [CANDIDATE02_VERSION,CANDIDATE03_VERSION,CANDIDATE04_VERSION].includes(promptVersion as typeof CANDIDATE02_VERSION) && execution === 'live'
+      : modelName === FLASH41_MODEL_NAME && execution === 'live' && [CANDIDATE03_VERSION,CANDIDATE05_VERSION,CANDIDATE06_VERSION].includes(promptVersion as typeof CANDIDATE03_VERSION), 'CANDIDATE_IDENTITY')
     const reading = plainJson(readingInput)
     await validateInputReceipt(reading.inputReceipt)
     assert(reading.sendSnapshot && /^[A-Za-z0-9-]{1,100}$/.test(operationId), 'SEND_RECEIPT_REQUIRED')
@@ -155,12 +159,12 @@ export class SemanticRepository {
       if (duplicate) {
         assert(equal(duplicate.legacyData!.realInputPending, { reading, execution, operationId }), 'SEND_OPERATION_COLLISION')
         const run = before.recognitionRuns.find(r => r.id === duplicate.recognitionRunId)!
-        assert(run.promptVersion === promptVersion, 'SEND_CANDIDATE_COLLISION')
+        assert(run.promptVersion === promptVersion && run.modelName === modelName, 'SEND_CANDIDATE_COLLISION')
         return { sourceId, sourceVersionId: run.sourceVersionId, recognitionRunId: run.id, draftId: duplicate.id, duplicate: true }
       }
       assert(!before.recognitionRuns.some(r => r.sourceVersionId === version.id && ['queued','running'].includes(r.status)), 'PENDING_REQUEST_NO_RETRY')
       const rawText = reading.sendSnapshot!.text
-      const request = { provider: execution === 'live' ? 'deepseek' as const : 'manual' as const, modelName: MODEL_NAME,
+      const request = { provider: execution === 'live' ? 'deepseek' as const : 'manual' as const, modelName,
         promptVersion, pipelineVersion: REAL_STATE_VERSION, now,
         sourceLegacyData: { realInput01: json(reading), reviewMetadata: { realInput01: json(reading) } } }
       if (rawText !== version.rawText) {
@@ -178,7 +182,7 @@ export class SemanticRepository {
    * private memory. Only a terminal, non-dispatchable review reaches the store. */
   async appendPairedRecordedSource(operationId: string, revision: string,
     complete: (memory: SemanticRepository) => Promise<void>): Promise<WorkspaceV8> {
-    assert(this.profile === 'real-input-01' && /^paired04-source-N(0[1-9]|1[0-2])$/.test(operationId), 'PAIRED_RECORDED_PROFILE')
+    assert(this.profile === 'real-input-01' && /^(?:paired04-source-N|paired05-source-P|paired06-source-Q)(0[1-9]|1[0-2])$/.test(operationId), 'PAIRED_RECORDED_PROFILE')
     const before = await this.load()
     assert(revision === semanticRevision(before), 'STALE_RELOAD_REQUIRED')
     assert(!before.sources.some(s => s.legacyData?.captureOperationId === operationId), 'PAIRED_SOURCE_ALREADY_EXISTS')

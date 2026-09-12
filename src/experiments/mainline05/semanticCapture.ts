@@ -5,7 +5,7 @@ import { composeSemantics, type ComposeContext } from '../mainline04/semanticCom
 import { parseSemanticInput, plainJson, type SemanticInput } from '../mainline04/semanticContract'
 import { STATE_VERSION, REAL_STATE_VERSION, assert, equal, json, saveState, canonicalFacts, isCurrentDraft, isLatestDraft,
   semanticRevision, type SemanticState, type RealInputState, type RealInputReading } from './semanticState'
-import { parseModelEnvelope } from '../realInput01/modelWire'
+import { parseModelEnvelope, FLASH41_MODEL_NAME, MODEL_NAME } from '../realInput01/modelWire'
 import { indexImmutableScopesV11 } from '../../recognition/scopeIndexV11'
 import type { SemanticRepository } from './semanticRepository'
 
@@ -81,7 +81,7 @@ export async function completeInputRun(repo: SemanticRepository, handle: Capture
     const context: ComposeContext = { index: await indexImmutableScopesV11(handle.sourceId, handle.sourceVersionId, version.rawText!),
       authority: 'live_model_candidate', profile: 'real-input-01', referenceTime: pending.reading.sendSnapshot!.consentAt,
       timezone: 'Asia/Shanghai', ownershipMode: 'mainline05-own-assets-1' }
-    const parsed = parseModelEnvelope(rawHttpText, context), first = await composeSemantics(parsed.adaptedResponse, context)
+    const parsed = parseModelEnvelope(rawHttpText, context, run.modelName === FLASH41_MODEL_NAME ? FLASH41_MODEL_NAME : MODEL_NAME), first = await composeSemantics(parsed.adaptedResponse, context)
     assert(!first.issues.some(i => ['BAD_ENTITY_REFERENCE','BAD_REVISION_REFERENCE'].includes(i.code)), 'INVALID_ENTITY_REFERENCE')
     const state: RealInputState = { version: REAL_STATE_VERSION, sourceId: handle.sourceId, sourceVersionId: handle.sourceVersionId,
       runId: run.id, draftId: draft.id, rawHttpText: parsed.rawHttpText, rawOutputText: parsed.rawOutputText,
@@ -133,7 +133,7 @@ export async function openFailedForCorrection(repo: SemanticRepository, draftId:
   const pending=draft.legacyData!.realInputPending as unknown as {reading:RealInputReading;execution:RealInputState['execution']}
   const context:ComposeContext={index:await indexImmutableScopesV11(version.sourceId,version.id,version.rawText!),authority:'live_model_candidate',
     profile:'real-input-01',referenceTime:pending.reading.sendSnapshot!.consentAt,timezone:'Asia/Shanghai',ownershipMode:'mainline05-own-assets-1'}
-  const parsed=parseModelEnvelope(failure.response,context),first=await composeSemantics(parsed.adaptedResponse,context)
+  const parsed=parseModelEnvelope(failure.response,context,run.modelName === FLASH41_MODEL_NAME ? FLASH41_MODEL_NAME : MODEL_NAME),first=await composeSemantics(parsed.adaptedResponse,context)
   const state:RealInputState={version:REAL_STATE_VERSION,sourceId:version.sourceId,sourceVersionId:version.id,runId:run.id,draftId,
     rawHttpText:parsed.rawHttpText,rawOutputText:parsed.rawOutputText,rawResponse:parsed.rawResponse,adaptedResponse:parsed.adaptedResponse,
     legacyResponse:null,context,first,inputReceipt:pending.reading.inputReceipt,sendSnapshot:pending.reading.sendSnapshot!,execution:pending.execution,

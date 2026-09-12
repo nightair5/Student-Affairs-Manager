@@ -4,9 +4,10 @@ import { createHash, randomBytes } from 'node:crypto'
 import { resolve, dirname, join } from 'node:path'
 import { isDeepStrictEqual } from 'node:util'
 import { build } from 'esbuild'
-import { inspectProtection, verifyReviewBinding, CANDIDATE02_DIRECTORY, CANDIDATE03_DIRECTORY, PAIRED04_DIRECTORY } from './check-mainline-real-input-01.mjs'
+import { execFileSync } from 'node:child_process'
+import { inspectProtection, verifyReviewBinding, CANDIDATE02_DIRECTORY, CANDIDATE03_DIRECTORY, PAIRED04_DIRECTORY, PAIRED05_DIRECTORY, PAIRED06_DIRECTORY } from './check-mainline-real-input-01.mjs'
 import { inspectRequest, createModelGateway, createPinnedProxyFetch, createRawRecorder } from './real-input-model-gateway.mjs'
-import { BILLING_POLICY, RECOVERY_ROUTE, initializeBudget, openBudget } from './real-input-budget.mjs'
+import { BILLING_POLICY, FLASH41_POLICY, FLASH41_PAIRED06_POLICY, RECOVERY_ROUTE, initializeBudget, openBudget } from './real-input-budget.mjs'
 
 const hash=bytes=>createHash('sha256').update(bytes).digest('hex')
 const check=(ok,code)=>{if(!ok)throw Error('REAL_INPUT_RUNNER_'+code)}
@@ -706,9 +707,231 @@ export async function dispatchPaired04(unitId){
   }finally{await recorder.close()}
 }
 
+const read05=name=>JSON.parse(readFileSync(join(PAIRED05_DIRECTORY,name)))
+export async function paired05Api(){
+  const compiled=await build({stdin:{contents:`export {buildFlash41ComparisonRequest} from './src/experiments/realInput01/candidate05.ts';
+    export {indexImmutableScopesV11} from './src/recognition/scopeIndexV11.ts';
+    export {adaptModelWire,parseModelEnvelope,projectSemantic,WIRE_VERSION} from './src/experiments/realInput01/modelWire.ts';
+    export {workspaceSnapshotHash} from './src/domain/v2/migration.ts';`,resolveDir:process.cwd(),loader:'ts'},bundle:true,write:false,platform:'node',format:'esm',metafile:true})
+  const dependencies=Object.keys(compiled.metafile.inputs).filter(p=>p!=='<stdin>').map(path=>({path,sha256:hash(readFileSync(path))}))
+  check(!dependencies.some(d=>/seenInputs|evaluation|fixture|expected/i.test(d.path)),'P05_ANSWER_IN_REQUEST')
+  return {dependencies,api:await import('data:text/javascript;base64,'+Buffer.from(compiled.outputFiles[0].contents).toString('base64'))}
+}
+/** Original scorer in a byte-verified, in-memory historical closure; never overwrites its files. */
+export async function compileOriginalScorer05(){
+  const baseline=read05('BASELINE.json'),frozen=JSON.parse(readFileSync(join(batchDirectory,'BATCH_SCORER_CLOSURE.json'))),files=new Map()
+  for(const d of frozen.usedDependencies){
+    let bytes=readFileSync(d.path)
+    if(hash(bytes)!==d.sha256){
+      const blob=execFileSync('git',['show',baseline.head+':'+d.path],{windowsHide:true})
+      bytes=[blob,Buffer.from(blob.toString().replace(/\r?\n/g,'\r\n'))].find(b=>hash(b)===d.sha256)
+    }
+    check(bytes&&hash(bytes)===d.sha256,'P05_HISTORICAL_SCORER_SHA');files.set(resolve(d.path),bytes)
+  }
+  const compiled=await build({stdin:{contents:scorerEntry,resolveDir:process.cwd(),loader:'ts'},bundle:true,write:false,platform:'node',format:'esm',target:'node24',metafile:true,
+    plugins:[{name:'exact-historical-scorer',setup(b){b.onLoad({filter:/\.ts$/},args=>{const bytes=files.get(args.path);check(bytes,'P05_UNFROZEN_SCORER_IMPORT');return{contents:bytes.toString(),loader:'ts',resolveDir:dirname(args.path)}})}}]})
+  check(hash(compiled.outputFiles[0].contents)===frozen.bundleSha,'P05_SCORER_BUNDLE_CHANGED')
+  return {bundleSha:frozen.bundleSha,dependencies:frozen.usedDependencies,api:await import('data:text/javascript;base64,'+Buffer.from(compiled.outputFiles[0].contents).toString('base64'))}
+}
+export function paired05Order(seed=20260912){
+  let n=seed>>>0;const order=Array.from({length:12},(_,i)=>i<6?['03','05']:['05','03'])
+  for(let i=order.length-1;i>0;i--){n=(Math.imul(n,1664525)+1013904223)>>>0;const j=n%(i+1);[order[i],order[j]]=[order[j],order[i]]}
+  return order
+}
+export async function preparePaired05(){
+  const protection=inspectProtection({stage:'paired05'}),freeze=read05('CANDIDATE_FREEZE.json'),inputs=read05('INPUTS.json'),reference=read05('REFERENCE_SPEC.json')
+  for(const d of freeze.dependencies)check(hash(readFileSync(d.path))===d.sha256,'P05_CANDIDATE_FIXED')
+  check(inputs.createdAfterCandidateFreeze===hash(JSON.stringify(freeze))&&inputs.items.length===12&&reference.items.length===12&&new Set(inputs.items.map(i=>i.text)).size===12,'P05_INPUTS')
+  const {api,dependencies}=await paired05Api(),closure=await compileOriginalScorer05(),old=JSON.parse(readFileSync(join(runDirectory,'STATE.json')))
+  const requests={},units=[],items=[],references=[],order=paired05Order(inputs.seed)
+  for(const [i,item]of inputs.items.entries()){
+    check(item.id===`P${String(i+1).padStart(2,'0')}`&&reference.items[i].id===item.id,'P05_ID')
+    const operationId='paired05-source-'+item.id,sourceId='source:'+api.workspaceSnapshotHash(operationId).slice('fnv1a32:'.length),sourceVersionId=sourceId+':version:1'
+    const context={index:await api.indexImmutableScopesV11(sourceId,sourceVersionId,item.text),referenceTime:inputs.referenceTime,timezone:inputs.timezone}
+    for(const arm of order[i]){const id=item.id+'-'+arm,built=await api.buildFlash41ComparisonRequest(context,arm),u=inspectRequest(built.serialized,FLASH41_POLICY)
+      requests[id]=built.serialized;units.push({unitId:id,candidateSha:u.candidateSha,inputSha:u.inputSha,requestSha:u.requestSha,requestBytes:u.requestBytes,scorerSha:old.scorerSha})}
+    items.push({id:item.id,operationId,context,title:item.text.split('\n')[0]})
+    try{references.push({id:item.id,context,response:pairedReference(reference.items[i],context,api)})}
+    catch(e){throw Error('P05_REFERENCE_'+item.id+': '+e.message)}
+  }
+  const refText=JSON.stringify({label:'人工参考仅评分，不进入请求或产品',items:references},null,2)+'\n'
+  const files=['INPUTS.json','REFERENCE_SPEC.json','CANDIDATE_FREEZE.json','COMPARISON_RULES.md'].map(name=>({path:join(PAIRED05_DIRECTORY,name),sha256:hash(readFileSync(join(PAIRED05_DIRECTORY,name)))}))
+  const binding={version:'real-input-paired05-binding-1',head:protection.head,dependencies,files,referenceSha:hash(refText),scorerSha:old.scorerSha,scorerBundleSha:closure.bundleSha,requests,units,items,seed:inputs.seed,order,
+    label:'12新合成通知首次开发配对验证，非独立盲测；24请求不是24独立通知',createdAt:new Date().toISOString()}
+  writeFileSync(join(PAIRED05_DIRECTORY,'REFERENCES.json'),refText,{flag:'wx'});writeFileSync(join(PAIRED05_DIRECTORY,'BINDING.json'),JSON.stringify(binding,null,2)+'\n',{flag:'wx'})
+  return {notices:12,requests:24,bindingSha:hash(JSON.stringify(binding,null,2)+'\n'),modelCalls:0}
+}
+export function verifyPaired05Send({bindingBytes,binding,baseline,billing,review,protection}){
+  check(isDeepStrictEqual(JSON.parse(bindingBytes),binding)&&binding.version==='real-input-paired05-binding-1'&&binding.items.length===12&&binding.units.length===24,'P05_BINDING')
+  const sources=protection.sources.map(s=>({path:s.path,sha256:s.workingSha256}))
+  verifyReviewBinding({head:protection.head,expectedHead:baseline.head,sources,review})
+  check(binding.head===baseline.head&&review.scope==='PAIRED05_SEND'&&review.bindingSha===hash(bindingBytes)&&review.billingSha===hash(JSON.stringify(billing)),'P05_REVIEW')
+  for(const d of [...binding.dependencies,...binding.files])check(hash(readFileSync(d.path))===d.sha256,'P05_DEPENDENCY')
+  check(hash(readFileSync(join(PAIRED05_DIRECTORY,'REFERENCES.json')))===binding.referenceSha,'P05_REFERENCE')
+  const old=JSON.parse(readFileSync(join(runDirectory,'STATE.json'))),old04=pairedRead('BINDING.json')
+  check(binding.scorerSha===old.scorerSha&&binding.scorerBundleSha===old04.scorerBundleSha&&isDeepStrictEqual(binding.order,paired05Order(binding.seed)),'P05_SCORER_ORDER')
+  for(const [i,item]of binding.items.entries()){
+    const pair=binding.units.slice(i*2,i*2+2);check(isDeepStrictEqual(pair.map(u=>u.unitId),binding.order[i].map(a=>item.id+'-'+a)),'P05_ORDER')
+    for(const u of pair){const p=inspectRequest(binding.requests[u.unitId],FLASH41_POLICY)
+      check(['candidateSha','requestSha','inputSha','requestBytes'].every(k=>p[k]===u[k])&&u.scorerSha===binding.scorerSha,'P05_REQUEST')
+      check(isDeepStrictEqual(JSON.parse(p.body.input[1].content[0].text),{source:item.context.index.sourceContent,referenceTime:item.context.referenceTime,timezone:item.context.timezone,scopes:item.context.index.scopes.map(s=>({id:s.id,text:s.text}))}),'P05_SOURCE')}
+    const comparable=t=>{const x=JSON.parse(t);return {...x,input:[x.input[1]],text:undefined}}
+    check(isDeepStrictEqual(comparable(binding.requests[pair[0].unitId]),comparable(binding.requests[pair[1].unitId])),'P05_PARAMETERS')
+  }
+  check(billing.verified===true&&isDeepStrictEqual(billing.policy,FLASH41_POLICY)&&billing.method==='official-public-document-review','P05_BILLING')
+  check(Date.now()>=Date.parse(billing.checkedAt)&&Date.now()<=Date.parse(billing.validUntil)&&Date.parse(billing.validUntil)-Date.parse(billing.checkedAt)<=86400000,'P05_PRICE_EXPIRED')
+  check(billing.documents.length===1&&hash(readFileSync(billing.documents[0].path))===billing.documents[0].sha256,'P05_PRICE_EVIDENCE')
+  const ledger=readFileSync(baseline.ledger.path),rows=ledger.toString().trimEnd().split('\n').map(JSON.parse)
+  check(baseline.ledger.sequence===117&&hash(ledger.subarray(0,baseline.ledger.bytes))===baseline.ledger.sha256,'P05_LEDGER_PREFIX')
+  const grant={version:'real-input-paired05-grant-1',grantId:review.grantId,parentTail:rows[116].hash,parentSequence:117,ledgerPrefixBytes:baseline.ledger.bytes,ledgerPrefixSha:baseline.ledger.sha256,
+    manifestSha:hash(readFileSync(join(runDirectory,'REQUEST_MANIFEST.json'))),bindingSha:hash(bindingBytes),head:binding.head,sourcesSha:hash(JSON.stringify(sources)),reviewSha:hash(JSON.stringify(review)),
+    targets:binding.units,billingEvidence:{checkedAt:billing.checkedAt,validUntil:billing.validUntil,evidenceSha:hash(JSON.stringify(billing))},route:RECOVERY_ROUTE,priorNonce:rows[1].event.nonce,a02ResponseSha:rows[4].event.responseSha,maxTotalRequests:80,policy:FLASH41_POLICY}
+  const existing=rows.find(r=>r.event.kind==='paired05Grant')?.event.grant
+  if(existing)check(isDeepStrictEqual(existing,grant),'P05_GRANT_CHANGED')
+  return grant
+}
+export async function dispatchPaired05(unitId){
+  check(/^P(?:0[1-9]|1[0-2])-(03|05)$/.test(unitId),'P05_UNIT')
+  const bytes=readFileSync(join(PAIRED05_DIRECTORY,'BINDING.json')),binding=JSON.parse(bytes),baseline=read05('BASELINE.json')
+  const grant=verifyPaired05Send({bindingBytes:bytes,binding,baseline,billing:read05('BILLING.json'),review:read05('SEND_REVIEW.json'),protection:inspectProtection({stage:'paired05'})})
+  const closure=await compileOriginalScorer05(),{api}=await paired05Api(),budget=await openBudget(runDirectory,grant.manifestSha,{batchGrant:grant}),before=await budget.snapshot(),index=before.reservations.length-56
+  check(binding.units[index]?.unitId===unitId&&!before.paired05?.stopped&&before.reservations.slice(1).every(r=>r.status==='settled'),'P05_NEXT')
+  check(before.reservations.reduce((n,r)=>n+r.costUpperMicroCny,0)+3300000<=10000000,'P05_BUDGET')
+  const rawPath=join(PAIRED05_DIRECTORY,unitId+'_RAW.jsonl'),resultPath=join(PAIRED05_DIRECTORY,unitId+'_RESULT.json')
+  check(!existsSync(rawPath)&&!existsSync(resultPath),'P05_ALREADY_ATTEMPTED')
+  // Sole credential-reading path: explicit authorized paid unit, no probe/retry.
+  try{process.loadEnvFile(resolve('.env'))}catch{check(false,'SERVER_CONFIGURATION_UNAVAILABLE')}
+  const old=JSON.parse(readFileSync(join(runDirectory,'STATE.json'))),recorder=await createRawRecorder(rawPath),origin='http://127.0.0.1:6631',capability=randomBytes(32).toString('hex');let observed
+  try{
+    const requests={...old.requests,...JSON.parse(readFileSync(join(CANDIDATE02_DIRECTORY,'BINDING.json'))).requests,...JSON.parse(readFileSync(join(CANDIDATE03_DIRECTORY,'BINDING.json'))).requests,...pairedRead('BINDING.json').requests,...binding.requests}
+    const gateway=await createModelGateway({origin,capability,budget,requests,policy:FLASH41_POLICY,fetchImpl:createPinnedProxyFetch(),recordRaw:async row=>{check(row.unitId===unitId&&row.requestSha===binding.units[index].requestSha,'P05_RAW_ID');await recorder.write(row);observed=row}})
+    const start=Date.now(),response=await gateway.handle({method:'POST',path:'/api/real-input/recognize',headers:{host:new URL(origin).host,origin,'sec-fetch-site':'same-origin','content-type':'application/json','x-real-input-capability':capability},bodyText:JSON.stringify({unitId,requestSha:binding.units[index].requestSha})})
+    let score=null,scoreError=null,assembled=null,returnedModel=null
+    const item=binding.items.find(i=>i.id===unitId.slice(0,3)),reference=read05('REFERENCES.json').items.find(i=>i.id===item.id)
+    if(response.status===200)try{
+      const parsed=api.parseModelEnvelope(observed.rawHttpText,item.context,'deepseek-flash');assembled=parsed.adaptedResponse;returnedModel=parsed.envelope.model
+      // Explicit derived scorer input, NOT a provider response. Original raw bytes stay in RAW.jsonl.
+      const projection=structuredClone(parsed.envelope);projection.model=BILLING_POLICY.model;projection.output[0].content[0].text=JSON.stringify(api.projectSemantic(assembled))
+      score=await closure.api.scoreSeenResponse(JSON.stringify(projection),item.context,reference.response,reference.context)
+    }catch{scoreError='SCHEMA_OR_SCORER_REJECTED'}
+    const after=await budget.snapshot(),r=after.reservations.find(r=>r.unitId===unitId)
+    const result={unitId,arm:unitId.slice(-2),bindingSha:hash(bytes),requestSha:binding.units[index].requestSha,responseSha:observed?.responseSha??null,requestModel:'deepseek-flash',returnedModel,scorerSha:binding.scorerSha,scorerBundleSha:closure.bundleSha,referenceSha:binding.referenceSha,
+      scoreInput:'explicit semantic projection into byte-identical historical scorer; raw response unmodified',assembled,http:response.status,diagnostic:response.diagnostic??null,waitingMs:Date.now()-start,score,scoreError,totalAttempts:after.reservations.length,
+      costUpperMicroCny:r?.costUpperMicroCny??0,totalCostUpperMicroCny:after.reservations.reduce((n,r)=>n+r.costUpperMicroCny,0),stopDispatch:response.status!==200||Boolean(after.paired05?.stopped)||r?.status!=='settled',providerBilledCny:'NOT_OBSERVABLE',automaticSelection:'NOT_ENABLED',qualityClaim:binding.label}
+    writeFileSync(resultPath,JSON.stringify(result,null,2)+'\n',{flag:'wx'})
+    return {unitId,http:result.http,stopDispatch:result.stopDispatch,scoreError,totalAttempts:result.totalAttempts,waitingMs:result.waitingMs,costUpperMicroCny:result.costUpperMicroCny}
+  }finally{await recorder.close()}
+}
+
+const read06=name=>JSON.parse(readFileSync(join(PAIRED06_DIRECTORY,name)))
+export async function paired06Api(){
+  const compiled=await build({stdin:{contents:`export {buildFlash41Candidate06ComparisonRequest} from './src/experiments/realInput01/candidate06.ts';
+    export {indexImmutableScopesV11} from './src/recognition/scopeIndexV11.ts';
+    export {adaptModelWire,parseModelEnvelope,projectSemantic,WIRE_VERSION} from './src/experiments/realInput01/modelWire.ts';
+    export {workspaceSnapshotHash} from './src/domain/v2/migration.ts';`,resolveDir:process.cwd(),loader:'ts'},bundle:true,write:false,platform:'node',format:'esm',metafile:true})
+  const dependencies=Object.keys(compiled.metafile.inputs).filter(p=>p!=='<stdin>').map(path=>({path,sha256:hash(readFileSync(path))}))
+  check(!dependencies.some(d=>/seenInputs|evaluation|fixture|expected/i.test(d.path)),'P06_ANSWER_IN_REQUEST')
+  return {dependencies,api:await import('data:text/javascript;base64,'+Buffer.from(compiled.outputFiles[0].contents).toString('base64'))}
+}
+export function paired06Order(seed=20260913){
+  let n=seed>>>0;const order=Array.from({length:12},(_,i)=>i<6?['03','06']:['06','03'])
+  for(let i=order.length-1;i>0;i--){n=(Math.imul(n,1664525)+1013904223)>>>0;const j=n%(i+1);[order[i],order[j]]=[order[j],order[i]]}
+  return order
+}
+export async function preparePaired06(){
+  const protection=inspectProtection({stage:'paired06'}),freeze=read06('CANDIDATE_FREEZE.json'),inputs=read05('INPUTS.json'),reference=read05('REFERENCE_SPEC.json')
+  for(const d of freeze.dependencies)check(hash(readFileSync(d.path))===d.sha256,'P06_CANDIDATE_FIXED')
+  check(inputs.items.length===12&&reference.items.length===12&&new Set(inputs.items.map(i=>i.text)).size===12,'P06_INPUTS')
+  const {api,dependencies}=await paired06Api(),closure=await compileOriginalScorer05(),old=JSON.parse(readFileSync(join(runDirectory,'STATE.json')))
+  const requests={},units=[],items=[],references=[],seed=20260913,order=paired06Order(seed)
+  for(const [i,item]of inputs.items.entries()){
+    check(item.id===`P${String(i+1).padStart(2,'0')}`&&reference.items[i].id===item.id,'P06_ID')
+    const id='Q'+item.id.slice(1),operationId='paired06-source-'+id,sourceId='source:'+api.workspaceSnapshotHash(operationId).slice('fnv1a32:'.length),sourceVersionId=sourceId+':version:1'
+    const context={index:await api.indexImmutableScopesV11(sourceId,sourceVersionId,item.text),referenceTime:inputs.referenceTime,timezone:inputs.timezone}
+    for(const arm of order[i]){const unitId=id+'-'+arm,built=await api.buildFlash41Candidate06ComparisonRequest(context,arm),u=inspectRequest(built.serialized,FLASH41_PAIRED06_POLICY)
+      requests[unitId]=built.serialized;units.push({unitId,candidateSha:u.candidateSha,inputSha:u.inputSha,requestSha:u.requestSha,requestBytes:u.requestBytes,scorerSha:old.scorerSha})}
+    items.push({id,originalId:item.id,operationId,context,title:item.text.split('\n')[0]})
+    try{references.push({id,context,response:pairedReference(reference.items[i],context,api)})}
+    catch(e){throw Error('P06_REFERENCE_'+item.id+': '+e.message)}
+  }
+  const refText=JSON.stringify({label:'人工参考仅评分，不进入请求或产品',items:references},null,2)+'\n'
+  const files=['INPUTS.json','REFERENCE_SPEC.json','COMPARISON_RULES.md'].map(name=>({path:join(PAIRED05_DIRECTORY,name),sha256:hash(readFileSync(join(PAIRED05_DIRECTORY,name)))}));files.push({path:join(PAIRED06_DIRECTORY,'CANDIDATE_FREEZE.json'),sha256:hash(readFileSync(join(PAIRED06_DIRECTORY,'CANDIDATE_FREEZE.json')))})
+  const binding={version:'real-input-paired06-binding-1',head:protection.head,dependencies,files,referenceSha:hash(refText),scorerSha:old.scorerSha,scorerBundleSha:closure.bundleSha,requests,units,items,seed,order,
+    label:'12份已见材料开发回归；授权同期重复测量，非盲测；24请求不是24份独立材料',createdAt:new Date().toISOString()}
+  writeFileSync(join(PAIRED06_DIRECTORY,'REFERENCES.json'),refText,{flag:'wx'});writeFileSync(join(PAIRED06_DIRECTORY,'BINDING.json'),JSON.stringify(binding,null,2)+'\n',{flag:'wx'})
+  return {notices:12,requests:24,bindingSha:hash(JSON.stringify(binding,null,2)+'\n'),modelCalls:0}
+}
+export function verifyPaired06Send({bindingBytes,binding,baseline,billing,review,protection}){
+  check(isDeepStrictEqual(JSON.parse(bindingBytes),binding)&&binding.version==='real-input-paired06-binding-1'&&binding.items.length===12&&binding.units.length===24,'P06_BINDING')
+  const sources=protection.sources.map(s=>({path:s.path,sha256:s.workingSha256}))
+  verifyReviewBinding({head:protection.head,expectedHead:baseline.head,sources,review})
+  check(binding.head===baseline.head&&review.scope==='PAIRED06_SEND'&&review.bindingSha===hash(bindingBytes)&&review.billingSha===hash(JSON.stringify(billing)),'P06_REVIEW')
+  for(const d of [...binding.dependencies,...binding.files])check(hash(readFileSync(d.path))===d.sha256,'P06_DEPENDENCY')
+  check(hash(readFileSync(join(PAIRED06_DIRECTORY,'REFERENCES.json')))===binding.referenceSha,'P06_REFERENCE')
+  const old=JSON.parse(readFileSync(join(runDirectory,'STATE.json'))),old04=pairedRead('BINDING.json')
+  check(binding.scorerSha===old.scorerSha&&binding.scorerBundleSha===old04.scorerBundleSha&&isDeepStrictEqual(binding.order,paired06Order(binding.seed)),'P06_SCORER_ORDER')
+  const originalInputs=read05('INPUTS.json')
+  for(const [i,item]of binding.items.entries()){
+    check(item.originalId===originalInputs.items[i].id&&item.context.index.sourceContent===originalInputs.items[i].text&&item.context.referenceTime===originalInputs.referenceTime&&item.context.timezone===originalInputs.timezone,'P06_ORIGINAL_TEXT')
+    const pair=binding.units.slice(i*2,i*2+2);check(isDeepStrictEqual(pair.map(u=>u.unitId),binding.order[i].map(a=>item.id+'-'+a)),'P06_ORDER')
+    for(const u of pair){const p=inspectRequest(binding.requests[u.unitId],FLASH41_PAIRED06_POLICY)
+      check(['candidateSha','requestSha','inputSha','requestBytes'].every(k=>p[k]===u[k])&&u.scorerSha===binding.scorerSha,'P06_REQUEST')
+      check(isDeepStrictEqual(JSON.parse(p.body.input[1].content[0].text),{source:item.context.index.sourceContent,referenceTime:item.context.referenceTime,timezone:item.context.timezone,scopes:item.context.index.scopes.map(s=>({id:s.id,text:s.text}))}),'P06_SOURCE')}
+    const comparable=t=>{const x=JSON.parse(t);return {...x,input:[x.input[1]]}}
+    check(isDeepStrictEqual(comparable(binding.requests[pair[0].unitId]),comparable(binding.requests[pair[1].unitId])),'P06_PARAMETERS')
+  }
+  check(billing.verified===true&&isDeepStrictEqual(billing.policy,FLASH41_PAIRED06_POLICY)&&billing.method==='official-public-document-review','P06_BILLING')
+  check(Date.now()>=Date.parse(billing.checkedAt)&&Date.now()<=Date.parse(billing.validUntil)&&Date.parse(billing.validUntil)-Date.parse(billing.checkedAt)<=86400000,'P06_PRICE_EXPIRED')
+  check(billing.documents.length===1&&hash(readFileSync(billing.documents[0].path))===billing.documents[0].sha256,'P06_PRICE_EVIDENCE')
+  const ledger=readFileSync(baseline.ledger.path),rows=ledger.toString().trimEnd().split('\n').map(JSON.parse)
+  check(baseline.ledger.sequence===166&&hash(ledger.subarray(0,baseline.ledger.bytes))===baseline.ledger.sha256,'P06_LEDGER_PREFIX')
+  const grant={version:'real-input-paired06-grant-1',grantId:review.grantId,parentTail:rows[165].hash,parentSequence:166,ledgerPrefixBytes:baseline.ledger.bytes,ledgerPrefixSha:baseline.ledger.sha256,
+    manifestSha:hash(readFileSync(join(runDirectory,'REQUEST_MANIFEST.json'))),bindingSha:hash(bindingBytes),head:binding.head,sourcesSha:hash(JSON.stringify(sources)),reviewSha:hash(JSON.stringify(review)),
+    targets:binding.units,billingEvidence:{checkedAt:billing.checkedAt,validUntil:billing.validUntil,evidenceSha:hash(JSON.stringify(billing))},route:RECOVERY_ROUTE,priorNonce:rows[1].event.nonce,a02ResponseSha:rows[4].event.responseSha,maxTotalRequests:104,policy:FLASH41_PAIRED06_POLICY}
+  const existing=rows.find(r=>r.event.kind==='paired06Grant')?.event.grant
+  if(existing)check(isDeepStrictEqual(existing,grant),'P06_GRANT_CHANGED')
+  return grant
+}
+export async function dispatchPaired06(unitId){
+  check(/^Q(?:0[1-9]|1[0-2])-(03|06)$/.test(unitId),'P06_UNIT')
+  const bytes=readFileSync(join(PAIRED06_DIRECTORY,'BINDING.json')),binding=JSON.parse(bytes),baseline=read06('BASELINE.json')
+  const grant=verifyPaired06Send({bindingBytes:bytes,binding,baseline,billing:read06('BILLING.json'),review:read06('SEND_REVIEW.json'),protection:inspectProtection({stage:'paired06'})})
+  const closure=await compileOriginalScorer05(),{api}=await paired06Api(),budget=await openBudget(runDirectory,grant.manifestSha,{batchGrant:grant}),before=await budget.snapshot(),index=before.reservations.length-80
+  check(binding.units[index]?.unitId===unitId&&!before.paired06?.stopped&&before.reservations.slice(1).every(r=>r.status==='settled'),'P06_NEXT')
+  check(before.reservations.reduce((n,r)=>n+r.costUpperMicroCny,0)+3300000<=10000000,'P06_BUDGET')
+  const rawPath=join(PAIRED06_DIRECTORY,unitId+'_RAW.jsonl'),resultPath=join(PAIRED06_DIRECTORY,unitId+'_RESULT.json')
+  check(!existsSync(rawPath)&&!existsSync(resultPath),'P06_ALREADY_ATTEMPTED')
+  // Sole credential-reading path: explicit authorized paid unit, no probe/retry.
+  try{process.loadEnvFile(resolve('.env'))}catch{check(false,'SERVER_CONFIGURATION_UNAVAILABLE')}
+  const old=JSON.parse(readFileSync(join(runDirectory,'STATE.json'))),recorder=await createRawRecorder(rawPath),origin='http://127.0.0.1:6631',capability=randomBytes(32).toString('hex');let observed
+  try{
+    const requests={...old.requests,...JSON.parse(readFileSync(join(CANDIDATE02_DIRECTORY,'BINDING.json'))).requests,...JSON.parse(readFileSync(join(CANDIDATE03_DIRECTORY,'BINDING.json'))).requests,...pairedRead('BINDING.json').requests,...read05('BINDING.json').requests,...binding.requests}
+    const gateway=await createModelGateway({origin,capability,budget,requests,policy:FLASH41_PAIRED06_POLICY,fetchImpl:createPinnedProxyFetch(),recordRaw:async row=>{check(row.unitId===unitId&&row.requestSha===binding.units[index].requestSha,'P06_RAW_ID');await recorder.write(row);observed=row}})
+    const start=Date.now(),response=await gateway.handle({method:'POST',path:'/api/real-input/recognize',headers:{host:new URL(origin).host,origin,'sec-fetch-site':'same-origin','content-type':'application/json','x-real-input-capability':capability},bodyText:JSON.stringify({unitId,requestSha:binding.units[index].requestSha})})
+    let score=null,scoreError=null,assembled=null,returnedModel=observed?JSON.parse(observed.rawHttpText).model:null
+    const item=binding.items.find(i=>i.id===unitId.slice(0,3)),reference=read06('REFERENCES.json').items.find(i=>i.id===item.id)
+    if(response.status===200)try{
+      const parsed=api.parseModelEnvelope(observed.rawHttpText,item.context,'deepseek-flash');assembled=parsed.adaptedResponse;returnedModel=parsed.envelope.model
+      // Explicit derived scorer input, NOT a provider response. Original raw bytes stay in RAW.jsonl.
+      const projection=structuredClone(parsed.envelope);projection.model=BILLING_POLICY.model;projection.output[0].content[0].text=JSON.stringify(api.projectSemantic(assembled))
+      score=await closure.api.scoreSeenResponse(JSON.stringify(projection),item.context,reference.response,reference.context)
+    }catch{scoreError='SCHEMA_OR_SCORER_REJECTED'}
+    const after=await budget.snapshot(),r=after.reservations.find(r=>r.unitId===unitId)
+    const result={unitId,arm:unitId.slice(-2),bindingSha:hash(bytes),requestSha:binding.units[index].requestSha,responseSha:observed?.responseSha??null,requestModel:'deepseek-flash',returnedModel,scorerSha:binding.scorerSha,scorerBundleSha:closure.bundleSha,referenceSha:binding.referenceSha,
+      scoreInput:'explicit semantic projection into byte-identical historical scorer; raw response unmodified',assembled,http:response.status,diagnostic:response.diagnostic??null,waitingMs:Date.now()-start,score,scoreError,totalAttempts:after.reservations.length,
+      costUpperMicroCny:r?.costUpperMicroCny??0,totalCostUpperMicroCny:after.reservations.reduce((n,r)=>n+r.costUpperMicroCny,0),stopDispatch:response.status!==200||Boolean(after.paired06?.stopped)||r?.status!=='settled',providerBilledCny:'NOT_OBSERVABLE',automaticSelection:'NOT_ENABLED',qualityClaim:binding.label}
+    writeFileSync(resultPath,JSON.stringify(result,null,2)+'\n',{flag:'wx'})
+    return {unitId,http:result.http,stopDispatch:result.stopDispatch,scoreError,totalAttempts:result.totalAttempts,waitingMs:result.waitingMs,costUpperMicroCny:result.costUpperMicroCny}
+  }finally{await recorder.close()}
+}
+
 if(process.argv[1]&&resolve(process.argv[1])===resolve(import.meta.filename)){
   const args=process.argv.slice(2),pick=key=>args.find(a=>a.startsWith('--'+key+'='))?.slice(key.length+3)
-  if(args.length===1&&args[0]==='--prepare-paired04')console.log(JSON.stringify(await preparePaired04()))
+  if(args.length===1&&args[0]==='--prepare-paired06')console.log(JSON.stringify(await preparePaired06()))
+  else if(args.length===1&&/^--paired06=Q(?:0[1-9]|1[0-2])-(03|06)$/.test(args[0]))console.log(JSON.stringify(await dispatchPaired06(pick('paired06'))))
+  else if(args.length===1&&args[0]==='--prepare-paired05')console.log(JSON.stringify(await preparePaired05()))
+  else if(args.length===1&&/^--paired05=P(?:0[1-9]|1[0-2])-(03|05)$/.test(args[0]))console.log(JSON.stringify(await dispatchPaired05(pick('paired05'))))
+  else if(args.length===1&&args[0]==='--prepare-paired04')console.log(JSON.stringify(await preparePaired04()))
   else if(args.length===1&&/^--paired04=N(?:0[1-9]|1[0-2])-(03|04)$/.test(args[0]))console.log(JSON.stringify(await dispatchPaired04(pick('paired04'))))
   else if(args.length===1&&args[0]==='--prepare-candidate03')console.log(JSON.stringify(await prepareCandidate03()))
   else if(args.length===1&&/^--candidate03=D0[1-8]$/.test(args[0]))console.log(JSON.stringify(await dispatchCandidate03(pick('candidate03'))))

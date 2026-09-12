@@ -45,6 +45,171 @@ import { indexImmutableScopesV11 } from '../../recognition/scopeIndexV11'
 import type { RealInputState } from '../mainline05/semanticState'
 import type { SemanticInput } from '../mainline04/semanticContract'
 import { replayRecordedPaired04, type RecordedPaired04 } from './runtime'
+import { buildFlash41Candidate06ComparisonRequest, CANDIDATE06_VERSION } from './candidate06'
+
+describe('paired06 existing wire recorded boundary',()=>{
+  it.each([
+    ['Q01-06', ['task-submit-authorization', 'task-upload-trailer'], 2],
+    ['Q07-06', ['task-upload-proof-pdf'], 1],
+    ['Q03-06', ['task-save-photos'], 1],
+  ] as const)('%s actual settled answer confirms reviewed tasks and independently reloads in memory',async(unitId,taskIds,count)=>{
+    const p='docs/recognition-optimization/mainline-real-input-01/runs/candidate06-20260912a/'
+    const binding=JSON.parse(readFileSync(p+'BINDING.json','utf8'))
+    const item=binding.items.find((i:{id:string})=>i.id===unitId.slice(0,3))
+    const raw=JSON.parse(readFileSync(p+unitId+'_RAW.jsonl','utf8'))
+    const r:RecordedPaired04={version:'recorded-paired06-1',unitId,name:recordedA02Identity.name,
+      operationId:item.operationId,title:item.title,context:item.context,requestSha:raw.requestSha,
+      responseSha:raw.responseSha,rawHttpText:raw.rawHttpText}
+    const identity={unitId,requestSha:r.requestSha,responseSha:r.responseSha}
+    const {repo,store}=await fixture()
+    const loaded=await replayRecordedPaired04(repo,r,identity),d=loaded.extractionDrafts[0],initial=stateOfRuntime(loaded,d.id)
+    if(initial.version!==REAL_STATE_VERSION)throw Error('REAL_EXPECTED')
+    expect(initial.rawHttpText).toBe(raw.rawHttpText)
+    expect(initial.execution).toBe('live')
+    expect(loaded.recognitionRuns[0].promptVersion).toBe(CANDIDATE06_VERSION)
+    expect(loaded.tasks).toHaveLength(0)
+    await expect(confirmSemantic(repo,{draftId:d.id,taskTempIds:[...taskIds],revision:semanticRevision(loaded)})).rejects.toThrow()
+    const facts=effectiveStateFacts(initial).facts
+    for(const m of facts.materials)await reviewSemanticMaterial(repo,{draftId:d.id,materialId:m.tempId,
+      revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID(),value:{required:m.required,status:'missing'}})
+    for(const taskId of taskIds)await reviewSemanticFact(repo,{draftId:d.id,taskId,
+      revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID()})
+    // Explicit test-user material preparation choices are edits, not model truth.
+    const saved=await confirmSemantic(repo,{draftId:d.id,taskTempIds:[...taskIds],revision:semanticRevision(await repo.load())})
+    expect(saved.tasks).toHaveLength(count)
+    expect(stateOfRuntime(saved,d.id).rawResponse).toEqual(initial.rawResponse)
+    expect(stateOfRuntime(saved,d.id).first).toEqual(initial.first)
+    expect(effectiveStateFacts(stateOfRuntime(saved,d.id)).facts.revisions).toEqual(facts.revisions)
+    expect(await new CanonicalWorkspaceRepository(store).load()).toEqual(JSON.parse(JSON.stringify(saved)))
+    expect(await replayRecordedPaired04(repo,r,identity)).toEqual(saved)
+    expect(await confirmSemantic(repo,{draftId:d.id,taskTempIds:[...taskIds],revision:semanticRevision(saved)})).toEqual(saved)
+    if(unitId==='Q07-06'){
+      expect(saved.tasks.some(t=>t.title.includes('寄送'))).toBe(false)
+      expect(facts.revisions).toHaveLength(1)
+    }
+    if(unitId==='Q03-06'){
+      expect(saved.timePoints).toHaveLength(0)
+      expect(saved.reminderRecords).toHaveLength(0)
+      expect(buildBrowserReminderJobs(semanticView(saved).tasks,new Date(NOW))).toHaveLength(0)
+    }
+  })
+  async function fixture(){
+    const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:recordedA02Identity.name})
+    const repo=await SemanticRepository.open(store.name,store,emptyRealInputWorkspace(store.name),'real-input-01')
+    return {store,repo}
+  }
+  // Memory-only engineering transformation of an already-seen response. It is
+  // neither a candidate06 prediction nor a new provider receipt or score.
+  async function engineeringRecord(arm:'03'|'06'='06'):Promise<RecordedPaired04>{
+    const p='docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/'
+    const b=JSON.parse(readFileSync(p+'BINDING.json','utf8')),old=b.items.find((i:{id:string})=>i.id==='P03')
+    const prior=JSON.parse(readFileSync(p+'P03-03_RAW.jsonl','utf8'))
+    const {repo}=await fixture(),receipt=await acquireText('paired06-Q03',old.context.index.sourceContent)
+    const source=await repo.saveReading(receipt,old.title,'paired06-source-Q03',old.context.referenceTime)
+    const context={index:await indexImmutableScopesV11(source.sourceId,source.sourceVersionId,old.context.index.sourceContent),
+      referenceTime:old.context.referenceTime,timezone:'Asia/Shanghai' as const}
+    const ids=new Map(old.context.index.scopes.map((scope:{id:string},i:number)=>[scope.id,context.index.scopes[i].id]))
+    const envelope=JSON.parse(prior.rawHttpText),wire=JSON.parse(envelope.output[0].content[0].text)
+    envelope.output[0].content[0].text=JSON.stringify(wire,(_key,value:unknown)=>typeof value==='string'&&ids.has(value)?ids.get(value):value)
+    const rawHttpText=JSON.stringify(envelope),request=await buildFlash41Candidate06ComparisonRequest(context,arm)
+    return {version:'recorded-paired06-1',unitId:'Q03-'+arm,name:recordedA02Identity.name,operationId:'paired06-source-Q03',title:old.title,
+      context,requestSha:await sha256Text(request.serialized),responseSha:await sha256Text(rawHttpText),rawHttpText}
+  }
+  it.each(['03','06'] as const)('%s same existing wire stays unselected until actual review, confirms and reloads without dispatch',async arm=>{
+    const {repo,store}=await fixture(),r=await engineeringRecord(arm),identity={unitId:r.unitId,requestSha:r.requestSha,responseSha:r.responseSha}
+    const loaded=await replayRecordedPaired04(repo,r,identity),d=loaded.extractionDrafts[0],s=stateOfRuntime(loaded,d.id)
+    expect(loaded.tasks).toHaveLength(0);expect(loaded.recognitionRuns[0].modelName).toBe('deepseek-flash')
+    expect(loaded.recognitionRuns[0].promptVersion).toBe(arm==='06'?CANDIDATE06_VERSION:CANDIDATE03_VERSION)
+    if(s.version!==REAL_STATE_VERSION)throw Error('REAL_EXPECTED')
+    expect(s.rawHttpText).toBe(r.rawHttpText);expect(s.execution).toBe('live')
+    const tasks=effectiveStateFacts(s).facts.tasks
+    expect(tasks).toHaveLength(1)
+    await expect(confirmSemantic(repo,{draftId:d.id,taskTempIds:tasks.map(t=>t.id),revision:semanticRevision(loaded)})).rejects.toThrow()
+    await reviewSemanticFact(repo,{draftId:d.id,taskId:tasks[0].id,revision:semanticRevision(loaded),operationId:crypto.randomUUID()})
+    const saved=await confirmSemantic(repo,{draftId:d.id,taskTempIds:tasks.map(t=>t.id),revision:semanticRevision(await repo.load())})
+    expect(saved.tasks).toHaveLength(1);expect(saved.timePoints).toHaveLength(0);expect(saved.reminderRecords).toHaveLength(0)
+    expect(stateOfRuntime(saved,d.id).rawResponse).toEqual(s.rawResponse);expect(stateOfRuntime(saved,d.id).first).toEqual(s.first)
+    expect(await new CanonicalWorkspaceRepository(store).load()).toEqual(JSON.parse(JSON.stringify(saved)))
+    expect(await replayRecordedPaired04(repo,r,identity)).toEqual(saved)
+    expect(await confirmSemantic(repo,{draftId:d.id,taskTempIds:tasks.map(t=>t.id),revision:semanticRevision(saved)})).toEqual(saved)
+    await expect(inputRunContext(repo,{sourceId:s.sourceId,sourceVersionId:s.sourceVersionId,recognitionRunId:s.runId,draftId:s.draftId,duplicate:false})).rejects.toThrow('RECORDED_NEVER_DISPATCHABLE')
+    const other=await engineeringRecord(arm==='03'?'06':'03')
+    await expect(replayRecordedPaired04(repo,other,{unitId:other.unitId,requestSha:other.requestSha,responseSha:other.responseSha})).rejects.toThrow('PAIRED_SOURCE_ARM_ALREADY_CHOSEN')
+    expect(await repo.load()).toEqual(saved)
+  })
+  it('rejects mismatched version, unit, source and response before any persisted write',async()=>{
+    for(const mutate of [(r:RecordedPaired04)=>{r.version='recorded-paired05-1'},(r:RecordedPaired04)=>{r.unitId='Q03-05'},
+      (r:RecordedPaired04)=>{r.operationId='paired06-source-Q02'},(r:RecordedPaired04)=>{r.rawHttpText+=' '},
+      (r:RecordedPaired04)=>{r.context.index.sourceContent+=' 未授权差异'}]){
+      const {repo}=await fixture(),before=await repo.load(),r=await engineeringRecord(),identity={unitId:r.unitId,requestSha:r.requestSha,responseSha:r.responseSha}
+      mutate(r);await expect(replayRecordedPaired04(repo,r,identity)).rejects.toThrow();expect(await repo.load()).toEqual(before)
+    }
+  })
+  it('rolls back failed append; valid retry of local replay preserves all pre-existing entities',async()=>{
+    const {repo,store}=await fixture(),source=await acquireText('paired06-prior-source','已有工程来源，请保留。')
+    await repo.saveReading(source,'此前来源','paired06-prior-source','2026-09-12T01:00:00.000Z')
+    const before=await repo.load(),r=await engineeringRecord(),identity={unitId:r.unitId,requestSha:r.requestSha,responseSha:r.responseSha}
+    vi.spyOn(store,'transaction').mockRejectedValueOnce(Error('P06_ATOMIC_FAILURE'))
+    await expect(replayRecordedPaired04(repo,r,identity)).rejects.toThrow('P06_ATOMIC_FAILURE');expect(await repo.load()).toEqual(before)
+    const saved=await replayRecordedPaired04(repo,r,identity)
+    expect(saved.sources).toHaveLength(before.sources.length+1)
+    for(const key of ['sources','sourceVersions','recognitionRuns','extractionDrafts','evidenceRefs','historyRecords','tasks'] as const)
+      for(const old of before[key])expect(saved[key].find(x=>x.id===old.id)).toEqual(old)
+  })
+})
+
+describe('paired05 new model recorded boundary',()=>{
+  function recorded(id:string):RecordedPaired04 {
+    const p='docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/',b=JSON.parse(readFileSync(p+'BINDING.json','utf8'))
+    const item=b.items.find((i:{id:string})=>i.id===id.slice(0,3)),raw=JSON.parse(readFileSync(p+id+'_RAW.jsonl','utf8'))
+    return {version:'recorded-paired05-1',unitId:id,name:recordedA02Identity.name,operationId:item.operationId,title:item.title,
+      context:item.context,requestSha:raw.requestSha,responseSha:raw.responseSha,rawHttpText:raw.rawHttpText}
+  }
+  async function fixture(){
+    const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:recordedA02Identity.name})
+    const repo=await SemanticRepository.open(store.name,store,emptyRealInputWorkspace(store.name),'real-input-01')
+    return {store,repo}
+  }
+  it.each(['P01-03','P05-05','P03-03'])('%s true response, manual review, confirm and independent memory reload without a model',async id=>{
+    const {store,repo}=await fixture(),r=recorded(id),identity={unitId:id,requestSha:r.requestSha,responseSha:r.responseSha}
+    const loaded=await replayRecordedPaired04(repo,r,identity),d=loaded.extractionDrafts[0],state=stateOfRuntime(loaded,d.id)
+    expect(loaded.recognitionRuns[0].modelName).toBe('deepseek-flash');expect(loaded.tasks).toHaveLength(0)
+    expect(state.version).toBe(REAL_STATE_VERSION)
+    if(state.version!==REAL_STATE_VERSION)throw Error('REAL_EXPECTED')
+    expect(state.rawHttpText).toBe(r.rawHttpText);expect(state.execution).toBe('live')
+    const facts=effectiveStateFacts(state).facts
+    expect(facts.tasks.length).toBeGreaterThan(0)
+    await expect(confirmSemantic(repo,{draftId:d.id,taskTempIds:facts.tasks.map(t=>t.id),revision:semanticRevision(loaded)})).rejects.toThrow()
+    for(const m of facts.materials)await reviewSemanticMaterial(repo,{draftId:d.id,materialId:m.tempId,revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID(),value:{required:m.required,status:'missing'}})
+    for(const t of facts.tasks)await reviewSemanticFact(repo,{draftId:d.id,taskId:t.id,revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID()})
+    const saved=await confirmSemantic(repo,{draftId:d.id,taskTempIds:facts.tasks.map(t=>t.id),revision:semanticRevision(await repo.load())})
+    expect(saved.tasks).toHaveLength(facts.tasks.length)
+    expect(stateOfRuntime(saved,d.id).rawResponse).toEqual(state.rawResponse);expect(stateOfRuntime(saved,d.id).first).toEqual(state.first)
+    expect(await new CanonicalWorkspaceRepository(store).load()).toEqual(JSON.parse(JSON.stringify(saved)))
+    expect(await confirmSemantic(repo,{draftId:d.id,taskTempIds:facts.tasks.map(t=>t.id),revision:semanticRevision(saved)})).toEqual(saved)
+    expect(await replayRecordedPaired04(repo,r,identity)).toEqual(saved)
+    await expect(inputRunContext(repo,{sourceId:state.sourceId,sourceVersionId:state.sourceVersionId,recognitionRunId:state.runId,draftId:d.id,duplicate:false})).rejects.toThrow('RECORDED_NEVER_DISPATCHABLE')
+    if(id==='P03-03'){expect(saved.timePoints).toHaveLength(0);expect(saved.reminderRecords).toHaveLength(0)}
+  })
+  it('invalid assembly, response identity and duplicate other arm refuse without changing prior records',async()=>{
+    const {repo}=await fixture(),initial=await repo.load(),bad=recorded('P01-05')
+    await expect(replayRecordedPaired04(repo,bad,{unitId:bad.unitId,requestSha:bad.requestSha,responseSha:bad.responseSha})).rejects.toThrow()
+    expect(await repo.load()).toEqual(initial)
+    const r=recorded('P01-03'),identity={unitId:r.unitId,requestSha:r.requestSha,responseSha:r.responseSha}
+    await expect(replayRecordedPaired04(repo,{...r,responseSha:'0'.repeat(64)},identity)).rejects.toThrow()
+    const before=await replayRecordedPaired04(repo,r,identity)
+    await expect(replayRecordedPaired04(repo,bad,{unitId:bad.unitId,requestSha:bad.requestSha,responseSha:bad.responseSha})).rejects.toThrow('PAIRED_SOURCE_ARM_ALREADY_CHOSEN')
+    const next=recorded('P05-05'),after=await replayRecordedPaired04(repo,next,{unitId:next.unitId,requestSha:next.requestSha,responseSha:next.responseSha})
+    for(const key of ['sources','sourceVersions','recognitionRuns','extractionDrafts','evidenceRefs','historyRecords','tasks'] as const)
+      for(const old of before[key])expect(after[key].find(x=>x.id===old.id)).toEqual(old)
+  })
+  it('new wire transaction failure is atomic, then a valid positive response succeeds',async()=>{
+    const {store,repo}=await fixture(),before=await repo.load(),r=recorded('P05-05'),identity={unitId:r.unitId,requestSha:r.requestSha,responseSha:r.responseSha}
+    vi.spyOn(store,'transaction').mockRejectedValueOnce(Error('P05_ATOMIC_FAILURE'))
+    await expect(replayRecordedPaired04(repo,r,identity)).rejects.toThrow('P05_ATOMIC_FAILURE');expect(await repo.load()).toEqual(before)
+    expect((await replayRecordedPaired04(repo,r,identity)).sources).toHaveLength(1)
+  })
+})
 
 describe('paired04 recorded source append',()=>{
   function record(id='N01-04'):RecordedPaired04 {

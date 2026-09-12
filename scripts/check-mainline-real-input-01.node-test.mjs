@@ -207,3 +207,23 @@ test('candidate02 binds current reviewed source, exact A inputs, readonly scorer
     assert.throws(()=>verifyCandidate02Send(copy))
   }
 })
+test('paired06 exact current grant and all historical request bodies construct without credentials or dispatch',async()=>{
+  const {verifyPaired06Send}=await import('./run-mainline-real-input-01.mjs')
+  const {createModelGateway,inspectRequest}=await import('./real-input-model-gateway.mjs')
+  const {FLASH41_PAIRED06_POLICY,BILLING_POLICY}=await import('./real-input-budget.mjs')
+  const R='docs/recognition-optimization/mainline-real-input-01/runs/',D=R+'candidate06-20260912a/',read=p=>JSON.parse(readFileSync(p))
+  const bindingBytes=readFileSync(D+'BINDING.json'),binding=JSON.parse(bindingBytes),baseline=read(D+'BASELINE.json'),billing=read(D+'BILLING.json'),protection=inspectProtection({stage:'paired06'})
+  const sources=protection.sources.map(s=>({path:s.path,sha256:s.workingSha256})),review={head:protection.head,status:'PASS',scope:'PAIRED06_SEND',sources,bindingSha:sha256(bindingBytes),billingSha:sha256(JSON.stringify(billing)),grantId:'66666666-6666-4666-8666-666666666666'}
+  const args={bindingBytes,binding,baseline,billing,review,protection},grant=verifyPaired06Send(args)
+  assert.equal(grant.parentSequence,166);assert.equal(grant.maxTotalRequests,104);assert.equal(grant.targets.length,24)
+  for(const mutate of [a=>{a.review.status='BLOCKED'},a=>{a.protection.head='a'.repeat(40)},a=>{a.review.sources[0].sha256='0'.repeat(64)},a=>{a.billing.verified=false},a=>{a.binding.items[0].context.timezone='UTC'},a=>{a.binding.units[0].requestSha='0'.repeat(64)}]){
+    const copy=structuredClone(args);copy.bindingBytes=Buffer.from(bindingBytes);mutate(copy);assert.throws(()=>verifyPaired06Send(copy))
+  }
+  const requests={...read(R+'usage-resume-20260907a/STATE.json').requests}
+  for(const dir of ['candidate02-20260908a','candidate03-20260908a','candidate04-20260909a','candidate05-20260912a','candidate06-20260912a'])Object.assign(requests,read(R+dir+'/BINDING.json').requests)
+  assert.equal(Object.keys(requests).length,104)
+  const units=Object.entries(requests).map(([unitId,text])=>({unitId,...inspectRequest(text,/^[PQ]/.test(unitId)?FLASH41_PAIRED06_POLICY:BILLING_POLICY)}))
+  let secretReads=0,network=0
+  const gateway=await createModelGateway({origin:'http://127.0.0.1:6631',capability:'6'.repeat(64),requests,policy:FLASH41_PAIRED06_POLICY,budget:{snapshot:async()=>({units})},readSecret:()=>{secretReads++;return 'not-a-real-key'},fetchImpl:async()=>{network++;throw Error('NO_SEND')},recordRaw:async()=>{}})
+  assert.equal(typeof gateway.handle,'function');assert.equal(secretReads,0);assert.equal(network,0)
+})

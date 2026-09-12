@@ -109,7 +109,42 @@ export function loadRecordedPaired04() {
       context:item.context,requestSha:u.requestSha,responseSha:raw.responseSha,rawHttpText:raw.rawHttpText}
   })
 }
-export async function createLocalApp({port,carrierManifest,checking=false,recordedA02=false,recordedBatch=false,recordedCandidate02=false,recordedCandidate03=false,recordedPaired04=false}) {
+export function loadRecordedPaired05() {
+  const root='docs/recognition-optimization/mainline-real-input-01/runs/',d=root+'candidate05-20260912a/'
+  const bytes=readFileSync(d+'BINDING.json'),b=JSON.parse(bytes)
+  const rows=readFileSync(root+'usage-resume-20260907a/CALL_LEDGER.jsonl','utf8').trimEnd().split('\n').map(JSON.parse)
+  const grants=rows.filter(r=>r.event.kind==='paired05Grant')
+  check(grants.length===1&&grants[0].event.grant.bindingSha===hash(bytes),'P05_GRANT')
+  return b.units.map(u=>{
+    const raw=JSON.parse(readFileSync(d+u.unitId+'_RAW.jsonl')),result=JSON.parse(readFileSync(d+u.unitId+'_RESULT.json'))
+    const settled=rows.filter(r=>r.event.kind==='batchSettle'&&r.event.unitId===u.unitId),item=b.items.find(i=>i.id===u.unitId.slice(0,3))
+    check(item&&raw.unitId===u.unitId&&raw.httpStatus===200&&result.http===200&&!result.stopDispatch
+      &&hash(raw.rawHttpText)===raw.responseSha&&raw.responseSha===result.responseSha&&result.bindingSha===hash(bytes)
+      &&raw.requestSha===u.requestSha&&hash(b.requests[u.unitId])===u.requestSha&&raw.candidateSha===u.candidateSha&&raw.inputSha===u.inputSha
+      &&settled.length===1&&settled[0].event.requestSha===u.requestSha&&settled[0].event.responseSha===raw.responseSha,'P05_RECORDED_BINDING')
+    return {version:'recorded-paired05-1',unitId:u.unitId,name:loadRecordedA02().name,operationId:item.operationId,title:item.title,
+      context:item.context,requestSha:u.requestSha,responseSha:raw.responseSha,rawHttpText:raw.rawHttpText}
+  })
+}
+export function loadRecordedPaired06() {
+  const root='docs/recognition-optimization/mainline-real-input-01/runs/',d=root+'candidate06-20260912a/'
+  const bytes=readFileSync(d+'BINDING.json'),b=JSON.parse(bytes)
+  const rows=readFileSync(root+'usage-resume-20260907a/CALL_LEDGER.jsonl','utf8').trimEnd().split('\n').map(JSON.parse)
+  const grants=rows.filter(r=>r.event.kind==='paired06Grant')
+  check(grants.length===1&&grants[0].event.grant.bindingSha===hash(bytes),'P06_GRANT')
+  return b.units.map(u=>{
+    check(/^Q(0[1-9]|1[0-2])-(03|06)$/.test(u.unitId),'P06_UNIT')
+    const raw=JSON.parse(readFileSync(d+u.unitId+'_RAW.jsonl')),result=JSON.parse(readFileSync(d+u.unitId+'_RESULT.json'))
+    const settled=rows.filter(r=>r.event.kind==='batchSettle'&&r.event.unitId===u.unitId),item=b.items.find(i=>i.id===u.unitId.slice(0,3))
+    check(item&&item.operationId==='paired06-source-'+item.id&&raw.unitId===u.unitId&&raw.httpStatus===200&&result.http===200&&!result.stopDispatch
+      &&hash(raw.rawHttpText)===raw.responseSha&&raw.responseSha===result.responseSha&&result.bindingSha===hash(bytes)
+      &&raw.requestSha===u.requestSha&&hash(b.requests[u.unitId])===u.requestSha&&raw.candidateSha===u.candidateSha&&raw.inputSha===u.inputSha
+      &&settled.length===1&&settled[0].event.requestSha===u.requestSha&&settled[0].event.responseSha===raw.responseSha,'P06_RECORDED_BINDING')
+    return {version:'recorded-paired06-1',unitId:u.unitId,name:loadRecordedA02().name,operationId:item.operationId,title:item.title,
+      context:item.context,requestSha:u.requestSha,responseSha:raw.responseSha,rawHttpText:raw.rawHttpText}
+  })
+}
+export async function createLocalApp({port,carrierManifest,checking=false,recordedA02=false,recordedBatch=false,recordedCandidate02=false,recordedCandidate03=false,recordedPaired04=false,recordedPaired05=false,recordedPaired06=false}) {
   check(Number.isSafeInteger(port)&&port>=1024&&port<=65535,'EXPLICIT_PORT')
   const origin='http://127.0.0.1:'+port, capability=randomBytes(32).toString('hex')
   check(!recordedA02||port===6631,'RECORDED_ORIGIN')
@@ -117,8 +152,10 @@ export async function createLocalApp({port,carrierManifest,checking=false,record
   check(!recordedCandidate02||(recordedBatch&&!recordedA02&&port===6631),'C02_RECORDED_ORIGIN')
   check(!recordedCandidate03||recordedCandidate02,'C03_RECORDED_ORIGIN')
   check(!recordedPaired04||recordedCandidate03,'P04_RECORDED_ORIGIN')
+  check(!recordedPaired05||recordedPaired04,'P05_RECORDED_ORIGIN')
+  check(!recordedPaired06||recordedPaired05,'P06_RECORDED_ORIGIN')
   const recorded=recordedA02?loadRecordedA02():null
-  const batch=recordedBatch?[...loadRecordedBatch(),...(recordedCandidate02?loadRecordedCandidate02():[]),...(recordedCandidate03?loadRecordedCandidate03():[]),...(recordedPaired04?loadRecordedPaired04():[])]:null
+  const batch=recordedBatch?[...loadRecordedBatch(),...(recordedCandidate02?loadRecordedCandidate02():[]),...(recordedCandidate03?loadRecordedCandidate03():[]),...(recordedPaired04?loadRecordedPaired04():[]),...(recordedPaired05?loadRecordedPaired05():[]),...(recordedPaired06?loadRecordedPaired06():[])]:null
   const mode=batch?'recorded_batch':recorded?'recorded_a02':'seen_engineering_replay'
   const manifestPath=realpathSync(carrierManifest), manifest=JSON.parse(readFileSync(manifestPath,'utf8'))
   check(manifest.version==='real-input-engineering-carriers-1'&&manifest.records?.length===8,'CARRIERS')
@@ -152,7 +189,7 @@ export async function createLocalApp({port,carrierManifest,checking=false,record
   const bundle=await build({entryPoints:['src/experiments/realInput01/browser.tsx'],bundle:true,write:false,metafile:true,outdir:'memory',
     platform:'browser',format:'esm',target:'es2022',jsx:'automatic',loader:{'.svg':'dataurl'},
     define:{'process.env.NODE_ENV':'"test"','import.meta.env':'{}',__REAL_INPUT_CONFIG__:JSON.stringify({mode,capability,resources,carriers:recorded||(batch&&!recordedCandidate02)?[]:carriers,units:[],
-      ...(batch?{batch:batch.map(({unitId,requestSha,responseSha})=>({unitId,requestSha,responseSha})),recorded:{name:batch[0].name},candidate02:recordedCandidate02,candidate03:recordedCandidate03,paired04:recordedPaired04}:{}),
+      ...(batch?{batch:batch.map(({unitId,requestSha,responseSha})=>({unitId,requestSha,responseSha})),recorded:{name:batch[0].name},candidate02:recordedCandidate02,candidate03:recordedCandidate03,paired04:recordedPaired04,paired05:recordedPaired05,paired06:recordedPaired06}:{}),
       ...(recorded?{recorded:{name:recorded.name,requestSha:recorded.requestSha,responseSha:recorded.responseSha}}:{})})}})
   const parsedReferenceModules=Object.keys(bundle.metafile.inputs).filter(path=>/(?:seenInputs|engineeringReplay|fixtures\.ts|fidelity|evaluation\.ts|\.test\.|DATASET|raw-results)/i.test(path))
   const browserJs=bundle.outputFiles.find(file=>file.path.endsWith('.js')).text
@@ -216,7 +253,7 @@ export async function createLocalApp({port,carrierManifest,checking=false,record
 }
 if(process.argv[1]&&resolve(process.argv[1])===resolve(import.meta.filename)){
   const args=process.argv.slice(2),pick=key=>args.find(arg=>arg.startsWith('--'+key+'='))?.slice(key.length+3)
-  check(args.every(a=>a==='--check'||a==='--recorded-a02'||a==='--recorded-batch'||a==='--recorded-candidate02'||a==='--recorded-candidate03'||a==='--recorded-paired04'||/^--(?:port|carriers)=/.test(a))&&new Set(args.map(a=>a.split('=')[0])).size===args.length,'ARGS')
-  const result=await createLocalApp({port:Number(pick('port')),carrierManifest:pick('carriers'),checking:args.includes('--check'),recordedA02:args.includes('--recorded-a02'),recordedBatch:args.includes('--recorded-batch'),recordedCandidate02:args.includes('--recorded-candidate02'),recordedCandidate03:args.includes('--recorded-candidate03'),recordedPaired04:args.includes('--recorded-paired04')})
+  check(args.every(a=>a==='--check'||a==='--recorded-a02'||a==='--recorded-batch'||a==='--recorded-candidate02'||a==='--recorded-candidate03'||a==='--recorded-paired04'||a==='--recorded-paired05'||a==='--recorded-paired06'||/^--(?:port|carriers)=/.test(a))&&new Set(args.map(a=>a.split('=')[0])).size===args.length,'ARGS')
+  const result=await createLocalApp({port:Number(pick('port')),carrierManifest:pick('carriers'),checking:args.includes('--check'),recordedA02:args.includes('--recorded-a02'),recordedBatch:args.includes('--recorded-batch'),recordedCandidate02:args.includes('--recorded-candidate02'),recordedCandidate03:args.includes('--recorded-candidate03'),recordedPaired04:args.includes('--recorded-paired04'),recordedPaired05:args.includes('--recorded-paired05'),recordedPaired06:args.includes('--recorded-paired06')})
   console.log(JSON.stringify(args.includes('--check')?result.evidence:{url:result.url,mode:result.evidence.mode,upstreamEnabled:false}))
 }

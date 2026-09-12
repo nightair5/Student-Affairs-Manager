@@ -16,10 +16,12 @@ import { FactCorrectionEditor, RelationCorrection } from './FactCorrectionEditor
 import { makeSendSnapshot, sha256Text } from './inputReceipt'
 import type { ModelExecutor } from './modelClient'
 import type { WireContext } from './modelWire'
-import { buildModelRequest } from './modelWire'
+import { buildModelRequest, MODEL_NAME, FLASH41_MODEL_NAME } from './modelWire'
 import { buildCandidate02Request, CANDIDATE02_VERSION } from './candidate02'
 import { buildCandidate03Request, CANDIDATE03_VERSION } from './candidate03'
 import { buildCandidate04Request, CANDIDATE04_VERSION } from './candidate04'
+import { buildFlash41ComparisonRequest, CANDIDATE05_VERSION } from './candidate05'
+import { buildFlash41Candidate06ComparisonRequest, CANDIDATE06_VERSION } from './candidate06'
 import { acquireText } from './inputAcquisition'
 import { pendingDateTaskIds } from '../mainline05/semanticView'
 import { stableJson } from '../mainline04/semanticContract'
@@ -52,7 +54,7 @@ export interface RecordedBatch extends Omit<RecordedA02,'version'> {
 }
 export interface RecordedBatchIdentity {unitId:string;requestSha:string;responseSha:string}
 export interface RecordedPaired04 {
-  version:'recorded-paired04-1'; unitId:string; name:string; operationId:string; title:string;
+  version:'recorded-paired04-1'|'recorded-paired05-1'|'recorded-paired06-1'; unitId:string; name:string; operationId:string; title:string;
   context:WireContext; requestSha:string; responseSha:string; rawHttpText:string
 }
 /** Server-bound paid record, not a model executor. No references or scores enter here. */
@@ -61,12 +63,17 @@ export async function replayRecordedPaired04(repo:SemanticRepository,record:Reco
   exactKeys(record,['version','unitId','name','operationId','title','context','requestSha','responseSha','rawHttpText'])
   exactKeys(identity,['unitId','requestSha','responseSha'])
   const id=record.unitId.slice(0,3),arm=record.unitId.slice(4)
-  if(record.version!=='recorded-paired04-1'||!/^N(0[1-9]|1[0-2])-(03|04)$/.test(record.unitId)
-    ||record.operationId!=='paired04-source-'+id||record.name!==recordedA02Identity.name
+  const newest=record.version==='recorded-paired06-1',next=record.version==='recorded-paired05-1',prefix=newest?'paired06':next?'paired05':'paired04'
+  const built=newest&&['03','06'].includes(arm)?await buildFlash41Candidate06ComparisonRequest(record.context,arm as '03'|'06')
+    :next&&['03','05'].includes(arm)?await buildFlash41ComparisonRequest(record.context,arm as '03'|'05')
+    :await (arm==='03'?buildCandidate03Request:buildCandidate04Request)(record.context)
+  if(!['recorded-paired04-1','recorded-paired05-1','recorded-paired06-1'].includes(record.version)
+    ||!(newest?/^Q(0[1-9]|1[0-2])-(03|06)$/:next?/^P(0[1-9]|1[0-2])-(03|05)$/:/^N(0[1-9]|1[0-2])-(03|04)$/).test(record.unitId)
+    ||record.operationId!==prefix+'-source-'+id||record.name!==recordedA02Identity.name
     ||repo.name!==record.name||repo.profile!=='real-input-01'||record.unitId!==identity.unitId
     ||record.requestSha!==identity.requestSha||record.responseSha!==identity.responseSha
     ||await sha256Text(record.rawHttpText)!==identity.responseSha
-    ||await sha256Text((await (arm==='03'?buildCandidate03Request:buildCandidate04Request)(record.context)).serialized)!==identity.requestSha)throw Error('REAL_INPUT_P04_IDENTITY')
+    ||await sha256Text(built.serialized)!==identity.requestSha)throw Error('REAL_INPUT_P04_IDENTITY')
   const before=await repo.load(),receipt={version:record.version,unitId:record.unitId,requestSha:record.requestSha,responseSha:record.responseSha}
   const existing=before.sources.find(s=>s.legacyData?.captureOperationId===record.operationId)
   if(existing){
@@ -76,15 +83,16 @@ export async function replayRecordedPaired04(repo:SemanticRepository,record:Reco
       ||(draft.legacyData?.mainline05 as {rawHttpText?:string})?.rawHttpText!==record.rawHttpText)throw Error('PAIRED_SOURCE_ARM_ALREADY_CHOSEN')
     return before
   }
-  const inputReceipt=await acquireText('paired04-'+id,record.context.index.sourceContent)
+  const inputReceipt=await acquireText(prefix+'-'+id,record.context.index.sourceContent)
   const reading={version:REAL_STATE_VERSION,inputReceipt,sendSnapshot:await makeSendSnapshot(inputReceipt,[1],[1],record.context.referenceTime)}
   return repo.appendPairedRecordedSource(record.operationId,semanticRevision(before),async memory=>{
     const source=await memory.saveReading(inputReceipt,record.title,record.operationId,record.context.referenceTime)
     const actual={index:await indexImmutableScopesV11(source.sourceId,source.sourceVersionId,reading.sendSnapshot.text),
       referenceTime:record.context.referenceTime,timezone:'Asia/Shanghai'}
     if(stableJson(actual)!==stableJson(record.context))throw Error('REAL_INPUT_P04_SOURCE')
-    const handle=await memory.beginInputRun(source.sourceId,reading,'live','recorded-paired04-'+record.unitId,
-      semanticRevision(await memory.load()),record.context.referenceTime,arm==='03'?CANDIDATE03_VERSION:CANDIDATE04_VERSION)
+    const handle=await memory.beginInputRun(source.sourceId,reading,'live','recorded-'+prefix+'-'+record.unitId,
+      semanticRevision(await memory.load()),record.context.referenceTime,arm==='03'?CANDIDATE03_VERSION:newest?CANDIDATE06_VERSION:next?CANDIDATE05_VERSION:CANDIDATE04_VERSION,
+      newest||next?FLASH41_MODEL_NAME:MODEL_NAME)
     await memory.transaction(w=>({...w,extractionDrafts:w.extractionDrafts.map(d=>d.id===handle.draftId
       ?{...d,legacyData:{...d.legacyData,realInputRecorded:receipt}}:d)}))
     await completeInputRun(memory,handle,record.rawHttpText)
@@ -275,6 +283,8 @@ export async function createRealInputRuntime(options: {
   recordedCandidate02?: true;
   recordedCandidate03?: true;
   recordedPaired04?: true;
+    recordedPaired05?: true;
+    recordedPaired06?: true;
 }) {
   options = { ...options, resources: structuredClone(options.resources) }
   if (!['live','seen_engineering_replay'].includes(options.execution)) throw Error('REAL_INPUT_EXECUTION_PROFILE')
@@ -283,6 +293,8 @@ export async function createRealInputRuntime(options: {
   if(options.recordedCandidate02&&!options.recordedBatch)throw Error('REAL_INPUT_C02_RECORDED_RUNTIME')
   if(options.recordedCandidate03&&!options.recordedCandidate02)throw Error('REAL_INPUT_C03_RECORDED_RUNTIME')
   if(options.recordedPaired04&&!options.recordedCandidate03)throw Error('REAL_INPUT_P04_RECORDED_RUNTIME')
+  if(options.recordedPaired05&&!options.recordedPaired04)throw Error('REAL_INPUT_P05_RECORDED_RUNTIME')
+  if(options.recordedPaired06&&!options.recordedPaired05)throw Error('REAL_INPUT_P06_RECORDED_RUNTIME')
   await SemanticRepository.open(options.name,options.store,options.initial,'real-input-01')
   return createMainlineRuntime({name:options.name,store:options.store,profile:'real-input-01',
     recognize:()=>{throw Error('REAL_INPUT_OLD_RECOGNIZER_FORBIDDEN')},
@@ -292,8 +304,8 @@ export async function createRealInputRuntime(options: {
         createElement(SemanticFacts,{state:stateOfRuntime(workspace,draftId),taskId,onFocus})
       return {load:()=>repo.load(),view:semanticView,dates:semanticDates,review:semanticReview,edit:i=>editSemantic(repo,i),
         confirm:i=>confirmSemantic(repo,i),exportJson:()=>repo.exportJson(),capture:async()=>{throw Error('请先在真实输入面板保存并核对本次文字范围。')},
-        recognitionDescription:options.recordedPaired04?'候选03/04配对真实回答 · 逐项人工核对':options.recordedCandidate03?'候选03与历史真实模型回答 · 逐项人工核对':options.recordedCandidate02?'新候选02与历史真实模型回答 · 逐项人工核对':options.recordedBatch?'已记录真实模型批次 · 原回答核对，不再调用模型':options.recordedA02?'A02历史真实模型响应回放 · 本轮零调用':options.execution==='live'?'真实模型建议 · 尚未逐项核对':'已见匿名工程回放 · 非模型预测',
-        realInput:{profile:'real-input-01',networkDescription:options.recordedPaired04?'24次配对已完成，本包累计56次；仅本机回放，不再发送。':options.recordedCandidate03?'候选03的8次已完成，本包累计32次；当前仅本机回放，不再发送。':options.recordedCandidate02?'新候选8次已完成，本包累计24次；当前仅本机回放，不再发送。':options.recordedBatch?'本批14次已派发完毕；仅核对已记录响应与本机提取文字，不再发送。':options.recordedA02?'只核对已记录A02响应；禁止新发送，不读取密钥，不访问模型。':options.execution==='live'
+        recognitionDescription:options.recordedPaired06?'DeepSeek-V4.1-Flash · 03/06已记录回答 · 逐项核对':options.recordedPaired05?'DeepSeek-V4.1-Flash · 03/05已记录回答 · 逐项核对':options.recordedPaired04?'候选03/04配对真实回答 · 逐项人工核对':options.recordedCandidate03?'候选03与历史真实模型回答 · 逐项人工核对':options.recordedCandidate02?'新候选02与历史真实模型回答 · 逐项人工核对':options.recordedBatch?'已记录真实模型批次 · 原回答核对，不再调用模型':options.recordedA02?'A02历史真实模型响应回放 · 本轮零调用':options.execution==='live'?'真实模型建议 · 尚未逐项核对':'已见匿名工程回放 · 非模型预测',
+        realInput:{profile:'real-input-01',networkDescription:options.recordedPaired06?'同材料03/06开发回归；仅回放本批已取得并结算的回答，不允许新发送。首次建议和人工纠正分别保留。':options.recordedPaired05?'新模型24次配对已完成，本包累计80次；只回放已取得回答，不再发送。05未替换现有路线。':options.recordedPaired04?'24次配对已完成，本包累计56次；仅本机回放，不再发送。':options.recordedCandidate03?'候选03的8次已完成，本包累计32次；当前仅本机回放，不再发送。':options.recordedCandidate02?'新候选8次已完成，本包累计24次；当前仅本机回放，不再发送。':options.recordedBatch?'本批14次已派发完毕；仅核对已记录响应与本机提取文字，不再发送。':options.recordedA02?'只核对已记录A02响应；禁止新发送，不读取密钥，不访问模型。':options.execution==='live'
           ?'本机读取；仅在逐次确认且预算允许时发送本次文字，不发送文件或工作区。':'本机读取与已见工程回放，无外部模型调用。',
           inputPanel:props=>options.recordedCandidate02?createElement(InputReview,{...props,repo,resources:options.resources,execution:options.execution,localOnly:true,
             send:async()=>{throw Error('REAL_INPUT_NEW_SEND_DISABLED')}}):options.recordedBatch?createElement('p',{role:'status'},'本批已调用完成；请从收件箱核对原回答。没有额外模型请求授权，新发送已关闭。'):options.recordedA02?createElement('p',{role:'status'},'当前只允许A02历史响应核对，已关闭新录入和发送。请从收件箱恢复A02。'):createElement(InputReview,{...props,repo,resources:options.resources,execution:options.execution,
