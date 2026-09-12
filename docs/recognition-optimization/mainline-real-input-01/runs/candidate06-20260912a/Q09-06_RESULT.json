@@ -1,0 +1,215 @@
+{
+  "unitId": "Q09-06",
+  "arm": "06",
+  "bindingSha": "301c71c90c23b743d1ff01ab83d914e3da4affcb3df06bb090c7602d05ba0dbf",
+  "requestSha": "adb442f86af5a7d605c091e85ff88cf6e0ee8a83f58c1c7cffb26939bd424aab",
+  "responseSha": "4c4d85593e0501d897a98c966a502d3edb9f2f8b120334c3e969cd54cb960889",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "scorerSha": "ad76149f8a88cb4adda6dca78b210daaa4f3c800d17582767911e8ace2658e1d",
+  "scorerBundleSha": "782c89b4f865d83c9a2051d9e2a6df3776b7231ad49aec87008b5c14f4e09f21",
+  "referenceSha": "71ab3cbb872361b24ae5c87ca3d1c99b3f43c0061c3ad9a43d3fb7c0c9f66e38",
+  "scoreInput": "explicit semantic projection into byte-identical historical scorer; raw response unmodified",
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [],
+    "materials": [],
+    "timePoints": [
+      {
+        "tempId": "tp-event-start",
+        "type": "event_start",
+        "rawText": "2026年9月28日19:00",
+        "relatedTaskTempIds": [],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0002-262dca57c4ddff4bef15bbd515de5b8103dd0ecc13727ccb67a4d0f2bf3c2790"
+        ],
+        "confidence": 0.95,
+        "normalizedValue": "2026-09-28T19:00",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "exact",
+        "needsConfirmation": false
+      },
+      {
+        "tempId": "tp-event-end",
+        "type": "event_end",
+        "rawText": "21:00",
+        "relatedTaskTempIds": [],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0003-f4397b4efa32da5fd0e69c128be4eec536fb251eb49dd1d8bb6e9695953e69dd"
+        ],
+        "confidence": 0.95,
+        "normalizedValue": null,
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "vague",
+        "needsConfirmation": true
+      }
+    ],
+    "events": [
+      {
+        "tempId": "ev-stargazing-night",
+        "title": "校园观星夜",
+        "description": "观星夜活动，地点为教学楼北侧平台。",
+        "startTimePointTempId": "tp-event-start",
+        "endTimePointTempId": "tp-event-end",
+        "location": "教学楼北侧平台",
+        "scopeIds": [
+          "scope-0001-052b3932a8ca15faff7dc8279a76a93a76e1990e6ae620bea4632a40db80dfc7",
+          "scope-0002-262dca57c4ddff4bef15bbd515de5b8103dd0ecc13727ccb67a4d0f2bf3c2790",
+          "scope-0003-f4397b4efa32da5fd0e69c128be4eec536fb251eb49dd1d8bb6e9695953e69dd",
+          "scope-0004-b02e184847895ba0271b4a83dac913b93cbcb25c76eb0179d9b4b8fd623ff2a2"
+        ],
+        "confidence": 0.95,
+        "inferenceLevel": "explicit",
+        "relatedTaskTempIds": []
+      }
+    ],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0005-d5f57c0d1b1da17236a7a7169d9fbfc6ef37f05dfbbc509ddfa281f755706c59",
+      "scope-0006-afa7a847423bf3032acd441abf10af44e06cdb0fc0f4e0bb98d51602034619b6",
+      "scope-0007-44b192a5197d6b570ac874410a6e4659f7e01cde9208d2fed5af999f3e1ce948",
+      "scope-0008-c558281acb84f6a353699bf2241aa4fa63fa43593d21f6a15ee6a3234debd502",
+      "scope-0009-8b99abd69a95d4aeb63e682ee697df75fc5c8a8d0e32851c8136c32fbd31d1bc"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "source:81f96e75",
+    "sourceVersionId": "source:81f96e75:version:1",
+    "sourceFingerprint": "sha256:4f359f274e2a8a993d5fa983a435deb50647ce5019a0b71a8b5ab778bece3f37"
+  },
+  "http": 200,
+  "diagnostic": null,
+  "waitingMs": 3766,
+  "score": {
+    "scorerVersion": "real-input-seen-fact-diagnostic-2",
+    "label": "已见人工工程参考的精确诊断，不是未见或商业准确率",
+    "metrics": {
+      "task": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "requiresAction": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 1,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "time": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 2,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "material": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "event": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 0,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0,
+        "recall": 0
+      },
+      "condition": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "revision": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "evidence": {
+        "predicted": 3,
+        "reference": 3,
+        "correct": 2,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0.6666666666666666,
+        "recall": 0.6666666666666666
+      },
+      "semantic": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 1,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0.5,
+        "recall": 0.5
+      },
+      "coverage": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 1,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0.5,
+        "recall": 0.5
+      }
+    },
+    "matchingAmbiguities": [],
+    "metricStatus": "EXACT_REFERENCE_DIAGNOSTIC",
+    "schemaParsed": true,
+    "issues": [
+      {
+        "code": "TIME_NEEDS_REVIEW",
+        "entityIds": [
+          "tp-event-end"
+        ]
+      },
+      {
+        "code": "EVENT_NOT_TASK_ASSOCIATED",
+        "entityIds": [
+          "ev-stargazing-night"
+        ]
+      }
+    ],
+    "completeCase": false,
+    "majorCorrectionRequired": true,
+    "forbidden": 0,
+    "automaticSelection": "NOT_ENABLED",
+    "humanActiveEditTime": "NOT_RUN",
+    "candidateTaskCount": 0,
+    "referenceTaskCount": 0
+  },
+  "scoreError": null,
+  "totalAttempts": 97,
+  "costUpperMicroCny": 14916,
+  "totalCostUpperMicroCny": 5421485,
+  "stopDispatch": false,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticSelection": "NOT_ENABLED",
+  "qualityClaim": "12份已见材料开发回归；授权同期重复测量，非盲测；24请求不是24份独立材料"
+}

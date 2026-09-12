@@ -1,0 +1,392 @@
+{
+  "unitId": "Q10-06",
+  "arm": "06",
+  "bindingSha": "301c71c90c23b743d1ff01ab83d914e3da4affcb3df06bb090c7602d05ba0dbf",
+  "requestSha": "03f93d1d9ae7e8a1df29ab7a06f631bf0422cf3e40f6ae6112c13a336d3a05a0",
+  "responseSha": "c9a56d1143b381673b5ff695079468d45f7bbff23ec2e40d9c757edf2094e149",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "scorerSha": "ad76149f8a88cb4adda6dca78b210daaa4f3c800d17582767911e8ace2658e1d",
+  "scorerBundleSha": "782c89b4f865d83c9a2051d9e2a6df3776b7231ad49aec87008b5c14f4e09f21",
+  "referenceSha": "71ab3cbb872361b24ae5c87ca3d1c99b3f43c0061c3ad9a43d3fb7c0c9f66e38",
+  "scoreInput": "explicit semantic projection into byte-identical historical scorer; raw response unmodified",
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-light-inventory-submit",
+        "propositionScopeIds": [
+          "scope-0002-9a7d251dc7ae4ec50464559eae6c775a9da5c67f4b222b16372a998cf8d81c50",
+          "scope-0003-12bc47fe5bca0691657c6426693ff87dce3f1f6d9f045b024ace0397dd9789a9",
+          "scope-0006-889105ac65daf10c6a91fbfa6f473e66650ba594eb767ea78237af042d04a243",
+          "scope-0008-9efaf2314a05319b7333bd9b1e7d6a9af86da101399ab4c53b3130e162e33298"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "submit",
+        "action": {
+          "scopeId": "scope-0002-9a7d251dc7ae4ec50464559eae6c775a9da5c67f4b222b16372a998cf8d81c50",
+          "surface": "提交"
+        },
+        "object": {
+          "scopeId": "scope-0002-9a7d251dc7ae4ec50464559eae6c775a9da5c67f4b222b16372a998cf8d81c50",
+          "surface": "灯光盘点表"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "提交灯光盘点表",
+          "description": "器材管理员于2026年9月29日16:00前提交灯光盘点表，表格使用XLSX并附两张灯具现状照片；灯具现状照片只属于灯光盘点，不要交叉上传。",
+          "completionCriteria": [
+            "灯光盘点表已提交",
+            "表格格式为XLSX",
+            "附两张灯具现状照片"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "high",
+          "dependencyTempIds": [],
+          "materialTempIds": [
+            "mat-light-inventory-table",
+            "mat-light-photos"
+          ],
+          "timePointTempIds": [
+            "tp-light-submit-deadline"
+          ],
+          "confidence": 0.95,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      },
+      {
+        "id": "task-audio-inventory-submit",
+        "propositionScopeIds": [
+          "scope-0004-014f727f48d308822438319e3f14f51d6428760921ba26051b3a5adfab9b6161",
+          "scope-0005-a420f572945f4017d06622ade3e5b787e3bc1746e3054aed13b488300107793d",
+          "scope-0007-6ec5d687ba6974fcf017ca98352a2b1d8b053f033ce7719928a8b8c269b77e92",
+          "scope-0008-9efaf2314a05319b7333bd9b1e7d6a9af86da101399ab4c53b3130e162e33298"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "submit",
+        "action": {
+          "scopeId": "scope-0004-014f727f48d308822438319e3f14f51d6428760921ba26051b3a5adfab9b6161",
+          "surface": "提交"
+        },
+        "object": {
+          "scopeId": "scope-0004-014f727f48d308822438319e3f14f51d6428760921ba26051b3a5adfab9b6161",
+          "surface": "音响盘点表"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "提交音响盘点表",
+          "description": "音响管理员于2026年9月30日11:00前提交音响盘点表，表格使用PDF并附维修收据；维修收据只属于音响盘点，不要交叉上传。",
+          "completionCriteria": [
+            "音响盘点表已提交",
+            "表格格式为PDF",
+            "附维修收据"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "high",
+          "dependencyTempIds": [],
+          "materialTempIds": [
+            "mat-audio-inventory-table",
+            "mat-repair-receipt"
+          ],
+          "timePointTempIds": [
+            "tp-audio-submit-deadline"
+          ],
+          "confidence": 0.95,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [
+      {
+        "tempId": "mat-light-inventory-table",
+        "name": "灯光盘点表",
+        "required": true,
+        "formatRequirements": [
+          "XLSX"
+        ],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "task-light-inventory-submit"
+        ],
+        "scopeIds": [
+          "scope-0002-9a7d251dc7ae4ec50464559eae6c775a9da5c67f4b222b16372a998cf8d81c50",
+          "scope-0003-12bc47fe5bca0691657c6426693ff87dce3f1f6d9f045b024ace0397dd9789a9"
+        ],
+        "confidence": 0.95
+      },
+      {
+        "tempId": "mat-light-photos",
+        "name": "灯具现状照片",
+        "required": true,
+        "formatRequirements": [],
+        "namingRequirements": [],
+        "quantity": 2,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "task-light-inventory-submit"
+        ],
+        "scopeIds": [
+          "scope-0003-12bc47fe5bca0691657c6426693ff87dce3f1f6d9f045b024ace0397dd9789a9",
+          "scope-0006-889105ac65daf10c6a91fbfa6f473e66650ba594eb767ea78237af042d04a243",
+          "scope-0008-9efaf2314a05319b7333bd9b1e7d6a9af86da101399ab4c53b3130e162e33298",
+          "scope-0009-bba26ae810a8efc01ac0fb95c14f46b9a0e3ce133b38a89066b5cb495ef3a7ef"
+        ],
+        "confidence": 0.95
+      },
+      {
+        "tempId": "mat-audio-inventory-table",
+        "name": "音响盘点表",
+        "required": true,
+        "formatRequirements": [
+          "PDF"
+        ],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "task-audio-inventory-submit"
+        ],
+        "scopeIds": [
+          "scope-0004-014f727f48d308822438319e3f14f51d6428760921ba26051b3a5adfab9b6161",
+          "scope-0005-a420f572945f4017d06622ade3e5b787e3bc1746e3054aed13b488300107793d"
+        ],
+        "confidence": 0.95
+      },
+      {
+        "tempId": "mat-repair-receipt",
+        "name": "维修收据",
+        "required": true,
+        "formatRequirements": [],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "task-audio-inventory-submit"
+        ],
+        "scopeIds": [
+          "scope-0005-a420f572945f4017d06622ade3e5b787e3bc1746e3054aed13b488300107793d",
+          "scope-0007-6ec5d687ba6974fcf017ca98352a2b1d8b053f033ce7719928a8b8c269b77e92",
+          "scope-0008-9efaf2314a05319b7333bd9b1e7d6a9af86da101399ab4c53b3130e162e33298",
+          "scope-0010-6c39897e2b9a523bdc096c5dac2451bd0da397f90efd9b50f4599a673ab3fd4e"
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "timePoints": [
+      {
+        "tempId": "tp-light-submit-deadline",
+        "type": "submission_deadline",
+        "rawText": "2026年9月29日16:00前",
+        "relatedTaskTempIds": [
+          "task-light-inventory-submit"
+        ],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0002-9a7d251dc7ae4ec50464559eae6c775a9da5c67f4b222b16372a998cf8d81c50"
+        ],
+        "confidence": 0.95,
+        "normalizedValue": "2026-09-29T16:00",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "exact",
+        "needsConfirmation": false
+      },
+      {
+        "tempId": "tp-audio-submit-deadline",
+        "type": "submission_deadline",
+        "rawText": "2026年9月30日11:00前",
+        "relatedTaskTempIds": [
+          "task-audio-inventory-submit"
+        ],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0004-014f727f48d308822438319e3f14f51d6428760921ba26051b3a5adfab9b6161"
+        ],
+        "confidence": 0.95,
+        "normalizedValue": "2026-09-30T11:00",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "exact",
+        "needsConfirmation": false
+      }
+    ],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0001-9f25da7f0bc880fc9dda8fe8066ab374519a11c3e579b768a48f4596a6942e11",
+      "scope-0009-bba26ae810a8efc01ac0fb95c14f46b9a0e3ce133b38a89066b5cb495ef3a7ef",
+      "scope-0010-6c39897e2b9a523bdc096c5dac2451bd0da397f90efd9b50f4599a673ab3fd4e"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "source:47900e93",
+    "sourceVersionId": "source:47900e93:version:1",
+    "sourceFingerprint": "sha256:93a3684c477fb8e730406e8778d94cec657b1d97aef9e95fb92ba9e22244b443"
+  },
+  "http": 200,
+  "diagnostic": null,
+  "waitingMs": 8458,
+  "score": {
+    "scorerVersion": "real-input-seen-fact-diagnostic-2",
+    "label": "已见人工工程参考的精确诊断，不是未见或商业准确率",
+    "metrics": {
+      "task": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 2,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "requiresAction": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 2,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "time": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 0,
+        "falsePositive": 2,
+        "falseNegative": 2,
+        "precision": 0,
+        "recall": 0
+      },
+      "material": {
+        "predicted": 4,
+        "reference": 4,
+        "correct": 4,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "event": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "condition": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 2,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "revision": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "evidence": {
+        "predicted": 8,
+        "reference": 8,
+        "correct": 2,
+        "falsePositive": 6,
+        "falseNegative": 6,
+        "precision": 0.25,
+        "recall": 0.25
+      },
+      "semantic": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 0,
+        "falsePositive": 2,
+        "falseNegative": 2,
+        "precision": 0,
+        "recall": 0
+      },
+      "coverage": {
+        "predicted": 4,
+        "reference": 4,
+        "correct": 1,
+        "falsePositive": 3,
+        "falseNegative": 3,
+        "precision": 0.25,
+        "recall": 0.25
+      }
+    },
+    "matchingAmbiguities": [],
+    "metricStatus": "EXACT_REFERENCE_DIAGNOSTIC",
+    "schemaParsed": true,
+    "issues": [],
+    "completeCase": false,
+    "majorCorrectionRequired": true,
+    "forbidden": 0,
+    "automaticSelection": "NOT_ENABLED",
+    "humanActiveEditTime": "NOT_RUN",
+    "candidateTaskCount": 2,
+    "referenceTaskCount": 2
+  },
+  "scoreError": null,
+  "totalAttempts": 99,
+  "costUpperMicroCny": 27904,
+  "totalCostUpperMicroCny": 5464471,
+  "stopDispatch": false,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticSelection": "NOT_ENABLED",
+  "qualityClaim": "12份已见材料开发回归；授权同期重复测量，非盲测；24请求不是24份独立材料"
+}

@@ -1,0 +1,231 @@
+{
+  "status": "PASS",
+  "head": "c419aea63a1f6595cb0140cde00eb89dcc092759",
+  "scope": "PAIRED06_SEND",
+  "grantId": "ee739a51-e5d3-4bcd-8b31-034244f89dec",
+  "sources": [
+    {
+      "path": "src/App.tsx",
+      "sha256": "e4c6ff0f9328867c8b0f9e9b191f67899ea789c19ad9d3d5c9429e75d2a1c749"
+    },
+    {
+      "path": "src/components/IntakePanel.tsx",
+      "sha256": "92b1e9b2dd3312b380b7d01dcff3e8c9ec2c5c3d919ef2f8802b85d1d3c5418b"
+    },
+    {
+      "path": "src/components/DraftReviewPanel.tsx",
+      "sha256": "ad0e9f72dbc8577de21abb1904d9c4c89841ce69709a7334ea20693cc1452bb1"
+    },
+    {
+      "path": "src/lib/fileExtraction.ts",
+      "sha256": "fc54f8605f86448012d4b2ab5f6679adbc95b78c94e85789ec464295cb790df3"
+    },
+    {
+      "path": "src/experiments/mainline02/runtime.ts",
+      "sha256": "42967c555f1616f54ea6fbf49b45e0df7a237a93d75470c22348a7cc0f69a36b"
+    },
+    {
+      "path": "src/experiments/mainline04/semanticComposer.ts",
+      "sha256": "21c38c5a10eda7446c8af941f9eecf6c9d0506e63eab954600118ec51b4ab5b8"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticState.ts",
+      "sha256": "800bbf79a0faf581253d0166828d245db93e417d7e95e36140498afaf400da03"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticRepository.ts",
+      "sha256": "2236b88efcfe086954ec1416cfca42a3fe87008430916aa0d8e1e0b19aec035e"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticCapture.ts",
+      "sha256": "e34667557499fa12a6ce02194069c37620195d1fbd733c9cb3d01462359f3a85"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticConfirmation.ts",
+      "sha256": "e87f4c23db9b1b64bcc72cea2ac49db1001391d06718ac082ff9b2576421b4fa"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticView.ts",
+      "sha256": "40fe7ea4a33d61a421c6d92348daac21144207584689774e061c45bee28275cf"
+    },
+    {
+      "path": "src/experiments/mainline05/runtime.ts",
+      "sha256": "9d6837cf4022fb989b7122a1f39c414355ee6f8f861e4d4df814146141edf83f"
+    },
+    {
+      "path": "src/experiments/mainline05/SemanticFacts.tsx",
+      "sha256": "4519767c3b1a1a320a3655a5b50da1aee75b400092dc073ecc5ea7318111b4a9"
+    },
+    {
+      "path": "src/experiments/realInput01/inputReceipt.ts",
+      "sha256": "743876df8bcc0eef0cf008f2000ad963f251ccf8cd005ae0319c968000b2b049"
+    },
+    {
+      "path": "src/experiments/realInput01/inputAcquisition.ts",
+      "sha256": "38339eacc4104653a9823adc8011744920b305852e91146346a645be396a2214"
+    },
+    {
+      "path": "src/experiments/realInput01/modelWire.ts",
+      "sha256": "844e7c0b9e552a33411fb2fb803a27225cb1d8f88b65be6daf959b14831f395d"
+    },
+    {
+      "path": "src/experiments/realInput01/modelClient.ts",
+      "sha256": "767edb637cf741d4f27a96d5059836cd7b17e8c643e9936d974e380bde21df0b"
+    },
+    {
+      "path": "src/experiments/realInput01/modelPolicy.ts",
+      "sha256": "ac2606d1a0fe84d56a911797bffec7eab93be19cdd95e54150d97becd113cafd"
+    },
+    {
+      "path": "src/experiments/realInput01/factCorrections.ts",
+      "sha256": "3e2071f8e7cdf58da796530b9d3e278b1aeb987c8a7def743eec21ca3d17ebdc"
+    },
+    {
+      "path": "src/experiments/realInput01/runtime.ts",
+      "sha256": "e9d02a57f36bce2318c86cd9c197579d4efb84acc3163e767bc8e87cd96adb8c"
+    },
+    {
+      "path": "src/experiments/realInput01/browser.tsx",
+      "sha256": "ccc2f8707c68c438a8e0b7fbcd3d69cf41aa1331975acf4ea9637cdce357db12"
+    },
+    {
+      "path": "src/experiments/realInput01/InputReview.tsx",
+      "sha256": "feff8078cced16316920cec1181af1d0e876830b1f4150c9f9dc710954f825ec"
+    },
+    {
+      "path": "src/experiments/realInput01/FactCorrectionEditor.tsx",
+      "sha256": "d9cc364372d16199c3d5e9e64eb30abb3c26de3ac40dab2df121f4c11dcf9511"
+    },
+    {
+      "path": "src/experiments/realInput01/seenInputs.ts",
+      "sha256": "e8c7cffc614b9be14c35657ddeb19592ddc3d8e8964423764889b46d37dd5583"
+    },
+    {
+      "path": "src/experiments/realInput01/evaluation.ts",
+      "sha256": "09ef0efff89c25761c721696da88de5fd73b74af0a417470e8f6af11979a6745"
+    },
+    {
+      "path": "src/experiments/realInput01/inputReceipt.test.ts",
+      "sha256": "421e2d67fca01e07bc044c75fc935f844b357d8b08f8707a4aa463e59e28fcd6"
+    },
+    {
+      "path": "src/experiments/realInput01/modelWire.test.ts",
+      "sha256": "dc417bf97d7cd0dedbffcdb70396cf0a915808cf423e7578b6a9c6cc1747f0ce"
+    },
+    {
+      "path": "src/experiments/realInput01/modelPolicy.test.ts",
+      "sha256": "bd8b511aede51694775c9fbdbc08dd2a0deea8611eb6b1e08a6736b0a8a1ac9b"
+    },
+    {
+      "path": "src/experiments/realInput01/factCorrections.test.ts",
+      "sha256": "5b5ad33a80d6f3226c08185fb2410b90bf3986d60c46f114ac8cfbf6e1d0440a"
+    },
+    {
+      "path": "src/experiments/realInput01/runtime.test.ts",
+      "sha256": "6859a42dfabb42206c016e035c86954b4b63e9c23da85556af9597cada73cdf1"
+    },
+    {
+      "path": "src/experiments/realInput01/acceptance.test.tsx",
+      "sha256": "392b80e4d66d0b0abb037c957ac5b2adb58fac1671b56ddccaffd3cb382caaf7"
+    },
+    {
+      "path": "src/experiments/realInput01/extraction.test.ts",
+      "sha256": "038e21fdf5448e5a7c859b3dd58b0b6f5b3d304f0a5515aaeb1ec00097ab4194"
+    },
+    {
+      "path": "scripts/serve-mainline-real-input-01.mjs",
+      "sha256": "7d20bb0cb87f3aed52974b8e9eed3781d7269102d0808704d52edb556a60b977"
+    },
+    {
+      "path": "scripts/real-input-model-gateway.mjs",
+      "sha256": "feb465bdc7517e275901617b6895574f050491c2305db8c97330eaccf4b29c06"
+    },
+    {
+      "path": "scripts/real-input-budget.mjs",
+      "sha256": "7be60b3c230c64e7742cb88665abe5fbfaf1127ed91f700abcaf7986304e529c"
+    },
+    {
+      "path": "scripts/check-mainline-real-input-01.mjs",
+      "sha256": "aee3a7e3512aa90f0b44be76615c665f0be7c030bad8ad10840a4bbe7cc3c4f4"
+    },
+    {
+      "path": "scripts/real-input-model-gateway.node-test.mjs",
+      "sha256": "7612008e0b2863438dd2248732342f45f2da3bfe85efb428195d1df147252855"
+    },
+    {
+      "path": "scripts/check-mainline-real-input-01.node-test.mjs",
+      "sha256": "8aaad86e10911c8e8b24fd6b3128340fccc5c0a503751d4788d628c1460c2f25"
+    },
+    {
+      "path": "scripts/run-mainline-real-input-01.mjs",
+      "sha256": "1ec8aadbd105f5b7ba50c042b66ae1d7ed0abeeb1122f94c7cd67deaee18ad6a"
+    },
+    {
+      "path": "scripts/real-input-budget.node-test.mjs",
+      "sha256": "92da38017373194c11deb997dffdc3a21bd4a8f875041cafbf96195e1edf80b0"
+    },
+    {
+      "path": "scripts/render-mainline-real-input-01-fixtures.mjs",
+      "sha256": "a5e88226104488cb61d50ea1c2fa92544ddd58974b08d5d4f0544cccacf6aafd"
+    },
+    {
+      "path": "src/pages/DashboardPage.tsx",
+      "sha256": "b0a475cb2c075fa789b360ead943c59d3b3be87da46a7adc49c9cf20be1bacec"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate02.ts",
+      "sha256": "4667ebb5a949b591002f4a6c8829212e2c3d4e3f6f15ee8afb75d2a9d0fd9ca2"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate02.test.ts",
+      "sha256": "e9a2bc32ffa7e6caa7210acf54178d8e62309911f689e4530175b056d783f222"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate03.ts",
+      "sha256": "f3a2dd9358ca2a50b9b3eba8a090211666db4c0fb8dc5fc146e742c9895f9508"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate03.test.ts",
+      "sha256": "fe3cf62ffe946e0441c8f154c2941730dc2012f6f8515ae8e14fa5c772e482ba"
+    },
+    {
+      "path": "src/pages/CalendarPage.tsx",
+      "sha256": "675947c46a541bc72f0d4b4be3d2139cddb57c6a1dbba54f79bd0561dc3c10e6"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate04.ts",
+      "sha256": "9fe3a9b905a79d103815739a372b482fa302ce28a047e15181762b0c39f395da"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate04.test.ts",
+      "sha256": "093575645747b1bafd44b124748b9ca81bec31424642ce8c1e2529f87a4ed29b"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate05.ts",
+      "sha256": "f9c38fa853dcf9f8e3576485c54cb17469f621ff0ae9777482207c59f4cd3a2a"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate05.test.ts",
+      "sha256": "78ed53a1719c11edec47d511585332588cda7b04d93cb799836b3b61ec49e8db"
+    },
+    {
+      "path": "src/experiments/realInput01/factAssembly.ts",
+      "sha256": "e4e5322bfd1c747ba74267fd3685712456028183ff7f32d00c8cdda353dcdadf"
+    },
+    {
+      "path": "src/experiments/realInput01/factAssembly.test.ts",
+      "sha256": "08e5fe7fddfde1592c3c5999ef9b82ae9d0aefa72d1591eb83baab501721c024"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate06.ts",
+      "sha256": "877b13ac614c9a1e196b56d112813ea7a118461c01861632d69d52d7aa72760b"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate06.test.ts",
+      "sha256": "3e03f9b9ffd32af6a98f143be34886f3108a85cc2507367c7ea302b488f59c92"
+    }
+  ],
+  "bindingSha": "301c71c90c23b743d1ff01ab83d914e3da4affcb3df06bb090c7602d05ba0dbf",
+  "billingSha": "b6cc236171b39c1952780d0d02ad4043d98256813ca425f09ad7795ba107981f",
+  "reviewEvidenceSha": "35cebb8d56c173f1bdaa8844418077b9327d17b9958d74112edbe396b0fe13c6"
+}

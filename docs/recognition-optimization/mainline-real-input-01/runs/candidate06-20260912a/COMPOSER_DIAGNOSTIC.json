@@ -1,0 +1,983 @@
+{
+  "label": "Zero-call readonly composition diagnostic; live-model profile; no repository write or user confirmation",
+  "sourceBindingSha": "301c71c90c23b743d1ff01ab83d914e3da4affcb3df06bb090c7602d05ba0dbf",
+  "dependencies": [
+    {
+      "path": "src/recognition/scopeIndexV11.ts",
+      "sha256": "2706131f0c133872042761016e8ccac0487ce854be3472f2d189e5c901889515"
+    },
+    {
+      "path": "src/lib/timeSemantics.ts",
+      "sha256": "d72109638ce4c653602478d2cd09049ab5a896a17c041422e8f5b583b8afde7d"
+    },
+    {
+      "path": "src/recognition/scopeReferenceContract.ts",
+      "sha256": "2f3b12b464991d8ea57fe08cad1217050485ddc69b310f13b489f6dcaae71cf2"
+    },
+    {
+      "path": "src/experiments/mainline04/semanticContract.ts",
+      "sha256": "a08953dfdb50bf0233d603ce46669f87ed4f61c810a322275011c7075b5e578f"
+    },
+    {
+      "path": "src/experiments/mainline04/semanticComposer.ts",
+      "sha256": "21c38c5a10eda7446c8af941f9eecf6c9d0506e63eab954600118ec51b4ab5b8"
+    }
+  ],
+  "rows": [
+    {
+      "unitId": "Q01-03",
+      "responseSha": "c1bb2804ef92d7afd3edab6f3048de8b14c8f92e4df002a6fce7d35a2f747664",
+      "http": 200,
+      "parseError": null,
+      "composeError": null,
+      "taskCount": 2,
+      "materialCount": 3,
+      "timeCount": 2,
+      "revisionCount": 0,
+      "issues": [],
+      "items": [
+        {
+          "id": "task-submit-authorization",
+          "requiresAction": "true",
+          "defaultSelected": false,
+          "issues": []
+        },
+        {
+          "id": "task-upload-trailer",
+          "requiresAction": "true",
+          "defaultSelected": false,
+          "issues": []
+        }
+      ],
+      "inverseMismatches": [],
+      "normalizedTimes": [
+        {
+          "id": "time-authorization-deadline",
+          "raw": "2026年9月23日16:00前",
+          "normalized": "2026-09-23T16:00",
+          "precision": "exact",
+          "needsConfirmation": false
+        },
+        {
+          "id": "time-trailer-deadline",
+          "raw": "2026年9月25日12:00前",
+          "normalized": "2026-09-25T12:00",
+          "precision": "exact",
+          "needsConfirmation": false
+        }
+      ]
+    },
+    {
+      "unitId": "Q01-06",
+      "responseSha": "defa94fbaa1b735dfc96530f3b956bd599f82f05e19b1a9b13f9ff7b33a608a0",
+      "http": 200,
+      "parseError": null,
+      "composeError": null,
+      "taskCount": 2,
+      "materialCount": 3,
+      "timeCount": 2,
+      "revisionCount": 0,
+      "issues": [],
+      "items": [
+        {
+          "id": "task-submit-authorization",
+          "requiresAction": "true",
+          "defaultSelected": false,
+          "issues": []
+        },
+        {
+          "id": "task-upload-trailer",
+          "requiresAction": "true",
+          "defaultSelected": false,
+          "issues": []
+        }
+      ],
+      "inverseMismatches": [],
+      "normalizedTimes": [
+        {
+          "id": "tp-authorization-deadline",
+          "raw": "2026年9月23日16:00前",
+          "normalized": "2026-09-23T16:00",
+          "precision": "exact",
+          "needsConfirmation": false
+        },
+        {
+          "id": "tp-trailer-deadline",
+          "raw": "2026年9月25日12:00前",
+          "normalized": "2026-09-25T12:00",
+          "precision": "exact",
+          "needsConfirmation": false
+        }
+      ]
+    },
+    {
+      "unitId": "Q02-03",
+      "responseSha": "f5ab772e35e840cfc4a43bb303259696d2dd529ed45e1c186825a9e259d1a3f8",
+      "http": 200,
+      "parseError": null,
+      "composeError": null,
+      "taskCount": 1,
+      "materialCount": 1,
+      "timeCount": 2,
+      "revisionCount": 0,
+      "issues": [
+        {
+          "code": "TIME_NEEDS_REVIEW",
+          "entityIds": [
+            "time-001"
+          ]
+        },
+        {
+          "code": "TIME_NEEDS_REVIEW",
+          "entityIds": [
+            "time-002"
+          ]
+        },
+        {
+          "code": "UNRESOLVED_SOURCE_SCOPE",
+          "entityIds": []
+        }
+      ],
+      "items": [
+        {
+          "id": "task-001",
+          "requiresAction": "true",
+          "defaultSelected": false,
+          "issues": [
+            "TIME_NEEDS_REVIEW",
+            "UNRESOLVED_SOURCE_SCOPE"
+          ]
+        }
+      ],
+      "inverseMismatches": [
+        {
+          "task": "task-001",
+          "kind": "time",
+          "entity": "time-002"
+        }
+      ],
+      "normalizedTimes": [
+        {
+          "id": "time-001",
+          "raw": "近期",
+          "normalized": null,
+          "precision": "vague",
+          "needsConfirmation": true
+        },
+        {
+          "id": "time-002",
+          "raw": "具体完成日期由实验室另行通知",
+          "normalized": null,
+          "precision": "vague",
+          "needsConfirmation": true
+        }
+      ]
+    },
+    {
+      "unitId": "Q02-06",
+      "responseSha": "d98cb8c94634967eb5c36671a62e786c3821c8af329eff550253b2962067503b",
+      "http": 200,
+      "parseError": null,
+      "composeError": null,
+      "taskCount": 1,
+      "materialCount": 1,
+      "timeCount": 1,
+      "revisionCount": 0,
+      "issues": [
+        {
+          "code": "TIME_NEEDS_REVIEW",
+          "entityIds": [
+            "time-1"
+          ]
+        }
+      ],
+      "items": [
+        {
+          "id": "task-1",
+          "requiresAction": "true",
+          "defaultSelected": false,
+          "issues": [
+            "TIME_NEEDS_REVIEW"
+          ]
+        }
+      ],
+      "inverseMismatches": [],
+      "normalizedTimes": [
+        {
+          "id": "time-1",
+          "raw": "具体完成日期由实验室另行通知",
+          "normalized": null,
+          "precision": "vague",
+          "needsConfirmation": true
+        }
+      ]
+    },
+    {
+      "unitId": "Q03-03",
+      "responseSha": "1465a7c517e16312aaf92b3e56577ba7d57c0d215047e6ed53ad769feae74984",
+      "http": 200,
+      "parseError": null,
+      "composeError": null,
+      "taskCount": 1,
+      "materialCount": 0,
+      "timeCount": 0,
+      "revisionCount": 0,
+      "issues": [],
+      "items": [
+        {
+          "id": "task-save-original-photos",
+          "requiresAction": "true",
+          "defaultSelected": false,
+          "issues": []
+        }
+      ],
+      "inverseMismatches": [],
+      "normalizedTimes": []
+    },
+    {
+      "unitId": "Q03-06",
+      "responseSha": "61342c9b7358f1f6df1a8f078e525bafaf1f5e325d1ad4d5d0a9218227b1c8eb",
+      "http": 200,
+      "parseError": null,
+      "composeError": null,
+      "taskCount": 1,
+      "materialCount": 1,
+      "timeCount": 0,
+      "revisionCount": 0,
+      "issues": [],
+      "items": [
+        {
+          "id": "task-save-photos",
+          "requiresAction": "true",
+          "defaultSelected": false,
+          "issues": []
+        }
+      ],
+      "inverseMismatches": [],
+      "normalizedTimes": []
+    },
+    {
+      "unitId": "Q04-03",
+      "responseSha": "743ad7c4a44a4aa5f2353ac89d8c31b1a5732c6d942329a4430cc6ccb4410d2c",
+      "http": 200,
+      "parseError": null,
+      "composeError": null,
+      "taskCount": 2,
+      "materialCount": 0,
+      "timeCount": 1,
+      "revisionCount": 0,
+      "issues": [],
+      "items": [
+        {
+          "id": "task-cancel-water-sampling-reservation",
+          "requiresAction": "false",
+          "defaultSelected": false,
+          "issues": []
+        },
+        {
+          "id": "task-check-sampling-bottle-seal",
+          "requiresAction": "true",
+          "defaultSelected": false,
+          "issues": []
+        }
+      ],
+      "inverseMismatches": [],
+      "normalizedTimes": [
+        {
+          "id": "tp-check-seal-deadline",
+          "raw": "2026年9月19日17:00前",
+          "normalized": "2026-09-19T17:00",
+          "precision": "exact",
+          "needsConfirmation": false
+        }
+      ]
+    },
+    {
+      "unitId": "Q04-06",
+      "responseSha": "e6a49a7d80cb13e00ae61d5128bb83c9062e9c5ff85b36ab2b3d5a63fd05a2e6",
+      "http": 200,
+      "parseError": null,
+      "composeError": null,
+      "taskCount": 2,
+      "materialCount": 1,
+      "timeCount": 1,
+      "revisionCount": 0,
+      "issues": [],
+      "items": [
+        {
+          "id": "task-cancel-sampling-reservation",
+          "requiresAction": "false",
+          "defaultSelected": false,
+          "issues": []
+        },
+        {
+          "id": "task-check-bottle-seal",
+          "requiresAction": "true",
+          "defaultSelected": false,
+          "issues": []
+        }
+      ],
+      "inverseMismatches": [],
+      "normalizedTimes": [
+        {
+          "id": "time-check-deadline",
+          "raw": "2026年9月19日17:00前",
+          "normalized": "2026-09-19T17:00",
+          "precision": "exact",
+          "needsConfirmation": false
+        }
+      ]
+    },
+    {
+      "unitId": "Q05-03",
+      "responseSha": "6948ad7af450cdbe40283be784f652b041482e71c4f430633ad70c0f62fd1f82",
+      "http": 200,
+      "parseError": null,
+      "composeError": null,
+      "taskCount": 1,
+      "materialCount": 1,
+      "timeCount": 1,
+      "revisionCount": 0,
+      "issues": [],
+      "items": [
+        {
+          "id": "task-submit-travel-proof",
+          "requiresAction": "true",
+          "defaultSelected": false,
+          "issues": []
+        }
+      ],
+      "inverseMismatches": [],
+      "normalizedTimes": [
+        {
+          "id": "time-submission-deadline",
+          "raw": "2026年9月21日15:00",
+          "normalized": "2026-09-21T15:00",
+          "precision": "exact",
+          "needsConfirmation": false
+        }
+      ]
+    },
+    {
+      "unitId": "Q05-06",
+      "responseSha": "473b601629c86fc20cc5624ef36e3b268371dd2a242aaf9c8082df3e5de53bf6",
+      "http": 200,
+      "parseError": null,
+      "composeError": null,
+      "taskCount": 1,
+      "materialCount": 1,
+      "timeCount": 1,
+      "revisionCount": 0,
+      "issues": [],
+      "items": [
+        {
+          "id": "task-0001",
+          "requiresAction": "true",
+          "defaultSelected": false,
+          "issues": []
+        }
+      ],
+      "inverseMismatches": [],
+      "normalizedTimes": [
+        {
+          "id": "time-0001",
+          "raw": "2026年9月21日15:00",
+          "normalized": "2026-09-21T15:00",
+          "precision": "exact",
+          "needsConfirmation": false
+        }
+      ]
+    },
+    {
+      "unitId": "Q06-03",
+      "responseSha": "e4bb704318f3b5b8be010cdffac52f23956102ffe6e487323a121b4d72111158",
+      "http": 200,
+      "parseError": null,
+      "composeError": null,
+      "taskCount": 1,
+      "materialCount": 1,
+      "timeCount": 0,
+      "revisionCount": 0,
+      "issues": [],
+      "items": [
+        {
+          "id": "task-claim-projector",
+          "requiresAction": "unknown",
+          "defaultSelected": false,
+          "issues": []
+        }
+      ],
+      "inverseMismatches": [],
+      "normalizedTimes": []
+    },
+    {
+      "unitId": "Q06-06",
+      "responseSha": "495cf09154e6dd605ffe2671dfcea9606a5debd46ef2b58e4c7557572a62c280",
+      "http": 200,
+      "parseError": null,
+      "composeError": null,
+      "taskCount": 1,
+      "materialCount": 2,
+      "timeCount": 0,
+      "revisionCount": 0,
+      "issues": [],
+      "items": [
+        {
+          "id": "task-0001",
+          "requiresAction": "unknown",
+          "defaultSelected": false,
+          "issues": []
+        }
+      ],
+      "inverseMismatches": [],
+      "normalizedTimes": []
+    },
+    {
+      "unitId": "Q07-03",
+      "responseSha": "b3776a6961bb4d67143056afd06ea4604802f59ffe333c1824c630fff38cde22",
+      "http": 200,
+      "parseError": null,
+      "composeError": null,
+      "taskCount": 2,
+      "materialCount": 2,
+      "timeCount": 2,
+      "revisionCount": 1,
+      "issues": [],
+      "items": [
+        {
+          "id": "task-old-mail-proof",
+          "requiresAction": "false",
+          "defaultSelected": false,
+          "issues": []
+        },
+        {
+          "id": "task-new-upload-proof",
+          "requiresAction": "true",
+          "defaultSelected": false,
+          "issues": []
+        }
+      ],
+      "inverseMismatches": [],
+      "normalizedTimes": [
+        {
+          "id": "time-old-deadline",
+          "raw": "2026年9月20日17:00前",
+          "normalized": "2026-09-20T17:00",
+          "precision": "exact",
+          "needsConfirmation": false
+        },
+        {
+          "id": "time-new-deadline",
+          "raw": "2026年9月24日10:00前",
+          "normalized": "2026-09-24T10:00",
+          "precision": "exact",
+          "needsConfirmation": false
+        }
+      ]
+    },
+    {
+      "unitId": "Q07-06",
+      "responseSha": "ed0b2a5087bfa1376a2a5be51237fe247d0861eec6f531762aa808e1de0a03d2",
+      "http": 200,
+      "parseError": null,
+      "composeError": null,
+      "taskCount": 2,
+      "materialCount": 2,
+      "timeCount": 2,
+      "revisionCount": 1,
+      "issues": [],
+      "items": [
+        {
+          "id": "task-old-mail-proof",
+          "requiresAction": "false",
+          "defaultSelected": false,
+          "issues": []
+        },
+        {
+          "id": "task-upload-proof-pdf",
+          "requiresAction": "true",
+          "defaultSelected": false,
+          "issues": []
+        }
+      ],
+      "inverseMismatches": [],
+      "normalizedTimes": [
+        {
+          "id": "tp-old-deadline",
+          "raw": "2026年9月20日17:00前",
+          "normalized": "2026-09-20T17:00",
+          "precision": "exact",
+          "needsConfirmation": false
+        },
+        {
+          "id": "tp-new-deadline",
+          "raw": "2026年9月24日10:00前",
+          "normalized": "2026-09-24T10:00",
+          "precision": "exact",
+          "needsConfirmation": false
+        }
+      ]
+    },
+    {
+      "unitId": "Q08-03",
+      "responseSha": "e4764f1ca25a5199a1c6bd35208a0a3ad518f9004d38c123e8f8db0bb675bde8",
+      "http": 200,
+      "parseError": null,
+      "composeError": null,
+      "taskCount": 2,
+      "materialCount": 1,
+      "timeCount": 2,
+      "revisionCount": 1,
+      "issues": [],
+      "items": [
+        {
+          "id": "task-attend-factory-visit",
+          "requiresAction": "false",
+          "defaultSelected": false,
+          "issues": []
+        },
+        {
+          "id": "task-submit-course-reflection",
+          "requiresAction": "true",
+          "defaultSelected": false,
+          "issues": []
+        }
+      ],
+      "inverseMismatches": [],
+      "normalizedTimes": [
+        {
+          "id": "tp-2026-09-22-0900",
+          "raw": "2026年9月22日09:00",
+          "normalized": "2026-09-22T09:00",
+          "precision": "exact",
+          "needsConfirmation": false
+        },
+        {
+          "id": "tp-2026-09-26-1800",
+          "raw": "2026年9月26日18:00前",
+          "normalized": "2026-09-26T18:00",
+          "precision": "exact",
+          "needsConfirmation": false
+        }
+      ]
+    },
+    {
+      "unitId": "Q08-06",
+      "responseSha": "3c11c04d9e04e69c37f4c5ca19fc134f8a282096ba16a817cb07cd70e8fcbc83",
+      "http": 200,
+      "parseError": null,
+      "composeError": null,
+      "taskCount": 2,
+      "materialCount": 1,
+      "timeCount": 2,
+      "revisionCount": 1,
+      "issues": [],
+      "items": [
+        {
+          "id": "task-cancel-visit",
+          "requiresAction": "false",
+          "defaultSelected": false,
+          "issues": []
+        },
+        {
+          "id": "task-reflection",
+          "requiresAction": "true",
+          "defaultSelected": false,
+          "issues": []
+        }
+      ],
+      "inverseMismatches": [],
+      "normalizedTimes": [
+        {
+          "id": "tp-visit-start",
+          "raw": "2026年9月22日09:00",
+          "normalized": "2026-09-22T09:00",
+          "precision": "exact",
+          "needsConfirmation": false
+        },
+        {
+          "id": "tp-reflection-deadline",
+          "raw": "2026年9月26日18:00前",
+          "normalized": "2026-09-26T18:00",
+          "precision": "exact",
+          "needsConfirmation": false
+        }
+      ]
+    },
+    {
+      "unitId": "Q09-03",
+      "responseSha": "abbe5b0a5cc0d6b508815a2d393fd3e3ae000e3d1cd645990f2bc951faa5267e",
+      "http": 200,
+      "parseError": null,
+      "composeError": null,
+      "taskCount": 0,
+      "materialCount": 0,
+      "timeCount": 2,
+      "revisionCount": 0,
+      "issues": [
+        {
+          "code": "TIME_NEEDS_REVIEW",
+          "entityIds": [
+            "tp-2"
+          ]
+        },
+        {
+          "code": "EVENT_NOT_TASK_ASSOCIATED",
+          "entityIds": [
+            "ev-1"
+          ]
+        }
+      ],
+      "items": [],
+      "inverseMismatches": [],
+      "normalizedTimes": [
+        {
+          "id": "tp-1",
+          "raw": "2026年9月28日19:00开始",
+          "normalized": "2026-09-28T19:00",
+          "precision": "exact",
+          "needsConfirmation": false
+        },
+        {
+          "id": "tp-2",
+          "raw": "于21:00结束",
+          "normalized": null,
+          "precision": "vague",
+          "needsConfirmation": true
+        }
+      ]
+    },
+    {
+      "unitId": "Q09-06",
+      "responseSha": "4c4d85593e0501d897a98c966a502d3edb9f2f8b120334c3e969cd54cb960889",
+      "http": 200,
+      "parseError": null,
+      "composeError": null,
+      "taskCount": 0,
+      "materialCount": 0,
+      "timeCount": 2,
+      "revisionCount": 0,
+      "issues": [
+        {
+          "code": "TIME_NEEDS_REVIEW",
+          "entityIds": [
+            "tp-event-end"
+          ]
+        },
+        {
+          "code": "EVENT_NOT_TASK_ASSOCIATED",
+          "entityIds": [
+            "ev-stargazing-night"
+          ]
+        }
+      ],
+      "items": [],
+      "inverseMismatches": [],
+      "normalizedTimes": [
+        {
+          "id": "tp-event-start",
+          "raw": "2026年9月28日19:00",
+          "normalized": "2026-09-28T19:00",
+          "precision": "exact",
+          "needsConfirmation": false
+        },
+        {
+          "id": "tp-event-end",
+          "raw": "21:00",
+          "normalized": null,
+          "precision": "vague",
+          "needsConfirmation": true
+        }
+      ]
+    },
+    {
+      "unitId": "Q10-03",
+      "responseSha": "fb5668088963619ab904a004ab18d475944430968353c39bf5b567493a7d28a6",
+      "http": 200,
+      "parseError": null,
+      "composeError": null,
+      "taskCount": 2,
+      "materialCount": 4,
+      "timeCount": 2,
+      "revisionCount": 0,
+      "issues": [],
+      "items": [
+        {
+          "id": "task-light-inventory-submit",
+          "requiresAction": "true",
+          "defaultSelected": false,
+          "issues": []
+        },
+        {
+          "id": "task-audio-inventory-submit",
+          "requiresAction": "true",
+          "defaultSelected": false,
+          "issues": []
+        }
+      ],
+      "inverseMismatches": [],
+      "normalizedTimes": [
+        {
+          "id": "tp-light-submit-deadline",
+          "raw": "2026年9月29日16:00前",
+          "normalized": "2026-09-29T16:00",
+          "precision": "exact",
+          "needsConfirmation": false
+        },
+        {
+          "id": "tp-audio-submit-deadline",
+          "raw": "2026年9月30日11:00前",
+          "normalized": "2026-09-30T11:00",
+          "precision": "exact",
+          "needsConfirmation": false
+        }
+      ]
+    },
+    {
+      "unitId": "Q10-06",
+      "responseSha": "c9a56d1143b381673b5ff695079468d45f7bbff23ec2e40d9c757edf2094e149",
+      "http": 200,
+      "parseError": null,
+      "composeError": null,
+      "taskCount": 2,
+      "materialCount": 4,
+      "timeCount": 2,
+      "revisionCount": 0,
+      "issues": [],
+      "items": [
+        {
+          "id": "task-light-inventory-submit",
+          "requiresAction": "true",
+          "defaultSelected": false,
+          "issues": []
+        },
+        {
+          "id": "task-audio-inventory-submit",
+          "requiresAction": "true",
+          "defaultSelected": false,
+          "issues": []
+        }
+      ],
+      "inverseMismatches": [],
+      "normalizedTimes": [
+        {
+          "id": "tp-light-submit-deadline",
+          "raw": "2026年9月29日16:00前",
+          "normalized": "2026-09-29T16:00",
+          "precision": "exact",
+          "needsConfirmation": false
+        },
+        {
+          "id": "tp-audio-submit-deadline",
+          "raw": "2026年9月30日11:00前",
+          "normalized": "2026-09-30T11:00",
+          "precision": "exact",
+          "needsConfirmation": false
+        }
+      ]
+    },
+    {
+      "unitId": "Q11-03",
+      "responseSha": "2901aa3badb02c44f79783dfeb463d3632e2ef49aea70021c07b852b5eefd927",
+      "http": 200,
+      "parseError": null,
+      "composeError": null,
+      "taskCount": 3,
+      "materialCount": 2,
+      "timeCount": 2,
+      "revisionCount": 0,
+      "issues": [],
+      "items": [
+        {
+          "id": "task-fill-registration-form",
+          "requiresAction": "true",
+          "defaultSelected": false,
+          "issues": []
+        },
+        {
+          "id": "task-submit-samples",
+          "requiresAction": "true",
+          "defaultSelected": false,
+          "issues": []
+        },
+        {
+          "id": "task-prepare-sealed-bags",
+          "requiresAction": "true",
+          "defaultSelected": false,
+          "issues": []
+        }
+      ],
+      "inverseMismatches": [],
+      "normalizedTimes": [
+        {
+          "id": "time-fill-deadline",
+          "raw": "2026年9月17日14:00前",
+          "normalized": "2026-09-17T14:00",
+          "precision": "exact",
+          "needsConfirmation": false
+        },
+        {
+          "id": "time-submit-deadline",
+          "raw": "2026年9月18日09:00前",
+          "normalized": "2026-09-18T09:00",
+          "precision": "exact",
+          "needsConfirmation": false
+        }
+      ]
+    },
+    {
+      "unitId": "Q11-06",
+      "responseSha": "429af81a58bcb07b77720b345c22e064095845a49f7805f0ea198574f5023bb3",
+      "http": 200,
+      "parseError": null,
+      "composeError": null,
+      "taskCount": 3,
+      "materialCount": 3,
+      "timeCount": 2,
+      "revisionCount": 0,
+      "issues": [],
+      "items": [
+        {
+          "id": "task-fill-registration-form",
+          "requiresAction": "true",
+          "defaultSelected": false,
+          "issues": []
+        },
+        {
+          "id": "task-submit-samples",
+          "requiresAction": "unknown",
+          "defaultSelected": false,
+          "issues": []
+        },
+        {
+          "id": "task-prepare-sealed-bags",
+          "requiresAction": "true",
+          "defaultSelected": false,
+          "issues": []
+        }
+      ],
+      "inverseMismatches": [],
+      "normalizedTimes": [
+        {
+          "id": "tp-fill-deadline",
+          "raw": "2026年9月17日14:00前",
+          "normalized": "2026-09-17T14:00",
+          "precision": "exact",
+          "needsConfirmation": false
+        },
+        {
+          "id": "tp-submit-deadline",
+          "raw": "2026年9月18日09:00前",
+          "normalized": "2026-09-18T09:00",
+          "precision": "exact",
+          "needsConfirmation": false
+        }
+      ]
+    },
+    {
+      "unitId": "Q12-03",
+      "responseSha": "20d8606d5a216428cac88140b15e2004ffed866a2cbac33fac149ba53006949f",
+      "http": 200,
+      "parseError": null,
+      "composeError": null,
+      "taskCount": 3,
+      "materialCount": 2,
+      "timeCount": 1,
+      "revisionCount": 1,
+      "issues": [],
+      "items": [
+        {
+          "id": "task-make-exhibit-labels",
+          "requiresAction": "true",
+          "defaultSelected": false,
+          "issues": []
+        },
+        {
+          "id": "task-save-final-labels",
+          "requiresAction": "true",
+          "defaultSelected": false,
+          "issues": []
+        },
+        {
+          "id": "task-send-source-files-cancelled",
+          "requiresAction": "false",
+          "defaultSelected": false,
+          "issues": []
+        }
+      ],
+      "inverseMismatches": [
+        {
+          "task": "task-make-exhibit-labels",
+          "kind": "material",
+          "entity": "material-qr-code"
+        }
+      ],
+      "normalizedTimes": [
+        {
+          "id": "time-label-deadline",
+          "raw": "2026年9月27日17:00前",
+          "normalized": "2026-09-27T17:00",
+          "precision": "exact",
+          "needsConfirmation": false
+        }
+      ]
+    },
+    {
+      "unitId": "Q12-06",
+      "responseSha": "92dd1c4daa6c71fedc82d77e308a1321b9c70387af5968bd68a9be6667d6eaa0",
+      "http": 200,
+      "parseError": null,
+      "composeError": null,
+      "taskCount": 2,
+      "materialCount": 3,
+      "timeCount": 1,
+      "revisionCount": 1,
+      "issues": [
+        {
+          "code": "COVERAGE_TIME",
+          "entityIds": [
+            "task_save_labels"
+          ]
+        },
+        {
+          "code": "BAD_REVISION_REFERENCE",
+          "entityIds": [
+            "task_send_source_files"
+          ]
+        },
+        {
+          "code": "REVISION_NEEDS_REVIEW",
+          "entityIds": [
+            "task_send_source_files"
+          ]
+        }
+      ],
+      "items": [
+        {
+          "id": "task_make_labels",
+          "requiresAction": "true",
+          "defaultSelected": false,
+          "issues": []
+        },
+        {
+          "id": "task_save_labels",
+          "requiresAction": "true",
+          "defaultSelected": false,
+          "issues": [
+            "COVERAGE_TIME"
+          ]
+        }
+      ],
+      "inverseMismatches": [],
+      "normalizedTimes": [
+        {
+          "id": "tp_label_deadline",
+          "raw": "2026年9月27日17:00前",
+          "normalized": "2026-09-27T17:00",
+          "precision": "exact",
+          "needsConfirmation": false
+        }
+      ]
+    }
+  ]
+}
