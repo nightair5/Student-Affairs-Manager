@@ -1,87 +1,85 @@
 # RCO Current Context
 
-## 当前目标和实际结论
-- 同一MAINLINE-REAL-INPUT-01；本轮简化HTTPS示例入口与打开草稿，不优化模型。
-- 用户明确批准GITHUB_SNAPSHOT六文件范围及新origin主动创建空实验库。
-- 固定URL：https://student-affairs-real-input-preview.nightsdell.workers.dev
-- Worker student-affairs-real-input-preview，最终版本bf52ea5d-4576-4c1c-8d21-0cdcc4f61fb0。
-- 线上页面及五个产物SHA通过；模型路由关闭；不依赖本机6631存活。
-- 实际浏览器控制失败，页面创建/确认/刷新/独立真实读库/下载仍NOT_RUN。
-- 本次为已发布但浏览器待验收实验版，不宣称完整工程或商业上线通过。
-- candidate06仍不采用，旧模型质量结论保持。
-- 报告：mainline-real-input-01/runs/candidate06-20260912a/HTTPS_TRIAL_AUDIT.md。
-- 检查及最终六源码SHA：同目录HTTPS_TRIAL_CHECKS.json；旧PREVIEW证据只读。
+## 当前目标与结论
+- 同一MAINLINE-REAL-INPUT-01：现有HTTPS交付收尾＋下一轮准确率主根因定位。
+- 2026-09-13本轮根因分析完成；真实确认/刷新/下载证据仍不足，不宣称整包完成。
+- 本轮业务源码0变化、模型0调用/0费用、浏览器0重试、构建0、部署0。
+- 用户确认已提交官方浏览器反馈；未报告连接恢复，不再重装/重启/循环刷新。
+- 最新报告：mainline-real-input-01/runs/candidate06-20260912a/HTTPS_CLOSE_ROOT_CAUSE.md。
+- 机器检查：同目录HTTPS_CLOSE_ROOT_CAUSE_CHECKS.json；旧TRIAL/PREVIEW证据只读。
 
-## 仓库与Git
+## Git与工作区
 - 唯一仓库C:\Users\Winner\student-affairs-multimodal-exp。
-- 唯一分支codex/e2-multimodal-recognition-exp；禁止在比赛默认工作区实施。
-- 最新恢复起点本机/远端92d148580b24c523502bf83f0afc6d09245970ac。
-- 前21业务文件已作为待浏览器验收源码快照提交；不再是未提交实现。
-- 六文件仅browser/runtime/acceptance修改且保留未提交；本轮仅审计交付，见TRIAL回执。
-- 不回切、不强推、不自动变基，不修改旧历史HEAD断言。
-- 工作字节SHA与Git换行规范化SHA分开，保护仍逐字核验。
+- 唯一分支codex/e2-multimodal-recognition-exp；不在比赛默认工作区实施。
+- 本轮开始本机/实际远端均72b753f62427844ceea7dd3c59e31902deb14001。
+- 本轮新审计提交以git log及远端回执为准，本文不写自身提交SHA。
+- browser.tsx、runtime.ts、acceptance.test.tsx仍为原三份未提交业务实现。
+- 前21业务文件已提交为待浏览器验收源码快照，不是新的未提交实现。
+- 本轮仅报告/检查/短交接/追加日志精确审计交付，不暂存未验收三源码。
+- 不回切、不强推、不自动变基；工作字节SHA与Git换行规范化SHA分开。
 
-## 本轮六文件边界
-- browser.tsx：显式HTTPS配置、origin限制、用户主动新库、固定两回放。
-- runtime.ts：目标预览库与历史原答身份分开，原绑定验证不变。
-- acceptance.test.tsx：新库/旧默认/确认/重复/身份及Worker边界。
-- 新scripts/build-real-input-preview.mjs：无根env构建、固定匿名资产。
-- 新cloudflare/real-input-preview.mjs：只读固定资产/状态，拒绝模型/写入。
-- 新wrangler.real-input-preview.jsonc：独立Worker、空routes、仅ASSETS。
-- 无Secret、云端数据库、生产域名绑定；不使用默认wrangler部署。
-- 只公开匿名Q01-06/Q07-06，raw/request/候选身份不改。
-- 其余52原实现、944保护、607静态证据、18冻结依赖均不变。
-- 全局Schema/repository/capture/validator/confirmationV2/domainCommit只读。
-- MAINLINE04/时间AST/候选03/05/06/factAssembly/Expected/评分/原答只读。
+## HTTPS现场
+- 固定URL：https://student-affairs-real-input-preview.nightsdell.workers.dev/。
+- Worker：student-affairs-real-input-preview；仅独立匿名回放，不是生产站点。
+- 上轮部署版本bf52ea5d-4576-4c1c-8d21-0cdcc4f61fb0；本轮未重新部署/在线检查。
+- 上轮HTTP200/五资产SHA一致/模型关闭只作历史在线证据，不冒充浏览器操作。
+- 库名rco-mainline-01-02-i1-real-input-https-preview-1；仅当前域名、当前浏览器。
+- 用户首次明确点击创建；已有库恢复，错误不建空库、不fallback或覆盖。
+- 仅Q01-06/Q07-06历史原答；候选06不采用，不是实时识别。
+- 页面“新事务”选择“体验多任务通知”或“体验新旧要求替代”直接开原面板。
+- 同一示例重复载入恢复已有记录；加载不等于自动选择或正式保存。
+- 材料需要与准备状态分别核对并保存，再事实核对、主动选择确认。
+- 原答、first、人工编辑、最终处置分留；不迁移6631旧库、不输入真实学生资料。
+- 原13任务是旧本机历史计数，不能套到HTTPS新域名库。
 
-## 访问和存储
-- 首次点击“创建本域名实验库并进入”，才创建HTTPS独立库。
-- 库名rco-mainline-01-02-i1-real-input-https-preview-1；数据仅当前域名浏览器。
-- 不是localhost旧13任务恢复，不迁移、不跨设备同步、不输入真实学生资料。
-- 点击真实App“新事务”，选择“体验多任务通知”或“体验新旧要求替代”。
-- 通过原inputPanel/onDraftReady刷新canonical并直接开原面板，不手动刷新或重挂App。
-- 已载入恢复原草稿；快速重复点击共享打开操作，不自动选择/确认；工程工具移下方。
-- 材料必需性/准备状态分别核对；本项事实核对后主动选择确认。
-- 模型发送关闭、自动默认选择NOT_ENABLED；不新增候选或调用。
-- 已有库只打开，错误/缺失恢复不fallback、不升级或覆盖旧记录。
-- 生产student-affairs.site及RC.4未操作；原6631旧库未访问。
-- Cloudflare固定workers.dev地址，不是临时隧道；持续性依赖账户/Worker保留。
+## 六文件职责与保护
+- browser.tsx：显式HTTPS/origin/用户主动新库/两示例入口及独立读库工具。
+- runtime.ts：预览库与原答身份分开、已载入恢复、真实App回调接线。
+- acceptance.test.tsx：对应边界/确认/重复/身份与旧默认检查。
+- scripts/build-real-input-preview.mjs：无根env构建固定匿名资产。
+- cloudflare/real-input-preview.mjs：只读资产/状态，拒绝模型与写接口。
+- wrangler.real-input-preview.jsonc：独立Worker、空routes、仅ASSETS。
+- 本轮六源码、其余52源码、944保护、607静态、18冻结依赖均逐字匹配。
+- 原两公开响应、全部候选/Expected/评分/回答/全局Schema及仓储/时间AST只读。
+- 不改MAINLINE04/confirmationV2/domainCommit，不新增依赖或产品路径。
+- 生产student-affairs.site及RC.4、本机旧库均未操作。
 
-## 已取得检查
-- 上轮54/1及wrapper修复历史保留；本轮最终影响层15通过0失败43未运行。
-- 新增两示例直接打开/重复/失败恢复及实际App回调抽取验证，不称真实页面操作。
-- 不累计不同attempt数量，不把EventTarget和内存称真实IndexedDB。
-- Q01两项/Q07新要求一项，共3项内存核对确认、重复不增、独立读回。
-- raw/first保留，取消旧要求未成为正式任务；未核对确认仍拒绝。
-- 本轮type、变更lint、esbuild、Secret scan1713通过；未变契约等证据复用。
-- lint1条Fast Refresh警告；未变13原工程日志SHA匹配。
-- 本轮沿用2026-09-12兼容配置；仅browser.js更新，其他四资产不变。
-- 线上首页200，五资产5/5 SHA匹配；状态modelCallsEnabled=false。
-- POST识别405，GET模型/未批准Q03/.env为404。
-- 生产依赖audit0漏洞；完整audit2 moderate/3 high，退出1。
-- 开发工具关联：@vitest/mocker/Vitest、sharp/miniflare/Wrangler。
-- 不在已发布运行依赖中；但完整工程门NOT_ALL_PASS。
-- 未升级依赖，六文件范围不含此权限；不audit fix。
-- 框架envFile=false/新envDir/cache，构建直接esbuild、import.meta.env为空。
-- Wrangler临时配置、CLOUDFLARE_LOAD_DEV_VARS_FROM_DOT_ENV=false。
+## 本轮根因定位
+- Q02/Q11/Q12各03/06，共6个原请求全文、时刻/时区、请求/响应SHA匹配。
+- 原答→RESULT任务/材料/修订等字段6/6一致；时间仅增加本机规范化字段。
+- 历史COMPOSER_DIAGNOSTIC五依赖匹配后复用，不称本轮重新运行composer。
+- Q11两臂都把“需要两个密封袋”多造任务；06袋子只归额外任务，漏真实提交归属。
+- 这是模型任务语义及归属错误，不是OCR或转换层增删；结构无错不等于事实正确。
+- Q12-06原答缺旧取消实体却引用它；completeInputRun会因坏引用拒绝正常接入。
+- Q12-03同契约能保留旧cancelled实体，证明不必先扩建Schema；03仍有反向列表问题。
+- Q02-06有“另行通知”模糊时间，近期仅在description；不能笼统说完全无时间。
+- Q02两臂原始时间均完整保留到解析、normalized=null；没有把模糊时间变假日期。
+- 模型材料wire无准备状态；用户MaterialDecision也暂无“尚未核实”选项，另列产品限制。
+- 不能用required=true推断已准备；用户未知不能强选missing或not_required救验收。
+- 下一轮唯一优先识别目标：独立任务/材料要求的语义区分＋真实材料归属。
+- candidate06已有相关明确指令，不能承诺再加警告有效；新机制及付费比较须另批。
+- 本轮不创建candidate07，不改语义契约或旧评分，不把定位当准确率提升。
+- 历史无需重大语义改写03为11/12、06为10/12；严格0/12→0/12，06不采用。
 
-## 浏览器和剩余验收
-- 再授权后仅恢复一次cua.getState，仍nodeRepl.fetch request failed，未返回标签。
-- 恢复证据见同目录HTTPS_TRIAL_RESUME.md；源码未变，未构建/部署/重跑测试。
-- 无系统/防护修改，无绕过控制或反复刷新；面板打开仅queued，不作验收。
-- 新域名实际创建、Q01/Q07核对确认、刷新查询、独立真实读库均NOT_RUN。
-- 实际下载对独立读库NOT_RUN；线上GET文件一致不冒充该证据。
-- 已一次集中请用户在新版选择两示例、核对确认、刷新并下载独立读库证据，尚未收到。
-- 下一步只补真实旅程及文件证据，不再改入口、不需要模型或候选。
-- 开发工具漏洞最小升级需另行批准；不把它与模型语义问题混为一谈。
+## 工程证据
+- HTTPS_TRIAL最终15通过0失败43未运行，实际测试文件SHA匹配；未重跑。
+- 13旧工程日志SHA匹配；未变化层按依赖复用，不把旧全量当本轮全量。
+- 既有type/变更lint/esbuild/Secret scan记录保持；本轮仅做文档与保护检查。
+- 开发依赖历史2 moderate/3 high未修；生产依赖历史audit0，不宣称全量audit通过。
+- 测试/构建禁止读取根.env；以后必要运行用新envDir/cache/输出，本轮未运行框架。
 
-## 账本与历史
-- 历史104请求，215行163134字节；本轮新增请求0、模型费用0。
-- SHA9a92b6886a0a40d7300aaa02054de53fb3df5c3a5397ddea9247ea3e3783ad41保持。
-- A01未知3.30元永久保留；不运行paid/recover，不读模型密钥/剪贴板。
-- 日志旧329980字节前缀SHAff94257089aff8ee995d243f884beb7e5d5d8eae60a0aab1bd48813abf4a0dc6保持。
-- candidate06原同材料开发回归：无需重大语义改写11/12→10/12，不采用。
-- Q11材料多拆任务和归属错；Q12取消引用悬空；Q02模糊时间漏实体仍未解决。
-- 原严格0/12→0/12，人工确认成功不等于模型首次准确率提高。
-- 本轮模型准确率未测量，真人操作时间/省时NOT_RUN。
-- 三源码最终SHA已登记；真实验收未通过前不提交业务，审计交付后停止。
+## 剩余真实验收与停止
+- 当前用户截图仅证明当时页面/面板可见，不证明确认保存。
+- 未获当前库对象/下载文件，Q01/Q07确认、刷新、独立读库和实际下载NOT_VERIFIED。
+- 本轮已一次集中说明人工步骤：两示例核对确认→刷新找回→独立读库工程JSON。
+- 主报告补充正式“导出完整测试库JSON”，与独立读库文件交叉比较，非同文件自算SHA。
+- 未知准备状态卡住只保留截图，不强填；不重复确认已完成项。
+- 原对象不覆盖需操作前快照；无前快照不能事后伪称逐对象不变。
+- 无明确连接恢复不再调用官方控制；不绕过控制、不清库，缺证据仍如实保留。
+- 用户文件到达后只核缺项，通过才精确提交三业务源码，不重复OCR/时区/模型流程。
+
+## 账本与日志
+- 历史104请求；账本215行163134字节，SHA9a92b6886a0a40d7300aaa02054de53fb3df5c3a5397ddea9247ea3e3783ad41。
+- A01未知3.30元永久保留；不运行paid/recover，不读密钥或剪贴板。
+- 本轮日志原332468字节前缀SHA7003a5e988af7d4e145c4c8c08c6b0875a06ac3353f2430e0e15935c8f2044c6。
+- 模型准确率本轮未测量；真人编辑时间/省时NOT_RUN。分析审计交付后停止。

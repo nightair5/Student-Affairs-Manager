@@ -1,0 +1,499 @@
+{
+  "version": "https-close-root-cause-1",
+  "baselineHead": "72b753f62427844ceea7dd3c59e31902deb14001",
+  "remoteBefore": "72b753f62427844ceea7dd3c59e31902deb14001",
+  "status": "ANALYSIS_COMPLETE_BROWSER_EVIDENCE_PENDING",
+  "protection": {
+    "sixSource": {
+      "count": 6,
+      "mismatches": []
+    },
+    "other52": {
+      "count": 52,
+      "mismatches": []
+    },
+    "protected": {
+      "count": 944,
+      "mismatches": []
+    },
+    "static": {
+      "count": 607,
+      "mismatches": []
+    },
+    "frozen": {
+      "count": 18,
+      "mismatches": []
+    },
+    "ledger": {
+      "bytes": 163134,
+      "rows": 215,
+      "sha256": "9a92b6886a0a40d7300aaa02054de53fb3df5c3a5397ddea9247ea3e3783ad41",
+      "matches": true
+    },
+    "log": {
+      "path": "docs/recognition-optimization/OPTIMIZATION_LOG.md",
+      "bytes": 332468,
+      "sha256": "7003a5e988af7d4e145c4c8c08c6b0875a06ac3353f2430e0e15935c8f2044c6",
+      "priorPrefixMatches": true
+    },
+    "recordedTest": {
+      "count": 1,
+      "mismatches": []
+    },
+    "dependencyIdentity": {
+      "count": 4,
+      "mismatches": []
+    },
+    "diagnosticDependencies": {
+      "count": 5,
+      "mismatches": []
+    }
+  },
+  "analysis": {
+    "method": "Fresh read-only byte/hash and JSON field comparison; historical composer diagnostics reused, not reexecuted",
+    "rows": [
+      {
+        "unitId": "Q02-03",
+        "sourceComplete": true,
+        "clockMatches": true,
+        "requestShaMatches": true,
+        "responseShaMatches": true,
+        "rawFieldsPreserved": {
+          "tasks": true,
+          "materials": true,
+          "events": true,
+          "revisions": true,
+          "conflicts": true,
+          "informationScopeIds": true,
+          "unresolvedScopeIds": true
+        },
+        "rawTimeFieldsPreserved": true,
+        "composer": {
+          "unitId": "Q02-03",
+          "responseSha": "f5ab772e35e840cfc4a43bb303259696d2dd529ed45e1c186825a9e259d1a3f8",
+          "http": 200,
+          "parseError": null,
+          "composeError": null,
+          "taskCount": 1,
+          "materialCount": 1,
+          "timeCount": 2,
+          "revisionCount": 0,
+          "issues": [
+            {
+              "code": "TIME_NEEDS_REVIEW",
+              "entityIds": [
+                "time-001"
+              ]
+            },
+            {
+              "code": "TIME_NEEDS_REVIEW",
+              "entityIds": [
+                "time-002"
+              ]
+            },
+            {
+              "code": "UNRESOLVED_SOURCE_SCOPE",
+              "entityIds": []
+            }
+          ],
+          "items": [
+            {
+              "id": "task-001",
+              "requiresAction": "true",
+              "defaultSelected": false,
+              "issues": [
+                "TIME_NEEDS_REVIEW",
+                "UNRESOLVED_SOURCE_SCOPE"
+              ]
+            }
+          ],
+          "inverseMismatches": [
+            {
+              "task": "task-001",
+              "kind": "time",
+              "entity": "time-002"
+            }
+          ],
+          "normalizedTimes": [
+            {
+              "id": "time-001",
+              "raw": "近期",
+              "normalized": null,
+              "precision": "vague",
+              "needsConfirmation": true
+            },
+            {
+              "id": "time-002",
+              "raw": "具体完成日期由实验室另行通知",
+              "normalized": null,
+              "precision": "vague",
+              "needsConfirmation": true
+            }
+          ]
+        }
+      },
+      {
+        "unitId": "Q02-06",
+        "sourceComplete": true,
+        "clockMatches": true,
+        "requestShaMatches": true,
+        "responseShaMatches": true,
+        "rawFieldsPreserved": {
+          "tasks": true,
+          "materials": true,
+          "events": true,
+          "revisions": true,
+          "conflicts": true,
+          "informationScopeIds": true,
+          "unresolvedScopeIds": true
+        },
+        "rawTimeFieldsPreserved": true,
+        "composer": {
+          "unitId": "Q02-06",
+          "responseSha": "d98cb8c94634967eb5c36671a62e786c3821c8af329eff550253b2962067503b",
+          "http": 200,
+          "parseError": null,
+          "composeError": null,
+          "taskCount": 1,
+          "materialCount": 1,
+          "timeCount": 1,
+          "revisionCount": 0,
+          "issues": [
+            {
+              "code": "TIME_NEEDS_REVIEW",
+              "entityIds": [
+                "time-1"
+              ]
+            }
+          ],
+          "items": [
+            {
+              "id": "task-1",
+              "requiresAction": "true",
+              "defaultSelected": false,
+              "issues": [
+                "TIME_NEEDS_REVIEW"
+              ]
+            }
+          ],
+          "inverseMismatches": [],
+          "normalizedTimes": [
+            {
+              "id": "time-1",
+              "raw": "具体完成日期由实验室另行通知",
+              "normalized": null,
+              "precision": "vague",
+              "needsConfirmation": true
+            }
+          ]
+        }
+      },
+      {
+        "unitId": "Q11-03",
+        "sourceComplete": true,
+        "clockMatches": true,
+        "requestShaMatches": true,
+        "responseShaMatches": true,
+        "rawFieldsPreserved": {
+          "tasks": true,
+          "materials": true,
+          "events": true,
+          "revisions": true,
+          "conflicts": true,
+          "informationScopeIds": true,
+          "unresolvedScopeIds": true
+        },
+        "rawTimeFieldsPreserved": true,
+        "composer": {
+          "unitId": "Q11-03",
+          "responseSha": "2901aa3badb02c44f79783dfeb463d3632e2ef49aea70021c07b852b5eefd927",
+          "http": 200,
+          "parseError": null,
+          "composeError": null,
+          "taskCount": 3,
+          "materialCount": 2,
+          "timeCount": 2,
+          "revisionCount": 0,
+          "issues": [],
+          "items": [
+            {
+              "id": "task-fill-registration-form",
+              "requiresAction": "true",
+              "defaultSelected": false,
+              "issues": []
+            },
+            {
+              "id": "task-submit-samples",
+              "requiresAction": "true",
+              "defaultSelected": false,
+              "issues": []
+            },
+            {
+              "id": "task-prepare-sealed-bags",
+              "requiresAction": "true",
+              "defaultSelected": false,
+              "issues": []
+            }
+          ],
+          "inverseMismatches": [],
+          "normalizedTimes": [
+            {
+              "id": "time-fill-deadline",
+              "raw": "2026年9月17日14:00前",
+              "normalized": "2026-09-17T14:00",
+              "precision": "exact",
+              "needsConfirmation": false
+            },
+            {
+              "id": "time-submit-deadline",
+              "raw": "2026年9月18日09:00前",
+              "normalized": "2026-09-18T09:00",
+              "precision": "exact",
+              "needsConfirmation": false
+            }
+          ]
+        }
+      },
+      {
+        "unitId": "Q11-06",
+        "sourceComplete": true,
+        "clockMatches": true,
+        "requestShaMatches": true,
+        "responseShaMatches": true,
+        "rawFieldsPreserved": {
+          "tasks": true,
+          "materials": true,
+          "events": true,
+          "revisions": true,
+          "conflicts": true,
+          "informationScopeIds": true,
+          "unresolvedScopeIds": true
+        },
+        "rawTimeFieldsPreserved": true,
+        "composer": {
+          "unitId": "Q11-06",
+          "responseSha": "429af81a58bcb07b77720b345c22e064095845a49f7805f0ea198574f5023bb3",
+          "http": 200,
+          "parseError": null,
+          "composeError": null,
+          "taskCount": 3,
+          "materialCount": 3,
+          "timeCount": 2,
+          "revisionCount": 0,
+          "issues": [],
+          "items": [
+            {
+              "id": "task-fill-registration-form",
+              "requiresAction": "true",
+              "defaultSelected": false,
+              "issues": []
+            },
+            {
+              "id": "task-submit-samples",
+              "requiresAction": "unknown",
+              "defaultSelected": false,
+              "issues": []
+            },
+            {
+              "id": "task-prepare-sealed-bags",
+              "requiresAction": "true",
+              "defaultSelected": false,
+              "issues": []
+            }
+          ],
+          "inverseMismatches": [],
+          "normalizedTimes": [
+            {
+              "id": "tp-fill-deadline",
+              "raw": "2026年9月17日14:00前",
+              "normalized": "2026-09-17T14:00",
+              "precision": "exact",
+              "needsConfirmation": false
+            },
+            {
+              "id": "tp-submit-deadline",
+              "raw": "2026年9月18日09:00前",
+              "normalized": "2026-09-18T09:00",
+              "precision": "exact",
+              "needsConfirmation": false
+            }
+          ]
+        }
+      },
+      {
+        "unitId": "Q12-03",
+        "sourceComplete": true,
+        "clockMatches": true,
+        "requestShaMatches": true,
+        "responseShaMatches": true,
+        "rawFieldsPreserved": {
+          "tasks": true,
+          "materials": true,
+          "events": true,
+          "revisions": true,
+          "conflicts": true,
+          "informationScopeIds": true,
+          "unresolvedScopeIds": true
+        },
+        "rawTimeFieldsPreserved": true,
+        "composer": {
+          "unitId": "Q12-03",
+          "responseSha": "20d8606d5a216428cac88140b15e2004ffed866a2cbac33fac149ba53006949f",
+          "http": 200,
+          "parseError": null,
+          "composeError": null,
+          "taskCount": 3,
+          "materialCount": 2,
+          "timeCount": 1,
+          "revisionCount": 1,
+          "issues": [],
+          "items": [
+            {
+              "id": "task-make-exhibit-labels",
+              "requiresAction": "true",
+              "defaultSelected": false,
+              "issues": []
+            },
+            {
+              "id": "task-save-final-labels",
+              "requiresAction": "true",
+              "defaultSelected": false,
+              "issues": []
+            },
+            {
+              "id": "task-send-source-files-cancelled",
+              "requiresAction": "false",
+              "defaultSelected": false,
+              "issues": []
+            }
+          ],
+          "inverseMismatches": [
+            {
+              "task": "task-make-exhibit-labels",
+              "kind": "material",
+              "entity": "material-qr-code"
+            }
+          ],
+          "normalizedTimes": [
+            {
+              "id": "time-label-deadline",
+              "raw": "2026年9月27日17:00前",
+              "normalized": "2026-09-27T17:00",
+              "precision": "exact",
+              "needsConfirmation": false
+            }
+          ]
+        }
+      },
+      {
+        "unitId": "Q12-06",
+        "sourceComplete": true,
+        "clockMatches": true,
+        "requestShaMatches": true,
+        "responseShaMatches": true,
+        "rawFieldsPreserved": {
+          "tasks": true,
+          "materials": true,
+          "events": true,
+          "revisions": true,
+          "conflicts": true,
+          "informationScopeIds": true,
+          "unresolvedScopeIds": true
+        },
+        "rawTimeFieldsPreserved": true,
+        "composer": {
+          "unitId": "Q12-06",
+          "responseSha": "92dd1c4daa6c71fedc82d77e308a1321b9c70387af5968bd68a9be6667d6eaa0",
+          "http": 200,
+          "parseError": null,
+          "composeError": null,
+          "taskCount": 2,
+          "materialCount": 3,
+          "timeCount": 1,
+          "revisionCount": 1,
+          "issues": [
+            {
+              "code": "COVERAGE_TIME",
+              "entityIds": [
+                "task_save_labels"
+              ]
+            },
+            {
+              "code": "BAD_REVISION_REFERENCE",
+              "entityIds": [
+                "task_send_source_files"
+              ]
+            },
+            {
+              "code": "REVISION_NEEDS_REVIEW",
+              "entityIds": [
+                "task_send_source_files"
+              ]
+            }
+          ],
+          "items": [
+            {
+              "id": "task_make_labels",
+              "requiresAction": "true",
+              "defaultSelected": false,
+              "issues": []
+            },
+            {
+              "id": "task_save_labels",
+              "requiresAction": "true",
+              "defaultSelected": false,
+              "issues": [
+                "COVERAGE_TIME"
+              ]
+            }
+          ],
+          "inverseMismatches": [],
+          "normalizedTimes": [
+            {
+              "id": "tp_label_deadline",
+              "raw": "2026年9月27日17:00前",
+              "normalized": "2026-09-27T17:00",
+              "precision": "exact",
+              "needsConfirmation": false
+            }
+          ]
+        }
+      }
+    ],
+    "engineeringLogs": {
+      "count": 13,
+      "mismatches": []
+    }
+  },
+  "browser": {
+    "attemptsThisTurn": 0,
+    "reason": "No explicit connection-recovered message; feedback submitted according to user",
+    "Q01": "NOT_VERIFIED",
+    "Q07": "NOT_VERIFIED",
+    "refresh": "NOT_VERIFIED",
+    "independentRead": "NOT_VERIFIED",
+    "actualDownload": "NOT_VERIFIED",
+    "savedTaskCount": null,
+    "userOperationFilesReceived": 0
+  },
+  "engineering": {
+    "sourceChanges": 0,
+    "newTests": 0,
+    "builds": 0,
+    "deployments": 0,
+    "reuse": "HTTPS_TRIAL_CHECKS final 15 pass/0 fail/43 not-run and unaffected historical layers only",
+    "knownDevAudit": {
+      "moderate": 2,
+      "high": 3,
+      "status": "HISTORICAL_NOT_RERUN_NOT_FIXED"
+    },
+    "secretScan": { "status": "PASS", "scannedFiles": 1718 },
+    "diffCheck": "PASS",
+    "logPrefixAfterAppend": { "bytes": 332468, "sha256": "7003a5e988af7d4e145c4c8c08c6b0875a06ac3353f2430e0e15935c8f2044c6", "matches": true }
+  },
+  "newModelCalls": 0,
+  "modelFees": 0,
+  "modelAccuracy": "NOT_MEASURED_THIS_TURN",
+  "candidate06Adopted": false,
+  "businessSourceCommitted": false
+}
