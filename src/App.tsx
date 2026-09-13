@@ -116,6 +116,7 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
   const RealInputPanel = runtime?.realInput?.inputPanel
   const [isolatedChoices, setIsolatedChoices] = useState<Record<string, Record<string, boolean>>>({})
   const [isolatedBusy, setIsolatedBusy] = useState(false)
+  const [experimentExport, setExperimentExport] = useState<{ url: string; filename: string } | null>(null)
   const isolatedLock = useRef(false)
   const [currentPage, setCurrentPage] = useState<PageId>('today')
   const [inboxView, setInboxView] = useState<'all' | 'needs_review'>('all')
@@ -150,6 +151,9 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
   const hydrationPromise = useRef<Promise<WorkspaceData> | null>(null)
   const persistedWorkspaceRevision = useRef<string | null>(null)
   const pendingWorkspaceRevision = useRef<string | null>(null)
+  useEffect(() => () => {
+    if (experimentExport) URL.revokeObjectURL(experimentExport.url)
+  }, [experimentExport])
   const selectedTask =
     tasks.find((task) => task.id === selectedTaskId) ?? null
   const selectedEvent = events.find((event) => event.id === selectedEventId) ?? null
@@ -1459,12 +1463,9 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
           <button type="button" disabled={isolatedBusy || !workspaceReady || storageError} onClick={() => void performExperiment(async () => {
             const json = await runtime.exportJson()
             const url = URL.createObjectURL(new Blob([json], { type: 'application/json' }))
-            const link = document.createElement('a'); link.href = url
-            if (runtime.semantic) {
-              link.download = runtime.semantic.exportName; document.body.append(link); link.click(); link.remove()
-              window.setTimeout(() => URL.revokeObjectURL(url), 1000)
-            } else { link.download = 'mainline-02-i1-workspace.json'; link.click(); URL.revokeObjectURL(url) }
-          })}>导出完整测试库 JSON</button>
+            setExperimentExport({ url, filename: runtime.semantic?.exportName ?? 'mainline-02-i1-workspace.json' })
+          })}>准备完整测试库 JSON</button>
+          {experimentExport && <a href={experimentExport.url} download={experimentExport.filename}>下载已准备的完整测试库 JSON</a>}
         </section>}
         <PageLoadBoundary key={currentPage} onRetry={() => window.location.reload()}>
           <Suspense fallback={<main className="page page-loading" role="status">正在打开页面…</main>}>

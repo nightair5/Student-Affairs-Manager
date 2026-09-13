@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from '../../App'
 import '../../styles.css'
@@ -71,7 +71,7 @@ for (const method of ['getItem','setItem','removeItem','clear','key'] as const) 
 window.fetch = (input, init) => {
   const url = new URL(input instanceof Request ? input.url : String(input),location.href)
   if(preview){
-    if(url.origin!==location.origin||!/^\/recorded\/(?:Q(?:01|07)-06|R(?:11|12)-07)\.json$/.test(url.pathname)||url.search||(init?.method??'GET')!=='GET')throw Error('REAL_INPUT_PREVIEW_NETWORK_FORBIDDEN')
+    if(url.origin!==location.origin||!/^\/recorded\/(?:Q(?:01|07)-06|R(?:11|12)-07|U11-09|V02-09)\.json$/.test(url.pathname)||url.search||(init?.method??'GET')!=='GET')throw Error('REAL_INPUT_PREVIEW_NETWORK_FORBIDDEN')
     return nativeFetch(input,{...init,redirect:'error'})
   }
   if (url.origin !== location.origin || !(url.pathname.startsWith('/real-input-assets/') || url.pathname.startsWith('/engineering-carriers/')
@@ -111,16 +111,13 @@ const execute: ModelExecutor = config.mode === 'live'
     return value.rawHttpText
   }
 let runtime: Awaited<ReturnType<typeof createRealInputRuntime>>
-const download = (value: unknown, filename: string) => {
-  const url = URL.createObjectURL(new Blob([JSON.stringify(value)],{type:'application/json'}))
-  const link = document.createElement('a'); link.href=url; link.download=filename
-  document.body.append(link); link.click(); link.remove(); setTimeout(()=>URL.revokeObjectURL(url),1000)
-}
 function EngineeringTools() {
   const [status,setStatus]=useState('尚未操作'), [busy,setBusy]=useState(false), [output,setOutput]=useState<unknown>(null)
+  const [downloadUrl,setDownloadUrl]=useState<string>()
+  useEffect(()=>()=>{if(downloadUrl)URL.revokeObjectURL(downloadUrl)},[downloadUrl])
   const action=async(work:()=>Promise<unknown>)=>{
-    if(busy)return;setBusy(true);setOutput(null)
-    try{const result=await work();setOutput(result);setStatus('本次本机操作完成；尚未代表产品旅程或模型质量通过')}
+    if(busy)return;setBusy(true);setOutput(null);setDownloadUrl(undefined)
+    try{const result=await work();setOutput(result);setDownloadUrl(URL.createObjectURL(new Blob([JSON.stringify(result)],{type:'application/json'})));setStatus('本次本机操作完成；尚未代表产品旅程或模型质量通过')}
     catch(error){setStatus(error instanceof Error?error.message:'本机操作失败，现场保留')}
     finally{setBusy(false)}
   }
@@ -228,7 +225,7 @@ function EngineeringTools() {
       return {version:'real-input-local-preparation-1',origin:location.origin,name,preparations,
         note:'工程输入准备；页面范围核对标记不是真人研究。零模型调用。冻结前仍须核对实际提取与校对。'}
     })}>准备A/B来源与请求（不发送模型）</button>
-    <button disabled={busy||!output} onClick={()=>download(output,'real-input-local-evidence.json')}>下载本次工程证据JSON</button>
+    {downloadUrl?<a href={downloadUrl} download="real-input-local-evidence.json">下载本次工程证据JSON</a>:<span>完成一次工程读取后可下载工程证据JSON</span>}
     <p role="status">{status}</p><pre aria-label="本次工程证据">{output?JSON.stringify(output):'尚无本次结果'}</pre>
   </details>
 }
@@ -247,8 +244,8 @@ async function mount(createPreview=false) {
   if(!preview){params.delete('new');history.replaceState(null,'','/?'+params.toString())}
   root.render(<>{preview&&<div className="app-shell" style={{minHeight:0}}><section className="content-shell" aria-label="实验版使用说明" style={{padding:16}}>
     <h2>{preview.localOnly?'本地独立试用 · 从一份通知开始':'从一份通知开始，把任务核对清楚'}</h2>
-    <p>点击“新事务”选择匿名示例，直接打开核对面板。新增“核对送样与共享材料”和“核对展签与取消要求”，保留首次错误供核对，并非采用新候选。</p>
-    <p>匿名历史回放 · 模型关闭 · 数据仅保存在本域名当前浏览器。不读取本机旧库，不同步，请勿输入真实学生资料。候选06/07未采用。</p>
+    <p>点击“新事务”选择匿名示例，直接打开核对面板。共享材料时间示例用于验证本机归属修复，保留首次错误供核对，并非采用新候选。</p>
+    <p>匿名历史回放 · 模型关闭 · 数据仅保存在当前入口的当前浏览器。不读取其他试用库，不同步，请勿输入真实学生资料。候选06/07/09未采用。</p>
   </section></div>}<App runtime={runtime}/>{preview?<div className="app-shell" style={{minHeight:0}}><div className="content-shell"><EngineeringTools/></div></div>:<EngineeringTools/>}</>)
 }
 const root=createRoot(document.getElementById('root')!)

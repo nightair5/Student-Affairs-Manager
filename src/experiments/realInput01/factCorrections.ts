@@ -41,9 +41,12 @@ export function factAssets(input: SemanticInput, taskId: string) {
   while (size !== materials.size + times.size + events.size) {
     size = materials.size + times.size + events.size
     for (const m of input.materials) if (m.relatedTaskTempIds.includes(taskId)) materials.add(m.tempId)
-    for (const t of input.timePoints) if (times.has(t.tempId) || t.relatedTaskTempIds.includes(taskId)
-      || t.relatedMaterialTempIds.some(id => materials.has(id))) {
-      times.add(t.tempId); t.relatedMaterialTempIds.forEach(id => materials.add(id))
+    for (const t of input.timePoints) {
+      const hasTaskOwner=t.relatedTaskTempIds.length>0||input.tasks.some(owner=>owner.detail.timePointTempIds.includes(t.tempId))
+      if (times.has(t.tempId) || t.relatedTaskTempIds.includes(taskId)
+        || (!hasTaskOwner&&t.relatedMaterialTempIds.some(id => materials.has(id)))) {
+        times.add(t.tempId); t.relatedMaterialTempIds.forEach(id => materials.add(id))
+      }
     }
     for (const e of input.events) if (events.has(e.tempId) || e.relatedTaskTempIds.includes(taskId)
       || (e.startTimePointTempId && times.has(e.startTimePointTempId)) || (e.endTimePointTempId && times.has(e.endTimePointTempId))) {

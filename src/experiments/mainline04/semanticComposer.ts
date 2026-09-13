@@ -108,6 +108,11 @@ export async function composeSemantics(input: unknown, options: ComposeContext):
     if (event.startTimePointTempId) link(event.tempId, event.startTimePointTempId, 'time')
     if (event.endTimePointTempId) link(event.tempId, event.endTimePointTempId, 'time')
   }
+  const taskOwnsTime = (taskId: string, timeId: string) => raw.timePoints.some(time => time.tempId === timeId
+    && time.relatedTaskTempIds.includes(taskId)) || raw.tasks.some(task => task.id === taskId
+      && task.detail.timePointTempIds.includes(timeId))
+  const timeHasTaskOwner = (timeId: string) => raw.timePoints.some(time => time.tempId === timeId
+    && time.relatedTaskTempIds.length > 0) || raw.tasks.some(task => task.detail.timePointTempIds.includes(timeId))
   // Follow all owned material/time/event edges, including reverse owner references.
   // Sharing an entity is not a dependency on its other owners or their private assets.
   // Only explicit task dependencies/parent links may cross into another task.
@@ -115,6 +120,10 @@ export async function composeSemantics(input: unknown, options: ComposeContext):
     const found = new Set([id]), pending = [id]
     for (let next = pending.pop(); next !== undefined; next = pending.pop()) {
       for (const target of adjacency.get(next) ?? []) if (!found.has(target)) {
+        // Shared material does not transfer a task-owned time to its other owners.
+        // A truly material-only time may still follow the material edge.
+        if (context.ownershipMode !== undefined && kinds.get(next) === 'material' && kinds.get(target) === 'time'
+          && timeHasTaskOwner(target) && !taskOwnsTime(id, target)) continue
         if (kinds.get(target) === 'task') {
           if (!includeDependencies) continue
           const owner = raw.tasks.find(task => task.id === next)
@@ -136,7 +145,8 @@ export async function composeSemantics(input: unknown, options: ComposeContext):
       const has = [...ids].some(id => kinds.get(id) === kind), status = task.coverage[kind]
       if ((status === 'present') !== has || ['unresolved', 'not_extracted'].includes(status)) issue('COVERAGE_' + kind.toUpperCase(), task.id)
     }
-    const deadlines = raw.timePoints.filter(t => ids.has(t.tempId) && ['task_deadline', 'submission_deadline', 'registration_deadline'].includes(t.type))
+    const deadlines = raw.timePoints.filter(t => (context.ownershipMode === undefined ? ids.has(t.tempId) : taskOwnsTime(task.id, t.tempId))
+      && ['task_deadline', 'submission_deadline', 'registration_deadline'].includes(t.type))
     if (new Set(deadlines.map(t => t.normalizedValue)).size > 1) issue('MULTIPLE_DEADLINES', task.id)
   }
   const inactive = new Set<string>()

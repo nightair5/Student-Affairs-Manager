@@ -155,6 +155,52 @@ describe('MAINLINE05 semantic confirmation business invariants', () => {
     expect(c.timePoints.every(t=>t.relatedTaskIds.length===1)).toBe(true)
     expect(c.tasks.find(t=>t.legacyData?.recognitionTempId==='print')!.dependencyIds).toEqual([c.tasks.find(t=>t.legacyData?.recognitionTempId==='submit')!.id])
   })
+  it('shared material does not exchange two tasks private deadlines',async()=>{
+    const {repo,draftId}=await setup('multi',input=>{
+      const shared=input.materials[0]
+      shared.relatedTaskTempIds=['submit','print']
+      input.tasks[1].detail.materialTempIds=['m0']
+      input.materials=[shared]
+      input.timePoints[0].relatedMaterialTempIds=['m0']
+      input.timePoints[1].relatedMaterialTempIds=['m0']
+    })
+    const before=await repo.load(),review=stateOf(before,draftId).first
+    expect(review.items.map(item=>[item.tempId,item.issues])).toEqual([['submit',[]],['print',[]]])
+    const saved=await confirmSemantic(repo,{draftId,revision:semanticRevision(before),taskTempIds:['submit','print']})
+    const byOwner=Object.fromEntries(saved.timePoints.map(time=>[time.relatedTaskIds[0],time.normalizedValue]))
+    const submit=saved.tasks.find(task=>task.legacyData?.recognitionTempId==='submit')!
+    const print=saved.tasks.find(task=>task.legacyData?.recognitionTempId==='print')!
+    expect(byOwner).toEqual({[submit.id]:'2026-09-10T18:00',[print.id]:'2026-09-11T18:00'})
+    expect(saved.materials).toHaveLength(1)
+    expect(saved.materials[0].relatedTaskIds.sort()).toEqual([print.id,submit.id].sort())
+  })
+  it('a material-only deadline persists without becoming a task deadline or a false conflict',async()=>{
+    const {repo,draftId}=await setup('multi',input=>{
+      input.tasks=[input.tasks[0]]
+      input.materials=[input.materials[0]]
+      input.timePoints[1].relatedTaskTempIds=[]
+      input.timePoints[1].relatedMaterialTempIds=['m0']
+    })
+    const before=await repo.load(),review=stateOf(before,draftId).first
+    expect(review.items[0].issues).not.toContain('MULTIPLE_DEADLINES')
+    const saved=await confirmSemantic(repo,{draftId,revision:semanticRevision(before),taskTempIds:['submit']})
+    const materialDeadline=saved.timePoints.find(time=>time.legacyData?.recognitionTempId==='d1')!
+    expect(materialDeadline.relatedTaskIds).toEqual([])
+    expect(materialDeadline.relatedMaterialIds).toEqual([saved.materials[0].id])
+    expect(saved.tasks[0].id).not.toBe(materialDeadline.taskId)
+  })
+  it('one deadline explicitly owned by two tasks remains shared without conflict',async()=>{
+    const {repo,draftId}=await setup('multi',input=>{
+      input.timePoints=[input.timePoints[0]]
+      input.timePoints[0].relatedTaskTempIds=['submit','print']
+      input.tasks[1].detail.timePointTempIds=['d0']
+    })
+    const before=await repo.load(),review=stateOf(before,draftId).first
+    expect(review.items.every(item=>!item.issues.includes('MULTIPLE_DEADLINES'))).toBe(true)
+    const saved=await confirmSemantic(repo,{draftId,revision:semanticRevision(before),taskTempIds:['submit','print']})
+    expect(saved.timePoints).toHaveLength(1)
+    expect(saved.timePoints[0].relatedTaskIds.sort()).toEqual(saved.tasks.map(task=>task.id).sort())
+  })
   it.each(['own-multiple','cycle','bad-prerequisite-scope'] as const)('new ownership mode still rejects %s without bypassing first issues',async kind=>{
     const {repo,draftId}=await setup('multi',input=>{
       input.tasks[1].detail.dependencyTempIds=['submit']

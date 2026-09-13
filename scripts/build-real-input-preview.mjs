@@ -23,6 +23,12 @@ const pinned07={
   'R11-07_RAW.jsonl':'b96eb4fdff1be4137955510609683b4fc5746f175aaddf83147c970bdd30a3ba',
   'R12-07_RAW.jsonl':'9b2af233504c7684be20e56c344b23714be51465f622bc7049dfbbfabfb4a801',
 }
+const N='docs/recognition-optimization/mainline-real-input-01/runs/candidate09-20260913a/'
+const pinned09={
+  'BINDING_FINAL.json':'d62abdfdedaf4b538364fe55bacd1e52fc3623f7a5acef9732de75af128125df',
+  'U11-09_RAW.jsonl':'1de5e7b280a6d808ebe83e9874dfa4b132fadedde3c55433cb944ade72fe650f',
+  'V02-09_RAW.jsonl':'2f5f87084770cdb2337c7fda92b72257b1378c644531fb75c5c85cfa8a3d7938',
+}
 export async function buildPreview(origin='https://student-affairs-real-input-preview.nightsdell.workers.dev', {localOnly=false}={}){
   check(localOnly ? origin==='http://127.0.0.1:6632' : origin==='https://student-affairs-real-input-preview.nightsdell.workers.dev','ORIGIN')
   const read=n=>{const b=readFileSync(join(sourceRoot,D,n));check(hash(b)===pinned[n],'HISTORY_CHANGED');return JSON.parse(b)}
@@ -41,6 +47,15 @@ export async function buildPreview(origin='https://student-affairs-real-input-pr
     check(item&&unit&&raw.httpStatus===200&&raw.requestSha===unit.requestSha&&raw.inputSha===unit.inputSha
       &&raw.candidateSha===unit.candidateSha&&hash(raw.rawHttpText)===raw.responseSha,'PAIRED07_RAW_BINDING')
     records.push({version:'recorded-paired07-1',unitId,name:historicalName,operationId:item.operationId,title:item.title,
+      context:item.context,requestSha:raw.requestSha,responseSha:raw.responseSha,rawHttpText:raw.rawHttpText})
+  }
+  const read09=n=>{const b=readFileSync(join(sourceRoot,N,n));check(hash(b)===pinned09[n],'PAIRED09_HISTORY_CHANGED');return JSON.parse(b)}
+  const binding09=read09('BINDING_FINAL.json')
+  for(const unitId of ['U11-09','V02-09']){
+    const raw=read09(unitId+'_RAW.jsonl'),item=binding09.items.find(i=>i.id===unitId.slice(0,3)),unit=binding09.units.find(u=>u.unitId===unitId)
+    check(item&&unit&&raw.httpStatus===200&&raw.requestSha===unit.requestSha&&raw.inputSha===unit.inputSha
+      &&raw.candidateSha===unit.candidateSha&&hash(raw.rawHttpText)===raw.responseSha,'PAIRED09_RAW_BINDING')
+    records.push({version:'recorded-paired09-1',unitId,name:historicalName,operationId:item.operationId,title:item.title,
       context:item.context,requestSha:raw.requestSha,responseSha:raw.responseSha,rawHttpText:raw.rawHttpText})
   }
   // Deliberately omit receipts, billing, Expected and absolute source paths from public assets.
@@ -87,7 +102,7 @@ export async function buildPreview(origin='https://student-affairs-real-input-pr
   const paths=['index.html','boot.js','browser.js','browser.css',...records.map(r=>'recorded/'+r.unitId+'.json')]
   const manifest={origin,directory,configuration,...(localOnly?{localOnly:true}:{}),modelCallsEnabled:false,rootEnvRead:false,
     assets:paths.map(path=>({path,sha256:hash(readFileSync(join(assets,path))),bytes:readFileSync(join(assets,path)).length})),
-    sourceFiles:['src/experiments/realInput01/browser.tsx','src/experiments/realInput01/runtime.ts','scripts/build-real-input-preview.mjs',
+    sourceFiles:['src/App.tsx','src/experiments/realInput01/browser.tsx','src/experiments/realInput01/runtime.ts','scripts/build-real-input-preview.mjs',
       'cloudflare/real-input-preview.mjs','wrangler.real-input-preview.jsonc'].map(path=>({path,sha256:hash(readFileSync(join(sourceRoot,path)))}))}
   writeFileSync(join(directory,'manifest.json'),JSON.stringify(manifest,null,2))
   return manifest

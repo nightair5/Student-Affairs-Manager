@@ -110,6 +110,32 @@ describe('paired09 settled raw replay; engineering simulation, not browser evide
       expect(fetch).not.toHaveBeenCalled()
     }finally{fetch.mockRestore()}
   })
+  it.each([
+    ['U11-09',['task-fill-registration','task-submit-samples']],
+    ['V02-09',['task-1','task-2']],
+    ['U01-09',['task-submit-authorization','task-upload-trailer']],
+    ['U10-09',['task-light-inventory','task-audio-inventory']],
+    ['V04-09',['task-1']],
+  ] as Array<[string,string[]]>)('%s zero-call replay keeps each task private time while retaining shared materials',async(unitId,taskIds)=>{
+    const {repo}=await fixture(),r=record(unitId),identity={unitId,requestSha:r.requestSha,responseSha:r.responseSha}
+    const fetch=vi.spyOn(globalThis,'fetch').mockRejectedValue(Error('MODEL_MUST_NOT_DISPATCH'))
+    try{
+      const saved=await replayRecordedPaired04(repo,r,identity),draft=saved.extractionDrafts[0],state=stateOfRuntime(saved,draft.id)
+      expect(state.first.items.every(item=>!item.issues.includes('MULTIPLE_DEADLINES'))).toBe(true)
+      const facts=effectiveStateFacts(state).facts
+      expect(facts.tasks.map(task=>task.id)).toEqual(taskIds)
+      for(const task of facts.tasks){
+        const direct=new Set([...task.detail.timePointTempIds,...facts.timePoints.filter(time=>time.relatedTaskTempIds.includes(task.id)).map(time=>time.tempId)])
+        expect(facts.timePoints.filter(time=>direct.has(time.tempId)).map(time=>time.tempId).sort()).toEqual([...direct].sort())
+      }
+      if(['U11-09','V02-09'].includes(unitId)){
+        expect(facts.materials.some(material=>material.relatedTaskTempIds.length===2)).toBe(true)
+        expect(facts.timePoints).toHaveLength(2)
+        expect(facts.timePoints.every(time=>time.relatedTaskTempIds.length===1)).toBe(true)
+      }
+      expect(fetch).not.toHaveBeenCalled()
+    }finally{fetch.mockRestore()}
+  })
   it('rejects wrong version, source, request and response before writes; rejected raw does not leave half records',async()=>{
     const {repo}=await fixture(),before=await repo.load()
     for(const change of [(r:RecordedPaired04)=>{r.version='recorded-paired07-1'},(r:RecordedPaired04)=>{r.operationId+='x'},
@@ -261,12 +287,12 @@ describe('paired07 actual recorded response boundary; memory only, not browser a
       expect(await replayRecordedPaired04(repo,r,identity,true)).toEqual(saved)
     }
   })
-  it('only the two selected R responses are public, write/model endpoints remain closed',()=>{
+  it('only the selected R and paired09 responses are public; write/model endpoints remain closed',()=>{
     const r=spawnSync(process.execPath,['--input-type=module','-e',`
       import assert from 'node:assert/strict';import worker from './cloudflare/real-input-preview.mjs';
       const env={ASSETS:{fetch:async()=>new Response('asset')}};
-      for(const path of ['/recorded/R11-07.json','/recorded/R12-07.json'])assert.equal((await worker.fetch(new Request('https://preview.invalid'+path),env)).status,200);
-      for(const path of ['/recorded/R11-03.json','/recorded/R01-07.json','/api/recognize'])assert.equal((await worker.fetch(new Request('https://preview.invalid'+path),env)).status,404);
+      for(const path of ['/recorded/R11-07.json','/recorded/R12-07.json','/recorded/U11-09.json','/recorded/V02-09.json'])assert.equal((await worker.fetch(new Request('https://preview.invalid'+path),env)).status,200);
+      for(const path of ['/recorded/R11-03.json','/recorded/R01-07.json','/recorded/U10-09.json','/api/recognize'])assert.equal((await worker.fetch(new Request('https://preview.invalid'+path),env)).status,404);
       assert.equal((await worker.fetch(new Request('https://preview.invalid/api/recognize',{method:'POST'}),env)).status,405);
     `],{encoding:'utf8'})
     expect(r.status,r.stderr).toBe(0)
@@ -319,10 +345,10 @@ describe('HTTPS preview',()=>{
       const assignment=tree.statements.find(s=>ts.isExpressionStatement(s)&&ts.isBinaryExpression(s.expression)&&s.expression.left.getText(tree)==='window.fetch');
       const window={},calls=[];
       runInNewContext(compile(assignment.getText(tree)),{window,URL,Request,location:{origin:local.origin,href:local.origin+'/'},preview:local,nativeFetch:(...args)=>{calls.push(args);return Promise.resolve()},effects:{forbiddenNetwork:0}});
-      for(const unit of ['Q01-06','Q07-06','R11-07','R12-07'])await window.fetch('/recorded/'+unit+'.json');
-      assert.equal(calls.length,4);
+      for(const unit of ['Q01-06','Q07-06','R11-07','R12-07','U11-09','V02-09'])await window.fetch('/recorded/'+unit+'.json');
+      assert.equal(calls.length,6);
       for(const path of ['/api/recognize','/recorded/R11-03.json','/recorded/R11-07.json?x=1','https://example.com/recorded/R11-07.json'])assert.throws(()=>window.fetch(path),/NETWORK_FORBIDDEN/);
-      assert.throws(()=>window.fetch('/recorded/R11-07.json',{method:'POST'}),/NETWORK_FORBIDDEN/);assert.equal(calls.length,4);
+      assert.throws(()=>window.fetch('/recorded/R11-07.json',{method:'POST'}),/NETWORK_FORBIDDEN/);assert.equal(calls.length,6);
     `],{encoding:'utf8'})
     expect(probe.status,probe.stderr).toBe(0)
   })
@@ -336,28 +362,30 @@ describe('HTTPS preview',()=>{
       const get=(path,headers={},method='GET')=>new Promise((resolve,reject)=>{const req=request(testOrigin+path,{headers:{Host:'127.0.0.1:6632',...headers},method},r=>{const parts=[];r.on('data',b=>parts.push(b));r.on('end',()=>resolve({status:r.statusCode,text:Buffer.concat(parts).toString()}))});req.on('error',reject);req.end()});
       try{
         assert.equal(server.address().address,'127.0.0.1');assert.equal(manifest.configuration,null);assert.equal(manifest.modelCallsEnabled,false);
-        for(const path of ['/','/browser.js','/browser.css','/recorded/Q01-06.json','/recorded/Q07-06.json','/recorded/R11-07.json','/recorded/R12-07.json'])assert.equal((await get(path)).status,200,path);
+        for(const path of ['/','/browser.js','/browser.css','/recorded/Q01-06.json','/recorded/Q07-06.json','/recorded/R11-07.json','/recorded/R12-07.json','/recorded/U11-09.json','/recorded/V02-09.json'])assert.equal((await get(path)).status,200,path);
         assert.equal(JSON.parse((await get('/api/status')).text).modelCallsEnabled,false);
         assert.equal((await get('/api/recognize',{},'POST')).status,405);
         assert.equal((await get('/',{Host:'localhost:6632'})).status,403);
         assert.equal((await get('/',{Origin:'https://example.com'})).status,403);
         assert.equal((await get('/',{'Sec-Fetch-Site':'cross-site'})).status,403);
-        for(const path of ['/.env','/package.json','/?new=1','/recorded/R11-03.json','/%2e%2e/.env'])assert.equal((await get(path)).status,404,path);
+        for(const path of ['/.env','/package.json','/?new=1','/recorded/R11-03.json','/recorded/U10-09.json','/%2e%2e/.env'])assert.equal((await get(path)).status,404,path);
       }finally{await new Promise(resolve=>server.close(resolve))}
     `],{encoding:'utf8',timeout:30000})
     expect(probe.status,probe.stderr).toBe(0)
   },35000)
   function record(unitId:string):RecordedPaired04{
-    const p='docs/recognition-optimization/mainline-real-input-01/runs/candidate06-20260912a/'
-    const binding=JSON.parse(readFileSync(p+'BINDING.json','utf8'))
+    const paired07=unitId.startsWith('R'),paired09=unitId.startsWith('U')||unitId.startsWith('V')
+    const p='docs/recognition-optimization/mainline-real-input-01/runs/'+(paired09?'candidate09-20260913a/':paired07?'candidate07-20260913a/':'candidate06-20260912a/')
+    const binding=JSON.parse(readFileSync(p+(paired09||paired07?'BINDING_FINAL.json':'BINDING.json'),'utf8'))
     const item=binding.items.find((i:{id:string})=>i.id===unitId.slice(0,3))
     const raw=JSON.parse(readFileSync(p+unitId+'_RAW.jsonl','utf8'))
-    return {version:'recorded-paired06-1',unitId,name:recordedA02Identity.name,operationId:item.operationId,
+    return {version:paired09?'recorded-paired09-1':paired07?'recorded-paired07-1':'recorded-paired06-1',unitId,name:recordedA02Identity.name,operationId:item.operationId,
       title:item.title,context:item.context,requestSha:raw.requestSha,responseSha:raw.responseSha,rawHttpText:raw.rawHttpText}
   }
-  it('real runtime picker opens both examples via the existing App callback without refreshing or dispatching',async()=>{
+  it('real runtime picker opens all bound examples via the existing App callback without refreshing or dispatching',async()=>{
     const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:HTTPS_PREVIEW_DATABASE}),execute=vi.fn(async()=>{throw Error('NO_MODEL')})
-    const records=['Q01-06','Q07-06'].map(record),identities=records.map(({unitId,requestSha,responseSha})=>({unitId,requestSha,responseSha}))
+    const unitIds=['Q01-06','Q07-06','R11-07','R12-07','U11-09','V02-09']
+    const records=unitIds.map(record),identities=records.map(({unitId,requestSha,responseSha})=>({unitId,requestSha,responseSha}))
     const read=vi.fn(async(id:string)=>structuredClone(records.find(r=>r.unitId===id)!))
     const runtime=await createRealInputRuntime({name:store.name,store,initial:emptyRealInputWorkspace(store.name),execution:'live',
       recordedBatch:true,httpsPreview:true,resources:{workerPath:'',corePath:'',langPath:'',pdfWorkerPath:''},execute,previewExamples:{identities,read}})
@@ -368,16 +396,16 @@ describe('HTTPS preview',()=>{
     })
     const picker=runtime.realInput!.inputPanel({workspace:await runtime.load(),initialText:'',onSaved:async()=>{},onDraftReady:onReady}) as ReactElement<{open:(id:string)=>Promise<unknown>}>
     const html=renderToStaticMarkup(picker)
-    expect(html).toContain('体验多任务通知');expect(html).toContain('体验新旧要求替代');expect(html).toContain('历史真实模型回答')
-    for(const id of ['Q01-06','Q07-06'])await picker.props.open(id)
-    const saved=await runtime.load();expect(saved.extractionDrafts).toHaveLength(2);expect(new Set(opened).size).toBe(2)
+    expect(html).toContain('体验多任务通知');expect(html).toContain('体验新旧要求替代');expect(html).toContain('验证共享材料的两个截止时间');expect(html).toContain('历史真实模型回答')
+    for(const id of unitIds)await picker.props.open(id)
+    const saved=await runtime.load();expect(saved.extractionDrafts).toHaveLength(6);expect(new Set(opened).size).toBe(6)
     expect(await new CanonicalWorkspaceRepository(store).load()).toEqual(JSON.parse(JSON.stringify(saved)))
-    await picker.props.open('Q01-06');expect(opened[2]).toBe(opened[0]);expect(await runtime.load()).toEqual(saved)
+    await picker.props.open('Q01-06');expect(opened[6]).toBe(opened[0]);expect(await runtime.load()).toEqual(saved)
     await Promise.all([picker.props.open('Q01-06'),picker.props.open('Q01-06')])
-    expect(opened).toHaveLength(4);expect(await runtime.load()).toEqual(saved)
+    expect(opened).toHaveLength(8);expect(await runtime.load()).toEqual(saved)
     await expect(picker.props.open('Q03-06')).rejects.toThrow('REAL_INPUT_HTTPS_EXAMPLE_IDENTITY')
-    expect(read).toHaveBeenCalledTimes(4);expect(execute).not.toHaveBeenCalled()
-  })
+    expect(read).toHaveBeenCalledTimes(8);expect(execute).not.toHaveBeenCalled()
+  },15000)
   it('explicit unverified preparation preserves a valid replacement and cancels no independent task (simulation)',async()=>{
     const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:HTTPS_PREVIEW_DATABASE})
     const repo=await SemanticRepository.open(store.name,store,emptyRealInputWorkspace(store.name),'real-input-01')
@@ -399,6 +427,35 @@ describe('HTTPS preview',()=>{
     const original=JSON.parse(JSON.stringify(saved))
     expect(await new CanonicalWorkspaceRepository(store).load()).toEqual(original)
     expect(await confirmSemantic(repo,{draftId,taskTempIds:[taskId],revision:semanticRevision(saved)})).toEqual(saved)
+  })
+  it.each([
+    ['U11-09','task-fill-registration','2026-09-17T14:00'],
+    ['V02-09','task-1','2026-10-10T12:00'],
+  ] as const)('%s preview can save its valid independent task without importing the sibling deadline',async(unitId,taskId,deadline)=>{
+    const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:HTTPS_PREVIEW_DATABASE})
+    const repo=await SemanticRepository.open(store.name,store,emptyRealInputWorkspace(store.name),'real-input-01')
+    const r=record(unitId),identity={unitId:r.unitId,requestSha:r.requestSha,responseSha:r.responseSha}
+    const loaded=await replayRecordedPaired04(repo,r,identity,true),draft=loaded.extractionDrafts[0],initial=stateOfRuntime(loaded,draft.id)
+    expect(initial.first.items.every(item=>!item.issues.includes('MULTIPLE_DEADLINES'))).toBe(true)
+    for(const material of effectiveStateFacts(initial).facts.materials)await reviewSemanticMaterial(repo,{draftId:draft.id,materialId:material.tempId,
+      revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID(),value:{required:material.required,status:'unverified'}})
+    await reviewSemanticFact(repo,{draftId:draft.id,taskId,revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID()})
+    const saved=await confirmSemantic(repo,{draftId:draft.id,taskTempIds:[taskId],revision:semanticRevision(await repo.load())})
+    expect(saved.tasks).toHaveLength(1);expect(saved.timePoints).toHaveLength(1)
+    expect(saved.timePoints[0].normalizedValue).toBe(deadline)
+    expect(saved.timePoints[0].relatedTaskIds).toEqual([saved.tasks[0].id])
+    expect(saved.materials.every(material=>material.status==='unverified')).toBe(true)
+    expect(stateOfRuntime(saved,draft.id).rawResponse).toEqual(initial.rawResponse)
+    expect(await new CanonicalWorkspaceRepository(store).load()).toEqual(JSON.parse(JSON.stringify(saved)))
+    expect(await replayRecordedPaired04(repo,r,identity,true)).toEqual(saved)
+    expect(await confirmSemantic(repo,{draftId:draft.id,taskTempIds:[taskId],revision:semanticRevision(saved)})).toEqual(saved)
+  })
+  it('download controls prepare explicit user-clickable links instead of losing user activation after async reads',()=>{
+    const app=readFileSync('src/App.tsx','utf8'),browser=readFileSync('src/experiments/realInput01/browser.tsx','utf8')
+    expect(app).toContain('准备完整测试库 JSON');expect(app).toContain('download={experimentExport.filename}')
+    expect(app).toContain('下载已准备的完整测试库 JSON')
+    expect(browser).toContain('href={downloadUrl} download="real-input-local-evidence.json"')
+    expect(browser).not.toContain('link.click()')
   })
   it('read/identity failures never open a panel or write; UI-open failure retains a recoverable single draft',async()=>{
     const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:HTTPS_PREVIEW_DATABASE})
@@ -466,16 +523,16 @@ describe('HTTPS preview',()=>{
     const result=spawnSync(process.execPath,['--input-type=module','-e',`
       import assert from 'node:assert/strict';import worker from './cloudflare/real-input-preview.mjs';
       let calls=0;const env={ASSETS:{fetch:async r=>{calls++;return new Response(r.url)}}};
-      for(const path of ['/','/browser.js','/browser.css','/recorded/Q01-06.json','/recorded/Q07-06.json']){
+      for(const path of ['/','/browser.js','/browser.css','/recorded/Q01-06.json','/recorded/Q07-06.json','/recorded/U11-09.json','/recorded/V02-09.json']){
         const r=await worker.fetch(new Request('https://preview.invalid'+path),env);assert.equal(r.status,200);
         assert.match(r.headers.get('content-security-policy'),/connect-src 'self'/);
       }
-      assert.equal(calls,5);
+      assert.equal(calls,7);
       for(const path of ['/api/deepseek','/api/real-input/recognize','/.env','/recorded/Q03-06.json','/browser.js?x=1']){
         assert.equal((await worker.fetch(new Request('https://preview.invalid'+path),env)).status,404);
         assert.equal((await worker.fetch(new Request('https://preview.invalid'+path,{method:'POST'}),env)).status,405);
       }
-      assert.equal(calls,5);assert.equal((await (await worker.fetch(new Request('https://preview.invalid/api/status'),env)).json()).modelCallsEnabled,false);
+      assert.equal(calls,7);const status=await (await worker.fetch(new Request('https://preview.invalid/api/status'),env)).json();assert.equal(status.modelCallsEnabled,false);assert.deepEqual(status.records,['Q01-06','Q07-06','R11-07','R12-07','U11-09','V02-09']);
     `],{encoding:'utf8'})
     expect(result.status,result.stderr).toBe(0)
   })

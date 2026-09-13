@@ -1,0 +1,42 @@
+{
+  "version": "shared-material-time-implementation-snapshot-1",
+  "baseHead": "944a2f3aa493432ce75a1b7a0d63c632146ed620",
+  "branch": "codex/e2-multimodal-recognition-exp",
+  "modelCalls": 0,
+  "candidate09Adopted": false,
+  "protection": {
+    "protectedPaths": 944,
+    "previousEvidenceFiles": 607,
+    "historicalLedgerChanged": false,
+    "historicalModelAnswersChanged": false,
+    "expectedOrScorerChanged": false
+  },
+  "files": {
+    "cloudflare/real-input-preview.mjs": "2e2888248cd0b1f8e1d1ff52e70f83314482e4ae270d6acfd33e50ea8103b299",
+    "scripts/build-real-input-preview.mjs": "12b594d3e2d82a14e39c5dec2d3114b7123672a02a5f7f794da4d8a0d66ee0f1",
+    "src/App.tsx": "eb93daea2c0e0a4555e0590f6585584a5df744b2fdff31f495007a8bf4097c26",
+    "src/experiments/mainline04/semanticComposer.ts": "279af6a4f81a82315b84cd4dcde584a327c2863fee16deab9e28f984c9f47d5c",
+    "src/experiments/mainline05/semanticConfirmation.test.ts": "cb29f4049923db2eb18037337ccb49bf0a47d947a6355f59f0cfd023d326e07e",
+    "src/experiments/mainline05/semanticState.ts": "bedf4e7d12772656f0f6b029dca0370d4abd1dec6b9f3ce253f32b79b35c3724",
+    "src/experiments/realInput01/acceptance.test.tsx": "6aa32ac108478417974e781bb9505e855a1fdf5f6a998ee67faa6a85de74f0ac",
+    "src/experiments/realInput01/browser.tsx": "3e033a132ebc0b15efdb623b07559773251b7241d6b975251bd8e3b9c11fd521",
+    "src/experiments/realInput01/factCorrections.ts": "3c9929d681cdce1fc5704432228a0bd2b8550b0964c05f3be0b5138a9826da60",
+    "src/experiments/realInput01/runtime.ts": "033bfe9a9b3eb5ee6143f79c3eef77d91b522f405cce5b14987753c16167eb6e",
+    "docs/recognition-optimization/mainline-real-input-01/runs/shared-material-time-20260913a/RUN.mjs": "f9a8535ea3ccc58329c9058b0d3176f57b74da5f182e2d50a5598356f0899b9d"
+  },
+  "checks": {
+    "evidenceSha256": "e57c63d8234d504d03b98d49c227793da947a1163ba66f26dd4a6263ec62953f",
+    "vitestPassed": 1381,
+    "vitestSkipped": 1,
+    "vitestFailed": 0,
+    "rootEnvRead": false,
+    "historicalNonApplicable": "RCO-5-007 FREEZE_HASH_MISMATCH:package-lock.json"
+  },
+  "runtime": {
+    "url": "http://127.0.0.1:6632/",
+    "httpStatus": 200,
+    "records": ["Q01-06", "Q07-06", "R11-07", "R12-07", "U11-09", "V02-09"],
+    "modelCallsEnabled": false,
+    "currentBrowserPersistenceAndDownloads": "NOT_RUN"
+  }
+}

@@ -63,7 +63,7 @@ export function pendingDateEligible(state: AnySemanticState, id: string): boolea
   if(state.version!==REAL_STATE_VERSION)return false
   const input=effectiveStateFacts(state).facts,review=effectiveReview(state),task=input.tasks.find(t=>t.id===id)
   if(!task||task.coverage.time!=='present')return false
-  const assets=relatedAssets(input,[id]),points=input.timePoints.filter(t=>assets.times.has(t.tempId))
+  const assets=relatedAssets(input,[id]),points=directTaskTimes(input,id)
   const problems=itemSafety(input,review,id)
   if(!points.length||assets.events.size||!problems.includes('TIME_NEEDS_REVIEW')||problems.some(p=>p!=='TIME_NEEDS_REVIEW'))return false
   if(state.operations.some(o=>o.kind==='edit'&&o.field==='deadline'&&o.taskIds.includes(id)))return false
@@ -123,6 +123,18 @@ export function stateOfRuntime(workspace: WorkspaceV8, draftId: string): AnySema
 // those properties. Strict semantic payloads are validated separately before this view.
 export const semanticRevision = (workspace: unknown) => stableJson(JSON.parse(JSON.stringify(workspace)))
 
+function taskOwnsTime(input: SemanticInput, taskId: string, timeId: string) {
+  return input.timePoints.some(time => time.tempId === timeId && time.relatedTaskTempIds.includes(taskId))
+    || input.tasks.some(task => task.id === taskId && task.detail.timePointTempIds.includes(timeId))
+}
+function timeHasTaskOwner(input: SemanticInput, timeId: string) {
+  return input.timePoints.some(time => time.tempId === timeId && time.relatedTaskTempIds.length > 0)
+    || input.tasks.some(task => task.detail.timePointTempIds.includes(timeId))
+}
+function directTaskTimes(input: SemanticInput, taskId: string) {
+  return input.timePoints.filter(time => taskOwnsTime(input, taskId, time.tempId))
+}
+
 export function relatedAssets(input: SemanticInput, ids: readonly string[]) {
   const tasks = new Set(ids), materials = new Set<string>(), times = new Set<string>(), events = new Set<string>()
   for (const task of input.tasks) if (tasks.has(task.id)) {
@@ -134,7 +146,7 @@ export function relatedAssets(input: SemanticInput, ids: readonly string[]) {
     size = materials.size + times.size + events.size
     for (const m of input.materials) if (m.relatedTaskTempIds.some(id => tasks.has(id))) materials.add(m.tempId)
     for (const t of input.timePoints) if (times.has(t.tempId) || t.relatedTaskTempIds.some(id => tasks.has(id))
-      || t.relatedMaterialTempIds.some(id => materials.has(id))) {
+      || (!timeHasTaskOwner(input,t.tempId) && t.relatedMaterialTempIds.some(id => materials.has(id)))) {
       times.add(t.tempId); t.relatedMaterialTempIds.forEach(id => materials.add(id))
     }
     for (const e of input.events) if (events.has(e.tempId) || e.relatedTaskTempIds.some(id => tasks.has(id))
@@ -149,7 +161,7 @@ export function editTimeSupport(state: AnySemanticState, id: string) {
   const input = effectiveStateFacts(state).facts
   const task = input.tasks.find(t => t.id === id)
   assert(task, 'TASK_MISSING')
-  const assets = relatedAssets(input, [id]), points = input.timePoints.filter(t => assets.times.has(t.tempId))
+  const assets = relatedAssets(input, [id]), points = directTaskTimes(input,id)
   const shared = input.tasks.some(t => t.id !== id
     && [...relatedAssets(input, [t.id]).times].some(time => assets.times.has(time)))
   return { points, allowed: assets.events.size === 0 && points.length <= 1 && !shared
@@ -266,7 +278,9 @@ export function canonicalFacts(state: AnySemanticState) {
   const timeId = (id: string) => semanticId('time', state, id)
   const eventId = (id: string) => semanticId('event', state, id)
   const taskAssets = Object.fromEntries(input.tasks.map(t => [t.id, relatedAssets(input, [t.id])]))
-  const owners = (kind: 'materials' | 'times' | 'events', id: string) => current.accepted.filter(t => taskAssets[t][kind].has(id))
+  const owners = (kind: 'materials' | 'times' | 'events', id: string) => kind === 'times'
+    ? current.accepted.filter(taskId => taskOwnsTime(input,taskId,id))
+    : current.accepted.filter(taskId => taskAssets[taskId][kind].has(id))
   const stamps = (ids: string[]) => {
     const times = ids.map(id => current.confirmedAt[id]).sort()
     assert(times.length > 0, 'ORPHAN_CANONICAL_ENTITY')
@@ -281,6 +295,7 @@ export function canonicalFacts(state: AnySemanticState) {
   const timePoints: TimePoint[] = input.timePoints.filter(t => assets.times.has(t.tempId)).map(t => {
     // Sharing a task owner does not assert a time-to-material edge.
     const taskOwners = owners('times', t.tempId)
+    const persistenceOwners = current.accepted.filter(taskId => taskAssets[taskId].times.has(t.tempId))
     const materialOwners = [...new Set(t.relatedMaterialTempIds)].filter(id => assets.materials.has(id))
     const editOwner = taskOwners.find(id => state.operations.some(op => op.kind === 'edit' && op.field === 'deadline' && op.taskIds[0] === id))
     const value = editOwner ? current.values[editOwner].deadline : t.normalizedValue
@@ -291,7 +306,7 @@ export function canonicalFacts(state: AnySemanticState) {
       relatedTaskIds: taskOwners.map(taskId), relatedMaterialIds: materialOwners.map(materialId), type: t.type, rawText: t.rawText,
       normalizedValue: value, timezone: changed ? isDateOnly(value!) ? null : state.context.timezone : t.timezone,
       isAllDay: changed ? isDateOnly(value!) : t.isAllDay, precision: changed ? isDateOnly(value!) ? 'date_only' : 'exact' : t.precision,
-      needsConfirmation: changed ? false : t.needsConfirmation, ...stamps(taskOwners), legacyData: pointer(t.tempId) }
+      needsConfirmation: changed ? false : t.needsConfirmation, ...stamps(persistenceOwners), legacyData: pointer(t.tempId) }
   })
   for (const t of input.tasks.filter(t => accepted.has(t.id))) {
     const value = current.values[t.id].deadline

@@ -66,6 +66,8 @@ export const HTTPS_PREVIEW_EXAMPLES = [
   {unitId:'Q07-06',label:'体验新旧要求替代',description:'核对旧要求作废及有效的新要求。'},
   {unitId:'R11-07',label:'核对送样与共享材料',description:'候选07历史回放：检查登记单、样本和密封袋归属；尚未采用该候选。'},
   {unitId:'R12-07',label:'核对展签与取消要求',description:'保留原回答的取消引用错误，须人工补正，不代表已通过识别。'},
+  {unitId:'U11-09',label:'验证共享材料的两个截止时间',description:'候选09历史回放：共享登记单仍关联两个任务，但每个任务只保留自己的截止时间；候选09未采用。'},
+  {unitId:'V02-09',label:'验证展签制作与安装时间',description:'候选09历史回放：先核对可确认的制作任务，安装任务的时间和前置条件仍须单独处理；候选09未采用。'},
 ] as const
 export async function openHttpsPreviewExample(repo:SemanticRepository,identity:RecordedBatchIdentity,
   read:(unitId:string)=>Promise<RecordedPaired04>,onReady:(draftId:string)=>Promise<void>) {
@@ -352,7 +354,7 @@ export async function createRealInputRuntime(options: {
 }) {
   options = { ...options, resources: structuredClone(options.resources) }
   if(options.previewExamples){
-    if(!options.httpsPreview||![2,4].includes(options.previewExamples.identities.length)
+    if(!options.httpsPreview||![2,4,6].includes(options.previewExamples.identities.length)
       ||!['Q01-06','Q07-06'].every(id=>options.previewExamples!.identities.filter(i=>i.unitId===id).length===1)
       ||options.previewExamples.identities.some(i=>!HTTPS_PREVIEW_EXAMPLES.some(e=>e.unitId===i.unitId))
       ||new Set(options.previewExamples.identities.map(i=>i.unitId)).size!==options.previewExamples.identities.length)throw Error('REAL_INPUT_HTTPS_EXAMPLES_PROFILE')
@@ -382,7 +384,7 @@ export async function createRealInputRuntime(options: {
       return {load:()=>repo.load(),view:semanticView,dates:semanticDates,review:semanticReview,edit:i=>editSemantic(repo,i),
         confirm:i=>confirmSemantic(repo,i),exportJson:()=>repo.exportJson(),capture:async()=>{throw Error('请先在真实输入面板保存并核对本次文字范围。')},
         recognitionDescription:options.recordedPaired06?'DeepSeek-V4.1-Flash · 03/06已记录回答 · 逐项核对':options.recordedPaired05?'DeepSeek-V4.1-Flash · 03/05已记录回答 · 逐项核对':options.recordedPaired04?'候选03/04配对真实回答 · 逐项人工核对':options.recordedCandidate03?'候选03与历史真实模型回答 · 逐项人工核对':options.recordedCandidate02?'新候选02与历史真实模型回答 · 逐项人工核对':options.recordedBatch?'已记录真实模型批次 · 原回答核对，不再调用模型':options.recordedA02?'A02历史真实模型响应回放 · 本轮零调用':options.execution==='live'?'真实模型建议 · 尚未逐项核对':'已见匿名工程回放 · 非模型预测',
-        realInput:{profile:'real-input-01',networkDescription:options.httpsPreview?'独立HTTPS匿名回放：仅提供已绑定Q01/Q07及R11/R12历史回答，模型接口关闭。确认结果只保存在本域名当前浏览器，不读取本机旧库。':options.recordedPaired06?'同材料03/06开发回归；仅回放本批已取得并结算的回答，不允许新发送。首次建议和人工纠正分别保留。':options.recordedPaired05?'新模型24次配对已完成，本包累计80次；只回放已取得回答，不再发送。05未替换现有路线。':options.recordedPaired04?'24次配对已完成，本包累计56次；仅本机回放，不再发送。':options.recordedCandidate03?'候选03的8次已完成，本包累计32次；当前仅本机回放，不再发送。':options.recordedCandidate02?'新候选8次已完成，本包累计24次；当前仅本机回放，不再发送。':options.recordedBatch?'本批14次已派发完毕；仅核对已记录响应与本机提取文字，不再发送。':options.recordedA02?'只核对已记录A02响应；禁止新发送，不读取密钥，不访问模型。':options.execution==='live'
+        realInput:{profile:'real-input-01',networkDescription:options.httpsPreview?'独立匿名回放：仅提供已绑定Q01/Q07、R11/R12及U11/V02历史回答，模型接口关闭。确认结果只保存在当前入口的当前浏览器，不读取其他试用库。':options.recordedPaired06?'同材料03/06开发回归；仅回放本批已取得并结算的回答，不允许新发送。首次建议和人工纠正分别保留。':options.recordedPaired05?'新模型24次配对已完成，本包累计80次；只回放已取得回答，不再发送。05未替换现有路线。':options.recordedPaired04?'24次配对已完成，本包累计56次；仅本机回放，不再发送。':options.recordedCandidate03?'候选03的8次已完成，本包累计32次；当前仅本机回放，不再发送。':options.recordedCandidate02?'新候选8次已完成，本包累计24次；当前仅本机回放，不再发送。':options.recordedBatch?'本批14次已派发完毕；仅核对已记录响应与本机提取文字，不再发送。':options.recordedA02?'只核对已记录A02响应；禁止新发送，不读取密钥，不访问模型。':options.execution==='live'
           ?'本机读取；仅在逐次确认且预算允许时发送本次文字，不发送文件或工作区。':'本机读取与已见工程回放，无外部模型调用。',
           inputPanel:props=>options.httpsPreview&&options.previewExamples?createElement(HttpsPreviewExamples,{unitIds:options.previewExamples.identities.map(i=>i.unitId),open:async(unitId:string)=>{
             const examples=options.previewExamples!,identity=examples.identities.find(i=>i.unitId===unitId)
