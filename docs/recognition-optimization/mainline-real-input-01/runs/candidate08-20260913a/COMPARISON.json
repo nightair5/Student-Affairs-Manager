@@ -1,0 +1,113 @@
+{
+  "version": "candidate08-paired-comparison-1",
+  "label": "12份已见材料开发回归＋8份新材料首次开发验证；不是商业盲测",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "parameters": {
+    "temperature": 0,
+    "reasoningEffort": "none",
+    "stream": false,
+    "maxOutputTokens": 8192,
+    "verifier": 0,
+    "repair": 0,
+    "transportRetry": 0
+  },
+  "requests": {
+    "authorized": 40,
+    "completedHttp200": 40,
+    "settled": 40,
+    "transportFailures": 0,
+    "cumulativeAttempts": 168,
+    "batchWaitingMs": 258222,
+    "batchCostUpperMicroCny": 1067565,
+    "cumulativeCostUpperMicroCny": 7197982,
+    "providerBilledCny": "NOT_OBSERVABLE"
+  },
+  "arms": {
+    "candidate03": {
+      "notices": 20,
+      "scored": 20,
+      "schemaOrScorerRejected": 0,
+      "completeCases": 0,
+      "majorCorrectionRequired": 20,
+      "metrics": {
+        "task": { "predicted": 31, "reference": 30, "correct": 29, "falsePositive": 2, "falseNegative": 1 },
+        "material": { "predicted": 26, "reference": 26, "correct": 11, "falsePositive": 15, "falseNegative": 15 },
+        "time": { "predicted": 29, "reference": 27, "correct": 7, "falsePositive": 22, "falseNegative": 20 },
+        "condition": { "predicted": 31, "reference": 30, "correct": 27, "falsePositive": 4, "falseNegative": 3 },
+        "revision": { "predicted": 4, "reference": 4, "correct": 2, "falsePositive": 2, "falseNegative": 2 }
+      }
+    },
+    "candidate08": {
+      "notices": 20,
+      "scored": 3,
+      "schemaOrScorerRejected": 17,
+      "completeCases": 0,
+      "majorCorrectionRequiredAmongScored": 3,
+      "metricsAmongScoredOnly": {
+        "task": { "predicted": 2, "reference": 2, "correct": 2, "falsePositive": 0, "falseNegative": 0 },
+        "material": { "predicted": 2, "reference": 1, "correct": 1, "falsePositive": 1, "falseNegative": 0 },
+        "time": { "predicted": 3, "reference": 3, "correct": 0, "falsePositive": 3, "falseNegative": 3 },
+        "condition": { "predicted": 2, "reference": 2, "correct": 2, "falsePositive": 0, "falseNegative": 0 },
+        "revision": { "predicted": 0, "reference": 0, "correct": 0, "falsePositive": 0, "falseNegative": 0 }
+      },
+      "rejectionCodes": {
+        "REAL_INPUT_EVIDENCE_TASK_ROLE": 7,
+        "REAL_INPUT_EVIDENCE_MATERIAL_ROLE": 7,
+        "REAL_INPUT_EVIDENCE_TIME_ROLE": 1,
+        "REAL_INPUT_EVIDENCE_EVENT_ROLE": 1,
+        "REAL_INPUT_EVIDENCE_COVERAGE_MATERIAL": 1
+      }
+    }
+  },
+  "cohorts": {
+    "seen": {
+      "notices": 12,
+      "candidate03Scored": 12,
+      "candidate08Scored": 2,
+      "candidate08Rejected": 10,
+      "candidate03Complete": 0,
+      "candidate08Complete": 0
+    },
+    "fresh": {
+      "notices": 8,
+      "candidate03Scored": 8,
+      "candidate08Scored": 1,
+      "candidate08Rejected": 7,
+      "candidate03Complete": 0,
+      "candidate08Complete": 0
+    }
+  },
+  "perNotice": [
+    { "id": "S01", "title": "校园影展送审安排", "candidate03": "任务正确；2项时间和2项材料仍需纠正", "candidate08": "拒绝：任务引用混入非动作角色" },
+    { "id": "S02", "title": "温室巡查记录", "candidate03": "任务正确；材料1错1漏，时间多1项", "candidate08": "拒绝：任务引用混入非动作角色" },
+    { "id": "S03", "title": "志愿服务影像留存", "candidate03": "任务、无日期和条件正确", "candidate08": "可评分但多造1项材料" },
+    { "id": "S04", "title": "户外水样采集的条件通知", "candidate03": "任务、时间、条件正确", "candidate08": "拒绝：时间引用角色不匹配" },
+    { "id": "S05", "title": "报销补件处理", "candidate03": "任务和材料正确；时间表达仍需纠正", "candidate08": "同样需要纠正时间" },
+    { "id": "S06", "title": "设备借用候补安排", "candidate03": "任务、材料、无日期和条件正确", "candidate08": "拒绝：材料覆盖与实体不一致" },
+    { "id": "S07", "title": "校刊稿件交接方式修订", "candidate03": "材料、时间和修订关系各需纠正", "candidate08": "拒绝：材料引用角色不匹配" },
+    { "id": "S08", "title": "实训行程取消与独立提交", "candidate03": "任务正确；时间和取消表达仍需核对", "candidate08": "拒绝：材料引用角色不匹配" },
+    { "id": "S09", "title": "校园观星夜信息", "candidate03": "未造任务；活动时间与事件仍需核对", "candidate08": "拒绝：事件引用角色不匹配" },
+    { "id": "S10", "title": "社团器材盘点交接", "candidate03": "任务正确；时间表达仍需纠正", "candidate08": "拒绝：任务引用混入非动作角色" },
+    { "id": "S11", "title": "材料送样前的准备", "candidate03": "多造1任务，材料、时间和条件归属需纠正", "candidate08": "拒绝：材料引用角色不匹配" },
+    { "id": "S12", "title": "毕业展布展责任澄清", "candidate03": "任务、时间、条件和修订正确；1项材料需纠正", "candidate08": "拒绝：材料引用角色不匹配" },
+    { "id": "T01", "title": "开放日设备交接", "candidate03": "任务正确；共享材料和两项时间归属需纠正", "candidate08": "拒绝：任务引用混入非动作角色" },
+    { "id": "T02", "title": "展架标识安装", "candidate03": "任务和时间正确；材料和条件各需纠正", "candidate08": "拒绝：材料引用角色不匹配" },
+    { "id": "T03", "title": "实验日志校对", "candidate03": "任务正确；材料和模糊时间需纠正", "candidate08": "拒绝：任务引用混入非动作角色" },
+    { "id": "T04", "title": "个人资料留存", "candidate03": "把非动作信息误成任务，需删除并改条件", "candidate08": "拒绝：任务引用混入非动作角色" },
+    { "id": "T05", "title": "备用电源领取条件", "candidate03": "任务、材料、无日期和未知条件正确", "candidate08": "拒绝：材料引用角色不匹配" },
+    { "id": "T06", "title": "数据交付要求替代", "candidate03": "任务正确；材料、时间和替代关系需纠正", "candidate08": "拒绝：材料引用角色不匹配" },
+    { "id": "T07", "title": "两项独立归档", "candidate03": "任务正确；两项材料和时间归属需纠正", "candidate08": "拒绝：任务引用混入非动作角色" },
+    { "id": "T08", "title": "校园植物观察说明", "candidate03": "未造任务；事件时间仍需核对", "candidate08": "可评分但额外留下未解决来源片段" }
+  ],
+  "businessDecision": {
+    "adoptCandidate08": false,
+    "reason": "17/20输出无法通过确定性角色引用契约；无需重大纠正数仍为0，且未证明减少材料或任务错误。",
+    "local6632Enabled": false,
+    "browserJourneys": "NOT_RUN_NON_ADOPTION",
+    "confirmedTasksFromThisBatch": 0,
+    "suggestionToConfirmedSaveRatio": "NOT_RUN_NON_ADOPTION",
+    "actualUserEditOperations": "NOT_RUN",
+    "nextPriority": "在新请求前先把证据角色的拥有者约束压缩为单一、可由JSON Schema直接表达的字段职责；不能在模型输出后放宽转换器吞掉错误。"
+  }
+}

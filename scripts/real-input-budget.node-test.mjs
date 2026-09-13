@@ -4,7 +4,7 @@ import { mkdtemp, mkdir, readFile, writeFile, unlink } from 'node:fs/promises'
 import { join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { spawn } from 'node:child_process'
-import { BILLING_POLICY, FLASH41_POLICY, FLASH41_PAIRED06_POLICY, FLASH41_PAIRED07_POLICY, sha256, costUpperMicroCny, validateManifest, validateUsageEnvelope, initializeBudget, openBudget } from './real-input-budget.mjs'
+import { BILLING_POLICY, FLASH41_POLICY, FLASH41_PAIRED06_POLICY, FLASH41_PAIRED07_POLICY, FLASH41_PAIRED08_POLICY, sha256, costUpperMicroCny, validateManifest, validateUsageEnvelope, initializeBudget, openBudget } from './real-input-budget.mjs'
 
 async function batchFixture() {
   const f=await recoveryFixture(),r=await openBudget(f.dir,f.manifestSha,{recoveryGrant:f.grant})
@@ -622,7 +622,26 @@ async function paired07Fixture() {
     parentTail:before.tail,parentSequence:before.nextSequence,ledgerPrefixBytes:prefix.length,ledgerPrefixSha:sha256(prefix),
     maxTotalRequests:128,policy:FLASH41_PAIRED07_POLICY,targets}}
 }
+async function paired08Fixture() {
+  const f=await paired07Fixture(),b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+  for(const u of f.grant.targets)await(await reserve(b,u.unitId,FLASH41_PAIRED07_POLICY)).complete(flashEnvelope(u.unitId))
+  const before=await b.snapshot(),prefix=await readFile(join(f.dir,'CALL_LEDGER.jsonl'))
+  const cases=[...Array.from({length:12},(_,i)=>`S${String(i+1).padStart(2,'0')}`),...Array.from({length:8},(_,i)=>`T${String(i+1).padStart(2,'0')}`)]
+  const targets=cases.flatMap((id,i)=>(i<10?['03','08']:['08','03']).map(arm=>row(`${id}-${arm}`,'flash41-'+arm,i<12?'new05-'+i:'fresh08-'+(i-12))))
+  return {...f,before,prefix,grant:{...f.grant,version:'real-input-paired08-grant-1',grantId:'99999999-9999-4999-8999-999999999999',
+    parentTail:before.tail,parentSequence:before.nextSequence,ledgerPrefixBytes:prefix.length,ledgerPrefixSha:sha256(prefix),
+    maxTotalRequests:168,policy:FLASH41_PAIRED08_POLICY,targets}}
+}
 if(process.argv[2]!=='--reserve-child') {
+  test('paired08: twenty balanced pairs append through 168 under the explicit twenty-yuan cap',async()=>{
+    const f=await paired08Fixture();assert.equal(f.before.nextSequence,264);assert.equal(f.before.reservations.length,128)
+    for(const u of f.grant.targets){const reopened=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant});await(await reserve(reopened,u.unitId,FLASH41_PAIRED08_POLICY)).complete(flashEnvelope(u.unitId))}
+    const b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant}),s=await b.snapshot()
+    assert.equal(s.reservations.length,168);assert.equal(s.nextSequence,345);assert.equal(s.paired08.stopped,false)
+    assert.deepEqual(s.reservations.slice(0,128),f.before.reservations);assert.deepEqual((await readFile(join(f.dir,'CALL_LEDGER.jsonl'))).subarray(0,f.prefix.length),f.prefix)
+    assert.equal(FLASH41_PAIRED08_POLICY.limitMicroCny,20000000);assert.equal(costUpperMicroCny(1048576,8192,FLASH41_PAIRED08_POLICY),3219456)
+    await assert.rejects(()=>reserve(b,'T08-08',FLASH41_PAIRED08_POLICY));await assert.rejects(()=>reserve(b,'S01-03',FLASH41_PAIRED07_POLICY))
+  })
   test('paired07: balanced shuffled pairs settle once through 128; original 104 and receipts stay intact',async()=>{
     const f=await paired07Fixture();assert.equal(f.before.nextSequence,215)
     for(const u of f.grant.targets){

@@ -16,6 +16,8 @@ export const FLASH41_POLICY = Object.freeze({...BILLING_POLICY,version:'real-inp
 // A new grant extends only the authorized Q comparison; prior policies remain byte-for-byte unchanged.
 export const FLASH41_PAIRED06_POLICY = Object.freeze({...FLASH41_POLICY,version:'real-input-flash41-budget-6',maxRequests:104})
 export const FLASH41_PAIRED07_POLICY = Object.freeze({...FLASH41_POLICY,version:'real-input-flash41-budget-7',maxRequests:128})
+export const FLASH41_PAIRED08_POLICY = Object.freeze({...FLASH41_POLICY,version:'real-input-flash41-budget-8',maxRequests:168,limitMicroCny:20000000,
+  inputPriceMicroPerMillion:3000000,outputPriceMicroPerMillion:9000000})
 const fail = code => { throw Error('REAL_INPUT_BUDGET_' + code) }
 const check = (ok, code) => { if (!ok) fail(code) }
 const digest = value => typeof value === 'string' && /^[a-f0-9]{64}$/.test(value)
@@ -98,7 +100,7 @@ function unambiguousResponse(rawText) {
   return value
 }
 export function validateUsageEnvelope(rawText, status, policy=BILLING_POLICY) {
-  check(isDeepStrictEqual(policy,BILLING_POLICY)||isDeepStrictEqual(policy,FLASH41_POLICY)||isDeepStrictEqual(policy,FLASH41_PAIRED06_POLICY)||isDeepStrictEqual(policy,FLASH41_PAIRED07_POLICY),'POLICY_CHANGED')
+  check(isDeepStrictEqual(policy,BILLING_POLICY)||isDeepStrictEqual(policy,FLASH41_POLICY)||isDeepStrictEqual(policy,FLASH41_PAIRED06_POLICY)||isDeepStrictEqual(policy,FLASH41_PAIRED07_POLICY)||isDeepStrictEqual(policy,FLASH41_PAIRED08_POLICY),'POLICY_CHANGED')
   check(status === 200 && typeof rawText === 'string' && Buffer.byteLength(rawText) <= 524288, 'HTTP_OR_RESPONSE_LIMIT')
   let response
   try { response = unambiguousResponse(rawText) } catch { fail('RESPONSE_JSON_OR_AMBIGUOUS') }
@@ -255,24 +257,33 @@ function replay(lines, manifestSha, manifest) {
         &&g.targets.every(u=>!state.units.some(old=>old.unitId===u.unitId)),'PAIRED07_PARENT')
       validatePaired07Candidates(g,state.paired06.grant)
       state.paired07={grant:g,stopped:false};state.units=[...state.units,...g.targets]
+    } else if (e.kind === 'paired08Grant') {
+      exact(e,['kind','grant']);const g=validateBatchGrant(e.grant,manifest,manifestSha)
+      check(g.version==='real-input-paired08-grant-1'&&!state.paired08&&state.paired07&&!state.paired07.stopped
+        &&sequence===g.parentSequence&&prior===g.parentTail&&state.reservations.length===128
+        &&state.reservations[0].status==='held-unknown'&&state.reservations[0].nonce===g.priorNonce
+        &&state.reservations[1].responseSha===g.a02ResponseSha&&state.reservations.slice(1).every(r=>r.status==='settled')
+        &&g.targets.every(u=>!state.units.some(old=>old.unitId===u.unitId)),'PAIRED08_PARENT')
+      validatePaired08Candidates(g,state.paired07.grant)
+      state.paired08={grant:g,stopped:false};state.units=[...state.units,...g.targets]
     } else if (e.kind === 'batchReserve') {
       exact(e,['kind','unitId','requestSha','candidateSha','nonce','reservedMicroCny'])
-      const active=state.paired07??state.paired06??state.paired05??state.paired04??state.candidate03??state.candidate02??state.batch,g=active?.grant,u=g?.targets[state.reservations.length-(state.paired07?104:state.paired06?80:state.paired05?56:state.paired04?32:state.candidate03?24:state.candidate02?16:2)]
+      const active=state.paired08??state.paired07??state.paired06??state.paired05??state.paired04??state.candidate03??state.candidate02??state.batch,g=active?.grant,u=g?.targets[state.reservations.length-(state.paired08?128:state.paired07?104:state.paired06?80:state.paired05?56:state.paired04?32:state.candidate03?24:state.candidate02?16:2)]
       check(g&&!active.stopped&&state.reservations.slice(1).every(r=>r.status==='settled')
         &&u&&u.unitId===e.unitId&&u.requestSha===e.requestSha&&u.candidateSha===e.candidateSha
         &&typeof e.nonce==='string'&&/^[a-f0-9-]{36}$/.test(e.nonce)
         &&!state.reservations.some(r=>r.nonce===e.nonce)&&e.reservedMicroCny===BILLING_POLICY.reservationMicroCny,'BATCH_RESERVE')
       check(state.reservations.length<g.maxTotalRequests
-        &&state.reservations.reduce((n,r)=>n+r.costUpperMicroCny,0)+e.reservedMicroCny<=BILLING_POLICY.limitMicroCny,'LIMIT')
+        &&state.reservations.reduce((n,r)=>n+r.costUpperMicroCny,0)+e.reservedMicroCny<=(state.paired08?FLASH41_PAIRED08_POLICY:BILLING_POLICY).limitMicroCny,'LIMIT')
       state.reservations.push({...e,status:'pending',costUpperMicroCny:e.reservedMicroCny})
     } else if (e.kind === 'batchSettle') {
       exact(e,['kind','unitId','nonce','requestSha','responseSha','responseId','usage','costUpperMicroCny'])
       const r=state.reservations.at(-1)
-      const active=state.paired07??state.paired06??state.paired05??state.paired04??state.candidate03??state.candidate02??state.batch
+      const active=state.paired08??state.paired07??state.paired06??state.paired05??state.paired04??state.candidate03??state.candidate02??state.batch
       check(active&&!active.stopped&&r?.kind==='batchReserve'&&r.status==='pending'
         &&r.unitId===e.unitId&&r.nonce===e.nonce&&r.requestSha===e.requestSha&&digest(e.responseSha)
         &&!state.reservations.some(x=>x.responseId===e.responseId),'BATCH_SETTLEMENT_BINDING')
-      const policy=state.paired07?FLASH41_PAIRED07_POLICY:state.paired06?FLASH41_PAIRED06_POLICY:state.paired05?FLASH41_POLICY:BILLING_POLICY
+      const policy=state.paired08?FLASH41_PAIRED08_POLICY:state.paired07?FLASH41_PAIRED07_POLICY:state.paired06?FLASH41_PAIRED06_POLICY:state.paired05?FLASH41_POLICY:BILLING_POLICY
       const v=validateUsageEnvelope(JSON.stringify({object:'response',status:'completed',model:policy.model,
         id:e.responseId,usage:e.usage,output:[{type:'message',role:'assistant',content:[{type:'output_text',text:'ledger validation'}]}]}),200,policy)
       check(v.costUpperMicroCny===e.costUpperMicroCny,'SETTLEMENT_AMOUNT');Object.assign(r,e,{status:'settled'})
@@ -286,6 +297,7 @@ function replay(lines, manifestSha, manifest) {
       if(state.paired05)state.paired05.stopped=true
       if(state.paired06)state.paired06.stopped=true
       if(state.paired07)state.paired07.stopped=true
+      if(state.paired08)state.paired08.stopped=true
     } else fail('LEDGER_EVENT_KIND')
     prior=line.hash
   }
@@ -400,25 +412,29 @@ function validateBatchGrant(input,manifest,manifestSha) {
   const paired04=g.version==='real-input-paired04-grant-1'
   const paired05=g.version==='real-input-paired05-grant-1'
   const paired07=g.version==='real-input-paired07-grant-1'
+  const paired08=g.version==='real-input-paired08-grant-1'
   const paired06=g.version==='real-input-paired06-grant-1'
   exact(g,['version','grantId','parentTail','parentSequence','ledgerPrefixBytes','ledgerPrefixSha','manifestSha',
-    'bindingSha','head','sourcesSha','reviewSha','targets','billingEvidence','route','priorNonce','a02ResponseSha','maxTotalRequests',...(paired05||paired06||paired07?['policy']:[])])
+    'bindingSha','head','sourcesSha','reviewSha','targets','billingEvidence','route','priorNonce','a02ResponseSha','maxTotalRequests',...(paired05||paired06||paired07||paired08?['policy']:[])])
   if(paired05)same(g.policy,FLASH41_POLICY,'PAIRED05_POLICY')
   if(paired07)same(g.policy,FLASH41_PAIRED07_POLICY,'PAIRED07_POLICY')
+  if(paired08)same(g.policy,FLASH41_PAIRED08_POLICY,'PAIRED08_POLICY')
   if(paired06)same(g.policy,FLASH41_PAIRED06_POLICY,'PAIRED06_POLICY')
-  check((paired07||paired06||paired05||paired04||candidate03||candidate02||g.version==='real-input-batch-grant-1')&&/^[a-f0-9-]{36}$/.test(g.grantId)
-    &&g.parentSequence===(paired07?215:paired06?166:paired05?117:paired04?68:candidate03?51:candidate02?34:5)&&g.maxTotalRequests===(paired07?128:paired06?104:paired05?80:paired04?56:candidate03?32:candidate02?24:16)&&integer(g.ledgerPrefixBytes,1048576)&&g.ledgerPrefixBytes>0
+  check((paired08||paired07||paired06||paired05||paired04||candidate03||candidate02||g.version==='real-input-batch-grant-1')&&/^[a-f0-9-]{36}$/.test(g.grantId)
+    &&g.parentSequence===(paired08?264:paired07?215:paired06?166:paired05?117:paired04?68:candidate03?51:candidate02?34:5)&&g.maxTotalRequests===(paired08?168:paired07?128:paired06?104:paired05?80:paired04?56:candidate03?32:candidate02?24:16)&&integer(g.ledgerPrefixBytes,1048576)&&g.ledgerPrefixBytes>0
     &&['parentTail','ledgerPrefixSha','manifestSha','bindingSha','sourcesSha','reviewSha','a02ResponseSha'].every(k=>digest(g[k]))
     &&typeof g.head==='string'&&/^[a-f0-9]{40}$/.test(g.head)
     &&typeof g.priorNonce==='string'&&/^[a-f0-9-]{36}$/.test(g.priorNonce),'BATCH_GRANT')
   check(g.manifestSha===manifestSha,'BATCH_MANIFEST')
-  if(paired04||paired05||paired06||paired07){
-    check(Array.isArray(g.targets)&&g.targets.length===24,'PAIRED04_TARGETS')
+  if(paired04||paired05||paired06||paired07||paired08){
+    const pairCount=paired08?20:12
+    check(Array.isArray(g.targets)&&g.targets.length===pairCount*2,'PAIRED04_TARGETS')
     const candidates=new Map(),inputs=new Set(),cases=new Set();let baselineFirst=0
-    for(let i=0;i<12;i++){
-      const pair=g.targets.slice(i*2,i*2+2),prefix=paired06||paired07?pair[0]?.unitId?.slice(0,4):`${paired05?'P':'N'}${String(i+1).padStart(2,'0')}-`
-      if(paired06||paired07){check((paired07?/^R(?:0[1-9]|1[0-2])-$/:/^Q(?:0[1-9]|1[0-2])-$/).test(prefix)&&!cases.has(prefix),'PAIRED06_CASE');cases.add(prefix);if(pair[0].unitId.endsWith('-03'))baselineFirst++}
-      check(new Set(pair.map(u=>u.unitId)).size===2&&pair.some(u=>u.unitId===prefix+'03')&&pair.some(u=>u.unitId===prefix+(paired07?'07':paired06?'06':paired05?'05':'04')),'PAIRED04_PAIR')
+    for(let i=0;i<pairCount;i++){
+      const pair=g.targets.slice(i*2,i*2+2),prefix=paired08?pair[0]?.unitId?.slice(0,4):paired06||paired07?pair[0]?.unitId?.slice(0,4):`${paired05?'P':'N'}${String(i+1).padStart(2,'0')}-`
+      if(paired08){check(/^(?:S(?:0[1-9]|1[0-2])|T0[1-8])-$/.test(prefix)&&!cases.has(prefix),'PAIRED08_CASE');cases.add(prefix);if(pair[0].unitId.endsWith('-03'))baselineFirst++}
+      else if(paired06||paired07){check((paired07?/^R(?:0[1-9]|1[0-2])-$/:/^Q(?:0[1-9]|1[0-2])-$/).test(prefix)&&!cases.has(prefix),'PAIRED06_CASE');cases.add(prefix);if(pair[0].unitId.endsWith('-03'))baselineFirst++}
+      check(new Set(pair.map(u=>u.unitId)).size===2&&pair.some(u=>u.unitId===prefix+'03')&&pair.some(u=>u.unitId===prefix+(paired08?'08':paired07?'07':paired06?'06':paired05?'05':'04')),'PAIRED04_PAIR')
       for(const u of pair){exact(u,unitKeys)
         check(['candidateSha','requestSha','inputSha','scorerSha'].every(k=>digest(u[k]))
           &&integer(u.requestBytes,BILLING_POLICY.requestByteCeiling)&&u.requestBytes>0
@@ -431,8 +447,8 @@ function validateBatchGrant(input,manifest,manifestSha) {
         &&!manifest.units.some(u=>u.inputSha===pair[0].inputSha),'PAIRED04_INPUT')
       inputs.add(pair[0].inputSha)
     }
-    check(candidates.get('03')!==candidates.get(paired07?'07':paired06?'06':paired05?'05':'04'),'PAIRED04_SAME_CANDIDATE')
-    if(paired06||paired07)check(cases.size===12&&baselineFirst===6,'PAIRED06_BALANCE')
+    check(candidates.get('03')!==candidates.get(paired08?'08':paired07?'07':paired06?'06':paired05?'05':'04'),'PAIRED04_SAME_CANDIDATE')
+    if(paired06||paired07||paired08)check(cases.size===pairCount&&baselineFirst===pairCount/2,'PAIRED06_BALANCE')
   }else if(candidate02||candidate03){
     check(Array.isArray(g.targets)&&g.targets.length===8,'C02_TARGETS')
     for(const [i,u] of g.targets.entries()){
@@ -464,18 +480,27 @@ function validatePaired07Candidates(grant,priorGrant) {
   check(baseline.candidateSha===oldBaseline.candidateSha
     &&!priorGrant.targets.some(u=>u.candidateSha===candidate.candidateSha),'PAIRED07_CANDIDATE')
 }
+function validatePaired08Candidates(grant,priorGrant) {
+  const oldBaseline=priorGrant.targets.find(u=>u.unitId.endsWith('-03'))
+  const baseline=grant.targets.find(u=>u.unitId.endsWith('-03'))
+  const candidate=grant.targets.find(u=>u.unitId.endsWith('-08'))
+  check(baseline.candidateSha===oldBaseline.candidateSha
+    &&!priorGrant.targets.some(u=>u.candidateSha===candidate.candidateSha),'PAIRED08_CANDIDATE')
+}
 async function batchBudget(dir,manifest,manifestSha,read,input) {
   const grant=validateBatchGrant(input,manifest,manifestSha)
   const candidate02=grant.version==='real-input-candidate02-grant-1',candidate03=grant.version==='real-input-candidate03-grant-1',paired04=grant.version==='real-input-paired04-grant-1'
   const paired07=grant.version==='real-input-paired07-grant-1'
+  const paired08=grant.version==='real-input-paired08-grant-1'
   const paired05=grant.version==='real-input-paired05-grant-1',paired06=grant.version==='real-input-paired06-grant-1'
-  const policy=paired07?FLASH41_PAIRED07_POLICY:paired06?FLASH41_PAIRED06_POLICY:paired05?FLASH41_POLICY:BILLING_POLICY
-  const offset=paired07?104:paired06?80:paired05?56:paired04?32:candidate03?24:candidate02?16:2,newCandidate=paired07||paired06||paired05||paired04||candidate02||candidate03
-  const active=s=>paired07?s.paired07:paired06?s.paired06:paired05?s.paired05:paired04?s.paired04:candidate03?s.candidate03:candidate02?s.candidate02:s.batch
+  const policy=paired08?FLASH41_PAIRED08_POLICY:paired07?FLASH41_PAIRED07_POLICY:paired06?FLASH41_PAIRED06_POLICY:paired05?FLASH41_POLICY:BILLING_POLICY
+  const offset=paired08?128:paired07?104:paired06?80:paired05?56:paired04?32:candidate03?24:candidate02?16:2,newCandidate=paired08||paired07||paired06||paired05||paired04||candidate02||candidate03
+  const active=s=>paired08?s.paired08:paired07?s.paired07:paired06?s.paired06:paired05?s.paired05:paired04?s.paired04:candidate03?s.candidate03:candidate02?s.candidate02:s.batch
   const boundRead=async()=>{
     const bytes=await readFile(join(dir,'CALL_LEDGER.jsonl'))
     check(bytes.length>=grant.ledgerPrefixBytes&&sha256(bytes.subarray(0,grant.ledgerPrefixBytes))===grant.ledgerPrefixSha,'BATCH_PREFIX')
     const state=await read()
+    if(paired08){check(state.paired07&&(state.paired08||!state.paired07.stopped),'PAIRED08_PARENT');validatePaired08Candidates(grant,state.paired07.grant)}
     if(paired07){check(state.paired06&&(state.paired07||!state.paired06.stopped),'PAIRED07_PARENT');validatePaired07Candidates(grant,state.paired06.grant)}
     if(paired06){check(state.paired05&&(state.paired06||!state.paired05.stopped),'PAIRED06_PARENT');validatePaired06Candidates(grant,state.paired05.grant)}
     if(paired04)check(state.candidate03&&(state.paired04||!state.candidate03.stopped)
@@ -504,8 +529,8 @@ async function batchBudget(dir,manifest,manifestSha,read,input) {
         const u=grant.targets[s.reservations.length-offset]
         check(s.reservations.slice(1).every(r=>r.status==='settled')&&u?.unitId===unitId,'BATCH_ORDER_OR_PENDING')
         check(typeof requestText==='string'&&sha256(requestText)===u.requestSha&&Buffer.byteLength(requestText)===u.requestBytes,'REQUEST_NOT_FROZEN')
-        check(s.reservations.length<grant.maxTotalRequests&&s.reservations.reduce((n,r)=>n+r.costUpperMicroCny,0)+BILLING_POLICY.reservationMicroCny<=BILLING_POLICY.limitMicroCny,'LIMIT')
-        if(!active(s)){await append(dir,manifest,s,{kind:paired07?'paired07Grant':paired06?'paired06Grant':paired05?'paired05Grant':paired04?'paired04Grant':candidate03?'candidate03Grant':candidate02?'candidate02Grant':'batchGrant',grant});s=await boundRead()}
+        check(s.reservations.length<grant.maxTotalRequests&&s.reservations.reduce((n,r)=>n+r.costUpperMicroCny,0)+BILLING_POLICY.reservationMicroCny<=policy.limitMicroCny,'LIMIT')
+        if(!active(s)){await append(dir,manifest,s,{kind:paired08?'paired08Grant':paired07?'paired07Grant':paired06?'paired06Grant':paired05?'paired05Grant':paired04?'paired04Grant':candidate03?'candidate03Grant':candidate02?'candidate02Grant':'batchGrant',grant});s=await boundRead()}
         const e={kind:'batchReserve',unitId,requestSha:u.requestSha,candidateSha:u.candidateSha,nonce:randomUUID(),reservedMicroCny:BILLING_POLICY.reservationMicroCny}
         await append(dir,manifest,s,e);return e
       })

@@ -1,0 +1,30 @@
+{
+  "head": "de017e5bfb759263ec24270ae85d624ffcb88471",
+  "status": "PASS",
+  "scope": "PAIRED08_SEND",
+  "sourceCount": 70,
+  "protectedCount": 944,
+  "historyCount": 607,
+  "bindingSha": "edb0f3cafde17cf0e7080ac11aeaadebc8e338cd626b807edc5149a2b81a0b76",
+  "billingSha": "dd9d31a72d312f9025211ac7126ab5774f80fba901e67cad99a2b395033cabac",
+  "sourcesSha": "6c10752318e93fe5b4ae753a54e98459ca279bf7ceddab8cf73024b258efc878",
+  "grantId": "af0b6eb7-3e29-4fb9-99b1-a62cc725b61b",
+  "reviewMethod": "focused zero-call boundary tests and exact source identity binding",
+  "checks": [
+    "candidate08 and evidence-role wire: 12 pass",
+    "paired08 budget boundary through 168: pass",
+    "paired08 gateway identity and text-only dispatch: pass",
+    "binding: 20 notices and 40 fixed requests",
+    "candidate frozen before fresh inputs",
+    "typecheck passed before dispatch scripting update"
+  ],
+  "boundaries": [
+    "A01 remains held unknown and every old ledger byte is preserved",
+    "new S/T identities only; 168 cumulative maximum and CNY 20 cap",
+    "reference facts excluded from request builder and product decisions",
+    "evidence-role assembly cannot invent semantic facts or dangling revisions",
+    "one reservation before each TLS dispatch; no retry, Repair, or verifier",
+    "response model identity and complete observable usage remain mandatory",
+    "no image, file, workspace, clipboard, or browser competitor"
+  ]
+}

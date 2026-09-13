@@ -1,0 +1,581 @@
+{
+  "version": "candidate08-final-implementation-snapshot-1",
+  "generatedAt": "2026-09-13T13:19:12.054Z",
+  "startHead": "de017e5bfb759263ec24270ae85d624ffcb88471",
+  "head": "ca4e3a7dca52698bf3b8be0318095aac5b9eba63",
+  "upstream": "ca4e3a7dca52698bf3b8be0318095aac5b9eba63",
+  "branch": "codex/e2-multimodal-recognition-exp",
+  "concurrentCommitsPreserved": [
+    "ca4e3a7dca52698bf3b8be0318095aac5b9eba63 docs(product): record final preview domain verification",
+    "479ccba940080673dfcf93acdb2d2e57017bcee8 fix(app): restore isolated preview access on custom domain"
+  ],
+  "concurrentFiles": [
+    "cloudflare/real-input-preview.mjs",
+    "docs/preview-access-20260913/AUDIT.md",
+    "docs/preview-access-20260913/ONLINE.json",
+    "scripts/build-real-input-preview.mjs",
+    "scripts/real-input-preview-access.node-test.mjs",
+    "src/experiments/realInput01/browser.tsx",
+    "wrangler.real-input-preview.jsonc"
+  ],
+  "sourceCount": 70,
+  "sources": [
+    {
+      "path": "src/App.tsx",
+      "exists": true,
+      "workingSha256": "e4c6ff0f9328867c8b0f9e9b191f67899ea789c19ad9d3d5c9429e75d2a1c749"
+    },
+    {
+      "path": "src/components/IntakePanel.tsx",
+      "exists": true,
+      "workingSha256": "92b1e9b2dd3312b380b7d01dcff3e8c9ec2c5c3d919ef2f8802b85d1d3c5418b"
+    },
+    {
+      "path": "src/components/DraftReviewPanel.tsx",
+      "exists": true,
+      "workingSha256": "ad0e9f72dbc8577de21abb1904d9c4c89841ce69709a7334ea20693cc1452bb1"
+    },
+    {
+      "path": "src/lib/fileExtraction.ts",
+      "exists": true,
+      "workingSha256": "fc54f8605f86448012d4b2ab5f6679adbc95b78c94e85789ec464295cb790df3"
+    },
+    {
+      "path": "src/experiments/mainline02/runtime.ts",
+      "exists": true,
+      "workingSha256": "42967c555f1616f54ea6fbf49b45e0df7a237a93d75470c22348a7cc0f69a36b"
+    },
+    {
+      "path": "src/experiments/mainline04/semanticComposer.ts",
+      "exists": true,
+      "workingSha256": "21c38c5a10eda7446c8af941f9eecf6c9d0506e63eab954600118ec51b4ab5b8"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticState.ts",
+      "exists": true,
+      "workingSha256": "0bd7d6d9369648b61247771bb14353bcc968a5b5308dc5f3b617920486061222"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticRepository.ts",
+      "exists": true,
+      "workingSha256": "1259aa87d947fa278e5a1bdd98ab1c516504562f9c948a474a936c13126fa1ee"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticCapture.ts",
+      "exists": true,
+      "workingSha256": "e34667557499fa12a6ce02194069c37620195d1fbd733c9cb3d01462359f3a85"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticConfirmation.ts",
+      "exists": true,
+      "workingSha256": "023fa8d35772f3c219aadb13381c24020c1be45b545b7c8e94a4d9ab6717e899"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticView.ts",
+      "exists": true,
+      "workingSha256": "40fe7ea4a33d61a421c6d92348daac21144207584689774e061c45bee28275cf"
+    },
+    {
+      "path": "src/experiments/mainline05/runtime.ts",
+      "exists": true,
+      "workingSha256": "9d6837cf4022fb989b7122a1f39c414355ee6f8f861e4d4df814146141edf83f"
+    },
+    {
+      "path": "src/experiments/mainline05/SemanticFacts.tsx",
+      "exists": true,
+      "workingSha256": "4519767c3b1a1a320a3655a5b50da1aee75b400092dc073ecc5ea7318111b4a9"
+    },
+    {
+      "path": "src/experiments/realInput01/inputReceipt.ts",
+      "exists": true,
+      "workingSha256": "743876df8bcc0eef0cf008f2000ad963f251ccf8cd005ae0319c968000b2b049"
+    },
+    {
+      "path": "src/experiments/realInput01/inputAcquisition.ts",
+      "exists": true,
+      "workingSha256": "38339eacc4104653a9823adc8011744920b305852e91146346a645be396a2214"
+    },
+    {
+      "path": "src/experiments/realInput01/modelWire.ts",
+      "exists": true,
+      "workingSha256": "844e7c0b9e552a33411fb2fb803a27225cb1d8f88b65be6daf959b14831f395d"
+    },
+    {
+      "path": "src/experiments/realInput01/modelClient.ts",
+      "exists": true,
+      "workingSha256": "767edb637cf741d4f27a96d5059836cd7b17e8c643e9936d974e380bde21df0b"
+    },
+    {
+      "path": "src/experiments/realInput01/modelPolicy.ts",
+      "exists": true,
+      "workingSha256": "ac2606d1a0fe84d56a911797bffec7eab93be19cdd95e54150d97becd113cafd"
+    },
+    {
+      "path": "src/experiments/realInput01/factCorrections.ts",
+      "exists": true,
+      "workingSha256": "fd7a8de40e1b1a03ed31c69fd54618ba311db0da20d0dedaa6f3217eb0701b07"
+    },
+    {
+      "path": "src/experiments/realInput01/InputReview.tsx",
+      "exists": true,
+      "workingSha256": "feff8078cced16316920cec1181af1d0e876830b1f4150c9f9dc710954f825ec"
+    },
+    {
+      "path": "src/experiments/realInput01/FactCorrectionEditor.tsx",
+      "exists": true,
+      "workingSha256": "8099c8edb6a22ab201cbc988d8d02e91e3bc0fd051a1b12b56a02016987c7ae9"
+    },
+    {
+      "path": "src/experiments/realInput01/seenInputs.ts",
+      "exists": true,
+      "workingSha256": "e8c7cffc614b9be14c35657ddeb19592ddc3d8e8964423764889b46d37dd5583"
+    },
+    {
+      "path": "src/experiments/realInput01/evaluation.ts",
+      "exists": true,
+      "workingSha256": "09ef0efff89c25761c721696da88de5fd73b74af0a417470e8f6af11979a6745"
+    },
+    {
+      "path": "src/experiments/realInput01/inputReceipt.test.ts",
+      "exists": true,
+      "workingSha256": "421e2d67fca01e07bc044c75fc935f844b357d8b08f8707a4aa463e59e28fcd6"
+    },
+    {
+      "path": "src/experiments/realInput01/modelWire.test.ts",
+      "exists": true,
+      "workingSha256": "dc417bf97d7cd0dedbffcdb70396cf0a915808cf423e7578b6a9c6cc1747f0ce"
+    },
+    {
+      "path": "src/experiments/realInput01/modelPolicy.test.ts",
+      "exists": true,
+      "workingSha256": "bd8b511aede51694775c9fbdbc08dd2a0deea8611eb6b1e08a6736b0a8a1ac9b"
+    },
+    {
+      "path": "src/experiments/realInput01/factCorrections.test.ts",
+      "exists": true,
+      "workingSha256": "5b5ad33a80d6f3226c08185fb2410b90bf3986d60c46f114ac8cfbf6e1d0440a"
+    },
+    {
+      "path": "src/experiments/realInput01/runtime.test.ts",
+      "exists": true,
+      "workingSha256": "6859a42dfabb42206c016e035c86954b4b63e9c23da85556af9597cada73cdf1"
+    },
+    {
+      "path": "src/experiments/realInput01/extraction.test.ts",
+      "exists": true,
+      "workingSha256": "038e21fdf5448e5a7c859b3dd58b0b6f5b3d304f0a5515aaeb1ec00097ab4194"
+    },
+    {
+      "path": "scripts/serve-mainline-real-input-01.mjs",
+      "exists": true,
+      "workingSha256": "7d20bb0cb87f3aed52974b8e9eed3781d7269102d0808704d52edb556a60b977"
+    },
+    {
+      "path": "scripts/real-input-model-gateway.mjs",
+      "exists": true,
+      "workingSha256": "6cc9c4f6e81838c12aa7eb275de5a7e9fc6c3dfed2e61790478433b79a3a11f7"
+    },
+    {
+      "path": "scripts/real-input-budget.mjs",
+      "exists": true,
+      "workingSha256": "ac0e73ac54af8cd16a785b184f9ef8fa6f35956a623d1ea5fcf1c6fa0a9a3c87"
+    },
+    {
+      "path": "scripts/check-mainline-real-input-01.mjs",
+      "exists": true,
+      "workingSha256": "c98b6437428b6d6da0e421b65a762b939f62785b8a33c34139ce3aadf5b1143b"
+    },
+    {
+      "path": "scripts/real-input-model-gateway.node-test.mjs",
+      "exists": true,
+      "workingSha256": "efd07ef14bd958c3c240a92575aac201edf246985370da4d5f488a91e438ac03"
+    },
+    {
+      "path": "scripts/check-mainline-real-input-01.node-test.mjs",
+      "exists": true,
+      "workingSha256": "fe50d965348a9986368ec64a5665dc78bba4356ee1e23137e2854faa0b3d4402"
+    },
+    {
+      "path": "scripts/run-mainline-real-input-01.mjs",
+      "exists": true,
+      "workingSha256": "6b7e0e6b1c4af01d0a4499afa3379727ef0315031a18bb503ba7a6cfa7d0de36"
+    },
+    {
+      "path": "scripts/real-input-budget.node-test.mjs",
+      "exists": true,
+      "workingSha256": "03fc3881e5bff0e2d568e4a71f252f7599762faf5ac2b3f19f0f0393b8f461ad"
+    },
+    {
+      "path": "scripts/render-mainline-real-input-01-fixtures.mjs",
+      "exists": true,
+      "workingSha256": "a5e88226104488cb61d50ea1c2fa92544ddd58974b08d5d4f0544cccacf6aafd"
+    },
+    {
+      "path": "src/pages/DashboardPage.tsx",
+      "exists": true,
+      "workingSha256": "b0a475cb2c075fa789b360ead943c59d3b3be87da46a7adc49c9cf20be1bacec"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate02.ts",
+      "exists": true,
+      "workingSha256": "4667ebb5a949b591002f4a6c8829212e2c3d4e3f6f15ee8afb75d2a9d0fd9ca2"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate02.test.ts",
+      "exists": true,
+      "workingSha256": "e9a2bc32ffa7e6caa7210acf54178d8e62309911f689e4530175b056d783f222"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate03.ts",
+      "exists": true,
+      "workingSha256": "f3a2dd9358ca2a50b9b3eba8a090211666db4c0fb8dc5fc146e742c9895f9508"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate03.test.ts",
+      "exists": true,
+      "workingSha256": "fe3cf62ffe946e0441c8f154c2941730dc2012f6f8515ae8e14fa5c772e482ba"
+    },
+    {
+      "path": "src/pages/CalendarPage.tsx",
+      "exists": true,
+      "workingSha256": "675947c46a541bc72f0d4b4be3d2139cddb57c6a1dbba54f79bd0561dc3c10e6"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate04.ts",
+      "exists": true,
+      "workingSha256": "9fe3a9b905a79d103815739a372b482fa302ce28a047e15181762b0c39f395da"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate04.test.ts",
+      "exists": true,
+      "workingSha256": "093575645747b1bafd44b124748b9ca81bec31424642ce8c1e2529f87a4ed29b"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate05.ts",
+      "exists": true,
+      "workingSha256": "f9c38fa853dcf9f8e3576485c54cb17469f621ff0ae9777482207c59f4cd3a2a"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate05.test.ts",
+      "exists": true,
+      "workingSha256": "78ed53a1719c11edec47d511585332588cda7b04d93cb799836b3b61ec49e8db"
+    },
+    {
+      "path": "src/experiments/realInput01/factAssembly.ts",
+      "exists": true,
+      "workingSha256": "e4e5322bfd1c747ba74267fd3685712456028183ff7f32d00c8cdda353dcdadf"
+    },
+    {
+      "path": "src/experiments/realInput01/factAssembly.test.ts",
+      "exists": true,
+      "workingSha256": "08e5fe7fddfde1592c3c5999ef9b82ae9d0aefa72d1591eb83baab501721c024"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate06.ts",
+      "exists": true,
+      "workingSha256": "877b13ac614c9a1e196b56d112813ea7a118461c01861632d69d52d7aa72760b"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate06.test.ts",
+      "exists": true,
+      "workingSha256": "3e03f9b9ffd32af6a98f143be34886f3108a85cc2507367c7ea302b488f59c92"
+    },
+    {
+      "path": "src/experiments/realInput01/browser.tsx",
+      "exists": true,
+      "workingSha256": "c38f94a32af952ab8c48a4c091ada3b7aaf8108be72911187ac3c1cc1a9e266e"
+    },
+    {
+      "path": "src/experiments/realInput01/runtime.ts",
+      "exists": true,
+      "workingSha256": "687e0a41c967f76750291ab227de588fd63b30c3d8dd3e70e541cc0301a7ffa9"
+    },
+    {
+      "path": "src/experiments/realInput01/acceptance.test.tsx",
+      "exists": true,
+      "workingSha256": "95c4ed546d26dca6c34226d1fa79e3d287f0167c3e5d7a54fbbe7d13cc4472ae"
+    },
+    {
+      "path": "scripts/build-real-input-preview.mjs",
+      "exists": true,
+      "workingSha256": "2aca508c87f10d5f04e9905a672ec57d0d1b0b57549bcc623b9d0fad5fe53c84"
+    },
+    {
+      "path": "cloudflare/real-input-preview.mjs",
+      "exists": true,
+      "workingSha256": "ebb970d62d6c420addde7ae90f83694772a6397a8ab494c91e31f35f901fedea"
+    },
+    {
+      "path": "wrangler.real-input-preview.jsonc",
+      "exists": true,
+      "workingSha256": "ac091c96d339d0a2f11ff425906a84352b5691c39dce93b12c5eb941565cfc46"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate07.ts",
+      "exists": true,
+      "workingSha256": "72df36040b29b6d0d1f3b318f424dffa374a3c226ff1740147a8dd5483b8d56e"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate07.test.ts",
+      "exists": true,
+      "workingSha256": "14ec2fff96ab908c1617431846bae0e469f0e9d25be7b803c71b836da23ab55a"
+    },
+    {
+      "path": "src/domain/v2/types.ts",
+      "exists": true,
+      "workingSha256": "6a0bf691690b0367a06b5107ca2722f2854b9ce125b21f57320777273cc51980"
+    },
+    {
+      "path": "src/domain/v2/validators/shapeValidator.ts",
+      "exists": true,
+      "workingSha256": "9b553eaa555e129a455fb28644d62ac85dc00339d0f6165b651b6ef58d9e55db"
+    },
+    {
+      "path": "src/types.ts",
+      "exists": true,
+      "workingSha256": "0dd452aae2a90d265c19915b4a22a097238b79c43e9c46eee6ea7b918c57a7a0"
+    },
+    {
+      "path": "src/components/TaskDetailPanel.tsx",
+      "exists": true,
+      "workingSha256": "98aab76b9e7466ff08b3b896fa3bc08fe5cec76fdc945ed7181a34779f4901e6"
+    },
+    {
+      "path": "src/lib/taskUpdates.ts",
+      "exists": true,
+      "workingSha256": "d45ef5fbc307db7ecaab9c6b6a7e4dec22399d7c777daaff3fa05e09ce174a30"
+    },
+    {
+      "path": "src/lib/taskLogic.ts",
+      "exists": true,
+      "workingSha256": "5ba62cc5bc3c337e025d6280c2c8773821c7dfec91deda48c666f83d5cd23a82"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate08.ts",
+      "exists": true,
+      "workingSha256": "3a98aaadaa32076becf334c418397692ae4c55bb0a5af792c7da3e13999ca71d"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate08.test.ts",
+      "exists": true,
+      "workingSha256": "a5724921357a1a766082763f17ceac9e586bbebe47bb5874a82df85e07bca233"
+    },
+    {
+      "path": "src/experiments/realInput01/evidenceRoleWire.ts",
+      "exists": true,
+      "workingSha256": "086f03d6a4efc59bb2b5dfdbf552db0f470254d2f24bccb8e8f5a9873393d209"
+    },
+    {
+      "path": "src/experiments/realInput01/evidenceRoleWire.test.ts",
+      "exists": true,
+      "workingSha256": "6b58ddda64665d437cde2db6a676484dcd97318d0655ea0657df09196dc11cde"
+    }
+  ],
+  "protection": {
+    "declaredCount": 944,
+    "unchangedAtOriginalSha": 938,
+    "authorizedExceptionsAtRecordedAfterSha": 6,
+    "staticEvidenceCount": 607,
+    "frozenDependencyCount": 18,
+    "frozenDependencyAuthorizedExceptions": [
+      "src/domain/v2/validators/shapeValidator.ts"
+    ],
+    "frozenSourceCount": 17
+  },
+  "workingChanges": [
+    "docs/recognition-optimization/CURRENT_CONTEXT.md",
+    "docs/recognition-optimization/OPTIMIZATION_LOG.md",
+    "docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/CALL_LEDGER.jsonl",
+    "scripts/check-mainline-real-input-01.mjs",
+    "scripts/real-input-budget.mjs",
+    "scripts/real-input-budget.node-test.mjs",
+    "scripts/real-input-model-gateway.mjs",
+    "scripts/real-input-model-gateway.node-test.mjs",
+    "scripts/run-mainline-real-input-01.mjs",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/AUDIT.md",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/BASELINE.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/BILLING.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/BINDING_FINAL.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/CANDIDATE_FREEZE.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/CHECKS.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/COMPARISON.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/EXPERIMENT_AUDIT.md",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/FINAL_CHECKS.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/FINAL_IMPLEMENTATION_SNAPSHOT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/FRESH_INPUTS.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/FRESH_REFERENCE_SPEC.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/IMPLEMENTATION_SNAPSHOT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/PUBLIC_VERIFICATION.md",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/REFERENCES_FINAL.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/RUN.mjs",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/S01-03_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/S01-03_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/S01-08_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/S01-08_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/S02-03_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/S02-03_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/S02-08_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/S02-08_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/S03-03_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/S03-03_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/S03-08_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/S03-08_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/S04-03_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/S04-03_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/S04-08_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/S04-08_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/S05-03_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/S05-03_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/S05-08_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/S05-08_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/S06-03_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/S06-03_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/S06-08_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/S06-08_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/S07-03_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/S07-03_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/S07-08_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/S07-08_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/S08-03_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/S08-03_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/S08-08_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/S08-08_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/S09-03_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/S09-03_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/S09-08_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/S09-08_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/S10-03_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/S10-03_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/S10-08_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/S10-08_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/S11-03_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/S11-03_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/S11-08_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/S11-08_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/S12-03_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/S12-03_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/S12-08_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/S12-08_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/SEND_REVIEW.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/T01-03_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/T01-03_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/T01-08_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/T01-08_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/T02-03_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/T02-03_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/T02-08_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/T02-08_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/T03-03_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/T03-03_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/T03-08_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/T03-08_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/T04-03_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/T04-03_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/T04-08_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/T04-08_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/T05-03_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/T05-03_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/T05-08_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/T05-08_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/T06-03_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/T06-03_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/T06-08_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/T06-08_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/T07-03_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/T07-03_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/T07-08_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/T07-08_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/T08-03_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/T08-03_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/T08-08_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/T08-08_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/target-1789302987677.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/vitest-full-1789303399434.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/vitest-full-1789303774923.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a/vitest-retry-1789303979873.json",
+    "src/experiments/realInput01/candidate08.test.ts",
+    "src/experiments/realInput01/candidate08.ts",
+    "src/experiments/realInput01/evidenceRoleWire.test.ts",
+    "src/experiments/realInput01/evidenceRoleWire.ts"
+  ],
+  "criticalEvidence": [
+    {
+      "path": "AUDIT.md",
+      "sha256": "8eedb6733bb3b30bcb84158db9b03a3a7bd190f6cddad6c52e2d57f7852122d4"
+    },
+    {
+      "path": "BASELINE.json",
+      "sha256": "65ef57ca53ab8e033e513c859ea37d891f4e52ab760a00bfdf955b4c5c3fbc3e"
+    },
+    {
+      "path": "BILLING.json",
+      "sha256": "6ae9073a9b723c94c38c527f6bb6c7c5a9765976aa31910ee29fe580b048bef2"
+    },
+    {
+      "path": "BINDING_FINAL.json",
+      "sha256": "edb0f3cafde17cf0e7080ac11aeaadebc8e338cd626b807edc5149a2b81a0b76"
+    },
+    {
+      "path": "CANDIDATE_FREEZE.json",
+      "sha256": "26429edbff08477c2c819ff6b5b4628f4a155db46bc9831ca847164d63ba6d50"
+    },
+    {
+      "path": "COMPARISON.json",
+      "sha256": "2145562588e6ab11e046a8f925fc02eec0a25006ae322460078623eeb1686b23"
+    },
+    {
+      "path": "EXPERIMENT_AUDIT.md",
+      "sha256": "820bd8562f5233a7e7355f5a1ed3c7629958ca9a7ad12f4dc895d838fbe51a62"
+    },
+    {
+      "path": "FRESH_INPUTS.json",
+      "sha256": "64d5d261d51ca3393935fa7218b9703d19a0183ae377065055bd07d3120816e8"
+    },
+    {
+      "path": "FRESH_REFERENCE_SPEC.json",
+      "sha256": "d16432cc4c27ff6d010cc4552483ba8f04fc6c4c166237bdd27adbaed34282e1"
+    },
+    {
+      "path": "PUBLIC_VERIFICATION.md",
+      "sha256": "1679e5152168bde709c1d2721ea078c20e6cff4b620b6ea912e645b8f8775d9e"
+    },
+    {
+      "path": "REFERENCES_FINAL.json",
+      "sha256": "a53998f9cf80293ff170e1a7e4d0c134dad6a6717647c91556ccec54931d6da8"
+    },
+    {
+      "path": "SEND_REVIEW.json",
+      "sha256": "02e32759f2ed913ce0781d4ffa164087be5c33345e93c46652ad9bc9e42b7bdb"
+    }
+  ],
+  "ledger": {
+    "path": "C:/Users/Winner/student-affairs-multimodal-exp/docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/CALL_LEDGER.jsonl",
+    "lines": 345,
+    "bytes": 261483,
+    "sha256": "e8503b7934eceadc278810ccffacae506edd320257a9b4890414fb0eaa1dcdc2",
+    "originalPrefixBytes": 200447,
+    "originalPrefixSha256": "9d4352be315600eeafe887284492398b95e9b2a3dd97721a39f5fe2439316d52",
+    "sequence": 344,
+    "tailHash": "64325fd5feddd249822a24a74bb0e0394997cb6f282d608aeb71aad46346dee8",
+    "cumulativeAttempts": 168
+  },
+  "decision": {
+    "adoptCandidate08": false,
+    "reason": "17/20输出无法通过确定性角色引用契约；无需重大纠正数仍为0，且未证明减少材料或任务错误。",
+    "local6632Enabled": false,
+    "browserJourneys": "NOT_RUN_NON_ADOPTION",
+    "confirmedTasksFromThisBatch": 0,
+    "suggestionToConfirmedSaveRatio": "NOT_RUN_NON_ADOPTION",
+    "actualUserEditOperations": "NOT_RUN",
+    "nextPriority": "在新请求前先把证据角色的拥有者约束压缩为单一、可由JSON Schema直接表达的字段职责；不能在模型输出后放宽转换器吞掉错误。"
+  },
+  "independentAudit": {
+    "verdict": "PASS_WITH_WARNINGS",
+    "blockingFinding": false,
+    "warnings": [
+      "Concurrent HTTPS commits were incorporated by this final snapshot and affected gates.",
+      "evidenceRoleWire parentTempId target existence is not validated; candidate08 is NOT_ADOPTED and must not be reused as a product contract.",
+      "Freeze-before-fresh-input ordering is locally evidenced, not independently timestamped; fresh inputs remain first-development validation only."
+    ]
+  }
+}

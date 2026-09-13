@@ -17,6 +17,7 @@ const git=(...args)=>execFileSync('git',args,{encoding:'utf8',windowsHide:true})
 /** Read-only current-stage protection. This is not a replacement for full
  * engineering, historical environment, paid safety or browser acceptance. */
 export function inspectProtection({stage}={}) {
+  if(stage==='paired08')return inspectPaired08Protection()
   if(stage==='paired07')return inspectPaired07Protection()
   if(stage==='paired06')return inspectPaired06Protection()
   if(stage==='paired05')return inspectPaired05Protection()
@@ -51,6 +52,33 @@ export const PAIRED04_DIRECTORY='docs/recognition-optimization/mainline-real-inp
 export const PAIRED05_DIRECTORY='docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a'
 export const PAIRED06_DIRECTORY='docs/recognition-optimization/mainline-real-input-01/runs/candidate06-20260912a'
 export const PAIRED07_DIRECTORY='docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a'
+export const PAIRED08_DIRECTORY='docs/recognition-optimization/mainline-real-input-01/runs/candidate08-20260913a'
+export function initializePaired08Baseline() {
+  const head=git('rev-parse','HEAD'),sourceManifest='docs/recognition-optimization/mainline-real-input-01/runs/material-unverified-20260913a/IMPLEMENTATION_SNAPSHOT.json'
+  ensure(head==='de017e5bfb759263ec24270ae85d624ffcb88471'&&git('branch','--show-current')===branch,'P08_START')
+  const snapshot=JSON.parse(readFileSync(sourceManifest)),ledgerPath='docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/CALL_LEDGER.jsonl'
+  ensure(snapshot.head==='52a862e01cde345bcd8ec5ab59011f627bae7b45'&&snapshot.sources.length===66&&snapshot.protectedUnchanged===938&&snapshot.exceptions?.length===6,'P08_SOURCE_SNAPSHOT')
+  const ledger=readFileSync(ledgerPath),rows=ledger.toString().trimEnd().split('\n').map(JSON.parse)
+  ensure(rows.length===264&&hash(ledger)==='9d4352be315600eeafe887284492398b95e9b2a3dd97721a39f5fe2439316d52','P08_LEDGER_START')
+  const value={head,sourceManifest:{path:sourceManifest,sha256:hash(readFileSync(sourceManifest))},sources:snapshot.sources,
+    protectedUnchanged:944,ledger:{path:ledgerPath,bytes:ledger.length,sha256:hash(ledger),sequence:264,tail:rows.at(-1).hash},
+    log:{path:logPath,bytes:readFileSync(logPath).length,sha256:hash(readFileSync(logPath))},modelCalls:128,
+    newPaths:['src/experiments/realInput01/candidate08.ts','src/experiments/realInput01/candidate08.test.ts','src/experiments/realInput01/evidenceRoleWire.ts','src/experiments/realInput01/evidenceRoleWire.test.ts']}
+  mkdirSync(PAIRED08_DIRECTORY,{recursive:true});writeFileSync(PAIRED08_DIRECTORY+'/BASELINE.json',JSON.stringify(value,null,2)+'\n',{flag:'wx'})
+  return {head,sourceCount:snapshot.sources.length,newPaths:value.newPaths.length,ledgerRows:rows.length}
+}
+export function inspectPaired08Protection() {
+  const b=JSON.parse(readFileSync(PAIRED08_DIRECTORY+'/BASELINE.json')),snapshot=JSON.parse(readFileSync(b.sourceManifest.path))
+  ensure(resolve(process.cwd()).toLowerCase()===root.toLowerCase()&&git('branch','--show-current')===branch&&git('rev-parse','HEAD')===b.head,'P08_GIT')
+  ensure(hash(readFileSync(b.sourceManifest.path))===b.sourceManifest.sha256&&snapshot.sources.length===66&&b.protectedUnchanged===944,'P08_BASELINE')
+  for(const item of snapshot.sources.filter(item=>/candidate0[2-7]|factAssembly|evaluation\.|seenInputs|mainline04\//.test(item.path)))
+    ensure(hash(readFileSync(item.path))===item.workingSha256,'P08_FROZEN:'+item.path)
+  for(const prefix of [b.ledger,b.log])ensure(hash(readFileSync(prefix.path).subarray(0,prefix.bytes))===prefix.sha256,'P08_PREFIX')
+  const paths=[...snapshot.sources.map(item=>item.path),...b.newPaths]
+  for(const path of [...git('diff','--name-only').split('\n'),...git('ls-files','--others','--exclude-standard').split('\n')].filter(Boolean))
+    ensure(paths.includes(path)||[contextPath,logPath,b.ledger.path].includes(path)||path.startsWith(PAIRED08_DIRECTORY+'/'),'P08_OUTSIDE:'+path)
+  return {head:b.head,branch,protectedCount:b.protectedUnchanged,historyCount:607,sources:paths.map(path=>({path,exists:existsSync(path),workingSha256:existsSync(path)?hash(readFileSync(path)):null}))}
+}
 export function inspectPaired07Protection() {
   const b=JSON.parse(readFileSync(PAIRED07_DIRECTORY+'/BASELINE.json'))
   ensure(resolve(process.cwd()).toLowerCase()===root.toLowerCase()&&git('branch','--show-current')===branch&&git('rev-parse','HEAD')===b.head,'P07_GIT')
