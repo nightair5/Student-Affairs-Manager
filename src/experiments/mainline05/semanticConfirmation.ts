@@ -56,7 +56,8 @@ export async function reviewSemanticMaterial(repo: SemanticRepository,intent:{dr
     const facts=effectiveStateFacts(state).facts
     const op:SemanticOperation={id:intent.operationId,kind:'review_material',at:now,
       taskIds:facts.tasks.filter(t=>relatedAssets(facts,[t.id]).materials.has(intent.materialId)).map(t=>t.id).sort(),field:null,value:null,before:null,
-      materialReview:{materialId:intent.materialId,identity:materialIdentity(state,intent.materialId),value}}
+      materialReview:{materialId:intent.materialId,identity:materialIdentity(state,intent.materialId),value,
+        ...(value.status==='unverified'?{version:'material-review-2' as const}:{})}}
     return applySemanticDomainCommitPlan(w,planOperation(w,intent.draftId,op),now)
   })
 }

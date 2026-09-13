@@ -10,6 +10,7 @@ import { parseModelEnvelope, MODEL_NAME, FLASH41_MODEL_NAME, PROMPT_VERSION, typ
 import type { FactWire } from '../realInput01/factAssembly'
 import { CANDIDATE05_VERSION } from '../realInput01/candidate05'
 import { CANDIDATE06_VERSION } from '../realInput01/candidate06'
+import { CANDIDATE07_VERSION } from '../realInput01/candidate07'
 import { CANDIDATE02_VERSION } from '../realInput01/candidate02'
 import { CANDIDATE03_VERSION } from '../realInput01/candidate03'
 import { CANDIDATE04_VERSION } from '../realInput01/candidate04'
@@ -21,7 +22,7 @@ export interface SemanticOperation {
   id: string; kind: 'edit' | 'confirm' | 'defer' | 'reject' | 'review_info' | 'review_task' | 'correct_fact' | 'enable_material_review' | 'review_material' | 'accept_pending_date'
   at: string; taskIds: string[]; field: 'title' | 'deadline' | null; value: string | null; before: string | null
   correction?: FactCorrection; factReview?: ReviewPackage; reviewIdentity?: string
-  materialReview?: { materialId: string; identity: string; value: MaterialDecision }
+  materialReview?: { materialId: string; identity: string; value: MaterialDecision; version?: 'material-review-2' }
   pendingDateIdentity?: string
 }
 export interface SemanticState {
@@ -307,7 +308,7 @@ export function canonicalFacts(state: AnySemanticState) {
       submissionChannel: m.submissionChannel, relatedTaskIds: owners('materials', m.tempId).map(taskId),
       deadlineTimePointId: associated.length === 1 ? associated[0].id : null, ...stamps(owners('materials', m.tempId)), version: 1,
       legacyData: { ...pointer(m.tempId), ...(effective.manualMaterials.includes(m.tempId) ? { extractionMethod: 'manual' } : {}),
-        ...(decision ? {materialReviewVersion:'material-review-1',requirementAndAvailabilityOrigin:'user_observation'} : {}) } }
+        ...(decision ? {materialReviewVersion:decision.status==='unverified'?'material-review-2':'material-review-1',requirementAndAvailabilityOrigin:'user_observation'} : {}) } }
   })
   const events: Event[] = input.events.filter(e => assets.events.has(e.tempId)).map(e => ({ id: eventId(e.tempId), projectId: null,
     title: e.title, description: e.description, location: e.location,
@@ -362,8 +363,9 @@ function liveLife(state: RealInputState) {
       assert(prefix.length===0&&!op.taskIds.length&&op.field===null&&op.value===null&&op.before===null,'MATERIAL_MODE_ACTIVATION')
     } else if (op.kind==='review_material') {
       assert(materialReviewEnabled(before)&&op.materialReview&&op.field===null&&op.value===null&&op.before===null,'MATERIAL_REVIEW_SHAPE')
-      exactKeys(op.materialReview,['materialId','identity','value'])
+      exactKeys(op.materialReview,['materialId','identity','value',...(op.materialReview.value?.status==='unverified'?['version']:[])])
       validateMaterialDecision(op.materialReview.value)
+      if(op.materialReview.value.status==='unverified')assert(op.materialReview.version==='material-review-2','MATERIAL_REVIEW_VERSION')
       const affected=effective.facts.tasks.filter(t=>relatedAssets(effective.facts,[t.id]).materials.has(op.materialReview!.materialId)).map(t=>t.id).sort()
       assert(affected.length&&equal(affected,[...op.taskIds].sort())&&affected.every(id=>!['confirmed','rejected'].includes(dispositions[id])),'MATERIAL_REVIEW_AFFECTED')
       assert(op.materialReview.identity===materialIdentity(before,op.materialReview.materialId),'MATERIAL_REVIEW_IDENTITY')
@@ -516,7 +518,7 @@ export async function validateSemanticWorkspace(workspace: WorkspaceV8, profile?
       && version.contentHash === workspaceSnapshotHash(version.rawText) && draft.result === null, 'SOURCE_CHAIN_INVALID')
     if (real) {
       assert((run.modelName === MODEL_NAME && [PROMPT_VERSION,CANDIDATE02_VERSION,CANDIDATE03_VERSION,CANDIDATE04_VERSION].includes(run.promptVersion as typeof PROMPT_VERSION)
-        || run.modelName === FLASH41_MODEL_NAME && [CANDIDATE03_VERSION,CANDIDATE05_VERSION,CANDIDATE06_VERSION].includes(run.promptVersion as typeof CANDIDATE03_VERSION))
+        || run.modelName === FLASH41_MODEL_NAME && [CANDIDATE03_VERSION,CANDIDATE05_VERSION,CANDIDATE06_VERSION,CANDIDATE07_VERSION].includes(run.promptVersion as typeof CANDIDATE03_VERSION))
         && run.pipelineVersion === REAL_STATE_VERSION, 'RUN_IDENTITY')
       const pending = draft.legacyData?.realInputPending
       assert(pending && typeof pending === 'object' && !Array.isArray(pending), 'SEND_RECEIPT_MISSING')

@@ -1,0 +1,183 @@
+{
+  "status": "ENGINEERING_AND_HTTPS_DEPLOYED_BROWSER_NOT_VERIFIED",
+  "gitWhitespace": {"sourceAndDocs":"PASS", "rawLogs":"Two original lint outputs end in a blank line; retained verbatim, not normalized or called full diff-check PASS"},
+  "baseHead": "52a862e01cde345bcd8ec5ab59011f627bae7b45",
+  "modelCalls": 0,
+  "fees": 0,
+  "ledgerSha": "9d4352be315600eeafe887284492398b95e9b2a3dd97721a39f5fe2439316d52",
+  "logPrefixBytes": 338586,
+  "logPrefixSha": "ba4791b38765152a8edb65a183e93d096a9dc633c2434b9e5256aae67a7d7d63",
+  "sources": 66,
+  "protected": {
+    "baseline": 944,
+    "unchanged": 938,
+    "approvedExceptions": [
+      {
+        "path": "src/domain/v2/types.ts",
+        "before": "000a9f5d689aad4463753aa8f0f6d1eb33843075e7a521ca6e1f7e10eef833b6",
+        "after": "6a0bf691690b0367a06b5107ca2722f2854b9ce125b21f57320777273cc51980"
+      },
+      {
+        "path": "src/domain/v2/validators/shapeValidator.ts",
+        "before": "c117efafd1d19ea9686c805cc17bbf58ce4312de2ab3d244bc8d94ebd0f2401f",
+        "after": "9b553eaa555e129a455fb28644d62ac85dc00339d0f6165b651b6ef58d9e55db"
+      },
+      {
+        "path": "src/types.ts",
+        "before": "a8914cb2b98463a06ae3ab7fc3fed61c2bdddf6c5a1e27fe960394cdaa6bb67c",
+        "after": "0dd452aae2a90d265c19915b4a22a097238b79c43e9c46eee6ea7b918c57a7a0"
+      },
+      {
+        "path": "src/components/TaskDetailPanel.tsx",
+        "before": "3e395eb570182b08252f65e2cf17c32be5157641aadbf02552c292a631b9747c",
+        "after": "98aab76b9e7466ff08b3b896fa3bc08fe5cec76fdc945ed7181a34779f4901e6"
+      },
+      {
+        "path": "src/lib/taskUpdates.ts",
+        "before": "0c4b49c652e5553c292aa306a898766c3488470c81a510d81a44e56a9b1590ce",
+        "after": "d45ef5fbc307db7ecaab9c6b6a7e4dec22399d7c777daaff3fa05e09ce174a30"
+      },
+      {
+        "path": "src/lib/taskLogic.ts",
+        "before": "e6ba77b9c6dec502ad239eaae5a774f7d0ce18099bd3c9fdff7ec970225f3d6b",
+        "after": "5ba62cc5bc3c337e025d6280c2c8773821c7dfec91deda48c666f83d5cd23a82"
+      }
+    ],
+    "unexpectedChanges": []
+  },
+  "frozenClosure": {
+    "baseline": 18,
+    "unchanged": 17,
+    "approvedCurrentImplementationException": "src/domain/v2/validators/shapeValidator.ts",
+    "historicalManifestAndResultsUnchanged": true,
+    "noHistoricalRegrading": true
+  },
+  "evidence": {
+    "oldStatic": 607,
+    "previousCandidateEvidence": 90,
+    "unexpectedChanges": []
+  },
+  "tests": {
+    "affectedInitial": {
+      "passed": 271,
+      "failed": 1,
+      "files": 19,
+      "report": "affected-tests-1789290527304.json",
+      "failure": "Missing REAL_INPUT_CARRIERS_MANIFEST, not a product regression"
+    },
+    "failedLayerRerun": {
+      "passed": 1,
+      "report": "launcher-tests-1789290734519.json",
+      "oldAssertionUnchanged": true
+    },
+    "finalTargeted": {
+      "passed": 2,
+      "report": "target-tests-1789290664180.json",
+      "kind": "memory simulations; not real user operations"
+    },
+    "initialTargetFailure": "New test wrongly expected factual review to reject dependency. Existing behavior permits review, rejects confirmation. Corrected to assert actual submit refusal; no old assertion changed.",
+    "types": "PASS",
+    "lint": "PASS_0_ERRORS_4_EXISTING_WARNINGS",
+    "viteBuild": "PASS_FRESH_TEMP_OUTPUT",
+    "rootEnvRead": false,
+    "envIsolationProbe": "PASS",
+    "secretScan": {
+      "passed": true,
+      "files": 1827
+    },
+    "fullUnaffectedTests": "REUSED_NOT_RERUN"
+  },
+  "safetyReview": {
+    "kind": "focused implementation and public-interface verification, not independent multi-agent audit",
+    "unverifiedIsNotMissingOrReady": true,
+    "defaultWorkspaceRejects": true,
+    "requiresVersionedReviewAndExplicitConfirmation": true,
+    "operationTamperRejected": true,
+    "dependencyAndBadReferenceStillReject": true,
+    "transactionFailurePreservesWorkspace": true,
+    "rawAndFirstPreserved": true,
+    "duplicateConfirmationNoNewTask": true
+  },
+  "productEvidence": {
+    "R11": "1 correct independent task confirmed with unverified materials in memory; dependent send blocked",
+    "R12": "Original missing entity/bad revision remains rejected",
+    "Q07": "1 correct new PDF requirement confirmed with unverified materials; original revision preserved, no cancelled task added; memory only"
+  },
+  "browser": {
+    "controlAttempts": 0,
+    "recoveryMessageReceived": false,
+    "confirmation": "NOT_VERIFIED",
+    "refresh": "NOT_VERIFIED",
+    "independentIndexedDB": "NOT_VERIFIED",
+    "actualDownload": "NOT_VERIFIED"
+  },
+  "deployment": {
+    "worker": "student-affairs-real-input-preview",
+    "version": "0343dcfe-d36a-4173-aa09-37960f40dcef",
+    "uploadedChangedAssets": 1,
+    "onlyBinding": "ASSETS",
+    "modelEnabled": false,
+    "productionChanged": false
+  },
+  "online": {
+    "kind": "HTTP_NOT_BROWSER_ACCEPTANCE",
+    "assets": [
+      {
+        "path": "index.html",
+        "status": 200,
+        "sha256": "0c57b67f30c3e97dd1a95fbeec331b53790817806450776673256062e49439de",
+        "match": true
+      },
+      {
+        "path": "browser.js",
+        "status": 200,
+        "sha256": "6c3deb989bf02eb187f40529e148463c0ed4aefe79b6339fa58a300acf3e49cc",
+        "match": true
+      },
+      {
+        "path": "browser.css",
+        "status": 200,
+        "sha256": "40088489b4456bd0c3c6653826c75b6a0ed1241d0f282dbea89c08486cc78fae",
+        "match": true
+      },
+      {
+        "path": "recorded/Q01-06.json",
+        "status": 200,
+        "sha256": "48f2f5985b56e674d6cf39feda176609dd33cba71f10a54d63a5368844e35fd9",
+        "match": true
+      },
+      {
+        "path": "recorded/Q07-06.json",
+        "status": 200,
+        "sha256": "97f3b37101e44547f736cf60fa92863165a023407486cf03d274d1c371b9f4f4",
+        "match": true
+      },
+      {
+        "path": "recorded/R11-07.json",
+        "status": 200,
+        "sha256": "2affb502f44bca729e85fbd7bed086462181f8ae3e02e5e4906d918d9bfefe05",
+        "match": true
+      },
+      {
+        "path": "recorded/R12-07.json",
+        "status": 200,
+        "sha256": "6229a53b20518be42ea7b6bb874905e8cec1c69f11a028fc23926fa07fc110fb",
+        "match": true
+      }
+    ],
+    "status": {
+      "experiment": "real-input-https-preview-1",
+      "modelCallsEnabled": false,
+      "storage": "browser-only-new-origin",
+      "records": [
+        "Q01-06",
+        "Q07-06",
+        "R11-07",
+        "R12-07"
+      ],
+      "candidateAdopted": false
+    },
+    "modelEndpointPostStatus": 405,
+    "passed": true
+  }
+}

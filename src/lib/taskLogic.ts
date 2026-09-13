@@ -277,7 +277,7 @@ export function summarizeCanonicalProjectMaterials(
   return {
     total: projectMaterials.length,
     ready,
-    missing: projectMaterials.length - ready,
+    missing: projectMaterials.filter((material) => material.status !== 'unverified').length - ready,
     latestUpdatedAt,
   }
 }

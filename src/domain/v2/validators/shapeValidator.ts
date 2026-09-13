@@ -422,12 +422,46 @@ function validateTask(value: UnknownRecord, path: string, issues: ValidationIssu
   numberField(value, 'version', path, issues)
 }
 
-function validateMaterial(value: UnknownRecord, path: string, issues: ValidationIssue[]): void {
+/** Shape-level exception only; the isolated repository also replays and validates the
+ * complete semantic operation chain. A status/legacy marker alone is never sufficient. */
+function hasExperimentalUnverifiedReview(workspace: UnknownRecord, material: UnknownRecord): boolean {
+  const meta = material.legacyData
+  if (!isRecord(workspace.workspace) || typeof workspace.workspace.id !== 'string'
+    || !/^rco-mainline-01-02-i1-real-input-[a-z0-9-]{10,100}$/.test(workspace.workspace.id)
+    || !isRecord(meta) || meta.materialReviewVersion !== 'material-review-2'
+    || meta.requirementAndAvailabilityOrigin !== 'user_observation'
+    || typeof meta.recognitionTempId !== 'string' || !Array.isArray(workspace.extractionDrafts)) return false
+  const draft = workspace.extractionDrafts.find(d => isRecord(d) && d.id === meta.mainline05DraftId)
+  if (!isRecord(draft) || !isRecord(draft.legacyData)) return false
+  const state = draft.legacyData.mainline05
+  if (!isRecord(state) || state.version !== 'mainline-real-input-state-1'
+    || state.draftId !== draft.id || state.sourceId !== meta.sourceId
+    || state.runId !== draft.recognitionRunId || !isRecord(state.bindings)
+    || state.bindings['material:' + meta.recognitionTempId] !== material.id || !Array.isArray(state.operations)) return false
+  const reviews = state.operations.filter(o => isRecord(o) && o.kind === 'review_material'
+    && isRecord(o.materialReview) && o.materialReview.materialId === meta.recognitionTempId)
+  const op = reviews.at(-1)
+  if (!isRecord(op) || !isRecord(op.materialReview) || !isRecord(op.materialReview.value)
+    || op.materialReview.version !== 'material-review-2' || typeof op.materialReview.identity !== 'string'
+    || !op.materialReview.identity || op.materialReview.value.status !== 'unverified'
+    || op.materialReview.value.required !== material.required || !Array.isArray(op.taskIds)
+    || !op.taskIds.length || !Array.isArray(material.relatedTaskIds) || !material.relatedTaskIds.length) return false
+  const reviewIndex = state.operations.indexOf(op)
+  const operations = state.operations, bindings = state.bindings, taskIds = op.taskIds
+  return operations.some((o, i) => i < reviewIndex && isRecord(o) && o.kind === 'enable_material_review')
+    && material.relatedTaskIds.every(id => taskIds.some(tempId => typeof tempId === 'string'
+      && bindings['task:' + tempId] === id
+      && operations.some((o, i) => i > reviewIndex && isRecord(o) && o.kind === 'confirm'
+        && Array.isArray(o.taskIds) && o.taskIds.includes(tempId))))
+}
+
+function validateMaterial(value: UnknownRecord, path: string, issues: ValidationIssue[], allowUnverified = false): void {
   idAndReview(value, path, issues)
   nullableStringField(value, 'projectId', path, issues)
   stringField(value, 'name', path, issues)
   booleanField(value, 'required', path, issues)
-  enumField(value, 'status', new Set(['missing', 'preparing', 'ready', 'submitted', 'verified', 'not_required']), path, issues)
+  enumField(value, 'status', new Set(['missing', 'preparing', 'ready', 'submitted', 'verified', 'not_required',
+    ...(allowUnverified ? ['unverified'] : [])]), path, issues)
   stringArrayField(value, 'requirements', path, issues)
   stringArrayField(value, 'formatRequirements', path, issues)
   stringArrayField(value, 'namingRequirements', path, issues)
@@ -583,7 +617,8 @@ export function validateWorkspaceShape(value: unknown): ValidationIssue[] {
   entityArray(workspace, 'milestones', issues, validateMilestone)
   entityArray(workspace, 'workPackages', issues, validateWorkPackage)
   entityArray(workspace, 'tasks', issues, validateTask)
-  entityArray(workspace, 'materials', issues, validateMaterial)
+  entityArray(workspace, 'materials', issues, (material, path, found) =>
+    validateMaterial(material, path, found, material.status === 'unverified' && hasExperimentalUnverifiedReview(workspace, material)))
   entityArray(workspace, 'timePoints', issues, validateTimePoint)
   entityArray(workspace, 'events', issues, validateEvent)
   entityArray(workspace, 'evidenceRefs', issues, validateEvidence)

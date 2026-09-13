@@ -15,6 +15,12 @@ const pinned={
   'Q07-06_RAW.jsonl':'ea18f7c430016e95331fd00f8542ed46ad576d32282ebdadc8c08963f746a72c',
 }
 const historicalName='rco-mainline-01-02-i1-real-input-d030c507-3f7c-4a2c-a511-8cd5bd534862'
+const R='docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/'
+const pinned07={
+  'BINDING_FINAL.json':'7d49dede6304e25e186e96dcee787ad2f477eaf25ac45a1fb1161fea5ec0aab7',
+  'R11-07_RAW.jsonl':'b96eb4fdff1be4137955510609683b4fc5746f175aaddf83147c970bdd30a3ba',
+  'R12-07_RAW.jsonl':'9b2af233504c7684be20e56c344b23714be51465f622bc7049dfbbfabfb4a801',
+}
 export async function buildPreview(origin='https://student-affairs-real-input-preview.nightsdell.workers.dev'){
   check(origin==='https://student-affairs-real-input-preview.nightsdell.workers.dev','ORIGIN')
   const read=n=>{const b=readFileSync(join(sourceRoot,D,n));check(hash(b)===pinned[n],'HISTORY_CHANGED');return JSON.parse(b)}
@@ -26,6 +32,15 @@ export async function buildPreview(origin='https://student-affairs-real-input-pr
     return {version:'recorded-paired06-1',unitId,name:historicalName,operationId:item.operationId,title:item.title,
       context:item.context,requestSha:raw.requestSha,responseSha:raw.responseSha,rawHttpText:raw.rawHttpText}
   })
+  const read07=n=>{const b=readFileSync(join(sourceRoot,R,n));check(hash(b)===pinned07[n],'PAIRED07_HISTORY_CHANGED');return JSON.parse(b)}
+  const binding07=read07('BINDING_FINAL.json')
+  for(const unitId of ['R11-07','R12-07']){
+    const raw=read07(unitId+'_RAW.jsonl'),item=binding07.items.find(i=>i.id===unitId.slice(0,3)),unit=binding07.units.find(u=>u.unitId===unitId)
+    check(item&&unit&&raw.httpStatus===200&&raw.requestSha===unit.requestSha&&raw.inputSha===unit.inputSha
+      &&raw.candidateSha===unit.candidateSha&&hash(raw.rawHttpText)===raw.responseSha,'PAIRED07_RAW_BINDING')
+    records.push({version:'recorded-paired07-1',unitId,name:historicalName,operationId:item.operationId,title:item.title,
+      context:item.context,requestSha:raw.requestSha,responseSha:raw.responseSha,rawHttpText:raw.rawHttpText})
+  }
   // Deliberately omit receipts, billing, Expected and absolute source paths from public assets.
   const config={mode:'recorded_batch',httpsPreview:{origin},capability:'',units:[],carriers:[],
     resources:{workerPath:'',corePath:'',langPath:'',pdfWorkerPath:''},
@@ -55,7 +70,7 @@ export async function buildPreview(origin='https://student-affairs-real-input-pr
   check(deployment.name==='student-affairs-real-input-preview'&&deployment.routes.length===0&&!deployment.vars&&!deployment.services,'DEPLOYMENT_SCOPE')
   deployment.main=join(sourceRoot,'cloudflare/real-input-preview.mjs');deployment.assets.directory=assets;delete deployment.$schema
   const configuration=join(directory,'wrangler.json');writeFileSync(configuration,JSON.stringify(deployment,null,2))
-  const paths=['index.html','browser.js','browser.css','recorded/Q01-06.json','recorded/Q07-06.json']
+  const paths=['index.html','browser.js','browser.css',...records.map(r=>'recorded/'+r.unitId+'.json')]
   const manifest={origin,directory,configuration,modelCallsEnabled:false,rootEnvRead:false,
     assets:paths.map(path=>({path,sha256:hash(readFileSync(join(assets,path))),bytes:readFileSync(join(assets,path)).length})),
     sourceFiles:['src/experiments/realInput01/browser.tsx','src/experiments/realInput01/runtime.ts','scripts/build-real-input-preview.mjs',

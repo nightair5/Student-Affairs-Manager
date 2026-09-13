@@ -119,7 +119,7 @@ function EngineeringTools() {
     finally{setBusy(false)}
   }
   const repository=()=>SemanticRepository.open(name,store,undefined,'real-input-01')
-  return <details aria-label="真实输入工程工具" style={{position:'fixed',left:8,top:8,zIndex:2000,maxWidth:'min(680px,90vw)',maxHeight:'65vh',overflow:'auto',background:'white',padding:12,border:'1px solid #163b41'}}>
+  return <details aria-label="真实输入工程工具" style={{position:preview?'relative':'fixed',left:8,top:8,zIndex:2000,maxWidth:'min(680px,90vw)',maxHeight:'65vh',overflow:'auto',background:'white',padding:12,border:'1px solid #163b41'}}>
     <summary>真实输入工程工具（不是用户确认入口）</summary>
     <p>{config.mode==='recorded_batch'?`${config.batch?.length??0}份已记录真实模型响应 · 本页零调用，原回答不改`:config.mode==='recorded_a02'?'A02历史真实模型响应 · 本轮零调用，不是人工预测':config.mode==='live'?'已绑定真实调用模式':'零调用工程回放模式'}。浏览器时区{Intl.DateTimeFormat().resolvedOptions().timeZone}；业务时区Asia/Shanghai。{name}</p>
     {config.mode==='recorded_batch'&&config.batch?.map(identity=><button key={identity.unitId} disabled={busy} onClick={()=>void action(async()=>{
@@ -231,11 +231,19 @@ async function mount(createPreview=false) {
   actual=new IsolatedTestStore(name)
   runtime=await createRealInputRuntime({name,store,initial:previewCreating||params.get('new')==='1'?emptyRealInputWorkspace(name):undefined,
     execution:config.mode==='recorded_a02'||config.mode==='recorded_batch'?'live':config.mode,resources:config.resources,execute,
-    ...(preview?{httpsPreview:true as const}:{}),
+    ...(preview?{httpsPreview:true as const,previewExamples:{identities:config.batch??[],read:async(unitId:string)=>{
+      const response=await fetch('/recorded/'+unitId+'.json')
+      if(!response.ok)throw Error('REAL_INPUT_BATCH_RECORD_UNAVAILABLE')
+      return await response.json() as RecordedPaired04
+    }}}:{}),
     ...(config.mode==='recorded_a02'?{recordedA02:true as const}:config.mode==='recorded_batch'?{recordedBatch:true as const,...(config.candidate02?{recordedCandidate02:true as const}:{}),...(config.candidate03?{recordedCandidate03:true as const}:{}),...(config.paired04?{recordedPaired04:true as const}:{}),...(config.paired05?{recordedPaired05:true as const}:{}),...(config.paired06?{recordedPaired06:true as const}:{})}:{})})
   previewCreating=false
   if(!preview){params.delete('new');history.replaceState(null,'','/?'+params.toString())}
-  root.render(<>{preview&&<p role="status" style={{margin:'52px 16px 12px'}}>独立HTTPS实验版 · 仅回放匿名Q01/Q07历史回答，模型调用关闭。数据只保存在本域名的此浏览器；不是本机旧库，不同步、不用于真实学生资料。候选06未采用。</p>}<App runtime={runtime}/><EngineeringTools/></>)
+  root.render(<>{preview&&<div className="app-shell" style={{minHeight:0}}><section className="content-shell" aria-label="实验版使用说明" style={{padding:16}}>
+    <h2>从一份通知开始，把任务核对清楚</h2>
+    <p>点击“新事务”选择匿名示例，直接打开核对面板。新增“核对送样与共享材料”和“核对展签与取消要求”，保留首次错误供核对，并非采用新候选。</p>
+    <p>匿名历史回放 · 模型关闭 · 数据仅保存在本域名当前浏览器。不读取本机旧库，不同步，请勿输入真实学生资料。候选06/07未采用。</p>
+  </section></div>}<App runtime={runtime}/>{preview?<div className="app-shell" style={{minHeight:0}}><div className="content-shell"><EngineeringTools/></div></div>:<EngineeringTools/>}</>)
 }
 const root=createRoot(document.getElementById('root')!)
 function showFailure(error:unknown){
@@ -248,7 +256,7 @@ async function start(){
   const databases=await indexedDB.databases()
   if(databases.some(d=>d.name===name))return mount()
   root.render(<main style={{maxWidth:720,margin:'10vh auto',padding:24}}><h1>学生事务管家 · 独立实验版</h1>
-    <p>本页只回放两份人工合成通知的历史真实模型回答，不发送模型请求。可以核对材料、主动确认任务、刷新找回和下载。</p>
+    <p>本页只回放已绑定人工合成通知的历史真实模型回答，不发送模型请求。可以核对材料、主动确认任务、刷新找回和下载。</p>
     <p>首次使用需要创建此域名下的新实验库。不会读取或迁移本机6631旧库；数据只存在当前浏览器，不同步。请勿输入真实学生资料。</p>
     <button onClick={event=>{event.currentTarget.disabled=true;void mount(true).catch(showFailure)}}>创建本域名实验库并进入</button></main>)
 }

@@ -1,0 +1,66 @@
+{
+  "origin": "https://student-affairs-real-input-preview.nightsdell.workers.dev",
+  "directory": "C:\\Users\\Winner\\AppData\\Local\\Temp\\real-input-https-P2fPef",
+  "configuration": "C:\\Users\\Winner\\AppData\\Local\\Temp\\real-input-https-P2fPef\\wrangler.json",
+  "modelCallsEnabled": false,
+  "rootEnvRead": false,
+  "assets": [
+    {
+      "path": "index.html",
+      "sha256": "0c57b67f30c3e97dd1a95fbeec331b53790817806450776673256062e49439de",
+      "bytes": 326
+    },
+    {
+      "path": "browser.js",
+      "sha256": "6c3deb989bf02eb187f40529e148463c0ed4aefe79b6339fa58a300acf3e49cc",
+      "bytes": 2708468
+    },
+    {
+      "path": "browser.css",
+      "sha256": "40088489b4456bd0c3c6653826c75b6a0ed1241d0f282dbea89c08486cc78fae",
+      "bytes": 167365
+    },
+    {
+      "path": "recorded/Q01-06.json",
+      "sha256": "48f2f5985b56e674d6cf39feda176609dd33cba71f10a54d63a5368844e35fd9",
+      "bytes": 25688
+    },
+    {
+      "path": "recorded/Q07-06.json",
+      "sha256": "97f3b37101e44547f736cf60fa92863165a023407486cf03d274d1c371b9f4f4",
+      "bytes": 24654
+    },
+    {
+      "path": "recorded/R11-07.json",
+      "sha256": "2affb502f44bca729e85fbd7bed086462181f8ae3e02e5e4906d918d9bfefe05",
+      "bytes": 23419
+    },
+    {
+      "path": "recorded/R12-07.json",
+      "sha256": "6229a53b20518be42ea7b6bb874905e8cec1c69f11a028fc23926fa07fc110fb",
+      "bytes": 26371
+    }
+  ],
+  "sourceFiles": [
+    {
+      "path": "src/experiments/realInput01/browser.tsx",
+      "sha256": "9d47185b698da500732fd31ca897229f5636dbab27f35a393daaee7557174ff0"
+    },
+    {
+      "path": "src/experiments/realInput01/runtime.ts",
+      "sha256": "687e0a41c967f76750291ab227de588fd63b30c3d8dd3e70e541cc0301a7ffa9"
+    },
+    {
+      "path": "scripts/build-real-input-preview.mjs",
+      "sha256": "719c34f9f52881374fc1e9bef72bd3a727ee98b0d1427aa0c761b6c5347fbac2"
+    },
+    {
+      "path": "cloudflare/real-input-preview.mjs",
+      "sha256": "280a54bcf03156718de6e15c47ebda3537f7b198cdb4292bc59e9881c59823d4"
+    },
+    {
+      "path": "wrangler.real-input-preview.jsonc",
+      "sha256": "5fb21e9c63dcd6e78ad644281d3ccb79ca03397c5014faea37e6615550ae9380"
+    }
+  ]
+}

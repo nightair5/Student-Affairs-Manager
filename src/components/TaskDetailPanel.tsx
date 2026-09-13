@@ -398,6 +398,7 @@ export function TaskDetailPanel({
                           event.target.value as MaterialStatus,
                         )}
                       >
+                        {readOnly && material.status === 'unverified' && <option value="unverified">准备情况尚未核实</option>}
                         {materialStatusOptions.map((option) => (
                           <option key={option.value} value={option.value}>{option.label}</option>
                         ))}

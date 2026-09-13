@@ -4,7 +4,7 @@ import type { MaterialStatus } from '../../domain/v2/types'
 
 /** User observation, not a model claim or a source quotation. */
 export interface MaterialDecision { required: boolean; status: MaterialStatus }
-export const materialStatusLabels: Record<MaterialStatus, string> = {missing:'确实缺少',preparing:'正在准备',ready:'已具备',submitted:'已提交',verified:'已核验',not_required:'不作为必备材料'}
+export const materialStatusLabels: Record<MaterialStatus, string> = {unverified:'准备情况尚未核实',missing:'确实缺少',preparing:'正在准备',ready:'已具备',submitted:'已提交',verified:'已核验',not_required:'不作为必备材料'}
 export function validateMaterialDecision(value: unknown): MaterialDecision {
   const row=plainJson(value) as MaterialDecision
   if (!row || typeof row!=='object' || Array.isArray(row)) return reject('MATERIAL_DECISION')

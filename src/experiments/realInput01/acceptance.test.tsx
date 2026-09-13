@@ -46,7 +46,167 @@ import type { RealInputState } from '../mainline05/semanticState'
 import type { SemanticInput } from '../mainline04/semanticContract'
 import { replayRecordedPaired04, type RecordedPaired04 } from './runtime'
 import { buildFlash41Candidate06ComparisonRequest, CANDIDATE06_VERSION } from './candidate06'
-import { HTTPS_PREVIEW_DATABASE } from './runtime'
+import { HTTPS_PREVIEW_DATABASE, openHttpsPreviewExample } from './runtime'
+import { CANDIDATE07_VERSION } from './candidate07'
+import { validateWorkspaceShape } from '../../domain/v2/validators/shapeValidator'
+import { validateMaterialDecision } from './factCorrections'
+import { TaskDetailPanel } from '../../components/TaskDetailPanel'
+
+describe('paired07 actual recorded response boundary; memory only, not browser acceptance',()=>{
+  function record(unitId:string):RecordedPaired04{
+    const p='docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/'
+    const b=JSON.parse(readFileSync(p+'BINDING_FINAL.json','utf8'))
+    const item=b.items.find((i:{id:string})=>i.id===unitId.slice(0,3)),raw=JSON.parse(readFileSync(p+unitId+'_RAW.jsonl','utf8'))
+    return {version:'recorded-paired07-1',unitId,name:recordedA02Identity.name,operationId:item.operationId,
+      title:item.title,context:item.context,requestSha:raw.requestSha,responseSha:raw.responseSha,rawHttpText:raw.rawHttpText}
+  }
+  it('explicit unverified review persists independently; dependency and broken sibling remain blocked (simulation)',async()=>{
+    const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:HTTPS_PREVIEW_DATABASE})
+    const repo=await SemanticRepository.open(store.name,store,emptyRealInputWorkspace(store.name),'real-input-01')
+    const r=record('R11-07'),identity={unitId:r.unitId,requestSha:r.requestSha,responseSha:r.responseSha}
+    const id=await openHttpsPreviewExample(repo,identity,async()=>r,async()=>{})
+    const initial=await repo.load(),first=stateOfRuntime(initial,id),facts=effectiveStateFacts(first).facts
+    const taskId='task-fill-registration-form'
+    expect(validateMaterialDecision({required:true,status:'unverified'})).toEqual({required:true,status:'unverified'})
+    expect(()=>validateMaterialDecision({required:null,status:'unverified'})).toThrow()
+    await expect(confirmSemantic(repo,{draftId:id,taskTempIds:[taskId],revision:semanticRevision(initial)})).rejects.toThrow()
+    for(const m of facts.materials)await reviewSemanticMaterial(repo,{draftId:id,materialId:m.tempId,
+      revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID(),value:{required:m.required,status:'unverified'}})
+    const reviewed=await repo.load()
+    expect(reviewed.tasks).toHaveLength(0)
+    for(const bad of ['version','identity','required'] as const){
+      await expect(repo.transaction(w=>{
+        const row=stateOfRuntime(w,id).operations.find(o=>o.kind==='review_material')!.materialReview!
+        if(bad==='version')delete row.version
+        else if(bad==='identity')row.identity='not-this-material'
+        else row.value.required=!row.value.required
+        return w
+      })).rejects.toThrow()
+      expect(await repo.load()).toEqual(reviewed)
+    }
+    const blocked=facts.tasks.find(t=>t.detail.dependencyTempIds.includes(taskId))!
+    expect(blocked).toBeDefined()
+    // Reviewing a fact is allowed; confirming the dependent task is not.
+    await reviewSemanticFact(repo,{draftId:id,taskId:blocked.id,revision:semanticRevision(reviewed),operationId:crypto.randomUUID()})
+    await expect(confirmSemantic(repo,{draftId:id,taskTempIds:[blocked.id],revision:semanticRevision(await repo.load())})).rejects.toThrow()
+    await reviewSemanticFact(repo,{draftId:id,taskId,revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID()})
+    const beforeCommit=await repo.load()
+    vi.spyOn(store,'transaction').mockRejectedValueOnce(Error('UNVERIFIED_ATOMIC_FAILURE'))
+    await expect(confirmSemantic(repo,{draftId:id,taskTempIds:[taskId],revision:semanticRevision(beforeCommit)})).rejects.toThrow('UNVERIFIED_ATOMIC_FAILURE')
+    expect(await repo.load()).toEqual(beforeCommit)
+    const saved=await confirmSemantic(repo,{draftId:id,taskTempIds:[taskId],revision:semanticRevision(await repo.load())})
+    expect(saved.tasks).toHaveLength(1)
+    expect(saved.materials.length).toBeGreaterThan(0)
+    expect(saved.materials.every(m=>m.status==='unverified'&&m.legacyData?.materialReviewVersion==='material-review-2')).toBe(true)
+    expect(stateOfRuntime(saved,id).rawResponse).toEqual(first.rawResponse)
+    expect(stateOfRuntime(saved,id).first).toEqual(first.first)
+    expect(stateOfRuntime(saved,id).rawOutputText).toEqual(first.rawOutputText)
+    const reopened=await SemanticRepository.open(store.name,store,undefined,'real-input-01')
+    const readback=await reopened.load()
+    expect(readback).toEqual(saved)
+    expect(await new CanonicalWorkspaceRepository(store).load()).toEqual(JSON.parse(JSON.stringify(saved)))
+    expect(buildBrowserReminderJobs(semanticView(saved).tasks)).toEqual([])
+    expect(await confirmSemantic(reopened,{draftId:id,taskTempIds:[taskId],revision:semanticRevision(readback)})).toEqual(saved)
+    expect(await openHttpsPreviewExample(reopened,identity,async()=>r,async()=>{})).toBe(id)
+    const ui=semanticView(saved),detail=renderToStaticMarkup(<TaskDetailPanel task={ui.tasks[0]} sources={ui.sources}
+      readOnly onClose={()=>{}} onUpdate={()=>{}} onComplete={()=>{}} notificationPermission="unsupported"
+      onRequestNotificationPermission={async()=> 'unsupported'} />)
+    expect(detail).toContain('准备情况尚未核实')
+    const broken=record('R12-07')
+    const brokenId=await openHttpsPreviewExample(reopened,{unitId:broken.unitId,requestSha:broken.requestSha,responseSha:broken.responseSha},async()=>broken,async()=>{})
+    await expect(confirmSemantic(reopened,{draftId:brokenId,taskTempIds:['directive-make-label'],revision:semanticRevision(await reopened.load())})).rejects.toThrow()
+    expect((await reopened.load()).tasks).toEqual(saved.tasks)
+    expect((await reopened.load()).materials).toEqual(saved.materials)
+    // Neither a bare status nor a copied marker opens the ordinary workspace path.
+    const ordinary=structuredClone(saved);ordinary.workspace.id='ordinary-workspace'
+    expect(validateWorkspaceShape(ordinary).some(i=>i.path==='materials[0].status')).toBe(true)
+    const tampered=structuredClone(saved)
+    delete tampered.materials[0].legacyData!.materialReviewVersion
+    expect(validateWorkspaceShape(tampered).some(i=>i.path==='materials[0].status')).toBe(true)
+    const noConsent=structuredClone(saved)
+    const s=stateOfRuntime(noConsent,id)
+    s.operations=s.operations.filter(o=>o.kind!=='review_material')
+    expect(validateWorkspaceShape(noConsent).some(i=>i.path==='materials[0].status')).toBe(true)
+    await expect(new CanonicalWorkspaceRepository(store).save(noConsent)).rejects.toThrow()
+    expect((await reopened.load()).tasks).toEqual(saved.tasks)
+  })
+  it.each(['R11-07','R12-07'])('%s retains raw, failures and prior records, never dispatches or auto-confirms',async unitId=>{
+    const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:HTTPS_PREVIEW_DATABASE})
+    const repo=await SemanticRepository.open(store.name,store,emptyRealInputWorkspace(store.name),'real-input-01')
+    const r=record(unitId),identity={unitId,requestSha:r.requestSha,responseSha:r.responseSha},ready=vi.fn(async()=>{})
+    const before=await repo.load()
+    await expect(openHttpsPreviewExample(repo,identity,async()=>({...r,rawHttpText:r.rawHttpText+' '}),ready)).rejects.toThrow()
+    expect(await repo.load()).toEqual(before);expect(ready).not.toHaveBeenCalled()
+    const id=await openHttpsPreviewExample(repo,identity,async()=>r,ready)
+    if(unitId==='R12-07'){
+      const failed=await repo.load()
+      expect(failed.recognitionRuns[0].status).toBe('failed');expect(failed.extractionDrafts[0].status).toBe('failed')
+      expect(await openHttpsPreviewExample(repo,identity,async()=>r,ready)).toBe(id)
+      expect(await repo.load()).toEqual(failed)
+      await expect(confirmSemantic(repo,{draftId:id,taskTempIds:['task-save-final-labels'],revision:semanticRevision(failed)})).rejects.toThrow()
+      await openFailedForCorrection(repo,id,semanticRevision(failed)) // Explicit simulated user click, not automatic replay.
+      expect((await repo.load()).recognitionRuns[0].status).toBe('failed')
+    }
+    const loaded=await repo.load(),first=stateOfRuntime(loaded,id)
+    if(first.version!==REAL_STATE_VERSION)throw Error('REAL_EXPECTED')
+    expect(first.rawHttpText).toBe(r.rawHttpText);expect(loaded.tasks).toHaveLength(0)
+    expect(loaded.recognitionRuns[0].promptVersion).toBe(CANDIDATE07_VERSION)
+    expect(await openHttpsPreviewExample(repo,identity,async()=>r,ready)).toBe(id)
+    expect(await repo.load()).toEqual(loaded)
+    const wrong=record(unitId.slice(0,3)+'-03')
+    await expect(openHttpsPreviewExample(repo,{unitId:wrong.unitId,requestSha:wrong.requestSha,responseSha:wrong.responseSha},async()=>wrong,ready)).rejects.toThrow()
+    expect(await new CanonicalWorkspaceRepository(store).load()).toEqual(JSON.parse(JSON.stringify(loaded)))
+    const taskId=unitId==='R11-07'?'task-fill-registration-form':'task-save-final-labels'
+    await expect(confirmSemantic(repo,{draftId:id,taskTempIds:[taskId],revision:semanticRevision(loaded)})).rejects.toThrow()
+    expect((await repo.load()).tasks).toHaveLength(0)
+    if(unitId==='R12-07'){
+      expect(effectiveStateFacts(first).facts.tasks.some(t=>t.id==='directive-send-source-files')).toBe(false)
+      expect(first.rawHttpText).toBe(r.rawHttpText) // Broken revision remains evidence, not repaired at replay.
+    }else{
+      // Explicit simulated user observation, not inferred preparation or real-browser evidence.
+      await reviewSemanticMaterial(repo,{draftId:id,materialId:'material-registration-form',revision:semanticRevision(await repo.load()),
+        operationId:crypto.randomUUID(),value:{required:true,status:'preparing'}})
+      await reviewSemanticFact(repo,{draftId:id,taskId,revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID()})
+      const saved=await confirmSemantic(repo,{draftId:id,taskTempIds:[taskId],revision:semanticRevision(await repo.load())})
+      expect(saved.tasks).toHaveLength(1)
+      expect(stateOfRuntime(saved,id).first).toEqual(first.first);expect(stateOfRuntime(saved,id).rawResponse).toEqual(first.rawResponse)
+      expect(saved.timePoints.some(t=>t.normalizedValue==='2026-09-17T14:00')).toBe(true)
+      expect(await new CanonicalWorkspaceRepository(store).load()).toEqual(JSON.parse(JSON.stringify(saved)))
+      expect(await confirmSemantic(repo,{draftId:id,taskTempIds:[taskId],revision:semanticRevision(saved)})).toEqual(saved)
+      expect(await replayRecordedPaired04(repo,r,identity,true)).toEqual(saved)
+    }
+  })
+  it('only the two selected R responses are public, write/model endpoints remain closed',()=>{
+    const r=spawnSync(process.execPath,['--input-type=module','-e',`
+      import assert from 'node:assert/strict';import worker from './cloudflare/real-input-preview.mjs';
+      const env={ASSETS:{fetch:async()=>new Response('asset')}};
+      for(const path of ['/recorded/R11-07.json','/recorded/R12-07.json'])assert.equal((await worker.fetch(new Request('https://preview.invalid'+path),env)).status,200);
+      for(const path of ['/recorded/R11-03.json','/recorded/R01-07.json','/api/recognize'])assert.equal((await worker.fetch(new Request('https://preview.invalid'+path),env)).status,404);
+      assert.equal((await worker.fetch(new Request('https://preview.invalid/api/recognize',{method:'POST'}),env)).status,405);
+    `],{encoding:'utf8'})
+    expect(r.status,r.stderr).toBe(0)
+  })
+  it('paired07 failed-response append is atomic and preserves every older record; invalid source identity cannot use the failure path',async()=>{
+    const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:HTTPS_PREVIEW_DATABASE})
+    const repo=await SemanticRepository.open(store.name,store,emptyRealInputWorkspace(store.name),'real-input-01')
+    const prior=record('R11-07'),priorIdentity={unitId:prior.unitId,requestSha:prior.requestSha,responseSha:prior.responseSha}
+    await replayRecordedPaired04(repo,prior,priorIdentity,true)
+    const before=await repo.load(),r=record('R12-07'),identity={unitId:r.unitId,requestSha:r.requestSha,responseSha:r.responseSha}
+    vi.spyOn(store,'transaction').mockRejectedValueOnce(Error('R07_ATOMIC_FAILURE'))
+    await expect(replayRecordedPaired04(repo,r,identity,true)).rejects.toThrow('R07_ATOMIC_FAILURE')
+    expect(await repo.load()).toEqual(before)
+    for(const bad of [{...r,operationId:'paired07-source-R11'},{...r,context:{...r.context,timezone:'UTC'}},{...r,requestSha:'0'.repeat(64)}]){
+      await expect(replayRecordedPaired04(repo,bad,identity,true)).rejects.toThrow()
+      expect(await repo.load()).toEqual(before)
+    }
+    const saved=await replayRecordedPaired04(repo,r,identity,true)
+    for(const key of ['sources','sourceVersions','recognitionRuns','extractionDrafts','evidenceRefs','historyRecords','tasks'] as const)
+      for(const old of before[key])expect(saved[key].find(x=>x.id===old.id)).toEqual(old)
+    expect(saved.recognitionRuns.some(r=>['queued','running'].includes(r.status))).toBe(false)
+    expect(saved.tasks).toEqual(before.tasks)
+    expect(await new CanonicalWorkspaceRepository(store).load()).toEqual(JSON.parse(JSON.stringify(saved)))
+  })
+})
 
 describe('HTTPS preview',()=>{
   function record(unitId:string):RecordedPaired04{
@@ -57,6 +217,74 @@ describe('HTTPS preview',()=>{
     return {version:'recorded-paired06-1',unitId,name:recordedA02Identity.name,operationId:item.operationId,
       title:item.title,context:item.context,requestSha:raw.requestSha,responseSha:raw.responseSha,rawHttpText:raw.rawHttpText}
   }
+  it('real runtime picker opens both examples via the existing App callback without refreshing or dispatching',async()=>{
+    const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:HTTPS_PREVIEW_DATABASE}),execute=vi.fn(async()=>{throw Error('NO_MODEL')})
+    const records=['Q01-06','Q07-06'].map(record),identities=records.map(({unitId,requestSha,responseSha})=>({unitId,requestSha,responseSha}))
+    const read=vi.fn(async(id:string)=>structuredClone(records.find(r=>r.unitId===id)!))
+    const runtime=await createRealInputRuntime({name:store.name,store,initial:emptyRealInputWorkspace(store.name),execution:'live',
+      recordedBatch:true,httpsPreview:true,resources:{workerPath:'',corePath:'',langPath:'',pdfWorkerPath:''},execute,previewExamples:{identities,read}})
+    const opened:string[]=[],onReady=vi.fn(async(id:string)=>{
+      const reloaded=await runtime.load()
+      expect(reloaded.extractionDrafts.some(d=>d.id===id)).toBe(true)
+      expect(reloaded.tasks).toHaveLength(0);opened.push(id)
+    })
+    const picker=runtime.realInput!.inputPanel({workspace:await runtime.load(),initialText:'',onSaved:async()=>{},onDraftReady:onReady}) as ReactElement<{open:(id:string)=>Promise<unknown>}>
+    const html=renderToStaticMarkup(picker)
+    expect(html).toContain('体验多任务通知');expect(html).toContain('体验新旧要求替代');expect(html).toContain('历史真实模型回答')
+    for(const id of ['Q01-06','Q07-06'])await picker.props.open(id)
+    const saved=await runtime.load();expect(saved.extractionDrafts).toHaveLength(2);expect(new Set(opened).size).toBe(2)
+    expect(await new CanonicalWorkspaceRepository(store).load()).toEqual(JSON.parse(JSON.stringify(saved)))
+    await picker.props.open('Q01-06');expect(opened[2]).toBe(opened[0]);expect(await runtime.load()).toEqual(saved)
+    await Promise.all([picker.props.open('Q01-06'),picker.props.open('Q01-06')])
+    expect(opened).toHaveLength(4);expect(await runtime.load()).toEqual(saved)
+    await expect(picker.props.open('Q03-06')).rejects.toThrow('REAL_INPUT_HTTPS_EXAMPLE_IDENTITY')
+    expect(read).toHaveBeenCalledTimes(4);expect(execute).not.toHaveBeenCalled()
+  })
+  it('explicit unverified preparation preserves a valid replacement and cancels no independent task (simulation)',async()=>{
+    const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:HTTPS_PREVIEW_DATABASE})
+    const repo=await SemanticRepository.open(store.name,store,emptyRealInputWorkspace(store.name),'real-input-01')
+    const r=record('Q07-06'),identity={unitId:r.unitId,requestSha:r.requestSha,responseSha:r.responseSha}
+    const draftId=await openHttpsPreviewExample(repo,identity,async()=>r,async()=>{})
+    const first=stateOfRuntime(await repo.load(),draftId)
+    for(const m of effectiveStateFacts(first).facts.materials)await reviewSemanticMaterial(repo,{draftId,materialId:m.tempId,
+      revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID(),value:{required:m.required,status:'unverified'}})
+    const taskId='task-upload-proof-pdf'
+    await reviewSemanticFact(repo,{draftId,taskId,revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID()})
+    const saved=await confirmSemantic(repo,{draftId,taskTempIds:[taskId],revision:semanticRevision(await repo.load())})
+    expect(saved.tasks).toHaveLength(1)
+    expect(saved.tasks[0].title).toContain('PDF')
+    expect(saved.materials.every(m=>m.status==='unverified')).toBe(true)
+    expect(stateOfRuntime(saved,draftId).rawResponse).toEqual(first.rawResponse)
+    expect(stateOfRuntime(saved,draftId).first).toEqual(first.first)
+    expect(effectiveStateFacts(stateOfRuntime(saved,draftId)).facts.revisions).toEqual(effectiveStateFacts(first).facts.revisions)
+    expect(await (await SemanticRepository.open(store.name,store,undefined,'real-input-01')).load()).toEqual(saved)
+    const original=JSON.parse(JSON.stringify(saved))
+    expect(await new CanonicalWorkspaceRepository(store).load()).toEqual(original)
+    expect(await confirmSemantic(repo,{draftId,taskTempIds:[taskId],revision:semanticRevision(saved)})).toEqual(saved)
+  })
+  it('read/identity failures never open a panel or write; UI-open failure retains a recoverable single draft',async()=>{
+    const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:HTTPS_PREVIEW_DATABASE})
+    const repo=await SemanticRepository.open(store.name,store,emptyRealInputWorkspace(store.name),'real-input-01')
+    const r=record('Q01-06'),identity={unitId:r.unitId,requestSha:r.requestSha,responseSha:r.responseSha},before=await repo.load(),ready=vi.fn(async()=>{})
+    await expect(openHttpsPreviewExample(repo,identity,async()=>{throw Error('NETWORK')},ready)).rejects.toThrow('NETWORK')
+    await expect(openHttpsPreviewExample(repo,identity,async()=>({...r,rawHttpText:r.rawHttpText+' '}),ready)).rejects.toThrow()
+    expect(ready).not.toHaveBeenCalled();expect(await repo.load()).toEqual(before)
+    await expect(openHttpsPreviewExample(repo,identity,async()=>r,async()=>{throw Error('PANEL_OPEN_FAILED')})).rejects.toThrow('PANEL_OPEN_FAILED')
+    const saved=await repo.load();expect(saved.tasks).toHaveLength(0);expect(saved.extractionDrafts).toHaveLength(1)
+    const id=await openHttpsPreviewExample(repo,identity,async()=>r,ready)
+    expect(id).toBe(saved.extractionDrafts[0].id);expect(await repo.load()).toEqual(saved)
+  })
+  it('existing App onDraftReady refreshes canonical view and selects the returned draft without page reload',()=>{
+    const probe=spawnSync(process.execPath,['--input-type=module','-e',`
+      import assert from 'node:assert/strict';import {readFileSync} from 'node:fs';import ts from 'typescript';import {runInNewContext} from 'node:vm';
+      const text=readFileSync('src/App.tsx','utf8'),tree=ts.createSourceFile('App.tsx',text,ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);
+      let attr;const visit=n=>{if(ts.isJsxSelfClosingElement(n)&&n.tagName.getText(tree)==='RealInputPanel')attr=n.attributes.properties.find(p=>ts.isJsxAttribute(p)&&p.name.getText(tree)==='onDraftReady');ts.forEachChild(n,visit)};visit(tree);
+      assert(attr?.initializer?.expression);const code=ts.transpileModule('('+attr.initializer.expression.getText(tree)+')',{compilerOptions:{target:ts.ScriptTarget.ES2022}}).outputText;
+      const calls=[];const callback=runInNewContext(code,{refreshExperiment:async()=>calls.push('read'),setIntakeOpen:v=>calls.push(['intake',v]),setSelectedDraftId:v=>calls.push(['draft',v]),setRealInputInitialText:v=>calls.push(['text',v])});
+      await callback('canonical-draft');assert.deepEqual(calls,['read',['intake',false],['draft','canonical-draft'],['text','']]);
+    `],{encoding:'utf8'})
+    expect(probe.status,probe.stderr).toBe(0)
+  })
   it.each(['Q01-06','Q07-06'])('%s preserves original identities and explicitly confirms in the new store',async unitId=>{
     const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:HTTPS_PREVIEW_DATABASE})
     const repo=await SemanticRepository.open(store.name,store,emptyRealInputWorkspace(store.name),'real-input-01')

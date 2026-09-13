@@ -69,8 +69,8 @@ export function FactCorrectionEditor({ repo, workspace, draftId, taskId, busy, o
       <label>本任务是否需要这份材料<select value={materialBuffer.required} onChange={e=>setMaterialBuffer({...materialBuffer,required:e.target.value})}>
         <option value="">请主动选择</option><option value="yes">需要</option><option value="no">不作为必备项</option></select></label>
       <label>当前准备状态<select value={materialBuffer.status} onChange={e=>setMaterialBuffer({...materialBuffer,status:e.target.value})}>
-        <option value="">尚未核实，请主动选择</option>{Object.entries(materialStatusLabels).map(([v,label])=><option key={v} value={v}>{label}</option>)}</select></label>
-      <p>未保存的材料核对不会用于确认；原始模型分类不会被覆盖。</p>
+        <option value="">请选择准备情况</option>{Object.entries(materialStatusLabels).map(([v,label])=><option key={v} value={v}>{label}</option>)}</select></label>
+      <p>不知道是否备齐时，可以主动选择“准备情况尚未核实”。确认任务不代表材料已齐备，也不会解除原文的执行条件或前置任务。未保存的核对不会用于确认。</p>
       <button type="button" disabled={!materialBuffer.required||!materialBuffer.status} onClick={()=>void run(()=>reviewSemanticMaterial(repo,
         {draftId,materialId:materialBuffer.id,revision:bufferRevision,operationId:crypto.randomUUID(),
           value:validateMaterialDecision({required:materialBuffer.required==='yes',status:materialBuffer.status})}))}>保存材料核对</button>
