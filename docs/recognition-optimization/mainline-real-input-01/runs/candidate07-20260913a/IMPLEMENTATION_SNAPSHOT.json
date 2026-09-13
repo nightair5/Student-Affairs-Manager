@@ -1,0 +1,849 @@
+{
+  "head": "8319bc6129c2893cb5bf8ba0877900afc3e713b5",
+  "remote": "8319bc6129c2893cb5bf8ba0877900afc3e713b5",
+  "branch": "codex/e2-multimodal-recognition-exp",
+  "sources": [
+    {
+      "path": "src/App.tsx",
+      "workingSha256": "e4c6ff0f9328867c8b0f9e9b191f67899ea789c19ad9d3d5c9429e75d2a1c749",
+      "gitNormalizedSha256": "e4c6ff0f9328867c8b0f9e9b191f67899ea789c19ad9d3d5c9429e75d2a1c749",
+      "gitBlobOid": "68e34b5fe1b1580179c95753e78c8fe90e74fc6e",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "UNCHANGED"
+    },
+    {
+      "path": "src/components/IntakePanel.tsx",
+      "workingSha256": "92b1e9b2dd3312b380b7d01dcff3e8c9ec2c5c3d919ef2f8802b85d1d3c5418b",
+      "gitNormalizedSha256": "92b1e9b2dd3312b380b7d01dcff3e8c9ec2c5c3d919ef2f8802b85d1d3c5418b",
+      "gitBlobOid": "e9b26bd6ada89c8a49151ab0d6709c8976ba918a",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "UNCHANGED"
+    },
+    {
+      "path": "src/components/DraftReviewPanel.tsx",
+      "workingSha256": "ad0e9f72dbc8577de21abb1904d9c4c89841ce69709a7334ea20693cc1452bb1",
+      "gitNormalizedSha256": "ad0e9f72dbc8577de21abb1904d9c4c89841ce69709a7334ea20693cc1452bb1",
+      "gitBlobOid": "e11e0eee97af29398e302b5f960bf26ecbe28069",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "UNCHANGED"
+    },
+    {
+      "path": "src/lib/fileExtraction.ts",
+      "workingSha256": "fc54f8605f86448012d4b2ab5f6679adbc95b78c94e85789ec464295cb790df3",
+      "gitNormalizedSha256": "fc54f8605f86448012d4b2ab5f6679adbc95b78c94e85789ec464295cb790df3",
+      "gitBlobOid": "a010aafea2d6f9ca2d250fa4d094a52f3c86a7ea",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "UNCHANGED"
+    },
+    {
+      "path": "src/experiments/mainline02/runtime.ts",
+      "workingSha256": "42967c555f1616f54ea6fbf49b45e0df7a237a93d75470c22348a7cc0f69a36b",
+      "gitNormalizedSha256": "42967c555f1616f54ea6fbf49b45e0df7a237a93d75470c22348a7cc0f69a36b",
+      "gitBlobOid": "944c534002d495d661927034aa175d4912346c88",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "UNCHANGED"
+    },
+    {
+      "path": "src/experiments/mainline04/semanticComposer.ts",
+      "workingSha256": "21c38c5a10eda7446c8af941f9eecf6c9d0506e63eab954600118ec51b4ab5b8",
+      "gitNormalizedSha256": "21c38c5a10eda7446c8af941f9eecf6c9d0506e63eab954600118ec51b4ab5b8",
+      "gitBlobOid": "8a158a61145383b2a6511dc73b2c395d80408333",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "UNCHANGED"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticState.ts",
+      "workingSha256": "d0326a0a7f06ca643f7ce307c5ceaad3b748fc7fbae095d0738abf68fd9912c7",
+      "gitNormalizedSha256": "d0326a0a7f06ca643f7ce307c5ceaad3b748fc7fbae095d0738abf68fd9912c7",
+      "gitBlobOid": "90eb18718746cca6cebd3a6b045105fcf3ebf698",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "PRESERVE_UNCOMMITTED_BROWSER_NOT_VERIFIED"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticRepository.ts",
+      "workingSha256": "1259aa87d947fa278e5a1bdd98ab1c516504562f9c948a474a936c13126fa1ee",
+      "gitNormalizedSha256": "1259aa87d947fa278e5a1bdd98ab1c516504562f9c948a474a936c13126fa1ee",
+      "gitBlobOid": "431531dad1358f4d014c46caac7a2658efdb93bb",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "PRESERVE_UNCOMMITTED_BROWSER_NOT_VERIFIED"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticCapture.ts",
+      "workingSha256": "e34667557499fa12a6ce02194069c37620195d1fbd733c9cb3d01462359f3a85",
+      "gitNormalizedSha256": "e34667557499fa12a6ce02194069c37620195d1fbd733c9cb3d01462359f3a85",
+      "gitBlobOid": "317d1cd13d36cae326ec2eb51d94cf3818911e60",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "UNCHANGED"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticConfirmation.ts",
+      "workingSha256": "e87f4c23db9b1b64bcc72cea2ac49db1001391d06718ac082ff9b2576421b4fa",
+      "gitNormalizedSha256": "e87f4c23db9b1b64bcc72cea2ac49db1001391d06718ac082ff9b2576421b4fa",
+      "gitBlobOid": "08c73de6b08e32a256c5935e913cbfabbdb9b97e",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "UNCHANGED"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticView.ts",
+      "workingSha256": "40fe7ea4a33d61a421c6d92348daac21144207584689774e061c45bee28275cf",
+      "gitNormalizedSha256": "40fe7ea4a33d61a421c6d92348daac21144207584689774e061c45bee28275cf",
+      "gitBlobOid": "5357b99aa806b6c5a5fa27914d09b91e32b08b58",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "UNCHANGED"
+    },
+    {
+      "path": "src/experiments/mainline05/runtime.ts",
+      "workingSha256": "9d6837cf4022fb989b7122a1f39c414355ee6f8f861e4d4df814146141edf83f",
+      "gitNormalizedSha256": "9d6837cf4022fb989b7122a1f39c414355ee6f8f861e4d4df814146141edf83f",
+      "gitBlobOid": "1c5ff54a8f595bf913dbd9a2ba71590b294bc3e6",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "UNCHANGED"
+    },
+    {
+      "path": "src/experiments/mainline05/SemanticFacts.tsx",
+      "workingSha256": "4519767c3b1a1a320a3655a5b50da1aee75b400092dc073ecc5ea7318111b4a9",
+      "gitNormalizedSha256": "4519767c3b1a1a320a3655a5b50da1aee75b400092dc073ecc5ea7318111b4a9",
+      "gitBlobOid": "7c6081d98a3e57c341eda6906e8a92a552f8bbbb",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "UNCHANGED"
+    },
+    {
+      "path": "src/experiments/realInput01/inputReceipt.ts",
+      "workingSha256": "743876df8bcc0eef0cf008f2000ad963f251ccf8cd005ae0319c968000b2b049",
+      "gitNormalizedSha256": "743876df8bcc0eef0cf008f2000ad963f251ccf8cd005ae0319c968000b2b049",
+      "gitBlobOid": "0f357924c63078157b00ddfdfad12d8107dbb835",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "UNCHANGED"
+    },
+    {
+      "path": "src/experiments/realInput01/inputAcquisition.ts",
+      "workingSha256": "38339eacc4104653a9823adc8011744920b305852e91146346a645be396a2214",
+      "gitNormalizedSha256": "38339eacc4104653a9823adc8011744920b305852e91146346a645be396a2214",
+      "gitBlobOid": "bcdace794ea16f83080615ce9efbd85dff4529a3",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "UNCHANGED"
+    },
+    {
+      "path": "src/experiments/realInput01/modelWire.ts",
+      "workingSha256": "844e7c0b9e552a33411fb2fb803a27225cb1d8f88b65be6daf959b14831f395d",
+      "gitNormalizedSha256": "844e7c0b9e552a33411fb2fb803a27225cb1d8f88b65be6daf959b14831f395d",
+      "gitBlobOid": "4d529d9d9d32ee4eeac5a986b6fe5bdcd02cdfbd",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "UNCHANGED"
+    },
+    {
+      "path": "src/experiments/realInput01/modelClient.ts",
+      "workingSha256": "767edb637cf741d4f27a96d5059836cd7b17e8c643e9936d974e380bde21df0b",
+      "gitNormalizedSha256": "767edb637cf741d4f27a96d5059836cd7b17e8c643e9936d974e380bde21df0b",
+      "gitBlobOid": "60f2ae3262519d5d9d68f354e6993e33b4758af7",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "UNCHANGED"
+    },
+    {
+      "path": "src/experiments/realInput01/modelPolicy.ts",
+      "workingSha256": "ac2606d1a0fe84d56a911797bffec7eab93be19cdd95e54150d97becd113cafd",
+      "gitNormalizedSha256": "ac2606d1a0fe84d56a911797bffec7eab93be19cdd95e54150d97becd113cafd",
+      "gitBlobOid": "72a0342418b76fc11d74313e3609f5fbe4dccf8c",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "UNCHANGED"
+    },
+    {
+      "path": "src/experiments/realInput01/factCorrections.ts",
+      "workingSha256": "3e2071f8e7cdf58da796530b9d3e278b1aeb987c8a7def743eec21ca3d17ebdc",
+      "gitNormalizedSha256": "3e2071f8e7cdf58da796530b9d3e278b1aeb987c8a7def743eec21ca3d17ebdc",
+      "gitBlobOid": "75ac1e20fb6fcee2121f1fb84f75fe0212de4a39",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "UNCHANGED"
+    },
+    {
+      "path": "src/experiments/realInput01/InputReview.tsx",
+      "workingSha256": "feff8078cced16316920cec1181af1d0e876830b1f4150c9f9dc710954f825ec",
+      "gitNormalizedSha256": "feff8078cced16316920cec1181af1d0e876830b1f4150c9f9dc710954f825ec",
+      "gitBlobOid": "36153199ee47963246517671aa7a1a2a7ec7a416",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "UNCHANGED"
+    },
+    {
+      "path": "src/experiments/realInput01/FactCorrectionEditor.tsx",
+      "workingSha256": "d9cc364372d16199c3d5e9e64eb30abb3c26de3ac40dab2df121f4c11dcf9511",
+      "gitNormalizedSha256": "d9cc364372d16199c3d5e9e64eb30abb3c26de3ac40dab2df121f4c11dcf9511",
+      "gitBlobOid": "6ec02c63262a891c2dfe9e09fb33585882284684",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "UNCHANGED"
+    },
+    {
+      "path": "src/experiments/realInput01/seenInputs.ts",
+      "workingSha256": "e8c7cffc614b9be14c35657ddeb19592ddc3d8e8964423764889b46d37dd5583",
+      "gitNormalizedSha256": "e8c7cffc614b9be14c35657ddeb19592ddc3d8e8964423764889b46d37dd5583",
+      "gitBlobOid": "af4ba155de206ffc47d843a65fdb84d420c5df77",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "UNCHANGED"
+    },
+    {
+      "path": "src/experiments/realInput01/evaluation.ts",
+      "workingSha256": "09ef0efff89c25761c721696da88de5fd73b74af0a417470e8f6af11979a6745",
+      "gitNormalizedSha256": "09ef0efff89c25761c721696da88de5fd73b74af0a417470e8f6af11979a6745",
+      "gitBlobOid": "f907d15f1ba4624db386de8e9af6c374f7a20a95",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "UNCHANGED"
+    },
+    {
+      "path": "src/experiments/realInput01/inputReceipt.test.ts",
+      "workingSha256": "421e2d67fca01e07bc044c75fc935f844b357d8b08f8707a4aa463e59e28fcd6",
+      "gitNormalizedSha256": "421e2d67fca01e07bc044c75fc935f844b357d8b08f8707a4aa463e59e28fcd6",
+      "gitBlobOid": "3e322a62c63b2b0cf0a6265030d69d1be77dfab6",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "UNCHANGED"
+    },
+    {
+      "path": "src/experiments/realInput01/modelWire.test.ts",
+      "workingSha256": "dc417bf97d7cd0dedbffcdb70396cf0a915808cf423e7578b6a9c6cc1747f0ce",
+      "gitNormalizedSha256": "dc417bf97d7cd0dedbffcdb70396cf0a915808cf423e7578b6a9c6cc1747f0ce",
+      "gitBlobOid": "7527f5622043ff892edeccb0df7225cbb053438f",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "UNCHANGED"
+    },
+    {
+      "path": "src/experiments/realInput01/modelPolicy.test.ts",
+      "workingSha256": "bd8b511aede51694775c9fbdbc08dd2a0deea8611eb6b1e08a6736b0a8a1ac9b",
+      "gitNormalizedSha256": "bd8b511aede51694775c9fbdbc08dd2a0deea8611eb6b1e08a6736b0a8a1ac9b",
+      "gitBlobOid": "cd62d608a2f922e62ee4a6fb2df9689031b6c18b",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "UNCHANGED"
+    },
+    {
+      "path": "src/experiments/realInput01/factCorrections.test.ts",
+      "workingSha256": "5b5ad33a80d6f3226c08185fb2410b90bf3986d60c46f114ac8cfbf6e1d0440a",
+      "gitNormalizedSha256": "5b5ad33a80d6f3226c08185fb2410b90bf3986d60c46f114ac8cfbf6e1d0440a",
+      "gitBlobOid": "f1029b68531797b45b9bddcbe862a33979261255",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "UNCHANGED"
+    },
+    {
+      "path": "src/experiments/realInput01/runtime.test.ts",
+      "workingSha256": "6859a42dfabb42206c016e035c86954b4b63e9c23da85556af9597cada73cdf1",
+      "gitNormalizedSha256": "6859a42dfabb42206c016e035c86954b4b63e9c23da85556af9597cada73cdf1",
+      "gitBlobOid": "ad744b6f74ea52ecda6407468f263be6be32d589",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "UNCHANGED"
+    },
+    {
+      "path": "src/experiments/realInput01/extraction.test.ts",
+      "workingSha256": "038e21fdf5448e5a7c859b3dd58b0b6f5b3d304f0a5515aaeb1ec00097ab4194",
+      "gitNormalizedSha256": "038e21fdf5448e5a7c859b3dd58b0b6f5b3d304f0a5515aaeb1ec00097ab4194",
+      "gitBlobOid": "34bc57b798b5a453241de2ca4589da3182edb83e",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "UNCHANGED"
+    },
+    {
+      "path": "scripts/serve-mainline-real-input-01.mjs",
+      "workingSha256": "7d20bb0cb87f3aed52974b8e9eed3781d7269102d0808704d52edb556a60b977",
+      "gitNormalizedSha256": "7d20bb0cb87f3aed52974b8e9eed3781d7269102d0808704d52edb556a60b977",
+      "gitBlobOid": "d561bb26cc70c166adc0729cbb71aa115e346108",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "UNCHANGED"
+    },
+    {
+      "path": "scripts/real-input-model-gateway.mjs",
+      "workingSha256": "4ba0ee8261e3cbc10eb71da11b327686b77094dcdf43ded942929466865e36d5",
+      "gitNormalizedSha256": "4ba0ee8261e3cbc10eb71da11b327686b77094dcdf43ded942929466865e36d5",
+      "gitBlobOid": "f9b76039581b9d41e49567581c23c708220d276c",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "COMMIT_VERIFIED_CANDIDATE_OR_DISPATCH"
+    },
+    {
+      "path": "scripts/real-input-budget.mjs",
+      "workingSha256": "694ea7562690d43059f52ddee7103bc5f4882b72711ecfb43cdc84c0e5119400",
+      "gitNormalizedSha256": "694ea7562690d43059f52ddee7103bc5f4882b72711ecfb43cdc84c0e5119400",
+      "gitBlobOid": "93fcb1482acdba4d810bbb4fbf0b036de52befd7",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "COMMIT_VERIFIED_CANDIDATE_OR_DISPATCH"
+    },
+    {
+      "path": "scripts/check-mainline-real-input-01.mjs",
+      "workingSha256": "4e2ec9d69a6c2ad4597a3c97d2da477386eabc1d24216cdaec85768c4b0ccdb3",
+      "gitNormalizedSha256": "4e2ec9d69a6c2ad4597a3c97d2da477386eabc1d24216cdaec85768c4b0ccdb3",
+      "gitBlobOid": "3cbc164c347a232bd727f61ce61edd798b4c463d",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "COMMIT_VERIFIED_CANDIDATE_OR_DISPATCH"
+    },
+    {
+      "path": "scripts/real-input-model-gateway.node-test.mjs",
+      "workingSha256": "aa3d8643c07bb9980996a2b4a41cc653b42fcd34534367298bdba38d9c44c3ce",
+      "gitNormalizedSha256": "aa3d8643c07bb9980996a2b4a41cc653b42fcd34534367298bdba38d9c44c3ce",
+      "gitBlobOid": "b1cf7590ab02534b27ee60ad3ac2f9e04c39b173",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "COMMIT_VERIFIED_CANDIDATE_OR_DISPATCH"
+    },
+    {
+      "path": "scripts/check-mainline-real-input-01.node-test.mjs",
+      "workingSha256": "fe50d965348a9986368ec64a5665dc78bba4356ee1e23137e2854faa0b3d4402",
+      "gitNormalizedSha256": "fe50d965348a9986368ec64a5665dc78bba4356ee1e23137e2854faa0b3d4402",
+      "gitBlobOid": "f7ee7070e87cf1d42364405fdcbb188c63aea003",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "COMMIT_VERIFIED_CANDIDATE_OR_DISPATCH"
+    },
+    {
+      "path": "scripts/run-mainline-real-input-01.mjs",
+      "workingSha256": "d566c66e0c2d2a4b173797c14d97c20d7af137eb1681c7188c17b30fe3dd2e51",
+      "gitNormalizedSha256": "d566c66e0c2d2a4b173797c14d97c20d7af137eb1681c7188c17b30fe3dd2e51",
+      "gitBlobOid": "b7f9011b18097d7112f8b20f7a191f1518f5bc7b",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "COMMIT_VERIFIED_CANDIDATE_OR_DISPATCH"
+    },
+    {
+      "path": "scripts/real-input-budget.node-test.mjs",
+      "workingSha256": "84a55af5c5da0a639379906cd21070c76f036fdfc0a6f43c59e13e2eb4a74df1",
+      "gitNormalizedSha256": "84a55af5c5da0a639379906cd21070c76f036fdfc0a6f43c59e13e2eb4a74df1",
+      "gitBlobOid": "c41d7d807ea9b889e3547695c7c0239eb38831bb",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "COMMIT_VERIFIED_CANDIDATE_OR_DISPATCH"
+    },
+    {
+      "path": "scripts/render-mainline-real-input-01-fixtures.mjs",
+      "workingSha256": "a5e88226104488cb61d50ea1c2fa92544ddd58974b08d5d4f0544cccacf6aafd",
+      "gitNormalizedSha256": "a5e88226104488cb61d50ea1c2fa92544ddd58974b08d5d4f0544cccacf6aafd",
+      "gitBlobOid": "39c7975d9b5e698c9076f0eb2289b9984624535d",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "UNCHANGED"
+    },
+    {
+      "path": "src/pages/DashboardPage.tsx",
+      "workingSha256": "b0a475cb2c075fa789b360ead943c59d3b3be87da46a7adc49c9cf20be1bacec",
+      "gitNormalizedSha256": "b0a475cb2c075fa789b360ead943c59d3b3be87da46a7adc49c9cf20be1bacec",
+      "gitBlobOid": "59a3447070a97cadd41be9ee1893e9b10efefc19",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "UNCHANGED"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate02.ts",
+      "workingSha256": "4667ebb5a949b591002f4a6c8829212e2c3d4e3f6f15ee8afb75d2a9d0fd9ca2",
+      "gitNormalizedSha256": "4667ebb5a949b591002f4a6c8829212e2c3d4e3f6f15ee8afb75d2a9d0fd9ca2",
+      "gitBlobOid": "c9706a9e396a3a998a96898fbb22191e9a7e6d03",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "UNCHANGED"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate02.test.ts",
+      "workingSha256": "e9a2bc32ffa7e6caa7210acf54178d8e62309911f689e4530175b056d783f222",
+      "gitNormalizedSha256": "e9a2bc32ffa7e6caa7210acf54178d8e62309911f689e4530175b056d783f222",
+      "gitBlobOid": "a8e50a362378c8e17be9f2e4c4821c78151d8ded",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "UNCHANGED"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate03.ts",
+      "workingSha256": "f3a2dd9358ca2a50b9b3eba8a090211666db4c0fb8dc5fc146e742c9895f9508",
+      "gitNormalizedSha256": "f3a2dd9358ca2a50b9b3eba8a090211666db4c0fb8dc5fc146e742c9895f9508",
+      "gitBlobOid": "a82d607dc21f65f8e6a85e88b069b3b5bbddc0b0",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "UNCHANGED"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate03.test.ts",
+      "workingSha256": "fe3cf62ffe946e0441c8f154c2941730dc2012f6f8515ae8e14fa5c772e482ba",
+      "gitNormalizedSha256": "fe3cf62ffe946e0441c8f154c2941730dc2012f6f8515ae8e14fa5c772e482ba",
+      "gitBlobOid": "acc8c0ce9c0b8997b99aa6e4712d667531a79aa2",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "UNCHANGED"
+    },
+    {
+      "path": "src/pages/CalendarPage.tsx",
+      "workingSha256": "675947c46a541bc72f0d4b4be3d2139cddb57c6a1dbba54f79bd0561dc3c10e6",
+      "gitNormalizedSha256": "675947c46a541bc72f0d4b4be3d2139cddb57c6a1dbba54f79bd0561dc3c10e6",
+      "gitBlobOid": "f742f07255d0af409fd037bacb43c541b74321b8",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "UNCHANGED"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate04.ts",
+      "workingSha256": "9fe3a9b905a79d103815739a372b482fa302ce28a047e15181762b0c39f395da",
+      "gitNormalizedSha256": "9fe3a9b905a79d103815739a372b482fa302ce28a047e15181762b0c39f395da",
+      "gitBlobOid": "df73288b790582dcd07452f62250da111593b339",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "UNCHANGED"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate04.test.ts",
+      "workingSha256": "093575645747b1bafd44b124748b9ca81bec31424642ce8c1e2529f87a4ed29b",
+      "gitNormalizedSha256": "093575645747b1bafd44b124748b9ca81bec31424642ce8c1e2529f87a4ed29b",
+      "gitBlobOid": "ff5c09e3a6fa910709a062ef63b37b00ce03b5ab",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "UNCHANGED"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate05.ts",
+      "workingSha256": "f9c38fa853dcf9f8e3576485c54cb17469f621ff0ae9777482207c59f4cd3a2a",
+      "gitNormalizedSha256": "f9c38fa853dcf9f8e3576485c54cb17469f621ff0ae9777482207c59f4cd3a2a",
+      "gitBlobOid": "2610744f417f26024f1fd7911e593e0f72c9618c",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "UNCHANGED"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate05.test.ts",
+      "workingSha256": "78ed53a1719c11edec47d511585332588cda7b04d93cb799836b3b61ec49e8db",
+      "gitNormalizedSha256": "78ed53a1719c11edec47d511585332588cda7b04d93cb799836b3b61ec49e8db",
+      "gitBlobOid": "16cc563d20b6d72ffa18d485153b5dccbd5dafc2",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "UNCHANGED"
+    },
+    {
+      "path": "src/experiments/realInput01/factAssembly.ts",
+      "workingSha256": "e4e5322bfd1c747ba74267fd3685712456028183ff7f32d00c8cdda353dcdadf",
+      "gitNormalizedSha256": "e4e5322bfd1c747ba74267fd3685712456028183ff7f32d00c8cdda353dcdadf",
+      "gitBlobOid": "0cf38ea444b3141290463d280465ce2fa228d5d6",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "UNCHANGED"
+    },
+    {
+      "path": "src/experiments/realInput01/factAssembly.test.ts",
+      "workingSha256": "08e5fe7fddfde1592c3c5999ef9b82ae9d0aefa72d1591eb83baab501721c024",
+      "gitNormalizedSha256": "08e5fe7fddfde1592c3c5999ef9b82ae9d0aefa72d1591eb83baab501721c024",
+      "gitBlobOid": "103d6716cf9cd7089c60c78417b0ee80fd1edebb",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "UNCHANGED"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate06.ts",
+      "workingSha256": "877b13ac614c9a1e196b56d112813ea7a118461c01861632d69d52d7aa72760b",
+      "gitNormalizedSha256": "877b13ac614c9a1e196b56d112813ea7a118461c01861632d69d52d7aa72760b",
+      "gitBlobOid": "cec4c5e4bf7785d93fa75bd609647929d61f2baf",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "UNCHANGED"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate06.test.ts",
+      "workingSha256": "3e03f9b9ffd32af6a98f143be34886f3108a85cc2507367c7ea302b488f59c92",
+      "gitNormalizedSha256": "3e03f9b9ffd32af6a98f143be34886f3108a85cc2507367c7ea302b488f59c92",
+      "gitBlobOid": "1743a93d423749d4fcc270ca6769eb7f6d9d839f",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "UNCHANGED"
+    },
+    {
+      "path": "src/experiments/realInput01/browser.tsx",
+      "workingSha256": "9d47185b698da500732fd31ca897229f5636dbab27f35a393daaee7557174ff0",
+      "gitNormalizedSha256": "9d47185b698da500732fd31ca897229f5636dbab27f35a393daaee7557174ff0",
+      "gitBlobOid": "cdc382ae335080e77d19365cb368518157990101",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "PRESERVE_UNCOMMITTED_BROWSER_NOT_VERIFIED"
+    },
+    {
+      "path": "src/experiments/realInput01/runtime.ts",
+      "workingSha256": "687e0a41c967f76750291ab227de588fd63b30c3d8dd3e70e541cc0301a7ffa9",
+      "gitNormalizedSha256": "687e0a41c967f76750291ab227de588fd63b30c3d8dd3e70e541cc0301a7ffa9",
+      "gitBlobOid": "0aef4c5b799cc49818329627278918dfb4bd5197",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "PRESERVE_UNCOMMITTED_BROWSER_NOT_VERIFIED"
+    },
+    {
+      "path": "src/experiments/realInput01/acceptance.test.tsx",
+      "workingSha256": "8bc45a6bbfa8877ad0bb048846a178fc80b28be84b62e03fb462f74509c02b0b",
+      "gitNormalizedSha256": "8bc45a6bbfa8877ad0bb048846a178fc80b28be84b62e03fb462f74509c02b0b",
+      "gitBlobOid": "4fc160bc71cf751e90bb40f23fa696fd7da8a894",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "PRESERVE_UNCOMMITTED_BROWSER_NOT_VERIFIED"
+    },
+    {
+      "path": "scripts/build-real-input-preview.mjs",
+      "workingSha256": "719c34f9f52881374fc1e9bef72bd3a727ee98b0d1427aa0c761b6c5347fbac2",
+      "gitNormalizedSha256": "719c34f9f52881374fc1e9bef72bd3a727ee98b0d1427aa0c761b6c5347fbac2",
+      "gitBlobOid": "a7b09c305272253020bd9157303c40f8928b0192",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "PRESERVE_UNCOMMITTED_BROWSER_NOT_VERIFIED"
+    },
+    {
+      "path": "cloudflare/real-input-preview.mjs",
+      "workingSha256": "280a54bcf03156718de6e15c47ebda3537f7b198cdb4292bc59e9881c59823d4",
+      "gitNormalizedSha256": "280a54bcf03156718de6e15c47ebda3537f7b198cdb4292bc59e9881c59823d4",
+      "gitBlobOid": "2e52b80a3fc70f7b77b72d9a58caac792feffc89",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "PRESERVE_UNCOMMITTED_BROWSER_NOT_VERIFIED"
+    },
+    {
+      "path": "wrangler.real-input-preview.jsonc",
+      "workingSha256": "5fb21e9c63dcd6e78ad644281d3ccb79ca03397c5014faea37e6615550ae9380",
+      "gitNormalizedSha256": "5fb21e9c63dcd6e78ad644281d3ccb79ca03397c5014faea37e6615550ae9380",
+      "gitBlobOid": "7c51a94c888b3e0ae55b1e127dbf18cffdbfe50c",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "UNCHANGED"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate07.ts",
+      "workingSha256": "72df36040b29b6d0d1f3b318f424dffa374a3c226ff1740147a8dd5483b8d56e",
+      "gitNormalizedSha256": "72df36040b29b6d0d1f3b318f424dffa374a3c226ff1740147a8dd5483b8d56e",
+      "gitBlobOid": "39a05a1e9b10d1624d070caf37abc98383e8b284",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "COMMIT_VERIFIED_CANDIDATE_OR_DISPATCH"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate07.test.ts",
+      "workingSha256": "14ec2fff96ab908c1617431846bae0e469f0e9d25be7b803c71b836da23ab55a",
+      "gitNormalizedSha256": "14ec2fff96ab908c1617431846bae0e469f0e9d25be7b803c71b836da23ab55a",
+      "gitBlobOid": "b0524c0c9ba3dc988158cfc8056624822de367fc",
+      "mapping": "IDENTICAL_BYTES",
+      "delivery": "COMMIT_VERIFIED_CANDIDATE_OR_DISPATCH"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/acceptance-final.log",
+      "sha256": "d56c8ee69f19c6cc84b5ef42ce2c93cad0f9b64b433b982dd42227bdccc0fdcd"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/affected-final.log",
+      "sha256": "eae5f53aaaf19217e58fcba67d994d6f5de4ab50cc38eebb08cadb34855441c1"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/AUDIT.md",
+      "sha256": "7fe0c61b6aa9a185ee68fc5cd03bd5ea4c4b28980e92a66066b976b492caf076"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/BASELINE.json",
+      "sha256": "6dc1a99a07e979d152416e1a7cd5444edd8ee71f88960699c85ed56fc8b5be9f"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/BILLING.json",
+      "sha256": "f3fed0f5a6f9849601c1c77b693e773daf09e55ad8d521f37aed50d8f890062d"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/binding-final.log",
+      "sha256": "00cb57751860ca3b681cbd545cd6046229b2fcc6a0af43db0b3dd2376902c752"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/binding-test-2.log",
+      "sha256": "53851e9e95584697857b969fa8c5bbcb41fdd79d61d618ebbd73c775249f91e1"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/binding-test.log",
+      "sha256": "35a4f31dae21db7b6b0af33a0bb30e4363afcff903c1425419076ce4e9c80d2f"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/BINDING.json",
+      "sha256": "60548c3a18d5b91305874bb418db20c885c20a4f20cdce747b11c7b5ee11ace9"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/BINDING_FINAL.json",
+      "sha256": "7d49dede6304e25e186e96dcee787ad2f477eaf25ac45a1fb1161fea5ec0aab7"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/budget-test.log",
+      "sha256": "05b618dfdc9aa4755d5da10bd760e35a81961abb9fab867fdceb1b01fde5b83c"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/build.log",
+      "sha256": "0b28c22dea7fecd543633f76cec5cc446820d97b41867d435198df0a582870c7"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/candidate-test.log",
+      "sha256": "723318e87c637d3f6d1020f3853de12f9acf12f8dcb2c06a4d66650177b3893c"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/CANDIDATE_FREEZE.json",
+      "sha256": "fa3eed17087ed62dac13c97bece8116f03db99057ec6abf6edc09370a01c6c60"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/CANDIDATE_FREEZE_FINAL.json",
+      "sha256": "17e0af1d076fdfe3b2ea457a956b05859b19a76962bcd039af3ed479b16da8e6"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/COMPARISON.json",
+      "sha256": "22db619850f8ea3018eeada4c1e33d3cb89a36d62345a07709ed6c94d1250401"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/contract-check.log",
+      "sha256": "82984b06b046c92fed4a80c145858c483b3df6e50483cfb0e2350edb3e38b48a"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/deploy.log",
+      "sha256": "4090c8d7999cb27c1ff00b0d533a7b6d47b2ca0a7f93696c157ed14a368adbc2"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/dispatch-first.log",
+      "sha256": "dc138595cce666302983ef34363158c2144c7bab112a6d32e39677d4a2c2f6df"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/dispatch-rest.log",
+      "sha256": "6850de005b6b442a26dd7ef20f6dad18ba510c055f4a11bb08ef2da0437e0d84"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/gateway-test.log",
+      "sha256": "65097b2373af407e7527e2254dc6bf3a91aeaec151cce355722162e77775654e"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/lint-final.log",
+      "sha256": "a5da6c0c6692598467e7f98ff6d58a8129c92141888c5a1a5d27bdc69588515c"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/lint-replay.log",
+      "sha256": "a5da6c0c6692598467e7f98ff6d58a8129c92141888c5a1a5d27bdc69588515c"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/lint.log",
+      "sha256": "ce6073f78e740c09e98a51adcc25a4c75c841f83d00596e38e0e848b3b4b3b74"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/online-final.json",
+      "sha256": "31c850e8aa02ca2fea672d5e6952653e00544ca47b3a45b2ba9bfe0469a232e2"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/online.json",
+      "sha256": "83298d07c12889536ed7cb92205a5b89e5f651d814ea201d5a6c525e9c8680a2"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/preview-build-final.json",
+      "sha256": "2b1fbb2810ab1f82be058dac6d532cea72aa0992fccf094ad6b7b19f8edbd37a"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/preview-build.json",
+      "sha256": "ff5a75ab7f85125d08036f0edc7e3af243d2657ca9f8b39620a0fd8fe352cb4f"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/PUBLIC_VERIFICATION.md",
+      "sha256": "808844c1532cb0aa8e4f9a77095e6d02e63f5132022577c380da0c661ffde60c"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R01-03_RAW.jsonl",
+      "sha256": "40b4eb9cb32cb245db0664c6b7ad37a9f18f62617574040e47ca61ea01686e8f"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R01-03_RESULT.json",
+      "sha256": "e8cca5c7b2baf31a2809b85719223d4d33c5db2ca053489352cd5e7d39da26a4"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R01-07_RAW.jsonl",
+      "sha256": "177cede80bbdea9132b189145ec5206fcb114676697e38535c04b6117ffa205a"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R01-07_RESULT.json",
+      "sha256": "78b99fb4d8434e60290bc4d4e849ae879c6d600d84ebc2c818194500acb469b7"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R02-03_RAW.jsonl",
+      "sha256": "08bd0c862051589a36df11698c084317390e531b25725a4a18c1641960025695"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R02-03_RESULT.json",
+      "sha256": "317a1673edfa231af1d2b41af5e1664bca6d3676628d8ed5186cb96b80ab3354"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R02-07_RAW.jsonl",
+      "sha256": "ef3cd0320a530068e08ad82bd647179bc0720fd104a197aead4004d5ddc7abf7"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R02-07_RESULT.json",
+      "sha256": "86bc2345625b85c20d604164208b63a225047cf9a4c5f102684a07b33e3157c9"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R03-03_RAW.jsonl",
+      "sha256": "45555accd8842a11c442bcefc16e2b302252db6adf3e37a3e2c05dfd2811290f"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R03-03_RESULT.json",
+      "sha256": "9a3c1b47fea88ace8d993085d9e66bc2c12dddee0d73ee018c8eb42b4b2a587f"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R03-07_RAW.jsonl",
+      "sha256": "708e8f0b6ff1c862e38d67cab2ed2251b6e42beffa3ec709e50bff934008547e"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R03-07_RESULT.json",
+      "sha256": "09792844619ca688b312208b24fcc1f688ada4637600608efb91f8bde6657fe0"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R04-03_RAW.jsonl",
+      "sha256": "f3b0034bbb0616a766e84da5546977007922a099c49e8b78fd744e38e9ea8e28"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R04-03_RESULT.json",
+      "sha256": "782aeb4e18d37ae753c49f98ba4d8a59815649d8d383bce01007b8c2a1d13da6"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R04-07_RAW.jsonl",
+      "sha256": "c3189ce3e98ba8c052a01afc24ee4c67b0201738f80c23587066622eddbb0c8a"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R04-07_RESULT.json",
+      "sha256": "854a0765984cb75d541d749a6bce7296307b1aca0c098bfabdc230c480518709"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R05-03_RAW.jsonl",
+      "sha256": "32a86677b8e60c3fdbbd44a6ec53734b2ae5cddff7b14708fa523c81233e44f8"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R05-03_RESULT.json",
+      "sha256": "9ea8869a8dac8a025a477414b5b4ca35f3932de5e2272712e6c95ebb6593ac84"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R05-07_RAW.jsonl",
+      "sha256": "b6042318331e8f280ad849c671b9d2ef3378ca1a7e90c020e14355aed94241df"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R05-07_RESULT.json",
+      "sha256": "b0743ecda1173d8624c4c79c5cd3dd4c99acd0282a66625c2961cc9483d5d999"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R06-03_RAW.jsonl",
+      "sha256": "b7b9c5729a2a9901dfbb9fdc6092205f3e55c87154231d54b449afe9199fe453"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R06-03_RESULT.json",
+      "sha256": "0a4d594d7424c7c9bda308c322f5f407467ec781c8352397c90d9438f54c2be5"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R06-07_RAW.jsonl",
+      "sha256": "216a0e1414bb3be8d86b6405e099682857d2a63d4a7982f9f455784fc9935462"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R06-07_RESULT.json",
+      "sha256": "607554058f4b1c3d2682a63594ccb2abced64471da09799b28fa13141c935ea1"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R07-03_RAW.jsonl",
+      "sha256": "346f39655aecb761ed4b93b2f843298bf759e2080d46708526fdcae9d16bbe48"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R07-03_RESULT.json",
+      "sha256": "4e64e948f6cd42df6a099377fddfa6766d4269c82ec1b4ca820da508ff4ae818"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R07-07_RAW.jsonl",
+      "sha256": "3f7e7731fb6593a553d216091021f6ea0e8b912d0166dae4f828fae33f593e2b"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R07-07_RESULT.json",
+      "sha256": "6d0e43ed0177fdf18edbd04c567b3d61d2b1a6fbdc0a78f29da662d89fc49811"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R08-03_RAW.jsonl",
+      "sha256": "edd96e23ab27e591e4c990533cbc7212ffd61713cf7051da1d11b76e0013cee4"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R08-03_RESULT.json",
+      "sha256": "24583a6451cb9180d4e7120bf6f2d30d6f834640b55e1d5b344e5e05d0ce256b"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R08-07_RAW.jsonl",
+      "sha256": "33b6395f9c910e061fd27f74e9b8f83c8df7fd8d255c092ece891d06ef2727c0"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R08-07_RESULT.json",
+      "sha256": "ec615e7374c07cce4d55ac4c49dd174d2eab4da2742488db32a16769dafe0279"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R09-03_RAW.jsonl",
+      "sha256": "feaef00796cf0503770641290799556afc7f5c81ae2e07f4dcd2d4f3206a2dd1"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R09-03_RESULT.json",
+      "sha256": "92592a4b1b0d3b9a379e6a71fd33f2e2ad304ea85880d22bcbe3f5a24af9b001"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R09-07_RAW.jsonl",
+      "sha256": "1519e6e9ebb58d5cca7bac3bcab37381d0e73cc54ae911f28a93493d7aee27e1"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R09-07_RESULT.json",
+      "sha256": "5b40f3c14df5f5164bb5abb21f0f2bbc06306d561b22f02cd12b77a262df2db6"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R10-03_RAW.jsonl",
+      "sha256": "7400ee0e75fe8472efe626e71c4d52a8e7c27e99258f37cb3b644b11ff53762e"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R10-03_RESULT.json",
+      "sha256": "328e25c761a93c1c25209bc57ccc0645926909b142ce81277fd8db714e1c6fcb"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R10-07_RAW.jsonl",
+      "sha256": "45b85546b4c6655170daf756a855cd712499000578690ee799b4d5f43ea7f0d9"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R10-07_RESULT.json",
+      "sha256": "e4aa5caffb347d1bb9e5562b51a43ac3b2af899439d8eb8ce813a3b6f0cd6423"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R11-03_RAW.jsonl",
+      "sha256": "aba97bcb19f77bd50f6db1c7f0570fd49d055e52c2fde44c631312355ac38ac0"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R11-03_RESULT.json",
+      "sha256": "4a7b86ec7b873dff941009eb2d659046563ee4a29153ad422719ba224dd1fc9e"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R11-07_RAW.jsonl",
+      "sha256": "b96eb4fdff1be4137955510609683b4fc5746f175aaddf83147c970bdd30a3ba"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R11-07_RESULT.json",
+      "sha256": "42b12048c5fa0ad7c90cdda36f5f73bc1912cde89452def460bcc7044090c5e5"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R12-03_RAW.jsonl",
+      "sha256": "850f161e972a09994a409bb68bd20cb4517f5946ae6e7fe8abf3e1e8386e40ac"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R12-03_RESULT.json",
+      "sha256": "b4b50707972523040111c6ddd6e33fa06fb2cdafdda237f9a59d1a580c4028f3"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R12-07_RAW.jsonl",
+      "sha256": "9b2af233504c7684be20e56c344b23714be51465f622bc7049dfbbfabfb4a801"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R12-07_RESULT.json",
+      "sha256": "6cb2531d33154044351faa385afe773545a619d65a02cf23a2135cec497e72ad"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/REFERENCES.json",
+      "sha256": "8336a67c2fc27af5a6c82802ba6b51b311fbae38353d13ab8dcaf45d612fbe0e"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/REFERENCES_FINAL.json",
+      "sha256": "8336a67c2fc27af5a6c82802ba6b51b311fbae38353d13ab8dcaf45d612fbe0e"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/replay-2.log",
+      "sha256": "932831651e561b17f316f287819d0508fe1d1638dae6041c044b9501fa1853a4"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/replay-3.log",
+      "sha256": "c770dd67cde806dd4fb40565df2784226521ce9c3e282a39bbf63c17f68aadbe"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/secret-scan.log",
+      "sha256": "a4c135be142cf81a8a28a22a2841cc6c5aee64cd2f70d4f1b9710a451f259bde"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/SEND_REVIEW.json",
+      "sha256": "3489a823c64b6d045ce85e0d49630cc94a7f311d19bc39da79f2bf1c737dce89"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/time-ast-check.log",
+      "sha256": "9312e5bcb197dc029fd0fa56e734cb0c73b75db15f8f559f2b00c72f61656104"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/type-2.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/type-final.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/type-replay.log",
+      "sha256": "b02f4b7cec6c0ed8b81d453772c33b7981af0b121e07e8daf7f38c865791b32a"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/type.log",
+      "sha256": "6182cca26502c253f0ea004c19ff01af77aac2f414e9d91942cbee2128ce9b9d"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/vitest-full.json",
+      "sha256": "7b1ee20ea1f43255599576975a28e6a6d2fea395bcb43b266474c37b84429b17"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/vitest-full.log",
+      "sha256": "64a3efff260c7a287174b89bc285f62b2bd74d5c24da698a06048ec9b79f4853"
+    }
+  ]
+}

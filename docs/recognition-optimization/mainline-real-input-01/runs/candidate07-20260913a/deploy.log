@@ -1,0 +1,28 @@
+▲ [WARNING] Proxy environment variables detected. We'll use your proxy for fetch requests.
+
+
+
+ ⛅️ wrangler 4.120.0 (update available 4.131.1)
+───────────────────────────────────────────────
+🌀 Building list of assets...
+✨ Read 8 files from the assets directory C:\Users\Winner\AppData\Local\Temp\real-input-https-J3jq87\assets
+🌀 Starting asset upload...
+🌀 Found 3 new or modified static assets to upload. Proceeding with upload...
++ /recorded/R11-07.json
++ /recorded/R12-07.json
++ /browser.js
+Uploaded 1 of 3 assets
+Uploaded 2 of 3 assets
+Uploaded 3 of 3 assets
+✨ Success! Uploaded 3 files (4 already uploaded) (4.17 sec)
+
+Total Upload: 1.81 KiB / gzip: 0.92 KiB
+Worker Startup Time: 5 ms
+Your Worker has access to the following bindings:
+Binding            Resource      
+env.ASSETS         Assets        
+
+Uploaded student-affairs-real-input-preview (15.56 sec)
+Deployed student-affairs-real-input-preview triggers (5.58 sec)
+  https://student-affairs-real-input-preview.nightsdell.workers.dev
+Current Version ID: e07c1a4a-97a8-4c6e-85c5-3fdd10b06cce

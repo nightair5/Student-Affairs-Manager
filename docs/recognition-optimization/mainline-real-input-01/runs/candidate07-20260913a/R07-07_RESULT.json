@@ -1,0 +1,374 @@
+{
+  "unitId": "R07-07",
+  "arm": "07",
+  "bindingSha": "7d49dede6304e25e186e96dcee787ad2f477eaf25ac45a1fb1161fea5ec0aab7",
+  "requestSha": "ffef7770040df513a0b292f0ddbd834bc8269f1d36fba9942ae7f57c5764e02e",
+  "responseSha": "b3f8e3962f853901faa407fb11686f5f38f53609f5aa9ca2d6241f5500ac3437",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "scorerSha": "ad76149f8a88cb4adda6dca78b210daaa4f3c800d17582767911e8ace2658e1d",
+  "scorerBundleSha": "782c89b4f865d83c9a2051d9e2a6df3776b7231ad49aec87008b5c14f4e09f21",
+  "referenceSha": "8336a67c2fc27af5a6c82802ba6b51b311fbae38353d13ab8dcaf45d612fbe0e",
+  "scoreInput": "explicit semantic projection into byte-identical historical scorer; raw response unmodified",
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-old-mail-proof",
+        "propositionScopeIds": [
+          "scope-0002-91dec3f93acac55074ecfdd5be5af271453baf214d685770bef345dceabfc916",
+          "scope-0003-0d35c40df781046b85836904d2f4f3b24d68f630619761e454e59f87b087e1b8",
+          "scope-0004-2ced0568f49cbd60b5a5efd4e6d36f30a018d211d6ccb748205a740fc6028051"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "cancelled",
+          "validity": "superseded",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "send",
+        "action": {
+          "scopeId": "scope-0002-91dec3f93acac55074ecfdd5be5af271453baf214d685770bef345dceabfc916",
+          "surface": "寄送"
+        },
+        "object": {
+          "scopeId": "scope-0002-91dec3f93acac55074ecfdd5be5af271453baf214d685770bef345dceabfc916",
+          "surface": "纸质校样"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "寄送纸质校样（已作废）",
+          "description": "先前要求作者于2026年9月20日17:00前寄送纸质校样，该要求现已作废，不再寄送。",
+          "completionCriteria": [],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [
+            "mat-paper-proof"
+          ],
+          "timePointTempIds": [
+            "tp-old-deadline"
+          ],
+          "confidence": 0.95,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      },
+      {
+        "id": "task-upload-proof-pdf",
+        "propositionScopeIds": [
+          "scope-0005-acf38daefa1eba47f04dcb3ef54fa3670b8566d21eafcd52f1d2bf5b74c354da",
+          "scope-0006-9cb4f9d4331ec70a65c20b454d969980471372d7b3f09cc021531bfca058732e",
+          "scope-0007-39f9b08d279c952245127a9355ef788b656c976e1b68c2d46636d4e17802888a",
+          "scope-0008-933b3c1b84e1358cacb52a37135f08372cc4488c84b9fb0df4e091252dd396d9"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "upload",
+        "action": {
+          "scopeId": "scope-0006-9cb4f9d4331ec70a65c20b454d969980471372d7b3f09cc021531bfca058732e",
+          "surface": "上传"
+        },
+        "object": {
+          "scopeId": "scope-0006-9cb4f9d4331ec70a65c20b454d969980471372d7b3f09cc021531bfca058732e",
+          "surface": "校样PDF"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "上传校样PDF至编辑部收稿系统",
+          "description": "请作者于2026年9月24日10:00前上传校样PDF，文件命名为“稿件编号_校样”，上传至编辑部收稿系统。",
+          "completionCriteria": [
+            "校样PDF已上传至编辑部收稿系统",
+            "文件命名为“稿件编号_校样”"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "high",
+          "dependencyTempIds": [],
+          "materialTempIds": [
+            "mat-proof-pdf"
+          ],
+          "timePointTempIds": [
+            "tp-new-deadline"
+          ],
+          "confidence": 0.95,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [
+      {
+        "tempId": "mat-paper-proof",
+        "name": "纸质校样",
+        "required": true,
+        "formatRequirements": [
+          "纸质"
+        ],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": "寄送",
+        "relatedTaskTempIds": [
+          "task-old-mail-proof"
+        ],
+        "scopeIds": [
+          "scope-0002-91dec3f93acac55074ecfdd5be5af271453baf214d685770bef345dceabfc916",
+          "scope-0004-2ced0568f49cbd60b5a5efd4e6d36f30a018d211d6ccb748205a740fc6028051",
+          "scope-0010-45850b258e1db8e50f303813168fb7dd420c717195ea85fdf666b46d388957bf"
+        ],
+        "confidence": 0.95
+      },
+      {
+        "tempId": "mat-proof-pdf",
+        "name": "校样PDF",
+        "required": true,
+        "formatRequirements": [
+          "PDF"
+        ],
+        "namingRequirements": [
+          "稿件编号_校样"
+        ],
+        "quantity": null,
+        "submissionChannel": "编辑部收稿系统",
+        "relatedTaskTempIds": [
+          "task-upload-proof-pdf"
+        ],
+        "scopeIds": [
+          "scope-0006-9cb4f9d4331ec70a65c20b454d969980471372d7b3f09cc021531bfca058732e",
+          "scope-0007-39f9b08d279c952245127a9355ef788b656c976e1b68c2d46636d4e17802888a",
+          "scope-0008-933b3c1b84e1358cacb52a37135f08372cc4488c84b9fb0df4e091252dd396d9"
+        ],
+        "confidence": 0.95
+      }
+    ],
+    "timePoints": [
+      {
+        "tempId": "tp-old-deadline",
+        "type": "submission_deadline",
+        "rawText": "2026年9月20日17:00前",
+        "relatedTaskTempIds": [
+          "task-old-mail-proof"
+        ],
+        "relatedMaterialTempIds": [
+          "mat-paper-proof"
+        ],
+        "scopeIds": [
+          "scope-0002-91dec3f93acac55074ecfdd5be5af271453baf214d685770bef345dceabfc916"
+        ],
+        "confidence": 0.95,
+        "normalizedValue": "2026-09-20T17:00",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "exact",
+        "needsConfirmation": false
+      },
+      {
+        "tempId": "tp-new-deadline",
+        "type": "submission_deadline",
+        "rawText": "2026年9月24日10:00前",
+        "relatedTaskTempIds": [
+          "task-upload-proof-pdf"
+        ],
+        "relatedMaterialTempIds": [
+          "mat-proof-pdf"
+        ],
+        "scopeIds": [
+          "scope-0006-9cb4f9d4331ec70a65c20b454d969980471372d7b3f09cc021531bfca058732e"
+        ],
+        "confidence": 0.95,
+        "normalizedValue": "2026-09-24T10:00",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "exact",
+        "needsConfirmation": false
+      }
+    ],
+    "events": [],
+    "revisions": [
+      {
+        "type": "supersedes",
+        "targetDirectiveId": "task-old-mail-proof",
+        "scopeIds": [
+          "scope-0009-04690ac1f20c1ab5039d89f36eaadbc8dc76a9ccece6d112bf884e30525099a2",
+          "scope-0005-acf38daefa1eba47f04dcb3ef54fa3670b8566d21eafcd52f1d2bf5b74c354da"
+        ],
+        "fromDirectiveId": "task-upload-proof-pdf",
+        "effective": "true"
+      },
+      {
+        "type": "cancels",
+        "targetDirectiveId": "task-old-mail-proof",
+        "scopeIds": [
+          "scope-0003-0d35c40df781046b85836904d2f4f3b24d68f630619761e454e59f87b087e1b8",
+          "scope-0004-2ced0568f49cbd60b5a5efd4e6d36f30a018d211d6ccb748205a740fc6028051"
+        ],
+        "fromDirectiveId": null,
+        "effective": "true"
+      }
+    ],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0001-f1f07daed8342dd9f005afffc6433dee16cc11504683c2b05887ed37cce39664",
+      "scope-0010-45850b258e1db8e50f303813168fb7dd420c717195ea85fdf666b46d388957bf"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "source:6865605f",
+    "sourceVersionId": "source:6865605f:version:1",
+    "sourceFingerprint": "sha256:a522db547edd0073d2cb62559598adc1e788ed391380fd6bf73b5867bfcd05ca"
+  },
+  "http": 200,
+  "diagnostic": null,
+  "waitingMs": 7740,
+  "score": {
+    "scorerVersion": "real-input-seen-fact-diagnostic-2",
+    "label": "已见人工工程参考的精确诊断，不是未见或商业准确率",
+    "metrics": {
+      "task": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 2,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "requiresAction": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 2,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "time": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 0,
+        "falsePositive": 2,
+        "falseNegative": 2,
+        "precision": 0,
+        "recall": 0
+      },
+      "material": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 1,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0.5,
+        "recall": 0.5
+      },
+      "event": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "condition": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 2,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "revision": {
+        "predicted": 2,
+        "reference": 1,
+        "correct": 0,
+        "falsePositive": 2,
+        "falseNegative": 1,
+        "precision": 0,
+        "recall": 0
+      },
+      "evidence": {
+        "predicted": 6,
+        "reference": 6,
+        "correct": 1,
+        "falsePositive": 5,
+        "falseNegative": 5,
+        "precision": 0.16666666666666666,
+        "recall": 0.16666666666666666
+      },
+      "semantic": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 0,
+        "falsePositive": 2,
+        "falseNegative": 2,
+        "precision": 0,
+        "recall": 0
+      },
+      "coverage": {
+        "predicted": 4,
+        "reference": 4,
+        "correct": 1,
+        "falsePositive": 3,
+        "falseNegative": 3,
+        "precision": 0.25,
+        "recall": 0.25
+      }
+    },
+    "matchingAmbiguities": [],
+    "metricStatus": "EXACT_REFERENCE_DIAGNOSTIC",
+    "schemaParsed": true,
+    "issues": [],
+    "completeCase": false,
+    "majorCorrectionRequired": true,
+    "forbidden": 0,
+    "automaticSelection": "NOT_ENABLED",
+    "humanActiveEditTime": "NOT_RUN",
+    "candidateTaskCount": 2,
+    "referenceTaskCount": 2
+  },
+  "scoreError": null,
+  "totalAttempts": 118,
+  "costUpperMicroCny": 25492,
+  "totalCostUpperMicroCny": 5882767,
+  "stopDispatch": false,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticSelection": "NOT_ENABLED",
+  "qualityClaim": "12份已见材料开发回归；授权同期重复测量，非盲测；24请求不是24份独立材料"
+}

@@ -17,6 +17,7 @@ const git=(...args)=>execFileSync('git',args,{encoding:'utf8',windowsHide:true})
 /** Read-only current-stage protection. This is not a replacement for full
  * engineering, historical environment, paid safety or browser acceptance. */
 export function inspectProtection({stage}={}) {
+  if(stage==='paired07')return inspectPaired07Protection()
   if(stage==='paired06')return inspectPaired06Protection()
   if(stage==='paired05')return inspectPaired05Protection()
   if(stage==='paired04')return inspectPaired04Protection()
@@ -49,6 +50,22 @@ export const CANDIDATE03_DIRECTORY='docs/recognition-optimization/mainline-real-
 export const PAIRED04_DIRECTORY='docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a'
 export const PAIRED05_DIRECTORY='docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a'
 export const PAIRED06_DIRECTORY='docs/recognition-optimization/mainline-real-input-01/runs/candidate06-20260912a'
+export const PAIRED07_DIRECTORY='docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a'
+export function inspectPaired07Protection() {
+  const b=JSON.parse(readFileSync(PAIRED07_DIRECTORY+'/BASELINE.json'))
+  ensure(resolve(process.cwd()).toLowerCase()===root.toLowerCase()&&git('branch','--show-current')===branch&&git('rev-parse','HEAD')===b.head,'P07_GIT')
+  for(const ref of [b.protectedManifest,b.frozenClosure])ensure(hash(readFileSync(ref.path))===ref.sha256,'P07_BASELINE')
+  const p=JSON.parse(readFileSync(b.protectedManifest.path)),frozen=JSON.parse(readFileSync(b.frozenClosure.path))
+  for(const f of [...p.protectedFiles,...p.staticEvidence,...b.staticEvidence,...frozen.dependencies])ensure(hash(readFileSync(f.path))===f.sha256,'P07_PROTECTED:'+f.path)
+  for(const f of b.sources.filter(s=>/candidate0[23456]|evaluation\.|factAssembly|mainline04\//.test(s.path)))ensure(hash(readFileSync(f.path))===f.workingSha256,'P07_FROZEN:'+f.path)
+  for(const prefix of [b.ledger,b.log])ensure(hash(readFileSync(prefix.path).subarray(0,prefix.bytes))===prefix.sha256,'P07_PREFIX')
+  const paths=[...b.sources.map(s=>s.path),'src/experiments/realInput01/candidate07.ts','src/experiments/realInput01/candidate07.test.ts']
+  ensure(paths.length===60&&new Set(paths).size===60,'P07_PATHS')
+  for(const path of [...git('diff','--name-only').split('\n'),...git('ls-files','--others','--exclude-standard').split('\n')].filter(Boolean))
+    ensure(paths.includes(path)||[contextPath,logPath,b.ledger.path].includes(path)||path.startsWith(PAIRED07_DIRECTORY+'/'),'P07_OUTSIDE:'+path)
+  return {head:b.head,branch,protectedCount:p.protectedFiles.length,historyCount:p.staticEvidence.length+b.staticEvidence.length,
+    sources:paths.map(path=>({path,exists:existsSync(path),workingSha256:existsSync(path)?hash(readFileSync(path)):null}))}
+}
 /** New authorization snapshot, preserving the old stage and every old byte check. */
 export function initializePaired06Baseline() {
   const head=git('rev-parse','HEAD')
@@ -226,7 +243,7 @@ export function verifyReviewBinding({head,expectedHead:expected,sources,review})
   ensure(head===expected&&/^[a-f0-9]{40}$/.test(head),'REVIEW_HEAD')
   ensure(review?.status==='PASS'&&review.head===head,'REVIEW_STATUS')
   ensure(Array.isArray(sources)&&sources.length>0&&sources.every(s=>typeof s.path==='string'
-    &&/^(?:src|scripts)\/[A-Za-z0-9_./-]+$/.test(s.path)&&!s.path.split('/').includes('..')&&/^[a-f0-9]{64}$/.test(s.sha256)),'REVIEW_PATHS')
+    &&(/^(?:src|scripts)\/[A-Za-z0-9_./-]+$/.test(s.path)||s.path==='cloudflare/real-input-preview.mjs'||s.path==='wrangler.real-input-preview.jsonc')&&!s.path.split('/').includes('..')&&/^[a-f0-9]{64}$/.test(s.sha256)),'REVIEW_PATHS')
   ensure(new Set(sources.map(s=>s.path)).size===sources.length,'REVIEW_DUPLICATES')
   ensure(Array.isArray(review.sources)&&review.sources.length===sources.length&&sources.every(s=>
     review.sources.some(r=>r.path===s.path&&r.sha256===s.sha256)),'REVIEW_SHA')

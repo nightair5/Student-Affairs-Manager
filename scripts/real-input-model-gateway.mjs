@@ -5,7 +5,7 @@ import { request as httpRequest } from 'node:http'
 import { request as httpsRequest, Agent as HttpsAgent } from 'node:https'
 import { connect as tlsConnect, checkServerIdentity } from 'node:tls'
 import { Readable } from 'node:stream'
-import { BILLING_POLICY, FLASH41_POLICY, FLASH41_PAIRED06_POLICY, sha256 } from './real-input-budget.mjs'
+import { BILLING_POLICY, FLASH41_POLICY, FLASH41_PAIRED06_POLICY, FLASH41_PAIRED07_POLICY, sha256 } from './real-input-budget.mjs'
 
 const localFailures = new WeakMap()
 const fail = code => { const error=Error('REAL_INPUT_GATEWAY_' + code);localFailures.set(error,code);throw error }
@@ -157,13 +157,14 @@ function failureReason(phase,error,deadline) {
 /** No listening socket or credential read at import time. A fixed launcher owns this instance. */
 export async function createModelGateway({origin,capability,budget,requests,recordRaw,
   readSecret=()=>process.env.DEEPSEEK_API_KEY,fetchImpl=globalThis.fetch,clock=()=>new Date().toISOString(),timeoutMs=60000,policy=BILLING_POLICY}) {
-  check(isDeepStrictEqual(policy,BILLING_POLICY)||isDeepStrictEqual(policy,FLASH41_POLICY)||isDeepStrictEqual(policy,FLASH41_PAIRED06_POLICY),'POLICY')
+  check(isDeepStrictEqual(policy,BILLING_POLICY)||isDeepStrictEqual(policy,FLASH41_POLICY)||isDeepStrictEqual(policy,FLASH41_PAIRED06_POLICY)||isDeepStrictEqual(policy,FLASH41_PAIRED07_POLICY),'POLICY')
   check(typeof origin==='string'&&/^http:\/\/127\.0\.0\.1:[1-9][0-9]{3,4}$/.test(origin),'ORIGIN')
   check(typeof capability==='string'&&/^[a-f0-9]{64}$/.test(capability),'CAPABILITY')
   check(typeof recordRaw==='function'&&typeof readSecret==='function'&&typeof fetchImpl==='function'
     &&Number.isSafeInteger(timeoutMs)&&timeoutMs>0&&timeoutMs<=60000,'CONFIG')
   const unitPolicy=id=>{
-    if(id.startsWith('Q')){check(isDeepStrictEqual(policy,FLASH41_PAIRED06_POLICY),'PAIRED06_POLICY');return FLASH41_PAIRED06_POLICY}
+    if(id.startsWith('R')){check(isDeepStrictEqual(policy,FLASH41_PAIRED07_POLICY),'PAIRED07_POLICY');return FLASH41_PAIRED07_POLICY}
+    if(id.startsWith('Q')){check(isDeepStrictEqual(policy,FLASH41_PAIRED06_POLICY)||isDeepStrictEqual(policy,FLASH41_PAIRED07_POLICY),'PAIRED06_POLICY');return FLASH41_PAIRED06_POLICY}
     return id.startsWith('P')?policy:BILLING_POLICY
   }
   // Copy bodies before the first await; callers cannot replace requests after the safety gate.
@@ -187,7 +188,7 @@ export async function createModelGateway({origin,capability,budget,requests,reco
       try {
         check(typeof bodyText==='string'&&Buffer.byteLength(bodyText)<=200,'CLIENT_LIMIT')
         const input=JSON.parse(bodyText);exact(input,['unitId','requestSha']);unitId=input.unitId;request=frozen[unitId]
-        check(typeof unitId==='string'&&/^(?:[ABCD]0[1-8]|N(?:0[1-9]|1[0-2])-(?:03|04)|P(?:0[1-9]|1[0-2])-(?:03|05)|Q(?:0[1-9]|1[0-2])-(?:03|06))$/.test(unitId)&&request&&request.requestSha===input.requestSha,'CLIENT_BINDING')
+        check(typeof unitId==='string'&&/^(?:[ABCD]0[1-8]|N(?:0[1-9]|1[0-2])-(?:03|04)|P(?:0[1-9]|1[0-2])-(?:03|05)|Q(?:0[1-9]|1[0-2])-(?:03|06)|R(?:0[1-9]|1[0-2])-(?:03|07))$/.test(unitId)&&request&&request.requestSha===input.requestSha,'CLIENT_BINDING')
       } catch {return response(400,{code:'REQUEST_BINDING_REJECTED'})}
       if(inFlight)return response(409,{code:'CALL_IN_PROGRESS'})
       inFlight=true

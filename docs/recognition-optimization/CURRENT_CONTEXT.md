@@ -1,85 +1,83 @@
 # RCO Current Context
 
 ## 当前目标与结论
-- 同一MAINLINE-REAL-INPUT-01：现有HTTPS交付收尾＋下一轮准确率主根因定位。
-- 2026-09-13本轮根因分析完成；真实确认/刷新/下载证据仍不足，不宣称整包完成。
-- 本轮业务源码0变化、模型0调用/0费用、浏览器0重试、构建0、部署0。
-- 用户确认已提交官方浏览器反馈；未报告连接恢复，不再重装/重启/循环刷新。
-- 最新报告：mainline-real-input-01/runs/candidate06-20260912a/HTTPS_CLOSE_ROOT_CAUSE.md。
-- 机器检查：同目录HTTPS_CLOSE_ROOT_CAUSE_CHECKS.json；旧TRIAL/PREVIEW证据只读。
+- MAINLINE-REAL-INPUT-01：candidate07任务与材料边界优化＋配对验证＋HTTPS承接。
+- 2026-09-13比较完成；candidate07 NOT_ADOPT，默认路线不变。
+- 真实浏览器确认/刷新/独立IndexedDB/下载未验证；不能称整包完成。
+- 报告目录mainline-real-input-01/runs/candidate07-20260913a/。
+- AUDIT.md、COMPARISON.json、CHECKS.json、IMPLEMENTATION_SNAPSHOT.json记录证据。
+- 后续只读本页和DELIVERY，不重读完整历史，不自动增加候选/调用。
 
-## Git与工作区
+## 仓库与Git
 - 唯一仓库C:\Users\Winner\student-affairs-multimodal-exp。
-- 唯一分支codex/e2-multimodal-recognition-exp；不在比赛默认工作区实施。
-- 本轮开始本机/实际远端均72b753f62427844ceea7dd3c59e31902deb14001。
-- 本轮新审计提交以git log及远端回执为准，本文不写自身提交SHA。
-- browser.tsx、runtime.ts、acceptance.test.tsx仍为原三份未提交业务实现。
-- 前21业务文件已提交为待浏览器验收源码快照，不是新的未提交实现。
-- 本轮仅报告/检查/短交接/追加日志精确审计交付，不暂存未验收三源码。
-- 不回切、不强推、不自动变基；工作字节SHA与Git换行规范化SHA分开。
+- 唯一分支codex/e2-multimodal-recognition-exp；默认“比赛”目录禁止实施。
+- 起点本机/远端8319bc6129c2893cb5bf8ba0877900afc3e713b5。
+- 新提交与远端核验见DELIVERY.json及实际git log，不在本文写自身SHA。
+- 60实际实现路径=原58+candidate07.ts/candidate07.test.ts。
+- 提交已验证候选/派发9源码、报告、账本追加，不是默认候选升级。
+- 7未验收业务文件保留：browser.tsx、runtime.ts、acceptance.test.tsx、
+- mainline05/semanticState.ts、semanticRepository.ts、build-real-input-preview.mjs、cloudflare/real-input-preview.mjs。
+- 原三未提交实现保留并增量接线，不回切/重复应用，不强推/自动变基。
+- 工作字节与Git换行规范化SHA分开，见IMPLEMENTATION_SNAPSHOT。
+
+## 首次建议结果
+- 12份原candidate05匿名材料，03/07同期各一次，平衡种子20260914。
+- 模型deepseek-flash，temperature0/reasoning.none/streamfalse/output8192。
+- 24请求不是24份材料；已见开发回归，非盲测或商业准确率。
+- 候选改为义务边界→附属要求→执行语义→引用覆盖，不新增wire/组装器。
+- 严格任务正确19/19→18/19，多余/遗漏1/0→0/1。
+- 严格材料正确10/17→10/17，FP/FN6/7→11/7；严格整份0/12→0/12。
+- 无需重大语义改写10/12→9/12；加结构/转换障碍9/12→7/12。
+- R11不再多造准备密封袋任务，袋关联提交，保留登记单依赖。
+- R03/R04/R12额外材料增多；R12取消旧实体缺失与悬空引用未解决。
+- R04条件not_applicable带事实矛盾；R05准备状态未说明变unresolved。
+- R02“近期”仍仅描述；R09本机归一化未继承同日为共同限制。
+- 等价措辞、作废材料、本机可承接反向关联单列，不全部算语义错误。
+- wire及人工材料处置缺尚未核实准备状态，不猜missing/preparing救验收。
+- NOT_ADOPT：只改善一例，总纠正未减少，不追加候选或调用追分。
+- 下一轮需先厘清任务对象与附属材料的可表达边界；本轮不实施下一轮。
+
+## 调用与账本
+- 新24/24有效usage结算，累计128=127结算+A01未知，授权已用完。
+- 本批费用上界0.533736元，实际扣费NOT_OBSERVABLE。
+- 全账本上界6.130417元，含A01永久未知3.30元；10元上限未突破。
+- 账本264行200447字节，SHA9d4352be315600eeafe887284492398b95e9b2a3dd97721a39f5fe2439316d52。
+- 尾hash bad2a759a5f62264b1cfe6dc2941793cfb6d28cb332f5e78ee642ee5ba637bcb。
+- 原215行163134字节前缀SHA9a92b6886a0a40d7300aaa02054de53fb3df5c3a5397ddea9247ea3e3783ad41保持。
+- A01不重发/迟到结算/退款释放；不运行paid/recover，不读密钥/剪贴板。
+- 请求等待163.406秒，03平均6.682秒、07平均6.936秒；真人省时NOT_RUN。
 
 ## HTTPS现场
-- 固定URL：https://student-affairs-real-input-preview.nightsdell.workers.dev/。
-- Worker：student-affairs-real-input-preview；仅独立匿名回放，不是生产站点。
-- 上轮部署版本bf52ea5d-4576-4c1c-8d21-0cdcc4f61fb0；本轮未重新部署/在线检查。
-- 上轮HTTP200/五资产SHA一致/模型关闭只作历史在线证据，不冒充浏览器操作。
-- 库名rco-mainline-01-02-i1-real-input-https-preview-1；仅当前域名、当前浏览器。
-- 用户首次明确点击创建；已有库恢复，错误不建空库、不fallback或覆盖。
-- 仅Q01-06/Q07-06历史原答；候选06不采用，不是实时识别。
-- 页面“新事务”选择“体验多任务通知”或“体验新旧要求替代”直接开原面板。
-- 同一示例重复载入恢复已有记录；加载不等于自动选择或正式保存。
-- 材料需要与准备状态分别核对并保存，再事实核对、主动选择确认。
-- 原答、first、人工编辑、最终处置分留；不迁移6631旧库、不输入真实学生资料。
-- 原13任务是旧本机历史计数，不能套到HTTPS新域名库。
+- https://student-affairs-real-input-preview.nightsdell.workers.dev/。
+- 同Worker，版本e07c1a4a-97a8-4c6e-85c5-3fdd10b06cce，模型关闭，仅ASSETS。
+- 原Q01/Q07保留，新增R11-07“核对送样与共享材料”、R12-07“核对展签与取消要求”。
+- 新事务进入历史回放；不代表candidate07采用或刚刚识别，不自动选择。
+- 库rco-mainline-01-02-i1-real-input-https-preview-1，仅当前域名/当前浏览器。
+- 已有库恢复，坏库不建空库，不读6631、不清库、不碰生产。
+- 原13任务为旧本机计数，不套用HTTPS；当前HTTPS数量未观测。
+- R11工程模拟准备状态后首项可确认，此选择不是实际用户状态。
+- R12坏引用以终态failed和原答保留，需主动进入已有人工纠错，不自动修正。
+- R12坏引用/时间覆盖仍不能直接确认，不静默删关系或改为无日期。
+- 初次HTTP缓存旧产物失败保留；no-cache验证7资产SHA匹配见online-final。
+- 仅一次部署，无模型/Secret/真实用户库绑定，不更换域名或系统设置。
 
-## 六文件职责与保护
-- browser.tsx：显式HTTPS/origin/用户主动新库/两示例入口及独立读库工具。
-- runtime.ts：预览库与原答身份分开、已载入恢复、真实App回调接线。
-- acceptance.test.tsx：对应边界/确认/重复/身份与旧默认检查。
-- scripts/build-real-input-preview.mjs：无根env构建固定匿名资产。
-- cloudflare/real-input-preview.mjs：只读资产/状态，拒绝模型与写接口。
-- wrangler.real-input-preview.jsonc：独立Worker、空routes、仅ASSETS。
-- 本轮六源码、其余52源码、944保护、607静态、18冻结依赖均逐字匹配。
-- 原两公开响应、全部候选/Expected/评分/回答/全局Schema及仓储/时间AST只读。
-- 不改MAINLINE04/confirmationV2/domainCommit，不新增依赖或产品路径。
-- 生产student-affairs.site及RC.4、本机旧库均未操作。
+## 工程与保护
+- 候选11、预算62、网关50、绑定1通过；无retry/verifier/Repair。
+- 全Vitest初跑1326PASS/1FAIL/1SKIP，唯一旧载体测试缺显式manifest。
+- 补配置原断言通过；最终受影响7文件121PASS（含62 acceptance），未变层复用。
+- 类型通过，lint0错误/原FastRefresh警告；安全Vite构建和最终HTTPS esbuild通过。
+- Secret scan1784、契约/时间AST生成检查通过；历史开发依赖2moderate/3high未修。
+- 944保护、607旧静态、18冻结闭包及日志前缀匹配，候选派发后未变。
+- 框架禁根.env、config:false/envFile:false、新临时envDir/cache/output。
+- 仅获准派发进程曾读服务端配置；Cloudflare临时配置禁dotenv/遥测。
+- 全局Schema/repository/capture/validator/confirmationV2/domainCommit/时间AST保持。
 
-## 本轮根因定位
-- Q02/Q11/Q12各03/06，共6个原请求全文、时刻/时区、请求/响应SHA匹配。
-- 原答→RESULT任务/材料/修订等字段6/6一致；时间仅增加本机规范化字段。
-- 历史COMPOSER_DIAGNOSTIC五依赖匹配后复用，不称本轮重新运行composer。
-- Q11两臂都把“需要两个密封袋”多造任务；06袋子只归额外任务，漏真实提交归属。
-- 这是模型任务语义及归属错误，不是OCR或转换层增删；结构无错不等于事实正确。
-- Q12-06原答缺旧取消实体却引用它；completeInputRun会因坏引用拒绝正常接入。
-- Q12-03同契约能保留旧cancelled实体，证明不必先扩建Schema；03仍有反向列表问题。
-- Q02-06有“另行通知”模糊时间，近期仅在description；不能笼统说完全无时间。
-- Q02两臂原始时间均完整保留到解析、normalized=null；没有把模糊时间变假日期。
-- 模型材料wire无准备状态；用户MaterialDecision也暂无“尚未核实”选项，另列产品限制。
-- 不能用required=true推断已准备；用户未知不能强选missing或not_required救验收。
-- 下一轮唯一优先识别目标：独立任务/材料要求的语义区分＋真实材料归属。
-- candidate06已有相关明确指令，不能承诺再加警告有效；新机制及付费比较须另批。
-- 本轮不创建candidate07，不改语义契约或旧评分，不把定位当准确率提升。
-- 历史无需重大语义改写03为11/12、06为10/12；严格0/12→0/12，06不采用。
-
-## 工程证据
-- HTTPS_TRIAL最终15通过0失败43未运行，实际测试文件SHA匹配；未重跑。
-- 13旧工程日志SHA匹配；未变化层按依赖复用，不把旧全量当本轮全量。
-- 既有type/变更lint/esbuild/Secret scan记录保持；本轮仅做文档与保护检查。
-- 开发依赖历史2 moderate/3 high未修；生产依赖历史audit0，不宣称全量audit通过。
-- 测试/构建禁止读取根.env；以后必要运行用新envDir/cache/输出，本轮未运行框架。
-
-## 剩余真实验收与停止
-- 当前用户截图仅证明当时页面/面板可见，不证明确认保存。
-- 未获当前库对象/下载文件，Q01/Q07确认、刷新、独立读库和实际下载NOT_VERIFIED。
-- 本轮已一次集中说明人工步骤：两示例核对确认→刷新找回→独立读库工程JSON。
-- 主报告补充正式“导出完整测试库JSON”，与独立读库文件交叉比较，非同文件自算SHA。
-- 未知准备状态卡住只保留截图，不强填；不重复确认已完成项。
-- 原对象不覆盖需操作前快照；无前快照不能事后伪称逐对象不变。
-- 无明确连接恢复不再调用官方控制；不绕过控制、不清库，缺证据仍如实保留。
-- 用户文件到达后只核缺项，通过才精确提交三业务源码，不重复OCR/时区/模型流程。
-
-## 账本与日志
-- 历史104请求；账本215行163134字节，SHA9a92b6886a0a40d7300aaa02054de53fb3df5c3a5397ddea9247ea3e3783ad41。
-- A01未知3.30元永久保留；不运行paid/recover，不读密钥或剪贴板。
-- 本轮日志原332468字节前缀SHA7003a5e988af7d4e145c4c8c08c6b0875a06ac3353f2430e0e15935c8f2044c6。
-- 模型准确率本轮未测量；真人编辑时间/省时NOT_RUN。分析审计交付后停止。
+## 浏览器与下一动作
+- 用户要求Codex内置浏览器自行打开下载后，仅一次官方iab打开调用。
+- 30.0494秒超时并kernel reset，未取得页面状态，未进行确认/下载。
+- 不推断站点或扩展根因，不循环重连/重装/刷新/改权限。
+- 两条真实旅程、独立IndexedDB与实际下载NOT_VERIFIED。
+- 已集中交过人工步骤；有控制恢复或前后文件后只补缺证据，不重跑模型。
+- 必须独立读库对象对实际导出，不用提示或同文件双哈希冒充。
+- 原对象不覆盖需操作前快照；准备未知不强选，坏引用仍阻断。
+- 比较与审计交付后停止；未验收7文件保留，后续通过才业务提交。

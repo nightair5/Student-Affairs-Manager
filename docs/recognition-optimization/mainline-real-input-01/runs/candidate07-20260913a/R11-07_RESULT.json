@@ -1,0 +1,369 @@
+{
+  "unitId": "R11-07",
+  "arm": "07",
+  "bindingSha": "7d49dede6304e25e186e96dcee787ad2f477eaf25ac45a1fb1161fea5ec0aab7",
+  "requestSha": "7cf3dfb9229b0028937251f34b6a72177f9f467240e7c0a9b8051a273224b81d",
+  "responseSha": "28faad0a80fd104cc013e9d31658d9504b8dfcdd95dd47184df9ca2eb461330e",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "scorerSha": "ad76149f8a88cb4adda6dca78b210daaa4f3c800d17582767911e8ace2658e1d",
+  "scorerBundleSha": "782c89b4f865d83c9a2051d9e2a6df3776b7231ad49aec87008b5c14f4e09f21",
+  "referenceSha": "8336a67c2fc27af5a6c82802ba6b51b311fbae38353d13ab8dcaf45d612fbe0e",
+  "scoreInput": "explicit semantic projection into byte-identical historical scorer; raw response unmodified",
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-fill-registration-form",
+        "propositionScopeIds": [
+          "scope-0002-493b3a3cadaf02e5added60c2594e72568a90043fd005ccbc4ea8fdf43ce7e7f",
+          "scope-0003-15209ef7ffcd88f26b18f939dd2f9dd20dbe95a77d8d700e46869bbc379b3337"
+        ],
+        "semantics": {
+          "actor": "addressed_group",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "fill",
+        "action": {
+          "scopeId": "scope-0002-493b3a3cadaf02e5added60c2594e72568a90043fd005ccbc4ea8fdf43ce7e7f",
+          "surface": "填写"
+        },
+        "object": {
+          "scopeId": "scope-0002-493b3a3cadaf02e5added60c2594e72568a90043fd005ccbc4ea8fdf43ce7e7f",
+          "surface": "送样登记单"
+        },
+        "effect": "local_change",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "填写送样登记单",
+          "description": "实验小组于2026年9月17日14:00前填写送样登记单，登记单须记录样本编号。",
+          "completionCriteria": [
+            "送样登记单已填写",
+            "登记单记录样本编号"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [
+            "material-registration-form"
+          ],
+          "timePointTempIds": [
+            "tp-fill-deadline"
+          ],
+          "confidence": 0.95,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      },
+      {
+        "id": "task-submit-sample",
+        "propositionScopeIds": [
+          "scope-0004-869fd17df91e587673c32e3b22271ad609b14445947eb5c8db49ad818a442693",
+          "scope-0005-024d4b44a2128b9c620bd1c751f6623815b0f412ff495212726dadaaa583fa4a"
+        ],
+        "semantics": {
+          "actor": "addressed_group",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "submit",
+        "action": {
+          "scopeId": "scope-0004-869fd17df91e587673c32e3b22271ad609b14445947eb5c8db49ad818a442693",
+          "surface": "提交"
+        },
+        "object": {
+          "scopeId": "scope-0004-869fd17df91e587673c32e3b22271ad609b14445947eb5c8db49ad818a442693",
+          "surface": "检测样本"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "提交检测样本",
+          "description": "在登记单填写完成后于2026年9月18日09:00前提交检测样本，提交时必须一并提供已经填写的送样登记单。",
+          "completionCriteria": [
+            "检测样本已提交",
+            "提交时一并提供已填写的送样登记单"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "high",
+          "dependencyTempIds": [
+            "task-fill-registration-form"
+          ],
+          "materialTempIds": [
+            "material-sample",
+            "material-registration-form"
+          ],
+          "timePointTempIds": [
+            "tp-submit-deadline"
+          ],
+          "confidence": 0.95,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [
+      {
+        "tempId": "material-registration-form",
+        "name": "送样登记单",
+        "required": true,
+        "formatRequirements": [],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "task-fill-registration-form",
+          "task-submit-sample"
+        ],
+        "scopeIds": [
+          "scope-0002-493b3a3cadaf02e5added60c2594e72568a90043fd005ccbc4ea8fdf43ce7e7f",
+          "scope-0003-15209ef7ffcd88f26b18f939dd2f9dd20dbe95a77d8d700e46869bbc379b3337",
+          "scope-0005-024d4b44a2128b9c620bd1c751f6623815b0f412ff495212726dadaaa583fa4a"
+        ],
+        "confidence": 0.95
+      },
+      {
+        "tempId": "material-sample",
+        "name": "检测样本",
+        "required": true,
+        "formatRequirements": [
+          "需要两个密封袋",
+          "标签仅写样本编号，不写个人姓名"
+        ],
+        "namingRequirements": [
+          "标签仅写样本编号",
+          "不写个人姓名"
+        ],
+        "quantity": null,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "task-submit-sample"
+        ],
+        "scopeIds": [
+          "scope-0004-869fd17df91e587673c32e3b22271ad609b14445947eb5c8db49ad818a442693",
+          "scope-0006-8999a2b5c03e91a44103050fe24e317d05cde0a4ebbdb212f92ae2d9236ab5e6",
+          "scope-0007-5f88ad83df7955bc8eae54ca8a5a8c245525ac8c67b4c5e7c442c6a11917ac75",
+          "scope-0008-0cfed2f2f4357d0bf3901ec481563e2e829ed68e805cfda1de52a7f5b92aca2c"
+        ],
+        "confidence": 0.9
+      },
+      {
+        "tempId": "material-sealed-bag",
+        "name": "密封袋",
+        "required": true,
+        "formatRequirements": [],
+        "namingRequirements": [],
+        "quantity": 2,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "task-submit-sample"
+        ],
+        "scopeIds": [
+          "scope-0006-8999a2b5c03e91a44103050fe24e317d05cde0a4ebbdb212f92ae2d9236ab5e6"
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "timePoints": [
+      {
+        "tempId": "tp-fill-deadline",
+        "type": "task_deadline",
+        "rawText": "2026年9月17日14:00前",
+        "relatedTaskTempIds": [
+          "task-fill-registration-form"
+        ],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0002-493b3a3cadaf02e5added60c2594e72568a90043fd005ccbc4ea8fdf43ce7e7f"
+        ],
+        "confidence": 0.95,
+        "normalizedValue": "2026-09-17T14:00",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "exact",
+        "needsConfirmation": false
+      },
+      {
+        "tempId": "tp-submit-deadline",
+        "type": "submission_deadline",
+        "rawText": "2026年9月18日09:00前",
+        "relatedTaskTempIds": [
+          "task-submit-sample"
+        ],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0004-869fd17df91e587673c32e3b22271ad609b14445947eb5c8db49ad818a442693"
+        ],
+        "confidence": 0.95,
+        "normalizedValue": "2026-09-18T09:00",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "exact",
+        "needsConfirmation": false
+      }
+    ],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0001-6176f726da2129b4c76ea768363a53721765ef5aaa5c84332bb0d77c9301977c"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "source:52f2e332",
+    "sourceVersionId": "source:52f2e332:version:1",
+    "sourceFingerprint": "sha256:a557bbaf8e25daa2bfdd5afdf8467864dbfa680373e2897f68dfed683c5f8b81"
+  },
+  "http": 200,
+  "diagnostic": null,
+  "waitingMs": 7437,
+  "score": {
+    "scorerVersion": "real-input-seen-fact-diagnostic-2",
+    "label": "已见人工工程参考的精确诊断，不是未见或商业准确率",
+    "metrics": {
+      "task": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 2,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "requiresAction": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 1,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0.5,
+        "recall": 0.5
+      },
+      "time": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 1,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0.5,
+        "recall": 0.5
+      },
+      "material": {
+        "predicted": 3,
+        "reference": 2,
+        "correct": 0,
+        "falsePositive": 3,
+        "falseNegative": 2,
+        "precision": 0,
+        "recall": 0
+      },
+      "event": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "condition": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 1,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0.5,
+        "recall": 0.5
+      },
+      "revision": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "evidence": {
+        "predicted": 7,
+        "reference": 6,
+        "correct": 2,
+        "falsePositive": 5,
+        "falseNegative": 4,
+        "precision": 0.2857142857142857,
+        "recall": 0.3333333333333333
+      },
+      "semantic": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 0,
+        "falsePositive": 2,
+        "falseNegative": 2,
+        "precision": 0,
+        "recall": 0
+      },
+      "coverage": {
+        "predicted": 4,
+        "reference": 4,
+        "correct": 2,
+        "falsePositive": 2,
+        "falseNegative": 2,
+        "precision": 0.5,
+        "recall": 0.5
+      }
+    },
+    "matchingAmbiguities": [],
+    "metricStatus": "EXACT_REFERENCE_DIAGNOSTIC",
+    "schemaParsed": true,
+    "issues": [],
+    "completeCase": false,
+    "majorCorrectionRequired": true,
+    "forbidden": 0,
+    "automaticSelection": "NOT_ENABLED",
+    "humanActiveEditTime": "NOT_RUN",
+    "candidateTaskCount": 2,
+    "referenceTaskCount": 2
+  },
+  "scoreError": null,
+  "totalAttempts": 126,
+  "costUpperMicroCny": 23406,
+  "totalCostUpperMicroCny": 6076811,
+  "stopDispatch": false,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticSelection": "NOT_ENABLED",
+  "qualityClaim": "12份已见材料开发回归；授权同期重复测量，非盲测；24请求不是24份独立材料"
+}
