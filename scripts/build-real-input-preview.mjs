@@ -4,6 +4,8 @@ import {resolve,join,basename} from 'node:path'
 import {tmpdir} from 'node:os'
 import {createHash} from 'node:crypto'
 import {fileURLToPath} from 'node:url'
+import {createServer} from 'node:http'
+import previewWorker from '../cloudflare/real-input-preview.mjs'
 
 const hash=x=>createHash('sha256').update(x).digest('hex')
 const check=(ok,code)=>{if(!ok)throw Error('HTTPS_PREVIEW_'+code)}
@@ -21,8 +23,8 @@ const pinned07={
   'R11-07_RAW.jsonl':'b96eb4fdff1be4137955510609683b4fc5746f175aaddf83147c970bdd30a3ba',
   'R12-07_RAW.jsonl':'9b2af233504c7684be20e56c344b23714be51465f622bc7049dfbbfabfb4a801',
 }
-export async function buildPreview(origin='https://student-affairs-real-input-preview.nightsdell.workers.dev'){
-  check(origin==='https://student-affairs-real-input-preview.nightsdell.workers.dev','ORIGIN')
+export async function buildPreview(origin='https://student-affairs-real-input-preview.nightsdell.workers.dev', {localOnly=false}={}){
+  check(localOnly ? origin==='http://127.0.0.1:6632' : origin==='https://student-affairs-real-input-preview.nightsdell.workers.dev','ORIGIN')
   const read=n=>{const b=readFileSync(join(sourceRoot,D,n));check(hash(b)===pinned[n],'HISTORY_CHANGED');return JSON.parse(b)}
   const binding=read('BINDING.json')
   const records=['Q01-06','Q07-06'].map(unitId=>{
@@ -42,7 +44,7 @@ export async function buildPreview(origin='https://student-affairs-real-input-pr
       context:item.context,requestSha:raw.requestSha,responseSha:raw.responseSha,rawHttpText:raw.rawHttpText})
   }
   // Deliberately omit receipts, billing, Expected and absolute source paths from public assets.
-  const config={mode:'recorded_batch',httpsPreview:{origin},capability:'',units:[],carriers:[],
+  const config={mode:'recorded_batch',httpsPreview:{origin,...(localOnly?{localOnly:true}:{})},capability:'',units:[],carriers:[],
     resources:{workerPath:'',corePath:'',langPath:'',pdfWorkerPath:''},
     batch:records.map(({unitId,requestSha,responseSha})=>({unitId,requestSha,responseSha}))}
   const directory=mkdtempSync(join(tmpdir(),'real-input-https-')),assets=join(directory,'assets');mkdirSync(assets)
@@ -69,13 +71,41 @@ export async function buildPreview(origin='https://student-affairs-real-input-pr
   const deployment=JSON.parse(readFileSync(join(sourceRoot,'wrangler.real-input-preview.jsonc'),'utf8'))
   check(deployment.name==='student-affairs-real-input-preview'&&deployment.routes.length===0&&!deployment.vars&&!deployment.services,'DEPLOYMENT_SCOPE')
   deployment.main=join(sourceRoot,'cloudflare/real-input-preview.mjs');deployment.assets.directory=assets;delete deployment.$schema
-  const configuration=join(directory,'wrangler.json');writeFileSync(configuration,JSON.stringify(deployment,null,2))
+  // A local artifact cannot accidentally be passed to Wrangler for deployment.
+  const configuration=localOnly?null:join(directory,'wrangler.json');if(configuration)writeFileSync(configuration,JSON.stringify(deployment,null,2))
   const paths=['index.html','browser.js','browser.css',...records.map(r=>'recorded/'+r.unitId+'.json')]
-  const manifest={origin,directory,configuration,modelCallsEnabled:false,rootEnvRead:false,
+  const manifest={origin,directory,configuration,...(localOnly?{localOnly:true}:{}),modelCallsEnabled:false,rootEnvRead:false,
     assets:paths.map(path=>({path,sha256:hash(readFileSync(join(assets,path))),bytes:readFileSync(join(assets,path)).length})),
     sourceFiles:['src/experiments/realInput01/browser.tsx','src/experiments/realInput01/runtime.ts','scripts/build-real-input-preview.mjs',
       'cloudflare/real-input-preview.mjs','wrangler.real-input-preview.jsonc'].map(path=>({path,sha256:hash(readFileSync(join(sourceRoot,path)))}))}
   writeFileSync(join(directory,'manifest.json'),JSON.stringify(manifest,null,2))
   return manifest
 }
-if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url))console.log(JSON.stringify(await buildPreview()))
+export async function startLocalPreview(){
+  const origin='http://127.0.0.1:6632'
+  const manifest=await buildPreview(origin,{localOnly:true})
+  const types={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json; charset=utf-8'}
+  const assets=new Map(manifest.assets.map(item=>['/'+item.path,readFileSync(join(manifest.directory,'assets',item.path))]))
+  const env={ASSETS:{fetch:async request=>{
+    const path=new URL(request.url).pathname,bytes=assets.get(path)
+    return new Response(request.method==='HEAD'?null:bytes,{status:bytes?200:404,headers:{'Content-Type':types[path.slice(path.lastIndexOf('.'))]??'application/octet-stream'}})
+  }}}
+  const server=createServer(async(req,res)=>{
+    try{
+      if(req.headers.host!=='127.0.0.1:6632'||(req.headers.origin&&req.headers.origin!==origin)
+        ||(req.headers['sec-fetch-site']&&!['none','same-origin'].includes(req.headers['sec-fetch-site']))){res.writeHead(403);res.end('LOCAL_ORIGIN_REJECTED');return}
+      if(!['GET','HEAD'].includes(req.method)){res.writeHead(405);res.end('MODEL_AND_WRITES_DISABLED');return}
+      if(!req.url?.startsWith('/')||req.url.startsWith('//')||/[\\%]/.test(req.url)){res.writeHead(404);res.end('NOT_AVAILABLE');return}
+      const response=await previewWorker.fetch(new Request(origin+req.url,{method:req.method}),env)
+      res.writeHead(response.status,Object.fromEntries(response.headers))
+      res.end(Buffer.from(await response.arrayBuffer()))
+    }catch{res.writeHead(500);res.end('LOCAL_PREVIEW_FAILED')}
+  })
+  await new Promise((yes,no)=>{server.once('error',no);server.listen(6632,'127.0.0.1',yes)})
+  return {server,manifest}
+}
+if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
+  const args=process.argv.slice(2)
+  check(args.length===0||(args.length===1&&args[0]==='--local'),'ARGS')
+  console.log(JSON.stringify(args[0]==='--local'?(await startLocalPreview()).manifest:await buildPreview()))
+}

@@ -20,7 +20,7 @@ import { buildBrowserReminderJobs } from '../../lib/notifications'
 
 interface Carrier { unitId: string; name: string; mime: string; sha256: string; url: string; sourceText: string }
 declare const __REAL_INPUT_CONFIG__: { mode: 'seen_engineering_replay' | 'live' | 'recorded_a02' | 'recorded_batch'; capability: string;
-  httpsPreview?: {origin: string};
+  httpsPreview?: {origin: string; localOnly?: true};
   batch?: RecordedBatchIdentity[];
   candidate02?: boolean;
   candidate03?: boolean;
@@ -31,8 +31,13 @@ declare const __REAL_INPUT_CONFIG__: { mode: 'seen_engineering_replay' | 'live' 
   units: Array<{unitId: string; requestSha: string}>; resources: LocalExtractionResources; carriers: Carrier[] }
 const config = __REAL_INPUT_CONFIG__
 const preview = config.httpsPreview
+function previewOriginAllowed(profile: {origin: string; localOnly?: true}, origin: string, protocol: string) {
+  return origin === profile.origin && (profile.localOnly === true
+    ? origin === 'http://127.0.0.1:6632' && protocol === 'http:'
+    : protocol === 'https:')
+}
 const params = new URLSearchParams(location.search), run = params.get('run')
-if(preview&&(location.protocol!=='https:'||location.origin!==preview.origin||config.mode!=='recorded_batch'||location.search))throw Error('REAL_INPUT_HTTPS_ORIGIN')
+if(preview&&(!previewOriginAllowed(preview,location.origin,location.protocol)||config.mode!=='recorded_batch'||location.search))throw Error('REAL_INPUT_HTTPS_ORIGIN')
 if (!preview&&(location.hostname !== '127.0.0.1' || !run || !/^real-input-[a-z0-9-]{10,100}$/.test(run))) throw Error('REAL_INPUT_ISOLATED_RUN_REQUIRED')
 const name = preview ? HTTPS_PREVIEW_DATABASE : 'rco-mainline-01-02-i1-' + run
 if(!preview&&(config.mode==='recorded_a02'||config.mode==='recorded_batch')&&(location.origin!=='http://127.0.0.1:6631'||config.recorded?.name!==name||params.has('new')))throw Error('REAL_INPUT_RECORDED_ORIGIN_OR_DATABASE')
@@ -65,7 +70,7 @@ for (const method of ['getItem','setItem','removeItem','clear','key'] as const) 
 window.fetch = (input, init) => {
   const url = new URL(input instanceof Request ? input.url : String(input),location.href)
   if(preview){
-    if(url.origin!==location.origin||!/^\/recorded\/Q(?:01|07)-06\.json$/.test(url.pathname)||url.search||(init?.method??'GET')!=='GET')throw Error('REAL_INPUT_PREVIEW_NETWORK_FORBIDDEN')
+    if(url.origin!==location.origin||!/^\/recorded\/(?:Q(?:01|07)-06|R(?:11|12)-07)\.json$/.test(url.pathname)||url.search||(init?.method??'GET')!=='GET')throw Error('REAL_INPUT_PREVIEW_NETWORK_FORBIDDEN')
     return nativeFetch(input,{...init,redirect:'error'})
   }
   if (url.origin !== location.origin || !(url.pathname.startsWith('/real-input-assets/') || url.pathname.startsWith('/engineering-carriers/')
@@ -240,7 +245,7 @@ async function mount(createPreview=false) {
   previewCreating=false
   if(!preview){params.delete('new');history.replaceState(null,'','/?'+params.toString())}
   root.render(<>{preview&&<div className="app-shell" style={{minHeight:0}}><section className="content-shell" aria-label="实验版使用说明" style={{padding:16}}>
-    <h2>从一份通知开始，把任务核对清楚</h2>
+    <h2>{preview.localOnly?'本地独立试用 · 从一份通知开始':'从一份通知开始，把任务核对清楚'}</h2>
     <p>点击“新事务”选择匿名示例，直接打开核对面板。新增“核对送样与共享材料”和“核对展签与取消要求”，保留首次错误供核对，并非采用新候选。</p>
     <p>匿名历史回放 · 模型关闭 · 数据仅保存在本域名当前浏览器。不读取本机旧库，不同步，请勿输入真实学生资料。候选06/07未采用。</p>
   </section></div>}<App runtime={runtime}/>{preview?<div className="app-shell" style={{minHeight:0}}><div className="content-shell"><EngineeringTools/></div></div>:<EngineeringTools/>}</>)
@@ -257,7 +262,7 @@ async function start(){
   if(databases.some(d=>d.name===name))return mount()
   root.render(<main style={{maxWidth:720,margin:'10vh auto',padding:24}}><h1>学生事务管家 · 独立实验版</h1>
     <p>本页只回放已绑定人工合成通知的历史真实模型回答，不发送模型请求。可以核对材料、主动确认任务、刷新找回和下载。</p>
-    <p>首次使用需要创建此域名下的新实验库。不会读取或迁移本机6631旧库；数据只存在当前浏览器，不同步。请勿输入真实学生资料。</p>
-    <button onClick={event=>{event.currentTarget.disabled=true;void mount(true).catch(showFailure)}}>创建本域名实验库并进入</button></main>)
+    <p>{preview.localOnly?'首次使用需要创建127.0.0.1:6632下的独立试用库。不会读取或迁移6631旧库及HTTPS网站数据。':'首次使用需要创建此域名下的新实验库。不会读取或迁移本机6631旧库；'}数据只存在当前浏览器，不同步。请勿输入真实学生资料。</p>
+    <button onClick={event=>{event.currentTarget.disabled=true;void mount(true).catch(showFailure)}}>{preview.localOnly?'创建本地独立试用库并进入':'创建本域名实验库并进入'}</button></main>)
 }
 void start().catch(showFailure)

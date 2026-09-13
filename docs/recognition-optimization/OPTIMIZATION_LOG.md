@@ -2157,3 +2157,10 @@
 - 原944保护中938不变+6明确例外；607旧静态/90前轮证据不变；18冻结依赖中17不变+获准shapeValidator当前变化，旧manifest/原评分保持，不冒充旧闭包通过。
 - 同独立Worker发布0343dcfe-d36a-4173-aa09-37960f40dcef，仅上传browser.js；7在线资产SHA一致，模型状态false、POST405，唯一ASSETS绑定，生产站点不动。0新增模型/模型费用/浏览器连接，未读密钥或剪贴板，不重试官方通信。
 - 工程与HTTPS产物交付完成，真实确认/刷新/IndexedDB/下载NOT_VERIFIED。按精确清单提交已工程验证实现（含原7接线）与报告；业务/远端见material-unverified-20260913a/DELIVERY.json。下一步只补真实HTTPS证据，不自动付费优化。
+
+## 2026-09-13 本地独立试用入口
+
+- 用户明确批准新本地地址创建独立试用库，旧数据全保留。起点04b56391e86ebf6be3ffde9d4512c31a2724f223本地/远端一致；原日志340656字节SHA dfd9e3059e2a14ddc0738993425c2ff2e37c53c2839d767bb4c57e13a3412d08。
+- 三源码增量：build-real-input-preview.mjs显式--local静态服务，browser.tsx仅6632允许用户点击建库并补齐R11/R12请求白名单，acceptance.test.tsx增加2正反测试。原HTTPS与6631不改、不迁移、不清库，模型始终关闭。
+- 66acceptance全通过，类型/lint/临时构建和Secret scan1844通过，旧4警告与依赖风险保留。7实际HTTP资产SHA一致，63未改实现及完整264行账本保持。
+- 本地服务http://127.0.0.1:6632/已运行；官方打开UI请求queued，不重试控制，无实际浏览器建库/确认/刷新/下载证据。工程和本地启动交付不冒充真实验收，详见local-preview-20260913a/AUDIT.md及CHECKS.json。

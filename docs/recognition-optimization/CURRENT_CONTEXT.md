@@ -1,6 +1,9 @@
 # RCO Current Context
 
 ## 当前目标与结论
+- 最新：用户批准新本地独立试用库；http://127.0.0.1:6632/已启动，点击才建库，原6631/HTTPS数据保持。
+- local-preview-20260913a/AUDIT.md、CHECKS.json记录3源码改动；66acceptance/类型/lint/构建通过，7HTTP资产一致。
+- 重启命令node scripts/build-real-input-preview.mjs --local；0模型/根.env/部署；实际浏览器建库与确认仍待验证。
 - MAINLINE-REAL-INPUT-01：材料准备情况尚未核实的无损确认承接。
 - 2026-09-13六例外已明确批准，已实现并部署；真实浏览器验收未完成。
 - 新主报告：mainline-real-input-01/runs/material-unverified-20260913a/AUDIT.md。

@@ -209,6 +209,58 @@ describe('paired07 actual recorded response boundary; memory only, not browser a
 })
 
 describe('HTTPS preview',()=>{
+  it('local preview keeps exact origin and explicit creation, restores existing stores and permits only bound examples',()=>{
+    const probe=spawnSync(process.execPath,['--input-type=module','-e',`
+      import assert from 'node:assert/strict';import {readFileSync} from 'node:fs';import ts from 'typescript';import {runInNewContext} from 'node:vm';
+      const text=readFileSync('src/experiments/realInput01/browser.tsx','utf8'),tree=ts.createSourceFile('browser.tsx',text,ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);
+      const fn=n=>tree.statements.find(s=>ts.isFunctionDeclaration(s)&&s.name?.text===n).getText(tree);
+      const compile=code=>ts.transpileModule(code,{compilerOptions:{target:ts.ScriptTarget.ES2022,jsx:ts.JsxEmit.React}}).outputText;
+      const allowed=runInNewContext(compile(fn('previewOriginAllowed')+';previewOriginAllowed'));
+      const local={origin:'http://127.0.0.1:6632',localOnly:true};
+      assert(allowed(local,local.origin,'http:'));
+      for(const origin of ['http://127.0.0.1:6631','http://localhost:6632','http://192.168.1.2:6632','https://127.0.0.1:6632'])assert(!allowed(local,origin,new URL(origin).protocol));
+      assert(!allowed({origin:local.origin},local.origin,'http:'));
+      const remote={origin:'https://student-affairs-real-input-preview.nightsdell.workers.dev'};
+      assert(allowed(remote,remote.origin,'https:'));assert(!allowed({...remote,localOnly:true},remote.origin,'https:'));
+      for(const exists of [false,true]){
+        const mounts=[],renders=[],name='isolated-preview';
+        const start=runInNewContext(compile(fn('start')+';start'),{preview:local,name,indexedDB:{databases:async()=>exists?[{name}]:[]},mount:async value=>mounts.push(value),showFailure:e=>{throw e},root:{render:v=>renders.push(v)},React:{createElement:(tag,props,...children)=>({tag,props,children})}});
+        await start();
+        if(exists){assert.deepEqual(mounts,[undefined]);assert.equal(renders.length,0)}else{
+          assert.equal(mounts.length,0,'no automatic creation');const button=renders[0].children.find(n=>n?.tag==='button');assert(button);
+          const target={disabled:false};button.props.onClick({currentTarget:target});await Promise.resolve();assert(target.disabled);assert.deepEqual(mounts,[true]);
+        }
+      }
+      const assignment=tree.statements.find(s=>ts.isExpressionStatement(s)&&ts.isBinaryExpression(s.expression)&&s.expression.left.getText(tree)==='window.fetch');
+      const window={},calls=[];
+      runInNewContext(compile(assignment.getText(tree)),{window,URL,Request,location:{origin:local.origin,href:local.origin+'/'},preview:local,nativeFetch:(...args)=>{calls.push(args);return Promise.resolve()},effects:{forbiddenNetwork:0}});
+      for(const unit of ['Q01-06','Q07-06','R11-07','R12-07'])await window.fetch('/recorded/'+unit+'.json');
+      assert.equal(calls.length,4);
+      for(const path of ['/api/recognize','/recorded/R11-03.json','/recorded/R11-07.json?x=1','https://example.com/recorded/R11-07.json'])assert.throws(()=>window.fetch(path),/NETWORK_FORBIDDEN/);
+      assert.throws(()=>window.fetch('/recorded/R11-07.json',{method:'POST'}),/NETWORK_FORBIDDEN/);assert.equal(calls.length,4);
+    `],{encoding:'utf8'})
+    expect(probe.status,probe.stderr).toBe(0)
+  })
+  it('local preview server serves only public assets on loopback with model and foreign origins blocked',()=>{
+    const probe=spawnSync(process.execPath,['--input-type=module','-e',`
+      import assert from 'node:assert/strict';import {request} from 'node:http';import {buildPreview,startLocalPreview} from './scripts/build-real-input-preview.mjs';
+      await assert.rejects(buildPreview('http://127.0.0.1:6632'),/ORIGIN/);
+      await assert.rejects(buildPreview('http://127.0.0.1:6631',{localOnly:true}),/ORIGIN/);
+      const {server,manifest}=await startLocalPreview();
+      const get=(path,headers={},method='GET')=>new Promise((resolve,reject)=>{const req=request(manifest.origin+path,{headers,method},r=>{const parts=[];r.on('data',b=>parts.push(b));r.on('end',()=>resolve({status:r.statusCode,text:Buffer.concat(parts).toString()}))});req.on('error',reject);req.end()});
+      try{
+        assert.equal(server.address().address,'127.0.0.1');assert.equal(manifest.configuration,null);assert.equal(manifest.modelCallsEnabled,false);
+        for(const path of ['/','/browser.js','/browser.css','/recorded/Q01-06.json','/recorded/Q07-06.json','/recorded/R11-07.json','/recorded/R12-07.json'])assert.equal((await get(path)).status,200,path);
+        assert.equal(JSON.parse((await get('/api/status')).text).modelCallsEnabled,false);
+        assert.equal((await get('/api/recognize',{},'POST')).status,405);
+        assert.equal((await get('/',{Host:'localhost:6632'})).status,403);
+        assert.equal((await get('/',{Origin:'https://example.com'})).status,403);
+        assert.equal((await get('/',{'Sec-Fetch-Site':'cross-site'})).status,403);
+        for(const path of ['/.env','/package.json','/?new=1','/recorded/R11-03.json','/%2e%2e/.env'])assert.equal((await get(path)).status,404,path);
+      }finally{await new Promise(resolve=>server.close(resolve))}
+    `],{encoding:'utf8',timeout:30000})
+    expect(probe.status,probe.stderr).toBe(0)
+  },35000)
   function record(unitId:string):RecordedPaired04{
     const p='docs/recognition-optimization/mainline-real-input-01/runs/candidate06-20260912a/'
     const binding=JSON.parse(readFileSync(p+'BINDING.json','utf8'))
