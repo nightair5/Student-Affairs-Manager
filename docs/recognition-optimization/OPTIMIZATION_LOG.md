@@ -2164,3 +2164,11 @@
 - 三源码增量：build-real-input-preview.mjs显式--local静态服务，browser.tsx仅6632允许用户点击建库并补齐R11/R12请求白名单，acceptance.test.tsx增加2正反测试。原HTTPS与6631不改、不迁移、不清库，模型始终关闭。
 - 66acceptance全通过，类型/lint/临时构建和Secret scan1844通过，旧4警告与依赖风险保留。7实际HTTP资产SHA一致，63未改实现及完整264行账本保持。
 - 本地服务http://127.0.0.1:6632/已运行；官方打开UI请求queued，不重试控制，无实际浏览器建库/确认/刷新/下载证据。工程和本地启动交付不冒充真实验收，详见local-preview-20260913a/AUDIT.md及CHECKS.json。
+
+### 2026-09-13 本地独立试用真实确认与双路径下载
+
+- 官方in-app browser控制后续恢复；在6632独立库中仅确认R11独立任务“填写送样登记单”，材料“送样登记单”保存为required=true/status=unverified，依赖未完成的“提交检测样本”保持待确认。
+- 刷新后任务中心、2026-09-17日历和详情均找回同一任务；详情保留原始时间、来源、材料及review_material/review_task/confirm历史。没有模型调用、提醒作业或真实用户库访问。
+- 操作前证据(11)为0任务；操作后独立仓储证据(12)为1任务/1材料/1时间点，完整导出workspace (4)计数相同。两条实际读取路径的canonical workspace稳定SHA均为7a3b21a3fcbf02c19c5ae56cf3558cf4ea8aedacc214e6779b4100ecfc2b8c7f，diff为空。
+- SourceVersion/RecognitionRun、Q01草稿、R11 raw/first/sourceIndex保持；R11只追加合法确认操作、绑定和正式实体。文件SHA、路径与未运行项见local-preview-20260913a/BROWSER.json。
+- 本次补齐真实浏览器、IndexedDB、刷新与下载证据，不重新测试模型准确率；第二依赖任务及R12负例未强行放行。

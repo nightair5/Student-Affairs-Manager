@@ -8,7 +8,7 @@
 
 1. 打开新地址，点击“创建本地独立试用库并进入”。访问页面本身不创建库。
 2. 点击“新事务”选择已有匿名通知；历史回放不等于重新调用模型。
-3. 明确核对和保存后主动确认；刷新可按原机制恢复。真实浏览器结果尚未观测，不冒充PASS。
+3. 明确核对和保存后主动确认；刷新后任务中心、日历与详情均从同一独立库恢复。
 
 新库使用原preview数据库名，但IndexedDB隔离键包含地址、端口和浏览器，因此6632、6631及HTTPS数据互不通用。仅访问固定preview库；不导入原库、不伪造旧任务。坏库或打开失败保持拒绝，不fallback，不自动重建。
 
@@ -25,10 +25,14 @@
 - 已运行服务7个HTTP资产SHA匹配、状态模型false、模型POST405。63未改源码SHA匹配，账本200447字节SHA9d4352be315600eeafe887284492398b95e9b2a3dd97721a39f5fe2439316d52不变。
 - 旧日志前缀340656字节SHA dfd9e3059e2a14ddc0738993425c2ff2e37c53c2839d767bb4c57e13a3412d08保留。
 - 后台Start-Process工具请求被平台策略拒绝，未执行；改用工具支持的普通长期exec会话启动本地Node服务。未修改系统设置。
-- Codex打开面板请求返回queued，未取得页面/控制台/点击/实际IndexedDB/下载证据。没有重试官方控制或使用其他浏览器控制路线。
+- 后续官方 in-app browser 控制恢复，实际打开6632独立库；确认前下载证据为0任务，随后从R11仅确认独立任务“填写送样登记单”，未强行确认仍受前置条件约束的“提交检测样本”。
+- 明确保存的材料“送样登记单”为required=true、status=unverified；没有映射成缺少、不需要或已备齐。正式任务截止2026-09-17T14:00（Asia/Shanghai），无提醒作业。
+- 刷新后任务中心显示1项待推进，9月17日日历显示同一任务与14:00，详情显示confirmed、原始时间、材料和review_material/review_task/confirm三类历史。
+- 独立仓储读回下载`real-input-local-evidence (12).json`，完整导出下载`mainline-real-input-01-workspace (4).json`；两条实际读取路径的canonical workspace稳定序列化SHA均为7a3b21a3fcbf02c19c5ae56cf3558cf4ea8aedacc214e6779b4100ecfc2b8c7f，差异路径为空。
+- 操作前`real-input-local-evidence (11).json`为0任务；操作后为1任务、1材料、1时间点。两份SourceVersion与RecognitionRun集合、未操作的Q01草稿、R11 raw/first/sourceIndex均保持；R11只追加confirm操作、绑定与状态变化。证据清单见BROWSER.json。
 
 ## 启动与停止
 
 在唯一实验仓库执行：`node scripts/build-real-input-preview.mjs --local`。保持进程运行，停止时Ctrl+C；重启服务不会清除浏览器数据。不需安装依赖或读取凭据。页面使用固定6632，勿改成localhost或换端口。
 
-当前进程exec会话1948。源码交付记录见Git，实际HTTP与源码摘要见CHECKS.json。工程与服务已运行；用户首次点击建库和完整确认保存旅程仍待真实操作验证。本轮没有提高模型首次准确率。
+当前服务由node进程在127.0.0.1:6632监听。源码交付记录见Git，实际HTTP与源码摘要见CHECKS.json，真实操作与下载比较见BROWSER.json。本轮验证了“准备情况尚未核实”的正确任务能够主动确认并刷新找回；没有提高或重新测量模型首次准确率。

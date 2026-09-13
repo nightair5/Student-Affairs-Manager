@@ -1,0 +1,122 @@
+{
+  "run": "local-preview-20260913a",
+  "observedAt": "2026-09-13T19:50:16+08:00",
+  "baselineCommit": "e50661403ec9b08be4a6d0a30a300a234b284407",
+  "origin": "http://127.0.0.1:6632",
+  "database": "rco-mainline-01-02-i1-real-input-https-preview-1",
+  "control": {
+    "route": "official-cua-in-app-browser",
+    "pageControlled": true,
+    "modelCalls": 0,
+    "rootEnvRead": false
+  },
+  "before": {
+    "file": "C:/Users/Winner/Downloads/real-input-local-evidence (11).json",
+    "fileSha256": "24908967e257d5aa1a9901f78a5e2c6376dee5891c02a68278374920c8f364f9",
+    "tasks": 0,
+    "materials": 0,
+    "timePoints": 0,
+    "historyRecords": 4
+  },
+  "operation": {
+    "sourceId": "source:52f2e332",
+    "draftId": "source:52f2e332:draft:1:1",
+    "confirmedTaskTempIds": [
+      "task-fill-registration-form"
+    ],
+    "leftPendingTaskTempIds": [
+      "task-submit-sample"
+    ],
+    "reasonLeftPending": "The second task still depends on completion of the registration form; it was not forced through.",
+    "materialReview": {
+      "tempId": "material-registration-form",
+      "required": true,
+      "status": "unverified"
+    }
+  },
+  "afterReload": {
+    "pendingSuggestions": 3,
+    "taskCenter": {
+      "visible": true,
+      "taskCount": 1,
+      "title": "填写送样登记单",
+      "deadline": "2026-09-17T14:00",
+      "timezone": "Asia/Shanghai",
+      "materialSummary": "0/1"
+    },
+    "calendar": {
+      "visible": true,
+      "date": "2026-09-17",
+      "time": "14:00",
+      "title": "填写送样登记单"
+    },
+    "detail": {
+      "visible": true,
+      "disposition": "confirmed",
+      "rawTime": "2026年9月17日14:00前",
+      "material": "送样登记单",
+      "materialStatus": "unverified",
+      "historyKinds": [
+        "review_material",
+        "review_task",
+        "confirm"
+      ]
+    }
+  },
+  "independentRepositoryDownload": {
+    "file": "C:/Users/Winner/Downloads/real-input-local-evidence (12).json",
+    "fileSha256": "f5aae71cfd42be43a6c9650778ede70f82749607efd3eeb04889603c71d9765a",
+    "declaredWorkspaceSha256": "a7c6073d673691335ee5eb54cab9f3834ffcfd7a8689e73a4133d08f09fe250d",
+    "source": "new CanonicalWorkspaceRepository(new IsolatedTestStore(name)).load()",
+    "counts": {
+      "sources": 2,
+      "sourceVersions": 2,
+      "recognitionRuns": 2,
+      "extractionDrafts": 2,
+      "tasks": 1,
+      "materials": 1,
+      "timePoints": 1,
+      "events": 0,
+      "evidenceRefs": 8,
+      "historyRecords": 5,
+      "reminderRecords": 0
+    },
+    "foreignDatabase": 0,
+    "forbiddenNetwork": 0,
+    "realJobs": 0
+  },
+  "fullWorkspaceDownload": {
+    "file": "C:/Users/Winner/Downloads/mainline-real-input-01-workspace (4).json",
+    "fileSha256": "e8b1b8797272378d691e265d5d131c688bb2a83c98b6a96950668679596602fb"
+  },
+  "comparison": {
+    "method": "stable recursive key ordering followed by SHA-256 over each parsed canonical workspace",
+    "independentWorkspaceSha256": "7a3b21a3fcbf02c19c5ae56cf3558cf4ea8aedacc214e6779b4100ecfc2b8c7f",
+    "fullExportWorkspaceSha256": "7a3b21a3fcbf02c19c5ae56cf3558cf4ea8aedacc214e6779b4100ecfc2b8c7f",
+    "equal": true,
+    "diffPaths": []
+  },
+  "preservation": {
+    "sourceVersionsUnchanged": true,
+    "recognitionRunsUnchanged": true,
+    "untouchedQ01DraftUnchanged": true,
+    "r11RawResponseUnchanged": true,
+    "r11FirstSuggestionUnchanged": true,
+    "r11SourceIndexUnchanged": true,
+    "expectedR11Changes": [
+      "source status and updatedAt",
+      "draft status and updatedAt",
+      "accepted entity and commit operation bindings",
+      "one appended confirm operation",
+      "one canonical task, material and time point",
+      "one appended confirmation history record"
+    ]
+  },
+  "claims": {
+    "localBrowserAcceptance": "PASS_FOR_ONE_INDEPENDENT_R11_TASK",
+    "secondDependentTask": "LEFT_PENDING",
+    "r12NegativeExample": "NOT_RUN_IN_THIS_ACCEPTANCE",
+    "modelAccuracyImproved": false,
+    "humanTimeSavedMeasured": false
+  }
+}
