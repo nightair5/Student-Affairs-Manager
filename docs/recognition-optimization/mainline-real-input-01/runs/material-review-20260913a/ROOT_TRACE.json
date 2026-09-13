@@ -1,0 +1,1189 @@
+{
+  "label": "Read-only layer trace; not new model evaluation or revised scoring",
+  "modelCalls": 0,
+  "cases": [
+    {
+      "caseNumber": "03",
+      "source": "志愿服务影像留存\n请参与者保存服务现场原始照片，以供本人以后查询。\n本通知不规定完成日期，也不要求提交照片或额外制作任何材料。\n照片目前是否整理好，中心没有掌握，不作推定。",
+      "arms": [
+        {
+          "unitId": "R03-03",
+          "rawFile": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R03-03_RAW.jsonl",
+          "rawFileSha256": "45555accd8842a11c442bcefc16e2b302252db6adf3e37a3e2c05dfd2811290f",
+          "resultFileSha256": "9a3c1b47fea88ace8d993085d9e66bc2c12dddee0d73ee018c8eb42b4b2a587f",
+          "taskMaterialRevisionFieldsPreserved": true,
+          "tasks": [
+            {
+              "id": "task-save-original-photos",
+              "action": {
+                "scopeId": "scope-0002-31d1866a659c8a0df4bbd7c5c30ca23f7f7e004522bdbf59b51fed57d52c9322",
+                "surface": "保存"
+              },
+              "object": {
+                "scopeId": "scope-0002-31d1866a659c8a0df4bbd7c5c30ca23f7f7e004522bdbf59b51fed57d52c9322",
+                "surface": "服务现场原始照片"
+              },
+              "status": "pending",
+              "validity": "active",
+              "materialTempIds": [],
+              "dependencies": []
+            }
+          ],
+          "materials": [],
+          "revisions": []
+        },
+        {
+          "unitId": "Q03-06",
+          "rawFile": "docs/recognition-optimization/mainline-real-input-01/runs/candidate06-20260912a/Q03-06_RAW.jsonl",
+          "rawFileSha256": "65339cf5a80e5dd8d020f3e7cc32d9f14e7ad0c8c1cd429e50697d1c01780dbb",
+          "resultFileSha256": "251b90fa83fb4cef0101b1c2cd282fa69d58b5c69e04a9ccd7a5f565a699dd69",
+          "taskMaterialRevisionFieldsPreserved": true,
+          "tasks": [
+            {
+              "id": "task-save-photos",
+              "action": {
+                "scopeId": "scope-0002-f5c4607ee21c633424453b0bea22d2a169f23b85845b1d8ede3951fbdef548e4",
+                "surface": "保存"
+              },
+              "object": {
+                "scopeId": "scope-0002-f5c4607ee21c633424453b0bea22d2a169f23b85845b1d8ede3951fbdef548e4",
+                "surface": "服务现场原始照片"
+              },
+              "status": "pending",
+              "validity": "active",
+              "materialTempIds": [
+                "material-original-photos"
+              ],
+              "dependencies": []
+            }
+          ],
+          "materials": [
+            {
+              "tempId": "material-original-photos",
+              "name": "服务现场原始照片",
+              "required": true,
+              "formatRequirements": [
+                "原始照片"
+              ],
+              "namingRequirements": [],
+              "quantity": null,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task-save-photos"
+              ],
+              "scopeIds": [
+                "scope-0002-f5c4607ee21c633424453b0bea22d2a169f23b85845b1d8ede3951fbdef548e4"
+              ],
+              "confidence": 0.9
+            }
+          ],
+          "revisions": []
+        },
+        {
+          "unitId": "R03-07",
+          "rawFile": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R03-07_RAW.jsonl",
+          "rawFileSha256": "708e8f0b6ff1c862e38d67cab2ed2251b6e42beffa3ec709e50bff934008547e",
+          "resultFileSha256": "09792844619ca688b312208b24fcc1f688ada4637600608efb91f8bde6657fe0",
+          "taskMaterialRevisionFieldsPreserved": true,
+          "tasks": [
+            {
+              "id": "task-save-photos",
+              "action": {
+                "scopeId": "scope-0002-31d1866a659c8a0df4bbd7c5c30ca23f7f7e004522bdbf59b51fed57d52c9322",
+                "surface": "保存"
+              },
+              "object": {
+                "scopeId": "scope-0002-31d1866a659c8a0df4bbd7c5c30ca23f7f7e004522bdbf59b51fed57d52c9322",
+                "surface": "服务现场原始照片"
+              },
+              "status": "pending",
+              "validity": "active",
+              "materialTempIds": [
+                "mat-original-photos"
+              ],
+              "dependencies": []
+            }
+          ],
+          "materials": [
+            {
+              "tempId": "mat-original-photos",
+              "name": "服务现场原始照片",
+              "required": true,
+              "formatRequirements": [
+                "原始照片"
+              ],
+              "namingRequirements": [],
+              "quantity": null,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task-save-photos"
+              ],
+              "scopeIds": [
+                "scope-0002-31d1866a659c8a0df4bbd7c5c30ca23f7f7e004522bdbf59b51fed57d52c9322"
+              ],
+              "confidence": 0.9
+            }
+          ],
+          "revisions": []
+        }
+      ]
+    },
+    {
+      "caseNumber": "10",
+      "source": "社团器材盘点交接\n请器材管理员于2026年9月29日16:00前提交灯光盘点表，表格使用XLSX并附两张灯具现状照片。\n请音响管理员于2026年9月30日11:00前提交音响盘点表，表格使用PDF并附维修收据。\n灯具现状照片只属于灯光盘点，维修收据只属于音响盘点；不要交叉上传。\n两张灯具照片已经拍摄完成，维修收据是否备齐尚未确认。",
+      "arms": [
+        {
+          "unitId": "R10-03",
+          "rawFile": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R10-03_RAW.jsonl",
+          "rawFileSha256": "7400ee0e75fe8472efe626e71c4d52a8e7c27e99258f37cb3b644b11ff53762e",
+          "resultFileSha256": "328e25c761a93c1c25209bc57ccc0645926909b142ce81277fd8db714e1c6fcb",
+          "taskMaterialRevisionFieldsPreserved": true,
+          "tasks": [
+            {
+              "id": "task-light-inventory-submit",
+              "action": {
+                "scopeId": "scope-0002-8836cb15973daad7064e5d2887a95b78abc4644cff95a862f3120d98914a036d",
+                "surface": "提交"
+              },
+              "object": {
+                "scopeId": "scope-0002-8836cb15973daad7064e5d2887a95b78abc4644cff95a862f3120d98914a036d",
+                "surface": "灯光盘点表"
+              },
+              "status": "pending",
+              "validity": "active",
+              "materialTempIds": [
+                "material-light-inventory-table",
+                "material-light-photos"
+              ],
+              "dependencies": []
+            },
+            {
+              "id": "task-audio-inventory-submit",
+              "action": {
+                "scopeId": "scope-0004-f31b26c3474b1edbfbfb2f5adbe91dc4a063ff77ef8316e9fbd9e0a5265e197b",
+                "surface": "提交"
+              },
+              "object": {
+                "scopeId": "scope-0004-f31b26c3474b1edbfbfb2f5adbe91dc4a063ff77ef8316e9fbd9e0a5265e197b",
+                "surface": "音响盘点表"
+              },
+              "status": "pending",
+              "validity": "active",
+              "materialTempIds": [
+                "material-audio-inventory-table",
+                "material-repair-receipt"
+              ],
+              "dependencies": []
+            }
+          ],
+          "materials": [
+            {
+              "tempId": "material-light-inventory-table",
+              "name": "灯光盘点表",
+              "required": true,
+              "formatRequirements": [
+                "XLSX"
+              ],
+              "namingRequirements": [],
+              "quantity": null,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task-light-inventory-submit"
+              ],
+              "scopeIds": [
+                "scope-0003-8e0fc8081439e5c0d05fb78bab3ddc99188edc5be0844e3178488b9ec9c90eb7"
+              ],
+              "confidence": 0.95
+            },
+            {
+              "tempId": "material-light-photos",
+              "name": "灯具现状照片",
+              "required": true,
+              "formatRequirements": [],
+              "namingRequirements": [],
+              "quantity": 2,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task-light-inventory-submit"
+              ],
+              "scopeIds": [
+                "scope-0003-8e0fc8081439e5c0d05fb78bab3ddc99188edc5be0844e3178488b9ec9c90eb7",
+                "scope-0006-cccbc64a632dfdbb7a370e554f0b48de85f44215bf0d12761457e38839b2795a",
+                "scope-0009-21f79a97ce1ec9bcd932cb2833203e21a394d2bc6a2c8580a11b3c351690d6de"
+              ],
+              "confidence": 0.95
+            },
+            {
+              "tempId": "material-audio-inventory-table",
+              "name": "音响盘点表",
+              "required": true,
+              "formatRequirements": [
+                "PDF"
+              ],
+              "namingRequirements": [],
+              "quantity": null,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task-audio-inventory-submit"
+              ],
+              "scopeIds": [
+                "scope-0005-6c5149282bffaa18f841374d4c3d6b44c7c95d46e417505e9ac5fd762c676868"
+              ],
+              "confidence": 0.95
+            },
+            {
+              "tempId": "material-repair-receipt",
+              "name": "维修收据",
+              "required": true,
+              "formatRequirements": [],
+              "namingRequirements": [],
+              "quantity": null,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task-audio-inventory-submit"
+              ],
+              "scopeIds": [
+                "scope-0005-6c5149282bffaa18f841374d4c3d6b44c7c95d46e417505e9ac5fd762c676868",
+                "scope-0007-7156caeb8a241abfa9847cd879d8f47fd7cbcb5c9d15e05feae9928605cd232a",
+                "scope-0010-31e3b4e1cb506eaddf4fcfbb60a9f81c68de1f5696e31f9dd9bfecfc20baf775"
+              ],
+              "confidence": 0.9
+            }
+          ],
+          "revisions": []
+        },
+        {
+          "unitId": "Q10-06",
+          "rawFile": "docs/recognition-optimization/mainline-real-input-01/runs/candidate06-20260912a/Q10-06_RAW.jsonl",
+          "rawFileSha256": "016b02dbca8b7b1c610a2b20c839cd706f62cffefae3d042e2b0e05e81b2f7e3",
+          "resultFileSha256": "ee4f33aad60fc8c755094866a5345c8b71470544fa297b99a8b4ce5da4ab4ccf",
+          "taskMaterialRevisionFieldsPreserved": true,
+          "tasks": [
+            {
+              "id": "task-light-inventory-submit",
+              "action": {
+                "scopeId": "scope-0002-9a7d251dc7ae4ec50464559eae6c775a9da5c67f4b222b16372a998cf8d81c50",
+                "surface": "提交"
+              },
+              "object": {
+                "scopeId": "scope-0002-9a7d251dc7ae4ec50464559eae6c775a9da5c67f4b222b16372a998cf8d81c50",
+                "surface": "灯光盘点表"
+              },
+              "status": "pending",
+              "validity": "active",
+              "materialTempIds": [
+                "mat-light-inventory-table",
+                "mat-light-photos"
+              ],
+              "dependencies": []
+            },
+            {
+              "id": "task-audio-inventory-submit",
+              "action": {
+                "scopeId": "scope-0004-014f727f48d308822438319e3f14f51d6428760921ba26051b3a5adfab9b6161",
+                "surface": "提交"
+              },
+              "object": {
+                "scopeId": "scope-0004-014f727f48d308822438319e3f14f51d6428760921ba26051b3a5adfab9b6161",
+                "surface": "音响盘点表"
+              },
+              "status": "pending",
+              "validity": "active",
+              "materialTempIds": [
+                "mat-audio-inventory-table",
+                "mat-repair-receipt"
+              ],
+              "dependencies": []
+            }
+          ],
+          "materials": [
+            {
+              "tempId": "mat-light-inventory-table",
+              "name": "灯光盘点表",
+              "required": true,
+              "formatRequirements": [
+                "XLSX"
+              ],
+              "namingRequirements": [],
+              "quantity": null,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task-light-inventory-submit"
+              ],
+              "scopeIds": [
+                "scope-0002-9a7d251dc7ae4ec50464559eae6c775a9da5c67f4b222b16372a998cf8d81c50",
+                "scope-0003-12bc47fe5bca0691657c6426693ff87dce3f1f6d9f045b024ace0397dd9789a9"
+              ],
+              "confidence": 0.95
+            },
+            {
+              "tempId": "mat-light-photos",
+              "name": "灯具现状照片",
+              "required": true,
+              "formatRequirements": [],
+              "namingRequirements": [],
+              "quantity": 2,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task-light-inventory-submit"
+              ],
+              "scopeIds": [
+                "scope-0003-12bc47fe5bca0691657c6426693ff87dce3f1f6d9f045b024ace0397dd9789a9",
+                "scope-0006-889105ac65daf10c6a91fbfa6f473e66650ba594eb767ea78237af042d04a243",
+                "scope-0008-9efaf2314a05319b7333bd9b1e7d6a9af86da101399ab4c53b3130e162e33298",
+                "scope-0009-bba26ae810a8efc01ac0fb95c14f46b9a0e3ce133b38a89066b5cb495ef3a7ef"
+              ],
+              "confidence": 0.95
+            },
+            {
+              "tempId": "mat-audio-inventory-table",
+              "name": "音响盘点表",
+              "required": true,
+              "formatRequirements": [
+                "PDF"
+              ],
+              "namingRequirements": [],
+              "quantity": null,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task-audio-inventory-submit"
+              ],
+              "scopeIds": [
+                "scope-0004-014f727f48d308822438319e3f14f51d6428760921ba26051b3a5adfab9b6161",
+                "scope-0005-a420f572945f4017d06622ade3e5b787e3bc1746e3054aed13b488300107793d"
+              ],
+              "confidence": 0.95
+            },
+            {
+              "tempId": "mat-repair-receipt",
+              "name": "维修收据",
+              "required": true,
+              "formatRequirements": [],
+              "namingRequirements": [],
+              "quantity": null,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task-audio-inventory-submit"
+              ],
+              "scopeIds": [
+                "scope-0005-a420f572945f4017d06622ade3e5b787e3bc1746e3054aed13b488300107793d",
+                "scope-0007-6ec5d687ba6974fcf017ca98352a2b1d8b053f033ce7719928a8b8c269b77e92",
+                "scope-0008-9efaf2314a05319b7333bd9b1e7d6a9af86da101399ab4c53b3130e162e33298",
+                "scope-0010-6c39897e2b9a523bdc096c5dac2451bd0da397f90efd9b50f4599a673ab3fd4e"
+              ],
+              "confidence": 0.9
+            }
+          ],
+          "revisions": []
+        },
+        {
+          "unitId": "R10-07",
+          "rawFile": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R10-07_RAW.jsonl",
+          "rawFileSha256": "45b85546b4c6655170daf756a855cd712499000578690ee799b4d5f43ea7f0d9",
+          "resultFileSha256": "e4aa5caffb347d1bb9e5562b51a43ac3b2af899439d8eb8ce813a3b6f0cd6423",
+          "taskMaterialRevisionFieldsPreserved": true,
+          "tasks": [
+            {
+              "id": "task-light-inventory-submit",
+              "action": {
+                "scopeId": "scope-0002-8836cb15973daad7064e5d2887a95b78abc4644cff95a862f3120d98914a036d",
+                "surface": "提交"
+              },
+              "object": {
+                "scopeId": "scope-0002-8836cb15973daad7064e5d2887a95b78abc4644cff95a862f3120d98914a036d",
+                "surface": "灯光盘点表"
+              },
+              "status": "pending",
+              "validity": "active",
+              "materialTempIds": [
+                "material-light-inventory-table",
+                "material-light-photos"
+              ],
+              "dependencies": []
+            },
+            {
+              "id": "task-audio-inventory-submit",
+              "action": {
+                "scopeId": "scope-0004-f31b26c3474b1edbfbfb2f5adbe91dc4a063ff77ef8316e9fbd9e0a5265e197b",
+                "surface": "提交"
+              },
+              "object": {
+                "scopeId": "scope-0004-f31b26c3474b1edbfbfb2f5adbe91dc4a063ff77ef8316e9fbd9e0a5265e197b",
+                "surface": "音响盘点表"
+              },
+              "status": "pending",
+              "validity": "active",
+              "materialTempIds": [
+                "material-audio-inventory-table",
+                "material-repair-receipt"
+              ],
+              "dependencies": []
+            }
+          ],
+          "materials": [
+            {
+              "tempId": "material-light-inventory-table",
+              "name": "灯光盘点表",
+              "required": true,
+              "formatRequirements": [
+                "XLSX"
+              ],
+              "namingRequirements": [],
+              "quantity": null,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task-light-inventory-submit"
+              ],
+              "scopeIds": [
+                "scope-0002-8836cb15973daad7064e5d2887a95b78abc4644cff95a862f3120d98914a036d",
+                "scope-0003-8e0fc8081439e5c0d05fb78bab3ddc99188edc5be0844e3178488b9ec9c90eb7"
+              ],
+              "confidence": 0.95
+            },
+            {
+              "tempId": "material-light-photos",
+              "name": "灯具现状照片",
+              "required": true,
+              "formatRequirements": [],
+              "namingRequirements": [],
+              "quantity": 2,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task-light-inventory-submit"
+              ],
+              "scopeIds": [
+                "scope-0003-8e0fc8081439e5c0d05fb78bab3ddc99188edc5be0844e3178488b9ec9c90eb7",
+                "scope-0006-cccbc64a632dfdbb7a370e554f0b48de85f44215bf0d12761457e38839b2795a",
+                "scope-0008-ba85fe25ddf7bb2a2fcd87668ed5d36d3134984c23ea9aed617c604217eab199",
+                "scope-0009-21f79a97ce1ec9bcd932cb2833203e21a394d2bc6a2c8580a11b3c351690d6de"
+              ],
+              "confidence": 0.95
+            },
+            {
+              "tempId": "material-audio-inventory-table",
+              "name": "音响盘点表",
+              "required": true,
+              "formatRequirements": [
+                "PDF"
+              ],
+              "namingRequirements": [],
+              "quantity": null,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task-audio-inventory-submit"
+              ],
+              "scopeIds": [
+                "scope-0004-f31b26c3474b1edbfbfb2f5adbe91dc4a063ff77ef8316e9fbd9e0a5265e197b",
+                "scope-0005-6c5149282bffaa18f841374d4c3d6b44c7c95d46e417505e9ac5fd762c676868"
+              ],
+              "confidence": 0.95
+            },
+            {
+              "tempId": "material-repair-receipt",
+              "name": "维修收据",
+              "required": true,
+              "formatRequirements": [],
+              "namingRequirements": [],
+              "quantity": null,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task-audio-inventory-submit"
+              ],
+              "scopeIds": [
+                "scope-0005-6c5149282bffaa18f841374d4c3d6b44c7c95d46e417505e9ac5fd762c676868",
+                "scope-0007-7156caeb8a241abfa9847cd879d8f47fd7cbcb5c9d15e05feae9928605cd232a",
+                "scope-0008-ba85fe25ddf7bb2a2fcd87668ed5d36d3134984c23ea9aed617c604217eab199",
+                "scope-0010-31e3b4e1cb506eaddf4fcfbb60a9f81c68de1f5696e31f9dd9bfecfc20baf775"
+              ],
+              "confidence": 0.95
+            }
+          ],
+          "revisions": []
+        }
+      ]
+    },
+    {
+      "caseNumber": "11",
+      "source": "材料送样前的准备\n请实验小组于2026年9月17日14:00前填写送样登记单，登记单须记录样本编号。\n请在登记单填写完成后于2026年9月18日09:00前提交检测样本，提交时必须一并提供已经填写的送样登记单。\n检测样本需要两个密封袋，标签仅写样本编号，不写个人姓名。",
+      "arms": [
+        {
+          "unitId": "R11-03",
+          "rawFile": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R11-03_RAW.jsonl",
+          "rawFileSha256": "aba97bcb19f77bd50f6db1c7f0570fd49d055e52c2fde44c631312355ac38ac0",
+          "resultFileSha256": "4a7b86ec7b873dff941009eb2d659046563ee4a29153ad422719ba224dd1fc9e",
+          "taskMaterialRevisionFieldsPreserved": true,
+          "tasks": [
+            {
+              "id": "task-fill-registration-form",
+              "action": {
+                "scopeId": "scope-0002-493b3a3cadaf02e5added60c2594e72568a90043fd005ccbc4ea8fdf43ce7e7f",
+                "surface": "填写"
+              },
+              "object": {
+                "scopeId": "scope-0002-493b3a3cadaf02e5added60c2594e72568a90043fd005ccbc4ea8fdf43ce7e7f",
+                "surface": "送样登记单"
+              },
+              "status": "pending",
+              "validity": "active",
+              "materialTempIds": [
+                "mat-registration-form"
+              ],
+              "dependencies": []
+            },
+            {
+              "id": "task-submit-samples",
+              "action": {
+                "scopeId": "scope-0004-869fd17df91e587673c32e3b22271ad609b14445947eb5c8db49ad818a442693",
+                "surface": "提交"
+              },
+              "object": {
+                "scopeId": "scope-0004-869fd17df91e587673c32e3b22271ad609b14445947eb5c8db49ad818a442693",
+                "surface": "检测样本"
+              },
+              "status": "pending",
+              "validity": "active",
+              "materialTempIds": [
+                "mat-registration-form",
+                "mat-sample-sealed-bags"
+              ],
+              "dependencies": [
+                "task-fill-registration-form"
+              ]
+            },
+            {
+              "id": "task-prepare-sealed-bags",
+              "action": {
+                "scopeId": "scope-0006-8999a2b5c03e91a44103050fe24e317d05cde0a4ebbdb212f92ae2d9236ab5e6",
+                "surface": "需要"
+              },
+              "object": {
+                "scopeId": "scope-0006-8999a2b5c03e91a44103050fe24e317d05cde0a4ebbdb212f92ae2d9236ab5e6",
+                "surface": "两个密封袋"
+              },
+              "status": "pending",
+              "validity": "active",
+              "materialTempIds": [
+                "mat-sample-sealed-bags"
+              ],
+              "dependencies": []
+            }
+          ],
+          "materials": [
+            {
+              "tempId": "mat-registration-form",
+              "name": "送样登记单",
+              "required": true,
+              "formatRequirements": [],
+              "namingRequirements": [],
+              "quantity": null,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task-fill-registration-form",
+                "task-submit-samples"
+              ],
+              "scopeIds": [
+                "scope-0002-493b3a3cadaf02e5added60c2594e72568a90043fd005ccbc4ea8fdf43ce7e7f",
+                "scope-0003-15209ef7ffcd88f26b18f939dd2f9dd20dbe95a77d8d700e46869bbc379b3337",
+                "scope-0005-024d4b44a2128b9c620bd1c751f6623815b0f412ff495212726dadaaa583fa4a"
+              ],
+              "confidence": 0.95
+            },
+            {
+              "tempId": "mat-sample-sealed-bags",
+              "name": "密封袋",
+              "required": true,
+              "formatRequirements": [
+                "密封"
+              ],
+              "namingRequirements": [
+                "标签仅写样本编号",
+                "不写个人姓名"
+              ],
+              "quantity": 2,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task-submit-samples",
+                "task-prepare-sealed-bags"
+              ],
+              "scopeIds": [
+                "scope-0006-8999a2b5c03e91a44103050fe24e317d05cde0a4ebbdb212f92ae2d9236ab5e6",
+                "scope-0007-5f88ad83df7955bc8eae54ca8a5a8c245525ac8c67b4c5e7c442c6a11917ac75",
+                "scope-0008-0cfed2f2f4357d0bf3901ec481563e2e829ed68e805cfda1de52a7f5b92aca2c"
+              ],
+              "confidence": 0.9
+            }
+          ],
+          "revisions": []
+        },
+        {
+          "unitId": "Q11-06",
+          "rawFile": "docs/recognition-optimization/mainline-real-input-01/runs/candidate06-20260912a/Q11-06_RAW.jsonl",
+          "rawFileSha256": "0f68daf5e3825a0bd5e29b20286dc1f286cdc4adc066dfdda85724ab5e636e56",
+          "resultFileSha256": "cc5e0195bcaf657441655fe69ff7f6c36cbba637020249afab319f99a8d351cd",
+          "taskMaterialRevisionFieldsPreserved": true,
+          "tasks": [
+            {
+              "id": "task-fill-registration-form",
+              "action": {
+                "scopeId": "scope-0002-feaece72fd1ce8434846e7b71a9a792eeb8089280efc3b933ce150cc48ecdd1c",
+                "surface": "填写"
+              },
+              "object": {
+                "scopeId": "scope-0002-feaece72fd1ce8434846e7b71a9a792eeb8089280efc3b933ce150cc48ecdd1c",
+                "surface": "送样登记单"
+              },
+              "status": "pending",
+              "validity": "active",
+              "materialTempIds": [
+                "mat-registration-form"
+              ],
+              "dependencies": []
+            },
+            {
+              "id": "task-submit-samples",
+              "action": {
+                "scopeId": "scope-0004-00c453ef18d957502526a51ef62759e0bfb28e86639c89d9e5b431918142de50",
+                "surface": "提交"
+              },
+              "object": {
+                "scopeId": "scope-0004-00c453ef18d957502526a51ef62759e0bfb28e86639c89d9e5b431918142de50",
+                "surface": "检测样本"
+              },
+              "status": "pending",
+              "validity": "active",
+              "materialTempIds": [
+                "mat-test-samples",
+                "mat-registration-form"
+              ],
+              "dependencies": [
+                "task-fill-registration-form"
+              ]
+            },
+            {
+              "id": "task-prepare-sealed-bags",
+              "action": {
+                "scopeId": "scope-0006-3902c7a753d8b3ee0b5ca106be181ec80157244adb0d98b9b3ee7cbbf40d598f",
+                "surface": "需要"
+              },
+              "object": {
+                "scopeId": "scope-0006-3902c7a753d8b3ee0b5ca106be181ec80157244adb0d98b9b3ee7cbbf40d598f",
+                "surface": "两个密封袋"
+              },
+              "status": "pending",
+              "validity": "active",
+              "materialTempIds": [
+                "mat-sealed-bags"
+              ],
+              "dependencies": []
+            }
+          ],
+          "materials": [
+            {
+              "tempId": "mat-registration-form",
+              "name": "送样登记单",
+              "required": true,
+              "formatRequirements": [
+                "须记录样本编号"
+              ],
+              "namingRequirements": [],
+              "quantity": null,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task-fill-registration-form",
+                "task-submit-samples"
+              ],
+              "scopeIds": [
+                "scope-0002-feaece72fd1ce8434846e7b71a9a792eeb8089280efc3b933ce150cc48ecdd1c",
+                "scope-0003-289018ed77e154a2d5e195a6a74e11ee9e8312dbdd408d7479f14daa1c1e701a",
+                "scope-0005-55c42a7a84f4793ae7a3ff2404b3e681863e4b4f589f4ef21ffd6253cb39883a"
+              ],
+              "confidence": 0.95
+            },
+            {
+              "tempId": "mat-test-samples",
+              "name": "检测样本",
+              "required": true,
+              "formatRequirements": [],
+              "namingRequirements": [],
+              "quantity": null,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task-submit-samples"
+              ],
+              "scopeIds": [
+                "scope-0004-00c453ef18d957502526a51ef62759e0bfb28e86639c89d9e5b431918142de50"
+              ],
+              "confidence": 0.95
+            },
+            {
+              "tempId": "mat-sealed-bags",
+              "name": "密封袋",
+              "required": true,
+              "formatRequirements": [
+                "标签仅写样本编号",
+                "不写个人姓名"
+              ],
+              "namingRequirements": [],
+              "quantity": 2,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task-prepare-sealed-bags"
+              ],
+              "scopeIds": [
+                "scope-0006-3902c7a753d8b3ee0b5ca106be181ec80157244adb0d98b9b3ee7cbbf40d598f",
+                "scope-0007-1d3e833db7f9bc358ef4576161953129604eead09270d724c7a9094d64a89b0a",
+                "scope-0008-e831f00c8f2e741f5e4cea4e016993f5756c63c886526febc56257f8f59aa037"
+              ],
+              "confidence": 0.9
+            }
+          ],
+          "revisions": []
+        },
+        {
+          "unitId": "R11-07",
+          "rawFile": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R11-07_RAW.jsonl",
+          "rawFileSha256": "b96eb4fdff1be4137955510609683b4fc5746f175aaddf83147c970bdd30a3ba",
+          "resultFileSha256": "42b12048c5fa0ad7c90cdda36f5f73bc1912cde89452def460bcc7044090c5e5",
+          "taskMaterialRevisionFieldsPreserved": true,
+          "tasks": [
+            {
+              "id": "task-fill-registration-form",
+              "action": {
+                "scopeId": "scope-0002-493b3a3cadaf02e5added60c2594e72568a90043fd005ccbc4ea8fdf43ce7e7f",
+                "surface": "填写"
+              },
+              "object": {
+                "scopeId": "scope-0002-493b3a3cadaf02e5added60c2594e72568a90043fd005ccbc4ea8fdf43ce7e7f",
+                "surface": "送样登记单"
+              },
+              "status": "pending",
+              "validity": "active",
+              "materialTempIds": [
+                "material-registration-form"
+              ],
+              "dependencies": []
+            },
+            {
+              "id": "task-submit-sample",
+              "action": {
+                "scopeId": "scope-0004-869fd17df91e587673c32e3b22271ad609b14445947eb5c8db49ad818a442693",
+                "surface": "提交"
+              },
+              "object": {
+                "scopeId": "scope-0004-869fd17df91e587673c32e3b22271ad609b14445947eb5c8db49ad818a442693",
+                "surface": "检测样本"
+              },
+              "status": "pending",
+              "validity": "active",
+              "materialTempIds": [
+                "material-sample",
+                "material-registration-form"
+              ],
+              "dependencies": [
+                "task-fill-registration-form"
+              ]
+            }
+          ],
+          "materials": [
+            {
+              "tempId": "material-registration-form",
+              "name": "送样登记单",
+              "required": true,
+              "formatRequirements": [],
+              "namingRequirements": [],
+              "quantity": null,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task-fill-registration-form",
+                "task-submit-sample"
+              ],
+              "scopeIds": [
+                "scope-0002-493b3a3cadaf02e5added60c2594e72568a90043fd005ccbc4ea8fdf43ce7e7f",
+                "scope-0003-15209ef7ffcd88f26b18f939dd2f9dd20dbe95a77d8d700e46869bbc379b3337",
+                "scope-0005-024d4b44a2128b9c620bd1c751f6623815b0f412ff495212726dadaaa583fa4a"
+              ],
+              "confidence": 0.95
+            },
+            {
+              "tempId": "material-sample",
+              "name": "检测样本",
+              "required": true,
+              "formatRequirements": [
+                "需要两个密封袋",
+                "标签仅写样本编号，不写个人姓名"
+              ],
+              "namingRequirements": [
+                "标签仅写样本编号",
+                "不写个人姓名"
+              ],
+              "quantity": null,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task-submit-sample"
+              ],
+              "scopeIds": [
+                "scope-0004-869fd17df91e587673c32e3b22271ad609b14445947eb5c8db49ad818a442693",
+                "scope-0006-8999a2b5c03e91a44103050fe24e317d05cde0a4ebbdb212f92ae2d9236ab5e6",
+                "scope-0007-5f88ad83df7955bc8eae54ca8a5a8c245525ac8c67b4c5e7c442c6a11917ac75",
+                "scope-0008-0cfed2f2f4357d0bf3901ec481563e2e829ed68e805cfda1de52a7f5b92aca2c"
+              ],
+              "confidence": 0.9
+            },
+            {
+              "tempId": "material-sealed-bag",
+              "name": "密封袋",
+              "required": true,
+              "formatRequirements": [],
+              "namingRequirements": [],
+              "quantity": 2,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task-submit-sample"
+              ],
+              "scopeIds": [
+                "scope-0006-8999a2b5c03e91a44103050fe24e317d05cde0a4ebbdb212f92ae2d9236ab5e6"
+              ],
+              "confidence": 0.9
+            }
+          ],
+          "revisions": []
+        }
+      ]
+    },
+    {
+      "caseNumber": "12",
+      "source": "毕业展布展责任澄清\n请布展组于2026年9月27日17:00前制作展签，每件作品对应一张A6展签；可以自行选择是否附上二维码，二维码不是必需材料。\n原来要求向公共邮箱发送作品源文件的规定已被取消，没有替代的文件发送要求。\n请布展组保存最终版展签，便于本人后续修订，此保存操作没有指定日期。",
+      "arms": [
+        {
+          "unitId": "R12-03",
+          "rawFile": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R12-03_RAW.jsonl",
+          "rawFileSha256": "850f161e972a09994a409bb68bd20cb4517f5946ae6e7fe8abf3e1e8386e40ac",
+          "resultFileSha256": "b4b50707972523040111c6ddd6e33fa06fb2cdafdda237f9a59d1a580c4028f3",
+          "taskMaterialRevisionFieldsPreserved": true,
+          "tasks": [
+            {
+              "id": "task-make-exhibit-labels",
+              "action": {
+                "scopeId": "scope-0002-f3a9d599e62d66976f325d784182da08c3c980d202af34f1fff888f4e33b2df2",
+                "surface": "制作"
+              },
+              "object": {
+                "scopeId": "scope-0002-f3a9d599e62d66976f325d784182da08c3c980d202af34f1fff888f4e33b2df2",
+                "surface": "展签"
+              },
+              "status": "pending",
+              "validity": "active",
+              "materialTempIds": [
+                "mat-exhibit-labels"
+              ],
+              "dependencies": []
+            },
+            {
+              "id": "task-save-final-labels",
+              "action": {
+                "scopeId": "scope-0008-dba73536481d0a8e0c6be90b13d5b2933ea9691bf1588f175e428aef158c822d",
+                "surface": "保存"
+              },
+              "object": {
+                "scopeId": "scope-0008-dba73536481d0a8e0c6be90b13d5b2933ea9691bf1588f175e428aef158c822d",
+                "surface": "最终版展签"
+              },
+              "status": "pending",
+              "validity": "active",
+              "materialTempIds": [],
+              "dependencies": [
+                "task-make-exhibit-labels"
+              ]
+            },
+            {
+              "id": "task-send-source-files-cancelled",
+              "action": {
+                "scopeId": "scope-0006-8081a4a804fec6f24fa19116f59669b608e2b41a5a3ddbd658efb94dd1512efe",
+                "surface": "发送"
+              },
+              "object": {
+                "scopeId": "scope-0006-8081a4a804fec6f24fa19116f59669b608e2b41a5a3ddbd658efb94dd1512efe",
+                "surface": "作品源文件"
+              },
+              "status": "cancelled",
+              "validity": "superseded",
+              "materialTempIds": [],
+              "dependencies": []
+            }
+          ],
+          "materials": [
+            {
+              "tempId": "mat-exhibit-labels",
+              "name": "展签",
+              "required": true,
+              "formatRequirements": [
+                "A6"
+              ],
+              "namingRequirements": [],
+              "quantity": null,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task-make-exhibit-labels"
+              ],
+              "scopeIds": [
+                "scope-0003-e290b13df3f113aa0df0faf3426af7e7f4e5ca535386705030118dbc34616eca"
+              ],
+              "confidence": 0.9
+            },
+            {
+              "tempId": "mat-qr-code",
+              "name": "二维码",
+              "required": false,
+              "formatRequirements": [],
+              "namingRequirements": [],
+              "quantity": null,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task-make-exhibit-labels"
+              ],
+              "scopeIds": [
+                "scope-0004-f113b3b4e1bbfac8e08f18173e6d4685390a8d0fd5cf418daa4be1ff85470de6",
+                "scope-0005-6a33ba6852f85f98dab299a1f7551eb60ceb39e68004344e818d95f4456e5386"
+              ],
+              "confidence": 0.9
+            }
+          ],
+          "revisions": [
+            {
+              "type": "cancels",
+              "targetDirectiveId": "task-send-source-files-cancelled",
+              "scopeIds": [
+                "scope-0006-8081a4a804fec6f24fa19116f59669b608e2b41a5a3ddbd658efb94dd1512efe",
+                "scope-0007-f9a1e9889131ded52bfe7dce145307c6da4805f75a6ae601682694dd9ec47097"
+              ],
+              "fromDirectiveId": null,
+              "effective": "true"
+            }
+          ]
+        },
+        {
+          "unitId": "Q12-06",
+          "rawFile": "docs/recognition-optimization/mainline-real-input-01/runs/candidate06-20260912a/Q12-06_RAW.jsonl",
+          "rawFileSha256": "9e6b1b173ac4ff00c204aadde903c98486ecedac132a9f9e25ccc9ff3defb936",
+          "resultFileSha256": "8c6071501c8bdf985efe068b8b034cbd745558a67c4ad27bdadb0714a973db46",
+          "taskMaterialRevisionFieldsPreserved": true,
+          "tasks": [
+            {
+              "id": "task_make_labels",
+              "action": {
+                "scopeId": "scope-0002-19f3c929ede32b8dfa24aedf066146deccbe5cd0c2ffea702b02ac5c6bb0ec38",
+                "surface": "制作"
+              },
+              "object": {
+                "scopeId": "scope-0002-19f3c929ede32b8dfa24aedf066146deccbe5cd0c2ffea702b02ac5c6bb0ec38",
+                "surface": "展签"
+              },
+              "status": "pending",
+              "validity": "active",
+              "materialTempIds": [
+                "mat_label",
+                "mat_qr_code"
+              ],
+              "dependencies": []
+            },
+            {
+              "id": "task_save_labels",
+              "action": {
+                "scopeId": "scope-0008-4ca4ff3a5923c69d1aa95b8313b601a631900d67c2823a6d3824de0fa0fef71c",
+                "surface": "保存"
+              },
+              "object": {
+                "scopeId": "scope-0008-4ca4ff3a5923c69d1aa95b8313b601a631900d67c2823a6d3824de0fa0fef71c",
+                "surface": "最终版展签"
+              },
+              "status": "pending",
+              "validity": "active",
+              "materialTempIds": [
+                "mat_final_label"
+              ],
+              "dependencies": [
+                "task_make_labels"
+              ]
+            }
+          ],
+          "materials": [
+            {
+              "tempId": "mat_label",
+              "name": "展签",
+              "required": true,
+              "formatRequirements": [
+                "A6"
+              ],
+              "namingRequirements": [],
+              "quantity": null,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task_make_labels"
+              ],
+              "scopeIds": [
+                "scope-0002-19f3c929ede32b8dfa24aedf066146deccbe5cd0c2ffea702b02ac5c6bb0ec38",
+                "scope-0003-62e644f8233142b5ae72a81e56b9c4cc1ccd22104c601b34973779eaff911c14"
+              ],
+              "confidence": 0.95
+            },
+            {
+              "tempId": "mat_qr_code",
+              "name": "二维码",
+              "required": false,
+              "formatRequirements": [],
+              "namingRequirements": [],
+              "quantity": null,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task_make_labels"
+              ],
+              "scopeIds": [
+                "scope-0004-7837b8df424cfacfd18fb410fffd975f1dfa91b9a794f7a99c4e5847d9c7914c",
+                "scope-0005-f310fd7c39fb0d1d6e26ef0d2cf8be22fa9a2aa4b69a908c2dcab218b89ccf45"
+              ],
+              "confidence": 0.95
+            },
+            {
+              "tempId": "mat_final_label",
+              "name": "最终版展签",
+              "required": true,
+              "formatRequirements": [],
+              "namingRequirements": [],
+              "quantity": null,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task_save_labels"
+              ],
+              "scopeIds": [
+                "scope-0008-4ca4ff3a5923c69d1aa95b8313b601a631900d67c2823a6d3824de0fa0fef71c"
+              ],
+              "confidence": 0.9
+            }
+          ],
+          "revisions": [
+            {
+              "type": "cancels",
+              "targetDirectiveId": "task_send_source_files",
+              "scopeIds": [
+                "scope-0006-b8203e35bbbbd74e995fb81f82ab37b2a97e7def8d321c6ed89ac735f3702929",
+                "scope-0007-9f46b02132bb6081b15a731d574982b35b353818d8a97b26cb447a7c3cc7f5ae"
+              ],
+              "fromDirectiveId": null,
+              "effective": "true"
+            }
+          ]
+        },
+        {
+          "unitId": "R12-07",
+          "rawFile": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/R12-07_RAW.jsonl",
+          "rawFileSha256": "9b2af233504c7684be20e56c344b23714be51465f622bc7049dfbbfabfb4a801",
+          "resultFileSha256": "6cb2531d33154044351faa385afe773545a619d65a02cf23a2135cec497e72ad",
+          "taskMaterialRevisionFieldsPreserved": true,
+          "tasks": [
+            {
+              "id": "task-make-exhibit-labels",
+              "action": {
+                "scopeId": "scope-0002-f3a9d599e62d66976f325d784182da08c3c980d202af34f1fff888f4e33b2df2",
+                "surface": "制作"
+              },
+              "object": {
+                "scopeId": "scope-0002-f3a9d599e62d66976f325d784182da08c3c980d202af34f1fff888f4e33b2df2",
+                "surface": "展签"
+              },
+              "status": "pending",
+              "validity": "active",
+              "materialTempIds": [
+                "material-exhibit-label",
+                "material-qr-code"
+              ],
+              "dependencies": []
+            },
+            {
+              "id": "task-save-final-labels",
+              "action": {
+                "scopeId": "scope-0008-dba73536481d0a8e0c6be90b13d5b2933ea9691bf1588f175e428aef158c822d",
+                "surface": "保存"
+              },
+              "object": {
+                "scopeId": "scope-0008-dba73536481d0a8e0c6be90b13d5b2933ea9691bf1588f175e428aef158c822d",
+                "surface": "最终版展签"
+              },
+              "status": "pending",
+              "validity": "active",
+              "materialTempIds": [
+                "material-final-exhibit-label"
+              ],
+              "dependencies": []
+            }
+          ],
+          "materials": [
+            {
+              "tempId": "material-exhibit-label",
+              "name": "展签",
+              "required": true,
+              "formatRequirements": [
+                "A6"
+              ],
+              "namingRequirements": [],
+              "quantity": null,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task-make-exhibit-labels"
+              ],
+              "scopeIds": [
+                "scope-0002-f3a9d599e62d66976f325d784182da08c3c980d202af34f1fff888f4e33b2df2",
+                "scope-0003-e290b13df3f113aa0df0faf3426af7e7f4e5ca535386705030118dbc34616eca"
+              ],
+              "confidence": 0.95
+            },
+            {
+              "tempId": "material-qr-code",
+              "name": "二维码",
+              "required": false,
+              "formatRequirements": [],
+              "namingRequirements": [],
+              "quantity": null,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task-make-exhibit-labels"
+              ],
+              "scopeIds": [
+                "scope-0004-f113b3b4e1bbfac8e08f18173e6d4685390a8d0fd5cf418daa4be1ff85470de6",
+                "scope-0005-6a33ba6852f85f98dab299a1f7551eb60ceb39e68004344e818d95f4456e5386"
+              ],
+              "confidence": 0.95
+            },
+            {
+              "tempId": "material-final-exhibit-label",
+              "name": "最终版展签",
+              "required": true,
+              "formatRequirements": [],
+              "namingRequirements": [],
+              "quantity": null,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task-save-final-labels"
+              ],
+              "scopeIds": [
+                "scope-0008-dba73536481d0a8e0c6be90b13d5b2933ea9691bf1588f175e428aef158c822d"
+              ],
+              "confidence": 0.95
+            }
+          ],
+          "revisions": [
+            {
+              "type": "cancels",
+              "targetDirectiveId": "directive-send-source-files",
+              "scopeIds": [
+                "scope-0006-8081a4a804fec6f24fa19116f59669b608e2b41a5a3ddbd658efb94dd1512efe",
+                "scope-0007-f9a1e9889131ded52bfe7dce145307c6da4805f75a6ae601682694dd9ec47097"
+              ],
+              "fromDirectiveId": null,
+              "effective": "true"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

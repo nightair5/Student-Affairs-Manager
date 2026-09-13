@@ -1,0 +1,53 @@
+{
+  "status": "REQUESTED_NOT_AUTHORIZED",
+  "baseHead": "715252940bf48cd90817941ccdebb9fc82d2dc1e",
+  "purpose": "仅显式隔离实验支持材料准备情况尚未核实；不迁移旧数据，不改变旧默认。",
+  "files": [
+    {
+      "path": "src/domain/v2/types.ts",
+      "sha256": "000a9f5d689aad4463753aa8f0f6d1eb33843075e7a521ca6e1f7e10eef833b6",
+      "responsibility": "材料类型无损承接实验unverified；保留六旧枚举含义。"
+    },
+    {
+      "path": "src/domain/v2/validators/shapeValidator.ts",
+      "sha256": "c117efafd1d19ea9686c805cc17bbf58ce4312de2ab3d244bc8d94ebd0f2401f",
+      "responsibility": "仅版本化real-input隔离库且具备有效核对记录的新状态通过；普通工作区仍拒绝；不得绕过完整语义验证。"
+    },
+    {
+      "path": "src/types.ts",
+      "sha256": "a8914cb2b98463a06ae3ab7fc3fed61c2bdddf6c5a1e27fe960394cdaa6bb67c",
+      "responsibility": "React兼容材料类型无损传递新值，不扩大默认录入能力。"
+    },
+    {
+      "path": "src/components/TaskDetailPanel.tsx",
+      "sha256": "3e395eb570182b08252f65e2cf17c32be5157641aadbf02552c292a631b9747c",
+      "responsibility": "实验只读详情正确显示准备情况尚未核实；旧默认选择保持。"
+    },
+    {
+      "path": "src/lib/taskUpdates.ts",
+      "sha256": "0c4b49c652e5553c292aa306a898766c3488470c81a510d81a44e56a9b1590ce",
+      "responsibility": "新状态历史文本可读，不输出undefined；旧标签不变。"
+    },
+    {
+      "path": "src/lib/taskLogic.ts",
+      "sha256": "e6ba77b9c6dec502ad239eaae5a774f7d0ce18099bd3c9fdff7ec970225f3d6b",
+      "responsibility": "新状态不算ready或missing，旧六状态统计不变；仅必要聚合接线，不扩建项目管理。"
+    }
+  ],
+  "retainedReadOnly": [
+    "global repository",
+    "capture",
+    "domainCommit",
+    "confirmationV2",
+    "timeAST",
+    "MAINLINE04",
+    "candidates",
+    "Expected",
+    "scorer",
+    "raw responses",
+    "ledger"
+  ],
+  "verification": "原获准测试内覆盖新状态保存/刷新、旧默认拒绝、六旧状态正常、条件/依赖/引用不解除、明确用户确认、原子保存与旧记录不变。",
+  "rollback": "仅回退新实施提交；不回滚已有工作区或迁移旧数据库。",
+  "modelCalls": 0
+}

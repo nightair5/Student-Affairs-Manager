@@ -1,17 +1,21 @@
 # RCO Current Context
 
 ## 当前目标与结论
-- MAINLINE-REAL-INPUT-01：candidate07任务与材料边界优化＋配对验证＋HTTPS承接。
-- 2026-09-13比较完成；candidate07 NOT_ADOPT，默认路线不变。
-- 真实浏览器确认/刷新/独立IndexedDB/下载未验证；不能称整包完成。
-- 报告目录mainline-real-input-01/runs/candidate07-20260913a/。
-- AUDIT.md、COMPARISON.json、CHECKS.json、IMPLEMENTATION_SNAPSHOT.json记录证据。
-- 后续只读本页和DELIVERY，不重读完整历史，不自动增加候选/调用。
+- MAINLINE-REAL-INPUT-01：材料准备状态尚未核实的无损确认承接。
+- 2026-09-13 SCOPE_BLOCKED：全局材料枚举及仓储校验拒绝unverified，不能仅实验修改。
+- 本轮0模型/费用/浏览器/部署/业务源码修改；7未提交文件逐字保持。
+- 新报告mainline-real-input-01/runs/material-review-20260913a/AUDIT.md、REPRO.json、CHECKS.json。
+- NEXT_SCOPE.json申请6例外：domain/v2/types、shapeValidator、src/types、TaskDetailPanel、taskUpdates、taskLogic。
+- 只允许新显式实验未知状态的类型/校验/显示，不开放旧默认，不绕过确认。
+- 六旧状态通过；unverified在R11公开核对和Canonical.save均拒绝，原内存记录不变。
+- R11模拟ready正常对照确认1任务并独立内存读回；不是新功能或真实浏览器PASS。
+- 12旧响应tasks/materials/revisions原答到解析相同；暂不支持新付费批次。
+- candidate07 NOT_ADOPT；先批准最小例外再同包修复，不重做PLAN。
 
 ## 仓库与Git
 - 唯一仓库C:\Users\Winner\student-affairs-multimodal-exp。
 - 唯一分支codex/e2-multimodal-recognition-exp；默认“比赛”目录禁止实施。
-- 起点本机/远端8319bc6129c2893cb5bf8ba0877900afc3e713b5。
+- 本轮起点本机/远端715252940bf48cd90817941ccdebb9fc82d2dc1e。
 - 新提交与远端核验见DELIVERY.json及实际git log，不在本文写自身SHA。
 - 60实际实现路径=原58+candidate07.ts/candidate07.test.ts。
 - 提交已验证候选/派发9源码、报告、账本追加，不是默认候选升级。
@@ -61,7 +65,7 @@
 - 初次HTTP缓存旧产物失败保留；no-cache验证7资产SHA匹配见online-final。
 - 仅一次部署，无模型/Secret/真实用户库绑定，不更换域名或系统设置。
 
-## 工程与保护
+## 历史工程与本轮保护
 - 候选11、预算62、网关50、绑定1通过；无retry/verifier/Repair。
 - 全Vitest初跑1326PASS/1FAIL/1SKIP，唯一旧载体测试缺显式manifest。
 - 补配置原断言通过；最终受影响7文件121PASS（含62 acceptance），未变层复用。
@@ -80,4 +84,4 @@
 - 已集中交过人工步骤；有控制恢复或前后文件后只补缺证据，不重跑模型。
 - 必须独立读库对象对实际导出，不用提示或同文件双哈希冒充。
 - 原对象不覆盖需操作前快照；准备未知不强选，坏引用仍阻断。
-- 比较与审计交付后停止；未验收7文件保留，后续通过才业务提交。
+- 本轮不重试浏览器；例外批准前只审计交付，保护和账本不动，7业务文件保留。
