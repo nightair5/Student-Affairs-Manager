@@ -20,7 +20,7 @@ import { buildBrowserReminderJobs } from '../../lib/notifications'
 
 interface Carrier { unitId: string; name: string; mime: string; sha256: string; url: string; sourceText: string }
 declare const __REAL_INPUT_CONFIG__: { mode: 'seen_engineering_replay' | 'live' | 'recorded_a02' | 'recorded_batch'; capability: string;
-  httpsPreview?: {origin: string; localOnly?: true};
+  httpsPreview?: {origin: string; localOnly?: true; allowedOrigins?: string[]};
   batch?: RecordedBatchIdentity[];
   candidate02?: boolean;
   candidate03?: boolean;
@@ -31,10 +31,11 @@ declare const __REAL_INPUT_CONFIG__: { mode: 'seen_engineering_replay' | 'live' 
   units: Array<{unitId: string; requestSha: string}>; resources: LocalExtractionResources; carriers: Carrier[] }
 const config = __REAL_INPUT_CONFIG__
 const preview = config.httpsPreview
-function previewOriginAllowed(profile: {origin: string; localOnly?: true}, origin: string, protocol: string) {
-  return origin === profile.origin && (profile.localOnly === true
-    ? origin === 'http://127.0.0.1:6632' && protocol === 'http:'
-    : protocol === 'https:')
+function previewOriginAllowed(profile: {origin: string; localOnly?: true; allowedOrigins?: string[]}, origin: string, protocol: string) {
+  if(profile.localOnly === true)return origin === profile.origin && origin === 'http://127.0.0.1:6632' && protocol === 'http:'
+  const approved = ['https://student-affairs-real-input-preview.nightsdell.workers.dev', 'https://preview.student-affairs.site']
+  return protocol === 'https:' && approved.includes(origin)
+    && (origin === profile.origin || profile.allowedOrigins?.includes(origin) === true)
 }
 const params = new URLSearchParams(location.search), run = params.get('run')
 if(preview&&(!previewOriginAllowed(preview,location.origin,location.protocol)||config.mode!=='recorded_batch'||location.search))throw Error('REAL_INPUT_HTTPS_ORIGIN')

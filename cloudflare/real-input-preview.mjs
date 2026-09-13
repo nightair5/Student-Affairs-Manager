@@ -1,5 +1,5 @@
 // No Secret, external fetch, database or model bindings. Only approved public assets.
-const staticPaths = new Set(['/', '/index.html', '/browser.js', '/browser.css', '/recorded/Q01-06.json', '/recorded/Q07-06.json', '/recorded/R11-07.json', '/recorded/R12-07.json'])
+const staticPaths = new Set(['/', '/index.html', '/boot.js', '/browser.js', '/browser.css', '/recorded/Q01-06.json', '/recorded/Q07-06.json', '/recorded/R11-07.json', '/recorded/R12-07.json'])
 const headers = {
   'Content-Security-Policy': "default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self'; img-src 'self' data: blob:; font-src 'self'; worker-src 'none'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'none'",
   'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'no-referrer',

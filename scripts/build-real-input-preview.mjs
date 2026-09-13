@@ -1,4 +1,4 @@
-import {build} from 'esbuild'
+import {build,transform} from 'esbuild'
 import {readFileSync,writeFileSync,mkdirSync,mkdtempSync} from 'node:fs'
 import {resolve,join,basename} from 'node:path'
 import {tmpdir} from 'node:os'
@@ -44,7 +44,7 @@ export async function buildPreview(origin='https://student-affairs-real-input-pr
       context:item.context,requestSha:raw.requestSha,responseSha:raw.responseSha,rawHttpText:raw.rawHttpText})
   }
   // Deliberately omit receipts, billing, Expected and absolute source paths from public assets.
-  const config={mode:'recorded_batch',httpsPreview:{origin,...(localOnly?{localOnly:true}:{})},capability:'',units:[],carriers:[],
+  const config={mode:'recorded_batch',httpsPreview:{origin,...(localOnly?{localOnly:true}:{allowedOrigins:[origin,'https://preview.student-affairs.site']})},capability:'',units:[],carriers:[],
     resources:{workerPath:'',corePath:'',langPath:'',pdfWorkerPath:''},
     batch:records.map(({unitId,requestSha,responseSha})=>({unitId,requestSha,responseSha}))}
   const directory=mkdtempSync(join(tmpdir(),'real-input-https-')),assets=join(directory,'assets');mkdirSync(assets)
@@ -63,17 +63,28 @@ export async function buildPreview(origin='https://student-affairs-real-input-pr
     let text=file.text
     if(file.path.endsWith('.css'))text=text.replace(/@import\s+url\("https:\/\/fonts\.googleapis\.com[^;]+;\s*/g,'')
     check(!/\bsk-[A-Za-z0-9_-]{20,}|-----BEGIN [A-Z ]*PRIVATE KEY-----|C:\\\\Users\\\\Winner/i.test(text),'PRIVATE_ASSET')
+    // Audit the readable bundle first; minify only the approved public output.
+    text=(await transform(text,{loader:file.path.endsWith('.css')?'css':'js',minify:true,target:'es2022',legalComments:'eof'})).code
     writeFileSync(join(assets,basename(file.path)),text)
   }
   mkdirSync(join(assets,'recorded'))
   for(const record of records)writeFileSync(join(assets,'recorded',record.unitId+'.json'),JSON.stringify(record))
-  writeFileSync(join(assets,'index.html'),'<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>学生事务管家 · HTTPS隔离实验版</title><link rel="stylesheet" href="/browser.css"></head><body><div id="root"></div><script type="module" src="/browser.js"></script></body></html>')
+  writeFileSync(join(assets,'index.html'),'<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>学生事务管家 · HTTPS隔离实验版</title><link rel="stylesheet" href="/browser.css"></head><body><div id="root"><main style="max-width:720px;margin:10vh auto;padding:24px;font-family:system-ui,sans-serif"><h1>学生事务管家 · 独立实验版</h1><p id="preview-loading" role="status">正在加载试用页面。若长时间停留在这里，请检查网络连接后重新加载。</p><p>本页数据保存在当前浏览器。重新加载不会清空已保存的数据。</p><a href="/">重新加载页面</a><noscript><p>请启用 JavaScript 后使用本页。</p></noscript></main></div><script type="module" src="/boot.js"></script></body></html>')
+  writeFileSync(join(assets,'boot.js'),`import('./browser.js').catch(() => {
+    const message = document.getElementById('preview-loading');
+    if (message) {
+      message.setAttribute('role', 'alert');
+      message.textContent = '页面程序未能加载，请检查网络连接后重新加载。已保存的数据不会因此删除。';
+    }
+  });\n`)
   const deployment=JSON.parse(readFileSync(join(sourceRoot,'wrangler.real-input-preview.jsonc'),'utf8'))
-  check(deployment.name==='student-affairs-real-input-preview'&&deployment.routes.length===0&&!deployment.vars&&!deployment.services,'DEPLOYMENT_SCOPE')
+  check(deployment.name==='student-affairs-real-input-preview'&&deployment.routes.length===1
+    &&deployment.routes[0].pattern==='preview.student-affairs.site'&&deployment.routes[0].custom_domain===true
+    &&!deployment.vars&&!deployment.services,'DEPLOYMENT_SCOPE')
   deployment.main=join(sourceRoot,'cloudflare/real-input-preview.mjs');deployment.assets.directory=assets;delete deployment.$schema
   // A local artifact cannot accidentally be passed to Wrangler for deployment.
   const configuration=localOnly?null:join(directory,'wrangler.json');if(configuration)writeFileSync(configuration,JSON.stringify(deployment,null,2))
-  const paths=['index.html','browser.js','browser.css',...records.map(r=>'recorded/'+r.unitId+'.json')]
+  const paths=['index.html','boot.js','browser.js','browser.css',...records.map(r=>'recorded/'+r.unitId+'.json')]
   const manifest={origin,directory,configuration,...(localOnly?{localOnly:true}:{}),modelCallsEnabled:false,rootEnvRead:false,
     assets:paths.map(path=>({path,sha256:hash(readFileSync(join(assets,path))),bytes:readFileSync(join(assets,path)).length})),
     sourceFiles:['src/experiments/realInput01/browser.tsx','src/experiments/realInput01/runtime.ts','scripts/build-real-input-preview.mjs',

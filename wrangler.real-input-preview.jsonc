@@ -5,7 +5,7 @@
   "compatibility_date": "2026-09-12",
   "workers_dev": true,
   "preview_urls": false,
-  "routes": [],
+  "routes": [{"pattern":"preview.student-affairs.site","custom_domain":true}],
   "assets": {
     "directory": "./.data/real-input-preview-assets",
     "binding": "ASSETS",
