@@ -92,7 +92,8 @@ export async function buildPreview(origin='https://student-affairs-real-input-pr
   writeFileSync(join(directory,'manifest.json'),JSON.stringify(manifest,null,2))
   return manifest
 }
-export async function startLocalPreview(){
+export async function startLocalPreview({testOnlyEphemeralPort=false}={}){
+  check(typeof testOnlyEphemeralPort==='boolean','TEST_PORT')
   const origin='http://127.0.0.1:6632'
   const manifest=await buildPreview(origin,{localOnly:true})
   const types={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json; charset=utf-8'}
@@ -112,7 +113,8 @@ export async function startLocalPreview(){
       res.end(Buffer.from(await response.arrayBuffer()))
     }catch{res.writeHead(500);res.end('LOCAL_PREVIEW_FAILED')}
   })
-  await new Promise((yes,no)=>{server.once('error',no);server.listen(6632,'127.0.0.1',yes)})
+  // Tests keep the same host/origin checks without occupying the user's live trial port.
+  await new Promise((yes,no)=>{server.once('error',no);server.listen(testOnlyEphemeralPort?0:6632,'127.0.0.1',yes)})
   return {server,manifest}
 }
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){

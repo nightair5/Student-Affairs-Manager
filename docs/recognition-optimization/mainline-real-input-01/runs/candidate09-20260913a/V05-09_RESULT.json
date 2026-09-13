@@ -1,0 +1,360 @@
+{
+  "unitId": "V05-09",
+  "arm": "09",
+  "cohort": "later8",
+  "bindingSha": "d62abdfdedaf4b538364fe55bacd1e52fc3623f7a5acef9732de75af128125df",
+  "requestSha": "3e8459b54decfa38dea2b9e89d8289bce31d5931b95a2a6035417e685db99554",
+  "responseSha": "badb3d5fa8f72d46a7faa98ed5ec6884c3cf2562fd6a91cc8580e3ad91d77beb",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "scorerSha": "ad76149f8a88cb4adda6dca78b210daaa4f3c800d17582767911e8ace2658e1d",
+  "scorerBundleSha": "782c89b4f865d83c9a2051d9e2a6df3776b7231ad49aec87008b5c14f4e09f21",
+  "referenceSha": "961683067b73fc179a3b914513c7fba2e462086a0e8f57923c4b42b75ffd1e52",
+  "scoreInput": "semantic projection into frozen scorer; provider raw unchanged",
+  "rawEvidence": {
+    "schemaVersion": "real-input-typed-fact-wire-2",
+    "tasks": [
+      {
+        "id": "task-1",
+        "propositionScopeIds": [
+          "scope-0002-c44f1b57898113c736a138ae18d6f36ab9a348d96c2ce7a94ae15f1abb081681",
+          "scope-0003-a5eee433d1f04085993fd6648f3223941a0a3f487c7bfd01cdcc1dec32134b4c"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "collect",
+        "action": {
+          "scopeId": "scope-0003-a5eee433d1f04085993fd6648f3223941a0a3f487c7bfd01cdcc1dec32134b4c",
+          "surface": "领取"
+        },
+        "object": {
+          "scopeId": "scope-0003-a5eee433d1f04085993fd6648f3223941a0a3f487c7bfd01cdcc1dec32134b4c",
+          "surface": "配电板"
+        },
+        "effect": "physical_action",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "领取配电板",
+          "description": "如果场馆确认主舞台可以接入备用电源，保障员领取配电板。",
+          "completionCriteria": [
+            "保障员领取配电板"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "confidence": 0.9,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "unknown",
+          "conditionScopeIds": [
+            "scope-0002-c44f1b57898113c736a138ae18d6f36ab9a348d96c2ce7a94ae15f1abb081681"
+          ],
+          "factScopeIds": [
+            "scope-0005-9b739bec34282a5ac32950e87627ee4758a32b21165f47a9fd600fa1352ba333",
+            "scope-0006-3e3cdba36c987ecfa95c279840634d7ba7a1216b6af9ca5614fdd385dd4c5f5c"
+          ]
+        },
+        "coverage": {
+          "time": "not_stated",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "factType": "task"
+      }
+    ],
+    "materials": [
+      {
+        "tempId": "material-1",
+        "name": "配电板",
+        "required": true,
+        "formatRequirements": [],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "task-1"
+        ],
+        "scopeIds": [
+          "scope-0003-a5eee433d1f04085993fd6648f3223941a0a3f487c7bfd01cdcc1dec32134b4c"
+        ],
+        "confidence": 0.9,
+        "factType": "material"
+      },
+      {
+        "tempId": "material-2",
+        "name": "工作证",
+        "required": true,
+        "formatRequirements": [],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "task-1"
+        ],
+        "scopeIds": [
+          "scope-0004-796849fa74ef796a6c3d4b2bbbc02b18379b495890b0ea5c32b092fec7ae8378"
+        ],
+        "confidence": 0.9,
+        "factType": "material"
+      }
+    ],
+    "timePoints": [],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0001-f892b6d39d2de80e37641a932e350be1613cb16846bd20fd43ca7d4834c17068",
+      "scope-0005-9b739bec34282a5ac32950e87627ee4758a32b21165f47a9fd600fa1352ba333",
+      "scope-0006-3e3cdba36c987ecfa95c279840634d7ba7a1216b6af9ca5614fdd385dd4c5f5c",
+      "scope-0007-7f334447297072e918e8614d1397f7b54aebe480eee4e9c0893a3aee05b9965b",
+      "scope-0008-a5434a93c44e27ea5252ffe667cdf3168428ca6d61c36c3b8303926fc64140f6"
+    ],
+    "unresolvedScopeIds": []
+  },
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-1",
+        "propositionScopeIds": [
+          "scope-0002-c44f1b57898113c736a138ae18d6f36ab9a348d96c2ce7a94ae15f1abb081681",
+          "scope-0003-a5eee433d1f04085993fd6648f3223941a0a3f487c7bfd01cdcc1dec32134b4c"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "collect",
+        "action": {
+          "scopeId": "scope-0003-a5eee433d1f04085993fd6648f3223941a0a3f487c7bfd01cdcc1dec32134b4c",
+          "surface": "领取"
+        },
+        "object": {
+          "scopeId": "scope-0003-a5eee433d1f04085993fd6648f3223941a0a3f487c7bfd01cdcc1dec32134b4c",
+          "surface": "配电板"
+        },
+        "effect": "physical_action",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "领取配电板",
+          "description": "如果场馆确认主舞台可以接入备用电源，保障员领取配电板。",
+          "completionCriteria": [
+            "保障员领取配电板"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "confidence": 0.9,
+          "userConfirmationRequired": true,
+          "materialTempIds": [
+            "material-1",
+            "material-2"
+          ],
+          "timePointTempIds": []
+        },
+        "condition": {
+          "value": "unknown",
+          "conditionScopeIds": [
+            "scope-0002-c44f1b57898113c736a138ae18d6f36ab9a348d96c2ce7a94ae15f1abb081681"
+          ],
+          "factScopeIds": [
+            "scope-0005-9b739bec34282a5ac32950e87627ee4758a32b21165f47a9fd600fa1352ba333",
+            "scope-0006-3e3cdba36c987ecfa95c279840634d7ba7a1216b6af9ca5614fdd385dd4c5f5c"
+          ]
+        },
+        "coverage": {
+          "time": "not_stated",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [
+      {
+        "tempId": "material-1",
+        "name": "配电板",
+        "required": true,
+        "formatRequirements": [],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "task-1"
+        ],
+        "scopeIds": [
+          "scope-0003-a5eee433d1f04085993fd6648f3223941a0a3f487c7bfd01cdcc1dec32134b4c"
+        ],
+        "confidence": 0.9
+      },
+      {
+        "tempId": "material-2",
+        "name": "工作证",
+        "required": true,
+        "formatRequirements": [],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "task-1"
+        ],
+        "scopeIds": [
+          "scope-0004-796849fa74ef796a6c3d4b2bbbc02b18379b495890b0ea5c32b092fec7ae8378"
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "timePoints": [],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0001-f892b6d39d2de80e37641a932e350be1613cb16846bd20fd43ca7d4834c17068",
+      "scope-0005-9b739bec34282a5ac32950e87627ee4758a32b21165f47a9fd600fa1352ba333",
+      "scope-0006-3e3cdba36c987ecfa95c279840634d7ba7a1216b6af9ca5614fdd385dd4c5f5c",
+      "scope-0007-7f334447297072e918e8614d1397f7b54aebe480eee4e9c0893a3aee05b9965b",
+      "scope-0008-a5434a93c44e27ea5252ffe667cdf3168428ca6d61c36c3b8303926fc64140f6"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "source:c5e61fc7",
+    "sourceVersionId": "source:c5e61fc7:version:1",
+    "sourceFingerprint": "sha256:ec14a59a191222088fc6b489b28df921c8b7fbaa20071b3e24604b4b470e1a0e"
+  },
+  "http": 200,
+  "diagnostic": null,
+  "waitingMs": 5656,
+  "score": {
+    "scorerVersion": "real-input-seen-fact-diagnostic-2",
+    "label": "已见人工工程参考的精确诊断，不是未见或商业准确率",
+    "metrics": {
+      "task": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 1,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "requiresAction": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 1,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "time": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "material": {
+        "predicted": 2,
+        "reference": 1,
+        "correct": 1,
+        "falsePositive": 1,
+        "falseNegative": 0,
+        "precision": 0.5,
+        "recall": 1
+      },
+      "event": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "condition": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 1,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "revision": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "evidence": {
+        "predicted": 3,
+        "reference": 2,
+        "correct": 1,
+        "falsePositive": 2,
+        "falseNegative": 1,
+        "precision": 0.3333333333333333,
+        "recall": 0.5
+      },
+      "semantic": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 0,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0,
+        "recall": 0
+      },
+      "coverage": {
+        "predicted": 3,
+        "reference": 3,
+        "correct": 1,
+        "falsePositive": 2,
+        "falseNegative": 2,
+        "precision": 0.3333333333333333,
+        "recall": 0.3333333333333333
+      }
+    },
+    "matchingAmbiguities": [],
+    "metricStatus": "EXACT_REFERENCE_DIAGNOSTIC",
+    "schemaParsed": true,
+    "issues": [],
+    "completeCase": false,
+    "majorCorrectionRequired": true,
+    "forbidden": 0,
+    "automaticSelection": "NOT_ENABLED",
+    "humanActiveEditTime": "NOT_RUN",
+    "candidateTaskCount": 1,
+    "referenceTaskCount": 1
+  },
+  "scoreError": null,
+  "totalAttempts": 202,
+  "costUpperMicroCny": 22299,
+  "totalCostUpperMicroCny": 8134777,
+  "stopDispatch": false,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticSelection": "NOT_ENABLED",
+  "qualityClaim": "20份已见材料开发回归；原12+后8分别报告；40请求不是40独立材料"
+}

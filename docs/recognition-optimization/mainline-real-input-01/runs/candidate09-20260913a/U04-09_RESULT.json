@@ -1,0 +1,481 @@
+{
+  "unitId": "U04-09",
+  "arm": "09",
+  "cohort": "original12",
+  "bindingSha": "d62abdfdedaf4b538364fe55bacd1e52fc3623f7a5acef9732de75af128125df",
+  "requestSha": "f23db2be0a22b62de9e4702c600a912eec0a77988029ec615e5a5d37ebe96dae",
+  "responseSha": "b4de708c0af88549a81761cda90db4460cc13ca32900eb893c203c8b477fa902",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "scorerSha": "ad76149f8a88cb4adda6dca78b210daaa4f3c800d17582767911e8ace2658e1d",
+  "scorerBundleSha": "782c89b4f865d83c9a2051d9e2a6df3776b7231ad49aec87008b5c14f4e09f21",
+  "referenceSha": "961683067b73fc179a3b914513c7fba2e462086a0e8f57923c4b42b75ffd1e52",
+  "scoreInput": "semantic projection into frozen scorer; provider raw unchanged",
+  "rawEvidence": {
+    "schemaVersion": "real-input-typed-fact-wire-2",
+    "tasks": [
+      {
+        "id": "task-cancel-water-sampling",
+        "propositionScopeIds": [
+          "scope-0002-1be9fa1ce94b46fe0a0629aa6a07fbd1b884528dc942d32a76a73f1202ace397",
+          "scope-0003-410a534e82da29c20f860f97190028d376b48d185baeaeb29af49156af98d90c",
+          "scope-0004-a1cbfc31331133f7d4a6022db795c68b0ac024a5b1ef37e39376ece9b4ca5045"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "other",
+        "action": {
+          "scopeId": "scope-0003-410a534e82da29c20f860f97190028d376b48d185baeaeb29af49156af98d90c",
+          "surface": "取消"
+        },
+        "object": {
+          "scopeId": "scope-0003-410a534e82da29c20f860f97190028d376b48d185baeaeb29af49156af98d90c",
+          "surface": "水样采集预约"
+        },
+        "effect": "external_interaction",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "取消水样采集预约",
+          "description": "若校气象站发布暴雨红色预警，采集员取消水样采集预约；只有该条件成立才需取消。",
+          "completionCriteria": [
+            "水样采集预约已取消"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "confidence": 0.95,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "false",
+          "conditionScopeIds": [
+            "scope-0002-1be9fa1ce94b46fe0a0629aa6a07fbd1b884528dc942d32a76a73f1202ace397",
+            "scope-0004-a1cbfc31331133f7d4a6022db795c68b0ac024a5b1ef37e39376ece9b4ca5045"
+          ],
+          "factScopeIds": [
+            "scope-0005-b9ba4503cd259020369324e9dd6b1385b1c6f125496078af5216c2a17d905109",
+            "scope-0006-a3ac329d0b1b0ab7319c3d3fd3fdcd7db8e968c149f11517b5790df0dff707c1"
+          ]
+        },
+        "coverage": {
+          "time": "not_stated",
+          "material": "not_stated",
+          "event": "not_stated"
+        },
+        "factType": "task"
+      },
+      {
+        "id": "task-check-bottle-seal",
+        "propositionScopeIds": [
+          "scope-0007-97c6613ea2f8a8f2d3aa02769a1c92ccebf563f5bef466d4c9219740b8c74bd3",
+          "scope-0008-26e233d2c77d11892f8a8f11f3c746840148fdd0cf91a66d90f31f56b9b6b61e"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "review",
+        "action": {
+          "scopeId": "scope-0007-97c6613ea2f8a8f2d3aa02769a1c92ccebf563f5bef466d4c9219740b8c74bd3",
+          "surface": "检查"
+        },
+        "object": {
+          "scopeId": "scope-0007-97c6613ea2f8a8f2d3aa02769a1c92ccebf563f5bef466d4c9219740b8c74bd3",
+          "surface": "采样瓶密封性"
+        },
+        "effect": "physical_action",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "检查采样瓶密封性",
+          "description": "采集员于2026年9月19日17:00前检查采样瓶密封性，这项检查不受上述预警条件影响。",
+          "completionCriteria": [
+            "采样瓶密封性已检查"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "high",
+          "dependencyTempIds": [],
+          "confidence": 0.95,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [
+            "scope-0008-26e233d2c77d11892f8a8f11f3c746840148fdd0cf91a66d90f31f56b9b6b61e"
+          ],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "factType": "task"
+      }
+    ],
+    "materials": [
+      {
+        "tempId": "material-sampling-bottle",
+        "name": "采样瓶",
+        "required": true,
+        "formatRequirements": [],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "task-check-bottle-seal"
+        ],
+        "scopeIds": [
+          "scope-0007-97c6613ea2f8a8f2d3aa02769a1c92ccebf563f5bef466d4c9219740b8c74bd3"
+        ],
+        "confidence": 0.9,
+        "factType": "material"
+      }
+    ],
+    "timePoints": [
+      {
+        "tempId": "time-check-deadline",
+        "type": "task_deadline",
+        "rawText": "2026年9月19日17:00前",
+        "relatedTaskTempIds": [
+          "task-check-bottle-seal"
+        ],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0007-97c6613ea2f8a8f2d3aa02769a1c92ccebf563f5bef466d4c9219740b8c74bd3"
+        ],
+        "confidence": 0.95,
+        "factType": "time"
+      }
+    ],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0001-d8ee597fae5700181a6467d1c56993a6567b3a40b81a05c81b036e8e39675901",
+      "scope-0005-b9ba4503cd259020369324e9dd6b1385b1c6f125496078af5216c2a17d905109",
+      "scope-0006-a3ac329d0b1b0ab7319c3d3fd3fdcd7db8e968c149f11517b5790df0dff707c1"
+    ],
+    "unresolvedScopeIds": []
+  },
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-cancel-water-sampling",
+        "propositionScopeIds": [
+          "scope-0002-1be9fa1ce94b46fe0a0629aa6a07fbd1b884528dc942d32a76a73f1202ace397",
+          "scope-0003-410a534e82da29c20f860f97190028d376b48d185baeaeb29af49156af98d90c",
+          "scope-0004-a1cbfc31331133f7d4a6022db795c68b0ac024a5b1ef37e39376ece9b4ca5045"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "other",
+        "action": {
+          "scopeId": "scope-0003-410a534e82da29c20f860f97190028d376b48d185baeaeb29af49156af98d90c",
+          "surface": "取消"
+        },
+        "object": {
+          "scopeId": "scope-0003-410a534e82da29c20f860f97190028d376b48d185baeaeb29af49156af98d90c",
+          "surface": "水样采集预约"
+        },
+        "effect": "external_interaction",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "取消水样采集预约",
+          "description": "若校气象站发布暴雨红色预警，采集员取消水样采集预约；只有该条件成立才需取消。",
+          "completionCriteria": [
+            "水样采集预约已取消"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "confidence": 0.95,
+          "userConfirmationRequired": true,
+          "materialTempIds": [],
+          "timePointTempIds": []
+        },
+        "condition": {
+          "value": "false",
+          "conditionScopeIds": [
+            "scope-0002-1be9fa1ce94b46fe0a0629aa6a07fbd1b884528dc942d32a76a73f1202ace397",
+            "scope-0004-a1cbfc31331133f7d4a6022db795c68b0ac024a5b1ef37e39376ece9b4ca5045"
+          ],
+          "factScopeIds": [
+            "scope-0005-b9ba4503cd259020369324e9dd6b1385b1c6f125496078af5216c2a17d905109",
+            "scope-0006-a3ac329d0b1b0ab7319c3d3fd3fdcd7db8e968c149f11517b5790df0dff707c1"
+          ]
+        },
+        "coverage": {
+          "time": "not_stated",
+          "material": "not_stated",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      },
+      {
+        "id": "task-check-bottle-seal",
+        "propositionScopeIds": [
+          "scope-0007-97c6613ea2f8a8f2d3aa02769a1c92ccebf563f5bef466d4c9219740b8c74bd3",
+          "scope-0008-26e233d2c77d11892f8a8f11f3c746840148fdd0cf91a66d90f31f56b9b6b61e"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "review",
+        "action": {
+          "scopeId": "scope-0007-97c6613ea2f8a8f2d3aa02769a1c92ccebf563f5bef466d4c9219740b8c74bd3",
+          "surface": "检查"
+        },
+        "object": {
+          "scopeId": "scope-0007-97c6613ea2f8a8f2d3aa02769a1c92ccebf563f5bef466d4c9219740b8c74bd3",
+          "surface": "采样瓶密封性"
+        },
+        "effect": "physical_action",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "检查采样瓶密封性",
+          "description": "采集员于2026年9月19日17:00前检查采样瓶密封性，这项检查不受上述预警条件影响。",
+          "completionCriteria": [
+            "采样瓶密封性已检查"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "high",
+          "dependencyTempIds": [],
+          "confidence": 0.95,
+          "userConfirmationRequired": true,
+          "materialTempIds": [
+            "material-sampling-bottle"
+          ],
+          "timePointTempIds": [
+            "time-check-deadline"
+          ]
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [
+            "scope-0008-26e233d2c77d11892f8a8f11f3c746840148fdd0cf91a66d90f31f56b9b6b61e"
+          ],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [
+      {
+        "tempId": "material-sampling-bottle",
+        "name": "采样瓶",
+        "required": true,
+        "formatRequirements": [],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "task-check-bottle-seal"
+        ],
+        "scopeIds": [
+          "scope-0007-97c6613ea2f8a8f2d3aa02769a1c92ccebf563f5bef466d4c9219740b8c74bd3"
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "timePoints": [
+      {
+        "tempId": "time-check-deadline",
+        "type": "task_deadline",
+        "rawText": "2026年9月19日17:00前",
+        "relatedTaskTempIds": [
+          "task-check-bottle-seal"
+        ],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0007-97c6613ea2f8a8f2d3aa02769a1c92ccebf563f5bef466d4c9219740b8c74bd3"
+        ],
+        "confidence": 0.95,
+        "normalizedValue": "2026-09-19T17:00",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "exact",
+        "needsConfirmation": false
+      }
+    ],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0001-d8ee597fae5700181a6467d1c56993a6567b3a40b81a05c81b036e8e39675901",
+      "scope-0005-b9ba4503cd259020369324e9dd6b1385b1c6f125496078af5216c2a17d905109",
+      "scope-0006-a3ac329d0b1b0ab7319c3d3fd3fdcd7db8e968c149f11517b5790df0dff707c1"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "source:b483355a",
+    "sourceVersionId": "source:b483355a:version:1",
+    "sourceFingerprint": "sha256:a12e63ec65572ff34cf50cd3cd90919efe5a6b46304a4c4900eb455809d2c013"
+  },
+  "http": 200,
+  "diagnostic": null,
+  "waitingMs": 7294,
+  "score": {
+    "scorerVersion": "real-input-seen-fact-diagnostic-2",
+    "label": "已见人工工程参考的精确诊断，不是未见或商业准确率",
+    "metrics": {
+      "task": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 2,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "requiresAction": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 2,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "time": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 1,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "material": {
+        "predicted": 1,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 1,
+        "falseNegative": 0,
+        "precision": 0,
+        "recall": null
+      },
+      "event": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "condition": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 0,
+        "falsePositive": 2,
+        "falseNegative": 2,
+        "precision": 0,
+        "recall": 0
+      },
+      "revision": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "evidence": {
+        "predicted": 4,
+        "reference": 3,
+        "correct": 2,
+        "falsePositive": 2,
+        "falseNegative": 1,
+        "precision": 0.5,
+        "recall": 0.6666666666666666
+      },
+      "semantic": {
+        "predicted": 3,
+        "reference": 2,
+        "correct": 0,
+        "falsePositive": 3,
+        "falseNegative": 2,
+        "precision": 0,
+        "recall": 0
+      },
+      "coverage": {
+        "predicted": 4,
+        "reference": 4,
+        "correct": 2,
+        "falsePositive": 2,
+        "falseNegative": 2,
+        "precision": 0.5,
+        "recall": 0.5
+      }
+    },
+    "matchingAmbiguities": [],
+    "metricStatus": "EXACT_REFERENCE_DIAGNOSTIC",
+    "schemaParsed": true,
+    "issues": [
+      {
+        "code": "CONDITION_CONTRADICTION",
+        "entityIds": [
+          "task-check-bottle-seal"
+        ]
+      }
+    ],
+    "completeCase": false,
+    "majorCorrectionRequired": true,
+    "forbidden": 0,
+    "automaticSelection": "NOT_ENABLED",
+    "humanActiveEditTime": "NOT_RUN",
+    "candidateTaskCount": 2,
+    "referenceTaskCount": 2
+  },
+  "scoreError": null,
+  "totalAttempts": 176,
+  "costUpperMicroCny": 30453,
+  "totalCostUpperMicroCny": 7413802,
+  "stopDispatch": false,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticSelection": "NOT_ENABLED",
+  "qualityClaim": "20份已见材料开发回归；原12+后8分别报告；40请求不是40独立材料"
+}

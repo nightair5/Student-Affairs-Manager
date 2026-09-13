@@ -3,6 +3,7 @@ import type { ImmutableScopeIndex } from '../../recognition/scopeReferenceContra
 import { indexImmutableScopesV11 } from '../../recognition/scopeIndexV11'
 import { parseChineseTimeAst } from '../../lib/timeSemantics'
 import { assembleFacts, FACT_WIRE_VERSION } from './factAssembly'
+import { assembleEvidenceRoleWireV2, EVIDENCE_ROLE_V2_VERSION } from './evidenceRoleWireV2'
 
 export const WIRE_VERSION = 'real-input-model-wire-1' as const
 export const MODEL_NAME = 'deepseek-v4-flash-vision-exp' as const
@@ -117,6 +118,10 @@ export function parseModelEnvelope(rawHttpText: string, context: WireContext, mo
     || Number(usage.output_tokens) > MAX_OUTPUT_TOKENS) wireError('USAGE_INVALID')
   const rawOutputText = output.text as string
   const rawResponse: unknown = JSON.parse(rawOutputText)
+  if (modelName === FLASH41_MODEL_NAME && record(rawResponse).schemaVersion === EVIDENCE_ROLE_V2_VERSION) {
+    const assembly = assembleEvidenceRoleWireV2(rawResponse, context)
+    return { rawHttpText, envelope, rawOutputText, rawResponse: assembly.rawEvidence, adaptedResponse: assembly.adaptedResponse }
+  }
   if (modelName === FLASH41_MODEL_NAME && record(rawResponse).schemaVersion === FACT_WIRE_VERSION) {
     const assembly = assembleFacts(rawResponse), adapted = adaptModelWire(assembly.assembledWire, context)
     return { rawHttpText, envelope, rawOutputText, rawResponse: assembly.rawFacts, adaptedResponse: adapted.adapted }

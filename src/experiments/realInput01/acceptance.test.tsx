@@ -51,6 +51,91 @@ import { CANDIDATE07_VERSION } from './candidate07'
 import { validateWorkspaceShape } from '../../domain/v2/validators/shapeValidator'
 import { validateMaterialDecision } from './factCorrections'
 import { TaskDetailPanel } from '../../components/TaskDetailPanel'
+import { CANDIDATE09_VERSION } from './candidate09'
+
+describe('paired09 settled raw replay; engineering simulation, not browser evidence',()=>{
+  function record(unitId:string):RecordedPaired04 {
+    const p='docs/recognition-optimization/mainline-real-input-01/runs/candidate09-20260913a/'
+    const binding=JSON.parse(readFileSync(p+'BINDING_FINAL.json','utf8'))
+    const item=binding.items.find((i:{id:string})=>i.id===unitId.slice(0,3))
+    const raw=JSON.parse(readFileSync(p+unitId+'_RAW.jsonl','utf8'))
+    return {version:'recorded-paired09-1',unitId,name:recordedA02Identity.name,operationId:item.operationId,
+      title:item.title,context:item.context,requestSha:raw.requestSha,responseSha:raw.responseSha,rawHttpText:raw.rawHttpText}
+  }
+  async function fixture(){
+    const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:recordedA02Identity.name})
+    const repo=await SemanticRepository.open(store.name,store,emptyRealInputWorkspace(store.name),'real-input-01')
+    return {store,repo}
+  }
+  it.each(['U01-09','U07-09','V04-03'])('%s explicitly reviews, partially confirms and independently restores raw, facts and unverified materials',async unitId=>{
+    const {repo,store}=await fixture(),r=record(unitId),identity={unitId,requestSha:r.requestSha,responseSha:r.responseSha}
+    const fetch=vi.spyOn(globalThis,'fetch').mockRejectedValue(Error('MODEL_MUST_NOT_DISPATCH'))
+    try{
+      const loaded=await replayRecordedPaired04(repo,r,identity),d=loaded.extractionDrafts[0],initial=stateOfRuntime(loaded,d.id)
+      expect(initial.version).toBe(REAL_STATE_VERSION)
+      if(initial.version!==REAL_STATE_VERSION)throw Error('REAL_EXPECTED')
+      expect(initial.rawHttpText).toBe(r.rawHttpText)
+      expect(loaded.recognitionRuns[0].promptVersion).toBe(unitId.endsWith('-09')?CANDIDATE09_VERSION:CANDIDATE03_VERSION)
+      expect(loaded.tasks).toHaveLength(0)
+      const facts=effectiveStateFacts(initial).facts,ids=facts.tasks.filter(t=>t.semantics.status==='pending').map(t=>t.id)
+      expect(ids).toHaveLength(unitId==='U01-09'?2:1)
+      await expect(confirmSemantic(repo,{draftId:d.id,taskTempIds:ids,revision:semanticRevision(loaded)})).rejects.toThrow()
+      for(const m of facts.materials)await reviewSemanticMaterial(repo,{draftId:d.id,materialId:m.tempId,
+        revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID(),value:{required:m.required,status:'unverified'}})
+      for(const taskId of ids)await reviewSemanticFact(repo,{draftId:d.id,taskId,revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID()})
+      let prior=await repo.load()
+      for(const taskId of ids){
+        const next=await confirmSemantic(repo,{draftId:d.id,taskTempIds:[taskId],revision:semanticRevision(prior)})
+        for(const old of prior.tasks)expect(next.tasks.find(t=>t.id===old.id)).toEqual(old)
+        prior=next
+      }
+      const saved=prior
+      expect(saved.tasks).toHaveLength(ids.length)
+      expect(saved.materials.every(m=>m.status==='unverified')).toBe(true)
+      expect(stateOfRuntime(saved,d.id).rawResponse).toEqual(initial.rawResponse)
+      expect(stateOfRuntime(saved,d.id).first).toEqual(initial.first)
+      expect(effectiveStateFacts(stateOfRuntime(saved,d.id)).facts.revisions).toEqual(facts.revisions)
+      if(unitId==='U07-09')expect(saved.tasks.some(t=>t.title.includes('寄送'))).toBe(false)
+      if(unitId==='V04-03')expect(saved.timePoints).toHaveLength(0)
+      const reopened=await SemanticRepository.open(store.name,store,undefined,'real-input-01')
+      expect(await reopened.load()).toEqual(saved)
+      expect(await new CanonicalWorkspaceRepository(store).load()).toEqual(JSON.parse(JSON.stringify(saved)))
+      expect(await replayRecordedPaired04(reopened,r,identity)).toEqual(saved)
+      expect(await confirmSemantic(reopened,{draftId:d.id,taskTempIds:ids,revision:semanticRevision(saved)})).toEqual(saved)
+      await expect(inputRunContext(repo,{sourceId:initial.sourceId,sourceVersionId:initial.sourceVersionId,
+        recognitionRunId:initial.runId,draftId:initial.draftId,duplicate:false})).rejects.toThrow('RECORDED_NEVER_DISPATCHABLE')
+      const other=record(unitId.slice(0,4)+(unitId.endsWith('-09')?'03':'09'))
+      await expect(replayRecordedPaired04(repo,other,{unitId:other.unitId,requestSha:other.requestSha,responseSha:other.responseSha})).rejects.toThrow('PAIRED_SOURCE_ARM_ALREADY_CHOSEN')
+      expect(await repo.load()).toEqual(saved)
+      expect(fetch).not.toHaveBeenCalled()
+    }finally{fetch.mockRestore()}
+  })
+  it('rejects wrong version, source, request and response before writes; rejected raw does not leave half records',async()=>{
+    const {repo}=await fixture(),before=await repo.load()
+    for(const change of [(r:RecordedPaired04)=>{r.version='recorded-paired07-1'},(r:RecordedPaired04)=>{r.operationId+='x'},
+      (r:RecordedPaired04)=>{r.context.timezone='UTC'},(r:RecordedPaired04)=>{r.requestSha='0'.repeat(64)},
+      (r:RecordedPaired04)=>{r.rawHttpText+=' '}]){
+      const r=record('U01-09'),identity={unitId:r.unitId,requestSha:r.requestSha,responseSha:r.responseSha}
+      change(r);await expect(replayRecordedPaired04(repo,r,identity)).rejects.toThrow();expect(await repo.load()).toEqual(before)
+    }
+    for(const unitId of ['U06-09','U12-09']){
+      const r=record(unitId)
+      await expect(replayRecordedPaired04(repo,r,{unitId,requestSha:r.requestSha,responseSha:r.responseSha})).rejects.toThrow()
+      expect(await repo.load()).toEqual(before)
+    }
+  })
+  it('transaction failure preserves older sources and successful append cannot overwrite them',async()=>{
+    const {repo,store}=await fixture()
+    const first=record('V04-03'),old=await replayRecordedPaired04(repo,first,{unitId:first.unitId,requestSha:first.requestSha,responseSha:first.responseSha})
+    const r=record('U01-09'),identity={unitId:r.unitId,requestSha:r.requestSha,responseSha:r.responseSha}
+    vi.spyOn(store,'transaction').mockRejectedValueOnce(Error('PAIRED09_ATOMIC_FAILURE'))
+    await expect(replayRecordedPaired04(repo,r,identity)).rejects.toThrow('PAIRED09_ATOMIC_FAILURE')
+    expect(await repo.load()).toEqual(old)
+    const saved=await replayRecordedPaired04(repo,r,identity)
+    for(const key of ['sources','sourceVersions','recognitionRuns','extractionDrafts','tasks','materials','historyRecords'] as const)
+      for(const entity of old[key])expect(saved[key].find(e=>e.id===entity.id)).toEqual(entity)
+  })
+})
 
 describe('paired07 actual recorded response boundary; memory only, not browser acceptance',()=>{
   function record(unitId:string):RecordedPaired04{
@@ -246,8 +331,9 @@ describe('HTTPS preview',()=>{
       import assert from 'node:assert/strict';import {request} from 'node:http';import {buildPreview,startLocalPreview} from './scripts/build-real-input-preview.mjs';
       await assert.rejects(buildPreview('http://127.0.0.1:6632'),/ORIGIN/);
       await assert.rejects(buildPreview('http://127.0.0.1:6631',{localOnly:true}),/ORIGIN/);
-      const {server,manifest}=await startLocalPreview();
-      const get=(path,headers={},method='GET')=>new Promise((resolve,reject)=>{const req=request(manifest.origin+path,{headers,method},r=>{const parts=[];r.on('data',b=>parts.push(b));r.on('end',()=>resolve({status:r.statusCode,text:Buffer.concat(parts).toString()}))});req.on('error',reject);req.end()});
+      const {server,manifest}=await startLocalPreview({testOnlyEphemeralPort:true});
+      const testOrigin='http://127.0.0.1:'+server.address().port;
+      const get=(path,headers={},method='GET')=>new Promise((resolve,reject)=>{const req=request(testOrigin+path,{headers:{Host:'127.0.0.1:6632',...headers},method},r=>{const parts=[];r.on('data',b=>parts.push(b));r.on('end',()=>resolve({status:r.statusCode,text:Buffer.concat(parts).toString()}))});req.on('error',reject);req.end()});
       try{
         assert.equal(server.address().address,'127.0.0.1');assert.equal(manifest.configuration,null);assert.equal(manifest.modelCallsEnabled,false);
         for(const path of ['/','/browser.js','/browser.css','/recorded/Q01-06.json','/recorded/Q07-06.json','/recorded/R11-07.json','/recorded/R12-07.json'])assert.equal((await get(path)).status,200,path);

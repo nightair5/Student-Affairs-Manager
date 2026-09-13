@@ -1,0 +1,39 @@
+{
+  "date": "2026-09-13",
+  "browser": "official Codex in-app browser 1, tab 3",
+  "url": "http://127.0.0.1:6632/",
+  "database": "rco-mainline-01-02-i1-real-input-https-preview-1",
+  "candidateUsed": "Q01-06/Q07-06 historical candidate06; candidate09 NOT_ADOPT",
+  "operator": "assistant through official UI; no human time claim",
+  "connection": "Targeted connection succeeded after user requested direct operation; no plugin reinstall or new database.",
+  "journeys": [
+    {"unit":"Q01-06","expectedActiveTasks":2,"correctlySaved":2,"titles":["提交放映授权书","上传预告片"],"deadlines":["2026-09-23T16:00","2026-09-25T12:00"],"timezone":"Asia/Shanghai","mode":"partial: one then the other","semanticEdits":0,"materialReviews":3,"taskReviews":2},
+    {"unit":"Q07-06","expectedActiveTasks":1,"correctlySaved":1,"titles":["上传校样PDF"],"deadlines":["2026-09-24T10:00"],"timezone":"Asia/Shanghai","cancelledTaskNotCreated":"寄送纸质校样","revision":{"type":"supersedes","targetDirectiveId":"task-old-mail-proof","fromDirectiveId":"task-upload-proof-pdf","effective":"true"},"semanticEdits":0,"materialReviews":1,"taskReviews":1}
+  ],
+  "materials": [
+    {"name":"放映授权书","required":true,"status":"unverified","format":["签名PDF"],"owner":"提交放映授权书","channel":"校内送审系统的授权区"},
+    {"name":"版权方邮件许可截图","required":true,"status":"unverified","format":["截图"],"owner":"提交放映授权书"},
+    {"name":"预告片","required":true,"status":"unverified","format":["MP4","时长不超过60秒"],"owner":"上传预告片","channel":"校内送审系统的视频区"},
+    {"name":"校样PDF","required":true,"status":"unverified","format":["PDF"],"naming":["稿件编号_校样"],"owner":"上传校样PDF","channel":"编辑部收稿系统"}
+  ],
+  "refresh": "PASS: official reload, task center four tasks, calendar September 17/23/24/25; September 20 no cancelled task; PDF detail includes saved operations and effective supersedes",
+  "before": {"tasks":1,"sha256":"a7c6073d673691335ee5eb54cab9f3834ffcfd7a8689e73a4133d08f09fe250d"},
+  "independentRead": {
+    "source":"new CanonicalWorkspaceRepository(new IsolatedTestStore(name)).load()",
+    "method":"Clicked independent repository UI; read all 283716 characters from visible pre; parsed and compared full objects within browser-control session",
+    "sha256":"cc62dcd655603d2e7ff11b6b497d3da08899405bc7de982331362ed541a1a41a",
+    "tasks":4,"materials":5,"timePoints":4,"realJobs":0,
+    "oldTasksUnchanged":true,"oldMaterialsUnchanged":true,"oldRecognitionRunsUnchanged":true,"oldRawAndFirstSuggestionsUnchanged":true,
+    "repeatQ01LoadFullWorkspaceEqual":true,
+    "effects":{"foreignDatabase":0,"blockedDatabaseUpgrades":0,"legacyStorage":0,"forbiddenNetwork":0,"writes":0}
+  },
+  "unsavedEditProtection":"Observed material editor dirty warning and disabled task confirmation before explicit material save",
+  "download": {
+    "status":"NOT_VERIFIED",
+    "actions":"Clicked engineering JSON and full workspace JSON download buttons. Official waitForEvent(download) timed out. No new JSON in Windows Downloads.",
+    "capability":"Page.setDownloadBehavior unsupported; tab_content_export unsupported. No permission bypass or alternate browser automation used.",
+    "actualFileComparison":"NOT_RUN; UI independent-read result is not presented as a downloaded file",
+    "remaining":"One actual full workspace JSON file and one independent-read engineering JSON file from current 6632 browser are still needed."
+  },
+  "limitations":["No required text correction, so no artificial typing was performed.","Normal undated control V04-03 passed in engineering test, not this browser journey.","Entire package not claimed complete while actual download comparison is missing."]
+}

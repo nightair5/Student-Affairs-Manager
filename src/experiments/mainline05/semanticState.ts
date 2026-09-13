@@ -8,6 +8,8 @@ import { effectiveFacts, appendCorrection, validateMaterialDecision, type Materi
 import { factIdentity, itemSafety, selectLiveTasks } from '../realInput01/modelPolicy'
 import { parseModelEnvelope, MODEL_NAME, FLASH41_MODEL_NAME, PROMPT_VERSION, type ModelWire } from '../realInput01/modelWire'
 import type { FactWire } from '../realInput01/factAssembly'
+import { EVIDENCE_ROLE_V2_VERSION, type EvidenceRoleWireV2 } from '../realInput01/evidenceRoleWireV2'
+import { CANDIDATE09_VERSION } from '../realInput01/candidate09'
 import { CANDIDATE05_VERSION } from '../realInput01/candidate05'
 import { CANDIDATE06_VERSION } from '../realInput01/candidate06'
 import { CANDIDATE07_VERSION } from '../realInput01/candidate07'
@@ -36,7 +38,7 @@ export interface SemanticState {
 export const REAL_STATE_VERSION = 'mainline-real-input-state-1' as const
 export interface RealInputState extends Omit<SemanticState, 'version' | 'rawResponse'> {
   version: typeof REAL_STATE_VERSION
-  rawResponse: ModelWire | FactWire
+  rawResponse: ModelWire | FactWire | EvidenceRoleWireV2
   rawHttpText: string
   adaptedResponse: SemanticInput
   inputReceipt: InputReceipt
@@ -518,7 +520,7 @@ export async function validateSemanticWorkspace(workspace: WorkspaceV8, profile?
       && version.contentHash === workspaceSnapshotHash(version.rawText) && draft.result === null, 'SOURCE_CHAIN_INVALID')
     if (real) {
       assert((run.modelName === MODEL_NAME && [PROMPT_VERSION,CANDIDATE02_VERSION,CANDIDATE03_VERSION,CANDIDATE04_VERSION].includes(run.promptVersion as typeof PROMPT_VERSION)
-        || run.modelName === FLASH41_MODEL_NAME && [CANDIDATE03_VERSION,CANDIDATE05_VERSION,CANDIDATE06_VERSION,CANDIDATE07_VERSION].includes(run.promptVersion as typeof CANDIDATE03_VERSION))
+        || run.modelName === FLASH41_MODEL_NAME && [CANDIDATE03_VERSION,CANDIDATE05_VERSION,CANDIDATE06_VERSION,CANDIDATE07_VERSION,CANDIDATE09_VERSION].includes(run.promptVersion as typeof CANDIDATE03_VERSION))
         && run.pipelineVersion === REAL_STATE_VERSION, 'RUN_IDENTITY')
       const pending = draft.legacyData?.realInputPending
       assert(pending && typeof pending === 'object' && !Array.isArray(pending), 'SEND_RECEIPT_MISSING')
@@ -564,6 +566,7 @@ export async function validateSemanticWorkspace(workspace: WorkspaceV8, profile?
     if (state.version === REAL_STATE_VERSION) {
       assert(state.context.profile === 'real-input-01' && state.context.authority === 'live_model_candidate' && state.legacyResponse === null, 'LIVE_AUTHORITY')
       const parsed = parseModelEnvelope(state.rawHttpText, state.context, run.modelName === FLASH41_MODEL_NAME ? FLASH41_MODEL_NAME : MODEL_NAME)
+      assert((parsed.rawResponse.schemaVersion === EVIDENCE_ROLE_V2_VERSION) === (run.promptVersion === CANDIDATE09_VERSION), 'MODEL_WIRE_PROMPT_IDENTITY')
       assert(equal(parsed.rawResponse, state.rawResponse) && parsed.rawOutputText === state.rawOutputText
         && equal(parsed.adaptedResponse, state.adaptedResponse), 'MODEL_ADAPTATION_MISMATCH')
       const pending = draft.legacyData!.realInputPending as unknown as { reading: RealInputReading; execution: string }

@@ -1,0 +1,4112 @@
+{
+  "version": "paired09-business-adjudication-1",
+  "claim": "已见材料开发回归；代理依据预先BUSINESS_RULES裁决，不是独立盲测或真人研究",
+  "adoption": "NOT_ADOPT",
+  "baseline": "candidate03",
+  "candidate": "candidate09",
+  "model": "deepseek-flash",
+  "immutableProviderVersion": "NOT_AVAILABLE",
+  "groups": {
+    "original12": {
+      "03": {
+        "denominator": 12,
+        "noSubstantiveCorrection": 9,
+        "noSubstantiveOrExtraStructuralCorrection": 9,
+        "parsed": 12,
+        "extraStructuralBlock": 0,
+        "businessErrors": {
+          "revision": 2,
+          "taskExtra": 1,
+          "materialOwner": 2,
+          "condition": 1,
+          "dependency": 1
+        }
+      },
+      "09": {
+        "denominator": 12,
+        "noSubstantiveCorrection": 6,
+        "noSubstantiveOrExtraStructuralCorrection": 6,
+        "parsed": 10,
+        "extraStructuralBlock": 4,
+        "businessErrors": {
+          "materialExtra": 3,
+          "taskExtra": 1,
+          "materialOwner": 1,
+          "dependency": 1,
+          "revision": 2,
+          "materialAttribute": 1,
+          "condition": 1,
+          "cancelledTaskMissing": 1,
+          "time": 1
+        }
+      }
+    },
+    "later8": {
+      "03": {
+        "denominator": 8,
+        "noSubstantiveCorrection": 8,
+        "noSubstantiveOrExtraStructuralCorrection": 8,
+        "parsed": 8,
+        "extraStructuralBlock": 0,
+        "businessErrors": {}
+      },
+      "09": {
+        "denominator": 8,
+        "noSubstantiveCorrection": 5,
+        "noSubstantiveOrExtraStructuralCorrection": 4,
+        "parsed": 8,
+        "extraStructuralBlock": 1,
+        "businessErrors": {
+          "materialExtra": 3,
+          "time": 1
+        }
+      }
+    },
+    "all20": {
+      "03": {
+        "denominator": 20,
+        "noSubstantiveCorrection": 17,
+        "noSubstantiveOrExtraStructuralCorrection": 17,
+        "parsed": 20,
+        "extraStructuralBlock": 0,
+        "businessErrors": {
+          "revision": 2,
+          "taskExtra": 1,
+          "materialOwner": 2,
+          "condition": 1,
+          "dependency": 1
+        }
+      },
+      "09": {
+        "denominator": 20,
+        "noSubstantiveCorrection": 11,
+        "noSubstantiveOrExtraStructuralCorrection": 10,
+        "parsed": 18,
+        "extraStructuralBlock": 5,
+        "businessErrors": {
+          "materialExtra": 6,
+          "taskExtra": 1,
+          "materialOwner": 1,
+          "dependency": 1,
+          "revision": 2,
+          "materialAttribute": 1,
+          "condition": 1,
+          "cancelledTaskMissing": 1,
+          "time": 2
+        }
+      }
+    }
+  },
+  "cases": [
+    {
+      "id": "U01",
+      "cohort": "original12",
+      "note": "两个任务、截止和三份材料正确。submission_deadline与task_deadline在本例均表示同一提交截止；截图格式、来源引用差异不改变实际办理。",
+      "arms": {
+        "03": {
+          "businessErrors": {},
+          "noSubstantiveCorrection": true,
+          "extraStructuralBlock": null,
+          "conversion": "PARSED",
+          "strict": {
+            "task": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "requiresAction": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "time": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 0,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0,
+              "recall": 0
+            },
+            "material": {
+              "predicted": 3,
+              "reference": 3,
+              "correct": 1,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0.3333333333333333,
+              "recall": 0.3333333333333333
+            },
+            "event": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "condition": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "revision": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "evidence": {
+              "predicted": 7,
+              "reference": 7,
+              "correct": 0,
+              "falsePositive": 7,
+              "falseNegative": 7,
+              "precision": 0,
+              "recall": 0
+            },
+            "semantic": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 0,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0,
+              "recall": 0
+            },
+            "coverage": {
+              "predicted": 4,
+              "reference": 4,
+              "correct": 1,
+              "falsePositive": 3,
+              "falseNegative": 3,
+              "precision": 0.25,
+              "recall": 0.25
+            }
+          },
+          "strictCompleteCase": false,
+          "scoreError": null
+        },
+        "09": {
+          "businessErrors": {},
+          "noSubstantiveCorrection": true,
+          "extraStructuralBlock": null,
+          "conversion": "PARSED",
+          "strict": {
+            "task": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "requiresAction": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "time": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 0,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0,
+              "recall": 0
+            },
+            "material": {
+              "predicted": 3,
+              "reference": 3,
+              "correct": 1,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0.3333333333333333,
+              "recall": 0.3333333333333333
+            },
+            "event": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "condition": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "revision": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "evidence": {
+              "predicted": 7,
+              "reference": 7,
+              "correct": 1,
+              "falsePositive": 6,
+              "falseNegative": 6,
+              "precision": 0.14285714285714285,
+              "recall": 0.14285714285714285
+            },
+            "semantic": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 0,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0,
+              "recall": 0
+            },
+            "coverage": {
+              "predicted": 4,
+              "reference": 4,
+              "correct": 1,
+              "falsePositive": 3,
+              "falseNegative": 3,
+              "precision": 0.25,
+              "recall": 0.25
+            }
+          },
+          "strictCompleteCase": false,
+          "scoreError": null
+        }
+      }
+    },
+    {
+      "id": "U02",
+      "cohort": "original12",
+      "note": "近期及另行通知均保留；没有具体日期。两个待定时间的粒度需要核对，不计假日期或漏任务。",
+      "arms": {
+        "03": {
+          "businessErrors": {},
+          "noSubstantiveCorrection": true,
+          "extraStructuralBlock": null,
+          "conversion": "PARSED",
+          "strict": {
+            "task": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "requiresAction": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "time": {
+              "predicted": 2,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 1,
+              "falseNegative": 0,
+              "precision": 0.5,
+              "recall": 1
+            },
+            "material": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 0,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0,
+              "recall": 0
+            },
+            "event": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "condition": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "revision": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "evidence": {
+              "predicted": 4,
+              "reference": 3,
+              "correct": 1,
+              "falsePositive": 3,
+              "falseNegative": 2,
+              "precision": 0.25,
+              "recall": 0.3333333333333333
+            },
+            "semantic": {
+              "predicted": 3,
+              "reference": 2,
+              "correct": 1,
+              "falsePositive": 2,
+              "falseNegative": 1,
+              "precision": 0.3333333333333333,
+              "recall": 0.5
+            },
+            "coverage": {
+              "predicted": 3,
+              "reference": 3,
+              "correct": 1,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0.3333333333333333,
+              "recall": 0.3333333333333333
+            }
+          },
+          "strictCompleteCase": false,
+          "scoreError": null
+        },
+        "09": {
+          "businessErrors": {},
+          "noSubstantiveCorrection": true,
+          "extraStructuralBlock": null,
+          "conversion": "PARSED",
+          "strict": {
+            "task": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "requiresAction": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "time": {
+              "predicted": 2,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 1,
+              "falseNegative": 0,
+              "precision": 0.5,
+              "recall": 1
+            },
+            "material": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 0,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0,
+              "recall": 0
+            },
+            "event": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "condition": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "revision": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "evidence": {
+              "predicted": 4,
+              "reference": 3,
+              "correct": 1,
+              "falsePositive": 3,
+              "falseNegative": 2,
+              "precision": 0.25,
+              "recall": 0.3333333333333333
+            },
+            "semantic": {
+              "predicted": 3,
+              "reference": 2,
+              "correct": 1,
+              "falsePositive": 2,
+              "falseNegative": 1,
+              "precision": 0.3333333333333333,
+              "recall": 0.5
+            },
+            "coverage": {
+              "predicted": 3,
+              "reference": 3,
+              "correct": 1,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0.3333333333333333,
+              "recall": 0.3333333333333333
+            }
+          },
+          "strictCompleteCase": false,
+          "scoreError": null
+        }
+      }
+    },
+    {
+      "id": "U03",
+      "cohort": "original12",
+      "note": "09把保存对象服务现场原始照片重复生成必需材料；03没有此项额外材料核对。",
+      "arms": {
+        "03": {
+          "businessErrors": {},
+          "noSubstantiveCorrection": true,
+          "extraStructuralBlock": null,
+          "conversion": "PARSED",
+          "strict": {
+            "task": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "requiresAction": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "time": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "material": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "event": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "condition": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "revision": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "evidence": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 0,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0,
+              "recall": 0
+            },
+            "semantic": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 0,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0,
+              "recall": 0
+            },
+            "coverage": {
+              "predicted": 3,
+              "reference": 3,
+              "correct": 2,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0.6666666666666666,
+              "recall": 0.6666666666666666
+            }
+          },
+          "strictCompleteCase": false,
+          "scoreError": null
+        },
+        "09": {
+          "businessErrors": {
+            "materialExtra": 1
+          },
+          "noSubstantiveCorrection": false,
+          "extraStructuralBlock": null,
+          "conversion": "PARSED",
+          "strict": {
+            "task": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "requiresAction": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "time": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "material": {
+              "predicted": 1,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 1,
+              "falseNegative": 0,
+              "precision": 0,
+              "recall": null
+            },
+            "event": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "condition": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "revision": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "evidence": {
+              "predicted": 2,
+              "reference": 1,
+              "correct": 0,
+              "falsePositive": 2,
+              "falseNegative": 1,
+              "precision": 0,
+              "recall": 0
+            },
+            "semantic": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 0,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0,
+              "recall": 0
+            },
+            "coverage": {
+              "predicted": 3,
+              "reference": 3,
+              "correct": 1,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0.3333333333333333,
+              "recall": 0.3333333333333333
+            }
+          },
+          "strictCompleteCase": false,
+          "scoreError": null
+        }
+      }
+    },
+    {
+      "id": "U04",
+      "cohort": "original12",
+      "note": "09多造采样瓶材料；独立检查的not_applicable带否定关联条件依据，另触发CONDITION_CONTRADICTION。条件假本身未被改为真。",
+      "arms": {
+        "03": {
+          "businessErrors": {},
+          "noSubstantiveCorrection": true,
+          "extraStructuralBlock": null,
+          "conversion": "PARSED",
+          "strict": {
+            "task": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "requiresAction": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "time": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "material": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "event": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "condition": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 1,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0.5,
+              "recall": 0.5
+            },
+            "revision": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "evidence": {
+              "predicted": 3,
+              "reference": 3,
+              "correct": 1,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0.3333333333333333,
+              "recall": 0.3333333333333333
+            },
+            "semantic": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 0,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0,
+              "recall": 0
+            },
+            "coverage": {
+              "predicted": 4,
+              "reference": 4,
+              "correct": 3,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0.75,
+              "recall": 0.75
+            }
+          },
+          "strictCompleteCase": false,
+          "scoreError": null
+        },
+        "09": {
+          "businessErrors": {
+            "materialExtra": 1
+          },
+          "noSubstantiveCorrection": false,
+          "extraStructuralBlock": "CONDITION_CONTRADICTION: condition evidence scope on independent task",
+          "conversion": "PARSED",
+          "strict": {
+            "task": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "requiresAction": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "time": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "material": {
+              "predicted": 1,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 1,
+              "falseNegative": 0,
+              "precision": 0,
+              "recall": null
+            },
+            "event": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "condition": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 0,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0,
+              "recall": 0
+            },
+            "revision": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "evidence": {
+              "predicted": 4,
+              "reference": 3,
+              "correct": 2,
+              "falsePositive": 2,
+              "falseNegative": 1,
+              "precision": 0.5,
+              "recall": 0.6666666666666666
+            },
+            "semantic": {
+              "predicted": 3,
+              "reference": 2,
+              "correct": 0,
+              "falsePositive": 3,
+              "falseNegative": 2,
+              "precision": 0,
+              "recall": 0
+            },
+            "coverage": {
+              "predicted": 4,
+              "reference": 4,
+              "correct": 2,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0.5,
+              "recall": 0.5
+            }
+          },
+          "strictCompleteCase": false,
+          "scoreError": null
+        }
+      }
+    },
+    {
+      "id": "U05",
+      "cohort": "original12",
+      "note": "行程证明PDF及已成立条件、截止均正确；03退回报销单背景事件不算新增任务。",
+      "arms": {
+        "03": {
+          "businessErrors": {},
+          "noSubstantiveCorrection": true,
+          "extraStructuralBlock": null,
+          "conversion": "PARSED",
+          "strict": {
+            "task": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "requiresAction": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "time": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 0,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0,
+              "recall": 0
+            },
+            "material": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "event": {
+              "predicted": 1,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 1,
+              "falseNegative": 0,
+              "precision": 0,
+              "recall": null
+            },
+            "condition": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "revision": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "evidence": {
+              "predicted": 4,
+              "reference": 3,
+              "correct": 1,
+              "falsePositive": 3,
+              "falseNegative": 2,
+              "precision": 0.25,
+              "recall": 0.3333333333333333
+            },
+            "semantic": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 0,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0,
+              "recall": 0
+            },
+            "coverage": {
+              "predicted": 3,
+              "reference": 3,
+              "correct": 1,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0.3333333333333333,
+              "recall": 0.3333333333333333
+            }
+          },
+          "strictCompleteCase": false,
+          "scoreError": null
+        },
+        "09": {
+          "businessErrors": {},
+          "noSubstantiveCorrection": true,
+          "extraStructuralBlock": null,
+          "conversion": "PARSED",
+          "strict": {
+            "task": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "requiresAction": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "time": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 0,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0,
+              "recall": 0
+            },
+            "material": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "event": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "condition": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "revision": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "evidence": {
+              "predicted": 3,
+              "reference": 3,
+              "correct": 0,
+              "falsePositive": 3,
+              "falseNegative": 3,
+              "precision": 0,
+              "recall": 0
+            },
+            "semantic": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 0,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0,
+              "recall": 0
+            },
+            "coverage": {
+              "predicted": 3,
+              "reference": 3,
+              "correct": 1,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0.3333333333333333,
+              "recall": 0.3333333333333333
+            }
+          },
+          "strictCompleteCase": false,
+          "scoreError": null
+        }
+      }
+    },
+    {
+      "id": "U06",
+      "cohort": "original12",
+      "note": "09把出示工作证件拆成额外动作并只把证件归该动作，领取仍声明material present，转换拒绝TYPED_COVERAGE_MATERIAL。原文是领取时携带材料。",
+      "arms": {
+        "03": {
+          "businessErrors": {},
+          "noSubstantiveCorrection": true,
+          "extraStructuralBlock": null,
+          "conversion": "PARSED",
+          "strict": {
+            "task": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "requiresAction": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "time": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "material": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "event": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "condition": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "revision": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "evidence": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 1,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0.5,
+              "recall": 0.5
+            },
+            "semantic": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 0,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0,
+              "recall": 0
+            },
+            "coverage": {
+              "predicted": 3,
+              "reference": 3,
+              "correct": 2,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0.6666666666666666,
+              "recall": 0.6666666666666666
+            }
+          },
+          "strictCompleteCase": false,
+          "scoreError": null
+        },
+        "09": {
+          "businessErrors": {
+            "taskExtra": 1,
+            "materialOwner": 1,
+            "dependency": 1
+          },
+          "noSubstantiveCorrection": false,
+          "extraStructuralBlock": "TYPED_COVERAGE_MATERIAL",
+          "conversion": "REJECTED",
+          "strict": null,
+          "strictCompleteCase": null,
+          "scoreError": "REAL_INPUT_TYPED_COVERAGE_MATERIAL"
+        }
+      }
+    },
+    {
+      "id": "U07",
+      "cohort": "original12",
+      "note": "旧寄送作废、新PDF上传、日期、命名和系统正确。旧纸质材料required差异单列历史表示，不影响有效新要求。",
+      "arms": {
+        "03": {
+          "businessErrors": {},
+          "noSubstantiveCorrection": true,
+          "extraStructuralBlock": null,
+          "conversion": "PARSED",
+          "strict": {
+            "task": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "requiresAction": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "time": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 0,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0,
+              "recall": 0
+            },
+            "material": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 1,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0.5,
+              "recall": 0.5
+            },
+            "event": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "condition": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "revision": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 0,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0,
+              "recall": 0
+            },
+            "evidence": {
+              "predicted": 6,
+              "reference": 6,
+              "correct": 2,
+              "falsePositive": 4,
+              "falseNegative": 4,
+              "precision": 0.3333333333333333,
+              "recall": 0.3333333333333333
+            },
+            "semantic": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 0,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0,
+              "recall": 0
+            },
+            "coverage": {
+              "predicted": 4,
+              "reference": 4,
+              "correct": 1,
+              "falsePositive": 3,
+              "falseNegative": 3,
+              "precision": 0.25,
+              "recall": 0.25
+            }
+          },
+          "strictCompleteCase": false,
+          "scoreError": null
+        },
+        "09": {
+          "businessErrors": {},
+          "noSubstantiveCorrection": true,
+          "extraStructuralBlock": null,
+          "conversion": "PARSED",
+          "strict": {
+            "task": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "requiresAction": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "time": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 0,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0,
+              "recall": 0
+            },
+            "material": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 1,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0.5,
+              "recall": 0.5
+            },
+            "event": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "condition": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "revision": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 0,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0,
+              "recall": 0
+            },
+            "evidence": {
+              "predicted": 6,
+              "reference": 6,
+              "correct": 2,
+              "falsePositive": 4,
+              "falseNegative": 4,
+              "precision": 0.3333333333333333,
+              "recall": 0.3333333333333333
+            },
+            "semantic": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 0,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0,
+              "recall": 0
+            },
+            "coverage": {
+              "predicted": 4,
+              "reference": 4,
+              "correct": 1,
+              "falsePositive": 3,
+              "falseNegative": 3,
+              "precision": 0.25,
+              "recall": 0.25
+            }
+          },
+          "strictCompleteCase": false,
+          "scoreError": null
+        }
+      }
+    },
+    {
+      "id": "U08",
+      "cohort": "original12",
+      "note": "两臂取消无替代却使用superseded，页面会显示已被替代，需要改回与纯取消一致的状态；独立课程反思保留。",
+      "arms": {
+        "03": {
+          "businessErrors": {
+            "revision": 1
+          },
+          "noSubstantiveCorrection": false,
+          "extraStructuralBlock": null,
+          "conversion": "PARSED",
+          "strict": {
+            "task": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "requiresAction": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "time": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 1,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0.5,
+              "recall": 0.5
+            },
+            "material": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "event": {
+              "predicted": 1,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 1,
+              "falseNegative": 0,
+              "precision": 0,
+              "recall": null
+            },
+            "condition": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "revision": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "evidence": {
+              "predicted": 6,
+              "reference": 5,
+              "correct": 1,
+              "falsePositive": 5,
+              "falseNegative": 4,
+              "precision": 0.16666666666666666,
+              "recall": 0.2
+            },
+            "semantic": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 0,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0,
+              "recall": 0
+            },
+            "coverage": {
+              "predicted": 4,
+              "reference": 4,
+              "correct": 1,
+              "falsePositive": 3,
+              "falseNegative": 3,
+              "precision": 0.25,
+              "recall": 0.25
+            }
+          },
+          "strictCompleteCase": false,
+          "scoreError": null
+        },
+        "09": {
+          "businessErrors": {
+            "revision": 1
+          },
+          "noSubstantiveCorrection": false,
+          "extraStructuralBlock": null,
+          "conversion": "PARSED",
+          "strict": {
+            "task": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "requiresAction": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "time": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 1,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0.5,
+              "recall": 0.5
+            },
+            "material": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "event": {
+              "predicted": 1,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 1,
+              "falseNegative": 0,
+              "precision": 0,
+              "recall": null
+            },
+            "condition": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "revision": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "evidence": {
+              "predicted": 6,
+              "reference": 5,
+              "correct": 1,
+              "falsePositive": 5,
+              "falseNegative": 4,
+              "precision": 0.16666666666666666,
+              "recall": 0.2
+            },
+            "semantic": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 0,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0,
+              "recall": 0
+            },
+            "coverage": {
+              "predicted": 4,
+              "reference": 4,
+              "correct": 1,
+              "falsePositive": 3,
+              "falseNegative": 3,
+              "precision": 0.25,
+              "recall": 0.25
+            }
+          },
+          "strictCompleteCase": false,
+          "scoreError": null
+        }
+      }
+    },
+    {
+      "id": "U09",
+      "cohort": "original12",
+      "note": "纯信息未生成任务；结束时刻缺日历日期导致现有时间归一化待核对，不是模型编造或漏读。",
+      "arms": {
+        "03": {
+          "businessErrors": {},
+          "noSubstantiveCorrection": true,
+          "extraStructuralBlock": null,
+          "conversion": "PARSED",
+          "strict": {
+            "task": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "requiresAction": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "time": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 0,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0,
+              "recall": 0
+            },
+            "material": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "event": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 0,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0,
+              "recall": 0
+            },
+            "condition": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "revision": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "evidence": {
+              "predicted": 3,
+              "reference": 3,
+              "correct": 0,
+              "falsePositive": 3,
+              "falseNegative": 3,
+              "precision": 0,
+              "recall": 0
+            },
+            "semantic": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 0,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0,
+              "recall": 0
+            },
+            "coverage": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 1,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0.5,
+              "recall": 0.5
+            }
+          },
+          "strictCompleteCase": false,
+          "scoreError": null
+        },
+        "09": {
+          "businessErrors": {},
+          "noSubstantiveCorrection": true,
+          "extraStructuralBlock": null,
+          "conversion": "PARSED",
+          "strict": {
+            "task": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "requiresAction": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "time": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "material": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "event": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 0,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0,
+              "recall": 0
+            },
+            "condition": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "revision": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "evidence": {
+              "predicted": 3,
+              "reference": 3,
+              "correct": 2,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0.6666666666666666,
+              "recall": 0.6666666666666666
+            },
+            "semantic": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 1,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0.5,
+              "recall": 0.5
+            },
+            "coverage": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            }
+          },
+          "strictCompleteCase": false,
+          "scoreError": null
+        }
+      }
+    },
+    {
+      "id": "U10",
+      "cohort": "original12",
+      "note": "灯光与音频两任务、各自材料和截止正确。照片已拍信息保留在来源，准备状态仍由用户核对。",
+      "arms": {
+        "03": {
+          "businessErrors": {},
+          "noSubstantiveCorrection": true,
+          "extraStructuralBlock": null,
+          "conversion": "PARSED",
+          "strict": {
+            "task": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "requiresAction": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "time": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 0,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0,
+              "recall": 0
+            },
+            "material": {
+              "predicted": 4,
+              "reference": 4,
+              "correct": 4,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "event": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "condition": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "revision": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "evidence": {
+              "predicted": 8,
+              "reference": 8,
+              "correct": 2,
+              "falsePositive": 6,
+              "falseNegative": 6,
+              "precision": 0.25,
+              "recall": 0.25
+            },
+            "semantic": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 0,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0,
+              "recall": 0
+            },
+            "coverage": {
+              "predicted": 4,
+              "reference": 4,
+              "correct": 1,
+              "falsePositive": 3,
+              "falseNegative": 3,
+              "precision": 0.25,
+              "recall": 0.25
+            }
+          },
+          "strictCompleteCase": false,
+          "scoreError": null
+        },
+        "09": {
+          "businessErrors": {},
+          "noSubstantiveCorrection": true,
+          "extraStructuralBlock": null,
+          "conversion": "PARSED",
+          "strict": {
+            "task": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "requiresAction": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "time": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 0,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0,
+              "recall": 0
+            },
+            "material": {
+              "predicted": 4,
+              "reference": 4,
+              "correct": 4,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "event": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "condition": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "revision": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "evidence": {
+              "predicted": 8,
+              "reference": 8,
+              "correct": 2,
+              "falsePositive": 6,
+              "falseNegative": 6,
+              "precision": 0.25,
+              "recall": 0.25
+            },
+            "semantic": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 0,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0,
+              "recall": 0
+            },
+            "coverage": {
+              "predicted": 4,
+              "reference": 4,
+              "correct": 1,
+              "falsePositive": 3,
+              "falseNegative": 3,
+              "precision": 0.25,
+              "recall": 0.25
+            }
+          },
+          "strictCompleteCase": false,
+          "scoreError": null
+        }
+      }
+    },
+    {
+      "id": "U11",
+      "cohort": "original12",
+      "note": "03多造准备密封袋动作并错误归属；09修复这两点但把袋的两个数量写到检测样本上。两臂均把前置状态未知写成true。09共享材料关联引发本机跨任务MULTIPLE_DEADLINES，日期原答并未错配。",
+      "arms": {
+        "03": {
+          "businessErrors": {
+            "taskExtra": 1,
+            "materialOwner": 1,
+            "condition": 1
+          },
+          "noSubstantiveCorrection": false,
+          "extraStructuralBlock": null,
+          "conversion": "PARSED",
+          "strict": {
+            "task": {
+              "predicted": 3,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 1,
+              "falseNegative": 0,
+              "precision": 0.6666666666666666,
+              "recall": 1
+            },
+            "requiresAction": {
+              "predicted": 3,
+              "reference": 2,
+              "correct": 1,
+              "falsePositive": 2,
+              "falseNegative": 1,
+              "precision": 0.3333333333333333,
+              "recall": 0.5
+            },
+            "time": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 1,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0.5,
+              "recall": 0.5
+            },
+            "material": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 0,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0,
+              "recall": 0
+            },
+            "event": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "condition": {
+              "predicted": 3,
+              "reference": 2,
+              "correct": 1,
+              "falsePositive": 2,
+              "falseNegative": 1,
+              "precision": 0.3333333333333333,
+              "recall": 0.5
+            },
+            "revision": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "evidence": {
+              "predicted": 7,
+              "reference": 6,
+              "correct": 2,
+              "falsePositive": 5,
+              "falseNegative": 4,
+              "precision": 0.2857142857142857,
+              "recall": 0.3333333333333333
+            },
+            "semantic": {
+              "predicted": 3,
+              "reference": 2,
+              "correct": 0,
+              "falsePositive": 3,
+              "falseNegative": 2,
+              "precision": 0,
+              "recall": 0
+            },
+            "coverage": {
+              "predicted": 5,
+              "reference": 4,
+              "correct": 2,
+              "falsePositive": 3,
+              "falseNegative": 2,
+              "precision": 0.4,
+              "recall": 0.5
+            }
+          },
+          "strictCompleteCase": false,
+          "scoreError": null
+        },
+        "09": {
+          "businessErrors": {
+            "materialAttribute": 1,
+            "condition": 1
+          },
+          "noSubstantiveCorrection": false,
+          "extraStructuralBlock": "MULTIPLE_DEADLINES: shared-material local traversal",
+          "conversion": "PARSED",
+          "strict": {
+            "task": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "requiresAction": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 1,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0.5,
+              "recall": 0.5
+            },
+            "time": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 0,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0,
+              "recall": 0
+            },
+            "material": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 0,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0,
+              "recall": 0
+            },
+            "event": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "condition": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 1,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0.5,
+              "recall": 0.5
+            },
+            "revision": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "evidence": {
+              "predicted": 6,
+              "reference": 6,
+              "correct": 2,
+              "falsePositive": 4,
+              "falseNegative": 4,
+              "precision": 0.3333333333333333,
+              "recall": 0.3333333333333333
+            },
+            "semantic": {
+              "predicted": 4,
+              "reference": 2,
+              "correct": 0,
+              "falsePositive": 4,
+              "falseNegative": 2,
+              "precision": 0,
+              "recall": 0
+            },
+            "coverage": {
+              "predicted": 4,
+              "reference": 4,
+              "correct": 2,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0.5,
+              "recall": 0.5
+            }
+          },
+          "strictCompleteCase": false,
+          "scoreError": null
+        }
+      }
+    },
+    {
+      "id": "U12",
+      "cohort": "original12",
+      "note": "03无依据增加保存依赖制作、A6材料归保存动作及纯取消superseded。09缺旧取消实体、悬空修订目标被拒绝，重复最终版展签材料，未指定日期却声明提取了时间。每作品一张A6在完成标准内已保留，不再重复计漏规格。",
+      "arms": {
+        "03": {
+          "businessErrors": {
+            "materialOwner": 1,
+            "dependency": 1,
+            "revision": 1
+          },
+          "noSubstantiveCorrection": false,
+          "extraStructuralBlock": null,
+          "conversion": "PARSED",
+          "strict": {
+            "task": {
+              "predicted": 3,
+              "reference": 3,
+              "correct": 3,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "requiresAction": {
+              "predicted": 3,
+              "reference": 3,
+              "correct": 3,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "time": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "material": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 1,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0.5,
+              "recall": 0.5
+            },
+            "event": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "condition": {
+              "predicted": 3,
+              "reference": 3,
+              "correct": 3,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "revision": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "evidence": {
+              "predicted": 6,
+              "reference": 6,
+              "correct": 2,
+              "falsePositive": 4,
+              "falseNegative": 4,
+              "precision": 0.3333333333333333,
+              "recall": 0.3333333333333333
+            },
+            "semantic": {
+              "predicted": 3,
+              "reference": 3,
+              "correct": 0,
+              "falsePositive": 3,
+              "falseNegative": 3,
+              "precision": 0,
+              "recall": 0
+            },
+            "coverage": {
+              "predicted": 5,
+              "reference": 5,
+              "correct": 2,
+              "falsePositive": 3,
+              "falseNegative": 3,
+              "precision": 0.4,
+              "recall": 0.4
+            }
+          },
+          "strictCompleteCase": false,
+          "scoreError": null
+        },
+        "09": {
+          "businessErrors": {
+            "cancelledTaskMissing": 1,
+            "materialExtra": 1,
+            "time": 1,
+            "revision": 1
+          },
+          "noSubstantiveCorrection": false,
+          "extraStructuralBlock": "TYPED_REVISION_TARGET",
+          "conversion": "REJECTED",
+          "strict": null,
+          "strictCompleteCase": null,
+          "scoreError": "REAL_INPUT_TYPED_REVISION_TARGET"
+        }
+      }
+    },
+    {
+      "id": "V01",
+      "cohort": "later8",
+      "note": "09多造耳麦材料，并把9点领取的开始安排表达为截止。03规格字段分散在完成标准但事实未丢；扫描件与原件粒度差异不当漏材料。",
+      "arms": {
+        "03": {
+          "businessErrors": {},
+          "noSubstantiveCorrection": true,
+          "extraStructuralBlock": null,
+          "conversion": "PARSED",
+          "strict": {
+            "task": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "requiresAction": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "time": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 0,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0,
+              "recall": 0
+            },
+            "material": {
+              "predicted": 3,
+              "reference": 2,
+              "correct": 0,
+              "falsePositive": 3,
+              "falseNegative": 2,
+              "precision": 0,
+              "recall": 0
+            },
+            "event": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "condition": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "revision": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "evidence": {
+              "predicted": 7,
+              "reference": 6,
+              "correct": 0,
+              "falsePositive": 7,
+              "falseNegative": 6,
+              "precision": 0,
+              "recall": 0
+            },
+            "semantic": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 0,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0,
+              "recall": 0
+            },
+            "coverage": {
+              "predicted": 4,
+              "reference": 4,
+              "correct": 1,
+              "falsePositive": 3,
+              "falseNegative": 3,
+              "precision": 0.25,
+              "recall": 0.25
+            }
+          },
+          "strictCompleteCase": false,
+          "scoreError": null
+        },
+        "09": {
+          "businessErrors": {
+            "materialExtra": 1,
+            "time": 1
+          },
+          "noSubstantiveCorrection": false,
+          "extraStructuralBlock": null,
+          "conversion": "PARSED",
+          "strict": {
+            "task": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "requiresAction": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "time": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 0,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0,
+              "recall": 0
+            },
+            "material": {
+              "predicted": 4,
+              "reference": 2,
+              "correct": 0,
+              "falsePositive": 4,
+              "falseNegative": 2,
+              "precision": 0,
+              "recall": 0
+            },
+            "event": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "condition": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "revision": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "evidence": {
+              "predicted": 8,
+              "reference": 6,
+              "correct": 1,
+              "falsePositive": 7,
+              "falseNegative": 5,
+              "precision": 0.125,
+              "recall": 0.16666666666666666
+            },
+            "semantic": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 0,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0,
+              "recall": 0
+            },
+            "coverage": {
+              "predicted": 4,
+              "reference": 4,
+              "correct": 1,
+              "falsePositive": 3,
+              "falseNegative": 3,
+              "precision": 0.25,
+              "recall": 0.25
+            }
+          },
+          "strictCompleteCase": false,
+          "scoreError": null
+        }
+      }
+    },
+    {
+      "id": "V02",
+      "cohort": "later8",
+      "note": "两臂共享A5材料、数量、任务归属和未知前置均正确。09正确共享图触发本机MULTIPLE_DEADLINES；当日17点未规范化属于上下文时间承接限制。",
+      "arms": {
+        "03": {
+          "businessErrors": {},
+          "noSubstantiveCorrection": true,
+          "extraStructuralBlock": null,
+          "conversion": "PARSED",
+          "strict": {
+            "task": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "requiresAction": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 1,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0.5,
+              "recall": 0.5
+            },
+            "time": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "material": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 0,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0,
+              "recall": 0
+            },
+            "event": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "condition": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 1,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0.5,
+              "recall": 0.5
+            },
+            "revision": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "evidence": {
+              "predicted": 5,
+              "reference": 5,
+              "correct": 3,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0.6,
+              "recall": 0.6
+            },
+            "semantic": {
+              "predicted": 3,
+              "reference": 3,
+              "correct": 1,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0.3333333333333333,
+              "recall": 0.3333333333333333
+            },
+            "coverage": {
+              "predicted": 4,
+              "reference": 4,
+              "correct": 3,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0.75,
+              "recall": 0.75
+            }
+          },
+          "strictCompleteCase": false,
+          "scoreError": null
+        },
+        "09": {
+          "businessErrors": {},
+          "noSubstantiveCorrection": true,
+          "extraStructuralBlock": "MULTIPLE_DEADLINES: shared-material local traversal",
+          "conversion": "PARSED",
+          "strict": {
+            "task": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "requiresAction": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 1,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0.5,
+              "recall": 0.5
+            },
+            "time": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 0,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0,
+              "recall": 0
+            },
+            "material": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 0,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0,
+              "recall": 0
+            },
+            "event": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "condition": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 1,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0.5,
+              "recall": 0.5
+            },
+            "revision": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "evidence": {
+              "predicted": 5,
+              "reference": 5,
+              "correct": 2,
+              "falsePositive": 3,
+              "falseNegative": 3,
+              "precision": 0.4,
+              "recall": 0.4
+            },
+            "semantic": {
+              "predicted": 5,
+              "reference": 3,
+              "correct": 1,
+              "falsePositive": 4,
+              "falseNegative": 2,
+              "precision": 0.2,
+              "recall": 0.3333333333333333
+            },
+            "coverage": {
+              "predicted": 4,
+              "reference": 4,
+              "correct": 3,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0.75,
+              "recall": 0.75
+            }
+          },
+          "strictCompleteCase": false,
+          "scoreError": null
+        }
+      }
+    },
+    {
+      "id": "V03",
+      "cohort": "later8",
+      "note": "近期和另行通知仍在任务与时间中，未伪装无日期。09把日志内容拆为关联材料清单；温度读数、校准说明有原文依据，按预定粒度口径不算凭空材料，但增加两次核对。",
+      "arms": {
+        "03": {
+          "businessErrors": {},
+          "noSubstantiveCorrection": true,
+          "extraStructuralBlock": null,
+          "conversion": "PARSED",
+          "strict": {
+            "task": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "requiresAction": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "time": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 0,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0,
+              "recall": 0
+            },
+            "material": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 0,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0,
+              "recall": 0
+            },
+            "event": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "condition": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "revision": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "evidence": {
+              "predicted": 3,
+              "reference": 3,
+              "correct": 0,
+              "falsePositive": 3,
+              "falseNegative": 3,
+              "precision": 0,
+              "recall": 0
+            },
+            "semantic": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 0,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0,
+              "recall": 0
+            },
+            "coverage": {
+              "predicted": 3,
+              "reference": 3,
+              "correct": 1,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0.3333333333333333,
+              "recall": 0.3333333333333333
+            }
+          },
+          "strictCompleteCase": false,
+          "scoreError": null
+        },
+        "09": {
+          "businessErrors": {},
+          "noSubstantiveCorrection": true,
+          "extraStructuralBlock": null,
+          "conversion": "PARSED",
+          "strict": {
+            "task": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "requiresAction": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "time": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 0,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0,
+              "recall": 0
+            },
+            "material": {
+              "predicted": 3,
+              "reference": 1,
+              "correct": 0,
+              "falsePositive": 3,
+              "falseNegative": 1,
+              "precision": 0,
+              "recall": 0
+            },
+            "event": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "condition": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "revision": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "evidence": {
+              "predicted": 5,
+              "reference": 3,
+              "correct": 0,
+              "falsePositive": 5,
+              "falseNegative": 3,
+              "precision": 0,
+              "recall": 0
+            },
+            "semantic": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 0,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0,
+              "recall": 0
+            },
+            "coverage": {
+              "predicted": 3,
+              "reference": 3,
+              "correct": 1,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0.3333333333333333,
+              "recall": 0.3333333333333333
+            }
+          },
+          "strictCompleteCase": false,
+          "scoreError": null
+        }
+      }
+    },
+    {
+      "id": "V04",
+      "cohort": "later8",
+      "note": "真正无日期保存回执：09把任务对象回执重复成必需材料。",
+      "arms": {
+        "03": {
+          "businessErrors": {},
+          "noSubstantiveCorrection": true,
+          "extraStructuralBlock": null,
+          "conversion": "PARSED",
+          "strict": {
+            "task": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 0,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0,
+              "recall": 0
+            },
+            "requiresAction": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 0,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0,
+              "recall": 0
+            },
+            "time": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "material": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "event": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "condition": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 0,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0,
+              "recall": 0
+            },
+            "revision": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "evidence": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 0,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0,
+              "recall": 0
+            },
+            "semantic": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 0,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0,
+              "recall": 0
+            },
+            "coverage": {
+              "predicted": 3,
+              "reference": 3,
+              "correct": 1,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0.3333333333333333,
+              "recall": 0.3333333333333333
+            }
+          },
+          "strictCompleteCase": false,
+          "scoreError": null
+        },
+        "09": {
+          "businessErrors": {
+            "materialExtra": 1
+          },
+          "noSubstantiveCorrection": false,
+          "extraStructuralBlock": null,
+          "conversion": "PARSED",
+          "strict": {
+            "task": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 0,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0,
+              "recall": 0
+            },
+            "requiresAction": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 0,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0,
+              "recall": 0
+            },
+            "time": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "material": {
+              "predicted": 1,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 1,
+              "falseNegative": 0,
+              "precision": 0,
+              "recall": null
+            },
+            "event": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "condition": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 0,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0,
+              "recall": 0
+            },
+            "revision": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "evidence": {
+              "predicted": 2,
+              "reference": 1,
+              "correct": 0,
+              "falsePositive": 2,
+              "falseNegative": 1,
+              "precision": 0,
+              "recall": 0
+            },
+            "semantic": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 0,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0,
+              "recall": 0
+            },
+            "coverage": {
+              "predicted": 3,
+              "reference": 3,
+              "correct": 1,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0.3333333333333333,
+              "recall": 0.3333333333333333
+            }
+          },
+          "strictCompleteCase": false,
+          "scoreError": null
+        }
+      }
+    },
+    {
+      "id": "V05",
+      "cohort": "later8",
+      "note": "未知条件和工作证正确；09多造领取对象配电板作为材料。",
+      "arms": {
+        "03": {
+          "businessErrors": {},
+          "noSubstantiveCorrection": true,
+          "extraStructuralBlock": null,
+          "conversion": "PARSED",
+          "strict": {
+            "task": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "requiresAction": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "time": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "material": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "event": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "condition": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "revision": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "evidence": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 1,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0.5,
+              "recall": 0.5
+            },
+            "semantic": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 0,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0,
+              "recall": 0
+            },
+            "coverage": {
+              "predicted": 3,
+              "reference": 3,
+              "correct": 2,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0.6666666666666666,
+              "recall": 0.6666666666666666
+            }
+          },
+          "strictCompleteCase": false,
+          "scoreError": null
+        },
+        "09": {
+          "businessErrors": {
+            "materialExtra": 1
+          },
+          "noSubstantiveCorrection": false,
+          "extraStructuralBlock": null,
+          "conversion": "PARSED",
+          "strict": {
+            "task": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "requiresAction": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "time": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "material": {
+              "predicted": 2,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 1,
+              "falseNegative": 0,
+              "precision": 0.5,
+              "recall": 1
+            },
+            "event": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "condition": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "revision": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "evidence": {
+              "predicted": 3,
+              "reference": 2,
+              "correct": 1,
+              "falsePositive": 2,
+              "falseNegative": 1,
+              "precision": 0.3333333333333333,
+              "recall": 0.5
+            },
+            "semantic": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 0,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0,
+              "recall": 0
+            },
+            "coverage": {
+              "predicted": 3,
+              "reference": 3,
+              "correct": 1,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0.3333333333333333,
+              "recall": 0.3333333333333333
+            }
+          },
+          "strictCompleteCase": false,
+          "scoreError": null
+        }
+      }
+    },
+    {
+      "id": "V06",
+      "cohort": "later8",
+      "note": "旧数据包取消与CSV校验清单替代正确。03的命名和SHA256在完成标准中，09在材料属性中；位置差异不是实际遗漏。",
+      "arms": {
+        "03": {
+          "businessErrors": {},
+          "noSubstantiveCorrection": true,
+          "extraStructuralBlock": null,
+          "conversion": "PARSED",
+          "strict": {
+            "task": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "requiresAction": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "time": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 0,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0,
+              "recall": 0
+            },
+            "material": {
+              "predicted": 1,
+              "reference": 2,
+              "correct": 0,
+              "falsePositive": 1,
+              "falseNegative": 2,
+              "precision": 0,
+              "recall": 0
+            },
+            "event": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "condition": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "revision": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 0,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0,
+              "recall": 0
+            },
+            "evidence": {
+              "predicted": 5,
+              "reference": 6,
+              "correct": 1,
+              "falsePositive": 4,
+              "falseNegative": 5,
+              "precision": 0.2,
+              "recall": 0.16666666666666666
+            },
+            "semantic": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 0,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0,
+              "recall": 0
+            },
+            "coverage": {
+              "predicted": 4,
+              "reference": 4,
+              "correct": 1,
+              "falsePositive": 3,
+              "falseNegative": 3,
+              "precision": 0.25,
+              "recall": 0.25
+            }
+          },
+          "strictCompleteCase": false,
+          "scoreError": null
+        },
+        "09": {
+          "businessErrors": {},
+          "noSubstantiveCorrection": true,
+          "extraStructuralBlock": null,
+          "conversion": "PARSED",
+          "strict": {
+            "task": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "requiresAction": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "time": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 0,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0,
+              "recall": 0
+            },
+            "material": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "event": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "condition": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "revision": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 0,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0,
+              "recall": 0
+            },
+            "evidence": {
+              "predicted": 6,
+              "reference": 6,
+              "correct": 1,
+              "falsePositive": 5,
+              "falseNegative": 5,
+              "precision": 0.16666666666666666,
+              "recall": 0.16666666666666666
+            },
+            "semantic": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 0,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0,
+              "recall": 0
+            },
+            "coverage": {
+              "predicted": 4,
+              "reference": 4,
+              "correct": 1,
+              "falsePositive": 3,
+              "falseNegative": 3,
+              "precision": 0.25,
+              "recall": 0.25
+            }
+          },
+          "strictCompleteCase": false,
+          "scoreError": null
+        }
+      }
+    },
+    {
+      "id": "V07",
+      "cohort": "later8",
+      "note": "录音WAV附授权编号、纪要DOCX附校对人姓名均保留且归属正确。附属内容拆成四个材料是粒度差异，不将原严格差异直接翻译为实质错误；两臂多两项核对负担。",
+      "arms": {
+        "03": {
+          "businessErrors": {},
+          "noSubstantiveCorrection": true,
+          "extraStructuralBlock": null,
+          "conversion": "PARSED",
+          "strict": {
+            "task": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "requiresAction": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "time": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 0,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0,
+              "recall": 0
+            },
+            "material": {
+              "predicted": 4,
+              "reference": 2,
+              "correct": 0,
+              "falsePositive": 4,
+              "falseNegative": 2,
+              "precision": 0,
+              "recall": 0
+            },
+            "event": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "condition": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "revision": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "evidence": {
+              "predicted": 8,
+              "reference": 6,
+              "correct": 2,
+              "falsePositive": 6,
+              "falseNegative": 4,
+              "precision": 0.25,
+              "recall": 0.3333333333333333
+            },
+            "semantic": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 0,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0,
+              "recall": 0
+            },
+            "coverage": {
+              "predicted": 4,
+              "reference": 4,
+              "correct": 2,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0.5,
+              "recall": 0.5
+            }
+          },
+          "strictCompleteCase": false,
+          "scoreError": null
+        },
+        "09": {
+          "businessErrors": {},
+          "noSubstantiveCorrection": true,
+          "extraStructuralBlock": null,
+          "conversion": "PARSED",
+          "strict": {
+            "task": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "requiresAction": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "time": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 0,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0,
+              "recall": 0
+            },
+            "material": {
+              "predicted": 4,
+              "reference": 2,
+              "correct": 0,
+              "falsePositive": 4,
+              "falseNegative": 2,
+              "precision": 0,
+              "recall": 0
+            },
+            "event": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "condition": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "revision": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "evidence": {
+              "predicted": 8,
+              "reference": 6,
+              "correct": 0,
+              "falsePositive": 8,
+              "falseNegative": 6,
+              "precision": 0,
+              "recall": 0
+            },
+            "semantic": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 0,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0,
+              "recall": 0
+            },
+            "coverage": {
+              "predicted": 4,
+              "reference": 4,
+              "correct": 1,
+              "falsePositive": 3,
+              "falseNegative": 3,
+              "precision": 0.25,
+              "recall": 0.25
+            }
+          },
+          "strictCompleteCase": false,
+          "scoreError": null
+        }
+      }
+    },
+    {
+      "id": "V08",
+      "cohort": "later8",
+      "note": "植物开放时间为纯信息，两臂无任务；结束时刻日期归一化仍待核对，来源未丢。",
+      "arms": {
+        "03": {
+          "businessErrors": {},
+          "noSubstantiveCorrection": true,
+          "extraStructuralBlock": null,
+          "conversion": "PARSED",
+          "strict": {
+            "task": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "requiresAction": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "time": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 0,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0,
+              "recall": 0
+            },
+            "material": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "event": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 0,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0,
+              "recall": 0
+            },
+            "condition": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "revision": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "evidence": {
+              "predicted": 3,
+              "reference": 3,
+              "correct": 0,
+              "falsePositive": 3,
+              "falseNegative": 3,
+              "precision": 0,
+              "recall": 0
+            },
+            "semantic": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 0,
+              "falsePositive": 2,
+              "falseNegative": 2,
+              "precision": 0,
+              "recall": 0
+            },
+            "coverage": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 1,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0.5,
+              "recall": 0.5
+            }
+          },
+          "strictCompleteCase": false,
+          "scoreError": null
+        },
+        "09": {
+          "businessErrors": {},
+          "noSubstantiveCorrection": true,
+          "extraStructuralBlock": null,
+          "conversion": "PARSED",
+          "strict": {
+            "task": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "requiresAction": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 1,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "time": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "material": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "event": {
+              "predicted": 1,
+              "reference": 1,
+              "correct": 0,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0,
+              "recall": 0
+            },
+            "condition": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "revision": {
+              "predicted": 0,
+              "reference": 0,
+              "correct": 0,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": null,
+              "recall": null
+            },
+            "evidence": {
+              "predicted": 3,
+              "reference": 3,
+              "correct": 2,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0.6666666666666666,
+              "recall": 0.6666666666666666
+            },
+            "semantic": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 2,
+              "falsePositive": 0,
+              "falseNegative": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "coverage": {
+              "predicted": 2,
+              "reference": 2,
+              "correct": 1,
+              "falsePositive": 1,
+              "falseNegative": 1,
+              "precision": 0.5,
+              "recall": 0.5
+            }
+          },
+          "strictCompleteCase": false,
+          "scoreError": null
+        }
+      }
+    }
+  ],
+  "calls": {
+    "new": 40,
+    "total": 208,
+    "waitingMs": 282557,
+    "costUpperMicroCny": 1104984,
+    "totalCostUpperMicroCny": 8302966,
+    "providerBilledCny": "NOT_OBSERVABLE",
+    "capMicroCny": 20000000,
+    "permanentA01UnknownMicroCny": 3300000
+  },
+  "caveats": [
+    "空数组未替换为原文没有；准备状态仍须用户明确核对。",
+    "严格分数原样保留；两份09转换失败留在20份分母。",
+    "任务实体遗漏中cancelledTaskMissing是历史作废实体，不冒充有效动作遗漏。",
+    "用户主动编辑时间与省时效果NOT_RUN；结构可用不等于语义正确。"
+  ],
+  "next": "优先定位共享材料的时间遍历：已有正确归属却引入另一任务截止；冻结MAINLINE04未改，需后续最小授权后零调用修复。不能据本批支持立即再开Prompt付费轮次。"
+}

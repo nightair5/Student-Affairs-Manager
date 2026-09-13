@@ -1,0 +1,543 @@
+{
+  "unitId": "V02-09",
+  "arm": "09",
+  "cohort": "later8",
+  "bindingSha": "d62abdfdedaf4b538364fe55bacd1e52fc3623f7a5acef9732de75af128125df",
+  "requestSha": "d9e0f5ee21fd57a7b9e63ec9ca9c12c127679dad7e28eb9f1d303f3c7c14793a",
+  "responseSha": "ad39517750590a4c467755a9b1c02d38a6858af2e89f593a30b4d9446a7f1779",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "scorerSha": "ad76149f8a88cb4adda6dca78b210daaa4f3c800d17582767911e8ace2658e1d",
+  "scorerBundleSha": "782c89b4f865d83c9a2051d9e2a6df3776b7231ad49aec87008b5c14f4e09f21",
+  "referenceSha": "961683067b73fc179a3b914513c7fba2e462086a0e8f57923c4b42b75ffd1e52",
+  "scoreInput": "semantic projection into frozen scorer; provider raw unchanged",
+  "rawEvidence": {
+    "schemaVersion": "real-input-typed-fact-wire-2",
+    "tasks": [
+      {
+        "id": "task-1",
+        "propositionScopeIds": [
+          "scope-0002-40329a9ef2afccac8cbb9aa2f32b3d60d0cb690392f2dec539ccd5855a4376a0"
+        ],
+        "semantics": {
+          "actor": "addressed_group",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "prepare",
+        "action": {
+          "scopeId": "scope-0002-40329a9ef2afccac8cbb9aa2f32b3d60d0cb690392f2dec539ccd5855a4376a0",
+          "surface": "制作"
+        },
+        "object": {
+          "scopeId": "scope-0002-40329a9ef2afccac8cbb9aa2f32b3d60d0cb690392f2dec539ccd5855a4376a0",
+          "surface": "三张展架标签"
+        },
+        "effect": "physical_action",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "制作三张展架标签",
+          "description": "宣传组于2026年10月10日12:00前制作三张展架标签，标签尺寸为A5，只写展区名称。",
+          "completionCriteria": [
+            "完成三张展架标签制作",
+            "标签尺寸为A5",
+            "标签只写展区名称"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "high",
+          "dependencyTempIds": [],
+          "confidence": 0.95,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "factType": "task"
+      },
+      {
+        "id": "task-2",
+        "propositionScopeIds": [
+          "scope-0006-239c6257320d9d03a5e3b9f145170e11fe35d7cf36b7ea46a413f4f784508155"
+        ],
+        "semantics": {
+          "actor": "addressed_group",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "other",
+        "action": {
+          "scopeId": "scope-0006-239c6257320d9d03a5e3b9f145170e11fe35d7cf36b7ea46a413f4f784508155",
+          "surface": "安装"
+        },
+        "object": {
+          "scopeId": "scope-0006-239c6257320d9d03a5e3b9f145170e11fe35d7cf36b7ea46a413f4f784508155",
+          "surface": "三张标签"
+        },
+        "effect": "physical_action",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "安装三张标签到入口展架",
+          "description": "制作完成后，于当日17:00前把三张标签安装到入口展架。",
+          "completionCriteria": [
+            "三张标签安装到入口展架"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "high",
+          "dependencyTempIds": [
+            "task-1"
+          ],
+          "confidence": 0.95,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "unknown",
+          "conditionScopeIds": [
+            "scope-0005-af2388d7ed9e86469a6d15d518634175cafb5415aff1fb99ebe2eb79bffbad6f"
+          ],
+          "factScopeIds": [
+            "scope-0007-ed3780a90c245556cd4e51e1e2629e052a36b123b6e551597ad745eaf57d5662"
+          ]
+        },
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "factType": "task"
+      }
+    ],
+    "materials": [
+      {
+        "tempId": "material-1",
+        "name": "展架标签",
+        "required": true,
+        "formatRequirements": [
+          "尺寸为A5",
+          "只写展区名称"
+        ],
+        "namingRequirements": [],
+        "quantity": 3,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "task-1",
+          "task-2"
+        ],
+        "scopeIds": [
+          "scope-0002-40329a9ef2afccac8cbb9aa2f32b3d60d0cb690392f2dec539ccd5855a4376a0",
+          "scope-0003-0a0367dd76a9756dbe66865db11f4e1f63274ad25e647f2f04ff937b14c39aa8",
+          "scope-0004-4bf5cd7ce94a97879dd11d07406d29249f737ab40285ad06a8ed2bcde6bb26ac"
+        ],
+        "confidence": 0.95,
+        "factType": "material"
+      }
+    ],
+    "timePoints": [
+      {
+        "tempId": "time-1",
+        "type": "task_deadline",
+        "rawText": "2026年10月10日12:00前",
+        "relatedTaskTempIds": [
+          "task-1"
+        ],
+        "relatedMaterialTempIds": [
+          "material-1"
+        ],
+        "scopeIds": [
+          "scope-0002-40329a9ef2afccac8cbb9aa2f32b3d60d0cb690392f2dec539ccd5855a4376a0"
+        ],
+        "confidence": 0.95,
+        "factType": "time"
+      },
+      {
+        "tempId": "time-2",
+        "type": "task_deadline",
+        "rawText": "当日17:00前",
+        "relatedTaskTempIds": [
+          "task-2"
+        ],
+        "relatedMaterialTempIds": [
+          "material-1"
+        ],
+        "scopeIds": [
+          "scope-0006-239c6257320d9d03a5e3b9f145170e11fe35d7cf36b7ea46a413f4f784508155"
+        ],
+        "confidence": 0.95,
+        "factType": "time"
+      }
+    ],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0001-aeba0fcf545a855a97ac8d0efbe94bbbf5d4d8035302ba4acf8c571db14625cf",
+      "scope-0005-af2388d7ed9e86469a6d15d518634175cafb5415aff1fb99ebe2eb79bffbad6f",
+      "scope-0007-ed3780a90c245556cd4e51e1e2629e052a36b123b6e551597ad745eaf57d5662"
+    ],
+    "unresolvedScopeIds": []
+  },
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-1",
+        "propositionScopeIds": [
+          "scope-0002-40329a9ef2afccac8cbb9aa2f32b3d60d0cb690392f2dec539ccd5855a4376a0"
+        ],
+        "semantics": {
+          "actor": "addressed_group",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "prepare",
+        "action": {
+          "scopeId": "scope-0002-40329a9ef2afccac8cbb9aa2f32b3d60d0cb690392f2dec539ccd5855a4376a0",
+          "surface": "制作"
+        },
+        "object": {
+          "scopeId": "scope-0002-40329a9ef2afccac8cbb9aa2f32b3d60d0cb690392f2dec539ccd5855a4376a0",
+          "surface": "三张展架标签"
+        },
+        "effect": "physical_action",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "制作三张展架标签",
+          "description": "宣传组于2026年10月10日12:00前制作三张展架标签，标签尺寸为A5，只写展区名称。",
+          "completionCriteria": [
+            "完成三张展架标签制作",
+            "标签尺寸为A5",
+            "标签只写展区名称"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "high",
+          "dependencyTempIds": [],
+          "confidence": 0.95,
+          "userConfirmationRequired": true,
+          "materialTempIds": [
+            "material-1"
+          ],
+          "timePointTempIds": [
+            "time-1"
+          ]
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      },
+      {
+        "id": "task-2",
+        "propositionScopeIds": [
+          "scope-0006-239c6257320d9d03a5e3b9f145170e11fe35d7cf36b7ea46a413f4f784508155"
+        ],
+        "semantics": {
+          "actor": "addressed_group",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "other",
+        "action": {
+          "scopeId": "scope-0006-239c6257320d9d03a5e3b9f145170e11fe35d7cf36b7ea46a413f4f784508155",
+          "surface": "安装"
+        },
+        "object": {
+          "scopeId": "scope-0006-239c6257320d9d03a5e3b9f145170e11fe35d7cf36b7ea46a413f4f784508155",
+          "surface": "三张标签"
+        },
+        "effect": "physical_action",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "安装三张标签到入口展架",
+          "description": "制作完成后，于当日17:00前把三张标签安装到入口展架。",
+          "completionCriteria": [
+            "三张标签安装到入口展架"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "high",
+          "dependencyTempIds": [
+            "task-1"
+          ],
+          "confidence": 0.95,
+          "userConfirmationRequired": true,
+          "materialTempIds": [
+            "material-1"
+          ],
+          "timePointTempIds": [
+            "time-2"
+          ]
+        },
+        "condition": {
+          "value": "unknown",
+          "conditionScopeIds": [
+            "scope-0005-af2388d7ed9e86469a6d15d518634175cafb5415aff1fb99ebe2eb79bffbad6f"
+          ],
+          "factScopeIds": [
+            "scope-0007-ed3780a90c245556cd4e51e1e2629e052a36b123b6e551597ad745eaf57d5662"
+          ]
+        },
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [
+      {
+        "tempId": "material-1",
+        "name": "展架标签",
+        "required": true,
+        "formatRequirements": [
+          "尺寸为A5",
+          "只写展区名称"
+        ],
+        "namingRequirements": [],
+        "quantity": 3,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "task-1",
+          "task-2"
+        ],
+        "scopeIds": [
+          "scope-0002-40329a9ef2afccac8cbb9aa2f32b3d60d0cb690392f2dec539ccd5855a4376a0",
+          "scope-0003-0a0367dd76a9756dbe66865db11f4e1f63274ad25e647f2f04ff937b14c39aa8",
+          "scope-0004-4bf5cd7ce94a97879dd11d07406d29249f737ab40285ad06a8ed2bcde6bb26ac"
+        ],
+        "confidence": 0.95
+      }
+    ],
+    "timePoints": [
+      {
+        "tempId": "time-1",
+        "type": "task_deadline",
+        "rawText": "2026年10月10日12:00前",
+        "relatedTaskTempIds": [
+          "task-1"
+        ],
+        "relatedMaterialTempIds": [
+          "material-1"
+        ],
+        "scopeIds": [
+          "scope-0002-40329a9ef2afccac8cbb9aa2f32b3d60d0cb690392f2dec539ccd5855a4376a0"
+        ],
+        "confidence": 0.95,
+        "normalizedValue": "2026-10-10T12:00",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "exact",
+        "needsConfirmation": false
+      },
+      {
+        "tempId": "time-2",
+        "type": "task_deadline",
+        "rawText": "当日17:00前",
+        "relatedTaskTempIds": [
+          "task-2"
+        ],
+        "relatedMaterialTempIds": [
+          "material-1"
+        ],
+        "scopeIds": [
+          "scope-0006-239c6257320d9d03a5e3b9f145170e11fe35d7cf36b7ea46a413f4f784508155"
+        ],
+        "confidence": 0.95,
+        "normalizedValue": null,
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "vague",
+        "needsConfirmation": true
+      }
+    ],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0001-aeba0fcf545a855a97ac8d0efbe94bbbf5d4d8035302ba4acf8c571db14625cf",
+      "scope-0005-af2388d7ed9e86469a6d15d518634175cafb5415aff1fb99ebe2eb79bffbad6f",
+      "scope-0007-ed3780a90c245556cd4e51e1e2629e052a36b123b6e551597ad745eaf57d5662"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "source:13de4bcc",
+    "sourceVersionId": "source:13de4bcc:version:1",
+    "sourceFingerprint": "sha256:b324ed58bd2200ba5544ed65fa4178ee0b994600eca19d96cc15e2383ca3f4a8"
+  },
+  "http": 200,
+  "diagnostic": null,
+  "waitingMs": 7000,
+  "score": {
+    "scorerVersion": "real-input-seen-fact-diagnostic-2",
+    "label": "已见人工工程参考的精确诊断，不是未见或商业准确率",
+    "metrics": {
+      "task": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 2,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "requiresAction": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 1,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0.5,
+        "recall": 0.5
+      },
+      "time": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 0,
+        "falsePositive": 2,
+        "falseNegative": 2,
+        "precision": 0,
+        "recall": 0
+      },
+      "material": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 0,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0,
+        "recall": 0
+      },
+      "event": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "condition": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 1,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0.5,
+        "recall": 0.5
+      },
+      "revision": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "evidence": {
+        "predicted": 5,
+        "reference": 5,
+        "correct": 2,
+        "falsePositive": 3,
+        "falseNegative": 3,
+        "precision": 0.4,
+        "recall": 0.4
+      },
+      "semantic": {
+        "predicted": 5,
+        "reference": 3,
+        "correct": 1,
+        "falsePositive": 4,
+        "falseNegative": 2,
+        "precision": 0.2,
+        "recall": 0.3333333333333333
+      },
+      "coverage": {
+        "predicted": 4,
+        "reference": 4,
+        "correct": 3,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0.75,
+        "recall": 0.75
+      }
+    },
+    "matchingAmbiguities": [],
+    "metricStatus": "EXACT_REFERENCE_DIAGNOSTIC",
+    "schemaParsed": true,
+    "issues": [
+      {
+        "code": "TIME_NEEDS_REVIEW",
+        "entityIds": [
+          "time-2"
+        ]
+      },
+      {
+        "code": "MULTIPLE_DEADLINES",
+        "entityIds": [
+          "task-1"
+        ]
+      },
+      {
+        "code": "MULTIPLE_DEADLINES",
+        "entityIds": [
+          "task-2"
+        ]
+      }
+    ],
+    "completeCase": false,
+    "majorCorrectionRequired": true,
+    "forbidden": 0,
+    "automaticSelection": "NOT_ENABLED",
+    "humanActiveEditTime": "NOT_RUN",
+    "candidateTaskCount": 2,
+    "referenceTaskCount": 2
+  },
+  "scoreError": null,
+  "totalAttempts": 196,
+  "costUpperMicroCny": 26460,
+  "totalCostUpperMicroCny": 8001859,
+  "stopDispatch": false,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticSelection": "NOT_ENABLED",
+  "qualityClaim": "20份已见材料开发回归；原12+后8分别报告；40请求不是40独立材料"
+}

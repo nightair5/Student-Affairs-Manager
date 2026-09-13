@@ -5,9 +5,9 @@ import { resolve, dirname, join } from 'node:path'
 import { isDeepStrictEqual } from 'node:util'
 import { build } from 'esbuild'
 import { execFileSync } from 'node:child_process'
-import { inspectProtection, verifyReviewBinding, CANDIDATE02_DIRECTORY, CANDIDATE03_DIRECTORY, PAIRED04_DIRECTORY, PAIRED05_DIRECTORY, PAIRED06_DIRECTORY, PAIRED07_DIRECTORY, PAIRED08_DIRECTORY } from './check-mainline-real-input-01.mjs'
+import { inspectProtection, verifyReviewBinding, CANDIDATE02_DIRECTORY, CANDIDATE03_DIRECTORY, PAIRED04_DIRECTORY, PAIRED05_DIRECTORY, PAIRED06_DIRECTORY, PAIRED07_DIRECTORY, PAIRED08_DIRECTORY, PAIRED09_DIRECTORY } from './check-mainline-real-input-01.mjs'
 import { inspectRequest, createModelGateway, createPinnedProxyFetch, createRawRecorder } from './real-input-model-gateway.mjs'
-import { BILLING_POLICY, FLASH41_POLICY, FLASH41_PAIRED06_POLICY, FLASH41_PAIRED07_POLICY, FLASH41_PAIRED08_POLICY, RECOVERY_ROUTE, initializeBudget, openBudget } from './real-input-budget.mjs'
+import { BILLING_POLICY, FLASH41_POLICY, FLASH41_PAIRED06_POLICY, FLASH41_PAIRED07_POLICY, FLASH41_PAIRED08_POLICY, FLASH41_PAIRED09_POLICY, RECOVERY_ROUTE, initializeBudget, openBudget } from './real-input-budget.mjs'
 
 const hash=bytes=>createHash('sha256').update(bytes).digest('hex')
 const check=(ok,code)=>{if(!ok)throw Error('REAL_INPUT_RUNNER_'+code)}
@@ -926,6 +926,119 @@ export async function dispatchPaired06(unitId){
 }
 
 const read07=name=>JSON.parse(readFileSync(join(PAIRED07_DIRECTORY,name)))
+const read09=name=>JSON.parse(readFileSync(join(PAIRED09_DIRECTORY,name)))
+export async function paired09Api(){
+  const compiled=await build({stdin:{contents:`export {buildFlash41Candidate09ComparisonRequest,CANDIDATE09_VERSION} from './src/experiments/realInput01/candidate09.ts';
+    export {parseEvidenceRoleEnvelopeV2,EVIDENCE_ROLE_V2_VERSION,EVIDENCE_ROLE_V2_JSON_SCHEMA} from './src/experiments/realInput01/evidenceRoleWireV2.ts';
+    export {indexImmutableScopesV11} from './src/recognition/scopeIndexV11.ts';
+    export {adaptModelWire,parseModelEnvelope,projectSemantic,WIRE_VERSION} from './src/experiments/realInput01/modelWire.ts';
+    export {workspaceSnapshotHash} from './src/domain/v2/migration.ts';`,resolveDir:process.cwd(),loader:'ts'},bundle:true,write:false,platform:'node',format:'esm',metafile:true})
+  const dependencies=Object.keys(compiled.metafile.inputs).filter(p=>p!=='<stdin>').sort().map(path=>({path,sha256:hash(readFileSync(path))}))
+  check(!dependencies.some(d=>/seenInputs|evaluation|fixture|expected|REFERENCE_SPEC|INPUTS\.json/i.test(d.path)),'P09_ANSWER_IN_REQUEST')
+  return {dependencies,api:await import('data:text/javascript;base64,'+Buffer.from(compiled.outputFiles[0].contents).toString('base64'))}
+}
+export async function freezeCandidate09(){
+  const protection=inspectProtection({stage:'paired09'}),{dependencies,api}=await paired09Api()
+  const value={version:'candidate09-freeze-1',head:protection.head,candidateVersion:api.CANDIDATE09_VERSION,
+    wireVersion:api.EVIDENCE_ROLE_V2_VERSION,dependencies,schemaSha:hash(JSON.stringify(api.EVIDENCE_ROLE_V2_JSON_SCHEMA)),
+    allInputsPreviouslySeen:true,modelCalls:0,createdAt:new Date().toISOString()}
+  writeFileSync(join(PAIRED09_DIRECTORY,'CANDIDATE_FREEZE.json'),JSON.stringify(value,null,2)+'\n',{flag:'wx'})
+  return {candidateVersion:value.candidateVersion,wireVersion:value.wireVersion,dependencies:dependencies.length,schemaSha:value.schemaSha,modelCalls:0}
+}
+export function paired09Order(seed=20260916){
+  let n=seed>>>0;const order=Array.from({length:20},(_,i)=>i<10?['03','09']:['09','03'])
+  for(let i=order.length-1;i>0;i--){n=(Math.imul(n,1664525)+1013904223)>>>0;const j=n%(i+1);[order[i],order[j]]=[order[j],order[i]]}
+  return order
+}
+export async function preparePaired09(){
+  const protection=inspectProtection({stage:'paired09'}),freeze=read09('CANDIDATE_FREEZE.json')
+  const previous=read08('BINDING_FINAL.json'),previousRefs=read08('REFERENCES_FINAL.json')
+  const {api,dependencies}=await paired09Api(),closure=await compileOriginalScorer05()
+  check(freeze.allInputsPreviouslySeen===true&&freeze.candidateVersion===api.CANDIDATE09_VERSION&&freeze.wireVersion===api.EVIDENCE_ROLE_V2_VERSION
+    &&freeze.schemaSha===hash(JSON.stringify(api.EVIDENCE_ROLE_V2_JSON_SCHEMA))&&isDeepStrictEqual(freeze.dependencies,dependencies),'P09_FREEZE')
+  check(previous.items.length===20&&previousRefs.items.length===20&&previous.scorerBundleSha===closure.bundleSha,'P09_INPUTS')
+  const requests={},units=[],items=[],references=[],seed=20260916,order=paired09Order(seed)
+  for(const [i,item]of previous.items.entries()){
+    const id=(i<12?'U':'V')+String(i<12?i+1:i-11).padStart(2,'0'),cohort=i<12?'original12':'later8',context=structuredClone(item.context)
+    for(const arm of order[i]){const unitId=id+'-'+arm,built=await api.buildFlash41Candidate09ComparisonRequest(context,arm),u=inspectRequest(built.serialized,FLASH41_PAIRED09_POLICY)
+      requests[unitId]=built.serialized;units.push({unitId,candidateSha:u.candidateSha,inputSha:u.inputSha,requestSha:u.requestSha,requestBytes:u.requestBytes,scorerSha:previous.scorerSha})}
+    items.push({...item,id,cohort,previousId:item.id})
+    const ref=previousRefs.items.find(r=>r.id===item.id);check(ref&&isDeepStrictEqual(ref.context,context),'P09_REFERENCE_CONTEXT')
+    references.push({...structuredClone(ref),id,cohort})
+  }
+  const refText=JSON.stringify({label:'20份全部为已见材料开发回归；原参考事实逐对象复用，仅用于评分',items:references},null,2)+'\n'
+  const files=['BINDING_FINAL.json','REFERENCES_FINAL.json','FRESH_INPUTS.json','FRESH_REFERENCE_SPEC.json'].map(name=>({path:join(PAIRED08_DIRECTORY,name),sha256:hash(readFileSync(join(PAIRED08_DIRECTORY,name)))}))
+  for(const path of [join(PAIRED05_DIRECTORY,'INPUTS.json'),join(PAIRED05_DIRECTORY,'REFERENCE_SPEC.json'),join(PAIRED09_DIRECTORY,'CANDIDATE_FREEZE.json'),join(PAIRED09_DIRECTORY,'BUSINESS_RULES.md')])files.push({path,sha256:hash(readFileSync(path))})
+  const binding={version:'real-input-paired09-binding-1',head:protection.head,dependencies,files,referenceSha:hash(refText),scorerSha:previous.scorerSha,scorerBundleSha:closure.bundleSha,
+    requests,units,items,seed,order,label:'20份已见材料开发回归；原12+后8分别报告；40请求不是40独立材料',createdAt:new Date().toISOString()}
+  writeFileSync(join(PAIRED09_DIRECTORY,'REFERENCES_FINAL.json'),refText,{flag:'wx'});writeFileSync(join(PAIRED09_DIRECTORY,'BINDING_FINAL.json'),JSON.stringify(binding,null,2)+'\n',{flag:'wx'})
+  return {original12:12,later8:8,requests:40,bindingSha:hash(JSON.stringify(binding,null,2)+'\n'),modelCalls:0}
+}
+export function verifyPaired09Send({bindingBytes,binding,baseline,billing,review,protection}){
+  check(isDeepStrictEqual(JSON.parse(bindingBytes),binding)&&binding.version==='real-input-paired09-binding-1'&&binding.items.length===20&&binding.units.length===40,'P09_BINDING')
+  const sources=protection.sources.map(s=>({path:s.path,sha256:s.workingSha256}))
+  check(review.status==='PASS'&&review.scope==='PAIRED09_SEND'&&review.head===baseline.head&&review.bindingSha===hash(bindingBytes)
+    &&review.billingSha===hash(JSON.stringify(billing))&&review.sourcesSha===hash(JSON.stringify(sources)),'P09_REVIEW')
+  check(binding.head===baseline.head&&binding.scorerBundleSha===read07('BINDING_FINAL.json').scorerBundleSha,'P09_SCORER')
+  for(const d of [...binding.dependencies,...binding.files])check(hash(readFileSync(d.path))===d.sha256,'P09_DEPENDENCY')
+  check(hash(readFileSync(join(PAIRED09_DIRECTORY,'REFERENCES_FINAL.json')))===binding.referenceSha&&isDeepStrictEqual(binding.order,paired09Order(binding.seed)),'P09_REFERENCE_ORDER')
+  const seen=read05('INPUTS.json'),fresh=read08('FRESH_INPUTS.json'),previous=read08('BINDING_FINAL.json')
+  for(const [i,item]of binding.items.entries()){
+    const original=i<12?seen.items[i]:fresh.items[i-12]
+    check(item.originalId===original.id&&item.context.index.sourceContent===original.text&&isDeepStrictEqual(item.context,previous.items[i].context),'P09_ORIGINAL_TEXT')
+    const pair=binding.units.slice(i*2,i*2+2);check(isDeepStrictEqual(pair.map(u=>u.unitId),binding.order[i].map(a=>item.id+'-'+a)),'P09_ORDER')
+    for(const u of pair){const p=inspectRequest(binding.requests[u.unitId],FLASH41_PAIRED09_POLICY)
+      check(['candidateSha','requestSha','inputSha','requestBytes'].every(k=>p[k]===u[k])&&u.scorerSha===binding.scorerSha,'P09_REQUEST')
+      check(isDeepStrictEqual(JSON.parse(p.body.input[1].content[0].text),{source:item.context.index.sourceContent,referenceTime:item.context.referenceTime,timezone:item.context.timezone,scopes:item.context.index.scopes.map(s=>({id:s.id,text:s.text}))}),'P09_SOURCE')}
+    const comparable=t=>{const x=JSON.parse(t);return {model:x.model,temperature:x.temperature,reasoning:x.reasoning,stream:x.stream,max_output_tokens:x.max_output_tokens,user:x.input[1]}}
+    check(isDeepStrictEqual(comparable(binding.requests[pair[0].unitId]),comparable(binding.requests[pair[1].unitId])),'P09_PARAMETERS')
+  }
+  check(billing.verified===true&&isDeepStrictEqual(billing.policy,FLASH41_PAIRED09_POLICY)&&billing.method==='official-public-document-review','P09_BILLING')
+  check(Date.now()>=Date.parse(billing.checkedAt)&&Date.now()<=Date.parse(billing.validUntil)&&Date.parse(billing.validUntil)-Date.parse(billing.checkedAt)<=86400000,'P09_PRICE_EXPIRED')
+  check(billing.documents.length===1&&hash(readFileSync(billing.documents[0].path))===billing.documents[0].sha256,'P09_PRICE_EVIDENCE')
+  const ledger=readFileSync(baseline.ledger.path),rows=ledger.toString().trimEnd().split('\n').map(JSON.parse)
+  check(baseline.ledger.sequence===345&&hash(ledger.subarray(0,baseline.ledger.bytes))===baseline.ledger.sha256,'P09_LEDGER_PREFIX')
+  const grant={version:'real-input-paired09-grant-1',grantId:review.grantId,parentTail:rows[344].hash,parentSequence:345,ledgerPrefixBytes:baseline.ledger.bytes,ledgerPrefixSha:baseline.ledger.sha256,
+    manifestSha:hash(readFileSync(join(runDirectory,'REQUEST_MANIFEST.json'))),bindingSha:hash(bindingBytes),head:binding.head,sourcesSha:hash(JSON.stringify(sources)),reviewSha:hash(JSON.stringify(review)),
+    targets:binding.units,billingEvidence:{checkedAt:billing.checkedAt,validUntil:billing.validUntil,evidenceSha:hash(JSON.stringify(billing))},route:RECOVERY_ROUTE,priorNonce:rows[1].event.nonce,a02ResponseSha:rows[4].event.responseSha,maxTotalRequests:208,policy:FLASH41_PAIRED09_POLICY}
+  const existing=rows.find(r=>r.event.kind==='paired09Grant')?.event.grant
+  if(existing)check(isDeepStrictEqual(existing,grant),'P09_GRANT_CHANGED')
+  return grant
+}
+export async function dispatchPaired09(unitId){
+  check(/^(?:U(?:0[1-9]|1[0-2])|V0[1-8])-(03|09)$/.test(unitId),'P09_UNIT')
+  const bytes=readFileSync(join(PAIRED09_DIRECTORY,'BINDING_FINAL.json')),binding=JSON.parse(bytes),baseline=read09('BASELINE.json')
+  const protection=inspectProtection({stage:'paired09'}),grant=verifyPaired09Send({bindingBytes:bytes,binding,baseline,billing:read09('BILLING.json'),review:read09('SEND_REVIEW.json'),protection})
+  const closure=await compileOriginalScorer05(),{api}=await paired09Api(),budget=await openBudget(runDirectory,grant.manifestSha,{batchGrant:grant}),before=await budget.snapshot(),index=before.reservations.length-168
+  check(binding.units[index]?.unitId===unitId&&!before.paired09?.stopped&&before.reservations.slice(1).every(r=>r.status==='settled'),'P09_NEXT')
+  check(before.reservations.reduce((n,r)=>n+r.costUpperMicroCny,0)+3300000<=FLASH41_PAIRED09_POLICY.limitMicroCny,'P09_BUDGET')
+  const rawPath=join(PAIRED09_DIRECTORY,unitId+'_RAW.jsonl'),resultPath=join(PAIRED09_DIRECTORY,unitId+'_RESULT.json')
+  check(!existsSync(rawPath)&&!existsSync(resultPath),'P09_ALREADY_ATTEMPTED')
+  try{process.loadEnvFile(resolve('.env'))}catch{check(false,'SERVER_CONFIGURATION_UNAVAILABLE')}
+  const old=JSON.parse(readFileSync(join(runDirectory,'STATE.json'))),recorder=await createRawRecorder(rawPath),origin='http://127.0.0.1:6631',capability=randomBytes(32).toString('hex');let observed
+  try{
+    const requests={...old.requests,...JSON.parse(readFileSync(join(CANDIDATE02_DIRECTORY,'BINDING.json'))).requests,...JSON.parse(readFileSync(join(CANDIDATE03_DIRECTORY,'BINDING.json'))).requests,
+      ...pairedRead('BINDING.json').requests,...read05('BINDING.json').requests,...read06('BINDING.json').requests,...read07('BINDING_FINAL.json').requests,...read08('BINDING_FINAL.json').requests,...binding.requests}
+    const gateway=await createModelGateway({origin,capability,budget,requests,policy:FLASH41_PAIRED09_POLICY,fetchImpl:createPinnedProxyFetch(),recordRaw:async row=>{check(row.unitId===unitId&&row.requestSha===binding.units[index].requestSha,'P09_RAW_ID');await recorder.write(row);observed=row}})
+    const start=Date.now(),response=await gateway.handle({method:'POST',path:'/api/real-input/recognize',headers:{host:new URL(origin).host,origin,'sec-fetch-site':'same-origin','content-type':'application/json','x-real-input-capability':capability},bodyText:JSON.stringify({unitId,requestSha:binding.units[index].requestSha})})
+    let score=null,scoreError=null,assembled=null,rawEvidence=null,returnedModel=observed?JSON.parse(observed.rawHttpText).model:null
+    const item=binding.items.find(i=>i.id===unitId.slice(0,3)),reference=read09('REFERENCES_FINAL.json').items.find(i=>i.id===item.id),arm=unitId.slice(-2)
+    if(response.status===200)try{
+      const parsed=arm==='09'?api.parseEvidenceRoleEnvelopeV2(observed.rawHttpText,item.context,'deepseek-flash'):api.parseModelEnvelope(observed.rawHttpText,item.context,'deepseek-flash')
+      assembled=parsed.adaptedResponse;rawEvidence=arm==='09'?parsed.rawResponse:null;returnedModel=parsed.envelope.model
+      const projection=structuredClone(parsed.envelope);projection.model=BILLING_POLICY.model;projection.output[0].content[0].text=JSON.stringify(api.projectSemantic(assembled))
+      score=await closure.api.scoreSeenResponse(JSON.stringify(projection),item.context,reference.response,reference.context)
+    }catch(error){scoreError=typeof error?.message==='string'&&/^REAL_INPUT_[A-Z0-9_]+$/.test(error.message)?error.message:'SCHEMA_OR_SCORER_REJECTED'}
+    const after=await budget.snapshot(),r=after.reservations.find(r=>r.unitId===unitId)
+    const result={unitId,arm,cohort:item.cohort,bindingSha:hash(bytes),requestSha:binding.units[index].requestSha,responseSha:observed?.responseSha??null,requestModel:'deepseek-flash',returnedModel,
+      scorerSha:binding.scorerSha,scorerBundleSha:closure.bundleSha,referenceSha:binding.referenceSha,scoreInput:'semantic projection into frozen scorer; provider raw unchanged',rawEvidence,assembled,
+      http:response.status,diagnostic:response.diagnostic??null,waitingMs:Date.now()-start,score,scoreError,totalAttempts:after.reservations.length,costUpperMicroCny:r?.costUpperMicroCny??0,
+      totalCostUpperMicroCny:after.reservations.reduce((n,r)=>n+r.costUpperMicroCny,0),stopDispatch:response.status!==200||Boolean(after.paired09?.stopped)||r?.status!=='settled',providerBilledCny:'NOT_OBSERVABLE',automaticSelection:'NOT_ENABLED',qualityClaim:binding.label}
+    writeFileSync(resultPath,JSON.stringify(result,null,2)+'\n',{flag:'wx'})
+    return {unitId,http:result.http,stopDispatch:result.stopDispatch,scoreError,totalAttempts:result.totalAttempts,waitingMs:result.waitingMs,costUpperMicroCny:result.costUpperMicroCny}
+  }finally{await recorder.close()}
+}
+
 const read08=name=>JSON.parse(readFileSync(join(PAIRED08_DIRECTORY,name)))
 export async function paired08Api(){
   const compiled=await build({stdin:{contents:`export {buildFlash41Candidate08ComparisonRequest,CANDIDATE08_VERSION} from './src/experiments/realInput01/candidate08.ts';
@@ -1148,7 +1261,10 @@ export async function dispatchPaired07(unitId){
 
 if(process.argv[1]&&resolve(process.argv[1])===resolve(import.meta.filename)){
   const args=process.argv.slice(2),pick=key=>args.find(a=>a.startsWith('--'+key+'='))?.slice(key.length+3)
-  if(args.length===1&&args[0]==='--freeze-candidate08')console.log(JSON.stringify(await freezeCandidate08()))
+  if(args.length===1&&args[0]==='--freeze-candidate09')console.log(JSON.stringify(await freezeCandidate09()))
+  else if(args.length===1&&args[0]==='--prepare-paired09')console.log(JSON.stringify(await preparePaired09()))
+  else if(args.length===1&&/^--paired09=(?:U(?:0[1-9]|1[0-2])|V0[1-8])-(03|09)$/.test(args[0]))console.log(JSON.stringify(await dispatchPaired09(pick('paired09'))))
+  else if(args.length===1&&args[0]==='--freeze-candidate08')console.log(JSON.stringify(await freezeCandidate08()))
   else if(args.length===1&&args[0]==='--prepare-paired08')console.log(JSON.stringify(await preparePaired08()))
   else if(args.length===1&&/^--paired08=(?:S(?:0[1-9]|1[0-2])|T0[1-8])-(03|08)$/.test(args[0]))console.log(JSON.stringify(await dispatchPaired08(pick('paired08'))))
   else if(args.length===1&&args[0]==='--prepare-paired07')console.log(JSON.stringify(await preparePaired07()))

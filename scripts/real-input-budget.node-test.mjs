@@ -4,7 +4,7 @@ import { mkdtemp, mkdir, readFile, writeFile, unlink } from 'node:fs/promises'
 import { join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { spawn } from 'node:child_process'
-import { BILLING_POLICY, FLASH41_POLICY, FLASH41_PAIRED06_POLICY, FLASH41_PAIRED07_POLICY, FLASH41_PAIRED08_POLICY, sha256, costUpperMicroCny, validateManifest, validateUsageEnvelope, initializeBudget, openBudget } from './real-input-budget.mjs'
+import { BILLING_POLICY, FLASH41_POLICY, FLASH41_PAIRED06_POLICY, FLASH41_PAIRED07_POLICY, FLASH41_PAIRED08_POLICY, FLASH41_PAIRED09_POLICY, sha256, costUpperMicroCny, validateManifest, validateUsageEnvelope, initializeBudget, openBudget } from './real-input-budget.mjs'
 
 async function batchFixture() {
   const f=await recoveryFixture(),r=await openBudget(f.dir,f.manifestSha,{recoveryGrant:f.grant})
@@ -701,3 +701,38 @@ if(process.argv[2]!=='--reserve-child') {
     }
   })
 }
+
+async function paired09Fixture() {
+  const f=await paired08Fixture(),b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+  for(const u of f.grant.targets)await(await reserve(b,u.unitId,FLASH41_PAIRED08_POLICY)).complete(flashEnvelope(u.unitId))
+  const before=await b.snapshot(),prefix=await readFile(join(f.dir,'CALL_LEDGER.jsonl'))
+  const targets=f.grant.targets.map(u=>({...u,unitId:u.unitId.replace(/^S/,'U').replace(/^T/,'V').replace(/-08$/,'-09'),
+    candidateSha:u.unitId.endsWith('-08')?sha256('flash41-09'):u.candidateSha}))
+  // request placeholders bind to the new unit identity, not an old request replay.
+  for(const u of targets)Object.assign(u,row(u.unitId,u.unitId.endsWith('-09')?'flash41-09':'flash41-03',u.unitId.startsWith('U')?'new05-'+(Number(u.unitId.slice(1,3))-1):'fresh08-'+(Number(u.unitId.slice(1,3))-1)))
+  return {...f,before,prefix,grant:{...f.grant,version:'real-input-paired09-grant-1',grantId:'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',
+    parentTail:before.tail,parentSequence:before.nextSequence,ledgerPrefixBytes:prefix.length,ledgerPrefixSha:sha256(prefix),
+    maxTotalRequests:208,policy:FLASH41_PAIRED09_POLICY,targets}}
+}
+if(process.argv[2]!=='--reserve-child')test('paired09: preserved 168 prefix, reject drift and settle forty exactly once',async()=>{
+  const f=await paired09Fixture()
+  assert.equal(f.before.nextSequence,345);assert.equal(f.before.reservations.length,168)
+  for(const mutate of [
+    g=>{g.parentTail=sha256('wrong')},g=>{g.parentSequence=264},g=>{g.maxTotalRequests=209},
+    g=>{g.policy.limitMicroCny=21000000},g=>{g.targets[0].unitId='S01-03'},
+    g=>{g.targets[1].inputSha=sha256('different')},g=>{g.targets[0].candidateSha=sha256('different')},
+    g=>{g.targets.splice(2,2,...structuredClone(g.targets.slice(0,2)))}
+  ]){const grant=structuredClone(f.grant);mutate(grant);await assert.rejects(()=>openBudget(f.dir,f.manifestSha,{batchGrant:grant}))}
+  assert.deepEqual(await readFile(join(f.dir,'CALL_LEDGER.jsonl')),f.prefix)
+  const b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+  await assert.rejects(()=>reserve(b,f.grant.targets[1].unitId,FLASH41_PAIRED09_POLICY))
+  await assert.rejects(()=>reserve(b,f.grant.targets[0].unitId,FLASH41_PAIRED08_POLICY))
+  for(const u of f.grant.targets)await(await reserve(b,u.unitId,FLASH41_PAIRED09_POLICY)).complete(flashEnvelope(u.unitId))
+  const s=await b.snapshot()
+  assert.equal(s.reservations.length,208);assert.equal(s.nextSequence,426)
+  assert.deepEqual(s.reservations.slice(0,168),f.before.reservations)
+  assert.deepEqual((await readFile(join(f.dir,'CALL_LEDGER.jsonl'))).subarray(0,f.prefix.length),f.prefix)
+  assert.equal(s.reservations[0].costUpperMicroCny,3300000)
+  await assert.rejects(()=>reserve(b,'U01-03',FLASH41_PAIRED09_POLICY))
+  assert.equal(costUpperMicroCny(1048576,8192,FLASH41_PAIRED09_POLICY),3219456)
+})

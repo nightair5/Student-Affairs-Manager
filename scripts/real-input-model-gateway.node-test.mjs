@@ -352,3 +352,15 @@ test('normal escaped Chinese and nested JSON retain exact raw bytes and can be r
     assert.equal(disk.responseSha,sha256(expected));assert.equal((await s.budget.snapshot()).reservations[0].status,'settled')
   } finally {await recorder.close()}
 })
+test('paired09: U/V membership requires the new policy and keeps text-only identity',async()=>{
+  const {FLASH41_PAIRED08_POLICY,FLASH41_PAIRED09_POLICY}=await import('./real-input-budget.mjs'),unitId='U01-09'
+  const value=JSON.parse(request());value.model='deepseek-flash';const body=JSON.stringify(value),identity=inspectRequest(body,FLASH41_PAIRED09_POLICY)
+  let calls=0,reserves=0,records=0;const envelope=JSON.parse(raw(unitId));envelope.model='deepseek-flash'
+  const config={origin:ORIGIN,capability:CAP,requests:{[unitId]:body},clock:()=>NOW,
+    budget:{snapshot:async()=>({units:[{unitId,...identity}]}),reserve:async(id,text,policy)=>{assert.equal(id,unitId);assert.equal(text,body);assert.deepEqual(policy,FLASH41_PAIRED09_POLICY);reserves++;return{complete:async()=>({usage:envelope.usage,costUpperMicroCny:300}),uncertain:async()=>{throw Error('UNEXPECTED')}}}},
+    readSecret:()=>FAKE_SECRET,fetchImpl:async(url,options)=>{calls++;assert.equal(url,'https://api.deepseek.com/responses');assert.equal(options.body,body);return http(JSON.stringify(envelope))},
+    recordRaw:async row=>{records++;assert.equal(row.unitId,unitId);assert.equal(row.requestSha,identity.requestSha)}}
+  await assert.rejects(()=>createModelGateway({...config,policy:FLASH41_PAIRED08_POLICY}),/PAIRED09_POLICY/)
+  const gateway=await createModelGateway({...config,policy:FLASH41_PAIRED09_POLICY}),message={method:'POST',path:'/api/real-input/recognize',headers:{host:new URL(ORIGIN).host,origin:ORIGIN,'sec-fetch-site':'same-origin','content-type':'application/json','x-real-input-capability':CAP},bodyText:JSON.stringify({unitId,requestSha:identity.requestSha})}
+  assert.equal((await gateway.handle(message)).status,200);assert.equal(calls,1);assert.equal(reserves,1);assert.equal(records,1)
+})

@@ -1,0 +1,32 @@
+{
+  "verified": true,
+  "policy": {
+    "version": "real-input-flash41-budget-9",
+    "model": "deepseek-flash",
+    "endpoint": "https://api.deepseek.com/responses",
+    "temperature": 0,
+    "reasoningEffort": "none",
+    "inputTokenCeiling": 1048576,
+    "outputTokenCeiling": 8192,
+    "requestByteCeiling": 65536,
+    "inputPriceMicroPerMillion": 3000000,
+    "outputPriceMicroPerMillion": 9000000,
+    "reservationMicroCny": 3300000,
+    "limitMicroCny": 20000000,
+    "maxRequests": 208
+  },
+  "method": "official-public-document-review",
+  "checkedAt": "2026-09-13T13:55:30.365Z",
+  "validUntil": "2026-09-14T13:55:30.365Z",
+  "documents": [
+    {
+      "path": "docs\\recognition-optimization\\mainline-real-input-01\\runs\\candidate09-20260913a\\PUBLIC_VERIFICATION.md",
+      "sha256": "9597977629205f52674fbfae0a8afb57b243aaf74a56927d464076cf431ff5aa"
+    }
+  ],
+  "officialPeakMicroPerMillion": {
+    "input": 2000000,
+    "output": 8000000
+  },
+  "conservativeUpperPolicy": "Existing 3/9 upper rates retained above current official 2/8; not claimed as provider billed amount."
+}

@@ -17,6 +17,7 @@ const git=(...args)=>execFileSync('git',args,{encoding:'utf8',windowsHide:true})
 /** Read-only current-stage protection. This is not a replacement for full
  * engineering, historical environment, paid safety or browser acceptance. */
 export function inspectProtection({stage}={}) {
+  if(stage==='paired09')return inspectPaired09Protection()
   if(stage==='paired08')return inspectPaired08Protection()
   if(stage==='paired07')return inspectPaired07Protection()
   if(stage==='paired06')return inspectPaired06Protection()
@@ -280,4 +281,44 @@ export function verifyReviewBinding({head,expectedHead:expected,sources,review})
 if(process.argv[1]&&resolve(process.argv[1])===resolve(import.meta.filename)){
   ensure(process.argv.length===3&&['--protection','--recovery-protection'].includes(process.argv[2]),'EXPLICIT_READ_ONLY_MODE')
   console.log(JSON.stringify(inspectProtection(process.argv[2]==='--recovery-protection'?{stage:'recovery-a02'}:{})))
+}
+
+export const PAIRED09_DIRECTORY='docs/recognition-optimization/mainline-real-input-01/runs/candidate09-20260913a'
+export function initializePaired09Baseline() {
+  const head=git('rev-parse','HEAD'),sourcePath=PAIRED08_DIRECTORY+'/FINAL_IMPLEMENTATION_SNAPSHOT.json'
+  ensure(head==='206722787a5973400903cdbd305cb4cce0073c23'&&git('branch','--show-current')===branch,'P09_START')
+  const snapshot=JSON.parse(readFileSync(sourcePath)),ledgerPath='docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/CALL_LEDGER.jsonl'
+  ensure(snapshot.sources.length===70,'P09_SOURCE_COUNT')
+  const ledger=readFileSync(ledgerPath),rows=ledger.toString().trimEnd().split('\n').map(JSON.parse)
+  ensure(rows.length===345&&hash(ledger)==='e8503b7934eceadc278810ccffacae506edd320257a9b4890414fb0eaa1dcdc2','P09_LEDGER_START')
+  const value={head,sourceManifest:{path:sourcePath,sha256:hash(readFileSync(sourcePath))},sources:snapshot.sources,
+    ledger:{path:ledgerPath,bytes:ledger.length,sha256:hash(ledger),sequence:345,tail:rows.at(-1).hash},
+    log:{path:logPath,bytes:readFileSync(logPath).length,sha256:hash(readFileSync(logPath))},modelCalls:168,
+    newPaths:['src/experiments/realInput01/candidate09.ts','src/experiments/realInput01/candidate09.test.ts','src/experiments/realInput01/evidenceRoleWireV2.ts','src/experiments/realInput01/evidenceRoleWireV2.test.ts']}
+  mkdirSync(PAIRED09_DIRECTORY,{recursive:true});writeFileSync(PAIRED09_DIRECTORY+'/BASELINE.json',JSON.stringify(value,null,2)+'\n',{flag:'wx'})
+  return {head,sourceCount:70,newPaths:4,ledgerRows:345}
+}
+export function inspectPaired09Protection() {
+  const b=JSON.parse(readFileSync(PAIRED09_DIRECTORY+'/BASELINE.json'))
+  ensure(resolve(process.cwd()).toLowerCase()===root.toLowerCase()&&git('branch','--show-current')===branch&&git('rev-parse','HEAD')===b.head,'P09_GIT')
+  ensure(hash(readFileSync(b.sourceManifest.path))===b.sourceManifest.sha256&&b.sources.length===70,'P09_BASELINE')
+  const p07=JSON.parse(readFileSync(PAIRED07_DIRECTORY+'/BASELINE.json'))
+  for(const ref of [p07.protectedManifest,p07.frozenClosure])ensure(hash(readFileSync(ref.path))===ref.sha256,'P09_PROTECTION_MANIFEST')
+  const protection=JSON.parse(readFileSync(p07.protectedManifest.path)),frozen=JSON.parse(readFileSync(p07.frozenClosure.path))
+  const material=JSON.parse(readFileSync('docs/recognition-optimization/mainline-real-input-01/runs/material-unverified-20260913a/IMPLEMENTATION_SNAPSHOT.json'))
+  const exceptions=new Map(material.exceptions.map(item=>[item.path,item.after]))
+  for(const item of protection.protectedFiles)ensure(hash(readFileSync(item.path))===(exceptions.get(item.path)??item.sha256),'P09_PROTECTED:'+item.path)
+  // Explicitly authorized version dispatch is the only new exception in the old
+  // request dependency closure. The frozen converters themselves stay unchanged.
+  for(const item of frozen.dependencies.filter(item=>item.path!=='src/experiments/realInput01/modelWire.ts'))
+    ensure(hash(readFileSync(item.path))===(exceptions.get(item.path)??item.sha256),'P09_FROZEN_DEPENDENCY:'+item.path)
+  for(const item of [...protection.staticEvidence,...p07.staticEvidence])ensure(hash(readFileSync(item.path))===item.sha256,'P09_STATIC:'+item.path)
+  for(const item of b.sources.filter(item=>/candidate0[2-8]|factAssembly|evidenceRoleWire\.|evaluation\.|seenInputs|mainline04\//.test(item.path)))
+    ensure(hash(readFileSync(item.path))===item.workingSha256,'P09_FROZEN:'+item.path)
+  for(const prefix of [b.ledger,b.log])ensure(hash(readFileSync(prefix.path).subarray(0,prefix.bytes))===prefix.sha256,'P09_PREFIX')
+  const paths=[...b.sources.map(item=>item.path),...b.newPaths]
+  ensure(paths.length===74&&new Set(paths).size===74,'P09_WHITELIST')
+  for(const path of [...git('diff','--name-only').split('\n'),...git('ls-files','--others','--exclude-standard').split('\n')].filter(Boolean))
+    ensure(paths.includes(path)||[contextPath,logPath,b.ledger.path].includes(path)||path.startsWith(PAIRED09_DIRECTORY+'/'),'P09_OUTSIDE:'+path)
+  return {head:b.head,branch,protectedCount:944,historyCount:607,sources:paths.map(path=>({path,exists:existsSync(path),workingSha256:existsSync(path)?hash(readFileSync(path)):null}))}
 }

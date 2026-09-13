@@ -1,0 +1,275 @@
+{
+  "unitId": "V08-09",
+  "arm": "09",
+  "cohort": "later8",
+  "bindingSha": "d62abdfdedaf4b538364fe55bacd1e52fc3623f7a5acef9732de75af128125df",
+  "requestSha": "1d5b17091c2a53f2e46036ecd2b6acd54ec07441c383a4ab83f5f75b40f0d38b",
+  "responseSha": "a652ef2c50f8deecd9408bb67813d49884065e4a23ca0ceabc2ebe00cf6e4929",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "scorerSha": "ad76149f8a88cb4adda6dca78b210daaa4f3c800d17582767911e8ace2658e1d",
+  "scorerBundleSha": "782c89b4f865d83c9a2051d9e2a6df3776b7231ad49aec87008b5c14f4e09f21",
+  "referenceSha": "961683067b73fc179a3b914513c7fba2e462086a0e8f57923c4b42b75ffd1e52",
+  "scoreInput": "semantic projection into frozen scorer; provider raw unchanged",
+  "rawEvidence": {
+    "schemaVersion": "real-input-typed-fact-wire-2",
+    "tasks": [],
+    "materials": [],
+    "timePoints": [
+      {
+        "tempId": "t1",
+        "type": "event_start",
+        "rawText": "2026年10月16日08:30",
+        "relatedTaskTempIds": [],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0002-6acad6b0801f6997a25fd86c794463a80f796b2ce67025f850063b250a38fe0b"
+        ],
+        "confidence": 0.95,
+        "factType": "time"
+      },
+      {
+        "tempId": "t2",
+        "type": "event_end",
+        "rawText": "10:00",
+        "relatedTaskTempIds": [],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0003-2f44c64d2b87d0baffbd5ad3bfb0ff13e5a8779f0e2fab6d0df2c5d3ede22c8b"
+        ],
+        "confidence": 0.95,
+        "factType": "time"
+      }
+    ],
+    "events": [
+      {
+        "tempId": "e1",
+        "title": "校园植物观察",
+        "description": "植物观察活动，集合地点为生物楼东门。",
+        "startTimePointTempId": "t1",
+        "endTimePointTempId": "t2",
+        "location": "生物楼东门",
+        "scopeIds": [
+          "scope-0001-6addc813b49d5e42149115621faf0d4ab82099234e857ab98e65e12034eea816",
+          "scope-0002-6acad6b0801f6997a25fd86c794463a80f796b2ce67025f850063b250a38fe0b",
+          "scope-0003-2f44c64d2b87d0baffbd5ad3bfb0ff13e5a8779f0e2fab6d0df2c5d3ede22c8b",
+          "scope-0004-ed2f4629d5ae30972d339b560093b405199897221bd470cfd504b410a1a5cb50"
+        ],
+        "confidence": 0.95,
+        "inferenceLevel": "explicit",
+        "relatedTaskTempIds": [],
+        "factType": "event"
+      }
+    ],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0005-fe30076d2114a07cd7932e59e7840dd05fa533114b3ae21cfcb6bdfde9848977",
+      "scope-0006-44db6a276cb6d9e3cf5cc576e46a5cba1a7fe06f3f44e0fe9db778cf12306dee",
+      "scope-0007-528cc4a400e532875c4a4cdf8c7b8c85bf4542f16644f4782572f78eef0cfae8",
+      "scope-0008-f184bf5d42fb1409591fd0b857e8927eaa05c7fad4b000562d145b5079c8999f"
+    ],
+    "unresolvedScopeIds": []
+  },
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [],
+    "materials": [],
+    "timePoints": [
+      {
+        "tempId": "t1",
+        "type": "event_start",
+        "rawText": "2026年10月16日08:30",
+        "relatedTaskTempIds": [],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0002-6acad6b0801f6997a25fd86c794463a80f796b2ce67025f850063b250a38fe0b"
+        ],
+        "confidence": 0.95,
+        "normalizedValue": "2026-10-16T08:30",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "exact",
+        "needsConfirmation": false
+      },
+      {
+        "tempId": "t2",
+        "type": "event_end",
+        "rawText": "10:00",
+        "relatedTaskTempIds": [],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0003-2f44c64d2b87d0baffbd5ad3bfb0ff13e5a8779f0e2fab6d0df2c5d3ede22c8b"
+        ],
+        "confidence": 0.95,
+        "normalizedValue": null,
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "vague",
+        "needsConfirmation": true
+      }
+    ],
+    "events": [
+      {
+        "tempId": "e1",
+        "title": "校园植物观察",
+        "description": "植物观察活动，集合地点为生物楼东门。",
+        "startTimePointTempId": "t1",
+        "endTimePointTempId": "t2",
+        "location": "生物楼东门",
+        "scopeIds": [
+          "scope-0001-6addc813b49d5e42149115621faf0d4ab82099234e857ab98e65e12034eea816",
+          "scope-0002-6acad6b0801f6997a25fd86c794463a80f796b2ce67025f850063b250a38fe0b",
+          "scope-0003-2f44c64d2b87d0baffbd5ad3bfb0ff13e5a8779f0e2fab6d0df2c5d3ede22c8b",
+          "scope-0004-ed2f4629d5ae30972d339b560093b405199897221bd470cfd504b410a1a5cb50"
+        ],
+        "confidence": 0.95,
+        "inferenceLevel": "explicit",
+        "relatedTaskTempIds": []
+      }
+    ],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0005-fe30076d2114a07cd7932e59e7840dd05fa533114b3ae21cfcb6bdfde9848977",
+      "scope-0006-44db6a276cb6d9e3cf5cc576e46a5cba1a7fe06f3f44e0fe9db778cf12306dee",
+      "scope-0007-528cc4a400e532875c4a4cdf8c7b8c85bf4542f16644f4782572f78eef0cfae8",
+      "scope-0008-f184bf5d42fb1409591fd0b857e8927eaa05c7fad4b000562d145b5079c8999f"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "source:3bed954e",
+    "sourceVersionId": "source:3bed954e:version:1",
+    "sourceFingerprint": "sha256:feaadf0336e1f61e3ac9a112bf602642e6095e6681bcd47cf9cf186cdf9be892"
+  },
+  "http": 200,
+  "diagnostic": null,
+  "waitingMs": 4756,
+  "score": {
+    "scorerVersion": "real-input-seen-fact-diagnostic-2",
+    "label": "已见人工工程参考的精确诊断，不是未见或商业准确率",
+    "metrics": {
+      "task": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "requiresAction": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 1,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "time": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 2,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "material": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "event": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 0,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0,
+        "recall": 0
+      },
+      "condition": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "revision": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "evidence": {
+        "predicted": 3,
+        "reference": 3,
+        "correct": 2,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0.6666666666666666,
+        "recall": 0.6666666666666666
+      },
+      "semantic": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 2,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "coverage": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 1,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0.5,
+        "recall": 0.5
+      }
+    },
+    "matchingAmbiguities": [],
+    "metricStatus": "EXACT_REFERENCE_DIAGNOSTIC",
+    "schemaParsed": true,
+    "issues": [
+      {
+        "code": "TIME_NEEDS_REVIEW",
+        "entityIds": [
+          "t2"
+        ]
+      },
+      {
+        "code": "EVENT_NOT_TASK_ASSOCIATED",
+        "entityIds": [
+          "e1"
+        ]
+      }
+    ],
+    "completeCase": false,
+    "majorCorrectionRequired": true,
+    "forbidden": 0,
+    "automaticSelection": "NOT_ENABLED",
+    "humanActiveEditTime": "NOT_RUN",
+    "candidateTaskCount": 0,
+    "referenceTaskCount": 0
+  },
+  "scoreError": null,
+  "totalAttempts": 207,
+  "costUpperMicroCny": 19533,
+  "totalCostUpperMicroCny": 8282989,
+  "stopDispatch": false,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticSelection": "NOT_ENABLED",
+  "qualityClaim": "20份已见材料开发回归；原12+后8分别报告；40请求不是40独立材料"
+}

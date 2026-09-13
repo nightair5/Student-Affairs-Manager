@@ -23,6 +23,7 @@ import { buildCandidate04Request, CANDIDATE04_VERSION } from './candidate04'
 import { buildFlash41ComparisonRequest, CANDIDATE05_VERSION } from './candidate05'
 import { buildFlash41Candidate06ComparisonRequest, CANDIDATE06_VERSION } from './candidate06'
 import { buildFlash41Candidate07ComparisonRequest, CANDIDATE07_VERSION } from './candidate07'
+import { buildFlash41Candidate09ComparisonRequest, CANDIDATE09_VERSION } from './candidate09'
 import { acquireText } from './inputAcquisition'
 import { pendingDateTaskIds } from '../mainline05/semanticView'
 import { stableJson } from '../mainline04/semanticContract'
@@ -55,7 +56,7 @@ export interface RecordedBatch extends Omit<RecordedA02,'version'> {
 }
 export interface RecordedBatchIdentity {unitId:string;requestSha:string;responseSha:string}
 export interface RecordedPaired04 {
-  version:'recorded-paired04-1'|'recorded-paired05-1'|'recorded-paired06-1'|'recorded-paired07-1'; unitId:string; name:string; operationId:string; title:string;
+  version:'recorded-paired04-1'|'recorded-paired05-1'|'recorded-paired06-1'|'recorded-paired07-1'|'recorded-paired09-1'; unitId:string; name:string; operationId:string; title:string;
   context:WireContext; requestSha:string; responseSha:string; rawHttpText:string
 }
 /** Server-bound paid record, not a model executor. No references or scores enter here. */
@@ -107,14 +108,18 @@ export async function replayRecordedPaired04(repo:SemanticRepository,record:Reco
   exactKeys(record,['version','unitId','name','operationId','title','context','requestSha','responseSha','rawHttpText'])
   exactKeys(identity,['unitId','requestSha','responseSha'])
   const id=record.unitId.slice(0,3),arm=record.unitId.slice(4)
-  const paired07=record.version==='recorded-paired07-1',newest=record.version==='recorded-paired06-1',next=record.version==='recorded-paired05-1',prefix=paired07?'paired07':newest?'paired06':next?'paired05':'paired04'
-  const built=paired07&&['03','07'].includes(arm)?await buildFlash41Candidate07ComparisonRequest(record.context,arm as '03'|'07')
+  const paired09=record.version==='recorded-paired09-1',paired07=record.version==='recorded-paired07-1',newest=record.version==='recorded-paired06-1',next=record.version==='recorded-paired05-1',prefix=paired09?'paired09':paired07?'paired07':newest?'paired06':next?'paired05':'paired04'
+  // Paired09 deliberately reuses the exact paired08 source/context. Do not
+  // manufacture a new source identity or confirm both arms of the same source.
+  const operationId=paired09?(id.startsWith('U')?'paired08-seen-S':'paired08-fresh-T')+id.slice(1):prefix+'-source-'+id
+  const built=paired09&&['03','09'].includes(arm)?await buildFlash41Candidate09ComparisonRequest(record.context,arm as '03'|'09')
+    :paired07&&['03','07'].includes(arm)?await buildFlash41Candidate07ComparisonRequest(record.context,arm as '03'|'07')
     :newest&&['03','06'].includes(arm)?await buildFlash41Candidate06ComparisonRequest(record.context,arm as '03'|'06')
     :next&&['03','05'].includes(arm)?await buildFlash41ComparisonRequest(record.context,arm as '03'|'05')
     :await (arm==='03'?buildCandidate03Request:buildCandidate04Request)(record.context)
-  if(!['recorded-paired04-1','recorded-paired05-1','recorded-paired06-1','recorded-paired07-1'].includes(record.version)
-    ||!(paired07?/^R(0[1-9]|1[0-2])-(03|07)$/:newest?/^Q(0[1-9]|1[0-2])-(03|06)$/:next?/^P(0[1-9]|1[0-2])-(03|05)$/:/^N(0[1-9]|1[0-2])-(03|04)$/).test(record.unitId)
-    ||record.operationId!==prefix+'-source-'+id||record.name!==recordedA02Identity.name
+  if(!['recorded-paired04-1','recorded-paired05-1','recorded-paired06-1','recorded-paired07-1','recorded-paired09-1'].includes(record.version)
+    ||!(paired09?/^(U(0[1-9]|1[0-2])|V0[1-8])-(03|09)$/:paired07?/^R(0[1-9]|1[0-2])-(03|07)$/:newest?/^Q(0[1-9]|1[0-2])-(03|06)$/:next?/^P(0[1-9]|1[0-2])-(03|05)$/:/^N(0[1-9]|1[0-2])-(03|04)$/).test(record.unitId)
+    ||record.operationId!==operationId||record.name!==recordedA02Identity.name
     ||(httpsPreview ? repo.name!==HTTPS_PREVIEW_DATABASE||!HTTPS_PREVIEW_EXAMPLES.some(e=>e.unitId===record.unitId) : repo.name!==record.name)
     ||repo.profile!=='real-input-01'||record.unitId!==identity.unitId
     ||record.requestSha!==identity.requestSha||record.responseSha!==identity.responseSha
@@ -139,8 +144,8 @@ export async function replayRecordedPaired04(repo:SemanticRepository,record:Reco
       referenceTime:record.context.referenceTime,timezone:'Asia/Shanghai'}
     if(stableJson(actual)!==stableJson(record.context))throw Error('REAL_INPUT_P04_SOURCE')
     const handle=await memory.beginInputRun(source.sourceId,reading,'live','recorded-'+prefix+'-'+record.unitId,
-      semanticRevision(await memory.load()),record.context.referenceTime,arm==='03'?CANDIDATE03_VERSION:paired07?CANDIDATE07_VERSION:newest?CANDIDATE06_VERSION:next?CANDIDATE05_VERSION:CANDIDATE04_VERSION,
-      paired07||newest||next?FLASH41_MODEL_NAME:MODEL_NAME)
+      semanticRevision(await memory.load()),record.context.referenceTime,arm==='03'?CANDIDATE03_VERSION:paired09?CANDIDATE09_VERSION:paired07?CANDIDATE07_VERSION:newest?CANDIDATE06_VERSION:next?CANDIDATE05_VERSION:CANDIDATE04_VERSION,
+      paired09||paired07||newest||next?FLASH41_MODEL_NAME:MODEL_NAME)
     await memory.transaction(w=>({...w,extractionDrafts:w.extractionDrafts.map(d=>d.id===handle.draftId
       ?{...d,legacyData:{...d.legacyData,realInputRecorded:receipt}}:d)}))
     try{await completeInputRun(memory,handle,record.rawHttpText)}catch(error){
