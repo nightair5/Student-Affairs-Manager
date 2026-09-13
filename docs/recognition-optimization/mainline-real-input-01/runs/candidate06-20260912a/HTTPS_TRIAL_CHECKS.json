@@ -1,0 +1,20 @@
+{
+  "baseline":"0f8ff0d93819b5a73217bb3bf047286ac763a7d2",
+  "status":"ENTRY_IMPLEMENTED_DEPLOYED_BROWSER_PENDING",
+  "deployment":{"worker":"student-affairs-real-input-preview","versionId":"bf52ea5d-4576-4c1c-8d21-0cdcc4f61fb0","earlierAttemptVersion":"1be781f6-25c1-416d-9f40-eedfe620a8ac","url":"https://student-affairs-real-input-preview.nightsdell.workers.dev","dryRun":"PASS","uploadedChangedAssets":1,"unchangedAssetsReused":4,"productionModified":false},
+  "implementation":[
+    {"path":"src/experiments/realInput01/browser.tsx","sha256":"663a68adb86abfb2c93216ff0bb13d969dbaa3166227d8fd8404451444934904"},
+    {"path":"src/experiments/realInput01/runtime.ts","sha256":"b173e73ef57997b2e0afe23b9a942b94b4e4ce75ddd0862d1623bed2eef1181f"},
+    {"path":"src/experiments/realInput01/acceptance.test.tsx","sha256":"9a0e87a93b111d5dbc413b6a0b47fcb987328295a8427bb2ddaefff81e0ec941"},
+    {"path":"scripts/build-real-input-preview.mjs","sha256":"8711e8f9a806997a2f6a34d91e6b9584edf88236b228b203105f3dfd2487b924","changed":false},
+    {"path":"cloudflare/real-input-preview.mjs","sha256":"331421969550f75593be45bf4fa6f13d9279d5e05856f96deff69661a14a750a","changed":false},
+    {"path":"wrangler.real-input-preview.jsonc","sha256":"5fb21e9c63dcd6e78ad644281d3ccb79ca03397c5014faea37e6615550ae9380","changed":false}
+  ],
+  "engineering":{"tests":{"path":"C:/Users/Winner/AppData/Local/Temp/https-picker-final-XeAg6I/test.json","sha256":"a1cbef8d17a2c0ab2345bcdf847c8460939cbc59489723475d57ce478da753f7","pass":15,"fail":0,"notRun":43},"initialTestAttempt":{"pass":15,"fail":0,"path":"C:/Users/Winner/AppData/Local/Temp/https-picker-test-AEzIp7/test.json"},"type":"PASS","lint":{"errors":0,"warnings":1,"initialRefRuleFailureResolvedWithoutDisablingRule":true},"build":"PASS","secretScan":{"pass":true,"files":1713},"envFile":false,"temporaryBuild":"C:/Users/Winner/AppData/Local/Temp/real-input-https-b2qq3T","newDependencies":0,"previousDevAudit":{"moderate":2,"high":3,"notRerunOrFixed":true}},
+  "finalLayoutCheck":{"change":"Reuse app-shell/content-shell to avoid fixed sidebar overlap; no CSS/App change","type":"PASS","lintErrors":0,"lintWarnings":1,"build":"PASS","temporaryBuild":"C:/Users/Winner/AppData/Local/Temp/real-input-https-4m3STC","previousEngineeringBuild":"earlier attempt retained below; runtime tests unchanged"},
+  "online":{"assetsMatch":5,"assetsTotal":5,"browserJsSha256":"2e5cefc429d07b68547462a3b0f09412f3cc71040835d21b6dc5f73f7fa34194","otherFourAssetHashes":"UNCHANGED_FROM_HTTPS_PREVIEW_CHECKS","modelCallsEnabled":false,"modelPostStatus":405},
+  "browser":{"attempts":1,"error":"nodeRepl.fetch request failed","tabsReturned":0,"Q01":"NOT_RUN","Q07":"NOT_RUN","refresh":"NOT_RUN","independentRead":"NOT_RUN","actualDownload":"NOT_RUN","newDatabaseCreatedThisTurn":false,"manualStepsRequestedOnce":true},
+  "protection":{"files":944,"staticEvidence":607,"frozenDependencies":18,"mismatches":0,"ledgerRows":215,"ledgerSha256":"9a92b6886a0a40d7300aaa02054de53fb3df5c3a5397ddea9247ea3e3783ad41","logPrefixBytes":329980,"logPrefixSha256":"ff94257089aff8ee995d243f884beb7e5d5d8eae60a0aab1bd48813abf4a0dc6","oldLocalDbAccessed":false},
+  "newModelCalls":0,"modelFees":0,"modelAccuracy":"NOT_MEASURED_THIS_TURN","candidate06Adopted":false,
+  "git":{"status":"AUDIT_ONLY_SOURCE_RETAINED_UNCOMMITTED_PENDING_BROWSER_ACCEPTANCE"}
+}
