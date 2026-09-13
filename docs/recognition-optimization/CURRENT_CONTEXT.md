@@ -15,7 +15,7 @@
 ## 仓库与Git
 - 唯一仓库C:\Users\Winner\student-affairs-multimodal-exp。
 - 唯一分支codex/e2-multimodal-recognition-exp；禁止在比赛默认工作区实施。
-- 本次起点本机/远端0f8ff0d93819b5a73217bb3bf047286ac763a7d2。
+- 最新恢复起点本机/远端92d148580b24c523502bf83f0afc6d09245970ac。
 - 前21业务文件已作为待浏览器验收源码快照提交；不再是未提交实现。
 - 六文件仅browser/runtime/acceptance修改且保留未提交；本轮仅审计交付，见TRIAL回执。
 - 不回切、不强推、不自动变基，不修改旧历史HEAD断言。
@@ -66,7 +66,8 @@
 - Wrangler临时配置、CLOUDFLARE_LOAD_DEV_VARS_FROM_DOT_ENV=false。
 
 ## 浏览器和剩余验收
-- 本轮一次官方cua.getState仍nodeRepl.fetch request failed，未返回标签。
+- 再授权后仅恢复一次cua.getState，仍nodeRepl.fetch request failed，未返回标签。
+- 恢复证据见同目录HTTPS_TRIAL_RESUME.md；源码未变，未构建/部署/重跑测试。
 - 无系统/防护修改，无绕过控制或反复刷新；面板打开仅queued，不作验收。
 - 新域名实际创建、Q01/Q07核对确认、刷新查询、独立真实读库均NOT_RUN。
 - 实际下载对独立读库NOT_RUN；线上GET文件一致不冒充该证据。
