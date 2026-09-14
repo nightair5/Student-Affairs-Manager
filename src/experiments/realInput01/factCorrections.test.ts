@@ -78,6 +78,21 @@ describe('controlled manual deltas, seen engineering only', () => {
     const shared: FactChange = { ...change, value: { ...materialEdit(r.rawResponse.materials[0]), name: '已修共享材料' } }
     expect(() => appendCorrection(r.rawResponse, [], row(r.rawResponse, shared), r.context.index, [b])).toThrow('CONFIRMED_OR_SHARED_ENTITY')
   })
+  it('dependency review can remove an ungrounded edge but rejects missing, self and cyclic targets', async () => {
+    const r=await engineeringReply('multi',handle),[a,b]=r.rawResponse.tasks.map(t=>t.id),scopeIds=[...r.rawResponse.tasks[1].propositionScopeIds]
+    r.rawResponse.tasks[1].detail.dependencyTempIds=[a]
+    const change:FactChange={kind:'dependency',taskId:b,value:[],scopeIds,note:'用户对照完整原文，确认该任务没有此前建议的前置关系。'}
+    const next=appendCorrection(r.rawResponse,[],row(r.rawResponse,change),r.context.index,[])
+    expect(next.facts.tasks.find(t=>t.id===b)!.detail.dependencyTempIds).toEqual([])
+    expect(next.sourceFacts.tasks.find(t=>t.id===b)!.detail.dependencyTempIds).toEqual([])
+    expect(r.rawResponse.tasks.find(t=>t.id===b)!.detail.dependencyTempIds).toEqual([a])
+    expect(next.affectedTaskIds).toEqual([b])
+    expect(()=>appendCorrection(r.rawResponse,[],row(r.rawResponse,{...change,value:['missing']}),r.context.index,[])).toThrow('DEPENDENCY_REFERENCE')
+    expect(()=>appendCorrection(r.rawResponse,[],row(r.rawResponse,{...change,value:[b]}),r.context.index,[])).toThrow('DEPENDENCY_REFERENCE')
+    const cycle:FactChange={kind:'dependency',taskId:a,value:[b],scopeIds:[...r.rawResponse.tasks[0].propositionScopeIds],note:'不能保存循环依赖'}
+    expect(()=>appendCorrection(r.rawResponse,[],row(r.rawResponse,cycle),r.context.index,[])).toThrow('DEPENDENCY_CYCLE')
+    expect(()=>appendCorrection(r.rawResponse,[],row(r.rawResponse,change),r.context.index,[b])).toThrow('CONFIRMED_OR_SHARED_ENTITY')
+  })
   it('explicit ownership updates both edges; cannot hide an existing time relation', async () => {
     const r = await engineeringReply('multi', handle), m = r.rawResponse.materials[0], [a,b] = r.rawResponse.tasks.map(t => t.id)
     const change: FactChange = { kind: 'material', materialId: m.tempId, value: { ...materialEdit(m), relatedTaskTempIds: [b] } }

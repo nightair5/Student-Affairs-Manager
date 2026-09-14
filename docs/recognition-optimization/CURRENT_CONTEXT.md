@@ -1,106 +1,88 @@
 # MAINLINE-REAL-INPUT-01 当前交接
 
 ## 当前结论
-- 本轮比较 deepseek-flash 的 reasoning none 与 low。
-- candidate03、wire、正文、时区和评价口径固定。
-- 实际完成 12 份、两臂 24/24 次有效返回。
-- none 明显少错、少改、更快、更便宜；结论 KEEP_NONE。
-- 剩余 8 份、16 次因累计 290 次硬上限而 NOT_RUN。
+- 本轮完成可靠基线难例的有限人工纠正能力。
+- 模型、Prompt、Expected、评分器和账本均未修改。
+- 新增模型调用 0 次；累计请求仍为 290 次。
+- candidate03 + deepseek-flash + reasoning=none 继续作为可靠基线。
 
 ## 仓库
 - 仓库：C:\Users\Winner\student-affairs-multimodal-exp。
 - 分支：codex/e2-multimodal-recognition-exp。
-- 本轮起点：934fb9e3afdd02c233f58e0831b1ce1dcf15b9df。
-- 用户给出的 129dd1 是较早快照，未回切。
-- 本轮业务提交：804bf07e4b38da13f9bc8b2081fba644dc31a795，已推送并核对远端同一 SHA。
+- 本轮起点：604a0e8ca90174c9d59b7331d45f64f18fc80a4a。
+- 当前业务提交由包含本文档的 HEAD 表示，最终 SHA 以远端核验为准。
 
-## 固定设计
-- 20 份已见完整匿名通知原样复用。
-- 优先前四份：W01、W11、W04、W12。
-- 两臂均为 deepseek-flash + candidate03；A none，B low。
-- 两臂 max_output_tokens=16384，stream=false。
-- verifier、Repair、传输 retry 均为 0。
-- low 为思考模式，temperature=0 按官方规则不生效。
-- 参考答案只用于评价，不进入请求。
+## 本轮功能
+- 未确认草稿中的任务现在可以人工核对前置依赖。
+- 用户从完整原文选择依据、说明原因并明确保存。
+- 已保存依赖参与后续确认资格计算。
+- 修改前后依赖与处置历史均保留。
+- 原模型回答和首次建议保持；已确认任务不能反向修改。
 
-## 截断响应用量
-- Y01-B 的身份、模型、截断原因和 usage 已在旧追加事件中核验。
-- Y01-B 费用上界 ¥0.075140 已结算，但回答保持 incomplete。
-- Y01-B 不评分、不回放、不形成可确认任务。
-- A01 未知 ¥3.30 预留永久保持，本轮没有解除。
+## 安全边界
+- 依赖目标必须存在。
+- 任务不能依赖自己，依赖图不能形成循环。
+- 未保存、过期或来源版本不一致的编辑不能提交。
+- 依赖修改不能解除 condition=unknown 等其他阻碍。
+- 失败事务不留下部分实体；自动默认选择继续关闭。
 
-## 质量结果
-- none 无需实质纠正 10/12，low 为 5/12。
-- none 实质事实错误 4 个，low 为 11 个。
-- none 最少用户纠正操作 3 次，low 为 11 次。
-- low 修掉 W11 的多余任务，并把条件恢复为 unknown。
-- low 在 W11 仍多造材料和时间，在更多通知新增假时间或材料错误。
-- W01/W04/W05/W08/W09 两臂均无需实质纠正。
-- W12 两臂都需纠正，low 没有净收益。
-- 严格 completeCase 两臂均为 0/12，业务裁决单独保留。
-- low 不采用，6632 不切换路线。
+## 12份零调用回放
+- 数据为 L01-A 至 L12-A 的既有 None 原回答。
+- 这是已见材料工程回放，不是新模型准确率实验。
+- 来源数：12。
+- 原文任务事实：19。
+- 模型建议任务：20，其中 1 条多余。
+- 修复前正确工程保存：12 个任务。
+- 明确纠正后正确工程保存：13 个任务。
+- 合理待处理：2 个，均为条件未知。
+- 正确不形成当前待办：4 个，原因是取消、替代或条件为假。
+- 多余建议拒绝 1 个；意外程序阻断 0。
+- 材料核对：14 项，准备状态无证据时保留 unverified。
 
-## 正确任务口径
-- 12 份参考事实共有 19 个任务事实。
-- 当前可确认的正确任务为 13 个。
-- 另有取消或替代 3 个、condition=false 1 个、condition=unknown 2 个。
-- 既有 candidate03 工程回放曾在 10 个来源正确保存 12 个任务。
-- 该数字是工程回放，不是本轮真实浏览器或真人转化率。
+## W11
+- 原答多造“准备两个密封袋”任务、误判送样条件为 true，并错归材料。
+- 回放将条件恢复为 unknown。
+- 回放把密封袋只关联到真实送样任务。
+- 多余建议被拒绝，原答与拒绝历史保留。
+- 独立登记任务可保存，送样任务合理待处理。
 
-## 等待、用量与费用
-- none：输入 55,555，输出 19,580，reasoning 0。
-- low：输入 55,855，输出 109,691，reasoning 91,344。
-- none 中位 7.790 秒、P95 8.918 秒。
-- low 中位 43.190 秒、P95 53.336 秒。
-- low 中位约慢 5.544 倍，P95 约慢 5.981 倍。
-- none 费用上界 ¥0.267750，low 为 ¥0.989238。
-- low 费用上界约为 none 的 3.695 倍。
-- 本批 24 次费用上界合计 ¥1.256988。
-- 服务商实际扣费 NOT_OBSERVABLE。
-
-## 账本
-- 账本现有 290 次请求、595 行，最后 sequence=594/L12-B。
-- settled 288、settledIncomplete 1、heldUnknown 1。
-- 已结算费用上界 ¥10.363183。
-- 加 A01 未知预留后的保守总上界 ¥13.663183，低于 ¥20 上限。
-- 账本 SHA256：acd7a263be10887b5727b695faaaa8970cba4c57fd253df33a80116dcf42d0e5。
-- 最后一行 hash：622b837675c52de02dcef78102e022e40c8a974a5973c75f1a2febca181c5f3f。
-
-## 工程接入
-- none/low 16K 通过显式新实验策略接入，旧配置未放宽。
-- reasoning 项与最终 message 分离，仅完整最终答案生成建议。
-- reasoning tokens 已包含在 output usage，不重复计费。
-- 截断回答可在身份和 usage 可信时结算，但始终不可保存。
-- candidate03、modelWire、全局 Schema 和正式仓储均未修改。
-
-## 产品与浏览器
-- 官方控制只尝试一次，21.910 秒后 nodeRepl.fetch request failed。
-- 本轮页面确认、刷新、独立读库和两个实际下载均 NOT_RUN。
-- 本轮实际新保存正式任务 0。
-- 历史 Q01/Q07、U11 页面和下载证据仅作历史证据。
-- 6632、公开产物和生产入口均未修改。
+## W12
+- 原答给“保存最终版展签”增加无依据依赖。
+- 用户可打开“核对前置依赖”定位到相关任务与原文。
+- 明确保存移除无依据依赖后，该任务可确认。
+- 本轮因此多保存 1 个正确任务；作废旧要求仍不形成待办。
 
 ## 工程检查
-- 预算/网关测试最终 124/124 通过。
-- Node 语法、类型、lint 通过；4 个既有警告保留。
-- 禁根 .env 的临时 Vite 构建通过。
-- Vitest 初次 1381 通过、1 失败、1 跳过。
-- 唯一失败为缺少外部匿名 carriers 清单；定向复跑 1/1 通过。
-- server 8、Worker 25、时间/评价 24、Functions 5 项通过。
-- 安全扫描 2317 个文件通过。
-- 旧 RCO-5-007 仍为 package-lock 历史 SHA 不匹配。
-- package-lock 本轮无 diff，旧断言未修改。
+- 定向测试：30 通过、0 失败。
+- 全量首轮：1381 通过、2 个并行负载下 5 秒超时、1 跳过。
+- 两项超时在同一最终源码、30 秒上限下定向复跑 2/2 通过。
+- App 类型、Node 类型、lint 和禁根 .env 的 Vite 构建通过。
+- 6632 已从最终源码重启并返回 HTTP 200。
+- 6632 模型 POST 返回 405，模型发送保持关闭。
+
+## 账本与保护
+- 账本 595 行、290 次请求。
+- 账本 SHA256：acd7a263be10887b5727b695faaaa8970cba4c57fd253df33a80116dcf42d0e5。
+- 本轮没有新增授权、收据、费用或模型请求。
+- A01 未知 3.30 元预留保留；全局 Schema、正式仓储与旧证据未改。
+
+## 浏览器与下载
+- 官方内置浏览器仅连接一次。
+- 22.654 秒后返回 nodeRepl.fetch request failed。
+- 本轮真实页面编辑、刷新、当前 IndexedDB 读回均 NOT_RUN。
+- 本轮两个实际下载文件比较 NOT_RUN。
+- 本轮新增正式任务 0；历史浏览器证据未冒充本轮验收。
 
 ## 证据入口
-- 主报告：reasoning-low16-compare-20260914a/AUDIT.md。
-- 逐例裁决：BUSINESS_ADJUDICATION.json。
-- 派生结果：FIRST12_DERIVED.json。
-- 原始回答：L01 至 L12 的 A/B_RAW.jsonl。
-- 浏览器：BROWSER.json。
-- 检查与 SHA：CHECKS.json、IMPLEMENTATION_SNAPSHOT.json。
+- 主报告：baseline-hard-corrections-20260915a/AUDIT.md。
+- 回放结果：baseline-hard-corrections-20260915a/REPLAY.json。
+- 工程检查：baseline-hard-corrections-20260915a/CHECKS.json。
+- 浏览器状态：baseline-hard-corrections-20260915a/BROWSER.json。
+- 源码快照：baseline-hard-corrections-20260915a/IMPLEMENTATION_SNAPSHOT.json。
+- 独立实验审计：baseline-hard-corrections-20260915a/EXPERIMENT_AUDIT.md。
 
 ## 下一动作
-- 追加 DELIVERY.json 后提交并核对最终远端 SHA。
-- 完成本轮后停止，不继续剩余 8 份或追加请求。
-- 保留 none + candidate03；不创建 candidate10。
-- 下一次若继续优化，优先处理假时间而不是提高思考强度。
+- 本轮交付完成后停止，不创建 candidate10 或追加调用。
+- 若浏览器控制以后恢复，只补当前6632页面、刷新、独立读库和双下载证据。
+- 下一次付费实验前先冻结单变量的任务/材料/依赖证据边界方案。
+- 没有新材料配对证据前，不宣称首次识别准确率提高。

@@ -1,0 +1,28 @@
+{
+  "version": "baseline-hard-corrections-browser-1",
+  "checkedAt": "2026-09-15T00:23:00+08:00",
+  "target": "http://127.0.0.1:6632/",
+  "localPreview": {
+    "restartedFromFinalSource": true,
+    "sameOriginStoragePreservedByDesign": true,
+    "httpStatus": 200,
+    "modelPostStatus": 405,
+    "modelCallsEnabled": false,
+    "rootEnvRead": false
+  },
+  "officialControlAttempt": {
+    "attempts": 1,
+    "durationSeconds": 22.654,
+    "apps": [],
+    "browsers": [],
+    "error": "nodeRepl.fetch request failed"
+  },
+  "actualBrowserJourney": "NOT_RUN_CONTROL_CONNECTION_FAILED",
+  "refreshRecovery": "NOT_RUN_CONTROL_CONNECTION_FAILED",
+  "independentRepositoryRead": "NOT_RUN_CONTROL_CONNECTION_FAILED",
+  "independentRepositoryDownload": "NOT_RUN_CONTROL_CONNECTION_FAILED",
+  "fullWorkspaceDownload": "NOT_RUN_CONTROL_CONNECTION_FAILED",
+  "downloadComparison": "NOT_RUN_CONTROL_CONNECTION_FAILED",
+  "newConfirmedTasks": 0,
+  "claimBoundary": "HTTP和构建只证明本地预览可提供最终源码；没有把它们当成真实页面、IndexedDB、刷新或下载验收。"
+}

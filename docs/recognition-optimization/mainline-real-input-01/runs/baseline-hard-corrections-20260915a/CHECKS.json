@@ -1,0 +1,50 @@
+{
+  "version": "baseline-hard-corrections-checks-1",
+  "checkedAt": "2026-09-15T01:01:35+08:00",
+  "zeroModelCalls": true,
+  "ledger": {
+    "lines": 595,
+    "requestCount": 290,
+    "sha256": "acd7a263be10887b5727b695faaaa8970cba4c57fd253df33a80116dcf42d0e5",
+    "changed": false
+  },
+  "replay": {
+    "sources": 12,
+    "referenceTaskFacts": 19,
+    "modelSuggestedTasks": 20,
+    "beforeCorrectlySaved": 12,
+    "afterCorrectlySaved": 13,
+    "reasonablePending": 2,
+    "correctlyNotActionable": 4,
+    "rejectedModelExtra": 1,
+    "unexpectedProgramBlockers": 0,
+    "correctionOperations": 4,
+    "independentReadsEqual": true,
+    "rawAndFirstSuggestionsPreserved": true,
+    "forbiddenNetworkCalls": 0
+  },
+  "evidenceBinding": {
+    "classification": "synthetic_proxy + simulation_only",
+    "frozenReferencePath": "docs/recognition-optimization/mainline-real-input-01/runs/reasoning-low16-compare-20260914a/REFERENCES_FINAL.json",
+    "frozenReferenceSha256": "c1ac44081f93187295dc14c4f9109217ec019696c1a0eca35c7efc01cceebba7",
+    "businessAdjudicationPath": "docs/recognition-optimization/mainline-real-input-01/runs/reasoning-low16-compare-20260914a/BUSINESS_ADJUDICATION.json",
+    "businessAdjudicationSha256": "7d3fa19c9302271f13f6af9b29be2e3df9c16917caab2f686ebdef8072c29901",
+    "referenceTaskFactsComputedAtReplay": 19,
+    "caseCorrectionOperationsComputedAtReplay": 4,
+    "historicalSummaryCorrectionOperations": 3,
+    "historicalSummaryMismatchAcknowledged": true
+  },
+  "tests": {
+    "targeted": { "passed": 30, "failed": 0, "skipped": 74, "artifact": "target-tests-1789404773638.json" },
+    "fullInitial": { "passed": 1381, "failed": 2, "skipped": 1, "artifact": "full-tests-1789403115821.json" },
+    "failedLayerRerun": { "passed": 2, "failed": 0, "skipped": 108, "artifact": "failed-tests-1789403294150.json" },
+    "finalDistinctPassingTests": 1383,
+    "initialFailureClassification": "两项5秒长时测试在并行全量负载下超时；同一最终源码以30秒上限定向复跑均通过。"
+  },
+  "typeApp": "PASS",
+  "typeNode": "PASS",
+  "lint": { "status": "PASS", "errors": 0, "warnings": 4, "warningClass": "existing non-blocking React refresh/ref warnings" },
+  "viteBuild": { "status": "PASS", "rootEnvRead": false, "output": "temporary directory", "warning": "existing large chunk warning" },
+  "localPreviewBuild": { "status": "PASS", "origin": "http://127.0.0.1:6632", "assets": 10, "modelCallsEnabled": false, "rootEnvRead": false },
+  "gitDiffCheck": "PASS_WITH_LINE_ENDING_NOTICES"
+}

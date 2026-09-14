@@ -19,6 +19,7 @@ export type FactChange = { kind: 'surface'; taskId: string; field: 'action' | 'o
   | { kind: 'material'; materialId: string; value: MaterialEdit }
   | { kind: 'time'; taskId: string; value: SemanticTime; scopeIds: string[]; note: string }
   | { kind: 'condition'; taskId: string; value: SemanticTask['condition']; scopeIds: string[]; note: string }
+  | { kind: 'dependency'; taskId: string; value: string[]; scopeIds: string[]; note: string }
   | { kind: 'event'; taskId: string; value: { coverage: SemanticTask['coverage']['event']; event: SemanticEvent | null }; scopeIds: string[]; note: string }
   | { kind: 'revision'; index: number; value: { relation: SemanticRevision; addedTask: SemanticTask | null }; scopeIds: string[]; note: string }
   | { kind: 'add_task'; value: SemanticTask; scopeIds: string[]; note: string }
@@ -90,6 +91,21 @@ function addTask(input: SemanticInput, task: SemanticTask, index: ImmutableScope
   }
   input.tasks.push(plainJson(task))
 }
+function validateDependencies(input: SemanticInput) {
+  const ids = new Set(input.tasks.map(task => task.id)), visiting = new Set<string>(), visited = new Set<string>()
+  const walk = (id: string) => {
+    if (visiting.has(id)) reject('DEPENDENCY_CYCLE')
+    if (visited.has(id)) return
+    visiting.add(id)
+    const task = input.tasks.find(item => item.id === id)!
+    const dependencies = task.detail.dependencyTempIds
+    if (!Array.isArray(dependencies) || new Set(dependencies).size !== dependencies.length
+      || dependencies.some(target => !ids.has(target) || target === id)) reject('DEPENDENCY_REFERENCE')
+    dependencies.forEach(walk)
+    visiting.delete(id); visited.add(id)
+  }
+  input.tasks.forEach(task => walk(task.id))
+}
 function apply(input: SemanticInput, change: FactChange, index: ImmutableScopeIndex) {
   reviewEvidence(change,index)
   if (change.kind === 'surface') {
@@ -136,6 +152,13 @@ function apply(input: SemanticInput, change: FactChange, index: ImmutableScopeIn
       || (['true','false'].includes(c.value)&&!c.factScopeIds.length)) reject('CONDITION_EVIDENCE')
     if ([...c.conditionScopeIds,...c.factScopeIds].some(id=>!change.scopeIds.includes(id))) reject('CONDITION_EVIDENCE')
     task.condition=plainJson(c)
+  } else if (change.kind === 'dependency') {
+    keys(change,['kind','taskId','value','scopeIds','note'])
+    const task=input.tasks.find(t=>t.id===change.taskId);if(!task)return reject('TASK_MISSING')
+    if(!Array.isArray(change.value)||new Set(change.value).size!==change.value.length
+      ||change.value.some(id=>typeof id!=='string'||!input.tasks.some(t=>t.id===id)||id===task.id))reject('DEPENDENCY_REFERENCE')
+    task.detail.dependencyTempIds=[...change.value]
+    validateDependencies(input)
   } else if (change.kind === 'event') {
     keys(change,['kind','taskId','value','scopeIds','note']);keys(change.value,['coverage','event'])
     const task=input.tasks.find(t=>t.id===change.taskId);if(!task)return reject('TASK_MISSING')
@@ -167,9 +190,9 @@ function apply(input: SemanticInput, change: FactChange, index: ImmutableScopeIn
 export function correctionBefore(input: SemanticInput, change: FactChange) {
   if(change.kind==='add_task'||change.kind==='time')return null
   if(change.kind==='revision')return {relation:plainJson(input.revisions[change.index]??null),addedTask:null}
-  if(change.kind==='condition'||change.kind==='event'){
+  if(change.kind==='condition'||change.kind==='event'||change.kind==='dependency'){
     const task=input.tasks.find(t=>t.id===change.taskId);if(!task)return reject('TASK_MISSING')
-    return change.kind==='condition'?plainJson(task.condition):{coverage:task.coverage.event,event:null}
+    return change.kind==='condition'?plainJson(task.condition):change.kind==='dependency'?[...task.detail.dependencyTempIds]:{coverage:task.coverage.event,event:null}
   }
   if (change.kind === 'surface') {
     const task = input.tasks.find(t => t.id === change.taskId)

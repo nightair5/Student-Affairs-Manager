@@ -1,0 +1,1103 @@
+{
+  "version": "baseline-hard-corrections-replay-1",
+  "generatedAt": "2026-09-14T16:51:08.431Z",
+  "claim": "12份L01-A至L12-A的candidate03真实历史回答零调用工程回放；不是新模型调用、真人操作或真实浏览器转化率。",
+  "evidenceBinding": {
+    "referencePath": "docs\\recognition-optimization\\mainline-real-input-01\\runs\\reasoning-low16-compare-20260914a\\REFERENCES_FINAL.json",
+    "referenceSha256": "c1ac44081f93187295dc14c4f9109217ec019696c1a0eca35c7efc01cceebba7",
+    "adjudicationPath": "docs\\recognition-optimization\\mainline-real-input-01\\runs\\reasoning-low16-compare-20260914a\\BUSINESS_ADJUDICATION.json",
+    "adjudicationSha256": "7d3fa19c9302271f13f6af9b29be2e3df9c16917caab2f686ebdef8072c29901",
+    "bindingReferenceSha256": "c1ac44081f93187295dc14c4f9109217ec019696c1a0eca35c7efc01cceebba7",
+    "completedSourcesFromAdjudication": 12,
+    "correctionOperationsFromCaseAdjudication": 4,
+    "historicalSummaryCorrectionOperations": 3,
+    "historicalSummaryMismatchAcknowledged": true
+  },
+  "denominators": {
+    "sources": 12,
+    "referenceTaskFacts": 19,
+    "modelSuggestedTasksBefore": 20
+  },
+  "before": {
+    "correctlySavedTasks": 12,
+    "modelCorrectionRequiredTasks": 3,
+    "reasonablePendingTasks": 1,
+    "correctlyNotActionableTasks": 4,
+    "unexpectedProgramBlockers": 0,
+    "materialReviews": 14,
+    "cases": [
+      {
+        "sourceId": "L01",
+        "originalSource": "W01",
+        "title": "校园影展送审安排",
+        "suggestedTasks": 2,
+        "materialReviews": [
+          "material-authorization-letter",
+          "material-copyright-email-screenshot",
+          "material-trailer"
+        ],
+        "correctionOperations": [],
+        "taskRows": [
+          {
+            "taskId": "task-submit-authorization",
+            "title": "提交放映授权书",
+            "condition": "not_applicable",
+            "status": "pending",
+            "dependencyTempIds": [],
+            "referenceTaskKey": "提交\u0000放映授权书",
+            "referenceIdentityMatched": true,
+            "adjudicatedIssue": false,
+            "disposition": "confirmed",
+            "confirm": "SAVED",
+            "outcome": "CORRECTLY_SAVED"
+          },
+          {
+            "taskId": "task-upload-trailer",
+            "title": "上传预告片",
+            "condition": "not_applicable",
+            "status": "pending",
+            "dependencyTempIds": [],
+            "referenceTaskKey": "上传\u0000预告片",
+            "referenceIdentityMatched": true,
+            "adjudicatedIssue": false,
+            "disposition": "confirmed",
+            "confirm": "SAVED",
+            "outcome": "CORRECTLY_SAVED"
+          }
+        ],
+        "savedTasks": [
+          {
+            "id": "mainline05:task:source:fe7b5b13:draft:1:1:task-submit-authorization",
+            "title": "提交放映授权书"
+          },
+          {
+            "id": "mainline05:task:source:fe7b5b13:draft:1:1:task-upload-trailer",
+            "title": "上传预告片"
+          }
+        ],
+        "independentReadEqual": true,
+        "rawResponsePreserved": true,
+        "firstSuggestionPreserved": true
+      },
+      {
+        "sourceId": "L02",
+        "originalSource": "W11",
+        "title": "材料送样前的准备",
+        "suggestedTasks": 3,
+        "materialReviews": [
+          "material-registration-form"
+        ],
+        "correctionOperations": [],
+        "taskRows": [
+          {
+            "taskId": "task-fill-registration-form",
+            "title": "填写送样登记单",
+            "condition": "not_applicable",
+            "status": "pending",
+            "dependencyTempIds": [],
+            "referenceTaskKey": "填写\u0000送样登记单",
+            "referenceIdentityMatched": true,
+            "adjudicatedIssue": false,
+            "disposition": "confirmed",
+            "confirm": "SAVED",
+            "outcome": "CORRECTLY_SAVED"
+          },
+          {
+            "taskId": "task-submit-samples",
+            "title": "提交检测样本",
+            "condition": "true",
+            "status": "pending",
+            "dependencyTempIds": [
+              "task-fill-registration-form"
+            ],
+            "referenceTaskKey": "提交\u0000检测样本",
+            "referenceIdentityMatched": true,
+            "adjudicatedIssue": true,
+            "disposition": "pending",
+            "confirm": "NOT_ATTEMPTED",
+            "outcome": "MODEL_CORRECTION_REQUIRED"
+          },
+          {
+            "taskId": "task-prepare-sample-bags",
+            "title": "准备两个密封袋",
+            "condition": "not_applicable",
+            "status": "pending",
+            "dependencyTempIds": [],
+            "referenceTaskKey": null,
+            "referenceIdentityMatched": false,
+            "adjudicatedIssue": true,
+            "disposition": "pending",
+            "confirm": "NOT_ATTEMPTED",
+            "outcome": "MODEL_CORRECTION_REQUIRED"
+          }
+        ],
+        "savedTasks": [
+          {
+            "id": "mainline05:task:source:710e312c:draft:1:1:task-fill-registration-form",
+            "title": "填写送样登记单"
+          }
+        ],
+        "independentReadEqual": true,
+        "rawResponsePreserved": true,
+        "firstSuggestionPreserved": true
+      },
+      {
+        "sourceId": "L03",
+        "originalSource": "W04",
+        "title": "户外水样采集的条件通知",
+        "suggestedTasks": 2,
+        "materialReviews": [],
+        "correctionOperations": [],
+        "taskRows": [
+          {
+            "taskId": "task-cancel-water-sampling-appointment",
+            "title": "取消水样采集预约",
+            "condition": "false",
+            "status": "pending",
+            "dependencyTempIds": [],
+            "referenceTaskKey": "取消\u0000水样采集预约",
+            "referenceIdentityMatched": true,
+            "adjudicatedIssue": false,
+            "disposition": "pending",
+            "confirm": "NOT_ATTEMPTED",
+            "outcome": "CORRECTLY_NOT_ACTIONABLE"
+          },
+          {
+            "taskId": "task-check-sampling-bottle-seal",
+            "title": "检查采样瓶密封性",
+            "condition": "not_applicable",
+            "status": "pending",
+            "dependencyTempIds": [],
+            "referenceTaskKey": "检查\u0000采样瓶密封性",
+            "referenceIdentityMatched": true,
+            "adjudicatedIssue": false,
+            "disposition": "confirmed",
+            "confirm": "SAVED",
+            "outcome": "CORRECTLY_SAVED"
+          }
+        ],
+        "savedTasks": [
+          {
+            "id": "mainline05:task:source:b483355a:draft:1:1:task-check-sampling-bottle-seal",
+            "title": "检查采样瓶密封性"
+          }
+        ],
+        "independentReadEqual": true,
+        "rawResponsePreserved": true,
+        "firstSuggestionPreserved": true
+      },
+      {
+        "sourceId": "L04",
+        "originalSource": "W12",
+        "title": "毕业展布展责任澄清",
+        "suggestedTasks": 3,
+        "materialReviews": [
+          "material-label",
+          "material-qr-code"
+        ],
+        "correctionOperations": [],
+        "taskRows": [
+          {
+            "taskId": "task-make-labels",
+            "title": "制作展签",
+            "condition": "not_applicable",
+            "status": "pending",
+            "dependencyTempIds": [],
+            "referenceTaskKey": "制作\u0000展签",
+            "referenceIdentityMatched": true,
+            "adjudicatedIssue": false,
+            "disposition": "confirmed",
+            "confirm": "SAVED",
+            "outcome": "CORRECTLY_SAVED"
+          },
+          {
+            "taskId": "task-save-final-labels",
+            "title": "保存最终版展签",
+            "condition": "not_applicable",
+            "status": "pending",
+            "dependencyTempIds": [
+              "task-make-labels"
+            ],
+            "referenceTaskKey": "保存\u0000最终版展签",
+            "referenceIdentityMatched": true,
+            "adjudicatedIssue": true,
+            "disposition": "pending",
+            "confirm": "NOT_ATTEMPTED",
+            "outcome": "MODEL_CORRECTION_REQUIRED"
+          },
+          {
+            "taskId": "task-send-source-files-cancelled",
+            "title": "向公共邮箱发送作品源文件",
+            "condition": "not_applicable",
+            "status": "cancelled",
+            "dependencyTempIds": [],
+            "referenceTaskKey": "发送\u0000作品源文件",
+            "referenceIdentityMatched": true,
+            "adjudicatedIssue": false,
+            "disposition": "pending",
+            "confirm": "NOT_ATTEMPTED",
+            "outcome": "CORRECTLY_NOT_ACTIONABLE"
+          }
+        ],
+        "savedTasks": [
+          {
+            "id": "mainline05:task:source:0b0b5203:draft:1:1:task-make-labels",
+            "title": "制作展签"
+          }
+        ],
+        "independentReadEqual": true,
+        "rawResponsePreserved": true,
+        "firstSuggestionPreserved": true
+      },
+      {
+        "sourceId": "L05",
+        "originalSource": "W02",
+        "title": "温室巡查记录",
+        "suggestedTasks": 1,
+        "materialReviews": [
+          "material-0001"
+        ],
+        "correctionOperations": [],
+        "taskRows": [
+          {
+            "taskId": "task-0001",
+            "title": "整理传感器异常记录",
+            "condition": "not_applicable",
+            "status": "pending",
+            "dependencyTempIds": [],
+            "referenceTaskKey": "整理\u0000传感器异常记录",
+            "referenceIdentityMatched": true,
+            "adjudicatedIssue": false,
+            "disposition": "confirmed",
+            "confirm": "SAVED",
+            "outcome": "CORRECTLY_SAVED"
+          }
+        ],
+        "savedTasks": [
+          {
+            "id": "mainline05:task:source:247dd57c:draft:1:1:task-0001",
+            "title": "整理传感器异常记录"
+          }
+        ],
+        "independentReadEqual": true,
+        "rawResponsePreserved": true,
+        "firstSuggestionPreserved": true
+      },
+      {
+        "sourceId": "L06",
+        "originalSource": "W03",
+        "title": "志愿服务影像留存",
+        "suggestedTasks": 1,
+        "materialReviews": [],
+        "correctionOperations": [],
+        "taskRows": [
+          {
+            "taskId": "task-save-original-photos",
+            "title": "保存服务现场原始照片",
+            "condition": "not_applicable",
+            "status": "pending",
+            "dependencyTempIds": [],
+            "referenceTaskKey": "保存\u0000服务现场原始照片",
+            "referenceIdentityMatched": true,
+            "adjudicatedIssue": false,
+            "disposition": "confirmed",
+            "confirm": "SAVED",
+            "outcome": "CORRECTLY_SAVED"
+          }
+        ],
+        "savedTasks": [
+          {
+            "id": "mainline05:task:source:8e80baf1:draft:1:1:task-save-original-photos",
+            "title": "保存服务现场原始照片"
+          }
+        ],
+        "independentReadEqual": true,
+        "rawResponsePreserved": true,
+        "firstSuggestionPreserved": true
+      },
+      {
+        "sourceId": "L07",
+        "originalSource": "W05",
+        "title": "报销补件处理",
+        "suggestedTasks": 1,
+        "materialReviews": [
+          "material-trip-proof-pdf"
+        ],
+        "correctionOperations": [],
+        "taskRows": [
+          {
+            "taskId": "task-submit-trip-proof",
+            "title": "补交行程证明",
+            "condition": "true",
+            "status": "pending",
+            "dependencyTempIds": [],
+            "referenceTaskKey": "补交\u0000行程证明",
+            "referenceIdentityMatched": true,
+            "adjudicatedIssue": false,
+            "disposition": "confirmed",
+            "confirm": "SAVED",
+            "outcome": "CORRECTLY_SAVED"
+          }
+        ],
+        "savedTasks": [
+          {
+            "id": "mainline05:task:source:968544b7:draft:1:1:task-submit-trip-proof",
+            "title": "补交行程证明"
+          }
+        ],
+        "independentReadEqual": true,
+        "rawResponsePreserved": true,
+        "firstSuggestionPreserved": true
+      },
+      {
+        "sourceId": "L08",
+        "originalSource": "W06",
+        "title": "设备借用候补安排",
+        "suggestedTasks": 1,
+        "materialReviews": [],
+        "correctionOperations": [],
+        "taskRows": [
+          {
+            "taskId": "task-pickup-projector",
+            "title": "领取投影仪",
+            "condition": "unknown",
+            "status": "pending",
+            "dependencyTempIds": [],
+            "referenceTaskKey": "领取\u0000投影仪",
+            "referenceIdentityMatched": true,
+            "adjudicatedIssue": false,
+            "disposition": "pending",
+            "confirm": "NOT_ATTEMPTED",
+            "outcome": "REASONABLE_PENDING"
+          }
+        ],
+        "savedTasks": [],
+        "independentReadEqual": true,
+        "rawResponsePreserved": true,
+        "firstSuggestionPreserved": true
+      },
+      {
+        "sourceId": "L09",
+        "originalSource": "W07",
+        "title": "校刊稿件交接方式修订",
+        "suggestedTasks": 2,
+        "materialReviews": [
+          "mat-proof-pdf"
+        ],
+        "correctionOperations": [],
+        "taskRows": [
+          {
+            "taskId": "task-old-mail-proof",
+            "title": "寄送纸质校样",
+            "condition": "not_applicable",
+            "status": "cancelled",
+            "dependencyTempIds": [],
+            "referenceTaskKey": "寄送\u0000纸质校样",
+            "referenceIdentityMatched": true,
+            "adjudicatedIssue": false,
+            "disposition": "pending",
+            "confirm": "NOT_ATTEMPTED",
+            "outcome": "CORRECTLY_NOT_ACTIONABLE"
+          },
+          {
+            "taskId": "task-new-upload-proof-pdf",
+            "title": "上传校样PDF",
+            "condition": "not_applicable",
+            "status": "pending",
+            "dependencyTempIds": [],
+            "referenceTaskKey": "上传\u0000校样PDF",
+            "referenceIdentityMatched": true,
+            "adjudicatedIssue": false,
+            "disposition": "confirmed",
+            "confirm": "SAVED",
+            "outcome": "CORRECTLY_SAVED"
+          }
+        ],
+        "savedTasks": [
+          {
+            "id": "mainline05:task:source:268aa495:draft:1:1:task-new-upload-proof-pdf",
+            "title": "上传校样PDF"
+          }
+        ],
+        "independentReadEqual": true,
+        "rawResponsePreserved": true,
+        "firstSuggestionPreserved": true
+      },
+      {
+        "sourceId": "L10",
+        "originalSource": "W08",
+        "title": "实训行程取消与独立提交",
+        "suggestedTasks": 2,
+        "materialReviews": [
+          "material-course-reflection"
+        ],
+        "correctionOperations": [],
+        "taskRows": [
+          {
+            "taskId": "task-attend-factory-visit",
+            "title": "参加工厂参访",
+            "condition": "not_applicable",
+            "status": "cancelled",
+            "dependencyTempIds": [],
+            "referenceTaskKey": "参加\u0000工厂参访",
+            "referenceIdentityMatched": true,
+            "adjudicatedIssue": false,
+            "disposition": "pending",
+            "confirm": "NOT_ATTEMPTED",
+            "outcome": "CORRECTLY_NOT_ACTIONABLE"
+          },
+          {
+            "taskId": "task-submit-course-reflection",
+            "title": "提交课程反思",
+            "condition": "not_applicable",
+            "status": "pending",
+            "dependencyTempIds": [],
+            "referenceTaskKey": "提交\u0000课程反思",
+            "referenceIdentityMatched": true,
+            "adjudicatedIssue": false,
+            "disposition": "confirmed",
+            "confirm": "SAVED",
+            "outcome": "CORRECTLY_SAVED"
+          }
+        ],
+        "savedTasks": [
+          {
+            "id": "mainline05:task:source:0c8cba3e:draft:1:1:task-submit-course-reflection",
+            "title": "提交课程反思"
+          }
+        ],
+        "independentReadEqual": true,
+        "rawResponsePreserved": true,
+        "firstSuggestionPreserved": true
+      },
+      {
+        "sourceId": "L11",
+        "originalSource": "W09",
+        "title": "校园观星夜信息",
+        "suggestedTasks": 0,
+        "materialReviews": [],
+        "correctionOperations": [],
+        "taskRows": [],
+        "savedTasks": [],
+        "independentReadEqual": true,
+        "rawResponsePreserved": true,
+        "firstSuggestionPreserved": true
+      },
+      {
+        "sourceId": "L12",
+        "originalSource": "W10",
+        "title": "社团器材盘点交接",
+        "suggestedTasks": 2,
+        "materialReviews": [
+          "mat-light-inventory-table",
+          "mat-light-photos",
+          "mat-audio-inventory-table",
+          "mat-repair-receipt"
+        ],
+        "correctionOperations": [],
+        "taskRows": [
+          {
+            "taskId": "task-light-inventory-submit",
+            "title": "提交灯光盘点表",
+            "condition": "not_applicable",
+            "status": "pending",
+            "dependencyTempIds": [],
+            "referenceTaskKey": "提交\u0000灯光盘点表",
+            "referenceIdentityMatched": true,
+            "adjudicatedIssue": false,
+            "disposition": "confirmed",
+            "confirm": "SAVED",
+            "outcome": "CORRECTLY_SAVED"
+          },
+          {
+            "taskId": "task-audio-inventory-submit",
+            "title": "提交音响盘点表",
+            "condition": "not_applicable",
+            "status": "pending",
+            "dependencyTempIds": [],
+            "referenceTaskKey": "提交\u0000音响盘点表",
+            "referenceIdentityMatched": true,
+            "adjudicatedIssue": false,
+            "disposition": "confirmed",
+            "confirm": "SAVED",
+            "outcome": "CORRECTLY_SAVED"
+          }
+        ],
+        "savedTasks": [
+          {
+            "id": "mainline05:task:source:9b10b1e1:draft:1:1:task-light-inventory-submit",
+            "title": "提交灯光盘点表"
+          },
+          {
+            "id": "mainline05:task:source:9b10b1e1:draft:1:1:task-audio-inventory-submit",
+            "title": "提交音响盘点表"
+          }
+        ],
+        "independentReadEqual": true,
+        "rawResponsePreserved": true,
+        "firstSuggestionPreserved": true
+      }
+    ]
+  },
+  "after": {
+    "correctlySavedTasks": 13,
+    "correctedThenSavedTasks": 1,
+    "rejectedModelExtraTasks": 1,
+    "reasonablePendingTasks": 2,
+    "correctlyNotActionableTasks": 4,
+    "unexpectedProgramBlockers": 0,
+    "materialReviews": 14,
+    "correctionOperations": 4,
+    "cases": [
+      {
+        "sourceId": "L01",
+        "originalSource": "W01",
+        "title": "校园影展送审安排",
+        "suggestedTasks": 2,
+        "materialReviews": [
+          "material-authorization-letter",
+          "material-copyright-email-screenshot",
+          "material-trailer"
+        ],
+        "correctionOperations": [],
+        "taskRows": [
+          {
+            "taskId": "task-submit-authorization",
+            "title": "提交放映授权书",
+            "condition": "not_applicable",
+            "status": "pending",
+            "dependencyTempIds": [],
+            "referenceTaskKey": "提交\u0000放映授权书",
+            "referenceIdentityMatched": true,
+            "adjudicatedIssue": false,
+            "disposition": "confirmed",
+            "confirm": "SAVED",
+            "outcome": "CORRECTLY_SAVED"
+          },
+          {
+            "taskId": "task-upload-trailer",
+            "title": "上传预告片",
+            "condition": "not_applicable",
+            "status": "pending",
+            "dependencyTempIds": [],
+            "referenceTaskKey": "上传\u0000预告片",
+            "referenceIdentityMatched": true,
+            "adjudicatedIssue": false,
+            "disposition": "confirmed",
+            "confirm": "SAVED",
+            "outcome": "CORRECTLY_SAVED"
+          }
+        ],
+        "savedTasks": [
+          {
+            "id": "mainline05:task:source:fe7b5b13:draft:1:1:task-submit-authorization",
+            "title": "提交放映授权书"
+          },
+          {
+            "id": "mainline05:task:source:fe7b5b13:draft:1:1:task-upload-trailer",
+            "title": "上传预告片"
+          }
+        ],
+        "independentReadEqual": true,
+        "rawResponsePreserved": true,
+        "firstSuggestionPreserved": true
+      },
+      {
+        "sourceId": "L02",
+        "originalSource": "W11",
+        "title": "材料送样前的准备",
+        "suggestedTasks": 3,
+        "materialReviews": [
+          "material-registration-form"
+        ],
+        "correctionOperations": [
+          {
+            "kind": "condition",
+            "taskId": "task-submit-samples",
+            "before": "true",
+            "after": "unknown"
+          },
+          {
+            "kind": "material",
+            "materialId": "material-sample-bags",
+            "before": [
+              "task-submit-samples",
+              "task-prepare-sample-bags"
+            ],
+            "after": [
+              "task-submit-samples"
+            ]
+          },
+          {
+            "kind": "reject_extra_task",
+            "taskId": "task-prepare-sample-bags"
+          }
+        ],
+        "taskRows": [
+          {
+            "taskId": "task-fill-registration-form",
+            "title": "填写送样登记单",
+            "condition": "not_applicable",
+            "status": "pending",
+            "dependencyTempIds": [],
+            "referenceTaskKey": "填写\u0000送样登记单",
+            "referenceIdentityMatched": true,
+            "adjudicatedIssue": false,
+            "disposition": "confirmed",
+            "confirm": "SAVED",
+            "outcome": "CORRECTLY_SAVED"
+          },
+          {
+            "taskId": "task-submit-samples",
+            "title": "提交检测样本",
+            "condition": "unknown",
+            "status": "pending",
+            "dependencyTempIds": [
+              "task-fill-registration-form"
+            ],
+            "referenceTaskKey": "提交\u0000检测样本",
+            "referenceIdentityMatched": true,
+            "adjudicatedIssue": false,
+            "disposition": "pending",
+            "confirm": "NOT_ATTEMPTED",
+            "outcome": "REASONABLE_PENDING"
+          },
+          {
+            "taskId": "task-prepare-sample-bags",
+            "title": "准备两个密封袋",
+            "condition": "not_applicable",
+            "status": "pending",
+            "dependencyTempIds": [],
+            "referenceTaskKey": null,
+            "referenceIdentityMatched": false,
+            "adjudicatedIssue": false,
+            "disposition": "rejected",
+            "confirm": "NOT_ATTEMPTED",
+            "outcome": "REJECTED_MODEL_EXTRA"
+          }
+        ],
+        "savedTasks": [
+          {
+            "id": "mainline05:task:source:710e312c:draft:1:1:task-fill-registration-form",
+            "title": "填写送样登记单"
+          }
+        ],
+        "independentReadEqual": true,
+        "rawResponsePreserved": true,
+        "firstSuggestionPreserved": true
+      },
+      {
+        "sourceId": "L03",
+        "originalSource": "W04",
+        "title": "户外水样采集的条件通知",
+        "suggestedTasks": 2,
+        "materialReviews": [],
+        "correctionOperations": [],
+        "taskRows": [
+          {
+            "taskId": "task-cancel-water-sampling-appointment",
+            "title": "取消水样采集预约",
+            "condition": "false",
+            "status": "pending",
+            "dependencyTempIds": [],
+            "referenceTaskKey": "取消\u0000水样采集预约",
+            "referenceIdentityMatched": true,
+            "adjudicatedIssue": false,
+            "disposition": "pending",
+            "confirm": "NOT_ATTEMPTED",
+            "outcome": "CORRECTLY_NOT_ACTIONABLE"
+          },
+          {
+            "taskId": "task-check-sampling-bottle-seal",
+            "title": "检查采样瓶密封性",
+            "condition": "not_applicable",
+            "status": "pending",
+            "dependencyTempIds": [],
+            "referenceTaskKey": "检查\u0000采样瓶密封性",
+            "referenceIdentityMatched": true,
+            "adjudicatedIssue": false,
+            "disposition": "confirmed",
+            "confirm": "SAVED",
+            "outcome": "CORRECTLY_SAVED"
+          }
+        ],
+        "savedTasks": [
+          {
+            "id": "mainline05:task:source:b483355a:draft:1:1:task-check-sampling-bottle-seal",
+            "title": "检查采样瓶密封性"
+          }
+        ],
+        "independentReadEqual": true,
+        "rawResponsePreserved": true,
+        "firstSuggestionPreserved": true
+      },
+      {
+        "sourceId": "L04",
+        "originalSource": "W12",
+        "title": "毕业展布展责任澄清",
+        "suggestedTasks": 3,
+        "materialReviews": [
+          "material-label",
+          "material-qr-code"
+        ],
+        "correctionOperations": [
+          {
+            "kind": "dependency",
+            "taskId": "task-save-final-labels",
+            "before": [
+              "task-make-labels"
+            ],
+            "after": []
+          }
+        ],
+        "taskRows": [
+          {
+            "taskId": "task-make-labels",
+            "title": "制作展签",
+            "condition": "not_applicable",
+            "status": "pending",
+            "dependencyTempIds": [],
+            "referenceTaskKey": "制作\u0000展签",
+            "referenceIdentityMatched": true,
+            "adjudicatedIssue": false,
+            "disposition": "confirmed",
+            "confirm": "SAVED",
+            "outcome": "CORRECTLY_SAVED"
+          },
+          {
+            "taskId": "task-save-final-labels",
+            "title": "保存最终版展签",
+            "condition": "not_applicable",
+            "status": "pending",
+            "dependencyTempIds": [],
+            "referenceTaskKey": "保存\u0000最终版展签",
+            "referenceIdentityMatched": true,
+            "adjudicatedIssue": false,
+            "disposition": "confirmed",
+            "confirm": "SAVED",
+            "outcome": "CORRECTLY_SAVED"
+          },
+          {
+            "taskId": "task-send-source-files-cancelled",
+            "title": "向公共邮箱发送作品源文件",
+            "condition": "not_applicable",
+            "status": "cancelled",
+            "dependencyTempIds": [],
+            "referenceTaskKey": "发送\u0000作品源文件",
+            "referenceIdentityMatched": true,
+            "adjudicatedIssue": false,
+            "disposition": "pending",
+            "confirm": "NOT_ATTEMPTED",
+            "outcome": "CORRECTLY_NOT_ACTIONABLE"
+          }
+        ],
+        "savedTasks": [
+          {
+            "id": "mainline05:task:source:0b0b5203:draft:1:1:task-make-labels",
+            "title": "制作展签"
+          },
+          {
+            "id": "mainline05:task:source:0b0b5203:draft:1:1:task-save-final-labels",
+            "title": "保存最终版展签"
+          }
+        ],
+        "independentReadEqual": true,
+        "rawResponsePreserved": true,
+        "firstSuggestionPreserved": true
+      },
+      {
+        "sourceId": "L05",
+        "originalSource": "W02",
+        "title": "温室巡查记录",
+        "suggestedTasks": 1,
+        "materialReviews": [
+          "material-0001"
+        ],
+        "correctionOperations": [],
+        "taskRows": [
+          {
+            "taskId": "task-0001",
+            "title": "整理传感器异常记录",
+            "condition": "not_applicable",
+            "status": "pending",
+            "dependencyTempIds": [],
+            "referenceTaskKey": "整理\u0000传感器异常记录",
+            "referenceIdentityMatched": true,
+            "adjudicatedIssue": false,
+            "disposition": "confirmed",
+            "confirm": "SAVED",
+            "outcome": "CORRECTLY_SAVED"
+          }
+        ],
+        "savedTasks": [
+          {
+            "id": "mainline05:task:source:247dd57c:draft:1:1:task-0001",
+            "title": "整理传感器异常记录"
+          }
+        ],
+        "independentReadEqual": true,
+        "rawResponsePreserved": true,
+        "firstSuggestionPreserved": true
+      },
+      {
+        "sourceId": "L06",
+        "originalSource": "W03",
+        "title": "志愿服务影像留存",
+        "suggestedTasks": 1,
+        "materialReviews": [],
+        "correctionOperations": [],
+        "taskRows": [
+          {
+            "taskId": "task-save-original-photos",
+            "title": "保存服务现场原始照片",
+            "condition": "not_applicable",
+            "status": "pending",
+            "dependencyTempIds": [],
+            "referenceTaskKey": "保存\u0000服务现场原始照片",
+            "referenceIdentityMatched": true,
+            "adjudicatedIssue": false,
+            "disposition": "confirmed",
+            "confirm": "SAVED",
+            "outcome": "CORRECTLY_SAVED"
+          }
+        ],
+        "savedTasks": [
+          {
+            "id": "mainline05:task:source:8e80baf1:draft:1:1:task-save-original-photos",
+            "title": "保存服务现场原始照片"
+          }
+        ],
+        "independentReadEqual": true,
+        "rawResponsePreserved": true,
+        "firstSuggestionPreserved": true
+      },
+      {
+        "sourceId": "L07",
+        "originalSource": "W05",
+        "title": "报销补件处理",
+        "suggestedTasks": 1,
+        "materialReviews": [
+          "material-trip-proof-pdf"
+        ],
+        "correctionOperations": [],
+        "taskRows": [
+          {
+            "taskId": "task-submit-trip-proof",
+            "title": "补交行程证明",
+            "condition": "true",
+            "status": "pending",
+            "dependencyTempIds": [],
+            "referenceTaskKey": "补交\u0000行程证明",
+            "referenceIdentityMatched": true,
+            "adjudicatedIssue": false,
+            "disposition": "confirmed",
+            "confirm": "SAVED",
+            "outcome": "CORRECTLY_SAVED"
+          }
+        ],
+        "savedTasks": [
+          {
+            "id": "mainline05:task:source:968544b7:draft:1:1:task-submit-trip-proof",
+            "title": "补交行程证明"
+          }
+        ],
+        "independentReadEqual": true,
+        "rawResponsePreserved": true,
+        "firstSuggestionPreserved": true
+      },
+      {
+        "sourceId": "L08",
+        "originalSource": "W06",
+        "title": "设备借用候补安排",
+        "suggestedTasks": 1,
+        "materialReviews": [],
+        "correctionOperations": [],
+        "taskRows": [
+          {
+            "taskId": "task-pickup-projector",
+            "title": "领取投影仪",
+            "condition": "unknown",
+            "status": "pending",
+            "dependencyTempIds": [],
+            "referenceTaskKey": "领取\u0000投影仪",
+            "referenceIdentityMatched": true,
+            "adjudicatedIssue": false,
+            "disposition": "pending",
+            "confirm": "NOT_ATTEMPTED",
+            "outcome": "REASONABLE_PENDING"
+          }
+        ],
+        "savedTasks": [],
+        "independentReadEqual": true,
+        "rawResponsePreserved": true,
+        "firstSuggestionPreserved": true
+      },
+      {
+        "sourceId": "L09",
+        "originalSource": "W07",
+        "title": "校刊稿件交接方式修订",
+        "suggestedTasks": 2,
+        "materialReviews": [
+          "mat-proof-pdf"
+        ],
+        "correctionOperations": [],
+        "taskRows": [
+          {
+            "taskId": "task-old-mail-proof",
+            "title": "寄送纸质校样",
+            "condition": "not_applicable",
+            "status": "cancelled",
+            "dependencyTempIds": [],
+            "referenceTaskKey": "寄送\u0000纸质校样",
+            "referenceIdentityMatched": true,
+            "adjudicatedIssue": false,
+            "disposition": "pending",
+            "confirm": "NOT_ATTEMPTED",
+            "outcome": "CORRECTLY_NOT_ACTIONABLE"
+          },
+          {
+            "taskId": "task-new-upload-proof-pdf",
+            "title": "上传校样PDF",
+            "condition": "not_applicable",
+            "status": "pending",
+            "dependencyTempIds": [],
+            "referenceTaskKey": "上传\u0000校样PDF",
+            "referenceIdentityMatched": true,
+            "adjudicatedIssue": false,
+            "disposition": "confirmed",
+            "confirm": "SAVED",
+            "outcome": "CORRECTLY_SAVED"
+          }
+        ],
+        "savedTasks": [
+          {
+            "id": "mainline05:task:source:268aa495:draft:1:1:task-new-upload-proof-pdf",
+            "title": "上传校样PDF"
+          }
+        ],
+        "independentReadEqual": true,
+        "rawResponsePreserved": true,
+        "firstSuggestionPreserved": true
+      },
+      {
+        "sourceId": "L10",
+        "originalSource": "W08",
+        "title": "实训行程取消与独立提交",
+        "suggestedTasks": 2,
+        "materialReviews": [
+          "material-course-reflection"
+        ],
+        "correctionOperations": [],
+        "taskRows": [
+          {
+            "taskId": "task-attend-factory-visit",
+            "title": "参加工厂参访",
+            "condition": "not_applicable",
+            "status": "cancelled",
+            "dependencyTempIds": [],
+            "referenceTaskKey": "参加\u0000工厂参访",
+            "referenceIdentityMatched": true,
+            "adjudicatedIssue": false,
+            "disposition": "pending",
+            "confirm": "NOT_ATTEMPTED",
+            "outcome": "CORRECTLY_NOT_ACTIONABLE"
+          },
+          {
+            "taskId": "task-submit-course-reflection",
+            "title": "提交课程反思",
+            "condition": "not_applicable",
+            "status": "pending",
+            "dependencyTempIds": [],
+            "referenceTaskKey": "提交\u0000课程反思",
+            "referenceIdentityMatched": true,
+            "adjudicatedIssue": false,
+            "disposition": "confirmed",
+            "confirm": "SAVED",
+            "outcome": "CORRECTLY_SAVED"
+          }
+        ],
+        "savedTasks": [
+          {
+            "id": "mainline05:task:source:0c8cba3e:draft:1:1:task-submit-course-reflection",
+            "title": "提交课程反思"
+          }
+        ],
+        "independentReadEqual": true,
+        "rawResponsePreserved": true,
+        "firstSuggestionPreserved": true
+      },
+      {
+        "sourceId": "L11",
+        "originalSource": "W09",
+        "title": "校园观星夜信息",
+        "suggestedTasks": 0,
+        "materialReviews": [],
+        "correctionOperations": [],
+        "taskRows": [],
+        "savedTasks": [],
+        "independentReadEqual": true,
+        "rawResponsePreserved": true,
+        "firstSuggestionPreserved": true
+      },
+      {
+        "sourceId": "L12",
+        "originalSource": "W10",
+        "title": "社团器材盘点交接",
+        "suggestedTasks": 2,
+        "materialReviews": [
+          "mat-light-inventory-table",
+          "mat-light-photos",
+          "mat-audio-inventory-table",
+          "mat-repair-receipt"
+        ],
+        "correctionOperations": [],
+        "taskRows": [
+          {
+            "taskId": "task-light-inventory-submit",
+            "title": "提交灯光盘点表",
+            "condition": "not_applicable",
+            "status": "pending",
+            "dependencyTempIds": [],
+            "referenceTaskKey": "提交\u0000灯光盘点表",
+            "referenceIdentityMatched": true,
+            "adjudicatedIssue": false,
+            "disposition": "confirmed",
+            "confirm": "SAVED",
+            "outcome": "CORRECTLY_SAVED"
+          },
+          {
+            "taskId": "task-audio-inventory-submit",
+            "title": "提交音响盘点表",
+            "condition": "not_applicable",
+            "status": "pending",
+            "dependencyTempIds": [],
+            "referenceTaskKey": "提交\u0000音响盘点表",
+            "referenceIdentityMatched": true,
+            "adjudicatedIssue": false,
+            "disposition": "confirmed",
+            "confirm": "SAVED",
+            "outcome": "CORRECTLY_SAVED"
+          }
+        ],
+        "savedTasks": [
+          {
+            "id": "mainline05:task:source:9b10b1e1:draft:1:1:task-light-inventory-submit",
+            "title": "提交灯光盘点表"
+          },
+          {
+            "id": "mainline05:task:source:9b10b1e1:draft:1:1:task-audio-inventory-submit",
+            "title": "提交音响盘点表"
+          }
+        ],
+        "independentReadEqual": true,
+        "rawResponsePreserved": true,
+        "firstSuggestionPreserved": true
+      }
+    ]
+  },
+  "invariants": {
+    "independentReadsEqual": true,
+    "rawAndFirstSuggestionsPreserved": true,
+    "forbiddenNetworkCalls": 0
+  }
+}

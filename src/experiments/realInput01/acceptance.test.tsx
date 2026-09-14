@@ -1390,7 +1390,7 @@ describe('real App runtime and public send connection; memory/SSR not browser ac
     const draftId=await sendRealInput(repo,{sourceId:source.sourceId,pages:[1],reviewed:[1],operationId:'editor-render-send',revision:semanticRevision(await repo.load())},'seen_engineering_replay',seen,NOW)
     const before=await repo.load(),onDirty=vi.fn(),onSaved=vi.fn(async()=>{})
     const html=renderToStaticMarkup(<FactCorrectionEditor repo={repo} workspace={before} draftId={draftId} taskId="save" busy={false} onDirty={onDirty} onSaved={onSaved}/>)
-    expect(html).toContain('本项事实已核对');expect(html).toContain('修改对象')
+    expect(html).toContain('本项事实已核对');expect(html).toContain('修改对象');expect(html).toContain('核对前置依赖')
     expect(onDirty).not.toHaveBeenCalled();expect(onSaved).not.toHaveBeenCalled()
     expect(await repo.load()).toEqual(before)
   })

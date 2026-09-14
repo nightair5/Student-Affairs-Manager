@@ -121,6 +121,7 @@ export function RelationCorrection({repo,workspace,draftId,taskId,busy,onDirty,o
   const state=ready?stateOfRuntime(workspace,draftId):null,facts=state?effectiveStateFacts(state).facts:null
   const task=facts?.tasks.find(t=>t.id===taskId)
   const [mode,setMode]=useState(''),[scopeIds,setScopes]=useState<string[]>([]),[note,setNote]=useState(''),[value,setValue]=useState('')
+  const [dependencyIds,setDependencyIds]=useState<string[]>([])
   const [action,setAction]=useState(''),[object,setObject]=useState(''),[effect,setEffect]=useState<SemanticTask['effect']>('unknown')
   const [relationIndex,setRelationIndex]=useState(0),[target,setTarget]=useState(''),[from,setFrom]=useState(''),[newTarget,setNewTarget]=useState(false)
   const [conditionScope,setConditionScope]=useState(''),[factScope,setFactScope]=useState(''),[eventTitle,setEventTitle]=useState('')
@@ -129,7 +130,8 @@ export function RelationCorrection({repo,workspace,draftId,taskId,busy,onDirty,o
   useEffect(()=>{notify.current(Boolean(mode)||working);return()=>notify.current(false)},[mode,working])
   const blocked=busy||working||(state&&taskId&&['confirmed','rejected'].includes(life(state).dispositions[taskId]))||!isCurrentDraft(workspace,draftId)
   async function run(work:()=>Promise<unknown>){setWorking(true);setError('');try{await work();setMode('');await onSaved()}catch(e){setError(e instanceof Error?e.message:'保存失败，修改仍保留')}finally{setWorking(false)}}
-  function start(next:string){setMode(next);setRevision(semanticRevision(workspace));setScopes([]);setNote('');setValue('');setChecked(false);setError('');setNewTarget(false)}
+  function start(next:string){setMode(next);setRevision(semanticRevision(workspace));setScopes([]);setNote('');setValue('');setChecked(false);setError('');setNewTarget(false)
+    setDependencyIds(next==='dependency'?[...(task?.detail.dependencyTempIds??[])]:[])}
   function newTask(id:string,old:boolean):SemanticTask{
     const scopes=state!.context.index.scopes,ar=scopes.find(s=>scopeIds.includes(s.id)&&s.text.includes(action)&&action.trim()),ob=scopes.find(s=>scopeIds.includes(s.id)&&s.text.includes(object)&&object.trim())
     if(!ar||!ob)throw Error('请从所选原文中逐字填写动作和对象')
@@ -144,17 +146,18 @@ export function RelationCorrection({repo,workspace,draftId,taskId,busy,onDirty,o
     if(mode==='event')change={kind:'event',taskId:taskId!,scopeIds,note,value:{coverage:value==='attach'?'present':value as SemanticTask['coverage']['event'],event:value==='attach'?{
       tempId:'user-'+crypto.randomUUID(),title:eventTitle,description:note,location:null,startTimePointTempId:null,endTimePointTempId:null,scopeIds,confidence:0,inferenceLevel:'explicit',relatedTaskTempIds:[taskId!]}:null}}
     else if(mode==='condition')change={kind:'condition',taskId:taskId!,scopeIds,note,value:{value:value as SemanticTask['condition']['value'],conditionScopeIds:value==='not_applicable'?[]:[conditionScope].filter(Boolean),factScopeIds:['true','false'].includes(value)?[factScope].filter(Boolean):[]}}
+    else if(mode==='dependency')change={kind:'dependency',taskId:taskId!,value:dependencyIds,scopeIds,note}
     else if(mode==='add_task')change={kind:'add_task',value:newTask('user-'+crypto.randomUUID(),false),scopeIds,note}
     else {const addedTask=newTarget?newTask('user-'+crypto.randomUUID(),true):null
       change={kind:'revision',index:relationIndex,value:{addedTask,relation:{type:from?'supersedes':'cancels',targetDirectiveId:addedTask?.id??target,fromDirectiveId:from||null,effective:value as 'true'|'false'|'unknown',scopeIds}},scopeIds,note}}
     await correctSemanticFact(repo,{draftId,revision,operationId:crypto.randomUUID(),change})
   }
-  return <section aria-label={task?'条件与事件纠正：'+task.detail.title:'通知漏项与新旧要求纠正'}>
+  return <section aria-label={task?'条件、依赖与事件纠正：'+task.detail.title:'通知漏项与新旧要求纠正'}>
     {!ready?<><p>模型原回答有关系错误，不能直接确认。可保留失败记录，依据完整原文人工纠正；这不会重新调用模型。</p>
       <blockquote>{workspace.sourceVersions.find(v=>v.id===workspace.recognitionRuns.find(r=>r.id===draft.recognitionRunId)?.sourceVersionId)?.rawText}</blockquote>
       <button type="button" disabled={Boolean(blocked)} onClick={()=>void run(()=>openFailedForCorrection(repo,draftId,semanticRevision(workspace)))}>保留失败原答，进入人工纠错</button></>
       :<><p>{state?.version===REAL_STATE_VERSION&&state.recovery?'原模型识别失败仍保留；以下为人工纠正。':'人工纠正单独保存，不改变模型原回答。'}</p>
-      {!mode&&(task?<><button type="button" disabled={Boolean(blocked)} onClick={()=>start('condition')}>核对执行条件</button><button type="button" disabled={Boolean(blocked)} onClick={()=>start('event')}>核对活动关联</button></>
+      {!mode&&(task?<><button type="button" disabled={Boolean(blocked)} onClick={()=>start('condition')}>核对执行条件</button><button type="button" disabled={Boolean(blocked)} onClick={()=>start('dependency')}>核对前置依赖</button><button type="button" disabled={Boolean(blocked)} onClick={()=>start('event')}>核对活动关联</button></>
         :<><button type="button" disabled={Boolean(blocked)} onClick={()=>start('revision')}>纠正旧要求与新要求</button><button type="button" disabled={Boolean(blocked)} onClick={()=>start('add_task')}>依据原文补充漏任务</button></>)}
       {mode&&<fieldset disabled={Boolean(blocked)}><legend>未保存的人工纠正</legend>
         <p>先选择支持本次判断的原文。点击已核对不等于条件成立，也不等于已创建任务。</p>
@@ -166,6 +169,8 @@ export function RelationCorrection({repo,workspace,draftId,taskId,busy,onDirty,o
           {value!=='not_applicable'&&<><label>条件所在原文<select value={conditionScope} onChange={e=>setConditionScope(e.target.value)}><option value="">请选择</option>{state!.context.index.scopes.filter(s=>scopeIds.includes(s.id)).map(s=><option key={s.id} value={s.id}>{s.text}</option>)}</select></label>
           {['true','false'].includes(value)&&<label>说明条件已发生或未发生的原文<select value={factScope} onChange={e=>setFactScope(e.target.value)}><option value="">请选择</option>{state!.context.index.scopes.filter(s=>scopeIds.includes(s.id)).map(s=><option key={s.id} value={s.id}>{s.text}</option>)}</select></label>}</>}
           <p>原文之外的新情况可写在用户补充说明中；本轮不能凭该说明自动解除条件阻挡，可保留未知并暂缓。</p></>}
+        {mode==='dependency'&&<><p>仅勾选完整原文明示的前置任务。取消全部勾选表示你明确核对后认为当前任务没有这些前置关系，不代表其他条件已经成立。</p>
+          {facts!.tasks.filter(candidate=>candidate.id!==taskId).map(candidate=><label key={candidate.id}><input type="checkbox" checked={dependencyIds.includes(candidate.id)} onChange={e=>setDependencyIds(e.target.checked?[...dependencyIds,candidate.id]:dependencyIds.filter(id=>id!==candidate.id))}/>{candidate.detail.title}</label>)}</>}
         {mode==='revision'&&<><label>要纠正的关系<select value={relationIndex} onChange={e=>setRelationIndex(Number(e.target.value))}>{facts!.revisions.map((r,i)=><option key={i} value={i}>关系 {i+1}：{r.type} / {r.targetDirectiveId}</option>)}<option value={facts!.revisions.length}>补充一条关系</option></select></label>
           <label><input type="checkbox" checked={newTarget} onChange={e=>setNewTarget(e.target.checked)}/>旧要求漏提取，依据原文补充</label>
           {!newTarget&&<label>作废的旧要求<select value={target} onChange={e=>setTarget(e.target.value)}><option value="">请选择</option>{facts!.tasks.map(t=><option key={t.id} value={t.id}>{t.detail.title}</option>)}</select></label>}
@@ -176,7 +181,7 @@ export function RelationCorrection({repo,workspace,draftId,taskId,busy,onDirty,o
           <p>本次补项仅适用于原文明示要求、没有额外时间/材料/活动/条件的任务；旧要求作为已作废历史保留，不创建待办。</p></>}
         <label>核对理由或用户补充说明<textarea value={note} onChange={e=>setNote(e.target.value)}/></label>
         <label><input type="checkbox" checked={checked} onChange={e=>setChecked(e.target.checked)}/>我已对照完整原文，确认上述关系及补项范围；说明属于人工核对，不是模型预测</label>
-        <button type="button" disabled={!checked||!note.trim()||!scopeIds.length||(!value&&mode!=='add_task')} onClick={()=>void run(save)}>保存关系纠正</button>
+        <button type="button" disabled={!checked||!note.trim()||!scopeIds.length||(!value&&!['add_task','dependency'].includes(mode))} onClick={()=>void run(save)}>保存关系纠正</button>
         <button type="button" onClick={()=>setMode('')}>放弃未保存关系纠正</button>
       </fieldset>}</>}
     {error&&<p role="alert">未保存：{error}。原回答和已确认内容没有改变。</p>}
