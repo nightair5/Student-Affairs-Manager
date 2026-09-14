@@ -7,7 +7,8 @@ import { connect as tlsConnect, checkServerIdentity } from 'node:tls'
 import { Readable } from 'node:stream'
 import { BILLING_POLICY, FLASH41_POLICY, FLASH41_PAIRED06_POLICY, FLASH41_PAIRED07_POLICY, FLASH41_PAIRED08_POLICY, FLASH41_PAIRED09_POLICY,
   MODEL_COMPARE_POLICY, modelComparePolicyFor, REASONING_COMPARE_POLICY, reasoningComparePolicyFor,
-  REASONING_MAX_POLICY, reasoningMaxPolicyFor, sha256 } from './real-input-budget.mjs'
+  REASONING_MAX_POLICY, reasoningMaxPolicyFor, REASONING_LOW16_POLICY, reasoningLow16PolicyFor,
+  sha256 } from './real-input-budget.mjs'
 
 const localFailures = new WeakMap()
 const fail = code => { const error=Error('REAL_INPUT_GATEWAY_' + code);localFailures.set(error,code);throw error }
@@ -159,21 +160,22 @@ function failureReason(phase,error,deadline) {
 /** No listening socket or credential read at import time. A fixed launcher owns this instance. */
 export async function createModelGateway({origin,capability,budget,requests,recordRaw,
   readSecret=()=>process.env.DEEPSEEK_API_KEY,fetchImpl=globalThis.fetch,clock=()=>new Date().toISOString(),timeoutMs=60000,policy=BILLING_POLICY}) {
-  check(isDeepStrictEqual(policy,BILLING_POLICY)||isDeepStrictEqual(policy,FLASH41_POLICY)||isDeepStrictEqual(policy,FLASH41_PAIRED06_POLICY)||isDeepStrictEqual(policy,FLASH41_PAIRED07_POLICY)||isDeepStrictEqual(policy,FLASH41_PAIRED08_POLICY)||isDeepStrictEqual(policy,FLASH41_PAIRED09_POLICY)||isDeepStrictEqual(policy,MODEL_COMPARE_POLICY)||isDeepStrictEqual(policy,REASONING_COMPARE_POLICY)||isDeepStrictEqual(policy,REASONING_MAX_POLICY),'POLICY')
+  check(isDeepStrictEqual(policy,BILLING_POLICY)||isDeepStrictEqual(policy,FLASH41_POLICY)||isDeepStrictEqual(policy,FLASH41_PAIRED06_POLICY)||isDeepStrictEqual(policy,FLASH41_PAIRED07_POLICY)||isDeepStrictEqual(policy,FLASH41_PAIRED08_POLICY)||isDeepStrictEqual(policy,FLASH41_PAIRED09_POLICY)||isDeepStrictEqual(policy,MODEL_COMPARE_POLICY)||isDeepStrictEqual(policy,REASONING_COMPARE_POLICY)||isDeepStrictEqual(policy,REASONING_MAX_POLICY)||isDeepStrictEqual(policy,REASONING_LOW16_POLICY),'POLICY')
   check(typeof origin==='string'&&/^http:\/\/127\.0\.0\.1:[1-9][0-9]{3,4}$/.test(origin),'ORIGIN')
   check(typeof capability==='string'&&/^[a-f0-9]{64}$/.test(capability),'CAPABILITY')
   check(typeof recordRaw==='function'&&typeof readSecret==='function'&&typeof fetchImpl==='function'
     &&Number.isSafeInteger(timeoutMs)&&timeoutMs>0&&timeoutMs<=180000,'CONFIG')
   const unitPolicy=id=>{
-    if(id.startsWith('M')){check(isDeepStrictEqual(policy,REASONING_MAX_POLICY),'REASONING_MAX_POLICY');return reasoningMaxPolicyFor(id)}
-    const max=isDeepStrictEqual(policy,REASONING_MAX_POLICY)
-    if(id.startsWith('Y')||id.startsWith('Z')){check(isDeepStrictEqual(policy,REASONING_COMPARE_POLICY)||max,'REASONING_COMPARE_POLICY');return reasoningComparePolicyFor(id)}
-    if(id.startsWith('W')||id.startsWith('X')){check(isDeepStrictEqual(policy,MODEL_COMPARE_POLICY)||isDeepStrictEqual(policy,REASONING_COMPARE_POLICY)||max,'MODEL_COMPARE_POLICY');return modelComparePolicyFor(id)}
-    if(id.startsWith('U')||id.startsWith('V')){check(isDeepStrictEqual(policy,FLASH41_PAIRED09_POLICY)||isDeepStrictEqual(policy,MODEL_COMPARE_POLICY)||isDeepStrictEqual(policy,REASONING_COMPARE_POLICY)||max,'PAIRED09_POLICY');return FLASH41_PAIRED09_POLICY}
-    if(id.startsWith('S')||id.startsWith('T')){check(isDeepStrictEqual(policy,FLASH41_PAIRED08_POLICY)||isDeepStrictEqual(policy,FLASH41_PAIRED09_POLICY)||isDeepStrictEqual(policy,MODEL_COMPARE_POLICY)||isDeepStrictEqual(policy,REASONING_COMPARE_POLICY)||max,'PAIRED08_POLICY');return FLASH41_PAIRED08_POLICY}
-    if(id.startsWith('R')){check(isDeepStrictEqual(policy,FLASH41_PAIRED07_POLICY)||isDeepStrictEqual(policy,FLASH41_PAIRED08_POLICY)||isDeepStrictEqual(policy,FLASH41_PAIRED09_POLICY)||isDeepStrictEqual(policy,MODEL_COMPARE_POLICY)||isDeepStrictEqual(policy,REASONING_COMPARE_POLICY)||max,'PAIRED07_POLICY');return FLASH41_PAIRED07_POLICY}
-    if(id.startsWith('Q')){check(isDeepStrictEqual(policy,FLASH41_PAIRED06_POLICY)||isDeepStrictEqual(policy,FLASH41_PAIRED07_POLICY)||isDeepStrictEqual(policy,FLASH41_PAIRED08_POLICY)||isDeepStrictEqual(policy,FLASH41_PAIRED09_POLICY)||isDeepStrictEqual(policy,MODEL_COMPARE_POLICY)||isDeepStrictEqual(policy,REASONING_COMPARE_POLICY)||max,'PAIRED06_POLICY');return FLASH41_PAIRED06_POLICY}
-    return id.startsWith('P')?(isDeepStrictEqual(policy,MODEL_COMPARE_POLICY)||isDeepStrictEqual(policy,REASONING_COMPARE_POLICY)||max?FLASH41_POLICY:policy):BILLING_POLICY
+    const current=isDeepStrictEqual(policy,REASONING_MAX_POLICY)||isDeepStrictEqual(policy,REASONING_LOW16_POLICY)
+    if(id.startsWith('M')){check(current,'REASONING_MAX_POLICY');return reasoningMaxPolicyFor(id)}
+    if(id.startsWith('L')){check(isDeepStrictEqual(policy,REASONING_LOW16_POLICY),'REASONING_LOW16_POLICY');return reasoningLow16PolicyFor(id)}
+    if(id.startsWith('Y')||id.startsWith('Z')){check(isDeepStrictEqual(policy,REASONING_COMPARE_POLICY)||current,'REASONING_COMPARE_POLICY');return reasoningComparePolicyFor(id)}
+    if(id.startsWith('W')||id.startsWith('X')){check(isDeepStrictEqual(policy,MODEL_COMPARE_POLICY)||isDeepStrictEqual(policy,REASONING_COMPARE_POLICY)||current,'MODEL_COMPARE_POLICY');return modelComparePolicyFor(id)}
+    if(id.startsWith('U')||id.startsWith('V')){check(isDeepStrictEqual(policy,FLASH41_PAIRED09_POLICY)||isDeepStrictEqual(policy,MODEL_COMPARE_POLICY)||isDeepStrictEqual(policy,REASONING_COMPARE_POLICY)||current,'PAIRED09_POLICY');return FLASH41_PAIRED09_POLICY}
+    if(id.startsWith('S')||id.startsWith('T')){check(isDeepStrictEqual(policy,FLASH41_PAIRED08_POLICY)||isDeepStrictEqual(policy,FLASH41_PAIRED09_POLICY)||isDeepStrictEqual(policy,MODEL_COMPARE_POLICY)||isDeepStrictEqual(policy,REASONING_COMPARE_POLICY)||current,'PAIRED08_POLICY');return FLASH41_PAIRED08_POLICY}
+    if(id.startsWith('R')){check(isDeepStrictEqual(policy,FLASH41_PAIRED07_POLICY)||isDeepStrictEqual(policy,FLASH41_PAIRED08_POLICY)||isDeepStrictEqual(policy,FLASH41_PAIRED09_POLICY)||isDeepStrictEqual(policy,MODEL_COMPARE_POLICY)||isDeepStrictEqual(policy,REASONING_COMPARE_POLICY)||current,'PAIRED07_POLICY');return FLASH41_PAIRED07_POLICY}
+    if(id.startsWith('Q')){check(isDeepStrictEqual(policy,FLASH41_PAIRED06_POLICY)||isDeepStrictEqual(policy,FLASH41_PAIRED07_POLICY)||isDeepStrictEqual(policy,FLASH41_PAIRED08_POLICY)||isDeepStrictEqual(policy,FLASH41_PAIRED09_POLICY)||isDeepStrictEqual(policy,MODEL_COMPARE_POLICY)||isDeepStrictEqual(policy,REASONING_COMPARE_POLICY)||current,'PAIRED06_POLICY');return FLASH41_PAIRED06_POLICY}
+    return id.startsWith('P')?(isDeepStrictEqual(policy,MODEL_COMPARE_POLICY)||isDeepStrictEqual(policy,REASONING_COMPARE_POLICY)||current?FLASH41_POLICY:policy):BILLING_POLICY
   }
   // Copy bodies before the first await; callers cannot replace requests after the safety gate.
   const frozen=Object.fromEntries(Object.entries(requests).map(([id,text])=>[id,{text,...inspectRequest(text,unitPolicy(id))}]))
@@ -196,7 +198,7 @@ export async function createModelGateway({origin,capability,budget,requests,reco
       try {
         check(typeof bodyText==='string'&&Buffer.byteLength(bodyText)<=200,'CLIENT_LIMIT')
         const input=JSON.parse(bodyText);exact(input,['unitId','requestSha']);unitId=input.unitId;request=frozen[unitId]
-        check(typeof unitId==='string'&&/^(?:[ABCD]0[1-8]|N(?:0[1-9]|1[0-2])-(?:03|04)|P(?:0[1-9]|1[0-2])-(?:03|05)|Q(?:0[1-9]|1[0-2])-(?:03|06)|R(?:0[1-9]|1[0-2])-(?:03|07)|S(?:0[1-9]|1[0-2])-(?:03|08)|T0[1-8]-(?:03|08)|U(?:0[1-9]|1[0-2])-(?:03|09)|V0[1-8]-(?:03|09)|W(?:0[1-9]|1[0-2])-[AB]|X0[1-8]-[AB]|Y(?:0[1-9]|1[0-2])-[AB]|Z0[1-8]-[AB]|M(?:0[1-9]|1[0-9]|20)-[AB])$/.test(unitId)&&request&&request.requestSha===input.requestSha,'CLIENT_BINDING')
+        check(typeof unitId==='string'&&/^(?:[ABCD]0[1-8]|N(?:0[1-9]|1[0-2])-(?:03|04)|P(?:0[1-9]|1[0-2])-(?:03|05)|Q(?:0[1-9]|1[0-2])-(?:03|06)|R(?:0[1-9]|1[0-2])-(?:03|07)|S(?:0[1-9]|1[0-2])-(?:03|08)|T0[1-8]-(?:03|08)|U(?:0[1-9]|1[0-2])-(?:03|09)|V0[1-8]-(?:03|09)|W(?:0[1-9]|1[0-2])-[AB]|X0[1-8]-[AB]|Y(?:0[1-9]|1[0-2])-[AB]|Z0[1-8]-[AB]|M(?:0[1-9]|1[0-9]|20)-[AB]|L(?:0[1-9]|1[0-9]|20)-[AB])$/.test(unitId)&&request&&request.requestSha===input.requestSha,'CLIENT_BINDING')
       } catch {return response(400,{code:'REQUEST_BINDING_REJECTED'})}
       if(inFlight)return response(409,{code:'CALL_IN_PROGRESS'})
       inFlight=true
@@ -220,7 +222,7 @@ export async function createModelGateway({origin,capability,budget,requests,reco
           check(res.headers.get('content-type')?.split(';')[0].trim()==='application/json'&&res.body,'UPSTREAM_PROTOCOL')
           phase='RESPONSE_BODY'
           const chunks=[],reader=res.body.getReader();let bytes=0
-          const responseLimit=isDeepStrictEqual(policy,REASONING_MAX_POLICY)?2097152:524288
+          const responseLimit=isDeepStrictEqual(policy,REASONING_MAX_POLICY)||isDeepStrictEqual(policy,REASONING_LOW16_POLICY)?2097152:524288
           try {while(true){const next=await reader.read();if(next.done)break;bytes+=next.value.byteLength;check(bytes<=responseLimit,'UPSTREAM_LIMIT');chunks.push(next.value)}}
           finally {reader.releaseLock()}
           phase='RESPONSE_DECODE'

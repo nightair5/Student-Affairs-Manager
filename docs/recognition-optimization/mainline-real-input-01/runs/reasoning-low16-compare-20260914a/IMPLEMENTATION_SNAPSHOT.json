@@ -1,0 +1,38 @@
+{
+  "version": "real-input-reasoning-low16-implementation-snapshot-1",
+  "generatedAt": "2026-09-14T20:14:00+08:00",
+  "startingHead": "934fb9e3afdd02c233f58e0831b1ce1dcf15b9df",
+  "scope": "显式16K none/low实验配置、截断响应结算边界、派发和结果分析；不修改candidate03、语义wire、正式仓储或生产入口",
+  "sourceFiles": {
+    "scripts/real-input-budget.mjs": "8be202166c23cde7afb3407915c650efdbd21125cd909e820ca48c2b192315cd",
+    "scripts/real-input-budget.node-test.mjs": "894b5946a5dd2aae9f3a7209ca337914c1e9fbb26fce61c8b5c2f42de7e7eb88",
+    "scripts/real-input-model-gateway.mjs": "5adeffde3130368fe165bb0eebd32cfd5a6b747b2b37959eed614040fc3d16ef",
+    "scripts/real-input-model-gateway.node-test.mjs": "622093e2299dc42951819d7b4cbe70031243bff9f8514b3ef5ac4ef9e9a3b8ce",
+    "scripts/run-mainline-real-input-01.mjs": "58054a34ac27177083fddcad23cfcb44fc9eec37d4e04cf8de38fd9da23e06e5"
+  },
+  "frozenInputs": {
+    "bindingSha256": "1ace528d15cc06bdc279f82bb13cb98e6526e5c3eb203f2bc0fe242aec3a82a1",
+    "referencesSha256": "c1ac44081f93187295dc14c4f9109217ec019696c1a0eca35c7efc01cceebba7"
+  },
+  "derivedEvidence": {
+    "first12Sha256": "b3443fc6d3cc135fb25c4092ce47342d3f7cc93f83c3849617a4765f6c931976",
+    "businessAdjudicationSha256": "7d3fa19c9302271f13f6af9b29be2e3df9c16917caab2f686ebdef8072c29901"
+  },
+  "requestPolicy": {
+    "model": "deepseek-flash",
+    "candidate": "candidate03",
+    "arms": ["reasoning.none", "reasoning.low"],
+    "maxOutputTokens": 16384,
+    "stream": false,
+    "retry": 0,
+    "transportRetry": 0
+  },
+  "runtimeBehavior": {
+    "reasoningItemsExcludedFromFinalSemanticAnswer": true,
+    "truncatedFinalAnswerUsable": false,
+    "credibleTruncatedUsageSettleable": true,
+    "legacyPoliciesRelaxed": false,
+    "productionEntryChanged": false,
+    "browserEntryChanged": false
+  }
+}

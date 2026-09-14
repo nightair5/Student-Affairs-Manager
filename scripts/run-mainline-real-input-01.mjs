@@ -9,7 +9,8 @@ import { inspectProtection, verifyReviewBinding, CANDIDATE02_DIRECTORY, CANDIDAT
 import { inspectRequest, createModelGateway, createPinnedProxyFetch, createRawRecorder } from './real-input-model-gateway.mjs'
 import { BILLING_POLICY, FLASH41_POLICY, FLASH41_PAIRED06_POLICY, FLASH41_PAIRED07_POLICY, FLASH41_PAIRED08_POLICY, FLASH41_PAIRED09_POLICY,
   MODEL_COMPARE_POLICY, modelComparePolicyFor, REASONING_COMPARE_POLICY, reasoningComparePolicyFor,
-  REASONING_MAX_POLICY, reasoningMaxPolicyFor, RECOVERY_ROUTE, initializeBudget, openBudget,
+  REASONING_MAX_POLICY, reasoningMaxPolicyFor, REASONING_LOW16_POLICY, reasoningLow16PolicyFor,
+  RECOVERY_ROUTE, initializeBudget, openBudget,
   reconcileIncompleteUsage } from './real-input-budget.mjs'
 
 const hash=bytes=>createHash('sha256').update(bytes).digest('hex')
@@ -1514,6 +1515,186 @@ export async function analyzeReasoningMax(count=8){
     maxStrictScored:rows.filter(row=>row.arm==='B'&&row.strictScore).length}
 }
 
+export const REASONING_LOW16_DIRECTORY='docs/recognition-optimization/mainline-real-input-01/runs/reasoning-low16-compare-20260914a'
+const readReasoningLow16=name=>JSON.parse(readFileSync(join(REASONING_LOW16_DIRECTORY,name)))
+const reasoningLow16Sources=['scripts/real-input-budget.mjs','scripts/real-input-budget.node-test.mjs','scripts/real-input-model-gateway.mjs',
+  'scripts/real-input-model-gateway.node-test.mjs','scripts/run-mainline-real-input-01.mjs',
+  'scripts/serve-mainline-real-input-01.mjs','src/experiments/realInput01/runtime.ts','src/experiments/realInput01/browser.tsx','src/experiments/realInput01/acceptance.test.tsx']
+const reasoningLow16Priority=['W01','W11','W04','W12']
+export function reasoningLow16Order(seed=2026091404){
+  let n=seed>>>0
+  const shuffle=values=>{for(let i=values.length-1;i>0;i--){n=(Math.imul(n,1664525)+1013904223)>>>0;const j=n%(i+1);[values[i],values[j]]=[values[j],values[i]]}return values}
+  return shuffle(Array.from({length:20},(_,i)=>i<10?['A','B']:['B','A']))
+}
+function inspectReasoningLow16Protection(baseline){
+  const branch=execFileSync('git',['branch','--show-current'],{encoding:'utf8'}).trim(),head=execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim()
+  check(branch==='codex/e2-multimodal-recognition-exp'&&head===baseline.head,'RL16_GIT')
+  for(const item of baseline.protectedFiles)check(hash(readFileSync(item.path))===item.sha256,'RL16_PROTECTED:'+item.path)
+  const allowed=new Set([...reasoningLow16Sources,'docs/recognition-optimization/CURRENT_CONTEXT.md','docs/recognition-optimization/OPTIMIZATION_LOG.md',
+    'docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/CALL_LEDGER.jsonl'])
+  const changed=[...execFileSync('git',['diff','--name-only'],{encoding:'utf8'}).trim().split('\n'),
+    ...execFileSync('git',['ls-files','--others','--exclude-standard'],{encoding:'utf8'}).trim().split('\n')].filter(Boolean)
+  for(const path of changed)check(allowed.has(path)||path.startsWith(REASONING_LOW16_DIRECTORY+'/'),'RL16_SCOPE:'+path)
+  return {head,branch,sources:reasoningLow16Sources.map(path=>({path,sha256:hash(readFileSync(path))}))}
+}
+export async function prepareReasoningLow16Compare(){
+  const ledgerPath=join(runDirectory,'CALL_LEDGER.jsonl'),ledger=readFileSync(ledgerPath),rows=ledger.toString().trimEnd().split('\n').map(JSON.parse)
+  check(rows.length===546&&rows.at(-1).event.kind==='batchSettle'&&rows.at(-1).event.unitId==='M08-A','RL16_LEDGER_BASELINE')
+  const previousBaseline=readReasoningMax('BASELINE.json'),head=execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),branch=execFileSync('git',['branch','--show-current'],{encoding:'utf8'}).trim()
+  check(/^[a-f0-9]{40}$/.test(head)&&branch==='codex/e2-multimodal-recognition-exp','RL16_BASE_HEAD')
+  const protectedFiles=previousBaseline.protectedFiles.filter(item=>!reasoningLow16Sources.includes(item.path))
+  for(const item of protectedFiles)check(hash(readFileSync(item.path))===item.sha256,'RL16_BASE_PROTECTED:'+item.path)
+  const baseline={version:'real-input-reasoning-low16-baseline-1',head,branch,protectedFiles,ledger:{path:ledgerPath,sequence:546,bytes:ledger.length,sha256:hash(ledger)},createdAt:new Date().toISOString()}
+  const protection=inspectReasoningLow16Protection(baseline),previous=readModelCompare('BINDING_FINAL.json'),previousRefs=readModelCompare('REFERENCES_FINAL.json')
+  const {api,dependencies}=await modelCompareApi(),closure=await compileOriginalScorer05()
+  check(api.CANDIDATE03_VERSION==='real-input-source-semantics-3'&&api.WIRE_VERSION==='real-input-model-wire-1','RL16_CANDIDATE')
+  const previousById=new Map(previous.items.map(item=>[item.id,item]))
+  const remaining=previous.items.map(item=>item.id).filter(id=>!reasoningLow16Priority.includes(id))
+  const previousIds=[...reasoningLow16Priority,...remaining]
+  check(previousIds.length===20&&new Set(previousIds).size===20&&previousIds.every(id=>previousById.has(id)),'RL16_SELECTION')
+  const requests={},units=[],items=[],references=[],seed=2026091404,order=reasoningLow16Order(seed)
+  for(const [i,previousId] of previousIds.entries()){
+    const oldItem=previousById.get(previousId),id='L'+String(i+1).padStart(2,'0'),context=structuredClone(oldItem.context),base=await api.buildCandidate03Request(context)
+    for(const arm of order[i]){
+      const unitId=id+'-'+arm,body=structuredClone(base.body),policy=reasoningLow16PolicyFor(unitId)
+      body.model=policy.model;body.reasoning.effort=policy.reasoningEffort;body.max_output_tokens=policy.outputTokenCeiling
+      const serialized=JSON.stringify(body),u=inspectRequest(serialized,policy)
+      requests[unitId]=serialized;units.push({unitId,candidateSha:u.candidateSha,inputSha:u.inputSha,requestSha:u.requestSha,requestBytes:u.requestBytes,scorerSha:previous.scorerSha})
+    }
+    const pair=order[i].map(arm=>requests[id+'-'+arm]),withoutReasoning=text=>{const value=JSON.parse(text);delete value.reasoning;return value}
+    check(isDeepStrictEqual(withoutReasoning(pair[0]),withoutReasoning(pair[1])),'RL16_ONLY_REASONING')
+    const oldA=previous.units.find(u=>u.unitId===previousId+'-A'),newA=units.find(u=>u.unitId===id+'-A')
+    check(oldA&&newA?.inputSha===oldA.inputSha,'RL16_INPUT_IDENTITY')
+    items.push({...oldItem,id,previousId,dispatchScope:i<12?'within-cumulative-cap':'not-run-cap'})
+    const reference=previousRefs.items.find(item=>item.id===previousId);check(reference&&isDeepStrictEqual(reference.context,context),'RL16_REFERENCE_CONTEXT')
+    references.push({...structuredClone(reference),id,previousId,dispatchScope:i<12?'within-cumulative-cap':'not-run-cap'})
+  }
+  const refText=JSON.stringify({label:'20份已见材料开发回归；candidate03与输入固定，仅none/low不同；参考事实只用于评分',items:references},null,2)+'\n'
+  const files=['BINDING_FINAL.json','REFERENCES_FINAL.json','COMPARISON.json'].map(name=>({path:join(MODEL_COMPARE_DIRECTORY,name),sha256:hash(readFileSync(join(MODEL_COMPARE_DIRECTORY,name))) }))
+  const selection={version:'real-input-reasoning-low16-selection-1',seed,priorityFirstFour:reasoningLow16Priority,
+    rationale:{W01:'既有8K low截断来源与明确时间材料正常对照',W11:'材料说明、共享材料、不同截止时间与前置条件',W04:'条件未成立与独立任务正常对照',W12:'旧要求作废、有效新要求及独立任务'},
+    cumulativeRequestStart:266,cumulativeRequestCap:290,maxDispatchableRequests:24,maxDispatchableSources:12,remainingSourcesNotRun:8,frozenBeforeResponses:true}
+  const binding={version:'real-input-reasoning-low16-binding-1',head,candidateVersion:api.CANDIDATE03_VERSION,wireVersion:api.WIRE_VERSION,
+    model:'deepseek-flash',reasoning:{A:'none',B:'low'},temperature:{A:0,B:0,lowEffect:'IGNORED_BY_PROVIDER_THINKING_MODE'},maxOutputTokens:16384,timeoutMs:120000,
+    dependencies,files,referenceSha:hash(refText),scorerSha:previous.scorerSha,scorerBundleSha:closure.bundleSha,requests,units,items,seed,order,
+    label:'20份已见材料开发回归；同模型、candidate03、正文与16384输出上限，仅reasoning effort不同；累计290次最多派发前12份',createdAt:new Date().toISOString()}
+  const checkedAt=new Date(),validUntil=new Date(checkedAt.getTime()+12*60*60*1000)
+  const billing={version:'real-input-reasoning-low16-billing-1',verified:true,method:'official-public-document-review',checkedAt:checkedAt.toISOString(),validUntil:validUntil.toISOString(),
+    policy:REASONING_LOW16_POLICY,documents:[
+      {url:'https://api-docs.deepseek.com/zh-cn/quick_start/pricing/',claim:'deepseek-flash maps to DeepSeek-V4.1-Flash; peak uncached input CNY 2/M and output CNY 8/M'},
+      {url:'https://api-docs.deepseek.com/zh-cn/guides/responses_api/',claim:'Responses supports max_output_tokens and reports reasoning tokens within output usage'},
+      {url:'https://api-docs.deepseek.com/zh-cn/guides/thinking_mode/',claim:'low uses thinking mode and temperature is ignored'}]}
+  const review={version:'real-input-reasoning-low16-send-check-1',status:'PASS',scope:'REASONING_LOW16_SEND_LOCAL_DETERMINISTIC',independent:false,
+    grantId:randomUUID(),head,bindingSha:hash(JSON.stringify(binding,null,2)+'\n'),billingSha:hash(JSON.stringify(billing)),sourcesSha:hash(JSON.stringify(protection.sources)),
+    checks:['candidate03 and all 20 inputs frozen','only reasoning effort differs within each pair','16384 output ceiling and common 120s timeout explicit','reference excluded from requests','Y01-B accounting already reconciled and not reopened','actual 266 requests and cumulative 290 cap limit this batch to 24 requests'],checkedAt:new Date().toISOString()}
+  writeFileSync(join(REASONING_LOW16_DIRECTORY,'BASELINE.json'),JSON.stringify(baseline,null,2)+'\n',{flag:'wx'})
+  writeFileSync(join(REASONING_LOW16_DIRECTORY,'SELECTION.json'),JSON.stringify(selection,null,2)+'\n',{flag:'wx'})
+  writeFileSync(join(REASONING_LOW16_DIRECTORY,'REFERENCES_FINAL.json'),refText,{flag:'wx'})
+  writeFileSync(join(REASONING_LOW16_DIRECTORY,'BINDING_FINAL.json'),JSON.stringify(binding,null,2)+'\n',{flag:'wx'})
+  writeFileSync(join(REASONING_LOW16_DIRECTORY,'BILLING.json'),JSON.stringify(billing,null,2)+'\n',{flag:'wx'})
+  writeFileSync(join(REASONING_LOW16_DIRECTORY,'SEND_REVIEW.json'),JSON.stringify(review,null,2)+'\n',{flag:'wx'})
+  return {priorityFirstFour:reasoningLow16Priority,dispatchableSources:12,dispatchableRequests:24,notRunSources:8,bindingSha:review.bindingSha,model:binding.model,reasoning:binding.reasoning,modelCalls:0}
+}
+export function verifyReasoningLow16Send({bindingBytes,binding,baseline,billing,review,selection,protection}){
+  check(isDeepStrictEqual(JSON.parse(bindingBytes),binding)&&binding.version==='real-input-reasoning-low16-binding-1'&&binding.items.length===20&&binding.units.length===40,'RL16_BINDING')
+  const ledger=readFileSync(baseline.ledger.path),rows=ledger.toString().trimEnd().split('\n').map(JSON.parse)
+  check(baseline.ledger.sequence===546&&rows.length>=546&&ledger.length>=baseline.ledger.bytes
+    &&hash(ledger.subarray(0,baseline.ledger.bytes))===baseline.ledger.sha256&&rows[545].event.kind==='batchSettle'&&rows[545].event.unitId==='M08-A','RL16_LEDGER_PREFIX')
+  const existing=rows.find(row=>row.event.kind==='reasoningLow16Grant')?.event.grant
+  check(review.status==='PASS'&&review.scope==='REASONING_LOW16_SEND_LOCAL_DETERMINISTIC'&&review.independent===false&&review.head===baseline.head
+    &&review.bindingSha===hash(bindingBytes)&&review.billingSha===hash(JSON.stringify(billing))&&review.sourcesSha===hash(JSON.stringify(protection.sources)),'RL16_REVIEW')
+  check(binding.head===baseline.head&&binding.candidateVersion==='real-input-source-semantics-3'&&binding.model==='deepseek-flash'
+    &&isDeepStrictEqual(binding.reasoning,{A:'none',B:'low'})&&binding.maxOutputTokens===16384&&binding.timeoutMs===120000,'RL16_IDENTITY')
+  check(selection.frozenBeforeResponses===true&&isDeepStrictEqual(selection.priorityFirstFour,reasoningLow16Priority)
+    &&selection.cumulativeRequestStart===266&&selection.cumulativeRequestCap===290&&selection.maxDispatchableRequests===24,'RL16_SELECTION')
+  for(const item of [...binding.dependencies,...binding.files])check(hash(readFileSync(item.path))===item.sha256,'RL16_DEPENDENCY:'+item.path)
+  check(hash(readFileSync(join(REASONING_LOW16_DIRECTORY,'REFERENCES_FINAL.json')))===binding.referenceSha&&isDeepStrictEqual(binding.order,reasoningLow16Order(binding.seed)),'RL16_REFERENCE_ORDER')
+  for(const [i,item] of binding.items.entries()){
+    const pair=binding.units.slice(i*2,i*2+2);check(isDeepStrictEqual(pair.map(unit=>unit.unitId),binding.order[i].map(arm=>item.id+'-'+arm)),'RL16_ORDER')
+    for(const unit of pair){const parsed=inspectRequest(binding.requests[unit.unitId],reasoningLow16PolicyFor(unit.unitId));check(['candidateSha','requestSha','inputSha','requestBytes'].every(key=>parsed[key]===unit[key])&&unit.scorerSha===binding.scorerSha,'RL16_REQUEST')}
+    const withoutReasoning=text=>{const value=JSON.parse(text);delete value.reasoning;return value}
+    check(isDeepStrictEqual(withoutReasoning(binding.requests[item.id+'-A']),withoutReasoning(binding.requests[item.id+'-B'])),'RL16_ONLY_REASONING')
+  }
+  check(billing.verified===true&&billing.method==='official-public-document-review'&&isDeepStrictEqual(billing.policy,REASONING_LOW16_POLICY),'RL16_BILLING')
+  check(Date.now()>=Date.parse(billing.checkedAt)&&Date.now()<=Date.parse(billing.validUntil)&&Date.parse(billing.validUntil)-Date.parse(billing.checkedAt)<=86400000,'RL16_PRICE_EXPIRED')
+  check(billing.documents.length===3&&billing.documents.every(document=>/^https:\/\/api-docs\.deepseek\.com\//.test(document.url)),'RL16_PRICE_EVIDENCE')
+  const grant={version:'real-input-reasoning-low16-grant-1',grantId:review.grantId,parentTail:rows[545].hash,parentSequence:546,ledgerPrefixBytes:baseline.ledger.bytes,ledgerPrefixSha:baseline.ledger.sha256,
+    manifestSha:hash(readFileSync(join(runDirectory,'REQUEST_MANIFEST.json'))),bindingSha:hash(bindingBytes),head:binding.head,sourcesSha:review.sourcesSha,reviewSha:hash(JSON.stringify(review)),targets:binding.units,
+    billingEvidence:{checkedAt:billing.checkedAt,validUntil:billing.validUntil,evidenceSha:hash(JSON.stringify(billing))},route:RECOVERY_ROUTE,priorNonce:rows[1].event.nonce,a02ResponseSha:rows[4].event.responseSha,maxTotalRequests:290,policy:REASONING_LOW16_POLICY}
+  if(existing)check(isDeepStrictEqual(existing,grant),'RL16_GRANT_CHANGED')
+  return grant
+}
+function projectReasoningLow16Final(api,providerEnvelope,context){
+  const finalMessages=providerEnvelope.output.filter(value=>value?.type==='message')
+  check(providerEnvelope.status==='completed'&&finalMessages.length===1&&providerEnvelope.output.at(-1)===finalMessages[0],'RL16_FINAL_OUTPUT')
+  const message=finalMessages[0],content=message?.content
+  check(message.role==='assistant'&&Array.isArray(content)&&content.length===1&&content[0]?.type==='output_text'&&typeof content[0].text==='string'&&content[0].text.trim(),'RL16_FINAL_TEXT')
+  const adapted=api.adaptModelWire(JSON.parse(content[0].text),context).adapted
+  const reasoningTokens=providerEnvelope.usage?.output_tokens_details?.reasoning_tokens??0,visibleOutputTokens=providerEnvelope.usage.output_tokens-reasoningTokens
+  check(Number.isSafeInteger(visibleOutputTokens)&&visibleOutputTokens>=0&&visibleOutputTokens<=16384,'RL16_VISIBLE_OUTPUT_USAGE')
+  const projection=structuredClone(providerEnvelope);projection.model=BILLING_POLICY.model;projection.output=[structuredClone(message)]
+  projection.output[0].content[0].text=JSON.stringify(api.projectSemantic(adapted))
+  projection.usage={input_tokens:providerEnvelope.usage.input_tokens,output_tokens:visibleOutputTokens,total_tokens:providerEnvelope.usage.input_tokens+visibleOutputTokens,
+    input_tokens_details:structuredClone(providerEnvelope.usage.input_tokens_details??{}),output_tokens_details:{reasoning_tokens:0}}
+  return {adapted,projection,visibleOutputTokens}
+}
+export async function dispatchReasoningLow16(unitId){
+  check(/^L(?:0[1-9]|1[0-9]|20)-[AB]$/.test(unitId),'RL16_UNIT')
+  const bytes=readFileSync(join(REASONING_LOW16_DIRECTORY,'BINDING_FINAL.json')),binding=JSON.parse(bytes),baseline=readReasoningLow16('BASELINE.json')
+  const protection=inspectReasoningLow16Protection(baseline),grant=verifyReasoningLow16Send({bindingBytes:bytes,binding,baseline,billing:readReasoningLow16('BILLING.json'),review:readReasoningLow16('SEND_REVIEW.json'),selection:readReasoningLow16('SELECTION.json'),protection})
+  const closure=await compileOriginalScorer05(),{api}=await modelCompareApi(),budget=await openBudget(runDirectory,grant.manifestSha,{batchGrant:grant}),before=await budget.snapshot(),index=before.reservations.length-266
+  check(index<24&&binding.units[index]?.unitId===unitId&&!before.reasoningLow16?.stopped&&before.reservations.slice(1).every(r=>r.status==='settled'||r.status==='settled-incomplete'),'RL16_NEXT')
+  check(before.reservations.reduce((n,r)=>n+r.costUpperMicroCny,0)+REASONING_LOW16_POLICY.reservationMicroCny<=REASONING_LOW16_POLICY.limitMicroCny,'RL16_BUDGET')
+  const rawPath=join(REASONING_LOW16_DIRECTORY,unitId+'_RAW.jsonl'),resultPath=join(REASONING_LOW16_DIRECTORY,unitId+'_RESULT.json')
+  check(!existsSync(rawPath)&&!existsSync(resultPath),'RL16_ALREADY_ATTEMPTED')
+  try{process.loadEnvFile(resolve('.env'))}catch{check(false,'SERVER_CONFIGURATION_UNAVAILABLE')}
+  const old=JSON.parse(readFileSync(join(runDirectory,'STATE.json'))),origin='http://127.0.0.1:6631',capability=randomBytes(32).toString('hex');let observed,recorder
+  try{
+    const requests={...old.requests,...JSON.parse(readFileSync(join(CANDIDATE02_DIRECTORY,'BINDING.json'))).requests,...JSON.parse(readFileSync(join(CANDIDATE03_DIRECTORY,'BINDING.json'))).requests,
+      ...pairedRead('BINDING.json').requests,...read05('BINDING.json').requests,...read06('BINDING.json').requests,...read07('BINDING_FINAL.json').requests,...read08('BINDING_FINAL.json').requests,...read09('BINDING_FINAL.json').requests,
+      ...readModelCompare('BINDING_FINAL.json').requests,...readReasoningCompare('BINDING_FINAL.json').requests,...readReasoningMax('BINDING_FINAL.json').requests,...binding.requests}
+    const gateway=await createModelGateway({origin,capability,budget,requests,policy:REASONING_LOW16_POLICY,timeoutMs:binding.timeoutMs,fetchImpl:createPinnedProxyFetch(),
+      recordRaw:async row=>{check(row.unitId===unitId&&row.requestSha===binding.units[index].requestSha&&recorder,'RL16_RAW_ID');await recorder.write(row);observed=row}})
+    recorder=await createRawRecorder(rawPath)
+    const start=Date.now(),response=await gateway.handle({method:'POST',path:'/api/real-input/recognize',headers:{host:new URL(origin).host,origin,'sec-fetch-site':'same-origin','content-type':'application/json','x-real-input-capability':capability},bodyText:JSON.stringify({unitId,requestSha:binding.units[index].requestSha})})
+    let score=null,scoreError=null,assembled=null,returnedModel=observed?JSON.parse(observed.rawHttpText).model:null
+    const item=binding.items.find(value=>value.id===unitId.slice(0,3)),reference=readReasoningLow16('REFERENCES_FINAL.json').items.find(value=>value.id===item.id),arm=unitId.at(-1),effort=binding.reasoning[arm]
+    if(response.status===200)try{
+      const providerEnvelope=JSON.parse(observed.rawHttpText);returnedModel=providerEnvelope.model
+      const projected=projectReasoningLow16Final(api,providerEnvelope,item.context);assembled=projected.adapted
+      score=await closure.api.scoreSeenResponse(JSON.stringify(projected.projection),item.context,reference.response,reference.context)
+    }catch(error){scoreError=typeof error?.message==='string'&&/^REAL_INPUT_[A-Z0-9_]+$/.test(error.message)?error.message:'SCHEMA_OR_SCORER_REJECTED'}
+    const after=await budget.snapshot(),reservation=after.reservations.find(value=>value.unitId===unitId),usage=reservation?.usage??null
+    const result={version:'real-input-reasoning-low16-result-1',unitId,arm,effort,dispatchScope:item.dispatchScope,previousId:item.previousId,bindingSha:hash(bytes),requestSha:binding.units[index].requestSha,
+      responseSha:observed?.responseSha??null,requestModel:binding.model,returnedModel,modelMatch:returnedModel===binding.model,candidateVersion:binding.candidateVersion,wireVersion:binding.wireVersion,
+      scorerSha:binding.scorerSha,scorerBundleSha:closure.bundleSha,referenceSha:binding.referenceSha,scoreInput:'candidate03 final message adapted only after gateway identity and usage verification; provider reasoning and immutable raw retained separately',assembled,
+      http:response.status,diagnostic:response.diagnostic??null,waitingMs:Date.now()-start,score,scoreError,totalAttempts:after.reservations.length,usage,reasoningTokens:usage?.output_tokens_details?.reasoning_tokens??null,
+      costUpperMicroCny:reservation?.costUpperMicroCny??0,totalCostUpperMicroCny:after.reservations.reduce((n,r)=>n+r.costUpperMicroCny,0),semanticStatus:reservation?.status==='settled'?'completed':'incomplete',
+      stopDispatch:Boolean(after.reasoningLow16?.stopped)||!['settled','settled-incomplete'].includes(reservation?.status),providerBilledCny:'NOT_OBSERVABLE',temperatureEffect:effort==='low'?'IGNORED_BY_PROVIDER_THINKING_MODE':'ACTIVE_NON_THINKING_MODE',
+      automaticSelection:'NOT_ENABLED',qualityClaim:binding.label}
+    writeFileSync(resultPath,JSON.stringify(result,null,2)+'\n',{flag:'wx'})
+    return {unitId,http:result.http,semanticStatus:result.semanticStatus,stopDispatch:result.stopDispatch,scoreError,totalAttempts:result.totalAttempts,waitingMs:result.waitingMs,costUpperMicroCny:result.costUpperMicroCny,reasoningTokens:result.reasoningTokens,effort}
+  }finally{if(recorder)await recorder.close()}
+}
+export async function analyzeReasoningLow16(count=12){
+  check([4,12].includes(count),'RL16_ANALYSIS_COUNT')
+  const bindingBytes=readFileSync(join(REASONING_LOW16_DIRECTORY,'BINDING_FINAL.json')),binding=JSON.parse(bindingBytes),rows=[]
+  for(const item of binding.items.slice(0,count))for(const arm of ['A','B']){
+    const unitId=item.id+'-'+arm,immutableResult=readReasoningLow16(unitId+'_RESULT.json')
+    const rawRows=readFileSync(join(REASONING_LOW16_DIRECTORY,unitId+'_RAW.jsonl'),'utf8').trimEnd().split('\n').map(JSON.parse)
+    check(rawRows.length===1&&rawRows[0].unitId===unitId&&rawRows[0].responseSha===hash(rawRows[0].rawHttpText),'RL16_ANALYSIS_RAW')
+    const envelope=JSON.parse(rawRows[0].rawHttpText)
+    rows.push({unitId,previousId:item.previousId,cohort:item.cohort,arm,effort:binding.reasoning[arm],responseSha:rawRows[0].responseSha,
+      returnedModel:envelope.model,status:envelope.status,actualUsage:envelope.usage,actualWaitingMs:immutableResult.waitingMs,actualCostUpperMicroCny:immutableResult.costUpperMicroCny,
+      strictScore:immutableResult.score,scoreError:immutableResult.scoreError,adapted:immutableResult.assembled})
+  }
+  const output={version:'real-input-reasoning-low16-derived-analysis-1',scope:count===4?'first4':'cumulative-cap-12',sourceCount:count,requestCount:rows.length,
+    bindingSha:hash(bindingBytes),unrun:{sources:20-count,requests:(20-count)*2,reason:'cumulative actual-request cap 290'},rows,generatedAt:new Date().toISOString()}
+  const path=join(REASONING_LOW16_DIRECTORY,count===4?'FIRST4_DERIVED.json':'FIRST12_DERIVED.json')
+  writeFileSync(path,JSON.stringify(output,null,2)+'\n',{flag:'wx'})
+  return {path,rows:rows.length,lowCompleted:rows.filter(row=>row.arm==='B'&&row.status==='completed').length,lowIncomplete:rows.filter(row=>row.arm==='B'&&row.status!=='completed').length,unrunSources:20-count}
+}
+
 const read08=name=>JSON.parse(readFileSync(join(PAIRED08_DIRECTORY,name)))
 export async function paired08Api(){
   const compiled=await build({stdin:{contents:`export {buildFlash41Candidate08ComparisonRequest,CANDIDATE08_VERSION} from './src/experiments/realInput01/candidate08.ts';
@@ -1736,7 +1917,10 @@ export async function dispatchPaired07(unitId){
 
 if(process.argv[1]&&resolve(process.argv[1])===resolve(import.meta.filename)){
   const args=process.argv.slice(2),pick=key=>args.find(a=>a.startsWith('--'+key+'='))?.slice(key.length+3)
-  if(args.length===1&&args[0]==='--reconcile-y01b')console.log(JSON.stringify(await reconcileReasoningCompareIncomplete()))
+  if(args.length===1&&args[0]==='--prepare-reasoning-low16')console.log(JSON.stringify(await prepareReasoningLow16Compare()))
+  else if(args.length===1&&/^--reasoning-low16=L(?:0[1-9]|1[0-9]|20)-[AB]$/.test(args[0]))console.log(JSON.stringify(await dispatchReasoningLow16(pick('reasoning-low16'))))
+  else if(args.length===1&&/^--analyze-reasoning-low16=(?:4|12)$/.test(args[0]))console.log(JSON.stringify(await analyzeReasoningLow16(Number(pick('analyze-reasoning-low16')))))
+  else if(args.length===1&&args[0]==='--reconcile-y01b')console.log(JSON.stringify(await reconcileReasoningCompareIncomplete()))
   else if(args.length===1&&args[0]==='--prepare-reasoning-max')console.log(JSON.stringify(await prepareReasoningMaxCompare()))
   else if(args.length===1&&/^--reasoning-max=M(?:0[1-9]|1[0-9]|20)-[AB]$/.test(args[0]))console.log(JSON.stringify(await dispatchReasoningMax(pick('reasoning-max'))))
   else if(args.length===1&&/^--analyze-reasoning-max=(?:8|20)$/.test(args[0]))console.log(JSON.stringify(await analyzeReasoningMax(Number(pick('analyze-reasoning-max')))))

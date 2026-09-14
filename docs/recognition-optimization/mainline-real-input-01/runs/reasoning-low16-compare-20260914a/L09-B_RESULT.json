@@ -1,0 +1,393 @@
+{
+  "version": "real-input-reasoning-low16-result-1",
+  "unitId": "L09-B",
+  "arm": "B",
+  "effort": "low",
+  "dispatchScope": "within-cumulative-cap",
+  "previousId": "W07",
+  "bindingSha": "1ace528d15cc06bdc279f82bb13cb98e6526e5c3eb203f2bc0fe242aec3a82a1",
+  "requestSha": "94ce263ff740f58130973147db5edaf28ada9bd1d99502ae5d533e4696ac842a",
+  "responseSha": "8571c3399e524dddfcdeed9b516eae2aeba4729658b0e304a4268f8e5f0fefa9",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "modelMatch": true,
+  "candidateVersion": "real-input-source-semantics-3",
+  "wireVersion": "real-input-model-wire-1",
+  "scorerSha": "ad76149f8a88cb4adda6dca78b210daaa4f3c800d17582767911e8ace2658e1d",
+  "scorerBundleSha": "782c89b4f865d83c9a2051d9e2a6df3776b7231ad49aec87008b5c14f4e09f21",
+  "referenceSha": "c1ac44081f93187295dc14c4f9109217ec019696c1a0eca35c7efc01cceebba7",
+  "scoreInput": "candidate03 final message adapted only after gateway identity and usage verification; provider reasoning and immutable raw retained separately",
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-old-send-paper-proof",
+        "propositionScopeIds": [
+          "scope-0002-6424aed014b1ba8b45bc3446ffe028e3445e2989123ac619db1b84c334db5dbc",
+          "scope-0003-a290d1a5e24ca7f8f39a2cabc1ef4fa95c66fd13a00bc6a6fd4e865a2e894c57",
+          "scope-0004-e8972529299b11e5e2bfc2b3bbed3eb889f43d65b5f438b845be5895112322f9",
+          "scope-0009-62e191ff69fc5a4c066d6f26c7918ebbcdc6c8aef1f2b13e8c303db6e3ba73cb",
+          "scope-0010-34cc70712b84708ec530597e64075a74001d27e7ac05dda7ebcb99330e5e31f5"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "cancelled",
+          "validity": "superseded",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "send",
+        "action": {
+          "scopeId": "scope-0002-6424aed014b1ba8b45bc3446ffe028e3445e2989123ac619db1b84c334db5dbc",
+          "surface": "寄送"
+        },
+        "object": {
+          "scopeId": "scope-0002-6424aed014b1ba8b45bc3446ffe028e3445e2989123ac619db1b84c334db5dbc",
+          "surface": "纸质校样"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "寄送纸质校样",
+          "description": "先前要求作者于2026年9月20日17:00前寄送纸质校样；该要求现已作废，不再寄送，并被新要求替代。",
+          "completionCriteria": [
+            "于2026年9月20日17:00前寄送纸质校样"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [
+            "mat-old-paper-proof"
+          ],
+          "timePointTempIds": [
+            "time-old-deadline"
+          ],
+          "confidence": 0.95,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      },
+      {
+        "id": "task-new-upload-proof-pdf",
+        "propositionScopeIds": [
+          "scope-0005-5c1b6727c26e072c53a7b20043a780d3b23e14814383889b0c261d04c20e0370",
+          "scope-0006-4d0e905be521e340528f2a6c09259dc65fff2792aaf2087709454ff7aff75edb",
+          "scope-0007-a3dc5c9d9406ca6c9ed3f05f416947c57c3019efabc8f4be5acebfe17b8fe3d7",
+          "scope-0008-0ae98ea96376200905726260ac7170c8b9f1514eec63fc6b452247770c1f2007",
+          "scope-0009-62e191ff69fc5a4c066d6f26c7918ebbcdc6c8aef1f2b13e8c303db6e3ba73cb",
+          "scope-0010-34cc70712b84708ec530597e64075a74001d27e7ac05dda7ebcb99330e5e31f5"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "upload",
+        "action": {
+          "scopeId": "scope-0006-4d0e905be521e340528f2a6c09259dc65fff2792aaf2087709454ff7aff75edb",
+          "surface": "上传"
+        },
+        "object": {
+          "scopeId": "scope-0006-4d0e905be521e340528f2a6c09259dc65fff2792aaf2087709454ff7aff75edb",
+          "surface": "校样PDF"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "上传校样PDF",
+          "description": "替代要求现已生效：请作者于2026年9月24日10:00前上传校样PDF，文件命名为“稿件编号_校样”，上传至编辑部收稿系统。新要求替代旧寄送要求，不是增加一份纸质材料。",
+          "completionCriteria": [
+            "于2026年9月24日10:00前将校样PDF上传至编辑部收稿系统",
+            "文件命名为“稿件编号_校样”"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "high",
+          "dependencyTempIds": [],
+          "materialTempIds": [
+            "mat-new-proof-pdf"
+          ],
+          "timePointTempIds": [
+            "time-new-deadline"
+          ],
+          "confidence": 0.98,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [
+      {
+        "tempId": "mat-old-paper-proof",
+        "name": "纸质校样",
+        "required": false,
+        "formatRequirements": [],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "task-old-send-paper-proof"
+        ],
+        "scopeIds": [
+          "scope-0002-6424aed014b1ba8b45bc3446ffe028e3445e2989123ac619db1b84c334db5dbc",
+          "scope-0003-a290d1a5e24ca7f8f39a2cabc1ef4fa95c66fd13a00bc6a6fd4e865a2e894c57",
+          "scope-0004-e8972529299b11e5e2bfc2b3bbed3eb889f43d65b5f438b845be5895112322f9",
+          "scope-0010-34cc70712b84708ec530597e64075a74001d27e7ac05dda7ebcb99330e5e31f5"
+        ],
+        "confidence": 0.95
+      },
+      {
+        "tempId": "mat-new-proof-pdf",
+        "name": "校样PDF",
+        "required": true,
+        "formatRequirements": [
+          "PDF"
+        ],
+        "namingRequirements": [
+          "文件命名为“稿件编号_校样”"
+        ],
+        "quantity": null,
+        "submissionChannel": "编辑部收稿系统",
+        "relatedTaskTempIds": [
+          "task-new-upload-proof-pdf"
+        ],
+        "scopeIds": [
+          "scope-0006-4d0e905be521e340528f2a6c09259dc65fff2792aaf2087709454ff7aff75edb",
+          "scope-0007-a3dc5c9d9406ca6c9ed3f05f416947c57c3019efabc8f4be5acebfe17b8fe3d7",
+          "scope-0008-0ae98ea96376200905726260ac7170c8b9f1514eec63fc6b452247770c1f2007",
+          "scope-0010-34cc70712b84708ec530597e64075a74001d27e7ac05dda7ebcb99330e5e31f5"
+        ],
+        "confidence": 0.98
+      }
+    ],
+    "timePoints": [
+      {
+        "tempId": "time-old-deadline",
+        "type": "submission_deadline",
+        "rawText": "2026年9月20日17:00前",
+        "relatedTaskTempIds": [
+          "task-old-send-paper-proof"
+        ],
+        "relatedMaterialTempIds": [
+          "mat-old-paper-proof"
+        ],
+        "scopeIds": [
+          "scope-0002-6424aed014b1ba8b45bc3446ffe028e3445e2989123ac619db1b84c334db5dbc"
+        ],
+        "confidence": 0.95,
+        "normalizedValue": "2026-09-20T17:00",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "exact",
+        "needsConfirmation": false
+      },
+      {
+        "tempId": "time-new-deadline",
+        "type": "submission_deadline",
+        "rawText": "2026年9月24日10:00前",
+        "relatedTaskTempIds": [
+          "task-new-upload-proof-pdf"
+        ],
+        "relatedMaterialTempIds": [
+          "mat-new-proof-pdf"
+        ],
+        "scopeIds": [
+          "scope-0006-4d0e905be521e340528f2a6c09259dc65fff2792aaf2087709454ff7aff75edb"
+        ],
+        "confidence": 0.98,
+        "normalizedValue": "2026-09-24T10:00",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "exact",
+        "needsConfirmation": false
+      }
+    ],
+    "events": [],
+    "revisions": [
+      {
+        "type": "supersedes",
+        "targetDirectiveId": "task-old-send-paper-proof",
+        "scopeIds": [
+          "scope-0003-a290d1a5e24ca7f8f39a2cabc1ef4fa95c66fd13a00bc6a6fd4e865a2e894c57",
+          "scope-0004-e8972529299b11e5e2bfc2b3bbed3eb889f43d65b5f438b845be5895112322f9",
+          "scope-0005-5c1b6727c26e072c53a7b20043a780d3b23e14814383889b0c261d04c20e0370",
+          "scope-0009-62e191ff69fc5a4c066d6f26c7918ebbcdc6c8aef1f2b13e8c303db6e3ba73cb",
+          "scope-0010-34cc70712b84708ec530597e64075a74001d27e7ac05dda7ebcb99330e5e31f5"
+        ],
+        "fromDirectiveId": "task-new-upload-proof-pdf",
+        "effective": "true"
+      }
+    ],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0001-d4f96399a83a1f6aae15d5d30686766af9c32d79cbb061a70b37bedb8c4d88fe"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "source:268aa495",
+    "sourceVersionId": "source:268aa495:version:1",
+    "sourceFingerprint": "sha256:f0b2eca1ea8e5c803588a0b4aea1c64caaa4d52caaf7af7339d74500ec7566c1"
+  },
+  "http": 200,
+  "diagnostic": null,
+  "waitingMs": 38185,
+  "score": {
+    "scorerVersion": "real-input-seen-fact-diagnostic-2",
+    "label": "已见人工工程参考的精确诊断，不是未见或商业准确率",
+    "metrics": {
+      "task": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 2,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "requiresAction": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 2,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "time": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 0,
+        "falsePositive": 2,
+        "falseNegative": 2,
+        "precision": 0,
+        "recall": 0
+      },
+      "material": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 0,
+        "falsePositive": 2,
+        "falseNegative": 2,
+        "precision": 0,
+        "recall": 0
+      },
+      "event": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "condition": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 2,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "revision": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 0,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0,
+        "recall": 0
+      },
+      "evidence": {
+        "predicted": 6,
+        "reference": 6,
+        "correct": 0,
+        "falsePositive": 6,
+        "falseNegative": 6,
+        "precision": 0,
+        "recall": 0
+      },
+      "semantic": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 0,
+        "falsePositive": 2,
+        "falseNegative": 2,
+        "precision": 0,
+        "recall": 0
+      },
+      "coverage": {
+        "predicted": 4,
+        "reference": 4,
+        "correct": 1,
+        "falsePositive": 3,
+        "falseNegative": 3,
+        "precision": 0.25,
+        "recall": 0.25
+      }
+    },
+    "matchingAmbiguities": [],
+    "metricStatus": "EXACT_REFERENCE_DIAGNOSTIC",
+    "schemaParsed": true,
+    "issues": [],
+    "completeCase": false,
+    "majorCorrectionRequired": true,
+    "forbidden": 0,
+    "automaticSelection": "NOT_ENABLED",
+    "humanActiveEditTime": "NOT_RUN",
+    "candidateTaskCount": 2,
+    "referenceTaskCount": 2
+  },
+  "scoreError": null,
+  "totalAttempts": 283,
+  "usage": {
+    "input_tokens": 4746,
+    "input_tokens_details": {
+      "cached_tokens": 3840
+    },
+    "output_tokens": 8960,
+    "output_tokens_details": {
+      "reasoning_tokens": 6623
+    },
+    "total_tokens": 13706
+  },
+  "reasoningTokens": 6623,
+  "costUpperMicroCny": 81172,
+  "totalCostUpperMicroCny": 13355439,
+  "semanticStatus": "completed",
+  "stopDispatch": false,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "temperatureEffect": "IGNORED_BY_PROVIDER_THINKING_MODE",
+  "automaticSelection": "NOT_ENABLED",
+  "qualityClaim": "20份已见材料开发回归；同模型、candidate03、正文与16384输出上限，仅reasoning effort不同；累计290次最多派发前12份"
+}

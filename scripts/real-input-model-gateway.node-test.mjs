@@ -8,7 +8,8 @@ import { Readable } from 'node:stream'
 import { BILLING_POLICY,FLASH41_POLICY,FLASH41_PAIRED06_POLICY,MODEL_COMPARE_POLICY,
   MODEL_COMPARE_FLASH_POLICY,MODEL_COMPARE_PRO_POLICY,REASONING_COMPARE_POLICY,
   REASONING_COMPARE_NONE_POLICY,REASONING_COMPARE_LOW_POLICY,REASONING_MAX_POLICY,
-  REASONING_MAX_NONE_POLICY,REASONING_MAX_MAX_POLICY,sha256,initializeBudget,openBudget } from './real-input-budget.mjs'
+  REASONING_MAX_NONE_POLICY,REASONING_MAX_MAX_POLICY,REASONING_LOW16_POLICY,
+  REASONING_LOW16_NONE_POLICY,REASONING_LOW16_LOW_POLICY,sha256,initializeBudget,openBudget } from './real-input-budget.mjs'
 
 const ORIGIN='http://127.0.0.1:6637',CAP='a'.repeat(64),NOW='2026-09-07T00:00:00.000Z'
 const FAKE_SECRET='NOT_A_REAL_CREDENTIAL_FOR_ENGINEERING'
@@ -437,4 +438,21 @@ test('reasoning max: 32768 envelope, 180 second deadline and incomplete accounti
   const none=JSON.parse(body);none.reasoning.effort='none';assert.throws(()=>inspectRequest(JSON.stringify(none),REASONING_MAX_MAX_POLICY),/REASONING/)
   assert.throws(()=>inspectRequest(body,REASONING_COMPARE_LOW_POLICY),/PARAMETERS|REASONING/)
   assert.equal(REASONING_MAX_NONE_POLICY.outputTokenCeiling,32768)
+})
+test('reasoning low16: accepts explicit low only for the new 16384 policy and keeps reasoning out of the final message',async()=>{
+  const unitId='L01-B',value=JSON.parse(request());value.model='deepseek-flash';value.reasoning.effort='low';value.max_output_tokens=16384
+  const body=JSON.stringify(value),identity=inspectRequest(body,REASONING_LOW16_LOW_POLICY),envelope=JSON.parse(raw(unitId))
+  const historicalValue=JSON.parse(request());historicalValue.model='deepseek-flash';const historicalBody=JSON.stringify(historicalValue),historicalIdentity=inspectRequest(historicalBody,FLASH41_POLICY)
+  envelope.model='deepseek-flash';envelope.usage.output_tokens=40;envelope.usage.output_tokens_details.reasoning_tokens=25;envelope.usage.total_tokens=140
+  envelope.output=[{type:'reasoning',id:'rs_'+unitId,summary:[]},...envelope.output]
+  let completed=0
+  const gateway=await createModelGateway({origin:ORIGIN,capability:CAP,requests:{'P01-03':historicalBody,[unitId]:body},policy:REASONING_LOW16_POLICY,timeoutMs:120000,clock:()=>NOW,
+    budget:{snapshot:async()=>({units:[{unitId:'P01-03',...historicalIdentity},{unitId,...identity}]}),reserve:async(id,text,policy)=>{assert.equal(id,unitId);assert.equal(text,body);assert.deepEqual(policy,REASONING_LOW16_LOW_POLICY)
+      return{complete:async rawText=>{completed++;assert.equal(JSON.parse(rawText).output.at(-1).type,'message');return{usage:envelope.usage,costUpperMicroCny:500}},uncertain:async()=>{throw Error('UNEXPECTED')}}}},
+    readSecret:()=>FAKE_SECRET,fetchImpl:async(url,options)=>{assert.equal(options.body,body);return http(JSON.stringify(envelope))},recordRaw:async()=>{}})
+  const message={method:'POST',path:'/api/real-input/recognize',headers:{host:new URL(ORIGIN).host,origin:ORIGIN,'sec-fetch-site':'same-origin','content-type':'application/json','x-real-input-capability':CAP},bodyText:JSON.stringify({unitId,requestSha:identity.requestSha})}
+  assert.equal((await gateway.handle(message)).status,200);assert.equal(completed,1)
+  const none=JSON.parse(body);none.reasoning.effort='none';assert.doesNotThrow(()=>inspectRequest(JSON.stringify(none),REASONING_LOW16_NONE_POLICY))
+  assert.throws(()=>inspectRequest(body,REASONING_COMPARE_LOW_POLICY),/PARAMETERS|REASONING/)
+  assert.equal(REASONING_LOW16_NONE_POLICY.outputTokenCeiling,16384)
 })

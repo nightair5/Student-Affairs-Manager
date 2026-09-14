@@ -1,0 +1,22 @@
+{
+  "version": "real-input-reasoning-low16-selection-1",
+  "seed": 2026091404,
+  "priorityFirstFour": [
+    "W01",
+    "W11",
+    "W04",
+    "W12"
+  ],
+  "rationale": {
+    "W01": "既有8K low截断来源与明确时间材料正常对照",
+    "W11": "材料说明、共享材料、不同截止时间与前置条件",
+    "W04": "条件未成立与独立任务正常对照",
+    "W12": "旧要求作废、有效新要求及独立任务"
+  },
+  "cumulativeRequestStart": 266,
+  "cumulativeRequestCap": 290,
+  "maxDispatchableRequests": 24,
+  "maxDispatchableSources": 12,
+  "remainingSourcesNotRun": 8,
+  "frozenBeforeResponses": true
+}

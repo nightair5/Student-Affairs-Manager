@@ -1,0 +1,59 @@
+{
+  "version": "real-input-reasoning-low16-billing-1",
+  "verified": true,
+  "method": "official-public-document-review",
+  "checkedAt": "2026-09-14T11:36:28.909Z",
+  "validUntil": "2026-09-14T23:36:28.909Z",
+  "policy": {
+    "version": "real-input-reasoning-low16-budget-1",
+    "maxRequests": 290,
+    "limitMicroCny": 20000000,
+    "reservationMicroCny": 3300000,
+    "arms": {
+      "A": {
+        "version": "real-input-reasoning-low16-none-1",
+        "model": "deepseek-flash",
+        "endpoint": "https://api.deepseek.com/responses",
+        "temperature": 0,
+        "reasoningEffort": "none",
+        "inputTokenCeiling": 1048576,
+        "outputTokenCeiling": 16384,
+        "requestByteCeiling": 65536,
+        "inputPriceMicroPerMillion": 2000000,
+        "outputPriceMicroPerMillion": 8000000,
+        "reservationMicroCny": 3300000,
+        "limitMicroCny": 20000000,
+        "maxRequests": 290
+      },
+      "B": {
+        "version": "real-input-reasoning-low16-low-1",
+        "model": "deepseek-flash",
+        "endpoint": "https://api.deepseek.com/responses",
+        "temperature": 0,
+        "reasoningEffort": "low",
+        "inputTokenCeiling": 1048576,
+        "outputTokenCeiling": 16384,
+        "requestByteCeiling": 65536,
+        "inputPriceMicroPerMillion": 2000000,
+        "outputPriceMicroPerMillion": 8000000,
+        "reservationMicroCny": 3300000,
+        "limitMicroCny": 20000000,
+        "maxRequests": 290
+      }
+    }
+  },
+  "documents": [
+    {
+      "url": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/",
+      "claim": "deepseek-flash maps to DeepSeek-V4.1-Flash; peak uncached input CNY 2/M and output CNY 8/M"
+    },
+    {
+      "url": "https://api-docs.deepseek.com/zh-cn/guides/responses_api/",
+      "claim": "Responses supports max_output_tokens and reports reasoning tokens within output usage"
+    },
+    {
+      "url": "https://api-docs.deepseek.com/zh-cn/guides/thinking_mode/",
+      "claim": "low uses thinking mode and temperature is ignored"
+    }
+  ]
+}

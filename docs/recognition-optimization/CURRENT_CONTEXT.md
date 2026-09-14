@@ -1,85 +1,107 @@
 # MAINLINE-REAL-INPUT-01 当前交接
 
 ## 当前结论
-- 本轮比较deepseek-flash的reasoning none与Max。
+- 本轮比较 deepseek-flash 的 reasoning none 与 low。
 - candidate03、wire、正文、时区和评价口径固定。
-- 首批8份两臂16/16均完整返回并完成分析。
-- Max整体错误更多、等待更长、费用更高；结论STOP_AFTER_FIRST8_AND_KEEP_NONE。
-- 剩余12份/24次NOT_RUN。
+- 实际完成 12 份、两臂 24/24 次有效返回。
+- none 明显少错、少改、更快、更便宜；结论 KEEP_NONE。
+- 剩余 8 份、16 次因累计 290 次硬上限而 NOT_RUN。
 
 ## 仓库
 - 仓库：C:\Users\Winner\student-affairs-multimodal-exp。
 - 分支：codex/e2-multimodal-recognition-exp。
-- 本轮起点：129dd1c53c142f45c069110dae42f21f0888a2f2。
-- 本轮业务提交：bcdbd948953e7809253c896b16e8a5f641839735。
-- 远端已精确核对为同一业务SHA；最终文档回执见DELIVERY.json。
+- 本轮起点：934fb9e3afdd02c233f58e0831b1ce1dcf15b9df。
+- 用户给出的 129dd1 是较早快照，未回切。
+- 本轮业务提交：待提交后写入 DELIVERY.json。
 
 ## 固定设计
-- 20份已见完整匿名通知原样复用。
-- 首批8份：W11、W12、W02、X05、W10、X01、W07、W01。
-- 两臂均为deepseek-flash + candidate03；A none，B max。
-- 两臂max_output_tokens=32768、timeout=180秒。
-- stream=false，verifier/Repair/传输retry=0；B思考模式忽略temperature。
+- 20 份已见完整匿名通知原样复用。
+- 优先前四份：W01、W11、W04、W12。
+- 两臂均为 deepseek-flash + candidate03；A none，B low。
+- 两臂 max_output_tokens=16384，stream=false。
+- verifier、Repair、传输 retry 均为 0。
+- low 为思考模式，temperature=0 按官方规则不生效。
 - 参考答案只用于评价，不进入请求。
 
-## 质量结果
-- none无需实质纠正6/8，实质错误5个。
-- Max无需实质纠正5/8，实质错误9个。
-- Max在W11减少3个任务/材料/条件错误。
-- Max在X05新增3个任务/材料/时间错误。
-- Max在W10新增4个多余任务和材料错归属。
-- W02、X01、W07增加核对负担；W01持平，W12没有减少需纠正来源。
-- 严格完全匹配两臂均0/8，业务差异另行裁决。
-- Max不采用，6632不切换路线。
+## 截断响应用量
+- Y01-B 的身份、模型、截断原因和 usage 已在旧追加事件中核验。
+- Y01-B 费用上界 ¥0.075140 已结算，但回答保持 incomplete。
+- Y01-B 不评分、不回放、不形成可确认任务。
+- A01 未知 ¥3.30 预留永久保持，本轮没有解除。
 
-## 等待与费用
-- none中位8660ms/最大9211ms；Max中位100154.5ms/最大125619ms。
-- Max中位等待约为none的11.57倍。
-- none费用上界0.196400元；Max为1.547088元。
-- 本批16次合计上界1.743488元。
-- 服务商实扣NOT_OBSERVABLE。
+## 质量结果
+- none 无需实质纠正 10/12，low 为 5/12。
+- none 实质事实错误 4 个，low 为 11 个。
+- none 最少用户纠正操作 3 次，low 为 11 次。
+- low 修掉 W11 的多余任务，并把条件恢复为 unknown。
+- low 在 W11 仍多造材料和时间，在更多通知新增假时间或材料错误。
+- W01/W04/W05/W08/W09 两臂均无需实质纠正。
+- W12 两臂都需纠正，low 没有净收益。
+- 严格 completeCase 两臂均为 0/12，业务裁决单独保留。
+- low 不采用，6632 不切换路线。
+
+## 正确任务口径
+- 12 份参考事实共有 19 个任务事实。
+- 当前可确认的正确任务为 13 个。
+- 另有取消或替代 3 个、condition=false 1 个、condition=unknown 2 个。
+- 既有 candidate03 工程回放曾在 10 个来源正确保存 12 个任务。
+- 该数字是工程回放，不是本轮真实浏览器或真人转化率。
+
+## 等待、用量与费用
+- none：输入 55,555，输出 19,580，reasoning 0。
+- low：输入 55,855，输出 109,691，reasoning 91,344。
+- none 中位 7.790 秒、P95 8.918 秒。
+- low 中位 43.190 秒、P95 53.336 秒。
+- low 中位约慢 5.544 倍，P95 约慢 5.981 倍。
+- none 费用上界 ¥0.267750，low 为 ¥0.989238。
+- low 费用上界约为 none 的 3.695 倍。
+- 本批 24 次费用上界合计 ¥1.256988。
+- 服务商实际扣费 NOT_OBSERVABLE。
 
 ## 账本
-- Y01-B可信usage核销0.075140元，但仍不可评分、回放或保存。
-- A01未知3.30元预留永久保持。
-- 账本546行，最后sequence=545。
-- 账本SHA256为fcec75c16702ae90fb1749acf3602b49ba1d8be1caf4b27e1703b718b15a3734。
-- 累计实际请求266次。
-- 累计权威费用上界12.406195元，低于20元上限。
+- 账本现有 290 次请求、595 行，最后 sequence=594/L12-B。
+- settled 288、settledIncomplete 1、heldUnknown 1。
+- 已结算费用上界 ¥10.363183。
+- 加 A01 未知预留后的保守总上界 ¥13.663183，低于 ¥20 上限。
+- 账本 SHA256：acd7a263be10887b5727b695faaaa8970cba4c57fd253df33a80116dcf42d0e5。
+- 最后一行 hash：622b837675c52de02dcef78102e022e40c8a974a5973c75f1a2febca181c5f3f。
 
 ## 工程接入
-- Max由显式新策略接入，旧none/low策略不放宽。
-- 最终message与reasoning项分开，只有完整答案形成建议。
-- 总output费用只计一次，不重复加reasoning tokens。
-- Max响应容量校验采用32768，不套旧8192。
-- 服务商raw、账本和请求身份保持；旧评分入口只接收可见答案投影。
-- candidate03和modelWire未修改。
+- none/low 16K 通过显式新实验策略接入，旧配置未放宽。
+- reasoning 项与最终 message 分离，仅完整最终答案生成建议。
+- reasoning tokens 已包含在 output usage，不重复计费。
+- 截断回答可在身份和 usage 可信时结算，但始终不可保存。
+- candidate03、modelWire、全局 Schema 和正式仓储均未修改。
 
 ## 产品与浏览器
-- 官方控制只连接一次，约22.666秒后nodeRepl.fetch request failed。
-- 本轮页面确认、刷新、独立读库和下载NOT_RUN。
-- 本轮实际新增正式任务0。
-- 历史20任务/16来源工程回放、Q01/Q07页面闭环和U11下载证据仅作历史证据。
-- Max未采用，6632和公开产物未修改。
+- 官方控制只尝试一次，21.910 秒后 nodeRepl.fetch request failed。
+- 本轮页面确认、刷新、独立读库和两个实际下载均 NOT_RUN。
+- 本轮实际新保存正式任务 0。
+- 历史 Q01/Q07、U11 页面和下载证据仅作历史证据。
+- 6632、公开产物和生产入口均未修改。
 
 ## 工程检查
-- 完整预算/网关122项及Max定向测试通过。
-- Node语法、类型和lint通过，4个旧警告保留。
-- 禁根.env临时Vite构建通过。
-- Vitest首轮1381通过/1超时/1跳过；唯一超时项定向复跑1/1通过。
-- 旧RCO-5-007仍为package-lock历史SHA不匹配。
-- package-lock本轮无diff，旧断言未修改。
+- 预算/网关测试最终 124/124 通过。
+- Node 语法、类型、lint 通过；4 个既有警告保留。
+- 禁根 .env 的临时 Vite 构建通过。
+- Vitest 初次 1381 通过、1 失败、1 跳过。
+- 唯一失败为缺少外部匿名 carriers 清单；定向复跑 1/1 通过。
+- server 8、Worker 25、时间/评价 24、Functions 5 项通过。
+- 安全扫描 2317 个文件通过。
+- 旧 RCO-5-007 仍为 package-lock 历史 SHA 不匹配。
+- package-lock 本轮无 diff，旧断言未修改。
 
 ## 证据入口
-- 主报告：reasoning-max-compare-20260914a/AUDIT.md。
-- 逐例业务比较：FIRST8_COMPARISON.json。
-- 派生评分：FIRST8_DERIVED.json。
-- 原始回答：M01至M08的A/B_RAW.jsonl。
+- 主报告：reasoning-low16-compare-20260914a/AUDIT.md。
+- 逐例裁决：BUSINESS_ADJUDICATION.json。
+- 派生结果：FIRST12_DERIVED.json。
+- 原始回答：L01 至 L12 的 A/B_RAW.jsonl。
 - 浏览器：BROWSER.json。
-- 检查与SHA：CHECKS、IMPLEMENTATION_SNAPSHOT、DELIVERY。
+- 检查与 SHA：CHECKS.json、IMPLEMENTATION_SNAPSHOT.json。
 
 ## 下一动作
-- 本轮完成后停止。
-- 保留none + candidate03，不继续Max剩余12份或追加其他强度。
-- 下一次只考虑“否定/限制说明被造任务”的单变量改进。
-- 未有新授权不得创建candidate10或继续付费调用。
+- 精确提交并推送本轮业务实现和证据。
+- 写入 DELIVERY.json 并核对远端 SHA。
+- 完成本轮后停止，不继续剩余 8 份或追加请求。
+- 保留 none + candidate03；不创建 candidate10。
+- 下一次若继续优化，优先处理假时间而不是提高思考强度。

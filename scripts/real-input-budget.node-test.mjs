@@ -8,6 +8,7 @@ import { BILLING_POLICY, FLASH41_POLICY, FLASH41_PAIRED06_POLICY, FLASH41_PAIRED
   MODEL_COMPARE_POLICY, MODEL_COMPARE_FLASH_POLICY, MODEL_COMPARE_PRO_POLICY, modelComparePolicyFor,
   REASONING_COMPARE_POLICY, REASONING_COMPARE_NONE_POLICY, REASONING_COMPARE_LOW_POLICY, reasoningComparePolicyFor,
   REASONING_MAX_POLICY, REASONING_MAX_NONE_POLICY, REASONING_MAX_MAX_POLICY, reasoningMaxPolicyFor,
+  REASONING_LOW16_POLICY, REASONING_LOW16_NONE_POLICY, REASONING_LOW16_LOW_POLICY, reasoningLow16PolicyFor,
   sha256, costUpperMicroCny, validateManifest, validateUsageEnvelope, validateUsageAccountingEnvelope,
   initializeBudget, openBudget, reconcileIncompleteUsage } from './real-input-budget.mjs'
 
@@ -864,5 +865,31 @@ if(process.argv[2]!=='--reserve-child')test('reasoning max: reconciles trustwort
   const state=await b.snapshot();assert.equal(state.reservations.at(-2).status,'settled-incomplete');assert.equal(state.reasoningMax.stopped,false)
   assert.equal(reasoningMaxPolicyFor('M01-A'),REASONING_MAX_NONE_POLICY);assert.equal(reasoningMaxPolicyFor('M01-B'),REASONING_MAX_MAX_POLICY)
   assert.equal(costUpperMicroCny(100,32768,REASONING_MAX_MAX_POLICY),262344)
+  assert.deepEqual((await readFile(join(f.dir,'CALL_LEDGER.jsonl'))).subarray(0,f.prefix.length),f.prefix)
+})
+
+async function reasoningLow16Fixture(){
+  const f=await reasoningMaxFixture(),b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+  for(const u of f.grant.targets.slice(0,16)){const policy=reasoningMaxPolicyFor(u.unitId);await(await reserve(b,u.unitId,policy)).complete(reasoningEnvelope(u.unitId,policy,100,50,u.unitId.endsWith('-B')?20:0))}
+  const before=await b.snapshot(),prefix=await readFile(join(f.dir,'CALL_LEDGER.jsonl')),priorInputs=f.grant.targets.filter(u=>u.unitId.endsWith('-A')).map(u=>u.inputSha)
+  const targets=Array.from({length:20},(_,i)=>`L${String(i+1).padStart(2,'0')}`).flatMap((id,i)=>(i<10?['A','B']:['B','A']).map(arm=>{
+    const value=row(`${id}-${arm}`,arm==='A'?'reasoning-low16-none':'reasoning-low16-low',priorInputs[i]);value.inputSha=priorInputs[i];return value
+  }))
+  return {...f,before,prefix,grant:{...f.grant,version:'real-input-reasoning-low16-grant-1',grantId:'eeeeeeee-eeee-4eee-8eee-eeeeeeeeeeee',
+    parentTail:before.tail,parentSequence:before.nextSequence,ledgerPrefixBytes:prefix.length,ledgerPrefixSha:sha256(prefix),maxTotalRequests:290,policy:REASONING_LOW16_POLICY,targets}}
+}
+if(process.argv[2]!=='--reserve-child')test('reasoning low16: opens a fresh 16K none/low batch without reopening prior Max and accounts incomplete output once',async()=>{
+  const f=await reasoningLow16Fixture();assert.equal(f.before.nextSequence,546);assert.equal(f.before.reservations.length,266)
+  for(const mutate of [g=>{g.parentSequence=545},g=>{g.maxTotalRequests=291},g=>{g.targets[0].unitId='M01-A'},g=>{g.targets[1].inputSha=sha256('different')}]){
+    const grant=structuredClone(f.grant);mutate(grant);await assert.rejects(()=>openBudget(f.dir,f.manifestSha,{batchGrant:grant}))
+  }
+  const b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+  await(await reserve(b,'L01-A',REASONING_LOW16_NONE_POLICY)).complete(reasoningEnvelope('L01-A',REASONING_LOW16_NONE_POLICY,100,50,0))
+  const incompleteLow=incompleteReasoningEnvelope('L01-B',REASONING_LOW16_LOW_POLICY,16384,14000)
+  const settled=await(await reserve(b,'L01-B',REASONING_LOW16_LOW_POLICY)).complete(incompleteLow);assert.equal(settled.semanticUsable,false)
+  await(await reserve(b,'L02-A',REASONING_LOW16_NONE_POLICY)).complete(reasoningEnvelope('L02-A',REASONING_LOW16_NONE_POLICY,100,50,0))
+  const state=await b.snapshot();assert.equal(state.reservations.at(-2).status,'settled-incomplete');assert.equal(state.reasoningLow16.stopped,false);assert.equal(state.reasoningMax.stopped,true)
+  assert.equal(reasoningLow16PolicyFor('L01-A'),REASONING_LOW16_NONE_POLICY);assert.equal(reasoningLow16PolicyFor('L01-B'),REASONING_LOW16_LOW_POLICY)
+  assert.equal(costUpperMicroCny(100,16384,REASONING_LOW16_LOW_POLICY),131272)
   assert.deepEqual((await readFile(join(f.dir,'CALL_LEDGER.jsonl'))).subarray(0,f.prefix.length),f.prefix)
 })

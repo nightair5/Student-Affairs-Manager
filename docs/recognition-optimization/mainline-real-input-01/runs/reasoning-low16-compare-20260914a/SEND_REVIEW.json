@@ -1,0 +1,20 @@
+{
+  "version": "real-input-reasoning-low16-send-check-1",
+  "status": "PASS",
+  "scope": "REASONING_LOW16_SEND_LOCAL_DETERMINISTIC",
+  "independent": false,
+  "grantId": "4cf84038-4169-495c-9f88-4321115b791a",
+  "head": "934fb9e3afdd02c233f58e0831b1ce1dcf15b9df",
+  "bindingSha": "1ace528d15cc06bdc279f82bb13cb98e6526e5c3eb203f2bc0fe242aec3a82a1",
+  "billingSha": "a17e4997e485601b66de658fb742df912279fc32918b83f28016d3ab77aa8ac4",
+  "sourcesSha": "815af711b0ebe635dcedf69bed919b1f8d17fc6f6e508611af96284f9d040798",
+  "checks": [
+    "candidate03 and all 20 inputs frozen",
+    "only reasoning effort differs within each pair",
+    "16384 output ceiling and common 120s timeout explicit",
+    "reference excluded from requests",
+    "Y01-B accounting already reconciled and not reopened",
+    "actual 266 requests and cumulative 290 cap limit this batch to 24 requests"
+  ],
+  "checkedAt": "2026-09-14T11:36:28.913Z"
+}
