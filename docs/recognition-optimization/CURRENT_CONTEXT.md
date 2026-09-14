@@ -10,7 +10,8 @@
 - 仓库：C:\Users\Winner\student-affairs-multimodal-exp。
 - 分支：codex/e2-multimodal-recognition-exp。
 - 本轮起点：95ffc393b5a10e6443bbb77413cc1195ad7822e4。
-- 最终提交与远端SHA以实际Git交付为准。
+- 业务提交：6a8b459ece9e6cc551a6bd9d07fa042ab4a9ef98。
+- 远端同分支已核对为同一业务SHA。
 
 ## 比较设计
 - 复用candidate09批次的20份完整匿名通知。
@@ -99,4 +100,5 @@
 - 旧冻结断言按授权保留，没有回切、删除或弱化。
 - 独立实验审计为PASS_WITH_DISCLOSED_LIMITATIONS，本轮blocker为0。
 - 审计独立重算请求、响应身份、账本链、费用和采用结论一致。
-- Git提交、远端SHA待最终收尾写入。
+- 业务提交和远端均为6a8b459ece9e6cc551a6bd9d07fa042ab4a9ef98。
+- 交付回执另写入本run的DELIVERY.json。
