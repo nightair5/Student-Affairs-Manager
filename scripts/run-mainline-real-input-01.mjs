@@ -1,6 +1,6 @@
 import { readFileSync, writeFileSync, realpathSync, existsSync } from 'node:fs'
 import { open } from 'node:fs/promises'
-import { createHash, randomBytes } from 'node:crypto'
+import { createHash, randomBytes, randomUUID } from 'node:crypto'
 import { resolve, dirname, join } from 'node:path'
 import { isDeepStrictEqual } from 'node:util'
 import { build } from 'esbuild'
@@ -9,7 +9,8 @@ import { inspectProtection, verifyReviewBinding, CANDIDATE02_DIRECTORY, CANDIDAT
 import { inspectRequest, createModelGateway, createPinnedProxyFetch, createRawRecorder } from './real-input-model-gateway.mjs'
 import { BILLING_POLICY, FLASH41_POLICY, FLASH41_PAIRED06_POLICY, FLASH41_PAIRED07_POLICY, FLASH41_PAIRED08_POLICY, FLASH41_PAIRED09_POLICY,
   MODEL_COMPARE_POLICY, modelComparePolicyFor, REASONING_COMPARE_POLICY, reasoningComparePolicyFor,
-  RECOVERY_ROUTE, initializeBudget, openBudget } from './real-input-budget.mjs'
+  REASONING_MAX_POLICY, reasoningMaxPolicyFor, RECOVERY_ROUTE, initializeBudget, openBudget,
+  reconcileIncompleteUsage } from './real-input-budget.mjs'
 
 const hash=bytes=>createHash('sha256').update(bytes).digest('hex')
 const check=(ok,code)=>{if(!ok)throw Error('REAL_INPUT_RUNNER_'+code)}
@@ -1059,7 +1060,7 @@ function inspectModelCompareProtection(){
 }
 export async function modelCompareApi(){
   const compiled=await build({stdin:{contents:`export {buildCandidate03Request,CANDIDATE03_VERSION} from './src/experiments/realInput01/candidate03.ts';
-    export {parseModelEnvelope,projectSemantic,WIRE_VERSION} from './src/experiments/realInput01/modelWire.ts';`,resolveDir:process.cwd(),loader:'ts'},bundle:true,write:false,platform:'node',format:'esm',metafile:true})
+    export {adaptModelWire,parseModelEnvelope,projectSemantic,WIRE_VERSION} from './src/experiments/realInput01/modelWire.ts';`,resolveDir:process.cwd(),loader:'ts'},bundle:true,write:false,platform:'node',format:'esm',metafile:true})
   const dependencies=Object.keys(compiled.metafile.inputs).filter(p=>p!=='<stdin>').sort().map(path=>({path,sha256:hash(readFileSync(path))}))
   check(!dependencies.some(d=>/seenInputs|evaluation|fixture|expected|REFERENCE_SPEC|INPUTS\.json/i.test(d.path)),'MC_ANSWER_IN_REQUEST')
   return {dependencies,api:await import('data:text/javascript;base64,'+Buffer.from(compiled.outputFiles[0].contents).toString('base64'))}
@@ -1295,6 +1296,224 @@ export async function dispatchReasoningCompare(unitId){
   }finally{if(recorder)await recorder.close()}
 }
 
+export const REASONING_MAX_DIRECTORY='docs/recognition-optimization/mainline-real-input-01/runs/reasoning-max-compare-20260914a'
+const readReasoningMax=name=>JSON.parse(readFileSync(join(REASONING_MAX_DIRECTORY,name)))
+const reasoningMaxSources=['scripts/real-input-budget.mjs','scripts/real-input-budget.node-test.mjs','scripts/real-input-model-gateway.mjs',
+  'scripts/real-input-model-gateway.node-test.mjs','scripts/run-mainline-real-input-01.mjs','scripts/serve-mainline-real-input-01.mjs',
+  'src/experiments/realInput01/runtime.ts','src/experiments/realInput01/browser.tsx','src/experiments/realInput01/acceptance.test.tsx']
+const reasoningMaxFirstEight=['W11','W12','W02','X05','W10','X01','W07','W01']
+export function reasoningMaxOrder(seed=2026091403){
+  let n=seed>>>0
+  const shuffle=values=>{for(let i=values.length-1;i>0;i--){n=(Math.imul(n,1664525)+1013904223)>>>0;const j=n%(i+1);[values[i],values[j]]=[values[j],values[i]]}return values}
+  return [...shuffle(Array.from({length:8},(_,i)=>i<4?['A','B']:['B','A'])),
+    ...shuffle(Array.from({length:12},(_,i)=>i<6?['A','B']:['B','A']))]
+}
+function inspectReasoningMaxProtection(baseline){
+  const branch=execFileSync('git',['branch','--show-current'],{encoding:'utf8'}).trim(),head=execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim()
+  check(branch==='codex/e2-multimodal-recognition-exp'&&head===baseline.head,'RM_GIT')
+  for(const item of baseline.protectedFiles)check(hash(readFileSync(item.path))===item.sha256,'RM_PROTECTED:'+item.path)
+  const allowed=new Set([...reasoningMaxSources,'docs/recognition-optimization/CURRENT_CONTEXT.md','docs/recognition-optimization/OPTIMIZATION_LOG.md',
+    'docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/CALL_LEDGER.jsonl'])
+  const changed=[...execFileSync('git',['diff','--name-only'],{encoding:'utf8'}).trim().split('\n'),
+    ...execFileSync('git',['ls-files','--others','--exclude-standard'],{encoding:'utf8'}).trim().split('\n')].filter(Boolean)
+  for(const path of changed)check(allowed.has(path)||path.startsWith(REASONING_MAX_DIRECTORY+'/'),'RM_SCOPE:'+path)
+  return {head,branch,sources:reasoningMaxSources.map(path=>({path,sha256:hash(readFileSync(path))}))}
+}
+export async function reconcileReasoningCompareIncomplete(){
+  const rawPath=join(REASONING_COMPARE_DIRECTORY,'Y01-B_RAW.jsonl'),rows=readFileSync(rawPath,'utf8').trimEnd().split('\n').map(JSON.parse)
+  check(rows.length===1,'RM_RECONCILE_RAW_COUNT');const row=rows[0]
+  check(row.version==='real-input-raw-result-1'&&row.unitId==='Y01-B'&&row.httpStatus===200
+    &&row.responseSha===hash(row.rawHttpText),'RM_RECONCILE_RAW')
+  const manifestSha=hash(readFileSync(join(runDirectory,'REQUEST_MANIFEST.json')))
+  const result=await reconcileIncompleteUsage(runDirectory,manifestSha,{unitId:row.unitId,requestSha:row.requestSha,
+    responseSha:row.responseSha,httpStatus:row.httpStatus,rawHttpText:row.rawHttpText})
+  writeFileSync(join(REASONING_MAX_DIRECTORY,'Y01_B_USAGE_RECONCILIATION.json'),JSON.stringify({version:'reasoning-max-y01b-usage-reconciliation-1',
+    originalSemanticStatus:'incomplete',replayable:false,originalRawPath:rawPath,...result,reconciledAt:new Date().toISOString()},null,2)+'\n',{flag:'wx'})
+  return result
+}
+export async function prepareReasoningMaxCompare(){
+  const ledgerPath=join(runDirectory,'CALL_LEDGER.jsonl'),ledger=readFileSync(ledgerPath),rows=ledger.toString().trimEnd().split('\n').map(JSON.parse)
+  check(rows.length===513&&rows.at(-1).event.kind==='usageReconcile','RM_LEDGER_RECONCILED')
+  const previousBaseline=readReasoningCompare('BASELINE.json'),head=execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),branch=execFileSync('git',['branch','--show-current'],{encoding:'utf8'}).trim()
+  check(/^[a-f0-9]{40}$/.test(head)&&branch==='codex/e2-multimodal-recognition-exp','RM_BASE_HEAD')
+  const protectedFiles=previousBaseline.protectedFiles.filter(item=>!reasoningMaxSources.includes(item.path))
+  for(const item of protectedFiles)check(hash(readFileSync(item.path))===item.sha256,'RM_BASE_PROTECTED:'+item.path)
+  const baseline={version:'real-input-reasoning-max-baseline-1',head,branch,protectedFiles,ledger:{path:ledgerPath,sequence:513,bytes:ledger.length,sha256:hash(ledger)},createdAt:new Date().toISOString()}
+  const protection=inspectReasoningMaxProtection(baseline),previous=readModelCompare('BINDING_FINAL.json'),previousRefs=readModelCompare('REFERENCES_FINAL.json')
+  const {api,dependencies}=await modelCompareApi(),closure=await compileOriginalScorer05()
+  check(api.CANDIDATE03_VERSION==='real-input-source-semantics-3'&&api.WIRE_VERSION==='real-input-model-wire-1','RM_CANDIDATE')
+  const previousById=new Map(previous.items.map(item=>[item.id,item])),remaining=previous.items.map(item=>item.id).filter(id=>!reasoningMaxFirstEight.includes(id))
+  const previousIds=[...reasoningMaxFirstEight,...remaining]
+  check(previousIds.length===20&&new Set(previousIds).size===20&&previousIds.every(id=>previousById.has(id)),'RM_SELECTION')
+  const requests={},units=[],items=[],references=[],seed=2026091403,order=reasoningMaxOrder(seed)
+  for(const [i,previousId] of previousIds.entries()){
+    const oldItem=previousById.get(previousId),id='M'+String(i+1).padStart(2,'0'),context=structuredClone(oldItem.context),base=await api.buildCandidate03Request(context)
+    for(const arm of order[i]){
+      const unitId=id+'-'+arm,body=structuredClone(base.body),policy=reasoningMaxPolicyFor(unitId)
+      body.model=policy.model;body.reasoning.effort=policy.reasoningEffort;body.max_output_tokens=policy.outputTokenCeiling
+      const serialized=JSON.stringify(body),u=inspectRequest(serialized,policy)
+      requests[unitId]=serialized;units.push({unitId,candidateSha:u.candidateSha,inputSha:u.inputSha,requestSha:u.requestSha,requestBytes:u.requestBytes,scorerSha:previous.scorerSha})
+    }
+    const pair=order[i].map(arm=>requests[id+'-'+arm]),withoutReasoning=text=>{const value=JSON.parse(text);delete value.reasoning;return value}
+    check(isDeepStrictEqual(withoutReasoning(pair[0]),withoutReasoning(pair[1])),'RM_ONLY_REASONING')
+    const oldA=previous.units.find(u=>u.unitId===previousId+'-A'),newA=units.find(u=>u.unitId===id+'-A')
+    check(oldA&&newA?.inputSha===oldA.inputSha,'RM_INPUT_IDENTITY')
+    items.push({...oldItem,id,previousId,selectionGroup:i<8?'first8':'remaining12'})
+    const reference=previousRefs.items.find(item=>item.id===previousId);check(reference&&isDeepStrictEqual(reference.context,context),'RM_REFERENCE_CONTEXT')
+    references.push({...structuredClone(reference),id,previousId,selectionGroup:i<8?'first8':'remaining12'})
+  }
+  const refText=JSON.stringify({label:'20份已见材料开发回归；candidate03与输入固定，仅none/max不同；参考事实只用于评分',items:references},null,2)+'\n'
+  const files=['BINDING_FINAL.json','REFERENCES_FINAL.json','COMPARISON.json'].map(name=>({path:join(MODEL_COMPARE_DIRECTORY,name),sha256:hash(readFileSync(join(MODEL_COMPARE_DIRECTORY,name))) }))
+  const selection={version:'real-input-reasoning-max-selection-1',seed,firstEight:reasoningMaxFirstEight,
+    rationale:{W11:'材料说明、共享材料、不同截止时间与前置条件',W12:'取消旧要求与有效独立任务',W02:'模糊时间',X05:'未知条件与材料/任务边界',W10:'多任务各自材料与准备状态',X01:'共享材料多任务归属',W07:'有效替代关系正常对照',W01:'明确时间材料的正常对照'},
+    frozenBeforeResponses:true}
+  const binding={version:'real-input-reasoning-max-binding-1',head,candidateVersion:api.CANDIDATE03_VERSION,wireVersion:api.WIRE_VERSION,
+    model:'deepseek-flash',reasoning:{A:'none',B:'max'},temperature:{A:0,B:0,maxEffect:'IGNORED_BY_PROVIDER_THINKING_MODE'},maxOutputTokens:32768,timeoutMs:180000,
+    dependencies,files,referenceSha:hash(refText),scorerSha:previous.scorerSha,scorerBundleSha:closure.bundleSha,requests,units,items,seed,order,
+    label:'20份已见材料开发回归；同模型、candidate03、正文与32768输出上限，仅reasoning effort不同',createdAt:new Date().toISOString()}
+  const checkedAt=new Date(),validUntil=new Date(checkedAt.getTime()+12*60*60*1000)
+  const billing={version:'real-input-reasoning-max-billing-1',verified:true,method:'official-public-document-review',checkedAt:checkedAt.toISOString(),validUntil:validUntil.toISOString(),
+    policy:REASONING_MAX_POLICY,documents:[
+      {url:'https://api-docs.deepseek.com/zh-cn/quick_start/pricing/',claim:'deepseek-flash maps to DeepSeek-V4.1-Flash; peak uncached input CNY 2/M and output CNY 8/M'},
+      {url:'https://api-docs.deepseek.com/api/create-response/',claim:'Responses supports max reasoning and max_output_tokens counts visible plus reasoning output'},
+      {url:'https://api-docs.deepseek.com/guides/thinking_mode/',claim:'max selects maximum reasoning budget and temperature is ignored in thinking mode'}]}
+  const review={version:'real-input-reasoning-max-send-check-1',status:'PASS',scope:'REASONING_MAX_SEND_LOCAL_DETERMINISTIC',independent:false,
+    grantId:randomUUID(),head,bindingSha:hash(JSON.stringify(binding,null,2)+'\n'),billingSha:hash(JSON.stringify(billing)),sourcesSha:hash(JSON.stringify(protection.sources)),
+    checks:['candidate03 and all 20 inputs frozen','only reasoning effort differs within each pair','max output ceiling and 180s timeout explicit','reference excluded from requests','ledger prefix follows Y01-B accounting-only reconciliation','budget upper bound retained'],checkedAt:new Date().toISOString()}
+  writeFileSync(join(REASONING_MAX_DIRECTORY,'BASELINE.json'),JSON.stringify(baseline,null,2)+'\n',{flag:'wx'})
+  writeFileSync(join(REASONING_MAX_DIRECTORY,'SELECTION.json'),JSON.stringify(selection,null,2)+'\n',{flag:'wx'})
+  writeFileSync(join(REASONING_MAX_DIRECTORY,'REFERENCES_FINAL.json'),refText,{flag:'wx'})
+  writeFileSync(join(REASONING_MAX_DIRECTORY,'BINDING_FINAL.json'),JSON.stringify(binding,null,2)+'\n',{flag:'wx'})
+  writeFileSync(join(REASONING_MAX_DIRECTORY,'BILLING.json'),JSON.stringify(billing,null,2)+'\n',{flag:'wx'})
+  writeFileSync(join(REASONING_MAX_DIRECTORY,'SEND_REVIEW.json'),JSON.stringify(review,null,2)+'\n',{flag:'wx'})
+  return {firstEight:reasoningMaxFirstEight,remaining12:remaining,requests:40,bindingSha:review.bindingSha,model:binding.model,reasoning:binding.reasoning,modelCalls:0}
+}
+export function verifyReasoningMaxSend({bindingBytes,binding,baseline,billing,review,selection,protection}){
+  check(isDeepStrictEqual(JSON.parse(bindingBytes),binding)&&binding.version==='real-input-reasoning-max-binding-1'&&binding.items.length===20&&binding.units.length===40,'RM_BINDING')
+  const ledger=readFileSync(baseline.ledger.path),rows=ledger.toString().trimEnd().split('\n').map(JSON.parse)
+  check(baseline.ledger.sequence===513&&rows.length>=513&&ledger.length>=baseline.ledger.bytes
+    &&hash(ledger.subarray(0,baseline.ledger.bytes))===baseline.ledger.sha256&&rows[512].event.kind==='usageReconcile','RM_LEDGER_PREFIX')
+  const existing=rows.find(row=>row.event.kind==='reasoningMaxGrant')?.event.grant
+  let reviewedSources=protection.sources
+  if(existing&&hash(JSON.stringify(reviewedSources))!==review.sourcesSha){
+    const fix=readReasoningMax('POST_GRANT_PARSER_FIX.json'),runnerPath='scripts/run-mainline-real-input-01.mjs'
+    const currentRunnerSha=reviewedSources.find(source=>source.path===runnerPath)?.sha256
+    check(fix.version==='reasoning-max-post-grant-parser-fix-1'&&fix.changedSourcePath===runnerPath
+      &&/^[a-f0-9]{64}$/.test(fix.beforeSha)&&/^[a-f0-9]{64}$/.test(fix.afterSha)&&fix.beforeSha!==fix.afterSha
+      &&currentRunnerSha===fix.afterSha&&fix.requestBindingUnchanged===true
+      &&fix.reason==='adapt the gateway-verified final message directly because the frozen historical envelope parser caps total output at 8192; retain provider raw and actual usage unchanged','RM_POST_GRANT_FIX')
+    reviewedSources=reviewedSources.map(source=>source.path===runnerPath?{...source,sha256:fix.beforeSha}:source)
+  }
+  check(review.status==='PASS'&&review.scope==='REASONING_MAX_SEND_LOCAL_DETERMINISTIC'&&review.independent===false&&review.head===baseline.head
+    &&review.bindingSha===hash(bindingBytes)&&review.billingSha===hash(JSON.stringify(billing))&&review.sourcesSha===hash(JSON.stringify(reviewedSources)),'RM_REVIEW')
+  check(binding.head===baseline.head&&binding.candidateVersion==='real-input-source-semantics-3'&&binding.model==='deepseek-flash'
+    &&isDeepStrictEqual(binding.reasoning,{A:'none',B:'max'})&&binding.maxOutputTokens===32768&&binding.timeoutMs===180000,'RM_IDENTITY')
+  check(selection.frozenBeforeResponses===true&&isDeepStrictEqual(selection.firstEight,reasoningMaxFirstEight),'RM_SELECTION')
+  for(const item of [...binding.dependencies,...binding.files])check(hash(readFileSync(item.path))===item.sha256,'RM_DEPENDENCY:'+item.path)
+  check(hash(readFileSync(join(REASONING_MAX_DIRECTORY,'REFERENCES_FINAL.json')))===binding.referenceSha&&isDeepStrictEqual(binding.order,reasoningMaxOrder(binding.seed)),'RM_REFERENCE_ORDER')
+  for(const [i,item] of binding.items.entries()){
+    const pair=binding.units.slice(i*2,i*2+2);check(isDeepStrictEqual(pair.map(unit=>unit.unitId),binding.order[i].map(arm=>item.id+'-'+arm)),'RM_ORDER')
+    for(const unit of pair){const parsed=inspectRequest(binding.requests[unit.unitId],reasoningMaxPolicyFor(unit.unitId));check(['candidateSha','requestSha','inputSha','requestBytes'].every(key=>parsed[key]===unit[key])&&unit.scorerSha===binding.scorerSha,'RM_REQUEST')}
+    const withoutReasoning=text=>{const value=JSON.parse(text);delete value.reasoning;return value}
+    check(isDeepStrictEqual(withoutReasoning(binding.requests[item.id+'-A']),withoutReasoning(binding.requests[item.id+'-B'])),'RM_ONLY_REASONING')
+  }
+  check(billing.verified===true&&billing.method==='official-public-document-review'&&isDeepStrictEqual(billing.policy,REASONING_MAX_POLICY),'RM_BILLING')
+  check(Date.now()>=Date.parse(billing.checkedAt)&&Date.now()<=Date.parse(billing.validUntil)&&Date.parse(billing.validUntil)-Date.parse(billing.checkedAt)<=86400000,'RM_PRICE_EXPIRED')
+  check(billing.documents.length===3&&billing.documents.every(document=>/^https:\/\/api-docs\.deepseek\.com\//.test(document.url)),'RM_PRICE_EVIDENCE')
+  const grant={version:'real-input-reasoning-max-grant-1',grantId:review.grantId,parentTail:rows[512].hash,parentSequence:513,ledgerPrefixBytes:baseline.ledger.bytes,ledgerPrefixSha:baseline.ledger.sha256,
+    manifestSha:hash(readFileSync(join(runDirectory,'REQUEST_MANIFEST.json'))),bindingSha:hash(bindingBytes),head:binding.head,sourcesSha:review.sourcesSha,reviewSha:hash(JSON.stringify(review)),targets:binding.units,
+    billingEvidence:{checkedAt:billing.checkedAt,validUntil:billing.validUntil,evidenceSha:hash(JSON.stringify(billing))},route:RECOVERY_ROUTE,priorNonce:rows[1].event.nonce,a02ResponseSha:rows[4].event.responseSha,maxTotalRequests:290,policy:REASONING_MAX_POLICY}
+  if(existing)check(isDeepStrictEqual(existing,grant),'RM_GRANT_CHANGED')
+  return grant
+}
+
+function projectReasoningMaxFinal(api,providerEnvelope,context){
+  const finalMessages=providerEnvelope.output.filter(value=>value?.type==='message')
+  check(finalMessages.length===1&&providerEnvelope.output.at(-1)===finalMessages[0],'RM_FINAL_OUTPUT')
+  const message=finalMessages[0],content=message?.content
+  check(message.role==='assistant'&&Array.isArray(content)&&content.length===1&&content[0]?.type==='output_text'
+    &&typeof content[0].text==='string'&&content[0].text.trim(),'RM_FINAL_TEXT')
+  const adapted=api.adaptModelWire(JSON.parse(content[0].text),context).adapted
+  const reasoningTokens=providerEnvelope.usage?.output_tokens_details?.reasoning_tokens??0
+  const visibleOutputTokens=providerEnvelope.usage.output_tokens-reasoningTokens
+  check(Number.isSafeInteger(visibleOutputTokens)&&visibleOutputTokens>=0&&visibleOutputTokens<=8192,'RM_VISIBLE_OUTPUT_USAGE')
+  const projection=structuredClone(providerEnvelope)
+  projection.model=BILLING_POLICY.model
+  projection.output=[structuredClone(message)]
+  projection.output[0].content[0].text=JSON.stringify(api.projectSemantic(adapted))
+  projection.usage={input_tokens:providerEnvelope.usage.input_tokens,output_tokens:visibleOutputTokens,
+    total_tokens:providerEnvelope.usage.input_tokens+visibleOutputTokens,
+    input_tokens_details:structuredClone(providerEnvelope.usage.input_tokens_details??{}),output_tokens_details:{reasoning_tokens:0}}
+  return {adapted,projection,visibleOutputTokens}
+}
+export async function dispatchReasoningMax(unitId){
+  check(/^M(?:0[1-9]|1[0-9]|20)-[AB]$/.test(unitId),'RM_UNIT')
+  const bytes=readFileSync(join(REASONING_MAX_DIRECTORY,'BINDING_FINAL.json')),binding=JSON.parse(bytes),baseline=readReasoningMax('BASELINE.json')
+  const protection=inspectReasoningMaxProtection(baseline),grant=verifyReasoningMaxSend({bindingBytes:bytes,binding,baseline,billing:readReasoningMax('BILLING.json'),review:readReasoningMax('SEND_REVIEW.json'),selection:readReasoningMax('SELECTION.json'),protection})
+  const closure=await compileOriginalScorer05(),{api}=await modelCompareApi(),budget=await openBudget(runDirectory,grant.manifestSha,{batchGrant:grant}),before=await budget.snapshot(),index=before.reservations.length-250
+  check(binding.units[index]?.unitId===unitId&&!before.reasoningMax?.stopped&&before.reservations.slice(1).every(r=>r.status==='settled'||r.status==='settled-incomplete'),'RM_NEXT')
+  check(before.reservations.reduce((n,r)=>n+r.costUpperMicroCny,0)+REASONING_MAX_POLICY.reservationMicroCny<=REASONING_MAX_POLICY.limitMicroCny,'RM_BUDGET')
+  const rawPath=join(REASONING_MAX_DIRECTORY,unitId+'_RAW.jsonl'),resultPath=join(REASONING_MAX_DIRECTORY,unitId+'_RESULT.json')
+  check(!existsSync(rawPath)&&!existsSync(resultPath),'RM_ALREADY_ATTEMPTED')
+  try{process.loadEnvFile(resolve('.env'))}catch{check(false,'SERVER_CONFIGURATION_UNAVAILABLE')}
+  const old=JSON.parse(readFileSync(join(runDirectory,'STATE.json'))),origin='http://127.0.0.1:6631',capability=randomBytes(32).toString('hex');let observed,recorder
+  try{
+    const requests={...old.requests,...JSON.parse(readFileSync(join(CANDIDATE02_DIRECTORY,'BINDING.json'))).requests,...JSON.parse(readFileSync(join(CANDIDATE03_DIRECTORY,'BINDING.json'))).requests,
+      ...pairedRead('BINDING.json').requests,...read05('BINDING.json').requests,...read06('BINDING.json').requests,...read07('BINDING_FINAL.json').requests,...read08('BINDING_FINAL.json').requests,...read09('BINDING_FINAL.json').requests,
+      ...readModelCompare('BINDING_FINAL.json').requests,...readReasoningCompare('BINDING_FINAL.json').requests,...binding.requests}
+    const gateway=await createModelGateway({origin,capability,budget,requests,policy:REASONING_MAX_POLICY,timeoutMs:binding.timeoutMs,fetchImpl:createPinnedProxyFetch(),
+      recordRaw:async row=>{check(row.unitId===unitId&&row.requestSha===binding.units[index].requestSha&&recorder,'RM_RAW_ID');await recorder.write(row);observed=row}})
+    recorder=await createRawRecorder(rawPath)
+    const start=Date.now(),response=await gateway.handle({method:'POST',path:'/api/real-input/recognize',headers:{host:new URL(origin).host,origin,'sec-fetch-site':'same-origin','content-type':'application/json','x-real-input-capability':capability},bodyText:JSON.stringify({unitId,requestSha:binding.units[index].requestSha})})
+    let score=null,scoreError=null,assembled=null,returnedModel=observed?JSON.parse(observed.rawHttpText).model:null
+    const item=binding.items.find(value=>value.id===unitId.slice(0,3)),reference=readReasoningMax('REFERENCES_FINAL.json').items.find(value=>value.id===item.id),arm=unitId.at(-1),effort=binding.reasoning[arm]
+    if(response.status===200)try{
+      const providerEnvelope=JSON.parse(observed.rawHttpText);returnedModel=providerEnvelope.model
+      const projected=projectReasoningMaxFinal(api,providerEnvelope,item.context);assembled=projected.adapted
+      const projection=projected.projection
+      score=await closure.api.scoreSeenResponse(JSON.stringify(projection),item.context,reference.response,reference.context)
+    }catch(error){scoreError=typeof error?.message==='string'&&/^REAL_INPUT_[A-Z0-9_]+$/.test(error.message)?error.message:'SCHEMA_OR_SCORER_REJECTED'}
+    const after=await budget.snapshot(),reservation=after.reservations.find(value=>value.unitId===unitId),usage=reservation?.usage??null
+    const result={version:'real-input-reasoning-max-result-1',unitId,arm,effort,selectionGroup:item.selectionGroup,previousId:item.previousId,bindingSha:hash(bytes),requestSha:binding.units[index].requestSha,
+      responseSha:observed?.responseSha??null,requestModel:binding.model,returnedModel,modelMatch:returnedModel===binding.model,candidateVersion:binding.candidateVersion,wireVersion:binding.wireVersion,
+      scorerSha:binding.scorerSha,scorerBundleSha:closure.bundleSha,referenceSha:binding.referenceSha,scoreInput:'candidate03 final message adapted directly after gateway identity and usage verification; scorer-only usage excludes provider reasoning while provider raw and billed usage remain unchanged',assembled,
+      http:response.status,diagnostic:response.diagnostic??null,waitingMs:Date.now()-start,score,scoreError,totalAttempts:after.reservations.length,usage,reasoningTokens:usage?.output_tokens_details?.reasoning_tokens??null,
+      costUpperMicroCny:reservation?.costUpperMicroCny??0,totalCostUpperMicroCny:after.reservations.reduce((n,r)=>n+r.costUpperMicroCny,0),semanticStatus:reservation?.status==='settled'?'completed':'incomplete',
+      stopDispatch:Boolean(after.reasoningMax?.stopped)||!['settled','settled-incomplete'].includes(reservation?.status),providerBilledCny:'NOT_OBSERVABLE',temperatureEffect:effort==='max'?'IGNORED_BY_PROVIDER_THINKING_MODE':'ACTIVE_NON_THINKING_MODE',
+      automaticSelection:'NOT_ENABLED',qualityClaim:binding.label}
+    writeFileSync(resultPath,JSON.stringify(result,null,2)+'\n',{flag:'wx'})
+    return {unitId,http:result.http,semanticStatus:result.semanticStatus,stopDispatch:result.stopDispatch,scoreError,totalAttempts:result.totalAttempts,waitingMs:result.waitingMs,costUpperMicroCny:result.costUpperMicroCny,reasoningTokens:result.reasoningTokens,effort}
+  }finally{if(recorder)await recorder.close()}
+}
+
+export async function analyzeReasoningMax(count=8){
+  check([8,20].includes(count),'RM_ANALYSIS_COUNT')
+  const bindingBytes=readFileSync(join(REASONING_MAX_DIRECTORY,'BINDING_FINAL.json')),binding=JSON.parse(bindingBytes)
+  const references=readReasoningMax('REFERENCES_FINAL.json'),closure=await compileOriginalScorer05(),{api}=await modelCompareApi()
+  const rows=[]
+  for(const item of binding.items.slice(0,count))for(const arm of ['A','B']){
+    const unitId=item.id+'-'+arm,rawRows=readFileSync(join(REASONING_MAX_DIRECTORY,unitId+'_RAW.jsonl'),'utf8').trimEnd().split('\n').map(JSON.parse)
+    check(rawRows.length===1&&rawRows[0].unitId===unitId&&rawRows[0].responseSha===hash(rawRows[0].rawHttpText),'RM_ANALYSIS_RAW')
+    const providerEnvelope=JSON.parse(rawRows[0].rawHttpText),projected=projectReasoningMaxFinal(api,providerEnvelope,item.context)
+    const reference=references.items.find(value=>value.id===item.id)
+    const score=await closure.api.scoreSeenResponse(JSON.stringify(projected.projection),item.context,reference.response,reference.context)
+    const immutableResult=readReasoningMax(unitId+'_RESULT.json')
+    rows.push({unitId,previousId:item.previousId,selectionGroup:item.selectionGroup,arm,effort:binding.reasoning[arm],
+      responseSha:rawRows[0].responseSha,returnedModel:providerEnvelope.model,status:providerEnvelope.status,
+      actualUsage:providerEnvelope.usage,visibleOutputTokensForScorer:projected.visibleOutputTokens,
+      actualWaitingMs:immutableResult.waitingMs,actualCostUpperMicroCny:immutableResult.costUpperMicroCny,
+      strictScore:score,adapted:projected.adapted})
+  }
+  const output={version:'real-input-reasoning-max-derived-analysis-1',scope:count===8?'first8':'all20',count,
+    requestCount:rows.length,bindingSha:hash(bindingBytes),method:'offline final-message adaptation after gateway identity and usage verification; immutable raw, ledger and result files unchanged',
+    historicalEnvelopeLimit:'8192 total output tokens; unsuitable for Max responses whose visible final answer remains within the original semantic wire',
+    rows,generatedAt:new Date().toISOString()}
+  const path=join(REASONING_MAX_DIRECTORY,count===8?'FIRST8_DERIVED.json':'ALL20_DERIVED.json')
+  writeFileSync(path,JSON.stringify(output,null,2)+'\n',{flag:'wx'})
+  return {path,rows:rows.length,maxCompleted:rows.filter(row=>row.arm==='B'&&row.status==='completed').length,
+    maxStrictScored:rows.filter(row=>row.arm==='B'&&row.strictScore).length}
+}
+
 const read08=name=>JSON.parse(readFileSync(join(PAIRED08_DIRECTORY,name)))
 export async function paired08Api(){
   const compiled=await build({stdin:{contents:`export {buildFlash41Candidate08ComparisonRequest,CANDIDATE08_VERSION} from './src/experiments/realInput01/candidate08.ts';
@@ -1517,7 +1736,11 @@ export async function dispatchPaired07(unitId){
 
 if(process.argv[1]&&resolve(process.argv[1])===resolve(import.meta.filename)){
   const args=process.argv.slice(2),pick=key=>args.find(a=>a.startsWith('--'+key+'='))?.slice(key.length+3)
-  if(args.length===1&&args[0]==='--prepare-reasoning-compare')console.log(JSON.stringify(await prepareReasoningCompare()))
+  if(args.length===1&&args[0]==='--reconcile-y01b')console.log(JSON.stringify(await reconcileReasoningCompareIncomplete()))
+  else if(args.length===1&&args[0]==='--prepare-reasoning-max')console.log(JSON.stringify(await prepareReasoningMaxCompare()))
+  else if(args.length===1&&/^--reasoning-max=M(?:0[1-9]|1[0-9]|20)-[AB]$/.test(args[0]))console.log(JSON.stringify(await dispatchReasoningMax(pick('reasoning-max'))))
+  else if(args.length===1&&/^--analyze-reasoning-max=(?:8|20)$/.test(args[0]))console.log(JSON.stringify(await analyzeReasoningMax(Number(pick('analyze-reasoning-max')))))
+  else if(args.length===1&&args[0]==='--prepare-reasoning-compare')console.log(JSON.stringify(await prepareReasoningCompare()))
   else if(args.length===1&&/^--reasoning-compare=(?:Y(?:0[1-9]|1[0-2])|Z0[1-8])-[AB]$/.test(args[0]))console.log(JSON.stringify(await dispatchReasoningCompare(pick('reasoning-compare'))))
   else if(args.length===1&&args[0]==='--prepare-model-compare')console.log(JSON.stringify(await prepareModelCompare()))
   else if(args.length===1&&/^--model-compare=(?:W(?:0[1-9]|1[0-2])|X0[1-8])-[AB]$/.test(args[0]))console.log(JSON.stringify(await dispatchModelCompare(pick('model-compare'))))

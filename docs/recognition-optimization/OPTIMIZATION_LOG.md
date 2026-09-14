@@ -2232,3 +2232,12 @@
 - 官方浏览器一次连接21.438秒后nodeRepl.fetch request failed；本轮页面、刷新、独立读库和下载NOT_RUN。6632 HTTP200且识别POST405 MODEL_AND_WRITES_DISABLED；历史页面证据不冒充本轮新验收。
 - 定向120测试、Node语法、类型、lint、安全临时Vite构建、Vitest1382、server8、Worker25、time AST1、评估库23、Functions5、最终Secret scan2211均通过。仅旧RCO-5-007的package-lock历史冻结SHA继续失败，本轮锁文件无diff且旧断言未改。
 - 23个精确业务/证据路径提交为1511a0056dccf3a3617a73a96446dddca80c4a5c并推送，远端同分支SHA逐字一致；不强推、不变基、不全工作区暂存。交付回执在本run的DELIVERY.json。
+
+### 2026-09-14 Flash none与Max思考配置对照
+
+- 固定deepseek-flash、candidate03、wire、正文、来源索引、参考时刻和时区；两臂同为32768输出上限与180秒超时，仅reasoning effort为none/Max。首批8份16/16完整返回，无试连接、重试、Repair或verifier。
+- Max修复W11的3个任务/材料/条件错误，但在X05新增3错、W10新增4错，并在W02/X01/W07增加核对负担。无需实质纠正由none的6/8降至Max的5/8，实质错误由5增至9，结论STOP_AFTER_FIRST8_AND_KEEP_NONE；剩余12份/24次NOT_RUN。
+- none中位等待8660ms、费用上界0.196400元；Max中位等待100154.5ms、费用上界1.547088元，分别约为11.57倍等待和7.88倍费用。本批16次上界1.743488元；累计266次/12.406195元含A01未知预留，服务商实扣NOT_OBSERVABLE。
+- Y01-B可信usage以追加事件核销0.075140元，但原回答仍incomplete、不可评分/回放/确认。新Max策略分离reasoning和最终message，总output只计费一次；冻结candidate03/modelWire、raw、请求绑定和历史结果保持。
+- 官方浏览器一次连接22.666秒后nodeRepl.fetch request failed；本轮确认、刷新、独立读库和下载NOT_RUN，新增正式任务0。历史工程/页面证据不冒充本轮验收，Max未接入6632。
+- 完整预算/网关122项、定向Max、Node语法、类型、lint及禁根.env临时Vite构建通过；Vitest唯一5秒超时项定向复跑通过。旧RCO-5-007的package-lock冻结SHA失败继续保留，锁文件和旧断言未改。

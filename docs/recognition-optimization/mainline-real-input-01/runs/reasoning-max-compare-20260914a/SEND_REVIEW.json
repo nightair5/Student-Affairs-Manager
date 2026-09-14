@@ -1,0 +1,21 @@
+{
+  "version": "real-input-reasoning-max-send-check-1",
+  "status": "PASS",
+  "scope": "REASONING_MAX_SEND_LOCAL_DETERMINISTIC",
+  "independent": false,
+  "grantId": "a9aa2737-bba3-475b-a89c-10848dc38e3b",
+  "head": "129dd1c53c142f45c069110dae42f21f0888a2f2",
+  "bindingSha": "858ce5755d1499669a453b3b7450174053f01a3e13e54f641040f6c03685b2cf",
+  "billingSha": "2e1efb05e23acdf8f407b38ccb377beb0bfb5c94c93c83fdf29e334c0ef3f599",
+  "sourcesSha": "87c4fabaa7a28aef0802bacbafbcc75a1f74b3c958adc0c4bb2948e7c600e55c",
+  "postFreezeNoCallFix": "Historical 8192-token requests retain their own frozen policies while only M units use the 32768-token Max policy; the rejected attempt occurred before credential read, reservation, or network dispatch.",
+  "checks": [
+    "candidate03 and all 20 inputs frozen",
+    "only reasoning effort differs within each pair",
+    "max output ceiling and 180s timeout explicit",
+    "reference excluded from requests",
+    "ledger prefix follows Y01-B accounting-only reconciliation",
+    "budget upper bound retained"
+  ],
+  "checkedAt": "2026-09-14T09:22:22.496Z"
+}

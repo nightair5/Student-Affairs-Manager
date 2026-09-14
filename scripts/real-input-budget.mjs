@@ -45,6 +45,19 @@ export function reasoningComparePolicyFor(unitId) {
   check(typeof unitId==='string'&&/^(?:Y(?:0[1-9]|1[0-2])|Z0[1-8])-[AB]$/.test(unitId),'REASONING_COMPARE_UNIT')
   return unitId.endsWith('-A')?REASONING_COMPARE_NONE_POLICY:REASONING_COMPARE_LOW_POLICY
 }
+// A separately authorized max-effort comparison. Both arms receive the same
+// larger output envelope; only the explicit reasoning effort differs.
+export const REASONING_MAX_NONE_POLICY = Object.freeze({...MODEL_COMPARE_FLASH_POLICY,
+  version:'real-input-reasoning-max-none-1',maxRequests:290,reasoningEffort:'none',outputTokenCeiling:32768})
+export const REASONING_MAX_MAX_POLICY = Object.freeze({...REASONING_MAX_NONE_POLICY,
+  version:'real-input-reasoning-max-max-1',reasoningEffort:'max'})
+export const REASONING_MAX_POLICY = Object.freeze({version:'real-input-reasoning-max-budget-1',maxRequests:290,
+  limitMicroCny:20000000,reservationMicroCny:3300000,
+  arms:Object.freeze({A:REASONING_MAX_NONE_POLICY,B:REASONING_MAX_MAX_POLICY})})
+export function reasoningMaxPolicyFor(unitId) {
+  check(typeof unitId==='string'&&/^M(?:0[1-9]|1[0-9]|20)-[AB]$/.test(unitId),'REASONING_MAX_UNIT')
+  return unitId.endsWith('-A')?REASONING_MAX_NONE_POLICY:REASONING_MAX_MAX_POLICY
+}
 const fail = code => { throw Error('REAL_INPUT_BUDGET_' + code) }
 const check = (ok, code) => { if (!ok) fail(code) }
 const digest = value => typeof value === 'string' && /^[a-f0-9]{64}$/.test(value)
@@ -72,6 +85,7 @@ function copy(value, seen = new Set(), depth = 0) {
 }
 const same = (a, b, code) => check(isDeepStrictEqual(a, b), code)
 const unitKeys = ['unitId','candidateSha','requestSha','inputSha','scorerSha','requestBytes']
+const accounted = reservation => reservation?.status==='settled'||reservation?.status==='settled-incomplete'
 function units(rows, group, old = []) {
   check(Array.isArray(rows) && rows.length === (group === 'AB' ? 16 : 8), 'UNIT_COUNT')
   for (const [i, row] of rows.entries()) {
@@ -99,7 +113,7 @@ export function validateManifest(input) {
   units(m.units, 'AB'); return m
 }
 export function costUpperMicroCny(inputTokens, outputTokens, policy=BILLING_POLICY) {
-  check(integer(inputTokens, BILLING_POLICY.inputTokenCeiling) && integer(outputTokens, BILLING_POLICY.outputTokenCeiling), 'TOKEN_CEILING')
+  check(integer(inputTokens, policy.inputTokenCeiling) && integer(outputTokens, policy.outputTokenCeiling), 'TOKEN_CEILING')
   const numerator = BigInt(inputTokens) * BigInt(policy.inputPriceMicroPerMillion)
     + BigInt(outputTokens) * BigInt(policy.outputPriceMicroPerMillion)
   return Number((numerator + 999999n) / 1000000n)
@@ -126,12 +140,17 @@ function unambiguousResponse(rawText) {
   }
   return value
 }
-export function validateUsageEnvelope(rawText, status, policy=BILLING_POLICY) {
-  check(isDeepStrictEqual(policy,BILLING_POLICY)||isDeepStrictEqual(policy,FLASH41_POLICY)||isDeepStrictEqual(policy,FLASH41_PAIRED06_POLICY)||isDeepStrictEqual(policy,FLASH41_PAIRED07_POLICY)||isDeepStrictEqual(policy,FLASH41_PAIRED08_POLICY)||isDeepStrictEqual(policy,FLASH41_PAIRED09_POLICY)||isDeepStrictEqual(policy,MODEL_COMPARE_FLASH_POLICY)||isDeepStrictEqual(policy,MODEL_COMPARE_PRO_POLICY)||isDeepStrictEqual(policy,REASONING_COMPARE_NONE_POLICY)||isDeepStrictEqual(policy,REASONING_COMPARE_LOW_POLICY),'POLICY_CHANGED')
-  check(status === 200 && typeof rawText === 'string' && Buffer.byteLength(rawText) <= 524288, 'HTTP_OR_RESPONSE_LIMIT')
+const knownPolicy = policy => [BILLING_POLICY,FLASH41_POLICY,FLASH41_PAIRED06_POLICY,FLASH41_PAIRED07_POLICY,
+  FLASH41_PAIRED08_POLICY,FLASH41_PAIRED09_POLICY,MODEL_COMPARE_FLASH_POLICY,MODEL_COMPARE_PRO_POLICY,
+  REASONING_COMPARE_NONE_POLICY,REASONING_COMPARE_LOW_POLICY,REASONING_MAX_NONE_POLICY,REASONING_MAX_MAX_POLICY]
+  .some(value=>isDeepStrictEqual(policy,value))
+const responseByteCeiling = policy => policy.outputTokenCeiling>8192?2097152:524288
+function validateUsageRecord(rawText,status,policy) {
+  check(knownPolicy(policy),'POLICY_CHANGED')
+  check(status===200&&typeof rawText==='string'&&Buffer.byteLength(rawText)<=responseByteCeiling(policy),'HTTP_OR_RESPONSE_LIMIT')
   let response
   try { response = unambiguousResponse(rawText) } catch { fail('RESPONSE_JSON_OR_AMBIGUOUS') }
-  check(response && response.object === 'response' && response.status === 'completed' && !response.error
+  check(response && response.object==='response'&&['completed','incomplete'].includes(response.status)&&!response.error
     && typeof response.id === 'string' && /^[a-zA-Z0-9_-]{1,200}$/.test(response.id)
     && typeof response.model === 'string' && response.model.toLowerCase() === policy.model, 'RESPONSE_IDENTITY')
   const u = response.usage
@@ -139,20 +158,33 @@ export function validateUsageEnvelope(rawText, status, policy=BILLING_POLICY) {
   exact(u.input_tokens_details, ['cached_tokens']); exact(u.output_tokens_details, ['reasoning_tokens'])
   const cost = costUpperMicroCny(u.input_tokens, u.output_tokens,policy)
   const reasoningTokens=u.output_tokens_details.reasoning_tokens
-  check(u.input_tokens > 0 && u.output_tokens > 0 && integer(u.total_tokens, 2 * BILLING_POLICY.inputTokenCeiling) && u.total_tokens === u.input_tokens + u.output_tokens
+  check(u.input_tokens > 0 && u.output_tokens > 0 && integer(u.total_tokens, policy.inputTokenCeiling+policy.outputTokenCeiling) && u.total_tokens === u.input_tokens + u.output_tokens
     && integer(u.input_tokens_details.cached_tokens, u.input_tokens) && integer(reasoningTokens,u.output_tokens)
-    && (policy.reasoningEffort==='none'?reasoningTokens===0:policy.reasoningEffort==='low'), 'USAGE_INCONSISTENT')
+    && (policy.reasoningEffort==='none'?reasoningTokens===0:['low','max'].includes(policy.reasoningEffort)), 'USAGE_INCONSISTENT')
+  check(cost<=BILLING_POLICY.reservationMicroCny,'RESERVATION_EXCEEDED')
+  return {response,responseId:response.id,usage:u,costUpperMicroCny:cost,responseSha:sha256(rawText)}
+}
+/** Accounting trust is intentionally independent of semantic completeness. */
+export function validateUsageAccountingEnvelope(rawText,status,policy=BILLING_POLICY) {
+  const checked=validateUsageRecord(rawText,status,policy),details=checked.response.incomplete_details
+  if(checked.response.status==='incomplete')check(details&&details.reason==='max_output_tokens','INCOMPLETE_REASON')
+  return {responseId:checked.responseId,usage:checked.usage,costUpperMicroCny:checked.costUpperMicroCny,
+    responseSha:checked.responseSha,responseStatus:checked.response.status,
+    incompleteReason:checked.response.status==='incomplete'?details.reason:null}
+}
+export function validateUsageEnvelope(rawText, status, policy=BILLING_POLICY) {
+  const checked=validateUsageRecord(rawText,status,policy),response=checked.response
+  check(response.status==='completed','RESPONSE_INCOMPLETE')
   const output=response.output
   const message=Array.isArray(output)?output.at(-1):null
-  const lowProtocol=policy.reasoningEffort==='low'&&Array.isArray(output)&&output.length>=1
+  const thinkingProtocol=['low','max'].includes(policy.reasoningEffort)&&Array.isArray(output)&&output.length>=1
     &&output.slice(0,-1).every(item=>item&&item.type==='reasoning')
   const noneProtocol=policy.reasoningEffort==='none'&&Array.isArray(output)&&output.length===1
-  check((lowProtocol||noneProtocol)&&message?.type === 'message'
+  check((thinkingProtocol||noneProtocol)&&message?.type === 'message'
     && message.role === 'assistant' && Array.isArray(message.content) && message.content.length === 1
     && message.content[0]?.type === 'output_text' && typeof message.content[0].text === 'string'
     && message.content[0].text.trim().length > 0, 'RESPONSE_PROTOCOL')
-  check(cost <= BILLING_POLICY.reservationMicroCny, 'RESERVATION_EXCEEDED')
-  return { responseId: response.id, usage: u, costUpperMicroCny: cost, responseSha: sha256(rawText) }
+  return {responseId:checked.responseId,usage:checked.usage,costUpperMicroCny:checked.costUpperMicroCny,responseSha:checked.responseSha}
 }
 
 async function regular(path) { const s = await lstat(path); check(s.isFile() && !s.isSymbolicLink(), 'NOT_REGULAR_FILE') }
@@ -327,30 +359,62 @@ function replay(lines, manifestSha, manifest) {
         &&g.targets.every(u=>!state.units.some(old=>old.unitId===u.unitId)),'REASONING_COMPARE_PARENT')
       validateReasoningCompareCandidates(g,state.modelCompare.grant)
       state.reasoningCompare={grant:g,stopped:false};state.units=[...state.units,...g.targets]
+    } else if (e.kind === 'usageReconcile') {
+      exact(e,['kind','unitId','nonce','requestSha','responseSha','responseId','usage','costUpperMicroCny','semanticStatus','incompleteReason'])
+      const r=state.reservations.at(-1)
+      check(sequence===512&&state.reasoningCompare?.stopped&&state.halted==='RESPONSE_OR_USAGE_INVALID'
+        &&r?.unitId==='Y01-B'&&r.status==='pending'&&r.nonce===e.nonce&&r.requestSha===e.requestSha
+        &&e.semanticStatus==='incomplete'&&e.incompleteReason==='max_output_tokens'&&digest(e.responseSha)
+        &&!state.reservations.some(value=>value.responseId===e.responseId),'USAGE_RECONCILE_BINDING')
+      const v=validateUsageAccountingEnvelope(JSON.stringify({object:'response',status:'incomplete',model:REASONING_COMPARE_LOW_POLICY.model,
+        id:e.responseId,error:null,incomplete_details:{reason:e.incompleteReason},usage:e.usage}),200,REASONING_COMPARE_LOW_POLICY)
+      check(v.costUpperMicroCny===e.costUpperMicroCny,'USAGE_RECONCILE_AMOUNT')
+      Object.assign(r,e,{status:'settled-incomplete'})
+    } else if (e.kind === 'reasoningMaxGrant') {
+      exact(e,['kind','grant']);const g=validateBatchGrant(e.grant,manifest,manifestSha)
+      check(g.version==='real-input-reasoning-max-grant-1'&&!state.reasoningMax&&state.reasoningCompare?.stopped
+        &&sequence===g.parentSequence&&prior===g.parentTail&&state.reservations.length===250
+        &&state.reservations[0].status==='held-unknown'&&state.reservations[0].nonce===g.priorNonce
+        &&state.reservations[1].responseSha===g.a02ResponseSha&&state.reservations.slice(1).every(accounted)
+        &&state.reservations.at(-1).unitId==='Y01-B'&&state.reservations.at(-1).status==='settled-incomplete'
+        &&g.targets.every(u=>!state.units.some(old=>old.unitId===u.unitId)),'REASONING_MAX_PARENT')
+      validateReasoningMaxCandidates(g,state.reasoningCompare.grant)
+      state.reasoningMax={grant:g,stopped:false};state.units=[...state.units,...g.targets]
     } else if (e.kind === 'batchReserve') {
       exact(e,['kind','unitId','requestSha','candidateSha','nonce','reservedMicroCny'])
-      const active=state.reasoningCompare??state.modelCompare??state.paired09??state.paired08??state.paired07??state.paired06??state.paired05??state.paired04??state.candidate03??state.candidate02??state.batch,g=active?.grant,u=g?.targets[state.reservations.length-(state.reasoningCompare?248:state.modelCompare?208:state.paired09?168:state.paired08?128:state.paired07?104:state.paired06?80:state.paired05?56:state.paired04?32:state.candidate03?24:state.candidate02?16:2)]
-      check(g&&!active.stopped&&state.reservations.slice(1).every(r=>r.status==='settled')
+      const active=state.reasoningMax??state.reasoningCompare??state.modelCompare??state.paired09??state.paired08??state.paired07??state.paired06??state.paired05??state.paired04??state.candidate03??state.candidate02??state.batch,g=active?.grant,u=g?.targets[state.reservations.length-(state.reasoningMax?250:state.reasoningCompare?248:state.modelCompare?208:state.paired09?168:state.paired08?128:state.paired07?104:state.paired06?80:state.paired05?56:state.paired04?32:state.candidate03?24:state.candidate02?16:2)]
+      check(g&&!active.stopped&&state.reservations.slice(1).every(accounted)
         &&u&&u.unitId===e.unitId&&u.requestSha===e.requestSha&&u.candidateSha===e.candidateSha
         &&typeof e.nonce==='string'&&/^[a-f0-9-]{36}$/.test(e.nonce)
         &&!state.reservations.some(r=>r.nonce===e.nonce)&&e.reservedMicroCny===BILLING_POLICY.reservationMicroCny,'BATCH_RESERVE')
       check(state.reservations.length<g.maxTotalRequests
-        &&state.reservations.reduce((n,r)=>n+r.costUpperMicroCny,0)+e.reservedMicroCny<=(state.reasoningCompare?REASONING_COMPARE_POLICY:state.modelCompare?MODEL_COMPARE_POLICY:state.paired09?FLASH41_PAIRED09_POLICY:state.paired08?FLASH41_PAIRED08_POLICY:BILLING_POLICY).limitMicroCny,'LIMIT')
+        &&state.reservations.reduce((n,r)=>n+r.costUpperMicroCny,0)+e.reservedMicroCny<=(state.reasoningMax?REASONING_MAX_POLICY:state.reasoningCompare?REASONING_COMPARE_POLICY:state.modelCompare?MODEL_COMPARE_POLICY:state.paired09?FLASH41_PAIRED09_POLICY:state.paired08?FLASH41_PAIRED08_POLICY:BILLING_POLICY).limitMicroCny,'LIMIT')
       state.reservations.push({...e,status:'pending',costUpperMicroCny:e.reservedMicroCny})
     } else if (e.kind === 'batchSettle') {
       exact(e,['kind','unitId','nonce','requestSha','responseSha','responseId','usage','costUpperMicroCny'])
       const r=state.reservations.at(-1)
-      const active=state.reasoningCompare??state.modelCompare??state.paired09??state.paired08??state.paired07??state.paired06??state.paired05??state.paired04??state.candidate03??state.candidate02??state.batch
+      const active=state.reasoningMax??state.reasoningCompare??state.modelCompare??state.paired09??state.paired08??state.paired07??state.paired06??state.paired05??state.paired04??state.candidate03??state.candidate02??state.batch
       check(active&&!active.stopped&&r?.kind==='batchReserve'&&r.status==='pending'
         &&r.unitId===e.unitId&&r.nonce===e.nonce&&r.requestSha===e.requestSha&&digest(e.responseSha)
         &&!state.reservations.some(x=>x.responseId===e.responseId),'BATCH_SETTLEMENT_BINDING')
-      const policy=state.reasoningCompare?reasoningComparePolicyFor(r.unitId):state.modelCompare?modelComparePolicyFor(r.unitId):state.paired09?FLASH41_PAIRED09_POLICY:state.paired08?FLASH41_PAIRED08_POLICY:state.paired07?FLASH41_PAIRED07_POLICY:state.paired06?FLASH41_PAIRED06_POLICY:state.paired05?FLASH41_POLICY:BILLING_POLICY
-      const validationOutput=policy.reasoningEffort==='low'&&e.usage.output_tokens_details.reasoning_tokens>0
+      const policy=state.reasoningMax?reasoningMaxPolicyFor(r.unitId):state.reasoningCompare?reasoningComparePolicyFor(r.unitId):state.modelCompare?modelComparePolicyFor(r.unitId):state.paired09?FLASH41_PAIRED09_POLICY:state.paired08?FLASH41_PAIRED08_POLICY:state.paired07?FLASH41_PAIRED07_POLICY:state.paired06?FLASH41_PAIRED06_POLICY:state.paired05?FLASH41_POLICY:BILLING_POLICY
+      const validationOutput=['low','max'].includes(policy.reasoningEffort)&&e.usage.output_tokens_details.reasoning_tokens>0
         ?[{type:'reasoning'},{type:'message',role:'assistant',content:[{type:'output_text',text:'ledger validation'}]}]
         :[{type:'message',role:'assistant',content:[{type:'output_text',text:'ledger validation'}]}]
       const v=validateUsageEnvelope(JSON.stringify({object:'response',status:'completed',model:policy.model,
         id:e.responseId,usage:e.usage,output:validationOutput}),200,policy)
       check(v.costUpperMicroCny===e.costUpperMicroCny,'SETTLEMENT_AMOUNT');Object.assign(r,e,{status:'settled'})
+    } else if (e.kind === 'batchUsageSettle') {
+      exact(e,['kind','unitId','nonce','requestSha','responseSha','responseId','usage','costUpperMicroCny','semanticStatus','incompleteReason'])
+      const r=state.reservations.at(-1),active=state.reasoningMax
+      check(active&&!active.stopped&&r?.kind==='batchReserve'&&r.status==='pending'
+        &&r.unitId===e.unitId&&r.nonce===e.nonce&&r.requestSha===e.requestSha&&digest(e.responseSha)
+        &&e.semanticStatus==='incomplete'&&e.incompleteReason==='max_output_tokens'
+        &&!state.reservations.some(x=>x.responseId===e.responseId),'BATCH_USAGE_SETTLEMENT_BINDING')
+      const policy=reasoningMaxPolicyFor(r.unitId),v=validateUsageAccountingEnvelope(JSON.stringify({object:'response',status:'incomplete',
+        model:policy.model,id:e.responseId,error:null,incomplete_details:{reason:e.incompleteReason},usage:e.usage}),200,policy)
+      check(v.costUpperMicroCny===e.costUpperMicroCny,'BATCH_USAGE_SETTLEMENT_AMOUNT')
+      Object.assign(r,e,{status:'settled-incomplete'})
     } else if (e.kind === 'halt') {
       exact(e, ['kind','code']); check(typeof e.code==='string' && /^[A-Z_]{1,80}$/.test(e.code), 'HALT_CODE'); state.halted=e.code
       if(state.recovery)state.recovery.status='stopped'
@@ -365,6 +429,7 @@ function replay(lines, manifestSha, manifest) {
       if(state.paired09)state.paired09.stopped=true
       if(state.modelCompare)state.modelCompare.stopped=true
       if(state.reasoningCompare)state.reasoningCompare.stopped=true
+      if(state.reasoningMax)state.reasoningMax.stopped=true
     } else fail('LEDGER_EVENT_KIND')
     prior=line.hash
   }
@@ -469,6 +534,31 @@ export async function openBudget(dir, expectedManifestSha, {recoveryGrant,batchG
   })
 }
 
+/** Settle only the trustworthy usage of the previously persisted incomplete Y01-B response.
+ * The original response and halt remain immutable; no semantic result becomes replayable. */
+export async function reconcileIncompleteUsage(dir,expectedManifestSha,input) {
+  dir=resolve(dir);check(digest(expectedManifestSha),'MANIFEST_HASH')
+  exact(input,['unitId','requestSha','responseSha','httpStatus','rawHttpText'])
+  check(input.unitId==='Y01-B'&&digest(input.requestSha)&&digest(input.responseSha)
+    &&input.httpStatus===200&&typeof input.rawHttpText==='string'&&sha256(input.rawHttpText)===input.responseSha,'USAGE_RECONCILE_INPUT')
+  const manifestPath=join(dir,'REQUEST_MANIFEST.json');await regular(manifestPath)
+  const raw=await readFile(manifestPath);check(raw.length<=100000&&sha256(raw)===expectedManifestSha,'MANIFEST_CHANGED')
+  const manifest=validateManifest(JSON.parse(raw.toString('utf8'))),checked=validateUsageAccountingEnvelope(input.rawHttpText,input.httpStatus,REASONING_COMPARE_LOW_POLICY)
+  check(checked.responseStatus==='incomplete'&&checked.incompleteReason==='max_output_tokens','USAGE_RECONCILE_STATUS')
+  return locked(manifest.lockRoot,async()=>{
+    const state=await readState(dir,manifest,expectedManifestSha),r=state.reservations.at(-1)
+    check(state.nextSequence===512&&state.halted==='RESPONSE_OR_USAGE_INVALID'&&state.reasoningCompare?.stopped
+      &&r?.unitId===input.unitId&&r.status==='pending'&&r.requestSha===input.requestSha
+      &&!state.reservations.some(value=>value.responseId===checked.responseId),'USAGE_RECONCILE_PARENT')
+    const event={kind:'usageReconcile',unitId:r.unitId,nonce:r.nonce,requestSha:r.requestSha,responseSha:input.responseSha,
+      responseId:checked.responseId,usage:checked.usage,costUpperMicroCny:checked.costUpperMicroCny,
+      semanticStatus:'incomplete',incompleteReason:checked.incompleteReason}
+    await append(dir,manifest,state,event)
+    return {unitId:r.unitId,responseId:checked.responseId,responseSha:input.responseSha,semanticStatus:'incomplete',
+      incompleteReason:checked.incompleteReason,costUpperMicroCny:checked.costUpperMicroCny,usage:checked.usage}
+  })
+}
+
 export const RECOVERY_ROUTE=Object.freeze({proxyHost:'127.0.0.1',proxyPort:10081,targetHost:'api.deepseek.com',targetPort:443})
 
 /** Separate opt-in batch authority; original halt and A01 unknown are never cleared. */
@@ -483,37 +573,40 @@ function validateBatchGrant(input,manifest,manifestSha) {
   const paired09=g.version==='real-input-paired09-grant-1'
   const modelCompare=g.version==='real-input-model-compare-grant-1'
   const reasoningCompare=g.version==='real-input-reasoning-compare-grant-1'
+  const reasoningMax=g.version==='real-input-reasoning-max-grant-1'
   const paired06=g.version==='real-input-paired06-grant-1'
   exact(g,['version','grantId','parentTail','parentSequence','ledgerPrefixBytes','ledgerPrefixSha','manifestSha',
-    'bindingSha','head','sourcesSha','reviewSha','targets','billingEvidence','route','priorNonce','a02ResponseSha','maxTotalRequests',...(paired05||paired06||paired07||paired08||paired09||modelCompare||reasoningCompare?['policy']:[])])
+    'bindingSha','head','sourcesSha','reviewSha','targets','billingEvidence','route','priorNonce','a02ResponseSha','maxTotalRequests',...(paired05||paired06||paired07||paired08||paired09||modelCompare||reasoningCompare||reasoningMax?['policy']:[])])
   if(paired05)same(g.policy,FLASH41_POLICY,'PAIRED05_POLICY')
   if(paired07)same(g.policy,FLASH41_PAIRED07_POLICY,'PAIRED07_POLICY')
   if(paired08)same(g.policy,FLASH41_PAIRED08_POLICY,'PAIRED08_POLICY')
   if(paired09)same(g.policy,FLASH41_PAIRED09_POLICY,'PAIRED09_POLICY')
   if(modelCompare)same(g.policy,MODEL_COMPARE_POLICY,'MODEL_COMPARE_POLICY')
   if(reasoningCompare)same(g.policy,REASONING_COMPARE_POLICY,'REASONING_COMPARE_POLICY')
+  if(reasoningMax)same(g.policy,REASONING_MAX_POLICY,'REASONING_MAX_POLICY')
   if(paired06)same(g.policy,FLASH41_PAIRED06_POLICY,'PAIRED06_POLICY')
-  check((reasoningCompare||modelCompare||paired09||paired08||paired07||paired06||paired05||paired04||candidate03||candidate02||g.version==='real-input-batch-grant-1')&&/^[a-f0-9-]{36}$/.test(g.grantId)
-    &&g.parentSequence===(reasoningCompare?507:modelCompare?426:paired09?345:paired08?264:paired07?215:paired06?166:paired05?117:paired04?68:candidate03?51:candidate02?34:5)&&g.maxTotalRequests===(reasoningCompare?288:modelCompare?248:paired09?208:paired08?168:paired07?128:paired06?104:paired05?80:paired04?56:candidate03?32:candidate02?24:16)&&integer(g.ledgerPrefixBytes,1048576)&&g.ledgerPrefixBytes>0
+  check((reasoningMax||reasoningCompare||modelCompare||paired09||paired08||paired07||paired06||paired05||paired04||candidate03||candidate02||g.version==='real-input-batch-grant-1')&&/^[a-f0-9-]{36}$/.test(g.grantId)
+    &&g.parentSequence===(reasoningMax?513:reasoningCompare?507:modelCompare?426:paired09?345:paired08?264:paired07?215:paired06?166:paired05?117:paired04?68:candidate03?51:candidate02?34:5)&&g.maxTotalRequests===(reasoningMax?290:reasoningCompare?288:modelCompare?248:paired09?208:paired08?168:paired07?128:paired06?104:paired05?80:paired04?56:candidate03?32:candidate02?24:16)&&integer(g.ledgerPrefixBytes,1048576)&&g.ledgerPrefixBytes>0
     &&['parentTail','ledgerPrefixSha','manifestSha','bindingSha','sourcesSha','reviewSha','a02ResponseSha'].every(k=>digest(g[k]))
     &&typeof g.head==='string'&&/^[a-f0-9]{40}$/.test(g.head)
     &&typeof g.priorNonce==='string'&&/^[a-f0-9-]{36}$/.test(g.priorNonce),'BATCH_GRANT')
   check(g.manifestSha===manifestSha,'BATCH_MANIFEST')
-  if(reasoningCompare||modelCompare){
-    check(Array.isArray(g.targets)&&g.targets.length===40,reasoningCompare?'REASONING_COMPARE_TARGETS':'MODEL_COMPARE_TARGETS')
+  if(reasoningMax||reasoningCompare||modelCompare){
+    const code=reasoningMax?'REASONING_MAX':reasoningCompare?'REASONING_COMPARE':'MODEL_COMPARE'
+    check(Array.isArray(g.targets)&&g.targets.length===40,code+'_TARGETS')
     const cases=new Set();let armAFirst=0
     for(let i=0;i<20;i++){
       const pair=g.targets.slice(i*2,i*2+2),prefix=pair[0]?.unitId?.slice(0,4)
-      const validPrefix=reasoningCompare?/^(?:Y(?:0[1-9]|1[0-2])|Z0[1-8])-$/.test(prefix):/^(?:W(?:0[1-9]|1[0-2])|X0[1-8])-$/.test(prefix)
-      check(validPrefix&&!cases.has(prefix),reasoningCompare?'REASONING_COMPARE_CASE':'MODEL_COMPARE_CASE')
+      const validPrefix=reasoningMax?/^M(?:0[1-9]|1[0-9]|20)-$/.test(prefix):reasoningCompare?/^(?:Y(?:0[1-9]|1[0-2])|Z0[1-8])-$/.test(prefix):/^(?:W(?:0[1-9]|1[0-2])|X0[1-8])-$/.test(prefix)
+      check(validPrefix&&!cases.has(prefix),code+'_CASE')
       cases.add(prefix);if(pair[0].unitId.endsWith('-A'))armAFirst++
-      check(new Set(pair.map(u=>u.unitId)).size===2&&pair.some(u=>u.unitId===prefix+'A')&&pair.some(u=>u.unitId===prefix+'B'),reasoningCompare?'REASONING_COMPARE_PAIR':'MODEL_COMPARE_PAIR')
+      check(new Set(pair.map(u=>u.unitId)).size===2&&pair.some(u=>u.unitId===prefix+'A')&&pair.some(u=>u.unitId===prefix+'B'),code+'_PAIR')
       for(const u of pair){exact(u,unitKeys);check(['candidateSha','requestSha','inputSha','scorerSha'].every(k=>digest(u[k]))
-        &&integer(u.requestBytes,BILLING_POLICY.requestByteCeiling)&&u.requestBytes>0&&u.scorerSha===manifest.units[0].scorerSha,reasoningCompare?'REASONING_COMPARE_IDENTITY':'MODEL_COMPARE_IDENTITY')}
+        &&integer(u.requestBytes,BILLING_POLICY.requestByteCeiling)&&u.requestBytes>0&&u.scorerSha===manifest.units[0].scorerSha,code+'_IDENTITY')}
       check(pair[0].inputSha===pair[1].inputSha&&pair[0].scorerSha===pair[1].scorerSha
-        &&pair[0].requestSha!==pair[1].requestSha&&pair[0].candidateSha!==pair[1].candidateSha,reasoningCompare?'REASONING_COMPARE_ONLY_REASONING':'MODEL_COMPARE_ONLY_MODEL')
+        &&pair[0].requestSha!==pair[1].requestSha&&pair[0].candidateSha!==pair[1].candidateSha,code+(reasoningMax||reasoningCompare?'_ONLY_REASONING':'_ONLY_MODEL'))
     }
-    check(cases.size===20&&armAFirst===10,reasoningCompare?'REASONING_COMPARE_BALANCE':'MODEL_COMPARE_BALANCE')
+    check(cases.size===20&&armAFirst===10,code+'_BALANCE')
   }else if(paired04||paired05||paired06||paired07||paired08||paired09){
     const pairCount=paired08||paired09?20:12
     check(Array.isArray(g.targets)&&g.targets.length===pairCount*2,'PAIRED04_TARGETS')
@@ -601,6 +694,15 @@ function validateReasoningCompareCandidates(grant,priorGrant) {
     check(a?.candidateSha===baseline.candidateSha,'REASONING_COMPARE_BASELINE')
   }
 }
+function validateReasoningMaxCandidates(grant,priorGrant) {
+  const priorInputs=new Set(priorGrant.targets.filter(u=>u.unitId.endsWith('-A')).map(u=>u.inputSha)),inputs=new Set()
+  for(let i=0;i<20;i++){
+    const pair=grant.targets.slice(i*2,i*2+2)
+    check(pair.length===2&&pair[0].inputSha===pair[1].inputSha&&priorInputs.has(pair[0].inputSha)
+      &&!inputs.has(pair[0].inputSha),'REASONING_MAX_INPUT')
+    inputs.add(pair[0].inputSha)
+  }
+}
 async function batchBudget(dir,manifest,manifestSha,read,input) {
   const grant=validateBatchGrant(input,manifest,manifestSha)
   const candidate02=grant.version==='real-input-candidate02-grant-1',candidate03=grant.version==='real-input-candidate03-grant-1',paired04=grant.version==='real-input-paired04-grant-1'
@@ -609,14 +711,16 @@ async function batchBudget(dir,manifest,manifestSha,read,input) {
   const paired09=grant.version==='real-input-paired09-grant-1'
   const modelCompare=grant.version==='real-input-model-compare-grant-1'
   const reasoningCompare=grant.version==='real-input-reasoning-compare-grant-1'
+  const reasoningMax=grant.version==='real-input-reasoning-max-grant-1'
   const paired05=grant.version==='real-input-paired05-grant-1',paired06=grant.version==='real-input-paired06-grant-1'
-  const policy=reasoningCompare?REASONING_COMPARE_POLICY:modelCompare?MODEL_COMPARE_POLICY:paired09?FLASH41_PAIRED09_POLICY:paired08?FLASH41_PAIRED08_POLICY:paired07?FLASH41_PAIRED07_POLICY:paired06?FLASH41_PAIRED06_POLICY:paired05?FLASH41_POLICY:BILLING_POLICY
-  const offset=reasoningCompare?248:modelCompare?208:paired09?168:paired08?128:paired07?104:paired06?80:paired05?56:paired04?32:candidate03?24:candidate02?16:2,newCandidate=reasoningCompare||modelCompare||paired09||paired08||paired07||paired06||paired05||paired04||candidate02||candidate03
-  const active=s=>reasoningCompare?s.reasoningCompare:modelCompare?s.modelCompare:paired09?s.paired09:paired08?s.paired08:paired07?s.paired07:paired06?s.paired06:paired05?s.paired05:paired04?s.paired04:candidate03?s.candidate03:candidate02?s.candidate02:s.batch
+  const policy=reasoningMax?REASONING_MAX_POLICY:reasoningCompare?REASONING_COMPARE_POLICY:modelCompare?MODEL_COMPARE_POLICY:paired09?FLASH41_PAIRED09_POLICY:paired08?FLASH41_PAIRED08_POLICY:paired07?FLASH41_PAIRED07_POLICY:paired06?FLASH41_PAIRED06_POLICY:paired05?FLASH41_POLICY:BILLING_POLICY
+  const offset=reasoningMax?250:reasoningCompare?248:modelCompare?208:paired09?168:paired08?128:paired07?104:paired06?80:paired05?56:paired04?32:candidate03?24:candidate02?16:2,newCandidate=reasoningMax||reasoningCompare||modelCompare||paired09||paired08||paired07||paired06||paired05||paired04||candidate02||candidate03
+  const active=s=>reasoningMax?s.reasoningMax:reasoningCompare?s.reasoningCompare:modelCompare?s.modelCompare:paired09?s.paired09:paired08?s.paired08:paired07?s.paired07:paired06?s.paired06:paired05?s.paired05:paired04?s.paired04:candidate03?s.candidate03:candidate02?s.candidate02:s.batch
   const boundRead=async()=>{
     const bytes=await readFile(join(dir,'CALL_LEDGER.jsonl'))
     check(bytes.length>=grant.ledgerPrefixBytes&&sha256(bytes.subarray(0,grant.ledgerPrefixBytes))===grant.ledgerPrefixSha,'BATCH_PREFIX')
     const state=await read()
+    if(reasoningMax){check(state.reasoningCompare&&(state.reasoningMax||state.reasoningCompare.stopped),'REASONING_MAX_PARENT');validateReasoningMaxCandidates(grant,state.reasoningCompare.grant)}
     if(reasoningCompare){check(state.modelCompare&&(state.reasoningCompare||!state.modelCompare.stopped),'REASONING_COMPARE_PARENT');validateReasoningCompareCandidates(grant,state.modelCompare.grant)}
     if(modelCompare){check(state.paired09&&(state.modelCompare||!state.paired09.stopped),'MODEL_COMPARE_PARENT');validateModelCompareCandidates(grant,state.paired09.grant)}
     if(paired09){check(state.paired08&&(state.paired09||!state.paired08.stopped),'PAIRED09_PARENT');validatePaired09Candidates(grant,state.paired08.grant)}
@@ -628,6 +732,11 @@ async function batchBudget(dir,manifest,manifestSha,read,input) {
     if(candidate03)check(state.candidate02&&(state.candidate03||!state.candidate02.stopped)
       &&grant.targets[0].candidateSha!==state.candidate02.grant.targets[0].candidateSha,'C03_PARENT_CANDIDATE')
     if(active(state))same(active(state).grant,grant,'BATCH_GRANT_CHANGED')
+    else if(reasoningMax)check(state.tail===grant.parentTail&&state.nextSequence===grant.parentSequence&&state.reservations.length===offset
+      &&state.reasoningCompare?.stopped&&state.halted==='RESPONSE_OR_USAGE_INVALID'
+      &&state.reservations[0].status==='held-unknown'&&state.reservations[0].nonce===grant.priorNonce
+      &&state.reservations[1].responseSha===grant.a02ResponseSha&&state.reservations.slice(1).every(accounted)
+      &&state.reservations.at(-1).unitId==='Y01-B'&&state.reservations.at(-1).status==='settled-incomplete','REASONING_MAX_PARENT')
     else check(state.tail===grant.parentTail&&state.nextSequence===grant.parentSequence&&state.reservations.length===offset
       &&state.recovery?.status==='settled'&&state.reservations[0].status==='held-unknown'
       &&state.reservations[0].nonce===grant.priorNonce&&state.reservations[1].responseSha===grant.a02ResponseSha
@@ -642,16 +751,16 @@ async function batchBudget(dir,manifest,manifestSha,read,input) {
     halt:code=>locked(manifest.lockRoot,async()=>{const s=await boundRead();check(/^[A-Z_]{1,80}$/.test(code),'HALT_CODE');await append(dir,manifest,s,{kind:'halt',code})}),
     async reserve(unitId,requestText,requestedPolicy=policy,now=new Date().toISOString()) {
       const reservation=await locked(manifest.lockRoot,async()=>{
-        let s=await boundRead();check(!active(s)?.stopped&&s.recovery?.status==='settled'&&(!newCandidate||!s.batch.stopped),'BATCH_STOPPED')
-        const unitPolicy=reasoningCompare?reasoningComparePolicyFor(unitId):modelCompare?modelComparePolicyFor(unitId):policy
+        let s=await boundRead();check(!active(s)?.stopped&&(reasoningMax||s.recovery?.status==='settled')&&(!newCandidate||reasoningMax||!s.batch.stopped),'BATCH_STOPPED')
+        const unitPolicy=reasoningMax?reasoningMaxPolicyFor(unitId):reasoningCompare?reasoningComparePolicyFor(unitId):modelCompare?modelComparePolicyFor(unitId):policy
         same(copy(requestedPolicy),unitPolicy,'POLICY_CHANGED')
         check(Number.isFinite(Date.parse(now))&&Date.parse(now)>=Date.parse(grant.billingEvidence.checkedAt)
           &&Date.parse(now)<=Date.parse(grant.billingEvidence.validUntil),'BATCH_PRICE_EXPIRED')
         const u=grant.targets[s.reservations.length-offset]
-        check(s.reservations.slice(1).every(r=>r.status==='settled')&&u?.unitId===unitId,'BATCH_ORDER_OR_PENDING')
+        check(s.reservations.slice(1).every(accounted)&&u?.unitId===unitId,'BATCH_ORDER_OR_PENDING')
         check(typeof requestText==='string'&&sha256(requestText)===u.requestSha&&Buffer.byteLength(requestText)===u.requestBytes,'REQUEST_NOT_FROZEN')
         check(s.reservations.length<grant.maxTotalRequests&&s.reservations.reduce((n,r)=>n+r.costUpperMicroCny,0)+BILLING_POLICY.reservationMicroCny<=policy.limitMicroCny,'LIMIT')
-        if(!active(s)){await append(dir,manifest,s,{kind:reasoningCompare?'reasoningCompareGrant':modelCompare?'modelCompareGrant':paired09?'paired09Grant':paired08?'paired08Grant':paired07?'paired07Grant':paired06?'paired06Grant':paired05?'paired05Grant':paired04?'paired04Grant':candidate03?'candidate03Grant':candidate02?'candidate02Grant':'batchGrant',grant});s=await boundRead()}
+        if(!active(s)){await append(dir,manifest,s,{kind:reasoningMax?'reasoningMaxGrant':reasoningCompare?'reasoningCompareGrant':modelCompare?'modelCompareGrant':paired09?'paired09Grant':paired08?'paired08Grant':paired07?'paired07Grant':paired06?'paired06Grant':paired05?'paired05Grant':paired04?'paired04Grant':candidate03?'candidate03Grant':candidate02?'candidate02Grant':'batchGrant',grant});s=await boundRead()}
         const e={kind:'batchReserve',unitId,requestSha:u.requestSha,candidateSha:u.candidateSha,nonce:randomUUID(),reservedMicroCny:BILLING_POLICY.reservationMicroCny}
         await append(dir,manifest,s,e);return e
       })
@@ -663,7 +772,21 @@ async function batchBudget(dir,manifest,manifestSha,read,input) {
           check(!used,'LEASE_ALREADY_FINALIZED');used=true
           return locked(manifest.lockRoot,async()=>{
             const s=await boundRead();validLease(s);let value
-            try{value=validateUsageEnvelope(raw,status,reasoningCompare?reasoningComparePolicyFor(unitId):modelCompare?modelComparePolicyFor(unitId):policy);check(!s.reservations.some(r=>r.responseId===value.responseId),'RESPONSE_REUSED')}
+            const responsePolicy=reasoningMax?reasoningMaxPolicyFor(unitId):reasoningCompare?reasoningComparePolicyFor(unitId):modelCompare?modelComparePolicyFor(unitId):policy
+            try{
+              if(reasoningMax){
+                const accounting=validateUsageAccountingEnvelope(raw,status,responsePolicy)
+                check(!s.reservations.some(r=>r.responseId===accounting.responseId),'RESPONSE_REUSED')
+                if(accounting.responseStatus==='incomplete'){
+                  const event={kind:'batchUsageSettle',unitId,nonce:reservation.nonce,requestSha:reservation.requestSha,responseSha:accounting.responseSha,
+                    responseId:accounting.responseId,usage:accounting.usage,costUpperMicroCny:accounting.costUpperMicroCny,
+                    semanticStatus:'incomplete',incompleteReason:accounting.incompleteReason}
+                  await append(dir,manifest,s,event)
+                  return {...accounting,semanticUsable:false}
+                }
+              }
+              value=validateUsageEnvelope(raw,status,responsePolicy);check(!s.reservations.some(r=>r.responseId===value.responseId),'RESPONSE_REUSED')
+            }
             catch{await append(dir,manifest,s,{kind:'halt',code:'RESPONSE_OR_USAGE_INVALID'});fail('RESPONSE_OR_USAGE_INVALID')}
             await append(dir,manifest,s,{kind:'batchSettle',unitId,nonce:reservation.nonce,requestSha:reservation.requestSha,...value})
             return value

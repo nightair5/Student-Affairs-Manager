@@ -7,7 +7,9 @@ import { spawn } from 'node:child_process'
 import { BILLING_POLICY, FLASH41_POLICY, FLASH41_PAIRED06_POLICY, FLASH41_PAIRED07_POLICY, FLASH41_PAIRED08_POLICY, FLASH41_PAIRED09_POLICY,
   MODEL_COMPARE_POLICY, MODEL_COMPARE_FLASH_POLICY, MODEL_COMPARE_PRO_POLICY, modelComparePolicyFor,
   REASONING_COMPARE_POLICY, REASONING_COMPARE_NONE_POLICY, REASONING_COMPARE_LOW_POLICY, reasoningComparePolicyFor,
-  sha256, costUpperMicroCny, validateManifest, validateUsageEnvelope, initializeBudget, openBudget } from './real-input-budget.mjs'
+  REASONING_MAX_POLICY, REASONING_MAX_NONE_POLICY, REASONING_MAX_MAX_POLICY, reasoningMaxPolicyFor,
+  sha256, costUpperMicroCny, validateManifest, validateUsageEnvelope, validateUsageAccountingEnvelope,
+  initializeBudget, openBudget, reconcileIncompleteUsage } from './real-input-budget.mjs'
 
 async function batchFixture() {
   const f=await recoveryFixture(),r=await openBudget(f.dir,f.manifestSha,{recoveryGrant:f.grant})
@@ -818,4 +820,49 @@ if(process.argv[2]!=='--reserve-child')test('reasoning compare: none remains exa
   assert.throws(()=>validateUsageEnvelope(reasoningEnvelope('bad',REASONING_COMPARE_NONE_POLICY,100,20,7),200,REASONING_COMPARE_NONE_POLICY))
   const missingFinal=JSON.parse(reasoningEnvelope('bad2',REASONING_COMPARE_LOW_POLICY,100,20,7));missingFinal.output=missingFinal.output.slice(0,1)
   assert.throws(()=>validateUsageEnvelope(JSON.stringify(missingFinal),200,REASONING_COMPARE_LOW_POLICY))
+})
+
+const incompleteReasoningEnvelope=(id,policy,output=8192,reasoning=6719)=>{
+  const value=JSON.parse(reasoningEnvelope(id,policy,100,output,reasoning));value.status='incomplete';value.error=null
+  value.incomplete_details={reason:'max_output_tokens'};value.output=value.output.slice(0,1)
+  return JSON.stringify(value)
+}
+async function reasoningMaxFixture(){
+  const f=await reasoningCompareFixture(),b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+  await(await reserve(b,'Y01-A',REASONING_COMPARE_NONE_POLICY)).complete(reasoningEnvelope('Y01-A',REASONING_COMPARE_NONE_POLICY))
+  const incomplete=incompleteReasoningEnvelope('Y01-B',REASONING_COMPARE_LOW_POLICY)
+  await assert.rejects(()=>reserve(b,'Y01-B',REASONING_COMPARE_LOW_POLICY).then(lease=>lease.complete(incomplete)))
+  let before=await b.snapshot();assert.equal(before.nextSequence,512);assert.equal(before.reservations.at(-1).status,'pending')
+  await reconcileIncompleteUsage(f.dir,f.manifestSha,{unitId:'Y01-B',requestSha:before.reservations.at(-1).requestSha,
+    responseSha:sha256(incomplete),httpStatus:200,rawHttpText:incomplete})
+  const reconciled=await openBudget(f.dir,f.manifestSha),state=await reconciled.snapshot(),prefix=await readFile(join(f.dir,'CALL_LEDGER.jsonl'))
+  const priorInputs=f.grant.targets.filter(u=>u.unitId.endsWith('-A')).map(u=>u.inputSha)
+  const targets=Array.from({length:20},(_,i)=>`M${String(i+1).padStart(2,'0')}`).flatMap((id,i)=>(i<10?['A','B']:['B','A']).map(arm=>{
+    const value=row(`${id}-${arm}`,arm==='A'?'reasoning-max-none':'reasoning-max-max',priorInputs[i]);value.inputSha=priorInputs[i];return value
+  }))
+  const grant={...f.grant,version:'real-input-reasoning-max-grant-1',grantId:'dddddddd-dddd-4ddd-8ddd-dddddddddddd',
+    parentTail:state.tail,parentSequence:state.nextSequence,ledgerPrefixBytes:prefix.length,ledgerPrefixSha:sha256(prefix),
+    maxTotalRequests:290,policy:REASONING_MAX_POLICY,targets}
+  return {...f,before:state,prefix,grant,incomplete}
+}
+if(process.argv[2]!=='--reserve-child')test('reasoning max: reconciles trustworthy incomplete usage, keeps it unusable, and continues after a new incomplete answer',async()=>{
+  const f=await reasoningMaxFixture()
+  assert.equal(f.before.nextSequence,513);assert.equal(f.before.reservations.length,250)
+  assert.equal(f.before.reservations.at(-1).status,'settled-incomplete');assert.equal(f.before.reasoningCompare.stopped,true)
+  const accounting=validateUsageAccountingEnvelope(f.incomplete,200,REASONING_COMPARE_LOW_POLICY)
+  assert.equal(accounting.responseStatus,'incomplete');assert.equal(accounting.incompleteReason,'max_output_tokens')
+  assert.throws(()=>validateUsageEnvelope(f.incomplete,200,REASONING_COMPARE_LOW_POLICY),/RESPONSE_INCOMPLETE/)
+  for(const mutate of [g=>{g.parentSequence=512},g=>{g.maxTotalRequests=291},g=>{g.targets[0].unitId='Y01-A'},g=>{g.targets[1].inputSha=sha256('different')}]){
+    const grant=structuredClone(f.grant);mutate(grant);await assert.rejects(()=>openBudget(f.dir,f.manifestSha,{batchGrant:grant}))
+  }
+  const b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+  await(await reserve(b,'M01-A',REASONING_MAX_NONE_POLICY)).complete(reasoningEnvelope('M01-A',REASONING_MAX_NONE_POLICY,100,50,0))
+  const incompleteMax=incompleteReasoningEnvelope('M01-B',REASONING_MAX_MAX_POLICY,32768,30000)
+  const settled=await(await reserve(b,'M01-B',REASONING_MAX_MAX_POLICY)).complete(incompleteMax)
+  assert.equal(settled.semanticUsable,false)
+  await(await reserve(b,'M02-A',REASONING_MAX_NONE_POLICY)).complete(reasoningEnvelope('M02-A',REASONING_MAX_NONE_POLICY,100,50,0))
+  const state=await b.snapshot();assert.equal(state.reservations.at(-2).status,'settled-incomplete');assert.equal(state.reasoningMax.stopped,false)
+  assert.equal(reasoningMaxPolicyFor('M01-A'),REASONING_MAX_NONE_POLICY);assert.equal(reasoningMaxPolicyFor('M01-B'),REASONING_MAX_MAX_POLICY)
+  assert.equal(costUpperMicroCny(100,32768,REASONING_MAX_MAX_POLICY),262344)
+  assert.deepEqual((await readFile(join(f.dir,'CALL_LEDGER.jsonl'))).subarray(0,f.prefix.length),f.prefix)
 })

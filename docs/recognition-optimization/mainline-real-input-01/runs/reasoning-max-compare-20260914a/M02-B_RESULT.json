@@ -1,0 +1,47 @@
+{
+  "version": "real-input-reasoning-max-result-1",
+  "unitId": "M02-B",
+  "arm": "B",
+  "effort": "max",
+  "selectionGroup": "first8",
+  "previousId": "W12",
+  "bindingSha": "858ce5755d1499669a453b3b7450174053f01a3e13e54f641040f6c03685b2cf",
+  "requestSha": "b86d88e6ef29f51d2934b11b3a6041b9e9bc97c7e7c60d05bfa6ba3a6a5de572",
+  "responseSha": "130bb37b27753ca1d6e9339d88b43aca6b3d9e0137d25c19c145d53d5134aaeb",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "modelMatch": true,
+  "candidateVersion": "real-input-source-semantics-3",
+  "wireVersion": "real-input-model-wire-1",
+  "scorerSha": "ad76149f8a88cb4adda6dca78b210daaa4f3c800d17582767911e8ace2658e1d",
+  "scorerBundleSha": "782c89b4f865d83c9a2051d9e2a6df3776b7231ad49aec87008b5c14f4e09f21",
+  "referenceSha": "103f06586e143f5df94b0765d83a681a6d67f23c140675739bf1d1c1fb46b6ca",
+  "scoreInput": "candidate03 final message only; provider reasoning and immutable raw retained separately",
+  "assembled": null,
+  "http": 200,
+  "diagnostic": null,
+  "waitingMs": 121866,
+  "score": null,
+  "scoreError": "REAL_INPUT_USAGE_INVALID",
+  "totalAttempts": 253,
+  "usage": {
+    "input_tokens": 4759,
+    "input_tokens_details": {
+      "cached_tokens": 3840
+    },
+    "output_tokens": 28194,
+    "output_tokens_details": {
+      "reasoning_tokens": 25776
+    },
+    "total_tokens": 32953
+  },
+  "reasoningTokens": 25776,
+  "costUpperMicroCny": 235070,
+  "totalCostUpperMicroCny": 11126323,
+  "semanticStatus": "completed",
+  "stopDispatch": false,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "temperatureEffect": "IGNORED_BY_PROVIDER_THINKING_MODE",
+  "automaticSelection": "NOT_ENABLED",
+  "qualityClaim": "20份已见材料开发回归；同模型、candidate03、正文与32768输出上限，仅reasoning effort不同"
+}

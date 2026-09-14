@@ -7,7 +7,8 @@ import { EventEmitter } from 'node:events'
 import { Readable } from 'node:stream'
 import { BILLING_POLICY,FLASH41_POLICY,FLASH41_PAIRED06_POLICY,MODEL_COMPARE_POLICY,
   MODEL_COMPARE_FLASH_POLICY,MODEL_COMPARE_PRO_POLICY,REASONING_COMPARE_POLICY,
-  REASONING_COMPARE_NONE_POLICY,REASONING_COMPARE_LOW_POLICY,sha256,initializeBudget,openBudget } from './real-input-budget.mjs'
+  REASONING_COMPARE_NONE_POLICY,REASONING_COMPARE_LOW_POLICY,REASONING_MAX_POLICY,
+  REASONING_MAX_NONE_POLICY,REASONING_MAX_MAX_POLICY,sha256,initializeBudget,openBudget } from './real-input-budget.mjs'
 
 const ORIGIN='http://127.0.0.1:6637',CAP='a'.repeat(64),NOW='2026-09-07T00:00:00.000Z'
 const FAKE_SECRET='NOT_A_REAL_CREDENTIAL_FOR_ENGINEERING'
@@ -415,4 +416,25 @@ test('reasoning compare: Y/Z dispatch changes only effort and never treats reaso
   }
   const bad=JSON.parse(bodies['Y01-B']);bad.reasoning.effort='high'
   assert.throws(()=>inspectRequest(JSON.stringify(bad),REASONING_COMPARE_LOW_POLICY),/REASONING/)
+})
+test('reasoning max: 32768 envelope, 180 second deadline and incomplete accounting stay explicit',async()=>{
+  const unitId='M01-B',value=JSON.parse(request());value.model='deepseek-flash';value.reasoning.effort='max';value.max_output_tokens=32768
+  const body=JSON.stringify(value),identity=inspectRequest(body,REASONING_MAX_MAX_POLICY),envelope=JSON.parse(raw(unitId))
+  const historicalValue=JSON.parse(request());historicalValue.model='deepseek-flash';const historicalBody=JSON.stringify(historicalValue),historicalIdentity=inspectRequest(historicalBody,FLASH41_POLICY)
+  envelope.model='deepseek-flash';envelope.usage.output_tokens=30;envelope.usage.output_tokens_details.reasoning_tokens=20;envelope.usage.total_tokens=130
+  envelope.output=[{type:'reasoning',id:'rs_'+unitId,summary:[]},...envelope.output]
+  let completed=0,recorded=0
+  const config={origin:ORIGIN,capability:CAP,requests:{'P01-03':historicalBody,[unitId]:body},policy:REASONING_MAX_POLICY,timeoutMs:180000,clock:()=>NOW,
+    budget:{snapshot:async()=>({units:[{unitId:'P01-03',...historicalIdentity},{unitId,...identity}]}),reserve:async(id,text,policy)=>{assert.equal(id,unitId);assert.equal(text,body);assert.deepEqual(policy,REASONING_MAX_MAX_POLICY)
+      return{complete:async rawText=>{completed++;assert.equal(JSON.parse(rawText).output.at(-1).type,'message');return{usage:envelope.usage,costUpperMicroCny:500}},uncertain:async()=>{throw Error('UNEXPECTED')}}}},
+    readSecret:()=>FAKE_SECRET,fetchImpl:async(url,options)=>{assert.equal(options.body,body);return http(JSON.stringify(envelope))},
+    recordRaw:async row=>{recorded++;assert.equal(row.unitId,unitId)}}
+  const gateway=await createModelGateway(config),message={method:'POST',path:'/api/real-input/recognize',headers:{host:new URL(ORIGIN).host,origin:ORIGIN,
+    'sec-fetch-site':'same-origin','content-type':'application/json','x-real-input-capability':CAP},bodyText:JSON.stringify({unitId,requestSha:identity.requestSha})}
+  assert.equal((await gateway.handle(message)).status,200);assert.equal(completed,1);assert.equal(recorded,1)
+  const incomplete=await createModelGateway({...config,budget:{snapshot:config.budget.snapshot,reserve:async()=>({complete:async()=>({semanticUsable:false,usage:envelope.usage,costUpperMicroCny:500}),uncertain:async()=>{throw Error('UNEXPECTED')}})}})
+  const result=await incomplete.handle(message);assert.equal(result.status,422);assert.equal(result.body.code,'MODEL_OUTPUT_INCOMPLETE_NO_RETRY')
+  const none=JSON.parse(body);none.reasoning.effort='none';assert.throws(()=>inspectRequest(JSON.stringify(none),REASONING_MAX_MAX_POLICY),/REASONING/)
+  assert.throws(()=>inspectRequest(body,REASONING_COMPARE_LOW_POLICY),/PARAMETERS|REASONING/)
+  assert.equal(REASONING_MAX_NONE_POLICY.outputTokenCeiling,32768)
 })
