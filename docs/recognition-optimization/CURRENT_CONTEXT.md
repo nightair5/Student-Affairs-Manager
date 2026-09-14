@@ -12,7 +12,8 @@
 - 分支：codex/e2-multimodal-recognition-exp。
 - 本轮起点：ec05976a824595fe28737d5dee84fb9d9bbbf2ac。
 - 起点对应上一轮业务提交：6a8b459ece9e6cc551a6bd9d07fa042ab4a9ef98。
-- 当前交付提交与远端SHA见reasoning run的DELIVERY.json。
+- 本轮业务提交：1511a0056dccf3a3617a73a96446dddca80c4a5c。
+- 远端同分支已精确核对为同一业务SHA。
 
 ## 固定设计
 - 20份已见完整匿名通知，原12份与后8份原样复用。
