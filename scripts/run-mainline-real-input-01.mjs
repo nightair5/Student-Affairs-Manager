@@ -7,7 +7,8 @@ import { build } from 'esbuild'
 import { execFileSync } from 'node:child_process'
 import { inspectProtection, verifyReviewBinding, CANDIDATE02_DIRECTORY, CANDIDATE03_DIRECTORY, PAIRED04_DIRECTORY, PAIRED05_DIRECTORY, PAIRED06_DIRECTORY, PAIRED07_DIRECTORY, PAIRED08_DIRECTORY, PAIRED09_DIRECTORY } from './check-mainline-real-input-01.mjs'
 import { inspectRequest, createModelGateway, createPinnedProxyFetch, createRawRecorder } from './real-input-model-gateway.mjs'
-import { BILLING_POLICY, FLASH41_POLICY, FLASH41_PAIRED06_POLICY, FLASH41_PAIRED07_POLICY, FLASH41_PAIRED08_POLICY, FLASH41_PAIRED09_POLICY, RECOVERY_ROUTE, initializeBudget, openBudget } from './real-input-budget.mjs'
+import { BILLING_POLICY, FLASH41_POLICY, FLASH41_PAIRED06_POLICY, FLASH41_PAIRED07_POLICY, FLASH41_PAIRED08_POLICY, FLASH41_PAIRED09_POLICY,
+  MODEL_COMPARE_POLICY, modelComparePolicyFor, RECOVERY_ROUTE, initializeBudget, openBudget } from './real-input-budget.mjs'
 
 const hash=bytes=>createHash('sha256').update(bytes).digest('hex')
 const check=(ok,code)=>{if(!ok)throw Error('REAL_INPUT_RUNNER_'+code)}
@@ -1039,6 +1040,141 @@ export async function dispatchPaired09(unitId){
   }finally{await recorder.close()}
 }
 
+export const MODEL_COMPARE_DIRECTORY='docs/recognition-optimization/mainline-real-input-01/runs/model-compare-20260914a'
+const readModelCompare=name=>JSON.parse(readFileSync(join(MODEL_COMPARE_DIRECTORY,name)))
+const modelCompareSources=['scripts/real-input-budget.mjs','scripts/real-input-budget.node-test.mjs','scripts/real-input-model-gateway.mjs',
+  'scripts/real-input-model-gateway.node-test.mjs','scripts/run-mainline-real-input-01.mjs','scripts/serve-mainline-real-input-01.mjs',
+  'src/experiments/realInput01/runtime.ts','src/experiments/realInput01/browser.tsx','src/experiments/realInput01/acceptance.test.tsx']
+function inspectModelCompareProtection(){
+  const baseline=readModelCompare('BASELINE.json'),branch=execFileSync('git',['branch','--show-current'],{encoding:'utf8'}).trim(),head=execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim()
+  check(branch==='codex/e2-multimodal-recognition-exp'&&head===baseline.head,'MC_GIT')
+  for(const item of baseline.protectedFiles)check(hash(readFileSync(item.path))===item.sha256,'MC_PROTECTED:'+item.path)
+  const allowed=new Set([...modelCompareSources,'docs/recognition-optimization/CURRENT_CONTEXT.md','docs/recognition-optimization/OPTIMIZATION_LOG.md',
+    'docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/CALL_LEDGER.jsonl'])
+  const changed=[...execFileSync('git',['diff','--name-only'],{encoding:'utf8'}).trim().split('\n'),
+    ...execFileSync('git',['ls-files','--others','--exclude-standard'],{encoding:'utf8'}).trim().split('\n')].filter(Boolean)
+  for(const path of changed)check(allowed.has(path)||path.startsWith(MODEL_COMPARE_DIRECTORY+'/'),'MC_SCOPE:'+path)
+  return {head,branch,sources:modelCompareSources.map(path=>({path,sha256:hash(readFileSync(path))}))}
+}
+export async function modelCompareApi(){
+  const compiled=await build({stdin:{contents:`export {buildCandidate03Request,CANDIDATE03_VERSION} from './src/experiments/realInput01/candidate03.ts';
+    export {parseModelEnvelope,projectSemantic,WIRE_VERSION} from './src/experiments/realInput01/modelWire.ts';`,resolveDir:process.cwd(),loader:'ts'},bundle:true,write:false,platform:'node',format:'esm',metafile:true})
+  const dependencies=Object.keys(compiled.metafile.inputs).filter(p=>p!=='<stdin>').sort().map(path=>({path,sha256:hash(readFileSync(path))}))
+  check(!dependencies.some(d=>/seenInputs|evaluation|fixture|expected|REFERENCE_SPEC|INPUTS\.json/i.test(d.path)),'MC_ANSWER_IN_REQUEST')
+  return {dependencies,api:await import('data:text/javascript;base64,'+Buffer.from(compiled.outputFiles[0].contents).toString('base64'))}
+}
+export function modelCompareOrder(seed=20260914){
+  let n=seed>>>0;const order=Array.from({length:20},(_,i)=>i<10?['A','B']:['B','A'])
+  for(let i=order.length-1;i>0;i--){n=(Math.imul(n,1664525)+1013904223)>>>0;const j=n%(i+1);[order[i],order[j]]=[order[j],order[i]]}
+  return order
+}
+export async function prepareModelCompare(){
+  const protection=inspectModelCompareProtection(),previous=read09('BINDING_FINAL.json'),previousRefs=read09('REFERENCES_FINAL.json')
+  const {api,dependencies}=await modelCompareApi(),closure=await compileOriginalScorer05()
+  check(api.CANDIDATE03_VERSION==='real-input-source-semantics-3'&&api.WIRE_VERSION==='real-input-model-wire-1','MC_CANDIDATE')
+  check(previous.items.length===20&&previousRefs.items.length===20&&previous.scorerBundleSha===closure.bundleSha,'MC_INPUTS')
+  const requests={},units=[],items=[],references=[],seed=20260914,order=modelCompareOrder(seed)
+  for(const [i,item] of previous.items.entries()){
+    const id=(i<12?'W':'X')+String(i<12?i+1:i-11).padStart(2,'0'),cohort=i<12?'original12':'later8',context=structuredClone(item.context)
+    const base=await api.buildCandidate03Request(context)
+    for(const arm of order[i]){
+      const unitId=id+'-'+arm,body=structuredClone(base.body);body.model=modelComparePolicyFor(unitId).model
+      const serialized=JSON.stringify(body),u=inspectRequest(serialized,modelComparePolicyFor(unitId))
+      requests[unitId]=serialized;units.push({unitId,candidateSha:u.candidateSha,inputSha:u.inputSha,requestSha:u.requestSha,requestBytes:u.requestBytes,scorerSha:previous.scorerSha})
+    }
+    const oldPair=previous.units.filter(u=>u.unitId.startsWith(item.id+'-')),old03=oldPair.find(u=>u.unitId.endsWith('-03')),newA=units.find(u=>u.unitId===id+'-A')
+    check(old03&&newA?.candidateSha===old03.candidateSha&&newA.inputSha===old03.inputSha,'MC_BASELINE_IDENTITY')
+    const pair=order[i].map(arm=>requests[id+'-'+arm]),withoutModel=text=>{const value=JSON.parse(text);delete value.model;return value}
+    check(isDeepStrictEqual(withoutModel(pair[0]),withoutModel(pair[1])),'MC_ONLY_MODEL')
+    items.push({...item,id,cohort,previousId:item.id})
+    const reference=previousRefs.items.find(r=>r.id===item.id);check(reference&&isDeepStrictEqual(reference.context,context),'MC_REFERENCE_CONTEXT')
+    references.push({...structuredClone(reference),id,cohort,previousId:item.id})
+  }
+  const refText=JSON.stringify({label:'20份已见材料开发回归；两臂固定candidate03与同一输入，仅模型不同；参考事实只用于评分',items:references},null,2)+'\n'
+  const files=['BINDING_FINAL.json','REFERENCES_FINAL.json','COMPARISON.json'].map(name=>({path:join(PAIRED09_DIRECTORY,name),sha256:hash(readFileSync(join(PAIRED09_DIRECTORY,name))) }))
+  const binding={version:'real-input-model-compare-binding-1',head:protection.head,candidateVersion:api.CANDIDATE03_VERSION,wireVersion:api.WIRE_VERSION,
+    models:{A:'deepseek-flash',B:'deepseek-v4-pro'},dependencies,files,referenceSha:hash(refText),scorerSha:previous.scorerSha,scorerBundleSha:closure.bundleSha,
+    requests,units,items,seed,order,label:'20份已见材料开发回归；同candidate03、同正文、同参数，仅模型身份不同；40请求不是40份材料',createdAt:new Date().toISOString()}
+  writeFileSync(join(MODEL_COMPARE_DIRECTORY,'REFERENCES_FINAL.json'),refText,{flag:'wx'})
+  writeFileSync(join(MODEL_COMPARE_DIRECTORY,'BINDING_FINAL.json'),JSON.stringify(binding,null,2)+'\n',{flag:'wx'})
+  return {original12:12,later8:8,requests:40,bindingSha:hash(JSON.stringify(binding,null,2)+'\n'),candidateVersion:binding.candidateVersion,models:binding.models,modelCalls:0}
+}
+export function verifyModelCompareSend({bindingBytes,binding,baseline,billing,review,protection}){
+  check(isDeepStrictEqual(JSON.parse(bindingBytes),binding)&&binding.version==='real-input-model-compare-binding-1'&&binding.items.length===20&&binding.units.length===40,'MC_BINDING')
+  const sources=protection.sources
+  const ledger=readFileSync(baseline.ledger.path),rows=ledger.toString().trimEnd().split('\n').map(JSON.parse)
+  check(baseline.ledger.sequence===426&&ledger.length>=baseline.ledger.bytes
+    &&hash(ledger.subarray(0,baseline.ledger.bytes))===baseline.ledger.sha256&&rows.length>=426,'MC_LEDGER_PREFIX')
+  const existing=rows.find(r=>r.event.kind==='modelCompareGrant')?.event.grant
+  let reviewedSources=sources
+  if(existing&&hash(JSON.stringify(sources))!==review.sourcesSha){
+    const fix=readModelCompare('POST_GRANT_FIX.json'),runnerPath='scripts/run-mainline-real-input-01.mjs'
+    const currentRunnerSha=sources.find(s=>s.path===runnerPath)?.sha256
+    check(fix.version==='model-compare-post-grant-fix-1'&&fix.changedSourcePath===runnerPath
+      &&/^[a-f0-9]{64}$/.test(fix.beforeSha)&&/^[a-f0-9]{64}$/.test(fix.afterSha)&&fix.beforeSha!==fix.afterSha
+      &&currentRunnerSha===fix.afterSha
+      &&fix.reason==='allow immutable ledger prefix and model-neutral candidate03 parsing after gateway identity validation','MC_POST_GRANT_FIX')
+    reviewedSources=sources.map(item=>item.path===runnerPath?{...item,sha256:fix.beforeSha}:item)
+  }
+  check(review.status==='PASS'&&review.scope==='MODEL_COMPARE_SEND'&&review.head===baseline.head&&review.bindingSha===hash(bindingBytes)
+    &&review.billingSha===hash(JSON.stringify(billing))&&review.sourcesSha===hash(JSON.stringify(reviewedSources)),'MC_REVIEW')
+  check(binding.head===baseline.head&&binding.candidateVersion==='real-input-source-semantics-3'&&binding.models.A==='deepseek-flash'&&binding.models.B==='deepseek-v4-pro','MC_IDENTITY')
+  for(const item of [...binding.dependencies,...binding.files])check(hash(readFileSync(item.path))===item.sha256,'MC_DEPENDENCY:'+item.path)
+  check(hash(readFileSync(join(MODEL_COMPARE_DIRECTORY,'REFERENCES_FINAL.json')))===binding.referenceSha&&isDeepStrictEqual(binding.order,modelCompareOrder(binding.seed)),'MC_REFERENCE_ORDER')
+  for(const [i,item] of binding.items.entries()){
+    const pair=binding.units.slice(i*2,i*2+2);check(isDeepStrictEqual(pair.map(u=>u.unitId),binding.order[i].map(arm=>item.id+'-'+arm)),'MC_ORDER')
+    for(const u of pair){const parsed=inspectRequest(binding.requests[u.unitId],modelComparePolicyFor(u.unitId));check(['candidateSha','requestSha','inputSha','requestBytes'].every(k=>parsed[k]===u[k])&&u.scorerSha===binding.scorerSha,'MC_REQUEST')}
+    const withoutModel=text=>{const value=JSON.parse(text);delete value.model;return value}
+    check(isDeepStrictEqual(withoutModel(binding.requests[item.id+'-A']),withoutModel(binding.requests[item.id+'-B'])),'MC_ONLY_MODEL')
+  }
+  check(billing.verified===true&&billing.method==='official-public-document-review'&&isDeepStrictEqual(billing.policy,MODEL_COMPARE_POLICY),'MC_BILLING')
+  check(Date.now()>=Date.parse(billing.checkedAt)&&Date.now()<=Date.parse(billing.validUntil)&&Date.parse(billing.validUntil)-Date.parse(billing.checkedAt)<=86400000,'MC_PRICE_EXPIRED')
+  check(billing.documents.length===2&&billing.documents.every(d=>/^https:\/\/api-docs\.deepseek\.com\//.test(d.url)),'MC_PRICE_EVIDENCE')
+  const grant={version:'real-input-model-compare-grant-1',grantId:review.grantId,parentTail:rows[425].hash,parentSequence:426,ledgerPrefixBytes:baseline.ledger.bytes,ledgerPrefixSha:baseline.ledger.sha256,
+    manifestSha:hash(readFileSync(join(runDirectory,'REQUEST_MANIFEST.json'))),bindingSha:hash(bindingBytes),head:binding.head,sourcesSha:review.sourcesSha,reviewSha:hash(JSON.stringify(review)),
+    targets:binding.units,billingEvidence:{checkedAt:billing.checkedAt,validUntil:billing.validUntil,evidenceSha:hash(JSON.stringify(billing))},route:RECOVERY_ROUTE,priorNonce:rows[1].event.nonce,a02ResponseSha:rows[4].event.responseSha,maxTotalRequests:248,policy:MODEL_COMPARE_POLICY}
+  if(existing)check(isDeepStrictEqual(existing,grant),'MC_GRANT_CHANGED')
+  return grant
+}
+export async function dispatchModelCompare(unitId){
+  check(/^(?:W(?:0[1-9]|1[0-2])|X0[1-8])-[AB]$/.test(unitId),'MC_UNIT')
+  const bytes=readFileSync(join(MODEL_COMPARE_DIRECTORY,'BINDING_FINAL.json')),binding=JSON.parse(bytes),baseline=readModelCompare('BASELINE.json')
+  const protection=inspectModelCompareProtection(),grant=verifyModelCompareSend({bindingBytes:bytes,binding,baseline,billing:readModelCompare('BILLING.json'),review:readModelCompare('SEND_REVIEW.json'),protection})
+  const closure=await compileOriginalScorer05(),{api}=await modelCompareApi(),budget=await openBudget(runDirectory,grant.manifestSha,{batchGrant:grant}),before=await budget.snapshot(),index=before.reservations.length-208
+  check(binding.units[index]?.unitId===unitId&&!before.modelCompare?.stopped&&before.reservations.slice(1).every(r=>r.status==='settled'),'MC_NEXT')
+  check(before.reservations.reduce((n,r)=>n+r.costUpperMicroCny,0)+MODEL_COMPARE_POLICY.reservationMicroCny<=MODEL_COMPARE_POLICY.limitMicroCny,'MC_BUDGET')
+  const rawPath=join(MODEL_COMPARE_DIRECTORY,unitId+'_RAW.jsonl'),resultPath=join(MODEL_COMPARE_DIRECTORY,unitId+'_RESULT.json')
+  check(!existsSync(rawPath)&&!existsSync(resultPath),'MC_ALREADY_ATTEMPTED')
+  try{process.loadEnvFile(resolve('.env'))}catch{check(false,'SERVER_CONFIGURATION_UNAVAILABLE')}
+  const old=JSON.parse(readFileSync(join(runDirectory,'STATE.json'))),recorder=await createRawRecorder(rawPath),origin='http://127.0.0.1:6631',capability=randomBytes(32).toString('hex');let observed
+  try{
+    const requests={...old.requests,...JSON.parse(readFileSync(join(CANDIDATE02_DIRECTORY,'BINDING.json'))).requests,...JSON.parse(readFileSync(join(CANDIDATE03_DIRECTORY,'BINDING.json'))).requests,
+      ...pairedRead('BINDING.json').requests,...read05('BINDING.json').requests,...read06('BINDING.json').requests,...read07('BINDING_FINAL.json').requests,...read08('BINDING_FINAL.json').requests,...read09('BINDING_FINAL.json').requests,...binding.requests}
+    const gateway=await createModelGateway({origin,capability,budget,requests,policy:MODEL_COMPARE_POLICY,fetchImpl:createPinnedProxyFetch(),recordRaw:async row=>{check(row.unitId===unitId&&row.requestSha===binding.units[index].requestSha,'MC_RAW_ID');await recorder.write(row);observed=row}})
+    const start=Date.now(),response=await gateway.handle({method:'POST',path:'/api/real-input/recognize',headers:{host:new URL(origin).host,origin,'sec-fetch-site':'same-origin','content-type':'application/json','x-real-input-capability':capability},bodyText:JSON.stringify({unitId,requestSha:binding.units[index].requestSha})})
+    let score=null,scoreError=null,assembled=null,returnedModel=observed?JSON.parse(observed.rawHttpText).model:null
+    const item=binding.items.find(i=>i.id===unitId.slice(0,3)),reference=readModelCompare('REFERENCES_FINAL.json').items.find(i=>i.id===item.id),arm=unitId.at(-1),expectedModel=binding.models[arm]
+    if(response.status===200)try{
+      const providerEnvelope=JSON.parse(observed.rawHttpText);returnedModel=providerEnvelope.model
+      // The gateway/budget already verified the exact requested provider model.
+      // Candidate03's historical parser only names Flash, so use a model-neutral
+      // parse copy while retaining the immutable provider bytes and identity.
+      const parserEnvelope=structuredClone(providerEnvelope);parserEnvelope.model='deepseek-flash'
+      const parsed=api.parseModelEnvelope(JSON.stringify(parserEnvelope),item.context,'deepseek-flash');assembled=parsed.adaptedResponse
+      const projection=structuredClone(parsed.envelope);projection.model=BILLING_POLICY.model;projection.output[0].content[0].text=JSON.stringify(api.projectSemantic(assembled))
+      score=await closure.api.scoreSeenResponse(JSON.stringify(projection),item.context,reference.response,reference.context)
+    }catch(error){scoreError=typeof error?.message==='string'&&/^REAL_INPUT_[A-Z0-9_]+$/.test(error.message)?error.message:'SCHEMA_OR_SCORER_REJECTED'}
+    const after=await budget.snapshot(),reservation=after.reservations.find(r=>r.unitId===unitId)
+    const result={version:'real-input-model-compare-result-1',unitId,arm,cohort:item.cohort,previousId:item.previousId,bindingSha:hash(bytes),requestSha:binding.units[index].requestSha,responseSha:observed?.responseSha??null,
+      requestModel:expectedModel,returnedModel,modelMatch:returnedModel===expectedModel,candidateVersion:binding.candidateVersion,wireVersion:binding.wireVersion,scorerSha:binding.scorerSha,scorerBundleSha:closure.bundleSha,referenceSha:binding.referenceSha,
+      scoreInput:'candidate03 semantic projection into frozen scorer; gateway-validated provider raw unchanged; parser copy model-neutralized only',assembled,http:response.status,diagnostic:response.diagnostic??null,waitingMs:Date.now()-start,score,scoreError,totalAttempts:after.reservations.length,
+      usage:reservation?.usage??null,costUpperMicroCny:reservation?.costUpperMicroCny??0,totalCostUpperMicroCny:after.reservations.reduce((n,r)=>n+r.costUpperMicroCny,0),stopDispatch:response.status!==200||Boolean(after.modelCompare?.stopped)||reservation?.status!=='settled',
+      providerBilledCny:'NOT_OBSERVABLE',automaticSelection:'NOT_ENABLED',qualityClaim:binding.label}
+    writeFileSync(resultPath,JSON.stringify(result,null,2)+'\n',{flag:'wx'})
+    return {unitId,http:result.http,stopDispatch:result.stopDispatch,scoreError,totalAttempts:result.totalAttempts,waitingMs:result.waitingMs,costUpperMicroCny:result.costUpperMicroCny,requestModel:result.requestModel,returnedModel:result.returnedModel}
+  }finally{await recorder.close()}
+}
+
 const read08=name=>JSON.parse(readFileSync(join(PAIRED08_DIRECTORY,name)))
 export async function paired08Api(){
   const compiled=await build({stdin:{contents:`export {buildFlash41Candidate08ComparisonRequest,CANDIDATE08_VERSION} from './src/experiments/realInput01/candidate08.ts';
@@ -1261,7 +1397,9 @@ export async function dispatchPaired07(unitId){
 
 if(process.argv[1]&&resolve(process.argv[1])===resolve(import.meta.filename)){
   const args=process.argv.slice(2),pick=key=>args.find(a=>a.startsWith('--'+key+'='))?.slice(key.length+3)
-  if(args.length===1&&args[0]==='--freeze-candidate09')console.log(JSON.stringify(await freezeCandidate09()))
+  if(args.length===1&&args[0]==='--prepare-model-compare')console.log(JSON.stringify(await prepareModelCompare()))
+  else if(args.length===1&&/^--model-compare=(?:W(?:0[1-9]|1[0-2])|X0[1-8])-[AB]$/.test(args[0]))console.log(JSON.stringify(await dispatchModelCompare(pick('model-compare'))))
+  else if(args.length===1&&args[0]==='--freeze-candidate09')console.log(JSON.stringify(await freezeCandidate09()))
   else if(args.length===1&&args[0]==='--prepare-paired09')console.log(JSON.stringify(await preparePaired09()))
   else if(args.length===1&&/^--paired09=(?:U(?:0[1-9]|1[0-2])|V0[1-8])-(03|09)$/.test(args[0]))console.log(JSON.stringify(await dispatchPaired09(pick('paired09'))))
   else if(args.length===1&&args[0]==='--freeze-candidate08')console.log(JSON.stringify(await freezeCandidate08()))

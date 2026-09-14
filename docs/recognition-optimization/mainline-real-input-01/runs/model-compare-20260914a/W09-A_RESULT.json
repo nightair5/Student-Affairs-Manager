@@ -1,0 +1,232 @@
+{
+  "version": "real-input-model-compare-result-1",
+  "unitId": "W09-A",
+  "arm": "A",
+  "cohort": "original12",
+  "previousId": "U09",
+  "bindingSha": "0e053544594dd40c5e99d577a290441ef4c32b44ce36d280cbef44bd87bde7d1",
+  "requestSha": "9e4e71aca91abce3075e83712e11d334795195ea38b4ec8243e34374500654c2",
+  "responseSha": "12d39c0ccef81e249872e428d68ff8b1b980fd04d853ac832eb4bf68db967269",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "modelMatch": true,
+  "candidateVersion": "real-input-source-semantics-3",
+  "wireVersion": "real-input-model-wire-1",
+  "scorerSha": "ad76149f8a88cb4adda6dca78b210daaa4f3c800d17582767911e8ace2658e1d",
+  "scorerBundleSha": "782c89b4f865d83c9a2051d9e2a6df3776b7231ad49aec87008b5c14f4e09f21",
+  "referenceSha": "ab7da30fc52a9de9a69a0569caa3ceafdfb4bf73eeda35e4835719aff80f565d",
+  "scoreInput": "candidate03 semantic projection into frozen scorer; gateway-validated provider raw unchanged; parser copy model-neutralized only",
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [],
+    "materials": [],
+    "timePoints": [
+      {
+        "tempId": "tp-1",
+        "type": "event_start",
+        "rawText": "2026年9月28日19:00开始",
+        "relatedTaskTempIds": [],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0002-f926cf20e7fd03ea21736fce579e25887c8dc18e96a1a27b1c7920a2cc8ed7fa"
+        ],
+        "confidence": 0.95,
+        "normalizedValue": "2026-09-28T19:00",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "exact",
+        "needsConfirmation": false
+      },
+      {
+        "tempId": "tp-2",
+        "type": "event_end",
+        "rawText": "于21:00结束",
+        "relatedTaskTempIds": [],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0003-0c98be1270d94817fc76797ae25116733695335e9787b23da2f08d232775b1f9"
+        ],
+        "confidence": 0.95,
+        "normalizedValue": null,
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "vague",
+        "needsConfirmation": true
+      }
+    ],
+    "events": [
+      {
+        "tempId": "ev-1",
+        "title": "校园观星夜",
+        "description": "观星夜将在2026年9月28日19:00开始，于21:00结束，地点为教学楼北侧平台。",
+        "startTimePointTempId": "tp-1",
+        "endTimePointTempId": "tp-2",
+        "location": "教学楼北侧平台",
+        "scopeIds": [
+          "scope-0001-09c7ccab5817997b03ca9978f943864451b89f8d1a81e58b0d8c54cf9d77ce83",
+          "scope-0002-f926cf20e7fd03ea21736fce579e25887c8dc18e96a1a27b1c7920a2cc8ed7fa",
+          "scope-0003-0c98be1270d94817fc76797ae25116733695335e9787b23da2f08d232775b1f9",
+          "scope-0004-ea9ea265e09511f46495525ee77e3f04dfa63f05b6b4876faaace37798a664dd"
+        ],
+        "confidence": 0.95,
+        "inferenceLevel": "explicit",
+        "relatedTaskTempIds": []
+      }
+    ],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0005-8f69e1ae7061f32cd47acdd2e08caaf0470f16edd3b59d645a7896a51e36312e",
+      "scope-0006-13bbae9371ab55296f149d233cfd0a187eefdf04560730f7ea501cdd5daceb67",
+      "scope-0007-6de85c02afa4f297c060a3d66e4beb3ab89ee4e18712de073435ad30f0d46cd5",
+      "scope-0008-9deccb7b137ba88ec3e600eb3dd949f0fced9d846b3c16e741cdf1bcfb499f4a",
+      "scope-0009-9fd633f92461f3eca9b3d419e019c696184bb8089add9a8401bccb231252493e"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "source:2e8f2e5b",
+    "sourceVersionId": "source:2e8f2e5b:version:1",
+    "sourceFingerprint": "sha256:80c9db3e0f2b77c9cda709adbcdffd0f69f43623669cef902e20b962708df606"
+  },
+  "http": 200,
+  "diagnostic": null,
+  "waitingMs": 4480,
+  "score": {
+    "scorerVersion": "real-input-seen-fact-diagnostic-2",
+    "label": "已见人工工程参考的精确诊断，不是未见或商业准确率",
+    "metrics": {
+      "task": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "requiresAction": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 1,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "time": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 0,
+        "falsePositive": 2,
+        "falseNegative": 2,
+        "precision": 0,
+        "recall": 0
+      },
+      "material": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "event": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 0,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0,
+        "recall": 0
+      },
+      "condition": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "revision": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "evidence": {
+        "predicted": 3,
+        "reference": 3,
+        "correct": 0,
+        "falsePositive": 3,
+        "falseNegative": 3,
+        "precision": 0,
+        "recall": 0
+      },
+      "semantic": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 0,
+        "falsePositive": 2,
+        "falseNegative": 2,
+        "precision": 0,
+        "recall": 0
+      },
+      "coverage": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 1,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0.5,
+        "recall": 0.5
+      }
+    },
+    "matchingAmbiguities": [],
+    "metricStatus": "EXACT_REFERENCE_DIAGNOSTIC",
+    "schemaParsed": true,
+    "issues": [
+      {
+        "code": "TIME_NEEDS_REVIEW",
+        "entityIds": [
+          "tp-2"
+        ]
+      },
+      {
+        "code": "EVENT_NOT_TASK_ASSOCIATED",
+        "entityIds": [
+          "ev-1"
+        ]
+      }
+    ],
+    "completeCase": false,
+    "majorCorrectionRequired": true,
+    "forbidden": 0,
+    "automaticSelection": "NOT_ENABLED",
+    "humanActiveEditTime": "NOT_RUN",
+    "candidateTaskCount": 0,
+    "referenceTaskCount": 0
+  },
+  "scoreError": null,
+  "totalAttempts": 225,
+  "usage": {
+    "input_tokens": 4617,
+    "input_tokens_details": {
+      "cached_tokens": 4480
+    },
+    "output_tokens": 718,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 5335
+  },
+  "costUpperMicroCny": 14978,
+  "totalCostUpperMicroCny": 9213314,
+  "stopDispatch": false,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticSelection": "NOT_ENABLED",
+  "qualityClaim": "20份已见材料开发回归；同candidate03、同正文、同参数，仅模型身份不同；40请求不是40份材料"
+}

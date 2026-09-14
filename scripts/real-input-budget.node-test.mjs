@@ -4,7 +4,9 @@ import { mkdtemp, mkdir, readFile, writeFile, unlink } from 'node:fs/promises'
 import { join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { spawn } from 'node:child_process'
-import { BILLING_POLICY, FLASH41_POLICY, FLASH41_PAIRED06_POLICY, FLASH41_PAIRED07_POLICY, FLASH41_PAIRED08_POLICY, FLASH41_PAIRED09_POLICY, sha256, costUpperMicroCny, validateManifest, validateUsageEnvelope, initializeBudget, openBudget } from './real-input-budget.mjs'
+import { BILLING_POLICY, FLASH41_POLICY, FLASH41_PAIRED06_POLICY, FLASH41_PAIRED07_POLICY, FLASH41_PAIRED08_POLICY, FLASH41_PAIRED09_POLICY,
+  MODEL_COMPARE_POLICY, MODEL_COMPARE_FLASH_POLICY, MODEL_COMPARE_PRO_POLICY, modelComparePolicyFor,
+  sha256, costUpperMicroCny, validateManifest, validateUsageEnvelope, initializeBudget, openBudget } from './real-input-budget.mjs'
 
 async function batchFixture() {
   const f=await recoveryFixture(),r=await openBudget(f.dir,f.manifestSha,{recoveryGrant:f.grant})
@@ -735,4 +737,44 @@ if(process.argv[2]!=='--reserve-child')test('paired09: preserved 168 prefix, rej
   assert.equal(s.reservations[0].costUpperMicroCny,3300000)
   await assert.rejects(()=>reserve(b,'U01-03',FLASH41_PAIRED09_POLICY))
   assert.equal(costUpperMicroCny(1048576,8192,FLASH41_PAIRED09_POLICY),3219456)
+})
+
+const modelEnvelope=(id,model,input=100,output=10)=>{const value=JSON.parse(envelope(id,input,output));value.model=model;return JSON.stringify(value)}
+async function modelCompareFixture() {
+  const f=await paired09Fixture(),b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+  for(const u of f.grant.targets)await(await reserve(b,u.unitId,FLASH41_PAIRED09_POLICY)).complete(flashEnvelope(u.unitId))
+  const before=await b.snapshot(),prefix=await readFile(join(f.dir,'CALL_LEDGER.jsonl'))
+  const baselines=f.grant.targets.filter(u=>u.unitId.endsWith('-03'))
+  const cases=[...Array.from({length:12},(_,i)=>`W${String(i+1).padStart(2,'0')}`),...Array.from({length:8},(_,i)=>`X${String(i+1).padStart(2,'0')}`)]
+  const targets=cases.flatMap((id,i)=>(i<10?['A','B']:['B','A']).map(arm=>{
+    const value=row(`${id}-${arm}`,arm==='A'?'flash41-03':'pro-03',baselines[i].inputSha)
+    value.inputSha=baselines[i].inputSha
+    if(arm==='A')value.candidateSha=baselines[i].candidateSha
+    return value
+  }))
+  return {...f,before,prefix,grant:{...f.grant,version:'real-input-model-compare-grant-1',grantId:'bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb',
+    parentTail:before.tail,parentSequence:before.nextSequence,ledgerPrefixBytes:prefix.length,ledgerPrefixSha:sha256(prefix),
+    maxTotalRequests:248,policy:MODEL_COMPARE_POLICY,targets}}
+}
+if(process.argv[2]!=='--reserve-child')test('model compare: same candidate/input, distinct model policies, exact order and twenty-yuan cap',async()=>{
+  const f=await modelCompareFixture()
+  assert.equal(f.before.nextSequence,426);assert.equal(f.before.reservations.length,208)
+  for(const mutate of [
+    g=>{g.parentSequence=425},g=>{g.maxTotalRequests=249},g=>{g.policy.limitMicroCny=21000000},
+    g=>{g.targets[0].unitId='U01-03'},g=>{g.targets[1].inputSha=sha256('different')},
+    g=>{g.targets.find(u=>u.unitId.endsWith('-A')).candidateSha=sha256('different')},
+    g=>{g.targets=g.targets.flatMap((_,i,a)=>i%2?[]:a.slice(i,i+2).sort((a,b)=>a.unitId.localeCompare(b.unitId)))}
+  ]){const grant=structuredClone(f.grant);mutate(grant);await assert.rejects(()=>openBudget(f.dir,f.manifestSha,{batchGrant:grant}))}
+  assert.deepEqual(await readFile(join(f.dir,'CALL_LEDGER.jsonl')),f.prefix)
+  const b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+  await assert.rejects(()=>reserve(b,f.grant.targets[1].unitId,modelComparePolicyFor(f.grant.targets[1].unitId)))
+  for(const u of f.grant.targets){const policy=modelComparePolicyFor(u.unitId)
+    await(await reserve(b,u.unitId,policy)).complete(modelEnvelope(u.unitId,policy.model))}
+  const s=await b.snapshot();assert.equal(s.reservations.length,248);assert.equal(s.nextSequence,507)
+  assert.deepEqual(s.reservations.slice(0,208),f.before.reservations)
+  assert.deepEqual((await readFile(join(f.dir,'CALL_LEDGER.jsonl'))).subarray(0,f.prefix.length),f.prefix)
+  assert.equal(modelComparePolicyFor('W01-A'),MODEL_COMPARE_FLASH_POLICY)
+  assert.equal(modelComparePolicyFor('W01-B'),MODEL_COMPARE_PRO_POLICY)
+  assert.equal(costUpperMicroCny(65536,8192,MODEL_COMPARE_PRO_POLICY),811008)
+  assert.ok(costUpperMicroCny(65536,8192,MODEL_COMPARE_PRO_POLICY)<MODEL_COMPARE_POLICY.reservationMicroCny)
 })

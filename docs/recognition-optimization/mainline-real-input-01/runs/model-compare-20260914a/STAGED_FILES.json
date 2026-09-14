@@ -1,0 +1,23 @@
+{
+  "version": "model-compare-staged-files-1",
+  "businessCommitScope": [
+    "scripts/real-input-budget.mjs",
+    "scripts/real-input-budget.node-test.mjs",
+    "scripts/real-input-model-gateway.mjs",
+    "scripts/real-input-model-gateway.node-test.mjs",
+    "scripts/run-mainline-real-input-01.mjs",
+    "docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/CALL_LEDGER.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/model-compare-20260914a/",
+    "docs/recognition-optimization/CURRENT_CONTEXT.md",
+    "docs/recognition-optimization/OPTIMIZATION_LOG.md"
+  ],
+  "excluded": [
+    "package-lock.json",
+    "src/experiments/realInput01/candidate03.ts",
+    "src/experiments/realInput01/modelWire.ts",
+    "production configuration and user databases"
+  ],
+  "workspaceWideAdd": false,
+  "forcePush": false,
+  "automaticRebase": false
+}

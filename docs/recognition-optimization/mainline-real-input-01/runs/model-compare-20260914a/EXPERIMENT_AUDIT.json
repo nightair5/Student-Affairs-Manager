@@ -1,0 +1,158 @@
+{
+  "audit_skill": "experiment-audit",
+  "version": "model-compare-experiment-audit-1",
+  "verdict": "PASS_WITH_DISCLOSED_LIMITATIONS",
+  "reason_code": "no_current_run_blocker_seen_synthetic_manual_adjudication_browser_not_run",
+  "summary": "The matched-pair requests, 40 provider responses, model identities, ledger chain and budget recompute cleanly. DO_NOT_ADOPT_PRO is supported, while exact business counts remain provisional development adjudication and current browser acceptance is NOT_RUN.",
+  "blockers": [],
+  "non_blockers": [
+    "The 20 notices and references are already-seen synthetic development material, not an unseen external ground-truth set.",
+    "Business adjudications are reproducible but same-workspace manual labels and were not cryptographically bound before dispatch.",
+    "W01-B raw bytes are ledger-bound, but originalResultSha names the provider response SHA rather than a prior whole RESULT file hash.",
+    "Provider billed amount is NOT_OBSERVABLE; only a peak-price upper bound is verified.",
+    "Current browser journeys, refresh readback, independent repository read and downloads are NOT_RUN.",
+    "The historical RCO-5-007 package-lock freeze mismatch remains separate and unresolved."
+  ],
+  "audited_input_hashes": {
+    "BINDING_FINAL.json": "sha256:0e053544594dd40c5e99d577a290441ef4c32b44ce36d280cbef44bd87bde7d1",
+    "REFERENCES_FINAL.json": "sha256:ab7da30fc52a9de9a69a0569caa3ceafdfb4bf73eeda35e4835719aff80f565d",
+    "COMPARISON.json": "sha256:44838d9dba3549e37af70e7685a98fd971a981b211e606f078143b81f1a27809",
+    "BILLING.json": "sha256:db1fcfeb50cd3e3364ca27b965e0ac5eeb14c561bd3d40f44230a66c7773bbd1",
+    "CHECKS.json": "sha256:21891c92231802c0630254521eb00068bfdc634dcd863885e18adc83034e4e10",
+    "IMPLEMENTATION_SNAPSHOT.json": "sha256:9e032bbfbac29a936d8c7a9b168b49da048a0f332e644759906dd558b01261c4",
+    "BROWSER.json": "sha256:75ecd3c19b0d0750d98b8eb0e56a4f5070d89d3917861fe629b18714f4381a42",
+    "AUDIT.md": "sha256:e464a04b999a48a3fce56410b80b9348297976bfed74aea04dea25aa0069c875",
+    "ANALYZE.mjs": "sha256:a57081ff143d2f5979d03a82a4ba872dbcd027522ed0d4ff135d5f21689aac5c",
+    "REPORT.mjs": "sha256:cd067ab95c3a48d498ee435cf7a846030e3e74ac81c45eb6f1b46ddfdb69d5df",
+    "REPARSE.json": "sha256:2a2d1addceb895010b96aead71a24edfc921b4e9991c7ba4ce3caf6eaa7043d7",
+    "POST_GRANT_FIX.json": "sha256:fd85208b840c13ceca1ffdb0cf63e4c51e6057d85a34c7769bcbe332fdd13d35",
+    "40_RAW_bundle_manifest": "sha256:9bdd1b9e3e9d698d7e276e01d7dfe3fabedd87cd47e4cc32b8a93d7c498f02ef",
+    "40_RESULT_bundle_manifest": "sha256:e03e9965ad573b43150ab9ef2096dfbe0112e9e832aa407fcfc79052ef004d9f",
+    "CALL_LEDGER.jsonl": "sha256:cde335bf62b473a7e86cbbdaa6a78e53ab0d6bd34a6dcc73fc19c38353d84911",
+    "scripts/run-mainline-real-input-01.mjs": "sha256:e8749ef504aa1f36cda8607d2773f589d7af506a587c0656058208a2acdd11ee",
+    "scripts/real-input-budget.mjs": "sha256:9b9e536e4e9cf9997610c475f3e6579b4b80291b5959cc9e23e5e8aa95265836",
+    "scripts/real-input-model-gateway.mjs": "sha256:27988fcb729d35d66bf19f58ae0800303fe93301e8e6471f3945c6642cd5eece"
+  },
+  "independent_recomputation": {
+    "request_pairs": 20,
+    "requests": 40,
+    "only_model_differs": true,
+    "http_200": 40,
+    "exact_returned_model_identity": 40,
+    "flash_responses": 20,
+    "pro_responses": 20,
+    "unique_response_ids": 40,
+    "ledger_rows": 507,
+    "frozen_prefix_rows": 426,
+    "appended_rows": 81,
+    "grant_rows": 1,
+    "reserve_rows": 40,
+    "settle_rows": 40,
+    "ledger_last_sequence": 506,
+    "ledger_last_hash": "7c5fd9503f47575fdfc03521d19c384d53bf8d4459a84db9f07fd713339e65b8",
+    "flash_cost_upper_micro_cny": 431170,
+    "pro_cost_upper_micro_cny": 1825677,
+    "batch_cost_upper_micro_cny": 2256847,
+    "cumulative_cost_upper_micro_cny": 10559813,
+    "cap_micro_cny": 20000000
+  },
+  "checks": {
+    "gt_provenance": {
+      "status": "warn",
+      "details": "Prior frozen synthetic references are independent of current arm outputs but are not external real-world ground truth or unseen holdout."
+    },
+    "score_normalization": {
+      "status": "pass_with_limitation",
+      "details": "Raw category counts are summed without model-output normalization; exact labels are provisional same-workspace manual adjudication."
+    },
+    "result_existence": {
+      "status": "pass",
+      "details": "All 40 raw and 40 result files exist and bind to requests, responses and ledger settlements."
+    },
+    "dead_code": {
+      "status": "pass",
+      "details": "Analysis and report scripts have materialized outputs; no claimed metric references an absent file."
+    },
+    "scope": {
+      "status": "warn",
+      "details": "One run per arm on 20 already-seen synthetic notices; suitable only for isolated development model selection."
+    },
+    "eval_type": "synthetic_proxy_paired_development_regression",
+    "only_model_variable": {
+      "status": "pass",
+      "details": "All parsed paired requests are deeply equal after deleting only the model field and match the prior candidate03 request."
+    },
+    "model_identity": {
+      "status": "pass",
+      "details": "20 Flash and 20 Pro returned identities exactly match the requested arms."
+    },
+    "ledger_and_budget": {
+      "status": "pass",
+      "details": "Full hash-chain and prefix recomputation passed; cumulative upper bound 10.559813 CNY is below the 20 CNY cap."
+    },
+    "adoption": {
+      "status": "pass",
+      "details": "DO_NOT_ADOPT_PRO is a conservative decision supported by the observed semantic regressions, latency and upper-cost tradeoff."
+    },
+    "w01_b_reparse": {
+      "status": "pass_with_disclosure",
+      "details": "Provider raw is unchanged and ledger-bound; only a cloned parser envelope is model-neutralized. Whole pre-analysis RESULT-file provenance is not separately hashed."
+    },
+    "browser_honesty": {
+      "status": "pass",
+      "details": "All current-run browser acceptance fields remain NOT_RUN after one failed control attempt."
+    },
+    "historical_freeze_separation": {
+      "status": "pass_with_retained_failure",
+      "details": "The pre-existing package-lock freeze mismatch is separately disclosed and package-lock.json has no current Git diff."
+    }
+  },
+  "claims": [
+    {
+      "id": "C1",
+      "claim": "Only model identity differs within each paired request.",
+      "impact": "supported"
+    },
+    {
+      "id": "C2",
+      "claim": "All 40 responses have exact requested model identities and ledger receipts.",
+      "impact": "supported"
+    },
+    {
+      "id": "C3",
+      "claim": "Flash is 17/20 with 6 errors versus Pro 15/20 with 10 errors.",
+      "impact": "supported_with_provisional_manual_adjudication_qualifier"
+    },
+    {
+      "id": "C4",
+      "claim": "Pro should not replace Flash in the isolated 6632 trial.",
+      "impact": "supported"
+    },
+    {
+      "id": "C5",
+      "claim": "Existing reliable engineering replay saved 20 correct tasks.",
+      "impact": "needs_existing_zero_call_replay_not_human_or_current_browser_qualifier"
+    },
+    {
+      "id": "C6",
+      "claim": "This run completed new browser journeys and downloads.",
+      "impact": "unsupported_and_correctly_not_claimed"
+    }
+  ],
+  "trace_path": "docs/recognition-optimization/mainline-real-input-01/runs/model-compare-20260914a/EXPERIMENT_AUDIT.json",
+  "trace_note": "The task allowed only the two audit files in the run directory; they serve as the disclosed forensic record.",
+  "agent_id": "/root/model_compare_independent_audit",
+  "verdict_id": "model-compare-20260914a-same-family-provisional",
+  "executor_model": "codex",
+  "executor_family": "openai",
+  "reviewer_model": "gpt-5.6-sol",
+  "reviewer_family": "openai",
+  "reviewer_reasoning": "ultra",
+  "review_independence": "same-family",
+  "acceptance_status": "provisional",
+  "generated_at": "2026-09-14T12:06:00+08:00",
+  "date": "2026-09-14",
+  "auditor": "gpt-5.6-sol-ultra",
+  "overall_verdict": "pass_with_disclosed_limitations",
+  "integrity_status": "pass"
+}

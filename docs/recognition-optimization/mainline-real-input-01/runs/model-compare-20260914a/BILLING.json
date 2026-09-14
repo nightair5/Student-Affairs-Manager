@@ -1,0 +1,55 @@
+{
+  "version": "real-input-model-compare-billing-1",
+  "verified": true,
+  "method": "official-public-document-review",
+  "checkedAt": "2026-09-14T02:53:41.3879291Z",
+  "validUntil": "2026-09-15T01:53:41.3879291Z",
+  "policy": {
+    "version": "real-input-model-compare-budget-1",
+    "maxRequests": 248,
+    "limitMicroCny": 20000000,
+    "reservationMicroCny": 3300000,
+    "arms": {
+      "A": {
+        "version": "real-input-model-compare-flash-1",
+        "model": "deepseek-flash",
+        "endpoint": "https://api.deepseek.com/responses",
+        "temperature": 0,
+        "reasoningEffort": "none",
+        "inputTokenCeiling": 1048576,
+        "outputTokenCeiling": 8192,
+        "requestByteCeiling": 65536,
+        "inputPriceMicroPerMillion": 2000000,
+        "outputPriceMicroPerMillion": 8000000,
+        "reservationMicroCny": 3300000,
+        "limitMicroCny": 20000000,
+        "maxRequests": 248
+      },
+      "B": {
+        "version": "real-input-model-compare-pro-1",
+        "model": "deepseek-v4-pro",
+        "endpoint": "https://api.deepseek.com/responses",
+        "temperature": 0,
+        "reasoningEffort": "none",
+        "inputTokenCeiling": 1048576,
+        "outputTokenCeiling": 8192,
+        "requestByteCeiling": 65536,
+        "inputPriceMicroPerMillion": 9000000,
+        "outputPriceMicroPerMillion": 27000000,
+        "reservationMicroCny": 3300000,
+        "limitMicroCny": 20000000,
+        "maxRequests": 248
+      }
+    }
+  },
+  "pricingMode": "peak uncached upper bound; cache discount and off-peak discount are not assumed",
+  "requestWorstCaseMicroCnyUnderByteAndOutputCeilings": {
+    "A": 196608,
+    "B": 811008
+  },
+  "documents": [
+    {"url":"https://api-docs.deepseek.com/zh-cn/quick_start/pricing/","supports":"model mapping, Responses compatibility and prices"},
+    {"url":"https://api-docs.deepseek.com/guides/responses_api/","supports":"Responses endpoint and request parameters"}
+  ],
+  "providerBilledCny": "NOT_OBSERVABLE"
+}

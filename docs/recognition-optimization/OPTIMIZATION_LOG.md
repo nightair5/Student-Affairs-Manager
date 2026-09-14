@@ -2211,3 +2211,12 @@
 - 重新读取2026-09-13在6632取得的两个实际下载：独立仓储工程JSON与完整库JSON的canonical workspace完全相等，SHA为7a3b21a3fcbf02c19c5ae56cf3558cf4ea8aedacc214e6779b4100ecfc2b8c7f；实际含1任务/1材料unverified/1时间点。该证据不含第二替代旅程。
 - 本轮官方浏览器只连接一次，约25秒后仍为nodeRepl.fetch request failed；当前自动页面操作NOT_RUN，不循环诊断。历史Q01/Q07操作不冒充本轮新操作。
 - 最终app/node类型、lint、契约、server/Worker/Functions、Vite/preview均通过；Vitest 1382通过/0失败/1跳过；根.env禁读。下一模型轮唯一优先是固定candidate03和wire，只改变模型能力验证U11/U12复合事实归属，不创建candidate10。
+
+### 2026-09-14 固定candidate03的Flash与Pro同期比较
+
+- 固定candidate03、wire、20份匿名正文、来源索引、参考时刻、时区和评分，只改变模型；40/40请求HTTP200，两臂实际返回模型身份各自一致，无试连接、重试、Repair或verifier。
+- deepseek-flash无需实质纠正17/20、实质错误6、结构阻断1；deepseek-v4-pro为15/20、实质错误10、结构阻断6。Pro只在W11条件unknown和X07少2个辅助核对项上改善，却在W02漏2项时间、X05多造任务/错归材料、W11多造材料，结论DO_NOT_ADOPT_PRO。
+- Flash等待141409ms、费用上界0.431170元；Pro等待363167ms、费用上界1.825677元。本批合计费用上界2.256847元，累计248次/10.559813元（含A01未知预留），服务商实扣NOT_OBSERVABLE；20元上限保持。
+- W01-B真实响应和schema有效，但冻结candidate03评分入口拒绝Pro模型名；原RESULT失败不改，业务分析在网关身份核验后对未改raw作模型名中立解析，Pro严格评分覆盖19/20。
+- Pro未接入6632；可靠Flash历史零调用回放的20条正确保存/16份来源继续作为工程承接证据，不冒充本轮真人转化率。
+- 官方浏览器一次连接23.276秒后仍为nodeRepl.fetch request failed；新两旅程与新下载NOT_RUN。当前6632服务从最终源码重启且HTTP200、模型关闭；历史Q01/Q07和U11下载证据仅按原范围复用。

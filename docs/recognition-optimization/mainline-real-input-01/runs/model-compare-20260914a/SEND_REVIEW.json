@@ -1,0 +1,29 @@
+{
+  "version": "real-input-model-compare-send-review-1",
+  "status": "PASS",
+  "scope": "MODEL_COMPARE_SEND",
+  "head": "95ffc393b5a10e6443bbb77413cc1195ad7822e4",
+  "grantId": "c3fe5495-e6d0-43eb-b9c9-d27cac5e5f70",
+  "bindingSha": "0e053544594dd40c5e99d577a290441ef4c32b44ce36d280cbef44bd87bde7d1",
+  "billingSha": "9d325195561db9ab5c68e51ad7a62b3d7dec11639883ddf0e1f4df7b27461a23",
+  "sourcesSha": "6ba9a589a494a4234d1b4bb4ee412d923095c3e473bc86702a10bb12b62c04da",
+  "checks": {
+    "sameCandidate03": true,
+    "sameWire": true,
+    "sameInputsParametersScorer": true,
+    "onlyModelDiffersWithinEachPair": true,
+    "models": {"A":"deepseek-flash","B":"deepseek-v4-pro"},
+    "responsesCompatibility": true,
+    "priceEvidenceCurrent": true,
+    "oldLedgerPrefixPreserved": true,
+    "permanentA01UnknownPreserved": true,
+    "requestWorstCaseWithinReservation": true,
+    "referenceExcludedFromRequests": true,
+    "textOnly": true,
+    "retryRepairVerifier": 0
+  },
+  "authorizedNewRequests": 40,
+  "maximumTotalRequests": 248,
+  "capMicroCny": 20000000,
+  "reviewedAt": "2026-09-14T02:58:00.000Z"
+}

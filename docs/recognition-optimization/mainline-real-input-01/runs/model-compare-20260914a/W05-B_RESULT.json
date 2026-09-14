@@ -1,0 +1,277 @@
+{
+  "version": "real-input-model-compare-result-1",
+  "unitId": "W05-B",
+  "arm": "B",
+  "cohort": "original12",
+  "previousId": "U05",
+  "bindingSha": "0e053544594dd40c5e99d577a290441ef4c32b44ce36d280cbef44bd87bde7d1",
+  "requestSha": "f844d2c81af3d44a98358842525d06292841e50958cb6cacce5faaeb1c828d99",
+  "responseSha": "36bed472f11aff5241136ffaba52d0cfdb879ad662d2ab9b1445347e0b3499ce",
+  "requestModel": "deepseek-v4-pro",
+  "returnedModel": "deepseek-v4-pro",
+  "modelMatch": true,
+  "candidateVersion": "real-input-source-semantics-3",
+  "wireVersion": "real-input-model-wire-1",
+  "scorerSha": "ad76149f8a88cb4adda6dca78b210daaa4f3c800d17582767911e8ace2658e1d",
+  "scorerBundleSha": "782c89b4f865d83c9a2051d9e2a6df3776b7231ad49aec87008b5c14f4e09f21",
+  "referenceSha": "ab7da30fc52a9de9a69a0569caa3ceafdfb4bf73eeda35e4835719aff80f565d",
+  "scoreInput": "candidate03 semantic projection into frozen scorer; gateway-validated provider raw unchanged; parser copy model-neutralized only",
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task_reimbursement_supplement",
+        "propositionScopeIds": [
+          "scope-0001-8353a7781b54ab0220a450c1ffb5f0c88e842d740a4cb7455ac505cc986282de",
+          "scope-0002-cb2536e0887ae2199170614135145fac085c5287c29788317d4948d62323287c",
+          "scope-0003-55704323ddcb7b6852fb3ecf12862804a90ee58a0e1b84aedb35d6088635473d",
+          "scope-0004-4c4065ef4afedd83c87a3555830715c9e5edba1109056ed9563ff1c81ea18f30",
+          "scope-0005-75b60137f9873fdaea0df2a1fc7291501b77ea8b607cb045409d3a2ee8ffef64",
+          "scope-0006-4fd52f6d61d629993ce4520dcdb4aea3acd3a78df6ef22258781a8d654f1d36e",
+          "scope-0007-37a7bbc8bbd940c0e214d4491cb8ebe268b4c601cae23161df943151c696d1bc",
+          "scope-0008-5f4e0dcdb4d116adf5174f1c9644e277e5c71e7b812821b2b7f7027ebddc8064"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "submit",
+        "action": {
+          "scopeId": "scope-0003-55704323ddcb7b6852fb3ecf12862804a90ee58a0e1b84aedb35d6088635473d",
+          "surface": "补交"
+        },
+        "object": {
+          "scopeId": "scope-0003-55704323ddcb7b6852fb3ecf12862804a90ee58a0e1b84aedb35d6088635473d",
+          "surface": "行程证明"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "补交行程证明",
+          "description": "财务退回报销单并注明缺少行程证明时，报销人补交行程证明。财务已退回本次报销单，退回说明明确为缺少行程证明。",
+          "completionCriteria": [
+            "报销人补交行程证明",
+            "行程证明以电子PDF形式提供"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "high",
+          "dependencyTempIds": [],
+          "materialTempIds": [
+            "material_travel_proof_pdf"
+          ],
+          "timePointTempIds": [
+            "time_supplement_deadline"
+          ],
+          "confidence": 0.98,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "true",
+          "conditionScopeIds": [
+            "scope-0002-cb2536e0887ae2199170614135145fac085c5287c29788317d4948d62323287c"
+          ],
+          "factScopeIds": [
+            "scope-0005-75b60137f9873fdaea0df2a1fc7291501b77ea8b607cb045409d3a2ee8ffef64",
+            "scope-0006-4fd52f6d61d629993ce4520dcdb4aea3acd3a78df6ef22258781a8d654f1d36e"
+          ]
+        },
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [
+      {
+        "tempId": "material_travel_proof_pdf",
+        "name": "行程证明",
+        "required": true,
+        "formatRequirements": [
+          "电子PDF"
+        ],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "task_reimbursement_supplement"
+        ],
+        "scopeIds": [
+          "scope-0003-55704323ddcb7b6852fb3ecf12862804a90ee58a0e1b84aedb35d6088635473d",
+          "scope-0007-37a7bbc8bbd940c0e214d4491cb8ebe268b4c601cae23161df943151c696d1bc"
+        ],
+        "confidence": 0.98
+      }
+    ],
+    "timePoints": [
+      {
+        "tempId": "time_supplement_deadline",
+        "type": "submission_deadline",
+        "rawText": "2026年9月21日15:00",
+        "relatedTaskTempIds": [
+          "task_reimbursement_supplement"
+        ],
+        "relatedMaterialTempIds": [
+          "material_travel_proof_pdf"
+        ],
+        "scopeIds": [
+          "scope-0004-4c4065ef4afedd83c87a3555830715c9e5edba1109056ed9563ff1c81ea18f30"
+        ],
+        "confidence": 0.99,
+        "normalizedValue": "2026-09-21T15:00",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "exact",
+        "needsConfirmation": false
+      }
+    ],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0008-5f4e0dcdb4d116adf5174f1c9644e277e5c71e7b812821b2b7f7027ebddc8064"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "source:968544b7",
+    "sourceVersionId": "source:968544b7:version:1",
+    "sourceFingerprint": "sha256:96c21107b841605eac1905da548a5fd1052b32fbea42355ed824285916c79955"
+  },
+  "http": 200,
+  "diagnostic": null,
+  "waitingMs": 15726,
+  "score": {
+    "scorerVersion": "real-input-seen-fact-diagnostic-2",
+    "label": "已见人工工程参考的精确诊断，不是未见或商业准确率",
+    "metrics": {
+      "task": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 1,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "requiresAction": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 1,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "time": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 0,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0,
+        "recall": 0
+      },
+      "material": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 1,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "event": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "condition": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 1,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "revision": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "evidence": {
+        "predicted": 3,
+        "reference": 3,
+        "correct": 0,
+        "falsePositive": 3,
+        "falseNegative": 3,
+        "precision": 0,
+        "recall": 0
+      },
+      "semantic": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 0,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0,
+        "recall": 0
+      },
+      "coverage": {
+        "predicted": 3,
+        "reference": 3,
+        "correct": 1,
+        "falsePositive": 2,
+        "falseNegative": 2,
+        "precision": 0.3333333333333333,
+        "recall": 0.3333333333333333
+      }
+    },
+    "matchingAmbiguities": [],
+    "metricStatus": "EXACT_REFERENCE_DIAGNOSTIC",
+    "schemaParsed": true,
+    "issues": [],
+    "completeCase": false,
+    "majorCorrectionRequired": true,
+    "forbidden": 0,
+    "automaticSelection": "NOT_ENABLED",
+    "humanActiveEditTime": "NOT_RUN",
+    "candidateTaskCount": 1,
+    "referenceTaskCount": 1
+  },
+  "scoreError": null,
+  "totalAttempts": 218,
+  "usage": {
+    "input_tokens": 4569,
+    "input_tokens_details": {
+      "cached_tokens": 3968
+    },
+    "output_tokens": 1455,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 6024
+  },
+  "costUpperMicroCny": 80406,
+  "totalCostUpperMicroCny": 8832830,
+  "stopDispatch": false,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticSelection": "NOT_ENABLED",
+  "qualityClaim": "20份已见材料开发回归；同candidate03、同正文、同参数，仅模型身份不同；40请求不是40份材料"
+}

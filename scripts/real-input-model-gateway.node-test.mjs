@@ -5,7 +5,8 @@ import { join,resolve } from 'node:path'
 import { createModelGateway,inspectRequest,createRawRecorder,createPinnedProxyFetch } from './real-input-model-gateway.mjs'
 import { EventEmitter } from 'node:events'
 import { Readable } from 'node:stream'
-import { BILLING_POLICY,FLASH41_POLICY,FLASH41_PAIRED06_POLICY,sha256,initializeBudget,openBudget } from './real-input-budget.mjs'
+import { BILLING_POLICY,FLASH41_POLICY,FLASH41_PAIRED06_POLICY,MODEL_COMPARE_POLICY,
+  MODEL_COMPARE_FLASH_POLICY,MODEL_COMPARE_PRO_POLICY,sha256,initializeBudget,openBudget } from './real-input-budget.mjs'
 
 const ORIGIN='http://127.0.0.1:6637',CAP='a'.repeat(64),NOW='2026-09-07T00:00:00.000Z'
 const FAKE_SECRET='NOT_A_REAL_CREDENTIAL_FOR_ENGINEERING'
@@ -363,4 +364,25 @@ test('paired09: U/V membership requires the new policy and keeps text-only ident
   await assert.rejects(()=>createModelGateway({...config,policy:FLASH41_PAIRED08_POLICY}),/PAIRED09_POLICY/)
   const gateway=await createModelGateway({...config,policy:FLASH41_PAIRED09_POLICY}),message={method:'POST',path:'/api/real-input/recognize',headers:{host:new URL(ORIGIN).host,origin:ORIGIN,'sec-fetch-site':'same-origin','content-type':'application/json','x-real-input-capability':CAP},bodyText:JSON.stringify({unitId,requestSha:identity.requestSha})}
   assert.equal((await gateway.handle(message)).status,200);assert.equal(calls,1);assert.equal(reserves,1);assert.equal(records,1)
+})
+test('model compare: W/X dispatch applies the frozen per-arm model without changing prompt or input',async()=>{
+  const bodies={},identities={},historicalValue=JSON.parse(request());historicalValue.model='deepseek-flash'
+  const historicalBody=JSON.stringify(historicalValue),historicalIdentity=inspectRequest(historicalBody,FLASH41_POLICY)
+  for(const [unitId,armPolicy] of [['W01-A',MODEL_COMPARE_FLASH_POLICY],['W01-B',MODEL_COMPARE_PRO_POLICY]]){
+    const value=JSON.parse(request());value.model=armPolicy.model;bodies[unitId]=JSON.stringify(value)
+    identities[unitId]=inspectRequest(bodies[unitId],armPolicy)
+  }
+  const comparable=text=>{const value=JSON.parse(text);delete value.model;return value}
+  assert.deepEqual(comparable(bodies['W01-A']),comparable(bodies['W01-B']))
+  for(const [unitId,armPolicy] of [['W01-A',MODEL_COMPARE_FLASH_POLICY],['W01-B',MODEL_COMPARE_PRO_POLICY]]){
+    let calls=0,reserves=0,records=0;const envelope=JSON.parse(raw(unitId));envelope.model=armPolicy.model
+    const gateway=await createModelGateway({origin:ORIGIN,capability:CAP,requests:{'P01-03':historicalBody,[unitId]:bodies[unitId]},policy:MODEL_COMPARE_POLICY,clock:()=>NOW,
+      budget:{snapshot:async()=>({units:[{unitId:'P01-03',...historicalIdentity},{unitId,...identities[unitId]}]}),reserve:async(id,text,policy)=>{assert.equal(id,unitId);assert.equal(text,bodies[unitId]);assert.deepEqual(policy,armPolicy);reserves++
+        return{complete:async()=>({usage:envelope.usage,costUpperMicroCny:300}),uncertain:async()=>{throw Error('UNEXPECTED')}}}},
+      readSecret:()=>FAKE_SECRET,fetchImpl:async(url,options)=>{calls++;assert.equal(url,BILLING_POLICY.endpoint);assert.equal(options.body,bodies[unitId]);return http(JSON.stringify(envelope))},
+      recordRaw:async row=>{records++;assert.equal(row.unitId,unitId);assert.equal(row.requestSha,identities[unitId].requestSha)}})
+    const message={method:'POST',path:'/api/real-input/recognize',headers:{host:new URL(ORIGIN).host,origin:ORIGIN,'sec-fetch-site':'same-origin','content-type':'application/json','x-real-input-capability':CAP},
+      bodyText:JSON.stringify({unitId,requestSha:identities[unitId].requestSha})}
+    assert.equal((await gateway.handle(message)).status,200);assert.equal(calls,1);assert.equal(reserves,1);assert.equal(records,1)
+  }
 })

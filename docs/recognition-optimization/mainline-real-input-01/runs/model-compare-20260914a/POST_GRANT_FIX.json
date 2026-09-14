@@ -1,0 +1,11 @@
+{
+  "version": "model-compare-post-grant-fix-1",
+  "changedSourcePath": "scripts/run-mainline-real-input-01.mjs",
+  "beforeSha": "4ba23a19ba2ca62881fd9320746bc292bfea9be881d21ad06b3cc3b1a1c19bff",
+  "afterSha": "e8749ef504aa1f36cda8607d2773f589d7af506a587c0656058208a2acdd11ee",
+  "reason": "allow immutable ledger prefix and model-neutral candidate03 parsing after gateway identity validation",
+  "effect": "The frozen candidate, requests, models, prices, order and grant are unchanged. Verification now hashes the original 426-row prefix, and the already gateway-validated Pro response uses a model-neutral parser copy because the historical candidate03 parser names only Flash. Provider raw bytes and returned model identity remain unchanged.",
+  "networkCallsBeforeFix": 1,
+  "failedDispatchesBeforeFix": 1,
+  "failedDispatchNetworkCalls": 0
+}

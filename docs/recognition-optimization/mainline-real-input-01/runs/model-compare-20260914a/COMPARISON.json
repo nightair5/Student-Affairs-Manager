@@ -1,0 +1,2261 @@
+{
+  "version": "model-compare-business-1",
+  "generatedAt": "2026-09-14T03:20:17.878Z",
+  "claim": "固定candidate03、wire、正文、参考时刻、时区和评分，只改变模型；20份均为已见材料开发回归。",
+  "bindingSha256": "0e053544594dd40c5e99d577a290441ef4c32b44ce36d280cbef44bd87bde7d1",
+  "requestCount": 40,
+  "exactReturnedModelIdentity": true,
+  "verifierRepairRetry": 0,
+  "billing": {
+    "version": "real-input-model-compare-billing-1",
+    "verified": true,
+    "method": "official-public-document-review",
+    "checkedAt": "2026-09-14T02:53:41.3879291Z",
+    "validUntil": "2026-09-15T01:53:41.3879291Z",
+    "policy": {
+      "version": "real-input-model-compare-budget-1",
+      "maxRequests": 248,
+      "limitMicroCny": 20000000,
+      "reservationMicroCny": 3300000,
+      "arms": {
+        "A": {
+          "version": "real-input-model-compare-flash-1",
+          "model": "deepseek-flash",
+          "endpoint": "https://api.deepseek.com/responses",
+          "temperature": 0,
+          "reasoningEffort": "none",
+          "inputTokenCeiling": 1048576,
+          "outputTokenCeiling": 8192,
+          "requestByteCeiling": 65536,
+          "inputPriceMicroPerMillion": 2000000,
+          "outputPriceMicroPerMillion": 8000000,
+          "reservationMicroCny": 3300000,
+          "limitMicroCny": 20000000,
+          "maxRequests": 248
+        },
+        "B": {
+          "version": "real-input-model-compare-pro-1",
+          "model": "deepseek-v4-pro",
+          "endpoint": "https://api.deepseek.com/responses",
+          "temperature": 0,
+          "reasoningEffort": "none",
+          "inputTokenCeiling": 1048576,
+          "outputTokenCeiling": 8192,
+          "requestByteCeiling": 65536,
+          "inputPriceMicroPerMillion": 9000000,
+          "outputPriceMicroPerMillion": 27000000,
+          "reservationMicroCny": 3300000,
+          "limitMicroCny": 20000000,
+          "maxRequests": 248
+        }
+      }
+    },
+    "pricingMode": "peak uncached upper bound; cache discount and off-peak discount are not assumed",
+    "requestWorstCaseMicroCnyUnderByteAndOutputCeilings": {
+      "A": 196608,
+      "B": 811008
+    },
+    "documents": [
+      {
+        "url": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/",
+        "supports": "model mapping, Responses compatibility and prices"
+      },
+      {
+        "url": "https://api-docs.deepseek.com/guides/responses_api/",
+        "supports": "Responses endpoint and request parameters"
+      }
+    ],
+    "providerBilledCny": "NOT_OBSERVABLE"
+  },
+  "summaries": {
+    "original12": {
+      "A": {
+        "model": "deepseek-flash",
+        "sources": 12,
+        "http200": 12,
+        "schemaParsed": 12,
+        "strictScored": 12,
+        "strictCompleteCases": 0,
+        "noSubstantiveCorrection": 9,
+        "substantiveCorrectionSources": 3,
+        "businessErrors": {
+          "taskExtra": 1,
+          "taskMissing": 0,
+          "materialMissing": 0,
+          "materialExtra": 0,
+          "materialOwnership": 1,
+          "timeMissing": 0,
+          "timeFalse": 0,
+          "timeOwnership": 0,
+          "condition": 1,
+          "dependency": 1,
+          "revision": 2
+        },
+        "totalBusinessErrors": 6,
+        "structuralReviewBlockerSources": 1,
+        "auxiliaryReviewBurden": 0,
+        "waitingMs": {
+          "total": 88017,
+          "median": 8068,
+          "p95": 9262,
+          "max": 9262
+        },
+        "usage": {
+          "inputTokens": 55555,
+          "cachedInputTokens": 53119,
+          "outputTokens": 19745,
+          "totalTokens": 75300
+        },
+        "observedPeakPriceUpperMicroCny": 269070,
+        "providerBilledCny": "NOT_OBSERVABLE"
+      },
+      "B": {
+        "model": "deepseek-v4-pro",
+        "sources": 12,
+        "http200": 12,
+        "schemaParsed": 12,
+        "strictScored": 11,
+        "strictCompleteCases": 0,
+        "noSubstantiveCorrection": 8,
+        "substantiveCorrectionSources": 4,
+        "businessErrors": {
+          "taskExtra": 1,
+          "taskMissing": 0,
+          "materialMissing": 0,
+          "materialExtra": 1,
+          "materialOwnership": 1,
+          "timeMissing": 2,
+          "timeFalse": 0,
+          "timeOwnership": 0,
+          "condition": 0,
+          "dependency": 1,
+          "revision": 2
+        },
+        "totalBusinessErrors": 8,
+        "structuralReviewBlockerSources": 4,
+        "auxiliaryReviewBurden": 0,
+        "waitingMs": {
+          "total": 227516,
+          "median": 17008,
+          "p95": 25652,
+          "max": 25652
+        },
+        "usage": {
+          "inputTokens": 55543,
+          "cachedInputTokens": 39680,
+          "outputTokens": 23346,
+          "totalTokens": 78889
+        },
+        "observedPeakPriceUpperMicroCny": 1130229,
+        "providerBilledCny": "NOT_OBSERVABLE"
+      }
+    },
+    "later8": {
+      "A": {
+        "model": "deepseek-flash",
+        "sources": 8,
+        "http200": 8,
+        "schemaParsed": 8,
+        "strictScored": 8,
+        "strictCompleteCases": 0,
+        "noSubstantiveCorrection": 8,
+        "substantiveCorrectionSources": 0,
+        "businessErrors": {
+          "taskExtra": 0,
+          "taskMissing": 0,
+          "materialMissing": 0,
+          "materialExtra": 0,
+          "materialOwnership": 0,
+          "timeMissing": 0,
+          "timeFalse": 0,
+          "timeOwnership": 0,
+          "condition": 0,
+          "dependency": 0,
+          "revision": 0
+        },
+        "totalBusinessErrors": 0,
+        "structuralReviewBlockerSources": 0,
+        "auxiliaryReviewBurden": 2,
+        "waitingMs": {
+          "total": 53392,
+          "median": 5965,
+          "p95": 8241,
+          "max": 8241
+        },
+        "usage": {
+          "inputTokens": 36546,
+          "cachedInputTokens": 34940,
+          "outputTokens": 11126,
+          "totalTokens": 47672
+        },
+        "observedPeakPriceUpperMicroCny": 162100,
+        "providerBilledCny": "NOT_OBSERVABLE"
+      },
+      "B": {
+        "model": "deepseek-v4-pro",
+        "sources": 8,
+        "http200": 8,
+        "schemaParsed": 8,
+        "strictScored": 8,
+        "strictCompleteCases": 0,
+        "noSubstantiveCorrection": 7,
+        "substantiveCorrectionSources": 1,
+        "businessErrors": {
+          "taskExtra": 1,
+          "taskMissing": 0,
+          "materialMissing": 0,
+          "materialExtra": 0,
+          "materialOwnership": 1,
+          "timeMissing": 0,
+          "timeFalse": 0,
+          "timeOwnership": 0,
+          "condition": 0,
+          "dependency": 0,
+          "revision": 0
+        },
+        "totalBusinessErrors": 2,
+        "structuralReviewBlockerSources": 2,
+        "auxiliaryReviewBurden": 0,
+        "waitingMs": {
+          "total": 135651,
+          "median": 16077,
+          "p95": 23352,
+          "max": 23352
+        },
+        "usage": {
+          "inputTokens": 36538,
+          "cachedInputTokens": 31744,
+          "outputTokens": 13578,
+          "totalTokens": 50116
+        },
+        "observedPeakPriceUpperMicroCny": 695448,
+        "providerBilledCny": "NOT_OBSERVABLE"
+      }
+    },
+    "all20": {
+      "A": {
+        "model": "deepseek-flash",
+        "sources": 20,
+        "http200": 20,
+        "schemaParsed": 20,
+        "strictScored": 20,
+        "strictCompleteCases": 0,
+        "noSubstantiveCorrection": 17,
+        "substantiveCorrectionSources": 3,
+        "businessErrors": {
+          "taskExtra": 1,
+          "taskMissing": 0,
+          "materialMissing": 0,
+          "materialExtra": 0,
+          "materialOwnership": 1,
+          "timeMissing": 0,
+          "timeFalse": 0,
+          "timeOwnership": 0,
+          "condition": 1,
+          "dependency": 1,
+          "revision": 2
+        },
+        "totalBusinessErrors": 6,
+        "structuralReviewBlockerSources": 1,
+        "auxiliaryReviewBurden": 2,
+        "waitingMs": {
+          "total": 141409,
+          "median": 7671,
+          "p95": 9128,
+          "max": 9262
+        },
+        "usage": {
+          "inputTokens": 92101,
+          "cachedInputTokens": 88059,
+          "outputTokens": 30871,
+          "totalTokens": 122972
+        },
+        "observedPeakPriceUpperMicroCny": 431170,
+        "providerBilledCny": "NOT_OBSERVABLE"
+      },
+      "B": {
+        "model": "deepseek-v4-pro",
+        "sources": 20,
+        "http200": 20,
+        "schemaParsed": 20,
+        "strictScored": 19,
+        "strictCompleteCases": 0,
+        "noSubstantiveCorrection": 15,
+        "substantiveCorrectionSources": 5,
+        "businessErrors": {
+          "taskExtra": 2,
+          "taskMissing": 0,
+          "materialMissing": 0,
+          "materialExtra": 1,
+          "materialOwnership": 2,
+          "timeMissing": 2,
+          "timeFalse": 0,
+          "timeOwnership": 0,
+          "condition": 0,
+          "dependency": 1,
+          "revision": 2
+        },
+        "totalBusinessErrors": 10,
+        "structuralReviewBlockerSources": 6,
+        "auxiliaryReviewBurden": 0,
+        "waitingMs": {
+          "total": 363167,
+          "median": 17008,
+          "p95": 25417,
+          "max": 25652
+        },
+        "usage": {
+          "inputTokens": 92081,
+          "cachedInputTokens": 71424,
+          "outputTokens": 36924,
+          "totalTokens": 129005
+        },
+        "observedPeakPriceUpperMicroCny": 1825677,
+        "providerBilledCny": "NOT_OBSERVABLE"
+      }
+    }
+  },
+  "adoption": {
+    "candidate03Model": "deepseek-flash",
+    "comparedModel": "deepseek-v4-pro",
+    "decision": "DO_NOT_ADOPT_PRO",
+    "reasons": [
+      "无需实质纠正从17/20降至15/20。",
+      "实质错误总数从6增至10；新增两个模糊时间遗漏和一项工作证动作误拆。",
+      "结构核对阻断来源从1份增至6份。",
+      "Pro把W11条件从错误true修正为unknown，并在X07少2个辅助材料核对项，但收益不足以覆盖退化。"
+    ],
+    "isolated6632PreferredModelRemains": "deepseek-flash"
+  },
+  "strictScoringCaveat": "W01-B原始响应身份核验和schema解析均成功，但冻结candidate03评分入口拒绝非Flash模型标识；原始RESULT保留失败，业务比较使用未改raw的解析结果，严格汇总覆盖B臂19/20。",
+  "productConversionEvidence": {
+    "source": "../baseline-conversion-20260914a/REPLAY.json",
+    "model": "deepseek-flash",
+    "sources": 20,
+    "suggestedTasks": 31,
+    "correctlySavedTasksInZeroCallEngineeringReplay": 20,
+    "sourcesWithAtLeastOneSavedTask": 16,
+    "unexpectedProgramBlockers": 0,
+    "claim": "既有可靠Flash回答的公开接口工程回放，不是真人转化率，也不是本轮新模型请求的浏览器保存结果。"
+  },
+  "cases": [
+    {
+      "id": "W01",
+      "previousId": "U01",
+      "cohort": "original12",
+      "arms": {
+        "A": {
+          "requestModel": "deepseek-flash",
+          "returnedModel": "deepseek-flash",
+          "http": 200,
+          "schemaParsed": true,
+          "strictScored": true,
+          "strictCompleteCase": false,
+          "businessErrors": {
+            "taskExtra": 0,
+            "taskMissing": 0,
+            "materialMissing": 0,
+            "materialExtra": 0,
+            "materialOwnership": 0,
+            "timeMissing": 0,
+            "timeFalse": 0,
+            "timeOwnership": 0,
+            "condition": 0,
+            "dependency": 0,
+            "revision": 0
+          },
+          "substantiveErrorCount": 0,
+          "substantiveCorrectionRequired": false,
+          "structuralReviewBlocker": false,
+          "auxiliaryReviewBurden": 0,
+          "reviewIssueCodes": [],
+          "suggestedTasks": [
+            "提交放映授权书",
+            "上传预告片"
+          ],
+          "waitingMs": 9128,
+          "usage": {
+            "input_tokens": 4777,
+            "input_tokens_details": {
+              "cached_tokens": 4608
+            },
+            "output_tokens": 2273,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 7050
+          },
+          "costUpperMicroCny": 27738,
+          "note": "两个任务、各自截止和三份材料正确。"
+        },
+        "B": {
+          "requestModel": "deepseek-v4-pro",
+          "returnedModel": "deepseek-v4-pro",
+          "http": 200,
+          "schemaParsed": true,
+          "strictScored": false,
+          "strictCompleteCase": null,
+          "businessErrors": {
+            "taskExtra": 0,
+            "taskMissing": 0,
+            "materialMissing": 0,
+            "materialExtra": 0,
+            "materialOwnership": 0,
+            "timeMissing": 0,
+            "timeFalse": 0,
+            "timeOwnership": 0,
+            "condition": 0,
+            "dependency": 0,
+            "revision": 0
+          },
+          "substantiveErrorCount": 0,
+          "substantiveCorrectionRequired": false,
+          "structuralReviewBlocker": true,
+          "auxiliaryReviewBurden": 0,
+          "reviewIssueCodes": [
+            "BAD_SCOPE",
+            "SURFACE_NOT_UNIQUE_IN_SCOPE",
+            "TIME_EVIDENCE_UNRESOLVED",
+            "UNACCOUNTED_SOURCE_SCOPE"
+          ],
+          "suggestedTasks": [
+            "提交放映授权书",
+            "上传预告片"
+          ],
+          "waitingMs": 25652,
+          "usage": {
+            "input_tokens": 4776,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 2720,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 7496
+          },
+          "costUpperMicroCny": 116424,
+          "note": "事实正确，但来源范围和时间证据引用不一致，增加核对阻断。"
+        }
+      }
+    },
+    {
+      "id": "W02",
+      "previousId": "U02",
+      "cohort": "original12",
+      "arms": {
+        "A": {
+          "requestModel": "deepseek-flash",
+          "returnedModel": "deepseek-flash",
+          "http": 200,
+          "schemaParsed": true,
+          "strictScored": true,
+          "strictCompleteCase": false,
+          "businessErrors": {
+            "taskExtra": 0,
+            "taskMissing": 0,
+            "materialMissing": 0,
+            "materialExtra": 0,
+            "materialOwnership": 0,
+            "timeMissing": 0,
+            "timeFalse": 0,
+            "timeOwnership": 0,
+            "condition": 0,
+            "dependency": 0,
+            "revision": 0
+          },
+          "substantiveErrorCount": 0,
+          "substantiveCorrectionRequired": false,
+          "structuralReviewBlocker": false,
+          "auxiliaryReviewBurden": 0,
+          "reviewIssueCodes": [
+            "TIME_NEEDS_REVIEW"
+          ],
+          "suggestedTasks": [
+            "整理传感器异常记录"
+          ],
+          "waitingMs": 5759,
+          "usage": {
+            "input_tokens": 4485,
+            "input_tokens_details": {
+              "cached_tokens": 4351
+            },
+            "output_tokens": 1138,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 5623
+          },
+          "costUpperMicroCny": 18074,
+          "note": "保留“近期”和“具体完成日期另行通知”，日期待定而不是无日期。"
+        },
+        "B": {
+          "requestModel": "deepseek-v4-pro",
+          "returnedModel": "deepseek-v4-pro",
+          "http": 200,
+          "schemaParsed": true,
+          "strictScored": true,
+          "strictCompleteCase": false,
+          "businessErrors": {
+            "taskExtra": 0,
+            "taskMissing": 0,
+            "materialMissing": 0,
+            "materialExtra": 0,
+            "materialOwnership": 0,
+            "timeMissing": 2,
+            "timeFalse": 0,
+            "timeOwnership": 0,
+            "condition": 0,
+            "dependency": 0,
+            "revision": 0
+          },
+          "substantiveErrorCount": 2,
+          "substantiveCorrectionRequired": true,
+          "structuralReviewBlocker": true,
+          "auxiliaryReviewBurden": 0,
+          "reviewIssueCodes": [
+            "CONDITION_CONTRADICTION",
+            "COVERAGE_TIME"
+          ],
+          "suggestedTasks": [
+            "整理传感器异常记录"
+          ],
+          "waitingMs": 14325,
+          "usage": {
+            "input_tokens": 4484,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 1306,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 5790
+          },
+          "costUpperMicroCny": 75618,
+          "note": "两个模糊时间均遗漏，并把缺失误写成时间覆盖矛盾。"
+        }
+      }
+    },
+    {
+      "id": "W03",
+      "previousId": "U03",
+      "cohort": "original12",
+      "arms": {
+        "A": {
+          "requestModel": "deepseek-flash",
+          "returnedModel": "deepseek-flash",
+          "http": 200,
+          "schemaParsed": true,
+          "strictScored": true,
+          "strictCompleteCase": false,
+          "businessErrors": {
+            "taskExtra": 0,
+            "taskMissing": 0,
+            "materialMissing": 0,
+            "materialExtra": 0,
+            "materialOwnership": 0,
+            "timeMissing": 0,
+            "timeFalse": 0,
+            "timeOwnership": 0,
+            "condition": 0,
+            "dependency": 0,
+            "revision": 0
+          },
+          "substantiveErrorCount": 0,
+          "substantiveCorrectionRequired": false,
+          "structuralReviewBlocker": false,
+          "auxiliaryReviewBurden": 0,
+          "reviewIssueCodes": [],
+          "suggestedTasks": [
+            "保存服务现场原始照片"
+          ],
+          "waitingMs": 4802,
+          "usage": {
+            "input_tokens": 4519,
+            "input_tokens_details": {
+              "cached_tokens": 4352
+            },
+            "output_tokens": 749,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 5268
+          },
+          "costUpperMicroCny": 15030,
+          "note": "正确。"
+        },
+        "B": {
+          "requestModel": "deepseek-v4-pro",
+          "returnedModel": "deepseek-v4-pro",
+          "http": 200,
+          "schemaParsed": true,
+          "strictScored": true,
+          "strictCompleteCase": false,
+          "businessErrors": {
+            "taskExtra": 0,
+            "taskMissing": 0,
+            "materialMissing": 0,
+            "materialExtra": 0,
+            "materialOwnership": 0,
+            "timeMissing": 0,
+            "timeFalse": 0,
+            "timeOwnership": 0,
+            "condition": 0,
+            "dependency": 0,
+            "revision": 0
+          },
+          "substantiveErrorCount": 0,
+          "substantiveCorrectionRequired": false,
+          "structuralReviewBlocker": false,
+          "auxiliaryReviewBurden": 0,
+          "reviewIssueCodes": [],
+          "suggestedTasks": [
+            "保存服务现场原始照片"
+          ],
+          "waitingMs": 9875,
+          "usage": {
+            "input_tokens": 4518,
+            "input_tokens_details": {
+              "cached_tokens": 3968
+            },
+            "output_tokens": 883,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 5401
+          },
+          "costUpperMicroCny": 64503,
+          "note": "正确。"
+        }
+      }
+    },
+    {
+      "id": "W04",
+      "previousId": "U04",
+      "cohort": "original12",
+      "arms": {
+        "A": {
+          "requestModel": "deepseek-flash",
+          "returnedModel": "deepseek-flash",
+          "http": 200,
+          "schemaParsed": true,
+          "strictScored": true,
+          "strictCompleteCase": false,
+          "businessErrors": {
+            "taskExtra": 0,
+            "taskMissing": 0,
+            "materialMissing": 0,
+            "materialExtra": 0,
+            "materialOwnership": 0,
+            "timeMissing": 0,
+            "timeFalse": 0,
+            "timeOwnership": 0,
+            "condition": 0,
+            "dependency": 0,
+            "revision": 0
+          },
+          "substantiveErrorCount": 0,
+          "substantiveCorrectionRequired": false,
+          "structuralReviewBlocker": true,
+          "auxiliaryReviewBurden": 0,
+          "reviewIssueCodes": [
+            "CONDITION_CONTRADICTION"
+          ],
+          "suggestedTasks": [
+            "取消水样采集预约",
+            "检查采样瓶密封性"
+          ],
+          "waitingMs": 8389,
+          "usage": {
+            "input_tokens": 4590,
+            "input_tokens_details": {
+              "cached_tokens": 4352
+            },
+            "output_tokens": 1869,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 6459
+          },
+          "costUpperMicroCny": 24132,
+          "note": "取消条件和独立检查任务的事实正确；条件来源表达仍需核对。"
+        },
+        "B": {
+          "requestModel": "deepseek-v4-pro",
+          "returnedModel": "deepseek-v4-pro",
+          "http": 200,
+          "schemaParsed": true,
+          "strictScored": true,
+          "strictCompleteCase": false,
+          "businessErrors": {
+            "taskExtra": 0,
+            "taskMissing": 0,
+            "materialMissing": 0,
+            "materialExtra": 0,
+            "materialOwnership": 0,
+            "timeMissing": 0,
+            "timeFalse": 0,
+            "timeOwnership": 0,
+            "condition": 0,
+            "dependency": 0,
+            "revision": 0
+          },
+          "substantiveErrorCount": 0,
+          "substantiveCorrectionRequired": false,
+          "structuralReviewBlocker": true,
+          "auxiliaryReviewBurden": 0,
+          "reviewIssueCodes": [
+            "CONDITION_CONTRADICTION"
+          ],
+          "suggestedTasks": [
+            "取消水样采集预约",
+            "检查采样瓶密封性"
+          ],
+          "waitingMs": 17008,
+          "usage": {
+            "input_tokens": 4589,
+            "input_tokens_details": {
+              "cached_tokens": 3968
+            },
+            "output_tokens": 1758,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 6347
+          },
+          "costUpperMicroCny": 88767,
+          "note": "与A相同，事实正确但条件来源表达仍需核对。"
+        }
+      }
+    },
+    {
+      "id": "W05",
+      "previousId": "U05",
+      "cohort": "original12",
+      "arms": {
+        "A": {
+          "requestModel": "deepseek-flash",
+          "returnedModel": "deepseek-flash",
+          "http": 200,
+          "schemaParsed": true,
+          "strictScored": true,
+          "strictCompleteCase": false,
+          "businessErrors": {
+            "taskExtra": 0,
+            "taskMissing": 0,
+            "materialMissing": 0,
+            "materialExtra": 0,
+            "materialOwnership": 0,
+            "timeMissing": 0,
+            "timeFalse": 0,
+            "timeOwnership": 0,
+            "condition": 0,
+            "dependency": 0,
+            "revision": 0
+          },
+          "substantiveErrorCount": 0,
+          "substantiveCorrectionRequired": false,
+          "structuralReviewBlocker": false,
+          "auxiliaryReviewBurden": 0,
+          "reviewIssueCodes": [],
+          "suggestedTasks": [
+            "补交行程证明"
+          ],
+          "waitingMs": 6335,
+          "usage": {
+            "input_tokens": 4570,
+            "input_tokens_details": {
+              "cached_tokens": 4352
+            },
+            "output_tokens": 1254,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 5824
+          },
+          "costUpperMicroCny": 19172,
+          "note": "条件成立、任务、材料和时间正确。"
+        },
+        "B": {
+          "requestModel": "deepseek-v4-pro",
+          "returnedModel": "deepseek-v4-pro",
+          "http": 200,
+          "schemaParsed": true,
+          "strictScored": true,
+          "strictCompleteCase": false,
+          "businessErrors": {
+            "taskExtra": 0,
+            "taskMissing": 0,
+            "materialMissing": 0,
+            "materialExtra": 0,
+            "materialOwnership": 0,
+            "timeMissing": 0,
+            "timeFalse": 0,
+            "timeOwnership": 0,
+            "condition": 0,
+            "dependency": 0,
+            "revision": 0
+          },
+          "substantiveErrorCount": 0,
+          "substantiveCorrectionRequired": false,
+          "structuralReviewBlocker": false,
+          "auxiliaryReviewBurden": 0,
+          "reviewIssueCodes": [],
+          "suggestedTasks": [
+            "补交行程证明"
+          ],
+          "waitingMs": 15726,
+          "usage": {
+            "input_tokens": 4569,
+            "input_tokens_details": {
+              "cached_tokens": 3968
+            },
+            "output_tokens": 1455,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 6024
+          },
+          "costUpperMicroCny": 80406,
+          "note": "条件成立、任务、材料和时间正确。"
+        }
+      }
+    },
+    {
+      "id": "W06",
+      "previousId": "U06",
+      "cohort": "original12",
+      "arms": {
+        "A": {
+          "requestModel": "deepseek-flash",
+          "returnedModel": "deepseek-flash",
+          "http": 200,
+          "schemaParsed": true,
+          "strictScored": true,
+          "strictCompleteCase": false,
+          "businessErrors": {
+            "taskExtra": 0,
+            "taskMissing": 0,
+            "materialMissing": 0,
+            "materialExtra": 0,
+            "materialOwnership": 0,
+            "timeMissing": 0,
+            "timeFalse": 0,
+            "timeOwnership": 0,
+            "condition": 0,
+            "dependency": 0,
+            "revision": 0
+          },
+          "substantiveErrorCount": 0,
+          "substantiveCorrectionRequired": false,
+          "structuralReviewBlocker": false,
+          "auxiliaryReviewBurden": 0,
+          "reviewIssueCodes": [],
+          "suggestedTasks": [
+            "领取投影仪"
+          ],
+          "waitingMs": 5718,
+          "usage": {
+            "input_tokens": 4565,
+            "input_tokens_details": {
+              "cached_tokens": 4352
+            },
+            "output_tokens": 1017,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 5582
+          },
+          "costUpperMicroCny": 17266,
+          "note": "条件保持unknown，领取任务和学生证材料正确。"
+        },
+        "B": {
+          "requestModel": "deepseek-v4-pro",
+          "returnedModel": "deepseek-v4-pro",
+          "http": 200,
+          "schemaParsed": true,
+          "strictScored": true,
+          "strictCompleteCase": false,
+          "businessErrors": {
+            "taskExtra": 0,
+            "taskMissing": 0,
+            "materialMissing": 0,
+            "materialExtra": 0,
+            "materialOwnership": 0,
+            "timeMissing": 0,
+            "timeFalse": 0,
+            "timeOwnership": 0,
+            "condition": 0,
+            "dependency": 0,
+            "revision": 0
+          },
+          "substantiveErrorCount": 0,
+          "substantiveCorrectionRequired": false,
+          "structuralReviewBlocker": true,
+          "auxiliaryReviewBurden": 0,
+          "reviewIssueCodes": [
+            "COVERAGE_MATERIAL"
+          ],
+          "suggestedTasks": [
+            "候补同学领取投影仪"
+          ],
+          "waitingMs": 13076,
+          "usage": {
+            "input_tokens": 4564,
+            "input_tokens_details": {
+              "cached_tokens": 3968
+            },
+            "output_tokens": 1211,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 5775
+          },
+          "costUpperMicroCny": 73773,
+          "note": "核心事实正确，但任务coverage与已提取材料矛盾。"
+        }
+      }
+    },
+    {
+      "id": "W07",
+      "previousId": "U07",
+      "cohort": "original12",
+      "arms": {
+        "A": {
+          "requestModel": "deepseek-flash",
+          "returnedModel": "deepseek-flash",
+          "http": 200,
+          "schemaParsed": true,
+          "strictScored": true,
+          "strictCompleteCase": false,
+          "businessErrors": {
+            "taskExtra": 0,
+            "taskMissing": 0,
+            "materialMissing": 0,
+            "materialExtra": 0,
+            "materialOwnership": 0,
+            "timeMissing": 0,
+            "timeFalse": 0,
+            "timeOwnership": 0,
+            "condition": 0,
+            "dependency": 0,
+            "revision": 0
+          },
+          "substantiveErrorCount": 0,
+          "substantiveCorrectionRequired": false,
+          "structuralReviewBlocker": false,
+          "auxiliaryReviewBurden": 0,
+          "reviewIssueCodes": [],
+          "suggestedTasks": [
+            "寄送纸质校样",
+            "上传校样PDF"
+          ],
+          "waitingMs": 8794,
+          "usage": {
+            "input_tokens": 4721,
+            "input_tokens_details": {
+              "cached_tokens": 4480
+            },
+            "output_tokens": 2167,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 6888
+          },
+          "costUpperMicroCny": 26778,
+          "note": "旧要求作废、新PDF要求生效，关系正确。"
+        },
+        "B": {
+          "requestModel": "deepseek-v4-pro",
+          "returnedModel": "deepseek-v4-pro",
+          "http": 200,
+          "schemaParsed": true,
+          "strictScored": true,
+          "strictCompleteCase": false,
+          "businessErrors": {
+            "taskExtra": 0,
+            "taskMissing": 0,
+            "materialMissing": 0,
+            "materialExtra": 0,
+            "materialOwnership": 0,
+            "timeMissing": 0,
+            "timeFalse": 0,
+            "timeOwnership": 0,
+            "condition": 0,
+            "dependency": 0,
+            "revision": 0
+          },
+          "substantiveErrorCount": 0,
+          "substantiveCorrectionRequired": false,
+          "structuralReviewBlocker": false,
+          "auxiliaryReviewBurden": 0,
+          "reviewIssueCodes": [],
+          "suggestedTasks": [
+            "寄送纸质校样",
+            "上传校样PDF"
+          ],
+          "waitingMs": 23652,
+          "usage": {
+            "input_tokens": 4720,
+            "input_tokens_details": {
+              "cached_tokens": 3968
+            },
+            "output_tokens": 2570,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 7290
+          },
+          "costUpperMicroCny": 111870,
+          "note": "旧要求作废、新PDF要求生效，关系正确。"
+        }
+      }
+    },
+    {
+      "id": "W08",
+      "previousId": "U08",
+      "cohort": "original12",
+      "arms": {
+        "A": {
+          "requestModel": "deepseek-flash",
+          "returnedModel": "deepseek-flash",
+          "http": 200,
+          "schemaParsed": true,
+          "strictScored": true,
+          "strictCompleteCase": false,
+          "businessErrors": {
+            "taskExtra": 0,
+            "taskMissing": 0,
+            "materialMissing": 0,
+            "materialExtra": 0,
+            "materialOwnership": 0,
+            "timeMissing": 0,
+            "timeFalse": 0,
+            "timeOwnership": 0,
+            "condition": 0,
+            "dependency": 0,
+            "revision": 1
+          },
+          "substantiveErrorCount": 1,
+          "substantiveCorrectionRequired": true,
+          "structuralReviewBlocker": false,
+          "auxiliaryReviewBurden": 0,
+          "reviewIssueCodes": [],
+          "suggestedTasks": [
+            "参加工厂参访",
+            "提交课程反思"
+          ],
+          "waitingMs": 8226,
+          "usage": {
+            "input_tokens": 4645,
+            "input_tokens_details": {
+              "cached_tokens": 4480
+            },
+            "output_tokens": 2036,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 6681
+          },
+          "costUpperMicroCny": 25578,
+          "note": "独立反思任务正确；无替代的纯取消被写成superseded。"
+        },
+        "B": {
+          "requestModel": "deepseek-v4-pro",
+          "returnedModel": "deepseek-v4-pro",
+          "http": 200,
+          "schemaParsed": true,
+          "strictScored": true,
+          "strictCompleteCase": false,
+          "businessErrors": {
+            "taskExtra": 0,
+            "taskMissing": 0,
+            "materialMissing": 0,
+            "materialExtra": 0,
+            "materialOwnership": 0,
+            "timeMissing": 0,
+            "timeFalse": 0,
+            "timeOwnership": 0,
+            "condition": 0,
+            "dependency": 0,
+            "revision": 1
+          },
+          "substantiveErrorCount": 1,
+          "substantiveCorrectionRequired": true,
+          "structuralReviewBlocker": false,
+          "auxiliaryReviewBurden": 0,
+          "reviewIssueCodes": [],
+          "suggestedTasks": [
+            "参加工厂参访",
+            "提交课程反思"
+          ],
+          "waitingMs": 23989,
+          "usage": {
+            "input_tokens": 4644,
+            "input_tokens_details": {
+              "cached_tokens": 3968
+            },
+            "output_tokens": 2535,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 7179
+          },
+          "costUpperMicroCny": 110241,
+          "note": "与A相同，纯取消语义仍需改。"
+        }
+      }
+    },
+    {
+      "id": "W09",
+      "previousId": "U09",
+      "cohort": "original12",
+      "arms": {
+        "A": {
+          "requestModel": "deepseek-flash",
+          "returnedModel": "deepseek-flash",
+          "http": 200,
+          "schemaParsed": true,
+          "strictScored": true,
+          "strictCompleteCase": false,
+          "businessErrors": {
+            "taskExtra": 0,
+            "taskMissing": 0,
+            "materialMissing": 0,
+            "materialExtra": 0,
+            "materialOwnership": 0,
+            "timeMissing": 0,
+            "timeFalse": 0,
+            "timeOwnership": 0,
+            "condition": 0,
+            "dependency": 0,
+            "revision": 0
+          },
+          "substantiveErrorCount": 0,
+          "substantiveCorrectionRequired": false,
+          "structuralReviewBlocker": false,
+          "auxiliaryReviewBurden": 0,
+          "reviewIssueCodes": [
+            "TIME_NEEDS_REVIEW",
+            "EVENT_NOT_TASK_ASSOCIATED"
+          ],
+          "suggestedTasks": [],
+          "waitingMs": 4480,
+          "usage": {
+            "input_tokens": 4617,
+            "input_tokens_details": {
+              "cached_tokens": 4480
+            },
+            "output_tokens": 718,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 5335
+          },
+          "costUpperMicroCny": 14978,
+          "note": "纯信息，不造任务；结束时间待核对。"
+        },
+        "B": {
+          "requestModel": "deepseek-v4-pro",
+          "returnedModel": "deepseek-v4-pro",
+          "http": 200,
+          "schemaParsed": true,
+          "strictScored": true,
+          "strictCompleteCase": false,
+          "businessErrors": {
+            "taskExtra": 0,
+            "taskMissing": 0,
+            "materialMissing": 0,
+            "materialExtra": 0,
+            "materialOwnership": 0,
+            "timeMissing": 0,
+            "timeFalse": 0,
+            "timeOwnership": 0,
+            "condition": 0,
+            "dependency": 0,
+            "revision": 0
+          },
+          "substantiveErrorCount": 0,
+          "substantiveCorrectionRequired": false,
+          "structuralReviewBlocker": false,
+          "auxiliaryReviewBurden": 0,
+          "reviewIssueCodes": [
+            "TIME_NEEDS_REVIEW",
+            "EVENT_NOT_TASK_ASSOCIATED"
+          ],
+          "suggestedTasks": [],
+          "waitingMs": 10041,
+          "usage": {
+            "input_tokens": 4616,
+            "input_tokens_details": {
+              "cached_tokens": 3968
+            },
+            "output_tokens": 822,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 5438
+          },
+          "costUpperMicroCny": 63738,
+          "note": "纯信息，不造任务；结束时间待核对。"
+        }
+      }
+    },
+    {
+      "id": "W10",
+      "previousId": "U10",
+      "cohort": "original12",
+      "arms": {
+        "A": {
+          "requestModel": "deepseek-flash",
+          "returnedModel": "deepseek-flash",
+          "http": 200,
+          "schemaParsed": true,
+          "strictScored": true,
+          "strictCompleteCase": false,
+          "businessErrors": {
+            "taskExtra": 0,
+            "taskMissing": 0,
+            "materialMissing": 0,
+            "materialExtra": 0,
+            "materialOwnership": 0,
+            "timeMissing": 0,
+            "timeFalse": 0,
+            "timeOwnership": 0,
+            "condition": 0,
+            "dependency": 0,
+            "revision": 0
+          },
+          "substantiveErrorCount": 0,
+          "substantiveCorrectionRequired": false,
+          "structuralReviewBlocker": false,
+          "auxiliaryReviewBurden": 0,
+          "reviewIssueCodes": [],
+          "suggestedTasks": [
+            "提交灯光盘点表",
+            "提交音响盘点表"
+          ],
+          "waitingMs": 8068,
+          "usage": {
+            "input_tokens": 4736,
+            "input_tokens_details": {
+              "cached_tokens": 4480
+            },
+            "output_tokens": 2146,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 6882
+          },
+          "costUpperMicroCny": 26640,
+          "note": "两个任务、材料和截止归属正确。"
+        },
+        "B": {
+          "requestModel": "deepseek-v4-pro",
+          "returnedModel": "deepseek-v4-pro",
+          "http": 200,
+          "schemaParsed": true,
+          "strictScored": true,
+          "strictCompleteCase": false,
+          "businessErrors": {
+            "taskExtra": 0,
+            "taskMissing": 0,
+            "materialMissing": 0,
+            "materialExtra": 0,
+            "materialOwnership": 0,
+            "timeMissing": 0,
+            "timeFalse": 0,
+            "timeOwnership": 0,
+            "condition": 0,
+            "dependency": 0,
+            "revision": 0
+          },
+          "substantiveErrorCount": 0,
+          "substantiveCorrectionRequired": false,
+          "structuralReviewBlocker": false,
+          "auxiliaryReviewBurden": 0,
+          "reviewIssueCodes": [],
+          "suggestedTasks": [
+            "提交灯光盘点表",
+            "提交音响盘点表"
+          ],
+          "waitingMs": 24163,
+          "usage": {
+            "input_tokens": 4735,
+            "input_tokens_details": {
+              "cached_tokens": 3968
+            },
+            "output_tokens": 2596,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 7331
+          },
+          "costUpperMicroCny": 112707,
+          "note": "两个任务、材料和截止归属正确。"
+        }
+      }
+    },
+    {
+      "id": "W11",
+      "previousId": "U11",
+      "cohort": "original12",
+      "arms": {
+        "A": {
+          "requestModel": "deepseek-flash",
+          "returnedModel": "deepseek-flash",
+          "http": 200,
+          "schemaParsed": true,
+          "strictScored": true,
+          "strictCompleteCase": false,
+          "businessErrors": {
+            "taskExtra": 1,
+            "taskMissing": 0,
+            "materialMissing": 0,
+            "materialExtra": 0,
+            "materialOwnership": 1,
+            "timeMissing": 0,
+            "timeFalse": 0,
+            "timeOwnership": 0,
+            "condition": 1,
+            "dependency": 0,
+            "revision": 0
+          },
+          "substantiveErrorCount": 3,
+          "substantiveCorrectionRequired": true,
+          "structuralReviewBlocker": false,
+          "auxiliaryReviewBurden": 0,
+          "reviewIssueCodes": [],
+          "suggestedTasks": [
+            "填写送样登记单",
+            "提交检测样本",
+            "准备两个密封袋"
+          ],
+          "waitingMs": 9262,
+          "usage": {
+            "input_tokens": 4596,
+            "input_tokens_details": {
+              "cached_tokens": 4352
+            },
+            "output_tokens": 2206,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 6802
+          },
+          "costUpperMicroCny": 26840,
+          "note": "多造密封袋任务；密封袋归属扩散；送样条件被误判成立。"
+        },
+        "B": {
+          "requestModel": "deepseek-v4-pro",
+          "returnedModel": "deepseek-v4-pro",
+          "http": 200,
+          "schemaParsed": true,
+          "strictScored": true,
+          "strictCompleteCase": false,
+          "businessErrors": {
+            "taskExtra": 1,
+            "taskMissing": 0,
+            "materialMissing": 0,
+            "materialExtra": 1,
+            "materialOwnership": 1,
+            "timeMissing": 0,
+            "timeFalse": 0,
+            "timeOwnership": 0,
+            "condition": 0,
+            "dependency": 0,
+            "revision": 0
+          },
+          "substantiveErrorCount": 3,
+          "substantiveCorrectionRequired": true,
+          "structuralReviewBlocker": false,
+          "auxiliaryReviewBurden": 0,
+          "reviewIssueCodes": [],
+          "suggestedTasks": [
+            "填写送样登记单",
+            "提交检测样本",
+            "准备检测样本密封袋"
+          ],
+          "waitingMs": 25417,
+          "usage": {
+            "input_tokens": 4595,
+            "input_tokens_details": {
+              "cached_tokens": 3968
+            },
+            "output_tokens": 2877,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 7472
+          },
+          "costUpperMicroCny": 119034,
+          "note": "条件unknown改善，但仍多造密封袋任务，又把检测样本多造为材料并错归密封袋。"
+        }
+      }
+    },
+    {
+      "id": "W12",
+      "previousId": "U12",
+      "cohort": "original12",
+      "arms": {
+        "A": {
+          "requestModel": "deepseek-flash",
+          "returnedModel": "deepseek-flash",
+          "http": 200,
+          "schemaParsed": true,
+          "strictScored": true,
+          "strictCompleteCase": false,
+          "businessErrors": {
+            "taskExtra": 0,
+            "taskMissing": 0,
+            "materialMissing": 0,
+            "materialExtra": 0,
+            "materialOwnership": 0,
+            "timeMissing": 0,
+            "timeFalse": 0,
+            "timeOwnership": 0,
+            "condition": 0,
+            "dependency": 1,
+            "revision": 1
+          },
+          "substantiveErrorCount": 2,
+          "substantiveCorrectionRequired": true,
+          "structuralReviewBlocker": false,
+          "auxiliaryReviewBurden": 0,
+          "reviewIssueCodes": [],
+          "suggestedTasks": [
+            "制作展签",
+            "保存最终版展签",
+            "向公共邮箱发送作品源文件"
+          ],
+          "waitingMs": 9056,
+          "usage": {
+            "input_tokens": 4734,
+            "input_tokens_details": {
+              "cached_tokens": 4480
+            },
+            "output_tokens": 2172,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 6906
+          },
+          "costUpperMicroCny": 26844,
+          "note": "给独立保存任务增加无依据依赖；纯取消仍被写成替代。"
+        },
+        "B": {
+          "requestModel": "deepseek-v4-pro",
+          "returnedModel": "deepseek-v4-pro",
+          "http": 200,
+          "schemaParsed": true,
+          "strictScored": true,
+          "strictCompleteCase": false,
+          "businessErrors": {
+            "taskExtra": 0,
+            "taskMissing": 0,
+            "materialMissing": 0,
+            "materialExtra": 0,
+            "materialOwnership": 0,
+            "timeMissing": 0,
+            "timeFalse": 0,
+            "timeOwnership": 0,
+            "condition": 0,
+            "dependency": 1,
+            "revision": 1
+          },
+          "substantiveErrorCount": 2,
+          "substantiveCorrectionRequired": true,
+          "structuralReviewBlocker": false,
+          "auxiliaryReviewBurden": 0,
+          "reviewIssueCodes": [],
+          "suggestedTasks": [
+            "制作展签",
+            "保存最终版展签",
+            "向公共邮箱发送作品源文件"
+          ],
+          "waitingMs": 24592,
+          "usage": {
+            "input_tokens": 4733,
+            "input_tokens_details": {
+              "cached_tokens": 3968
+            },
+            "output_tokens": 2613,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 7346
+          },
+          "costUpperMicroCny": 113148,
+          "note": "与A相同，依赖和纯取消语义仍需纠正。"
+        }
+      }
+    },
+    {
+      "id": "X01",
+      "previousId": "V01",
+      "cohort": "later8",
+      "arms": {
+        "A": {
+          "requestModel": "deepseek-flash",
+          "returnedModel": "deepseek-flash",
+          "http": 200,
+          "schemaParsed": true,
+          "strictScored": true,
+          "strictCompleteCase": false,
+          "businessErrors": {
+            "taskExtra": 0,
+            "taskMissing": 0,
+            "materialMissing": 0,
+            "materialExtra": 0,
+            "materialOwnership": 0,
+            "timeMissing": 0,
+            "timeFalse": 0,
+            "timeOwnership": 0,
+            "condition": 0,
+            "dependency": 0,
+            "revision": 0
+          },
+          "substantiveErrorCount": 0,
+          "substantiveCorrectionRequired": false,
+          "structuralReviewBlocker": false,
+          "auxiliaryReviewBurden": 0,
+          "reviewIssueCodes": [],
+          "suggestedTasks": [
+            "提交投影设备清单",
+            "领取讲解耳麦"
+          ],
+          "waitingMs": 8241,
+          "usage": {
+            "input_tokens": 4722,
+            "input_tokens_details": {
+              "cached_tokens": 4480
+            },
+            "output_tokens": 2015,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 6737
+          },
+          "costUpperMicroCny": 25564,
+          "note": "两个任务、材料和截止正确。"
+        },
+        "B": {
+          "requestModel": "deepseek-v4-pro",
+          "returnedModel": "deepseek-v4-pro",
+          "http": 200,
+          "schemaParsed": true,
+          "strictScored": true,
+          "strictCompleteCase": false,
+          "businessErrors": {
+            "taskExtra": 0,
+            "taskMissing": 0,
+            "materialMissing": 0,
+            "materialExtra": 0,
+            "materialOwnership": 0,
+            "timeMissing": 0,
+            "timeFalse": 0,
+            "timeOwnership": 0,
+            "condition": 0,
+            "dependency": 0,
+            "revision": 0
+          },
+          "substantiveErrorCount": 0,
+          "substantiveCorrectionRequired": false,
+          "structuralReviewBlocker": false,
+          "auxiliaryReviewBurden": 0,
+          "reviewIssueCodes": [],
+          "suggestedTasks": [
+            "提交投影设备清单",
+            "领取讲解耳麦"
+          ],
+          "waitingMs": 22868,
+          "usage": {
+            "input_tokens": 4721,
+            "input_tokens_details": {
+              "cached_tokens": 3968
+            },
+            "output_tokens": 2408,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 7129
+          },
+          "costUpperMicroCny": 107505,
+          "note": "两个任务、材料和截止正确。"
+        }
+      }
+    },
+    {
+      "id": "X02",
+      "previousId": "V02",
+      "cohort": "later8",
+      "arms": {
+        "A": {
+          "requestModel": "deepseek-flash",
+          "returnedModel": "deepseek-flash",
+          "http": 200,
+          "schemaParsed": true,
+          "strictScored": true,
+          "strictCompleteCase": false,
+          "businessErrors": {
+            "taskExtra": 0,
+            "taskMissing": 0,
+            "materialMissing": 0,
+            "materialExtra": 0,
+            "materialOwnership": 0,
+            "timeMissing": 0,
+            "timeFalse": 0,
+            "timeOwnership": 0,
+            "condition": 0,
+            "dependency": 0,
+            "revision": 0
+          },
+          "substantiveErrorCount": 0,
+          "substantiveCorrectionRequired": false,
+          "structuralReviewBlocker": false,
+          "auxiliaryReviewBurden": 0,
+          "reviewIssueCodes": [
+            "TIME_NEEDS_REVIEW"
+          ],
+          "suggestedTasks": [
+            "制作三张展架标签",
+            "安装三张标签到入口展架"
+          ],
+          "waitingMs": 7671,
+          "usage": {
+            "input_tokens": 4519,
+            "input_tokens_details": {
+              "cached_tokens": 4352
+            },
+            "output_tokens": 1669,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 6188
+          },
+          "costUpperMicroCny": 22390,
+          "note": "共享材料归属正确；当日17:00保留待核对。"
+        },
+        "B": {
+          "requestModel": "deepseek-v4-pro",
+          "returnedModel": "deepseek-v4-pro",
+          "http": 200,
+          "schemaParsed": true,
+          "strictScored": true,
+          "strictCompleteCase": false,
+          "businessErrors": {
+            "taskExtra": 0,
+            "taskMissing": 0,
+            "materialMissing": 0,
+            "materialExtra": 0,
+            "materialOwnership": 0,
+            "timeMissing": 0,
+            "timeFalse": 0,
+            "timeOwnership": 0,
+            "condition": 0,
+            "dependency": 0,
+            "revision": 0
+          },
+          "substantiveErrorCount": 0,
+          "substantiveCorrectionRequired": false,
+          "structuralReviewBlocker": false,
+          "auxiliaryReviewBurden": 0,
+          "reviewIssueCodes": [
+            "TIME_NEEDS_REVIEW"
+          ],
+          "suggestedTasks": [
+            "制作三张展架标签",
+            "安装三张标签到入口展架"
+          ],
+          "waitingMs": 20694,
+          "usage": {
+            "input_tokens": 4518,
+            "input_tokens_details": {
+              "cached_tokens": 3968
+            },
+            "output_tokens": 2089,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 6607
+          },
+          "costUpperMicroCny": 97065,
+          "note": "共享材料归属正确；当日17:00保留待核对。"
+        }
+      }
+    },
+    {
+      "id": "X03",
+      "previousId": "V03",
+      "cohort": "later8",
+      "arms": {
+        "A": {
+          "requestModel": "deepseek-flash",
+          "returnedModel": "deepseek-flash",
+          "http": 200,
+          "schemaParsed": true,
+          "strictScored": true,
+          "strictCompleteCase": false,
+          "businessErrors": {
+            "taskExtra": 0,
+            "taskMissing": 0,
+            "materialMissing": 0,
+            "materialExtra": 0,
+            "materialOwnership": 0,
+            "timeMissing": 0,
+            "timeFalse": 0,
+            "timeOwnership": 0,
+            "condition": 0,
+            "dependency": 0,
+            "revision": 0
+          },
+          "substantiveErrorCount": 0,
+          "substantiveCorrectionRequired": false,
+          "structuralReviewBlocker": false,
+          "auxiliaryReviewBurden": 0,
+          "reviewIssueCodes": [
+            "TIME_NEEDS_REVIEW"
+          ],
+          "suggestedTasks": [
+            "校对温控实验日志"
+          ],
+          "waitingMs": 5965,
+          "usage": {
+            "input_tokens": 4477,
+            "input_tokens_details": {
+              "cached_tokens": 4224
+            },
+            "output_tokens": 1045,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 5522
+          },
+          "costUpperMicroCny": 17314,
+          "note": "模糊截止保留为待核对，材料规格在原文和建议中保留。"
+        },
+        "B": {
+          "requestModel": "deepseek-v4-pro",
+          "returnedModel": "deepseek-v4-pro",
+          "http": 200,
+          "schemaParsed": true,
+          "strictScored": true,
+          "strictCompleteCase": false,
+          "businessErrors": {
+            "taskExtra": 0,
+            "taskMissing": 0,
+            "materialMissing": 0,
+            "materialExtra": 0,
+            "materialOwnership": 0,
+            "timeMissing": 0,
+            "timeFalse": 0,
+            "timeOwnership": 0,
+            "condition": 0,
+            "dependency": 0,
+            "revision": 0
+          },
+          "substantiveErrorCount": 0,
+          "substantiveCorrectionRequired": false,
+          "structuralReviewBlocker": true,
+          "auxiliaryReviewBurden": 0,
+          "reviewIssueCodes": [
+            "CONDITION_CONTRADICTION",
+            "TIME_NEEDS_REVIEW"
+          ],
+          "suggestedTasks": [
+            "校对温控实验日志"
+          ],
+          "waitingMs": 13881,
+          "usage": {
+            "input_tokens": 4476,
+            "input_tokens_details": {
+              "cached_tokens": 3968
+            },
+            "output_tokens": 1308,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 5784
+          },
+          "costUpperMicroCny": 75600,
+          "note": "事实基本保留，但把辅助事实范围放入条件字段，增加无谓核对。"
+        }
+      }
+    },
+    {
+      "id": "X04",
+      "previousId": "V04",
+      "cohort": "later8",
+      "arms": {
+        "A": {
+          "requestModel": "deepseek-flash",
+          "returnedModel": "deepseek-flash",
+          "http": 200,
+          "schemaParsed": true,
+          "strictScored": true,
+          "strictCompleteCase": false,
+          "businessErrors": {
+            "taskExtra": 0,
+            "taskMissing": 0,
+            "materialMissing": 0,
+            "materialExtra": 0,
+            "materialOwnership": 0,
+            "timeMissing": 0,
+            "timeFalse": 0,
+            "timeOwnership": 0,
+            "condition": 0,
+            "dependency": 0,
+            "revision": 0
+          },
+          "substantiveErrorCount": 0,
+          "substantiveCorrectionRequired": false,
+          "structuralReviewBlocker": false,
+          "auxiliaryReviewBurden": 0,
+          "reviewIssueCodes": [],
+          "suggestedTasks": [
+            "保存培训回执"
+          ],
+          "waitingMs": 4794,
+          "usage": {
+            "input_tokens": 4482,
+            "input_tokens_details": {
+              "cached_tokens": 4348
+            },
+            "output_tokens": 806,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 5288
+          },
+          "costUpperMicroCny": 15412,
+          "note": "真正无日期任务正确。"
+        },
+        "B": {
+          "requestModel": "deepseek-v4-pro",
+          "returnedModel": "deepseek-v4-pro",
+          "http": 200,
+          "schemaParsed": true,
+          "strictScored": true,
+          "strictCompleteCase": false,
+          "businessErrors": {
+            "taskExtra": 0,
+            "taskMissing": 0,
+            "materialMissing": 0,
+            "materialExtra": 0,
+            "materialOwnership": 0,
+            "timeMissing": 0,
+            "timeFalse": 0,
+            "timeOwnership": 0,
+            "condition": 0,
+            "dependency": 0,
+            "revision": 0
+          },
+          "substantiveErrorCount": 0,
+          "substantiveCorrectionRequired": false,
+          "structuralReviewBlocker": false,
+          "auxiliaryReviewBurden": 0,
+          "reviewIssueCodes": [],
+          "suggestedTasks": [
+            "保存本人收到的培训回执"
+          ],
+          "waitingMs": 9562,
+          "usage": {
+            "input_tokens": 4481,
+            "input_tokens_details": {
+              "cached_tokens": 3968
+            },
+            "output_tokens": 849,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 5330
+          },
+          "costUpperMicroCny": 63252,
+          "note": "真正无日期任务正确。"
+        }
+      }
+    },
+    {
+      "id": "X05",
+      "previousId": "V05",
+      "cohort": "later8",
+      "arms": {
+        "A": {
+          "requestModel": "deepseek-flash",
+          "returnedModel": "deepseek-flash",
+          "http": 200,
+          "schemaParsed": true,
+          "strictScored": true,
+          "strictCompleteCase": false,
+          "businessErrors": {
+            "taskExtra": 0,
+            "taskMissing": 0,
+            "materialMissing": 0,
+            "materialExtra": 0,
+            "materialOwnership": 0,
+            "timeMissing": 0,
+            "timeFalse": 0,
+            "timeOwnership": 0,
+            "condition": 0,
+            "dependency": 0,
+            "revision": 0
+          },
+          "substantiveErrorCount": 0,
+          "substantiveCorrectionRequired": false,
+          "structuralReviewBlocker": false,
+          "auxiliaryReviewBurden": 0,
+          "reviewIssueCodes": [],
+          "suggestedTasks": [
+            "领取配电板"
+          ],
+          "waitingMs": 5797,
+          "usage": {
+            "input_tokens": 4533,
+            "input_tokens_details": {
+              "cached_tokens": 4352
+            },
+            "output_tokens": 1195,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 5728
+          },
+          "costUpperMicroCny": 18626,
+          "note": "条件unknown，领取任务和工作证材料正确。"
+        },
+        "B": {
+          "requestModel": "deepseek-v4-pro",
+          "returnedModel": "deepseek-v4-pro",
+          "http": 200,
+          "schemaParsed": true,
+          "strictScored": true,
+          "strictCompleteCase": false,
+          "businessErrors": {
+            "taskExtra": 1,
+            "taskMissing": 0,
+            "materialMissing": 0,
+            "materialExtra": 0,
+            "materialOwnership": 1,
+            "timeMissing": 0,
+            "timeFalse": 0,
+            "timeOwnership": 0,
+            "condition": 0,
+            "dependency": 0,
+            "revision": 0
+          },
+          "substantiveErrorCount": 2,
+          "substantiveCorrectionRequired": true,
+          "structuralReviewBlocker": true,
+          "auxiliaryReviewBurden": 0,
+          "reviewIssueCodes": [
+            "COVERAGE_MATERIAL"
+          ],
+          "suggestedTasks": [
+            "领取配电板",
+            "出示工作证"
+          ],
+          "waitingMs": 16077,
+          "usage": {
+            "input_tokens": 4532,
+            "input_tokens_details": {
+              "cached_tokens": 3968
+            },
+            "output_tokens": 1532,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 6064
+          },
+          "costUpperMicroCny": 82152,
+          "note": "把“出示工作证”多拆成任务，并把工作证只归给多余任务。"
+        }
+      }
+    },
+    {
+      "id": "X06",
+      "previousId": "V06",
+      "cohort": "later8",
+      "arms": {
+        "A": {
+          "requestModel": "deepseek-flash",
+          "returnedModel": "deepseek-flash",
+          "http": 200,
+          "schemaParsed": true,
+          "strictScored": true,
+          "strictCompleteCase": false,
+          "businessErrors": {
+            "taskExtra": 0,
+            "taskMissing": 0,
+            "materialMissing": 0,
+            "materialExtra": 0,
+            "materialOwnership": 0,
+            "timeMissing": 0,
+            "timeFalse": 0,
+            "timeOwnership": 0,
+            "condition": 0,
+            "dependency": 0,
+            "revision": 0
+          },
+          "substantiveErrorCount": 0,
+          "substantiveCorrectionRequired": false,
+          "structuralReviewBlocker": false,
+          "auxiliaryReviewBurden": 0,
+          "reviewIssueCodes": [],
+          "suggestedTasks": [
+            "上传原始数据包",
+            "提交校验值清单"
+          ],
+          "waitingMs": 7845,
+          "usage": {
+            "input_tokens": 4669,
+            "input_tokens_details": {
+              "cached_tokens": 4480
+            },
+            "output_tokens": 1775,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 6444
+          },
+          "costUpperMicroCny": 23538,
+          "note": "旧上传要求作废，新校验值任务生效。"
+        },
+        "B": {
+          "requestModel": "deepseek-v4-pro",
+          "returnedModel": "deepseek-v4-pro",
+          "http": 200,
+          "schemaParsed": true,
+          "strictScored": true,
+          "strictCompleteCase": false,
+          "businessErrors": {
+            "taskExtra": 0,
+            "taskMissing": 0,
+            "materialMissing": 0,
+            "materialExtra": 0,
+            "materialOwnership": 0,
+            "timeMissing": 0,
+            "timeFalse": 0,
+            "timeOwnership": 0,
+            "condition": 0,
+            "dependency": 0,
+            "revision": 0
+          },
+          "substantiveErrorCount": 0,
+          "substantiveCorrectionRequired": false,
+          "structuralReviewBlocker": false,
+          "auxiliaryReviewBurden": 0,
+          "reviewIssueCodes": [],
+          "suggestedTasks": [
+            "上传原始数据包",
+            "提交校验值清单"
+          ],
+          "waitingMs": 23352,
+          "usage": {
+            "input_tokens": 4668,
+            "input_tokens_details": {
+              "cached_tokens": 3968
+            },
+            "output_tokens": 2521,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 7189
+          },
+          "costUpperMicroCny": 110079,
+          "note": "旧上传要求作废，新校验值任务生效；保留旧材料不影响当前行动。"
+        }
+      }
+    },
+    {
+      "id": "X07",
+      "previousId": "V07",
+      "cohort": "later8",
+      "arms": {
+        "A": {
+          "requestModel": "deepseek-flash",
+          "returnedModel": "deepseek-flash",
+          "http": 200,
+          "schemaParsed": true,
+          "strictScored": true,
+          "strictCompleteCase": false,
+          "businessErrors": {
+            "taskExtra": 0,
+            "taskMissing": 0,
+            "materialMissing": 0,
+            "materialExtra": 0,
+            "materialOwnership": 0,
+            "timeMissing": 0,
+            "timeFalse": 0,
+            "timeOwnership": 0,
+            "condition": 0,
+            "dependency": 0,
+            "revision": 0
+          },
+          "substantiveErrorCount": 0,
+          "substantiveCorrectionRequired": false,
+          "structuralReviewBlocker": false,
+          "auxiliaryReviewBurden": 2,
+          "reviewIssueCodes": [],
+          "suggestedTasks": [
+            "归档采访录音",
+            "归档访谈纪要"
+          ],
+          "waitingMs": 8191,
+          "usage": {
+            "input_tokens": 4582,
+            "input_tokens_details": {
+              "cached_tokens": 4352
+            },
+            "output_tokens": 1937,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 6519
+          },
+          "costUpperMicroCny": 24660,
+          "note": "事实正确；授权编号和校对人姓名被拆成两个辅助材料核对项。"
+        },
+        "B": {
+          "requestModel": "deepseek-v4-pro",
+          "returnedModel": "deepseek-v4-pro",
+          "http": 200,
+          "schemaParsed": true,
+          "strictScored": true,
+          "strictCompleteCase": false,
+          "businessErrors": {
+            "taskExtra": 0,
+            "taskMissing": 0,
+            "materialMissing": 0,
+            "materialExtra": 0,
+            "materialOwnership": 0,
+            "timeMissing": 0,
+            "timeFalse": 0,
+            "timeOwnership": 0,
+            "condition": 0,
+            "dependency": 0,
+            "revision": 0
+          },
+          "substantiveErrorCount": 0,
+          "substantiveCorrectionRequired": false,
+          "structuralReviewBlocker": false,
+          "auxiliaryReviewBurden": 0,
+          "reviewIssueCodes": [],
+          "suggestedTasks": [
+            "归档采访录音",
+            "归档访谈纪要"
+          ],
+          "waitingMs": 19711,
+          "usage": {
+            "input_tokens": 4581,
+            "input_tokens_details": {
+              "cached_tokens": 3968
+            },
+            "output_tokens": 2080,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 6661
+          },
+          "costUpperMicroCny": 97389,
+          "note": "事实正确，并把两个辅助属性保留在主材料中，少2个材料核对项。"
+        }
+      }
+    },
+    {
+      "id": "X08",
+      "previousId": "V08",
+      "cohort": "later8",
+      "arms": {
+        "A": {
+          "requestModel": "deepseek-flash",
+          "returnedModel": "deepseek-flash",
+          "http": 200,
+          "schemaParsed": true,
+          "strictScored": true,
+          "strictCompleteCase": false,
+          "businessErrors": {
+            "taskExtra": 0,
+            "taskMissing": 0,
+            "materialMissing": 0,
+            "materialExtra": 0,
+            "materialOwnership": 0,
+            "timeMissing": 0,
+            "timeFalse": 0,
+            "timeOwnership": 0,
+            "condition": 0,
+            "dependency": 0,
+            "revision": 0
+          },
+          "substantiveErrorCount": 0,
+          "substantiveCorrectionRequired": false,
+          "structuralReviewBlocker": false,
+          "auxiliaryReviewBurden": 0,
+          "reviewIssueCodes": [
+            "TIME_NEEDS_REVIEW",
+            "EVENT_NOT_TASK_ASSOCIATED"
+          ],
+          "suggestedTasks": [],
+          "waitingMs": 4888,
+          "usage": {
+            "input_tokens": 4562,
+            "input_tokens_details": {
+              "cached_tokens": 4352
+            },
+            "output_tokens": 684,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 5246
+          },
+          "costUpperMicroCny": 14596,
+          "note": "纯信息，不造任务；结束时间待核对。"
+        },
+        "B": {
+          "requestModel": "deepseek-v4-pro",
+          "returnedModel": "deepseek-v4-pro",
+          "http": 200,
+          "schemaParsed": true,
+          "strictScored": true,
+          "strictCompleteCase": false,
+          "businessErrors": {
+            "taskExtra": 0,
+            "taskMissing": 0,
+            "materialMissing": 0,
+            "materialExtra": 0,
+            "materialOwnership": 0,
+            "timeMissing": 0,
+            "timeFalse": 0,
+            "timeOwnership": 0,
+            "condition": 0,
+            "dependency": 0,
+            "revision": 0
+          },
+          "substantiveErrorCount": 0,
+          "substantiveCorrectionRequired": false,
+          "structuralReviewBlocker": false,
+          "auxiliaryReviewBurden": 0,
+          "reviewIssueCodes": [
+            "TIME_NEEDS_REVIEW",
+            "EVENT_NOT_TASK_ASSOCIATED"
+          ],
+          "suggestedTasks": [],
+          "waitingMs": 9506,
+          "usage": {
+            "input_tokens": 4561,
+            "input_tokens_details": {
+              "cached_tokens": 3968
+            },
+            "output_tokens": 791,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 5352
+          },
+          "costUpperMicroCny": 62406,
+          "note": "纯信息，不造任务；结束时间待核对。"
+        }
+      }
+    }
+  ]
+}
