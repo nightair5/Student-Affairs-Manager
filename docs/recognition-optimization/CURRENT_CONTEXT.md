@@ -12,7 +12,7 @@
 - 分支：codex/e2-multimodal-recognition-exp。
 - 本轮起点：934fb9e3afdd02c233f58e0831b1ce1dcf15b9df。
 - 用户给出的 129dd1 是较早快照，未回切。
-- 本轮业务提交：待提交后写入 DELIVERY.json。
+- 本轮业务提交：804bf07e4b38da13f9bc8b2081fba644dc31a795，已推送并核对远端同一 SHA。
 
 ## 固定设计
 - 20 份已见完整匿名通知原样复用。
@@ -100,8 +100,7 @@
 - 检查与 SHA：CHECKS.json、IMPLEMENTATION_SNAPSHOT.json。
 
 ## 下一动作
-- 精确提交并推送本轮业务实现和证据。
-- 写入 DELIVERY.json 并核对远端 SHA。
+- 追加 DELIVERY.json 后提交并核对最终远端 SHA。
 - 完成本轮后停止，不继续剩余 8 份或追加请求。
 - 保留 none + candidate03；不创建 candidate10。
 - 下一次若继续优化，优先处理假时间而不是提高思考强度。
