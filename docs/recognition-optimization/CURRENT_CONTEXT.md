@@ -11,7 +11,8 @@
 - 仓库：C:\Users\Winner\student-affairs-multimodal-exp。
 - 分支：codex/e2-multimodal-recognition-exp。
 - 本轮起点：129dd1c53c142f45c069110dae42f21f0888a2f2。
-- 业务提交和远端SHA见本run的DELIVERY.json。
+- 本轮业务提交：bcdbd948953e7809253c896b16e8a5f641839735。
+- 远端已精确核对为同一业务SHA；最终文档回执见DELIVERY.json。
 
 ## 固定设计
 - 20份已见完整匿名通知原样复用。
