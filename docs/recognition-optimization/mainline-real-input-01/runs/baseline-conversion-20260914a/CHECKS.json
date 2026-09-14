@@ -1,0 +1,125 @@
+{
+  "version": "baseline-conversion-checks-1",
+  "generatedAt": "2026-09-14T01:42:35.424Z",
+  "rootEnvRead": false,
+  "modelCalls": 0,
+  "temporaryRoot": "C:\\Users\\Winner\\AppData\\Local\\Temp\\baseline-conversion-OknWxM",
+  "sources": [
+    {
+      "path": "src/experiments/mainline05/semanticView.ts",
+      "sha256": "465042db8e0cd16e544fe22559cb2d6af7747b85a6194d3f874f8f4b0d18c234"
+    },
+    {
+      "path": "src/experiments/realInput01/acceptance.test.tsx",
+      "sha256": "0a7fd69c7a306496deacdae251310237a660ae76c91330613803bd1fd3e70237"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/baseline-conversion-20260914a/RUN.mjs",
+      "sha256": "05e7b7576757d4bee3ab85b36139d277b71a34a312bacdf4ef7c348015901965"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/baseline-conversion-20260914a/COMPARE_DOWNLOADS.mjs",
+      "sha256": "39af3fde4e3d6ac876e6ab9eeeb3ae166f70d5130be897f4537c2c2934ab1458"
+    }
+  ],
+  "checks": [
+    {
+      "name": "type-app",
+      "status": 0,
+      "reusedFromPriorAttempt": true
+    },
+    {
+      "name": "type-node",
+      "status": 0,
+      "reusedFromPriorAttempt": true
+    },
+    {
+      "name": "lint",
+      "status": 0,
+      "reusedFromPriorAttempt": true
+    },
+    {
+      "name": "recognition-contract",
+      "status": 0,
+      "reusedFromPriorAttempt": true
+    },
+    {
+      "name": "time-ast-contract",
+      "status": 0,
+      "reusedFromPriorAttempt": true
+    },
+    {
+      "name": "vitest",
+      "status": 0,
+      "passed": 1382,
+      "failed": 0,
+      "skipped": 1,
+      "reusedFromPriorAttempt": true,
+      "evidence": "C:\\Users\\Winner\\AppData\\Local\\Temp\\baseline-conversion-lAdUv2\\vitest.json"
+    },
+    {
+      "name": "node-server-server-tests-mjs",
+      "status": 0,
+      "reusedFromPriorAttempt": true
+    },
+    {
+      "name": "node-cloudflare-worker-tests-mjs",
+      "status": 0,
+      "reusedFromPriorAttempt": true
+    },
+    {
+      "name": "node-scripts-time-ast-parity-node-test-mjs",
+      "status": 0,
+      "reusedFromPriorAttempt": true
+    },
+    {
+      "name": "node-scripts-multimodal-evaluation-lib-node-test-mjs",
+      "status": 0,
+      "reusedFromPriorAttempt": true
+    },
+    {
+      "name": "functions-test",
+      "status": 0,
+      "reusedFromPriorAttempt": true
+    },
+    {
+      "name": "zero-call-replay",
+      "status": 0,
+      "reusedFromPriorAttempt": true
+    },
+    {
+      "name": "download-comparison",
+      "status": 0,
+      "reusedFromPriorAttempt": true
+    },
+    {
+      "name": "build",
+      "status": 0,
+      "reusedFromPriorAttempt": true
+    },
+    {
+      "name": "local-preview-build",
+      "status": 0,
+      "browserJsSha256": "b82f86ee7ccfdfff20c054beeda378bfaa8d9cefabef11d82a69a0ddda029924",
+      "modelCallsEnabled": false,
+      "records": [
+        "recorded/Q01-06.json",
+        "recorded/Q07-06.json",
+        "recorded/R11-07.json",
+        "recorded/R12-07.json",
+        "recorded/U11-09.json",
+        "recorded/V02-09.json"
+      ]
+    },
+    {
+      "name": "local-preview-http",
+      "status": 0,
+      "httpStatus": 200,
+      "modelCallsEnabled": false
+    }
+  ],
+  "reused": {
+    "rco5007": "历史package-lock冻结SHA不匹配，与本轮源码无依赖，未重跑或弱化断言。",
+    "browserControl": "本轮一次官方连接返回nodeRepl.fetch request failed，不循环重试。"
+  }
+}

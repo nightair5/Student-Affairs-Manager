@@ -39,7 +39,7 @@ import { replayRecordedCandidate03, type RecordedCandidate03 } from './runtime'
 import { CANDIDATE03_VERSION } from './candidate03'
 import { acceptSemanticPendingDate } from '../mainline05/semanticConfirmation'
 import { pendingDateEligible, hasPendingDateConsent, pendingDateIdentity, liveReviewIdentity } from '../mainline05/semanticState'
-import { semanticDates, semanticView, pendingDateTaskIds } from '../mainline05/semanticView'
+import { semanticDates, semanticView, semanticReview, pendingDateTaskIds } from '../mainline05/semanticView'
 import { CalendarPage } from '../../pages/CalendarPage'
 import { indexImmutableScopesV11 } from '../../recognition/scopeIndexV11'
 import type { RealInputState } from '../mainline05/semanticState'
@@ -109,6 +109,24 @@ describe('paired09 settled raw replay; engineering simulation, not browser evide
       expect(await repo.load()).toEqual(saved)
       expect(fetch).not.toHaveBeenCalled()
     }finally{fetch.mockRestore()}
+  })
+  it('explains an unknown condition and a cancelled old requirement without weakening either blocker',async()=>{
+    for(const [unitId,taskId,reason] of [
+      ['U06-03','task-pickup-projector','执行条件是否成立尚未确认'],
+      ['U07-03','task-old-mail-proof','旧要求已作废或被替代'],
+    ]){
+      const {repo}=await fixture(),r=record(unitId),identity={unitId,requestSha:r.requestSha,responseSha:r.responseSha}
+      const loaded=await replayRecordedPaired04(repo,r,identity),draft=loaded.extractionDrafts[0]
+      for(const material of effectiveStateFacts(stateOfRuntime(loaded,draft.id)).facts.materials)await reviewSemanticMaterial(repo,{
+        draftId:draft.id,materialId:material.tempId,revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID(),
+        value:{required:material.required,status:'unverified'}})
+      const current=await repo.load(),view=semanticReview(current,draft.id)
+      const item=view.draft.items.find(row=>row.suggestion.id===taskId)!
+      expect(view.states[item.id].blockedReason).toContain(reason)
+      expect(item.selected).toBe(false)
+      await expect(confirmSemantic(repo,{draftId:draft.id,taskTempIds:[taskId],revision:semanticRevision(current)})).rejects.toThrow()
+      expect(await repo.load()).toEqual(current)
+    }
   })
   it.each([
     ['U11-09',['task-fill-registration','task-submit-samples']],

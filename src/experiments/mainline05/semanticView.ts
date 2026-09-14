@@ -5,9 +5,35 @@ import type { TaskDateViews, TaskDateView } from '../mainline02/taskDateView'
 import { isDateOnly } from '../../lib/timeSemantics'
 import { stateOfRuntime as stateOf, life, relatedAssets, canAct, editTimeSupport, semanticRevision,
   effectiveStateFacts, effectiveReview, REAL_STATE_VERSION, liveReviewIdentity, isCurrentDraft, titleReviewProblem, materialReviewProblem, hasPendingDateConsent, type AnySemanticState as SemanticState } from './semanticState'
+import { itemSafety } from '../realInput01/modelPolicy'
+import type { SemanticInput } from '../mainline04/semanticContract'
+import type { ReviewPackage } from '../mainline04/semanticComposer'
 
 export const timeLabel = (value: string | null, timezone: string) => !value ? '时间待核对'
   : value + (isDateOnly(value) ? '（仅日期）' : '（' + timezone + '）')
+function explainItemBlocker(input: SemanticInput, review: ReviewPackage, taskId: string) {
+  const task = input.tasks.find(row => row.id === taskId)
+  if (!task) return '任务事实缺失，暂时不能确认。'
+  if (task.semantics.status === 'cancelled' || task.semantics.validity === 'superseded') {
+    return '该旧要求已作废或被替代，不会创建新的待办任务。'
+  }
+  if (task.condition.value === 'unknown') return '执行条件是否成立尚未确认；任务会保留，但现在不会当作可执行任务保存。'
+  if (task.condition.value === 'false') return '原文条件当前未成立；任务会保留，但现在不会当作可执行任务保存。'
+  const labels: Record<string, string> = {
+    TIME_NEEDS_REVIEW: '时间说法或日期归属仍需核对',
+    MULTIPLE_DEADLINES: '同一任务出现多个截止时间，需要核对正确归属',
+    BAD_ENTITY_REFERENCE: '任务、材料或时间引用的目标不存在',
+    BAD_REVISION_REFERENCE: '取消或替代关系引用的旧／新要求不存在',
+    CONDITION_CONTRADICTION: '条件状态与原文依据互相矛盾',
+    ACTION_UNKNOWN: '原文是否要求你执行仍不明确',
+    ACTION_FALSE: '该内容不是当前需要执行的行动',
+    ACTOR_REQUIRES_REVIEW: '执行人是否是你或通知对象仍需核对',
+    EFFECT_REQUIRES_REVIEW: '这项要求是否生效仍需核对',
+    NOT_ACTIVE_DIRECTIVE: '这不是当前有效且需要执行的要求',
+  }
+  const reasons = itemSafety(input, review, taskId).map(code => labels[code] ?? `事实关系仍需核对（${code}）`)
+  return reasons.length ? [...new Set(reasons)].join('；') + '。' : '原文行动、状态或依据仍需核对。'
+}
 export function semanticDates(workspace: WorkspaceV8): TaskDateViews {
   return Object.fromEntries(workspace.tasks.map(task => {
     const state = stateOf(workspace, String(task.legacyData?.mainline05DraftId))
@@ -61,7 +87,7 @@ function draftView(workspace: WorkspaceV8, draftId: string, choices: Readonly<Re
     const dependenciesReady = prerequisites(task.id).every(dep => current.dispositions[dep] === 'confirmed' || choose(dep))
     const blockedReason = live && !isCurrentDraft(workspace, draftId) ? '来源或识别版本已更新，旧未确认建议已过期；已确认任务保留。'
       : materialReviewProblem(state,task.id) ? materialReviewProblem(state,task.id)
-      : !canAct(state,task.id) ? '原文行动条件、状态或依据需核对：' + (item.issues.join('、') || item.requiresAction)
+      : !canAct(state,task.id) ? explainItemBlocker(input,review,task.id)
       : disposition === 'rejected' ? '你已明确选择不需要'
       : live && titleReviewProblem(current.values[task.id].title) ? titleReviewProblem(current.values[task.id].title)
       : !reviewed(task.id) ? (live && state.operations.some(o => o.correction?.change.kind === 'surface' && o.correction.change.taskId === task.id)
