@@ -1,0 +1,30 @@
+{
+  "version": "real-input-reasoning-compare-send-review-1",
+  "status": "PASS",
+  "scope": "REASONING_COMPARE_SEND",
+  "head": "ec05976a824595fe28737d5dee84fb9d9bbbf2ac",
+  "grantId": "b9ef8d8b-54a9-4991-878c-975f53bcf94e",
+  "bindingSha": "0dc81a1cefd72380dd973f22cc3183a48f138cfdaa26c620f9853f114e93ad1f",
+  "billingSha": "5d871635ca4181b5dcd729b1bbec8552fe8b03f64ac779037023b2bff4697bef",
+  "sourcesSha": "8e8ac11d22eca78da3558e6a72955e9b1896be7f842e9daba4be55d73bf9c557",
+  "checks": {
+    "sameDeepSeekFlash": true,
+    "sameCandidate03AndWire": true,
+    "sameInputsSchemaParserScorer": true,
+    "onlyReasoningEffortDiffersWithinEachPair": true,
+    "reasoning": {"A":"none","B":"low"},
+    "lowTemperatureRecordedAsProviderIgnored": true,
+    "reasoningItemsExcludedFromSemanticParsing": true,
+    "totalOutputUsageChargedOnce": true,
+    "oldLedgerPrefixPreserved": true,
+    "permanentA01UnknownPreserved": true,
+    "requestWorstCaseWithinReservation": true,
+    "referenceExcludedFromRequests": true,
+    "textOnly": true,
+    "retryRepairVerifier": 0
+  },
+  "authorizedNewRequests": 40,
+  "maximumTotalRequests": 288,
+  "capMicroCny": 20000000,
+  "reviewedAt": "2026-09-14T06:29:00.000Z"
+}

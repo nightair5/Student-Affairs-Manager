@@ -2221,3 +2221,13 @@
 - Pro未接入6632；可靠Flash历史零调用回放的20条正确保存/16份来源继续作为工程承接证据，不冒充本轮真人转化率。
 - 官方浏览器一次连接23.276秒后仍为nodeRepl.fetch request failed；新两旅程与新下载NOT_RUN。当前6632服务从最终源码重启且HTTP200、模型关闭；历史Q01/Q07和U11下载证据仅按原范围复用。
 - 业务提交6a8b459ece9e6cc551a6bd9d07fa042ab4a9ef98已推送并精确核验远端同SHA；独立审计无本轮阻断。
+
+### 2026-09-14 Flash none与low思考配置对照
+
+- 固定deepseek-flash、candidate03、wire、20份已见正文、来源索引、参考时刻、时区和评分，只改变reasoning effort。A为none；B为low。旧none校验不放宽，reasoning项与最终message分离，输出用量只计费一次。
+- 实际只发送首对2次：Y01-A none为HTTP200/completed，等待9698ms，input4777/output2275/reasoning0，费用上界0.027754元；业务上两任务、两时间、三材料正确，无实质纠正。
+- Y01-B low上游HTTP200但status=incomplete，等待37323ms，input4802/output8192/reasoning6719，原因max_output_tokens。最终答案不可可靠使用，结算拒绝、账本停机；后续38次未发送，无重试或补调用。
+- 账本512行/累计250次，原507行前缀保持；当前费用权威上界13.887567元，含A01与Y01-B各3.30元未知预留，服务商实扣NOT_OBSERVABLE，20元上限未突破。
+- 没有形成任何完整配对来源，不能报告20份质量差值、错误计数或low减少用户修改。结论DO_NOT_ADOPT_LOW_KEEP_NONE，不提高上限、不追加high/Pro/候选。
+- 官方浏览器一次连接21.438秒后nodeRepl.fetch request failed；本轮页面、刷新、独立读库和下载NOT_RUN。6632 HTTP200且识别POST405 MODEL_AND_WRITES_DISABLED；历史页面证据不冒充本轮新验收。
+- 定向120测试、Node语法、类型、lint、安全临时Vite构建、Vitest1382、server8、Worker25、time AST1、评估库23、Functions5、最终Secret scan2211均通过。仅旧RCO-5-007的package-lock历史冻结SHA继续失败，本轮锁文件无diff且旧断言未改。

@@ -1,0 +1,31 @@
+{
+  "version": "real-input-reasoning-compare-baseline-1",
+  "head": "ec05976a824595fe28737d5dee84fb9d9bbbf2ac",
+  "branch": "codex/e2-multimodal-recognition-exp",
+  "ledger": {
+    "path": "docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/CALL_LEDGER.jsonl",
+    "bytes": 383989,
+    "sha256": "cde335bf62b473a7e86cbbdaa6a78e53ab0d6bd34a6dcc73fc19c38353d84911",
+    "sequence": 507,
+    "tail": "7c5fd9503f47575fdfc03521d19c384d53bf8d4459a84db9f07fd713339e65b8",
+    "totalRequests": 248
+  },
+  "log": {
+    "path": "docs/recognition-optimization/OPTIMIZATION_LOG.md",
+    "bytes": 351277,
+    "sha256": "4b4c6b8617426752b55aa5ef776e19a1875d5e6dcfbd46f41b0a6d97e0fb10fe"
+  },
+  "protectedFiles": [
+    {"path":"src/experiments/realInput01/candidate03.ts","sha256":"f3a2dd9358ca2a50b9b3eba8a090211666db4c0fb8dc5fc146e742c9895f9508"},
+    {"path":"src/experiments/realInput01/modelWire.ts","sha256":"c7c81ae516c30faec850f4d765ae625d2cf1d11f39ed0d515ab93da45efb8be2"},
+    {"path":"docs/recognition-optimization/mainline-real-input-01/runs/model-compare-20260914a/BINDING_FINAL.json","sha256":"0e053544594dd40c5e99d577a290441ef4c32b44ce36d280cbef44bd87bde7d1"},
+    {"path":"docs/recognition-optimization/mainline-real-input-01/runs/model-compare-20260914a/REFERENCES_FINAL.json","sha256":"ab7da30fc52a9de9a69a0569caa3ceafdfb4bf73eeda35e4835719aff80f565d"},
+    {"path":"docs/recognition-optimization/mainline-real-input-01/runs/model-compare-20260914a/COMPARISON.json","sha256":"44838d9dba3549e37af70e7685a98fd971a981b211e606f078143b81f1a27809"},
+    {"path":"docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/REQUEST_MANIFEST.json","sha256":"7ed6c3c2054e0d101328f882e0efc5e4415d0db8d3cc1f2bc98157ce324d9a9c"}
+  ],
+  "modelCallsAtStart": 248,
+  "permanentA01UnknownMicroCny": 3300000,
+  "totalCostUpperMicroCnyAtStart": 10559813,
+  "capMicroCny": 20000000,
+  "gitWasClean": true
+}

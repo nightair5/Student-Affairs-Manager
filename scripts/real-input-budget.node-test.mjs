@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url'
 import { spawn } from 'node:child_process'
 import { BILLING_POLICY, FLASH41_POLICY, FLASH41_PAIRED06_POLICY, FLASH41_PAIRED07_POLICY, FLASH41_PAIRED08_POLICY, FLASH41_PAIRED09_POLICY,
   MODEL_COMPARE_POLICY, MODEL_COMPARE_FLASH_POLICY, MODEL_COMPARE_PRO_POLICY, modelComparePolicyFor,
+  REASONING_COMPARE_POLICY, REASONING_COMPARE_NONE_POLICY, REASONING_COMPARE_LOW_POLICY, reasoningComparePolicyFor,
   sha256, costUpperMicroCny, validateManifest, validateUsageEnvelope, initializeBudget, openBudget } from './real-input-budget.mjs'
 
 async function batchFixture() {
@@ -777,4 +778,44 @@ if(process.argv[2]!=='--reserve-child')test('model compare: same candidate/input
   assert.equal(modelComparePolicyFor('W01-B'),MODEL_COMPARE_PRO_POLICY)
   assert.equal(costUpperMicroCny(65536,8192,MODEL_COMPARE_PRO_POLICY),811008)
   assert.ok(costUpperMicroCny(65536,8192,MODEL_COMPARE_PRO_POLICY)<MODEL_COMPARE_POLICY.reservationMicroCny)
+})
+
+const reasoningEnvelope=(id,policy,input=100,output=20,reasoning=0)=>{
+  const value=JSON.parse(modelEnvelope(id,policy.model,input,output));value.usage.output_tokens_details.reasoning_tokens=reasoning
+  value.output=reasoning>0?[{type:'reasoning',id:'rs_'+id,summary:[]},...value.output]:value.output
+  return JSON.stringify(value)
+}
+async function reasoningCompareFixture(){
+  const f=await modelCompareFixture(),b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+  for(const u of f.grant.targets){const policy=modelComparePolicyFor(u.unitId);await(await reserve(b,u.unitId,policy)).complete(modelEnvelope(u.unitId,policy.model))}
+  const before=await b.snapshot(),prefix=await readFile(join(f.dir,'CALL_LEDGER.jsonl'))
+  const priorA=f.grant.targets.filter(u=>u.unitId.endsWith('-A'))
+  const cases=[...Array.from({length:12},(_,i)=>`Y${String(i+1).padStart(2,'0')}`),...Array.from({length:8},(_,i)=>`Z${String(i+1).padStart(2,'0')}`)]
+  const targets=cases.flatMap((id,i)=>(i<10?['A','B']:['B','A']).map(arm=>{
+    const value=row(`${id}-${arm}`,arm==='A'?'reasoning-none':'reasoning-low',priorA[i].inputSha);value.inputSha=priorA[i].inputSha
+    if(arm==='A')value.candidateSha=priorA[i].candidateSha
+    return value
+  }))
+  return {...f,before,prefix,grant:{...f.grant,version:'real-input-reasoning-compare-grant-1',grantId:'cccccccc-cccc-4ccc-8ccc-cccccccccccc',
+    parentTail:before.tail,parentSequence:before.nextSequence,ledgerPrefixBytes:prefix.length,ledgerPrefixSha:sha256(prefix),maxTotalRequests:288,policy:REASONING_COMPARE_POLICY,targets}}
+}
+if(process.argv[2]!=='--reserve-child')test('reasoning compare: none remains exact, low accepts separate reasoning output and charges total output once',async()=>{
+  const f=await reasoningCompareFixture();assert.equal(f.before.nextSequence,507);assert.equal(f.before.reservations.length,248)
+  for(const mutate of [g=>{g.parentSequence=506},g=>{g.maxTotalRequests=289},g=>{g.policy.limitMicroCny=21000000},
+    g=>{g.targets[0].unitId='W01-A'},g=>{g.targets[1].inputSha=sha256('different')},
+    g=>{g.targets.find(u=>u.unitId.endsWith('-A')).candidateSha=sha256('different')}]){
+    const grant=structuredClone(f.grant);mutate(grant);await assert.rejects(()=>openBudget(f.dir,f.manifestSha,{batchGrant:grant}))
+  }
+  assert.deepEqual(await readFile(join(f.dir,'CALL_LEDGER.jsonl')),f.prefix)
+  const b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+  for(const u of f.grant.targets){const policy=reasoningComparePolicyFor(u.unitId),reasoning=u.unitId.endsWith('-B')?7:0
+    await(await reserve(b,u.unitId,policy)).complete(reasoningEnvelope(u.unitId,policy,100,20,reasoning))}
+  const s=await b.snapshot();assert.equal(s.reservations.length,288);assert.equal(s.nextSequence,588)
+  assert.deepEqual(s.reservations.slice(0,248),f.before.reservations)
+  assert.equal(reasoningComparePolicyFor('Y01-A'),REASONING_COMPARE_NONE_POLICY)
+  assert.equal(reasoningComparePolicyFor('Y01-B'),REASONING_COMPARE_LOW_POLICY)
+  assert.equal(costUpperMicroCny(100,20,REASONING_COMPARE_LOW_POLICY),360)
+  assert.throws(()=>validateUsageEnvelope(reasoningEnvelope('bad',REASONING_COMPARE_NONE_POLICY,100,20,7),200,REASONING_COMPARE_NONE_POLICY))
+  const missingFinal=JSON.parse(reasoningEnvelope('bad2',REASONING_COMPARE_LOW_POLICY,100,20,7));missingFinal.output=missingFinal.output.slice(0,1)
+  assert.throws(()=>validateUsageEnvelope(JSON.stringify(missingFinal),200,REASONING_COMPARE_LOW_POLICY))
 })

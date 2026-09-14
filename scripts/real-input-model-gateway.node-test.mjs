@@ -6,7 +6,8 @@ import { createModelGateway,inspectRequest,createRawRecorder,createPinnedProxyFe
 import { EventEmitter } from 'node:events'
 import { Readable } from 'node:stream'
 import { BILLING_POLICY,FLASH41_POLICY,FLASH41_PAIRED06_POLICY,MODEL_COMPARE_POLICY,
-  MODEL_COMPARE_FLASH_POLICY,MODEL_COMPARE_PRO_POLICY,sha256,initializeBudget,openBudget } from './real-input-budget.mjs'
+  MODEL_COMPARE_FLASH_POLICY,MODEL_COMPARE_PRO_POLICY,REASONING_COMPARE_POLICY,
+  REASONING_COMPARE_NONE_POLICY,REASONING_COMPARE_LOW_POLICY,sha256,initializeBudget,openBudget } from './real-input-budget.mjs'
 
 const ORIGIN='http://127.0.0.1:6637',CAP='a'.repeat(64),NOW='2026-09-07T00:00:00.000Z'
 const FAKE_SECRET='NOT_A_REAL_CREDENTIAL_FOR_ENGINEERING'
@@ -385,4 +386,33 @@ test('model compare: W/X dispatch applies the frozen per-arm model without chang
       bodyText:JSON.stringify({unitId,requestSha:identities[unitId].requestSha})}
     assert.equal((await gateway.handle(message)).status,200);assert.equal(calls,1);assert.equal(reserves,1);assert.equal(records,1)
   }
+})
+test('reasoning compare: Y/Z dispatch changes only effort and never treats reasoning items as the final answer',async()=>{
+  const bodies={},identities={},historical={}
+  for(const [unitId,armPolicy] of [['P01-03',FLASH41_POLICY],['W01-A',MODEL_COMPARE_FLASH_POLICY]]){
+    const value=JSON.parse(request());value.model=armPolicy.model;historical[unitId]=JSON.stringify(value);identities[unitId]=inspectRequest(historical[unitId],armPolicy)
+  }
+  for(const [unitId,armPolicy] of [['Y01-A',REASONING_COMPARE_NONE_POLICY],['Y01-B',REASONING_COMPARE_LOW_POLICY]]){
+    const value=JSON.parse(request());value.model=armPolicy.model;value.reasoning.effort=armPolicy.reasoningEffort
+    bodies[unitId]=JSON.stringify(value);identities[unitId]=inspectRequest(bodies[unitId],armPolicy)
+  }
+  const comparable=text=>{const value=JSON.parse(text);delete value.reasoning;return value}
+  assert.deepEqual(comparable(bodies['Y01-A']),comparable(bodies['Y01-B']))
+  for(const [unitId,armPolicy] of [['Y01-A',REASONING_COMPARE_NONE_POLICY],['Y01-B',REASONING_COMPARE_LOW_POLICY]]){
+    let calls=0,reserves=0,records=0;const envelope=JSON.parse(raw(unitId));envelope.model='deepseek-flash'
+    if(armPolicy.reasoningEffort==='low'){
+      envelope.usage.output_tokens=20;envelope.usage.output_tokens_details.reasoning_tokens=10;envelope.usage.total_tokens=120
+      envelope.output=[{type:'reasoning',id:'rs_'+unitId,summary:[]},...envelope.output]
+    }
+    const gateway=await createModelGateway({origin:ORIGIN,capability:CAP,requests:{...historical,[unitId]:bodies[unitId]},policy:REASONING_COMPARE_POLICY,clock:()=>NOW,
+      budget:{snapshot:async()=>({units:[{unitId:'P01-03',...identities['P01-03']},{unitId:'W01-A',...identities['W01-A']},{unitId,...identities[unitId]}]}),reserve:async(id,text,policy)=>{assert.equal(id,unitId);assert.equal(text,bodies[unitId]);assert.deepEqual(policy,armPolicy);reserves++
+        return{complete:async()=>({usage:envelope.usage,costUpperMicroCny:400}),uncertain:async()=>{throw Error('UNEXPECTED')}}}},
+      readSecret:()=>FAKE_SECRET,fetchImpl:async(url,options)=>{calls++;assert.equal(options.body,bodies[unitId]);return http(JSON.stringify(envelope))},
+      recordRaw:async row=>{records++;assert.equal(row.unitId,unitId);assert.equal(JSON.parse(row.rawHttpText).output.at(-1).type,'message')}})
+    const message={method:'POST',path:'/api/real-input/recognize',headers:{host:new URL(ORIGIN).host,origin:ORIGIN,'sec-fetch-site':'same-origin','content-type':'application/json','x-real-input-capability':CAP},
+      bodyText:JSON.stringify({unitId,requestSha:identities[unitId].requestSha})}
+    assert.equal((await gateway.handle(message)).status,200);assert.equal(calls,1);assert.equal(reserves,1);assert.equal(records,1)
+  }
+  const bad=JSON.parse(bodies['Y01-B']);bad.reasoning.effort='high'
+  assert.throws(()=>inspectRequest(JSON.stringify(bad),REASONING_COMPARE_LOW_POLICY),/REASONING/)
 })
