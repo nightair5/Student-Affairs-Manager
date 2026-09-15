@@ -71,7 +71,7 @@ for (const method of ['getItem','setItem','removeItem','clear','key'] as const) 
 window.fetch = (input, init) => {
   const url = new URL(input instanceof Request ? input.url : String(input),location.href)
   if(preview){
-    if(url.origin!==location.origin||!/^\/recorded\/(?:Q(?:01|07)-06|R(?:11|12)-07|U11-09|V02-09)\.json$/.test(url.pathname)||url.search||(init?.method??'GET')!=='GET')throw Error('REAL_INPUT_PREVIEW_NETWORK_FORBIDDEN')
+    if(url.origin!==location.origin||!/^\/recorded\/(?:Q(?:01|07)-06|R(?:11|12)-07|U11-09|V02-09|L(?:01|02|04)-A)\.json$/.test(url.pathname)||url.search||(init?.method??'GET')!=='GET')throw Error('REAL_INPUT_PREVIEW_NETWORK_FORBIDDEN')
     return nativeFetch(input,{...init,redirect:'error'})
   }
   if (url.origin !== location.origin || !(url.pathname.startsWith('/real-input-assets/') || url.pathname.startsWith('/engineering-carriers/')
@@ -130,14 +130,14 @@ function EngineeringTools() {
         body:JSON.stringify({unitId:identity.unitId,requestSha:identity.requestSha})})
       if(!response.ok)throw Error('REAL_INPUT_BATCH_RECORD_UNAVAILABLE')
       const record=await response.json() as RecordedBatch|RecordedCandidate02|RecordedCandidate03|RecordedPaired04
-      const saved=(record.version==='recorded-paired04-1'&&config.paired04||record.version==='recorded-paired05-1'&&config.paired05||record.version==='recorded-paired06-1'&&(config.paired06||preview))
+      const saved=(record.version==='recorded-reasoning-none-1'&&preview||record.version==='recorded-paired09-1'&&preview||record.version==='recorded-paired07-1'&&preview||record.version==='recorded-paired04-1'&&config.paired04||record.version==='recorded-paired05-1'&&config.paired05||record.version==='recorded-paired06-1'&&(config.paired06||preview))
         ?await replayRecordedPaired04(await repository(),record,identity,Boolean(preview))
         :record.version==='recorded-candidate03-1'&&config.candidate03
         ?await replayRecordedCandidate03(await repository(),record,identity)
         :record.version==='recorded-candidate02-1'&&config.candidate02
         ?await replayRecordedCandidate02(await repository(),record,identity)
         :await replayRecordedBatch(await repository(),record as RecordedBatch,identity)
-      const savedDraft=record.version==='recorded-candidate02-1'||record.version==='recorded-candidate03-1'||record.version==='recorded-paired04-1'||record.version==='recorded-paired05-1'||record.version==='recorded-paired06-1'
+      const savedDraft=record.version==='recorded-candidate02-1'||record.version==='recorded-candidate03-1'||record.version==='recorded-paired04-1'||record.version==='recorded-paired05-1'||record.version==='recorded-paired06-1'||record.version==='recorded-reasoning-none-1'
         ?saved.extractionDrafts.find(d=>{const pending=d.legacyData?.realInputPending;return pending&&typeof pending==='object'&&!Array.isArray(pending)&&pending.operationId===record.version.replace(/-1$/,'-')+record.unitId})
         :undefined
       return {unitId:identity.unitId,label:'原模型响应，非新预测/人工替身',tasks:saved.tasks.length,...(savedDraft?{draftId:savedDraft.id}:'handle' in record?{originalDraftId:record.handle.draftId}:{}),
@@ -244,7 +244,7 @@ async function mount(createPreview=false) {
   if(!preview){params.delete('new');history.replaceState(null,'','/?'+params.toString())}
   root.render(<>{preview&&<div className="app-shell" style={{minHeight:0}}><section className="content-shell" aria-label="实验版使用说明" style={{padding:16}}>
     <h2>{preview.localOnly?'本地独立试用 · 从一份通知开始':'从一份通知开始，把任务核对清楚'}</h2>
-    <p>点击“新事务”选择匿名示例，直接打开核对面板。共享材料时间示例用于验证本机归属修复，保留首次错误供核对，并非采用新候选。</p>
+    <p>点击“新事务”选择最新可靠None历史回答，直接打开核对面板。W11/W12保留首次错误供你短路径纠正；这里没有重新调用模型。</p>
     <p>匿名历史回放 · 模型关闭 · 数据仅保存在当前入口的当前浏览器。不读取其他试用库，不同步，请勿输入真实学生资料。候选06/07/09未采用。</p>
   </section></div>}<App runtime={runtime}/>{preview?<div className="app-shell" style={{minHeight:0}}><div className="content-shell"><EngineeringTools/></div></div>:<EngineeringTools/>}</>)
 }

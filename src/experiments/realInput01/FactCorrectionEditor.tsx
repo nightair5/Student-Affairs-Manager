@@ -115,6 +115,11 @@ export function FactCorrectionEditor({ repo, workspace, draftId, taskId, busy, o
 }
 
 type CorrectionProps={repo:SemanticRepository;workspace:WorkspaceV8;draftId:string;taskId?:string;busy:boolean;onDirty:(dirty:boolean)=>void;onSaved:()=>Promise<void>}
+/** Exact persistence adapter used by the relation editor's save event. */
+// eslint-disable-next-line react-refresh/only-export-components -- exported so the editor-to-repository path is tested without a second implementation.
+export async function submitRelationCorrection(repo:SemanticRepository,draftId:string,revision:string,change:FactChange,operationId:string=crypto.randomUUID()){
+  return correctSemanticFact(repo,{draftId,revision,operationId,change})
+}
 /** Same review panel, explicit source-bound user edits; no model call or raw rewrite. */
 export function RelationCorrection({repo,workspace,draftId,taskId,busy,onDirty,onSaved}:CorrectionProps){
   const draft=workspace.extractionDrafts.find(d=>d.id===draftId)!,ready=Boolean(draft.legacyData?.mainline05)
@@ -150,7 +155,7 @@ export function RelationCorrection({repo,workspace,draftId,taskId,busy,onDirty,o
     else if(mode==='add_task')change={kind:'add_task',value:newTask('user-'+crypto.randomUUID(),false),scopeIds,note}
     else {const addedTask=newTarget?newTask('user-'+crypto.randomUUID(),true):null
       change={kind:'revision',index:relationIndex,value:{addedTask,relation:{type:from?'supersedes':'cancels',targetDirectiveId:addedTask?.id??target,fromDirectiveId:from||null,effective:value as 'true'|'false'|'unknown',scopeIds}},scopeIds,note}}
-    await correctSemanticFact(repo,{draftId,revision,operationId:crypto.randomUUID(),change})
+    await submitRelationCorrection(repo,draftId,revision,change)
   }
   return <section aria-label={task?'条件、依赖与事件纠正：'+task.detail.title:'通知漏项与新旧要求纠正'}>
     {!ready?<><p>模型原回答有关系错误，不能直接确认。可保留失败记录，依据完整原文人工纠正；这不会重新调用模型。</p>

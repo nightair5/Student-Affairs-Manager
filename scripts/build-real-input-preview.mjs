@@ -29,6 +29,13 @@ const pinned09={
   'U11-09_RAW.jsonl':'1de5e7b280a6d808ebe83e9874dfa4b132fadedde3c55433cb944ade72fe650f',
   'V02-09_RAW.jsonl':'2f5f87084770cdb2337c7fda92b72257b1378c644531fb75c5c85cfa8a3d7938',
 }
+const L='docs/recognition-optimization/mainline-real-input-01/runs/reasoning-low16-compare-20260914a/'
+const pinnedNone={
+  'BINDING_FINAL.json':'1ace528d15cc06bdc279f82bb13cb98e6526e5c3eb203f2bc0fe242aec3a82a1',
+  'L01-A_RAW.jsonl':'97be31dc41a3445e57ab22a3476f39d5d27ec128690846e3a9feb9854a5586cc',
+  'L02-A_RAW.jsonl':'918ab684576c8152a62993a1f3275c9268ccafbc235aa8d85cb53896f9ee6777',
+  'L04-A_RAW.jsonl':'ba253a17fd5797920a8f459b817c0c354194d995b4dde9253db5c10b3c4f3e7d',
+}
 export async function buildPreview(origin='https://student-affairs-real-input-preview.nightsdell.workers.dev', {localOnly=false}={}){
   check(localOnly ? origin==='http://127.0.0.1:6632' : origin==='https://student-affairs-real-input-preview.nightsdell.workers.dev','ORIGIN')
   const read=n=>{const b=readFileSync(join(sourceRoot,D,n));check(hash(b)===pinned[n],'HISTORY_CHANGED');return JSON.parse(b)}
@@ -56,6 +63,15 @@ export async function buildPreview(origin='https://student-affairs-real-input-pr
     check(item&&unit&&raw.httpStatus===200&&raw.requestSha===unit.requestSha&&raw.inputSha===unit.inputSha
       &&raw.candidateSha===unit.candidateSha&&hash(raw.rawHttpText)===raw.responseSha,'PAIRED09_RAW_BINDING')
     records.push({version:'recorded-paired09-1',unitId,name:historicalName,operationId:item.operationId,title:item.title,
+      context:item.context,requestSha:raw.requestSha,responseSha:raw.responseSha,rawHttpText:raw.rawHttpText})
+  }
+  const readNone=n=>{const b=readFileSync(join(sourceRoot,L,n));check(hash(b)===pinnedNone[n],'LATEST_NONE_HISTORY_CHANGED');return JSON.parse(b)}
+  const bindingNone=readNone('BINDING_FINAL.json')
+  for(const unitId of ['L01-A','L02-A','L04-A']){
+    const raw=readNone(unitId+'_RAW.jsonl'),item=bindingNone.items.find(i=>i.id===unitId.slice(0,3)),unit=bindingNone.units.find(u=>u.unitId===unitId)
+    check(item&&unit&&raw.httpStatus===200&&raw.requestSha===unit.requestSha&&raw.inputSha===unit.inputSha
+      &&raw.candidateSha===unit.candidateSha&&hash(raw.rawHttpText)===raw.responseSha,'LATEST_NONE_RAW_BINDING')
+    records.push({version:'recorded-reasoning-none-1',unitId,name:historicalName,operationId:item.operationId,title:item.title,
       context:item.context,requestSha:raw.requestSha,responseSha:raw.responseSha,rawHttpText:raw.rawHttpText})
   }
   // Deliberately omit receipts, billing, Expected and absolute source paths from public assets.

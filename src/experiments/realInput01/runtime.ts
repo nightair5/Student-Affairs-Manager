@@ -56,7 +56,7 @@ export interface RecordedBatch extends Omit<RecordedA02,'version'> {
 }
 export interface RecordedBatchIdentity {unitId:string;requestSha:string;responseSha:string}
 export interface RecordedPaired04 {
-  version:'recorded-paired04-1'|'recorded-paired05-1'|'recorded-paired06-1'|'recorded-paired07-1'|'recorded-paired09-1'; unitId:string; name:string; operationId:string; title:string;
+  version:'recorded-paired04-1'|'recorded-paired05-1'|'recorded-paired06-1'|'recorded-paired07-1'|'recorded-paired09-1'|'recorded-reasoning-none-1'; unitId:string; name:string; operationId:string; title:string;
   context:WireContext; requestSha:string; responseSha:string; rawHttpText:string
 }
 /** Server-bound paid record, not a model executor. No references or scores enter here. */
@@ -68,6 +68,9 @@ export const HTTPS_PREVIEW_EXAMPLES = [
   {unitId:'R12-07',label:'核对展签与取消要求',description:'保留原回答的取消引用错误，须人工补正，不代表已通过识别。'},
   {unitId:'U11-09',label:'验证共享材料的两个截止时间',description:'候选09历史回放：共享登记单仍关联两个任务，但每个任务只保留自己的截止时间；候选09未采用。'},
   {unitId:'V02-09',label:'验证展签制作与安装时间',description:'候选09历史回放：先核对可确认的制作任务，安装任务的时间和前置条件仍须单独处理；候选09未采用。'},
+  {unitId:'L01-A',label:'体验多任务通知',description:'最新可靠基线 · L01-A · deepseek-flash · reasoning=none：核对两项任务、各自截止时间与材料归属。'},
+  {unitId:'L02-A',label:'核对送样与共享材料',description:'最新可靠基线 · L02-A / W11：纠正多余建议、材料归属和未知条件，再确认合法独立任务。'},
+  {unitId:'L04-A',label:'核对展签与前置关系',description:'最新可靠基线 · L04-A / W12：核对无依据依赖；作废旧要求不会成为待办。'},
 ] as const
 export async function openHttpsPreviewExample(repo:SemanticRepository,identity:RecordedBatchIdentity,
   read:(unitId:string)=>Promise<RecordedPaired04>,onReady:(draftId:string)=>Promise<void>) {
@@ -90,8 +93,10 @@ export function HttpsPreviewExamples({open,unitIds=['Q01-06','Q07-06']}:{open:(u
   const choose=async(unitId:string)=>{
     if(busy)return
     setBusy(true);setError('')
-    try{await open(unitId)}catch{
-      setError('示例未能打开，已有保存内容未被清空。请再次选择以恢复；若仍失败，请保留现场并联系维护者。')
+    try{await open(unitId)}catch(error){
+      setError(error instanceof Error&&error.message==='PAIRED_SOURCE_ARM_ALREADY_CHOSEN'
+        ?'同一通知已载入另一条历史回答。为避免重复任务，本次没有覆盖；请从收件箱继续处理已有记录。'
+        :'示例未能打开，已有保存内容未被清空。请再次选择以恢复；若仍失败，请保留现场并联系维护者。')
     }finally{setBusy(false)}
   }
   const examples=HTTPS_PREVIEW_EXAMPLES.filter(e=>unitIds.includes(e.unitId))
@@ -110,18 +115,20 @@ export async function replayRecordedPaired04(repo:SemanticRepository,record:Reco
   exactKeys(record,['version','unitId','name','operationId','title','context','requestSha','responseSha','rawHttpText'])
   exactKeys(identity,['unitId','requestSha','responseSha'])
   const id=record.unitId.slice(0,3),arm=record.unitId.slice(4)
-  const paired09=record.version==='recorded-paired09-1',paired07=record.version==='recorded-paired07-1',newest=record.version==='recorded-paired06-1',next=record.version==='recorded-paired05-1',prefix=paired09?'paired09':paired07?'paired07':newest?'paired06':next?'paired05':'paired04'
+  const latestNone=record.version==='recorded-reasoning-none-1',paired09=record.version==='recorded-paired09-1',paired07=record.version==='recorded-paired07-1',newest=record.version==='recorded-paired06-1',next=record.version==='recorded-paired05-1',prefix=latestNone?'reasoning-none':paired09?'paired09':paired07?'paired07':newest?'paired06':next?'paired05':'paired04'
   // Paired09 deliberately reuses the exact paired08 source/context. Do not
   // manufacture a new source identity or confirm both arms of the same source.
-  const operationId=paired09?(id.startsWith('U')?'paired08-seen-S':'paired08-fresh-T')+id.slice(1):prefix+'-source-'+id
-  const built=paired09&&['03','09'].includes(arm)?await buildFlash41Candidate09ComparisonRequest(record.context,arm as '03'|'09')
+  const latestNoneOperation={L01:'paired08-seen-S01',L02:'paired08-seen-S11',L04:'paired08-seen-S12'}[id]
+  const operationId=latestNone?latestNoneOperation:paired09?(id.startsWith('U')?'paired08-seen-S':'paired08-fresh-T')+id.slice(1):prefix+'-source-'+id
+  const built=latestNone?await buildReasoningLow16NoneRequest(record.context)
+    :paired09&&['03','09'].includes(arm)?await buildFlash41Candidate09ComparisonRequest(record.context,arm as '03'|'09')
     :paired07&&['03','07'].includes(arm)?await buildFlash41Candidate07ComparisonRequest(record.context,arm as '03'|'07')
     :newest&&['03','06'].includes(arm)?await buildFlash41Candidate06ComparisonRequest(record.context,arm as '03'|'06')
     :next&&['03','05'].includes(arm)?await buildFlash41ComparisonRequest(record.context,arm as '03'|'05')
     :await (arm==='03'?buildCandidate03Request:buildCandidate04Request)(record.context)
-  if(!['recorded-paired04-1','recorded-paired05-1','recorded-paired06-1','recorded-paired07-1','recorded-paired09-1'].includes(record.version)
-    ||!(paired09?/^(U(0[1-9]|1[0-2])|V0[1-8])-(03|09)$/:paired07?/^R(0[1-9]|1[0-2])-(03|07)$/:newest?/^Q(0[1-9]|1[0-2])-(03|06)$/:next?/^P(0[1-9]|1[0-2])-(03|05)$/:/^N(0[1-9]|1[0-2])-(03|04)$/).test(record.unitId)
-    ||record.operationId!==operationId||record.name!==recordedA02Identity.name
+  if(!['recorded-paired04-1','recorded-paired05-1','recorded-paired06-1','recorded-paired07-1','recorded-paired09-1','recorded-reasoning-none-1'].includes(record.version)
+    ||!(latestNone?/^L(?:01|02|04)-A$/:paired09?/^(U(0[1-9]|1[0-2])|V0[1-8])-(03|09)$/:paired07?/^R(0[1-9]|1[0-2])-(03|07)$/:newest?/^Q(0[1-9]|1[0-2])-(03|06)$/:next?/^P(0[1-9]|1[0-2])-(03|05)$/:/^N(0[1-9]|1[0-2])-(03|04)$/).test(record.unitId)
+    ||!operationId||record.operationId!==operationId||record.name!==recordedA02Identity.name
     ||(httpsPreview ? repo.name!==HTTPS_PREVIEW_DATABASE||!HTTPS_PREVIEW_EXAMPLES.some(e=>e.unitId===record.unitId) : repo.name!==record.name)
     ||repo.profile!=='real-input-01'||record.unitId!==identity.unitId
     ||record.requestSha!==identity.requestSha||record.responseSha!==identity.responseSha
@@ -146,8 +153,8 @@ export async function replayRecordedPaired04(repo:SemanticRepository,record:Reco
       referenceTime:record.context.referenceTime,timezone:'Asia/Shanghai'}
     if(stableJson(actual)!==stableJson(record.context))throw Error('REAL_INPUT_P04_SOURCE')
     const handle=await memory.beginInputRun(source.sourceId,reading,'live','recorded-'+prefix+'-'+record.unitId,
-      semanticRevision(await memory.load()),record.context.referenceTime,arm==='03'?CANDIDATE03_VERSION:paired09?CANDIDATE09_VERSION:paired07?CANDIDATE07_VERSION:newest?CANDIDATE06_VERSION:next?CANDIDATE05_VERSION:CANDIDATE04_VERSION,
-      paired09||paired07||newest||next?FLASH41_MODEL_NAME:MODEL_NAME)
+      semanticRevision(await memory.load()),record.context.referenceTime,latestNone||arm==='03'?CANDIDATE03_VERSION:paired09?CANDIDATE09_VERSION:paired07?CANDIDATE07_VERSION:newest?CANDIDATE06_VERSION:next?CANDIDATE05_VERSION:CANDIDATE04_VERSION,
+      latestNone||paired09||paired07||newest||next?FLASH41_MODEL_NAME:MODEL_NAME)
     await memory.transaction(w=>({...w,extractionDrafts:w.extractionDrafts.map(d=>d.id===handle.draftId
       ?{...d,legacyData:{...d.legacyData,realInputRecorded:receipt}}:d)}))
     try{await completeInputRun(memory,handle,record.rawHttpText)}catch(error){
@@ -162,6 +169,11 @@ export async function replayRecordedPaired04(repo:SemanticRepository,record:Reco
     }
     await enableMaterialReview(memory,handle.draftId)
   })
+}
+async function buildReasoningLow16NoneRequest(context:WireContext){
+  const request=await buildCandidate03Request(context),body={...structuredClone(request.body),model:FLASH41_MODEL_NAME,
+    reasoning:{effort:'none' as const},max_output_tokens:16384}
+  return {body,serialized:JSON.stringify(body)}
 }
 export interface RecordedCandidate02 extends Omit<RecordedBatch,'version'> { version:'recorded-candidate02-1' }
 /** Already-paid response only. New run identity; old source version and response remain intact. */
@@ -354,8 +366,8 @@ export async function createRealInputRuntime(options: {
 }) {
   options = { ...options, resources: structuredClone(options.resources) }
   if(options.previewExamples){
-    if(!options.httpsPreview||![2,4,6].includes(options.previewExamples.identities.length)
-      ||!['Q01-06','Q07-06'].every(id=>options.previewExamples!.identities.filter(i=>i.unitId===id).length===1)
+    const ids=options.previewExamples.identities.map(i=>i.unitId),hasBase=['Q01-06','Q07-06'].every(id=>ids.includes(id)),hasLatest=['L01-A','L02-A','L04-A'].every(id=>ids.includes(id))
+    if(!options.httpsPreview||![2,4,6,9].includes(options.previewExamples.identities.length)||(!hasBase&&!hasLatest)
       ||options.previewExamples.identities.some(i=>!HTTPS_PREVIEW_EXAMPLES.some(e=>e.unitId===i.unitId))
       ||new Set(options.previewExamples.identities.map(i=>i.unitId)).size!==options.previewExamples.identities.length)throw Error('REAL_INPUT_HTTPS_EXAMPLES_PROFILE')
     options={...options,previewExamples:{...options.previewExamples,identities:structuredClone(options.previewExamples.identities)}}
@@ -384,9 +396,9 @@ export async function createRealInputRuntime(options: {
       return {load:()=>repo.load(),view:semanticView,dates:semanticDates,review:semanticReview,edit:i=>editSemantic(repo,i),
         confirm:i=>confirmSemantic(repo,i),exportJson:()=>repo.exportJson(),capture:async()=>{throw Error('请先在真实输入面板保存并核对本次文字范围。')},
         recognitionDescription:options.recordedPaired06?'DeepSeek-V4.1-Flash · 03/06已记录回答 · 逐项核对':options.recordedPaired05?'DeepSeek-V4.1-Flash · 03/05已记录回答 · 逐项核对':options.recordedPaired04?'候选03/04配对真实回答 · 逐项人工核对':options.recordedCandidate03?'候选03与历史真实模型回答 · 逐项人工核对':options.recordedCandidate02?'新候选02与历史真实模型回答 · 逐项人工核对':options.recordedBatch?'已记录真实模型批次 · 原回答核对，不再调用模型':options.recordedA02?'A02历史真实模型响应回放 · 本轮零调用':options.execution==='live'?'真实模型建议 · 尚未逐项核对':'已见匿名工程回放 · 非模型预测',
-        realInput:{profile:'real-input-01',networkDescription:options.httpsPreview?'独立匿名回放：仅提供已绑定Q01/Q07、R11/R12及U11/V02历史回答，模型接口关闭。确认结果只保存在当前入口的当前浏览器，不读取其他试用库。':options.recordedPaired06?'同材料03/06开发回归；仅回放本批已取得并结算的回答，不允许新发送。首次建议和人工纠正分别保留。':options.recordedPaired05?'新模型24次配对已完成，本包累计80次；只回放已取得回答，不再发送。05未替换现有路线。':options.recordedPaired04?'24次配对已完成，本包累计56次；仅本机回放，不再发送。':options.recordedCandidate03?'候选03的8次已完成，本包累计32次；当前仅本机回放，不再发送。':options.recordedCandidate02?'新候选8次已完成，本包累计24次；当前仅本机回放，不再发送。':options.recordedBatch?'本批14次已派发完毕；仅核对已记录响应与本机提取文字，不再发送。':options.recordedA02?'只核对已记录A02响应；禁止新发送，不读取密钥，不访问模型。':options.execution==='live'
+        realInput:{profile:'real-input-01',networkDescription:options.httpsPreview?'独立匿名回放：直接提供L01-A、L02-A、L04-A最新可靠None回答，并保留旧受控历史回答；模型接口关闭。确认结果只保存在当前入口的当前浏览器，不读取其他试用库。':options.recordedPaired06?'同材料03/06开发回归；仅回放本批已取得并结算的回答，不允许新发送。首次建议和人工纠正分别保留。':options.recordedPaired05?'新模型24次配对已完成，本包累计80次；只回放已取得回答，不再发送。05未替换现有路线。':options.recordedPaired04?'24次配对已完成，本包累计56次；仅本机回放，不再发送。':options.recordedCandidate03?'候选03的8次已完成，本包累计32次；当前仅本机回放，不再发送。':options.recordedCandidate02?'新候选8次已完成，本包累计24次；当前仅本机回放，不再发送。':options.recordedBatch?'本批14次已派发完毕；仅核对已记录响应与本机提取文字，不再发送。':options.recordedA02?'只核对已记录A02响应；禁止新发送，不读取密钥，不访问模型。':options.execution==='live'
           ?'本机读取；仅在逐次确认且预算允许时发送本次文字，不发送文件或工作区。':'本机读取与已见工程回放，无外部模型调用。',
-          inputPanel:props=>options.httpsPreview&&options.previewExamples?createElement(HttpsPreviewExamples,{unitIds:options.previewExamples.identities.map(i=>i.unitId),open:async(unitId:string)=>{
+          inputPanel:props=>options.httpsPreview&&options.previewExamples?createElement(HttpsPreviewExamples,{unitIds:(()=>{const latest=options.previewExamples!.identities.map(i=>i.unitId).filter(id=>id.startsWith('L'));return latest.length?latest:options.previewExamples!.identities.map(i=>i.unitId)})(),open:async(unitId:string)=>{
             const examples=options.previewExamples!,identity=examples.identities.find(i=>i.unitId===unitId)
             if(!identity)throw Error('REAL_INPUT_HTTPS_EXAMPLE_IDENTITY')
             if(!previewOpening)previewOpening=openHttpsPreviewExample(repo,identity,examples.read,props.onDraftReady).finally(()=>{previewOpening=undefined})

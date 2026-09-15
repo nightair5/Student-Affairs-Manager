@@ -13,7 +13,7 @@ import { SemanticRepository } from '../mainline05/semanticRepository'
 import { reviewSemanticFact } from '../mainline05/semanticConfirmation'
 import { REAL_STATE_VERSION, semanticRevision, stateOfRuntime } from '../mainline05/semanticState'
 import { cases, notices, seenWire, NOW } from './seenInputs'
-import { FactCorrectionEditor } from './FactCorrectionEditor'
+import { FactCorrectionEditor, submitRelationCorrection } from './FactCorrectionEditor'
 import { readFileSync } from 'node:fs'
 import { createHash } from 'node:crypto'
 import { spawnSync } from 'node:child_process'
@@ -49,7 +49,7 @@ import { buildFlash41Candidate06ComparisonRequest, CANDIDATE06_VERSION } from '.
 import { HTTPS_PREVIEW_DATABASE, openHttpsPreviewExample } from './runtime'
 import { CANDIDATE07_VERSION } from './candidate07'
 import { validateWorkspaceShape } from '../../domain/v2/validators/shapeValidator'
-import { validateMaterialDecision } from './factCorrections'
+import { materialEdit, validateMaterialDecision } from './factCorrections'
 import { TaskDetailPanel } from '../../components/TaskDetailPanel'
 import { CANDIDATE09_VERSION } from './candidate09'
 
@@ -309,7 +309,7 @@ describe('paired07 actual recorded response boundary; memory only, not browser a
     const r=spawnSync(process.execPath,['--input-type=module','-e',`
       import assert from 'node:assert/strict';import worker from './cloudflare/real-input-preview.mjs';
       const env={ASSETS:{fetch:async()=>new Response('asset')}};
-      for(const path of ['/recorded/R11-07.json','/recorded/R12-07.json','/recorded/U11-09.json','/recorded/V02-09.json'])assert.equal((await worker.fetch(new Request('https://preview.invalid'+path),env)).status,200);
+      for(const path of ['/recorded/R11-07.json','/recorded/R12-07.json','/recorded/U11-09.json','/recorded/V02-09.json','/recorded/L01-A.json','/recorded/L02-A.json','/recorded/L04-A.json'])assert.equal((await worker.fetch(new Request('https://preview.invalid'+path),env)).status,200);
       for(const path of ['/recorded/R11-03.json','/recorded/R01-07.json','/recorded/U10-09.json','/api/recognize'])assert.equal((await worker.fetch(new Request('https://preview.invalid'+path),env)).status,404);
       assert.equal((await worker.fetch(new Request('https://preview.invalid/api/recognize',{method:'POST'}),env)).status,405);
     `],{encoding:'utf8'})
@@ -363,10 +363,10 @@ describe('HTTPS preview',()=>{
       const assignment=tree.statements.find(s=>ts.isExpressionStatement(s)&&ts.isBinaryExpression(s.expression)&&s.expression.left.getText(tree)==='window.fetch');
       const window={},calls=[];
       runInNewContext(compile(assignment.getText(tree)),{window,URL,Request,location:{origin:local.origin,href:local.origin+'/'},preview:local,nativeFetch:(...args)=>{calls.push(args);return Promise.resolve()},effects:{forbiddenNetwork:0}});
-      for(const unit of ['Q01-06','Q07-06','R11-07','R12-07','U11-09','V02-09'])await window.fetch('/recorded/'+unit+'.json');
-      assert.equal(calls.length,6);
+      for(const unit of ['Q01-06','Q07-06','R11-07','R12-07','U11-09','V02-09','L01-A','L02-A','L04-A'])await window.fetch('/recorded/'+unit+'.json');
+      assert.equal(calls.length,9);
       for(const path of ['/api/recognize','/recorded/R11-03.json','/recorded/R11-07.json?x=1','https://example.com/recorded/R11-07.json'])assert.throws(()=>window.fetch(path),/NETWORK_FORBIDDEN/);
-      assert.throws(()=>window.fetch('/recorded/R11-07.json',{method:'POST'}),/NETWORK_FORBIDDEN/);assert.equal(calls.length,6);
+      assert.throws(()=>window.fetch('/recorded/R11-07.json',{method:'POST'}),/NETWORK_FORBIDDEN/);assert.equal(calls.length,9);
     `],{encoding:'utf8'})
     expect(probe.status,probe.stderr).toBe(0)
   })
@@ -380,7 +380,7 @@ describe('HTTPS preview',()=>{
       const get=(path,headers={},method='GET')=>new Promise((resolve,reject)=>{const req=request(testOrigin+path,{headers:{Host:'127.0.0.1:6632',...headers},method},r=>{const parts=[];r.on('data',b=>parts.push(b));r.on('end',()=>resolve({status:r.statusCode,text:Buffer.concat(parts).toString()}))});req.on('error',reject);req.end()});
       try{
         assert.equal(server.address().address,'127.0.0.1');assert.equal(manifest.configuration,null);assert.equal(manifest.modelCallsEnabled,false);
-        for(const path of ['/','/browser.js','/browser.css','/recorded/Q01-06.json','/recorded/Q07-06.json','/recorded/R11-07.json','/recorded/R12-07.json','/recorded/U11-09.json','/recorded/V02-09.json'])assert.equal((await get(path)).status,200,path);
+      for(const path of ['/','/browser.js','/browser.css','/recorded/Q01-06.json','/recorded/Q07-06.json','/recorded/R11-07.json','/recorded/R12-07.json','/recorded/U11-09.json','/recorded/V02-09.json','/recorded/L01-A.json','/recorded/L02-A.json','/recorded/L04-A.json'])assert.equal((await get(path)).status,200,path);
         assert.equal(JSON.parse((await get('/api/status')).text).modelCallsEnabled,false);
         assert.equal((await get('/api/recognize',{},'POST')).status,405);
         assert.equal((await get('/',{Host:'localhost:6632'})).status,403);
@@ -392,17 +392,18 @@ describe('HTTPS preview',()=>{
     expect(probe.status,probe.stderr).toBe(0)
   },35000)
   function record(unitId:string):RecordedPaired04{
-    const paired07=unitId.startsWith('R'),paired09=unitId.startsWith('U')||unitId.startsWith('V')
-    const p='docs/recognition-optimization/mainline-real-input-01/runs/'+(paired09?'candidate09-20260913a/':paired07?'candidate07-20260913a/':'candidate06-20260912a/')
-    const binding=JSON.parse(readFileSync(p+(paired09||paired07?'BINDING_FINAL.json':'BINDING.json'),'utf8'))
+    const latestNone=unitId.startsWith('L'),paired07=unitId.startsWith('R'),paired09=unitId.startsWith('U')||unitId.startsWith('V')
+    const p='docs/recognition-optimization/mainline-real-input-01/runs/'+(latestNone?'reasoning-low16-compare-20260914a/':paired09?'candidate09-20260913a/':paired07?'candidate07-20260913a/':'candidate06-20260912a/')
+    const binding=JSON.parse(readFileSync(p+(latestNone||paired09||paired07?'BINDING_FINAL.json':'BINDING.json'),'utf8'))
     const item=binding.items.find((i:{id:string})=>i.id===unitId.slice(0,3))
     const raw=JSON.parse(readFileSync(p+unitId+'_RAW.jsonl','utf8'))
-    return {version:paired09?'recorded-paired09-1':paired07?'recorded-paired07-1':'recorded-paired06-1',unitId,name:recordedA02Identity.name,operationId:item.operationId,
+    return {version:latestNone?'recorded-reasoning-none-1':paired09?'recorded-paired09-1':paired07?'recorded-paired07-1':'recorded-paired06-1',unitId,name:recordedA02Identity.name,operationId:item.operationId,
       title:item.title,context:item.context,requestSha:raw.requestSha,responseSha:raw.responseSha,rawHttpText:raw.rawHttpText}
   }
   it('real runtime picker opens all bound examples via the existing App callback without refreshing or dispatching',async()=>{
     const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:HTTPS_PREVIEW_DATABASE}),execute=vi.fn(async()=>{throw Error('NO_MODEL')})
-    const unitIds=['Q01-06','Q07-06','R11-07','R12-07','U11-09','V02-09']
+    const unitIds=['Q01-06','Q07-06','R11-07','R12-07','U11-09','V02-09','L01-A','L02-A','L04-A']
+    const directIds=['L01-A','L02-A','L04-A']
     const records=unitIds.map(record),identities=records.map(({unitId,requestSha,responseSha})=>({unitId,requestSha,responseSha}))
     const read=vi.fn(async(id:string)=>structuredClone(records.find(r=>r.unitId===id)!))
     const runtime=await createRealInputRuntime({name:store.name,store,initial:emptyRealInputWorkspace(store.name),execution:'live',
@@ -414,16 +415,104 @@ describe('HTTPS preview',()=>{
     })
     const picker=runtime.realInput!.inputPanel({workspace:await runtime.load(),initialText:'',onSaved:async()=>{},onDraftReady:onReady}) as ReactElement<{open:(id:string)=>Promise<unknown>}>
     const html=renderToStaticMarkup(picker)
-    expect(html).toContain('体验多任务通知');expect(html).toContain('体验新旧要求替代');expect(html).toContain('验证共享材料的两个截止时间');expect(html).toContain('历史真实模型回答')
-    for(const id of unitIds)await picker.props.open(id)
-    const saved=await runtime.load();expect(saved.extractionDrafts).toHaveLength(6);expect(new Set(opened).size).toBe(6)
+    expect(html).toContain('体验多任务通知');expect(html).toContain('核对送样与共享材料');expect(html).toContain('核对展签与前置关系');expect(html).toContain('deepseek-flash');expect(html).toContain('历史真实模型回答')
+    for(const id of directIds)await picker.props.open(id)
+    const saved=await runtime.load();expect(saved.extractionDrafts).toHaveLength(3);expect(new Set(opened).size).toBe(3)
     expect(await new CanonicalWorkspaceRepository(store).load()).toEqual(JSON.parse(JSON.stringify(saved)))
-    await picker.props.open('Q01-06');expect(opened[6]).toBe(opened[0]);expect(await runtime.load()).toEqual(saved)
-    await Promise.all([picker.props.open('Q01-06'),picker.props.open('Q01-06')])
-    expect(opened).toHaveLength(8);expect(await runtime.load()).toEqual(saved)
+    await picker.props.open('L01-A');expect(opened[3]).toBe(opened[0]);expect(await runtime.load()).toEqual(saved)
+    await Promise.all([picker.props.open('L01-A'),picker.props.open('L01-A')])
+    expect(opened).toHaveLength(5);expect(await runtime.load()).toEqual(saved)
     await expect(picker.props.open('Q03-06')).rejects.toThrow('REAL_INPUT_HTTPS_EXAMPLE_IDENTITY')
-    expect(read).toHaveBeenCalledTimes(8);expect(execute).not.toHaveBeenCalled()
+    expect(read).toHaveBeenCalledTimes(5);expect(execute).not.toHaveBeenCalled()
   },15000)
+  it.each(['L01-A','L02-A','L04-A'])('%s binds the latest settled None answer, preserves raw identity, and never duplicates the same entry',async unitId=>{
+    const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:HTTPS_PREVIEW_DATABASE})
+    const repo=await SemanticRepository.open(store.name,store,emptyRealInputWorkspace(store.name),'real-input-01')
+    const r=record(unitId),identity={unitId:r.unitId,requestSha:r.requestSha,responseSha:r.responseSha}
+    const loaded=await replayRecordedPaired04(repo,r,identity,true),draft=loaded.extractionDrafts[0],run=loaded.recognitionRuns[0]
+    expect(run).toMatchObject({modelName:'deepseek-flash',promptVersion:CANDIDATE03_VERSION,status:'succeeded'})
+    const state=stateOfRuntime(loaded,draft.id);if(state.version!==REAL_STATE_VERSION)throw Error('REAL_EXPECTED')
+    expect(state.rawHttpText).toBe(r.rawHttpText)
+    expect(loaded.tasks).toHaveLength(0)
+    expect(await replayRecordedPaired04(repo,r,identity,true)).toEqual(loaded)
+    expect(await new CanonicalWorkspaceRepository(store).load()).toEqual(JSON.parse(JSON.stringify(loaded)))
+  })
+  it('L01-A saves both reviewed tasks with their own deadlines and unverified preparation',async()=>{
+    const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:HTTPS_PREVIEW_DATABASE})
+    const repo=await SemanticRepository.open(store.name,store,emptyRealInputWorkspace(store.name),'real-input-01')
+    const r=record('L01-A'),identity={unitId:r.unitId,requestSha:r.requestSha,responseSha:r.responseSha}
+    const loaded=await replayRecordedPaired04(repo,r,identity,true),draftId=loaded.extractionDrafts[0].id,initial=stateOfRuntime(loaded,draftId)
+    const facts=effectiveStateFacts(initial).facts,taskIds=facts.tasks.map(task=>task.id)
+    for(const material of facts.materials)await reviewSemanticMaterial(repo,{draftId,materialId:material.tempId,
+      revision:semanticRevision(await repo.load()),operationId:'latest-L01-material-'+material.tempId,
+      value:{required:material.required,status:'unverified'}})
+    for(const taskId of taskIds)await reviewSemanticFact(repo,{draftId,taskId,revision:semanticRevision(await repo.load()),operationId:'latest-L01-task-'+taskId})
+    const saved=await confirmSemantic(repo,{draftId,taskTempIds:taskIds,revision:semanticRevision(await repo.load())})
+    expect(saved.tasks.map(task=>task.title).sort()).toEqual(['上传预告片','提交放映授权书'].sort())
+    expect(saved.timePoints).toHaveLength(2);expect(saved.timePoints.every(time=>time.relatedTaskIds.length===1)).toBe(true)
+    expect(saved.materials.every(material=>material.status==='unverified')).toBe(true)
+    expect(stateOfRuntime(saved,draftId).rawResponse).toEqual(initial.rawResponse)
+    expect(await (await SemanticRepository.open(store.name,store,undefined,'real-input-01')).load()).toEqual(saved)
+  })
+  it('L02-A uses explicit W11 corrections, rejects the extra suggestion, and saves only the valid independent task',async()=>{
+    const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:HTTPS_PREVIEW_DATABASE})
+    const repo=await SemanticRepository.open(store.name,store,emptyRealInputWorkspace(store.name),'real-input-01')
+    const r=record('L02-A'),identity={unitId:r.unitId,requestSha:r.requestSha,responseSha:r.responseSha}
+    const loaded=await replayRecordedPaired04(repo,r,identity,true),draftId=loaded.extractionDrafts[0].id,initial=stateOfRuntime(loaded,draftId)
+    let facts=effectiveStateFacts(initial).facts
+    const submit=facts.tasks.find(task=>task.id==='task-submit-samples')!,extra=facts.tasks.find(task=>task.id==='task-prepare-sample-bags')!
+    const bags=facts.materials.find(material=>material.tempId==='material-sample-bags')!
+    expect(submit.condition.value).toBe('true');expect(bags.relatedTaskTempIds).toEqual(expect.arrayContaining([submit.id,extra.id]))
+    await submitRelationCorrection(repo,draftId,semanticRevision(loaded),{
+      kind:'condition',taskId:submit.id,value:{...submit.condition,value:'unknown',factScopeIds:[]},
+      scopeIds:[...new Set([...submit.condition.conditionScopeIds,...submit.propositionScopeIds])],
+      note:'完整原文只说明填写登记单后再送样，没有说明登记单已经填写完成，因此条件保持尚不确定。'
+    },'latest-W11-condition')
+    let current=await repo.load();facts=effectiveStateFacts(stateOfRuntime(current,draftId)).facts
+    const currentBags=facts.materials.find(material=>material.tempId===bags.tempId)!
+    await correctSemanticFact(repo,{draftId,revision:semanticRevision(current),operationId:'latest-W11-material-owner',change:{
+      kind:'material',materialId:bags.tempId,value:{...materialEdit(currentBags),relatedTaskTempIds:[submit.id]}}})
+    await disposeSemantic(repo,{draftId,taskTempIds:[extra.id],kind:'reject',revision:semanticRevision(await repo.load()),operationId:'latest-W11-reject-extra'})
+    current=await repo.load();facts=effectiveStateFacts(stateOfRuntime(current,draftId)).facts
+    const independent='task-fill-registration-form'
+    for(const material of facts.materials.filter(row=>row.relatedTaskTempIds.includes(independent)))await reviewSemanticMaterial(repo,{
+      draftId,materialId:material.tempId,revision:semanticRevision(await repo.load()),operationId:'latest-W11-review-'+material.tempId,
+      value:{required:material.required,status:'unverified'}})
+    await reviewSemanticFact(repo,{draftId,taskId:independent,revision:semanticRevision(await repo.load()),operationId:'latest-W11-review-task'})
+    const saved=await confirmSemantic(repo,{draftId,taskTempIds:[independent],revision:semanticRevision(await repo.load())})
+    const finalState=stateOfRuntime(saved,draftId),finalFacts=effectiveStateFacts(finalState).facts
+    expect(saved.tasks.map(task=>task.title)).toEqual(['填写送样登记单'])
+    expect(life(finalState).dispositions[extra.id]).toBe('rejected')
+    expect(finalFacts.tasks.find(task=>task.id===submit.id)?.condition.value).toBe('unknown')
+    expect(finalFacts.materials.find(material=>material.tempId===bags.tempId)?.relatedTaskTempIds).toEqual([submit.id])
+    expect(finalState.rawResponse).toEqual(initial.rawResponse);expect(finalState.first).toEqual(initial.first)
+    expect(await (await SemanticRepository.open(store.name,store,undefined,'real-input-01')).load()).toEqual(saved)
+  })
+  it('L04-A relation-editor save removes only the ungrounded dependency and persists the valid new task',async()=>{
+    const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:HTTPS_PREVIEW_DATABASE})
+    const repo=await SemanticRepository.open(store.name,store,emptyRealInputWorkspace(store.name),'real-input-01')
+    const r=record('L04-A'),identity={unitId:r.unitId,requestSha:r.requestSha,responseSha:r.responseSha}
+    const loaded=await replayRecordedPaired04(repo,r,identity,true),draftId=loaded.extractionDrafts[0].id,initial=stateOfRuntime(loaded,draftId)
+    const taskId='task-save-final-labels',task=effectiveStateFacts(initial).facts.tasks.find(row=>row.id===taskId)!
+    expect(task.detail.dependencyTempIds).toEqual(['task-make-labels'])
+    await submitRelationCorrection(repo,draftId,semanticRevision(loaded),{
+      kind:'dependency',taskId,value:[],scopeIds:[...task.propositionScopeIds],
+      note:'完整原文将制作展签与保存最终版展签并列要求，没有说明保存动作必须等待制作任务完成。'
+    },'latest-W12-remove-dependency')
+    const current=await repo.load(),facts=effectiveStateFacts(stateOfRuntime(current,draftId)).facts
+    expect(facts.tasks.find(row=>row.id===taskId)?.detail.dependencyTempIds).toEqual([])
+    const taskIds=['task-make-labels',taskId]
+    for(const material of facts.materials.filter(row=>row.relatedTaskTempIds.some(id=>taskIds.includes(id))))await reviewSemanticMaterial(repo,{
+      draftId,materialId:material.tempId,revision:semanticRevision(await repo.load()),operationId:'latest-W12-review-'+material.tempId,
+      value:{required:material.required,status:'unverified'}})
+    for(const id of taskIds)await reviewSemanticFact(repo,{draftId,taskId:id,revision:semanticRevision(await repo.load()),operationId:'latest-W12-review-'+id})
+    const saved=await confirmSemantic(repo,{draftId,taskTempIds:taskIds,revision:semanticRevision(await repo.load())}),finalState=stateOfRuntime(saved,draftId)
+    expect(saved.tasks.map(row=>row.title).sort()).toEqual(['制作展签','保存最终版展签'].sort())
+    expect(saved.tasks.every(row=>row.dependencyIds.length===0)).toBe(true)
+    expect(saved.tasks.some(row=>row.title.includes('源文件'))).toBe(false)
+    expect(finalState.rawResponse).toEqual(initial.rawResponse);expect(finalState.first).toEqual(initial.first)
+    expect(await (await SemanticRepository.open(store.name,store,undefined,'real-input-01')).load()).toEqual(saved)
+  })
   it('explicit unverified preparation preserves a valid replacement and cancels no independent task (simulation)',async()=>{
     const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:HTTPS_PREVIEW_DATABASE})
     const repo=await SemanticRepository.open(store.name,store,emptyRealInputWorkspace(store.name),'real-input-01')
@@ -541,16 +630,16 @@ describe('HTTPS preview',()=>{
     const result=spawnSync(process.execPath,['--input-type=module','-e',`
       import assert from 'node:assert/strict';import worker from './cloudflare/real-input-preview.mjs';
       let calls=0;const env={ASSETS:{fetch:async r=>{calls++;return new Response(r.url)}}};
-      for(const path of ['/','/browser.js','/browser.css','/recorded/Q01-06.json','/recorded/Q07-06.json','/recorded/U11-09.json','/recorded/V02-09.json']){
+      for(const path of ['/','/browser.js','/browser.css','/recorded/Q01-06.json','/recorded/Q07-06.json','/recorded/U11-09.json','/recorded/V02-09.json','/recorded/L01-A.json','/recorded/L02-A.json','/recorded/L04-A.json']){
         const r=await worker.fetch(new Request('https://preview.invalid'+path),env);assert.equal(r.status,200);
         assert.match(r.headers.get('content-security-policy'),/connect-src 'self'/);
       }
-      assert.equal(calls,7);
+      assert.equal(calls,10);
       for(const path of ['/api/deepseek','/api/real-input/recognize','/.env','/recorded/Q03-06.json','/browser.js?x=1']){
         assert.equal((await worker.fetch(new Request('https://preview.invalid'+path),env)).status,404);
         assert.equal((await worker.fetch(new Request('https://preview.invalid'+path,{method:'POST'}),env)).status,405);
       }
-      assert.equal(calls,7);const status=await (await worker.fetch(new Request('https://preview.invalid/api/status'),env)).json();assert.equal(status.modelCallsEnabled,false);assert.deepEqual(status.records,['Q01-06','Q07-06','R11-07','R12-07','U11-09','V02-09']);
+      assert.equal(calls,10);const status=await (await worker.fetch(new Request('https://preview.invalid/api/status'),env)).json();assert.equal(status.modelCallsEnabled,false);assert.deepEqual(status.records,['Q01-06','Q07-06','R11-07','R12-07','U11-09','V02-09','L01-A','L02-A','L04-A']);
     `],{encoding:'utf8'})
     expect(result.status,result.stderr).toBe(0)
   })
