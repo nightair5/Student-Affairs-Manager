@@ -71,6 +71,20 @@ export function reasoningLow16PolicyFor(unitId) {
   check(typeof unitId==='string'&&/^L(?:0[1-9]|1[0-9]|20)-[AB]$/.test(unitId),'REASONING_LOW16_UNIT')
   return unitId.endsWith('-A')?REASONING_LOW16_NONE_POLICY:REASONING_LOW16_LOW_POLICY
 }
+// Explicitly authorized 12-source candidate03 versus candidate10 comparison.
+// Both arms keep the same Flash/non-thinking parameters; only the fixed system
+// teaching examples differ. Peak prices remain the conservative hard ceiling.
+export const CONTRASTIVE_BASELINE_POLICY = Object.freeze({...MODEL_COMPARE_FLASH_POLICY,
+  version:'real-input-contrastive-baseline-1',maxRequests:314,reasoningEffort:'none',outputTokenCeiling:8192})
+export const CONTRASTIVE_CANDIDATE_POLICY = Object.freeze({...CONTRASTIVE_BASELINE_POLICY,
+  version:'real-input-contrastive-candidate-1'})
+export const CONTRASTIVE_POLICY = Object.freeze({version:'real-input-contrastive-budget-1',maxRequests:314,
+  limitMicroCny:20000000,reservationMicroCny:3300000,
+  arms:Object.freeze({A:CONTRASTIVE_BASELINE_POLICY,B:CONTRASTIVE_CANDIDATE_POLICY})})
+export function contrastivePolicyFor(unitId) {
+  check(typeof unitId==='string'&&/^K(?:0[1-9]|1[0-2])-[AB]$/.test(unitId),'CONTRASTIVE_UNIT')
+  return unitId.endsWith('-A')?CONTRASTIVE_BASELINE_POLICY:CONTRASTIVE_CANDIDATE_POLICY
+}
 const fail = code => { throw Error('REAL_INPUT_BUDGET_' + code) }
 const check = (ok, code) => { if (!ok) fail(code) }
 const digest = value => typeof value === 'string' && /^[a-f0-9]{64}$/.test(value)
@@ -156,7 +170,7 @@ function unambiguousResponse(rawText) {
 const knownPolicy = policy => [BILLING_POLICY,FLASH41_POLICY,FLASH41_PAIRED06_POLICY,FLASH41_PAIRED07_POLICY,
   FLASH41_PAIRED08_POLICY,FLASH41_PAIRED09_POLICY,MODEL_COMPARE_FLASH_POLICY,MODEL_COMPARE_PRO_POLICY,
   REASONING_COMPARE_NONE_POLICY,REASONING_COMPARE_LOW_POLICY,REASONING_MAX_NONE_POLICY,REASONING_MAX_MAX_POLICY,
-  REASONING_LOW16_NONE_POLICY,REASONING_LOW16_LOW_POLICY]
+  REASONING_LOW16_NONE_POLICY,REASONING_LOW16_LOW_POLICY,CONTRASTIVE_BASELINE_POLICY,CONTRASTIVE_CANDIDATE_POLICY]
   .some(value=>isDeepStrictEqual(policy,value))
 const responseByteCeiling = policy => policy.outputTokenCeiling>8192?2097152:524288
 function validateUsageRecord(rawText,status,policy) {
@@ -404,24 +418,34 @@ function replay(lines, manifestSha, manifest) {
       validateReasoningLow16Candidates(g,state.reasoningMax.grant)
       state.reasoningMax.stopped=true
       state.reasoningLow16={grant:g,stopped:false};state.units=[...state.units,...g.targets]
+    } else if (e.kind === 'contrastiveGrant') {
+      exact(e,['kind','grant']);const g=validateBatchGrant(e.grant,manifest,manifestSha)
+      check(g.version==='real-input-contrastive-grant-1'&&!state.contrastive&&state.reasoningLow16&&!state.reasoningLow16.stopped
+        &&sequence===g.parentSequence&&prior===g.parentTail&&state.reservations.length===290
+        &&state.reservations[0].status==='held-unknown'&&state.reservations[0].nonce===g.priorNonce
+        &&state.reservations[1].responseSha===g.a02ResponseSha&&state.reservations.slice(1).every(accounted)
+        &&g.targets.every(u=>!state.units.some(old=>old.unitId===u.unitId)),'CONTRASTIVE_PARENT')
+      validateContrastiveCandidates(g,state)
+      state.reasoningLow16.stopped=true
+      state.contrastive={grant:g,stopped:false};state.units=[...state.units,...g.targets]
     } else if (e.kind === 'batchReserve') {
       exact(e,['kind','unitId','requestSha','candidateSha','nonce','reservedMicroCny'])
-      const active=state.reasoningLow16??state.reasoningMax??state.reasoningCompare??state.modelCompare??state.paired09??state.paired08??state.paired07??state.paired06??state.paired05??state.paired04??state.candidate03??state.candidate02??state.batch,g=active?.grant,u=g?.targets[state.reservations.length-(state.reasoningLow16?266:state.reasoningMax?250:state.reasoningCompare?248:state.modelCompare?208:state.paired09?168:state.paired08?128:state.paired07?104:state.paired06?80:state.paired05?56:state.paired04?32:state.candidate03?24:state.candidate02?16:2)]
+      const active=state.contrastive??state.reasoningLow16??state.reasoningMax??state.reasoningCompare??state.modelCompare??state.paired09??state.paired08??state.paired07??state.paired06??state.paired05??state.paired04??state.candidate03??state.candidate02??state.batch,g=active?.grant,u=g?.targets[state.reservations.length-(state.contrastive?290:state.reasoningLow16?266:state.reasoningMax?250:state.reasoningCompare?248:state.modelCompare?208:state.paired09?168:state.paired08?128:state.paired07?104:state.paired06?80:state.paired05?56:state.paired04?32:state.candidate03?24:state.candidate02?16:2)]
       check(g&&!active.stopped&&state.reservations.slice(1).every(accounted)
         &&u&&u.unitId===e.unitId&&u.requestSha===e.requestSha&&u.candidateSha===e.candidateSha
         &&typeof e.nonce==='string'&&/^[a-f0-9-]{36}$/.test(e.nonce)
         &&!state.reservations.some(r=>r.nonce===e.nonce)&&e.reservedMicroCny===BILLING_POLICY.reservationMicroCny,'BATCH_RESERVE')
       check(state.reservations.length<g.maxTotalRequests
-        &&state.reservations.reduce((n,r)=>n+r.costUpperMicroCny,0)+e.reservedMicroCny<=(state.reasoningLow16?REASONING_LOW16_POLICY:state.reasoningMax?REASONING_MAX_POLICY:state.reasoningCompare?REASONING_COMPARE_POLICY:state.modelCompare?MODEL_COMPARE_POLICY:state.paired09?FLASH41_PAIRED09_POLICY:state.paired08?FLASH41_PAIRED08_POLICY:BILLING_POLICY).limitMicroCny,'LIMIT')
+        &&state.reservations.reduce((n,r)=>n+r.costUpperMicroCny,0)+e.reservedMicroCny<=(state.contrastive?CONTRASTIVE_POLICY:state.reasoningLow16?REASONING_LOW16_POLICY:state.reasoningMax?REASONING_MAX_POLICY:state.reasoningCompare?REASONING_COMPARE_POLICY:state.modelCompare?MODEL_COMPARE_POLICY:state.paired09?FLASH41_PAIRED09_POLICY:state.paired08?FLASH41_PAIRED08_POLICY:BILLING_POLICY).limitMicroCny,'LIMIT')
       state.reservations.push({...e,status:'pending',costUpperMicroCny:e.reservedMicroCny})
     } else if (e.kind === 'batchSettle') {
       exact(e,['kind','unitId','nonce','requestSha','responseSha','responseId','usage','costUpperMicroCny'])
       const r=state.reservations.at(-1)
-      const active=state.reasoningLow16??state.reasoningMax??state.reasoningCompare??state.modelCompare??state.paired09??state.paired08??state.paired07??state.paired06??state.paired05??state.paired04??state.candidate03??state.candidate02??state.batch
+      const active=state.contrastive??state.reasoningLow16??state.reasoningMax??state.reasoningCompare??state.modelCompare??state.paired09??state.paired08??state.paired07??state.paired06??state.paired05??state.paired04??state.candidate03??state.candidate02??state.batch
       check(active&&!active.stopped&&r?.kind==='batchReserve'&&r.status==='pending'
         &&r.unitId===e.unitId&&r.nonce===e.nonce&&r.requestSha===e.requestSha&&digest(e.responseSha)
         &&!state.reservations.some(x=>x.responseId===e.responseId),'BATCH_SETTLEMENT_BINDING')
-      const policy=state.reasoningLow16?reasoningLow16PolicyFor(r.unitId):state.reasoningMax?reasoningMaxPolicyFor(r.unitId):state.reasoningCompare?reasoningComparePolicyFor(r.unitId):state.modelCompare?modelComparePolicyFor(r.unitId):state.paired09?FLASH41_PAIRED09_POLICY:state.paired08?FLASH41_PAIRED08_POLICY:state.paired07?FLASH41_PAIRED07_POLICY:state.paired06?FLASH41_PAIRED06_POLICY:state.paired05?FLASH41_POLICY:BILLING_POLICY
+      const policy=state.contrastive?contrastivePolicyFor(r.unitId):state.reasoningLow16?reasoningLow16PolicyFor(r.unitId):state.reasoningMax?reasoningMaxPolicyFor(r.unitId):state.reasoningCompare?reasoningComparePolicyFor(r.unitId):state.modelCompare?modelComparePolicyFor(r.unitId):state.paired09?FLASH41_PAIRED09_POLICY:state.paired08?FLASH41_PAIRED08_POLICY:state.paired07?FLASH41_PAIRED07_POLICY:state.paired06?FLASH41_PAIRED06_POLICY:state.paired05?FLASH41_POLICY:BILLING_POLICY
       const validationOutput=['low','max'].includes(policy.reasoningEffort)&&e.usage.output_tokens_details.reasoning_tokens>0
         ?[{type:'reasoning'},{type:'message',role:'assistant',content:[{type:'output_text',text:'ledger validation'}]}]
         :[{type:'message',role:'assistant',content:[{type:'output_text',text:'ledger validation'}]}]
@@ -455,6 +479,7 @@ function replay(lines, manifestSha, manifest) {
       if(state.reasoningCompare)state.reasoningCompare.stopped=true
       if(state.reasoningMax)state.reasoningMax.stopped=true
       if(state.reasoningLow16)state.reasoningLow16.stopped=true
+      if(state.contrastive)state.contrastive.stopped=true
     } else fail('LEDGER_EVENT_KIND')
     prior=line.hash
   }
@@ -600,9 +625,10 @@ function validateBatchGrant(input,manifest,manifestSha) {
   const reasoningCompare=g.version==='real-input-reasoning-compare-grant-1'
   const reasoningMax=g.version==='real-input-reasoning-max-grant-1'
   const reasoningLow16=g.version==='real-input-reasoning-low16-grant-1'
+  const contrastive=g.version==='real-input-contrastive-grant-1'
   const paired06=g.version==='real-input-paired06-grant-1'
   exact(g,['version','grantId','parentTail','parentSequence','ledgerPrefixBytes','ledgerPrefixSha','manifestSha',
-    'bindingSha','head','sourcesSha','reviewSha','targets','billingEvidence','route','priorNonce','a02ResponseSha','maxTotalRequests',...(paired05||paired06||paired07||paired08||paired09||modelCompare||reasoningCompare||reasoningMax||reasoningLow16?['policy']:[])])
+    'bindingSha','head','sourcesSha','reviewSha','targets','billingEvidence','route','priorNonce','a02ResponseSha','maxTotalRequests',...(paired05||paired06||paired07||paired08||paired09||modelCompare||reasoningCompare||reasoningMax||reasoningLow16||contrastive?['policy']:[])])
   if(paired05)same(g.policy,FLASH41_POLICY,'PAIRED05_POLICY')
   if(paired07)same(g.policy,FLASH41_PAIRED07_POLICY,'PAIRED07_POLICY')
   if(paired08)same(g.policy,FLASH41_PAIRED08_POLICY,'PAIRED08_POLICY')
@@ -611,14 +637,30 @@ function validateBatchGrant(input,manifest,manifestSha) {
   if(reasoningCompare)same(g.policy,REASONING_COMPARE_POLICY,'REASONING_COMPARE_POLICY')
   if(reasoningMax)same(g.policy,REASONING_MAX_POLICY,'REASONING_MAX_POLICY')
   if(reasoningLow16)same(g.policy,REASONING_LOW16_POLICY,'REASONING_LOW16_POLICY')
+  if(contrastive)same(g.policy,CONTRASTIVE_POLICY,'CONTRASTIVE_POLICY')
   if(paired06)same(g.policy,FLASH41_PAIRED06_POLICY,'PAIRED06_POLICY')
-  check((reasoningLow16||reasoningMax||reasoningCompare||modelCompare||paired09||paired08||paired07||paired06||paired05||paired04||candidate03||candidate02||g.version==='real-input-batch-grant-1')&&/^[a-f0-9-]{36}$/.test(g.grantId)
-    &&g.parentSequence===(reasoningLow16?546:reasoningMax?513:reasoningCompare?507:modelCompare?426:paired09?345:paired08?264:paired07?215:paired06?166:paired05?117:paired04?68:candidate03?51:candidate02?34:5)&&g.maxTotalRequests===(reasoningLow16?290:reasoningMax?290:reasoningCompare?288:modelCompare?248:paired09?208:paired08?168:paired07?128:paired06?104:paired05?80:paired04?56:candidate03?32:candidate02?24:16)&&integer(g.ledgerPrefixBytes,1048576)&&g.ledgerPrefixBytes>0
+  check((contrastive||reasoningLow16||reasoningMax||reasoningCompare||modelCompare||paired09||paired08||paired07||paired06||paired05||paired04||candidate03||candidate02||g.version==='real-input-batch-grant-1')&&/^[a-f0-9-]{36}$/.test(g.grantId)
+    &&g.parentSequence===(contrastive?595:reasoningLow16?546:reasoningMax?513:reasoningCompare?507:modelCompare?426:paired09?345:paired08?264:paired07?215:paired06?166:paired05?117:paired04?68:candidate03?51:candidate02?34:5)&&g.maxTotalRequests===(contrastive?314:reasoningLow16?290:reasoningMax?290:reasoningCompare?288:modelCompare?248:paired09?208:paired08?168:paired07?128:paired06?104:paired05?80:paired04?56:candidate03?32:candidate02?24:16)&&integer(g.ledgerPrefixBytes,1048576)&&g.ledgerPrefixBytes>0
     &&['parentTail','ledgerPrefixSha','manifestSha','bindingSha','sourcesSha','reviewSha','a02ResponseSha'].every(k=>digest(g[k]))
     &&typeof g.head==='string'&&/^[a-f0-9]{40}$/.test(g.head)
     &&typeof g.priorNonce==='string'&&/^[a-f0-9-]{36}$/.test(g.priorNonce),'BATCH_GRANT')
   check(g.manifestSha===manifestSha,'BATCH_MANIFEST')
-  if(reasoningLow16||reasoningMax||reasoningCompare||modelCompare){
+  if(contrastive){
+    const cases=new Set(),candidateByArm=new Map();let baselineFirst=0
+    check(Array.isArray(g.targets)&&g.targets.length===24,'CONTRASTIVE_TARGETS')
+    for(let i=0;i<12;i++){
+      const pair=g.targets.slice(i*2,i*2+2),prefix=pair[0]?.unitId?.slice(0,4)
+      check(/^K(?:0[1-9]|1[0-2])-$/.test(prefix)&&!cases.has(prefix),'CONTRASTIVE_CASE');cases.add(prefix)
+      if(pair[0].unitId.endsWith('-A'))baselineFirst++
+      check(new Set(pair.map(u=>u.unitId)).size===2&&pair.some(u=>u.unitId===prefix+'A')&&pair.some(u=>u.unitId===prefix+'B'),'CONTRASTIVE_PAIR')
+      for(const u of pair){exact(u,unitKeys);check(['candidateSha','requestSha','inputSha','scorerSha'].every(k=>digest(u[k]))
+        &&integer(u.requestBytes,BILLING_POLICY.requestByteCeiling)&&u.requestBytes>0,'CONTRASTIVE_IDENTITY')
+        const arm=u.unitId.at(-1);if(candidateByArm.has(arm))check(candidateByArm.get(arm)===u.candidateSha,'CONTRASTIVE_CANDIDATE_DRIFT');candidateByArm.set(arm,u.candidateSha)}
+      check(pair[0].inputSha===pair[1].inputSha&&pair[0].scorerSha===pair[1].scorerSha
+        &&pair[0].requestSha!==pair[1].requestSha&&pair[0].candidateSha!==pair[1].candidateSha,'CONTRASTIVE_ONLY_PROMPT')
+    }
+    check(cases.size===12&&baselineFirst===6&&candidateByArm.get('A')!==candidateByArm.get('B'),'CONTRASTIVE_BALANCE')
+  }else if(reasoningLow16||reasoningMax||reasoningCompare||modelCompare){
     const code=reasoningLow16?'REASONING_LOW16':reasoningMax?'REASONING_MAX':reasoningCompare?'REASONING_COMPARE':'MODEL_COMPARE'
     check(Array.isArray(g.targets)&&g.targets.length===40,code+'_TARGETS')
     const cases=new Set();let armAFirst=0
@@ -739,6 +781,16 @@ function validateReasoningLow16Candidates(grant,priorGrant) {
     inputs.add(pair[0].inputSha)
   }
 }
+function validateContrastiveCandidates(grant,state) {
+  const targetIds=new Set(grant.targets.map(u=>u.unitId)),priorUnits=state.units.filter(u=>!targetIds.has(u.unitId))
+  const priorCandidates=new Set(priorUnits.map(u=>u.candidateSha)),priorInputs=new Set(priorUnits.map(u=>u.inputSha)),inputs=new Set()
+  for(let i=0;i<12;i++){
+    const pair=grant.targets.slice(i*2,i*2+2),a=pair.find(u=>u.unitId.endsWith('-A')),b=pair.find(u=>u.unitId.endsWith('-B'))
+    check(a&&b&&!priorCandidates.has(b.candidateSha)&&a.candidateSha!==b.candidateSha&&a.inputSha===b.inputSha
+      &&!priorInputs.has(a.inputSha)&&!inputs.has(a.inputSha),'CONTRASTIVE_CANDIDATE')
+    inputs.add(a.inputSha)
+  }
+}
 async function batchBudget(dir,manifest,manifestSha,read,input) {
   const grant=validateBatchGrant(input,manifest,manifestSha)
   const candidate02=grant.version==='real-input-candidate02-grant-1',candidate03=grant.version==='real-input-candidate03-grant-1',paired04=grant.version==='real-input-paired04-grant-1'
@@ -749,14 +801,16 @@ async function batchBudget(dir,manifest,manifestSha,read,input) {
   const reasoningCompare=grant.version==='real-input-reasoning-compare-grant-1'
   const reasoningMax=grant.version==='real-input-reasoning-max-grant-1'
   const reasoningLow16=grant.version==='real-input-reasoning-low16-grant-1'
+  const contrastive=grant.version==='real-input-contrastive-grant-1'
   const paired05=grant.version==='real-input-paired05-grant-1',paired06=grant.version==='real-input-paired06-grant-1'
-  const policy=reasoningLow16?REASONING_LOW16_POLICY:reasoningMax?REASONING_MAX_POLICY:reasoningCompare?REASONING_COMPARE_POLICY:modelCompare?MODEL_COMPARE_POLICY:paired09?FLASH41_PAIRED09_POLICY:paired08?FLASH41_PAIRED08_POLICY:paired07?FLASH41_PAIRED07_POLICY:paired06?FLASH41_PAIRED06_POLICY:paired05?FLASH41_POLICY:BILLING_POLICY
-  const offset=reasoningLow16?266:reasoningMax?250:reasoningCompare?248:modelCompare?208:paired09?168:paired08?128:paired07?104:paired06?80:paired05?56:paired04?32:candidate03?24:candidate02?16:2,newCandidate=reasoningLow16||reasoningMax||reasoningCompare||modelCompare||paired09||paired08||paired07||paired06||paired05||paired04||candidate02||candidate03
-  const active=s=>reasoningLow16?s.reasoningLow16:reasoningMax?s.reasoningMax:reasoningCompare?s.reasoningCompare:modelCompare?s.modelCompare:paired09?s.paired09:paired08?s.paired08:paired07?s.paired07:paired06?s.paired06:paired05?s.paired05:paired04?s.paired04:candidate03?s.candidate03:candidate02?s.candidate02:s.batch
+  const policy=contrastive?CONTRASTIVE_POLICY:reasoningLow16?REASONING_LOW16_POLICY:reasoningMax?REASONING_MAX_POLICY:reasoningCompare?REASONING_COMPARE_POLICY:modelCompare?MODEL_COMPARE_POLICY:paired09?FLASH41_PAIRED09_POLICY:paired08?FLASH41_PAIRED08_POLICY:paired07?FLASH41_PAIRED07_POLICY:paired06?FLASH41_PAIRED06_POLICY:paired05?FLASH41_POLICY:BILLING_POLICY
+  const offset=contrastive?290:reasoningLow16?266:reasoningMax?250:reasoningCompare?248:modelCompare?208:paired09?168:paired08?128:paired07?104:paired06?80:paired05?56:paired04?32:candidate03?24:candidate02?16:2,newCandidate=contrastive||reasoningLow16||reasoningMax||reasoningCompare||modelCompare||paired09||paired08||paired07||paired06||paired05||paired04||candidate02||candidate03
+  const active=s=>contrastive?s.contrastive:reasoningLow16?s.reasoningLow16:reasoningMax?s.reasoningMax:reasoningCompare?s.reasoningCompare:modelCompare?s.modelCompare:paired09?s.paired09:paired08?s.paired08:paired07?s.paired07:paired06?s.paired06:paired05?s.paired05:paired04?s.paired04:candidate03?s.candidate03:candidate02?s.candidate02:s.batch
   const boundRead=async()=>{
     const bytes=await readFile(join(dir,'CALL_LEDGER.jsonl'))
     check(bytes.length>=grant.ledgerPrefixBytes&&sha256(bytes.subarray(0,grant.ledgerPrefixBytes))===grant.ledgerPrefixSha,'BATCH_PREFIX')
     const state=await read()
+    if(contrastive){check(state.reasoningLow16&&(state.contrastive||!state.reasoningLow16.stopped),'CONTRASTIVE_PARENT');validateContrastiveCandidates(grant,state)}
     if(reasoningLow16){check(state.reasoningMax&&(state.reasoningLow16||!state.reasoningMax.stopped),'REASONING_LOW16_PARENT');validateReasoningLow16Candidates(grant,state.reasoningMax.grant)}
     if(reasoningMax){check(state.reasoningCompare&&(state.reasoningMax||state.reasoningCompare.stopped),'REASONING_MAX_PARENT');validateReasoningMaxCandidates(grant,state.reasoningCompare.grant)}
     if(reasoningCompare){check(state.modelCompare&&(state.reasoningCompare||!state.modelCompare.stopped),'REASONING_COMPARE_PARENT');validateReasoningCompareCandidates(grant,state.modelCompare.grant)}
@@ -770,6 +824,10 @@ async function batchBudget(dir,manifest,manifestSha,read,input) {
     if(candidate03)check(state.candidate02&&(state.candidate03||!state.candidate02.stopped)
       &&grant.targets[0].candidateSha!==state.candidate02.grant.targets[0].candidateSha,'C03_PARENT_CANDIDATE')
     if(active(state))same(active(state).grant,grant,'BATCH_GRANT_CHANGED')
+    else if(contrastive)check(state.tail===grant.parentTail&&state.nextSequence===grant.parentSequence&&state.reservations.length===offset
+      &&state.reasoningLow16&&!state.reasoningLow16.stopped&&state.reservations[0].status==='held-unknown'
+      &&state.reservations[0].nonce===grant.priorNonce&&state.reservations[1].responseSha===grant.a02ResponseSha
+      &&state.reservations.slice(1).every(accounted),'CONTRASTIVE_PARENT')
     else if(reasoningLow16)check(state.tail===grant.parentTail&&state.nextSequence===grant.parentSequence&&state.reservations.length===offset
       &&state.reasoningMax&&!state.reasoningMax.stopped&&state.reservations[0].status==='held-unknown'
       &&state.reservations[0].nonce===grant.priorNonce&&state.reservations[1].responseSha===grant.a02ResponseSha
@@ -794,8 +852,8 @@ async function batchBudget(dir,manifest,manifestSha,read,input) {
     halt:code=>locked(manifest.lockRoot,async()=>{const s=await boundRead();check(/^[A-Z_]{1,80}$/.test(code),'HALT_CODE');await append(dir,manifest,s,{kind:'halt',code})}),
     async reserve(unitId,requestText,requestedPolicy=policy,now=new Date().toISOString()) {
       const reservation=await locked(manifest.lockRoot,async()=>{
-        let s=await boundRead();check(!active(s)?.stopped&&(reasoningLow16||reasoningMax||s.recovery?.status==='settled')&&(!newCandidate||reasoningLow16||reasoningMax||!s.batch.stopped),'BATCH_STOPPED')
-        const unitPolicy=reasoningLow16?reasoningLow16PolicyFor(unitId):reasoningMax?reasoningMaxPolicyFor(unitId):reasoningCompare?reasoningComparePolicyFor(unitId):modelCompare?modelComparePolicyFor(unitId):policy
+        let s=await boundRead();check(!active(s)?.stopped&&(contrastive||reasoningLow16||reasoningMax||s.recovery?.status==='settled')&&(!newCandidate||contrastive||reasoningLow16||reasoningMax||!s.batch.stopped),'BATCH_STOPPED')
+        const unitPolicy=contrastive?contrastivePolicyFor(unitId):reasoningLow16?reasoningLow16PolicyFor(unitId):reasoningMax?reasoningMaxPolicyFor(unitId):reasoningCompare?reasoningComparePolicyFor(unitId):modelCompare?modelComparePolicyFor(unitId):policy
         same(copy(requestedPolicy),unitPolicy,'POLICY_CHANGED')
         check(Number.isFinite(Date.parse(now))&&Date.parse(now)>=Date.parse(grant.billingEvidence.checkedAt)
           &&Date.parse(now)<=Date.parse(grant.billingEvidence.validUntil),'BATCH_PRICE_EXPIRED')
@@ -803,7 +861,7 @@ async function batchBudget(dir,manifest,manifestSha,read,input) {
         check(s.reservations.slice(1).every(accounted)&&u?.unitId===unitId,'BATCH_ORDER_OR_PENDING')
         check(typeof requestText==='string'&&sha256(requestText)===u.requestSha&&Buffer.byteLength(requestText)===u.requestBytes,'REQUEST_NOT_FROZEN')
         check(s.reservations.length<grant.maxTotalRequests&&s.reservations.reduce((n,r)=>n+r.costUpperMicroCny,0)+BILLING_POLICY.reservationMicroCny<=policy.limitMicroCny,'LIMIT')
-        if(!active(s)){await append(dir,manifest,s,{kind:reasoningLow16?'reasoningLow16Grant':reasoningMax?'reasoningMaxGrant':reasoningCompare?'reasoningCompareGrant':modelCompare?'modelCompareGrant':paired09?'paired09Grant':paired08?'paired08Grant':paired07?'paired07Grant':paired06?'paired06Grant':paired05?'paired05Grant':paired04?'paired04Grant':candidate03?'candidate03Grant':candidate02?'candidate02Grant':'batchGrant',grant});s=await boundRead()}
+        if(!active(s)){await append(dir,manifest,s,{kind:contrastive?'contrastiveGrant':reasoningLow16?'reasoningLow16Grant':reasoningMax?'reasoningMaxGrant':reasoningCompare?'reasoningCompareGrant':modelCompare?'modelCompareGrant':paired09?'paired09Grant':paired08?'paired08Grant':paired07?'paired07Grant':paired06?'paired06Grant':paired05?'paired05Grant':paired04?'paired04Grant':candidate03?'candidate03Grant':candidate02?'candidate02Grant':'batchGrant',grant});s=await boundRead()}
         const e={kind:'batchReserve',unitId,requestSha:u.requestSha,candidateSha:u.candidateSha,nonce:randomUUID(),reservedMicroCny:BILLING_POLICY.reservationMicroCny}
         await append(dir,manifest,s,e);return e
       })
@@ -815,7 +873,7 @@ async function batchBudget(dir,manifest,manifestSha,read,input) {
           check(!used,'LEASE_ALREADY_FINALIZED');used=true
           return locked(manifest.lockRoot,async()=>{
             const s=await boundRead();validLease(s);let value
-            const responsePolicy=reasoningLow16?reasoningLow16PolicyFor(unitId):reasoningMax?reasoningMaxPolicyFor(unitId):reasoningCompare?reasoningComparePolicyFor(unitId):modelCompare?modelComparePolicyFor(unitId):policy
+            const responsePolicy=contrastive?contrastivePolicyFor(unitId):reasoningLow16?reasoningLow16PolicyFor(unitId):reasoningMax?reasoningMaxPolicyFor(unitId):reasoningCompare?reasoningComparePolicyFor(unitId):modelCompare?modelComparePolicyFor(unitId):policy
             try{
               if(reasoningLow16||reasoningMax){
                 const accounting=validateUsageAccountingEnvelope(raw,status,responsePolicy)

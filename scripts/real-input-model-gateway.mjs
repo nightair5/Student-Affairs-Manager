@@ -8,6 +8,7 @@ import { Readable } from 'node:stream'
 import { BILLING_POLICY, FLASH41_POLICY, FLASH41_PAIRED06_POLICY, FLASH41_PAIRED07_POLICY, FLASH41_PAIRED08_POLICY, FLASH41_PAIRED09_POLICY,
   MODEL_COMPARE_POLICY, modelComparePolicyFor, REASONING_COMPARE_POLICY, reasoningComparePolicyFor,
   REASONING_MAX_POLICY, reasoningMaxPolicyFor, REASONING_LOW16_POLICY, reasoningLow16PolicyFor,
+  CONTRASTIVE_POLICY, contrastivePolicyFor,
   sha256 } from './real-input-budget.mjs'
 
 const localFailures = new WeakMap()
@@ -160,13 +161,14 @@ function failureReason(phase,error,deadline) {
 /** No listening socket or credential read at import time. A fixed launcher owns this instance. */
 export async function createModelGateway({origin,capability,budget,requests,recordRaw,
   readSecret=()=>process.env.DEEPSEEK_API_KEY,fetchImpl=globalThis.fetch,clock=()=>new Date().toISOString(),timeoutMs=60000,policy=BILLING_POLICY}) {
-  check(isDeepStrictEqual(policy,BILLING_POLICY)||isDeepStrictEqual(policy,FLASH41_POLICY)||isDeepStrictEqual(policy,FLASH41_PAIRED06_POLICY)||isDeepStrictEqual(policy,FLASH41_PAIRED07_POLICY)||isDeepStrictEqual(policy,FLASH41_PAIRED08_POLICY)||isDeepStrictEqual(policy,FLASH41_PAIRED09_POLICY)||isDeepStrictEqual(policy,MODEL_COMPARE_POLICY)||isDeepStrictEqual(policy,REASONING_COMPARE_POLICY)||isDeepStrictEqual(policy,REASONING_MAX_POLICY)||isDeepStrictEqual(policy,REASONING_LOW16_POLICY),'POLICY')
+  check(isDeepStrictEqual(policy,BILLING_POLICY)||isDeepStrictEqual(policy,FLASH41_POLICY)||isDeepStrictEqual(policy,FLASH41_PAIRED06_POLICY)||isDeepStrictEqual(policy,FLASH41_PAIRED07_POLICY)||isDeepStrictEqual(policy,FLASH41_PAIRED08_POLICY)||isDeepStrictEqual(policy,FLASH41_PAIRED09_POLICY)||isDeepStrictEqual(policy,MODEL_COMPARE_POLICY)||isDeepStrictEqual(policy,REASONING_COMPARE_POLICY)||isDeepStrictEqual(policy,REASONING_MAX_POLICY)||isDeepStrictEqual(policy,REASONING_LOW16_POLICY)||isDeepStrictEqual(policy,CONTRASTIVE_POLICY),'POLICY')
   check(typeof origin==='string'&&/^http:\/\/127\.0\.0\.1:[1-9][0-9]{3,4}$/.test(origin),'ORIGIN')
   check(typeof capability==='string'&&/^[a-f0-9]{64}$/.test(capability),'CAPABILITY')
   check(typeof recordRaw==='function'&&typeof readSecret==='function'&&typeof fetchImpl==='function'
     &&Number.isSafeInteger(timeoutMs)&&timeoutMs>0&&timeoutMs<=180000,'CONFIG')
   const unitPolicy=id=>{
     const current=isDeepStrictEqual(policy,REASONING_MAX_POLICY)||isDeepStrictEqual(policy,REASONING_LOW16_POLICY)
+    if(id.startsWith('K')){check(isDeepStrictEqual(policy,CONTRASTIVE_POLICY),'CONTRASTIVE_POLICY');return contrastivePolicyFor(id)}
     if(id.startsWith('M')){check(current,'REASONING_MAX_POLICY');return reasoningMaxPolicyFor(id)}
     if(id.startsWith('L')){check(isDeepStrictEqual(policy,REASONING_LOW16_POLICY),'REASONING_LOW16_POLICY');return reasoningLow16PolicyFor(id)}
     if(id.startsWith('Y')||id.startsWith('Z')){check(isDeepStrictEqual(policy,REASONING_COMPARE_POLICY)||current,'REASONING_COMPARE_POLICY');return reasoningComparePolicyFor(id)}
@@ -198,7 +200,7 @@ export async function createModelGateway({origin,capability,budget,requests,reco
       try {
         check(typeof bodyText==='string'&&Buffer.byteLength(bodyText)<=200,'CLIENT_LIMIT')
         const input=JSON.parse(bodyText);exact(input,['unitId','requestSha']);unitId=input.unitId;request=frozen[unitId]
-        check(typeof unitId==='string'&&/^(?:[ABCD]0[1-8]|N(?:0[1-9]|1[0-2])-(?:03|04)|P(?:0[1-9]|1[0-2])-(?:03|05)|Q(?:0[1-9]|1[0-2])-(?:03|06)|R(?:0[1-9]|1[0-2])-(?:03|07)|S(?:0[1-9]|1[0-2])-(?:03|08)|T0[1-8]-(?:03|08)|U(?:0[1-9]|1[0-2])-(?:03|09)|V0[1-8]-(?:03|09)|W(?:0[1-9]|1[0-2])-[AB]|X0[1-8]-[AB]|Y(?:0[1-9]|1[0-2])-[AB]|Z0[1-8]-[AB]|M(?:0[1-9]|1[0-9]|20)-[AB]|L(?:0[1-9]|1[0-9]|20)-[AB])$/.test(unitId)&&request&&request.requestSha===input.requestSha,'CLIENT_BINDING')
+        check(typeof unitId==='string'&&/^(?:[ABCD]0[1-8]|N(?:0[1-9]|1[0-2])-(?:03|04)|P(?:0[1-9]|1[0-2])-(?:03|05)|Q(?:0[1-9]|1[0-2])-(?:03|06)|R(?:0[1-9]|1[0-2])-(?:03|07)|S(?:0[1-9]|1[0-2])-(?:03|08)|T0[1-8]-(?:03|08)|U(?:0[1-9]|1[0-2])-(?:03|09)|V0[1-8]-(?:03|09)|W(?:0[1-9]|1[0-2])-[AB]|X0[1-8]-[AB]|Y(?:0[1-9]|1[0-2])-[AB]|Z0[1-8]-[AB]|M(?:0[1-9]|1[0-9]|20)-[AB]|L(?:0[1-9]|1[0-9]|20)-[AB]|K(?:0[1-9]|1[0-2])-[AB])$/.test(unitId)&&request&&request.requestSha===input.requestSha,'CLIENT_BINDING')
       } catch {return response(400,{code:'REQUEST_BINDING_REJECTED'})}
       if(inFlight)return response(409,{code:'CALL_IN_PROGRESS'})
       inFlight=true
