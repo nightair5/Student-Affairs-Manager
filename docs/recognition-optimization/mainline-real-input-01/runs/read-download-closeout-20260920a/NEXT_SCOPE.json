@@ -1,0 +1,166 @@
+{
+  "status": "PREPARED_NOT_DISPATCHED",
+  "preparedAt": "2026-09-20T00:00:00+08:00",
+  "baseHead": "00330d91f53503a07b6adf3eb21238a3dc3792a9",
+  "mainline": "MAINLINE-REAL-INPUT-01",
+  "objective": "区分真正需要执行的动作任务与材料、数量、格式和渠道要求，同时保证取消、替代和依赖只引用实际存在的目标。",
+  "evidenceBasis": [
+    "W11把材料说明多拆为任务、错归材料并误判条件",
+    "W12为正确任务添加无依据依赖",
+    "既有Low、Max、Pro和复杂输出结构均未取得稳定净收益"
+  ],
+  "protections": {
+    "modelCalls": 0,
+    "candidateCreated": false,
+    "datasetRegistered": false,
+    "expectedChanged": false,
+    "scorerChanged": false,
+    "ledgerChanged": false,
+    "runnerConnected": false,
+    "productionConnected": false
+  },
+  "fixedAdjudication": {
+    "taskRule": "只有原文明示或有强证据要求完成的动作加明确对象才是任务；材料名称、数量、规格、格式、渠道和背景说明本身不形成任务。",
+    "explicitPreparationRule": "原文明示购买、准备、打印、领取等独立动作时必须保留为任务，不能因其对象也是材料而删除。",
+    "materialRule": "材料保留required、规格、数量、渠道和明确relatedTaskIds；不因同名、同owner或共享关系猜测归属。",
+    "conditionRule": "未知条件保持unknown；只有原文证据支持时才是true或false。",
+    "dependencyRule": "dependency目标必须存在、不能自引用或成环；原文没有依赖证据时不得添加。",
+    "revisionRule": "取消或替代必须同时保留可识别的旧目标与有效新目标；旧要求不得生成当前待办，缺失目标必须保持unresolved。",
+    "timeRule": "每个时间只关联原文明示的任务或材料；共享材料不得传播其他任务的私有截止时间。",
+    "successRule": "以用户少删除任务、少补材料、少改归属和少清理坏依赖为主要业务结果；结构可解析不等于语义正确。"
+  },
+  "notices": [
+    {
+      "id": "N01",
+      "title": "设备校准报告归档",
+      "referenceTime": "2026-10-05T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "text": "请实验负责人于10月9日17:00前上传设备校准报告。报告须加盖实验室章，每页标注设备编号，双面打印后扫描合并为一个PDF，上传到设备平台的年度校准栏目。打印、扫描和合并是报告的提交规格，不另设独立办理事项。",
+      "adjudication": {
+        "tasks": ["上传设备校准报告"],
+        "materials": [
+          {
+            "name": "设备校准报告",
+            "required": true,
+            "specifications": ["加盖实验室章", "每页标注设备编号", "双面打印后扫描合并为一个PDF"],
+            "channel": "设备平台年度校准栏目",
+            "relatedTasks": ["上传设备校准报告"]
+          }
+        ],
+        "times": [{"raw": "10月9日17:00前", "relatedTasks": ["上传设备校准报告"]}],
+        "dependencies": [],
+        "revisions": [],
+        "mustNotCreate": ["双面打印设备校准报告", "扫描设备校准报告", "合并PDF"]
+      }
+    },
+    {
+      "id": "N02",
+      "title": "野外采样封装准备",
+      "referenceTime": "2026-10-05T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "text": "各组须在10月7日出发前购买三只带编号封条的采样罐。完成采样后，于10月8日15:00前把三只采样罐连同一份现场记录表交到分析室。现场记录表须由两名组员签字。",
+      "adjudication": {
+        "tasks": ["购买三只带编号封条的采样罐", "提交采样罐和现场记录表"],
+        "materials": [
+          {"name": "采样罐", "required": true, "quantity": 3, "relatedTasks": ["购买三只带编号封条的采样罐", "提交采样罐和现场记录表"]},
+          {"name": "现场记录表", "required": true, "specifications": ["两名组员签字"], "relatedTasks": ["提交采样罐和现场记录表"]}
+        ],
+        "times": [
+          {"raw": "10月7日出发前", "relatedTasks": ["购买三只带编号封条的采样罐"]},
+          {"raw": "10月8日15:00前", "relatedTasks": ["提交采样罐和现场记录表"]}
+        ],
+        "dependencies": [],
+        "revisions": [],
+        "mustNotDrop": ["购买三只带编号封条的采样罐"]
+      }
+    },
+    {
+      "id": "N03",
+      "title": "报销与审计共享凭证",
+      "referenceTime": "2026-10-05T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "text": "项目助理请于10月12日12:00前在财务系统提交报销包，并于10月14日17:00前在项目档案库归档审计副本。银行流水原件同时作为两项工作的共同凭证；报销包另需发票扫描件，审计副本另需经费负责人签字页。",
+      "adjudication": {
+        "tasks": ["提交报销包", "归档审计副本"],
+        "materials": [
+          {"name": "银行流水原件", "required": true, "relatedTasks": ["提交报销包", "归档审计副本"]},
+          {"name": "发票扫描件", "required": true, "relatedTasks": ["提交报销包"]},
+          {"name": "经费负责人签字页", "required": true, "relatedTasks": ["归档审计副本"]}
+        ],
+        "times": [
+          {"raw": "10月12日12:00前", "relatedTasks": ["提交报销包"]},
+          {"raw": "10月14日17:00前", "relatedTasks": ["归档审计副本"]}
+        ],
+        "dependencies": [],
+        "revisions": [],
+        "mustNotCreate": ["准备银行流水原件"]
+      }
+    },
+    {
+      "id": "N04",
+      "title": "实验室门禁方式变更",
+      "referenceTime": "2026-10-05T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "text": "原定到服务台领取实体门禁卡的安排作废，不再办理。改为请新成员于10月10日18:00前在校园服务应用中激活移动门禁通行证。此前已领取的实体卡继续有效，无需重复激活。",
+      "adjudication": {
+        "tasks": ["激活移动门禁通行证"],
+        "materials": [],
+        "times": [{"raw": "10月10日18:00前", "relatedTasks": ["激活移动门禁通行证"]}],
+        "dependencies": [],
+        "revisions": [
+          {"type": "supersedes", "from": "激活移动门禁通行证", "target": "领取实体门禁卡", "targetMustExistInSemanticResponse": true}
+        ],
+        "inactiveDirectives": ["领取实体门禁卡"],
+        "mustNotCreate": ["领取实体门禁卡"],
+        "informationOnly": ["此前已领取的实体卡继续有效，无需重复激活"]
+      }
+    },
+    {
+      "id": "N05",
+      "title": "数据发布与审批前置",
+      "referenceTime": "2026-10-05T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "text": "请数据管理员于10月11日10:00前提交公开审批申请。发布脱敏数据集前必须先完成该申请，并且只有审批通过后才能在数据门户发布。最终版元数据说明须于10月11日16:00前保存到项目档案库，该保存工作不以公开审批通过为前提。",
+      "adjudication": {
+        "tasks": ["提交公开审批申请", "发布脱敏数据集", "保存最终版元数据说明"],
+        "materials": [
+          {"name": "脱敏数据集", "required": true, "relatedTasks": ["发布脱敏数据集"]},
+          {"name": "最终版元数据说明", "required": true, "relatedTasks": ["保存最终版元数据说明"]}
+        ],
+        "times": [
+          {"raw": "10月11日10:00前", "relatedTasks": ["提交公开审批申请"]},
+          {"raw": "10月11日16:00前", "relatedTasks": ["保存最终版元数据说明"]}
+        ],
+        "dependencies": [
+          {"task": "发布脱敏数据集", "target": "提交公开审批申请", "targetMustExist": true}
+        ],
+        "conditions": [{"task": "发布脱敏数据集", "value": "unknown", "reason": "审批是否通过尚未知"}],
+        "revisions": [],
+        "mustNotAddDependencyTo": ["保存最终版元数据说明"]
+      }
+    },
+    {
+      "id": "N06",
+      "title": "场地服务信息",
+      "referenceTime": "2026-10-05T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "text": "新媒体教室工作日8:30开放，现场提供HDMI转接头和临时储物柜。技术支持邮箱为support@example.invalid。本段仅供参加活动的师生了解场地服务，不要求任何人提交、领取或准备材料。",
+      "adjudication": {
+        "tasks": [],
+        "materials": [],
+        "times": [],
+        "dependencies": [],
+        "revisions": [],
+        "informationOnly": ["开放时间", "可用设备", "技术支持邮箱"],
+        "mustNotCreate": ["领取HDMI转接头", "准备临时储物柜", "联系技术支持"]
+      }
+    }
+  ],
+  "futureMinimumFileResponsibilities": [
+    "一个待授权的新候选指令与版本文件及对应测试",
+    "现有runner的显式候选分流与响应身份测试",
+    "本NEXT_SCOPE的只读装载和冻结哈希检查",
+    "现有业务裁决器的只读复用，不修改Expected或原评分器"
+  ],
+  "futureGate": "另行授权后，先冻结候选、6份输入、文件SHA、请求顺序、评价口径和预算，再做candidate03与新候选的同期配对；未授权前保持0调用。"
+}

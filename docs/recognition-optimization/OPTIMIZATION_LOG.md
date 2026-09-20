@@ -2272,3 +2272,10 @@
 - 显式为无头CDP会话配置下载目录后，完整库JSON和独立仓储工程JSON均实际落地；workspace逐对象相等，SHA均为2d8a3754c9385e26b4682a701bec3fa3f69efa04514b8c650bf75eb7ff456b31。上次缺文件的差异是自动化下载落盘策略，不是Blob或导出数据损坏。
 - 定向Vitest 7通过/79跳过/0失败；使用envDir:false。6632首页和状态HTTP200、9份受控回答、模型关闭，识别POST为405 MODEL_AND_WRITES_DISABLED。
 - 用户当前库的三例处置、刷新找回、独立实读和双文件仍NOT_RUN；唯一剩余动作是从当前页面实际下载工程证据JSON与完整库JSON并交回比较。
+
+## 2026-09-20 当前真实保存闭环与双下载正式收口
+- 读取用户实际下载的 `mainline-real-input-01-workspace (11).json` 与 `real-input-local-evidence (14).json`；完整库与独立读库证据内 workspace 逐对象完全相等，独立读库 `writes=0`，不存在外库访问、禁止网络或数据库升级副作用。
+- 两路径均为4 tasks、5 materials（全部required + unverified）、4 timePoints、3 sources、3 sourceVersions、3 recognitionRuns、3 extractionDrafts、16 historyRecords；正式任务为填写送样登记单、提交放映授权书、上传预告片和上传校样PDF。
+- 当前 workspace 没有顶层 `revisions` 集合；`supersedes` 仅保存在 `source:09fec1bb:draft:1:1` 的原回答草稿和处置历史中。旧寄送要求 `task-old-mail-proof` 未进入 canonical tasks，有效新任务已保存。
+- 本轮不重复浏览器下载、连接诊断、模型调用或旧回放；产品源码、候选、Expected、评分器、账本和历史原答保持。当前真实保存、独立只读读回和双实际文件比较按证据收口。
+- 下一轮只准备6份未派发匿名通知和固定裁决，唯一目标为任务动作/材料要求边界及取消、替代、依赖目标存在性；状态 `PREPARED_NOT_DISPATCHED`，0调用、无新候选、未改Expected。
