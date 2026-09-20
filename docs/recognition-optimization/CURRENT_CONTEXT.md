@@ -47,3 +47,7 @@
 - 证据：mainline-real-input-01/runs/read-download-closeout-20260920a/AUDIT.md。
 - 完整上轮交接保存在 mainline-real-input-01/runs/opensource-methods-20260920a/PREVIOUS_CONTEXT.md。
 - 原 6 份未派发资料未用于本轮教学或开发集，保持原样。
+
+## 交付核验
+- 候选代码提交 f7a0f2da0d62625341864aa85e8e80bbd8e3ec20 已推送，远端核验一致。
+- 实际集成父节点 119cebe 比源码基线 00330d9 多上轮 4 份文档更新，已保留；源码与账本哈希仍一致。
