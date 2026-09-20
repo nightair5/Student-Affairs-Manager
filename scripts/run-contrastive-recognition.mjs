@@ -105,23 +105,15 @@ function verifySend(){
   return {bytes,binding,baseline,billing,review,protection,grant}
 }
 
-function historicalRequests(){
-  const state=JSON.parse(readFileSync(join(LEDGER_DIRECTORY,'STATE.json'))),paths=[
-    ['candidate02-20260908a','BINDING.json'],['candidate03-20260908a','BINDING.json'],['candidate04-20260909a','BINDING.json'],['candidate05-20260912a','BINDING.json'],
-    ['candidate06-20260912a','BINDING.json'],['candidate07-20260913a','BINDING_FINAL.json'],['candidate08-20260913a','BINDING_FINAL.json'],['candidate09-20260913a','BINDING_FINAL.json'],
-    ['model-compare-20260914a','BINDING_FINAL.json'],['reasoning-compare-20260914a','BINDING_FINAL.json'],['reasoning-max-compare-20260914a','BINDING_FINAL.json'],['reasoning-low16-compare-20260914a','BINDING_FINAL.json']]
-  const root='docs/recognition-optimization/mainline-real-input-01/runs';return Object.assign({},state.requests,...paths.map(([directory,file])=>JSON.parse(readFileSync(join(root,directory,file))).requests))
-}
-
 export async function dispatchContrastive(unitId){
   check(/^K(?:0[1-9]|1[0-2])-[AB]$/.test(unitId),'UNIT_ID')
   const verified=verifySend(),{binding,grant,bytes}=verified,budget=await openBudget(LEDGER_DIRECTORY,grant.manifestSha,{batchGrant:grant}),before=await budget.snapshot(),index=before.reservations.length-290
   check(index<24&&binding.units[index]?.unitId===unitId&&!before.contrastive?.stopped&&before.reservations.slice(1).every(value=>['settled','settled-incomplete'].includes(value.status)),'NEXT_UNIT')
   const rawPath=join(DIRECTORY,unitId+'_RAW.jsonl'),resultPath=join(DIRECTORY,unitId+'_RESULT.json');check(!existsSync(rawPath)&&!existsSync(resultPath),'ALREADY_ATTEMPTED')
   try{process.loadEnvFile(resolve('.env'))}catch{check(false,'SERVER_CONFIGURATION_UNAVAILABLE')}
-  const requests={...historicalRequests(),...binding.requests},origin='http://127.0.0.1:6631',capability=randomBytes(32).toString('hex'),{api}=await adapterApi();let observed,recorder
+  const origin='http://127.0.0.1:6631',capability=randomBytes(32).toString('hex'),{api}=await adapterApi();let observed,recorder
   try{
-    const gateway=await createModelGateway({origin,capability,budget,requests,policy:CONTRASTIVE_POLICY,timeoutMs:binding.timeoutMs,fetchImpl:createPinnedProxyFetch(),
+    const gateway=await createModelGateway({origin,capability,budget,requests:binding.requests,policy:CONTRASTIVE_POLICY,timeoutMs:binding.timeoutMs,fetchImpl:createPinnedProxyFetch(),
       recordRaw:async row=>{check(row.unitId===unitId&&row.requestSha===binding.units[index].requestSha&&recorder,'RAW_ID');await recorder.write(row);observed=row}})
     recorder=await createRawRecorder(rawPath);const start=Date.now(),response=await gateway.handle({method:'POST',path:'/api/real-input/recognize',headers:{host:new URL(origin).host,origin,'sec-fetch-site':'same-origin','content-type':'application/json','x-real-input-capability':capability},bodyText:JSON.stringify({unitId,requestSha:binding.units[index].requestSha})})
     const item=binding.items.find(value=>value.id===unitId.slice(0,3)),arm=unitId.at(-1);let assembled=null,parseError=null,returnedModel=null
