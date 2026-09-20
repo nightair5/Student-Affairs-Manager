@@ -1,0 +1,149 @@
+[
+  {
+    "id": "OS01",
+    "source": "请把校史照片交到档案室。照片须装入防潮盒，每盒最多十张。",
+    "reference": {
+      "tasks": [
+        "交校史照片"
+      ],
+      "material": "防潮盒归交照片任务",
+      "risk": "包装规格不能另造购买或准备任务"
+    },
+    "labelProvenance": "single-author-synthetic-development"
+  },
+  {
+    "id": "OS02",
+    "source": "请先购买防潮盒，再把校史照片交到档案室。",
+    "reference": {
+      "tasks": [
+        "购买防潮盒",
+        "交校史照片"
+      ],
+      "dependency": "交照片依赖购买防潮盒",
+      "risk": "明确购买义务不能因材料去重被删"
+    },
+    "labelProvenance": "single-author-synthetic-development"
+  },
+  {
+    "id": "OS03",
+    "source": "请编写设备说明。另请备份上一学期的维修记录；两项工作可独立进行。",
+    "reference": {
+      "tasks": [
+        "编写设备说明",
+        "备份维修记录"
+      ],
+      "dependency": "无",
+      "risk": "同主题和叙述顺序不构成前置"
+    },
+    "labelProvenance": "single-author-synthetic-development"
+  },
+  {
+    "id": "OS04",
+    "source": "请核验数据授权书。只有核验通过后才能公开调查摘要，目前核验结果未知。",
+    "reference": {
+      "tasks": [
+        "核验数据授权书",
+        "公开调查摘要"
+      ],
+      "condition": "公开前置核验通过，当前unknown",
+      "risk": "要求核验不等于已通过"
+    },
+    "labelProvenance": "single-author-synthetic-development"
+  },
+  {
+    "id": "OS05",
+    "source": "仅在机房安全检查通过后领取实验钥匙。检查结果尚未公布。",
+    "reference": {
+      "tasks": [
+        "领取实验钥匙"
+      ],
+      "condition": "unknown",
+      "risk": "未公布不是通过，也不是永久取消"
+    },
+    "labelProvenance": "single-author-synthetic-development"
+  },
+  {
+    "id": "OS06",
+    "source": "仅在机房安全检查通过后领取实验钥匙。检查结果为通过。",
+    "reference": {
+      "tasks": [
+        "领取实验钥匙"
+      ],
+      "condition": "true",
+      "risk": "条件通过不意味着钥匙已领取"
+    },
+    "labelProvenance": "single-author-synthetic-development"
+  },
+  {
+    "id": "OS07",
+    "source": "仅在机房安全检查通过后领取实验钥匙。本次检查未通过，请勿领取。",
+    "reference": {
+      "tasks": [
+        "领取实验钥匙（当前不执行）"
+      ],
+      "condition": "false",
+      "risk": "保留禁止与条件依据，不生成可执行领取待办"
+    },
+    "labelProvenance": "single-author-synthetic-development"
+  },
+  {
+    "id": "OS08",
+    "source": "请保存已签收的借用凭证。保存时保持编号不变；无需今天交回凭证，交回日期待通知。",
+    "reference": {
+      "tasks": [
+        "保存借用凭证"
+      ],
+      "time": "无具体保存截止；交回日期待通知",
+      "risk": "已签收、保存时和否定的今天不能成为有效截止"
+    },
+    "labelProvenance": "single-author-synthetic-development"
+  },
+  {
+    "id": "OS09",
+    "source": "请在10月12日上午十点前交回借用凭证，编号保持不变。",
+    "reference": {
+      "tasks": [
+        "交回借用凭证"
+      ],
+      "time": "10月12日上午十点前",
+      "risk": "明确截止必须保留，不因抑制假日期漏掉真日期"
+    },
+    "labelProvenance": "single-author-synthetic-development"
+  },
+  {
+    "id": "OS10",
+    "source": "原定邮寄纸质调查册的要求取消。现在改为上传电子调查册，不再寄纸质材料。",
+    "reference": {
+      "tasks": [
+        "邮寄纸质调查册（作废）",
+        "上传电子调查册"
+      ],
+      "revision": "上传替代邮寄",
+      "risk": "旧实体及修订依据保留，不再要求准备纸质材料"
+    },
+    "labelProvenance": "single-author-synthetic-development"
+  },
+  {
+    "id": "OS11",
+    "source": "资料室周日闭馆，工作人员已完成设备盘点。此消息仅供知悉，不需回复或办理任何事项。",
+    "reference": {
+      "tasks": [],
+      "risk": "背景和已完成事实不能转成新任务"
+    },
+    "labelProvenance": "single-author-synthetic-development"
+  },
+  {
+    "id": "OS12",
+    "source": "请于10月9日提交录播视频，于10月11日提交文字摘要。两项均需附同一份授权证明，各自的截止时间互不影响。",
+    "reference": {
+      "tasks": [
+        "提交录播视频",
+        "提交文字摘要"
+      ],
+      "material": "授权证明共享两任务",
+      "time": "录播视频10月9日，文字摘要10月11日",
+      "risk": "共享材料不能传播其他任务的私有截止"
+    },
+    "labelProvenance": "single-author-synthetic-development"
+  }
+]

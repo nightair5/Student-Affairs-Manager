@@ -1,0 +1,48 @@
+{
+  "stage": "OFFLINE_CANDIDATE_ONLY",
+  "overall": "CURRENT_CHECKS_PASS_WITH_RETAINED_HISTORICAL_FAILURE",
+  "modelCalls": 0,
+  "lint": {
+    "status": "PASS",
+    "errors": 0,
+    "existingWarnings": 4
+  },
+  "typecheck": "PASS",
+  "contract": "PASS",
+  "focused": {
+    "status": "PASS",
+    "passed": 5
+  },
+  "vitest": {
+    "initialPassed": 1393,
+    "initialFailed": 1,
+    "initialSkipped": 1,
+    "config": "scripts/mainline-01.vitest.config.mts",
+    "initialFailure": "missing REAL_INPUT_CARRIERS_MANIFEST",
+    "targetedRetryPassed": 1,
+    "codeChangedForRetry": false
+  },
+  "node": {
+    "passed": 60,
+    "failed": 1,
+    "failure": "historical RCO-5-007 FREEZE_HASH_MISMATCH:package-lock.json",
+    "unchangedFromBaseline": true
+  },
+  "functions": {
+    "status": "PASS",
+    "passed": 5
+  },
+  "build": {
+    "status": "PASS",
+    "method": "tsc -b plus Vite API configFile:false/envDir:false, temporary outDir",
+    "warning": "existing chunk >500kB"
+  },
+  "security": {
+    "status": "PASS",
+    "filesScanned": 2348
+  },
+  "protectedFiles": "HASHES_UNCHANGED",
+  "paidEvaluation": "NOT_RUN",
+  "liveDeployment": "NOT_RUN",
+  "userConversion": "NOT_OBSERVABLE"
+}
