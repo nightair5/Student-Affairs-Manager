@@ -6,7 +6,7 @@ import {join} from 'node:path'
 import {randomUUID} from 'node:crypto'
 import {inspectRequest,createModelGateway} from './real-input-model-gateway.mjs'
 import {CONTRASTIVE_POLICY,CONTRASTIVE_BASELINE_POLICY,CONTRASTIVE_CANDIDATE_POLICY,contrastivePolicyFor,openBudget,RECOVERY_ROUTE,sha256} from './real-input-budget.mjs'
-import {contrastiveOrder} from './run-contrastive-recognition.mjs'
+import {contrastiveBudgetView,contrastiveOrder} from './run-contrastive-recognition.mjs'
 import {scoreContrastiveCase,aggregateContrastiveScores} from './score-contrastive-recognition.mjs'
 
 const run='docs/recognition-optimization/mainline-real-input-01/runs',prepared=run+'/opensource-methods-20260920a/prepared',ledgerDir=run+'/usage-resume-20260907a'
@@ -35,8 +35,9 @@ test('gateway accepts a K unit only through the contrastive policy and settles r
   const row=JSON.parse(readFileSync(prepared+'/REQUESTS.json')).find(value=>value.id==='OS01'&&value.arm==='baseline'),body=JSON.stringify(row.body),identity=inspectRequest(body,CONTRASTIVE_BASELINE_POLICY)
   let completed=0,recorded=0
   const envelope={object:'response',status:'completed',model:'deepseek-flash',id:'contrastive_gateway_response',usage:{input_tokens:100,input_tokens_details:{cached_tokens:0},output_tokens:20,output_tokens_details:{reasoning_tokens:0},total_tokens:120},output:[{type:'message',role:'assistant',content:[{type:'output_text',text:'{}'}]}]}
-  const gateway=await createModelGateway({origin:'http://127.0.0.1:6631',capability:'a'.repeat(64),requests:{'K01-A':body},policy:CONTRASTIVE_POLICY,
-    budget:{snapshot:async()=>({units:[{unitId:'K01-A',...identity}]}),reserve:async(id,text,policy)=>{assert.equal(id,'K01-A');assert.equal(text,body);assert.equal(policy,CONTRASTIVE_BASELINE_POLICY);return{complete:async()=>{completed++;return{usage:envelope.usage,costUpperMicroCny:360}},uncertain:async()=>{throw Error('UNEXPECTED')}}}},
+  const units=JSON.parse(readFileSync(prepared+'/REQUESTS.json')).map((value,index)=>{const unitId=`K${String(Math.floor(index/2)+1).padStart(2,'0')}-${value.arm==='baseline'?'A':'B'}`,requestText=JSON.stringify(value.body);return{unitId,...inspectRequest(requestText,contrastivePolicyFor(unitId))}})
+  const gateway=await createModelGateway({origin:'http://127.0.0.1:6631',capability:'a'.repeat(64),requests:Object.fromEntries(JSON.parse(readFileSync(prepared+'/REQUESTS.json')).map((value,index)=>[`K${String(Math.floor(index/2)+1).padStart(2,'0')}-${value.arm==='baseline'?'A':'B'}`,JSON.stringify(value.body)])),policy:CONTRASTIVE_POLICY,
+    budget:contrastiveBudgetView({snapshot:async()=>({units:[{unitId:'A01',requestSha:'historic'},...units]}),reserve:async(id,text,policy)=>{assert.equal(id,'K01-A');assert.equal(text,body);assert.equal(policy,CONTRASTIVE_BASELINE_POLICY);return{complete:async()=>{completed++;return{usage:envelope.usage,costUpperMicroCny:360}},uncertain:async()=>{throw Error('UNEXPECTED')}}}}),
     readSecret:()=> 'NOT_A_REAL_CREDENTIAL_FOR_ENGINEERING',fetchImpl:async()=>new Response(JSON.stringify(envelope),{status:200,headers:{'content-type':'application/json'}}),recordRaw:async row=>{recorded++;assert.equal(row.unitId,'K01-A')}})
   const result=await gateway.handle({method:'POST',path:'/api/real-input/recognize',headers:{host:'127.0.0.1:6631',origin:'http://127.0.0.1:6631','sec-fetch-site':'same-origin','content-type':'application/json','x-real-input-capability':'a'.repeat(64)},bodyText:JSON.stringify({unitId:'K01-A',requestSha:identity.requestSha})})
   assert.equal(result.status,200);assert.equal(completed,1);assert.equal(recorded,1)

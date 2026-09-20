@@ -27,6 +27,11 @@ export function contrastiveOrder(seed=20260920){
   return order
 }
 
+export function contrastiveBudgetView(budget){
+  return {snapshot:async()=>{const state=await budget.snapshot(),units=state.units.filter(unit=>/^K(?:0[1-9]|1[0-2])-[AB]$/.test(unit.unitId));check(units.length===24,'BUDGET_SCOPE');return{...state,units}},
+    reserve:(...args)=>budget.reserve(...args)}
+}
+
 async function adapterApi(){
   const output=await build({stdin:{contents:`export {adaptModelWire,WIRE_VERSION} from './src/experiments/realInput01/modelWire.ts';`,resolveDir:process.cwd(),loader:'ts'},
     bundle:true,write:false,platform:'node',format:'esm',metafile:true,logLevel:'silent'})
@@ -113,7 +118,7 @@ export async function dispatchContrastive(unitId){
   try{process.loadEnvFile(resolve('.env'))}catch{check(false,'SERVER_CONFIGURATION_UNAVAILABLE')}
   const origin='http://127.0.0.1:6631',capability=randomBytes(32).toString('hex'),{api}=await adapterApi();let observed,recorder
   try{
-    const gateway=await createModelGateway({origin,capability,budget,requests:binding.requests,policy:CONTRASTIVE_POLICY,timeoutMs:binding.timeoutMs,fetchImpl:createPinnedProxyFetch(),
+    const gateway=await createModelGateway({origin,capability,budget:contrastiveBudgetView(budget),requests:binding.requests,policy:CONTRASTIVE_POLICY,timeoutMs:binding.timeoutMs,fetchImpl:createPinnedProxyFetch(),
       recordRaw:async row=>{check(row.unitId===unitId&&row.requestSha===binding.units[index].requestSha&&recorder,'RAW_ID');await recorder.write(row);observed=row}})
     recorder=await createRawRecorder(rawPath);const start=Date.now(),response=await gateway.handle({method:'POST',path:'/api/real-input/recognize',headers:{host:new URL(origin).host,origin,'sec-fetch-site':'same-origin','content-type':'application/json','x-real-input-capability':capability},bodyText:JSON.stringify({unitId,requestSha:binding.units[index].requestSha})})
     const item=binding.items.find(value=>value.id===unitId.slice(0,3)),arm=unitId.at(-1);let assembled=null,parseError=null,returnedModel=null
