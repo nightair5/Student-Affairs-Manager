@@ -1,0 +1,152 @@
+{
+  "version": "real-input-contrastive-result-1",
+  "unitId": "K09-A",
+  "sourceId": "OS09",
+  "arm": "A",
+  "armName": "candidate03-baseline",
+  "bindingSha": "ac3e13d5f67dc090d0f54bb424161a30c1422a1daf366fd03d4d6c6d877eab6d",
+  "requestSha": "04e6796fd8fb93077888355f3409122dc95734e51017d7227e0843ccb73723c7",
+  "responseSha": "954444c7c4ba427df694c3cf726340a940b97fbb553f1eab538a0044da5156af",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "modelMatch": true,
+  "candidateVersion": "real-input-source-semantics-3",
+  "exampleVersion": null,
+  "scorerSha": "647dbd204ddcf6083f6a9788395f3098687aff844f90643e31e795e44c3e82bf",
+  "referenceSha": "42b1b69a1c0c5d1575e49cb1f69ee55364404108f69e14534446d5f221840567",
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-return-borrowing-voucher",
+        "propositionScopeIds": [
+          "scope-0001-14f3bbfc83db9d94066d12a9b23cb1908bc3f021df90fb5549a314a1359d8bae",
+          "scope-0002-b61619e27a83c8b508bdf6cb535577e09d31c7bff3367c726306211c2a5e5695"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "submit",
+        "action": {
+          "scopeId": "scope-0001-14f3bbfc83db9d94066d12a9b23cb1908bc3f021df90fb5549a314a1359d8bae",
+          "surface": "交回"
+        },
+        "object": {
+          "scopeId": "scope-0001-14f3bbfc83db9d94066d12a9b23cb1908bc3f021df90fb5549a314a1359d8bae",
+          "surface": "借用凭证"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "交回借用凭证",
+          "description": "在10月12日上午十点前交回借用凭证，编号保持不变。",
+          "completionCriteria": [
+            "借用凭证已交回",
+            "编号保持不变"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [
+            "material-borrowing-voucher"
+          ],
+          "timePointTempIds": [
+            "time-1012-1000"
+          ],
+          "confidence": 0.95,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [
+      {
+        "tempId": "material-borrowing-voucher",
+        "name": "借用凭证",
+        "required": true,
+        "formatRequirements": [],
+        "namingRequirements": [
+          "编号保持不变"
+        ],
+        "quantity": null,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "task-return-borrowing-voucher"
+        ],
+        "scopeIds": [
+          "scope-0001-14f3bbfc83db9d94066d12a9b23cb1908bc3f021df90fb5549a314a1359d8bae",
+          "scope-0002-b61619e27a83c8b508bdf6cb535577e09d31c7bff3367c726306211c2a5e5695"
+        ],
+        "confidence": 0.95
+      }
+    ],
+    "timePoints": [
+      {
+        "tempId": "time-1012-1000",
+        "type": "submission_deadline",
+        "rawText": "10月12日上午十点前",
+        "relatedTaskTempIds": [
+          "task-return-borrowing-voucher"
+        ],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0001-14f3bbfc83db9d94066d12a9b23cb1908bc3f021df90fb5549a314a1359d8bae"
+        ],
+        "confidence": 0.95,
+        "normalizedValue": "2026-10-12T10:00",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "exact",
+        "needsConfirmation": false
+      }
+    ],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [],
+    "unresolvedScopeIds": [],
+    "sourceId": "opensource-dev-OS09",
+    "sourceVersionId": "opensource-dev-OS09:1",
+    "sourceFingerprint": "sha256:7b2dbff0478e993def44876b6140d87b1313373aa053491ed95b8deab8b8e5d8"
+  },
+  "http": 200,
+  "diagnostic": null,
+  "waitingMs": 5329,
+  "parseError": null,
+  "totalAttempts": 308,
+  "usage": {
+    "input_tokens": 4174,
+    "input_tokens_details": {
+      "cached_tokens": 3840
+    },
+    "output_tokens": 761,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 4935
+  },
+  "costUpperMicroCny": 14436,
+  "totalCostUpperMicroCny": 13941099,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticSelection": "NOT_ENABLED",
+  "qualityClaim": "12份新编匿名相近结构Development配对；单作者参照；仅固定教学正反例不同；不是盲测或真实用户转化"
+}

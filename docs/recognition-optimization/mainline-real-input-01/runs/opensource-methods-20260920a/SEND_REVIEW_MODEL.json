@@ -1,0 +1,20 @@
+{
+  "version": "real-input-contrastive-send-check-1",
+  "status": "PASS",
+  "scope": "CONTRASTIVE_SEND_LOCAL_DETERMINISTIC",
+  "independent": false,
+  "grantId": "5b82e458-0a4c-4e6d-bec2-47ee74ad6d28",
+  "head": "9c9460dafef511a922938ce012ae4874070a67e1",
+  "bindingSha": "ac3e13d5f67dc090d0f54bb424161a30c1422a1daf366fd03d4d6c6d877eab6d",
+  "billingSha": "374c21ca22f748aee0546c18e00b3e8b10dabd7eaac39392a7bd170d9f2aeda2",
+  "sourcesSha": "c3fd97c24b7881c523bc2ab0bb92810ea5106e646d4cae5ddab530f29bb7d19e",
+  "checks": [
+    "24 calls explicitly authorized by current user",
+    "12 anonymous synthetic sources; no real materials",
+    "candidate03 versus candidate10; same model/schema/input/parameters",
+    "references excluded from request bodies",
+    "no retries",
+    "cumulative cap 314 and CNY 20 hard limit"
+  ],
+  "checkedAt": "2026-09-20T10:13:07.447Z"
+}

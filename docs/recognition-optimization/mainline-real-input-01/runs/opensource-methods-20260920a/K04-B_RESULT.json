@@ -1,0 +1,168 @@
+{
+  "version": "real-input-contrastive-result-1",
+  "unitId": "K04-B",
+  "sourceId": "OS04",
+  "arm": "B",
+  "armName": "candidate10-contrastive",
+  "bindingSha": "ac3e13d5f67dc090d0f54bb424161a30c1422a1daf366fd03d4d6c6d877eab6d",
+  "requestSha": "8ef0274a06eb8b52ed261248b69965274251d3429f392343133d0bfdeda66dfb",
+  "responseSha": "c48326535c8ec9ba3497912d9277914ebead4178c8f666103b47f6ae567fab6f",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "modelMatch": true,
+  "candidateVersion": "real-input-source-semantics-10",
+  "exampleVersion": "contrastive-evidence-examples-1",
+  "scorerSha": "647dbd204ddcf6083f6a9788395f3098687aff844f90643e31e795e44c3e82bf",
+  "referenceSha": "42b1b69a1c0c5d1575e49cb1f69ee55364404108f69e14534446d5f221840567",
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-verify-authorization",
+        "propositionScopeIds": [
+          "scope-0001-52785886bac0d82376f86fa2b79aeba91b48f509d07383b834d1758f9a66deba"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "review",
+        "action": {
+          "scopeId": "scope-0001-52785886bac0d82376f86fa2b79aeba91b48f509d07383b834d1758f9a66deba",
+          "surface": "核验"
+        },
+        "object": {
+          "scopeId": "scope-0001-52785886bac0d82376f86fa2b79aeba91b48f509d07383b834d1758f9a66deba",
+          "surface": "数据授权书"
+        },
+        "effect": "local_change",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "核验数据授权书",
+          "description": "核验数据授权书。",
+          "completionCriteria": [
+            "数据授权书核验通过"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [],
+          "timePointTempIds": [],
+          "confidence": 0.95,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "not_stated",
+          "material": "not_stated",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      },
+      {
+        "id": "task-publish-survey-summary",
+        "propositionScopeIds": [
+          "scope-0002-c798385e500f8c1854e0d18ca08e306de3808e95363bcf1bfbe86736a0cf7806",
+          "scope-0003-36e275a390d63fb2025da2ec2876079443bf926c01c133c1157ac773dfd93a37"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "other",
+        "action": {
+          "scopeId": "scope-0002-c798385e500f8c1854e0d18ca08e306de3808e95363bcf1bfbe86736a0cf7806",
+          "surface": "公开"
+        },
+        "object": {
+          "scopeId": "scope-0002-c798385e500f8c1854e0d18ca08e306de3808e95363bcf1bfbe86736a0cf7806",
+          "surface": "调查摘要"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "公开调查摘要",
+          "description": "只有核验通过后才能公开调查摘要，目前核验结果未知。",
+          "completionCriteria": [
+            "调查摘要已公开"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [
+            "task-verify-authorization"
+          ],
+          "materialTempIds": [],
+          "timePointTempIds": [],
+          "confidence": 0.9,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "unknown",
+          "conditionScopeIds": [
+            "scope-0002-c798385e500f8c1854e0d18ca08e306de3808e95363bcf1bfbe86736a0cf7806"
+          ],
+          "factScopeIds": [
+            "scope-0003-36e275a390d63fb2025da2ec2876079443bf926c01c133c1157ac773dfd93a37"
+          ]
+        },
+        "coverage": {
+          "time": "not_stated",
+          "material": "not_stated",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [],
+    "timePoints": [],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [],
+    "unresolvedScopeIds": [],
+    "sourceId": "opensource-dev-OS04",
+    "sourceVersionId": "opensource-dev-OS04:1",
+    "sourceFingerprint": "sha256:32040e9b5fe25c63d2f2e321ddc327d4ee4e0cddd8c211774a87ff67493cd026"
+  },
+  "http": 200,
+  "diagnostic": null,
+  "waitingMs": 5166,
+  "parseError": null,
+  "totalAttempts": 297,
+  "usage": {
+    "input_tokens": 5095,
+    "input_tokens_details": {
+      "cached_tokens": 4736
+    },
+    "output_tokens": 912,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 6007
+  },
+  "costUpperMicroCny": 17486,
+  "totalCostUpperMicroCny": 13775817,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticSelection": "NOT_ENABLED",
+  "qualityClaim": "12份新编匿名相近结构Development配对；单作者参照；仅固定教学正反例不同；不是盲测或真实用户转化"
+}

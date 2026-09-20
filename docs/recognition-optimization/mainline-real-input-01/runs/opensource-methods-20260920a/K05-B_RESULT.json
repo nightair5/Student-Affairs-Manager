@@ -1,0 +1,112 @@
+{
+  "version": "real-input-contrastive-result-1",
+  "unitId": "K05-B",
+  "sourceId": "OS05",
+  "arm": "B",
+  "armName": "candidate10-contrastive",
+  "bindingSha": "ac3e13d5f67dc090d0f54bb424161a30c1422a1daf366fd03d4d6c6d877eab6d",
+  "requestSha": "8e9abed20c6cb2cd645c0fb67b5de0687e164a26fdf3a0e837f3d84e15347b1a",
+  "responseSha": "c2de30e46e6a48a801973c5c586298243f9a83b37dac3f78678b5999741a9e8a",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "modelMatch": true,
+  "candidateVersion": "real-input-source-semantics-10",
+  "exampleVersion": "contrastive-evidence-examples-1",
+  "scorerSha": "647dbd204ddcf6083f6a9788395f3098687aff844f90643e31e795e44c3e82bf",
+  "referenceSha": "42b1b69a1c0c5d1575e49cb1f69ee55364404108f69e14534446d5f221840567",
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-claim-key",
+        "propositionScopeIds": [
+          "scope-0001-94183281fc1354c1f15c80476ef6af557a2300648e6ae7cfbb831d8804990b0b",
+          "scope-0002-7fc3e953ac53851de511e02cf0b82afd1105deba457f3b3ab42652ca957e0746"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "collect",
+        "action": {
+          "scopeId": "scope-0001-94183281fc1354c1f15c80476ef6af557a2300648e6ae7cfbb831d8804990b0b",
+          "surface": "领取"
+        },
+        "object": {
+          "scopeId": "scope-0001-94183281fc1354c1f15c80476ef6af557a2300648e6ae7cfbb831d8804990b0b",
+          "surface": "实验钥匙"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "领取实验钥匙",
+          "description": "仅在机房安全检查通过后领取实验钥匙；检查结果尚未公布。",
+          "completionCriteria": [
+            "实验钥匙已领取"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [],
+          "timePointTempIds": [],
+          "confidence": 0.9,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "unknown",
+          "conditionScopeIds": [
+            "scope-0001-94183281fc1354c1f15c80476ef6af557a2300648e6ae7cfbb831d8804990b0b"
+          ],
+          "factScopeIds": [
+            "scope-0002-7fc3e953ac53851de511e02cf0b82afd1105deba457f3b3ab42652ca957e0746"
+          ]
+        },
+        "coverage": {
+          "time": "not_stated",
+          "material": "not_stated",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [],
+    "timePoints": [],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [],
+    "unresolvedScopeIds": [],
+    "sourceId": "opensource-dev-OS05",
+    "sourceVersionId": "opensource-dev-OS05:1",
+    "sourceFingerprint": "sha256:1fbc3eb4f26e33d6406722ccc42ca3b4d896cae3ff678036d42e8fe186fcb146"
+  },
+  "http": 200,
+  "diagnostic": null,
+  "waitingMs": 4347,
+  "parseError": null,
+  "totalAttempts": 299,
+  "usage": {
+    "input_tokens": 5035,
+    "input_tokens_details": {
+      "cached_tokens": 4736
+    },
+    "output_tokens": 541,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 5576
+  },
+  "costUpperMicroCny": 14398,
+  "totalCostUpperMicroCny": 13805977,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticSelection": "NOT_ENABLED",
+  "qualityClaim": "12份新编匿名相近结构Development配对；单作者参照；仅固定教学正反例不同；不是盲测或真实用户转化"
+}

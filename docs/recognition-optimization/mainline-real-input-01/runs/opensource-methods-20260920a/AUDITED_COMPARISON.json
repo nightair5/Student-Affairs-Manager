@@ -1,0 +1,31 @@
+{
+  "version": "real-input-contrastive-posthoc-audit-1",
+  "evaluationType": "posthoc-explicit-reference-review",
+  "provisional": true,
+  "preRegistered": false,
+  "frozenComparisonPath": "MODEL_COMPARISON.json",
+  "frozen": {
+    "candidate03Complete": 10,
+    "candidate10Complete": 12,
+    "candidate10Wins": 2,
+    "candidate03Wins": 0,
+    "ties": 10
+  },
+  "audited": {
+    "candidate03Complete": 9,
+    "candidate10Complete": 11,
+    "candidate10Wins": 3,
+    "candidate03Wins": 1,
+    "ties": 8,
+    "candidate03Errors": {
+      "OS07": "duplicate positive and negative key-pickup tasks; positive task remained active/pending",
+      "OS08": "invented return task and normalized negated today as a deadline",
+      "OS10": "effective replacement was emitted as effective=unknown"
+    },
+    "candidate10Errors": {
+      "OS04": "completion criterion changed completion of verification into verification passing"
+    }
+  },
+  "metricBoundary": "Frozen keyword precision, recall and false-positive counts are retained as raw diagnostics and are not strict task accuracy.",
+  "route": "candidate10 full teaching package has net development benefit but requires an OS04 fix and independent blind evaluation before adoption"
+}

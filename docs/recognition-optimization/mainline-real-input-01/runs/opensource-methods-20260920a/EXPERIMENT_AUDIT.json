@@ -1,0 +1,50 @@
+{
+  "version": "experiment-audit-1",
+  "date": "2026-09-20",
+  "reviewer": "fresh-same-family-model-agent",
+  "provisional": true,
+  "overall": "FAIL_STRICT_EXPERIMENT_AUDIT",
+  "dimensions": {
+    "A_groundTruthProvenance": "PASS_DISCLOSURE_ONLY",
+    "B_normalizationAndPairing": "FAIL_STRICT_CAUSAL_ATTRIBUTION",
+    "C_resultsAndAccounting": "PASS",
+    "D_scoringIntegrity": "FAIL",
+    "E_executionAndReplay": "FAIL",
+    "F_externalClaimScope": "PASS"
+  },
+  "frozenResult": {
+    "candidate03Complete": 10,
+    "candidate10Complete": 12,
+    "sources": 12,
+    "candidate10Wins": 2,
+    "candidate03Wins": 0,
+    "ties": 10
+  },
+  "postHocExplicitReferenceReview": {
+    "candidate03Complete": 9,
+    "candidate10Complete": 11,
+    "sources": 12,
+    "candidate10Wins": 3,
+    "candidate03Wins": 1,
+    "ties": 8,
+    "candidate03Errors": ["OS07", "OS08", "OS10"],
+    "candidate10Errors": ["OS04"],
+    "isPreregisteredMetric": false
+  },
+  "accounting": {
+    "rawFiles": 24,
+    "resultFiles": 24,
+    "ledgerRows": 644,
+    "receipts": 644,
+    "newCalls": 24,
+    "cumulativeCalls": 314,
+    "newCostUpperMicroCny": 379360,
+    "cumulativeCostUpperMicroCny": 14042543,
+    "providerBilledCny": "NOT_OBSERVABLE"
+  },
+  "route": "FIX_CANDIDATE10_PACKAGE_THEN_INDEPENDENT_BLIND_HOLDOUT",
+  "adoption": "NOT_ADOPTED",
+  "previewDeployment": "NOT_AUTHORIZED",
+  "productionDeployment": "NOT_AUTHORIZED",
+  "realAcceptSaveConversion": "NOT_OBSERVABLE"
+}

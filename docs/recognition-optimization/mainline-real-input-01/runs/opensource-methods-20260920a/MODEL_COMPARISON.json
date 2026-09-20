@@ -1,0 +1,4477 @@
+{
+  "version": "real-input-contrastive-analysis-1",
+  "evaluationType": "single-author-synthetic-development",
+  "blind": false,
+  "independentGroundTruth": false,
+  "bindingSha": "ac3e13d5f67dc090d0f54bb424161a30c1422a1daf366fd03d4d6c6d877eab6d",
+  "sources": 12,
+  "requests": 24,
+  "arms": {
+    "A": "candidate03-baseline",
+    "B": "candidate10-contrastive"
+  },
+  "metrics": {
+    "A": {
+      "sources": 12,
+      "completeCases": 10,
+      "completeCaseRate": 0.8333333333333334,
+      "checklistPassed": 55,
+      "checklistTotal": 61,
+      "checklistRate": 0.9016393442622951,
+      "taskPrecision": 0.8333333333333334,
+      "taskRecall": 0.9375,
+      "falsePositiveTasks": 1
+    },
+    "B": {
+      "sources": 12,
+      "completeCases": 12,
+      "completeCaseRate": 1,
+      "checklistPassed": 61,
+      "checklistTotal": 61,
+      "checklistRate": 1,
+      "taskPrecision": 1,
+      "taskRecall": 1,
+      "falsePositiveTasks": 0
+    }
+  },
+  "pairWins": {
+    "A": 0,
+    "B": 2,
+    "tie": 10
+  },
+  "operational": {
+    "A": {
+      "medianWaitingMs": 5207,
+      "inputTokens": 50692,
+      "outputTokens": 10253,
+      "costUpperMicroCny": 183408
+    },
+    "B": {
+      "medianWaitingMs": 4937,
+      "inputTokens": 61132,
+      "outputTokens": 9211,
+      "costUpperMicroCny": 195952
+    }
+  },
+  "cases": [
+    {
+      "id": "OS01",
+      "unitId": "K01-A",
+      "arm": "A",
+      "armName": "candidate03-baseline",
+      "assembled": {
+        "schemaVersion": "mainline04-task-semantics-1",
+        "tasks": [
+          {
+            "id": "task-submit-photos",
+            "propositionScopeIds": [
+              "scope-0001-7d21683f7911495deee52795c31e6400673e9dd7d05b7017e14239ddf2746bb6",
+              "scope-0002-ecfd12284fece4c8208190affa7da41eccd8ace9b3cbc0c18dcfb1d292b11a74",
+              "scope-0003-18c2d27fc33002ac2e3b39ad87b750a424d1bb6928885089ee61cb67b7134c7f"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "submit",
+            "action": {
+              "scopeId": "scope-0001-7d21683f7911495deee52795c31e6400673e9dd7d05b7017e14239ddf2746bb6",
+              "surface": "交"
+            },
+            "object": {
+              "scopeId": "scope-0001-7d21683f7911495deee52795c31e6400673e9dd7d05b7017e14239ddf2746bb6",
+              "surface": "校史照片"
+            },
+            "effect": "external_transfer",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "交校史照片",
+              "description": "把校史照片交到档案室；照片须装入防潮盒，每盒最多十张。",
+              "completionCriteria": [
+                "校史照片已交到档案室",
+                "照片已装入防潮盒",
+                "每盒最多十张"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [
+                "material-moisture-box"
+              ],
+              "timePointTempIds": [],
+              "confidence": 0.9,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": []
+            },
+            "coverage": {
+              "time": "not_stated",
+              "material": "present",
+              "event": "not_stated"
+            },
+            "eventTempIds": []
+          }
+        ],
+        "materials": [
+          {
+            "tempId": "material-moisture-box",
+            "name": "防潮盒",
+            "required": true,
+            "formatRequirements": [],
+            "namingRequirements": [],
+            "quantity": null,
+            "submissionChannel": null,
+            "relatedTaskTempIds": [
+              "task-submit-photos"
+            ],
+            "scopeIds": [
+              "scope-0002-ecfd12284fece4c8208190affa7da41eccd8ace9b3cbc0c18dcfb1d292b11a74",
+              "scope-0003-18c2d27fc33002ac2e3b39ad87b750a424d1bb6928885089ee61cb67b7134c7f"
+            ],
+            "confidence": 0.9
+          }
+        ],
+        "timePoints": [],
+        "events": [],
+        "revisions": [],
+        "conflicts": [],
+        "informationScopeIds": [],
+        "unresolvedScopeIds": [],
+        "sourceId": "opensource-dev-OS01",
+        "sourceVersionId": "opensource-dev-OS01:1",
+        "sourceFingerprint": "sha256:a7a9dbb4835505f50e9d1ccbd07e08cead0016508176a15495074e7a12cd2b03"
+      },
+      "waitingMs": 4370,
+      "usage": {
+        "input_tokens": 4235,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 696,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 4931
+      },
+      "costUpperMicroCny": 14038,
+      "responseSha": "9e4b10e5574bd249d4946f3f17c0c801c2e6f117fc1a9b03e52d9191e31095a9",
+      "score": {
+        "id": "OS01",
+        "checks": [
+          {
+            "name": "expected-task-count",
+            "group": "task",
+            "pass": true,
+            "detail": "1/1"
+          },
+          {
+            "name": "task-1",
+            "group": "task",
+            "pass": true,
+            "detail": "交+校史照片:1"
+          },
+          {
+            "name": "no-unexpected-task",
+            "group": "task",
+            "pass": true,
+            "detail": "1/1"
+          },
+          {
+            "name": "no-purchase-or-prepare-task",
+            "group": "boundary",
+            "pass": true,
+            "detail": "property-is-not-action"
+          },
+          {
+            "name": "box-owned-by-delivery",
+            "group": "material",
+            "pass": true,
+            "detail": [
+              "task-submit-photos"
+            ]
+          }
+        ],
+        "passed": 5,
+        "total": 5,
+        "complete": true,
+        "taskFacts": {
+          "expected": 1,
+          "predicted": 1,
+          "matched": 1,
+          "unexpected": 0
+        }
+      }
+    },
+    {
+      "id": "OS01",
+      "unitId": "K01-B",
+      "arm": "B",
+      "armName": "candidate10-contrastive",
+      "assembled": {
+        "schemaVersion": "mainline04-task-semantics-1",
+        "tasks": [
+          {
+            "id": "task-deliver-photos",
+            "propositionScopeIds": [
+              "scope-0001-7d21683f7911495deee52795c31e6400673e9dd7d05b7017e14239ddf2746bb6",
+              "scope-0002-ecfd12284fece4c8208190affa7da41eccd8ace9b3cbc0c18dcfb1d292b11a74",
+              "scope-0003-18c2d27fc33002ac2e3b39ad87b750a424d1bb6928885089ee61cb67b7134c7f"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "carry",
+            "action": {
+              "scopeId": "scope-0001-7d21683f7911495deee52795c31e6400673e9dd7d05b7017e14239ddf2746bb6",
+              "surface": "交到"
+            },
+            "object": {
+              "scopeId": "scope-0001-7d21683f7911495deee52795c31e6400673e9dd7d05b7017e14239ddf2746bb6",
+              "surface": "校史照片"
+            },
+            "effect": "external_transfer",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "交校史照片到档案室",
+              "description": "把校史照片交到档案室；照片须装入防潮盒，每盒最多十张。",
+              "completionCriteria": [
+                "校史照片已交到档案室",
+                "照片装入防潮盒",
+                "每盒最多十张"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [
+                "mat-moisture-box"
+              ],
+              "timePointTempIds": [],
+              "confidence": 0.9,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": []
+            },
+            "coverage": {
+              "time": "not_stated",
+              "material": "present",
+              "event": "not_stated"
+            },
+            "eventTempIds": []
+          }
+        ],
+        "materials": [
+          {
+            "tempId": "mat-moisture-box",
+            "name": "防潮盒",
+            "required": true,
+            "formatRequirements": [
+              "每盒最多十张"
+            ],
+            "namingRequirements": [],
+            "quantity": null,
+            "submissionChannel": null,
+            "relatedTaskTempIds": [
+              "task-deliver-photos"
+            ],
+            "scopeIds": [
+              "scope-0002-ecfd12284fece4c8208190affa7da41eccd8ace9b3cbc0c18dcfb1d292b11a74",
+              "scope-0003-18c2d27fc33002ac2e3b39ad87b750a424d1bb6928885089ee61cb67b7134c7f"
+            ],
+            "confidence": 0.9
+          }
+        ],
+        "timePoints": [],
+        "events": [],
+        "revisions": [],
+        "conflicts": [],
+        "informationScopeIds": [],
+        "unresolvedScopeIds": [],
+        "sourceId": "opensource-dev-OS01",
+        "sourceVersionId": "opensource-dev-OS01:1",
+        "sourceFingerprint": "sha256:a7a9dbb4835505f50e9d1ccbd07e08cead0016508176a15495074e7a12cd2b03"
+      },
+      "waitingMs": 5779,
+      "usage": {
+        "input_tokens": 5105,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 706,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5811
+      },
+      "costUpperMicroCny": 15858,
+      "responseSha": "6922c606c9d27aba6c912dcdd99434cd4ce24d7723fbe74d138ab3bfe36c1c97",
+      "score": {
+        "id": "OS01",
+        "checks": [
+          {
+            "name": "expected-task-count",
+            "group": "task",
+            "pass": true,
+            "detail": "1/1"
+          },
+          {
+            "name": "task-1",
+            "group": "task",
+            "pass": true,
+            "detail": "交+校史照片:1"
+          },
+          {
+            "name": "no-unexpected-task",
+            "group": "task",
+            "pass": true,
+            "detail": "1/1"
+          },
+          {
+            "name": "no-purchase-or-prepare-task",
+            "group": "boundary",
+            "pass": true,
+            "detail": "property-is-not-action"
+          },
+          {
+            "name": "box-owned-by-delivery",
+            "group": "material",
+            "pass": true,
+            "detail": [
+              "task-deliver-photos"
+            ]
+          }
+        ],
+        "passed": 5,
+        "total": 5,
+        "complete": true,
+        "taskFacts": {
+          "expected": 1,
+          "predicted": 1,
+          "matched": 1,
+          "unexpected": 0
+        }
+      }
+    },
+    {
+      "id": "OS02",
+      "unitId": "K02-A",
+      "arm": "A",
+      "armName": "candidate03-baseline",
+      "assembled": {
+        "schemaVersion": "mainline04-task-semantics-1",
+        "tasks": [
+          {
+            "id": "task-buy-dehumidifier-box",
+            "propositionScopeIds": [
+              "scope-0001-d9c92f673dbe23ad10578b5b2fb211d72793879446ef8f56cc02670c99c58a29"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "other",
+            "action": {
+              "scopeId": "scope-0001-d9c92f673dbe23ad10578b5b2fb211d72793879446ef8f56cc02670c99c58a29",
+              "surface": "购买"
+            },
+            "object": {
+              "scopeId": "scope-0001-d9c92f673dbe23ad10578b5b2fb211d72793879446ef8f56cc02670c99c58a29",
+              "surface": "防潮盒"
+            },
+            "effect": "external_transfer",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "购买防潮盒",
+              "description": "先购买防潮盒。",
+              "completionCriteria": [
+                "防潮盒已购买"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [],
+              "timePointTempIds": [],
+              "confidence": 0.9,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": []
+            },
+            "coverage": {
+              "time": "not_stated",
+              "material": "not_stated",
+              "event": "not_stated"
+            },
+            "eventTempIds": []
+          },
+          {
+            "id": "task-submit-school-history-photos",
+            "propositionScopeIds": [
+              "scope-0002-f613467911b79f166c8611ca099c0dbe23c21cf918af0b789e1ab038053937d8"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "submit",
+            "action": {
+              "scopeId": "scope-0002-f613467911b79f166c8611ca099c0dbe23c21cf918af0b789e1ab038053937d8",
+              "surface": "交到"
+            },
+            "object": {
+              "scopeId": "scope-0002-f613467911b79f166c8611ca099c0dbe23c21cf918af0b789e1ab038053937d8",
+              "surface": "校史照片"
+            },
+            "effect": "external_transfer",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "提交校史照片",
+              "description": "再把校史照片交到档案室。",
+              "completionCriteria": [
+                "校史照片已交到档案室"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [
+                "task-buy-dehumidifier-box"
+              ],
+              "materialTempIds": [
+                "material-school-history-photos"
+              ],
+              "timePointTempIds": [],
+              "confidence": 0.9,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": []
+            },
+            "coverage": {
+              "time": "not_stated",
+              "material": "present",
+              "event": "not_stated"
+            },
+            "eventTempIds": []
+          }
+        ],
+        "materials": [
+          {
+            "tempId": "material-school-history-photos",
+            "name": "校史照片",
+            "required": true,
+            "formatRequirements": [],
+            "namingRequirements": [],
+            "quantity": null,
+            "submissionChannel": "档案室",
+            "relatedTaskTempIds": [
+              "task-submit-school-history-photos"
+            ],
+            "scopeIds": [
+              "scope-0002-f613467911b79f166c8611ca099c0dbe23c21cf918af0b789e1ab038053937d8"
+            ],
+            "confidence": 0.9
+          }
+        ],
+        "timePoints": [],
+        "events": [],
+        "revisions": [],
+        "conflicts": [],
+        "informationScopeIds": [],
+        "unresolvedScopeIds": [],
+        "sourceId": "opensource-dev-OS02",
+        "sourceVersionId": "opensource-dev-OS02:1",
+        "sourceFingerprint": "sha256:4704935e96e6a3759c04bad86cd630c542d91d48e3071db59511ef5625877eed"
+      },
+      "waitingMs": 4802,
+      "usage": {
+        "input_tokens": 4167,
+        "input_tokens_details": {
+          "cached_tokens": 3840
+        },
+        "output_tokens": 903,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5070
+      },
+      "costUpperMicroCny": 15558,
+      "responseSha": "afa36288d4febdad3a85c7492abb045084247e6e10d5987745ae5f3266ab7408",
+      "score": {
+        "id": "OS02",
+        "checks": [
+          {
+            "name": "expected-task-count",
+            "group": "task",
+            "pass": true,
+            "detail": "2/2"
+          },
+          {
+            "name": "task-1",
+            "group": "task",
+            "pass": true,
+            "detail": "购买+防潮盒:1"
+          },
+          {
+            "name": "task-2",
+            "group": "task",
+            "pass": true,
+            "detail": "交+校史照片:1"
+          },
+          {
+            "name": "no-unexpected-task",
+            "group": "task",
+            "pass": true,
+            "detail": "2/2"
+          },
+          {
+            "name": "explicit-purchase-kept",
+            "group": "boundary",
+            "pass": true,
+            "detail": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            }
+          },
+          {
+            "name": "explicit-order-kept",
+            "group": "dependency",
+            "pass": true,
+            "detail": [
+              "task-buy-dehumidifier-box"
+            ]
+          }
+        ],
+        "passed": 6,
+        "total": 6,
+        "complete": true,
+        "taskFacts": {
+          "expected": 2,
+          "predicted": 2,
+          "matched": 2,
+          "unexpected": 0
+        }
+      }
+    },
+    {
+      "id": "OS02",
+      "unitId": "K02-B",
+      "arm": "B",
+      "armName": "candidate10-contrastive",
+      "assembled": {
+        "schemaVersion": "mainline04-task-semantics-1",
+        "tasks": [
+          {
+            "id": "task-buy-moisture-box",
+            "propositionScopeIds": [
+              "scope-0001-d9c92f673dbe23ad10578b5b2fb211d72793879446ef8f56cc02670c99c58a29"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "other",
+            "action": {
+              "scopeId": "scope-0001-d9c92f673dbe23ad10578b5b2fb211d72793879446ef8f56cc02670c99c58a29",
+              "surface": "购买"
+            },
+            "object": {
+              "scopeId": "scope-0001-d9c92f673dbe23ad10578b5b2fb211d72793879446ef8f56cc02670c99c58a29",
+              "surface": "防潮盒"
+            },
+            "effect": "external_transfer",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "购买防潮盒",
+              "description": "先购买防潮盒。",
+              "completionCriteria": [
+                "防潮盒已购买"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [],
+              "timePointTempIds": [],
+              "confidence": 0.95,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": []
+            },
+            "coverage": {
+              "time": "not_stated",
+              "material": "not_stated",
+              "event": "not_stated"
+            },
+            "eventTempIds": []
+          },
+          {
+            "id": "task-deliver-school-history-photos",
+            "propositionScopeIds": [
+              "scope-0002-f613467911b79f166c8611ca099c0dbe23c21cf918af0b789e1ab038053937d8"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "carry",
+            "action": {
+              "scopeId": "scope-0002-f613467911b79f166c8611ca099c0dbe23c21cf918af0b789e1ab038053937d8",
+              "surface": "交到"
+            },
+            "object": {
+              "scopeId": "scope-0002-f613467911b79f166c8611ca099c0dbe23c21cf918af0b789e1ab038053937d8",
+              "surface": "校史照片"
+            },
+            "effect": "external_transfer",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "交校史照片到档案室",
+              "description": "再把校史照片交到档案室。",
+              "completionCriteria": [
+                "校史照片已交到档案室"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [
+                "task-buy-moisture-box"
+              ],
+              "materialTempIds": [],
+              "timePointTempIds": [],
+              "confidence": 0.95,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": []
+            },
+            "coverage": {
+              "time": "not_stated",
+              "material": "not_stated",
+              "event": "not_stated"
+            },
+            "eventTempIds": []
+          }
+        ],
+        "materials": [],
+        "timePoints": [],
+        "events": [],
+        "revisions": [],
+        "conflicts": [],
+        "informationScopeIds": [],
+        "unresolvedScopeIds": [],
+        "sourceId": "opensource-dev-OS02",
+        "sourceVersionId": "opensource-dev-OS02:1",
+        "sourceFingerprint": "sha256:4704935e96e6a3759c04bad86cd630c542d91d48e3071db59511ef5625877eed"
+      },
+      "waitingMs": 4937,
+      "usage": {
+        "input_tokens": 5037,
+        "input_tokens_details": {
+          "cached_tokens": 4736
+        },
+        "output_tokens": 799,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5836
+      },
+      "costUpperMicroCny": 16466,
+      "responseSha": "39105eced974f4f0f6f0d773c20d6ab8d949629c2d7fbc4911f9e29865b8775a",
+      "score": {
+        "id": "OS02",
+        "checks": [
+          {
+            "name": "expected-task-count",
+            "group": "task",
+            "pass": true,
+            "detail": "2/2"
+          },
+          {
+            "name": "task-1",
+            "group": "task",
+            "pass": true,
+            "detail": "购买+防潮盒:1"
+          },
+          {
+            "name": "task-2",
+            "group": "task",
+            "pass": true,
+            "detail": "交+校史照片:1"
+          },
+          {
+            "name": "no-unexpected-task",
+            "group": "task",
+            "pass": true,
+            "detail": "2/2"
+          },
+          {
+            "name": "explicit-purchase-kept",
+            "group": "boundary",
+            "pass": true,
+            "detail": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            }
+          },
+          {
+            "name": "explicit-order-kept",
+            "group": "dependency",
+            "pass": true,
+            "detail": [
+              "task-buy-moisture-box"
+            ]
+          }
+        ],
+        "passed": 6,
+        "total": 6,
+        "complete": true,
+        "taskFacts": {
+          "expected": 2,
+          "predicted": 2,
+          "matched": 2,
+          "unexpected": 0
+        }
+      }
+    },
+    {
+      "id": "OS03",
+      "unitId": "K03-A",
+      "arm": "A",
+      "armName": "candidate03-baseline",
+      "assembled": {
+        "schemaVersion": "mainline04-task-semantics-1",
+        "tasks": [
+          {
+            "id": "task-write-equipment-instructions",
+            "propositionScopeIds": [
+              "scope-0001-d75a02b6dc27f411a7cb56bc24b0e0c376f9052aa0e2121b1ead2c78373aad9a",
+              "scope-0003-c66f426a6392ded2fe47e87f782b6a6b588995209d7e17d50edeee636011c289"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "prepare",
+            "action": {
+              "scopeId": "scope-0001-d75a02b6dc27f411a7cb56bc24b0e0c376f9052aa0e2121b1ead2c78373aad9a",
+              "surface": "编写"
+            },
+            "object": {
+              "scopeId": "scope-0001-d75a02b6dc27f411a7cb56bc24b0e0c376f9052aa0e2121b1ead2c78373aad9a",
+              "surface": "设备说明"
+            },
+            "effect": "local_change",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "编写设备说明",
+              "description": "编写设备说明。",
+              "completionCriteria": [],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [],
+              "timePointTempIds": [],
+              "confidence": 0.95,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": []
+            },
+            "coverage": {
+              "time": "not_stated",
+              "material": "not_stated",
+              "event": "not_stated"
+            },
+            "eventTempIds": []
+          },
+          {
+            "id": "task-backup-last-semester-maintenance-records",
+            "propositionScopeIds": [
+              "scope-0002-319860cb538e2b0b0e126e0b13d63dff47b9ff43a26505ae400499939c548841",
+              "scope-0003-c66f426a6392ded2fe47e87f782b6a6b588995209d7e17d50edeee636011c289"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "save",
+            "action": {
+              "scopeId": "scope-0002-319860cb538e2b0b0e126e0b13d63dff47b9ff43a26505ae400499939c548841",
+              "surface": "备份"
+            },
+            "object": {
+              "scopeId": "scope-0002-319860cb538e2b0b0e126e0b13d63dff47b9ff43a26505ae400499939c548841",
+              "surface": "上一学期的维修记录"
+            },
+            "effect": "local_change",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "备份上一学期的维修记录",
+              "description": "备份上一学期的维修记录。",
+              "completionCriteria": [],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [],
+              "timePointTempIds": [],
+              "confidence": 0.95,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": []
+            },
+            "coverage": {
+              "time": "not_stated",
+              "material": "not_stated",
+              "event": "not_stated"
+            },
+            "eventTempIds": []
+          }
+        ],
+        "materials": [],
+        "timePoints": [],
+        "events": [],
+        "revisions": [],
+        "conflicts": [],
+        "informationScopeIds": [
+          "scope-0003-c66f426a6392ded2fe47e87f782b6a6b588995209d7e17d50edeee636011c289"
+        ],
+        "unresolvedScopeIds": [],
+        "sourceId": "opensource-dev-OS03",
+        "sourceVersionId": "opensource-dev-OS03:1",
+        "sourceFingerprint": "sha256:64ca354ea5734eed3f075f08ebd2636afe509e261216de3d6dbbc1664d4e5ded"
+      },
+      "waitingMs": 5188,
+      "usage": {
+        "input_tokens": 4226,
+        "input_tokens_details": {
+          "cached_tokens": 3840
+        },
+        "output_tokens": 907,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5133
+      },
+      "costUpperMicroCny": 15708,
+      "responseSha": "94662c13fb0f20f4f02bd75dfd282c6a7ff39d41faf530aeb4e52e8adee7ee6d",
+      "score": {
+        "id": "OS03",
+        "checks": [
+          {
+            "name": "expected-task-count",
+            "group": "task",
+            "pass": true,
+            "detail": "2/2"
+          },
+          {
+            "name": "task-1",
+            "group": "task",
+            "pass": true,
+            "detail": "编写+设备说明:1"
+          },
+          {
+            "name": "task-2",
+            "group": "task",
+            "pass": true,
+            "detail": "备份+维修记录:1"
+          },
+          {
+            "name": "no-unexpected-task",
+            "group": "task",
+            "pass": true,
+            "detail": "2/2"
+          },
+          {
+            "name": "independent-actions",
+            "group": "dependency",
+            "pass": true,
+            "detail": "zero-dependencies"
+          }
+        ],
+        "passed": 5,
+        "total": 5,
+        "complete": true,
+        "taskFacts": {
+          "expected": 2,
+          "predicted": 2,
+          "matched": 2,
+          "unexpected": 0
+        }
+      }
+    },
+    {
+      "id": "OS03",
+      "unitId": "K03-B",
+      "arm": "B",
+      "armName": "candidate10-contrastive",
+      "assembled": {
+        "schemaVersion": "mainline04-task-semantics-1",
+        "tasks": [
+          {
+            "id": "task-write-equipment-instructions",
+            "propositionScopeIds": [
+              "scope-0001-d75a02b6dc27f411a7cb56bc24b0e0c376f9052aa0e2121b1ead2c78373aad9a",
+              "scope-0003-c66f426a6392ded2fe47e87f782b6a6b588995209d7e17d50edeee636011c289"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "prepare",
+            "action": {
+              "scopeId": "scope-0001-d75a02b6dc27f411a7cb56bc24b0e0c376f9052aa0e2121b1ead2c78373aad9a",
+              "surface": "编写"
+            },
+            "object": {
+              "scopeId": "scope-0001-d75a02b6dc27f411a7cb56bc24b0e0c376f9052aa0e2121b1ead2c78373aad9a",
+              "surface": "设备说明"
+            },
+            "effect": "local_change",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "编写设备说明",
+              "description": "编写设备说明。",
+              "completionCriteria": [
+                "设备说明已编写完成"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [],
+              "timePointTempIds": [],
+              "confidence": 0.95,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": []
+            },
+            "coverage": {
+              "time": "not_stated",
+              "material": "not_stated",
+              "event": "not_stated"
+            },
+            "eventTempIds": []
+          },
+          {
+            "id": "task-backup-maintenance-records",
+            "propositionScopeIds": [
+              "scope-0002-319860cb538e2b0b0e126e0b13d63dff47b9ff43a26505ae400499939c548841",
+              "scope-0003-c66f426a6392ded2fe47e87f782b6a6b588995209d7e17d50edeee636011c289"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "save",
+            "action": {
+              "scopeId": "scope-0002-319860cb538e2b0b0e126e0b13d63dff47b9ff43a26505ae400499939c548841",
+              "surface": "备份"
+            },
+            "object": {
+              "scopeId": "scope-0002-319860cb538e2b0b0e126e0b13d63dff47b9ff43a26505ae400499939c548841",
+              "surface": "上一学期的维修记录"
+            },
+            "effect": "local_change",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "备份上一学期的维修记录",
+              "description": "备份上一学期的维修记录。",
+              "completionCriteria": [
+                "上一学期的维修记录已备份"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [],
+              "timePointTempIds": [],
+              "confidence": 0.95,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": []
+            },
+            "coverage": {
+              "time": "not_stated",
+              "material": "not_stated",
+              "event": "not_stated"
+            },
+            "eventTempIds": []
+          }
+        ],
+        "materials": [],
+        "timePoints": [],
+        "events": [],
+        "revisions": [],
+        "conflicts": [],
+        "informationScopeIds": [
+          "scope-0003-c66f426a6392ded2fe47e87f782b6a6b588995209d7e17d50edeee636011c289"
+        ],
+        "unresolvedScopeIds": [],
+        "sourceId": "opensource-dev-OS03",
+        "sourceVersionId": "opensource-dev-OS03:1",
+        "sourceFingerprint": "sha256:64ca354ea5734eed3f075f08ebd2636afe509e261216de3d6dbbc1664d4e5ded"
+      },
+      "waitingMs": 5448,
+      "usage": {
+        "input_tokens": 5096,
+        "input_tokens_details": {
+          "cached_tokens": 4736
+        },
+        "output_tokens": 916,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6012
+      },
+      "costUpperMicroCny": 17520,
+      "responseSha": "e5bf12bab5aae6b77df0ace7d4eb185fff97aecad29ab477b9bef9ce80da5570",
+      "score": {
+        "id": "OS03",
+        "checks": [
+          {
+            "name": "expected-task-count",
+            "group": "task",
+            "pass": true,
+            "detail": "2/2"
+          },
+          {
+            "name": "task-1",
+            "group": "task",
+            "pass": true,
+            "detail": "编写+设备说明:1"
+          },
+          {
+            "name": "task-2",
+            "group": "task",
+            "pass": true,
+            "detail": "备份+维修记录:1"
+          },
+          {
+            "name": "no-unexpected-task",
+            "group": "task",
+            "pass": true,
+            "detail": "2/2"
+          },
+          {
+            "name": "independent-actions",
+            "group": "dependency",
+            "pass": true,
+            "detail": "zero-dependencies"
+          }
+        ],
+        "passed": 5,
+        "total": 5,
+        "complete": true,
+        "taskFacts": {
+          "expected": 2,
+          "predicted": 2,
+          "matched": 2,
+          "unexpected": 0
+        }
+      }
+    },
+    {
+      "id": "OS04",
+      "unitId": "K04-A",
+      "arm": "A",
+      "armName": "candidate03-baseline",
+      "assembled": {
+        "schemaVersion": "mainline04-task-semantics-1",
+        "tasks": [
+          {
+            "id": "task-verify-data-authorization",
+            "propositionScopeIds": [
+              "scope-0001-52785886bac0d82376f86fa2b79aeba91b48f509d07383b834d1758f9a66deba"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "review",
+            "action": {
+              "scopeId": "scope-0001-52785886bac0d82376f86fa2b79aeba91b48f509d07383b834d1758f9a66deba",
+              "surface": "核验"
+            },
+            "object": {
+              "scopeId": "scope-0001-52785886bac0d82376f86fa2b79aeba91b48f509d07383b834d1758f9a66deba",
+              "surface": "数据授权书"
+            },
+            "effect": "local_change",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "核验数据授权书",
+              "description": "核验数据授权书。",
+              "completionCriteria": [
+                "数据授权书核验完成"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [],
+              "timePointTempIds": [],
+              "confidence": 0.9,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": []
+            },
+            "coverage": {
+              "time": "not_stated",
+              "material": "not_stated",
+              "event": "not_stated"
+            },
+            "eventTempIds": []
+          },
+          {
+            "id": "task-publish-survey-summary",
+            "propositionScopeIds": [
+              "scope-0002-c798385e500f8c1854e0d18ca08e306de3808e95363bcf1bfbe86736a0cf7806",
+              "scope-0003-36e275a390d63fb2025da2ec2876079443bf926c01c133c1157ac773dfd93a37"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "other",
+            "action": {
+              "scopeId": "scope-0002-c798385e500f8c1854e0d18ca08e306de3808e95363bcf1bfbe86736a0cf7806",
+              "surface": "公开"
+            },
+            "object": {
+              "scopeId": "scope-0002-c798385e500f8c1854e0d18ca08e306de3808e95363bcf1bfbe86736a0cf7806",
+              "surface": "调查摘要"
+            },
+            "effect": "external_transfer",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "公开调查摘要",
+              "description": "只有核验通过后才能公开调查摘要，目前核验结果未知。",
+              "completionCriteria": [
+                "调查摘要已公开"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [
+                "task-verify-data-authorization"
+              ],
+              "materialTempIds": [],
+              "timePointTempIds": [],
+              "confidence": 0.9,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "unknown",
+              "conditionScopeIds": [
+                "scope-0002-c798385e500f8c1854e0d18ca08e306de3808e95363bcf1bfbe86736a0cf7806"
+              ],
+              "factScopeIds": [
+                "scope-0003-36e275a390d63fb2025da2ec2876079443bf926c01c133c1157ac773dfd93a37"
+              ]
+            },
+            "coverage": {
+              "time": "not_stated",
+              "material": "not_stated",
+              "event": "not_stated"
+            },
+            "eventTempIds": []
+          }
+        ],
+        "materials": [],
+        "timePoints": [],
+        "events": [],
+        "revisions": [],
+        "conflicts": [],
+        "informationScopeIds": [],
+        "unresolvedScopeIds": [],
+        "sourceId": "opensource-dev-OS04",
+        "sourceVersionId": "opensource-dev-OS04:1",
+        "sourceFingerprint": "sha256:32040e9b5fe25c63d2f2e321ddc327d4ee4e0cddd8c211774a87ff67493cd026"
+      },
+      "waitingMs": 5207,
+      "usage": {
+        "input_tokens": 4225,
+        "input_tokens_details": {
+          "cached_tokens": 3840
+        },
+        "output_tokens": 914,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5139
+      },
+      "costUpperMicroCny": 15762,
+      "responseSha": "cfec4a248df0c81d065d10681602bfba76879e0fc7cf6c4ce1aed52d3f13dfda",
+      "score": {
+        "id": "OS04",
+        "checks": [
+          {
+            "name": "expected-task-count",
+            "group": "task",
+            "pass": true,
+            "detail": "2/2"
+          },
+          {
+            "name": "task-1",
+            "group": "task",
+            "pass": true,
+            "detail": "核验+数据授权书:1"
+          },
+          {
+            "name": "task-2",
+            "group": "task",
+            "pass": true,
+            "detail": "公开+调查摘要:1"
+          },
+          {
+            "name": "no-unexpected-task",
+            "group": "task",
+            "pass": true,
+            "detail": "2/2"
+          },
+          {
+            "name": "unknown-condition",
+            "group": "condition",
+            "pass": true,
+            "detail": "unknown"
+          },
+          {
+            "name": "verification-not-completed",
+            "group": "condition",
+            "pass": true,
+            "detail": "pending"
+          }
+        ],
+        "passed": 6,
+        "total": 6,
+        "complete": true,
+        "taskFacts": {
+          "expected": 2,
+          "predicted": 2,
+          "matched": 2,
+          "unexpected": 0
+        }
+      }
+    },
+    {
+      "id": "OS04",
+      "unitId": "K04-B",
+      "arm": "B",
+      "armName": "candidate10-contrastive",
+      "assembled": {
+        "schemaVersion": "mainline04-task-semantics-1",
+        "tasks": [
+          {
+            "id": "task-verify-authorization",
+            "propositionScopeIds": [
+              "scope-0001-52785886bac0d82376f86fa2b79aeba91b48f509d07383b834d1758f9a66deba"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "review",
+            "action": {
+              "scopeId": "scope-0001-52785886bac0d82376f86fa2b79aeba91b48f509d07383b834d1758f9a66deba",
+              "surface": "核验"
+            },
+            "object": {
+              "scopeId": "scope-0001-52785886bac0d82376f86fa2b79aeba91b48f509d07383b834d1758f9a66deba",
+              "surface": "数据授权书"
+            },
+            "effect": "local_change",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "核验数据授权书",
+              "description": "核验数据授权书。",
+              "completionCriteria": [
+                "数据授权书核验通过"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [],
+              "timePointTempIds": [],
+              "confidence": 0.95,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": []
+            },
+            "coverage": {
+              "time": "not_stated",
+              "material": "not_stated",
+              "event": "not_stated"
+            },
+            "eventTempIds": []
+          },
+          {
+            "id": "task-publish-survey-summary",
+            "propositionScopeIds": [
+              "scope-0002-c798385e500f8c1854e0d18ca08e306de3808e95363bcf1bfbe86736a0cf7806",
+              "scope-0003-36e275a390d63fb2025da2ec2876079443bf926c01c133c1157ac773dfd93a37"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "other",
+            "action": {
+              "scopeId": "scope-0002-c798385e500f8c1854e0d18ca08e306de3808e95363bcf1bfbe86736a0cf7806",
+              "surface": "公开"
+            },
+            "object": {
+              "scopeId": "scope-0002-c798385e500f8c1854e0d18ca08e306de3808e95363bcf1bfbe86736a0cf7806",
+              "surface": "调查摘要"
+            },
+            "effect": "external_transfer",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "公开调查摘要",
+              "description": "只有核验通过后才能公开调查摘要，目前核验结果未知。",
+              "completionCriteria": [
+                "调查摘要已公开"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [
+                "task-verify-authorization"
+              ],
+              "materialTempIds": [],
+              "timePointTempIds": [],
+              "confidence": 0.9,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "unknown",
+              "conditionScopeIds": [
+                "scope-0002-c798385e500f8c1854e0d18ca08e306de3808e95363bcf1bfbe86736a0cf7806"
+              ],
+              "factScopeIds": [
+                "scope-0003-36e275a390d63fb2025da2ec2876079443bf926c01c133c1157ac773dfd93a37"
+              ]
+            },
+            "coverage": {
+              "time": "not_stated",
+              "material": "not_stated",
+              "event": "not_stated"
+            },
+            "eventTempIds": []
+          }
+        ],
+        "materials": [],
+        "timePoints": [],
+        "events": [],
+        "revisions": [],
+        "conflicts": [],
+        "informationScopeIds": [],
+        "unresolvedScopeIds": [],
+        "sourceId": "opensource-dev-OS04",
+        "sourceVersionId": "opensource-dev-OS04:1",
+        "sourceFingerprint": "sha256:32040e9b5fe25c63d2f2e321ddc327d4ee4e0cddd8c211774a87ff67493cd026"
+      },
+      "waitingMs": 5166,
+      "usage": {
+        "input_tokens": 5095,
+        "input_tokens_details": {
+          "cached_tokens": 4736
+        },
+        "output_tokens": 912,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6007
+      },
+      "costUpperMicroCny": 17486,
+      "responseSha": "c48326535c8ec9ba3497912d9277914ebead4178c8f666103b47f6ae567fab6f",
+      "score": {
+        "id": "OS04",
+        "checks": [
+          {
+            "name": "expected-task-count",
+            "group": "task",
+            "pass": true,
+            "detail": "2/2"
+          },
+          {
+            "name": "task-1",
+            "group": "task",
+            "pass": true,
+            "detail": "核验+数据授权书:1"
+          },
+          {
+            "name": "task-2",
+            "group": "task",
+            "pass": true,
+            "detail": "公开+调查摘要:1"
+          },
+          {
+            "name": "no-unexpected-task",
+            "group": "task",
+            "pass": true,
+            "detail": "2/2"
+          },
+          {
+            "name": "unknown-condition",
+            "group": "condition",
+            "pass": true,
+            "detail": "unknown"
+          },
+          {
+            "name": "verification-not-completed",
+            "group": "condition",
+            "pass": true,
+            "detail": "pending"
+          }
+        ],
+        "passed": 6,
+        "total": 6,
+        "complete": true,
+        "taskFacts": {
+          "expected": 2,
+          "predicted": 2,
+          "matched": 2,
+          "unexpected": 0
+        }
+      }
+    },
+    {
+      "id": "OS05",
+      "unitId": "K05-A",
+      "arm": "A",
+      "armName": "candidate03-baseline",
+      "assembled": {
+        "schemaVersion": "mainline04-task-semantics-1",
+        "tasks": [
+          {
+            "id": "task-0001",
+            "propositionScopeIds": [
+              "scope-0001-94183281fc1354c1f15c80476ef6af557a2300648e6ae7cfbb831d8804990b0b",
+              "scope-0002-7fc3e953ac53851de511e02cf0b82afd1105deba457f3b3ab42652ca957e0746"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "collect",
+            "action": {
+              "scopeId": "scope-0001-94183281fc1354c1f15c80476ef6af557a2300648e6ae7cfbb831d8804990b0b",
+              "surface": "领取"
+            },
+            "object": {
+              "scopeId": "scope-0001-94183281fc1354c1f15c80476ef6af557a2300648e6ae7cfbb831d8804990b0b",
+              "surface": "实验钥匙"
+            },
+            "effect": "external_transfer",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "领取实验钥匙",
+              "description": "仅在机房安全检查通过后领取实验钥匙。检查结果尚未公布。",
+              "completionCriteria": [
+                "在机房安全检查通过后领取实验钥匙"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [],
+              "timePointTempIds": [],
+              "confidence": 0.9,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "unknown",
+              "conditionScopeIds": [
+                "scope-0001-94183281fc1354c1f15c80476ef6af557a2300648e6ae7cfbb831d8804990b0b"
+              ],
+              "factScopeIds": [
+                "scope-0002-7fc3e953ac53851de511e02cf0b82afd1105deba457f3b3ab42652ca957e0746"
+              ]
+            },
+            "coverage": {
+              "time": "not_stated",
+              "material": "not_stated",
+              "event": "not_stated"
+            },
+            "eventTempIds": []
+          }
+        ],
+        "materials": [],
+        "timePoints": [],
+        "events": [],
+        "revisions": [],
+        "conflicts": [],
+        "informationScopeIds": [
+          "scope-0002-7fc3e953ac53851de511e02cf0b82afd1105deba457f3b3ab42652ca957e0746"
+        ],
+        "unresolvedScopeIds": [],
+        "sourceId": "opensource-dev-OS05",
+        "sourceVersionId": "opensource-dev-OS05:1",
+        "sourceFingerprint": "sha256:1fbc3eb4f26e33d6406722ccc42ca3b4d896cae3ff678036d42e8fe186fcb146"
+      },
+      "waitingMs": 4122,
+      "usage": {
+        "input_tokens": 4165,
+        "input_tokens_details": {
+          "cached_tokens": 3840
+        },
+        "output_tokens": 586,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 4751
+      },
+      "costUpperMicroCny": 13018,
+      "responseSha": "8a91983dc0c0a655fe48ec44dca75670416802e510419667b7561aff276005e3",
+      "score": {
+        "id": "OS05",
+        "checks": [
+          {
+            "name": "expected-task-count",
+            "group": "task",
+            "pass": true,
+            "detail": "1/1"
+          },
+          {
+            "name": "task-1",
+            "group": "task",
+            "pass": true,
+            "detail": "领取+实验钥匙:1"
+          },
+          {
+            "name": "no-unexpected-task",
+            "group": "task",
+            "pass": true,
+            "detail": "1/1"
+          },
+          {
+            "name": "unknown-condition",
+            "group": "condition",
+            "pass": true,
+            "detail": "unknown"
+          }
+        ],
+        "passed": 4,
+        "total": 4,
+        "complete": true,
+        "taskFacts": {
+          "expected": 1,
+          "predicted": 1,
+          "matched": 1,
+          "unexpected": 0
+        }
+      }
+    },
+    {
+      "id": "OS05",
+      "unitId": "K05-B",
+      "arm": "B",
+      "armName": "candidate10-contrastive",
+      "assembled": {
+        "schemaVersion": "mainline04-task-semantics-1",
+        "tasks": [
+          {
+            "id": "task-claim-key",
+            "propositionScopeIds": [
+              "scope-0001-94183281fc1354c1f15c80476ef6af557a2300648e6ae7cfbb831d8804990b0b",
+              "scope-0002-7fc3e953ac53851de511e02cf0b82afd1105deba457f3b3ab42652ca957e0746"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "collect",
+            "action": {
+              "scopeId": "scope-0001-94183281fc1354c1f15c80476ef6af557a2300648e6ae7cfbb831d8804990b0b",
+              "surface": "领取"
+            },
+            "object": {
+              "scopeId": "scope-0001-94183281fc1354c1f15c80476ef6af557a2300648e6ae7cfbb831d8804990b0b",
+              "surface": "实验钥匙"
+            },
+            "effect": "external_transfer",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "领取实验钥匙",
+              "description": "仅在机房安全检查通过后领取实验钥匙；检查结果尚未公布。",
+              "completionCriteria": [
+                "实验钥匙已领取"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [],
+              "timePointTempIds": [],
+              "confidence": 0.9,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "unknown",
+              "conditionScopeIds": [
+                "scope-0001-94183281fc1354c1f15c80476ef6af557a2300648e6ae7cfbb831d8804990b0b"
+              ],
+              "factScopeIds": [
+                "scope-0002-7fc3e953ac53851de511e02cf0b82afd1105deba457f3b3ab42652ca957e0746"
+              ]
+            },
+            "coverage": {
+              "time": "not_stated",
+              "material": "not_stated",
+              "event": "not_stated"
+            },
+            "eventTempIds": []
+          }
+        ],
+        "materials": [],
+        "timePoints": [],
+        "events": [],
+        "revisions": [],
+        "conflicts": [],
+        "informationScopeIds": [],
+        "unresolvedScopeIds": [],
+        "sourceId": "opensource-dev-OS05",
+        "sourceVersionId": "opensource-dev-OS05:1",
+        "sourceFingerprint": "sha256:1fbc3eb4f26e33d6406722ccc42ca3b4d896cae3ff678036d42e8fe186fcb146"
+      },
+      "waitingMs": 4347,
+      "usage": {
+        "input_tokens": 5035,
+        "input_tokens_details": {
+          "cached_tokens": 4736
+        },
+        "output_tokens": 541,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5576
+      },
+      "costUpperMicroCny": 14398,
+      "responseSha": "c2de30e46e6a48a801973c5c586298243f9a83b37dac3f78678b5999741a9e8a",
+      "score": {
+        "id": "OS05",
+        "checks": [
+          {
+            "name": "expected-task-count",
+            "group": "task",
+            "pass": true,
+            "detail": "1/1"
+          },
+          {
+            "name": "task-1",
+            "group": "task",
+            "pass": true,
+            "detail": "领取+实验钥匙:1"
+          },
+          {
+            "name": "no-unexpected-task",
+            "group": "task",
+            "pass": true,
+            "detail": "1/1"
+          },
+          {
+            "name": "unknown-condition",
+            "group": "condition",
+            "pass": true,
+            "detail": "unknown"
+          }
+        ],
+        "passed": 4,
+        "total": 4,
+        "complete": true,
+        "taskFacts": {
+          "expected": 1,
+          "predicted": 1,
+          "matched": 1,
+          "unexpected": 0
+        }
+      }
+    },
+    {
+      "id": "OS06",
+      "unitId": "K06-A",
+      "arm": "A",
+      "armName": "candidate03-baseline",
+      "assembled": {
+        "schemaVersion": "mainline04-task-semantics-1",
+        "tasks": [
+          {
+            "id": "task-0001",
+            "propositionScopeIds": [
+              "scope-0001-eab428cf980e143acc0bddd7f0a049ec622cf3f2e3023d1f65f6de9e5122d180",
+              "scope-0002-4529019630d6e43c3b357bc2a528e1f2bc346e0704e121a00a57e4f586ea5aef"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "collect",
+            "action": {
+              "scopeId": "scope-0001-eab428cf980e143acc0bddd7f0a049ec622cf3f2e3023d1f65f6de9e5122d180",
+              "surface": "领取"
+            },
+            "object": {
+              "scopeId": "scope-0001-eab428cf980e143acc0bddd7f0a049ec622cf3f2e3023d1f65f6de9e5122d180",
+              "surface": "实验钥匙"
+            },
+            "effect": "external_transfer",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "领取实验钥匙",
+              "description": "仅在机房安全检查通过后领取实验钥匙。检查结果为通过。",
+              "completionCriteria": [
+                "在机房安全检查通过后领取实验钥匙"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [],
+              "timePointTempIds": [],
+              "confidence": 0.9,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "true",
+              "conditionScopeIds": [
+                "scope-0001-eab428cf980e143acc0bddd7f0a049ec622cf3f2e3023d1f65f6de9e5122d180"
+              ],
+              "factScopeIds": [
+                "scope-0002-4529019630d6e43c3b357bc2a528e1f2bc346e0704e121a00a57e4f586ea5aef"
+              ]
+            },
+            "coverage": {
+              "time": "not_stated",
+              "material": "not_stated",
+              "event": "not_stated"
+            },
+            "eventTempIds": []
+          }
+        ],
+        "materials": [],
+        "timePoints": [],
+        "events": [],
+        "revisions": [],
+        "conflicts": [],
+        "informationScopeIds": [],
+        "unresolvedScopeIds": [],
+        "sourceId": "opensource-dev-OS06",
+        "sourceVersionId": "opensource-dev-OS06:1",
+        "sourceFingerprint": "sha256:5cd589a9aa0793497d29420147195a557558eafd5358e962464e9a5c5e17d7d4"
+      },
+      "waitingMs": 4109,
+      "usage": {
+        "input_tokens": 4169,
+        "input_tokens_details": {
+          "cached_tokens": 3840
+        },
+        "output_tokens": 560,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 4729
+      },
+      "costUpperMicroCny": 12818,
+      "responseSha": "3fb35392a31e8da54d758c57404de91a70b0fddeeaeaca83e453e34eb27427dd",
+      "score": {
+        "id": "OS06",
+        "checks": [
+          {
+            "name": "expected-task-count",
+            "group": "task",
+            "pass": true,
+            "detail": "1/1"
+          },
+          {
+            "name": "task-1",
+            "group": "task",
+            "pass": true,
+            "detail": "领取+实验钥匙:1"
+          },
+          {
+            "name": "no-unexpected-task",
+            "group": "task",
+            "pass": true,
+            "detail": "1/1"
+          },
+          {
+            "name": "true-condition",
+            "group": "condition",
+            "pass": true,
+            "detail": "true"
+          },
+          {
+            "name": "key-still-pending",
+            "group": "condition",
+            "pass": true,
+            "detail": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            }
+          }
+        ],
+        "passed": 5,
+        "total": 5,
+        "complete": true,
+        "taskFacts": {
+          "expected": 1,
+          "predicted": 1,
+          "matched": 1,
+          "unexpected": 0
+        }
+      }
+    },
+    {
+      "id": "OS06",
+      "unitId": "K06-B",
+      "arm": "B",
+      "armName": "candidate10-contrastive",
+      "assembled": {
+        "schemaVersion": "mainline04-task-semantics-1",
+        "tasks": [
+          {
+            "id": "task-0001-claim-key",
+            "propositionScopeIds": [
+              "scope-0001-eab428cf980e143acc0bddd7f0a049ec622cf3f2e3023d1f65f6de9e5122d180",
+              "scope-0002-4529019630d6e43c3b357bc2a528e1f2bc346e0704e121a00a57e4f586ea5aef"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "collect",
+            "action": {
+              "scopeId": "scope-0001-eab428cf980e143acc0bddd7f0a049ec622cf3f2e3023d1f65f6de9e5122d180",
+              "surface": "领取"
+            },
+            "object": {
+              "scopeId": "scope-0001-eab428cf980e143acc0bddd7f0a049ec622cf3f2e3023d1f65f6de9e5122d180",
+              "surface": "实验钥匙"
+            },
+            "effect": "external_transfer",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "领取实验钥匙",
+              "description": "在机房安全检查通过后领取实验钥匙。",
+              "completionCriteria": [
+                "实验钥匙已领取"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [],
+              "timePointTempIds": [],
+              "confidence": 0.9,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "true",
+              "conditionScopeIds": [
+                "scope-0001-eab428cf980e143acc0bddd7f0a049ec622cf3f2e3023d1f65f6de9e5122d180"
+              ],
+              "factScopeIds": [
+                "scope-0002-4529019630d6e43c3b357bc2a528e1f2bc346e0704e121a00a57e4f586ea5aef"
+              ]
+            },
+            "coverage": {
+              "time": "not_stated",
+              "material": "not_stated",
+              "event": "not_stated"
+            },
+            "eventTempIds": []
+          }
+        ],
+        "materials": [],
+        "timePoints": [],
+        "events": [],
+        "revisions": [],
+        "conflicts": [],
+        "informationScopeIds": [],
+        "unresolvedScopeIds": [],
+        "sourceId": "opensource-dev-OS06",
+        "sourceVersionId": "opensource-dev-OS06:1",
+        "sourceFingerprint": "sha256:5cd589a9aa0793497d29420147195a557558eafd5358e962464e9a5c5e17d7d4"
+      },
+      "waitingMs": 4073,
+      "usage": {
+        "input_tokens": 5039,
+        "input_tokens_details": {
+          "cached_tokens": 4736
+        },
+        "output_tokens": 555,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5594
+      },
+      "costUpperMicroCny": 14518,
+      "responseSha": "79dbc82f62ce27855a322ba56cb58122750af3ee1fdf54a140bc7606abf446c5",
+      "score": {
+        "id": "OS06",
+        "checks": [
+          {
+            "name": "expected-task-count",
+            "group": "task",
+            "pass": true,
+            "detail": "1/1"
+          },
+          {
+            "name": "task-1",
+            "group": "task",
+            "pass": true,
+            "detail": "领取+实验钥匙:1"
+          },
+          {
+            "name": "no-unexpected-task",
+            "group": "task",
+            "pass": true,
+            "detail": "1/1"
+          },
+          {
+            "name": "true-condition",
+            "group": "condition",
+            "pass": true,
+            "detail": "true"
+          },
+          {
+            "name": "key-still-pending",
+            "group": "condition",
+            "pass": true,
+            "detail": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            }
+          }
+        ],
+        "passed": 5,
+        "total": 5,
+        "complete": true,
+        "taskFacts": {
+          "expected": 1,
+          "predicted": 1,
+          "matched": 1,
+          "unexpected": 0
+        }
+      }
+    },
+    {
+      "id": "OS07",
+      "unitId": "K07-A",
+      "arm": "A",
+      "armName": "candidate03-baseline",
+      "assembled": {
+        "schemaVersion": "mainline04-task-semantics-1",
+        "tasks": [
+          {
+            "id": "task-conditional-key-pickup",
+            "propositionScopeIds": [
+              "scope-0001-6955f53b9fbf6424534a13ba93c7815a1d43421b20ec222541f401ba27a91f82",
+              "scope-0002-6580b3a054e75cb6e73170c5311faff82479a156c06874f2830bd07109d03923"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "collect",
+            "action": {
+              "scopeId": "scope-0001-6955f53b9fbf6424534a13ba93c7815a1d43421b20ec222541f401ba27a91f82",
+              "surface": "领取"
+            },
+            "object": {
+              "scopeId": "scope-0001-6955f53b9fbf6424534a13ba93c7815a1d43421b20ec222541f401ba27a91f82",
+              "surface": "实验钥匙"
+            },
+            "effect": "physical_action",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "领取实验钥匙",
+              "description": "仅在机房安全检查通过后领取实验钥匙。",
+              "completionCriteria": [
+                "在机房安全检查通过后领取实验钥匙"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [],
+              "timePointTempIds": [],
+              "confidence": 0.9,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "false",
+              "conditionScopeIds": [
+                "scope-0001-6955f53b9fbf6424534a13ba93c7815a1d43421b20ec222541f401ba27a91f82"
+              ],
+              "factScopeIds": [
+                "scope-0002-6580b3a054e75cb6e73170c5311faff82479a156c06874f2830bd07109d03923"
+              ]
+            },
+            "coverage": {
+              "time": "not_stated",
+              "material": "not_stated",
+              "event": "not_stated"
+            },
+            "eventTempIds": []
+          },
+          {
+            "id": "task-do-not-pickup",
+            "propositionScopeIds": [
+              "scope-0002-6580b3a054e75cb6e73170c5311faff82479a156c06874f2830bd07109d03923",
+              "scope-0003-b17b1f7546d71f572c805be19bcc98511716ca41b8f8c3774248e61163d6db3d"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "negative",
+              "tense": "present",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "collect",
+            "action": {
+              "scopeId": "scope-0003-b17b1f7546d71f572c805be19bcc98511716ca41b8f8c3774248e61163d6db3d",
+              "surface": "领取"
+            },
+            "object": {
+              "scopeId": "scope-0001-6955f53b9fbf6424534a13ba93c7815a1d43421b20ec222541f401ba27a91f82",
+              "surface": "实验钥匙"
+            },
+            "effect": "physical_action",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "不领取实验钥匙",
+              "description": "本次检查未通过，请勿领取。",
+              "completionCriteria": [
+                "本次检查未通过期间不领取实验钥匙"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "high",
+              "dependencyTempIds": [],
+              "materialTempIds": [],
+              "timePointTempIds": [],
+              "confidence": 0.9,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": []
+            },
+            "coverage": {
+              "time": "not_stated",
+              "material": "not_stated",
+              "event": "not_stated"
+            },
+            "eventTempIds": []
+          }
+        ],
+        "materials": [],
+        "timePoints": [],
+        "events": [],
+        "revisions": [],
+        "conflicts": [],
+        "informationScopeIds": [],
+        "unresolvedScopeIds": [],
+        "sourceId": "opensource-dev-OS07",
+        "sourceVersionId": "opensource-dev-OS07:1",
+        "sourceFingerprint": "sha256:8cab7a8612da826bf01686d9f4076fd11075b9f4f2f4c3d9d4885ba0af5cebb5"
+      },
+      "waitingMs": 5315,
+      "usage": {
+        "input_tokens": 4221,
+        "input_tokens_details": {
+          "cached_tokens": 3840
+        },
+        "output_tokens": 956,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5177
+      },
+      "costUpperMicroCny": 16090,
+      "responseSha": "13d8662da0cb4966ef902eb37a31b9f9b7cd928502a2564b21849a18a75900da",
+      "score": {
+        "id": "OS07",
+        "checks": [
+          {
+            "name": "expected-task-count",
+            "group": "task",
+            "pass": false,
+            "detail": "2/1"
+          },
+          {
+            "name": "task-1",
+            "group": "task",
+            "pass": false,
+            "detail": "领取+实验钥匙:2"
+          },
+          {
+            "name": "no-unexpected-task",
+            "group": "task",
+            "pass": true,
+            "detail": "2/2"
+          },
+          {
+            "name": "false-condition",
+            "group": "condition",
+            "pass": true,
+            "detail": "false"
+          },
+          {
+            "name": "not-actionable",
+            "group": "condition",
+            "pass": false,
+            "detail": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            }
+          }
+        ],
+        "passed": 2,
+        "total": 5,
+        "complete": false,
+        "taskFacts": {
+          "expected": 1,
+          "predicted": 2,
+          "matched": 0,
+          "unexpected": 0
+        }
+      }
+    },
+    {
+      "id": "OS07",
+      "unitId": "K07-B",
+      "arm": "B",
+      "armName": "candidate10-contrastive",
+      "assembled": {
+        "schemaVersion": "mainline04-task-semantics-1",
+        "tasks": [
+          {
+            "id": "task-0001",
+            "propositionScopeIds": [
+              "scope-0001-6955f53b9fbf6424534a13ba93c7815a1d43421b20ec222541f401ba27a91f82",
+              "scope-0002-6580b3a054e75cb6e73170c5311faff82479a156c06874f2830bd07109d03923",
+              "scope-0003-b17b1f7546d71f572c805be19bcc98511716ca41b8f8c3774248e61163d6db3d"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "negative",
+              "tense": "future",
+              "status": "cancelled",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "collect",
+            "action": {
+              "scopeId": "scope-0001-6955f53b9fbf6424534a13ba93c7815a1d43421b20ec222541f401ba27a91f82",
+              "surface": "领取"
+            },
+            "object": {
+              "scopeId": "scope-0001-6955f53b9fbf6424534a13ba93c7815a1d43421b20ec222541f401ba27a91f82",
+              "surface": "实验钥匙"
+            },
+            "effect": "external_transfer",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "领取实验钥匙",
+              "description": "仅在机房安全检查通过后领取实验钥匙；本次检查未通过，请勿领取。",
+              "completionCriteria": [],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [],
+              "timePointTempIds": [],
+              "confidence": 0.9,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "false",
+              "conditionScopeIds": [
+                "scope-0001-6955f53b9fbf6424534a13ba93c7815a1d43421b20ec222541f401ba27a91f82"
+              ],
+              "factScopeIds": [
+                "scope-0002-6580b3a054e75cb6e73170c5311faff82479a156c06874f2830bd07109d03923"
+              ]
+            },
+            "coverage": {
+              "time": "not_stated",
+              "material": "not_stated",
+              "event": "not_stated"
+            },
+            "eventTempIds": []
+          }
+        ],
+        "materials": [],
+        "timePoints": [],
+        "events": [],
+        "revisions": [],
+        "conflicts": [],
+        "informationScopeIds": [],
+        "unresolvedScopeIds": [],
+        "sourceId": "opensource-dev-OS07",
+        "sourceVersionId": "opensource-dev-OS07:1",
+        "sourceFingerprint": "sha256:8cab7a8612da826bf01686d9f4076fd11075b9f4f2f4c3d9d4885ba0af5cebb5"
+      },
+      "waitingMs": 4348,
+      "usage": {
+        "input_tokens": 5091,
+        "input_tokens_details": {
+          "cached_tokens": 4736
+        },
+        "output_tokens": 585,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5676
+      },
+      "costUpperMicroCny": 14862,
+      "responseSha": "a830700f418bdf83e49cac006f3652677301297055813231a0b0802b4a198bcb",
+      "score": {
+        "id": "OS07",
+        "checks": [
+          {
+            "name": "expected-task-count",
+            "group": "task",
+            "pass": true,
+            "detail": "1/1"
+          },
+          {
+            "name": "task-1",
+            "group": "task",
+            "pass": true,
+            "detail": "领取+实验钥匙:1"
+          },
+          {
+            "name": "no-unexpected-task",
+            "group": "task",
+            "pass": true,
+            "detail": "1/1"
+          },
+          {
+            "name": "false-condition",
+            "group": "condition",
+            "pass": true,
+            "detail": "false"
+          },
+          {
+            "name": "not-actionable",
+            "group": "condition",
+            "pass": true,
+            "detail": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "negative",
+              "tense": "future",
+              "status": "cancelled",
+              "validity": "active",
+              "modality": "required"
+            }
+          }
+        ],
+        "passed": 5,
+        "total": 5,
+        "complete": true,
+        "taskFacts": {
+          "expected": 1,
+          "predicted": 1,
+          "matched": 1,
+          "unexpected": 0
+        }
+      }
+    },
+    {
+      "id": "OS08",
+      "unitId": "K08-A",
+      "arm": "A",
+      "armName": "candidate03-baseline",
+      "assembled": {
+        "schemaVersion": "mainline04-task-semantics-1",
+        "tasks": [
+          {
+            "id": "task-save-receipt",
+            "propositionScopeIds": [
+              "scope-0001-e4273f0fdd25282ab17bcb075240c84bbf6d9acd4b47db82ac06252aefc7caff",
+              "scope-0002-604a0e8dd3594b6198d673cad5d351d60ea15c80e4232bff46683cbb68540470"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "save",
+            "action": {
+              "scopeId": "scope-0001-e4273f0fdd25282ab17bcb075240c84bbf6d9acd4b47db82ac06252aefc7caff",
+              "surface": "保存"
+            },
+            "object": {
+              "scopeId": "scope-0001-e4273f0fdd25282ab17bcb075240c84bbf6d9acd4b47db82ac06252aefc7caff",
+              "surface": "已签收的借用凭证"
+            },
+            "effect": "local_change",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "保存已签收的借用凭证",
+              "description": "保存已签收的借用凭证，保存时保持编号不变。",
+              "completionCriteria": [
+                "已签收的借用凭证被保存",
+                "保存时编号保持不变"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [
+                "material-borrow-receipt"
+              ],
+              "timePointTempIds": [],
+              "confidence": 0.9,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": []
+            },
+            "coverage": {
+              "time": "not_stated",
+              "material": "present",
+              "event": "not_stated"
+            },
+            "eventTempIds": []
+          },
+          {
+            "id": "task-return-receipt",
+            "propositionScopeIds": [
+              "scope-0003-84f949ded562d920f6a3b5ae562e9d55157b97335ded96ce6675edbbcf57bcd2",
+              "scope-0004-52efca00b2d9f9e8942b676c2abbf684130e88d9083b3922213e6ed6989ff9d3"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "negative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "other",
+            "action": {
+              "scopeId": "scope-0003-84f949ded562d920f6a3b5ae562e9d55157b97335ded96ce6675edbbcf57bcd2",
+              "surface": "交回"
+            },
+            "object": {
+              "scopeId": "scope-0003-84f949ded562d920f6a3b5ae562e9d55157b97335ded96ce6675edbbcf57bcd2",
+              "surface": "凭证"
+            },
+            "effect": "external_transfer",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "交回凭证",
+              "description": "无需今天交回凭证，交回日期待通知。",
+              "completionCriteria": [
+                "按待通知的交回日期交回凭证"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "low",
+              "dependencyTempIds": [],
+              "materialTempIds": [
+                "material-borrow-receipt"
+              ],
+              "timePointTempIds": [
+                "time-today",
+                "time-return-tbd"
+              ],
+              "confidence": 0.85,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": []
+            },
+            "coverage": {
+              "time": "present",
+              "material": "present",
+              "event": "not_stated"
+            },
+            "eventTempIds": []
+          }
+        ],
+        "materials": [
+          {
+            "tempId": "material-borrow-receipt",
+            "name": "已签收的借用凭证",
+            "required": true,
+            "formatRequirements": [],
+            "namingRequirements": [
+              "保持编号不变"
+            ],
+            "quantity": null,
+            "submissionChannel": null,
+            "relatedTaskTempIds": [
+              "task-save-receipt",
+              "task-return-receipt"
+            ],
+            "scopeIds": [
+              "scope-0001-e4273f0fdd25282ab17bcb075240c84bbf6d9acd4b47db82ac06252aefc7caff",
+              "scope-0002-604a0e8dd3594b6198d673cad5d351d60ea15c80e4232bff46683cbb68540470"
+            ],
+            "confidence": 0.9
+          }
+        ],
+        "timePoints": [
+          {
+            "tempId": "time-today",
+            "type": "task_deadline",
+            "rawText": "今天",
+            "relatedTaskTempIds": [
+              "task-return-receipt"
+            ],
+            "relatedMaterialTempIds": [],
+            "scopeIds": [
+              "scope-0003-84f949ded562d920f6a3b5ae562e9d55157b97335ded96ce6675edbbcf57bcd2"
+            ],
+            "confidence": 0.8,
+            "normalizedValue": "2026-09-20",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": true,
+            "precision": "date_only",
+            "needsConfirmation": false
+          },
+          {
+            "tempId": "time-return-tbd",
+            "type": "task_deadline",
+            "rawText": "交回日期待通知",
+            "relatedTaskTempIds": [
+              "task-return-receipt"
+            ],
+            "relatedMaterialTempIds": [],
+            "scopeIds": [
+              "scope-0004-52efca00b2d9f9e8942b676c2abbf684130e88d9083b3922213e6ed6989ff9d3"
+            ],
+            "confidence": 0.8,
+            "normalizedValue": null,
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "vague",
+            "needsConfirmation": true
+          }
+        ],
+        "events": [],
+        "revisions": [],
+        "conflicts": [],
+        "informationScopeIds": [],
+        "unresolvedScopeIds": [],
+        "sourceId": "opensource-dev-OS08",
+        "sourceVersionId": "opensource-dev-OS08:1",
+        "sourceFingerprint": "sha256:3663186c5abc0acbfc6da7b56d2901c9b461ce8991e96c95493e7a0c5cfc898a"
+      },
+      "waitingMs": 6279,
+      "usage": {
+        "input_tokens": 4290,
+        "input_tokens_details": {
+          "cached_tokens": 3840
+        },
+        "output_tokens": 1277,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5567
+      },
+      "costUpperMicroCny": 18796,
+      "responseSha": "10bdca278cbcb984c8cb1f61b692081de899fb28fd5b7fc05a065b85ca89a6bf",
+      "score": {
+        "id": "OS08",
+        "checks": [
+          {
+            "name": "expected-task-count",
+            "group": "task",
+            "pass": false,
+            "detail": "2/1"
+          },
+          {
+            "name": "task-1",
+            "group": "task",
+            "pass": true,
+            "detail": "保存+借用凭证:1"
+          },
+          {
+            "name": "no-unexpected-task",
+            "group": "task",
+            "pass": false,
+            "detail": "1/2"
+          },
+          {
+            "name": "no-save-deadline",
+            "group": "time",
+            "pass": true,
+            "detail": []
+          },
+          {
+            "name": "no-negated-today-date",
+            "group": "time",
+            "pass": false,
+            "detail": [
+              "今天",
+              "交回日期待通知"
+            ]
+          }
+        ],
+        "passed": 2,
+        "total": 5,
+        "complete": false,
+        "taskFacts": {
+          "expected": 1,
+          "predicted": 2,
+          "matched": 1,
+          "unexpected": 1
+        }
+      }
+    },
+    {
+      "id": "OS08",
+      "unitId": "K08-B",
+      "arm": "B",
+      "armName": "candidate10-contrastive",
+      "assembled": {
+        "schemaVersion": "mainline04-task-semantics-1",
+        "tasks": [
+          {
+            "id": "task-save-voucher",
+            "propositionScopeIds": [
+              "scope-0001-e4273f0fdd25282ab17bcb075240c84bbf6d9acd4b47db82ac06252aefc7caff",
+              "scope-0002-604a0e8dd3594b6198d673cad5d351d60ea15c80e4232bff46683cbb68540470"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "save",
+            "action": {
+              "scopeId": "scope-0001-e4273f0fdd25282ab17bcb075240c84bbf6d9acd4b47db82ac06252aefc7caff",
+              "surface": "保存"
+            },
+            "object": {
+              "scopeId": "scope-0001-e4273f0fdd25282ab17bcb075240c84bbf6d9acd4b47db82ac06252aefc7caff",
+              "surface": "已签收的借用凭证"
+            },
+            "effect": "local_change",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "保存已签收的借用凭证",
+              "description": "保存已签收的借用凭证，保存时保持编号不变。",
+              "completionCriteria": [
+                "已签收的借用凭证被保存",
+                "保存时编号保持不变"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [],
+              "timePointTempIds": [],
+              "confidence": 0.9,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": []
+            },
+            "coverage": {
+              "time": "not_stated",
+              "material": "not_stated",
+              "event": "not_stated"
+            },
+            "eventTempIds": []
+          }
+        ],
+        "materials": [],
+        "timePoints": [
+          {
+            "tempId": "tp-return-date-tbd",
+            "type": "task_deadline",
+            "rawText": "交回日期待通知",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "scopeIds": [
+              "scope-0004-52efca00b2d9f9e8942b676c2abbf684130e88d9083b3922213e6ed6989ff9d3"
+            ],
+            "confidence": 0.6,
+            "normalizedValue": null,
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "vague",
+            "needsConfirmation": true
+          }
+        ],
+        "events": [],
+        "revisions": [],
+        "conflicts": [],
+        "informationScopeIds": [
+          "scope-0003-84f949ded562d920f6a3b5ae562e9d55157b97335ded96ce6675edbbcf57bcd2"
+        ],
+        "unresolvedScopeIds": [
+          "scope-0004-52efca00b2d9f9e8942b676c2abbf684130e88d9083b3922213e6ed6989ff9d3"
+        ],
+        "sourceId": "opensource-dev-OS08",
+        "sourceVersionId": "opensource-dev-OS08:1",
+        "sourceFingerprint": "sha256:3663186c5abc0acbfc6da7b56d2901c9b461ce8991e96c95493e7a0c5cfc898a"
+      },
+      "waitingMs": 4311,
+      "usage": {
+        "input_tokens": 5160,
+        "input_tokens_details": {
+          "cached_tokens": 4736
+        },
+        "output_tokens": 667,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5827
+      },
+      "costUpperMicroCny": 15656,
+      "responseSha": "8dddaecbc501ce5fca63ea4cdd7fded01149241729eb58faf0ee7727c80c7a96",
+      "score": {
+        "id": "OS08",
+        "checks": [
+          {
+            "name": "expected-task-count",
+            "group": "task",
+            "pass": true,
+            "detail": "1/1"
+          },
+          {
+            "name": "task-1",
+            "group": "task",
+            "pass": true,
+            "detail": "保存+借用凭证:1"
+          },
+          {
+            "name": "no-unexpected-task",
+            "group": "task",
+            "pass": true,
+            "detail": "1/1"
+          },
+          {
+            "name": "no-save-deadline",
+            "group": "time",
+            "pass": true,
+            "detail": []
+          },
+          {
+            "name": "no-negated-today-date",
+            "group": "time",
+            "pass": true,
+            "detail": [
+              "交回日期待通知"
+            ]
+          }
+        ],
+        "passed": 5,
+        "total": 5,
+        "complete": true,
+        "taskFacts": {
+          "expected": 1,
+          "predicted": 1,
+          "matched": 1,
+          "unexpected": 0
+        }
+      }
+    },
+    {
+      "id": "OS09",
+      "unitId": "K09-A",
+      "arm": "A",
+      "armName": "candidate03-baseline",
+      "assembled": {
+        "schemaVersion": "mainline04-task-semantics-1",
+        "tasks": [
+          {
+            "id": "task-return-borrowing-voucher",
+            "propositionScopeIds": [
+              "scope-0001-14f3bbfc83db9d94066d12a9b23cb1908bc3f021df90fb5549a314a1359d8bae",
+              "scope-0002-b61619e27a83c8b508bdf6cb535577e09d31c7bff3367c726306211c2a5e5695"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "submit",
+            "action": {
+              "scopeId": "scope-0001-14f3bbfc83db9d94066d12a9b23cb1908bc3f021df90fb5549a314a1359d8bae",
+              "surface": "交回"
+            },
+            "object": {
+              "scopeId": "scope-0001-14f3bbfc83db9d94066d12a9b23cb1908bc3f021df90fb5549a314a1359d8bae",
+              "surface": "借用凭证"
+            },
+            "effect": "external_transfer",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "交回借用凭证",
+              "description": "在10月12日上午十点前交回借用凭证，编号保持不变。",
+              "completionCriteria": [
+                "借用凭证已交回",
+                "编号保持不变"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [
+                "material-borrowing-voucher"
+              ],
+              "timePointTempIds": [
+                "time-1012-1000"
+              ],
+              "confidence": 0.95,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": []
+            },
+            "coverage": {
+              "time": "present",
+              "material": "present",
+              "event": "not_stated"
+            },
+            "eventTempIds": []
+          }
+        ],
+        "materials": [
+          {
+            "tempId": "material-borrowing-voucher",
+            "name": "借用凭证",
+            "required": true,
+            "formatRequirements": [],
+            "namingRequirements": [
+              "编号保持不变"
+            ],
+            "quantity": null,
+            "submissionChannel": null,
+            "relatedTaskTempIds": [
+              "task-return-borrowing-voucher"
+            ],
+            "scopeIds": [
+              "scope-0001-14f3bbfc83db9d94066d12a9b23cb1908bc3f021df90fb5549a314a1359d8bae",
+              "scope-0002-b61619e27a83c8b508bdf6cb535577e09d31c7bff3367c726306211c2a5e5695"
+            ],
+            "confidence": 0.95
+          }
+        ],
+        "timePoints": [
+          {
+            "tempId": "time-1012-1000",
+            "type": "submission_deadline",
+            "rawText": "10月12日上午十点前",
+            "relatedTaskTempIds": [
+              "task-return-borrowing-voucher"
+            ],
+            "relatedMaterialTempIds": [],
+            "scopeIds": [
+              "scope-0001-14f3bbfc83db9d94066d12a9b23cb1908bc3f021df90fb5549a314a1359d8bae"
+            ],
+            "confidence": 0.95,
+            "normalizedValue": "2026-10-12T10:00",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false
+          }
+        ],
+        "events": [],
+        "revisions": [],
+        "conflicts": [],
+        "informationScopeIds": [],
+        "unresolvedScopeIds": [],
+        "sourceId": "opensource-dev-OS09",
+        "sourceVersionId": "opensource-dev-OS09:1",
+        "sourceFingerprint": "sha256:7b2dbff0478e993def44876b6140d87b1313373aa053491ed95b8deab8b8e5d8"
+      },
+      "waitingMs": 5329,
+      "usage": {
+        "input_tokens": 4174,
+        "input_tokens_details": {
+          "cached_tokens": 3840
+        },
+        "output_tokens": 761,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 4935
+      },
+      "costUpperMicroCny": 14436,
+      "responseSha": "954444c7c4ba427df694c3cf726340a940b97fbb553f1eab538a0044da5156af",
+      "score": {
+        "id": "OS09",
+        "checks": [
+          {
+            "name": "expected-task-count",
+            "group": "task",
+            "pass": true,
+            "detail": "1/1"
+          },
+          {
+            "name": "task-1",
+            "group": "task",
+            "pass": true,
+            "detail": "交回+借用凭证:1"
+          },
+          {
+            "name": "no-unexpected-task",
+            "group": "task",
+            "pass": true,
+            "detail": "1/1"
+          },
+          {
+            "name": "explicit-deadline-linked",
+            "group": "time",
+            "pass": true,
+            "detail": {
+              "tempId": "time-1012-1000",
+              "type": "submission_deadline",
+              "rawText": "10月12日上午十点前",
+              "relatedTaskTempIds": [
+                "task-return-borrowing-voucher"
+              ],
+              "relatedMaterialTempIds": [],
+              "scopeIds": [
+                "scope-0001-14f3bbfc83db9d94066d12a9b23cb1908bc3f021df90fb5549a314a1359d8bae"
+              ],
+              "confidence": 0.95,
+              "normalizedValue": "2026-10-12T10:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false
+            }
+          }
+        ],
+        "passed": 4,
+        "total": 4,
+        "complete": true,
+        "taskFacts": {
+          "expected": 1,
+          "predicted": 1,
+          "matched": 1,
+          "unexpected": 0
+        }
+      }
+    },
+    {
+      "id": "OS09",
+      "unitId": "K09-B",
+      "arm": "B",
+      "armName": "candidate10-contrastive",
+      "assembled": {
+        "schemaVersion": "mainline04-task-semantics-1",
+        "tasks": [
+          {
+            "id": "task-return-borrowing-voucher",
+            "propositionScopeIds": [
+              "scope-0001-14f3bbfc83db9d94066d12a9b23cb1908bc3f021df90fb5549a314a1359d8bae",
+              "scope-0002-b61619e27a83c8b508bdf6cb535577e09d31c7bff3367c726306211c2a5e5695"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "submit",
+            "action": {
+              "scopeId": "scope-0001-14f3bbfc83db9d94066d12a9b23cb1908bc3f021df90fb5549a314a1359d8bae",
+              "surface": "交回"
+            },
+            "object": {
+              "scopeId": "scope-0001-14f3bbfc83db9d94066d12a9b23cb1908bc3f021df90fb5549a314a1359d8bae",
+              "surface": "借用凭证"
+            },
+            "effect": "external_transfer",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "交回借用凭证",
+              "description": "在10月12日上午十点前交回借用凭证，编号保持不变。",
+              "completionCriteria": [
+                "借用凭证已交回",
+                "编号保持不变"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [],
+              "timePointTempIds": [
+                "time-deadline-1012-1000"
+              ],
+              "confidence": 0.95,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": []
+            },
+            "coverage": {
+              "time": "present",
+              "material": "not_stated",
+              "event": "not_stated"
+            },
+            "eventTempIds": []
+          }
+        ],
+        "materials": [],
+        "timePoints": [
+          {
+            "tempId": "time-deadline-1012-1000",
+            "type": "submission_deadline",
+            "rawText": "10月12日上午十点前",
+            "relatedTaskTempIds": [
+              "task-return-borrowing-voucher"
+            ],
+            "relatedMaterialTempIds": [],
+            "scopeIds": [
+              "scope-0001-14f3bbfc83db9d94066d12a9b23cb1908bc3f021df90fb5549a314a1359d8bae"
+            ],
+            "confidence": 0.95,
+            "normalizedValue": "2026-10-12T10:00",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false
+          }
+        ],
+        "events": [],
+        "revisions": [],
+        "conflicts": [],
+        "informationScopeIds": [],
+        "unresolvedScopeIds": [],
+        "sourceId": "opensource-dev-OS09",
+        "sourceVersionId": "opensource-dev-OS09:1",
+        "sourceFingerprint": "sha256:7b2dbff0478e993def44876b6140d87b1313373aa053491ed95b8deab8b8e5d8"
+      },
+      "waitingMs": 4002,
+      "usage": {
+        "input_tokens": 5044,
+        "input_tokens_details": {
+          "cached_tokens": 4736
+        },
+        "output_tokens": 605,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5649
+      },
+      "costUpperMicroCny": 14928,
+      "responseSha": "56a77e1d9e8efb32e871ec0fc4d10086b076f0b17cb9bdd95962190b3a04dd7d",
+      "score": {
+        "id": "OS09",
+        "checks": [
+          {
+            "name": "expected-task-count",
+            "group": "task",
+            "pass": true,
+            "detail": "1/1"
+          },
+          {
+            "name": "task-1",
+            "group": "task",
+            "pass": true,
+            "detail": "交回+借用凭证:1"
+          },
+          {
+            "name": "no-unexpected-task",
+            "group": "task",
+            "pass": true,
+            "detail": "1/1"
+          },
+          {
+            "name": "explicit-deadline-linked",
+            "group": "time",
+            "pass": true,
+            "detail": {
+              "tempId": "time-deadline-1012-1000",
+              "type": "submission_deadline",
+              "rawText": "10月12日上午十点前",
+              "relatedTaskTempIds": [
+                "task-return-borrowing-voucher"
+              ],
+              "relatedMaterialTempIds": [],
+              "scopeIds": [
+                "scope-0001-14f3bbfc83db9d94066d12a9b23cb1908bc3f021df90fb5549a314a1359d8bae"
+              ],
+              "confidence": 0.95,
+              "normalizedValue": "2026-10-12T10:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false
+            }
+          }
+        ],
+        "passed": 4,
+        "total": 4,
+        "complete": true,
+        "taskFacts": {
+          "expected": 1,
+          "predicted": 1,
+          "matched": 1,
+          "unexpected": 0
+        }
+      }
+    },
+    {
+      "id": "OS10",
+      "unitId": "K10-A",
+      "arm": "A",
+      "armName": "candidate03-baseline",
+      "assembled": {
+        "schemaVersion": "mainline04-task-semantics-1",
+        "tasks": [
+          {
+            "id": "task-cancel-mail-paper",
+            "propositionScopeIds": [
+              "scope-0001-5f0edc0a4842d5651aca928226db815f866989c97c29ba2693dd5b6bf4a8ce26",
+              "scope-0003-48bfdc08fe8b2e6103e6bd9983b7b0bed7a44a767d1303fc1e45825759678dbf"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "negative",
+              "tense": "past",
+              "status": "cancelled",
+              "validity": "superseded",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "send",
+            "action": {
+              "scopeId": "scope-0001-5f0edc0a4842d5651aca928226db815f866989c97c29ba2693dd5b6bf4a8ce26",
+              "surface": "邮寄"
+            },
+            "object": {
+              "scopeId": "scope-0001-5f0edc0a4842d5651aca928226db815f866989c97c29ba2693dd5b6bf4a8ce26",
+              "surface": "纸质调查册"
+            },
+            "effect": "external_transfer",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "邮寄纸质调查册",
+              "description": "原定邮寄纸质调查册的要求已取消，不再寄纸质材料。",
+              "completionCriteria": [],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [],
+              "timePointTempIds": [],
+              "confidence": 0.95,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": []
+            },
+            "coverage": {
+              "time": "not_stated",
+              "material": "present",
+              "event": "not_stated"
+            },
+            "eventTempIds": []
+          },
+          {
+            "id": "task-upload-electronic",
+            "propositionScopeIds": [
+              "scope-0002-bfe79d7236a68aecb433a15ef5df6341bd99ce301ebd40eb2d4933fa34cde784"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "present",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "upload",
+            "action": {
+              "scopeId": "scope-0002-bfe79d7236a68aecb433a15ef5df6341bd99ce301ebd40eb2d4933fa34cde784",
+              "surface": "上传"
+            },
+            "object": {
+              "scopeId": "scope-0002-bfe79d7236a68aecb433a15ef5df6341bd99ce301ebd40eb2d4933fa34cde784",
+              "surface": "电子调查册"
+            },
+            "effect": "external_transfer",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "上传电子调查册",
+              "description": "现在改为上传电子调查册。",
+              "completionCriteria": [],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [
+                "mat-electronic-survey"
+              ],
+              "timePointTempIds": [],
+              "confidence": 0.95,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": []
+            },
+            "coverage": {
+              "time": "not_stated",
+              "material": "present",
+              "event": "not_stated"
+            },
+            "eventTempIds": []
+          }
+        ],
+        "materials": [
+          {
+            "tempId": "mat-electronic-survey",
+            "name": "电子调查册",
+            "required": true,
+            "formatRequirements": [],
+            "namingRequirements": [],
+            "quantity": null,
+            "submissionChannel": "上传",
+            "relatedTaskTempIds": [
+              "task-upload-electronic"
+            ],
+            "scopeIds": [
+              "scope-0002-bfe79d7236a68aecb433a15ef5df6341bd99ce301ebd40eb2d4933fa34cde784"
+            ],
+            "confidence": 0.9
+          }
+        ],
+        "timePoints": [],
+        "events": [],
+        "revisions": [
+          {
+            "type": "supersedes",
+            "targetDirectiveId": "task-cancel-mail-paper",
+            "scopeIds": [
+              "scope-0001-5f0edc0a4842d5651aca928226db815f866989c97c29ba2693dd5b6bf4a8ce26",
+              "scope-0002-bfe79d7236a68aecb433a15ef5df6341bd99ce301ebd40eb2d4933fa34cde784",
+              "scope-0003-48bfdc08fe8b2e6103e6bd9983b7b0bed7a44a767d1303fc1e45825759678dbf"
+            ],
+            "fromDirectiveId": "task-upload-electronic",
+            "effective": "unknown"
+          }
+        ],
+        "conflicts": [],
+        "informationScopeIds": [],
+        "unresolvedScopeIds": [],
+        "sourceId": "opensource-dev-OS10",
+        "sourceVersionId": "opensource-dev-OS10:1",
+        "sourceFingerprint": "sha256:3693893ab38ee782fa0147467c3a67b03332ec354bf2ca8e52ed683460d25787"
+      },
+      "waitingMs": 5915,
+      "usage": {
+        "input_tokens": 4230,
+        "input_tokens_details": {
+          "cached_tokens": 3840
+        },
+        "output_tokens": 1104,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5334
+      },
+      "costUpperMicroCny": 17292,
+      "responseSha": "81ac6198d846054060edf3a626721f13d2700caa6810bfa0e4db4334de3a2810",
+      "score": {
+        "id": "OS10",
+        "checks": [
+          {
+            "name": "expected-task-count",
+            "group": "task",
+            "pass": true,
+            "detail": "2/2"
+          },
+          {
+            "name": "task-1",
+            "group": "task",
+            "pass": true,
+            "detail": "邮寄+调查册:1"
+          },
+          {
+            "name": "task-2",
+            "group": "task",
+            "pass": true,
+            "detail": "上传+调查册:1"
+          },
+          {
+            "name": "no-unexpected-task",
+            "group": "task",
+            "pass": true,
+            "detail": "2/2"
+          },
+          {
+            "name": "old-requirement-inactive",
+            "group": "revision",
+            "pass": true,
+            "detail": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "negative",
+              "tense": "past",
+              "status": "cancelled",
+              "validity": "superseded",
+              "modality": "required"
+            }
+          },
+          {
+            "name": "replacement-active",
+            "group": "revision",
+            "pass": true,
+            "detail": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "present",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            }
+          },
+          {
+            "name": "revision-edge-kept",
+            "group": "revision",
+            "pass": true,
+            "detail": [
+              {
+                "type": "supersedes",
+                "targetDirectiveId": "task-cancel-mail-paper",
+                "scopeIds": [
+                  "scope-0001-5f0edc0a4842d5651aca928226db815f866989c97c29ba2693dd5b6bf4a8ce26",
+                  "scope-0002-bfe79d7236a68aecb433a15ef5df6341bd99ce301ebd40eb2d4933fa34cde784",
+                  "scope-0003-48bfdc08fe8b2e6103e6bd9983b7b0bed7a44a767d1303fc1e45825759678dbf"
+                ],
+                "fromDirectiveId": "task-upload-electronic",
+                "effective": "unknown"
+              }
+            ]
+          }
+        ],
+        "passed": 7,
+        "total": 7,
+        "complete": true,
+        "taskFacts": {
+          "expected": 2,
+          "predicted": 2,
+          "matched": 2,
+          "unexpected": 0
+        }
+      }
+    },
+    {
+      "id": "OS10",
+      "unitId": "K10-B",
+      "arm": "B",
+      "armName": "candidate10-contrastive",
+      "assembled": {
+        "schemaVersion": "mainline04-task-semantics-1",
+        "tasks": [
+          {
+            "id": "task-upload-electronic-survey",
+            "propositionScopeIds": [
+              "scope-0002-bfe79d7236a68aecb433a15ef5df6341bd99ce301ebd40eb2d4933fa34cde784",
+              "scope-0003-48bfdc08fe8b2e6103e6bd9983b7b0bed7a44a767d1303fc1e45825759678dbf"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "upload",
+            "action": {
+              "scopeId": "scope-0002-bfe79d7236a68aecb433a15ef5df6341bd99ce301ebd40eb2d4933fa34cde784",
+              "surface": "上传"
+            },
+            "object": {
+              "scopeId": "scope-0002-bfe79d7236a68aecb433a15ef5df6341bd99ce301ebd40eb2d4933fa34cde784",
+              "surface": "电子调查册"
+            },
+            "effect": "external_transfer",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "上传电子调查册",
+              "description": "现在改为上传电子调查册，不再寄纸质材料。",
+              "completionCriteria": [
+                "电子调查册已上传"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [
+                "material-electronic-survey"
+              ],
+              "timePointTempIds": [],
+              "confidence": 0.9,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": []
+            },
+            "coverage": {
+              "time": "not_stated",
+              "material": "present",
+              "event": "not_stated"
+            },
+            "eventTempIds": []
+          },
+          {
+            "id": "task-mail-paper-survey-cancelled",
+            "propositionScopeIds": [
+              "scope-0001-5f0edc0a4842d5651aca928226db815f866989c97c29ba2693dd5b6bf4a8ce26",
+              "scope-0003-48bfdc08fe8b2e6103e6bd9983b7b0bed7a44a767d1303fc1e45825759678dbf"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "negative",
+              "tense": "past",
+              "status": "cancelled",
+              "validity": "superseded",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "send",
+            "action": {
+              "scopeId": "scope-0001-5f0edc0a4842d5651aca928226db815f866989c97c29ba2693dd5b6bf4a8ce26",
+              "surface": "邮寄"
+            },
+            "object": {
+              "scopeId": "scope-0001-5f0edc0a4842d5651aca928226db815f866989c97c29ba2693dd5b6bf4a8ce26",
+              "surface": "纸质调查册"
+            },
+            "effect": "external_transfer",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "邮寄纸质调查册",
+              "description": "原定邮寄纸质调查册的要求取消。不再寄纸质材料。",
+              "completionCriteria": [],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "low",
+              "dependencyTempIds": [],
+              "materialTempIds": [
+                "material-paper-survey"
+              ],
+              "timePointTempIds": [],
+              "confidence": 0.9,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": []
+            },
+            "coverage": {
+              "time": "not_stated",
+              "material": "present",
+              "event": "not_stated"
+            },
+            "eventTempIds": []
+          }
+        ],
+        "materials": [
+          {
+            "tempId": "material-electronic-survey",
+            "name": "电子调查册",
+            "required": true,
+            "formatRequirements": [],
+            "namingRequirements": [],
+            "quantity": null,
+            "submissionChannel": "上传",
+            "relatedTaskTempIds": [
+              "task-upload-electronic-survey"
+            ],
+            "scopeIds": [
+              "scope-0002-bfe79d7236a68aecb433a15ef5df6341bd99ce301ebd40eb2d4933fa34cde784"
+            ],
+            "confidence": 0.9
+          },
+          {
+            "tempId": "material-paper-survey",
+            "name": "纸质调查册",
+            "required": false,
+            "formatRequirements": [],
+            "namingRequirements": [],
+            "quantity": null,
+            "submissionChannel": "邮寄",
+            "relatedTaskTempIds": [
+              "task-mail-paper-survey-cancelled"
+            ],
+            "scopeIds": [
+              "scope-0001-5f0edc0a4842d5651aca928226db815f866989c97c29ba2693dd5b6bf4a8ce26",
+              "scope-0003-48bfdc08fe8b2e6103e6bd9983b7b0bed7a44a767d1303fc1e45825759678dbf"
+            ],
+            "confidence": 0.9
+          }
+        ],
+        "timePoints": [],
+        "events": [],
+        "revisions": [
+          {
+            "type": "supersedes",
+            "targetDirectiveId": "task-mail-paper-survey-cancelled",
+            "scopeIds": [
+              "scope-0001-5f0edc0a4842d5651aca928226db815f866989c97c29ba2693dd5b6bf4a8ce26",
+              "scope-0002-bfe79d7236a68aecb433a15ef5df6341bd99ce301ebd40eb2d4933fa34cde784",
+              "scope-0003-48bfdc08fe8b2e6103e6bd9983b7b0bed7a44a767d1303fc1e45825759678dbf"
+            ],
+            "fromDirectiveId": "task-upload-electronic-survey",
+            "effective": "true"
+          }
+        ],
+        "conflicts": [],
+        "informationScopeIds": [],
+        "unresolvedScopeIds": [],
+        "sourceId": "opensource-dev-OS10",
+        "sourceVersionId": "opensource-dev-OS10:1",
+        "sourceFingerprint": "sha256:3693893ab38ee782fa0147467c3a67b03332ec354bf2ca8e52ed683460d25787"
+      },
+      "waitingMs": 6409,
+      "usage": {
+        "input_tokens": 5100,
+        "input_tokens_details": {
+          "cached_tokens": 4736
+        },
+        "output_tokens": 1331,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6431
+      },
+      "costUpperMicroCny": 20848,
+      "responseSha": "a763c537c941062cf33573bf60202cc26145f3c94a2fe1b40d6adcab5a5d1f54",
+      "score": {
+        "id": "OS10",
+        "checks": [
+          {
+            "name": "expected-task-count",
+            "group": "task",
+            "pass": true,
+            "detail": "2/2"
+          },
+          {
+            "name": "task-1",
+            "group": "task",
+            "pass": true,
+            "detail": "邮寄+调查册:1"
+          },
+          {
+            "name": "task-2",
+            "group": "task",
+            "pass": true,
+            "detail": "上传+调查册:1"
+          },
+          {
+            "name": "no-unexpected-task",
+            "group": "task",
+            "pass": true,
+            "detail": "2/2"
+          },
+          {
+            "name": "old-requirement-inactive",
+            "group": "revision",
+            "pass": true,
+            "detail": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "negative",
+              "tense": "past",
+              "status": "cancelled",
+              "validity": "superseded",
+              "modality": "required"
+            }
+          },
+          {
+            "name": "replacement-active",
+            "group": "revision",
+            "pass": true,
+            "detail": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            }
+          },
+          {
+            "name": "revision-edge-kept",
+            "group": "revision",
+            "pass": true,
+            "detail": [
+              {
+                "type": "supersedes",
+                "targetDirectiveId": "task-mail-paper-survey-cancelled",
+                "scopeIds": [
+                  "scope-0001-5f0edc0a4842d5651aca928226db815f866989c97c29ba2693dd5b6bf4a8ce26",
+                  "scope-0002-bfe79d7236a68aecb433a15ef5df6341bd99ce301ebd40eb2d4933fa34cde784",
+                  "scope-0003-48bfdc08fe8b2e6103e6bd9983b7b0bed7a44a767d1303fc1e45825759678dbf"
+                ],
+                "fromDirectiveId": "task-upload-electronic-survey",
+                "effective": "true"
+              }
+            ]
+          }
+        ],
+        "passed": 7,
+        "total": 7,
+        "complete": true,
+        "taskFacts": {
+          "expected": 2,
+          "predicted": 2,
+          "matched": 2,
+          "unexpected": 0
+        }
+      }
+    },
+    {
+      "id": "OS11",
+      "unitId": "K11-A",
+      "arm": "A",
+      "armName": "candidate03-baseline",
+      "assembled": {
+        "schemaVersion": "mainline04-task-semantics-1",
+        "tasks": [],
+        "materials": [],
+        "timePoints": [],
+        "events": [],
+        "revisions": [],
+        "conflicts": [],
+        "informationScopeIds": [
+          "scope-0001-a5204c8084d254fa3b5bb62d98609f8f8b6e961ee588b7a732cc2fee07f382ad",
+          "scope-0002-112a997b24550c39174cab52dba9e319128a57f8c69ce9065bbc4bd0effe617d",
+          "scope-0003-5ec77f18e1737ac590c8a13f47ec227f55057aef4b79f240d5bb3d652c013a61",
+          "scope-0004-3d35f54965fa3cb0211a091ed7d2caea583e3dce798bb6122fecb65d1ae9fcdb"
+        ],
+        "unresolvedScopeIds": [],
+        "sourceId": "opensource-dev-OS11",
+        "sourceVersionId": "opensource-dev-OS11:1",
+        "sourceFingerprint": "sha256:785a8b58fb07a40f73be4ee26fee5b1e16dc4cd84168e470547d91304bb267b8"
+      },
+      "waitingMs": 4347,
+      "usage": {
+        "input_tokens": 4285,
+        "input_tokens_details": {
+          "cached_tokens": 3840
+        },
+        "output_tokens": 226,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 4511
+      },
+      "costUpperMicroCny": 10378,
+      "responseSha": "469a1401ab00200be87b2fb60ddfe5fa8d39cf7dcf913b403000077adc3a649c",
+      "score": {
+        "id": "OS11",
+        "checks": [
+          {
+            "name": "expected-task-count",
+            "group": "task",
+            "pass": true,
+            "detail": "0/0"
+          },
+          {
+            "name": "no-unexpected-task",
+            "group": "task",
+            "pass": true,
+            "detail": "0/0"
+          },
+          {
+            "name": "information-only",
+            "group": "boundary",
+            "pass": true,
+            "detail": "zero-tasks"
+          }
+        ],
+        "passed": 3,
+        "total": 3,
+        "complete": true,
+        "taskFacts": {
+          "expected": 0,
+          "predicted": 0,
+          "matched": 0,
+          "unexpected": 0
+        }
+      }
+    },
+    {
+      "id": "OS11",
+      "unitId": "K11-B",
+      "arm": "B",
+      "armName": "candidate10-contrastive",
+      "assembled": {
+        "schemaVersion": "mainline04-task-semantics-1",
+        "tasks": [],
+        "materials": [],
+        "timePoints": [],
+        "events": [],
+        "revisions": [],
+        "conflicts": [],
+        "informationScopeIds": [
+          "scope-0001-a5204c8084d254fa3b5bb62d98609f8f8b6e961ee588b7a732cc2fee07f382ad",
+          "scope-0002-112a997b24550c39174cab52dba9e319128a57f8c69ce9065bbc4bd0effe617d",
+          "scope-0003-5ec77f18e1737ac590c8a13f47ec227f55057aef4b79f240d5bb3d652c013a61",
+          "scope-0004-3d35f54965fa3cb0211a091ed7d2caea583e3dce798bb6122fecb65d1ae9fcdb"
+        ],
+        "unresolvedScopeIds": [],
+        "sourceId": "opensource-dev-OS11",
+        "sourceVersionId": "opensource-dev-OS11:1",
+        "sourceFingerprint": "sha256:785a8b58fb07a40f73be4ee26fee5b1e16dc4cd84168e470547d91304bb267b8"
+      },
+      "waitingMs": 2905,
+      "usage": {
+        "input_tokens": 5155,
+        "input_tokens_details": {
+          "cached_tokens": 4736
+        },
+        "output_tokens": 226,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5381
+      },
+      "costUpperMicroCny": 12118,
+      "responseSha": "e1838efd2b4bd98cf2c7316e36b07f0b9678042d1fec0068377f64c45987a8bd",
+      "score": {
+        "id": "OS11",
+        "checks": [
+          {
+            "name": "expected-task-count",
+            "group": "task",
+            "pass": true,
+            "detail": "0/0"
+          },
+          {
+            "name": "no-unexpected-task",
+            "group": "task",
+            "pass": true,
+            "detail": "0/0"
+          },
+          {
+            "name": "information-only",
+            "group": "boundary",
+            "pass": true,
+            "detail": "zero-tasks"
+          }
+        ],
+        "passed": 3,
+        "total": 3,
+        "complete": true,
+        "taskFacts": {
+          "expected": 0,
+          "predicted": 0,
+          "matched": 0,
+          "unexpected": 0
+        }
+      }
+    },
+    {
+      "id": "OS12",
+      "unitId": "K12-A",
+      "arm": "A",
+      "armName": "candidate03-baseline",
+      "assembled": {
+        "schemaVersion": "mainline04-task-semantics-1",
+        "tasks": [
+          {
+            "id": "task-submit-recording",
+            "propositionScopeIds": [
+              "scope-0001-3bd872c5f129af4d91467ad55d7da78e8694e55dc7f5d7bcfbe5137d3fa97774",
+              "scope-0003-4efa34745055e193a491a798bc4ce95373b6b84d6db341e38c5c4dada7e3e959",
+              "scope-0004-ddaaa576cdac369060b47e633d832819d5e97bcfe06c61a3d3bc0dd90c1dd971"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "submit",
+            "action": {
+              "scopeId": "scope-0001-3bd872c5f129af4d91467ad55d7da78e8694e55dc7f5d7bcfbe5137d3fa97774",
+              "surface": "提交"
+            },
+            "object": {
+              "scopeId": "scope-0001-3bd872c5f129af4d91467ad55d7da78e8694e55dc7f5d7bcfbe5137d3fa97774",
+              "surface": "录播视频"
+            },
+            "effect": "external_transfer",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "提交录播视频",
+              "description": "于10月9日提交录播视频，并附同一份授权证明。",
+              "completionCriteria": [
+                "录播视频已提交",
+                "已附同一份授权证明"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [
+                "material-authorization-proof"
+              ],
+              "timePointTempIds": [
+                "time-recording-deadline"
+              ],
+              "confidence": 0.95,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": []
+            },
+            "coverage": {
+              "time": "present",
+              "material": "present",
+              "event": "not_stated"
+            },
+            "eventTempIds": []
+          },
+          {
+            "id": "task-submit-text-summary",
+            "propositionScopeIds": [
+              "scope-0002-c641501a357e42d0980ef5be16f676e78e614d3ab8764114e19c9ef93b412ea7",
+              "scope-0003-4efa34745055e193a491a798bc4ce95373b6b84d6db341e38c5c4dada7e3e959",
+              "scope-0004-ddaaa576cdac369060b47e633d832819d5e97bcfe06c61a3d3bc0dd90c1dd971"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "submit",
+            "action": {
+              "scopeId": "scope-0002-c641501a357e42d0980ef5be16f676e78e614d3ab8764114e19c9ef93b412ea7",
+              "surface": "提交"
+            },
+            "object": {
+              "scopeId": "scope-0002-c641501a357e42d0980ef5be16f676e78e614d3ab8764114e19c9ef93b412ea7",
+              "surface": "文字摘要"
+            },
+            "effect": "external_transfer",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "提交文字摘要",
+              "description": "于10月11日提交文字摘要，并附同一份授权证明。",
+              "completionCriteria": [
+                "文字摘要已提交",
+                "已附同一份授权证明"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [
+                "material-authorization-proof"
+              ],
+              "timePointTempIds": [
+                "time-summary-deadline"
+              ],
+              "confidence": 0.95,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": []
+            },
+            "coverage": {
+              "time": "present",
+              "material": "present",
+              "event": "not_stated"
+            },
+            "eventTempIds": []
+          }
+        ],
+        "materials": [
+          {
+            "tempId": "material-authorization-proof",
+            "name": "授权证明",
+            "required": true,
+            "formatRequirements": [],
+            "namingRequirements": [],
+            "quantity": 1,
+            "submissionChannel": null,
+            "relatedTaskTempIds": [
+              "task-submit-recording",
+              "task-submit-text-summary"
+            ],
+            "scopeIds": [
+              "scope-0003-4efa34745055e193a491a798bc4ce95373b6b84d6db341e38c5c4dada7e3e959"
+            ],
+            "confidence": 0.95
+          }
+        ],
+        "timePoints": [
+          {
+            "tempId": "time-recording-deadline",
+            "type": "submission_deadline",
+            "rawText": "10月9日",
+            "relatedTaskTempIds": [
+              "task-submit-recording"
+            ],
+            "relatedMaterialTempIds": [],
+            "scopeIds": [
+              "scope-0001-3bd872c5f129af4d91467ad55d7da78e8694e55dc7f5d7bcfbe5137d3fa97774"
+            ],
+            "confidence": 0.95,
+            "normalizedValue": "2026-10-09",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": true,
+            "precision": "date_only",
+            "needsConfirmation": false
+          },
+          {
+            "tempId": "time-summary-deadline",
+            "type": "submission_deadline",
+            "rawText": "10月11日",
+            "relatedTaskTempIds": [
+              "task-submit-text-summary"
+            ],
+            "relatedMaterialTempIds": [],
+            "scopeIds": [
+              "scope-0002-c641501a357e42d0980ef5be16f676e78e614d3ab8764114e19c9ef93b412ea7"
+            ],
+            "confidence": 0.95,
+            "normalizedValue": "2026-10-11",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": true,
+            "precision": "date_only",
+            "needsConfirmation": false
+          }
+        ],
+        "events": [],
+        "revisions": [],
+        "conflicts": [],
+        "informationScopeIds": [
+          "scope-0004-ddaaa576cdac369060b47e633d832819d5e97bcfe06c61a3d3bc0dd90c1dd971"
+        ],
+        "unresolvedScopeIds": [],
+        "sourceId": "opensource-dev-OS12",
+        "sourceVersionId": "opensource-dev-OS12:1",
+        "sourceFingerprint": "sha256:3fdd2efb82a9f26108dd2333e04f3a57fdf64339f4c45f9dc7743d5686f74226"
+      },
+      "waitingMs": 6149,
+      "usage": {
+        "input_tokens": 4305,
+        "input_tokens_details": {
+          "cached_tokens": 3840
+        },
+        "output_tokens": 1363,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5668
+      },
+      "costUpperMicroCny": 19514,
+      "responseSha": "3acf4589010d7c018faa40e18acdbe7205074fea12d1fdffd2fdc12e830f3e0b",
+      "score": {
+        "id": "OS12",
+        "checks": [
+          {
+            "name": "expected-task-count",
+            "group": "task",
+            "pass": true,
+            "detail": "2/2"
+          },
+          {
+            "name": "task-1",
+            "group": "task",
+            "pass": true,
+            "detail": "提交+录播视频:1"
+          },
+          {
+            "name": "task-2",
+            "group": "task",
+            "pass": true,
+            "detail": "提交+文字摘要:1"
+          },
+          {
+            "name": "no-unexpected-task",
+            "group": "task",
+            "pass": true,
+            "detail": "2/2"
+          },
+          {
+            "name": "shared-material",
+            "group": "material",
+            "pass": true,
+            "detail": [
+              "task-submit-recording",
+              "task-submit-text-summary"
+            ]
+          },
+          {
+            "name": "separate-deadlines",
+            "group": "time",
+            "pass": true,
+            "detail": [
+              "time-recording-deadline",
+              "time-summary-deadline"
+            ]
+          }
+        ],
+        "passed": 6,
+        "total": 6,
+        "complete": true,
+        "taskFacts": {
+          "expected": 2,
+          "predicted": 2,
+          "matched": 2,
+          "unexpected": 0
+        }
+      }
+    },
+    {
+      "id": "OS12",
+      "unitId": "K12-B",
+      "arm": "B",
+      "armName": "candidate10-contrastive",
+      "assembled": {
+        "schemaVersion": "mainline04-task-semantics-1",
+        "tasks": [
+          {
+            "id": "task-submit-recording",
+            "propositionScopeIds": [
+              "scope-0001-3bd872c5f129af4d91467ad55d7da78e8694e55dc7f5d7bcfbe5137d3fa97774",
+              "scope-0003-4efa34745055e193a491a798bc4ce95373b6b84d6db341e38c5c4dada7e3e959",
+              "scope-0004-ddaaa576cdac369060b47e633d832819d5e97bcfe06c61a3d3bc0dd90c1dd971"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "submit",
+            "action": {
+              "scopeId": "scope-0001-3bd872c5f129af4d91467ad55d7da78e8694e55dc7f5d7bcfbe5137d3fa97774",
+              "surface": "提交"
+            },
+            "object": {
+              "scopeId": "scope-0001-3bd872c5f129af4d91467ad55d7da78e8694e55dc7f5d7bcfbe5137d3fa97774",
+              "surface": "录播视频"
+            },
+            "effect": "external_transfer",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "提交录播视频",
+              "description": "于10月9日提交录播视频，并附同一份授权证明。",
+              "completionCriteria": [
+                "录播视频已提交",
+                "已附同一份授权证明"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [
+                "mat-authorization-proof"
+              ],
+              "timePointTempIds": [
+                "tp-submit-recording-deadline"
+              ],
+              "confidence": 0.95,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": []
+            },
+            "coverage": {
+              "time": "present",
+              "material": "present",
+              "event": "not_stated"
+            },
+            "eventTempIds": []
+          },
+          {
+            "id": "task-submit-summary",
+            "propositionScopeIds": [
+              "scope-0002-c641501a357e42d0980ef5be16f676e78e614d3ab8764114e19c9ef93b412ea7",
+              "scope-0003-4efa34745055e193a491a798bc4ce95373b6b84d6db341e38c5c4dada7e3e959",
+              "scope-0004-ddaaa576cdac369060b47e633d832819d5e97bcfe06c61a3d3bc0dd90c1dd971"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "submit",
+            "action": {
+              "scopeId": "scope-0002-c641501a357e42d0980ef5be16f676e78e614d3ab8764114e19c9ef93b412ea7",
+              "surface": "提交"
+            },
+            "object": {
+              "scopeId": "scope-0002-c641501a357e42d0980ef5be16f676e78e614d3ab8764114e19c9ef93b412ea7",
+              "surface": "文字摘要"
+            },
+            "effect": "external_transfer",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "提交文字摘要",
+              "description": "于10月11日提交文字摘要，并附同一份授权证明。",
+              "completionCriteria": [
+                "文字摘要已提交",
+                "已附同一份授权证明"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [
+                "mat-authorization-proof"
+              ],
+              "timePointTempIds": [
+                "tp-submit-summary-deadline"
+              ],
+              "confidence": 0.95,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": []
+            },
+            "coverage": {
+              "time": "present",
+              "material": "present",
+              "event": "not_stated"
+            },
+            "eventTempIds": []
+          }
+        ],
+        "materials": [
+          {
+            "tempId": "mat-authorization-proof",
+            "name": "授权证明",
+            "required": true,
+            "formatRequirements": [],
+            "namingRequirements": [],
+            "quantity": 1,
+            "submissionChannel": null,
+            "relatedTaskTempIds": [
+              "task-submit-recording",
+              "task-submit-summary"
+            ],
+            "scopeIds": [
+              "scope-0003-4efa34745055e193a491a798bc4ce95373b6b84d6db341e38c5c4dada7e3e959"
+            ],
+            "confidence": 0.95
+          }
+        ],
+        "timePoints": [
+          {
+            "tempId": "tp-submit-recording-deadline",
+            "type": "submission_deadline",
+            "rawText": "10月9日",
+            "relatedTaskTempIds": [
+              "task-submit-recording"
+            ],
+            "relatedMaterialTempIds": [],
+            "scopeIds": [
+              "scope-0001-3bd872c5f129af4d91467ad55d7da78e8694e55dc7f5d7bcfbe5137d3fa97774"
+            ],
+            "confidence": 0.95,
+            "normalizedValue": "2026-10-09",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": true,
+            "precision": "date_only",
+            "needsConfirmation": false
+          },
+          {
+            "tempId": "tp-submit-summary-deadline",
+            "type": "submission_deadline",
+            "rawText": "10月11日",
+            "relatedTaskTempIds": [
+              "task-submit-summary"
+            ],
+            "relatedMaterialTempIds": [],
+            "scopeIds": [
+              "scope-0002-c641501a357e42d0980ef5be16f676e78e614d3ab8764114e19c9ef93b412ea7"
+            ],
+            "confidence": 0.95,
+            "normalizedValue": "2026-10-11",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": true,
+            "precision": "date_only",
+            "needsConfirmation": false
+          }
+        ],
+        "events": [],
+        "revisions": [],
+        "conflicts": [],
+        "informationScopeIds": [
+          "scope-0004-ddaaa576cdac369060b47e633d832819d5e97bcfe06c61a3d3bc0dd90c1dd971"
+        ],
+        "unresolvedScopeIds": [],
+        "sourceId": "opensource-dev-OS12",
+        "sourceVersionId": "opensource-dev-OS12:1",
+        "sourceFingerprint": "sha256:3fdd2efb82a9f26108dd2333e04f3a57fdf64339f4c45f9dc7743d5686f74226"
+      },
+      "waitingMs": 6261,
+      "usage": {
+        "input_tokens": 5175,
+        "input_tokens_details": {
+          "cached_tokens": 4736
+        },
+        "output_tokens": 1368,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6543
+      },
+      "costUpperMicroCny": 21294,
+      "responseSha": "c3db3a11eedbafb5456651ea0de64c8442504ff92c7023652720df541906236b",
+      "score": {
+        "id": "OS12",
+        "checks": [
+          {
+            "name": "expected-task-count",
+            "group": "task",
+            "pass": true,
+            "detail": "2/2"
+          },
+          {
+            "name": "task-1",
+            "group": "task",
+            "pass": true,
+            "detail": "提交+录播视频:1"
+          },
+          {
+            "name": "task-2",
+            "group": "task",
+            "pass": true,
+            "detail": "提交+文字摘要:1"
+          },
+          {
+            "name": "no-unexpected-task",
+            "group": "task",
+            "pass": true,
+            "detail": "2/2"
+          },
+          {
+            "name": "shared-material",
+            "group": "material",
+            "pass": true,
+            "detail": [
+              "task-submit-recording",
+              "task-submit-summary"
+            ]
+          },
+          {
+            "name": "separate-deadlines",
+            "group": "time",
+            "pass": true,
+            "detail": [
+              "tp-submit-recording-deadline",
+              "tp-submit-summary-deadline"
+            ]
+          }
+        ],
+        "passed": 6,
+        "total": 6,
+        "complete": true,
+        "taskFacts": {
+          "expected": 2,
+          "predicted": 2,
+          "matched": 2,
+          "unexpected": 0
+        }
+      }
+    }
+  ],
+  "generatedAt": "2026-09-20T10:16:53.849Z",
+  "claimBoundary": "Development diagnostic only; does not measure real user accept-and-save conversion and cannot authorize Preview or Production."
+}

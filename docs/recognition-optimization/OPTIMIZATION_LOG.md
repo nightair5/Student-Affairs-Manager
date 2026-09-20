@@ -2292,3 +2292,16 @@
 - 模型调用0，账本及受保护文件哈希未变。候选NOT_ADOPTED，模型效果NOT_RUN，真实转化NOT_OBSERVABLE。
 - 已提出24次配对调用授权，尚未收到答复；不得自动读取凭证、派发模型或部署。
 - 审计：mainline-real-input-01/runs/opensource-methods-20260920a/AUDIT.md。
+
+### 2026-09-20 candidate03 与 candidate10 的 24 次配对开发评测
+
+- 用户明确授权 12 份匿名合成通知的 24 次 Flash none 同期配对，把累计上限从290扩至314；原累计20元硬上限、现有服务端凭证路径和无真实材料边界保持，未授权部署。
+- A/B 同模型、temperature、reasoning、Schema、正文、scope、参考时刻与本机适配，仅 candidate10 增加8个固定原创教学正反例；参照分离，6对A先/6对B先，无重试。
+- 24/24 HTTP200、解析及usage结算通过。原冻结评分器给出candidate03 10/12、candidate10 12/12、B 2胜10平0负；独立审计确认其关键词/非一对一和逐例规则有漏洞，precision/recall不作为严格任务准确率。
+- 逐例审计确认candidate03在OS07/OS08/OS10有3处参照级错误，candidate10在OS04有1处“核验完成＝核验通过”回归；审计重判A 9/12、B 11/12、B 3胜/A 1胜/8平。该重判发生在响应后，不冒充预注册指标。
+- candidate10本批费用上界0.195952元，较基线多0.012544元；两臂合计0.379360元。全账本314次/644行/644收据，累计费用权威上界14.042543元含历史未知预留，服务商实扣NOT_OBSERVABLE。
+- candidate10变化包含版本标记、3段防复制/核对元指令和8个示例，收益只能归因于完整教学包。开发集与教学例由同一实施者编写，非独立盲测；真实接受保存转化率NOT_OBSERVABLE。现版本须先修OS04、拆分消融并加严评分，再进入独立未见Holdout；不接Preview/Production，不替换当前正式路径。
+- 评测基础设施专门4项和历史预算/网关124项通过；类型、lint、构建、安全扫描通过。旧RCO-5-007冻结哈希失败继续保留。
+- 发送前两次本地绑定错误均在预留和网络前失败并重新冻结；一次测试误建孤立收据已精确清理，原595行账本前缀SHA保持。原始失败不计模型样本。
+- 同系列模型独立只读审计A PASS/B FAIL/C PASS/D FAIL/E FAIL/F PASS，总体严格审计FAIL；账本结果闭合，但官方分析不可长期幂等重放、K失败分支未专门验证、exampleVersion未贯通。
+- 证据：mainline-real-input-01/runs/opensource-methods-20260920a/AUDIT.md、MODEL_COMPARISON.json、AUDITED_COMPARISON.json 与 EXPERIMENT_AUDIT.md。

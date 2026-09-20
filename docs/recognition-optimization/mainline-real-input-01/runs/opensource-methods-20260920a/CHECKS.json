@@ -1,48 +1,111 @@
 {
-  "stage": "OFFLINE_CANDIDATE_ONLY",
-  "overall": "CURRENT_CHECKS_PASS_WITH_RETAINED_HISTORICAL_FAILURE",
-  "modelCalls": 0,
+  "stage": "PAIRED_DEVELOPMENT_EVALUATION_COMPLETE",
+  "overall": "ENGINEERING_AND_ACCOUNTING_PASS_STRICT_EXPERIMENT_AUDIT_FAIL",
+  "modelCalls": {
+    "authorized": 24,
+    "attempted": 24,
+    "http200": 24,
+    "parsed": 24,
+    "retried": 0,
+    "cumulative": 314
+  },
+  "accounting": {
+    "ledgerRows": 644,
+    "ledgerSha256": "dc52d9cd04b809be9d22d5298bd45d0e6f0a01307017d48a91aaa91a45e8e597",
+    "receipts": 644,
+    "grantEvents": 1,
+    "reserveEvents": 24,
+    "settleEvents": 24,
+    "haltEvents": 0,
+    "batchCostUpperMicroCny": 379360,
+    "cumulativeCostUpperMicroCny": 14042543,
+    "hardLimitMicroCny": 20000000,
+    "providerBilledCny": "NOT_OBSERVABLE"
+  },
+  "artifacts": {
+    "rawFiles": 24,
+    "resultFiles": 24,
+    "uniqueResponses": 24,
+    "returnedModels": ["deepseek-flash"],
+    "hashAndBindingIntegrity": "PASS"
+  },
+  "frozenScorer": {
+    "candidate03Complete": 10,
+    "candidate10Complete": 12,
+    "candidate03Checklist": "55/61",
+    "candidate10Checklist": "61/61",
+    "status": "ARITHMETIC_REPRODUCIBLE_BUT_SEMANTICALLY_INCOMPLETE"
+  },
+  "postHocAudit": {
+    "candidate03Complete": 9,
+    "candidate10Complete": 11,
+    "candidate10Wins": 3,
+    "candidate03Wins": 1,
+    "ties": 8,
+    "candidate03Errors": ["OS07", "OS08", "OS10"],
+    "candidate10Errors": ["OS04"],
+    "preRegistered": false
+  },
+  "focusedContrastiveTests": {
+    "status": "PASS",
+    "passed": 4
+  },
+  "historicalBudgetGatewayRegression": {
+    "status": "PASS",
+    "passed": 124,
+    "durationMs": 977582.8728
+  },
+  "npmTest": {
+    "contract": "PASS",
+    "vitestInitial": {
+      "passed": 1393,
+      "failed": 1,
+      "skipped": 1,
+      "failure": "realInput01 runtime A02 test exceeded the default 5000 ms by 19 ms"
+    },
+    "targetedRetry": {
+      "status": "PASS",
+      "passed": 1,
+      "durationMs": 952,
+      "timeoutMs": 30000,
+      "assertionsChanged": false
+    },
+    "server": "8/8 PASS",
+    "worker": "25/25 PASS",
+    "timeAndEvaluationLibraries": "24/24 PASS",
+    "functions": "5/5 PASS",
+    "rco5007": {
+      "passed": 3,
+      "failed": 1,
+      "failure": "historical FREEZE_HASH_MISMATCH:package-lock.json",
+      "oldAssertionChanged": false
+    }
+  },
   "lint": {
     "status": "PASS",
     "errors": 0,
     "existingWarnings": 4
   },
   "typecheck": "PASS",
-  "contract": "PASS",
-  "focused": {
-    "status": "PASS",
-    "passed": 5
-  },
-  "vitest": {
-    "initialPassed": 1393,
-    "initialFailed": 1,
-    "initialSkipped": 1,
-    "config": "scripts/mainline-01.vitest.config.mts",
-    "initialFailure": "missing REAL_INPUT_CARRIERS_MANIFEST",
-    "targetedRetryPassed": 1,
-    "codeChangedForRetry": false
-  },
-  "node": {
-    "passed": 60,
-    "failed": 1,
-    "failure": "historical RCO-5-007 FREEZE_HASH_MISMATCH:package-lock.json",
-    "unchangedFromBaseline": true
-  },
-  "functions": {
-    "status": "PASS",
-    "passed": 5
-  },
   "build": {
     "status": "PASS",
-    "method": "tsc -b plus Vite API configFile:false/envDir:false, temporary outDir",
-    "warning": "existing chunk >500kB"
+    "warning": "existing chunk greater than 500 kB"
   },
   "security": {
     "status": "PASS",
-    "filesScanned": 2348
+    "filesScanned": 2423
   },
-  "protectedFiles": "HASHES_UNCHANGED",
-  "paidEvaluation": "NOT_RUN",
-  "liveDeployment": "NOT_RUN",
-  "userConversion": "NOT_OBSERVABLE"
+  "experimentAudit": {
+    "provisional": true,
+    "A": "PASS_DISCLOSURE_ONLY",
+    "B": "FAIL_STRICT_CAUSAL_ATTRIBUTION",
+    "C": "PASS",
+    "D": "FAIL",
+    "E": "FAIL",
+    "F": "PASS",
+    "overall": "FAIL_STRICT_EXPERIMENT_AUDIT"
+  },
+  "candidate10": "REQUIRES_FIX_BEFORE_INDEPENDENT_BLIND_EVALUATION",
+  "liveDeployment": "NOT_RUN_NOT_AUTHORIZED",
+  "realAcceptSaveConversion": "NOT_OBSERVABLE"
 }

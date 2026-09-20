@@ -1,0 +1,112 @@
+{
+  "version": "real-input-contrastive-result-1",
+  "unitId": "K06-A",
+  "sourceId": "OS06",
+  "arm": "A",
+  "armName": "candidate03-baseline",
+  "bindingSha": "ac3e13d5f67dc090d0f54bb424161a30c1422a1daf366fd03d4d6c6d877eab6d",
+  "requestSha": "7fb088768322382122d2e8d1743c6e17570abfe1230cda2c7f42cbd7211402f2",
+  "responseSha": "3fb35392a31e8da54d758c57404de91a70b0fddeeaeaca83e453e34eb27427dd",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "modelMatch": true,
+  "candidateVersion": "real-input-source-semantics-3",
+  "exampleVersion": null,
+  "scorerSha": "647dbd204ddcf6083f6a9788395f3098687aff844f90643e31e795e44c3e82bf",
+  "referenceSha": "42b1b69a1c0c5d1575e49cb1f69ee55364404108f69e14534446d5f221840567",
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-0001",
+        "propositionScopeIds": [
+          "scope-0001-eab428cf980e143acc0bddd7f0a049ec622cf3f2e3023d1f65f6de9e5122d180",
+          "scope-0002-4529019630d6e43c3b357bc2a528e1f2bc346e0704e121a00a57e4f586ea5aef"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "collect",
+        "action": {
+          "scopeId": "scope-0001-eab428cf980e143acc0bddd7f0a049ec622cf3f2e3023d1f65f6de9e5122d180",
+          "surface": "领取"
+        },
+        "object": {
+          "scopeId": "scope-0001-eab428cf980e143acc0bddd7f0a049ec622cf3f2e3023d1f65f6de9e5122d180",
+          "surface": "实验钥匙"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "领取实验钥匙",
+          "description": "仅在机房安全检查通过后领取实验钥匙。检查结果为通过。",
+          "completionCriteria": [
+            "在机房安全检查通过后领取实验钥匙"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [],
+          "timePointTempIds": [],
+          "confidence": 0.9,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "true",
+          "conditionScopeIds": [
+            "scope-0001-eab428cf980e143acc0bddd7f0a049ec622cf3f2e3023d1f65f6de9e5122d180"
+          ],
+          "factScopeIds": [
+            "scope-0002-4529019630d6e43c3b357bc2a528e1f2bc346e0704e121a00a57e4f586ea5aef"
+          ]
+        },
+        "coverage": {
+          "time": "not_stated",
+          "material": "not_stated",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [],
+    "timePoints": [],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [],
+    "unresolvedScopeIds": [],
+    "sourceId": "opensource-dev-OS06",
+    "sourceVersionId": "opensource-dev-OS06:1",
+    "sourceFingerprint": "sha256:5cd589a9aa0793497d29420147195a557558eafd5358e962464e9a5c5e17d7d4"
+  },
+  "http": 200,
+  "diagnostic": null,
+  "waitingMs": 4109,
+  "parseError": null,
+  "totalAttempts": 301,
+  "usage": {
+    "input_tokens": 4169,
+    "input_tokens_details": {
+      "cached_tokens": 3840
+    },
+    "output_tokens": 560,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 4729
+  },
+  "costUpperMicroCny": 12818,
+  "totalCostUpperMicroCny": 13831813,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticSelection": "NOT_ENABLED",
+  "qualityClaim": "12份新编匿名相近结构Development配对；单作者参照；仅固定教学正反例不同；不是盲测或真实用户转化"
+}

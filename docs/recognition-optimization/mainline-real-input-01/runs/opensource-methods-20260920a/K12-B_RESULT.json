@@ -1,0 +1,232 @@
+{
+  "version": "real-input-contrastive-result-1",
+  "unitId": "K12-B",
+  "sourceId": "OS12",
+  "arm": "B",
+  "armName": "candidate10-contrastive",
+  "bindingSha": "ac3e13d5f67dc090d0f54bb424161a30c1422a1daf366fd03d4d6c6d877eab6d",
+  "requestSha": "2e05e59f16589cbe0fe4f24df54dd2e376063d1cfb2f9ac4ceedac7ae83872a8",
+  "responseSha": "c3db3a11eedbafb5456651ea0de64c8442504ff92c7023652720df541906236b",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "modelMatch": true,
+  "candidateVersion": "real-input-source-semantics-10",
+  "exampleVersion": "contrastive-evidence-examples-1",
+  "scorerSha": "647dbd204ddcf6083f6a9788395f3098687aff844f90643e31e795e44c3e82bf",
+  "referenceSha": "42b1b69a1c0c5d1575e49cb1f69ee55364404108f69e14534446d5f221840567",
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-submit-recording",
+        "propositionScopeIds": [
+          "scope-0001-3bd872c5f129af4d91467ad55d7da78e8694e55dc7f5d7bcfbe5137d3fa97774",
+          "scope-0003-4efa34745055e193a491a798bc4ce95373b6b84d6db341e38c5c4dada7e3e959",
+          "scope-0004-ddaaa576cdac369060b47e633d832819d5e97bcfe06c61a3d3bc0dd90c1dd971"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "submit",
+        "action": {
+          "scopeId": "scope-0001-3bd872c5f129af4d91467ad55d7da78e8694e55dc7f5d7bcfbe5137d3fa97774",
+          "surface": "提交"
+        },
+        "object": {
+          "scopeId": "scope-0001-3bd872c5f129af4d91467ad55d7da78e8694e55dc7f5d7bcfbe5137d3fa97774",
+          "surface": "录播视频"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "提交录播视频",
+          "description": "于10月9日提交录播视频，并附同一份授权证明。",
+          "completionCriteria": [
+            "录播视频已提交",
+            "已附同一份授权证明"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [
+            "mat-authorization-proof"
+          ],
+          "timePointTempIds": [
+            "tp-submit-recording-deadline"
+          ],
+          "confidence": 0.95,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      },
+      {
+        "id": "task-submit-summary",
+        "propositionScopeIds": [
+          "scope-0002-c641501a357e42d0980ef5be16f676e78e614d3ab8764114e19c9ef93b412ea7",
+          "scope-0003-4efa34745055e193a491a798bc4ce95373b6b84d6db341e38c5c4dada7e3e959",
+          "scope-0004-ddaaa576cdac369060b47e633d832819d5e97bcfe06c61a3d3bc0dd90c1dd971"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "submit",
+        "action": {
+          "scopeId": "scope-0002-c641501a357e42d0980ef5be16f676e78e614d3ab8764114e19c9ef93b412ea7",
+          "surface": "提交"
+        },
+        "object": {
+          "scopeId": "scope-0002-c641501a357e42d0980ef5be16f676e78e614d3ab8764114e19c9ef93b412ea7",
+          "surface": "文字摘要"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "提交文字摘要",
+          "description": "于10月11日提交文字摘要，并附同一份授权证明。",
+          "completionCriteria": [
+            "文字摘要已提交",
+            "已附同一份授权证明"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [
+            "mat-authorization-proof"
+          ],
+          "timePointTempIds": [
+            "tp-submit-summary-deadline"
+          ],
+          "confidence": 0.95,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [
+      {
+        "tempId": "mat-authorization-proof",
+        "name": "授权证明",
+        "required": true,
+        "formatRequirements": [],
+        "namingRequirements": [],
+        "quantity": 1,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "task-submit-recording",
+          "task-submit-summary"
+        ],
+        "scopeIds": [
+          "scope-0003-4efa34745055e193a491a798bc4ce95373b6b84d6db341e38c5c4dada7e3e959"
+        ],
+        "confidence": 0.95
+      }
+    ],
+    "timePoints": [
+      {
+        "tempId": "tp-submit-recording-deadline",
+        "type": "submission_deadline",
+        "rawText": "10月9日",
+        "relatedTaskTempIds": [
+          "task-submit-recording"
+        ],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0001-3bd872c5f129af4d91467ad55d7da78e8694e55dc7f5d7bcfbe5137d3fa97774"
+        ],
+        "confidence": 0.95,
+        "normalizedValue": "2026-10-09",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": true,
+        "precision": "date_only",
+        "needsConfirmation": false
+      },
+      {
+        "tempId": "tp-submit-summary-deadline",
+        "type": "submission_deadline",
+        "rawText": "10月11日",
+        "relatedTaskTempIds": [
+          "task-submit-summary"
+        ],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0002-c641501a357e42d0980ef5be16f676e78e614d3ab8764114e19c9ef93b412ea7"
+        ],
+        "confidence": 0.95,
+        "normalizedValue": "2026-10-11",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": true,
+        "precision": "date_only",
+        "needsConfirmation": false
+      }
+    ],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0004-ddaaa576cdac369060b47e633d832819d5e97bcfe06c61a3d3bc0dd90c1dd971"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "opensource-dev-OS12",
+    "sourceVersionId": "opensource-dev-OS12:1",
+    "sourceFingerprint": "sha256:3fdd2efb82a9f26108dd2333e04f3a57fdf64339f4c45f9dc7743d5686f74226"
+  },
+  "http": 200,
+  "diagnostic": null,
+  "waitingMs": 6261,
+  "parseError": null,
+  "totalAttempts": 314,
+  "usage": {
+    "input_tokens": 5175,
+    "input_tokens_details": {
+      "cached_tokens": 4736
+    },
+    "output_tokens": 1368,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 6543
+  },
+  "costUpperMicroCny": 21294,
+  "totalCostUpperMicroCny": 14042543,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticSelection": "NOT_ENABLED",
+  "qualityClaim": "12份新编匿名相近结构Development配对；单作者参照；仅固定教学正反例不同；不是盲测或真实用户转化"
+}
