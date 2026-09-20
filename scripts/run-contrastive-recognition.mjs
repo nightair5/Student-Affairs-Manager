@@ -52,7 +52,7 @@ export async function prepareContrastive(){
   const scorerSha=hash(readFileSync('scripts/score-contrastive-recognition.mjs'))
   for(const [index,reference] of references.entries()){
     const id='K'+String(index+1).padStart(2,'0'),sourceRequests=frozenRequests.filter(item=>item.id===reference.id)
-    check(sourceRequests.length===2&&sourceRequests.every(item=>item.context.index.source===reference.source),'SOURCE_PAIR')
+    check(sourceRequests.length===2&&sourceRequests.every(item=>item.context.index.sourceContent===reference.source),'SOURCE_PAIR')
     for(const arm of order[index]){
       const sourceArm=arm==='A'?'baseline':'contrastive',prepared=sourceRequests.find(item=>item.arm===sourceArm),unitId=id+'-'+arm,serialized=JSON.stringify(prepared.body),identity=inspectRequest(serialized,contrastivePolicyFor(unitId))
       check(identity.requestSha===prepared.requestSha256&&identity.requestBytes===prepared.bytes,'REQUEST_FREEZE')
