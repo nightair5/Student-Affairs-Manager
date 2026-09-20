@@ -16,6 +16,10 @@ const hash=value=>createHash('sha256').update(value).digest('hex')
 const check=(value,code)=>{if(!value)throw Error('CONTRASTIVE_RUNNER_'+code)}
 const read=name=>JSON.parse(readFileSync(join(DIRECTORY,name)))
 const shaFile=path=>({path,sha256:hash(readFileSync(path))})
+const allowedWorktreePath=path=>path==='docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/CALL_LEDGER.jsonl'
+  ||path==='docs/recognition-optimization/CURRENT_CONTEXT.md'||path==='docs/recognition-optimization/OPTIMIZATION_LOG.md'||path.startsWith(DIRECTORY+'/')
+const changedWorktreePaths=()=>[...execFileSync('git',['diff','--name-only'],{encoding:'utf8'}).trim().split('\n'),...execFileSync('git',['ls-files','--others','--exclude-standard'],{encoding:'utf8'}).trim().split('\n')]
+  .filter(Boolean).map(path=>path.replaceAll('\\','/'))
 
 export function contrastiveOrder(seed=20260920){
   let n=seed>>>0,order=Array.from({length:12},(_,index)=>index<6?['A','B']:['B','A'])
@@ -34,9 +38,9 @@ function currentProtection(binding){
   const head=execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),branch=execFileSync('git',['branch','--show-current'],{encoding:'utf8'}).trim()
   check(branch==='codex/e2-multimodal-recognition-exp'&&head===binding.head,'GIT')
   for(const file of binding.dependencies)check(hash(readFileSync(file.path))===file.sha256,'DEPENDENCY:'+file.path)
-  const allowed=new Set(['docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/CALL_LEDGER.jsonl','docs/recognition-optimization/CURRENT_CONTEXT.md','docs/recognition-optimization/OPTIMIZATION_LOG.md'])
-  const changed=[...execFileSync('git',['diff','--name-only'],{encoding:'utf8'}).trim().split('\n'),...execFileSync('git',['ls-files','--others','--exclude-standard'],{encoding:'utf8'}).trim().split('\n')].filter(Boolean).map(path=>path.replaceAll('\\','/'))
-  for(const path of changed)check(allowed.has(path)||path.startsWith(DIRECTORY+'/'),'WORKTREE_SCOPE:'+path)
+  const baseline=new Map(binding.worktreeBaseline.map(file=>[file.path,file.sha256]))
+  for(const path of changedWorktreePaths())check(allowedWorktreePath(path)||(baseline.has(path)&&existsSync(path)&&hash(readFileSync(path))===baseline.get(path)),'WORKTREE_SCOPE:'+path)
+  for(const [path,sha256] of baseline)check(existsSync(path)&&hash(readFileSync(path))===sha256,'WORKTREE_BASELINE:'+path)
   return {head,branch}
 }
 
@@ -68,9 +72,10 @@ export async function prepareContrastive(){
     'src/experiments/realInput01/candidate10.ts','src/experiments/realInput01/contrastiveEvidenceExamples.ts','src/experiments/realInput01/contrastiveDevelopmentCases.ts',
     join(PREPARED,'MANIFEST.json'),join(PREPARED,'REQUESTS.json'),join(PREPARED,'REFERENCES.json')]
   const dependencies=[...new Map([...dependencyPaths.map(shaFile),...adapterDependencies].map(value=>[value.path,value])).values()].sort((a,b)=>a.path.localeCompare(b.path))
+  const worktreeBaseline=changedWorktreePaths().filter(path=>!allowedWorktreePath(path)).map(shaFile)
   const binding={version:'real-input-contrastive-binding-1',head,branch,model:'deepseek-flash',reasoning:'none',temperature:0,maxOutputTokens:8192,timeoutMs:120000,
     candidateVersions:{A:'real-input-source-semantics-3',B:'real-input-source-semantics-10'},exampleVersion:'contrastive-evidence-examples-1',wireVersion:api.WIRE_VERSION,
-    scorerSha,preparedManifestSha:hash(readFileSync(join(PREPARED,'MANIFEST.json'))),referenceSha:hash(referenceBytes),requests,units,items,order,dependencies,
+    scorerSha,preparedManifestSha:hash(readFileSync(join(PREPARED,'MANIFEST.json'))),referenceSha:hash(referenceBytes),requests,units,items,order,dependencies,worktreeBaseline,
     label:'12份新编匿名相近结构Development配对；单作者参照；仅固定教学正反例不同；不是盲测或真实用户转化',createdAt:new Date().toISOString()}
   const checkedAt=new Date(),billing={version:'real-input-contrastive-billing-1',verified:true,method:'official-public-document-review',checkedAt:checkedAt.toISOString(),validUntil:new Date(checkedAt.getTime()+12*60*60*1000).toISOString(),
     policy:CONTRASTIVE_POLICY,documents:[
