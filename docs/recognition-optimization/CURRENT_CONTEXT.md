@@ -1,57 +1,53 @@
-# 当前交接：candidate10 配对开发评测完成
+# 当前交接：candidate11 独立支线与计划
 
-## 当前结论
+## 本轮授权与目标
 
-- 用户已明确授权 24 次 Flash none 配对评测；24/24 均 HTTP 200、可解析并完成 usage 结算，累计调用准确到 314。
-- 原冻结评分器：candidate03 为10/12、55/61；candidate10 为12/12、61/61。其关键词 precision/recall 与 false-positive 计数存在审计确认的漏洞，不作为严格任务准确率。
-- 独立逐例审计：candidate03 有 OS07、OS08、OS10 三处明确参照级错误，为9/12；candidate10 有 OS04 一处“核验完成＝核验通过”过度推断，为11/12；配对 B 3胜、A 1胜、8平。
-- candidate10 完整教学包只保留为修正方向，状态 `REQUIRES_FIX_BEFORE_INDEPENDENT_BLIND_EVALUATION`。未接入 Preview/Production，当前正式候选与 RC.4 均未修改。
-- 这不是独立人审或盲测；真实用户接受并保存转化率仍为 `NOT OBSERVABLE`。
+- 当前用户要求：读取 HANDOVER_CONTEXT_BRIEF.md，重新建立独立支线并交付详细推进路线。
+- 本轮只有C11-P0分支/规划文档；candidate11代码、scorer v2、模型调用、真实材料/真人试验和部署均未执行。
+- 下一建议阶段是C11-P1评分与只读复算，需要当前用户明确启动该实施包。计划中的调用不是许可。
 
-## 仓库与分支
+## 工作区与基点
 
-- 仓库：`C:/Users/Winner/student-affairs-multimodal-exp`。
-- 分支：`codex/e2-multimodal-recognition-exp`。
-- 付费评测冻结 HEAD：`9c9460dafef511a922938ce012ae4874070a67e1`；最终文档以最终提交为准。
-- 用户另行提交的 `学生事务管家_跨工作区交接文档.docx` 已保留，不属于本轮实验修改。
+- 新工作区：C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/比赛。
+- 新分支：codex/e2-candidate11-blind-eval。
+- 父提交：c9ed5ea673487b99d6a537795e3c873803a961da；原分支codex/e2-multimodal-recognition-exp及其原工作区保持。
+- 本轮交付提交请用git log -1 --oneline和远端核对，不能把父提交当最新提交。
+- 没有复制.env、浏览器库或用户Downloads，没有装依赖、启动服务或新建另一条Codex任务。
+- Windows检出将83个保护文件转为CRLF；核实与父Git blob完全一致后，只在新worktree恢复原工作区的精确字节。84个保护文件的hash见基线；未改Git内容。
+- 后续工具必须显式使用这个新路径，不能在旧cwd原地修改。
 
-## 固定实验
+## 历史状态校正
 
-- A：deepseek-flash + candidate03 + reasoning none；B：同模型同参数，system prompt 改为 candidate10 完整教学包，包括版本标记、3 段防复制/核对元指令和 8 个固定原创教学正反例。
-- 12 份单作者匿名合成开发通知，每份 A/B 各一次；6 对 A 先、6 对 B 先。参照不进入请求。
-- 模型输出仍只是待确认建议，不会直接创建或覆盖正式任务。
-- 证据目录：`mainline-real-input-01/runs/opensource-methods-20260920a/`。
-- 关键文件：`AUDIT.md`、`MODEL_COMPARISON.json`、`BINDING_FINAL.json`、24 份 raw、24 份 result。
+- HANDOVER_CONTEXT_BRIEF.md的9f4128e/290次/candidate10 NOT_RUN为历史快照；后续24次已经完成，累计314次。
+- 原评分：A10/12、B12/12；响应后有限审计：A9/12、B11/12，B3胜/A1胜/8平。
+- 审计者是全新同系列模型代理，不是独立人工标注者；审计后比例不是预注册盲测或真实用户转化率。
+- candidate10在OS04把核验完成扩大为核验通过；严格实验审计FAIL，未采用。
+- 证据目录：mainline-real-input-01/runs/opensource-methods-20260920a/。
+- 旧原答、Expected、scorer、binding与报告不可覆盖；新评分另存为已见诊断结果。
 
-## 账本与费用
+## 预算与保护
 
-- 统一账本：644 行，独立收据 644 份；本轮无重试。
-- 本轮 24 次费用上界 0.379360 元；累计费用权威上界 14.042543 元，包含历史未知调用预留，20 元硬上限未变。
-- 服务商实际扣费 `NOT OBSERVABLE`。
-- candidate10 输入 61,132 tokens、输出 9,211；candidate03 输入 50,692、输出 10,253。
+- 账本644行，实际reserve计数314；SHA256 dc52d9cd04b809be9d22d5298bd45d0e6f0a01307017d48a91aaa91a45e8e597。
+- 历史已审报告费用上界14.042543元，原硬限20元；服务商实扣NOT_OBSERVABLE。
+- 当前314次调用许可已用完，本轮新增0。候选分支内ledger只是快照，不得形成并行写账本/新预算。
+- 后续派发前必须明确唯一权威ledger目录、跨进程锁、最新计费和逐次预留。不可直接运行继承的历史runner。
+- 现有6632用户库、公开Preview、RC.4/Production保持；未进行线上验收。
 
-## 差异案例
+## 路线与停止点
 
-- OS07：candidate03 在条件为假时生成重复的正/负领取任务，并留下 active/pending 任务；candidate10 只保留一个不可执行要求。
-- OS08：candidate03 多造交回任务，并把否定语境中的“今天”归一化为截止日期；candidate10 只保留保存任务，将待通知日期作为未绑定待确认信息。
-- OS10：candidate03 把已生效修订写为 `effective=unknown`；candidate10 正确写为 true。
-- OS04 回归：candidate10 把“核验数据授权书”的完成标准写成“核验通过”，原文只要求完成核验；修正前不得采用。
+1. P1：新增版本化评分器v2、结构化一对一匹配、完成标准/时间/条件/修订检查、只读幂等复算及预算失败保护。>=30匿名工程夹具，24旧答另存复算，0调用。
+2. P2：candidate11最小完成标准修正及新版对比例子；真实组件承接正确事实的工程上限，0调用。
+3. P3：修正公共底座上6source×4变体=24次Development消融，元指令M/示例E开关，可见版本一致。待新授权。
+4. P4：独立制作者的12个全新source×原candidate03/冻结最佳candidate11=24次。独立标签尚未落实；同作者换皮/模型审计不能冒充人工盲测。
+5. P5：本机隔离真实App确认保存、刷新读回、本机观察事件；工程转化不等于真人。
+6. P6：另批用户研究和商业验证，仍由未批准商业契约决定范围/阈值；48次不代替商业Holdout，不自动批准Preview。
 
-## 验证与异常
+## 产物与核验
 
-- 对照专门测试 4/4；历史预算/网关回归 124/124。
-- lint 0 错误、4 个既有警告；typecheck、build、security scan 通过。
-- 历史 `RCO-5-007` package-lock 冻结哈希失败未修改，不能声称整个历史测试集全绿或发布阶段完成。
-- 正式调用前的字段绑定和网关范围错误均在预留/网络发送前停止；修复后重新冻结。一次集成测试误建的孤立测试收据已精确删除，真实账本原前缀哈希保持。
-- 独立审计确认冻结评分器漏检、官方分析命令不可长期幂等重放、K 路径失败分支未专门验证及 exampleVersion 未贯通；详见本轮 `EXPERIMENT_AUDIT.md`。
-
-## 下一步
-
-- 先修复“核验完成不等于核验通过”，拆分版本标记/元指令/示例的消融，并加严结构化评分；再由独立标注者制作结构不同的未见 Holdout，做 candidate03/修正版同期配对。
-- 在产品端增加能区分建议生成、用户接受、修改和正式保存的本地可审计漏斗，才能测量真实转化。
-- 没有新的明确授权，不部署 Preview/Production，不把 candidate10 接入当前正式路径，不扩大模型调用。
-
-## 上轮证据
-
-- 6632 隔离库的实际保存、独立只读读回和双下载已在 `mainline-real-input-01/runs/read-download-closeout-20260920a/AUDIT.md` 收口。
-- 完整上轮交接保存在本轮目录的 `PREVIOUS_CONTEXT.md`。
+- 详细计划：refine-logs/EXPERIMENT_PLAN.md；包含实施路径、消融矩阵、判定规则、预算和P1可复制指令。
+- 任务表：refine-logs/EXPERIMENT_TRACKER.md。
+- 基线与审计：docs/recognition-optimization/candidate11/BRANCH_BASELINE.json、BRANCH_SETUP_AUDIT.md。
+- 受保护文件84个；原分支Git内容及原工作区未变。
+- 本轮仅文档检查、diff和密钥扫描；不重跑模型、完整代码测试或网页验收，不把历史测试成绩算本轮。
+- 旧RCO-5-007锁文件冻结hash失败仍在；后续代码阶段不得改旧断言或以定向通过声称全套全绿。
+- 恢复顺序：AGENTS/PRD相关章→本短交接→日志末尾→计划→基线核对→当前获准包。

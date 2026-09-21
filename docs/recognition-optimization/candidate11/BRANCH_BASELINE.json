@@ -1,0 +1,627 @@
+{
+  "version": "candidate11-branch-baseline-1",
+  "capturedAt": "2026-09-21T03:03:23.740Z",
+  "branch": "codex/e2-candidate11-blind-eval",
+  "baseCommit": "c9ed5ea673487b99d6a537795e3c873803a961da",
+  "worktree": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛",
+  "sourceBranch": "codex/e2-multimodal-recognition-exp",
+  "sourceWorktree": "C:/Users/Winner/student-affairs-multimodal-exp",
+  "sourceBranchUnchanged": true,
+  "sourceWorktreeClean": true,
+  "sourceRemoteVerifiedAtSetup": true,
+  "sourceRemoteCommit": "c9ed5ea673487b99d6a537795e3c873803a961da",
+  "authorizedScope": "independent branch and roadmap documentation only",
+  "candidate11Implementation": "NOT_RUN",
+  "newModelCalls": 0,
+  "paidEvaluation": "NOT_AUTHORIZED",
+  "previewDeployment": "NOT_RUN",
+  "productionDeployment": "NOT_RUN",
+  "newDependencyInstallation": false,
+  "checkoutHandling": {
+    "firstVerification": "LINE_ENDING_ONLY_BYTE_MISMATCH",
+    "correctiveAction": "restore original source worktree bytes after verifying Git blob identity for all protected files",
+    "filesRestored": 83,
+    "gitContentChanged": false,
+    "sourceWorktreeModified": false
+  },
+  "ledger": {
+    "path": "docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/CALL_LEDGER.jsonl",
+    "role": "read-only inherited snapshot; not an independent budget writer",
+    "rows": 644,
+    "reservedRequests": 314,
+    "sha256": "dc52d9cd04b809be9d22d5298bd45d0e6f0a01307017d48a91aaa91a45e8e597",
+    "cumulativeCostUpperMicroCnyFromReviewedReport": 14042543,
+    "limitMicroCny": 20000000,
+    "providerBilledCny": "NOT_OBSERVABLE"
+  },
+  "protectedFiles": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "e0724609050a3ac32b500c7360db4a4fadf72af1c3b9983ac4d932dac4b1573b",
+      "checkoutSha256": "531d9e0accf05c61cd5bb60d6f31b56aa035f5d4fb419e5827b8f36f32b7327e",
+      "gitBlobSha1": "ab0598ff41c479752b01e78bae2621590499240d",
+      "bytes": 36158
+    },
+    {
+      "path": "PRD.md",
+      "sha256": "463b26202c26e955bedc58e3f78cf3a8ff2a68eb53d9338b2d1a72d9d011a678",
+      "checkoutSha256": "f3a1b8d6b4f97fc3629ce4c7c2141023dc0473b506185d21e8635580761dc206",
+      "gitBlobSha1": "924661f2db3dac58f410b6e24e2c8af2546c8b7e",
+      "bytes": 62835
+    },
+    {
+      "path": "docs/recognition-optimization/COMMERCIAL_VALIDATION_CONTRACT.md",
+      "sha256": "643df93152cefdea7a397821b6e9bede4f924cdab64bbd4dc4b0bcd68d5c7e16",
+      "checkoutSha256": "d951e5daacea06a28b74a15fc7d6e35b5ecbf4b26c201f76429b59586407a0c3",
+      "gitBlobSha1": "394ed4f115aae5fe4db4d2f0504f05fd72344e26",
+      "bytes": 41925
+    },
+    {
+      "path": "docs/recognition-optimization/HANDOVER_CONTEXT_BRIEF.md",
+      "sha256": "6e6cefea99bcf92cb122cd90064a1a0efb42928a5ceb4eb9d09810bd3e2fba88",
+      "checkoutSha256": "bc4cf321f3fa060604670fdf80bc5397a414a9f71cfb0287f8bf2344827e9d7d",
+      "gitBlobSha1": "dbddb394b3afef7994729446e4046b97ef93800e",
+      "bytes": 35820
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/AUDIT.md",
+      "sha256": "ccdacf76f41dc235d1cef814e62783c81a517e16a9a580df7e3d023237258c77",
+      "checkoutSha256": "48f3420f17e09856e59fa47d10b4d535996ed54f55a7c6eae40d25de34e09bb1",
+      "gitBlobSha1": "38dae3fe2e5d0414d84eff03d846f726e7d98f0f",
+      "bytes": 12032
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/AUDITED_COMPARISON.json",
+      "sha256": "0c97a1028fb9fa3615240f776160f8be9835748367e82b212b1c94e7a7133f05",
+      "checkoutSha256": "aaca9f82ca0858cb3d11383cd4b9e7c66016e6ec829b998e458ed3229637730c",
+      "gitBlobSha1": "c3d21cbb23626d263f537d7b5c5d64a942f7f970",
+      "bytes": 1231
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/BASELINE_MODEL.json",
+      "sha256": "6fa3bea428a4770ce50c183a8a9f5e1ab6853434f61477fad106542ec605d5aa",
+      "checkoutSha256": "f56c4b89645758a16c72b865aafeee3f6e4c91886fed845e699da9c51728ea2f",
+      "gitBlobSha1": "69ea9c304410dab0692fcf2154a0385d210e652e",
+      "bytes": 701
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/BILLING_MODEL.json",
+      "sha256": "da23c208d859f01c9b644b6e3afdb202069da355fc1a5facb92a768a76c89bbd",
+      "checkoutSha256": "c106db982a54bc5bbbae3bf4b305cb2246388d3dabaa3d021853eafa06b2062d",
+      "gitBlobSha1": "b14d040a75ff8f67302d4df6dd169fc17035c706",
+      "bytes": 1830
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/BINDING_FINAL.json",
+      "sha256": "ac3e13d5f67dc090d0f54bb424161a30c1422a1daf366fd03d4d6c6d877eab6d",
+      "checkoutSha256": "50ee6889f5c046004878c69acc055b2642727bb65f68278f43bb05cfd429d5e1",
+      "gitBlobSha1": "e1fa895caf21f0216c22233bce1c014f3ebe11e6",
+      "bytes": 466681
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/CHECKS.json",
+      "sha256": "160d07e8223960ffbde928b6b5f59e17398d65e5567bb0bd7c4a29f7b2ba4e0d",
+      "checkoutSha256": "6da351a406b1391c434931f4b761b2e630e3471f507233084e8a44e0ac3e4b88",
+      "gitBlobSha1": "d7477178dcef055c343485752daa7e17e2deaede",
+      "bytes": 2887
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/EXPERIMENT_AUDIT.json",
+      "sha256": "f0ec7335ee9fdff573c0bc8569430db18a1f7c35797f283f8cb3153cd4f315e4",
+      "checkoutSha256": "0028457ec4fc893b600d30cca37ea757cb99af64fd7a83cf572609f372cd8fb3",
+      "gitBlobSha1": "72c009417fc648084bd8d4339c5132d6693dc341",
+      "bytes": 1461
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/EXPERIMENT_AUDIT.md",
+      "sha256": "ec288ae4e3f20197c533628bb4d2f156f77383b8dd9b54fab256fa7926d98202",
+      "checkoutSha256": "5685a728cb462958725d4f1173863ea55730cf378bf467d3ab18083bf801560e",
+      "gitBlobSha1": "9f0318d777eb9119a9709a530008449dbbe1a082",
+      "bytes": 4754
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/K01-A_RAW.jsonl",
+      "sha256": "c39138c8f023de3f268ae53a71242a6507b4e4078c55caf62517c5999cbe49d5",
+      "checkoutSha256": "159ffe88ff98af9d094077e4e558e6943e6a2aaa71a76045b16a48d743ebe3ea",
+      "gitBlobSha1": "033f890ade5a89bbc29f714d4f82d466db1446d1",
+      "bytes": 15465
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/K01-A_RESULT.json",
+      "sha256": "797d92f4dccf94b516d781e19d8aa7216d2049e236d5716f019f03075aa60dc4",
+      "checkoutSha256": "94c8f0f07b561b0867fc792fb2d90253c7ce6730b6503ce7a76bf5cecbab1e3e",
+      "gitBlobSha1": "c2ce444755a0f6c83f25358be26c712f166e60ef",
+      "bytes": 4478
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/K01-B_RAW.jsonl",
+      "sha256": "cad5ed43cd6ed75ff37c26e21eaffde95c7c4e97d4f29e3f4161e9ece6aeb63a",
+      "checkoutSha256": "e62362f3677285fffef98a26591a68824852ae75ac986a9a1d0360e839c4c474",
+      "gitBlobSha1": "27fef8968338ec4ff397deec3008852261b8320e",
+      "bytes": 15494
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/K01-B_RESULT.json",
+      "sha256": "cf9bede0fa573c058a77cb6554681ad73c9bfe9bdb12e481f855968d22a8928f",
+      "checkoutSha256": "0a41ed60e35d7ba41d947429df0026709df03261188d7177a307ab2ed5ed4f18",
+      "gitBlobSha1": "a2a209236cf91fa7111b40736bace47cd8cdb445",
+      "bytes": 4554
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/K02-A_RAW.jsonl",
+      "sha256": "3b9accb9b2d3c67e0d2a264a839be09651d8d789716b4c247d6272f9695add7f",
+      "checkoutSha256": "d38b936dacf9d79d18ca7d97cee324d29824d559804f346ac8929d0262efef31",
+      "gitBlobSha1": "8f01c282e2550d3eea84894d01daa650c5ed43cd",
+      "bytes": 16770
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/K02-A_RESULT.json",
+      "sha256": "f782cb56cdcdb5d2438e40968eeedb57976c9fc15f9aca06f69e97650d201e62",
+      "checkoutSha256": "0d7c100b8026267b3a8a6c05b6420fa62207277d7e1d87629af02e4cc5745158",
+      "gitBlobSha1": "adcfb3bf59191167df883e16b9e7ac0cabfb6e01",
+      "bytes": 5950
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/K02-B_RAW.jsonl",
+      "sha256": "87d94fe6cb107dd20995430b309819303cb370481bd06bbe4009d7dd0b1c78fb",
+      "checkoutSha256": "83e585219bb69af0ba0399949eb33f6db8f2d62fcd5d668a8634182e50d21434",
+      "gitBlobSha1": "bf0d92189f526b84c93df494f36869469d16772a",
+      "bytes": 16304
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/K02-B_RESULT.json",
+      "sha256": "b9f8f1278b155cf412c17fe83fd2a96dc94f61a330aaaff376b051782aa3bd47",
+      "checkoutSha256": "82ceb9126e00e39c7a57bc65fb4bcbf4536dc306155c0291c330ec9a99da4e6b",
+      "gitBlobSha1": "854e94fc8a6d78c0e6da81efb54ede73340d4189",
+      "bytes": 5430
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/K03-A_RAW.jsonl",
+      "sha256": "f1fd847c4626bfd8b4cde423f543d9c297c0279f9dfe397a27ff87e9601748d8",
+      "checkoutSha256": "4c3443a87b9b8b0e5b98cc51df1fd423b397415999eeaefa98106163a7c288bd",
+      "gitBlobSha1": "a00855c4a18030ce54f9e803319ba1b0385c1581",
+      "bytes": 16503
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/K03-A_RESULT.json",
+      "sha256": "fe166f31ffec8f85cbbfcd8bcb0250e58400312045e2e8a878680457ac05a17a",
+      "checkoutSha256": "bdfb8341af92e6ec227abb2fc0ccd88c1b30226f62ae0bad1b7cbb6c7042ebb1",
+      "gitBlobSha1": "350041f927b787e7bbd5fe16bdde646fc8299f50",
+      "bytes": 5558
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/K03-B_RAW.jsonl",
+      "sha256": "058df2a63c37d96b4ccc06419454dd8d10e8296d7dca3c8c1f85b48b4436e9d4",
+      "checkoutSha256": "b4cc5730e7cd4137f204adbb20c172a7f8f933ceb8225c9c74e02bc70a8ffc4b",
+      "gitBlobSha1": "09b4a6284ee658fb4e25a58dae087b3bca16a8e7",
+      "bytes": 16568
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/K03-B_RESULT.json",
+      "sha256": "e9a794698476806e662827d1b712bed838d1f7119fba64c8aefba83f7ae67c64",
+      "checkoutSha256": "183030a24b998502d5edbd935d96c81d57a9c306b574bdaace192f192e2b8dae",
+      "gitBlobSha1": "ff9758897e3cf72bff5f0502469304ed77517b3e",
+      "bytes": 5692
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/K04-A_RAW.jsonl",
+      "sha256": "d29d04ba28070dc4d284c415ad6184df1fd4935bbb2bb4048b22875eef85f1fb",
+      "checkoutSha256": "4301f6ecdd178cf8e769780d1cf05d1981d0e5d75563dded329b6df087c8ddad",
+      "gitBlobSha1": "c8829a4e89876302a9890979ceeb747d72d2e9fd",
+      "bytes": 16597
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/K04-A_RESULT.json",
+      "sha256": "413f5ee2df23c0832215eb5f9638255c28635ae26ee4663279f0c3fd79893011",
+      "checkoutSha256": "57218956b73f6c0ab8ebf5f1e462d99a927dcb865da013ff42c889efb9c917c1",
+      "gitBlobSha1": "86f47f80fef1d2c2e153b018bafc31c89456d205",
+      "bytes": 5731
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/K04-B_RAW.jsonl",
+      "sha256": "23bf01ad1b9579f59e9048135ef1936d44a4588baaceada0bc0bebd2fc2a3a71",
+      "checkoutSha256": "688df643df591ee0331f0f0f768059d12458f678e081e824acec8511f2e09dc1",
+      "gitBlobSha1": "734a0ebc94b53254732a39cf74301cf7841c0203",
+      "bytes": 16588
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/K04-B_RESULT.json",
+      "sha256": "3d9ce405e7e3928d5901fddb6ad108e92057dcee4403d958db4a9527c963aa15",
+      "checkoutSha256": "aa4b67b74449fecd4a5e90253bcf869c9398700fe9a94709fb06ccae9196633b",
+      "gitBlobSha1": "475a498c2c4556ff87fc13f34e12b31740a725f4",
+      "bytes": 5755
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/K05-A_RAW.jsonl",
+      "sha256": "d7bc24cfdd6b0460d36471ab6d602780af5282a3aad315e63c988c84386398d9",
+      "checkoutSha256": "c8b44c91650bbaaa2e89576da73b20c7d4ee55a09b0a44d36225eba9e213460e",
+      "gitBlobSha1": "5af8d24f61492b2b5036851721bdf352bd3d519b",
+      "bytes": 15078
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/K05-A_RESULT.json",
+      "sha256": "105a5dd0f615177a399114cedc93e08e3fd2d9f1d67c8aaf96992c2e8b41f7ad",
+      "checkoutSha256": "350033f2757332b83f6506883f286da8848656d386b5ff2eabe573ca827f9b81",
+      "gitBlobSha1": "cbc1206edf7918bad7dfa029ee239e7c3ebcfa32",
+      "bytes": 4016
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/K05-B_RAW.jsonl",
+      "sha256": "5a07202ad476c32f73bc74f96dae296b8c0bdc2043c88244a6772a053c68499c",
+      "checkoutSha256": "89844cb47c6403951a9d440f3253ea92e1eaeba7630c3fd58dd0567e7eac4972",
+      "gitBlobSha1": "34be8712f820acfc2875b49d133b10991199bb21",
+      "bytes": 14973
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/K05-B_RESULT.json",
+      "sha256": "f50830c78f67057cc5ec6a3a92b26669090ca78f05dc30c643728e55c62c4e6b",
+      "checkoutSha256": "08f018607ac245d19e571efc8a16be01d19dfa49e08ca9924431485cda3117a1",
+      "gitBlobSha1": "dbf4c445f818ad1607e667b7f8018cd38ada55fc",
+      "bytes": 3938
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/K06-A_RAW.jsonl",
+      "sha256": "a2cdc4f6268b4ed66b28ecac98621752d687fd8787291faa08a7d904cc247bc3",
+      "checkoutSha256": "c4ed46d915091e98dd324ea7ba9cd380294944561882d84bc72c612f144d2c6c",
+      "gitBlobSha1": "7a57457147e642a69134a57b8fa5c2005bc35b1f",
+      "bytes": 14989
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/K06-A_RESULT.json",
+      "sha256": "09ad5c35e61db313f958e0c319d0fd60bccd305606be0fad7706be8f9f73b8bc",
+      "checkoutSha256": "26a9ef0fa7041179425af0cc8af033ead0160f8653449ad5f9cdafc40b8b11f8",
+      "gitBlobSha1": "4971de7e1f6665b01ba45b9a206cf24cc265fbbb",
+      "bytes": 3921
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/K06-B_RAW.jsonl",
+      "sha256": "d5db652f425f58c7608c768cda125bd999736dc6438f20a14e9da0705c23f297",
+      "checkoutSha256": "5a0cfc06b7e68e22821d86a7c788b4c6d348c67b3975258aecfd6bd7cb7b9aef",
+      "gitBlobSha1": "990ddb8f5b9b368b8de4e42cf23c78b294f94d91",
+      "bytes": 14945
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/K06-B_RESULT.json",
+      "sha256": "ad59c8baf318e5aa17d8466c2dcb0a078ec0f710db92bf6edf23664a6b712e61",
+      "checkoutSha256": "709d66abc23f79e47440f1b92a3dde0d1f344145e4f40664eed54e7e57a997da",
+      "gitBlobSha1": "6ab2acbbf5f124820f2350e381e3b0c3892fcf53",
+      "bytes": 3910
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/K07-A_RAW.jsonl",
+      "sha256": "31422f127215e3133d12e22cb570efe33596035589df8aac68ceb04e4c4f6b22",
+      "checkoutSha256": "fadf9e3b4505b8b41a3d75749c466547892321b02a96d2f7805461cf1e9512e5",
+      "gitBlobSha1": "9a3dd6dd32ce137240191953582cf64b62c4afc3",
+      "bytes": 16668
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/K07-A_RESULT.json",
+      "sha256": "ad50d14685f9ca39696b1dafb61088cb4ee1189cf879fac5da245a6355c3a650",
+      "checkoutSha256": "6221b4d4f9e4498241b705fea06ebf48228a400656879a40ba8ac2d0cb6939a8",
+      "gitBlobSha1": "2611ade92d01420e65642aeb6eeca68a87688ae7",
+      "bytes": 5789
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/K07-B_RAW.jsonl",
+      "sha256": "c8835e4f55ef349bbc7501e2364c4095833c0145f46ae1376a774d8151f4de4d",
+      "checkoutSha256": "80b94a9207b2268d20f5e69732931c48b39b52077e48ac58e4fa26f6d048ebf2",
+      "gitBlobSha1": "bebdecd00c6b812ac8064819d5eeaa4adcff071f",
+      "bytes": 15032
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/K07-B_RESULT.json",
+      "sha256": "05b54f280ffb92862cf5c58a775551ceace92d3175564969e292e32413f80dc4",
+      "checkoutSha256": "9102bf228adcf07a413d37c5c0f071379b8be2d199a21aea9a415390ebf48635",
+      "gitBlobSha1": "3bb87f83ab4c3e7c82607d693d86ad0f89499313",
+      "bytes": 3984
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/K08-A_RAW.jsonl",
+      "sha256": "5ed68c3ad6f8acc732f20707fd574e8703791feeba487864c8d22ec4c6e94864",
+      "checkoutSha256": "ae698c91da6e8a4d13ed766750bec7f28fcae6c204a48bfc2cc5acbd5beff53d",
+      "gitBlobSha1": "54df34030eee5e38010c2d6c946e26e20d4bbb4a",
+      "bytes": 17838
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/K08-A_RESULT.json",
+      "sha256": "e5d799b0c5d8a8e360569f5673c7f2e85b3f10df86a02aa175cafc646eab9951",
+      "checkoutSha256": "048b32c0d1653310293b64011a4e657e8dc5975a1948e1027c108bcbb4d1ceac",
+      "gitBlobSha1": "e8e5373fd0c71e4e5406d78d3f67f3d3870f8f5b",
+      "bytes": 7535
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/K08-B_RAW.jsonl",
+      "sha256": "2a1a8a4bbff829c20f32eab2f0480d70a58ead7392635125bfea0176f3d6c9bc",
+      "checkoutSha256": "107fe2c60f847a7c1782726e96e86157e3b1a87a9ce3448d186f7ce6af9e51e8",
+      "gitBlobSha1": "9b1b6de3ce60f4f17d3d024e5d822f87f8de45d8",
+      "bytes": 15343
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/K08-B_RESULT.json",
+      "sha256": "59087da039217bfad34b3195231879372532d7ee9cbf31a2c7d71e684121b72c",
+      "checkoutSha256": "1ad23b7fa5346b73e791d95f7364e8477bb7269a3489cbf906036d8d8548d21f",
+      "gitBlobSha1": "06a16ad8e97f790600b7857201bb46fa203185eb",
+      "bytes": 4496
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/K09-A_RAW.jsonl",
+      "sha256": "2c97db339ff818534c8d2e60212c38cadaf2c84ccdc9e3ef96e3b5c3dad6cb07",
+      "checkoutSha256": "45761d337f4449dd90a17bccc0c16bf91a234d1decc78dd4f47c30c4c3fdbaee",
+      "gitBlobSha1": "f674263070e87b6d2a3b43e886300b42e89bd60d",
+      "bytes": 15777
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/K09-A_RESULT.json",
+      "sha256": "f11f92f69cd97de05963cda175534d633331099d931fabbe048c87908952d9a1",
+      "checkoutSha256": "163497ab232e01b2c67ebf7999a8f03b6d6ebb1356df074d4461cff6c8b0453b",
+      "gitBlobSha1": "c33c4c87e0f27926e2e8e027ba3a7974d4233442",
+      "bytes": 5044
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/K09-B_RAW.jsonl",
+      "sha256": "3430b4bf2357096fd5dc88af885c4afb37d87d31db0d68a6c0a9ff8f1cecdb06",
+      "checkoutSha256": "0da216c8385aa7331ff243ccb8e9a9d5194c1ab725326eeddc21328f41487906",
+      "gitBlobSha1": "47d8f8e586e53ffabbb47a168f06578ae47a0436",
+      "bytes": 15240
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/K09-B_RESULT.json",
+      "sha256": "2a45731afe3e537ff9733082139db774be176efacf33b2fdb31ab4398148efdc",
+      "checkoutSha256": "9900a554c07f69799438a6418d8e6055e1bb8315b5e43f0a04f99792f18b3e7c",
+      "gitBlobSha1": "adaff42b24934b814eb88571e49f3b7fe4957d72",
+      "bytes": 4428
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/K10-A_RAW.jsonl",
+      "sha256": "86219c733c738803f1e871fa69586c18c28325526e0ed9f9fb1ff5ed9ba02028",
+      "checkoutSha256": "0e1956dd79987aa5bcd0b2ba0ffa5a726b3b86c14569664846cc593755febf96",
+      "gitBlobSha1": "3af972fc2d5d94eba52f7da715d4a82e6f8998d1",
+      "bytes": 17234
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/K10-A_RESULT.json",
+      "sha256": "f7fd8cb7ac960c16bc91667009be0e813c751f369866172311a5bd4dfaae6328",
+      "checkoutSha256": "9644ce2775fed77c7037a31a0ce1644ee22083aedaccbb80b1526460c915ab94",
+      "gitBlobSha1": "4ad8fb021d5df4a6994786340402e8249b715721",
+      "bytes": 6404
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/K10-B_RAW.jsonl",
+      "sha256": "910001e1c9b608dd601ba8d800ef2229e834c32df6c2487a11672f43b531fbe0",
+      "checkoutSha256": "d6ce6f43cad8e40df325df5b499d65076efe712d451af9a631a30929468fae44",
+      "gitBlobSha1": "eb9f3577d4a3634a8ecdf0b8042633bf2bf7a358",
+      "bytes": 17952
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/K10-B_RESULT.json",
+      "sha256": "a4845c2950f274958f469e2ae80bc45e035f755efc9e6de31ba0d87a30f6139f",
+      "checkoutSha256": "aeb84edfe374e8a8a9b78cdd3914ecb1796ba4c29e97cf4759b2d3588c280201",
+      "gitBlobSha1": "de62496035c975fce787fdea4ba4bc46ef546b36",
+      "bytes": 7265
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/K11-A_RAW.jsonl",
+      "sha256": "74a645172dc19703bacf72d715d70fb9fddbddd3650ecebfbba70abd63496093",
+      "checkoutSha256": "26cdf2e3b506aed0d10ebcb855255212f1f2f636bf5e5fe3558d14b3d07e3307",
+      "gitBlobSha1": "f00d177fcb8fdab60914015f6df85d42ee56ac40",
+      "bytes": 13450
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/K11-A_RESULT.json",
+      "sha256": "1881a304a5387265804530ba4abec6569291740b5771a08181ae859b3825992e",
+      "checkoutSha256": "8ca57f30a2056fb53608abe8dc64d9d72b94cba3dd723a824024f8ab6e821adf",
+      "gitBlobSha1": "81b9df67918517f31bad973fc2af8766a8a8c65e",
+      "bytes": 2161
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/K11-B_RAW.jsonl",
+      "sha256": "ff17c680fa0d2011a9cd747f5900c6fbd8a1270fa223baeebefa73bfca025267",
+      "checkoutSha256": "eefd0190318bbc6549b568a41cf0d00d49c913b0c8eb694367af9be327255fe8",
+      "gitBlobSha1": "ca6b5c4a32cbc56dfdf9936e079a4f593d4b9b15",
+      "bytes": 13450
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/K11-B_RESULT.json",
+      "sha256": "0f7b558c5577317ae7a4d3e1f4d44c72590b11cff2fec377828be08cab70a7d8",
+      "checkoutSha256": "3cd9748571773fb2b60ba9beca2a1405b471d88b9efa501a28b4f1987e4eac4f",
+      "gitBlobSha1": "a92f890b720f2708770ca24a00b8c7a8455ad370",
+      "bytes": 2194
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/K12-A_RAW.jsonl",
+      "sha256": "cdcc8beb8585d43e0673e73990bafb0d4a28df81e8486e39d54b141d21d4c01f",
+      "checkoutSha256": "ee7e8fd197d037e3be24f41f422822086d6639f71bdb261316e81764eacae93b",
+      "gitBlobSha1": "5b0019ffaf246fa689bba3d4b988e8057507519b",
+      "bytes": 18067
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/K12-A_RESULT.json",
+      "sha256": "04897b9e9ed4ff7401e158f52ab2ae0b69921b754ab47e355e2eaf1630aaa968",
+      "checkoutSha256": "7137e43a41b6dcdbca6a4814a00266722a9158c6e4302f3360bf6e638694f1d3",
+      "gitBlobSha1": "6af5de728a6ae960d03eb521ce0f330a8b55dd1f",
+      "bytes": 7791
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/K12-B_RAW.jsonl",
+      "sha256": "c62cc7e01cf88c3f8c69257543b29ada471b6c7d8be7f9e9bc11daf5373ce57c",
+      "checkoutSha256": "b73ed2911127925416d29030a760f41b558af1a7160341adee5831c0ad87d13c",
+      "gitBlobSha1": "cbd0b2faa0f80c03de5dbd4637f8cba239ae6c1e",
+      "bytes": 18057
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/K12-B_RESULT.json",
+      "sha256": "5066c3008853ea3f32570382cf1120c0187f1c426a4bb3e6b8b02754f298bc2e",
+      "checkoutSha256": "55aea27badc5cc4fefad98972828674d85fe3a8b9368bcf22d21b05d28f79b4a",
+      "gitBlobSha1": "7cf0e22b52008632c2751e124cfc8d36a96ff752",
+      "bytes": 7814
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/MODEL_COMPARISON.json",
+      "sha256": "d82a80a3dc5537abce63ca6f63a184a24c93402b71e907a6125e9cce3e1f7a30",
+      "checkoutSha256": "0a0081e6c6530deb2349a40b6dbf48b62b8197ae114af1bf7033a007a3a97ed1",
+      "gitBlobSha1": "48121ac64e3f671b07d2843d2a9eacc781c0dbc5",
+      "bytes": 147019
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/PREVIOUS_CONTEXT.md",
+      "sha256": "b4235d386915c4b437730eafc4ddda12505f5375b7008391693d727a41dcb690",
+      "checkoutSha256": "a2f3b9d3bf9cadc402c416054ebe361b73d7267f9969f1737db07672f21355f3",
+      "gitBlobSha1": "a863f8a26c7277a3029373b87360410cff4b9e23",
+      "bytes": 4276
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/SEND_REVIEW_MODEL.json",
+      "sha256": "e4ebc345a04765a5f28c81b02a6228883b7095bd8b698962615f2057cb858a38",
+      "checkoutSha256": "eb0709cfc6db33e02b338c47527fe898cf231838762ee3cfd76ffa3d5e0ecbb1",
+      "gitBlobSha1": "2968784bd3ffbd0f02241227bcfbc32dfc656de1",
+      "bytes": 868
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/START.json",
+      "sha256": "6e16fe20223547026466a50562b195a723f3b8a179afa6d94028fd080ecdd1a3",
+      "checkoutSha256": "8cb215cecc02109d8e9606207bc399332100f47d008f3e4a5d6d7ef51471f583",
+      "gitBlobSha1": "6af9b71df8a5cf18f7ec0561a1c97d58b04b6123",
+      "bytes": 229
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/build.log.txt",
+      "sha256": "0e94f2a2cc6d4228d0172449ed163b57ca0b1e5ca6a2bcf7ff0061838b00994a",
+      "checkoutSha256": "8bc730747a936ace0fa16d20bdd878e194df761419e7d41c24394a572a4a0699",
+      "gitBlobSha1": "1973f82d7f6d5c0eaf705704dfe8a2688494f4dc",
+      "bytes": 2841
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/carrier-recheck.log.txt",
+      "sha256": "cfdec259785c71518b61325da633650dd1191edf82d7468e5076279718ff1705",
+      "checkoutSha256": "16185ffd6c0283ad4b74409843b49971c20601ebdb69ae063fa0f4905fc73ee0",
+      "gitBlobSha1": "7302459d6598bbd45430accf7dd9609f809acc8c",
+      "bytes": 510
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/contract.log.txt",
+      "sha256": "b3917928ac72fb9a08287de4bfc296758a8fd0f1be5e49e5b26008b00b526bba",
+      "checkoutSha256": "d22756bbebca66adeb504828a6fb39660e5fd649c227a86ff8ce626a21741aed",
+      "gitBlobSha1": "9b868f9a08b69d0e0e0f2008c05c7dfe7fdbe914",
+      "bytes": 583
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/focused.log.txt",
+      "sha256": "2c206cf8acce361c37efb19bbb8f3d5f0580eae4e45b57141844f45a2646f4d5",
+      "checkoutSha256": "056d8a69d99d6431e3dafe6a81a5b4570576281a8d12aeca3c5786e9a517f95e",
+      "gitBlobSha1": "3a9aaf11c63e02832e35ffab4b673613ccb99d00",
+      "bytes": 320
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/functions.log.txt",
+      "sha256": "7b71ede861793bb38e821605cf8ce98dab8958285df9325e85b91e8cc624ff33",
+      "checkoutSha256": "a7d30607f21f254ec3aad9272c59390a5183ab0bb494e62ad5d0452df0a41c3d",
+      "gitBlobSha1": "89f42ee80a8063a217f69b39ee0366d622cc9f1c",
+      "bytes": 575
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/lint.log.txt",
+      "sha256": "fea31e609eb4f61de20b8c2a241f842f04456df6a006b5f4f9534ae5c6d13ee8",
+      "checkoutSha256": "be6ccc1097cf0388080777f1d83947ab3b615d3f4b7c262cd2b3cd3bf2f35b6e",
+      "gitBlobSha1": "827379860787ca776de50553baedef170c31ee54",
+      "bytes": 1205
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/node.log.txt",
+      "sha256": "b054e2152df5a5e9bd5dbe273f252c5304090c943c81ad5ef3b9c4d9ce0ec728",
+      "checkoutSha256": "97666130c31cd11a10d23104ade84f19e50ecd4b11da4c629bab4785679dde85",
+      "gitBlobSha1": "de947f62596553fb91738732010932836376c0c1",
+      "bytes": 14481
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/prepared/MANIFEST.json",
+      "sha256": "ee2c48d30a79ea99ffa339b2fe940c7c3588de28823d3bd3f76843246c206510",
+      "checkoutSha256": "1edbd29db61181de7f6f451bbce29563e87cbf5afb0a0a5193265529ee5999cf",
+      "gitBlobSha1": "33056b56edc91e6412d28fdd47378c6d756df275",
+      "bytes": 3001
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/prepared/REFERENCES.json",
+      "sha256": "42b1b69a1c0c5d1575e49cb1f69ee55364404108f69e14534446d5f221840567",
+      "checkoutSha256": "3e57b23efe7bfd13a2943d41ad515624ad382c6c3ce37fbf2f6812266364a7c3",
+      "gitBlobSha1": "2c565ac8bd1cb5f7d4956f4edaccdc1a3915491d",
+      "bytes": 4877
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/prepared/REQUESTS.json",
+      "sha256": "b88c713eea09aea6dfed878d77e9314c3a2589f6401ea882ec9187ba295d79a0",
+      "checkoutSha256": "2236db9d4e7099ede46c65ba0e0d314998c2995c8720bab599931cb094febc3d",
+      "gitBlobSha1": "840112ffbd67793da9ccaefa12997db4cc04ae6b",
+      "bytes": 931713
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/security.log.txt",
+      "sha256": "a08be91fe97d527b8ea0413790ca2572f8c32be5fa592cc395c3c0f746683412",
+      "checkoutSha256": "a836765cd03015006f37109d84e64a92169db487d3bdca85c08987f6a17b5f57",
+      "gitBlobSha1": "7dde146e4e8cacb034034211bd43d4ab09f2a9c9",
+      "bytes": 135
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/types.log.txt",
+      "sha256": "d54b1273e9f4b314ada58f7cf6c336606fa378b3563b7c15803aea940b53c2b6",
+      "checkoutSha256": "e72986f5de3c553d394ae937b1abb2d98b9e02613a1e4e7fc444633cb189f1a0",
+      "gitBlobSha1": "65e3ce0fce415b951e34e1b434a6fbb765924dca",
+      "bytes": 69
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/vitest-summary.log.txt",
+      "sha256": "4828a5bb9401638669bfa3b25bfa5ce5b5f170fde52d3764cf8691aa239986d8",
+      "checkoutSha256": "a997bba6f9f215b115815628c12a8bbd060d4b10e7f1f61a9bd3bd5f051a3244",
+      "gitBlobSha1": "0beef898932f51e4f33d8426dc5478d95b3a2639",
+      "bytes": 246
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/CALL_LEDGER.jsonl",
+      "sha256": "dc52d9cd04b809be9d22d5298bd45d0e6f0a01307017d48a91aaa91a45e8e597",
+      "checkoutSha256": "ed7ce503e75ede0569c1d52c276549b475c687a845990899c3bc3ed7371cbc5a",
+      "gitBlobSha1": "16ed5def1a6f1da85fc3c86af9087fac001c01ca",
+      "bytes": 519152
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "330350e448c1cd29c6c7869c7a978142d95ba84aa12658a9c9bcacdcf763bbe3",
+      "checkoutSha256": "330350e448c1cd29c6c7869c7a978142d95ba84aa12658a9c9bcacdcf763bbe3",
+      "gitBlobSha1": "4ce14bd28b44b18d0ede279257faf9ec45a3bbe1",
+      "bytes": 191359
+    },
+    {
+      "path": "scripts/score-contrastive-recognition.mjs",
+      "sha256": "647dbd204ddcf6083f6a9788395f3098687aff844f90643e31e795e44c3e82bf",
+      "checkoutSha256": "1887863621f5562ccbd7b066d77baedb60dadb06eb174fce0aee5638fb7cad35",
+      "gitBlobSha1": "1df04adbfef00abada0effba64a0291c152d7626",
+      "bytes": 7172
+    },
+    {
+      "path": "src/experiments/realInput01/candidate03.ts",
+      "sha256": "f3a2dd9358ca2a50b9b3eba8a090211666db4c0fb8dc5fc146e742c9895f9508",
+      "checkoutSha256": "e6158fbd39ed6e193d8e91c7f16984f1cd6a70661c195f58f38cee6881610a35",
+      "gitBlobSha1": "a82d607dc21f65f8e6a85e88b069b3b5bbddc0b0",
+      "bytes": 3854
+    },
+    {
+      "path": "src/experiments/realInput01/candidate10.ts",
+      "sha256": "38676b4e4a9afa29fa5150fed381505f5bf780748f8fff579573270784533a8a",
+      "checkoutSha256": "8966b3ea0f57f8eed31bcacc13c5fc84668ccab52b2e7876a3c22f5eee19b9b0",
+      "gitBlobSha1": "572879e3e712031be93b7adc159db5353e47af5c",
+      "bytes": 2096
+    },
+    {
+      "path": "src/experiments/realInput01/contrastiveEvidenceExamples.ts",
+      "sha256": "368943f527b88994982be2fb1ccc0f0cb1d38bc08dc538e5498f409527e5b30a",
+      "checkoutSha256": "11e9c57b5c63aff3e1341bd01ff19209120bedf71a62cb7b89d8566ea68ba90f",
+      "gitBlobSha1": "ad065a978ec5c51984e0f63258bae2fa9da1c670",
+      "bytes": 4429
+    },
+    {
+      "path": "src/experiments/realInput01/modelWire.ts",
+      "sha256": "c7c81ae516c30faec850f4d765ae625d2cf1d11f39ed0d515ab93da45efb8be2",
+      "checkoutSha256": "f787fcf50e85b5651775f8dcf66b7d50347086ed2b78bd69f6a2e1f84e9f59bb",
+      "gitBlobSha1": "ad6654e91be59952f1c47be04a71e2822c4319de",
+      "bytes": 10103
+    }
+  ]
+}

@@ -2305,3 +2305,20 @@
 - 发送前两次本地绑定错误均在预留和网络前失败并重新冻结；一次测试误建孤立收据已精确清理，原595行账本前缀SHA保持。原始失败不计模型样本。
 - 同系列模型独立只读审计A PASS/B FAIL/C PASS/D FAIL/E FAIL/F PASS，总体严格审计FAIL；账本结果闭合，但官方分析不可长期幂等重放、K失败分支未专门验证、exampleVersion未贯通。
 - 证据：mainline-real-input-01/runs/opensource-methods-20260920a/AUDIT.md、MODEL_COMPARISON.json、AUDITED_COMPARISON.json 与 EXPERIMENT_AUDIT.md。
+
+### 2026-09-21 C11-P0 独立支线与执行计划启动
+
+- 当前用户明确要求读取 HANDOVER_CONTEXT_BRIEF.md，重新建立支线并交付详细推进路线。本轮授权范围为隔离工作区、Git 分支、规划与交接文档；没有新的模型调用、产品实现、真实材料、真人研究或部署授权。
+- 已核对原实验分支与远端同为 c9ed5ea673487b99d6a537795e3c873803a961da，原工作区干净。通过 Codex 创建独立 worktree，再建立 codex/e2-candidate11-blind-eval；原实验分支保持在上述提交。
+- 交接长文的 9f4128e / 290 次 / candidate10 NOT_RUN 是历史快照；最新日志、短交接和付费报告证明已经完成 24 次，累计 314 次。账本 644 行，SHA256 dc52d9cd04b809be9d22d5298bd45d0e6f0a01307017d48a91aaa91a45e8e597；本阶段只读。
+- 候选质量仍为 NO_PROMOTION：candidate10 有 OS04 回归，严格实验审计 FAIL。9/12 与 11/12 是同系列模型的响应后审计重判，不是人工盲审或真实接受保存转化率。
+- 本阶段写入版本化路线、实验跟踪表、分支基线和交接；后续 C11-P1 开始前须取得该阶段明确指令。计划中的 24+24 是待授权探索性上限，不是授权、预约运行或商业发布保证。
+
+### 2026-09-21 C11-P0 分支规划交付核验
+
+- 形成五个核心实验块与P0—P6顺序：先可信评分/复算，再最小candidate11与正确响应承接，再6×4消融和12×2新配对，最后真实App、本机观察与另批真人/商业验证。
+- 消融公共底座为candidate03加完成标准修正，四臂可见版本一致，仅切换元指令M和例子E；V00不冒充原candidate03。独立标签人员尚未落实，48次不构成商业验证。
+- Windows checkout将83个保护文件转为CRLF，首次字节校验因此失败；核实84个保护文件的Git blob和纯行尾差异后，仅在新worktree恢复原工作区精确字节并刷新索引stat，暂存内容无差异。没有覆盖原文件、旧评分或账本事件。
+- 文档结构、8个本机链接、两对时间戳/固定入口和84份保护hash核验通过；短交接54行/4186字节。密钥扫描2412文件通过，diff检查通过。本阶段不运行代码全量测试/浏览器/付费模型。
+- 本轮新增调用0；原分支仍c9ed5ea且工作区干净。候选实施、独立标签和后续付费/产品/部署均未启动，当前只完成规划交付。
+- 交付文件：refine-logs/EXPERIMENT_PLAN.md、EXPERIMENT_TRACKER.md，以及docs/recognition-optimization/candidate11/BRANCH_BASELINE.json和BRANCH_SETUP_AUDIT.md。提交推送后以Git最新SHA和交付回复为准。
