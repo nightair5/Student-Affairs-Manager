@@ -15,6 +15,7 @@ const B1='docs/recognition-optimization/candidate11/b1-preparation'
 const AUTHORIZATION=resolve('C:/Users/Winner/.codex/attachments/63d10dbd-a474-4f8a-b7bb-9d8d766d4fc7/已粘贴的文本.txt')
 const LEDGER_PATH=resolve('C:/Users/Winner/student-affairs-multimodal-exp/docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/CALL_LEDGER.jsonl')
 const LEGACY_MANIFEST_PATH=resolve('C:/Users/Winner/student-affairs-multimodal-exp/docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/REQUEST_MANIFEST.json')
+const EXISTING_SERVER_ENV=resolve('C:/Users/Winner/student-affairs-multimodal-exp/.env')
 const LOCK_ROOT=resolve('C:/Users/Winner/student-affairs-multimodal-exp/.data/candidate11-b2-20260921a')
 const B1_MANIFEST_SHA='af1f1d2427eec1795691e1d4a62056a614bac72f0254103667632b341794744e'
 const LEDGER_PREFIX={rows:644,reserves:314,bytes:519152,sha256:'dc52d9cd04b809be9d22d5298bd45d0e6f0a01307017d48a91aaa91a45e8e597',tail:'37ffce66d2e92d036481308f84b08a24c70d42c313cdaf7aaa8ad505f3f2822e'}
@@ -132,7 +133,8 @@ export async function dispatchCandidate11B2(unitId){
   const verified=verifySend(),{binding,grant,bindingBytes}=verified,budget=await openCandidate11B2Budget({ledgerPath:LEDGER_PATH,lockRoot:LOCK_ROOT,grant}),before=await budget.snapshot(),index=before.reservations.length
   check(index<24&&binding.units[index]?.unitId===unitId&&!before.stopped&&before.reservations.every(value=>value.status==='settled'),'NEXT_UNIT')
   const rawPath=join(DIRECTORY,'raw',unitId+'.jsonl'),resultPath=join(DIRECTORY,'results',unitId+'.json');check(!existsSync(rawPath)&&!existsSync(resultPath),'ALREADY_ATTEMPTED')
-  if(existsSync(resolve('.env')))process.loadEnvFile(resolve('.env'))
+  const envPath=existsSync(resolve('.env'))?resolve('.env'):EXISTING_SERVER_ENV
+  if(existsSync(envPath))process.loadEnvFile(envPath)
   try{assertModelGatewayConfigured()}catch{check(false,'SERVER_CONFIGURATION_UNAVAILABLE')}
   const origin='http://127.0.0.1:6631',capability=randomBytes(32).toString('hex'),{api}=await adapterApi();let observed,recorder
   try{
