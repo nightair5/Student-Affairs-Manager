@@ -1,0 +1,43 @@
+{
+  "version": "candidate11-b2-send-review-1",
+  "status": "PASS",
+  "authorizationSha": "38ee1a2112ca0d74066f1647f63d7bd57ef2ac31382e95f71afe5adaedaceca6",
+  "grantId": "f62bc5d0-1827-4a9f-a53a-44effef24cdf",
+  "head": "6541a40b0331e19e194745494527f242219c30ae",
+  "b1ManifestSha": "af1f1d2427eec1795691e1d4a62056a614bac72f0254103667632b341794744e",
+  "bindingSha": "66ddb8814eb8d19307004f4ac2efcc65174b5debdb6c712325602ebecc07e95c",
+  "billingSha": "63de4308cabe89005f81c398f657d06bb7071cd6116f008bcbe6943fa1b282e0",
+  "sourcesSha": "ba86dec533792e4ef2b4b1e00b658f9735eb03d6d5a7a9cad3548500b5fc6a66",
+  "b1Check": {
+    "status": "B1_PREPARED_FOR_REVIEW",
+    "requests": 24,
+    "modelCalls": 0,
+    "references": 6,
+    "manifestSha": "af1f1d2427eec1795691e1d4a62056a614bac72f0254103667632b341794744e",
+    "maxPreparedRequestBytes": 19908,
+    "ledger": {
+      "authoritativePath": "C:/Users/Winner/student-affairs-multimodal-exp/docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/CALL_LEDGER.jsonl",
+      "authoritativeSha": "dc52d9cd04b809be9d22d5298bd45d0e6f0a01307017d48a91aaa91a45e8e597",
+      "snapshotPath": "docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/CALL_LEDGER.jsonl",
+      "snapshotSha": "dc52d9cd04b809be9d22d5298bd45d0e6f0a01307017d48a91aaa91a45e8e597",
+      "bytes": 519152,
+      "rows": 644,
+      "reserves": 314,
+      "sameBytes": true,
+      "expectedSha": "dc52d9cd04b809be9d22d5298bd45d0e6f0a01307017d48a91aaa91a45e8e597",
+      "writerOpened": false
+    },
+    "protection": {
+      "count": 84,
+      "ledgerSha": "dc52d9cd04b809be9d22d5298bd45d0e6f0a01307017d48a91aaa91a45e8e597"
+    }
+  },
+  "checkedAt": "2026-09-21T10:01:59.379Z",
+  "constraints": {
+    "calls": 24,
+    "repair": 0,
+    "verifier": 0,
+    "retry": 0,
+    "maxBudgetCny": 51.904512
+  }
+}

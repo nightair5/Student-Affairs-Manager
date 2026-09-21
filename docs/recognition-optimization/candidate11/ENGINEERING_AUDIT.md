@@ -1,4 +1,4 @@
-# C11 A 工程包执行审计
+# C11 A—B2 工程与 Development 执行审计
 
 日期：2026-09-21。起点：593ab7847a5791f8e3fbc6e4b82f94a6c4d0ebb5。
 
@@ -16,7 +16,7 @@
 
 ## 阶段状态
 
-A1—A5实施及验证已交付。C11工程闭环 ENGINEERING_READY，仓库全量门槛 HAS_HISTORICAL_FAILURE / NO_PROMOTION。模型质量 NOT_RUN；真人收益 NOT_OBSERVABLE；合并/部署 NOT_RUN。
+A1—A5实施及验证已交付。B2模型评测已完成并决定`REJECT_CANDIDATE11`；仓库全量门槛仍为 HAS_HISTORICAL_FAILURE / NO_PROMOTION。真人收益 NOT_OBSERVABLE；合并/部署 NOT_RUN。
 
 ## 验证记录
 
@@ -94,3 +94,16 @@ A1—A5实施及验证已交付。C11工程闭环 ENGINEERING_READY，仓库全�
 - 所有阶段产物均为 ENGINEERING_NO_AUTHORIZATION / NOT_RUN；没有 C11 付费运行授权或生产接入。有效 prepared 仍被 dispatch 拒绝。
 - 7 项候选构造 + 6 项身份测试通过；新网关失败保护 9 项通过。原预算/网关全量 124 项通过，全部使用独立临时目录和 Mock；没有真实模型请求、Secret 读取或真实账本写入。
 - lint / typecheck / build / security 通过。完整测试的旧历史换行问题已逐项恢复原字节；旧 RCO-5-007 锁文件冻结差异保留。A5 最终全量结果继续单独记录。
+
+## B2 24次冻结Development消融
+
+- 用户明确授权B1 Manifest内24个身份、`deepseek-flash`固定参数、新专用grant、权威账本追加和¥51.904512最坏费用上限。代码先提交推送，本地/远端/待执行HEAD一致后才派发。
+- 使用新持久绝对锁目录、原子mkdir和排他owner；每单元锁内按冻结顺序reserve，解锁后只发送一次，raw落盘后再锁内settle。最终1 grant、24 reserve、24 settle；0 retry、0 repair、0 verifier、0 halt、0 uncertain。
+- 24次均HTTP 200且usage可审计。本地峰值价费用上界¥0.523928；provider实际扣费`NOT_OBSERVABLE`。账本最终693行、SHA `2051d8e775123579c3fa262f671a757e690983f64bc5945d692faaeb24b5322e`、tail `13b520d270d26335072f99920e47a4443e8bc586365eb20cda61c4122d7ab3bd`。
+- 发送期派发器把不存在的`packet.context`交给适配器，24个结果文件因此记录本地适配失败。原始raw未损坏；冻结raw、冻结适配器和冻结`packet.prepared.context`只读重放24/24通过。保留原始错误分析，另存`ADAPTER_REPLAY.json`与正式后处理分析；没有修改模型JSON或新增调用。
+- 正式评分：V00/V10/V01/V11完整来源均1/6；F1依次75.86%、75.86%、78.57%、71.43%。四臂Schema/引用均6/6有效、教学例越界0，但均因D06非法合并两个已作废旧端点而Severe=1。
+- V00有2 FN、5 Forbidden并发生关键修订端点回归，按预注册规则决定`REJECT_CANDIDATE11`。M、E、M×E以完整来源数描述性差分均为0；不得据此选择增强臂或进入Holdout模型调用。
+- 全套结果、逐请求账本绑定、错误分类和验证记录位于`candidate11/b2-development-20260921a/`。数据仍是已见Development、单作者模型辅助参照，不是独立人工真值或真实转化率。
+- 历史RCO-5-007继续为`FREEZE_HASH_MISMATCH:package-lock.json`；未改旧锁、Expected、冻结hash或发布门槛。默认候选、旧库、Preview和Production均未修改。
+
+当前停止状态：`B2_DEVELOPMENT_RESULTS_READY_FOR_REVIEW`。下一阶段只能准备独立人工参照与全新Holdout；在参照独立性、盲化、冻结和新授权完成前不得发送Holdout请求。

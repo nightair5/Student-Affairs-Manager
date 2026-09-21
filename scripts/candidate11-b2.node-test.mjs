@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import {mkdtemp,cp,readFile} from 'node:fs/promises'
+import {mkdtemp,readFile,writeFile} from 'node:fs/promises'
 import {tmpdir} from 'node:os'
 import {join,resolve} from 'node:path'
 import {createHash} from 'node:crypto'
@@ -14,6 +14,8 @@ const LEDGER=resolve('C:/Users/Winner/student-affairs-multimodal-exp/docs/recogn
 const LEGACY=resolve('C:/Users/Winner/student-affairs-multimodal-exp/docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/REQUEST_MANIFEST.json')
 const packets=JSON.parse(await readFile(join(ROOT,'docs/recognition-optimization/candidate11/b1-preparation/PREPARED_REQUESTS.json'),'utf8')).requests
 const scorerSha=sha(await readFile(join(ROOT,'scripts/score-candidate11-recognition.mjs')))
+const frozenLedgerPrefix=(await readFile(LEDGER)).subarray(0,519152)
+const seedLedger=path=>writeFile(path,frozenLedgerPrefix)
 
 function makeGrant(lockRoot){
   const units=packets.map(packet=>{const identity=inspectRequest(packet.requestSerialized,CANDIDATE11_B2_UNIT_POLICY);return {unitId:packet.unitId,ordinal:packet.ordinal,sourceId:packet.sourceId,sourceVersionId:packet.sourceVersionId,variant:packet.variant,position:packet.position,
@@ -37,7 +39,7 @@ test('grant fixes 24 identities, model route, zero retry and exact worst budget'
 })
 
 test('append-only budget grants, reserves and settles once in frozen order',async()=>{
-  const root=await mkdtemp(join(tmpdir(),'c11-b2-budget-')),ledger=join(root,'ledger.jsonl'),lockRoot=join(root,'lock');await cp(LEDGER,ledger)
+  const root=await mkdtemp(join(tmpdir(),'c11-b2-budget-')),ledger=join(root,'ledger.jsonl'),lockRoot=join(root,'lock');await seedLedger(ledger)
   const grant=makeGrant(lockRoot),budget=await openCandidate11B2Budget({ledgerPath:ledger,lockRoot,grant}),packet=packets[0]
   const lease=await budget.reserve(packet.unitId,packet.requestSerialized,CANDIDATE11_B2_UNIT_POLICY,'2026-09-21T06:00:00.000Z')
   const settled=await lease.complete(response(),200),state=await budget.snapshot()
@@ -47,7 +49,7 @@ test('append-only budget grants, reserves and settles once in frozen order',asyn
 })
 
 test('expired evidence and configuration failure do not reserve',async()=>{
-  const root=await mkdtemp(join(tmpdir(),'c11-b2-gateway-')),ledger=join(root,'ledger.jsonl'),lockRoot=join(root,'lock');await cp(LEDGER,ledger)
+  const root=await mkdtemp(join(tmpdir(),'c11-b2-gateway-')),ledger=join(root,'ledger.jsonl'),lockRoot=join(root,'lock');await seedLedger(ledger)
   const grant=makeGrant(lockRoot),budget=await openCandidate11B2Budget({ledgerPath:ledger,lockRoot,grant})
   assert.throws(()=>assertModelGatewayConfigured(()=>undefined),/NOT_CONFIGURED/)
   await assert.rejects(()=>budget.reserve(packets[0].unitId,packets[0].requestSerialized,CANDIDATE11_B2_UNIT_POLICY,'2026-09-22T00:00:00.000Z'),/PRICE_EXPIRED/)
@@ -58,7 +60,7 @@ test('expired evidence and configuration failure do not reserve',async()=>{
 })
 
 test('uncertain result halts the whole batch and cannot be retried',async()=>{
-  const root=await mkdtemp(join(tmpdir(),'c11-b2-uncertain-')),ledger=join(root,'ledger.jsonl'),lockRoot=join(root,'lock');await cp(LEDGER,ledger)
+  const root=await mkdtemp(join(tmpdir(),'c11-b2-uncertain-')),ledger=join(root,'ledger.jsonl'),lockRoot=join(root,'lock');await seedLedger(ledger)
   const grant=makeGrant(lockRoot),budget=await openCandidate11B2Budget({ledgerPath:ledger,lockRoot,grant}),packet=packets[0]
   const lease=await budget.reserve(packet.unitId,packet.requestSerialized,CANDIDATE11_B2_UNIT_POLICY,'2026-09-21T06:00:00.000Z');await lease.uncertain()
   const state=await budget.snapshot();assert.equal(state.stopped,true);assert.equal(state.reservations[0].status,'uncertain')

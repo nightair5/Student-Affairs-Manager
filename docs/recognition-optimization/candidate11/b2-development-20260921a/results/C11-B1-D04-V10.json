@@ -1,0 +1,34 @@
+{
+  "version": "candidate11-b2-result-1",
+  "unitId": "C11-B1-D04-V10",
+  "sourceId": "C11-B1-D04",
+  "variant": "V10",
+  "ordinal": 15,
+  "bindingSha": "66ddb8814eb8d19307004f4ac2efcc65174b5debdb6c712325602ebecc07e95c",
+  "requestSha": "6ecf88e46383cca8a90d821421581621f3e76a51ef92c832c7dc094f905b002e",
+  "responseSha": "1636a5fc69f9acb80748aa2200b91cd6bcd815ba28a18c5a0f74faaf643c0a94",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "modelMatch": true,
+  "httpStatus": 200,
+  "diagnostic": null,
+  "waitingMs": 5048,
+  "parseError": "SCHEMA_OR_ADAPTER_REJECTED",
+  "assembled": null,
+  "ledgerStatus": "settled",
+  "usage": {
+    "input_tokens": 4555,
+    "input_tokens_details": {
+      "cached_tokens": 3968
+    },
+    "output_tokens": 1320,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 5875
+  },
+  "costUpperMicroCny": 19670,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticRepair": false,
+  "retryCount": 0
+}

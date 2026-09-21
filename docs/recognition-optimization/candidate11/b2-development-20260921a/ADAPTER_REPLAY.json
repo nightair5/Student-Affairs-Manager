@@ -1,0 +1,232 @@
+{
+  "version": "candidate11-b2-adapter-replay-1",
+  "finding": {
+    "code": "RUNNER_CONTEXT_PATH_ERROR",
+    "affectedResults": 24,
+    "originalPath": "packet.context",
+    "correctFrozenPath": "packet.prepared.context",
+    "rawResponsesChanged": false,
+    "modelOutputsChanged": false,
+    "additionalModelCalls": 0,
+    "automaticRepair": false,
+    "note": "The live result diagnostic was a local adapter invocation error. Canonical scoring replays each unchanged raw output through the same frozen adapter and its frozen request context."
+  },
+  "units": [
+    {
+      "unitId": "C11-B1-D01-V00",
+      "rawResponseSha": "32337bffe803ee9c47734cdaf0eb5aa5159408c7a6718dbee27bb21dcabeb5cd",
+      "originalRunnerParseError": "SCHEMA_OR_ADAPTER_REJECTED",
+      "originalContextPath": "packet.context",
+      "frozenContextPath": "packet.prepared.context",
+      "frozenAdapterStatus": "PASS",
+      "assembledSha": "9d62daf8d6a80dbc5458dd63d71b00018f0d1385619086d4e7b80cf9448e47a1"
+    },
+    {
+      "unitId": "C11-B1-D01-V10",
+      "rawResponseSha": "4165a77484ee4eb06649693d1063129d581e452b428249aa0075a7d90f07f972",
+      "originalRunnerParseError": "SCHEMA_OR_ADAPTER_REJECTED",
+      "originalContextPath": "packet.context",
+      "frozenContextPath": "packet.prepared.context",
+      "frozenAdapterStatus": "PASS",
+      "assembledSha": "0c04698710541579819e7c0caaecc914e6727e79438d669c34c617f208ff85ce"
+    },
+    {
+      "unitId": "C11-B1-D01-V01",
+      "rawResponseSha": "0544d48e6f3d8df510345f18b93fc3970c4bb534f9616b721751b7d7ac399554",
+      "originalRunnerParseError": "SCHEMA_OR_ADAPTER_REJECTED",
+      "originalContextPath": "packet.context",
+      "frozenContextPath": "packet.prepared.context",
+      "frozenAdapterStatus": "PASS",
+      "assembledSha": "42faad4a9bb301dc83ee0ed13b545954ba2e323af8419057283f08ea00419850"
+    },
+    {
+      "unitId": "C11-B1-D01-V11",
+      "rawResponseSha": "4b5cb480ef2704422c0c678b0e8e87b13120f845aa3741d5a68e2f8d6ae432ce",
+      "originalRunnerParseError": "SCHEMA_OR_ADAPTER_REJECTED",
+      "originalContextPath": "packet.context",
+      "frozenContextPath": "packet.prepared.context",
+      "frozenAdapterStatus": "PASS",
+      "assembledSha": "b31f6aa1d9d2a0413855409e71cc3593b3af3f8fae6de91cfa038f107146a212"
+    },
+    {
+      "unitId": "C11-B1-D02-V00",
+      "rawResponseSha": "42039155f88b6d30ea471c881ecf13828c551e40c3a1af96803fb4462dc87000",
+      "originalRunnerParseError": "SCHEMA_OR_ADAPTER_REJECTED",
+      "originalContextPath": "packet.context",
+      "frozenContextPath": "packet.prepared.context",
+      "frozenAdapterStatus": "PASS",
+      "assembledSha": "b20efb724f433981e821c7622840ccb93b0bb5b75d4d3e7155f2fa7cf8b3c796"
+    },
+    {
+      "unitId": "C11-B1-D02-V10",
+      "rawResponseSha": "175a0679077195234d456ae971c3ed54097cf6e427c7478fcddd602598024a1b",
+      "originalRunnerParseError": "SCHEMA_OR_ADAPTER_REJECTED",
+      "originalContextPath": "packet.context",
+      "frozenContextPath": "packet.prepared.context",
+      "frozenAdapterStatus": "PASS",
+      "assembledSha": "562393dc1aad719a7b013209397ce33d8d98674b41ca08e33dcf79edd3b9c0b5"
+    },
+    {
+      "unitId": "C11-B1-D02-V11",
+      "rawResponseSha": "88425e1f39f4d2b6db799887fe39fc47a18571dbb154ea891d43a478abaf91ed",
+      "originalRunnerParseError": "SCHEMA_OR_ADAPTER_REJECTED",
+      "originalContextPath": "packet.context",
+      "frozenContextPath": "packet.prepared.context",
+      "frozenAdapterStatus": "PASS",
+      "assembledSha": "e0b82236315f451e548a29c9f9ecf85a4a05f0c3e5c865b1e0a5416811178eff"
+    },
+    {
+      "unitId": "C11-B1-D02-V01",
+      "rawResponseSha": "2e458b49d69a947db681e6ddb0e1e5ce30d9e2f43d9b3377b3e56b491e903aae",
+      "originalRunnerParseError": "SCHEMA_OR_ADAPTER_REJECTED",
+      "originalContextPath": "packet.context",
+      "frozenContextPath": "packet.prepared.context",
+      "frozenAdapterStatus": "PASS",
+      "assembledSha": "da724f83c1ab2486c466eda9aa8516042e1932465e2ca97b15fabd6cac70d2c5"
+    },
+    {
+      "unitId": "C11-B1-D03-V10",
+      "rawResponseSha": "dcf568c180ac19e071331a5ec1da9b14f600780be1f9e29ea26c9e570a4eb4d9",
+      "originalRunnerParseError": "SCHEMA_OR_ADAPTER_REJECTED",
+      "originalContextPath": "packet.context",
+      "frozenContextPath": "packet.prepared.context",
+      "frozenAdapterStatus": "PASS",
+      "assembledSha": "989d4374bb8f41e9969c08cf78a5ea7633c53859dd81d2234cb03862a3a9a506"
+    },
+    {
+      "unitId": "C11-B1-D03-V01",
+      "rawResponseSha": "fb60fffcfcbd009afafba48e826f3476a7019e7b886b89d08d3cbf3975c7d104",
+      "originalRunnerParseError": "SCHEMA_OR_ADAPTER_REJECTED",
+      "originalContextPath": "packet.context",
+      "frozenContextPath": "packet.prepared.context",
+      "frozenAdapterStatus": "PASS",
+      "assembledSha": "db29a3fd705d05ebfdafaf1b45c8efafa87dcec7a4cc0146502342dee35fb132"
+    },
+    {
+      "unitId": "C11-B1-D03-V00",
+      "rawResponseSha": "98ce2a59469909d95634f4677ada8d60c0f0157dbe0245702f80ae53e68ecf71",
+      "originalRunnerParseError": "SCHEMA_OR_ADAPTER_REJECTED",
+      "originalContextPath": "packet.context",
+      "frozenContextPath": "packet.prepared.context",
+      "frozenAdapterStatus": "PASS",
+      "assembledSha": "3157d3f728f744cc970c386f211e9efb59fca5dc682c86dced1716d4648d0745"
+    },
+    {
+      "unitId": "C11-B1-D03-V11",
+      "rawResponseSha": "9cc038da501bd9b4adea5e57722a31aa7197d51cab43e858547978301042079f",
+      "originalRunnerParseError": "SCHEMA_OR_ADAPTER_REJECTED",
+      "originalContextPath": "packet.context",
+      "frozenContextPath": "packet.prepared.context",
+      "frozenAdapterStatus": "PASS",
+      "assembledSha": "aedd5fa7747d980f63596f6829dc07184b57d3a47ea0451cd9e6f977d03ebff8"
+    },
+    {
+      "unitId": "C11-B1-D04-V01",
+      "rawResponseSha": "6c9776780f8adba776078f5ce3957a3e4576fe6ccb18248c9780a73296fb3fcf",
+      "originalRunnerParseError": "SCHEMA_OR_ADAPTER_REJECTED",
+      "originalContextPath": "packet.context",
+      "frozenContextPath": "packet.prepared.context",
+      "frozenAdapterStatus": "PASS",
+      "assembledSha": "0d38f9262ca608edadc544696037c8f8aab789bb71c9dc7e523b7287f008eb07"
+    },
+    {
+      "unitId": "C11-B1-D04-V11",
+      "rawResponseSha": "eb7595ca279f08a6d684d04e232a04d3b7d7c59c6ff8087cf419d27c37d5b7aa",
+      "originalRunnerParseError": "SCHEMA_OR_ADAPTER_REJECTED",
+      "originalContextPath": "packet.context",
+      "frozenContextPath": "packet.prepared.context",
+      "frozenAdapterStatus": "PASS",
+      "assembledSha": "ea693dc19e66e8f253c8a14ec5d09f01cb784f8e3d825caddaaf854b22a10a40"
+    },
+    {
+      "unitId": "C11-B1-D04-V10",
+      "rawResponseSha": "1636a5fc69f9acb80748aa2200b91cd6bcd815ba28a18c5a0f74faaf643c0a94",
+      "originalRunnerParseError": "SCHEMA_OR_ADAPTER_REJECTED",
+      "originalContextPath": "packet.context",
+      "frozenContextPath": "packet.prepared.context",
+      "frozenAdapterStatus": "PASS",
+      "assembledSha": "512e93d5d1b1d125e7000b2824ec93354c8e469e8ef6c7fbccdad43477346d19"
+    },
+    {
+      "unitId": "C11-B1-D04-V00",
+      "rawResponseSha": "e254d15fb5308ceea8f7cd4f5ccddee32f50bc6f53334823864b41bbdda3e914",
+      "originalRunnerParseError": "SCHEMA_OR_ADAPTER_REJECTED",
+      "originalContextPath": "packet.context",
+      "frozenContextPath": "packet.prepared.context",
+      "frozenAdapterStatus": "PASS",
+      "assembledSha": "e082bde90086108342969c252a3c8250d965aadbb86967111bf3cd41fee4e8cc"
+    },
+    {
+      "unitId": "C11-B1-D05-V11",
+      "rawResponseSha": "18dfebece6c25493e05a8be867b34eec3a17a76e9366683c51822428222c7168",
+      "originalRunnerParseError": "SCHEMA_OR_ADAPTER_REJECTED",
+      "originalContextPath": "packet.context",
+      "frozenContextPath": "packet.prepared.context",
+      "frozenAdapterStatus": "PASS",
+      "assembledSha": "44ba4dd38e74f97c0be0824c3f76403e13fd9e176302f65e86c40788c192a430"
+    },
+    {
+      "unitId": "C11-B1-D05-V00",
+      "rawResponseSha": "e9e44c121c22ab0eb5d2a0c333825a1444b9e5852eda0529bb75726c8285c7b3",
+      "originalRunnerParseError": "SCHEMA_OR_ADAPTER_REJECTED",
+      "originalContextPath": "packet.context",
+      "frozenContextPath": "packet.prepared.context",
+      "frozenAdapterStatus": "PASS",
+      "assembledSha": "836753454c76bced8ae5407b2461cb868af3e3a3edb3093149cb58810b361398"
+    },
+    {
+      "unitId": "C11-B1-D05-V01",
+      "rawResponseSha": "b17f6accd60c4f8182aa2d3f687c711b30b1514b87121bce9a2ff0309a4e8551",
+      "originalRunnerParseError": "SCHEMA_OR_ADAPTER_REJECTED",
+      "originalContextPath": "packet.context",
+      "frozenContextPath": "packet.prepared.context",
+      "frozenAdapterStatus": "PASS",
+      "assembledSha": "0e960de02b2633c88534ef691d4b9f59cad89f1f3eaad3e689766744fa505c84"
+    },
+    {
+      "unitId": "C11-B1-D05-V10",
+      "rawResponseSha": "499915a73d8e7497f56b24ba53e45084b9ed84bb79f07aebff28a1bf875cddba",
+      "originalRunnerParseError": "SCHEMA_OR_ADAPTER_REJECTED",
+      "originalContextPath": "packet.context",
+      "frozenContextPath": "packet.prepared.context",
+      "frozenAdapterStatus": "PASS",
+      "assembledSha": "78d77f51c69b150c996e66d3946740b1c74e2fc49ade7c3d58493777531c4f9d"
+    },
+    {
+      "unitId": "C11-B1-D06-V11",
+      "rawResponseSha": "7a02a6178593caf41abc4fc9c1be903ee8e69f632258f906c0992cd25de769d9",
+      "originalRunnerParseError": "SCHEMA_OR_ADAPTER_REJECTED",
+      "originalContextPath": "packet.context",
+      "frozenContextPath": "packet.prepared.context",
+      "frozenAdapterStatus": "PASS",
+      "assembledSha": "a68a86538c263c2f63b23bda3dab9ba13258b87f37bda18c7e0fe48dd9a15217"
+    },
+    {
+      "unitId": "C11-B1-D06-V01",
+      "rawResponseSha": "632340fc76a011d10d158e33a529d76bc30807880672e8e6ad7f57acce022377",
+      "originalRunnerParseError": "SCHEMA_OR_ADAPTER_REJECTED",
+      "originalContextPath": "packet.context",
+      "frozenContextPath": "packet.prepared.context",
+      "frozenAdapterStatus": "PASS",
+      "assembledSha": "8c6d04ee76b8b571b45114777c9923158e03770a5de9bf2b5fb6109f0c30ae56"
+    },
+    {
+      "unitId": "C11-B1-D06-V10",
+      "rawResponseSha": "f87302a378c2bb4467a3d92e3e088b28a7cf4f841a843ff41732a1ca37184488",
+      "originalRunnerParseError": "SCHEMA_OR_ADAPTER_REJECTED",
+      "originalContextPath": "packet.context",
+      "frozenContextPath": "packet.prepared.context",
+      "frozenAdapterStatus": "PASS",
+      "assembledSha": "9153e82336326720a0cbc38a51396752d69dc3c40ba8cead0402ae9e435d1e7b"
+    },
+    {
+      "unitId": "C11-B1-D06-V00",
+      "rawResponseSha": "f0684d78880d85f21ca61cf359fa4bfb4126a766115f5c846f65496accae9bbd",
+      "originalRunnerParseError": "SCHEMA_OR_ADAPTER_REJECTED",
+      "originalContextPath": "packet.context",
+      "frozenContextPath": "packet.prepared.context",
+      "frozenAdapterStatus": "PASS",
+      "assembledSha": "09bf3688a1a49d2e21ec963610817113965695b8b8e54188327e05680baa1217"
+    }
+  ]
+}
