@@ -85,6 +85,18 @@ export function contrastivePolicyFor(unitId) {
   check(typeof unitId==='string'&&/^K(?:0[1-9]|1[0-2])-[AB]$/.test(unitId),'CONTRASTIVE_UNIT')
   return unitId.endsWith('-A')?CONTRASTIVE_BASELINE_POLICY:CONTRASTIVE_CANDIDATE_POLICY
 }
+// Candidate11 B2 is a fresh 24-call authorization. Its conservative reserve is
+// the exact peak-price envelope: 1,048,576 input tokens at CNY 2/M plus 8,192
+// output tokens at CNY 8/M = 2,162,688 micro-CNY per frozen request.
+export const CANDIDATE11_B2_UNIT_POLICY = Object.freeze({...MODEL_COMPARE_FLASH_POLICY,
+  version:'candidate11-b2-unit-budget-1',maxRequests:338,reasoningEffort:'none',outputTokenCeiling:8192,
+  reservationMicroCny:2162688,limitMicroCny:51904512})
+export const CANDIDATE11_B2_POLICY = Object.freeze({version:'candidate11-b2-budget-1',maxRequests:24,maxTotalRequests:338,
+  limitMicroCny:51904512,reservationMicroCny:2162688,unit:CANDIDATE11_B2_UNIT_POLICY})
+export function candidate11B2PolicyFor(unitId) {
+  check(typeof unitId==='string'&&/^C11-B1-D0[1-6]-V(?:00|10|01|11)$/.test(unitId),'CANDIDATE11_B2_UNIT')
+  return CANDIDATE11_B2_UNIT_POLICY
+}
 const fail = code => { throw Error('REAL_INPUT_BUDGET_' + code) }
 const check = (ok, code) => { if (!ok) fail(code) }
 const digest = value => typeof value === 'string' && /^[a-f0-9]{64}$/.test(value)
@@ -170,7 +182,8 @@ function unambiguousResponse(rawText) {
 const knownPolicy = policy => [BILLING_POLICY,FLASH41_POLICY,FLASH41_PAIRED06_POLICY,FLASH41_PAIRED07_POLICY,
   FLASH41_PAIRED08_POLICY,FLASH41_PAIRED09_POLICY,MODEL_COMPARE_FLASH_POLICY,MODEL_COMPARE_PRO_POLICY,
   REASONING_COMPARE_NONE_POLICY,REASONING_COMPARE_LOW_POLICY,REASONING_MAX_NONE_POLICY,REASONING_MAX_MAX_POLICY,
-  REASONING_LOW16_NONE_POLICY,REASONING_LOW16_LOW_POLICY,CONTRASTIVE_BASELINE_POLICY,CONTRASTIVE_CANDIDATE_POLICY]
+  REASONING_LOW16_NONE_POLICY,REASONING_LOW16_LOW_POLICY,CONTRASTIVE_BASELINE_POLICY,CONTRASTIVE_CANDIDATE_POLICY,
+  CANDIDATE11_B2_UNIT_POLICY]
   .some(value=>isDeepStrictEqual(policy,value))
 const responseByteCeiling = policy => policy.outputTokenCeiling>8192?2097152:524288
 function validateUsageRecord(rawText,status,policy) {
@@ -189,7 +202,7 @@ function validateUsageRecord(rawText,status,policy) {
   check(u.input_tokens > 0 && u.output_tokens > 0 && integer(u.total_tokens, policy.inputTokenCeiling+policy.outputTokenCeiling) && u.total_tokens === u.input_tokens + u.output_tokens
     && integer(u.input_tokens_details.cached_tokens, u.input_tokens) && integer(reasoningTokens,u.output_tokens)
     && (policy.reasoningEffort==='none'?reasoningTokens===0:['low','max'].includes(policy.reasoningEffort)), 'USAGE_INCONSISTENT')
-  check(cost<=BILLING_POLICY.reservationMicroCny,'RESERVATION_EXCEEDED')
+  check(cost<=(policy.reservationMicroCny??BILLING_POLICY.reservationMicroCny),'RESERVATION_EXCEEDED')
   return {response,responseId:response.id,usage:u,costUpperMicroCny:cost,responseSha:sha256(rawText)}
 }
 /** Accounting trust is intentionally independent of semantic completeness. */
