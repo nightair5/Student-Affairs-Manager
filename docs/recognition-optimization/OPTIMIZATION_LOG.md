@@ -2322,3 +2322,9 @@
 - 文档结构、8个本机链接、两对时间戳/固定入口和84份保护hash核验通过；短交接54行/4186字节。密钥扫描2412文件通过，diff检查通过。本阶段不运行代码全量测试/浏览器/付费模型。
 - 本轮新增调用0；原分支仍c9ed5ea且工作区干净。候选实施、独立标签和后续付费/产品/部署均未启动，当前只完成规划交付。
 - 交付文件：refine-logs/EXPERIMENT_PLAN.md、EXPERIMENT_TRACKER.md，以及docs/recognition-optimization/candidate11/BRANCH_BASELINE.json和BRANCH_SETUP_AUDIT.md。提交推送后以Git最新SHA和交付回复为准。
+
+### 2026-09-21 C11-A 工程包授权与开始
+
+- 当前用户明确授权连续完成 A1—A5，允许锁定依赖恢复、独立本机库及入口、验证、提交推送当前 C11 分支；不授权模型、真人、真实账本写入、合并或部署。
+- 起点593ab78，工作区干净，84个保护文件逐字节匹配，旧账本644行/314次只读。
+- 具体实施与验证记录见 candidate11/ENGINEERING_AUDIT.md。本条更新覆盖旧计划仅P1的下一步建议，不改变冻结历史。

@@ -1,0 +1,1675 @@
+{
+  "version": "candidate11-historical-rescore-2",
+  "scorerVersion": "candidate11-scoring-2.0.0",
+  "scorerSha": "f12600d7b061ac8ec15e9d6de4912b96213ab6067d70b47485a6b0e7a33e6343",
+  "referenceProvenance": "Post-hoc single-agent diagnostic constraints; not independent human labels; all references partial.",
+  "bindingSha": "ac3e13d5f67dc090d0f54bb424161a30c1422a1daf366fd03d4d6c6d877eab6d",
+  "protection": {
+    "count": 84,
+    "ledgerSha": "dc52d9cd04b809be9d22d5298bd45d0e6f0a01307017d48a91aaa91a45e8e597"
+  },
+  "ledgerRows": 644,
+  "newModelCalls": 0,
+  "oldCandidateSnapshots": [
+    {
+      "sourceId": "OS01",
+      "candidate03RequestSha": "6c482d227dbef5affc48a805a70691aaaf0f1da8c00653b00eb8ee13a722a615",
+      "candidate10RequestSha": "59aa02c64670086e8ef17d92be087197a883c25440016d6cdca389189b70eef4"
+    },
+    {
+      "sourceId": "OS02",
+      "candidate03RequestSha": "ddae68eb95cd5a2a91003264098451a2f02a37b61eea69e40719fbcb32c3f439",
+      "candidate10RequestSha": "2789c81d7c297acc2a0515f5d4ae7cc898685cf660037c7df2654c6d0dc41d25"
+    },
+    {
+      "sourceId": "OS03",
+      "candidate03RequestSha": "a88026bd626ec2e19b8ea9748f20844abb11c109ac6716e0226c8fc82750627a",
+      "candidate10RequestSha": "c04900f38e47e118b7073e8d5a2dcc4a6113dc37ef70ba2620a270ef7df65246"
+    },
+    {
+      "sourceId": "OS04",
+      "candidate03RequestSha": "8323c8b05d63a63dc0ea8c87e95353b773853dd76b0ad09cf877350e1ce4eea4",
+      "candidate10RequestSha": "8ef0274a06eb8b52ed261248b69965274251d3429f392343133d0bfdeda66dfb"
+    },
+    {
+      "sourceId": "OS05",
+      "candidate03RequestSha": "105fb4801460c5ee0691a3f00f89a0d422eae44360b26d06e9582ea4fde6a8cf",
+      "candidate10RequestSha": "8e9abed20c6cb2cd645c0fb67b5de0687e164a26fdf3a0e837f3d84e15347b1a"
+    },
+    {
+      "sourceId": "OS06",
+      "candidate03RequestSha": "d3c9a26ff77a7da54a4e0b99a6ace9d5751ddc630e044b8f7e3eac4838b926ae",
+      "candidate10RequestSha": "0034b9ca7a5fd624d124b01b208a222a2c516cd6e98c0e08252023f0ec9b0a7d"
+    },
+    {
+      "sourceId": "OS07",
+      "candidate03RequestSha": "4f2f96f11f6302e8731a75c12cf14914cef017a76033ddecd16543295bcaf27a",
+      "candidate10RequestSha": "e43e3a1fb6a314f8d72e00715588a66fa1932d49191183d3389cabd0291fbc1b"
+    },
+    {
+      "sourceId": "OS08",
+      "candidate03RequestSha": "090ea278fbe2d0b9f23c5d6b1b7549306a3ffd81927cd442b09a892a7a0dac1d",
+      "candidate10RequestSha": "0c78f7fc8df1077b99cce83eb3521fbe0bb226081bc61df37b54cf4069dec454"
+    },
+    {
+      "sourceId": "OS09",
+      "candidate03RequestSha": "7d8f5e75ab933e8767a6216aaaa620a51dbd212ea7e2bf344a9be7d5d41f3612",
+      "candidate10RequestSha": "874ef02c98422f71dd39589314f31176e4a02b981b58536d82f8c8221f0e5b6a"
+    },
+    {
+      "sourceId": "OS10",
+      "candidate03RequestSha": "5708e3f26319774f5f2e0ea1884bc2790389051d7eb39c355c8a51e1b665b1e7",
+      "candidate10RequestSha": "c7312afcb4c6a7ef16425e0e3e6427f1ead136f7cb8484a4eae36926b4f8b4e6"
+    },
+    {
+      "sourceId": "OS11",
+      "candidate03RequestSha": "cac89c70b899d5fdd829f548a73b6813c88cec1c225dc2cd1352f2a7d7e3076e",
+      "candidate10RequestSha": "1fb44a887351e29324f779042d40cc229534d1e6b0470e49f1167495d4044214"
+    },
+    {
+      "sourceId": "OS12",
+      "candidate03RequestSha": "6c3e504db2207edfeaffcd4280480e9132a9e894dbd05cd4b4b9c5e950ccc784",
+      "candidate10RequestSha": "2e05e59f16589cbe0fe4f24df54dd2e376063d1cfb2f9ac4ceedac7ae83872a8"
+    }
+  ],
+  "rows": [
+    {
+      "sourceId": "OS01",
+      "unitId": "K01-A",
+      "arm": "A",
+      "requestSha": "a887022fdd5da16a07f4be790716d507e4bc17dd36e038714fb8233323a2f886",
+      "responseSha": "9e4b10e5574bd249d4946f3f17c0c801c2e6f117fc1a9b03e52d9191e31095a9",
+      "parseError": null,
+      "score": {
+        "scorerVersion": "candidate11-scoring-2.0.0",
+        "status": "REFERENCE_INCOMPLETE",
+        "plannedSources": 1,
+        "expectedTasks": 1,
+        "complete": null,
+        "knownChecksPass": true,
+        "taskMetrics": {
+          "expected": 1,
+          "predicted": 1,
+          "alignedPairs": 1,
+          "correctPairs": 1,
+          "alignment": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1,
+            "recall": 1
+          },
+          "correctness": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1,
+            "recall": 1
+          }
+        },
+        "alignment": [
+          {
+            "goldId": "deliver",
+            "predictedId": "task-submit-photos",
+            "aligned": true,
+            "correct": true,
+            "fields": [
+              {
+                "path": "materials",
+                "pass": true
+              }
+            ]
+          }
+        ],
+        "checks": [],
+        "issues": [
+          "REFERENCE_INCOMPLETE"
+        ],
+        "states": {
+          "actionable": 1,
+          "unknownCondition": 0,
+          "falseCondition": 0,
+          "inactive": 0
+        }
+      }
+    },
+    {
+      "sourceId": "OS01",
+      "unitId": "K01-B",
+      "arm": "B",
+      "requestSha": "59aa02c64670086e8ef17d92be087197a883c25440016d6cdca389189b70eef4",
+      "responseSha": "6922c606c9d27aba6c912dcdd99434cd4ce24d7723fbe74d138ab3bfe36c1c97",
+      "parseError": null,
+      "score": {
+        "scorerVersion": "candidate11-scoring-2.0.0",
+        "status": "REFERENCE_INCOMPLETE",
+        "plannedSources": 1,
+        "expectedTasks": 1,
+        "complete": null,
+        "knownChecksPass": true,
+        "taskMetrics": {
+          "expected": 1,
+          "predicted": 1,
+          "alignedPairs": 1,
+          "correctPairs": 1,
+          "alignment": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1,
+            "recall": 1
+          },
+          "correctness": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1,
+            "recall": 1
+          }
+        },
+        "alignment": [
+          {
+            "goldId": "deliver",
+            "predictedId": "task-deliver-photos",
+            "aligned": true,
+            "correct": true,
+            "fields": [
+              {
+                "path": "materials",
+                "pass": true
+              }
+            ]
+          }
+        ],
+        "checks": [],
+        "issues": [
+          "REFERENCE_INCOMPLETE"
+        ],
+        "states": {
+          "actionable": 1,
+          "unknownCondition": 0,
+          "falseCondition": 0,
+          "inactive": 0
+        }
+      }
+    },
+    {
+      "sourceId": "OS02",
+      "unitId": "K02-A",
+      "arm": "A",
+      "requestSha": "28238d7de29aef2bc3f0618297aabb78783fb089af03e3cccc3dbfe785517f47",
+      "responseSha": "afa36288d4febdad3a85c7492abb045084247e6e10d5987745ae5f3266ab7408",
+      "parseError": null,
+      "score": {
+        "scorerVersion": "candidate11-scoring-2.0.0",
+        "status": "REFERENCE_INCOMPLETE",
+        "plannedSources": 1,
+        "expectedTasks": 2,
+        "complete": null,
+        "knownChecksPass": true,
+        "taskMetrics": {
+          "expected": 2,
+          "predicted": 2,
+          "alignedPairs": 2,
+          "correctPairs": 2,
+          "alignment": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1,
+            "recall": 1
+          },
+          "correctness": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1,
+            "recall": 1
+          }
+        },
+        "alignment": [
+          {
+            "goldId": "buy",
+            "predictedId": "task-buy-dehumidifier-box",
+            "aligned": true,
+            "correct": true,
+            "fields": []
+          },
+          {
+            "goldId": "deliver",
+            "predictedId": "task-submit-school-history-photos",
+            "aligned": true,
+            "correct": true,
+            "fields": [
+              {
+                "path": "dependencies",
+                "pass": true
+              }
+            ]
+          }
+        ],
+        "checks": [],
+        "issues": [
+          "REFERENCE_INCOMPLETE"
+        ],
+        "states": {
+          "actionable": 2,
+          "unknownCondition": 0,
+          "falseCondition": 0,
+          "inactive": 0
+        }
+      }
+    },
+    {
+      "sourceId": "OS02",
+      "unitId": "K02-B",
+      "arm": "B",
+      "requestSha": "2789c81d7c297acc2a0515f5d4ae7cc898685cf660037c7df2654c6d0dc41d25",
+      "responseSha": "39105eced974f4f0f6f0d773c20d6ab8d949629c2d7fbc4911f9e29865b8775a",
+      "parseError": null,
+      "score": {
+        "scorerVersion": "candidate11-scoring-2.0.0",
+        "status": "REFERENCE_INCOMPLETE",
+        "plannedSources": 1,
+        "expectedTasks": 2,
+        "complete": null,
+        "knownChecksPass": true,
+        "taskMetrics": {
+          "expected": 2,
+          "predicted": 2,
+          "alignedPairs": 2,
+          "correctPairs": 2,
+          "alignment": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1,
+            "recall": 1
+          },
+          "correctness": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1,
+            "recall": 1
+          }
+        },
+        "alignment": [
+          {
+            "goldId": "buy",
+            "predictedId": "task-buy-moisture-box",
+            "aligned": true,
+            "correct": true,
+            "fields": []
+          },
+          {
+            "goldId": "deliver",
+            "predictedId": "task-deliver-school-history-photos",
+            "aligned": true,
+            "correct": true,
+            "fields": [
+              {
+                "path": "dependencies",
+                "pass": true
+              }
+            ]
+          }
+        ],
+        "checks": [],
+        "issues": [
+          "REFERENCE_INCOMPLETE"
+        ],
+        "states": {
+          "actionable": 2,
+          "unknownCondition": 0,
+          "falseCondition": 0,
+          "inactive": 0
+        }
+      }
+    },
+    {
+      "sourceId": "OS03",
+      "unitId": "K03-A",
+      "arm": "A",
+      "requestSha": "e8ee819ba98571b65f0cf46852b318ea4620fae2a04ebac289ab14b81c48b9d2",
+      "responseSha": "94662c13fb0f20f4f02bd75dfd282c6a7ff39d41faf530aeb4e52e8adee7ee6d",
+      "parseError": null,
+      "score": {
+        "scorerVersion": "candidate11-scoring-2.0.0",
+        "status": "REFERENCE_INCOMPLETE",
+        "plannedSources": 1,
+        "expectedTasks": 2,
+        "complete": null,
+        "knownChecksPass": true,
+        "taskMetrics": {
+          "expected": 2,
+          "predicted": 2,
+          "alignedPairs": 2,
+          "correctPairs": 2,
+          "alignment": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1,
+            "recall": 1
+          },
+          "correctness": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1,
+            "recall": 1
+          }
+        },
+        "alignment": [
+          {
+            "goldId": "write",
+            "predictedId": "task-write-equipment-instructions",
+            "aligned": true,
+            "correct": true,
+            "fields": [
+              {
+                "path": "dependencies",
+                "pass": true
+              }
+            ]
+          },
+          {
+            "goldId": "backup",
+            "predictedId": "task-backup-last-semester-maintenance-records",
+            "aligned": true,
+            "correct": true,
+            "fields": [
+              {
+                "path": "dependencies",
+                "pass": true
+              }
+            ]
+          }
+        ],
+        "checks": [],
+        "issues": [
+          "REFERENCE_INCOMPLETE"
+        ],
+        "states": {
+          "actionable": 2,
+          "unknownCondition": 0,
+          "falseCondition": 0,
+          "inactive": 0
+        }
+      }
+    },
+    {
+      "sourceId": "OS03",
+      "unitId": "K03-B",
+      "arm": "B",
+      "requestSha": "c04900f38e47e118b7073e8d5a2dcc4a6113dc37ef70ba2620a270ef7df65246",
+      "responseSha": "e5bf12bab5aae6b77df0ace7d4eb185fff97aecad29ab477b9bef9ce80da5570",
+      "parseError": null,
+      "score": {
+        "scorerVersion": "candidate11-scoring-2.0.0",
+        "status": "REFERENCE_INCOMPLETE",
+        "plannedSources": 1,
+        "expectedTasks": 2,
+        "complete": null,
+        "knownChecksPass": true,
+        "taskMetrics": {
+          "expected": 2,
+          "predicted": 2,
+          "alignedPairs": 2,
+          "correctPairs": 2,
+          "alignment": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1,
+            "recall": 1
+          },
+          "correctness": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1,
+            "recall": 1
+          }
+        },
+        "alignment": [
+          {
+            "goldId": "write",
+            "predictedId": "task-write-equipment-instructions",
+            "aligned": true,
+            "correct": true,
+            "fields": [
+              {
+                "path": "dependencies",
+                "pass": true
+              }
+            ]
+          },
+          {
+            "goldId": "backup",
+            "predictedId": "task-backup-maintenance-records",
+            "aligned": true,
+            "correct": true,
+            "fields": [
+              {
+                "path": "dependencies",
+                "pass": true
+              }
+            ]
+          }
+        ],
+        "checks": [],
+        "issues": [
+          "REFERENCE_INCOMPLETE"
+        ],
+        "states": {
+          "actionable": 2,
+          "unknownCondition": 0,
+          "falseCondition": 0,
+          "inactive": 0
+        }
+      }
+    },
+    {
+      "sourceId": "OS04",
+      "unitId": "K04-A",
+      "arm": "A",
+      "requestSha": "c0e787a5ec63a95b6741834135e02d7869090e032b589ce2e6cd09d80deb4926",
+      "responseSha": "cfec4a248df0c81d065d10681602bfba76879e0fc7cf6c4ce1aed52d3f13dfda",
+      "parseError": null,
+      "score": {
+        "scorerVersion": "candidate11-scoring-2.0.0",
+        "status": "REFERENCE_INCOMPLETE",
+        "plannedSources": 1,
+        "expectedTasks": 2,
+        "complete": null,
+        "knownChecksPass": true,
+        "taskMetrics": {
+          "expected": 2,
+          "predicted": 2,
+          "alignedPairs": 2,
+          "correctPairs": 2,
+          "alignment": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1,
+            "recall": 1
+          },
+          "correctness": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1,
+            "recall": 1
+          }
+        },
+        "alignment": [
+          {
+            "goldId": "verify",
+            "predictedId": "task-verify-data-authorization",
+            "aligned": true,
+            "correct": true,
+            "fields": [
+              {
+                "path": "semantics.status",
+                "pass": true
+              },
+              {
+                "path": "detail.completionCriteria",
+                "pass": true
+              }
+            ]
+          },
+          {
+            "goldId": "publish",
+            "predictedId": "task-publish-survey-summary",
+            "aligned": true,
+            "correct": true,
+            "fields": [
+              {
+                "path": "condition.value",
+                "pass": true
+              },
+              {
+                "path": "actionable",
+                "pass": true
+              }
+            ]
+          }
+        ],
+        "checks": [],
+        "issues": [
+          "REFERENCE_INCOMPLETE"
+        ],
+        "states": {
+          "actionable": 1,
+          "unknownCondition": 1,
+          "falseCondition": 0,
+          "inactive": 0
+        }
+      }
+    },
+    {
+      "sourceId": "OS04",
+      "unitId": "K04-B",
+      "arm": "B",
+      "requestSha": "8ef0274a06eb8b52ed261248b69965274251d3429f392343133d0bfdeda66dfb",
+      "responseSha": "c48326535c8ec9ba3497912d9277914ebead4178c8f666103b47f6ae567fab6f",
+      "parseError": null,
+      "score": {
+        "scorerVersion": "candidate11-scoring-2.0.0",
+        "status": "REFERENCE_INCOMPLETE",
+        "plannedSources": 1,
+        "expectedTasks": 2,
+        "complete": null,
+        "knownChecksPass": false,
+        "taskMetrics": {
+          "expected": 2,
+          "predicted": 2,
+          "alignedPairs": 2,
+          "correctPairs": 1,
+          "alignment": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1,
+            "recall": 1
+          },
+          "correctness": {
+            "tp": 1,
+            "fp": 1,
+            "fn": 1,
+            "precision": 0.5,
+            "recall": 0.5
+          }
+        },
+        "alignment": [
+          {
+            "goldId": "verify",
+            "predictedId": "task-verify-authorization",
+            "aligned": true,
+            "correct": false,
+            "fields": [
+              {
+                "path": "semantics.status",
+                "pass": true
+              },
+              {
+                "path": "detail.completionCriteria",
+                "pass": false
+              }
+            ]
+          },
+          {
+            "goldId": "publish",
+            "predictedId": "task-publish-survey-summary",
+            "aligned": true,
+            "correct": true,
+            "fields": [
+              {
+                "path": "condition.value",
+                "pass": true
+              },
+              {
+                "path": "actionable",
+                "pass": true
+              }
+            ]
+          }
+        ],
+        "checks": [],
+        "issues": [
+          "REFERENCE_INCOMPLETE"
+        ],
+        "states": {
+          "actionable": 1,
+          "unknownCondition": 1,
+          "falseCondition": 0,
+          "inactive": 0
+        }
+      }
+    },
+    {
+      "sourceId": "OS05",
+      "unitId": "K05-A",
+      "arm": "A",
+      "requestSha": "616de9eeb93511316534882d23bf04c323f07f89ed4a1fdbbd9af53a02e8e5f5",
+      "responseSha": "8a91983dc0c0a655fe48ec44dca75670416802e510419667b7561aff276005e3",
+      "parseError": null,
+      "score": {
+        "scorerVersion": "candidate11-scoring-2.0.0",
+        "status": "REFERENCE_INCOMPLETE",
+        "plannedSources": 1,
+        "expectedTasks": 1,
+        "complete": null,
+        "knownChecksPass": true,
+        "taskMetrics": {
+          "expected": 1,
+          "predicted": 1,
+          "alignedPairs": 1,
+          "correctPairs": 1,
+          "alignment": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1,
+            "recall": 1
+          },
+          "correctness": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1,
+            "recall": 1
+          }
+        },
+        "alignment": [
+          {
+            "goldId": "key",
+            "predictedId": "task-0001",
+            "aligned": true,
+            "correct": true,
+            "fields": [
+              {
+                "path": "condition.value",
+                "pass": true
+              },
+              {
+                "path": "actionable",
+                "pass": true
+              }
+            ]
+          }
+        ],
+        "checks": [],
+        "issues": [
+          "REFERENCE_INCOMPLETE"
+        ],
+        "states": {
+          "actionable": 0,
+          "unknownCondition": 1,
+          "falseCondition": 0,
+          "inactive": 0
+        }
+      }
+    },
+    {
+      "sourceId": "OS05",
+      "unitId": "K05-B",
+      "arm": "B",
+      "requestSha": "8e9abed20c6cb2cd645c0fb67b5de0687e164a26fdf3a0e837f3d84e15347b1a",
+      "responseSha": "c2de30e46e6a48a801973c5c586298243f9a83b37dac3f78678b5999741a9e8a",
+      "parseError": null,
+      "score": {
+        "scorerVersion": "candidate11-scoring-2.0.0",
+        "status": "REFERENCE_INCOMPLETE",
+        "plannedSources": 1,
+        "expectedTasks": 1,
+        "complete": null,
+        "knownChecksPass": true,
+        "taskMetrics": {
+          "expected": 1,
+          "predicted": 1,
+          "alignedPairs": 1,
+          "correctPairs": 1,
+          "alignment": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1,
+            "recall": 1
+          },
+          "correctness": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1,
+            "recall": 1
+          }
+        },
+        "alignment": [
+          {
+            "goldId": "key",
+            "predictedId": "task-claim-key",
+            "aligned": true,
+            "correct": true,
+            "fields": [
+              {
+                "path": "condition.value",
+                "pass": true
+              },
+              {
+                "path": "actionable",
+                "pass": true
+              }
+            ]
+          }
+        ],
+        "checks": [],
+        "issues": [
+          "REFERENCE_INCOMPLETE"
+        ],
+        "states": {
+          "actionable": 0,
+          "unknownCondition": 1,
+          "falseCondition": 0,
+          "inactive": 0
+        }
+      }
+    },
+    {
+      "sourceId": "OS06",
+      "unitId": "K06-A",
+      "arm": "A",
+      "requestSha": "7fb088768322382122d2e8d1743c6e17570abfe1230cda2c7f42cbd7211402f2",
+      "responseSha": "3fb35392a31e8da54d758c57404de91a70b0fddeeaeaca83e453e34eb27427dd",
+      "parseError": null,
+      "score": {
+        "scorerVersion": "candidate11-scoring-2.0.0",
+        "status": "REFERENCE_INCOMPLETE",
+        "plannedSources": 1,
+        "expectedTasks": 1,
+        "complete": null,
+        "knownChecksPass": true,
+        "taskMetrics": {
+          "expected": 1,
+          "predicted": 1,
+          "alignedPairs": 1,
+          "correctPairs": 1,
+          "alignment": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1,
+            "recall": 1
+          },
+          "correctness": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1,
+            "recall": 1
+          }
+        },
+        "alignment": [
+          {
+            "goldId": "key",
+            "predictedId": "task-0001",
+            "aligned": true,
+            "correct": true,
+            "fields": [
+              {
+                "path": "condition.value",
+                "pass": true
+              },
+              {
+                "path": "actionable",
+                "pass": true
+              },
+              {
+                "path": "semantics.status",
+                "pass": true
+              }
+            ]
+          }
+        ],
+        "checks": [],
+        "issues": [
+          "REFERENCE_INCOMPLETE"
+        ],
+        "states": {
+          "actionable": 1,
+          "unknownCondition": 0,
+          "falseCondition": 0,
+          "inactive": 0
+        }
+      }
+    },
+    {
+      "sourceId": "OS06",
+      "unitId": "K06-B",
+      "arm": "B",
+      "requestSha": "0034b9ca7a5fd624d124b01b208a222a2c516cd6e98c0e08252023f0ec9b0a7d",
+      "responseSha": "79dbc82f62ce27855a322ba56cb58122750af3ee1fdf54a140bc7606abf446c5",
+      "parseError": null,
+      "score": {
+        "scorerVersion": "candidate11-scoring-2.0.0",
+        "status": "REFERENCE_INCOMPLETE",
+        "plannedSources": 1,
+        "expectedTasks": 1,
+        "complete": null,
+        "knownChecksPass": true,
+        "taskMetrics": {
+          "expected": 1,
+          "predicted": 1,
+          "alignedPairs": 1,
+          "correctPairs": 1,
+          "alignment": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1,
+            "recall": 1
+          },
+          "correctness": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1,
+            "recall": 1
+          }
+        },
+        "alignment": [
+          {
+            "goldId": "key",
+            "predictedId": "task-0001-claim-key",
+            "aligned": true,
+            "correct": true,
+            "fields": [
+              {
+                "path": "condition.value",
+                "pass": true
+              },
+              {
+                "path": "actionable",
+                "pass": true
+              },
+              {
+                "path": "semantics.status",
+                "pass": true
+              }
+            ]
+          }
+        ],
+        "checks": [],
+        "issues": [
+          "REFERENCE_INCOMPLETE"
+        ],
+        "states": {
+          "actionable": 1,
+          "unknownCondition": 0,
+          "falseCondition": 0,
+          "inactive": 0
+        }
+      }
+    },
+    {
+      "sourceId": "OS07",
+      "unitId": "K07-A",
+      "arm": "A",
+      "requestSha": "6596f3fe3e7c6bfaf5637c416436894eda230f20ec6e166606187ed192c3764f",
+      "responseSha": "13d8662da0cb4966ef902eb37a31b9f9b7cd928502a2564b21849a18a75900da",
+      "parseError": null,
+      "score": {
+        "scorerVersion": "candidate11-scoring-2.0.0",
+        "status": "AMBIGUOUS_MATCH",
+        "plannedSources": 1,
+        "expectedTasks": 1,
+        "complete": null,
+        "taskMetrics": null,
+        "alignment": [],
+        "issues": [
+          "ADJUDICATION_REQUIRED"
+        ]
+      }
+    },
+    {
+      "sourceId": "OS07",
+      "unitId": "K07-B",
+      "arm": "B",
+      "requestSha": "e43e3a1fb6a314f8d72e00715588a66fa1932d49191183d3389cabd0291fbc1b",
+      "responseSha": "a830700f418bdf83e49cac006f3652677301297055813231a0b0802b4a198bcb",
+      "parseError": null,
+      "score": {
+        "scorerVersion": "candidate11-scoring-2.0.0",
+        "status": "REFERENCE_INCOMPLETE",
+        "plannedSources": 1,
+        "expectedTasks": 1,
+        "complete": null,
+        "knownChecksPass": true,
+        "taskMetrics": {
+          "expected": 1,
+          "predicted": 1,
+          "alignedPairs": 1,
+          "correctPairs": 1,
+          "alignment": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1,
+            "recall": 1
+          },
+          "correctness": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1,
+            "recall": 1
+          }
+        },
+        "alignment": [
+          {
+            "goldId": "key",
+            "predictedId": "task-0001",
+            "aligned": true,
+            "correct": true,
+            "fields": [
+              {
+                "path": "condition.value",
+                "pass": true
+              },
+              {
+                "path": "actionable",
+                "pass": true
+              }
+            ]
+          }
+        ],
+        "checks": [],
+        "issues": [
+          "REFERENCE_INCOMPLETE"
+        ],
+        "states": {
+          "actionable": 0,
+          "unknownCondition": 0,
+          "falseCondition": 1,
+          "inactive": 0
+        }
+      }
+    },
+    {
+      "sourceId": "OS08",
+      "unitId": "K08-A",
+      "arm": "A",
+      "requestSha": "c3c31ebf51b9908a170fd11899d6ec612b0cf1866f785155451e7e8ce7b918f3",
+      "responseSha": "10bdca278cbcb984c8cb1f61b692081de899fb28fd5b7fc05a065b85ca89a6bf",
+      "parseError": null,
+      "score": {
+        "scorerVersion": "candidate11-scoring-2.0.0",
+        "status": "REFERENCE_INCOMPLETE",
+        "plannedSources": 1,
+        "expectedTasks": 1,
+        "complete": null,
+        "knownChecksPass": false,
+        "taskMetrics": {
+          "expected": 1,
+          "predicted": 2,
+          "alignedPairs": 1,
+          "correctPairs": 1,
+          "alignment": {
+            "tp": 1,
+            "fp": 1,
+            "fn": 0,
+            "precision": 0.5,
+            "recall": 1
+          },
+          "correctness": {
+            "tp": 1,
+            "fp": 1,
+            "fn": 0,
+            "precision": 0.5,
+            "recall": 1
+          }
+        },
+        "alignment": [
+          {
+            "goldId": "save",
+            "predictedId": "task-save-receipt",
+            "aligned": true,
+            "correct": true,
+            "fields": [
+              {
+                "path": "timeRaw",
+                "pass": true
+              }
+            ]
+          }
+        ],
+        "checks": [
+          {
+            "name": "negated-today-not-normalized",
+            "pass": false
+          }
+        ],
+        "issues": [
+          "REFERENCE_INCOMPLETE"
+        ],
+        "states": {
+          "actionable": 1,
+          "unknownCondition": 0,
+          "falseCondition": 0,
+          "inactive": 0
+        }
+      }
+    },
+    {
+      "sourceId": "OS08",
+      "unitId": "K08-B",
+      "arm": "B",
+      "requestSha": "0c78f7fc8df1077b99cce83eb3521fbe0bb226081bc61df37b54cf4069dec454",
+      "responseSha": "8dddaecbc501ce5fca63ea4cdd7fded01149241729eb58faf0ee7727c80c7a96",
+      "parseError": null,
+      "score": {
+        "scorerVersion": "candidate11-scoring-2.0.0",
+        "status": "REFERENCE_INCOMPLETE",
+        "plannedSources": 1,
+        "expectedTasks": 1,
+        "complete": null,
+        "knownChecksPass": true,
+        "taskMetrics": {
+          "expected": 1,
+          "predicted": 1,
+          "alignedPairs": 1,
+          "correctPairs": 1,
+          "alignment": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1,
+            "recall": 1
+          },
+          "correctness": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1,
+            "recall": 1
+          }
+        },
+        "alignment": [
+          {
+            "goldId": "save",
+            "predictedId": "task-save-voucher",
+            "aligned": true,
+            "correct": true,
+            "fields": [
+              {
+                "path": "timeRaw",
+                "pass": true
+              }
+            ]
+          }
+        ],
+        "checks": [
+          {
+            "name": "negated-today-not-normalized",
+            "pass": true
+          }
+        ],
+        "issues": [
+          "REFERENCE_INCOMPLETE"
+        ],
+        "states": {
+          "actionable": 1,
+          "unknownCondition": 0,
+          "falseCondition": 0,
+          "inactive": 0
+        }
+      }
+    },
+    {
+      "sourceId": "OS09",
+      "unitId": "K09-A",
+      "arm": "A",
+      "requestSha": "04e6796fd8fb93077888355f3409122dc95734e51017d7227e0843ccb73723c7",
+      "responseSha": "954444c7c4ba427df694c3cf726340a940b97fbb553f1eab538a0044da5156af",
+      "parseError": null,
+      "score": {
+        "scorerVersion": "candidate11-scoring-2.0.0",
+        "status": "REFERENCE_INCOMPLETE",
+        "plannedSources": 1,
+        "expectedTasks": 1,
+        "complete": null,
+        "knownChecksPass": true,
+        "taskMetrics": {
+          "expected": 1,
+          "predicted": 1,
+          "alignedPairs": 1,
+          "correctPairs": 1,
+          "alignment": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1,
+            "recall": 1
+          },
+          "correctness": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1,
+            "recall": 1
+          }
+        },
+        "alignment": [
+          {
+            "goldId": "return",
+            "predictedId": "task-return-borrowing-voucher",
+            "aligned": true,
+            "correct": true,
+            "fields": [
+              {
+                "path": "timeRaw",
+                "pass": true
+              }
+            ]
+          }
+        ],
+        "checks": [],
+        "issues": [
+          "REFERENCE_INCOMPLETE"
+        ],
+        "states": {
+          "actionable": 1,
+          "unknownCondition": 0,
+          "falseCondition": 0,
+          "inactive": 0
+        }
+      }
+    },
+    {
+      "sourceId": "OS09",
+      "unitId": "K09-B",
+      "arm": "B",
+      "requestSha": "874ef02c98422f71dd39589314f31176e4a02b981b58536d82f8c8221f0e5b6a",
+      "responseSha": "56a77e1d9e8efb32e871ec0fc4d10086b076f0b17cb9bdd95962190b3a04dd7d",
+      "parseError": null,
+      "score": {
+        "scorerVersion": "candidate11-scoring-2.0.0",
+        "status": "REFERENCE_INCOMPLETE",
+        "plannedSources": 1,
+        "expectedTasks": 1,
+        "complete": null,
+        "knownChecksPass": true,
+        "taskMetrics": {
+          "expected": 1,
+          "predicted": 1,
+          "alignedPairs": 1,
+          "correctPairs": 1,
+          "alignment": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1,
+            "recall": 1
+          },
+          "correctness": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1,
+            "recall": 1
+          }
+        },
+        "alignment": [
+          {
+            "goldId": "return",
+            "predictedId": "task-return-borrowing-voucher",
+            "aligned": true,
+            "correct": true,
+            "fields": [
+              {
+                "path": "timeRaw",
+                "pass": true
+              }
+            ]
+          }
+        ],
+        "checks": [],
+        "issues": [
+          "REFERENCE_INCOMPLETE"
+        ],
+        "states": {
+          "actionable": 1,
+          "unknownCondition": 0,
+          "falseCondition": 0,
+          "inactive": 0
+        }
+      }
+    },
+    {
+      "sourceId": "OS10",
+      "unitId": "K10-A",
+      "arm": "A",
+      "requestSha": "6243a771be0a21e2707b5547a79edd2ab348b69475245ecb3f7e5d48b9f837f2",
+      "responseSha": "81ac6198d846054060edf3a626721f13d2700caa6810bfa0e4db4334de3a2810",
+      "parseError": null,
+      "score": {
+        "scorerVersion": "candidate11-scoring-2.0.0",
+        "status": "REFERENCE_INCOMPLETE",
+        "plannedSources": 1,
+        "expectedTasks": 2,
+        "complete": null,
+        "knownChecksPass": false,
+        "taskMetrics": {
+          "expected": 2,
+          "predicted": 2,
+          "alignedPairs": 2,
+          "correctPairs": 2,
+          "alignment": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1,
+            "recall": 1
+          },
+          "correctness": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1,
+            "recall": 1
+          }
+        },
+        "alignment": [
+          {
+            "goldId": "old",
+            "predictedId": "task-cancel-mail-paper",
+            "aligned": true,
+            "correct": true,
+            "fields": [
+              {
+                "path": "semantics.validity",
+                "pass": true
+              },
+              {
+                "path": "actionable",
+                "pass": true
+              }
+            ]
+          },
+          {
+            "goldId": "new",
+            "predictedId": "task-upload-electronic",
+            "aligned": true,
+            "correct": true,
+            "fields": [
+              {
+                "path": "actionable",
+                "pass": true
+              }
+            ]
+          }
+        ],
+        "checks": [
+          {
+            "name": "new-to-old-effective-revision",
+            "pass": false
+          }
+        ],
+        "issues": [
+          "REFERENCE_INCOMPLETE"
+        ],
+        "states": {
+          "actionable": 1,
+          "unknownCondition": 0,
+          "falseCondition": 0,
+          "inactive": 1
+        }
+      }
+    },
+    {
+      "sourceId": "OS10",
+      "unitId": "K10-B",
+      "arm": "B",
+      "requestSha": "c7312afcb4c6a7ef16425e0e3e6427f1ead136f7cb8484a4eae36926b4f8b4e6",
+      "responseSha": "a763c537c941062cf33573bf60202cc26145f3c94a2fe1b40d6adcab5a5d1f54",
+      "parseError": null,
+      "score": {
+        "scorerVersion": "candidate11-scoring-2.0.0",
+        "status": "REFERENCE_INCOMPLETE",
+        "plannedSources": 1,
+        "expectedTasks": 2,
+        "complete": null,
+        "knownChecksPass": true,
+        "taskMetrics": {
+          "expected": 2,
+          "predicted": 2,
+          "alignedPairs": 2,
+          "correctPairs": 2,
+          "alignment": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1,
+            "recall": 1
+          },
+          "correctness": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1,
+            "recall": 1
+          }
+        },
+        "alignment": [
+          {
+            "goldId": "old",
+            "predictedId": "task-mail-paper-survey-cancelled",
+            "aligned": true,
+            "correct": true,
+            "fields": [
+              {
+                "path": "semantics.validity",
+                "pass": true
+              },
+              {
+                "path": "actionable",
+                "pass": true
+              }
+            ]
+          },
+          {
+            "goldId": "new",
+            "predictedId": "task-upload-electronic-survey",
+            "aligned": true,
+            "correct": true,
+            "fields": [
+              {
+                "path": "actionable",
+                "pass": true
+              }
+            ]
+          }
+        ],
+        "checks": [
+          {
+            "name": "new-to-old-effective-revision",
+            "pass": true
+          }
+        ],
+        "issues": [
+          "REFERENCE_INCOMPLETE"
+        ],
+        "states": {
+          "actionable": 1,
+          "unknownCondition": 0,
+          "falseCondition": 0,
+          "inactive": 1
+        }
+      }
+    },
+    {
+      "sourceId": "OS11",
+      "unitId": "K11-A",
+      "arm": "A",
+      "requestSha": "3c049964179cd1fb2fb1dacfb143b8703c12980d5f0891bddb5445bd6f0d0d3e",
+      "responseSha": "469a1401ab00200be87b2fb60ddfe5fa8d39cf7dcf913b403000077adc3a649c",
+      "parseError": null,
+      "score": {
+        "scorerVersion": "candidate11-scoring-2.0.0",
+        "status": "REFERENCE_INCOMPLETE",
+        "plannedSources": 1,
+        "expectedTasks": 0,
+        "complete": null,
+        "knownChecksPass": true,
+        "taskMetrics": {
+          "expected": 0,
+          "predicted": 0,
+          "alignedPairs": 0,
+          "correctPairs": 0,
+          "alignment": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": null,
+            "recall": null
+          },
+          "correctness": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": null,
+            "recall": null
+          }
+        },
+        "alignment": [],
+        "checks": [],
+        "issues": [
+          "REFERENCE_INCOMPLETE"
+        ],
+        "states": {
+          "actionable": 0,
+          "unknownCondition": 0,
+          "falseCondition": 0,
+          "inactive": 0
+        }
+      }
+    },
+    {
+      "sourceId": "OS11",
+      "unitId": "K11-B",
+      "arm": "B",
+      "requestSha": "1fb44a887351e29324f779042d40cc229534d1e6b0470e49f1167495d4044214",
+      "responseSha": "e1838efd2b4bd98cf2c7316e36b07f0b9678042d1fec0068377f64c45987a8bd",
+      "parseError": null,
+      "score": {
+        "scorerVersion": "candidate11-scoring-2.0.0",
+        "status": "REFERENCE_INCOMPLETE",
+        "plannedSources": 1,
+        "expectedTasks": 0,
+        "complete": null,
+        "knownChecksPass": true,
+        "taskMetrics": {
+          "expected": 0,
+          "predicted": 0,
+          "alignedPairs": 0,
+          "correctPairs": 0,
+          "alignment": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": null,
+            "recall": null
+          },
+          "correctness": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": null,
+            "recall": null
+          }
+        },
+        "alignment": [],
+        "checks": [],
+        "issues": [
+          "REFERENCE_INCOMPLETE"
+        ],
+        "states": {
+          "actionable": 0,
+          "unknownCondition": 0,
+          "falseCondition": 0,
+          "inactive": 0
+        }
+      }
+    },
+    {
+      "sourceId": "OS12",
+      "unitId": "K12-A",
+      "arm": "A",
+      "requestSha": "ffd0bb0d229a425120018f4c5c6c7d6dcac3bf8b2708c5abe41e1b0fff644c22",
+      "responseSha": "3acf4589010d7c018faa40e18acdbe7205074fea12d1fdffd2fdc12e830f3e0b",
+      "parseError": null,
+      "score": {
+        "scorerVersion": "candidate11-scoring-2.0.0",
+        "status": "REFERENCE_INCOMPLETE",
+        "plannedSources": 1,
+        "expectedTasks": 2,
+        "complete": null,
+        "knownChecksPass": true,
+        "taskMetrics": {
+          "expected": 2,
+          "predicted": 2,
+          "alignedPairs": 2,
+          "correctPairs": 2,
+          "alignment": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1,
+            "recall": 1
+          },
+          "correctness": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1,
+            "recall": 1
+          }
+        },
+        "alignment": [
+          {
+            "goldId": "video",
+            "predictedId": "task-submit-recording",
+            "aligned": true,
+            "correct": true,
+            "fields": [
+              {
+                "path": "timeRaw",
+                "pass": true
+              },
+              {
+                "path": "materials",
+                "pass": true
+              }
+            ]
+          },
+          {
+            "goldId": "abstract",
+            "predictedId": "task-submit-text-summary",
+            "aligned": true,
+            "correct": true,
+            "fields": [
+              {
+                "path": "timeRaw",
+                "pass": true
+              },
+              {
+                "path": "materials",
+                "pass": true
+              }
+            ]
+          }
+        ],
+        "checks": [],
+        "issues": [
+          "REFERENCE_INCOMPLETE"
+        ],
+        "states": {
+          "actionable": 2,
+          "unknownCondition": 0,
+          "falseCondition": 0,
+          "inactive": 0
+        }
+      }
+    },
+    {
+      "sourceId": "OS12",
+      "unitId": "K12-B",
+      "arm": "B",
+      "requestSha": "2e05e59f16589cbe0fe4f24df54dd2e376063d1cfb2f9ac4ceedac7ae83872a8",
+      "responseSha": "c3db3a11eedbafb5456651ea0de64c8442504ff92c7023652720df541906236b",
+      "parseError": null,
+      "score": {
+        "scorerVersion": "candidate11-scoring-2.0.0",
+        "status": "REFERENCE_INCOMPLETE",
+        "plannedSources": 1,
+        "expectedTasks": 2,
+        "complete": null,
+        "knownChecksPass": true,
+        "taskMetrics": {
+          "expected": 2,
+          "predicted": 2,
+          "alignedPairs": 2,
+          "correctPairs": 2,
+          "alignment": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1,
+            "recall": 1
+          },
+          "correctness": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1,
+            "recall": 1
+          }
+        },
+        "alignment": [
+          {
+            "goldId": "video",
+            "predictedId": "task-submit-recording",
+            "aligned": true,
+            "correct": true,
+            "fields": [
+              {
+                "path": "timeRaw",
+                "pass": true
+              },
+              {
+                "path": "materials",
+                "pass": true
+              }
+            ]
+          },
+          {
+            "goldId": "abstract",
+            "predictedId": "task-submit-summary",
+            "aligned": true,
+            "correct": true,
+            "fields": [
+              {
+                "path": "timeRaw",
+                "pass": true
+              },
+              {
+                "path": "materials",
+                "pass": true
+              }
+            ]
+          }
+        ],
+        "checks": [],
+        "issues": [
+          "REFERENCE_INCOMPLETE"
+        ],
+        "states": {
+          "actionable": 2,
+          "unknownCondition": 0,
+          "falseCondition": 0,
+          "inactive": 0
+        }
+      }
+    }
+  ],
+  "arms": {
+    "A": {
+      "plannedSources": 12,
+      "completeCases": 0,
+      "completeCaseRate": null,
+      "verifiedCorrectLowerBound": 0,
+      "definitive": false,
+      "unresolved": 12,
+      "failures": 0,
+      "promotionAllowed": false,
+      "boundary": "Engineering/reference-relative scores, not human conversion or independent model validation."
+    },
+    "B": {
+      "plannedSources": 12,
+      "completeCases": 0,
+      "completeCaseRate": null,
+      "verifiedCorrectLowerBound": 0,
+      "definitive": false,
+      "unresolved": 12,
+      "failures": 0,
+      "promotionAllowed": false,
+      "boundary": "Engineering/reference-relative scores, not human conversion or independent model validation."
+    }
+  },
+  "qualityConclusion": "NO_PROMOTION_REFERENCE_INCOMPLETE",
+  "userConversion": "NOT_OBSERVABLE"
+}

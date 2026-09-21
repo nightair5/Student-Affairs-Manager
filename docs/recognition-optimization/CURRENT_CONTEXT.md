@@ -1,10 +1,22 @@
-# 当前交接：candidate11 独立支线与计划
+# 当前交接：candidate11 A1—A5 连续工程实施
 
 ## 本轮授权与目标
 
-- 当前用户要求：读取 HANDOVER_CONTEXT_BRIEF.md，重新建立独立支线并交付详细推进路线。
-- 本轮只有C11-P0分支/规划文档；candidate11代码、scorer v2、模型调用、真实材料/真人试验和部署均未执行。
-- 下一建议阶段是C11-P1评分与只读复算，需要当前用户明确启动该实施包。计划中的调用不是许可。
+- 当前用户明确授权执行粘贴的A1—A5工程包：实现、锁定依赖恢复、独立本机入口/库、离线测试、提交推送当前C11分支。
+- 本轮新增模型请求/试连接/评审模型、真实账本写入、Secret读取、旧用户库、Schema升级、新依赖、真人、合并及部署均禁止。
+- 当前指令覆盖旧计划仅P1和手册仅本地提交的建议；连续完成A1—A5，不进入B1/B2。
+
+## 本轮实时进度（以下历史规划段仅作基线）
+
+- 起点593ab78，干净；Node24.18.0/npm11.16.0。npm ci --ignore-scripts恢复244包，锁文件不变。
+- A1新评分器及45项评分/幂等复算测试通过；24份历史原答身份、usage结算、客户端适配通过。
+- 已定义检查A9/12、B11/12；24份参照均partial，完整案例准确率null，NO_PROMOTION_REFERENCE_INCOMPLETE。
+- A2四变体实现及7项构造测试通过，candidate11模型质量NOT_RUN。
+- A3/A4继续实现身份、保护与独立真实App；新入口尚未启动，原6632及公开Preview未操作。
+- A5首次完整测试已执行：lint/类型/无.env构建通过；Vitest有3个旧检出/载体失败，RCO-5-007冻结图差异待定点核验，不能称全绿。
+- 四个契约源/生成文件经HEAD与父原字节比对证明仅行尾差异后恢复，契约检查通过，无Schema/Git内容改变。
+- 84个保护hash仍一致。旧账本644行/314次只读。模型调用0、真人NOT_OBSERVABLE、合并/部署NOT_RUN。
+- 审计candidate11/ENGINEERING_AUDIT.md；新复算candidate11/historical-rescore/REPORT.json；完整日志.data/candidate11/checks/。
 
 ## 工作区与基点
 
