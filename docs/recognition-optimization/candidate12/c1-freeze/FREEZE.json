@@ -1,0 +1,74 @@
+{
+  "version": "candidate12-c1-development-freeze-1.0.0",
+  "status": "CANDIDATE12_ENGINEERING_FROZEN_MODEL_NOT_RUN",
+  "generatedAt": "2026-09-21T10:32:29.700Z",
+  "candidateVersion": "real-input-source-semantics-12",
+  "promptVersion": "real-input-source-semantics-12",
+  "ruleIds": [
+    "current-obligation-admission",
+    "supporting-fact-boundary",
+    "endpoint-conservation",
+    "completion-condition-fidelity"
+  ],
+  "modelConfig": {
+    "model": "deepseek-flash",
+    "temperature": 0,
+    "reasoning": {
+      "effort": "none"
+    },
+    "maxOutputTokens": 8192
+  },
+  "promptSha": "6303a9f61bd18c901ea58cf1613a94054d534e1107f888737189d117c601a4ac",
+  "exampleSha": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "schemaSha": "52b52e25774d61b8fddecf978f2215d53c0f9b4e47f9d45c74426c0b50a77d7e",
+  "freezeProbeRequestSha": "ff0b4f221517170dbdc2bb34687faa0ee920055975e7de31b6dccb129ca68137",
+  "freezeProbeRequestBytes": 15196,
+  "candidateBundleSha": "880488f038cec55763276f525c1847638533fe95d79a64599e9585dc8d92296a",
+  "componentHashes": {
+    "src/experiments/realInput01/candidate12.ts": "b4f6db69360019bc81355edf181fda48ae8470d1a84d8034545e7f458b1c4bfe",
+    "src/experiments/realInput01/candidate12.test.ts": "b479422e0ed946cde9d814abb8c019221507ab9d8f5bbb0cf23c192cdd9d31df",
+    "src/experiments/realInput01/candidate03.ts": "f3a2dd9358ca2a50b9b3eba8a090211666db4c0fb8dc5fc146e742c9895f9508",
+    "src/experiments/realInput01/modelWire.ts": "c7c81ae516c30faec850f4d765ae625d2cf1d11f39ed0d515ab93da45efb8be2",
+    "src/experiments/mainline04/semanticContract.ts": "fca1be185c94d169f2505ad420f107aed24fe49c0208e80ea784b65f80188961",
+    "scripts/score-candidate11-recognition.mjs": "f12600d7b061ac8ec15e9d6de4912b96213ab6067d70b47485a6b0e7a33e6343",
+    "scripts/freeze-candidate12-c1.mjs": "8e09a4aab3572e5490bd3d185f57fe433a477313dfd36a940fcdd4e3d72c5a12"
+  },
+  "evidence": {
+    "b1ManifestSha": "af1f1d2427eec1795691e1d4a62056a614bac72f0254103667632b341794744e",
+    "b2AnalysisSha": "a8568795c292bd5c543eccebc7f325b20aa1243a29b9b56e304172e0fd21fe2c",
+    "b2ExecutionSha": "122a1d120d7cbae17da6a6ca751db3a459b007feee878791fb4e70ce81bedb4c",
+    "b2Decision": "REJECT_CANDIDATE11",
+    "b2Calls": 24,
+    "protectedFiles": 84,
+    "authorityLedger": {
+      "path": "C:\\Users\\Winner\\student-affairs-multimodal-exp\\docs\\recognition-optimization\\mainline-real-input-01\\runs\\usage-resume-20260907a\\CALL_LEDGER.jsonl",
+      "rows": 693,
+      "bytes": 572913,
+      "sha256": "2051d8e775123579c3fa262f671a757e690983f64bc5945d692faaeb24b5322e",
+      "tail": "13b520d270d26335072f99920e47a4443e8bc586365eb20cda61c4122d7ab3bd"
+    }
+  },
+  "independence": {
+    "sourceOfChanges": "B2_SEEN_DEVELOPMENT_ERROR_FAMILIES_ONLY",
+    "holdoutSourcesObserved": 0,
+    "holdoutExpectedObserved": 0,
+    "independentHumanLabelsObserved": 0
+  },
+  "operations": {
+    "modelCalls": 0,
+    "secretReads": 0,
+    "ledgerWrites": 0,
+    "grants": 0,
+    "reserves": 0,
+    "settlements": 0
+  },
+  "prohibitions": [
+    "MODEL_DISPATCH",
+    "SECRET_READ",
+    "LEDGER_WRITE",
+    "HOLDOUT_EXPECTED_AUTHORING_BY_AGENT",
+    "DEFAULT_CANDIDATE_CHANGE",
+    "MERGE",
+    "DEPLOY"
+  ]
+}
