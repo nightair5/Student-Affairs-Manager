@@ -1,0 +1,34 @@
+{
+  "version": "candidate12-d2-result-1",
+  "unitId": "C12-D1-PD04-A",
+  "sourceId": "C12-PD04",
+  "arm": "A",
+  "ordinal": 8,
+  "bindingSha": "c7a2049a40c0ba6de4de6a8cd69ccfb17db3bbc53dd81d9fbcbf35330f14a92d",
+  "requestSha": "08f20a550a96ae2b8020465acb4af10b95b753d60f8ef53fb5550a394002c21a",
+  "responseSha": "08bd8f42e77e192ee12de30ec289a2e3401ac0fb10f75f9a4230621a338d491b",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "modelMatch": true,
+  "httpStatus": 200,
+  "diagnostic": null,
+  "waitingMs": 5344,
+  "parseError": "SCHEMA_OR_ADAPTER_REJECTED",
+  "assembled": null,
+  "ledgerStatus": "settled",
+  "usage": {
+    "input_tokens": 4349,
+    "input_tokens_details": {
+      "cached_tokens": 3840
+    },
+    "output_tokens": 1449,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 5798
+  },
+  "costUpperMicroCny": 20290,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticRepair": false,
+  "retryCount": 0
+}

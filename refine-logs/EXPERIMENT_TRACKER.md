@@ -1,6 +1,6 @@
 # Candidate11 实验跟踪表
 
-版本：c12-tracker-0.7-d1-provisional-paired。日期：2026-09-21。
+版本：c12-tracker-0.8-d2-provisional-results。日期：2026-09-21。
 本表状态反映真实执行；PLANNED不等于授权，PREPARED不等于派发，工程PASS不等于模型/商业PASS。
 核心计划见 [EXPERIMENT_PLAN.md](EXPERIMENT_PLAN.md)。
 
@@ -17,7 +17,9 @@
 | C12-010 | C1 | Candidate12 Development修正与冻结 | B2已见错误族 | 0 | COMMITTED_PUSHED | `c033680`先于任何新Expected冻结，bundle `880488f0…296a` |
 | C12-020 | C1 | 双人人工协议、模板、Schema、排除库与验证器 | 零数据准备 | 0 | PREPARED_ZERO_CALL | 原63条已见排除文本；模型不能冒充人工 |
 | C12-020A | C2临时 | Codex制作12份合成来源与provisional参照 | SEEN_SYNTHETIC_DEVELOPMENT | 0 | PASS_STRUCTURE_NOT_HOLDOUT | `modelAssistanceUsed=true`；排除库增至75条；不得晋级 |
-| C12-020B | D1临时 | candidate03 vs Candidate12 12×2零调用身份 | SEEN_SYNTHETIC_DEVELOPMENT | 0 | READY_FOR_NEW_AUTHORIZATION | 24身份冻结；Expected隔离；runner无授权拒绝；仅工程筛选 |
+| C12-020B | D1临时 | candidate03 vs Candidate12 12×2零调用身份 | SEEN_SYNTHETIC_DEVELOPMENT | 0 | FROZEN_THEN_EXECUTED_IN_D2 | 24身份冻结；Expected隔离；D2独立grant执行 |
+| C12-020C | D2临时 | 24次配对执行、结算与冻结评分 | SEEN_SYNTHETIC_DEVELOPMENT | 24/24 | REJECT_SCORING_CONTRACT_INVALID | 24次settled；冻结scorer/reference接口不兼容；正式失败关闭 |
+| C12-020D | D3后续 | 未来reference/scorer接口修复与预注册 | 已见诊断/零调用 | 0 | PLANNED_ZERO_CALL | 不改D1 Expected；新数据前冻结machine-readable契约 |
 | C12-021 | C1 | 两位真实人员提交12份新source+Expected | 拟Holdout | 0 | WAITING_FOR_INDEPENDENT_HUMAN_LABELS | 当前来源0/12、完整参照0/12 |
 | C12-022 | C1 | candidate03 vs Candidate12 24个冻结身份 | 12份新配对 | 0 | BLOCKED_BY_HUMAN_GATE | 人工包通过后才可生成；仍保持NOT_RUN |
 | C12-030 | 后续 | 24次Holdout配对执行 | 12份新配对 | <=24 | PLANNED_NOT_AUTHORIZED | 新价格、新预算、新grant及明确授权 |
@@ -53,7 +55,7 @@ A包当时只构造工程请求与NOT_RUN身份记录；B2随后按新授权生�
 ## 结果填写纪律
 
 不把计划预计数写到实测列；不把模型代理审计写成人工；不把“无任务正确处置”写成保存了任务。
-历史RCO-5-007冻结hash失败已在本分支和父工作区复现，保留为发布阻碍。B2已完成24个确定结局并拒绝candidate11；Candidate12已冻结但没有模型结果。当前停止在`WAITING_FOR_INDEPENDENT_HUMAN_LABELS`，不得生成或调用Holdout请求。
+历史RCO-5-007冻结hash失败已在本分支和父工作区复现，保留为发布阻碍。D2已完成24个确定结局，但正式评分包接口无效并拒绝Candidate12；当前仍停止在`WAITING_FOR_INDEPENDENT_HUMAN_LABELS`，不得生成或调用Holdout请求。
 
 ## B2结果登记
 
@@ -82,4 +84,12 @@ A包当时只构造工程请求与NOT_RUN身份记录；B2随后按新授权生�
 - candidate03/Candidate12各12个身份，共24个；PD01起A→B/B→A交替，固定Flash none参数，全部`dispatchAuthorized=false`、`NOT_RUN`。
 - 定向测试11/11通过：Expected变更不改变request SHA；来源、Prompt或模型参数变化会改变请求身份；直接及runner派发均在外部操作前拒绝。
 - 84份保护文件和693行权威账本不变；模型调用、Secret、grant、reserve、settle、receipt、raw和账本写入为0。
-- 当前临时状态为`D1_PROVISIONAL_DEVELOPMENT_IDENTITIES_READY_FOR_AUTHORIZATION`；正式人工Holdout仍为`WAITING_FOR_INDEPENDENT_HUMAN_LABELS`。
+- D1冻结身份已由D2独立授权执行；D1文件本身未回写。正式人工Holdout仍为`WAITING_FOR_INDEPENDENT_HUMAN_LABELS`。
+
+## Candidate12 D2 临时结果登记
+
+- run目录：`docs/recognition-optimization/candidate12/d2-provisional-development-20260921a/`；grant `dda1a7f0-b703-435c-bff9-37e328ed26b6`。
+- 调用/账本：24/24 settled，0 retry/repair/verifier；693→742行，最终SHA `df4035229093554b6417b0a37571730f68c10ecb7098234814406b49dfae1e1e`。
+- 费用：本地可审计上界¥0.436048；provider实际扣费`NOT_OBSERVABLE`。
+- 正式评分：10份含任务的冻结参照均因`C11_REFERENCE_IDENTITY_INVALID`不能被绑定评分器消费；决定`REJECT_CANDIDATE12_ENGINEERING_SCREEN`。
+- 非预注册诊断：Candidate03 TP/FP/FN 13/2/5，F1 78.79%；Candidate12 16/1/2，F1 91.43%。两臂诊断完整来源均6/12，Candidate12 Forbidden=1；不得晋级。

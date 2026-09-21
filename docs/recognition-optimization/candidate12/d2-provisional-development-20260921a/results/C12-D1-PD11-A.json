@@ -1,0 +1,84 @@
+{
+  "version": "candidate12-d2-result-1",
+  "unitId": "C12-D1-PD11-A",
+  "sourceId": "C12-PD11",
+  "arm": "A",
+  "ordinal": 21,
+  "bindingSha": "c7a2049a40c0ba6de4de6a8cd69ccfb17db3bbc53dd81d9fbcbf35330f14a92d",
+  "requestSha": "bfac137cc2c228ee5539ca0d7b75e483dfe5c5ce5cd1dd9ae4af6e87e62b8a45",
+  "responseSha": "ed83a8cb5d6d2af70b416f446a98f22dde18763229a221a1653eef880741fe4f",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "modelMatch": true,
+  "httpStatus": 200,
+  "diagnostic": null,
+  "waitingMs": 2829,
+  "parseError": null,
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [],
+    "materials": [],
+    "timePoints": [
+      {
+        "tempId": "tp-opening-hours",
+        "type": "event_start",
+        "rawText": "8:00—18:00",
+        "relatedTaskTempIds": [],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0001-9ff46528225682a307c9a64d4aea9571369e31a99870a3e86fd9b6d42f0afd63"
+        ],
+        "confidence": 0.9,
+        "normalizedValue": null,
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "vague",
+        "needsConfirmation": true
+      }
+    ],
+    "events": [
+      {
+        "tempId": "ev-first-floor-study-area-open",
+        "title": "一楼自习区开放",
+        "description": "图书馆假日期间一楼自习区开放时间为8:00—18:00。",
+        "startTimePointTempId": "tp-opening-hours",
+        "endTimePointTempId": null,
+        "location": "图书馆一楼自习区",
+        "scopeIds": [
+          "scope-0001-9ff46528225682a307c9a64d4aea9571369e31a99870a3e86fd9b6d42f0afd63"
+        ],
+        "confidence": 0.9,
+        "inferenceLevel": "explicit",
+        "relatedTaskTempIds": []
+      }
+    ],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0001-9ff46528225682a307c9a64d4aea9571369e31a99870a3e86fd9b6d42f0afd63",
+      "scope-0002-183a7b02d29c1cb1d9cfc6cc18bc35e9fe397d72e3bfb025016a9baff38ada14",
+      "scope-0003-23c2369cb7027a8fcf3e97d3b0d8a131c143d289f8cbd57550f3a81b91a01a4a",
+      "scope-0004-495c84971783369019b146d59b5d3142e6abbcdd3d288ab7196c7364fe9d53c7"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "C12-PD11",
+    "sourceVersionId": "C12-PD11-v1",
+    "sourceFingerprint": "sha256:dfc8df22d89a75b9355748c593ddb26381e3e5ca55725e6ca943168713bb13a0"
+  },
+  "ledgerStatus": "settled",
+  "usage": {
+    "input_tokens": 4315,
+    "input_tokens_details": {
+      "cached_tokens": 3840
+    },
+    "output_tokens": 456,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 4771
+  },
+  "costUpperMicroCny": 12278,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticRepair": false,
+  "retryCount": 0
+}

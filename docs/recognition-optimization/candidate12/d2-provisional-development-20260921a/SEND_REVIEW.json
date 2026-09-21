@@ -1,0 +1,35 @@
+{
+  "version": "candidate12-d2-send-review-1",
+  "status": "PASS",
+  "authorizationSha": "9e29f74d92b4f41043949c344701697d7c6b30f89c21e8630be65f08ec9d05a7",
+  "grantId": "dda1a7f0-b703-435c-bff9-37e328ed26b6",
+  "head": "b44c47335a579c94d7749a632acc4997c64bb390",
+  "d1ManifestSha": "e2a14c8a920613f8cdd44afa57699f674f266f102df28b2eb926e1b750b1e005",
+  "bindingSha": "c7a2049a40c0ba6de4de6a8cd69ccfb17db3bbc53dd81d9fbcbf35330f14a92d",
+  "billingSha": "137cf9c61d4b4113cc5a235c71925b326b7772ab1850236eafbf2e2e9f68ead3",
+  "sourcesSha": "348ae562fd10e73535a45f92f4d08b1552d55353674eabf607201b925aa5eae0",
+  "d1Check": {
+    "status": "D1_PROVISIONAL_DEVELOPMENT_IDENTITIES_READY_FOR_AUTHORIZATION",
+    "requests": 24,
+    "modelCalls": 0,
+    "dispatchAuthorized": false,
+    "manifestSha256": "e2a14c8a920613f8cdd44afa57699f674f266f102df28b2eb926e1b750b1e005",
+    "authorityLedger": {
+      "path": "C:/Users/Winner/student-affairs-multimodal-exp/docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/CALL_LEDGER.jsonl",
+      "rows": 693,
+      "bytes": 572913,
+      "sha256": "2051d8e775123579c3fa262f671a757e690983f64bc5945d692faaeb24b5322e",
+      "tail": "13b520d270d26335072f99920e47a4443e8bc586365eb20cda61c4122d7ab3bd",
+      "writerOpened": false
+    },
+    "protectedFiles": 84
+  },
+  "checkedAt": "2026-09-21T13:31:18.205Z",
+  "constraints": {
+    "calls": 24,
+    "repair": 0,
+    "verifier": 0,
+    "retry": 0,
+    "maxBudgetCny": 51.904512
+  }
+}

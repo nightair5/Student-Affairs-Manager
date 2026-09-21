@@ -1,0 +1,122 @@
+{
+  "version": "candidate12-d2-result-1",
+  "unitId": "C12-D1-PD04-B",
+  "sourceId": "C12-PD04",
+  "arm": "B",
+  "ordinal": 7,
+  "bindingSha": "c7a2049a40c0ba6de4de6a8cd69ccfb17db3bbc53dd81d9fbcbf35330f14a92d",
+  "requestSha": "5a87473c6bb81bc235da13750edaad82bec07944a2d47d5ff86a42c13cb5d55c",
+  "responseSha": "47268e2169ed6491cdfde73f3b36fc89988da9adb08b29f51ad3f9714c98c721",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "modelMatch": true,
+  "httpStatus": 200,
+  "diagnostic": null,
+  "waitingMs": 3839,
+  "parseError": null,
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-0001-pay-makeup-exam-fee",
+        "propositionScopeIds": [
+          "scope-0001-aef847f0dae95707958f2ac07db02f6684d4b2c5865023c4f88c16657362d48e",
+          "scope-0002-3e5a43aca23142f8c4605921a719753c22bdac1a84c48d63c9708bf96157421f",
+          "scope-0003-adf8873fe1fb382b956d5503ffa2ae86d763365caf6818287270d726c8cef3df",
+          "scope-0004-d1f839858397aa1a73cc84c95c3ceb53d4b9ae5032cc22bb0fe123b391014830"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "cancelled",
+          "validity": "superseded",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "pay",
+        "action": {
+          "scopeId": "scope-0002-3e5a43aca23142f8c4605921a719753c22bdac1a84c48d63c9708bf96157421f",
+          "surface": "缴纳"
+        },
+        "object": {
+          "scopeId": "scope-0002-3e5a43aca23142f8c4605921a719753c22bdac1a84c48d63c9708bf96157421f",
+          "surface": "补考费"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "缴纳补考费",
+          "description": "若补考申请获批，申请人需缴纳补考费；现通知本次补考申请未获批准，因此无需缴费。",
+          "completionCriteria": [
+            "缴纳补考费"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [],
+          "timePointTempIds": [],
+          "confidence": 0.9,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "false",
+          "conditionScopeIds": [
+            "scope-0001-aef847f0dae95707958f2ac07db02f6684d4b2c5865023c4f88c16657362d48e"
+          ],
+          "factScopeIds": [
+            "scope-0003-adf8873fe1fb382b956d5503ffa2ae86d763365caf6818287270d726c8cef3df"
+          ]
+        },
+        "coverage": {
+          "time": "not_stated",
+          "material": "not_stated",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [],
+    "timePoints": [],
+    "events": [],
+    "revisions": [
+      {
+        "type": "cancels",
+        "targetDirectiveId": "task-0001-pay-makeup-exam-fee",
+        "scopeIds": [
+          "scope-0003-adf8873fe1fb382b956d5503ffa2ae86d763365caf6818287270d726c8cef3df",
+          "scope-0004-d1f839858397aa1a73cc84c95c3ceb53d4b9ae5032cc22bb0fe123b391014830"
+        ],
+        "fromDirectiveId": null,
+        "effective": "true"
+      }
+    ],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0005-d09f81a9e488cfa8f6d17e31b4c16c8e017b51a340c89416d0ace32565d5a8c3"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "C12-PD04",
+    "sourceVersionId": "C12-PD04-v1",
+    "sourceFingerprint": "sha256:88562e2bac6b13f705a71ea13834952f8fbf967ee03c3ca6c1d50498ff3b692d"
+  },
+  "ledgerStatus": "settled",
+  "usage": {
+    "input_tokens": 4770,
+    "input_tokens_details": {
+      "cached_tokens": 4224
+    },
+    "output_tokens": 826,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 5596
+  },
+  "costUpperMicroCny": 16148,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticRepair": false,
+  "retryCount": 0
+}

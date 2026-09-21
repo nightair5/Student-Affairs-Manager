@@ -1,0 +1,178 @@
+{
+  "version": "candidate12-d2-result-1",
+  "unitId": "C12-D1-PD12-B",
+  "sourceId": "C12-PD12",
+  "arm": "B",
+  "ordinal": 23,
+  "bindingSha": "c7a2049a40c0ba6de4de6a8cd69ccfb17db3bbc53dd81d9fbcbf35330f14a92d",
+  "requestSha": "2a6de9d69d054435e00d9cddac20fa1a168c9fca7786e6c4739d0c6d3120e30d",
+  "responseSha": "f8d79849ed2a70ccb3611afc335354b077278d6b61e7f6ea9e11d1a89f6ed0f4",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "modelMatch": true,
+  "httpStatus": 200,
+  "diagnostic": null,
+  "waitingMs": 5077,
+  "parseError": null,
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-submit-exemption-application",
+        "propositionScopeIds": [
+          "scope-0001-8641f815b5a0db373d3785947aa1269718ed9f4bb7c1ab459fbe52da924fa527",
+          "scope-0002-c6fd0117a52f4d1b55fbbb69a37ba4c01519f6d531f0b7973201eb0e90c0cc01",
+          "scope-0003-0d6a7b4be200de6021219e131101fbcdc69e7038c74e3fa5ef2cfff80f10cab9",
+          "scope-0004-852ce4fd5fa5cf9b668a090a37d15aff44d4adca5fb58915e9c4d161d8d93d51",
+          "scope-0005-37524aacd8a46e08db51a0ec86bcc53a6bd1e37608bdaf55aecdc57f495220ed",
+          "scope-0006-f608ff7b294eee2e1c8182bd2dda9df153e56a7a04ae9e86d03fc06057bb46e6"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "submit",
+        "action": {
+          "scopeId": "scope-0001-8641f815b5a0db373d3785947aa1269718ed9f4bb7c1ab459fbe52da924fa527",
+          "surface": "提交"
+        },
+        "object": {
+          "scopeId": "scope-0001-8641f815b5a0db373d3785947aa1269718ed9f4bb7c1ab459fbe52da924fa527",
+          "surface": "课程免修申请"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "提交课程免修申请",
+          "description": "通过教务平台上传课程免修申请，申请材料为成绩证明和课程大纲合并成的一个PDF，命名为“免修申请-编号”。",
+          "completionCriteria": [
+            "课程免修申请已通过教务平台上传"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "high",
+          "dependencyTempIds": [],
+          "materialTempIds": [
+            "material-transcript",
+            "material-syllabus"
+          ],
+          "timePointTempIds": [
+            "time-deadline-20261025"
+          ],
+          "confidence": 0.95,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [
+      {
+        "tempId": "material-transcript",
+        "name": "成绩证明",
+        "required": true,
+        "formatRequirements": [
+          "与课程大纲合并为一个PDF"
+        ],
+        "namingRequirements": [
+          "合并后的PDF命名为“免修申请-编号”"
+        ],
+        "quantity": null,
+        "submissionChannel": "教务平台",
+        "relatedTaskTempIds": [
+          "task-submit-exemption-application"
+        ],
+        "scopeIds": [
+          "scope-0002-c6fd0117a52f4d1b55fbbb69a37ba4c01519f6d531f0b7973201eb0e90c0cc01",
+          "scope-0003-0d6a7b4be200de6021219e131101fbcdc69e7038c74e3fa5ef2cfff80f10cab9",
+          "scope-0004-852ce4fd5fa5cf9b668a090a37d15aff44d4adca5fb58915e9c4d161d8d93d51"
+        ],
+        "confidence": 0.95
+      },
+      {
+        "tempId": "material-syllabus",
+        "name": "课程大纲",
+        "required": true,
+        "formatRequirements": [
+          "与成绩证明合并为一个PDF"
+        ],
+        "namingRequirements": [
+          "合并后的PDF命名为“免修申请-编号”"
+        ],
+        "quantity": null,
+        "submissionChannel": "教务平台",
+        "relatedTaskTempIds": [
+          "task-submit-exemption-application"
+        ],
+        "scopeIds": [
+          "scope-0002-c6fd0117a52f4d1b55fbbb69a37ba4c01519f6d531f0b7973201eb0e90c0cc01",
+          "scope-0003-0d6a7b4be200de6021219e131101fbcdc69e7038c74e3fa5ef2cfff80f10cab9",
+          "scope-0004-852ce4fd5fa5cf9b668a090a37d15aff44d4adca5fb58915e9c4d161d8d93d51"
+        ],
+        "confidence": 0.95
+      }
+    ],
+    "timePoints": [
+      {
+        "tempId": "time-deadline-20261025",
+        "type": "submission_deadline",
+        "rawText": "2026年10月25日中午12:00",
+        "relatedTaskTempIds": [
+          "task-submit-exemption-application"
+        ],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0006-f608ff7b294eee2e1c8182bd2dda9df153e56a7a04ae9e86d03fc06057bb46e6"
+        ],
+        "confidence": 0.95,
+        "normalizedValue": "2026-10-25T12:00",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "exact",
+        "needsConfirmation": false
+      }
+    ],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0005-37524aacd8a46e08db51a0ec86bcc53a6bd1e37608bdaf55aecdc57f495220ed"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "C12-PD12",
+    "sourceVersionId": "C12-PD12-v1",
+    "sourceFingerprint": "sha256:948a98c76bc100fbf0b54af33c25e1d122e6163e936be4ae4533c442b03e1538"
+  },
+  "ledgerStatus": "settled",
+  "usage": {
+    "input_tokens": 4874,
+    "input_tokens_details": {
+      "cached_tokens": 4224
+    },
+    "output_tokens": 1277,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 6151
+  },
+  "costUpperMicroCny": 19964,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticRepair": false,
+  "retryCount": 0
+}

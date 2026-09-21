@@ -1,0 +1,52 @@
+{
+  "version": "candidate12-d2-result-1",
+  "unitId": "C12-D1-PD08-B",
+  "sourceId": "C12-PD08",
+  "arm": "B",
+  "ordinal": 15,
+  "bindingSha": "c7a2049a40c0ba6de4de6a8cd69ccfb17db3bbc53dd81d9fbcbf35330f14a92d",
+  "requestSha": "bf6a1480fcd2bd14374e7170d643abfd15cb134d8827858a129e73966441ae21",
+  "responseSha": "94779c922cd242f3947405436a510445c77929807f5ddd0c864b8bb9a39d7c35",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "modelMatch": true,
+  "httpStatus": 200,
+  "diagnostic": null,
+  "waitingMs": 1776,
+  "parseError": null,
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [],
+    "materials": [],
+    "timePoints": [],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0001-e634fde269b45298cc7289b54982d0bc1315b4d1262a07ff567b0e3cdc6ae143",
+      "scope-0002-21f425af4f84db412a63818af118fd60c33cfee85b784c48f5ba08bd93f2d567",
+      "scope-0003-f5ede12c73ac8080fed61463a08c1ba14def73600532ccea4c91ea6d6d18aec3",
+      "scope-0004-54b84685a8d7e43568530819b698abae91df885fc8bbd27827e5de25d939d0a8"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "C12-PD08",
+    "sourceVersionId": "C12-PD08-v1",
+    "sourceFingerprint": "sha256:86d00c3761d3eecc01a8287d5bd1da6181683053f6ad906f801419f15a69f23b"
+  },
+  "ledgerStatus": "settled",
+  "usage": {
+    "input_tokens": 4718,
+    "input_tokens_details": {
+      "cached_tokens": 4224
+    },
+    "output_tokens": 220,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 4938
+  },
+  "costUpperMicroCny": 11196,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticRepair": false,
+  "retryCount": 0
+}

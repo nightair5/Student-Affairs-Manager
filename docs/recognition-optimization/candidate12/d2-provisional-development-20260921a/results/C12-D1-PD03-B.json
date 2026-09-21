@@ -1,0 +1,131 @@
+{
+  "version": "candidate12-d2-result-1",
+  "unitId": "C12-D1-PD03-B",
+  "sourceId": "C12-PD03",
+  "arm": "B",
+  "ordinal": 6,
+  "bindingSha": "c7a2049a40c0ba6de4de6a8cd69ccfb17db3bbc53dd81d9fbcbf35330f14a92d",
+  "requestSha": "1917dc283d24fc770a8b68d37ed8e0cb0e45f409dc3fb29a3c2d7acb3016bd4d",
+  "responseSha": "ed16a74380297105e065f406cb05bde318c119f081377f21775d4c6fd0a02e1c",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "modelMatch": true,
+  "httpStatus": 200,
+  "diagnostic": null,
+  "waitingMs": 3504,
+  "parseError": null,
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-confirm-course-selection",
+        "propositionScopeIds": [
+          "scope-0002-cbbafe0d4fce1790a1b309296d512d844edc439c2587352059659788e3914e74"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "other",
+        "action": {
+          "scopeId": "scope-0002-cbbafe0d4fce1790a1b309296d512d844edc439c2587352059659788e3914e74",
+          "surface": "登录"
+        },
+        "object": {
+          "scopeId": "scope-0002-cbbafe0d4fce1790a1b309296d512d844edc439c2587352059659788e3914e74",
+          "surface": "教务平台"
+        },
+        "effect": "external_interaction",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "登录教务平台确认选课结果",
+          "description": "在课程申请通过后两个工作日内登录教务平台确认选课结果。",
+          "completionCriteria": [
+            "登录教务平台",
+            "确认选课结果"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "high",
+          "dependencyTempIds": [],
+          "materialTempIds": [],
+          "timePointTempIds": [
+            "tp-within-two-workdays"
+          ],
+          "confidence": 0.9,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "true",
+          "conditionScopeIds": [
+            "scope-0001-4ac70f912bbddb4ba9384970e71005873e141567875dfc7d50727a2d6177c1a5"
+          ],
+          "factScopeIds": [
+            "scope-0001-4ac70f912bbddb4ba9384970e71005873e141567875dfc7d50727a2d6177c1a5"
+          ]
+        },
+        "coverage": {
+          "time": "present",
+          "material": "not_stated",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [],
+    "timePoints": [
+      {
+        "tempId": "tp-within-two-workdays",
+        "type": "task_deadline",
+        "rawText": "通过后两个工作日内",
+        "relatedTaskTempIds": [
+          "task-confirm-course-selection"
+        ],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0002-cbbafe0d4fce1790a1b309296d512d844edc439c2587352059659788e3914e74"
+        ],
+        "confidence": 0.9,
+        "normalizedValue": null,
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "vague",
+        "needsConfirmation": true
+      }
+    ],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0001-4ac70f912bbddb4ba9384970e71005873e141567875dfc7d50727a2d6177c1a5",
+      "scope-0003-0f59c78af7b33aa1aef309377e95d7f41eac2aa7fd425ea16baaddab7200e185"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "C12-PD03",
+    "sourceVersionId": "C12-PD03-v1",
+    "sourceFingerprint": "sha256:c68f3559c3c3203047c2434a43c5799215bae513ea1d3b3dae593e9d51ccc09e"
+  },
+  "ledgerStatus": "settled",
+  "usage": {
+    "input_tokens": 4663,
+    "input_tokens_details": {
+      "cached_tokens": 4224
+    },
+    "output_tokens": 695,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 5358
+  },
+  "costUpperMicroCny": 14886,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticRepair": false,
+  "retryCount": 0
+}

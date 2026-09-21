@@ -1,0 +1,236 @@
+{
+  "version": "candidate12-d2-result-1",
+  "unitId": "C12-D1-PD10-A",
+  "sourceId": "C12-PD10",
+  "arm": "A",
+  "ordinal": 20,
+  "bindingSha": "c7a2049a40c0ba6de4de6a8cd69ccfb17db3bbc53dd81d9fbcbf35330f14a92d",
+  "requestSha": "e1f73ccd0bdec7e7bb305bc947228315297df30a808e1cc2b7bea5332a097121",
+  "responseSha": "ba5145f445bfc854e3b840400dd961a789631584f3427258babb54735f59eb5a",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "modelMatch": true,
+  "httpStatus": 200,
+  "diagnostic": null,
+  "waitingMs": 5875,
+  "parseError": null,
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-online-report-submit",
+        "propositionScopeIds": [
+          "scope-0001-e9d0e6d79a15fab52e6e01da663a70bd327c9514c6d690f614b0c197e7e08739",
+          "scope-0002-4f158d4fbc163fa17b2480dd83134b4c55573192935efc84415d439e502c7bbd",
+          "scope-0004-a7aa5f055e2f94e49fd420a8696cdf932a89c46bc9c668796e7dd0a4919d7995",
+          "scope-0005-292261b10a4ebf08f3a1937bc8febfe3fabe5ecf7817f028e2d1b8f38a7c8589"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "submit",
+        "action": {
+          "scopeId": "scope-0004-a7aa5f055e2f94e49fd420a8696cdf932a89c46bc9c668796e7dd0a4919d7995",
+          "surface": "提交"
+        },
+        "object": {
+          "scopeId": "scope-0004-a7aa5f055e2f94e49fd420a8696cdf932a89c46bc9c668796e7dd0a4919d7995",
+          "surface": "线上实践报告"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "线上提交实践报告",
+          "description": "线上提交实践报告，填写项目编号，项目编号规则不变。",
+          "completionCriteria": [
+            "线上提交实践报告",
+            "填写项目编号"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [
+            "material-practice-report"
+          ],
+          "timePointTempIds": [
+            "time-2026-10-22"
+          ],
+          "confidence": 0.9,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      },
+      {
+        "id": "task-paper-signin-cancelled",
+        "propositionScopeIds": [
+          "scope-0001-e9d0e6d79a15fab52e6e01da663a70bd327c9514c6d690f614b0c197e7e08739",
+          "scope-0002-4f158d4fbc163fa17b2480dd83134b4c55573192935efc84415d439e502c7bbd",
+          "scope-0003-982c05914943ad050510916694acec98b39c69f5db71ff157e838c053f1aeafb"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "past",
+          "status": "cancelled",
+          "validity": "superseded",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "submit",
+        "action": {
+          "scopeId": "scope-0001-e9d0e6d79a15fab52e6e01da663a70bd327c9514c6d690f614b0c197e7e08739",
+          "surface": "交"
+        },
+        "object": {
+          "scopeId": "scope-0001-e9d0e6d79a15fab52e6e01da663a70bd327c9514c6d690f614b0c197e7e08739",
+          "surface": "纸质签到表"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "现场交纸质签到表",
+          "description": "原通知要求现场交纸质签到表，填写项目编号；现取消该要求。",
+          "completionCriteria": [
+            "现场交纸质签到表",
+            "填写项目编号"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "low",
+          "dependencyTempIds": [],
+          "materialTempIds": [
+            "material-paper-signin"
+          ],
+          "timePointTempIds": [],
+          "confidence": 0.9,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "not_stated",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [
+      {
+        "tempId": "material-practice-report",
+        "name": "实践报告",
+        "required": true,
+        "formatRequirements": [],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": "线上",
+        "relatedTaskTempIds": [
+          "task-online-report-submit"
+        ],
+        "scopeIds": [
+          "scope-0001-e9d0e6d79a15fab52e6e01da663a70bd327c9514c6d690f614b0c197e7e08739",
+          "scope-0004-a7aa5f055e2f94e49fd420a8696cdf932a89c46bc9c668796e7dd0a4919d7995"
+        ],
+        "confidence": 0.9
+      },
+      {
+        "tempId": "material-paper-signin",
+        "name": "纸质签到表",
+        "required": true,
+        "formatRequirements": [],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": "现场",
+        "relatedTaskTempIds": [
+          "task-paper-signin-cancelled"
+        ],
+        "scopeIds": [
+          "scope-0001-e9d0e6d79a15fab52e6e01da663a70bd327c9514c6d690f614b0c197e7e08739",
+          "scope-0003-982c05914943ad050510916694acec98b39c69f5db71ff157e838c053f1aeafb"
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "timePoints": [
+      {
+        "tempId": "time-2026-10-22",
+        "type": "submission_deadline",
+        "rawText": "2026年10月22日前",
+        "relatedTaskTempIds": [
+          "task-online-report-submit"
+        ],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0004-a7aa5f055e2f94e49fd420a8696cdf932a89c46bc9c668796e7dd0a4919d7995"
+        ],
+        "confidence": 0.95,
+        "normalizedValue": "2026-10-22",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": true,
+        "precision": "date_only",
+        "needsConfirmation": false
+      }
+    ],
+    "events": [],
+    "revisions": [
+      {
+        "type": "cancels",
+        "targetDirectiveId": "task-paper-signin-cancelled",
+        "scopeIds": [
+          "scope-0003-982c05914943ad050510916694acec98b39c69f5db71ff157e838c053f1aeafb"
+        ],
+        "fromDirectiveId": null,
+        "effective": "true"
+      }
+    ],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0002-4f158d4fbc163fa17b2480dd83134b4c55573192935efc84415d439e502c7bbd",
+      "scope-0005-292261b10a4ebf08f3a1937bc8febfe3fabe5ecf7817f028e2d1b8f38a7c8589"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "C12-PD10",
+    "sourceVersionId": "C12-PD10-v1",
+    "sourceFingerprint": "sha256:6b6acd4c4f9913608664d6b35eb08ba276c6bb82be3603da90a4f3320ab7176a"
+  },
+  "ledgerStatus": "settled",
+  "usage": {
+    "input_tokens": 4379,
+    "input_tokens_details": {
+      "cached_tokens": 3840
+    },
+    "output_tokens": 1636,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 6015
+  },
+  "costUpperMicroCny": 21846,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticRepair": false,
+  "retryCount": 0
+}

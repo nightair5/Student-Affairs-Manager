@@ -1,26 +1,26 @@
 {
-  "version": "candidate11-engineering-delivery-1",
+  "version": "candidate12-d2-provisional-results-1",
   "date": "2026-09-21",
   "branch": "codex/e2-candidate11-blind-eval",
   "base": "593ab7847a5791f8e3fbc6e4b82f94a6c4d0ebb5",
   "status": {
     "engineering": "ENGINEERING_READY",
     "repositoryGate": "HAS_VERIFIED_HISTORICAL_FAILURE_NO_PROMOTION",
-    "modelQuality": "NOT_RUN_NOT_ADOPTED",
+    "modelQuality": "D2_FORMAL_REJECT_SCORER_CONTRACT_MISMATCH",
     "humanBenefit": "NOT_OBSERVABLE",
     "merge": "NOT_RUN",
     "deployment": "NOT_RUN"
   },
-  "newModelCalls": 0,
-  "realLedgerWrites": 0,
-  "secretReads": 0,
+  "newModelCalls": 48,
+  "realLedgerWrites": 98,
+  "secretReads": "RUNTIME_CONFIGURATION_USED_NOT_PERSISTED",
   "schemaUpgrade": false,
   "dependencyUpgrade": false,
   "protection": {
     "count": 84,
-    "ledgerSha": "dc52d9cd04b809be9d22d5298bd45d0e6f0a01307017d48a91aaa91a45e8e597",
-    "ledgerRows": 644,
-    "reserves": 314,
+    "ledgerSha": "df4035229093554b6417b0a37571730f68c10ecb7098234814406b49dfae1e1e",
+    "ledgerRows": 742,
+    "reserves": 362,
     "oldOriginAndBrowserLibraries": "NOT_OPERATED"
   },
   "historical": {
@@ -406,6 +406,33 @@
       ]
     }
   },
+  "candidate12D2": {
+    "directory": "docs/recognition-optimization/candidate12/d2-provisional-development-20260921a",
+    "runnerCommit": "b44c47335a579c94d7749a632acc4997c64bb390",
+    "grantId": "dda1a7f0-b703-435c-bff9-37e328ed26b6",
+    "calls": 24,
+    "settled": 24,
+    "retries": 0,
+    "repairs": 0,
+    "verifiers": 0,
+    "inputTokens": 109392,
+    "outputTokens": 27158,
+    "localAuditableCostUpperCny": 0.436048,
+    "providerBilledCny": "NOT_OBSERVABLE",
+    "ledgerAfter": {
+      "rows": 742,
+      "bytes": 631869,
+      "sha256": "df4035229093554b6417b0a37571730f68c10ecb7098234814406b49dfae1e1e",
+      "tail": "6812e1b072caeaa4fd3e6e8e55b485c57533bc0a0d9eaaff4dd84bbf48809922"
+    },
+    "officialDecision": "REJECT_CANDIDATE12_ENGINEERING_SCREEN",
+    "officialDecisionReason": "FROZEN_SCORER_REFERENCE_CONTRACT_MISMATCH",
+    "diagnosticOnly": {
+      "preregistered": false,
+      "candidate03": {"tp": 13, "fp": 2, "fn": 5, "f1": 0.7878787878787877, "completeSources": 6},
+      "candidate12": {"tp": 16, "fp": 1, "fn": 2, "f1": 0.9142857142857143, "completeSources": 6}
+    }
+  },
   "logHashes": [
     {
       "path": ".data/candidate11/checks/lint.log",
@@ -485,6 +512,6 @@
     "8714f0130f62a89ae6230c58a8c3a4664934a8bd"
   ],
   "finalCommit": "Resolve current Git HEAD; final artifact cannot contain its own commit hash.",
-  "nextStage": "B1_ZERO_CALL_PREPARATION_ONLY",
-  "paidGrant": "NOT_AUTHORIZED"
+  "nextStage": "D3_ZERO_CALL_SCORER_CONTRACT_REMEDIATION",
+  "paidGrant": "D2_CONSUMED_COMPLETE"
 }

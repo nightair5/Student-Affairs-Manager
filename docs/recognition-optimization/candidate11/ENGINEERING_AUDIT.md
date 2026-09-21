@@ -137,3 +137,16 @@ A1—A5实施及验证已交付。B2模型评测已完成并决定`REJECT_CANDID
 - lint为0 error/5个既有warning，build与security scan通过。裸`npm run test`为1432通过/1失败/1跳过，唯一失败仍是未设置`REAL_INPUT_CARRIERS_MANIFEST`；隔离入口补齐临时匿名carrier后Vitest 1433通过/1跳过，其余Node/Functions组通过，只有历史RCO-5-007保持`FREEZE_HASH_MISMATCH:package-lock.json`。
 
 当前停止状态：`D1_PROVISIONAL_DEVELOPMENT_IDENTITIES_READY_FOR_AUTHORIZATION`。这只表示临时Development的24个零调用身份可审查；它不解除正式人工Holdout的`WAITING_FOR_INDEPENDENT_HUMAN_LABELS`，也不证明Candidate12优于candidate03。
+
+## D2 Candidate12 临时 Development 配对执行
+
+- 用户在收到“24次、¥51.904512最坏上限、唯一权威账本writer”的具体下一步后明确要求执行。执行器、预算锁和6项定向测试先在提交`b44c47335a579c94d7749a632acc4997c64bb390`提交推送，本地/upstream/远端一致后才创建grant。
+- grant `dda1a7f0-b703-435c-bff9-37e328ed26b6`绑定D1 Manifest、24个unitId、逐请求SHA、候选bundle、Schema、scorer、adapter、代码HEAD、693行账本前缀和12小时官方价格证据。专用绝对锁支持raw已持久化后的零重发续结算；无raw的pending固定转uncertain并停批。
+- 24/24请求按冻结A/B顺序一次发送，全部HTTP 200且settled。新增1 grant、24 reserve、24 settle；0 retry、0 repair、0 verifier、0 halt、0 uncertain。输入109,392 tokens，输出27,158 tokens；本地可审计费用上界¥0.436048，provider实际扣费`NOT_OBSERVABLE`。
+- 权威账本从693行/572913字节增至742行/631869字节；最终SHA `df4035229093554b6417b0a37571730f68c10ecb7098234814406b49dfae1e1e`，tail `6812e1b072caeaa4fd3e6e8e55b485c57533bc0a0d9eaaff4dd84bbf48809922`。
+- 首次正式评分发现冻结接口不兼容：10份含任务来源的`scorerReference`都缺少绑定评分器要求的`actions[]/objects[]/fields`，并使用自然语言checks，触发`C11_REFERENCE_IDENTITY_INVALID`。没有修改Expected、scorer、旧hash或门槛；正式决定按失败关闭为`REJECT_CANDIDATE12_ENGINEERING_SCREEN`。
+- 事后任务结构诊断明确标注`notPreregistered=true`：candidate03 TP/FP/FN 13/2/5，P/R/F1 86.67%/72.22%/78.79%；Candidate12 16/1/2，94.12%/88.89%/91.43%。两臂诊断完整来源均6/12；Candidate12仍有Forbidden=1，完整来源未净增2。该诊断不构成晋级或真实转化证据。
+- 发送前D2定向测试6/6、D1+D2联合17/17通过；发送后复跑联合测试为1/17通过、16项因693行前缀已合法追加至742行而按设计拒绝，未改旧锁或旧哈希来迁就测试。发送后只读`analyze-candidate12-d2-postrun.mjs --verify`、lint、build和security均通过。裸全量测试仍有既有`REAL_INPUT_CARRIERS_MANIFEST`未设置失败；同一A02测试单独1/1通过。历史RCO-5-007继续为`FREEZE_HASH_MISMATCH:package-lock.json`。
+- 默认候选、Schema、旧库、Preview、Production、D1身份和正式人工Holdout均未修改或运行。
+
+当前停止状态：`D2_EXECUTION_COMPLETE_SCORING_PACKAGE_INVALID / REJECT_CANDIDATE12_ENGINEERING_SCREEN`。下一阶段只能先进行D3零调用评分契约修复和新数据前预注册；正式人工Holdout仍为`WAITING_FOR_INDEPENDENT_HUMAN_LABELS`。

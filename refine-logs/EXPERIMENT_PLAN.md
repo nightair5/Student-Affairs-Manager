@@ -1,7 +1,7 @@
 # Candidate11 独立支线推进计划
 
-版本：c12-plan-0.7-d1-provisional-paired。日期：2026-09-21（Asia/Shanghai）。
-状态：B2已完成并拒绝candidate11；Candidate12已工程冻结，C1人工准备包完成。Codex制作的12例临时Development包已形成24个零调用配对身份，但独立人工标签、任何Candidate12模型调用、真人验证、合并和部署仍未执行。
+版本：c12-plan-0.8-d2-provisional-results。日期：2026-09-21（Asia/Shanghai）。
+状态：D2已执行24个临时Development配对请求，但冻结评分参照与评分器接口不兼容，正式决定`REJECT_CANDIDATE12_ENGINEERING_SCREEN`。独立人工标签、正式Holdout、真人验证、合并和部署仍未执行。
 当前主问题：已经正确读取的校园通知，仍会被误拆任务、误判条件、误归材料和时间；旧评分又漏掉部分错误。
 方法主张：以可复核的结构化评分选择最小必要的提示词修正和教学例，降低首次建议的实质纠正负担，再验证真实确认保存。
 
@@ -185,6 +185,16 @@ C2的12份合成来源只能作为已见Development。D1把来源与provisional 
 
 D1即使通过预注册工程筛选，也只得到`ELIGIBLE_FOR_INDEPENDENT_HUMAN_HOLDOUT`，不能替代两位真实人员的独立标签或Candidate12晋级结论。正式人工Holdout仍停在`WAITING_FOR_INDEPENDENT_HUMAN_LABELS`。
 
+### 6.2 D2 临时 Development 实际结果
+
+D2使用独立grant按D1顺序完成24/24请求，全部HTTP 200且settled；0 retry、0 repair、0 verifier、0 halt、0 uncertain。本地可审计费用上界¥0.436048，账本从693行增至742行。
+
+冻结评分包在结果可见后首次暴露契约错误：`scorerReference.tasks`保存单值`action/object`和自然语言checks，冻结评分器要求`actions[]/objects[]/fields`与结构化checks。10个含任务来源均无法进入正式评分。不得在揭盲后补写别名或改Expected，因此正式结论失败关闭为`REJECT_CANDIDATE12_ENGINEERING_SCREEN`。
+
+事后任务结构诊断仅用于定位：candidate03任务F1 78.79%，Candidate12 91.43%；Candidate12少3个FN和1个FP，但诊断完整来源仍6/12、Forbidden仍为1、完整来源未净增2。该结果不授予Holdout、默认候选或发布资格。
+
+D3只能零调用推进：定义并测试未来唯一的machine-readable reference/scorer contract，冻结compiler/scorer/hash，再决定Candidate13或全新材料方案。D2的12份来源与24个输出永久视为已见，不得重标后冒充新的预注册验证。
+
 ## 7. B4 / C11-P5—P6：确认保存与真实转化
 
 ### 7.1 本机实验闭环（独立实施阶段）
@@ -260,5 +270,7 @@ Candidate12冻结及C1零调用人工准备已经完成。当前只允许两位�
 - [x] 按预注册门槛拒绝当前candidate11，不强选增强臂。
 - [x] Candidate12仅按Development错误修正并先行冻结；独立人工协议、空白模板、重合校验与预算草案完成。
 - [x] Codex临时制作12份合成Development来源和provisional参照；明确不能冒充独立人工，并加入已见排除库。
+- [x] D2按新grant完成24次临时Development配对执行与结算。
+- [x] 冻结评分接口不兼容按预注册纪律失败关闭；保留透明事后诊断，不修改Expected。
 - [ ] 两位真实人员完成12份独立双审来源与Expected。
 - [ ] 24个零调用请求身份、盲测、产品/真人验证。
