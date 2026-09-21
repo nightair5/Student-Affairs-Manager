@@ -1,0 +1,490 @@
+{
+  "version": "candidate11-engineering-delivery-1",
+  "date": "2026-09-21",
+  "branch": "codex/e2-candidate11-blind-eval",
+  "base": "593ab7847a5791f8e3fbc6e4b82f94a6c4d0ebb5",
+  "status": {
+    "engineering": "ENGINEERING_READY",
+    "repositoryGate": "HAS_VERIFIED_HISTORICAL_FAILURE_NO_PROMOTION",
+    "modelQuality": "NOT_RUN_NOT_ADOPTED",
+    "humanBenefit": "NOT_OBSERVABLE",
+    "merge": "NOT_RUN",
+    "deployment": "NOT_RUN"
+  },
+  "newModelCalls": 0,
+  "realLedgerWrites": 0,
+  "secretReads": 0,
+  "schemaUpgrade": false,
+  "dependencyUpgrade": false,
+  "protection": {
+    "count": 84,
+    "ledgerSha": "dc52d9cd04b809be9d22d5298bd45d0e6f0a01307017d48a91aaa91a45e8e597",
+    "ledgerRows": 644,
+    "reserves": 314,
+    "oldOriginAndBrowserLibraries": "NOT_OPERATED"
+  },
+  "historical": {
+    "count": 24,
+    "identityAndSettlementValid": 24,
+    "clientParseAndCompositionValid": 24,
+    "knownChecks": {
+      "candidate03": "9/12",
+      "candidate10": "11/12"
+    },
+    "completeCaseRate": null,
+    "reference": "POST_HOC_PARTIAL_SINGLE_AGENT_DIAGNOSTIC",
+    "qualityConclusion": "NO_PROMOTION_REFERENCE_INCOMPLETE"
+  },
+  "candidate": {
+    "version": "real-input-source-semantics-11",
+    "variants": [
+      "V00",
+      "V10",
+      "V01",
+      "V11"
+    ],
+    "common": "candidate03 plus completion rule",
+    "metaFactor": "M",
+    "exampleFactor": "E",
+    "exampleCount": 10,
+    "oldRequestsUnchanged": true
+  },
+  "tests": {
+    "vitest": {
+      "pass": 1422,
+      "fail": 0,
+      "skip": 1,
+      "skipReason": "Existing opt-in ocrLiveComponent test"
+    },
+    "candidate11": {
+      "scoring": 44,
+      "history": 1,
+      "construction": 7,
+      "identity": 6,
+      "gateway": 9,
+      "runtime": 15,
+      "staticPreview": 5,
+      "total": 87,
+      "overlapsVitest": 28
+    },
+    "legacyBudgetGateway": {
+      "pass": 124,
+      "fail": 0,
+      "realNetwork": false,
+      "temporaryLedgerOnly": true
+    },
+    "otherNode": {
+      "server": 8,
+      "worker": 25,
+      "timeParity": 1,
+      "multimodalLibrary": 23,
+      "functions": 5
+    },
+    "historicalFailure": {
+      "suite": "RCO-5-007",
+      "pass": 3,
+      "fail": 1,
+      "error": "FREEZE_HASH_MISMATCH:package-lock.json",
+      "reproducedInParent": true,
+      "waived": false
+    },
+    "priorAttempts": {
+      "windowsEol": "Restored exact parent bytes only after Git canonical equivalence checks; no semantic diff",
+      "fixtures": "Generated 8 carriers in new temporary directory; restored existing OCR language assets",
+      "timing": "One previous full run failed old OCR timeout terminate assertion; same test and code passed final full run with maxWorkers=2"
+    }
+  },
+  "browser": {
+    "evidence": "TOOL_OBSERVED_MANUAL_SUMMARY",
+    "origin": "http://127.0.0.1:6633/?automation=1",
+    "engineeringCases": 8,
+    "historicalCases": [
+      "OS03",
+      "OS04"
+    ],
+    "actions": [
+      "edit",
+      "explicit material review",
+      "injected atomic failure",
+      "refresh recovery",
+      "partial confirmation",
+      "rejection",
+      "repeat open",
+      "all selected confirmation",
+      "independent repository readback"
+    ],
+    "finalReadback": {
+      "tasks": 3,
+      "drafts": 10,
+      "events": 31,
+      "successfulCommitEvents": 2,
+      "failedCommitEvents": 1,
+      "rejectionEvents": 1,
+      "readbackVerifiedEvents": 2,
+      "observationOrigin": "AUTOMATION"
+    },
+    "viewportChecks": [
+      {
+        "width": 1024,
+        "height": 900
+      },
+      {
+        "width": 390,
+        "height": 844
+      }
+    ],
+    "consoleErrorsOrWarningsObserved": 0,
+    "exportToDisk": "NOT_VERIFIED_IAB_CONTENT_EXPORT_UNSUPPORTED",
+    "notHumanConversion": true
+  },
+  "preview": {
+    "origin": "http://127.0.0.1:6633",
+    "database": "rco-mainline-01-02-i1-real-input-candidate11-engineering-1",
+    "records": 20,
+    "modelCallsEnabled": false,
+    "staticAssetHashes": [
+      {
+        "path": "index.html",
+        "sha256": "e8b65ceafd1b3ac80fb55946b0befde68c5b3d4931229cfb8356e46a14b89eb9"
+      },
+      {
+        "path": "browser.js",
+        "sha256": "4af7d37990e21a8249031718f544d8f1def58d3156ba7b674de037dd5699e974"
+      },
+      {
+        "path": "browser.css",
+        "sha256": "510c6fd27c3427423c30a4d1312ebcdc719fab8743c32bccfaceabc704b5195f"
+      },
+      {
+        "path": "records/fixture-multi.json",
+        "sha256": "f71968824d3a1d52749d27fbce6539d0e917238cf4368f5f10e09bdbf751d2ad"
+      },
+      {
+        "path": "records/fixture-no-date.json",
+        "sha256": "bad472e5e88336b3bbd431a05050e0d11039b7e46db9a1c5c260ade8c684a726"
+      },
+      {
+        "path": "records/fixture-vague.json",
+        "sha256": "6eda29578b80933673cb3399fdcfe2682ed9faee75ecce2e2876b2824cffdc6a"
+      },
+      {
+        "path": "records/fixture-information.json",
+        "sha256": "2625a555c20bb24c0343d9519fe6a7a24e937dccce48538faf9e837c1bcb62e6"
+      },
+      {
+        "path": "records/fixture-condition-true.json",
+        "sha256": "2eafe3d3b18a937ca2a045904e0dd14025f349c185b54e5c7bcf45db40b01eef"
+      },
+      {
+        "path": "records/fixture-condition-false.json",
+        "sha256": "30496a768006c601dbab5804754687069b91b5261b4f91008f125a992009c9b7"
+      },
+      {
+        "path": "records/fixture-condition-unknown.json",
+        "sha256": "7e9ab766702053f8549a347aaf615151dc5d945b8d842a86f75c04b15237f576"
+      },
+      {
+        "path": "records/fixture-revision.json",
+        "sha256": "491dfe1b2710dd1b0c2aaff64689a3cb3161e490265a60dc06135019ff57e003"
+      },
+      {
+        "path": "records/history-K01-A.json",
+        "sha256": "a3efae238195c82fe6d73da1fdc52fa81e74a2bdaf90e6498528e2524c121f7d"
+      },
+      {
+        "path": "records/history-K02-A.json",
+        "sha256": "346db7f9f896ee58543032ec43a05c9c47c0eefcfe457f1e5ab001df348f39e2"
+      },
+      {
+        "path": "records/history-K03-A.json",
+        "sha256": "d45bc3360d9cd3259dc3bc50b7e8621f0872170b8d7c778200c5e0b2be2449a7"
+      },
+      {
+        "path": "records/history-K04-A.json",
+        "sha256": "68443bac7c71fa3954b80bb0363de4603b512306811ea1f77b0ab5c2b08143f8"
+      },
+      {
+        "path": "records/history-K05-A.json",
+        "sha256": "b5367cb7c401b73197784eb1d92c39df82dcd31d661dd8626d19359d0d664f54"
+      },
+      {
+        "path": "records/history-K06-A.json",
+        "sha256": "604e2f24c200b191363485d2ad53cf118b844a17fceac92fe6ce8d80538f9e87"
+      },
+      {
+        "path": "records/history-K07-A.json",
+        "sha256": "5a61366da8170e882dcb8da34e439d2c836f7cbaf8108013e849932fb269f71c"
+      },
+      {
+        "path": "records/history-K08-A.json",
+        "sha256": "8d965c68962bedbff0a8249c6daef44c3f8cdfc53c034c4ee23b3eb8b4421a43"
+      },
+      {
+        "path": "records/history-K09-A.json",
+        "sha256": "26043d1cc120dfb38d6618fc4e3a6716e5760707477c2ad0b01aa0363cf397f1"
+      },
+      {
+        "path": "records/history-K10-A.json",
+        "sha256": "3d2e42ae360fccca641bd1bc698d5eebafa3d6da497b3c344142eefbdd574171"
+      },
+      {
+        "path": "records/history-K11-A.json",
+        "sha256": "ed72b281bf29298784fea80dbf06c8a774ae8067b49339ddff2b071afde58a53"
+      },
+      {
+        "path": "records/history-K12-A.json",
+        "sha256": "f90e4e565448bb6700b72c391fc9ab2b0f7158e1c86389fed52f39ee0310edba"
+      }
+    ]
+  },
+  "sourceHashes": [
+    {
+      "path": "scripts/score-candidate11-recognition.mjs",
+      "sha256": "f12600d7b061ac8ec15e9d6de4912b96213ab6067d70b47485a6b0e7a33e6343"
+    },
+    {
+      "path": "scripts/verify-candidate11-analysis.mjs",
+      "sha256": "a1c05b6a28afa8fb4b56333c8cd17098dd72bfb43cf65d6a60db7a82c4f7b522"
+    },
+    {
+      "path": "scripts/serve-candidate11.mjs",
+      "sha256": "dc2e16c1406e465c8d0c58c4aa8090adbdd33ba583509df5351ed72f160facc8"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate11.ts",
+      "sha256": "750b3e8fce44057adbb56fccced094b9f54ac0e4b4f2daaa186acf2219404150"
+    },
+    {
+      "path": "src/experiments/candidate11/identity.ts",
+      "sha256": "2b2aa3074e093000647c45f78c2867194fc5d080c92c9df1cd1e463e30b2f4d0"
+    },
+    {
+      "path": "src/experiments/candidate11/runtime.tsx",
+      "sha256": "4af949eb9bfde8217f5a3c6a7fe102c251df582ade4f2b030da377e8c8bb759b"
+    },
+    {
+      "path": "src/experiments/candidate11/replay.ts",
+      "sha256": "aa4e80c821356344f1b5cc7708940ee7f56f7e4e2021fe7e625cea41851e7fb5"
+    },
+    {
+      "path": "src/experiments/candidate11/observation.ts",
+      "sha256": "7262a9bcb038e7c3b8b2e0e6cc00f89e12d8a19c2b456c728eda0c94e9b039d4"
+    },
+    {
+      "path": "src/experiments/candidate11/browser.tsx",
+      "sha256": "f51548ea436e0e95d9c55ecf1139ac563991c75f46c6a60e72ba606b53d2ff1a"
+    }
+  ],
+  "checks": {
+    "lint": {
+      "phase": "lint",
+      "envDir": false,
+      "rootEnvRead": false,
+      "results": [
+        {
+          "label": "lint",
+          "status": 0,
+          "error": null,
+          "log": ".data/candidate11/checks/lint.log"
+        }
+      ]
+    },
+    "test": {
+      "phase": "test",
+      "envDir": false,
+      "rootEnvRead": false,
+      "results": [
+        {
+          "label": "contract",
+          "status": 0,
+          "error": null,
+          "log": ".data/candidate11/checks/contract.log"
+        },
+        {
+          "label": "time-contract",
+          "status": 0,
+          "error": null,
+          "log": ".data/candidate11/checks/time-contract.log"
+        },
+        {
+          "label": "vitest",
+          "status": 0,
+          "error": null,
+          "log": ".data/candidate11/checks/vitest.log"
+        },
+        {
+          "label": "server",
+          "status": 0,
+          "error": null,
+          "log": ".data/candidate11/checks/server.log"
+        },
+        {
+          "label": "worker",
+          "status": 0,
+          "error": null,
+          "log": ".data/candidate11/checks/worker.log"
+        },
+        {
+          "label": "time-parity",
+          "status": 0,
+          "error": null,
+          "log": ".data/candidate11/checks/time-parity.log"
+        },
+        {
+          "label": "multimodal-lib",
+          "status": 0,
+          "error": null,
+          "log": ".data/candidate11/checks/multimodal-lib.log"
+        },
+        {
+          "label": "rco-5-007",
+          "status": 1,
+          "error": null,
+          "log": ".data/candidate11/checks/rco-5-007.log"
+        },
+        {
+          "label": "functions",
+          "status": 0,
+          "error": null,
+          "log": ".data/candidate11/checks/functions.log"
+        },
+        {
+          "label": "c11-scoring",
+          "status": 0,
+          "error": null,
+          "log": ".data/candidate11/checks/c11-scoring.log"
+        },
+        {
+          "label": "c11-history",
+          "status": 0,
+          "error": null,
+          "log": ".data/candidate11/checks/c11-history.log"
+        },
+        {
+          "label": "c11-gateway",
+          "status": 0,
+          "error": null,
+          "log": ".data/candidate11/checks/c11-gateway.log"
+        },
+        {
+          "label": "c11-preview",
+          "status": 0,
+          "error": null,
+          "log": ".data/candidate11/checks/c11-preview.log"
+        }
+      ]
+    },
+    "build": {
+      "phase": "build",
+      "envDir": false,
+      "rootEnvRead": false,
+      "results": [
+        {
+          "label": "typecheck",
+          "status": 0,
+          "error": null,
+          "log": ".data/candidate11/checks/typecheck.log"
+        },
+        {
+          "label": "build",
+          "status": 0,
+          "rootEnvRead": false
+        }
+      ]
+    },
+    "security": {
+      "phase": "security",
+      "envDir": false,
+      "rootEnvRead": false,
+      "results": [
+        {
+          "label": "security",
+          "status": 0,
+          "error": null,
+          "log": ".data/candidate11/checks/security.log"
+        }
+      ]
+    }
+  },
+  "logHashes": [
+    {
+      "path": ".data/candidate11/checks/lint.log",
+      "sha256": "330074cd4602ab400348781c17a03e7a1e2be3ea91b589e50f076f8f40cc1c5c"
+    },
+    {
+      "path": ".data/candidate11/checks/contract.log",
+      "sha256": "5f1d25d423196cc011a5db69f6e90281e80d77e9aa16b4402b6ba1d053cca32a"
+    },
+    {
+      "path": ".data/candidate11/checks/time-contract.log",
+      "sha256": "724482e94b2a3d606d0bc91efecb4d3eeda6977f835f6c250f7ebb40f5770777"
+    },
+    {
+      "path": ".data/candidate11/checks/vitest.log",
+      "sha256": "b230573c49b2885d163451abbeb7d03a1ec2f2fee133b4208014c0e6d785142f"
+    },
+    {
+      "path": ".data/candidate11/checks/server.log",
+      "sha256": "a5978c1ec36ad073479201ce4215cff380257f2759e6025dc0aa09886d428b64"
+    },
+    {
+      "path": ".data/candidate11/checks/worker.log",
+      "sha256": "8acf19befb70065bfaf80799ebe8601a12c07d639c5bc6d9818ff8a42bd244bf"
+    },
+    {
+      "path": ".data/candidate11/checks/time-parity.log",
+      "sha256": "9f43a0887d194c1837b83d92eb11ba9e843d392e1efc52e37ba578f7750035ae"
+    },
+    {
+      "path": ".data/candidate11/checks/multimodal-lib.log",
+      "sha256": "6ee5fb2bb9a414206aff464d9da72e893a5735fe7be250bbfaacc2c7c71c61a1"
+    },
+    {
+      "path": ".data/candidate11/checks/rco-5-007.log",
+      "sha256": "313c987eb4881f2ade2a66b5e6cc43b3b9d1d4f4b35767fdd96371f11760bf05"
+    },
+    {
+      "path": ".data/candidate11/checks/functions.log",
+      "sha256": "db12c7efe4ab938dd1d7570a2785c2c62013bb452db1538ffd71d057fa3bbf4b"
+    },
+    {
+      "path": ".data/candidate11/checks/c11-scoring.log",
+      "sha256": "b5dc0527fdbfa65ebce9a54fe2d5f8a24675e6de61070457d470df019f8a0e3c"
+    },
+    {
+      "path": ".data/candidate11/checks/c11-history.log",
+      "sha256": "c538e474c3cc2c50b4a28e3cf6660a865dbbbcdff28c252829b9f6a643a19b8b"
+    },
+    {
+      "path": ".data/candidate11/checks/c11-gateway.log",
+      "sha256": "675626d6f000414138a7c1ad50b9481cbcb06c04a1712312f4864bfd5d0b9650"
+    },
+    {
+      "path": ".data/candidate11/checks/c11-preview.log",
+      "sha256": "6eadd5e4eb1d5f548d560fffa2939519a45f37a02db705758d4445b08f895e79"
+    },
+    {
+      "path": ".data/candidate11/checks/typecheck.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".data/candidate11/checks/security.log",
+      "sha256": "825b45f9e7c14818d6ce021f27f677f9bf126ec992bebd6ec5c4c68066dd0559"
+    },
+    {
+      "path": ".data-c11-budget-regression-rerun.log",
+      "sha256": "77b9f1ecd1b1c77645702f0d6de25979f9aac4a67f89815fdc4a15f2f44ebd8e"
+    },
+    {
+      "path": ".data-c11-targeted-final.log",
+      "sha256": "72469dbb45b4f40250ef0064a3beabff3e14ad07100046c483701039cc1f7641"
+    }
+  ],
+  "commitsVerifiedBeforeFinal": [
+    "d0407f6b59a8e099b834feaadfaf4d166644d7ab",
+    "8714f0130f62a89ae6230c58a8c3a4664934a8bd"
+  ],
+  "finalCommit": "Resolve current Git HEAD; final artifact cannot contain its own commit hash.",
+  "nextStage": "B1_ZERO_CALL_PREPARATION_ONLY",
+  "paidGrant": "NOT_AUTHORIZED"
+}

@@ -11,7 +11,7 @@
 - 解析/客户端结构失败仍占一个计划来源分母；其预测实体数未知，实体指标null。评分器自身异常抛出，属于工具错误，运行无质量结论。
 - 空集合 precision/recall 为null，不记100%。业务条件unknown有实际状态；评分不确定保持未裁决，不能删分母。
 - 覆盖充分参照可输出 complete；partial参照只能输出 knownChecksPass、字段诊断和 REFERENCE_INCOMPLETE，complete=null，不发布完整准确率。
-- 来源级聚合保留所有计划单元；不确定时 completeCaseRate 仅是已确认正确比例的下界，definitive=false，不能称点估计准确率。
+- 来源级聚合保留所有计划单元；存在未裁决时 completeCaseRate=null，verifiedCorrectLowerBound 单列已确认正确比例下界，definitive=false，不能称点估计准确率。
 - 历史单作者 Expected 缺少完整字段及独立裁决。本轮新增约束依据原文与已见审计，明确事后性质，两臂共用；不追求复现任何旧分数。
 - 当字段未纳入参照时，correctPairs仅指已定义字段，不声明所有自然语言事实正确。材料、时间、条件、修订必须有对应检查才能声称覆盖。
 

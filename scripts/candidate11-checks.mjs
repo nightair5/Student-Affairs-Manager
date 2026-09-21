@@ -3,6 +3,8 @@ import {mkdirSync,writeFileSync,readdirSync} from 'node:fs'
 import {resolve} from 'node:path'
 import {build} from 'vite'
 import react from '@vitejs/plugin-react'
+import {tmpdir} from 'node:os'
+import {randomUUID} from 'node:crypto'
 
 // Explicit environment allowlist; no .env loading, service startup or model runner.
 const allowed=['PATH','PATHEXT','SYSTEMROOT','WINDIR','COMSPEC','TEMP','TMP','USERPROFILE','APPDATA','LOCALAPPDATA','PROGRAMFILES','PROGRAMFILES(X86)','SYSTEMDRIVE','NUMBER_OF_PROCESSORS']
@@ -22,10 +24,17 @@ function run(label,args){
 if(phase==='lint')run('lint',['node_modules/eslint/bin/eslint.js','.'])
 else if(phase==='test'){
   run('contract',['scripts/generate-recognition-contract.mjs','--check']);run('time-contract',['scripts/generate-time-ast.mjs','--check'])
-  run('vitest',['node_modules/vitest/vitest.mjs','run','--config','scripts/mainline-01.vitest.config.mts'])
+  const {renderEngineeringCarriers}=await import('./render-mainline-real-input-01-fixtures.mjs')
+  const carrierDirectory=resolve(tmpdir(),'c11-engineering-carriers-'+randomUUID())
+  await renderEngineeringCarriers(carrierDirectory)
+  env.REAL_INPUT_CARRIERS_MANIFEST=resolve(carrierDirectory,'carriers.json')
+  run('vitest',['node_modules/vitest/vitest.mjs','run','--config','scripts/mainline-01.vitest.config.mts','--maxWorkers=2'])
   for(const [label,file] of [['server','server/server-tests.mjs'],['worker','cloudflare/worker-tests.mjs'],['time-parity','scripts/time-ast-parity.node-test.mjs'],
     ['multimodal-lib','scripts/multimodal-evaluation-lib.node-test.mjs'],['rco-5-007','scripts/rco-5-007-replay.node-test.mjs'],['functions','functions/functions-tests.mjs']])run(label,['--test',file])
   run('c11-scoring',['--test','scripts/candidate11-scoring.node-test.mjs'])
+  run('c11-history',['--test','scripts/candidate11-history.node-test.mjs'])
+  run('c11-gateway',['--test','scripts/candidate11-gateway.node-test.mjs'])
+  run('c11-preview',['--test','scripts/candidate11-preview.node-test.mjs'])
 }else if(phase==='build'){
   run('typecheck',['node_modules/typescript/bin/tsc','-b','--pretty','false'])
   if(results.every(r=>r.status===0)){

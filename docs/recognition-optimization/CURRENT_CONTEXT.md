@@ -1,65 +1,36 @@
-# 当前交接：candidate11 A1—A5 连续工程实施
+# 当前交接：C11 A1—A5 工程包交付
 
-## 本轮授权与目标
+日期：2026-09-21。工作区 C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/比赛；分支 codex/e2-candidate11-blind-eval。
+本轮授权是实现、验证、独立本机入口和提交推送。模型请求、Secret、真实账本写入、旧库操作、Schema/依赖升级、真人、合并及部署均不在授权内。
 
-- 当前用户明确授权执行粘贴的A1—A5工程包：实现、锁定依赖恢复、独立本机入口/库、离线测试、提交推送当前C11分支。
-- 本轮新增模型请求/试连接/评审模型、真实账本写入、Secret读取、旧用户库、Schema升级、新依赖、真人、合并及部署均禁止。
-- 当前指令覆盖旧计划仅P1和手册仅本地提交的建议；连续完成A1—A5，不进入B1/B2。
+## 当前结论
+- C11 工程闭环已实际运行并经浏览器验证；全仓库存在已复现的历史 RCO-5-007 冻结锁文件失败，不能宣布全绿或发布就绪。
+- 模型效果 NOT_RUN_NOT_ADOPTED；真人收益 NOT_OBSERVABLE；合并/部署 NOT_RUN。
+- A1：版本化结构匹配评分器44项，历史只读复算1项通过；24旧答身份/结算/解析通过。A已定义检查9/12、B11/12，均为partial参照；完整案例准确率null。
+- A2：公共完成标准修正，V00/V10/V01/V11仅切换元指令M和教学例E；保留旧8例+新增2例。原candidate03/10不变。
+- A3：prepared/binding/result/analysis身份重建校验；构造和身份13项、新网关9项、原预算/网关124项通过；C11派发始终拒绝。
+- A4：复用真实App/MainlineRuntime/semanticComposer/CanonicalWorkspaceRepository。8工程夹具+12份candidate03历史原答；原答与仅scope-ID重绑定、用户修改分别保留。
+- 浏览器：8类夹具+历史OS03/OS04，逐项编辑、部分/全部确认、拒绝、失败恢复、重复打开、刷新独立读回已执行。最终3正式任务/10草稿/31事件；全部标记AUTOMATION。
+- A5：Vitest1422通过/1原设置跳过，契约/类型/lint/build/security及其他Node组通过。历史RCO-5-007 3通过/1失败；父工作区同样FREEZE_HASH_MISMATCH:package-lock.json，不改断言、不豁免发布。
 
-## 本轮实时进度（以下历史规划段仅作基线）
+## 启动与独立数据
+在本工作区运行 node scripts/serve-candidate11.mjs 6633，打开 http://127.0.0.1:6633/。
+只能本机精确127.0.0.1地址；6631/6632与公网地址被拒绝。端口冲突时停止，不杀原服务。
+独立IndexedDB：rco-mainline-01-02-i1-real-input-candidate11-engineering-1，数据库版本1、canonical Schema v8不变。
+浏览器工具验收使用?automation=1；普通打开记录ENGINEERING_REPLAY，均不自动算真人。
+静态产物及日志位于.data/candidate11；不含Secret，不使用旧部署配置。
+只提供固定匿名回放；原文粘贴入口会打开回放选择，不运行新的文字/OCR/模型识别。
 
-- 起点593ab78，干净；Node24.18.0/npm11.16.0。npm ci --ignore-scripts恢复244包，锁文件不变。
-- A1新评分器及45项评分/幂等复算测试通过；24份历史原答身份、usage结算、客户端适配通过。
-- 已定义检查A9/12、B11/12；24份参照均partial，完整案例准确率null，NO_PROMOTION_REFERENCE_INCOMPLETE。
-- A2四变体实现及7项构造测试通过，candidate11模型质量NOT_RUN。
-- A2/A3实现完成：四变体及身份13项、新网关9项、原预算/网关124项全部通过；派发关闭。A4已在6633启动，真实App浏览器已完成编辑/失败保护/部分及全部确认/刷新读回，正在收束A5。
-- A5首次完整测试已执行：lint/类型/无.env构建通过；Vitest有3个旧检出/载体失败，RCO-5-007冻结图差异待定点核验，不能称全绿。
-- 四个契约源/生成文件经HEAD与父原字节比对证明仅行尾差异后恢复，契约检查通过，无Schema/Git内容改变。
-- 84个保护hash仍一致。旧账本644行/314次只读。模型调用0、真人NOT_OBSERVABLE、合并/部署NOT_RUN。
-- 审计candidate11/ENGINEERING_AUDIT.md；新复算candidate11/historical-rescore/REPORT.json；完整日志.data/candidate11/checks/。
+## 保护与结果边界
+84个保护SHA一致；旧账本644行、314个reserve，SHA256 dc52d9cd04b809be9d22d5298bd45d0e6f0a01307017d48a91aaa91a45e8e597。
+父分支/6632/旧浏览器库/公开Preview/RC.4/Production未修改。新模型调用0。
+Windows检出行尾问题仅在C11工作树恢复经Git blob与父原字节核对的文件；没有Git语义差异。
+A9/12与B11/12不是人工盲审、全字段准确率或真实转化率，candidate11也尚无模型回答。
+原预算授权已耗尽；工作树账本只是只读副本，不能新开writer。
 
-## 工作区与基点
-
-- 新工作区：C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/比赛。
-- 新分支：codex/e2-candidate11-blind-eval。
-- 父提交：c9ed5ea673487b99d6a537795e3c873803a961da；原分支codex/e2-multimodal-recognition-exp及其原工作区保持。
-- 本轮交付提交请用git log -1 --oneline和远端核对，不能把父提交当最新提交。
-- 没有复制.env、浏览器库或用户Downloads，没有装依赖、启动服务或新建另一条Codex任务。
-- Windows检出将83个保护文件转为CRLF；核实与父Git blob完全一致后，只在新worktree恢复原工作区的精确字节。84个保护文件的hash见基线；未改Git内容。
-- 后续工具必须显式使用这个新路径，不能在旧cwd原地修改。
-
-## 历史状态校正
-
-- HANDOVER_CONTEXT_BRIEF.md的9f4128e/290次/candidate10 NOT_RUN为历史快照；后续24次已经完成，累计314次。
-- 原评分：A10/12、B12/12；响应后有限审计：A9/12、B11/12，B3胜/A1胜/8平。
-- 审计者是全新同系列模型代理，不是独立人工标注者；审计后比例不是预注册盲测或真实用户转化率。
-- candidate10在OS04把核验完成扩大为核验通过；严格实验审计FAIL，未采用。
-- 证据目录：mainline-real-input-01/runs/opensource-methods-20260920a/。
-- 旧原答、Expected、scorer、binding与报告不可覆盖；新评分另存为已见诊断结果。
-
-## 预算与保护
-
-- 账本644行，实际reserve计数314；SHA256 dc52d9cd04b809be9d22d5298bd45d0e6f0a01307017d48a91aaa91a45e8e597。
-- 历史已审报告费用上界14.042543元，原硬限20元；服务商实扣NOT_OBSERVABLE。
-- 当前314次调用许可已用完，本轮新增0。候选分支内ledger只是快照，不得形成并行写账本/新预算。
-- 后续派发前必须明确唯一权威ledger目录、跨进程锁、最新计费和逐次预留。不可直接运行继承的历史runner。
-- 现有6632用户库、公开Preview、RC.4/Production保持；未进行线上验收。
-
-## 路线与停止点
-
-1. P1：新增版本化评分器v2、结构化一对一匹配、完成标准/时间/条件/修订检查、只读幂等复算及预算失败保护。>=30匿名工程夹具，24旧答另存复算，0调用。
-2. P2：candidate11最小完成标准修正及新版对比例子；真实组件承接正确事实的工程上限，0调用。
-3. P3：修正公共底座上6source×4变体=24次Development消融，元指令M/示例E开关，可见版本一致。待新授权。
-4. P4：独立制作者的12个全新source×原candidate03/冻结最佳candidate11=24次。独立标签尚未落实；同作者换皮/模型审计不能冒充人工盲测。
-5. P5：本机隔离真实App确认保存、刷新读回、本机观察事件；工程转化不等于真人。
-6. P6：另批用户研究和商业验证，仍由未批准商业契约决定范围/阈值；48次不代替商业Holdout，不自动批准Preview。
-
-## 产物与核验
-
-- 详细计划：refine-logs/EXPERIMENT_PLAN.md；包含实施路径、消融矩阵、判定规则、预算和P1可复制指令。
-- 任务表：refine-logs/EXPERIMENT_TRACKER.md。
-- 基线与审计：docs/recognition-optimization/candidate11/BRANCH_BASELINE.json、BRANCH_SETUP_AUDIT.md。
-- 受保护文件84个；原分支Git内容及原工作区未变。
-- 本轮仅文档检查、diff和密钥扫描；不重跑模型、完整代码测试或网页验收，不把历史测试成绩算本轮。
-- 旧RCO-5-007锁文件冻结hash失败仍在；后续代码阶段不得改旧断言或以定向通过声称全套全绿。
-- 恢复顺序：AGENTS/PRD相关章→本短交接→日志末尾→计划→基线核对→当前获准包。
+## 交付与下一步
+审计：candidate11/ENGINEERING_AUDIT.md；机器检查摘要：candidate11/ENGINEERING_RESULTS.json。
+评分契约：candidate11/SCORING_CONTRACT_V2.md；历史复算：candidate11/historical-rescore/REPORT.json。
+计划/跟踪：refine-logs/EXPERIMENT_PLAN.md、EXPERIMENT_TRACKER.md。
+已提交推送：A1 d0407f6b59a8e099b834feaadfaf4d166644d7ab；A2/A3 8714f0130f62a89ae6230c58a8c3a4664934a8bd。A4/A5交付SHA以Git当前HEAD及远端核验为准。
+下一步仅B1零调用准备：完整结构化参照及裁决、6×4 Development设计、身份冻结包、唯一权威账本方案和预算授权卡。未授权B1派发/真实预留/模型/真人/上线。

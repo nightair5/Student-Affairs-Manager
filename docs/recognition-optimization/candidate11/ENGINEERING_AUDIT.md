@@ -16,11 +16,56 @@
 
 ## 阶段状态
 
-A1—A5：IN_PROGRESS。模型质量 NOT_RUN；真人收益 NOT_OBSERVABLE；合并/部署 NOT_RUN。
+A1—A5实施及验证已交付。C11工程闭环 ENGINEERING_READY，仓库全量门槛 HAS_HISTORICAL_FAILURE / NO_PROMOTION。模型质量 NOT_RUN；真人收益 NOT_OBSERVABLE；合并/部署 NOT_RUN。
 
 ## 验证记录
 
-待实际执行后填写。历史 RCO-5-007 冻结锁文件差异不修改、不豁免；本轮结果独立记录。
+本轮实测见下文及 ENGINEERING_RESULTS.json。历史 RCO-5-007 冻结锁文件差异不修改、不豁免。
+
+## A4 独立产品入口
+
+- 启动：在本工作区执行 `node scripts/serve-candidate11.mjs 6633`，打开 http://127.0.0.1:6633/。只有本机精确Origin/Host可访问；仅静态GET/HEAD白名单，所有服务端写入与模型路由拒绝。端口占用时停止，不杀旧进程。
+- 新库：`rco-mainline-01-02-i1-real-input-candidate11-engineering-1`，IndexedDB版本1。沿用canonical v8，没有迁移旧库。独立事件与原答metadata用同object store中的C11键保存。
+- 复用真实App、MainlineRuntime、SemanticRepository、semanticComposer、CanonicalWorkspaceRepository与原确认事务。没有新建玩具任务仓库。
+- 提供8份既有匿名工程夹具和12份candidate03已见原答。历史candidate10不冒充candidate03接入；candidate11没有模型结果。界面明确标识人工工程夹具与历史回放。
+- 原答在独立记录中原样保留；为新SourceVersion重新绑定scope ID，要求文本顺序完全一致且逆映射还原原wire。这个适配不是模型纠错，也不改变历史得分。
+- 用户编辑、核对、拒绝、确认通过既有操作历史保存；确认前不创建正式任务；重复打开按操作身份返回已有草稿，不能覆盖确认结果。
+- 事件记录source_ready、suggestion_ready、edit_saved、rejected、confirmation_requested、commit_succeeded、commit_failed、readback_verified。工作区成功事件与写入同事务，点击确认不是成功；确认返回后以独立repository再次读回。日志不含正文、密钥或联系方式。
+- 事件origin显式区分AUTOMATION、ENGINEERING_REPLAY、REGISTERED_HUMAN_TRIAL和UNKNOWN；当前没有真人试用入口。无自动化标记不视为真人。
+- 此入口是固定回放工程工具：不提供新模型识别或新OCR；首页沿用App录入按钮，打开后明确进入回放列表。卡片类别、预计耗时等旧UI兼容估计仍有提示，不作为模型事实或质量证据。
+
+## A4 浏览器实测记录
+
+2026-09-21，Codex Browser工具实际操作新6633入口，query为automation=1。原公开站点标签和旧库未操作。
+
+1. 双任务夹具：来源和草稿先保存，初始0正式任务；编辑第一项名称并显式保存，核对材料required与准备状态，明确核对事实。
+2. 开启“模拟下一次保存失败”，加入第一项时出现C11_INJECTED_ATOMIC_FAILURE并显示未确认。刷新后仍为0正式任务、2待确认，编辑及核对保留。
+3. 显式重试第一项成功，任务中心只出现1项；刷新和重复打开同夹具，第一项显示已加入、第二项仍待确认，无重复创建。
+4. 对第二项记录不需要，刷新后1任务/1草稿；独立读回事件为1成功提交、1失败、1拒绝、1读回通过。
+5. 逐一打开其余7类夹具：原文无日期、日期另行通知、纯资讯、条件true/false/unknown及取消替代。unknown/false/旧作废要求阻止加入；没有自动勾选；纯资讯可明确核对而不创建空项目。
+6. 历史OS04原答显示2条要求，“公开调查摘要”保留unknown条件并阻断；没有把回放等待写成模型时延。
+7. 历史OS03的2条独立要求逐项核对后全部勾选，页面预览为2任务/0项目；点击“加入已选任务（2）”，刷新后独立读回3正式任务/10草稿/31事件，其中2次成功事务、1次失败、1次拒绝、2次读回通过。
+8. 1024×900确认页及最终工具区域实际截图检查；修正工具被固定侧栏遮挡的问题。390×844工具区域换行与导航检查通过，随后恢复默认视口。浏览器控制台error/warn读取为空。
+
+浏览器证据来自本轮工具记录，上述是人工撰写的实测摘要，不冒充自动截图文件。IAB的content.export不受支持，因此没有宣称导出截图/浏览器JSON到磁盘。页面提供独立读回与匿名JSON下载，可复查。原答、材料、时间、来源和历史的全图一致性由15项实际runtime/repository测试补充验证。
+
+## A5 验证、失败分类与保护
+
+- 安全等价执行器 `node scripts/candidate11-checks.mjs lint|test|build|security`。test逐段覆盖原npm test的契约、全量Vitest、server、worker、时间AST、multimodal库、RCO-5-007及Functions，再追加C11 Node测试；失败不跳过后续组。
+- Vite使用configFile:false/envDir:false；Vitest使用既有envDir:false配置。环境只保留操作系统运行变量，不加载根.env。完整Vitest最终限制2个worker，没有减少测试；独立新temp生成8份工程载体，原载体路径仅被旧测试只读使用。
+- 锁定依赖npm ci禁用lifecycle；恢复父工作区现有OCR语言文件用于旧测试静态资源校验，没有下载/升级依赖。未调用Wrangler或生产部署配置。
+- 最终Vitest1422通过、1跳过（原ocrLiveComponent需显式活体OCR环境）；server8、worker25、time-parity1、multimodal-lib23、Functions5通过；C11评分44、历史1、网关9、静态入口5通过；旧预算/网关124通过。C11构造7、身份6、真实runtime15已包括在Vitest总数中。
+- 类型、构建、契约、安全扫描通过；lint0错误、5条非阻塞warning（4条既有、1条C11生产入口无热更新组件提示）。
+- 新增功能失败：0。历史失败：RCO-5-007为3通过/1失败，FREEZE_HASH_MISMATCH:package-lock.json；父工作区只读重跑同样失败。没有改旧hash或锁文件。
+- 环境/暂态失败：首次Windows行尾导致契约/历史原答校验失败；逐文件证明与HEAD及父工作区仅行尾差异后恢复原字节，无Git内容变化。旧carrier/OCR资源恢复后通过。一次全量并发下旧OCR timeout测试未观察到terminate，保留本轮失败记录；同代码限定2 worker后全量通过，不改变断言。
+- 未执行：真实OCR效果、任何candidate11模型/连通调用、真人收益、合并、部署、线上验收；没有调用npm audit或cloudflare:check，因为本次非发布且后者读取旧部署配置。
+- 原84份保护文件hash匹配，ledger 644行/314 reserves且SHA不变；父分支及工作区未修改。全套存在历史失败，工程交付不构成合并或上线许可。
+
+## B1 最小准备与现存阻碍
+
+只准备6来源×4变体Development包，不执行24次请求。先给出完整结构化参照、字段覆盖、拆合边界、别名和歧义裁决；单作者/模型标签必须如实标记，独立人工验证仍缺位。冻结来源、参照、候选/示例/Schema/评分器/适配器和逐请求hash；固定参数、平衡调用顺序、预先写失败处理和候选选择规则。
+
+确认唯一权威账本位置及跨进程锁方案，给出最新官方计价依据和最坏预算提案；不读Secret、不创建grant/预留/收据、不发送请求。原314次许可已耗尽，新授权尚未取得。历史RCO-5-007失败保持单独发布阻碍；不通过改旧Expected/锁文件取得绿色。
 
 ### A1 评分与历史诊断
 

@@ -1,0 +1,20 @@
+.c11-tools {
+  margin-left: 276px;
+  padding: 14px 28px;
+  background: #f4f6f4;
+  overflow-wrap: anywhere;
+}
+.c11-tools summary { cursor: pointer; font-weight: 650; color: #234b42; }
+.c11-tools button, .c11-tools a { margin: 8px 12px 8px 0; }
+#root > .app-shell section[aria-label="隔离实验状态"] {
+  padding: 18px 28px;
+  background: #f4f7f8;
+  border-bottom: 1px solid #d7e1e8;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 1024px) {
+  .c11-tools { margin-left: 236px; }
+}
+@media (max-width: 900px) {
+  .c11-tools { margin-left: 0; margin-top: 64px; }
+}
