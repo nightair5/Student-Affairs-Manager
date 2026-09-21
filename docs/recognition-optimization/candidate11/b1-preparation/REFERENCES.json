@@ -1,0 +1,382 @@
+{
+  "version": "candidate11-b1-structured-references-1.0.0",
+  "referenceContract": {
+    "completenessAxis": {
+      "complete": "该来源在本工程契约列出的任务身份、语义、条件、完成标准、依赖、材料、时间、修订、资讯与禁止推断均已填写；出现未裁决歧义时不得标 complete。",
+      "partial": "仅能核验已列字段；complete、完整案例准确率和晋级结论均必须为不可用。",
+      "historicalExpected": "历史 Expected 与旧评分结果保持原样；本文件不回写、不订正、不替代历史标签。"
+    },
+    "truthAxis": {
+      "engineeringReference": "字段齐备只说明工程参照覆盖完整。",
+      "independentTruth": "必须由未参与候选与题目设计的人工标注者独立复核并裁决；本包尚未满足。"
+    },
+    "matching": {
+      "identity": "以冻结的动作别名、对象别名、执行归属及逐字依据进行一对一最大匹配；标题、描述或关键词共现不能替代身份。",
+      "aliases": "仅允许本文件发送前冻结的别名；看到输出后不得扩充。",
+      "unknown": "unknown 只在参照为 unknown 时正确；明确 true、false、时间或材料改成 unknown 均为错误。"
+    },
+    "composition": {
+      "minimalObligation": "一个最小义务必须同时具备明示动作、明确对象和可独立判定的完成状态。",
+      "legalSplit": "并列动作、不同条件、不同时间、不同对象、不同完成标准或不同修订状态应拆成可独立核对的义务。",
+      "legalMerge": "仅当动作、对象、执行人、条件、时间、材料归属、完成标准和修订状态均相同，且合并后仍可逐项评分时才允许；本批任务层没有允许合并。",
+      "presentationGrouping": "同一来源可在界面分组，但不改变评分义务数。"
+    },
+    "ambiguity": {
+      "rule": "别名外的合理等价、多个最大匹配产生不同字段结论、自由文本完成标准无法确定、修订端点不唯一或参照遗漏时，一律进入 ADJUDICATION_REQUIRED。",
+      "effect": "未裁决单元保留在分母；不得自动选候选、不得删除义务、不得事后迁就输出。",
+      "orderInvariance": "预测 ID、数组顺序和字段顺序不得改变评分。"
+    }
+  },
+  "provenance": {
+    "labelAuthoring": "MODEL_ASSISTED_SINGLE_ENGINEERING_AUTHOR",
+    "review": "SAME_SYSTEM_MODEL_REVIEWER_ONLY",
+    "independentHumanReview": "PENDING",
+    "truthStatus": "PROVISIONAL_ENGINEERING_REFERENCE",
+    "evaluationRole": "SEEN_DEVELOPMENT"
+  },
+  "references": [
+    {
+      "sourceId": "C11-B1-D01",
+      "coverage": "complete",
+      "provenance": { "authoring": "MODEL_ASSISTED_SINGLE_ENGINEERING_AUTHOR", "independentHuman": false },
+      "minimalObligations": [
+        {
+          "id": "D01-T01",
+          "kind": "current",
+          "actionAliases": ["核对"],
+          "objectAliases": ["奖学金公示名单", "公示名单"],
+          "actor": "addressee",
+          "semantics": { "speechAct": "directive", "polarity": "affirmative", "status": "pending", "validity": "active", "modality": "required", "inferenceLevel": "explicit", "actionable": true },
+          "condition": { "value": "not_applicable", "conditionEvidenceQuotes": [], "factEvidenceQuotes": [] },
+          "completionStandard": { "meaning": "名单核对动作已经完成，不要求结论无误", "requiredFragments": ["核对"], "forbiddenFragments": ["核对无误", "核对通过", "名单无误"] },
+          "dependencyIds": [],
+          "materialIds": [],
+          "timePointIds": [],
+          "evidenceQuotes": ["请核对奖学金公示名单"]
+        },
+        {
+          "id": "D01-T02",
+          "kind": "current",
+          "actionAliases": ["发布"],
+          "objectAliases": ["公示", "奖学金公示"],
+          "actor": "addressee",
+          "semantics": { "speechAct": "directive", "polarity": "affirmative", "status": "pending", "validity": "active", "modality": "required", "inferenceLevel": "explicit", "actionable": false },
+          "condition": { "value": "unknown", "conditionEvidenceQuotes": ["名单核对无误后"], "factEvidenceQuotes": ["目前核对结论尚未确定"] },
+          "completionStandard": { "meaning": "公示已经发布", "requiredFragments": ["发布"], "forbiddenFragments": [] },
+          "dependencyIds": ["D01-T01"],
+          "materialIds": [],
+          "timePointIds": [],
+          "evidenceQuotes": ["名单核对无误后，再发布公示", "目前核对结论尚未确定"]
+        }
+      ],
+      "retainedFacts": [
+        { "kind": "condition_fact", "value": "unknown", "evidenceQuote": "目前核对结论尚未确定" }
+      ],
+      "materials": [],
+      "timePoints": [],
+      "revisions": [],
+      "composition": { "currentObligationCount": 2, "historicalInactiveCount": 0, "semanticTaskEntityCount": 2, "allowedTaskMerges": [], "allowedPresentationGroups": [["D01-T01", "D01-T02"]], "reason": "完成标准与条件不同" },
+      "forbiddenInferences": ["把核对完成写成核对无误或核对通过", "把发布条件判为 true 或 false", "删除条件未知的发布义务"],
+      "scorerReference": {
+        "coverage": "complete",
+        "tasks": [
+          { "id": "D01-T01", "actions": ["核对"], "objects": ["奖学金公示名单", "公示名单"], "actor": "addressee", "fields": { "semantics.speechAct": { "equals": "directive" }, "semantics.polarity": { "equals": "affirmative" }, "semantics.status": { "equals": "pending" }, "semantics.validity": { "equals": "active" }, "semantics.modality": { "equals": "required" }, "condition.value": { "equals": "not_applicable" }, "actionable": { "equals": true }, "dependencies": { "setEquals": [] }, "materials": { "setEquals": [] }, "timeRaw": { "setEquals": [] }, "detail.completionCriteria": { "forbiddenFragments": ["核对无误", "核对通过", "名单无误"] } } },
+          { "id": "D01-T02", "actions": ["发布"], "objects": ["公示", "奖学金公示"], "actor": "addressee", "fields": { "semantics.speechAct": { "equals": "directive" }, "semantics.polarity": { "equals": "affirmative" }, "semantics.status": { "equals": "pending" }, "semantics.validity": { "equals": "active" }, "semantics.modality": { "equals": "required" }, "condition.value": { "equals": "unknown" }, "actionable": { "equals": false }, "dependencies": { "oneOf": [["核对:奖学金公示名单"], ["核对:公示名单"]] }, "materials": { "setEquals": [] }, "timeRaw": { "setEquals": [] } } }
+        ]
+      }
+    },
+    {
+      "sourceId": "C11-B1-D02",
+      "coverage": "complete",
+      "provenance": { "authoring": "MODEL_ASSISTED_SINGLE_ENGINEERING_AUTHOR", "independentHuman": false },
+      "minimalObligations": [
+        {
+          "id": "D02-T01",
+          "kind": "current",
+          "actionAliases": ["取得"],
+          "objectAliases": ["大礼堂使用审批通过", "大礼堂使用批准"],
+          "actor": "addressee",
+          "semantics": { "speechAct": "directive", "polarity": "affirmative", "status": "pending", "validity": "active", "modality": "required", "inferenceLevel": "explicit", "actionable": true },
+          "condition": { "value": "not_applicable", "conditionEvidenceQuotes": [], "factEvidenceQuotes": ["目前尚未取得批准"] },
+          "completionStandard": { "meaning": "大礼堂使用的正式批准已经取得", "requiredFragments": ["批准"], "forbiddenFragments": ["申请已提交"] },
+          "dependencyIds": [],
+          "materialIds": [],
+          "timePointIds": ["D02-TIME01"],
+          "evidenceQuotes": ["本次晚会彩排开始前，必须取得大礼堂使用审批通过", "目前尚未取得批准"]
+        }
+      ],
+      "retainedFacts": [
+        { "kind": "pending_fact", "value": "批准尚未取得", "evidenceQuote": "目前尚未取得批准" }
+      ],
+      "materials": [],
+      "timePoints": [
+        { "id": "D02-TIME01", "rawText": "本次晚会彩排开始前", "type": "task_deadline", "normalizedValue": null, "timezone": "Asia/Shanghai", "precision": "vague", "needsConfirmation": true, "relatedTaskIds": ["D02-T01"], "evidenceQuotes": ["本次晚会彩排开始前"] }
+      ],
+      "revisions": [],
+      "composition": { "currentObligationCount": 1, "historicalInactiveCount": 0, "semanticTaskEntityCount": 1, "allowedTaskMerges": [], "allowedPresentationGroups": [["D02-T01"]], "reason": "单一明示结果义务" },
+      "forbiddenInferences": ["把取得批准降格为提交申请", "把尚未取得批准改写成已批准"],
+      "scorerReference": {
+        "coverage": "complete",
+        "tasks": [
+          { "id": "D02-T01", "actions": ["取得"], "objects": ["大礼堂使用审批通过", "大礼堂使用批准"], "actor": "addressee", "fields": { "semantics.status": { "equals": "pending" }, "semantics.validity": { "equals": "active" }, "semantics.modality": { "equals": "required" }, "condition.value": { "equals": "not_applicable" }, "actionable": { "equals": true }, "dependencies": { "setEquals": [] }, "materials": { "setEquals": [] }, "timeRaw": { "setEquals": ["本次晚会彩排开始前"] }, "detail.completionCriteria": { "requiredFragments": ["批准"] } } }
+        ]
+      }
+    },
+    {
+      "sourceId": "C11-B1-D03",
+      "coverage": "complete",
+      "provenance": { "authoring": "MODEL_ASSISTED_SINGLE_ENGINEERING_AUTHOR", "independentHuman": false },
+      "minimalObligations": [
+        {
+          "id": "D03-T01",
+          "kind": "current",
+          "actionAliases": ["上传"],
+          "objectAliases": ["迎新海报电子版", "电子版迎新海报"],
+          "actor": "addressee",
+          "semantics": { "speechAct": "directive", "polarity": "affirmative", "status": "pending", "validity": "active", "modality": "required", "inferenceLevel": "explicit", "actionable": true },
+          "condition": { "value": "not_applicable", "conditionEvidenceQuotes": [], "factEvidenceQuotes": [] },
+          "completionStandard": { "meaning": "PDF格式的迎新海报电子版已经上传", "requiredFragments": ["上传"], "forbiddenFragments": [] },
+          "dependencyIds": [],
+          "materialIds": ["D03-M01"],
+          "timePointIds": ["D03-TIME01"],
+          "evidenceQuotes": ["请于9月25日前上传迎新海报电子版", "文件格式为PDF"]
+        }
+      ],
+      "retainedFacts": [
+        { "kind": "negative_non_task", "value": "纸质海报无需提交", "evidenceQuote": "纸质海报无需提交" },
+        { "kind": "negative_non_task", "value": "硬纸筒无需准备", "evidenceQuote": "也无需准备硬纸筒" }
+      ],
+      "materials": [
+        { "id": "D03-M01", "nameAliases": ["迎新海报电子版", "电子版迎新海报"], "required": true, "formatRequirements": ["PDF"], "namingRequirements": [], "quantity": null, "submissionChannel": null, "relatedTaskIds": ["D03-T01"], "readiness": "unknown", "evidenceQuotes": ["迎新海报电子版", "文件格式为PDF"] }
+      ],
+      "timePoints": [
+        { "id": "D03-TIME01", "rawText": "9月25日前", "type": "submission_deadline", "normalizedValue": "2026-09-25", "timezone": "Asia/Shanghai", "precision": "date_only", "needsConfirmation": false, "relatedTaskIds": ["D03-T01"], "evidenceQuotes": ["9月25日前"] }
+      ],
+      "revisions": [],
+      "composition": { "currentObligationCount": 1, "historicalInactiveCount": 0, "semanticTaskEntityCount": 1, "allowedTaskMerges": [], "allowedPresentationGroups": [["D03-T01"]], "reason": "否定材料说明不构成额外义务" },
+      "forbiddenInferences": ["生成提交纸质海报任务", "生成准备或购买硬纸筒任务", "把硬纸筒列为required材料", "复制教学例的展务台或任务ID"],
+      "scorerReference": {
+        "coverage": "complete",
+        "tasks": [
+          { "id": "D03-T01", "actions": ["上传"], "objects": ["迎新海报电子版", "电子版迎新海报"], "actor": "addressee", "fields": { "semantics.status": { "equals": "pending" }, "semantics.validity": { "equals": "active" }, "condition.value": { "equals": "not_applicable" }, "actionable": { "equals": true }, "dependencies": { "setEquals": [] }, "materials": { "oneOf": [["迎新海报电子版"], ["电子版迎新海报"]] }, "timeRaw": { "setEquals": ["9月25日前"] } } }
+        ],
+        "checks": [
+          { "name": "material-format", "path": "materials.0.formatRequirements", "rule": { "requiredFragments": ["PDF"] } }
+        ]
+      }
+    },
+    {
+      "sourceId": "C11-B1-D04",
+      "coverage": "complete",
+      "provenance": { "authoring": "MODEL_ASSISTED_SINGLE_ENGINEERING_AUTHOR", "independentHuman": false },
+      "minimalObligations": [
+        {
+          "id": "D04-T01",
+          "kind": "current",
+          "actionAliases": ["校对"],
+          "objectAliases": ["志愿者名单"],
+          "actor": "addressee",
+          "semantics": { "speechAct": "directive", "polarity": "affirmative", "status": "pending", "validity": "active", "modality": "required", "inferenceLevel": "explicit", "actionable": true },
+          "condition": { "value": "not_applicable", "conditionEvidenceQuotes": [], "factEvidenceQuotes": [] },
+          "completionStandard": { "meaning": "志愿者名单校对完成", "requiredFragments": ["校对"], "forbiddenFragments": [] },
+          "dependencyIds": [],
+          "materialIds": [],
+          "timePointIds": [],
+          "evidenceQuotes": ["请分别校对志愿者名单"]
+        },
+        {
+          "id": "D04-T02",
+          "kind": "current",
+          "actionAliases": ["备份"],
+          "objectAliases": ["采访录音", "录音"],
+          "actor": "addressee",
+          "semantics": { "speechAct": "directive", "polarity": "affirmative", "status": "pending", "validity": "active", "modality": "required", "inferenceLevel": "explicit", "actionable": true },
+          "condition": { "value": "not_applicable", "conditionEvidenceQuotes": [], "factEvidenceQuotes": [] },
+          "completionStandard": { "meaning": "采访录音已备份到学院共享盘", "requiredFragments": ["备份", "共享盘"], "forbiddenFragments": [] },
+          "dependencyIds": [],
+          "materialIds": [],
+          "timePointIds": [],
+          "evidenceQuotes": ["把采访录音备份到学院共享盘", "两项可以同时进行，不设先后关系"]
+        }
+      ],
+      "retainedFacts": [
+        { "kind": "negative_non_task", "value": "不要制作录音清单", "evidenceQuote": "不要制作录音清单" },
+        { "kind": "dependency_fact", "value": "两项无先后依赖", "evidenceQuote": "两项可以同时进行，不设先后关系" }
+      ],
+      "materials": [],
+      "timePoints": [],
+      "revisions": [],
+      "composition": { "currentObligationCount": 2, "historicalInactiveCount": 0, "semanticTaskEntityCount": 2, "allowedTaskMerges": [], "allowedPresentationGroups": [["D04-T01", "D04-T02"]], "reason": "动作、对象和完成状态独立，且原文明示无依赖" },
+      "forbiddenInferences": ["生成制作录音清单任务", "在校对和备份之间建立依赖", "复制昨日、录音清单核对或教学例ID"],
+      "scorerReference": {
+        "coverage": "complete",
+        "tasks": [
+          { "id": "D04-T01", "actions": ["校对"], "objects": ["志愿者名单"], "actor": "addressee", "fields": { "semantics.status": { "equals": "pending" }, "semantics.validity": { "equals": "active" }, "condition.value": { "equals": "not_applicable" }, "actionable": { "equals": true }, "dependencies": { "setEquals": [] }, "materials": { "setEquals": [] }, "timeRaw": { "setEquals": [] } } },
+          { "id": "D04-T02", "actions": ["备份"], "objects": ["采访录音", "录音"], "actor": "addressee", "fields": { "semantics.status": { "equals": "pending" }, "semantics.validity": { "equals": "active" }, "condition.value": { "equals": "not_applicable" }, "actionable": { "equals": true }, "dependencies": { "setEquals": [] }, "materials": { "setEquals": [] }, "timeRaw": { "setEquals": [] } } }
+        ]
+      }
+    },
+    {
+      "sourceId": "C11-B1-D05",
+      "coverage": "complete",
+      "provenance": { "authoring": "MODEL_ASSISTED_SINGLE_ENGINEERING_AUTHOR", "independentHuman": false },
+      "minimalObligations": [
+        {
+          "id": "D05-T01",
+          "kind": "current",
+          "actionAliases": ["布置"],
+          "objectAliases": ["会场"],
+          "actor": "addressee",
+          "semantics": { "speechAct": "directive", "polarity": "affirmative", "status": "pending", "validity": "active", "modality": "required", "inferenceLevel": "explicit", "actionable": false },
+          "condition": { "value": "unknown", "conditionEvidenceQuotes": ["学院确认教室已开放后"], "factEvidenceQuotes": ["教室是否开放尚待确认"] },
+          "completionStandard": { "meaning": "会场布置完成", "requiredFragments": ["布置"], "forbiddenFragments": ["教室已开放"] },
+          "dependencyIds": [],
+          "materialIds": [],
+          "timePointIds": [],
+          "evidenceQuotes": ["请在学院确认教室已开放后布置会场", "教室是否开放尚待确认"]
+        },
+        {
+          "id": "D05-T02",
+          "kind": "current",
+          "actionAliases": ["补交"],
+          "objectAliases": ["练习记录"],
+          "actor": "addressee",
+          "semantics": { "speechAct": "directive", "polarity": "affirmative", "status": "pending", "validity": "active", "modality": "required", "inferenceLevel": "explicit", "actionable": false },
+          "condition": { "value": "false", "conditionEvidenceQuotes": ["若本周培训考核未通过"], "factEvidenceQuotes": ["通知已确认本周考核通过"] },
+          "completionStandard": { "meaning": "练习记录已经补交", "requiredFragments": ["补交"], "forbiddenFragments": [] },
+          "dependencyIds": [],
+          "materialIds": [],
+          "timePointIds": [],
+          "evidenceQuotes": ["若本周培训考核未通过，则补交练习记录", "通知已确认本周考核通过"]
+        },
+        {
+          "id": "D05-T03",
+          "kind": "current",
+          "actionAliases": ["增订"],
+          "objectAliases": ["午餐"],
+          "actor": "addressee",
+          "semantics": { "speechAct": "directive", "polarity": "affirmative", "status": "pending", "validity": "active", "modality": "required", "inferenceLevel": "explicit", "actionable": true },
+          "condition": { "value": "true", "conditionEvidenceQuotes": ["只有报名人数超过30人才增订午餐"], "factEvidenceQuotes": ["目前报名人数为35人"] },
+          "completionStandard": { "meaning": "午餐增订完成", "requiredFragments": ["增订"], "forbiddenFragments": [] },
+          "dependencyIds": [],
+          "materialIds": [],
+          "timePointIds": [],
+          "evidenceQuotes": ["只有报名人数超过30人才增订午餐", "目前报名人数为35人"]
+        }
+      ],
+      "retainedFacts": [
+        { "kind": "condition_fact", "value": "unknown", "evidenceQuote": "教室是否开放尚待确认" },
+        { "kind": "condition_fact", "value": "false", "evidenceQuote": "通知已确认本周考核通过" },
+        { "kind": "condition_fact", "value": "true", "evidenceQuote": "目前报名人数为35人" }
+      ],
+      "materials": [],
+      "timePoints": [],
+      "revisions": [],
+      "composition": { "currentObligationCount": 3, "historicalInactiveCount": 0, "semanticTaskEntityCount": 3, "allowedTaskMerges": [], "allowedPresentationGroups": [["D05-T01", "D05-T02", "D05-T03"]], "reason": "三个义务条件与当前可执行性不同" },
+      "forbiddenInferences": ["把三个条件全部改成unknown", "删除false或unknown条件义务", "把本周误作补交任务截止日期", "把条件事实状态另建任务"],
+      "scorerReference": {
+        "coverage": "complete",
+        "tasks": [
+          { "id": "D05-T01", "actions": ["布置"], "objects": ["会场"], "actor": "addressee", "fields": { "semantics.status": { "equals": "pending" }, "semantics.validity": { "equals": "active" }, "condition.value": { "equals": "unknown" }, "actionable": { "equals": false }, "dependencies": { "setEquals": [] }, "materials": { "setEquals": [] }, "timeRaw": { "setEquals": [] } } },
+          { "id": "D05-T02", "actions": ["补交"], "objects": ["练习记录"], "actor": "addressee", "fields": { "semantics.status": { "equals": "pending" }, "semantics.validity": { "equals": "active" }, "condition.value": { "equals": "false" }, "actionable": { "equals": false }, "dependencies": { "setEquals": [] }, "materials": { "setEquals": [] }, "timeRaw": { "setEquals": [] } } },
+          { "id": "D05-T03", "actions": ["增订"], "objects": ["午餐"], "actor": "addressee", "fields": { "semantics.status": { "equals": "pending" }, "semantics.validity": { "equals": "active" }, "condition.value": { "equals": "true" }, "actionable": { "equals": true }, "dependencies": { "setEquals": [] }, "materials": { "setEquals": [] }, "timeRaw": { "setEquals": [] } } }
+        ]
+      }
+    },
+    {
+      "sourceId": "C11-B1-D06",
+      "coverage": "complete",
+      "provenance": { "authoring": "MODEL_ASSISTED_SINGLE_ENGINEERING_AUTHOR", "independentHuman": false },
+      "minimalObligations": [
+        {
+          "id": "D06-OLD01",
+          "kind": "historical_inactive",
+          "actionAliases": ["提交", "统一提交"],
+          "objectAliases": ["嘉宾名单"],
+          "actor": "addressee",
+          "semantics": { "speechAct": "directive", "polarity": "affirmative", "status": "cancelled", "validity": "superseded", "modality": "required", "inferenceLevel": "explicit", "actionable": false },
+          "condition": { "value": "not_applicable", "conditionEvidenceQuotes": [], "factEvidenceQuotes": [] },
+          "completionStandard": { "meaning": "历史提交安排，仅为保留作废事实，不可执行", "requiredFragments": ["提交"], "forbiddenFragments": [] },
+          "dependencyIds": [],
+          "materialIds": [],
+          "timePointIds": ["D06-OLDTIME"],
+          "evidenceQuotes": ["原定10月8日下午三点统一提交嘉宾名单和场地图的安排作废"]
+        },
+        {
+          "id": "D06-OLD02",
+          "kind": "historical_inactive",
+          "actionAliases": ["提交", "统一提交"],
+          "objectAliases": ["场地图"],
+          "actor": "addressee",
+          "semantics": { "speechAct": "directive", "polarity": "affirmative", "status": "cancelled", "validity": "superseded", "modality": "required", "inferenceLevel": "explicit", "actionable": false },
+          "condition": { "value": "not_applicable", "conditionEvidenceQuotes": [], "factEvidenceQuotes": [] },
+          "completionStandard": { "meaning": "历史提交安排，仅为保留作废事实，不可执行", "requiredFragments": ["提交"], "forbiddenFragments": [] },
+          "dependencyIds": [],
+          "materialIds": [],
+          "timePointIds": ["D06-OLDTIME"],
+          "evidenceQuotes": ["原定10月8日下午三点统一提交嘉宾名单和场地图的安排作废"]
+        },
+        {
+          "id": "D06-T01",
+          "kind": "current",
+          "actionAliases": ["提交"],
+          "objectAliases": ["嘉宾名单"],
+          "actor": "addressee",
+          "semantics": { "speechAct": "directive", "polarity": "affirmative", "status": "pending", "validity": "active", "modality": "required", "inferenceLevel": "explicit", "actionable": true },
+          "condition": { "value": "not_applicable", "conditionEvidenceQuotes": [], "factEvidenceQuotes": [] },
+          "completionStandard": { "meaning": "嘉宾名单已提交并附活动编号表", "requiredFragments": ["提交"], "forbiddenFragments": [] },
+          "dependencyIds": [],
+          "materialIds": ["D06-M01"],
+          "timePointIds": ["D06-TIME01"],
+          "evidenceQuotes": ["请于10月10日上午9点前提交嘉宾名单", "两项均附同一份活动编号表"]
+        },
+        {
+          "id": "D06-T02",
+          "kind": "current",
+          "actionAliases": ["提交"],
+          "objectAliases": ["场地图"],
+          "actor": "addressee",
+          "semantics": { "speechAct": "directive", "polarity": "affirmative", "status": "pending", "validity": "active", "modality": "required", "inferenceLevel": "explicit", "actionable": true },
+          "condition": { "value": "not_applicable", "conditionEvidenceQuotes": [], "factEvidenceQuotes": [] },
+          "completionStandard": { "meaning": "场地图已提交并附活动编号表", "requiredFragments": ["提交"], "forbiddenFragments": [] },
+          "dependencyIds": [],
+          "materialIds": ["D06-M01"],
+          "timePointIds": ["D06-TIME02"],
+          "evidenceQuotes": ["于10月12日17:00前提交场地图", "两项均附同一份活动编号表"]
+        }
+      ],
+      "retainedFacts": [
+        { "kind": "provided_material_fact", "value": "活动编号表已由办公室提供", "evidenceQuote": "编号表已由办公室提供" },
+        { "kind": "negative_non_task", "value": "不另设准备活动编号表任务", "evidenceQuote": "不另设准备任务" }
+      ],
+      "materials": [
+        { "id": "D06-M01", "nameAliases": ["活动编号表", "编号表"], "required": true, "formatRequirements": [], "namingRequirements": [], "quantity": 1, "submissionChannel": null, "relatedTaskIds": ["D06-T01", "D06-T02"], "readiness": "provided", "evidenceQuotes": ["两项均附同一份活动编号表", "编号表已由办公室提供"] }
+      ],
+      "timePoints": [
+        { "id": "D06-OLDTIME", "rawText": "10月8日下午三点", "type": "submission_deadline", "normalizedValue": "2026-10-08T15:00:00+08:00", "timezone": "Asia/Shanghai", "precision": "exact", "needsConfirmation": false, "relatedTaskIds": ["D06-OLD01", "D06-OLD02"], "status": "superseded", "evidenceQuotes": ["10月8日下午三点"] },
+        { "id": "D06-TIME01", "rawText": "10月10日上午9点前", "type": "submission_deadline", "normalizedValue": "2026-10-10T09:00:00+08:00", "timezone": "Asia/Shanghai", "precision": "exact", "needsConfirmation": false, "relatedTaskIds": ["D06-T01"], "status": "active", "evidenceQuotes": ["10月10日上午9点前"] },
+        { "id": "D06-TIME02", "rawText": "10月12日17:00前", "type": "submission_deadline", "normalizedValue": "2026-10-12T17:00:00+08:00", "timezone": "Asia/Shanghai", "precision": "exact", "needsConfirmation": false, "relatedTaskIds": ["D06-T02"], "status": "active", "evidenceQuotes": ["10月12日17:00前"] }
+      ],
+      "revisions": [
+        { "type": "supersedes", "fromTaskId": "D06-T01", "targetTaskId": "D06-OLD01", "effective": "true", "evidenceQuotes": ["更正", "安排作废", "请于10月10日上午9点前提交嘉宾名单"] },
+        { "type": "supersedes", "fromTaskId": "D06-T02", "targetTaskId": "D06-OLD02", "effective": "true", "evidenceQuotes": ["更正", "安排作废", "于10月12日17:00前提交场地图"] }
+      ],
+      "composition": { "currentObligationCount": 2, "historicalInactiveCount": 2, "semanticTaskEntityCount": 4, "allowedTaskMerges": [], "allowedPresentationGroups": [["D06-T01", "D06-T02"]], "reason": "两项当前义务有不同时间；两个旧端点仅保留作废与替代关系" },
+      "forbiddenInferences": ["把10月8日下午三点作为当前截止", "生成准备活动编号表任务", "只给一个当前任务或把两个新截止合并", "把已提供材料改成未准备", "丢失作废端点或反转修订方向"],
+      "scorerReference": {
+        "coverage": "complete",
+        "tasks": [
+          { "id": "D06-OLD01", "actions": ["提交", "统一提交"], "objects": ["嘉宾名单"], "actor": "addressee", "fields": { "semantics.status": { "equals": "cancelled" }, "semantics.validity": { "oneOf": ["superseded"] }, "condition.value": { "equals": "not_applicable" }, "actionable": { "equals": false }, "dependencies": { "setEquals": [] }, "materials": { "setEquals": [] }, "timeRaw": { "setEquals": ["10月8日下午三点"] } } },
+          { "id": "D06-OLD02", "actions": ["提交", "统一提交"], "objects": ["场地图"], "actor": "addressee", "fields": { "semantics.status": { "equals": "cancelled" }, "semantics.validity": { "oneOf": ["superseded"] }, "condition.value": { "equals": "not_applicable" }, "actionable": { "equals": false }, "dependencies": { "setEquals": [] }, "materials": { "setEquals": [] }, "timeRaw": { "setEquals": ["10月8日下午三点"] } } },
+          { "id": "D06-T01", "actions": ["提交"], "objects": ["嘉宾名单"], "actor": "addressee", "fields": { "semantics.status": { "equals": "pending" }, "semantics.validity": { "equals": "active" }, "condition.value": { "equals": "not_applicable" }, "actionable": { "equals": true }, "dependencies": { "setEquals": [] }, "materials": { "oneOf": [["活动编号表"], ["编号表"]] }, "timeRaw": { "setEquals": ["10月10日上午9点前"] } } },
+          { "id": "D06-T02", "actions": ["提交"], "objects": ["场地图"], "actor": "addressee", "fields": { "semantics.status": { "equals": "pending" }, "semantics.validity": { "equals": "active" }, "condition.value": { "equals": "not_applicable" }, "actionable": { "equals": true }, "dependencies": { "setEquals": [] }, "materials": { "oneOf": [["活动编号表"], ["编号表"]] }, "timeRaw": { "setEquals": ["10月12日17:00前"] } } }
+        ],
+        "checks": [
+          { "name": "revision-one-effective", "path": "revisions.0.effective", "rule": { "equals": "true" } },
+          { "name": "revision-two-effective", "path": "revisions.1.effective", "rule": { "equals": "true" } }
+        ],
+        "mandatoryAdjudication": ["两条修订的from/target必须分别为新嘉宾名单到旧嘉宾名单、新场地图到旧场地图；scorer 2.0.0不能按动作对象消解自由ID端点，未裁决时禁止选候选。"]
+      }
+    }
+  ]
+}

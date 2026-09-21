@@ -67,6 +67,17 @@ A1—A5实施及验证已交付。C11工程闭环 ENGINEERING_READY，仓库全�
 
 确认唯一权威账本位置及跨进程锁方案，给出最新官方计价依据和最坏预算提案；不读Secret、不创建grant/预留/收据、不发送请求。原314次许可已耗尽，新授权尚未取得。历史RCO-5-007失败保持单独发布阻碍；不通过改旧Expected/锁文件取得绿色。
 
+### B1 零调用准备结果
+
+- 交付目录`candidate11/b1-preparation/`，manifest SHA-256 `af1f1d2427eec1795691e1d4a62056a614bac72f0254103667632b341794744e`。保存6份来源、6份完整工程参照、实际模型Schema、24个prepared packet、逐文件/逐请求hash、设计、审查、计价和预算卡。
+- 来源均为作者已见Development；参照为模型辅助单作者，独立人工复核PENDING。完整字段覆盖不冒充独立人工真值；历史Expected与旧结果未改。
+- V00/V10/V01/V11只切换M/E；同来源四臂的输入、模型、temperature 0、reasoning none、8192输出上限、Schema、referenceTime、timezone和适配器一致。24个身份唯一，最大请求体19,908字节。
+- B1定向测试5/5通过；重复生成字节一致，身份/请求/上下文漂移拒绝，重复派发与无授权派发均返回拒绝，84份保护文件和旧账本保持不变。
+- 联合评分/网关测试58/58通过；隔离全量Vitest 1422/1422通过、1跳过，server、worker、Functions及其余candidate11组通过。最终验证记录见`b1-preparation/VALIDATION.md`；历史RCO-5-007失败仍单独保留。
+- 唯一权威账本只读位置为`C:/Users/Winner/student-affairs-multimodal-exp/docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/CALL_LEDGER.jsonl`；candidate11副本与其逐字节一致：644行、314 reserves、SHA `dc52d9cd04b809be9d22d5298bd45d0e6f0a01307017d48a91aaa91a45e8e597`。writer未打开。
+- 2026-09-21按DeepSeek官方V4.1 Flash峰值、缓存未命中价核验；严格最坏预算为¥51.904512。实际账单仍NOT_OBSERVABLE；无新grant、reserve、receipt或请求。
+- 当前状态`B1_PREPARED_FOR_REVIEW / MODEL_CALLS=0 / AWAITING_NEW_MODEL_CALL_AUTHORIZATION`。历史RCO-5-007仍为`FREEZE_HASH_MISMATCH:package-lock.json`，不改旧锁或发布门槛。
+
 ### A1 评分与历史诊断
 
 - 44项评分反例/正常对照通过。独立 scorerVersion、最大基数一对一、字段判定、歧义裁决、空集合null及解析失败分母已实现。

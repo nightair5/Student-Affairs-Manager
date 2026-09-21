@@ -1,6 +1,6 @@
 # Candidate11 实验跟踪表
 
-版本：c11-tracker-0.2。日期：2026-09-21。
+版本：c11-tracker-0.3-b1-prepared。日期：2026-09-21。
 本表状态反映真实执行；PLANNED不等于授权，PREPARED不等于派发，工程PASS不等于模型/商业PASS。
 核心计划见 [EXPERIMENT_PLAN.md](EXPERIMENT_PLAN.md)。
 
@@ -12,7 +12,7 @@
 | C11-012 | P1 | 只读重放、元数据和临时预算失败分支 | 工程合成 | 0 | PASS_ENGINEERING_ONLY | repeated verify规范化结果相同，真实账本hash不变 |
 | C11-020 | P2 | candidate11最小完成标准修正 | 工程合成 | 0 | PASS_ENGINEERING_ONLY | P1可信；版本化新模块和示例 |
 | C11-021 | P2 | 正确事实→真实组件→确认仓储读回 | 独立工程库 | 0 | PASS_ENGINEERING_ONLY | 保留取消/未知/无日期，确认前0正式任务 |
-| C11-030 | P3 | V00/V10/V01/V11 2×2消融 | 6份Development | <=24 | PLANNED_NOT_AUTHORIZED | 准备冻结包与新授权；累计最多338仅提案 |
+| C11-030 | P3 | V00/V10/V01/V11 2×2消融 | 6份Development | 0/24 | PREPARED_NOT_AUTHORIZED | 24身份已冻结；待独立审查和新模型调用/预算授权 |
 | C11-031 | P3 | 按冻结规则选唯一候选 | P3结果 | 0 | NOT_RUN | 完整结果后评分；不看中途结果改Prompt |
 | C11-040 | P4 | 独立作者12份新source+Expected | 拟合成验证 | 0实验调用 | BLOCKED_INDEPENDENT_LABELS | 人员/方法未落实；模型标注不冒充人审 |
 | C11-041 | P4 | candidate03 vs 冻结最佳candidate11 | 12份新配对 | <=24 | PLANNED_NOT_AUTHORIZED | 先冻结候选/评分，后独立材料；新授权 |
@@ -26,6 +26,16 @@
 request/response hash、调用顺序、authorization与budget、账本前后hash、失败类型、逐例匹配与指标。
 A包已构造工程请求与NOT_RUN身份记录，未生成模型结果或付费授权；旧账本644行/314次hash保持。工程检查与浏览器记录见ENGINEERING_AUDIT.md和ENGINEERING_RESULTS.json。
 
+## B1零调用准备登记
+
+- 交付目录：`docs/recognition-optimization/candidate11/b1-preparation/`；manifest SHA-256为`af1f1d2427eec1795691e1d4a62056a614bac72f0254103667632b341794744e`。
+- 六份来源均为作者已见Development；六份参照为字段覆盖完整的模型辅助单作者工程标签，独立人工复核仍为PENDING。历史Expected未修改。
+- 24个prepared packet均为`ENGINEERING_NO_AUTHORIZATION`、`dispatchAuthorized=false`、`NOT_RUN`；同一来源四臂的输入、模型、temperature、reasoning、Schema、输出上限、referenceTime和timezone一致。
+- 平衡顺序固定；每臂在每位置出现1或2次，M/E每位置各开3次，12种有向相邻组合出现1或2次。
+- 定向B1测试5/5通过：重复生成一致、身份/请求/上下文漂移拒绝、重复派发与无授权派发拒绝、保护文件和账本只读。
+- 唯一权威账本只读核验为644行/314 reserves，SHA仍为`dc52d9cd04b809be9d22d5298bd45d0e6f0a01307017d48a91aaa91a45e8e597`。新调用、grant、reserve、receipt均为0。
+- 官方DeepSeek计价于2026-09-21重新核验。24次严格最坏包络为¥51.904512；本卡未获授权，也未预留费用。
+
 ## P1已完成的任务顺序（历史实施清单）
 
 1. 固定预期语义与操作性任务的计数区别；定义完成标准/自由文本裁决接口。
@@ -38,4 +48,4 @@ A包已构造工程请求与NOT_RUN身份记录，未生成模型结果或付费
 ## 结果填写纪律
 
 不把计划预计数写到实测列；不把模型代理审计写成人工；不把“无任务正确处置”写成保存了任务。
-历史RCO-5-007冻结hash失败已在本分支和父工作区复现，保留为发布阻碍；下一步B1仅准备，不派发模型。
+历史RCO-5-007冻结hash失败已在本分支和父工作区复现，保留为发布阻碍。当前停止在B1可审查、待新模型调用授权；不得派发模型或用部分结果选择候选。

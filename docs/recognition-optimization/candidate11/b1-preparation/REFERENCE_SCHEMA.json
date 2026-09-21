@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "candidate11-b1-reference-schema-1.0.0",
+  "title": "Candidate11 B1 structured engineering reference",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "referenceContract", "provenance", "references"],
+  "properties": {
+    "version": { "const": "candidate11-b1-structured-references-1.0.0" },
+    "referenceContract": {
+      "type": "object",
+      "required": ["completenessAxis", "truthAxis", "matching", "composition", "ambiguity"],
+      "additionalProperties": true
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["labelAuthoring", "independentHumanReview", "truthStatus"],
+      "additionalProperties": true
+    },
+    "references": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["sourceId", "coverage", "provenance", "minimalObligations", "retainedFacts", "materials", "timePoints", "revisions", "composition", "forbiddenInferences", "scorerReference"],
+        "properties": {
+          "sourceId": { "type": "string", "pattern": "^C11-B1-D0[1-6]$" },
+          "coverage": { "enum": ["complete", "partial"] },
+          "provenance": { "type": "object", "additionalProperties": true },
+          "minimalObligations": { "type": "array", "items": { "$ref": "#/$defs/obligation" } },
+          "retainedFacts": { "type": "array", "items": { "type": "object", "additionalProperties": true } },
+          "materials": { "type": "array", "items": { "type": "object", "additionalProperties": true } },
+          "timePoints": { "type": "array", "items": { "type": "object", "additionalProperties": true } },
+          "revisions": { "type": "array", "items": { "type": "object", "additionalProperties": true } },
+          "composition": { "type": "object", "additionalProperties": true },
+          "forbiddenInferences": { "type": "array", "items": { "type": "string" } },
+          "scorerReference": { "type": "object", "additionalProperties": true }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "obligation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "actionAliases", "objectAliases", "actor", "semantics", "condition", "completionStandard", "dependencyIds", "materialIds", "timePointIds", "evidenceQuotes"],
+      "properties": {
+        "id": { "type": "string" },
+        "kind": { "enum": ["current", "historical_inactive"] },
+        "actionAliases": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "objectAliases": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "actor": { "enum": ["addressee", "addressed_group", "issuer", "third_party", "unknown"] },
+        "semantics": { "type": "object", "additionalProperties": true },
+        "condition": { "type": "object", "additionalProperties": true },
+        "completionStandard": { "type": "object", "additionalProperties": true },
+        "dependencyIds": { "type": "array", "items": { "type": "string" } },
+        "materialIds": { "type": "array", "items": { "type": "string" } },
+        "timePointIds": { "type": "array", "items": { "type": "string" } },
+        "evidenceQuotes": { "type": "array", "minItems": 1, "items": { "type": "string" } }
+      }
+    }
+  }
+}

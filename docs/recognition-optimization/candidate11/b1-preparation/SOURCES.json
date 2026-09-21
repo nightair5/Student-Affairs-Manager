@@ -1,0 +1,102 @@
+{
+  "version": "candidate11-b1-development-sources-1.0.0",
+  "evaluationRole": "SEEN_DEVELOPMENT",
+  "notHoldout": true,
+  "notHumanValidation": true,
+  "createdAt": "2026-09-21T00:00:00+08:00",
+  "referenceTime": "2026-09-21T09:00:00+08:00",
+  "timezone": "Asia/Shanghai",
+  "provenance": {
+    "sourceAuthoring": "MODEL_ASSISTED_SINGLE_ENGINEERING_AUTHOR",
+    "referenceAuthoring": "MODEL_ASSISTED_SINGLE_ENGINEERING_AUTHOR",
+    "review": "SAME_SYSTEM_MODEL_REVIEWER_ONLY",
+    "independentHumanReview": "PENDING",
+    "truthStatus": "PROVISIONAL_ENGINEERING_REFERENCE"
+  },
+  "sources": [
+    {
+      "id": "C11-B1-D01",
+      "title": "完成动作不等于结果成功",
+      "text": "请核对奖学金公示名单。名单核对无误后，再发布公示；目前核对结论尚未确定。",
+      "scenarioCoverage": ["completion_vs_outcome", "unknown_condition", "conditional_action"],
+      "seenDegree": "SEEN_BY_CANDIDATE_DEVELOPER_AND_REFERENCE_AUTHOR",
+      "teachingOverlap": {
+        "level": "NEAR_STRUCTURE_DIFFERENT_WORDING",
+        "exampleIds": ["c11-completion-not-outcome"],
+        "exactTextOverlap": false,
+        "purpose": "直接探测公共完成标准修正；不是泛化证据"
+      },
+      "variantOrder": ["V00", "V10", "V01", "V11"]
+    },
+    {
+      "id": "C11-B1-D02",
+      "title": "明示结果目标正控制",
+      "text": "本次晚会彩排开始前，必须取得大礼堂使用审批通过；目前尚未取得批准。",
+      "scenarioCoverage": ["explicit_outcome_goal", "pending_status", "vague_relative_deadline"],
+      "seenDegree": "SEEN_BY_CANDIDATE_DEVELOPER_AND_REFERENCE_AUTHOR",
+      "teachingOverlap": {
+        "level": "NEAR_STRUCTURE_DIFFERENT_DOMAIN",
+        "exampleIds": ["c11-explicit-outcome-goal"],
+        "exactTextOverlap": false,
+        "purpose": "防止把明示取得批准错误降格为提交申请"
+      },
+      "variantOrder": ["V00", "V10", "V11", "V01"]
+    },
+    {
+      "id": "C11-B1-D03",
+      "title": "材料属性与反复制",
+      "text": "请于9月25日前上传迎新海报电子版，文件格式为PDF。纸质海报无需提交，也无需准备硬纸筒。",
+      "scenarioCoverage": ["task_vs_material", "format_requirement", "deadline", "negative_non_task", "example_contamination"],
+      "seenDegree": "SEEN_BY_CANDIDATE_DEVELOPER_AND_REFERENCE_AUTHOR",
+      "teachingOverlap": {
+        "level": "DELIBERATE_LEXICAL_OVERLAP_OPPOSITE_SEMANTICS",
+        "exampleIds": ["material-without-action", "material-with-explicit-action"],
+        "exactTextOverlap": false,
+        "purpose": "复用海报和硬纸筒词面，检验 E 污染及 M 保护"
+      },
+      "variantOrder": ["V10", "V01", "V00", "V11"]
+    },
+    {
+      "id": "C11-B1-D04",
+      "title": "并行任务与反复制",
+      "text": "请分别校对志愿者名单，并把采访录音备份到学院共享盘。两项可以同时进行，不设先后关系；不要制作录音清单。",
+      "scenarioCoverage": ["parallel_tasks", "no_dependency", "negative_non_task", "example_contamination"],
+      "seenDegree": "SEEN_BY_CANDIDATE_DEVELOPER_AND_REFERENCE_AUTHOR",
+      "teachingOverlap": {
+        "level": "DELIBERATE_LEXICAL_OVERLAP_REVERSED_CONSTRAINT",
+        "exampleIds": ["parallel-actions", "dependent-actions"],
+        "exactTextOverlap": false,
+        "purpose": "复用录音、清单和共享盘词面，检验错误依赖与示例复制"
+      },
+      "variantOrder": ["V01", "V11", "V10", "V00"]
+    },
+    {
+      "id": "C11-B1-D05",
+      "title": "条件真值三态",
+      "text": "请在学院确认教室已开放后布置会场；教室是否开放尚待确认。若本周培训考核未通过，则补交练习记录；通知已确认本周考核通过。只有报名人数超过30人才增订午餐，目前报名人数为35人。",
+      "scenarioCoverage": ["condition_unknown", "condition_false", "condition_true", "actionability", "anti_unknown_gaming"],
+      "seenDegree": "SEEN_BY_CANDIDATE_DEVELOPER_AND_REFERENCE_AUTHOR",
+      "teachingOverlap": {
+        "level": "CONCEPTUAL_OVERLAP_THREE_STATE_COMPOSITION",
+        "exampleIds": ["condition-unknown", "condition-true"],
+        "exactTextOverlap": false,
+        "purpose": "同源同时出现 true、false、unknown，阻止一律 unknown 取巧"
+      },
+      "variantOrder": ["V11", "V00", "V01", "V10"]
+    },
+    {
+      "id": "C11-B1-D06",
+      "title": "作废修订、独立时间与共享材料",
+      "text": "更正：原定10月8日下午三点统一提交嘉宾名单和场地图的安排作废。请于10月10日上午9点前提交嘉宾名单，于10月12日17:00前提交场地图。两项均附同一份活动编号表；编号表已由办公室提供，不另设准备任务。",
+      "scenarioCoverage": ["superseded_directives", "independent_deadlines", "shared_material", "provided_material", "example_contamination"],
+      "seenDegree": "SEEN_BY_CANDIDATE_DEVELOPER_AND_REFERENCE_AUTHOR",
+      "teachingOverlap": {
+        "level": "DELIBERATE_TIME_LEXICAL_OVERLAP_CANCELLED_CONTEXT",
+        "exampleIds": ["explicit-deadline"],
+        "exactTextOverlap": false,
+        "purpose": "复用10月8日下午三点，但该时间已作废；检验日期复制和修订端点"
+      },
+      "variantOrder": ["V11", "V01", "V10", "V00"]
+    }
+  ]
+}

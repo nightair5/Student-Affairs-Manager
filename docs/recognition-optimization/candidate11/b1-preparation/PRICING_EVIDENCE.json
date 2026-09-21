@@ -1,0 +1,22 @@
+{
+  "version": "candidate11-b1-pricing-evidence-1.0.0",
+  "checkedAt": "2026-09-21T17:09:42+08:00",
+  "provider": "DeepSeek",
+  "officialSources": [
+    "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/",
+    "https://api-docs.deepseek.com/zh-cn/news/news260910/"
+  ],
+  "modelRequested": "deepseek-flash",
+  "modelServed": "DeepSeek-V4.1-Flash",
+  "currency": "CNY",
+  "unit": "per_1m_tokens",
+  "prices": {
+    "offPeak": { "inputCacheHit": 0.02, "inputCacheMiss": 1, "output": 4 },
+    "peak": { "inputCacheHit": 0.04, "inputCacheMiss": 2, "output": 8 }
+  },
+  "peakWindowBeijing": "Monday-Friday 09:00-12:00 and 14:00-18:00; all other times off-peak",
+  "compatibilityNote": "Official documentation says legacy deepseek-v4-flash and deepseek-v4-flash-vision-exp names are temporarily routed to V4.1-Flash and billed at the Flash price.",
+  "effectiveSince": "2026-09-10T12:00:00+08:00",
+  "freshnessRule": "Recheck the official pricing page within 24 hours before any future grant or dispatch. Price drift invalidates the authorization card.",
+  "status": "READ_ONLY_WEB_VERIFIED_NO_BILLING_ACTION"
+}
