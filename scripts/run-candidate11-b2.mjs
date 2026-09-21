@@ -54,7 +54,7 @@ function currentGit(requireClean=true){
 
 function verifyB1(){
   const output=execFileSync(process.execPath,['scripts/prepare-candidate11-b1.mjs','--verify'],{encoding:'utf8'})
-  const result=JSON.parse(output.trim());check(result.requestCount===24&&result.protectedFiles===84&&result.modelCalls===0,'B1_VERIFY')
+  const result=JSON.parse(output.trim());check(result.requests===24&&result.protection?.count===84&&result.modelCalls===0,'B1_VERIFY')
   check(hash(readFileSync(join(B1,'MANIFEST.json')))===B1_MANIFEST_SHA,'B1_MANIFEST')
   return result
 }
