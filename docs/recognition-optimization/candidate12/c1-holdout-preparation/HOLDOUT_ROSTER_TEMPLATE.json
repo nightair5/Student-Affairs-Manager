@@ -1,0 +1,22 @@
+{
+  "version": "candidate12-holdout-roster-template-1.0.0",
+  "status": "EMPTY_TEMPLATE_NOT_A_HOLDOUT",
+  "candidateFreezeCommit": "c03368054ff8c357f055658c2d2d39b45bbcb761",
+  "candidateBundleSha": "880488f038cec55763276f525c1847638533fe95d79a64599e9585dc8d92296a",
+  "sourceTextCount": 0,
+  "expectedCount": 0,
+  "slots": [
+    {"sourceId": "C12-H01", "coverageTarget": ["single_task", "precise_time"], "sourceText": null, "reference": null},
+    {"sourceId": "C12-H02", "coverageTarget": ["multi_task", "shared_material"], "sourceText": null, "reference": null},
+    {"sourceId": "C12-H03", "coverageTarget": ["condition_true"], "sourceText": null, "reference": null},
+    {"sourceId": "C12-H04", "coverageTarget": ["condition_false"], "sourceText": null, "reference": null},
+    {"sourceId": "C12-H05", "coverageTarget": ["condition_unknown", "vague_time"], "sourceText": null, "reference": null},
+    {"sourceId": "C12-H06", "coverageTarget": ["completion_standard", "explicit_outcome"], "sourceText": null, "reference": null},
+    {"sourceId": "C12-H07", "coverageTarget": ["dependency", "multi_task"], "sourceText": null, "reference": null},
+    {"sourceId": "C12-H08", "coverageTarget": ["forbidden_non_task", "supporting_fact"], "sourceText": null, "reference": null},
+    {"sourceId": "C12-H09", "coverageTarget": ["multi_endpoint_revision", "precise_time"], "sourceText": null, "reference": null},
+    {"sourceId": "C12-H10", "coverageTarget": ["multi_endpoint_revision", "shared_material"], "sourceText": null, "reference": null},
+    {"sourceId": "C12-H11", "coverageTarget": ["information_only", "correct_no_action"], "sourceText": null, "reference": null},
+    {"sourceId": "C12-H12", "coverageTarget": ["cross_sentence_scope", "format_and_channel"], "sourceText": null, "reference": null}
+  ]
+}

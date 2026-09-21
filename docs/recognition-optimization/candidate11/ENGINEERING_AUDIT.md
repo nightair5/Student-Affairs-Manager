@@ -27,7 +27,7 @@ A1—A5实施及验证已交付。B2模型评测已完成并决定`REJECT_CANDID
 - 启动：在本工作区执行 `node scripts/serve-candidate11.mjs 6633`，打开 http://127.0.0.1:6633/。只有本机精确Origin/Host可访问；仅静态GET/HEAD白名单，所有服务端写入与模型路由拒绝。端口占用时停止，不杀旧进程。
 - 新库：`rco-mainline-01-02-i1-real-input-candidate11-engineering-1`，IndexedDB版本1。沿用canonical v8，没有迁移旧库。独立事件与原答metadata用同object store中的C11键保存。
 - 复用真实App、MainlineRuntime、SemanticRepository、semanticComposer、CanonicalWorkspaceRepository与原确认事务。没有新建玩具任务仓库。
-- 提供8份既有匿名工程夹具和12份candidate03已见原答。历史candidate10不冒充candidate03接入；candidate11没有模型结果。界面明确标识人工工程夹具与历史回放。
+- 提供8份既有匿名工程夹具和12份candidate03已见原答。历史candidate10不冒充candidate03接入；该A4入口当时没有candidate11模型结果。后续B2结果只保存在独立评测包，未接入此入口。界面明确标识人工工程夹具与历史回放。
 - 原答在独立记录中原样保留；为新SourceVersion重新绑定scope ID，要求文本顺序完全一致且逆映射还原原wire。这个适配不是模型纠错，也不改变历史得分。
 - 用户编辑、核对、拒绝、确认通过既有操作历史保存；确认前不创建正式任务；重复打开按操作身份返回已有草稿，不能覆盖确认结果。
 - 事件记录source_ready、suggestion_ready、edit_saved、rejected、confirmation_requested、commit_succeeded、commit_failed、readback_verified。工作区成功事件与写入同事务，点击确认不是成功；确认返回后以独立repository再次读回。日志不含正文、密钥或联系方式。
@@ -107,3 +107,12 @@ A1—A5实施及验证已交付。B2模型评测已完成并决定`REJECT_CANDID
 - 历史RCO-5-007继续为`FREEZE_HASH_MISMATCH:package-lock.json`；未改旧锁、Expected、冻结hash或发布门槛。默认候选、旧库、Preview和Production均未修改。
 
 当前停止状态：`B2_DEVELOPMENT_RESULTS_READY_FOR_REVIEW`。下一阶段只能准备独立人工参照与全新Holdout；在参照独立性、盲化、冻结和新授权完成前不得发送Holdout请求。
+
+## C1 Candidate12 与独立人工准备
+
+- Candidate12 只使用B2 Development错误类别形成四条任务守恒规则，不使用未来Holdout来源或Expected；无教学例、不改Schema/适配器/评分器/默认候选。11项构造与边界测试通过。
+- 候选在提交`c03368054ff8c357f055658c2d2d39b45bbcb761`先行冻结并推送；candidate bundle SHA为`880488f038cec55763276f525c1847638533fe95d79a64599e9585dc8d92296a`。冻结核验绑定B1/B2、84份保护文件和693行权威账本。
+- 后续包只创建人工协议、12个空槽、参照/签名/裁决模板、提交Schema、63条已见语料排除库、验证器、预注册与预算草案。验证器定向测试4/4通过，能拒绝空模板、模型辅助、个人信息、已见重合和覆盖不足。
+- 没有真实独立标注者参与：实际来源0、完整人工参照0、请求身份0。未创建grant或预算预留，未读取Secret、未调用模型、未写账本。
+
+当前停止状态：`WAITING_FOR_INDEPENDENT_HUMAN_LABELS`。只有两位不同真实人员完成12份密封双审参照并通过校验后，才允许另包生成24个`dispatchAuthorized=false`请求身份。

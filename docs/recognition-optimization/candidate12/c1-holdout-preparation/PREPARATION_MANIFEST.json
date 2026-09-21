@@ -1,0 +1,76 @@
+{
+  "version": "candidate12-c1-preparation-manifest-1.0.0",
+  "status": "WAITING_FOR_INDEPENDENT_HUMAN_LABELS",
+  "generatedAt": "2026-09-21T10:39:31.182Z",
+  "candidateFreeze": {
+    "commit": "c03368054ff8c357f055658c2d2d39b45bbcb761",
+    "candidateBundleSha": "880488f038cec55763276f525c1847638533fe95d79a64599e9585dc8d92296a",
+    "candidateVersion": "real-input-source-semantics-12",
+    "promptSha": "6303a9f61bd18c901ea58cf1613a94054d534e1107f888737189d117c601a4ac",
+    "schemaSha": "52b52e25774d61b8fddecf978f2215d53c0f9b4e47f9d45c74426c0b50a77d7e"
+  },
+  "holdout": {
+    "plannedSources": 12,
+    "actualSources": 0,
+    "completeReferences": 0,
+    "requestIdentities": 0,
+    "modelCalls": 0,
+    "dispatchAuthorized": false,
+    "truthStatus": "NOT_AVAILABLE",
+    "overlapCorpusEntries": 63,
+    "overlapCorpusSha256": "3f8d6d988a9c43bdaf1087b834d47d3059576f622d4b14fc7a8b0a7ac5d5ae3d"
+  },
+  "roles": {
+    "sourceProvider": "UNASSIGNED",
+    "labelerA": "UNASSIGNED",
+    "reviewerB": "UNASSIGNED"
+  },
+  "operations": {
+    "secretReads": 0,
+    "grants": 0,
+    "reserves": 0,
+    "settlements": 0,
+    "ledgerWrites": 0,
+    "modelCalls": 0
+  },
+  "authorityLedger": {
+    "rows": 693,
+    "bytes": 572913,
+    "sha256": "2051d8e775123579c3fa262f671a757e690983f64bc5945d692faaeb24b5322e",
+    "tail": "13b520d270d26335072f99920e47a4443e8bc586365eb20cda61c4122d7ab3bd"
+  },
+  "expectedAuthorityLedger": {
+    "rows": 693,
+    "bytes": 572913,
+    "sha256": "2051d8e775123579c3fa262f671a757e690983f64bc5945d692faaeb24b5322e",
+    "tail": "13b520d270d26335072f99920e47a4443e8bc586365eb20cda61c4122d7ab3bd"
+  },
+  "protectedFiles": 84,
+  "artifactHashes": {
+    "docs/recognition-optimization/candidate12/c1-holdout-preparation/README.md": "75f62593660d1775e3cc2b33c28f9cbedc24f165a1e701b7341035dff526944f",
+    "docs/recognition-optimization/candidate12/c1-holdout-preparation/HUMAN_ANNOTATION_PROTOCOL.md": "9cdb1a5734113aca5f8a9cc54ebc17ea3a5a1deb115ff31c93b27dd636eb93c5",
+    "docs/recognition-optimization/candidate12/c1-holdout-preparation/HOLDOUT_ROSTER_TEMPLATE.json": "2a9ec82e9441a8e55fa8f8f5e380beece965939da60b945d6e04fdb34a54582f",
+    "docs/recognition-optimization/candidate12/c1-holdout-preparation/HUMAN_SUBMISSION_SCHEMA.json": "563b04dbe5243dec342e8b5d65abbe5f0ff7d6639ff9b7cd7a3603d97de918f2",
+    "docs/recognition-optimization/candidate12/c1-holdout-preparation/REFERENCE_TEMPLATE.json": "67be1d66de1eae564f7acf6adf64202d132374bb37d9e17bfc202137b55f8432",
+    "docs/recognition-optimization/candidate12/c1-holdout-preparation/SIGNOFF_TEMPLATE.json": "4c52cff3395943a6f9bc520379424300264ae138439b5de8a8442a9efc79e05a",
+    "docs/recognition-optimization/candidate12/c1-holdout-preparation/ADJUDICATION_TEMPLATE.csv": "c180841c1d0ff33cbf98fb406c059a2a9f3825c5ddb6cd553bb58c034916bbca",
+    "docs/recognition-optimization/candidate12/c1-holdout-preparation/PREREGISTRATION.md": "d9db8080da561dac50d49a5f1872bc4ad4af37b12ad3569e184f8453959280a0",
+    "docs/recognition-optimization/candidate12/c1-holdout-preparation/BUDGET_AUTHORIZATION_CARD_DRAFT.md": "1110c916ca488e330f57c2f9fe06a2c031237fa2ee4ab486c68637b73f43ebfa",
+    "docs/recognition-optimization/candidate12/c1-holdout-preparation/OVERLAP_CORPUS.json": "9a243499b7f85a50ce10b9b6fcd33429f8684b515d6bb6c99c468383b6739daf",
+    "scripts/candidate12-holdout-lib.mjs": "5e3d063ccd44481fd1e1486035f82d21e490b0f6c916204e0cc585c78d8bfbd0",
+    "scripts/validate-candidate12-human-submission.mjs": "0d1d21ac1140fbd9d4585f5ac11cedefa43ee916ec0d14fd6274ec787a0c4616",
+    "scripts/prepare-candidate12-c1.mjs": "70b4af7452b4fa4b2f676198b6ed221408fe0b882cad84a329abe1da7cfdebab",
+    "scripts/candidate12-c1.node-test.mjs": "2027339627ef2145a264f1b2d0dfa475580bb2394ae8b7e7fa80171c6250d365"
+  },
+  "nextGate": "REAL_INDEPENDENT_HUMAN_DOUBLE_REVIEWED_SUBMISSION_REQUIRED",
+  "prohibitions": [
+    "MODEL_DISPATCH",
+    "SECRET_READ",
+    "LEDGER_WRITE",
+    "PREPARE_REQUEST_IDENTITIES_BEFORE_HUMAN_GATE",
+    "MODEL_AS_HUMAN_LABELER",
+    "DEFAULT_CANDIDATE_CHANGE",
+    "MERGE",
+    "DEPLOY"
+  ]
+}

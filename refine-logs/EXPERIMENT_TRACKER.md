@@ -1,6 +1,6 @@
 # Candidate11 实验跟踪表
 
-版本：c11-tracker-0.4-b2-results。日期：2026-09-21。
+版本：c12-tracker-0.5-c1-human-gate。日期：2026-09-21。
 本表状态反映真实执行；PLANNED不等于授权，PREPARED不等于派发，工程PASS不等于模型/商业PASS。
 核心计划见 [EXPERIMENT_PLAN.md](EXPERIMENT_PLAN.md)。
 
@@ -14,8 +14,11 @@
 | C11-021 | P2 | 正确事实→真实组件→确认仓储读回 | 独立工程库 | 0 | PASS_ENGINEERING_ONLY | 保留取消/未知/无日期，确认前0正式任务 |
 | C11-030 | P3 | V00/V10/V01/V11 2×2消融 | 6份Development | 24/24 | SETTLED_COMPLETE | 固定顺序完成；0重试；权威账本693行 |
 | C11-031 | P3 | 按冻结规则选唯一候选 | P3结果 | 0新增 | REJECT_CANDIDATE11 | 四臂均D06 Severe=1；无候选进入Holdout |
-| C11-040 | P4 | 独立作者12份新source+Expected | 拟合成验证 | 0实验调用 | BLOCKED_INDEPENDENT_LABELS | 人员/方法未落实；模型标注不冒充人审 |
-| C11-041 | P4 | candidate03 vs 冻结最佳candidate11 | 12份新配对 | <=24 | PLANNED_NOT_AUTHORIZED | 先冻结候选/评分，后独立材料；新授权 |
+| C12-010 | C1 | Candidate12 Development修正与冻结 | B2已见错误族 | 0 | COMMITTED_PUSHED | `c033680`先于任何新Expected冻结，bundle `880488f0…296a` |
+| C12-020 | C1 | 双人人工协议、模板、Schema、排除库与验证器 | 零数据准备 | 0 | PREPARED_ZERO_CALL | 63条已见排除文本；模型不能冒充人工 |
+| C12-021 | C1 | 两位真实人员提交12份新source+Expected | 拟Holdout | 0 | WAITING_FOR_INDEPENDENT_HUMAN_LABELS | 当前来源0/12、完整参照0/12 |
+| C12-022 | C1 | candidate03 vs Candidate12 24个冻结身份 | 12份新配对 | 0 | BLOCKED_BY_HUMAN_GATE | 人工包通过后才可生成；仍保持NOT_RUN |
+| C12-030 | 后续 | 24次Holdout配对执行 | 12份新配对 | <=24 | PLANNED_NOT_AUTHORIZED | 新价格、新预算、新grant及明确授权 |
 | C11-050 | P5 | 新回答接真实App、本机事件和恢复 | 结算输出/独立库 | 0新增 | REPLAY_ENGINEERING_PASS_MODEL_NOT_RUN | P4净收益；适用浏览器/事务验收 |
 | C11-060 | P6 | 用户观察协议及正式商业验证 | 真实材料/真人 | 未预算 | PLANNED_NOT_AUTHORIZED | 独立批准，沿用或预先修订商业契约 |
 | C11-070 | 发布 | Commercial Preview/Production | 发布验收 | 未预算 | NOT_AUTHORIZED | G7/发布前门→另批Preview→G8→另批Production |
@@ -48,7 +51,7 @@ A包当时只构造工程请求与NOT_RUN身份记录；B2随后按新授权生�
 ## 结果填写纪律
 
 不把计划预计数写到实测列；不把模型代理审计写成人工；不把“无任务正确处置”写成保存了任务。
-历史RCO-5-007冻结hash失败已在本分支和父工作区复现，保留为发布阻碍。B2已完成24个确定结局并拒绝candidate11；当前停止在`B2_DEVELOPMENT_RESULTS_READY_FOR_REVIEW`，不得调用Holdout模型或用V01较高F1绕过Severe门槛。
+历史RCO-5-007冻结hash失败已在本分支和父工作区复现，保留为发布阻碍。B2已完成24个确定结局并拒绝candidate11；Candidate12已冻结但没有模型结果。当前停止在`WAITING_FOR_INDEPENDENT_HUMAN_LABELS`，不得生成或调用Holdout请求。
 
 ## B2结果登记
 
@@ -57,3 +60,10 @@ A包当时只构造工程请求与NOT_RUN身份记录；B2随后按新授权生�
 - 调用/费用：24次；本地可审计上界¥0.523928；provider实际扣费NOT_OBSERVABLE。
 - 完整来源：四臂均1/6。Task F1：V00 75.86%、V10 75.86%、V01 78.57%、V11 71.43%。四臂Severe均1，候选决定`REJECT_CANDIDATE11`。
 - 发送期上下文路径错误已作为执行器缺陷单列；冻结raw只读适配24/24通过，未修改回答、未补发。
+
+## Candidate12 C1登记
+
+- 冻结提交`c03368054ff8c357f055658c2d2d39b45bbcb761`；candidate bundle SHA `880488f038cec55763276f525c1847638533fe95d79a64599e9585dc8d92296a`。
+- 候选构造与边界11/11通过；不含教学例，模型、Schema、adapter、scorer及默认候选不变。
+- 12个来源槽均为空，人工角色未分配；独立来源0、完整参照0、请求身份0、模型调用0。
+- C1验证器4/4通过；已见排除库63条。权威账本仍为693行和SHA `2051d8e775123579c3fa262f671a757e690983f64bc5945d692faaeb24b5322e`。
