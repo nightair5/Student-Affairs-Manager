@@ -1,6 +1,6 @@
 # Candidate11 实验跟踪表
 
-版本：c12-tracker-0.6-provisional-development。日期：2026-09-21。
+版本：c12-tracker-0.7-d1-provisional-paired。日期：2026-09-21。
 本表状态反映真实执行；PLANNED不等于授权，PREPARED不等于派发，工程PASS不等于模型/商业PASS。
 核心计划见 [EXPERIMENT_PLAN.md](EXPERIMENT_PLAN.md)。
 
@@ -17,6 +17,7 @@
 | C12-010 | C1 | Candidate12 Development修正与冻结 | B2已见错误族 | 0 | COMMITTED_PUSHED | `c033680`先于任何新Expected冻结，bundle `880488f0…296a` |
 | C12-020 | C1 | 双人人工协议、模板、Schema、排除库与验证器 | 零数据准备 | 0 | PREPARED_ZERO_CALL | 原63条已见排除文本；模型不能冒充人工 |
 | C12-020A | C2临时 | Codex制作12份合成来源与provisional参照 | SEEN_SYNTHETIC_DEVELOPMENT | 0 | PASS_STRUCTURE_NOT_HOLDOUT | `modelAssistanceUsed=true`；排除库增至75条；不得晋级 |
+| C12-020B | D1临时 | candidate03 vs Candidate12 12×2零调用身份 | SEEN_SYNTHETIC_DEVELOPMENT | 0 | READY_FOR_NEW_AUTHORIZATION | 24身份冻结；Expected隔离；runner无授权拒绝；仅工程筛选 |
 | C12-021 | C1 | 两位真实人员提交12份新source+Expected | 拟Holdout | 0 | WAITING_FOR_INDEPENDENT_HUMAN_LABELS | 当前来源0/12、完整参照0/12 |
 | C12-022 | C1 | candidate03 vs Candidate12 24个冻结身份 | 12份新配对 | 0 | BLOCKED_BY_HUMAN_GATE | 人工包通过后才可生成；仍保持NOT_RUN |
 | C12-030 | 后续 | 24次Holdout配对执行 | 12份新配对 | <=24 | PLANNED_NOT_AUTHORIZED | 新价格、新预算、新grant及明确授权 |
@@ -74,3 +75,11 @@ A包当时只构造工程请求与NOT_RUN身份记录；B2随后按新授权生�
 - Codex按用户要求生成12份完全合成来源与12份结构化参照；source set SHA、Expected set SHA和package SHA见冻结JSON。
 - `eligibleForIndependentHoldout=false`，独立人工A/B均为0，正式请求身份0。独立人工验证器必须拒绝本包。
 - 新增12份正文已加入排除语料，当前总数75；人工门仍为`WAITING_FOR_INDEPENDENT_HUMAN_LABELS`。
+
+## Candidate12 D1 临时配对身份登记
+
+- 交付目录：`docs/recognition-optimization/candidate12/d1-provisional-paired-preparation/`；12份来源和12份provisional Expected分文件冻结。
+- candidate03/Candidate12各12个身份，共24个；PD01起A→B/B→A交替，固定Flash none参数，全部`dispatchAuthorized=false`、`NOT_RUN`。
+- 定向测试11/11通过：Expected变更不改变request SHA；来源、Prompt或模型参数变化会改变请求身份；直接及runner派发均在外部操作前拒绝。
+- 84份保护文件和693行权威账本不变；模型调用、Secret、grant、reserve、settle、receipt、raw和账本写入为0。
+- 当前临时状态为`D1_PROVISIONAL_DEVELOPMENT_IDENTITIES_READY_FOR_AUTHORIZATION`；正式人工Holdout仍为`WAITING_FOR_INDEPENDENT_HUMAN_LABELS`。

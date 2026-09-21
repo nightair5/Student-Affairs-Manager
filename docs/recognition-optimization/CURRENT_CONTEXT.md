@@ -1,4 +1,4 @@
-# 当前交接：Candidate12 已冻结，等待独立人工标签
+# 当前交接：Candidate12 D1 临时配对身份已冻结，待新调用授权
 
 日期：2026-09-21。工作区 C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/比赛；分支 codex/e2-candidate11-blind-eval。
 本轮在B1冻结包上获明确授权执行24次Development模型调用、专用grant和权威账本追加。授权不包含重试、repair、verifier、额外样本、真人、Holdout、默认候选变更、合并或部署。
@@ -9,6 +9,7 @@
 - Candidate12 已仅依据B2已见错误族形成并在提交`c03368054ff8c357f055658c2d2d39b45bbcb761`先行冻结；候选包SHA为`880488f038cec55763276f525c1847638533fe95d79a64599e9585dc8d92296a`，模型结果仍为NOT_RUN。
 - C1已交付独立人工双审协议、12个空白覆盖槽位、密封提交Schema、63条已见语料重合排除库、校验器、预注册和预算草案。当前真实来源0、完整人工参照0、请求身份0、模型调用0。
 - 用户随后要求Codex自行制作一份材料；已另建12例`PROVISIONAL_MODEL_AUTHORED_DEVELOPMENT_ONLY`合成包。它含完整结构化参照但没有独立人工资格，不能生成正式Holdout身份或支持晋级结论。12份正文已加入排除库，当前排除库共75条。
+- D1已把上述来源与provisional Expected物理拆分并冻结candidate03/Candidate12的12×2配对身份。24个身份均`dispatchAuthorized=false / NOT_RUN`，定向测试11/11通过；它们只供`ENGINEERING_SCREENING_ONLY`，不是正式Holdout身份。
 - A1：版本化结构匹配评分器44项，历史只读复算1项通过；24旧答身份/结算/解析通过。A已定义检查9/12、B11/12，均为partial参照；完整案例准确率null。
 - A2：公共完成标准修正，V00/V10/V01/V11仅切换元指令M和教学例E；保留旧8例+新增2例。原candidate03/10不变。
 - A3：prepared/binding/result/analysis身份重建校验；构造和身份13项、新网关9项、原预算/网关124项通过；C11派发始终拒绝。
@@ -45,7 +46,7 @@ A9/12与B11/12不是人工盲审、全字段准确率或真实转化率。candid
 计划/跟踪：refine-logs/EXPERIMENT_PLAN.md、EXPERIMENT_TRACKER.md。
 准备包：candidate11/b1-preparation/README.md；验证记录：candidate11/b1-preparation/VALIDATION.md；manifest SHA256 af1f1d2427eec1795691e1d4a62056a614bac72f0254103667632b341794744e。
 已提交推送：A1 d0407f6b59a8e099b834feaadfaf4d166644d7ab；A2/A3 8714f0130f62a89ae6230c58a8c3a4664934a8bd。A4/A5交付SHA以Git当前HEAD及远端核验为准。
-当前停止在`WAITING_FOR_INDEPENDENT_HUMAN_LABELS`。B2完成24次冻结调用并按原规则得出`REJECT_CANDIDATE11`；Candidate12已在任何新Holdout Expected出现前冻结。下一步必须由两位不同的真实人员完成12份全新匿名来源的标注与复核；在密封包验证通过前不得生成24个请求身份，更不得调用模型、切换默认候选或上线。
+临时Development支线停止在`D1_PROVISIONAL_DEVELOPMENT_IDENTITIES_READY_FOR_AUTHORIZATION`：如要实际运行这24个身份，必须另行明确授权24次调用、¥51.904512最坏上限和唯一账本writer。正式Holdout仍停止在`WAITING_FOR_INDEPENDENT_HUMAN_LABELS`；两位不同真实人员的12份密封双审材料没有完成前，不得生成或运行正式Holdout身份、切换默认候选或上线。
 
 ## B2 Development 结果
 
@@ -65,3 +66,11 @@ A9/12与B11/12不是人工盲审、全字段准确率或真实转化率。candid
 - 人工准备目录：`docs/recognition-optimization/candidate12/c1-holdout-preparation/`；Manifest SHA以该目录文件为准，状态`WAITING_FOR_INDEPENDENT_HUMAN_LABELS`。
 - C1未读取Secret，未创建grant/reserve/settle，权威账本仍为693行、572913字节和SHA `2051d8e775123579c3fa262f671a757e690983f64bc5945d692faaeb24b5322e`。
 - Codex临时Development包：`docs/recognition-optimization/candidate12/c2-provisional-development/`；来源12、provisional参照12、正式请求身份0、模型API调用0。人工门状态不变。
+
+## Candidate12 D1 临时配对准备
+
+- 目录：`docs/recognition-optimization/candidate12/d1-provisional-paired-preparation/`；数据标签固定为`SEEN_SYNTHETIC_DEVELOPMENT / PROVISIONAL_MODEL_AUTHORED`，独立Holdout资格为false。
+- A=candidate03、B=Candidate12；两臂均固定`deepseek-flash`、temperature 0、reasoning none、8192、同一Schema/scorer/adapter/referenceTime/timezone。candidate03和Candidate12源文件未改。
+- 24个身份按PD01 A→B、PD02 B→A交替冻结；来源与Expected分文件保存，请求只从来源生成。改变Expected不影响request SHA，改变来源、Prompt或模型参数会触发漂移。
+- 独立runner当前固定返回`D1_MODEL_CALL_NOT_AUTHORIZED`，没有Secret、预算、网络、raw或重试路径。权威账本仍为693行，84份保护文件一致。
+- 当前只可审查和申请新的模型调用授权；没有Candidate12结果、评分、优胜结论、真人转化证据、合并或部署。

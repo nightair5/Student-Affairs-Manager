@@ -14,3 +14,5 @@
 - `scripts/candidate12-provisional-development.node-test.mjs`：资格阻断、哈希和排除库测试。
 
 这 12 份正文已加入 C1 `OVERLAP_CORPUS.json`，未来人工来源与它们逐字或高相似重合时必须被拒绝。人工门状态继续为 `WAITING_FOR_INDEPENDENT_HUMAN_LABELS`。
+
+后续D1已基于本包另建24个`dispatchAuthorized=false / NOT_RUN`的临时Development配对身份，目录为`../d1-provisional-paired-preparation/`。这些不是正式Holdout身份，不改变本包的独立资格或人工门状态。

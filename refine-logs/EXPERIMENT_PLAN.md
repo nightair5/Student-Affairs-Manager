@@ -1,7 +1,7 @@
 # Candidate11 独立支线推进计划
 
-版本：c12-plan-0.6-provisional-development。日期：2026-09-21（Asia/Shanghai）。
-状态：B2已完成并拒绝candidate11；Candidate12已工程冻结，C1人工准备包完成。新增Codex制作的12例临时Development包，但独立人工标签、Holdout模型调用、真人验证、合并和部署仍未执行。
+版本：c12-plan-0.7-d1-provisional-paired。日期：2026-09-21（Asia/Shanghai）。
+状态：B2已完成并拒绝candidate11；Candidate12已工程冻结，C1人工准备包完成。Codex制作的12例临时Development包已形成24个零调用配对身份，但独立人工标签、任何Candidate12模型调用、真人验证、合并和部署仍未执行。
 当前主问题：已经正确读取的校园通知，仍会被误拆任务、误判条件、误归材料和时间；旧评分又漏掉部分错误。
 方法主张：以可复核的结构化评分选择最小必要的提示词修正和教学例，降低首次建议的实质纠正负担，再验证真实确认保存。
 
@@ -14,7 +14,7 @@
 - 原分支、candidate03/10、旧评分器、原始回答、Expected、冻结 binding、账本、RC.4、现有 Preview/Production 保留。新评分只能另写结果，不能覆盖旧分数。
 - 继承当前 AGENTS.md、PRD 第14节；本路线是有限 Development 子线，不更改商业验证契约 0.6.0-draft，不降低已有门槛。
 - 未复制.env、Secret或浏览器库。按原锁文件恢复依赖，独立本机6633入口已运行；旧测试引用匿名历史导出为只读。
-- A工程包授权已落实；下一步为B1零调用准备，实际模型派发仍需新明确授权。
+- D1零调用身份准备已落实；实际运行这24个临时Development身份仍需新的次数、费用和唯一账本writer明确授权。正式人工Holdout继续等待独立双审标签。
 
 ## 1. 交接校正与现有证据
 
@@ -176,6 +176,14 @@ Candidate12代码和Prompt已在提交`c03368054ff8c357f055658c2d2d39b45bbcb761`
 任何揭盲后修正形成新候选，当前数据永久转已见回归；不就地改Expected重跑直到PASS。
 输出：独立标签provenance、隔离/冻结日志、完整24单元结果、审计报告和GO/NO_PROMOTION决定。
 通过仅允许提出下一阶段本机实验产品整合，不授予Commercial Preview、线上替换或Production。
+
+### 6.1 D1 临时 Development 配对筛选（身份已冻结，待新授权）
+
+C2的12份合成来源只能作为已见Development。D1把来源与provisional Expected分开保存，只从来源构造candidate03/Candidate12的12×2请求。A/B顺序从PD01 A→B开始逐例交替；固定`deepseek-flash`、temperature 0、reasoning none、8192、同一Schema/scorer/adapter/referenceTime/timezone，零repair、verifier和重试。
+
+24个身份均为`dispatchAuthorized=false / NOT_RUN`；拒绝型runner在Secret、预算和网络组件存在前固定拒绝。Expected变更不影响request SHA，来源/Prompt/模型变更必须引起漂移。未来取得明确的24次和¥51.904512最坏上限授权后，才可另建grant绑定的执行阶段。
+
+D1即使通过预注册工程筛选，也只得到`ELIGIBLE_FOR_INDEPENDENT_HUMAN_HOLDOUT`，不能替代两位真实人员的独立标签或Candidate12晋级结论。正式人工Holdout仍停在`WAITING_FOR_INDEPENDENT_HUMAN_LABELS`。
 
 ## 7. B4 / C11-P5—P6：确认保存与真实转化
 

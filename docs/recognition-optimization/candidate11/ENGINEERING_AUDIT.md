@@ -125,3 +125,15 @@ A1—A5实施及验证已交付。B2模型评测已完成并决定`REJECT_CANDID
 - 未生成正式24身份，未调用模型API，未读取Secret，未创建grant/reserve/settle，未写权威账本，未修改Candidate12、默认候选、Schema、scorer或adapter。
 
 当前停止状态仍为`WAITING_FOR_INDEPENDENT_HUMAN_LABELS`。
+
+## D1 临时 Development 24 个配对身份
+
+- 将C2的12份合成来源与provisional Expected物理拆分；来源文件不含参照，24个请求仅从来源构造。数据角色固定为`SEEN_SYNTHETIC_DEVELOPMENT / PROVISIONAL_MODEL_AUTHORED`，`eligibleForIndependentHoldout=false`，主张上限为`ENGINEERING_SCREENING_ONLY`。
+- A臂为candidate03，B臂为冻结Candidate12；仅在D1隔离包装器中把A臂模型路由固定为`deepseek-flash`。两臂的temperature、reasoning、输出上限、Schema、输入、referenceTime、timezone和adapter一致，candidate03/Candidate12源文件均未修改。
+- 24个身份按PD01 A→B、PD02 B→A交替冻结；A/B各12，全部`dispatchAuthorized=false`、`NOT_RUN`。请求身份绑定来源、候选、Prompt、Schema、scorer、adapter和candidate bundle哈希。
+- Expected污染测试会实际改动一份provisional参照并重建请求，24个request SHA保持不变；来源、Prompt或模型参数变化则改变请求SHA。身份、请求和上下文漂移均被拒绝。
+- 独立执行入口不包含模型客户端、Secret reader、预算writer、raw writer、retry、repair或verifier；当前任何派发都在外部操作前固定失败为`D1_MODEL_CALL_NOT_AUTHORIZED`。
+- 定向Node测试11/11通过；84份保护文件一致，权威账本仍为693行、572913字节和SHA `2051d8e775123579c3fa262f671a757e690983f64bc5945d692faaeb24b5322e`，writer未打开。模型调用、Secret读取、grant/reserve/settle/receipt/raw和账本写入均为0。
+- lint为0 error/5个既有warning，build与security scan通过。裸`npm run test`为1432通过/1失败/1跳过，唯一失败仍是未设置`REAL_INPUT_CARRIERS_MANIFEST`；隔离入口补齐临时匿名carrier后Vitest 1433通过/1跳过，其余Node/Functions组通过，只有历史RCO-5-007保持`FREEZE_HASH_MISMATCH:package-lock.json`。
+
+当前停止状态：`D1_PROVISIONAL_DEVELOPMENT_IDENTITIES_READY_FOR_AUTHORIZATION`。这只表示临时Development的24个零调用身份可审查；它不解除正式人工Holdout的`WAITING_FOR_INDEPENDENT_HUMAN_LABELS`，也不证明Candidate12优于candidate03。
