@@ -1,0 +1,710 @@
+{
+  "count": 28,
+  "dataRole": "SEEN_ERROR_FAMILY_SYNTHETIC_ENGINEERING_REGRESSION_ONLY",
+  "eligibleForFreshDevelopment": false,
+  "eligibleForIndependentHoldout": false,
+  "fixtures": [
+    {
+      "category": "否定通知不生成任务",
+      "d3ContractRules": [
+        "taskBasis",
+        "forbiddenInferences"
+      ],
+      "dataRole": "SEEN_ERROR_FAMILY_SYNTHETIC_ENGINEERING_REGRESSION_ONLY",
+      "eligibleForFreshDevelopment": false,
+      "eligibleForIndependentHoldout": false,
+      "expectedEngineeringInvariants": [
+        "NEGATIVE_SCOPE_IS_NOT_CURRENT_TASK"
+      ],
+      "failureCode": "D4_NEGATIVE_TASK_CREATED",
+      "fixtureId": "D4-F01",
+      "forbiddenBehaviors": [
+        "CREATE_SUBMIT_PAPER_TASK"
+      ],
+      "inputSummary": "匿名工程反例：否定通知不生成任务",
+      "requiredRuleIds": [
+        "speech-act-currentness-gate"
+      ],
+      "seen": true,
+      "sourceText": "本通知说明：无需提交纸质副本。"
+    },
+    {
+      "category": "取消通知不生成新的执行任务",
+      "d3ContractRules": [
+        "semanticStatus",
+        "cancellationRelations"
+      ],
+      "dataRole": "SEEN_ERROR_FAMILY_SYNTHETIC_ENGINEERING_REGRESSION_ONLY",
+      "eligibleForFreshDevelopment": false,
+      "eligibleForIndependentHoldout": false,
+      "expectedEngineeringInvariants": [
+        "CANCELLED_ENDPOINT_IS_INACTIVE"
+      ],
+      "failureCode": "D4_CANCELLATION_AS_ACTION",
+      "fixtureId": "D4-F02",
+      "forbiddenBehaviors": [
+        "CREATE_CANCEL_ACTION_TASK"
+      ],
+      "inputSummary": "匿名工程反例：取消通知不生成新的执行任务",
+      "requiredRuleIds": [
+        "speech-act-currentness-gate",
+        "multi-endpoint-ledger"
+      ],
+      "seen": true,
+      "sourceText": "原定填写匿名登记表的要求现已取消。"
+    },
+    {
+      "category": "禁止项不生成任务",
+      "d3ContractRules": [
+        "taskBasis",
+        "semanticValidity"
+      ],
+      "dataRole": "SEEN_ERROR_FAMILY_SYNTHETIC_ENGINEERING_REGRESSION_ONLY",
+      "eligibleForFreshDevelopment": false,
+      "eligibleForIndependentHoldout": false,
+      "expectedEngineeringInvariants": [
+        "PROHIBITION_IS_NOT_A_POSITIVE_DIRECTIVE"
+      ],
+      "failureCode": "D4_PROHIBITION_AS_TASK",
+      "fixtureId": "D4-F03",
+      "forbiddenBehaviors": [
+        "CREATE_SEND_TASK"
+      ],
+      "inputSummary": "匿名工程反例：禁止项不生成任务",
+      "requiredRuleIds": [
+        "speech-act-currentness-gate"
+      ],
+      "seen": true,
+      "sourceText": "请勿向群聊发送匿名材料。"
+    },
+    {
+      "category": "背景说明不生成任务",
+      "d3ContractRules": [
+        "taskBasis"
+      ],
+      "dataRole": "SEEN_ERROR_FAMILY_SYNTHETIC_ENGINEERING_REGRESSION_ONLY",
+      "eligibleForFreshDevelopment": false,
+      "eligibleForIndependentHoldout": false,
+      "expectedEngineeringInvariants": [
+        "BACKGROUND_SCOPE_IS_INFORMATION"
+      ],
+      "failureCode": "D4_BACKGROUND_AS_TASK",
+      "fixtureId": "D4-F04",
+      "forbiddenBehaviors": [
+        "CREATE_EXPLANATION_TASK"
+      ],
+      "inputSummary": "匿名工程反例：背景说明不生成任务",
+      "requiredRuleIds": [
+        "speech-act-currentness-gate"
+      ],
+      "seen": true,
+      "sourceText": "本次调整用于说明匿名流程的历史背景。"
+    },
+    {
+      "category": "材料名称不生成任务",
+      "d3ContractRules": [
+        "materials",
+        "taskBasis"
+      ],
+      "dataRole": "SEEN_ERROR_FAMILY_SYNTHETIC_ENGINEERING_REGRESSION_ONLY",
+      "eligibleForFreshDevelopment": false,
+      "eligibleForIndependentHoldout": false,
+      "expectedEngineeringInvariants": [
+        "MATERIALS_REQUIRE_AN_EXPLICIT_ACTION"
+      ],
+      "failureCode": "D4_MATERIAL_AS_TASK",
+      "fixtureId": "D4-F05",
+      "forbiddenBehaviors": [
+        "CREATE_PREPARE_TASK"
+      ],
+      "inputSummary": "匿名工程反例：材料名称不生成任务",
+      "requiredRuleIds": [
+        "supporting-fact-boundary",
+        "speech-act-currentness-gate"
+      ],
+      "seen": true,
+      "sourceText": "附件材料包括匿名申请表和匿名说明页。"
+    },
+    {
+      "category": "地点信息不生成任务",
+      "d3ContractRules": [
+        "taskBasis"
+      ],
+      "dataRole": "SEEN_ERROR_FAMILY_SYNTHETIC_ENGINEERING_REGRESSION_ONLY",
+      "eligibleForFreshDevelopment": false,
+      "eligibleForIndependentHoldout": false,
+      "expectedEngineeringInvariants": [
+        "LOCATION_IS_SUPPORTING_INFORMATION"
+      ],
+      "failureCode": "D4_LOCATION_AS_TASK",
+      "fixtureId": "D4-F06",
+      "forbiddenBehaviors": [
+        "CREATE_VISIT_TASK"
+      ],
+      "inputSummary": "匿名工程反例：地点信息不生成任务",
+      "requiredRuleIds": [
+        "supporting-fact-boundary",
+        "speech-act-currentness-gate"
+      ],
+      "seen": true,
+      "sourceText": "办理地点为匿名服务点二层。"
+    },
+    {
+      "category": "格式要求不生成任务",
+      "d3ContractRules": [
+        "materials",
+        "taskBasis"
+      ],
+      "dataRole": "SEEN_ERROR_FAMILY_SYNTHETIC_ENGINEERING_REGRESSION_ONLY",
+      "eligibleForFreshDevelopment": false,
+      "eligibleForIndependentHoldout": false,
+      "expectedEngineeringInvariants": [
+        "FORMAT_REQUIRES_AN_OWNING_TASK"
+      ],
+      "failureCode": "D4_FORMAT_AS_TASK",
+      "fixtureId": "D4-F07",
+      "forbiddenBehaviors": [
+        "CREATE_CONVERT_TASK"
+      ],
+      "inputSummary": "匿名工程反例：格式要求不生成任务",
+      "requiredRuleIds": [
+        "supporting-fact-boundary",
+        "speech-act-currentness-gate"
+      ],
+      "seen": true,
+      "sourceText": "匿名附件格式为PDF。"
+    },
+    {
+      "category": "联系方式不生成任务",
+      "d3ContractRules": [
+        "taskBasis"
+      ],
+      "dataRole": "SEEN_ERROR_FAMILY_SYNTHETIC_ENGINEERING_REGRESSION_ONLY",
+      "eligibleForFreshDevelopment": false,
+      "eligibleForIndependentHoldout": false,
+      "expectedEngineeringInvariants": [
+        "CONTACT_SCOPE_IS_INFORMATION"
+      ],
+      "failureCode": "D4_CONTACT_AS_TASK",
+      "fixtureId": "D4-F08",
+      "forbiddenBehaviors": [
+        "CREATE_CONTACT_TASK"
+      ],
+      "inputSummary": "匿名工程反例：联系方式不生成任务",
+      "requiredRuleIds": [
+        "supporting-fact-boundary",
+        "speech-act-currentness-gate"
+      ],
+      "seen": true,
+      "sourceText": "咨询方式将在匿名页面另行公布。"
+    },
+    {
+      "category": "false条件保持不可执行",
+      "d3ContractRules": [
+        "condition.value",
+        "actionable"
+      ],
+      "dataRole": "SEEN_ERROR_FAMILY_SYNTHETIC_ENGINEERING_REGRESSION_ONLY",
+      "eligibleForFreshDevelopment": false,
+      "eligibleForIndependentHoldout": false,
+      "expectedEngineeringInvariants": [
+        "FALSE_CONDITION_RETAINED",
+        "FALSE_CONDITION_NOT_ACTIONABLE"
+      ],
+      "failureCode": "D4_FALSE_ACTIONABLE",
+      "fixtureId": "D4-F09",
+      "forbiddenBehaviors": [
+        "MARK_FALSE_TASK_ACTIONABLE",
+        "DROP_FALSE_CONDITION_ENTITY"
+      ],
+      "inputSummary": "匿名工程反例：false条件保持不可执行",
+      "requiredRuleIds": [
+        "condition-actionability-gate"
+      ],
+      "seen": true,
+      "sourceText": "若已收到确认则上传表格；目前明确尚未收到确认。"
+    },
+    {
+      "category": "unknown条件保持待确认且不可执行",
+      "d3ContractRules": [
+        "condition.value",
+        "actionable"
+      ],
+      "dataRole": "SEEN_ERROR_FAMILY_SYNTHETIC_ENGINEERING_REGRESSION_ONLY",
+      "eligibleForFreshDevelopment": false,
+      "eligibleForIndependentHoldout": false,
+      "expectedEngineeringInvariants": [
+        "UNKNOWN_CONDITION_RETAINED",
+        "UNKNOWN_CONDITION_NOT_ACTIONABLE"
+      ],
+      "failureCode": "D4_UNKNOWN_ACTIONABLE",
+      "fixtureId": "D4-F10",
+      "forbiddenBehaviors": [
+        "ASSUME_CONDITION_TRUE",
+        "DROP_UNKNOWN_ENTITY"
+      ],
+      "inputSummary": "匿名工程反例：unknown条件保持待确认且不可执行",
+      "requiredRuleIds": [
+        "condition-actionability-gate"
+      ],
+      "seen": true,
+      "sourceText": "若通过匿名审核则提交材料，审核结论尚未发布。"
+    },
+    {
+      "category": "true条件正常保留",
+      "d3ContractRules": [
+        "condition.value",
+        "actionable"
+      ],
+      "dataRole": "SEEN_ERROR_FAMILY_SYNTHETIC_ENGINEERING_REGRESSION_ONLY",
+      "eligibleForFreshDevelopment": false,
+      "eligibleForIndependentHoldout": false,
+      "expectedEngineeringInvariants": [
+        "TRUE_CONDITION_DIRECTIVE_RETAINED"
+      ],
+      "failureCode": "D4_TRUE_TASK_DROPPED",
+      "fixtureId": "D4-F11",
+      "forbiddenBehaviors": [
+        "DROP_VALID_TASK",
+        "MARK_ALL_UNKNOWN"
+      ],
+      "inputSummary": "匿名工程反例：true条件正常保留",
+      "requiredRuleIds": [
+        "condition-actionability-gate",
+        "anti-evasion-recall-floor"
+      ],
+      "seen": true,
+      "sourceText": "匿名物资已经到达，请布置登记台。"
+    },
+    {
+      "category": "单端点取消",
+      "d3ContractRules": [
+        "cancellationRelations",
+        "semanticValidity"
+      ],
+      "dataRole": "SEEN_ERROR_FAMILY_SYNTHETIC_ENGINEERING_REGRESSION_ONLY",
+      "eligibleForFreshDevelopment": false,
+      "eligibleForIndependentHoldout": false,
+      "expectedEngineeringInvariants": [
+        "ONE_CANCELLED_ENDPOINT_RETAINED"
+      ],
+      "failureCode": "D4_SINGLE_CANCEL_ENDPOINT_LOST",
+      "fixtureId": "D4-F12",
+      "forbiddenBehaviors": [
+        "CREATE_REPLACEMENT_WITHOUT_EVIDENCE"
+      ],
+      "inputSummary": "匿名工程反例：单端点取消",
+      "requiredRuleIds": [
+        "multi-endpoint-ledger"
+      ],
+      "seen": true,
+      "sourceText": "旧版匿名清单停止使用。"
+    },
+    {
+      "category": "多端点取消",
+      "d3ContractRules": [
+        "cancellationRelations",
+        "forbiddenMerges"
+      ],
+      "dataRole": "SEEN_ERROR_FAMILY_SYNTHETIC_ENGINEERING_REGRESSION_ONLY",
+      "eligibleForFreshDevelopment": false,
+      "eligibleForIndependentHoldout": false,
+      "expectedEngineeringInvariants": [
+        "TWO_CANCELLED_ENDPOINTS_RETAINED"
+      ],
+      "failureCode": "D4_MULTI_CANCEL_COLLAPSED",
+      "fixtureId": "D4-F13",
+      "forbiddenBehaviors": [
+        "MERGE_DISTINCT_CANCELLED_OBJECTS"
+      ],
+      "inputSummary": "匿名工程反例：多端点取消",
+      "requiredRuleIds": [
+        "multi-endpoint-ledger",
+        "cross-object-merge-ban"
+      ],
+      "seen": true,
+      "sourceText": "旧清单甲与旧清单乙均停止使用。"
+    },
+    {
+      "category": "单端点替代",
+      "d3ContractRules": [
+        "replacementRelations"
+      ],
+      "dataRole": "SEEN_ERROR_FAMILY_SYNTHETIC_ENGINEERING_REGRESSION_ONLY",
+      "eligibleForFreshDevelopment": false,
+      "eligibleForIndependentHoldout": false,
+      "expectedEngineeringInvariants": [
+        "OLD_AND_NEW_ENDPOINTS_RETAINED",
+        "REPLACEMENT_DIRECTION_NEW_TO_OLD"
+      ],
+      "failureCode": "D4_SINGLE_REPLACEMENT_INVALID",
+      "fixtureId": "D4-F14",
+      "forbiddenBehaviors": [
+        "DROP_OLD_ENDPOINT",
+        "REVERSE_RELATION"
+      ],
+      "inputSummary": "匿名工程反例：单端点替代",
+      "requiredRuleIds": [
+        "multi-endpoint-ledger"
+      ],
+      "seen": true,
+      "sourceText": "以新版匿名表格替代旧版匿名表格。"
+    },
+    {
+      "category": "多端点替代",
+      "d3ContractRules": [
+        "replacementRelations",
+        "forbiddenMerges"
+      ],
+      "dataRole": "SEEN_ERROR_FAMILY_SYNTHETIC_ENGINEERING_REGRESSION_ONLY",
+      "eligibleForFreshDevelopment": false,
+      "eligibleForIndependentHoldout": false,
+      "expectedEngineeringInvariants": [
+        "FOUR_ENDPOINTS_RETAINED",
+        "TWO_OBJECT_BOUND_RELATIONS"
+      ],
+      "failureCode": "D4_MULTI_REPLACEMENT_INVALID",
+      "fixtureId": "D4-F15",
+      "forbiddenBehaviors": [
+        "MERGE_OLD_ENDPOINTS",
+        "CROSS_PAIR_RELATIONS"
+      ],
+      "inputSummary": "匿名工程反例：多端点替代",
+      "requiredRuleIds": [
+        "multi-endpoint-ledger",
+        "cross-object-merge-ban"
+      ],
+      "seen": true,
+      "sourceText": "新版清单甲替代旧清单甲，新版清单乙替代旧清单乙。"
+    },
+    {
+      "category": "跨对象合并被阻断",
+      "d3ContractRules": [
+        "forbiddenMerges",
+        "objects"
+      ],
+      "dataRole": "SEEN_ERROR_FAMILY_SYNTHETIC_ENGINEERING_REGRESSION_ONLY",
+      "eligibleForFreshDevelopment": false,
+      "eligibleForIndependentHoldout": false,
+      "expectedEngineeringInvariants": [
+        "DISTINCT_OBJECTS_REMAIN_DISTINCT_TASKS"
+      ],
+      "failureCode": "D4_CROSS_OBJECT_MERGE",
+      "fixtureId": "D4-F16",
+      "forbiddenBehaviors": [
+        "MERGE_DIFFERENT_OBJECTS"
+      ],
+      "inputSummary": "匿名工程反例：跨对象合并被阻断",
+      "requiredRuleIds": [
+        "cross-object-merge-ban",
+        "anti-evasion-recall-floor"
+      ],
+      "seen": true,
+      "sourceText": "请分别提交匿名名册和匿名预算表。"
+    },
+    {
+      "category": "同对象合法拆分",
+      "d3ContractRules": [
+        "actions",
+        "forbiddenMerges"
+      ],
+      "dataRole": "SEEN_ERROR_FAMILY_SYNTHETIC_ENGINEERING_REGRESSION_ONLY",
+      "eligibleForFreshDevelopment": false,
+      "eligibleForIndependentHoldout": false,
+      "expectedEngineeringInvariants": [
+        "DISTINCT_ACTION_STAGES_RETAINED"
+      ],
+      "failureCode": "D4_LEGAL_SPLIT_COLLAPSED",
+      "fixtureId": "D4-F17",
+      "forbiddenBehaviors": [
+        "COLLAPSE_FILL_AND_SUBMIT"
+      ],
+      "inputSummary": "匿名工程反例：同对象合法拆分",
+      "requiredRuleIds": [
+        "multi-endpoint-ledger",
+        "anti-evasion-recall-floor"
+      ],
+      "seen": true,
+      "sourceText": "先填写匿名表格，再提交同一匿名表格。"
+    },
+    {
+      "category": "合法合并规则",
+      "d3ContractRules": [
+        "allowedMerges",
+        "actionObjectAliases"
+      ],
+      "dataRole": "SEEN_ERROR_FAMILY_SYNTHETIC_ENGINEERING_REGRESSION_ONLY",
+      "eligibleForFreshDevelopment": false,
+      "eligibleForIndependentHoldout": false,
+      "expectedEngineeringInvariants": [
+        "MERGE_REQUIRES_EXPLICIT_SAME_OBJECT_COMPATIBILITY"
+      ],
+      "failureCode": "D4_LEGAL_MERGE_RULE_LOST",
+      "fixtureId": "D4-F18",
+      "forbiddenBehaviors": [
+        "INFER_MERGE_WITHOUT_COMPATIBILITY"
+      ],
+      "inputSummary": "匿名工程反例：合法合并规则",
+      "requiredRuleIds": [
+        "cross-object-merge-ban"
+      ],
+      "seen": true,
+      "sourceText": "“递交”和“提交”在本通知中指同一匿名对象的一次交付。"
+    },
+    {
+      "category": "完成标准保真",
+      "d3ContractRules": [
+        "completionStandard"
+      ],
+      "dataRole": "SEEN_ERROR_FAMILY_SYNTHETIC_ENGINEERING_REGRESSION_ONLY",
+      "eligibleForFreshDevelopment": false,
+      "eligibleForIndependentHoldout": false,
+      "expectedEngineeringInvariants": [
+        "COMPLETION_STOPS_AT_EXPLICIT_ACTION"
+      ],
+      "failureCode": "D4_COMPLETION_EXPANDED",
+      "fixtureId": "D4-F19",
+      "forbiddenBehaviors": [
+        "EXPAND_TO_APPROVAL_OR_PASS"
+      ],
+      "inputSummary": "匿名工程反例：完成标准保真",
+      "requiredRuleIds": [
+        "completion-condition-fidelity",
+        "attached-field-fidelity"
+      ],
+      "seen": true,
+      "sourceText": "请核对匿名名单；完成标准是核对工作已经执行。"
+    },
+    {
+      "category": "依赖关系保真",
+      "d3ContractRules": [
+        "dependencies"
+      ],
+      "dataRole": "SEEN_ERROR_FAMILY_SYNTHETIC_ENGINEERING_REGRESSION_ONLY",
+      "eligibleForFreshDevelopment": false,
+      "eligibleForIndependentHoldout": false,
+      "expectedEngineeringInvariants": [
+        "DEPENDENCY_DIRECTION_RETAINED"
+      ],
+      "failureCode": "D4_DEPENDENCY_INVALID",
+      "fixtureId": "D4-F20",
+      "forbiddenBehaviors": [
+        "DROP_DEPENDENCY",
+        "REVERSE_DEPENDENCY"
+      ],
+      "inputSummary": "匿名工程反例：依赖关系保真",
+      "requiredRuleIds": [
+        "completion-condition-fidelity",
+        "attached-field-fidelity"
+      ],
+      "seen": true,
+      "sourceText": "完成匿名登记后，再上传匿名汇总表。"
+    },
+    {
+      "category": "共享材料归属",
+      "d3ContractRules": [
+        "materials"
+      ],
+      "dataRole": "SEEN_ERROR_FAMILY_SYNTHETIC_ENGINEERING_REGRESSION_ONLY",
+      "eligibleForFreshDevelopment": false,
+      "eligibleForIndependentHoldout": false,
+      "expectedEngineeringInvariants": [
+        "SHARED_MATERIAL_BOUND_TO_BOTH_TASKS"
+      ],
+      "failureCode": "D4_SHARED_MATERIAL_INVALID",
+      "fixtureId": "D4-F21",
+      "forbiddenBehaviors": [
+        "CREATE_MATERIAL_TASK",
+        "BIND_ONLY_ONE_TASK"
+      ],
+      "inputSummary": "匿名工程反例：共享材料归属",
+      "requiredRuleIds": [
+        "supporting-fact-boundary",
+        "attached-field-fidelity"
+      ],
+      "seen": true,
+      "sourceText": "请分别登记事项甲和事项乙，两项都使用同一匿名证明。"
+    },
+    {
+      "category": "精确时间保真",
+      "d3ContractRules": [
+        "timePoints"
+      ],
+      "dataRole": "SEEN_ERROR_FAMILY_SYNTHETIC_ENGINEERING_REGRESSION_ONLY",
+      "eligibleForFreshDevelopment": false,
+      "eligibleForIndependentHoldout": false,
+      "expectedEngineeringInvariants": [
+        "EXACT_RAW_TIME_RETAINED"
+      ],
+      "failureCode": "D4_EXACT_TIME_INVALID",
+      "fixtureId": "D4-F22",
+      "forbiddenBehaviors": [
+        "DROP_TIME",
+        "CHANGE_TIME_OWNER"
+      ],
+      "inputSummary": "匿名工程反例：精确时间保真",
+      "requiredRuleIds": [
+        "attached-field-fidelity"
+      ],
+      "seen": true,
+      "sourceText": "请于2026年11月1日12时前提交匿名表格。"
+    },
+    {
+      "category": "模糊时间不伪造",
+      "d3ContractRules": [
+        "timePoints"
+      ],
+      "dataRole": "SEEN_ERROR_FAMILY_SYNTHETIC_ENGINEERING_REGRESSION_ONLY",
+      "eligibleForFreshDevelopment": false,
+      "eligibleForIndependentHoldout": false,
+      "expectedEngineeringInvariants": [
+        "VAGUE_RAW_TIME_RETAINED",
+        "NO_INVENTED_NORMALIZED_TIME"
+      ],
+      "failureCode": "D4_VAGUE_TIME_FABRICATED",
+      "fixtureId": "D4-F23",
+      "forbiddenBehaviors": [
+        "INVENT_CALENDAR_DATE"
+      ],
+      "inputSummary": "匿名工程反例：模糊时间不伪造",
+      "requiredRuleIds": [
+        "attached-field-fidelity"
+      ],
+      "seen": true,
+      "sourceText": "请在下周前后核对匿名记录。"
+    },
+    {
+      "category": "PD09类多端点召回",
+      "d3ContractRules": [
+        "replacementRelations",
+        "forbiddenMerges"
+      ],
+      "dataRole": "SEEN_ERROR_FAMILY_SYNTHETIC_ENGINEERING_REGRESSION_ONLY",
+      "eligibleForFreshDevelopment": false,
+      "eligibleForIndependentHoldout": false,
+      "expectedEngineeringInvariants": [
+        "ALL_OLD_AND_NEW_ENDPOINTS_RETAINED",
+        "RELATIONS_STAY_OBJECT_BOUND"
+      ],
+      "failureCode": "D4_PD09_RECALL_REGRESSION",
+      "fixtureId": "D4-F24",
+      "forbiddenBehaviors": [
+        "DROP_OLD_ENDPOINTS",
+        "MERGE_OBJECTS"
+      ],
+      "inputSummary": "匿名工程反例：PD09类多端点召回",
+      "requiredRuleIds": [
+        "multi-endpoint-ledger",
+        "cross-object-merge-ban",
+        "anti-evasion-recall-floor"
+      ],
+      "seen": true,
+      "sourceText": "旧年审表和旧汇总表作废，现分别提交新版年审表和新版汇总表。"
+    },
+    {
+      "category": "正常单任务不回归",
+      "d3ContractRules": [
+        "actions",
+        "objects"
+      ],
+      "dataRole": "SEEN_ERROR_FAMILY_SYNTHETIC_ENGINEERING_REGRESSION_ONLY",
+      "eligibleForFreshDevelopment": false,
+      "eligibleForIndependentHoldout": false,
+      "expectedEngineeringInvariants": [
+        "ONE_EXPLICIT_ACTION_OBJECT_TASK_RETAINED"
+      ],
+      "failureCode": "D4_SINGLE_TASK_REGRESSION",
+      "fixtureId": "D4-F25",
+      "forbiddenBehaviors": [
+        "DROP_VALID_TASK",
+        "MARK_VALID_TASK_INACTIVE"
+      ],
+      "inputSummary": "匿名工程反例：正常单任务不回归",
+      "requiredRuleIds": [
+        "speech-act-currentness-gate",
+        "anti-evasion-recall-floor"
+      ],
+      "seen": true,
+      "sourceText": "请提交匿名报名表。"
+    },
+    {
+      "category": "正常多任务不回归",
+      "d3ContractRules": [
+        "actions",
+        "objects"
+      ],
+      "dataRole": "SEEN_ERROR_FAMILY_SYNTHETIC_ENGINEERING_REGRESSION_ONLY",
+      "eligibleForFreshDevelopment": false,
+      "eligibleForIndependentHoldout": false,
+      "expectedEngineeringInvariants": [
+        "TWO_EXPLICIT_TASKS_RETAINED"
+      ],
+      "failureCode": "D4_MULTI_TASK_REGRESSION",
+      "fixtureId": "D4-F26",
+      "forbiddenBehaviors": [
+        "DROP_ONE_TASK",
+        "MERGE_DISTINCT_ACTION_OBJECTS"
+      ],
+      "inputSummary": "匿名工程反例：正常多任务不回归",
+      "requiredRuleIds": [
+        "anti-evasion-recall-floor"
+      ],
+      "seen": true,
+      "sourceText": "请登记匿名时段，并提交匿名情况说明。"
+    },
+    {
+      "category": "无任务纯通知输出空tasks",
+      "d3ContractRules": [
+        "tasks"
+      ],
+      "dataRole": "SEEN_ERROR_FAMILY_SYNTHETIC_ENGINEERING_REGRESSION_ONLY",
+      "eligibleForFreshDevelopment": false,
+      "eligibleForIndependentHoldout": false,
+      "expectedEngineeringInvariants": [
+        "NO_TASK_SOURCE_USES_EMPTY_TASKS"
+      ],
+      "failureCode": "D4_NO_TASK_DISPOSITION_INVALID",
+      "fixtureId": "D4-F27",
+      "forbiddenBehaviors": [
+        "CREATE_INFORMATION_TASK",
+        "USE_NULL_TASKS"
+      ],
+      "inputSummary": "匿名工程反例：无任务纯通知输出空tasks",
+      "requiredRuleIds": [
+        "speech-act-currentness-gate"
+      ],
+      "seen": true,
+      "sourceText": "匿名服务点本周照常开放，本段没有要求办理事项。"
+    },
+    {
+      "category": "不得通过全量unknown或全量不可执行规避错误",
+      "d3ContractRules": [
+        "condition.value",
+        "actionable"
+      ],
+      "dataRole": "SEEN_ERROR_FAMILY_SYNTHETIC_ENGINEERING_REGRESSION_ONLY",
+      "eligibleForFreshDevelopment": false,
+      "eligibleForIndependentHoldout": false,
+      "expectedEngineeringInvariants": [
+        "UNCONDITIONAL_TASK_ACTIONABLE",
+        "CONDITIONAL_TASK_UNKNOWN_AND_INACTIVE"
+      ],
+      "failureCode": "D4_ANTI_EVASION_FAILED",
+      "fixtureId": "D4-F28",
+      "forbiddenBehaviors": [
+        "MARK_ALL_UNKNOWN",
+        "MARK_ALL_INACTIVE",
+        "DROP_CONDITIONAL_ENTITY"
+      ],
+      "inputSummary": "匿名工程反例：不得通过全量unknown或全量不可执行规避错误",
+      "requiredRuleIds": [
+        "condition-actionability-gate",
+        "anti-evasion-recall-floor"
+      ],
+      "seen": true,
+      "sourceText": "请提交匿名记录；若另行收到补充通知，再上传匿名附件。"
+    }
+  ],
+  "status": "SEEN_ENGINEERING_REGRESSION_ONLY_NOT_MODEL_EVALUATION",
+  "version": "candidate13-d4-engineering-fixtures-1.0.0"
+}

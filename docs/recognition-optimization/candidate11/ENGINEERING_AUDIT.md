@@ -1,4 +1,4 @@
-# C11 A—D3 工程与 Development 执行审计
+# C11 A—D4 工程与 Development 执行审计
 
 日期：2026-09-21。起点：593ab7847a5791f8e3fbc6e4b82f94a6c4d0ebb5。
 
@@ -16,7 +16,7 @@
 
 ## 阶段状态
 
-A1—A5实施及验证已交付。B2模型评测已完成并决定`REJECT_CANDIDATE11`；仓库全量门槛仍为 HAS_HISTORICAL_FAILURE / NO_PROMOTION。真人收益 NOT_OBSERVABLE；合并/部署 NOT_RUN。
+A1—A5实施及验证已交付。B2模型评测、Candidate12 D2失败关闭、D3评分契约和D4 Candidate13零调用冻结已完成。仓库全量门槛仍为 HAS_HISTORICAL_FAILURE / NO_PROMOTION。Candidate13模型效果和真人收益 NOT_OBSERVABLE；合并/部署 NOT_RUN。
 
 ## 验证记录
 
@@ -164,3 +164,13 @@ A1—A5实施及验证已交付。B2模型评测已完成并决定`REJECT_CANDID
 - D3测试64/64、lint 0 error/5 warning、build和security通过。裸`npm run test`保留3个既有环境/暂态失败；匿名carrier隔离入口Vitest 1433/1433通过、1跳过，其余工程组通过，唯一非零项仍是历史`RCO-5-007`的`FREEZE_HASH_MISMATCH:package-lock.json`。
 
 当前停止状态：`D3_SCORER_CONTRACT_READY_FOR_FRESH_DATA`。下一步可先零调用实现并冻结Candidate13，或组织全新数据与真实独立人工标签；任何模型调用、预算账本写入、Holdout、Preview或Production仍需新阶段和授权。
+
+## D4 Candidate13零调用冻结
+
+- Candidate13版本为`real-input-source-semantics-13`，Prompt版本为`recognition-prompt-candidate13-1.0.0`。它继承Candidate12基底，只追加六类已见D2错误族控制：言语行为与当前性双门、条件与actionable分离、多端点逐项记账、跨对象合并禁止、附属字段保真、召回防规避。
+- 新增28类匿名工程夹具，全部标记`SEEN_ERROR_FAMILY_SYNTHETIC_ENGINEERING_REGRESSION_ONLY`，不具备全新Development或独立Holdout资格。工程回归验证规则、身份、隔离和构造，不伪造模型识别分数。
+- Prompt、Schema、adapter、D3 reference/compiler/scorer、fixture与Candidate bundle都进入可重算SHA绑定。任一组件漂移均失败关闭；无授权派发固定返回`D4_MODEL_CALL_NOT_AUTHORIZED`。
+- D4 Node 46/46、Candidate13 Vitest 9/9、D3 64/64通过。隔离全量Vitest 1442/1442通过、1跳过；server 8/8、Worker 25/25、Functions 5/5与C11各Node组通过。裸`npm run test`依旧因缺少`REAL_INPUT_CARRIERS_MANIFEST`导致candidate02 launcher的1项失败；隔离执行已通过该项。
+- 保留历史`RCO-5-007` 3/4通过及`FREEZE_HASH_MISMATCH:package-lock.json`。D1/D2/D3冻结聚合SHA、84份保护文件与742行权威账本均一致。
+- D4模型调用、连通性探测、Secret读取、grant/reserve/settle、账本写入、全新Expected读取、正式请求身份、真人试用、合并和部署均为0。
+- 当前停止点为`D4_CANDIDATE13_FROZEN_READY_FOR_FRESH_DATA`。下一阶段必须使用冻结提交之后创建的全新匿名Development，或两位真实人员密封双审的Holdout；先经D3 validator/compiler，后续模型调用须另行核价、预算、grant和明确授权。

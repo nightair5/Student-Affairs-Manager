@@ -1,16 +1,19 @@
-# 当前交接：D3未来评分契约已修复，Candidate12的D2拒绝结论保持不变
+# 当前交接：Candidate13已零调用实现并冻结，等待全新数据
 
 日期：2026-09-21。工作区 C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/比赛；分支 codex/e2-candidate11-blind-eval。
 本轮先完成D1临时Development身份准备，随后获明确授权执行24次candidate03/Candidate12配对模型调用、专用grant和权威账本追加。授权不包含重试、repair、verifier、额外样本、真人、Holdout、默认候选变更、合并或部署。
 
-## D3 当前状态
+## D4 当前状态
 
 - 已建立唯一的未来参照契约`candidate12-reference-contract-3.0.0`、编译器`candidate12-reference-compiler-3.0.0`、评分输入`candidate12-scorer-input-3.0.0`和评分器`candidate12-scoring-3.0.0`。这是实验评分接口，不改变产品Workspace schema v8。
 - 24类匿名契约夹具各有合法/拒绝案例，共48份；D3定向测试64/64通过。无效参照会失败关闭，不能进入候选胜负计算。
 - D1历史参照12/12不兼容v3：10份含任务参照缺少任务身份数组/字段规则，12份都使用自然语言checks。D1/D2材料、旧Expected、旧评分器、旧哈希和D2正式结论均未改写。
 - D3模型调用、Secret读取、grant、reserve、settle、账本写入、Holdout、真人、默认候选、Preview、Production、合并和部署均为0。权威账本仍为742行及SHA `df4035229093554b6417b0a37571730f68c10ecb7098234814406b49dfae1e1e`。
-- Candidate13只有零调用变更计划，尚未实施、尚未冻结、尚未模型评测。下一阶段须先实现并冻结Candidate13，再使用全新匿名Development；正式Holdout仍等待两位真实人员的独立标签。
-- 当前停止状态：`D3_SCORER_CONTRACT_READY_FOR_FRESH_DATA`。
+- Candidate13已实现为`real-input-source-semantics-13` / `recognition-prompt-candidate13-1.0.0`，只改实验Prompt和候选身份，未改Schema、adapter、模型参数、默认候选或产品入口。
+- 新增28类匿名已见错误族工程夹具，覆盖否定/取消/禁止/背景、材料/地点/格式/联系方式越界、条件actionable、多端点修订、跨对象合并、附属字段保真与召回防规避。它们是工程回归，不是新Development或Holdout。
+- D4定向Node测试46/46、Candidate13 Vitest 9/9、D3契约64/64通过。隔离全量Vitest 1442/1442通过、1跳过；仅保留历史`RCO-5-007 FREEZE_HASH_MISMATCH:package-lock.json`。
+- D4模型调用、连通性探测、Secret读取、grant/reserve/settle、账本写入、全新Expected、请求身份、真人、合并和部署均为0。
+- 当前停止状态：`D4_CANDIDATE13_FROZEN_READY_FOR_FRESH_DATA`。Candidate13的识别率、转化率和相对提升仍为`NOT_OBSERVABLE`。
 
 ## 当前结论
 - C11 工程闭环已实际运行并经浏览器验证；全仓库存在已复现的历史 RCO-5-007 冻结锁文件失败，不能宣布全绿或发布就绪。
@@ -55,7 +58,7 @@ A9/12与B11/12不是人工盲审、全字段准确率或真实转化率。candid
 计划/跟踪：refine-logs/EXPERIMENT_PLAN.md、EXPERIMENT_TRACKER.md。
 准备包：candidate11/b1-preparation/README.md；验证记录：candidate11/b1-preparation/VALIDATION.md；manifest SHA256 af1f1d2427eec1795691e1d4a62056a614bac72f0254103667632b341794744e。
 已提交推送：A1 d0407f6b59a8e099b834feaadfaf4d166644d7ab；A2/A3 8714f0130f62a89ae6230c58a8c3a4664934a8bd。A4/A5交付SHA以Git当前HEAD及远端核验为准。
-临时Development支线停止在`D2_EXECUTION_COMPLETE_SCORING_PACKAGE_INVALID / REJECT_CANDIDATE12_ENGINEERING_SCREEN`。下一步只能先做零调用D3，修复未来参照与评分器的机器接口并预注册；不得修改D1 Expected后把本批结果重新包装为正式PASS。正式Holdout仍停止在`WAITING_FOR_INDEPENDENT_HUMAN_LABELS`；两位不同真实人员的12份密封双审材料没有完成前，不得生成或运行正式Holdout身份、切换默认候选或上线。
+临时Development支线保留`D2_EXECUTION_COMPLETE_SCORING_PACKAGE_INVALID / REJECT_CANDIDATE12_ENGINEERING_SCREEN`。D3评分契约和D4 Candidate13冻结已完成；下一步只能在本次冻结提交之后准备全新匿名Development，或继续等待两位真实人员的独立Holdout密封双审。新参照须先通过D3 validator/compiler，才能准备`dispatchAuthorized=false`/`NOT_RUN`身份；任何模型派发前仍须重新核价、新预算卡、新grant和用户明确授权。
 
 ## B2 Development 结果
 

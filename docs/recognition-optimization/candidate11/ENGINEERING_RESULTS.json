@@ -1,12 +1,12 @@
 {
-  "version": "candidate12-d3-scorer-contract-results-1",
+  "version": "candidate13-d4-freeze-results-1",
   "date": "2026-09-21",
   "branch": "codex/e2-candidate11-blind-eval",
   "base": "593ab7847a5791f8e3fbc6e4b82f94a6c4d0ebb5",
   "status": {
-    "engineering": "D3_SCORER_CONTRACT_READY_FOR_FRESH_DATA",
+    "engineering": "D4_CANDIDATE13_FROZEN_READY_FOR_FRESH_DATA",
     "repositoryGate": "HAS_VERIFIED_HISTORICAL_FAILURE_NO_PROMOTION",
-    "modelQuality": "D2_FORMAL_REJECT_SCORER_CONTRACT_MISMATCH",
+    "modelQuality": "CANDIDATE13_NOT_RUN_D2_CANDIDATE12_REJECT_PRESERVED",
     "humanBenefit": "NOT_OBSERVABLE",
     "merge": "NOT_RUN",
     "deployment": "NOT_RUN"
@@ -51,7 +51,7 @@
   },
   "tests": {
     "vitest": {
-      "pass": 1433,
+      "pass": 1442,
       "fail": 0,
       "skip": 1,
       "skipReason": "Existing opt-in ocrLiveComponent test; isolated temporary carriers used"
@@ -92,7 +92,8 @@
       "windowsEol": "Restored exact parent bytes only after Git canonical equivalence checks; no semantic diff",
       "fixtures": "Generated 8 carriers in new temporary directory; restored existing OCR language assets",
       "timing": "One previous full run failed old OCR timeout terminate assertion; same test and code passed final full run with maxWorkers=2",
-      "d3RawNpmTest": "1430 pass, 3 fail, 1 skip: missing REAL_INPUT_CARRIERS_MANIFEST, transient OCR terminate observation, transient A02 5000ms timeout; isolated reruns passed 10/10 and 30/30"
+      "d3RawNpmTest": "1430 pass, 3 fail, 1 skip: missing REAL_INPUT_CARRIERS_MANIFEST, transient OCR terminate observation, transient A02 5000ms timeout; isolated reruns passed 10/10 and 30/30",
+      "d4RawNpmTest": "1441 pass, 1 fail, 1 skip: candidate02 launcher lacked REAL_INPUT_CARRIERS_MANIFEST and resolved an undefined path; isolated carrier run passed 1442/1442 with 1 skip"
     }
   },
   "browser": {
@@ -525,7 +526,7 @@
     "8714f0130f62a89ae6230c58a8c3a4664934a8bd"
   ],
   "finalCommit": "Resolve current Git HEAD; final artifact cannot contain its own commit hash.",
-  "nextStage": "D4_CANDIDATE13_ZERO_CALL_IMPLEMENTATION_AND_FREEZE_OR_FRESH_DATA_LABELING",
+  "nextStage": "D5_FRESH_DEVELOPMENT_PREPARATION_OR_WAIT_FOR_INDEPENDENT_HUMAN_LABELS",
   "paidGrant": "D2_CONSUMED_COMPLETE",
   "candidate12D3": {
     "directory": "docs/recognition-optimization/candidate12/d3-scorer-contract",
@@ -575,5 +576,93 @@
     },
     "candidate13": "PLANNED_NOT_IMPLEMENTED_NOT_EVALUATED",
     "officialD2DecisionPreserved": "REJECT_CANDIDATE12_ENGINEERING_SCREEN"
+  },
+  "candidate13D4": {
+    "directory": "docs/recognition-optimization/candidate13/d4-freeze",
+    "status": "D4_CANDIDATE13_FROZEN_READY_FOR_FRESH_DATA",
+    "candidateVersion": "real-input-source-semantics-13",
+    "promptVersion": "recognition-prompt-candidate13-1.0.0",
+    "referenceContractVersion": "candidate12-reference-contract-3.0.0",
+    "scorerVersion": "candidate12-scoring-3.0.0",
+    "fixtures": {
+      "count": 28,
+      "dataRole": "SEEN_ERROR_FAMILY_SYNTHETIC_ENGINEERING_REGRESSION_ONLY",
+      "eligibleForFreshDevelopment": false,
+      "eligibleForIndependentHoldout": false
+    },
+    "tests": {
+      "node": {
+        "pass": 46,
+        "fail": 0
+      },
+      "candidateVitest": {
+        "pass": 9,
+        "fail": 0
+      },
+      "d3Contract": {
+        "pass": 64,
+        "fail": 0
+      },
+      "isolatedVitest": {
+        "pass": 1442,
+        "fail": 0,
+        "skip": 1
+      },
+      "rawNpmTest": {
+        "pass": 1441,
+        "fail": 1,
+        "skip": 1,
+        "failure": "MISSING_REAL_INPUT_CARRIERS_MANIFEST"
+      },
+      "historicalRco5007": {
+        "pass": 3,
+        "fail": 1,
+        "error": "FREEZE_HASH_MISMATCH:package-lock.json"
+      }
+    },
+    "frozenEvidence": {
+      "protectedFiles": 84,
+      "d1AggregateSha256": "4afa5b08a368961ba6782b4ac3d4450f6e6d89c02fa034e1eb426f0390855a5b",
+      "d2AggregateSha256": "2074b8931077a9975ea61293723d1a668728f3baefb5933da84602f61aab6d53",
+      "d3AggregateSha256": "d158ec4e29e925562993570442626fb35015ced39aeaee0862f29d4cbf820759",
+      "ledgerRows": 742,
+      "ledgerBytes": 631869,
+      "ledgerSha256": "df4035229093554b6417b0a37571730f68c10ecb7098234814406b49dfae1e1e",
+      "ledgerTail": "6812e1b072caeaa4fd3e6e8e55b485c57533bc0a0d9eaaff4dd84bbf48809922"
+    },
+    "operations": {
+      "modelCalls": 0,
+      "modelConnectivityProbes": 0,
+      "secretReads": 0,
+      "grants": 0,
+      "reserves": 0,
+      "settlements": 0,
+      "ledgerWrites": 0,
+      "freshExpectedReads": 0,
+      "formalRequestIdentities": 0,
+      "humanTrials": 0,
+      "merge": 0,
+      "deploy": 0
+    },
+    "boundaries": {
+      "candidate03Changed": false,
+      "candidate12Changed": false,
+      "defaultCandidateChanged": false,
+      "workspaceSchemaChanged": false,
+      "recognitionResultSchemaChanged": false,
+      "dependenciesChanged": false,
+      "previewChanged": false,
+      "productionChanged": false
+    },
+    "modelEvaluation": "NOT_RUN",
+    "recognitionRate": "NOT_OBSERVABLE",
+    "conversionRate": "NOT_OBSERVABLE",
+    "demonstratedImprovement": false,
+    "officialD2DecisionPreserved": "REJECT_CANDIDATE12_ENGINEERING_SCREEN",
+    "promptSha256": "274607edf843a7aa58da2b9c44619c80cc085df330f10e09cfcec6b328d83c59",
+    "schemaSha256": "52b52e25774d61b8fddecf978f2215d53c0f9b4e47f9d45c74426c0b50a77d7e",
+    "adapterSha256": "c7c81ae516c30faec850f4d765ae625d2cf1d11f39ed0d515ab93da45efb8be2",
+    "candidateBundleSha256": "81037adee63cb48fa66d9aa0f42bb5c8ead18651a606173f386b1ec5c455d617",
+    "fixtureSha256": "42d4672672f71e22266910f0ca69d1e263b214113e49f75ac99f842122fe6201"
   }
 }

@@ -1,6 +1,6 @@
 # Candidate11 实验跟踪表
 
-版本：c12-tracker-0.9-d3-scorer-contract。日期：2026-09-21。
+版本：c13-tracker-1.0-d4-frozen。日期：2026-09-21。
 本表状态反映真实执行；PLANNED不等于授权，PREPARED不等于派发，工程PASS不等于模型/商业PASS。
 核心计划见 [EXPERIMENT_PLAN.md](EXPERIMENT_PLAN.md)。
 
@@ -19,8 +19,9 @@
 | C12-020A | C2临时 | Codex制作12份合成来源与provisional参照 | SEEN_SYNTHETIC_DEVELOPMENT | 0 | PASS_STRUCTURE_NOT_HOLDOUT | `modelAssistanceUsed=true`；排除库增至75条；不得晋级 |
 | C12-020B | D1临时 | candidate03 vs Candidate12 12×2零调用身份 | SEEN_SYNTHETIC_DEVELOPMENT | 0 | FROZEN_THEN_EXECUTED_IN_D2 | 24身份冻结；Expected隔离；D2独立grant执行 |
 | C12-020C | D2临时 | 24次配对执行、结算与冻结评分 | SEEN_SYNTHETIC_DEVELOPMENT | 24/24 | REJECT_SCORING_CONTRACT_INVALID | 24次settled；冻结scorer/reference接口不兼容；正式失败关闭 |
-| C12-020D | D3 | 未来reference/compiler/scorer接口修复与预注册 | 已见诊断/零调用 | 0 | PASS_ENGINEERING_ONLY | v3契约冻结；48夹具、62测试通过；D1/D2不改写 |
-| C13-010 | D4后续 | Candidate13零调用实现、反例回归与冻结 | D2已见错误族 | 0 | PLANNED_ZERO_CALL | 在任何全新Expected可见前冻结；不能用D2证明提升 |
+| C12-020D | D3 | 未来reference/compiler/scorer接口修复与预注册 | 已见诊断/零调用 | 0 | PASS_ENGINEERING_ONLY | v3契约冻结；48夹具、64测试通过；D1/D2不改写 |
+| C13-010 | D4 | Candidate13零调用实现、反例回归与冻结 | D2已见错误族 | 0 | FROZEN_READY_FOR_FRESH_DATA | 28类已见工程夹具；46 Node + 9 Vitest通过；未模型评测 |
+| C13-020 | D5后续 | candidate03 vs Candidate13全新Development准备 | 待创建全新数据 | 0 | PLANNED_ZERO_CALL | D4冻结提交之后才可创建Expected；先过v3 validator/compiler |
 | C12-021 | C1 | 两位真实人员提交12份新source+Expected | 拟Holdout | 0 | WAITING_FOR_INDEPENDENT_HUMAN_LABELS | 当前来源0/12、完整参照0/12 |
 | C12-022 | C1 | candidate03 vs Candidate12 24个冻结身份 | 12份新配对 | 0 | BLOCKED_BY_HUMAN_GATE | 人工包通过后才可生成；仍保持NOT_RUN |
 | C12-030 | 后续 | 24次Holdout配对执行 | 12份新配对 | <=24 | PLANNED_NOT_AUTHORIZED | 新价格、新预算、新grant及明确授权 |
@@ -102,4 +103,13 @@ A包当时只构造工程请求与NOT_RUN身份记录；B2随后按新授权生�
 - 版本：reference contract 3.0.0、compiler 3.0.0、scorer input 3.0.0、scorer 3.0.0；产品Workspace schema v8不变。
 - 24类契约夹具、24合法/24拒绝，定向测试64/64通过。D1历史参照兼容0/12；10份任务身份字段失败、12份自然语言checks失败，禁止自动转换。
 - 84份保护文件、D2 Manifest 60份文件、24 raw和24 result、742行权威账本均保持一致。D3模型调用、Secret、grant、reserve、settle、账本写入均为0。
-- Candidate13仅为计划，正式Holdout仍为`WAITING_FOR_INDEPENDENT_HUMAN_LABELS`；默认候选、Preview和Production没有改变。
+- D3时Candidate13仅为计划；后续D4已完成冻结。正式Holdout仍为`WAITING_FOR_INDEPENDENT_HUMAN_LABELS`；默认候选、Preview和Production没有改变。
+
+## Candidate13 D4登记
+
+- 交付目录：`docs/recognition-optimization/candidate13/d4-freeze/`；状态`D4_CANDIDATE13_FROZEN_READY_FOR_FRESH_DATA`。
+- 版本：Candidate `real-input-source-semantics-13`，Prompt `recognition-prompt-candidate13-1.0.0`，reference/scorer继续绑定D3 v3。
+- 28份已见错误族工程夹具全部为`SEEN_ERROR_FAMILY_SYNTHETIC_ENGINEERING_REGRESSION_ONLY`；新Development/Holdout source、Expected和正式请求身份均为0。
+- D4 Node 46/46、Candidate13 Vitest 9/9、D3 64/64通过；隔离全量Vitest 1442/1442通过、1跳过。历史RCO-5-007仍为3/4通过及`FREEZE_HASH_MISMATCH:package-lock.json`。
+- 模型调用、Secret读取、grant/reserve/settle、账本写入、人工试用、默认候选变更、合并和部署均为0。
+- 识别率、转化率和相对candidate03提升仍为`NOT_OBSERVABLE`。下一步是准备全新Development，或等待两位真实人员的独立Holdout双审。

@@ -1,0 +1,238 @@
+{
+  "baselineHead": "08680cbbd5798426201c60cdc75ec0dd74d56436",
+  "binding": {
+    "adapterSha": "c7c81ae516c30faec850f4d765ae625d2cf1d11f39ed0d515ab93da45efb8be2",
+    "bindingSha": "900f9f896d710ab99db087931786b41d974850d652095df83b2a1f643c266752",
+    "candidateVersion": "real-input-source-semantics-13",
+    "compilerSha": "c95f35b464561a939960c52280cf50e7c4266e653e77a9df49790072dcb6773c",
+    "compilerVersion": "candidate12-reference-compiler-3.0.0",
+    "fixtureSha": "42d4672672f71e22266910f0ca69d1e263b214113e49f75ac99f842122fe6201",
+    "modelConfig": {
+      "maxOutputTokens": 8192,
+      "model": "deepseek-flash",
+      "reasoning": {
+        "effort": "none"
+      },
+      "temperature": 0
+    },
+    "promptSha": "274607edf843a7aa58da2b9c44619c80cc085df330f10e09cfcec6b328d83c59",
+    "promptVersion": "recognition-prompt-candidate13-1.0.0",
+    "referenceContractSha": "a35a5dbf32b3ed9b5110e7a60d6beb0710774f1fdbcdde5d298f995b74299406",
+    "referenceContractVersion": "candidate12-reference-contract-3.0.0",
+    "schemaSha": "52b52e25774d61b8fddecf978f2215d53c0f9b4e47f9d45c74426c0b50a77d7e",
+    "scorerSha": "64f33da0e83fdc29c052e0f4320f29d831fbee461659489da7c368ba70a0cf1a",
+    "scorerVersion": "candidate12-scoring-3.0.0",
+    "version": "candidate13-d4-binding-1.0.0"
+  },
+  "boundaries": {
+    "candidate03Changed": false,
+    "candidate12Changed": false,
+    "candidate13ImportedByProductRuntime": false,
+    "d3Changed": false,
+    "defaultCandidateChanged": false,
+    "dependenciesChanged": false,
+    "previewChanged": false,
+    "productionChanged": false,
+    "recognitionResultSchemaChanged": false,
+    "workspaceSchemaChanged": false
+  },
+  "candidate": {
+    "adapterSha256": "c7c81ae516c30faec850f4d765ae625d2cf1d11f39ed0d515ab93da45efb8be2",
+    "candidateBundleSha256": "81037adee63cb48fa66d9aa0f42bb5c8ead18651a606173f386b1ec5c455d617",
+    "candidateVersion": "real-input-source-semantics-13",
+    "demonstratedImprovement": false,
+    "modelConfig": {
+      "maxOutputTokens": 8192,
+      "model": "deepseek-flash",
+      "reasoning": {
+        "effort": "none"
+      },
+      "temperature": 0
+    },
+    "modelEvaluation": "NOT_RUN",
+    "promptSha256": "274607edf843a7aa58da2b9c44619c80cc085df330f10e09cfcec6b328d83c59",
+    "promptVersion": "recognition-prompt-candidate13-1.0.0",
+    "ruleIds": [
+      "current-obligation-admission",
+      "supporting-fact-boundary",
+      "endpoint-conservation",
+      "completion-condition-fidelity",
+      "speech-act-currentness-gate",
+      "condition-actionability-gate",
+      "multi-endpoint-ledger",
+      "cross-object-merge-ban",
+      "attached-field-fidelity",
+      "anti-evasion-recall-floor"
+    ],
+    "schemaSha256": "52b52e25774d61b8fddecf978f2215d53c0f9b4e47f9d45c74426c0b50a77d7e",
+    "status": "ENGINEERING_FROZEN_MODEL_NOT_RUN"
+  },
+  "files": [
+    {
+      "bytes": 1452,
+      "path": "docs/recognition-optimization/candidate13/d4-freeze/README.md",
+      "sha256": "4aa6aa8ed79fe50c6c5829f355fdd3e3c2d5d059109a5ae8ee61211cdea2e83d"
+    },
+    {
+      "bytes": 1264,
+      "path": "docs/recognition-optimization/candidate13/d4-freeze/CANDIDATE13_SPEC.md",
+      "sha256": "4707178e7a02c90856287296f34dc80fa4aef92467d63e25be6aa19522fa3820"
+    },
+    {
+      "bytes": 823,
+      "path": "docs/recognition-optimization/candidate13/d4-freeze/CHANGE_LOG.md",
+      "sha256": "ad4d889cf3997d814c0fe72ace09079465e737c41e2bdd1513546d4ad92db4d6"
+    },
+    {
+      "bytes": 1171,
+      "path": "docs/recognition-optimization/candidate13/d4-freeze/FRESH_DATA_ISOLATION.md",
+      "sha256": "4707c3caa63728dec97eae76569789eb1919554a70efe42502b43b2e185233cb"
+    },
+    {
+      "bytes": 2369,
+      "path": "docs/recognition-optimization/candidate13/d4-freeze/VALIDATION.md",
+      "sha256": "bb7cf6107b4f097c722f45007d9816c602219f96e6e8a38e456376b36d7e3ba8"
+    },
+    {
+      "bytes": 23606,
+      "path": "docs/recognition-optimization/candidate13/d4-freeze/ENGINEERING_FIXTURES.json",
+      "sha256": "87554efb9522202bb90a7c156bea97ad7b1b5145b9101f0a0059e3495cab37ef"
+    },
+    {
+      "bytes": 726,
+      "path": "docs/recognition-optimization/candidate13/d4-freeze/REGRESSION_RESULTS.json",
+      "sha256": "86770c19f48e34797b1a0e2c6689652bd3036e06b90486e7d835c5c07f8741d7"
+    },
+    {
+      "bytes": 4903,
+      "path": "src/experiments/realInput01/candidate13.ts",
+      "sha256": "a26d77a094fbadb4b4ffc4ecbbf62a02281e310c854e6fc3027f7853f8d0d3fc"
+    },
+    {
+      "bytes": 4268,
+      "path": "src/experiments/realInput01/candidate13.test.ts",
+      "sha256": "4007960701637f62a8da94535867f8bf1053ceb566af0c96ae596f6daed8f1d1"
+    },
+    {
+      "bytes": 10824,
+      "path": "scripts/candidate13-d4-fixtures.mjs",
+      "sha256": "1b08b2d824a33f55a0ad35c64cc5290d27b6a7fa8ff89cf16d7521f01acf04e2"
+    },
+    {
+      "bytes": 4352,
+      "path": "scripts/candidate13-d4-isolation.mjs",
+      "sha256": "d8ecbe1711e2b529c58154da5e9b103122026ed1b6df78a1300bf55dfdd2bfc2"
+    },
+    {
+      "bytes": 13629,
+      "path": "scripts/freeze-candidate13-d4.mjs",
+      "sha256": "e2681bb4a0f360391e611079d30d1cfc081ca4d10dba81fdf8d1b67108868eaa"
+    },
+    {
+      "bytes": 9299,
+      "path": "scripts/candidate13-d4.node-test.mjs",
+      "sha256": "4c1f6c443313ae2e1190450065ba71af474a8f8fbda82756b41f98398fd06b88"
+    }
+  ],
+  "fixtures": {
+    "count": 28,
+    "dataRole": "SEEN_ERROR_FAMILY_SYNTHETIC_ENGINEERING_REGRESSION_ONLY",
+    "eligibleForFreshDevelopment": false,
+    "eligibleForIndependentHoldout": false,
+    "sha256": "42d4672672f71e22266910f0ca69d1e263b214113e49f75ac99f842122fe6201"
+  },
+  "frozenEvidence": {
+    "authorityLedger": {
+      "bytes": 631869,
+      "path": "C:\\Users\\Winner\\student-affairs-multimodal-exp\\docs\\recognition-optimization\\mainline-real-input-01\\runs\\usage-resume-20260907a\\CALL_LEDGER.jsonl",
+      "rows": 742,
+      "sha256": "df4035229093554b6417b0a37571730f68c10ecb7098234814406b49dfae1e1e",
+      "tail": "6812e1b072caeaa4fd3e6e8e55b485c57533bc0a0d9eaaff4dd84bbf48809922",
+      "writerOpened": false
+    },
+    "d1": {
+      "aggregateSha256": "4afa5b08a368961ba6782b4ac3d4450f6e6d89c02fa034e1eb426f0390855a5b",
+      "count": 8
+    },
+    "d2": {
+      "aggregateSha256": "2074b8931077a9975ea61293723d1a668728f3baefb5933da84602f61aab6d53",
+      "count": 61
+    },
+    "d2ManifestFiles": 60,
+    "d2OfficialDecision": "REJECT_CANDIDATE12_ENGINEERING_SCREEN",
+    "d2Raw": 24,
+    "d2Results": 24,
+    "d3": {
+      "aggregateSha256": "d158ec4e29e925562993570442626fb35015ced39aeaee0862f29d4cbf820759",
+      "count": 11
+    },
+    "d3Status": "D3_SCORER_CONTRACT_READY_FOR_FRESH_DATA",
+    "protectedFiles": 84
+  },
+  "generatedAt": "2026-09-21T15:35:05.803Z",
+  "isolation": {
+    "candidateImports": [
+      "./candidate03",
+      "./candidate12",
+      "./modelWire",
+      "./inputReceipt"
+    ],
+    "defaultCandidateChanged": false,
+    "defaultComponents": {
+      "src/experiments/mainline04/semanticContract.ts": "fca1be185c94d169f2505ad420f107aed24fe49c0208e80ea784b65f80188961",
+      "src/experiments/realInput01/candidate03.ts": "f3a2dd9358ca2a50b9b3eba8a090211666db4c0fb8dc5fc146e742c9895f9508",
+      "src/experiments/realInput01/candidate12.ts": "b4f6db69360019bc81355edf181fda48ae8470d1a84d8034545e7f458b1c4bfe",
+      "src/experiments/realInput01/modelClient.ts": "fd639d306f069296054abd44ba29c2d9124c3a21b515f341a03c90f3adad5359",
+      "src/experiments/realInput01/modelWire.ts": "c7c81ae516c30faec850f4d765ae625d2cf1d11f39ed0d515ab93da45efb8be2"
+    },
+    "fixtureValidation": {
+      "count": 28,
+      "uniqueCategories": 28,
+      "uniqueIds": 28,
+      "uniqueSources": 28
+    },
+    "formalRequestIdentitiesCreated": 0,
+    "freshDevelopmentSourcesObserved": 0,
+    "freshExpectedObserved": 0,
+    "holdoutExpectedObserved": 0,
+    "holdoutSourcesObserved": 0,
+    "modelDispatchPathPresent": false,
+    "nextDataRule": "Candidate13 freeze commit must precede creation or disclosure of any fresh Expected.",
+    "previewChanged": false,
+    "productionChanged": false,
+    "status": "D4_FRESH_DATA_ISOLATION_PASS"
+  },
+  "nextStageRequires": [
+    "Candidate13 freeze commit precedes any fresh Expected",
+    "fresh anonymous Development or independent human Holdout",
+    "v3 reference validation and compilation",
+    "new price check, budget card and explicit model-call authorization"
+  ],
+  "operations": {
+    "deploy": 0,
+    "freshExpectedReads": 0,
+    "grants": 0,
+    "holdoutRequests": 0,
+    "humanTrials": 0,
+    "ledgerWrites": 0,
+    "merge": 0,
+    "modelCalls": 0,
+    "modelConnectivityProbes": 0,
+    "reserves": 0,
+    "secretReads": 0,
+    "settlements": 0
+  },
+  "protectedCandidates": {
+    "candidate03": {
+      "sourceSha256": "f3a2dd9358ca2a50b9b3eba8a090211666db4c0fb8dc5fc146e742c9895f9508",
+      "version": "real-input-source-semantics-3"
+    },
+    "candidate12": {
+      "sourceSha256": "b4f6db69360019bc81355edf181fda48ae8470d1a84d8034545e7f458b1c4bfe",
+      "version": "real-input-source-semantics-12"
+    },
+    "defaultCandidateChanged": false
+  },
+  "status": "D4_CANDIDATE13_FROZEN_READY_FOR_FRESH_DATA",
+  "version": "candidate13-d4-freeze-manifest-1.0.0"
+}
