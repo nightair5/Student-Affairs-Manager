@@ -30,3 +30,11 @@ A1—A5：IN_PROGRESS。模型质量 NOT_RUN；真人收益 NOT_OBSERVABLE；合
 - lint、类型、无.env构建通过；完整Vitest首次存在3个旧测试的检出/载体问题，RCO-5-007冻结图也受检出行尾影响，A5继续核验，不修改旧断言。
 - 契约检查首次受Windows混合换行影响。核实四个文件与HEAD和父工作区只差行尾后，在本工作树恢复父原字节，未改变Git内容；识别契约与时间AST检查随后通过。无Schema升级。
 - 全部标准测试分段执行，不因早期失败跳过后续Node/Functions。原始日志位于.data/candidate11/checks/，最终汇总另存可提交报告。
+
+### A2—A3 候选构造与执行保护
+
+- candidate11 公共底座为 candidate03 加完成标准最小修正；四变体 V00/V10/V01/V11 仅切换元指令与教学例，模型及其他参数固定，可见版本一致。保留旧八例并新增两例完成动作/明确结果目标对照。candidate03/10 请求重建逐字一致。
+- prepared / binding / result / analysis 贯通候选、提示词、例子、Schema、输入、请求、模型配置和评分器身份；从原上下文重新构造校验，不能靠重算外层 hash 接受错误元数据。
+- 所有阶段产物均为 ENGINEERING_NO_AUTHORIZATION / NOT_RUN；没有 C11 付费运行授权或生产接入。有效 prepared 仍被 dispatch 拒绝。
+- 7 项候选构造 + 6 项身份测试通过；新网关失败保护 9 项通过。原预算/网关全量 124 项通过，全部使用独立临时目录和 Mock；没有真实模型请求、Secret 读取或真实账本写入。
+- lint / typecheck / build / security 通过。完整测试的旧历史换行问题已逐项恢复原字节；旧 RCO-5-007 锁文件冻结差异保留。A5 最终全量结果继续单独记录。
