@@ -1,4 +1,4 @@
-# C11 A—B2 工程与 Development 执行审计
+# C11 A—D3 工程与 Development 执行审计
 
 日期：2026-09-21。起点：593ab7847a5791f8e3fbc6e4b82f94a6c4d0ebb5。
 
@@ -150,3 +150,17 @@ A1—A5实施及验证已交付。B2模型评测已完成并决定`REJECT_CANDID
 - 默认候选、Schema、旧库、Preview、Production、D1身份和正式人工Holdout均未修改或运行。
 
 当前停止状态：`D2_EXECUTION_COMPLETE_SCORING_PACKAGE_INVALID / REJECT_CANDIDATE12_ENGINEERING_SCREEN`。下一阶段只能先进行D3零调用评分契约修复和新数据前预注册；正式人工Holdout仍为`WAITING_FOR_INDEPENDENT_HUMAN_LABELS`。
+
+
+## D3 未来评分参照与评分器契约修复
+
+- 新建`candidate12-reference-contract-3.0.0`、`candidate12-reference-compiler-3.0.0`、`candidate12-scorer-input-3.0.0`和`candidate12-scoring-3.0.0`。validator、compiler和scorer分层；compiler只读取参照，候选输出不能补全Expected或改变reference SHA。
+- 参照强制使用`actions[]`、`objects[]`和成对别名，并结构化表达状态、有效性、actionable、条件、材料、时间、完成标准、依赖、修订/取消/替代、合法/禁止合并、禁止推断和歧义规则。无任务固定为空数组；材料、地点、格式、联系方式和背景不能冒充任务。
+- 24类匿名接口夹具各有一份合法及拒绝案例，共48份；64项定向测试全部通过。invalid reference与prediction schema failure分离，不以0分掩盖接口错误。
+- 历史只读报告确认D1的12份参照均不能直接进入v3：10份含任务参照缺少任务身份数组或字段规则，12份含自然语言checks。禁止自动转换；D2正式决定仍为`REJECT_CANDIDATE12_ENGINEERING_SCREEN`。
+- Candidate13仅形成`PLANNED_NOT_IMPLEMENTED_NOT_EVALUATED`变更计划。它必须在任何全新评测Expected对实现者可见前冻结；D2来源、输出和D3夹具不得证明其提升。
+- 冻结校验：84份保护文件通过；D2 Manifest 60份文件、24 raw、24 result通过；D1/D2聚合SHA保持`4afa5b08…0855a5b`/`2074b893…b6d53`；权威账本只读保持742行、631869字节、SHA `df4035229093554b6417b0a37571730f68c10ecb7098234814406b49dfae1e1e`和既有tail。
+- 本阶段模型调用、Secret读取、grant、reserve、settle、账本写入、正式Holdout、真人、Schema/依赖/默认候选变更、合并和部署均为0。
+- D3测试64/64、lint 0 error/5 warning、build和security通过。裸`npm run test`保留3个既有环境/暂态失败；匿名carrier隔离入口Vitest 1433/1433通过、1跳过，其余工程组通过，唯一非零项仍是历史`RCO-5-007`的`FREEZE_HASH_MISMATCH:package-lock.json`。
+
+当前停止状态：`D3_SCORER_CONTRACT_READY_FOR_FRESH_DATA`。下一步可先零调用实现并冻结Candidate13，或组织全新数据与真实独立人工标签；任何模型调用、预算账本写入、Holdout、Preview或Production仍需新阶段和授权。

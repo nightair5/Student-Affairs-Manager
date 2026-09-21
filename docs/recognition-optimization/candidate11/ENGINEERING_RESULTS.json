@@ -1,10 +1,10 @@
 {
-  "version": "candidate12-d2-provisional-results-1",
+  "version": "candidate12-d3-scorer-contract-results-1",
   "date": "2026-09-21",
   "branch": "codex/e2-candidate11-blind-eval",
   "base": "593ab7847a5791f8e3fbc6e4b82f94a6c4d0ebb5",
   "status": {
-    "engineering": "ENGINEERING_READY",
+    "engineering": "D3_SCORER_CONTRACT_READY_FOR_FRESH_DATA",
     "repositoryGate": "HAS_VERIFIED_HISTORICAL_FAILURE_NO_PROMOTION",
     "modelQuality": "D2_FORMAL_REJECT_SCORER_CONTRACT_MISMATCH",
     "humanBenefit": "NOT_OBSERVABLE",
@@ -51,10 +51,10 @@
   },
   "tests": {
     "vitest": {
-      "pass": 1422,
+      "pass": 1433,
       "fail": 0,
       "skip": 1,
-      "skipReason": "Existing opt-in ocrLiveComponent test"
+      "skipReason": "Existing opt-in ocrLiveComponent test; isolated temporary carriers used"
     },
     "candidate11": {
       "scoring": 44,
@@ -91,7 +91,8 @@
     "priorAttempts": {
       "windowsEol": "Restored exact parent bytes only after Git canonical equivalence checks; no semantic diff",
       "fixtures": "Generated 8 carriers in new temporary directory; restored existing OCR language assets",
-      "timing": "One previous full run failed old OCR timeout terminate assertion; same test and code passed final full run with maxWorkers=2"
+      "timing": "One previous full run failed old OCR timeout terminate assertion; same test and code passed final full run with maxWorkers=2",
+      "d3RawNpmTest": "1430 pass, 3 fail, 1 skip: missing REAL_INPUT_CARRIERS_MANIFEST, transient OCR terminate observation, transient A02 5000ms timeout; isolated reruns passed 10/10 and 30/30"
     }
   },
   "browser": {
@@ -429,8 +430,20 @@
     "officialDecisionReason": "FROZEN_SCORER_REFERENCE_CONTRACT_MISMATCH",
     "diagnosticOnly": {
       "preregistered": false,
-      "candidate03": {"tp": 13, "fp": 2, "fn": 5, "f1": 0.7878787878787877, "completeSources": 6},
-      "candidate12": {"tp": 16, "fp": 1, "fn": 2, "f1": 0.9142857142857143, "completeSources": 6}
+      "candidate03": {
+        "tp": 13,
+        "fp": 2,
+        "fn": 5,
+        "f1": 0.7878787878787877,
+        "completeSources": 6
+      },
+      "candidate12": {
+        "tp": 16,
+        "fp": 1,
+        "fn": 2,
+        "f1": 0.9142857142857143,
+        "completeSources": 6
+      }
     }
   },
   "logHashes": [
@@ -512,6 +525,55 @@
     "8714f0130f62a89ae6230c58a8c3a4664934a8bd"
   ],
   "finalCommit": "Resolve current Git HEAD; final artifact cannot contain its own commit hash.",
-  "nextStage": "D3_ZERO_CALL_SCORER_CONTRACT_REMEDIATION",
-  "paidGrant": "D2_CONSUMED_COMPLETE"
+  "nextStage": "D4_CANDIDATE13_ZERO_CALL_IMPLEMENTATION_AND_FREEZE_OR_FRESH_DATA_LABELING",
+  "paidGrant": "D2_CONSUMED_COMPLETE",
+  "candidate12D3": {
+    "directory": "docs/recognition-optimization/candidate12/d3-scorer-contract",
+    "status": "D3_SCORER_CONTRACT_READY_FOR_FRESH_DATA",
+    "versions": {
+      "referenceContract": "candidate12-reference-contract-3.0.0",
+      "compiler": "candidate12-reference-compiler-3.0.0",
+      "scorerInput": "candidate12-scorer-input-3.0.0",
+      "scorer": "candidate12-scoring-3.0.0"
+    },
+    "fixtures": {
+      "categories": 24,
+      "valid": 24,
+      "invalid": 24,
+      "testAssertionsPassed": 64
+    },
+    "historicalCompatibility": {
+      "sources": 12,
+      "compatible": 0,
+      "taskIdentityFailures": 10,
+      "naturalLanguageCheckFailures": 12,
+      "autoConversionAllowed": false
+    },
+    "frozenEvidence": {
+      "protectedFiles": 84,
+      "d2ManifestFiles": 60,
+      "d2Raw": 24,
+      "d2Results": 24,
+      "d1AggregateSha256": "4afa5b08a368961ba6782b4ac3d4450f6e6d89c02fa034e1eb426f0390855a5b",
+      "d2AggregateSha256": "2074b8931077a9975ea61293723d1a668728f3baefb5933da84602f61aab6d53",
+      "ledgerRows": 742,
+      "ledgerBytes": 631869,
+      "ledgerSha256": "df4035229093554b6417b0a37571730f68c10ecb7098234814406b49dfae1e1e",
+      "ledgerTail": "6812e1b072caeaa4fd3e6e8e55b485c57533bc0a0d9eaaff4dd84bbf48809922"
+    },
+    "operations": {
+      "modelCalls": 0,
+      "secretReads": 0,
+      "grants": 0,
+      "reserves": 0,
+      "settlements": 0,
+      "ledgerWrites": 0,
+      "holdoutRequests": 0,
+      "humanTrials": 0,
+      "merge": 0,
+      "deploy": 0
+    },
+    "candidate13": "PLANNED_NOT_IMPLEMENTED_NOT_EVALUATED",
+    "officialD2DecisionPreserved": "REJECT_CANDIDATE12_ENGINEERING_SCREEN"
+  }
 }

@@ -1,3 +1,10 @@
 # Keep frozen D2 evidence byte-identical across Windows and Unix checkouts.
 docs/recognition-optimization/candidate12/d2-provisional-development-20260921a/** -text
 scripts/analyze-candidate12-d2-postrun.mjs text eol=lf
+docs/recognition-optimization/candidate12/d3-scorer-contract/** -text
+scripts/candidate12-reference-contract.mjs text eol=lf
+scripts/compile-candidate12-reference.mjs text eol=lf
+scripts/score-candidate12-contract-v3.mjs text eol=lf
+scripts/candidate12-d3-fixtures.mjs text eol=lf
+scripts/build-candidate12-d3.mjs text eol=lf
+scripts/candidate12-d3.node-test.mjs text eol=lf

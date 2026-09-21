@@ -1,7 +1,16 @@
-# 当前交接：Candidate12 D2 已执行，正式筛选因评分接口不兼容而拒绝
+# 当前交接：D3未来评分契约已修复，Candidate12的D2拒绝结论保持不变
 
 日期：2026-09-21。工作区 C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/比赛；分支 codex/e2-candidate11-blind-eval。
 本轮先完成D1临时Development身份准备，随后获明确授权执行24次candidate03/Candidate12配对模型调用、专用grant和权威账本追加。授权不包含重试、repair、verifier、额外样本、真人、Holdout、默认候选变更、合并或部署。
+
+## D3 当前状态
+
+- 已建立唯一的未来参照契约`candidate12-reference-contract-3.0.0`、编译器`candidate12-reference-compiler-3.0.0`、评分输入`candidate12-scorer-input-3.0.0`和评分器`candidate12-scoring-3.0.0`。这是实验评分接口，不改变产品Workspace schema v8。
+- 24类匿名契约夹具各有合法/拒绝案例，共48份；D3定向测试64/64通过。无效参照会失败关闭，不能进入候选胜负计算。
+- D1历史参照12/12不兼容v3：10份含任务参照缺少任务身份数组/字段规则，12份都使用自然语言checks。D1/D2材料、旧Expected、旧评分器、旧哈希和D2正式结论均未改写。
+- D3模型调用、Secret读取、grant、reserve、settle、账本写入、Holdout、真人、默认候选、Preview、Production、合并和部署均为0。权威账本仍为742行及SHA `df4035229093554b6417b0a37571730f68c10ecb7098234814406b49dfae1e1e`。
+- Candidate13只有零调用变更计划，尚未实施、尚未冻结、尚未模型评测。下一阶段须先实现并冻结Candidate13，再使用全新匿名Development；正式Holdout仍等待两位真实人员的独立标签。
+- 当前停止状态：`D3_SCORER_CONTRACT_READY_FOR_FRESH_DATA`。
 
 ## 当前结论
 - C11 工程闭环已实际运行并经浏览器验证；全仓库存在已复现的历史 RCO-5-007 冻结锁文件失败，不能宣布全绿或发布就绪。

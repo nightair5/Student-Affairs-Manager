@@ -1,0 +1,66 @@
+{
+  "$id": "urn:student-affairs:candidate12:scorer-input:3.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "boundary": {
+      "type": "object"
+    },
+    "checks": {
+      "type": "array"
+    },
+    "compiledSha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "compilerVersion": {
+      "const": "candidate12-reference-compiler-3.0.0"
+    },
+    "contractVersion": {
+      "const": "candidate12-reference-contract-3.0.0"
+    },
+    "coverage": {
+      "enum": [
+        "complete",
+        "partial"
+      ]
+    },
+    "inputSha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "referenceVersion": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "sourceId": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "tasks": {
+      "type": "array"
+    },
+    "truthStatus": {
+      "type": "string"
+    },
+    "version": {
+      "const": "candidate12-scorer-input-3.0.0"
+    }
+  },
+  "required": [
+    "version",
+    "contractVersion",
+    "compilerVersion",
+    "sourceId",
+    "referenceVersion",
+    "coverage",
+    "truthStatus",
+    "inputSha256",
+    "tasks",
+    "checks",
+    "boundary",
+    "compiledSha256"
+  ],
+  "title": "candidate12-scorer-input-3.0.0",
+  "type": "object"
+}

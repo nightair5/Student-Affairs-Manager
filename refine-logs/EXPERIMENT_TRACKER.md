@@ -1,6 +1,6 @@
 # Candidate11 实验跟踪表
 
-版本：c12-tracker-0.8-d2-provisional-results。日期：2026-09-21。
+版本：c12-tracker-0.9-d3-scorer-contract。日期：2026-09-21。
 本表状态反映真实执行；PLANNED不等于授权，PREPARED不等于派发，工程PASS不等于模型/商业PASS。
 核心计划见 [EXPERIMENT_PLAN.md](EXPERIMENT_PLAN.md)。
 
@@ -19,7 +19,8 @@
 | C12-020A | C2临时 | Codex制作12份合成来源与provisional参照 | SEEN_SYNTHETIC_DEVELOPMENT | 0 | PASS_STRUCTURE_NOT_HOLDOUT | `modelAssistanceUsed=true`；排除库增至75条；不得晋级 |
 | C12-020B | D1临时 | candidate03 vs Candidate12 12×2零调用身份 | SEEN_SYNTHETIC_DEVELOPMENT | 0 | FROZEN_THEN_EXECUTED_IN_D2 | 24身份冻结；Expected隔离；D2独立grant执行 |
 | C12-020C | D2临时 | 24次配对执行、结算与冻结评分 | SEEN_SYNTHETIC_DEVELOPMENT | 24/24 | REJECT_SCORING_CONTRACT_INVALID | 24次settled；冻结scorer/reference接口不兼容；正式失败关闭 |
-| C12-020D | D3后续 | 未来reference/scorer接口修复与预注册 | 已见诊断/零调用 | 0 | PLANNED_ZERO_CALL | 不改D1 Expected；新数据前冻结machine-readable契约 |
+| C12-020D | D3 | 未来reference/compiler/scorer接口修复与预注册 | 已见诊断/零调用 | 0 | PASS_ENGINEERING_ONLY | v3契约冻结；48夹具、62测试通过；D1/D2不改写 |
+| C13-010 | D4后续 | Candidate13零调用实现、反例回归与冻结 | D2已见错误族 | 0 | PLANNED_ZERO_CALL | 在任何全新Expected可见前冻结；不能用D2证明提升 |
 | C12-021 | C1 | 两位真实人员提交12份新source+Expected | 拟Holdout | 0 | WAITING_FOR_INDEPENDENT_HUMAN_LABELS | 当前来源0/12、完整参照0/12 |
 | C12-022 | C1 | candidate03 vs Candidate12 24个冻结身份 | 12份新配对 | 0 | BLOCKED_BY_HUMAN_GATE | 人工包通过后才可生成；仍保持NOT_RUN |
 | C12-030 | 后续 | 24次Holdout配对执行 | 12份新配对 | <=24 | PLANNED_NOT_AUTHORIZED | 新价格、新预算、新grant及明确授权 |
@@ -93,3 +94,12 @@ A包当时只构造工程请求与NOT_RUN身份记录；B2随后按新授权生�
 - 费用：本地可审计上界¥0.436048；provider实际扣费`NOT_OBSERVABLE`。
 - 正式评分：10份含任务的冻结参照均因`C11_REFERENCE_IDENTITY_INVALID`不能被绑定评分器消费；决定`REJECT_CANDIDATE12_ENGINEERING_SCREEN`。
 - 非预注册诊断：Candidate03 TP/FP/FN 13/2/5，F1 78.79%；Candidate12 16/1/2，F1 91.43%。两臂诊断完整来源均6/12，Candidate12 Forbidden=1；不得晋级。
+
+
+## Candidate12 D3登记
+
+- 交付目录：`docs/recognition-optimization/candidate12/d3-scorer-contract/`；状态`D3_SCORER_CONTRACT_READY_FOR_FRESH_DATA`。
+- 版本：reference contract 3.0.0、compiler 3.0.0、scorer input 3.0.0、scorer 3.0.0；产品Workspace schema v8不变。
+- 24类契约夹具、24合法/24拒绝，定向测试64/64通过。D1历史参照兼容0/12；10份任务身份字段失败、12份自然语言checks失败，禁止自动转换。
+- 84份保护文件、D2 Manifest 60份文件、24 raw和24 result、742行权威账本均保持一致。D3模型调用、Secret、grant、reserve、settle、账本写入均为0。
+- Candidate13仅为计划，正式Holdout仍为`WAITING_FOR_INDEPENDENT_HUMAN_LABELS`；默认候选、Preview和Production没有改变。
