@@ -41,6 +41,12 @@ test('C1 preparation remains zero-call, empty and bound to frozen Candidate12', 
   assert.deepEqual(result.manifest.holdout.actualSources, 0)
   assert.deepEqual(result.manifest.holdout.completeReferences, 0)
   assert.deepEqual(result.manifest.holdout.requestIdentities, 0)
+  assert.deepEqual(result.manifest.holdoutHashes.sourceSet, {status: 'NOT_AVAILABLE', sha256: null})
+  assert.deepEqual(result.manifest.holdoutHashes.expectedSet, {status: 'NOT_AVAILABLE', sha256: null})
+  for (const key of ['schema', 'scorer', 'adapter', 'candidate12']) {
+    assert.equal(result.manifest.holdoutHashes[key].status, 'FROZEN')
+    assert.match(result.manifest.holdoutHashes[key].sha256, /^[a-f0-9]{64}$/u)
+  }
   assert.deepEqual(result.manifest.operations, {secretReads: 0, grants: 0, reserves: 0, settlements: 0, ledgerWrites: 0, modelCalls: 0})
   assert.deepEqual(validateAuthorityLedger(), result.manifest.authorityLedger)
 })
