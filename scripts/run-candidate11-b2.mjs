@@ -9,6 +9,7 @@ import {inspectRequest,createModelGateway,createPinnedProxyFetch,createRawRecord
 import {CANDIDATE11_B2_POLICY,CANDIDATE11_B2_UNIT_POLICY} from './real-input-budget.mjs'
 import {openCandidate11B2Budget} from './candidate11-b2-budget.mjs'
 import {scoreCandidate11} from './score-candidate11-recognition.mjs'
+import {verifyProtectedFiles} from './verify-candidate11-analysis.mjs'
 
 export const DIRECTORY='docs/recognition-optimization/candidate11/b2-development-20260921a'
 const B1='docs/recognition-optimization/candidate11/b1-preparation'
@@ -75,7 +76,8 @@ function verifyDependencies(binding){
   const head=git(['rev-parse','HEAD']),upstream=git(['rev-parse','@{u}']),branch=git(['branch','--show-current'])
   check(head===binding.head&&upstream===head&&branch===BRANCH,'GIT_BINDING')
   const remote=git(['ls-remote','origin','refs/heads/'+BRANCH]).split(/\s+/u)[0];check(remote===head,'REMOTE_BINDING')
-  verifyB1()
+  const protection=verifyProtectedFiles();check(protection.count===84,'PROTECTED_FILES')
+  if(readFileSync(LEDGER_PATH).length===LEDGER_PREFIX.bytes)verifyB1()
 }
 
 export async function prepareCandidate11B2(){
@@ -87,7 +89,7 @@ export async function prepareCandidate11B2(){
   const units=packets.map((packet,index)=>{check(packet.unitId===manifest.units[index].unitId&&packet.ordinal===index+1,'B1_ORDER');return unitFrom(packet,manifest.units[index])})
   const requests=Object.fromEntries(packets.map(packet=>[packet.unitId,packet.requestSerialized]))
   const {dependencies:adapterDependencies,api}=await adapterApi();check(api.WIRE_VERSION==='real-input-model-wire-1','ADAPTER_VERSION')
-  const dependencyPaths=['scripts/real-input-budget.mjs','scripts/real-input-model-gateway.mjs','scripts/candidate11-b2-budget.mjs','scripts/run-candidate11-b2.mjs','scripts/score-candidate11-recognition.mjs','scripts/prepare-candidate11-b1.mjs',
+  const dependencyPaths=['scripts/real-input-budget.mjs','scripts/real-input-model-gateway.mjs','scripts/candidate11-b2-budget.mjs','scripts/run-candidate11-b2.mjs','scripts/score-candidate11-recognition.mjs','scripts/prepare-candidate11-b1.mjs','scripts/verify-candidate11-analysis.mjs',
     join(B1,'MANIFEST.json'),join(B1,'PREPARED_REQUESTS.json'),join(B1,'REFERENCES.json'),join(B1,'REFERENCE_SCHEMA.json'),join(B1,'SCORING_REFERENCE_RULES.md'),
     'src/experiments/realInput01/candidate11.ts','src/experiments/realInput01/modelWire.ts','src/experiments/mainline04/semanticContract.ts']
   const dependencies=[...new Map([...dependencyPaths.map(shaFile),...adapterDependencies].map(file=>[file.path,file])).values()].sort((a,b)=>a.path.localeCompare(b.path))
