@@ -8,6 +8,7 @@
 - B2模型效果已测但`REJECT_CANDIDATE11`，没有候选被采用；真人收益 NOT_OBSERVABLE；合并/部署 NOT_RUN。
 - Candidate12 已仅依据B2已见错误族形成并在提交`c03368054ff8c357f055658c2d2d39b45bbcb761`先行冻结；候选包SHA为`880488f038cec55763276f525c1847638533fe95d79a64599e9585dc8d92296a`，模型结果仍为NOT_RUN。
 - C1已交付独立人工双审协议、12个空白覆盖槽位、密封提交Schema、63条已见语料重合排除库、校验器、预注册和预算草案。当前真实来源0、完整人工参照0、请求身份0、模型调用0。
+- 用户随后要求Codex自行制作一份材料；已另建12例`PROVISIONAL_MODEL_AUTHORED_DEVELOPMENT_ONLY`合成包。它含完整结构化参照但没有独立人工资格，不能生成正式Holdout身份或支持晋级结论。12份正文已加入排除库，当前排除库共75条。
 - A1：版本化结构匹配评分器44项，历史只读复算1项通过；24旧答身份/结算/解析通过。A已定义检查9/12、B11/12，均为partial参照；完整案例准确率null。
 - A2：公共完成标准修正，V00/V10/V01/V11仅切换元指令M和教学例E；保留旧8例+新增2例。原candidate03/10不变。
 - A3：prepared/binding/result/analysis身份重建校验；构造和身份13项、新网关9项、原预算/网关124项通过；C11派发始终拒绝。
@@ -63,3 +64,4 @@ A9/12与B11/12不是人工盲审、全字段准确率或真实转化率。candid
 - 修正仅覆盖当前任务准入、附属事实边界、多端点守恒、完成标准与条件保真；candidate03/10/11与默认候选未修改。
 - 人工准备目录：`docs/recognition-optimization/candidate12/c1-holdout-preparation/`；Manifest SHA以该目录文件为准，状态`WAITING_FOR_INDEPENDENT_HUMAN_LABELS`。
 - C1未读取Secret，未创建grant/reserve/settle，权威账本仍为693行、572913字节和SHA `2051d8e775123579c3fa262f671a757e690983f64bc5945d692faaeb24b5322e`。
+- Codex临时Development包：`docs/recognition-optimization/candidate12/c2-provisional-development/`；来源12、provisional参照12、正式请求身份0、模型API调用0。人工门状态不变。

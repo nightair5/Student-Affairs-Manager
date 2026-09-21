@@ -15,7 +15,7 @@
 - Candidate12冻结重复验证通过；84份保护文件与693行权威账本不变。
 - Manifest 分列来源、Expected、Schema、scorer、adapter 与 Candidate12：前两项因真实材料缺失保持 `NOT_AVAILABLE/null`，后四项具有独立冻结 SHA。
 - 人工准备验证器：4/4通过，覆盖空模板拒绝、完整结构正控制、模型辅助/个人信息/已见重合/覆盖不足拒绝。
-- 已见语料排除库：63条；6条B1、32条历史绑定、7条Candidate12工程反例、8条工程夹具、10条Prompt教学例。
+- 已见语料排除库：75条；6条B1、32条历史绑定、7条Candidate12工程反例、8条工程夹具、10条Prompt教学例、12条Codex临时Development来源。
 
 ## 全仓检查
 

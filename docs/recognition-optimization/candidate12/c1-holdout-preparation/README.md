@@ -29,4 +29,6 @@ Candidate12 已在提交 `c03368054ff8c357f055658c2d2d39b45bbcb761` 中先于任
 
 Manifest 将六类未来评测输入分开记录：来源集和 Expected 当前为 `NOT_AVAILABLE`、SHA 为 `null`；Schema、scorer、adapter 和 Candidate12 已分别记录冻结 SHA。不得用空模板的哈希冒充来源或 Expected 哈希。
 
+用户要求Codex自行制作的12份临时Development来源也已进入`OVERLAP_CORPUS.json`。排除库现为75条；新增材料不改变真实独立来源0和完整人工参照0的状态。
+
 当前缺口只有真实独立人工提交。没有该提交时，正确停止状态始终是 `WAITING_FOR_INDEPENDENT_HUMAN_LABELS`。

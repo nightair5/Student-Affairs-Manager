@@ -1,7 +1,7 @@
 # Candidate11 独立支线推进计划
 
-版本：c12-plan-0.5-c1-human-gate。日期：2026-09-21（Asia/Shanghai）。
-状态：B2已完成并拒绝candidate11；Candidate12已工程冻结，C1人工准备包完成。独立人工标签、Holdout模型调用、真人验证、合并和部署均未执行。
+版本：c12-plan-0.6-provisional-development。日期：2026-09-21（Asia/Shanghai）。
+状态：B2已完成并拒绝candidate11；Candidate12已工程冻结，C1人工准备包完成。新增Codex制作的12例临时Development包，但独立人工标签、Holdout模型调用、真人验证、合并和部署仍未执行。
 当前主问题：已经正确读取的校园通知，仍会被误拆任务、误判条件、误归材料和时间；旧评分又漏掉部分错误。
 方法主张：以可复核的结构化评分选择最小必要的提示词修正和教学例，降低首次建议的实质纠正负担，再验证真实确认保存。
 
@@ -236,6 +236,8 @@ Commercial Preview需先完成相应G7与部署前门，再获部署许可；部
 
 Candidate12冻结及C1零调用人工准备已经完成。当前只允许两位不同真实人员在盲态下填充12份全新匿名来源与Expected，提交密封包给`validate-candidate12-human-submission.mjs`。验证通过前不生成请求身份；验证通过后也只准备24个`NOT_RUN`身份和新预算卡，模型派发仍需另行明确授权。具体见`docs/recognition-optimization/candidate12/c1-holdout-preparation/README.md`。
 
+用户要求Codex自行制作的材料已作为`PROVISIONAL_MODEL_AUTHORED_DEVELOPMENT_ONLY`另包保存。12份来源和参照可检查模板、字段、哈希和阻断逻辑，但不具备独立人工资格；它们已永久进入已见排除库，不能替代上述人工步骤或用于Candidate12晋级。
+
 ## 11. 状态清单
 
 - [x] 历史交接与最新结果差异已说明。
@@ -249,5 +251,6 @@ Candidate12冻结及C1零调用人工准备已经完成。当前只允许两位�
 - [x] B2新实验授权、专用grant、24次冻结调用、结算与Development评分。
 - [x] 按预注册门槛拒绝当前candidate11，不强选增强臂。
 - [x] Candidate12仅按Development错误修正并先行冻结；独立人工协议、空白模板、重合校验与预算草案完成。
+- [x] Codex临时制作12份合成Development来源和provisional参照；明确不能冒充独立人工，并加入已见排除库。
 - [ ] 两位真实人员完成12份独立双审来源与Expected。
 - [ ] 24个零调用请求身份、盲测、产品/真人验证。

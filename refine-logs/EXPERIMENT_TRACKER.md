@@ -1,6 +1,6 @@
 # Candidate11 实验跟踪表
 
-版本：c12-tracker-0.5-c1-human-gate。日期：2026-09-21。
+版本：c12-tracker-0.6-provisional-development。日期：2026-09-21。
 本表状态反映真实执行；PLANNED不等于授权，PREPARED不等于派发，工程PASS不等于模型/商业PASS。
 核心计划见 [EXPERIMENT_PLAN.md](EXPERIMENT_PLAN.md)。
 
@@ -15,7 +15,8 @@
 | C11-030 | P3 | V00/V10/V01/V11 2×2消融 | 6份Development | 24/24 | SETTLED_COMPLETE | 固定顺序完成；0重试；权威账本693行 |
 | C11-031 | P3 | 按冻结规则选唯一候选 | P3结果 | 0新增 | REJECT_CANDIDATE11 | 四臂均D06 Severe=1；无候选进入Holdout |
 | C12-010 | C1 | Candidate12 Development修正与冻结 | B2已见错误族 | 0 | COMMITTED_PUSHED | `c033680`先于任何新Expected冻结，bundle `880488f0…296a` |
-| C12-020 | C1 | 双人人工协议、模板、Schema、排除库与验证器 | 零数据准备 | 0 | PREPARED_ZERO_CALL | 63条已见排除文本；模型不能冒充人工 |
+| C12-020 | C1 | 双人人工协议、模板、Schema、排除库与验证器 | 零数据准备 | 0 | PREPARED_ZERO_CALL | 原63条已见排除文本；模型不能冒充人工 |
+| C12-020A | C2临时 | Codex制作12份合成来源与provisional参照 | SEEN_SYNTHETIC_DEVELOPMENT | 0 | PASS_STRUCTURE_NOT_HOLDOUT | `modelAssistanceUsed=true`；排除库增至75条；不得晋级 |
 | C12-021 | C1 | 两位真实人员提交12份新source+Expected | 拟Holdout | 0 | WAITING_FOR_INDEPENDENT_HUMAN_LABELS | 当前来源0/12、完整参照0/12 |
 | C12-022 | C1 | candidate03 vs Candidate12 24个冻结身份 | 12份新配对 | 0 | BLOCKED_BY_HUMAN_GATE | 人工包通过后才可生成；仍保持NOT_RUN |
 | C12-030 | 后续 | 24次Holdout配对执行 | 12份新配对 | <=24 | PLANNED_NOT_AUTHORIZED | 新价格、新预算、新grant及明确授权 |
@@ -66,4 +67,10 @@ A包当时只构造工程请求与NOT_RUN身份记录；B2随后按新授权生�
 - 冻结提交`c03368054ff8c357f055658c2d2d39b45bbcb761`；candidate bundle SHA `880488f038cec55763276f525c1847638533fe95d79a64599e9585dc8d92296a`。
 - 候选构造与边界11/11通过；不含教学例，模型、Schema、adapter、scorer及默认候选不变。
 - 12个来源槽均为空，人工角色未分配；独立来源0、完整参照0、请求身份0、模型调用0。
-- C1验证器4/4通过；已见排除库63条。权威账本仍为693行和SHA `2051d8e775123579c3fa262f671a757e690983f64bc5945d692faaeb24b5322e`。
+- C1验证器4/4通过；原排除库63条，加入12条Codex临时Development来源后为75条。权威账本仍为693行和SHA `2051d8e775123579c3fa262f671a757e690983f64bc5945d692faaeb24b5322e`。
+
+## Candidate12 临时 Development 登记
+
+- Codex按用户要求生成12份完全合成来源与12份结构化参照；source set SHA、Expected set SHA和package SHA见冻结JSON。
+- `eligibleForIndependentHoldout=false`，独立人工A/B均为0，正式请求身份0。独立人工验证器必须拒绝本包。
+- 新增12份正文已加入排除语料，当前总数75；人工门仍为`WAITING_FOR_INDEPENDENT_HUMAN_LABELS`。

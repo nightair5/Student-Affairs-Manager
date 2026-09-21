@@ -1,6 +1,6 @@
 # 规划产物索引
 
-阶段：C12-C1；日期：2026-09-21。作者：本任务；性质：Candidate12工程冻结与独立人工Holdout零调用准备。
+阶段：C12-C2临时Development；日期：2026-09-21。作者：本任务；性质：Candidate12工程冻结、独立人工Holdout零调用准备及Codex临时合成数据。
 A1—A5、B1、B2及Candidate12冻结已完成。C1新增模型调用0；没有真人标签、Holdout调用、合并或部署。
 
 | 产物 | 版本 | 作用 |
@@ -17,4 +17,5 @@ A1—A5、B1、B2及Candidate12冻结已完成。C1新增模型调用0；没有�
 | [B2结果包](../docs/recognition-optimization/candidate11/b2-development-20260921a/README.md) | candidate11-b2 | 24次结算、raw、账本绑定、评分、错误分类和拒绝决定 |
 | [Candidate12冻结](../docs/recognition-optimization/candidate12/c1-freeze/DEVELOPMENT_FREEZE.md) | candidate12-freeze-1 | 先于Holdout Expected冻结的四类Development修正 |
 | [C1人工准备包](../docs/recognition-optimization/candidate12/c1-holdout-preparation/README.md) | candidate12-c1 | 双审协议、12空槽、重合检查、预注册与预算草案 |
+| [Codex临时Development包](../docs/recognition-optimization/candidate12/c2-provisional-development/README.md) | candidate12-provisional-development-1 | 12份合成来源与provisional参照；只用于结构检查并加入排除库 |
 | [短交接](../docs/recognition-optimization/CURRENT_CONTEXT.md) | C12-C1 | 下一轮恢复入口；停止在等待真实独立人工标签 |

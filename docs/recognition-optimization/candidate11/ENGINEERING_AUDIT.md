@@ -116,3 +116,12 @@ A1—A5实施及验证已交付。B2模型评测已完成并决定`REJECT_CANDID
 - 没有真实独立标注者参与：实际来源0、完整人工参照0、请求身份0。未创建grant或预算预留，未读取Secret、未调用模型、未写账本。
 
 当前停止状态：`WAITING_FOR_INDEPENDENT_HUMAN_LABELS`。只有两位不同真实人员完成12份密封双审参照并通过校验后，才允许另包生成24个`dispatchAuthorized=false`请求身份。
+
+## C2 Codex 临时 Development 包
+
+- 用户要求由Codex自行制作一份材料后，新增12份完全合成通知及12份结构化参照，状态固定为`PROVISIONAL_MODEL_AUTHORED_DEVELOPMENT_ONLY`。
+- 包内明确记录`modelAssistanceUsed=true`、独立人工标注者0、独立人工复核者0和`eligibleForIndependentHoldout=false`；独立人工验证器必须拒绝它。
+- 12份正文覆盖既定场景并加入已见排除库，排除库由63条增至75条。它们只可用于Development结构检查，未来真人来源不得逐字或高相似复用。
+- 未生成正式24身份，未调用模型API，未读取Secret，未创建grant/reserve/settle，未写权威账本，未修改Candidate12、默认候选、Schema、scorer或adapter。
+
+当前停止状态仍为`WAITING_FOR_INDEPENDENT_HUMAN_LABELS`。

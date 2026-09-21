@@ -10,6 +10,7 @@ const DIRECTORY = 'docs/recognition-optimization/candidate12/c1-holdout-preparat
 const CORPUS = DIRECTORY + '/OVERLAP_CORPUS.json'
 const MANIFEST = DIRECTORY + '/PREPARATION_MANIFEST.json'
 const B1_SOURCES = 'docs/recognition-optimization/candidate11/b1-preparation/SOURCES.json'
+const PROVISIONAL_DEVELOPMENT = 'docs/recognition-optimization/candidate12/c2-provisional-development/PROVISIONAL_DEVELOPMENT_PACKAGE.json'
 const INCLUDED = [
   DIRECTORY + '/README.md',
   DIRECTORY + '/HUMAN_ANNOTATION_PROTOCOL.md',
@@ -53,6 +54,13 @@ export async function buildOverlapCorpus(root = process.cwd(), generatedAt = new
   b1.sources.forEach(source => entries.push({id: 'b1-' + source.id, category: 'b1-development', text: source.text}))
   Object.entries(api.notices).forEach(([id, text]) => entries.push({id: 'mainline-fixture-' + id, category: 'engineering-fixture', text}))
   api.CANDIDATE11_EXAMPLES.forEach(example => entries.push({id: 'teaching-' + example.id, category: 'prompt-teaching', text: example.text}))
+  if (existsSync(resolve(root, PROVISIONAL_DEVELOPMENT))) {
+    const provisional = JSON.parse(readFileSync(resolve(root, PROVISIONAL_DEVELOPMENT), 'utf8'))
+    check(provisional.status === 'PROVISIONAL_MODEL_AUTHORED_DEVELOPMENT_ONLY' && provisional.eligibleForIndependentHoldout === false,
+      'C12_PROVISIONAL_DEVELOPMENT_STATUS')
+    provisional.sources.forEach(source => entries.push({id: 'candidate12-provisional-' + source.sourceId,
+      category: 'candidate12-provisional-development', text: source.sourceText}))
+  }
   const testText = readFileSync(resolve(root, 'src/experiments/realInput01/candidate12.test.ts'), 'utf8')
   ;[...testText.matchAll(/\btext:\s*'([^']+)'/gu)].forEach((match, index) => entries.push({id: `candidate12-engineering-${index + 1}`, category: 'candidate12-engineering-fixture', text: match[1]}))
   const runs = resolve(root, 'docs/recognition-optimization/mainline-real-input-01/runs')
