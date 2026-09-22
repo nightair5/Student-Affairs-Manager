@@ -1,16 +1,16 @@
 {
-  "version": "candidate14-d7-freeze-manifest-1.2.0",
+  "version": "candidate14-d7-freeze-manifest-1.3.0",
   "status": "FROZEN_PRE_DATA",
-  "freezeParentHead": "a7626da901066d6d1515b2fb5ec4768fe4d0825a",
+  "freezeParentHead": "0b13e44d173d8cb99d956c5985206c2f9befce12",
   "branch": "codex/e2-candidate11-blind-eval",
   "candidateVersion": "real-input-source-semantics-14",
   "promptVersion": "recognition-prompt-candidate14-1.0.0",
-  "referenceVersion": "candidate14-reference-contract-5.2.0",
-  "scorerVersion": "candidate14-scoring-5.2.0",
+  "referenceVersion": "candidate14-reference-contract-5.3.0",
+  "scorerVersion": "candidate14-scoring-5.3.0",
   "commonAdapterVersion": "candidate14-common-adapter-1.0.0",
   "timePolicyVersion": "candidate14-time-policy-1.1.0",
-  "measurementVersion": "candidate14-product-metrics-2.1.0",
-  "noTaskDispositionVersion": "candidate14-no-task-disposition-1.1.0",
+  "measurementVersion": "candidate14-product-metrics-2.2.0",
+  "noTaskDispositionVersion": "candidate14-no-task-disposition-1.2.0",
   "components": [
     {
       "path": "src/experiments/realInput01/candidate14.ts",
@@ -29,23 +29,23 @@
     },
     {
       "path": "src/experiments/candidate14/noTaskDisposition.ts",
-      "bytes": 6843,
-      "sha256": "60d0f165cfce89f0985c0e62c2c8df201f7b72b858e901f6f27494e0b37f5c8d"
+      "bytes": 8746,
+      "sha256": "3af2ef16868b9a21033f0a8eab7b542124da3926ad52ee9bff3777e7edc4e5ff"
     },
     {
       "path": "src/experiments/candidate14/measurement.ts",
-      "bytes": 7564,
-      "sha256": "0ceca6b4570d58778fdbe2119d6debc8a4bd8594f0b42af60570f3df06b91ceb"
+      "bytes": 10584,
+      "sha256": "1aea6ab2d0c46a729ad4bb7fb1d33594c23f496f8e40d8b2c5d41f717df83b72"
     },
     {
       "path": "scripts/candidate14-reference-contract.mjs",
-      "bytes": 6396,
-      "sha256": "35304fee87f959b762a6ac915a3927f54462ef32e2dc54c0a81a2891904e2371"
+      "bytes": 7989,
+      "sha256": "8f85b1435f19c64cdb0dab18e867e1c46ac3c1ca2308aa33b58b600ed9c6279d"
     },
     {
       "path": "scripts/score-candidate14-contract-v5.mjs",
-      "bytes": 9875,
-      "sha256": "59883650d222109b55e5c1a3340e1afdef84cfe50c33fa292dbba580652dc34e"
+      "bytes": 11064,
+      "sha256": "688ab04d52b8a5bea246e996432444dae5b77f23d0d8d744760863fdcc815229"
     },
     {
       "path": "scripts/analyze-candidate14-d7-offline.mjs",
@@ -54,18 +54,18 @@
     },
     {
       "path": "docs/recognition-optimization/candidate14/d7-freeze/CANDIDATE14_SPEC.md",
-      "bytes": 1042,
-      "sha256": "ffb8c701658184b2cf067518da6750844d5d04490057c327a76a115954ad404b"
+      "bytes": 1053,
+      "sha256": "1e829925ce9b7730a456e46d2801fa5583822d55190f23705f4800cab417cd3a"
     },
     {
       "path": "docs/recognition-optimization/candidate14/d7-freeze/REFERENCE_AND_SCORING_CONTRACT.md",
-      "bytes": 1355,
-      "sha256": "d846294efbe309e5b26fe7b6b6cc1099bd8743006e523245f43a77128bb8f207"
+      "bytes": 1543,
+      "sha256": "68d19697177c0ee491baa013a9f3d8827d333d6bf1a4e7d7dc0d1d2ace84fc8c"
     },
     {
       "path": "docs/recognition-optimization/candidate14/d7-freeze/PRODUCT_MEASUREMENT_CONTRACT.md",
-      "bytes": 1222,
-      "sha256": "33f38aa81ab9e8eee0c2ca6f9d2bf61419c85df1dc59baf7b5051cbef39fb4e2"
+      "bytes": 1390,
+      "sha256": "f566e759fc0eb55264869bdae1cf180e207659caef71e611904b561892e347e7"
     },
     {
       "path": "docs/recognition-optimization/candidate14/d7-freeze/CHECKLIST_REGRESSION_MATRIX.json",
@@ -73,7 +73,7 @@
       "sha256": "921365be5d6b1c3089a28e6eaf3c5a60766c3d1febd56e7a559811caad1f2f45"
     }
   ],
-  "aggregateSha256": "b33449098bbd65d07f1fc8cc756806d4c38848161796f7e4fa62aafc300afeb1",
+  "aggregateSha256": "ec33918f3035b3a9d893cefea9799eae0f77c1c8c6f79428d0d158c2a10d8720",
   "protectedFiles": 84,
   "ledger": {
     "path": "C:\\Users\\Winner\\student-affairs-multimodal-exp\\docs\\recognition-optimization\\mainline-real-input-01\\runs\\usage-resume-20260907a\\CALL_LEDGER.jsonl",

@@ -1,0 +1,17 @@
+import {build} from 'esbuild'
+import {createServer} from 'node:http'
+import {createHash} from 'node:crypto'
+import {mkdirSync,readFileSync,writeFileSync} from 'node:fs'
+import {basename,resolve} from 'node:path'
+import {pathToFileURL} from 'node:url'
+
+const sha=value=>createHash('sha256').update(value).digest('hex')
+export async function buildCandidate14D7Preview(origin='http://127.0.0.1:6635'){
+  const url=new URL(origin);if(url.hostname!=='127.0.0.1'||url.protocol!=='http:'||url.port!=='6635'||url.origin!==origin)throw Error('D7_PREVIEW_ORIGIN')
+  const directory=resolve('.data/candidate14/d7-preview');mkdirSync(directory,{recursive:true});const output=await build({absWorkingDir:process.cwd(),entryPoints:['src/experiments/candidate14/d7Browser.tsx'],bundle:true,write:false,format:'esm',platform:'browser',jsx:'automatic',target:'es2022',outdir:'memory',minify:true,metafile:true,define:{'process.env.NODE_ENV':'"production"','import.meta.env':'{}',__D7_ORIGIN__:JSON.stringify(origin)}})
+  for(const file of output.outputFiles){let text=file.text;if(file.path.endsWith('.css'))text=text.replace(/@import\s+url\("https:\/\/fonts\.googleapis\.com[^;]+;\s*/gu,'');writeFileSync(resolve(directory,basename(file.path)),text)}
+  writeFileSync(resolve(directory,'index.html'),'<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>D7正确无任务工程验收</title><link rel="stylesheet" href="/d7Browser.css"></head><body><div id="root">正在加载…</div><script type="module" src="/d7Browser.js"></script></body></html>')
+  const assets=['index.html','d7Browser.js','d7Browser.css'].map(path=>({path,sha256:sha(readFileSync(resolve(directory,path)))})),manifest={version:'candidate14-d7-local-preview-3',origin,database:'rco-candidate14-d7-engineering-3',directory,modelCallsEnabled:false,humanTrial:false,assets};writeFileSync(resolve(directory,'manifest.json'),JSON.stringify(manifest,null,2)+'\n');return manifest
+}
+export function handler(manifest){const assets=new Map(manifest.assets.map(row=>['/'+row.path,readFileSync(resolve(manifest.directory,row.path))])),host=new URL(manifest.origin).host;return(req,res)=>{const headers={'Cache-Control':'no-store','X-Content-Type-Options':'nosniff','Referrer-Policy':'no-referrer','Content-Security-Policy':"default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'none'; img-src 'self' data:; object-src 'none'; base-uri 'none'; frame-ancestors 'none'"};if(req.headers.host!==host||!['GET','HEAD'].includes(req.method)){res.writeHead(403,headers);res.end('D7_REJECTED');return}const path=req.url==='/'||req.url==='/?automation=1'?'/index.html':req.url,bytes=assets.get(path);if(!bytes){res.writeHead(404,headers);res.end('D7_NOT_FOUND');return}res.writeHead(200,{...headers,'Content-Type':path.endsWith('.html')?'text/html; charset=utf-8':path.endsWith('.js')?'text/javascript; charset=utf-8':'text/css; charset=utf-8'});res.end(req.method==='HEAD'?undefined:bytes)}}
+if(process.argv[1]&&import.meta.url===pathToFileURL(resolve(process.argv[1])).href){const manifest=await buildCandidate14D7Preview(),server=createServer(handler(manifest));server.once('error',error=>{console.error(error.code==='EADDRINUSE'?'D7_PORT_BUSY_NO_PROCESS_KILLED':'D7_SERVER_FAILED');process.exitCode=1});server.listen(6635,'127.0.0.1',()=>console.log(JSON.stringify({url:manifest.origin,database:manifest.database,modelCallsEnabled:false,humanTrial:false})))}
