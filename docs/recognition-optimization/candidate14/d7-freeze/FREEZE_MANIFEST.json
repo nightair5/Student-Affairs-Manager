@@ -1,0 +1,106 @@
+{
+  "version": "candidate14-d7-freeze-manifest-1.0.0",
+  "status": "FROZEN_PRE_DATA",
+  "baseHead": "efbd905f64e46839fd56b4bfa53c1e0c06c5d51b",
+  "branch": "codex/e2-candidate11-blind-eval",
+  "candidateVersion": "real-input-source-semantics-14",
+  "promptVersion": "recognition-prompt-candidate14-1.0.0",
+  "referenceVersion": "candidate14-reference-contract-5.0.0",
+  "scorerVersion": "candidate14-scoring-5.0.0",
+  "commonAdapterVersion": "candidate14-common-adapter-1.0.0",
+  "timePolicyVersion": "candidate14-time-policy-1.0.0",
+  "measurementVersion": "candidate14-product-metrics-2.0.0",
+  "noTaskDispositionVersion": "candidate14-no-task-disposition-1.0.0",
+  "components": [
+    {
+      "path": "src/experiments/realInput01/candidate14.ts",
+      "bytes": 3652,
+      "sha256": "7b28d2c3837a67e5a3d3781e8c90b88cb612cd90c9f74b5ff029c5dab243cd93"
+    },
+    {
+      "path": "src/experiments/candidate14/commonAdapter.ts",
+      "bytes": 1111,
+      "sha256": "6e3c1745c9358207fe714d1bf4f1ee25d0dcf3185b8ce8748343d31f7307d427"
+    },
+    {
+      "path": "src/experiments/candidate14/timePolicy.ts",
+      "bytes": 1408,
+      "sha256": "d4ca7f913fe5a1f20857c53c5c298756a69afcea314e955db1ca1d7bfb7bb33e"
+    },
+    {
+      "path": "src/experiments/candidate14/noTaskDisposition.ts",
+      "bytes": 4111,
+      "sha256": "bb94dddc60f29cd801b1717563e88e2b5e8165c1bc14a0058ee51f50b41ef739"
+    },
+    {
+      "path": "src/experiments/candidate14/measurement.ts",
+      "bytes": 6060,
+      "sha256": "b839432c238b9a79f3d0ee043d1c34b622f6478d6a27851419c44490ea47b61a"
+    },
+    {
+      "path": "scripts/candidate14-reference-contract.mjs",
+      "bytes": 3609,
+      "sha256": "2a201a1a80b1ec971c3ae80b00d81c2d0de7fa3aeb80546a821e5133395d99f3"
+    },
+    {
+      "path": "scripts/score-candidate14-contract-v5.mjs",
+      "bytes": 5124,
+      "sha256": "3ec2a18e843e06115558655b4a6f10eaca0b7b44a72f684c819ed1752988c173"
+    },
+    {
+      "path": "scripts/analyze-candidate14-d7-offline.mjs",
+      "bytes": 7247,
+      "sha256": "1383f0059461e2b2421824be12e90798fae124051b344091e4a75b5dc3285f07"
+    },
+    {
+      "path": "docs/recognition-optimization/candidate14/d7-freeze/CANDIDATE14_SPEC.md",
+      "bytes": 930,
+      "sha256": "65a81c63caa668049aab7144835cdb0f7e3048400bb5161c302cd9889f557235"
+    },
+    {
+      "path": "docs/recognition-optimization/candidate14/d7-freeze/REFERENCE_AND_SCORING_CONTRACT.md",
+      "bytes": 946,
+      "sha256": "0a400d475406b53f644518da6ddb85bbffcb22f9d0ce93fe20e577fb8be6a9eb"
+    },
+    {
+      "path": "docs/recognition-optimization/candidate14/d7-freeze/PRODUCT_MEASUREMENT_CONTRACT.md",
+      "bytes": 907,
+      "sha256": "39f17c3d412ac94f42099873a7dc8f68e3221edc43cf29de1536a340788e5caa"
+    },
+    {
+      "path": "docs/recognition-optimization/candidate14/d7-freeze/CHECKLIST_REGRESSION_MATRIX.json",
+      "bytes": 1600,
+      "sha256": "4df454418fb02677c63afad1052edaf1ecd59f01b81edfcc934c410ed4d31a9e"
+    }
+  ],
+  "aggregateSha256": "6465ee5706cc0d290db7e256ea42b28025ec2ae3ab212782bcec910742608de7",
+  "protectedFiles": 84,
+  "ledger": {
+    "path": "C:\\Users\\Winner\\student-affairs-multimodal-exp\\docs\\recognition-optimization\\mainline-real-input-01\\runs\\usage-resume-20260907a\\CALL_LEDGER.jsonl",
+    "rows": 791,
+    "bytes": 694807,
+    "sha256": "efb46f116db9c550ba53624c5d710164c6143ba9cc30c57ab2b7515c059f4d6a",
+    "mode": "READ_ONLY"
+  },
+  "constraints": {
+    "modelCalls": 0,
+    "dispatchAuthorized": false,
+    "grantCreated": false,
+    "ledgerWritten": false,
+    "secretsRead": false,
+    "newDependencies": 0,
+    "schemaMigration": false,
+    "defaultCandidateChanged": false
+  },
+  "teachingLeak": {
+    "status": "NOT_APPLICABLE_NO_TEACHING_EXAMPLES",
+    "count": null
+  },
+  "developmentDataStatus": "NOT_CREATED_UNTIL_FREEZE_COMMIT_PUSHED",
+  "historical": {
+    "d6Decision": "REJECT_CANDIDATE13_DEVELOPMENT",
+    "revisedAccuracy": null,
+    "oldLocksModified": false,
+    "knownVerifierFailure": "D3_AUTHORITY_LEDGER_DRIFT_ON_LEGITIMATE_791_ROW_LEDGER"
+  }
+}

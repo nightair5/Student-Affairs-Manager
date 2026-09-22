@@ -1,0 +1,18 @@
+{
+  "version": "candidate14-checklist-regression-1.0.0",
+  "role": "SEEN_ERROR_FAMILY_ENGINEERING_ONLY",
+  "modelCalls": 0,
+  "families": [
+    {"id":"MFT-01","transform":"single_to_multi_obligation","mustChange":["task_count"],"mustNotChange":["source_grounding"]},
+    {"id":"MFT-02","transform":"condition_true_false_unknown","mustChange":["condition","actionability","default_selection"],"mustNotChange":["action","object"]},
+    {"id":"MFT-03","transform":"current_to_cancelled_or_superseded","mustChange":["currentness","revision"],"mustNotChange":["endpoint_identity"]},
+    {"id":"INV-01","transform":"parallel_item_reorder","mustChange":[],"mustNotChange":["task_identity","ownership","relations"]},
+    {"id":"INV-02","transform":"punctuation_whitespace_politeness","mustChange":[],"mustNotChange":["semantic_facts"]},
+    {"id":"INV-03","transform":"background_relocation","mustChange":[],"mustNotChange":["task_count","actionability"]},
+    {"id":"DIR-01","transform":"affirmative_to_negative","mustChange":["polarity","actionability","default_selection"],"mustNotChange":["scope_coverage"]},
+    {"id":"DIR-02","transform":"tentative_to_exact_time","mustChange":["time_precision","needs_confirmation"],"mustNotChange":["time_ownership"]},
+    {"id":"DIR-03","transform":"one_object_to_two_objects","mustChange":["task_count"],"mustNotChange":["cross_object_merge_forbidden"]},
+    {"id":"DIR-04","transform":"no_task_information","mustChange":["product_disposition"],"mustNotChange":["no_canonical_task_or_reminder"]}
+  ],
+  "claimCeiling": "CONTRACT_AND_CONSTRUCTION_REGRESSION_ONLY"
+}
