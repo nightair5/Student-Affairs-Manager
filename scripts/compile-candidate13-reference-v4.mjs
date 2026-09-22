@@ -2,8 +2,8 @@ import {createHash} from 'node:crypto'
 import {validateReferenceV3, stable} from './candidate12-reference-contract.mjs'
 
 export const D5_REFERENCE_CONTRACT_VERSION = 'candidate12-reference-contract-3.0.0'
-export const D5_COMPILER_VERSION = 'candidate13-reference-compiler-4.0.0'
-export const D5_SCORER_INPUT_VERSION = 'candidate13-scorer-input-4.0.0'
+export const D5_COMPILER_VERSION = 'candidate13-reference-compiler-4.1.0'
+export const D5_SCORER_INPUT_VERSION = 'candidate13-scorer-input-4.1.0'
 
 const sha256 = value => createHash('sha256').update(value).digest('hex')
 const unique = values => [...new Set(values)]
@@ -40,7 +40,7 @@ export function compileReferenceV4(reference) {
       materials: task.materials.map(item => ({name: item.names[0], required: item.required,
         formatRequirements: item.formatRequirements, namingRequirements: item.namingRequirements})),
       timePoints: task.timePoints.map(item => ({rawTexts: item.rawTexts, normalizedValues: item.normalizedValues,
-        type: item.type, precision: item.precision, actionable: item.actionable})),
+        type: item.type, precision: item.precision})),
       dependencies: task.dependencies.map(id => identity(taskMap.get(id))),
       revisionRelations: task.revisionRelations.map(item => relationSignature(item, taskMap)),
       cancellationRelations: task.cancellationRelations.map(item => relationSignature(item, taskMap)),

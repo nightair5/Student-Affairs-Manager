@@ -1,7 +1,7 @@
 import {normalize, stable} from './candidate12-reference-contract.mjs'
 import {validateScorerInputV4} from './compile-candidate13-reference-v4.mjs'
 
-export const D5_SCORER_VERSION = 'candidate13-scoring-4.0.0'
+export const D5_SCORER_VERSION = 'candidate13-scoring-4.1.0'
 
 const canonical = value => {
   if (Array.isArray(value)) return value.map(canonical)
@@ -43,7 +43,7 @@ function candidateFacts(result) {
     timePoints: (result.timePoints ?? []).filter(item => item.relatedTaskTempIds?.includes(task.id)).map(item => ({
       rawTexts: [item.rawText], normalizedValues: item.normalizedValue == null ? [] : [item.normalizedValue],
       type: item.type === 'submission_deadline' ? 'deadline' : item.type,
-      precision: item.precision, actionable: item.actionable ?? true,
+      precision: item.precision,
     })),
     dependencies: (task.detail?.dependencyTempIds ?? []).map(endpoint),
     revisionRelations: [], cancellationRelations: [], replacementRelations: [], raw: task,
