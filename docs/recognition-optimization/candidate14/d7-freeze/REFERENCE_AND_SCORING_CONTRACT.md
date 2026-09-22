@@ -1,4 +1,4 @@
-# Candidate14 Reference/Scorer 5.3
+# Candidate14 Reference/Scorer 5.4
 
 参照把存在性、执行人、当前性、条件、依赖、可执行性、默认选择、确认状态、材料、时间和完成标准分开。完整参照中的 `N/A` 表示该字段在来源中没有事实，因此预测也必须为空；部分参照才允许明确列出未裁决字段。
 
@@ -6,4 +6,4 @@
 
 当前 wire 的历史/取消概念通过合法 `tense/status/validity/revision` 组合表达，不要求 Schema 中不存在的枚举。参照验证器阻断 `false + actionable`、自依赖、依赖环、无事件的地点和生效修订端点状态冲突。聚合保留 Schema/reference failure 的分母与 Severe，TP 只由最终字段检查重新计算。
 
-Reference/Scorer 5.3 仍是合成 Development 的单作者工程参照，不是独立人工真值。5.1 与 5.2 均在派发前被同系列 provisional 审计判为失效；旧 v4.1、旧 Expected 和 D6 分数保持不变。
+Reference/Scorer 5.4 将动作来源、对象来源和整项命题来源分别锁定；无任务事实必须给出原文中的精确证据短语，未声明的事件、地点和关联事件均计错。它仍是合成 Development 的单作者工程参照，不是独立人工真值。5.1、5.2 与 5.3 均在派发前被同系列 provisional 审计判为失效；旧 v4.1、旧 Expected 和 D6 分数保持不变。

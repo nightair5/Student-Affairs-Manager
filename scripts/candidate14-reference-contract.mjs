@@ -1,7 +1,7 @@
 import {createHash} from 'node:crypto'
 
-export const CANDIDATE14_REFERENCE_VERSION='candidate14-reference-contract-5.3.0'
-export const CANDIDATE14_SCORER_VERSION='candidate14-scoring-5.3.0'
+export const CANDIDATE14_REFERENCE_VERSION='candidate14-reference-contract-5.4.0'
+export const CANDIDATE14_SCORER_VERSION='candidate14-scoring-5.4.0'
 export const sha256=value=>createHash('sha256').update(value).digest('hex')
 export const canonical=value=>JSON.stringify(sort(value))
 const sort=value=>Array.isArray(value)?value.map(sort):value&&typeof value==='object'?Object.fromEntries(Object.entries(value).sort(([a],[b])=>a.localeCompare(b)).map(([k,v])=>[k,sort(v)])):value
@@ -26,7 +26,10 @@ export function validateCandidate14Reference(reference){
     uniqueStrings(task.materials,'FIELD_MATERIALS');uniqueStrings(task.completionStandards,'FIELD_COMPLETIONSTANDARDS');uniqueStrings(task.dependencies,'FIELD_DEPENDENCIES')
     check(task.times==='N/A'||Array.isArray(task.times),'FIELD_TIMES')
     if(task.times!=='N/A')for(const time of task.times)check(time&&timeTypes.includes(time.type)&&typeof time.rawText==='string'&&normalize(time.rawText)&&typeof time.normalizedValue==='string'&&time.normalizedValue&&time.timezone===reference.timezone&&typeof time.isAllDay==='boolean'&&timePrecision.includes(time.precision)&&typeof time.needsConfirmation==='boolean','TIME_FACT')
-    check(Array.isArray(task.scopeIds)&&task.scopeIds.length&&task.scopeIds.every(id=>typeof id==='string'&&id&&typeof reference.scopeTextById[id]==='string')&&new Set(task.scopeIds).size===task.scopeIds.length,'SCOPES')
+    for(const key of ['actionScopeIds','objectScopeIds'])check(Array.isArray(task[key])&&task[key].length&&task[key].every(id=>typeof reference.scopeTextById[id]==='string')&&new Set(task[key]).size===task[key].length,'FIELD_'+key.toUpperCase())
+    const supports=(field,scopeIds)=>[field.canonical,...field.aliases].some(value=>normalize(scopeIds.map(id=>reference.scopeTextById[id]).join('')).includes(normalize(value)))
+    check(supports(task.action,task.actionScopeIds)&&supports(task.object,task.objectScopeIds),'FIELD_SCOPE_SUPPORT')
+    check(Array.isArray(task.scopeIds)&&task.scopeIds.length&&task.scopeIds.every(id=>typeof id==='string'&&id&&typeof reference.scopeTextById[id]==='string')&&new Set(task.scopeIds).size===task.scopeIds.length&&[...task.actionScopeIds,...task.objectScopeIds].every(id=>task.scopeIds.includes(id)),'SCOPES')
     if(task.condition==='false')check(task.actionability==='not_actionable'&&task.defaultSelection==='not_selected','FALSE_REACHABILITY')
     if(task.condition==='unknown')check(task.actionability==='needs_confirmation'&&task.defaultSelection==='not_selected','UNKNOWN_REACHABILITY')
     if(['historical','cancelled','superseded'].includes(task.currentness))check(task.actionability==='not_actionable'&&task.defaultSelection==='not_selected','CURRENTNESS_REACHABILITY')
@@ -37,8 +40,7 @@ export function validateCandidate14Reference(reference){
   for(const task of reference.tasks)if(task.dependencies!=='N/A')for(const id of task.dependencies)check(ids.has(id)&&id!==task.id,'DEPENDENCY')
   const visiting=new Set(),visited=new Set();const visit=id=>{if(visiting.has(id))throw Error('CANDIDATE14_REFERENCE_DEPENDENCY_CYCLE');if(visited.has(id))return;visiting.add(id);const task=taskById.get(id);for(const dependency of task.dependencies==='N/A'?[]:task.dependencies)visit(dependency);visiting.delete(id);visited.add(id)};for(const id of ids)visit(id)
   const relationKeys=new Set();for(const relation of reference.relations){check(['supersedes','cancels','amends'].includes(relation.type)&&ids.has(relation.targetTaskId)&&(relation.fromTaskId===null||ids.has(relation.fromTaskId))&&relation.fromTaskId!==relation.targetTaskId&&['true','false','unknown'].includes(relation.effective),'RELATION');const key=canonical([relation.type,relation.fromTaskId,relation.targetTaskId,relation.effective]);check(!relationKeys.has(key),'RELATION_DUPLICATE');relationKeys.add(key);if(Object.hasOwn(relation,'continuitySlot'))check(typeof relation.continuitySlot==='string'&&relation.continuitySlot,'RELATION_SLOT');if(relation.effective==='true'){const target=taskById.get(relation.targetTaskId),from=relation.fromTaskId===null?null:taskById.get(relation.fromTaskId);if(relation.type==='supersedes')check(target.currentness==='superseded'&&from?.currentness==='current','RELATION_STATE');if(relation.type==='cancels')check(target.currentness==='cancelled','RELATION_STATE')}}
-  const overlaps=(left,right)=>{const a=normalize(left),b=normalize(right);if(a.includes(b)||b.includes(a))return true;for(let i=0;i<a.length-1;i++)if(b.includes(a.slice(i,i+2)))return true;return false}
-  check(reference.noTaskFacts.every(row=>row&&['event','time','location','prohibition','quoted_third_party_directive','pending_announcement','information'].includes(row.kind)&&typeof row.value==='string'&&normalize(row.value)&&Array.isArray(row.scopeIds)&&row.scopeIds.length&&new Set(row.scopeIds).size===row.scopeIds.length&&row.scopeIds.every(id=>typeof reference.scopeTextById[id]==='string')&&row.scopeIds.some(id=>overlaps(reference.scopeTextById[id],row.value))),'NO_TASK_FACT')
+  check(reference.noTaskFacts.every(row=>{if(!(row&&['event','time','location','prohibition','quoted_third_party_directive','pending_announcement','information'].includes(row.kind)&&typeof row.value==='string'&&normalize(row.value)&&Array.isArray(row.aliases)&&row.aliases.every(v=>typeof v==='string'&&normalize(v))&&typeof row.sourceText==='string'&&normalize(row.sourceText)&&Array.isArray(row.scopeIds)&&row.scopeIds.length&&new Set(row.scopeIds).size===row.scopeIds.length&&row.scopeIds.every(id=>typeof reference.scopeTextById[id]==='string')))return false;const scopeText=normalize(row.scopeIds.map(id=>reference.scopeTextById[id]).join('')),evidence=normalize(row.sourceText);return scopeText.includes(evidence)&&[row.value,...row.aliases].some(value=>evidence.includes(normalize(value)))}),'NO_TASK_FACT')
   if(reference.noTaskFacts.some(row=>row.kind==='location'))check(reference.noTaskFacts.some(row=>row.kind==='event'),'NO_TASK_LOCATION_WITHOUT_EVENT')
   return structuredClone(reference)
 }

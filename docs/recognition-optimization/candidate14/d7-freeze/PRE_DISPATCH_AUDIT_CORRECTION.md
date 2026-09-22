@@ -15,3 +15,10 @@
 - 处置：升级到 Reference/Scorer 5.3、no-task disposition 1.2、measurement 2.2，先重新冻结提交并推送，再生成 R3。R2 文件未提交，不作为实验输入或结果。
 
 旧 D6 raw、Expected、评分、锁文件和 `REJECT_CANDIDATE13_DEVELOPMENT` 结论没有修改。
+
+R3随后也在授权和派发前被同系列 provisional 复审否决：
+
+- 失效 R3 Manifest SHA-256：`96760f25fab7cce9b78068aea38bd571737baa3925ac6815f80ea8a312d7de30`。
+- R3 状态：`INVALIDATED_BEFORE_DISPATCH`；24 个身份仍为 `dispatchAuthorized=false / NOT_RUN`，模型调用为 0。
+- 原因：动作与对象 scope 未分别评分；no-task 参照允许相反语义且未封闭事件地点；S04/S05/S07/S08 参照遗漏或错挂事实；首次输出锚点和真人测量登记仍可与调用方数据联动自签；生成时间早于冻结提交。
+- 处置：升级到 Reference/Scorer 5.4、no-task disposition 1.3、measurement 2.3，R3 文件不提交、不派发；冻结提交并推送后再生成 R4。
