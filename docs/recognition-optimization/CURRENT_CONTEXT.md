@@ -1,7 +1,17 @@
-# 当前交接：Candidate13已零调用实现并冻结，等待全新数据
+# 当前交接：Candidate13 D5 Development已备好，等待新调用授权
 
-日期：2026-09-21。工作区 C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/比赛；分支 codex/e2-candidate11-blind-eval。
+日期：2026-09-22。工作区 C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/比赛；分支 codex/e2-candidate11-blind-eval。
 本轮先完成D1临时Development身份准备，随后获明确授权执行24次candidate03/Candidate12配对模型调用、专用grant和权威账本追加。授权不包含重试、repair、verifier、额外样本、真人、Holdout、默认候选变更、合并或部署。
+
+## D5 当前状态
+
+- D5评分器`candidate13-scoring-4.1.0`会拒绝错误材料格式/必需性、无据材料、无据依赖和禁止推断；匹配歧义进入裁决，不选对候选有利的得分。
+- 四项主指标的分母、语义判定、独立读回、实质修改和主动编辑计时已冻结；独立sidecar不改Workspace v8。
+- Candidate13 D4的Prompt、Schema、adapter和原v3绑定保留；D5使用新Manifest另行绑定v4.1评估器。v4.0的时间点`actionable`不兼容生产输出Schema，已在零调用状态作废；现行新数据前冻结提交为`ee6ee45caa4e1bd258237ccb4c6bc9792d0c9e34`。
+- 冻结后重建D5-R1：12份匿名合成Development、12份完整模型辅助单作者参照和24个Candidate03/Candidate13配对身份。全部身份为`dispatchAuthorized=false / NOT_RUN`。
+- 本地重合检查12/12通过，最高bigram Jaccard为0.15873；该检查不证明零概念重合。数据标签为`SYNTHETIC_DEVELOPMENT / PROVISIONAL_MODEL_AUTHORED`，独立人工数仍为0。
+- 官方价格于2026-09-22只读核验；高峰cache-miss字节包络为US$0.7077888，建议新授权硬上限US$1.00。本阶段未创建grant/reserve/settle。
+- 当前停止状态：`CANDIDATE13_V4_DEVELOPMENT_READY_FOR_NEW_AUTHORIZATION`，人工门另行保持`WAITING_FOR_INDEPENDENT_HUMAN_LABELS_AND_TRIAL`。
 
 ## D4 当前状态
 

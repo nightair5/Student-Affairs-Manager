@@ -1,6 +1,6 @@
 # 规划产物索引
 
-阶段：C13-D4零调用候选冻结；日期：2026-09-21。作者：本任务；性质：Candidate13 Prompt实现、已见错误族工程回归、绑定冻结与全新数据隔离。
+阶段：C13-D5 Development零调用准备；日期：2026-09-22。作者：本任务；性质：v4评分与主指标契约、全新合成Development、24个关闭派发身份。
 A1—A5、B1、B2、Candidate12冻结、D1身份准备、D2执行、D3契约修复和D4 Candidate13冻结已完成。D4新增模型调用、Secret读取、账本写入和全新Expected均为0；没有真人标签、正式Holdout、合并或部署。
 
 | 产物 | 版本 | 作用 |
@@ -11,9 +11,10 @@ A1—A5、B1、B2、Candidate12冻结、D1身份准备、D2执行、D3契约修�
 | [D2时间戳计划](2026-09-21_2142_EXPERIMENT_PLAN.md) | c12-plan-0.8-d2-provisional-results | 24次结算、正式失败关闭和D3零调用停止点 |
 | [D3时间戳计划](2026-09-21_2316_EXPERIMENT_PLAN.md) | c12-plan-0.9-d3-scorer-contract | 未来评分契约修复、Candidate13计划与全新数据停止点 |
 | [D4时间戳计划](2026-09-21_2343_EXPERIMENT_PLAN.md) | c13-plan-1.0-d4-frozen | Candidate13冻结、全新数据隔离与后续顺序 |
-| [当前计划](EXPERIMENT_PLAN.md) | c13-plan-1.0-d4-frozen | D4后的权威当前计划；时间戳文件保留快照 |
+| [D5时间戳计划](2026-09-22_1005_EXPERIMENT_PLAN.md) | c13-plan-1.1-d5-ready | D5零调用交付和下一授权门 |
+| [当前计划](EXPERIMENT_PLAN.md) | c13-plan-1.1-d5-ready | D5后的权威当前计划；时间戳文件保留快照 |
 | [时间戳跟踪表](2026-09-21_1100_EXPERIMENT_TRACKER.md) | c11-tracker-0.1 | 本轮任务状态快照 |
-| [当前跟踪表](EXPERIMENT_TRACKER.md) | c13-tracker-1.0-d4-frozen | D4真实状态；时间戳文件保留原快照 |
+| [当前跟踪表](EXPERIMENT_TRACKER.md) | c13-tracker-1.1-d5-ready | D5真实状态；时间戳文件保留原快照 |
 | [分支基线](../docs/recognition-optimization/candidate11/BRANCH_BASELINE.json) | candidate11-branch-baseline-1 | 父提交、84个保护文件、账本hash和换行处理 |
 | [分支审计](../docs/recognition-optimization/candidate11/BRANCH_SETUP_AUDIT.md) | C11-P0 | 本轮检查、差异与范围 |
 | [A—B2审计](../docs/recognition-optimization/candidate11/ENGINEERING_AUDIT.md) | C11-A—B2 | A1—A5、B1准备及B2执行边界 |
@@ -26,4 +27,6 @@ A1—A5、B1、B2、Candidate12冻结、D1身份准备、D2执行、D3契约修�
 | [D2临时配对结果包](../docs/recognition-optimization/candidate12/d2-provisional-development-20260921a/README.md) | candidate12-d2-results-1 | 24次结算、评分接口事件、失败关闭与透明事后诊断 |
 | [D3评分契约包](../docs/recognition-optimization/candidate12/d3-scorer-contract/README.md) | candidate12-d3-scorer-contract-1 | v3参照/评分接口、48夹具、历史兼容报告、Candidate13计划与验证 |
 | [D4 Candidate13冻结包](../docs/recognition-optimization/candidate13/d4-freeze/README.md) | candidate13-d4-freeze-1 | Candidate13、28类已见工程夹具、绑定Manifest、新数据隔离与验证 |
-| [短交接](../docs/recognition-optimization/CURRENT_CONTEXT.md) | C13-D4 | 下一轮恢复入口；候选已冻结，只能准备全新Development或等待真实独立人工Holdout标签 |
+| [D5 Development准备包](../docs/recognition-optimization/candidate13/d5-development/README.md) | candidate13-d5r1-development-1.1 | v4.1评分、四指标契约、冻结后重建的12份合成来源/参照及24个NOT_RUN身份 |
+| [D5 实验完整性审计](../docs/recognition-optimization/candidate13/d5-development/EXPERIMENT_AUDIT.md) | candidate13-d5r1-experiment-audit-1.0.0 | 同系列全新只读复核PASS_WITH_WARN；不是独立人工审计 |
+| [短交接](../docs/recognition-optimization/CURRENT_CONTEXT.md) | C13-D5 | 下一轮恢复入口；待新24次模型调用授权，独立人工/真人门仍未满足 |

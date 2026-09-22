@@ -1,0 +1,33 @@
+{
+  "auditVersion": "candidate13-d5r1-experiment-audit-1.0.0",
+  "reviewer": {
+    "fresh": true,
+    "sameModelFamily": true,
+    "independentHuman": false,
+    "classification": "PROVISIONAL"
+  },
+  "overall": "PASS_WITH_WARN",
+  "readyStateAllowed": "CANDIDATE13_V4_DEVELOPMENT_READY_FOR_NEW_AUTHORIZATION",
+  "checks": {
+    "groundTruthProvenance": "PASS_WITH_WARN",
+    "freezeTimeline": "PASS",
+    "scoreNormalization": "PASS_WITH_WARN",
+    "d4AndD5Binding": "PASS",
+    "identityAndNoDispatch": "PASS",
+    "resultExistence": "PASS_ZERO_RESULTS",
+    "overlap": "PASS_WITH_WARN",
+    "executionReachability": "WARN_PREPARATION_ONLY",
+    "claimScope": "PASS"
+  },
+  "evidenceClassification": {
+    "realModelResults": 0,
+    "registeredHumanTrials": 0,
+    "syntheticDevelopmentSources": 12,
+    "preparedRequestIdentities": 24
+  },
+  "warnings": [
+    "References are model-assisted single-author labels, not independent human ground truth.",
+    "Local overlap screening cannot prove zero conceptual overlap.",
+    "Authorized runner, transport, paired-result gate and registered human workflow are not executed in this zero-call stage."
+  ]
+}

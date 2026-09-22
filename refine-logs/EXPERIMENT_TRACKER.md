@@ -1,6 +1,6 @@
 # Candidate11 实验跟踪表
 
-版本：c13-tracker-1.0-d4-frozen。日期：2026-09-21。
+版本：c13-tracker-1.1-d5-ready。日期：2026-09-22。
 本表状态反映真实执行；PLANNED不等于授权，PREPARED不等于派发，工程PASS不等于模型/商业PASS。
 核心计划见 [EXPERIMENT_PLAN.md](EXPERIMENT_PLAN.md)。
 
@@ -21,7 +21,8 @@
 | C12-020C | D2临时 | 24次配对执行、结算与冻结评分 | SEEN_SYNTHETIC_DEVELOPMENT | 24/24 | REJECT_SCORING_CONTRACT_INVALID | 24次settled；冻结scorer/reference接口不兼容；正式失败关闭 |
 | C12-020D | D3 | 未来reference/compiler/scorer接口修复与预注册 | 已见诊断/零调用 | 0 | PASS_ENGINEERING_ONLY | v3契约冻结；48夹具、64测试通过；D1/D2不改写 |
 | C13-010 | D4 | Candidate13零调用实现、反例回归与冻结 | D2已见错误族 | 0 | FROZEN_READY_FOR_FRESH_DATA | 28类已见工程夹具；46 Node + 9 Vitest通过；未模型评测 |
-| C13-020 | D5后续 | candidate03 vs Candidate13全新Development准备 | 待创建全新数据 | 0 | PLANNED_ZERO_CALL | D4冻结提交之后才可创建Expected；先过v3 validator/compiler |
+| C13-020 | D5 | v4.1评分/测量契约与数据前冻结 | 已见评分反例 | 0 | COMMITTED_PUSHED | v4.0作废；`ee6ee45`冻结Schema可表达合同；旧v3绑定保留 |
+| C13-021 | D5-R1 | candidate03 vs Candidate13 12×2合成Development准备 | SYNTHETIC_DEVELOPMENT | 0 | READY_FOR_NEW_AUTHORIZATION | 冻结后重建12完整参照、24 NOT_RUN身份、US$1.00授权上限草案 |
 | C12-021 | C1 | 两位真实人员提交12份新source+Expected | 拟Holdout | 0 | WAITING_FOR_INDEPENDENT_HUMAN_LABELS | 当前来源0/12、完整参照0/12 |
 | C12-022 | C1 | candidate03 vs Candidate12 24个冻结身份 | 12份新配对 | 0 | BLOCKED_BY_HUMAN_GATE | 人工包通过后才可生成；仍保持NOT_RUN |
 | C12-030 | 后续 | 24次Holdout配对执行 | 12份新配对 | <=24 | PLANNED_NOT_AUTHORIZED | 新价格、新预算、新grant及明确授权 |
@@ -113,3 +114,12 @@ A包当时只构造工程请求与NOT_RUN身份记录；B2随后按新授权生�
 - D4 Node 46/46、Candidate13 Vitest 9/9、D3 64/64通过；隔离全量Vitest 1442/1442通过、1跳过。历史RCO-5-007仍为3/4通过及`FREEZE_HASH_MISMATCH:package-lock.json`。
 - 模型调用、Secret读取、grant/reserve/settle、账本写入、人工试用、默认候选变更、合并和部署均为0。
 - 识别率、转化率和相对candidate03提升仍为`NOT_OBSERVABLE`。下一步是准备全新Development，或等待两位真实人员的独立Holdout双审。
+
+## Candidate13 D5登记
+
+- v4.0在零调用状态因时间点`actionable`不可表达而作废；v4.1评分器在提交`ee6ee45caa4e1bd258237ccb4c6bc9792d0c9e34`重新冻结并推送，之后重建D5-R1的source与Expected。
+- 交付目录：`docs/recognition-optimization/candidate13/d5-development/`；12份source、12份完整参照、24个配对身份。
+- 参照全部为`PROVISIONAL_MODEL_AUTHORED`，独立人工0，不具备Holdout资格。
+- 所有身份都为`dispatchAuthorized=false / NOT_RUN`；请求不含Expected，两臂非Prompt字段一致，顺序6 AB/6 BA。
+- 权威账本仍为742行和SHA `df4035229093554b6417b0a37571730f68c10ecb7098234814406b49dfae1e1e`；新调用0，Secret/grant/reserve/settle/账本写入0。
+- 四项主指标的工程计算路径已实现，但新模型结果和真人结果仍分别为`NOT_RUN / NOT_OBSERVABLE`。

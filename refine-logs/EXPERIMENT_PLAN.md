@@ -303,3 +303,15 @@ D4工程夹具永久标记为已见合成回归，不能用来声称Candidate13�
 5. 评测仍使用预注册门槛：全部单元确定、两臂Schema/reference有效、Candidate13 Severe/Forbidden/教学例泄漏为0、不增加任务FN或关键字段Major、完整来源净增至少2；任一不满足就拒绝Candidate13。
 
 当前停止点：`D4_CANDIDATE13_FROZEN_READY_FOR_FRESH_DATA`。在全新参照或独立人工标签就绪前，不创建正式请求身份；在新授权前，不调用模型。
+
+## 14. D5评分、测量与Development准备
+
+D5初始v4.0在零调用状态发现时间点`actionable`无法由现有输出Schema表达，因此作废。v4.1评分合同在提交`ee6ee45caa4e1bd258237ccb4c6bc9792d0c9e34`重新冻结并推送，随后重建D5-R1 source与Expected。v4.1拦截旧评分器漏判的错误材料属性、凭空材料/依赖、禁止推断和乐观歧义匹配，不对Schema无法表达的时间点`actionable`作伪精确评分。D4 Candidate13文件和原v3绑定没有改写。
+
+已交付12份`SYNTHETIC_DEVELOPMENT / PROVISIONAL_MODEL_AUTHORED`来源与完整参照，覆盖单/多任务、三值条件、共享材料、精确/模糊时间、完成标准、依赖、禁止项、正确无任务及多端点取消/替代。证据引用必须能在source中定位；本地逐字和bigram检查12/12通过。这些材料不具备独立Holdout资格。
+
+Candidate03/Candidate13的24个身份均固定`deepseek-flash`、temperature 0、reasoning none、8192输出上限、同一referenceTime/timezone/Schema/adapter/v4 scorer，顺序为6 AB/6 BA。所有身份仍为`dispatchAuthorized=false / NOT_RUN`。
+
+下一阶段只有在重新核价、确认权威账本、创建独立grant并获得用户对“24次/US$1.00硬上限”的明确授权后，才可执行一次发送。运行结果仍只是Development工程筛选；真实正确处置率、低修改率和主动修改时间必须经独立人工参照和真人操作验证。
+
+当前停止点：`CANDIDATE13_V4_DEVELOPMENT_READY_FOR_NEW_AUTHORIZATION`。

@@ -174,3 +174,13 @@ A1—A5实施及验证已交付。B2模型评测、Candidate12 D2失败关闭、
 - 保留历史`RCO-5-007` 3/4通过及`FREEZE_HASH_MISMATCH:package-lock.json`。D1/D2/D3冻结聚合SHA、84份保护文件与742行权威账本均一致。
 - D4模型调用、连通性探测、Secret读取、grant/reserve/settle、账本写入、全新Expected读取、正式请求身份、真人试用、合并和部署均为0。
 - 当前停止点为`D4_CANDIDATE13_FROZEN_READY_FOR_FRESH_DATA`。下一阶段必须使用冻结提交之后创建的全新匿名Development，或两位真实人员密封双审的Holdout；先经D3 validator/compiler，后续模型调用须另行核价、预算、grant和明确授权。
+
+## D5评分、指标与全新Development审计
+
+- 初始`b1bebff`之后发现时间点`actionable`无法由现有输出Schema表达；v4.0在零调用、零raw/result时作废。现行v4.1评分合同以`ee6ee45caa4e1bd258237ccb4c6bc9792d0c9e34`重新冻结并推送，D5-R1数据在该提交之后重建。
+- v4纠正四个已复现漏判：材料格式/必需性错误、无据材料、无据依赖、无据审批完成标准；同时将多个最大匹配固定为待裁决。
+- D5创建12份冻结合成Development和12份完整参照；全部如实标记模型辅助单作者，独立人工参照0，不冒充Holdout。
+- 24个请求身份的Expected与请求物理分开；两臂非Prompt字段一致，请求哈希唯一，派发开关全部关闭。
+- 本地重合检查的最高bigram Jaccard为0.15873，12份均低于0.8阈值；这是本地筛查，不是概念独立性证明。
+- 四项指标中，工程计算和本地最小事件sidecar已实现；Candidate13首次整份正确率仍`NOT_RUN`，真人正确处置、低修改处置和主动修改时间仍`NOT_OBSERVABLE`。
+- 模型调用、Secret、grant/reserve/settle、账本写入、真人试用、默认候选修改、合并和部署均为0。权威账本保持742行及SHA `df4035229093554b6417b0a37571730f68c10ecb7098234814406b49dfae1e1e`。
