@@ -1,5 +1,5 @@
 {
-  "version": "candidate14-checklist-regression-1.0.0",
+  "version": "candidate14-checklist-regression-1.1.0",
   "role": "SEEN_ERROR_FAMILY_ENGINEERING_ONLY",
   "modelCalls": 0,
   "families": [
@@ -12,7 +12,11 @@
     {"id":"DIR-01","transform":"affirmative_to_negative","mustChange":["polarity","actionability","default_selection"],"mustNotChange":["scope_coverage"]},
     {"id":"DIR-02","transform":"tentative_to_exact_time","mustChange":["time_precision","needs_confirmation"],"mustNotChange":["time_ownership"]},
     {"id":"DIR-03","transform":"one_object_to_two_objects","mustChange":["task_count"],"mustNotChange":["cross_object_merge_forbidden"]},
-    {"id":"DIR-04","transform":"no_task_information","mustChange":["product_disposition"],"mustNotChange":["no_canonical_task_or_reminder"]}
+    {"id":"DIR-04","transform":"no_task_information","mustChange":["product_disposition"],"mustNotChange":["no_canonical_task_or_reminder"]},
+    {"id":"ADV-01","transform":"exact_to_negated_substring","mustChange":["field_score"],"mustNotChange":["exact_equivalence"]},
+    {"id":"ADV-02","transform":"empty_expected_to_invented_entity","mustChange":["major_error"],"mustNotChange":["complete_status"]},
+    {"id":"ADV-03","transform":"schema_failure_to_aggregate","mustChange":["severe_error"],"mustNotChange":["denominator"]},
+    {"id":"ADV-04","transform":"nested_same_reason_pause_tokens","mustChange":["active_edit_ms","system_wait_ms"],"mustNotChange":["trial_identity"]}
   ],
   "claimCeiling": "CONTRACT_AND_CONSTRUCTION_REGRESSION_ONLY"
 }

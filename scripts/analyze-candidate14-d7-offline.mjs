@@ -4,7 +4,7 @@ import {join,resolve} from 'node:path'
 import {pathToFileURL} from 'node:url'
 import {build} from 'esbuild'
 
-export const D7_DIAGNOSTIC_VERSION='candidate14-d7-offline-diagnostic-1.0.0'
+export const D7_DIAGNOSTIC_VERSION='candidate14-d7-offline-diagnostic-1.1.0'
 const D6='docs/recognition-optimization/candidate13/d6-development-20260922a'
 const D5='docs/recognition-optimization/candidate13/d5-development'
 const OUTPUT='docs/recognition-optimization/candidate14/d7-diagnostics'
@@ -35,9 +35,9 @@ export async function analyzeCandidate14D7Offline(){
     check(JSON.stringify(adapted)===JSON.stringify(result.assembled),'READAPT_MISMATCH')
     check(envelope.usage.input_tokens===result.usage.input_tokens&&envelope.usage.output_tokens===result.usage.output_tokens,'USAGE_MISMATCH')
     const short=target.sourceId.slice(-3),key=`${short}-${target.arm}`,category=armOverride[key]??sourceRoot[short]
-    units.push({unitId:target.unitId,ordinal:target.ordinal,sourceId:target.sourceId,arm:target.arm,transport:'COMPLETED_HTTP_200',rawSha256:raw.responseSha256,requestSha256:target.requestSha256,adapterRoundTrip:'PASS',usageVerified:true,postHocRootCause:category,explanation:explanations[category],historicalScoreChanged:false})
+    units.push({unitId:target.unitId,ordinal:target.ordinal,sourceId:target.sourceId,arm:target.arm,transport:'COMPLETED_HTTP_200',rawSha256:raw.responseSha256,requestSha256:target.requestSha256,adapterRoundTrip:'PASS',usageVerified:true,preassignedPostHocHypothesis:category,hypothesisBasis:'D7_PREASSIGNED_SOURCE_ARM_MAP_NOT_DETERMINISTIC_RESCORING',explanation:explanations[category],historicalScoreChanged:false})
   }
-  return {version:D7_DIAGNOSTIC_VERSION,status:'PASS',mode:'PURE_OFFLINE_NO_DISPATCH',modelCalls:0,networkCalls:0,ledgerReads:0,ledgerWrites:0,budgetOperations:0,units,rootCauseCounts:Object.fromEntries([...new Set(units.map(u=>u.postHocRootCause))].sort().map(key=>[key,units.filter(u=>u.postHocRootCause===key).length])),historicalDecision:'REJECT_CANDIDATE13_DEVELOPMENT',historicalDecisionPreserved:true,revisedAccuracy:null,claim:'POST_HOC_ROOT_CAUSE_DIAGNOSIS_ONLY'}
+  return {version:D7_DIAGNOSTIC_VERSION,status:'PASS',mode:'PURE_OFFLINE_NO_DISPATCH',modelCalls:0,networkCalls:0,ledgerReads:0,ledgerWrites:0,budgetOperations:0,units,hypothesisCounts:Object.fromEntries([...new Set(units.map(u=>u.preassignedPostHocHypothesis))].sort().map(key=>[key,units.filter(u=>u.preassignedPostHocHypothesis===key).length])),historicalDecision:'REJECT_CANDIDATE13_DEVELOPMENT',historicalDecisionPreserved:true,revisedAccuracy:null,claim:'EVIDENCE_CHAIN_VERIFIED_PREASSIGNED_HYPOTHESES_NOT_CAUSAL_ADJUDICATION'}
 }
 function correctionLog(result){return {version:'candidate14-d7-corrections-1',appendOnly:true,entries:[
   {id:'D7-CORR-001',kind:'REFERENCE_ERROR',scope:'D5R1-S11',statement:'旧参照把“登记现场展示场地”缩成“展示时段”，且虚构取消/历史端点完成标准。',historicalArtifactsModified:false},

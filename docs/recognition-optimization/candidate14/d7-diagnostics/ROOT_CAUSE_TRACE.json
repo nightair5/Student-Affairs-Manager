@@ -11,7 +11,8 @@
       "requestSha256": "08c71233ccfa45af30f82aa77728183d86c991553a2a7ba4c73f9962a8cd4f19",
       "adapterRoundTrip": "PASS",
       "usageVerified": true,
-      "postHocRootCause": "SCORER_ERROR",
+      "preassignedPostHocHypothesis": "SCORER_ERROR",
+      "hypothesisBasis": "D7_PREASSIGNED_SOURCE_ARM_MAP_NOT_DETERMINISTIC_RESCORING",
       "explanation": "旧v4.1字段投影或窄等义规则造成错误计分，保留历史分数但不再解释为纯模型错误。",
       "historicalScoreChanged": false
     },
@@ -25,7 +26,8 @@
       "requestSha256": "45c2251f15948277dfc3d820eaada5006cced9ee6063d75564dde08e39de4669",
       "adapterRoundTrip": "PASS",
       "usageVerified": true,
-      "postHocRootCause": "SCORER_ERROR",
+      "preassignedPostHocHypothesis": "SCORER_ERROR",
+      "hypothesisBasis": "D7_PREASSIGNED_SOURCE_ARM_MAP_NOT_DETERMINISTIC_RESCORING",
       "explanation": "旧v4.1字段投影或窄等义规则造成错误计分，保留历史分数但不再解释为纯模型错误。",
       "historicalScoreChanged": false
     },
@@ -39,7 +41,8 @@
       "requestSha256": "1171f9237f490b0b5e93b56aaf0908e58f8997050513be702637cd00c33fae45",
       "adapterRoundTrip": "PASS",
       "usageVerified": true,
-      "postHocRootCause": "SCORER_ERROR",
+      "preassignedPostHocHypothesis": "SCORER_ERROR",
+      "hypothesisBasis": "D7_PREASSIGNED_SOURCE_ARM_MAP_NOT_DETERMINISTIC_RESCORING",
       "explanation": "旧v4.1字段投影或窄等义规则造成错误计分，保留历史分数但不再解释为纯模型错误。",
       "historicalScoreChanged": false
     },
@@ -53,7 +56,8 @@
       "requestSha256": "c0a2dcfa9b93e22a38b62e349db7eda6b1bb6eea7b58534dac8d3fef7091266a",
       "adapterRoundTrip": "PASS",
       "usageVerified": true,
-      "postHocRootCause": "SCORER_ERROR",
+      "preassignedPostHocHypothesis": "SCORER_ERROR",
+      "hypothesisBasis": "D7_PREASSIGNED_SOURCE_ARM_MAP_NOT_DETERMINISTIC_RESCORING",
       "explanation": "旧v4.1字段投影或窄等义规则造成错误计分，保留历史分数但不再解释为纯模型错误。",
       "historicalScoreChanged": false
     },
@@ -67,7 +71,8 @@
       "requestSha256": "4aaf3648a9d42d55638f3ebfa5778509f3673f094b89f0ecf0630bcca8478419",
       "adapterRoundTrip": "PASS",
       "usageVerified": true,
-      "postHocRootCause": "SCORER_ERROR",
+      "preassignedPostHocHypothesis": "SCORER_ERROR",
+      "hypothesisBasis": "D7_PREASSIGNED_SOURCE_ARM_MAP_NOT_DETERMINISTIC_RESCORING",
       "explanation": "旧v4.1字段投影或窄等义规则造成错误计分，保留历史分数但不再解释为纯模型错误。",
       "historicalScoreChanged": false
     },
@@ -81,7 +86,8 @@
       "requestSha256": "36dd9bc975f79d1baf870cc086f14eb5361c248b04a4ae8f3d40bd39cfed16b5",
       "adapterRoundTrip": "PASS",
       "usageVerified": true,
-      "postHocRootCause": "SCORER_ERROR",
+      "preassignedPostHocHypothesis": "SCORER_ERROR",
+      "hypothesisBasis": "D7_PREASSIGNED_SOURCE_ARM_MAP_NOT_DETERMINISTIC_RESCORING",
       "explanation": "旧v4.1字段投影或窄等义规则造成错误计分，保留历史分数但不再解释为纯模型错误。",
       "historicalScoreChanged": false
     },
@@ -95,7 +101,8 @@
       "requestSha256": "ef1ae8a95fa2ec5371b9e12ad2444c079d5195b0aedccc4646bd8b18e4b16621",
       "adapterRoundTrip": "PASS",
       "usageVerified": true,
-      "postHocRootCause": "MODEL_ERROR",
+      "preassignedPostHocHypothesis": "MODEL_ERROR",
+      "hypothesisBasis": "D7_PREASSIGNED_SOURCE_ARM_MAP_NOT_DETERMINISTIC_RESCORING",
       "explanation": "公共适配后仍存在任务遗漏或完成标准损失。",
       "historicalScoreChanged": false
     },
@@ -109,7 +116,8 @@
       "requestSha256": "154c9b036decc72b3e4291ca1ac7a8e50913c656878f97bfcd9ddb4b55d9d6ac",
       "adapterRoundTrip": "PASS",
       "usageVerified": true,
-      "postHocRootCause": "SCORER_ERROR",
+      "preassignedPostHocHypothesis": "SCORER_ERROR",
+      "hypothesisBasis": "D7_PREASSIGNED_SOURCE_ARM_MAP_NOT_DETERMINISTIC_RESCORING",
       "explanation": "旧v4.1字段投影或窄等义规则造成错误计分，保留历史分数但不再解释为纯模型错误。",
       "historicalScoreChanged": false
     },
@@ -123,7 +131,8 @@
       "requestSha256": "e5a3d779ae48ddf708dc6ce9b201fc7c430d42c90952fdc7668b862d44d2ef8c",
       "adapterRoundTrip": "PASS",
       "usageVerified": true,
-      "postHocRootCause": "ADAPTER_ERROR",
+      "preassignedPostHocHypothesis": "ADAPTER_ERROR",
+      "hypothesisBasis": "D7_PREASSIGNED_SOURCE_ARM_MAP_NOT_DETERMINISTIC_RESCORING",
       "explanation": "模型raw保留不确定时间，但旧本机时间适配把它确定化。",
       "historicalScoreChanged": false
     },
@@ -137,7 +146,8 @@
       "requestSha256": "7e861b75af07598730b480e95381bc1cb1d05b375d045d1a94d320745bf2d845",
       "adapterRoundTrip": "PASS",
       "usageVerified": true,
-      "postHocRootCause": "ADAPTER_ERROR",
+      "preassignedPostHocHypothesis": "ADAPTER_ERROR",
+      "hypothesisBasis": "D7_PREASSIGNED_SOURCE_ARM_MAP_NOT_DETERMINISTIC_RESCORING",
       "explanation": "模型raw保留不确定时间，但旧本机时间适配把它确定化。",
       "historicalScoreChanged": false
     },
@@ -151,7 +161,8 @@
       "requestSha256": "9b563f8432eef1bcec55fea5d8250c123532c8a3f0cee2d8971d303142c1d821",
       "adapterRoundTrip": "PASS",
       "usageVerified": true,
-      "postHocRootCause": "UNRESOLVED_SEMANTIC_AMBIGUITY",
+      "preassignedPostHocHypothesis": "UNRESOLVED_SEMANTIC_AMBIGUITY",
+      "hypothesisBasis": "D7_PREASSIGNED_SOURCE_ARM_MAP_NOT_DETERMINISTIC_RESCORING",
       "explanation": "依赖、条件或时间类型口径未预先冻结，不能事后偏向任一候选。",
       "historicalScoreChanged": false
     },
@@ -165,7 +176,8 @@
       "requestSha256": "9f604ac913452dcbc598161464af5904ae7e225204be2a4a77842f1f65f8a60a",
       "adapterRoundTrip": "PASS",
       "usageVerified": true,
-      "postHocRootCause": "UNRESOLVED_SEMANTIC_AMBIGUITY",
+      "preassignedPostHocHypothesis": "UNRESOLVED_SEMANTIC_AMBIGUITY",
+      "hypothesisBasis": "D7_PREASSIGNED_SOURCE_ARM_MAP_NOT_DETERMINISTIC_RESCORING",
       "explanation": "依赖、条件或时间类型口径未预先冻结，不能事后偏向任一候选。",
       "historicalScoreChanged": false
     },
@@ -179,7 +191,8 @@
       "requestSha256": "e3f0969bba1742997b42b683652883cbaec6ade5343ca576452783d74d4a1279",
       "adapterRoundTrip": "PASS",
       "usageVerified": true,
-      "postHocRootCause": "UNRESOLVED_SEMANTIC_AMBIGUITY",
+      "preassignedPostHocHypothesis": "UNRESOLVED_SEMANTIC_AMBIGUITY",
+      "hypothesisBasis": "D7_PREASSIGNED_SOURCE_ARM_MAP_NOT_DETERMINISTIC_RESCORING",
       "explanation": "依赖、条件或时间类型口径未预先冻结，不能事后偏向任一候选。",
       "historicalScoreChanged": false
     },
@@ -193,7 +206,8 @@
       "requestSha256": "a69e2bed3e13099002fc1a6bbfe1de33b6dad01c575d006a66c04c1d5a3081a3",
       "adapterRoundTrip": "PASS",
       "usageVerified": true,
-      "postHocRootCause": "UNRESOLVED_SEMANTIC_AMBIGUITY",
+      "preassignedPostHocHypothesis": "UNRESOLVED_SEMANTIC_AMBIGUITY",
+      "hypothesisBasis": "D7_PREASSIGNED_SOURCE_ARM_MAP_NOT_DETERMINISTIC_RESCORING",
       "explanation": "依赖、条件或时间类型口径未预先冻结，不能事后偏向任一候选。",
       "historicalScoreChanged": false
     },
@@ -207,7 +221,8 @@
       "requestSha256": "44f8accf3e19fe0bf9fe705dd15e6697ec994a2cf9834c76076b94d36b5df322",
       "adapterRoundTrip": "PASS",
       "usageVerified": true,
-      "postHocRootCause": "UNRESOLVED_SEMANTIC_AMBIGUITY",
+      "preassignedPostHocHypothesis": "UNRESOLVED_SEMANTIC_AMBIGUITY",
+      "hypothesisBasis": "D7_PREASSIGNED_SOURCE_ARM_MAP_NOT_DETERMINISTIC_RESCORING",
       "explanation": "依赖、条件或时间类型口径未预先冻结，不能事后偏向任一候选。",
       "historicalScoreChanged": false
     },
@@ -221,7 +236,8 @@
       "requestSha256": "5c4ef3d0a8eb1135cd3fa72cbb2c410091483aa300147f8ae4cef4248b9f61ee",
       "adapterRoundTrip": "PASS",
       "usageVerified": true,
-      "postHocRootCause": "UNRESOLVED_SEMANTIC_AMBIGUITY",
+      "preassignedPostHocHypothesis": "UNRESOLVED_SEMANTIC_AMBIGUITY",
+      "hypothesisBasis": "D7_PREASSIGNED_SOURCE_ARM_MAP_NOT_DETERMINISTIC_RESCORING",
       "explanation": "依赖、条件或时间类型口径未预先冻结，不能事后偏向任一候选。",
       "historicalScoreChanged": false
     },
@@ -235,7 +251,8 @@
       "requestSha256": "0fceaf92a47463369c64b16f6d4b567c59cc3901cbb4d7f878a7b82b89176765",
       "adapterRoundTrip": "PASS",
       "usageVerified": true,
-      "postHocRootCause": "PRODUCT_DISPOSITION_ERROR",
+      "preassignedPostHocHypothesis": "PRODUCT_DISPOSITION_ERROR",
+      "hypothesisBasis": "D7_PREASSIGNED_SOURCE_ARM_MAP_NOT_DETERMINISTIC_RESCORING",
       "explanation": "识别结果可成立，但产品确认流程阻断正确无任务归档。",
       "historicalScoreChanged": false
     },
@@ -249,7 +266,8 @@
       "requestSha256": "2d14cbe84e1a7d8f598686540455e67d7d92a09137c61a1dabbb70e65fdb4e23",
       "adapterRoundTrip": "PASS",
       "usageVerified": true,
-      "postHocRootCause": "PRODUCT_DISPOSITION_ERROR",
+      "preassignedPostHocHypothesis": "PRODUCT_DISPOSITION_ERROR",
+      "hypothesisBasis": "D7_PREASSIGNED_SOURCE_ARM_MAP_NOT_DETERMINISTIC_RESCORING",
       "explanation": "识别结果可成立，但产品确认流程阻断正确无任务归档。",
       "historicalScoreChanged": false
     },
@@ -263,7 +281,8 @@
       "requestSha256": "fbe671de9c8de90684c5717d46f591a57bccb6a0c76b0ff71799af10773592bd",
       "adapterRoundTrip": "PASS",
       "usageVerified": true,
-      "postHocRootCause": "CONTRACT_UNREACHABLE",
+      "preassignedPostHocHypothesis": "CONTRACT_UNREACHABLE",
+      "hypothesisBasis": "D7_PREASSIGNED_SOURCE_ARM_MAP_NOT_DETERMINISTIC_RESCORING",
       "explanation": "旧参照要求当前wire枚举无法合法输出的状态。",
       "historicalScoreChanged": false
     },
@@ -277,7 +296,8 @@
       "requestSha256": "d7875a3306e9d63317b1126ea77ba501d1a0e1d7639ea81b482a20a80f384760",
       "adapterRoundTrip": "PASS",
       "usageVerified": true,
-      "postHocRootCause": "CONTRACT_UNREACHABLE",
+      "preassignedPostHocHypothesis": "CONTRACT_UNREACHABLE",
+      "hypothesisBasis": "D7_PREASSIGNED_SOURCE_ARM_MAP_NOT_DETERMINISTIC_RESCORING",
       "explanation": "旧参照要求当前wire枚举无法合法输出的状态。",
       "historicalScoreChanged": false
     },
@@ -291,7 +311,8 @@
       "requestSha256": "476dab5c2738431d7a2610886722bbc50f4d2aafbeabf80ae4988c6c2bf0cd60",
       "adapterRoundTrip": "PASS",
       "usageVerified": true,
-      "postHocRootCause": "REFERENCE_ERROR",
+      "preassignedPostHocHypothesis": "REFERENCE_ERROR",
+      "hypothesisBasis": "D7_PREASSIGNED_SOURCE_ARM_MAP_NOT_DETERMINISTIC_RESCORING",
       "explanation": "参照存在错对象、虚构完成标准或不当规范化。",
       "historicalScoreChanged": false
     },
@@ -305,7 +326,8 @@
       "requestSha256": "f935cf4278f621e592633c5a13b4b59ecf8f595f8fb89afec2a46e6fd69427e7",
       "adapterRoundTrip": "PASS",
       "usageVerified": true,
-      "postHocRootCause": "REFERENCE_ERROR",
+      "preassignedPostHocHypothesis": "REFERENCE_ERROR",
+      "hypothesisBasis": "D7_PREASSIGNED_SOURCE_ARM_MAP_NOT_DETERMINISTIC_RESCORING",
       "explanation": "参照存在错对象、虚构完成标准或不当规范化。",
       "historicalScoreChanged": false
     },
@@ -319,7 +341,8 @@
       "requestSha256": "c64ae5588b12ce2b28202f8f1a53bdae44a336400211ff857961400cb2d1e640",
       "adapterRoundTrip": "PASS",
       "usageVerified": true,
-      "postHocRootCause": "SCORER_ERROR",
+      "preassignedPostHocHypothesis": "SCORER_ERROR",
+      "hypothesisBasis": "D7_PREASSIGNED_SOURCE_ARM_MAP_NOT_DETERMINISTIC_RESCORING",
       "explanation": "旧v4.1字段投影或窄等义规则造成错误计分，保留历史分数但不再解释为纯模型错误。",
       "historicalScoreChanged": false
     },
@@ -333,7 +356,8 @@
       "requestSha256": "82d5c34f692c893d700ba9e12b6c4285a4daf5f148a00b2a3c246efe00d475c1",
       "adapterRoundTrip": "PASS",
       "usageVerified": true,
-      "postHocRootCause": "SCORER_ERROR",
+      "preassignedPostHocHypothesis": "SCORER_ERROR",
+      "hypothesisBasis": "D7_PREASSIGNED_SOURCE_ARM_MAP_NOT_DETERMINISTIC_RESCORING",
       "explanation": "旧v4.1字段投影或窄等义规则造成错误计分，保留历史分数但不再解释为纯模型错误。",
       "historicalScoreChanged": false
     }
