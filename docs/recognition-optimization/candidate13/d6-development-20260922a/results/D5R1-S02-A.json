@@ -1,0 +1,231 @@
+{
+  "version": "candidate13-d6-result-1",
+  "unitId": "D5R1-S02-A",
+  "sourceId": "C13-D5R1-S02",
+  "arm": "A",
+  "ordinal": 4,
+  "bindingSha256": "3de1006c7e2c3d110138bc9ecb0f6bb8402808003acc0a630d0dc028da4cb4d0",
+  "requestSha256": "c0a2dcfa9b93e22a38b62e349db7eda6b1bb6eea7b58534dac8d3fef7091266a",
+  "responseSha256": "a9719ff72ab8bc0dfbfe0260dc2c6be900b83f9387d23362f7031f51ca4a8dba",
+  "transportStatus": "COMPLETED_HTTP_200",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "modelMatch": true,
+  "httpStatus": 200,
+  "waitingMs": 5661,
+  "parseError": null,
+  "parseStage": null,
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-confirm-team-info",
+        "propositionScopeIds": [
+          "scope-0002-08813f30e2ab3a8becded0537ccb9e0e2383c7c0190a3ec4490306809f181139",
+          "scope-0003-b66bd08529826eee12fe87f2a36b98bbb9f2086d20c4b86322426db72d98ab1a",
+          "scope-0007-b0d23332e2056aae0941f88ca02cbd6cb5e3da7319465ad71af20f17ec5c5e42"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "review",
+        "action": {
+          "scopeId": "scope-0002-08813f30e2ab3a8becded0537ccb9e0e2383c7c0190a3ec4490306809f181139",
+          "surface": "确认"
+        },
+        "object": {
+          "scopeId": "scope-0002-08813f30e2ab3a8becded0537ccb9e0e2383c7c0190a3ec4490306809f181139",
+          "surface": "竞赛队伍信息"
+        },
+        "effect": "local_change",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "确认竞赛队伍信息",
+          "description": "在10月20日前确认竞赛队伍信息，页面显示确认完成。",
+          "completionCriteria": [
+            "页面显示确认完成"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [],
+          "timePointTempIds": [
+            "tp-confirm-deadline"
+          ],
+          "confidence": 0.95,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "present",
+          "material": "not_stated",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      },
+      {
+        "id": "task-upload-guardian-consent",
+        "propositionScopeIds": [
+          "scope-0004-0a3421115228c9f8bc7bac9d211d0e49268ec55eb1e9c2e41c1c1f8bab92f161",
+          "scope-0005-64739e26fee96f2890e548f7a3a351db2e8d9028bdd0655a6a4d0a2fbae96fdc",
+          "scope-0006-f36a0c972b89d2f1561d01ea873cddece3964576ddcbc4e5cc9768edd24664da",
+          "scope-0007-b0d23332e2056aae0941f88ca02cbd6cb5e3da7319465ad71af20f17ec5c5e42"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "upload",
+        "action": {
+          "scopeId": "scope-0004-0a3421115228c9f8bc7bac9d211d0e49268ec55eb1e9c2e41c1c1f8bab92f161",
+          "surface": "上传"
+        },
+        "object": {
+          "scopeId": "scope-0004-0a3421115228c9f8bc7bac9d211d0e49268ec55eb1e9c2e41c1c1f8bab92f161",
+          "surface": "监护人知情书"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "上传监护人知情书",
+          "description": "在10月22日前上传监护人知情书，监护人知情书须为JPG，平台显示知情书已接收。",
+          "completionCriteria": [
+            "平台显示知情书已接收"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [
+            "mat-guardian-consent"
+          ],
+          "timePointTempIds": [
+            "tp-upload-deadline"
+          ],
+          "confidence": 0.95,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [
+      {
+        "tempId": "mat-guardian-consent",
+        "name": "监护人知情书",
+        "required": true,
+        "formatRequirements": [
+          "JPG"
+        ],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": "平台",
+        "relatedTaskTempIds": [
+          "task-upload-guardian-consent"
+        ],
+        "scopeIds": [
+          "scope-0004-0a3421115228c9f8bc7bac9d211d0e49268ec55eb1e9c2e41c1c1f8bab92f161",
+          "scope-0005-64739e26fee96f2890e548f7a3a351db2e8d9028bdd0655a6a4d0a2fbae96fdc",
+          "scope-0006-f36a0c972b89d2f1561d01ea873cddece3964576ddcbc4e5cc9768edd24664da"
+        ],
+        "confidence": 0.95
+      }
+    ],
+    "timePoints": [
+      {
+        "tempId": "tp-confirm-deadline",
+        "type": "task_deadline",
+        "rawText": "10月20日前",
+        "relatedTaskTempIds": [
+          "task-confirm-team-info"
+        ],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0002-08813f30e2ab3a8becded0537ccb9e0e2383c7c0190a3ec4490306809f181139"
+        ],
+        "confidence": 0.95,
+        "normalizedValue": "2026-10-20",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": true,
+        "precision": "date_only",
+        "needsConfirmation": false
+      },
+      {
+        "tempId": "tp-upload-deadline",
+        "type": "submission_deadline",
+        "rawText": "10月22日前",
+        "relatedTaskTempIds": [
+          "task-upload-guardian-consent"
+        ],
+        "relatedMaterialTempIds": [
+          "mat-guardian-consent"
+        ],
+        "scopeIds": [
+          "scope-0004-0a3421115228c9f8bc7bac9d211d0e49268ec55eb1e9c2e41c1c1f8bab92f161"
+        ],
+        "confidence": 0.95,
+        "normalizedValue": "2026-10-22",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": true,
+        "precision": "date_only",
+        "needsConfirmation": false
+      }
+    ],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0001-0a099086381197c5c41514a4d6d8dcf9d06b773e4ef4ca2fea9195de90dce51d"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "C13-D5R1-S02",
+    "sourceVersionId": "C13-D5R1-S02-v1",
+    "sourceFingerprint": "sha256:66d14c2140e24568f8b6e095e4d9372d2b2ab1f1c6b3d61857051e4a1b02e701"
+  },
+  "ledgerStatus": "settled",
+  "usage": {
+    "input_tokens": 4495,
+    "input_tokens_details": {
+      "cached_tokens": 3840
+    },
+    "output_tokens": 1537,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 6032
+  },
+  "costUpperMicroUsd": 3193,
+  "providerBilledUsd": "NOT_OBSERVABLE",
+  "automaticRepair": false,
+  "retryCount": 0,
+  "verifierCalls": 0
+}

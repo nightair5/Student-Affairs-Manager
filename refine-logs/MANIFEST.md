@@ -1,7 +1,7 @@
 # 规划产物索引
 
-阶段：C13-D5 Development零调用准备；日期：2026-09-22。作者：本任务；性质：v4评分与主指标契约、全新合成Development、24个关闭派发身份。
-A1—A5、B1、B2、Candidate12冻结、D1身份准备、D2执行、D3契约修复和D4 Candidate13冻结已完成。D4新增模型调用、Secret读取、账本写入和全新Expected均为0；没有真人标签、正式Holdout、合并或部署。
+阶段：C13-D6 Development执行与拒绝；日期：2026-09-22。作者：本任务；性质：24次冻结调用、v4.1评分、预算结算与录制结果工程回放。
+A1—A5、B1、B2、Candidate12冻结、D1身份准备、D2执行、D3契约修复、D4 Candidate13冻结、D5准备和D6执行已完成。D6决定为`REJECT_CANDIDATE13_DEVELOPMENT`；没有真人标签、正式Holdout、默认候选替换、合并或部署。
 
 | 产物 | 版本 | 作用 |
 |---|---|---|
@@ -29,4 +29,6 @@ A1—A5、B1、B2、Candidate12冻结、D1身份准备、D2执行、D3契约修�
 | [D4 Candidate13冻结包](../docs/recognition-optimization/candidate13/d4-freeze/README.md) | candidate13-d4-freeze-1 | Candidate13、28类已见工程夹具、绑定Manifest、新数据隔离与验证 |
 | [D5 Development准备包](../docs/recognition-optimization/candidate13/d5-development/README.md) | candidate13-d5r1-development-1.1 | v4.1评分、四指标契约、冻结后重建的12份合成来源/参照及24个NOT_RUN身份 |
 | [D5 实验完整性审计](../docs/recognition-optimization/candidate13/d5-development/EXPERIMENT_AUDIT.md) | candidate13-d5r1-experiment-audit-1.0.0 | 同系列全新只读复核PASS_WITH_WARN；不是独立人工审计 |
-| [短交接](../docs/recognition-optimization/CURRENT_CONTEXT.md) | C13-D5 | 下一轮恢复入口；待新24次模型调用授权，独立人工/真人门仍未满足 |
+| [D6 Development结果包](../docs/recognition-optimization/candidate13/d6-development-20260922a/README.md) | candidate13-d6-results-1 | 24次一次发送、v4.1评分、拒绝决定、结算和工程回放 |
+| [D6 provisional实验审计](../docs/recognition-optimization/candidate13/d6-development-20260922a/EXPERIMENT_AUDIT.md) | candidate13-d6-experiment-audit-1.0.0 | 同系列模型只读审计；不是独立人工真值 |
+| [短交接](../docs/recognition-optimization/CURRENT_CONTEXT.md) | C13-D6 | 下一轮恢复入口；Candidate13已拒绝，下一步为Candidate14零调用工程修正 |

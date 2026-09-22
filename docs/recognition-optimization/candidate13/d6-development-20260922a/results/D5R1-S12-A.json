@@ -1,0 +1,111 @@
+{
+  "version": "candidate13-d6-result-1",
+  "unitId": "D5R1-S12-A",
+  "sourceId": "C13-D5R1-S12",
+  "arm": "A",
+  "ordinal": 24,
+  "bindingSha256": "3de1006c7e2c3d110138bc9ecb0f6bb8402808003acc0a630d0dc028da4cb4d0",
+  "requestSha256": "82d5c34f692c893d700ba9e12b6c4285a4daf5f148a00b2a3c246efe00d475c1",
+  "responseSha256": "1e8ea2f2db46f6cf8bb4d36377a6d89d1aa66f5c091ada5aa702582861c859da",
+  "transportStatus": "COMPLETED_HTTP_200",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "modelMatch": true,
+  "httpStatus": 200,
+  "waitingMs": 3365,
+  "parseError": null,
+  "parseStage": null,
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-review-member-materials",
+        "propositionScopeIds": [
+          "scope-0002-3ba0b716805daa4795a4a14f4c12162b18d36881020f9d29eb533959e17cf3b7",
+          "scope-0003-cc9facabddb0bf135daefe6e7d54650a25ba57dca0a5ed42bd724936a905feaa",
+          "scope-0004-70f71d6d4deabbf7872d4953fb6e9b8b059cf8e505178f7b3db89ba205b4aa5c",
+          "scope-0005-b6e9cb85438725cc27c0fc90f136a23144f1396cca53a239a011a13f57f93900"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "review",
+        "action": {
+          "scopeId": "scope-0002-3ba0b716805daa4795a4a14f4c12162b18d36881020f9d29eb533959e17cf3b7",
+          "surface": "复核"
+        },
+        "object": {
+          "scopeId": "scope-0002-3ba0b716805daa4795a4a14f4c12162b18d36881020f9d29eb533959e17cf3b7",
+          "surface": "项目成员资料"
+        },
+        "effect": "local_change",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "复核项目成员资料",
+          "description": "复核项目成员资料，以页面显示资料复核完成为完成标准。无需院长签字，也不要创建“联系项目办”任务。",
+          "completionCriteria": [
+            "页面显示资料复核完成"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [],
+          "timePointTempIds": [],
+          "confidence": 0.9,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "not_stated",
+          "material": "not_stated",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [],
+    "timePoints": [],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0001-5536a73955da7d1ab56c27a35488339490c26826b7d9b8dd325b34b3a9bfde73",
+      "scope-0004-70f71d6d4deabbf7872d4953fb6e9b8b059cf8e505178f7b3db89ba205b4aa5c",
+      "scope-0005-b6e9cb85438725cc27c0fc90f136a23144f1396cca53a239a011a13f57f93900"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "C13-D5R1-S12",
+    "sourceVersionId": "C13-D5R1-S12-v1",
+    "sourceFingerprint": "sha256:455b8d026e3e993fad2ddce5bb37b15f60745b7c90d8cf1355d280e00c90a848"
+  },
+  "ledgerStatus": "settled",
+  "usage": {
+    "input_tokens": 4359,
+    "input_tokens_details": {
+      "cached_tokens": 3840
+    },
+    "output_tokens": 706,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 5065
+  },
+  "costUpperMicroUsd": 2155,
+  "providerBilledUsd": "NOT_OBSERVABLE",
+  "automaticRepair": false,
+  "retryCount": 0,
+  "verifierCalls": 0
+}

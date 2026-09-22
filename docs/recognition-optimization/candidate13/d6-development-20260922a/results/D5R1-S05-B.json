@@ -1,0 +1,156 @@
+{
+  "version": "candidate13-d6-result-1",
+  "unitId": "D5R1-S05-B",
+  "sourceId": "C13-D5R1-S05",
+  "arm": "B",
+  "ordinal": 10,
+  "bindingSha256": "3de1006c7e2c3d110138bc9ecb0f6bb8402808003acc0a630d0dc028da4cb4d0",
+  "requestSha256": "7e861b75af07598730b480e95381bc1cb1d05b375d045d1a94d320745bf2d845",
+  "responseSha256": "590b05e64d5cf381ad9c8bfd4dc3a4cebb2484af4d50e03b87e90caf0b0f810e",
+  "transportStatus": "COMPLETED_HTTP_200",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "modelMatch": true,
+  "httpStatus": 200,
+  "waitingMs": 4808,
+  "parseError": null,
+  "parseStage": null,
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-0001-submit-outline",
+        "propositionScopeIds": [
+          "scope-0002-e1eb85ab3d336db1fc8ca890d36206287660041a7cc443570cf25db5001d97f4",
+          "scope-0003-f11a535e4543e0e70b19a121ae2d34a6900de74adfc6989a6a3292c9abb66a9d",
+          "scope-0004-2fdca49a0cd1c6fda59c396dffc644acbf2b0df08a282bce29de14beced789e4",
+          "scope-0005-9c8b904f4e5cb16fcfe57c5105196c4f4ca0706a79478fb2cca2ce0787fdc664",
+          "scope-0006-ff2b489e786e649cd778f8c55ce080d36d2255a679d0c265881c6158b2603ed6"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "submit",
+        "action": {
+          "scopeId": "scope-0003-f11a535e4543e0e70b19a121ae2d34a6900de74adfc6989a6a3292c9abb66a9d",
+          "surface": "提交"
+        },
+        "object": {
+          "scopeId": "scope-0003-f11a535e4543e0e70b19a121ae2d34a6900de74adfc6989a6a3292c9abb66a9d",
+          "surface": "主持提纲"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "提交主持提纲",
+          "description": "若安排担任主持人，请提交主持提纲，以平台显示提纲已收取为完成。",
+          "completionCriteria": [
+            "平台显示提纲已收取"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [
+            "material-0001-outline"
+          ],
+          "timePointTempIds": [
+            "time-0001-next-tuesday-afternoon"
+          ],
+          "confidence": 0.9,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "unknown",
+          "conditionScopeIds": [
+            "scope-0002-e1eb85ab3d336db1fc8ca890d36206287660041a7cc443570cf25db5001d97f4"
+          ],
+          "factScopeIds": [
+            "scope-0006-ff2b489e786e649cd778f8c55ce080d36d2255a679d0c265881c6158b2603ed6"
+          ]
+        },
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [
+      {
+        "tempId": "material-0001-outline",
+        "name": "主持提纲",
+        "required": true,
+        "formatRequirements": [],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": "平台",
+        "relatedTaskTempIds": [
+          "task-0001-submit-outline"
+        ],
+        "scopeIds": [
+          "scope-0003-f11a535e4543e0e70b19a121ae2d34a6900de74adfc6989a6a3292c9abb66a9d",
+          "scope-0004-2fdca49a0cd1c6fda59c396dffc644acbf2b0df08a282bce29de14beced789e4"
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "timePoints": [
+      {
+        "tempId": "time-0001-next-tuesday-afternoon",
+        "type": "planned_start",
+        "rawText": "暂定下周二下午办理",
+        "relatedTaskTempIds": [
+          "task-0001-submit-outline"
+        ],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0005-9c8b904f4e5cb16fcfe57c5105196c4f4ca0706a79478fb2cca2ce0787fdc664"
+        ],
+        "confidence": 0.8,
+        "normalizedValue": "2026-09-29",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": true,
+        "precision": "date_only",
+        "needsConfirmation": false
+      }
+    ],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0001-f52f8b326e828d8f12543118ba2931d95a06aba9632b295a75a071a6efd0f1cc",
+      "scope-0006-ff2b489e786e649cd778f8c55ce080d36d2255a679d0c265881c6158b2603ed6"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "C13-D5R1-S05",
+    "sourceVersionId": "C13-D5R1-S05-v1",
+    "sourceFingerprint": "sha256:685aaed951071d3d6090fe46b1ff3c397068ed61ffdaaf76408b87c805779289"
+  },
+  "ledgerStatus": "settled",
+  "usage": {
+    "input_tokens": 5269,
+    "input_tokens_details": {
+      "cached_tokens": 4736
+    },
+    "output_tokens": 1050,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 6319
+  },
+  "costUpperMicroUsd": 2841,
+  "providerBilledUsd": "NOT_OBSERVABLE",
+  "automaticRepair": false,
+  "retryCount": 0,
+  "verifierCalls": 0
+}

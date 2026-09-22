@@ -1,0 +1,112 @@
+{
+  "version": "candidate13-d6-result-1",
+  "unitId": "D5R1-S04-A",
+  "sourceId": "C13-D5R1-S04",
+  "arm": "A",
+  "ordinal": 8,
+  "bindingSha256": "3de1006c7e2c3d110138bc9ecb0f6bb8402808003acc0a630d0dc028da4cb4d0",
+  "requestSha256": "154c9b036decc72b3e4291ca1ac7a8e50913c656878f97bfcd9ddb4b55d9d6ac",
+  "responseSha256": "9afd6bdf146571c5fe6b831647796230e45ed50d5d8b61c4d7e44f2a3d4e1982",
+  "transportStatus": "COMPLETED_HTTP_200",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "modelMatch": true,
+  "httpStatus": 200,
+  "waitingMs": 2994,
+  "parseError": null,
+  "parseStage": null,
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-attend-reevaluation-presentation",
+        "propositionScopeIds": [
+          "scope-0002-62d11d78e95c735b1e67fe9494c23a71f2cdbda5ab4995f5362f56fb1f75c712",
+          "scope-0003-ed231cb3ff886e3fc990a32121d43fcc8da6e796e688b816e0f57a311482cfbd"
+        ],
+        "semantics": {
+          "actor": "addressed_group",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "attend",
+        "action": {
+          "scopeId": "scope-0002-62d11d78e95c735b1e67fe9494c23a71f2cdbda5ab4995f5362f56fb1f75c712",
+          "surface": "参加"
+        },
+        "object": {
+          "scopeId": "scope-0002-62d11d78e95c735b1e67fe9494c23a71f2cdbda5ab4995f5362f56fb1f75c712",
+          "surface": "作品复评陈述"
+        },
+        "effect": "external_interaction",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "参加作品复评陈述",
+          "description": "进入复评名单的同学须参加作品复评陈述，以完成作品复评陈述为准。",
+          "completionCriteria": [
+            "完成作品复评陈述"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [],
+          "timePointTempIds": [],
+          "confidence": 0.9,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "false",
+          "conditionScopeIds": [
+            "scope-0002-62d11d78e95c735b1e67fe9494c23a71f2cdbda5ab4995f5362f56fb1f75c712"
+          ],
+          "factScopeIds": [
+            "scope-0004-4b6dc3cc3c7cc2c3f699fb7d598fcdcbfe61e82ff0799cc7d918b4124fcce368"
+          ]
+        },
+        "coverage": {
+          "time": "not_stated",
+          "material": "not_stated",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [],
+    "timePoints": [],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0001-43330e448006867bec2040206c9f6d566791884986fe7d4eec95d37e4a6a4078",
+      "scope-0005-7dfaf5a5576c9ada572c66606ddeec28fae327006a3b8739a495d31d5e186cf6"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "C13-D5R1-S04",
+    "sourceVersionId": "C13-D5R1-S04-v1",
+    "sourceFingerprint": "sha256:cb645a1baf7bae473e7e7ad78293317c1ef52cee415a5614c0e320960605eff3"
+  },
+  "ledgerStatus": "settled",
+  "usage": {
+    "input_tokens": 4371,
+    "input_tokens_details": {
+      "cached_tokens": 3840
+    },
+    "output_tokens": 664,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 5035
+  },
+  "costUpperMicroUsd": 2109,
+  "providerBilledUsd": "NOT_OBSERVABLE",
+  "automaticRepair": false,
+  "retryCount": 0,
+  "verifierCalls": 0
+}

@@ -1,0 +1,133 @@
+{
+  "version": "candidate13-d6-result-1",
+  "unitId": "D5R1-S03-A",
+  "sourceId": "C13-D5R1-S03",
+  "arm": "A",
+  "ordinal": 5,
+  "bindingSha256": "3de1006c7e2c3d110138bc9ecb0f6bb8402808003acc0a630d0dc028da4cb4d0",
+  "requestSha256": "4aaf3648a9d42d55638f3ebfa5778509f3673f094b89f0ecf0630bcca8478419",
+  "responseSha256": "89e270e58fdc84b5cf6b83fcb42ecbbff8b0b56a916ce01f7ee2024ef4027f5e",
+  "transportStatus": "COMPLETED_HTTP_200",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "modelMatch": true,
+  "httpStatus": 200,
+  "waitingMs": 3660,
+  "parseError": null,
+  "parseStage": null,
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-claim-access-card",
+        "propositionScopeIds": [
+          "scope-0003-67ebdc3ebc3a7e63e076ac8448c2017d7476ab631769670f7ddf7fa1fb37d38f",
+          "scope-0004-8c1445152bdc863d3ec55b271d11eb6d04dfb8680444c2d87fe4f5d6fb8cde0f"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "collect",
+        "action": {
+          "scopeId": "scope-0003-67ebdc3ebc3a7e63e076ac8448c2017d7476ab631769670f7ddf7fa1fb37d38f",
+          "surface": "领取"
+        },
+        "object": {
+          "scopeId": "scope-0003-67ebdc3ebc3a7e63e076ac8448c2017d7476ab631769670f7ddf7fa1fb37d38f",
+          "surface": "实验室门禁卡"
+        },
+        "effect": "physical_action",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "领取实验室门禁卡",
+          "description": "获批准的同学须在10月16日11:30前领取实验室门禁卡，以在领取册签字为完成。",
+          "completionCriteria": [
+            "在领取册签字"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "high",
+          "dependencyTempIds": [],
+          "materialTempIds": [],
+          "timePointTempIds": [
+            "tp-1016-1130"
+          ],
+          "confidence": 0.95,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "true",
+          "conditionScopeIds": [
+            "scope-0002-05eb30c12e022b359b22704ae90f14e4b3313fe90c85f628fc4f13ab8df9d674"
+          ],
+          "factScopeIds": [
+            "scope-0002-05eb30c12e022b359b22704ae90f14e4b3313fe90c85f628fc4f13ab8df9d674"
+          ]
+        },
+        "coverage": {
+          "time": "present",
+          "material": "not_stated",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [],
+    "timePoints": [
+      {
+        "tempId": "tp-1016-1130",
+        "type": "task_deadline",
+        "rawText": "10月16日11:30前",
+        "relatedTaskTempIds": [
+          "task-claim-access-card"
+        ],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0003-67ebdc3ebc3a7e63e076ac8448c2017d7476ab631769670f7ddf7fa1fb37d38f"
+        ],
+        "confidence": 0.95,
+        "normalizedValue": "2026-10-16T11:30",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "exact",
+        "needsConfirmation": false
+      }
+    ],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0001-a1df4245b9219baca59f03f12e03e42ce4050dbdd51978f9518928e219b874ff",
+      "scope-0002-05eb30c12e022b359b22704ae90f14e4b3313fe90c85f628fc4f13ab8df9d674"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "C13-D5R1-S03",
+    "sourceVersionId": "C13-D5R1-S03-v1",
+    "sourceFingerprint": "sha256:78502bdfb7d940b12e3a357a6f64839aa7b903128578e0f933852429ba3ab840"
+  },
+  "ledgerStatus": "settled",
+  "usage": {
+    "input_tokens": 4322,
+    "input_tokens_details": {
+      "cached_tokens": 3840
+    },
+    "output_tokens": 771,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 5093
+  },
+  "costUpperMicroUsd": 2222,
+  "providerBilledUsd": "NOT_OBSERVABLE",
+  "automaticRepair": false,
+  "retryCount": 0,
+  "verifierCalls": 0
+}

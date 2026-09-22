@@ -1,26 +1,26 @@
 {
-  "version": "candidate13-d4-freeze-results-1",
-  "date": "2026-09-21",
+  "version": "candidate13-d6-development-results-1",
+  "date": "2026-09-22",
   "branch": "codex/e2-candidate11-blind-eval",
   "base": "593ab7847a5791f8e3fbc6e4b82f94a6c4d0ebb5",
   "status": {
-    "engineering": "D4_CANDIDATE13_FROZEN_READY_FOR_FRESH_DATA",
+    "engineering": "D6_REJECT_CANDIDATE13_READY_FOR_CANDIDATE14_ZERO_CALL_ENGINEERING",
     "repositoryGate": "HAS_VERIFIED_HISTORICAL_FAILURE_NO_PROMOTION",
-    "modelQuality": "CANDIDATE13_NOT_RUN_D2_CANDIDATE12_REJECT_PRESERVED",
+    "modelQuality": "REJECT_CANDIDATE13_DEVELOPMENT",
     "humanBenefit": "NOT_OBSERVABLE",
     "merge": "NOT_RUN",
     "deployment": "NOT_RUN"
   },
-  "newModelCalls": 48,
-  "realLedgerWrites": 98,
+  "newModelCalls": 72,
+  "realLedgerWrites": 147,
   "secretReads": "RUNTIME_CONFIGURATION_USED_NOT_PERSISTED",
   "schemaUpgrade": false,
   "dependencyUpgrade": false,
   "protection": {
     "count": 84,
-    "ledgerSha": "df4035229093554b6417b0a37571730f68c10ecb7098234814406b49dfae1e1e",
-    "ledgerRows": 742,
-    "reserves": 362,
+    "ledgerSha": "efb46f116db9c550ba53624c5d710164c6143ba9cc30c57ab2b7515c059f4d6a",
+    "ledgerRows": 791,
+    "reserves": 386,
     "oldOriginAndBrowserLibraries": "NOT_OPERATED"
   },
   "historical": {
@@ -94,6 +94,39 @@
       "timing": "One previous full run failed old OCR timeout terminate assertion; same test and code passed final full run with maxWorkers=2",
       "d3RawNpmTest": "1430 pass, 3 fail, 1 skip: missing REAL_INPUT_CARRIERS_MANIFEST, transient OCR terminate observation, transient A02 5000ms timeout; isolated reruns passed 10/10 and 30/30",
       "d4RawNpmTest": "1441 pass, 1 fail, 1 skip: candidate02 launcher lacked REAL_INPUT_CARRIERS_MANIFEST and resolved an undefined path; isolated carrier run passed 1442/1442 with 1 skip"
+    },
+    "d6": {
+      "node": {
+        "pass": 17,
+        "fail": 0
+      },
+      "vitest": {
+        "pass": 22,
+        "fail": 0
+      },
+      "lint": {
+        "errors": 0,
+        "warnings": 6
+      },
+      "build": "PASS",
+      "securityScan": "PASS_2784_FILES",
+      "fullNpmTest": {
+        "pass": 1452,
+        "fail": 3,
+        "skip": 1,
+        "timeoutReruns": "2/2 PASS",
+        "remainingHistorical": "REAL_INPUT_CARRIERS_MANIFEST"
+      },
+      "rco5007": {
+        "pass": 3,
+        "fail": 1,
+        "error": "FREEZE_HASH_MISMATCH:package-lock.json"
+      },
+      "d5HistoricalPostLedger": {
+        "pass": 3,
+        "fail": 3,
+        "error": "D3_AUTHORITY_LEDGER_DRIFT"
+      }
     }
   },
   "browser": {
@@ -526,7 +559,7 @@
     "8714f0130f62a89ae6230c58a8c3a4664934a8bd"
   ],
   "finalCommit": "Resolve current Git HEAD; final artifact cannot contain its own commit hash.",
-  "nextStage": "D5_FRESH_DEVELOPMENT_PREPARATION_OR_WAIT_FOR_INDEPENDENT_HUMAN_LABELS",
+  "nextStage": "Candidate14 zero-call engineering correction; Candidate13 may not enter independent Holdout.",
   "paidGrant": "D2_CONSUMED_COMPLETE",
   "candidate12D3": {
     "directory": "docs/recognition-optimization/candidate12/d3-scorer-contract",
@@ -664,5 +697,147 @@
     "adapterSha256": "c7c81ae516c30faec850f4d765ae625d2cf1d11f39ed0d515ab93da45efb8be2",
     "candidateBundleSha256": "81037adee63cb48fa66d9aa0f42bb5c8ead18651a606173f386b1ec5c455d617",
     "fixtureSha256": "42d4672672f71e22266910f0ca69d1e263b214113e49f75ac99f842122fe6201"
+  },
+  "candidate13D6": {
+    "runDirectory": "docs/recognition-optimization/candidate13/d6-development-20260922a",
+    "requests": {
+      "attempted": 24,
+      "settled": 24,
+      "retries": 0,
+      "repairs": 0,
+      "verifiers": 0
+    },
+    "pairSummary": {
+      "candidate03Wins": 2,
+      "candidate13Wins": 3,
+      "ties": 7
+    },
+    "arms": {
+      "A": {
+        "scorerVersion": "candidate13-scoring-4.1.0",
+        "sources": 12,
+        "determinate": true,
+        "schemaAndReferenceValid": 12,
+        "completeSources": 2,
+        "taskMetrics": {
+          "tp": 12,
+          "fp": 9,
+          "fn": 6,
+          "precision": 0.5714285714285714,
+          "recall": 0.6666666666666666,
+          "f1": 0.6153846153846153
+        },
+        "severity": {
+          "criticalMajor": 47,
+          "major": 35,
+          "severe": 0,
+          "forbidden": 2,
+          "teachingLeak": 0
+        },
+        "promotionEligible": false,
+        "boundary": "Synthetic Development engineering score only; human correctness and user conversion remain NOT_OBSERVABLE."
+      },
+      "B": {
+        "scorerVersion": "candidate13-scoring-4.1.0",
+        "sources": 12,
+        "determinate": true,
+        "schemaAndReferenceValid": 12,
+        "completeSources": 2,
+        "taskMetrics": {
+          "tp": 14,
+          "fp": 3,
+          "fn": 4,
+          "precision": 0.8235294117647058,
+          "recall": 0.7777777777777778,
+          "f1": 0.7999999999999999
+        },
+        "severity": {
+          "criticalMajor": 35,
+          "major": 30,
+          "severe": 0,
+          "forbidden": 2,
+          "teachingLeak": 0
+        },
+        "promotionEligible": false,
+        "boundary": "Synthetic Development engineering score only; human correctness and user conversion remain NOT_OBSERVABLE."
+      }
+    },
+    "gates": {
+      "allDeterminate": true,
+      "bothArmsSchemaAndReferenceValid": true,
+      "candidate13Safety": false,
+      "noTaskFnOrCriticalMajorRegression": true,
+      "completeSourceGainAtLeast2": false
+    },
+    "decision": "REJECT_CANDIDATE13_DEVELOPMENT",
+    "metrics": {
+      "syntheticDevelopmentFirstWholeSuggestionAccuracy": {
+        "candidate03": {
+          "numerator": 2,
+          "denominator": 12,
+          "value": 0.16666666666666666
+        },
+        "candidate13": {
+          "numerator": 2,
+          "denominator": 12,
+          "value": 0.16666666666666666
+        }
+      },
+      "correctDispositionRate": "NOT_OBSERVABLE",
+      "lowModificationCorrectDispositionRate": "NOT_OBSERVABLE",
+      "activeEditTime": "NOT_OBSERVABLE"
+    },
+    "operational": {
+      "actualCalls": 24,
+      "retries": 0,
+      "repairs": 0,
+      "verifiers": 0,
+      "providerBilledUsd": "NOT_OBSERVABLE",
+      "localAuditableCostUpperMicroUsd": 67607,
+      "localAuditableCostUpperUsd": 0.067607,
+      "authorizedFrozenWorstUsd": 0.35158,
+      "hardLimitUsd": 1,
+      "usage": {
+        "inputTokens": 116262,
+        "cachedInputTokens": 98176,
+        "outputTokens": 27266
+      }
+    },
+    "ledger": {
+      "before": {
+        "path": "C:\\Users\\Winner\\student-affairs-multimodal-exp\\docs\\recognition-optimization\\mainline-real-input-01\\runs\\usage-resume-20260907a\\CALL_LEDGER.jsonl",
+        "rows": 742,
+        "bytes": 631869,
+        "sha256": "df4035229093554b6417b0a37571730f68c10ecb7098234814406b49dfae1e1e",
+        "tail": "6812e1b072caeaa4fd3e6e8e55b485c57533bc0a0d9eaaff4dd84bbf48809922",
+        "nextSequence": 742
+      },
+      "after": {
+        "path": "C:\\Users\\Winner\\student-affairs-multimodal-exp\\docs\\recognition-optimization\\mainline-real-input-01\\runs\\usage-resume-20260907a\\CALL_LEDGER.jsonl",
+        "rows": 791,
+        "bytes": 694807,
+        "sha256": "efb46f116db9c550ba53624c5d710164c6143ba9cc30c57ab2b7515c059f4d6a",
+        "tail": "0d7d84ba0816cb89cc8e54a2dac02d0413f6608431ce7593c23914bfbb5be3b3",
+        "nextSequence": 791
+      }
+    },
+    "browser": {
+      "origin": "http://127.0.0.1:6634/?automation=1",
+      "database": "rco-mainline-01-02-i1-real-input-candidate13-d6-engineering-1",
+      "actions": [
+        "source open",
+        "evidence review",
+        "edit",
+        "rejection",
+        "partial confirmation",
+        "injected atomic failure",
+        "explicit retry",
+        "independent readback",
+        "refresh recovery"
+      ],
+      "consoleErrorsOrWarningsObserved": 0,
+      "noTaskDisposition": "BLOCKED_BY_TIME_AND_EVENT_REVIEW",
+      "notHumanConversion": true
+    }
   }
 }

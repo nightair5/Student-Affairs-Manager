@@ -1,7 +1,7 @@
 # Candidate11 独立支线推进计划
 
-版本：c13-plan-1.0-d4-frozen。日期：2026-09-21（Asia/Shanghai）。
-状态：D4已完成Candidate13零模型调用实现、28类匿名工程回归、候选绑定与全新数据前冻结；D2正式决定仍为`REJECT_CANDIDATE12_ENGINEERING_SCREEN`。Candidate13模型效果尚未评测，独立人工标签、正式Holdout、真人验证、合并和部署仍未执行。
+版本：c13-plan-1.2-d6-rejected。日期：2026-09-22（Asia/Shanghai）。
+状态：D6已按独立授权完成Candidate03/Candidate13的24次D5-R1合成Development配对调用、v4.1评分、预算结算和独立工程回放；正式决定为`REJECT_CANDIDATE13_DEVELOPMENT`。独立人工标签、正式Holdout、真人验证、默认候选替换、合并和部署仍未执行。
 当前主问题：已经正确读取的校园通知，仍会被误拆任务、误判条件、误归材料和时间；旧评分又漏掉部分错误。
 方法主张：以可复核的结构化评分选择最小必要的提示词修正和教学例，降低首次建议的实质纠正负担，再验证真实确认保存。
 
@@ -315,3 +315,19 @@ Candidate03/Candidate13的24个身份均固定`deepseek-flash`、temperature 0�
 下一阶段只有在重新核价、确认权威账本、创建独立grant并获得用户对“24次/US$1.00硬上限”的明确授权后，才可执行一次发送。运行结果仍只是Development工程筛选；真实正确处置率、低修改率和主动修改时间必须经独立人工参照和真人操作验证。
 
 当前停止点：`CANDIDATE13_V4_DEVELOPMENT_READY_FOR_NEW_AUTHORIZATION`。
+
+## 15. D6实际结果、拒绝决定与后续路线
+
+D6使用专用grant严格执行D5-R1冻结的24个身份：24/24一次发送并settled，0重试、0 repair、0 verifier。Candidate13把任务F1从Candidate03的61.54%提高到80.00%，主要来自FP 9→3和FN 6→4；但两臂完整正确来源均为2/12。S11的多端点替代仍产生2个Forbidden，安全门失败；完整来源净增门也失败。正式决定固定为`REJECT_CANDIDATE13_DEVELOPMENT`。
+
+独立工程回放证明录制答案可进入真实编辑、拒绝、部分确认、原子保存、独立读回和刷新恢复链路。S09虽正确为0任务，但维护事件/时间仍待核对，用户无法完成“正确无任务处置”。这项产品阻断和Candidate13的语义错误都需先解决；自动化回放不计入真人指标。
+
+下一阶段不得直接准备Candidate13独立Holdout。应先形成Candidate14零调用工程包：
+
+1. 只使用D6已见错误形成修正规则，重点修复S04条件false实体召回、S08关键字段回归、S11多端点替代/取消端点守恒；同时修复正确0任务含事件信息的确认处置。
+2. 补匿名工程回归，保持正常单任务、多任务、材料、时间、依赖和完成标准召回，禁止靠删除实体降低误报。
+3. 冻结Candidate14版本、Prompt SHA、工程入口和候选绑定，并在接触任何新Development/Expected前提交推送。
+4. 候选冻结后再制作全新合成Development；如需正式Holdout，必须由真实标注者A和复核者B密封双审。
+5. 重新核价、生成零调用身份和预算卡，取得新的明确授权后才可派发。冻结门槛不降低。
+
+当前停止点：`D6_REJECT_CANDIDATE13_READY_FOR_CANDIDATE14_ZERO_CALL_ENGINEERING`。

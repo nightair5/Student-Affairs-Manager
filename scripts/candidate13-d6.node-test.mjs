@@ -24,7 +24,7 @@ const requestText=new Map(d5.requests.map(packet=>[packet.unitId,JSON.stringify(
 
 async function fixture(){
   const dir=await mkdtemp(join(tmpdir(),'candidate13-d6-')),ledger=join(dir,'CALL_LEDGER.jsonl'),lockRoot=join(dir,'lock')
-  await writeFile(ledger,await readFile(authority));await mkdir(lockRoot)
+  const authorityBytes=await readFile(authority);await writeFile(ledger,authorityBytes.subarray(0,631869));await mkdir(lockRoot)
   const now=Date.now(),grant={version:'candidate13-d6-grant-1',grantId:'11111111-1111-4111-8111-111111111111',
     parentTail:'6812e1b072caeaa4fd3e6e8e55b485c57533bc0a0d9eaaff4dd84bbf48809922',parentSequence:742,ledgerPrefixBytes:631869,
     ledgerPrefixSha:'df4035229093554b6417b0a37571730f68c10ecb7098234814406b49dfae1e1e',d5ManifestSha256:digest,bindingSha256:digest,

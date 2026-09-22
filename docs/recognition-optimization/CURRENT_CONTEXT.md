@@ -1,7 +1,18 @@
-# 当前交接：Candidate13 D5 Development已备好，等待新调用授权
+# 当前交接：Candidate13 D6 Development已完成并拒绝晋级
 
 日期：2026-09-22。工作区 C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/比赛；分支 codex/e2-candidate11-blind-eval。
-本轮先完成D1临时Development身份准备，随后获明确授权执行24次candidate03/Candidate12配对模型调用、专用grant和权威账本追加。授权不包含重试、repair、verifier、额外样本、真人、Holdout、默认候选变更、合并或部署。
+本轮按独立D6授权只执行D5-R1 Manifest冻结的24次Candidate03/Candidate13配对调用，模型为`deepseek-flash`，硬上限US$1.00。全部请求一次发送并结算，没有重试、repair、verifier、额外样本、真人、Holdout、默认候选变更、合并或部署。
+
+## D6 当前状态
+
+- 24/24请求HTTP 200并settled，transport/解析/Schema/引用/执行期语义失败均为0。专用grant为`7bcbd608-ba1b-4121-be2f-49c23d8d7029`。
+- Candidate03与Candidate13完整正确来源均2/12，首次整份建议正确率均16.67%。Candidate13 Task F1为80.00%，高于Candidate03的61.54%，但仍有Forbidden=2，且完整来源净增为0。
+- 配对结果为Candidate03胜2、Candidate13胜3、平7。冻结门槛中安全门和完整来源净增门失败，正式决定`REJECT_CANDIDATE13_DEVELOPMENT`。
+- 输入116,262 tokens、缓存输入98,176、输出27,266；本地可审计峰值费用上界US$0.067607，provider实际扣费`NOT_OBSERVABLE`。冻结最坏预算US$0.351580，未超过US$1.00。
+- 权威账本742→791行，新增1 grant、24 reserve、24 settle；最终SHA `efb46f116db9c550ba53624c5d710164c6143ba9cc30c57ab2b7515c059f4d6a`。
+- 独立6634工程回放已验证来源依据、编辑、拒绝、部分确认、原子失败恢复、独立读回和刷新恢复。S09正确0任务但带事件/时间时仍无法完成“正确无任务处置”，是后续产品缺口。
+- 正确处置率、低修改正确处置率、主动修改时间保持`NOT_OBSERVABLE`。Candidate13不得进入独立Holdout、替换默认候选或部署。
+- 结果包：`docs/recognition-optimization/candidate13/d6-development-20260922a/`。下一步先形成Candidate14零调用修正并在新数据前冻结，重点处理S04、S08、S11及零任务信息处置。
 
 ## D5 当前状态
 

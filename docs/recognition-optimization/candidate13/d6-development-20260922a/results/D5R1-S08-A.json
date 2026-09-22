@@ -1,0 +1,189 @@
+{
+  "version": "candidate13-d6-result-1",
+  "unitId": "D5R1-S08-A",
+  "sourceId": "C13-D5R1-S08",
+  "arm": "A",
+  "ordinal": 16,
+  "bindingSha256": "3de1006c7e2c3d110138bc9ecb0f6bb8402808003acc0a630d0dc028da4cb4d0",
+  "requestSha256": "5c4ef3d0a8eb1135cd3fa72cbb2c410091483aa300147f8ae4cef4248b9f61ee",
+  "responseSha256": "c3c7f7a71105933a63dd8bf74e20e938b89bfb2daeb435d994075a29107f3da2",
+  "transportStatus": "COMPLETED_HTTP_200",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "modelMatch": true,
+  "httpStatus": 200,
+  "waitingMs": 5017,
+  "parseError": null,
+  "parseStage": null,
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-verify-bank-card",
+        "propositionScopeIds": [
+          "scope-0002-61bce2fff25c39fedeb15e354cae653bf2af5d4ebac78752162a77315c00c715",
+          "scope-0003-e6a6e5495b8004ef150e60a2d034bd11c2a03e662c7549e82530ceacd1106fb9"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "other",
+        "action": {
+          "scopeId": "scope-0002-61bce2fff25c39fedeb15e354cae653bf2af5d4ebac78752162a77315c00c715",
+          "surface": "核验"
+        },
+        "object": {
+          "scopeId": "scope-0002-61bce2fff25c39fedeb15e354cae653bf2af5d4ebac78752162a77315c00c715",
+          "surface": "报销银行卡信息"
+        },
+        "effect": "external_interaction",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "核验报销银行卡信息",
+          "description": "核验报销银行卡信息，页面显示银行卡核验完成后，才能上传差旅报销声明。",
+          "completionCriteria": [
+            "页面显示银行卡核验完成"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [],
+          "timePointTempIds": [],
+          "confidence": 0.9,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "not_stated",
+          "material": "not_stated",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      },
+      {
+        "id": "task-upload-travel-reimbursement-declaration",
+        "propositionScopeIds": [
+          "scope-0004-c6b1b98209ea00a108bee472075d9a76cd46d1f11729f08bfd60b6031cde3bab",
+          "scope-0005-d850620b754acb41fa3da9313205cd925aef268f0ea79ceb0a217c91d615918d",
+          "scope-0006-40470bb97f568e578ceadeb9204aae2a8f836211e74d134401a6cf50cc36bb9a"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "upload",
+        "action": {
+          "scopeId": "scope-0004-c6b1b98209ea00a108bee472075d9a76cd46d1f11729f08bfd60b6031cde3bab",
+          "surface": "上传"
+        },
+        "object": {
+          "scopeId": "scope-0004-c6b1b98209ea00a108bee472075d9a76cd46d1f11729f08bfd60b6031cde3bab",
+          "surface": "差旅报销声明"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "上传差旅报销声明",
+          "description": "页面显示银行卡核验完成后，才能上传差旅报销声明。差旅报销声明须为PDF；系统显示声明上传成功即完成。",
+          "completionCriteria": [
+            "系统显示声明上传成功"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [
+            "task-verify-bank-card"
+          ],
+          "materialTempIds": [
+            "material-travel-reimbursement-declaration"
+          ],
+          "timePointTempIds": [],
+          "confidence": 0.9,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "unknown",
+          "conditionScopeIds": [
+            "scope-0003-e6a6e5495b8004ef150e60a2d034bd11c2a03e662c7549e82530ceacd1106fb9"
+          ],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "not_stated",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [
+      {
+        "tempId": "material-travel-reimbursement-declaration",
+        "name": "差旅报销声明",
+        "required": true,
+        "formatRequirements": [
+          "PDF"
+        ],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": "上传",
+        "relatedTaskTempIds": [
+          "task-upload-travel-reimbursement-declaration"
+        ],
+        "scopeIds": [
+          "scope-0005-d850620b754acb41fa3da9313205cd925aef268f0ea79ceb0a217c91d615918d"
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "timePoints": [],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0001-6f5be6287affe5fd885f62756cfaadc4620797d476be2c006401f52d4cb7a8ad",
+      "scope-0006-40470bb97f568e578ceadeb9204aae2a8f836211e74d134401a6cf50cc36bb9a"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "C13-D5R1-S08",
+    "sourceVersionId": "C13-D5R1-S08-v1",
+    "sourceFingerprint": "sha256:aab811fdf5cb965f08ada389e448b994e7c02d7752a200b1bcd0008fbe26ba32"
+  },
+  "ledgerStatus": "settled",
+  "usage": {
+    "input_tokens": 4415,
+    "input_tokens_details": {
+      "cached_tokens": 3840
+    },
+    "output_tokens": 1209,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 5624
+  },
+  "costUpperMicroUsd": 2776,
+  "providerBilledUsd": "NOT_OBSERVABLE",
+  "automaticRepair": false,
+  "retryCount": 0,
+  "verifierCalls": 0
+}

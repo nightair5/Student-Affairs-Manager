@@ -1,0 +1,55 @@
+{
+  "version": "candidate13-d6-result-1",
+  "unitId": "D5R1-S04-B",
+  "sourceId": "C13-D5R1-S04",
+  "arm": "B",
+  "ordinal": 7,
+  "bindingSha256": "3de1006c7e2c3d110138bc9ecb0f6bb8402808003acc0a630d0dc028da4cb4d0",
+  "requestSha256": "ef1ae8a95fa2ec5371b9e12ad2444c079d5195b0aedccc4646bd8b18e4b16621",
+  "responseSha256": "717e197c460d49e044b4f4cfe79cd40ebe889b88f8066c3031dde3c5cf58e67d",
+  "transportStatus": "COMPLETED_HTTP_200",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "modelMatch": true,
+  "httpStatus": 200,
+  "waitingMs": 2089,
+  "parseError": null,
+  "parseStage": null,
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [],
+    "materials": [],
+    "timePoints": [],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0001-43330e448006867bec2040206c9f6d566791884986fe7d4eec95d37e4a6a4078",
+      "scope-0002-62d11d78e95c735b1e67fe9494c23a71f2cdbda5ab4995f5362f56fb1f75c712",
+      "scope-0003-ed231cb3ff886e3fc990a32121d43fcc8da6e796e688b816e0f57a311482cfbd",
+      "scope-0004-4b6dc3cc3c7cc2c3f699fb7d598fcdcbfe61e82ff0799cc7d918b4124fcce368",
+      "scope-0005-7dfaf5a5576c9ada572c66606ddeec28fae327006a3b8739a495d31d5e186cf6"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "C13-D5R1-S04",
+    "sourceVersionId": "C13-D5R1-S04-v1",
+    "sourceFingerprint": "sha256:cb645a1baf7bae473e7e7ad78293317c1ef52cee415a5614c0e320960605eff3"
+  },
+  "ledgerStatus": "settled",
+  "usage": {
+    "input_tokens": 5229,
+    "input_tokens_details": {
+      "cached_tokens": 4736
+    },
+    "output_tokens": 270,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 5499
+  },
+  "costUpperMicroUsd": 1893,
+  "providerBilledUsd": "NOT_OBSERVABLE",
+  "automaticRepair": false,
+  "retryCount": 0,
+  "verifierCalls": 0
+}

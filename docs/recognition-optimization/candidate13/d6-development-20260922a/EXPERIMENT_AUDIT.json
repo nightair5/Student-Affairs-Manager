@@ -1,0 +1,41 @@
+{
+  "auditVersion": "candidate13-d6-experiment-audit-1.0.0",
+  "reviewer": {
+    "task": "/root/d6_provisional_experiment_audit/d6_integrity_reviewer",
+    "modelFamily": "gpt-5.6-sol",
+    "reasoning": "ultra",
+    "fresh": true,
+    "sameModelFamily": true,
+    "independentHuman": false,
+    "classification": "PROVISIONAL"
+  },
+  "overall": "WARN",
+  "decisionSupported": "REJECT_CANDIDATE13_DEVELOPMENT",
+  "checks": {
+    "groundTruthProvenance": "WARN_MODEL_ASSISTED_SINGLE_AUTHOR",
+    "scoreNormalization": "PASS_WITH_WARN",
+    "resultExistenceAndExactness": "PASS",
+    "budgetAndLedger": "PASS",
+    "executionReachability": "PASS_WITH_WARN",
+    "scopeAndGateEnforcement": "PASS",
+    "claimScope": "PASS"
+  },
+  "evidenceClassification": {
+    "realModelRequests": 24,
+    "rawResults": 24,
+    "parsedResults": 24,
+    "syntheticDevelopmentSources": 12,
+    "modelAssistedReferences": 12,
+    "independentHumanReferences": 0,
+    "registeredHumanTrials": 0,
+    "browserEngineeringReplay": true
+  },
+  "findings": [
+    "No phantom result, self-normalization, hidden retry, budget overrun or frozen-gate bypass was found.",
+    "Complete-source correctness means complete under scorer v4.1, not exhaustive product-semantic correctness.",
+    "Candidate13 improves task-level precision, recall and F1 but remains 2/12 on complete sources and has two Forbidden findings.",
+    "The S09 correct-zero-task flow is blocked by event/time review and cannot count as correct human disposition.",
+    "Correct disposition, low-modification correct disposition and active edit time remain NOT_OBSERVABLE."
+  ],
+  "claimCeiling": "SYNTHETIC_DEVELOPMENT_ENGINEERING_SELECTION_ONLY"
+}

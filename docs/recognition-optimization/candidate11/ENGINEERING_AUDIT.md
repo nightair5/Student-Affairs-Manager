@@ -16,7 +16,7 @@
 
 ## 阶段状态
 
-A1—A5实施及验证已交付。B2模型评测、Candidate12 D2失败关闭、D3评分契约和D4 Candidate13零调用冻结已完成。仓库全量门槛仍为 HAS_HISTORICAL_FAILURE / NO_PROMOTION。Candidate13模型效果和真人收益 NOT_OBSERVABLE；合并/部署 NOT_RUN。
+A1—A5实施及验证已交付。B2模型评测、Candidate12 D2失败关闭、D3评分契约、D4 Candidate13冻结和D6 Development配对执行已完成。仓库全量门槛仍为 HAS_HISTORICAL_FAILURE / NO_PROMOTION。Candidate13正式决定为`REJECT_CANDIDATE13_DEVELOPMENT`；真人收益仍NOT_OBSERVABLE，合并/部署NOT_RUN。
 
 ## 验证记录
 
@@ -150,6 +150,19 @@ A1—A5实施及验证已交付。B2模型评测、Candidate12 D2失败关闭、
 - 默认候选、Schema、旧库、Preview、Production、D1身份和正式人工Holdout均未修改或运行。
 
 当前停止状态：`D2_EXECUTION_COMPLETE_SCORING_PACKAGE_INVALID / REJECT_CANDIDATE12_ENGINEERING_SCREEN`。下一阶段只能先进行D3零调用评分契约修复和新数据前预注册；正式人工Holdout仍为`WAITING_FOR_INDEPENDENT_HUMAN_LABELS`。
+
+## D6 Candidate03 vs Candidate13 Development执行
+
+- 起点HEAD `51e3916baeeea52475615a36d360ff5daf5443b4`、D5-R1 Manifest SHA `2acd34fce52396a3be17b70fee28e4fe1f3d11bec796e97c672249406c453f53`和742行权威账本均在grant创建前核对通过。执行器提交`69b5943f3480b9a10c57b27ee6d1c9fbb20b3bb1`先推送后派发。
+- 官方价格按DeepSeek V4.1 Flash峰值cache-miss输入US$0.30/M、输出US$1.20/M核验。24份冻结请求最坏预算US$0.351580，低于授权硬上限US$1.00。
+- 专用grant `7bcbd608-ba1b-4121-be2f-49c23d8d7029`绑定24个身份。24/24一次发送、HTTP 200、settled；0 retry、0 repair、0 verifier、0 uncertain、0 halt。
+- Candidate03为TP/FP/FN 12/9/6、F1 61.54%、完整2/12；Candidate13为14/3/4、F1 80.00%、完整2/12。配对为A胜2、B胜3、平7。
+- Candidate13仍有2个Forbidden，完整来源没有净增；冻结安全门和净增门失败，决定`REJECT_CANDIDATE13_DEVELOPMENT`。较高F1不覆盖硬门失败。
+- 合成Development首次整份建议正确率两臂均16.67%；正确处置率、低修改正确处置率和主动修改时间因无注册真人试次保持`NOT_OBSERVABLE`。
+- 权威账本合法追加49行到791行，最终SHA `efb46f116db9c550ba53624c5d710164c6143ba9cc30c57ab2b7515c059f4d6a`。本地可审计费用上界US$0.067607，provider实际扣费`NOT_OBSERVABLE`。
+- 独立6634入口只载入24份录制结果，复用真实App和canonical仓储。浏览器实际通过来源打开、依据定位、编辑、拒绝、部分确认、保存失败回滚、显式重试、独立读回与刷新恢复；控制台无error/warning。
+- S09 Candidate13正确输出0任务且没有误建任务，但因事件/时间待核对，界面禁用“标记已核对（不创建任务）”。工程回放因此为部分通过，不能代替真人正确处置证据。
+- 默认候选、Schema、旧Expected、旧raw、旧结果、旧锁、6633入口、Preview、Production和正式人工Holdout均未修改或运行。
 
 
 ## D3 未来评分参照与评分器契约修复

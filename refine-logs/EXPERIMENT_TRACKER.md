@@ -1,6 +1,6 @@
 # Candidate11 实验跟踪表
 
-版本：c13-tracker-1.1-d5-ready。日期：2026-09-22。
+版本：c13-tracker-1.2-d6-rejected。日期：2026-09-22。
 本表状态反映真实执行；PLANNED不等于授权，PREPARED不等于派发，工程PASS不等于模型/商业PASS。
 核心计划见 [EXPERIMENT_PLAN.md](EXPERIMENT_PLAN.md)。
 
@@ -22,7 +22,9 @@
 | C12-020D | D3 | 未来reference/compiler/scorer接口修复与预注册 | 已见诊断/零调用 | 0 | PASS_ENGINEERING_ONLY | v3契约冻结；48夹具、64测试通过；D1/D2不改写 |
 | C13-010 | D4 | Candidate13零调用实现、反例回归与冻结 | D2已见错误族 | 0 | FROZEN_READY_FOR_FRESH_DATA | 28类已见工程夹具；46 Node + 9 Vitest通过；未模型评测 |
 | C13-020 | D5 | v4.1评分/测量契约与数据前冻结 | 已见评分反例 | 0 | COMMITTED_PUSHED | v4.0作废；`ee6ee45`冻结Schema可表达合同；旧v3绑定保留 |
-| C13-021 | D5-R1 | candidate03 vs Candidate13 12×2合成Development准备 | SYNTHETIC_DEVELOPMENT | 0 | READY_FOR_NEW_AUTHORIZATION | 冻结后重建12完整参照、24 NOT_RUN身份、US$1.00授权上限草案 |
+| C13-021 | D5-R1 | candidate03 vs Candidate13 12×2合成Development准备 | SYNTHETIC_DEVELOPMENT | 0 | EXECUTED_IN_D6 | 冻结后重建12完整参照、24身份；D6独立grant按原身份执行 |
+| C13-022 | D6 | Candidate03 vs Candidate13 24次配对、v4.1评分与结算 | SYNTHETIC_DEVELOPMENT | 24/24 | REJECT_CANDIDATE13_DEVELOPMENT | B的F1 80.00%但Forbidden=2、完整2/12且净增0；账本791行 |
+| C13-023 | D6 | 录制结果独立工程回放与浏览器验收 | RECORDED_ENGINEERING_REPLAY | 0新增 | PARTIAL_PASS_PRODUCT_GAP | 编辑/部分确认/拒绝/失败恢复/刷新通过；零任务事件信息无法完成处置 |
 | C12-021 | C1 | 两位真实人员提交12份新source+Expected | 拟Holdout | 0 | WAITING_FOR_INDEPENDENT_HUMAN_LABELS | 当前来源0/12、完整参照0/12 |
 | C12-022 | C1 | candidate03 vs Candidate12 24个冻结身份 | 12份新配对 | 0 | BLOCKED_BY_HUMAN_GATE | 人工包通过后才可生成；仍保持NOT_RUN |
 | C12-030 | 后续 | 24次Holdout配对执行 | 12份新配对 | <=24 | PLANNED_NOT_AUTHORIZED | 新价格、新预算、新grant及明确授权 |

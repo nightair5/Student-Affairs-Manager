@@ -1,0 +1,33 @@
+{
+  "version": "candidate13-d6-budget-settlement-1",
+  "grantId": "7bcbd608-ba1b-4121-be2f-49c23d8d7029",
+  "currency": "USD",
+  "hardLimitUsd": 1,
+  "authorizedFrozenWorstUsd": 0.35158,
+  "localAuditablePeakPriceUsageUpperUsd": 0.067607,
+  "providerActualBilledUsd": "NOT_OBSERVABLE",
+  "usage": {
+    "inputTokens": 116262,
+    "cachedInputTokens": 98176,
+    "outputTokens": 27266
+  },
+  "ledger": {
+    "path": "C:\\Users\\Winner\\student-affairs-multimodal-exp\\docs\\recognition-optimization\\mainline-real-input-01\\runs\\usage-resume-20260907a\\CALL_LEDGER.jsonl",
+    "rows": 791,
+    "bytes": 694807,
+    "sha256": "efb46f116db9c550ba53624c5d710164c6143ba9cc30c57ab2b7515c059f4d6a",
+    "tail": "0d7d84ba0816cb89cc8e54a2dac02d0413f6608431ce7593c23914bfbb5be3b3",
+    "nextSequence": 791
+  },
+  "priceEvidence": [
+    {
+      "url": "https://api-docs.deepseek.com/quick_start/pricing/",
+      "claim": "deepseek-flash maps to DeepSeek-V4.1-Flash; peak cache-miss input USD 0.30/M and output USD 1.20/M"
+    }
+  ],
+  "requests": {
+    "settled": 24,
+    "total": 24
+  },
+  "unknownFeeHandling": "Provider actual charge remains NOT_OBSERVABLE; no estimate is represented as billed amount."
+}
