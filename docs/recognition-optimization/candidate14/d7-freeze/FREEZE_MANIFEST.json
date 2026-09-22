@@ -1,12 +1,12 @@
 {
-  "version": "candidate14-d7-freeze-manifest-1.0.0",
+  "version": "candidate14-d7-freeze-manifest-1.1.0",
   "status": "FROZEN_PRE_DATA",
-  "baseHead": "efbd905f64e46839fd56b4bfa53c1e0c06c5d51b",
+  "baseHead": "df7858425afb2eec048f06587500ff184086d034",
   "branch": "codex/e2-candidate11-blind-eval",
   "candidateVersion": "real-input-source-semantics-14",
   "promptVersion": "recognition-prompt-candidate14-1.0.0",
-  "referenceVersion": "candidate14-reference-contract-5.0.0",
-  "scorerVersion": "candidate14-scoring-5.0.0",
+  "referenceVersion": "candidate14-reference-contract-5.1.0",
+  "scorerVersion": "candidate14-scoring-5.1.0",
   "commonAdapterVersion": "candidate14-common-adapter-1.0.0",
   "timePolicyVersion": "candidate14-time-policy-1.0.0",
   "measurementVersion": "candidate14-product-metrics-2.0.0",
@@ -39,13 +39,13 @@
     },
     {
       "path": "scripts/candidate14-reference-contract.mjs",
-      "bytes": 3609,
-      "sha256": "2a201a1a80b1ec971c3ae80b00d81c2d0de7fa3aeb80546a821e5133395d99f3"
+      "bytes": 3985,
+      "sha256": "20c661255c86afc187d2fd05b7e9a2edc3e9d093ca11a310c203bac46b4a3cdd"
     },
     {
       "path": "scripts/score-candidate14-contract-v5.mjs",
-      "bytes": 5124,
-      "sha256": "3ec2a18e843e06115558655b4a6f10eaca0b7b44a72f684c819ed1752988c173"
+      "bytes": 6879,
+      "sha256": "d6435a126862839ecde7a6bdadb8ef1e8c85ee55e06042fbadf2b99fe889761a"
     },
     {
       "path": "scripts/analyze-candidate14-d7-offline.mjs",
@@ -54,13 +54,13 @@
     },
     {
       "path": "docs/recognition-optimization/candidate14/d7-freeze/CANDIDATE14_SPEC.md",
-      "bytes": 930,
-      "sha256": "65a81c63caa668049aab7144835cdb0f7e3048400bb5161c302cd9889f557235"
+      "bytes": 977,
+      "sha256": "445a7359bd2640fee366b9c5238bce87278be78ba18a7167cfdf49e7f551ebac"
     },
     {
       "path": "docs/recognition-optimization/candidate14/d7-freeze/REFERENCE_AND_SCORING_CONTRACT.md",
-      "bytes": 946,
-      "sha256": "0a400d475406b53f644518da6ddb85bbffcb22f9d0ce93fe20e577fb8be6a9eb"
+      "bytes": 1123,
+      "sha256": "94a3a34abd1595392ca5d34b3ad809934e6757d405071f4a34653721fcf7f6af"
     },
     {
       "path": "docs/recognition-optimization/candidate14/d7-freeze/PRODUCT_MEASUREMENT_CONTRACT.md",
@@ -73,7 +73,7 @@
       "sha256": "4df454418fb02677c63afad1052edaf1ecd59f01b81edfcc934c410ed4d31a9e"
     }
   ],
-  "aggregateSha256": "6465ee5706cc0d290db7e256ea42b28025ec2ae3ab212782bcec910742608de7",
+  "aggregateSha256": "85cab155873d01fdb337cdad6876dc7ef0cb15edbbc22405c57b7592b7be8583",
   "protectedFiles": 84,
   "ledger": {
     "path": "C:\\Users\\Winner\\student-affairs-multimodal-exp\\docs\\recognition-optimization\\mainline-real-input-01\\runs\\usage-resume-20260907a\\CALL_LEDGER.jsonl",
