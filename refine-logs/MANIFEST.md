@@ -1,5 +1,7 @@
 # 规划产物索引
 
+> D9 新增：[结果与剩余工作](../docs/recognition-optimization/candidate15/d9-development/D9_RESULTS.md)、[浏览器证据](../docs/recognition-optimization/candidate15/d9-development/BROWSER_EVIDENCE.md)、[12份 provisional 参照](../docs/recognition-optimization/candidate15/d9-development/REFERENCES.json)、[正反例往返](../docs/recognition-optimization/candidate15/d9-development/ROUNDTRIP_RESULTS.json)、[24个未授权请求](../docs/recognition-optimization/candidate15/d9-development/PREPARED_REQUEST_IDENTITIES.json)、[冻结 Manifest](../docs/recognition-optimization/candidate15/d9-development/MANIFEST.json)、[未来预算草案](../docs/recognition-optimization/candidate15/d9-development/FUTURE_BUDGET_AUTHORIZATION_DRAFT.md)。D9 受独立事件编辑/读回阻断，不能发送请求；下方 D8 条目是历史快照。
+
 > D8 新交付：[Candidate15 D8 结果与停止点](../docs/recognition-optimization/candidate15/d8-development/D8_RESULTS.md)、[语义对应表](../docs/recognition-optimization/candidate15/d8-development/SEMANTIC_TRACE.md)、[计时口径](../docs/recognition-optimization/candidate15/d8-development/MEASUREMENT_CONTRACT_V3.md)、[零调用包](../docs/recognition-optimization/candidate15/d8-development/MANIFEST.json)、[预算草案](../docs/recognition-optimization/candidate15/d8-development/FUTURE_BUDGET_CARD_DRAFT.md)。W1/W2 工程交付，W3 等待完整参照；下方 D7 索引属于历史快照。
 
 > 当前执行入口为 [PRD 1.0](../PRD.md)、[AGENTS 2.0](../AGENTS.md) 和 [治理 D8 提示词](../docs/governance/NEXT_STAGE_EXECUTION_PROMPT.md)。下方 D7 提示词行属于历史方案，不能覆盖当前规则。

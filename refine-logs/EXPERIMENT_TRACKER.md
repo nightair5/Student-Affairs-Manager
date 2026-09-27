@@ -1,5 +1,7 @@
 # Candidate11 实验跟踪表
 
+> D9 最新（2026-09-27）：12/12 provisional v6 参照和 24 个零调用身份已构造、校验；浏览器独立事件编辑与正式读回未过，`D9_BLOCKED_ON_REFERENCE_OR_BROWSER_CONTRACT`。不能申请派发。详见 [D9 结果](../docs/recognition-optimization/candidate15/d9-development/D9_RESULTS.md)。下方 D8 跟踪行保留其历史时间点。
+
 > D8 最新（2026-09-27）：W1/W2 工程实现和浏览器部分验收完成，W3 参照不足，未形成可派发批次。见 [D8 结果](../docs/recognition-optimization/candidate15/d8-development/D8_RESULTS.md)。下方 D7 顶部段落保留历史状态。
 
 > 2026-09-27 最新治理状态：文档与只读保护工具交付；候选仍 D7_BLOCKED_ON_REFERENCE_CONTRACT。旧行保留历史意义，新工作包见 [治理审查](../docs/governance/GOVERNANCE_REVIEW_2026-09-27.md)。
@@ -10,6 +12,9 @@
 
 | ID | 阶段 | 工作/比较 | 数据角色 | 调用 | 当前状态 | 进入条件 / 交付 |
 |---|---|---|---|---:|---|---|
+| C15-D9-REF | D9 | 12份 v6 结构参照与正反例往返 | 完全已见合成 Development，非独立人工 | 0 | PASS_PROVISIONAL_CONTRACT | 12/12 正例与 12/12 关键字段负例通过；历史 Expected 不动 |
+| C15-D9-BROWSER | D9 | 纯信息与独立事件工程验收 | S09 匿名合法夹具，隔离浏览器 | 0 | BLOCKED_EVENT_EDIT_READBACK | 无任务确认/失败恢复/刷新通过；独立事件单独编辑与 canonical 读回缺失 |
+| C15-D9-PAIR | D9 | Candidate03 vs Candidate15 12×2 配对身份 | 已见合成 Development | 0/24 | PREPARED_UNAUTHORIZED_NOT_READY | 6 AB、6 BA，`dispatchAuthorized=false`；浏览器契约与预算上界未过，不可发送 |
 | C15-D8-W1 | D8 | Candidate15 Prompt、v6参照/评分、独立事件时间变异 | 已见工程反例 | 0 | PASS_TARGETED_ENGINEERING_ONLY | 无任务 scope/事件六字段正反例通过；12来源完整参照未齐 |
 | C15-D8-W2 | D8 | 真实确认组件与计时 v3、6635 隔离工程回放 | D6已见录制结果 | 0 | PARTIAL_BROWSER_ENGINEERING | 编辑失败恢复、部分确认、无日期任务、读回/刷新通过；纯信息归档与完整仪器未验收 |
 | C15-D8-W3 | D8 | Candidate03 vs Candidate15 12×2 计划 | 完全已见合成 Development | 0 | WAITING_FOR_COMPLETE_REFERENCES | v6 完整参照0/12、实际身份0/24、dispatchAuthorized=false、NOT_RUN；新授权前仍需冻结和核价 |

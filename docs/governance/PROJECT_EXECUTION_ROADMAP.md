@@ -2,6 +2,8 @@
 
 > 执行状态更新（2026-09-27）：D8 的 Candidate15 语义/评分与真实确认/计时工程已交付，6635 浏览器回放完成部分验收；W3 仍缺 12 份完整 v6 参照，实际请求身份 0/24，尚不可申请派发。下一项本地工作是补逐来源参照与正反例，再冻结请求身份。详见 [D8 结果](../recognition-optimization/candidate15/d8-development/D8_RESULTS.md)。下文“现在先执行 D8”属于制定本路线时的起点快照，不是重复执行指令。
 
+> D9 后续状态更新（2026-09-27）：上述 D8 数据是历史快照。D9 已完成 12/12 provisional v6 参照、正反例与 24 个未经授权的 `NOT_RUN` 身份；纯信息保存、失败恢复和读回通过。下一本地工程工作改为补无任务独立事件的逐字段编辑、确认与 canonical 读回/刷新，重新进行浏览器验收与执行 Manifest 冻结。此项未过以前不申请 24 次调用，详见 [D9 结果](../recognition-optimization/candidate15/d9-development/D9_RESULTS.md)。随后才是新预算授权、已见 Development 配对、独立人工 Holdout 和真人效用验证。
+
 制定日期：2026-09-27。规划起点：`2a19b65eea51f7bd39ed7bff13264997bf8030bf`，本地/upstream/远端一致，工作区干净。当前分支为 `codex/e2-candidate11-blind-eval`。本文件细化现行 PRD 的工作顺序、责任和验收，不覆盖冻结实验或另设发布标准；本轮只制定计划，没有执行下列产品改造、调用或真人研究。
 
 ## 1. 你现在先做什么

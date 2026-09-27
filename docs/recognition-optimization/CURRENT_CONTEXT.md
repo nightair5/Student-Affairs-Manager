@@ -1,4 +1,8 @@
-# 当前交接：D8 W1/W2 工程已交付，W3 等待完整参照
+# 当前交接：D9 参照与零调用身份已建，独立事件浏览器契约阻断
+
+## D9 最新状态（2026-09-27）
+
+12/12 份完全已见的 D5 合成 Development 来源已有单作者、模型辅助的 provisional 完整 v6 参照，并通过真实 Schema→公共 adapter→v6 评分器的 12 组正反例。Candidate03/Candidate15 的 24 个配对身份已生成并校验，全部 `NOT_RUN`、`dispatchAuthorized=false`，没有模型调用、grant 或账本写入。S09 匿名工程夹具的纯信息无任务保存、失败恢复、独立读回和刷新通过；但独立事件没有单独编辑与正式 Event 读回入口，不能把这轮标记为可调用。当前停止点 `D9_BLOCKED_ON_REFERENCE_OR_BROWSER_CONTRACT`，详见 [D9 结果](candidate15/d9-development/D9_RESULTS.md) 与 [浏览器证据](candidate15/d9-development/BROWSER_EVIDENCE.md)。四项真人指标仍 `NOT_OBSERVABLE`。下方 D8 段落为当时快照，其 0/12、0/24 不代表 D9 现状。
 
 ## D8 最新状态（2026-09-27）
 

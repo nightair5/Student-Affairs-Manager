@@ -1,5 +1,7 @@
 # C11 A—D4 工程与 Development 执行审计
 
+> D9 追加审计（2026-09-27）：D8 旧文件未改；D9 另建 12/12 provisional v6 完整参照与 24 个严格未授权、未运行请求身份。12 组正反例经真实 Schema、公共 adapter、v6 评分器往返；跨身份漂移、重复、未授权均在零调用校验工具中阻断。独立 6637/6638 浏览器验证纯信息无任务确认、失败恢复、读回和刷新，但无任务独立事件缺少编辑及 canonical Event 读回，故 `D9_BLOCKED_ON_REFERENCE_OR_BROWSER_CONTRACT`。详见 [D9 结果](../candidate15/d9-development/D9_RESULTS.md)。旧 D8 0/12、0/24 记录仅为当时快照。
+
 > D8 追加记录（2026-09-27）：Candidate15 v6 评分和计时 v3 的零调用工程修复、6635 隔离浏览器回放已实施；12 份已见来源的 v6 完整参照仍为 0/12，实际请求身份 0/24，不能派发。详见 [D8 结果](../candidate15/d8-development/D8_RESULTS.md)。本文件下方 A—D7 叙述保持其历史时间点，不把旧 D6/D7 成绩改写为 Candidate15 结果。
 
 日期：2026-09-21。起点：593ab7847a5791f8e3fbc6e4b82f94a6c4d0ebb5。

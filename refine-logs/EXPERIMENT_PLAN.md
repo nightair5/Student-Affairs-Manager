@@ -1,5 +1,7 @@
 # Candidate11 独立支线推进计划
 
+> D9 现状（2026-09-27）：12/12 份已见合成 Development 来源形成 provisional v6 完整参照，24 个配对请求身份准备但 `dispatchAuthorized=false`、`NOT_RUN`，不是调用许可。独立浏览器已证明纯信息来源保留、0 任务/0 项目、失败后人工重试与刷新；无任务独立事件不能逐字段编辑及正式读回，停止于 `D9_BLOCKED_ON_REFERENCE_OR_BROWSER_CONTRACT`。下一步先补此工程缺口、重做浏览器与冻结校验，再单独申请固定模型/次数/费用授权。见 [D9 结果](../docs/recognition-optimization/candidate15/d9-development/D9_RESULTS.md)。下方 D8 数字为历史快照。
+
 > D8 实施记录（2026-09-27）：Candidate15 v6 语义/评分与计时 v3、独立浏览器工程回放已交付；12 份已见 D5 来源的完整 v6 参照 0/12，实际请求身份 0/24，停止于 `W1_W2_ENGINEERING_DELIVERED_W3_WAITING_FOR_COMPLETE_REFERENCES`。先补逐来源参照与真实链路正反例，再冻结身份；此时不能申请派发。见 [D8 结果](../docs/recognition-optimization/candidate15/d8-development/D8_RESULTS.md)。下方“D8 未执行”等文字是治理复查时的历史计划快照。
 
 > 当前详细路线：[五批执行计划](../docs/governance/PROJECT_EXECUTION_ROADMAP.md)，包含 D8 工作分解、后续 24 次开发对比、独立人工参照、探索真人设计、发布依赖、各方职责和停止条件。新增样本设计均为计划建议，不创造外部行动许可；当前仍未执行 D8。
