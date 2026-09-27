@@ -1,5 +1,7 @@
 # Candidate11 独立支线推进计划
 
+> 当前详细路线：[五批执行计划](../docs/governance/PROJECT_EXECUTION_ROADMAP.md)，包含 D8 工作分解、后续 24 次开发对比、独立人工参照、探索真人设计、发布依赖、各方职责和停止条件。新增样本设计均为计划建议，不创造外部行动许可；当前仍未执行 D8。
+
 > 当前入口更新（2026-09-27）：以根 PRD 1.0 / AGENTS 2.0 和 [治理 D8 工作包](../docs/governance/NEXT_STAGE_EXECUTION_PROMPT.md) 为后续执行规则。以下保留各阶段历史计划；旧授权/全新 Development 要求不自动成为当前授权或当前门槛。D7 仍阻断，下一步先 W1/W2 零调用工程。
 
 > 同日全局复查补充：[行动表](../docs/governance/review-20260927-r2/REVIEW_AND_ACTIONS.md) 已将评分时间漏检、阅读/编辑混计、批量纠正漏计纳入 W1/W2；[20 项资源](../docs/governance/review-20260927-r2/RESOURCE_CATALOG.md) 按用途筛选。入口及工具已修，产品代码待 D8；不新开无必要支线，不先装新框架。

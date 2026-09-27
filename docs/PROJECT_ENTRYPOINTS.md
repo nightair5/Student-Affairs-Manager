@@ -7,7 +7,7 @@
 1. [PRD](../PRD.md)：用户目标、四项指标和验收含义。
 2. [AGENTS](../AGENTS.md)：自主执行、数据保护、版本边界与分层检查。
 3. [CURRENT_CONTEXT](recognition-optimization/CURRENT_CONTEXT.md)：实际最新状态和未完成项。
-4. 当前工作包：[D8 执行提示词](governance/NEXT_STAGE_EXECUTION_PROMPT.md)；先完成契约与测量修正，再准备新调用。
+4. 当前工作包：[D8 执行提示词](governance/NEXT_STAGE_EXECUTION_PROMPT.md)；先完成契约与测量修正，再准备新调用。后续五批工作、角色与验收见 [完整执行路线](governance/PROJECT_EXECUTION_ROADMAP.md)。
 5. 按涉及范围查 [全局复查与行动表](governance/review-20260927-r2/REVIEW_AND_ACTIONS.md) 和 [外部资源目录](governance/review-20260927-r2/RESOURCE_CATALOG.md)。不必把全部历史载入上下文。
 
 ## 文件按用途使用

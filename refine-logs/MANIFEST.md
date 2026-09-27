@@ -8,6 +8,7 @@ A1—A5 至 D6 历史产物保留。D6决定为`REJECT_CANDIDATE13_DEVELOPMENT`�
 | 产物 | 版本 | 作用 |
 |---|---|---|
 | [项目入口](../docs/PROJECT_ENTRYPOINTS.md) | 2026-09-27 | 当前、历史、冻结及商业草案的用途索引 |
+| [完整执行路线](../docs/governance/PROJECT_EXECUTION_ROADMAP.md) | roadmap-20260927 | 当前 D8 至后续五批工作、交付与验收、人员责任和启动指令；待执行计划 |
 | [全局复查与行动](../docs/governance/review-20260927-r2/REVIEW_AND_ACTIONS.md) | governance-r2 | 文件范围、测量反例、W1—W6 与验证入口 |
 | [外部资源目录](../docs/governance/review-20260927-r2/RESOURCE_CATALOG.md) | research-20260927 | 20 项一手资源、许可、成本与本地适配判断 |
 | [时间戳计划](2026-09-21_1100_EXPERIMENT_PLAN.md) | c11-plan-0.1-draft | 本轮计划快照 |

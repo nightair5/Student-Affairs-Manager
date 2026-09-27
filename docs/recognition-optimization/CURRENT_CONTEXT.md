@@ -4,6 +4,8 @@
 
 ## 最新复查（2026-09-27）
 
+后续规划已按用户要求展开为 [完整执行路线](../governance/PROJECT_EXECUTION_ROADMAP.md)：当前先连续执行 D8 的 W1/W2/W3，再按结果进入新授权 Development、独立人工 Holdout、真人效用和发布准备。文末有可直接发送的启动指令；本轮仅交付计划，D8 尚未执行。
+
 已修正 README、PR 模板、RUNBOOK 和旧总计划的适用范围，新增 [项目入口](../PROJECT_ENTRYPOINTS.md)。PRD 1.0 / AGENTS 2.0 与其哈希不变。保护工具单测改为纯内存夹具，CI 增加独立治理单测，原 verify job 与发布门保留。
 
 只读工程复现发现 measurement 2.4 把阅读计作主动修改，且 edit 与批量保存 ID 不同可能漏计纠正。旧冻结代码未改；下一版需修复。20 项外部资源已按优先级筛选，优先借鉴证据定位、行为反例测试、标注隔离和交互恢复。详见 [复查与行动表](../governance/review-20260927-r2/REVIEW_AND_ACTIONS.md)、[资源目录](../governance/review-20260927-r2/RESOURCE_CATALOG.md)；[D8 提示词](../governance/NEXT_STAGE_EXECUTION_PROMPT.md) 已加入具体反例验收。
