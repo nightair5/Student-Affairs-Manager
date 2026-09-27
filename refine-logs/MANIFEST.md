@@ -1,7 +1,7 @@
 # 规划产物索引
 
-阶段：C13-D6 Development执行与拒绝；日期：2026-09-22。作者：本任务；性质：24次冻结调用、v4.1评分、预算结算与录制结果工程回放。
-A1—A5、B1、B2、Candidate12冻结、D1身份准备、D2执行、D3契约修复、D4 Candidate13冻结、D5准备和D6执行已完成。D6决定为`REJECT_CANDIDATE13_DEVELOPMENT`；没有真人标签、正式Holdout、默认候选替换、合并或部署。
+阶段：C14-D7 契约阻断；日期：2026-09-27。作者：本任务；性质：D6证据复核、Candidate14工程链路、R4/R5派发前失效与下一轮合同决定。
+A1—A5 至 D6 历史产物保留。D6决定为`REJECT_CANDIDATE13_DEVELOPMENT`；D7 当前为`D7_BLOCKED_ON_REFERENCE_CONTRACT`。没有D7模型调用、真人标签、正式Holdout、默认候选替换、合并或部署。
 
 | 产物 | 版本 | 作用 |
 |---|---|---|
@@ -12,9 +12,10 @@ A1—A5、B1、B2、Candidate12冻结、D1身份准备、D2执行、D3契约修�
 | [D3时间戳计划](2026-09-21_2316_EXPERIMENT_PLAN.md) | c12-plan-0.9-d3-scorer-contract | 未来评分契约修复、Candidate13计划与全新数据停止点 |
 | [D4时间戳计划](2026-09-21_2343_EXPERIMENT_PLAN.md) | c13-plan-1.0-d4-frozen | Candidate13冻结、全新数据隔离与后续顺序 |
 | [D5时间戳计划](2026-09-22_1005_EXPERIMENT_PLAN.md) | c13-plan-1.1-d5-ready | D5零调用交付和下一授权门 |
-| [当前计划](EXPERIMENT_PLAN.md) | c13-plan-1.1-d5-ready | D5后的权威当前计划；时间戳文件保留快照 |
+| [D7 R4时间戳计划](2026-09-22_1535_EXPERIMENT_PLAN.md) | c14-d7-r4-historical-invalidated | 原R4计划及2026-09-27追加失效订正 |
+| [当前计划](EXPERIMENT_PLAN.md) | c14-d7-blocked | D7契约阻断后的当前执行顺序；时间戳文件保留历史快照 |
 | [时间戳跟踪表](2026-09-21_1100_EXPERIMENT_TRACKER.md) | c11-tracker-0.1 | 本轮任务状态快照 |
-| [当前跟踪表](EXPERIMENT_TRACKER.md) | c13-tracker-1.1-d5-ready | D5真实状态；时间戳文件保留原快照 |
+| [当前跟踪表](EXPERIMENT_TRACKER.md) | c14-d7-blocked | R4/R5派发前失效与当前阻断；时间戳文件保留原快照 |
 | [分支基线](../docs/recognition-optimization/candidate11/BRANCH_BASELINE.json) | candidate11-branch-baseline-1 | 父提交、84个保护文件、账本hash和换行处理 |
 | [分支审计](../docs/recognition-optimization/candidate11/BRANCH_SETUP_AUDIT.md) | C11-P0 | 本轮检查、差异与范围 |
 | [A—B2审计](../docs/recognition-optimization/candidate11/ENGINEERING_AUDIT.md) | C11-A—B2 | A1—A5、B1准备及B2执行边界 |
@@ -31,4 +32,12 @@ A1—A5、B1、B2、Candidate12冻结、D1身份准备、D2执行、D3契约修�
 | [D5 实验完整性审计](../docs/recognition-optimization/candidate13/d5-development/EXPERIMENT_AUDIT.md) | candidate13-d5r1-experiment-audit-1.0.0 | 同系列全新只读复核PASS_WITH_WARN；不是独立人工审计 |
 | [D6 Development结果包](../docs/recognition-optimization/candidate13/d6-development-20260922a/README.md) | candidate13-d6-results-1 | 24次一次发送、v4.1评分、拒绝决定、结算和工程回放 |
 | [D6 provisional实验审计](../docs/recognition-optimization/candidate13/d6-development-20260922a/EXPERIMENT_AUDIT.md) | candidate13-d6-experiment-audit-1.0.0 | 同系列模型只读审计；不是独立人工真值 |
-| [短交接](../docs/recognition-optimization/CURRENT_CONTEXT.md) | C13-D6 | 下一轮恢复入口；Candidate13已拒绝，下一步为Candidate14零调用工程修正 |
+| [D7 Candidate14冻结](../docs/recognition-optimization/candidate14/d7-freeze/CANDIDATE14_SPEC.md) | candidate14-d7-freeze-1.3 | 单一Prompt、Reference/Scorer 5.3、time 1.1、无任务1.2与测量2.2 |
+| D7 Development R3 | candidate14-d7-development-r3 | 派发前失效；Manifest SHA `96760f25fab7cce9b78068aea38bd571737baa3925ac6815f80ea8a312d7de30` |
+| [D7追加订正](../docs/recognition-optimization/candidate14/d7-diagnostics/CORRECTIONS_LOG.md) | candidate14-d7-corrections-1 | D6 24单元证据链复核与预分配事后假设；不改历史决定和准确率 |
+| [短交接](../docs/recognition-optimization/CURRENT_CONTEXT.md) | C14-D7-blocked | 最新停止点与下一轮前置工作 |
+| [D7 Candidate14冻结 R5前版](../docs/recognition-optimization/candidate14/d7-freeze/CANDIDATE14_SPEC.md) | candidate14-d7-freeze-1.5 | Reference/Scorer 5.5、time 1.1、无任务1.4与测量2.4；因评分契约缺口不能派发 |
+| D7 Development R4/R5 | INVALIDATED_PRE_DISPATCH | R4/R5 Manifest SHA 分别为 `00cf5919…50a8866` / `3513b4f7…b11c0bfed`；无可派发身份 |
+| [D7架构决定](../docs/recognition-optimization/candidate14/d7-blocked/ARCHITECTURE_DECISION.md) | D7_BLOCKED_ON_REFERENCE_CONTRACT | 同系列 provisional 审计反例、派发前失效原因和下一轮设计门 |
+| [D7 provisional实验审计](../docs/recognition-optimization/candidate14/d7-blocked/PROVISIONAL_EXPERIMENT_AUDIT.md) | FAIL_FOR_DEVELOPMENT_DISPATCH | 冻结/身份结构通过，时间与信息事实评分契约失败 |
+| [R5已见来源排除库](../docs/recognition-optimization/candidate14/d7-blocked/INVALIDATED_R5_SEEN_SOURCES.json) | candidate14-d7-invalidated-r5-seen-sources-1 | 12份已见合成来源，后续排重专用；不含请求身份 |

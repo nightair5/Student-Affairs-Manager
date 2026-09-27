@@ -125,3 +125,30 @@ A包当时只构造工程请求与NOT_RUN身份记录；B2随后按新授权生�
 - 所有身份都为`dispatchAuthorized=false / NOT_RUN`；请求不含Expected，两臂非Prompt字段一致，顺序6 AB/6 BA。
 - 权威账本仍为742行和SHA `df4035229093554b6417b0a37571730f68c10ecb7098234814406b49dfae1e1e`；新调用0，Secret/grant/reserve/settle/账本写入0。
 - 四项主指标的工程计算路径已实现，但新模型结果和真人结果仍分别为`NOT_RUN / NOT_OBSERVABLE`。
+
+## Candidate14 D7登记
+
+- 现行冻结提交：`02cc0f613f4f554af2c4dc7a916765820dc2f1c2`；此前`df78584`、`a7626da`、`0b13e44`、`6b07a76`、`f9c1754`保留为可审计修订历史。
+- 版本：Candidate14 `real-input-source-semantics-14`，Prompt `recognition-prompt-candidate14-1.0.0`，Reference/Scorer 5.3.0，公共adapter 1.0.0，time policy 1.1.0，no-task disposition 1.2.0，measurement 2.2.0。
+- D6 24单元证据链复核通过；历史拒绝、raw、Expected、评分与锁文件未改。错误类型仅为预分配事后假设，不产生订正后准确率。
+- R1 Manifest `8e3775...`与R2 Manifest `7da51e...`均在派发前失效。R3为12 source/12 provisional reference/24身份、6 AB/6 BA，Manifest SHA `96760f25fab7cce9b78068aea38bd571737baa3925ac6815f80ea8a312d7de30`。
+- 模型调用、Secret、grant/reserve/settle、权威账本写入均为0；24个身份全部`dispatchAuthorized=false / NOT_RUN`。
+- 独立6635浏览器工程回放已验证无任务归档、不可变首次输出锚点、完整事实收据、正式实体零增量、独立读回和刷新恢复；数据库为`rco-candidate14-d7-engineering-3`，不计入真人指标。
+- 状态：`D7_CANDIDATE14_READY_FOR_NEW_DEVELOPMENT_AUTHORIZATION`。
+
+## Candidate14 D7 R4登记
+
+- 冻结提交 `fcb5b91`；Reference/Scorer 5.4、time 1.1、no-task 1.3、measurement 2.3。
+- R1/R2/R3 均在派发前失效且零调用；R4 Manifest SHA `00cf591998b6396ca4bbbbca61b4a0594cdb88f86b8879f02391bdea350a8866`。
+- R4：12 source、12 provisional reference、24 identity、6 AB/6 BA，全部 `dispatchAuthorized=false / NOT_RUN`。
+- 权威账本 791 行、SHA `efb46f116db9c550ba53624c5d710164c6143ba9cc30c57ab2b7515c059f4d6a`；保护文件 84。
+- R4 浏览器验收：`NOT_RUN / nodeRepl.fetch request failed`。模型调用、Secret、预算和账本写入均为 0。
+- 状态：`D7_CANDIDATE14_READY_FOR_NEW_DEVELOPMENT_AUTHORIZATION`。
+
+## Candidate14 D7 R4/R5失效与当前阻断（2026-09-27）
+
+- 上述“可授权”记录现为历史快照。R4 Manifest `00cf591998b6396ca4bbbbca61b4a0594cdb88f86b8879f02391bdea350a8866` 因数据先于冻结、时间证据不实而在派发前失效。
+- 新冻结提交 `c1598c6` 已推送：Reference/Scorer 5.5、no-task 1.4、measurement 2.4、数据前通用生成器及冻结选择门槛。R5 post-freeze 作者文件 SHA `ca2fba295de9c11ea3931b74dba36a7e85548a67bc19c6988b5b48a4eab7e290`，Manifest SHA `3513b4f7842d7992b65d850057f18bac91424de77d773236d7c51ecb11c0bfed`。
+- R5 结构核验 12 source/12 reference/24 unique identity、6 AB/6 BA、`dispatchAuthorized=false / NOT_RUN`、重合最高 0.2099；同系列 provisional 审计为 FAIL。S09 错误时间语义仍可得 `complete=true`，无任务信息 scope 与 Prompt 冲突，S07/S12 参照口径待裁决。R5 身份不保留为可派发文件，文字仅列入已见排除库。
+- 定向测试 13/13 + 11/11、lint、build、security scan、84 份保护文件和 791 行账本通过。裸全测 1468 通过、3 失败、1 跳过；2 项 5 秒超时定向重跑通过，1 项是既有载体环境变量问题。浏览器操作因官方通道错误为 `NOT_RUN`；四项真人指标 `NOT_OBSERVABLE`。
+- 当前停止状态：`D7_BLOCKED_ON_REFERENCE_CONTRACT`；下阶段为合同对应表、正反例、语义裁决、重新冻结和全新 Development。没有新模型授权。

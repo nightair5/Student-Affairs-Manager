@@ -1,117 +1,13 @@
-# 当前交接：Candidate13 D6 Development已完成并拒绝晋级
+# 当前交接：Candidate14 D7 评分契约阻断
 
-日期：2026-09-22。工作区 C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/比赛；分支 codex/e2-candidate11-blind-eval。
-本轮按独立D6授权只执行D5-R1 Manifest冻结的24次Candidate03/Candidate13配对调用，模型为`deepseek-flash`，硬上限US$1.00。全部请求一次发送并结算，没有重试、repair、verifier、额外样本、真人、Holdout、默认候选变更、合并或部署。
+日期：2026-09-27。工作区：`C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/比赛`。分支：`codex/e2-candidate11-blind-eval`。停止状态：`D7_BLOCKED_ON_REFERENCE_CONTRACT`。
 
-## D6 当前状态
+Candidate14 仍为独立完整 Prompt，默认候选未变。D6 的 24 次配对结果和 `REJECT_CANDIDATE13_DEVELOPMENT` 原样保留；D7 没有新增业务模型调用、Secret 读取、grant、reserve、settle、账本写入、真人试用、合并或部署。旧 Expected、raw、结果、锁文件与 84 份保护文件未改。
 
-- 24/24请求HTTP 200并settled，transport/解析/Schema/引用/执行期语义失败均为0。专用grant为`7bcbd608-ba1b-4121-be2f-49c23d8d7029`。
-- Candidate03与Candidate13完整正确来源均2/12，首次整份建议正确率均16.67%。Candidate13 Task F1为80.00%，高于Candidate03的61.54%，但仍有Forbidden=2，且完整来源净增为0。
-- 配对结果为Candidate03胜2、Candidate13胜3、平7。冻结门槛中安全门和完整来源净增门失败，正式决定`REJECT_CANDIDATE13_DEVELOPMENT`。
-- 输入116,262 tokens、缓存输入98,176、输出27,266；本地可审计峰值费用上界US$0.067607，provider实际扣费`NOT_OBSERVABLE`。冻结最坏预算US$0.351580，未超过US$1.00。
-- 权威账本742→791行，新增1 grant、24 reserve、24 settle；最终SHA `efb46f116db9c550ba53624c5d710164c6143ba9cc30c57ab2b7515c059f4d6a`。
-- 独立6634工程回放已验证来源依据、编辑、拒绝、部分确认、原子失败恢复、独立读回和刷新恢复。S09正确0任务但带事件/时间时仍无法完成“正确无任务处置”，是后续产品缺口。
-- 正确处置率、低修改正确处置率、主动修改时间保持`NOT_OBSERVABLE`。Candidate13不得进入独立Holdout、替换默认候选或部署。
-- 结果包：`docs/recognition-optimization/candidate13/d6-development-20260922a/`。下一步先形成Candidate14零调用修正并在新数据前冻结，重点处理S04、S08、S11及零任务信息处置。
+新工程链路已做：Reference/Scorer 5.5 分开检查动作、对象、条件前件/事实 scope、事件关联和候选结果；时间策略 1.1 保留不确定性；无任务处置 1.4 使用隔离本地锚点库与工作区历史核对，支持只归档信息、独立读回和失败闭锁；测量 2.4 要求独立授权真人试次并从原始事件重算。定向测试、lint、build、security scan 通过。上述是工程能力，不是识别正确率或真人转化率已提升。
 
-## D5 当前状态
+冻结提交 `c1598c6` 已推送，冻结聚合 SHA-256 为 `603802b1d165b6e46645de5fda971977565b2e24a0c385f7b97e0fd94e27f0f7`。之后合成的 R5 曾有 12 来源、12 单作者参照和 24 个 `dispatchAuthorized=false / NOT_RUN` 身份，但同系列 provisional 审计发现公平评分阻断：Prompt 与信息 scope 评分不一致；独立事件时间的类型、精度、时区及确认状态漏检；个别来源的格式/完成标准和未知时间口径未裁决。R5 Manifest SHA-256 `3513b4f7842d7992b65d850057f18bac91424de77d773236d7c51ecb11c0bfed` 已在派发前失效，不能授权调用。R4 Manifest `00cf591998b6396ca4bbbbca61b4a0594cdb88f86b8879f02391bdea350a8866` 也因数据冻结顺序问题提前失效。R1–R3 失效记录保持。
 
-- D5评分器`candidate13-scoring-4.1.0`会拒绝错误材料格式/必需性、无据材料、无据依赖和禁止推断；匹配歧义进入裁决，不选对候选有利的得分。
-- 四项主指标的分母、语义判定、独立读回、实质修改和主动编辑计时已冻结；独立sidecar不改Workspace v8。
-- Candidate13 D4的Prompt、Schema、adapter和原v3绑定保留；D5使用新Manifest另行绑定v4.1评估器。v4.0的时间点`actionable`不兼容生产输出Schema，已在零调用状态作废；现行新数据前冻结提交为`ee6ee45caa4e1bd258237ccb4c6bc9792d0c9e34`。
-- 冻结后重建D5-R1：12份匿名合成Development、12份完整模型辅助单作者参照和24个Candidate03/Candidate13配对身份。全部身份为`dispatchAuthorized=false / NOT_RUN`。
-- 本地重合检查12/12通过，最高bigram Jaccard为0.15873；该检查不证明零概念重合。数据标签为`SYNTHETIC_DEVELOPMENT / PROVISIONAL_MODEL_AUTHORED`，独立人工数仍为0。
-- 官方价格于2026-09-22只读核验；高峰cache-miss字节包络为US$0.7077888，建议新授权硬上限US$1.00。本阶段未创建grant/reserve/settle。
-- 当前停止状态：`CANDIDATE13_V4_DEVELOPMENT_READY_FOR_NEW_AUTHORIZATION`，人工门另行保持`WAITING_FOR_INDEPENDENT_HUMAN_LABELS_AND_TRIAL`。
+问题与下一轮设计见 `candidate14/d7-blocked/ARCHITECTURE_DECISION.md`；R5 文字已转入仅用于排除的 `candidate14/d7-blocked/INVALIDATED_R5_SEEN_SOURCES.json`。下一轮先完成 Prompt→wire→adapter→reference→scorer→处置的对应表和正反 wire 实例，审计通过后重新冻结，再编写全新来源并进行排重。所有新调用均须重新核价、核对账本和单独取得明确授权。不得复用 R4/R5 身份。
 
-## D4 当前状态
-
-- 已建立唯一的未来参照契约`candidate12-reference-contract-3.0.0`、编译器`candidate12-reference-compiler-3.0.0`、评分输入`candidate12-scorer-input-3.0.0`和评分器`candidate12-scoring-3.0.0`。这是实验评分接口，不改变产品Workspace schema v8。
-- 24类匿名契约夹具各有合法/拒绝案例，共48份；D3定向测试64/64通过。无效参照会失败关闭，不能进入候选胜负计算。
-- D1历史参照12/12不兼容v3：10份含任务参照缺少任务身份数组/字段规则，12份都使用自然语言checks。D1/D2材料、旧Expected、旧评分器、旧哈希和D2正式结论均未改写。
-- D3模型调用、Secret读取、grant、reserve、settle、账本写入、Holdout、真人、默认候选、Preview、Production、合并和部署均为0。权威账本仍为742行及SHA `df4035229093554b6417b0a37571730f68c10ecb7098234814406b49dfae1e1e`。
-- Candidate13已实现为`real-input-source-semantics-13` / `recognition-prompt-candidate13-1.0.0`，只改实验Prompt和候选身份，未改Schema、adapter、模型参数、默认候选或产品入口。
-- 新增28类匿名已见错误族工程夹具，覆盖否定/取消/禁止/背景、材料/地点/格式/联系方式越界、条件actionable、多端点修订、跨对象合并、附属字段保真与召回防规避。它们是工程回归，不是新Development或Holdout。
-- D4定向Node测试46/46、Candidate13 Vitest 9/9、D3契约64/64通过。隔离全量Vitest 1442/1442通过、1跳过；仅保留历史`RCO-5-007 FREEZE_HASH_MISMATCH:package-lock.json`。
-- D4模型调用、连通性探测、Secret读取、grant/reserve/settle、账本写入、全新Expected、请求身份、真人、合并和部署均为0。
-- 当前停止状态：`D4_CANDIDATE13_FROZEN_READY_FOR_FRESH_DATA`。Candidate13的识别率、转化率和相对提升仍为`NOT_OBSERVABLE`。
-
-## 当前结论
-- C11 工程闭环已实际运行并经浏览器验证；全仓库存在已复现的历史 RCO-5-007 冻结锁文件失败，不能宣布全绿或发布就绪。
-- B2模型效果已测但`REJECT_CANDIDATE11`，没有候选被采用；真人收益 NOT_OBSERVABLE；合并/部署 NOT_RUN。
-- Candidate12 已仅依据B2已见错误族形成并在提交`c03368054ff8c357f055658c2d2d39b45bbcb761`先行冻结；候选包SHA为`880488f038cec55763276f525c1847638533fe95d79a64599e9585dc8d92296a`。D2 已实际运行24次，但正式结论为`REJECT_CANDIDATE12_ENGINEERING_SCREEN`。
-- C1已交付独立人工双审协议、12个空白覆盖槽位、密封提交Schema、63条已见语料重合排除库、校验器、预注册和预算草案。当前真实来源0、完整人工参照0、请求身份0、模型调用0。
-- 用户随后要求Codex自行制作一份材料；已另建12例`PROVISIONAL_MODEL_AUTHORED_DEVELOPMENT_ONLY`合成包。它含完整结构化参照但没有独立人工资格，不能生成正式Holdout身份或支持晋级结论。12份正文已加入排除库，当前排除库共75条。
-- D1已把上述来源与provisional Expected物理拆分并冻结candidate03/Candidate12的12×2配对身份。D2 按新授权只执行这些身份：24/24 一次发送并settled，0重试/repair/verifier；它们只供`ENGINEERING_SCREENING_ONLY`，不是正式Holdout身份。
-- A1：版本化结构匹配评分器44项，历史只读复算1项通过；24旧答身份/结算/解析通过。A已定义检查9/12、B11/12，均为partial参照；完整案例准确率null。
-- A2：公共完成标准修正，V00/V10/V01/V11仅切换元指令M和教学例E；保留旧8例+新增2例。原candidate03/10不变。
-- A3：prepared/binding/result/analysis身份重建校验；构造和身份13项、新网关9项、原预算/网关124项通过；C11派发始终拒绝。
-- A4：复用真实App/MainlineRuntime/semanticComposer/CanonicalWorkspaceRepository。8工程夹具+12份candidate03历史原答；原答与仅scope-ID重绑定、用户修改分别保留。
-- 浏览器：8类夹具+历史OS03/OS04，逐项编辑、部分/全部确认、拒绝、失败恢复、重复打开、刷新独立读回已执行。最终3正式任务/10草稿/31事件；全部标记AUTOMATION。
-- A5：Vitest1422通过/1原设置跳过，契约/类型/lint/build/security及其他Node组通过。历史RCO-5-007 3通过/1失败；父工作区同样FREEZE_HASH_MISMATCH:package-lock.json，不改断言、不豁免发布。
-- B1：6份已见Development来源与字段覆盖完整的工程参照已冻结；参照为模型辅助单作者，独立人工复核PENDING，不能称人工真值或Holdout。
-- 24个V00/V10/V01/V11 prepared packet已保存，最大请求体19,908字节；逐请求身份、source/reference/candidate/examples/Schema/scorer/adapter版本与hash均进入manifest。B1本身仍是零调用冻结产物；B2仅按新grant派发这些身份。
-- 顺序、失败处理、停止条件和选择规则已预注册；M、E及交互可描述，公共完成标准修正相对candidate03的效应不能由本设计识别。
-- B1定向测试5/5通过：两次生成一致，身份/请求/上下文漂移拒绝，重复派发和无授权派发拒绝，保护文件与账本只读。
-- B1联合评分/网关测试58/58通过；隔离全量Vitest 1422/1422通过、1跳过，server/worker/Functions等后续组通过。唯一保留失败为历史RCO-5-007 3/4通过、`FREEZE_HASH_MISMATCH:package-lock.json`；详见`candidate11/b1-preparation/VALIDATION.md`。
-
-## 启动与独立数据
-在本工作区运行 node scripts/serve-candidate11.mjs 6633，打开 http://127.0.0.1:6633/。
-只能本机精确127.0.0.1地址；6631/6632与公网地址被拒绝。端口冲突时停止，不杀原服务。
-独立IndexedDB：rco-mainline-01-02-i1-real-input-candidate11-engineering-1，数据库版本1、canonical Schema v8不变。
-浏览器工具验收使用?automation=1；普通打开记录ENGINEERING_REPLAY，均不自动算真人。
-静态产物及日志位于.data/candidate11；不含Secret，不使用旧部署配置。
-只提供固定匿名回放；原文粘贴入口会打开回放选择，不运行新的文字/OCR/模型识别。
-
-## 保护与结果边界
-84个保护SHA一致；B2前账本644行、314个reserve，SHA256 dc52d9cd04b809be9d22d5298bd45d0e6f0a01307017d48a91aaa91a45e8e597。
-父分支/6632/旧浏览器库/公开Preview/RC.4/Production未修改。B2新增模型调用24次且全部结算。
-Windows检出行尾问题仅在C11工作树恢复经Git blob与父原字节核对的文件；没有Git语义差异。
-A9/12与B11/12不是人工盲审、全字段准确率或真实转化率。candidate11现有24份B2模型回答只属于已见Development消融，不得作为独立Holdout或真人证据。
-原314次预算授权已耗尽；B2使用独立专用grant和持久锁，工作树账本副本仍只是只读快照。
-
-唯一权威账本位于C:/Users/Winner/student-affairs-multimodal-exp/docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/CALL_LEDGER.jsonl；D2后为742行、SHA256 df4035229093554b6417b0a37571730f68c10ecb7098234814406b49dfae1e1e，tail 6812e1b072caeaa4fd3e6e8e55b485c57533bc0a0d9eaaff4dd84bbf48809922。D2新增1 grant、24 reserve、24 settle，无halt/uncertain。
-2026-09-21已核验DeepSeek官方V4.1 Flash计价。D2的24次严格最坏预算包络为¥51.904512；本地可审计费用上界¥0.436048，实际服务商扣费NOT_OBSERVABLE。
-
-## 交付与下一步
-审计：candidate11/ENGINEERING_AUDIT.md；机器检查摘要：candidate11/ENGINEERING_RESULTS.json。
-评分契约：candidate11/SCORING_CONTRACT_V2.md；历史复算：candidate11/historical-rescore/REPORT.json。
-计划/跟踪：refine-logs/EXPERIMENT_PLAN.md、EXPERIMENT_TRACKER.md。
-准备包：candidate11/b1-preparation/README.md；验证记录：candidate11/b1-preparation/VALIDATION.md；manifest SHA256 af1f1d2427eec1795691e1d4a62056a614bac72f0254103667632b341794744e。
-已提交推送：A1 d0407f6b59a8e099b834feaadfaf4d166644d7ab；A2/A3 8714f0130f62a89ae6230c58a8c3a4664934a8bd。A4/A5交付SHA以Git当前HEAD及远端核验为准。
-临时Development支线保留`D2_EXECUTION_COMPLETE_SCORING_PACKAGE_INVALID / REJECT_CANDIDATE12_ENGINEERING_SCREEN`。D3评分契约和D4 Candidate13冻结已完成；下一步只能在本次冻结提交之后准备全新匿名Development，或继续等待两位真实人员的独立Holdout密封双审。新参照须先通过D3 validator/compiler，才能准备`dispatchAuthorized=false`/`NOT_RUN`身份；任何模型派发前仍须重新核价、新预算卡、新grant和用户明确授权。
-
-## B2 Development 结果
-
-- 24/24 请求按冻结顺序完成，全部HTTP 200、usage明确且settled；无重试、repair、verifier、halt或uncertain。
-- V00：TP/FP/FN 11/5/2，P/R/F1 68.75%/84.62%/75.86%，完整来源1/6，Major 26、Severe 1、Forbidden 5。
-- V10：11/5/2，68.75%/84.62%/75.86%，完整来源1/6，Major 27、Severe 1、Forbidden 5。
-- V01：11/4/2，73.33%/84.62%/78.57%，完整来源1/6，Major 25、Severe 1、Forbidden 4。
-- V11：10/5/3，66.67%/76.92%/71.43%，完整来源1/6，Major 33、Severe 1、Forbidden 5。
-- M、E和M×E按完整来源数的描述性差分均为0；不报告显著性、泛化率或真实转化率。
-- 发送期结果文件因执行器误用`packet.context`记录24次本地适配失败；未改raw使用冻结`packet.prepared.context`重放后24/24适配通过。该缺陷、原始错误分析及正式只读复核同时保留，未补发模型请求。
-- 结果目录：`docs/recognition-optimization/candidate11/b2-development-20260921a/`。
-
-## Candidate12 C1 零调用准备
-
-- 冻结目录：`docs/recognition-optimization/candidate12/c1-freeze/`；版本`real-input-source-semantics-12`，固定`deepseek-flash`/temperature 0/reasoning none/8192，Schema不变且不含教学例。
-- 修正仅覆盖当前任务准入、附属事实边界、多端点守恒、完成标准与条件保真；candidate03/10/11与默认候选未修改。
-- 人工准备目录：`docs/recognition-optimization/candidate12/c1-holdout-preparation/`；Manifest SHA以该目录文件为准，状态`WAITING_FOR_INDEPENDENT_HUMAN_LABELS`。
-- C1未读取Secret，未创建grant/reserve/settle，权威账本仍为693行、572913字节和SHA `2051d8e775123579c3fa262f671a757e690983f64bc5945d692faaeb24b5322e`。
-- Codex临时Development包：`docs/recognition-optimization/candidate12/c2-provisional-development/`；来源12、provisional参照12、正式请求身份0、模型API调用0。人工门状态不变。
-
-## Candidate12 D1 临时配对准备
-
-- 目录：`docs/recognition-optimization/candidate12/d1-provisional-paired-preparation/`；数据标签固定为`SEEN_SYNTHETIC_DEVELOPMENT / PROVISIONAL_MODEL_AUTHORED`，独立Holdout资格为false。
-- A=candidate03、B=Candidate12；两臂均固定`deepseek-flash`、temperature 0、reasoning none、8192、同一Schema/scorer/adapter/referenceTime/timezone。candidate03和Candidate12源文件未改。
-- 24个身份按PD01 A→B、PD02 B→A交替冻结；来源与Expected分文件保存，请求只从来源生成。改变Expected不影响request SHA，改变来源、Prompt或模型参数会触发漂移。
-- 独立runner当前固定返回`D1_MODEL_CALL_NOT_AUTHORIZED`，没有Secret、预算、网络、raw或重试路径。权威账本仍为693行，84份保护文件一致。
-- D1的零调用状态保留为历史冻结事实；后续D2只在独立执行目录追加授权、raw、result和ledger证据，没有回写D1身份。
-
-## Candidate12 D2 临时配对结果
-
-- 执行目录：`docs/recognition-optimization/candidate12/d2-provisional-development-20260921a/`；执行器提交`b44c47335a579c94d7749a632acc4997c64bb390`先推送后派发。
-- 24/24请求HTTP 200并settled；总输入109,392 tokens、输出27,158 tokens；本地可审计费用上界¥0.436048，provider实际扣费`NOT_OBSERVABLE`。
-- 冻结`scorerReference`与冻结`candidate11-scoring-2.0.0`接口不兼容，10个含任务来源均触发`C11_REFERENCE_IDENTITY_INVALID`。正式决定按失败关闭为`REJECT_CANDIDATE12_ENGINEERING_SCREEN`。
-- 透明事后诊断仅供定位：Candidate03任务P/R/F1为86.67%/72.22%/78.79%，Candidate12为94.12%/88.89%/91.43%；两臂诊断完整来源均6/12，Candidate12仍有1个Forbidden，完整来源未净增2。
-- 该诊断不是预注册评分、独立人工Holdout或真实识别转化率；Candidate12未晋级，默认候选、Preview与Production均未修改。
+权威账本只读核验为 791 行、694807 字节、SHA-256 `efb46f116db9c550ba53624c5d710164c6143ba9cc30c57ab2b7515c059f4d6a`；84 份保护文件一致。完整 `npm run test` 的 1468 项通过、3 项失败、1 项跳过：2 项旧回放默认 5 秒超时，定向重跑通过；1 项历史 `REAL_INPUT_CARRIERS_MANIFEST` 未定义，未改旧载体。`RCO-5-007 / FREEZE_HASH_MISMATCH:package-lock.json` 仍为历史失败。官方浏览器通道报 `Browsers: Error: nodeRepl.fetch request failed`，本轮浏览器点击、读回、刷新验收为 `NOT_RUN`；本地构建或单测不代替浏览器证据。四项真人主指标全部 `NOT_OBSERVABLE`。

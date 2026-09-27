@@ -138,6 +138,20 @@ A1—A5实施及验证已交付。B2模型评测、Candidate12 D2失败关闭、
 
 当前停止状态：`D1_PROVISIONAL_DEVELOPMENT_IDENTITIES_READY_FOR_AUTHORIZATION`。这只表示临时Development的24个零调用身份可审查；它不解除正式人工Holdout的`WAITING_FOR_INDEPENDENT_HUMAN_LABELS`，也不证明Candidate12优于candidate03。
 
+## D7 Candidate14 契约、产品处置与零调用准备
+
+- 纯离线分析器重新适配D6全部24份raw，核对request/response SHA、usage、顺序与结果一致；不导入gateway/budget，不读取Secret、账本或网络，不改旧评分与决定。
+- 追加订正确认旧v4.1混入参照、契约、评分、适配和产品处置问题。D6拒绝保留，订正后准确率不计算；分栏是预分配事后假设，不冒充确定性根因裁决。
+- Candidate14使用一份完整Prompt，不叠加旧候选。Reference/Scorer 5.1在派发前被同系列provisional审计否决；R1 Manifest `8e3775...`失效且从未运行。
+- 现行5.3按字段精确匹配并检查有意义符号、evidence scope、悬空材料/时间、额外范围、无任务事实、relation、依赖TP和Schema聚合；自依赖、依赖环及修订端点状态冲突在参照验证阶段阻断。
+- 公共time policy 1.1把不确定下午保留为vague/needsConfirmation且不标全天。no-task disposition 1.2使用识别完成时冻结的SourceVersion/首次输出锚点，从冻结result派生全部事实并完整比较持久化收据。
+- measurement 2.2要求专用数据库持久注册、64位snapshot SHA、唯一ID/sequence/pause token及严格commit/archive→readback；修改只按完成读回的operation去重。
+- R1与R2均在派发前失效。现行冻结提交`02cc0f613f4f554af2c4dc7a916765820dc2f1c2`已推送；R3生成12份来源、12份provisional参照和24个身份，6 AB/6 BA，全部未授权、未运行。
+- 独立6635工程入口使用`rco-candidate14-d7-engineering-3`。浏览器实际执行正确无任务归档后返回`READBACK_VERIFIED`，不可变首次输出锚点/完整事实收据核对通过，正式实体增量为0；刷新后仍从独立数据库读回同一凭据。该证据仅为ENGINEERING_REPLAY，不计入真人指标。
+- 模型调用、Secret、grant/reserve/settle、账本写入、默认候选、旧库、6633、合并和部署均为0。
+
+当前停止状态：`D7_CANDIDATE14_READY_FOR_NEW_DEVELOPMENT_AUTHORIZATION`。本审计为同系列工程证据，不是独立人工真值或真人转化证据。
+
 ## D2 Candidate12 临时 Development 配对执行
 
 - 用户在收到“24次、¥51.904512最坏上限、唯一权威账本writer”的具体下一步后明确要求执行。执行器、预算锁和6项定向测试先在提交`b44c47335a579c94d7749a632acc4997c64bb390`提交推送，本地/upstream/远端一致后才创建grant。
@@ -197,3 +211,17 @@ A1—A5实施及验证已交付。B2模型评测、Candidate12 D2失败关闭、
 - 本地重合检查的最高bigram Jaccard为0.15873，12份均低于0.8阈值；这是本地筛查，不是概念独立性证明。
 - 四项指标中，工程计算和本地最小事件sidecar已实现；Candidate13首次整份正确率仍`NOT_RUN`，真人正确处置、低修改处置和主动修改时间仍`NOT_OBSERVABLE`。
 - 模型调用、Secret、grant/reserve/settle、账本写入、真人试用、默认候选修改、合并和部署均为0。权威账本保持742行及SHA `df4035229093554b6417b0a37571730f68c10ecb7098234814406b49dfae1e1e`。
+
+## D7 R4 最终订正与零调用交付（2026-09-22）
+
+R3 在派发前被 provisional 复审否决，Manifest SHA 为 `96760f25fab7cce9b78068aea38bd571737baa3925ac6815f80ea8a312d7de30`，未授权、未调用、未提交。修复后冻结提交 `fcb5b91` 已推送：Reference/Scorer 5.4 分别锁定 action/object/proposition scope，使用精确来源短语验证 no-task 语义，并封闭额外事件与地点；S04/S05/S07/S08 参照完成订正。no-task 1.3 把首次输出锚点写入独立追加式 history record；measurement 2.3 要求外部预授权和首次输出 SHA 绑定，并只统计 edit→commit→readback 的同操作链。
+
+R4 包有 12 source、12 provisional reference、24 NOT_RUN identity、6 AB/6 BA；Manifest SHA `00cf591998b6396ca4bbbbca61b4a0594cdb88f86b8879f02391bdea350a8866`。所有声明 Markdown 均在 Manifest 哈希清单。模型调用、Secret、grant/reserve/settle、账本写入为 0。R4 浏览器工具因 `nodeRepl.fetch request failed` 标记 `NOT_RUN`；不以测试替代。当前停止在 `D7_CANDIDATE14_READY_FOR_NEW_DEVELOPMENT_AUTHORIZATION`。
+
+## D7 R4/R5 派发前失效及契约阻断（2026-09-27）
+
+上节的“可授权”状态已被后续只读审计撤销。R4 Manifest SHA `00cf591998b6396ca4bbbbca61b4a0594cdb88f86b8879f02391bdea350a8866` 因生成器/来源在冻结前已出现、生成时间系推算而失效。重新冻结提交 `c1598c6` 已推送，包含 Reference/Scorer 5.5、no-task disposition 1.4、measurement 2.4 和数据前的通用生成器。R5 在冻结后生成 12 source、12 provisional reference、24 unique NOT_RUN identity，Manifest SHA `3513b4f7842d7992b65d850057f18bac91424de77d773236d7c51ecb11c0bfed`，作者文件 SHA `ca2fba295de9c11ea3931b74dba36a7e85548a67bc19c6988b5b48a4eab7e290`；结构、顺序、排重和零调用校验通过，但同系列 provisional 实验审计为 FAIL。
+
+关键反例：R5 S09 的事件时间把 `type` 改为 `event_end`、`normalizedValue` 改成 1900 年、`timezone` 改成 UTC、`isAllDay=true`、`precision=vague`，保留 rawText/scope 后 5.5 仍给出 `complete=true / major=0`。Prompt 的无任务 `informationScopeIds` 要求也与评分器允许集冲突。S07 的包装限制是否为完成标准、S12 的“月底另行通知”是否应为未知时间尚未裁决。R5 在派发前失效，24 身份不可复用；来源文本仅进入已见排除库。细节见 `candidate14/d7-blocked/ARCHITECTURE_DECISION.md`。
+
+本轮定向 Reference/Scorer 13/13、Candidate14 产品与测量 Vitest 11/11、lint 0 错误、build、security scan、冻结及保护校验通过。裸 `npm run test` 为 1468 passed、3 failed、1 skipped：两项旧 5 秒超时单独重跑通过，另为既有 `REAL_INPUT_CARRIERS_MANIFEST` 未定义；历史 RCO-5-007 不变。官方浏览器通道 `nodeRepl.fetch request failed`，R5 浏览器验收 `NOT_RUN`。权威账本仍为 791 行、694807 字节及 SHA `efb46f116db9c550ba53624c5d710164c6143ba9cc30c57ab2b7515c059f4d6a`，84 份保护文件一致。模型调用、Secret、grant/reserve/settle、账本写入与真人试次均为 0；四项真人指标均 `NOT_OBSERVABLE`。当前停止状态 `D7_BLOCKED_ON_REFERENCE_CONTRACT`。

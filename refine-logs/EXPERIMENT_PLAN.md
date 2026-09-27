@@ -331,3 +331,25 @@ D6使用专用grant严格执行D5-R1冻结的24个身份：24/24一次发送并s
 5. 重新核价、生成零调用身份和预算卡，取得新的明确授权后才可派发。冻结门槛不降低。
 
 当前停止点：`D6_REJECT_CANDIDATE13_READY_FOR_CANDIDATE14_ZERO_CALL_ENGINEERING`。
+
+## 16. D7 Candidate14冻结与下一授权门
+
+D7先复核D6并追加订正，再冻结Candidate14。R1/5.1及R2/5.2均在零派发状态被provisional审计否决。现行5.3保留有意义符号，校验evidence scope、悬空实体、额外范围、依赖环和修订状态；no-task 1.2冻结首次输出锚点并完整读回收据；measurement 2.2使用持久注册与严格状态机。冻结提交`02cc0f6`推送后生成R3的12份表面未见合成Development和24个Candidate03/Candidate14身份。
+
+下一阶段只执行一个受控包：重新联网核验官方价格，按当前Manifest和24个request字节计算最坏预算，核对远端HEAD、84份保护文件和791行账本，经用户明确授权后创建专用grant并逐单元一次发送。零重试、零repair、零verifier；任何身份、价格、账本或transport不确定立即停止。
+
+冻结门槛保持：24个确定结局；两臂各12/12 Schema与引用有效；Candidate14 Severe=0、Forbidden=0；教学例为N/A；不增加任务FN或关键字段Major；完整正确来源净增至少2。任何一条失败固定拒绝。通过也只能进入独立人工Holdout与真人试用准备，不能替换默认候选或部署。
+
+当前停止点：`D7_CANDIDATE14_READY_FOR_NEW_DEVELOPMENT_AUTHORIZATION`。
+
+## 17. D7 R4 冻结准备与下一授权门
+
+R3 在派发前失效。现行冻结提交 `fcb5b91` 绑定 Reference/Scorer 5.4、no-task 1.3、measurement 2.3。R4 Manifest SHA 为 `00cf591998b6396ca4bbbbca61b4a0594cdb88f86b8879f02391bdea350a8866`，包含 12 份合成 Development 来源、12 份 provisional 参照和 24 个 `dispatchAuthorized=false / NOT_RUN` 身份。R4 仍不是独立 Holdout 或真人试用。
+
+下一阶段仅可在重新核价、核对远端 HEAD、84 份保护文件和 791 行账本并取得明确授权后，执行 R4 的 24 个冻结身份。零重试、零 repair、零 verifier；任何不确定立即停止。当前停止点：`D7_CANDIDATE14_READY_FOR_NEW_DEVELOPMENT_AUTHORIZATION`。
+
+## 18. D7 契约阻断后的当前计划（2026-09-27）
+
+第 16–17 节的调用授权计划已失效，R4/R5 身份都不得派发。R4 Manifest `00cf591998b6396ca4bbbbca61b4a0594cdb88f86b8879f02391bdea350a8866` 存在冻结顺序/生成时间问题；R5 Manifest `3513b4f7842d7992b65d850057f18bac91424de77d773236d7c51ecb11c0bfed` 虽结构校验通过，但 Reference/Scorer 5.5 对独立事件时间漏检关键语义，同系列 provisional 审计 FAIL。停止点 `D7_BLOCKED_ON_REFERENCE_CONTRACT`。
+
+下一轮先做契约级设计审查：列出 Prompt、wire、adapter、参照、评分器和确认页之间每个事实的对应关系；用合法正例和错误反例验证独立事件时间、完整信息 scope、包装/格式限制与未知时间；无法表达的语义标未观测。通过审计后重新冻结 Candidate14 后续版和门槛、提交推送，再制作与 R4/R5 及历史 Expected/教学例低重合的全新合成 Development。只有可满足参照、有效身份和独立预算卡齐备后，才向用户申请新模型调用授权。真人正确处置与主动修改时间另需真实独立协调方和注册试次；不得由工程回放推算。
