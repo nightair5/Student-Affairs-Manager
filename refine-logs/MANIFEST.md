@@ -41,3 +41,5 @@ A1—A5 至 D6 历史产物保留。D6决定为`REJECT_CANDIDATE13_DEVELOPMENT`�
 | [D7架构决定](../docs/recognition-optimization/candidate14/d7-blocked/ARCHITECTURE_DECISION.md) | D7_BLOCKED_ON_REFERENCE_CONTRACT | 同系列 provisional 审计反例、派发前失效原因和下一轮设计门 |
 | [D7 provisional实验审计](../docs/recognition-optimization/candidate14/d7-blocked/PROVISIONAL_EXPERIMENT_AUDIT.md) | FAIL_FOR_DEVELOPMENT_DISPATCH | 冻结/身份结构通过，时间与信息事实评分契约失败 |
 | [R5已见来源排除库](../docs/recognition-optimization/candidate14/d7-blocked/INVALIDATED_R5_SEEN_SOURCES.json) | candidate14-d7-invalidated-r5-seen-sources-1 | 12份已见合成来源，后续排重专用；不含请求身份 |
+| [下一批预算卡草案](../docs/recognition-optimization/candidate14/d7-blocked/FUTURE_BUDGET_AUTHORIZATION_CARD_DRAFT.md) | NOT_AUTHORIZED | 当前可授权身份0；只列未来核价、锁与新授权条件 |
+| [D8执行提示词](../docs/recognition-optimization/candidate14/d7-blocked/NEXT_STAGE_EXECUTION_PROMPT.md) | d8-zero-call-contract-redesign | 先审合同、重新冻结，后造全新来源；本提示词不授权模型调用 |
