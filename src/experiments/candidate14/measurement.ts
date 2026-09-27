@@ -1,5 +1,6 @@
-export const CANDIDATE14_MEASUREMENT_VERSION = 'candidate14-product-metrics-2.3.0' as const
-export const CANDIDATE14_MEASUREMENT_DATABASE = 'rco-candidate14-d7-measurement-2' as const
+export const CANDIDATE14_MEASUREMENT_VERSION = 'candidate14-product-metrics-2.4.0' as const
+export const CANDIDATE14_MEASUREMENT_DATABASE = 'rco-candidate14-d7-measurement-3' as const
+export const CANDIDATE14_HUMAN_AUTHORITY_DATABASE = 'rco-candidate14-d7-human-authority-1' as const
 export const CANDIDATE14_EDIT_CATEGORIES = ['task_add','task_remove','task_split','task_merge','action','object','time','condition','material','completion_standard','revision','dependency'] as const
 export type Candidate14EditCategory = typeof CANDIDATE14_EDIT_CATEGORIES[number]
 export type Candidate14Origin = 'HUMAN_TRIAL'|'AUTOMATION'|'ENGINEERING_REPLAY'
@@ -10,26 +11,29 @@ export interface Candidate14MetricEvent {eventId:string;sequence:number;registra
 export interface Candidate14Judgment {firstWholeCorrect:boolean|null;finalDispositionCorrect:boolean|null;disposition:'confirmed'|'no_task'|'partial'|'abandoned'|'timed_out'|'unknown'}
 export interface Candidate14TrialMetrics {status:'DETERMINATE'|'SEMANTIC_JUDGMENT_REQUIRED'|'INCOMPLETE'|'IDENTITY_INVALID';registryVerified:boolean;registrationId:string|null;trialId:string|null;origin:Candidate14Origin|null;firstWholeCorrect:boolean|null;correctDisposition:boolean|null;lowModificationCorrectDisposition:boolean|null;substantiveEditCount:number|null;activeEditMs:number|null;wallMs:number|null;systemWaitMs:number|null}
 export interface Candidate14MeasurementStore {name:string;read(key:string):Promise<unknown>;write(key:string,value:unknown):Promise<void>}
+export interface Candidate14HumanAuthorityStore {name:string;read(key:string):Promise<unknown>}
+export interface Candidate14TrialEvidence {registration:Candidate14TrialRegistration;events:readonly Candidate14MetricEvent[];judgment:Candidate14Judgment}
 
 const key=(id:string)=>`candidate14-trial-registration:${id}`
 export const candidate14HumanAuthorizationKey=(id:string)=>`candidate14-human-trial-authorization:${id}`
 const canonical=(value:unknown):string=>value===undefined?'__undefined__':JSON.stringify(value,Object.keys(value as object).sort())
 const validSha=(value:string)=>/^[a-f0-9]{64}$/u.test(value)
-const validRegistration=(row:Candidate14TrialRegistration)=>row.status==='REGISTERED'&&/^[A-Za-z0-9-]{1,100}$/u.test(row.registrationId)&&/^[A-Za-z0-9-]{1,100}$/u.test(row.trialId)&&validSha(row.sourceIdentitySha256)&&validSha(row.candidateIdentitySha256)&&validSha(row.firstOutputSha256)&&Number.isFinite(row.registeredAtMs)
+const validRegistration=(row:Candidate14TrialRegistration)=>row.status==='REGISTERED'&&['HUMAN_TRIAL','AUTOMATION','ENGINEERING_REPLAY'].includes(row.origin)&&/^[A-Za-z0-9-]{1,100}$/u.test(row.registrationId)&&/^[A-Za-z0-9-]{1,100}$/u.test(row.trialId)&&validSha(row.sourceIdentitySha256)&&validSha(row.candidateIdentitySha256)&&validSha(row.firstOutputSha256)&&Number.isFinite(row.registeredAtMs)
 const empty=(status:Candidate14TrialMetrics['status'],registration:Candidate14TrialRegistration|null,registryVerified=false):Candidate14TrialMetrics=>({status,registryVerified,registrationId:registration?.registrationId??null,trialId:registration?.trialId??null,origin:registration?.origin??null,firstWholeCorrect:null,correctDisposition:null,lowModificationCorrectDisposition:null,substantiveEditCount:null,activeEditMs:null,wallMs:null,systemWaitMs:null})
 function percentile(values:number[],p:number){if(!values.length)return null;return values[Math.ceil(p*values.length)-1]}
 
-export async function registerCandidate14Trial(store:Candidate14MeasurementStore,registration:Candidate14TrialRegistration){
+const authorized=async(authority:Candidate14HumanAuthorityStore,registration:Candidate14TrialRegistration)=>authority.name===CANDIDATE14_HUMAN_AUTHORITY_DATABASE&&canonical(await authority.read(candidate14HumanAuthorizationKey(registration.registrationId)))===canonical(registration)
+export async function registerCandidate14Trial(store:Candidate14MeasurementStore,authority:Candidate14HumanAuthorityStore,registration:Candidate14TrialRegistration){
   if(store.name!==CANDIDATE14_MEASUREMENT_DATABASE||!validRegistration(registration))throw Error('CANDIDATE14_TRIAL_REGISTRATION')
-  if(registration.origin==='HUMAN_TRIAL'&&canonical(await store.read(candidate14HumanAuthorizationKey(registration.registrationId)))!==canonical(registration))throw Error('CANDIDATE14_HUMAN_TRIAL_NOT_AUTHORIZED')
+  if(registration.origin==='HUMAN_TRIAL'&&!await authorized(authority,registration))throw Error('CANDIDATE14_HUMAN_TRIAL_NOT_AUTHORIZED')
   const existing=await store.read(key(registration.registrationId));if(existing!==undefined&&canonical(existing)!==canonical(registration))throw Error('CANDIDATE14_REGISTRATION_COLLISION')
   if(existing===undefined)await store.write(key(registration.registrationId),structuredClone(registration))
   const readback=await store.read(key(registration.registrationId));if(canonical(readback)!==canonical(registration))throw Error('CANDIDATE14_REGISTRATION_READBACK')
   return structuredClone(registration)
 }
 
-export async function calculateCandidate14Trial(store:Candidate14MeasurementStore,registration:Candidate14TrialRegistration,events:readonly Candidate14MetricEvent[],judgment:Candidate14Judgment):Promise<Candidate14TrialMetrics>{
-  if(store.name!==CANDIDATE14_MEASUREMENT_DATABASE||!validRegistration(registration)||canonical(await store.read(key(registration.registrationId)))!==canonical(registration))return empty('IDENTITY_INVALID',registration)
+export async function calculateCandidate14Trial(store:Candidate14MeasurementStore,authority:Candidate14HumanAuthorityStore,registration:Candidate14TrialRegistration,events:readonly Candidate14MetricEvent[],judgment:Candidate14Judgment):Promise<Candidate14TrialMetrics>{
+  if(store.name!==CANDIDATE14_MEASUREMENT_DATABASE||!validRegistration(registration)||canonical(await store.read(key(registration.registrationId)))!==canonical(registration)||(registration.origin==='HUMAN_TRIAL'&&!await authorized(authority,registration)))return empty('IDENTITY_INVALID',registration)
   if(!events.length)return empty('INCOMPLETE',registration,true)
   const rows=[...events].sort((a,b)=>a.sequence-b.sequence),identityInvalid=rows.some((event,index)=>event.sequence!==index+1||event.registrationId!==registration.registrationId||event.trialId!==registration.trialId||event.sourceIdentitySha256!==registration.sourceIdentitySha256||event.candidateIdentitySha256!==registration.candidateIdentitySha256)||new Set(rows.map(row=>row.eventId)).size!==rows.length||rows.some((row,index)=>index>0&&row.atMs<rows[index-1].atMs)
   if(identityInvalid)return empty('IDENTITY_INVALID',registration,true)
@@ -53,7 +57,10 @@ export async function calculateCandidate14Trial(store:Candidate14MeasurementStor
   const correct=judgment.finalDispositionCorrect===null?null:Boolean(judgment.finalDispositionCorrect&&terminal),status=judgment.firstWholeCorrect===null||judgment.finalDispositionCorrect===null?'SEMANTIC_JUDGMENT_REQUIRED':'DETERMINATE'
   return {status,registryVerified:true,registrationId:registration.registrationId,trialId:registration.trialId,origin:registration.origin,firstWholeCorrect:judgment.firstWholeCorrect,correctDisposition:correct,lowModificationCorrectDisposition:correct===null?null:correct&&operations.size===0,substantiveEditCount:operations.size,activeEditMs:active,wallMs:Math.max(0,end.atMs-starts[0].atMs),systemWaitMs:systemWait}
 }
-export async function aggregateCandidate14Trials(store:Candidate14MeasurementStore,rows:readonly Candidate14TrialMetrics[]){
-  const verified=await Promise.all(rows.map(async row=>{if(!row.registrationId)return null;const registered=await store.read(key(row.registrationId)) as Candidate14TrialRegistration|undefined,authorization=await store.read(candidate14HumanAuthorizationKey(row.registrationId));return registered&&validRegistration(registered)&&canonical(authorization)===canonical(registered)?registered:null})),human=rows.filter((row,index)=>{const registered=verified[index];return row.registryVerified&&registered?.origin==='HUMAN_TRIAL'&&registered.trialId===row.trialId&&row.origin==='HUMAN_TRIAL'}),determinate=human.filter(row=>row.status==='DETERMINATE'),rate=(metric:'firstWholeCorrect'|'correctDisposition'|'lowModificationCorrectDisposition')=>human.length?human.filter(row=>row[metric]===true).length/human.length:null,times=determinate.flatMap(row=>row.activeEditMs===null?[]:[row.activeEditMs]).sort((a,b)=>a-b)
+export async function aggregateCandidate14Trials(store:Candidate14MeasurementStore,authority:Candidate14HumanAuthorityStore,evidence:readonly Candidate14TrialEvidence[]){
+  const registrations=new Set<string>(),trials=new Set<string>();for(const row of evidence){if(registrations.has(row.registration.registrationId)||trials.has(row.registration.trialId))throw Error('CANDIDATE14_DUPLICATE_TRIAL');registrations.add(row.registration.registrationId);trials.add(row.registration.trialId)}
+  const rows=await Promise.all(evidence.map(row=>calculateCandidate14Trial(store,authority,row.registration,row.events,row.judgment)))
+  if(rows.some((row,index)=>evidence[index].registration.origin==='HUMAN_TRIAL'&&!row.registryVerified))throw Error('CANDIDATE14_UNVERIFIED_HUMAN_TRIAL')
+  const human=rows.filter(row=>row.origin==='HUMAN_TRIAL'),determinate=human.filter(row=>row.status==='DETERMINATE'),rate=(metric:'firstWholeCorrect'|'correctDisposition'|'lowModificationCorrectDisposition')=>human.length?human.filter(row=>row[metric]===true).length/human.length:null,times=determinate.flatMap(row=>row.activeEditMs===null?[]:[row.activeEditMs]).sort((a,b)=>a-b)
   return {version:CANDIDATE14_MEASUREMENT_VERSION,humanTrials:human.length,determinate:determinate.length,incomplete:human.filter(row=>row.status==='INCOMPLETE').length,identityInvalid:human.filter(row=>row.status==='IDENTITY_INVALID').length,firstWholeSuggestionAccuracy:rate('firstWholeCorrect'),correctDispositionRate:rate('correctDisposition'),lowModificationCorrectDispositionRate:rate('lowModificationCorrectDisposition'),activeEditMs:{n:times.length,median:percentile(times,.5),p95:percentile(times,.95)},excludedEngineeringRows:rows.length-human.length}
 }
