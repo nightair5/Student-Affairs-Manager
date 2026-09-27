@@ -1513,6 +1513,7 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
       )}
       {!workspaceRecovery && selectedDraft && (!runtime || experimentalReview) && (
         <DraftReviewPanel
+          onFieldInput={runtime?.realInput?.onReviewFieldInput ? (itemId,field)=>runtime.realInput!.onReviewFieldInput!(selectedDraft.id,itemId,field) : undefined}
           draftCorrection={runtime?.realInput?.draftEditor&&isolatedSnapshot?(onDirty,unsaved)=>runtime.realInput!.draftEditor!({workspace:isolatedSnapshot,draftId:selectedDraft.id,busy:isolatedBusy||storageError||unsaved,onDirty,onSaved:refreshExperiment}):undefined}
           factCorrection={runtime?.realInput && isolatedSnapshot ? (taskId, onDirty, unsaved) => runtime.realInput!.factEditor({
             workspace: isolatedSnapshot, draftId: selectedDraft.id, taskId, busy: isolatedBusy || storageError || unsaved,

@@ -23,6 +23,7 @@ export interface MainlineSemanticCapabilities {
   readonly exportName: string
 }
 export interface MainlineRealInputCapabilities {
+  onReviewFieldInput?(draftId:string,itemId:string,field:'title'|'deadline'):void
   pendingDateTaskIds?(workspace: WorkspaceV8): string[]
   readonly profile: 'real-input-01'
   readonly networkDescription: string

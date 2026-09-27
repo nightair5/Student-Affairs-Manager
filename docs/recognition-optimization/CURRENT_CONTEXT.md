@@ -1,4 +1,12 @@
-# 当前交接：全局复查与资源路线已交付，D7 评分契约仍阻断
+# 当前交接：D8 W1/W2 工程已交付，W3 等待完整参照
+
+## D8 最新状态（2026-09-27）
+
+本支线新增 Candidate15 Prompt 15.1、v6 参照/评分、真实 UI 事件计时 v3 和独立 6635 工程回放；默认 Candidate03、D7 冻结文件、旧结果、旧库和权威账本均未改。事件时间六字段与关联错误不再容易被评分放过；无当前任务的 informationScopeIds 与 Prompt 对齐。D8 浏览器实际核对了编辑写入失败后恢复、两事项部分确认、无截止任务确认、独立读回与刷新。详细结果与不足见 [D8 结果](candidate15/d8-development/D8_RESULTS.md)。
+
+新 Development 包复用 12 份完全已见的 D5 合成来源；v6 完整参照目前 **0/12**，故 **24 个配对请求仅为计划、实际身份 0**，全部 `NOT_RUN` 且不可派发。停止状态为 `W1_W2_ENGINEERING_DELIVERED_W3_WAITING_FOR_COMPLETE_REFERENCES`，并非 `D8_DEVELOPMENT_READY_FOR_NEW_AUTHORIZATION`。下一步在已见开发资料上逐份完成可表达参照与实际 Schema/adapter/scorer 正反例，再冻结 24 身份、重核官方价格/账本及申请新的调用授权；独立人工 Holdout 与真人指标仍需后续独立证据。四项真人主指标仍 `NOT_OBSERVABLE`，不宣称 Candidate15 已提高识别转化率。
+
+以下 D7 与治理复查为历史快照，保留原结论；其中“D8 尚未执行”的语句只说明该快照当时状态。
 
 日期：2026-09-27。工作区：`C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/比赛`。分支：`codex/e2-candidate11-blind-eval`。停止状态：`D7_BLOCKED_ON_REFERENCE_CONTRACT`。
 

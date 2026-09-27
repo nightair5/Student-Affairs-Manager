@@ -1,0 +1,243 @@
+{
+  "version": "candidate15-d8-development-preparation-1.0.0",
+  "status": "WAITING_FOR_COMPLETE_REFERENCES",
+  "origin": "SYNTHETIC_SEEN_DEVELOPMENT",
+  "humanTruth": "NOT_INDEPENDENT",
+  "holdoutEligible": false,
+  "candidateArms": {
+    "A": "real-input-source-semantics-3",
+    "B": "real-input-source-semantics-15"
+  },
+  "referenceVersion": "candidate15-reference-contract-6.0.0",
+  "modelPlanned": "deepseek-flash",
+  "fixedParameters": {
+    "temperature": 0,
+    "reasoning": {
+      "effort": "none"
+    },
+    "stream": false,
+    "max_output_tokens": 8192,
+    "timezone": "Asia/Shanghai",
+    "referenceTime": "FROM_SOURCE_ROSTER",
+    "schema": "CURRENT_MODEL_JSON_SCHEMA"
+  },
+  "plannedSources": 12,
+  "plannedUnits": 24,
+  "balancedOrder": {
+    "AB": 6,
+    "BA": 6
+  },
+  "actualRequestIdentities": [],
+  "dispatchAuthorized": false,
+  "runStatus": "NOT_RUN",
+  "modelCalls": 0,
+  "grantCreated": false,
+  "ledgerWritten": false,
+  "failedUnitRule": "KEEP_IN_DENOMINATOR_NO_RETRY_NO_REPAIR_NO_VERIFIER",
+  "promotionGate": {
+    "determinateUnits": 24,
+    "schemaAndReferenceValidPerArm": 12,
+    "newSevere": 0,
+    "newForbidden": 0,
+    "teachingLeak": 0,
+    "taskFNIncreaseMax": 0,
+    "keyMajorIncreaseMax": 0,
+    "completeCorrectNetGainMin": 2
+  },
+  "sourceFile": {
+    "path": "docs/recognition-optimization/candidate13/d5-development/SOURCES.json",
+    "sha256": "fd3b0f835567fa37626cda8261f5c2f9fcbbaee5c6c5ed259252f8b3bea6130b",
+    "bytes": 7722,
+    "hashMode": "UTF8_LF_CANONICAL"
+  },
+  "referenceFile": {
+    "path": "docs/recognition-optimization/candidate15/d8-development/REFERENCES.json",
+    "sha256": "f4f1b20b20423790f245123e3222fee64edc7c9c30a5409b8ddb85fe3a3e0b75",
+    "bytes": 317,
+    "hashMode": "UTF8_LF_CANONICAL"
+  },
+  "sources": [
+    {
+      "sourceId": "C13-D5R1-S01",
+      "coverageTags": [
+        "single",
+        "exact_time",
+        "material_format"
+      ],
+      "sourceSha256": "895f80c62d76f543e31ca29ead43776faf05ac982ca3941138d3b2507a82ebb7",
+      "referenceStatus": "NOT_YET_V6_COMPLETE",
+      "plannedOrders": "AB"
+    },
+    {
+      "sourceId": "C13-D5R1-S02",
+      "coverageTags": [
+        "multi",
+        "date_only",
+        "material"
+      ],
+      "sourceSha256": "18c8acf9f6960d586ebe4f4881822c6605694acc2d3aeddcef213c0c10eaac51",
+      "referenceStatus": "NOT_YET_V6_COMPLETE",
+      "plannedOrders": "BA"
+    },
+    {
+      "sourceId": "C13-D5R1-S03",
+      "coverageTags": [
+        "condition_true",
+        "exact_time"
+      ],
+      "sourceSha256": "cd998b634d186b6e2fb9c2b9c3e241ba2c6d9fee688029917911e92b213d03ae",
+      "referenceStatus": "NOT_YET_V6_COMPLETE",
+      "plannedOrders": "BA"
+    },
+    {
+      "sourceId": "C13-D5R1-S04",
+      "coverageTags": [
+        "condition_false",
+        "inactive"
+      ],
+      "sourceSha256": "79c44b2ab80fc9d862add2f30240ec5fdadbcc5c786a7187fe7ce0ecd279dae3",
+      "referenceStatus": "NOT_YET_V6_COMPLETE",
+      "plannedOrders": "AB"
+    },
+    {
+      "sourceId": "C13-D5R1-S05",
+      "coverageTags": [
+        "condition_unknown",
+        "vague_time"
+      ],
+      "sourceSha256": "4a07654bfd4b8d289934c99e25e0d686efe8d6b476b7295ec6fe5b31ab8c7ab5",
+      "referenceStatus": "NOT_YET_V6_COMPLETE",
+      "plannedOrders": "BA"
+    },
+    {
+      "sourceId": "C13-D5R1-S06",
+      "coverageTags": [
+        "shared_material",
+        "dependency",
+        "multi"
+      ],
+      "sourceSha256": "7d9e41736da4b83712f55559ffbee5e4ff57965f56b79f710d7a57f1d69c5628",
+      "referenceStatus": "NOT_YET_V6_COMPLETE",
+      "plannedOrders": "AB"
+    },
+    {
+      "sourceId": "C13-D5R1-S07",
+      "coverageTags": [
+        "vague_time",
+        "single"
+      ],
+      "sourceSha256": "e5861deffaaa3fd97c191479e4965797faf729c47df15b4432f656a1ba8dd782",
+      "referenceStatus": "NOT_YET_V6_COMPLETE",
+      "plannedOrders": "AB"
+    },
+    {
+      "sourceId": "C13-D5R1-S08",
+      "coverageTags": [
+        "dependency",
+        "material",
+        "multi"
+      ],
+      "sourceSha256": "0783267766ec15d7b86467b79f4c17039430dd915c56cb4673ca63edbe7eeb61",
+      "referenceStatus": "NOT_YET_V6_COMPLETE",
+      "plannedOrders": "BA"
+    },
+    {
+      "sourceId": "C13-D5R1-S09",
+      "coverageTags": [
+        "no_task",
+        "forbidden",
+        "background"
+      ],
+      "sourceSha256": "8fe0a0b5f05cf5e5e9c70f2c4976401a4b2d9aaef7e5d1639cbaa2bc9f12c834",
+      "referenceStatus": "NOT_YET_V6_COMPLETE",
+      "plannedOrders": "AB"
+    },
+    {
+      "sourceId": "C13-D5R1-S10",
+      "coverageTags": [
+        "multi_endpoint_cancellation",
+        "historical"
+      ],
+      "sourceSha256": "8090eca0f1022322d14c171cb727c2822d722d5bdf818665eddd47c05b00e0ed",
+      "referenceStatus": "NOT_YET_V6_COMPLETE",
+      "plannedOrders": "BA"
+    },
+    {
+      "sourceId": "C13-D5R1-S11",
+      "coverageTags": [
+        "multi_endpoint_replacement",
+        "historical",
+        "multi"
+      ],
+      "sourceSha256": "515fd17ebd4cd7e73389a92f5be9506756780bf0fe077b649d44d4834b48b50d",
+      "referenceStatus": "NOT_YET_V6_COMPLETE",
+      "plannedOrders": "BA"
+    },
+    {
+      "sourceId": "C13-D5R1-S12",
+      "coverageTags": [
+        "completion_standard",
+        "forbidden"
+      ],
+      "sourceSha256": "d285ab2c8f543d11e443785ac7616b3aec74f034ea91740f84874a78b744feef",
+      "referenceStatus": "NOT_YET_V6_COMPLETE",
+      "plannedOrders": "AB"
+    }
+  ],
+  "components": [
+    {
+      "path": "src/experiments/realInput01/candidate03.ts",
+      "sha256": "f3a2dd9358ca2a50b9b3eba8a090211666db4c0fb8dc5fc146e742c9895f9508",
+      "bytes": 3854,
+      "hashMode": "UTF8_LF_CANONICAL"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate15.ts",
+      "sha256": "acb0c59c818a18d4e26973c1376ca9d2e5baf65f200632829149d90102c9bf27",
+      "bytes": 4311,
+      "hashMode": "UTF8_LF_CANONICAL"
+    },
+    {
+      "path": "src/experiments/realInput01/modelWire.ts",
+      "sha256": "c7c81ae516c30faec850f4d765ae625d2cf1d11f39ed0d515ab93da45efb8be2",
+      "bytes": 10103,
+      "hashMode": "UTF8_LF_CANONICAL"
+    },
+    {
+      "path": "src/experiments/mainline04/semanticContract.ts",
+      "sha256": "a08953dfdb50bf0233d603ce46669f87ed4f61c810a322275011c7075b5e578f",
+      "bytes": 9681,
+      "hashMode": "UTF8_LF_CANONICAL"
+    },
+    {
+      "path": "src/experiments/candidate14/commonAdapter.ts",
+      "sha256": "6e3c1745c9358207fe714d1bf4f1ee25d0dcf3185b8ce8748343d31f7307d427",
+      "bytes": 1111,
+      "hashMode": "UTF8_LF_CANONICAL"
+    },
+    {
+      "path": "src/experiments/candidate14/timePolicy.ts",
+      "sha256": "a72b93ab463fbbf523d16433cee7910d2c2fb54a7ebd70d0d7e34e4f0e3a87c2",
+      "bytes": 1548,
+      "hashMode": "UTF8_LF_CANONICAL"
+    },
+    {
+      "path": "scripts/candidate15-reference-contract.mjs",
+      "sha256": "c2f0992afa5c9acae1862fcad5c4b6482d5bb84b66633d9f3ca388f1560284b7",
+      "bytes": 10342,
+      "hashMode": "UTF8_LF_CANONICAL"
+    },
+    {
+      "path": "scripts/score-candidate15-contract.mjs",
+      "sha256": "8175abb23d29e395be779389be1f18a24ef461c615d50d340fee596d74440afe",
+      "bytes": 13825,
+      "hashMode": "UTF8_LF_CANONICAL"
+    }
+  ],
+  "blockedOn": [
+    "12_VERSION_6_COMPLETE_REFERENCES",
+    "SCHEMA_ADAPTER_SCORER_ROUNDTRIP_PER_SOURCE",
+    "INDEPENDENT_PRE_DISPATCH_REVIEW",
+    "NEW_COST_AUTHORIZATION"
+  ]
+}

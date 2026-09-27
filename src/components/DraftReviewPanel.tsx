@@ -7,6 +7,7 @@ import { assessFocusedReview } from '../recognition/focusedReview'
 import type { ReactNode } from 'react'
 
 interface DraftReviewPanelProps {
+  onFieldInput?: (itemId:string,field:'title'|'deadline')=>void
   factCorrection?: (taskId: string, onDirty: (dirty: boolean) => void, unsaved: boolean) => ReactNode
   draftCorrection?: (onDirty:(dirty:boolean)=>void,unsaved:boolean)=>ReactNode
   semanticReview?: { itemFacts: (taskId: string, onFocus: (quote: string) => void) => ReactNode; information: ReactNode;
@@ -70,7 +71,7 @@ function EvidenceLocator({ recognition, evidenceIds, onFocusEvidence }: {
     : <small className="evidence-unavailable">暂无可定位依据</small>
 }
 
-export function DraftReviewPanel({ draftCorrection, factCorrection, semanticReview, isolatedCapabilities, recognitionDescription, draft, source, onClose, onUpdate, onConfirm, onReject, onConfirmAll, projectWillCreate, projects, onProjectChoice, onKeepExplicit, onMoveTask, onToggleRecognitionEntity, onToggleTaskSelected, onSplitTask, onMergeTask, confirmationV2 }: DraftReviewPanelProps) {
+export function DraftReviewPanel({ onFieldInput, draftCorrection, factCorrection, semanticReview, isolatedCapabilities, recognitionDescription, draft, source, onClose, onUpdate, onConfirm, onReject, onConfirmAll, projectWillCreate, projects, onProjectChoice, onKeepExplicit, onMoveTask, onToggleRecognitionEntity, onToggleTaskSelected, onSplitTask, onMergeTask, confirmationV2 }: DraftReviewPanelProps) {
   const titleId = useId()
   const panelRef = useRef<HTMLElement>(null)
   const [editingId, setEditingId] = useState<string | null>(null)
@@ -111,6 +112,7 @@ export function DraftReviewPanel({ draftCorrection, factCorrection, semanticRevi
     groupedItemIds.add(item.suggestion.id)
     const metadata = taskMeta.get(item.suggestion.id)
     return <DraftItemReview
+      onFieldInput={onFieldInput}
       key={item.id}
       semanticFacts={<>{semanticReview?.itemFacts(item.suggestion.id, setActiveEvidence)}
         {factCorrection?.(item.suggestion.id, dirty => setFactDirty(previous => previous[item.id] === dirty ? previous : { ...previous, [item.id]: dirty }),
@@ -222,6 +224,7 @@ export function DraftReviewPanel({ draftCorrection, factCorrection, semanticRevi
 }
 
 interface DraftItemReviewProps {
+  onFieldInput?: DraftReviewPanelProps['onFieldInput']
   semanticFacts?: ReactNode
   onDefer?: () => void
   isolatedCapabilities?: boolean
@@ -245,7 +248,7 @@ interface DraftItemReviewProps {
   onMergeTask: DraftReviewPanelProps['onMergeTask']
 }
 
-function DraftItemReview({ semanticFacts, onDefer, isolatedCapabilities, index, item, editing, onToggleEdit, onUpdate, onConfirm, onReject, onToggleSelected, onFocusEvidence, inferenceLevel, milestones, milestoneTempId, onMoveTask, mergeTargets, onSplitTask, onMergeTask, confirmationV2 }: DraftItemReviewProps) {
+function DraftItemReview({ onFieldInput, semanticFacts, onDefer, isolatedCapabilities, index, item, editing, onToggleEdit, onUpdate, onConfirm, onReject, onToggleSelected, onFocusEvidence, inferenceLevel, milestones, milestoneTempId, onMoveTask, mergeTargets, onSplitTask, onMergeTask, confirmationV2 }: DraftItemReviewProps) {
   const suggestion = item.suggestion
   const [mergeTargetId, setMergeTargetId] = useState('')
   if (item.status !== '待确认') return <article className={`review-item processed ${item.status === '已拒绝' ? 'rejected' : ''}`}>
@@ -270,10 +273,10 @@ function DraftItemReview({ semanticFacts, onDefer, isolatedCapabilities, index, 
       <button type="button" disabled={confirmationV2?.busy || confirmationV2?.unsaved} onClick={() => onReject(item.id)}>记录此项不需要</button>
     </div>}
     {editing && <fieldset className="review-edit-form"><legend>修改这件事</legend><div className="form-grid">
-      <label className="field span-2"><span>任务名称</span><input disabled={confirmationV2?.busy} value={suggestion.title} onChange={(event) => onUpdate(item.id, { title: event.target.value })} /></label>
+      <label className="field span-2"><span>任务名称</span><input disabled={confirmationV2?.busy} value={suggestion.title} onChange={(event) => {onFieldInput?.(item.id,'title');onUpdate(item.id, { title: event.target.value })}} /></label>
       {confirmationV2 && <button type="button" disabled={confirmationV2.busy || !confirmationV2.titleDirty} onClick={() => confirmationV2.onSave('title')}>保存修改：任务名称</button>}
       <label className="field"><span>分类</span><select disabled={Boolean(confirmationV2)} value={suggestion.category} onChange={(event) => onUpdate(item.id, { category: event.target.value as TaskCategory })}>{categories.map((category) => <option key={category}>{category}</option>)}</select></label>
-      <label className="field"><span>截止时间</span><input type={confirmationV2 ? "text" : "datetime-local"} placeholder={confirmationV2 ? "YYYY-MM-DD 或 YYYY-MM-DDTHH:mm" : undefined} disabled={confirmationV2 && (confirmationV2.busy || Boolean(confirmationV2.dateEditBlockedReason))} value={suggestion.deadline} onChange={(event) => onUpdate(item.id, { deadline: event.target.value })} /></label>
+      <label className="field"><span>截止时间</span><input type={confirmationV2 ? "text" : "datetime-local"} placeholder={confirmationV2 ? "YYYY-MM-DD 或 YYYY-MM-DDTHH:mm" : undefined} disabled={confirmationV2 && (confirmationV2.busy || Boolean(confirmationV2.dateEditBlockedReason))} value={suggestion.deadline} onChange={(event) => {onFieldInput?.(item.id,'deadline');onUpdate(item.id, { deadline: event.target.value })}} /></label>
       {confirmationV2 && <button type="button" disabled={confirmationV2.busy || !confirmationV2.deadlineDirty || Boolean(confirmationV2.dateEditBlockedReason)} onClick={() => confirmationV2.onSave('deadline')}>保存修改：截止时间</button>}
       <label className="field"><span>预计耗时（分钟）</span><input disabled={Boolean(confirmationV2)} type="number" min="5" step="5" value={suggestion.estimatedMinutes} onChange={(event) => onUpdate(item.id, { estimatedMinutes: Number(event.target.value) })} /></label>
       <label className="field span-2"><span>下一步动作</span><input disabled={Boolean(confirmationV2)} value={suggestion.nextAction} onChange={(event) => onUpdate(item.id, { nextAction: event.target.value })} /></label>

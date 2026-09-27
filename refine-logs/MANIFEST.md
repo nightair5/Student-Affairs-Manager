@@ -1,5 +1,7 @@
 # 规划产物索引
 
+> D8 新交付：[Candidate15 D8 结果与停止点](../docs/recognition-optimization/candidate15/d8-development/D8_RESULTS.md)、[语义对应表](../docs/recognition-optimization/candidate15/d8-development/SEMANTIC_TRACE.md)、[计时口径](../docs/recognition-optimization/candidate15/d8-development/MEASUREMENT_CONTRACT_V3.md)、[零调用包](../docs/recognition-optimization/candidate15/d8-development/MANIFEST.json)、[预算草案](../docs/recognition-optimization/candidate15/d8-development/FUTURE_BUDGET_CARD_DRAFT.md)。W1/W2 工程交付，W3 等待完整参照；下方 D7 索引属于历史快照。
+
 > 当前执行入口为 [PRD 1.0](../PRD.md)、[AGENTS 2.0](../AGENTS.md) 和 [治理 D8 提示词](../docs/governance/NEXT_STAGE_EXECUTION_PROMPT.md)。下方 D7 提示词行属于历史方案，不能覆盖当前规则。
 
 阶段：C14-D7 契约阻断；日期：2026-09-27。作者：本任务；性质：D6证据复核、Candidate14工程链路、R4/R5派发前失效与下一轮合同决定。

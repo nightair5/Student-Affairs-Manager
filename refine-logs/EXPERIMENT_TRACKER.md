@@ -1,5 +1,7 @@
 # Candidate11 实验跟踪表
 
+> D8 最新（2026-09-27）：W1/W2 工程实现和浏览器部分验收完成，W3 参照不足，未形成可派发批次。见 [D8 结果](../docs/recognition-optimization/candidate15/d8-development/D8_RESULTS.md)。下方 D7 顶部段落保留历史状态。
+
 > 2026-09-27 最新治理状态：文档与只读保护工具交付；候选仍 D7_BLOCKED_ON_REFERENCE_CONTRACT。旧行保留历史意义，新工作包见 [治理审查](../docs/governance/GOVERNANCE_REVIEW_2026-09-27.md)。
 
 版本：c13-tracker-1.2-d6-rejected。日期：2026-09-22。
@@ -8,6 +10,9 @@
 
 | ID | 阶段 | 工作/比较 | 数据角色 | 调用 | 当前状态 | 进入条件 / 交付 |
 |---|---|---|---|---:|---|---|
+| C15-D8-W1 | D8 | Candidate15 Prompt、v6参照/评分、独立事件时间变异 | 已见工程反例 | 0 | PASS_TARGETED_ENGINEERING_ONLY | 无任务 scope/事件六字段正反例通过；12来源完整参照未齐 |
+| C15-D8-W2 | D8 | 真实确认组件与计时 v3、6635 隔离工程回放 | D6已见录制结果 | 0 | PARTIAL_BROWSER_ENGINEERING | 编辑失败恢复、部分确认、无日期任务、读回/刷新通过；纯信息归档与完整仪器未验收 |
+| C15-D8-W3 | D8 | Candidate03 vs Candidate15 12×2 计划 | 完全已见合成 Development | 0 | WAITING_FOR_COMPLETE_REFERENCES | v6 完整参照0/12、实际身份0/24、dispatchAuthorized=false、NOT_RUN；新授权前仍需冻结和核价 |
 | GOV-R2 | 2026-09-27 复查 | 活动入口修正、可移植保护单测、资源路线与测量反例 | 只读工程诊断 | 0 | DELIVERED_GOVERNANCE_ONLY | [复查验证](../docs/governance/review-20260927-r2/VALIDATION.md)；未执行 D8，D7 仍阻断 |
 | C11-000 | P0 | 隔离worktree、分支、交接与规划 | 历史只读 | 0 | COMMITTED_PUSHED | 文档检查、提交和远端核验见分支审计 |
 | C11-010 | P1 | scorer v2及一对一/字段反例 | 工程合成 | 0 | PASS_ENGINEERING_ONLY | 新增反例>=30，正确/错误fixture明确分离 |

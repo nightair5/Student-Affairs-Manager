@@ -1,5 +1,7 @@
 # Candidate11 独立支线推进计划
 
+> D8 实施记录（2026-09-27）：Candidate15 v6 语义/评分与计时 v3、独立浏览器工程回放已交付；12 份已见 D5 来源的完整 v6 参照 0/12，实际请求身份 0/24，停止于 `W1_W2_ENGINEERING_DELIVERED_W3_WAITING_FOR_COMPLETE_REFERENCES`。先补逐来源参照与真实链路正反例，再冻结身份；此时不能申请派发。见 [D8 结果](../docs/recognition-optimization/candidate15/d8-development/D8_RESULTS.md)。下方“D8 未执行”等文字是治理复查时的历史计划快照。
+
 > 当前详细路线：[五批执行计划](../docs/governance/PROJECT_EXECUTION_ROADMAP.md)，包含 D8 工作分解、后续 24 次开发对比、独立人工参照、探索真人设计、发布依赖、各方职责和停止条件。新增样本设计均为计划建议，不创造外部行动许可；当前仍未执行 D8。
 
 > 当前入口更新（2026-09-27）：以根 PRD 1.0 / AGENTS 2.0 和 [治理 D8 工作包](../docs/governance/NEXT_STAGE_EXECUTION_PROMPT.md) 为后续执行规则。以下保留各阶段历史计划；旧授权/全新 Development 要求不自动成为当前授权或当前门槛。D7 仍阻断，下一步先 W1/W2 零调用工程。
