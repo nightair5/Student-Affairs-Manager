@@ -1,24 +1,57 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import {readFileSync} from 'node:fs'
+import {createHash} from 'node:crypto'
 import {resolve} from 'node:path'
 import {AUTHORITY_LEDGER, GOVERNANCE_MANIFEST, verifyGovernanceProtection} from './verify-governance-protection.mjs'
 
-const root = process.cwd()
-const manifest = JSON.parse(readFileSync(resolve(root, GOVERNANCE_MANIFEST), 'utf8'))
-const baseline = JSON.parse(readFileSync(resolve(root, manifest.originalProtection.path), 'utf8'))
-const freeze = JSON.parse(readFileSync(resolve(root, manifest.d7Freeze.path), 'utf8'))
+// Unit tests must work in a fresh checkout, without this developer's private ledger.
+// The CLI still checks the real repository and authority ledger separately.
+const root = resolve(process.cwd(), '__virtual_governance_fixture__')
+const sha = bytes => createHash('sha256').update(bytes).digest('hex')
+const files = new Map()
+const put = (path, value) => {
+  const bytes = Buffer.from(typeof value === 'string' ? value : JSON.stringify(value))
+  files.set(resolve(root, path), bytes)
+  return {path, sha256: sha(bytes), bytes: bytes.length}
+}
+const transitions = ['AGENTS.md', 'PRD.md'].map(path => {
+  const old = put('docs/governance/archive/2026-09-27/' + path.replace('.md', '.previous.md'), 'old ' + path)
+  const current = put(path, 'current ' + path)
+  return {path, archivePath: old.path, previousSha256: old.sha256, currentSha256: current.sha256}
+})
+const baseline = {protectedFiles: [
+  ...transitions.map(item => ({path: item.path, sha256: item.previousSha256})),
+  ...Array.from({length: 82}, (_, index) => put('history/file-' + index, 'frozen history ' + index)),
+]}
+const originalProtection = put('docs/recognition-optimization/candidate11/BRANCH_BASELINE.json', baseline)
+const components = Array.from({length: 14}, (_, index) => put('frozen/component-' + index, 'component ' + index))
+const freeze = {components, aggregateSha256: sha(JSON.stringify(components))}
+const d7Freeze = put('docs/recognition-optimization/candidate14/d7-freeze/FREEZE_MANIFEST.json', freeze)
+const ledger = Buffer.from(Array.from({length: 791}, (_, index) => JSON.stringify({syntheticRow: index})).join('\n') + '\n')
+files.set(resolve(AUTHORITY_LEDGER), ledger)
+const manifest = {
+  version: 'governance-protection-1',
+  originalProtection: {...originalProtection, count: 84}, transitions,
+  d7Freeze: {...d7Freeze, aggregateSha256: freeze.aggregateSha256},
+  authorityLedger: {path: AUTHORITY_LEDGER, rows: 791, bytes: ledger.length, sha256: sha(ledger)},
+}
+put(GOVERNANCE_MANIFEST, manifest)
+const readFixture = path => {
+  const bytes = files.get(resolve(path))
+  assert.ok(bytes, 'Unexpected read outside the in-memory fixture: ' + path)
+  return Buffer.from(bytes)
+}
 const withCorruption = (path, corrupt) => {
-  const target = resolve(root, path)
+  const target = path === AUTHORITY_LEDGER ? resolve(AUTHORITY_LEDGER) : resolve(root, path)
   return file => {
-    const bytes = readFileSync(file)
+    const bytes = readFixture(file)
     return resolve(file) === target ? corrupt(bytes) : bytes
   }
 }
 const appended = bytes => Buffer.concat([bytes, Buffer.from('unauthorized drift')])
 
 test('authorized document transition preserves every historical byte and never grants dispatch', () => {
-  const result = verifyGovernanceProtection(root)
+  const result = verifyGovernanceProtection(root, readFixture)
   assert.equal(result.historicalFilesUnchangedInPlace + result.historicalDocumentsPreservedInArchive, 84)
   assert.equal(result.activeDocumentVersionsVerified, 2)
   assert.equal(result.dispatchAuthorized, false)

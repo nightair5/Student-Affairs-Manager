@@ -18,6 +18,21 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  governance-unit:
+    # Portable unit checks only. The real ledger stays local and read-only.
+    # This job cannot replace the verify job or authorize model dispatch/release.
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Test governance verifier with synthetic in-memory evidence
+        run: node --test scripts/governance-protection.node-test.mjs
+
   verify:
     runs-on: ubuntu-latest
     timeout-minutes: 15

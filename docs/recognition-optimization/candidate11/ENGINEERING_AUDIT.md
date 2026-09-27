@@ -229,3 +229,7 @@ R4 包有 12 source、12 provisional reference、24 NOT_RUN identity、6 AB/6 BA
 ## 2026-09-27：用户授权治理规则重整
 
 本轮更新根 PRD 1.0 / AGENTS 2.0，单独归档两份旧根文档并新增只读保护版本，未改历史保护清单。其余 82 份保护文件原位不变，旧 84 份原位验证不再适用于活动根文档；旧断言保留预期漂移。D7 组件及账本另检，不等于解除 D7 阻断。没有候选实现、模型调用、真人或部署。完整变更与验证见 docs/governance/GOVERNANCE_REVIEW_2026-09-27.md 与 docs/governance/VALIDATION.md。
+
+## 2026-09-27：全局复查与外部资源路线
+
+复查当前入口、历史约束、CI/PR 和测量代码，修正活动文档的范围冲突；纯内存保护单测不再依赖开发者真实账本，新增独立 CI job，原 verify job 不变。measurement 2.4 的三份匿名只读反例复现了阅读计为修改、批量保存未关联字段纠正的问题；冻结模块未改，D8 提示词已加入修复验收。20 项外部资源仅完成研究和适配判断，未安装或执行。范围、证据与验证见 docs/governance/review-20260927-r2/REVIEW_AND_ACTIONS.md 和 VALIDATION.md。D7 阻断、旧结果、所有真人指标不可观测以及账本只读边界保持。

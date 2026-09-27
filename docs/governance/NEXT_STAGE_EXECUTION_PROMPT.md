@@ -2,13 +2,15 @@
 
 这是后续任务草案，不是本轮已经执行或已经获得付费/真人/部署许可。用户提交以下提示词时，可一次推进相依的本地工作包。
 
+2026-09-27 复查补充：纳入 [实际测量反例](review-20260927-r2/MEASUREMENT_COUNTEREXAMPLES.json) 与 [资源采用决定](review-20260927-r2/RESOURCE_CATALOG.md)。优先使用现有技术栈落实这些方法，无需先安装外部框架。
+
 ```text
 继续“学生事务管家”的识别优化独立支线，执行 D8：
 评分契约可满足性修复、确认与计时闭环、已见 Development 回归和下一批零调用准备。
 
 工作区：C:\Users\Winner\.codex\worktrees\student-affairs-candidate11\比赛
 分支：codex/e2-candidate11-blind-eval
-以当前 PRD 1.0、AGENTS 2.0 和 CURRENT_CONTEXT 为入口。先核验本地/upstream/远端及工作区；不要使用过期硬编码 HEAD。读取 D7 架构决定、provisional 审计、冻结清单与本轮治理审查。
+以当前 PRD 1.0、AGENTS 2.0 和 CURRENT_CONTEXT 为入口。先核验本地/upstream/远端及工作区；不要使用过期硬编码 HEAD。读取 D7 架构决定、provisional 审计、冻结清单与 docs/governance/review-20260927-r2/REVIEW_AND_ACTIONS.md。历史文档只按本次涉及部分读取，不重走所有旧阶段。
 
 授权连续完成本地设计、代码、匿名工程夹具、独立端口/数据库的工程回放与浏览器验收、验证、Conventional Commits 并立即推送。普通实现问题自行处理。
 不授权业务模型调用或连通性探测、Secret 明文读取、grant/reserve/settle、账本写入、真人或真实材料采集、旧库操作、Schema 升级、新依赖、合并、部署或默认候选替换。
@@ -18,8 +20,11 @@
 3. 修复无当前任务 informationScopeIds 的 Prompt/评分集合不一致；修复独立事件时间仅比 rawText/scope 的漏检，对 type、normalizedValue、timezone、precision、isAllDay、needsConfirmation 和关联对象逐项验证。原 D7 错时间仍满分的反例必须失败。
 4. 建立版本化 provisional 语义裁决：包装/格式与办结标准区分；待公布时间不得冒充截止；任务按动作对象和取消/替代端点拆分；条件 true/false/unknown 保持。支持合理别名、顺序和拆合，不能靠 exact wording 判错或为某个输出改答案。需独立人工才能解决的歧义登记为未决，不伪装真值。
 5. 在已见匿名资料和反例上迭代；旧 R4/R5 来源如引用，明确是已见回归用途，保留旧失效记录与原文件，不复活身份，也不称全新数据。每类完整参照至少一份合法 wire 和关键语义变错的反例，经实际 Schema、adapter、scorer 和处置路径验证。冻结前可反复修复，不机械销毁数据。
+   采用 CheckList 式能力矩阵：否定、取消/替代、true/false/unknown、动作对象、多端点、材料、完成标准、依赖、任务/事件时间、无任务。对保持含义的别名/顺序与改变含义的单字段变异分别断言；关键时间字段须逐一变异，不只把多字段同时改错一次。用现有 Vitest/Node 即可，不为此安装 fast-check、promptfoo、DSPy 或新增业务模型调用。
 6. 在独立入口复核：无日期任务、纯信息归档、事件信息、逐项修改/拒绝/部分确认、依据定位、保存失败恢复、独立读回、刷新恢复。使用真实产品组件；录制结果注明工程回放/非真人。不得操作旧 6633/6634 入口及数据库。
 7. 对照 PRD 四项指标审查测量：首次输出不可覆盖；全部开始的合法试次进分母；低修改主指标分母不可缩为成功者；失败或取消前的编辑负担要保留；active/read/wall/wait/hidden/idle 分开，缺失不记 0。工程回放不能产生真人率或真人省时结论。实现与新口径差异要有反例测试。
+   先运行 node scripts/audit-candidate14-measurement-readonly.mjs，保留旧 2.4 诊断。新版必须修复：没有编辑的 10 秒阅读不再记为 10 秒主动修改；edit_operation 与 batch_commit 不同 ID 时通过显式映射保留纠正次数，缺对应不能回落 0 或 lowModification=true；超时/放弃前的真实编辑仍计入负担。定义可审查的编辑开始/结束、空闲截断及恢复口径，暂停/隐藏/等待避免重叠扣时；区间未闭合标缺失。首次到最终字段差异与事件链交叉检查，但不把中途修改后撤销的操作成本抹掉。每类终止状态报告有效 n、缺失 n 与时间，不只挑成功者。
+   依据定位复用现有不可变 scope/evidence 与真实组件，不增加第二事实源；LangExtract/HAX 仅作方法参考，不引入其额外多轮调用。UI 原始事件必须真正进入新版测量，不能只写脱离页面的模拟单测。
 8. 根据错误分布决定最小必要的候选修正，修改 Prompt 必须新 promptVersion。两臂共用评分/适配；多组件同改只宣称整包比较，单变量归因另行消融。若 wire 不足以完整表达，不绕过当前 Schema 禁令，列明缺口和兼容方案。
 9. 契约与工程链路验证通过后，准备一个新 Development 运行版本。可以使用公开已见程度的开发资料；不冒充独立 Holdout。首次派发前一次性冻结来源、参照、候选、Schema、scorer、adapter、参数、平衡顺序、失败处理和选择门槛。不沿用 R4/R5 请求身份。
 10. 如果已具备可信完整参照和公平两臂链路，准备 Candidate03 vs 新候选的 12×2 请求身份，固定非候选参数，6 AB/6 BA，全部 dispatchAuthorized=false、NOT_RUN。预注册全部单元有确定结局、两臂结构/引用有效、新候选 Severe/Forbidden=0、不增加任务 FN 或关键 Major、整份正确至少净增 2 的开发筛选门。若不具备，交付具体缺口，不勉强生成可调用包。

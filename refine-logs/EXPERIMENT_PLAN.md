@@ -2,6 +2,8 @@
 
 > 当前入口更新（2026-09-27）：以根 PRD 1.0 / AGENTS 2.0 和 [治理 D8 工作包](../docs/governance/NEXT_STAGE_EXECUTION_PROMPT.md) 为后续执行规则。以下保留各阶段历史计划；旧授权/全新 Development 要求不自动成为当前授权或当前门槛。D7 仍阻断，下一步先 W1/W2 零调用工程。
 
+> 同日全局复查补充：[行动表](../docs/governance/review-20260927-r2/REVIEW_AND_ACTIONS.md) 已将评分时间漏检、阅读/编辑混计、批量纠正漏计纳入 W1/W2；[20 项资源](../docs/governance/review-20260927-r2/RESOURCE_CATALOG.md) 按用途筛选。入口及工具已修，产品代码待 D8；不新开无必要支线，不先装新框架。
+
 版本：c13-plan-1.2-d6-rejected。日期：2026-09-22（Asia/Shanghai）。
 状态：D6已按独立授权完成Candidate03/Candidate13的24次D5-R1合成Development配对调用、v4.1评分、预算结算和独立工程回放；正式决定为`REJECT_CANDIDATE13_DEVELOPMENT`。独立人工标签、正式Holdout、真人验证、默认候选替换、合并和部署仍未执行。
 当前主问题：已经正确读取的校园通知，仍会被误拆任务、误判条件、误归材料和时间；旧评分又漏掉部分错误。

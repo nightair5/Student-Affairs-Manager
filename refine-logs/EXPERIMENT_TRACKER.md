@@ -8,6 +8,7 @@
 
 | ID | 阶段 | 工作/比较 | 数据角色 | 调用 | 当前状态 | 进入条件 / 交付 |
 |---|---|---|---|---:|---|---|
+| GOV-R2 | 2026-09-27 复查 | 活动入口修正、可移植保护单测、资源路线与测量反例 | 只读工程诊断 | 0 | DELIVERED_GOVERNANCE_ONLY | [复查验证](../docs/governance/review-20260927-r2/VALIDATION.md)；未执行 D8，D7 仍阻断 |
 | C11-000 | P0 | 隔离worktree、分支、交接与规划 | 历史只读 | 0 | COMMITTED_PUSHED | 文档检查、提交和远端核验见分支审计 |
 | C11-010 | P1 | scorer v2及一对一/字段反例 | 工程合成 | 0 | PASS_ENGINEERING_ONLY | 新增反例>=30，正确/错误fixture明确分离 |
 | C11-011 | P1 | 24旧答复算、不可变证据对照 | SEEN_DIAGNOSTIC | 0 | PASS_ENGINEERING_ONLY | 无Secret/账本写入，重评分另存 |

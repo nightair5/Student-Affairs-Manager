@@ -1,6 +1,14 @@
-# 当前交接：治理规则已升级，D7 评分契约仍阻断
+# 当前交接：全局复查与资源路线已交付，D7 评分契约仍阻断
 
 日期：2026-09-27。工作区：`C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/比赛`。分支：`codex/e2-candidate11-blind-eval`。停止状态：`D7_BLOCKED_ON_REFERENCE_CONTRACT`。
+
+## 最新复查（2026-09-27）
+
+已修正 README、PR 模板、RUNBOOK 和旧总计划的适用范围，新增 [项目入口](../PROJECT_ENTRYPOINTS.md)。PRD 1.0 / AGENTS 2.0 与其哈希不变。保护工具单测改为纯内存夹具，CI 增加独立治理单测，原 verify job 与发布门保留。
+
+只读工程复现发现 measurement 2.4 把阅读计作主动修改，且 edit 与批量保存 ID 不同可能漏计纠正。旧冻结代码未改；下一版需修复。20 项外部资源已按优先级筛选，优先借鉴证据定位、行为反例测试、标注隔离和交互恢复。详见 [复查与行动表](../governance/review-20260927-r2/REVIEW_AND_ACTIONS.md)、[资源目录](../governance/review-20260927-r2/RESOURCE_CATALOG.md)；[D8 提示词](../governance/NEXT_STAGE_EXECUTION_PROMPT.md) 已加入具体反例验收。
+
+本次没有新增产品模型调用、grant/reserve/settle、Secret 明文读取、账本/旧库写入、依赖、Schema 变更、默认候选替换、真人或部署；未执行 D8 产品实现，不宣称识别率提高。验证见 [复查验证](../governance/review-20260927-r2/VALIDATION.md)。
 
 ## D7 交付证据快照
 
