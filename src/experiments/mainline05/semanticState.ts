@@ -200,8 +200,19 @@ function validDate(value: string, timezone: string) {
 export function informationReviewProblem(state: AnySemanticState): string | undefined {
   const input = effectiveStateFacts(state).facts, review = effectiveReview(state)
   if (input.tasks.length) return '包含任务建议，请逐项核对。'
-  if (review.issues.length || input.unresolvedScopeIds.length) {
-    return '原文尚有未覆盖或未解决的信息，需继续核对：' + review.issues.map(issue => issue.code).join('、')
+  const consentableTime = (id: string) => {
+    const point=input.timePoints.find(row=>row.tempId===id)
+    if(!point||point.relatedTaskTempIds.length||!point.needsConfirmation||point.normalizedValue!==null
+      ||point.precision!=='vague'||point.isAllDay||point.timezone!==state.context.timezone
+      ||!['event_start','event_end'].includes(point.type)
+      ||!input.events.some(event=>event.startTimePointTempId===id||event.endTimePointTempId===id))return false
+    const ast=parseChineseTimeAst(point.rawText,{type:point.type,referenceTime:state.context.referenceTime,timezone:state.context.timezone})
+    return ast.normalizedValue===null&&ast.precision==='vague'&&ast.isAllDay===false
+      &&point.scopeIds.filter(scopeId=>state.context.index.scopes.find(scope=>scope.id===scopeId)?.text.includes(point.rawText)).length===1
+  }
+  const blocking=review.issues.filter(issue=>issue.code!=='TIME_NEEDS_REVIEW'||!issue.entityIds.length||!issue.entityIds.every(consentableTime))
+  if (blocking.length || input.unresolvedScopeIds.length) {
+    return '原文尚有未覆盖或未解决的信息，需继续核对：' + blocking.map(issue => issue.code).join('、')
   }
   return undefined
 }

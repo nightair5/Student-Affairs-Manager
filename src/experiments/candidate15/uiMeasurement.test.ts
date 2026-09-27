@@ -12,6 +12,30 @@ function memoryStore(){
 const registration:D8Registration={trialId:'recorded-engineering',origin:'ENGINEERING_REPLAY',sourceSha256:'a'.repeat(64),candidateSha256:'b'.repeat(64),firstOutputSha256:'c'.repeat(64),registeredAtMs:Date.now(),humanAuthorityVerified:false}
 
 describe('D8 real UI event recorder',()=>{
+  it('counts 10 seconds of reading as zero editing and records verified no-task review',async()=>{
+    const ui=createD8UiMeasurement(memoryStore()),draftId='info-draft'
+    const reg={...registration,registeredAtMs:Date.now()-11_000}
+    await ui.begin(draftId,reg)
+    const rows=await ui.events(draftId)
+    // The clock mutation is limited to this anonymous in-memory measurement test.
+    rows.forEach(row=>{row.atMs-=10_000})
+    await ui.reviewNoTask(draftId,async()=>{})
+    const result=calculateD8Trial(reg,await ui.events(draftId),{firstWholeCorrect:true,finalDispositionCorrect:true,disposition:'no_task'})
+    expect(result.status).toBe('DETERMINATE')
+    expect(result.substantiveEditCount).toBe(0)
+    expect(result.activeEditMs).toBe(0)
+    expect(result.readMs).toBeGreaterThanOrEqual(10_000)
+  })
+  it('a failed no-task save has no terminal success and a later retry retains the source trial',async()=>{
+    const ui=createD8UiMeasurement(memoryStore()),draftId='retry-draft'
+    await ui.begin(draftId,registration)
+    await expect(ui.reviewNoTask(draftId,async()=>{throw Error('injected write failure')})).rejects.toThrow('injected write failure')
+    expect((await ui.events(draftId)).some(row=>row.kind==='no_task_archived')).toBe(false)
+    await ui.reviewNoTask(draftId,async()=>{})
+    const events=await ui.events(draftId)
+    expect(events.filter(row=>row.kind==='no_task_archived')).toHaveLength(1)
+    expect(calculateD8Trial(registration,events,{firstWholeCorrect:true,finalDispositionCorrect:true,disposition:'no_task'}).status).toBe('DETERMINATE')
+  })
   it('maps two changed fields to one batch save and does not count reading as editing',async()=>{
     const ui=createD8UiMeasurement(memoryStore()),draftId='draft-1'
     await ui.begin(draftId,registration)

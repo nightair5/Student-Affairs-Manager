@@ -13,7 +13,7 @@ import type {D8EditCategory} from './measurement'
 interface Choice {id:string;label:string;kind:D8ReplayRecord['kind']}
 function ReplayPicker({choices,open}:{choices:readonly Choice[];open:(id:string)=>Promise<void>}){
   const [busy,setBusy]=useState(false),[error,setError]=useState('')
-  return <section aria-label="D8录制结果"><p><strong>工程回放 / D6已见录制结果 / 非真人试用</strong></p><p>这里仅重放D6已经产生的模型回答。不会再次调用模型，也不会计入真人正确处置率、低修改正确处置率或主动修改时间。</p>
+  return <section aria-label="D8录制结果"><p><strong>工程回放 / 录制结果与匿名夹具 / 非真人试用</strong></p><p>这里重放D6录制回答或明确标注的D9匿名工程夹具。不会再次调用模型，也不会计入真人正确处置率、低修改正确处置率或主动修改时间。</p>
     {choices.map(choice=><button className="secondary-button" key={choice.id} disabled={busy} onClick={()=>{setBusy(true);setError('');void open(choice.id).catch(()=>setError('回放未完成，已有来源与草稿已保留。')).finally(()=>setBusy(false))}}>{choice.label}</button>)}
     {busy&&<p role="status">正在载入本机录制结果…</p>}{error&&<p role="alert">{error}</p>}</section>
 }
@@ -30,9 +30,20 @@ export async function createD8Runtime(options:{transport:WorkspaceRecordStore&{n
   const fieldIds=new WeakMap<EventTarget,string>()
   const fieldKey=(target:EventTarget)=>{let key=fieldIds.get(target);if(!key){key=crypto.randomUUID();fieldIds.set(target,key)}return key}
   const verifiedReadback=async()=>{const live=await repo.load(),readback=await new CanonicalWorkspaceRepository(options.transport).load();if(stableJson(live)!==stableJson(readback))throw Error('D8_READBACK_MISMATCH')}
-  const runtime=await createMainlineRuntime({name:D8_DATABASE,store,profile:'real-input-01',recognize:()=>{throw Error('D8_OLD_RECOGNIZER_DISABLED')},semanticDriver:async()=>({...base,semantic:base.semantic!,
+  const runtime=await createMainlineRuntime({name:D8_DATABASE,store,profile:'real-input-01',recognize:()=>{throw Error('D8_OLD_RECOGNIZER_DISABLED')},semanticDriver:async()=>({...base,semantic:{...base.semantic!,
+    dispose:async intent=>{
+      if(intent.kind!=='review_info')return base.semantic!.dispose(intent)
+      let saved:Awaited<ReturnType<NonNullable<typeof base.semantic>['dispose']>>|undefined
+      await metrics.reviewNoTask(intent.draftId,async()=>{
+        const before=await repo.load()
+        saved=await base.semantic!.dispose(intent)
+        await verifiedReadback()
+        if(saved.tasks.length!==before.tasks.length||saved.projects.length!==before.projects.length||!saved.sources.some(source=>before.sources.some(old=>old.id===source.id)))throw Error('D9_NO_TASK_CREATED_ENTITY_OR_LOST_SOURCE')
+      })
+      return saved!
+    }},
     edit:async request=>{const saved=await base.edit(request);await verifiedReadback();await metrics.saved(request.draftId,request.operationId);return saved},
-    recognitionDescription:'D8独立工程回放 · D6已见Candidate03/Candidate13录制结果 · 非真人试用',view:workspace=>{const view=base.view(workspace);return {...view,drafts:view.drafts.map(draft=>({...draft,modelName:'D6已见录制结果（原始候选身份在隔离记录中）'}))}},
+    recognitionDescription:'独立工程回放 · D6录制结果或D9匿名夹具 · 非真人试用',view:workspace=>{const view=base.view(workspace);return {...view,drafts:view.drafts.map(draft=>({...draft,modelName:'工程回放（来源类型见隔离记录）'}))}},
     realInput:{...base.realInput!,networkDescription:'本机只读载入D6录制回答；新模型发送关闭，原始回答与用户编辑分开保留。',inputPanel:props=><ReplayPicker choices={options.choices} open={async id=>{const draftId=await open(id);await props.onSaved();await props.onDraftReady(draftId)}}/>,
       onReviewFieldInput:(draftId,itemId,field)=>{void metrics.changed(draftId,field==='deadline'?'time':'title',itemId+':'+field)},
       factEditor:props=><section onChangeCapture={e=>{void metrics.changed(props.draftId,category(e.target),fieldKey(e.target))}}>{base.realInput!.factEditor({...props,onSaved:async()=>{await props.onSaved();await verifiedReadback();await metrics.saved(props.draftId)}})}</section>,

@@ -31,6 +31,14 @@ function draft(sourceId: string, workflowStatus: NonNullable<ExtractionDraft['wo
 }
 
 describe('source workflow mapping', () => {
+  it('describes a confirmed zero-task source without implying a task was created', () => {
+    const result = recognition('图书馆服务维护，仅供了解。')
+    result.standaloneTasks=[];result.milestones=[]
+    const info = draft('notice','confirmed',result)
+    const item = mapSourceWorkflowItem(source('notice','confirmed'),[info])
+    expect(item.statusDescription).toContain('没有创建任务或项目')
+    expect(item.statusDescription).not.toContain('至少一项建议')
+  })
   it('keeps unprocessed, processing, failed, needs_review, confirmed, archived and info-only states explicit', () => {
     const sources = [
       source('unprocessed', 'uploaded'),

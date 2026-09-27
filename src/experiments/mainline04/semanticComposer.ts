@@ -103,7 +103,9 @@ export async function composeSemantics(input: unknown, options: ComposeContext):
   })
   for (const event of raw.events) {
     evidence(event.scopeIds, event.tempId)
-    if (!event.relatedTaskTempIds.length) issue('EVENT_NOT_TASK_ASSOCIATED', event.tempId)
+    // An informational event can stand alone when its evidence is explicitly
+    // accounted for as information; no fake task should be required.
+    if (!event.relatedTaskTempIds.length && (!event.scopeIds.length||!event.scopeIds.every(id=>raw.informationScopeIds.includes(id)))) issue('EVENT_NOT_TASK_ASSOCIATED', event.tempId)
     for (const id of event.relatedTaskTempIds) link(event.tempId, id, 'task')
     if (event.startTimePointTempId) link(event.tempId, event.startTimePointTempId, 'time')
     if (event.endTimePointTempId) link(event.tempId, event.endTimePointTempId, 'time')

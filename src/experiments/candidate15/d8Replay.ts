@@ -11,7 +11,7 @@ import {REAL_STATE_VERSION,semanticRevision} from '../mainline05/semanticState'
 import {stableJson} from '../mainline04/semanticContract'
 import {assertD8Database} from './d8Observation'
 
-export interface D8ReplayRecord {id:string;label:string;kind:'RECORDED_MODEL';candidateVersion:typeof CANDIDATE03_VERSION|typeof CANDIDATE13_VERSION;
+export interface D8ReplayRecord {id:string;label:string;kind:'RECORDED_MODEL'|'ENGINEERING_FIXTURE';candidateVersion:typeof CANDIDATE03_VERSION|typeof CANDIDATE13_VERSION;
   context:WireContext;rawHttpText:string;responseSha256:string;requestSha256:string}
 export function rebindD8ScopeIds(value:unknown,mapping:Map<string,string>,key=''):unknown{
   if(Array.isArray(value))return value.map(item=>rebindD8ScopeIds(item,mapping,key))
@@ -20,7 +20,7 @@ export function rebindD8ScopeIds(value:unknown,mapping:Map<string,string>,key=''
 }
 export async function openD8Replay(repo:SemanticRepository,record:D8ReplayRecord){
   assertD8Database(repo.name)
-  if(!/^d8-D5R1-S(?:0[1-9]|1[0-2])-[AB]$/.test(record.id)||record.kind!=='RECORDED_MODEL'
+  if(!(/^d8-D5R1-S(?:0[1-9]|1[0-2])-[AB]$/.test(record.id)&&record.kind==='RECORDED_MODEL'||record.id==='d9-fixture-S09-no-task'&&record.kind==='ENGINEERING_FIXTURE')
     ||![CANDIDATE03_VERSION,CANDIDATE13_VERSION].includes(record.candidateVersion)
     ||await sha256Text(record.rawHttpText)!==record.responseSha256||!/^[a-f0-9]{64}$/.test(record.requestSha256))throw Error('D8_REPLAY_IDENTITY')
   const before=await repo.load(),operationId='d8-'+record.id,prior=before.sources.find(source=>source.legacyData?.captureOperationId===operationId)

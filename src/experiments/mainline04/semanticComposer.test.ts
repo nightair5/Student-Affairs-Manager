@@ -25,6 +25,22 @@ async function example() {
   return { input, context, task }
 }
 describe('MAINLINE-04 finite-state composition, not natural-language classification', () => {
+  it('keeps a source-bound independent event as information without inventing a task', async () => {
+    const index = await indexImmutableScopesV11('event-info', 'v1', '周三晚图书馆检索服务维护，仅供了解。')
+    const scope = index.scopes[0]
+    const input: SemanticInput = { schemaVersion: SEMANTIC_VERSION, sourceId:index.sourceId,
+      sourceVersionId:index.sourceVersionId, sourceFingerprint:index.sourceFingerprint,
+      tasks:[],materials:[],timePoints:[],revisions:[],conflicts:[],unresolvedScopeIds:[],
+      informationScopeIds:index.scopes.map(row=>row.id),events:[{tempId:'event-1',title:'图书馆检索服务',description:'',
+        startTimePointTempId:null,endTimePointTempId:null,location:null,scopeIds:[scope.id],confidence:1,
+        inferenceLevel:'explicit',relatedTaskTempIds:[]}] }
+    const context: ComposeContext={index,authority:'seen_model_unverified',referenceTime:NOW,timezone:'Asia/Shanghai'}
+    const positive=await composeSemantics(input,context)
+    expect(positive.original.tasks).toHaveLength(0)
+    expect(positive.issues.map(row=>row.code)).not.toContain('EVENT_NOT_TASK_ASSOCIATED')
+    const negative=await composeSemantics({...input,informationScopeIds:[]},context)
+    expect(negative.issues.map(row=>row.code)).toContain('EVENT_NOT_TASK_ASSOCIATED')
+  })
   it.each<Truth>(['true', 'false', 'unknown'])('preserves declared condition %s without coercion', async value => {
     const { input, context, task } = await example(); task.condition.value = value
     const out = await composeSemantics(input, context)

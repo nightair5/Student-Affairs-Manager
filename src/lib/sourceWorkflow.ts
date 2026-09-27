@@ -131,7 +131,9 @@ export function mapSourceWorkflowItem(source: Source, drafts: ExtractionDraft[])
     draft,
     status,
     statusLabel: sourceStatusLabels[status],
-    statusDescription: statusDescriptions[status],
+    statusDescription: status === 'confirmed' && taskCount(draft) === 0
+      ? '通知已核对，来源已保存；没有创建任务或项目。事件和不确定时间请按原文核对。'
+      : statusDescriptions[status],
     modelLabel: modelLabel(source, draft),
     projectLabel: projectLabel(draft),
     errorMessage: source.processingError?.trim() || null,

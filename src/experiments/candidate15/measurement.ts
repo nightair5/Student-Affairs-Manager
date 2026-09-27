@@ -1,5 +1,5 @@
 /** D8 instrument contract. Engineering rows never enter human rates. */
-export const D8_MEASUREMENT_VERSION='candidate15-product-metrics-3.0.0' as const
+export const D8_MEASUREMENT_VERSION='candidate15-product-metrics-3.1.0' as const
 export const D8_IDLE_LIMIT_MS=5_000
 export type D8Origin='ENGINEERING_REPLAY'|'AUTOMATION'|'HUMAN_TRIAL'
 export type D8EditCategory='task_add'|'task_remove'|'task_split'|'task_merge'|'title'|'action'|'object'|'time'|'condition'|'material'|'completion_standard'|'revision'|'dependency'|'cosmetic'|'personalization'|'unknown'
@@ -20,7 +20,7 @@ export function calculateD8Trial(r:D8Registration,events:readonly D8Event[],j:D8
     if(!e.id||ids.has(e.id)||e.trialId!==r.trialId||e.sourceSha256!==r.sourceSha256||e.candidateSha256!==r.candidateSha256||e.firstOutputSha256!==r.firstOutputSha256||!Number.isFinite(e.atMs)||e.atMs<r.registeredAtMs||(i>0&&e.atMs<rows[i-1].atMs))return blank(r,'IDENTITY_INVALID',['event identity/order'])
     ids.add(e.id)
   }
-  if(rows[0].kind!=='trial_started'||rows.filter(e=>e.kind==='first_snapshot_frozen').length!==1||rows.filter(e=>e.kind==='suggestion_interactive').length!==1||!['readback_verified','abandoned','timed_out'].includes(rows.at(-1)!.kind))return blank(r,'INCOMPLETE',['lifecycle'])
+  if(rows[0].kind!=='trial_started'||rows.filter(e=>e.kind==='first_snapshot_frozen').length!==1||rows.filter(e=>e.kind==='suggestion_interactive').length!==1||!['readback_verified','no_task_archived','abandoned','timed_out'].includes(rows.at(-1)!.kind))return blank(r,'INCOMPLETE',['lifecycle'])
   const snapshot=rows.findIndex(e=>e.kind==='first_snapshot_frozen'),interactive=rows.findIndex(e=>e.kind==='suggestion_interactive')
   if(!(0<snapshot&&snapshot<interactive))return blank(r,'INCOMPLETE',['lifecycle order'])
   let reading=false,editing=false,idle=false,openedEditId:string|null=null,unclosedEdit=false
@@ -59,8 +59,10 @@ export function calculateD8Trial(r:D8Registration,events:readonly D8Event[],j:D8
   const substantiveEdits=[...edits].filter(([,category])=>substantive.has(category))
   if(substantiveEdits.some(([id])=>!linked.has(id))&&['confirmed','partial','no_task'].includes(j.disposition))missing.add('unmapped substantive edit')
   if(unclosedEdit)missing.add('edit time incomplete')
-  const terminalVerified=j.disposition==='confirmed'||j.disposition==='partial'||j.disposition==='no_task'?
-    Boolean(terminal.kind==='readback_verified'&&terminal.commitId&&readbacks.has(terminal.commitId)):j.disposition==='abandoned'?terminal.kind==='abandoned':j.disposition==='timed_out'?terminal.kind==='timed_out':false
+  const noTaskCommit=rows.at(-2)?.kind==='readback_verified'?rows.at(-2)?.commitId:null
+  const terminalVerified=j.disposition==='no_task'?Boolean(terminal.kind==='no_task_archived'&&noTaskCommit&&readbacks.has(noTaskCommit)):
+    j.disposition==='confirmed'||j.disposition==='partial'?Boolean(terminal.kind==='readback_verified'&&terminal.commitId&&readbacks.has(terminal.commitId)):
+    j.disposition==='abandoned'?terminal.kind==='abandoned':j.disposition==='timed_out'?terminal.kind==='timed_out':false
   const correct=j.finalDispositionCorrect===null?null:Boolean(j.finalDispositionCorrect&&terminalVerified)
   const semanticMissing=j.firstWholeCorrect===null||j.finalDispositionCorrect===null
   const criticalMissing=missing.has('unmapped substantive edit')||missing.has('explicit commit mapping')||missing.has('edit activity')||missing.has('unclosed interval')

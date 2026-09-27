@@ -8,6 +8,8 @@ const coverage = {present:'已提取',not_stated:'原文未说明',not_extracted
 export function SemanticFacts({state,taskId,onFocus}:{state:SemanticState;taskId?:string;onFocus?:(quote:string)=>void}) {
   const effective=effectiveStateFacts(state),input=effective.facts,current=life(state),tasks=taskId?input.tasks.filter(t=>t.id===taskId):input.tasks
   const assets=relatedAssets(input,tasks.map(t=>t.id))
+  const independentEvents=!taskId&&!tasks.length?input.events.filter(e=>e.relatedTaskTempIds.length===0):[]
+  const independentTimes=!taskId&&!tasks.length?input.timePoints.filter(t=>t.relatedTaskTempIds.length===0):[]
   const scopes=new Map(state.context.index.scopes.map(s=>[s.id,s]))
   const locate=(ids:string[])=><div>{[...new Set(ids)].map(id=>{
     const scope=scopes.get(id)
@@ -18,6 +20,9 @@ export function SemanticFacts({state,taskId,onFocus}:{state:SemanticState;taskId
     {!tasks.length&&(informationReviewProblem(state)
       ? <p role="status">待核对：{informationReviewProblem(state)}。尚不能判定为正确无任务，原文仍保留。</p>
       : <p>这份通知仅供了解，没有要确认的任务；可明确标记已核对，不会创建空项目。</p>)}
+    {independentEvents.map(event=><div key={event.tempId}><p><strong>独立事件：{event.title}</strong>；地点：{event.location??'未说明'}</p>
+      <p>开始时间引用：{event.startTimePointTempId??'未说明'}；结束时间引用：{event.endTimePointTempId??'未说明'}。这不是待办任务。</p>{locate(event.scopeIds)}</div>)}
+    {independentTimes.map(point=><div key={point.tempId}><p><strong>事件时间原文：{point.rawText}</strong>；{timeLabel(point.normalizedValue,state.context.timezone)}；{point.needsConfirmation?'时间尚不确定，标记核对仅表示已知晓，不能当成确定日期':'已表达'}</p>{locate(point.scopeIds)}</div>)}
     {tasks.map(t=><div key={t.id}>
       <p><strong>{t.action.surface} → {t.object.surface}</strong> · {truth[t.condition.value]}</p>
       {state.version===REAL_STATE_VERSION?<p>当前已保存状态：{t.semantics.status==='cancelled'?'已作废':t.semantics.status==='pending'?'待执行':t.semantics.status} / {t.semantics.validity==='superseded'?'已被替代':t.semantics.validity==='active'?'有效':t.semantics.validity}；当前处置：{current.dispositions[t.id]}</p>

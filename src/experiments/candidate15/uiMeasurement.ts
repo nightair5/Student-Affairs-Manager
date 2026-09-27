@@ -56,7 +56,19 @@ export function createD8UiMeasurement(store:Store){
     const commitId=crypto.randomUUID();await append(draftId,'commit_succeeded',{commitId,includedEditIds:[...(savedEdits.get(draftId)??[]),...(pendingEdits.get(draftId)??[])]});await append(draftId,'readback_verified',{commitId})
     activeEdit.delete(draftId);pendingEdits.delete(draftId)
   })}
+  async function reviewNoTask(draftId:string,work:()=>Promise<void>){return sequence(async()=>{
+    const active=activeEdit.get(draftId)
+    if(active)await append(draftId,'edit_ended',{editId:active.id})
+    else await append(draftId,'read_ended')
+    await append(draftId,'confirmation_requested')
+    try {await work()} catch(error) {activeEdit.delete(draftId);await append(draftId,'read_started');throw error}
+    const commitId=crypto.randomUUID()
+    await append(draftId,'commit_succeeded',{commitId,includedEditIds:[...(savedEdits.get(draftId)??[]),...(pendingEdits.get(draftId)??[])]})
+    await append(draftId,'readback_verified',{commitId})
+    await append(draftId,'no_task_archived')
+    activeEdit.delete(draftId);pendingEdits.delete(draftId)
+  })}
   async function resume(draftIds:readonly string[]){for(const id of draftIds)if(await store.read(regKey(id))){await append(id,'page_restored');await append(id,'read_started')}}
   const events=async(draftId:string)=>await store.read(eventKey(draftId)) as D8Event[]??[]
-  return {begin,append,changed,saved,confirmation,resume,events}
+  return {begin,append,changed,saved,confirmation,reviewNoTask,resume,events}
 }
