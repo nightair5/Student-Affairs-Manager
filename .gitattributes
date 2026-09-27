@@ -15,3 +15,11 @@ scripts/freeze-candidate13-d4.mjs text eol=lf
 scripts/candidate13-d4.node-test.mjs text eol=lf
 src/experiments/realInput01/candidate13.ts text eol=lf
 src/experiments/realInput01/candidate13.test.ts text eol=lf
+
+# Governance v2: stable active hashes and exact historical document bytes.
+AGENTS.md text eol=lf
+PRD.md text eol=lf
+docs/governance/** text eol=lf
+docs/governance/archive/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+scripts/verify-governance-protection.mjs text eol=lf
+scripts/governance-protection.node-test.mjs text eol=lf

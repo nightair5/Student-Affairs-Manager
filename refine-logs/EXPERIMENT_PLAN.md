@@ -1,5 +1,7 @@
 # Candidate11 独立支线推进计划
 
+> 当前入口更新（2026-09-27）：以根 PRD 1.0 / AGENTS 2.0 和 [治理 D8 工作包](../docs/governance/NEXT_STAGE_EXECUTION_PROMPT.md) 为后续执行规则。以下保留各阶段历史计划；旧授权/全新 Development 要求不自动成为当前授权或当前门槛。D7 仍阻断，下一步先 W1/W2 零调用工程。
+
 版本：c13-plan-1.2-d6-rejected。日期：2026-09-22（Asia/Shanghai）。
 状态：D6已按独立授权完成Candidate03/Candidate13的24次D5-R1合成Development配对调用、v4.1评分、预算结算和独立工程回放；正式决定为`REJECT_CANDIDATE13_DEVELOPMENT`。独立人工标签、正式Holdout、真人验证、默认候选替换、合并和部署仍未执行。
 当前主问题：已经正确读取的校园通知，仍会被误拆任务、误判条件、误归材料和时间；旧评分又漏掉部分错误。
@@ -353,3 +355,7 @@ R3 在派发前失效。现行冻结提交 `fcb5b91` 绑定 Reference/Scorer 5.4
 第 16–17 节的调用授权计划已失效，R4/R5 身份都不得派发。R4 Manifest `00cf591998b6396ca4bbbbca61b4a0594cdb88f86b8879f02391bdea350a8866` 存在冻结顺序/生成时间问题；R5 Manifest `3513b4f7842d7992b65d850057f18bac91424de77d773236d7c51ecb11c0bfed` 虽结构校验通过，但 Reference/Scorer 5.5 对独立事件时间漏检关键语义，同系列 provisional 审计 FAIL。停止点 `D7_BLOCKED_ON_REFERENCE_CONTRACT`。
 
 下一轮先做契约级设计审查：列出 Prompt、wire、adapter、参照、评分器和确认页之间每个事实的对应关系；用合法正例和错误反例验证独立事件时间、完整信息 scope、包装/格式限制与未知时间；无法表达的语义标未观测。通过审计后重新冻结 Candidate14 后续版和门槛、提交推送，再制作与 R4/R5 及历史 Expected/教学例低重合的全新合成 Development。只有可满足参照、有效身份和独立预算卡齐备后，才向用户申请新模型调用授权。真人正确处置与主动修改时间另需真实独立协调方和注册试次；不得由工程回放推算。
+
+## 治理后下一步（2026-09-27）
+
+W1 新版本契约与评分反例修复 → W2 真实确认和测量链路 → W3 审查新 Development 请求包，获新授权才调用 → W4 独立人工 Holdout → W5 获准真人效用 → W6 明确范围的发布决策。W1/W2 可在一次本地授权工作包内连续推进；缺标签、候选失败或旧无关测试失败不阻断无依赖工作。原批次门槛与失败记录保留。

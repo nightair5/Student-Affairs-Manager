@@ -225,3 +225,7 @@ R4 包有 12 source、12 provisional reference、24 NOT_RUN identity、6 AB/6 BA
 关键反例：R5 S09 的事件时间把 `type` 改为 `event_end`、`normalizedValue` 改成 1900 年、`timezone` 改成 UTC、`isAllDay=true`、`precision=vague`，保留 rawText/scope 后 5.5 仍给出 `complete=true / major=0`。Prompt 的无任务 `informationScopeIds` 要求也与评分器允许集冲突。S07 的包装限制是否为完成标准、S12 的“月底另行通知”是否应为未知时间尚未裁决。R5 在派发前失效，24 身份不可复用；来源文本仅进入已见排除库。细节见 `candidate14/d7-blocked/ARCHITECTURE_DECISION.md`。
 
 本轮定向 Reference/Scorer 13/13、Candidate14 产品与测量 Vitest 11/11、lint 0 错误、build、security scan、冻结及保护校验通过。裸 `npm run test` 为 1468 passed、3 failed、1 skipped：两项旧 5 秒超时单独重跑通过，另为既有 `REAL_INPUT_CARRIERS_MANIFEST` 未定义；历史 RCO-5-007 不变。官方浏览器通道 `nodeRepl.fetch request failed`，R5 浏览器验收 `NOT_RUN`。权威账本仍为 791 行、694807 字节及 SHA `efb46f116db9c550ba53624c5d710164c6143ba9cc30c57ab2b7515c059f4d6a`，84 份保护文件一致。模型调用、Secret、grant/reserve/settle、账本写入与真人试次均为 0；四项真人指标均 `NOT_OBSERVABLE`。当前停止状态 `D7_BLOCKED_ON_REFERENCE_CONTRACT`。
+
+## 2026-09-27：用户授权治理规则重整
+
+本轮更新根 PRD 1.0 / AGENTS 2.0，单独归档两份旧根文档并新增只读保护版本，未改历史保护清单。其余 82 份保护文件原位不变，旧 84 份原位验证不再适用于活动根文档；旧断言保留预期漂移。D7 组件及账本另检，不等于解除 D7 阻断。没有候选实现、模型调用、真人或部署。完整变更与验证见 docs/governance/GOVERNANCE_REVIEW_2026-09-27.md 与 docs/governance/VALIDATION.md。

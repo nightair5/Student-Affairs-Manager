@@ -1,6 +1,10 @@
-# 当前交接：Candidate14 D7 评分契约阻断
+# 当前交接：治理规则已升级，D7 评分契约仍阻断
 
 日期：2026-09-27。工作区：`C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/比赛`。分支：`codex/e2-candidate11-blind-eval`。停止状态：`D7_BLOCKED_ON_REFERENCE_CONTRACT`。
+
+## D7 交付证据快照
+
+以下测试与“84 份原位一致”是治理改版前的 D7 记录；当前保护状态与后续执行规则以下方“治理更新”为准。
 
 Candidate14 仍为独立完整 Prompt，默认候选未变。D6 的 24 次配对结果和 `REJECT_CANDIDATE13_DEVELOPMENT` 原样保留；D7 没有新增业务模型调用、Secret 读取、grant、reserve、settle、账本写入、真人试用、合并或部署。旧 Expected、raw、结果、锁文件与 84 份保护文件未改。
 
@@ -8,6 +12,14 @@ Candidate14 仍为独立完整 Prompt，默认候选未变。D6 的 24 次配对
 
 冻结提交 `c1598c6` 已推送，冻结聚合 SHA-256 为 `603802b1d165b6e46645de5fda971977565b2e24a0c385f7b97e0fd94e27f0f7`。之后合成的 R5 曾有 12 来源、12 单作者参照和 24 个 `dispatchAuthorized=false / NOT_RUN` 身份，但同系列 provisional 审计发现公平评分阻断：Prompt 与信息 scope 评分不一致；独立事件时间的类型、精度、时区及确认状态漏检；个别来源的格式/完成标准和未知时间口径未裁决。R5 Manifest SHA-256 `3513b4f7842d7992b65d850057f18bac91424de77d773236d7c51ecb11c0bfed` 已在派发前失效，不能授权调用。R4 Manifest `00cf591998b6396ca4bbbbca61b4a0594cdb88f86b8879f02391bdea350a8866` 也因数据冻结顺序问题提前失效。R1–R3 失效记录保持。
 
-问题与下一轮设计见 `candidate14/d7-blocked/ARCHITECTURE_DECISION.md`；R5 文字已转入仅用于排除的 `candidate14/d7-blocked/INVALIDATED_R5_SEEN_SOURCES.json`。完整下一阶段操作见 `candidate14/d7-blocked/NEXT_STAGE_EXECUTION_PROMPT.md`，预算仅有 `FUTURE_BUDGET_AUTHORIZATION_CARD_DRAFT.md` 草案。下一轮先完成 Prompt→wire→adapter→reference→scorer→处置的对应表和正反 wire 实例，审计通过后重新冻结，再编写全新来源并进行排重。所有新调用均须重新核价、核对账本和单独取得明确授权。不得复用 R4/R5 身份。
+问题与下一轮设计见 `candidate14/d7-blocked/ARCHITECTURE_DECISION.md`；R5 文字已转入仅用于排除的 `candidate14/d7-blocked/INVALIDATED_R5_SEEN_SOURCES.json`。完整下一阶段操作见 `../governance/NEXT_STAGE_EXECUTION_PROMPT.md`，预算仅有 `FUTURE_BUDGET_AUTHORIZATION_CARD_DRAFT.md` 草案。下一轮先在已见匿名工程资料上完成 Prompt→wire→adapter→reference→scorer→处置对应表与正反 wire 实例；开发调试允许复用资料，新正式批次派发前冻结。只有独立 Holdout 需要未见和独立人工隔离。所有新调用均须重新核价、核对账本和单独取得明确授权。不得复用 R4/R5 身份。
 
 权威账本只读核验为 791 行、694807 字节、SHA-256 `efb46f116db9c550ba53624c5d710164c6143ba9cc30c57ab2b7515c059f4d6a`；84 份保护文件一致。完整 `npm run test` 的 1468 项通过、3 项失败、1 项跳过：2 项旧回放默认 5 秒超时，定向重跑通过；1 项历史 `REAL_INPUT_CARRIERS_MANIFEST` 未定义，未改旧载体。`RCO-5-007 / FREEZE_HASH_MISMATCH:package-lock.json` 仍为历史失败。官方浏览器通道报 `Browsers: Error: nodeRepl.fetch request failed`，本轮浏览器点击、读回、刷新验收为 `NOT_RUN`；本地构建或单测不代替浏览器证据。四项真人主指标全部 `NOT_OBSERVABLE`。
+
+## 2026-09-27 治理更新（当前规则入口）
+
+用户已明确授权审查并重制 PRD/AGENTS，本轮只交付治理文档与必要只读校验工具。根 PRD 1.0 和 AGENTS 2.0 生效，历史阶段禁令按原范围归档，不再要求每个本地补丁重新授权。四项指标、无任务归档、分层验证与停止范围已澄清；详细决定见 docs/governance/GOVERNANCE_REVIEW_2026-09-27.md。
+
+保护状态已变为 82 份历史文件原位不变 + 2 份旧根文档逐字节存档；两份新活动文档另锁哈希。运行 node scripts/verify-governance-protection.mjs。旧 84 份原位校验及依赖它的旧 D7 验证预期失败于两份授权文档变更，不能再称 84 份原位未变；旧清单、断言和冻结组件均不修改。账本仍只读、D7 仍未通过，新保护检查不授权派发。
+
+下一任务按新 D8 提示词推进 W1 契约修复和 W2 确认/测量闭环；本轮尚未执行。原 R4/R5 身份仍失效；已见文字只能以公开已见程度的新回归/Development 用途使用，不称全新 Holdout。下一批业务模型调用、真人验证及部署均需相应新授权。验证记录见 docs/governance/VALIDATION.md。

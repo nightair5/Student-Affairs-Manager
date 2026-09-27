@@ -1,5 +1,7 @@
 # Candidate11 实验跟踪表
 
+> 2026-09-27 最新治理状态：文档与只读保护工具交付；候选仍 D7_BLOCKED_ON_REFERENCE_CONTRACT。旧行保留历史意义，新工作包见 [治理审查](../docs/governance/GOVERNANCE_REVIEW_2026-09-27.md)。
+
 版本：c13-tracker-1.2-d6-rejected。日期：2026-09-22。
 本表状态反映真实执行；PLANNED不等于授权，PREPARED不等于派发，工程PASS不等于模型/商业PASS。
 核心计划见 [EXPERIMENT_PLAN.md](EXPERIMENT_PLAN.md)。
@@ -152,3 +154,7 @@ A包当时只构造工程请求与NOT_RUN身份记录；B2随后按新授权生�
 - R5 结构核验 12 source/12 reference/24 unique identity、6 AB/6 BA、`dispatchAuthorized=false / NOT_RUN`、重合最高 0.2099；同系列 provisional 审计为 FAIL。S09 错误时间语义仍可得 `complete=true`，无任务信息 scope 与 Prompt 冲突，S07/S12 参照口径待裁决。R5 身份不保留为可派发文件，文字仅列入已见排除库。
 - 定向测试 13/13 + 11/11、lint、build、security scan、84 份保护文件和 791 行账本通过。裸全测 1468 通过、3 失败、1 跳过；2 项 5 秒超时定向重跑通过，1 项是既有载体环境变量问题。浏览器操作因官方通道错误为 `NOT_RUN`；四项真人指标 `NOT_OBSERVABLE`。
 - 当前停止状态：`D7_BLOCKED_ON_REFERENCE_CONTRACT`；下阶段为合同对应表、正反例、语义裁决、重新冻结和全新 Development。没有新模型授权。
+
+## 治理交付（2026-09-27）
+
+GOV-20260927：根 PRD/AGENTS 重整、旧文件精确存档、新保护版本与反例校验；0 次业务模型调用。适用验证和远端结果见 docs/governance/VALIDATION.md。没有改写 D6/D7 结论，W1/W2 待后续执行。

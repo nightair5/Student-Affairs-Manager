@@ -1,5 +1,7 @@
 # 下一阶段可复制执行提示词
 
+> 历史方案存档：2026-09-27 治理更新后，下一阶段改用 [新 D8 提示词](../../../governance/NEXT_STAGE_EXECUTION_PROMPT.md)。本文件保留此前“全新 Development/每轮冻结”方案，不再作为当前执行入口；D7 拒绝与失效结论保持。
+
 继续“学生事务管家”识别优化独立支线，执行 D8：Candidate14 后续版的评分契约重构、可表达性审计、重新冻结与全新 Development 零调用准备。工作区 `C:\Users\Winner\.codex\worktrees\student-affairs-candidate11\比赛`，分支 `codex/e2-candidate11-blind-eval`。起点应为 D7 阻断交接提交及其远端同 SHA；先读 `AGENTS.md`、`PRD.md` 第 14 节、`CURRENT_CONTEXT.md`、`candidate14/d7-blocked/ARCHITECTURE_DECISION.md`、`PROVISIONAL_EXPERIMENT_AUDIT.md`、D7 冻结 Manifest、D6 结果和 refine-logs 当前计划/跟踪/索引。
 
 本阶段授权本地代码、文档、匿名工程测试、独立端口/数据库的浏览器验证、分阶段 Conventional Commit 并立即推送；允许把只读审计委派给未参与实现的同系列审计员。**不授权任何业务模型调用、模型连通性探测、Secret 读取、grant/reserve/settle、权威账本写入、真人试用、独立 Holdout、默认候选替换、旧数据库操作、Schema 升级、新依赖、合并或部署。** R4/R5 的 24 个身份均已作废，不得复用；D6 的旧 raw/Expected/结果/锁/门槛及 84 份保护文件原样保留。

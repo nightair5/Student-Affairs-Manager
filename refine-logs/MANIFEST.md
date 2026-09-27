@@ -1,5 +1,7 @@
 # 规划产物索引
 
+> 当前执行入口为 [PRD 1.0](../PRD.md)、[AGENTS 2.0](../AGENTS.md) 和 [治理 D8 提示词](../docs/governance/NEXT_STAGE_EXECUTION_PROMPT.md)。下方 D7 提示词行属于历史方案，不能覆盖当前规则。
+
 阶段：C14-D7 契约阻断；日期：2026-09-27。作者：本任务；性质：D6证据复核、Candidate14工程链路、R4/R5派发前失效与下一轮合同决定。
 A1—A5 至 D6 历史产物保留。D6决定为`REJECT_CANDIDATE13_DEVELOPMENT`；D7 当前为`D7_BLOCKED_ON_REFERENCE_CONTRACT`。没有D7模型调用、真人标签、正式Holdout、默认候选替换、合并或部署。
 
@@ -43,3 +45,10 @@ A1—A5 至 D6 历史产物保留。D6决定为`REJECT_CANDIDATE13_DEVELOPMENT`�
 | [R5已见来源排除库](../docs/recognition-optimization/candidate14/d7-blocked/INVALIDATED_R5_SEEN_SOURCES.json) | candidate14-d7-invalidated-r5-seen-sources-1 | 12份已见合成来源，后续排重专用；不含请求身份 |
 | [下一批预算卡草案](../docs/recognition-optimization/candidate14/d7-blocked/FUTURE_BUDGET_AUTHORIZATION_CARD_DRAFT.md) | NOT_AUTHORIZED | 当前可授权身份0；只列未来核价、锁与新授权条件 |
 | [D8执行提示词](../docs/recognition-optimization/candidate14/d7-blocked/NEXT_STAGE_EXECUTION_PROMPT.md) | d8-zero-call-contract-redesign | 先审合同、重新冻结，后造全新来源；本提示词不授权模型调用 |
+
+## 当前治理补充索引
+
+- [规则变更审计](../docs/governance/GOVERNANCE_REVIEW_2026-09-27.md)：旧规则处置、永久边界与非追溯说明。
+- [服务边界](../docs/governance/INTEGRATION_BOUNDARIES.md)：仍生效的外部服务与数据保护。
+- [治理保护基线](../docs/governance/GOVERNANCE_BASELINE.json)：82 原位 + 2 存档 + 新根文档及 D7/账本绑定。
+- [治理验证](../docs/governance/VALIDATION.md)：测试、历史预期失败和交付状态。

@@ -1,0 +1,44 @@
+{
+  "version": "governance-protection-1",
+  "effectiveDate": "2026-09-27",
+  "authorizedChange": {
+    "scope": "PRD and AGENTS governance refresh and supporting verification tooling",
+    "userRequest": "你自己审查看一下全局，有没有旧的规则不适合现在，需要更新，有没有规则审核太严，重新制作prd和agent.md需要针对我的目标优化升级",
+    "parentHead": "a6d545335542c7dc385f6b078bc62224299de988",
+    "branch": "codex/e2-candidate11-blind-eval",
+    "modelDispatchAuthorized": false,
+    "productionChangeAuthorized": false
+  },
+  "originalProtection": {
+    "path": "docs/recognition-optimization/candidate11/BRANCH_BASELINE.json",
+    "sha256": "95d8908447b113f58ae706bb24f7407f06d895efb50a90f5ec0c432101d7855e",
+    "count": 84
+  },
+  "transitions": [
+    {
+      "path": "AGENTS.md",
+      "archivePath": "docs/governance/archive/2026-09-27/AGENTS.previous.md",
+      "previousSha256": "e0724609050a3ac32b500c7360db4a4fadf72af1c3b9983ac4d932dac4b1573b",
+      "currentSha256": "f5c374802c4c90ea4a5a26d865cad9efa8d5ec18bcdb22f6b78aae1bf2a8e98b"
+    },
+    {
+      "path": "PRD.md",
+      "archivePath": "docs/governance/archive/2026-09-27/PRD.previous.md",
+      "previousSha256": "463b26202c26e955bedc58e3f78cf3a8ff2a68eb53d9338b2d1a72d9d011a678",
+      "currentSha256": "76be5bdff720d61831d24acf4343bc9b0cc1b5c8816a09a1ab31b3ffa3f64eb2"
+    }
+  ],
+  "d7Freeze": {
+    "path": "docs/recognition-optimization/candidate14/d7-freeze/FREEZE_MANIFEST.json",
+    "sha256": "1ed40afb149fa9a24619b982080b36036fc84ee4e5548a24d10b795a9c4bf2b9",
+    "aggregateSha256": "603802b1d165b6e46645de5fda971977565b2e24a0c385f7b97e0fd94e27f0f7",
+    "qualityStatus": "D7_BLOCKED_ON_REFERENCE_CONTRACT"
+  },
+  "authorityLedger": {
+    "path": "C:/Users/Winner/student-affairs-multimodal-exp/docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/CALL_LEDGER.jsonl",
+    "rows": 791,
+    "bytes": 694807,
+    "sha256": "efb46f116db9c550ba53624c5d710164c6143ba9cc30c57ab2b7515c059f4d6a",
+    "mode": "READ_ONLY"
+  }
+}
