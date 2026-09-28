@@ -1,4 +1,8 @@
-# 学生事务管家：D16 后主线推进路线
+# 学生事务管家：D17 当前主线推进路线
+
+更新：2026-09-28。D17 已把 [冻结比较的安全执行前置记录](../recognition-optimization/candidate17/d17-development/PREFLIGHT.md)做成可审查版本，24/24 身份仍 `NOT_RUN`，0 grant、0 模型调用。本批具体模型、次数和美元硬上限授权尚缺；取得授权并重新核价、核账本、核远端后才可做 Candidate03/Candidate17 24 次开发比较与冻结 v7 评分。开发改善后还需真正未见的独立人工 Holdout 和另行授权的真人试次；风险退步须另立候选版本。Development 结果不能直接更换默认候选或部署。以下 D16 路线为历史快照。
+
+# D16 后主线推进路线历史快照
 
 更新：2026-09-28。[D16 本地结果](../recognition-optimization/candidate17/D16_RESULTS.md)已经建立 Candidate17、小范围风险约束、事件先确认后的任务重载入口和 12×2 个零调用身份。新来源是旧结构模板衍生的 provisional Development；这一步只提供工程证据，尚无 Candidate17 识别效果数据。四项真人指标仍不可观测。
 

@@ -1,6 +1,8 @@
 # 识别优化当前跟踪
 
-2026-09-28 D16 当前：[Candidate17 结果](../docs/recognition-optimization/candidate17/D16_RESULTS.md)：新候选 promptVersion 1.0.0；新写模板衍生 Development 12/12 provisional 完整参照、24/24 身份 `NOT_RUN`、0 新调用；隔离浏览器 p5 正式 Task1/Project0/Event2/TimePoint4，p6 初始空库、随后实测未保存字段重基线和失败重试，独立读回 1/0/1/0。独立人工和真人指标仍缺；新模型效果未知。以下 D15 跟踪是历史快照。
+2026-09-28 D17 当前：[前置与零调用状态](../docs/recognition-optimization/candidate17/d17-development/PREFLIGHT.md)：24/24 `NOT_RUN`，0 grant/reserve/settle；安全执行器离线测试和冻结评分选择规则就绪，付费比较待新批明确授权。以下 D16 为历史快照。
+
+2026-09-28 D16 历史快照：[Candidate17 结果](../docs/recognition-optimization/candidate17/D16_RESULTS.md)：新候选 promptVersion 1.0.0；新写模板衍生 Development 12/12 provisional 完整参照、24/24 身份 `NOT_RUN`、0 新调用；隔离浏览器 p5 正式 Task1/Project0/Event2/TimePoint4，p6 初始空库、随后实测未保存字段重基线和失败重试，独立读回 1/0/1/0。独立人工和真人指标仍缺；新模型效果未知。以下 D15 跟踪是历史快照。
 
 2026-09-28 D15 状态：[冻结比较与产品交付](../docs/recognition-optimization/candidate16/d15-integrated/D15_RESULTS.md)：24/24 已发送结算、0 不确定；C03 2/12、C16 3/12 整份正确，S10 引用失败，结论 NEEDS_TARGETED_FIXES。隔离浏览器已验任务+两事件、精确/模糊结束时间、失败后手动恢复及独立读回；真人四指标 NOT_OBSERVABLE。全量测试与依赖审计仍有分列失败。下方 D14 状态是历史快照。
 

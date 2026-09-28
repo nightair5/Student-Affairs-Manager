@@ -1,6 +1,10 @@
-# 当前交接：D16 本地修复与零调用新比较已准备
+# 当前交接：D17 安全执行准备完成，等待本批具体模型授权
 
-更新：2026-09-28。现行入口为 [D16 结果](candidate17/D16_RESULTS.md)、[新 Manifest](candidate17/d16-development/MANIFEST.json)、[浏览器证据](candidate17/BROWSER_EVIDENCE.md) 和 [预算草案](candidate17/FUTURE_BUDGET_CARD.md)。Candidate17 为独立 Prompt 版本，针对 D15 S02/S10/S11 的真实错误增加材料/时间归属、取消替代端点闭合和状态约束；没有新模型输出，效果仍未知。D15 C03 2/12、C16 3/12 及 `NEEDS_TARGETED_FIXES` 是历史 Development 决定，不更改。
+更新：2026-09-28。现行入口为 [D17 前置记录](candidate17/d17-development/PREFLIGHT.md)。Candidate03/Candidate17 的 D16 冻结 24 身份保持 `NOT_RUN`；D17 专用执行器、账本只读核验、离线故障注入和预注册选择器已就绪，无授权派发被阻断，0 新模型请求、0 grant/reserve/settle。官方价格本次只读核验，逐单元取整保守上界 US$7.785696；US$8.00 仅是建议硬上限，尚未获得用户对本批模型、24 次和美元上限的明确授权。四项真人指标仍为 `NOT_OBSERVABLE`。以下 D16 内容保留为历史快照。
+
+# D16 历史交接：本地修复与零调用新比较已准备
+
+更新：2026-09-28。当时入口为 [D16 结果](candidate17/D16_RESULTS.md)、[新 Manifest](candidate17/d16-development/MANIFEST.json)、[浏览器证据](candidate17/BROWSER_EVIDENCE.md) 和 [预算草案](candidate17/FUTURE_BUDGET_CARD.md)。Candidate17 为独立 Prompt 版本，针对 D15 S02/S10/S11 的真实错误增加材料/时间归属、取消替代端点闭合和状态约束；没有新模型输出，效果仍未知。D15 C03 2/12、C16 3/12 及 `NEEDS_TARGETED_FIXES` 是历史 Development 决定，不更改。
 
 D16 在 6652/p5 隔离浏览器完成任务与两个独立事件、旧版本重载、确认、读回和刷新；p5 Task1/Project0/Event2/TimePoint4。p6 6653 新身份开始为空库，随后另做未保存动作字段的冲突恢复和失败后手动重试，读回 1/0/1/0；正式事实未串库。12 份新写但旧模板衍生的 provisional Development 参照完成正负往返；Candidate03/Candidate17 的 24 个身份 6 AB/6 BA，全 `NOT_RUN`、`dispatchAuthorized=false`。无 grant/账本写入、无真人、无默认替换。四项真人指标均 `NOT_OBSERVABLE`。旧账本只读核验为 889 行、SHA `01d6670af09175475fcdfa5aec3594d2751cfd3b03050743fb79a04a578ad4c9`；调用前重核官方价格与账本。
 
