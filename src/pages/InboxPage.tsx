@@ -3,8 +3,10 @@ import { useMemo, useState } from 'react'
 import { SourceDetailPanel } from '../components/SourceDetailPanel'
 import { buildSourceWorkflowItems, selectPendingReviewItems, sourceTypeLabels } from '../lib/sourceWorkflow'
 import type { ExtractionDraft, Source } from '../types'
+import type {WorkspaceV8} from '../domain/v2/types'
 
 interface InboxPageProps {
+  canonicalWorkspace?:WorkspaceV8
   drafts: ExtractionDraft[]
   sources: Source[]
   view: 'all' | 'needs_review'
@@ -20,6 +22,7 @@ interface InboxPageProps {
 }
 
 export function InboxPage({
+  canonicalWorkspace,
   drafts,
   sources,
   view,
@@ -35,7 +38,7 @@ export function InboxPage({
   const [selectedSourceId, setSelectedSourceId] = useState<string | null>(null)
   const [retryingSourceId, setRetryingSourceId] = useState<string | null>(null)
   const [actionFailure, setActionFailure] = useState<{ sourceId: string; message: string } | null>(null)
-  const workflowItems = useMemo(() => buildSourceWorkflowItems(sources, drafts), [sources, drafts])
+  const workflowItems = useMemo(() => buildSourceWorkflowItems(sources, drafts, canonicalWorkspace), [sources, drafts,canonicalWorkspace])
   const pendingItems = useMemo(() => selectPendingReviewItems(sources, drafts), [sources, drafts])
   const visibleItems = view === 'needs_review'
     ? pendingItems
@@ -161,6 +164,7 @@ export function InboxPage({
     </main>
 
     {selectedSource && <SourceDetailPanel
+      canonicalWorkspace={canonicalWorkspace}
       item={selectedSource}
       onClose={() => setSelectedSourceId(null)}
       onOpenDraft={(draftId) => {

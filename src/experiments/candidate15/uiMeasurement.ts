@@ -1,13 +1,13 @@
 import type {WorkspaceRecordStore} from '../../domain/v2/repository'
 import type {D8Event,D8EventKind,D8EditCategory,D8Registration} from './measurement'
-import {D8_DATABASE} from './d8Observation'
+import {assertD8Database} from './d8Observation'
 
 type Store=WorkspaceRecordStore&{name:string}
 const regKey=(draftId:string)=>`d8-metric-registration:${draftId}`
 const eventKey=(draftId:string)=>`d8-metric-events:${draftId}`
 /** One append queue keeps browser event order intact across IndexedDB transactions. */
 export function createD8UiMeasurement(store:Store){
-  if(store.name!==D8_DATABASE)throw Error('D8_METRIC_DATABASE')
+  assertD8Database(store.name)
   let queue=Promise.resolve()
   let transitions=Promise.resolve()
   function sequence<T>(work:()=>Promise<T>):Promise<T>{const result=transitions.then(work);transitions=result.then(()=>undefined,()=>undefined);return result}

@@ -3,8 +3,10 @@ import { useMemo, useState } from 'react'
 import { SourceDetailPanel } from '../components/SourceDetailPanel'
 import { buildSourceWorkflowItems, sourceTypeLabels } from '../lib/sourceWorkflow'
 import type { ExtractionDraft, Source } from '../types'
+import type {WorkspaceV8} from '../domain/v2/types'
 
 interface LibraryPageProps {
+  canonicalWorkspace?:WorkspaceV8
   sources: Source[]
   drafts?: ExtractionDraft[]
   onMarkIndependent: (sourceId: string) => void
@@ -18,6 +20,7 @@ interface LibraryPageProps {
 const typeIcon = { text: MessageSquareText, file: File, image: FileImage, link: Link2 }
 
 export function LibraryPage({
+  canonicalWorkspace,
   sources,
   drafts = [],
   onMarkIndependent,
@@ -30,7 +33,7 @@ export function LibraryPage({
   const [selectedSourceId, setSelectedSourceId] = useState<string | null>(null)
   const [retryingSourceId, setRetryingSourceId] = useState<string | null>(null)
   const [actionError, setActionError] = useState<string | null>(null)
-  const items = useMemo(() => buildSourceWorkflowItems(sources, drafts), [sources, drafts])
+  const items = useMemo(() => buildSourceWorkflowItems(sources, drafts, canonicalWorkspace), [sources, drafts,canonicalWorkspace])
   const selectedItem = items.find((item) => item.source.id === selectedSourceId) ?? null
 
   const retrySource = async (sourceId: string): Promise<boolean> => {
@@ -74,6 +77,7 @@ export function LibraryPage({
     </main>
 
     {selectedItem && <SourceDetailPanel
+      canonicalWorkspace={canonicalWorkspace}
       item={selectedItem}
       onClose={() => {
         setSelectedSourceId(null)

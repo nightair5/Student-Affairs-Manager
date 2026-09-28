@@ -6,7 +6,8 @@ export type D8EventKind='source_ready'|'suggestion_ready'|'edit_saved'|'rejected
 export interface D8Event {id:string;at:string;kind:D8EventKind;origin:D8ObservationOrigin;draftId:string|null;sourceVersionId:string|null;candidateVersion:string|null}
 export const D8_EVENTS_KEY='candidate13-d8-observation-v1'
 export const D8_DATABASE='rco-mainline-01-02-i1-real-input-candidate15-d8-engineering-1'
-export function assertD8Database(name:string){if(name!==D8_DATABASE)throw Error('D8_DATABASE_BINDING')}
+export const D10_DATABASE='rco-mainline-01-02-i1-real-input-candidate15-d10-engineering-1'
+export function assertD8Database(name:string){if(name!==D8_DATABASE&&name!==D10_DATABASE)throw Error('D8_DATABASE_BINDING')}
 const workspace=(value:unknown):WorkspaceV8|undefined=>value&&typeof value==='object'&&'schemaVersion' in value&&value.schemaVersion===8?value as WorkspaceV8:undefined
 
 export function createD8Store(transport:WorkspaceRecordStore&{name:string},origin:D8ObservationOrigin='UNKNOWN'){

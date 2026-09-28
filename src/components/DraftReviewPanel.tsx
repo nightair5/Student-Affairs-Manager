@@ -11,7 +11,7 @@ interface DraftReviewPanelProps {
   factCorrection?: (taskId: string, onDirty: (dirty: boolean) => void, unsaved: boolean) => ReactNode
   draftCorrection?: (onDirty:(dirty:boolean)=>void,unsaved:boolean)=>ReactNode
   semanticReview?: { itemFacts: (taskId: string, onFocus: (quote: string) => void) => ReactNode; information: ReactNode;
-    informationReviewProblem?: string;
+    informationReviewProblem?: string; informationEditor?: (onDirty:(dirty:boolean)=>void)=>ReactNode;
     eventCount: number; onDefer: (itemId: string) => void; onInformationReviewed: () => void }
   isolatedCapabilities?: boolean
   recognitionDescription?: string
@@ -79,6 +79,7 @@ export function DraftReviewPanel({ onFieldInput, draftCorrection, factCorrection
   const [editBuffer, setEditBuffer] = useState<Record<string, Partial<Pick<DraftItem['suggestion'], 'title' | 'deadline'>>>>({})
   const [factDirty, setFactDirty] = useState<Record<string, boolean>>({})
   const [draftDirty,setDraftDirty]=useState(false)
+  const [informationDirty,setInformationDirty]=useState(false)
   const isDirty = (item: DraftItem, field: 'title' | 'deadline') =>
     editBuffer[item.id]?.[field] !== undefined && editBuffer[item.id][field] !== item.suggestion[field]
   const hasUnsaved = (item: DraftItem) => draftDirty || isDirty(item, 'title') || isDirty(item, 'deadline') || Boolean(factDirty[item.id])
@@ -198,8 +199,8 @@ export function DraftReviewPanel({ onFieldInput, draftCorrection, factCorrection
           </details>)}
           {draft.items.filter((item) => !groupedItemIds.has(item.suggestion.id)).map((item, index) => renderItem(item, index))}
           {draftCorrection?.(setDraftDirty,draft.items.some(item=>isDirty(item,'title')||isDirty(item,'deadline')||Boolean(factDirty[item.id])))}
-          {semanticReview && draft.items.length === 0 && <div>{semanticReview.information}
-            <button type="button" disabled={confirmationV2?.busy || draft.workflowStatus === 'confirmed' || Boolean(semanticReview.informationReviewProblem)} onClick={semanticReview.onInformationReviewed}>标记已核对（不创建任务）</button></div>}
+          {semanticReview && draft.items.length === 0 && <div>{semanticReview.information}{semanticReview.informationEditor?.(setInformationDirty)}
+            <button type="button" disabled={confirmationV2?.busy || draft.workflowStatus === 'confirmed' || informationDirty || Boolean(semanticReview.informationReviewProblem)} onClick={semanticReview.onInformationReviewed}>{semanticReview.eventCount>0?`确认无任务并保存 ${semanticReview.eventCount} 个独立事件`:'标记已核对（不创建任务）'}</button></div>}
           {recognition && draft.items.length === 0 && <div className="empty-state compact"><ShieldCheck size={28} /><h3>没有识别到明确行动</h3><p>可保存为资料、关闭稍后处理，或返回录入手动创建任务。</p></div>}
           {recognition?.materials.length ? <section className={`recognition-entity-list ${focusedReview?.expandedSections.includes('materials') ? 'focused' : ''}`}><h3>材料</h3>{recognition.materials.map((material) => <div className="recognition-entity-row" key={material.tempId}><label><input type="checkbox" disabled={isolatedCapabilities} checked={material.selected !== false} onChange={(event) => { if (!isolatedCapabilities) onToggleRecognitionEntity('material', material.tempId, event.target.checked) }} /><span><strong>{material.name}</strong><small>{material.formatRequirements.join('；') || '具体要求请回看原文'}</small></span></label><EvidenceLocator recognition={recognition} evidenceIds={material.evidenceIds} onFocusEvidence={setActiveEvidence} /></div>)}</section> : null}
           {recognition?.timePoints.length ? <section className={`recognition-entity-list ${focusedReview?.expandedSections.includes('timePoints') ? 'focused' : ''}`}><h3>时间节点</h3>{recognition.timePoints.map((point) => <div className="recognition-entity-row" key={point.tempId}><label><input type="checkbox" disabled={isolatedCapabilities} checked={point.selected !== false} onChange={(event) => { if (!isolatedCapabilities) onToggleRecognitionEntity('timePoint', point.tempId, event.target.checked) }} /><span><strong>{point.type}</strong><small>{point.rawText}{point.needsConfirmation ? ' · 需要确认' : ''}</small></span></label><EvidenceLocator recognition={recognition} evidenceIds={point.evidenceIds} onFocusEvidence={setActiveEvidence} /></div>)}</section> : null}

@@ -13,6 +13,7 @@ import { REAL_STATE_VERSION, stateOfRuntime, effectiveStateFacts, relatedAssets,
 import { SemanticFacts } from '../mainline05/SemanticFacts'
 import { InputReview } from './InputReview'
 import { FactCorrectionEditor, RelationCorrection } from './FactCorrectionEditor'
+import { IndependentEventEditor } from './IndependentEventEditor'
 import { makeSendSnapshot, sha256Text } from './inputReceipt'
 import type { ModelExecutor } from './modelClient'
 import type { WireContext } from './modelWire'
@@ -406,13 +407,14 @@ export async function createRealInputRuntime(options: {
           }}):options.recordedCandidate02?createElement(InputReview,{...props,repo,resources:options.resources,execution:options.execution,localOnly:true,
             send:async()=>{throw Error('REAL_INPUT_NEW_SEND_DISABLED')}}):options.recordedBatch?createElement('p',{role:'status'},'本批已调用完成；请从收件箱核对原回答。没有额外模型请求授权，新发送已关闭。'):options.recordedA02?createElement('p',{role:'status'},'当前只允许A02历史响应核对，已关闭新录入和发送。请从收件箱恢复A02。'):createElement(InputReview,{...props,repo,resources:options.resources,execution:options.execution,
             send:async(sourceId,pages,reviewed,operationId)=>sendRealInput(repo,{sourceId,pages,reviewed,operationId,revision:semanticRevision(props.workspace)},options.execution,options.execute)}),
-          pendingDateTaskIds,factEditor:props=>createElement(FactCorrectionEditor,{...props,repo}),draftEditor:props=>createElement(RelationCorrection,{...props,repo})},
+          pendingDateTaskIds,factEditor:props=>createElement(FactCorrectionEditor,{...props,repo}),informationEditor:props=>createElement(IndependentEventEditor,{...props,repo}),draftEditor:props=>createElement(RelationCorrection,{...props,repo})},
         semantic:{facts,timezone:'Asia/Shanghai',exportName:'mainline-real-input-01-workspace.json',
           informationReviewProblem:(w,d)=>informationReviewProblem(stateOfRuntime(w,d)),dispose:i=>disposeSemantic(repo,i),
           taskFacts:(w,id)=>{const state=stateForEntity(w,id);return facts(w,state.draftId,String(w.tasks.find(t=>t.id===id)!.legacyData!.recognitionTempId))},
           eventFacts:(w,id)=>{const event=w.events.find(e=>e.id===id)!,state=stateForEntity(w,id);return {
             startLabel:timeLabel(w.timePoints.find(t=>t.id===event.startTimePointId)?.normalizedValue??null,state.context.timezone),
             endLabel:timeLabel(w.timePoints.find(t=>t.id===event.endTimePointId)?.normalizedValue??null,state.context.timezone),content:facts(w,state.draftId)}},
-          eventCount:(w,d,ids)=>relatedAssets(effectiveStateFacts(stateOfRuntime(w,d)).facts,ids).events.size}}
+          eventCount:(w,d,ids)=>{const facts=effectiveStateFacts(stateOfRuntime(w,d)).facts
+            return !ids.length&&!facts.tasks.length?facts.events.filter(event=>!event.relatedTaskTempIds.length).length:relatedAssets(facts,ids).events.size}}}
     }})
 }

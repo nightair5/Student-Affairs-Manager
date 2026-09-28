@@ -21,11 +21,20 @@ export type FactChange = { kind: 'surface'; taskId: string; field: 'action' | 'o
   | { kind: 'condition'; taskId: string; value: SemanticTask['condition']; scopeIds: string[]; note: string }
   | { kind: 'dependency'; taskId: string; value: string[]; scopeIds: string[]; note: string }
   | { kind: 'event'; taskId: string; value: { coverage: SemanticTask['coverage']['event']; event: SemanticEvent | null }; scopeIds: string[]; note: string }
+  | { kind: 'independent_event'; eventId: string; value: SemanticEvent; scopeIds: string[]; note: string }
+  | { kind: 'independent_time'; timeId: string; value: SemanticTime; scopeIds: string[]; note: string }
   | { kind: 'revision'; index: number; value: { relation: SemanticRevision; addedTask: SemanticTask | null }; scopeIds: string[]; note: string }
   | { kind: 'add_task'; value: SemanticTask; scopeIds: string[]; note: string }
 export interface FactCorrection { id: string; at: string; change: FactChange; before: unknown }
 const reject = (code: string): never => { throw Error('REAL_INPUT_CORRECTION_' + code) }
 const same = (a: unknown, b: unknown) => stableJson(a) === stableJson(b)
+function validCalendarValue(value:string){
+  const match=/^(\d{4})-(\d{2})-(\d{2})(?:T(\d{2}):(\d{2}))?$/.exec(value)
+  if(!match)return false
+  const [,year,month,day,hour,minute]=match,date=new Date(Date.UTC(Number(year),Number(month)-1,Number(day)))
+  return date.getUTCFullYear()===Number(year)&&date.getUTCMonth()+1===Number(month)&&date.getUTCDate()===Number(day)
+    &&(hour===undefined||Number(hour)<24&&Number(minute)<60)
+}
 function keys(value: object, names: string[]) {
   if (!same(Object.keys(value).sort(), names.sort())) reject('FIELDS')
 }
@@ -70,6 +79,7 @@ function safetyTasks(input: SemanticInput, initial: Set<string>) {
   return found
 }
 function affected(input: SemanticInput, change: FactChange) {
+  if (change.kind === 'independent_event' || change.kind === 'independent_time') return new Set<string>()
   const ids = change.kind === 'material' ? input.tasks.filter(t => factAssets(input, t.id).materials.has(change.materialId)).map(t => t.id)
     : change.kind === 'event' ? [change.taskId,...(change.value.event?.relatedTaskTempIds??[]),
       ...input.tasks.filter(t=>change.value.event&&factAssets(input,t.id).events.has(change.value.event.tempId)).map(t=>t.id)]
@@ -108,7 +118,30 @@ function validateDependencies(input: SemanticInput) {
 }
 function apply(input: SemanticInput, change: FactChange, index: ImmutableScopeIndex) {
   reviewEvidence(change,index)
-  if (change.kind === 'surface') {
+  if (change.kind === 'independent_event') {
+    keys(change,['kind','eventId','value','scopeIds','note'])
+    const old=input.events.find(e=>e.tempId===change.eventId),value=change.value
+    if(!old||old.relatedTaskTempIds.length||value.tempId!==old.tempId||value.relatedTaskTempIds.length
+      ||!same(value.scopeIds,old.scopeIds)||!same(change.scopeIds,old.scopeIds)
+      ||!value.title.trim()||value.title.length>200
+      ||(value.startTimePointTempId!==null&&!input.timePoints.some(t=>t.tempId===value.startTimePointTempId&&!t.relatedTaskTempIds.length&&t.type==='event_start'))
+      ||(value.endTimePointTempId!==null&&!input.timePoints.some(t=>t.tempId===value.endTimePointTempId&&!t.relatedTaskTempIds.length&&t.type==='event_end')))reject('INDEPENDENT_EVENT')
+    Object.assign(old!,plainJson(value))
+  } else if (change.kind === 'independent_time') {
+    keys(change,['kind','timeId','value','scopeIds','note'])
+    const old=input.timePoints.find(t=>t.tempId===change.timeId),value=change.value
+    if(!old||old.relatedTaskTempIds.length||old.relatedMaterialTempIds.length
+      ||!input.events.some(e=>!e.relatedTaskTempIds.length&&[e.startTimePointTempId,e.endTimePointTempId].includes(old.tempId))
+      ||value.tempId!==old.tempId||value.relatedTaskTempIds.length||value.relatedMaterialTempIds.length
+      ||!same(value.scopeIds,old.scopeIds)||!same(change.scopeIds,old.scopeIds)
+      ||!['event_start','event_end'].includes(value.type)||!value.rawText.trim()
+      ||input.events.some(e=>e.startTimePointTempId===old.tempId&&value.type!=='event_start'||e.endTimePointTempId===old.tempId&&value.type!=='event_end')
+      ||value.timezone!==old.timezone
+      ||(value.needsConfirmation&&value.normalizedValue!==null)
+      ||(!value.needsConfirmation&&value.normalizedValue===null)
+      ||(value.normalizedValue!==null&&!validCalendarValue(value.normalizedValue)))reject('INDEPENDENT_TIME')
+    Object.assign(old!,plainJson(value))
+  } else if (change.kind === 'surface') {
     keys(change, ['kind', 'taskId', 'field', 'value']); keys(change.value, ['scopeId', 'surface'])
     if (!['action', 'object'].includes(change.field)) reject('SURFACE_FIELD')
     const task = input.tasks.find(t => t.id === change.taskId), scope = index.scopes.find(s => s.id === change.value.scopeId)
@@ -188,6 +221,8 @@ function apply(input: SemanticInput, change: FactChange, index: ImmutableScopeIn
   parseSemanticInput(input)
 }
 export function correctionBefore(input: SemanticInput, change: FactChange) {
+  if(change.kind==='independent_event')return plainJson(input.events.find(e=>e.tempId===change.eventId)??reject('EVENT_MISSING'))
+  if(change.kind==='independent_time')return plainJson(input.timePoints.find(t=>t.tempId===change.timeId)??reject('TIME_MISSING'))
   if(change.kind==='add_task'||change.kind==='time')return null
   if(change.kind==='revision')return {relation:plainJson(input.revisions[change.index]??null),addedTask:null}
   if(change.kind==='condition'||change.kind==='event'||change.kind==='dependency'){
@@ -230,6 +265,19 @@ export function effectiveFacts(original: SemanticInput, corrections: readonly Fa
     const first = original.materials.find(m => m.tempId === id)!, current = sourceFacts.materials.find(m => m.tempId === id)!
     // Do not validate manual literal values as though the model/source supplied them.
     Object.assign(current, materialEdit(first), { relatedTaskTempIds: [...current.relatedTaskTempIds] })
+  }
+  // User corrections stay in the editable view; the original model facts remain the composer input.
+  for (const row of history) {
+    const change=row.change
+    if(change.kind==='independent_event') {
+      const originalEvent=original.events.find(e=>e.tempId===change.eventId)!
+      const target=sourceFacts.events.find(e=>e.tempId===change.eventId)!
+      Object.assign(target,plainJson(originalEvent))
+    } else if(change.kind==='independent_time') {
+      const originalTime=original.timePoints.find(t=>t.tempId===change.timeId)!
+      const target=sourceFacts.timePoints.find(t=>t.tempId===change.timeId)!
+      Object.assign(target,plainJson(originalTime))
+    }
   }
   return { facts, sourceFacts, changedTasks: [...changedTasks].sort(), manualMaterials: [...manualMaterials].sort() }
 }

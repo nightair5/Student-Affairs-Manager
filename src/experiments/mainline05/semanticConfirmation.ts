@@ -84,7 +84,9 @@ function sameOperation(workspace: WorkspaceV8, draftId: string, operationId: str
   const old = stateOf(workspace, draftId).operations.find(o => o.id === operationId)
   if (!old) return false
   const { before, at, ...shape } = old; void before; void at
-  assert(equal(shape, op), 'OPERATION_COLLISION'); return true
+  const legacyInformation=old.kind==='review_info'&&old.informationEventVersion===undefined&&op.kind==='review_info'
+  const {informationEventVersion:ignored,...withoutMarker}=op;void ignored
+  assert(equal(shape,legacyInformation?withoutMarker:op), 'OPERATION_COLLISION'); return true
 }
 export async function editSemantic(repo: SemanticRepository, intent: ConfirmationEditV2, now = new Date().toISOString()) {
   exactKeys(intent, ['draftId','taskTempId','revision','operationId','field','value'])
@@ -118,7 +120,8 @@ export async function confirmSemantic(repo: SemanticRepository, intent: Confirma
 export async function disposeSemantic(repo: SemanticRepository, intent: SemanticDispositionIntent, now = new Date().toISOString()) {
   exactKeys(intent, ['draftId','revision','taskTempIds','kind','operationId'])
   return repo.transaction(workspace => {
-    const shape = { id: intent.operationId, kind: intent.kind, taskIds: intent.taskTempIds, field: null, value: null }
+    const shape = { id: intent.operationId, kind: intent.kind, taskIds: intent.taskTempIds, field: null, value: null,
+      ...(intent.kind==='review_info'&&stateOf(workspace,intent.draftId).version===REAL_STATE_VERSION?{informationEventVersion:'d10-event-commit-1' as const}:{}) }
     if (sameOperation(workspace, intent.draftId, intent.operationId, shape)) return workspace
     assert(intent.revision === semanticRevision(workspace), 'STALE_RELOAD_REQUIRED')
     const plan = planOperation(workspace, intent.draftId, { ...shape, before: null, at: now })
@@ -149,7 +152,10 @@ export async function correctSemanticFact(repo: SemanticRepository,
   const intent = {...plainJson({...input,revision:''}),revision:descriptor.value as string}
   exactKeys(intent, ['draftId','revision','operationId','change'])
   assert(repo.profile === 'real-input-01', 'EXPLICIT_REAL_INPUT_REQUIRED')
-  const before = await repo.load(); assert(semanticRevision(before) === intent.revision, 'STALE_RELOAD_REQUIRED')
+  const before = await repo.load()
+  const existing=stateOf(before,intent.draftId).operations.find(op=>op.id===intent.operationId)
+  if(existing){assert(existing.kind==='correct_fact'&&equal(existing.correction?.change,intent.change),'OPERATION_COLLISION');return before}
+  assert(semanticRevision(before) === intent.revision, 'STALE_RELOAD_REQUIRED')
   const state = stateOf(before, intent.draftId); assert(state.version === REAL_STATE_VERSION, 'EXPLICIT_REAL_INPUT_REQUIRED')
   const correction = { id: intent.operationId, at: now, change: intent.change, before: correctionBefore(effectiveStateFacts(state).facts, intent.change) }
   const next = appendCorrection(state.adaptedResponse, state.operations.filter(o => o.correction).map(o => o.correction!), correction,

@@ -1,14 +1,14 @@
 /** D8 instrument contract. Engineering rows never enter human rates. */
-export const D8_MEASUREMENT_VERSION='candidate15-product-metrics-3.1.0' as const
+export const D8_MEASUREMENT_VERSION='candidate15-product-metrics-3.2.0' as const
 export const D8_IDLE_LIMIT_MS=5_000
 export type D8Origin='ENGINEERING_REPLAY'|'AUTOMATION'|'HUMAN_TRIAL'
-export type D8EditCategory='task_add'|'task_remove'|'task_split'|'task_merge'|'title'|'action'|'object'|'time'|'condition'|'material'|'completion_standard'|'revision'|'dependency'|'cosmetic'|'personalization'|'unknown'
+export type D8EditCategory='task_add'|'task_remove'|'task_split'|'task_merge'|'title'|'action'|'object'|'event'|'time'|'condition'|'material'|'completion_standard'|'revision'|'dependency'|'cosmetic'|'personalization'|'unknown'
 export type D8EventKind='trial_started'|'first_snapshot_frozen'|'suggestion_interactive'|'page_restored'|'read_started'|'read_ended'|'edit_started'|'edit_activity'|'edit_ended'|'idle_started'|'idle_ended'|'pause_started'|'pause_ended'|'confirmation_requested'|'commit_succeeded'|'readback_verified'|'no_task_archived'|'abandoned'|'timed_out'
 export interface D8Event {id:string;atMs:number;kind:D8EventKind;trialId:string;sourceSha256:string;candidateSha256:string;firstOutputSha256:string;editId?:string;editCategory?:D8EditCategory;commitId?:string;includedEditIds?:string[];pauseReason?:'system_wait'|'visibility_hidden'|'user_pause';pauseToken?:string}
 export interface D8Registration {trialId:string;origin:D8Origin;sourceSha256:string;candidateSha256:string;firstOutputSha256:string;registeredAtMs:number;humanAuthorityVerified:boolean}
 export interface D8Judgment {firstWholeCorrect:boolean|null;finalDispositionCorrect:boolean|null;disposition:'confirmed'|'partial'|'no_task'|'abandoned'|'timed_out'|'unknown'}
 export interface D8Metrics {status:'DETERMINATE'|'INCOMPLETE'|'REGISTRATION_INVALID'|'IDENTITY_INVALID'|'SEMANTIC_JUDGMENT_REQUIRED';trialId:string;origin:D8Origin;firstWholeCorrect:boolean|null;correctDisposition:boolean|null;lowModificationCorrectDisposition:boolean|null;substantiveEditCount:number|null;activeEditMs:number|null;readMs:number|null;wallMs:number|null;systemWaitMs:number|null;hiddenMs:number|null;idleMs:number|null;unclassifiedMs:number|null;missing:string[]}
-const substantive=new Set<D8EditCategory>(['task_add','task_remove','task_split','task_merge','title','action','object','time','condition','material','completion_standard','revision','dependency','unknown'])
+const substantive=new Set<D8EditCategory>(['task_add','task_remove','task_split','task_merge','title','action','object','event','time','condition','material','completion_standard','revision','dependency','unknown'])
 const sha=(value:string)=>/^[a-f0-9]{64}$/u.test(value)
 const blank=(r:D8Registration,status:D8Metrics['status'],missing:string[]=[]):D8Metrics=>({status,trialId:r.trialId,origin:r.origin,firstWholeCorrect:null,correctDisposition:null,lowModificationCorrectDisposition:null,substantiveEditCount:null,activeEditMs:null,readMs:null,wallMs:null,systemWaitMs:null,hiddenMs:null,idleMs:null,unclassifiedMs:null,missing})
 

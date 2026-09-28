@@ -26,6 +26,7 @@ export interface SemanticOperation {
   correction?: FactCorrection; factReview?: ReviewPackage; reviewIdentity?: string
   materialReview?: { materialId: string; identity: string; value: MaterialDecision; version?: 'material-review-2' }
   pendingDateIdentity?: string
+  informationEventVersion?: 'd10-event-commit-1'
 }
 export interface SemanticState {
   version: typeof STATE_VERSION
@@ -202,10 +203,12 @@ export function informationReviewProblem(state: AnySemanticState): string | unde
   if (input.tasks.length) return '包含任务建议，请逐项核对。'
   const consentableTime = (id: string) => {
     const point=input.timePoints.find(row=>row.tempId===id)
-    if(!point||point.relatedTaskTempIds.length||!point.needsConfirmation||point.normalizedValue!==null
-      ||point.precision!=='vague'||point.isAllDay||point.timezone!==state.context.timezone
+    if(!point||point.relatedTaskTempIds.length||point.isAllDay||point.timezone!==state.context.timezone
       ||!['event_start','event_end'].includes(point.type)
       ||!input.events.some(event=>event.startTimePointTempId===id||event.endTimePointTempId===id))return false
+    if(state.operations.some(op=>op.correction?.change.kind==='independent_time'&&op.correction.change.timeId===id))
+      return point.normalizedValue===null&&point.needsConfirmation||point.normalizedValue!==null&&!point.needsConfirmation
+    if(!point.needsConfirmation||point.normalizedValue!==null||point.precision!=='vague')return false
     const ast=parseChineseTimeAst(point.rawText,{type:point.type,referenceTime:state.context.referenceTime,timezone:state.context.timezone})
     return ast.normalizedValue===null&&ast.precision==='vague'&&ast.isAllDay===false
       &&point.scopeIds.filter(scopeId=>state.context.index.scopes.find(scope=>scope.id===scopeId)?.text.includes(point.rawText)).length===1
@@ -284,6 +287,12 @@ export function operationHistory(state: AnySemanticState): HistoryRecord[] {
 export function canonicalFacts(state: AnySemanticState) {
   const effective = effectiveStateFacts(state), input = effective.facts, current = life(state), accepted = new Set(current.accepted)
   const assets = relatedAssets(input, current.accepted)
+  const informationAt = current.informationReviewed ? state.operations.find(op=>op.kind==='review_info'&&op.informationEventVersion==='d10-event-commit-1')?.at : undefined
+  if (informationAt) for (const event of input.events.filter(row=>!row.relatedTaskTempIds.length)) {
+    assets.events.add(event.tempId)
+    if(event.startTimePointTempId)assets.times.add(event.startTimePointTempId)
+    if(event.endTimePointTempId)assets.times.add(event.endTimePointTempId)
+  }
   const taskId = (id: string) => semanticId('task', state, id)
   const materialId = (id: string) => semanticId('material', state, id)
   const timeId = (id: string) => semanticId('time', state, id)
@@ -294,6 +303,7 @@ export function canonicalFacts(state: AnySemanticState) {
     : current.accepted.filter(taskId => taskAssets[taskId][kind].has(id))
   const stamps = (ids: string[]) => {
     const times = ids.map(id => current.confirmedAt[id]).sort()
+    if(!times.length&&informationAt)return {createdAt:informationAt,updatedAt:informationAt}
     assert(times.length > 0, 'ORPHAN_CANONICAL_ENTITY')
     return { createdAt: times[0], updatedAt: times.at(-1)! }
   }
@@ -317,7 +327,7 @@ export function canonicalFacts(state: AnySemanticState) {
       relatedTaskIds: taskOwners.map(taskId), relatedMaterialIds: materialOwners.map(materialId), type: t.type, rawText: t.rawText,
       normalizedValue: value, timezone: changed ? isDateOnly(value!) ? null : state.context.timezone : t.timezone,
       isAllDay: changed ? isDateOnly(value!) : t.isAllDay, precision: changed ? isDateOnly(value!) ? 'date_only' : 'exact' : t.precision,
-      needsConfirmation: changed ? false : t.needsConfirmation, ...stamps(persistenceOwners), legacyData: pointer(t.tempId) }
+      needsConfirmation: changed ? false : t.needsConfirmation, ...stamps(persistenceOwners), legacyData: { ...pointer(t.tempId),...(state.operations.some(op=>op.correction?.change.kind==='independent_time'&&op.correction.change.timeId===t.tempId)?{extractionMethod:'user_correction'}:{}) } }
   })
   for (const t of input.tasks.filter(t => accepted.has(t.id))) {
     const value = current.values[t.id].deadline
@@ -342,11 +352,11 @@ export function canonicalFacts(state: AnySemanticState) {
     title: e.title, description: e.description, location: e.location,
     startTimePointId: e.startTimePointTempId ? timeId(e.startTimePointTempId) : null,
     endTimePointId: e.endTimePointTempId ? timeId(e.endTimePointTempId) : null,
-    ...stamps(owners('events', e.tempId)), legacyData: pointer(e.tempId) }))
-  const evidenceRefs: EvidenceRef[] = !accepted.size ? [] : state.context.index.scopes.map(scope => ({
+    ...stamps(owners('events', e.tempId)), legacyData: { ...pointer(e.tempId),...(state.operations.some(op=>op.correction?.change.kind==='independent_event'&&op.correction.change.eventId===e.tempId)?{extractionMethod:'user_correction'}:{}) } }))
+  const evidenceRefs: EvidenceRef[] = !accepted.size&&!assets.events.size ? [] : state.context.index.scopes.map(scope => ({
     id: semanticId('evidence', state, scope.id), sourceVersionId: state.sourceVersionId, page: null, textStart: scope.start,
     textEnd: scope.end, quotedText: scope.text, bbox: null, fieldPath: scope.id, extractionMethod: 'manual', confidence: null,
-    createdAt: Object.values(current.confirmedAt).sort()[0], legacyData: pointer(scope.id) }))
+    createdAt: Object.values(current.confirmedAt).sort()[0]??informationAt!, legacyData: pointer(scope.id) }))
   const bindings: Record<string, string | null> = {}
   for (const [kind, entries, materialized] of [
     ['task', input.tasks.map(t => t.id), tasks], ['material', input.materials.map(t => t.tempId), materials],
@@ -379,7 +389,7 @@ function liveLife(state: RealInputState) {
   const prefix: SemanticOperation[] = []
   let informationReviewed = false, lastAt = -Infinity
   for (const op of state.operations) {
-    const extra = op.kind === 'correct_fact' ? ['correction', 'factReview'] : op.kind === 'review_task' ? ['reviewIdentity'] : op.kind==='review_material'?['materialReview']:op.kind==='accept_pending_date'?['pendingDateIdentity']:[]
+    const extra = op.kind === 'correct_fact' ? ['correction', 'factReview'] : op.kind === 'review_task' ? ['reviewIdentity'] : op.kind==='review_material'?['materialReview']:op.kind==='accept_pending_date'?['pendingDateIdentity']:op.kind==='review_info'&&op.informationEventVersion?['informationEventVersion']:[]
     exactKeys(op, ['id', 'kind', 'at', 'taskIds', 'field', 'value', 'before', ...extra])
     assert(typeof op.id === 'string' && /^[A-Za-z0-9-]{1,100}$/.test(op.id) && !ids.has(op.id), 'OPERATION_ID'); ids.add(op.id)
     assert(Number.isFinite(Date.parse(op.at)) && Date.parse(op.at) >= lastAt, 'OPERATION_TIME_ORDER'); lastAt = Date.parse(op.at)
@@ -402,15 +412,18 @@ function liveLife(state: RealInputState) {
     } else if (op.kind === 'review_info') {
       assert(!op.taskIds.length && !informationReviewed && !informationReviewProblem(before), 'INFORMATION_REQUIRES_REVIEW')
       assert(op.field === null && op.value === null && op.before === null, 'INFO_OPERATION')
+      assert(op.informationEventVersion===undefined||op.informationEventVersion==='d10-event-commit-1','INFORMATION_EVENT_VERSION')
       informationReviewed = true
     } else {
-      assert(op.taskIds.length && op.taskIds.every(id => dispositions[id] !== 'confirmed'), 'ALREADY_CONFIRMED')
+      const independentCorrection=op.kind==='correct_fact'&&['independent_event','independent_time'].includes(op.correction?.change.kind??'')
+      assert((op.taskIds.length||independentCorrection)&&!informationReviewed&&op.taskIds.every(id => dispositions[id] !== 'confirmed'), 'ALREADY_CONFIRMED')
       if (op.kind === 'correct_fact') {
         assert(op.correction && op.factReview && op.field === null && op.value === null && op.before === null, 'CORRECTION_SHAPE')
         assert(op.correction.id === op.id && op.correction.at === op.at, 'CORRECTION_IDENTITY')
         const changed = appendCorrection(state.adaptedResponse, prefix.filter(o => o.correction).map(o => o.correction!),
           op.correction, state.context.index, Object.keys(confirmedAt))
         assert(equal(changed.affectedTaskIds, [...op.taskIds].sort()) && op.taskIds.every(id => dispositions[id] !== 'rejected'), 'CORRECTION_AFFECTED')
+        if(independentCorrection)assert(!op.taskIds.length&&!effective.facts.tasks.length,'INDEPENDENT_EVENT_REVIEW_SCOPE')
         assert(equal(op.factReview.original, changed.sourceFacts), 'CORRECTION_REVIEW_BINDING')
         if (op.correction.change.kind === 'surface') {
           const id = op.correction.change.taskId, task = changed.facts.tasks.find(t => t.id === id)!

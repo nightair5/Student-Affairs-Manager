@@ -1319,6 +1319,7 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
             {isolatedSnapshot.extractionDrafts.filter(d=>d.status==='failed'&&typeof (d.legacyData?.mainline05Failure as {response?:unknown}|undefined)?.response==='string').map(d=><button className="secondary-button" type="button" key={d.id} onClick={()=>void selectDraftForReview(d.id)}>
               纠错：{sources.find(s=>s.id===drafts.find(view=>view.id===d.id)?.sourceId)?.title??'失败通知'}</button>)}</section>}
           <InboxPage
+          canonicalWorkspace={isolatedSnapshot??undefined}
           drafts={drafts}
           sources={sources}
           view={inboxView}
@@ -1357,7 +1358,7 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
           />
         )
       case 'library':
-        return <LibraryPage sources={sources} drafts={drafts} onOpenIntake={() => setIntakeOpen(true)} onOpenDraft={(draftId) => { void selectDraftForReview(draftId) }} onRetrySource={handleRetrySource} onManualSupplementSource={openManualSupplement} onMarkIndependent={(sourceId) => {
+        return <LibraryPage canonicalWorkspace={isolatedSnapshot??undefined} sources={sources} drafts={drafts} onOpenIntake={() => setIntakeOpen(true)} onOpenDraft={(draftId) => { void selectDraftForReview(draftId) }} onRetrySource={handleRetrySource} onManualSupplementSource={openManualSupplement} onMarkIndependent={(sourceId) => {
           setSources((current) => current.map((source) => source.id === sourceId
             ? { ...source, duplicateReviewStatus: '保留为独立来源' }
             : source))
@@ -1525,6 +1526,7 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
           semanticReview={runtime?.semantic && isolatedSnapshot && experimentalReview && isolatedSnapshot.extractionDrafts.find(d=>d.id===selectedDraft.id)?.legacyData?.mainline05 ? {
             itemFacts: (taskId, onFocus) => runtime.semantic!.facts(isolatedSnapshot, selectedDraft.id, taskId, onFocus),
             information: runtime.semantic.facts(isolatedSnapshot, selectedDraft.id),
+            informationEditor: runtime.realInput?.informationEditor ? onDirty=>runtime.realInput!.informationEditor!({workspace:isolatedSnapshot,draftId:selectedDraft.id,busy:isolatedBusy||storageError,onDirty,onSaved:refreshExperiment}) : undefined,
             informationReviewProblem: runtime.semantic.informationReviewProblem?.(isolatedSnapshot, selectedDraft.id),
             eventCount: runtime.semantic.eventCount(isolatedSnapshot, selectedDraft.id, experimentalReview.draft.items.filter(i => i.status === '待确认' && i.selected).map(i => i.suggestion.id)),
             onDefer: itemId => disposeExperiment(selectedDraft.id, 'defer', itemId),

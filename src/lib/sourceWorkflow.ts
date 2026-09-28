@@ -1,4 +1,5 @@
 import type { ExtractionDraft, Source, SourceType } from '../types'
+import type {WorkspaceV8} from '../domain/v2/types'
 
 export type SourceWorkflowStatus = 'unprocessed' | 'processing' | 'failed' | 'needs_review' | 'confirmed' | 'archived' | 'info_only'
 
@@ -123,9 +124,16 @@ function modelLabel(source: Source, draft: ExtractionDraft | null): string | nul
   return null
 }
 
-export function mapSourceWorkflowItem(source: Source, drafts: ExtractionDraft[]): SourceWorkflowItem {
+export function mapSourceWorkflowItem(source: Source, drafts: ExtractionDraft[], canonicalWorkspace?:WorkspaceV8): SourceWorkflowItem {
   const draft = latestDraftForSource(source, drafts)
   const status = canonicalStatus(source, draft)
+  const counts=entityCounts(draft)
+  if(canonicalWorkspace&&status==='confirmed'){
+    const events=canonicalWorkspace.events.filter(event=>event.legacyData?.sourceId===source.id)
+    const eventIds=new Set(events.map(event=>event.id))
+    counts.events=Math.max(counts.events,events.length)
+    counts.timePoints=Math.max(counts.timePoints,canonicalWorkspace.timePoints.filter(point=>point.eventId&&eventIds.has(point.eventId)).length)
+  }
   return {
     source,
     draft,
@@ -137,7 +145,7 @@ export function mapSourceWorkflowItem(source: Source, drafts: ExtractionDraft[])
     modelLabel: modelLabel(source, draft),
     projectLabel: projectLabel(draft),
     errorMessage: source.processingError?.trim() || null,
-    counts: entityCounts(draft),
+    counts,
     canOpenDraft: status === 'needs_review' && Boolean(draft),
     canRetry: status === 'failed' || status === 'processing',
     canManualSupplement: status === 'failed' || status === 'unprocessed' || status === 'processing',
@@ -155,9 +163,9 @@ const statusOrder: Record<SourceWorkflowStatus, number> = {
   archived: 6,
 }
 
-export function buildSourceWorkflowItems(sources: Source[], drafts: ExtractionDraft[]): SourceWorkflowItem[] {
+export function buildSourceWorkflowItems(sources: Source[], drafts: ExtractionDraft[], canonicalWorkspace?:WorkspaceV8): SourceWorkflowItem[] {
   return sources
-    .map((source) => mapSourceWorkflowItem(source, drafts))
+    .map((source) => mapSourceWorkflowItem(source, drafts, canonicalWorkspace))
     .sort((left, right) => statusOrder[left.status] - statusOrder[right.status]
       || parseTime(right.updatedAt) - parseTime(left.updatedAt))
 }

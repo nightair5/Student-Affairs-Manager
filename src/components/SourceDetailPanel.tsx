@@ -1,10 +1,12 @@
 import { AlertTriangle, FileSearch, ListChecks, RefreshCw, ShieldCheck, SquarePen, X } from 'lucide-react'
 import { useId, useRef } from 'react'
 import { sourceTypeLabels, type SourceWorkflowItem } from '../lib/sourceWorkflow'
+import type {WorkspaceV8} from '../domain/v2/types'
 import { useDialogFocusTrap } from '../lib/useDialogFocusTrap'
 
 interface SourceDetailPanelProps {
   item: SourceWorkflowItem
+  canonicalWorkspace?: WorkspaceV8
   onClose: () => void
   onOpenDraft?: (draftId: string) => void
   onRetrySource?: (sourceId: string) => void | Promise<void>
@@ -23,6 +25,7 @@ function formatDate(value: string): string {
 
 export function SourceDetailPanel({
   item,
+  canonicalWorkspace,
   onClose,
   onOpenDraft,
   onRetrySource,
@@ -36,6 +39,8 @@ export function SourceDetailPanel({
   useDialogFocusTrap(panelRef, onClose)
   const { source, draft, counts } = item
   const sourceText = source.content ?? source.rawText ?? source.contentPreview
+  const savedEvents=canonicalWorkspace?.events.filter(event=>event.legacyData?.sourceId===source.id)??[]
+  const savedTimes=canonicalWorkspace?.timePoints??[]
   const actionsConnected = Boolean(onRetrySource && onManualSupplement)
 
   return <div className="modal-backdrop detail-backdrop" role="presentation">
@@ -75,6 +80,13 @@ export function SourceDetailPanel({
           <div><dt>材料</dt><dd>{counts.materials} 项</dd></div>
           <div><dt>时间 / 活动</dt><dd>{counts.timePoints} / {counts.events} 项</dd></div>
         </dl>
+
+        {savedEvents.length>0&&<section aria-label="已确认的事件"><h3>已确认的事件</h3>{savedEvents.map(event=>{
+          const start=savedTimes.find(point=>point.id===event.startTimePointId),end=savedTimes.find(point=>point.id===event.endTimePointId)
+          return <article key={event.id}><strong>{event.title}</strong><p>地点：{event.location??'未说明'}；{event.description}</p>
+            {([['开始',start],['结束',end]] as const).map(([label,point])=><p key={label}>{label}：{point?`${point.rawText} · ${point.normalizedValue??'具体时间尚未确定'} · ${point.precision}${point.needsConfirmation?' · 待核对':''}`:'未说明'}</p>)}
+            <p>依据：本来源已保存原文；人工纠正与原建议分别保存在草稿历史中。</p></article>
+        })}</section>}
 
         <section className="source-original" aria-labelledby={`${titleId}-original`}>
           <div className="source-section-heading"><FileSearch size={17} /><h3 id={`${titleId}-original`}>保存的来源内容</h3></div>

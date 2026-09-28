@@ -82,6 +82,17 @@ describe('MAINLINE05 semantic confirmation business invariants', () => {
     expect(saved.timePoints[0].type).toBe('event_start')
     expect(stateOf(saved,draftId).rawResponse.tasks[0].eventTempIds).toEqual(['linked-event'])
   })
+  it('a task confirmation does not silently accept a separate independent event in the same source',async()=>{
+    const {repo,draftId}=await setup('multi',input=>{
+      input.events.push({tempId:'independent-notice-event',title:'活动',description:'同来源的独立活动工程夹具',location:null,
+        startTimePointTempId:null,endTimePointTempId:null,scopeIds:[...input.tasks[0].propositionScopeIds],
+        relatedTaskTempIds:[],confidence:1,inferenceLevel:'explicit'})
+    }),before=await repo.load()
+    const saved=await confirmSemantic(repo,{draftId,revision:semanticRevision(before),taskTempIds:['submit']})
+    expect(saved.tasks).toHaveLength(1)
+    expect(saved.events).toHaveLength(0)
+    expect(stateOf(saved,draftId).rawResponse.events).toHaveLength(1)
+  })
   it.each([['submit','print'],['print','submit']])('shared event keeps all original edges and one canonical event: %s then %s',async(firstId,secondId)=>{
     const {repo,draftId}=await setup('multi',sharedEvent),before=await repo.load(),original=stateOf(before,draftId).rawResponse
     expect(stateOf(before,draftId).first.items.every(i=>i.defaultSelected)).toBe(true)
