@@ -1,14 +1,13 @@
-# 当前交接：D13 本地工程与零调用准备已交付
+# 当前交接：D14 本地一体化工程已交付
 
-更新：2026-09-28。工作区 C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/比赛；分支 codex/e2-candidate11-blind-eval。规则 PRD 1.1 / AGENTS 2.1 / [分层推进](../governance/PROGRESS_POLICY.md)。D13 起点 80aee0914c5fda09225b21603f9b4bce3a6ae3f4。
+更新：2026-09-28。工作区 `C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/比赛`，分支 `codex/e2-candidate11-blind-eval`。执行以 PRD、AGENTS 和 [分层规则](../governance/PROGRESS_POLICY.md) 为准。当前唯一 D14 结果入口：[D14_RESULTS](candidate16/d14-integrated/D14_RESULTS.md)。
 
-- [D13 结果](candidate16/d13-development/D13_RESULTS.md)：Candidate16 Prompt、新 v7 scorer、12/12 provisional 完整参照与真实往返；旧 v6、D12 diagnostic、D11 拒绝结果不变。
-- 新批 D13-C03-C16-DEVELOPMENT-R1：24 实际请求身份，6 AB/6 BA，deepseek-flash，全部未授权/NOT_RUN。[Manifest](candidate16/d13-development/MANIFEST.json)；运行 node scripts/prepare-candidate16-d13.mjs --verify。候选、Schema/adapter/scorer、参照和请求冻结；不要无声改写。
-- 旧 D11 24 份 raw 的 v7 事后诊断整份为 C03 1/12、C15 2/12。C15 有 2 份坏引用未评分；不是 C16 成绩，不是独立质量证明。
-- 独立入口 http://127.0.0.1:6646/?automation=1 ，D13 engineering-2 新库。[浏览器证据](candidate16/d13-development/BROWSER_EVIDENCE.md) 已验证无任务、事件编辑/失败恢复/刷新、任务修改、拒绝、错误修订局部阻断和部分确认。新 low-edit-v2 用实际 commit/readback；刷新缺时间仍为缺失。只复用 D11 回答/匿名夹具，无模型路径。
-- [验证](candidate16/d13-development/VALIDATION.md)：20 Node + 12 runtime/measurement 定向 PASS；lint/build/security/history/package PASS。裸全量仍 FAIL：旧 Node/Vitest 收集、carrier 裸测试和默认 5 秒超时；串行后 acceptance 仍 7 超时 + carrier。未把新增超时数量全归为已证明无关；不改旧测试凑绿。
-- node scripts/verify-recognition-history.mjs --verify：84 保护、119 冻结、D7 与 7 存档不变；账本840行、SHA ca5bb4f57d011bcf8f583d48d637076a8c76d380d98b3f5b46b0ea6f6c9f17ea，新增0。
-- 四项真人指标均 NOT_OBSERVABLE；Candidate16 模型效果 NOT_RUN；预算 BUDGET_UNRESOLVED；无新 grant/reserve/settle/Secret/试用/默认替换/合并/部署。
-- 下一步按 [一体化 D14 路线](../governance/PROJECT_EXECUTION_ROADMAP.md) 与 [完整执行提示词](../governance/NEXT_STAGE_EXECUTION_PROMPT.md)：在一个本地工作包内连续完成有限契约复核、确切预算与安全执行器、手动/辅助确认和试次计时入口、浏览器及测试收口。该批模型比较仅在另获模型/次数/费用上限授权时执行；真人探索仍需真实负责人/参与者和对应授权。
+- Candidate16/v7、12 份单作者/模型辅助已见合成 Development 参照和 24 个 C03/C16 冻结身份来自 [D13](candidate16/d13-development/D13_RESULTS.md)，未改。D14 有边界复核未发现影响比较的确定性评分错误。旧 D11 拒绝和旧 raw/Expected/结果均不变。
+- 24 个身份仍 `dispatchAuthorized=false`、`NOT_RUN`；D14 本地执行器及故障注入已完成，`node scripts/run-candidate16-d14.mjs --verify` 只读，缺本批新授权时 `--dispatch-next` 机械拒绝。模型调用/新 grant/reserve/settle/账本追加皆 0。
+- [具体预算卡](candidate16/d14-integrated/BUDGET_AUTHORIZATION_CARD.md)：2026-09-28 官方核价，采用峰时/未命中缓存和保守 1,048,576 输入+8,192 输出 token，24 次最坏保守占用 US$7.785696，建议**新**硬上限 US$7.80。价格/路由/账本/最终 HEAD 在未来真调用前重查；旧 D11 US$8 许可不复用。
+- D14 入口 `http://127.0.0.1:6647/?automation=1`，新独立库 `rco-mainline-01-02-i1-real-input-candidate16-d14-trial-1`。[浏览器证据](candidate16/d14-integrated/BROWSER_EVIDENCE.md) 覆盖无任务、精确/模糊事件、失败后手动重试、空白补录首任务、坏修订隔离、无关任务局部保存和多余任务拒绝；原回答与人工编辑分开。手动空白条件对完成标准/材料/条件/独立事件时间仍缺完整录入，正式真人探索前须补。
+- low-edit-v2 工程链路记录字段差异、editId/commitId/readback，拒绝是结构纠正；未闭合时间为缺失。四项真人指标皆 `NOT_OBSERVABLE`，真人参与者 0、负责人 0。[空白协议](candidate16/d14-integrated/TRIAL_PROTOCOL.md) 不是试用授权。
+- [验证](candidate16/d14-integrated/VALIDATION.md)：D14 执行器 11/11、隔离 2/2、相关产品定向 9/9、D13 语义/身份 17/17、lint/build/security 与历史保护通过；`npm run test` 仍 FAIL（1503 passed/3 failed/1 skipped，旧 carrier 环境和 5 秒超时等）。没有改旧断言凑绿。
+- 权威账本 840 行、SHA-256 `ca5bb4f57d011bcf8f583d48d637076a8c76d380d98b3f5b46b0ea6f6c9f17ea`、完整链通过、append 0；84 历史保护与 119 冻结文件通过。代码 `50f7161`、隔离检查 `7b16ffb` 已提交推送；文档最终 HEAD 见 Git/交付回复。
 
-旧交接 [原字节存档](../governance/archive/2026-09-28-d13/docs/recognition-optimization/CURRENT_CONTEXT.md)。精确交付 SHA 使用 Git 历史及本轮最终回复；不自引用追加空提交。
+接下来只需按具体授权卡取得**本批模型、24 次及美元硬上限**的明确新授权，才可再核价与执行比较；并单独补齐空白手动完整字段、安排真实负责人/参与者及试用范围授权。独立 Holdout、默认候选替换、合并和部署均未授权。

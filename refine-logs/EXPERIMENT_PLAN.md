@@ -1,5 +1,7 @@
 # 当前识别优化计划
 
+2026-09-28 D14 已交付：[统一结果](../docs/recognition-optimization/candidate16/d14-integrated/D14_RESULTS.md)。24 身份仍 0 调用，具体预算峰时最坏 US$7.785696、建议新硬上限 US$7.80；安全执行器、独立两条件工程入口及真实浏览器/读回已完成。下一项外部动作是**本批明确模型/24次/美元上限授权**，之后重核价/账本/HEAD并同包执行与评分；另一产品工作是补空白手动完整字段，再申请真实3—5人探索。旧 D13 计划段落仅作交付前历史说明。
+
 更新：2026-09-28。路线：[PROJECT_EXECUTION_ROADMAP](../docs/governance/PROJECT_EXECUTION_ROADMAP.md)。
 
 D13 已实现语义/评分 v7、Candidate16、局部修订保护和页面测量，12份provisional完整参照及24个零调用身份冻结。[结果](../docs/recognition-optimization/candidate16/d13-development/D13_RESULTS.md)。历史D11结论不变，C16效果尚未调用验证，真人指标不可观测。

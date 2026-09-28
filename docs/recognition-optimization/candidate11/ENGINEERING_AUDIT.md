@@ -255,3 +255,10 @@ R4 包有 12 source、12 provisional reference、24 NOT_RUN identity、6 AB/6 BA
 定向Node20/20、D13产品/测量12/12、lint0错误/8旧warning、build、安全/隔离/历史校验通过。全量FAIL1487通过/14失败/1跳过，另旧Node无Vitest套件；串行相关文件仍旧acceptance7个5秒超时+carrier问题，新增超时数量未完全归因，历史RCO锁哈希失败不改。一次同系列只读工程审查4项发现由主实现者修复并定向验证，不是独立人工或二次复审。
 
 账本840行、SHA ca5bb4f57d011bcf8f583d48d637076a8c76d380d98b3f5b46b0ea6f6c9f17ea，84原保护/119冻结/D7/7存档一致。结果、验证、浏览器、预算、审查和矩阵统一在 candidate16/d13-development；停止于本地工程及准备可审查、待具体外部授权，按交付边界提交立即推送。
+## 2026-09-28：D14 一体化本地包
+
+本次复核 D13 v7 的12份有限契约正反例，未发现足以使新 C03/C16 24次配对失效的确定性错误；旧 D13 Manifest、Expected、身份与 D11 拒绝不变。自动 Forbidden 不覆盖标题/自由描述和教学例泄漏的人工裁决。新模型调用0、grant/reserve/settle0、权威账本追加0。
+
+新增未授权机械停发的 D14 专用执行器、跨进程锁与故障注入；官方当日价按峰时未命中缓存输入 US$0.30/百万、输出 US$1.20/百万，以 1,048,576 输入+8,192 输出每单元保守上限计 24 次 US$7.785696，建议新硬上限 US$7.80。未有该批明确授权，不读取 Secret，不执行真实派发。D14 独立6647入口的实际浏览器验证无任务、精确/模糊事件、保存失败手动恢复、空白手动补首任务、坏修订局部阻断、无关任务部分确认、多余任务拒绝；独立库读回累计 Task2/Project0/Event2/TimePoint2。手动完整字段仍有缺口，真人试次0，四指标全 NOT_OBSERVABLE。
+
+执行器11/11、隔离2/2、相关产品定向9/9、D13语义/身份17/17及 lint/build/security/history 通过。全量 `npm run test` 仍 FAIL：Vitest 1503过/3失败/1跳过，涉及旧 carrier 环境未设、5秒超时和原生 Node test 收集；旧RCO锁失败不改。84历史保护、119冻结文件及账本840行哈希链通过。完整证据见 [D14_RESULTS](../candidate16/d14-integrated/D14_RESULTS.md)。

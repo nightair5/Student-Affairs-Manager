@@ -1,5 +1,7 @@
 # 规划产物索引
 
+当前 D14 入口：[结果](../docs/recognition-optimization/candidate16/d14-integrated/D14_RESULTS.md)、[语义复核](../docs/recognition-optimization/candidate16/d14-integrated/SEMANTIC_REVIEW.md)、[具体预算卡](../docs/recognition-optimization/candidate16/d14-integrated/BUDGET_AUTHORIZATION_CARD.md)、[浏览器证据](../docs/recognition-optimization/candidate16/d14-integrated/BROWSER_EVIDENCE.md)、[试次协议](../docs/recognition-optimization/candidate16/d14-integrated/TRIAL_PROTOCOL.md)、[验证](../docs/recognition-optimization/candidate16/d14-integrated/VALIDATION.md)。D14 本地工程已交付，24 身份未授权/未运行、真人指标不可观测。下方 D13“当前/下一步”为历史快照。
+
 当前（2026-09-28）：[D13实际交付](../docs/recognition-optimization/candidate16/d13-development/D13_RESULTS.md)、[冻结矩阵](../docs/recognition-optimization/candidate16/d13-development/EXPERIMENT_MATRIX.md)、[逐例事后诊断](../docs/recognition-optimization/candidate16/d13-development/POSTHOC_CASES.md)、[浏览器证据](../docs/recognition-optimization/candidate16/d13-development/BROWSER_EVIDENCE.md)、[验证](../docs/recognition-optimization/candidate16/d13-development/VALIDATION.md)、[分层规则](../docs/governance/PROGRESS_POLICY.md)、[活动路线](../docs/governance/PROJECT_EXECUTION_ROADMAP.md)、[下一阶段提示词](../docs/governance/NEXT_STAGE_EXECUTION_PROMPT.md)。规则仍 PRD 1.1 / AGENTS 2.1。Candidate16已冻结未调用，24身份未授权，四项真人指标不可观测。
 
 此前索引的原字节见 [D13存档](../docs/governance/archive/2026-09-28-d13/refine-logs/MANIFEST.md)。D12审查及diagnostic保留，D11历史拒绝不变。下方旧“当前/下一步”不作为现行指令。
