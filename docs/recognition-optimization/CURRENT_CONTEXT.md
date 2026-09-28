@@ -9,6 +9,6 @@
 - [验证](candidate16/d13-development/VALIDATION.md)：20 Node + 12 runtime/measurement 定向 PASS；lint/build/security/history/package PASS。裸全量仍 FAIL：旧 Node/Vitest 收集、carrier 裸测试和默认 5 秒超时；串行后 acceptance 仍 7 超时 + carrier。未把新增超时数量全归为已证明无关；不改旧测试凑绿。
 - node scripts/verify-recognition-history.mjs --verify：84 保护、119 冻结、D7 与 7 存档不变；账本840行、SHA ca5bb4f57d011bcf8f583d48d637076a8c76d380d98b3f5b46b0ea6f6c9f17ea，新增0。
 - 四项真人指标均 NOT_OBSERVABLE；Candidate16 模型效果 NOT_RUN；预算 BUDGET_UNRESOLVED；无新 grant/reserve/settle/Secret/试用/默认替换/合并/部署。
-- 下一步按 [路线](../governance/PROJECT_EXECUTION_ROADMAP.md) 与 [执行提示词](../governance/NEXT_STAGE_EXECUTION_PROMPT.md)：先只读核价形成确切授权卡；已冻结比较仅在用户给出该批模型、次数与硬上限后执行。真人探索需真实负责人/参与者和独立试次入口；不让模型冒充人。
+- 下一步按 [一体化 D14 路线](../governance/PROJECT_EXECUTION_ROADMAP.md) 与 [完整执行提示词](../governance/NEXT_STAGE_EXECUTION_PROMPT.md)：在一个本地工作包内连续完成有限契约复核、确切预算与安全执行器、手动/辅助确认和试次计时入口、浏览器及测试收口。该批模型比较仅在另获模型/次数/费用上限授权时执行；真人探索仍需真实负责人/参与者和对应授权。
 
 旧交接 [原字节存档](../governance/archive/2026-09-28-d13/docs/recognition-optimization/CURRENT_CONTEXT.md)。精确交付 SHA 使用 Git 历史及本轮最终回复；不自引用追加空提交。
