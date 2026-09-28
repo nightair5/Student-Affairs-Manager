@@ -598,7 +598,7 @@ export async function validateSemanticWorkspace(workspace: WorkspaceV8, profile?
     if(recovery){
       exactKeys(recovery,['kind','at',...(recovery.scopePolicy?['scopePolicy']:[])])
       assert(recovery.kind==='user_opened_failed_response'&&Number.isFinite(Date.parse(recovery.at)),'RECOVERY_IDENTITY')
-      if(recovery.scopePolicy)assert(recovery.scopePolicy==='d13-local-revision-isolation-1'&&workspace.workspace.id==='rco-mainline-01-02-i1-real-input-candidate16-d13-engineering-2','RECOVERY_SCOPE_POLICY_BINDING')
+      if(recovery.scopePolicy)assert(recovery.scopePolicy==='d13-local-revision-isolation-1'&&['rco-mainline-01-02-i1-real-input-candidate16-d13-engineering-2','rco-mainline-01-02-i1-real-input-candidate16-d14-trial-1'].includes(workspace.workspace.id),'RECOVERY_SCOPE_POLICY_BINDING')
       const f=draft.legacyData?.mainline05Failure as {response?:unknown;code?:unknown;version?:unknown}|undefined
       assert(f&&equal(f,{version:REAL_STATE_VERSION,response:(state as RealInputState).rawHttpText,code:'SEMANTIC_RESPONSE_REJECTED'}),'RECOVERY_RAW_BINDING')
     } else assert(draft.legacyData?.mainline05Failure === undefined, 'FAILED_RECEIPT_WITH_SUCCESS')
@@ -636,7 +636,9 @@ export async function validateSemanticWorkspace(workspace: WorkspaceV8, profile?
     assert(equal([...draft.acceptedEntityTempIds].sort(), [...current.accepted].sort()), 'ACCEPTED_STATE')
     assert(equal([...draft.rejectedEntityTempIds].sort(), Object.keys(current.dispositions).filter(id => current.dispositions[id] === 'rejected').sort()), 'REJECTED_STATE')
     assert(equal(draft.commitOperationIds, state.operations.filter(o => o.kind === 'confirm').map(o => semanticId('operation', state, o.id))), 'COMMIT_OPERATIONS')
-    const terminal = current.informationReviewed || (initialFacts.tasks.length > 0 && Object.values(current.dispositions).every(d => ['confirmed','rejected'].includes(d)))
+    // A user may add the first task to an empty manual draft. Terminal status is
+    // based on the current reviewed facts, while the frozen first answer stays empty.
+    const terminal = current.informationReviewed || (effectiveStateFacts(state).facts.tasks.length > 0 && Object.values(current.dispositions).every(d => ['confirmed','rejected'].includes(d)))
     const status = terminal ? 'confirmed' : current.accepted.length ? 'partially_confirmed' : 'needs_review'
     assert(draft.status === status && (real || source.status === status), 'LIFECYCLE_STATUS')
     for (const key of Object.keys(expected) as Array<keyof typeof expected>) {

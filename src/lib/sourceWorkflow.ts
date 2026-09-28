@@ -115,7 +115,9 @@ function projectLabel(draft: ExtractionDraft | null): string | null {
     ?? (recognition.projectMatch.matchedProjectId ? `已有项目 ${recognition.projectMatch.matchedProjectId}` : null)
 }
 
-function modelLabel(source: Source, draft: ExtractionDraft | null): string | null {
+function modelLabel(source: Source, draft: ExtractionDraft | null, canonicalWorkspace?:WorkspaceV8): string | null {
+  const operationId=canonicalWorkspace?.sources.find(item=>item.id===source.id)?.legacyData?.captureOperationId
+  if(typeof operationId==='string'&&/^d13-d13-fixture-manual-[a-z0-9-]+$/.test(operationId)) return '手动空白工程基线（无模型建议）'
   if (draft?.modelName?.includes('vision-exp')) return 'DeepSeek Vision Exp 建议'
   if (draft?.modelName) return draft.modelName.includes('deepseek') ? 'DeepSeek V4 Flash 建议' : `${draft.modelName} 建议`
   if (source.extractionMethod === 'deepseek-v4-flash-vision-exp') return 'DeepSeek Vision Exp 建议'
@@ -142,7 +144,7 @@ export function mapSourceWorkflowItem(source: Source, drafts: ExtractionDraft[],
     statusDescription: status === 'confirmed' && taskCount(draft) === 0
       ? '通知已核对，来源已保存；没有创建任务或项目。事件和不确定时间请按原文核对。'
       : statusDescriptions[status],
-    modelLabel: modelLabel(source, draft),
+    modelLabel: modelLabel(source, draft, canonicalWorkspace),
     projectLabel: projectLabel(draft),
     errorMessage: source.processingError?.trim() || null,
     counts,
