@@ -1,4 +1,8 @@
-# 学生事务管家：D17 当前主线推进路线
+# 学生事务管家：D17 后主线推进路线
+
+更新：2026-09-28。[D17 冻结比较](../recognition-optimization/candidate17/d17-development/D17_RESULTS.md)已完成 24/24 一次发送与结算。Candidate17 在 provisional Development 的整份正确由 C03 的 1/12 提至 2/12，纯信息误建任务减少，但仍有 9 个 Severe、新材料错误和未解决的取消/替代关系，结论 `MIXED_PROGRESS`、不能默认替换。下一包聚焦 S05—S11 的条件、待公布时间、材料细节与真实修订端点，一次做有边界的根因修复与工程确认；新候选和选择规则须在新输出前另冻。之后才考虑独立人工未见 Holdout 与获同意的真人探索。真人四项指标仍不可观测；本批授权已用尽。以下 D17 派发前路线为历史快照。
+
+# D17 派发前路线历史快照
 
 更新：2026-09-28。D17 已把 [冻结比较的安全执行前置记录](../recognition-optimization/candidate17/d17-development/PREFLIGHT.md)做成可审查版本，24/24 身份仍 `NOT_RUN`，0 grant、0 模型调用。本批具体模型、次数和美元硬上限授权尚缺；取得授权并重新核价、核账本、核远端后才可做 Candidate03/Candidate17 24 次开发比较与冻结 v7 评分。开发改善后还需真正未见的独立人工 Holdout 和另行授权的真人试次；风险退步须另立候选版本。Development 结果不能直接更换默认候选或部署。以下 D16 路线为历史快照。
 

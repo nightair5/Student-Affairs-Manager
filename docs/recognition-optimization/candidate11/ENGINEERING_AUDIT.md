@@ -1,5 +1,7 @@
 # C11 A—D4 工程与 Development 执行审计
 
+> D17 追加工程审计（2026-09-28，provisional，同系列工程复核）：用户明确授权的 C03/C17 24 个 D16 冻结 `deepseek-flash` 单元全部一次发送并结算，0 重试/repair/verifier、不确定状态 0；账本 889→938 行（1 grant、24 reserve、24 settle），最终 SHA-256 `e79aec8bbb1378e37f3941d8ffac9cce7d74bbb8e11d7ceee5c90a88b6c734b9`。冻结 v7 给出整份 C03 1/12、C17 2/12，C17 Severe 9、S08 新材料细节错误、S10/S11 修订关系仍失败，结论 `MIXED_PROGRESS`，不晋级、不默认替换。S04 选择器误报已追加诊断，不改原评分；四项真人指标 `NOT_OBSERVABLE`。84 历史保护/119 冻结文件不变。见 [D17 结果](../candidate17/d17-development/D17_RESULTS.md)和[预算结算](../candidate17/d17-development/BUDGET_SETTLEMENT.md)。本审计不是独立人工真值。
+
 > D12 追加工程记录（2026-09-28）：按用户新要求审查门槛适用性。新增6.0.1-diagnostic修复三个零匹配异常，全部24份录制回答离线诊断；其他21份旧规则结果不变，Candidate15两份引用失败仍失败。PRD/AGENTS、活动路线和交接更新为分层推进；旧规则原字节存档。新增历史保护入口，账本本轮只读。见 [D12结果](../d12-progress/D12_AUDIT_AND_RESULTS.md)；独立视角审查为同系列 provisional，不是独立人工真值。
 
 > D11 追加审计（2026-09-28，provisional，同系列工程审计）：用户本批授权的 24 个 D10 冻结 `deepseek-flash` 单元全部一次发送并结算，零重试/repair/verifier；账本 791→840 行（1 grant、24 reserve、24 settle），最终 SHA-256 `ca5bb4f57d011bcf8f583d48d637076a8c76d380d98b3f5b46b0ea6f6c9f17ea`。Candidate15 仅 10/12 引用有效，冻结 v6 又对 3 个零匹配输出抛错；不改旧 scorer/Expected，结论 `REJECT_CANDIDATE15_DEVELOPMENT`、完整双臂评分 `NOT_SCOREABLE`。四项真人指标 `NOT_OBSERVABLE`，D11 浏览器回放 `NOT_RUN`，默认候选、独立 Holdout、真人、合并及部署均未执行。见 [D11 结果](../candidate15/d11-development-20260928a/D11_RESULTS.md)。此审计不是独立人工真值。

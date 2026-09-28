@@ -1,6 +1,8 @@
 # 当前识别优化计划
 
-2026-09-28 D17 当前：[安全执行前置记录](../docs/recognition-optimization/candidate17/d17-development/PREFLIGHT.md)。24 个 D16 冻结身份未运行；离线执行器和分层选择器完成，未来须新授权本批模型、24 次和美元硬上限，且首次调用前重核价、身份和账本。以下 D16 为历史快照。
+2026-09-28 D17 结果：[冻结比较](../docs/recognition-optimization/candidate17/d17-development/D17_RESULTS.md)已完成 24/24 一次发送与结算；C03 1/12、C17 2/12 整份正确，但 C17 Severe 9、S08 新材料错误和 S10/S11 修订关系失败，决定 `MIXED_PROGRESS`。本批授权已用尽；下一阶段定向修失败机制并另冻新候选/新选择规则，独立人工 Holdout 和真人试次仍分别待材料与授权。以下 D17 前置段落为历史快照。
+
+2026-09-28 D17 派发前快照：[安全执行前置记录](../docs/recognition-optimization/candidate17/d17-development/PREFLIGHT.md)。24 个 D16 冻结身份未运行；离线执行器和分层选择器完成，未来须新授权本批模型、24 次和美元硬上限，且首次调用前重核价、身份和账本。以下 D16 为历史快照。
 
 2026-09-28 D16 历史快照：[一体化结果](../docs/recognition-optimization/candidate17/D16_RESULTS.md)。Candidate17 已建立并做零调用本地契约回归；12 份新写但旧模板衍生的 provisional Development 参照和 24 个 C03/C17 未授权身份已冻结，四项真人指标不可观测。隔离浏览器已验事件先保存后任务旧版本重载、未保存字段显式续存、失败后手动重试、正式读回与跨身份空库。下一阶段先审查新参照与预算，再由用户另行明确授权模型、24 次和美元硬上限，才能派发；不能复用 D15 grant。以下 D15 段落为历史快照。
 

@@ -1,4 +1,8 @@
-# 当前交接：D17 安全执行准备完成，等待本批具体模型授权
+# 当前交接：D17 冻结 Development 比较完成，结论为混合进展
+
+更新：2026-09-28。现行入口为 [D17 结果](candidate17/d17-development/D17_RESULTS.md)、[逐单元评分](candidate17/d17-development/SCORING_RESULTS.json)、[追加式选择器诊断](candidate17/d17-development/POSTHOC_DECISION_AUDIT.md)与[预算结算](candidate17/d17-development/BUDGET_SETTLEMENT.md)。用户授权的 Candidate03/Candidate17 24 次冻结请求全部各发送一次并结算，0 重试、0 不确定；Candidate03 整份正确 1/12，Candidate17 2/12，但 Candidate17 仍有 9 个 Severe、S08 新材料错误及 S10/S11 修订关系失败。预注册分层结论 `MIXED_PROGRESS`，不得替换默认候选或部署。账本 938 行、SHA `e79aec8bbb1378e37f3941d8ffac9cce7d74bbb8e11d7ceee5c90a88b6c734b9`，原 D16 冻结字节、84 份历史保护和 119 份冻结文件保持；本批 grant 已耗尽。四项真人指标仍 `NOT_OBSERVABLE`。以下是派发前及更早历史快照。
+
+# D17 派发前历史快照
 
 更新：2026-09-28。现行入口为 [D17 前置记录](candidate17/d17-development/PREFLIGHT.md)。Candidate03/Candidate17 的 D16 冻结 24 身份保持 `NOT_RUN`；D17 专用执行器、账本只读核验、离线故障注入和预注册选择器已就绪，无授权派发被阻断，0 新模型请求、0 grant/reserve/settle。官方价格本次只读核验，逐单元取整保守上界 US$7.785696；US$8.00 仅是建议硬上限，尚未获得用户对本批模型、24 次和美元上限的明确授权。四项真人指标仍为 `NOT_OBSERVABLE`。以下 D16 内容保留为历史快照。
 

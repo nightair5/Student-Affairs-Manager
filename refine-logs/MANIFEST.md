@@ -1,6 +1,8 @@
 # 规划产物索引
 
-当前 D17 入口：[前置记录](../docs/recognition-optimization/candidate17/d17-development/PREFLIGHT.md)、[D16 冻结 Manifest](../docs/recognition-optimization/candidate17/d16-development/MANIFEST.json)、[24 个未授权身份](../docs/recognition-optimization/candidate17/d16-development/PREPARED_REQUEST_IDENTITIES.json)。D17 执行器和分层选择器仅离线就绪，24/24 `NOT_RUN`；以下 D16/D15/D14 为历史快照。
+当前 D17 结果入口：[结果总览](../docs/recognition-optimization/candidate17/d17-development/D17_RESULTS.md)、[逐单元评分](../docs/recognition-optimization/candidate17/d17-development/SCORING_RESULTS.json)、[事后选择器诊断](../docs/recognition-optimization/candidate17/d17-development/POSTHOC_DECISION_AUDIT.md)、[预算结算](../docs/recognition-optimization/candidate17/d17-development/BUDGET_SETTLEMENT.md)、[验证](../docs/recognition-optimization/candidate17/d17-development/VALIDATION.md)。24 次已结算，本批许可用尽；以下 D17 前置和 D16/D15 是历史快照。
+
+D17 派发前入口：[前置记录](../docs/recognition-optimization/candidate17/d17-development/PREFLIGHT.md)、[D16 冻结 Manifest](../docs/recognition-optimization/candidate17/d16-development/MANIFEST.json)、[24 个未授权身份](../docs/recognition-optimization/candidate17/d16-development/PREPARED_REQUEST_IDENTITIES.json)。D17 执行器和分层选择器仅离线就绪，24/24 `NOT_RUN`；以下 D16/D15/D14 为历史快照。
 
 D16 历史入口：[结果](../docs/recognition-optimization/candidate17/D16_RESULTS.md)、[冻结 Manifest](../docs/recognition-optimization/candidate17/d16-development/MANIFEST.json)、[24 个未授权身份](../docs/recognition-optimization/candidate17/d16-development/PREPARED_REQUEST_IDENTITIES.json)、[浏览器证据](../docs/recognition-optimization/candidate17/BROWSER_EVIDENCE.md)、[预算草案](../docs/recognition-optimization/candidate17/FUTURE_BUDGET_CARD.md)、[验证](../docs/recognition-optimization/candidate17/VALIDATION.md)、[空白真人登记](../docs/recognition-optimization/candidate17/TRIAL_REGISTRY_BLANK.csv)、[空白平衡排程](../docs/recognition-optimization/candidate17/TRIAL_SCHEDULE_BLANK.csv)。Candidate17 只有工程证据，模型效果与真人四指标尚未得到；以下 D15/D14 为历史快照。
 
