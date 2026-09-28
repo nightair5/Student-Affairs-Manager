@@ -266,3 +266,13 @@ R4 包有 12 source、12 provisional reference、24 NOT_RUN identity、6 AB/6 BA
 D14 追加修正：空白手动可按来源逐字补完成标准、材料及纯信息独立事件/未知开始时间。真实浏览器试次 `4e1373b8-5dfa-4cb0-a87a-3125f88537c0` 正式确认后，隔离库累计 Task2/Project0/Event3/TimePoint3，刷新保留；71 个相关定向测试通过。重复夹具曾复用旧草稿，已封存该次工程试次，并在开始前增加机械阻断。旧库一致性试错已撤回通用映射改动并确认刷新恢复；当前仍需混合任务/事件、多事件/结束时间和每人独立库，真人指标继续不可观察。
 
 追加验证后状态：新增 2 个 Node 原生测试改名 `.node-test.mjs`，13/13 PASS，不再使 Vitest 误收集；最后全量 Vitest 1506过/2失败/1跳过，剩旧 carrier 环境、一个 5 秒超时及旧 D9 Node 文件收集。全量不称 PASS；本地 D14 定向通过。
+
+## 2026-09-28：D15 已授权冻结比较与混合事件确认
+
+D13 Candidate03/Candidate16 的 24 个身份逐序各发送一次，HTTP 200、raw 持久化与 SETTLED 各 24，0 重试、0 不确定；唯一新 grant 和 24 reserve/settle 对应账本新增 49 行。D13 Manifest/身份/Expected/v7 与历史 D11 raw/决定未修改。账本完整链 889 行、SHA `01d6670af09175475fcdfa5aec3594d2751cfd3b03050743fb79a04a578ad4c9`，84 历史保护、119 冻结文件保持。真实 usage 输入 106266、输出 25919 token，保守峰时未命中结算 US$0.062990；供应商实扣不可观察。
+
+已见合成 Development 整份正确 C03 2/12、C16 3/12；C16 只 11/12 引用有效，S10 修订引用不存在的旧任务，S02 材料/时间从正确退步为 1 Severe/3 key Major，C16 仍有 7 Severe。按冻结规则结论 `NEEDS_TARGETED_FIXES`，不宣称晋级。自动任务计数 C16 仅 11 份可评分；标题/描述和教学例泄漏未人工裁决。独立 Holdout、真人试用及默认替换未进行。
+
+D15 新隔离 6649—6651 浏览器验收无任务双事件、任务+双事件、精确/模糊开始结束时间、注入保存失败后手动重试、独立库读回与刷新；p4 Task1/Project0/Event2/TimePoint4，p3 Task0/Project0/Event2/TimePoint4。p2 发现事件编辑表单残留时刻后修复。p4 先事件后任务触发版本冲突重载保护，需 UX 引导改进。工程 editId/commitId/readback 保留，跨刷新主动计时缺失不填零；真人四指标全 NOT_OBSERVABLE。
+
+相关定向 33/33、执行器/隔离 13/13、lint/build/security scan、评分 raw/账本只读重建通过。全量 Vitest 1507过/3失败/1跳过，仍有旧 carrier 环境、5秒超时/Node 收集问题；`npm audit` 3 high/2 moderate，未改旧锁。完整分层证据见 [D15_RESULTS](../candidate16/d15-integrated/D15_RESULTS.md)。本审计为同一工程线的 provisional 记录，不是独立人工真值。
