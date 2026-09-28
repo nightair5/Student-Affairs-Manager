@@ -1,0 +1,47 @@
+## Provisional verdict: WARN
+
+Fresh same-family, read-only review. No files were modified.
+
+D11 shows no evidence of fake ground truth, self-normalized scoring, phantom primary results, or inflated scope language. Its historical rejection remains supported: Candidate15 had only 10/12 valid references against a frozen 12/12 gate, independently of the scorer exceptions. The WARN comes from the frozen v6 scorer throwing on three valid-schema cases, which prevents complete comparative metrics.
+
+| Check | Status | Finding |
+|---|---|---|
+| A. Reference provenance and fairness | WARN | Provenance is explicit and the paired design is balanced, but truth is fully seen, synthetic, single-author, and model-assisted. |
+| B. Denominators and normalization | PASS | All 12 sources remain in each arm; failed cases produce null/NOT_SCOREABLE rather than denominator shrinkage. No self-output normalization exists. |
+| C. Claims match results | PASS | The reported 12/12 vs 10/12 reference validity, 11 vs 8 scored cases, three exceptions, 5–0–4 plus three unscoreable pairs, usage, and rejection all match stored artifacts. |
+| D. Scorer execution and failures | WARN | The scorer clearly executed and the wrapper failed closed, but the core scorer lacks a correct zero-match path. |
+| E. Scope and language | PASS | Reports consistently say fully seen synthetic Development, provisional truth, no Holdout, no human metrics, and no release implication. |
+| F. Evaluation classification | PASS | D11 quality evidence is synthetic_proxy; accounting/raw verification is engineering evidence; D10 browser work is engineering simulation/replay; real_gt and human evaluation are absent. |
+
+### Material findings
+
+1. High: frozen scorer cannot score zero action/object matches.
+assignments() creates an all-null mapping, but the seeded reduction can retain {map: []} on a tie; the following code then dereferences actual[undefined].id (scripts/score-candidate15-contract.mjs:23-31, :71-74). The three resulting TYPE_ERROR cases appear at SCORING_RESULTS.json:3136-3157, :3196-3217, and :6998-7019. The wrapper catches these as SCORER_EXCEPTION and prevents promotion (scripts/score-candidate15-d11.mjs:49-60), so this invalidates complete quality metrics without falsifying the rejection.
+Minimal future fix: create a new scorer version whose reduction starts from evaluated[0], then test zero predictions, only nonmatching predictions, multiple expected tasks, and empty-reference sources. It should return finite FP/FN counts and complete:false, never throw. Preserve D11 unchanged.
+
+2. Medium limitation: the references support Development screening only.
+The reference package declares SINGLE_AUTHOR_MODEL_ASSISTED_NOT_INDEPENDENT_HUMAN and every source is FULLY_SEEN_D5_SYNTHETIC_DEVELOPMENT (REFERENCES.json:2-11). D10 freezes 12 sources, 12 arms each, and 6 AB/6 BA with common parameters (MANIFEST.json:3-29), so there is no sign of post-output reference tailoring or asymmetric runtime configuration. This is acceptable proxy truth for debugging, but cannot establish general candidate superiority.
+
+3. Low machine-consumption risk.
+AUDIT.json uses PASS_ACCOUNTING_AND_IDENTITY_WITH_SCORING_FAILURE (AUDIT.json:2-4). Humans can read the qualifier, but a consumer using a PASS* prefix could misclassify it. Future artifacts should separate accountingStatus, scoringStatus, qualityStatus, and overallStatus. The future audit should also store the exact SCORING_RESULTS.json SHA.
+
+4. Low future robustness issue.
+The scoring wrapper hardcodes transportStatus:'HTTP_200' and teachingLeak=0 (scripts/score-candidate15-d11.mjs:54, :59-60). Both are correct for these stored artifacts—the raw records are HTTP 200 and both frozen prompts contain no worked examples—but future code should derive and assert them from bound raw/prompt artifacts.
+
+### Denominators and claim integrity
+
+The aggregates retain 12 sources per arm and explicitly record failed cases and null totals (SCORING_RESULTS.json:13-51). Whole-suggestion accuracy is withheld for both arms rather than computed from successful subsets (SCORING_RESULTS.json:8990-9005). The narrative labels 2/12 and 1/12 as confirmed lower bounds, not accuracy (D11_RESULTS.md:9-13). String normalization only removes presentation punctuation and spacing; it does not divide metrics by prediction statistics (scripts/candidate15-reference-contract.mjs:6-10).
+
+The raw/accounting evidence is internally consistent: 24 calls, 24 raw records, one grant, 24 reserves, 24 settlements, and the stated usage totals (AUDIT.json:8-35). The result package accurately distinguishes accounting success from scoring failure.
+
+### Gate applicability
+
+- Engineering/accounting gate: passed for stored raw identity, parsing, schema handling, and settlement. This says nothing about recognition superiority.
+- Development selection gate: failed. All five recorded gates are false (SCORING_RESULTS.json:6-11).
+- Independent quality gate: not run; there is no independent human truth or unseen Holdout.
+- Human utility gate: not observable (SCORING_RESULTS.json:9002-9005).
+- Release gate: not applicable and not authorized.
+
+Even a future pass of the frozen Development thresholds would justify only “ready for independent validation,” which is exactly how the decision code is worded (scripts/score-candidate15-d11.mjs:60-64). The roadmap also says the net +2/12 rule is a Development screen without statistical generalization (PROJECT_EXECUTION_ROADMAP.md:122-134). Current thresholds cannot justify Candidate15 superiority.
+
+Future-only policy: retain D11 and REJECT_CANDIDATE15_DEVELOPMENT unchanged; version scorer/reference changes; diagnose old raw in a separate artifact; freeze the corrected scorer before any new comparative run; require complete determinate Development outcomes before advancement; require unseen independently human-reviewed references for quality claims; require registered human and release evidence for product or deployment claims.

@@ -1,5 +1,11 @@
 # 规划产物索引
 
+当前（2026-09-28）：[D12审查与修复](../docs/recognition-optimization/d12-progress/D12_AUDIT_AND_RESULTS.md)、[零调用诊断](../docs/recognition-optimization/d12-progress/POSTHOC_DIAGNOSTIC.json)、[分层规则](../docs/governance/PROGRESS_POLICY.md)、[活动路线](../docs/governance/PROJECT_EXECUTION_ROADMAP.md)、[D13工作包](../docs/governance/NEXT_STAGE_EXECUTION_PROMPT.md)。规则为 PRD 1.1 / AGENTS 2.1。
+
+## 历史索引
+
+以下“当前/下一步”仅指对应历史记录日期，不再承担当前启动指令。
+
 > D11 新增：[执行契约](../docs/recognition-optimization/candidate15/D11_EXECUTION_PLAN.md)、[24 单元结果与阻断](../docs/recognition-optimization/candidate15/d11-development-20260928a/D11_RESULTS.md)、[逐例冻结 v6 观察](../docs/recognition-optimization/candidate15/d11-development-20260928a/SCORING_RESULTS.json)、[账本及请求绑定](../docs/recognition-optimization/candidate15/d11-development-20260928a/BINDING.json)。24/24 调用已结算、Candidate15 不晋级，下一阶段 D12 零调用修复新版契约。下方 D10 文件保持历史原貌。
 
 > D10 新增：[结果](../docs/recognition-optimization/candidate15/d10-development/D10_RESULTS.md)、[隔离浏览器证据](../docs/recognition-optimization/candidate15/d10-development/BROWSER_EVIDENCE.md)、[验证](../docs/recognition-optimization/candidate15/d10-development/VALIDATION.md)、[D10 Manifest](../docs/recognition-optimization/candidate15/d10-development/MANIFEST.json)、[24 个未授权身份](../docs/recognition-optimization/candidate15/d10-development/PREPARED_REQUEST_IDENTITIES.json)、[未来预算草案](../docs/recognition-optimization/candidate15/d10-development/FUTURE_BUDGET_AUTHORIZATION_DRAFT.md)。D9 冻结包保留原样；下方 D9 阻断是历史快照。

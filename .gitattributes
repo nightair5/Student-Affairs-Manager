@@ -26,3 +26,11 @@ scripts/governance-protection.node-test.mjs text eol=lf
 
 # D11 raw, receipts, identities, and audit files carry byte-level SHA-256 evidence.
 docs/recognition-optimization/candidate15/d11-development-20260928a/** -text
+
+# D12 diagnostics keep evidence hashes stable without modifying D11.
+docs/recognition-optimization/d12-progress/** -text
+scripts/score-candidate15-diagnostic.mjs text eol=lf
+scripts/diagnose-recognition-d12.mjs text eol=lf
+scripts/verify-recognition-history.mjs text eol=lf
+scripts/recognition-progress-policy.mjs text eol=lf
+scripts/recognition-d12.check.mjs text eol=lf
