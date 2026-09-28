@@ -7,6 +7,7 @@ import { REAL_STATE_VERSION, stateOfRuntime, effectiveStateFacts, life, canAct, 
 import { materialEdit, factAssets, materialStatusLabels, validateMaterialDecision, type FactChange, type MaterialEdit } from './factCorrections'
 import type { SemanticTask } from '../mainline04/semanticContract'
 import { openFailedForCorrection } from '../mainline05/semanticCapture'
+import {revisionLabel,taskReviewFingerprint} from '../candidate16/staleRecovery'
 
 export function FactCorrectionEditor({ repo, workspace, draftId, taskId, busy, onDirty, onSaved }: {
   repo: SemanticRepository; workspace: WorkspaceV8; draftId: string; taskId: string; busy: boolean;
@@ -19,15 +20,26 @@ export function FactCorrectionEditor({ repo, workspace, draftId, taskId, busy, o
   const [materialBuffer,setMaterialBuffer]=useState<{id:string;required:string;status:string}|null>(null)
   const [relationDirty,setRelationDirty]=useState(false)
   const savedRevision = semanticRevision(workspace), [bufferRevision,setBufferRevision] = useState(savedRevision)
+  const [bufferFingerprint,setBufferFingerprint]=useState(''),[pendingRevision,setPendingRevision]=useState<string|null>(null)
+  const [refreshConflict,setRefreshConflict]=useState(false)
   const notify = useRef(onDirty)
   useEffect(() => { notify.current=onDirty },[onDirty])
   useEffect(() => { notify.current(Boolean(change||materialBuffer) || relationDirty || working); return () => notify.current(false) },[change,materialBuffer,working,relationDirty])
   const blocked = busy || working || current.dispositions[taskId] === 'confirmed' || current.dispositions[taskId] === 'rejected' || !isCurrentDraft(workspace,draftId)
-  const choose = (value: FactChange) => { setChange(value); setBufferRevision(savedRevision); setError('') }
+  const fingerprint=taskReviewFingerprint(facts,taskId,current.values[taskId])
+  const choose = (value: FactChange) => { setChange(value); setBufferRevision(savedRevision);setBufferFingerprint(fingerprint);setPendingRevision(null);setRefreshConflict(false); setError('') }
+  const reloadLatest=async()=>{
+    try{await onSaved();const latest=await repo.load(),state=stateOfRuntime(latest,draftId)
+      if(change||materialBuffer){
+        if(taskReviewFingerprint(effectiveStateFacts(state).facts,taskId,life(state).values[taskId])!==bufferFingerprint){setRefreshConflict(true);setError('最新保存的本项事实也已变化。未保存输入仍在，请对照原文重新编辑；不会自动覆盖。');return}
+        setPendingRevision(semanticRevision(latest));setError('已载入最新来源；本项已保存事实没有变化。请对照保留的输入，明确选择继续后再保存。')
+      }else {setBufferRevision(semanticRevision(latest));setError('已载入最新工作区修订 '+revisionLabel(semanticRevision(latest))+'。请重新核对本项事实后继续。')}
+    }catch(cause){setError(cause instanceof Error?cause.message:'重读失败；未保存输入仍保留。')}
+  }
   const run = async (action: () => Promise<unknown>) => {
-    if (blocked) return
+    if (blocked||pendingRevision||refreshConflict) return
     setWorking(true); setError('')
-    try { await action(); setChange(null); setMaterialBuffer(null); await onSaved() } catch (cause) { setError(cause instanceof Error ? cause.message : '未保存；请保留修改后再核对。') }
+    try { await action(); setChange(null); setMaterialBuffer(null);setPendingRevision(null);setRefreshConflict(false); await onSaved();setBufferRevision(semanticRevision(await repo.load())) } catch (cause) { setError(cause instanceof Error ? cause.message : '未保存；请保留修改后再核对。') }
     finally { setWorking(false) }
   }
   const assets = factAssets(facts,taskId)
@@ -62,7 +74,7 @@ export function FactCorrectionEditor({ repo, workspace, draftId, taskId, busy, o
     </details>
     {materialReviewEnabled(state)&&facts.materials.filter(m=>assets.materials.has(m.tempId)).map(m=><div key={m.tempId}>
       <button type="button" disabled={blocked||relationDirty||Boolean(change||materialBuffer)} onClick={()=>{
-        setMaterialBuffer({id:m.tempId,required:'',status:''});setBufferRevision(savedRevision);setError('')
+        setMaterialBuffer({id:m.tempId,required:'',status:''});setBufferRevision(savedRevision);setBufferFingerprint(fingerprint);setPendingRevision(null);setRefreshConflict(false);setError('')
       }}>{materialDecision(state,m.tempId)?'重新核对材料：':'核对材料：'}{m.name}</button>
     </div>)}
     {materialBuffer&&<fieldset disabled={blocked}><legend>分别核对必需性和当前准备状态（用户观察，不是模型预测）</legend>
@@ -74,7 +86,7 @@ export function FactCorrectionEditor({ repo, workspace, draftId, taskId, busy, o
       <button type="button" disabled={!materialBuffer.required||!materialBuffer.status} onClick={()=>void run(()=>reviewSemanticMaterial(repo,
         {draftId,materialId:materialBuffer.id,revision:bufferRevision,operationId:crypto.randomUUID(),
           value:validateMaterialDecision({required:materialBuffer.required==='yes',status:materialBuffer.status})}))}>保存材料核对</button>
-      <button type="button" onClick={()=>setMaterialBuffer(null)}>放弃未保存材料核对</button>
+      <button type="button" onClick={()=>{setMaterialBuffer(null);setPendingRevision(null);setRefreshConflict(false)}}>放弃未保存材料核对</button>
     </fieldset>}
     <button type="button" disabled={blocked || relationDirty || Boolean(change||materialBuffer) || !canAct(state,taskId) || reviewed || Boolean(titleReviewProblem(current.values[taskId].title))}
       onClick={() => void run(() => reviewSemanticFact(repo,{draftId,taskId,revision:savedRevision,operationId:crypto.randomUUID()}))}>
@@ -105,11 +117,14 @@ export function FactCorrectionEditor({ repo, workspace, draftId, taskId, busy, o
         {facts.tasks.map(t => <label key={t.id}><input type="checkbox" checked={change.value.relatedTaskTempIds.includes(t.id)} onChange={e => setChange({...change,value:{...change.value,
           relatedTaskTempIds:e.target.checked?[...change.value.relatedTaskTempIds,t.id]:change.value.relatedTaskTempIds.filter(id=>id!==t.id)}})} />{t.detail.title}</label>)}
       </fieldset>}
-      {change && change.kind!=='time' && <><p>有未保存的事实编辑，当前内容不会被确认。{bufferRevision!==savedRevision?'其他操作已更新版本；本次保存将明确拒绝，缓冲仍保留。':''}</p>
-        <button type="button" disabled={blocked} onClick={() => void run(() => correctSemanticFact(repo,{draftId,revision:bufferRevision,operationId:crypto.randomUUID(),change}))}>保存事实修改</button>
-        <button type="button" disabled={working} onClick={() => setChange(null)}>放弃未保存修改</button></>}
+      {change && change.kind!=='time' && <><p>有未保存的事实编辑，当前内容不会被确认。{bufferRevision!==savedRevision?'其他操作已更新版本；必须重新载入并核对，缓冲仍保留。':''}</p>
+        <button type="button" disabled={blocked||Boolean(pendingRevision)||refreshConflict} onClick={() => void run(() => correctSemanticFact(repo,{draftId,revision:bufferRevision,operationId:crypto.randomUUID(),change}))}>保存事实修改</button>
+        <button type="button" disabled={working} onClick={() => {setChange(null);setPendingRevision(null);setRefreshConflict(false)}}>放弃未保存修改</button></>}
     </details>
     <RelationCorrection repo={repo} workspace={workspace} draftId={draftId} taskId={taskId} busy={blocked||Boolean(change||materialBuffer)} onDirty={setRelationDirty} onSaved={onSaved}/>
+    {(error.includes('STALE_RELOAD_REQUIRED')||bufferRevision!==savedRevision)&&<><p>工作区修订已变化：编辑开始时 {revisionLabel(bufferRevision)}，当前 {revisionLabel(savedRevision)}。先重新载入并核对；不会覆盖已保存事实。</p><button type="button" disabled={working||relationDirty} onClick={()=>void reloadLatest()}>载入最新来源（保留未保存输入）</button></>}
+    {pendingRevision&&<button type="button" disabled={working} onClick={()=>{setBufferRevision(pendingRevision);setPendingRevision(null);setError('已明确核对最新事实，可手动保存；仍不会自动提交。')}}>已对照原文，继续保存保留的输入</button>}
+    {refreshConflict&&<p role="alert">相关事实已被其他操作修改。当前输入仍显示在编辑框，需先放弃本次编辑，再按最新事实重新修改。</p>}
     {error && <p role="alert">{error}。未宣称保存成功。</p>}
   </section>
 }
