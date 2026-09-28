@@ -1,0 +1,134 @@
+- generic "D13工程回放与测量"
+- paragraph: 工程回放 / 录制回答 / 非真人试用。独立数据库：rco-mainline-01-02-i1-real-input-candidate16-d13-engineering-2
+- button "模拟下一次保存失败"
+- button "独立读回与测量导出"
+- status: 下一次保存将原子失败；需手动重试。
+- link "跳到主要内容":
+  - /url: "#main-content"
+- complementary:
+  - button "返回今日首页":
+    - strong: 事务管家
+    - generic: STUDENT DESK
+  - button "新事务 N":
+    - text: 新事务
+    - generic: "N"
+  - navigation "主要导航":
+    - generic: 执行闭环
+    - button "今日":
+      - text: 今日
+    - button "收件箱":
+      - text: 收件箱
+    - button "打开待确认队列，共 0 项":
+      - text: 待确认
+      - generic: "0"
+    - button "项目":
+      - text: 项目
+    - button "日历":
+      - text: 日历
+    - button "资料库":
+      - text: 资料库
+    - generic: 低频工具
+    - button "所有任务":
+      - text: 所有任务
+    - button "知识问答":
+      - text: 知识问答
+    - button "周报月报":
+      - text: 周报月报
+  - button "搜索事项":
+    - text: 搜索事项
+  - button "新手教程":
+    - text: 新手教程
+  - button "设置与服务":
+    - text: 设置与服务
+  - button "隐私与数据":
+    - text: 隐私与数据
+  - strong: 已在此设备自动保存
+  - paragraph: 同一浏览器与站点地址下可恢复；识别结果确认后才入库。
+- region "隔离实验状态":
+  - paragraph: D13隔离工程回放 · 非真人试用 · 不代表Candidate16输出 · 独立测试库 · 仅本机已录制结果；新模型调用和旧用户库访问关闭。
+  - paragraph: 仅本轮录入、核对、确认、查询与JSON备份可用；未纳入操作会明确阻断。
+  - paragraph: 新语义保存在独立实验格式中，不能导入稳定入口。卡片分类与耗时仍是旧界面的兼容估计，不代表原文；完整原始属性可在详情核对，不会作为修改写回。
+  - button "准备完整测试库 JSON"
+- main:
+  - text: 9月28日星期一
+  - heading "先把新通知变成清楚的下一步" [level=1]
+  - paragraph: 不用管理所有事情。先处理首页，再去任务中心查看其余内容。
+  - strong: 收到新通知？直接粘贴
+  - generic: 先核对输入文字，再决定本次发送范围。
+  - generic: 真实输入隔离实验 · 发送前核对
+  - textbox "快速粘贴通知":
+    - /placeholder: 粘贴老师消息、群通知或网页正文……
+  - button "打开文字、图片或文件录入":
+    - text: 打开文字、图片或文件录入
+  - button "先核对输入文字" [disabled]:
+    - text: 先核对输入文字
+  - generic: 此按钮只打开输入核对，不立即发送。仅本机已录制结果；新模型调用和旧用户库访问关闭。 建议须经用户确认，仅保存到隔离测试库。
+  - region "现在先做这些":
+    - generic: TODAY
+    - heading "现在先做这些" [level=2]
+    - button "全部 0 项":
+      - text: 全部 0 项
+    - strong: 今天还没有任务
+    - paragraph: 把一段通知粘贴到上方，确认后就会出现在这里。
+- dialog "识别出 0 件事":
+  - banner:
+    - generic: 第 2 步 · D13隔离工程回放 · 非真人试用 · 不代表Candidate16输出
+    - heading "识别出 0 件事" [level=2]
+    - paragraph: 先看标题和时间；不准确时再点“编辑”。
+    - button "稍后处理并关闭":
+  - strong: 0 项待确认
+  - generic: 确认后才会进入今日和任务中心
+  - generic "原始通知与定位依据":
+    - text: 原始通知与定位依据
+  - paragraph: "[D5匿名合成Development] 图书馆检索服务将在周三晚维护，原有预约记录不受影响。无需取消预约，不要上传说明，也不必给管理员发邮件。本通知仅说明维护安排。"
+  - region "项目树待确认事项":
+    - region "通知漏项与新旧要求纠正":
+      - paragraph: 人工纠正单独保存，不改变模型原回答。
+      - button "纠正旧要求与新要求"
+      - button "依据原文补充漏任务"
+    - region "通知完整事实":
+      - paragraph: 这份通知仅供了解，没有要确认的任务；可明确标记已核对，不会创建空项目。
+      - paragraph:
+        - strong: 独立事件：图书馆检索服务
+        - text: ；地点：未说明
+      - paragraph: 开始时间引用：P1；结束时间引用：未说明。这不是待办任务。
+      - generic "原文依据 · 20–35"
+      - blockquote: 图书馆检索服务将在周三晚维护，
+      - paragraph:
+        - strong: 事件时间原文：周三晚
+        - text: ；时间待核对；时间尚不确定，标记核对仅表示已知晓，不能当成确定日期
+      - generic "原文依据 · 20–35"
+      - generic "本次完整原文（包括无截止说明）"
+      - paragraph: 用户操作：enable_material_review · 2026-09-28T04:28:32.049Z
+      - paragraph: 模型建议不自动勾选。当前明细为已保存的有效事实；原始响应与首次建议保留不变。
+      - generic "原始响应与首次建议（不含后续编辑）"
+      - generic "全字段与关系明细"
+    - region "独立事件人工核对":
+      - heading "核对独立事件" [level=3]
+      - paragraph: 此处编辑是你的纠正，原模型回答和首次建议不变。原文依据仍可在上方定位；时间不确定时不生成日程。
+      - paragraph: 事件：图书馆检索服务；地点：未说明
+      - button "编辑事件字段" [disabled]
+      - paragraph: 开始：周三晚；时间尚未确定；vague；需确认
+      - button "编辑事件时间" [disabled]
+      - group "编辑事件字段":
+        - generic: 编辑事件字段
+        - text: 事件名称
+        - textbox "事件名称": 图书馆检索服务
+        - text: 地点
+        - textbox "地点": 匿名服务台
+        - text: 说明
+        - textbox "说明"
+        - text: 开始时间
+        - combobox "开始时间":
+          - option "未说明"
+          - option "周三晚" [selected]
+        - text: 结束时间
+        - combobox "结束时间":
+          - option "未说明" [selected]
+      - paragraph: 编辑尚未保存，不能直接标记已核对。
+      - button "保存事件纠正"
+      - button "放弃未保存修改"
+      - alert: D13_INJECTED_ATOMIC_FAILURE。未宣称保存成功。
+    - button "确认无任务并保存 1 个独立事件" [disabled]
+  - contentinfo:
+    - button "完成"

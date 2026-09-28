@@ -145,8 +145,9 @@ export class SemanticRepository {
   async beginInputRun(sourceId: string, readingInput: RealInputReading, execution: 'live' | 'seen_engineering_replay',
     operationId: string, revision: string, now = new Date().toISOString(), promptVersion: typeof PROMPT_VERSION | typeof CANDIDATE02_VERSION | typeof CANDIDATE03_VERSION | typeof CANDIDATE04_VERSION | typeof CANDIDATE05_VERSION | typeof CANDIDATE06_VERSION | typeof CANDIDATE07_VERSION | typeof CANDIDATE09_VERSION = PROMPT_VERSION,
     modelName: typeof MODEL_NAME | typeof FLASH41_MODEL_NAME = MODEL_NAME): Promise<CaptureHandle> {
-    assert(modelName === MODEL_NAME ? promptVersion === PROMPT_VERSION || [CANDIDATE02_VERSION,CANDIDATE03_VERSION,CANDIDATE04_VERSION].includes(promptVersion as typeof CANDIDATE02_VERSION) && execution === 'live'
-      : modelName === FLASH41_MODEL_NAME && execution === 'live' && [CANDIDATE03_VERSION,CANDIDATE05_VERSION,CANDIDATE06_VERSION,CANDIDATE07_VERSION,CANDIDATE09_VERSION].includes(promptVersion as typeof CANDIDATE03_VERSION), 'CANDIDATE_IDENTITY')
+    const d13Recorded = this.name === 'rco-mainline-01-02-i1-real-input-candidate16-d13-engineering-2' && execution === 'seen_engineering_replay' && modelName === FLASH41_MODEL_NAME && promptVersion === CANDIDATE03_VERSION
+    assert(d13Recorded || (modelName === MODEL_NAME ? promptVersion === PROMPT_VERSION || [CANDIDATE02_VERSION,CANDIDATE03_VERSION,CANDIDATE04_VERSION].includes(promptVersion as typeof CANDIDATE02_VERSION) && execution === 'live'
+      : modelName === FLASH41_MODEL_NAME && execution === 'live' && [CANDIDATE03_VERSION,CANDIDATE05_VERSION,CANDIDATE06_VERSION,CANDIDATE07_VERSION,CANDIDATE09_VERSION].includes(promptVersion as typeof CANDIDATE03_VERSION)), 'CANDIDATE_IDENTITY')
     const reading = plainJson(readingInput)
     await validateInputReceipt(reading.inputReceipt)
     assert(reading.sendSnapshot && /^[A-Za-z0-9-]{1,100}$/.test(operationId), 'SEND_RECEIPT_REQUIRED')

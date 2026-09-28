@@ -34,3 +34,10 @@ scripts/diagnose-recognition-d12.mjs text eol=lf
 scripts/verify-recognition-history.mjs text eol=lf
 scripts/recognition-progress-policy.mjs text eol=lf
 scripts/recognition-d12.check.mjs text eol=lf
+
+# D13 new package; old frozen paths remain untouched.
+docs/recognition-optimization/candidate16/d13-development/** -text
+scripts/*candidate16*d13* text eol=lf
+scripts/recognition-semantic-v7.mjs text eol=lf
+src/experiments/candidate16/** text eol=lf
+src/experiments/realInput01/candidate16.ts text eol=lf

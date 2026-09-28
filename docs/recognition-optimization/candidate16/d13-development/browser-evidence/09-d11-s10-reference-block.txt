@@ -1,0 +1,186 @@
+- generic "D13工程回放与测量"
+- paragraph: 工程回放 / 录制回答 / 非真人试用。独立数据库：rco-mainline-01-02-i1-real-input-candidate16-d13-engineering-2
+- button "模拟下一次保存失败"
+- button "独立读回与测量导出"
+- link "下载匿名工程证据":
+  - /url: blob:http://127.0.0.1:6646/364a6b7d-1cff-45a5-b04c-b9a739fa53e0
+- status: 独立读回：任务 3，项目 0，事件 1，时间 1，草稿 5。
+- generic: "[ { \"draftId\": \"source:372c315a:draft:1:1\", \"version\": \"low-edit-v2-exploratory-1\", \"role\": \"ENGINEERING_REPLAY\", \"correctDisposition\": null, \"zeroSubstantiveModification\": null, \"lowModificationCorrectDisposition\": null, \"committedFields\": [], \"fieldCount\": 0, \"structural\": false, \"activeEditMs\": 0, \"readMs\": 35990, \"waitMs\": 16, \"hiddenMs\": 0, \"idleMs\": 0, \"missing\": [], \"postTerminalEvents\": 12, \"humanMetrics\": \"NOT_OBSERVABLE\" }, { \"draftId\": \"source:f90bee88:draft:1:1\", \"version\": \"low-edit-v2-exploratory-1\", \"role\": \"ENGINEERING_REPLAY\", \"correctDisposition\": null, \"zeroSubstantiveModification\": null, \"lowModificationCorrectDisposition\": null, \"committedFields\": [ \"events.E1.location\" ], \"fieldCount\": 1, \"structural\": false, \"activeEditMs\": null, \"readMs\": null, \"waitMs\": null, \"hiddenMs\": null, \"idleMs\": null, \"missing\": [ \"refresh time discontinuity\" ], \"postTerminalEvents\": 0, \"humanMetrics\": \"NOT_OBSERVABLE\" }, { \"draftId\": \"source:22a99c1e:draft:1:1\", \"version\": \"low-edit-v2-exploratory-1\", \"role\": \"ENGINEERING_REPLAY\", \"correctDisposition\": null, \"zeroSubstantiveModification\": null, \"lowModificationCorrectDisposition\": null, \"committedFields\": [], \"fieldCount\": 0, \"structural\": false, \"activeEditMs\": 0, \"readMs\": 78154, \"waitMs\": 157, \"hiddenMs\": 0, \"idleMs\": 0, \"missing\": [], \"postTerminalEvents\": 0, \"humanMetrics\": \"NOT_OBSERVABLE\" }, { \"draftId\": \"source:074a9d4a:draft:1:1\", \"version\": \"low-edit-v2-exploratory-1\", \"role\": \"ENGINEERING_REPLAY\", \"correctDisposition\": null, \"zeroSubstantiveModification\": null, \"lowModificationCorrectDisposition\": null, \"committedFields\": [ \"display.T1.title\" ], \"fieldCount\": 1, \"structural\": false, \"activeEditMs\": 129, \"readMs\": 189257, \"waitMs\": 175, \"hiddenMs\": 0, \"idleMs\": 0, \"missing\": [], \"postTerminalEvents\": 0, \"humanMetrics\": \"NOT_OBSERVABLE\" }, { \"draftId\": \"source:65009e6d:draft:1:1\", \"version\": \"low-edit-v2-exploratory-1\", \"role\": \"ENGINEERING_REPLAY\", \"correctDisposition\": null, \"zeroSubstantiveModification\": null, \"lowModificationCorrectDisposition\": null, \"committedFields\": [ \"disposition.reject.T2\" ], \"fieldCount\": 1, \"structural\": true, \"activeEditMs\": 121, \"readMs\": 48002, \"waitMs\": 148, \"hiddenMs\": 0, \"idleMs\": 0, \"missing\": [], \"postTerminalEvents\": 0, \"humanMetrics\": \"NOT_OBSERVABLE\" } ]"
+- generic "查看完整匿名读回 JSON"
+- link "跳到主要内容":
+  - /url: "#main-content"
+- complementary:
+  - button "返回今日首页":
+    - strong: 事务管家
+    - generic: STUDENT DESK
+  - button "新事务 N":
+    - text: 新事务
+    - generic: "N"
+  - navigation "主要导航":
+    - generic: 执行闭环
+    - button "今日":
+      - text: 今日
+    - button "收件箱":
+      - text: 收件箱
+    - button "打开待确认队列，共 3 项":
+      - text: 待确认
+      - generic: "3"
+    - button "项目":
+      - text: 项目
+    - button "日历":
+      - text: 日历
+    - button "资料库":
+      - text: 资料库
+    - generic: 低频工具
+    - button "所有任务":
+      - text: 所有任务
+    - button "知识问答":
+      - text: 知识问答
+    - button "周报月报":
+      - text: 周报月报
+  - button "搜索事项":
+    - text: 搜索事项
+  - button "新手教程":
+    - text: 新手教程
+  - button "设置与服务":
+    - text: 设置与服务
+  - button "隐私与数据":
+    - text: 隐私与数据
+  - strong: 已在此设备自动保存
+  - paragraph: 同一浏览器与站点地址下可恢复；识别结果确认后才入库。
+- region "隔离实验状态":
+  - paragraph: D13隔离工程回放 · 非真人试用 · 不代表Candidate16输出 · 独立测试库 · 仅本机已录制结果；新模型调用和旧用户库访问关闭。
+  - paragraph: 仅本轮录入、核对、确认、查询与JSON备份可用；未纳入操作会明确阻断。
+  - paragraph: 新语义保存在独立实验格式中，不能导入稳定入口。卡片分类与耗时仍是旧界面的兼容估计，不代表原文；完整原始属性可在详情核对，不会作为修改写回。
+  - button "准备完整测试库 JSON"
+- main:
+  - text: 来源先保存，确认后入库
+  - heading "收件箱" [level=1]
+  - paragraph: 查看每份来源的真实处理状态。失败不会删除来源；重新识别会沿用原来源与当前版本。
+  - strong: "2"
+  - text: 份需关注
+  - group "收件箱视图":
+    - button "全部来源" [pressed]
+    - button "待确认 1"
+  - button "新建手动来源":
+    - text: 新建手动来源
+  - checkbox "选择全部待核对"
+  - text: 选择全部待核对
+  - article:
+    - generic: DeepSeek V4 Flash 建议
+    - generic: 待核对
+    - heading "D11录制 C13-D5R1-S10 / Candidate15" [level=2]
+    - paragraph: "[D5匿名合成Development] 原通知要求归还实验室备用钥匙并签署旧版值班名册。现通知：取消归还实验室备用钥匙，同时取消签署旧版值班名册；两项都无需办理。"
+    - paragraph: 识别建议已保存，确认前不会创建正式任务。
+    - term: 项目
+    - definition: 未形成项目建议
+    - term: 实体
+    - definition: 0 任务 · 0 材料 · 0 时间 · 0 活动
+    - alert: 识别未完成，来源已保留，请重试或手动补充。
+    - button "核对 0 项":
+      - text: 核对 0 项
+    - button "查看来源":
+      - text: 查看来源
+    - button "归档":
+      - text: 归档
+  - article:
+    - checkbox "选择 匿名工程夹具：错误修订与无关正确项"
+    - generic: 选择 匿名工程夹具：错误修订与无关正确项
+    - generic: DeepSeek V4 Flash 建议
+    - generic: 待核对
+    - heading "匿名工程夹具：错误修订与无关正确项" [level=2]
+    - paragraph: "[D5匿名合成Development] 原定打印会议海报，并登记现场展示场地。现调整为：会议海报改为上传电子版，平台显示电子海报上传成功；现场展示场地改为预约线上时段，页面保存线上展示时段。两项分别替代原要求。"
+    - paragraph: 识别建议已保存，确认前不会创建正式任务。
+    - term: 项目
+    - definition: 未形成项目建议
+    - term: 实体
+    - definition: 4 任务 · 0 材料 · 0 时间 · 0 活动
+    - alert: 识别未完成，来源已保留，请重试或手动补充。
+    - button "核对 3 项":
+      - text: 核对 3 项
+    - button "查看来源":
+      - text: 查看来源
+    - button "归档":
+      - text: 归档
+  - article:
+    - generic: DeepSeek V4 Flash 建议
+    - generic: 已确认
+    - heading "匿名工程夹具：纠正多余任务 / 拒绝也算修改" [level=2]
+    - paragraph: "[D5匿名合成Development] 请复核项目成员资料，以页面显示资料复核完成为完成标准。无需院长签字，也不要创建“联系项目办”任务。"
+    - paragraph: 至少一项建议已经人工确认并进入正式工作区。
+    - term: 项目
+    - definition: 未形成项目建议
+    - term: 实体
+    - definition: 2 任务 · 0 材料 · 0 时间 · 0 活动
+    - button "查看来源":
+      - text: 查看来源
+  - article:
+    - generic: DeepSeek V4 Flash 建议
+    - generic: 已确认
+    - heading "匿名工程夹具：任务 / 人工修改" [level=2]
+    - paragraph: "[D5匿名合成Development] 请复核项目成员资料，以页面显示资料复核完成为完成标准。无需院长签字，也不要创建“联系项目办”任务。"
+    - paragraph: 至少一项建议已经人工确认并进入正式工作区。
+    - term: 项目
+    - definition: 未形成项目建议
+    - term: 实体
+    - definition: 1 任务 · 0 材料 · 0 时间 · 0 活动
+    - button "查看来源":
+      - text: 查看来源
+  - article:
+    - generic: DeepSeek V4 Flash 建议
+    - generic: 已确认
+    - heading "匿名工程夹具：独立事件 / 模糊时间" [level=2]
+    - paragraph: "[D5匿名合成Development] 图书馆检索服务将在周三晚维护，原有预约记录不受影响。无需取消预约，不要上传说明，也不必给管理员发邮件。本通知仅说明维护安排。"
+    - paragraph: 通知已核对，来源已保存；没有创建任务或项目。事件和不确定时间请按原文核对。
+    - term: 项目
+    - definition: 未形成项目建议
+    - term: 实体
+    - definition: 0 任务 · 0 材料 · 1 时间 · 1 活动
+    - button "查看来源":
+      - text: 查看来源
+  - article:
+    - generic: DeepSeek V4 Flash 建议
+    - generic: 已确认
+    - heading "匿名工程夹具：纯信息无任务" [level=2]
+    - paragraph: "[D5匿名合成Development] 进入复评名单的同学须参加作品复评陈述，以完成作品复评陈述为准。你的作品未进入复评名单，本通知不要求你参加。"
+    - paragraph: 通知已核对，来源已保存；没有创建任务或项目。事件和不确定时间请按原文核对。
+    - term: 项目
+    - definition: 未形成项目建议
+    - term: 实体
+    - definition: 0 任务 · 0 材料 · 0 时间 · 0 活动
+    - button "查看来源":
+      - text: 查看来源
+- status:
+  - generic: 匿名工程夹具：纠正多余任务 / 拒绝也算修改（source:65009e6d:draft:1:1）：已确认保存 1 项，可在任务中心查找。未确认建议和已保存编辑仍保留。
+  - button "关闭提示": ×
+- dialog "识别出 0 件事":
+  - banner:
+    - generic: 第 2 步 · D13隔离工程回放 · 非真人试用 · 不代表Candidate16输出
+    - heading "识别出 0 件事" [level=2]
+    - paragraph: 先看标题和时间；不准确时再点“编辑”。
+    - button "稍后处理并关闭" [active]:
+  - strong: 0 项待确认
+  - generic: 确认后才会进入今日和任务中心
+  - generic "原始通知与定位依据":
+    - text: 原始通知与定位依据
+  - paragraph: "[D5匿名合成Development] 原通知要求归还实验室备用钥匙并签署旧版值班名册。现通知：取消归还实验室备用钥匙，同时取消签署旧版值班名册；两项都无需办理。"
+  - region "项目树待确认事项":
+    - alert: 修订引用需纠正：MISSING_OR_INVALID_ENDPOINT（无法定位端点）。受影响项暂不能确认；原回答仍保留，请核对原文后编辑关系。
+    - region "通知漏项与新旧要求纠正":
+      - paragraph: 原模型识别失败仍保留；以下为人工纠正。
+      - button "纠正旧要求与新要求"
+      - button "依据原文补充漏任务"
+    - region "通知完整事实":
+      - status: 待核对：原文尚有未覆盖或未解决的信息，需继续核对：BAD_REVISION_REFERENCE、REVISION_NEEDS_REVIEW。尚不能判定为正确无任务，原文仍保留。
+      - generic "本次完整原文（包括无截止说明）"
+      - generic "旧/新要求：cancels · 已生效"
+      - paragraph: 用户操作：enable_material_review · 2026-09-28T04:48:01.109Z
+      - paragraph: 模型建议不自动勾选。当前明细为已保存的有效事实；原始响应与首次建议保留不变。
+      - generic "原始响应与首次建议（不含后续编辑）"
+      - generic "全字段与关系明细"
+    - region "独立事件人工核对":
+      - heading "核对独立事件" [level=3]
+      - paragraph: 此处编辑是你的纠正，原模型回答和首次建议不变。原文依据仍可在上方定位；时间不确定时不生成日程。
+    - button "标记已核对（不创建任务）" [disabled]
+  - contentinfo:
+    - button "完成"

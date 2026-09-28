@@ -17,6 +17,7 @@ import { CANDIDATE02_VERSION } from '../realInput01/candidate02'
 import { CANDIDATE03_VERSION } from '../realInput01/candidate03'
 import { CANDIDATE04_VERSION } from '../realInput01/candidate04'
 import { validateInputReceipt, validateSendSnapshot, effectivePages, type InputReceipt, type SendSnapshot } from '../realInput01/inputReceipt'
+import {inspectRevisionLinks} from '../candidate16/revisionGuard'
 
 export const STATE_VERSION = 'mainline05-semantic-state-1' as const
 export type Disposition = 'pending' | 'deferred' | 'rejected' | 'confirmed'
@@ -45,7 +46,7 @@ export interface RealInputState extends Omit<SemanticState, 'version' | 'rawResp
   inputReceipt: InputReceipt
   sendSnapshot: SendSnapshot
   execution: 'live' | 'seen_engineering_replay'
-  recovery?: { kind: 'user_opened_failed_response'; at: string }
+  recovery?: { kind: 'user_opened_failed_response'; at: string; scopePolicy?: 'd13-local-revision-isolation-1' }
 }
 export type AnySemanticState = SemanticState | RealInputState
 export function effectiveStateFacts(state: AnySemanticState) {
@@ -169,8 +170,11 @@ export function editTimeSupport(state: AnySemanticState, id: string) {
     && points.every(t => deadlineType(t.type)) && (points.length > 0 || task.coverage.time === 'not_stated') }
 }
 export function canAct(state: AnySemanticState, id: string): boolean {
-  if(state.version===REAL_STATE_VERSION&&state.recovery&&(!state.operations.some(o=>o.kind==='correct_fact')
-    ||effectiveReview(state).issues.some(i=>['BAD_ENTITY_REFERENCE','BAD_REVISION_REFERENCE'].includes(i.code))))return false
+  if(state.version===REAL_STATE_VERSION&&state.recovery){
+    if(state.recovery.scopePolicy==='d13-local-revision-isolation-1'){
+      if(inspectRevisionLinks(effectiveStateFacts(state).facts).some(p=>p.unbound||p.taskIds.includes(id)))return false
+    }else if(!state.operations.some(o=>o.kind==='correct_fact')||effectiveReview(state).issues.some(i=>['BAD_ENTITY_REFERENCE','BAD_REVISION_REFERENCE'].includes(i.code)))return false
+  }
   if (state.version === REAL_STATE_VERSION) return !materialReviewProblem(state,id) && itemSafety(effectiveStateFacts(state).facts, confirmationReview(state), id).length === 0
   const item = state.first.items.find(i => i.tempId === id)
   const task = state.rawResponse.tasks.find(t => t.id === id)
@@ -592,8 +596,9 @@ export async function validateSemanticWorkspace(workspace: WorkspaceV8, profile?
     assert(state.version === (real ? REAL_STATE_VERSION : STATE_VERSION) && state.sourceId === source.id && state.sourceVersionId === version.id
       && state.runId === run.id && state.draftId === draft.id && run.schemaVersion === state.version && run.status === (recovery?'failed':'succeeded'), 'STATE_IDENTITY')
     if(recovery){
-      exactKeys(recovery,['kind','at'])
+      exactKeys(recovery,['kind','at',...(recovery.scopePolicy?['scopePolicy']:[])])
       assert(recovery.kind==='user_opened_failed_response'&&Number.isFinite(Date.parse(recovery.at)),'RECOVERY_IDENTITY')
+      if(recovery.scopePolicy)assert(recovery.scopePolicy==='d13-local-revision-isolation-1'&&workspace.workspace.id==='rco-mainline-01-02-i1-real-input-candidate16-d13-engineering-2','RECOVERY_SCOPE_POLICY_BINDING')
       const f=draft.legacyData?.mainline05Failure as {response?:unknown;code?:unknown;version?:unknown}|undefined
       assert(f&&equal(f,{version:REAL_STATE_VERSION,response:(state as RealInputState).rawHttpText,code:'SEMANTIC_RESPONSE_REJECTED'}),'RECOVERY_RAW_BINDING')
     } else assert(draft.legacyData?.mainline05Failure === undefined, 'FAILED_RECEIPT_WITH_SUCCESS')

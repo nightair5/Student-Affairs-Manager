@@ -1,9 +1,11 @@
 # 当前识别优化计划
 
-更新：2026-09-28。执行路线唯一入口：[PROJECT_EXECUTION_ROADMAP](../docs/governance/PROJECT_EXECUTION_ROADMAP.md)，下一包：[D13执行提示词](../docs/governance/NEXT_STAGE_EXECUTION_PROMPT.md)。
+更新：2026-09-28。路线：[PROJECT_EXECUTION_ROADMAP](../docs/governance/PROJECT_EXECUTION_ROADMAP.md)。
 
-D12已完成门槛适用性审查和零调用诊断工程。后续按三类根因连续推进：一致的语义/证据评分、取消替代端点、真实确认与计时。工程交付、开发观察、探索准备、独立质量和发布分别验收；不再以旧批总拒绝阻断所有工作。
+D13 已实现语义/评分 v7、Candidate16、局部修订保护和页面测量，12份provisional完整参照及24个零调用身份冻结。[结果](../docs/recognition-optimization/candidate16/d13-development/D13_RESULTS.md)。历史D11结论不变，C16效果尚未调用验证，真人指标不可观测。
 
-业务调用、真人试用、换默认和发布各保留授权边界。旧D11请求已全部用完；其不晋级结果不变。当前四项真人指标均不可观测。
+下一步优先把24请求的费用边界变成具体金额卡，由用户授权后执行一次固定比较；并可独立完成真实探索的空试次接口、负责人和材料准备。[下一提示词](../docs/governance/NEXT_STAGE_EXECUTION_PROMPT.md)。不为旧评分问题重新买回答；不把研究门扩大成安全工程总开关。
 
-历史计划全文：[2026-09-28前存档](../docs/governance/archive/2026-09-28-d12/refine-logs/EXPERIMENT_PLAN.md)。
+全量测试仍有旧文件收集/carrier和超时，列为维护事项，不写PASS。默认替换、真人和发布各保留授权边界。
+
+旧计划 [原字节归档](../docs/governance/archive/2026-09-28-d13/refine-logs/EXPERIMENT_PLAN.md)。

@@ -122,8 +122,9 @@ export async function failInputRun(repo: SemanticRepository, handle: CaptureHand
 
 /** User explicitly opens a failed, structurally parseable answer for correction.
  * This never dispatches a request or upgrades the failed recognition run. */
-export async function openFailedForCorrection(repo: SemanticRepository, draftId: string, revision: string, now=new Date().toISOString()) {
+export async function openFailedForCorrection(repo: SemanticRepository, draftId: string, revision: string, now=new Date().toISOString(), scopePolicy?:'d13-local-revision-isolation-1') {
   assert(repo.profile==='real-input-01','EXPLICIT_REAL_INPUT_REQUIRED')
+  if(scopePolicy)assert(scopePolicy==='d13-local-revision-isolation-1'&&repo.name==='rco-mainline-01-02-i1-real-input-candidate16-d13-engineering-2','RECOVERY_SCOPE_POLICY_BINDING')
   const before=await repo.load();assert(semanticRevision(before)===revision,'STALE_RELOAD_REQUIRED')
   const draft=before.extractionDrafts.find(d=>d.id===draftId)
   assert(draft&&draft.status==='failed'&&!draft.legacyData?.mainline05&&isCurrentDraft(before,draftId),'FAILED_RESPONSE_REQUIRED')
@@ -137,7 +138,7 @@ export async function openFailedForCorrection(repo: SemanticRepository, draftId:
   const state:RealInputState={version:REAL_STATE_VERSION,sourceId:version.sourceId,sourceVersionId:version.id,runId:run.id,draftId,
     rawHttpText:parsed.rawHttpText,rawOutputText:parsed.rawOutputText,rawResponse:parsed.rawResponse,adaptedResponse:parsed.adaptedResponse,
     legacyResponse:null,context,first,inputReceipt:pending.reading.inputReceipt,sendSnapshot:pending.reading.sendSnapshot!,execution:pending.execution,
-    recovery:{kind:'user_opened_failed_response',at:now},operations:[{id:'material-review-mode-1',kind:'enable_material_review',at:now,taskIds:[],field:null,value:null,before:null}],bindings:{}}
+    recovery:{kind:'user_opened_failed_response',at:now,...(scopePolicy?{scopePolicy}:{})},operations:[{id:'material-review-mode-1',kind:'enable_material_review',at:now,taskIds:[],field:null,value:null,before:null}],bindings:{}}
   const facts=canonicalFacts(state);state.bindings=facts.bindings
   return repo.transaction(w=>{assert(semanticRevision(w)===revision,'STALE_RELOAD_REQUIRED');return saveState({...w,
     historyRecords:[...w.historyRecords,...facts.historyRecords],

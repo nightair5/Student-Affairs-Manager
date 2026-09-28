@@ -243,3 +243,15 @@ R4 包有 12 source、12 provisional reference、24 NOT_RUN identity、6 AB/6 BA
 ## 2026-09-27：全局复查与外部资源路线
 
 复查当前入口、历史约束、CI/PR 和测量代码，修正活动文档的范围冲突；纯内存保护单测不再依赖开发者真实账本，新增独立 CI job，原 verify job 不变。measurement 2.4 的三份匿名只读反例复现了阅读计为修改、批量保存未关联字段纠正的问题；冻结模块未改，D8 提示词已加入修复验收。20 项外部资源仅完成研究和适配判断，未安装或执行。范围、证据与验证见 docs/governance/review-20260927-r2/REVIEW_AND_ACTIONS.md 和 VALIDATION.md。D7 阻断、旧结果、所有真人指标不可观测以及账本只读边界保持。
+
+## 2026-09-28：D13 语义、局部确认与测量交付
+
+本轮按用户 D13 指令连续实现 Candidate16 / recognition-prompt-candidate16-1.0.0、新 v7 评分与12份 provisional 参照；保留全部旧评分/Expected/raw/结果。两个 false 表示与模糊时间表示有真实 Schema→adapter→v7 正反例。旧24份录制输出事后诊断，C03整份1/12、C15整份2/12（C15两份引用失败不可语义评分），不改D11拒绝，不当新候选输出。
+
+新增局部修订端点保护，只在D13精确数据库名和显式策略下启用。6646全新工程入口已实际浏览器验收来源/依据、无任务、事件修改与失败恢复、任务编辑、拒绝、错误修订阻断及无关项部分确认；独立读回与刷新恢复。low-edit-v2由实际字段/editId/commitId/readback证明，拒绝列为结构修改，缺时仍null；旧measurement3.2不动。
+
+24个C03/C16新身份冻结但NOT_RUN、dispatchAuthorized=false；未来预算BUDGET_UNRESOLVED，0新业务调用、0账本写入和grant/reserve/settle。探索仅协议和空表，0真人；独立Holdout、默认候选、合并、部署均未执行。四项真人指标仍NOT_OBSERVABLE。
+
+定向Node20/20、D13产品/测量12/12、lint0错误/8旧warning、build、安全/隔离/历史校验通过。全量FAIL1487通过/14失败/1跳过，另旧Node无Vitest套件；串行相关文件仍旧acceptance7个5秒超时+carrier问题，新增超时数量未完全归因，历史RCO锁哈希失败不改。一次同系列只读工程审查4项发现由主实现者修复并定向验证，不是独立人工或二次复审。
+
+账本840行、SHA ca5bb4f57d011bcf8f583d48d637076a8c76d380d98b3f5b46b0ea6f6c9f17ea，84原保护/119冻结/D7/7存档一致。结果、验证、浏览器、预算、审查和矩阵统一在 candidate16/d13-development；停止于本地工程及准备可审查、待具体外部授权，按交付边界提交立即推送。

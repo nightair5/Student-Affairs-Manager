@@ -1,0 +1,607 @@
+
+> student-affairs-steward@0.1.0 test
+> npm run recognition:contract:check && vitest run && node --test server/server-tests.mjs && node --test cloudflare/worker-tests.mjs && node --test scripts/time-ast-parity.node-test.mjs && node --test scripts/multimodal-evaluation-lib.node-test.mjs && node --test scripts/rco-5-007-replay.node-test.mjs && npm --prefix functions test
+
+
+> student-affairs-steward@0.1.0 recognition:contract:check
+> node scripts/generate-recognition-contract.mjs --check && node scripts/generate-time-ast.mjs --check
+
+{"status":"PASS","sourceSha256":"81f636bcf62a4e35221ba7e620a0410b3cc39bbf7481882e42ab1222839eab40","output":"C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\cloudflare\\recognition-contract.generated.mjs"}
+{"status":"PASS","sourceSha256":"d72109638ce4c653602478d2cd09049ab5a896a17c041422e8f5b583b8afde7d","output":"C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\cloudflare\\chinese-time-ast.generated.mjs"}
+
+ RUN  v3.2.7 C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/比赛
+
+✖ frozen 12×2 package is intact and remains unsent (29.6123ms)
+✔ unauthorized dispatch is always blocked by this zero-call package (36.9246ms)
+✔ request and identity drift are blocked (58.8267ms)
+✔ duplicate, reordered and dropped units are blocked (35.6051ms)
+ ✓ src/lib/timeSemantics.test.ts (16 tests) 355ms
+   ✓ RCO-2 unique Chinese time AST > round-trips valid calendar days and rejects each month overflow  307ms
+ ✓ src/lib/fileExtraction.test.ts (23 tests) 333ms
+ ✓ src/experiments/realInput01/modelWire.test.ts (26 tests) 441ms
+stdout | src/experiments/mainline04/semanticAcceptance.test.ts > MAINLINE-04 seen-engineering acceptance, never model accuracy > all 8 seen notices preserve every supplied leaf, tri-state and positive coverage
+MAINLINE04_FACT_LEDGER={"origin":"human_engineering_seen","ledger":[{"name":"multi","leaves":167,"equal":167,"rows":[{"path":"$.schemaVersion","value":"mainline04-task-semantics-1"},{"path":"$.sourceId","value":"engineering"},{"path":"$.sourceVersionId","value":"v1"},{"path":"$.sourceFingerprint","value":"sha256:dacfa02c63a035a96fa87826945a1398854761ca016ef774c5c99188049c4672"},{"path":"$.tasks[0].id","value":"submit"},{"path":"$.tasks[0].propositionScopeIds[0]","value":"scope-0001-822c639265acd8692bb0abb8994c9b633ba93af604824ded70aa14cd37fa5fa8"},{"path":"$.tasks[0].propositionScopeIds[1]","value":"scope-0002-e37eed8946014483fe11423e16a9ea6f54c060fd5b5a67fab7e464844b0cc191"},{"path":"$.tasks[0].propositionScopeIds[2]","value":"scope-0003-3203f687cc5681a8b75a212b8cf3701911bb00022ae99d3766469b06e7ffed6b"},{"path":"$.tasks[0].propositionScopeIds[3]","value":"scope-0004-16e9f6785d8230439100564854f3c842595e38074c9d62207dae31f0380f0490"},{"path":"$.tasks[0].propositionScopeIds[4]","value":"scope-0005-875ba6b3ccc3f9e10ff148db28f4f78cd4bc13b6f0b595da148f8d85ab8a18ec"},{"path":"$.tasks[0].propositionScopeIds[5]","value":"scope-0006-209832d4ca0583b753e4f0220a00f5c754b1b6fc5bc1826a5141cf9b811087c0"},{"path":"$.tasks[0].propositionScopeIds[6]","value":"scope-0007-febd6c89e5b5cc8fd9f2a3f4813bcb8938e44775ed0bbf409a1eddbfe39e1440"},{"path":"$.tasks[0].propositionScopeIds[7]","value":"scope-0008-756d3ae5f3f413693293330bd18c32e5270e7690ee187109817ef4444c79ccbd"},{"path":"$.tasks[0].action.scopeId","value":"scope-0001-822c639265acd8692bb0abb8994c9b633ba93af604824ded70aa14cd37fa5fa8"},{"path":"$.tasks[0].action.surface","value":"提交"},{"path":"$.tasks[0].object.scopeId","value":"scope-0001-822c639265acd8692bb0abb8994c9b633ba93af604824ded70aa14cd37fa5fa8"},{"path":"$.tasks[0].object.surface","value":"活动报名表"},{"path":"$.tasks[0].inferenceLevel","value":"explicit"},{"path":"$.tasks[0].semantics.actor","value":"addressee"},{"path":"$.tasks[0].semantics.speechAct","value":"directive"},{"path":"$.tasks[0].semantics.polarity","value":"affirmative"},{"path":"$.tasks[0].semantics.tense","value":"future"},{"path":"$.tasks[0].semantics.status","value":"pending"},{"path":"$.tasks[0].semantics.validity","value":"active"},{"path":"$.tasks[0].semantics.modality","value":"required"},{"path":"$.tasks[0].actionType","value":"submit"},{"path":"$.tasks[0].effect","value":"physical_action"},{"path":"$.tasks[0].detail.parentTempId","value":null},{"path":"$.tasks[0].detail.hierarchyType","value":"task"},{"path":"$.tasks[0].detail.title","value":"提交活动报名表"},{"path":"$.tasks[0].detail.description","value":"提交活动报名表"},{"path":"$.tasks[0].detail.completionCriteria","value":[]},{"path":"$.tasks[0].detail.estimatedMinutes","value":null},{"path":"$.tasks[0].detail.statusSuggestion","value":"todo"},{"path":"$.tasks[0].detail.prioritySuggestion","value":"medium"},{"path":"$.tasks[0].detail.dependencyTempIds","value":[]},{"path":"$.tasks[0].detail.materialTempIds[0]","value":"m0"},{"path":"$.tasks[0].detail.timePointTempIds[0]","value":"d0"},{"path":"$.tasks[0].detail.confidence","value":1},{"path":"$.tasks[0].detail.userConfirmationRequired","value":true},{"path":"$.tasks[0].condition.value","value":"not_applicable"},{"path":"$.tasks[0].condition.conditionScopeIds","value":[]},{"path":"$.tasks[0].condition.factScopeIds","value":[]},{"path":"$.tasks[0].coverage.time","value":"present"},{"path":"$.tasks[0].coverage.material","value":"present"},{"path":"$.tasks[0].coverage.event","value":"not_stated"},{"path":"$.tasks[0].eventTempIds","value":[]},{"path":"$.tasks[1].id","value":"print"},{"path":"$.tasks[1].propositionScopeIds[0]","value":"scope-0001-822c639265acd8692bb0abb8994c9b633ba93af604824ded70aa14cd37fa5fa8"},{"path":"$.tasks[1].propositionScopeIds[1]","value":"scope-0002-e37eed8946014483fe11423e16a9ea6f54c060fd5b5a67fab7e464844b0cc191"},{"path":"$.tasks[1].propositionScopeIds[2]","value":"scope-0003-3203f687cc5681a8b75a212b8cf3701911bb00022ae99d3766469b06e7ffed6b"},{"path":"$.tasks[1].propositionScopeIds[3]","value":"scope-0004-16e9f6785d8230439100564854f3c842595e38074c9d62207dae31f0380f0490"},{"path":"$.tasks[1].propositionScopeIds[4]","value":"scope-0005-875ba6b3ccc3f9e10ff148db28f4f78cd4bc13b6f0b595da148f8d85ab8a18ec"},{"path":"$.tasks[1].propositionScopeIds[5]","value":"scope-0006-209832d4ca0583b753e4f0220a00f5c754b1b6fc5bc1826a5141cf9b811087c0"},{"path":"$.tasks[1].propositionScopeIds[6]","value":"scope-0007-febd6c89e5b5cc8fd9f2a3f4813bcb8938e44775ed0bbf409a1eddbfe39e1440"},{"path":"$.tasks[1].propositionScopeIds[7]","value":"scope-0008-756d3ae5f3f413693293330bd18c32e5270e7690ee187109817ef4444c79ccbd"},{"path":"$.tasks[1].action.scopeId","value":"scope-0006-209832d4ca0583b753e4f0220a00f5c754b1b6fc5bc1826a5141cf9b811087c0"},{"path":"$.tasks[1].action.surface","value":"打印"},{"path":"$.tasks[1].object.scopeId","value":"scope-0006-209832d4ca0583b753e4f0220a00f5c754b1b6fc5bc1826a5141cf9b811087c0"},{"path":"$.tasks[1].object.surface","value":"入场凭证"},{"path":"$.tasks[1].inferenceLevel","value":"explicit"},{"path":"$.tasks[1].semantics.actor","value":"addressee"},{"path":"$.tasks[1].semantics.speechAct","value":"directive"},{"path":"$.tasks[1].semantics.polarity","value":"affirmative"},{"path":"$.tasks[1].semantics.tense","value":"future"},{"path":"$.tasks[1].semantics.status","value":"pending"},{"path":"$.tasks[1].semantics.validity","value":"active"},{"path":"$.tasks[1].semantics.modality","value":"required"},{"path":"$.tasks[1].actionType","value":"print"},{"path":"$.tasks[1].effect","value":"physical_action"},{"path":"$.tasks[1].detail.parentTempId","value":null},{"path":"$.tasks[1].detail.hierarchyType","value":"task"},{"path":"$.tasks[1].detail.title","value":"打印入场凭证"},{"path":"$.tasks[1].detail.description","value":"打印入场凭证"},{"path":"$.tasks[1].detail.completionCriteria","value":[]},{"path":"$.tasks[1].detail.estimatedMinutes","value":null},{"path":"$.tasks[1].detail.statusSuggestion","value":"todo"},{"path":"$.tasks[1].detail.prioritySuggestion","value":"medium"},{"path":"$.tasks[1].detail.dependencyTempIds","value":[]},{"path":"$.tasks[1].detail.materialTempIds[0]","value":"m1"},{"path":"$.tasks[1].detail.timePointTempIds[0]","value":"d1"},{"path":"$.tasks[1].detail.confidence","value":1},{"path":"$.tasks[1].detail.userConfirmationRequired","value":true},{"path":"$.tasks[1].condition.value","value":"not_applicable"},{"path":"$.tasks[1].condition.conditionScopeIds","value":[]},{"path":"$.tasks[1].condition.factScopeIds","value":[]},{"path":"$.tasks[1].coverage.time","value":"present"},{"path":"$.tasks[1].coverage.material","value":"present"},{"path":"$.tasks[1].coverage.event","value":"not_stated"},{"path":"$.tasks[1].eventTempIds","value":[]},{"path":"$.materials[0].tempId","value":"m0"},{"path":"$.materials[0].name","value":"活动报名表"},{"path":"$.materials[0].required","value":true},{"path":"$.materials[0].formatRequirements[0]","value":"PDF"},{"path":"$.materials[0].namingRequirements[0]","value":"组别"},{"path":"$.materials[0].quantity","value":1},{"path":"$.materials[0].submissionChannel","value":"活动平台"},{"path":"$.materials[0].relatedTaskTempIds[0]","value":"submit"},{"path":"$.materials[0].confidence","value":1},{"path":"$.materials[0].scopeIds[0]","value":"scope-0001-822c639265acd8692bb0abb8994c9b633ba93af604824ded70aa14cd37fa5fa8"},{"path":"$.materials[0].scopeIds[1]","value":"scope-0002-e37eed8946014483fe11423e16a9ea6f54c060fd5b5a67fab7e464844b0cc191"},{"path":"$.materials[0].scopeIds[2]","value":"scope-0003-3203f687cc5681a8b75a212b8cf3701911bb00022ae99d3766469b06e7ffed6b"},{"path":"$.materials[0].scopeIds[3]","value":"scope-0004-16e9f6785d8230439100564854f3c842595e38074c9d62207dae31f0380f0490"},{"path":"$.materials[0].scopeIds[4]","value":"scope-0005-875ba6b3ccc3f9e10ff148db28f4f78cd4bc13b6f0b595da148f8d85ab8a18ec"},{"path":"$.materials[0].scopeIds[5]","value":"scope-0006-209832d4ca0583b753e4f0220a00f5c754b1b6fc5bc1826a5141cf9b811087c0"},{"path":"$.materials[0].scopeIds[6]","value":"scope-0007-febd6c89e5b5cc8fd9f2a3f4813bcb8938e44775ed0bbf409a1eddbfe39e1440"},{"path":"$.materials[0].scopeIds[7]","value":"scope-0008-756d3ae5f3f413693293330bd18c32e5270e7690ee187109817ef4444c79ccbd"},{"path":"$.materials[1].tempId","value":"m1"},{"path":"$.materials[1].name","value":"入场凭证"},{"path":"$.materials[1].required","value":true},{"path":"$.materials[1].formatRequirements[0]","value":"A4"},{"path":"$.materials[1].namingRequirements","value":[]},{"path":"$.materials[1].quantity","value":1},{"path":"$.materials[1].submissionChannel","value":null},{"path":"$.materials[1].relatedTaskTempIds[0]","value":"print"},{"path":"$.materials[1].confidence","value":1},{"path":"$.materials[1].scopeIds[0]","value":"scope-0001-822c639265acd8692bb0abb8994c9b633ba93af604824ded70aa14cd37fa5fa8"},{"path":"$.materials[1].scopeIds[1]","value":"scope-0002-e37eed8946014483fe11423e16a9ea6f54c060fd5b5a67fab7e464844b0cc191"},{"path":"$.materials[1].scopeIds[2]","value":"scope-0003-3203f687cc5681a8b75a212b8cf3701911bb00022ae99d3766469b06e7ffed6b"},{"path":"$.materials[1].scopeIds[3]","value":"scope-0004-16e9f6785d8230439100564854f3c842595e38074c9d62207dae31f0380f0490"},{"path":"$.materials[1].scopeIds[4]","value":"scope-0005-875ba6b3ccc3f9e10ff148db28f4f78cd4bc13b6f0b595da148f8d85ab8a18ec"},{"path":"$.materials[1].scopeIds[5]","value":"scope-0006-209832d4ca0583b753e4f0220a00f5c754b1b6fc5bc1826a5141cf9b811087c0"},{"path":"$.materials[1].scopeIds[6]","value":"scope-0007-febd6c89e5b5cc8fd9f2a3f4813bcb8938e44775ed0bbf409a1eddbfe39e1440"},{"path":"$.materials[1].scopeIds[7]","value":"scope-0008-756d3ae5f3f413693293330bd18c32e5270e7690ee187109817ef4444c79ccbd"},{"path":"$.timePoints[0].tempId","value":"d0"},{"path":"$.timePoints[0].type","value":"task_deadline"},{"path":"$.timePoints[0].rawText","value":"2026年9月10日18:00前"},{"path":"$.timePoints[0].normalizedValue","value":"2026-09-10T18:00"},{"path":"$.timePoints[0].timezone","value":"Asia/Shanghai"},{"path":"$.timePoints[0].isAllDay","value":false},{"path":"$.timePoints[0].precision","value":"exact"},{"path":"$.timePoints[0].needsConfirmation","value":false},{"path":"$.timePoints[0].relatedTaskTempIds[0]","value":"submit"},{"path":"$.timePoints[0].relatedMaterialTempIds[0]","value":"m0"},{"path":"$.timePoints[0].confidence","value":1},{"path":"$.timePoints[0].scopeIds[0]","value":"scope-0001-822c639265acd8692bb0abb8994c9b633ba93af604824ded70aa14cd37fa5fa8"},{"path":"$.timePoints[0].scopeIds[1]","value":"scope-0002-e37eed8946014483fe11423e16a9ea6f54c060fd5b5a67fab7e464844b0cc191"},{"path":"$.timePoints[0].scopeIds[2]","value":"scope-0003-3203f687cc5681a8b75a212b8cf3701911bb00022ae99d3766469b06e7ffed6b"},{"path":"$.timePoints[0].scopeIds[3]","value":"scope-0004-16e9f6785d8230439100564854f3c842595e38074c9d62207dae31f0380f0490"},{"path":"$.timePoints[0].scopeIds[4]","value":"scope-0005-875ba6b3ccc3f9e10ff148db28f4f78cd4bc13b6f0b595da148f8d85ab8a18ec"},{"path":"$.timePoints[0].scopeIds[5]","value":"scope-0006-209832d4ca0583b753e4f0220a00f5c754b1b6fc5bc1826a5141cf9b811087c0"},{"path":"$.timePoints[0].scopeIds[6]","value":"scope-0007-febd6c89e5b5cc8fd9f2a3f4813bcb8938e44775ed0bbf409a1eddbfe39e1440"},{"path":"$.timePoints[0].scopeIds[7]","value":"scope-0008-756d3ae5f3f413693293330bd18c32e5270e7690ee187109817ef4444c79ccbd"},{"path":"$.timePoints[1].tempId","value":"d1"},{"path":"$.timePoints[1].type","value":"task_deadline"},{"path":"$.timePoints[1].rawText","value":"2026年9月11日18:00前"},{"path":"$.timePoints[1].normalizedValue","value":"2026-09-11T18:00"},{"path":"$.timePoints[1].timezone","value":"Asia/Shanghai"},{"path":"$.timePoints[1].isAllDay","value":false},{"path":"$.timePoints[1].precision","value":"exact"},{"path":"$.timePoints[1].needsConfirmation","value":false},{"path":"$.timePoints[1].relatedTaskTempIds[0]","value":"print"},{"path":"$.timePoints[1].relatedMaterialTempIds[0]","value":"m1"},{"path":"$.timePoints[1].confidence","value":1},{"path":"$.timePoints[1].scopeIds[0]","value":"scope-0001-822c639265acd8692bb0abb8994c9b633ba93af604824ded70aa14cd37fa5fa8"},{"path":"$.timePoints[1].scopeIds[1]","value":"scope-0002-e37eed8946014483fe11423e16a9ea6f54c060fd5b5a67fab7e464844b0cc191"},{"path":"$.timePoints[1].scopeIds[2]","value":"scope-0003-3203f687cc5681a8b75a212b8cf3701911bb00022ae99d3766469b06e7ffed6b"},{"path":"$.timePoints[1].scopeIds[3]","value":"scope-0004-16e9f6785d8230439100564854f3c842595e38074c9d62207dae31f0380f0490"},{"path":"$.timePoints[1].scopeIds[4]","value":"scope-0005-875ba6b3ccc3f9e10ff148db28f4f78cd4bc13b6f0b595da148f8d85ab8a18ec"},{"path":"$.timePoints[1].scopeIds[5]","value":"scope-0006-209832d4ca0583b753e4f0220a00f5c754b1b6fc5bc1826a5141cf9b811087c0"},{"path":"$.timePoints[1].scopeIds[6]","value":"scope-0007-febd6c89e5b5cc8fd9f2a3f4813bcb8938e44775ed0bbf409a1eddbfe39e1440"},{"path":"$.timePoints[1].scopeIds[7]","value":"scope-0008-756d3ae5f3f413693293330bd18c32e5270e7690ee187109817ef4444c79ccbd"},{"path":"$.events","value":[]},{"path":"$.revisions","value":[]},{"path":"$.conflicts","value":[]},{"path":"$.informationScopeIds","value":[]},{"path":"$.unresolvedScopeIds","value":[]}],"selected":["submit","print"],"oldV2":[{"taskId":"submit","capability":"EQUIVALENT_OLD_V2","reasons":[]},{"taskId":"print","capability":"EQUIVALENT_OLD_V2","reasons":[]}],"newApp":"NOT_RUN","newCanonical":"NOT_RUN"},{"name":"no-date","leaves":48,"equal":48,"rows":[{"path":"$.schemaVersion","value":"mainline04-task-semantics-1"},{"path":"$.sourceId","value":"engineering"},{"path":"$.sourceVersionId","value":"v1"},{"path":"$.sourceFingerprint","value":"sha256:4e4e83dface2a5a8e46b19992a9eba1cc700f6b3021712139f8574f2c277c2c0"},{"path":"$.tasks[0].id","value":"save"},{"path":"$.tasks[0].propositionScopeIds[0]","value":"scope-0001-78044a593f4da8e0f1c9cc9f2703acf912dcea2b5da3d441797e8bf52d88fc50"},{"path":"$.tasks[0].propositionScopeIds[1]","value":"scope-0002-53cc9ca735324b95597f48605708a915d332f9d30152fce693cf07f4184f9988"},{"path":"$.tasks[0].action.scopeId","value":"scope-0001-78044a593f4da8e0f1c9cc9f2703acf912dcea2b5da3d441797e8bf52d88fc50"},{"path":"$.tasks[0].action.surface","value":"保存"},{"path":"$.tasks[0].object.scopeId","value":"scope-0001-78044a593f4da8e0f1c9cc9f2703acf912dcea2b5da3d441797e8bf52d88fc50"},{"path":"$.tasks[0].object.surface","value":"活动手册"},{"path":"$.tasks[0].inferenceLevel","value":"explicit"},{"path":"$.tasks[0].semantics.actor","value":"addressee"},{"path":"$.tasks[0].semantics.speechAct","value":"directive"},{"path":"$.tasks[0].semantics.polarity","value":"affirmative"},{"path":"$.tasks[0].semantics.tense","value":"future"},{"path":"$.tasks[0].semantics.status","value":"pending"},{"path":"$.tasks[0].semantics.validity","value":"active"},{"path":"$.tasks[0].semantics.modality","value":"required"},{"path":"$.tasks[0].actionType","value":"save"},{"path":"$.tasks[0].effect","value":"physical_action"},{"path":"$.tasks[0].detail.parentTempId","value":null},{"path":"$.tasks[0].detail.hierarchyType","value":"task"},{"path":"$.tasks[0].detail.title","value":"保存活动手册"},{"path":"$.tasks[0].detail.description","value":"保存活动手册"},{"path":"$.tasks[0].detail.completionCriteria","value":[]},{"path":"$.tasks[0].detail.estimatedMinutes","value":null},{"path":"$.tasks[0].detail.statusSuggestion","value":"todo"},{"path":"$.tasks[0].detail.prioritySuggestion","value":"medium"},{"path":"$.tasks[0].detail.dependencyTempIds","value":[]},{"path":"$.tasks[0].detail.materialTempIds","value":[]},{"path":"$.tasks[0].detail.timePointTempIds","value":[]},{"path":"$.tasks[0].detail.confidence","value":1},{"path":"$.tasks[0].detail.userConfirmationRequired","value":true},{"path":"$.tasks[0].condition.value","value":"not_applicable"},{"path":"$.tasks[0].condition.conditionScopeIds","value":[]},{"path":"$.tasks[0].condition.factScopeIds","value":[]},{"path":"$.tasks[0].coverage.time","value":"not_stated"},{"path":"$.tasks[0].coverage.material","value":"not_stated"},{"path":"$.tasks[0].coverage.event","value":"not_stated"},{"path":"$.tasks[0].eventTempIds","value":[]},{"path":"$.materials","value":[]},{"path":"$.timePoints","value":[]},{"path":"$.events","value":[]},{"path":"$.revisions","value":[]},{"path":"$.conflicts","value":[]},{"path":"$.informationScopeIds","value":[]},{"path":"$.unresolvedScopeIds","value":[]}],"selected":["save"],"oldV2":[{"taskId":"save","capability":"EQUIVALENT_OLD_V2","reasons":[]}],"newApp":"NOT_RUN","newCanonical":"NOT_RUN"},{"name":"vague","leaves":60,"equal":60,"rows":[{"path":"$.schemaVersion","value":"mainline04-task-semantics-1"},{"path":"$.sourceId","value":"engineering"},{"path":"$.sourceVersionId","value":"v1"},{"path":"$.sourceFingerprint","value":"sha256:97537895e5d8e9605c74cb703b679fe5a9ef4a3a7eeec7f8cf7a8e44117838f7"},{"path":"$.tasks[0].id","value":"summary"},{"path":"$.tasks[0].propositionScopeIds[0]","value":"scope-0001-968969ad871e041715c8af9ebcc161b2dd6134cfeda7b004558d8ac17e4272a2"},{"path":"$.tasks[0].propositionScopeIds[1]","value":"scope-0002-2c2ee9d664a7899201932f573f7d3e0062ed48c7fcd8810a5eadd7924c8d0fb9"},{"path":"$.tasks[0].action.scopeId","value":"scope-0001-968969ad871e041715c8af9ebcc161b2dd6134cfeda7b004558d8ac17e4272a2"},{"path":"$.tasks[0].action.surface","value":"提交"},{"path":"$.tasks[0].object.scopeId","value":"scope-0001-968969ad871e041715c8af9ebcc161b2dd6134cfeda7b004558d8ac17e4272a2"},{"path":"$.tasks[0].object.surface","value":"活动总结"},{"path":"$.tasks[0].inferenceLevel","value":"explicit"},{"path":"$.tasks[0].semantics.actor","value":"addressee"},{"path":"$.tasks[0].semantics.speechAct","value":"directive"},{"path":"$.tasks[0].semantics.polarity","value":"affirmative"},{"path":"$.tasks[0].semantics.tense","value":"future"},{"path":"$.tasks[0].semantics.status","value":"pending"},{"path":"$.tasks[0].semantics.validity","value":"active"},{"path":"$.tasks[0].semantics.modality","value":"required"},{"path":"$.tasks[0].actionType","value":"submit"},{"path":"$.tasks[0].effect","value":"physical_action"},{"path":"$.tasks[0].detail.parentTempId","value":null},{"path":"$.tasks[0].detail.hierarchyType","value":"task"},{"path":"$.tasks[0].detail.title","value":"提交活动总结"},{"path":"$.tasks[0].detail.description","value":"提交活动总结"},{"path":"$.tasks[0].detail.completionCriteria","value":[]},{"path":"$.tasks[0].detail.estimatedMinutes","value":null},{"path":"$.tasks[0].detail.statusSuggestion","value":"todo"},{"path":"$.tasks[0].detail.prioritySuggestion","value":"medium"},{"path":"$.tasks[0].detail.dependencyTempIds","value":[]},{"path":"$.tasks[0].detail.materialTempIds","value":[]},{"path":"$.tasks[0].detail.timePointTempIds[0]","value":"vague-date"},{"path":"$.tasks[0].detail.confidence","value":1},{"path":"$.tasks[0].detail.userConfirmationRequired","value":true},{"path":"$.tasks[0].condition.value","value":"not_applicable"},{"path":"$.tasks[0].condition.conditionScopeIds","value":[]},{"path":"$.tasks[0].condition.factScopeIds","value":[]},{"path":"$.tasks[0].coverage.time","value":"present"},{"path":"$.tasks[0].coverage.material","value":"not_stated"},{"path":"$.tasks[0].coverage.event","value":"not_stated"},{"path":"$.tasks[0].eventTempIds","value":[]},{"path":"$.materials","value":[]},{"path":"$.timePoints[0].tempId","value":"vague-date"},{"path":"$.timePoints[0].type","value":"task_deadline"},{"path":"$.timePoints[0].rawText","value":"近期"},{"path":"$.timePoints[0].normalizedValue","value":null},{"path":"$.timePoints[0].timezone","value":"Asia/Shanghai"},{"path":"$.timePoints[0].isAllDay","value":false},{"path":"$.timePoints[0].precision","value":"vague"},{"path":"$.timePoints[0].needsConfirmation","value":true},{"path":"$.timePoints[0].relatedTaskTempIds[0]","value":"summary"},{"path":"$.timePoints[0].relatedMaterialTempIds","value":[]},{"path":"$.timePoints[0].confidence","value":0},{"path":"$.timePoints[0].scopeIds[0]","value":"scope-0001-968969ad871e041715c8af9ebcc161b2dd6134cfeda7b004558d8ac17e4272a2"},{"path":"$.timePoints[0].scopeIds[1]","value":"scope-0002-2c2ee9d664a7899201932f573f7d3e0062ed48c7fcd8810a5eadd7924c8d0fb9"},{"path":"$.events","value":[]},{"path":"$.revisions","value":[]},{"path":"$.conflicts","value":[]},{"path":"$.informationScopeIds","value":[]},{"path":"$.unresolvedScopeIds","value":[]}],"selected":[],"oldV2":[{"taskId":"summary","capability":"NOT_SUPPORTED","reasons":["REQUIRES_REVIEW"]}],"newApp":"NOT_RUN","newCanonical":"NOT_RUN"},{"name":"information","leaves":14,"equal":14,"rows":[{"path":"$.schemaVersion","value":"mainline04-task-semantics-1"},{"path":"$.sourceId","value":"engineering"},{"path":"$.sourceVersionId","value":"v1"},{"path":"$.sourceFingerprint","value":"sha256:28aa044ac698a4930f95a1db259c68031477c0a796ab0bc17ebda0144b05dbe4"},{"path":"$.tasks","value":[]},{"path":"$.materials","value":[]},{"path":"$.timePoints","value":[]},{"path":"$.events","value":[]},{"path":"$.revisions","value":[]},{"path":"$.conflicts","value":[]},{"path":"$.informationScopeIds[0]","value":"scope-0001-9498dd7e41ec75058e4bc22457a754fd1d4799a7ac7d5dd6d1141379fca2e7c7"},{"path":"$.informationScopeIds[1]","value":"scope-0002-021693c2ff860b3c44cd5d771465c30f823d9e6a357c73175d3209131eade8a3"},{"path":"$.informationScopeIds[2]","value":"scope-0003-b4c6e3ae9c8cc56c4b956916c31db7b4b61c2cc5dceab04428fe382d8f8f0485"},{"path":"$.unresolvedScopeIds","value":[]}],"selected":[],"oldV2":[],"newApp":"NOT_RUN","newCanonical":"NOT_RUN"},{"name":"condition-true","leaves":49,"equal":49,"rows":[{"path":"$.schemaVersion","value":"mainline04-task-semantics-1"},{"path":"$.sourceId","value":"engineering"},{"path":"$.sourceVersionId","value":"v1"},{"path":"$.sourceFingerprint","value":"sha256:e9e1004f19b489cf54c8e57cab7f79d350611492cd7bdbdd75c1f3b470007587"},{"path":"$.tasks[0].id","value":"conditional"},{"path":"$.tasks[0].propositionScopeIds[0]","value":"scope-0001-afa3bf5e7892c0da220723cc14273355fc9b491a96df91ddb7f7a9e07ed06612"},{"path":"$.tasks[0].propositionScopeIds[1]","value":"scope-0002-952d6b15120d9db83ef6509a5eb0b85de17e0c254924a44fdbc922c266a96c8c"},{"path":"$.tasks[0].propositionScopeIds[2]","value":"scope-0003-9b3b9f243853f557b1dbddcebb76ac4cc71bface0a160c5fccf34f9ac4d4260e"},{"path":"$.tasks[0].action.scopeId","value":"scope-0002-952d6b15120d9db83ef6509a5eb0b85de17e0c254924a44fdbc922c266a96c8c"},{"path":"$.tasks[0].action.surface","value":"提交"},{"path":"$.tasks[0].object.scopeId","value":"scope-0002-952d6b15120d9db83ef6509a5eb0b85de17e0c254924a44fdbc922c266a96c8c"},{"path":"$.tasks[0].object.surface","value":"场地申请表"},{"path":"$.tasks[0].inferenceLevel","value":"explicit"},{"path":"$.tasks[0].semantics.actor","value":"addressee"},{"path":"$.tasks[0].semantics.speechAct","value":"directive"},{"path":"$.tasks[0].semantics.polarity","value":"affirmative"},{"path":"$.tasks[0].semantics.tense","value":"future"},{"path":"$.tasks[0].semantics.status","value":"pending"},{"path":"$.tasks[0].semantics.validity","value":"active"},{"path":"$.tasks[0].semantics.modality","value":"required"},{"path":"$.tasks[0].actionType","value":"submit"},{"path":"$.tasks[0].effect","value":"physical_action"},{"path":"$.tasks[0].detail.parentTempId","value":null},{"path":"$.tasks[0].detail.hierarchyType","value":"task"},{"path":"$.tasks[0].detail.title","value":"提交场地申请表"},{"path":"$.tasks[0].detail.description","value":"若活动获批，请提交场地申请表。活动已获批。"},{"path":"$.tasks[0].detail.completionCriteria","value":[]},{"path":"$.tasks[0].detail.estimatedMinutes","value":null},{"path":"$.tasks[0].detail.statusSuggestion","value":"todo"},{"path":"$.tasks[0].detail.prioritySuggestion","value":"medium"},{"path":"$.tasks[0].detail.dependencyTempIds","value":[]},{"path":"$.tasks[0].detail.materialTempIds","value":[]},{"path":"$.tasks[0].detail.timePointTempIds","value":[]},{"path":"$.tasks[0].detail.confidence","value":1},{"path":"$.tasks[0].detail.userConfirmationRequired","value":true},{"path":"$.tasks[0].condition.value","value":"true"},{"path":"$.tasks[0].condition.conditionScopeIds[0]","value":"scope-0001-afa3bf5e7892c0da220723cc14273355fc9b491a96df91ddb7f7a9e07ed06612"},{"path":"$.tasks[0].condition.factScopeIds[0]","value":"scope-0003-9b3b9f243853f557b1dbddcebb76ac4cc71bface0a160c5fccf34f9ac4d4260e"},{"path":"$.tasks[0].coverage.time","value":"not_stated"},{"path":"$.tasks[0].coverage.material","value":"not_stated"},{"path":"$.tasks[0].coverage.event","value":"not_stated"},{"path":"$.tasks[0].eventTempIds","value":[]},{"path":"$.materials","value":[]},{"path":"$.timePoints","value":[]},{"path":"$.events","value":[]},{"path":"$.revisions","value":[]},{"path":"$.conflicts","value":[]},{"path":"$.informationScopeIds","value":[]},{"path":"$.unresolvedScopeIds","value":[]}],"selected":["conditional"],"oldV2":[{"taskId":"conditional","capability":"NOT_SUPPORTED","reasons":["CONDITION_NOT_EXPRESSIBLE"]}],"newApp":"NOT_RUN","newCanonical":"NOT_RUN"},{"name":"condition-false","leaves":49,"equal":49,"rows":[{"path":"$.schemaVersion","value":"mainline04-task-semantics-1"},{"path":"$.sourceId","value":"engineering"},{"path":"$.sourceVersionId","value":"v1"},{"path":"$.sourceFingerprint","value":"sha256:8becf404c68926892d413bc6bb2abf057216d6a093866ebb683a528883822b51"},{"path":"$.tasks[0].id","value":"conditional"},{"path":"$.tasks[0].propositionScopeIds[0]","value":"scope-0001-a650416bd9c07fb427cbde75c1318ba13d946eeb808a3bec40e7b87403bafb49"},{"path":"$.tasks[0].propositionScopeIds[1]","value":"scope-0002-532a4bc2f2a2262258f63cad993485cff4aa9ae6387ad7a169b69bef4e0a5463"},{"path":"$.tasks[0].propositionScopeIds[2]","value":"scope-0003-8b2d822620c95184c09941237a4a93af36b92dac98158eba16073cda2c98f884"},{"path":"$.tasks[0].action.scopeId","value":"scope-0002-532a4bc2f2a2262258f63cad993485cff4aa9ae6387ad7a169b69bef4e0a5463"},{"path":"$.tasks[0].action.surface","value":"提交"},{"path":"$.tasks[0].object.scopeId","value":"scope-0002-532a4bc2f2a2262258f63cad993485cff4aa9ae6387ad7a169b69bef4e0a5463"},{"path":"$.tasks[0].object.surface","value":"场地申请表"},{"path":"$.tasks[0].inferenceLevel","value":"explicit"},{"path":"$.tasks[0].semantics.actor","value":"addressee"},{"path":"$.tasks[0].semantics.speechAct","value":"directive"},{"path":"$.tasks[0].semantics.polarity","value":"affirmative"},{"path":"$.tasks[0].semantics.tense","value":"future"},{"path":"$.tasks[0].semantics.status","value":"pending"},{"path":"$.tasks[0].semantics.validity","value":"active"},{"path":"$.tasks[0].semantics.modality","value":"required"},{"path":"$.tasks[0].actionType","value":"submit"},{"path":"$.tasks[0].effect","value":"physical_action"},{"path":"$.tasks[0].detail.parentTempId","value":null},{"path":"$.tasks[0].detail.hierarchyType","value":"task"},{"path":"$.tasks[0].detail.title","value":"提交场地申请表"},{"path":"$.tasks[0].detail.description","value":"若活动获批，请提交场地申请表。活动未获批。"},{"path":"$.tasks[0].detail.completionCriteria","value":[]},{"path":"$.tasks[0].detail.estimatedMinutes","value":null},{"path":"$.tasks[0].detail.statusSuggestion","value":"todo"},{"path":"$.tasks[0].detail.prioritySuggestion","value":"medium"},{"path":"$.tasks[0].detail.dependencyTempIds","value":[]},{"path":"$.tasks[0].detail.materialTempIds","value":[]},{"path":"$.tasks[0].detail.timePointTempIds","value":[]},{"path":"$.tasks[0].detail.confidence","value":1},{"path":"$.tasks[0].detail.userConfirmationRequired","value":true},{"path":"$.tasks[0].condition.value","value":"false"},{"path":"$.tasks[0].condition.conditionScopeIds[0]","value":"scope-0001-a650416bd9c07fb427cbde75c1318ba13d946eeb808a3bec40e7b87403bafb49"},{"path":"$.tasks[0].condition.factScopeIds[0]","value":"scope-0003-8b2d822620c95184c09941237a4a93af36b92dac98158eba16073cda2c98f884"},{"path":"$.tasks[0].coverage.time","value":"not_stated"},{"path":"$.tasks[0].coverage.material","value":"not_stated"},{"path":"$.tasks[0].coverage.event","value":"not_stated"},{"path":"$.tasks[0].eventTempIds","value":[]},{"path":"$.materials","value":[]},{"path":"$.timePoints","value":[]},{"path":"$.events","value":[]},{"path":"$.revisions","value":[]},{"path":"$.conflicts","value":[]},{"path":"$.informationScopeIds","value":[]},{"path":"$.unresolvedScopeIds","value":[]}],"selected":[],"oldV2":[{"taskId":"conditional","capability":"NOT_SUPPORTED","reasons":["CONDITION_NOT_EXPRESSIBLE","REQUIRES_REVIEW"]}],"newApp":"NOT_RUN","newCanonical":"NOT_RUN"},{"name":"condition-unknown","leaves":49,"equal":49,"rows":[{"path":"$.schemaVersion","value":"mainline04-task-semantics-1"},{"path":"$.sourceId","value":"engineering"},{"path":"$.sourceVersionId","value":"v1"},{"path":"$.sourceFingerprint","value":"sha256:5842ad5793355413223f042afc3e4854de45a38bc4a1d0b8b0534bce7d081b21"},{"path":"$.tasks[0].id","value":"conditional"},{"path":"$.tasks[0].propositionScopeIds[0]","value":"scope-0001-08d2ba568a0f17a01c90b4817463ab395d35d5b617ca42c78ec546006648c98d"},{"path":"$.tasks[0].propositionScopeIds[1]","value":"scope-0002-90be33cfda3cb49a842104decdc9e60161716f25a6a5421f47c6c969a3e0f457"},{"path":"$.tasks[0].propositionScopeIds[2]","value":"scope-0003-f07156104b83f483df27855ef462b64de6e162c5df4aa36a30501807c06cdedc"},{"path":"$.tasks[0].action.scopeId","value":"scope-0002-90be33cfda3cb49a842104decdc9e60161716f25a6a5421f47c6c969a3e0f457"},{"path":"$.tasks[0].action.surface","value":"提交"},{"path":"$.tasks[0].object.scopeId","value":"scope-0002-90be33cfda3cb49a842104decdc9e60161716f25a6a5421f47c6c969a3e0f457"},{"path":"$.tasks[0].object.surface","value":"场地申请表"},{"path":"$.tasks[0].inferenceLevel","value":"explicit"},{"path":"$.tasks[0].semantics.actor","value":"addressee"},{"path":"$.tasks[0].semantics.speechAct","value":"directive"},{"path":"$.tasks[0].semantics.polarity","value":"affirmative"},{"path":"$.tasks[0].semantics.tense","value":"future"},{"path":"$.tasks[0].semantics.status","value":"pending"},{"path":"$.tasks[0].semantics.validity","value":"active"},{"path":"$.tasks[0].semantics.modality","value":"required"},{"path":"$.tasks[0].actionType","value":"submit"},{"path":"$.tasks[0].effect","value":"physical_action"},{"path":"$.tasks[0].detail.parentTempId","value":null},{"path":"$.tasks[0].detail.hierarchyType","value":"task"},{"path":"$.tasks[0].detail.title","value":"提交场地申请表"},{"path":"$.tasks[0].detail.description","value":"若活动获批，请提交场地申请表。活动已获批。"},{"path":"$.tasks[0].detail.completionCriteria","value":[]},{"path":"$.tasks[0].detail.estimatedMinutes","value":null},{"path":"$.tasks[0].detail.statusSuggestion","value":"todo"},{"path":"$.tasks[0].detail.prioritySuggestion","value":"medium"},{"path":"$.tasks[0].detail.dependencyTempIds","value":[]},{"path":"$.tasks[0].detail.materialTempIds","value":[]},{"path":"$.tasks[0].detail.timePointTempIds","value":[]},{"path":"$.tasks[0].detail.confidence","value":1},{"path":"$.tasks[0].detail.userConfirmationRequired","value":true},{"path":"$.tasks[0].condition.value","value":"unknown"},{"path":"$.tasks[0].condition.conditionScopeIds[0]","value":"scope-0001-08d2ba568a0f17a01c90b4817463ab395d35d5b617ca42c78ec546006648c98d"},{"path":"$.tasks[0].condition.factScopeIds[0]","value":"scope-0003-f07156104b83f483df27855ef462b64de6e162c5df4aa36a30501807c06cdedc"},{"path":"$.tasks[0].coverage.time","value":"not_stated"},{"path":"$.tasks[0].coverage.material","value":"not_stated"},{"path":"$.tasks[0].coverage.event","value":"not_stated"},{"path":"$.tasks[0].eventTempIds","value":[]},{"path":"$.materials","value":[]},{"path":"$.timePoints","value":[]},{"path":"$.events","value":[]},{"path":"$.revisions","value":[]},{"path":"$.conflicts","value":[]},{"path":"$.informationScopeIds","value":[]},{"path":"$.unresolvedScopeIds","value":[]}],"selected":[],"oldV2":"NO_EQUIVALENT_OLD_RESPONSE","newApp":"NOT_RUN","newCanonical":"NOT_RUN"},{"name":"revision","leaves":90,"equal":90,"rows":[{"path":"$.schemaVersion","value":"mainline04-task-semantics-1"},{"path":"$.sourceId","value":"engineering"},{"path":"$.sourceVersionId","value":"v1"},{"path":"$.sourceFingerprint","value":"sha256:9ba9e08430e0074e5df098ba695a6916f78fe8253b5599106d1f40f7b96cb2ee"},{"path":"$.tasks[0].id","value":"old"},{"path":"$.tasks[0].propositionScopeIds[0]","value":"scope-0001-bb0eec9d4117ac6762d257da9563052af1a8ecc3e59ab19392346309d0a63a2f"},{"path":"$.tasks[0].propositionScopeIds[1]","value":"scope-0002-992cb530a19358171b92c808dce56710202fb828cd115a17e8e311c371920d53"},{"path":"$.tasks[0].action.scopeId","value":"scope-0001-bb0eec9d4117ac6762d257da9563052af1a8ecc3e59ab19392346309d0a63a2f"},{"path":"$.tasks[0].action.surface","value":"打印"},{"path":"$.tasks[0].object.scopeId","value":"scope-0001-bb0eec9d4117ac6762d257da9563052af1a8ecc3e59ab19392346309d0a63a2f"},{"path":"$.tasks[0].object.surface","value":"纸质报名表"},{"path":"$.tasks[0].inferenceLevel","value":"explicit"},{"path":"$.tasks[0].semantics.actor","value":"addressee"},{"path":"$.tasks[0].semantics.speechAct","value":"directive"},{"path":"$.tasks[0].semantics.polarity","value":"affirmative"},{"path":"$.tasks[0].semantics.tense","value":"past"},{"path":"$.tasks[0].semantics.status","value":"cancelled"},{"path":"$.tasks[0].semantics.validity","value":"superseded"},{"path":"$.tasks[0].semantics.modality","value":"required"},{"path":"$.tasks[0].actionType","value":"print"},{"path":"$.tasks[0].effect","value":"physical_action"},{"path":"$.tasks[0].detail.parentTempId","value":null},{"path":"$.tasks[0].detail.hierarchyType","value":"task"},{"path":"$.tasks[0].detail.title","value":"打印纸质报名表"},{"path":"$.tasks[0].detail.description","value":"打印纸质报名表"},{"path":"$.tasks[0].detail.completionCriteria","value":[]},{"path":"$.tasks[0].detail.estimatedMinutes","value":null},{"path":"$.tasks[0].detail.statusSuggestion","value":"todo"},{"path":"$.tasks[0].detail.prioritySuggestion","value":"medium"},{"path":"$.tasks[0].detail.dependencyTempIds","value":[]},{"path":"$.tasks[0].detail.materialTempIds","value":[]},{"path":"$.tasks[0].detail.timePointTempIds","value":[]},{"path":"$.tasks[0].detail.confidence","value":1},{"path":"$.tasks[0].detail.userConfirmationRequired","value":true},{"path":"$.tasks[0].condition.value","value":"not_applicable"},{"path":"$.tasks[0].condition.conditionScopeIds","value":[]},{"path":"$.tasks[0].condition.factScopeIds","value":[]},{"path":"$.tasks[0].coverage.time","value":"not_stated"},{"path":"$.tasks[0].coverage.material","value":"not_stated"},{"path":"$.tasks[0].coverage.event","value":"not_stated"},{"path":"$.tasks[0].eventTempIds","value":[]},{"path":"$.tasks[1].id","value":"new"},{"path":"$.tasks[1].propositionScopeIds[0]","value":"scope-0001-bb0eec9d4117ac6762d257da9563052af1a8ecc3e59ab19392346309d0a63a2f"},{"path":"$.tasks[1].propositionScopeIds[1]","value":"scope-0002-992cb530a19358171b92c808dce56710202fb828cd115a17e8e311c371920d53"},{"path":"$.tasks[1].action.scopeId","value":"scope-0002-992cb530a19358171b92c808dce56710202fb828cd115a17e8e311c371920d53"},{"path":"$.tasks[1].action.surface","value":"提交"},{"path":"$.tasks[1].object.scopeId","value":"scope-0002-992cb530a19358171b92c808dce56710202fb828cd115a17e8e311c371920d53"},{"path":"$.tasks[1].object.surface","value":"电子报名表"},{"path":"$.tasks[1].inferenceLevel","value":"explicit"},{"path":"$.tasks[1].semantics.actor","value":"addressee"},{"path":"$.tasks[1].semantics.speechAct","value":"directive"},{"path":"$.tasks[1].semantics.polarity","value":"affirmative"},{"path":"$.tasks[1].semantics.tense","value":"future"},{"path":"$.tasks[1].semantics.status","value":"pending"},{"path":"$.tasks[1].semantics.validity","value":"active"},{"path":"$.tasks[1].semantics.modality","value":"required"},{"path":"$.tasks[1].actionType","value":"submit"},{"path":"$.tasks[1].effect","value":"physical_action"},{"path":"$.tasks[1].detail.parentTempId","value":null},{"path":"$.tasks[1].detail.hierarchyType","value":"task"},{"path":"$.tasks[1].detail.title","value":"提交电子报名表"},{"path":"$.tasks[1].detail.description","value":"提交电子报名表"},{"path":"$.tasks[1].detail.completionCriteria","value":[]},{"path":"$.tasks[1].detail.estimatedMinutes","value":null},{"path":"$.tasks[1].detail.statusSuggestion","value":"todo"},{"path":"$.tasks[1].detail.prioritySuggestion","value":"medium"},{"path":"$.tasks[1].detail.dependencyTempIds","value":[]},{"path":"$.tasks[1].detail.materialTempIds","value":[]},{"path":"$.tasks[1].detail.timePointTempIds","value":[]},{"path":"$.tasks[1].detail.confidence","value":1},{"path":"$.tasks[1].detail.userConfirmationRequired","value":true},{"path":"$.tasks[1].condition.value","value":"not_applicable"},{"path":"$.tasks[1].condition.conditionScopeIds","value":[]},{"path":"$.tasks[1].condition.factScopeIds","value":[]},{"path":"$.tasks[1].coverage.time","value":"not_stated"},{"path":"$.tasks[1].coverage.material","value":"not_stated"},{"path":"$.tasks[1].coverage.event","value":"not_stated"},{"path":"$.tasks[1].eventTempIds","value":[]},{"path":"$.materials","value":[]},{"path":"$.timePoints","value":[]},{"path":"$.events","value":[]},{"path":"$.revisions[0].type","value":"supersedes"},{"path":"$.revisions[0].targetDirectiveId","value":"old"},{"path":"$.revisions[0].fromDirectiveId","value":"new"},{"path":"$.revisions[0].effective","value":"true"},{"path":"$.revisions[0].scopeIds[0]","value":"scope-0001-bb0eec9d4117ac6762d257da9563052af1a8ecc3e59ab19392346309d0a63a2f"},{"path":"$.revisions[0].scopeIds[1]","value":"scope-0002-992cb530a19358171b92c808dce56710202fb828cd115a17e8e311c371920d53"},{"path":"$.conflicts","value":[]},{"path":"$.informationScopeIds","value":[]},{"path":"$.unresolvedScopeIds","value":[]}],"selected":["new"],"oldV2":[{"taskId":"old","capability":"NOT_SUPPORTED","reasons":["REVISION_NOT_EXPRESSIBLE","STATUS_NOT_EXPRESSIBLE","REQUIRES_REVIEW"]},{"taskId":"new","capability":"NOT_SUPPORTED","reasons":["REVISION_NOT_EXPRESSIBLE"]}],"newApp":"NOT_RUN","newCanonical":"NOT_RUN"}],"totalLeaves":526,"wrongDefaults":0,"omittedTasks":0,"addedTasks":0,"majorChanges":0,"forbidden":0,"modelAccuracy":"本轮未测量"}
+
+stdout | src/experiments/mainline04/semanticAcceptance.test.ts > MAINLINE-04 seen-engineering acceptance, never model accuracy > the protected original 42-field measure uses real V2 memory confirmation and reload
+MAINLINE04_OLD42={"path":"explicit-confirmation-v2","material":"handcrafted engineering response; not semantic gold","checked":42,"equal":42,"fidelity":1,"complete":true,"differences":[],"rows":[{"task":"submit","field":"action","supplied":"提交","stored":"提交","equal":true},{"task":"submit","field":"object","supplied":"活动报名表","stored":"活动报名表","equal":true},{"task":"submit","field":"title","supplied":"提交活动报名表","stored":"提交活动报名表","equal":true},{"task":"submit","field":"description","supplied":"提交活动报名表","stored":"提交活动报名表","equal":true},{"task":"submit","field":"completionCriteria","supplied":[],"stored":[],"equal":true},{"task":"submit","field":"time.rawText","supplied":"2026年9月10日18:00前","stored":"2026年9月10日18:00前","equal":true},{"task":"submit","field":"time.normalizedValue","supplied":"2026-09-10T18:00","stored":"2026-09-10T18:00","equal":true},{"task":"submit","field":"time.timezone","supplied":"Asia/Shanghai","stored":"Asia/Shanghai","equal":true},{"task":"submit","field":"time.isAllDay","supplied":false,"stored":false,"equal":true},{"task":"submit","field":"time.precision","supplied":"exact","stored":"exact","equal":true},{"task":"submit","field":"time.task","supplied":["task:source:1ca4e0cd:draft:1:submit"],"stored":["task:source:1ca4e0cd:draft:1:submit"],"equal":true},{"task":"submit","field":"time.material","supplied":["material:source:1ca4e0cd:draft:1:m0"],"stored":["material:source:1ca4e0cd:draft:1:m0"],"equal":true},{"task":"submit","field":"material.name","supplied":"活动报名表","stored":"活动报名表","equal":true},{"task":"submit","field":"material.formatRequirements","supplied":["PDF"],"stored":["PDF"],"equal":true},{"task":"submit","field":"material.namingRequirements","supplied":["组别"],"stored":["组别"],"equal":true},{"task":"submit","field":"material.quantity","supplied":1,"stored":1,"equal":true},{"task":"submit","field":"material.submissionChannel","supplied":"活动平台","stored":"活动平台","equal":true},{"task":"submit","field":"material.task","supplied":["task:source:1ca4e0cd:draft:1:submit"],"stored":["task:source:1ca4e0cd:draft:1:submit"],"equal":true},{"task":"submit","field":"material.deadline","supplied":"time:source:1ca4e0cd:draft:1:d0","stored":"time:source:1ca4e0cd:draft:1:d0","equal":true},{"task":"submit","field":"evidence.source","supplied":"source:1ca4e0cd:version:1","stored":"source:1ca4e0cd:version:1","equal":true},{"task":"submit","field":"evidence.quote","supplied":"请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。","stored":"请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。","equal":true},{"task":"print","field":"action","supplied":"打印","stored":"打印","equal":true},{"task":"print","field":"object","supplied":"入场凭证","stored":"入场凭证","equal":true},{"task":"print","field":"title","supplied":"打印入场凭证","stored":"打印入场凭证","equal":true},{"task":"print","field":"description","supplied":"打印入场凭证","stored":"打印入场凭证","equal":true},{"task":"print","field":"completionCriteria","supplied":[],"stored":[],"equal":true},{"task":"print","field":"time.rawText","supplied":"2026年9月11日18:00前","stored":"2026年9月11日18:00前","equal":true},{"task":"print","field":"time.normalizedValue","supplied":"2026-09-11T18:00","stored":"2026-09-11T18:00","equal":true},{"task":"print","field":"time.timezone","supplied":"Asia/Shanghai","stored":"Asia/Shanghai","equal":true},{"task":"print","field":"time.isAllDay","supplied":false,"stored":false,"equal":true},{"task":"print","field":"time.precision","supplied":"exact","stored":"exact","equal":true},{"task":"print","field":"time.task","supplied":["task:source:1ca4e0cd:draft:1:print"],"stored":["task:source:1ca4e0cd:draft:1:print"],"equal":true},{"task":"print","field":"time.material","supplied":["material:source:1ca4e0cd:draft:1:m1"],"stored":["material:source:1ca4e0cd:draft:1:m1"],"equal":true},{"task":"print","field":"material.name","supplied":"入场凭证","stored":"入场凭证","equal":true},{"task":"print","field":"material.formatRequirements","supplied":["A4"],"stored":["A4"],"equal":true},{"task":"print","field":"material.namingRequirements","supplied":[],"stored":[],"equal":true},{"task":"print","field":"material.quantity","supplied":1,"stored":1,"equal":true},{"task":"print","field":"material.submissionChannel","supplied":null,"stored":null,"equal":true},{"task":"print","field":"material.task","supplied":["task:source:1ca4e0cd:draft:1:print"],"stored":["task:source:1ca4e0cd:draft:1:print"],"equal":true},{"task":"print","field":"material.deadline","supplied":"time:source:1ca4e0cd:draft:1:d1","stored":"time:source:1ca4e0cd:draft:1:d1","equal":true},{"task":"print","field":"evidence.source","supplied":"source:1ca4e0cd:version:1","stored":"source:1ca4e0cd:version:1","equal":true},{"task":"print","field":"evidence.quote","supplied":"请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。","stored":"请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。","equal":true}]}
+
+ ✓ src/experiments/mainline01/chain.test.ts (15 tests) 478ms
+stdout | src/experiments/mainline04/semanticAcceptance.test.ts > MAINLINE-04 seen-engineering acceptance, never model accuracy > seen B8-01/07/09 remain raw unverified candidates, not invented complete 2.0 results
+MAINLINE04_SEEN_B8=[{"id":"rco-task-b8-01","source":"请整理器材清点表并保存归档副本。","raw":{"schemaVersion":"model-anchor-selection-1.0.0","sourceId":"rco-task-b8-01","sourceVersionId":"source-v1","sourceFingerprint":"sha256:72942cfa5fe4a615567681520a288cb8f067db79003d754e381d9a39b57c3cc1","producerRunId":"candidate-rco-5-008-b8-m1-20260904a-rco-task-b8-01","directives":[{"id":"d1","propositionScopeIds":["scope-0001-5bbc2d9b7401a8a2c187401e120b2ab6e1adec04e2f7010841509348d07fe04d"],"action":{"scopeId":"scope-0001-5bbc2d9b7401a8a2c187401e120b2ab6e1adec04e2f7010841509348d07fe04d","surface":"整理"},"object":{"scopeId":"scope-0001-5bbc2d9b7401a8a2c187401e120b2ab6e1adec04e2f7010841509348d07fe04d","surface":"器材清点表"}},{"id":"d2","propositionScopeIds":["scope-0001-5bbc2d9b7401a8a2c187401e120b2ab6e1adec04e2f7010841509348d07fe04d"],"action":{"scopeId":"scope-0001-5bbc2d9b7401a8a2c187401e120b2ab6e1adec04e2f7010841509348d07fe04d","surface":"保存"},"object":{"scopeId":"scope-0001-5bbc2d9b7401a8a2c187401e120b2ab6e1adec04e2f7010841509348d07fe04d","surface":"归档副本"}}],"ignoredScopeIds":[]},"status":"NOT_SUPPORTED_MISSING_UPSTREAM_SEMANTICS","accuracy":"NOT_REMEASURED"},{"id":"rco-task-b8-07","source":"材料目录已经整理完成。请核对缺失项。","raw":{"schemaVersion":"model-anchor-selection-1.0.0","sourceId":"rco-task-b8-07","sourceVersionId":"source-v1","sourceFingerprint":"sha256:8bdf7ec581953c53e146b64bba602184876aea6ef746caee822a8a10bb9624f9","producerRunId":"candidate-rco-5-008-b8-m1-20260904a-rco-task-b8-07","directives":[{"id":"dir-001","propositionScopeIds":["scope-0002-62706adcfaec9bc824ef9cb768d7b15342e8fcfbf58c3f7b40928f95189bb9d9"],"action":{"scopeId":"scope-0002-62706adcfaec9bc824ef9cb768d7b15342e8fcfbf58c3f7b40928f95189bb9d9","surface":"请核对"},"object":{"scopeId":"scope-0002-62706adcfaec9bc824ef9cb768d7b15342e8fcfbf58c3f7b40928f95189bb9d9","surface":"缺失项"}}],"ignoredScopeIds":["scope-0001-f2759702080cddc0ee03e3855738862129bde6e02f691c6a64967ab385507813"]},"status":"NOT_SUPPORTED_MISSING_UPSTREAM_SEMANTICS","accuracy":"NOT_REMEASURED"},{"id":"rco-task-b8-09","source":"先前安排要求联系校车司机。该安排停止执行。","raw":{"schemaVersion":"model-anchor-selection-1.0.0","sourceId":"rco-task-b8-09","sourceVersionId":"source-v1","sourceFingerprint":"sha256:dac26cb03c2266e3b1e428064d135034503f8c55d7573cb0a9e101dddf248c7f","producerRunId":"candidate-rco-5-008-b8-m1-20260904a-rco-task-b8-09","directives":[{"id":"dir-1","propositionScopeIds":["scope-0001-9239f1e9dd6f2f10d1b244ddfc4d373f58edabf315dae1a4c83ea00038bfe6b3"],"action":{"scopeId":"scope-0001-9239f1e9dd6f2f10d1b244ddfc4d373f58edabf315dae1a4c83ea00038bfe6b3","surface":"联系"},"object":{"scopeId":"scope-0001-9239f1e9dd6f2f10d1b244ddfc4d373f58edabf315dae1a4c83ea00038bfe6b3","surface":"校车司机"}},{"id":"dir-2","propositionScopeIds":["scope-0002-25e2b86063b74c19c247e61008be1e6195d9cac966894dfc94f250aa213fe81d"],"action":{"scopeId":"scope-0002-25e2b86063b74c19c247e61008be1e6195d9cac966894dfc94f250aa213fe81d","surface":"停止执行"},"object":{"scopeId":"scope-0002-25e2b86063b74c19c247e61008be1e6195d9cac966894dfc94f250aa213fe81d","surface":"该安排"}}],"ignoredScopeIds":[]},"status":"NOT_SUPPORTED_MISSING_UPSTREAM_SEMANTICS","accuracy":"NOT_REMEASURED"}]
+
+ ✓ src/recognition/candidateTaskSafetyPolicyV2.test.ts (50 tests) 1120ms
+ ✓ src/experiments/mainline04/semanticAcceptance.test.ts (27 tests) 1051ms
+ ✓ src/domain/v2/capture.test.ts (15 tests) 1378ms
+   ✓ B4 source-before-AI persistence > survives the React compatibility autosave after a failed AI run and local retry  968ms
+ ✓ src/domain/v2/domainCommit.test.ts (15 tests) 1577ms
+   ✓ B3 rich RecognitionResult domain atomic commit > fingerprints project choice, rejected selection and draft revision and rejects a stale plan transaction  634ms
+ ✓ src/lib/repository.test.ts (14 tests) 597ms
+ ✓ src/experiments/mainline03/seenReplay.test.ts (12 tests) 1820ms
+   ✓ MAINLINE03 read-only replay provenance > R1 accepts harmless object order in seen rco-task-b8-07 without inventing absent metadata  694ms
+   ✓ MAINLINE03 read-only replay provenance > freezes selection identity, rejects duplicate text and rejects unregistered text  430ms
+ ✓ src/experiments/realInput01/candidate06.test.ts (11 tests) 429ms
+ ✓ src/domain/v2/confirmationV2.test.ts (47 tests) 2640ms
+ ✓ src/experiments/mainline05/semanticRepository.test.ts (3 tests) 1782ms
+   ✓ MAINLINE05 actual repository transactions > edit abort leaves no history; confirmation abort preserves previously saved edit; retry succeeds once  1157ms
+   ✓ MAINLINE05 actual repository transactions > cross-client stale edit rejects and confirmed task properties cannot be overwritten  563ms
+ ✓ src/experiments/mainline03/recognitionHandoff.test.ts (29 tests) 2999ms
+   ✓ MAINLINE03 constrained binding and preservation > rejects dangling-reference without rewriting a bad response  346ms
+   ✓ MAINLINE03 constrained binding and preservation > leaves duplicate quote unbound and permits the independently valid sibling  340ms
+   ✓ MAINLINE03 constrained binding and preservation > preserves material-only time linkage and explicit user choice restrictions  306ms
+ ✓ src/experiments/mainline02/reviewAdapter.test.ts (14 tests) 3219ms
+   ✓ V2 intent handoff > preserves original 42 fields through the new runtime without inventing edits  557ms
+   ✓ V2 intent handoff > preserves raw/first response, adopts saved edit and rejects stale confirmation  448ms
+   ✓ V2 intent handoff > partial, repeat and remainder never duplicate or overwrite the first task  527ms
+   ✓ V2 intent handoff > unsupported start-time editing fails before history while sibling remains confirmable  386ms
+   ✓ V2 intent handoff > save and confirmation transaction failures roll back, preserving earlier saved edits  462ms
+stdout | src/recognition/evaluation.test.ts > 60-case recognition evaluation > keeps the anonymous dataset complete and reports reproducible metrics
+RECOGNITION_EVAL={"sampleCount":60,"projectMatchAccuracy":0.8833333333333333,"projectNameAccuracy":0.9,"stageAccuracy":0.3179012345679012,"taskPrecision":1,"taskRecall":0.6419753086419754,"duplicateTaskRate":0,"overFragmentationRate":0.016666666666666666,"materialAccuracy":0.9615384615384616,"timePointAccuracy":0.9,"evidenceAccuracy":0.9166666666666666,"severeErrorRate":0.1,"humanReviewAgreement":0.75,"averageTaskCount":1.35,"averageConfirmationTimeSeconds":null}
+
+ ✓ src/experiments/mainline02/taskDateView.test.ts (3 tests) 315ms
+ ✓ src/experiments/mainline01p1/confirmationHarness.test.ts (4 tests) 311ms
+ ✓ src/recognition/evaluation.test.ts (2 tests) 309ms
+   ✓ 60-case recognition evaluation > keeps the anonymous dataset complete and reports reproducible metrics  306ms
+stdout | src/experiments/mainline05/semanticView.test.ts > MAINLINE05 fidelity and view ledger > all 8 human notices retain full supplied facts and explicit positive/negative user outcomes
+MAINLINE05_LEDGER=[{"kind":"multi","tasks":2,"materials":2,"timePoints":2,"wrongDefaults":0},{"kind":"no-date","tasks":1,"materials":0,"timePoints":0,"wrongDefaults":0},{"kind":"vague","tasks":0,"materials":0,"timePoints":0,"wrongDefaults":0},{"kind":"information","tasks":0,"materials":0,"timePoints":0,"wrongDefaults":0},{"kind":"condition-true","tasks":1,"materials":0,"timePoints":0,"wrongDefaults":0},{"kind":"condition-false","tasks":0,"materials":0,"timePoints":0,"wrongDefaults":0},{"kind":"condition-unknown","tasks":0,"materials":0,"timePoints":0,"wrongDefaults":0},{"kind":"revision","tasks":1,"materials":0,"timePoints":0,"wrongDefaults":0}]
+
+ ✓ src/experiments/mainline05/semanticView.test.ts (3 tests) 2392ms
+   ✓ MAINLINE05 fidelity and view ledger > preserves original protected V2 42-field measure  370ms
+   ✓ MAINLINE05 fidelity and view ledger > all 8 human notices retain full supplied facts and explicit positive/negative user outcomes  2014ms
+ ✓ src/domain/v2/migration.test.ts (7 tests) 177ms
+ ✓ src/recognition/taskFormationB2Dataset.test.ts (7 tests) 120ms
+ ✓ src/recognition/propositionGraph.test.ts (69 tests) 252ms
+ ✓ src/recognition/modelAnchorB8Dataset.test.ts (7 tests) 181ms
+ ✓ src/experiments/realInput01/factCorrections.test.ts (24 tests) 150ms
+ ✓ src/recognition/facts.test.ts (54 tests) 162ms
+ ✓ src/recognition/modelAnchorB7Dataset.test.ts (7 tests) 388ms
+ ✓ src/recognition/taskFormationB3Dataset.test.ts (7 tests) 168ms
+ ✓ src/recognition/schema.test.ts (6 tests) 159ms
+ ✓ src/domain/v2/runtimeMigration.test.ts (11 tests) 234ms
+ ✓ src/recognition/actionCandidateB8Regression.test.ts (3 tests) 177ms
+ ✓ src/experiments/mainline05/semanticState.test.ts (11 tests) 4425ms
+   ✓ MAINLINE05 joint state integrity > rejects version tampering on every read  1135ms
+   ✓ MAINLINE05 joint state integrity > rejects raw tampering on every read  675ms
+   ✓ MAINLINE05 joint state integrity > rejects first tampering on every read  603ms
+   ✓ MAINLINE05 joint state integrity > rejects binding tampering on every read  647ms
+   ✓ MAINLINE05 joint state integrity > failed semantic references retain the returned original receipt without a valid result or tasks  467ms
+ ✓ src/experiments/candidate14/noTaskDisposition.test.ts (6 tests) 154ms
+ ✓ src/experiments/mainline02/mainlineAcceptance.test.tsx (6 tests) 302ms
+ ✓ src/domain/v2/validators/workspaceValidator.test.ts (18 tests) 126ms
+ ✓ src/domain/v2/repository.test.ts (7 tests) 218ms
+ ✓ src/experiments/realInput01/extraction.test.ts (10 tests) 168ms
+ ✓ src/lib/parser.test.ts (16 tests) 205ms
+ ✓ src/experiments/candidate13/preparedIdentity.test.ts (2 tests) 589ms
+   ✓ Candidate13 D5 zero-call identity > normalizes both arms to one model and differs only by the prompt  471ms
+ ✓ src/experiments/realInput01/evidenceRoleWireV2.test.ts (14 tests) 540ms
+ ✓ src/recognition/rco5010E1Boundary.test.ts (29 tests) 1576ms
+ ✓ src/experiments/realInput01/candidate13.test.ts (9 tests) 1011ms
+   ✓ candidate13 is a zero-call Development-derived frozen candidate > is deterministic and leaves candidate03 and candidate12 construction unchanged  692ms
+ ✓ src/experiments/mainline04/semanticComposer.test.ts (29 tests) 909ms
+ ✓ src/experiments/candidate11/identity.test.ts (6 tests) 954ms
+ ✓ src/experiments/mainline05/semanticCapture.test.ts (2 tests) 442ms
+   ✓ MAINLINE05 source-first capture > persists a real source chain before the response and retains the raw/first response separately  335ms
+ ✓ src/experiments/realInput01/inputReceipt.test.ts (7 tests) 184ms
+ ✓ src/recognition/directiveGovernorProof.test.ts (29 tests) 376ms
+   ✓ RCO-5-010-E1 positive directive governor proof > rejects every uncontrolled one-character CJK bridge instead of maintaining a blacklist  358ms
+ ✓ src/domain/v2/legacyView.test.ts (10 tests) 256ms
+ ✓ src/lib/ocrPreprocessing.test.ts (6 tests) 143ms
+ ✓ src/recognition/scopeReferenceB1Dataset.test.ts (7 tests) 166ms
+ ✓ src/domain/v2/sourceRetry.test.ts (1 test) 122ms
+ ✓ src/experiments/realInput01/candidate07.test.ts (11 tests) 214ms
+ ✓ src/experiments/candidate15/d10Event.test.ts (5 tests) 5443ms
+   ✓ D10 independent event confirmation > edits an event, retains the model answer, and commits a vague time without task or project  1227ms
+   ✓ D10 independent event confirmation > fails atomically and allows a manual retry without losing edited draft  474ms
+   ✓ D10 independent event confirmation > keeps edited vague wording uncertain and rejects a taskless event correction with a wrong edge  935ms
+   ✓ D10 independent event confirmation > materializes two independently identified events without creating tasks or projects  1776ms
+   ✓ D10 independent event confirmation > saves a user-supplied exact event time as a correction, never as the model first answer  1027ms
+ ✓ src/experiments/realInput01/modelPolicy.test.ts (9 tests) 188ms
+ ✓ src/experiments/realInput01/candidate12.test.ts (11 tests) 584ms
+ ✓ src/recognition/rco5010SeenB9Regression.test.ts (3 tests) 214ms
+ ✓ src/experiments/mainline05/mainlineAcceptance.test.tsx (4 tests) 2645ms
+   ✓ MAINLINE05 existing interface characterization (not missing-module failures) > real App accepts only verified semantic runtime and never reads legacy storage during rendering  355ms
+   ✓ MAINLINE05 existing interface characterization (not missing-module failures) > real calendar keeps undated tasks findable and date-only edits free of artificial clocks in two host timezones  2021ms
+ ✓ src/recognition/taskFormationB6Dataset.test.ts (7 tests) 214ms
+ ✓ src/experiments/mainline01/fidelity.test.ts (2 tests) 192ms
+ ✓ src/experiments/realInput01/candidate03.test.ts (5 tests) 291ms
+ ✓ src/experiments/realInput01/factAssembly.test.ts (11 tests) 123ms
+ ✓ src/recognition/actionCandidateV2B8Regression.test.ts (3 tests) 213ms
+ ✓ src/domain/v2/serialization.test.ts (3 tests) 77ms
+ ✓ src/recognition/factsProvenance.test.ts (52 tests) 120ms
+ ✓ src/recognition/taskFormationB5Dataset.test.ts (7 tests) 193ms
+ ✓ src/experiments/realInput01/candidate02.test.ts (5 tests) 86ms
+ ✓ src/recognition/taskFormationB4Dataset.test.ts (7 tests) 282ms
+ ✓ src/experiments/realInput01/candidate11.test.ts (7 tests) 235ms
+ ✓ src/recognition/pipeline.test.ts (8 tests) 99ms
+ ✓ src/lib/deepseekExtraction.test.ts (6 tests) 97ms
+ ✓ src/recognition/focusedReview.test.ts (11 tests) 125ms
+ ✓ src/recognition/actionCandidateB9DataFreeze.test.ts (6 tests) 110ms
+ ✓ src/experiments/realInput01/candidate10.test.ts (5 tests) 153ms
+ ✓ src/experiments/mainline02/runtime.test.ts (8 tests) 77ms
+ ✓ src/experiments/mainline03/mainlineAcceptance.test.tsx (13 tests) 5119ms
+   ✓ MAINLINE03 real App and canonical acceptance > R1 rejects internally inconsistent version receipt before creating a Source  348ms
+   ✓ MAINLINE03 real App and canonical acceptance > new source first, unchanged original receipt, adopted full 42-field contract on batch confirm  602ms
+   ✓ MAINLINE03 real App and canonical acceptance > partially confirms without duplicates, overwrites or fake no-date reminders  1471ms
+   ✓ MAINLINE03 real App and canonical acceptance > time saves and commit plans agree; failed save/confirm roll back and stale tab cannot overwrite  740ms
+   ✓ MAINLINE03 real App and canonical acceptance > reused operation ID cannot return a different source or receipt  557ms
+ ✓ src/lib/sourceWorkflow.test.ts (4 tests) 100ms
+ ✓ src/recognition/candidateTaskSafetyPolicy.test.ts (16 tests) 120ms
+ ✓ src/recognition/actionCandidateFreshAdversarial.test.ts (14 tests) 95ms
+ ✓ src/experiments/realInput01/candidate09.test.ts (4 tests) 191ms
+ ✓ src/experiments/mainline04/legacyHandoff.test.ts (8 tests) 154ms
+ ✓ src/lib/intake.test.ts (9 tests) 63ms
+ ✓ src/recognition/localActionCandidateIndexV2.test.ts (9 tests) 101ms
+ ✓ src/experiments/realInput01/candidate05.test.ts (1 test) 63ms
+ ✓ src/experiments/realInput01/candidate08.test.ts (4 tests) 106ms
+ ✓ src/experiments/realInput01/evidenceRoleWire.test.ts (8 tests) 98ms
+ ✓ src/recognition/scopeReferenceContract.test.ts (13 tests) 280ms
+ ✓ src/experiments/realInput01/candidate04.test.ts (3 tests) 70ms
+ ✓ src/recognition/scopeReferenceContract.fresh.test.ts (14 tests) 60ms
+ ✓ src/recognition/actionCandidateComposerV2.test.ts (7 tests) 56ms
+ ✓ src/lib/calendar.test.ts (8 tests) 54ms
+ ✓ src/recognition/taskFormationPolicyP4.test.ts (7 tests) 63ms
+ ✓ src/recognition/actionCandidateComposer.test.ts (7 tests) 73ms
+ ✓ src/recognition/actionCandidateClassificationContract.test.ts (6 tests) 25ms
+ ✓ src/lib/workspace.test.ts (7 tests) 53ms
+ ✓ src/recognition/revisionRelationResolver.metamorphic.test.ts (3 tests) 38ms
+ ✓ src/recognition/taskFormationPolicyV2.test.ts (12 tests) 63ms
+ ✓ src/recognition/scopeReferenceContract.metamorphic.test.ts (9 tests) 48ms
+ ✓ src/lib/taskLogic.test.ts (13 tests) 47ms
+ ✓ src/recognition/taskFormationPolicyP1.test.ts (16 tests) 50ms
+ ✓ src/lib/calendarExport.test.ts (4 tests) 43ms
+ ✓ src/lib/knowledge.test.ts (3 tests) 41ms
+ ✓ src/recognition/localActionCandidateIndex.test.ts (8 tests) 57ms
+ ✓ src/experiments/realInput01/candidate14.test.ts (1 test) 51ms
+ ✓ src/experiments/candidate14/commonAdapter.test.ts (1 test) 40ms
+ ✓ src/experiments/candidate14/timePolicy.test.ts (3 tests) 41ms
+ ✓ src/lib/scheduling.test.ts (2 tests) 42ms
+ ✓ src/lib/notifications.test.ts (3 tests) 36ms
+ ✓ src/recognition/taskFormationPolicyP3.test.ts (7 tests) 32ms
+ ✓ src/lib/domainEntities.test.ts (3 tests) 42ms
+ ✓ src/recognition/taskFormationEvaluationV2.test.ts (3 tests) 27ms
+ ✓ src/recognition/modelAnchorSelectionContract.test.ts (3 tests) 23ms
+ ✓ src/recognition/taskFormationPolicyP2.test.ts (8 tests) 64ms
+ ✓ src/recognition/scopeIndexV11.test.ts (3 tests) 15ms
+ ✓ src/lib/reports.test.ts (2 tests) 22ms
+ ✓ scripts/rco-5-009-b9-evaluation.test.ts (8 tests) 40ms
+ ✓ src/experiments/candidate15/uiMeasurement.test.ts (4 tests) 14ms
+ ✓ src/lib/storage.test.ts (3 tests) 10ms
+ ✓ src/lib/linkExtraction.test.ts (2 tests) 12ms
+ ✓ src/lib/emailClient.test.ts (2 tests) 9ms
+ ✓ src/lib/webMonitorClient.test.ts (2 tests) 14ms
+ ✓ src/lib/syncClient.test.ts (2 tests) 12ms
+ ✓ src/experiments/candidate14/measurement.test.ts (5 tests) 12ms
+ ✓ src/lib/taskUpdates.test.ts (3 tests) 10ms
+ ✓ src/experiments/candidate15/measurement.test.ts (6 tests) 8ms
+ ✓ src/recognition/taskFormationEvaluation.test.ts (6 tests) 8ms
+ ✓ src/experiments/mainline04/semanticContract.test.ts (9 tests) 13ms
+ ✓ src/lib/obsidian.test.ts (3 tests) 7ms
+ ✓ src/lib/sourceDuplicates.test.ts (3 tests) 8ms
+ ✓ src/experiments/candidate13/observation.test.ts (2 tests) 8ms
+ ✓ src/lib/workspaceRecoveryUi.test.ts (3 tests) 8ms
+ ✓ src/recognition/countMapComparison.test.ts (7 tests) 10ms
+ ✓ src/lib/webMonitoring.test.ts (4 tests) 8ms
+ ✓ src/lib/multimodal.test.ts (3 tests) 7ms
+ ✓ src/mobileLayout.test.ts (3 tests) 10ms
+ ✓ src/recognition/jsonStructuralEqual.test.ts (4 tests) 7ms
+ ✓ src/lib/onboarding.test.ts (1 test) 4ms
+ ✓ src/lib/integrationConnections.test.ts (2 tests) 7ms
+ ✓ src/experiments/candidate13/measurement.test.ts (3 tests) 6ms
+ ✓ src/experiments/candidate16/measurement.test.ts (4 tests) 8ms
+ ✓ src/lib/schemaMigration.test.ts (1 test) 7ms
+ ❯ src/experiments/candidate13/d6Runtime.test.tsx (6 tests | 1 failed) 12105ms
+   ✓ D6 recorded-result engineering replay > opens a recorded answer with source evidence and preserves the immutable original  863ms
+   × D6 recorded-result engineering replay > edits, partially confirms, recovers from an injected save failure, reads back and survives refresh 5048ms
+     → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+   ✓ D6 recorded-result engineering replay > supports explicit rejection after partial acceptance  3490ms
+   ✓ D6 recorded-result engineering replay > keeps the correct no-task result task-free and exposes the remaining information-review block  316ms
+   ✓ D6 recorded-result engineering replay > refuses a foreign database and new model execution 23ms
+   ✓ D6 recorded-result engineering replay > keeps the injected failure armed across a no-op write  2360ms
+ ↓ src/lib/ocrLiveComponent.test.ts (1 test | 1 skipped)
+ ✓ src/experiments/mainline05/semanticConfirmation.test.ts (40 tests) 16354ms
+   ✓ MAINLINE05 semantic confirmation business invariants > positive no-date confirms, persists and rereads without fake dates or reminders  1752ms
+   ✓ MAINLINE05 semantic confirmation business invariants > positive condition-true confirms, persists and rereads without fake dates or reminders  354ms
+   ✓ MAINLINE05 semantic confirmation business invariants > ordinary multi supports partial then remainder, same-panel batch, raw text and full material attributes  991ms
+   ✓ MAINLINE05 semantic confirmation business invariants > edits are explicit, adopted exactly, source raw time and first response remain untouched  568ms
+   ✓ MAINLINE05 semantic confirmation business invariants > no-date accepts a user date-only value; planned_start and event-time edits reject before history write  2053ms
+   ✓ MAINLINE05 semantic confirmation business invariants > shared event keeps all original edges and one canonical event: submit then print  366ms
+   ✓ MAINLINE05 semantic confirmation business invariants > shared event keeps all original edges and one canonical event: print then submit  405ms
+   ✓ MAINLINE05 semantic confirmation business invariants > shared material with independent times grows ownership without duplicated/overwritten facts; reordered=false  424ms
+   ✓ MAINLINE05 semantic confirmation business invariants > shared material with independent times grows ownership without duplicated/overwritten facts; reordered=true  375ms
+   ✓ MAINLINE05 semantic confirmation business invariants > dependency-first sequential confirmation preserves each own date and the explicit dependency  305ms
+   ✓ MAINLINE05 semantic confirmation business invariants > S01 current prerequisite defer cancels dependent selection while preserving first response  563ms
+   ✓ MAINLINE05 semantic confirmation business invariants > S01 current prerequisite uncheck cancels dependent selection while preserving first response  574ms
+   ✓ MAINLINE05 semantic confirmation business invariants > S01 confirmed prerequisite and reversed task order keep valid dependent default selection  783ms
+   ✓ MAINLINE05 semantic confirmation business invariants > S02 unresolved information cannot masquerade as fully reviewed  418ms
+   ✓ MAINLINE05 semantic confirmation business invariants > S03 explicit material-time edges only, order submit  837ms
+   ✓ MAINLINE05 semantic confirmation business invariants > S03 explicit material-time edges only, order print  555ms
+   ✓ MAINLINE05 semantic confirmation business invariants > S03 explicit material-time edges only, order batch  540ms
+   ✓ MAINLINE05 semantic confirmation business invariants > S03 original explicit material deadlines remain present and unchanged after the independent sibling confirms  452ms
+ ✓ src/experiments/candidate16/runtime.test.ts (8 tests) 18834ms
+   ✓ D13 actual confirmation repository, recorded outputs remain immutable > no-task archive leaves zero tasks and projects; idempotent recorded reopening  573ms
+   ✓ D13 actual confirmation repository, recorded outputs remain immutable > event edit/save failure/manual retry/readback preserves original and vague time  1404ms
+   ✓ D13 actual confirmation repository, recorded outputs remain immutable > wrong revision blocks only its connected task; unrelated reviewed task can be partially confirmed  3642ms
+   ✓ D13 actual confirmation repository, recorded outputs remain immutable > task title edits are linked to a real correction commit, readback, and final confirmation  1491ms
+   ✓ D13 actual confirmation repository, recorded outputs remain immutable > exact independent event becomes a canonical event/time while preserving zero tasks  482ms
+   ✓ D13 actual confirmation repository, recorded outputs remain immutable > rejecting a wrong extra suggestion is a structural correction, never zero/low modification  1279ms
+   ✓ D13 actual confirmation repository, recorded outputs remain immutable > repository queue delay is wait time captured before transaction execution  440ms
+   ✓ D13 actual confirmation repository, recorded outputs remain immutable > all 24 D11 recorded responses can be opened without a new model request  9513ms
+ ❯ src/experiments/candidate11/runtime.test.tsx (15 tests | 2 failed) 26444ms
+   ✓ C11 actual App/runtime/repository engineering closure > preserves multi as durable unconfirmed source and draft, opens idempotently  3234ms
+   ✓ C11 actual App/runtime/repository engineering closure > preserves no-date as durable unconfirmed source and draft, opens idempotently  635ms
+   ✓ C11 actual App/runtime/repository engineering closure > preserves vague as durable unconfirmed source and draft, opens idempotently  756ms
+   ✓ C11 actual App/runtime/repository engineering closure > preserves information as durable unconfirmed source and draft, opens idempotently  671ms
+   ✓ C11 actual App/runtime/repository engineering closure > preserves condition-true as durable unconfirmed source and draft, opens idempotently  752ms
+   ✓ C11 actual App/runtime/repository engineering closure > preserves condition-false as durable unconfirmed source and draft, opens idempotently  542ms
+   ✓ C11 actual App/runtime/repository engineering closure > preserves condition-unknown as durable unconfirmed source and draft, opens idempotently  530ms
+   ✓ C11 actual App/runtime/repository engineering closure > preserves revision as durable unconfirmed source and draft, opens idempotently  1076ms
+   × C11 actual App/runtime/repository engineering closure > edits, partially confirms, aborts a save, then explicitly retries; refresh and repeat cannot duplicate 5145ms
+     → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+   × C11 actual App/runtime/repository engineering closure > allows partial acceptance and explicit rejection without losing confirmed tasks 5283ms
+     → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+   ✓ C11 actual App/runtime/repository engineering closure > condition-unknown cannot force an inactive/unknown requirement into formal tasks  4563ms
+   ✓ C11 actual App/runtime/repository engineering closure > condition-false cannot force an inactive/unknown requirement into formal tasks  2222ms
+   ✓ C11 actual App/runtime/repository engineering closure > revision cannot force an inactive/unknown requirement into formal tasks  564ms
+   ✓ C11 actual App/runtime/repository engineering closure > historical candidate03 original survives a reversible scope-only binding into the new library  457ms
+   ✓ C11 actual App/runtime/repository engineering closure > database failure or a foreign database never falls back to a user library 2ms
+ ❯ src/experiments/realInput01/runtime.test.ts (30 tests | 3 failed) 46774ms
+   × real-input isolated canonical connection, seen responses not model accuracy > exact original A02 enters existing source atomically, provenance stays live, duplicate replay preserves confirmed data 5036ms
+     → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+   × real-input isolated canonical connection, seen responses not model accuracy > record corruption/identity substitution rejects before writes; original pending source retained on transaction failure 5009ms
+     → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+   × real-input isolated canonical connection, seen responses not model accuracy > material edits invalidate their observation; shared confirmed entity cannot be rewritten 5025ms
+     → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > explicit material review separates requirement and availability: ready  3323ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > explicit material review separates requirement and availability: missing  2802ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > explicit material review separates requirement and availability: not_required  2354ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > material review save failure is atomic, stale choices refuse, independent sibling can confirm  1882ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > engineering preparation resumes the same persisted request after partial failure without repeat consent or writes 232ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > changed saved reading refuses recovery of a prepared request, retaining the original pending evidence 97ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > saved source correction immediately expires old suggestions, prior review=false  424ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > saved source correction immediately expires old suggestions, prior review=true  771ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > saved correction preserves a previously confirmed task and independent source confirmation  3882ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > object correction keeps the current default title consistent and preserves explicit user title=false  2080ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > object correction keeps the current default title consistent and preserves explicit user title=true  2389ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > failed reading correction leaves old input usable; saving then restoring still requires a new suggestion  706ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > an unsent page correction preserves the explicitly selected page and can confirm normally  639ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > late response for a corrected in-flight input fails cleanly and preserves the response as failure evidence 212ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > derived long title requires an explicit short user title without truncating the corrected object  1301ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > saves real source and pending run before response; unchanged content does not create a second version 115ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > no selected flag can skip explicit review; reviewed no-date saves with zero time/reminders and reopens  512ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > explicit saved date/title invalidate old review and are the confirmed values; rollback is atomic  896ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > truth/status condition-true and nonzero normal confirmations  378ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > truth/status condition-false and nonzero normal confirmations 186ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > truth/status condition-unknown and nonzero normal confirmations 171ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > truth/status revision and nonzero normal confirmations  536ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > manual material repair persists exact values, keeps originals and independent brother confirmation  2900ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > whole-source versions remain immutable, old pending draft is stale, confirmed task survives  2343ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > changed source-only reading and duplicate operation cannot silently replace original; failed save rolls back 33ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > tampered first/effective review/raw or canonical is rejected, not repaired  387ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > pure information is explicitly disposed with no fake task; defer does not change unknown truth 138ms
+ ❯ src/experiments/realInput01/acceptance.test.tsx (86 tests | 8 failed) 197122ms
+   × paired09 settled raw replay; engineering simulation, not browser evidence > U01-09 explicitly reviews, partially confirms and independently restores raw, facts and unverified materials 5072ms
+     → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+   × paired09 settled raw replay; engineering simulation, not browser evidence > U07-09 explicitly reviews, partially confirms and independently restores raw, facts and unverified materials 5008ms
+     → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+   × paired09 settled raw replay; engineering simulation, not browser evidence > V04-03 explicitly reviews, partially confirms and independently restores raw, facts and unverified materials 5011ms
+     → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+   ✓ paired09 settled raw replay; engineering simulation, not browser evidence > explains an unknown condition and a cancelled old requirement without weakening either blocker  4997ms
+   ✓ paired09 settled raw replay; engineering simulation, not browser evidence > U11-09 zero-call replay keeps each task private time while retaining shared materials  691ms
+   ✓ paired09 settled raw replay; engineering simulation, not browser evidence > V02-09 zero-call replay keeps each task private time while retaining shared materials  505ms
+   ✓ paired09 settled raw replay; engineering simulation, not browser evidence > U01-09 zero-call replay keeps each task private time while retaining shared materials  676ms
+   ✓ paired09 settled raw replay; engineering simulation, not browser evidence > U10-09 zero-call replay keeps each task private time while retaining shared materials  915ms
+   ✓ paired09 settled raw replay; engineering simulation, not browser evidence > V04-09 zero-call replay keeps each task private time while retaining shared materials  843ms
+   ✓ paired09 settled raw replay; engineering simulation, not browser evidence > rejects wrong version, source, request and response before writes; rejected raw does not leave half records  1158ms
+   ✓ paired09 settled raw replay; engineering simulation, not browser evidence > transaction failure preserves older sources and successful append cannot overwrite them  3991ms
+   × paired07 actual recorded response boundary; memory only, not browser acceptance > explicit unverified review persists independently; dependency and broken sibling remain blocked (simulation) 5025ms
+     → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+   × paired07 actual recorded response boundary; memory only, not browser acceptance > R11-07 retains raw, failures and prior records, never dispatches or auto-confirms 5008ms
+     → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+   × paired07 actual recorded response boundary; memory only, not browser acceptance > R12-07 retains raw, failures and prior records, never dispatches or auto-confirms 5162ms
+     → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+   ✓ paired07 actual recorded response boundary; memory only, not browser acceptance > only the selected R and paired09 responses are public; write/model endpoints remain closed  331ms
+   × paired07 actual recorded response boundary; memory only, not browser acceptance > paired07 failed-response append is atomic and preserves every older record; invalid source identity cannot use the failure path 5032ms
+     → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+   ✓ HTTPS preview > local preview keeps exact origin and explicit creation, restores existing stores and permits only bound examples  1019ms
+   ✓ HTTPS preview > local preview server serves only public assets on loopback with model and foreign origins blocked  6181ms
+   ✓ HTTPS preview > real runtime picker opens all bound examples via the existing App callback without refreshing or dispatching  2590ms
+   ✓ HTTPS preview > L01-A binds the latest settled None answer, preserves raw identity, and never duplicates the same entry 189ms
+   ✓ HTTPS preview > L02-A binds the latest settled None answer, preserves raw identity, and never duplicates the same entry 178ms
+   ✓ HTTPS preview > L04-A binds the latest settled None answer, preserves raw identity, and never duplicates the same entry 168ms
+   ✓ HTTPS preview > L01-A saves both reviewed tasks with their own deadlines and unverified preparation  1327ms
+   ✓ HTTPS preview > L02-A uses explicit W11 corrections, rejects the extra suggestion, and saves only the valid independent task  1873ms
+   ✓ HTTPS preview > L04-A relation-editor save removes only the ungrounded dependency and persists the valid new task  1933ms
+   ✓ HTTPS preview > explicit unverified preparation preserves a valid replacement and cancels no independent task (simulation)  968ms
+   ✓ HTTPS preview > U11-09 preview can save its valid independent task without importing the sibling deadline  890ms
+   ✓ HTTPS preview > V02-09 preview can save its valid independent task without importing the sibling deadline  687ms
+   ✓ HTTPS preview > download controls prepare explicit user-clickable links instead of losing user activation after async reads 1ms
+   ✓ HTTPS preview > read/identity failures never open a panel or write; UI-open failure retains a recoverable single draft 194ms
+   ✓ HTTPS preview > existing App onDraftReady refreshes canonical view and selects the returned draft without page reload  316ms
+   ✓ HTTPS preview > Q01-06 preserves original identities and explicitly confirms in the new store  2034ms
+   ✓ HTTPS preview > Q07-06 preserves original identities and explicitly confirms in the new store  870ms
+   ✓ HTTPS preview > requires explicit preview profile and retains old recorded initial/name restrictions 3ms
+   ✓ HTTPS preview > Worker exposes only approved static responses and rejects all model/writing requests 77ms
+   ✓ paired06 existing wire recorded boundary > Q01-06 actual settled answer confirms reviewed tasks and independently reloads in memory  1216ms
+   ✓ paired06 existing wire recorded boundary > Q07-06 actual settled answer confirms reviewed tasks and independently reloads in memory  629ms
+   ✓ paired06 existing wire recorded boundary > Q03-06 actual settled answer confirms reviewed tasks and independently reloads in memory 287ms
+   ✓ paired06 existing wire recorded boundary > 03 same existing wire stays unselected until actual review, confirms and reloads without dispatch 229ms
+   ✓ paired06 existing wire recorded boundary > 06 same existing wire stays unselected until actual review, confirms and reloads without dispatch 223ms
+   ✓ paired06 existing wire recorded boundary > rejects mismatched version, unit, source and response before any persisted write 56ms
+   ✓ paired06 existing wire recorded boundary > rolls back failed append; valid retry of local replay preserves all pre-existing entities 155ms
+   ✓ paired05 new model recorded boundary > P01-03 true response, manual review, confirm and independent memory reload without a model  1255ms
+   ✓ paired05 new model recorded boundary > P05-05 true response, manual review, confirm and independent memory reload without a model  439ms
+   ✓ paired05 new model recorded boundary > P03-03 true response, manual review, confirm and independent memory reload without a model 243ms
+   ✓ paired05 new model recorded boundary > invalid assembly, response identity and duplicate other arm refuse without changing prior records  618ms
+   ✓ paired05 new model recorded boundary > new wire transaction failure is atomic, then a valid positive response succeeds 184ms
+   ✓ paired04 recorded source append > retains original source and response; no queued or dispatchable state, duplicate arm rejected 192ms
+   ✓ paired04 recorded source append > identity, request, response and recomputed source mismatch reject without writing 24ms
+   ✓ paired04 recorded source append > atomic failure leaves no source, run, draft or task; valid response then succeeds 203ms
+   ✓ paired04 recorded source append > adds distinct complex sources without changing any old record, and never confirms by loading  1760ms
+   ✓ explicit pending date confirmation > saves source-bound missing vague time without overwriting the real answer or existing nine tasks  15213ms
+   ✓ explicit pending date confirmation > source, ownership, stale edits and atomic consent boundaries reject without changing the workspace  10395ms
+   ✓ explicit pending date confirmation > targeted safety review: only date uncertainty qualifies, never references, conflicts, conditions, revisions or dependencies  4115ms
+   ✓ candidate03 recorded response integration, no model requests > rejects source/run/version/request/response substitution before any write  2787ms
+   ✓ candidate03 recorded response integration, no model requests > failed transaction rolls back the entire import; successful retry of local save is terminal and duplicate-safe  7082ms
+   ✓ candidate03 recorded response integration, no model requests > D01 preserves originals and confirms only reviewed expressible facts  10463ms
+   ✓ candidate03 recorded response integration, no model requests > D02 preserves originals and confirms only reviewed expressible facts  7318ms
+   ✓ candidate03 recorded response integration, no model requests > D03 preserves originals and confirms only reviewed expressible facts  3842ms
+   ✓ candidate03 recorded response integration, no model requests > D05 preserves originals and confirms only reviewed expressible facts  8380ms
+   ✓ read-close local review without model authorization > real runtime opens InputReview and saves independent corrections, while its send handler rejects before any run  2942ms
+   × candidate02 paid records replay without a model request > the candidate02 launcher exposes local carriers but keeps all upstream sending disabled 174ms
+     →
+node:fs:2787
+      const stats = binding.lstat(base, true, undefined, true /* throwIfNoEntry */);
+                            ^
+
+Error: ENOENT: no such file or directory, lstat 'C:\Users\Winner\.codex\worktrees\student-affairs-candidate11\比赛\undefined'
+    at realpathSync (node:fs:2787:29)
+    at createLocalApp (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/serve-mainline-real-input-01.mjs:160:22)
+    at file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/[eval1]:4:23 {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'lstat',
+  path: 'C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\undefined'
+}
+
+Node.js v24.18.0
+: expected 1 to be +0 // Object.is equality
+   ✓ candidate02 paid records replay without a model request > C03 creates a separately identified run and confirms valid tasks without overwriting old work  4554ms
+   ✓ candidate02 paid records replay without a model request > C05 creates a separately identified run and confirms valid tasks without overwriting old work  8191ms
+   ✓ candidate02 paid records replay without a model request > C08 creates a separately identified run and confirms valid tasks without overwriting old work  8137ms
+   ✓ complex notice correction public API, original model answers remain immutable > B01 event mismatch corrected explicitly; separate confirmation preserves two different deadlines  3192ms
+   ✓ complex notice correction public API, original model answers remain immutable > B01 event mismatch corrected explicitly; batch confirmation preserves two different deadlines  2673ms
+   ✓ complex notice correction public API, original model answers remain immutable > A08 failed raw is retained, missing old task and revision can be explicitly corrected and new task saved  1545ms
+   ✓ complex notice correction public API, original model answers remain immutable > B08 failed raw is retained, missing old task and revision can be explicitly corrected and new task saved  1617ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > batch actual recorded responses retain raw and first suggestions, never default select, preserve A02 and reject identity substitution  12276ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > real-input source description changes only the review banner; engineering and ordinary defaults remain 43ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > actual App forwards an existing description only for the real-input runtime 276ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > actual browser open wrapper rejects creation/upgrade events before legacy handlers, retains existing and old-default opens 262ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > original A02 real App driver preserves provenance, material observation and explicit edits through independent reload  1325ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > recorded runtime rejects replacement database initialization and missing original storage 1ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > recorded launcher builds real App, serves only bound A02 and rejects unauthorized endpoints without model code  800ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > the input renderer is a React component retaining original text without invoking save callbacks during render 5ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > the fact editor render preserves saved facts and does not publish dirty or saved notifications during render 41ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > real homepage retains dates and explains review before any send; old presentation remains 2ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > mounts the actual App with isolated capabilities and does not read old storage 5ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > source-first to correct confirmation and independent reload: no-date 105ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > source-first to correct confirmation and independent reload: multi  374ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > source-first to correct confirmation and independent reload: condition-true 99ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > source-first to correct confirmation and independent reload: revision 150ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > a failed executor is terminal, no retry; missing or malformed database never falls back 26ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > client sends exactly the bound text request once, then refuses duplicate or changed input 46ms
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  scripts/verify-candidate15-d9.test.mjs [ scripts/verify-candidate15-d9.test.mjs ]
+Error: No test suite found in file C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/比赛/scripts/verify-candidate15-d9.test.mjs
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/15]⎯
+
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 14 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/experiments/candidate11/runtime.test.tsx > C11 actual App/runtime/repository engineering closure > edits, partially confirms, aborts a save, then explicitly retries; refresh and repeat cannot duplicate
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/experiments/candidate11/runtime.test.tsx:44:3
+     42|     expect((await f.app.observed.events()).every(e=>e.origin==='AUTOMA…
+     43|   })
+     44|   it('edits, partially confirms, aborts a save, then explicitly retrie…
+       |   ^
+     45|     const f=await setup(),state=stateOfRuntime(await f.app.runtime.loa…
+     46|     const taskIds=state.first.original.tasks.map(t=>t.id)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/15]⎯
+
+ FAIL  src/experiments/candidate11/runtime.test.tsx > C11 actual App/runtime/repository engineering closure > allows partial acceptance and explicit rejection without losing confirmed tasks
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/experiments/candidate11/runtime.test.tsx:64:3
+     62|     expect(events.filter(e=>e.kind==='commit_succeeded')).toHaveLength…
+     63|   })
+     64|   it('allows partial acceptance and explicit rejection without losing …
+       |   ^
+     65|     const f=await setup(),ids=await reviewAll(f)
+     66|     await f.app.runtime.confirm({draftId:f.draftId,taskTempIds:[ids[0]…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/15]⎯
+
+ FAIL  src/experiments/candidate13/d6Runtime.test.tsx > D6 recorded-result engineering replay > edits, partially confirms, recovers from an injected save failure, reads back and survives refresh
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/experiments/candidate13/d6Runtime.test.tsx:33:3
+     31|     expect(original.originalRawHttpText).toBe(f.replay.rawHttpText);ex…
+     32|   })
+     33|   it('edits, partially confirms, recovers from an injected save failur…
+       |   ^
+     34|     const f=await setup(),state=stateOfRuntime(await f.app.runtime.loa…
+     35|     await f.app.runtime.edit({draftId:f.draftId,taskTempId:ids[0],revi…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/15]⎯
+
+ FAIL  src/experiments/realInput01/acceptance.test.tsx > paired09 settled raw replay; engineering simulation, not browser evidence > U01-09 explicitly reviews, partially confirms and independently restores raw, facts and unverified materials
+ FAIL  src/experiments/realInput01/acceptance.test.tsx > paired09 settled raw replay; engineering simulation, not browser evidence > U07-09 explicitly reviews, partially confirms and independently restores raw, facts and unverified materials
+ FAIL  src/experiments/realInput01/acceptance.test.tsx > paired09 settled raw replay; engineering simulation, not browser evidence > V04-03 explicitly reviews, partially confirms and independently restores raw, facts and unverified materials
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/experiments/realInput01/acceptance.test.tsx:70:39
+     68|     return {store,repo}
+     69|   }
+     70|   it.each(['U01-09','U07-09','V04-03'])('%s explicitly reviews, partia…
+       |                                       ^
+     71|     const {repo,store}=await fixture(),r=record(unitId),identity={unit…
+     72|     const fetch=vi.spyOn(globalThis,'fetch').mockRejectedValue(Error('…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/15]⎯
+
+ FAIL  src/experiments/realInput01/acceptance.test.tsx > paired07 actual recorded response boundary; memory only, not browser acceptance > explicit unverified review persists independently; dependency and broken sibling remain blocked (simulation)
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/experiments/realInput01/acceptance.test.tsx:192:3
+    190|       title:item.title,context:item.context,requestSha:raw.requestSha,…
+    191|   }
+    192|   it('explicit unverified review persists independently; dependency an…
+       |   ^
+    193|     const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:H…
+    194|     const repo=await SemanticRepository.open(store.name,store,emptyRea…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/15]⎯
+
+ FAIL  src/experiments/realInput01/acceptance.test.tsx > paired07 actual recorded response boundary; memory only, not browser acceptance > R11-07 retains raw, failures and prior records, never dispatches or auto-confirms
+ FAIL  src/experiments/realInput01/acceptance.test.tsx > paired07 actual recorded response boundary; memory only, not browser acceptance > R12-07 retains raw, failures and prior records, never dispatches or auto-confirms
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/experiments/realInput01/acceptance.test.tsx:262:30
+    260|     expect((await reopened.load()).tasks).toEqual(saved.tasks)
+    261|   })
+    262|   it.each(['R11-07','R12-07'])('%s retains raw, failures and prior rec…
+       |                              ^
+    263|     const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:H…
+    264|     const repo=await SemanticRepository.open(store.name,store,emptyRea…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/15]⎯
+
+ FAIL  src/experiments/realInput01/acceptance.test.tsx > paired07 actual recorded response boundary; memory only, not browser acceptance > paired07 failed-response append is atomic and preserves every older record; invalid source identity cannot use the failure path
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/experiments/realInput01/acceptance.test.tsx:318:3
+    316|     expect(r.status,r.stderr).toBe(0)
+    317|   })
+    318|   it('paired07 failed-response append is atomic and preserves every ol…
+       |   ^
+    319|     const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:H…
+    320|     const repo=await SemanticRepository.open(store.name,store,emptyRea…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/15]⎯
+
+ FAIL  src/experiments/realInput01/acceptance.test.tsx > candidate02 paid records replay without a model request > the candidate02 launcher exposes local carriers but keeps all upstream sending disabled
+AssertionError:
+node:fs:2787
+      const stats = binding.lstat(base, true, undefined, true /* throwIfNoEntry */);
+                            ^
+
+Error: ENOENT: no such file or directory, lstat 'C:\Users\Winner\.codex\worktrees\student-affairs-candidate11\比赛\undefined'
+    at realpathSync (node:fs:2787:29)
+    at createLocalApp (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/serve-mainline-real-input-01.mjs:160:22)
+    at file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/[eval1]:4:23 {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'lstat',
+  path: 'C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\undefined'
+}
+
+Node.js v24.18.0
+: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ createLocalApp ../%E6%AF%94%E8%B5%9B/scripts/serve-mainline-real-input-01.mjs:160:22
+ ❯ src/experiments/realInput01/acceptance.test.tsx:1136:103
+    1134|       console.log('candidate02 launcher: eight local carriers, zero up…
+    1135|     `],{encoding:'utf8',timeout:60000,maxBuffer:1024*1024})
+    1136|     expect(result.error?.message??'').toBe('');expect(result.status,re…
+       |                                                                                                       ^
+    1137|   },65000)
+    1138|   it.each(['C03','C05','C08'])('%s creates a separately identified run…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/15]⎯
+
+ FAIL  src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > exact original A02 enters existing source atomically, provenance stays live, duplicate replay preserves confirmed data
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/experiments/realInput01/runtime.test.ts:56:3
+     54| }
+     55| describe('real-input isolated canonical connection, seen responses not…
+     56|   it('exact original A02 enters existing source atomically, provenance…
+       |   ^
+     57|     const {record,workspace}=historicalA02(),store=Object.assign(new M…
+     58|     await new CanonicalWorkspaceRepository(store).save(workspace)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/15]⎯
+
+ FAIL  src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > record corruption/identity substitution rejects before writes; original pending source retained on transaction failure
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/experiments/realInput01/runtime.test.ts:74:3
+     72|     expect(await (await SemanticRepository.open(store.name,store,undef…
+     73|   })
+     74|   it('record corruption/identity substitution rejects before writes; o…
+       |   ^
+     75|     const {record,workspace}=historicalA02(),store=Object.assign(new M…
+     76|     await new CanonicalWorkspaceRepository(store).save(workspace)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/15]⎯
+
+ FAIL  src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > material edits invalidate their observation; shared confirmed entity cannot be rewritten
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/experiments/realInput01/runtime.test.ts:89:3
+     87|     await expect(replayRecordedA02(failedRepo,record)).rejects.toThrow…
+     88|   })
+     89|   it('material edits invalidate their observation; shared confirmed en…
+       |   ^
+     90|     const {repo,handle}=await setup('multi',r=>{
+     91|       const input=structuredClone(r.original.rawResponse);sharedMateri…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/15]⎯
+
+
+ Test Files  5 failed | 141 passed | 1 skipped (147)
+      Tests  14 failed | 1487 passed | 1 skipped (1502)
+   Start at  12:28:20
+   Duration  208.64s (transform 49.67s, setup 0ms, collect 147.61s, tests 376.22s, environment 48ms, prepare 52.05s)

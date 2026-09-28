@@ -1,0 +1,2189 @@
+{
+  "role": "ENGINEERING_REPLAY",
+  "workspace": {
+    "schemaVersion": 8,
+    "workspace": {
+      "id": "rco-mainline-01-02-i1-real-input-candidate16-d13-engineering-2",
+      "title": "真实输入隔离实验（不是用户工作区）",
+      "createdAt": "2026-09-28T04:18:29.569Z",
+      "updatedAt": "2026-09-28T04:30:42.440Z"
+    },
+    "settings": {
+      "defaultTimezone": "Asia/Shanghai",
+      "locale": "zh-CN"
+    },
+    "sources": [
+      {
+        "id": "source:f90bee88",
+        "workspaceId": "rco-mainline-01-02-i1-real-input-candidate16-d13-engineering-2",
+        "type": "text",
+        "title": "匿名工程夹具：独立事件 / 模糊时间",
+        "status": "confirmed",
+        "currentVersionId": "source:f90bee88:version:1",
+        "createdAt": "2026-09-22T09:00:00+08:00",
+        "updatedAt": "2026-09-28T04:30:42.440Z",
+        "legacyData": {
+          "realInput01": {
+            "version": "mainline-real-input-state-1",
+            "inputReceipt": {
+              "inputId": "d13-d13-fixture-vague-event",
+              "sourceType": "text",
+              "file": null,
+              "extractorVersion": "real-input-paste-1",
+              "pageCount": 1,
+              "pages": [
+                {
+                  "number": 1,
+                  "route": "parser",
+                  "chunks": [
+                    "[D5匿名合成Development]\n图书馆检索服务将在周三晚维护，原有预约记录不受影响。无需取消预约，不要上传说明，也不必给管理员发邮件。本通知仅说明维护安排。"
+                  ],
+                  "issues": [],
+                  "parserChunks": [
+                    "[D5匿名合成Development]\n图书馆检索服务将在周三晚维护，原有预约记录不受影响。无需取消预约，不要上传说明，也不必给管理员发邮件。本通知仅说明维护安排。"
+                  ],
+                  "ocrChunks": null
+                }
+              ],
+              "version": "real-input-receipt-1",
+              "originalSha256": "7a587c145fd130422c36ea46eee4d279b5dffdcc551a098b1fda5c0ef54e5946",
+              "corrections": []
+            },
+            "sendSnapshot": null
+          },
+          "reviewMetadata": {
+            "realInput01": {
+              "version": "mainline-real-input-state-1",
+              "inputReceipt": {
+                "inputId": "d13-d13-fixture-vague-event",
+                "sourceType": "text",
+                "file": null,
+                "extractorVersion": "real-input-paste-1",
+                "pageCount": 1,
+                "pages": [
+                  {
+                    "number": 1,
+                    "route": "parser",
+                    "chunks": [
+                      "[D5匿名合成Development]\n图书馆检索服务将在周三晚维护，原有预约记录不受影响。无需取消预约，不要上传说明，也不必给管理员发邮件。本通知仅说明维护安排。"
+                    ],
+                    "issues": [],
+                    "parserChunks": [
+                      "[D5匿名合成Development]\n图书馆检索服务将在周三晚维护，原有预约记录不受影响。无需取消预约，不要上传说明，也不必给管理员发邮件。本通知仅说明维护安排。"
+                    ],
+                    "ocrChunks": null
+                  }
+                ],
+                "version": "real-input-receipt-1",
+                "originalSha256": "7a587c145fd130422c36ea46eee4d279b5dffdcc551a098b1fda5c0ef54e5946",
+                "corrections": []
+              },
+              "sendSnapshot": null
+            }
+          },
+          "captureOperationId": "d13-d13-fixture-vague-event"
+        }
+      },
+      {
+        "id": "source:372c315a",
+        "workspaceId": "rco-mainline-01-02-i1-real-input-candidate16-d13-engineering-2",
+        "type": "text",
+        "title": "匿名工程夹具：纯信息无任务",
+        "status": "confirmed",
+        "currentVersionId": "source:372c315a:version:1",
+        "createdAt": "2026-09-22T09:00:00+08:00",
+        "updatedAt": "2026-09-28T04:19:15.892Z",
+        "legacyData": {
+          "realInput01": {
+            "version": "mainline-real-input-state-1",
+            "inputReceipt": {
+              "inputId": "d13-d13-fixture-no-task",
+              "sourceType": "text",
+              "file": null,
+              "extractorVersion": "real-input-paste-1",
+              "pageCount": 1,
+              "pages": [
+                {
+                  "number": 1,
+                  "route": "parser",
+                  "chunks": [
+                    "[D5匿名合成Development]\n进入复评名单的同学须参加作品复评陈述，以完成作品复评陈述为准。你的作品未进入复评名单，本通知不要求你参加。"
+                  ],
+                  "issues": [],
+                  "parserChunks": [
+                    "[D5匿名合成Development]\n进入复评名单的同学须参加作品复评陈述，以完成作品复评陈述为准。你的作品未进入复评名单，本通知不要求你参加。"
+                  ],
+                  "ocrChunks": null
+                }
+              ],
+              "version": "real-input-receipt-1",
+              "originalSha256": "0138dbeb5a7d82aa05090cc83a175559e6aed733e9acf558f360395cbb8a1568",
+              "corrections": []
+            },
+            "sendSnapshot": null
+          },
+          "reviewMetadata": {
+            "realInput01": {
+              "version": "mainline-real-input-state-1",
+              "inputReceipt": {
+                "inputId": "d13-d13-fixture-no-task",
+                "sourceType": "text",
+                "file": null,
+                "extractorVersion": "real-input-paste-1",
+                "pageCount": 1,
+                "pages": [
+                  {
+                    "number": 1,
+                    "route": "parser",
+                    "chunks": [
+                      "[D5匿名合成Development]\n进入复评名单的同学须参加作品复评陈述，以完成作品复评陈述为准。你的作品未进入复评名单，本通知不要求你参加。"
+                    ],
+                    "issues": [],
+                    "parserChunks": [
+                      "[D5匿名合成Development]\n进入复评名单的同学须参加作品复评陈述，以完成作品复评陈述为准。你的作品未进入复评名单，本通知不要求你参加。"
+                    ],
+                    "ocrChunks": null
+                  }
+                ],
+                "version": "real-input-receipt-1",
+                "originalSha256": "0138dbeb5a7d82aa05090cc83a175559e6aed733e9acf558f360395cbb8a1568",
+                "corrections": []
+              },
+              "sendSnapshot": null
+            }
+          },
+          "captureOperationId": "d13-d13-fixture-no-task"
+        }
+      }
+    ],
+    "sourceVersions": [
+      {
+        "id": "source:f90bee88:version:1",
+        "sourceId": "source:f90bee88",
+        "versionNo": 1,
+        "contentHash": "fnv1a32:78a2da76",
+        "rawText": "[D5匿名合成Development]\n图书馆检索服务将在周三晚维护，原有预约记录不受影响。无需取消预约，不要上传说明，也不必给管理员发邮件。本通知仅说明维护安排。",
+        "rawTextRef": null,
+        "createdAt": "2026-09-22T09:00:00+08:00",
+        "legacyData": {
+          "reviewMetadata": {
+            "realInput01": {
+              "version": "mainline-real-input-state-1",
+              "inputReceipt": {
+                "inputId": "d13-d13-fixture-vague-event",
+                "sourceType": "text",
+                "file": null,
+                "extractorVersion": "real-input-paste-1",
+                "pageCount": 1,
+                "pages": [
+                  {
+                    "number": 1,
+                    "route": "parser",
+                    "chunks": [
+                      "[D5匿名合成Development]\n图书馆检索服务将在周三晚维护，原有预约记录不受影响。无需取消预约，不要上传说明，也不必给管理员发邮件。本通知仅说明维护安排。"
+                    ],
+                    "issues": [],
+                    "parserChunks": [
+                      "[D5匿名合成Development]\n图书馆检索服务将在周三晚维护，原有预约记录不受影响。无需取消预约，不要上传说明，也不必给管理员发邮件。本通知仅说明维护安排。"
+                    ],
+                    "ocrChunks": null
+                  }
+                ],
+                "version": "real-input-receipt-1",
+                "originalSha256": "7a587c145fd130422c36ea46eee4d279b5dffdcc551a098b1fda5c0ef54e5946",
+                "corrections": []
+              },
+              "sendSnapshot": null
+            }
+          }
+        }
+      },
+      {
+        "id": "source:372c315a:version:1",
+        "sourceId": "source:372c315a",
+        "versionNo": 1,
+        "contentHash": "fnv1a32:fd3075ff",
+        "rawText": "[D5匿名合成Development]\n进入复评名单的同学须参加作品复评陈述，以完成作品复评陈述为准。你的作品未进入复评名单，本通知不要求你参加。",
+        "rawTextRef": null,
+        "createdAt": "2026-09-22T09:00:00+08:00",
+        "legacyData": {
+          "reviewMetadata": {
+            "realInput01": {
+              "version": "mainline-real-input-state-1",
+              "inputReceipt": {
+                "inputId": "d13-d13-fixture-no-task",
+                "sourceType": "text",
+                "file": null,
+                "extractorVersion": "real-input-paste-1",
+                "pageCount": 1,
+                "pages": [
+                  {
+                    "number": 1,
+                    "route": "parser",
+                    "chunks": [
+                      "[D5匿名合成Development]\n进入复评名单的同学须参加作品复评陈述，以完成作品复评陈述为准。你的作品未进入复评名单，本通知不要求你参加。"
+                    ],
+                    "issues": [],
+                    "parserChunks": [
+                      "[D5匿名合成Development]\n进入复评名单的同学须参加作品复评陈述，以完成作品复评陈述为准。你的作品未进入复评名单，本通知不要求你参加。"
+                    ],
+                    "ocrChunks": null
+                  }
+                ],
+                "version": "real-input-receipt-1",
+                "originalSha256": "0138dbeb5a7d82aa05090cc83a175559e6aed733e9acf558f360395cbb8a1568",
+                "corrections": []
+              },
+              "sendSnapshot": null
+            }
+          }
+        }
+      }
+    ],
+    "recognitionRuns": [
+      {
+        "id": "source:372c315a:run:1:1",
+        "sourceVersionId": "source:372c315a:version:1",
+        "provider": "deepseek",
+        "modelName": "deepseek-flash",
+        "promptVersion": "real-input-source-semantics-3",
+        "schemaVersion": "mainline-real-input-state-1",
+        "pipelineVersion": "mainline-real-input-state-1",
+        "status": "succeeded",
+        "startedAt": "2026-09-22T09:00:00+08:00",
+        "completedAt": "2026-09-28T04:18:39.900Z",
+        "durationMs": null,
+        "tokenUsage": null,
+        "qualityFlags": [],
+        "errorCode": null
+      },
+      {
+        "id": "source:f90bee88:run:1:1",
+        "sourceVersionId": "source:f90bee88:version:1",
+        "provider": "manual",
+        "modelName": "deepseek-flash",
+        "promptVersion": "real-input-source-semantics-3",
+        "schemaVersion": "mainline-real-input-state-1",
+        "pipelineVersion": "mainline-real-input-state-1",
+        "status": "succeeded",
+        "startedAt": "2026-09-22T09:00:00+08:00",
+        "completedAt": "2026-09-28T04:28:31.958Z",
+        "durationMs": null,
+        "tokenUsage": null,
+        "qualityFlags": [],
+        "errorCode": null
+      }
+    ],
+    "extractionDrafts": [
+      {
+        "id": "source:372c315a:draft:1:1",
+        "recognitionRunId": "source:372c315a:run:1:1",
+        "status": "confirmed",
+        "result": null,
+        "commitOperationIds": [],
+        "acceptedEntityTempIds": [],
+        "rejectedEntityTempIds": [],
+        "createdAt": "2026-09-22T09:00:00+08:00",
+        "updatedAt": "2026-09-28T04:19:15.892Z",
+        "legacyData": {
+          "realInputPending": {
+            "reading": {
+              "version": "mainline-real-input-state-1",
+              "inputReceipt": {
+                "inputId": "d13-d13-fixture-no-task",
+                "sourceType": "text",
+                "file": null,
+                "extractorVersion": "real-input-paste-1",
+                "pageCount": 1,
+                "pages": [
+                  {
+                    "number": 1,
+                    "route": "parser",
+                    "chunks": [
+                      "[D5匿名合成Development]\n进入复评名单的同学须参加作品复评陈述，以完成作品复评陈述为准。你的作品未进入复评名单，本通知不要求你参加。"
+                    ],
+                    "issues": [],
+                    "parserChunks": [
+                      "[D5匿名合成Development]\n进入复评名单的同学须参加作品复评陈述，以完成作品复评陈述为准。你的作品未进入复评名单，本通知不要求你参加。"
+                    ],
+                    "ocrChunks": null
+                  }
+                ],
+                "version": "real-input-receipt-1",
+                "originalSha256": "0138dbeb5a7d82aa05090cc83a175559e6aed733e9acf558f360395cbb8a1568",
+                "corrections": []
+              },
+              "sendSnapshot": {
+                "version": "real-input-send-1",
+                "inputId": "d13-d13-fixture-no-task",
+                "receiptSha256": "02f5ecdf86c4edcbbc914ec9c6d66ede508d023231199ec7d4107f60cbd52a2f",
+                "text": "[D5匿名合成Development]\n进入复评名单的同学须参加作品复评陈述，以完成作品复评陈述为准。你的作品未进入复评名单，本通知不要求你参加。",
+                "textSha256": "79c44b2ab80fc9d862add2f30240ec5fdadbcc5c786a7187fe7ce0ecd279dae3",
+                "pages": [
+                  1
+                ],
+                "ranges": [
+                  {
+                    "page": 1,
+                    "start": 0,
+                    "end": 73,
+                    "pageTextSha256": "79c44b2ab80fc9d862add2f30240ec5fdadbcc5c786a7187fe7ce0ecd279dae3"
+                  }
+                ],
+                "coverage": "complete_declared_range",
+                "reviewedPages": [
+                  1
+                ],
+                "consentAt": "2026-09-22T09:00:00+08:00"
+              }
+            },
+            "execution": "live",
+            "operationId": "d13-d13-fixture-no-task-run"
+          },
+          "mainline05": {
+            "version": "mainline-real-input-state-1",
+            "sourceId": "source:372c315a",
+            "sourceVersionId": "source:372c315a:version:1",
+            "runId": "source:372c315a:run:1:1",
+            "draftId": "source:372c315a:draft:1:1",
+            "rawHttpText": "{\"id\":\"fixture-not-a-model-request\",\"model\":\"deepseek-flash\",\"status\":\"completed\",\"error\":null,\"output\":[{\"type\":\"message\",\"role\":\"assistant\",\"content\":[{\"type\":\"output_text\",\"text\":\"{\\\"schemaVersion\\\":\\\"real-input-model-wire-1\\\",\\\"tasks\\\":[],\\\"materials\\\":[],\\\"timePoints\\\":[],\\\"events\\\":[],\\\"revisions\\\":[],\\\"conflicts\\\":[],\\\"informationScopeIds\\\":[\\\"scope-0001-aeb58fddf2196c73b4e8c936425d65620faed7a4e959894e002761c60fb9185e\\\",\\\"scope-0002-aff30b420be6c53cdc151939146ec324bc632591ae1e4c6cd40abe83067615cd\\\",\\\"scope-0003-2ca24c9c19a890f10a34ab5aff115971bc00bbc5975b43eec0f08ef9f5e38427\\\",\\\"scope-0004-ec2d5ff40df28c9eca50e93717e6a5689b97f4b5e3534b939579ea629e0c6e19\\\",\\\"scope-0005-35316e5a086e701d885310543efd5449919a915018192269157c4ca68b502880\\\"],\\\"unresolvedScopeIds\\\":[]}\"}]}],\"usage\":{\"input_tokens\":0,\"output_tokens\":0}}",
+            "rawOutputText": "{\"schemaVersion\":\"real-input-model-wire-1\",\"tasks\":[],\"materials\":[],\"timePoints\":[],\"events\":[],\"revisions\":[],\"conflicts\":[],\"informationScopeIds\":[\"scope-0001-aeb58fddf2196c73b4e8c936425d65620faed7a4e959894e002761c60fb9185e\",\"scope-0002-aff30b420be6c53cdc151939146ec324bc632591ae1e4c6cd40abe83067615cd\",\"scope-0003-2ca24c9c19a890f10a34ab5aff115971bc00bbc5975b43eec0f08ef9f5e38427\",\"scope-0004-ec2d5ff40df28c9eca50e93717e6a5689b97f4b5e3534b939579ea629e0c6e19\",\"scope-0005-35316e5a086e701d885310543efd5449919a915018192269157c4ca68b502880\"],\"unresolvedScopeIds\":[]}",
+            "rawResponse": {
+              "schemaVersion": "real-input-model-wire-1",
+              "tasks": [],
+              "materials": [],
+              "timePoints": [],
+              "events": [],
+              "revisions": [],
+              "conflicts": [],
+              "informationScopeIds": [
+                "scope-0001-aeb58fddf2196c73b4e8c936425d65620faed7a4e959894e002761c60fb9185e",
+                "scope-0002-aff30b420be6c53cdc151939146ec324bc632591ae1e4c6cd40abe83067615cd",
+                "scope-0003-2ca24c9c19a890f10a34ab5aff115971bc00bbc5975b43eec0f08ef9f5e38427",
+                "scope-0004-ec2d5ff40df28c9eca50e93717e6a5689b97f4b5e3534b939579ea629e0c6e19",
+                "scope-0005-35316e5a086e701d885310543efd5449919a915018192269157c4ca68b502880"
+              ],
+              "unresolvedScopeIds": []
+            },
+            "adaptedResponse": {
+              "schemaVersion": "mainline04-task-semantics-1",
+              "tasks": [],
+              "materials": [],
+              "timePoints": [],
+              "events": [],
+              "revisions": [],
+              "conflicts": [],
+              "informationScopeIds": [
+                "scope-0001-aeb58fddf2196c73b4e8c936425d65620faed7a4e959894e002761c60fb9185e",
+                "scope-0002-aff30b420be6c53cdc151939146ec324bc632591ae1e4c6cd40abe83067615cd",
+                "scope-0003-2ca24c9c19a890f10a34ab5aff115971bc00bbc5975b43eec0f08ef9f5e38427",
+                "scope-0004-ec2d5ff40df28c9eca50e93717e6a5689b97f4b5e3534b939579ea629e0c6e19",
+                "scope-0005-35316e5a086e701d885310543efd5449919a915018192269157c4ca68b502880"
+              ],
+              "unresolvedScopeIds": [],
+              "sourceId": "source:372c315a",
+              "sourceVersionId": "source:372c315a:version:1",
+              "sourceFingerprint": "sha256:bbcb9e395eb854a0d24899c7d2cf7937d723640d689d7d350ad2a71ae90dd6f4"
+            },
+            "legacyResponse": null,
+            "context": {
+              "index": {
+                "sourceId": "source:372c315a",
+                "sourceVersionId": "source:372c315a:version:1",
+                "sourceFingerprint": "sha256:bbcb9e395eb854a0d24899c7d2cf7937d723640d689d7d350ad2a71ae90dd6f4",
+                "sourceContent": "[D5匿名合成Development]\n进入复评名单的同学须参加作品复评陈述，以完成作品复评陈述为准。你的作品未进入复评名单，本通知不要求你参加。",
+                "scopes": [
+                  {
+                    "id": "scope-0001-aeb58fddf2196c73b4e8c936425d65620faed7a4e959894e002761c60fb9185e",
+                    "sourceId": "source:372c315a",
+                    "sourceVersionId": "source:372c315a:version:1",
+                    "sourceFingerprint": "sha256:bbcb9e395eb854a0d24899c7d2cf7937d723640d689d7d350ad2a71ae90dd6f4",
+                    "order": 0,
+                    "start": 0,
+                    "end": 19,
+                    "text": "[D5匿名合成Development]",
+                    "contentHash": "sha256:aeb58fddf2196c73b4e8c936425d65620faed7a4e959894e002761c60fb9185e"
+                  },
+                  {
+                    "id": "scope-0002-aff30b420be6c53cdc151939146ec324bc632591ae1e4c6cd40abe83067615cd",
+                    "sourceId": "source:372c315a",
+                    "sourceVersionId": "source:372c315a:version:1",
+                    "sourceFingerprint": "sha256:bbcb9e395eb854a0d24899c7d2cf7937d723640d689d7d350ad2a71ae90dd6f4",
+                    "order": 1,
+                    "start": 20,
+                    "end": 39,
+                    "text": "进入复评名单的同学须参加作品复评陈述，",
+                    "contentHash": "sha256:aff30b420be6c53cdc151939146ec324bc632591ae1e4c6cd40abe83067615cd"
+                  },
+                  {
+                    "id": "scope-0003-2ca24c9c19a890f10a34ab5aff115971bc00bbc5975b43eec0f08ef9f5e38427",
+                    "sourceId": "source:372c315a",
+                    "sourceVersionId": "source:372c315a:version:1",
+                    "sourceFingerprint": "sha256:bbcb9e395eb854a0d24899c7d2cf7937d723640d689d7d350ad2a71ae90dd6f4",
+                    "order": 2,
+                    "start": 39,
+                    "end": 51,
+                    "text": "以完成作品复评陈述为准。",
+                    "contentHash": "sha256:2ca24c9c19a890f10a34ab5aff115971bc00bbc5975b43eec0f08ef9f5e38427"
+                  },
+                  {
+                    "id": "scope-0004-ec2d5ff40df28c9eca50e93717e6a5689b97f4b5e3534b939579ea629e0c6e19",
+                    "sourceId": "source:372c315a",
+                    "sourceVersionId": "source:372c315a:version:1",
+                    "sourceFingerprint": "sha256:bbcb9e395eb854a0d24899c7d2cf7937d723640d689d7d350ad2a71ae90dd6f4",
+                    "order": 3,
+                    "start": 51,
+                    "end": 63,
+                    "text": "你的作品未进入复评名单，",
+                    "contentHash": "sha256:ec2d5ff40df28c9eca50e93717e6a5689b97f4b5e3534b939579ea629e0c6e19"
+                  },
+                  {
+                    "id": "scope-0005-35316e5a086e701d885310543efd5449919a915018192269157c4ca68b502880",
+                    "sourceId": "source:372c315a",
+                    "sourceVersionId": "source:372c315a:version:1",
+                    "sourceFingerprint": "sha256:bbcb9e395eb854a0d24899c7d2cf7937d723640d689d7d350ad2a71ae90dd6f4",
+                    "order": 4,
+                    "start": 63,
+                    "end": 73,
+                    "text": "本通知不要求你参加。",
+                    "contentHash": "sha256:35316e5a086e701d885310543efd5449919a915018192269157c4ca68b502880"
+                  }
+                ]
+              },
+              "authority": "live_model_candidate",
+              "profile": "real-input-01",
+              "referenceTime": "2026-09-22T09:00:00+08:00",
+              "timezone": "Asia/Shanghai",
+              "ownershipMode": "mainline05-own-assets-1"
+            },
+            "first": {
+              "schemaVersion": "mainline04-review-package-1",
+              "original": {
+                "schemaVersion": "mainline04-task-semantics-1",
+                "tasks": [],
+                "materials": [],
+                "timePoints": [],
+                "events": [],
+                "revisions": [],
+                "conflicts": [],
+                "informationScopeIds": [
+                  "scope-0001-aeb58fddf2196c73b4e8c936425d65620faed7a4e959894e002761c60fb9185e",
+                  "scope-0002-aff30b420be6c53cdc151939146ec324bc632591ae1e4c6cd40abe83067615cd",
+                  "scope-0003-2ca24c9c19a890f10a34ab5aff115971bc00bbc5975b43eec0f08ef9f5e38427",
+                  "scope-0004-ec2d5ff40df28c9eca50e93717e6a5689b97f4b5e3534b939579ea629e0c6e19",
+                  "scope-0005-35316e5a086e701d885310543efd5449919a915018192269157c4ca68b502880"
+                ],
+                "unresolvedScopeIds": [],
+                "sourceId": "source:372c315a",
+                "sourceVersionId": "source:372c315a:version:1",
+                "sourceFingerprint": "sha256:bbcb9e395eb854a0d24899c7d2cf7937d723640d689d7d350ad2a71ae90dd6f4"
+              },
+              "origin": "live_model_candidate",
+              "items": [],
+              "issues": [],
+              "sourceIndex": {
+                "sourceId": "source:372c315a",
+                "sourceVersionId": "source:372c315a:version:1",
+                "sourceFingerprint": "sha256:bbcb9e395eb854a0d24899c7d2cf7937d723640d689d7d350ad2a71ae90dd6f4",
+                "sourceContent": "[D5匿名合成Development]\n进入复评名单的同学须参加作品复评陈述，以完成作品复评陈述为准。你的作品未进入复评名单，本通知不要求你参加。",
+                "scopes": [
+                  {
+                    "id": "scope-0001-aeb58fddf2196c73b4e8c936425d65620faed7a4e959894e002761c60fb9185e",
+                    "sourceId": "source:372c315a",
+                    "sourceVersionId": "source:372c315a:version:1",
+                    "sourceFingerprint": "sha256:bbcb9e395eb854a0d24899c7d2cf7937d723640d689d7d350ad2a71ae90dd6f4",
+                    "order": 0,
+                    "start": 0,
+                    "end": 19,
+                    "text": "[D5匿名合成Development]",
+                    "contentHash": "sha256:aeb58fddf2196c73b4e8c936425d65620faed7a4e959894e002761c60fb9185e"
+                  },
+                  {
+                    "id": "scope-0002-aff30b420be6c53cdc151939146ec324bc632591ae1e4c6cd40abe83067615cd",
+                    "sourceId": "source:372c315a",
+                    "sourceVersionId": "source:372c315a:version:1",
+                    "sourceFingerprint": "sha256:bbcb9e395eb854a0d24899c7d2cf7937d723640d689d7d350ad2a71ae90dd6f4",
+                    "order": 1,
+                    "start": 20,
+                    "end": 39,
+                    "text": "进入复评名单的同学须参加作品复评陈述，",
+                    "contentHash": "sha256:aff30b420be6c53cdc151939146ec324bc632591ae1e4c6cd40abe83067615cd"
+                  },
+                  {
+                    "id": "scope-0003-2ca24c9c19a890f10a34ab5aff115971bc00bbc5975b43eec0f08ef9f5e38427",
+                    "sourceId": "source:372c315a",
+                    "sourceVersionId": "source:372c315a:version:1",
+                    "sourceFingerprint": "sha256:bbcb9e395eb854a0d24899c7d2cf7937d723640d689d7d350ad2a71ae90dd6f4",
+                    "order": 2,
+                    "start": 39,
+                    "end": 51,
+                    "text": "以完成作品复评陈述为准。",
+                    "contentHash": "sha256:2ca24c9c19a890f10a34ab5aff115971bc00bbc5975b43eec0f08ef9f5e38427"
+                  },
+                  {
+                    "id": "scope-0004-ec2d5ff40df28c9eca50e93717e6a5689b97f4b5e3534b939579ea629e0c6e19",
+                    "sourceId": "source:372c315a",
+                    "sourceVersionId": "source:372c315a:version:1",
+                    "sourceFingerprint": "sha256:bbcb9e395eb854a0d24899c7d2cf7937d723640d689d7d350ad2a71ae90dd6f4",
+                    "order": 3,
+                    "start": 51,
+                    "end": 63,
+                    "text": "你的作品未进入复评名单，",
+                    "contentHash": "sha256:ec2d5ff40df28c9eca50e93717e6a5689b97f4b5e3534b939579ea629e0c6e19"
+                  },
+                  {
+                    "id": "scope-0005-35316e5a086e701d885310543efd5449919a915018192269157c4ca68b502880",
+                    "sourceId": "source:372c315a",
+                    "sourceVersionId": "source:372c315a:version:1",
+                    "sourceFingerprint": "sha256:bbcb9e395eb854a0d24899c7d2cf7937d723640d689d7d350ad2a71ae90dd6f4",
+                    "order": 4,
+                    "start": 63,
+                    "end": 73,
+                    "text": "本通知不要求你参加。",
+                    "contentHash": "sha256:35316e5a086e701d885310543efd5449919a915018192269157c4ca68b502880"
+                  }
+                ]
+              },
+              "normalizedTimes": [],
+              "app": "NOT_RUN",
+              "canonicalPersistence": "NOT_RUN"
+            },
+            "inputReceipt": {
+              "inputId": "d13-d13-fixture-no-task",
+              "sourceType": "text",
+              "file": null,
+              "extractorVersion": "real-input-paste-1",
+              "pageCount": 1,
+              "pages": [
+                {
+                  "number": 1,
+                  "route": "parser",
+                  "chunks": [
+                    "[D5匿名合成Development]\n进入复评名单的同学须参加作品复评陈述，以完成作品复评陈述为准。你的作品未进入复评名单，本通知不要求你参加。"
+                  ],
+                  "issues": [],
+                  "parserChunks": [
+                    "[D5匿名合成Development]\n进入复评名单的同学须参加作品复评陈述，以完成作品复评陈述为准。你的作品未进入复评名单，本通知不要求你参加。"
+                  ],
+                  "ocrChunks": null
+                }
+              ],
+              "version": "real-input-receipt-1",
+              "originalSha256": "0138dbeb5a7d82aa05090cc83a175559e6aed733e9acf558f360395cbb8a1568",
+              "corrections": []
+            },
+            "sendSnapshot": {
+              "version": "real-input-send-1",
+              "inputId": "d13-d13-fixture-no-task",
+              "receiptSha256": "02f5ecdf86c4edcbbc914ec9c6d66ede508d023231199ec7d4107f60cbd52a2f",
+              "text": "[D5匿名合成Development]\n进入复评名单的同学须参加作品复评陈述，以完成作品复评陈述为准。你的作品未进入复评名单，本通知不要求你参加。",
+              "textSha256": "79c44b2ab80fc9d862add2f30240ec5fdadbcc5c786a7187fe7ce0ecd279dae3",
+              "pages": [
+                1
+              ],
+              "ranges": [
+                {
+                  "page": 1,
+                  "start": 0,
+                  "end": 73,
+                  "pageTextSha256": "79c44b2ab80fc9d862add2f30240ec5fdadbcc5c786a7187fe7ce0ecd279dae3"
+                }
+              ],
+              "coverage": "complete_declared_range",
+              "reviewedPages": [
+                1
+              ],
+              "consentAt": "2026-09-22T09:00:00+08:00"
+            },
+            "execution": "live",
+            "operations": [
+              {
+                "id": "material-review-mode-1",
+                "kind": "enable_material_review",
+                "at": "2026-09-28T04:18:39.912Z",
+                "taskIds": [],
+                "field": null,
+                "value": null,
+                "before": null
+              },
+              {
+                "id": "1c930521-cb73-4ee4-9578-c2cbecdddc9d",
+                "kind": "review_info",
+                "taskIds": [],
+                "field": null,
+                "value": null,
+                "informationEventVersion": "d10-event-commit-1",
+                "before": null,
+                "at": "2026-09-28T04:19:15.892Z"
+              }
+            ],
+            "bindings": {}
+          }
+        }
+      },
+      {
+        "id": "source:f90bee88:draft:1:1",
+        "recognitionRunId": "source:f90bee88:run:1:1",
+        "status": "confirmed",
+        "result": null,
+        "commitOperationIds": [],
+        "acceptedEntityTempIds": [],
+        "rejectedEntityTempIds": [],
+        "createdAt": "2026-09-22T09:00:00+08:00",
+        "updatedAt": "2026-09-28T04:30:42.440Z",
+        "legacyData": {
+          "realInputPending": {
+            "reading": {
+              "version": "mainline-real-input-state-1",
+              "inputReceipt": {
+                "inputId": "d13-d13-fixture-vague-event",
+                "sourceType": "text",
+                "file": null,
+                "extractorVersion": "real-input-paste-1",
+                "pageCount": 1,
+                "pages": [
+                  {
+                    "number": 1,
+                    "route": "parser",
+                    "chunks": [
+                      "[D5匿名合成Development]\n图书馆检索服务将在周三晚维护，原有预约记录不受影响。无需取消预约，不要上传说明，也不必给管理员发邮件。本通知仅说明维护安排。"
+                    ],
+                    "issues": [],
+                    "parserChunks": [
+                      "[D5匿名合成Development]\n图书馆检索服务将在周三晚维护，原有预约记录不受影响。无需取消预约，不要上传说明，也不必给管理员发邮件。本通知仅说明维护安排。"
+                    ],
+                    "ocrChunks": null
+                  }
+                ],
+                "version": "real-input-receipt-1",
+                "originalSha256": "7a587c145fd130422c36ea46eee4d279b5dffdcc551a098b1fda5c0ef54e5946",
+                "corrections": []
+              },
+              "sendSnapshot": {
+                "version": "real-input-send-1",
+                "inputId": "d13-d13-fixture-vague-event",
+                "receiptSha256": "2383d660302a77d3f2950f6245b8109c87f2299e673f6df87f630e4a1b2b0a41",
+                "text": "[D5匿名合成Development]\n图书馆检索服务将在周三晚维护，原有预约记录不受影响。无需取消预约，不要上传说明，也不必给管理员发邮件。本通知仅说明维护安排。",
+                "textSha256": "8fe0a0b5f05cf5e5e9c70f2c4976401a4b2d9aaef7e5d1639cbaa2bc9f12c834",
+                "pages": [
+                  1
+                ],
+                "ranges": [
+                  {
+                    "page": 1,
+                    "start": 0,
+                    "end": 82,
+                    "pageTextSha256": "8fe0a0b5f05cf5e5e9c70f2c4976401a4b2d9aaef7e5d1639cbaa2bc9f12c834"
+                  }
+                ],
+                "coverage": "complete_declared_range",
+                "reviewedPages": [
+                  1
+                ],
+                "consentAt": "2026-09-22T09:00:00+08:00"
+              }
+            },
+            "execution": "seen_engineering_replay",
+            "operationId": "d13-d13-fixture-vague-event-run"
+          },
+          "mainline05": {
+            "version": "mainline-real-input-state-1",
+            "sourceId": "source:f90bee88",
+            "sourceVersionId": "source:f90bee88:version:1",
+            "runId": "source:f90bee88:run:1:1",
+            "draftId": "source:f90bee88:draft:1:1",
+            "rawHttpText": "{\"id\":\"fixture-not-a-model-request\",\"model\":\"deepseek-flash\",\"status\":\"completed\",\"error\":null,\"output\":[{\"type\":\"message\",\"role\":\"assistant\",\"content\":[{\"type\":\"output_text\",\"text\":\"{\\\"schemaVersion\\\":\\\"real-input-model-wire-1\\\",\\\"tasks\\\":[],\\\"materials\\\":[],\\\"timePoints\\\":[{\\\"tempId\\\":\\\"P1\\\",\\\"type\\\":\\\"event_start\\\",\\\"rawText\\\":\\\"周三晚\\\",\\\"relatedTaskTempIds\\\":[],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0002-0728a0221a0f09e243b2eb14611ca49784f54af685aa506ea98c50f4363fc8ff\\\"],\\\"confidence\\\":1}],\\\"events\\\":[{\\\"tempId\\\":\\\"E1\\\",\\\"title\\\":\\\"图书馆检索服务\\\",\\\"description\\\":\\\"\\\",\\\"startTimePointTempId\\\":\\\"P1\\\",\\\"endTimePointTempId\\\":null,\\\"location\\\":null,\\\"scopeIds\\\":[\\\"scope-0002-0728a0221a0f09e243b2eb14611ca49784f54af685aa506ea98c50f4363fc8ff\\\"],\\\"confidence\\\":1,\\\"inferenceLevel\\\":\\\"explicit\\\",\\\"relatedTaskTempIds\\\":[]}],\\\"revisions\\\":[],\\\"conflicts\\\":[],\\\"informationScopeIds\\\":[\\\"scope-0001-5fd0fdb6f859f2904e074487cd0e7cb8b3ff1f66423ff87defe58b7e5a88922c\\\",\\\"scope-0002-0728a0221a0f09e243b2eb14611ca49784f54af685aa506ea98c50f4363fc8ff\\\",\\\"scope-0003-793dd0ea31dc79d160dc355a5d46b4588949acd3b848ef7916d73d02250c70c0\\\",\\\"scope-0004-6c606ecea35a797215ef640c69575f4c9788e4bcb378fa82a54b69e54b078139\\\",\\\"scope-0005-d1d3fa717227fd8d823c8abde17ad4cc6c4ddadaa52f8059e5b3ffbfcfaf6f13\\\",\\\"scope-0006-d6cb5dabc34e4b6e2d868618f0818569fbc83e58a705c6bf7823d332dde150e2\\\",\\\"scope-0007-360b3691dc0ec86724de04c94fcac6432d11c20c1f55d9721b4ad09699c368a6\\\"],\\\"unresolvedScopeIds\\\":[]}\"}]}],\"usage\":{\"input_tokens\":0,\"output_tokens\":0}}",
+            "rawOutputText": "{\"schemaVersion\":\"real-input-model-wire-1\",\"tasks\":[],\"materials\":[],\"timePoints\":[{\"tempId\":\"P1\",\"type\":\"event_start\",\"rawText\":\"周三晚\",\"relatedTaskTempIds\":[],\"relatedMaterialTempIds\":[],\"scopeIds\":[\"scope-0002-0728a0221a0f09e243b2eb14611ca49784f54af685aa506ea98c50f4363fc8ff\"],\"confidence\":1}],\"events\":[{\"tempId\":\"E1\",\"title\":\"图书馆检索服务\",\"description\":\"\",\"startTimePointTempId\":\"P1\",\"endTimePointTempId\":null,\"location\":null,\"scopeIds\":[\"scope-0002-0728a0221a0f09e243b2eb14611ca49784f54af685aa506ea98c50f4363fc8ff\"],\"confidence\":1,\"inferenceLevel\":\"explicit\",\"relatedTaskTempIds\":[]}],\"revisions\":[],\"conflicts\":[],\"informationScopeIds\":[\"scope-0001-5fd0fdb6f859f2904e074487cd0e7cb8b3ff1f66423ff87defe58b7e5a88922c\",\"scope-0002-0728a0221a0f09e243b2eb14611ca49784f54af685aa506ea98c50f4363fc8ff\",\"scope-0003-793dd0ea31dc79d160dc355a5d46b4588949acd3b848ef7916d73d02250c70c0\",\"scope-0004-6c606ecea35a797215ef640c69575f4c9788e4bcb378fa82a54b69e54b078139\",\"scope-0005-d1d3fa717227fd8d823c8abde17ad4cc6c4ddadaa52f8059e5b3ffbfcfaf6f13\",\"scope-0006-d6cb5dabc34e4b6e2d868618f0818569fbc83e58a705c6bf7823d332dde150e2\",\"scope-0007-360b3691dc0ec86724de04c94fcac6432d11c20c1f55d9721b4ad09699c368a6\"],\"unresolvedScopeIds\":[]}",
+            "rawResponse": {
+              "schemaVersion": "real-input-model-wire-1",
+              "tasks": [],
+              "materials": [],
+              "timePoints": [
+                {
+                  "tempId": "P1",
+                  "type": "event_start",
+                  "rawText": "周三晚",
+                  "relatedTaskTempIds": [],
+                  "relatedMaterialTempIds": [],
+                  "scopeIds": [
+                    "scope-0002-0728a0221a0f09e243b2eb14611ca49784f54af685aa506ea98c50f4363fc8ff"
+                  ],
+                  "confidence": 1
+                }
+              ],
+              "events": [
+                {
+                  "tempId": "E1",
+                  "title": "图书馆检索服务",
+                  "description": "",
+                  "startTimePointTempId": "P1",
+                  "endTimePointTempId": null,
+                  "location": null,
+                  "scopeIds": [
+                    "scope-0002-0728a0221a0f09e243b2eb14611ca49784f54af685aa506ea98c50f4363fc8ff"
+                  ],
+                  "confidence": 1,
+                  "inferenceLevel": "explicit",
+                  "relatedTaskTempIds": []
+                }
+              ],
+              "revisions": [],
+              "conflicts": [],
+              "informationScopeIds": [
+                "scope-0001-5fd0fdb6f859f2904e074487cd0e7cb8b3ff1f66423ff87defe58b7e5a88922c",
+                "scope-0002-0728a0221a0f09e243b2eb14611ca49784f54af685aa506ea98c50f4363fc8ff",
+                "scope-0003-793dd0ea31dc79d160dc355a5d46b4588949acd3b848ef7916d73d02250c70c0",
+                "scope-0004-6c606ecea35a797215ef640c69575f4c9788e4bcb378fa82a54b69e54b078139",
+                "scope-0005-d1d3fa717227fd8d823c8abde17ad4cc6c4ddadaa52f8059e5b3ffbfcfaf6f13",
+                "scope-0006-d6cb5dabc34e4b6e2d868618f0818569fbc83e58a705c6bf7823d332dde150e2",
+                "scope-0007-360b3691dc0ec86724de04c94fcac6432d11c20c1f55d9721b4ad09699c368a6"
+              ],
+              "unresolvedScopeIds": []
+            },
+            "adaptedResponse": {
+              "schemaVersion": "mainline04-task-semantics-1",
+              "tasks": [],
+              "materials": [],
+              "timePoints": [
+                {
+                  "tempId": "P1",
+                  "type": "event_start",
+                  "rawText": "周三晚",
+                  "relatedTaskTempIds": [],
+                  "relatedMaterialTempIds": [],
+                  "scopeIds": [
+                    "scope-0002-0728a0221a0f09e243b2eb14611ca49784f54af685aa506ea98c50f4363fc8ff"
+                  ],
+                  "confidence": 1,
+                  "normalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "vague",
+                  "needsConfirmation": true
+                }
+              ],
+              "events": [
+                {
+                  "tempId": "E1",
+                  "title": "图书馆检索服务",
+                  "description": "",
+                  "startTimePointTempId": "P1",
+                  "endTimePointTempId": null,
+                  "location": null,
+                  "scopeIds": [
+                    "scope-0002-0728a0221a0f09e243b2eb14611ca49784f54af685aa506ea98c50f4363fc8ff"
+                  ],
+                  "confidence": 1,
+                  "inferenceLevel": "explicit",
+                  "relatedTaskTempIds": []
+                }
+              ],
+              "revisions": [],
+              "conflicts": [],
+              "informationScopeIds": [
+                "scope-0001-5fd0fdb6f859f2904e074487cd0e7cb8b3ff1f66423ff87defe58b7e5a88922c",
+                "scope-0002-0728a0221a0f09e243b2eb14611ca49784f54af685aa506ea98c50f4363fc8ff",
+                "scope-0003-793dd0ea31dc79d160dc355a5d46b4588949acd3b848ef7916d73d02250c70c0",
+                "scope-0004-6c606ecea35a797215ef640c69575f4c9788e4bcb378fa82a54b69e54b078139",
+                "scope-0005-d1d3fa717227fd8d823c8abde17ad4cc6c4ddadaa52f8059e5b3ffbfcfaf6f13",
+                "scope-0006-d6cb5dabc34e4b6e2d868618f0818569fbc83e58a705c6bf7823d332dde150e2",
+                "scope-0007-360b3691dc0ec86724de04c94fcac6432d11c20c1f55d9721b4ad09699c368a6"
+              ],
+              "unresolvedScopeIds": [],
+              "sourceId": "source:f90bee88",
+              "sourceVersionId": "source:f90bee88:version:1",
+              "sourceFingerprint": "sha256:c7bd27530e7a5f944afa8da9dc5ef50386ac5cd13dd5e4afa4d6c65b45c78895"
+            },
+            "legacyResponse": null,
+            "context": {
+              "index": {
+                "sourceId": "source:f90bee88",
+                "sourceVersionId": "source:f90bee88:version:1",
+                "sourceFingerprint": "sha256:c7bd27530e7a5f944afa8da9dc5ef50386ac5cd13dd5e4afa4d6c65b45c78895",
+                "sourceContent": "[D5匿名合成Development]\n图书馆检索服务将在周三晚维护，原有预约记录不受影响。无需取消预约，不要上传说明，也不必给管理员发邮件。本通知仅说明维护安排。",
+                "scopes": [
+                  {
+                    "id": "scope-0001-5fd0fdb6f859f2904e074487cd0e7cb8b3ff1f66423ff87defe58b7e5a88922c",
+                    "sourceId": "source:f90bee88",
+                    "sourceVersionId": "source:f90bee88:version:1",
+                    "sourceFingerprint": "sha256:c7bd27530e7a5f944afa8da9dc5ef50386ac5cd13dd5e4afa4d6c65b45c78895",
+                    "order": 0,
+                    "start": 0,
+                    "end": 19,
+                    "text": "[D5匿名合成Development]",
+                    "contentHash": "sha256:5fd0fdb6f859f2904e074487cd0e7cb8b3ff1f66423ff87defe58b7e5a88922c"
+                  },
+                  {
+                    "id": "scope-0002-0728a0221a0f09e243b2eb14611ca49784f54af685aa506ea98c50f4363fc8ff",
+                    "sourceId": "source:f90bee88",
+                    "sourceVersionId": "source:f90bee88:version:1",
+                    "sourceFingerprint": "sha256:c7bd27530e7a5f944afa8da9dc5ef50386ac5cd13dd5e4afa4d6c65b45c78895",
+                    "order": 1,
+                    "start": 20,
+                    "end": 35,
+                    "text": "图书馆检索服务将在周三晚维护，",
+                    "contentHash": "sha256:0728a0221a0f09e243b2eb14611ca49784f54af685aa506ea98c50f4363fc8ff"
+                  },
+                  {
+                    "id": "scope-0003-793dd0ea31dc79d160dc355a5d46b4588949acd3b848ef7916d73d02250c70c0",
+                    "sourceId": "source:f90bee88",
+                    "sourceVersionId": "source:f90bee88:version:1",
+                    "sourceFingerprint": "sha256:c7bd27530e7a5f944afa8da9dc5ef50386ac5cd13dd5e4afa4d6c65b45c78895",
+                    "order": 2,
+                    "start": 35,
+                    "end": 46,
+                    "text": "原有预约记录不受影响。",
+                    "contentHash": "sha256:793dd0ea31dc79d160dc355a5d46b4588949acd3b848ef7916d73d02250c70c0"
+                  },
+                  {
+                    "id": "scope-0004-6c606ecea35a797215ef640c69575f4c9788e4bcb378fa82a54b69e54b078139",
+                    "sourceId": "source:f90bee88",
+                    "sourceVersionId": "source:f90bee88:version:1",
+                    "sourceFingerprint": "sha256:c7bd27530e7a5f944afa8da9dc5ef50386ac5cd13dd5e4afa4d6c65b45c78895",
+                    "order": 3,
+                    "start": 46,
+                    "end": 53,
+                    "text": "无需取消预约，",
+                    "contentHash": "sha256:6c606ecea35a797215ef640c69575f4c9788e4bcb378fa82a54b69e54b078139"
+                  },
+                  {
+                    "id": "scope-0005-d1d3fa717227fd8d823c8abde17ad4cc6c4ddadaa52f8059e5b3ffbfcfaf6f13",
+                    "sourceId": "source:f90bee88",
+                    "sourceVersionId": "source:f90bee88:version:1",
+                    "sourceFingerprint": "sha256:c7bd27530e7a5f944afa8da9dc5ef50386ac5cd13dd5e4afa4d6c65b45c78895",
+                    "order": 4,
+                    "start": 53,
+                    "end": 60,
+                    "text": "不要上传说明，",
+                    "contentHash": "sha256:d1d3fa717227fd8d823c8abde17ad4cc6c4ddadaa52f8059e5b3ffbfcfaf6f13"
+                  },
+                  {
+                    "id": "scope-0006-d6cb5dabc34e4b6e2d868618f0818569fbc83e58a705c6bf7823d332dde150e2",
+                    "sourceId": "source:f90bee88",
+                    "sourceVersionId": "source:f90bee88:version:1",
+                    "sourceFingerprint": "sha256:c7bd27530e7a5f944afa8da9dc5ef50386ac5cd13dd5e4afa4d6c65b45c78895",
+                    "order": 5,
+                    "start": 60,
+                    "end": 71,
+                    "text": "也不必给管理员发邮件。",
+                    "contentHash": "sha256:d6cb5dabc34e4b6e2d868618f0818569fbc83e58a705c6bf7823d332dde150e2"
+                  },
+                  {
+                    "id": "scope-0007-360b3691dc0ec86724de04c94fcac6432d11c20c1f55d9721b4ad09699c368a6",
+                    "sourceId": "source:f90bee88",
+                    "sourceVersionId": "source:f90bee88:version:1",
+                    "sourceFingerprint": "sha256:c7bd27530e7a5f944afa8da9dc5ef50386ac5cd13dd5e4afa4d6c65b45c78895",
+                    "order": 6,
+                    "start": 71,
+                    "end": 82,
+                    "text": "本通知仅说明维护安排。",
+                    "contentHash": "sha256:360b3691dc0ec86724de04c94fcac6432d11c20c1f55d9721b4ad09699c368a6"
+                  }
+                ]
+              },
+              "authority": "live_model_candidate",
+              "profile": "real-input-01",
+              "referenceTime": "2026-09-22T09:00:00+08:00",
+              "timezone": "Asia/Shanghai",
+              "ownershipMode": "mainline05-own-assets-1"
+            },
+            "first": {
+              "schemaVersion": "mainline04-review-package-1",
+              "original": {
+                "schemaVersion": "mainline04-task-semantics-1",
+                "tasks": [],
+                "materials": [],
+                "timePoints": [
+                  {
+                    "tempId": "P1",
+                    "type": "event_start",
+                    "rawText": "周三晚",
+                    "relatedTaskTempIds": [],
+                    "relatedMaterialTempIds": [],
+                    "scopeIds": [
+                      "scope-0002-0728a0221a0f09e243b2eb14611ca49784f54af685aa506ea98c50f4363fc8ff"
+                    ],
+                    "confidence": 1,
+                    "normalizedValue": null,
+                    "timezone": "Asia/Shanghai",
+                    "isAllDay": false,
+                    "precision": "vague",
+                    "needsConfirmation": true
+                  }
+                ],
+                "events": [
+                  {
+                    "tempId": "E1",
+                    "title": "图书馆检索服务",
+                    "description": "",
+                    "startTimePointTempId": "P1",
+                    "endTimePointTempId": null,
+                    "location": null,
+                    "scopeIds": [
+                      "scope-0002-0728a0221a0f09e243b2eb14611ca49784f54af685aa506ea98c50f4363fc8ff"
+                    ],
+                    "confidence": 1,
+                    "inferenceLevel": "explicit",
+                    "relatedTaskTempIds": []
+                  }
+                ],
+                "revisions": [],
+                "conflicts": [],
+                "informationScopeIds": [
+                  "scope-0001-5fd0fdb6f859f2904e074487cd0e7cb8b3ff1f66423ff87defe58b7e5a88922c",
+                  "scope-0002-0728a0221a0f09e243b2eb14611ca49784f54af685aa506ea98c50f4363fc8ff",
+                  "scope-0003-793dd0ea31dc79d160dc355a5d46b4588949acd3b848ef7916d73d02250c70c0",
+                  "scope-0004-6c606ecea35a797215ef640c69575f4c9788e4bcb378fa82a54b69e54b078139",
+                  "scope-0005-d1d3fa717227fd8d823c8abde17ad4cc6c4ddadaa52f8059e5b3ffbfcfaf6f13",
+                  "scope-0006-d6cb5dabc34e4b6e2d868618f0818569fbc83e58a705c6bf7823d332dde150e2",
+                  "scope-0007-360b3691dc0ec86724de04c94fcac6432d11c20c1f55d9721b4ad09699c368a6"
+                ],
+                "unresolvedScopeIds": [],
+                "sourceId": "source:f90bee88",
+                "sourceVersionId": "source:f90bee88:version:1",
+                "sourceFingerprint": "sha256:c7bd27530e7a5f944afa8da9dc5ef50386ac5cd13dd5e4afa4d6c65b45c78895"
+              },
+              "origin": "live_model_candidate",
+              "items": [],
+              "issues": [
+                {
+                  "code": "TIME_NEEDS_REVIEW",
+                  "entityIds": [
+                    "P1"
+                  ]
+                }
+              ],
+              "sourceIndex": {
+                "sourceId": "source:f90bee88",
+                "sourceVersionId": "source:f90bee88:version:1",
+                "sourceFingerprint": "sha256:c7bd27530e7a5f944afa8da9dc5ef50386ac5cd13dd5e4afa4d6c65b45c78895",
+                "sourceContent": "[D5匿名合成Development]\n图书馆检索服务将在周三晚维护，原有预约记录不受影响。无需取消预约，不要上传说明，也不必给管理员发邮件。本通知仅说明维护安排。",
+                "scopes": [
+                  {
+                    "id": "scope-0001-5fd0fdb6f859f2904e074487cd0e7cb8b3ff1f66423ff87defe58b7e5a88922c",
+                    "sourceId": "source:f90bee88",
+                    "sourceVersionId": "source:f90bee88:version:1",
+                    "sourceFingerprint": "sha256:c7bd27530e7a5f944afa8da9dc5ef50386ac5cd13dd5e4afa4d6c65b45c78895",
+                    "order": 0,
+                    "start": 0,
+                    "end": 19,
+                    "text": "[D5匿名合成Development]",
+                    "contentHash": "sha256:5fd0fdb6f859f2904e074487cd0e7cb8b3ff1f66423ff87defe58b7e5a88922c"
+                  },
+                  {
+                    "id": "scope-0002-0728a0221a0f09e243b2eb14611ca49784f54af685aa506ea98c50f4363fc8ff",
+                    "sourceId": "source:f90bee88",
+                    "sourceVersionId": "source:f90bee88:version:1",
+                    "sourceFingerprint": "sha256:c7bd27530e7a5f944afa8da9dc5ef50386ac5cd13dd5e4afa4d6c65b45c78895",
+                    "order": 1,
+                    "start": 20,
+                    "end": 35,
+                    "text": "图书馆检索服务将在周三晚维护，",
+                    "contentHash": "sha256:0728a0221a0f09e243b2eb14611ca49784f54af685aa506ea98c50f4363fc8ff"
+                  },
+                  {
+                    "id": "scope-0003-793dd0ea31dc79d160dc355a5d46b4588949acd3b848ef7916d73d02250c70c0",
+                    "sourceId": "source:f90bee88",
+                    "sourceVersionId": "source:f90bee88:version:1",
+                    "sourceFingerprint": "sha256:c7bd27530e7a5f944afa8da9dc5ef50386ac5cd13dd5e4afa4d6c65b45c78895",
+                    "order": 2,
+                    "start": 35,
+                    "end": 46,
+                    "text": "原有预约记录不受影响。",
+                    "contentHash": "sha256:793dd0ea31dc79d160dc355a5d46b4588949acd3b848ef7916d73d02250c70c0"
+                  },
+                  {
+                    "id": "scope-0004-6c606ecea35a797215ef640c69575f4c9788e4bcb378fa82a54b69e54b078139",
+                    "sourceId": "source:f90bee88",
+                    "sourceVersionId": "source:f90bee88:version:1",
+                    "sourceFingerprint": "sha256:c7bd27530e7a5f944afa8da9dc5ef50386ac5cd13dd5e4afa4d6c65b45c78895",
+                    "order": 3,
+                    "start": 46,
+                    "end": 53,
+                    "text": "无需取消预约，",
+                    "contentHash": "sha256:6c606ecea35a797215ef640c69575f4c9788e4bcb378fa82a54b69e54b078139"
+                  },
+                  {
+                    "id": "scope-0005-d1d3fa717227fd8d823c8abde17ad4cc6c4ddadaa52f8059e5b3ffbfcfaf6f13",
+                    "sourceId": "source:f90bee88",
+                    "sourceVersionId": "source:f90bee88:version:1",
+                    "sourceFingerprint": "sha256:c7bd27530e7a5f944afa8da9dc5ef50386ac5cd13dd5e4afa4d6c65b45c78895",
+                    "order": 4,
+                    "start": 53,
+                    "end": 60,
+                    "text": "不要上传说明，",
+                    "contentHash": "sha256:d1d3fa717227fd8d823c8abde17ad4cc6c4ddadaa52f8059e5b3ffbfcfaf6f13"
+                  },
+                  {
+                    "id": "scope-0006-d6cb5dabc34e4b6e2d868618f0818569fbc83e58a705c6bf7823d332dde150e2",
+                    "sourceId": "source:f90bee88",
+                    "sourceVersionId": "source:f90bee88:version:1",
+                    "sourceFingerprint": "sha256:c7bd27530e7a5f944afa8da9dc5ef50386ac5cd13dd5e4afa4d6c65b45c78895",
+                    "order": 5,
+                    "start": 60,
+                    "end": 71,
+                    "text": "也不必给管理员发邮件。",
+                    "contentHash": "sha256:d6cb5dabc34e4b6e2d868618f0818569fbc83e58a705c6bf7823d332dde150e2"
+                  },
+                  {
+                    "id": "scope-0007-360b3691dc0ec86724de04c94fcac6432d11c20c1f55d9721b4ad09699c368a6",
+                    "sourceId": "source:f90bee88",
+                    "sourceVersionId": "source:f90bee88:version:1",
+                    "sourceFingerprint": "sha256:c7bd27530e7a5f944afa8da9dc5ef50386ac5cd13dd5e4afa4d6c65b45c78895",
+                    "order": 6,
+                    "start": 71,
+                    "end": 82,
+                    "text": "本通知仅说明维护安排。",
+                    "contentHash": "sha256:360b3691dc0ec86724de04c94fcac6432d11c20c1f55d9721b4ad09699c368a6"
+                  }
+                ]
+              },
+              "normalizedTimes": [
+                {
+                  "tempId": "P1",
+                  "ast": {
+                    "rawText": "周三晚",
+                    "type": "event_start",
+                    "normalizedValue": null,
+                    "rangeEndNormalizedValue": null,
+                    "timezone": "Asia/Shanghai",
+                    "isAllDay": false,
+                    "precision": "vague",
+                    "needsConfirmation": true,
+                    "evidenceSpan": {
+                      "start": 0,
+                      "end": 3
+                    },
+                    "dateKind": "none",
+                    "timeKind": "none",
+                    "correctionApplied": false,
+                    "issues": [
+                      "time_not_found"
+                    ]
+                  }
+                }
+              ],
+              "app": "NOT_RUN",
+              "canonicalPersistence": "NOT_RUN"
+            },
+            "inputReceipt": {
+              "inputId": "d13-d13-fixture-vague-event",
+              "sourceType": "text",
+              "file": null,
+              "extractorVersion": "real-input-paste-1",
+              "pageCount": 1,
+              "pages": [
+                {
+                  "number": 1,
+                  "route": "parser",
+                  "chunks": [
+                    "[D5匿名合成Development]\n图书馆检索服务将在周三晚维护，原有预约记录不受影响。无需取消预约，不要上传说明，也不必给管理员发邮件。本通知仅说明维护安排。"
+                  ],
+                  "issues": [],
+                  "parserChunks": [
+                    "[D5匿名合成Development]\n图书馆检索服务将在周三晚维护，原有预约记录不受影响。无需取消预约，不要上传说明，也不必给管理员发邮件。本通知仅说明维护安排。"
+                  ],
+                  "ocrChunks": null
+                }
+              ],
+              "version": "real-input-receipt-1",
+              "originalSha256": "7a587c145fd130422c36ea46eee4d279b5dffdcc551a098b1fda5c0ef54e5946",
+              "corrections": []
+            },
+            "sendSnapshot": {
+              "version": "real-input-send-1",
+              "inputId": "d13-d13-fixture-vague-event",
+              "receiptSha256": "2383d660302a77d3f2950f6245b8109c87f2299e673f6df87f630e4a1b2b0a41",
+              "text": "[D5匿名合成Development]\n图书馆检索服务将在周三晚维护，原有预约记录不受影响。无需取消预约，不要上传说明，也不必给管理员发邮件。本通知仅说明维护安排。",
+              "textSha256": "8fe0a0b5f05cf5e5e9c70f2c4976401a4b2d9aaef7e5d1639cbaa2bc9f12c834",
+              "pages": [
+                1
+              ],
+              "ranges": [
+                {
+                  "page": 1,
+                  "start": 0,
+                  "end": 82,
+                  "pageTextSha256": "8fe0a0b5f05cf5e5e9c70f2c4976401a4b2d9aaef7e5d1639cbaa2bc9f12c834"
+                }
+              ],
+              "coverage": "complete_declared_range",
+              "reviewedPages": [
+                1
+              ],
+              "consentAt": "2026-09-22T09:00:00+08:00"
+            },
+            "execution": "seen_engineering_replay",
+            "operations": [
+              {
+                "id": "material-review-mode-1",
+                "kind": "enable_material_review",
+                "at": "2026-09-28T04:28:32.049Z",
+                "taskIds": [],
+                "field": null,
+                "value": null,
+                "before": null
+              },
+              {
+                "id": "329c6637-4616-46b8-a3db-12dc4b4dc17a",
+                "kind": "correct_fact",
+                "at": "2026-09-28T04:30:35.424Z",
+                "taskIds": [],
+                "field": null,
+                "value": null,
+                "before": null,
+                "correction": {
+                  "id": "329c6637-4616-46b8-a3db-12dc4b4dc17a",
+                  "at": "2026-09-28T04:30:35.424Z",
+                  "change": {
+                    "kind": "independent_event",
+                    "eventId": "E1",
+                    "value": {
+                      "tempId": "E1",
+                      "title": "图书馆检索服务",
+                      "description": "",
+                      "startTimePointTempId": "P1",
+                      "endTimePointTempId": null,
+                      "location": "匿名服务台",
+                      "scopeIds": [
+                        "scope-0002-0728a0221a0f09e243b2eb14611ca49784f54af685aa506ea98c50f4363fc8ff"
+                      ],
+                      "confidence": 1,
+                      "inferenceLevel": "explicit",
+                      "relatedTaskTempIds": []
+                    },
+                    "scopeIds": [
+                      "scope-0002-0728a0221a0f09e243b2eb14611ca49784f54af685aa506ea98c50f4363fc8ff"
+                    ],
+                    "note": "用户核对独立事件字段。"
+                  },
+                  "before": {
+                    "tempId": "E1",
+                    "title": "图书馆检索服务",
+                    "description": "",
+                    "startTimePointTempId": "P1",
+                    "endTimePointTempId": null,
+                    "location": null,
+                    "scopeIds": [
+                      "scope-0002-0728a0221a0f09e243b2eb14611ca49784f54af685aa506ea98c50f4363fc8ff"
+                    ],
+                    "confidence": 1,
+                    "inferenceLevel": "explicit",
+                    "relatedTaskTempIds": []
+                  }
+                },
+                "factReview": {
+                  "schemaVersion": "mainline04-review-package-1",
+                  "original": {
+                    "schemaVersion": "mainline04-task-semantics-1",
+                    "tasks": [],
+                    "materials": [],
+                    "timePoints": [
+                      {
+                        "tempId": "P1",
+                        "type": "event_start",
+                        "rawText": "周三晚",
+                        "relatedTaskTempIds": [],
+                        "relatedMaterialTempIds": [],
+                        "scopeIds": [
+                          "scope-0002-0728a0221a0f09e243b2eb14611ca49784f54af685aa506ea98c50f4363fc8ff"
+                        ],
+                        "confidence": 1,
+                        "normalizedValue": null,
+                        "timezone": "Asia/Shanghai",
+                        "isAllDay": false,
+                        "precision": "vague",
+                        "needsConfirmation": true
+                      }
+                    ],
+                    "events": [
+                      {
+                        "tempId": "E1",
+                        "title": "图书馆检索服务",
+                        "description": "",
+                        "startTimePointTempId": "P1",
+                        "endTimePointTempId": null,
+                        "location": null,
+                        "scopeIds": [
+                          "scope-0002-0728a0221a0f09e243b2eb14611ca49784f54af685aa506ea98c50f4363fc8ff"
+                        ],
+                        "confidence": 1,
+                        "inferenceLevel": "explicit",
+                        "relatedTaskTempIds": []
+                      }
+                    ],
+                    "revisions": [],
+                    "conflicts": [],
+                    "informationScopeIds": [
+                      "scope-0001-5fd0fdb6f859f2904e074487cd0e7cb8b3ff1f66423ff87defe58b7e5a88922c",
+                      "scope-0002-0728a0221a0f09e243b2eb14611ca49784f54af685aa506ea98c50f4363fc8ff",
+                      "scope-0003-793dd0ea31dc79d160dc355a5d46b4588949acd3b848ef7916d73d02250c70c0",
+                      "scope-0004-6c606ecea35a797215ef640c69575f4c9788e4bcb378fa82a54b69e54b078139",
+                      "scope-0005-d1d3fa717227fd8d823c8abde17ad4cc6c4ddadaa52f8059e5b3ffbfcfaf6f13",
+                      "scope-0006-d6cb5dabc34e4b6e2d868618f0818569fbc83e58a705c6bf7823d332dde150e2",
+                      "scope-0007-360b3691dc0ec86724de04c94fcac6432d11c20c1f55d9721b4ad09699c368a6"
+                    ],
+                    "unresolvedScopeIds": [],
+                    "sourceId": "source:f90bee88",
+                    "sourceVersionId": "source:f90bee88:version:1",
+                    "sourceFingerprint": "sha256:c7bd27530e7a5f944afa8da9dc5ef50386ac5cd13dd5e4afa4d6c65b45c78895"
+                  },
+                  "origin": "live_model_candidate",
+                  "items": [],
+                  "issues": [
+                    {
+                      "code": "TIME_NEEDS_REVIEW",
+                      "entityIds": [
+                        "P1"
+                      ]
+                    }
+                  ],
+                  "sourceIndex": {
+                    "sourceId": "source:f90bee88",
+                    "sourceVersionId": "source:f90bee88:version:1",
+                    "sourceFingerprint": "sha256:c7bd27530e7a5f944afa8da9dc5ef50386ac5cd13dd5e4afa4d6c65b45c78895",
+                    "sourceContent": "[D5匿名合成Development]\n图书馆检索服务将在周三晚维护，原有预约记录不受影响。无需取消预约，不要上传说明，也不必给管理员发邮件。本通知仅说明维护安排。",
+                    "scopes": [
+                      {
+                        "id": "scope-0001-5fd0fdb6f859f2904e074487cd0e7cb8b3ff1f66423ff87defe58b7e5a88922c",
+                        "sourceId": "source:f90bee88",
+                        "sourceVersionId": "source:f90bee88:version:1",
+                        "sourceFingerprint": "sha256:c7bd27530e7a5f944afa8da9dc5ef50386ac5cd13dd5e4afa4d6c65b45c78895",
+                        "order": 0,
+                        "start": 0,
+                        "end": 19,
+                        "text": "[D5匿名合成Development]",
+                        "contentHash": "sha256:5fd0fdb6f859f2904e074487cd0e7cb8b3ff1f66423ff87defe58b7e5a88922c"
+                      },
+                      {
+                        "id": "scope-0002-0728a0221a0f09e243b2eb14611ca49784f54af685aa506ea98c50f4363fc8ff",
+                        "sourceId": "source:f90bee88",
+                        "sourceVersionId": "source:f90bee88:version:1",
+                        "sourceFingerprint": "sha256:c7bd27530e7a5f944afa8da9dc5ef50386ac5cd13dd5e4afa4d6c65b45c78895",
+                        "order": 1,
+                        "start": 20,
+                        "end": 35,
+                        "text": "图书馆检索服务将在周三晚维护，",
+                        "contentHash": "sha256:0728a0221a0f09e243b2eb14611ca49784f54af685aa506ea98c50f4363fc8ff"
+                      },
+                      {
+                        "id": "scope-0003-793dd0ea31dc79d160dc355a5d46b4588949acd3b848ef7916d73d02250c70c0",
+                        "sourceId": "source:f90bee88",
+                        "sourceVersionId": "source:f90bee88:version:1",
+                        "sourceFingerprint": "sha256:c7bd27530e7a5f944afa8da9dc5ef50386ac5cd13dd5e4afa4d6c65b45c78895",
+                        "order": 2,
+                        "start": 35,
+                        "end": 46,
+                        "text": "原有预约记录不受影响。",
+                        "contentHash": "sha256:793dd0ea31dc79d160dc355a5d46b4588949acd3b848ef7916d73d02250c70c0"
+                      },
+                      {
+                        "id": "scope-0004-6c606ecea35a797215ef640c69575f4c9788e4bcb378fa82a54b69e54b078139",
+                        "sourceId": "source:f90bee88",
+                        "sourceVersionId": "source:f90bee88:version:1",
+                        "sourceFingerprint": "sha256:c7bd27530e7a5f944afa8da9dc5ef50386ac5cd13dd5e4afa4d6c65b45c78895",
+                        "order": 3,
+                        "start": 46,
+                        "end": 53,
+                        "text": "无需取消预约，",
+                        "contentHash": "sha256:6c606ecea35a797215ef640c69575f4c9788e4bcb378fa82a54b69e54b078139"
+                      },
+                      {
+                        "id": "scope-0005-d1d3fa717227fd8d823c8abde17ad4cc6c4ddadaa52f8059e5b3ffbfcfaf6f13",
+                        "sourceId": "source:f90bee88",
+                        "sourceVersionId": "source:f90bee88:version:1",
+                        "sourceFingerprint": "sha256:c7bd27530e7a5f944afa8da9dc5ef50386ac5cd13dd5e4afa4d6c65b45c78895",
+                        "order": 4,
+                        "start": 53,
+                        "end": 60,
+                        "text": "不要上传说明，",
+                        "contentHash": "sha256:d1d3fa717227fd8d823c8abde17ad4cc6c4ddadaa52f8059e5b3ffbfcfaf6f13"
+                      },
+                      {
+                        "id": "scope-0006-d6cb5dabc34e4b6e2d868618f0818569fbc83e58a705c6bf7823d332dde150e2",
+                        "sourceId": "source:f90bee88",
+                        "sourceVersionId": "source:f90bee88:version:1",
+                        "sourceFingerprint": "sha256:c7bd27530e7a5f944afa8da9dc5ef50386ac5cd13dd5e4afa4d6c65b45c78895",
+                        "order": 5,
+                        "start": 60,
+                        "end": 71,
+                        "text": "也不必给管理员发邮件。",
+                        "contentHash": "sha256:d6cb5dabc34e4b6e2d868618f0818569fbc83e58a705c6bf7823d332dde150e2"
+                      },
+                      {
+                        "id": "scope-0007-360b3691dc0ec86724de04c94fcac6432d11c20c1f55d9721b4ad09699c368a6",
+                        "sourceId": "source:f90bee88",
+                        "sourceVersionId": "source:f90bee88:version:1",
+                        "sourceFingerprint": "sha256:c7bd27530e7a5f944afa8da9dc5ef50386ac5cd13dd5e4afa4d6c65b45c78895",
+                        "order": 6,
+                        "start": 71,
+                        "end": 82,
+                        "text": "本通知仅说明维护安排。",
+                        "contentHash": "sha256:360b3691dc0ec86724de04c94fcac6432d11c20c1f55d9721b4ad09699c368a6"
+                      }
+                    ]
+                  },
+                  "normalizedTimes": [
+                    {
+                      "tempId": "P1",
+                      "ast": {
+                        "rawText": "周三晚",
+                        "type": "event_start",
+                        "normalizedValue": null,
+                        "rangeEndNormalizedValue": null,
+                        "timezone": "Asia/Shanghai",
+                        "isAllDay": false,
+                        "precision": "vague",
+                        "needsConfirmation": true,
+                        "evidenceSpan": {
+                          "start": 0,
+                          "end": 3
+                        },
+                        "dateKind": "none",
+                        "timeKind": "none",
+                        "correctionApplied": false,
+                        "issues": [
+                          "time_not_found"
+                        ]
+                      }
+                    }
+                  ],
+                  "app": "NOT_RUN",
+                  "canonicalPersistence": "NOT_RUN"
+                }
+              },
+              {
+                "id": "58288cc1-3c55-49e7-9b1c-354f1b9d1321",
+                "kind": "review_info",
+                "taskIds": [],
+                "field": null,
+                "value": null,
+                "informationEventVersion": "d10-event-commit-1",
+                "before": null,
+                "at": "2026-09-28T04:30:42.440Z"
+              }
+            ],
+            "bindings": {
+              "time:P1": "mainline05:time:source:f90bee88:draft:1:1:P1",
+              "event:E1": "mainline05:event:source:f90bee88:draft:1:1:E1"
+            }
+          }
+        }
+      }
+    ],
+    "projects": [],
+    "milestones": [],
+    "workPackages": [],
+    "tasks": [],
+    "materials": [],
+    "timePoints": [
+      {
+        "id": "mainline05:time:source:f90bee88:draft:1:1:P1",
+        "projectId": null,
+        "milestoneId": null,
+        "taskId": null,
+        "materialId": null,
+        "eventId": "mainline05:event:source:f90bee88:draft:1:1:E1",
+        "relatedTaskIds": [],
+        "relatedMaterialIds": [],
+        "type": "event_start",
+        "rawText": "周三晚",
+        "normalizedValue": null,
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "vague",
+        "needsConfirmation": true,
+        "createdAt": "2026-09-28T04:30:42.440Z",
+        "updatedAt": "2026-09-28T04:30:42.440Z",
+        "legacyData": {
+          "mainline05DraftId": "source:f90bee88:draft:1:1",
+          "recognitionTempId": "P1",
+          "sourceId": "source:f90bee88"
+        }
+      }
+    ],
+    "events": [
+      {
+        "id": "mainline05:event:source:f90bee88:draft:1:1:E1",
+        "projectId": null,
+        "title": "图书馆检索服务",
+        "description": "",
+        "location": "匿名服务台",
+        "startTimePointId": "mainline05:time:source:f90bee88:draft:1:1:P1",
+        "endTimePointId": null,
+        "createdAt": "2026-09-28T04:30:42.440Z",
+        "updatedAt": "2026-09-28T04:30:42.440Z",
+        "legacyData": {
+          "mainline05DraftId": "source:f90bee88:draft:1:1",
+          "recognitionTempId": "E1",
+          "sourceId": "source:f90bee88",
+          "extractionMethod": "user_correction"
+        }
+      }
+    ],
+    "evidenceRefs": [
+      {
+        "id": "mainline05:evidence:source:f90bee88:draft:1:1:scope-0001-5fd0fdb6f859f2904e074487cd0e7cb8b3ff1f66423ff87defe58b7e5a88922c",
+        "sourceVersionId": "source:f90bee88:version:1",
+        "page": null,
+        "textStart": 0,
+        "textEnd": 19,
+        "quotedText": "[D5匿名合成Development]",
+        "bbox": null,
+        "fieldPath": "scope-0001-5fd0fdb6f859f2904e074487cd0e7cb8b3ff1f66423ff87defe58b7e5a88922c",
+        "extractionMethod": "manual",
+        "confidence": null,
+        "createdAt": "2026-09-28T04:30:42.440Z",
+        "legacyData": {
+          "mainline05DraftId": "source:f90bee88:draft:1:1",
+          "recognitionTempId": "scope-0001-5fd0fdb6f859f2904e074487cd0e7cb8b3ff1f66423ff87defe58b7e5a88922c",
+          "sourceId": "source:f90bee88"
+        }
+      },
+      {
+        "id": "mainline05:evidence:source:f90bee88:draft:1:1:scope-0002-0728a0221a0f09e243b2eb14611ca49784f54af685aa506ea98c50f4363fc8ff",
+        "sourceVersionId": "source:f90bee88:version:1",
+        "page": null,
+        "textStart": 20,
+        "textEnd": 35,
+        "quotedText": "图书馆检索服务将在周三晚维护，",
+        "bbox": null,
+        "fieldPath": "scope-0002-0728a0221a0f09e243b2eb14611ca49784f54af685aa506ea98c50f4363fc8ff",
+        "extractionMethod": "manual",
+        "confidence": null,
+        "createdAt": "2026-09-28T04:30:42.440Z",
+        "legacyData": {
+          "mainline05DraftId": "source:f90bee88:draft:1:1",
+          "recognitionTempId": "scope-0002-0728a0221a0f09e243b2eb14611ca49784f54af685aa506ea98c50f4363fc8ff",
+          "sourceId": "source:f90bee88"
+        }
+      },
+      {
+        "id": "mainline05:evidence:source:f90bee88:draft:1:1:scope-0003-793dd0ea31dc79d160dc355a5d46b4588949acd3b848ef7916d73d02250c70c0",
+        "sourceVersionId": "source:f90bee88:version:1",
+        "page": null,
+        "textStart": 35,
+        "textEnd": 46,
+        "quotedText": "原有预约记录不受影响。",
+        "bbox": null,
+        "fieldPath": "scope-0003-793dd0ea31dc79d160dc355a5d46b4588949acd3b848ef7916d73d02250c70c0",
+        "extractionMethod": "manual",
+        "confidence": null,
+        "createdAt": "2026-09-28T04:30:42.440Z",
+        "legacyData": {
+          "mainline05DraftId": "source:f90bee88:draft:1:1",
+          "recognitionTempId": "scope-0003-793dd0ea31dc79d160dc355a5d46b4588949acd3b848ef7916d73d02250c70c0",
+          "sourceId": "source:f90bee88"
+        }
+      },
+      {
+        "id": "mainline05:evidence:source:f90bee88:draft:1:1:scope-0004-6c606ecea35a797215ef640c69575f4c9788e4bcb378fa82a54b69e54b078139",
+        "sourceVersionId": "source:f90bee88:version:1",
+        "page": null,
+        "textStart": 46,
+        "textEnd": 53,
+        "quotedText": "无需取消预约，",
+        "bbox": null,
+        "fieldPath": "scope-0004-6c606ecea35a797215ef640c69575f4c9788e4bcb378fa82a54b69e54b078139",
+        "extractionMethod": "manual",
+        "confidence": null,
+        "createdAt": "2026-09-28T04:30:42.440Z",
+        "legacyData": {
+          "mainline05DraftId": "source:f90bee88:draft:1:1",
+          "recognitionTempId": "scope-0004-6c606ecea35a797215ef640c69575f4c9788e4bcb378fa82a54b69e54b078139",
+          "sourceId": "source:f90bee88"
+        }
+      },
+      {
+        "id": "mainline05:evidence:source:f90bee88:draft:1:1:scope-0005-d1d3fa717227fd8d823c8abde17ad4cc6c4ddadaa52f8059e5b3ffbfcfaf6f13",
+        "sourceVersionId": "source:f90bee88:version:1",
+        "page": null,
+        "textStart": 53,
+        "textEnd": 60,
+        "quotedText": "不要上传说明，",
+        "bbox": null,
+        "fieldPath": "scope-0005-d1d3fa717227fd8d823c8abde17ad4cc6c4ddadaa52f8059e5b3ffbfcfaf6f13",
+        "extractionMethod": "manual",
+        "confidence": null,
+        "createdAt": "2026-09-28T04:30:42.440Z",
+        "legacyData": {
+          "mainline05DraftId": "source:f90bee88:draft:1:1",
+          "recognitionTempId": "scope-0005-d1d3fa717227fd8d823c8abde17ad4cc6c4ddadaa52f8059e5b3ffbfcfaf6f13",
+          "sourceId": "source:f90bee88"
+        }
+      },
+      {
+        "id": "mainline05:evidence:source:f90bee88:draft:1:1:scope-0006-d6cb5dabc34e4b6e2d868618f0818569fbc83e58a705c6bf7823d332dde150e2",
+        "sourceVersionId": "source:f90bee88:version:1",
+        "page": null,
+        "textStart": 60,
+        "textEnd": 71,
+        "quotedText": "也不必给管理员发邮件。",
+        "bbox": null,
+        "fieldPath": "scope-0006-d6cb5dabc34e4b6e2d868618f0818569fbc83e58a705c6bf7823d332dde150e2",
+        "extractionMethod": "manual",
+        "confidence": null,
+        "createdAt": "2026-09-28T04:30:42.440Z",
+        "legacyData": {
+          "mainline05DraftId": "source:f90bee88:draft:1:1",
+          "recognitionTempId": "scope-0006-d6cb5dabc34e4b6e2d868618f0818569fbc83e58a705c6bf7823d332dde150e2",
+          "sourceId": "source:f90bee88"
+        }
+      },
+      {
+        "id": "mainline05:evidence:source:f90bee88:draft:1:1:scope-0007-360b3691dc0ec86724de04c94fcac6432d11c20c1f55d9721b4ad09699c368a6",
+        "sourceVersionId": "source:f90bee88:version:1",
+        "page": null,
+        "textStart": 71,
+        "textEnd": 82,
+        "quotedText": "本通知仅说明维护安排。",
+        "bbox": null,
+        "fieldPath": "scope-0007-360b3691dc0ec86724de04c94fcac6432d11c20c1f55d9721b4ad09699c368a6",
+        "extractionMethod": "manual",
+        "confidence": null,
+        "createdAt": "2026-09-28T04:30:42.440Z",
+        "legacyData": {
+          "mainline05DraftId": "source:f90bee88:draft:1:1",
+          "recognitionTempId": "scope-0007-360b3691dc0ec86724de04c94fcac6432d11c20c1f55d9721b4ad09699c368a6",
+          "sourceId": "source:f90bee88"
+        }
+      }
+    ],
+    "changeProposals": [],
+    "historyRecords": [
+      {
+        "id": "mainline05:history:source:372c315a:draft:1:1:material-review-mode-1",
+        "entityType": "extraction_draft",
+        "entityId": "source:372c315a:draft:1:1",
+        "action": "mainline05_enable_material_review",
+        "fieldName": null,
+        "before": null,
+        "after": {
+          "taskIds": [],
+          "kind": "enable_material_review"
+        },
+        "actor": "system",
+        "reason": "mainline-real-input-state-1",
+        "sourceVersionId": "source:372c315a:version:1",
+        "changedAt": "2026-09-28T04:18:39.912Z"
+      },
+      {
+        "id": "mainline05:history:source:372c315a:draft:1:1:1c930521-cb73-4ee4-9578-c2cbecdddc9d",
+        "entityType": "extraction_draft",
+        "entityId": "source:372c315a:draft:1:1",
+        "action": "mainline05_review_info",
+        "fieldName": null,
+        "before": null,
+        "after": {
+          "taskIds": [],
+          "kind": "review_info"
+        },
+        "actor": "user",
+        "reason": "mainline-real-input-state-1",
+        "sourceVersionId": "source:372c315a:version:1",
+        "changedAt": "2026-09-28T04:19:15.892Z"
+      },
+      {
+        "id": "mainline05:history:source:f90bee88:draft:1:1:material-review-mode-1",
+        "entityType": "extraction_draft",
+        "entityId": "source:f90bee88:draft:1:1",
+        "action": "mainline05_enable_material_review",
+        "fieldName": null,
+        "before": null,
+        "after": {
+          "taskIds": [],
+          "kind": "enable_material_review"
+        },
+        "actor": "system",
+        "reason": "mainline-real-input-state-1",
+        "sourceVersionId": "source:f90bee88:version:1",
+        "changedAt": "2026-09-28T04:28:32.049Z"
+      },
+      {
+        "id": "mainline05:history:source:f90bee88:draft:1:1:329c6637-4616-46b8-a3db-12dc4b4dc17a",
+        "entityType": "extraction_draft",
+        "entityId": "source:f90bee88:draft:1:1",
+        "action": "mainline05_correct_fact",
+        "fieldName": null,
+        "before": null,
+        "after": {
+          "taskIds": [],
+          "kind": "correct_fact",
+          "correction": {
+            "id": "329c6637-4616-46b8-a3db-12dc4b4dc17a",
+            "at": "2026-09-28T04:30:35.424Z",
+            "change": {
+              "kind": "independent_event",
+              "eventId": "E1",
+              "value": {
+                "tempId": "E1",
+                "title": "图书馆检索服务",
+                "description": "",
+                "startTimePointTempId": "P1",
+                "endTimePointTempId": null,
+                "location": "匿名服务台",
+                "scopeIds": [
+                  "scope-0002-0728a0221a0f09e243b2eb14611ca49784f54af685aa506ea98c50f4363fc8ff"
+                ],
+                "confidence": 1,
+                "inferenceLevel": "explicit",
+                "relatedTaskTempIds": []
+              },
+              "scopeIds": [
+                "scope-0002-0728a0221a0f09e243b2eb14611ca49784f54af685aa506ea98c50f4363fc8ff"
+              ],
+              "note": "用户核对独立事件字段。"
+            },
+            "before": {
+              "tempId": "E1",
+              "title": "图书馆检索服务",
+              "description": "",
+              "startTimePointTempId": "P1",
+              "endTimePointTempId": null,
+              "location": null,
+              "scopeIds": [
+                "scope-0002-0728a0221a0f09e243b2eb14611ca49784f54af685aa506ea98c50f4363fc8ff"
+              ],
+              "confidence": 1,
+              "inferenceLevel": "explicit",
+              "relatedTaskTempIds": []
+            }
+          }
+        },
+        "actor": "user",
+        "reason": "mainline-real-input-state-1",
+        "sourceVersionId": "source:f90bee88:version:1",
+        "changedAt": "2026-09-28T04:30:35.424Z"
+      },
+      {
+        "id": "mainline05:history:source:f90bee88:draft:1:1:58288cc1-3c55-49e7-9b1c-354f1b9d1321",
+        "entityType": "extraction_draft",
+        "entityId": "source:f90bee88:draft:1:1",
+        "action": "mainline05_review_info",
+        "fieldName": null,
+        "before": null,
+        "after": {
+          "taskIds": [],
+          "kind": "review_info"
+        },
+        "actor": "user",
+        "reason": "mainline-real-input-state-1",
+        "sourceVersionId": "source:f90bee88:version:1",
+        "changedAt": "2026-09-28T04:30:42.440Z"
+      }
+    ],
+    "reminderRecords": [],
+    "preferences": {
+      "onboardingCompletedAt": null
+    },
+    "migrationMetadata": [],
+    "savedAt": "2026-09-28T04:30:42.440Z"
+  },
+  "originals": [
+    {
+      "draftId": "source:372c315a:draft:1:1",
+      "record": {
+        "recordId": "d13-fixture-no-task",
+        "kind": "ENGINEERING_FIXTURE",
+        "candidateVersion": "real-input-source-semantics-3",
+        "requestSha256": "0177fa0c7c0c9b44d6bbd6a293b852298d9f0b180dcce5d632bbb9bfac665f0b",
+        "responseSha256": "3c3a60e59ded6220f10a58abcdc9b10cf5631188f5aee8497e79d5f645a969be",
+        "context": {
+          "index": {
+            "sourceId": "C13-D5R1-S04",
+            "sourceVersionId": "C13-D5R1-S04-v1",
+            "sourceFingerprint": "sha256:cb645a1baf7bae473e7e7ad78293317c1ef52cee415a5614c0e320960605eff3",
+            "sourceContent": "[D5匿名合成Development]\n进入复评名单的同学须参加作品复评陈述，以完成作品复评陈述为准。你的作品未进入复评名单，本通知不要求你参加。",
+            "scopes": [
+              {
+                "id": "scope-0001-43330e448006867bec2040206c9f6d566791884986fe7d4eec95d37e4a6a4078",
+                "sourceId": "C13-D5R1-S04",
+                "sourceVersionId": "C13-D5R1-S04-v1",
+                "sourceFingerprint": "sha256:cb645a1baf7bae473e7e7ad78293317c1ef52cee415a5614c0e320960605eff3",
+                "order": 0,
+                "start": 0,
+                "end": 19,
+                "text": "[D5匿名合成Development]",
+                "contentHash": "sha256:43330e448006867bec2040206c9f6d566791884986fe7d4eec95d37e4a6a4078"
+              },
+              {
+                "id": "scope-0002-62d11d78e95c735b1e67fe9494c23a71f2cdbda5ab4995f5362f56fb1f75c712",
+                "sourceId": "C13-D5R1-S04",
+                "sourceVersionId": "C13-D5R1-S04-v1",
+                "sourceFingerprint": "sha256:cb645a1baf7bae473e7e7ad78293317c1ef52cee415a5614c0e320960605eff3",
+                "order": 1,
+                "start": 20,
+                "end": 39,
+                "text": "进入复评名单的同学须参加作品复评陈述，",
+                "contentHash": "sha256:62d11d78e95c735b1e67fe9494c23a71f2cdbda5ab4995f5362f56fb1f75c712"
+              },
+              {
+                "id": "scope-0003-ed231cb3ff886e3fc990a32121d43fcc8da6e796e688b816e0f57a311482cfbd",
+                "sourceId": "C13-D5R1-S04",
+                "sourceVersionId": "C13-D5R1-S04-v1",
+                "sourceFingerprint": "sha256:cb645a1baf7bae473e7e7ad78293317c1ef52cee415a5614c0e320960605eff3",
+                "order": 2,
+                "start": 39,
+                "end": 51,
+                "text": "以完成作品复评陈述为准。",
+                "contentHash": "sha256:ed231cb3ff886e3fc990a32121d43fcc8da6e796e688b816e0f57a311482cfbd"
+              },
+              {
+                "id": "scope-0004-4b6dc3cc3c7cc2c3f699fb7d598fcdcbfe61e82ff0799cc7d918b4124fcce368",
+                "sourceId": "C13-D5R1-S04",
+                "sourceVersionId": "C13-D5R1-S04-v1",
+                "sourceFingerprint": "sha256:cb645a1baf7bae473e7e7ad78293317c1ef52cee415a5614c0e320960605eff3",
+                "order": 3,
+                "start": 51,
+                "end": 63,
+                "text": "你的作品未进入复评名单，",
+                "contentHash": "sha256:4b6dc3cc3c7cc2c3f699fb7d598fcdcbfe61e82ff0799cc7d918b4124fcce368"
+              },
+              {
+                "id": "scope-0005-7dfaf5a5576c9ada572c66606ddeec28fae327006a3b8739a495d31d5e186cf6",
+                "sourceId": "C13-D5R1-S04",
+                "sourceVersionId": "C13-D5R1-S04-v1",
+                "sourceFingerprint": "sha256:cb645a1baf7bae473e7e7ad78293317c1ef52cee415a5614c0e320960605eff3",
+                "order": 4,
+                "start": 63,
+                "end": 73,
+                "text": "本通知不要求你参加。",
+                "contentHash": "sha256:7dfaf5a5576c9ada572c66606ddeec28fae327006a3b8739a495d31d5e186cf6"
+              }
+            ]
+          },
+          "referenceTime": "2026-09-22T09:00:00+08:00",
+          "timezone": "Asia/Shanghai"
+        },
+        "rawHttpText": "{\"id\":\"fixture-not-a-model-request\",\"model\":\"deepseek-flash\",\"status\":\"completed\",\"error\":null,\"output\":[{\"type\":\"message\",\"role\":\"assistant\",\"content\":[{\"type\":\"output_text\",\"text\":\"{\\\"schemaVersion\\\":\\\"real-input-model-wire-1\\\",\\\"tasks\\\":[],\\\"materials\\\":[],\\\"timePoints\\\":[],\\\"events\\\":[],\\\"revisions\\\":[],\\\"conflicts\\\":[],\\\"informationScopeIds\\\":[\\\"scope-0001-43330e448006867bec2040206c9f6d566791884986fe7d4eec95d37e4a6a4078\\\",\\\"scope-0002-62d11d78e95c735b1e67fe9494c23a71f2cdbda5ab4995f5362f56fb1f75c712\\\",\\\"scope-0003-ed231cb3ff886e3fc990a32121d43fcc8da6e796e688b816e0f57a311482cfbd\\\",\\\"scope-0004-4b6dc3cc3c7cc2c3f699fb7d598fcdcbfe61e82ff0799cc7d918b4124fcce368\\\",\\\"scope-0005-7dfaf5a5576c9ada572c66606ddeec28fae327006a3b8739a495d31d5e186cf6\\\"],\\\"unresolvedScopeIds\\\":[]}\"}]}],\"usage\":{\"input_tokens\":0,\"output_tokens\":0}}",
+        "programConversion": "SCOPE_ID_REBIND_ONLY; legacy replay parser; model first answer unchanged"
+      }
+    },
+    {
+      "draftId": "source:f90bee88:draft:1:1",
+      "record": {
+        "recordId": "d13-fixture-vague-event",
+        "kind": "ENGINEERING_FIXTURE",
+        "candidateVersion": "real-input-source-semantics-3",
+        "requestSha256": "aa4138710146d6deffa21b94025bf0b667370d6ae2799b94fb45183ea5740a21",
+        "responseSha256": "ed8dc12f431e686365f14b0b1a491267ebfca18f917f0d9d5e73f6170ab5b1ba",
+        "context": {
+          "index": {
+            "sourceId": "C13-D5R1-S09",
+            "sourceVersionId": "C13-D5R1-S09-v1",
+            "sourceFingerprint": "sha256:b6ab4070b47ff69e107132b449f97c07a1a2d6483538fe1f25df34fa6713b839",
+            "sourceContent": "[D5匿名合成Development]\n图书馆检索服务将在周三晚维护，原有预约记录不受影响。无需取消预约，不要上传说明，也不必给管理员发邮件。本通知仅说明维护安排。",
+            "scopes": [
+              {
+                "id": "scope-0001-1e14be6e2c1dd8b940d1b88c59c39598584885abdbc705f8266b04badc8d31e0",
+                "sourceId": "C13-D5R1-S09",
+                "sourceVersionId": "C13-D5R1-S09-v1",
+                "sourceFingerprint": "sha256:b6ab4070b47ff69e107132b449f97c07a1a2d6483538fe1f25df34fa6713b839",
+                "order": 0,
+                "start": 0,
+                "end": 19,
+                "text": "[D5匿名合成Development]",
+                "contentHash": "sha256:1e14be6e2c1dd8b940d1b88c59c39598584885abdbc705f8266b04badc8d31e0"
+              },
+              {
+                "id": "scope-0002-7013504177b9fcd5745e786a7a1e028ff72669593aba0585d79097df3a302b42",
+                "sourceId": "C13-D5R1-S09",
+                "sourceVersionId": "C13-D5R1-S09-v1",
+                "sourceFingerprint": "sha256:b6ab4070b47ff69e107132b449f97c07a1a2d6483538fe1f25df34fa6713b839",
+                "order": 1,
+                "start": 20,
+                "end": 35,
+                "text": "图书馆检索服务将在周三晚维护，",
+                "contentHash": "sha256:7013504177b9fcd5745e786a7a1e028ff72669593aba0585d79097df3a302b42"
+              },
+              {
+                "id": "scope-0003-c1dbc20153dac98e3a71556238b7c695cdeb6f9943a1232657de47bda8d2eb97",
+                "sourceId": "C13-D5R1-S09",
+                "sourceVersionId": "C13-D5R1-S09-v1",
+                "sourceFingerprint": "sha256:b6ab4070b47ff69e107132b449f97c07a1a2d6483538fe1f25df34fa6713b839",
+                "order": 2,
+                "start": 35,
+                "end": 46,
+                "text": "原有预约记录不受影响。",
+                "contentHash": "sha256:c1dbc20153dac98e3a71556238b7c695cdeb6f9943a1232657de47bda8d2eb97"
+              },
+              {
+                "id": "scope-0004-cb64e3f9cdb37810080cd95e8596fb0b5e31eaf0b41eb21040b1ddd8a7b2ebe7",
+                "sourceId": "C13-D5R1-S09",
+                "sourceVersionId": "C13-D5R1-S09-v1",
+                "sourceFingerprint": "sha256:b6ab4070b47ff69e107132b449f97c07a1a2d6483538fe1f25df34fa6713b839",
+                "order": 3,
+                "start": 46,
+                "end": 53,
+                "text": "无需取消预约，",
+                "contentHash": "sha256:cb64e3f9cdb37810080cd95e8596fb0b5e31eaf0b41eb21040b1ddd8a7b2ebe7"
+              },
+              {
+                "id": "scope-0005-f45cc3a27b9bcd42ef7dba08fe777dfb0f5c93615f5b20329b875eb78afd6b16",
+                "sourceId": "C13-D5R1-S09",
+                "sourceVersionId": "C13-D5R1-S09-v1",
+                "sourceFingerprint": "sha256:b6ab4070b47ff69e107132b449f97c07a1a2d6483538fe1f25df34fa6713b839",
+                "order": 4,
+                "start": 53,
+                "end": 60,
+                "text": "不要上传说明，",
+                "contentHash": "sha256:f45cc3a27b9bcd42ef7dba08fe777dfb0f5c93615f5b20329b875eb78afd6b16"
+              },
+              {
+                "id": "scope-0006-b6ff6885179c16d8cd5af9f69aa1e14735cc2841965a301c224f64f721aecc6f",
+                "sourceId": "C13-D5R1-S09",
+                "sourceVersionId": "C13-D5R1-S09-v1",
+                "sourceFingerprint": "sha256:b6ab4070b47ff69e107132b449f97c07a1a2d6483538fe1f25df34fa6713b839",
+                "order": 5,
+                "start": 60,
+                "end": 71,
+                "text": "也不必给管理员发邮件。",
+                "contentHash": "sha256:b6ff6885179c16d8cd5af9f69aa1e14735cc2841965a301c224f64f721aecc6f"
+              },
+              {
+                "id": "scope-0007-c206b8691340aea8a9ffcde24913fd14c1c0d942e4728239e851db7ffdc782f6",
+                "sourceId": "C13-D5R1-S09",
+                "sourceVersionId": "C13-D5R1-S09-v1",
+                "sourceFingerprint": "sha256:b6ab4070b47ff69e107132b449f97c07a1a2d6483538fe1f25df34fa6713b839",
+                "order": 6,
+                "start": 71,
+                "end": 82,
+                "text": "本通知仅说明维护安排。",
+                "contentHash": "sha256:c206b8691340aea8a9ffcde24913fd14c1c0d942e4728239e851db7ffdc782f6"
+              }
+            ]
+          },
+          "referenceTime": "2026-09-22T09:00:00+08:00",
+          "timezone": "Asia/Shanghai"
+        },
+        "rawHttpText": "{\"id\":\"fixture-not-a-model-request\",\"model\":\"deepseek-flash\",\"status\":\"completed\",\"error\":null,\"output\":[{\"type\":\"message\",\"role\":\"assistant\",\"content\":[{\"type\":\"output_text\",\"text\":\"{\\\"schemaVersion\\\":\\\"real-input-model-wire-1\\\",\\\"tasks\\\":[],\\\"materials\\\":[],\\\"timePoints\\\":[{\\\"tempId\\\":\\\"P1\\\",\\\"type\\\":\\\"event_start\\\",\\\"rawText\\\":\\\"周三晚\\\",\\\"relatedTaskTempIds\\\":[],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0002-7013504177b9fcd5745e786a7a1e028ff72669593aba0585d79097df3a302b42\\\"],\\\"confidence\\\":1}],\\\"events\\\":[{\\\"tempId\\\":\\\"E1\\\",\\\"title\\\":\\\"图书馆检索服务\\\",\\\"description\\\":\\\"\\\",\\\"startTimePointTempId\\\":\\\"P1\\\",\\\"endTimePointTempId\\\":null,\\\"location\\\":null,\\\"scopeIds\\\":[\\\"scope-0002-7013504177b9fcd5745e786a7a1e028ff72669593aba0585d79097df3a302b42\\\"],\\\"confidence\\\":1,\\\"inferenceLevel\\\":\\\"explicit\\\",\\\"relatedTaskTempIds\\\":[]}],\\\"revisions\\\":[],\\\"conflicts\\\":[],\\\"informationScopeIds\\\":[\\\"scope-0001-1e14be6e2c1dd8b940d1b88c59c39598584885abdbc705f8266b04badc8d31e0\\\",\\\"scope-0002-7013504177b9fcd5745e786a7a1e028ff72669593aba0585d79097df3a302b42\\\",\\\"scope-0003-c1dbc20153dac98e3a71556238b7c695cdeb6f9943a1232657de47bda8d2eb97\\\",\\\"scope-0004-cb64e3f9cdb37810080cd95e8596fb0b5e31eaf0b41eb21040b1ddd8a7b2ebe7\\\",\\\"scope-0005-f45cc3a27b9bcd42ef7dba08fe777dfb0f5c93615f5b20329b875eb78afd6b16\\\",\\\"scope-0006-b6ff6885179c16d8cd5af9f69aa1e14735cc2841965a301c224f64f721aecc6f\\\",\\\"scope-0007-c206b8691340aea8a9ffcde24913fd14c1c0d942e4728239e851db7ffdc782f6\\\"],\\\"unresolvedScopeIds\\\":[]}\"}]}],\"usage\":{\"input_tokens\":0,\"output_tokens\":0}}",
+        "programConversion": "SCOPE_ID_REBIND_ONLY; legacy replay parser; model first answer unchanged"
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "0d146abb-2a28-4e6a-a08d-a7bfb26361bb",
+      "draftId": "source:372c315a:draft:1:1",
+      "atMs": 1790569119928,
+      "kind": "begin",
+      "snapshot": {
+        "recordId": "d13-fixture-no-task",
+        "sourceSha256": "79c44b2ab80fc9d862add2f30240ec5fdadbcc5c786a7187fe7ce0ecd279dae3",
+        "firstOutputSha256": "3c3a60e59ded6220f10a58abcdc9b10cf5631188f5aee8497e79d5f645a969be"
+      }
+    },
+    {
+      "id": "cca278fb-33e8-4782-bf8b-cf5dd77e5125",
+      "draftId": "source:372c315a:draft:1:1",
+      "atMs": 1790569119929,
+      "kind": "read"
+    },
+    {
+      "id": "281add9f-d4bb-4ffd-82b3-f97f09b2527a",
+      "draftId": "source:372c315a:draft:1:1",
+      "atMs": 1790569155909,
+      "kind": "wait"
+    },
+    {
+      "id": "5cf00309-021d-4e96-942f-090e747fc5a0",
+      "draftId": "source:372c315a:draft:1:1",
+      "kind": "commit",
+      "atMs": 1790569155918,
+      "commitId": "1c930521-cb73-4ee4-9578-c2cbecdddc9d",
+      "includedEditIds": [],
+      "fields": [],
+      "structural": false,
+      "disposition": "no_task"
+    },
+    {
+      "id": "225a7c9e-a5e6-4dad-9d3f-d8fabfb4dd57",
+      "draftId": "source:372c315a:draft:1:1",
+      "atMs": 1790569155925,
+      "kind": "wait_end"
+    },
+    {
+      "id": "3ff08958-9e56-4f49-83ad-dd1ec0e828b8",
+      "draftId": "source:372c315a:draft:1:1",
+      "atMs": 1790569155926,
+      "kind": "readback",
+      "commitId": "1c930521-cb73-4ee4-9578-c2cbecdddc9d"
+    },
+    {
+      "id": "b6bde9ba-2276-4b94-871b-9653bdc8ee88",
+      "draftId": "source:372c315a:draft:1:1",
+      "atMs": 1790569155934,
+      "kind": "end",
+      "disposition": "no_task",
+      "commitId": "1c930521-cb73-4ee4-9578-c2cbecdddc9d"
+    },
+    {
+      "id": "31ff4e30-5a3b-4dc9-b89f-6732bc40fc01",
+      "draftId": "source:372c315a:draft:1:1",
+      "atMs": 1790569711750,
+      "kind": "wait"
+    },
+    {
+      "id": "f041634e-d57e-482d-93eb-0ce5a15f848b",
+      "draftId": "source:372c315a:draft:1:1",
+      "atMs": 1790569711794,
+      "kind": "wait_end"
+    },
+    {
+      "id": "8bbb0ade-0b08-4885-a4fe-43e309a37c94",
+      "draftId": "source:372c315a:draft:1:1",
+      "atMs": 1790569711883,
+      "kind": "wait"
+    },
+    {
+      "id": "da9d6a7f-8dc7-4b7a-a6e8-77a1a8ebb2b2",
+      "draftId": "source:372c315a:draft:1:1",
+      "atMs": 1790569711927,
+      "kind": "wait_end"
+    },
+    {
+      "id": "36a2e9f2-9ff1-480e-b376-24d87012994b",
+      "draftId": "source:372c315a:draft:1:1",
+      "atMs": 1790569711988,
+      "kind": "wait"
+    },
+    {
+      "id": "71b7b673-7eff-4abe-a4f1-46fcb7cb76d7",
+      "draftId": "source:372c315a:draft:1:1",
+      "atMs": 1790569712020,
+      "kind": "wait_end"
+    },
+    {
+      "id": "58b043bc-5096-463a-a890-c440c5a08f63",
+      "draftId": "source:372c315a:draft:1:1",
+      "atMs": 1790569712096,
+      "kind": "wait"
+    },
+    {
+      "id": "b224fc23-aa41-4f4c-965e-86c470173ec2",
+      "draftId": "source:372c315a:draft:1:1",
+      "atMs": 1790569712122,
+      "kind": "wait_end"
+    },
+    {
+      "id": "2fdb9adb-3e4f-43e7-b48f-17c4db9bf1f9",
+      "draftId": "source:f90bee88:draft:1:1",
+      "atMs": 1790569712164,
+      "kind": "begin",
+      "snapshot": {
+        "recordId": "d13-fixture-vague-event",
+        "sourceSha256": "8fe0a0b5f05cf5e5e9c70f2c4976401a4b2d9aaef7e5d1639cbaa2bc9f12c834",
+        "firstOutputSha256": "ed8dc12f431e686365f14b0b1a491267ebfca18f917f0d9d5e73f6170ab5b1ba"
+      }
+    },
+    {
+      "id": "253de507-65ec-4e4c-b01c-233153029bf8",
+      "draftId": "source:f90bee88:draft:1:1",
+      "atMs": 1790569712166,
+      "kind": "read"
+    },
+    {
+      "id": "b1e52b94-306f-4358-8cfd-472a4b3e6db8",
+      "draftId": "source:372c315a:draft:1:1",
+      "atMs": 1790569790414,
+      "kind": "restore"
+    },
+    {
+      "id": "5241b468-f5fd-4a6b-99f2-d77dbc4f90f6",
+      "draftId": "source:372c315a:draft:1:1",
+      "atMs": 1790569790417,
+      "kind": "read"
+    },
+    {
+      "id": "ef47c897-e395-477b-9d98-d9e32943ab8e",
+      "draftId": "source:f90bee88:draft:1:1",
+      "atMs": 1790569790418,
+      "kind": "restore"
+    },
+    {
+      "id": "3697e047-97cd-4d9d-9127-755855f61d84",
+      "draftId": "source:f90bee88:draft:1:1",
+      "atMs": 1790569790419,
+      "kind": "read"
+    },
+    {
+      "id": "8256d0f8-ec73-4073-9014-732a93238e4b",
+      "draftId": "source:f90bee88:draft:1:1",
+      "atMs": 1790569808837,
+      "kind": "restore"
+    },
+    {
+      "id": "164b813d-dfdb-43bd-8110-33f84f87c61e",
+      "draftId": "source:f90bee88:draft:1:1",
+      "atMs": 1790569808838,
+      "kind": "read"
+    },
+    {
+      "id": "99b818b8-4343-479b-97cf-8f5a8f3c9de9",
+      "draftId": "source:f90bee88:draft:1:1",
+      "atMs": 1790569815941,
+      "kind": "blur"
+    },
+    {
+      "id": "453f87d6-1436-48aa-86f8-ba520953e86d",
+      "draftId": "source:f90bee88:draft:1:1",
+      "atMs": 1790569822098,
+      "kind": "edit",
+      "editId": "9afc86cc-188e-49ea-b941-872a010bd5e6",
+      "fieldKey": "地点"
+    },
+    {
+      "id": "f7bdf768-14d1-44c7-927c-f85da1201964",
+      "draftId": "source:f90bee88:draft:1:1",
+      "atMs": 1790569822114,
+      "kind": "blur"
+    },
+    {
+      "id": "5752f22f-9539-4118-b220-48930a9d2867",
+      "draftId": "source:f90bee88:draft:1:1",
+      "atMs": 1790569822164,
+      "kind": "blur"
+    },
+    {
+      "id": "470c63ad-e1f9-4722-9963-3c0dc9b8b052",
+      "draftId": "source:f90bee88:draft:1:1",
+      "atMs": 1790569822204,
+      "kind": "wait"
+    },
+    {
+      "id": "3ab46053-94b9-44d6-98e1-51c227caca40",
+      "draftId": "source:f90bee88:draft:1:1",
+      "atMs": 1790569822228,
+      "kind": "wait_end"
+    },
+    {
+      "id": "1d48ac79-bc32-44c0-bd19-6e793d12eb9f",
+      "draftId": "source:f90bee88:draft:1:1",
+      "atMs": 1790569822230,
+      "kind": "failure",
+      "error": "D13_INJECTED_ATOMIC_FAILURE"
+    },
+    {
+      "id": "859078f9-02cf-4a8d-a365-66233a4d727c",
+      "draftId": "source:f90bee88:draft:1:1",
+      "atMs": 1790569835433,
+      "kind": "blur"
+    },
+    {
+      "id": "9235263a-b0ba-4b72-8fb3-b8cd4e1a9ede",
+      "draftId": "source:f90bee88:draft:1:1",
+      "atMs": 1790569835470,
+      "kind": "wait"
+    },
+    {
+      "id": "bfbbd850-fa31-4c7a-be51-7de0124df546",
+      "draftId": "source:f90bee88:draft:1:1",
+      "kind": "commit",
+      "atMs": 1790569835481,
+      "commitId": "329c6637-4616-46b8-a3db-12dc4b4dc17a",
+      "includedEditIds": [
+        "9afc86cc-188e-49ea-b941-872a010bd5e6"
+      ],
+      "fields": [
+        "events.E1.location"
+      ],
+      "structural": false
+    },
+    {
+      "id": "2c239cab-2ae1-45c0-9441-55e97ed8d7d2",
+      "draftId": "source:f90bee88:draft:1:1",
+      "atMs": 1790569835491,
+      "kind": "wait_end"
+    },
+    {
+      "id": "6e66bfcb-9bbd-4fa7-84f6-15b066ed3dbc",
+      "draftId": "source:f90bee88:draft:1:1",
+      "atMs": 1790569835492,
+      "kind": "readback",
+      "commitId": "329c6637-4616-46b8-a3db-12dc4b4dc17a"
+    },
+    {
+      "id": "46875844-fa84-4e40-b3c1-cb3604f17c7b",
+      "draftId": "source:f90bee88:draft:1:1",
+      "atMs": 1790569842486,
+      "kind": "wait"
+    },
+    {
+      "id": "3327953d-0691-4f54-b4c9-a7fb275946d9",
+      "draftId": "source:f90bee88:draft:1:1",
+      "kind": "commit",
+      "atMs": 1790569842499,
+      "commitId": "58288cc1-3c55-49e7-9b1c-354f1b9d1321",
+      "includedEditIds": [],
+      "fields": [],
+      "structural": false,
+      "disposition": "no_task"
+    },
+    {
+      "id": "02302543-43a6-4292-8baf-66b35743968a",
+      "draftId": "source:f90bee88:draft:1:1",
+      "atMs": 1790569842508,
+      "kind": "wait_end"
+    },
+    {
+      "id": "abaa49da-0801-44bd-97c5-cf3864d76229",
+      "draftId": "source:f90bee88:draft:1:1",
+      "atMs": 1790569842509,
+      "kind": "readback",
+      "commitId": "58288cc1-3c55-49e7-9b1c-354f1b9d1321"
+    },
+    {
+      "id": "81d7949d-eb6f-4ce1-98f9-1a528d7fc81a",
+      "draftId": "source:f90bee88:draft:1:1",
+      "atMs": 1790569842533,
+      "kind": "end",
+      "disposition": "no_task",
+      "commitId": "58288cc1-3c55-49e7-9b1c-354f1b9d1321"
+    }
+  ],
+  "metrics": [
+    {
+      "draftId": "source:372c315a:draft:1:1",
+      "version": "low-edit-v2-exploratory-1",
+      "role": "ENGINEERING_REPLAY",
+      "correctDisposition": null,
+      "zeroSubstantiveModification": null,
+      "lowModificationCorrectDisposition": null,
+      "committedFields": [],
+      "fieldCount": 0,
+      "structural": false,
+      "activeEditMs": 0,
+      "readMs": 35990,
+      "waitMs": 16,
+      "hiddenMs": 0,
+      "idleMs": 0,
+      "missing": [],
+      "postTerminalEvents": 10,
+      "humanMetrics": "NOT_OBSERVABLE"
+    },
+    {
+      "draftId": "source:f90bee88:draft:1:1",
+      "version": "low-edit-v2-exploratory-1",
+      "role": "ENGINEERING_REPLAY",
+      "correctDisposition": null,
+      "zeroSubstantiveModification": null,
+      "lowModificationCorrectDisposition": null,
+      "committedFields": [
+        "events.E1.location"
+      ],
+      "fieldCount": 1,
+      "structural": false,
+      "activeEditMs": null,
+      "readMs": null,
+      "waitMs": null,
+      "hiddenMs": null,
+      "idleMs": null,
+      "missing": [
+        "refresh time discontinuity"
+      ],
+      "postTerminalEvents": 0,
+      "humanMetrics": "NOT_OBSERVABLE"
+    }
+  ],
+  "humanMetrics": "NOT_OBSERVABLE"
+}

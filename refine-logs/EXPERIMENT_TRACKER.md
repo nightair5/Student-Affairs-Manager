@@ -1,17 +1,18 @@
 # 识别优化当前跟踪
 
-更新：2026-09-28。PLANNED不等于已执行；工程完成不等于质量优胜。
+更新：2026-09-28。工程交付、开发观察、探索准备、独立质量和发布分开。
 
-| 工作 | 状态 | 证据或下一步 |
+| 工作 | 状态 | 证据/下一步 |
 |---|---|---|
-| D10独立事件确认/恢复 | 已有工程证据 | D10结果及浏览器记录，非真人 |
-| D11配对24次 | 已执行，Candidate15按冻结协议不晋级 | 引用10/12及3个旧评分异常；raw和结算保留 |
-| D12零匹配诊断修复 | 已实现并定向验证 | 24份只读诊断，三个异常恢复，其余21份保持旧规则 |
-| D12分层规则/历史保护 | 已实现并定向验证 | PROGRESS_POLICY及历史保护工具；不自动产生调用/发布许可 |
-| D13统一语义/引用/确认 | PLANNED | 下一执行提示词，一次相依工程包 |
-| 新模型配对 | NOT_AUTHORIZED | 新候选及公平可审查包完成后申请 |
-| 探索真人体验 | NOT_RUN_NOT_AUTHORIZED | 可并行准备匿名材料与操作方案 |
-| 独立Holdout/发布 | NOT_RUN_NOT_AUTHORIZED | 按各自证据与授权推进 |
+| D11 24次 C03/C15 | 历史已运行、不晋级 | 原Expected/raw/v6结果和拒绝决定不改 |
+| D12 治理与异常修复 | 已交付 | 原3个评分异常diagnostic保留 |
+| D13 v7参照/评分 | 定向验证通过 | 12完整、0部分/未决，provisional有限契约；20项Node检查 |
+| D13 Candidate16 | 本地实现冻结，模型NOT_RUN | 最小动作、条件/证据、真实取消替代端点 |
+| D13旧输出同口径诊断 | 已完成，非新版输出 | 分母24；C03 1/12、C15 2/12；C15引用10/12 |
+| D13确认/计时 | 核心浏览器与12项产品测试通过 | 无任务、事件、部分确认、失败恢复、拒绝计纠正；真人指标缺失 |
+| 新C03/C16配对 | 24身份冻结，NOT_RUN_NOT_AUTHORIZED | BUDGET_UNRESOLVED；下一步只读核价后申请具体上限 |
+| 探索体验 | 协议/材料/空表已准备 | 0参与者；缺真人授权/负责人、正式试次与手动条件入口 |
+| 全量验证 | FAIL，定向通过 | 旧收集/carrier与5秒超时；超时增加尚未完全归因，保留维护项 |
+| 独立Holdout/默认替换/发布 | NOT_RUN_NOT_AUTHORIZED | 真实独立A/B、未见材料及另行授权 |
 
-D12全量验证和远端同步见 [VALIDATION](../docs/recognition-optimization/d12-progress/VALIDATION.md)。
-历史跟踪全文：[存档](../docs/governance/archive/2026-09-28-d12/refine-logs/EXPERIMENT_TRACKER.md)。
+[D13验证](../docs/recognition-optimization/candidate16/d13-development/VALIDATION.md)；[旧跟踪存档](../docs/governance/archive/2026-09-28-d13/refine-logs/EXPERIMENT_TRACKER.md)。

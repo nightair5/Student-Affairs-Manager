@@ -1,0 +1,18 @@
+{
+  "version": "d13-engineering-audit-1",
+  "status": "PROVISIONAL_FINDINGS_ADDRESSED_BY_IMPLEMENTER",
+  "reviewer": "/root/d13_delivery_review",
+  "reviewerKind": "same-family model agent, separate read-only perspective",
+  "rounds": 1,
+  "independentHumanTruth": false,
+  "secondIndependentReaudit": false,
+  "businessModelCalls": 0,
+  "findings": [
+    {"finding": "Wrong inverse time ownership could pass", "resolution": "Added bidirectional task/time ownership and revision evidence checks", "test": "candidate16-d13.check typed material hierarchy inverse time ownership and revision evidence"},
+    {"finding": "Rejecting an extra task looked like zero modification", "resolution": "Persisted disposition diff, edit linkage and structural correction", "test": "D13 runtime reject regression plus browser evidence 08"},
+    {"finding": "Begin/end without committed disposition and readback could count as successful", "resolution": "Require terminal commit/readback, closed intervals; missing remains null", "test": "measurement missing commit/readback and unfinished intervals"},
+    {"finding": "Queue latency polluted editing and omitted storage waits", "resolution": "Capture timestamp before queue and wait before transaction entry; close success/failure", "test": "queued timestamp 100 not 900; runtime delayed storage wait"}
+  ],
+  "validation": "Primary implementer ran final 20 Node and 12 runtime/measurement tests; all passed. Actual browser paths recorded. Full suite remains FAIL with separately documented old-file failures/timeouts.",
+  "limits": ["Candidate16 has no real model output", "References are provisional and finite, not independent human gold", "Title/free-description semantics and leakage need human adjudication", "No human trial or release validation", "Future budget unresolved; dispatch prohibited"]
+}

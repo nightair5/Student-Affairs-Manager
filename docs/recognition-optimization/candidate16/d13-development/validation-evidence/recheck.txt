@@ -1,0 +1,244 @@
+
+ RUN  v3.2.7 C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/比赛
+
+ ❯ src/experiments/realInput01/acceptance.test.tsx (86 tests | 8 failed) 198924ms
+   × paired09 settled raw replay; engineering simulation, not browser evidence > U01-09 explicitly reviews, partially confirms and independently restores raw, facts and unverified materials 5092ms
+     → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+   × paired09 settled raw replay; engineering simulation, not browser evidence > U07-09 explicitly reviews, partially confirms and independently restores raw, facts and unverified materials 5348ms
+     → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+   × paired09 settled raw replay; engineering simulation, not browser evidence > V04-03 explicitly reviews, partially confirms and independently restores raw, facts and unverified materials 5014ms
+     → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+   × paired09 settled raw replay; engineering simulation, not browser evidence > explains an unknown condition and a cancelled old requirement without weakening either blocker 5042ms
+     → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+   ✓ paired09 settled raw replay; engineering simulation, not browser evidence > U11-09 zero-call replay keeps each task private time while retaining shared materials  2866ms
+   ✓ paired09 settled raw replay; engineering simulation, not browser evidence > V02-09 zero-call replay keeps each task private time while retaining shared materials  2400ms
+   ✓ paired09 settled raw replay; engineering simulation, not browser evidence > U01-09 zero-call replay keeps each task private time while retaining shared materials  1776ms
+   ✓ paired09 settled raw replay; engineering simulation, not browser evidence > U10-09 zero-call replay keeps each task private time while retaining shared materials  806ms
+   ✓ paired09 settled raw replay; engineering simulation, not browser evidence > V04-09 zero-call replay keeps each task private time while retaining shared materials  624ms
+   ✓ paired09 settled raw replay; engineering simulation, not browser evidence > rejects wrong version, source, request and response before writes; rejected raw does not leave half records  642ms
+   ✓ paired09 settled raw replay; engineering simulation, not browser evidence > transaction failure preserves older sources and successful append cannot overwrite them  3850ms
+   × paired07 actual recorded response boundary; memory only, not browser acceptance > explicit unverified review persists independently; dependency and broken sibling remain blocked (simulation) 5060ms
+     → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+   × paired07 actual recorded response boundary; memory only, not browser acceptance > R11-07 retains raw, failures and prior records, never dispatches or auto-confirms 5199ms
+     → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+   × paired07 actual recorded response boundary; memory only, not browser acceptance > R12-07 retains raw, failures and prior records, never dispatches or auto-confirms 5051ms
+     → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+   ✓ paired07 actual recorded response boundary; memory only, not browser acceptance > only the selected R and paired09 responses are public; write/model endpoints remain closed 82ms
+   ✓ paired07 actual recorded response boundary; memory only, not browser acceptance > paired07 failed-response append is atomic and preserves every older record; invalid source identity cannot use the failure path  1174ms
+   ✓ HTTPS preview > local preview keeps exact origin and explicit creation, restores existing stores and permits only bound examples  340ms
+   ✓ HTTPS preview > local preview server serves only public assets on loopback with model and foreign origins blocked  1800ms
+   ✓ HTTPS preview > real runtime picker opens all bound examples via the existing App callback without refreshing or dispatching  1567ms
+   ✓ HTTPS preview > L01-A binds the latest settled None answer, preserves raw identity, and never duplicates the same entry 133ms
+   ✓ HTTPS preview > L02-A binds the latest settled None answer, preserves raw identity, and never duplicates the same entry 132ms
+   ✓ HTTPS preview > L04-A binds the latest settled None answer, preserves raw identity, and never duplicates the same entry 134ms
+   ✓ HTTPS preview > L01-A saves both reviewed tasks with their own deadlines and unverified preparation  1116ms
+   ✓ HTTPS preview > L02-A uses explicit W11 corrections, rejects the extra suggestion, and saves only the valid independent task  1639ms
+   ✓ HTTPS preview > L04-A relation-editor save removes only the ungrounded dependency and persists the valid new task  1342ms
+   ✓ HTTPS preview > explicit unverified preparation preserves a valid replacement and cancels no independent task (simulation)  773ms
+   ✓ HTTPS preview > U11-09 preview can save its valid independent task without importing the sibling deadline  641ms
+   ✓ HTTPS preview > V02-09 preview can save its valid independent task without importing the sibling deadline  471ms
+   ✓ HTTPS preview > download controls prepare explicit user-clickable links instead of losing user activation after async reads 1ms
+   ✓ HTTPS preview > read/identity failures never open a panel or write; UI-open failure retains a recoverable single draft 148ms
+   ✓ HTTPS preview > existing App onDraftReady refreshes canonical view and selects the returned draft without page reload 285ms
+   ✓ HTTPS preview > Q01-06 preserves original identities and explicitly confirms in the new store  1468ms
+   ✓ HTTPS preview > Q07-06 preserves original identities and explicitly confirms in the new store  744ms
+   ✓ HTTPS preview > requires explicit preview profile and retains old recorded initial/name restrictions 2ms
+   ✓ HTTPS preview > Worker exposes only approved static responses and rejects all model/writing requests 72ms
+   ✓ paired06 existing wire recorded boundary > Q01-06 actual settled answer confirms reviewed tasks and independently reloads in memory  1122ms
+   ✓ paired06 existing wire recorded boundary > Q07-06 actual settled answer confirms reviewed tasks and independently reloads in memory  636ms
+   ✓ paired06 existing wire recorded boundary > Q03-06 actual settled answer confirms reviewed tasks and independently reloads in memory 292ms
+   ✓ paired06 existing wire recorded boundary > 03 same existing wire stays unselected until actual review, confirms and reloads without dispatch 255ms
+   ✓ paired06 existing wire recorded boundary > 06 same existing wire stays unselected until actual review, confirms and reloads without dispatch 277ms
+   ✓ paired06 existing wire recorded boundary > rejects mismatched version, unit, source and response before any persisted write 65ms
+   ✓ paired06 existing wire recorded boundary > rolls back failed append; valid retry of local replay preserves all pre-existing entities 166ms
+   ✓ paired05 new model recorded boundary > P01-03 true response, manual review, confirm and independent memory reload without a model  1340ms
+   ✓ paired05 new model recorded boundary > P05-05 true response, manual review, confirm and independent memory reload without a model  359ms
+   ✓ paired05 new model recorded boundary > P03-03 true response, manual review, confirm and independent memory reload without a model 212ms
+   ✓ paired05 new model recorded boundary > invalid assembly, response identity and duplicate other arm refuse without changing prior records  551ms
+   ✓ paired05 new model recorded boundary > new wire transaction failure is atomic, then a valid positive response succeeds 171ms
+   ✓ paired04 recorded source append > retains original source and response; no queued or dispatchable state, duplicate arm rejected 157ms
+   ✓ paired04 recorded source append > identity, request, response and recomputed source mismatch reject without writing 26ms
+   ✓ paired04 recorded source append > atomic failure leaves no source, run, draft or task; valid response then succeeds 236ms
+   ✓ paired04 recorded source append > adds distinct complex sources without changing any old record, and never confirms by loading  1397ms
+   ✓ explicit pending date confirmation > saves source-bound missing vague time without overwriting the real answer or existing nine tasks  13290ms
+   ✓ explicit pending date confirmation > source, ownership, stale edits and atomic consent boundaries reject without changing the workspace  10359ms
+   ✓ explicit pending date confirmation > targeted safety review: only date uncertainty qualifies, never references, conflicts, conditions, revisions or dependencies  4658ms
+   ✓ candidate03 recorded response integration, no model requests > rejects source/run/version/request/response substitution before any write  5569ms
+   ✓ candidate03 recorded response integration, no model requests > failed transaction rolls back the entire import; successful retry of local save is terminal and duplicate-safe  8427ms
+   ✓ candidate03 recorded response integration, no model requests > D01 preserves originals and confirms only reviewed expressible facts  12227ms
+   ✓ candidate03 recorded response integration, no model requests > D02 preserves originals and confirms only reviewed expressible facts  7173ms
+   ✓ candidate03 recorded response integration, no model requests > D03 preserves originals and confirms only reviewed expressible facts  3675ms
+   ✓ candidate03 recorded response integration, no model requests > D05 preserves originals and confirms only reviewed expressible facts  8022ms
+   ✓ read-close local review without model authorization > real runtime opens InputReview and saves independent corrections, while its send handler rejects before any run  2804ms
+   × candidate02 paid records replay without a model request > the candidate02 launcher exposes local carriers but keeps all upstream sending disabled 152ms
+     →
+node:fs:2787
+      const stats = binding.lstat(base, true, undefined, true /* throwIfNoEntry */);
+                            ^
+
+Error: ENOENT: no such file or directory, lstat 'C:\Users\Winner\.codex\worktrees\student-affairs-candidate11\比赛\undefined'
+    at realpathSync (node:fs:2787:29)
+    at createLocalApp (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/serve-mainline-real-input-01.mjs:160:22)
+    at file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/[eval1]:4:23 {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'lstat',
+  path: 'C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\undefined'
+}
+
+Node.js v24.18.0
+: expected 1 to be +0 // Object.is equality
+   ✓ candidate02 paid records replay without a model request > C03 creates a separately identified run and confirms valid tasks without overwriting old work  4899ms
+   ✓ candidate02 paid records replay without a model request > C05 creates a separately identified run and confirms valid tasks without overwriting old work  9884ms
+   ✓ candidate02 paid records replay without a model request > C08 creates a separately identified run and confirms valid tasks without overwriting old work  11133ms
+   ✓ complex notice correction public API, original model answers remain immutable > B01 event mismatch corrected explicitly; separate confirmation preserves two different deadlines  4436ms
+   ✓ complex notice correction public API, original model answers remain immutable > B01 event mismatch corrected explicitly; batch confirmation preserves two different deadlines  2591ms
+   ✓ complex notice correction public API, original model answers remain immutable > A08 failed raw is retained, missing old task and revision can be explicitly corrected and new task saved  1499ms
+   ✓ complex notice correction public API, original model answers remain immutable > B08 failed raw is retained, missing old task and revision can be explicitly corrected and new task saved  1777ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > batch actual recorded responses retain raw and first suggestions, never default select, preserve A02 and reject identity substitution  12593ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > real-input source description changes only the review banner; engineering and ordinary defaults remain 43ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > actual App forwards an existing description only for the real-input runtime 292ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > actual browser open wrapper rejects creation/upgrade events before legacy handlers, retains existing and old-default opens 280ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > original A02 real App driver preserves provenance, material observation and explicit edits through independent reload  1281ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > recorded runtime rejects replacement database initialization and missing original storage 1ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > recorded launcher builds real App, serves only bound A02 and rejects unauthorized endpoints without model code  831ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > the input renderer is a React component retaining original text without invoking save callbacks during render 4ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > the fact editor render preserves saved facts and does not publish dirty or saved notifications during render 42ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > real homepage retains dates and explains review before any send; old presentation remains 1ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > mounts the actual App with isolated capabilities and does not read old storage 5ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > source-first to correct confirmation and independent reload: no-date 95ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > source-first to correct confirmation and independent reload: multi  411ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > source-first to correct confirmation and independent reload: condition-true 112ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > source-first to correct confirmation and independent reload: revision 180ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > a failed executor is terminal, no retry; missing or malformed database never falls back 23ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > client sends exactly the bound text request once, then refuses duplicate or changed input 38ms
+ ✓ src/experiments/realInput01/runtime.test.ts (30 tests) 8764ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > exact original A02 enters existing source atomically, provenance stays live, duplicate replay preserves confirmed data  895ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > record corruption/identity substitution rejects before writes; original pending source retained on transaction failure  448ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > material edits invalidate their observation; shared confirmed entity cannot be rewritten  839ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > explicit material review separates requirement and availability: ready  640ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > explicit material review separates requirement and availability: missing  633ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > explicit material review separates requirement and availability: not_required  598ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > material review save failure is atomic, stale choices refuse, independent sibling can confirm  423ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > saved correction preserves a previously confirmed task and independent source confirmation  815ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > object correction keeps the current default title consistent and preserves explicit user title=false  403ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > object correction keeps the current default title consistent and preserves explicit user title=true  455ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > manual material repair persists exact values, keeps originals and independent brother confirmation  697ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > whole-source versions remain immutable, old pending draft is stale, confirmed task survives  417ms
+ ✓ src/experiments/candidate11/runtime.test.tsx (15 tests) 3066ms
+   ✓ C11 actual App/runtime/repository engineering closure > edits, partially confirms, aborts a save, then explicitly retries; refresh and repeat cannot duplicate  1560ms
+   ✓ C11 actual App/runtime/repository engineering closure > allows partial acceptance and explicit rejection without losing confirmed tasks  722ms
+ ✓ src/experiments/candidate13/d6Runtime.test.tsx (6 tests) 2073ms
+   ✓ D6 recorded-result engineering replay > edits, partially confirms, recovers from an injected save failure, reads back and survives refresh  973ms
+   ✓ D6 recorded-result engineering replay > supports explicit rejection after partial acceptance  499ms
+   ✓ D6 recorded-result engineering replay > keeps the injected failure armed across a no-op write  422ms
+ ✓ src/experiments/candidate16/runtime.test.ts (8 tests) 3026ms
+   ✓ D13 actual confirmation repository, recorded outputs remain immutable > wrong revision blocks only its connected task; unrelated reviewed task can be partially confirmed  428ms
+   ✓ D13 actual confirmation repository, recorded outputs remain immutable > all 24 D11 recorded responses can be opened without a new model request  1531ms
+ ✓ src/experiments/candidate16/measurement.test.ts (4 tests) 4ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 8 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/experiments/realInput01/acceptance.test.tsx > paired09 settled raw replay; engineering simulation, not browser evidence > U01-09 explicitly reviews, partially confirms and independently restores raw, facts and unverified materials
+ FAIL  src/experiments/realInput01/acceptance.test.tsx > paired09 settled raw replay; engineering simulation, not browser evidence > U07-09 explicitly reviews, partially confirms and independently restores raw, facts and unverified materials
+ FAIL  src/experiments/realInput01/acceptance.test.tsx > paired09 settled raw replay; engineering simulation, not browser evidence > V04-03 explicitly reviews, partially confirms and independently restores raw, facts and unverified materials
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/experiments/realInput01/acceptance.test.tsx:70:39
+     68|     return {store,repo}
+     69|   }
+     70|   it.each(['U01-09','U07-09','V04-03'])('%s explicitly reviews, partia…
+       |                                       ^
+     71|     const {repo,store}=await fixture(),r=record(unitId),identity={unit…
+     72|     const fetch=vi.spyOn(globalThis,'fetch').mockRejectedValue(Error('…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/8]⎯
+
+ FAIL  src/experiments/realInput01/acceptance.test.tsx > paired09 settled raw replay; engineering simulation, not browser evidence > explains an unknown condition and a cancelled old requirement without weakening either blocker
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/experiments/realInput01/acceptance.test.tsx:113:3
+    111|     }finally{fetch.mockRestore()}
+    112|   })
+    113|   it('explains an unknown condition and a cancelled old requirement wi…
+       |   ^
+    114|     for(const [unitId,taskId,reason] of [
+    115|       ['U06-03','task-pickup-projector','执行条件是否成立尚未确认'],
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/8]⎯
+
+ FAIL  src/experiments/realInput01/acceptance.test.tsx > paired07 actual recorded response boundary; memory only, not browser acceptance > explicit unverified review persists independently; dependency and broken sibling remain blocked (simulation)
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/experiments/realInput01/acceptance.test.tsx:192:3
+    190|       title:item.title,context:item.context,requestSha:raw.requestSha,…
+    191|   }
+    192|   it('explicit unverified review persists independently; dependency an…
+       |   ^
+    193|     const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:H…
+    194|     const repo=await SemanticRepository.open(store.name,store,emptyRea…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/8]⎯
+
+ FAIL  src/experiments/realInput01/acceptance.test.tsx > paired07 actual recorded response boundary; memory only, not browser acceptance > R11-07 retains raw, failures and prior records, never dispatches or auto-confirms
+ FAIL  src/experiments/realInput01/acceptance.test.tsx > paired07 actual recorded response boundary; memory only, not browser acceptance > R12-07 retains raw, failures and prior records, never dispatches or auto-confirms
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/experiments/realInput01/acceptance.test.tsx:262:30
+    260|     expect((await reopened.load()).tasks).toEqual(saved.tasks)
+    261|   })
+    262|   it.each(['R11-07','R12-07'])('%s retains raw, failures and prior rec…
+       |                              ^
+    263|     const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:H…
+    264|     const repo=await SemanticRepository.open(store.name,store,emptyRea…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/8]⎯
+
+ FAIL  src/experiments/realInput01/acceptance.test.tsx > candidate02 paid records replay without a model request > the candidate02 launcher exposes local carriers but keeps all upstream sending disabled
+AssertionError:
+node:fs:2787
+      const stats = binding.lstat(base, true, undefined, true /* throwIfNoEntry */);
+                            ^
+
+Error: ENOENT: no such file or directory, lstat 'C:\Users\Winner\.codex\worktrees\student-affairs-candidate11\比赛\undefined'
+    at realpathSync (node:fs:2787:29)
+    at createLocalApp (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/serve-mainline-real-input-01.mjs:160:22)
+    at file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/[eval1]:4:23 {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'lstat',
+  path: 'C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\undefined'
+}
+
+Node.js v24.18.0
+: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ createLocalApp ../%E6%AF%94%E8%B5%9B/scripts/serve-mainline-real-input-01.mjs:160:22
+ ❯ src/experiments/realInput01/acceptance.test.tsx:1136:103
+    1134|       console.log('candidate02 launcher: eight local carriers, zero up…
+    1135|     `],{encoding:'utf8',timeout:60000,maxBuffer:1024*1024})
+    1136|     expect(result.error?.message??'').toBe('');expect(result.status,re…
+       |                                                                                                       ^
+    1137|   },65000)
+    1138|   it.each(['C03','C05','C08'])('%s creates a separately identified run…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/8]⎯
+
+
+ Test Files  1 failed | 5 passed (6)
+      Tests  8 failed | 141 passed (149)
+   Start at  12:35:19
+   Duration  233.45s (transform 9.70s, setup 0ms, collect 14.90s, tests 215.86s, environment 1ms, prepare 860ms)
