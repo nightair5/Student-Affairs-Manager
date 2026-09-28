@@ -1,5 +1,7 @@
 # Candidate11 实验跟踪表
 
+> D10 当前（2026-09-28）：独立事件编辑、无任务确认和失败恢复经隔离浏览器工程验收；D10 包另建 Manifest，24 个 D9 请求身份/正文逐份不变且仍 `NOT_RUN`、`dispatchAuthorized=false`。没有业务模型调用或真人指标；下一步仅可审查新预算和另行授权。见 [D10 结果](../docs/recognition-optimization/candidate15/d10-development/D10_RESULTS.md)。下方 D9 阻断行是历史记录。
+
 > D9 最新（2026-09-27）：12/12 provisional v6 参照和 24 个零调用身份已构造、校验；浏览器独立事件编辑与正式读回未过，`D9_BLOCKED_ON_REFERENCE_OR_BROWSER_CONTRACT`。不能申请派发。详见 [D9 结果](../docs/recognition-optimization/candidate15/d9-development/D9_RESULTS.md)。下方 D8 跟踪行保留其历史时间点。
 
 > D8 最新（2026-09-27）：W1/W2 工程实现和浏览器部分验收完成，W3 参照不足，未形成可派发批次。见 [D8 结果](../docs/recognition-optimization/candidate15/d8-development/D8_RESULTS.md)。下方 D7 顶部段落保留历史状态。
@@ -12,6 +14,8 @@
 
 | ID | 阶段 | 工作/比较 | 数据角色 | 调用 | 当前状态 | 进入条件 / 交付 |
 |---|---|---|---|---:|---|---|
+| C15-D10-EVENT | D10 | 独立事件人工核对、无任务确认、失败恢复、读回/刷新 | 匿名夹具及隔离工程库 | 0 | PASS_ENGINEERING_BROWSER | 0 Task/0 Project/1 Event/1 TimePoint；无真人正确率证明 |
+| C15-D10-PAIR | D10 | D9 请求身份零调用再冻结 | 已见合成 Development | 0/24 | REVIEWABLE_UNAUTHORIZED_NOT_RUN | D9 请求正文/身份不变，另建产品组件哈希；调用前须新授权和核价 |
 | C15-D9-REF | D9 | 12份 v6 结构参照与正反例往返 | 完全已见合成 Development，非独立人工 | 0 | PASS_PROVISIONAL_CONTRACT | 12/12 正例与 12/12 关键字段负例通过；历史 Expected 不动 |
 | C15-D9-BROWSER | D9 | 纯信息与独立事件工程验收 | S09 匿名合法夹具，隔离浏览器 | 0 | BLOCKED_EVENT_EDIT_READBACK | 无任务确认/失败恢复/刷新通过；独立事件单独编辑与 canonical 读回缺失 |
 | C15-D9-PAIR | D9 | Candidate03 vs Candidate15 12×2 配对身份 | 已见合成 Development | 0/24 | PREPARED_UNAUTHORIZED_NOT_READY | 6 AB、6 BA，`dispatchAuthorized=false`；浏览器契约与预算上界未过，不可发送 |

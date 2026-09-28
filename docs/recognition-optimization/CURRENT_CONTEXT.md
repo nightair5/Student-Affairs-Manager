@@ -1,4 +1,8 @@
-# 当前交接：D9 参照与零调用身份已建，独立事件浏览器契约阻断
+# 当前交接：D10 无任务独立事件闭环与零调用再冻结
+
+## D10 最新状态（2026-09-28）
+
+无任务独立事件已增加人工字段核对，经 schema v8 的单事务确认形成 canonical Event、TimePoint 和来源依据；模糊时间保留原文与不确定状态，不填确定日程。隔离浏览器实际验证成功、注入写入失败、人工重试、独立读回和刷新，正式 Task=0、Project=0。D9 的 12 份已见合成 Development 参照和 24 份请求正文保持不变，另建 D10 Manifest 记录产品组件哈希；24 个身份全部 `NOT_RUN`、`dispatchAuthorized=false`。未来预算草案按官方价格提出有前提的 US$8 上限，尚无 grant 或调用。四项真人主指标仍 `NOT_OBSERVABLE`。详见 [D10 结果](candidate15/d10-development/D10_RESULTS.md)、[浏览器证据](candidate15/d10-development/BROWSER_EVIDENCE.md)和[预算草案](candidate15/d10-development/FUTURE_BUDGET_AUTHORIZATION_DRAFT.md)。下方 D9 阻断是当时快照。
 
 ## D9 最新状态（2026-09-27）
 
