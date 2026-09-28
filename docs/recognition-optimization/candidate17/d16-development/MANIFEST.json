@@ -1,0 +1,75 @@
+{
+  "version": "candidate17-d16-development-1",
+  "role": "NEWLY_AUTHORED_TEMPLATE_DERIVED_PROVISIONAL_DEVELOPMENT_NOT_HOLDOUT",
+  "status": "ZERO_CALL_REVIEWABLE_FOR_NEW_AUTHORIZATION",
+  "dispatchAuthorized": false,
+  "modelCalls": 0,
+  "requestCount": 24,
+  "sourceCount": 12,
+  "referenceCoverage": {
+    "complete": 12,
+    "partial": 0,
+    "unresolved": 0
+  },
+  "order": {
+    "AB": 6,
+    "BA": 6
+  },
+  "model": "deepseek-flash",
+  "scorer": "recognition-semantic-scoring-7.0.0",
+  "requestBodiesContainExpected": false,
+  "components": [
+    {
+      "path": "src/experiments/realInput01/candidate03.ts",
+      "sha256": "f3a2dd9358ca2a50b9b3eba8a090211666db4c0fb8dc5fc146e742c9895f9508"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate17.ts",
+      "sha256": "ebaff284b63ed365f7ab6f9fabb937663dd4cf29e2fa0f8c5cf9e6566f8db357"
+    },
+    {
+      "path": "src/experiments/realInput01/modelWire.ts",
+      "sha256": "c7c81ae516c30faec850f4d765ae625d2cf1d11f39ed0d515ab93da45efb8be2"
+    },
+    {
+      "path": "src/experiments/candidate14/commonAdapter.ts",
+      "sha256": "6e3c1745c9358207fe714d1bf4f1ee25d0dcf3185b8ce8748343d31f7307d427"
+    },
+    {
+      "path": "scripts/recognition-semantic-v7.mjs",
+      "sha256": "cd32d48cb49535a6e97cde7dfd7740016425e95dba3329740136cac802403e62"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "SOURCES.json",
+      "sha256": "8a331b426c9c48a1987e77ee99f810287c9a28fd3e2b21c59e4250b03f6b25a8"
+    },
+    {
+      "path": "REFERENCES.json",
+      "sha256": "ebfac2dbc3a262c1c9de41ea230bf3d727afbc7517f188bbcbe6ecb111b3544a"
+    },
+    {
+      "path": "LEGAL_WIRE_ORACLES.json",
+      "sha256": "847597fef5264f6938d1cf17e934896f76034cb330ea2f6d2a0917ff28ff93c2"
+    },
+    {
+      "path": "ROUNDTRIP_RESULTS.json",
+      "sha256": "ac97acfad1d11c202c6f3f4fdfe3a2477f5cd0672560fe77805d8d8d0db1ae6a"
+    },
+    {
+      "path": "SIMILARITY_CHECK.json",
+      "sha256": "9ac6c00a0b6c40016d394b5c170012cc47edb675cd80705d023fe07b2a5c0301"
+    },
+    {
+      "path": "PRE_REGISTRATION.json",
+      "sha256": "670614f567bbb1b54365fe6444104fc121a807a307b8ec1d7a79762f10df9196"
+    },
+    {
+      "path": "PREPARED_REQUEST_IDENTITIES.json",
+      "sha256": "b107900c6f31f4c02b45d54dcb3ae0693da6240ae12cac07a0411b0a1adf139b"
+    }
+  ],
+  "preRegistration": "PRE_REGISTRATION.json",
+  "historyD15Decision": "NEEDS_TARGETED_FIXES_UNCHANGED"
+}

@@ -1,4 +1,12 @@
-# 当前交接：D15 已完成冻结比较与隔离确认闭环
+# 当前交接：D16 本地修复与零调用新比较已准备
+
+更新：2026-09-28。现行入口为 [D16 结果](candidate17/D16_RESULTS.md)、[新 Manifest](candidate17/d16-development/MANIFEST.json)、[浏览器证据](candidate17/BROWSER_EVIDENCE.md) 和 [预算草案](candidate17/FUTURE_BUDGET_CARD.md)。Candidate17 为独立 Prompt 版本，针对 D15 S02/S10/S11 的真实错误增加材料/时间归属、取消替代端点闭合和状态约束；没有新模型输出，效果仍未知。D15 C03 2/12、C16 3/12 及 `NEEDS_TARGETED_FIXES` 是历史 Development 决定，不更改。
+
+D16 在 6652/p5 隔离浏览器完成任务与两个独立事件、旧版本重载、确认、读回和刷新；p5 Task1/Project0/Event2/TimePoint4。p6 6653 新身份开始为空库，随后另做未保存动作字段的冲突恢复和失败后手动重试，读回 1/0/1/0；正式事实未串库。12 份新写但旧模板衍生的 provisional Development 参照完成正负往返；Candidate03/Candidate17 的 24 个身份 6 AB/6 BA，全 `NOT_RUN`、`dispatchAuthorized=false`。无 grant/账本写入、无真人、无默认替换。四项真人指标均 `NOT_OBSERVABLE`。旧账本只读核验为 889 行、SHA `01d6670af09175475fcdfa5aec3594d2751cfd3b03050743fb79a04a578ad4c9`；调用前重核官方价格与账本。
+
+下面的 D15 内容保留为历史交接快照，不作为 Candidate17 效果或本批授权。
+
+# D15 历史交接：已完成冻结比较与隔离确认闭环
 
 更新：2026-09-28。工作区 `C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/比赛`，分支 `codex/e2-candidate11-blind-eval`。现行事实入口为 [D15 结果](candidate16/d15-integrated/D15_RESULTS.md)、[逐单元评分](candidate16/d15-integrated/SCORING_RESULTS.json)、[浏览器证据](candidate16/d15-integrated/BROWSER_EVIDENCE.md) 和 [验证](candidate16/d15-integrated/VALIDATION.md)；阶段规则见 [PROGRESS_POLICY](../governance/PROGRESS_POLICY.md)。
 

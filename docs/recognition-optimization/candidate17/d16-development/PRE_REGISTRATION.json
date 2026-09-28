@@ -1,0 +1,25 @@
+{
+  "version": "candidate17-d16-selection-1",
+  "role": "SEEN_TEMPLATE_DERIVED_PROVISIONAL_DEVELOPMENT",
+  "baseline": "Candidate03",
+  "challenger": "Candidate17",
+  "units": 24,
+  "sources": 12,
+  "order": "6 AB / 6 BA",
+  "transport": "one attempt per frozen identity; zero retry, repair or verifier; failures remain in the denominator",
+  "dispatchAuthorized": false,
+  "selection": {
+    "developmentImprovement": "all 24 determinate, both arms schema and reference valid, Candidate17 no Severe or Forbidden, no per-source risk regression, and strictly more whole-correct sources than Candidate03",
+    "mixedProgress": "whole-correct gain with at least one risk regression, or improvements and regressions across sources",
+    "riskRegression": "new critical FN, unsupported action, wrong precise time/material/revision relation, Severe or Forbidden",
+    "insufficientEvidence": "incomplete or uncertain units, invalid scoring reference, or unresolved adjudication affecting comparison"
+  },
+  "report": [
+    "whole-correct numerator/12 and paired wins/ties/losses",
+    "task FN and unsupported additions",
+    "time, material and revision errors",
+    "Schema/reference failures, Severe and Forbidden",
+    "not-scoreable and human disputes"
+  ],
+  "truthLimit": "No independent human truth or human efficacy claim; D15 decisions remain unchanged"
+}
