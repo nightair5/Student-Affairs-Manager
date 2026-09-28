@@ -1,0 +1,19 @@
+{
+  "version": "candidate15-d11-billing-1",
+  "verifiedAt": "2026-09-28T02:49:14.574Z",
+  "validUntil": "2026-09-28T14:49:14.574Z",
+  "model": "deepseek-flash",
+  "contextTokens": 1048576,
+  "outputTokens": 8192,
+  "peakInputMicroUsdPerMillion": 300000,
+  "peakOutputMicroUsdPerMillion": 1200000,
+  "unitWorstMicroUsd": 324404,
+  "batchWorstMicroUsd": 7785696,
+  "hardLimitMicroUsd": 8000000,
+  "providerActualUsd": "NOT_OBSERVABLE",
+  "sources": [
+    "https://api-docs.deepseek.com/quick_start/pricing/",
+    "https://api-docs.deepseek.com/api/list-models/",
+    "https://api-docs.deepseek.com/api/create-response/"
+  ]
+}

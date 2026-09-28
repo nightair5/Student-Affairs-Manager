@@ -1,4 +1,8 @@
-# 当前交接：D10 无任务独立事件闭环与零调用再冻结
+# 当前交接：D11 已见 Development 执行完毕，Candidate15 不晋级
+
+## D11 最新状态（2026-09-28）
+
+用户单独授权的 Candidate03/Candidate15 24 次 D10 冻结请求已各发送一次、raw 已保存、24/24 结算，权威账本 840 行，全链 SHA-256 `ca5bb4f57d011bcf8f583d48d637076a8c76d380d98b3f5b46b0ea6f6c9f17ea`。Candidate15 有 2 个引用失败，冻结 v6 对另 3 个单元抛零匹配异常；两臂完整总分和首次整份正确率不可可靠计算。Candidate15 的引用有效性仅 10/12，已违反 12/12 冻结晋级门槛，固定结论 `REJECT_CANDIDATE15_DEVELOPMENT`。没有更改旧 scorer/Expected、默认候选、旧库或部署。真实 usage 峰时保守费用上界 US$0.062017，供应商实扣不可观测；四项真人指标仍 `NOT_OBSERVABLE`。D11 浏览器工程回放因评分契约未形成完整结局而 `NOT_RUN`；D10 旧浏览器证据不冒充 D11。详见 [D11 结果](candidate15/d11-development-20260928a/D11_RESULTS.md)；下方 D10/D9 均为历史快照。下一步用新版本修复零匹配评分契约与取消/替代、条件、引用反例，再准备新 Development；Candidate15 不进入 Holdout。
 
 ## D10 最新状态（2026-09-28）
 

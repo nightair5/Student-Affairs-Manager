@@ -1,5 +1,7 @@
 # Candidate11 实验跟踪表
 
+> D11 当前（2026-09-28）：24/24 已结算，2 个 Candidate15 引用失败、3 个冻结 v6 评分异常，Candidate15 固定不晋级；账本 840 行、零重试。真实 usage 可见但供应商实扣与真人指标不可观测，D11 浏览器工程回放未执行。见 [D11 结果](../docs/recognition-optimization/candidate15/d11-development-20260928a/D11_RESULTS.md)。下方 D10 行属于当时的零调用快照。
+
 > D10 当前（2026-09-28）：独立事件编辑、无任务确认和失败恢复经隔离浏览器工程验收；D10 包另建 Manifest，24 个 D9 请求身份/正文逐份不变且仍 `NOT_RUN`、`dispatchAuthorized=false`。没有业务模型调用或真人指标；下一步仅可审查新预算和另行授权。见 [D10 结果](../docs/recognition-optimization/candidate15/d10-development/D10_RESULTS.md)。下方 D9 阻断行是历史记录。
 
 > D9 最新（2026-09-27）：12/12 provisional v6 参照和 24 个零调用身份已构造、校验；浏览器独立事件编辑与正式读回未过，`D9_BLOCKED_ON_REFERENCE_OR_BROWSER_CONTRACT`。不能申请派发。详见 [D9 结果](../docs/recognition-optimization/candidate15/d9-development/D9_RESULTS.md)。下方 D8 跟踪行保留其历史时间点。
@@ -14,6 +16,8 @@
 
 | ID | 阶段 | 工作/比较 | 数据角色 | 调用 | 当前状态 | 进入条件 / 交付 |
 |---|---|---|---|---:|---|---|
+| C15-D11-PAIR | D11 | Candidate03 / Candidate15 冻结配对、v6 评分与预算 | 完全已见合成 Development、provisional | 24/24 | REJECT_CANDIDATE15_DEVELOPMENT | 24 settle；B 引用 10/12；3 单元冻结 scorer 异常，完整总分不可评分；不进 Holdout |
+| C15-D11-REPLAY | D11 | D11 录制结果隔离浏览器工程回放 | 录制结果、非真人 | 0 新调用 | NOT_RUN_SCORING_CONTRACT_BLOCKED | D10 历史浏览器证据不得冒充 D11；下轮先修新评分契约 |
 | C15-D10-EVENT | D10 | 独立事件人工核对、无任务确认、失败恢复、读回/刷新 | 匿名夹具及隔离工程库 | 0 | PASS_ENGINEERING_BROWSER | 0 Task/0 Project/1 Event/1 TimePoint；无真人正确率证明 |
 | C15-D10-PAIR | D10 | D9 请求身份零调用再冻结 | 已见合成 Development | 0/24 | REVIEWABLE_UNAUTHORIZED_NOT_RUN | D9 请求正文/身份不变，另建产品组件哈希；调用前须新授权和核价 |
 | C15-D9-REF | D9 | 12份 v6 结构参照与正反例往返 | 完全已见合成 Development，非独立人工 | 0 | PASS_PROVISIONAL_CONTRACT | 12/12 正例与 12/12 关键字段负例通过；历史 Expected 不动 |

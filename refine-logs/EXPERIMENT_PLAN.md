@@ -1,5 +1,7 @@
 # Candidate11 独立支线推进计划
 
+> D11 实际执行（2026-09-28）：24/24 D10 冻结请求一次发送并结算，账本 840 行；Candidate15 引用有效 10/12，冻结 v6 对 3 个零匹配单元抛错，固定结论 `REJECT_CANDIDATE15_DEVELOPMENT`，不得把 2/12 与 1/12 的已确认完整数称为双臂准确率。接下来 D12 先零调用修复新版评分契约和语义边界，再准备新 Development；所有新调用重新授权，独立人工 Holdout 与真人试次未启动。详见 [D11 结果](../docs/recognition-optimization/candidate15/d11-development-20260928a/D11_RESULTS.md)。下方 D10 计划为历史状态。
+
 > D10 执行记录（2026-09-28）：无任务独立事件的人工核对、无任务确认、canonical Event/TimePoint、来源详情、失败重试与刷新已在隔离工程库及浏览器验证。D10 Manifest 对 D9 冻结文件做历史 Git 快照校验，24 个请求 JSON/身份保持逐份相同；`dispatchAuthorized=false`、`NOT_RUN`。预算草案 US$8 有模型上下文、输出上限、价格和无附加费用前提，调用前必须重新核价并取得新授权。12 参照为已见合成 Development、四项真人主指标不可观测；后续先做获授权的配对 Development，再做独立人工 Holdout、注册真人验证。见 [D10 结果](../docs/recognition-optimization/candidate15/d10-development/D10_RESULTS.md)。下方 D9 状态为历史快照。
 
 > D9 现状（2026-09-27）：12/12 份已见合成 Development 来源形成 provisional v6 完整参照，24 个配对请求身份准备但 `dispatchAuthorized=false`、`NOT_RUN`，不是调用许可。独立浏览器已证明纯信息来源保留、0 任务/0 项目、失败后人工重试与刷新；无任务独立事件不能逐字段编辑及正式读回，停止于 `D9_BLOCKED_ON_REFERENCE_OR_BROWSER_CONTRACT`。下一步先补此工程缺口、重做浏览器与冻结校验，再单独申请固定模型/次数/费用授权。见 [D9 结果](../docs/recognition-optimization/candidate15/d9-development/D9_RESULTS.md)。下方 D8 数字为历史快照。
