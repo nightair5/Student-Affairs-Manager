@@ -63,6 +63,7 @@ function gitState(clean){
   if(clean)check(git(['status','--porcelain']).length===0,'WORKTREE_DIRTY')
   return {head,branch,upstream,remote}
 }
+function ancestor(base,head){try{execFileSync('git',['merge-base','--is-ancestor',base,head],{stdio:'ignore'});return true}catch{return false}}
 function frozen(){
   check(SHA(readFileSync(join(D10,'MANIFEST.json')))===MANIFEST_SHA,'MANIFEST_DRIFT')
   check(SHA(readFileSync(join(D10,'PREPARED_REQUEST_IDENTITIES.json')))===IDENTITIES_SHA,'IDENTITIES_DRIFT')
@@ -111,7 +112,7 @@ function saveState(value){const temp=statePath()+'.new';writeNewText(temp,JSON.s
 function verifyBound(){
   const binding=read('BINDING.json'),grant=read('GRANT.json'),authorization=read('AUTHORIZATION.json'),billing=read('BILLING.json'),manifest=read('RUN_MANIFEST.json'),state=read('STATE.json'),list=frozen(),gitInfo=gitState(false)
   check(protectedFilesD11()===84,'PROTECTED_FILES')
-  check(binding.head===gitInfo.head&&binding.manifestSha256===MANIFEST_SHA&&binding.identitiesSha256===IDENTITIES_SHA&&binding.branch===BRANCH,'BINDING')
+  check(ancestor(binding.head,gitInfo.head)&&binding.manifestSha256===MANIFEST_SHA&&binding.identitiesSha256===IDENTITIES_SHA&&binding.branch===BRANCH,'BINDING')
   check(binding.units.length===24&&binding.units.every((row,i)=>assertD11Identity(list[i],row)),'UNIT_DRIFT')
   check(authorization.authorized===true&&authorization.count===24&&authorization.model===MODEL&&authorization.hardLimitMicroUsd===HARD_MICRO_USD&&authorization.grantId===grant.grantId&&grant.batchId===binding.batchId&&grant.grantId===binding.grantId,'AUTHORIZATION')
   check(manifest.batchId===binding.batchId&&manifest.grantId===binding.grantId&&manifest.head===binding.head&&manifest.manifestSha256===MANIFEST_SHA&&manifest.identitiesSha256===IDENTITIES_SHA&&manifest.retry===0&&manifest.repair===0&&manifest.verifier===0&&manifest.units===24,'RUN_MANIFEST')
@@ -178,6 +179,7 @@ async function sendOnce(bodyText){
 }
 export async function dispatchNext(){
   const data=verifyBound(),ordinal=data.state.units.find(u=>u.status!=='SETTLED')?.ordinal
+  check(git(['rev-parse','HEAD'])===data.binding.head,'DISPATCH_HEAD_DRIFT')
   check(ordinal&&data.state.units[ordinal-1].status==='NOT_SENT','PENDING_OR_COMPLETE')
   const row=data.list[ordinal-1],bodyText=JSON.stringify(row.body)
   check(SHA(bodyText)===row.requestSha256,'REQUEST_DRIFT')
