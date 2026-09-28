@@ -22,7 +22,7 @@ import {inspectRevisionLinks} from '../candidate16/revisionGuard'
 export const STATE_VERSION = 'mainline05-semantic-state-1' as const
 export type Disposition = 'pending' | 'deferred' | 'rejected' | 'confirmed'
 export interface SemanticOperation {
-  id: string; kind: 'edit' | 'confirm' | 'defer' | 'reject' | 'review_info' | 'review_task' | 'correct_fact' | 'enable_material_review' | 'review_material' | 'accept_pending_date'
+  id: string; kind: 'edit' | 'confirm' | 'defer' | 'reject' | 'review_info' | 'review_independent_events' | 'review_task' | 'correct_fact' | 'enable_material_review' | 'review_material' | 'accept_pending_date'
   at: string; taskIds: string[]; field: 'title' | 'deadline' | null; value: string | null; before: string | null
   correction?: FactCorrection; factReview?: ReviewPackage; reviewIdentity?: string
   materialReview?: { materialId: string; identity: string; value: MaterialDecision; version?: 'material-review-2' }
@@ -224,8 +224,14 @@ export function informationReviewProblem(state: AnySemanticState): string | unde
   }
   return undefined
 }
+export function independentEventIdentity(state: AnySemanticState): string {
+  const input=effectiveStateFacts(state).facts
+  const events=input.events.filter(event=>!event.relatedTaskTempIds.length)
+  const ids=new Set(events.flatMap(event=>[event.startTimePointTempId,event.endTimePointTempId].filter((id):id is string=>Boolean(id))))
+  return stableJson({sourceVersionId:state.sourceVersionId,events,times:input.timePoints.filter(time=>ids.has(time.tempId))})
+}
 export function life(state: AnySemanticState): { dispositions: Record<string, Disposition>; values: Record<string, { title: string; deadline: string }>;
-  confirmedAt: Record<string, string>; informationReviewed: boolean; accepted: string[]; reviewed?: Record<string, string> } {
+  confirmedAt: Record<string, string>; informationReviewed: boolean; independentEventsReviewedAt?: string; accepted: string[]; reviewed?: Record<string, string> } {
   if (state.version === REAL_STATE_VERSION) return liveLife(state)
   const input = state.rawResponse
   const dispositions: Record<string, Disposition> = Object.fromEntries(input.tasks.map(t => [t.id, 'pending']))
@@ -292,7 +298,7 @@ export function operationHistory(state: AnySemanticState): HistoryRecord[] {
 export function canonicalFacts(state: AnySemanticState) {
   const effective = effectiveStateFacts(state), input = effective.facts, current = life(state), accepted = new Set(current.accepted)
   const assets = relatedAssets(input, current.accepted)
-  const informationAt = current.informationReviewed ? state.operations.find(op=>op.kind==='review_info'&&op.informationEventVersion==='d10-event-commit-1')?.at : undefined
+  const informationAt = current.independentEventsReviewedAt ?? (current.informationReviewed ? state.operations.find(op=>op.kind==='review_info'&&op.informationEventVersion==='d10-event-commit-1')?.at : undefined)
   if (informationAt) for (const event of input.events.filter(row=>!row.relatedTaskTempIds.length)) {
     assets.events.add(event.tempId)
     if(event.startTimePointTempId)assets.times.add(event.startTimePointTempId)
@@ -361,7 +367,7 @@ export function canonicalFacts(state: AnySemanticState) {
   const evidenceRefs: EvidenceRef[] = !accepted.size&&!assets.events.size ? [] : state.context.index.scopes.map(scope => ({
     id: semanticId('evidence', state, scope.id), sourceVersionId: state.sourceVersionId, page: null, textStart: scope.start,
     textEnd: scope.end, quotedText: scope.text, bbox: null, fieldPath: scope.id, extractionMethod: 'manual', confidence: null,
-    createdAt: Object.values(current.confirmedAt).sort()[0]??informationAt!, legacyData: pointer(scope.id) }))
+    createdAt: [...Object.values(current.confirmedAt),...(informationAt?[informationAt]:[])].sort()[0]!, legacyData: pointer(scope.id) }))
   const bindings: Record<string, string | null> = {}
   for (const [kind, entries, materialized] of [
     ['task', input.tasks.map(t => t.id), tasks], ['material', input.materials.map(t => t.tempId), materials],
@@ -392,9 +398,9 @@ function liveLife(state: RealInputState) {
   }))
   const confirmedAt: Record<string, string> = {}, reviewed: Record<string, string> = {}, ids = new Set<string>()
   const prefix: SemanticOperation[] = []
-  let informationReviewed = false, lastAt = -Infinity
+  let informationReviewed = false, independentEventsReviewedAt:string|undefined, lastAt = -Infinity
   for (const op of state.operations) {
-    const extra = op.kind === 'correct_fact' ? ['correction', 'factReview'] : op.kind === 'review_task' ? ['reviewIdentity'] : op.kind==='review_material'?['materialReview']:op.kind==='accept_pending_date'?['pendingDateIdentity']:op.kind==='review_info'&&op.informationEventVersion?['informationEventVersion']:[]
+    const extra = op.kind === 'correct_fact' ? ['correction', 'factReview'] : op.kind === 'review_task'||op.kind==='review_independent_events' ? ['reviewIdentity'] : op.kind==='review_material'?['materialReview']:op.kind==='accept_pending_date'?['pendingDateIdentity']:op.kind==='review_info'&&op.informationEventVersion?['informationEventVersion']:[]
     exactKeys(op, ['id', 'kind', 'at', 'taskIds', 'field', 'value', 'before', ...extra])
     assert(typeof op.id === 'string' && /^[A-Za-z0-9-]{1,100}$/.test(op.id) && !ids.has(op.id), 'OPERATION_ID'); ids.add(op.id)
     assert(Number.isFinite(Date.parse(op.at)) && Date.parse(op.at) >= lastAt, 'OPERATION_TIME_ORDER'); lastAt = Date.parse(op.at)
@@ -419,6 +425,15 @@ function liveLife(state: RealInputState) {
       assert(op.field === null && op.value === null && op.before === null, 'INFO_OPERATION')
       assert(op.informationEventVersion===undefined||op.informationEventVersion==='d10-event-commit-1','INFORMATION_EVENT_VERSION')
       informationReviewed = true
+    } else if (op.kind === 'review_independent_events') {
+      const independent=effective.facts.events.filter(event=>!event.relatedTaskTempIds.length)
+      assert(!op.taskIds.length && !informationReviewed && !independentEventsReviewedAt && effective.facts.tasks.length>0 && independent.length>0
+        && op.field===null && op.value===null && op.before===null && op.reviewIdentity===independentEventIdentity(before), 'INDEPENDENT_EVENT_REVIEW')
+      assert(independent.every(event=>event.scopeIds.some(id=>before.context.index.scopes.find(scope=>scope.id===id)?.text.includes(event.title))
+        && [event.startTimePointTempId,event.endTimePointTempId].every(id=>!id||effective.facts.timePoints.some(time=>time.tempId===id
+          && !time.relatedTaskTempIds.length && !time.relatedMaterialTempIds.length && time.scopeIds.some(scopeId=>before.context.index.scopes.find(scope=>scope.id===scopeId)?.text.includes(time.rawText))
+          && (time.normalizedValue===null)===time.needsConfirmation))), 'INDEPENDENT_EVENT_EVIDENCE')
+      independentEventsReviewedAt=op.at
     } else {
       const independentCorrection=op.kind==='correct_fact'&&['independent_event','independent_time','add_independent_event'].includes(op.correction?.change.kind??'')
       assert((op.taskIds.length||independentCorrection)&&!informationReviewed&&op.taskIds.every(id => dispositions[id] !== 'confirmed'), 'ALREADY_CONFIRMED')
@@ -428,7 +443,7 @@ function liveLife(state: RealInputState) {
         const changed = appendCorrection(state.adaptedResponse, prefix.filter(o => o.correction).map(o => o.correction!),
           op.correction, state.context.index, Object.keys(confirmedAt))
         assert(equal(changed.affectedTaskIds, [...op.taskIds].sort()) && op.taskIds.every(id => dispositions[id] !== 'rejected'), 'CORRECTION_AFFECTED')
-        if(independentCorrection)assert(!op.taskIds.length&&!effective.facts.tasks.length,'INDEPENDENT_EVENT_REVIEW_SCOPE')
+        if(independentCorrection)assert(!op.taskIds.length&&!independentEventsReviewedAt,'INDEPENDENT_EVENT_REVIEW_SCOPE')
         assert(equal(op.factReview.original, changed.sourceFacts), 'CORRECTION_REVIEW_BINDING')
         if (op.correction.change.kind === 'surface') {
           const id = op.correction.change.taskId, task = changed.facts.tasks.find(t => t.id === id)!
@@ -480,7 +495,7 @@ function liveLife(state: RealInputState) {
     }
     prefix.push(op)
   }
-  return { dispositions, values, confirmedAt, informationReviewed, reviewed, accepted: Object.keys(confirmedAt) }
+  return { dispositions, values, confirmedAt, informationReviewed, independentEventsReviewedAt, reviewed, accepted: Object.keys(confirmedAt) }
 }
 export function saveState(workspace: WorkspaceV8, state: AnySemanticState): WorkspaceV8 {
   return { ...workspace, extractionDrafts: workspace.extractionDrafts.map(d => d.id === state.draftId
@@ -599,7 +614,7 @@ export async function validateSemanticWorkspace(workspace: WorkspaceV8, profile?
     if(recovery){
       exactKeys(recovery,['kind','at',...(recovery.scopePolicy?['scopePolicy']:[])])
       assert(recovery.kind==='user_opened_failed_response'&&Number.isFinite(Date.parse(recovery.at)),'RECOVERY_IDENTITY')
-      if(recovery.scopePolicy)assert(recovery.scopePolicy==='d13-local-revision-isolation-1'&&['rco-mainline-01-02-i1-real-input-candidate16-d13-engineering-2','rco-mainline-01-02-i1-real-input-candidate16-d14-trial-1'].includes(workspace.workspace.id),'RECOVERY_SCOPE_POLICY_BINDING')
+      if(recovery.scopePolicy)assert(recovery.scopePolicy==='d13-local-revision-isolation-1'&&(['rco-mainline-01-02-i1-real-input-candidate16-d13-engineering-2','rco-mainline-01-02-i1-real-input-candidate16-d14-trial-1'].includes(workspace.workspace.id)||/^rco-mainline-01-02-i1-real-input-candidate16-d15-trial-[a-z0-9]{2,20}$/.test(workspace.workspace.id)),'RECOVERY_SCOPE_POLICY_BINDING')
       const f=draft.legacyData?.mainline05Failure as {response?:unknown;code?:unknown;version?:unknown}|undefined
       assert(f&&equal(f,{version:REAL_STATE_VERSION,response:(state as RealInputState).rawHttpText,code:'SEMANTIC_RESPONSE_REJECTED'}),'RECOVERY_RAW_BINDING')
     } else assert(draft.legacyData?.mainline05Failure === undefined, 'FAILED_RECEIPT_WITH_SUCCESS')

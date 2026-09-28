@@ -26,7 +26,7 @@ export type FactChange = { kind: 'surface'; taskId: string; field: 'action' | 'o
   | { kind: 'revision'; index: number; value: { relation: SemanticRevision; addedTask: SemanticTask | null }; scopeIds: string[]; note: string }
   | { kind: 'add_task'; value: SemanticTask; scopeIds: string[]; note: string }
   | { kind: 'add_material'; value: SemanticMaterial; scopeIds: string[]; note: string }
-  | { kind: 'add_independent_event'; value: { event: SemanticEvent; time: SemanticTime | null }; scopeIds: string[]; note: string }
+  | { kind: 'add_independent_event'; value: { event: SemanticEvent; time: SemanticTime | null; endTime?: SemanticTime | null }; scopeIds: string[]; note: string }
 export interface FactCorrection { id: string; at: string; change: FactChange; before: unknown }
 const reject = (code: string): never => { throw Error('REAL_INPUT_CORRECTION_' + code) }
 const same = (a: unknown, b: unknown) => stableJson(a) === stableJson(b)
@@ -123,16 +123,17 @@ function validateDependencies(input: SemanticInput) {
 function apply(input: SemanticInput, change: FactChange, index: ImmutableScopeIndex) {
   reviewEvidence(change,index)
   if (change.kind === 'add_independent_event') {
-    keys(change,['kind','value','scopeIds','note']);keys(change.value,['event','time'])
-    const {event,time}=change.value, ids=[event.tempId,...(time?[time.tempId]:[])]
+    keys(change,['kind','value','scopeIds','note']);keys(change.value,change.value.endTime===undefined?['event','time']:['event','time','endTime'])
+    const {event,time,endTime}=change.value, ids=[event.tempId,...(time?[time.tempId]:[]),...(endTime?[endTime.tempId]:[])]
     if(ids.some(id=>!/^user-[A-Za-z0-9-]{1,90}$/.test(id)||[...input.tasks.map(t=>t.id),...input.materials.map(m=>m.tempId),...input.events.map(e=>e.tempId),...input.timePoints.map(t=>t.tempId)].includes(id))||new Set(ids).size!==ids.length
       ||event.relatedTaskTempIds.length||!event.title.trim()||!event.scopeIds.length||event.scopeIds.some(id=>!change.scopeIds.includes(id))
       ||!event.scopeIds.some(id=>index.scopes.find(s=>s.id===id)?.text.includes(event.title))
-      ||event.endTimePointTempId!==null||event.startTimePointTempId!==(time?.tempId??null))reject('NEW_INDEPENDENT_EVENT')
-    if(time&&(!same(time.scopeIds,change.scopeIds)||time.type!=='event_start'||time.relatedTaskTempIds.length||time.relatedMaterialTempIds.length
-      ||!time.rawText.trim()||time.scopeIds.filter(id=>index.scopes.find(s=>s.id===id)?.text.includes(time.rawText)).length!==1
-      ||(time.normalizedValue===null)!==time.needsConfirmation||(time.normalizedValue!==null&&!validCalendarValue(time.normalizedValue))))reject('NEW_INDEPENDENT_TIME')
+      ||event.endTimePointTempId!==(endTime?.tempId??null)||event.startTimePointTempId!==(time?.tempId??null))reject('NEW_INDEPENDENT_EVENT')
+    for(const [point,type] of [[time,'event_start'],[endTime,'event_end']] as const)if(point&&(!same(point.scopeIds,change.scopeIds)||point.type!==type||point.relatedTaskTempIds.length||point.relatedMaterialTempIds.length
+      ||!point.rawText.trim()||point.scopeIds.filter(id=>index.scopes.find(s=>s.id===id)?.text.includes(point.rawText)).length!==1
+      ||(point.normalizedValue===null)!==point.needsConfirmation||(point.normalizedValue!==null&&!validCalendarValue(point.normalizedValue))))reject('NEW_INDEPENDENT_TIME')
     if(time)input.timePoints.push(plainJson(time))
+    if(endTime)input.timePoints.push(plainJson(endTime))
     input.events.push(plainJson(event))
   } else if (change.kind === 'add_material') {
     keys(change,['kind','value','scopeIds','note'])

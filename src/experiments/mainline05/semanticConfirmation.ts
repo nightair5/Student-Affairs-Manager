@@ -4,7 +4,7 @@ import { applySemanticDomainCommitPlan, type SemanticDomainCommitPlan } from '..
 import { workspaceSnapshotHash } from '../../domain/v2/migration'
 import { plainJson } from '../mainline04/semanticContract'
 import { assert, exactKeys, equal, stateOfRuntime as stateOf, life, canonicalFacts, saveState, semanticId, semanticRevision,
-  REAL_STATE_VERSION, effectiveStateFacts, liveReviewIdentity, isCurrentDraft, relatedAssets, materialIdentity, materialDecision, materialReviewEnabled, type SemanticOperation } from './semanticState'
+  REAL_STATE_VERSION, effectiveStateFacts, liveReviewIdentity, independentEventIdentity, isCurrentDraft, relatedAssets, materialIdentity, materialDecision, materialReviewEnabled, type SemanticOperation } from './semanticState'
 import { appendCorrection, correctionBefore, validateMaterialDecision, type MaterialDecision, type FactChange } from '../realInput01/factCorrections'
 import { composeSemantics } from '../mainline04/semanticComposer'
 import { pendingDateEligible, pendingDateIdentity, hasPendingDateConsent } from './semanticState'
@@ -138,6 +138,20 @@ export async function reviewSemanticFact(repo: SemanticRepository, intent: { dra
     const op: SemanticOperation = { id: intent.operationId, kind: 'review_task', at: now, taskIds: [intent.taskId],
       field: null, value: null, before: null, reviewIdentity: liveReviewIdentity(state, intent.taskId, current.values) }
     return applySemanticDomainCommitPlan(w, planOperation(w, intent.draftId, op), now)
+  })
+}
+/** Mixed notices require explicit independent-event confirmation, separate from task acceptance. */
+export async function reviewIndependentEvents(repo: SemanticRepository, intent:{draftId:string;revision:string;operationId:string},now=new Date().toISOString()) {
+  exactKeys(intent,['draftId','revision','operationId'])
+  assert(repo.profile==='real-input-01','EXPLICIT_REAL_INPUT_REQUIRED')
+  return repo.transaction(w=>{
+    assert(semanticRevision(w)===intent.revision,'STALE_RELOAD_REQUIRED')
+    const state=stateOf(w,intent.draftId)
+    assert(state.version===REAL_STATE_VERSION&&isCurrentDraft(w,intent.draftId),'EXPLICIT_REAL_INPUT_REQUIRED')
+    const facts=effectiveStateFacts(state).facts
+    assert(facts.tasks.length>0&&facts.events.some(event=>!event.relatedTaskTempIds.length),'INDEPENDENT_EVENT_REVIEW_REQUIRED')
+    const op:SemanticOperation={id:intent.operationId,kind:'review_independent_events',at:now,taskIds:[],field:null,value:null,before:null,reviewIdentity:independentEventIdentity(state)}
+    return applySemanticDomainCommitPlan(w,planOperation(w,intent.draftId,op),now)
   })
 }
 export async function correctSemanticFact(repo: SemanticRepository,

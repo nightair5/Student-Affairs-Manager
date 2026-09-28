@@ -35,7 +35,7 @@ export async function createD13Runtime(options:{transport:WorkspaceRecordStore&{
     void metrics.changed(draftId,label).catch(()=>undefined)
   }} onBlurCapture={()=>{void metrics.blur(draftId)}}>{content}</section>
   const runtime=await createMainlineRuntime({name:store.name,store,profile:'real-input-01',recognize:()=>{throw Error('D13_RECOGNIZER_DISABLED')},semanticDriver:async()=>({...base,
-    recognitionDescription:store.name.includes('d14-trial')?'D14隔离试次 · 非真人试用 · 不代表Candidate16输出':'D13隔离工程回放 · 非真人试用 · 不代表Candidate16输出',
+    recognitionDescription:store.name.includes('d15-trial')?'D15隔离试次 · 非真人试用 · 不代表Candidate16输出':store.name.includes('d14-trial')?'D14隔离试次 · 非真人试用 · 不代表Candidate16输出':'D13隔离工程回放 · 非真人试用 · 不代表Candidate16输出',
     realInput:{...base.realInput!,networkDescription:'仅本机已录制结果；新模型调用和旧用户库访问关闭。',
       inputPanel:props=><D13ReplayPicker choices={options.choices} open={async id=>{const draft=await open(id);await props.onSaved();await props.onDraftReady(draft)}}/>,
       onReviewFieldInput:(draftId,itemId,field)=>{void metrics.changed(draftId,itemId+':'+field)},

@@ -5,12 +5,17 @@ import {stableJson} from '../mainline04/semanticContract'
 
 export const D13_DATABASE='rco-mainline-01-02-i1-real-input-candidate16-d13-engineering-2'
 export const D14_DATABASE='rco-mainline-01-02-i1-real-input-candidate16-d14-trial-1'
+export const d15Database=(participant:string)=>{
+  if(!/^[a-z0-9]{2,20}$/.test(participant))throw Error('D15_PARTICIPANT_ID')
+  return `rco-mainline-01-02-i1-real-input-candidate16-d15-trial-${participant}`
+}
+export const isD15Database=(name:string)=>/^rco-mainline-01-02-i1-real-input-candidate16-d15-trial-[a-z0-9]{2,20}$/.test(name)
 export const D13_TRACE_KEY='d13-measurement-low-edit-v2'
 export const LOW_EDIT_POLICY={version:'low-edit-v2-exploratory-1',maxFields:2,maxActiveEditMs:30_000,idleLimitMs:5_000,origin:'ENGINEERING_REPLAY',humanTrialAuthorized:false} as const
 type Kind='begin'|'read'|'edit'|'blur'|'hidden'|'visible'|'wait'|'wait_end'|'commit'|'readback'|'failure'|'restore'|'end'
 export interface D13Trace {id:string;draftId:string;atMs:number;kind:Kind;editId?:string;fieldKey?:string;commitId?:string;includedEditIds?:string[];fields?:string[];structural?:boolean;error?:string;disposition?:'confirmed'|'partial'|'no_task';snapshot?:{recordId:string;sourceSha256:string;firstOutputSha256:string}}
 type Store=WorkspaceRecordStore&{name:string}
-export function assertD13Database(name:string){if(name!==D13_DATABASE&&name!==D14_DATABASE)throw Error('D13_ISOLATED_DATABASE_REQUIRED')}
+export function assertD13Database(name:string){if(name!==D13_DATABASE&&name!==D14_DATABASE&&!isD15Database(name))throw Error('D13_ISOLATED_DATABASE_REQUIRED')}
 const flatten=(value:unknown,prefix='',out:Record<string,unknown>={}):Record<string,unknown>=>{
   if(value&&typeof value==='object'&&!Array.isArray(value))for(const [key,v] of Object.entries(value))flatten(v,prefix?prefix+'.'+key:key,out)
   else out[prefix]=value
