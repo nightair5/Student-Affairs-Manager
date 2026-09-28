@@ -27,6 +27,13 @@ describe('D14 isolated engineering trial',()=>{
     await expect(beginTrial(Object.assign(store(),{name:'old-user-db'}),'manual','text',null,null)).rejects.toThrow('D14_TRIAL_IDENTITY')
     await expect(beginTrial(store(),'manual','',null,null)).rejects.toThrow('D14_TRIAL_IDENTITY')
   })
+  it('blocks overlapping trials and reopening an already captured stimulus',async()=>{
+    const s=store(),first=await beginTrial(s,'manual','匿名通知','fixture',null)
+    await expect(beginTrial(s,'assisted','另一条通知','other','a'.repeat(64))).rejects.toThrow('D14_ACTIVE_TRIAL_MUST_EXIT')
+    await trialAction(s,first.id,'exit')
+    await s.transaction('current',()=>({sources:[{legacyData:{captureOperationId:'d13-fixture'}}]}))
+    await expect(beginTrial(s,'manual','匿名通知','fixture',null)).rejects.toThrow('D14_RECORD_ALREADY_OPENED_IN_THIS_DATABASE')
+  })
   it('four human indicators keep started denominators and missing values visible',()=>{
     expect(calculateFourIndicators([]).firstWholeSuggestionCorrect.status).toBe('NOT_OBSERVABLE')
     const row={trialId:'anonymous',condition:'assisted' as const,registered:true,consented:true,started:true,sourceSha256:'a'.repeat(64),firstOutputSha256:'b'.repeat(64),firstWholeCorrect:true,finalCorrect:true,readbackVerified:true,lowEditCorrect:null,activeEditMs:null,measurementComplete:false}

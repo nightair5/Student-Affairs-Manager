@@ -1,4 +1,5 @@
 import type {WorkspaceRecordStore} from '../../domain/v2/repository'
+import type {WorkspaceV8} from '../../domain/v2/types'
 import {sha256Text} from '../realInput01/inputReceipt'
 
 export const D14_TRIAL_POLICY={version:'d14-isolated-trial-1',role:'ENGINEERING_REPLAY',humanTrialAuthorized:false,conditions:['manual','assisted'],lowEditVersion:'low-edit-v2-exploratory-1',legacyZeroEditVersion:'measurement-3.2'} as const
@@ -8,6 +9,9 @@ const prefix='d14-trial:'
 const key=(id:string)=>prefix+id
 export async function beginTrial(store:Store,condition:Trial['condition'],sourceText:string,recordId:string|null,stimulusSha256:string|null){
   if(store.name!=='rco-mainline-01-02-i1-real-input-candidate16-d14-trial-1'||!sourceText.trim()||sourceText.length>24000||condition==='assisted'&&(!recordId||!stimulusSha256))throw Error('D14_TRIAL_IDENTITY')
+  const active=await loadTrial(store),workspace=await store.read('current') as WorkspaceV8|undefined
+  if(active&&['started','paused'].includes(active.status))throw Error('D14_ACTIVE_TRIAL_MUST_EXIT')
+  if(recordId&&workspace?.sources?.some(source=>source.legacyData?.captureOperationId==='d13-'+recordId))throw Error('D14_RECORD_ALREADY_OPENED_IN_THIS_DATABASE')
   const now=new Date().toISOString(),trial:Trial={id:crypto.randomUUID(),role:'ENGINEERING_REPLAY',condition,status:'started',sourceSha256:await sha256Text(sourceText),stimulusSha256,recordId,draftId:null,sourceText,startedAt:now,history:[{kind:'start',at:now}]}
   await store.transaction(key(trial.id),old=>{if(old!==undefined)throw Error('D14_TRIAL_COLLISION');return trial})
   await store.transaction('d14-active-trial',()=>trial.id)

@@ -25,6 +25,8 @@ export type FactChange = { kind: 'surface'; taskId: string; field: 'action' | 'o
   | { kind: 'independent_time'; timeId: string; value: SemanticTime; scopeIds: string[]; note: string }
   | { kind: 'revision'; index: number; value: { relation: SemanticRevision; addedTask: SemanticTask | null }; scopeIds: string[]; note: string }
   | { kind: 'add_task'; value: SemanticTask; scopeIds: string[]; note: string }
+  | { kind: 'add_material'; value: SemanticMaterial; scopeIds: string[]; note: string }
+  | { kind: 'add_independent_event'; value: { event: SemanticEvent; time: SemanticTime | null }; scopeIds: string[]; note: string }
 export interface FactCorrection { id: string; at: string; change: FactChange; before: unknown }
 const reject = (code: string): never => { throw Error('REAL_INPUT_CORRECTION_' + code) }
 const same = (a: unknown, b: unknown) => stableJson(a) === stableJson(b)
@@ -79,8 +81,9 @@ function safetyTasks(input: SemanticInput, initial: Set<string>) {
   return found
 }
 function affected(input: SemanticInput, change: FactChange) {
-  if (change.kind === 'independent_event' || change.kind === 'independent_time') return new Set<string>()
+  if (change.kind === 'independent_event' || change.kind === 'independent_time' || change.kind === 'add_independent_event') return new Set<string>()
   const ids = change.kind === 'material' ? input.tasks.filter(t => factAssets(input, t.id).materials.has(change.materialId)).map(t => t.id)
+    : change.kind === 'add_material' ? change.value.relatedTaskTempIds
     : change.kind === 'event' ? [change.taskId,...(change.value.event?.relatedTaskTempIds??[]),
       ...input.tasks.filter(t=>change.value.event&&factAssets(input,t.id).events.has(change.value.event.tempId)).map(t=>t.id)]
     : change.kind === 'revision' ? [change.value.relation.targetDirectiveId, change.value.relation.fromDirectiveId,
@@ -99,6 +102,7 @@ function addTask(input: SemanticInput, task: SemanticTask, index: ImmutableScope
     const scope=index.scopes.find(s=>s.id===ref.scopeId)
     if (!scope || !task.propositionScopeIds.includes(scope.id) || !ref.surface.trim() || !scope.text.includes(ref.surface)) reject('NEW_TASK_SOURCE')
   }
+  if(task.detail.completionCriteria.some(text=>!task.propositionScopeIds.some(id=>index.scopes.find(s=>s.id===id)?.text.includes(text))))reject('NEW_TASK_COMPLETION_SOURCE')
   input.tasks.push(plainJson(task))
 }
 function validateDependencies(input: SemanticInput) {
@@ -118,7 +122,31 @@ function validateDependencies(input: SemanticInput) {
 }
 function apply(input: SemanticInput, change: FactChange, index: ImmutableScopeIndex) {
   reviewEvidence(change,index)
-  if (change.kind === 'independent_event') {
+  if (change.kind === 'add_independent_event') {
+    keys(change,['kind','value','scopeIds','note']);keys(change.value,['event','time'])
+    const {event,time}=change.value, ids=[event.tempId,...(time?[time.tempId]:[])]
+    if(ids.some(id=>!/^user-[A-Za-z0-9-]{1,90}$/.test(id)||[...input.tasks.map(t=>t.id),...input.materials.map(m=>m.tempId),...input.events.map(e=>e.tempId),...input.timePoints.map(t=>t.tempId)].includes(id))||new Set(ids).size!==ids.length
+      ||event.relatedTaskTempIds.length||!event.title.trim()||!event.scopeIds.length||event.scopeIds.some(id=>!change.scopeIds.includes(id))
+      ||!event.scopeIds.some(id=>index.scopes.find(s=>s.id===id)?.text.includes(event.title))
+      ||event.endTimePointTempId!==null||event.startTimePointTempId!==(time?.tempId??null))reject('NEW_INDEPENDENT_EVENT')
+    if(time&&(!same(time.scopeIds,change.scopeIds)||time.type!=='event_start'||time.relatedTaskTempIds.length||time.relatedMaterialTempIds.length
+      ||!time.rawText.trim()||time.scopeIds.filter(id=>index.scopes.find(s=>s.id===id)?.text.includes(time.rawText)).length!==1
+      ||(time.normalizedValue===null)!==time.needsConfirmation||(time.normalizedValue!==null&&!validCalendarValue(time.normalizedValue))))reject('NEW_INDEPENDENT_TIME')
+    if(time)input.timePoints.push(plainJson(time))
+    input.events.push(plainJson(event))
+  } else if (change.kind === 'add_material') {
+    keys(change,['kind','value','scopeIds','note'])
+    const material=change.value
+    if(!/^user-[A-Za-z0-9-]{1,90}$/.test(material.tempId)
+      ||[...input.tasks.map(t=>t.id),...input.materials.map(m=>m.tempId),...input.events.map(e=>e.tempId),...input.timePoints.map(t=>t.tempId)].includes(material.tempId)
+      ||!material.name.trim()||!material.scopeIds.length||material.scopeIds.some(id=>!change.scopeIds.includes(id))
+      ||!material.scopeIds.some(id=>index.scopes.find(s=>s.id===id)?.text.includes(material.name))
+      ||!material.relatedTaskTempIds.length||material.relatedTaskTempIds.some(id=>!input.tasks.some(t=>t.id===id)))reject('NEW_MATERIAL_SOURCE')
+    input.materials.push(plainJson(material))
+    for(const task of input.tasks)if(material.relatedTaskTempIds.includes(task.id)){
+      task.detail.materialTempIds.push(material.tempId);task.coverage.material='present'
+    }
+  } else if (change.kind === 'independent_event') {
     keys(change,['kind','eventId','value','scopeIds','note'])
     const old=input.events.find(e=>e.tempId===change.eventId),value=change.value
     if(!old||old.relatedTaskTempIds.length||value.tempId!==old.tempId||value.relatedTaskTempIds.length
@@ -223,7 +251,7 @@ function apply(input: SemanticInput, change: FactChange, index: ImmutableScopeIn
 export function correctionBefore(input: SemanticInput, change: FactChange) {
   if(change.kind==='independent_event')return plainJson(input.events.find(e=>e.tempId===change.eventId)??reject('EVENT_MISSING'))
   if(change.kind==='independent_time')return plainJson(input.timePoints.find(t=>t.tempId===change.timeId)??reject('TIME_MISSING'))
-  if(change.kind==='add_task'||change.kind==='time')return null
+  if(change.kind==='add_task'||change.kind==='time'||change.kind==='add_material'||change.kind==='add_independent_event')return null
   if(change.kind==='revision')return {relation:plainJson(input.revisions[change.index]??null),addedTask:null}
   if(change.kind==='condition'||change.kind==='event'||change.kind==='dependency'){
     const task=input.tasks.find(t=>t.id===change.taskId);if(!task)return reject('TASK_MISSING')

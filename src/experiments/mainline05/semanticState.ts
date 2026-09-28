@@ -210,7 +210,8 @@ export function informationReviewProblem(state: AnySemanticState): string | unde
     if(!point||point.relatedTaskTempIds.length||point.isAllDay||point.timezone!==state.context.timezone
       ||!['event_start','event_end'].includes(point.type)
       ||!input.events.some(event=>event.startTimePointTempId===id||event.endTimePointTempId===id))return false
-    if(state.operations.some(op=>op.correction?.change.kind==='independent_time'&&op.correction.change.timeId===id))
+    if(state.operations.some(op=>op.correction?.change.kind==='independent_time'&&op.correction.change.timeId===id
+      ||op.correction?.change.kind==='add_independent_event'&&op.correction.change.value.time?.tempId===id))
       return point.normalizedValue===null&&point.needsConfirmation||point.normalizedValue!==null&&!point.needsConfirmation
     if(!point.needsConfirmation||point.normalizedValue!==null||point.precision!=='vague')return false
     const ast=parseChineseTimeAst(point.rawText,{type:point.type,referenceTime:state.context.referenceTime,timezone:state.context.timezone})
@@ -419,7 +420,7 @@ function liveLife(state: RealInputState) {
       assert(op.informationEventVersion===undefined||op.informationEventVersion==='d10-event-commit-1','INFORMATION_EVENT_VERSION')
       informationReviewed = true
     } else {
-      const independentCorrection=op.kind==='correct_fact'&&['independent_event','independent_time'].includes(op.correction?.change.kind??'')
+      const independentCorrection=op.kind==='correct_fact'&&['independent_event','independent_time','add_independent_event'].includes(op.correction?.change.kind??'')
       assert((op.taskIds.length||independentCorrection)&&!informationReviewed&&op.taskIds.every(id => dispositions[id] !== 'confirmed'), 'ALREADY_CONFIRMED')
       if (op.kind === 'correct_fact') {
         assert(op.correction && op.factReview && op.field === null && op.value === null && op.before === null, 'CORRECTION_SHAPE')
