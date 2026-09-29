@@ -843,12 +843,11 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
       const item = experimentalReview.draft.items.find(candidate => candidate.id === itemId)
       if (!item || entries.length !== 1 || !['title', 'deadline'].includes(entries[0][0]) || typeof entries[0][1] !== 'string') { rejectExperimentAction(); return }
       const [field, value] = entries[0]
-      void performExperiment(async () => {
+      return performExperiment(async () => {
         await runtime.edit({ draftId, taskTempId: item.suggestion.id, revision: experimentalReview.revision,
           operationId: crypto.randomUUID(), field: field as 'title' | 'deadline', value: value as string })
         setNotice({ text: '修改已明确保存；尚未创建任务。' })
       })
-      return
     }
     setDrafts((current) => current.map((draft) =>
       draft.id === draftId ? updateDraftItem(draft, itemId, patch, status) : draft,

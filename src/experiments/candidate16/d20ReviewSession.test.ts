@@ -69,6 +69,19 @@ it('cannot clear another tab conflict or a newer edit from the same writer', asy
   expect((await repo.load(w, 'draft')).fields['task:T1:title'].mine).toBe(newer.fields['task:T1:title'].mine)
 })
 
+it('blocks a stale formal field save after another tab takes over the checkpoint', async () => {
+  const { repo, w } = setup()
+  const first = await repo.stage(w, 'draft', 'task:T1:title', 'old', 'tab-a-value', 'tab-a')
+  const taken = await repo.recover(w, 'draft', 'tab-b', { 'task:T1:title': first.fields['task:T1:title'].revision })
+  await repo.stage(w, 'draft', 'task:T1:title', 'old', 'tab-b-value', 'tab-b')
+  let committed = false
+  await expect(repo.withFreshField(w, 'draft', 'task:T1:title', 'tab-a', first.fields['task:T1:title'].revision,
+    'tab-a-value', async () => { committed = true })).rejects.toThrow('D21_FIELD_CHANGED_REVIEW_CONFLICT')
+  expect(committed).toBe(false)
+  expect(taken.fields['task:T1:title'].writer).toBe('tab-b')
+  expect((await repo.load(w, 'draft')).fields['task:T1:title'].mine).toBe('tab-b-value')
+})
+
 it('rejects stale takeover and checks the actual current source version inside the transaction', async () => {
   const { repo, transport, w } = setup()
   const saved = await repo.stage(w, 'draft', 'task:T1:title', 'old', 'edited', 'tab-a')

@@ -24,7 +24,7 @@ interface DraftReviewPanelProps {
   draft: ExtractionDraft
   source: Source | null
   onClose: () => void
-  onUpdate: (itemId: string, patch: Partial<DraftItem['suggestion']>) => void
+  onUpdate: (itemId: string, patch: Partial<DraftItem['suggestion']>) => void | Promise<void>
   onConfirm: (itemId: string) => void
   onReject: (itemId: string) => void
   onConfirmAll: () => void
@@ -90,6 +90,7 @@ export function DraftReviewPanel({ reviewSession, reviewWorkspace, onFieldInput,
   const [sessionRecord,setSessionRecord]=useState<ReviewSession|null>(null)
   const [checkpointStatus,setCheckpointStatus]=useState<'loading'|'ready'|'saving'|'saved'|'failed'|'conflict'>(reviewSession?'loading':'ready')
   const [checkpointError,setCheckpointError]=useState('')
+  const [staleChoice,setStaleChoice]=useState<{key:string;itemId:string;field:'title'|'deadline';base:unknown;latest:unknown;mine:string;revision:string}|null>(null)
   const [writer]=useState(()=>reviewSession?.writer ?? crypto.randomUUID())
   const checkpointQueue=useRef(Promise.resolve())
   useEffect(()=>{
@@ -183,7 +184,23 @@ export function DraftReviewPanel({ reviewSession, reviewWorkspace, onFieldInput,
         editBusy:confirmationV2.busy||eventDirty||checkpointEditBusy,
         saveBusy:{title:confirmationV2.busy||eventDirty||checkpointSaveBusy(item,'title'),deadline:confirmationV2.busy||eventDirty||checkpointSaveBusy(item,'deadline')},
         titleDirty: isDirty(item, 'title'), deadlineDirty: isDirty(item, 'deadline'),
-        onSave: (field) => { if (isDirty(item, field)&&!checkpointSaveBusy(item,field)) onUpdate(item.id, { [field]: editBuffer[item.id][field] }) },
+        onSave: (field) => {
+          if (!isDirty(item, field) || checkpointSaveBusy(item, field)) return
+          const value = editBuffer[item.id][field]
+          if (!reviewSession || !reviewWorkspace) { void onUpdate(item.id, { [field]: value }); return }
+          const key = `task:${item.id}:${field}`, entry = sessionRecord?.fields[key]
+          if (!entry) { setCheckpointStatus('conflict'); setCheckpointError('未确认字段版本已失效，请重新打开本通知核对。'); return }
+          void reviewSession.withFreshField(reviewWorkspace, draft.id, key, writer, entry.revision, value,
+            async () => { await onUpdate(item.id, { [field]: value }) })
+            .catch(async error => {
+              setCheckpointStatus('conflict'); setCheckpointError(String(error))
+              try {
+                const current=await reviewSession.load(reviewWorkspace,draft.id),latest=current.fields[key]
+                setSessionRecord(current)
+                if(latest&&!latest.conflict)setStaleChoice({key,itemId:item.id,field,base:entry.base,latest:latest.mine,mine:String(value),revision:latest.revision})
+              } catch { /* keep both visible edits */ }
+            })
+        },
       } : undefined}
       editing={editingId === item.id}
       inferenceLevel={metadata?.inferenceLevel}
@@ -222,6 +239,20 @@ export function DraftReviewPanel({ reviewSession, reviewWorkspace, onFieldInput,
           {Object.entries(sessionRecord?.fields??{}).filter(([key,value])=>/^task:.+:(title|deadline)$/.test(key)&&value.conflict).map(([key,value])=><fieldset key={key}><legend>字段冲突：{reviewFieldLabel(key)}</legend><p>编辑前：{String(value.base)}；最新已保存：{String(value.conflict?.latest)}；我的未保存修改：{String(value.conflict?.incoming)}</p>
             {(['latest','incoming'] as const).map(choice=><button type="button" key={choice} onClick={()=>{if(!reviewWorkspace)return;void reviewSession.resolve(reviewWorkspace,draft.id,key,choice,writer,value.revision).then(record=>{setSessionRecord(record);setCheckpointStatus('saved');const match=/^task:(.+):(title|deadline)$/.exec(key);if(match)setEditBuffer(previous=>({...previous,[match[1]]:{...previous[match[1]],[match[2]]:String(record.fields[key].mine)}}))}).catch(error=>{setCheckpointStatus('conflict');setCheckpointError(String(error))})}}>采用{choice==='latest'?'最新已保存':'我的修改'}</button>)}</fieldset>)}
           {Object.keys(sessionRecord?.fields??{}).some(key=>/^(event|time):/.test(key)&&sessionRecord?.fields[key].conflict)&&<p>事件或时间冲突选择后，请关闭并重新打开本通知核对编辑框；不会自动正式确认。</p>}
+          {staleChoice&&reviewWorkspace&&reviewSession&&<fieldset><legend>字段冲突：{reviewFieldLabel(staleChoice.key)}</legend>
+            <p>编辑前：{String(staleChoice.base)}；最新已保存：{String(staleChoice.latest)}；我的未保存修改：{staleChoice.mine}</p>
+            <button type="button" onClick={()=>{void (async()=>{
+              const record=await reviewSession.recover(reviewWorkspace,draft.id,writer,{[staleChoice.key]:staleChoice.revision})
+              setSessionRecord(record);setEditBuffer(previous=>({...previous,[staleChoice.itemId]:{...previous[staleChoice.itemId],[staleChoice.field]:String(staleChoice.latest)}}))
+              setStaleChoice(null);setCheckpointStatus('saved');setCheckpointError('')
+            })().catch(error=>setCheckpointError(String(error)))}}>采用最新已保存</button>
+            <button type="button" onClick={()=>{void (async()=>{
+              const collision=await reviewSession.stage(reviewWorkspace,draft.id,staleChoice.key,staleChoice.base,staleChoice.mine,writer)
+              const field=collision.fields[staleChoice.key]
+              const record=field.conflict?await reviewSession.resolve(reviewWorkspace,draft.id,staleChoice.key,'incoming',writer,field.revision):collision
+              setSessionRecord(record);setStaleChoice(null);setCheckpointStatus('saved');setCheckpointError('')
+            })().catch(error=>setCheckpointError(String(error)))}}>保留我的修改，继续核对</button>
+          </fieldset>}
           {checkpointError&&<p role="alert">{checkpointError}</p>}
         </section>}
         <div className="review-progress"><ListChecks size={18} /><span><strong>{pending.length} 项待确认</strong><small>{processed ? `已处理 ${processed} 项` : '确认后才会进入今日和任务中心'}</small></span></div>

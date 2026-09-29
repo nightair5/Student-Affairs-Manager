@@ -55,10 +55,26 @@ export class D20ReviewSessionRepository {
     const raw = await this.store.read(keyOf(draftId))
     return raw === undefined ? { version: D20_SESSION_VERSION, ...id, fields: {}, history: [] } : parse(raw, id)
   }
+  private async withFieldLock<T>(draftId: string, action: () => Promise<T>): Promise<T> {
+    if (!this.store.name.includes('d21-review-session-')) return action()
+    if (typeof navigator === 'undefined') return action() // Node's in-memory tests use one atomic store.
+    if (!navigator.locks) throw Error('D21_CROSS_TAB_LOCK_UNAVAILABLE')
+    return navigator.locks.request(`d21-review-session:${this.store.name}:${draftId}`, action)
+  }
+  /** Keep the ownership check and the formal action in one cross-tab field lease. */
+  async withFreshField<T>(workspace: WorkspaceV8, draftId: string, field: string, writer: string,
+    revision: string, mine: unknown, action: () => Promise<T>): Promise<T> {
+    return this.withFieldLock(draftId, async () => {
+      const current = (await this.load(workspace, draftId)).fields[field]
+      if (!current || current.revision !== revision || current.writer !== writer || current.conflict || !same(current.mine, mine))
+        throw Error('D21_FIELD_CHANGED_REVIEW_CONFLICT')
+      return action()
+    })
+  }
   private async mutate(workspace: WorkspaceV8, draftId: string, change: (session: ReviewSession) => ReviewSession) {
     const id = identity(workspace, draftId)
     const key = keyOf(draftId)
-    const result = await this.store.transactionMany(['current', key], records => {
+    const result = await this.withFieldLock(draftId, () => this.store.transactionMany(['current', key], records => {
       const latest = records.get('current') as WorkspaceV8 | undefined
       if(this.store.name.includes('d21-review-session-')&&!latest)throw Error('D21_CANONICAL_SOURCE_MISSING')
       if (latest) {
@@ -71,7 +87,7 @@ export class D20ReviewSessionRepository {
       // IsolatedTestStore treats an omitted key as deletion. Keep the canonical
       // read-set member byte-for-byte identical while committing the checkpoint.
       return records
-    })
+    }))
     return parse(result.get(key), id)
   }
   async stage(workspace: WorkspaceV8, draftId: string, field: string, base: unknown, mine: unknown, writer: string) {
