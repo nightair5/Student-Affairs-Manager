@@ -9,10 +9,11 @@ import {sha256Text} from '../realInput01/inputReceipt'
 import {createD13Store,createD13Measurement} from './measurement'
 import {openD13Replay,type D13ReplayRecord} from './replay'
 import {assertRevisionSelection,inspectRevisionLinks} from './revisionGuard'
+import {confirmSemanticSource} from '../mainline05/semanticConfirmation'
 import {D13ReplayPicker,type D13ReplayChoice} from './ReplayPicker'
 
-export async function createD13Runtime(options:{transport:WorkspaceRecordStore&{name:string};choices:readonly D13ReplayChoice[];read:(id:string)=>Promise<D13ReplayRecord>;beforeOpen?:(record:D13ReplayRecord)=>Promise<void>;onOpen?:(record:D13ReplayRecord,draftId:string)=>Promise<void>;onDisposition?:(draftId:string,disposition:'confirmed'|'no_task')=>Promise<void>}){
-  const metrics=createD13Measurement(options.transport),observed=createD13Store(options.transport,metrics),store=observed.store
+export async function createD13Runtime(options:{transport:WorkspaceRecordStore&{name:string};choices:readonly D13ReplayChoice[];read:(id:string)=>Promise<D13ReplayRecord>;beforeOpen?:(record:D13ReplayRecord)=>Promise<void>;onOpen?:(record:D13ReplayRecord,draftId:string)=>Promise<void>;onDisposition?:(draftId:string,disposition:'confirmed'|'no_task')=>Promise<void>;sourceSession?:boolean}){
+  const metrics=createD13Measurement(options.transport),observed=createD13Store(options.transport,metrics,options.sourceSession===true),store=observed.store
   const existing=await store.read('current')
   const base=await createRealInputRuntime({name:store.name,store,...(existing===undefined?{initial:emptyRealInputWorkspace(store.name)}:{}),execution:'seen_engineering_replay',resources:{workerPath:'',corePath:'',langPath:'',pdfWorkerPath:''},execute:async()=>{throw Error('D13_MODEL_DISABLED')}})
   const repo=await SemanticRepository.open(store.name,store,undefined,'real-input-01')
@@ -35,16 +36,16 @@ export async function createD13Runtime(options:{transport:WorkspaceRecordStore&{
     void metrics.changed(draftId,label).catch(()=>undefined)
   }} onBlurCapture={()=>{void metrics.blur(draftId)}}>{content}</section>
   const runtime=await createMainlineRuntime({name:store.name,store,profile:'real-input-01',recognize:()=>{throw Error('D13_RECOGNIZER_DISABLED')},semanticDriver:async()=>({...base,
-    recognitionDescription:store.name.includes('d15-trial')?'D15隔离试次 · 非真人试用 · 不代表Candidate16输出':store.name.includes('d14-trial')?'D14隔离试次 · 非真人试用 · 不代表Candidate16输出':'D13隔离工程回放 · 非真人试用 · 不代表Candidate16输出',
-    realInput:{...base.realInput!,networkDescription:'仅本机已录制结果；新模型调用和旧用户库访问关闭。',
-      inputPanel:props=><D13ReplayPicker choices={options.choices} open={async id=>{const draft=await open(id);await props.onSaved();await props.onDraftReady(draft)}}/>,
+    recognitionDescription:options.sourceSession?'D19来源级核对 · 录制回答或匿名夹具 · 非真人试用':store.name.includes('d15-trial')?'D15隔离试次 · 非真人试用 · 不代表Candidate16输出':store.name.includes('d14-trial')?'D14隔离试次 · 非真人试用 · 不代表Candidate16输出':'D13隔离工程回放 · 非真人试用 · 不代表Candidate16输出',
+    realInput:{...base.realInput!,sourceSession:options.sourceSession??false,networkDescription:'仅本机已录制结果；新模型调用和旧用户库访问关闭。',
+      inputPanel:props=><D13ReplayPicker choices={options.choices} sourceSession={options.sourceSession} open={async id=>{const draft=await open(id);await props.onSaved();await props.onDraftReady(draft)}}/>,
       onReviewFieldInput:(draftId,itemId,field)=>{void metrics.changed(draftId,itemId+':'+field)},
       factEditor:props=>instrument(props.draftId,base.realInput!.factEditor(props)),
       informationEditor:props=>instrument(props.draftId,base.realInput!.informationEditor?.(props)),
       draftEditor:props=>{const issues=inspectRevisionLinks(effectiveStateFacts(stateOfRuntime(props.workspace,props.draftId)).facts)
         return <>{issues.length>0&&<p role="alert">修订引用需纠正：{issues.map(i=>`${i.code}（${i.taskIds.join('、')||'无法定位端点'}）`).join('；')}。受影响项暂不能确认；原回答仍保留，请核对原文后编辑关系。</p>}{instrument(props.draftId,base.realInput!.draftEditor?.(props))}</>}},
     confirm:async intent=>{const before=await repo.load();assertRevisionSelection(effectiveStateFacts(stateOfRuntime(before,intent.draftId)).facts,intent.taskTempIds)
-      const saved=await base.confirm(intent);await readback();const draft=saved.extractionDrafts.find(d=>d.id===intent.draftId)!
+      const saved=options.sourceSession?await confirmSemanticSource(repo,intent):await base.confirm(intent);await readback();const draft=saved.extractionDrafts.find(d=>d.id===intent.draftId)!
       await metrics.finish(intent.draftId,draft.status==='confirmed'?'confirmed':'partial');if(draft.status==='confirmed')await options.onDisposition?.(intent.draftId,'confirmed');return saved},
       semantic:{...base.semantic!,dispose:async intent=>{if(intent.kind==='reject')await metrics.changed(intent.draftId,'disposition.reject.'+intent.taskTempIds.join(','));const saved=await base.semantic!.dispose(intent);await readback();if(intent.kind==='review_info'){await metrics.finish(intent.draftId,'no_task');await options.onDisposition?.(intent.draftId,'no_task')}return saved}},
   })})

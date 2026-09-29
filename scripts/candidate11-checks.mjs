@@ -29,7 +29,7 @@ else if(phase==='test'){
   await renderEngineeringCarriers(carrierDirectory)
   env.REAL_INPUT_CARRIERS_MANIFEST=resolve(carrierDirectory,'carriers.json')
   run('vitest',['node_modules/vitest/vitest.mjs','run','--config','scripts/mainline-01.vitest.config.mts','--maxWorkers=2'])
-  for(const [label,file] of [['server','server/server-tests.mjs'],['worker','cloudflare/worker-tests.mjs'],['time-parity','scripts/time-ast-parity.node-test.mjs'],
+  for(const [label,file] of [['server','server/server-tests.mjs'],['worker','cloudflare/worker-tests.mjs'],['d19-diagnostic','scripts/d19-offline-diagnostic.node-test.mjs'],['d9-historical','scripts/verify-candidate15-d9.test.mjs'],['time-parity','scripts/time-ast-parity.node-test.mjs'],
     ['multimodal-lib','scripts/multimodal-evaluation-lib.node-test.mjs'],['rco-5-007','scripts/rco-5-007-replay.node-test.mjs'],['functions','functions/functions-tests.mjs']])run(label,['--test',file])
   run('c11-scoring',['--test','scripts/candidate11-scoring.node-test.mjs'])
   run('c11-history',['--test','scripts/candidate11-history.node-test.mjs'])

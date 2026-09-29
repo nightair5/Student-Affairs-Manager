@@ -1,7 +1,7 @@
 import type {WorkspaceRecordStore} from '../../domain/v2/repository'
 import type {WorkspaceV8} from '../../domain/v2/types'
 import {sha256Text} from '../realInput01/inputReceipt'
-import {D14_DATABASE,isD15Database} from './measurement'
+import {D14_DATABASE,isD15Database,isD19Database} from './measurement'
 
 export const D14_TRIAL_POLICY={version:'d14-isolated-trial-1',role:'ENGINEERING_REPLAY',humanTrialAuthorized:false,conditions:['manual','assisted'],lowEditVersion:'low-edit-v2-exploratory-1',legacyZeroEditVersion:'measurement-3.2'} as const
 export interface Trial {id:string;role:'ENGINEERING_REPLAY';condition:'manual'|'assisted';status:'started'|'paused'|'completed'|'exited';sourceSha256:string;stimulusSha256:string|null;recordId:string|null;draftId:string|null;sourceText:string;startedAt:string;history:Array<{kind:string;at:string}>}
@@ -9,7 +9,7 @@ type Store=WorkspaceRecordStore&{name:string}
 const prefix='d14-trial:'
 const key=(id:string)=>prefix+id
 export async function beginTrial(store:Store,condition:Trial['condition'],sourceText:string,recordId:string|null,stimulusSha256:string|null){
-  if(store.name!==D14_DATABASE&&!isD15Database(store.name)||!sourceText.trim()||sourceText.length>24000||condition==='assisted'&&(!recordId||!stimulusSha256))throw Error('D14_TRIAL_IDENTITY')
+  if(store.name!==D14_DATABASE&&!isD15Database(store.name)&&!isD19Database(store.name)||!sourceText.trim()||sourceText.length>24000||condition==='assisted'&&(!recordId||!stimulusSha256))throw Error('D14_TRIAL_IDENTITY')
   const active=await loadTrial(store),workspace=await store.read('current') as WorkspaceV8|undefined
   if(active&&['started','paused'].includes(active.status))throw Error('D14_ACTIVE_TRIAL_MUST_EXIT')
   if(recordId&&workspace?.sources?.some(source=>source.legacyData?.captureOperationId==='d13-'+recordId))throw Error('D14_RECORD_ALREADY_OPENED_IN_THIS_DATABASE')

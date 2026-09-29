@@ -12,6 +12,7 @@ interface DraftReviewPanelProps {
   draftCorrection?: (onDirty:(dirty:boolean)=>void,unsaved:boolean)=>ReactNode
   semanticReview?: { itemFacts: (taskId: string, onFocus: (quote: string) => void) => ReactNode; information: ReactNode;
     informationReviewProblem?: string; informationEditor?: (onDirty:(dirty:boolean)=>void)=>ReactNode;
+    sourceSession?: boolean; eventReview?: (onDirty:(dirty:boolean)=>void)=>ReactNode;
     eventCount: number; onDefer: (itemId: string) => void; onInformationReviewed: () => void }
   isolatedCapabilities?: boolean
   recognitionDescription?: string
@@ -80,6 +81,7 @@ export function DraftReviewPanel({ onFieldInput, draftCorrection, factCorrection
   const [factDirty, setFactDirty] = useState<Record<string, boolean>>({})
   const [draftDirty,setDraftDirty]=useState(false)
   const [informationDirty,setInformationDirty]=useState(false)
+  const [eventDirty,setEventDirty]=useState(false)
   const isDirty = (item: DraftItem, field: 'title' | 'deadline') =>
     editBuffer[item.id]?.[field] !== undefined && editBuffer[item.id][field] !== item.suggestion[field]
   const hasUnsaved = (item: DraftItem) => draftDirty || isDirty(item, 'title') || isDirty(item, 'deadline') || Boolean(factDirty[item.id])
@@ -123,7 +125,7 @@ export function DraftReviewPanel({ onFieldInput, draftCorrection, factCorrection
       index={index}
       item={confirmationV2 ? { ...item, suggestion: { ...item.suggestion, ...editBuffer[item.id] } } : item}
       confirmationV2={confirmationV2 ? {
-        ...confirmationV2.items[item.id], busy: confirmationV2.busy, unsaved: factCorrection ? draft.items.some(hasUnsaved) : hasUnsaved(item),
+        ...confirmationV2.items[item.id], busy: confirmationV2.busy || eventDirty, unsaved: factCorrection ? draft.items.some(hasUnsaved) : hasUnsaved(item),
         titleDirty: isDirty(item, 'title'), deadlineDirty: isDirty(item, 'deadline'),
         onSave: (field) => { if (isDirty(item, field)) onUpdate(item.id, { [field]: editBuffer[item.id][field] }) },
       } : undefined}
@@ -189,6 +191,11 @@ export function DraftReviewPanel({ onFieldInput, draftCorrection, factCorrection
         </section>}
         <details className="source-details" open><summary><FileText size={16} />原始通知与定位依据</summary><p>{evidenceIndex >= 0 ? <>{sourceText.slice(0, evidenceIndex)}<mark>{activeEvidence}</mark>{sourceText.slice(evidenceIndex + activeEvidence.length)}</> : sourceText}</p>{activeEvidence && evidenceIndex < 0 && <small>这条依据来自解析结果，但无法在当前保存的原文中精确定位，请人工核对。</small>}</details>
         <section className="review-list recognition-tree" aria-label="项目树待确认事项">
+          {semanticReview?.sourceSession && draft.items.length > 0 && <section aria-label="同一通知的独立事件核对">
+            <p>任务与独立事件在这一页核对。保存事件字段纠正后，确认任务时会在同一笔正式提交中保存独立事件和已选任务。</p>
+            {semanticReview.eventReview?.(setEventDirty)}
+            {eventDirty && <p role="status">独立事件仍有未保存编辑，暂不能确认任务。</p>}
+          </section>}
           {recognition?.milestones.map((milestone) => <details className="recognition-stage" key={milestone.tempId} open={expandTaskTree}>
             <summary><span><strong>{milestone.title}</strong><small>{milestone.objective || '阶段目标待确认'}</small></span><em>{milestone.tasks.length + milestone.workPackages.reduce((count, workPackage) => count + workPackage.tasks.length, 0)} 项</em></summary>
             {milestone.tasks.map((task) => {
@@ -215,10 +222,10 @@ export function DraftReviewPanel({ onFieldInput, draftCorrection, factCorrection
           <span>{confirmationV2 ? new Set(selectedPending.flatMap((item) => confirmationV2.items[item.id]?.timePointTempIds ?? [])).size : recognition?.timePoints.filter((item) => item.selected !== false).length ?? pending.length} 个时间节点</span>
           <span>{confirmationV2 ? new Set(selectedPending.flatMap((item) => confirmationV2.items[item.id]?.materialTempIds ?? [])).size : pendingMaterials} 项材料</span>
           {recognition && <span>{confirmationV2 ? 0 : recognition.events.filter((item) => item.selected !== false).length} 个事件</span>}
-          {semanticReview && <span>{semanticReview.eventCount} 个关联事件（随本次确认保存）</span>}
+          {semanticReview && <span>{semanticReview.eventCount} 个任务关联事件{semanticReview.sourceSession?'；上方独立事件也随本次确认保存':'（随本次确认保存）'}</span>}
         </div>}
         <button className="secondary-button" type="button" onClick={onClose}>{pending.length ? '稍后再处理' : '完成'}</button>
-        {selectedPending.length > 0 && <button className="primary-button" type="button" disabled={confirmationV2 && (confirmationV2.busy || selectedPending.some((item) => !confirmationV2.items[item.id] || confirmationV2.items[item.id].blockedReason || hasUnsaved(item)))} onClick={onConfirmAll}><CheckCheck size={17} />加入已选任务（{selectedPending.length}）</button>}
+        {selectedPending.length > 0 && <button className="primary-button" type="button" disabled={confirmationV2 && (confirmationV2.busy || eventDirty || selectedPending.some((item) => !confirmationV2.items[item.id] || confirmationV2.items[item.id].blockedReason || hasUnsaved(item)))} onClick={onConfirmAll}><CheckCheck size={17} />{semanticReview?.sourceSession?'确认本通知已选任务及独立事件':'加入已选任务'}（{selectedPending.length}）</button>}
       </footer>
     </aside>
   </div>

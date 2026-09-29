@@ -10,12 +10,17 @@ export const d15Database=(participant:string)=>{
   return `rco-mainline-01-02-i1-real-input-candidate16-d15-trial-${participant}`
 }
 export const isD15Database=(name:string)=>/^rco-mainline-01-02-i1-real-input-candidate16-d15-trial-[a-z0-9]{2,20}$/.test(name)
+export const d19Database=(participant:string)=>{
+  if(!/^p[1-9][0-9]{0,2}$/.test(participant))throw Error('D19_SIMULATED_IDENTITY')
+  return `rco-mainline-01-02-i1-real-input-d19-source-session-${participant}`
+}
+export const isD19Database=(name:string)=>/^rco-mainline-01-02-i1-real-input-d19-source-session-p[1-9][0-9]{0,2}$/.test(name)
 export const D13_TRACE_KEY='d13-measurement-low-edit-v2'
 export const LOW_EDIT_POLICY={version:'low-edit-v2-exploratory-1',maxFields:2,maxActiveEditMs:30_000,idleLimitMs:5_000,origin:'ENGINEERING_REPLAY',humanTrialAuthorized:false} as const
 type Kind='begin'|'read'|'edit'|'blur'|'hidden'|'visible'|'wait'|'wait_end'|'commit'|'readback'|'failure'|'restore'|'end'
-export interface D13Trace {id:string;draftId:string;atMs:number;kind:Kind;editId?:string;fieldKey?:string;commitId?:string;includedEditIds?:string[];fields?:string[];structural?:boolean;error?:string;disposition?:'confirmed'|'partial'|'no_task';snapshot?:{recordId:string;sourceSha256:string;firstOutputSha256:string}}
+export interface D13Trace {id:string;draftId:string;atMs:number;kind:Kind;editId?:string;fieldKey?:string;commitId?:string;includedEditIds?:string[];fields?:string[];semanticFields?:string[];structural?:boolean;error?:string;disposition?:'confirmed'|'partial'|'no_task';snapshot?:{recordId:string;sourceSha256:string;firstOutputSha256:string}}
 type Store=WorkspaceRecordStore&{name:string}
-export function assertD13Database(name:string){if(name!==D13_DATABASE&&name!==D14_DATABASE&&!isD15Database(name))throw Error('D13_ISOLATED_DATABASE_REQUIRED')}
+export function assertD13Database(name:string){if(name!==D13_DATABASE&&name!==D14_DATABASE&&!isD15Database(name)&&!isD19Database(name))throw Error('D13_ISOLATED_DATABASE_REQUIRED')}
 const flatten=(value:unknown,prefix='',out:Record<string,unknown>={}):Record<string,unknown>=>{
   if(value&&typeof value==='object'&&!Array.isArray(value))for(const [key,v] of Object.entries(value))flatten(v,prefix?prefix+'.'+key:key,out)
   else out[prefix]=value
@@ -35,6 +40,38 @@ export function committedFieldDiff(before:WorkspaceV8,after:WorkspaceV8,draftId:
   fields.push(...rejected.map(id=>'disposition.reject.'+id))
   // Title/deadline compatibility views are separate fields; derived ID/scope changes are never hidden.
   return {fields,structural:rejected.length>0||stableJson(s1.tasks.map(t=>t.id).sort())!==stableJson(s2.tasks.map(t=>t.id).sort())||stableJson(s1.revisions)!==stableJson(s2.revisions)}
+}
+/** D19 counts a user's semantic correction once while retaining every storage-path change for audit. */
+export function groupD19SemanticFields(paths:readonly string[],after:WorkspaceV8,draftId:string){
+  const facts=effectiveStateFacts(stateOfRuntime(after,draftId)).facts,groups=new Set<string>()
+  let structural=false
+  for(const path of paths){
+    if(path==='revisions'||path.startsWith('disposition.reject.')){groups.add(path);structural=true;continue}
+    const [kind,id,...parts]=path.split('.'),field=parts.join('.')
+    if(!id||!field)continue
+    if(kind==='display'){
+      if(field==='deadline'){
+        const task=facts.tasks.find(row=>row.id===id),points=task?.detail.timePointTempIds??[]
+        groups.add(points.length===1?'time:'+points[0]+':value':'task:'+id+':deadline')
+      }else if(field==='title')groups.add('task:'+id+':title')
+      continue
+    }
+    if(/(?:^|\.)(?:tempId|id|scopeId|scopeIds|confidence|inferenceLevel)$/.test(field))continue
+    if(kind==='timePoints'){
+      if(field.includes('related')||field==='type'){groups.add('time:'+id+':relation');structural=true}
+      else groups.add('time:'+id+':value')
+    }else if(kind==='events'){
+      if(field.includes('TimePointTempId')||field.includes('related')){groups.add('event:'+id+':relation');structural=true}
+      else groups.add('event:'+id+':'+field)
+    }else if(kind==='tasks'){
+      if(field.includes('TempId')||field.includes('dependency')||field.includes('parent')){groups.add('task:'+id+':relation');structural=true}
+      else groups.add('task:'+id+':'+(field.startsWith('detail.')?field.slice(7):field).split('.')[0])
+    }else if(kind==='materials'){
+      if(field.includes('related')){groups.add('material:'+id+':relation');structural=true}
+      else groups.add('material:'+id+':'+field)
+    }
+  }
+  return {fields:[...groups].sort(),structural}
 }
 export function createD13Measurement(transport:Store,now:()=>number=Date.now){
   assertD13Database(transport.name)
@@ -58,7 +95,7 @@ export function createD13Measurement(transport:Store,now:()=>number=Date.now){
 }
 export type D13Measurement=ReturnType<typeof createD13Measurement>
 /** Every measured correction is derived from a real saved operation, then independently read back. */
-export function createD13Store(transport:Store,metrics:D13Measurement){
+export function createD13Store(transport:Store,metrics:D13Measurement,sourceSession=false){
   assertD13Database(transport.name);let fail=false
   const store:Store={name:transport.name,read:key=>transport.read(key),write:async(key,value)=>{await store.transaction(key,old=>{if(old!==undefined)throw Error('D13_OVERWRITE_INITIAL');return value})},remove:async()=>{throw Error('D13_DELETE_DISABLED')},transactionMany:async()=>{throw Error('D13_MIGRATION_DISABLED')},transaction:async(key,mutate)=>{
     if(key!=='current')throw Error('D13_WORKSPACE_KEY')
@@ -74,11 +111,11 @@ export function createD13Store(transport:Store,metrics:D13Measurement){
           if(!old?.legacyData?.mainline05||!draft.legacyData?.mainline05)continue
           const prev=stateOfRuntime(before!,draft.id),current=stateOfRuntime(next,draft.id),ops=current.operations.slice(prev.operations.length)
           if(!ops.length||!traces.some(e=>e.draftId===draft.id&&e.kind==='begin'))continue;changedDrafts.push(draft.id)
-          const commitId=ops.map(o=>o.id).join(':'),diff=committedFieldDiff(before!,next,draft.id)
+          const commitId=ops.map(o=>o.id).join(':'),diff=committedFieldDiff(before!,next,draft.id),semantic=sourceSession?groupD19SemanticFields(diff.fields,next,draft.id):null
           const trace=traces.filter(t=>t.draftId===draft.id),already=new Set(trace.flatMap(t=>t.includedEditIds??[])),includedEditIds=trace.filter(t=>t.kind==='edit'&&t.editId&&!already.has(t.editId)).map(t=>t.editId!)
           if(fail&&stableJson(before)!==stableJson(next)){fail=false;throw Error('D13_INJECTED_ATOMIC_FAILURE')}
           const disposition=ops.some(o=>o.kind==='review_info')?'no_task':ops.some(o=>o.kind==='confirm')?(draft.status==='confirmed'?'confirmed':'partial'):undefined
-          traces.push({id:crypto.randomUUID(),draftId:draft.id,kind:'commit',atMs:metrics.now(),commitId,includedEditIds,fields:diff.fields,structural:diff.structural,...(disposition?{disposition}:{})})
+          traces.push({id:crypto.randomUUID(),draftId:draft.id,kind:'commit',atMs:metrics.now(),commitId,includedEditIds,fields:diff.fields,...(semantic?{semanticFields:semantic.fields}:{}),structural:diff.structural||Boolean(semantic?.structural),...(disposition?{disposition}:{})})
           commitIds.push({draftId:draft.id,commitId})
         }
         return new Map<string,unknown>([['current',next],[D13_TRACE_KEY,traces]])

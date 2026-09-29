@@ -117,6 +117,28 @@ export async function confirmSemantic(repo: SemanticRepository, intent: Confirma
     return applySemanticDomainCommitPlan(workspace, plan, now)
   })
 }
+/** A source review commits its independently reviewed events and selected tasks in one repository transaction. */
+export async function confirmSemanticSource(repo: SemanticRepository, intent: ConfirmationIntentV2, now = new Date().toISOString()) {
+  exactKeys(intent, ['draftId','revision','taskTempIds'])
+  assert(repo.profile === 'real-input-01' && Array.isArray(intent.taskTempIds) && intent.taskTempIds.length > 0
+    && new Set(intent.taskTempIds).size === intent.taskTempIds.length, 'SOURCE_SELECTION_INVALID')
+  return repo.transaction(workspace => {
+    const state = stateOf(workspace, intent.draftId), current = life(state)
+    assert(state.version === REAL_STATE_VERSION && isCurrentDraft(workspace,intent.draftId),'SOURCE_REVIEW_PROFILE')
+    assert(intent.taskTempIds.every(id => Object.hasOwn(current.dispositions,id)), 'SELECTION_UNKNOWN_ID')
+    if(intent.taskTempIds.every(id => current.dispositions[id] === 'confirmed')) return workspace
+    assert(semanticRevision(workspace) === intent.revision, 'STALE_RELOAD_REQUIRED')
+    let next = workspace
+    const independent = effectiveStateFacts(state).facts.events.filter(event => !event.relatedTaskTempIds.length)
+    if(independent.length && !current.independentEventsReviewedAt){
+      const review:SemanticOperation={id:crypto.randomUUID(),kind:'review_independent_events',at:now,
+        taskIds:[],field:null,value:null,before:null,reviewIdentity:independentEventIdentity(state)}
+      next = applySemanticDomainCommitPlan(next,planOperation(next,intent.draftId,review),now)
+    }
+    const confirm:SemanticOperation={id:crypto.randomUUID(),kind:'confirm',at:now,taskIds:intent.taskTempIds,field:null,value:null,before:null}
+    return applySemanticDomainCommitPlan(next,planOperation(next,intent.draftId,confirm),now)
+  })
+}
 export async function disposeSemantic(repo: SemanticRepository, intent: SemanticDispositionIntent, now = new Date().toISOString()) {
   exactKeys(intent, ['draftId','revision','taskTempIds','kind','operationId'])
   return repo.transaction(workspace => {

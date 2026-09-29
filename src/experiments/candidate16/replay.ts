@@ -4,6 +4,7 @@ import {makeSendSnapshot,sha256Text} from '../realInput01/inputReceipt'
 import {FLASH41_MODEL_NAME,parseModelEnvelope,type WireContext} from '../realInput01/modelWire'
 import {CANDIDATE03_VERSION} from '../realInput01/candidate03'
 import {CANDIDATE15_VERSION} from '../realInput01/candidate15'
+import {CANDIDATE17_VERSION} from '../realInput01/candidate17'
 import {SemanticRepository} from '../mainline05/semanticRepository'
 import {completeInputRun,openFailedForCorrection} from '../mainline05/semanticCapture'
 import {enableMaterialReview} from '../mainline05/semanticConfirmation'
@@ -11,7 +12,7 @@ import {REAL_STATE_VERSION,semanticRevision} from '../mainline05/semanticState'
 import {stableJson} from '../mainline04/semanticContract'
 import {assertD13Database} from './measurement'
 
-export interface D13ReplayRecord {id:string;label:string;kind:'RECORDED_MODEL'|'ENGINEERING_FIXTURE';candidateVersion:typeof CANDIDATE03_VERSION|typeof CANDIDATE15_VERSION;
+export interface D13ReplayRecord {id:string;label:string;kind:'RECORDED_MODEL'|'ENGINEERING_FIXTURE';candidateVersion:typeof CANDIDATE03_VERSION|typeof CANDIDATE15_VERSION|typeof CANDIDATE17_VERSION;
   context:WireContext;rawHttpText:string;responseSha256:string;requestSha256:string}
 export function rebindD13ScopeIds(value:unknown,mapping:Map<string,string>,key=''):unknown{
   if(Array.isArray(value))return value.map(item=>rebindD13ScopeIds(item,mapping,key))
@@ -20,9 +21,9 @@ export function rebindD13ScopeIds(value:unknown,mapping:Map<string,string>,key='
 }
 export async function openD13Replay(repo:SemanticRepository,record:D13ReplayRecord){
   assertD13Database(repo.name)
-  if(!/^d13-(?:record-[0-9]{2}|fixture-[a-z0-9-]+)$/.test(record.id)
+  if(!/^(?:d13-(?:record-[0-9]{2}|fixture-[a-z0-9-]+)|d19-record-[0-9]{2})$/.test(record.id)
     || !['RECORDED_MODEL','ENGINEERING_FIXTURE'].includes(record.kind)
-    || ![CANDIDATE03_VERSION,CANDIDATE15_VERSION].includes(record.candidateVersion)
+    || ![CANDIDATE03_VERSION,CANDIDATE15_VERSION,CANDIDATE17_VERSION].includes(record.candidateVersion as typeof CANDIDATE03_VERSION)
     || await sha256Text(record.rawHttpText)!==record.responseSha256 || !/^[a-f0-9]{64}$/.test(record.requestSha256)) throw Error('D13_REPLAY_IDENTITY')
   const before=await repo.load(),operationId='d13-'+record.id,prior=before.sources.find(source=>source.legacyData?.captureOperationId===operationId)
   if(prior){const run=before.recognitionRuns.find(item=>item.sourceVersionId===prior.currentVersionId),draft=before.extractionDrafts.find(item=>item.recognitionRunId===run?.id);if(draft?.legacyData?.mainline05)return draft.id;throw Error('D13_PRIOR_INCOMPLETE_PRESERVED')}

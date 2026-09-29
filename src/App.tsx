@@ -1527,6 +1527,8 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
             itemFacts: (taskId, onFocus) => runtime.semantic!.facts(isolatedSnapshot, selectedDraft.id, taskId, onFocus),
             information: runtime.semantic.facts(isolatedSnapshot, selectedDraft.id),
             informationEditor: runtime.realInput?.informationEditor ? onDirty=>runtime.realInput!.informationEditor!({workspace:isolatedSnapshot,draftId:selectedDraft.id,busy:isolatedBusy||storageError,onDirty,onSaved:refreshExperiment}) : undefined,
+            sourceSession: runtime.realInput?.sourceSession,
+            eventReview: runtime.realInput?.sourceSession && runtime.realInput.informationEditor ? onDirty=>runtime.realInput!.informationEditor!({workspace:isolatedSnapshot,draftId:selectedDraft.id,busy:isolatedBusy||storageError,onDirty,onSaved:refreshExperiment}) : undefined,
             informationReviewProblem: runtime.semantic.informationReviewProblem?.(isolatedSnapshot, selectedDraft.id),
             eventCount: runtime.semantic.eventCount(isolatedSnapshot, selectedDraft.id, experimentalReview.draft.items.filter(i => i.status === '待确认' && i.selected).map(i => i.suggestion.id)),
             onDefer: itemId => disposeExperiment(selectedDraft.id, 'defer', itemId),
