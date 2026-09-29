@@ -11,6 +11,7 @@ import {openD13Replay,type D13ReplayRecord} from './replay'
 import {assertRevisionSelection,inspectRevisionLinks} from './revisionGuard'
 import {confirmSemanticSource} from '../mainline05/semanticConfirmation'
 import {D13ReplayPicker,type D13ReplayChoice} from './ReplayPicker'
+import {D20ReviewSessionRepository} from './d20ReviewSession'
 
 export async function createD13Runtime(options:{transport:WorkspaceRecordStore&{name:string};choices:readonly D13ReplayChoice[];read:(id:string)=>Promise<D13ReplayRecord>;beforeOpen?:(record:D13ReplayRecord)=>Promise<void>;onOpen?:(record:D13ReplayRecord,draftId:string)=>Promise<void>;onDisposition?:(draftId:string,disposition:'confirmed'|'no_task')=>Promise<void>;sourceSession?:boolean}){
   const metrics=createD13Measurement(options.transport),observed=createD13Store(options.transport,metrics,options.sourceSession===true),store=observed.store
@@ -36,8 +37,10 @@ export async function createD13Runtime(options:{transport:WorkspaceRecordStore&{
     void metrics.changed(draftId,label).catch(()=>undefined)
   }} onBlurCapture={()=>{void metrics.blur(draftId)}}>{content}</section>
   const runtime=await createMainlineRuntime({name:store.name,store,profile:'real-input-01',recognize:()=>{throw Error('D13_RECOGNIZER_DISABLED')},semanticDriver:async()=>({...base,
-    recognitionDescription:options.sourceSession?'D19来源级核对 · 录制回答或匿名夹具 · 非真人试用':store.name.includes('d15-trial')?'D15隔离试次 · 非真人试用 · 不代表Candidate16输出':store.name.includes('d14-trial')?'D14隔离试次 · 非真人试用 · 不代表Candidate16输出':'D13隔离工程回放 · 非真人试用 · 不代表Candidate16输出',
-    realInput:{...base.realInput!,sourceSession:options.sourceSession??false,networkDescription:'仅本机已录制结果；新模型调用和旧用户库访问关闭。',
+    recognitionDescription:store.name.includes('d20-review-session-')?'D20来源级核对 · 检查点与冲突保护 · 非真人试用':options.sourceSession?'D19来源级核对 · 录制回答或匿名夹具 · 非真人试用':store.name.includes('d15-trial')?'D15隔离试次 · 非真人试用 · 不代表Candidate16输出':store.name.includes('d14-trial')?'D14隔离试次 · 非真人试用 · 不代表Candidate16输出':'D13隔离工程回放 · 非真人试用 · 不代表Candidate16输出',
+    realInput:{...base.realInput!,sourceSession:options.sourceSession??false,
+      ...(store.name.includes('d20-review-session-')?{reviewSession:new D20ReviewSessionRepository(options.transport)}:{}),
+      networkDescription:'仅本机已录制结果；新模型调用和旧用户库访问关闭。',
       inputPanel:props=><D13ReplayPicker choices={options.choices} sourceSession={options.sourceSession} open={async id=>{const draft=await open(id);await props.onSaved();await props.onDraftReady(draft)}}/>,
       onReviewFieldInput:(draftId,itemId,field)=>{void metrics.changed(draftId,itemId+':'+field)},
       factEditor:props=>instrument(props.draftId,base.realInput!.factEditor(props)),

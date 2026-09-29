@@ -1,12 +1,16 @@
 import { AlertTriangle, Check, CheckCheck, Clock3, FileText, FolderTree, ListChecks, PencilLine, ShieldCheck, Trash2, X } from 'lucide-react'
-import { useId, useRef, useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 import { useDialogFocusTrap } from '../lib/useDialogFocusTrap'
 import type { DraftItem, ExtractionDraft, Project, Source, TaskCategory } from '../types'
 import type { InferenceLevel } from '../types'
 import { assessFocusedReview } from '../recognition/focusedReview'
 import type { ReactNode } from 'react'
+import type { WorkspaceV8 } from '../domain/v2/types'
+import type { D20ReviewSessionRepository, ReviewSession } from '../experiments/candidate16/d20ReviewSession'
 
 interface DraftReviewPanelProps {
+  reviewSession?: D20ReviewSessionRepository
+  reviewWorkspace?: WorkspaceV8
   onFieldInput?: (itemId:string,field:'title'|'deadline')=>void
   factCorrection?: (taskId: string, onDirty: (dirty: boolean) => void, unsaved: boolean) => ReactNode
   draftCorrection?: (onDirty:(dirty:boolean)=>void,unsaved:boolean)=>ReactNode
@@ -36,6 +40,7 @@ interface DraftReviewPanelProps {
 }
 
 const categories: TaskCategory[] = ['比赛', '保研', '课程', '老师任务', '其他']
+const reviewFieldLabel=(key:string)=>key.endsWith(':title')?'任务名称':key.endsWith(':deadline')?'截止时间':key.startsWith('event:')?'独立事件':key.startsWith('time:')?'事件时间':key.startsWith('material:')?'材料':key.startsWith('relation:')?'修订或依赖关系':'核对字段'
 
 function deadlineLabel(value: string): string {
   if (Number.isNaN(new Date(value).getTime())) return '日期待确认'
@@ -72,7 +77,7 @@ function EvidenceLocator({ recognition, evidenceIds, onFocusEvidence }: {
     : <small className="evidence-unavailable">暂无可定位依据</small>
 }
 
-export function DraftReviewPanel({ onFieldInput, draftCorrection, factCorrection, semanticReview, isolatedCapabilities, recognitionDescription, draft, source, onClose, onUpdate, onConfirm, onReject, onConfirmAll, projectWillCreate, projects, onProjectChoice, onKeepExplicit, onMoveTask, onToggleRecognitionEntity, onToggleTaskSelected, onSplitTask, onMergeTask, confirmationV2 }: DraftReviewPanelProps) {
+export function DraftReviewPanel({ reviewSession, reviewWorkspace, onFieldInput, draftCorrection, factCorrection, semanticReview, isolatedCapabilities, recognitionDescription, draft, source, onClose, onUpdate, onConfirm, onReject, onConfirmAll, projectWillCreate, projects, onProjectChoice, onKeepExplicit, onMoveTask, onToggleRecognitionEntity, onToggleTaskSelected, onSplitTask, onMergeTask, confirmationV2 }: DraftReviewPanelProps) {
   const titleId = useId()
   const panelRef = useRef<HTMLElement>(null)
   const [editingId, setEditingId] = useState<string | null>(null)
@@ -82,6 +87,55 @@ export function DraftReviewPanel({ onFieldInput, draftCorrection, factCorrection
   const [draftDirty,setDraftDirty]=useState(false)
   const [informationDirty,setInformationDirty]=useState(false)
   const [eventDirty,setEventDirty]=useState(false)
+  const [sessionRecord,setSessionRecord]=useState<ReviewSession|null>(null)
+  const [checkpointStatus,setCheckpointStatus]=useState<'loading'|'ready'|'saving'|'saved'|'failed'|'conflict'>(reviewSession?'loading':'ready')
+  const [checkpointError,setCheckpointError]=useState('')
+  const [writer]=useState(()=>reviewSession?.writer ?? crypto.randomUUID())
+  const checkpointQueue=useRef(Promise.resolve())
+  useEffect(()=>{
+    if(!reviewSession||!reviewWorkspace||sessionRecord)return
+    let live=true
+    void reviewSession.load(reviewWorkspace,draft.id).then(record=>{
+      if(!live)return
+      setSessionRecord(record)
+      const buffer:Record<string,Partial<Pick<DraftItem['suggestion'],'title'|'deadline'>>>={}
+      for(const [key,value] of Object.entries(record.fields)){
+        const match=/^task:(.+):(title|deadline)$/.exec(key)
+        if(match){const [,taskId,field]=match;buffer[taskId]={...buffer[taskId],[field]:String(value.mine)}}
+      }
+      setEditBuffer(buffer);setCheckpointStatus('ready')
+    }).catch(error=>{if(live){setCheckpointStatus('failed');setCheckpointError(String(error))}})
+    return()=>{live=false}
+  },[reviewSession,reviewWorkspace,draft.id,sessionRecord])
+  useEffect(()=>{
+    if(!reviewSession||!reviewWorkspace||!sessionRecord)return
+    for(const item of draft.items)for(const field of ['title','deadline'] as const){
+      const key=`task:${item.id}:${field}`,entry=sessionRecord.fields[key]
+      if(entry&&!entry.conflict&&entry.writer===writer&&entry.mine===item.suggestion[field]){
+        void reviewSession.clear(reviewWorkspace,draft.id,key,writer).then(setSessionRecord).catch(error=>setCheckpointError(String(error)))
+      }
+    }
+  },[draft,reviewSession,reviewWorkspace,sessionRecord,writer])
+  const foreignCheckpoint=Boolean(sessionRecord&&Object.values(sessionRecord.fields).some(field=>field.writer!==writer))
+  const checkpointEditBusy=Boolean(reviewSession&&(checkpointStatus==='loading'||checkpointStatus==='conflict'))
+  const checkpointSaveBusy=(item:DraftItem,field:'title'|'deadline')=>{
+    if(!reviewSession)return false
+    const entry=sessionRecord?.fields[`task:${item.id}:${field}`]
+    return checkpointStatus==='loading'||checkpointStatus==='saving'||checkpointStatus==='failed'||checkpointStatus==='conflict'||!entry||entry.writer!==writer||Boolean(entry.conflict)||entry.mine!==editBuffer[item.id]?.[field]
+  }
+  const stageTask=(item:DraftItem,patch:Partial<DraftItem['suggestion']>)=>{
+    setEditBuffer(previous=>({...previous,[item.id]:{...previous[item.id],
+      ...(patch.title!==undefined?{title:patch.title}:{}),...(patch.deadline!==undefined?{deadline:patch.deadline}:{})}}))
+    if(!reviewSession||!reviewWorkspace)return
+    const field=patch.title!==undefined?'title':'deadline',mine=patch[field]
+    if(mine===undefined)return
+    setCheckpointStatus('saving');setCheckpointError('')
+    checkpointQueue.current=checkpointQueue.current.catch(()=>undefined).then(async()=>{
+      const record=await reviewSession.stage(reviewWorkspace,draft.id,`task:${item.id}:${field}`,item.suggestion[field],mine,writer)
+      setSessionRecord(record)
+      setCheckpointStatus(record.fields[`task:${item.id}:${field}`]?.conflict?'conflict':'saved')
+    }).catch(error=>{setCheckpointStatus('failed');setCheckpointError(String(error))})
+  }
   const isDirty = (item: DraftItem, field: 'title' | 'deadline') =>
     editBuffer[item.id]?.[field] !== undefined && editBuffer[item.id][field] !== item.suggestion[field]
   const hasUnsaved = (item: DraftItem) => draftDirty || isDirty(item, 'title') || isDirty(item, 'deadline') || Boolean(factDirty[item.id])
@@ -125,9 +179,11 @@ export function DraftReviewPanel({ onFieldInput, draftCorrection, factCorrection
       index={index}
       item={confirmationV2 ? { ...item, suggestion: { ...item.suggestion, ...editBuffer[item.id] } } : item}
       confirmationV2={confirmationV2 ? {
-        ...confirmationV2.items[item.id], busy: confirmationV2.busy || eventDirty, unsaved: factCorrection ? draft.items.some(hasUnsaved) : hasUnsaved(item),
+        ...confirmationV2.items[item.id], busy: confirmationV2.busy || eventDirty || Boolean(reviewSession&&(checkpointStatus==='loading'||checkpointStatus==='saving'||checkpointStatus==='failed'||checkpointStatus==='conflict'||foreignCheckpoint)), unsaved: factCorrection ? draft.items.some(hasUnsaved) : hasUnsaved(item),
+        editBusy:confirmationV2.busy||eventDirty||checkpointEditBusy,
+        saveBusy:{title:confirmationV2.busy||eventDirty||checkpointSaveBusy(item,'title'),deadline:confirmationV2.busy||eventDirty||checkpointSaveBusy(item,'deadline')},
         titleDirty: isDirty(item, 'title'), deadlineDirty: isDirty(item, 'deadline'),
-        onSave: (field) => { if (isDirty(item, field)) onUpdate(item.id, { [field]: editBuffer[item.id][field] }) },
+        onSave: (field) => { if (isDirty(item, field)&&!checkpointSaveBusy(item,field)) onUpdate(item.id, { [field]: editBuffer[item.id][field] }) },
       } : undefined}
       editing={editingId === item.id}
       inferenceLevel={metadata?.inferenceLevel}
@@ -138,11 +194,7 @@ export function DraftReviewPanel({ onFieldInput, draftCorrection, factCorrection
       onSplitTask={onSplitTask}
       onMergeTask={onMergeTask}
       onToggleEdit={() => setEditingId((current) => current === item.id ? null : item.id)}
-      onUpdate={confirmationV2 ? (id, patch) => setEditBuffer((previous) => ({
-        ...previous, [id]: { ...previous[id],
-          ...(patch.title !== undefined ? { title: patch.title } : {}),
-          ...(patch.deadline !== undefined ? { deadline: patch.deadline } : {}) },
-      })) : onUpdate}
+      onUpdate={confirmationV2 ? (_id, patch) => stageTask(item,patch) : onUpdate}
       onConfirm={onConfirm}
       onReject={onReject}
       onToggleSelected={(selected) => onToggleTaskSelected(item.id, selected)}
@@ -157,6 +209,21 @@ export function DraftReviewPanel({ onFieldInput, draftCorrection, factCorrection
         <button className="icon-button" type="button" onClick={onClose} aria-label="稍后处理并关闭"><X size={20} /></button>
       </header>
       <div className="detail-body review-body">
+        {reviewSession&&<section aria-label="未确认编辑检查点" role="status"><strong>{Object.keys(sessionRecord?.fields??{}).length?'恢复的未确认草稿':'本来源核对会话'}</strong>
+          <p>{checkpointStatus==='saving'?'正在保存未确认编辑…':checkpointStatus==='saved'?'未确认编辑检查点已保存；尚未正式确认。':checkpointStatus==='failed'?'检查点写入失败；当前输入仅在本页，刷新可能丢失。':checkpointStatus==='conflict'?'另一个标签修改了同一字段，请处理冲突。':'编辑在确认前不会创建任务。'}</p>
+          {foreignCheckpoint&&<button type="button" onClick={()=>{if(reviewWorkspace)void reviewSession.recover(reviewWorkspace,draft.id,writer).then(record=>{setSessionRecord(record);setCheckpointStatus('ready')}).catch(error=>{setCheckpointStatus('failed');setCheckpointError(String(error))})}}>恢复未确认编辑并在本标签继续</button>}
+          {checkpointStatus==='failed'&&reviewWorkspace&&<button type="button" onClick={()=>{
+            setCheckpointStatus('saving');setCheckpointError('')
+            void (async()=>{let record=sessionRecord
+              for(const item of draft.items)for(const field of ['title','deadline'] as const){const value=editBuffer[item.id]?.[field];if(value!==undefined&&value!==item.suggestion[field])record=await reviewSession.stage(reviewWorkspace,draft.id,`task:${item.id}:${field}`,item.suggestion[field],value,writer)}
+              if(record)setSessionRecord(record);setCheckpointStatus('saved')
+            })().catch(error=>{setCheckpointStatus('failed');setCheckpointError(String(error))})
+          }}>手动重试保存未确认编辑</button>}
+          {Object.entries(sessionRecord?.fields??{}).filter(([,value])=>value.conflict).map(([key,value])=><fieldset key={key}><legend>字段冲突：{reviewFieldLabel(key)}</legend><p>编辑前：{JSON.stringify(value.base)}；最新已保存：{JSON.stringify(value.conflict?.latest)}；我的未保存修改：{JSON.stringify(value.conflict?.incoming)}</p>
+            {(['latest','incoming'] as const).map(choice=><button type="button" key={choice} onClick={()=>{if(!reviewWorkspace)return;void reviewSession.resolve(reviewWorkspace,draft.id,key,choice,writer).then(record=>{setSessionRecord(record);setCheckpointStatus('saved');const match=/^task:(.+):(title|deadline)$/.exec(key);if(match)setEditBuffer(previous=>({...previous,[match[1]]:{...previous[match[1]],[match[2]]:String(record.fields[key].mine)}}))})}}>采用{choice==='latest'?'最新已保存':'我的修改'}</button>)}</fieldset>)}
+          {Object.keys(sessionRecord?.fields??{}).some(key=>/^(event|time):/.test(key)&&sessionRecord?.fields[key].conflict)&&<p>事件或时间冲突选择后，请关闭并重新打开本通知核对编辑框；不会自动正式确认。</p>}
+          {checkpointError&&<p role="alert">{checkpointError}</p>}
+        </section>}
         <div className="review-progress"><ListChecks size={18} /><span><strong>{pending.length} 项待确认</strong><small>{processed ? `已处理 ${processed} 项` : '确认后才会进入今日和任务中心'}</small></span></div>
         {recognition && <section className="recognition-overview" aria-label="项目匹配与识别质量">
           <div className="recognition-project-choice">
@@ -237,6 +304,7 @@ interface DraftItemReviewProps {
   onDefer?: () => void
   isolatedCapabilities?: boolean
   confirmationV2?: { dateLabel?: string; blockedReason?: string; dateEditBlockedReason?: string; busy: boolean; unsaved: boolean
+    editBusy?:boolean; saveBusy?:{title:boolean;deadline:boolean}
     titleDirty: boolean; deadlineDirty: boolean; onSave: (field: 'title' | 'deadline') => void }
   index: number
   item: DraftItem
@@ -272,7 +340,7 @@ function DraftItemReview({ onFieldInput, semanticFacts, onDefer, isolatedCapabil
     </header>
     <div className="review-meta"><span>{suggestion.category}</span><span>约 {suggestion.estimatedMinutes} 分钟</span>{suggestion.materials.length > 0 && <span>{suggestion.materials.length} 项材料</span>}{inferenceLevel && <span className={`inference-badge ${inferenceLevel}`}>{inferenceLabels[inferenceLevel]}</span>}{suggestion.confidence === '低' && <em>请重点核对</em>}</div>
     <p className="review-next"><span>下一步</span>{suggestion.nextAction}</p>
-    {confirmationV2 && <p>隔离确认 V2：本轮支持修改名称和时间，其他编辑尚未接入。首次建议、原文和编辑记录分开保留。输入完成后点击“保存修改”；未保存输入在关闭或刷新后不保留。{confirmationV2.blockedReason && <strong role="status">需核对（{confirmationV2.blockedReason}）</strong>}</p>}
+    {confirmationV2 && <p>首次建议、原文和你的修改分开保留。编辑后先点“保存修改”，再正式核对确认；只有显示“检查点已保存”的工程入口可恢复未确认输入。{confirmationV2.blockedReason && <strong role="status">需核对（{confirmationV2.blockedReason}）</strong>}</p>}
     {confirmationV2?.unsaved && <p role="status">有未保存修改：请先保存修改，再确认该任务。</p>}
     {confirmationV2?.dateEditBlockedReason && <p role="status">{confirmationV2.dateEditBlockedReason}</p>}
     {semanticFacts}
@@ -281,11 +349,11 @@ function DraftItemReview({ onFieldInput, semanticFacts, onDefer, isolatedCapabil
       <button type="button" disabled={confirmationV2?.busy || confirmationV2?.unsaved} onClick={() => onReject(item.id)}>记录此项不需要</button>
     </div>}
     {editing && <fieldset className="review-edit-form"><legend>修改这件事</legend><div className="form-grid">
-      <label className="field span-2"><span>任务名称</span><input disabled={confirmationV2?.busy} value={suggestion.title} onChange={(event) => {onFieldInput?.(item.id,'title');onUpdate(item.id, { title: event.target.value })}} /></label>
-      {confirmationV2 && <button type="button" disabled={confirmationV2.busy || !confirmationV2.titleDirty} onClick={() => confirmationV2.onSave('title')}>保存修改：任务名称</button>}
+      <label className="field span-2"><span>任务名称</span><input disabled={confirmationV2?.editBusy??confirmationV2?.busy} value={suggestion.title} onChange={(event) => {onFieldInput?.(item.id,'title');onUpdate(item.id, { title: event.target.value })}} /></label>
+      {confirmationV2 && <button type="button" disabled={(confirmationV2.saveBusy?.title??confirmationV2.busy) || !confirmationV2.titleDirty} onClick={() => confirmationV2.onSave('title')}>保存修改：任务名称</button>}
       <label className="field"><span>分类</span><select disabled={Boolean(confirmationV2)} value={suggestion.category} onChange={(event) => onUpdate(item.id, { category: event.target.value as TaskCategory })}>{categories.map((category) => <option key={category}>{category}</option>)}</select></label>
-      <label className="field"><span>截止时间</span><input type={confirmationV2 ? "text" : "datetime-local"} placeholder={confirmationV2 ? "YYYY-MM-DD 或 YYYY-MM-DDTHH:mm" : undefined} disabled={confirmationV2 && (confirmationV2.busy || Boolean(confirmationV2.dateEditBlockedReason))} value={suggestion.deadline} onChange={(event) => {onFieldInput?.(item.id,'deadline');onUpdate(item.id, { deadline: event.target.value })}} /></label>
-      {confirmationV2 && <button type="button" disabled={confirmationV2.busy || !confirmationV2.deadlineDirty || Boolean(confirmationV2.dateEditBlockedReason)} onClick={() => confirmationV2.onSave('deadline')}>保存修改：截止时间</button>}
+      <label className="field"><span>截止时间</span><input type={confirmationV2 ? "text" : "datetime-local"} placeholder={confirmationV2 ? "YYYY-MM-DD 或 YYYY-MM-DDTHH:mm" : undefined} disabled={confirmationV2 && ((confirmationV2.editBusy??confirmationV2.busy) || Boolean(confirmationV2.dateEditBlockedReason))} value={suggestion.deadline} onChange={(event) => {onFieldInput?.(item.id,'deadline');onUpdate(item.id, { deadline: event.target.value })}} /></label>
+      {confirmationV2 && <button type="button" disabled={(confirmationV2.saveBusy?.deadline??confirmationV2.busy) || !confirmationV2.deadlineDirty || Boolean(confirmationV2.dateEditBlockedReason)} onClick={() => confirmationV2.onSave('deadline')}>保存修改：截止时间</button>}
       <label className="field"><span>预计耗时（分钟）</span><input disabled={Boolean(confirmationV2)} type="number" min="5" step="5" value={suggestion.estimatedMinutes} onChange={(event) => onUpdate(item.id, { estimatedMinutes: Number(event.target.value) })} /></label>
       <label className="field span-2"><span>下一步动作</span><input disabled={Boolean(confirmationV2)} value={suggestion.nextAction} onChange={(event) => onUpdate(item.id, { nextAction: event.target.value })} /></label>
       <label className="field span-2"><span>材料（用逗号或顿号分隔）</span><input disabled={Boolean(confirmationV2)} value={suggestion.materials.join('、')} onChange={(event) => onUpdate(item.id, { materials: event.target.value.split(/[，,、]/).map((value) => value.trim()).filter(Boolean) })} /></label>

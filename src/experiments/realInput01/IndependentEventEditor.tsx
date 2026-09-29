@@ -1,15 +1,53 @@
-import {useEffect,useRef,useState} from 'react'
+import {useEffect,useMemo,useRef,useState} from 'react'
 import type {WorkspaceV8} from '../../domain/v2/types'
 import type {SemanticRepository} from '../mainline05/semanticRepository'
 import {correctSemanticFact} from '../mainline05/semanticConfirmation'
 import {effectiveStateFacts,life,semanticRevision,stateOfRuntime} from '../mainline05/semanticState'
 import type {FactChange} from './factCorrections'
+import type {D20ReviewSessionRepository} from '../candidate16/d20ReviewSession'
 
 /** Explicit, source-linked user corrections. The model response remains immutable. */
-export function IndependentEventEditor({repo,workspace,draftId,busy,onDirty,onSaved}:{repo:SemanticRepository;workspace:WorkspaceV8;draftId:string;busy:boolean;onDirty:(dirty:boolean)=>void;onSaved:()=>Promise<void>}){
+export function IndependentEventEditor({repo,workspace,draftId,busy,onDirty,onSaved,reviewSession}:{repo:SemanticRepository;workspace:WorkspaceV8;draftId:string;busy:boolean;onDirty:(dirty:boolean)=>void;onSaved:()=>Promise<void>;reviewSession?:D20ReviewSessionRepository}){
   const state=stateOfRuntime(workspace,draftId),facts=effectiveStateFacts(state).facts
   const [change,setChange]=useState<FactChange|null>(null),[revision,setRevision]=useState(''),[working,setWorking]=useState(false),[error,setError]=useState('')
   const [adding,setAdding]=useState(false),[scopes,setScopes]=useState<string[]>([]),[title,setTitle]=useState(''),[location,setLocation]=useState(''),[rawTime,setRawTime]=useState(''),[normalized,setNormalized]=useState(''),[precision,setPrecision]=useState<'vague'|'relative'|'date_only'|'exact'>('vague'),[rawEnd,setRawEnd]=useState(''),[normalizedEnd,setNormalizedEnd]=useState(''),[precisionEnd,setPrecisionEnd]=useState<'vague'|'relative'|'date_only'|'exact'>('vague'),[note,setNote]=useState('')
+  const [checkpointReady,setCheckpointReady]=useState(!reviewSession),[checkpointStatus,setCheckpointStatus]=useState(''),[checkpointError,setCheckpointError]=useState('')
+  const lastCheckpoint=useRef(''),checkpointQueue=useRef(Promise.resolve()),checkpointEpoch=useRef(0)
+  const [retryCheckpoint,setRetryCheckpoint]=useState(0)
+  const changeKey=change?.kind==='independent_event'?`event:${change.eventId}:edit`:change?.kind==='independent_time'?`time:${change.timeId}:edit`:''
+  const snapshot=useMemo(()=>adding?{adding,scopes,title,location,rawTime,normalized,precision,rawEnd,normalizedEnd,precisionEnd,note,revision}
+    :change?{change,revision}:null,[adding,scopes,title,location,rawTime,normalized,precision,rawEnd,normalizedEnd,precisionEnd,note,revision,change])
+  useEffect(()=>{
+    if(!reviewSession||checkpointReady)return
+    let live=true
+    void reviewSession.load(workspace,draftId).then(session=>{
+      if(!live)return
+      const entry=Object.entries(session.fields).find(([key])=>key==='event:new:add'||/^event:[^:]+:edit$/.test(key)||/^time:[^:]+:edit$/.test(key))
+      if(entry){const saved=entry[1].mine as typeof snapshot
+        if(saved&&'adding' in saved&&saved.adding){setAdding(true);setScopes(saved.scopes);setTitle(saved.title);setLocation(saved.location);setRawTime(saved.rawTime);setNormalized(saved.normalized);setPrecision(saved.precision);setRawEnd(saved.rawEnd);setNormalizedEnd(saved.normalizedEnd);setPrecisionEnd(saved.precisionEnd);setNote(saved.note);setRevision(saved.revision)}
+        else if(saved&&'change' in saved){setChange(saved.change);setRevision(saved.revision)}
+        lastCheckpoint.current=JSON.stringify(saved);setCheckpointStatus('恢复的未确认事件编辑')
+      }
+      setCheckpointReady(true)
+    }).catch(error=>{if(live){setCheckpointError(String(error));setCheckpointReady(true)}})
+    return()=>{live=false}
+  },[reviewSession,draftId,workspace,checkpointReady])
+  useEffect(()=>{
+    if(!reviewSession||!checkpointReady||!snapshot)return
+    const serialized=JSON.stringify(snapshot)
+    if(serialized===lastCheckpoint.current&&!retryCheckpoint)return
+    lastCheckpoint.current=serialized
+    const epoch=++checkpointEpoch.current
+    const key=adding?'event:new:add':changeKey
+    const base=adding?null:change?.kind==='independent_event'?facts.events.find(item=>item.tempId===change.eventId)
+      :change?.kind==='independent_time'?facts.timePoints.find(item=>item.tempId===change.timeId):null
+    setCheckpointStatus('正在保存事件检查点');setCheckpointError('')
+    checkpointQueue.current=checkpointQueue.current.catch(()=>undefined).then(async()=>{
+      const saved=await reviewSession.stage(workspace,draftId,key,base,snapshot,reviewSession.writer)
+      const field=saved.fields[key]
+      if(epoch===checkpointEpoch.current){setCheckpointStatus(field?.conflict?'事件编辑冲突：请在来源会话中选择版本':'事件检查点已保存，尚未正式确认');setRetryCheckpoint(0)}
+    }).catch(error=>{if(epoch===checkpointEpoch.current){setCheckpointStatus('事件检查点保存失败');setCheckpointError(String(error));setRetryCheckpoint(0)}})
+  },[reviewSession,checkpointReady,snapshot,adding,change,changeKey,workspace,draftId,facts.events,facts.timePoints,retryCheckpoint])
   const notify=useRef(onDirty);useEffect(()=>{notify.current=onDirty},[onDirty])
   useEffect(()=>{notify.current(Boolean(change)||adding||working);return()=>notify.current(false)},[change,adding,working])
   const blocked=busy||working||life(state).informationReviewed||Boolean(life(state).independentEventsReviewedAt)
@@ -17,14 +55,18 @@ export function IndependentEventEditor({repo,workspace,draftId,busy,onDirty,onSa
   const select=(next:FactChange)=>{setChange(next);setRevision(semanticRevision(workspace));setError('')}
   const update=(value:FactChange['value'])=>{if(change)setChange({...change,value} as FactChange)}
   const save=async()=>{
-    if(!change||blocked)return
+    if(!change||blocked||reviewSession&&checkpointStatus!=='事件检查点已保存，尚未正式确认')return
     setWorking(true);setError('')
-    try{await correctSemanticFact(repo,{draftId,revision,operationId:crypto.randomUUID(),change});setChange(null);await onSaved()}
-    catch(cause){setError(cause instanceof Error?cause.message:'保存失败；编辑仍保留，请手动重试。')}
-    finally{setWorking(false)}
+    try{await correctSemanticFact(repo,{draftId,revision,operationId:crypto.randomUUID(),change})}
+    catch(cause){setError(cause instanceof Error?cause.message:'保存失败；编辑仍保留，请手动重试。');setWorking(false);return}
+    setChange(null)
+    try{await onSaved()}catch{setError('正式事实已写入，但独立读回失败；请重新打开来源核对。');setWorking(false);return}
+    if(reviewSession)try{await reviewSession.clear(workspace,draftId,changeKey,reviewSession.writer)}
+    catch{setError('正式事实已保存，但未确认检查点清理失败；请重新打开来源核对。')}
+    setWorking(false)
   }
   const saveAdd=async()=>{
-    if(blocked||!adding)return
+    if(blocked||!adding||reviewSession&&checkpointStatus!=='事件检查点已保存，尚未正式确认')return
     if((normalized.trim()&& !['exact','date_only'].includes(precision))||(normalizedEnd.trim()&&!['exact','date_only'].includes(precisionEnd))){setError('模糊或相对时间不能沿用确定时刻；请清空确定时间，或核实后改为具体时刻。');return}
     setWorking(true);setError('')
     try{
@@ -34,13 +76,17 @@ export function IndependentEventEditor({repo,workspace,draftId,busy,onDirty,onSa
         time:timeId?{tempId:timeId,type:'event_start',rawText:rawTime.trim(),normalizedValue:normalized.trim()||null,timezone:state.context.timezone,isAllDay:precision==='date_only',precision,needsConfirmation:!normalized.trim(),relatedTaskTempIds:[],relatedMaterialTempIds:[],scopeIds:scopes,confidence:1}:null,
         endTime:endId?{tempId:endId,type:'event_end',rawText:rawEnd.trim(),normalizedValue:normalizedEnd.trim()||null,timezone:state.context.timezone,isAllDay:precisionEnd==='date_only',precision:precisionEnd,needsConfirmation:!normalizedEnd.trim(),relatedTaskTempIds:[],relatedMaterialTempIds:[],scopeIds:scopes,confidence:1}:null}}
       await correctSemanticFact(repo,{draftId,revision,operationId:crypto.randomUUID(),change})
-      setAdding(false);resetAdd();await onSaved()
-    }catch(cause){setError(cause instanceof Error?cause.message:'保存失败；编辑仍保留，请手动重试。')}
-    finally{setWorking(false)}
+    }catch(cause){setError(cause instanceof Error?cause.message:'保存失败；编辑仍保留，请手动重试。');setWorking(false);return}
+    setAdding(false);resetAdd()
+    try{await onSaved()}catch{setError('正式事实已写入，但独立读回失败；请重新打开来源核对。');setWorking(false);return}
+    if(reviewSession)try{await reviewSession.clear(workspace,draftId,'event:new:add',reviewSession.writer)}
+    catch{setError('正式事实已保存，但未确认检查点清理失败；请重新打开来源核对。')}
+    setWorking(false)
   }
   const events=facts.events.filter(event=>!event.relatedTaskTempIds.length)
   const times=facts.timePoints.filter(time=>!time.relatedTaskTempIds.length&&!time.relatedMaterialTempIds.length&&events.some(event=>[event.startTimePointTempId,event.endTimePointTempId].includes(time.tempId)))
   return <section aria-label="独立事件人工核对"><h3>核对独立事件</h3><p>此处编辑是你的纠正，原模型回答和首次建议不变。原文依据仍可在上方定位；时间不确定时不生成日程。</p>
+    {reviewSession&&<p role="status">{checkpointStatus||'事件尚未编辑'}。{checkpointError&&<><strong role="alert">{checkpointError}；当前输入仅在本页，刷新可能丢失。</strong><button type="button" onClick={()=>setRetryCheckpoint(value=>value+1)}>重试保存事件检查点</button></>}</p>}
     {!change&&!adding&&<button type="button" disabled={blocked} onClick={()=>{resetAdd();setAdding(true);setRevision(semanticRevision(workspace));setError('')}}>依据原文补充独立事件</button>}
     {adding&&<fieldset disabled={blocked}><legend>人工补录独立事件及可选起止时间</legend>
       <p>逐项选择原文依据；事件名称和时间原文必须逐字出现在所选片段中。未知日期留空，不猜测具体日程。</p>

@@ -8,6 +8,7 @@ import { assert, exactKeys, equal, stateOfRuntime as stateOf, life, canonicalFac
 import { appendCorrection, correctionBefore, validateMaterialDecision, type MaterialDecision, type FactChange } from '../realInput01/factCorrections'
 import { composeSemantics } from '../mainline04/semanticComposer'
 import { pendingDateEligible, pendingDateIdentity, hasPendingDateConsent } from './semanticState'
+import { canRebaseD20Correction, canRebaseD20Source, canRebaseD20Task } from '../candidate16/d20Rebase'
 
 /** Records consent only. Formal tasks still require separate fact review and explicit confirmation. */
 export async function acceptSemanticPendingDate(repo: SemanticRepository, intent: {draftId:string;taskId:string;revision:string;operationId:string}) {
@@ -93,7 +94,7 @@ export async function editSemantic(repo: SemanticRepository, intent: Confirmatio
   return repo.transaction(workspace => {
     const shape = { id: intent.operationId, kind: 'edit' as const, taskIds: [intent.taskTempId], field: intent.field, value: intent.value }
     if (sameOperation(workspace, intent.draftId, intent.operationId, shape)) return workspace
-    assert(intent.revision === semanticRevision(workspace), 'STALE_RELOAD_REQUIRED')
+    assert(intent.revision === semanticRevision(workspace) || canRebaseD20Task(repo.name,intent.revision,workspace,intent.draftId,[intent.taskTempId]), 'STALE_RELOAD_REQUIRED')
     const state = stateOf(workspace, intent.draftId), values = life(state).values
     assert(values[intent.taskTempId] && ['title','deadline'].includes(intent.field), 'EDIT_TARGET_INVALID')
     const before = values[intent.taskTempId][intent.field]
@@ -127,7 +128,7 @@ export async function confirmSemanticSource(repo: SemanticRepository, intent: Co
     assert(state.version === REAL_STATE_VERSION && isCurrentDraft(workspace,intent.draftId),'SOURCE_REVIEW_PROFILE')
     assert(intent.taskTempIds.every(id => Object.hasOwn(current.dispositions,id)), 'SELECTION_UNKNOWN_ID')
     if(intent.taskTempIds.every(id => current.dispositions[id] === 'confirmed')) return workspace
-    assert(semanticRevision(workspace) === intent.revision, 'STALE_RELOAD_REQUIRED')
+    assert(semanticRevision(workspace) === intent.revision || canRebaseD20Source(repo.name,intent.revision,workspace,intent.draftId,intent.taskTempIds), 'STALE_RELOAD_REQUIRED')
     let next = workspace
     const independent = effectiveStateFacts(state).facts.events.filter(event => !event.relatedTaskTempIds.length)
     if(independent.length && !current.independentEventsReviewedAt){
@@ -154,7 +155,7 @@ export async function reviewSemanticFact(repo: SemanticRepository, intent: { dra
   exactKeys(intent, ['draftId','taskId','revision','operationId'])
   assert(repo.profile === 'real-input-01', 'EXPLICIT_REAL_INPUT_REQUIRED')
   return repo.transaction(w => {
-    assert(semanticRevision(w) === intent.revision, 'STALE_RELOAD_REQUIRED')
+    assert(semanticRevision(w) === intent.revision || canRebaseD20Task(repo.name,intent.revision,w,intent.draftId,[intent.taskId]), 'STALE_RELOAD_REQUIRED')
     const state = stateOf(w, intent.draftId); assert(state.version === REAL_STATE_VERSION, 'EXPLICIT_REAL_INPUT_REQUIRED')
     const current = life(state)
     const op: SemanticOperation = { id: intent.operationId, kind: 'review_task', at: now, taskIds: [intent.taskId],
@@ -191,14 +192,15 @@ export async function correctSemanticFact(repo: SemanticRepository,
   const before = await repo.load()
   const existing=stateOf(before,intent.draftId).operations.find(op=>op.id===intent.operationId)
   if(existing){assert(existing.kind==='correct_fact'&&equal(existing.correction?.change,intent.change),'OPERATION_COLLISION');return before}
-  assert(semanticRevision(before) === intent.revision, 'STALE_RELOAD_REQUIRED')
+  assert(semanticRevision(before) === intent.revision || canRebaseD20Correction(repo.name,intent.revision,before,intent.draftId,intent.change), 'STALE_RELOAD_REQUIRED')
+  const rebasedRevision=semanticRevision(before)
   const state = stateOf(before, intent.draftId); assert(state.version === REAL_STATE_VERSION, 'EXPLICIT_REAL_INPUT_REQUIRED')
   const correction = { id: intent.operationId, at: now, change: intent.change, before: correctionBefore(effectiveStateFacts(state).facts, intent.change) }
   const next = appendCorrection(state.adaptedResponse, state.operations.filter(o => o.correction).map(o => o.correction!), correction,
     state.context.index, life(state).accepted)
   const review = await composeSemantics(next.sourceFacts, state.context)
   return repo.transaction(w => {
-    assert(semanticRevision(w) === intent.revision, 'STALE_RELOAD_REQUIRED')
+    assert(semanticRevision(w) === rebasedRevision, 'STALE_RELOAD_REQUIRED')
     const op: SemanticOperation = { id: intent.operationId, kind: 'correct_fact', at: now, taskIds: next.affectedTaskIds,
       field: null, value: null, before: null, correction, factReview: review }
     return applySemanticDomainCommitPlan(w, planOperation(w, intent.draftId, op), now)

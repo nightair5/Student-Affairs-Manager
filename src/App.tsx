@@ -1514,11 +1514,13 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
       )}
       {!workspaceRecovery && selectedDraft && (!runtime || experimentalReview) && (
         <DraftReviewPanel
+          reviewSession={runtime?.realInput?.reviewSession}
+          reviewWorkspace={isolatedSnapshot ?? undefined}
           onFieldInput={runtime?.realInput?.onReviewFieldInput ? (itemId,field)=>runtime.realInput!.onReviewFieldInput!(selectedDraft.id,itemId,field) : undefined}
-          draftCorrection={runtime?.realInput?.draftEditor&&isolatedSnapshot?(onDirty,unsaved)=>runtime.realInput!.draftEditor!({workspace:isolatedSnapshot,draftId:selectedDraft.id,busy:isolatedBusy||storageError||unsaved,onDirty,onSaved:refreshExperiment}):undefined}
+          draftCorrection={runtime?.realInput?.draftEditor&&isolatedSnapshot?(onDirty,unsaved)=>runtime.realInput!.draftEditor!({workspace:isolatedSnapshot,draftId:selectedDraft.id,busy:isolatedBusy||storageError||unsaved,onDirty,onSaved:refreshExperiment,reviewSession:runtime.realInput?.reviewSession}):undefined}
           factCorrection={runtime?.realInput && isolatedSnapshot ? (taskId, onDirty, unsaved) => runtime.realInput!.factEditor({
             workspace: isolatedSnapshot, draftId: selectedDraft.id, taskId, busy: isolatedBusy || storageError || unsaved,
-            onDirty, onSaved: refreshExperiment }) : undefined}
+            onDirty, onSaved: refreshExperiment, reviewSession:runtime.realInput?.reviewSession }) : undefined}
           key={runtime ? selectedDraft.id : undefined}
           isolatedCapabilities={Boolean(runtime)}
           recognitionDescription={runtime?.realInput ? runtime.recognitionDescription : undefined}
@@ -1526,9 +1528,9 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
           semanticReview={runtime?.semantic && isolatedSnapshot && experimentalReview && isolatedSnapshot.extractionDrafts.find(d=>d.id===selectedDraft.id)?.legacyData?.mainline05 ? {
             itemFacts: (taskId, onFocus) => runtime.semantic!.facts(isolatedSnapshot, selectedDraft.id, taskId, onFocus),
             information: runtime.semantic.facts(isolatedSnapshot, selectedDraft.id),
-            informationEditor: runtime.realInput?.informationEditor ? onDirty=>runtime.realInput!.informationEditor!({workspace:isolatedSnapshot,draftId:selectedDraft.id,busy:isolatedBusy||storageError,onDirty,onSaved:refreshExperiment}) : undefined,
+            informationEditor: runtime.realInput?.informationEditor ? onDirty=>runtime.realInput!.informationEditor!({workspace:isolatedSnapshot,draftId:selectedDraft.id,busy:isolatedBusy||storageError,onDirty,onSaved:refreshExperiment,reviewSession:runtime.realInput?.reviewSession}) : undefined,
             sourceSession: runtime.realInput?.sourceSession,
-            eventReview: runtime.realInput?.sourceSession && runtime.realInput.informationEditor ? onDirty=>runtime.realInput!.informationEditor!({workspace:isolatedSnapshot,draftId:selectedDraft.id,busy:isolatedBusy||storageError,onDirty,onSaved:refreshExperiment}) : undefined,
+            eventReview: runtime.realInput?.sourceSession && runtime.realInput.informationEditor ? onDirty=>runtime.realInput!.informationEditor!({workspace:isolatedSnapshot,draftId:selectedDraft.id,busy:isolatedBusy||storageError,onDirty,onSaved:refreshExperiment,reviewSession:runtime.realInput?.reviewSession}) : undefined,
             informationReviewProblem: runtime.semantic.informationReviewProblem?.(isolatedSnapshot, selectedDraft.id),
             eventCount: runtime.semantic.eventCount(isolatedSnapshot, selectedDraft.id, experimentalReview.draft.items.filter(i => i.status === '待确认' && i.selected).map(i => i.suggestion.id)),
             onDefer: itemId => disposeExperiment(selectedDraft.id, 'defer', itemId),

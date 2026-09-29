@@ -614,7 +614,7 @@ export async function validateSemanticWorkspace(workspace: WorkspaceV8, profile?
     if(recovery){
       exactKeys(recovery,['kind','at',...(recovery.scopePolicy?['scopePolicy']:[])])
       assert(recovery.kind==='user_opened_failed_response'&&Number.isFinite(Date.parse(recovery.at)),'RECOVERY_IDENTITY')
-      if(recovery.scopePolicy)assert(recovery.scopePolicy==='d13-local-revision-isolation-1'&&(['rco-mainline-01-02-i1-real-input-candidate16-d13-engineering-2','rco-mainline-01-02-i1-real-input-candidate16-d14-trial-1'].includes(workspace.workspace.id)||/^rco-mainline-01-02-i1-real-input-candidate16-d15-trial-[a-z0-9]{2,20}$/.test(workspace.workspace.id)||/^rco-mainline-01-02-i1-real-input-d19-source-session-p[1-9][0-9]{0,2}$/.test(workspace.workspace.id)),'RECOVERY_SCOPE_POLICY_BINDING')
+      if(recovery.scopePolicy)assert(recovery.scopePolicy==='d13-local-revision-isolation-1'&&(['rco-mainline-01-02-i1-real-input-candidate16-d13-engineering-2','rco-mainline-01-02-i1-real-input-candidate16-d14-trial-1'].includes(workspace.workspace.id)||/^rco-mainline-01-02-i1-real-input-candidate16-d15-trial-[a-z0-9]{2,20}$/.test(workspace.workspace.id)||/^rco-mainline-01-02-i1-real-input-d19-source-session-p[1-9][0-9]{0,2}$/.test(workspace.workspace.id)||/^rco-mainline-01-02-i1-real-input-d20-review-session-p[1-9][0-9]{0,2}$/.test(workspace.workspace.id)),'RECOVERY_SCOPE_POLICY_BINDING')
       const f=draft.legacyData?.mainline05Failure as {response?:unknown;code?:unknown;version?:unknown}|undefined
       assert(f&&equal(f,{version:REAL_STATE_VERSION,response:(state as RealInputState).rawHttpText,code:'SEMANTIC_RESPONSE_REJECTED'}),'RECOVERY_RAW_BINDING')
     } else assert(draft.legacyData?.mainline05Failure === undefined, 'FAILED_RECEIPT_WITH_SUCCESS')

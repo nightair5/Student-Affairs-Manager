@@ -21,7 +21,7 @@ export function rebindD13ScopeIds(value:unknown,mapping:Map<string,string>,key='
 }
 export async function openD13Replay(repo:SemanticRepository,record:D13ReplayRecord){
   assertD13Database(repo.name)
-  if(!/^(?:d13-(?:record-[0-9]{2}|fixture-[a-z0-9-]+)|d19-record-[0-9]{2})$/.test(record.id)
+  if(!/^(?:d13-(?:record-[0-9]{2}|fixture-[a-z0-9-]+)|d(?:19|20)-record-[0-9]{2})$/.test(record.id)
     || !['RECORDED_MODEL','ENGINEERING_FIXTURE'].includes(record.kind)
     || ![CANDIDATE03_VERSION,CANDIDATE15_VERSION,CANDIDATE17_VERSION].includes(record.candidateVersion as typeof CANDIDATE03_VERSION)
     || await sha256Text(record.rawHttpText)!==record.responseSha256 || !/^[a-f0-9]{64}$/.test(record.requestSha256)) throw Error('D13_REPLAY_IDENTITY')

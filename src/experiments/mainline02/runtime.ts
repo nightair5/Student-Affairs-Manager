@@ -11,6 +11,7 @@ import { assertReplayHandoff, type ReplayHandoff } from '../mainline03/seenRepla
 import { jsonCopy, verifyReceipt } from '../mainline03/recognitionHandoff'
 import type { ReactNode } from 'react'
 import type { SemanticDispositionIntent } from '../mainline05/semanticConfirmation'
+import type { D20ReviewSessionRepository } from '../candidate16/d20ReviewSession'
 
 export interface MainlineSemanticCapabilities {
   informationReviewProblem?(workspace: WorkspaceV8, draftId: string): string | undefined
@@ -24,15 +25,16 @@ export interface MainlineSemanticCapabilities {
 }
 export interface MainlineRealInputCapabilities {
   readonly sourceSession?: boolean
+  readonly reviewSession?: D20ReviewSessionRepository
   onReviewFieldInput?(draftId:string,itemId:string,field:'title'|'deadline'):void
   pendingDateTaskIds?(workspace: WorkspaceV8): string[]
   readonly profile: 'real-input-01'
   readonly networkDescription: string
   inputPanel(options: { workspace: WorkspaceV8; initialText: string; onSaved: () => Promise<void>; onDraftReady: (id: string) => Promise<void> }): ReactNode
   factEditor(options: { workspace: WorkspaceV8; draftId: string; taskId: string; busy: boolean;
-    onDirty: (dirty: boolean) => void; onSaved: () => Promise<void> }): ReactNode
-  informationEditor?(options:{workspace:WorkspaceV8;draftId:string;busy:boolean;onDirty:(dirty:boolean)=>void;onSaved:()=>Promise<void>}):ReactNode
-  draftEditor?(options: {workspace:WorkspaceV8;draftId:string;busy:boolean;onDirty:(dirty:boolean)=>void;onSaved:()=>Promise<void>}):ReactNode
+    onDirty: (dirty: boolean) => void; onSaved: () => Promise<void>; reviewSession?: D20ReviewSessionRepository }): ReactNode
+  informationEditor?(options:{workspace:WorkspaceV8;draftId:string;busy:boolean;onDirty:(dirty:boolean)=>void;onSaved:()=>Promise<void>;reviewSession?:D20ReviewSessionRepository}):ReactNode
+  draftEditor?(options: {workspace:WorkspaceV8;draftId:string;busy:boolean;onDirty:(dirty:boolean)=>void;onSaved:()=>Promise<void>;reviewSession?:D20ReviewSessionRepository}):ReactNode
 }
 export type MainlineSemanticDriver = Pick<MainlineRuntime, 'load' | 'view' | 'dates' | 'review' | 'capture' | 'edit' | 'confirm' | 'exportJson'>
   & { semantic: MainlineSemanticCapabilities; recognitionDescription: string; realInput?: MainlineRealInputCapabilities }

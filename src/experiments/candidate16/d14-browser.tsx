@@ -8,9 +8,11 @@ import '../candidate11/preview.css'
 import {IsolatedTestStore} from '../mainline01/isolatedStore'
 import {sha256Text} from '../realInput01/inputReceipt'
 import {createD13Runtime} from './runtime'
-import {calculateLowEditV2,D14_DATABASE,isD15Database,isD19Database} from './measurement'
+import {calculateLowEditV2,D14_DATABASE,isD15Database,isD19Database,isD20Database} from './measurement'
 import {beginTrial,loadTrial,trialAction,metricEntry,type Trial} from './d14Trial'
 import {calculateD19Engineering,summarizeD19HumanTrials} from './d19Measurement'
+import {summarizeD20Engineering} from './d20Measurement'
+import type {ReviewSession} from './d20ReviewSession'
 import {IndependentEventEditor} from '../realInput01/IndependentEventEditor'
 import {reviewIndependentEvents} from '../mainline05/semanticConfirmation'
 import {effectiveStateFacts,life,semanticRevision,stateOfRuntime} from '../mainline05/semanticState'
@@ -19,7 +21,7 @@ import type {D13ReplayRecord} from './replay'
 
 declare const __D14_CONFIG__:{origin:string;database:string;records:Array<{id:string;label:string;kind:D13ReplayRecord['kind'];sha256:string}>;sourceSession?:boolean;buildLabel?:string}
 const config=__D14_CONFIG__
-if(location.origin!==config.origin||location.hostname!=='127.0.0.1'||(config.database!==D14_DATABASE&&!isD15Database(config.database)&&!isD19Database(config.database))||!['','?automation=1'].includes(location.search))throw Error('D14_ORIGIN_REQUIRED')
+if(location.origin!==config.origin||location.hostname!=='127.0.0.1'||(config.database!==D14_DATABASE&&!isD15Database(config.database)&&!isD19Database(config.database)&&!isD20Database(config.database))||!['','?automation=1'].includes(location.search))throw Error('D14_ORIGIN_REQUIRED')
 const nativeOpen=indexedDB.open.bind(indexedDB),nativeFetch=window.fetch.bind(window)
 indexedDB.open=(name,version)=>{if(name!==config.database||version!==1)throw Error('D14_DATABASE_FORBIDDEN');return nativeOpen(name,version)}
 for(const method of ['getItem','setItem','removeItem','clear','key'] as const)Object.defineProperty(Storage.prototype,method,{value:()=>{throw Error('D14_OLD_STORAGE_DISABLED')}})
@@ -42,7 +44,7 @@ async function start(){
     const d15=isD15Database(config.database),eventState=trial?.draftId&&snapshot?stateOfRuntime(snapshot,trial.draftId):null,eventFacts=eventState?effectiveStateFacts(eventState).facts:null
     const refreshEvents=async()=>{const current=await loadTrial(transport);setTrial(current);if(!current?.draftId)throw Error('请先在快速录入中打开本试次来源');setSnapshot(await app.repository.load())}
     return <details className="c11-tools" open><summary>{config.buildLabel??(d15?'D15':'D14')} 隔离试次与工程测量</summary><p><strong>匿名工程回放 / 非真人试用</strong>。数据库：{config.database}。此入口不发送模型请求；真人四项指标均不可观测。</p>
-      <p>试次身份：{trial?.id??'尚未开始'}；状态：{trial?.status??'NOT_RUN'}；条件：{trial?.condition??'未选'}。</p>
+      <p>试次身份：{trial?.id??'尚未开始'}；状态：{trial?.status??'NOT_RUN'}；条件：{trial?.condition??'未选'}；来源夹具：{trial?.recordId??'未选'}。</p>
       {!trial&&<div><label>条件 <select value={condition} onChange={e=>setCondition(e.target.value as 'manual'|'assisted')}><option value="assisted">固定辅助建议</option><option value="manual">从空白手动录入</option></select></label><label>匿名通知 <select value={recordId} onChange={e=>setRecordId(e.target.value)}>{config.records.filter(r=>!r.id.includes('-manual-')&&(condition==='assisted'||r.kind==='ENGINEERING_FIXTURE')).map(r=><option value={r.id} key={r.id}>{r.label}</option>)}</select></label>
         <button onClick={()=>{void run(async()=>{const r=await read(selected.id),stimulus=condition==='manual'?await read('d13-fixture-manual-'+selected.id.slice('d13-fixture-'.length)):r,t=await beginTrial(transport,condition,r.context.index.sourceContent,stimulus.id,stimulus.responseSha256);setTrial(t);setStatus('请在下方快速录入中选择“'+stimulus.label+'”，走同一编辑、确认和 canonical 保存链。')})}}>开始隔离工程试次</button></div>}
       {trial?.status==='started'&&<button onClick={()=>{void run(()=>act('pause'))}}>暂停</button>}{trial?.status==='paused'&&<button onClick={()=>{void run(()=>act('resume'))}}>继续</button>}{trial&&['started','paused'].includes(trial.status)&&<button onClick={()=>{void run(()=>act('exit'))}}>退出</button>}
@@ -55,7 +57,7 @@ async function start(){
         {eventState?.version&&life(eventState).independentEventsReviewedAt&&<p role="status">独立事件已确认，原回答与人工修改分别保存。</p>}
       </section>}
       <button onClick={()=>{app.observed.failNext();setStatus('下次工作区保存将失败；请在页面手动重试。')}}>注入下一次工作区保存失败</button>
-      <button onClick={()=>{void run(async()=>{const workspace=await app.independentReadback(),current=await loadTrial(transport),trace=current?.draftId?await app.metrics.events(current.draftId):[],metric=current?.draftId?calculateLowEditV2(trace):null,reportData={role:'ENGINEERING_REPLAY',trial:current,workspaceCounts:{sources:workspace.sources.length,drafts:workspace.extractionDrafts.length,tasks:workspace.tasks.length,projects:workspace.projects.length,events:workspace.events.length,timePoints:workspace.timePoints.length},trace,metric:metricEntry(current,metric),...(config.sourceSession?{d19Engineering:current?.draftId?calculateD19Engineering(trace,current.condition):null,humanConditionGroups:summarizeD19HumanTrials([])}:{}),original:current?.draftId?await transport.read('d13-original:'+current.draftId):null,humanTrial:'NOT_RUN'};const body=JSON.stringify(reportData,null,2);setReport(body);if(url)URL.revokeObjectURL(url);setUrl(URL.createObjectURL(new Blob([body],{type:'application/json'})));setTrial(current);setStatus(`独立读回：Task ${workspace.tasks.length}，Project ${workspace.projects.length}，Event ${workspace.events.length}，TimePoint ${workspace.timePoints.length}。`)})}}>独立读回与四指标状态</button>
+      <button onClick={()=>{void run(async()=>{const workspace=await app.independentReadback(),current=await loadTrial(transport),trace=current?.draftId?await app.metrics.events(current.draftId):[],metric=current?.draftId?calculateLowEditV2(trace):null,d20Session=current?.draftId&&isD20Database(config.database)?await transport.read('d20-review-session:'+current.draftId) as ReviewSession|undefined:undefined,reportData={role:'ENGINEERING_REPLAY',trial:current,workspaceCounts:{sources:workspace.sources.length,drafts:workspace.extractionDrafts.length,tasks:workspace.tasks.length,projects:workspace.projects.length,events:workspace.events.length,timePoints:workspace.timePoints.length},trace,metric:metricEntry(current,metric),...(config.sourceSession?{d19Engineering:current?.draftId?calculateD19Engineering(trace,current.condition):null,humanConditionGroups:summarizeD19HumanTrials([])}:{}),...(isD20Database(config.database)?{d20Engineering:summarizeD20Engineering(d20Session,trace)}:{}),original:current?.draftId?await transport.read('d13-original:'+current.draftId):null,humanTrial:'NOT_RUN'};const body=JSON.stringify(reportData,null,2);setReport(body);if(url)URL.revokeObjectURL(url);setUrl(URL.createObjectURL(new Blob([body],{type:'application/json'})));setTrial(current);setStatus(`独立读回：Task ${workspace.tasks.length}，Project ${workspace.projects.length}，Event ${workspace.events.length}，TimePoint ${workspace.timePoints.length}。`)})}}>独立读回与四指标状态</button>
       {url&&<a href={url} download="d14-engineering-trial.json">下载匿名工程证据</a>}<p role="status">{status}</p>{report&&<details><summary>查看隔离库读回</summary><pre aria-label="D14独立读回JSON" style={{maxHeight:260,overflow:'auto'}}>{report}</pre></details>}
     </details>
   }
