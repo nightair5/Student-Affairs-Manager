@@ -193,11 +193,15 @@ export function DraftReviewPanel({ reviewSession, reviewWorkspace, onFieldInput,
           void reviewSession.withFreshField(reviewWorkspace, draft.id, key, writer, entry.revision, value,
             async () => { await onUpdate(item.id, { [field]: value }) })
             .catch(async error => {
-              setCheckpointStatus('conflict'); setCheckpointError(String(error))
+              setCheckpointStatus('conflict')
+              setCheckpointError(String(error).includes('D21_FIELD_CHANGED_REVIEW_CONFLICT')
+                ? '另一标签已修改这项内容。你的输入仍在此页，请核对最新值后选择。'
+                : String(error))
               try {
                 const current=await reviewSession.load(reviewWorkspace,draft.id),latest=current.fields[key]
                 setSessionRecord(current)
                 if(latest&&!latest.conflict)setStaleChoice({key,itemId:item.id,field,base:entry.base,latest:latest.mine,mine:String(value),revision:latest.revision})
+                else if(!latest)setCheckpointError('另一标签已保存这项内容；你的输入仍在此页。请关闭并重新打开来源，核对正式保存的值。')
               } catch { /* keep both visible edits */ }
             })
         },

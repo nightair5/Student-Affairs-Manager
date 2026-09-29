@@ -427,11 +427,21 @@ function liveLife(state: RealInputState) {
       informationReviewed = true
     } else if (op.kind === 'review_independent_events') {
       const independent=effective.facts.events.filter(event=>!event.relatedTaskTempIds.length)
+      const correctedEventIds=new Set(prefix.flatMap(row=>row.correction?.change.kind==='independent_event'
+        ? [row.correction.change.eventId] : []))
+      const correctedTimeIds=new Set(prefix.flatMap(row=>row.correction?.change.kind==='independent_time'
+        ? [row.correction.change.timeId] : []))
       assert(!op.taskIds.length && !informationReviewed && !independentEventsReviewedAt && effective.facts.tasks.length>0 && independent.length>0
         && op.field===null && op.value===null && op.before===null && op.reviewIdentity===independentEventIdentity(before), 'INDEPENDENT_EVENT_REVIEW')
-      assert(independent.every(event=>event.scopeIds.some(id=>before.context.index.scopes.find(scope=>scope.id===id)?.text.includes(event.title))
+      // A validated human correction may use different wording from the quoted
+      // source. Keep the source scope and correction history; do not require the
+      // edited title/raw text to be a literal substring of the original notice.
+      assert(independent.every(event=>event.scopeIds.some(id=>before.context.index.scopes.some(scope=>scope.id===id))
+        && (correctedEventIds.has(event.tempId)||event.scopeIds.some(id=>before.context.index.scopes.find(scope=>scope.id===id)?.text.includes(event.title)))
         && [event.startTimePointTempId,event.endTimePointTempId].every(id=>!id||effective.facts.timePoints.some(time=>time.tempId===id
-          && !time.relatedTaskTempIds.length && !time.relatedMaterialTempIds.length && time.scopeIds.some(scopeId=>before.context.index.scopes.find(scope=>scope.id===scopeId)?.text.includes(time.rawText))
+          && !time.relatedTaskTempIds.length && !time.relatedMaterialTempIds.length
+          && time.scopeIds.some(scopeId=>before.context.index.scopes.some(scope=>scope.id===scopeId))
+          && (correctedTimeIds.has(time.tempId)||time.scopeIds.some(scopeId=>before.context.index.scopes.find(scope=>scope.id===scopeId)?.text.includes(time.rawText)))
           && (time.normalizedValue===null)===time.needsConfirmation))), 'INDEPENDENT_EVENT_EVIDENCE')
       independentEventsReviewedAt=op.at
     } else {

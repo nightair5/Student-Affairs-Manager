@@ -78,7 +78,8 @@ export function IndependentEventEditor({repo,workspace,draftId,busy,onDirty,onSa
   },[reviewSession,checkpointReady,snapshot,adding,change,changeKey,workspace,draftId,facts.events,facts.timePoints,retryCheckpoint,checkpointPhase])
   const notify=useRef(onDirty);useEffect(()=>{notify.current=onDirty},[onDirty])
   useEffect(()=>{notify.current(Boolean(change)||adding||working);return()=>notify.current(false)},[change,adding,working])
-  const blocked=busy||working||life(state).informationReviewed||Boolean(life(state).independentEventsReviewedAt)
+  const independentReviewed=Boolean(life(state).independentEventsReviewedAt)
+  const blocked=busy||working||life(state).informationReviewed||independentReviewed
   const resetAdd=()=>{setAddIdentity('');setScopes([]);setTitle('');setLocation('');setRawTime('');setNormalized('');setPrecision('vague');setRawEnd('');setNormalizedEnd('');setPrecisionEnd('vague');setNote('')}
   const select=(next:FactChange)=>{const baseline=baselineFor(next,false);lastCheckpoint.current=JSON.stringify({change:next,baseline});checkpointVersion.current='';setCheckpointPhase('saved');setChange(next);setRevision(semanticRevision(workspace));setInputBaseline(baseline);setBaselineChanged(false);setError('')}
   const update=(value:FactChange['value'])=>{if(change)setChange({...change,value} as FactChange)}
@@ -133,7 +134,7 @@ export function IndependentEventEditor({repo,workspace,draftId,busy,onDirty,onSa
   const events=facts.events.filter(event=>!event.relatedTaskTempIds.length)
   const times=facts.timePoints.filter(time=>!time.relatedTaskTempIds.length&&!time.relatedMaterialTempIds.length&&events.some(event=>[event.startTimePointTempId,event.endTimePointTempId].includes(time.tempId)))
   return <section aria-label="独立事件人工核对"><h3>核对独立事件</h3><p>此处编辑是你的纠正，原模型回答和首次建议不变。原文依据仍可在上方定位；时间不确定时不生成日程。</p>
-    {reviewSession&&<p role="status">{checkpointStatus||'当前没有未保存的事件输入'}。{baselineChanged&&<strong role="alert">相关事件或时间已变化；保留了你的输入，请重新核对，不能直接覆盖。</strong>}
+    {reviewSession&&<p role="status">{independentReviewed?'独立事件已正式确认并保存':checkpointStatus||'当前没有未保存的事件输入'}。{!independentReviewed&&baselineChanged&&<strong role="alert">相关事件或时间已变化；保留了你的输入，请重新核对，不能直接覆盖。</strong>}
       {checkpointPhase==='foreign'&&checkpointEntry&&<button type="button" onClick={()=>{const key=adding?'event:new:add':changeKey;void reviewSession.recover(workspace,draftId,reviewSession.writer,{[key]:checkpointEntry.revision}).then(saved=>{const entry=saved.fields[key];setCheckpointEntry(entry);checkpointVersion.current=entry.revision;setCheckpointPhase('saved');setCheckpointStatus('已接管未确认输入，仍需核对')}).catch(cause=>setCheckpointError(String(cause)))}}>接管未确认事件输入</button>}
       {checkpointPhase==='conflict'&&checkpointEntry?.conflict&&<><span>编辑前：{eventEditSummary(checkpointEntry.base)}；最新已保存：{eventEditSummary(checkpointEntry.conflict.latest)}；我的输入：{eventEditSummary(checkpointEntry.conflict.incoming)}</span>
         {(['latest','incoming'] as const).map(choice=><button type="button" key={choice} onClick={()=>{const key=adding?'event:new:add':changeKey;void reviewSession.resolve(workspace,draftId,key,choice,reviewSession.writer,checkpointEntry.revision).then(saved=>{const entry=saved.fields[key];restoreSnapshot(entry.mine as typeof snapshot);setCheckpointEntry(entry);checkpointVersion.current=entry.revision;lastCheckpoint.current=JSON.stringify(entry.mine);setCheckpointPhase('saved');setCheckpointStatus('已选择冲突版本，仍须核对后保存')}).catch(cause=>setCheckpointError(String(cause)))}}>采用{choice==='latest'?'最新已保存':'我的输入'}</button>)}</>}
