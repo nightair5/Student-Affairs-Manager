@@ -41,3 +41,7 @@ scripts/*candidate16*d13* text eol=lf
 scripts/recognition-semantic-v7.mjs text eol=lf
 src/experiments/candidate16/** text eol=lf
 src/experiments/realInput01/candidate16.ts text eol=lf
+
+# D19 generated diagnostic is checked byte-for-byte; keep its LF bytes on Windows.
+docs/recognition-optimization/d19-source-session/OFFLINE_DIAGNOSTIC.json -text
+scripts/d19-offline-diagnostic.mjs text eol=lf
