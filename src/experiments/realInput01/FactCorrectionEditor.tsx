@@ -122,7 +122,9 @@ export function FactCorrectionEditor({ repo, workspace, draftId, taskId, busy, o
         <button type="button" disabled={working} onClick={() => {setChange(null);setPendingRevision(null);setRefreshConflict(false)}}>放弃未保存修改</button></>}
     </details>
     <RelationCorrection repo={repo} workspace={workspace} draftId={draftId} taskId={taskId} busy={blocked||Boolean(change||materialBuffer)} onDirty={setRelationDirty} onSaved={onSaved}/>
-    {(error.includes('STALE_RELOAD_REQUIRED')||bufferRevision!==savedRevision)&&<><p>工作区修订已变化：编辑开始时 {revisionLabel(bufferRevision)}，当前 {revisionLabel(savedRevision)}。先重新载入并核对；不会覆盖已保存事实。</p><button type="button" disabled={working||relationDirty} onClick={()=>void reloadLatest()}>载入最新来源（保留未保存输入）</button></>}
+    {(error.includes('STALE_RELOAD_REQUIRED')||bufferRevision!==savedRevision)&&<><p>{bufferRevision===savedRevision
+      ? '另一标签或操作已更新来源；当前页面还没读到新版本。请主动载入并核对，未保存输入不会被静默覆盖。'
+      : `工作区修订已变化：编辑开始时 ${revisionLabel(bufferRevision)}，当前已载入 ${revisionLabel(savedRevision)}。请核对差异，不会覆盖已保存事实。`}</p><button type="button" disabled={working||relationDirty} onClick={()=>void reloadLatest()}>载入最新来源（保留未保存输入）</button></>}
     {pendingRevision&&<button type="button" disabled={working} onClick={()=>{setBufferRevision(pendingRevision);setPendingRevision(null);setError('已明确核对最新事实，可手动保存；仍不会自动提交。')}}>已对照原文，继续保存保留的输入</button>}
     {refreshConflict&&<p role="alert">相关事实已被其他操作修改。当前输入仍显示在编辑框，需先放弃本次编辑，再按最新事实重新修改。</p>}
     {error && <p role="alert">{error}。未宣称保存成功。</p>}

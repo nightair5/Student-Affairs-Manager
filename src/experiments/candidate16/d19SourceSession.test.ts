@@ -10,7 +10,8 @@ import {d19Database} from './measurement'
 import {groupD19SemanticFields} from './measurement'
 import type {D13ReplayRecord} from './replay'
 import {correctSemanticFact,reviewSemanticFact} from '../mainline05/semanticConfirmation'
-import {effectiveStateFacts,life,semanticRevision,stateOfRuntime} from '../mainline05/semanticState'
+import {REAL_STATE_VERSION,effectiveStateFacts,life,semanticRevision,stateOfRuntime} from '../mainline05/semanticState'
+import {assertRevisionSelection,inspectRevisionLinks} from './revisionGuard'
 // @ts-expect-error Isolated D19 builder is a Node engineering fixture, not an app dependency.
 import {buildD19Preview} from '../../../scripts/serve-d19-source-session.mjs'
 
@@ -57,4 +58,19 @@ it('D19 prefilled mixed fixture has fully evidenced event names and uncertain ti
   for(const event of facts.events)expect(event.scopeIds.some(id=>state.context.index.scopes.find(scope=>scope.id===id)?.text.includes(event.title))).toBe(true)
   for(const point of facts.timePoints)expect({raw:point.rawText,normalized:point.normalizedValue,confirm:point.needsConfirmation,scope:point.scopeIds.some(id=>state.context.index.scopes.find(scope=>scope.id===id)?.text.includes(point.rawText))}).toMatchObject({scope:true})
   expect(facts.timePoints.filter(point=>point.normalizedValue===null)).toHaveLength(2)
+},30_000)
+
+it('D19 isolated recovery can open a failed revision answer without disabling the bad-link guard',async()=>{
+  const preview=await buildD19Preview('6671','p13')
+  const record=JSON.parse(readFileSync(preview.directory+'/records/d13-fixture-partial-revision.json','utf8')) as D13ReplayRecord
+  const transport=Object.assign(new MemoryWorkspaceRecordStore(),{name:d19Database('p13')})
+  const app=await createD13Runtime({transport,choices:[record],read:async()=>record,sourceSession:true})
+  const draftId=await app.open(record.id),state=stateOfRuntime(await app.repository.load(),draftId)
+  if(state.version!==REAL_STATE_VERSION)throw Error('D19_EXPECT_REAL_STATE')
+  expect(state.recovery?.scopePolicy).toBe('d13-local-revision-isolation-1')
+  const facts=effectiveStateFacts(state).facts
+  expect(facts.revisions[0].targetDirectiveId).toBe('missing_old_task')
+  expect(inspectRevisionLinks(facts).some(issue=>issue.taskIds.includes('T3'))).toBe(true)
+  expect(()=>assertRevisionSelection(facts,['T3'])).toThrow()
+  expect(()=>assertRevisionSelection(facts,['T4'])).not.toThrow()
 },30_000)
