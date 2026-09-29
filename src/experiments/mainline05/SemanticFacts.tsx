@@ -27,6 +27,7 @@ export function SemanticFacts({state,taskId,onFocus}:{state:SemanticState;taskId
       <p><strong>{t.action.surface} → {t.object.surface}</strong> · {truth[t.condition.value]}</p>
       {state.version===REAL_STATE_VERSION?<p>当前已保存状态：{t.semantics.status==='cancelled'?'已作废':t.semantics.status==='pending'?'待执行':t.semantics.status} / {t.semantics.validity==='superseded'?'已被替代':t.semantics.validity==='active'?'有效':t.semantics.validity}；当前处置：{current.dispositions[t.id]}</p>
         :<p>原文状态：{t.semantics.status} / {t.semantics.validity}；当前处置：{current.dispositions[t.id]}</p>}
+      {t.detail.dependencyTempIds.length>0&&<p>前置步骤：先完成{t.detail.dependencyTempIds.map(id=>input.tasks.find(item=>item.id===id)?.detail.title??'待核对的前置事项').join('、')}，再执行本项。这里确认只会保存任务，不代表前一步已经完成；请在任务中心核对实际完成状态。</p>}
       <p>时间：{coverage[t.coverage.time]}；材料：{coverage[t.coverage.material]}；事件：{coverage[t.coverage.event]}</p>
       {hasPendingDateConsent(state,t.id)&&<p>日期待定：用户已明确接受先保存任务；时间原文和待补充状态仍保留，未分配日期或提醒。</p>}
       {locate([...t.propositionScopeIds,...t.condition.conditionScopeIds,...t.condition.factScopeIds])}
