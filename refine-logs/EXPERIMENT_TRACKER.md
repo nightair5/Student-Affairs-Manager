@@ -1,16 +1,14 @@
 # 当前工作跟踪
 
-更新：2026-09-29。完整事实见 [CURRENT_CONTEXT](../docs/recognition-optimization/CURRENT_CONTEXT.md)。
+更新：2026-09-30。事实入口：[D21结果](../docs/recognition-optimization/d21-review-session/D21_RESULTS.md)。
 
-| 工作 | 状态 | 下一直接动作 |
+| 工作 | 状态 | 下一动作 |
 |---|---|---|
-| D17冻结24单元 | 24/24 SETTLED；原MIXED_PROGRESS | 许可耗尽；旧结果/账本只读 |
-| D18解释与路线审查 | 已完成；provisional工程审查 | D19诊断细分真风险与参照争议 |
-| D19来源级核对与事务 | 内部入口同页任务+事件、源级最终原子保存；浏览器失败/重试/刷新、无任务、manual、拒绝/局部阻断、双标签过期写入及双任务前置说明已验 | 补双任务正式提交/读回、双方不同未保存编辑的冲突合并及跨刷新编辑缓冲 |
-| D20未确认来源会话 | `PARTIAL`；既有浏览器观察保留；追加内存复现clear丢冲突/较新输入，静态发现事件恢复和状态提示问题 | D21先修真实缺陷，再补材料/条件/依赖/修订缓冲、冲突与A–L；见[复核](../docs/governance/D20_REVIEW_AND_D21_PLAN.md) |
-| 四指标对照 | D19工程语义字段和manual/assisted分组保留；D20检查点与editId尚无直接持久绑定；真人NOT_OBSERVABLE | 接通页面editId/检查点/commit/readback并浏览器核对缺失；取得真人材料后小规模探索 |
-| 新候选比较 | 未创建新批、未调用 | 根因机制明确后冻结并申请该批授权 |
-| 真实探索 | NOT_RUN | 负责人、参与者/同意、范围授权；保存/测量验收 |
-| 独立Holdout/默认替换/部署 | 未开展/未授权 | 分别按活动路线证据门推进 |
+| D17 冻结比较 | 24/24 SETTLED；C03 1/12、C17 2/12，MIXED_PROGRESS | 许可耗尽，旧结果与账本只读 |
+| D19 离线诊断 | 已完成，provisional | 不冒充新模型效果 |
+| D21 来源核对 | 过期清理、事件恢复、同字段旧保存和三方选择已修；p18 最终构建任务+两事件及模糊时间正式读回，p19 正式事务失败/手动恢复通过；A—L 未全验 | 补检查点和提交后读回故障、全字段恢复、不同字段双方提交、关系/来源冲突及双身份全图 |
+| 四指标 | 工程 editId→检查点→commit→readback 有页面证据；真人全 NOT_OBSERVABLE | 最终测量缺失分支验收；获准后真实探索 |
+| 真人探索 | NOT_RUN | 真实负责人、参与者同意和明确范围授权 |
+| 新模型批次/独立 Holdout/默认替换/部署 | 本轮 0 调用、未授权 | 各自冻结假设、证据和授权，不从 D17 继承许可 |
 
-历史跟踪见 [归档](../docs/governance/archive/2026-09-29-d18/refine-logs/EXPERIMENT_TRACKER.md)。不重复复制旧“当前”。
+历史跟踪见[归档](../docs/governance/archive/2026-09-29-d18/refine-logs/EXPERIMENT_TRACKER.md)。
