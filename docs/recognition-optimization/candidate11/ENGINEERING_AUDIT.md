@@ -1,5 +1,7 @@
 # C11 A—D4 工程与 Development 执行审计
 
+> D18 追加（2026-09-29，provisional 模型辅助只读审查）：D17 原评分/结果/许可不变，但“C17 S08材料不准、S10/S11关系不正确”的文字概括过重。S08材料值正确而scope较宽；S10/S11端点/方向/生效正确但支持性补充依据被拒。原9个Severe包含工程/事实2、契约/测量3、表示争议4，这不是重评分；S09漏事件/时间仍是真实缺口。详见 [D18追加解释](../candidate17/d17-development/D18_INTERPRETATION_CORRECTION.md)。本轮更新产品/执行路线和过时入口，未修改产品运行时；账本只读938行，模型/真人/部署0。正式验证见 [D18验证](../../governance/d18-product-direction/VALIDATION.md)。
+
 > D17 追加工程审计（2026-09-28，provisional，同系列工程复核）：用户明确授权的 C03/C17 24 个 D16 冻结 `deepseek-flash` 单元全部一次发送并结算，0 重试/repair/verifier、不确定状态 0；账本 889→938 行（1 grant、24 reserve、24 settle），最终 SHA-256 `e79aec8bbb1378e37f3941d8ffac9cce7d74bbb8e11d7ceee5c90a88b6c734b9`。冻结 v7 给出整份 C03 1/12、C17 2/12，C17 Severe 9、S08 新材料细节错误、S10/S11 修订关系仍失败，结论 `MIXED_PROGRESS`，不晋级、不默认替换。S04 选择器误报已追加诊断，不改原评分；四项真人指标 `NOT_OBSERVABLE`。84 历史保护/119 冻结文件不变。见 [D17 结果](../candidate17/d17-development/D17_RESULTS.md)和[预算结算](../candidate17/d17-development/BUDGET_SETTLEMENT.md)。本审计不是独立人工真值。
 
 > D12 追加工程记录（2026-09-28）：按用户新要求审查门槛适用性。新增6.0.1-diagnostic修复三个零匹配异常，全部24份录制回答离线诊断；其他21份旧规则结果不变，Candidate15两份引用失败仍失败。PRD/AGENTS、活动路线和交接更新为分层推进；旧规则原字节存档。新增历史保护入口，账本本轮只读。见 [D12结果](../d12-progress/D12_AUDIT_AND_RESULTS.md)；独立视角审查为同系列 provisional，不是独立人工真值。
