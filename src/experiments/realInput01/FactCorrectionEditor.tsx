@@ -8,10 +8,28 @@ import { materialEdit, factAssets, materialStatusLabels, validateMaterialDecisio
 import type { SemanticTask } from '../mainline04/semanticContract'
 import { openFailedForCorrection } from '../mainline05/semanticCapture'
 import {revisionLabel,taskReviewFingerprint} from '../candidate16/staleRecovery'
+import type { D20ReviewSessionRepository } from '../candidate16/d20ReviewSession'
+import { useD21EditorCheckpoint } from '../candidate16/useD21EditorCheckpoint'
+import { stableJson } from '../mainline04/semanticContract'
 
-export function FactCorrectionEditor({ repo, workspace, draftId, taskId, busy, onDirty, onSaved }: {
+function correctionSummary(input:unknown,titles:Map<string,string>){
+  if(typeof input==='string'&&input.startsWith('{'))try{input=JSON.parse(input)}catch{/* remain a plain note */}
+  if(!input||typeof input!=='object')return '原文事实'
+  const row=input as Record<string,unknown>,change=row.change&&typeof row.change==='object'?row.change as Record<string,unknown>:null
+  const value=(change?.value&&typeof change.value==='object'?change.value:null) as Record<string,unknown>|null
+  if(change?.kind==='surface')return `${change.field==='action'?'动作':'对象'}：${String(value?.surface??'未填写')}`
+  if(change?.kind==='material')return `材料：${String(value?.name??'未填写')}`
+  if(change?.kind==='time')return `时间原文：${String(value?.rawText??'未填写')}`
+  const task=row.task&&typeof row.task==='object'?row.task as Record<string,unknown>:null
+  if(task){const condition=task.condition&&typeof task.condition==='object'?task.condition as Record<string,unknown>:null
+    return `条件：${String(condition?.value??'未说明')}；前置任务：${Array.isArray(task.dependencyTempIds)?task.dependencyTempIds.map(id=>titles.get(String(id))??'待核对任务').join('、')||'无':'无'}`}
+  if(Array.isArray(row.dependencyIds))return `前置任务：${row.dependencyIds.map(id=>titles.get(String(id))??'待核对任务').join('、')||'无'}；说明：${String(row.note??'未填写')}`
+  return [row.mode?`正在核对${String(row.mode)}`:'',row.action||row.object?`${String(row.action??'')}${String(row.object??'')}`:'',row.value?`判断：${String(row.value)}`:'',row.note?`说明：${String(row.note)}`:''].filter(Boolean).join('；')||'待核对输入'
+}
+
+export function FactCorrectionEditor({ repo, workspace, draftId, taskId, busy, onDirty, onSaved, onReviewed, reviewSession }: {
   repo: SemanticRepository; workspace: WorkspaceV8; draftId: string; taskId: string; busy: boolean;
-  onDirty: (dirty: boolean) => void; onSaved: () => Promise<void>
+  onDirty: (dirty: boolean) => void; onSaved: () => Promise<void>; onReviewed?:()=>void; reviewSession?: D20ReviewSessionRepository
 }) {
   const state = stateOfRuntime(workspace,draftId)
   if (state.version !== REAL_STATE_VERSION) throw Error('REAL_INPUT_EDITOR_PROFILE')
@@ -27,6 +45,12 @@ export function FactCorrectionEditor({ repo, workspace, draftId, taskId, busy, o
   useEffect(() => { notify.current(Boolean(change||materialBuffer) || relationDirty || working); return () => notify.current(false) },[change,materialBuffer,working,relationDirty])
   const blocked = busy || working || current.dispositions[taskId] === 'confirmed' || current.dispositions[taskId] === 'rejected' || !isCurrentDraft(workspace,draftId)
   const fingerprint=taskReviewFingerprint(facts,taskId,current.values[taskId])
+  const checkpoint=useD21EditorCheckpoint({repo:reviewSession,workspace,draftId,field:`task:${taskId}:facts`,base:fingerprint,
+    value:{change,materialBuffer,fingerprint},active:Boolean(change||materialBuffer),restore:saved=>{
+      setChange(saved.change);setMaterialBuffer(saved.materialBuffer)
+      setBufferFingerprint(saved.fingerprint);setBufferRevision(savedRevision)
+      if(saved.fingerprint!==fingerprint){setRefreshConflict(true);setError('来源中的本项事实已变化；保留未确认输入，请对照原文重新核对。')}
+    }})
   const choose = (value: FactChange) => { setChange(value); setBufferRevision(savedRevision);setBufferFingerprint(fingerprint);setPendingRevision(null);setRefreshConflict(false); setError('') }
   const reloadLatest=async()=>{
     try{await onSaved();const latest=await repo.load(),state=stateOfRuntime(latest,draftId)
@@ -36,15 +60,26 @@ export function FactCorrectionEditor({ repo, workspace, draftId, taskId, busy, o
       }else {setBufferRevision(semanticRevision(latest));setError('已载入最新工作区修订 '+revisionLabel(semanticRevision(latest))+'。请重新核对本项事实后继续。')}
     }catch(cause){setError(cause instanceof Error?cause.message:'重读失败；未保存输入仍保留。')}
   }
-  const run = async (action: () => Promise<unknown>) => {
-    if (blocked||pendingRevision||refreshConflict) return
+  const run = async (action: () => Promise<unknown>,selectAfterReview=false) => {
+    if (blocked||pendingRevision||refreshConflict||!checkpoint.readyToSave) return
     setWorking(true); setError('')
-    try { await action(); setChange(null); setMaterialBuffer(null);setPendingRevision(null);setRefreshConflict(false); await onSaved();setBufferRevision(semanticRevision(await repo.load())) } catch (cause) { setError(cause instanceof Error ? cause.message : '未保存；请保留修改后再核对。') }
+    try {
+      await action();setChange(null);setMaterialBuffer(null);setPendingRevision(null);setRefreshConflict(false)
+      try{await checkpoint.clear()}catch(cause){setError('草稿纠正已保存，但未确认检查点清理失败：'+String(cause))}
+      await onSaved();if(selectAfterReview)onReviewed?.();setBufferRevision(semanticRevision(await repo.load()))
+    } catch (cause) { setError(cause instanceof Error ? cause.message : '未保存；请保留修改后再核对。') }
     finally { setWorking(false) }
   }
   const assets = factAssets(facts,taskId)
   const reviewed = current.reviewed?.[taskId] === liveReviewIdentity(state,taskId,current.values)
   return <section aria-label={'事实核对与修改：' + task.detail.title}>
+    {reviewSession&&<p role="status">{checkpoint.phase==='saved'?'未确认事实编辑已保存，可继续核对。':checkpoint.phase==='saving'?'正在保存未确认编辑…':checkpoint.phase==='foreign'?'发现另一标签未确认编辑，请明确接管。':checkpoint.phase==='conflict'?'本项事实发生编辑冲突，请选择版本。':checkpoint.phase==='failed'?'检查点保存失败，刷新可能丢失输入。':'本项事实编辑尚未正式确认。'}
+      {checkpoint.phase==='foreign'&&<button type="button" onClick={()=>void checkpoint.takeOver()}>接管并继续核对</button>}
+      {checkpoint.phase==='failed'&&<button type="button" onClick={checkpoint.retry}>手动重试保存未确认编辑</button>}
+      {checkpoint.phase==='conflict'&&<><button type="button" onClick={()=>void checkpoint.resolve('latest')}>采用最新已保存</button><button type="button" onClick={()=>void checkpoint.resolve('incoming')}>保留我的修改</button></>}
+      {checkpoint.entry?.conflict&&<p>编辑前：{correctionSummary(checkpoint.entry.base,new Map(facts.tasks.map(item=>[item.id,item.detail.title])))}；最新：{correctionSummary(checkpoint.entry.conflict.latest,new Map(facts.tasks.map(item=>[item.id,item.detail.title])))}；我的输入：{correctionSummary(checkpoint.entry.conflict.incoming,new Map(facts.tasks.map(item=>[item.id,item.detail.title])))}</p>}
+      {checkpoint.error&&<span role="alert">{checkpoint.error}</span>}
+    </p>}
     <p>请核对当前标题“{current.values[taskId].title}”与动作、对象、条件、时间、材料和来源。核对不等于勾选，也不会创建正式任务。</p>
     {titleReviewProblem(current.values[taskId].title)&&<p role="status">{titleReviewProblem(current.values[taskId].title)}</p>}
     {materialReviewProblem(state,taskId)&&<p role="status">{materialReviewProblem(state,taskId)}</p>}
@@ -83,14 +118,14 @@ export function FactCorrectionEditor({ repo, workspace, draftId, taskId, busy, o
       <label>当前准备状态<select value={materialBuffer.status} onChange={e=>setMaterialBuffer({...materialBuffer,status:e.target.value})}>
         <option value="">请选择准备情况</option>{Object.entries(materialStatusLabels).map(([v,label])=><option key={v} value={v}>{label}</option>)}</select></label>
       <p>不知道是否备齐时，可以主动选择“准备情况尚未核实”。确认任务不代表材料已齐备，也不会解除原文的执行条件或前置任务。未保存的核对不会用于确认。</p>
-      <button type="button" disabled={!materialBuffer.required||!materialBuffer.status} onClick={()=>void run(()=>reviewSemanticMaterial(repo,
+        <button type="button" disabled={!materialBuffer.required||!materialBuffer.status||!checkpoint.readyToSave} onClick={()=>void run(()=>reviewSemanticMaterial(repo,
         {draftId,materialId:materialBuffer.id,revision:bufferRevision,operationId:crypto.randomUUID(),
           value:validateMaterialDecision({required:materialBuffer.required==='yes',status:materialBuffer.status})}))}>保存材料核对</button>
       <button type="button" onClick={()=>{setMaterialBuffer(null);setPendingRevision(null);setRefreshConflict(false)}}>放弃未保存材料核对</button>
     </fieldset>}
     <button type="button" disabled={blocked || relationDirty || Boolean(change||materialBuffer) || !canAct(state,taskId) || reviewed || Boolean(titleReviewProblem(current.values[taskId].title))}
-      onClick={() => void run(() => reviewSemanticFact(repo,{draftId,taskId,revision:savedRevision,operationId:crypto.randomUUID()}))}>
-      {reviewed ? '本项已核对（已保存）' : '本项事实已核对'}</button>
+      onClick={() => void run(() => reviewSemanticFact(repo,{draftId,taskId,revision:savedRevision,operationId:crypto.randomUUID()}),true)}>
+      {reviewed ? '本项已核对（已保存）' : onReviewed?'核对并选入本次确认':'本项事实已核对'}</button>
     <details><summary>修正动作、对象或材料</summary>
       <p>仅修正未确认内容；手动材料会独立标记，不冒充原文。时间和标题请使用任务卡中的编辑与保存按钮。</p>
       {(['action','object'] as const).map(field => <button type="button" key={field} disabled={blocked || relationDirty || Boolean(change||materialBuffer)}
@@ -118,10 +153,10 @@ export function FactCorrectionEditor({ repo, workspace, draftId, taskId, busy, o
           relatedTaskTempIds:e.target.checked?[...change.value.relatedTaskTempIds,t.id]:change.value.relatedTaskTempIds.filter(id=>id!==t.id)}})} />{t.detail.title}</label>)}
       </fieldset>}
       {change && change.kind!=='time' && <><p>有未保存的事实编辑，当前内容不会被确认。{bufferRevision!==savedRevision?'其他操作已更新版本；必须重新载入并核对，缓冲仍保留。':''}</p>
-        <button type="button" disabled={blocked||Boolean(pendingRevision)||refreshConflict} onClick={() => void run(() => correctSemanticFact(repo,{draftId,revision:bufferRevision,operationId:crypto.randomUUID(),change}))}>保存事实修改</button>
-        <button type="button" disabled={working} onClick={() => {setChange(null);setPendingRevision(null);setRefreshConflict(false)}}>放弃未保存修改</button></>}
+        <button type="button" disabled={blocked||Boolean(pendingRevision)||refreshConflict||!checkpoint.readyToSave} onClick={() => void run(() => correctSemanticFact(repo,{draftId,revision:bufferRevision,operationId:crypto.randomUUID(),change}))}>保存事实修改</button>
+        <button type="button" disabled={working} onClick={() => {void checkpoint.clear().catch(cause=>setError(String(cause)));setChange(null);setPendingRevision(null);setRefreshConflict(false)}}>放弃未保存修改</button></>}
     </details>
-    <RelationCorrection repo={repo} workspace={workspace} draftId={draftId} taskId={taskId} busy={blocked||Boolean(change||materialBuffer)} onDirty={setRelationDirty} onSaved={onSaved}/>
+    <RelationCorrection repo={repo} workspace={workspace} draftId={draftId} taskId={taskId} busy={blocked||Boolean(change||materialBuffer)} onDirty={setRelationDirty} onSaved={onSaved} reviewSession={reviewSession}/>
     {(error.includes('STALE_RELOAD_REQUIRED')||Boolean(change||materialBuffer)&&bufferRevision!==savedRevision)&&<><p>{bufferRevision===savedRevision
       ? '另一标签或操作已更新来源；当前页面还没读到新版本。请主动载入并核对，未保存输入不会被静默覆盖。'
       : `工作区修订已变化：编辑开始时 ${revisionLabel(bufferRevision)}，当前已载入 ${revisionLabel(savedRevision)}。请核对差异，不会覆盖已保存事实。`}</p><button type="button" disabled={working||relationDirty} onClick={()=>void reloadLatest()}>载入最新来源（保留未保存输入）</button></>}
@@ -131,14 +166,14 @@ export function FactCorrectionEditor({ repo, workspace, draftId, taskId, busy, o
   </section>
 }
 
-type CorrectionProps={repo:SemanticRepository;workspace:WorkspaceV8;draftId:string;taskId?:string;busy:boolean;onDirty:(dirty:boolean)=>void;onSaved:()=>Promise<void>}
+type CorrectionProps={repo:SemanticRepository;workspace:WorkspaceV8;draftId:string;taskId?:string;busy:boolean;onDirty:(dirty:boolean)=>void;onSaved:()=>Promise<void>;reviewSession?:D20ReviewSessionRepository}
 /** Exact persistence adapter used by the relation editor's save event. */
 // eslint-disable-next-line react-refresh/only-export-components -- exported so the editor-to-repository path is tested without a second implementation.
 export async function submitRelationCorrection(repo:SemanticRepository,draftId:string,revision:string,change:FactChange,operationId:string=crypto.randomUUID()){
   return correctSemanticFact(repo,{draftId,revision,operationId,change})
 }
 /** Same review panel, explicit source-bound user edits; no model call or raw rewrite. */
-export function RelationCorrection({repo,workspace,draftId,taskId,busy,onDirty,onSaved}:CorrectionProps){
+export function RelationCorrection({repo,workspace,draftId,taskId,busy,onDirty,onSaved,reviewSession}:CorrectionProps){
   const draft=workspace.extractionDrafts.find(d=>d.id===draftId)!,ready=Boolean(draft.legacyData?.mainline05)
   const state=ready?stateOfRuntime(workspace,draftId):null,facts=state?effectiveStateFacts(state).facts:null
   const task=facts?.tasks.find(t=>t.id===taskId)
@@ -152,7 +187,20 @@ export function RelationCorrection({repo,workspace,draftId,taskId,busy,onDirty,o
   const notify=useRef(onDirty);useEffect(()=>{notify.current=onDirty},[onDirty])
   useEffect(()=>{notify.current(Boolean(mode)||working);return()=>notify.current(false)},[mode,working])
   const blocked=busy||working||(state&&taskId&&['confirmed','rejected'].includes(life(state).dispositions[taskId]))||!isCurrentDraft(workspace,draftId)
-  async function run(work:()=>Promise<unknown>){setWorking(true);setError('');try{await work();setMode('');await onSaved()}catch(e){setError(e instanceof Error?e.message:'保存失败，修改仍保留')}finally{setWorking(false)}}
+  const base=stableJson({task:task?{condition:task.condition,dependencyTempIds:task.detail.dependencyTempIds,eventTempIds:task.eventTempIds}:null,
+    revisions:facts?.revisions??[],events:mode==='event'?facts?.events??[]:[]})
+  const checkpoint=useD21EditorCheckpoint({repo:reviewSession,workspace,draftId,field:`relation:${taskId??'source'}:edit`,base,
+    value:{mode,scopeIds,note,value,dependencyIds,action,object,effect,completion,materialName,relationIndex,target,from,newTarget,conditionScope,factScope,eventTitle,checked,base},
+    active:Boolean(mode),restore:saved=>{
+      setMode(saved.mode);setScopes(saved.scopeIds);setNote(saved.note);setValue(saved.value);setDependencyIds(saved.dependencyIds)
+      setAction(saved.action);setObject(saved.object);setEffect(saved.effect);setCompletion(saved.completion);setMaterialName(saved.materialName)
+      setRelationIndex(saved.relationIndex);setTarget(saved.target);setFrom(saved.from);setNewTarget(saved.newTarget)
+      setConditionScope(saved.conditionScope);setFactScope(saved.factScope);setEventTitle(saved.eventTitle);setChecked(saved.checked)
+      setRevision(semanticRevision(workspace));if(saved.base!==base)setError('关联事实已变化；未确认输入仍保留，请重新核对原文。')
+    }})
+  async function run(work:()=>Promise<unknown>){if(mode&&!checkpoint.readyToSave)return;setWorking(true);setError('');try{await work();setMode('');
+    try{await checkpoint.clear()}catch(cause){setError('草稿纠正已保存，但检查点清理失败：'+String(cause))}
+    await onSaved()}catch(e){setError(e instanceof Error?e.message:'保存失败，修改仍保留')}finally{setWorking(false)}}
   function start(next:string){setMode(next);setRevision(semanticRevision(workspace));setScopes([]);setNote('');setValue('');setChecked(false);setError('');setNewTarget(false)
     setCompletion('');setMaterialName('')
     setDependencyIds(next==='dependency'?[...(task?.detail.dependencyTempIds??[])]:[])}
@@ -180,6 +228,12 @@ export function RelationCorrection({repo,workspace,draftId,taskId,busy,onDirty,o
     await submitRelationCorrection(repo,draftId,revision,change)
   }
   return <section aria-label={task?'条件、依赖与事件纠正：'+task.detail.title:'通知漏项与新旧要求纠正'}>
+    {reviewSession&&mode&&<p role="status">{checkpoint.phase==='saved'?'未确认的关系输入已保存，可继续核对。':checkpoint.phase==='saving'?'正在保存未确认输入…':checkpoint.phase==='conflict'?'同一关联事实发生冲突，请选择版本。':checkpoint.phase==='foreign'?'另一标签有未确认输入，请接管后继续。':checkpoint.phase==='failed'?'检查点失败，本页输入仍保留。':'未确认输入尚未正式保存。'}
+      {checkpoint.phase==='foreign'&&<button type="button" onClick={()=>void checkpoint.takeOver()}>接管未确认输入</button>}
+      {checkpoint.phase==='conflict'&&<><button type="button" onClick={()=>void checkpoint.resolve('latest')}>采用最新</button><button type="button" onClick={()=>void checkpoint.resolve('incoming')}>保留我的输入</button></>}
+      {checkpoint.entry?.conflict&&<span>编辑前：{correctionSummary(checkpoint.entry.base,new Map(facts?.tasks.map(item=>[item.id,item.detail.title])??[]))}；最新：{correctionSummary(checkpoint.entry.conflict.latest,new Map(facts?.tasks.map(item=>[item.id,item.detail.title])??[]))}；我的输入：{correctionSummary(checkpoint.entry.conflict.incoming,new Map(facts?.tasks.map(item=>[item.id,item.detail.title])??[]))}</span>}
+      {checkpoint.phase==='failed'&&<button type="button" onClick={checkpoint.retry}>手动重试检查点</button>}
+      {checkpoint.error&&<span role="alert">{checkpoint.error}</span>}</p>}
     {!ready?<><p>模型原回答有关系错误，不能直接确认。可保留失败记录，依据完整原文人工纠正；这不会重新调用模型。</p>
       <blockquote>{workspace.sourceVersions.find(v=>v.id===workspace.recognitionRuns.find(r=>r.id===draft.recognitionRunId)?.sourceVersionId)?.rawText}</blockquote>
       <button type="button" disabled={Boolean(blocked)} onClick={()=>void run(()=>openFailedForCorrection(repo,draftId,semanticRevision(workspace)))}>保留失败原答，进入人工纠错</button></>
@@ -199,7 +253,7 @@ export function RelationCorrection({repo,workspace,draftId,taskId,busy,onDirty,o
         {mode==='dependency'&&<><p>仅勾选完整原文明示的前置任务。取消全部勾选表示你明确核对后认为当前任务没有这些前置关系，不代表其他条件已经成立。</p>
           {facts!.tasks.filter(candidate=>candidate.id!==taskId).map(candidate=><label key={candidate.id}><input type="checkbox" checked={dependencyIds.includes(candidate.id)} onChange={e=>setDependencyIds(e.target.checked?[...dependencyIds,candidate.id]:dependencyIds.filter(id=>id!==candidate.id))}/>{candidate.detail.title}</label>)}</>}
         {mode==='add_material'&&<label>原文材料名称<input value={materialName} onChange={e=>setMaterialName(e.target.value)}/></label>}
-        {mode==='revision'&&<><label>要纠正的关系<select value={relationIndex} onChange={e=>setRelationIndex(Number(e.target.value))}>{facts!.revisions.map((r,i)=><option key={i} value={i}>关系 {i+1}：{r.type} / {r.targetDirectiveId}</option>)}<option value={facts!.revisions.length}>补充一条关系</option></select></label>
+        {mode==='revision'&&<><label>要纠正的关系<select value={relationIndex} onChange={e=>setRelationIndex(Number(e.target.value))}>{facts!.revisions.map((r,i)=><option key={i} value={i}>{r.type==='supersedes'?'替代':'取消'}：{facts!.tasks.find(item=>item.id===r.targetDirectiveId)?.detail.title??'旧要求待核对'}{r.fromDirectiveId?` → ${facts!.tasks.find(item=>item.id===r.fromDirectiveId)?.detail.title??'新要求待核对'}`:''}</option>)}<option value={facts!.revisions.length}>补充一条关系</option></select></label>
           <label><input type="checkbox" checked={newTarget} onChange={e=>setNewTarget(e.target.checked)}/>旧要求漏提取，依据原文补充</label>
           {!newTarget&&<label>作废的旧要求<select value={target} onChange={e=>setTarget(e.target.value)}><option value="">请选择</option>{facts!.tasks.map(t=><option key={t.id} value={t.id}>{t.detail.title}</option>)}</select></label>}
           <label>替代它的新要求<select value={from} onChange={e=>setFrom(e.target.value)}><option value="">只取消，没有替代要求</option>{facts!.tasks.map(t=><option key={t.id} value={t.id}>{t.detail.title}</option>)}</select></label>
@@ -210,7 +264,7 @@ export function RelationCorrection({repo,workspace,draftId,taskId,busy,onDirty,o
           <p>可先保存原文明示的动作、对象和完成标准，再分别补录材料、时间、条件及活动；全部核对前不要确认。旧要求作为已作废历史保留，不创建待办。</p></>}
         <label>核对理由或用户补充说明<textarea value={note} onChange={e=>setNote(e.target.value)}/></label>
         <label><input type="checkbox" checked={checked} onChange={e=>setChecked(e.target.checked)}/>我已对照完整原文，确认上述关系及补项范围；说明属于人工核对，不是模型预测</label>
-        <button type="button" disabled={!checked||!note.trim()||!scopeIds.length||(!value&&!['add_task','dependency','add_material'].includes(mode))} onClick={()=>void run(save)}>保存关系纠正</button>
+        <button type="button" disabled={!checkpoint.readyToSave||!checked||!note.trim()||!scopeIds.length||(!value&&!['add_task','dependency','add_material'].includes(mode))} onClick={()=>void run(save)}>保存关系纠正</button>
         <button type="button" onClick={()=>setMode('')}>放弃未保存关系纠正</button>
       </fieldset>}</>}
     {error&&<p role="alert">未保存：{error}。原回答和已确认内容没有改变。</p>}

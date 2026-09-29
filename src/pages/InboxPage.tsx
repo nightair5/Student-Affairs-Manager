@@ -134,7 +134,9 @@ export function InboxPage({
             <p className="source-status-description">{item.statusDescription}</p>
             <dl className="inbox-source-meta">
               <div><dt>项目</dt><dd>{item.projectLabel ?? '未形成项目建议'}</dd></div>
-              <div><dt>实体</dt><dd>{counts.tasks} 任务 · {counts.materials} 材料 · {counts.timePoints} 时间 · {counts.events} 活动</dd></div>
+              <div><dt>实体</dt><dd>{item.modelLabel?.includes('工程夹具')&&item.status==='needs_review'
+                ? `${counts.tasks} 任务 · 独立事件及时间请在核对页查看`
+                : `${counts.tasks} 任务 · ${counts.materials} 材料 · ${counts.timePoints} 时间 · ${counts.events} 活动`}</dd></div>
             </dl>
             {item.errorMessage && <p className="inline-error" role="alert">{item.errorMessage}</p>}
             {actionFailure?.sourceId === source.id && <p className="inline-error" role="alert">{actionFailure.message}</p>}

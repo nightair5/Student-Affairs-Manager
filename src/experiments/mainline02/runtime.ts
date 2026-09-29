@@ -32,7 +32,7 @@ export interface MainlineRealInputCapabilities {
   readonly networkDescription: string
   inputPanel(options: { workspace: WorkspaceV8; initialText: string; onSaved: () => Promise<void>; onDraftReady: (id: string) => Promise<void> }): ReactNode
   factEditor(options: { workspace: WorkspaceV8; draftId: string; taskId: string; busy: boolean;
-    onDirty: (dirty: boolean) => void; onSaved: () => Promise<void>; reviewSession?: D20ReviewSessionRepository }): ReactNode
+    onDirty: (dirty: boolean) => void; onSaved: () => Promise<void>; onReviewed?:()=>void; reviewSession?: D20ReviewSessionRepository }): ReactNode
   informationEditor?(options:{workspace:WorkspaceV8;draftId:string;busy:boolean;onDirty:(dirty:boolean)=>void;onSaved:()=>Promise<void>;reviewSession?:D20ReviewSessionRepository}):ReactNode
   draftEditor?(options: {workspace:WorkspaceV8;draftId:string;busy:boolean;onDirty:(dirty:boolean)=>void;onSaved:()=>Promise<void>;reviewSession?:D20ReviewSessionRepository}):ReactNode
 }

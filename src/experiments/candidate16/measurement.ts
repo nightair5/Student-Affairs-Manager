@@ -16,12 +16,13 @@ export const d19Database=(participant:string)=>{
 }
 export const isD19Database=(name:string)=>/^rco-mainline-01-02-i1-real-input-d19-source-session-p[1-9][0-9]{0,2}$/.test(name)
 export const isD20Database=(name:string)=>/^rco-mainline-01-02-i1-real-input-d20-review-session-p[1-9][0-9]{0,2}$/.test(name)
+export const isD21Database=(name:string)=>/^rco-mainline-01-02-i1-real-input-d21-review-session-p[1-9][0-9]{0,2}$/.test(name)
 export const D13_TRACE_KEY='d13-measurement-low-edit-v2'
 export const LOW_EDIT_POLICY={version:'low-edit-v2-exploratory-1',maxFields:2,maxActiveEditMs:30_000,idleLimitMs:5_000,origin:'ENGINEERING_REPLAY',humanTrialAuthorized:false} as const
 type Kind='begin'|'read'|'edit'|'blur'|'hidden'|'visible'|'wait'|'wait_end'|'commit'|'readback'|'failure'|'restore'|'end'
 export interface D13Trace {id:string;draftId:string;atMs:number;kind:Kind;editId?:string;fieldKey?:string;commitId?:string;includedEditIds?:string[];fields?:string[];semanticFields?:string[];structural?:boolean;error?:string;disposition?:'confirmed'|'partial'|'no_task';snapshot?:{recordId:string;sourceSha256:string;firstOutputSha256:string}}
 type Store=WorkspaceRecordStore&{name:string}
-export function assertD13Database(name:string){if(name!==D13_DATABASE&&name!==D14_DATABASE&&!isD15Database(name)&&!isD19Database(name)&&!isD20Database(name))throw Error('D13_ISOLATED_DATABASE_REQUIRED')}
+export function assertD13Database(name:string){if(name!==D13_DATABASE&&name!==D14_DATABASE&&!isD15Database(name)&&!isD19Database(name)&&!isD20Database(name)&&!isD21Database(name))throw Error('D13_ISOLATED_DATABASE_REQUIRED')}
 const flatten=(value:unknown,prefix='',out:Record<string,unknown>={}):Record<string,unknown>=>{
   if(value&&typeof value==='object'&&!Array.isArray(value))for(const [key,v] of Object.entries(value))flatten(v,prefix?prefix+'.'+key:key,out)
   else out[prefix]=value
@@ -87,7 +88,7 @@ export function createD13Measurement(transport:Store,now:()=>number=Date.now){
   return {append,events,now,activeDraft:()=>activeDraft,
     finish:async(draftId:string,disposition:NonNullable<D13Trace['disposition']>)=>{const rows=await events(draftId),commit=[...rows].reverse().find(e=>e.kind==='commit'&&e.disposition===disposition);await append(draftId,'end',{disposition,...(commit?{commitId:commit.commitId}:{})});activeDraft=undefined},
     begin:async(draftId:string,snapshot:NonNullable<D13Trace['snapshot']>)=>{activeDraft=draftId;const rows=await events(draftId);if(rows.length){if(stableJson(rows[0].snapshot)!==stableJson(snapshot))throw Error('D13_SNAPSHOT_DRIFT');if(finished(rows)){activeDraft=undefined;return}await append(draftId,'restore')}else await append(draftId,'begin',{snapshot});await append(draftId,'read')},
-    changed:async(draftId:string,fieldKey:string)=>{activeDraft=draftId;await append(draftId,'edit',{editId:crypto.randomUUID(),fieldKey})},
+    changed:async(draftId:string,fieldKey:string)=>{activeDraft=draftId;const editId=crypto.randomUUID();await append(draftId,'edit',{editId,fieldKey});return editId},
     blur:async(draftId:string)=>append(draftId,'blur'),
     visibility:async(hidden:boolean)=>{if(activeDraft)await append(activeDraft,hidden?'hidden':'visible')},
     restore:async(draftId:string)=>{activeDraft=draftId;if(finished(await events(draftId))){activeDraft=undefined;return}await append(draftId,'restore');await append(draftId,'read')},

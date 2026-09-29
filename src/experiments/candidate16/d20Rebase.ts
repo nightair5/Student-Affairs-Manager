@@ -4,7 +4,7 @@ import { effectiveStateFacts, life, stateOfRuntime } from '../mainline05/semanti
 import { stableJson } from '../mainline04/semanticContract'
 
 const same = (a: unknown, b: unknown) => stableJson(a ?? null) === stableJson(b ?? null)
-const isD20 = (name: string) => /^rco-mainline-01-02-i1-real-input-d20-review-session-p[1-9][0-9]{0,2}$/.test(name)
+const isD20 = (name: string) => /^rco-mainline-01-02-i1-real-input-d2[01]-review-session-p[1-9][0-9]{0,2}$/.test(name)
 
 function snapshot(revision: string, latest: WorkspaceV8, draftId: string): WorkspaceV8 | null {
   try {

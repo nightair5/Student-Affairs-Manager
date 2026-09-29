@@ -112,11 +112,11 @@ export function DraftReviewPanel({ reviewSession, reviewWorkspace, onFieldInput,
     for(const item of draft.items)for(const field of ['title','deadline'] as const){
       const key=`task:${item.id}:${field}`,entry=sessionRecord.fields[key]
       if(entry&&!entry.conflict&&entry.writer===writer&&entry.mine===item.suggestion[field]){
-        void reviewSession.clear(reviewWorkspace,draft.id,key,writer).then(setSessionRecord).catch(error=>setCheckpointError(String(error)))
+        void reviewSession.clear(reviewWorkspace,draft.id,key,writer,entry.revision).then(setSessionRecord).catch(error=>setCheckpointError(String(error)))
       }
     }
   },[draft,reviewSession,reviewWorkspace,sessionRecord,writer])
-  const foreignCheckpoint=Boolean(sessionRecord&&Object.values(sessionRecord.fields).some(field=>field.writer!==writer))
+  const foreignCheckpoint=Boolean(sessionRecord&&Object.entries(sessionRecord.fields).some(([key,field])=>/^task:.+:(title|deadline)$/.test(key)&&field.writer!==writer))
   const checkpointEditBusy=Boolean(reviewSession&&(checkpointStatus==='loading'||checkpointStatus==='conflict'))
   const checkpointSaveBusy=(item:DraftItem,field:'title'|'deadline')=>{
     if(!reviewSession)return false
@@ -211,7 +211,7 @@ export function DraftReviewPanel({ reviewSession, reviewWorkspace, onFieldInput,
       <div className="detail-body review-body">
         {reviewSession&&<section aria-label="未确认编辑检查点" role="status"><strong>{Object.keys(sessionRecord?.fields??{}).length?'恢复的未确认草稿':'本来源核对会话'}</strong>
           <p>{checkpointStatus==='saving'?'正在保存未确认编辑…':checkpointStatus==='saved'?'未确认编辑检查点已保存；尚未正式确认。':checkpointStatus==='failed'?'检查点写入失败；当前输入仅在本页，刷新可能丢失。':checkpointStatus==='conflict'?'另一个标签修改了同一字段，请处理冲突。':'编辑在确认前不会创建任务。'}</p>
-          {foreignCheckpoint&&<button type="button" onClick={()=>{if(reviewWorkspace)void reviewSession.recover(reviewWorkspace,draft.id,writer).then(record=>{setSessionRecord(record);setCheckpointStatus('ready')}).catch(error=>{setCheckpointStatus('failed');setCheckpointError(String(error))})}}>恢复未确认编辑并在本标签继续</button>}
+          {foreignCheckpoint&&<button type="button" onClick={()=>{if(reviewWorkspace&&sessionRecord)void reviewSession.recover(reviewWorkspace,draft.id,writer,Object.fromEntries(Object.entries(sessionRecord.fields).filter(([key,value])=>/^task:.+:(title|deadline)$/.test(key)&&value.writer!==writer).map(([key,value])=>[key,value.revision]))).then(record=>{setSessionRecord(record);setCheckpointStatus('ready')}).catch(error=>{setCheckpointStatus('failed');setCheckpointError(String(error))})}}>接管任务标题或日期的未确认输入</button>}
           {checkpointStatus==='failed'&&reviewWorkspace&&<button type="button" onClick={()=>{
             setCheckpointStatus('saving');setCheckpointError('')
             void (async()=>{let record=sessionRecord
@@ -219,8 +219,8 @@ export function DraftReviewPanel({ reviewSession, reviewWorkspace, onFieldInput,
               if(record)setSessionRecord(record);setCheckpointStatus('saved')
             })().catch(error=>{setCheckpointStatus('failed');setCheckpointError(String(error))})
           }}>手动重试保存未确认编辑</button>}
-          {Object.entries(sessionRecord?.fields??{}).filter(([,value])=>value.conflict).map(([key,value])=><fieldset key={key}><legend>字段冲突：{reviewFieldLabel(key)}</legend><p>编辑前：{JSON.stringify(value.base)}；最新已保存：{JSON.stringify(value.conflict?.latest)}；我的未保存修改：{JSON.stringify(value.conflict?.incoming)}</p>
-            {(['latest','incoming'] as const).map(choice=><button type="button" key={choice} onClick={()=>{if(!reviewWorkspace)return;void reviewSession.resolve(reviewWorkspace,draft.id,key,choice,writer).then(record=>{setSessionRecord(record);setCheckpointStatus('saved');const match=/^task:(.+):(title|deadline)$/.exec(key);if(match)setEditBuffer(previous=>({...previous,[match[1]]:{...previous[match[1]],[match[2]]:String(record.fields[key].mine)}}))})}}>采用{choice==='latest'?'最新已保存':'我的修改'}</button>)}</fieldset>)}
+          {Object.entries(sessionRecord?.fields??{}).filter(([key,value])=>/^task:.+:(title|deadline)$/.test(key)&&value.conflict).map(([key,value])=><fieldset key={key}><legend>字段冲突：{reviewFieldLabel(key)}</legend><p>编辑前：{String(value.base)}；最新已保存：{String(value.conflict?.latest)}；我的未保存修改：{String(value.conflict?.incoming)}</p>
+            {(['latest','incoming'] as const).map(choice=><button type="button" key={choice} onClick={()=>{if(!reviewWorkspace)return;void reviewSession.resolve(reviewWorkspace,draft.id,key,choice,writer,value.revision).then(record=>{setSessionRecord(record);setCheckpointStatus('saved');const match=/^task:(.+):(title|deadline)$/.exec(key);if(match)setEditBuffer(previous=>({...previous,[match[1]]:{...previous[match[1]],[match[2]]:String(record.fields[key].mine)}}))}).catch(error=>{setCheckpointStatus('conflict');setCheckpointError(String(error))})}}>采用{choice==='latest'?'最新已保存':'我的修改'}</button>)}</fieldset>)}
           {Object.keys(sessionRecord?.fields??{}).some(key=>/^(event|time):/.test(key)&&sessionRecord?.fields[key].conflict)&&<p>事件或时间冲突选择后，请关闭并重新打开本通知核对编辑框；不会自动正式确认。</p>}
           {checkpointError&&<p role="alert">{checkpointError}</p>}
         </section>}

@@ -32,17 +32,19 @@ export async function createD13Runtime(options:{transport:WorkspaceRecordStore&{
     }finally{opening=false}
   }
   const readback=async()=>{const a=await repo.load(),b=await new CanonicalWorkspaceRepository(options.transport).load();if(!b||stableJson(a)!==stableJson(b))throw Error('D13_READBACK_MISMATCH');return b}
+  const d21=store.name.includes('d21-review-session-')
   const instrument=(draftId:string,content:ReactNode)=><section onChangeCapture={e=>{
+    if(d21)return // D21 records one editId per persisted semantic field in the review session.
     const target=e.target as HTMLElement,label=target.closest('label')?.textContent??target.getAttribute('aria-label')??'unlabelled'
     void metrics.changed(draftId,label).catch(()=>undefined)
   }} onBlurCapture={()=>{void metrics.blur(draftId)}}>{content}</section>
   const runtime=await createMainlineRuntime({name:store.name,store,profile:'real-input-01',recognize:()=>{throw Error('D13_RECOGNIZER_DISABLED')},semanticDriver:async()=>({...base,
-    recognitionDescription:store.name.includes('d20-review-session-')?'D20来源级核对 · 检查点与冲突保护 · 非真人试用':options.sourceSession?'D19来源级核对 · 录制回答或匿名夹具 · 非真人试用':store.name.includes('d15-trial')?'D15隔离试次 · 非真人试用 · 不代表Candidate16输出':store.name.includes('d14-trial')?'D14隔离试次 · 非真人试用 · 不代表Candidate16输出':'D13隔离工程回放 · 非真人试用 · 不代表Candidate16输出',
+    recognitionDescription:store.name.includes('d21-review-session-')?'D21来源级核对 · 未确认输入恢复与冲突保护 · 非真人试用':store.name.includes('d20-review-session-')?'D20来源级核对 · 检查点与冲突保护 · 非真人试用':options.sourceSession?'D19来源级核对 · 录制回答或匿名夹具 · 非真人试用':store.name.includes('d15-trial')?'D15隔离试次 · 非真人试用 · 不代表Candidate16输出':store.name.includes('d14-trial')?'D14隔离试次 · 非真人试用 · 不代表Candidate16输出':'D13隔离工程回放 · 非真人试用 · 不代表Candidate16输出',
     realInput:{...base.realInput!,sourceSession:options.sourceSession??false,
-      ...(store.name.includes('d20-review-session-')?{reviewSession:new D20ReviewSessionRepository(options.transport)}:{}),
+      ...((store.name.includes('d20-review-session-')||d21)?{reviewSession:new D20ReviewSessionRepository(options.transport,d21?(draftId,field)=>metrics.changed(draftId,field):undefined)}:{}),
       networkDescription:'仅本机已录制结果；新模型调用和旧用户库访问关闭。',
-      inputPanel:props=><D13ReplayPicker choices={options.choices} sourceSession={options.sourceSession} open={async id=>{const draft=await open(id);await props.onSaved();await props.onDraftReady(draft)}}/>,
-      onReviewFieldInput:(draftId,itemId,field)=>{void metrics.changed(draftId,itemId+':'+field)},
+      inputPanel:props=><D13ReplayPicker choices={options.choices} sourceSession={options.sourceSession} label={d21?'D21来源级工程回放':undefined} open={async id=>{const draft=await open(id);await props.onSaved();await props.onDraftReady(draft)}}/>,
+      onReviewFieldInput:(draftId,itemId,field)=>{if(!d21)void metrics.changed(draftId,itemId+':'+field)},
       factEditor:props=>instrument(props.draftId,base.realInput!.factEditor(props)),
       informationEditor:props=>instrument(props.draftId,base.realInput!.informationEditor?.(props)),
       draftEditor:props=>{const issues=inspectRevisionLinks(effectiveStateFacts(stateOfRuntime(props.workspace,props.draftId)).facts)

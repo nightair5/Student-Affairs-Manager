@@ -1520,7 +1520,9 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
           draftCorrection={runtime?.realInput?.draftEditor&&isolatedSnapshot?(onDirty,unsaved)=>runtime.realInput!.draftEditor!({workspace:isolatedSnapshot,draftId:selectedDraft.id,busy:isolatedBusy||storageError||unsaved,onDirty,onSaved:refreshExperiment,reviewSession:runtime.realInput?.reviewSession}):undefined}
           factCorrection={runtime?.realInput && isolatedSnapshot ? (taskId, onDirty, unsaved) => runtime.realInput!.factEditor({
             workspace: isolatedSnapshot, draftId: selectedDraft.id, taskId, busy: isolatedBusy || storageError || unsaved,
-            onDirty, onSaved: refreshExperiment, reviewSession:runtime.realInput?.reviewSession }) : undefined}
+            onDirty, onSaved: refreshExperiment, reviewSession:runtime.realInput?.reviewSession,
+            onReviewed:runtime.databaseName.includes('d21-review-session-')?()=>{const itemId=selectedDraft.items.find(item=>item.suggestion.id===taskId)?.id??taskId
+              setIsolatedChoices(previous=>({...previous,[selectedDraft.id]:{...previous[selectedDraft.id],[itemId]:true}}))}:undefined }) : undefined}
           key={runtime ? selectedDraft.id : undefined}
           isolatedCapabilities={Boolean(runtime)}
           recognitionDescription={runtime?.realInput ? runtime.recognitionDescription : undefined}

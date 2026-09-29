@@ -116,8 +116,11 @@ function projectLabel(draft: ExtractionDraft | null): string | null {
 }
 
 function modelLabel(source: Source, draft: ExtractionDraft | null, canonicalWorkspace?:WorkspaceV8): string | null {
+  if(source.title.startsWith('空白手动 · 匿名工程夹具：')) return '手动空白工程基线（无模型建议）'
+  if(source.title.startsWith('匿名工程夹具：')) return '匿名工程夹具（无新模型调用）'
   const operationId=canonicalWorkspace?.sources.find(item=>item.id===source.id)?.legacyData?.captureOperationId
   if(typeof operationId==='string'&&/^d13-d13-fixture-manual-[a-z0-9-]+$/.test(operationId)) return '手动空白工程基线（无模型建议）'
+  if(typeof operationId==='string'&&/^d13-d13-fixture-[a-z0-9-]+$/.test(operationId)) return '匿名工程夹具（无新模型调用）'
   if (draft?.modelName?.includes('vision-exp')) return 'DeepSeek Vision Exp 建议'
   if (draft?.modelName) return draft.modelName.includes('deepseek') ? 'DeepSeek V4 Flash 建议' : `${draft.modelName} 建议`
   if (source.extractionMethod === 'deepseek-v4-flash-vision-exp') return 'DeepSeek Vision Exp 建议'
