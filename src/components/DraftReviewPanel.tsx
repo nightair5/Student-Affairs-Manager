@@ -1,14 +1,15 @@
 import { AlertTriangle, Check, CheckCheck, Clock3, FileText, FolderTree, ListChecks, PencilLine, ShieldCheck, Trash2, X } from 'lucide-react'
-import { useEffect, useId, useRef, useState } from 'react'
+import { Fragment, useEffect, useId, useRef, useState } from 'react'
 import { useDialogFocusTrap } from '../lib/useDialogFocusTrap'
 import type { DraftItem, ExtractionDraft, Project, Source, TaskCategory } from '../types'
 import type { InferenceLevel } from '../types'
 import { assessFocusedReview } from '../recognition/focusedReview'
-import type { ReactNode } from 'react'
+import type { ComponentType, ReactNode } from 'react'
 import type { WorkspaceV8 } from '../domain/v2/types'
 import type { D20ReviewSessionRepository, ReviewSession } from '../experiments/candidate16/d20ReviewSession'
 
 interface DraftReviewPanelProps {
+  sessionFrame?:ComponentType<{children:ReactNode;onClose?:()=>void}>
   onRestoreTaskSelections?: (choices:Record<string,boolean>)=>void
   onReloadLatest?: () => Promise<void>
   reviewSession?: D20ReviewSessionRepository
@@ -79,7 +80,8 @@ function EvidenceLocator({ recognition, evidenceIds, onFocusEvidence }: {
     : <small className="evidence-unavailable">暂无可定位依据</small>
 }
 
-export function DraftReviewPanel({ onRestoreTaskSelections, onReloadLatest, reviewSession, reviewWorkspace, onFieldInput, draftCorrection, factCorrection, semanticReview, isolatedCapabilities, recognitionDescription, draft, source, onClose, onUpdate, onConfirm, onReject, onConfirmAll, projectWillCreate, projects, onProjectChoice, onKeepExplicit, onMoveTask, onToggleRecognitionEntity, onToggleTaskSelected, onSplitTask, onMergeTask, confirmationV2 }: DraftReviewPanelProps) {
+export function DraftReviewPanel({ sessionFrame, onRestoreTaskSelections, onReloadLatest, reviewSession, reviewWorkspace, onFieldInput, draftCorrection, factCorrection, semanticReview, isolatedCapabilities, recognitionDescription, draft, source, onClose, onUpdate, onConfirm, onReject, onConfirmAll, projectWillCreate, projects, onProjectChoice, onKeepExplicit, onMoveTask, onToggleRecognitionEntity, onToggleTaskSelected, onSplitTask, onMergeTask, confirmationV2 }: DraftReviewPanelProps) {
+  const SessionFrame=sessionFrame??Fragment
   const titleId = useId()
   const panelRef = useRef<HTMLElement>(null)
   const [editingId, setEditingId] = useState<string | null>(null)
@@ -250,6 +252,7 @@ export function DraftReviewPanel({ onRestoreTaskSelections, onReloadLatest, revi
         <div><span className="category-label">第 2 步 · {recognitionDescription ?? (isolatedCapabilities ? '人工工程响应（非模型预测）' : draft.modelName?.includes('deepseek') ? 'DeepSeek 建议' : '本地规则建议')}</span><h2 id={titleId}>识别出 {draft.items.length} 件事</h2><p>先看标题和时间；不准确时再点“编辑”。</p></div>
         <button className="icon-button" type="button" onClick={onClose} aria-label="稍后处理并关闭"><X size={20} /></button>
       </header>
+      <SessionFrame {...(sessionFrame?{onClose}:{})}>
       <div className="detail-body review-body">
         {reviewSession&&<section aria-label="未确认编辑检查点" role="status"><strong>{Object.keys(sessionRecord?.fields??{}).length?'恢复的未确认草稿':'本来源核对会话'}</strong>
           <p>{checkpointStatus==='saving'?'正在保存未确认编辑…':checkpointStatus==='saved'?'未确认编辑检查点已保存；尚未正式确认。':checkpointStatus==='failed'?'检查点写入失败；当前输入仅在本页，刷新可能丢失。':checkpointStatus==='conflict'?'另一个标签修改了同一字段，请处理冲突。':'编辑在确认前不会创建任务。'}</p>
@@ -350,6 +353,7 @@ export function DraftReviewPanel({ onRestoreTaskSelections, onReloadLatest, revi
         <button className="secondary-button" type="button" onClick={onClose}>{pending.length ? '稍后再处理' : '完成'}</button>
         {selectedPending.length > 0 && <button className="primary-button" type="button" disabled={confirmationV2 && (confirmationV2.busy || eventDirty || Boolean(reviewSession&&(checkpointStatus==='loading'||checkpointStatus==='saving'||checkpointStatus==='failed')) || selectedPending.some((item) => !confirmationV2.items[item.id] || confirmationV2.items[item.id].blockedReason || hasUnsaved(item) || itemCheckpointUnsafe(item)))} onClick={onConfirmAll}><CheckCheck size={17} />{semanticReview?.sourceSession?'确认本通知已选任务及独立事件':'加入已选任务'}（{selectedPending.length}）</button>}
       </footer>
+      </SessionFrame>
     </aside>
   </div>
 }

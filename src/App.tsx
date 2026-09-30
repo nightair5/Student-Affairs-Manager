@@ -1548,6 +1548,7 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
       )}
       {!workspaceRecovery && selectedDraft && (!runtime || experimentalReview) && (
         <DraftReviewPanel
+          sessionFrame={runtime?.realInput?.sessionFrame}
           reviewSession={runtime?.realInput?.reviewSession}
           reviewWorkspace={isolatedSnapshot ?? undefined}
           onRestoreTaskSelections={runtime ? choices=>setIsolatedChoices(previous=>({...previous,[selectedDraft.id]:{...previous[selectedDraft.id],...choices}})) : undefined}

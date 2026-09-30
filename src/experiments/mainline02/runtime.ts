@@ -24,6 +24,7 @@ export interface MainlineSemanticCapabilities {
   readonly exportName: string
 }
 export interface MainlineRealInputCapabilities {
+  readonly sessionFrame?:import('react').ComponentType<{children:ReactNode;onClose?:()=>void}>
   readonly readbackRecovery?: {
     pending(): Promise<unknown>
     retry(): Promise<void>

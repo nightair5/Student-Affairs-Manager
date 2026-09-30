@@ -18,7 +18,7 @@ export const d19Database=(participant:string)=>{
 }
 export const isD19Database=(name:string)=>/^rco-mainline-01-02-i1-real-input-d19-source-session-p[1-9][0-9]{0,2}$/.test(name)
 export const isD20Database=(name:string)=>/^rco-mainline-01-02-i1-real-input-d20-review-session-p[1-9][0-9]{0,2}$/.test(name)
-export const isD21Database=(name:string)=>/^rco-mainline-01-02-i1-real-input-d21-review-session-p[1-9][0-9]{0,2}$/.test(name)
+export const isD21Database=(name:string)=>/^rco-mainline-01-02-i1-real-input-(?:d21-review-session-p[1-9][0-9]{0,2}|d23-study-(?:engineering|human)-[a-z0-9-]{2,32})$/.test(name)
 export const D13_TRACE_KEY='d13-measurement-low-edit-v2'
 export const LOW_EDIT_POLICY={version:'low-edit-v2-exploratory-1',maxFields:2,maxActiveEditMs:30_000,idleLimitMs:5_000,origin:'ENGINEERING_REPLAY',humanTrialAuthorized:false} as const
 type Kind='begin'|'read'|'edit'|'edit_activity'|'blur'|'hidden'|'visible'|'wait'|'wait_end'|'commit'|'readback'|'failure'|'restore'|'end'

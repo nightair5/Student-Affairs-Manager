@@ -49,7 +49,7 @@ export class D20ReviewSessionRepository {
   readonly writer = crypto.randomUUID()
   private readonly pendingEditIds=new Map<string,string>()
   constructor(private readonly store: WorkspaceRecordStore & { name: string }, private readonly recordEdit?: (draftId:string,field:string)=>Promise<string>,private readonly recordActivity?: (draftId:string,field:string,editId:string)=>Promise<void>) {
-    if (!/^rco-mainline-01-02-i1-real-input-d2[01]-review-session-p[1-9][0-9]{0,2}$/.test(store.name)) throw Error('D20_ISOLATED_DATABASE_REQUIRED')
+    if (!/^rco-mainline-01-02-i1-real-input-(?:d2[01]-review-session-p[1-9][0-9]{0,2}|d23-study-(?:engineering|human)-[a-z0-9-]{2,32})$/.test(store.name)) throw Error('D20_ISOLATED_DATABASE_REQUIRED')
   }
   async load(workspace: WorkspaceV8, draftId: string): Promise<ReviewSession> {
     const id = identity(workspace, draftId)
@@ -57,7 +57,7 @@ export class D20ReviewSessionRepository {
     return raw === undefined ? { version: D20_SESSION_VERSION, ...id, fields: {}, history: [] } : parse(raw, id)
   }
   private async withFieldLock<T>(draftId: string, action: () => Promise<T>): Promise<T> {
-    if (!this.store.name.includes('d21-review-session-')) return action()
+    if (!this.store.name.includes('d21-review-session-')&&!this.store.name.includes('d23-study-')) return action()
     if (typeof navigator === 'undefined') return action() // Node's in-memory tests use one atomic store.
     if (!navigator.locks) throw Error('D21_CROSS_TAB_LOCK_UNAVAILABLE')
     return navigator.locks.request(`d21-review-session:${this.store.name}:${draftId}`, action)
@@ -77,7 +77,7 @@ export class D20ReviewSessionRepository {
     const key = keyOf(draftId)
     const result = await this.withFieldLock(draftId, () => this.store.transactionMany(['current', key], records => {
       const latest = records.get('current') as WorkspaceV8 | undefined
-      if(this.store.name.includes('d21-review-session-')&&!latest)throw Error('D21_CANONICAL_SOURCE_MISSING')
+      if((this.store.name.includes('d21-review-session-')||this.store.name.includes('d23-study-'))&&!latest)throw Error('D21_CANONICAL_SOURCE_MISSING')
       if (latest) {
         const actual = identity(latest, draftId)
         if (stableJson(actual) !== stableJson(id)) throw Error('D20_SOURCE_VERSION_CONFLICT')
