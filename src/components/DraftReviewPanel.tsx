@@ -95,6 +95,7 @@ export function DraftReviewPanel({ onRestoreTaskSelections, onReloadLatest, revi
   const [staleChoice,setStaleChoice]=useState<{key:string;itemId:string;field:'title'|'deadline';base:unknown;latest:unknown;mine:string;revision:string}|null>(null)
   const [writer]=useState(()=>reviewSession?.writer ?? crypto.randomUUID())
   const checkpointQueue=useRef(Promise.resolve())
+  const initialSessionLoaded=useRef(false)
   const restoreSelections=useRef(onRestoreTaskSelections)
   useEffect(()=>{restoreSelections.current=onRestoreTaskSelections},[onRestoreTaskSelections])
   useEffect(()=>{
@@ -102,6 +103,7 @@ export function DraftReviewPanel({ onRestoreTaskSelections, onReloadLatest, revi
     let live=true
     void reviewSession.load(reviewWorkspace,draft.id).then(record=>{
       if(!live)return
+      initialSessionLoaded.current=true
       setSessionRecord(record)
       const buffer:Record<string,Partial<Pick<DraftItem['suggestion'],'title'|'deadline'>>>={}
       for(const [key,value] of Object.entries(record.fields)){
@@ -112,6 +114,20 @@ export function DraftReviewPanel({ onRestoreTaskSelections, onReloadLatest, revi
     }).catch(error=>{if(live){setCheckpointStatus('failed');setCheckpointError(String(error))}})
     return()=>{live=false}
   },[reviewSession,reviewWorkspace,draft.id,sessionRecord])
+  useEffect(()=>{
+    if(!reviewSession||!reviewWorkspace||!initialSessionLoaded.current)return
+    let live=true
+    // Child editors save through the same repository. Refresh only the session
+    // metadata; keep the parent's unsaved inputs and explicit conflict choices.
+    void reviewSession.load(reviewWorkspace,draft.id).then(record=>{
+      if(!live)return
+      setSessionRecord(record)
+      if(!Object.values(record.fields).some(field=>field.conflict)){
+        setCheckpointStatus(current=>current==='conflict'?'ready':current)
+      }
+    }).catch(error=>{if(live)setCheckpointError(String(error))})
+    return()=>{live=false}
+  },[reviewSession,reviewWorkspace,draft.id])
   useEffect(()=>{
     if(!reviewSession||!reviewWorkspace||!sessionRecord)return
     for(const item of draft.items)for(const field of ['title','deadline'] as const){
