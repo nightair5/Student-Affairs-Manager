@@ -6,9 +6,9 @@ import type { D20ReviewSessionRepository, ReviewField } from './d20ReviewSession
 type Phase = 'loading' | 'ready' | 'saving' | 'saved' | 'foreign' | 'conflict' | 'failed'
 
 /** An editor owns one source-bound field in the same review session as the task card. */
-export function useD21EditorCheckpoint<T>({ repo, workspace, draftId, field, base, value, active, restore }: {
+export function useD21EditorCheckpoint<T>({ repo, workspace, draftId, field, base, value, active, restore, edited=true }: {
   repo?: D20ReviewSessionRepository; workspace: WorkspaceV8; draftId: string; field: string;
-  base: unknown; value: T; active: boolean; restore: (value: T) => void
+  base: unknown; value: T; active: boolean; restore: (value: T) => void; edited?:boolean
 }) {
   const [phase, setPhase] = useState<Phase>(repo ? 'loading' : 'ready')
   const [entry, setEntry] = useState<ReviewField | null>(null)
@@ -49,7 +49,7 @@ export function useD21EditorCheckpoint<T>({ repo, workspace, draftId, field, bas
     const submitted = serialized
     scheduled.current = submitted
     queue.current = queue.current.catch(() => undefined).then(async () => {
-      const saved = await repo.stage(workspace, draftId, field, base, value, repo.writer)
+      const saved = await repo.stage(workspace, draftId, field, base, value, repo.writer,edited)
       const current = saved.fields[field]
       setEntry(current)
       revision.current = current.revision
@@ -60,7 +60,7 @@ export function useD21EditorCheckpoint<T>({ repo, workspace, draftId, field, bas
         setRetry(0)
       }
     }).catch(cause => { setError(String(cause)); setPhase('failed'); setRetry(0) })
-  }, [repo, workspace, draftId, field, base, value, active, phase, serialized, retry])
+  }, [repo, workspace, draftId, field, base, value, active, phase, serialized, retry,edited])
 
   const takeOver = async () => {
     if (!repo || !entry) return
@@ -91,5 +91,7 @@ export function useD21EditorCheckpoint<T>({ repo, workspace, draftId, field, bas
     setEntry(null); setPhase('ready'); last.current = ''; scheduled.current = ''; revision.current=''
   }
   return { phase, entry, error, takeOver, resolve, clear, retry: () => setRetry(number => number + 1),
+    withFresh:<R,>(action:()=>Promise<R>)=>repo&&active
+      ?repo.withFreshField(workspace,draftId,field,repo.writer,revision.current,value,action):action(),
     readyToSave: !repo || !active || phase === 'saved' }
 }

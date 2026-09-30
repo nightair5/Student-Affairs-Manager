@@ -25,7 +25,9 @@ function taskRead(workspace: WorkspaceV8, draftId: string, id: string) {
   const task = facts.tasks.find(row => row.id === id)
   if (!task) return null
   const related = new Set(task.detail.materialTempIds), timeIds = new Set(task.detail.timePointTempIds)
+  const linked=new Set([...task.detail.dependencyTempIds,...facts.revisions.filter(row=>row.targetDirectiveId===id||row.fromDirectiveId===id).flatMap(row=>[row.targetDirectiveId,row.fromDirectiveId].filter((value):value is string=>Boolean(value)))])
   return { task, value: life(state).values[id], disposition: life(state).dispositions[id],
+    linkedTasks:facts.tasks.filter(row=>linked.has(row.id)&&row.id!==id).map(row=>({task:row,value:life(state).values[row.id],disposition:life(state).dispositions[row.id]})),
     materials: facts.materials.filter(row => related.has(row.tempId) || row.relatedTaskTempIds.includes(id)),
     times: facts.timePoints.filter(row => timeIds.has(row.tempId) || row.relatedTaskTempIds.includes(id)),
     revisions: facts.revisions.filter(row => row.targetDirectiveId === id || row.fromDirectiveId === id) }

@@ -116,6 +116,16 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
   const RealInputPanel = runtime?.realInput?.inputPanel
   const [isolatedChoices, setIsolatedChoices] = useState<Record<string, Record<string, boolean>>>({})
   const [isolatedBusy, setIsolatedBusy] = useState(false)
+  const [readbackPending, setReadbackPending] = useState(false)
+  useEffect(() => {
+    const recovery = runtime?.realInput?.readbackRecovery
+    if (!recovery) return
+    let live = true
+    const update = () => { void recovery.pending().then(value => { if (live) setReadbackPending(Boolean(value)) }) }
+    update()
+    const unsubscribe = recovery.subscribe(update)
+    return () => { live = false; unsubscribe() }
+  }, [runtime])
   const [experimentExport, setExperimentExport] = useState<{ url: string; filename: string } | null>(null)
   const isolatedLock = useRef(false)
   const [currentPage, setCurrentPage] = useState<PageId>('today')
@@ -358,10 +368,17 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
             label = (current.sources.find(source => source.id === reviewed.draft.sourceId)?.title || '来源') + '（' + draftId + '）'
             const items = reviewed.draft.items.filter(item => item.status === '待确认' && (itemId ? item.id === itemId : item.selected !== false))
             if (!items.length) { outcomes.push(label + '：未选择可确认任务，来源仍保留'); continue }
+            if (runtime.realInput?.reviewSession) {
+              const session = await runtime.realInput.reviewSession.load(current,draftId)
+              for (const item of items) {
+                const choice = session.fields[`task:${item.id}:selected`]
+                if (choice?.conflict || choice?.mine === false) throw Error('确认选择已经变化；请重新打开并核对，未覆盖其他标签的选择。')
+              }
+            }
             current = await runtime.confirm({ draftId, revision: reviewed.revision, taskTempIds: items.map(item => item.suggestion.id) })
             outcomes.push(label + '：已确认保存 ' + items.length + ' 项，可在任务中心查找')
           } catch (error) {
-            outcomes.push(label + '：该草稿未确认：' + (error instanceof Error ? error.message : '需重新核对'))
+            outcomes.push(label + (error instanceof Error && error.name === 'CommittedReadbackPendingError' ? '：' : '：该草稿未确认：') + (error instanceof Error ? error.message : '需重新核对'))
             current = await runtime.load()
           }
         }
@@ -988,9 +1005,19 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
     }))
   }
 
-  const handleToggleDraftItemSelection = (draftId: string, itemId: string, selected: boolean) => {
+  const handleToggleDraftItemSelection = (draftId: string, itemId: string, selected: boolean, justReviewed=false) => {
     if (runtime) {
-      if (isolatedLock.current || experimentalReview?.states[itemId]?.blockedReason) return
+      if (isolatedLock.current || !justReviewed && experimentalReview?.states[itemId]?.blockedReason) return
+      if (runtime.realInput?.reviewSession && isolatedSnapshot) {
+        const session = runtime.realInput.reviewSession
+        void performExperiment(async () => {
+          const key = `task:${itemId}:selected`, prior = (await session.load(isolatedSnapshot, draftId)).fields[key]
+          const stored = await session.stage(isolatedSnapshot, draftId, key, prior?.base ?? false, selected, session.writer, false)
+          if (stored.fields[key].conflict) throw Error('确认选择发生冲突；请重新打开通知并明确选择版本。')
+          setIsolatedChoices(previous => ({ ...previous, [draftId]: { ...previous[draftId], [itemId]: selected } }))
+        })
+        return
+      }
       setIsolatedChoices(previous => ({ ...previous, [draftId]: { ...previous[draftId], [itemId]: selected } }))
       return
     }
@@ -1458,6 +1485,14 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
       <div id="main-content" className="content-shell" tabIndex={-1}>
         {runtime && <section aria-label="隔离实验状态">
           <p>{runtime.recognitionDescription ?? '人工工程响应（非模型预测）'} · 独立测试库 · {runtime.realInput?.networkDescription ?? '无模型/通知外发'}</p>
+          {readbackPending && runtime.realInput?.readbackRecovery && <section role="alert" aria-label="提交后读回恢复">
+            <p>已提交，读回尚未验证。已保存内容保留；请重新读回，勿重复提交。</p>
+            <button type="button" disabled={isolatedBusy} onClick={() => void performExperiment(async () => {
+              await runtime.realInput!.readbackRecovery!.retry()
+              setReadbackPending(false)
+              setNotice({ text: '已重新读回并核实保存结果，没有重复提交。' })
+            })}>重新读回已提交结果</button>
+          </section>}
           <p>仅本轮录入、核对、确认、查询与JSON备份可用；未纳入操作会明确阻断。</p>
           {runtime.semantic && <p>新语义保存在独立实验格式中，不能导入稳定入口。卡片分类与耗时仍是旧界面的兼容估计，不代表原文；完整原始属性可在详情核对，不会作为修改写回。</p>}
           <button type="button" disabled={isolatedBusy || !workspaceReady || storageError} onClick={() => void performExperiment(async () => {
@@ -1515,13 +1550,14 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
         <DraftReviewPanel
           reviewSession={runtime?.realInput?.reviewSession}
           reviewWorkspace={isolatedSnapshot ?? undefined}
+          onRestoreTaskSelections={runtime ? choices=>setIsolatedChoices(previous=>({...previous,[selectedDraft.id]:{...previous[selectedDraft.id],...choices}})) : undefined}
           onFieldInput={runtime?.realInput?.onReviewFieldInput ? (itemId,field)=>runtime.realInput!.onReviewFieldInput!(selectedDraft.id,itemId,field) : undefined}
           draftCorrection={runtime?.realInput?.draftEditor&&isolatedSnapshot?(onDirty,unsaved)=>runtime.realInput!.draftEditor!({workspace:isolatedSnapshot,draftId:selectedDraft.id,busy:isolatedBusy||storageError||unsaved,onDirty,onSaved:refreshExperiment,reviewSession:runtime.realInput?.reviewSession}):undefined}
           factCorrection={runtime?.realInput && isolatedSnapshot ? (taskId, onDirty, unsaved) => runtime.realInput!.factEditor({
             workspace: isolatedSnapshot, draftId: selectedDraft.id, taskId, busy: isolatedBusy || storageError || unsaved,
             onDirty, onSaved: refreshExperiment, reviewSession:runtime.realInput?.reviewSession,
             onReviewed:runtime.databaseName.includes('d21-review-session-')?()=>{const itemId=selectedDraft.items.find(item=>item.suggestion.id===taskId)?.id??taskId
-              setIsolatedChoices(previous=>({...previous,[selectedDraft.id]:{...previous[selectedDraft.id],[itemId]:true}}))}:undefined }) : undefined}
+              handleToggleDraftItemSelection(selectedDraft.id,itemId,true,true)}:undefined }) : undefined}
           key={runtime ? selectedDraft.id : undefined}
           isolatedCapabilities={Boolean(runtime)}
           recognitionDescription={runtime?.realInput ? runtime.recognitionDescription : undefined}
@@ -1541,6 +1577,7 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
           source={selectedDraftSource}
           onClose={() => setSelectedDraftId(null)}
           onUpdate={(itemId, patch) => handleUpdateDraft(selectedDraft.id, itemId, patch)}
+          onReloadLatest={runtime ? refreshExperiment : undefined}
           onConfirm={(itemId) => handleConfirmDraftItem(selectedDraft.id, itemId)}
           onReject={(itemId) => {
             if (runtime?.semantic) { disposeExperiment(selectedDraft.id, 'reject', itemId); return }

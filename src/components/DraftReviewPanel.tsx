@@ -9,6 +9,8 @@ import type { WorkspaceV8 } from '../domain/v2/types'
 import type { D20ReviewSessionRepository, ReviewSession } from '../experiments/candidate16/d20ReviewSession'
 
 interface DraftReviewPanelProps {
+  onRestoreTaskSelections?: (choices:Record<string,boolean>)=>void
+  onReloadLatest?: () => Promise<void>
   reviewSession?: D20ReviewSessionRepository
   reviewWorkspace?: WorkspaceV8
   onFieldInput?: (itemId:string,field:'title'|'deadline')=>void
@@ -40,7 +42,7 @@ interface DraftReviewPanelProps {
 }
 
 const categories: TaskCategory[] = ['比赛', '保研', '课程', '老师任务', '其他']
-const reviewFieldLabel=(key:string)=>key.endsWith(':title')?'任务名称':key.endsWith(':deadline')?'截止时间':key.startsWith('event:')?'独立事件':key.startsWith('time:')?'事件时间':key.startsWith('material:')?'材料':key.startsWith('relation:')?'修订或依赖关系':'核对字段'
+const reviewFieldLabel=(key:string)=>key.endsWith(':selected')?'本次确认选择':key.endsWith(':title')?'任务名称':key.endsWith(':deadline')?'截止时间':key.startsWith('event:')?'独立事件':key.startsWith('time:')?'事件时间':key.startsWith('material:')?'材料':key.startsWith('relation:')?'修订或依赖关系':'核对字段'
 
 function deadlineLabel(value: string): string {
   if (Number.isNaN(new Date(value).getTime())) return '日期待确认'
@@ -77,7 +79,7 @@ function EvidenceLocator({ recognition, evidenceIds, onFocusEvidence }: {
     : <small className="evidence-unavailable">暂无可定位依据</small>
 }
 
-export function DraftReviewPanel({ reviewSession, reviewWorkspace, onFieldInput, draftCorrection, factCorrection, semanticReview, isolatedCapabilities, recognitionDescription, draft, source, onClose, onUpdate, onConfirm, onReject, onConfirmAll, projectWillCreate, projects, onProjectChoice, onKeepExplicit, onMoveTask, onToggleRecognitionEntity, onToggleTaskSelected, onSplitTask, onMergeTask, confirmationV2 }: DraftReviewPanelProps) {
+export function DraftReviewPanel({ onRestoreTaskSelections, onReloadLatest, reviewSession, reviewWorkspace, onFieldInput, draftCorrection, factCorrection, semanticReview, isolatedCapabilities, recognitionDescription, draft, source, onClose, onUpdate, onConfirm, onReject, onConfirmAll, projectWillCreate, projects, onProjectChoice, onKeepExplicit, onMoveTask, onToggleRecognitionEntity, onToggleTaskSelected, onSplitTask, onMergeTask, confirmationV2 }: DraftReviewPanelProps) {
   const titleId = useId()
   const panelRef = useRef<HTMLElement>(null)
   const [editingId, setEditingId] = useState<string | null>(null)
@@ -93,6 +95,8 @@ export function DraftReviewPanel({ reviewSession, reviewWorkspace, onFieldInput,
   const [staleChoice,setStaleChoice]=useState<{key:string;itemId:string;field:'title'|'deadline';base:unknown;latest:unknown;mine:string;revision:string}|null>(null)
   const [writer]=useState(()=>reviewSession?.writer ?? crypto.randomUUID())
   const checkpointQueue=useRef(Promise.resolve())
+  const restoreSelections=useRef(onRestoreTaskSelections)
+  useEffect(()=>{restoreSelections.current=onRestoreTaskSelections},[onRestoreTaskSelections])
   useEffect(()=>{
     if(!reviewSession||!reviewWorkspace||sessionRecord)return
     let live=true
@@ -104,7 +108,7 @@ export function DraftReviewPanel({ reviewSession, reviewWorkspace, onFieldInput,
         const match=/^task:(.+):(title|deadline)$/.exec(key)
         if(match){const [,taskId,field]=match;buffer[taskId]={...buffer[taskId],[field]:String(value.mine)}}
       }
-      setEditBuffer(buffer);setCheckpointStatus('ready')
+      setEditBuffer(buffer);restoreSelections.current?.(Object.fromEntries(Object.entries(record.fields).flatMap(([key,entry])=>{const match=/^task:(.+):selected$/.exec(key);return match&&typeof entry.mine==='boolean'?[[match[1],entry.mine]]:[]})));setCheckpointStatus(Object.values(record.fields).some(entry=>entry.conflict)?'conflict':'ready')
     }).catch(error=>{if(live){setCheckpointStatus('failed');setCheckpointError(String(error))}})
     return()=>{live=false}
   },[reviewSession,reviewWorkspace,draft.id,sessionRecord])
@@ -117,8 +121,9 @@ export function DraftReviewPanel({ reviewSession, reviewWorkspace, onFieldInput,
       }
     }
   },[draft,reviewSession,reviewWorkspace,sessionRecord,writer])
-  const foreignCheckpoint=Boolean(sessionRecord&&Object.entries(sessionRecord.fields).some(([key,field])=>/^task:.+:(title|deadline)$/.test(key)&&field.writer!==writer))
-  const checkpointEditBusy=Boolean(reviewSession&&(checkpointStatus==='loading'||checkpointStatus==='conflict'))
+  const foreignCheckpoint=Boolean(sessionRecord&&Object.entries(sessionRecord.fields).some(([key,field])=>/^task:.+:(title|deadline|selected)$/.test(key)&&field.writer!==writer))
+  const itemCheckpointUnsafe=(item:DraftItem)=>Boolean(sessionRecord&&Object.entries(sessionRecord.fields).some(([key,field])=>key.startsWith(`task:${item.id}:`)&&/:(title|deadline|selected)$/.test(key)&&(field.writer!==writer||field.conflict)))
+  const checkpointEditBusy=Boolean(reviewSession&&checkpointStatus==='loading')
   const checkpointSaveBusy=(item:DraftItem,field:'title'|'deadline')=>{
     if(!reviewSession)return false
     const entry=sessionRecord?.fields[`task:${item.id}:${field}`]
@@ -174,14 +179,14 @@ export function DraftReviewPanel({ reviewSession, reviewWorkspace, onFieldInput,
       key={item.id}
       semanticFacts={<>{semanticReview?.itemFacts(item.suggestion.id, setActiveEvidence)}
         {factCorrection?.(item.suggestion.id, dirty => setFactDirty(previous => previous[item.id] === dirty ? previous : { ...previous, [item.id]: dirty }),
-          draft.items.some(candidate => isDirty(candidate, 'title') || isDirty(candidate, 'deadline')))}</>}
+          isDirty(item, 'title') || isDirty(item, 'deadline'))}</>}
       onDefer={semanticReview ? () => semanticReview.onDefer(item.id) : undefined}
       isolatedCapabilities={isolatedCapabilities}
       index={index}
       item={confirmationV2 ? { ...item, suggestion: { ...item.suggestion, ...editBuffer[item.id] } } : item}
       confirmationV2={confirmationV2 ? {
-        ...confirmationV2.items[item.id], busy: confirmationV2.busy || eventDirty || Boolean(reviewSession&&(checkpointStatus==='loading'||checkpointStatus==='saving'||checkpointStatus==='failed'||checkpointStatus==='conflict'||foreignCheckpoint)), unsaved: factCorrection ? draft.items.some(hasUnsaved) : hasUnsaved(item),
-        editBusy:confirmationV2.busy||eventDirty||checkpointEditBusy,
+        ...confirmationV2.items[item.id], busy: confirmationV2.busy || eventDirty || Boolean(reviewSession&&(checkpointStatus==='loading'||checkpointStatus==='saving'||checkpointStatus==='failed'||itemCheckpointUnsafe(item))), unsaved: hasUnsaved(item),
+        editBusy:confirmationV2.busy||eventDirty||checkpointEditBusy||itemCheckpointUnsafe(item),
         saveBusy:{title:confirmationV2.busy||eventDirty||checkpointSaveBusy(item,'title'),deadline:confirmationV2.busy||eventDirty||checkpointSaveBusy(item,'deadline')},
         titleDirty: isDirty(item, 'title'), deadlineDirty: isDirty(item, 'deadline'),
         onSave: (field) => {
@@ -232,7 +237,7 @@ export function DraftReviewPanel({ reviewSession, reviewWorkspace, onFieldInput,
       <div className="detail-body review-body">
         {reviewSession&&<section aria-label="未确认编辑检查点" role="status"><strong>{Object.keys(sessionRecord?.fields??{}).length?'恢复的未确认草稿':'本来源核对会话'}</strong>
           <p>{checkpointStatus==='saving'?'正在保存未确认编辑…':checkpointStatus==='saved'?'未确认编辑检查点已保存；尚未正式确认。':checkpointStatus==='failed'?'检查点写入失败；当前输入仅在本页，刷新可能丢失。':checkpointStatus==='conflict'?'另一个标签修改了同一字段，请处理冲突。':'编辑在确认前不会创建任务。'}</p>
-          {foreignCheckpoint&&<button type="button" onClick={()=>{if(reviewWorkspace&&sessionRecord)void reviewSession.recover(reviewWorkspace,draft.id,writer,Object.fromEntries(Object.entries(sessionRecord.fields).filter(([key,value])=>/^task:.+:(title|deadline)$/.test(key)&&value.writer!==writer).map(([key,value])=>[key,value.revision]))).then(record=>{setSessionRecord(record);setCheckpointStatus('ready')}).catch(error=>{setCheckpointStatus('failed');setCheckpointError(String(error))})}}>接管任务标题或日期的未确认输入</button>}
+          {foreignCheckpoint&&<button type="button" onClick={()=>{if(reviewWorkspace&&sessionRecord)void reviewSession.recover(reviewWorkspace,draft.id,writer,Object.fromEntries(Object.entries(sessionRecord.fields).filter(([key,value])=>/^task:.+:(title|deadline|selected)$/.test(key)&&value.writer!==writer).map(([key,value])=>[key,value.revision]))).then(record=>{setSessionRecord(record);setCheckpointStatus('ready')}).catch(error=>{setCheckpointStatus('failed');setCheckpointError(String(error))})}}>接管未确认标题、日期或选择</button>}
           {checkpointStatus==='failed'&&reviewWorkspace&&<button type="button" onClick={()=>{
             setCheckpointStatus('saving');setCheckpointError('')
             void (async()=>{let record=sessionRecord
@@ -240,8 +245,8 @@ export function DraftReviewPanel({ reviewSession, reviewWorkspace, onFieldInput,
               if(record)setSessionRecord(record);setCheckpointStatus('saved')
             })().catch(error=>{setCheckpointStatus('failed');setCheckpointError(String(error))})
           }}>手动重试保存未确认编辑</button>}
-          {Object.entries(sessionRecord?.fields??{}).filter(([key,value])=>/^task:.+:(title|deadline)$/.test(key)&&value.conflict).map(([key,value])=><fieldset key={key}><legend>字段冲突：{reviewFieldLabel(key)}</legend><p>编辑前：{String(value.base)}；最新已保存：{String(value.conflict?.latest)}；我的未保存修改：{String(value.conflict?.incoming)}</p>
-            {(['latest','incoming'] as const).map(choice=><button type="button" key={choice} onClick={()=>{if(!reviewWorkspace)return;void reviewSession.resolve(reviewWorkspace,draft.id,key,choice,writer,value.revision).then(record=>{setSessionRecord(record);setCheckpointStatus('saved');const match=/^task:(.+):(title|deadline)$/.exec(key);if(match)setEditBuffer(previous=>({...previous,[match[1]]:{...previous[match[1]],[match[2]]:String(record.fields[key].mine)}}))}).catch(error=>{setCheckpointStatus('conflict');setCheckpointError(String(error))})}}>采用{choice==='latest'?'最新已保存':'我的修改'}</button>)}</fieldset>)}
+          {Object.entries(sessionRecord?.fields??{}).filter(([key,value])=>/^task:.+:(title|deadline|selected)$/.test(key)&&value.conflict).map(([key,value])=><fieldset key={key}><legend>字段冲突：{reviewFieldLabel(key)}</legend><p>编辑前：{String(value.base)}；最新已保存：{String(value.conflict?.latest)}；我的未保存修改：{String(value.conflict?.incoming)}</p>
+            {(['latest','incoming'] as const).map(choice=><button type="button" key={choice} onClick={()=>{if(!reviewWorkspace)return;void reviewSession.resolve(reviewWorkspace,draft.id,key,choice,writer,value.revision).then(async record=>{setSessionRecord(record);setCheckpointStatus('saving');const selectedMatch=/^task:(.+):selected$/.exec(key);if(selectedMatch)restoreSelections.current?.({[selectedMatch[1]]:Boolean(record.fields[key].mine)});const match=/^task:(.+):(title|deadline)$/.exec(key);if(match)setEditBuffer(previous=>({...previous,[match[1]]:{...previous[match[1]],[match[2]]:String(record.fields[key].mine)}}));await onReloadLatest?.();setCheckpointStatus('saved')}).catch(error=>{setCheckpointStatus('conflict');setCheckpointError(String(error))})}}>采用{choice==='latest'?'最新已保存':'我的修改'}</button>)}</fieldset>)}
           {Object.keys(sessionRecord?.fields??{}).some(key=>/^(event|time):/.test(key)&&sessionRecord?.fields[key].conflict)&&<p>事件或时间冲突选择后，请关闭并重新打开本通知核对编辑框；不会自动正式确认。</p>}
           {staleChoice&&reviewWorkspace&&reviewSession&&<fieldset><legend>字段冲突：{reviewFieldLabel(staleChoice.key)}</legend>
             <p>编辑前：{String(staleChoice.base)}；最新已保存：{String(staleChoice.latest)}；我的未保存修改：{staleChoice.mine}</p>
@@ -327,7 +332,7 @@ export function DraftReviewPanel({ reviewSession, reviewWorkspace, onFieldInput,
           {semanticReview && <span>{semanticReview.eventCount} 个任务关联事件{semanticReview.sourceSession?'；上方独立事件也随本次确认保存':'（随本次确认保存）'}</span>}
         </div>}
         <button className="secondary-button" type="button" onClick={onClose}>{pending.length ? '稍后再处理' : '完成'}</button>
-        {selectedPending.length > 0 && <button className="primary-button" type="button" disabled={confirmationV2 && (confirmationV2.busy || eventDirty || selectedPending.some((item) => !confirmationV2.items[item.id] || confirmationV2.items[item.id].blockedReason || hasUnsaved(item)))} onClick={onConfirmAll}><CheckCheck size={17} />{semanticReview?.sourceSession?'确认本通知已选任务及独立事件':'加入已选任务'}（{selectedPending.length}）</button>}
+        {selectedPending.length > 0 && <button className="primary-button" type="button" disabled={confirmationV2 && (confirmationV2.busy || eventDirty || Boolean(reviewSession&&(checkpointStatus==='loading'||checkpointStatus==='saving'||checkpointStatus==='failed')) || selectedPending.some((item) => !confirmationV2.items[item.id] || confirmationV2.items[item.id].blockedReason || hasUnsaved(item) || itemCheckpointUnsafe(item)))} onClick={onConfirmAll}><CheckCheck size={17} />{semanticReview?.sourceSession?'确认本通知已选任务及独立事件':'加入已选任务'}（{selectedPending.length}）</button>}
       </footer>
     </aside>
   </div>

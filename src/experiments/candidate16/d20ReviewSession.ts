@@ -19,7 +19,7 @@ export type ReviewSession = {
   sourceVersionId: string
   runId: string
   fields: Record<string, ReviewField>
-  history: Array<{ id: string; at: string; kind: 'stage' | 'recover' | 'resolve' | 'clear'; field: string; writer: string; editId?: string }>
+  history: Array<{ id: string; at: string; kind: 'stage' | 'recover' | 'resolve' | 'clear'; field: string; writer: string; editId?: string; checkpointRevision?:string }>
 }
 
 const keyOf = (draftId: string) => `d20-review-session:${draftId}`
@@ -47,7 +47,8 @@ function parse(raw: unknown, expected: ReturnType<typeof identity>): ReviewSessi
  * It is never a WorkspaceV8 fact and cannot create a Task/Project. Every edit is CAS-merged per field. */
 export class D20ReviewSessionRepository {
   readonly writer = crypto.randomUUID()
-  constructor(private readonly store: WorkspaceRecordStore & { name: string }, private readonly recordEdit?: (draftId:string,field:string)=>Promise<string>) {
+  private readonly pendingEditIds=new Map<string,string>()
+  constructor(private readonly store: WorkspaceRecordStore & { name: string }, private readonly recordEdit?: (draftId:string,field:string)=>Promise<string>,private readonly recordActivity?: (draftId:string,field:string,editId:string)=>Promise<void>) {
     if (!/^rco-mainline-01-02-i1-real-input-d2[01]-review-session-p[1-9][0-9]{0,2}$/.test(store.name)) throw Error('D20_ISOLATED_DATABASE_REQUIRED')
   }
   async load(workspace: WorkspaceV8, draftId: string): Promise<ReviewSession> {
@@ -90,22 +91,31 @@ export class D20ReviewSessionRepository {
     }))
     return parse(result.get(key), id)
   }
-  async stage(workspace: WorkspaceV8, draftId: string, field: string, base: unknown, mine: unknown, writer: string) {
-    if (field.length>1024||!/^(task:.+:(title|deadline|facts)|event:.+:.+|time:.+:.+|relation:.+|material:.+:.+)$/.test(field)) throw Error('D20_FIELD_KEY_INVALID')
+  async stage(workspace: WorkspaceV8, draftId: string, field: string, base: unknown, mine: unknown, writer: string, edited=true) {
+    if (field.length>1024||!/^(task:.+:(title|deadline|facts|selected)|event:.+:.+|time:.+:.+|relation:.+|material:.+:.+)$/.test(field)) throw Error('D20_FIELD_KEY_INVALID')
     if (!writer || writer.length > 100) throw Error('D20_FIELD_WRITER_INVALID')
     if (stableJson(mine).length > 100_000) throw Error('D20_FIELD_VALUE_TOO_LARGE')
     const observed=(await this.load(workspace,draftId)).fields[field]
-    const editId=observed?.writer===writer?observed.editId:await this.recordEdit?.(draftId,field)
+    const pendingKey=draftId+':'+writer+':'+field
+    const priorEdit=(observed?.writer===writer?observed.editId:undefined)??this.pendingEditIds.get(pendingKey)
+    // The checkpoint owns the whole fact editor; measurement identifies its
+    // material-observation mode separately from corrections to model facts.
+    const buffer=mine&&typeof mine==='object'&&'materialBuffer' in mine?mine.materialBuffer:null
+    const materialId=buffer&&typeof buffer==='object'&&'id' in buffer&&typeof buffer.id==='string'?buffer.id:null
+    const activityField=materialId&&/^task:.+:facts$/.test(field)?field.replace(/:facts$/,':material-review:'+materialId):field
+    const editId=priorEdit??(edited?await this.recordEdit?.(draftId,activityField):undefined)
+    if(edited&&priorEdit&&!same(observed?.mine,mine))await this.recordActivity?.(draftId,activityField,priorEdit)
+    if(editId)this.pendingEditIds.set(pendingKey,editId)
     return this.mutate(workspace, draftId, session => {
-      const previous = session.fields[field], at = new Date().toISOString()
+      const previous = session.fields[field], at = new Date().toISOString(), checkpointRevision=crypto.randomUUID()
       if (previous?.conflict) throw Error('D20_FIELD_CONFLICT_UNRESOLVED')
       if (previous && (!same(previous.base, base) || previous.writer !== writer && !same(previous.mine, mine))) {
         return { ...session, fields: { ...session.fields, [field]: { ...previous,
-          revision: crypto.randomUUID(), conflict: { latest: previous.mine, incoming: mine, incomingWriter: writer, incomingEditId:editId } } },
-          history: [...session.history, { id: crypto.randomUUID(), at, kind: 'stage', field, writer, editId }] }
+          revision: checkpointRevision, conflict: { latest: previous.mine, incoming: mine, incomingWriter: writer, incomingEditId:editId } } },
+          history: [...session.history, { id: crypto.randomUUID(), at, kind: 'stage', field, writer, editId,checkpointRevision }] }
       }
-      return { ...session, fields: { ...session.fields, [field]: { base, mine, writer, updatedAt: at, revision: crypto.randomUUID(), editId:previous?.editId??editId } },
-        history: [...session.history, { id: crypto.randomUUID(), at, kind: 'stage', field, writer, editId:previous?.editId??editId }] }
+      return { ...session, fields: { ...session.fields, [field]: { base, mine, writer, updatedAt: at, revision: checkpointRevision, editId:previous?.editId??editId } },
+        history: [...session.history, { id: crypto.randomUUID(), at, kind: 'stage', field, writer, editId:previous?.editId??editId,checkpointRevision }] }
     })
   }
   async recover(workspace: WorkspaceV8, draftId: string, writer: string, expected: Record<string, string>) {
@@ -132,12 +142,14 @@ export class D20ReviewSessionRepository {
     })
   }
   async clear(workspace: WorkspaceV8, draftId: string, field: string, writer: string, expectedRevision: string) {
-    return this.mutate(workspace, draftId, session => {
+    const result=await this.mutate(workspace, draftId, session => {
       const previous = session.fields[field]
       if (!previous || previous.revision !== expectedRevision || previous.conflict) throw Error('D20_FIELD_STALE')
       if (previous.writer !== writer) throw Error('D20_FIELD_OWNED_BY_OTHER_TAB')
       const fields = { ...session.fields }; delete fields[field]
       return { ...session, fields, history: [...session.history, { id: crypto.randomUUID(), at: new Date().toISOString(), kind: 'clear', field, writer, editId:previous.editId }] }
     })
+    this.pendingEditIds.delete(draftId+':'+writer+':'+field)
+    return result
   }
 }

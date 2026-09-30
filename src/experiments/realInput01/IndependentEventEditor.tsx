@@ -43,6 +43,8 @@ export function IndependentEventEditor({repo,workspace,draftId,busy,onDirty,onSa
     else if('change' in saved)setChange(saved.change)
     setInputBaseline(saved.baseline);setRevision(semanticRevision(workspace));setBaselineChanged(saved.baseline!==baselineFor('change' in saved?saved.change??null:null,Boolean('adding' in saved&&saved.adding)))
   }
+  const restoreSnapshotRef=useRef(restoreSnapshot)
+  useEffect(()=>{restoreSnapshotRef.current=restoreSnapshot})
   useEffect(()=>{
     if(!reviewSession||checkpointReady||loadStarted.current)return
     loadStarted.current=true
@@ -51,7 +53,7 @@ export function IndependentEventEditor({repo,workspace,draftId,busy,onDirty,onSa
       if(!live)return
       const entry=Object.entries(session.fields).find(([key])=>key==='event:new:add'||/^event:[^:]+:edit$/.test(key)||/^time:[^:]+:edit$/.test(key))
       if(entry){const saved=entry[1].mine as typeof snapshot
-        restoreSnapshot(saved)
+        restoreSnapshotRef.current(saved)
         lastCheckpoint.current=JSON.stringify(saved);checkpointVersion.current=entry[1].revision
         setCheckpointEntry(entry[1])
         setCheckpointPhase(entry[1].conflict?'conflict':entry[1].writer!==reviewSession.writer?'foreign':'saved');setCheckpointStatus(entry[1].conflict?'事件编辑存在冲突，请先处理':'恢复的未确认事件编辑，尚未正式确认')
@@ -59,7 +61,7 @@ export function IndependentEventEditor({repo,workspace,draftId,busy,onDirty,onSa
       setCheckpointReady(true)
     }).catch(error=>{if(live){setCheckpointError(String(error));setCheckpointReady(true)}})
     return()=>{live=false;loadStarted.current=false}
-  },[reviewSession,draftId,workspace,checkpointReady,restoreSnapshot])
+  },[reviewSession,draftId,workspace,checkpointReady])
   useEffect(()=>{
     if(!reviewSession||!checkpointReady||!snapshot||checkpointPhase==='foreign'||checkpointPhase==='conflict')return
     const serialized=JSON.stringify(snapshot)
@@ -82,6 +84,7 @@ export function IndependentEventEditor({repo,workspace,draftId,busy,onDirty,onSa
   const blocked=busy||working||life(state).informationReviewed||independentReviewed
   const resetAdd=()=>{setAddIdentity('');setScopes([]);setTitle('');setLocation('');setRawTime('');setNormalized('');setPrecision('vague');setRawEnd('');setNormalizedEnd('');setPrecisionEnd('vague');setNote('')}
   const select=(next:FactChange)=>{const baseline=baselineFor(next,false);lastCheckpoint.current=JSON.stringify({change:next,baseline});checkpointVersion.current='';setCheckpointPhase('saved');setChange(next);setRevision(semanticRevision(workspace));setInputBaseline(baseline);setBaselineChanged(false);setError('')}
+  const discard=async()=>{setWorking(true);try{await checkpointQueue.current;if(reviewSession&&checkpointVersion.current)await reviewSession.clear(workspace,draftId,adding?'event:new:add':changeKey,reviewSession.writer,checkpointVersion.current);setChange(null);setAdding(false);resetAdd();lastCheckpoint.current='';checkpointVersion.current='';setCheckpointEntry(null);setCheckpointPhase('idle');setCheckpointStatus('已放弃本页未确认编辑，正式事实未改变');setError('')}catch(cause){setError('未放弃：事件输入已变化，仍保留。'+String(cause))}finally{setWorking(false)}}
   const update=(value:FactChange['value'])=>{if(change)setChange({...change,value} as FactChange)}
   const save=async()=>{
     if(!change||blocked||baselineChanged||reviewSession&&checkpointPhase!=='saved')return
@@ -97,7 +100,9 @@ export function IndependentEventEditor({repo,workspace,draftId,busy,onDirty,onSa
       // A recovered checkpoint may already have been applied before the tab
       // reloaded. Closing it is not a second correction and needs no text edit.
       if(!current||stableJson(current)!==stableJson(pending.value)){
-        await correctSemanticFact(repo,{draftId,revision,operationId:crypto.randomUUID(),change:pending})
+        const action=()=>correctSemanticFact(repo,{draftId,revision,operationId:crypto.randomUUID(),change:pending})
+        if(reviewSession)await reviewSession.withFreshField(workspace,draftId,key,reviewSession.writer,expectedCheckpointRevision,snapshot,action)
+        else await action()
         changed=true
       }
     }
@@ -122,7 +127,9 @@ export function IndependentEventEditor({repo,workspace,draftId,busy,onDirty,onSa
         event:{tempId:eventId,title:title.trim(),description:'',location:location.trim()||null,startTimePointTempId:timeId,endTimePointTempId:endId,scopeIds:scopes,confidence:1,inferenceLevel:'explicit',relatedTaskTempIds:[]},
         time:timeId?{tempId:timeId,type:'event_start',rawText:rawTime.trim(),normalizedValue:normalized.trim()||null,timezone:state.context.timezone,isAllDay:precision==='date_only',precision,needsConfirmation:!normalized.trim(),relatedTaskTempIds:[],relatedMaterialTempIds:[],scopeIds:scopes,confidence:1}:null,
         endTime:endId?{tempId:endId,type:'event_end',rawText:rawEnd.trim(),normalizedValue:normalizedEnd.trim()||null,timezone:state.context.timezone,isAllDay:precisionEnd==='date_only',precision:precisionEnd,needsConfirmation:!normalizedEnd.trim(),relatedTaskTempIds:[],relatedMaterialTempIds:[],scopeIds:scopes,confidence:1}:null}}
-      await correctSemanticFact(repo,{draftId,revision,operationId:addIdentity,change})
+      const action=()=>correctSemanticFact(repo,{draftId,revision,operationId:addIdentity,change})
+      if(reviewSession)await reviewSession.withFreshField(workspace,draftId,'event:new:add',reviewSession.writer,checkpointVersion.current,snapshot,action)
+      else await action()
     }catch(cause){setError(cause instanceof Error?cause.message:'保存失败；编辑仍保留，请手动重试。');setWorking(false);return}
     if(reviewSession)try{await reviewSession.clear(workspace,draftId,'event:new:add',reviewSession.writer,checkpointVersion.current)}
     catch{setError('人工草稿纠正已保存，但检查点清理失败；请核对未确认编辑，尚未确认正式事件。');setWorking(false);return}
@@ -153,7 +160,7 @@ export function IndependentEventEditor({repo,workspace,draftId,busy,onDirty,onSa
         <label>确定的结束日期或时刻（未知留空）<input value={normalizedEnd} onChange={e=>setNormalizedEnd(e.target.value)} placeholder="YYYY-MM-DD 或 YYYY-MM-DDTHH:mm"/></label></>}
       <label>核对说明<textarea value={note} onChange={e=>setNote(e.target.value)}/></label>
       <button type="button" disabled={working||baselineChanged||reviewSession&&checkpointPhase!=='saved'||!scopes.length||!title.trim()||!note.trim()} onClick={()=>void saveAdd()}>保存人工事件</button>
-      <button type="button" disabled={working} onClick={()=>{setAdding(false);resetAdd()}}>放弃未保存补录</button>
+      <button type="button" disabled={working} onClick={()=>void discard()}>放弃未保存补录</button>
     </fieldset>}
     {events.map(event=><div key={event.tempId}><p>事件：{event.title}；地点：{event.location??'未说明'}</p><button type="button" disabled={blocked||Boolean(change)} onClick={()=>select({kind:'independent_event',eventId:event.tempId,value:{...event},scopeIds:[...event.scopeIds],note:'用户核对独立事件字段。'})}>编辑事件字段</button></div>)}
     {times.map(time=><div key={time.tempId}><p>{time.type==='event_start'?'开始':'结束'}：{time.rawText}；{time.normalizedValue??'时间尚未确定'}；{time.precision}；{time.needsConfirmation?'需确认':'已核对'}</p><button type="button" disabled={blocked||Boolean(change)} onClick={()=>select({kind:'independent_time',timeId:time.tempId,value:{...time},scopeIds:[...time.scopeIds],note:'用户核对独立事件时间。'})}>编辑事件时间</button></div>)}
@@ -171,7 +178,7 @@ export function IndependentEventEditor({repo,workspace,draftId,busy,onDirty,onSa
       <label><input type="checkbox" checked={change.value.needsConfirmation} onChange={e=>update({...change.value,needsConfirmation:e.target.checked,normalizedValue:e.target.checked?null:change.value.normalizedValue})}/>时间仍需确认</label>
       <p>原模型的 rawText 与来源定位会保留在修改历史。没有确切日期时只能留空，不能猜测。</p>
     </fieldset>}
-    {change&&<><p>编辑尚未保存，不能直接标记已核对。</p><button type="button" disabled={busy||working||baselineChanged||reviewSession&&checkpointPhase!=='saved'} onClick={()=>void save()}>保存事件纠正</button><button type="button" disabled={working} onClick={()=>{setChange(null);setError('')}}>放弃未保存修改</button></>}
+    {change&&<><p>编辑尚未保存，不能直接标记已核对。</p><button type="button" disabled={busy||working||baselineChanged||reviewSession&&checkpointPhase!=='saved'} onClick={()=>void save()}>保存事件纠正</button><button type="button" disabled={working} onClick={()=>void discard()}>放弃未保存修改</button></>}
     {error&&<p role="alert">{error}。未宣称保存成功。</p>}
   </section>
 }

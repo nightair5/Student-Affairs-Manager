@@ -3,17 +3,19 @@ import {createServer} from 'node:http'
 import {readFileSync,writeFileSync,mkdirSync} from 'node:fs'
 import {resolve,basename} from 'node:path'
 import {pathToFileURL} from 'node:url'
+import {execFileSync} from 'node:child_process'
 import {buildD13Records,digest} from './candidate16-d13-records.mjs'
 import {d13Components} from './candidate16-d13-support.mjs'
 import {scoreD17} from './score-candidate17-d17.mjs'
 import {d8Handler} from './serve-candidate15-d8.mjs'
 
 const read=path=>JSON.parse(readFileSync(path,'utf8'))
-export async function buildD21Preview(port='6654',participant='p1'){
+export async function buildD21Preview(port='6654',participant='p1',delivery='D21'){
   if(!/^\d{4,5}$/.test(port)||Number(port)<6654||Number(port)>65535||!/^p[1-9][0-9]{0,2}$/.test(participant))throw Error('D21_NEW_LOOPBACK_OR_IDENTITY_REQUIRED')
   const scored=await scoreD17()
   if(scored.sent!==24||scored.settled!==24||scored.rawCount!==24)throw Error('D21_D17_RECORDINGS_INCOMPLETE')
-  const directory=resolve('.data/d21/review-session-'+participant),origin='http://127.0.0.1:'+port
+  if(!['D21','D22'].includes(delivery))throw Error('REVIEW_DELIVERY_INVALID')
+  const directory=resolve('.data/'+delivery.toLowerCase()+'/review-session-'+participant),origin='http://127.0.0.1:'+port
   const database='rco-mainline-01-02-i1-real-input-d21-review-session-'+participant
   mkdirSync(resolve(directory,'records'),{recursive:true})
   const root='docs/recognition-optimization/candidate17/d16-development'
@@ -81,12 +83,15 @@ export async function buildD21Preview(port='6654',participant='p1'){
     return {...row,id,label:'空白手动 · '+row.label,rawHttpText:text,responseSha256:digest(text),requestSha256:digest('D21_MANUAL_NO_MODEL:'+id)}
   })
   const records=[...fixtures,...manual,...recorded].map(row=>{const content=JSON.stringify(row);writeFileSync(resolve(directory,'records',row.id+'.json'),content);return {id:row.id,label:row.label,kind:row.kind,sha256:digest(content)}})
-  const config={origin,database,records,sourceSession:true,buildLabel:'D21来源级核对'}
+  const gitHead=execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim()
+  const sourceFiles=[...new Set(execFileSync('git',['ls-files','--cached','--others','--exclude-standard','src','scripts'],{encoding:'utf8'}).trim().split(/\r?\n/).filter(path=>/\.(tsx?|m?js)$/.test(path)))].sort()
+  const sourceSha256=digest(sourceFiles.map(path=>path+':'+digest(readFileSync(path))).join('\n'))
+  const config={origin,database,records,sourceSession:true,buildLabel:delivery+'来源级核对',buildIdentity:gitHead.slice(0,12)+' / source '+sourceSha256.slice(0,12)}
   const output=await build({absWorkingDir:process.cwd(),entryPoints:['src/experiments/candidate16/d14-browser.tsx'],bundle:true,write:false,format:'esm',platform:'browser',jsx:'automatic',target:'es2022',outdir:'memory',minify:true,define:{'process.env.NODE_ENV':'"production"','import.meta.env':'{}',__D14_CONFIG__:JSON.stringify(config)}})
   for(const file of output.outputFiles){const content=file.text.replace(/@import\s+url\("https:\/\/fonts\.googleapis\.com[^;]+;\s*/g,'');writeFileSync(resolve(directory,basename(file.path)),content)}
-  writeFileSync(resolve(directory,'index.html'),'<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>D21来源级核对 / 匿名工程回放</title><link rel="stylesheet" href="/d14-browser.css"></head><body><div id="root">正在打开 D21 来源级核对…</div><script type="module" src="/d14-browser.js"></script></body></html>')
+  writeFileSync(resolve(directory,'index.html'),'<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+delivery+'来源级核对 / 匿名工程回放</title><link rel="stylesheet" href="/d14-browser.css"></head><body><div id="root">正在打开 D21 来源级核对…</div><script type="module" src="/d14-browser.js"></script></body></html>')
   const paths=['index.html','d14-browser.js','d14-browser.css',...records.map(row=>'records/'+row.id+'.json')]
-  const manifest={version:'d21-review-session-local-1',origin,database,directory,participant,buildLabel:config.buildLabel,records,modelCallsEnabled:false,humanTrial:false,assets:paths.map(path=>({path,sha256:digest(readFileSync(resolve(directory,path)))}))}
+  const manifest={version:delivery.toLowerCase()+'-review-session-local-1',gitHead,sourceSha256,origin,database,directory,participant,buildLabel:config.buildLabel,records,modelCallsEnabled:false,humanTrial:false,assets:paths.map(path=>({path,sha256:digest(readFileSync(resolve(directory,path)))}))}
   writeFileSync(resolve(directory,'manifest.json'),JSON.stringify(manifest,null,2)+'\n')
   return manifest
 }

@@ -2,6 +2,8 @@ import type {WorkspaceRecordStore} from '../../domain/v2/repository'
 import type {WorkspaceV8} from '../../domain/v2/types'
 import {effectiveStateFacts,life,stateOfRuntime} from '../mainline05/semanticState'
 import {stableJson} from '../mainline04/semanticContract'
+import {D22_PENDING_READBACK_KEY,CommittedReadbackPendingError,type PendingReadback} from './d22Readback'
+import {d22EditBelongsToCommit} from './d22EditLink'
 
 export const D13_DATABASE='rco-mainline-01-02-i1-real-input-candidate16-d13-engineering-2'
 export const D14_DATABASE='rco-mainline-01-02-i1-real-input-candidate16-d14-trial-1'
@@ -19,8 +21,8 @@ export const isD20Database=(name:string)=>/^rco-mainline-01-02-i1-real-input-d20
 export const isD21Database=(name:string)=>/^rco-mainline-01-02-i1-real-input-d21-review-session-p[1-9][0-9]{0,2}$/.test(name)
 export const D13_TRACE_KEY='d13-measurement-low-edit-v2'
 export const LOW_EDIT_POLICY={version:'low-edit-v2-exploratory-1',maxFields:2,maxActiveEditMs:30_000,idleLimitMs:5_000,origin:'ENGINEERING_REPLAY',humanTrialAuthorized:false} as const
-type Kind='begin'|'read'|'edit'|'blur'|'hidden'|'visible'|'wait'|'wait_end'|'commit'|'readback'|'failure'|'restore'|'end'
-export interface D13Trace {id:string;draftId:string;atMs:number;kind:Kind;editId?:string;fieldKey?:string;commitId?:string;includedEditIds?:string[];fields?:string[];semanticFields?:string[];structural?:boolean;error?:string;disposition?:'confirmed'|'partial'|'no_task';snapshot?:{recordId:string;sourceSha256:string;firstOutputSha256:string}}
+type Kind='begin'|'read'|'edit'|'edit_activity'|'blur'|'hidden'|'visible'|'wait'|'wait_end'|'commit'|'readback'|'failure'|'restore'|'end'
+export interface D13Trace {id:string;draftId:string;atMs:number;kind:Kind;editId?:string;fieldKey?:string;commitId?:string;includedEditIds?:string[];includedOperationIds?:string[];fields?:string[];semanticFields?:string[];structural?:boolean;error?:string;disposition?:'confirmed'|'partial'|'no_task';snapshot?:{recordId:string;sourceSha256:string;firstOutputSha256:string}}
 type Store=WorkspaceRecordStore&{name:string}
 export function assertD13Database(name:string){if(name!==D13_DATABASE&&name!==D14_DATABASE&&!isD15Database(name)&&!isD19Database(name)&&!isD20Database(name)&&!isD21Database(name))throw Error('D13_ISOLATED_DATABASE_REQUIRED')}
 const flatten=(value:unknown,prefix='',out:Record<string,unknown>={}):Record<string,unknown>=>{
@@ -98,14 +100,20 @@ export function createD13Measurement(transport:Store,now:()=>number=Date.now){
 export type D13Measurement=ReturnType<typeof createD13Measurement>
 /** Every measured correction is derived from a real saved operation, then independently read back. */
 export function createD13Store(transport:Store,metrics:D13Measurement,sourceSession=false){
-  assertD13Database(transport.name);let fail=false
+  assertD13Database(transport.name);let fail=false,failReadback=false,failCheckpoint=false
+  const recoverable=isD21Database(transport.name)
+  const listeners=new Set<()=>void>()
+  const notify=()=>listeners.forEach(listener=>listener())
+  const pending=async()=>await transport.read(D22_PENDING_READBACK_KEY) as PendingReadback|undefined
   const store:Store={name:transport.name,read:key=>transport.read(key),write:async(key,value)=>{await store.transaction(key,old=>{if(old!==undefined)throw Error('D13_OVERWRITE_INITIAL');return value})},remove:async()=>{throw Error('D13_DELETE_DISABLED')},transactionMany:async()=>{throw Error('D13_MIGRATION_DISABLED')},transaction:async(key,mutate)=>{
     if(key!=='current')throw Error('D13_WORKSPACE_KEY')
     const waitingDraft=metrics.activeDraft()
     if(waitingDraft)await metrics.append(waitingDraft,'wait');else await metrics.flush()
-    let changedDrafts:string[]=[],nextValue:unknown,commitIds:Array<{draftId:string;commitId:string}>=[]
+    let changedDrafts:string[]=[],nextValue:unknown,written=false,waitingOpen=Boolean(waitingDraft)
+    const commitIds:PendingReadback['commits']=[]
     try{
-      const saved=await transport.transactionMany(['current',D13_TRACE_KEY],rows=>{
+      const saved=await transport.transactionMany(['current',D13_TRACE_KEY,...(recoverable?[D22_PENDING_READBACK_KEY]:[])],rows=>{
+        if(recoverable&&rows.get(D22_PENDING_READBACK_KEY))throw new CommittedReadbackPendingError()
         const before=rows.get('current') as WorkspaceV8|undefined,next=mutate(before) as WorkspaceV8
         nextValue=next
         const traces=[...(Array.isArray(rows.get(D13_TRACE_KEY))?rows.get(D13_TRACE_KEY) as D13Trace[]:[])]
@@ -114,22 +122,53 @@ export function createD13Store(transport:Store,metrics:D13Measurement,sourceSess
           const prev=stateOfRuntime(before!,draft.id),current=stateOfRuntime(next,draft.id),ops=current.operations.slice(prev.operations.length)
           if(!ops.length||!traces.some(e=>e.draftId===draft.id&&e.kind==='begin'))continue;changedDrafts.push(draft.id)
           const commitId=ops.map(o=>o.id).join(':'),diff=committedFieldDiff(before!,next,draft.id),semantic=sourceSession?groupD19SemanticFields(diff.fields,next,draft.id):null
-          const trace=traces.filter(t=>t.draftId===draft.id),already=new Set(trace.flatMap(t=>t.includedEditIds??[])),includedEditIds=trace.filter(t=>t.kind==='edit'&&t.editId&&!already.has(t.editId)).map(t=>t.editId!)
+          const trace=traces.filter(t=>t.draftId===draft.id),already=new Set(trace.flatMap(t=>t.includedEditIds??[]))
           if(fail&&stableJson(before)!==stableJson(next)){fail=false;throw Error('D13_INJECTED_ATOMIC_FAILURE')}
           const disposition=ops.some(o=>o.kind==='review_info')?'no_task':ops.some(o=>o.kind==='confirm')?(draft.status==='confirmed'?'confirmed':'partial'):undefined
-          traces.push({id:crypto.randomUUID(),draftId:draft.id,kind:'commit',atMs:metrics.now(),commitId,includedEditIds,fields:diff.fields,...(semantic?{semanticFields:semantic.fields}:{}),structural:diff.structural||Boolean(semantic?.structural),...(disposition?{disposition}:{})})
-          commitIds.push({draftId:draft.id,commitId})
+          const includedEditIds=trace.filter(t=>t.kind==='edit'&&t.editId&&!already.has(t.editId)
+            &&(!recoverable||disposition==='confirmed'||disposition==='no_task'||d22EditBelongsToCommit(t.fieldKey,semantic?.fields??[],next,draft.id,ops))).map(t=>t.editId!)
+          traces.push({id:crypto.randomUUID(),draftId:draft.id,kind:'commit',atMs:metrics.now(),commitId,includedEditIds,...(recoverable?{includedOperationIds:ops.map(op=>op.id)}:{}),fields:diff.fields,...(semantic?{semanticFields:semantic.fields}:{}),structural:diff.structural||Boolean(semantic?.structural),...(disposition?{disposition}:{})})
+          commitIds.push({draftId:draft.id,commitId,operationIds:ops.map(op=>op.id),...(disposition?{disposition}:{})})
         }
-        return new Map<string,unknown>([['current',next],[D13_TRACE_KEY,traces]])
+        const records=new Map<string,unknown>([['current',next],[D13_TRACE_KEY,traces]])
+        if(recoverable&&commitIds.length)records.set(D22_PENDING_READBACK_KEY,{version:'d22-pending-readback-1',id:crypto.randomUUID(),commits:commitIds} satisfies PendingReadback)
+        return records
       })
+      written=true
+      if(recoverable&&commitIds.length&&failReadback){failReadback=false;throw Error('D22_INJECTED_READBACK_FAILURE')}
       const readback=await transport.read('current')
       if(stableJson(nextValue)!==stableJson(readback))throw Error('D13_INDEPENDENT_READBACK_MISMATCH')
-      if(waitingDraft)await metrics.append(waitingDraft,'wait_end')
+      if(waitingDraft){await metrics.append(waitingDraft,'wait_end');waitingOpen=false}
       for(const c of commitIds)await metrics.append(c.draftId,'readback',{commitId:c.commitId})
+      if(recoverable&&commitIds.length)await clearPending((await pending())!.id)
       return saved.get('current')
-    }catch(error){commitIds=[];if(waitingDraft)await metrics.append(waitingDraft,'wait_end');changedDrafts=[...new Set([...changedDrafts,...(waitingDraft?[waitingDraft]:[])])];for(const id of changedDrafts)await metrics.append(id,'failure',{error:error instanceof Error?error.message:'UNKNOWN_STORE_FAILURE'});throw error}
+    }catch(error){if(waitingDraft&&waitingOpen)await metrics.append(waitingDraft,'wait_end');changedDrafts=[...new Set([...changedDrafts,...(waitingDraft?[waitingDraft]:[])])];for(const id of changedDrafts)await metrics.append(id,'failure',{error:error instanceof Error?error.message:'UNKNOWN_STORE_FAILURE'});notify();if(recoverable&&written&&commitIds.length)throw new CommittedReadbackPendingError();throw error}
   }}
-  return {store,failNext:()=>{fail=true}}
+  async function clearPending(id:string){
+    await transport.transaction(D22_PENDING_READBACK_KEY,raw=>{
+      if((raw as PendingReadback|undefined)?.id!==id)throw Error('D22_READBACK_RECOVERY_STALE')
+      return undefined
+    })
+    notify()
+  }
+  const retryReadback=async()=>{
+    const recovery=await pending()
+    if(!recovery)return []
+    const workspace=await transport.read('current') as WorkspaceV8
+    for(const commit of recovery.commits){
+      const operations=stateOfRuntime(workspace,commit.draftId).operations
+      if(!commit.operationIds.every(id=>operations.some(op=>op.id===id)))throw Error('D22_READBACK_COMMIT_MISSING')
+      if(!(await metrics.events(commit.draftId)).some(row=>row.kind==='readback'&&row.commitId===commit.commitId))
+        await metrics.append(commit.draftId,'readback',{commitId:commit.commitId})
+    }
+    await clearPending(recovery.id)
+    return recovery.commits
+  }
+  const checkpointTransport:Store={...transport,name:transport.name,read:key=>transport.read(key),write:(key,value)=>transport.write(key,value),remove:key=>transport.remove(key),transaction:(key,mutate)=>transport.transaction(key,mutate),transactionMany:(keys,mutate)=>{
+    if(failCheckpoint&&keys.some(key=>key.startsWith('d20-review-session:'))){failCheckpoint=false;return Promise.reject(Error('D22_INJECTED_CHECKPOINT_FAILURE'))}
+    return transport.transactionMany(keys,mutate)
+  }}
+  return {store,checkpointTransport,pending,retryReadback,subscribe:(listener:()=>void)=>{listeners.add(listener);return()=>{listeners.delete(listener)}},failNext:()=>{fail=true},failReadbackNext:()=>{failReadback=true},failCheckpointNext:()=>{failCheckpoint=true}}
 }
 export function calculateLowEditV2(events:readonly D13Trace[],finalCorrect:boolean|null=null){
   // One registration measures its first final disposition. Later navigation is not a new trial.

@@ -24,6 +24,11 @@ export interface MainlineSemanticCapabilities {
   readonly exportName: string
 }
 export interface MainlineRealInputCapabilities {
+  readonly readbackRecovery?: {
+    pending(): Promise<unknown>
+    retry(): Promise<void>
+    subscribe(listener: () => void): () => void
+  }
   readonly sourceSession?: boolean
   readonly reviewSession?: D20ReviewSessionRepository
   onReviewFieldInput?(draftId:string,itemId:string,field:'title'|'deadline'):void
