@@ -280,3 +280,11 @@ D13 Candidate03/Candidate16 的 24 个身份逐序各发送一次，HTTP 200、r
 D15 新隔离 6649—6651 浏览器验收无任务双事件、任务+双事件、精确/模糊开始结束时间、注入保存失败后手动重试、独立库读回与刷新；p4 Task1/Project0/Event2/TimePoint4，p3 Task0/Project0/Event2/TimePoint4。p2 发现事件编辑表单残留时刻后修复。p4 先事件后任务触发版本冲突重载保护，需 UX 引导改进。工程 editId/commitId/readback 保留，跨刷新主动计时缺失不填零；真人四指标全 NOT_OBSERVABLE。
 
 相关定向 33/33、执行器/隔离 13/13、lint/build/security scan、评分 raw/账本只读重建通过。全量 Vitest 1507过/3失败/1跳过，仍有旧 carrier 环境、5秒超时/Node 收集问题；`npm audit` 3 high/2 moderate，未改旧锁。完整分层证据见 [D15_RESULTS](../candidate16/d15-integrated/D15_RESULTS.md)。本审计为同一工程线的 provisional 记录，不是独立人工真值。
+
+## 2026-09-30：D22 来源核对收口（provisional 工程记录）
+
+本轮新模型/账本交易/真人/部署0。复用正式ReviewSession、编辑器、DomainCommitPlan、Repository，完成三个故障分支、读回恢复、不丢输入的CAS清理/裁决、关联与来源版本冲突、无关项部分确认、双工程身份隔离及页面测量链。最后浏览器发现父级冲突提示与无任务事件状态残留，实质修复后回归；不以程序修复称新模型效果。
+
+唯一内部6718/p29入口，schema8，模型/真人机械关闭。混合通知正式读回Task1/Project0/Event2/Time4；模糊时间null；无任务不造空项目。A—L逐项与构建复用界限见[D22浏览器证据](../d22-review-session/BROWSER_EVIDENCE.md)，匿名原图/测量哈希见证据索引。四项真人仍NOT_OBSERVABLE，旧路径步骤差未测。可以申请明确范围探索，仍缺真实负责人/范围/同意与固定材料裁决；现有工程记录不能改名为真人。
+
+最后代码lint/build通过，155文件/1540 Vitest测试通过；权威全量15组11过4旧冻结失败，实际失败为D9 guard、RCO旧lock、C11旧AGENTS两组，不改断言凑绿。84历史保护/119冻结/账本938行SHA e79aec8bbb1378e37f3941d8ffac9cce7d74bbb8e11d7ceee5c90a88b6c734b9保持；D17旧成绩和许可不改。按代码及结果边界验证、Conventional Commit并立即普通推送。完整结论见[D22结果](../d22-review-session/D22_RESULTS.md)及验证。这不是独立人工质量审查。

@@ -5,7 +5,7 @@
 1. [PRD](../PRD.md)定义稳定产品目标；[AGENTS](../AGENTS.md)定义执行和保护。
 2. [CURRENT_CONTEXT](recognition-optimization/CURRENT_CONTEXT.md)是唯一当前状态。
 3. [D18全局审查](governance/d18-product-direction/REVIEW_AND_DECISIONS.md)说明为何卡住及设计调整；[D17追加解释](recognition-optimization/candidate17/d17-development/D18_INTERPRETATION_CORRECTION.md)纠正把评分红项直接当模型事实错误的表述。
-4. [D21当前结果](recognition-optimization/d21-review-session/D21_RESULTS.md)、[活动路线](governance/PROJECT_EXECUTION_ROADMAP.md)与[下一执行入口](governance/NEXT_STAGE_EXECUTION_PROMPT.md)是当前工作入口。D20 保留为历史工程证据。
+4. [D22当前结果](recognition-optimization/d22-review-session/D22_RESULTS.md)、[活动路线](governance/PROJECT_EXECUTION_ROADMAP.md)与[下一执行入口](governance/NEXT_STAGE_EXECUTION_PROMPT.md)是当前工作入口；唯一内部 URL http://127.0.0.1:6718/?automation=1，仍为匿名工程回放。D19—D21保留为历史工程证据。
 5. [跟踪表](../refine-logs/EXPERIMENT_TRACKER.md)只维护状态；旧快照见[D18存档](governance/archive/2026-09-29-d18/ARCHIVE_MANIFEST.json)。
 
 保护入口为 node scripts/verify-recognition-history.mjs --verify；历史结果和许可不可复用或追溯改判。活动文档由Git版本管理，旧测试断言不作为新编辑的永久总门。模型调用、真人研究和发布仍分别需要适用范围授权；缺其中一项不阻止其余安全本地工程。

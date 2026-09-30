@@ -1,9 +1,11 @@
-# 当前交接：D21 来源核对仍有明确产品验收缺项
+# 当前交接：D22 核对产品路径已验收，待真实探索材料
 
-更新：2026-09-30。工作区 C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/比赛，分支 codex/e2-candidate11-blind-eval。当前内部入口 http://127.0.0.1:6709/?automation=1（仅本机服务运行时可达），隔离数据库 rco-mainline-01-02-i1-real-input-d21-review-session-p18，不发送模型请求。状态 D21_PARTIAL_WITH_EXPLICIT_PRODUCT_GAPS；以 [D21结果](d21-review-session/D21_RESULTS.md)、[逐项浏览器证据](d21-review-session/BROWSER_EVIDENCE.md)及[验证](d21-review-session/VALIDATION.md)为准。
+2026-09-30。工作区 C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/比赛，分支 codex/e2-candidate11-blind-eval。状态 D22_REVIEW_SESSION_READY_FOR_AUTHORIZED_EXPLORATORY_TRIAL；事实见 [D22结果](d22-review-session/D22_RESULTS.md)、[浏览器A—L](d22-review-session/BROWSER_EVIDENCE.md)、[验证](d22-review-session/VALIDATION.md)。唯一内部入口 http://127.0.0.1:6718/?automation=1；全新工程库 p29，代码构建6fc2ff8c6e4f/source e44972c00346。模型与真人派发关闭。
 
-D21 已修检查点过期清理、事件恢复直接保存、草稿/正式成功提示；材料、动作对象、条件、依赖、修订和事件时间编辑已接入同一未确认会话。浏览器复现并修复双标签旧字段保存，过期标签被阻断，三方值可读且选择后即回填。p18 又修复人工事件更名被原文逐字校验误阻断；任务+两事件正式保存并独立读回 1/2/4，模糊时刻为 null。p19 正式事务失败读回 0，手动重试读回 Task 1。最终构建 A—L 尚未全部完成，尤其检查点/读回故障全路径、不同字段双方正式提交、关系/来源冲突和所有字段恢复未验；不能申请真人试次。
+来源同页核对、编辑恢复、局部确认、三个故障恢复、并发/真实来源冲突、独立读回与四指标工程链已验。提交成功但读回失败只重读，过期清理/裁决保留新输入；事件恢复无需改字，父子冲突提示同步，无任务事件正式状态准确。混合通知读回 Task1/Project0/Event2/Time4；模糊时间保持null。过程证据明确标构建及未受影响复用范围，不把过程计时写成真人效果。
 
-页面已能串起 editId→检查点→commitId→独立读回 的工程证据；四项真人指标仍 NOT_OBSERVABLE。D17 原 Candidate03 1/12、Candidate17 2/12、MIXED_PROGRESS 保留；D19 旧回答诊断和 D21 程序修复均不是新模型成绩。本轮业务模型 0 调用，grant/reserve/settle 0，账本只读；保护与 Git 状态见 D21 验证及最终实核。
+真人四项仍NOT_OBSERVABLE；工程阅读约25.8秒编辑0、刷新缺时为null、有纠正试次的字段/commit/readback可查。旧路径步骤差未测。D17原1/12、2/12和MIXED_PROGRESS不改；D19是旧回答离线诊断，本轮无新模型成绩。
 
-下一直接动作是完成剩余 A—L 最终浏览器路径和必要的故障注入，不再扩大候选或默认做 24 次调用。完成保存安全和计量验收后，再由用户单独授权并提供真实负责人、参与者同意及范围，开展 3—5 人探索。路线见[活动路线](../governance/PROJECT_EXECUTION_ROADMAP.md)。
+下一步直接申请3—5人小范围探索：真实负责人、范围授权、参与者同意、选定匿名来源/固定辅助刺激SHA、预先冻结裁决与测量。复用现有排程/记录工具，不再造候选或24身份。当前入口强制ENGINEERING_REPLAY，真人授权后才接入独立真人角色和库，不把工程记录改名。
+
+权威账本只读938行，SHA e79aec8bbb1378e37f3941d8ffac9cce7d74bbb8e11d7ceee5c90a88b6c734b9；84保护/119冻结原样。相关测试、lint/build/security通过；全量15组11过4历史冻结失败，不能称全量PASS。未合并、默认替换或部署。Git最终同步以当次交付回执为准。[活动路线](../governance/PROJECT_EXECUTION_ROADMAP.md)。
