@@ -1,11 +1,13 @@
-# 当前交接：D22 核对产品路径已验收，待真实探索材料
+# 当前交接：D23 探索接线已交付，等待真实范围与参与者
 
-2026-09-30。工作区 C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/比赛，分支 codex/e2-candidate11-blind-eval。状态 D22_REVIEW_SESSION_READY_FOR_AUTHORIZED_EXPLORATORY_TRIAL；事实见 [D22结果](d22-review-session/D22_RESULTS.md)、[浏览器A—L](d22-review-session/BROWSER_EVIDENCE.md)、[验证](d22-review-session/VALIDATION.md)。唯一内部入口 http://127.0.0.1:6718/?automation=1；全新工程库 p29，代码构建6fc2ff8c6e4f/source e44972c00346。模型与真人派发关闭。
+2026-09-30。工作区 C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/比赛；分支 codex/e2-candidate11-blind-eval。状态 D23_ENGINEERING_CONNECTED_WAITING_FOR_REAL_SCOPE_OR_PARTICIPANTS。事实见 [D23结果](d23-study/D23_RESULTS.md)、[浏览器](d23-study/BROWSER_EVIDENCE.md)、[验证](d23-study/VALIDATION.md)。代码提交 f7b635cccb391204b178a09113f654e5e7fbe2f6 已推送。
 
-来源同页核对、编辑恢复、局部确认、三个故障恢复、并发/真实来源冲突、独立读回与四指标工程链已验。提交成功但读回失败只重读，过期清理/裁决保留新输入；事件恢复无需改字，父子冲突提示同步，无任务事件正式状态准确。混合通知读回 Task1/Project0/Event2/Time4；模糊时间保持null。过程证据明确标构建及未受影响复用范围，不把过程计时写成真人效果。
+唯一推荐内部入口 http://127.0.0.1:6725/?automation=1；ENGINEERING_REPLAY；4个新隔离库 engineering-final01-p1—p4；页面构建 f7b635cccb39/source c4758fcdad41。旧入口/用户库保留，实时模型派发机械关闭。关闭本机服务后须用 node scripts/serve-d23-study.mjs 6725 final01 重新启动；不把本机URL称为云端地址。
 
-真人四项仍NOT_OBSERVABLE；工程阅读约25.8秒编辑0、刷新缺时为null、有纠正试次的字段/commit/readback可查。旧路径步骤差未测。D17原1/12、2/12和MIXED_PROGRESS不改；D19是旧回答离线诊断，本轮无新模型成绩。
+8份匿名来源与8份D17原录制，4人×4条、手动/辅助各2条，计划SHA 2f2d39da1c9b75d22726cafa2c648f7ec4d83d79ed2d8e422893e77f42e9a4a0。负责人/范围/同意、试次身份、保存读回、裁决CAS、暂停退出和四指标已接到正式路径。实际工程开始13条：4条完成候选、1条partial、8条退出；完成候选不等于裁决正确。真人0，四项真人指标NOT_OBSERVABLE；工程时间不得称省时。
 
-下一步直接申请3—5人小范围探索：真实负责人、范围授权、参与者同意、选定匿名来源/固定辅助刺激SHA、预先冻结裁决与测量。复用现有排程/记录工具，不再造候选或24身份。当前入口强制ENGINEERING_REPLAY，真人授权后才接入独立真人角色和库，不把工程记录改名。
+下一步直接取得真实负责人、4人16条本机固定录制探索范围授权、参与者本人同意；负责人首人前核准8份义务与争议、刺激及测量。使用独立human实例，不回填工程数据，不再造候选/24身份。S09信息覆盖、S02/S07时间核对及手动重复步骤是可追踪卡点，按证据只修1—3类。
 
-权威账本只读938行，SHA e79aec8bbb1378e37f3941d8ffac9cce7d74bbb8e11d7ceee5c90a88b6c734b9；84保护/119冻结原样。相关测试、lint/build/security通过；全量15组11过4历史冻结失败，不能称全量PASS。未合并、默认替换或部署。Git最终同步以当次交付回执为准。[活动路线](../governance/PROJECT_EXECUTION_ROADMAP.md)。
+全量15组11过/4历史冻结失败；定向26过；lint/build/security/隔离通过，精确数见验证。84保护/119冻结及账本只读，938行 SHA e79aec8bbb1378e37f3941d8ffac9cce7d74bbb8e11d7ceee5c90a88b6c734b9。D17原1/12、2/12及MIXED_PROGRESS不改，D19非新模型成绩。
+
+用户另要求配置Codex云端开发环境：限GitHub代码拉取、开发和离线测试；不能据此推断应用部署、真人或业务模型授权。云端实际状态以配置回执为准。

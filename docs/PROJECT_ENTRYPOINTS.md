@@ -1,11 +1,11 @@
 # 项目入口：现在读什么、做什么
 
-更新：2026-09-30。当前独立支线继续 candidate11 worktree，不因阶段名称重建仓库。
+更新2026-09-30。独立支线仍使用candidate11 worktree；不因阶段编号另建仓库。
 
-1. [PRD](../PRD.md)定义稳定产品目标；[AGENTS](../AGENTS.md)定义执行和保护。
+1. [PRD](../PRD.md)与[AGENTS](../AGENTS.md)定义目标和执行边界。
 2. [CURRENT_CONTEXT](recognition-optimization/CURRENT_CONTEXT.md)是唯一当前状态。
-3. [D18全局审查](governance/d18-product-direction/REVIEW_AND_DECISIONS.md)说明为何卡住及设计调整；[D17追加解释](recognition-optimization/candidate17/d17-development/D18_INTERPRETATION_CORRECTION.md)纠正把评分红项直接当模型事实错误的表述。
-4. [D22当前结果](recognition-optimization/d22-review-session/D22_RESULTS.md)、[活动路线](governance/PROJECT_EXECUTION_ROADMAP.md)与[下一执行入口](governance/NEXT_STAGE_EXECUTION_PROMPT.md)是当前工作入口；唯一内部 URL http://127.0.0.1:6718/?automation=1，仍为匿名工程回放。D19—D21保留为历史工程证据。
-5. [跟踪表](../refine-logs/EXPERIMENT_TRACKER.md)只维护状态；旧快照见[D18存档](governance/archive/2026-09-29-d18/ARCHIVE_MANIFEST.json)。
+3. [D23当前结果](recognition-optimization/d23-study/D23_RESULTS.md)、[浏览器](recognition-optimization/d23-study/BROWSER_EVIDENCE.md)、[验证](recognition-optimization/d23-study/VALIDATION.md)、[路线](governance/PROJECT_EXECUTION_ROADMAP.md)与[下一执行](governance/NEXT_STAGE_EXECUTION_PROMPT.md)是当前入口。
+4. 唯一推荐本机URL http://127.0.0.1:6725/?automation=1；固定录制工程回放，模型关闭、真人0。D22及更早保留为带构建范围的历史证据。
+5. [跟踪](../refine-logs/EXPERIMENT_TRACKER.md)仅维护状态；[D18存档](governance/archive/2026-09-29-d18/ARCHIVE_MANIFEST.json)保留旧规则。D17成绩和D19离线诊断不改。
 
-保护入口为 node scripts/verify-recognition-history.mjs --verify；历史结果和许可不可复用或追溯改判。活动文档由Git版本管理，旧测试断言不作为新编辑的永久总门。模型调用、真人研究和发布仍分别需要适用范围授权；缺其中一项不阻止其余安全本地工程。
+保护入口node scripts/verify-recognition-history.mjs --verify；账本只读。真实范围、业务模型、发布许可互不替代。Codex云端开发配置只指GitHub代码开发测试，不代表应用部署。
