@@ -80,7 +80,10 @@ export function IndependentEventEditor({repo,workspace,draftId,busy,onDirty,onSa
   },[reviewSession,checkpointReady,snapshot,adding,change,changeKey,workspace,draftId,facts.events,facts.timePoints,retryCheckpoint,checkpointPhase])
   const notify=useRef(onDirty);useEffect(()=>{notify.current=onDirty},[onDirty])
   useEffect(()=>{notify.current(Boolean(change)||adding||working);return()=>notify.current(false)},[change,adding,working])
-  const independentReviewed=Boolean(life(state).independentEventsReviewedAt)
+  const independentReviewed=Boolean(life(state).independentEventsReviewedAt
+    || life(state).informationReviewed&&facts.events.some(event=>!event.relatedTaskTempIds.length)
+      &&state.operations.some(operation=>operation.kind==='review_info'
+        &&'informationEventVersion' in operation&&operation.informationEventVersion==='d10-event-commit-1'))
   const blocked=busy||working||life(state).informationReviewed||independentReviewed
   const resetAdd=()=>{setAddIdentity('');setScopes([]);setTitle('');setLocation('');setRawTime('');setNormalized('');setPrecision('vague');setRawEnd('');setNormalizedEnd('');setPrecisionEnd('vague');setNote('')}
   const select=(next:FactChange)=>{const baseline=baselineFor(next,false);lastCheckpoint.current=JSON.stringify({change:next,baseline});checkpointVersion.current='';setCheckpointPhase('saved');setChange(next);setRevision(semanticRevision(workspace));setInputBaseline(baseline);setBaselineChanged(false);setError('')}
