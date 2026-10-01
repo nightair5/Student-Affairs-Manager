@@ -55,7 +55,7 @@ describe('D24 actual source disposal and safe unknown-time consent',()=>{
     await correct(r,{kind:'add_task',value:task,scopeIds:task.propositionScopeIds,note:'工程手动从空白补录原文任务'})
     const scope=manual.context.index.scopes.find(s=>s.text.includes('2026年10月19日16:30'))!,time=reviewTimeEvidence({tempId:'user-manual-time',type:'task_deadline',rawText:'2026年10月19日16:30前',normalizedValue:null,timezone:'Asia/Shanghai',isAllDay:false,precision:'vague',needsConfirmation:true,relatedTaskTempIds:[task.id],relatedMaterialTempIds:[],scopeIds:[scope.id],confidence:1},manual.context.referenceTime,manual.context.timezone)
     await correct(r,{kind:'time',taskId:task.id,value:time,scopeIds:[scope.id],note:'用户逐字补录，程序仅做确定性转换'})
-    let w=await r.app.repository.load(),after=stateOfRuntime(w,r.draftId)
+    let w=await r.app.repository.load();const after=stateOfRuntime(w,r.draftId)
     expect(after.first).toEqual(first);expect(effectiveReview(after).issues.some(i=>i.code==='TIME_NEEDS_REVIEW')).toBe(false)
     w=await reviewSemanticFact(r.app.repository,{draftId:r.draftId,taskId:task.id,revision:semanticRevision(w),operationId:crypto.randomUUID()})
     await r.app.runtime.confirm({draftId:r.draftId,revision:semanticRevision(w),taskTempIds:[task.id]})
