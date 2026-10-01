@@ -16,6 +16,7 @@ export function validateMaterialDecision(value: unknown): MaterialDecision {
 
 export type MaterialEdit = Pick<SemanticMaterial, 'name' | 'quantity' | 'formatRequirements' | 'namingRequirements' | 'submissionChannel' | 'relatedTaskTempIds'>
 export type FactChange = { kind: 'surface'; taskId: string; field: 'action' | 'object'; value: SurfaceReference }
+  | { kind: 'information_scope'; value: 'information' | 'provenance'; scopeIds: string[]; note: string }
   | { kind: 'material'; materialId: string; value: MaterialEdit }
   | { kind: 'time'; taskId: string; value: SemanticTime; scopeIds: string[]; note: string }
   | { kind: 'condition'; taskId: string; value: SemanticTask['condition']; scopeIds: string[]; note: string }
@@ -81,6 +82,7 @@ function safetyTasks(input: SemanticInput, initial: Set<string>) {
   return found
 }
 function affected(input: SemanticInput, change: FactChange) {
+  if (change.kind === 'information_scope') return new Set(input.tasks.map(t=>t.id))
   if (change.kind === 'independent_event' || change.kind === 'independent_time' || change.kind === 'add_independent_event') return new Set<string>()
   const ids = change.kind === 'material' ? input.tasks.filter(t => factAssets(input, t.id).materials.has(change.materialId)).map(t => t.id)
     : change.kind === 'add_material' ? change.value.relatedTaskTempIds
@@ -122,7 +124,16 @@ function validateDependencies(input: SemanticInput) {
 }
 function apply(input: SemanticInput, change: FactChange, index: ImmutableScopeIndex) {
   reviewEvidence(change,index)
-  if (change.kind === 'add_independent_event') {
+  if (change.kind === 'information_scope') {
+    keys(change,['kind','value','scopeIds','note'])
+    // One fragment, an explicit decision, and an unchanged source. This is never
+    // a blanket "all information" repair or an excuse for a current task.
+    if(change.scopeIds.length!==1||!['information','provenance'].includes(change.value)
+      ||input.tasks.some(t=>t.propositionScopeIds.includes(change.scopeIds[0])))reject('INFORMATION_SCOPE')
+    if(change.value==='provenance'&&!/^\[.*(?:Development|开发|匿名).*\]$/u.test(index.scopes.find(s=>s.id===change.scopeIds[0])!.text))reject('PROVENANCE_SCOPE')
+    input.informationScopeIds=[...new Set([...input.informationScopeIds,...change.scopeIds])]
+    input.unresolvedScopeIds=input.unresolvedScopeIds.filter(id=>!change.scopeIds.includes(id))
+  } else if (change.kind === 'add_independent_event') {
     keys(change,['kind','value','scopeIds','note']);keys(change.value,change.value.endTime===undefined?['event','time']:['event','time','endTime'])
     const {event,time,endTime}=change.value, ids=[event.tempId,...(time?[time.tempId]:[]),...(endTime?[endTime.tempId]:[])]
     if(ids.some(id=>!/^user-[A-Za-z0-9-]{1,90}$/.test(id)||[...input.tasks.map(t=>t.id),...input.materials.map(m=>m.tempId),...input.events.map(e=>e.tempId),...input.timePoints.map(t=>t.tempId)].includes(id))||new Set(ids).size!==ids.length
@@ -250,6 +261,7 @@ function apply(input: SemanticInput, change: FactChange, index: ImmutableScopeIn
   parseSemanticInput(input)
 }
 export function correctionBefore(input: SemanticInput, change: FactChange) {
+  if(change.kind==='information_scope')return {information:input.informationScopeIds.filter(id=>change.scopeIds.includes(id)),unresolved:input.unresolvedScopeIds.filter(id=>change.scopeIds.includes(id))}
   if(change.kind==='independent_event')return plainJson(input.events.find(e=>e.tempId===change.eventId)??reject('EVENT_MISSING'))
   if(change.kind==='independent_time')return plainJson(input.timePoints.find(t=>t.tempId===change.timeId)??reject('TIME_MISSING'))
   if(change.kind==='add_task'||change.kind==='time'||change.kind==='add_material'||change.kind==='add_independent_event')return null

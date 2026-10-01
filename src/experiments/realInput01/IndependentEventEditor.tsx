@@ -7,6 +7,7 @@ import type {FactChange} from './factCorrections'
 import type {D20ReviewSessionRepository} from '../candidate16/d20ReviewSession'
 import type {ReviewField} from '../candidate16/d20ReviewSession'
 import {stableJson} from '../mainline04/semanticContract'
+import {SourceCoverageEditor} from './SourceCoverageEditor'
 
 function eventEditSummary(input:unknown){
   if(!input||typeof input!=='object')return '无原值'
@@ -21,6 +22,7 @@ function eventEditSummary(input:unknown){
 export function IndependentEventEditor({repo,workspace,draftId,busy,onDirty,onSaved,reviewSession}:{repo:SemanticRepository;workspace:WorkspaceV8;draftId:string;busy:boolean;onDirty:(dirty:boolean)=>void;onSaved:()=>Promise<void>;reviewSession?:D20ReviewSessionRepository}){
   const state=stateOfRuntime(workspace,draftId),facts=effectiveStateFacts(state).facts
   const [change,setChange]=useState<FactChange|null>(null),[revision,setRevision]=useState(''),[working,setWorking]=useState(false),[error,setError]=useState('')
+  const [coverageDirty,setCoverageDirty]=useState(false)
   const [adding,setAdding]=useState(false),[addIdentity,setAddIdentity]=useState(''),[scopes,setScopes]=useState<string[]>([]),[title,setTitle]=useState(''),[location,setLocation]=useState(''),[rawTime,setRawTime]=useState(''),[normalized,setNormalized]=useState(''),[precision,setPrecision]=useState<'vague'|'relative'|'date_only'|'exact'>('vague'),[rawEnd,setRawEnd]=useState(''),[normalizedEnd,setNormalizedEnd]=useState(''),[precisionEnd,setPrecisionEnd]=useState<'vague'|'relative'|'date_only'|'exact'>('vague'),[note,setNote]=useState('')
   const [checkpointReady,setCheckpointReady]=useState(!reviewSession),[checkpointStatus,setCheckpointStatus]=useState(''),[checkpointError,setCheckpointError]=useState('')
   const [checkpointPhase,setCheckpointPhase]=useState<'idle'|'saving'|'saved'|'failed'|'conflict'|'foreign'>('idle')
@@ -79,12 +81,12 @@ export function IndependentEventEditor({repo,workspace,draftId,busy,onDirty,onSa
     }).catch(error=>{if(epoch===checkpointEpoch.current){setCheckpointPhase('failed');setCheckpointStatus('事件检查点保存失败');setCheckpointError(String(error));setRetryCheckpoint(0)}})
   },[reviewSession,checkpointReady,snapshot,adding,change,changeKey,workspace,draftId,facts.events,facts.timePoints,retryCheckpoint,checkpointPhase])
   const notify=useRef(onDirty);useEffect(()=>{notify.current=onDirty},[onDirty])
-  useEffect(()=>{notify.current(Boolean(change)||adding||working);return()=>notify.current(false)},[change,adding,working])
+  useEffect(()=>{notify.current(Boolean(change)||adding||working||coverageDirty);return()=>notify.current(false)},[change,adding,working,coverageDirty])
   const independentReviewed=Boolean(life(state).independentEventsReviewedAt
     || life(state).informationReviewed&&facts.events.some(event=>!event.relatedTaskTempIds.length)
       &&state.operations.some(operation=>operation.kind==='review_info'
         &&'informationEventVersion' in operation&&operation.informationEventVersion==='d10-event-commit-1'))
-  const blocked=busy||working||life(state).informationReviewed||independentReviewed
+  const blocked=busy||working||coverageDirty||life(state).informationReviewed||independentReviewed
   const resetAdd=()=>{setAddIdentity('');setScopes([]);setTitle('');setLocation('');setRawTime('');setNormalized('');setPrecision('vague');setRawEnd('');setNormalizedEnd('');setPrecisionEnd('vague');setNote('')}
   const select=(next:FactChange)=>{const baseline=baselineFor(next,false);lastCheckpoint.current=JSON.stringify({change:next,baseline});checkpointVersion.current='';setCheckpointPhase('saved');setChange(next);setRevision(semanticRevision(workspace));setInputBaseline(baseline);setBaselineChanged(false);setError('')}
   const discard=async()=>{setWorking(true);try{await checkpointQueue.current;if(reviewSession&&checkpointVersion.current)await reviewSession.clear(workspace,draftId,adding?'event:new:add':changeKey,reviewSession.writer,checkpointVersion.current);setChange(null);setAdding(false);resetAdd();lastCheckpoint.current='';checkpointVersion.current='';setCheckpointEntry(null);setCheckpointPhase('idle');setCheckpointStatus('已放弃本页未确认编辑，正式事实未改变');setError('')}catch(cause){setError('未放弃：事件输入已变化，仍保留。'+String(cause))}finally{setWorking(false)}}
@@ -144,6 +146,7 @@ export function IndependentEventEditor({repo,workspace,draftId,busy,onDirty,onSa
   const events=facts.events.filter(event=>!event.relatedTaskTempIds.length)
   const times=facts.timePoints.filter(time=>!time.relatedTaskTempIds.length&&!time.relatedMaterialTempIds.length&&events.some(event=>[event.startTimePointTempId,event.endTimePointTempId].includes(time.tempId)))
   return <section aria-label="独立事件人工核对"><h3>核对独立事件</h3><p>此处编辑是你的纠正，原模型回答和首次建议不变。原文依据仍可在上方定位；时间不确定时不生成日程。</p>
+    <SourceCoverageEditor repo={repo} workspace={workspace} draftId={draftId} busy={busy||working||Boolean(change)||adding} onDirty={setCoverageDirty} onSaved={onSaved} reviewSession={reviewSession}/>
     {reviewSession&&<p role="status">{independentReviewed?'独立事件已正式确认并保存':checkpointStatus||'当前没有未保存的事件输入'}。{!independentReviewed&&baselineChanged&&<strong role="alert">相关事件或时间已变化；保留了你的输入，请重新核对，不能直接覆盖。</strong>}
       {checkpointPhase==='foreign'&&checkpointEntry&&<button type="button" onClick={()=>{const key=adding?'event:new:add':changeKey;void reviewSession.recover(workspace,draftId,reviewSession.writer,{[key]:checkpointEntry.revision}).then(saved=>{const entry=saved.fields[key];setCheckpointEntry(entry);checkpointVersion.current=entry.revision;setCheckpointPhase('saved');setCheckpointStatus('已接管未确认输入，仍需核对')}).catch(cause=>setCheckpointError(String(cause)))}}>接管未确认事件输入</button>}
       {checkpointPhase==='conflict'&&checkpointEntry?.conflict&&<><span>编辑前：{eventEditSummary(checkpointEntry.base)}；最新已保存：{eventEditSummary(checkpointEntry.conflict.latest)}；我的输入：{eventEditSummary(checkpointEntry.conflict.incoming)}</span>

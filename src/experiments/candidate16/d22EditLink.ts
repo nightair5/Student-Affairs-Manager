@@ -5,6 +5,7 @@ import type {SemanticOperation} from '../mainline05/semanticState'
 /** A concurrent save may consume only edits of the facts it actually changed. */
 export function d22EditBelongsToCommit(key:string|undefined,fields:readonly string[],workspace:WorkspaceV8,draftId:string,operations:readonly SemanticOperation[]=[]){
   if(!key)return false
+  if(key==='relation:source:information')return fields.includes('source:information')&&operations.some(op=>op.kind==='correct_fact'&&op.correction?.change.kind==='information_scope')
   const observation=/^task:([^:]+):material-review:([^:]+)$/.exec(key)
   if(observation)return operations.some(op=>op.kind==='review_material'&&op.taskIds.includes(observation[1])&&op.materialReview?.materialId===observation[2])
   const facts=effectiveStateFacts(stateOfRuntime(workspace,draftId)).facts

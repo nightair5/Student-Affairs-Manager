@@ -6,15 +6,15 @@ import {SemanticRepository} from '../mainline05/semanticRepository'
 import {effectiveStateFacts,stateOfRuntime} from '../mainline05/semanticState'
 import {stableJson} from '../mainline04/semanticContract'
 import {sha256Text} from '../realInput01/inputReceipt'
-import {createD13Store,createD13Measurement,type D13Measurement} from './measurement'
+import {createD13Store,createD13Measurement,type D13Measurement,type D24_CORRECTION_VERSION} from './measurement'
 import {openD13Replay,type D13ReplayRecord} from './replay'
 import {assertRevisionSelection,inspectRevisionLinks} from './revisionGuard'
 import {confirmSemanticSource} from '../mainline05/semanticConfirmation'
 import {D13ReplayPicker,type D13ReplayChoice} from './ReplayPicker'
 import {D20ReviewSessionRepository} from './d20ReviewSession'
 
-export async function createD13Runtime(options:{transport:WorkspaceRecordStore&{name:string};choices:readonly D13ReplayChoice[];read:(id:string)=>Promise<D13ReplayRecord>;beforeOpen?:(record:D13ReplayRecord)=>Promise<void>;onOpen?:(record:D13ReplayRecord,draftId:string)=>Promise<void>;onDisposition?:(draftId:string,disposition:'confirmed'|'no_task')=>Promise<void>;sourceSession?:boolean;buildLabel?:string;audience?:'engineering'|'human';measurement?:D13Measurement;sessionFrame?:import('react').ComponentType<{children:ReactNode;onClose?:()=>void}>;inputPanel?:NonNullable<import('../mainline02/runtime').MainlineRuntime['realInput']>['inputPanel']}){
-  const metrics=options.measurement??createD13Measurement(options.transport),observed=createD13Store(options.transport,metrics,options.sourceSession===true),store=observed.store
+export async function createD13Runtime(options:{transport:WorkspaceRecordStore&{name:string};choices:readonly D13ReplayChoice[];read:(id:string)=>Promise<D13ReplayRecord>;beforeOpen?:(record:D13ReplayRecord)=>Promise<void>;onOpen?:(record:D13ReplayRecord,draftId:string)=>Promise<void>;onDisposition?:(draftId:string,disposition:'confirmed'|'no_task')=>Promise<void>;sourceSession?:boolean;buildLabel?:string;audience?:'engineering'|'human';measurement?:D13Measurement;correctionVersion?:typeof D24_CORRECTION_VERSION;sessionFrame?:import('react').ComponentType<{children:ReactNode;onClose?:()=>void}>;inputPanel?:NonNullable<import('../mainline02/runtime').MainlineRuntime['realInput']>['inputPanel']}){
+  const metrics=options.measurement??createD13Measurement(options.transport),observed=createD13Store(options.transport,metrics,options.sourceSession===true,options.correctionVersion),store=observed.store
   const existing=await store.read('current')
   const base=await createRealInputRuntime({name:store.name,store,...(existing===undefined?{initial:emptyRealInputWorkspace(store.name)}:{}),execution:'seen_engineering_replay',resources:{workerPath:'',corePath:'',langPath:'',pdfWorkerPath:''},execute:async()=>{throw Error('D13_MODEL_DISABLED')}})
   const repo=await SemanticRepository.open(store.name,store,undefined,'real-input-01')

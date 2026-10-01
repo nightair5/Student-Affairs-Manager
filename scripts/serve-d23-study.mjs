@@ -36,7 +36,8 @@ export async function d23Materials(){
   const body={version:'d23-material-plan-1',materials,slots,measurement:{version:'d23-semantic-measurement-1',idleLimitMs:5000,maxFields:2,maxEditMs:30000,completionWindowMs:600000}},plan={...body,sha256:digest(JSON.stringify(body))}
   return {plan,records}
 }
-export async function buildD23Preview(port='6721',instance='run01',authority=null){
+export async function buildD23Preview(port='6721',instance='run01',authority=null,reportVersion=null){
+  if(reportVersion!==null&&reportVersion!=='d24-planned-coverage-1')throw Error('D24_REPORT_VERSION_INVALID')
   if(!/^\d{4,5}$/.test(port)||Number(port)<6720||Number(port)>65535||!/^[a-z0-9]{2,20}$/.test(instance))throw Error('D23_NEW_PORT_IDENTITY_REQUIRED')
   const {plan,records}=await d23Materials(),role=authority?'HUMAN_EXPLORATORY':'ENGINEERING_REPLAY'
   if(authority&&(authority.planSha256!==plan.sha256||authority.scope!=='4_PEOPLE_16_TRIALS_LOCAL_RECORDED'||!authority.authorizedByHuman?.trim()||!authority.ownerRef?.trim()||!authority.scopeRef?.trim()))throw Error('D23_SCOPE_AUTHORITY_INVALID')
@@ -44,12 +45,12 @@ export async function buildD23Preview(port='6721',instance='run01',authority=nul
   const choices=records.map(row=>{const bytes=JSON.stringify(row);writeFileSync(resolve(directory,'records',row.id+'.json'),bytes);return {id:row.id,label:row.label,kind:row.kind,sha256:digest(bytes)}})
   const gitHead=execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),sourceFiles=execFileSync('git',['ls-files','--cached','--others','--exclude-standard','src','scripts'],{encoding:'utf8'}).trim().split(/\r?\n/).filter(p=>/\.(tsx?|m?js|css)$/.test(p)).sort(),sourceSha256=digest(sourceFiles.map(p=>p+':'+digest(readFileSync(p))).join('\n'))
   const databases=Object.fromEntries([1,2,3,4].map(n=>['p'+n,`rco-mainline-01-02-i1-real-input-d23-study-${authority?'human':'engineering'}-${instance}-p${n}`]))
-  const config={origin,databases,records:choices,plan,role,authority,buildIdentity:gitHead.slice(0,12)+' / source '+sourceSha256.slice(0,12)}
+  const config={origin,databases,records:choices,plan,role,authority,reportVersion,buildIdentity:gitHead.slice(0,12)+' / source '+sourceSha256.slice(0,12)}
   const output=await build({absWorkingDir:process.cwd(),entryPoints:['src/experiments/candidate16/d23-browser.tsx'],bundle:true,write:false,format:'esm',platform:'browser',jsx:'automatic',target:'es2022',outdir:'memory',minify:true,define:{'process.env.NODE_ENV':'"production"','import.meta.env':'{}',__D23_CONFIG__:JSON.stringify(config)}})
   for(const file of output.outputFiles)writeFileSync(resolve(directory,basename(file.path)),file.text.replace(/@import\s+url\("https:\/\/fonts\.googleapis\.com[^;]+;\s*/g,''))
-  writeFileSync(resolve(directory,'index.html'),'<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>D23 来源核对与试次 / '+role+'</title><link rel="stylesheet" href="/d23-browser.css"></head><body><div id="root">正在打开隔离核对…</div><script type="module" src="/d23-browser.js"></script></body></html>')
+  writeFileSync(resolve(directory,'index.html'),'<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+ (reportVersion?'D24':'D23') +' 来源核对与试次 / '+role+'</title><link rel="stylesheet" href="/d23-browser.css"></head><body><div id="root">正在打开隔离核对…</div><script type="module" src="/d23-browser.js"></script></body></html>')
   const paths=['index.html','d23-browser.js','d23-browser.css',...choices.map(r=>'records/'+r.id+'.json')]
-  const manifest={version:'d23-local-study-1',gitHead,sourceSha256,origin,directory,databases,role,plan,records:choices,modelCallsEnabled:false,humanTrial:role==='HUMAN_EXPLORATORY',assets:paths.map(path=>({path,sha256:digest(readFileSync(resolve(directory,path)))}))}
+  const manifest={version:'d23-local-study-1',gitHead,sourceSha256,origin,directory,databases,role,reportVersion,plan,records:choices,modelCallsEnabled:false,humanTrial:role==='HUMAN_EXPLORATORY',assets:paths.map(path=>({path,sha256:digest(readFileSync(resolve(directory,path)))}))}
   writeFileSync(resolve(directory,'manifest.json'),JSON.stringify(manifest,null,2)+'\n');return manifest
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(resolve(process.argv[1])).href){

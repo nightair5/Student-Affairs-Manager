@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import type { WorkspaceV8 } from '../../domain/v2/types'
 import type { SemanticRepository } from '../mainline05/semanticRepository'
-import { correctSemanticFact, reviewSemanticFact, reviewSemanticMaterial, acceptSemanticPendingDate } from '../mainline05/semanticConfirmation'
+import { correctSemanticFact, reviewSemanticFact, reviewSemanticMaterialAndTask, acceptSemanticPendingDate } from '../mainline05/semanticConfirmation'
 import { pendingDateEligible, hasPendingDateConsent } from '../mainline05/semanticState'
 import { REAL_STATE_VERSION, stateOfRuntime, effectiveStateFacts, life, canAct, isCurrentDraft, liveReviewIdentity, semanticRevision, titleReviewProblem, materialReviewEnabled, materialDecision, materialReviewProblem } from '../mainline05/semanticState'
 import { materialEdit, factAssets, materialStatusLabels, validateMaterialDecision, type FactChange, type MaterialEdit } from './factCorrections'
@@ -86,9 +86,9 @@ export function FactCorrectionEditor({ repo, workspace, draftId, taskId, busy, o
     <p>请核对当前标题“{current.values[taskId].title}”与动作、对象、条件、时间、材料和来源。核对不等于勾选，也不会创建正式任务。</p>
     {titleReviewProblem(current.values[taskId].title)&&<p role="status">{titleReviewProblem(current.values[taskId].title)}</p>}
     {materialReviewProblem(state,taskId)&&<p role="status">{materialReviewProblem(state,taskId)}</p>}
-    <details><summary>核对日期待定的原文依据</summary>
-      <p>日期不明确不等于没有时间要求。请核对全部时间依据；可补充本任务遗漏的原文，不改原答或删除原有时间。</p>
-      {facts.timePoints.filter(t=>assets.times.has(t.tempId)).map(t=><p key={t.tempId}>{t.rawText} · {t.normalizedValue??'尚无具体日期'}</p>)}
+    <details open={pendingDateEligible(state,taskId)}><summary>核对时间与当前未知的原文依据</summary>
+      <p>精确时间可确定到时分；仅日期不代表午夜截止；模糊时段和未公布时间保留原文、未知值，不需要编造日期。个人计划日期与通知截止分别保留。</p>
+      {facts.timePoints.filter(t=>assets.times.has(t.tempId)).map(t=><p key={t.tempId}>{t.rawText} · {t.normalizedValue??'当前未知：不生成具体时刻'} · {t.precision==='date_only'?'仅日期，没有具体时分':t.precision==='vague'?'模糊或尚未公布':t.precision==='exact'?'精确时间':'相对时间'}</p>)}
       <button type="button" disabled={blocked||relationDirty||Boolean(change||materialBuffer)} onClick={()=>choose({kind:'time',taskId,
         scopeIds:[task.propositionScopeIds[0]],note:'用户核对补充时间原文；日期仍待定。',value:{tempId:'user-'+crypto.randomUUID(),
           type:'task_deadline',rawText:'',normalizedValue:null,timezone:state.context.timezone,isAllDay:false,precision:'vague',needsConfirmation:true,
@@ -106,7 +106,7 @@ export function FactCorrectionEditor({ repo, workspace, draftId, taskId, busy, o
         <p>以下操作只记录接受日期待定，不填日期、不取消时间待核对标记，也不会自动创建或勾选任务。</p>
         <button type="button" disabled={blocked||relationDirty||Boolean(change||materialBuffer)||hasPendingDateConsent(state,taskId)} onClick={()=>void run(()=>acceptSemanticPendingDate(repo,
           {draftId,taskId,revision:savedRevision,operationId:crypto.randomUUID()}))}>
-          {hasPendingDateConsent(state,taskId)?'已保存：接受日期仍待定':'任务内容已核对，先加入任务；日期仍待定'}</button>
+          {hasPendingDateConsent(state,taskId)?'已保存：接受日期仍待定':'依据原文确认时间目前未知，保留待核对'}</button>
         <p>之后再点“本项事实已核对”并主动选择加入任务；未保存的编辑不能确认。</p>
       </>}
     </details>
@@ -121,9 +121,10 @@ export function FactCorrectionEditor({ repo, workspace, draftId, taskId, busy, o
       <label>当前准备状态<select value={materialBuffer.status} onChange={e=>setMaterialBuffer({...materialBuffer,status:e.target.value})}>
         <option value="">请选择准备情况</option>{Object.entries(materialStatusLabels).map(([v,label])=><option key={v} value={v}>{label}</option>)}</select></label>
       <p>不知道是否备齐时，可以主动选择“准备情况尚未核实”。确认任务不代表材料已齐备，也不会解除原文的执行条件或前置任务。未保存的核对不会用于确认。</p>
-        <button type="button" disabled={!materialBuffer.required||!materialBuffer.status||!checkpoint.readyToSave} onClick={()=>void run(()=>reviewSemanticMaterial(repo,
-        {draftId,materialId:materialBuffer.id,revision:bufferRevision,operationId:crypto.randomUUID(),
-          value:validateMaterialDecision({required:materialBuffer.required==='yes',status:materialBuffer.status})}))}>保存材料核对</button>
+        <p>同时核对本项的动作、对象、时间和依据。点击下方会保存材料观察，并在其他事实没有阻碍时记录本项已核对；正式加入任务仍需你确认。</p>
+        <button type="button" disabled={!materialBuffer.required||!materialBuffer.status||!checkpoint.readyToSave} onClick={()=>void run(()=>reviewSemanticMaterialAndTask(repo,
+        {draftId,taskId,materialId:materialBuffer.id,revision:bufferRevision,operationId:crypto.randomUUID(),
+          value:validateMaterialDecision({required:materialBuffer.required==='yes',status:materialBuffer.status})}))}>保存材料并核对本项</button>
       <button type="button" disabled={working} onClick={()=>void discard()}>放弃未保存材料核对</button>
     </fieldset>}
     <button type="button" disabled={blocked || relationDirty || Boolean(change||materialBuffer) || !canAct(state,taskId) || reviewed || Boolean(titleReviewProblem(current.values[taskId].title))}

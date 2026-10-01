@@ -20,9 +20,10 @@ export const isD19Database=(name:string)=>/^rco-mainline-01-02-i1-real-input-d19
 export const isD20Database=(name:string)=>/^rco-mainline-01-02-i1-real-input-d20-review-session-p[1-9][0-9]{0,2}$/.test(name)
 export const isD21Database=(name:string)=>/^rco-mainline-01-02-i1-real-input-(?:d21-review-session-p[1-9][0-9]{0,2}|d23-study-(?:engineering|human)-[a-z0-9-]{2,32})$/.test(name)
 export const D13_TRACE_KEY='d13-measurement-low-edit-v2'
+export const D24_CORRECTION_VERSION='d24-source-information-1'
 export const LOW_EDIT_POLICY={version:'low-edit-v2-exploratory-1',maxFields:2,maxActiveEditMs:30_000,idleLimitMs:5_000,origin:'ENGINEERING_REPLAY',humanTrialAuthorized:false} as const
 type Kind='begin'|'read'|'edit'|'edit_activity'|'blur'|'hidden'|'visible'|'wait'|'wait_end'|'commit'|'readback'|'failure'|'restore'|'end'
-export interface D13Trace {id:string;draftId:string;atMs:number;kind:Kind;editId?:string;fieldKey?:string;commitId?:string;includedEditIds?:string[];includedOperationIds?:string[];fields?:string[];semanticFields?:string[];structural?:boolean;error?:string;disposition?:'confirmed'|'partial'|'no_task';snapshot?:{recordId:string;sourceSha256:string;firstOutputSha256:string}}
+export interface D13Trace {id:string;draftId:string;atMs:number;kind:Kind;editId?:string;fieldKey?:string;commitId?:string;includedEditIds?:string[];includedOperationIds?:string[];fields?:string[];semanticFields?:string[];semanticMappingVersion?:typeof D24_CORRECTION_VERSION;structural?:boolean;error?:string;disposition?:'confirmed'|'partial'|'no_task';snapshot?:{recordId:string;sourceSha256:string;firstOutputSha256:string}}
 type Store=WorkspaceRecordStore&{name:string}
 export function assertD13Database(name:string){if(name!==D13_DATABASE&&name!==D14_DATABASE&&!isD15Database(name)&&!isD19Database(name)&&!isD20Database(name)&&!isD21Database(name))throw Error('D13_ISOLATED_DATABASE_REQUIRED')}
 const flatten=(value:unknown,prefix='',out:Record<string,unknown>={}):Record<string,unknown>=>{
@@ -30,13 +31,13 @@ const flatten=(value:unknown,prefix='',out:Record<string,unknown>={}):Record<str
   else out[prefix]=value
   return out
 }
-function semanticFields(w:WorkspaceV8,draftId:string){
+function semanticFields(w:WorkspaceV8,draftId:string,version?:typeof D24_CORRECTION_VERSION){
   const s=stateOfRuntime(w,draftId),facts=effectiveStateFacts(s).facts
   const entities=Object.fromEntries((['tasks','materials','timePoints','events'] as const).map(kind=>[kind,Object.fromEntries(facts[kind].map(v=>['id' in v?v.id:v.tempId,v]))]))
-  return flatten({...entities,revisions:facts.revisions,display:life(s).values})
+  return flatten({...entities,revisions:facts.revisions,...(version?{informationScopeIds:facts.informationScopeIds,unresolvedScopeIds:facts.unresolvedScopeIds}:{}),display:life(s).values})
 }
-export function committedFieldDiff(before:WorkspaceV8,after:WorkspaceV8,draftId:string){
-  const a=semanticFields(before,draftId),b=semanticFields(after,draftId)
+export function committedFieldDiff(before:WorkspaceV8,after:WorkspaceV8,draftId:string,version?:typeof D24_CORRECTION_VERSION){
+  const a=semanticFields(before,draftId,version),b=semanticFields(after,draftId,version)
   const fields=[...new Set([...Object.keys(a),...Object.keys(b)])].filter(key=>stableJson(a[key]??null)!==stableJson(b[key]??null))
   const s1=effectiveStateFacts(stateOfRuntime(before,draftId)).facts,s2=effectiveStateFacts(stateOfRuntime(after,draftId)).facts
   const d1=life(stateOfRuntime(before,draftId)).dispositions,d2=life(stateOfRuntime(after,draftId)).dispositions
@@ -50,6 +51,7 @@ export function groupD19SemanticFields(paths:readonly string[],after:WorkspaceV8
   const facts=effectiveStateFacts(stateOfRuntime(after,draftId)).facts,groups=new Set<string>()
   let structural=false
   for(const path of paths){
+    if(path.startsWith('informationScopeIds')||path.startsWith('unresolvedScopeIds')){groups.add('source:information');continue}
     if(path==='revisions'||path.startsWith('disposition.reject.')){groups.add(path);structural=true;continue}
     const [kind,id,...parts]=path.split('.'),field=parts.join('.')
     if(!id||!field)continue
@@ -99,7 +101,7 @@ export function createD13Measurement(transport:Store,now:()=>number=Date.now){
 }
 export type D13Measurement=ReturnType<typeof createD13Measurement>
 /** Every measured correction is derived from a real saved operation, then independently read back. */
-export function createD13Store(transport:Store,metrics:D13Measurement,sourceSession=false){
+export function createD13Store(transport:Store,metrics:D13Measurement,sourceSession=false,correctionVersion?:typeof D24_CORRECTION_VERSION){
   assertD13Database(transport.name);let fail=false,failReadback=false,failCheckpoint=false
   const recoverable=isD21Database(transport.name)
   const listeners=new Set<()=>void>()
@@ -121,13 +123,13 @@ export function createD13Store(transport:Store,metrics:D13Measurement,sourceSess
           if(!old?.legacyData?.mainline05||!draft.legacyData?.mainline05)continue
           const prev=stateOfRuntime(before!,draft.id),current=stateOfRuntime(next,draft.id),ops=current.operations.slice(prev.operations.length)
           if(!ops.length||!traces.some(e=>e.draftId===draft.id&&e.kind==='begin'))continue;changedDrafts.push(draft.id)
-          const commitId=ops.map(o=>o.id).join(':'),diff=committedFieldDiff(before!,next,draft.id),semantic=sourceSession?groupD19SemanticFields(diff.fields,next,draft.id):null
+          const commitId=ops.map(o=>o.id).join(':'),diff=committedFieldDiff(before!,next,draft.id,correctionVersion),semantic=sourceSession?groupD19SemanticFields(diff.fields,next,draft.id):null
           const trace=traces.filter(t=>t.draftId===draft.id),already=new Set(trace.flatMap(t=>t.includedEditIds??[]))
           if(fail&&stableJson(before)!==stableJson(next)){fail=false;throw Error('D13_INJECTED_ATOMIC_FAILURE')}
           const disposition=ops.some(o=>o.kind==='review_info')?'no_task':ops.some(o=>o.kind==='confirm')?(draft.status==='confirmed'?'confirmed':'partial'):undefined
           const includedEditIds=trace.filter(t=>t.kind==='edit'&&t.editId&&!already.has(t.editId)
             &&(!recoverable||disposition==='confirmed'||disposition==='no_task'||d22EditBelongsToCommit(t.fieldKey,semantic?.fields??[],next,draft.id,ops))).map(t=>t.editId!)
-          traces.push({id:crypto.randomUUID(),draftId:draft.id,kind:'commit',atMs:metrics.now(),commitId,includedEditIds,...(recoverable?{includedOperationIds:ops.map(op=>op.id)}:{}),fields:diff.fields,...(semantic?{semanticFields:semantic.fields}:{}),structural:diff.structural||Boolean(semantic?.structural),...(disposition?{disposition}:{})})
+          traces.push({id:crypto.randomUUID(),draftId:draft.id,kind:'commit',atMs:metrics.now(),commitId,includedEditIds,...(recoverable?{includedOperationIds:ops.map(op=>op.id)}:{}),fields:diff.fields,...(semantic?{semanticFields:semantic.fields}:{}),...(correctionVersion?{semanticMappingVersion:correctionVersion}:{}),structural:diff.structural||Boolean(semantic?.structural),...(disposition?{disposition}:{})})
           commitIds.push({draftId:draft.id,commitId,operationIds:ops.map(op=>op.id),...(disposition?{disposition}:{})})
         }
         const records=new Map<string,unknown>([['current',next],[D13_TRACE_KEY,traces]])

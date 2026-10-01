@@ -81,7 +81,8 @@ export function pendingDateEligible(state: AnySemanticState, id: string): boolea
     if(probe.normalizedValue&&!isDateOnly(probe.normalizedValue))clocks.add(stableJson([probe.normalizedValue,probe.rangeEndNormalizedValue]))
     return deadlineType(t.type)&&t.normalizedValue===null&&t.precision==='vague'&&t.needsConfirmation&&t.isAllDay===false
       &&t.timezone===state.context.timezone&&ast.normalizedValue===null&&ast.precision==='vague'
-      &&ast.issues.length===1&&['date_missing','time_not_found'].includes(ast.issues[0])&&probe.issues.length===0
+      &&ast.issues.length===1&&['date_missing','time_not_found'].includes(ast.issues[0])
+      &&(probe.issues.length===0 || ast.issues[0]==='time_not_found'&&/(月底|月末|前后|周[一二三四五六日天].*(晚|上午|下午)|未公布|尚未|稍后公布|另行通知|待定|待通知)/u.test(t.rawText))
       &&t.scopeIds.filter(s=>state.context.index.scopes.find(x=>x.id===s)?.text.includes(t.rawText)).length===1
   })
   return valid&&clocks.size<=1
@@ -445,7 +446,8 @@ function liveLife(state: RealInputState) {
           && (time.normalizedValue===null)===time.needsConfirmation))), 'INDEPENDENT_EVENT_EVIDENCE')
       independentEventsReviewedAt=op.at
     } else {
-      const independentCorrection=op.kind==='correct_fact'&&['independent_event','independent_time','add_independent_event'].includes(op.correction?.change.kind??'')
+      const independentCorrection=op.kind==='correct_fact'&&(['independent_event','independent_time','add_independent_event'].includes(op.correction?.change.kind??'')
+        ||op.correction?.change.kind==='information_scope'&&!op.taskIds.length)
       assert((op.taskIds.length||independentCorrection)&&!informationReviewed&&op.taskIds.every(id => dispositions[id] !== 'confirmed'), 'ALREADY_CONFIRMED')
       if (op.kind === 'correct_fact') {
         assert(op.correction && op.factReview && op.field === null && op.value === null && op.before === null, 'CORRECTION_SHAPE')

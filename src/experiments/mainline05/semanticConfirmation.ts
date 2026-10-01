@@ -4,7 +4,7 @@ import { applySemanticDomainCommitPlan, type SemanticDomainCommitPlan } from '..
 import { workspaceSnapshotHash } from '../../domain/v2/migration'
 import { plainJson } from '../mainline04/semanticContract'
 import { assert, exactKeys, equal, stateOfRuntime as stateOf, life, canonicalFacts, saveState, semanticId, semanticRevision,
-  REAL_STATE_VERSION, effectiveStateFacts, liveReviewIdentity, independentEventIdentity, isCurrentDraft, relatedAssets, materialIdentity, materialDecision, materialReviewEnabled, type SemanticOperation } from './semanticState'
+  REAL_STATE_VERSION, effectiveStateFacts, liveReviewIdentity, independentEventIdentity, isCurrentDraft, relatedAssets, materialIdentity, materialDecision, materialReviewEnabled, canAct, type SemanticOperation } from './semanticState'
 import { appendCorrection, correctionBefore, validateMaterialDecision, type MaterialDecision, type FactChange } from '../realInput01/factCorrections'
 import { composeSemantics } from '../mainline04/semanticComposer'
 import { pendingDateEligible, pendingDateIdentity, hasPendingDateConsent } from './semanticState'
@@ -60,6 +60,30 @@ export async function reviewSemanticMaterial(repo: SemanticRepository,intent:{dr
       materialReview:{materialId:intent.materialId,identity:materialIdentity(state,intent.materialId),value,
         ...(value.status==='unverified'?{version:'material-review-2' as const}:{})}}
     return applySemanticDomainCommitPlan(w,planOperation(w,intent.draftId,op),now)
+  })
+}
+/** One explicit click; both draft observations are atomic. Never confirms canonical facts. */
+export async function reviewSemanticMaterialAndTask(repo:SemanticRepository,intent:{draftId:string;taskId:string;materialId:string;revision:string;operationId:string;value:MaterialDecision},now=new Date().toISOString()){
+  exactKeys(intent,['draftId','taskId','materialId','revision','operationId','value'])
+  const value=validateMaterialDecision(intent.value)
+  return repo.transaction(w=>{
+    assert(repo.profile==='real-input-01'&&semanticRevision(w)===intent.revision,'STALE_RELOAD_REQUIRED')
+    const state=stateOf(w,intent.draftId),facts=effectiveStateFacts(state).facts
+    assert(state.version===REAL_STATE_VERSION,'EXPLICIT_REAL_INPUT_REQUIRED')
+    assert(isCurrentDraft(w,intent.draftId)&&materialReviewEnabled(state),'MATERIAL_MODE_REQUIRED')
+    assert(relatedAssets(facts,[intent.taskId]).materials.has(intent.materialId),'MATERIAL_TASK_REFERENCE')
+    const previous=state.operations.find(o=>o.id===intent.operationId)
+    if(previous){assert(previous.kind==='review_material'&&previous.materialReview?.materialId===intent.materialId&&equal(previous.materialReview.value,value),'OPERATION_COLLISION');return w}
+    const materialOp:SemanticOperation={id:intent.operationId,kind:'review_material',at:now,
+      taskIds:facts.tasks.filter(t=>relatedAssets(facts,[t.id]).materials.has(intent.materialId)).map(t=>t.id).sort(),field:null,value:null,before:null,
+      materialReview:{materialId:intent.materialId,identity:materialIdentity(state,intent.materialId),value,...(value.status==='unverified'?{version:'material-review-2' as const}:{})}}
+    const next=applySemanticDomainCommitPlan(w,planOperation(w,intent.draftId,materialOp),now),after=stateOf(next,intent.draftId)
+    assert(after.version===REAL_STATE_VERSION,'EXPLICIT_REAL_INPUT_REQUIRED')
+    // Other missing materials, time/graph issues or false conditions still block review.
+    if(!canAct(after,intent.taskId))return next
+    const taskOp:SemanticOperation={id:intent.operationId+'-review',kind:'review_task',at:now,taskIds:[intent.taskId],field:null,value:null,before:null,
+      reviewIdentity:liveReviewIdentity(after,intent.taskId,life(after).values)}
+    return applySemanticDomainCommitPlan(next,planOperation(next,intent.draftId,taskOp),now)
   })
 }
 export function planOperation(workspace: WorkspaceV8, draftId: string, op: SemanticOperation): SemanticDomainCommitPlan {
