@@ -11,6 +11,7 @@ import {revisionLabel,taskReviewFingerprint} from '../candidate16/staleRecovery'
 import type { D20ReviewSessionRepository } from '../candidate16/d20ReviewSession'
 import { useD21EditorCheckpoint } from '../candidate16/useD21EditorCheckpoint'
 import { stableJson } from '../mainline04/semanticContract'
+import {reviewTimeEvidence} from './reviewTimeEvidence'
 
 function correctionSummary(input:unknown,titles:Map<string,string>){
   if(typeof input==='string'&&input.startsWith('{'))try{input=JSON.parse(input)}catch{/* remain a plain note */}
@@ -90,16 +91,16 @@ export function FactCorrectionEditor({ repo, workspace, draftId, taskId, busy, o
       <p>精确时间可确定到时分；仅日期不代表午夜截止；模糊时段和未公布时间保留原文、未知值，不需要编造日期。个人计划日期与通知截止分别保留。</p>
       {facts.timePoints.filter(t=>assets.times.has(t.tempId)).map(t=><p key={t.tempId}>{t.rawText} · {t.normalizedValue??'当前未知：不生成具体时刻'} · {t.precision==='date_only'?'仅日期，没有具体时分':t.precision==='vague'?'模糊或尚未公布':t.precision==='exact'?'精确时间':'相对时间'}</p>)}
       <button type="button" disabled={blocked||relationDirty||Boolean(change||materialBuffer)} onClick={()=>choose({kind:'time',taskId,
-        scopeIds:[task.propositionScopeIds[0]],note:'用户核对补充时间原文；日期仍待定。',value:{tempId:'user-'+crypto.randomUUID(),
+        scopeIds:[task.propositionScopeIds[0]],note:'用户按原文补录时间；确定性转换与未知状态保留。',value:{tempId:'user-'+crypto.randomUUID(),
           type:'task_deadline',rawText:'',normalizedValue:null,timezone:state.context.timezone,isAllDay:false,precision:'vague',needsConfirmation:true,
           relatedTaskTempIds:[taskId],relatedMaterialTempIds:[],scopeIds:[task.propositionScopeIds[0]],confidence:1}})}>补充遗漏的时间依据</button>
-      {change?.kind==='time'&&<fieldset disabled={blocked}><legend>人工补充日期待定依据（不改模型原答）</legend>
+      {change?.kind==='time'&&<fieldset disabled={blocked}><legend>人工补充原文时间依据（不改模型原答）</legend>
         <label>时间所在原文<select value={change.value.scopeIds[0]} onChange={e=>setChange({...change,scopeIds:[e.target.value],value:{...change.value,scopeIds:[e.target.value]}})}>
           {state.context.index.scopes.filter(s=>task.propositionScopeIds.includes(s.id)||facts.timePoints.some(t=>assets.times.has(t.tempId)&&t.scopeIds.includes(s.id)))
             .map(s=><option key={s.id} value={s.id}>{s.text}</option>)}</select></label>
         <label>需要保留的逐字时间原文<input value={change.value.rawText} onChange={e=>setChange({...change,value:{...change.value,rawText:e.target.value}})}/></label>
-        <p>归属本任务：{task.detail.title}。这里只补充待定截止依据；明确日期用已有日期编辑，不能用此操作消除冲突。</p>
-        <button type="button" disabled={!change.value.rawText.trim()} onClick={()=>void run(()=>correctSemanticFact(repo,{draftId,revision:bufferRevision,operationId:crypto.randomUUID(),change}))}>保存时间依据</button>
+        <p>归属本任务：{task.detail.title}。按原文补录截止：精确时间、仅日期由确定性解析器转换；模糊或未公布保持未知。个人计划日期另行编辑，不能用此操作消除冲突。</p>
+        <button type="button" disabled={!checkpoint.readyToSave||!change.value.rawText.trim()} onClick={()=>void run(()=>correctSemanticFact(repo,{draftId,revision:bufferRevision,operationId:crypto.randomUUID(),change:{...change,value:reviewTimeEvidence(change.value,state.context.referenceTime,state.context.timezone)}}))}>保存时间依据</button>
         <button type="button" disabled={working} onClick={()=>void discard()}>放弃未保存时间依据</button>
       </fieldset>}
       {pendingDateEligible(state,taskId)&&<>

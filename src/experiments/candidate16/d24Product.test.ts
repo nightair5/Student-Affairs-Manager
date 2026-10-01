@@ -15,6 +15,7 @@ import {acceptSemanticPendingDate,correctSemanticFact,reviewSemanticMaterialAndT
 import {sourceCoverageGaps} from '../realInput01/sourceCoverage'
 import {semanticReview} from '../mainline05/semanticView'
 import type {FactChange} from '../realInput01/factCorrections'
+import {reviewTimeEvidence} from '../realInput01/reviewTimeEvidence'
 let plan:StudyPlan,records:D13ReplayRecord[]
 beforeAll(async()=>{({plan,records}=await d23Materials())},30000)
 async function opened(slotId:string){
@@ -31,6 +32,35 @@ async function opened(slotId:string){
 }
 async function correct(r:Awaited<ReturnType<typeof opened>>,change:FactChange){const w=await r.app.repository.load();return correctSemanticFact(r.app.repository,{draftId:r.draftId,revision:semanticRevision(w),operationId:crypto.randomUUID(),change})}
 describe('D24 actual source disposal and safe unknown-time consent',()=>{
+  it('manual source time entry uses the shared parser for four classes and rejects malformed times',()=>{
+    const base={tempId:'user-time',type:'task_deadline' as const,rawText:'',normalizedValue:null,timezone:'Asia/Shanghai',isAllDay:false,precision:'vague' as const,needsConfirmation:true,relatedTaskTempIds:['user-task'],relatedMaterialTempIds:[],scopeIds:['source-scope'],confidence:1}
+    for(const [rawText,normalizedValue,precision,isAllDay] of [
+      ['2026年10月19日16:30前','2026-10-19T16:30','exact',false],
+      ['10月20日前','2026-10-20','date_only',true],
+      ['月底前后',null,'vague',false],['尚未公布',null,'vague',false],
+    ] as const){
+      const next=reviewTimeEvidence({...base,rawText},'2026-10-01T00:00:00.000Z','Asia/Shanghai')
+      expect(next).toMatchObject({rawText,normalizedValue,precision,isAllDay,relatedTaskTempIds:['user-task'],scopeIds:['source-scope']})
+      if(normalizedValue===null)expect(next.needsConfirmation).toBe(true)
+    }
+    expect(()=>reviewTimeEvidence({...base,rawText:'2026年10月19日25:99'},'2026-10-01T00:00:00.000Z','Asia/Shanghai')).toThrow('TIME_EVIDENCE_REQUIRES_REVIEW')
+  })
+  it('blank manual entry can add the actual source deadline before material review without changing the empty first response',async()=>{
+    const r=await opened('p2-1'),example=await opened('p1-1'),sample=stateOfRuntime(await example.app.repository.load(),example.draftId),manual=stateOfRuntime(await r.app.repository.load(),r.draftId)
+    const task=structuredClone(effectiveStateFacts(sample).facts.tasks[0]),first=structuredClone(manual.first)
+    const mapped=new Map(sample.context.index.scopes.map(scope=>[scope.id,manual.context.index.scopes.find(s=>s.text===scope.text)!.id]))
+    task.id='user-d24-manual';task.detail.materialTempIds=[];task.detail.timePointTempIds=[]
+    task.propositionScopeIds=task.propositionScopeIds.map(id=>mapped.get(id)!);task.action.scopeId=mapped.get(task.action.scopeId)!;task.object.scopeId=mapped.get(task.object.scopeId)!
+    task.coverage.material='not_stated';task.coverage.time='not_stated'
+    await correct(r,{kind:'add_task',value:task,scopeIds:task.propositionScopeIds,note:'工程手动从空白补录原文任务'})
+    const scope=manual.context.index.scopes.find(s=>s.text.includes('2026年10月19日16:30'))!,time=reviewTimeEvidence({tempId:'user-manual-time',type:'task_deadline',rawText:'2026年10月19日16:30前',normalizedValue:null,timezone:'Asia/Shanghai',isAllDay:false,precision:'vague',needsConfirmation:true,relatedTaskTempIds:[task.id],relatedMaterialTempIds:[],scopeIds:[scope.id],confidence:1},manual.context.referenceTime,manual.context.timezone)
+    await correct(r,{kind:'time',taskId:task.id,value:time,scopeIds:[scope.id],note:'用户逐字补录，程序仅做确定性转换'})
+    let w=await r.app.repository.load(),after=stateOfRuntime(w,r.draftId)
+    expect(after.first).toEqual(first);expect(effectiveReview(after).issues.some(i=>i.code==='TIME_NEEDS_REVIEW')).toBe(false)
+    w=await reviewSemanticFact(r.app.repository,{draftId:r.draftId,taskId:task.id,revision:semanticRevision(w),operationId:crypto.randomUUID()})
+    await r.app.runtime.confirm({draftId:r.draftId,revision:semanticRevision(w),taskTempIds:[task.id]})
+    const saved=await r.app.independentReadback();expect(saved.tasks).toHaveLength(1);expect(saved.timePoints[0]).toMatchObject({normalizedValue:'2026-10-19T16:30',rawText:'2026年10月19日16:30前',precision:'exact'})
+  })
   it('S09 exposes only the missing provenance fragment; explicit event plus classification archives 0 tasks and real event/time',async()=>{
     const r=await opened('p1-4'),w=await r.app.repository.load(),s=stateOfRuntime(w,r.draftId),original=JSON.stringify(s),facts=effectiveStateFacts(s).facts
     const gaps=sourceCoverageGaps(facts,s.context.index);expect(gaps.map(g=>g.text)).toEqual(['[D16新编匿名Development]'])
