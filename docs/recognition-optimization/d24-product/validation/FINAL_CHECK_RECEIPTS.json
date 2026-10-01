@@ -1,0 +1,39 @@
+{
+  "checkedAt": "2026-10-01T10:31:05.977832+08:00",
+  "codeHead": "0b8a6e4534e0ed8ffe220e9bce9193fcc691d2bd",
+  "role": "ENGINEERING_REPLAY",
+  "modelCalls": 0,
+  "ledgerTransactions": 0,
+  "checks": [
+    {
+      "label": "history",
+      "command": "node scripts/verify-recognition-history.mjs --verify",
+      "exitCode": 0,
+      "log": "history.log"
+    },
+    {
+      "label": "d19-diagnostic",
+      "command": "node scripts/d19-offline-diagnostic.mjs --verify",
+      "exitCode": 0,
+      "log": "d19-diagnostic.log"
+    },
+    {
+      "label": "isolation-main",
+      "command": "node scripts/verify-d23-study.mjs .data/d23/d24release01",
+      "exitCode": 0,
+      "log": "isolation-main.log"
+    },
+    {
+      "label": "isolation-supplement",
+      "command": "node scripts/verify-d23-study.mjs .data/d23/d24manual01",
+      "exitCode": 0,
+      "log": "isolation-supplement.log"
+    },
+    {
+      "label": "security",
+      "command": "node scripts/candidate11-checks.mjs security",
+      "exitCode": 0,
+      "log": "security.log"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+✔ sync is closed when the server token is missing (41.6485ms)
+✔ authenticated sync persists data and reports conflicts (23.2437ms)
+✔ email queue stays blocked without a provider (5.9311ms)
+✔ email queue records failure and explicit retry before sent (25.4937ms)
+✔ web fetch is closed unless explicitly enabled and validates public HTTPS targets (1.1806ms)
+✔ public web fetch extracts inert text and revalidates redirects (1.6538ms)
+✔ DeepSeek remains disabled without a server-side key (0.1519ms)
+✔ DeepSeek adapter sends only the bounded question and citations (0.5842ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 244.8721

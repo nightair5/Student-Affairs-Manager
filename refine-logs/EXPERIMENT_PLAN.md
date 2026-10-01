@@ -1,7 +1,7 @@
 # 当前产品验证计划
 
-2026-09-30。唯一[活动路线](../docs/governance/PROJECT_EXECUTION_ROADMAP.md)。[D23](../docs/recognition-optimization/d23-study/D23_RESULTS.md)已接通4人16条手动/固定辅助排程、范围/同意门、负责人裁决和正式保存计量。
+2026-10-01。唯一[活动路线](../docs/governance/PROJECT_EXECUTION_ROADMAP.md)。[D24](../docs/recognition-optimization/d24-product/D24_RESULTS.md)已交付信息覆盖、原文未知时间、材料联合核对及真实手动补录修订，复用D23正式保存和探索系统。
 
-工程开始13条，4完成候选/1partial/8退出；未裁决不能算正确。真人0，四项NOT_OBSERVABLE。本轮模型及账本交易0。
+主工程8开始/4完成候选/3退出/1超时，16排程/8来源仍保留。补充工程独立3开始，不混合为真人比较。真人0、四项NOT_OBSERVABLE，模型与账本交易0。
 
-下一直接动作是取得真实负责人接受、明确本机4人16条范围授权和本人同意；负责人首人前核准8份义务/争议及冻结刺激/测量。复用现有工具和新human库，不再生成新候选/24身份。随后按真实卡点最多修1—3类根因，需要新模型证据才另申请。Codex云端开发另配置，不能替代真人或模型授权。
+下一直接动作：真实负责人接受、4人16条本机固定录制范围授权、本人同意；首人前核准义务/争议、构建、刺激、d24-planned-coverage-1、d24-source-information-1、历史measurement/low-edit-v2及完成窗。复用工具、新human库、不复制空表。观察后最多修3根因；确需首次新输出才另申请模型比较。

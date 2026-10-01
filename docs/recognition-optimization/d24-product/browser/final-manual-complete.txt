@@ -1,0 +1,208 @@
+- banner:
+  - heading "D24 通知核对与覆盖报告" [level=1]
+  - paragraph: 角色：匿名工程回放／非真人试用 · 构建：2d4e97212a23 / source 69e9222b263b · 固定 Candidate17 D17 录制 · 新模型调用关闭
+  - text: 隔离身份
+  - combobox "隔离身份":
+    - option "模拟身份 p1"
+    - option "模拟身份 p2" [selected]
+    - option "模拟身份 p3"
+    - option "模拟身份 p4"
+  - paragraph: 本机浏览器保存；无账号认证或跨设备同步。登记、同意与准备不计通知处理时间。个人资料和同意原件留在负责人本机。
+- region "D23试次控制":
+  - heading "试次与固定来源" [level=2]
+  - paragraph: 数据库：rco-mainline-01-02-i1-real-input-d23-study-engineering-d24manual01-p2。本身份已开始 1；真人计划 16，真人实际 0。
+  - paragraph: 当前状态：started；条件：manual；试次：6775ce6b-59e1-4b67-86ab-58c7199dfab0。
+  - button "检查真人开始资格"
+  - generic "工程模拟登记／裁决（不会生成真人）"
+  - generic "工程模拟知情同意"
+  - text: 锁定排程
+  - combobox "锁定排程" [disabled]:
+    - option "1 · C17-D16-S01 · 空白手动" [selected]
+    - option "2 · C17-D16-S06 · 固定辅助"
+    - option "3 · C17-D16-S04 · 固定辅助"
+    - option "4 · C17-D16-S09 · 空白手动"
+  - heading "指定原文" [level=3]
+  - generic: "[D16新编匿名Development] 请于2026年10月19日16:30前提交社团器材盘点表。社团器材盘点表须为PDF格式，文件名为社团编号-经办人；门户提示收件成功即结束。"
+  - paragraph: 来源 SHA 2bfbae1b2b06；首次刺激 SHA dbba9885dc86。参考时点 2026-09-22，时区上海。空白手动不包含任务答案。
+  - button "看到原文并开始处理" [disabled]
+  - button "暂停处理"
+  - button "退出本试次"
+  - generic "匿名故障注入"
+  - paragraph: 报告同时保留计划16条、已开始、已打开建议、未打开、退出及未裁决。固定建议来源8份；未暴露和未知不会从计划分母删除。完整处置看总墙钟及阅读、编辑、等待、隐藏、空闲、暂停；工程记录不产生真人正确率。
+  - button "独立读回与试次报告"
+  - status: 已恢复处理，暂停区间单列。
+  - button "独立读回全部身份汇总"
+  - generic "工程模拟裁决接线"
+  - option "p2-1 · C17-D16-S01 · manual · started" [selected]
+- group "本试次正式核对与保存":
+  - generic: 本试次正式核对与保存
+  - link "跳到主要内容":
+    - /url: "#main-content"
+  - complementary:
+    - button "返回今日首页":
+      - strong: 事务管家
+      - generic: STUDENT DESK
+    - button "新事务 N":
+      - text: 新事务
+      - generic: "N"
+    - navigation "主要导航":
+      - generic: 执行闭环
+      - button "今日":
+        - text: 今日
+      - button "收件箱":
+        - text: 收件箱
+      - button "打开待确认队列，共 1 项":
+        - text: 待确认
+        - generic: "1"
+      - button "项目":
+        - text: 项目
+      - button "日历":
+        - text: 日历
+      - button "资料库":
+        - text: 资料库
+      - generic: 低频工具
+      - button "所有任务":
+        - text: 所有任务
+      - button "知识问答":
+        - text: 知识问答
+      - button "周报月报":
+        - text: 周报月报
+    - button "搜索事项":
+      - text: 搜索事项
+    - button "新手教程":
+      - text: 新手教程
+    - button "设置与服务":
+      - text: 设置与服务
+    - button "隐私与数据":
+      - text: 隐私与数据
+    - strong: 已在此设备自动保存
+    - paragraph: 同一浏览器与站点地址下可恢复；识别结果确认后才入库。
+  - region "隔离实验状态":
+    - paragraph: D24来源级核对 · 未确认输入恢复与冲突保护 · 非真人试用 · 独立测试库 · 仅本机已录制结果；新模型调用和旧用户库访问关闭。
+    - paragraph: 仅本轮录入、核对、确认、查询与JSON备份可用；未纳入操作会明确阻断。
+    - paragraph: 新语义保存在独立实验格式中，不能导入稳定入口。卡片分类与耗时仍是旧界面的兼容估计，不代表原文；完整原始属性可在详情核对，不会作为修改写回。
+    - button "准备完整测试库 JSON" [disabled]
+  - main:
+    - text: 来源先保存，确认后入库
+    - heading "待确认" [level=1]
+    - paragraph: 这里只显示已经形成建议、仍等待你核对的来源；确认前不会创建正式任务。
+    - strong: "1"
+    - text: 份需关注
+    - group "收件箱视图":
+      - button "全部来源"
+      - button "待确认 1" [pressed]
+    - button "新建手动来源":
+      - text: 新建手动来源
+    - checkbox "选择全部待核对"
+    - text: 选择全部待核对
+    - article:
+      - checkbox "选择 空白手动 · C17-D16-S01"
+      - generic: 选择 空白手动 · C17-D16-S01
+      - generic: DeepSeek V4 Flash 建议
+      - generic: 待核对
+      - heading "空白手动 · C17-D16-S01" [level=2]
+      - paragraph: "[D16新编匿名Development] 请于2026年10月19日16:30前提交社团器材盘点表。社团器材盘点表须为PDF格式，文件名为社团编号-经办人；门户提示收件成功即结束。"
+      - paragraph: 识别建议已保存，确认前不会创建正式任务。
+      - term: 项目
+      - definition: 未形成项目建议
+      - term: 实体
+      - definition: 1 任务 · 0 材料 · 0 时间 · 0 活动
+      - button "核对 1 项":
+        - text: 核对 1 项
+      - button "查看来源":
+        - text: 查看来源
+      - button "归档":
+        - text: 归档
+  - dialog "识别出 1 件事":
+    - banner:
+      - generic: 第 2 步 · D24来源级核对 · 未确认输入恢复与冲突保护 · 非真人试用
+      - heading "识别出 1 件事" [level=2]
+      - paragraph: 先看标题和时间；不准确时再点“编辑”。
+      - button "稍后处理并关闭":
+    - region "本试次暂停与退出":
+      - strong: 试次 started（部分确认不算整份完成）
+      - button "暂停本页处理"
+      - button "退出本页试次"
+    - status: 空白手动录入：目前没有预填答案，不能据此认定通知没有任务。请按原文补录任务、材料、时间和事件；确实无任务时才归档。手动录入量不会计作 AI 纠错。
+    - status "未确认编辑检查点":
+      - strong: 本来源核对会话
+      - paragraph: 编辑在确认前不会创建任务。
+    - strong: 1 项待确认
+    - generic: 确认后才会进入今日和任务中心
+    - generic "原始通知与定位依据":
+      - text: 原始通知与定位依据
+    - paragraph: "[D16新编匿名Development] 请于2026年10月19日16:30前提交社团器材盘点表。社团器材盘点表须为PDF格式，文件名为社团编号-经办人；门户提示收件成功即结束。"
+    - region "项目树待确认事项":
+      - region "同一通知的独立事件核对":
+        - paragraph: 任务与独立事件在这一页核对。保存事件字段纠正后，确认任务时会在同一笔正式提交中保存独立事件和已选任务。
+        - region "独立事件人工核对":
+          - heading "核对独立事件" [level=3]
+          - paragraph: 此处编辑是你的纠正，原模型回答和首次建议不变。原文依据仍可在上方定位；时间不确定时不生成日程。
+          - region "未处理原文逐片段核对":
+            - heading "尚未处理的原文" [level=3]
+            - paragraph: 若片段包含遗漏任务、事件或时间，请先在本页补录。只有确认它是非任务说明或样本出处后，才单独记录信息核对；不会自动处理所有片段。
+            - paragraph: 当前片段覆盖完整；保存成功仍不代表语义已经裁决。
+          - status: 当前没有未保存的事件输入。
+          - button "依据原文补充独立事件" [disabled]
+      - article:
+        - checkbox "选择该任务"
+        - generic: 选择该任务
+        - generic: "1"
+        - strong: 提交社团器材盘点表
+        - time:
+          - text: 2026-10-19T16:30（Asia/Shanghai） · 本项仍待核对
+        - button "编辑":
+          - text: 编辑
+        - generic: 其他
+        - generic: 约 30 分钟
+        - generic: 1 项材料
+        - paragraph: 下一步提交社团器材盘点表
+        - paragraph: 首次建议、原文和你的修改分开保留。编辑后先点“保存修改”，再正式核对确认；只有显示“检查点已保存”的工程入口可恢复未确认输入。
+        - region "任务完整事实":
+          - paragraph:
+            - strong: 提交 → 社团器材盘点表
+            - text: · 无附加条件
+          - paragraph: 当前已保存状态：待执行 / 有效；当前处置：pending
+          - paragraph: 时间：已提取；材料：已提取；事件：原文未说明
+          - generic "原文依据 · 21–50"
+          - generic "原文依据 · 78–90"
+          - generic "当前已保存任务属性（原答另行保留）"
+          - generic "材料：社团器材盘点表"
+          - generic "本次完整原文（包括无截止说明）"
+          - generic "原始时间：2026年10月19日16:30前"
+          - paragraph: 用户操作：correct_fact ENGINEERING_REPLAY：从空白补录原文动作及完成标准 · 2026-10-01T02:04:19.295Z
+          - paragraph: 用户操作：correct_fact 用户按原文补录时间；确定性转换与未知状态保留。 · 2026-10-01T02:04:29.272Z
+          - paragraph: 用户操作：correct_fact ENGINEERING_REPLAY：按原文补录PDF材料与命名 · 2026-10-01T02:04:45.278Z
+          - paragraph: 用户操作：correct_fact · 2026-10-01T02:12:05.524Z
+          - paragraph: 用户操作：review_material · 2026-10-01T02:12:21.880Z
+          - paragraph: 用户操作：review_task · 2026-10-01T02:12:21.880Z
+          - paragraph: 模型建议不自动勾选。当前明细为已保存的有效事实；原始响应与首次建议保留不变。
+          - paragraph: 人工修订材料：user-ec0af209-3d2f-4b02-809f-40fe8b177e85；人工字面值不是原文摘录。
+          - generic "原始响应与首次建议（不含后续编辑）"
+          - generic "全字段与关系明细"
+        - region "事实核对与修改：提交社团器材盘点表":
+          - status: 本项事实编辑尚未正式确认。
+          - paragraph: 请核对当前标题“提交社团器材盘点表”与动作、对象、条件、时间、材料和来源。核对不等于勾选，也不会创建正式任务。
+          - generic "核对时间与当前未知的原文依据"
+          - button "重新核对材料：社团器材盘点表" [disabled]
+          - button "本项已核对（已保存）" [disabled]
+          - generic "修正动作、对象或材料"
+          - region "条件、依赖与事件纠正：提交社团器材盘点表":
+            - paragraph: 人工纠正单独保存，不改变模型原回答。
+            - button "核对执行条件" [disabled]
+            - button "核对前置依赖" [disabled]
+            - button "核对活动关联" [disabled]
+            - button "依据原文补充材料" [disabled]
+        - button "稍后核对此项" [disabled]
+        - button "记录此项不需要" [disabled]
+        - generic "为什么这样拆？"
+        - button "不需要" [disabled]:
+          - text: 不需要
+        - button "加入任务" [disabled]:
+          - text: 加入任务
+      - region "通知漏项与新旧要求纠正":
+        - paragraph: 人工纠正单独保存，不改变模型原回答。
+        - button "纠正旧要求与新要求" [disabled]
+        - button "依据原文补充漏任务" [disabled]
+    - contentinfo:
+      - button "稍后再处理"

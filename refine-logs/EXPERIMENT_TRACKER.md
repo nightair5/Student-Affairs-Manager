@@ -1,15 +1,14 @@
 # 当前工作跟踪
 
-2026-10-01。事实入口：[D23](../docs/recognition-optimization/d23-study/D23_RESULTS.md)、[本轮工程入口恢复](../docs/recognition-optimization/d23-study/resume-20261001/RESUME.md)。
+2026-10-01。唯一事实入口：[D24](../docs/recognition-optimization/d24-product/D24_RESULTS.md)。
 
 | 工作 | 状态 | 下一动作 |
 |---|---|---|
-| D17比较 | 24/24 SETTLED；C03 1/12、C17 2/12，MIXED_PROGRESS | 许可耗尽，原数据只读 |
-| D19诊断/D22正式链 | 已完成，历史角色保留 | D23沿用未受影响基础证据，新增接线单独实际验收 |
-| D23工程接线 | 4人16条计划；工程13开始/4完成候选/1partial/8退出 | 已交付，不把完成候选称正确 |
-| D23入口恢复 | 新6730/resume1001，0新试次；26定向PASS；材料/隔离/保护通过 | 用户选择本轮只恢复工程入口；真人不启动，旧库保留 |
-| 四指标 | 实际edit/checkpoint/commit/readback及时间分项可查 | 真人全部NOT_OBSERVABLE；manual/assisted分开 |
-| 真人探索 | NOT_RUN；真实负责人/范围/同意缺失 | 首人前真实接受/同意、义务刺激和口径核准；新human库 |
-| 模型/Holdout/默认/部署 | 本轮0 | 匹配具体假设才另取许可 |
-| 检查 | 定向26过；全量15组11过4历史失败 | 不改旧断言凑绿 |
-| Codex云端开发 | 仓库配置及本机14组代码检查通过；账户创建因官方浏览器通道超时未完成 | [配置回执](../docs/governance/CODEX_CLOUD_ENVIRONMENT.md)；真实Cloud published未观察，Linux尚未运行 |
+| D24核对 | S09/S07/S01及手动再次修订已工程验收；S02旧归因未复现 | 直接取得真实操作反馈 |
+| 正式保存/测量 | 实际浏览器、故障恢复、canonical/刷新、edit到readback、阅读0编辑 | 工程不替代真人效果 |
+| 覆盖报告 | 16排程/8来源/4已打开/8质量未决，退出超时保留 | 首人前负责人核准新报告与映射 |
+| 真人 | NOT_RUN，0人；范围/真实负责人接受/本人同意缺失 | 新human库，人亲自操作与裁决 |
+| D17历史 | 24SETTLED；C03 1/12、C17 2/12及MIXED_PROGRESS；许可耗尽 | 原数据只读，D19不是新成绩 |
+| 检查 | 定向38PASS；全量15组11PASS/4历史FAIL；lint/build通过 | 不改旧锁/Expected/断言凑绿 |
+| 模型/Holdout/默认/发布 | 本轮0 | 具体假设与证据后另授权 |
+| Codex云端 | 账户创建/Linux无新增验收 | 见[回执](../docs/governance/CODEX_CLOUD_ENVIRONMENT.md)，不等于部署 |

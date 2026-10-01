@@ -1,0 +1,31 @@
+✔ scores auditable entity matches without self-normalization (14.0973ms)
+✔ scores local wall-clock values using the declared timezone rather than the evaluator host (1.6947ms)
+✔ loads and executes the exact client validator without a duplicate schema (84.7646ms)
+✔ browser, Worker generated contract, and evaluator agree on strict outcomes (1.982ms)
+✔ penalizes missing and forbidden tasks as correction burden (0.5789ms)
+✔ does not match forbidden tokens that exist only in task description (0.3219ms)
+✔ does not score suggestions that client safety marked unselected (0.2988ms)
+✔ excludes unselected materials, time points and events from quality scoring (0.1923ms)
+✔ paired bootstrap reports paired deltas rather than dividing by model maxima (0.8464ms)
+✔ reports unavailable quality metrics as null when every request failed (0.22ms)
+✔ keeps an untested arm NOT_RUN instead of inventing request failures (0.0921ms)
+✔ rejects observations attached to an arm declared untested (0.4968ms)
+✔ does not award vacuous task F1 when both expected and predicted tasks are empty (0.1501ms)
+✔ penalizes predicted entities that have no evidence (0.3258ms)
+✔ reports evidence validity separately from entity coverage (0.2808ms)
+✔ image-only evidence is checked against offline ground truth rather than OCR text (0.2395ms)
+✔ paired bootstrap resamples independent scenario families as clusters (0.4451ms)
+✔ a partial request failure invalidates arm-level quality metrics (0.2776ms)
+✔ client-invalid truthy results never become completed quality observations (0.0966ms)
+✔ scoreCase is fail-closed unless the caller explicitly marks a result completed (0.0792ms)
+✔ invalid or untested arms cannot produce paired quality claims (0.4531ms)
+✔ a scoreable comparison is not mislabeled as a promotion PASS (3.569ms)
+✔ classifies HTTP failures without collapsing auth, billing, rate limit, model and request errors (0.1696ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 356.5654

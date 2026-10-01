@@ -45,3 +45,7 @@ src/experiments/realInput01/candidate16.ts text eol=lf
 # D19 generated diagnostic is checked byte-for-byte; keep its LF bytes on Windows.
 docs/recognition-optimization/d19-source-session/OFFLINE_DIAGNOSTIC.json -text
 scripts/d19-offline-diagnostic.mjs text eol=lf
+
+# D24 browser readback and validation artifacts carry exact byte-level evidence.
+docs/recognition-optimization/d24-product/** -text whitespace=cr-at-eol
+docs/recognition-optimization/d24-product/validation/*.log whitespace=-blank-at-eof,cr-at-eol
