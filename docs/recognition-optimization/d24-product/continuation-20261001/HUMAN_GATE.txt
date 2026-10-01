@@ -1,0 +1,133 @@
+- banner:
+  - heading "D24 通知核对与覆盖报告" [level=1]
+  - paragraph: 角色：匿名工程回放／非真人试用 · 构建：6aeb2c2e2699 / source 69e9222b263b · 固定 Candidate17 D17 录制 · 新模型调用关闭
+  - text: 隔离身份
+  - combobox "隔离身份":
+    - option "模拟身份 p1" [selected]
+    - option "模拟身份 p2"
+    - option "模拟身份 p3"
+    - option "模拟身份 p4"
+  - paragraph: 本机浏览器保存；无账号认证或跨设备同步。登记、同意与准备不计通知处理时间。个人资料和同意原件留在负责人本机。
+- region "D23试次控制":
+  - heading "试次与固定来源" [level=2]
+  - paragraph: 数据库：rco-mainline-01-02-i1-real-input-d23-study-engineering-d24release01-p1。本身份已开始 4；真人计划 16，真人实际 0。
+  - paragraph: 当前状态：candidate_complete；条件：assisted；试次：feefd678-5081-4007-a637-19d9cd203f9e。
+  - button "检查真人开始资格" [active]
+  - generic "工程模拟登记／裁决（不会生成真人）"
+  - generic "工程模拟知情同意"
+  - text: 锁定排程
+  - combobox "锁定排程":
+    - option "1 · C17-D16-S01 · 固定辅助" [selected]
+    - option "2 · C17-D16-S06 · 空白手动"
+    - option "3 · C17-D16-S04 · 空白手动"
+    - option "4 · C17-D16-S09 · 固定辅助"
+  - heading "指定原文" [level=3]
+  - generic: "[D16新编匿名Development] 校车预约平台将在周三晚停机，已保存行程不受影响。无需删除行程，不要提交说明，也不必向值班员发消息。本通知仅说明停机消息。"
+  - paragraph: 来源 SHA 51d5c32e8172；首次刺激 SHA 2b4e1b2c861a。参考时点 2026-09-22，时区上海。空白手动不包含任务答案。
+  - button "看到原文并开始处理"
+  - generic "匿名故障注入"
+  - paragraph: 报告同时保留计划16条、已开始、已打开建议、未打开、退出及未裁决。固定建议来源8份；未暴露和未知不会从计划分母删除。完整处置看总墙钟及阅读、编辑、等待、隐藏、空闲、暂停；工程记录不产生真人正确率。
+  - button "独立读回与试次报告"
+  - status: "Error: D23_REAL_SCOPE_AUTHORIZATION_MISSING"
+  - button "独立读回全部身份汇总"
+  - generic "工程模拟裁决接线"
+  - option "p1-1 · C17-D16-S01 · assisted · candidate_complete"
+  - option "p1-2 · C17-D16-S06 · manual · exited"
+  - option "p1-3 · C17-D16-S04 · manual · exited"
+  - option "p1-4 · C17-D16-S09 · assisted · candidate_complete" [selected]
+  - generic "查看逐试次与缺失报告"
+- group "请先开始一条获准试次；已确认事实可在报告中查看":
+  - generic: 请先开始一条获准试次；已确认事实可在报告中查看
+  - link "跳到主要内容":
+    - /url: "#main-content"
+  - complementary:
+    - button "返回今日首页":
+      - strong: 事务管家
+      - generic: STUDENT DESK
+    - button "新事务 N":
+      - text: 新事务
+      - generic: "N"
+    - navigation "主要导航":
+      - generic: 执行闭环
+      - button "今日":
+        - text: 今日
+      - button "收件箱":
+        - text: 收件箱
+      - button "打开待确认队列，共 0 项":
+        - text: 待确认
+        - generic: "0"
+      - button "项目":
+        - text: 项目
+      - button "日历":
+        - text: 日历
+      - button "资料库":
+        - text: 资料库
+      - generic: 低频工具
+      - button "所有任务":
+        - text: 所有任务
+      - button "知识问答":
+        - text: 知识问答
+      - button "周报月报":
+        - text: 周报月报
+    - button "搜索事项":
+      - text: 搜索事项
+    - button "新手教程":
+      - text: 新手教程
+    - button "设置与服务":
+      - text: 设置与服务
+    - button "隐私与数据":
+      - text: 隐私与数据
+    - strong: 已在此设备自动保存
+    - paragraph: 同一浏览器与站点地址下可恢复；识别结果确认后才入库。
+  - region "隔离实验状态":
+    - paragraph: D24来源级核对 · 未确认输入恢复与冲突保护 · 非真人试用 · 独立测试库 · 仅本机已录制结果；新模型调用和旧用户库访问关闭。
+    - paragraph: 仅本轮录入、核对、确认、查询与JSON备份可用；未纳入操作会明确阻断。
+    - paragraph: 新语义保存在独立实验格式中，不能导入稳定入口。卡片分类与耗时仍是旧界面的兼容估计，不代表原文；完整原始属性可在详情核对，不会作为修改写回。
+    - button "准备完整测试库 JSON"
+  - main:
+    - text: 10月1日星期四
+    - heading "今天只看最重要的 1 件事" [level=1]:
+      - text: 今天只看最重要的
+      - emphasis: "1"
+      - text: 件事
+    - paragraph: 不用管理所有事情。先处理首页，再去任务中心查看其余内容。
+    - strong: 收到新通知？直接粘贴
+    - generic: 先核对输入文字，再决定本次发送范围。
+    - generic: 真实输入隔离实验 · 发送前核对
+    - textbox "快速粘贴通知":
+      - /placeholder: 粘贴老师消息、群通知或网页正文……
+    - button "打开文字、图片或文件录入":
+      - text: 打开文字、图片或文件录入
+    - button "先核对输入文字" [disabled]:
+      - text: 先核对输入文字
+    - generic: 此按钮只打开输入核对，不立即发送。仅本机已录制结果；新模型调用和旧用户库访问关闭。 建议须经用户确认，仅保存到隔离测试库。
+    - region "现在先做这些":
+      - generic: TODAY
+      - heading "现在先做这些" [level=2]
+      - button "全部 1 项":
+        - text: 全部 1 项
+      - article:
+        - generic: 独立事项 · 其他
+        - button "查看 提交社团器材盘点表 详情":
+          - text: 查看详情
+        - heading "提交社团器材盘点表" [level=3]
+        - text: 截止时间
+        - strong: 2026-10-19T16:30（Asia/Shanghai）
+        - emphasis: ·
+        - generic: 预计用时
+        - strong: 1 小时
+        - text: 材料 0/1
+        - paragraph: 排序理由：按截止时间与当前状态排序
+        - generic: 下一步
+        - strong: 提交社团器材盘点表
+        - generic "任务风险":
+          - generic: 节奏正常
+        - generic "快速操作":
+          - button "开始" [disabled]:
+            - text: 开始
+          - button "稍后" [disabled]:
+            - text: 稍后
+          - button "置顶" [disabled]:
+            - text: 置顶
+        - button "标记完成" [disabled]:
+          - text: 标记完成

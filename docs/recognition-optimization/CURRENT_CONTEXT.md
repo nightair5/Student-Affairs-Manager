@@ -2,7 +2,7 @@
 
 2026-10-01。工作区C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/比赛，分支codex/e2-candidate11-blind-eval。状态D24_ENGINEERING_DELIVERED_WAITING_FOR_REAL_SCOPE_AND_CONSENT。唯一结果入口：[D24](d24-product/D24_RESULTS.md)、[浏览器](d24-product/BROWSER_EVIDENCE.md)、[验证](d24-product/VALIDATION.md)。
 
-唯一推荐内部URL http://127.0.0.1:6742/?automation=1；ENGINEERING_REPLAY，固定Candidate17 D17录制。最终代码0b8a6e4/source69e9222b263b；新engineering-d24release01-p1—p4库。重启node scripts/serve-d24-study.mjs 6742 d24release01。旧6730/resume1001及旧库保留，不改为真人。
+唯一推荐内部URL http://127.0.0.1:6742/?automation=1；ENGINEERING_REPLAY，固定Candidate17 D17录制。D24产品代码0b8a6e4/source69e9222b263b；2026-10-01接续已恢复服务，页面构建6aeb2c2e2699，源码未变，engineering-d24release01-p1—p4库保留。重启node scripts/serve-d24-study.mjs 6742 d24release01。旧6730/resume1001及旧库保留，不改为真人。见[本次条件接续核验](d24-product/continuation-20261001/CONTINUATION.md)：真人条件仍缺、新试次0。
 
 已修S09出处覆盖阻断、S07合法未知时间、S01材料/本项重复核对；S02时间错误未复现，原答两日期正确。手动验收另修精确时间补录、新材料再次修改崩溃与时间摘要误待定。浏览器验证信息归档0Task/0Project/1Event/1TimePoint、null/raw/精度、保存失败恢复、提交后只重读、手动完整事实读回/刷新和身份隔离。
 

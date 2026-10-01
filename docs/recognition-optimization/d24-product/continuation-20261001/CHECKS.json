@@ -1,0 +1,39 @@
+{
+  "checkedAt": "2026-10-01T17:39:03.452877+08:00",
+  "startingHead": "6aeb2c2e26994b19f4ee51d92f35672be62e2ba0",
+  "buildHead": "6aeb2c2e26994b19f4ee51d92f35672be62e2ba0",
+  "sourceSha256": "69e9222b263b02f95800832ae9b6d224a0ed41c081a9ba05b32cef22642d8731",
+  "planSha256": "2f2d39da1c9b75d22726cafa2c648f7ec4d83d79ed2d8e422893e77f42e9a4a0",
+  "checks": [
+    {
+      "label": "history",
+      "exitCode": 0,
+      "stdout": "{\n  \"status\": \"HISTORY_PRESERVED_LEDGER_APPEND_REVIEW_REQUIRED\",\n  \"protectedFiles\": 84,\n  \"archives\": 7,\n  \"frozenFiles\": 119,\n  \"activeDocuments\": \"GIT_VERSIONED_NOT_A_RUNTIME_FREEZE\",\n  \"historicalDecisions\": \"UNCHANGED\",\n  \"ledger\": {\n    \"rows\": 938,\n    \"sha256\": \"e79aec8bbb1378e37f3941d8ffac9cce7d74bbb8e11d7ceee5c90a88b6c734b9\",\n    \"appendRows\": 98,\n    \"mode\": \"READ_ONLY\"\n  },\n  \"dispatchAuthorized\": false,\n  \"qualityPromotion\": false\n}",
+      "stderr": ""
+    },
+    {
+      "label": "diagnostic",
+      "exitCode": 0,
+      "stdout": "{\"d17\":{\"A\":1,\"B\":2},\"unresolved\":{\"A\":1,\"B\":3},\"d15Raw\":24,\"pairs\":[\"UNKNOWN\",\"UNKNOWN\",\"TIE\",\"IMPROVED\",\"RISK_REGRESSION\",\"TIE\",\"TIE\",\"TIE\",\"RISK_REGRESSION\",\"UNKNOWN\",\"TIE\",\"TIE\"]}",
+      "stderr": ""
+    },
+    {
+      "label": "isolation",
+      "exitCode": 0,
+      "stdout": "{\"status\":\"PASS\",\"role\":\"ENGINEERING_REPLAY\",\"origin\":\"http://127.0.0.1:6742\",\"sourceSha256\":\"69e9222b263b02f95800832ae9b6d224a0ed41c081a9ba05b32cef22642d8731\",\"planSha256\":\"2f2d39da1c9b75d22726cafa2c648f7ec4d83d79ed2d8e422893e77f42e9a4a0\",\"materials\":8,\"slots\":16,\"records\":16,\"databases\":4,\"modelCalls\":0,\"network\":\"OFFLINE_HANDLER_ONLY\"}",
+      "stderr": ""
+    }
+  ],
+  "componentHashChecks": 13,
+  "originalD24ArtifactHashChecks": 73,
+  "conditions": {
+    "explicitRealScopeAuthorization": "MISSING",
+    "realOwnerAcceptance": "MISSING",
+    "participantPersonalConsent": "MISSING"
+  },
+  "newTrials": 0,
+  "humanTrials": 0,
+  "businessModelCalls": 0,
+  "ledgerTransactions": 0,
+  "regressionPolicy": "No runtime change; reuse final D24 lint/test/build, current isolation/history and browser gate verified"
+}
