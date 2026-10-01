@@ -13,6 +13,7 @@ import type {D13ReplayRecord} from './replay'
 import {effectiveStateFacts,effectiveReview,informationReviewProblem,pendingDateEligible,hasPendingDateConsent,life,stateOfRuntime,semanticRevision} from '../mainline05/semanticState'
 import {acceptSemanticPendingDate,correctSemanticFact,reviewSemanticMaterialAndTask,reviewSemanticFact} from '../mainline05/semanticConfirmation'
 import {sourceCoverageGaps} from '../realInput01/sourceCoverage'
+import {semanticReview} from '../mainline05/semanticView'
 import type {FactChange} from '../realInput01/factCorrections'
 let plan:StudyPlan,records:D13ReplayRecord[]
 beforeAll(async()=>{({plan,records}=await d23Materials())},30000)
@@ -91,6 +92,7 @@ describe('D24 actual source disposal and safe unknown-time consent',()=>{
   })
   it('S07 explicit unresolved unknown notice can be judged, consented and saved; raw remains unknown',async()=>{
     const r=await opened('p3-2');let w=await r.app.repository.load(),s=stateOfRuntime(w,r.draftId);const facts=effectiveStateFacts(s).facts
+    const summary=Object.values(semanticReview(w,r.draftId).states)[0].dateLabel;expect(summary).toContain('截止时间待定');expect(summary).toContain('月底前后');expect(summary).not.toContain('仅说明开始')
     const gap=sourceCoverageGaps(facts,s.context.index).find(s=>s.text.includes('稍后公布'))!
     await correct(r,{kind:'information_scope',value:'information',scopeIds:[gap.id],note:'原文说明确切日期尚未公布，不是额外任务'})
     w=await r.app.repository.load();s=stateOfRuntime(w,r.draftId);const task=facts.tasks[0];expect(pendingDateEligible(s,task.id)).toBe(true)

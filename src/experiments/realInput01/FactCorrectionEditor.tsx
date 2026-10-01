@@ -107,7 +107,7 @@ export function FactCorrectionEditor({ repo, workspace, draftId, taskId, busy, o
         <button type="button" disabled={blocked||relationDirty||Boolean(change||materialBuffer)||hasPendingDateConsent(state,taskId)} onClick={()=>void run(()=>acceptSemanticPendingDate(repo,
           {draftId,taskId,revision:savedRevision,operationId:crypto.randomUUID()}))}>
           {hasPendingDateConsent(state,taskId)?'已保存：接受日期仍待定':'依据原文确认时间目前未知，保留待核对'}</button>
-        <p>之后再点“本项事实已核对”并主动选择加入任务；未保存的编辑不能确认。</p>
+        <p>继续核对其他事实；有材料时可一并核对，再主动选择加入任务。未保存的编辑不能确认。</p>
       </>}
     </details>
     {materialReviewEnabled(state)&&facts.materials.filter(m=>assets.materials.has(m.tempId)).map(m=><div key={m.tempId}>

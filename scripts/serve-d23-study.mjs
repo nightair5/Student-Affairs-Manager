@@ -55,7 +55,7 @@ export async function buildD23Preview(port='6721',instance='run01',authority=nul
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(resolve(process.argv[1])).href){
   // Human authority may only be supplied after a separate explicit human scope authorization.
-  const authority=process.argv[4]?json(resolve(process.argv[4])):null,manifest=await buildD23Preview(process.argv[2],process.argv[3],authority),handler=d8Handler(manifest),server=createServer((req,res)=>{if(req.url==='/?owner=1')req.url='/';handler(req,res)})
+  const authority=process.argv[4]?json(resolve(process.argv[4])):null,manifest=await buildD23Preview(process.argv[2],process.argv[3],authority,process.argv[5]??null),handler=d8Handler(manifest),server=createServer((req,res)=>{if(req.url==='/?owner=1')req.url='/';handler(req,res)})
   server.once('error',e=>{console.error(e.code==='EADDRINUSE'?'D23_PORT_BUSY_NO_PROCESS_KILLED':e.message);process.exitCode=1})
   server.listen(Number(new URL(manifest.origin).port),'127.0.0.1',()=>console.log(JSON.stringify({origin:manifest.origin,databases:manifest.databases,build:manifest.sourceSha256,role:manifest.role,modelCalls:0,humanAuthorized:manifest.humanTrial})))
 }
