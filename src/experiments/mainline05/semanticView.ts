@@ -102,7 +102,8 @@ function draftView(workspace: WorkspaceV8, draftId: string, choices: Readonly<Re
       value,edited,originalDate:originalDate.length===1?originalDate[0].normalizedValue??'':'',
       dateLabel:hasPendingDateConsent(state,task.id)?'日期待定 · '+input.timePoints.filter(t=>assets.times.has(t.tempId)).map(t=>t.rawText).join('；')
         :blockedReason&&!materialReviewProblem(state,task.id)?'待核对：不能当作无日期确认':value?timeLabel(value,state.context.timezone)+(edited?' · 用户修改':'')
-        :originalDate.length?'截止时间待定 · '+originalDate.map(t=>t.rawText).join('；')+'（不生成具体时刻）'
+        :originalDate.length===1&&originalDate[0].normalizedValue&&!originalDate[0].needsConfirmation?timeLabel(originalDate[0].normalizedValue,state.context.timezone)+' · 本项仍待核对'
+        :originalDate.length?originalDate.every(t=>t.normalizedValue===null)?'截止时间待定 · '+originalDate.map(t=>t.rawText).join('；')+'（不生成具体时刻）':'原文截止仍需核对 · '+originalDate.map(t=>t.rawText).join('；')
         :assets.times.size?'原文仅说明开始/事件时间，完整时间见依据':'原文未说明截止时间 · 可无日期确认' }
     return {id,status:disposition==='confirmed'?'已确认' as const:disposition==='rejected'?'已拒绝' as const:'待确认' as const,
       selected:!blockedReason && choose(task.id),

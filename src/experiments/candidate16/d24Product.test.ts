@@ -14,7 +14,7 @@ import {effectiveStateFacts,effectiveReview,informationReviewProblem,pendingDate
 import {acceptSemanticPendingDate,correctSemanticFact,reviewSemanticMaterialAndTask,reviewSemanticFact} from '../mainline05/semanticConfirmation'
 import {sourceCoverageGaps} from '../realInput01/sourceCoverage'
 import {semanticReview} from '../mainline05/semanticView'
-import type {FactChange} from '../realInput01/factCorrections'
+import {materialEdit,type FactChange} from '../realInput01/factCorrections'
 import {reviewTimeEvidence} from '../realInput01/reviewTimeEvidence'
 let plan:StudyPlan,records:D13ReplayRecord[]
 beforeAll(async()=>{({plan,records}=await d23Materials())},30000)
@@ -55,17 +55,25 @@ describe('D24 actual source disposal and safe unknown-time consent',()=>{
     await correct(r,{kind:'add_task',value:task,scopeIds:task.propositionScopeIds,note:'工程手动从空白补录原文任务'})
     const scope=manual.context.index.scopes.find(s=>s.text.includes('2026年10月19日16:30'))!,time=reviewTimeEvidence({tempId:'user-manual-time',type:'task_deadline',rawText:'2026年10月19日16:30前',normalizedValue:null,timezone:'Asia/Shanghai',isAllDay:false,precision:'vague',needsConfirmation:true,relatedTaskTempIds:[task.id],relatedMaterialTempIds:[],scopeIds:[scope.id],confidence:1},manual.context.referenceTime,manual.context.timezone)
     await correct(r,{kind:'time',taskId:task.id,value:time,scopeIds:[scope.id],note:'用户逐字补录，程序仅做确定性转换'})
+    const material=structuredClone(effectiveStateFacts(sample).facts.materials[0]);material.tempId='user-manual-material';material.relatedTaskTempIds=[task.id];material.scopeIds=material.scopeIds.map(id=>mapped.get(id)!)
+    material.formatRequirements=[];material.namingRequirements=[]
+    await correct(r,{kind:'add_material',value:material,scopeIds:material.scopeIds,note:'从空白补录材料，随后核对字段'})
+    expect(Object.values(semanticReview(await r.app.repository.load(),r.draftId).states)[0].dateLabel).toContain('2026-10-19T16:30')
+    expect(Object.values(semanticReview(await r.app.repository.load(),r.draftId).states)[0].dateLabel).not.toContain('待定')
+    await correct(r,{kind:'material',materialId:material.tempId,value:{...materialEdit(material),formatRequirements:['PDF'],namingRequirements:['社团编号-经办人']}})
     let w=await r.app.repository.load();const after=stateOfRuntime(w,r.draftId)
     expect(after.first).toEqual(first);expect(effectiveReview(after).issues.some(i=>i.code==='TIME_NEEDS_REVIEW')).toBe(false)
-    w=await reviewSemanticFact(r.app.repository,{draftId:r.draftId,taskId:task.id,revision:semanticRevision(w),operationId:crypto.randomUUID()})
+    w=await reviewSemanticMaterialAndTask(r.app.repository,{draftId:r.draftId,taskId:task.id,materialId:material.tempId,revision:semanticRevision(w),operationId:crypto.randomUUID(),value:{required:true,status:'unverified'}})
     await r.app.runtime.confirm({draftId:r.draftId,revision:semanticRevision(w),taskTempIds:[task.id]})
-    const saved=await r.app.independentReadback();expect(saved.tasks).toHaveLength(1);expect(saved.timePoints[0]).toMatchObject({normalizedValue:'2026-10-19T16:30',rawText:'2026年10月19日16:30前',precision:'exact'})
+    const saved=await r.app.independentReadback();expect(saved.tasks).toHaveLength(1);expect(saved.timePoints[0]).toMatchObject({normalizedValue:'2026-10-19T16:30',rawText:'2026年10月19日16:30前',precision:'exact'});expect(saved.materials[0]).toMatchObject({formatRequirements:['PDF'],namingRequirements:['社团编号-经办人']})
   })
   it('S09 exposes only the missing provenance fragment; explicit event plus classification archives 0 tasks and real event/time',async()=>{
     const r=await opened('p1-4'),w=await r.app.repository.load(),s=stateOfRuntime(w,r.draftId),original=JSON.stringify(s),facts=effectiveStateFacts(s).facts
     const gaps=sourceCoverageGaps(facts,s.context.index);expect(gaps.map(g=>g.text)).toEqual(['[D16新编匿名Development]'])
     const scope=s.context.index.scopes.find(s=>s.text.includes('周三晚'))!,eventId='user-d24-event',timeId='user-d24-time'
     await correct(r,{kind:'add_independent_event',scopeIds:[scope.id],note:'人工补录原文遗漏的停机事件',value:{event:{tempId:eventId,title:'校车预约平台',description:'停机',location:null,startTimePointTempId:timeId,endTimePointTempId:null,relatedTaskTempIds:[],scopeIds:[scope.id],confidence:0,inferenceLevel:'explicit'},time:{tempId:timeId,type:'event_start',rawText:'周三晚',normalizedValue:null,timezone:'Asia/Shanghai',isAllDay:false,precision:'vague',needsConfirmation:true,relatedTaskTempIds:[],relatedMaterialTempIds:[],scopeIds:[scope.id],confidence:0}}})
+    const added=effectiveStateFacts(stateOfRuntime(await r.app.repository.load(),r.draftId)).facts.events[0]
+    await correct(r,{kind:'independent_event',eventId:added.tempId,scopeIds:added.scopeIds,note:'人工补录后再次核对事件说明',value:{...added,description:'原文停机事件，非待办任务'}})
     expect(informationReviewProblem(stateOfRuntime(await r.app.repository.load(),r.draftId))).toContain('UNACCOUNTED')
     await correct(r,{kind:'information_scope',value:'provenance',scopeIds:[gaps[0].id],note:'人工核对样本出处标签，不是通知事实'})
     const next=await r.app.repository.load(),after=stateOfRuntime(next,r.draftId);expect(informationReviewProblem(after)).toBeUndefined()

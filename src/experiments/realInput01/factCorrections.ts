@@ -303,7 +303,10 @@ export function effectiveFacts(original: SemanticInput, corrections: readonly Fa
   }
   const facts = parseSemanticInput(input), sourceFacts = plainJson(facts)
   for (const id of manualMaterials) {
-    const first = original.materials.find(m => m.tempId === id)!, current = sourceFacts.materials.find(m => m.tempId === id)!
+    const first = original.materials.find(m => m.tempId === id)
+      ?? history.flatMap(({change})=>change.kind==='add_material'&&change.value.tempId===id?[change.value]:[])[0]
+    if(!first)reject('MATERIAL_ORIGIN_MISSING')
+    const current = sourceFacts.materials.find(m => m.tempId === id)!
     // Do not validate manual literal values as though the model/source supplied them.
     Object.assign(current, materialEdit(first), { relatedTaskTempIds: [...current.relatedTaskTempIds] })
   }
@@ -311,11 +314,17 @@ export function effectiveFacts(original: SemanticInput, corrections: readonly Fa
   for (const row of history) {
     const change=row.change
     if(change.kind==='independent_event') {
-      const originalEvent=original.events.find(e=>e.tempId===change.eventId)!
+      const originalEvent=original.events.find(e=>e.tempId===change.eventId)
+        ?? history.flatMap(({change:creation})=>creation.kind==='add_independent_event'&&creation.value.event.tempId===change.eventId?[creation.value.event]
+          :creation.kind==='event'&&creation.value.event?.tempId===change.eventId?[creation.value.event]:[])[0]
+      if(!originalEvent)reject('EVENT_ORIGIN_MISSING')
       const target=sourceFacts.events.find(e=>e.tempId===change.eventId)!
       Object.assign(target,plainJson(originalEvent))
     } else if(change.kind==='independent_time') {
-      const originalTime=original.timePoints.find(t=>t.tempId===change.timeId)!
+      const originalTime=original.timePoints.find(t=>t.tempId===change.timeId)
+        ?? history.flatMap(({change:creation})=>creation.kind==='time'&&creation.value.tempId===change.timeId?[creation.value]
+          :creation.kind==='add_independent_event'?[creation.value.time,creation.value.endTime].filter((t):t is SemanticTime=>Boolean(t&&t.tempId===change.timeId)):[])[0]
+      if(!originalTime)reject('TIME_ORIGIN_MISSING')
       const target=sourceFacts.timePoints.find(t=>t.tempId===change.timeId)!
       Object.assign(target,plainJson(originalTime))
     }
