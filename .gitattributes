@@ -60,3 +60,9 @@ src/experiments/candidate18/** text eol=lf
 src/experiments/realInput01/candidate18.ts text eol=lf
 src/experiments/realInput01/sourceFactsV3.ts text eol=lf
 src/experiments/realInput01/firstSuggestionGuard.ts text eol=lf
+
+# D26 is a new freeze. Requests and evidence remain byte-exact on every checkout.
+docs/recognition-optimization/d26-correction/** -text whitespace=cr-at-eol
+docs/recognition-optimization/d26-correction/validation/*.log whitespace=-blank-at-eof,cr-at-eol
+scripts/*d26*.mjs text eol=lf
+src/experiments/d26/** text eol=lf

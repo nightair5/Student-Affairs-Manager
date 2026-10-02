@@ -5,6 +5,7 @@ import { pathToFileURL } from 'node:url'
 import { createHash } from 'node:crypto'
 import { build } from 'esbuild'
 import { createCanvas, PDFDocument, GlobalFonts } from '@napi-rs/canvas'
+import { ENGINEERING_FONT, validateEngineeringFont } from './engineering-font.mjs'
 
 const sha=value=>createHash('sha256').update(value).digest('hex')
 const fixturePath='src/experiments/mainline01/fixtures.ts'
@@ -50,9 +51,13 @@ export async function renderEngineeringCarriers(output) {
   const parent=await realpath(tmpdir()),target=resolve(output),rel=relative(parent,target)
   if(!rel||rel.startsWith('..')||isAbsolute(rel))throw Error('TEMP_SCOPE_REQUIRED')
   await mkdir(target) // Existing output is an error; never replace previous carriers.
-  const fontPath='C:/Windows/Fonts/simhei.ttf'
-  if(!GlobalFonts.registerFromPath(fontPath,'EngineeringNotice'))throw Error('ENGINEERING_FONT_MISSING')
+  const fontPath=ENGINEERING_FONT
   const {cases,notices,NOW}=await engineeringNotices(),records=[]
+  const fontValidation=validateEngineeringFont(Object.values(notices).join(''))
+  if(!GlobalFonts.registerFromPath(fontPath,'EngineeringNotice'))throw Error('ENGINEERING_FONT_MISSING')
+  const probe=character=>{const canvas=createCanvas(64,64),context=canvas.getContext('2d');context.font='40px EngineeringNotice';context.fillText(character,4,48);return {sha:sha(canvas.data()),ink:canvas.data().some(value=>value!==0)}}
+  const probeA=probe('请'),probeB=probe('交')
+  if(!probeA.ink||!probeB.ink||probeA.sha===probeB.sha)throw Error('ENGINEERING_FONT_RENDER_MISSING_OR_TOFU')
   const formats=['png','jpeg','webp','scanned-png','text-pdf','scan-pdf','mixed-pdf','page-mixed-pdf']
   for(const [i,name]of cases.entries()) {
     const text=notices[name],kind=formats[i],suffix=kind.includes('pdf')?'pdf':kind==='scanned-png'?'png':kind
@@ -64,7 +69,7 @@ export async function renderEngineeringCarriers(output) {
     for(const ext of ['txt','md'])await writeFile(join(target,`${name}.${ext}`),text,{flag:'wx'})
     records.push({unitId:`B${String(i+1).padStart(2,'0')}`,caseName:name,format:kind,path,fileName,mime:i<4?'image/'+suffix:'application/pdf',bytes:bytes.length,sha256:sha(bytes),sourceText:text,sourceSha256:sha(text)})
   }
-  const manifest={version:'real-input-engineering-carriers-1',label:'旧8通知的工程载体，非新数据/真实材料/盲测',fixturePath,fixtureSha,fontPath,fontSha256:sha(await readFile(fontPath)),referenceTime:NOW,records,modelCalls:0}
+  const manifest={version:'real-input-engineering-carriers-1',rendererVersion:'portable-noto-cmap-2',label:'旧8通知的工程载体，非新数据/真实材料/盲测',fixturePath,fixtureSha,fontPath,fontSha256:sha(await readFile(fontPath)),fontValidation:{...fontValidation,renderedDistinctGlyphs:true},referenceTime:NOW,records,modelCalls:0}
   await writeFile(join(target,'carriers.json'),JSON.stringify(manifest,null,2)+'\n',{flag:'wx'})
   return manifest
 }

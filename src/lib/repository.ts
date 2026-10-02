@@ -3,7 +3,10 @@ import { materializeWorkspaceEntities } from './domainEntities'
 import { isRecognitionResult } from '../recognition/schema'
 import { CanonicalWorkspaceRepository, type RuntimeMigrationResult } from '../domain/v2/repository'
 import { applyPreparedV8Migration, prepareV7ToV8Migration } from '../domain/v2/migration'
-import { mergeLegacyViewIntoWorkspaceV8, workspaceV8ToLegacyView } from '../domain/v2/legacyView'
+import { legacyViewReadBaseline, mergeLegacyViewIntoWorkspaceV8, rebaseLegacyViewEdits, workspaceV8ToLegacyView } from '../domain/v2/legacyView'
+
+export { WorkspaceViewConflictError } from '../domain/v2/legacyView'
+export type { WorkspaceViewConflict } from '../domain/v2/legacyView'
 
 const DATABASE_NAME = 'student-affairs-steward'
 const STORE_NAME = 'workspace'
@@ -704,6 +707,8 @@ function validateWorkspaceIntegrity(workspace: WorkspaceData): void {
 export class IndexedDbWorkspaceRepository implements WorkspaceRepository {
   private database: Promise<IDBDatabase> | null = null
   private latestCanonicalBackupId: string | null = null
+  private readBaseline: WorkspaceData | null = null
+  private saveQueue: Promise<void> = Promise.resolve()
 
   constructor(private readonly canonical = new CanonicalWorkspaceRepository()) {}
 
@@ -725,20 +730,28 @@ export class IndexedDbWorkspaceRepository implements WorkspaceRepository {
   async load(): Promise<WorkspaceData | null> {
     const migration = await this.canonical.loadOrMigrate()
     this.rememberCanonicalBackup(migration.backupId)
-    if (migration.workspace) return workspaceV8ToLegacyView(migration.workspace)
+    if (migration.workspace) return this.rememberRead(workspaceV8ToLegacyView(migration.workspace))
     if (migration.status === 'recovery_required') {
       if (!migration.backupId) throw new Error('WORKSPACE_RECOVERY_BACKUP_MISSING')
       throw new WorkspaceRecoveryRequiredError(migration.backupId, migration.errors)
     }
-    if (migration.status === 'migration_required') return null
+    if (migration.status === 'migration_required') {
+      this.readBaseline = null
+      return null
+    }
 
     const migratedLegacy = await this.tryMigratePreV7Workspace()
-    if (migratedLegacy) return migratedLegacy
+    if (migratedLegacy) return this.rememberRead(migratedLegacy)
     throw new Error(migration.errors.join(',') || 'WORKSPACE_V8_MIGRATION_FAILED')
   }
 
   private rememberCanonicalBackup(backupId: string | null): void {
     if (backupId) this.latestCanonicalBackupId = backupId
+  }
+
+  private rememberRead(view: WorkspaceData): WorkspaceData {
+    this.readBaseline = structuredClone(view)
+    return view
   }
 
   private async tryMigratePreV7Workspace(): Promise<WorkspaceData | null> {
@@ -816,7 +829,7 @@ export class IndexedDbWorkspaceRepository implements WorkspaceRepository {
       ? { migrationId: backup.migrationId, now: backup.createdAt }
       : {})
     this.rememberCanonicalBackup(migration.backupId ?? backupId)
-    if (migration.workspace) return workspaceV8ToLegacyView(migration.workspace)
+    if (migration.workspace) return this.rememberRead(workspaceV8ToLegacyView(migration.workspace))
     if (migration.status === 'recovery_required') {
       if (!migration.backupId) throw new Error('WORKSPACE_RECOVERY_BACKUP_MISSING')
       throw new WorkspaceRecoveryRequiredError(migration.backupId, migration.errors)
@@ -829,16 +842,34 @@ export class IndexedDbWorkspaceRepository implements WorkspaceRepository {
   }
 
   async save(workspace: WorkspaceData): Promise<void> {
-    const current = await this.canonical.load()
-    if (!current) {
-      await this.canonical.save(applyPreparedV8Migration(prepareV7ToV8Migration(workspace)))
-      return
-    }
-    await this.canonical.transaction((canonical) => mergeLegacyViewIntoWorkspaceV8(canonical, workspace))
+    const proposed = structuredClone(workspace)
+    const suppliedBaseline = legacyViewReadBaseline(workspace)
+    const save = this.saveQueue.then(async () => {
+      const current = await this.canonical.load()
+      if (!current) {
+        const initial = applyPreparedV8Migration(prepareV7ToV8Migration(proposed))
+        const initialized = await this.canonical.initialize(initial)
+        if (JSON.stringify(initialized) !== JSON.stringify(initial)) {
+          throw new Error('WORKSPACE_INITIALIZED_IN_ANOTHER_PAGE')
+        }
+        this.readBaseline = proposed
+        return
+      }
+      const baseline = this.readBaseline ?? suppliedBaseline
+      if (!baseline) throw new Error('WORKSPACE_READ_BASELINE_REQUIRED')
+      await this.canonical.transaction((canonical) => mergeLegacyViewIntoWorkspaceV8(canonical,
+        rebaseLegacyViewEdits(baseline, proposed, workspaceV8ToLegacyView(canonical))))
+      // Keep the last submitted screen as the baseline. A merged concurrent field
+      // has not been displayed yet and must not become the user's next edit.
+      this.readBaseline = proposed
+    })
+    this.saveQueue = save.catch(() => undefined)
+    await save
   }
 
   async clear(): Promise<void> {
     await this.canonical.clear()
+    this.readBaseline = null
   }
 
   async exportCurrentJson(): Promise<string> {
@@ -854,12 +885,12 @@ export class IndexedDbWorkspaceRepository implements WorkspaceRepository {
     if (isRecord(parsed) && parsed.schemaVersion === 8) {
       const canonical = this.canonical.importJson(serialized)
       await this.canonical.save(canonical)
-      return workspaceV8ToLegacyView(canonical)
+      return this.rememberRead(workspaceV8ToLegacyView(canonical))
     }
     const legacy = this.importJson(serialized)
     const canonical = applyPreparedV8Migration(prepareV7ToV8Migration(legacy))
     await this.canonical.save(canonical)
-    return workspaceV8ToLegacyView(canonical)
+    return this.rememberRead(workspaceV8ToLegacyView(canonical))
   }
 
   exportJson(workspace: WorkspaceData): string {

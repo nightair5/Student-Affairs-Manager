@@ -47,6 +47,7 @@ const materialStatusOptions: Array<{ value: MaterialStatus; label: string }> = [
 ]
 
 interface TaskDetailPanelProps {
+  pendingSave?: boolean
   semanticContent?: ReactNode
   readOnly?: boolean
   dateView?: TaskDateView
@@ -60,6 +61,7 @@ interface TaskDetailPanelProps {
 }
 
 export function TaskDetailPanel({
+  pendingSave,
   readOnly, dateView, semanticContent,
   task,
   sources,
@@ -352,14 +354,15 @@ export function TaskDetailPanel({
               <Clock3 size={18} />
               <span>
                 <small>截止时间</small>
-                <strong>{dateView?.label ?? formatDeadline(task.deadline)}</strong>
+                <strong>{dateView?.label ?? task.sourceDeadlineLabel ?? formatDeadline(task.deadline)}</strong>
+                {task.plannedStart && <small>我的计划：{task.plannedStart}（不改变原文截止）</small>}
               </span>
             </div>
             <div>
               <BellRing size={18} />
               <span>
                 <small>预计耗时</small>
-                <strong>{formatDuration(task.estimatedMinutes)}</strong>
+                <strong>{task.estimatedMinutesKnown===false?'尚未估计':formatDuration(task.estimatedMinutes)}</strong>
               </span>
             </div>
           </div>
@@ -398,7 +401,7 @@ export function TaskDetailPanel({
                           event.target.value as MaterialStatus,
                         )}
                       >
-                        {readOnly && material.status === 'unverified' && <option value="unverified">准备情况尚未核实</option>}
+                        {material.status === 'unverified' && <option value="unverified">准备情况尚未核实</option>}
                         {materialStatusOptions.map((option) => (
                           <option key={option.value} value={option.value}>{option.label}</option>
                         ))}
@@ -547,7 +550,7 @@ export function TaskDetailPanel({
             </div>
             <p className="muted-copy">
               {task.history.length
-                ? `已保存 ${task.history.length} 条可追溯记录`
+                ? pendingSave ? `本页 ${task.history.length} 条记录含未保存修改，请先处理冲突` : `已保存 ${task.history.length} 条可追溯记录`
                 : '尚无手动修改，后续编辑会在这里留下记录。'}
             </p>
             {task.history.length > 0 && (

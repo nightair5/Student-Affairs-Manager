@@ -1,5 +1,5 @@
 // GENERATED from src/recognition/schema.ts; do not edit.
-// source-sha256: 81f636bcf62a4e35221ba7e620a0410b3cc39bbf7481882e42ab1222839eab40
+// source-sha256: 92989435101ad219b52729a001494550339ecc7cc2ded3dd5fa20c1bef503c5c
 const categories = new Set(['比赛', '保研', '课程', '老师任务', '其他']);
 const inferenceLevels = new Set(['explicit', 'strong_inference', 'optional_suggestion']);
 const priorities = new Set(['low', 'medium', 'high', 'urgent']);

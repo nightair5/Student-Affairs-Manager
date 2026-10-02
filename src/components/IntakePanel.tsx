@@ -39,6 +39,7 @@ import { useDialogFocusTrap } from '../lib/useDialogFocusTrap'
 import type { Priority, SourceReviewMetadata, SourceType, TaskCategory } from '../types'
 
 interface IntakePanelProps {
+  engineeringInput?: boolean
   realInputPanel?: import('react').ReactNode
   textOnly?: boolean
   onClose: () => void
@@ -47,7 +48,7 @@ interface IntakePanelProps {
   smartExtractionStatus: 'checking' | 'connected' | 'unavailable'
 }
 
-export function IntakePanel({ realInputPanel, textOnly, onClose, onSubmitIntake, onSaveSource, smartExtractionStatus }: IntakePanelProps) {
+export function IntakePanel({ engineeringInput, realInputPanel, textOnly, onClose, onSubmitIntake, onSaveSource, smartExtractionStatus }: IntakePanelProps) {
   const [sourceType, setSourceType] = useState<SourceType>('text')
   const [manualMode, setManualMode] = useState(false)
   const [content, setContent] = useState('')
@@ -485,8 +486,8 @@ export function IntakePanel({ realInputPanel, textOnly, onClose, onSubmitIntake,
             </fieldset>
           )}
           <div className={`privacy-note ${smartExtractionStatus === 'connected' ? 'cloud-enabled' : 'cloud-unavailable'}`}><Sparkles size={18} /><p>
-            <strong>{textOnly ? '人工工程响应（非模型预测）' : smartExtractionStatus === 'connected' ? 'DeepSeek 已配置（调用时验证）' : '本地规则兜底可用'}</strong>
-            {textOnly ? ' 只在本机测试库承接旧匿名工程通知；不调用模型，不回退识别规则，确认前不会创建任务。' : manualMode
+            <strong>{engineeringInput ? '匿名工程输入（模型派发关闭）' : textOnly ? '人工工程响应（非模型预测）' : smartExtractionStatus === 'connected' ? 'DeepSeek 已配置（调用时验证）' : '本地规则兜底可用'}</strong>
+            {engineeringInput ? ' 只处理已列出的匿名通知；使用普通确认保存链，不发送文字、图片或文件。' : textOnly ? ' 只在本机测试库承接旧匿名工程通知；不调用模型，不回退识别规则，确认前不会创建任务。' : manualMode
               ? ' 手动填写的内容只保存在本机，仍会先进入待确认。'
               : sourceType === 'link'
               ? ' 只有受控读取成功或你粘贴正文后才会调用 DeepSeek；裸链接不会被伪装成已读取内容。'

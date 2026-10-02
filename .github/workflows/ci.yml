@@ -18,63 +18,107 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  governance-unit:
-    # Portable unit checks only. The real ledger stays local and read-only.
-    # This job cannot replace the verify job or authorize model dispatch/release.
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-      - name: Test governance verifier with synthetic in-memory evidence
-        run: node --test scripts/governance-protection.node-test.mjs
-
-  verify:
+  current-product:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        timezone: [UTC, Asia/Shanghai]
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
-
-      - name: Install locked dependencies
-        run: npm ci
-
-      - name: Lint
-        run: npm run lint
-
-      - name: Typecheck
-        run: npm run typecheck
-
-      - name: Test all adapters in UTC
-        run: npm run test
+      - run: npm ci
+      - name: Current product and service regressions
+        run: npm run test:product
         env:
-          TZ: UTC
+          TZ: ${{ matrix.timezone }}
+      - name: Preserve actual group outcomes even on failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: product-${{ strategy.job-index }}
+          path: .data/candidate11/checks/current-product/
+          if-no-files-found: error
 
-      - name: Test all adapters in Asia/Shanghai
-        run: npm run test
+  current-safety:
+    # Windows supplies the existing PowerShell lock test. Linux records that
+    # host-only test as NOT_AVAILABLE, while still completing independent groups.
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Current offline experiment and executor safety
+        run: npm run test:safety
         env:
           TZ: Asia/Shanghai
+      - name: Preserve preparation failures and independent results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: safety-${{ matrix.os }}
+          path: .data/candidate11/checks/current-safety/
+          if-no-files-found: error
 
-      - name: Build production assets
-        run: npm run build
+  historical:
+    # Missing private originals are NOT_AVAILABLE. Old assertions are unchanged.
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Immutable originals and historical replay
+        run: npm run test:historical
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: historical
+          path: .data/candidate11/checks/historical/
+          if-no-files-found: error
 
+  build-security:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Lint
+        run: npm run lint
+      - name: Typecheck and build
+        if: success() || failure()
+        run: node scripts/candidate11-checks.mjs build
       - name: Scan source and build for secrets
+        if: success() || failure()
         run: npm run security:scan
-
       - name: Audit high-severity dependencies
+        if: success() || failure()
         run: npm audit --audit-level=high
-
-      - name: Verify Cloudflare package
+      - name: Verify Cloudflare package without deployment
+        if: success() || failure()
         run: npm run cloudflare:check

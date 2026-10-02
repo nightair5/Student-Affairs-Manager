@@ -43,7 +43,7 @@ const COMMON_SECURITY_HEADERS = Object.freeze({
 const KNOWLEDGE_REQUEST_FIELDS = new Set(['question', 'context'])
 const KNOWLEDGE_CONTEXT_FIELDS = new Set(['title', 'kind', 'excerpt'])
 const EXTRACTION_REQUEST_FIELDS = new Set([
-  'sourceType', 'sourceTitle', 'content', 'referenceTime', 'timezone', 'projectCandidates', 'existingTasks',
+  'sourceType', 'sourceTitle', 'content', 'referenceTime', 'timezone', 'projectCandidates', 'existingTasks', 'contextSelection',
 ])
 const MULTIMODAL_EXTRACTION_REQUEST_FIELDS = new Set([
   ...EXTRACTION_REQUEST_FIELDS,
@@ -54,6 +54,7 @@ const MULTIMODAL_IMAGE_TYPES = new Set(['image/jpeg', 'image/png', 'image/gif', 
 const WEB_FETCH_REQUEST_FIELDS = new Set(['url'])
 const PROJECT_CANDIDATE_FIELDS = new Set(['projectId', 'title', 'category', 'keywords', 'activeMilestones', 'recentSourceTitles', 'dateRange'])
 const EXISTING_TASK_FIELDS = new Set(['id', 'projectId', 'title', 'deadline'])
+const CONTEXT_SELECTION_FIELDS = new Set(['projectIds', 'taskIds'])
 
 function safeText(value, limit) {
   return typeof value === 'string'
@@ -192,6 +193,19 @@ export function validateExtractionRequest(value) {
       || !(item.projectId === null || isBoundedString(item.projectId, 100))
       || !isBoundedString(item.deadline, 80))
   )) return 'DEEPSEEK_TASK_CONTEXT_INVALID'
+  const projectIds = (value.projectCandidates ?? []).map((item) => item.projectId)
+  const taskIds = (value.existingTasks ?? []).map((item) => item.id)
+  if (projectIds.length || taskIds.length || value.contextSelection !== undefined) {
+    const selection = value.contextSelection
+    const matches = (selected, sent) => Array.isArray(selected)
+      && selected.every((id) => isBoundedString(id, 100))
+      && new Set(selected).size === selected.length && new Set(sent).size === sent.length
+      && selected.length === sent.length && selected.every((id) => sent.includes(id))
+    if (!hasOnlyFields(selection, CONTEXT_SELECTION_FIELDS)
+      || !matches(selection.projectIds, projectIds) || !matches(selection.taskIds, taskIds)) {
+      return 'DEEPSEEK_CONTEXT_SELECTION_REQUIRED'
+    }
+  }
   return null
 }
 
@@ -726,7 +740,10 @@ async function askDeepSeek(request, env, fetcher, isRateLimited, acquireConcurre
 function extractionUserText(body, sourceContent, sourceTitle, referenceTime, timezone) {
   const projectContext = Array.isArray(body.projectCandidates) ? body.projectCandidates : []
   const existingTaskContext = Array.isArray(body.existingTasks) ? body.existingTasks : []
-  return `参考时间：${referenceTime}\n时区：${timezone}\n来源类型：${body.sourceType}\n来源标题：${sourceTitle || '未提供'}\n可选已有项目（仅供匹配建议）：${JSON.stringify(projectContext)}\n已有未完成任务（仅供重复检测）：${JSON.stringify(existingTaskContext)}\n来源正文：\n${sourceContent}`
+  const selectedContext = projectContext.length || existingTaskContext.length
+    ? `\n本次用户选择的项目摘要（仅供匹配建议）：${JSON.stringify(projectContext)}\n本次用户选择的任务摘要（仅供重复检测）：${JSON.stringify(existingTaskContext)}`
+    : ''
+  return `参考时间：${referenceTime}\n时区：${timezone}\n来源类型：${body.sourceType}\n来源标题：${sourceTitle || '未提供'}${selectedContext}\n来源正文：\n${sourceContent}`
 }
 
 async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurrency, context) {

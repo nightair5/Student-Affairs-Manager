@@ -13,6 +13,8 @@ function sha256(value) {
 }
 
 export function generateRecognitionContract(source) {
+  // Git checkouts may change line endings; the contract binds the LF source.
+  source = source.replace(/\r\n/g, '\n')
   const compiled = ts.transpileModule(source, {
     fileName: fileURLToPath(sourceUrl),
     reportDiagnostics: true,
@@ -36,13 +38,13 @@ async function main() {
   const source = await readFile(sourceUrl, 'utf8')
   const generated = generateRecognitionContract(source)
   if (process.argv.includes('--check')) {
-    const current = await readFile(outputUrl, 'utf8').catch(() => '')
+    const current = (await readFile(outputUrl, 'utf8').catch(() => '')).replace(/\r\n/g, '\n')
     if (current !== generated) throw new Error('RECOGNITION_CONTRACT_GENERATED_FILE_STALE')
-    console.log(JSON.stringify({ status: 'PASS', sourceSha256: sha256(source), output: fileURLToPath(outputUrl) }))
+    console.log(JSON.stringify({ status: 'PASS', sourceSha256: sha256(source.replace(/\r\n/g, '\n')), sourceHashMode: 'LF', output: fileURLToPath(outputUrl) }))
     return
   }
   await writeFile(outputUrl, generated, 'utf8')
-  console.log(JSON.stringify({ status: 'WROTE', sourceSha256: sha256(source), output: fileURLToPath(outputUrl) }))
+  console.log(JSON.stringify({ status: 'WROTE', sourceSha256: sha256(source.replace(/\r\n/g, '\n')), sourceHashMode: 'LF', output: fileURLToPath(outputUrl) }))
 }
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.argv[1])) {

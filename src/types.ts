@@ -106,6 +106,8 @@ export interface Task {
   status: TaskStatus
   deadline: string
   estimatedMinutes: number
+  estimatedMinutesKnown?: boolean
+  sourceDeadlineLabel?: string
   nextAction: string
   description: string
   priority: Priority

@@ -15,10 +15,22 @@ export interface SmartIntakeResult extends IntakeResult {
   fallbackReason?: string
 }
 
+export interface RecognitionContextSelection {
+  projectIds: string[]
+  taskIds: string[]
+}
+
+export interface RecognitionWorkspaceContext {
+  projects: Project[]
+  tasks: Task[]
+  /** Only IDs explicitly selected in the submit UI may leave the device. */
+  cloudSelection?: RecognitionContextSelection
+}
+
 export interface DeepSeekExtractionService {
   status(): Promise<{ configured: boolean; model?: string; multimodalModel?: string }>
   extract(input: IntakeInput): Promise<ParsedSuggestion[]>
-  recognize?(input: IntakeInput, context?: { projects: Project[]; tasks: Task[] }): Promise<RecognitionResult>
+  recognize?(input: IntakeInput, context?: RecognitionWorkspaceContext): Promise<RecognitionResult>
 }
 
 function serverMessage(value: unknown, fallback: string): string {
@@ -30,22 +42,25 @@ function serverMessage(value: unknown, fallback: string): string {
 export class ProxyDeepSeekExtractionService implements DeepSeekExtractionService {
   private readonly cache = new Map<string, RecognitionResult>()
   private readonly inFlight = new Map<string, Promise<RecognitionResult>>()
+  private configuredState: boolean | null = null
 
   constructor(private readonly endpoint = '/api/deepseek') {}
 
   async status(): Promise<{ configured: boolean; model?: string; multimodalModel?: string }> {
     try {
       const response = await fetch(`${this.endpoint}/status`, { headers: { Accept: 'application/json' } })
-      if (!response.ok) return { configured: false }
+      if (!response.ok) { this.configuredState = false; return { configured: false } }
       const data: unknown = await response.json()
-      if (typeof data !== 'object' || data === null) return { configured: false }
+      if (typeof data !== 'object' || data === null) { this.configuredState = false; return { configured: false } }
       const record = data as { configured?: unknown; model?: unknown; multimodalModel?: unknown }
+      this.configuredState = record.configured === true
       return {
         configured: record.configured === true,
         model: typeof record.model === 'string' ? record.model : undefined,
         multimodalModel: typeof record.multimodalModel === 'string' ? record.multimodalModel : undefined,
       }
     } catch {
+      this.configuredState = false
       return { configured: false }
     }
   }
@@ -57,30 +72,32 @@ export class ProxyDeepSeekExtractionService implements DeepSeekExtractionService
     return suggestions
   }
 
-  async recognize(input: IntakeInput, context: { projects: Project[]; tasks: Task[] } = { projects: [], tasks: [] }): Promise<RecognitionResult> {
+  async recognize(input: IntakeInput, context: RecognitionWorkspaceContext = { projects: [], tasks: [] }): Promise<RecognitionResult> {
+    if (this.configuredState === false) throw new Error('DeepSeek 尚未配置，来源内容未发送。')
+    const selectedProjects = context.cloudSelection
+      ? context.projects.filter((project) => context.cloudSelection!.projectIds.includes(project.id)).slice(0, 20)
+      : []
+    const selectedTasks = context.cloudSelection
+      ? context.tasks.filter((task) => context.cloudSelection!.taskIds.includes(task.id)).slice(0, 40)
+      : []
+    const selectedContext = selectedProjects.length || selectedTasks.length ? {
+      contextSelection: { projectIds: selectedProjects.map((item) => item.id), taskIds: selectedTasks.map((item) => item.id) },
+      projectCandidates: selectedProjects.map((project) => ({
+        projectId: project.id.slice(0, 100), title: project.title.slice(0, 160), category: project.category,
+        keywords: [], activeMilestones: [], recentSourceTitles: [], dateRange: [],
+      })),
+      existingTasks: selectedTasks.map((task) => ({
+        id: task.id.slice(0, 100), projectId: task.projectId?.slice(0, 100) ?? null,
+        title: task.title.slice(0, 160), deadline: task.deadline,
+      })),
+    } : {}
     const body = {
         sourceType: input.sourceType,
         sourceTitle: (input.sourceTitle ?? input.fileName ?? '').slice(0, 160),
         content: input.content.slice(0, 24_000),
         referenceTime: (input.now ?? new Date()).toISOString(),
         timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'Asia/Shanghai',
-        projectCandidates: context.projects.slice(0, 20).map((project) => ({
-          projectId: project.id.slice(0, 100),
-          title: project.title.slice(0, 160),
-          category: project.category,
-          keywords: (project.keywords ?? []).slice(0, 20).map((keyword) => keyword.slice(0, 80)),
-          activeMilestones: project.milestones.filter((milestone) => milestone.status !== '已完成').map((milestone) => milestone.title.slice(0, 100)).slice(0, 6),
-          recentSourceTitles: project.sourceIds.slice(-3).map((title) => title.slice(0, 160)),
-          dateRange: project.milestones.length
-            ? [project.milestones[0].dueAt, project.milestones[project.milestones.length - 1].dueAt]
-            : [],
-        })),
-        existingTasks: context.tasks.filter((task) => task.status !== '已完成').slice(0, 40).map((task) => ({
-          id: task.id.slice(0, 100),
-          projectId: task.projectId?.slice(0, 100) ?? null,
-          title: task.title.slice(0, 160),
-          deadline: task.deadline,
-        })),
+        ...selectedContext,
         ...(input.multimodal
           ? {
               consent: input.multimodal.consent,

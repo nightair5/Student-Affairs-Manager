@@ -14,7 +14,7 @@ import { demoSources, demoTasks } from './data/demo'
 import { InboxPage } from './pages/InboxPage'
 import { DashboardPage } from './pages/DashboardPage'
 import { TasksPage } from './pages/TasksPage'
-import { IndexedDbWorkspaceRepository, WorkspaceRecoveryRequiredError } from './lib/repository'
+import { IndexedDbWorkspaceRepository, WorkspaceRecoveryRequiredError, WorkspaceViewConflictError } from './lib/repository'
 import {
   getBrowserNotificationPermission,
   requestBrowserNotificationPermission,
@@ -25,7 +25,7 @@ import { loadWorkspace } from './lib/storage'
 import { updateTaskWithHistory } from './lib/taskUpdates'
 import { canSaveLinkOnly, createIntakeResult, type IntakeInput } from './lib/intake'
 import { MULTIMODAL_PROMPT_VERSION } from './lib/multimodal'
-import { ProxyDeepSeekExtractionService } from './lib/deepseekExtraction'
+import { ProxyDeepSeekExtractionService, type DeepSeekExtractionService } from './lib/deepseekExtraction'
 import { buildLocalRecognition } from './recognition/pipeline'
 import {
   nextWorkspaceRecoveryAction,
@@ -37,13 +37,15 @@ import { CapturePersistenceService } from './domain/v2/capture'
 import { retryExistingSourceRecognition } from './domain/v2/sourceRetry'
 import { selectPendingReviewItems } from './lib/sourceWorkflow'
 import { materialStatusFromLegacy } from './lib/domainEntities'
-import { CanonicalWorkspaceRepository } from './domain/v2/repository'
+import { CanonicalWorkspaceRepository, IndexedDbWorkspaceRecordStore, type WorkspaceRecordStore } from './domain/v2/repository'
+import { D20ReviewSessionRepository } from './experiments/candidate16/d20ReviewSession'
+import { buildSourceReviewPlan, commitSourceReview, verifySourceReviewReadback, acknowledgeSourceReadback, sourceReviewProblem, PENDING_SOURCE_READBACK, type SourceReviewReceipt } from './domain/v2/sourceReviewD26'
+import { OrdinarySourceFacts } from './components/OrdinarySourceFacts'
+import { assembleRecognitionFirstSuggestionD26 } from './recognition/firstSuggestionD26'
+import {createOrdinaryMeasurement,type OrdinaryMeasurement} from './domain/v2/ordinaryMeasurementD26'
 import {
-  buildDomainCommitPlan,
-  commitDomainPlan,
   mergeRecognitionTasks,
   recognitionResultFromManualSuggestion,
-  selectionFromDraftItems,
   splitRecognitionTask,
 } from './domain/v2/domainCommit'
 import {
@@ -55,10 +57,28 @@ import {
 } from './lib/workspace'
 import type { CourseBlock, Event, ExtractionDraft, IntegrationState, KnowledgeSettings, MaterialItemEntity, MigrationRecord, PageId, ParsedSuggestion, Project, RecognitionFeedbackRecord, Source, Task, WorkPackage, WorkspaceData } from './types'
 
-const canonicalWorkspaceRepository = new CanonicalWorkspaceRepository()
-const workspaceRepository = new IndexedDbWorkspaceRepository(canonicalWorkspaceRepository)
-const capturePersistenceService = new CapturePersistenceService(canonicalWorkspaceRepository)
-const deepSeekExtractionService = new ProxyDeepSeekExtractionService()
+const ordinaryStore = Object.assign(new IndexedDbWorkspaceRecordStore(), {name:'student-affairs-steward'})
+const defaultCanonical = new CanonicalWorkspaceRepository(ordinaryStore)
+const defaultViewRepository = new IndexedDbWorkspaceRepository(defaultCanonical)
+const defaultCapture = new CapturePersistenceService(defaultCanonical)
+const defaultExtraction = new ProxyDeepSeekExtractionService()
+const defaultMeasurement=createOrdinaryMeasurement(ordinaryStore)
+const defaultReviewSession = new D20ReviewSessionRepository(ordinaryStore, defaultMeasurement.changed, defaultMeasurement.activity, true)
+
+/** Replaces transport/provider only; App, capture, review and DomainCommitPlan remain the ordinary product path. */
+export interface OrdinaryAppEnvironment {
+  canonical: CanonicalWorkspaceRepository
+  viewRepository: IndexedDbWorkspaceRepository
+  reader: CanonicalWorkspaceRepository
+  capture: CapturePersistenceService
+  extraction: DeepSeekExtractionService
+  reviewSession: D20ReviewSessionRepository
+  measurement: OrdinaryMeasurement
+  initial: WorkspaceData
+  store: WorkspaceRecordStore & {name:string}
+  label: string
+  semanticSidecar?: (sourceId:string)=>unknown
+}
 
 function captureActionMessage(error: unknown, fallback: string): string {
   const code = error instanceof Error ? error.message : ''
@@ -106,11 +126,31 @@ const ReportsPage = lazy(() => import('./pages/ReportsPage').then((module) => ({
 const ServicesPage = lazy(() => import('./pages/ServicesPage').then((module) => ({ default: module.ServicesPage })))
 const PrivacyPage = lazy(() => import('./pages/PrivacyPage').then((module) => ({ default: module.PrivacyPage })))
 
-function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
+function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordinaryEnvironment?: OrdinaryAppEnvironment } = {}) {
+  const canonicalWorkspaceRepository = ordinaryEnvironment?.canonical ?? defaultCanonical
+  const workspaceRepository = ordinaryEnvironment?.viewRepository ?? defaultViewRepository
+  const capturePersistenceService = ordinaryEnvironment?.capture ?? defaultCapture
+  const deepSeekExtractionService = ordinaryEnvironment?.extraction ?? defaultExtraction
+  const ordinaryReviewSession = ordinaryEnvironment?.reviewSession ?? defaultReviewSession
+  const ordinaryMeasurement = ordinaryEnvironment?.measurement ?? defaultMeasurement
+  const independentReader = ordinaryEnvironment?.reader ?? new CanonicalWorkspaceRepository(ordinaryStore)
   if (runtime !== undefined) assertMainlineRuntime(runtime)
   const [boundRuntime] = useState(runtime)
   if (runtime !== boundRuntime) throw new Error('MAINLINE_RUNTIME_CHANGE_FORBIDDEN')
-  const [initialWorkspace] = useState(() => runtime ? runtime.view(runtime.initial) : loadWorkspace(demoTasks, demoSources))
+  const [initialWorkspace] = useState(() => runtime ? runtime.view(runtime.initial) : ordinaryEnvironment?.initial ?? loadWorkspace(demoTasks, demoSources))
+  const [ordinaryCanonical, setOrdinaryCanonical] = useState<WorkspaceV8 | null>(null)
+  const [ordinaryBusy,setOrdinaryBusy] = useState(false)
+  const [ordinaryFactsDirty,setOrdinaryFactsDirty] = useState(false)
+  const [ordinaryReceipt,setOrdinaryReceipt] = useState<SourceReviewReceipt | null>(null)
+  const [viewConflict,setViewConflict] = useState<WorkspaceViewConflictError | null>(null)
+  const ordinaryCommitLock = useRef(false)
+  useEffect(()=>{
+    if(runtime)return
+    const visibility=()=>{void ordinaryMeasurement.visibility(document.hidden)}
+    const blur=()=>{void ordinaryMeasurement.blur()}
+    document.addEventListener('visibilitychange',visibility);window.addEventListener('blur',blur)
+    return()=>{document.removeEventListener('visibilitychange',visibility);window.removeEventListener('blur',blur)}
+  },[runtime,ordinaryMeasurement])
   const [isolatedSnapshot, setIsolatedSnapshot] = useState<WorkspaceV8 | null>(runtime?.initial ?? null)
   const [realInputInitialText, setRealInputInitialText] = useState('')
   const RealInputPanel = runtime?.realInput?.inputPanel
@@ -147,7 +187,7 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
   const [storageError, setStorageError] = useState(false)
   const [workspaceRecovery, setWorkspaceRecovery] = useState<WorkspaceRecoveryState | null>(null)
   const [intakeOpen, setIntakeOpen] = useState(false)
-  const [guideOpen, setGuideOpen] = useState(() => runtime ? false : shouldShowOnboarding())
+  const [guideOpen, setGuideOpen] = useState(() => runtime || ordinaryEnvironment ? false : shouldShowOnboarding())
   const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null)
   const [selectedEventId, setSelectedEventId] = useState<string | null>(null)
   const [selectedDraftId, setSelectedDraftId] = useState<string | null>(null)
@@ -156,7 +196,7 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
   const [notice, setNotice] = useState<{ text: string; undo?: () => void } | null>(null)
   const [smartExtractionStatus, setSmartExtractionStatus] = useState<'checking' | 'connected' | 'unavailable'>('checking')
   const [notificationPermission, setNotificationPermission] =
-    useState<BrowserNotificationPermission>(() => runtime ? 'unsupported' : getBrowserNotificationPermission())
+    useState<BrowserNotificationPermission>(() => runtime || ordinaryEnvironment ? 'unsupported' : getBrowserNotificationPermission())
   const deliveredNotifications = useRef(new Set<string>())
   const hydrationPromise = useRef<Promise<WorkspaceData> | null>(null)
   const persistedWorkspaceRevision = useRef<string | null>(null)
@@ -231,6 +271,17 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
     setLegacyData(saved.legacyData)
   }, [])
 
+  const refreshOrdinary = async () => {
+    const saved=await workspaceRepository.load()
+    const canonical=await canonicalWorkspaceRepository.load()
+    if (!saved || !canonical) throw Error('WORKSPACE_V8_READBACK_UNAVAILABLE')
+    persistedWorkspaceRevision.current=persistenceRevisionForView(saved)
+    pendingWorkspaceRevision.current=null
+    applyWorkspaceView(saved); setOrdinaryCanonical(canonical)
+    const pending=canonical.extractionDrafts.map(d=>d.legacyData?.[PENDING_SOURCE_READBACK]).find(Boolean)
+    if(pending&&typeof pending==='object'&&!Array.isArray(pending)&&pending.version==='source-review-d26-1')setOrdinaryReceipt(pending as unknown as SourceReviewReceipt)
+  }
+
   useEffect(() => {
     if (runtime) return
     let active = true
@@ -238,7 +289,7 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
       if (active) setSmartExtractionStatus(status.configured ? 'connected' : 'unavailable')
     })
     return () => { active = false }
-  }, [runtime])
+  }, [runtime, deepSeekExtractionService])
 
   useEffect(() => {
     let active = true
@@ -260,6 +311,11 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
       persistedWorkspaceRevision.current = persistenceRevisionForView(saved)
       pendingWorkspaceRevision.current = null
       applyWorkspaceView(saved)
+      void canonicalWorkspaceRepository.load().then(canonical=>{
+        setOrdinaryCanonical(canonical)
+        const pending=canonical?.extractionDrafts.map(d=>d.legacyData?.[PENDING_SOURCE_READBACK]).find(Boolean)
+        if(pending&&typeof pending==='object'&&!Array.isArray(pending)&&pending.version==='source-review-d26-1')setOrdinaryReceipt(pending as unknown as SourceReviewReceipt)
+      })
       setStorageError(false)
       setWorkspaceRecovery(null)
     }).catch((error: unknown) => {
@@ -283,21 +339,22 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
     return () => {
       active = false
     }
-  }, [applyWorkspaceView, initialWorkspace.sources, initialWorkspace.tasks, runtime])
+  }, [applyWorkspaceView, initialWorkspace.sources, initialWorkspace.tasks, runtime, canonicalWorkspaceRepository, workspaceRepository])
 
   useEffect(() => {
-    if (runtime || !workspaceReady || storageError || workspaceRecovery) return
+    if (runtime || !workspaceReady || storageError || workspaceRecovery || viewConflict || ordinaryBusy) return
     const revision = workspacePersistenceRevision(workspace)
     if (revision === persistedWorkspaceRevision.current || revision === pendingWorkspaceRevision.current) return
     pendingWorkspaceRevision.current = revision
     void workspaceRepository.save(workspace).then(() => {
       persistedWorkspaceRevision.current = revision
       if (pendingWorkspaceRevision.current === revision) pendingWorkspaceRevision.current = null
-    }).catch(() => {
+    }).catch((error:unknown) => {
       if (pendingWorkspaceRevision.current === revision) pendingWorkspaceRevision.current = null
-      setStorageError(true)
+      if(error instanceof WorkspaceViewConflictError)setViewConflict(error)
+      else setStorageError(true)
     })
-  }, [storageError, workspace, workspaceReady, workspaceRecovery, runtime])
+  }, [storageError, workspace, workspaceReady, workspaceRecovery, runtime, viewConflict, ordinaryBusy, workspaceRepository])
 
   useEffect(() => {
     const openIntake = (event: KeyboardEvent) => {
@@ -316,11 +373,11 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
   }, [])
 
   useEffect(() => {
-    if (runtime || notificationPermission !== 'granted') return
+    if (runtime || ordinaryEnvironment || notificationPermission !== 'granted') return
     return scheduleBrowserNotifications(tasks, deliveredNotifications.current, () => {
       setNotice({ text: '浏览器通知发送失败，请检查网站通知权限。' })
     })
-  }, [notificationPermission, tasks, runtime])
+  }, [notificationPermission, tasks, runtime, ordinaryEnvironment])
 
   useEffect(() => {
     if (runtime) return
@@ -542,6 +599,7 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
       setDraftSourceSnapshot(null)
     }
     setSelectedDraftId(draftId)
+    if(!runtime){setOrdinaryFactsDirty(false);await ordinaryMeasurement.begin(draftId)}
   }
 
   const openDraftReview = (draftId: string, message: string) => {
@@ -594,12 +652,12 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
       sourceType: input.sourceType,
       title: input.sourceTitle ?? input.fileName ?? localResult.source.title,
       rawText: input.content,
-      provider: input.manualSuggestion
+      provider: ordinaryEnvironment ? 'manual' as const : input.manualSuggestion
         ? 'manual' as const
         : useCloudRecognition
           ? 'deepseek' as const
           : 'local-rules' as const,
-      modelName: input.manualSuggestion
+      modelName: ordinaryEnvironment ? 'anonymous-offline-engineering-input' : input.manualSuggestion
         ? 'manual-entry'
         : useCloudRecognition
           ? input.multimodal
@@ -609,7 +667,7 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
       promptVersion: input.manualSuggestion
         ? null
         : input.multimodal ? MULTIMODAL_PROMPT_VERSION : localRecognition.promptVersion,
-      pipelineVersion: useCloudRecognition
+      pipelineVersion: ordinaryEnvironment ? 'd26-ordinary-engineering-fake-transport' : useCloudRecognition
         ? input.multimodal ? 'source-before-multimodal-ai-v1' : 'source-before-ai-v1'
         : 'source-before-local-rules-v1',
       sourceLegacyData: {
@@ -635,22 +693,27 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
     }
     try {
       const handle = await capturePersistenceService.beginCapture(captureRequest)
+      const providerInput={...input,sourceId:handle.sourceId,sourceVersionId:handle.sourceVersionId}
       const recognitionResult = await capturePersistenceService.recognize(
         handle,
         input.manualSuggestion
           ? async () => draftRecognition
           : useCloudRecognition
-            ? async () => deepSeekExtractionService.recognize(input, { projects, tasks })
+            ? async () => deepSeekExtractionService.recognize!(providerInput, { projects, tasks })
             : async () => draftRecognition,
       )
+      const semanticSidecar=ordinaryEnvironment?.semanticSidecar?.(handle.sourceId)
+      const assembled=assembleRecognitionFirstSuggestionD26(recognitionResult,{sourceText:input.content,referenceTime:input.now?.toISOString() ?? new Date().toISOString(),timezone:Intl.DateTimeFormat().resolvedOptions().timeZone || 'Asia/Shanghai'})
+      await canonicalWorkspaceRepository.transaction(w=>({...w,recognitionRuns:w.recognitionRuns.map(r=>r.id===handle.recognitionRunId?{...r,legacyData:{...r.legacyData,originalRecognitionResult:JSON.parse(JSON.stringify(recognitionResult))}}:r),extractionDrafts:w.extractionDrafts.map(d=>d.id===handle.draftId?{...d,result:assembled.result,legacyData:{...d.legacyData,...(semanticSidecar?{semanticSidecar:JSON.parse(JSON.stringify(semanticSidecar))}:{}),firstSuggestionDisplayed:JSON.parse(JSON.stringify(assembled.result)),firstSuggestionAssembly:JSON.parse(JSON.stringify(assembled.audit))}}:d)}))
       const saved = await workspaceRepository.load()
       if (saved) applyWorkspaceView(saved)
+      setOrdinaryCanonical(await canonicalWorkspaceRepository.load())
       if (useCloudRecognition) setSmartExtractionStatus('connected')
       openDraftReview(
         handle.draftId,
         input.manualSuggestion
           ? '手动录入已先保存来源，再生成待确认草稿；核对后才会创建正式任务。'
-          : useCloudRecognition
+          : ordinaryEnvironment ? '匿名工程建议已生成；没有模型请求，核对后走普通正式保存。' : useCloudRecognition
             ? `${recognitionResult.modelName} 已生成可编辑建议；来源已在请求前安全保存。`
             : 'DeepSeek 当前未连接；来源已先保存，并由本地规则生成可编辑建议。',
       )
@@ -848,7 +911,7 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
     await handleIntakeInput({ sourceType: 'text', content })
   }
 
-  const handleUpdateDraft = (
+  const handleUpdateDraft = async (
     draftId: string,
     itemId: string,
     patch: Partial<ParsedSuggestion>,
@@ -866,9 +929,20 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
         setNotice({ text: '修改已明确保存；尚未创建任务。' })
       })
     }
-    setDrafts((current) => current.map((draft) =>
-      draft.id === draftId ? updateDraftItem(draft, itemId, patch, status) : draft,
-    ))
+    const nextDrafts=drafts.map(draft=>draft.id===draftId?updateDraftItem(draft,itemId,patch,status):draft)
+    try {
+      if(ordinaryCanonical&&(status==='已拒绝'||Object.keys(patch).some(k=>!['title','deadline'].includes(k)))){
+        const before=drafts.find(d=>d.id===draftId)?.items.find(i=>i.id===itemId)
+        await ordinaryReviewSession.stage(ordinaryCanonical,draftId,`task:${itemId}:facts`,before?.suggestion??{},nextDrafts.find(d=>d.id===draftId)?.items.find(i=>i.id===itemId)??{},ordinaryReviewSession.writer)
+      }
+      await workspaceRepository.save({...workspace,drafts:nextDrafts})
+      await refreshOrdinary()
+      setNotice({text:'草稿修改已保存；正式事实尚未创建。'})
+    }catch(error){
+      if(error instanceof WorkspaceViewConflictError)setViewConflict(error)
+      setNotice({text:'草稿修改尚未保存；输入保留，请处理冲突或手动重试。'})
+      throw error
+    }
     if (Object.keys(patch).length > 0 || status === '已拒绝') {
       const action = status === '已拒绝' ? 'rejected' : 'modified'
       setRecognitionFeedback((current) => [...current, {
@@ -1098,79 +1172,69 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
     setNotice({ text: '已合并到目标建议；原建议保留为已拒绝记录，可追溯。' })
   }
 
-  const handleConfirmDraftItem = async (draftId: string, itemId: string) => {
-    if (runtime) { await confirmExperiment([draftId], itemId); return }
-    const draft = drafts.find((item) => item.id === draftId)
-    const item = draft?.items.find((candidate) => candidate.id === itemId)
-    if (!draft || !item || item.status !== '待确认' || !draft.recognitionResult) return
-    if (Number.isNaN(new Date(item.suggestion.deadline).getTime())) {
-      setNotice({ text: '请先补全并确认该任务的截止时间；模糊日期不会直接进入正式任务。' })
-      return
-    }
-    const unconfirmedTime = draft.recognitionResult?.timePoints.some((point) => point.relatedTaskTempIds.includes(item.suggestion.id) && point.selected === false)
-    if (unconfirmedTime) {
-      setNotice({ text: '该任务仍有模糊或未勾选的时间节点，请在“时间节点”中确认后再加入。' })
-      return
-    }
+  const retryOrdinaryReadback = async (receipt=ordinaryReceipt) => {
+    if(!receipt)return
+    setOrdinaryBusy(true)
     try {
-      await workspaceRepository.save(workspace)
-      const canonical = await canonicalWorkspaceRepository.load()
-      if (!canonical) throw new Error('WORKSPACE_V8_NOT_INITIALIZED')
-      const selection = selectionFromDraftItems(draft.recognitionResult, [item])
-      selection.rejectedTempIds = draft.items.filter((candidate) => candidate.status === '已拒绝').map((candidate) => candidate.suggestion.id)
-      const plan = buildDomainCommitPlan(canonical, draftId, selection)
-      await commitDomainPlan(canonicalWorkspaceRepository, plan)
-      const saved = await workspaceRepository.load()
-      if (saved) applyWorkspaceView(saved)
-      setNotice({ text: '已原子创建任务及关联实体，可在任务中心继续编辑。' })
-      if (draft.items.filter((draftItem) => draftItem.status === '待确认').length <= 1) {
-        setSelectedDraftId(null)
-        setCurrentPage('today')
-      }
-    } catch (error) {
-      const message = error instanceof Error && error.message.startsWith('DOMAIN_COMMIT_PROJECT_DECISION_REQUIRED')
-        ? '请先明确选择新建项目、关联已有项目或作为独立事项；“稍后决定”不会静默创建项目。'
-        : error instanceof Error && error.message.startsWith('DOMAIN_COMMIT_PARENT_REQUIRED')
-          ? '该子任务依赖父任务，请先一并勾选父任务后使用“全部加入”。'
-          : '确认未写入：实体关系或时间仍需核对，现有数据未被部分修改。'
-      setNotice({ text: message })
-    }
+      await verifySourceReviewReadback(independentReader,receipt)
+      await ordinaryMeasurement.readback(receipt)
+      await acknowledgeSourceReadback(canonicalWorkspaceRepository,receipt)
+      setOrdinaryReceipt(null)
+      await refreshOrdinary()
+      if(receipt.disposition!=='partial')await ordinaryMeasurement.finish(receipt.draftId,receipt.disposition==='no_task')
+      setNotice({text:'正式事实已保存，独立读回已验证。'})
+    } catch {setNotice({text:'已提交，读回尚未验证；请手动重新读回，勿重复提交。'})}
+    finally{setOrdinaryBusy(false)}
   }
 
-  const handleConfirmAll = async (draftId: string) => {
-    if (runtime) { await confirmExperiment([draftId]); return }
-    const draft = drafts.find((item) => item.id === draftId)
-    if (!draft?.recognitionResult) return
-    const pending = draft.items.filter((item) => item.status === '待确认' && item.selected !== false)
-    if (!pending.length) return
-    if (pending.some((item) => Number.isNaN(new Date(item.suggestion.deadline).getTime()))) {
-      setNotice({ text: '仍有任务的截止时间未确认，请逐项补全后再全部加入。' })
-      return
-    }
-    const pendingIds = new Set(pending.map((item) => item.suggestion.id))
-    if (draft.recognitionResult?.timePoints.some((point) => point.selected === false && point.relatedTaskTempIds.some((id) => pendingIds.has(id)))) {
-      setNotice({ text: '仍有模糊或未勾选的时间节点，请先逐项确认。' })
-      return
-    }
+  const confirmOrdinary = async (draftId:string,itemId?:string) => {
+    if(ordinaryCommitLock.current||ordinaryReceipt||ordinaryFactsDirty)return
+    const draft=drafts.find(d=>d.id===draftId)
+    if(!draft?.recognitionResult)return
+    ordinaryCommitLock.current=true;setOrdinaryBusy(true)
+    let receipt:SourceReviewReceipt|null=null,waiting=false
     try {
+      await ordinaryMeasurement.wait(draftId);waiting=true
       await workspaceRepository.save(workspace)
-      const canonical = await canonicalWorkspaceRepository.load()
-      if (!canonical) throw new Error('WORKSPACE_V8_NOT_INITIALIZED')
-      const selection = selectionFromDraftItems(draft.recognitionResult, draft.items)
-      const plan = buildDomainCommitPlan(canonical, draftId, selection)
-      await commitDomainPlan(canonicalWorkspaceRepository, plan)
-      const saved = await workspaceRepository.load()
-      if (saved) applyWorkspaceView(saved)
-      setSelectedDraftId(null)
-      setCurrentPage('today')
-      setNotice({ text: `已原子创建 ${plan.create.tasks.length} 项任务，并完整保存材料、时间与证据。` })
-    } catch (error) {
-      setNotice({
-        text: error instanceof Error && error.message.startsWith('DOMAIN_COMMIT_PROJECT_DECISION_REQUIRED')
-          ? '请先明确项目归属；“稍后决定”不会创建项目或正式任务。'
-          : '全部确认未写入：请检查父子任务、依赖和未确认时间，当前数据未被部分修改。',
-      })
-    }
+      const canonical=await canonicalWorkspaceRepository.load()
+      if(!canonical)throw Error('WORKSPACE_V8_NOT_INITIALIZED')
+      const plan=buildSourceReviewPlan(canonical,draft,itemId)
+      receipt=await commitSourceReview(canonicalWorkspaceRepository,plan)
+      setOrdinaryReceipt(receipt)
+      const committed=(await canonicalWorkspaceRepository.load())!
+      const session=await ordinaryReviewSession.load(committed,draftId)
+      await ordinaryMeasurement.committed(receipt,session,committed)
+      await verifySourceReviewReadback(independentReader,receipt)
+      await ordinaryMeasurement.waitEnd(draftId);waiting=false
+      await ordinaryMeasurement.readback(receipt)
+      await acknowledgeSourceReadback(canonicalWorkspaceRepository,receipt)
+      setOrdinaryReceipt(null)
+      await refreshOrdinary()
+      if(receipt.disposition!=='partial')await ordinaryMeasurement.finish(draftId,receipt.disposition==='no_task')
+      setNotice({text:`已保存并独立读回：${plan.create.tasks.length} 项任务、${plan.create.events.length} 个事件；不确定时间保持原状。`})
+      if(!itemId&&receipt.disposition!=='partial'){setSelectedDraftId(null);setCurrentPage('today')}
+    }catch(error){
+      if(waiting)await ordinaryMeasurement.waitEnd(draftId)
+      await ordinaryMeasurement.failure(draftId,error instanceof Error?error.message:'UNKNOWN')
+      if(receipt){setNotice({text:'已提交，读回尚未验证；输入和提交记录保留，请重新读回，勿重复提交。'})}
+      else if(error instanceof WorkspaceViewConflictError){setViewConflict(error);setNotice({text:'其他页面修改了相同内容。你的输入保留，请核对差异。'})}
+      else setNotice({text:`正式提交未完成：${error instanceof Error?error.message:'数据库写入失败'}；没有创建半份事实。`})
+    }finally{ordinaryCommitLock.current=false;setOrdinaryBusy(false)}
+  }
+  const handleConfirmDraftItem = async (draftId:string,itemId:string) => {
+    if(runtime){await confirmExperiment([draftId],itemId);return}
+    await confirmOrdinary(draftId,itemId)
+  }
+  const handleConfirmAll = async (draftId:string) => {
+    if(runtime){await confirmExperiment([draftId]);return}
+    await confirmOrdinary(draftId)
+  }
+
+  const handleOrdinaryFacts = async (draftId:string,result:NonNullable<ExtractionDraft['recognitionResult']>) => {
+    const nextDrafts=drafts.map(d=>d.id===draftId?{...d,recognitionResult:result,updatedAt:new Date().toISOString()}:d)
+    await workspaceRepository.save({...workspace,drafts:nextDrafts})
+    await refreshOrdinary()
+    setNotice({text:'草稿纠正已保存；原始首次回答不变，尚未正式确认。'})
   }
 
   const handleArchiveDrafts = (draftIds: string[]) => {
@@ -1195,10 +1259,12 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
 
   const handleImportWorkspace = async (serialized: string) => {
     if (runtime) { rejectExperimentAction(); return }
+    setNotice(null) // A previous successful import must not mask a new rejection.
     const imported = await workspaceRepository.importAndReplace(serialized)
     persistedWorkspaceRevision.current = persistenceRevisionForView(imported)
     pendingWorkspaceRevision.current = null
     applyWorkspaceView(imported)
+    setOrdinaryCanonical(await canonicalWorkspaceRepository.load())
     setNotice({ text: '已导入 JSON 备份。' })
   }
 
@@ -1318,6 +1384,7 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
       case 'today':
         return (
           <DashboardPage
+            engineeringInput={Boolean(ordinaryEnvironment)}
             realInput={runtime?.realInput}
             dateViews={dateViews}
             readOnly={Boolean(runtime)}
@@ -1483,6 +1550,13 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
         onOpenGuide={() => runtime ? rejectExperimentAction() : setGuideOpen(true)}
       />
       <div id="main-content" className="content-shell" tabIndex={-1}>
+        {ordinaryEnvironment && <details className="ordinary-engineering-mode"><summary>匿名工程输入 · 普通产品路径 · 不发送模型请求</summary><p>{ordinaryEnvironment.label}；{ordinaryEnvironment.store.name}</p></details>}
+        {viewConflict && <section className="source-review-status" role="alert"><strong>另一页面已修改相同内容，你的输入保留在本页。</strong>
+          {viewConflict.conflicts.map(c=><p key={c.path}>{c.path}：编辑前「{String(c.baseline)}」→最新「{String(c.current)}」；我的输入「{String(c.proposed)}」</p>)}
+          <button type="button" onClick={()=>void refreshOrdinary().then(()=>{setViewConflict(null);setStorageError(false);setNotice({text:'已明确重新载入最新内容；未确认检查点仍可恢复。'})})}>采用最新内容并重新核对</button>
+          <p>请先记下仍需保留的冲突输入；未确认标题和日期检查点保留，不会自动覆盖最新事实。</p>
+        </section>}
+        {ordinaryReceipt && <section className="source-review-status" role="status"><strong>已提交，读回尚未验证。</strong><p>提交记录已保留；恢复只重新读回，不重复创建任务。</p><button type="button" disabled={ordinaryBusy} onClick={()=>void retryOrdinaryReadback()}>重新读回并核验</button></section>}
         {runtime && <section aria-label="隔离实验状态">
           <p>{runtime.recognitionDescription ?? '人工工程响应（非模型预测）'} · 独立测试库 · {runtime.realInput?.networkDescription ?? '无模型/通知外发'}</p>
           {readbackPending && runtime.realInput?.readbackRecovery && <section role="alert" aria-label="提交后读回恢复">
@@ -1529,6 +1603,7 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
 
       {!workspaceRecovery && intakeOpen && (
         <IntakePanel
+          engineeringInput={Boolean(ordinaryEnvironment)}
           realInputPanel={RealInputPanel && isolatedSnapshot ? <RealInputPanel workspace={isolatedSnapshot}
             initialText={realInputInitialText} onSaved={refreshExperiment}
             onDraftReady={async id => { await refreshExperiment(); setIntakeOpen(false); setSelectedDraftId(id); setRealInputInitialText('') }} /> : undefined}
@@ -1549,8 +1624,8 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
       {!workspaceRecovery && selectedDraft && (!runtime || experimentalReview) && (
         <DraftReviewPanel
           sessionFrame={runtime?.realInput?.sessionFrame}
-          reviewSession={runtime?.realInput?.reviewSession}
-          reviewWorkspace={isolatedSnapshot ?? undefined}
+          reviewSession={runtime?.realInput?.reviewSession ?? ordinaryReviewSession}
+          reviewWorkspace={isolatedSnapshot ?? ordinaryCanonical ?? undefined}
           onRestoreTaskSelections={runtime ? choices=>setIsolatedChoices(previous=>({...previous,[selectedDraft.id]:{...previous[selectedDraft.id],...choices}})) : undefined}
           onFieldInput={runtime?.realInput?.onReviewFieldInput ? (itemId,field)=>runtime.realInput!.onReviewFieldInput!(selectedDraft.id,itemId,field) : undefined}
           draftCorrection={runtime?.realInput?.draftEditor&&isolatedSnapshot?(onDirty,unsaved)=>runtime.realInput!.draftEditor!({workspace:isolatedSnapshot,draftId:selectedDraft.id,busy:isolatedBusy||storageError||unsaved,onDirty,onSaved:refreshExperiment,reviewSession:runtime.realInput?.reviewSession}):undefined}
@@ -1562,7 +1637,8 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
           key={runtime ? selectedDraft.id : undefined}
           isolatedCapabilities={Boolean(runtime)}
           recognitionDescription={runtime?.realInput ? runtime.recognitionDescription : undefined}
-          confirmationV2={runtime && experimentalReview ? { busy: isolatedBusy || storageError, items: experimentalReview.states } : undefined}
+          ordinarySourceReview={!runtime ? {busy:ordinaryBusy || Boolean(ordinaryReceipt) || Boolean(viewConflict),unsaved:ordinaryFactsDirty,onConfirm:()=>void handleConfirmAll(selectedDraft.id),facts:<OrdinarySourceFacts draft={selectedDraft} source={selectedDraftSource} workspace={ordinaryCanonical} session={ordinaryReviewSession} onDirty={setOrdinaryFactsDirty} onSave={result=>handleOrdinaryFacts(selectedDraft.id,result)} />} : undefined}
+          confirmationV2={runtime && experimentalReview ? { busy: isolatedBusy || storageError, items: experimentalReview.states } : !runtime && selectedDraft.recognitionResult ? {busy:ordinaryBusy || Boolean(ordinaryReceipt) || Boolean(viewConflict),items:Object.fromEntries(selectedDraft.items.map(item=>{const r=selectedDraft.recognitionResult!,p=r.timePoints.filter(t=>t.relatedTaskTempIds.includes(item.suggestion.id));return [item.id,{dateLabel:p.length?p.map(t=>t.rawText+(t.needsConfirmation?'（时刻待定）':'')).join('；'):'原文未说明截止；可直接保存',blockedReason:sourceReviewProblem(r,item.suggestion.id),materialTempIds:r.materials.filter(m=>m.relatedTaskTempIds.includes(item.suggestion.id)).map(m=>m.tempId),timePointTempIds:p.map(t=>t.tempId)}]}))} : undefined}
           semanticReview={runtime?.semantic && isolatedSnapshot && experimentalReview && isolatedSnapshot.extractionDrafts.find(d=>d.id===selectedDraft.id)?.legacyData?.mainline05 ? {
             itemFacts: (taskId, onFocus) => runtime.semantic!.facts(isolatedSnapshot, selectedDraft.id, taskId, onFocus),
             information: runtime.semantic.facts(isolatedSnapshot, selectedDraft.id),
@@ -1578,13 +1654,12 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
           source={selectedDraftSource}
           onClose={() => setSelectedDraftId(null)}
           onUpdate={(itemId, patch) => handleUpdateDraft(selectedDraft.id, itemId, patch)}
-          onReloadLatest={runtime ? refreshExperiment : undefined}
+          onReloadLatest={runtime ? refreshExperiment : refreshOrdinary}
           onConfirm={(itemId) => handleConfirmDraftItem(selectedDraft.id, itemId)}
           onReject={(itemId) => {
             if (runtime?.semantic) { disposeExperiment(selectedDraft.id, 'reject', itemId); return }
             if (runtime) { rejectExperimentAction(); return }
-            handleUpdateDraft(selectedDraft.id, itemId, {}, '已拒绝')
-            setNotice({ text: '已拒绝该建议，不会创建任务。', undo: () => handleUpdateDraft(selectedDraft.id, itemId, {}, '待确认') })
+            void handleUpdateDraft(selectedDraft.id, itemId, {}, '已拒绝').then(()=>setNotice({ text: '拒绝已保存，不会创建该任务。', undo: () => {void handleUpdateDraft(selectedDraft.id, itemId, {}, '待确认').catch(()=>undefined)} })).catch(()=>undefined)
           }}
           onConfirmAll={() => handleConfirmAll(selectedDraft.id)}
           projectWillCreate={runtime?.semantic ? false : selectedDraft.recognitionResult
@@ -1602,6 +1677,7 @@ function App({ runtime }: { runtime?: MainlineRuntime } = {}) {
       )}
       {!workspaceRecovery && selectedTask && (
         <TaskDetailPanel
+          pendingSave={Boolean(viewConflict)}
           semanticContent={runtime?.semantic && isolatedSnapshot ? runtime.semantic.taskFacts(isolatedSnapshot, selectedTask.id) : undefined}
           readOnly={Boolean(runtime)}
           dateView={dateViews?.[selectedTask.id]}

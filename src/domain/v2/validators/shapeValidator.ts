@@ -426,6 +426,12 @@ function validateTask(value: UnknownRecord, path: string, issues: ValidationIssu
  * complete semantic operation chain. A status/legacy marker alone is never sufficient. */
 function hasExperimentalUnverifiedReview(workspace: UnknownRecord, material: UnknownRecord): boolean {
   const meta = material.legacyData
+  if(isRecord(meta)&&meta.availabilityVersion==='ordinary-availability-unobserved-1'&&meta.availabilityOrigin==='not_observed'&&typeof meta.recognitionTempId==='string'&&Array.isArray(workspace.extractionDrafts)){
+    const draft=workspace.extractionDrafts.find(d=>isRecord(d)&&d.id===meta.sourceReviewDraftId)
+    if(!isRecord(draft)||!isRecord(draft.result)||!Array.isArray(draft.result.materials)||!Array.isArray(draft.commitOperationIds)||!draft.commitOperationIds.some(id=>typeof id==='string'&&id.startsWith('source-review:')))return false
+    const sourceMaterial=draft.result.materials.find(m=>isRecord(m)&&m.tempId===meta.recognitionTempId)
+    return isRecord(sourceMaterial)&&material.id===`material:${String(draft.id)}:${meta.recognitionTempId}`&&sourceMaterial.name===material.name&&sourceMaterial.required===material.required&&Array.isArray(material.relatedTaskIds)&&material.relatedTaskIds.length>0
+  }
   if (!isRecord(workspace.workspace) || typeof workspace.workspace.id !== 'string'
     || !/^rco-mainline-01-02-i1-real-input-[a-z0-9-]{10,100}$/.test(workspace.workspace.id)
     || !isRecord(meta) || meta.materialReviewVersion !== 'material-review-2'

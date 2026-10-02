@@ -1,5 +1,5 @@
 import { Download, RotateCcw, Upload } from 'lucide-react'
-import { useRef, useState, type ChangeEvent } from 'react'
+import { useEffect, useRef, useState, type ChangeEvent } from 'react'
 import { MAX_WORKSPACE_IMPORT_BYTES } from '../lib/repository'
 
 interface WorkspaceControlsProps {
@@ -12,6 +12,8 @@ export function WorkspaceControls({ onExport, onImport, onClear }: WorkspaceCont
   const inputRef = useRef<HTMLInputElement>(null)
   const [clearArmed, setClearArmed] = useState(false)
   const [message, setMessage] = useState('')
+  const [backup,setBackup]=useState<{url:string;name:string;serialized:string}|null>(null)
+  useEffect(()=>()=>{if(backup)URL.revokeObjectURL(backup.url)},[backup])
 
   const exportData = async () => {
     try {
@@ -21,9 +23,9 @@ export function WorkspaceControls({ onExport, onImport, onClear }: WorkspaceCont
       const link = document.createElement('a')
       link.href = url
       link.download = `student-affairs-v8-backup-${new Date().toISOString().slice(0, 10)}.json`
+      setBackup({url,name:link.download,serialized})
       link.click()
-      URL.revokeObjectURL(url)
-      setMessage('已下载 Workspace v8 本机数据备份。')
+      setMessage('备份已生成并请求浏览器下载。请检查下载结果；未下载时可再次下载或复制备份内容。')
     } catch {
       setMessage('导出失败：当前权威工作区尚未就绪。')
     }
@@ -67,5 +69,6 @@ export function WorkspaceControls({ onExport, onImport, onClear }: WorkspaceCont
       <button className={clearArmed ? 'danger-button armed' : 'danger-button'} type="button" onClick={clearData}><RotateCcw size={16} />{clearArmed ? '确认清空' : '清空数据'}</button>
     </div>
     {message && <p className="workspace-control-message" role="status">{message}</p>}
+    {backup&&<details><summary>下载与查看本次备份</summary><a href={backup.url} download={backup.name}>再次下载本次 JSON 备份</a><label>本次备份内容（请妥善保管）<textarea aria-label="本次备份内容" readOnly value={backup.serialized}/></label></details>}
   </section>
 }

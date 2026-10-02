@@ -300,6 +300,15 @@ export class CanonicalWorkspaceRepository {
     await this.store.write(this.recordKey, cloneValue(parseWorkspaceV8(workspace)))
   }
 
+  /** An empty workspace is initialized atomically; another tab's record wins. */
+  async initialize(workspace: WorkspaceV8): Promise<WorkspaceV8> {
+    const initial = cloneValue(parseWorkspaceV8(workspace))
+    const result = await this.store.transaction(this.recordKey, (raw) => raw === undefined
+      ? initial
+      : cloneValue(parseWorkspaceV8(raw)))
+    return cloneValue(parseWorkspaceV8(result))
+  }
+
   async transaction(mutate: CanonicalWorkspaceMutation): Promise<WorkspaceV8> {
     const result = await this.store.transaction(this.recordKey, (raw) => {
       if (raw === undefined) throw new Error('WORKSPACE_V8_NOT_INITIALIZED')

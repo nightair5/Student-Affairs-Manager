@@ -25,6 +25,31 @@ import { createIntegrationState } from '../../lib/workspace'
 import { workspaceSnapshotHash } from './migration'
 import type { JsonValue, LegacyData, WorkspaceV8 } from './types'
 
+// Provenance belongs to the in-memory projection, never to exported user data.
+// The copy is taken before callers edit the projection.
+const legacyViewBaselines = new WeakMap<WorkspaceData, WorkspaceData>()
+
+export function legacyViewReadBaseline(view: WorkspaceData): WorkspaceData | null {
+  const baseline = legacyViewBaselines.get(view)
+  return baseline ? structuredClone(baseline) : null
+}
+
+export interface WorkspaceViewConflict {
+  path: string
+  baseline: unknown
+  current: unknown
+  proposed: unknown
+}
+
+export class WorkspaceViewConflictError extends Error {
+  readonly code = 'WORKSPACE_VIEW_CONFLICT' as const
+
+  constructor(readonly conflicts: readonly WorkspaceViewConflict[]) {
+    super('其他页面已修改相同内容。你的输入已保留，请核对差异后再保存。')
+    this.name = 'WorkspaceViewConflictError'
+  }
+}
+
 function record(value: JsonValue | undefined): Record<string, unknown> | null {
   return value && typeof value === 'object' && !Array.isArray(value)
     ? value as Record<string, unknown>
@@ -78,7 +103,28 @@ function preferredTaskDeadlinePoint(workspace: WorkspaceV8, taskId: string): Wor
 }
 
 function taskDeadline(workspace: WorkspaceV8, taskId: string): string {
-  return preferredTaskDeadlinePoint(workspace, taskId)?.normalizedValue ?? ''
+  const point = preferredTaskDeadlinePoint(workspace, taskId)
+  return point && !point.needsConfirmation && point.precision !== 'vague' && point.precision !== 'relative'
+    ? point.normalizedValue ?? '' : ''
+}
+
+function sourceDeadlineLabel(workspace: WorkspaceV8, taskId: string): string | undefined {
+  const points = workspace.timePoints.filter((point) => (point.taskId === taskId || point.relatedTaskIds.includes(taskId))
+    && ['task_deadline', 'submission_deadline', 'registration_deadline', 'result_announcement'].includes(point.type))
+  const point = points.find((candidate) => candidate.type === 'task_deadline') ?? points[0]
+  return point && (point.needsConfirmation || point.precision === 'vague' || point.precision === 'relative')
+    ? point.rawText || undefined : undefined
+}
+
+function userEditedDraftDeadline(item: LegacyDraft['items'][number] | undefined): boolean {
+  return Boolean(item?.history?.some((entry) => {
+    if (entry.actor !== 'user') return false
+    if (entry.field === '截止时间') return true
+    if (entry.field !== '识别建议') return false
+    try {
+      return JSON.parse(entry.before).deadline !== JSON.parse(entry.after).deadline
+    } catch { return false }
+  }))
 }
 
 function taskMaterials(workspace: WorkspaceV8, taskId: string, sourceId?: string): LegacyTaskMaterial[] {
@@ -204,7 +250,7 @@ export function workspaceV8ToLegacyView(workspace: WorkspaceV8): WorkspaceData {
         ?? (typeof item.legacyData?.contentPreview === 'string' ? item.legacyData.contentPreview : undefined)
         ?? rawText?.slice(0, 240)
         ?? '',
-      content: legacy.content ?? rawText,
+      content: rawText ?? legacy.content,
       rawText,
       url: legacy.url ?? (typeof item.legacyData?.url === 'string' ? item.legacyData.url : undefined),
       originalFileName: legacy.originalFileName ?? (typeof item.legacyData?.originalFileName === 'string' ? item.legacyData.originalFileName : undefined),
@@ -256,6 +302,8 @@ export function workspaceV8ToLegacyView(workspace: WorkspaceV8): WorkspaceData {
       status: legacyTaskStatus(item.status),
       deadline,
       estimatedMinutes: item.estimatedMinutes ?? 60,
+      estimatedMinutesKnown: item.estimatedMinutes !== null,
+      sourceDeadlineLabel: sourceDeadlineLabel(workspace, item.id),
       nextAction: item.nextAction ?? item.title,
       description: item.description ?? '',
       priority: legacyPriority(item.legacyData?.priority ?? item.legacyData?.prioritySuggestion ?? legacy.priority),
@@ -316,6 +364,14 @@ export function workspaceV8ToLegacyView(workspace: WorkspaceV8): WorkspaceData {
       items: suggestions.length ? suggestions.map((suggestion) => {
         const previous = legacyItems.find((candidate) => candidate.suggestion.id === suggestion.id)
         const recognized = recognizedTasksById.get(suggestion.id)
+        const sourcePoint = item.result?.timePoints.find((point) => point.selected !== false
+          && (recognized?.timePointTempIds.includes(point.tempId) || point.relatedTaskTempIds.includes(suggestion.id))
+          && ['task_deadline', 'submission_deadline', 'registration_deadline'].includes(point.type))
+        const knownSourceDate = sourcePoint?.normalizedValue?.match(/^\d{4}-\d{2}-\d{2}/u)?.[0] ?? ''
+        const sourceDeadline = sourcePoint?.needsConfirmation || sourcePoint?.precision === 'vague' || sourcePoint?.precision === 'relative'
+          ? knownSourceDate : sourcePoint?.normalizedValue ?? ''
+        const displaySuggestion = { ...(previous?.suggestion ?? suggestion),
+          deadline: userEditedDraftDeadline(previous) ? previous!.suggestion.deadline : sourceDeadline }
         const selected = accepted.has(suggestion.id)
           ? true
           : rejected.has(suggestion.id)
@@ -323,7 +379,7 @@ export function workspaceV8ToLegacyView(workspace: WorkspaceV8): WorkspaceData {
             : previous?.selected ?? recognized?.selected ?? recognized?.inferenceLevel === 'explicit'
         return {
           id: previous?.id ?? `draft-item:${item.id}:${suggestion.id}`,
-          suggestion: previous?.suggestion ?? suggestion,
+          suggestion: displaySuggestion,
           selected,
           status: accepted.has(suggestion.id) ? '已确认' : rejected.has(suggestion.id) ? '已拒绝' : '待确认',
           updatedAt: previous?.updatedAt ?? item.updatedAt,
@@ -476,7 +532,7 @@ export function workspaceV8ToLegacyView(workspace: WorkspaceV8): WorkspaceData {
     updatedAt: item.updatedAt,
   }))
 
-  return {
+  const view: WorkspaceData = {
     schemaVersion: 7,
     tasks,
     sources,
@@ -497,6 +553,51 @@ export function workspaceV8ToLegacyView(workspace: WorkspaceV8): WorkspaceData {
     knowledgeSettings: preferencesValue<KnowledgeSettings>(workspace, 'knowledgeSettings', {}),
     savedAt: workspace.savedAt,
   }
+  legacyViewBaselines.set(view, structuredClone(view))
+  return view
+}
+
+/** Apply only changes since the screen's read; unrelated concurrent changes survive. */
+export function rebaseLegacyViewEdits(
+  baseline: WorkspaceData,
+  proposed: WorkspaceData,
+  current: WorkspaceData,
+): WorkspaceData {
+  const conflicts: WorkspaceViewConflict[] = []
+  const merge = (before: unknown, edited: unknown, latest: unknown, path: string): unknown => {
+    if (sameLegacyViewValue(before, edited)) return latest
+    if (sameLegacyViewValue(before, latest) || sameLegacyViewValue(edited, latest)) return edited
+    // Timestamps describe writes, not user decisions. Two unrelated field edits
+    // can legitimately have different updatedAt values.
+    if (/(?:^|\.)updatedAt$/u.test(path) || path === 'savedAt') {
+      return typeof edited === 'string' && typeof latest === 'string' && edited < latest ? latest : edited
+    }
+    if (Array.isArray(before) && Array.isArray(edited) && Array.isArray(latest)
+      && [...before, ...edited, ...latest].every((item) => item && typeof item === 'object'
+        && 'id' in item && typeof item.id === 'string')) {
+      const indexed = (items: unknown[]) => new Map(items.map((item) => [(item as { id: string }).id, item]))
+      const baseItems = indexed(before), nextItems = indexed(edited), currentItems = indexed(latest)
+      const ids = [...new Set([...currentItems.keys(), ...nextItems.keys(), ...baseItems.keys()])]
+      return ids.flatMap((id) => {
+        const result = merge(baseItems.get(id), nextItems.get(id), currentItems.get(id), `${path}[${id}]`)
+        return result === undefined ? [] : [result]
+      })
+    }
+    const isObject = (value: unknown): value is Record<string, unknown> => Boolean(value)
+      && typeof value === 'object' && !Array.isArray(value)
+    if (isObject(before) && isObject(edited) && isObject(latest)) {
+      return Object.fromEntries([...new Set([...Object.keys(before), ...Object.keys(edited), ...Object.keys(latest)])]
+        .flatMap((key) => {
+          const result = merge(before[key], edited[key], latest[key], path ? `${path}.${key}` : key)
+          return result === undefined ? [] : [[key, result]]
+        }))
+    }
+    conflicts.push({ path, baseline: structuredClone(before), current: structuredClone(latest), proposed: structuredClone(edited) })
+    return latest
+  }
+  const view = merge(baseline, proposed, current, '') as WorkspaceData
+  if (conflicts.length) throw new WorkspaceViewConflictError(conflicts)
+  return view
 }
 
 function sameLegacyViewValue(left: unknown, right: unknown): boolean {
@@ -592,6 +693,36 @@ export function mergeLegacyViewIntoWorkspaceV8(workspace: WorkspaceV8, view: Wor
   const baselineMaterialsById = new Map(baselineView.materialItems.map((item) => [item.id, item]))
   const baselineRemindersById = new Map(baselineView.reminderRecords.map((item) => [item.id, item]))
   const now = view.savedAt
+
+  const addedSourceVersions: WorkspaceV8['sourceVersions'] = []
+  const revisedSourceVersionIds = new Map<string, string>()
+  sourcesById.forEach((edited, sourceId) => {
+    const baseline = baselineSourcesById.get(sourceId)
+    const source = workspace.sources.find((item) => item.id === sourceId)
+    const previous = source && workspace.sourceVersions.find((item) => item.id === source.currentVersionId)
+    if (!baseline || !source || !previous) return
+    const rawChanged = !sameLegacyViewValue(edited.rawText, baseline.rawText)
+    const contentChanged = !sameLegacyViewValue(edited.content, baseline.content)
+    if (!rawChanged && !contentChanged) return
+    if (rawChanged && contentChanged && edited.rawText !== edited.content) {
+      throw new WorkspaceViewConflictError([{
+        path: `sources[${sourceId}].rawText`, baseline: previous.rawText,
+        current: edited.rawText, proposed: edited.content,
+      }])
+    }
+    const rawText = (rawChanged ? edited.rawText : edited.content) ?? ''
+    if (rawText === previous.rawText) return
+    const versionNo = workspace.sourceVersions.filter((item) => item.sourceId === sourceId)
+      .reduce((maximum, item) => Math.max(maximum, item.versionNo), 0) + 1
+    const versionId = `${sourceId}:version:${versionNo}`
+    addedSourceVersions.push({
+      id: versionId, sourceId, versionNo, rawText, rawTextRef: null,
+      contentHash: workspaceSnapshotHash(rawText), createdAt: now,
+      legacyData: { editedFromSourceVersionId: previous.id, extractionMethod: 'manual' },
+    })
+    revisedSourceVersionIds.set(sourceId, versionId)
+    sourcesById.set(sourceId, { ...edited, currentVersionId: versionId, rawText, content: rawText, contentPreview: rawText.slice(0, 240) })
+  })
 
   const milestonesById = new Map<string, {
     milestone: WorkspaceData['projects'][number]['milestones'][number]
@@ -716,15 +847,17 @@ export function mergeLegacyViewIntoWorkspaceV8(workspace: WorkspaceV8, view: Wor
       return {
         ...item,
         title: edited.title,
-        description: edited.description || null,
-        nextAction: edited.nextAction || null,
-        status: edited.status === '已完成' ? 'completed' : edited.status === '进行中' ? 'in_progress' : 'todo',
-        estimatedMinutes: edited.estimatedMinutes,
-        manualPriority: edited.manualPriority ?? null,
-        snoozedUntil: edited.snoozedUntil ?? null,
-        dependencyIds: edited.dependencyIds ?? [],
+        description: baseline && edited.description === baseline.description ? item.description : edited.description || null,
+        nextAction: baseline && edited.nextAction === baseline.nextAction ? item.nextAction : edited.nextAction || null,
+        status: baseline && edited.status === baseline.status ? item.status
+          : edited.status === '已完成' ? 'completed' : edited.status === '进行中' ? 'in_progress' : 'todo',
+        estimatedMinutes: baseline && edited.estimatedMinutes === baseline.estimatedMinutes
+          && edited.estimatedMinutesKnown === baseline.estimatedMinutesKnown ? item.estimatedMinutes : edited.estimatedMinutes,
+        manualPriority: baseline && edited.manualPriority === baseline.manualPriority ? item.manualPriority : edited.manualPriority ?? null,
+        snoozedUntil: baseline && edited.snoozedUntil === baseline.snoozedUntil ? item.snoozedUntil : edited.snoozedUntil ?? null,
+        dependencyIds: baseline && sameLegacyViewValue(edited.dependencyIds, baseline.dependencyIds) ? item.dependencyIds : edited.dependencyIds ?? [],
         updatedAt: edited.updatedAt,
-        version: item.version + (edited.updatedAt !== item.updatedAt ? 1 : 0),
+        version: item.version + 1,
         legacyData: withLegacyRecord(item.legacyData, edited, baseline),
       }
     }),
@@ -732,22 +865,12 @@ export function mergeLegacyViewIntoWorkspaceV8(workspace: WorkspaceV8, view: Wor
       const edited = sourcesById.get(item.id)
       const baseline = baselineSourcesById.get(item.id)
       return edited && !(baseline && sameLegacyViewValue(edited, baseline))
-        ? { ...item, title: edited.title, status: edited.status ?? item.status, updatedAt: edited.updatedAt ?? item.updatedAt, legacyData: withLegacyRecord(item.legacyData, edited, baseline) }
+        ? { ...item, title: edited.title, currentVersionId: revisedSourceVersionIds.get(item.id) ?? item.currentVersionId,
+            status: revisedSourceVersionIds.has(item.id) ? 'needs_review' : edited.status ?? item.status,
+            updatedAt: edited.updatedAt ?? item.updatedAt, legacyData: withLegacyRecord(item.legacyData, edited, baseline) }
         : item
     }),
-    sourceVersions: workspace.sourceVersions.map((item) => {
-      const source = sourcesById.get(item.sourceId)
-      const baseline = baselineSourcesById.get(item.sourceId)
-      const canonicalSource = workspace.sources.find((candidate) => candidate.id === item.sourceId)
-      if (!source || canonicalSource?.currentVersionId !== item.id || (baseline && sameLegacyViewValue(source, baseline))) return item
-      const rawText = source.rawText ?? source.content ?? item.rawText
-      return {
-        ...item,
-        rawText,
-        contentHash: rawText !== item.rawText ? workspaceSnapshotHash(rawText) : item.contentHash,
-        legacyData: withLegacyRecord(item.legacyData, source, baseline),
-      }
-    }),
+    sourceVersions: [...workspace.sourceVersions, ...addedSourceVersions],
     extractionDrafts: workspace.extractionDrafts.map((item) => {
       const edited = draftsById.get(item.id)
       if (!edited) return item
@@ -771,7 +894,7 @@ export function mergeLegacyViewIntoWorkspaceV8(workspace: WorkspaceV8, view: Wor
       const edited = projectsById.get(item.id)
       const baseline = baselineProjectsById.get(item.id)
       return edited && !(baseline && sameLegacyViewValue(edited, baseline))
-        ? { ...item, title: edited.title, category: edited.category, objective: edited.objective ?? null, status: edited.status ?? item.status, updatedAt: edited.updatedAt, version: item.version + (edited.updatedAt !== item.updatedAt ? 1 : 0), legacyData: withLegacyRecord(item.legacyData, edited, baseline) }
+        ? { ...item, title: edited.title, category: edited.category, objective: edited.objective ?? null, status: edited.status ?? item.status, updatedAt: edited.updatedAt, version: item.version + 1, legacyData: withLegacyRecord(item.legacyData, edited, baseline) }
         : item
     }),
     milestones: [
@@ -833,8 +956,9 @@ export function mergeLegacyViewIntoWorkspaceV8(workspace: WorkspaceV8, view: Wor
         const relatedTaskId = item.taskId ?? item.relatedTaskIds[0]
         const canonicalTask = relatedTaskId ? workspace.tasks.find((task) => task.id === relatedTaskId) : undefined
         const editedTask = relatedTaskId ? tasksById.get(relatedTaskId) : undefined
+        const baselineTask = relatedTaskId ? baselineTasksById.get(relatedTaskId) : undefined
         const preferred = relatedTaskId ? preferredTaskDeadlinePoint(workspace, relatedTaskId) : undefined
-        if (!canonicalTask || !editedTask || preferred?.id !== item.id || editedTask.updatedAt === canonicalTask.updatedAt || !editedTask.deadline || editedTask.deadline === item.normalizedValue) return item
+        if (!canonicalTask || !editedTask || preferred?.id !== item.id || editedTask.deadline === baselineTask?.deadline || !editedTask.deadline || editedTask.deadline === item.normalizedValue) return item
         const dateOnly = /^\d{4}-\d{2}-\d{2}$/u.test(editedTask.deadline)
         return {
           ...item,

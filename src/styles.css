@@ -1422,6 +1422,9 @@ h3 {
 .danger-button.armed { background: #a23d32; color: #fff; }
 .workspace-status, .app-toast { position: fixed; right: 24px; bottom: 24px; z-index: 30; background: #173c39; color: #fff; padding: 12px 16px; box-shadow: 0 12px 30px rgba(13, 37, 35, .2); display: flex; gap: 12px; align-items: center; }
 .workspace-status.error { background: #9c3f34; }
+.source-review-status { margin: 1rem 2rem; padding: 1rem; border: 1px solid #e3c5b7; border-radius: 12px; background: #fff5ef; color: #733d2c; overflow-wrap: anywhere; }
+.source-review-status button { padding: .65rem 1rem; }
+.ordinary-engineering-mode { margin: .75rem 2rem; color: #52677c; font-size: .85rem; overflow-wrap: anywhere; }
 .app-toast button { border: 0; background: transparent; color: inherit; font: inherit; cursor: pointer; text-decoration: underline; }
 
 .knowledge-header { align-items: flex-start; }
