@@ -1,0 +1,82 @@
+{
+  "version": "d26-comparison-1",
+  "scope": "SEEN_DEVELOPMENT_NOT_HOLDOUT_NOT_ORDINARY_DEFAULT_MODEL",
+  "pairs": [
+    {
+      "sourceId": "D26-S01",
+      "target": "S09_EVENT",
+      "outcome": "UNKNOWN"
+    },
+    {
+      "sourceId": "D26-S02",
+      "target": "S09_EVENT",
+      "outcome": "UNKNOWN"
+    },
+    {
+      "sourceId": "D26-S03",
+      "target": "S06_PREREQUISITE",
+      "outcome": "UNKNOWN"
+    },
+    {
+      "sourceId": "D26-S04",
+      "target": "S06_PREREQUISITE",
+      "outcome": "UNKNOWN"
+    },
+    {
+      "sourceId": "D26-S05",
+      "target": "S05_GRAPH",
+      "outcome": "UNKNOWN"
+    },
+    {
+      "sourceId": "D26-S06",
+      "target": "S05_GRAPH",
+      "outcome": "UNKNOWN"
+    },
+    {
+      "sourceId": "D26-S07",
+      "target": "CONTROL_MATERIAL_PRECISE",
+      "outcome": "UNKNOWN"
+    },
+    {
+      "sourceId": "D26-S08",
+      "target": "CONTROL_MULTI_DATE",
+      "outcome": "UNKNOWN"
+    }
+  ],
+  "decision": {
+    "version": "d26-layered-development-1",
+    "denominator": 8,
+    "observedPairs": 0,
+    "improved": 0,
+    "regressed": 0,
+    "netWhole": 0,
+    "unknown": 8,
+    "riskRegressions": [],
+    "status": "EVIDENCE_INCOMPLETE",
+    "scope": "PROVISIONAL_SEEN_DEVELOPMENT_NOT_HOLDOUT",
+    "enumeratedPlannedPairs": 8
+  },
+  "arms": {
+    "Candidate17": {
+      "denominator": 8,
+      "observed": 0,
+      "firstWholeCorrect": 0,
+      "structuredChecksPassed": 0,
+      "unknown": 8
+    },
+    "Candidate18": {
+      "denominator": 8,
+      "observed": 0,
+      "firstWholeCorrect": 0,
+      "structuredChecksPassed": 0,
+      "unknown": 8
+    }
+  },
+  "humanMetrics": "NOT_OBSERVABLE",
+  "providerActualUsd": "NOT_OBSERVABLE",
+  "status": "NOT_RUN",
+  "correctRate": "NOT_OBSERVABLE; observed=0, planned denominator=8 per arm; zero observed successes is not 0% model accuracy",
+  "ordinaryDefaultModelFirstAccuracy": "NOT_MEASURED",
+  "humanTrial": "NOT_RUN",
+  "reportingNormalization": "In this NOT_RUN report, observedPairs counts only pairs with actual answers. The library originally enumerates all 8 planned UNKNOWN rows; preserve them as enumeratedPlannedPairs. Frozen scoring/selector rules are unchanged."
+}

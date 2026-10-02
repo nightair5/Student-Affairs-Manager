@@ -1,0 +1,78 @@
+{
+  "version": "source-time-assertions-1",
+  "role": "PROVISIONAL_SOURCE_AUTHORED_NOT_PARSER_DERIVED",
+  "referenceTime": "2026-09-22T09:00:00+08:00",
+  "timezone": "Asia/Shanghai",
+  "assertions": [
+    {
+      "sourceId": "D26-S01",
+      "rawText": "周三晚",
+      "type": "event_start",
+      "normalizedValue": null,
+      "precision": "vague",
+      "isAllDay": false,
+      "needsConfirmation": true,
+      "reason": "Weekday and evening are retained verbatim; the week and clock are not asserted."
+    },
+    {
+      "sourceId": "D26-S02",
+      "rawText": "周四晚",
+      "type": "event_start",
+      "normalizedValue": null,
+      "precision": "vague",
+      "isAllDay": false,
+      "needsConfirmation": true,
+      "reason": "Weekday and evening remain partial; no invented clock."
+    },
+    {
+      "sourceId": "D26-S05",
+      "rawText": "暂定下周二下午办理",
+      "type": "planned_start",
+      "normalizedValue": "2026-09-29",
+      "precision": "vague",
+      "isAllDay": false,
+      "needsConfirmation": true,
+      "reason": "Reference Tuesday September 22; next Tuesday September 29, tentative afternoon without exact clock."
+    },
+    {
+      "sourceId": "D26-S06",
+      "rawText": "暂定下周四上午办理",
+      "type": "planned_start",
+      "normalizedValue": "2026-10-01",
+      "precision": "vague",
+      "isAllDay": false,
+      "needsConfirmation": true,
+      "reason": "Reference Tuesday September 22; next Thursday October 1, tentative morning without exact clock."
+    },
+    {
+      "sourceId": "D26-S07",
+      "rawText": "2026年10月19日16:30前",
+      "type": "submission_deadline",
+      "normalizedValue": "2026-10-19T16:30",
+      "precision": "exact",
+      "isAllDay": false,
+      "needsConfirmation": false,
+      "reason": "The source explicitly states the complete date and 24-hour clock."
+    },
+    {
+      "sourceId": "D26-S08",
+      "rawText": "10月20日前",
+      "type": "task_deadline",
+      "normalizedValue": "2026-10-20",
+      "precision": "date_only",
+      "isAllDay": true,
+      "needsConfirmation": false,
+      "reason": "Date-only deadline in the reference year; no clock or uncertainty marker."
+    },
+    {
+      "sourceId": "D26-S08",
+      "rawText": "10月22日前",
+      "type": "submission_deadline",
+      "normalizedValue": "2026-10-22",
+      "precision": "date_only",
+      "isAllDay": true,
+      "needsConfirmation": false,
+      "reason": "Second independent date-only deadline; not the first task endpoint."
+    }
+  ]
+}

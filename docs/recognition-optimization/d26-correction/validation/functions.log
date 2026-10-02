@@ -1,0 +1,13 @@
+✔ status reports whether the server secret is configured (2.4979ms)
+✔ POST rejects untrusted origins before contacting DeepSeek (0.3578ms)
+✔ POST sends only bounded question and citation summaries (31.9088ms)
+✔ rate limiter blocks requests over the per-window limit (0.1994ms)
+✔ validation rejects missing citations and accepts bounded input (0.1437ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 151.8071

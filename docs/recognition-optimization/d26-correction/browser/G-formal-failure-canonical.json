@@ -1,0 +1,535 @@
+{
+  "schemaVersion": 8,
+  "workspace": {
+    "id": "rco-mainline-01-02-i1-d26-ordinary-delivery04",
+    "title": "MAINLINE-01 人工工程响应（非模型预测）",
+    "createdAt": "2026-09-05T08:00:00.000Z",
+    "updatedAt": "2026-10-02T09:45:37.462Z"
+  },
+  "settings": {
+    "defaultTimezone": "Asia/Shanghai",
+    "locale": "zh-CN"
+  },
+  "sources": [
+    {
+      "id": "source:96df9059",
+      "workspaceId": "rco-mainline-01-02-i1-d26-ordinary-delivery04",
+      "type": "text",
+      "title": "手动粘贴消息",
+      "status": "needs_review",
+      "currentVersionId": "source:96df9059:version:1",
+      "createdAt": "2026-10-02T09:45:37.432Z",
+      "updatedAt": "2026-10-02T09:45:37.453Z",
+      "legacyData": {
+        "contentPreview": "请保存活动手册。没有截止日期要求。",
+        "url": null,
+        "originalFileName": null,
+        "mimeType": null,
+        "fileSize": null,
+        "fileHash": null,
+        "parserVersion": "local-rules-v2",
+        "reviewMetadata": {
+          "sourceType": "text",
+          "mimeType": null,
+          "characterCount": 17,
+          "pageCount": null,
+          "extractionMethod": "manual",
+          "ocrConfidence": null,
+          "partialExtraction": null,
+          "qualityFlags": []
+        },
+        "captureOperationId": "59c66413-0a25-4218-a361-0b58977cab76"
+      }
+    }
+  ],
+  "sourceVersions": [
+    {
+      "id": "source:96df9059:version:1",
+      "sourceId": "source:96df9059",
+      "versionNo": 1,
+      "contentHash": "fnv1a32:8fad7f1a",
+      "rawText": "请保存活动手册。没有截止日期要求。",
+      "rawTextRef": null,
+      "createdAt": "2026-10-02T09:45:37.432Z",
+      "legacyData": {
+        "reviewMetadata": {
+          "sourceType": "text",
+          "mimeType": null,
+          "characterCount": 17,
+          "pageCount": null,
+          "extractionMethod": "manual",
+          "ocrConfidence": null,
+          "partialExtraction": null,
+          "qualityFlags": []
+        }
+      }
+    }
+  ],
+  "recognitionRuns": [
+    {
+      "id": "source:96df9059:run:1",
+      "sourceVersionId": "source:96df9059:version:1",
+      "provider": "manual",
+      "modelName": "anonymous-offline-engineering-input",
+      "promptVersion": "recognition-2.0.0",
+      "schemaVersion": "2.0",
+      "pipelineVersion": "d26-ordinary-engineering-fake-transport",
+      "status": "succeeded",
+      "startedAt": "2026-10-02T09:45:37.449Z",
+      "completedAt": "2026-10-02T09:45:37.453Z",
+      "durationMs": 4,
+      "tokenUsage": null,
+      "qualityFlags": [
+        "MAINLINE-01 人工工程响应（非模型预测）"
+      ],
+      "errorCode": null,
+      "legacyData": {
+        "originalRecognitionResult": {
+          "schemaVersion": "2.0",
+          "promptVersion": "engineering-mainline-01",
+          "modelName": "D26 匿名工程假传输（非模型成绩）",
+          "createdAt": "2026-09-05T08:00:00.000Z",
+          "sourceSummary": {
+            "title": "MAINLINE-01 人工工程响应（非模型预测）",
+            "sourceType": "text",
+            "notificationType": "uncertain",
+            "summary": "请保存活动手册。没有截止日期要求。",
+            "requiresAction": true,
+            "actionReason": "请保存活动手册。没有截止日期要求。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "MAINLINE-01 人工工程响应（非模型预测）"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [
+            {
+              "tempId": "save",
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "保存活动手册",
+              "actionVerb": "保存",
+              "actionObject": "活动手册",
+              "description": "保存活动手册",
+              "completionCriteria": [],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [],
+              "timePointTempIds": [],
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "inferenceLevel": "explicit",
+              "userConfirmationRequired": true,
+              "selected": true
+            }
+          ],
+          "materials": [],
+          "timePoints": [],
+          "events": [],
+          "evidence": [
+            {
+              "id": "notice",
+              "sourceId": "source:96df9059",
+              "textStart": 0,
+              "textEnd": 17,
+              "quote": "请保存活动手册。没有截止日期要求。",
+              "quotedText": "请保存活动手册。没有截止日期要求。",
+              "field": "description",
+              "extractionMethod": "manual",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [],
+          "ambiguities": [],
+          "ignoredContent": [],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 1,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": true,
+            "reviewReasons": [
+              "MAINLINE-01 人工工程响应（非模型预测）"
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "extractionDrafts": [
+    {
+      "id": "source:96df9059:draft:1",
+      "recognitionRunId": "source:96df9059:run:1",
+      "status": "needs_review",
+      "result": {
+        "schemaVersion": "2.0",
+        "promptVersion": "engineering-mainline-01",
+        "modelName": "D26 匿名工程假传输（非模型成绩）",
+        "createdAt": "2026-09-05T08:00:00.000Z",
+        "sourceSummary": {
+          "title": "保存活动手册",
+          "sourceType": "text",
+          "notificationType": "uncertain",
+          "summary": "1项任务，0项事件。请核对后确认。",
+          "requiresAction": true,
+          "actionReason": "请保存活动手册。没有截止日期要求。"
+        },
+        "projectMatch": {
+          "decision": "standalone_task",
+          "matchedProjectId": null,
+          "suggestedProjectTitle": null,
+          "confidence": 1,
+          "reasons": [
+            "MAINLINE-01 人工工程响应（非模型预测）"
+          ]
+        },
+        "projectSuggestion": null,
+        "milestones": [],
+        "standaloneTasks": [
+          {
+            "tempId": "save",
+            "parentTempId": null,
+            "hierarchyType": "task",
+            "title": "保存活动手册",
+            "actionVerb": "保存",
+            "actionObject": "活动手册",
+            "description": "请保存活动手册。没有截止日期要求。",
+            "completionCriteria": [],
+            "estimatedMinutes": null,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "medium",
+            "dependencyTempIds": [],
+            "materialTempIds": [],
+            "timePointTempIds": [],
+            "evidenceIds": [
+              "notice"
+            ],
+            "confidence": 1,
+            "inferenceLevel": "explicit",
+            "userConfirmationRequired": true,
+            "selected": true
+          }
+        ],
+        "materials": [],
+        "timePoints": [],
+        "events": [],
+        "evidence": [
+          {
+            "id": "notice",
+            "sourceId": "source:96df9059",
+            "textStart": 0,
+            "textEnd": 17,
+            "quote": "请保存活动手册。没有截止日期要求。",
+            "quotedText": "请保存活动手册。没有截止日期要求。",
+            "field": "description",
+            "extractionMethod": "manual",
+            "confidence": 1
+          }
+        ],
+        "conflicts": [],
+        "ambiguities": [],
+        "ignoredContent": [],
+        "quality": {
+          "overallConfidence": 1,
+          "hierarchyConfidence": 1,
+          "dateConfidence": 1,
+          "evidenceCoverage": 1,
+          "duplicateRisk": 0,
+          "overFragmentationRisk": 0,
+          "missingActionRisk": 0,
+          "needsHumanReview": true,
+          "reviewReasons": [
+            "MAINLINE-01 人工工程响应（非模型预测）"
+          ]
+        }
+      },
+      "commitOperationIds": [],
+      "acceptedEntityTempIds": [],
+      "rejectedEntityTempIds": [],
+      "createdAt": "2026-10-02T09:45:37.432Z",
+      "updatedAt": "2026-10-02T09:45:37.453Z",
+      "legacyData": {
+        "firstSuggestionDisplayed": {
+          "schemaVersion": "2.0",
+          "promptVersion": "engineering-mainline-01",
+          "modelName": "D26 匿名工程假传输（非模型成绩）",
+          "createdAt": "2026-09-05T08:00:00.000Z",
+          "sourceSummary": {
+            "title": "保存活动手册",
+            "sourceType": "text",
+            "notificationType": "uncertain",
+            "summary": "1项任务，0项事件。请核对后确认。",
+            "requiresAction": true,
+            "actionReason": "请保存活动手册。没有截止日期要求。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "MAINLINE-01 人工工程响应（非模型预测）"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [
+            {
+              "tempId": "save",
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "保存活动手册",
+              "actionVerb": "保存",
+              "actionObject": "活动手册",
+              "description": "请保存活动手册。没有截止日期要求。",
+              "completionCriteria": [],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [],
+              "timePointTempIds": [],
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "inferenceLevel": "explicit",
+              "userConfirmationRequired": true,
+              "selected": true
+            }
+          ],
+          "materials": [],
+          "timePoints": [],
+          "events": [],
+          "evidence": [
+            {
+              "id": "notice",
+              "sourceId": "source:96df9059",
+              "textStart": 0,
+              "textEnd": 17,
+              "quote": "请保存活动手册。没有截止日期要求。",
+              "quotedText": "请保存活动手册。没有截止日期要求。",
+              "field": "description",
+              "extractionMethod": "manual",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [],
+          "ambiguities": [],
+          "ignoredContent": [],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 1,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": true,
+            "reviewReasons": [
+              "MAINLINE-01 人工工程响应（非模型预测）"
+            ]
+          }
+        },
+        "firstSuggestionAssembly": {
+          "version": "grounded-first-suggestion-1.0.0",
+          "originalProse": [
+            {
+              "entityId": "save",
+              "kind": "task",
+              "title": "保存活动手册",
+              "description": "保存活动手册"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "MAINLINE-01 人工工程响应（非模型预测）",
+              "description": "请保存活动手册。没有截止日期要求。"
+            }
+          ],
+          "generatedProse": [
+            {
+              "entityId": "save",
+              "kind": "task",
+              "title": "保存活动手册",
+              "description": "请保存活动手册。没有截止日期要求。"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "保存活动手册",
+              "description": "1项任务，0项事件。请核对后确认。"
+            }
+          ],
+          "times": [],
+          "unresolved": [],
+          "role": "DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT"
+        },
+        "v7Record": {
+          "id": "source:96df9059:draft:1",
+          "sourceId": "source:96df9059",
+          "sourceVersionId": "source:96df9059:version:1",
+          "sourceReviewMetadata": {
+            "sourceType": "text",
+            "characterCount": 17,
+            "extractionMethod": "manual"
+          },
+          "attemptOrder": 0,
+          "status": "待确认",
+          "workflowStatus": "needs_review",
+          "createdAt": "2026-10-02T09:45:37.432Z",
+          "updatedAt": "2026-10-02T09:45:37.453Z",
+          "schemaVersion": "2.0",
+          "modelName": "D26 匿名工程假传输（非模型成绩）",
+          "promptVersion": "engineering-mainline-01",
+          "recognitionResult": {
+            "schemaVersion": "2.0",
+            "promptVersion": "engineering-mainline-01",
+            "modelName": "D26 匿名工程假传输（非模型成绩）",
+            "createdAt": "2026-09-05T08:00:00.000Z",
+            "sourceSummary": {
+              "title": "保存活动手册",
+              "sourceType": "text",
+              "notificationType": "uncertain",
+              "summary": "1项任务，0项事件。请核对后确认。",
+              "requiresAction": true,
+              "actionReason": "请保存活动手册。没有截止日期要求。"
+            },
+            "projectMatch": {
+              "decision": "standalone_task",
+              "matchedProjectId": null,
+              "suggestedProjectTitle": null,
+              "confidence": 1,
+              "reasons": [
+                "MAINLINE-01 人工工程响应（非模型预测）"
+              ]
+            },
+            "projectSuggestion": null,
+            "milestones": [],
+            "standaloneTasks": [
+              {
+                "tempId": "save",
+                "parentTempId": null,
+                "hierarchyType": "task",
+                "title": "保存活动手册",
+                "actionVerb": "保存",
+                "actionObject": "活动手册",
+                "description": "请保存活动手册。没有截止日期要求。",
+                "completionCriteria": [],
+                "estimatedMinutes": null,
+                "statusSuggestion": "todo",
+                "prioritySuggestion": "medium",
+                "dependencyTempIds": [],
+                "materialTempIds": [],
+                "timePointTempIds": [],
+                "evidenceIds": [
+                  "notice"
+                ],
+                "confidence": 1,
+                "inferenceLevel": "explicit",
+                "userConfirmationRequired": true,
+                "selected": true
+              }
+            ],
+            "materials": [],
+            "timePoints": [],
+            "events": [],
+            "evidence": [
+              {
+                "id": "notice",
+                "sourceId": "source:96df9059",
+                "textStart": 0,
+                "textEnd": 17,
+                "quote": "请保存活动手册。没有截止日期要求。",
+                "quotedText": "请保存活动手册。没有截止日期要求。",
+                "field": "description",
+                "extractionMethod": "manual",
+                "confidence": 1
+              }
+            ],
+            "conflicts": [],
+            "ambiguities": [],
+            "ignoredContent": [],
+            "quality": {
+              "overallConfidence": 1,
+              "hierarchyConfidence": 1,
+              "dateConfidence": 1,
+              "evidenceCoverage": 1,
+              "duplicateRisk": 0,
+              "overFragmentationRisk": 0,
+              "missingActionRisk": 0,
+              "needsHumanReview": true,
+              "reviewReasons": [
+                "MAINLINE-01 人工工程响应（非模型预测）"
+              ]
+            }
+          },
+          "items": [
+            {
+              "id": "draft-item:source:96df9059:draft:1:save",
+              "suggestion": {
+                "id": "save",
+                "title": "保存活动手册",
+                "category": "其他",
+                "nextAction": "保存活动手册",
+                "description": "请保存活动手册。没有截止日期要求。",
+                "priority": "中",
+                "materials": [],
+                "evidence": "1项任务，0项事件。请核对后确认。",
+                "confidence": "高"
+              },
+              "selected": true,
+              "status": "待确认",
+              "updatedAt": "2026-10-02T09:45:37.453Z",
+              "history": []
+            }
+          ],
+          "modelVersion": "local-rules"
+        }
+      }
+    }
+  ],
+  "projects": [],
+  "milestones": [],
+  "workPackages": [],
+  "tasks": [],
+  "materials": [],
+  "timePoints": [],
+  "events": [],
+  "evidenceRefs": [],
+  "changeProposals": [],
+  "historyRecords": [],
+  "reminderRecords": [],
+  "preferences": {
+    "onboardingCompletedAt": null,
+    "legacyData": {
+      "courseBlocks": [],
+      "integrations": {
+        "sync": {
+          "endpoint": "http://127.0.0.1:8787"
+        },
+        "webMonitors": [],
+        "connectionIntents": []
+      },
+      "knowledgeSettings": {},
+      "recognitionFeedback": [],
+      "v7MigrationLog": [],
+      "v7LegacyData": {}
+    }
+  },
+  "migrationMetadata": [],
+  "savedAt": "2026-10-02T09:45:37.462Z"
+}

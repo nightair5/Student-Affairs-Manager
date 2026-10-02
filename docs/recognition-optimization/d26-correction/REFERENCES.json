@@ -1,0 +1,1678 @@
+{
+  "references": [
+    {
+      "version": "recognition-reference-7.0.0",
+      "sourceId": "D26-S01",
+      "sourceSha256": "2c26a738ff018e87e77d3a0db5cc0f7030714be372d45d2f587d48bce347683f",
+      "completeness": "complete",
+      "truthStatus": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "author": "Codex / D26 single-author model-assisted provisional source assertions",
+      "seenDegree": "SEEN_TEMPLATE_DERIVED_DEVELOPMENT",
+      "decisions": [
+        "必要命题证据为动作和对象；独立属性各自验证，相关补充scope可接受。",
+        "条件前件与成立事实独立；同义/顺序不改变义务，跨对象拆合不合法。"
+      ],
+      "unresolved": [],
+      "representations": [
+        {
+          "version": "candidate15-reference-contract-6.0.0",
+          "sourceId": "D26-S01",
+          "completeness": "complete",
+          "referenceTime": "2026-09-22T09:00:00+08:00",
+          "timezone": "Asia/Shanghai",
+          "scopeTextById": {
+            "scope-0001-9db77cbcd0c61cdf1cc13654084e11bfdd7dd94b8b5fe459709d051c35b0d576": "图书借阅门户将在周三晚停机，",
+            "scope-0002-fbc0f684895ea64a4aeb4a1ebd8f2efeca080df0cfe9e824f7519bbfbbc59f5a": "既有借阅记录不受影响。",
+            "scope-0003-180bae71b19d87d18dcd96dd8338f98810756b01ca4b04cdde1d3a92f98b9579": "无需删除记录，",
+            "scope-0004-2ce97682b154157776d68fa5df48643c47b542a8d9e81dabd248f90cbff5312d": "不要提交说明，",
+            "scope-0005-1479de8a6a3df8b8ac60d72f2289a79eb02a6cfa3f2d303e42fcaa4b1f34cf23": "也不必向值班员发消息。",
+            "scope-0006-7304b14d42592ffe949f35c934e4e8747d89e5bbb33a6160a84a10009ae29761": "本通知仅说明停机消息。"
+          },
+          "allowedAliases": [],
+          "tasks": [],
+          "relations": [],
+          "noTaskFacts": [
+            {
+              "id": "E1",
+              "kind": "event",
+              "value": "图书借阅门户",
+              "aliases": [
+                "图书借阅门户停机"
+              ],
+              "sourceText": "图书借阅门户",
+              "scopeIds": [
+                "scope-0001-9db77cbcd0c61cdf1cc13654084e11bfdd7dd94b8b5fe459709d051c35b0d576"
+              ],
+              "timeFactIds": [
+                "P1"
+              ],
+              "locationFactIds": []
+            },
+            {
+              "id": "P1",
+              "kind": "time",
+              "value": "周三晚",
+              "aliases": [],
+              "sourceText": "周三晚",
+              "scopeIds": [
+                "scope-0001-9db77cbcd0c61cdf1cc13654084e11bfdd7dd94b8b5fe459709d051c35b0d576"
+              ],
+              "time": {
+                "rawText": "周三晚",
+                "type": "event_start",
+                "normalizedValue": null,
+                "precision": "vague",
+                "isAllDay": false,
+                "needsConfirmation": true,
+                "timezone": "Asia/Shanghai",
+                "tempId": "P1",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "scopeIds": [
+                  "scope-0001-9db77cbcd0c61cdf1cc13654084e11bfdd7dd94b8b5fe459709d051c35b0d576"
+                ],
+                "confidence": 1
+              }
+            },
+            {
+              "id": "I1",
+              "kind": "information",
+              "value": "既有借阅记录不受影响",
+              "aliases": [],
+              "sourceText": "既有借阅记录不受影响",
+              "scopeIds": [
+                "scope-0002-fbc0f684895ea64a4aeb4a1ebd8f2efeca080df0cfe9e824f7519bbfbbc59f5a"
+              ]
+            },
+            {
+              "id": "I2",
+              "kind": "information",
+              "value": "无需删除记录",
+              "aliases": [],
+              "sourceText": "无需删除记录",
+              "scopeIds": [
+                "scope-0003-180bae71b19d87d18dcd96dd8338f98810756b01ca4b04cdde1d3a92f98b9579"
+              ]
+            },
+            {
+              "id": "I3",
+              "kind": "information",
+              "value": "不要提交说明",
+              "aliases": [],
+              "sourceText": "不要提交说明",
+              "scopeIds": [
+                "scope-0004-2ce97682b154157776d68fa5df48643c47b542a8d9e81dabd248f90cbff5312d"
+              ]
+            },
+            {
+              "id": "I4",
+              "kind": "information",
+              "value": "不必向值班员发消息",
+              "aliases": [],
+              "sourceText": "不必向值班员发消息",
+              "scopeIds": [
+                "scope-0005-1479de8a6a3df8b8ac60d72f2289a79eb02a6cfa3f2d303e42fcaa4b1f34cf23"
+              ]
+            },
+            {
+              "id": "I5",
+              "kind": "information",
+              "value": "本通知仅说明停机消息",
+              "aliases": [],
+              "sourceText": "本通知仅说明停机消息",
+              "scopeIds": [
+                "scope-0006-7304b14d42592ffe949f35c934e4e8747d89e5bbb33a6160a84a10009ae29761"
+              ]
+            }
+          ]
+        }
+      ],
+      "forbiddenActions": [
+        {
+          "action": {
+            "canonical": "删除",
+            "aliases": []
+          },
+          "object": {
+            "canonical": "记录",
+            "aliases": []
+          },
+          "scopeIds": [
+            "scope-0003-180bae71b19d87d18dcd96dd8338f98810756b01ca4b04cdde1d3a92f98b9579"
+          ],
+          "reason": "explicit_prohibition"
+        },
+        {
+          "action": {
+            "canonical": "提交",
+            "aliases": []
+          },
+          "object": {
+            "canonical": "说明",
+            "aliases": []
+          },
+          "scopeIds": [
+            "scope-0004-2ce97682b154157776d68fa5df48643c47b542a8d9e81dabd248f90cbff5312d"
+          ],
+          "reason": "explicit_prohibition"
+        },
+        {
+          "action": {
+            "canonical": "发",
+            "aliases": []
+          },
+          "object": {
+            "canonical": "消息",
+            "aliases": []
+          },
+          "scopeIds": [
+            "scope-0005-1479de8a6a3df8b8ac60d72f2289a79eb02a6cfa3f2d303e42fcaa4b1f34cf23"
+          ],
+          "reason": "explicit_prohibition"
+        }
+      ],
+      "d26ReferenceVersion": "source-semantics-reference-1.0.0",
+      "d26DisplayPolicy": {
+        "eventContradictions": [
+          "不会停机",
+          "不停机",
+          "正常运行",
+          "无需停机"
+        ]
+      }
+    },
+    {
+      "version": "recognition-reference-7.0.0",
+      "sourceId": "D26-S02",
+      "sourceSha256": "7c84f283d7aac45b36a11eadd949b649a0c30249fd1ec15f2266d3e9af79fa4b",
+      "completeness": "complete",
+      "truthStatus": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "author": "Codex / D26 single-author model-assisted provisional source assertions",
+      "seenDegree": "SEEN_TEMPLATE_DERIVED_DEVELOPMENT",
+      "decisions": [
+        "必要命题证据为动作和对象；独立属性各自验证，相关补充scope可接受。",
+        "条件前件与成立事实独立；同义/顺序不改变义务，跨对象拆合不合法。"
+      ],
+      "unresolved": [],
+      "representations": [
+        {
+          "version": "candidate15-reference-contract-6.0.0",
+          "sourceId": "D26-S02",
+          "completeness": "complete",
+          "referenceTime": "2026-09-22T09:00:00+08:00",
+          "timezone": "Asia/Shanghai",
+          "scopeTextById": {
+            "scope-0001-d151e3e81bd149622392c36fa62a4a5f28eee06c7d02335c6b8efead65747573": "实验预约系统将于周四晚维护，",
+            "scope-0002-b32c35bd233a89f8e008d66998ec3b45867a561b79bc4fce9f1f3664ef3fa5f3": "已有预约不受影响。",
+            "scope-0003-26a5db2384eee5561f478df8db4d0e67dbad93c18057e1d7ce4b845dcdfbadc1": "无需取消预约，",
+            "scope-0004-a2fc9f22d47c1e5bc289fb948d44f03f912a9c951070c466caa8d966ed1b02d4": "不要提交说明，",
+            "scope-0005-19b40449282892f4114ebeb4e069d89afea3219c6365b321c713d651f1ec00df": "也不必向值班员发消息。",
+            "scope-0006-88c3bc8c2bc1caa3cf23b414471f3bf8139c51ef7de6491a72dd0f3bf9279727": "本通知仅说明维护消息。"
+          },
+          "allowedAliases": [],
+          "tasks": [],
+          "relations": [],
+          "noTaskFacts": [
+            {
+              "id": "E1",
+              "kind": "event",
+              "value": "实验预约系统",
+              "aliases": [
+                "实验预约系统维护"
+              ],
+              "sourceText": "实验预约系统",
+              "scopeIds": [
+                "scope-0001-d151e3e81bd149622392c36fa62a4a5f28eee06c7d02335c6b8efead65747573"
+              ],
+              "timeFactIds": [
+                "P1"
+              ],
+              "locationFactIds": []
+            },
+            {
+              "id": "P1",
+              "kind": "time",
+              "value": "周四晚",
+              "aliases": [],
+              "sourceText": "周四晚",
+              "scopeIds": [
+                "scope-0001-d151e3e81bd149622392c36fa62a4a5f28eee06c7d02335c6b8efead65747573"
+              ],
+              "time": {
+                "rawText": "周四晚",
+                "type": "event_start",
+                "normalizedValue": null,
+                "precision": "vague",
+                "isAllDay": false,
+                "needsConfirmation": true,
+                "timezone": "Asia/Shanghai",
+                "tempId": "P1",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "scopeIds": [
+                  "scope-0001-d151e3e81bd149622392c36fa62a4a5f28eee06c7d02335c6b8efead65747573"
+                ],
+                "confidence": 1
+              }
+            },
+            {
+              "id": "I1",
+              "kind": "information",
+              "value": "已有预约不受影响",
+              "aliases": [],
+              "sourceText": "已有预约不受影响",
+              "scopeIds": [
+                "scope-0002-b32c35bd233a89f8e008d66998ec3b45867a561b79bc4fce9f1f3664ef3fa5f3"
+              ]
+            },
+            {
+              "id": "I2",
+              "kind": "information",
+              "value": "无需取消预约",
+              "aliases": [],
+              "sourceText": "无需取消预约",
+              "scopeIds": [
+                "scope-0003-26a5db2384eee5561f478df8db4d0e67dbad93c18057e1d7ce4b845dcdfbadc1"
+              ]
+            },
+            {
+              "id": "I3",
+              "kind": "information",
+              "value": "不要提交说明",
+              "aliases": [],
+              "sourceText": "不要提交说明",
+              "scopeIds": [
+                "scope-0004-a2fc9f22d47c1e5bc289fb948d44f03f912a9c951070c466caa8d966ed1b02d4"
+              ]
+            },
+            {
+              "id": "I4",
+              "kind": "information",
+              "value": "不必向值班员发消息",
+              "aliases": [],
+              "sourceText": "不必向值班员发消息",
+              "scopeIds": [
+                "scope-0005-19b40449282892f4114ebeb4e069d89afea3219c6365b321c713d651f1ec00df"
+              ]
+            },
+            {
+              "id": "I5",
+              "kind": "information",
+              "value": "本通知仅说明维护消息",
+              "aliases": [],
+              "sourceText": "本通知仅说明维护消息",
+              "scopeIds": [
+                "scope-0006-88c3bc8c2bc1caa3cf23b414471f3bf8139c51ef7de6491a72dd0f3bf9279727"
+              ]
+            }
+          ]
+        }
+      ],
+      "forbiddenActions": [
+        {
+          "action": {
+            "canonical": "取消",
+            "aliases": []
+          },
+          "object": {
+            "canonical": "预约",
+            "aliases": []
+          },
+          "scopeIds": [
+            "scope-0003-26a5db2384eee5561f478df8db4d0e67dbad93c18057e1d7ce4b845dcdfbadc1"
+          ],
+          "reason": "explicit_prohibition"
+        },
+        {
+          "action": {
+            "canonical": "提交",
+            "aliases": []
+          },
+          "object": {
+            "canonical": "说明",
+            "aliases": []
+          },
+          "scopeIds": [
+            "scope-0004-a2fc9f22d47c1e5bc289fb948d44f03f912a9c951070c466caa8d966ed1b02d4"
+          ],
+          "reason": "explicit_prohibition"
+        },
+        {
+          "action": {
+            "canonical": "发",
+            "aliases": []
+          },
+          "object": {
+            "canonical": "消息",
+            "aliases": []
+          },
+          "scopeIds": [
+            "scope-0005-19b40449282892f4114ebeb4e069d89afea3219c6365b321c713d651f1ec00df"
+          ],
+          "reason": "explicit_prohibition"
+        }
+      ],
+      "d26ReferenceVersion": "source-semantics-reference-1.0.0",
+      "d26DisplayPolicy": {
+        "eventContradictions": [
+          "不会维护",
+          "不维护",
+          "正常运行",
+          "无需维护"
+        ]
+      }
+    },
+    {
+      "version": "recognition-reference-7.0.0",
+      "sourceId": "D26-S03",
+      "sourceSha256": "1945a0d8937a4b016966bf3b9915b1fc20d8b0e68f567bd90ad7e17255c3f197",
+      "completeness": "complete",
+      "truthStatus": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "author": "Codex / D26 single-author model-assisted provisional source assertions",
+      "seenDegree": "SEEN_TEMPLATE_DERIVED_DEVELOPMENT",
+      "decisions": [
+        "必要命题证据为动作和对象；独立属性各自验证，相关补充scope可接受。",
+        "条件前件与成立事实独立；同义/顺序不改变义务，跨对象拆合不合法。"
+      ],
+      "unresolved": [],
+      "representations": [
+        {
+          "version": "candidate15-reference-contract-6.0.0",
+          "sourceId": "D26-S03",
+          "completeness": "complete",
+          "referenceTime": "2026-09-22T09:00:00+08:00",
+          "timezone": "Asia/Shanghai",
+          "scopeTextById": {
+            "scope-0001-27dad68e19cb7e99dc2516fd18655402fcc174d71f4e1231eda7caf300a8607f": "请先填写社团设备登记表，",
+            "scope-0002-95f4b7b5b967a7be61f6cc9f197e55f7171c20c8f054bc4356c290e2c7d0df68": "登记表必填栏均已填写后，",
+            "scope-0003-c0825242dc3ea02667921d27580d92afccbb49cd9d6b1755c28b036be4cf1806": "再提交社团设备登记表；",
+            "scope-0004-0216fd860bb9886aa61f89ad7e533be77f50c57e702d63ec012c9911d4a4d464": "社团设备登记表格式为XLSX，",
+            "scope-0005-05ff0ce6c5467215449dc6d45d976ac101e8873ee962108f4be56bec9c511002": "以器材室确认收妥登记表为完成。"
+          },
+          "allowedAliases": [],
+          "tasks": [
+            {
+              "id": "T1",
+              "action": {
+                "canonical": "填写",
+                "aliases": []
+              },
+              "object": {
+                "canonical": "社团设备登记表",
+                "aliases": []
+              },
+              "actor": "addressee",
+              "currentness": "current",
+              "condition": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": [],
+              "actionability": "actionable",
+              "defaultSelection": "selected",
+              "confirmation": "required",
+              "materials": [
+                "XLSX"
+              ],
+              "times": "N/A",
+              "completionStandards": [
+                "登记表必填栏均已填写"
+              ],
+              "dependencies": "N/A",
+              "actionScopeIds": [
+                "scope-0001-27dad68e19cb7e99dc2516fd18655402fcc174d71f4e1231eda7caf300a8607f"
+              ],
+              "objectScopeIds": [
+                "scope-0001-27dad68e19cb7e99dc2516fd18655402fcc174d71f4e1231eda7caf300a8607f"
+              ],
+              "scopeIds": [
+                "scope-0001-27dad68e19cb7e99dc2516fd18655402fcc174d71f4e1231eda7caf300a8607f",
+                "scope-0002-95f4b7b5b967a7be61f6cc9f197e55f7171c20c8f054bc4356c290e2c7d0df68",
+                "scope-0004-0216fd860bb9886aa61f89ad7e533be77f50c57e702d63ec012c9911d4a4d464"
+              ],
+              "evidencePolicy": {
+                "proposition": {
+                  "requiredAnyOf": [
+                    [
+                      "scope-0001-27dad68e19cb7e99dc2516fd18655402fcc174d71f4e1231eda7caf300a8607f"
+                    ],
+                    [
+                      "scope-0001-27dad68e19cb7e99dc2516fd18655402fcc174d71f4e1231eda7caf300a8607f",
+                      "scope-0003-c0825242dc3ea02667921d27580d92afccbb49cd9d6b1755c28b036be4cf1806",
+                      "scope-0004-0216fd860bb9886aa61f89ad7e533be77f50c57e702d63ec012c9911d4a4d464"
+                    ]
+                  ],
+                  "allowed": [
+                    "scope-0001-27dad68e19cb7e99dc2516fd18655402fcc174d71f4e1231eda7caf300a8607f",
+                    "scope-0002-95f4b7b5b967a7be61f6cc9f197e55f7171c20c8f054bc4356c290e2c7d0df68",
+                    "scope-0004-0216fd860bb9886aa61f89ad7e533be77f50c57e702d63ec012c9911d4a4d464",
+                    "scope-0003-c0825242dc3ea02667921d27580d92afccbb49cd9d6b1755c28b036be4cf1806"
+                  ],
+                  "contradictory": []
+                },
+                "condition": {
+                  "requiredAnyOf": [],
+                  "allowed": [],
+                  "contradictory": []
+                },
+                "fact": {
+                  "requiredAnyOf": [],
+                  "allowed": [],
+                  "contradictory": []
+                }
+              },
+              "parentTaskId": null,
+              "hierarchyType": "task",
+              "materialDetails": [
+                {
+                  "tempId": "M1",
+                  "name": "社团设备登记表",
+                  "required": true,
+                  "formatRequirements": [
+                    "XLSX"
+                  ],
+                  "namingRequirements": [],
+                  "quantity": null,
+                  "submissionChannel": null,
+                  "relatedTaskTempIds": [
+                    "T1",
+                    "T2"
+                  ],
+                  "scopeIds": [
+                    "scope-0004-0216fd860bb9886aa61f89ad7e533be77f50c57e702d63ec012c9911d4a4d464"
+                  ],
+                  "confidence": 1,
+                  "evidencePolicy": {
+                    "requiredAnyOf": [
+                      [
+                        "scope-0004-0216fd860bb9886aa61f89ad7e533be77f50c57e702d63ec012c9911d4a4d464"
+                      ]
+                    ],
+                    "allowed": [
+                      "scope-0004-0216fd860bb9886aa61f89ad7e533be77f50c57e702d63ec012c9911d4a4d464"
+                    ],
+                    "contradictory": []
+                  }
+                }
+              ],
+              "timeEvidence": []
+            },
+            {
+              "id": "T2",
+              "action": {
+                "canonical": "提交",
+                "aliases": []
+              },
+              "object": {
+                "canonical": "社团设备登记表",
+                "aliases": []
+              },
+              "actor": "addressee",
+              "currentness": "current",
+              "condition": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": [],
+              "actionability": "actionable",
+              "defaultSelection": "selected",
+              "confirmation": "required",
+              "materials": [
+                "XLSX"
+              ],
+              "times": "N/A",
+              "completionStandards": [
+                "器材室确认收妥登记表"
+              ],
+              "dependencies": [
+                "T1"
+              ],
+              "actionScopeIds": [
+                "scope-0003-c0825242dc3ea02667921d27580d92afccbb49cd9d6b1755c28b036be4cf1806"
+              ],
+              "objectScopeIds": [
+                "scope-0003-c0825242dc3ea02667921d27580d92afccbb49cd9d6b1755c28b036be4cf1806"
+              ],
+              "scopeIds": [
+                "scope-0002-95f4b7b5b967a7be61f6cc9f197e55f7171c20c8f054bc4356c290e2c7d0df68",
+                "scope-0003-c0825242dc3ea02667921d27580d92afccbb49cd9d6b1755c28b036be4cf1806",
+                "scope-0004-0216fd860bb9886aa61f89ad7e533be77f50c57e702d63ec012c9911d4a4d464",
+                "scope-0005-05ff0ce6c5467215449dc6d45d976ac101e8873ee962108f4be56bec9c511002"
+              ],
+              "evidencePolicy": {
+                "proposition": {
+                  "requiredAnyOf": [
+                    [
+                      "scope-0003-c0825242dc3ea02667921d27580d92afccbb49cd9d6b1755c28b036be4cf1806"
+                    ],
+                    [
+                      "scope-0001-27dad68e19cb7e99dc2516fd18655402fcc174d71f4e1231eda7caf300a8607f",
+                      "scope-0003-c0825242dc3ea02667921d27580d92afccbb49cd9d6b1755c28b036be4cf1806",
+                      "scope-0004-0216fd860bb9886aa61f89ad7e533be77f50c57e702d63ec012c9911d4a4d464"
+                    ]
+                  ],
+                  "allowed": [
+                    "scope-0002-95f4b7b5b967a7be61f6cc9f197e55f7171c20c8f054bc4356c290e2c7d0df68",
+                    "scope-0003-c0825242dc3ea02667921d27580d92afccbb49cd9d6b1755c28b036be4cf1806",
+                    "scope-0004-0216fd860bb9886aa61f89ad7e533be77f50c57e702d63ec012c9911d4a4d464",
+                    "scope-0005-05ff0ce6c5467215449dc6d45d976ac101e8873ee962108f4be56bec9c511002",
+                    "scope-0001-27dad68e19cb7e99dc2516fd18655402fcc174d71f4e1231eda7caf300a8607f"
+                  ],
+                  "contradictory": []
+                },
+                "condition": {
+                  "requiredAnyOf": [],
+                  "allowed": [],
+                  "contradictory": []
+                },
+                "fact": {
+                  "requiredAnyOf": [],
+                  "allowed": [],
+                  "contradictory": []
+                }
+              },
+              "parentTaskId": null,
+              "hierarchyType": "task",
+              "materialDetails": [
+                {
+                  "tempId": "M1",
+                  "name": "社团设备登记表",
+                  "required": true,
+                  "formatRequirements": [
+                    "XLSX"
+                  ],
+                  "namingRequirements": [],
+                  "quantity": null,
+                  "submissionChannel": null,
+                  "relatedTaskTempIds": [
+                    "T1",
+                    "T2"
+                  ],
+                  "scopeIds": [
+                    "scope-0004-0216fd860bb9886aa61f89ad7e533be77f50c57e702d63ec012c9911d4a4d464"
+                  ],
+                  "confidence": 1,
+                  "evidencePolicy": {
+                    "requiredAnyOf": [
+                      [
+                        "scope-0004-0216fd860bb9886aa61f89ad7e533be77f50c57e702d63ec012c9911d4a4d464"
+                      ]
+                    ],
+                    "allowed": [
+                      "scope-0004-0216fd860bb9886aa61f89ad7e533be77f50c57e702d63ec012c9911d4a4d464"
+                    ],
+                    "contradictory": []
+                  }
+                }
+              ],
+              "timeEvidence": []
+            }
+          ],
+          "relations": [],
+          "noTaskFacts": []
+        }
+      ],
+      "forbiddenActions": [],
+      "d26ReferenceVersion": "source-semantics-reference-1.0.0",
+      "d26DisplayPolicy": {
+        "eventContradictions": []
+      }
+    },
+    {
+      "version": "recognition-reference-7.0.0",
+      "sourceId": "D26-S04",
+      "sourceSha256": "a9c8d224b9c3659d2c3373b8fc275b70f31ba31137aa3df4dcdbaa0bad6bfba6",
+      "completeness": "complete",
+      "truthStatus": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "author": "Codex / D26 single-author model-assisted provisional source assertions",
+      "seenDegree": "SEEN_TEMPLATE_DERIVED_DEVELOPMENT",
+      "decisions": [
+        "必要命题证据为动作和对象；独立属性各自验证，相关补充scope可接受。",
+        "条件前件与成立事实独立；同义/顺序不改变义务，跨对象拆合不合法。"
+      ],
+      "unresolved": [],
+      "representations": [
+        {
+          "version": "candidate15-reference-contract-6.0.0",
+          "sourceId": "D26-S04",
+          "completeness": "complete",
+          "referenceTime": "2026-09-22T09:00:00+08:00",
+          "timezone": "Asia/Shanghai",
+          "scopeTextById": {
+            "scope-0001-f2e02ceac00b24a6071c9669f6003018fc1804917a07976dce6c6560feb5f86f": "请先补全志愿服务汇总表，",
+            "scope-0002-c4c7ca50380a21faa010479137c9c8512007d0b16e316028d52d2c3cbad641fb": "汇总表必填栏全部补全后，",
+            "scope-0003-a2ba4f3937b85fe1595ca1e036f9940ea722e70b8ad93d8e4af47856b6425372": "再提交志愿服务汇总表；",
+            "scope-0004-012c4ed5a24969a6f6f57a707b62c5872a7838e28fee303a86ac8a55f86cb592": "志愿服务汇总表格式为PDF，",
+            "scope-0005-f8e8a41850f6d533e68997a5e2f272fd683b5a0569d502aec21eef94913498bd": "以活动组确认收妥汇总表为完成。"
+          },
+          "allowedAliases": [],
+          "tasks": [
+            {
+              "id": "T1",
+              "action": {
+                "canonical": "补全",
+                "aliases": []
+              },
+              "object": {
+                "canonical": "志愿服务汇总表",
+                "aliases": []
+              },
+              "actor": "addressee",
+              "currentness": "current",
+              "condition": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": [],
+              "actionability": "actionable",
+              "defaultSelection": "selected",
+              "confirmation": "required",
+              "materials": [
+                "PDF"
+              ],
+              "times": "N/A",
+              "completionStandards": [
+                "汇总表必填栏均已补全"
+              ],
+              "dependencies": "N/A",
+              "actionScopeIds": [
+                "scope-0001-f2e02ceac00b24a6071c9669f6003018fc1804917a07976dce6c6560feb5f86f"
+              ],
+              "objectScopeIds": [
+                "scope-0001-f2e02ceac00b24a6071c9669f6003018fc1804917a07976dce6c6560feb5f86f"
+              ],
+              "scopeIds": [
+                "scope-0001-f2e02ceac00b24a6071c9669f6003018fc1804917a07976dce6c6560feb5f86f",
+                "scope-0002-c4c7ca50380a21faa010479137c9c8512007d0b16e316028d52d2c3cbad641fb",
+                "scope-0004-012c4ed5a24969a6f6f57a707b62c5872a7838e28fee303a86ac8a55f86cb592"
+              ],
+              "evidencePolicy": {
+                "proposition": {
+                  "requiredAnyOf": [
+                    [
+                      "scope-0001-f2e02ceac00b24a6071c9669f6003018fc1804917a07976dce6c6560feb5f86f"
+                    ],
+                    [
+                      "scope-0001-f2e02ceac00b24a6071c9669f6003018fc1804917a07976dce6c6560feb5f86f",
+                      "scope-0003-a2ba4f3937b85fe1595ca1e036f9940ea722e70b8ad93d8e4af47856b6425372",
+                      "scope-0004-012c4ed5a24969a6f6f57a707b62c5872a7838e28fee303a86ac8a55f86cb592"
+                    ]
+                  ],
+                  "allowed": [
+                    "scope-0001-f2e02ceac00b24a6071c9669f6003018fc1804917a07976dce6c6560feb5f86f",
+                    "scope-0002-c4c7ca50380a21faa010479137c9c8512007d0b16e316028d52d2c3cbad641fb",
+                    "scope-0004-012c4ed5a24969a6f6f57a707b62c5872a7838e28fee303a86ac8a55f86cb592",
+                    "scope-0003-a2ba4f3937b85fe1595ca1e036f9940ea722e70b8ad93d8e4af47856b6425372"
+                  ],
+                  "contradictory": []
+                },
+                "condition": {
+                  "requiredAnyOf": [],
+                  "allowed": [],
+                  "contradictory": []
+                },
+                "fact": {
+                  "requiredAnyOf": [],
+                  "allowed": [],
+                  "contradictory": []
+                }
+              },
+              "parentTaskId": null,
+              "hierarchyType": "task",
+              "materialDetails": [
+                {
+                  "tempId": "M1",
+                  "name": "志愿服务汇总表",
+                  "required": true,
+                  "formatRequirements": [
+                    "PDF"
+                  ],
+                  "namingRequirements": [],
+                  "quantity": null,
+                  "submissionChannel": null,
+                  "relatedTaskTempIds": [
+                    "T1",
+                    "T2"
+                  ],
+                  "scopeIds": [
+                    "scope-0004-012c4ed5a24969a6f6f57a707b62c5872a7838e28fee303a86ac8a55f86cb592"
+                  ],
+                  "confidence": 1,
+                  "evidencePolicy": {
+                    "requiredAnyOf": [
+                      [
+                        "scope-0004-012c4ed5a24969a6f6f57a707b62c5872a7838e28fee303a86ac8a55f86cb592"
+                      ]
+                    ],
+                    "allowed": [
+                      "scope-0004-012c4ed5a24969a6f6f57a707b62c5872a7838e28fee303a86ac8a55f86cb592"
+                    ],
+                    "contradictory": []
+                  }
+                }
+              ],
+              "timeEvidence": []
+            },
+            {
+              "id": "T2",
+              "action": {
+                "canonical": "提交",
+                "aliases": []
+              },
+              "object": {
+                "canonical": "志愿服务汇总表",
+                "aliases": []
+              },
+              "actor": "addressee",
+              "currentness": "current",
+              "condition": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": [],
+              "actionability": "actionable",
+              "defaultSelection": "selected",
+              "confirmation": "required",
+              "materials": [
+                "PDF"
+              ],
+              "times": "N/A",
+              "completionStandards": [
+                "活动组确认收妥汇总表"
+              ],
+              "dependencies": [
+                "T1"
+              ],
+              "actionScopeIds": [
+                "scope-0003-a2ba4f3937b85fe1595ca1e036f9940ea722e70b8ad93d8e4af47856b6425372"
+              ],
+              "objectScopeIds": [
+                "scope-0003-a2ba4f3937b85fe1595ca1e036f9940ea722e70b8ad93d8e4af47856b6425372"
+              ],
+              "scopeIds": [
+                "scope-0002-c4c7ca50380a21faa010479137c9c8512007d0b16e316028d52d2c3cbad641fb",
+                "scope-0003-a2ba4f3937b85fe1595ca1e036f9940ea722e70b8ad93d8e4af47856b6425372",
+                "scope-0004-012c4ed5a24969a6f6f57a707b62c5872a7838e28fee303a86ac8a55f86cb592",
+                "scope-0005-f8e8a41850f6d533e68997a5e2f272fd683b5a0569d502aec21eef94913498bd"
+              ],
+              "evidencePolicy": {
+                "proposition": {
+                  "requiredAnyOf": [
+                    [
+                      "scope-0003-a2ba4f3937b85fe1595ca1e036f9940ea722e70b8ad93d8e4af47856b6425372"
+                    ],
+                    [
+                      "scope-0001-f2e02ceac00b24a6071c9669f6003018fc1804917a07976dce6c6560feb5f86f",
+                      "scope-0003-a2ba4f3937b85fe1595ca1e036f9940ea722e70b8ad93d8e4af47856b6425372",
+                      "scope-0004-012c4ed5a24969a6f6f57a707b62c5872a7838e28fee303a86ac8a55f86cb592"
+                    ]
+                  ],
+                  "allowed": [
+                    "scope-0002-c4c7ca50380a21faa010479137c9c8512007d0b16e316028d52d2c3cbad641fb",
+                    "scope-0003-a2ba4f3937b85fe1595ca1e036f9940ea722e70b8ad93d8e4af47856b6425372",
+                    "scope-0004-012c4ed5a24969a6f6f57a707b62c5872a7838e28fee303a86ac8a55f86cb592",
+                    "scope-0005-f8e8a41850f6d533e68997a5e2f272fd683b5a0569d502aec21eef94913498bd",
+                    "scope-0001-f2e02ceac00b24a6071c9669f6003018fc1804917a07976dce6c6560feb5f86f"
+                  ],
+                  "contradictory": []
+                },
+                "condition": {
+                  "requiredAnyOf": [],
+                  "allowed": [],
+                  "contradictory": []
+                },
+                "fact": {
+                  "requiredAnyOf": [],
+                  "allowed": [],
+                  "contradictory": []
+                }
+              },
+              "parentTaskId": null,
+              "hierarchyType": "task",
+              "materialDetails": [
+                {
+                  "tempId": "M1",
+                  "name": "志愿服务汇总表",
+                  "required": true,
+                  "formatRequirements": [
+                    "PDF"
+                  ],
+                  "namingRequirements": [],
+                  "quantity": null,
+                  "submissionChannel": null,
+                  "relatedTaskTempIds": [
+                    "T1",
+                    "T2"
+                  ],
+                  "scopeIds": [
+                    "scope-0004-012c4ed5a24969a6f6f57a707b62c5872a7838e28fee303a86ac8a55f86cb592"
+                  ],
+                  "confidence": 1,
+                  "evidencePolicy": {
+                    "requiredAnyOf": [
+                      [
+                        "scope-0004-012c4ed5a24969a6f6f57a707b62c5872a7838e28fee303a86ac8a55f86cb592"
+                      ]
+                    ],
+                    "allowed": [
+                      "scope-0004-012c4ed5a24969a6f6f57a707b62c5872a7838e28fee303a86ac8a55f86cb592"
+                    ],
+                    "contradictory": []
+                  }
+                }
+              ],
+              "timeEvidence": []
+            }
+          ],
+          "relations": [],
+          "noTaskFacts": []
+        }
+      ],
+      "forbiddenActions": [],
+      "d26ReferenceVersion": "source-semantics-reference-1.0.0",
+      "d26DisplayPolicy": {
+        "eventContradictions": []
+      }
+    },
+    {
+      "version": "recognition-reference-7.0.0",
+      "sourceId": "D26-S05",
+      "sourceSha256": "da2534bf919fdc5b9fab0b3c23cac67eeb90e6341636e67ecd8c7cb0f1abbf23",
+      "completeness": "complete",
+      "truthStatus": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "author": "Codex / D26 single-author model-assisted provisional source assertions",
+      "seenDegree": "SEEN_TEMPLATE_DERIVED_DEVELOPMENT",
+      "decisions": [
+        "必要命题证据为动作和对象；独立属性各自验证，相关补充scope可接受。",
+        "条件前件与成立事实独立；同义/顺序不改变义务，跨对象拆合不合法。"
+      ],
+      "unresolved": [],
+      "representations": [
+        {
+          "version": "candidate15-reference-contract-6.0.0",
+          "sourceId": "D26-S05",
+          "completeness": "complete",
+          "referenceTime": "2026-09-22T09:00:00+08:00",
+          "timezone": "Asia/Shanghai",
+          "scopeTextById": {
+            "scope-0001-fc9e5cb59a0662dbe1b69afbd1602b562816e1e1789760ea5c7a379c316eb8a8": "若安排你担任场地协调员，",
+            "scope-0002-eb5c503b2fd4b9d319614755b8b9b7023679c85ed9d56a5d40e224841baea145": "请递交场地安排单，",
+            "scope-0003-561673d3cdc94367b084c1c72bf9fd8d609895860dd302d12a9803f72411012d": "以平台显示安排单已收取为完成。",
+            "scope-0004-cde07a7eac4475610facb75587e80117bb75e90e9d746fafe7948b4972e39634": "暂定下周二下午办理，",
+            "scope-0005-b9c6cd12f3b91ad08785c040083513b576c736dc5adbfc2be03c1e8f6f86a8de": "场地岗位安排尚未确定。"
+          },
+          "allowedAliases": [],
+          "tasks": [
+            {
+              "id": "T1",
+              "action": {
+                "canonical": "递交",
+                "aliases": []
+              },
+              "object": {
+                "canonical": "场地安排单",
+                "aliases": []
+              },
+              "actor": "addressee",
+              "currentness": "current",
+              "condition": "unknown",
+              "conditionScopeIds": [
+                "scope-0001-fc9e5cb59a0662dbe1b69afbd1602b562816e1e1789760ea5c7a379c316eb8a8"
+              ],
+              "factScopeIds": [
+                "scope-0005-b9c6cd12f3b91ad08785c040083513b576c736dc5adbfc2be03c1e8f6f86a8de"
+              ],
+              "actionability": "needs_confirmation",
+              "defaultSelection": "not_selected",
+              "confirmation": "required",
+              "materials": "N/A",
+              "times": [
+                {
+                  "rawText": "暂定下周二下午办理",
+                  "type": "planned_start",
+                  "normalizedValue": "2026-09-29",
+                  "precision": "vague",
+                  "isAllDay": false,
+                  "needsConfirmation": true,
+                  "timezone": "Asia/Shanghai",
+                  "tempId": "PT1_0",
+                  "relatedTaskTempIds": [
+                    "T1"
+                  ],
+                  "relatedMaterialTempIds": [],
+                  "scopeIds": [
+                    "scope-0004-cde07a7eac4475610facb75587e80117bb75e90e9d746fafe7948b4972e39634"
+                  ],
+                  "confidence": 1
+                }
+              ],
+              "completionStandards": [
+                "平台显示安排单已收取"
+              ],
+              "dependencies": "N/A",
+              "actionScopeIds": [
+                "scope-0002-eb5c503b2fd4b9d319614755b8b9b7023679c85ed9d56a5d40e224841baea145"
+              ],
+              "objectScopeIds": [
+                "scope-0002-eb5c503b2fd4b9d319614755b8b9b7023679c85ed9d56a5d40e224841baea145"
+              ],
+              "scopeIds": [
+                "scope-0001-fc9e5cb59a0662dbe1b69afbd1602b562816e1e1789760ea5c7a379c316eb8a8",
+                "scope-0002-eb5c503b2fd4b9d319614755b8b9b7023679c85ed9d56a5d40e224841baea145",
+                "scope-0003-561673d3cdc94367b084c1c72bf9fd8d609895860dd302d12a9803f72411012d",
+                "scope-0004-cde07a7eac4475610facb75587e80117bb75e90e9d746fafe7948b4972e39634",
+                "scope-0005-b9c6cd12f3b91ad08785c040083513b576c736dc5adbfc2be03c1e8f6f86a8de"
+              ],
+              "evidencePolicy": {
+                "proposition": {
+                  "requiredAnyOf": [
+                    [
+                      "scope-0002-eb5c503b2fd4b9d319614755b8b9b7023679c85ed9d56a5d40e224841baea145"
+                    ],
+                    [
+                      "scope-0002-eb5c503b2fd4b9d319614755b8b9b7023679c85ed9d56a5d40e224841baea145"
+                    ]
+                  ],
+                  "allowed": [
+                    "scope-0001-fc9e5cb59a0662dbe1b69afbd1602b562816e1e1789760ea5c7a379c316eb8a8",
+                    "scope-0002-eb5c503b2fd4b9d319614755b8b9b7023679c85ed9d56a5d40e224841baea145",
+                    "scope-0003-561673d3cdc94367b084c1c72bf9fd8d609895860dd302d12a9803f72411012d",
+                    "scope-0004-cde07a7eac4475610facb75587e80117bb75e90e9d746fafe7948b4972e39634",
+                    "scope-0005-b9c6cd12f3b91ad08785c040083513b576c736dc5adbfc2be03c1e8f6f86a8de"
+                  ],
+                  "contradictory": []
+                },
+                "condition": {
+                  "requiredAnyOf": [
+                    [
+                      "scope-0001-fc9e5cb59a0662dbe1b69afbd1602b562816e1e1789760ea5c7a379c316eb8a8"
+                    ]
+                  ],
+                  "allowed": [
+                    "scope-0001-fc9e5cb59a0662dbe1b69afbd1602b562816e1e1789760ea5c7a379c316eb8a8"
+                  ],
+                  "contradictory": []
+                },
+                "fact": {
+                  "requiredAnyOf": [
+                    [
+                      "scope-0005-b9c6cd12f3b91ad08785c040083513b576c736dc5adbfc2be03c1e8f6f86a8de"
+                    ]
+                  ],
+                  "allowed": [
+                    "scope-0005-b9c6cd12f3b91ad08785c040083513b576c736dc5adbfc2be03c1e8f6f86a8de"
+                  ],
+                  "contradictory": []
+                }
+              },
+              "parentTaskId": null,
+              "hierarchyType": "task",
+              "materialDetails": [],
+              "timeEvidence": [
+                {
+                  "rawText": "暂定下周二下午办理",
+                  "type": "planned_start",
+                  "relatedTaskTempIds": [
+                    "T1"
+                  ],
+                  "evidencePolicy": {
+                    "requiredAnyOf": [
+                      [
+                        "scope-0004-cde07a7eac4475610facb75587e80117bb75e90e9d746fafe7948b4972e39634"
+                      ]
+                    ],
+                    "allowed": [
+                      "scope-0004-cde07a7eac4475610facb75587e80117bb75e90e9d746fafe7948b4972e39634"
+                    ],
+                    "contradictory": []
+                  }
+                }
+              ]
+            }
+          ],
+          "relations": [],
+          "noTaskFacts": []
+        }
+      ],
+      "forbiddenActions": [],
+      "d26ReferenceVersion": "source-semantics-reference-1.0.0",
+      "d26DisplayPolicy": {
+        "eventContradictions": []
+      }
+    },
+    {
+      "version": "recognition-reference-7.0.0",
+      "sourceId": "D26-S06",
+      "sourceSha256": "9dcb36da6c3e3d6194d2c52615fff5ccf6b44c1b9bf0d304d296d9ba33c50ed1",
+      "completeness": "complete",
+      "truthStatus": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "author": "Codex / D26 single-author model-assisted provisional source assertions",
+      "seenDegree": "SEEN_TEMPLATE_DERIVED_DEVELOPMENT",
+      "decisions": [
+        "必要命题证据为动作和对象；独立属性各自验证，相关补充scope可接受。",
+        "条件前件与成立事实独立；同义/顺序不改变义务，跨对象拆合不合法。"
+      ],
+      "unresolved": [],
+      "representations": [
+        {
+          "version": "candidate15-reference-contract-6.0.0",
+          "sourceId": "D26-S06",
+          "completeness": "complete",
+          "referenceTime": "2026-09-22T09:00:00+08:00",
+          "timezone": "Asia/Shanghai",
+          "scopeTextById": {
+            "scope-0001-97988ebdfc09774b6e4683f5abe6cbea35bcd274c586ccc271d7dc006d33c063": "如果安排你担任签到志愿者，",
+            "scope-0002-c30d247f1b0befdaab59a01ce052af9b45fa9c59eb5845ed6d826ce211819d9c": "请提交签到安排表，",
+            "scope-0003-8193cad4aadb318733c461f76880b47a79eed89d76985971954f909a01baa3f4": "以平台显示安排表已收取为完成。",
+            "scope-0004-ea3ab19d9907bae8c9672d2d8f961a4a875f68a4d63f448ac7d14a934e6aadca": "暂定下周四上午办理，",
+            "scope-0005-dbded8aec9876ec2758db080f22fedfb084a859defbf9f8b30a663d133ad7d65": "签到岗位安排尚未确定。"
+          },
+          "allowedAliases": [],
+          "tasks": [
+            {
+              "id": "T1",
+              "action": {
+                "canonical": "提交",
+                "aliases": []
+              },
+              "object": {
+                "canonical": "签到安排表",
+                "aliases": []
+              },
+              "actor": "addressee",
+              "currentness": "current",
+              "condition": "unknown",
+              "conditionScopeIds": [
+                "scope-0001-97988ebdfc09774b6e4683f5abe6cbea35bcd274c586ccc271d7dc006d33c063"
+              ],
+              "factScopeIds": [
+                "scope-0005-dbded8aec9876ec2758db080f22fedfb084a859defbf9f8b30a663d133ad7d65"
+              ],
+              "actionability": "needs_confirmation",
+              "defaultSelection": "not_selected",
+              "confirmation": "required",
+              "materials": "N/A",
+              "times": [
+                {
+                  "rawText": "暂定下周四上午办理",
+                  "type": "planned_start",
+                  "normalizedValue": "2026-10-01",
+                  "precision": "vague",
+                  "isAllDay": false,
+                  "needsConfirmation": true,
+                  "timezone": "Asia/Shanghai",
+                  "tempId": "PT1_0",
+                  "relatedTaskTempIds": [
+                    "T1"
+                  ],
+                  "relatedMaterialTempIds": [],
+                  "scopeIds": [
+                    "scope-0004-ea3ab19d9907bae8c9672d2d8f961a4a875f68a4d63f448ac7d14a934e6aadca"
+                  ],
+                  "confidence": 1
+                }
+              ],
+              "completionStandards": [
+                "平台显示安排表已收取"
+              ],
+              "dependencies": "N/A",
+              "actionScopeIds": [
+                "scope-0002-c30d247f1b0befdaab59a01ce052af9b45fa9c59eb5845ed6d826ce211819d9c"
+              ],
+              "objectScopeIds": [
+                "scope-0002-c30d247f1b0befdaab59a01ce052af9b45fa9c59eb5845ed6d826ce211819d9c"
+              ],
+              "scopeIds": [
+                "scope-0001-97988ebdfc09774b6e4683f5abe6cbea35bcd274c586ccc271d7dc006d33c063",
+                "scope-0002-c30d247f1b0befdaab59a01ce052af9b45fa9c59eb5845ed6d826ce211819d9c",
+                "scope-0003-8193cad4aadb318733c461f76880b47a79eed89d76985971954f909a01baa3f4",
+                "scope-0004-ea3ab19d9907bae8c9672d2d8f961a4a875f68a4d63f448ac7d14a934e6aadca",
+                "scope-0005-dbded8aec9876ec2758db080f22fedfb084a859defbf9f8b30a663d133ad7d65"
+              ],
+              "evidencePolicy": {
+                "proposition": {
+                  "requiredAnyOf": [
+                    [
+                      "scope-0002-c30d247f1b0befdaab59a01ce052af9b45fa9c59eb5845ed6d826ce211819d9c"
+                    ],
+                    [
+                      "scope-0002-c30d247f1b0befdaab59a01ce052af9b45fa9c59eb5845ed6d826ce211819d9c"
+                    ]
+                  ],
+                  "allowed": [
+                    "scope-0001-97988ebdfc09774b6e4683f5abe6cbea35bcd274c586ccc271d7dc006d33c063",
+                    "scope-0002-c30d247f1b0befdaab59a01ce052af9b45fa9c59eb5845ed6d826ce211819d9c",
+                    "scope-0003-8193cad4aadb318733c461f76880b47a79eed89d76985971954f909a01baa3f4",
+                    "scope-0004-ea3ab19d9907bae8c9672d2d8f961a4a875f68a4d63f448ac7d14a934e6aadca",
+                    "scope-0005-dbded8aec9876ec2758db080f22fedfb084a859defbf9f8b30a663d133ad7d65"
+                  ],
+                  "contradictory": []
+                },
+                "condition": {
+                  "requiredAnyOf": [
+                    [
+                      "scope-0001-97988ebdfc09774b6e4683f5abe6cbea35bcd274c586ccc271d7dc006d33c063"
+                    ]
+                  ],
+                  "allowed": [
+                    "scope-0001-97988ebdfc09774b6e4683f5abe6cbea35bcd274c586ccc271d7dc006d33c063"
+                  ],
+                  "contradictory": []
+                },
+                "fact": {
+                  "requiredAnyOf": [
+                    [
+                      "scope-0005-dbded8aec9876ec2758db080f22fedfb084a859defbf9f8b30a663d133ad7d65"
+                    ]
+                  ],
+                  "allowed": [
+                    "scope-0005-dbded8aec9876ec2758db080f22fedfb084a859defbf9f8b30a663d133ad7d65"
+                  ],
+                  "contradictory": []
+                }
+              },
+              "parentTaskId": null,
+              "hierarchyType": "task",
+              "materialDetails": [],
+              "timeEvidence": [
+                {
+                  "rawText": "暂定下周四上午办理",
+                  "type": "planned_start",
+                  "relatedTaskTempIds": [
+                    "T1"
+                  ],
+                  "evidencePolicy": {
+                    "requiredAnyOf": [
+                      [
+                        "scope-0004-ea3ab19d9907bae8c9672d2d8f961a4a875f68a4d63f448ac7d14a934e6aadca"
+                      ]
+                    ],
+                    "allowed": [
+                      "scope-0004-ea3ab19d9907bae8c9672d2d8f961a4a875f68a4d63f448ac7d14a934e6aadca"
+                    ],
+                    "contradictory": []
+                  }
+                }
+              ]
+            }
+          ],
+          "relations": [],
+          "noTaskFacts": []
+        }
+      ],
+      "forbiddenActions": [],
+      "d26ReferenceVersion": "source-semantics-reference-1.0.0",
+      "d26DisplayPolicy": {
+        "eventContradictions": []
+      }
+    },
+    {
+      "version": "recognition-reference-7.0.0",
+      "sourceId": "D26-S07",
+      "sourceSha256": "7be36d8dd0322e5e339910188ea99613cbd6681331ac0b89a240da1734871e4c",
+      "completeness": "complete",
+      "truthStatus": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "author": "Codex / D26 single-author model-assisted provisional source assertions",
+      "seenDegree": "SEEN_TEMPLATE_DERIVED_DEVELOPMENT",
+      "decisions": [
+        "必要命题证据为动作和对象；独立属性各自验证，相关补充scope可接受。",
+        "条件前件与成立事实独立；同义/顺序不改变义务，跨对象拆合不合法。"
+      ],
+      "unresolved": [],
+      "representations": [
+        {
+          "version": "candidate15-reference-contract-6.0.0",
+          "sourceId": "D26-S07",
+          "completeness": "complete",
+          "referenceTime": "2026-09-22T09:00:00+08:00",
+          "timezone": "Asia/Shanghai",
+          "scopeTextById": {
+            "scope-0001-26afc139801e3fd7f2d6fcffac33531a94ba367b510ca9468378dfa6a6bd7e92": "请于2026年10月19日16:30前提交实验物资核对表。",
+            "scope-0002-c5f753dfc84d2bec83bbe9b3540a4a6a87c60d1fa5632273132d5e4436651f49": "实验物资核对表须为PDF格式，",
+            "scope-0003-d978e01005db330b0550620ec0451827556edba579a7b32a22570733bb58ee1e": "文件名为实验编号-负责人；",
+            "scope-0004-de291caac73c64db4214c412e2e5fc6750486303641cfa2b6d219561ec6b22b1": "门户提示收件成功即结束。"
+          },
+          "allowedAliases": [],
+          "tasks": [
+            {
+              "id": "T1",
+              "action": {
+                "canonical": "提交",
+                "aliases": []
+              },
+              "object": {
+                "canonical": "实验物资核对表",
+                "aliases": []
+              },
+              "actor": "addressee",
+              "currentness": "current",
+              "condition": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": [],
+              "actionability": "actionable",
+              "defaultSelection": "selected",
+              "confirmation": "required",
+              "materials": [
+                "PDF格式",
+                "实验编号-负责人"
+              ],
+              "times": [
+                {
+                  "rawText": "2026年10月19日16:30前",
+                  "type": "submission_deadline",
+                  "normalizedValue": "2026-10-19T16:30",
+                  "precision": "exact",
+                  "isAllDay": false,
+                  "needsConfirmation": false,
+                  "timezone": "Asia/Shanghai",
+                  "tempId": "PT1_0",
+                  "relatedTaskTempIds": [
+                    "T1"
+                  ],
+                  "relatedMaterialTempIds": [],
+                  "scopeIds": [
+                    "scope-0001-26afc139801e3fd7f2d6fcffac33531a94ba367b510ca9468378dfa6a6bd7e92"
+                  ],
+                  "confidence": 1
+                }
+              ],
+              "completionStandards": [
+                "门户提示收件成功"
+              ],
+              "dependencies": "N/A",
+              "actionScopeIds": [
+                "scope-0001-26afc139801e3fd7f2d6fcffac33531a94ba367b510ca9468378dfa6a6bd7e92"
+              ],
+              "objectScopeIds": [
+                "scope-0001-26afc139801e3fd7f2d6fcffac33531a94ba367b510ca9468378dfa6a6bd7e92"
+              ],
+              "scopeIds": [
+                "scope-0001-26afc139801e3fd7f2d6fcffac33531a94ba367b510ca9468378dfa6a6bd7e92",
+                "scope-0002-c5f753dfc84d2bec83bbe9b3540a4a6a87c60d1fa5632273132d5e4436651f49",
+                "scope-0003-d978e01005db330b0550620ec0451827556edba579a7b32a22570733bb58ee1e",
+                "scope-0004-de291caac73c64db4214c412e2e5fc6750486303641cfa2b6d219561ec6b22b1"
+              ],
+              "evidencePolicy": {
+                "proposition": {
+                  "requiredAnyOf": [
+                    [
+                      "scope-0001-26afc139801e3fd7f2d6fcffac33531a94ba367b510ca9468378dfa6a6bd7e92",
+                      "scope-0004-de291caac73c64db4214c412e2e5fc6750486303641cfa2b6d219561ec6b22b1"
+                    ],
+                    [
+                      "scope-0001-26afc139801e3fd7f2d6fcffac33531a94ba367b510ca9468378dfa6a6bd7e92",
+                      "scope-0002-c5f753dfc84d2bec83bbe9b3540a4a6a87c60d1fa5632273132d5e4436651f49"
+                    ]
+                  ],
+                  "allowed": [
+                    "scope-0001-26afc139801e3fd7f2d6fcffac33531a94ba367b510ca9468378dfa6a6bd7e92",
+                    "scope-0002-c5f753dfc84d2bec83bbe9b3540a4a6a87c60d1fa5632273132d5e4436651f49",
+                    "scope-0003-d978e01005db330b0550620ec0451827556edba579a7b32a22570733bb58ee1e",
+                    "scope-0004-de291caac73c64db4214c412e2e5fc6750486303641cfa2b6d219561ec6b22b1"
+                  ],
+                  "contradictory": []
+                },
+                "condition": {
+                  "requiredAnyOf": [],
+                  "allowed": [],
+                  "contradictory": []
+                },
+                "fact": {
+                  "requiredAnyOf": [],
+                  "allowed": [],
+                  "contradictory": []
+                }
+              },
+              "parentTaskId": null,
+              "hierarchyType": "task",
+              "materialDetails": [
+                {
+                  "tempId": "MT1",
+                  "name": "实验物资核对表",
+                  "required": true,
+                  "formatRequirements": [
+                    "PDF格式"
+                  ],
+                  "namingRequirements": [
+                    "实验编号-负责人"
+                  ],
+                  "quantity": null,
+                  "submissionChannel": null,
+                  "relatedTaskTempIds": [
+                    "T1"
+                  ],
+                  "scopeIds": [
+                    "scope-0002-c5f753dfc84d2bec83bbe9b3540a4a6a87c60d1fa5632273132d5e4436651f49",
+                    "scope-0003-d978e01005db330b0550620ec0451827556edba579a7b32a22570733bb58ee1e"
+                  ],
+                  "confidence": 1,
+                  "evidencePolicy": {
+                    "requiredAnyOf": [
+                      [
+                        "scope-0002-c5f753dfc84d2bec83bbe9b3540a4a6a87c60d1fa5632273132d5e4436651f49",
+                        "scope-0003-d978e01005db330b0550620ec0451827556edba579a7b32a22570733bb58ee1e"
+                      ]
+                    ],
+                    "allowed": [
+                      "scope-0002-c5f753dfc84d2bec83bbe9b3540a4a6a87c60d1fa5632273132d5e4436651f49",
+                      "scope-0003-d978e01005db330b0550620ec0451827556edba579a7b32a22570733bb58ee1e"
+                    ],
+                    "contradictory": []
+                  }
+                }
+              ],
+              "timeEvidence": [
+                {
+                  "rawText": "2026年10月19日16:30前",
+                  "type": "submission_deadline",
+                  "relatedTaskTempIds": [
+                    "T1"
+                  ],
+                  "evidencePolicy": {
+                    "requiredAnyOf": [
+                      [
+                        "scope-0001-26afc139801e3fd7f2d6fcffac33531a94ba367b510ca9468378dfa6a6bd7e92"
+                      ]
+                    ],
+                    "allowed": [
+                      "scope-0001-26afc139801e3fd7f2d6fcffac33531a94ba367b510ca9468378dfa6a6bd7e92"
+                    ],
+                    "contradictory": []
+                  }
+                }
+              ]
+            }
+          ],
+          "relations": [],
+          "noTaskFacts": []
+        }
+      ],
+      "forbiddenActions": [],
+      "d26ReferenceVersion": "source-semantics-reference-1.0.0",
+      "d26DisplayPolicy": {
+        "eventContradictions": []
+      }
+    },
+    {
+      "version": "recognition-reference-7.0.0",
+      "sourceId": "D26-S08",
+      "sourceSha256": "43cf06ec71b277a9d51c4330357cfcf00f5f07eb8970c6e2c98f7dd0497d7a3b",
+      "completeness": "complete",
+      "truthStatus": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "author": "Codex / D26 single-author model-assisted provisional source assertions",
+      "seenDegree": "SEEN_TEMPLATE_DERIVED_DEVELOPMENT",
+      "decisions": [
+        "必要命题证据为动作和对象；独立属性各自验证，相关补充scope可接受。",
+        "条件前件与成立事实独立；同义/顺序不改变义务，跨对象拆合不合法。"
+      ],
+      "unresolved": [],
+      "representations": [
+        {
+          "version": "candidate15-reference-contract-6.0.0",
+          "sourceId": "D26-S08",
+          "completeness": "complete",
+          "referenceTime": "2026-09-22T09:00:00+08:00",
+          "timezone": "Asia/Shanghai",
+          "scopeTextById": {
+            "scope-0001-df430ac961b252cd894223c2787efcd808e65bddb59b9623d5cd3110e595ccd0": "请在10月20日前核对校园接待岗位，",
+            "scope-0002-797a3f5f73da8db14000371708e6ee11442163e0d291cb57b46a5f7372bd2f76": "页面显示核对完成；",
+            "scope-0003-a63b6c363fd5609fd5e6fb23b62df6d0517bc226c12bdb2340f257f712d6dc4d": "另于10月22日前上传接待安排确认单，",
+            "scope-0004-66957192528b454e5abb6fc482ed6a30a6539b16de1540bfbec5f3ca6dafa5c1": "接待安排确认单须为PDF，",
+            "scope-0005-446b8c2051d8dec40ac685b28f985c080ff624d4c89986ab3990f2284b5fbc48": "平台显示承诺函已收妥。",
+            "scope-0006-d5bd56ad04a1dffb07de12c35372cc54e58eeaf0c430d3ba969c3b6eb19e86d5": "两项分别办理。"
+          },
+          "allowedAliases": [],
+          "tasks": [
+            {
+              "id": "T1",
+              "action": {
+                "canonical": "核对",
+                "aliases": []
+              },
+              "object": {
+                "canonical": "校园接待岗位",
+                "aliases": []
+              },
+              "actor": "addressee",
+              "currentness": "current",
+              "condition": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": [],
+              "actionability": "actionable",
+              "defaultSelection": "selected",
+              "confirmation": "required",
+              "materials": "N/A",
+              "times": [
+                {
+                  "rawText": "10月20日前",
+                  "type": "task_deadline",
+                  "normalizedValue": "2026-10-20",
+                  "precision": "date_only",
+                  "isAllDay": true,
+                  "needsConfirmation": false,
+                  "timezone": "Asia/Shanghai",
+                  "tempId": "PT1_0",
+                  "relatedTaskTempIds": [
+                    "T1"
+                  ],
+                  "relatedMaterialTempIds": [],
+                  "scopeIds": [
+                    "scope-0001-df430ac961b252cd894223c2787efcd808e65bddb59b9623d5cd3110e595ccd0"
+                  ],
+                  "confidence": 1
+                }
+              ],
+              "completionStandards": [
+                "页面显示核对完成"
+              ],
+              "dependencies": "N/A",
+              "actionScopeIds": [
+                "scope-0001-df430ac961b252cd894223c2787efcd808e65bddb59b9623d5cd3110e595ccd0"
+              ],
+              "objectScopeIds": [
+                "scope-0001-df430ac961b252cd894223c2787efcd808e65bddb59b9623d5cd3110e595ccd0"
+              ],
+              "scopeIds": [
+                "scope-0001-df430ac961b252cd894223c2787efcd808e65bddb59b9623d5cd3110e595ccd0",
+                "scope-0002-797a3f5f73da8db14000371708e6ee11442163e0d291cb57b46a5f7372bd2f76",
+                "scope-0006-d5bd56ad04a1dffb07de12c35372cc54e58eeaf0c430d3ba969c3b6eb19e86d5"
+              ],
+              "evidencePolicy": {
+                "proposition": {
+                  "requiredAnyOf": [
+                    [
+                      "scope-0001-df430ac961b252cd894223c2787efcd808e65bddb59b9623d5cd3110e595ccd0",
+                      "scope-0002-797a3f5f73da8db14000371708e6ee11442163e0d291cb57b46a5f7372bd2f76"
+                    ],
+                    [
+                      "scope-0001-df430ac961b252cd894223c2787efcd808e65bddb59b9623d5cd3110e595ccd0"
+                    ]
+                  ],
+                  "allowed": [
+                    "scope-0001-df430ac961b252cd894223c2787efcd808e65bddb59b9623d5cd3110e595ccd0",
+                    "scope-0002-797a3f5f73da8db14000371708e6ee11442163e0d291cb57b46a5f7372bd2f76",
+                    "scope-0006-d5bd56ad04a1dffb07de12c35372cc54e58eeaf0c430d3ba969c3b6eb19e86d5"
+                  ],
+                  "contradictory": []
+                },
+                "condition": {
+                  "requiredAnyOf": [],
+                  "allowed": [],
+                  "contradictory": []
+                },
+                "fact": {
+                  "requiredAnyOf": [],
+                  "allowed": [],
+                  "contradictory": []
+                }
+              },
+              "parentTaskId": null,
+              "hierarchyType": "task",
+              "materialDetails": [],
+              "timeEvidence": [
+                {
+                  "rawText": "10月20日前",
+                  "type": "task_deadline",
+                  "relatedTaskTempIds": [
+                    "T1"
+                  ],
+                  "evidencePolicy": {
+                    "requiredAnyOf": [
+                      [
+                        "scope-0001-df430ac961b252cd894223c2787efcd808e65bddb59b9623d5cd3110e595ccd0"
+                      ]
+                    ],
+                    "allowed": [
+                      "scope-0001-df430ac961b252cd894223c2787efcd808e65bddb59b9623d5cd3110e595ccd0"
+                    ],
+                    "contradictory": []
+                  }
+                }
+              ]
+            },
+            {
+              "id": "T2",
+              "action": {
+                "canonical": "上传",
+                "aliases": []
+              },
+              "object": {
+                "canonical": "接待安排确认单",
+                "aliases": []
+              },
+              "actor": "addressee",
+              "currentness": "current",
+              "condition": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": [],
+              "actionability": "actionable",
+              "defaultSelection": "selected",
+              "confirmation": "required",
+              "materials": [
+                "PDF"
+              ],
+              "times": [
+                {
+                  "rawText": "10月22日前",
+                  "type": "submission_deadline",
+                  "normalizedValue": "2026-10-22",
+                  "precision": "date_only",
+                  "isAllDay": true,
+                  "needsConfirmation": false,
+                  "timezone": "Asia/Shanghai",
+                  "tempId": "PT2_0",
+                  "relatedTaskTempIds": [
+                    "T2"
+                  ],
+                  "relatedMaterialTempIds": [],
+                  "scopeIds": [
+                    "scope-0003-a63b6c363fd5609fd5e6fb23b62df6d0517bc226c12bdb2340f257f712d6dc4d"
+                  ],
+                  "confidence": 1
+                }
+              ],
+              "completionStandards": [
+                "平台显示承诺函已收妥"
+              ],
+              "dependencies": "N/A",
+              "actionScopeIds": [
+                "scope-0003-a63b6c363fd5609fd5e6fb23b62df6d0517bc226c12bdb2340f257f712d6dc4d"
+              ],
+              "objectScopeIds": [
+                "scope-0003-a63b6c363fd5609fd5e6fb23b62df6d0517bc226c12bdb2340f257f712d6dc4d"
+              ],
+              "scopeIds": [
+                "scope-0003-a63b6c363fd5609fd5e6fb23b62df6d0517bc226c12bdb2340f257f712d6dc4d",
+                "scope-0004-66957192528b454e5abb6fc482ed6a30a6539b16de1540bfbec5f3ca6dafa5c1",
+                "scope-0005-446b8c2051d8dec40ac685b28f985c080ff624d4c89986ab3990f2284b5fbc48",
+                "scope-0006-d5bd56ad04a1dffb07de12c35372cc54e58eeaf0c430d3ba969c3b6eb19e86d5"
+              ],
+              "evidencePolicy": {
+                "proposition": {
+                  "requiredAnyOf": [
+                    [
+                      "scope-0003-a63b6c363fd5609fd5e6fb23b62df6d0517bc226c12bdb2340f257f712d6dc4d"
+                    ],
+                    [
+                      "scope-0003-a63b6c363fd5609fd5e6fb23b62df6d0517bc226c12bdb2340f257f712d6dc4d",
+                      "scope-0004-66957192528b454e5abb6fc482ed6a30a6539b16de1540bfbec5f3ca6dafa5c1"
+                    ]
+                  ],
+                  "allowed": [
+                    "scope-0003-a63b6c363fd5609fd5e6fb23b62df6d0517bc226c12bdb2340f257f712d6dc4d",
+                    "scope-0004-66957192528b454e5abb6fc482ed6a30a6539b16de1540bfbec5f3ca6dafa5c1",
+                    "scope-0005-446b8c2051d8dec40ac685b28f985c080ff624d4c89986ab3990f2284b5fbc48",
+                    "scope-0006-d5bd56ad04a1dffb07de12c35372cc54e58eeaf0c430d3ba969c3b6eb19e86d5"
+                  ],
+                  "contradictory": []
+                },
+                "condition": {
+                  "requiredAnyOf": [],
+                  "allowed": [],
+                  "contradictory": []
+                },
+                "fact": {
+                  "requiredAnyOf": [],
+                  "allowed": [],
+                  "contradictory": []
+                }
+              },
+              "parentTaskId": null,
+              "hierarchyType": "task",
+              "materialDetails": [
+                {
+                  "tempId": "MT2",
+                  "name": "接待安排确认单",
+                  "required": true,
+                  "formatRequirements": [
+                    "PDF"
+                  ],
+                  "namingRequirements": [],
+                  "quantity": null,
+                  "submissionChannel": null,
+                  "relatedTaskTempIds": [
+                    "T2"
+                  ],
+                  "scopeIds": [
+                    "scope-0004-66957192528b454e5abb6fc482ed6a30a6539b16de1540bfbec5f3ca6dafa5c1"
+                  ],
+                  "confidence": 1,
+                  "evidencePolicy": {
+                    "requiredAnyOf": [
+                      [
+                        "scope-0004-66957192528b454e5abb6fc482ed6a30a6539b16de1540bfbec5f3ca6dafa5c1"
+                      ]
+                    ],
+                    "allowed": [
+                      "scope-0004-66957192528b454e5abb6fc482ed6a30a6539b16de1540bfbec5f3ca6dafa5c1"
+                    ],
+                    "contradictory": []
+                  }
+                }
+              ],
+              "timeEvidence": [
+                {
+                  "rawText": "10月22日前",
+                  "type": "submission_deadline",
+                  "relatedTaskTempIds": [
+                    "T2"
+                  ],
+                  "evidencePolicy": {
+                    "requiredAnyOf": [
+                      [
+                        "scope-0003-a63b6c363fd5609fd5e6fb23b62df6d0517bc226c12bdb2340f257f712d6dc4d"
+                      ]
+                    ],
+                    "allowed": [
+                      "scope-0003-a63b6c363fd5609fd5e6fb23b62df6d0517bc226c12bdb2340f257f712d6dc4d"
+                    ],
+                    "contradictory": []
+                  }
+                }
+              ]
+            }
+          ],
+          "relations": [],
+          "noTaskFacts": []
+        }
+      ],
+      "forbiddenActions": [],
+      "d26ReferenceVersion": "source-semantics-reference-1.0.0",
+      "d26DisplayPolicy": {
+        "eventContradictions": []
+      }
+    }
+  ]
+}

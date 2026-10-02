@@ -1,0 +1,31 @@
+✔ scores auditable entity matches without self-normalization (17.047ms)
+✔ scores local wall-clock values using the declared timezone rather than the evaluator host (2.1912ms)
+✔ loads and executes the exact client validator without a duplicate schema (113.5636ms)
+✔ browser, Worker generated contract, and evaluator agree on strict outcomes (2.5481ms)
+✔ penalizes missing and forbidden tasks as correction burden (0.9819ms)
+✔ does not match forbidden tokens that exist only in task description (0.4319ms)
+✔ does not score suggestions that client safety marked unselected (0.5663ms)
+✔ excludes unselected materials, time points and events from quality scoring (0.2882ms)
+✔ paired bootstrap reports paired deltas rather than dividing by model maxima (1.1322ms)
+✔ reports unavailable quality metrics as null when every request failed (0.3055ms)
+✔ keeps an untested arm NOT_RUN instead of inventing request failures (0.1603ms)
+✔ rejects observations attached to an arm declared untested (0.7117ms)
+✔ does not award vacuous task F1 when both expected and predicted tasks are empty (0.1929ms)
+✔ penalizes predicted entities that have no evidence (0.4682ms)
+✔ reports evidence validity separately from entity coverage (0.3363ms)
+✔ image-only evidence is checked against offline ground truth rather than OCR text (0.3367ms)
+✔ paired bootstrap resamples independent scenario families as clusters (0.5594ms)
+✔ a partial request failure invalidates arm-level quality metrics (0.3436ms)
+✔ client-invalid truthy results never become completed quality observations (0.1201ms)
+✔ scoreCase is fail-closed unless the caller explicitly marks a result completed (0.0928ms)
+✔ invalid or untested arms cannot produce paired quality claims (0.5266ms)
+✔ a scoreable comparison is not mislabeled as a promotion PASS (4.6255ms)
+✔ classifies HTTP failures without collapsing auth, billing, rate limit, model and request errors (0.1195ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 463.2287

@@ -1,0 +1,5147 @@
+{
+  "schemaVersion": 8,
+  "workspace": {
+    "id": "rco-mainline-01-02-i1-d26-ordinary-scenarios01",
+    "title": "MAINLINE-01 人工工程响应（非模型预测）",
+    "createdAt": "2026-09-05T08:00:00.000Z",
+    "updatedAt": "2026-10-02T09:53:04.933Z"
+  },
+  "settings": {
+    "defaultTimezone": "Asia/Shanghai",
+    "locale": "zh-CN"
+  },
+  "sources": [
+    {
+      "id": "source:ea0cb01e",
+      "workspaceId": "rco-mainline-01-02-i1-d26-ordinary-scenarios01",
+      "type": "text",
+      "title": "手动粘贴消息",
+      "status": "partially_confirmed",
+      "currentVersionId": "source:ea0cb01e:version:1",
+      "createdAt": "2026-10-02T09:53:04.768Z",
+      "updatedAt": "2026-10-02T09:53:25.875Z",
+      "legacyData": {
+        "contentPreview": "原提交旧版登记表的要求已取消。现在改为上传新版登记表。请保存报名回执。",
+        "url": null,
+        "originalFileName": null,
+        "mimeType": null,
+        "fileSize": null,
+        "fileHash": null,
+        "parserVersion": "local-rules-v2",
+        "reviewMetadata": {
+          "sourceType": "text",
+          "mimeType": null,
+          "characterCount": 35,
+          "pageCount": null,
+          "extractionMethod": "manual",
+          "ocrConfidence": null,
+          "partialExtraction": null,
+          "qualityFlags": []
+        },
+        "captureOperationId": "bc03bd53-0ba5-4f9b-8f23-2890806b2231"
+      }
+    },
+    {
+      "id": "source:97cbaff3",
+      "workspaceId": "rco-mainline-01-02-i1-d26-ordinary-scenarios01",
+      "type": "text",
+      "title": "手动粘贴消息",
+      "status": "partially_confirmed",
+      "currentVersionId": "source:97cbaff3:version:1",
+      "createdAt": "2026-10-02T09:52:02.294Z",
+      "updatedAt": "2026-10-02T09:52:20.192Z",
+      "legacyData": {
+        "contentPreview": "请先填写设备核对表。填写完成后提交设备核对表。只有资格确认后才可以领取设备钥匙，资格尚未确认。你不符合借用资格，无需领取投影设备。",
+        "url": null,
+        "originalFileName": null,
+        "mimeType": null,
+        "fileSize": null,
+        "fileHash": null,
+        "parserVersion": "local-rules-v2",
+        "reviewMetadata": {
+          "sourceType": "text",
+          "mimeType": null,
+          "characterCount": 65,
+          "pageCount": null,
+          "extractionMethod": "manual",
+          "ocrConfidence": null,
+          "partialExtraction": null,
+          "qualityFlags": []
+        },
+        "captureOperationId": "10d5d708-5067-42fe-aa8d-33b9fc66c137"
+      }
+    },
+    {
+      "id": "source:939bf12e",
+      "workspaceId": "rco-mainline-01-02-i1-d26-ordinary-scenarios01",
+      "type": "text",
+      "title": "手动粘贴消息",
+      "status": "confirmed",
+      "currentVersionId": "source:939bf12e:version:1",
+      "createdAt": "2026-10-02T09:51:29.573Z",
+      "updatedAt": "2026-10-02T09:51:44.586Z",
+      "legacyData": {
+        "contentPreview": "资料室已新增一批参考手册。本通知仅供了解，无需行动。",
+        "url": null,
+        "originalFileName": null,
+        "mimeType": null,
+        "fileSize": null,
+        "fileHash": null,
+        "parserVersion": "local-rules-v2",
+        "reviewMetadata": {
+          "sourceType": "text",
+          "mimeType": null,
+          "characterCount": 26,
+          "pageCount": null,
+          "extractionMethod": "manual",
+          "ocrConfidence": null,
+          "partialExtraction": null,
+          "qualityFlags": []
+        },
+        "captureOperationId": "265f34a6-0076-4caa-be7e-66cafbba0839"
+      }
+    },
+    {
+      "id": "source:f6821822",
+      "workspaceId": "rco-mainline-01-02-i1-d26-ordinary-scenarios01",
+      "type": "text",
+      "title": "手动粘贴消息",
+      "status": "confirmed",
+      "currentVersionId": "source:f6821822:version:1",
+      "createdAt": "2026-10-02T09:50:41.142Z",
+      "updatedAt": "2026-10-02T09:50:56.789Z",
+      "legacyData": {
+        "contentPreview": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+        "url": null,
+        "originalFileName": null,
+        "mimeType": null,
+        "fileSize": null,
+        "fileHash": null,
+        "parserVersion": "local-rules-v2",
+        "reviewMetadata": {
+          "sourceType": "text",
+          "mimeType": null,
+          "characterCount": 60,
+          "pageCount": null,
+          "extractionMethod": "manual",
+          "ocrConfidence": null,
+          "partialExtraction": null,
+          "qualityFlags": []
+        },
+        "captureOperationId": "0d324846-d659-49c0-97be-84e4024ddd0b"
+      }
+    }
+  ],
+  "sourceVersions": [
+    {
+      "id": "source:ea0cb01e:version:1",
+      "sourceId": "source:ea0cb01e",
+      "versionNo": 1,
+      "contentHash": "fnv1a32:492d53cc",
+      "rawText": "原提交旧版登记表的要求已取消。现在改为上传新版登记表。请保存报名回执。",
+      "rawTextRef": null,
+      "createdAt": "2026-10-02T09:53:04.768Z",
+      "legacyData": {
+        "reviewMetadata": {
+          "sourceType": "text",
+          "mimeType": null,
+          "characterCount": 35,
+          "pageCount": null,
+          "extractionMethod": "manual",
+          "ocrConfidence": null,
+          "partialExtraction": null,
+          "qualityFlags": []
+        }
+      }
+    },
+    {
+      "id": "source:97cbaff3:version:1",
+      "sourceId": "source:97cbaff3",
+      "versionNo": 1,
+      "contentHash": "fnv1a32:9ec3cf56",
+      "rawText": "请先填写设备核对表。填写完成后提交设备核对表。只有资格确认后才可以领取设备钥匙，资格尚未确认。你不符合借用资格，无需领取投影设备。",
+      "rawTextRef": null,
+      "createdAt": "2026-10-02T09:52:02.294Z",
+      "legacyData": {
+        "reviewMetadata": {
+          "sourceType": "text",
+          "mimeType": null,
+          "characterCount": 65,
+          "pageCount": null,
+          "extractionMethod": "manual",
+          "ocrConfidence": null,
+          "partialExtraction": null,
+          "qualityFlags": []
+        }
+      }
+    },
+    {
+      "id": "source:939bf12e:version:1",
+      "sourceId": "source:939bf12e",
+      "versionNo": 1,
+      "contentHash": "fnv1a32:35e454db",
+      "rawText": "资料室已新增一批参考手册。本通知仅供了解，无需行动。",
+      "rawTextRef": null,
+      "createdAt": "2026-10-02T09:51:29.573Z",
+      "legacyData": {
+        "reviewMetadata": {
+          "sourceType": "text",
+          "mimeType": null,
+          "characterCount": 26,
+          "pageCount": null,
+          "extractionMethod": "manual",
+          "ocrConfidence": null,
+          "partialExtraction": null,
+          "qualityFlags": []
+        }
+      }
+    },
+    {
+      "id": "source:f6821822:version:1",
+      "sourceId": "source:f6821822",
+      "versionNo": 1,
+      "contentHash": "fnv1a32:4a68841c",
+      "rawText": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+      "rawTextRef": null,
+      "createdAt": "2026-10-02T09:50:41.142Z",
+      "legacyData": {
+        "reviewMetadata": {
+          "sourceType": "text",
+          "mimeType": null,
+          "characterCount": 60,
+          "pageCount": null,
+          "extractionMethod": "manual",
+          "ocrConfidence": null,
+          "partialExtraction": null,
+          "qualityFlags": []
+        }
+      }
+    }
+  ],
+  "recognitionRuns": [
+    {
+      "id": "source:ea0cb01e:run:1",
+      "sourceVersionId": "source:ea0cb01e:version:1",
+      "provider": "manual",
+      "modelName": "anonymous-offline-engineering-input",
+      "promptVersion": "recognition-2.0.0",
+      "schemaVersion": "2.0",
+      "pipelineVersion": "d26-ordinary-engineering-fake-transport",
+      "status": "succeeded",
+      "startedAt": "2026-10-02T09:53:04.849Z",
+      "completedAt": "2026-10-02T09:53:04.873Z",
+      "durationMs": 24,
+      "tokenUsage": null,
+      "qualityFlags": [
+        "当前状态、执行人或义务类型不能由普通任务字段完整表达。",
+        "取消或替代关系保留原始端点，需核对后才能接受相关事项。"
+      ],
+      "errorCode": null,
+      "legacyData": {
+        "originalRecognitionResult": {
+          "schemaVersion": "2.0",
+          "promptVersion": "d26-common-bridge-1",
+          "modelName": "D26 匿名工程语义桥接（非模型成绩）",
+          "createdAt": "2026-10-02T09:00:00+08:00",
+          "sourceSummary": {
+            "title": "提交旧版登记表",
+            "sourceType": "text",
+            "notificationType": "uncertain",
+            "summary": "3项任务，0项事件。",
+            "requiresAction": true,
+            "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "未主动建立或匹配项目。"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [
+            {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "提交旧版登记表",
+              "description": "原提交旧版登记表的要求已取消。",
+              "completionCriteria": [],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [],
+              "timePointTempIds": [],
+              "confidence": 1,
+              "userConfirmationRequired": true,
+              "tempId": "T1",
+              "actionVerb": "提交",
+              "actionObject": "旧版登记表",
+              "evidenceIds": [
+                "d26-scope-0001-d647b49b8366ca0984e1ed7a66f508b91c737e2046d846980cabf06921623315"
+              ],
+              "inferenceLevel": "explicit",
+              "selected": false
+            },
+            {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "上传新版登记表",
+              "description": "现在改为上传新版登记表。",
+              "completionCriteria": [],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [],
+              "timePointTempIds": [],
+              "confidence": 1,
+              "userConfirmationRequired": true,
+              "tempId": "T2",
+              "actionVerb": "上传",
+              "actionObject": "新版登记表",
+              "evidenceIds": [
+                "d26-scope-0002-4ef5d863d332ed5980e5def91195f6f918f422a7e33b32aeb0ef3aa07db0d25e"
+              ],
+              "inferenceLevel": "explicit",
+              "selected": false
+            },
+            {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "保存报名回执",
+              "description": "请保存报名回执。",
+              "completionCriteria": [],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [],
+              "timePointTempIds": [],
+              "confidence": 1,
+              "userConfirmationRequired": true,
+              "tempId": "T3",
+              "actionVerb": "保存",
+              "actionObject": "报名回执",
+              "evidenceIds": [
+                "d26-scope-0003-0b665b477aad42bf56579f1d70c8580fa6d4563cc688d73d37ac6ed7f5df05ac"
+              ],
+              "inferenceLevel": "explicit",
+              "selected": true
+            }
+          ],
+          "materials": [],
+          "timePoints": [],
+          "events": [],
+          "evidence": [
+            {
+              "id": "d26-scope-0001-d647b49b8366ca0984e1ed7a66f508b91c737e2046d846980cabf06921623315",
+              "sourceId": "source:ea0cb01e",
+              "quote": "原提交旧版登记表的要求已取消。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0002-4ef5d863d332ed5980e5def91195f6f918f422a7e33b32aeb0ef3aa07db0d25e",
+              "sourceId": "source:ea0cb01e",
+              "quote": "现在改为上传新版登记表。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0003-0b665b477aad42bf56579f1d70c8580fa6d4563cc688d73d37ac6ed7f5df05ac",
+              "sourceId": "source:ea0cb01e",
+              "quote": "请保存报名回执。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [
+            {
+              "id": "d26-representation-0",
+              "type": "other",
+              "message": "当前状态、执行人或义务类型不能由普通任务字段完整表达。",
+              "entityTempIds": [
+                "T1"
+              ],
+              "evidenceIds": [],
+              "requiresDecision": true
+            },
+            {
+              "id": "d26-representation-1",
+              "type": "other",
+              "message": "取消或替代关系保留原始端点，需核对后才能接受相关事项。",
+              "entityTempIds": [
+                "T1",
+                "T2"
+              ],
+              "evidenceIds": [],
+              "requiresDecision": true
+            }
+          ],
+          "ambiguities": [],
+          "ignoredContent": [],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 1,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": true,
+            "reviewReasons": [
+              "当前状态、执行人或义务类型不能由普通任务字段完整表达。",
+              "取消或替代关系保留原始端点，需核对后才能接受相关事项。"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "source:97cbaff3:run:1",
+      "sourceVersionId": "source:97cbaff3:version:1",
+      "provider": "manual",
+      "modelName": "anonymous-offline-engineering-input",
+      "promptVersion": "recognition-2.0.0",
+      "schemaVersion": "2.0",
+      "pipelineVersion": "d26-ordinary-engineering-fake-transport",
+      "status": "succeeded",
+      "startedAt": "2026-10-02T09:52:02.343Z",
+      "completedAt": "2026-10-02T09:52:02.359Z",
+      "durationMs": 16,
+      "tokenUsage": null,
+      "qualityFlags": [
+        "资格尚未确认，不能当成已符合；请保留待核对。",
+        "原文明确当前不适用，不创建执行任务。",
+        "当前状态、执行人或义务类型不能由普通任务字段完整表达。"
+      ],
+      "errorCode": null,
+      "legacyData": {
+        "originalRecognitionResult": {
+          "schemaVersion": "2.0",
+          "promptVersion": "d26-common-bridge-1",
+          "modelName": "D26 匿名工程语义桥接（非模型成绩）",
+          "createdAt": "2026-10-02T09:00:00+08:00",
+          "sourceSummary": {
+            "title": "填写设备核对表",
+            "sourceType": "text",
+            "notificationType": "uncertain",
+            "summary": "4项任务，0项事件。",
+            "requiresAction": true,
+            "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "未主动建立或匹配项目。"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [
+            {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "填写设备核对表",
+              "description": "请先填写设备核对表。",
+              "completionCriteria": [],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [],
+              "timePointTempIds": [],
+              "confidence": 1,
+              "userConfirmationRequired": true,
+              "tempId": "T1",
+              "actionVerb": "填写",
+              "actionObject": "设备核对表",
+              "evidenceIds": [
+                "d26-scope-0001-2ef2315280bed48bb36c28dff91828ea2286fe5d2f937064597a1d84224b2eaa"
+              ],
+              "inferenceLevel": "explicit",
+              "selected": true
+            },
+            {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "提交设备核对表",
+              "description": "填写完成后提交设备核对表。",
+              "completionCriteria": [],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [
+                "T1"
+              ],
+              "materialTempIds": [],
+              "timePointTempIds": [],
+              "confidence": 1,
+              "userConfirmationRequired": true,
+              "tempId": "T2",
+              "actionVerb": "提交",
+              "actionObject": "设备核对表",
+              "evidenceIds": [
+                "d26-scope-0002-b43461c835d4078f5cbf80a099f95de01dd6a1ded1121ed7200ed6ccf6d205d7"
+              ],
+              "inferenceLevel": "explicit",
+              "selected": true
+            },
+            {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "领取设备钥匙",
+              "description": "只有资格确认后才可以领取设备钥匙，",
+              "completionCriteria": [],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [],
+              "timePointTempIds": [],
+              "confidence": 1,
+              "userConfirmationRequired": true,
+              "tempId": "T3",
+              "actionVerb": "领取",
+              "actionObject": "设备钥匙",
+              "evidenceIds": [
+                "d26-scope-0003-9db26462d7d4f1da5ee11bc2ed86efd2c1304a98c74c1ac167ea3b441ec83dbe"
+              ],
+              "inferenceLevel": "explicit",
+              "selected": false
+            },
+            {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "领取投影设备",
+              "description": "无需领取投影设备。",
+              "completionCriteria": [],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [],
+              "timePointTempIds": [],
+              "confidence": 1,
+              "userConfirmationRequired": true,
+              "tempId": "T4",
+              "actionVerb": "领取",
+              "actionObject": "投影设备",
+              "evidenceIds": [
+                "d26-scope-0006-41009ba2b1f6ed08fcf22665850e0c8584c5465be32458b542eb2b26b8d712d1"
+              ],
+              "inferenceLevel": "explicit",
+              "selected": false
+            }
+          ],
+          "materials": [],
+          "timePoints": [],
+          "events": [],
+          "evidence": [
+            {
+              "id": "d26-scope-0001-2ef2315280bed48bb36c28dff91828ea2286fe5d2f937064597a1d84224b2eaa",
+              "sourceId": "source:97cbaff3",
+              "quote": "请先填写设备核对表。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0002-b43461c835d4078f5cbf80a099f95de01dd6a1ded1121ed7200ed6ccf6d205d7",
+              "sourceId": "source:97cbaff3",
+              "quote": "填写完成后提交设备核对表。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0003-9db26462d7d4f1da5ee11bc2ed86efd2c1304a98c74c1ac167ea3b441ec83dbe",
+              "sourceId": "source:97cbaff3",
+              "quote": "只有资格确认后才可以领取设备钥匙，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0004-7d26ea14ab221b7990334b5a6fff6df7e2b4adb73908496e02fe2343355d548a",
+              "sourceId": "source:97cbaff3",
+              "quote": "资格尚未确认。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0005-131066a2b0c3fc1b26a7135cd2deb4343c055bb8a85e213569aae35afccd0c10",
+              "sourceId": "source:97cbaff3",
+              "quote": "你不符合借用资格，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0006-41009ba2b1f6ed08fcf22665850e0c8584c5465be32458b542eb2b26b8d712d1",
+              "sourceId": "source:97cbaff3",
+              "quote": "无需领取投影设备。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [
+            {
+              "id": "d26-representation-0",
+              "type": "other",
+              "message": "资格尚未确认，不能当成已符合；请保留待核对。",
+              "entityTempIds": [
+                "T3"
+              ],
+              "evidenceIds": [],
+              "requiresDecision": true
+            },
+            {
+              "id": "d26-representation-1",
+              "type": "other",
+              "message": "原文明确当前不适用，不创建执行任务。",
+              "entityTempIds": [
+                "T4"
+              ],
+              "evidenceIds": [],
+              "requiresDecision": true
+            },
+            {
+              "id": "d26-representation-2",
+              "type": "other",
+              "message": "当前状态、执行人或义务类型不能由普通任务字段完整表达。",
+              "entityTempIds": [
+                "T4"
+              ],
+              "evidenceIds": [],
+              "requiresDecision": true
+            }
+          ],
+          "ambiguities": [],
+          "ignoredContent": [
+            {
+              "text": "资格尚未确认。",
+              "reason": "other"
+            },
+            {
+              "text": "你不符合借用资格，",
+              "reason": "other"
+            }
+          ],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 1,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": true,
+            "reviewReasons": [
+              "资格尚未确认，不能当成已符合；请保留待核对。",
+              "原文明确当前不适用，不创建执行任务。",
+              "当前状态、执行人或义务类型不能由普通任务字段完整表达。"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "source:939bf12e:run:1",
+      "sourceVersionId": "source:939bf12e:version:1",
+      "provider": "manual",
+      "modelName": "anonymous-offline-engineering-input",
+      "promptVersion": "recognition-2.0.0",
+      "schemaVersion": "2.0",
+      "pipelineVersion": "d26-ordinary-engineering-fake-transport",
+      "status": "succeeded",
+      "startedAt": "2026-10-02T09:51:29.641Z",
+      "completedAt": "2026-10-02T09:51:29.647Z",
+      "durationMs": 6,
+      "tokenUsage": null,
+      "qualityFlags": [
+        "MAINLINE-01 人工工程响应（非模型预测）"
+      ],
+      "errorCode": null,
+      "legacyData": {
+        "originalRecognitionResult": {
+          "schemaVersion": "2.0",
+          "promptVersion": "engineering-mainline-01",
+          "modelName": "D26 匿名工程假传输（非模型成绩）",
+          "createdAt": "2026-09-05T08:00:00.000Z",
+          "sourceSummary": {
+            "title": "MAINLINE-01 人工工程响应（非模型预测）",
+            "sourceType": "text",
+            "notificationType": "uncertain",
+            "summary": "资料室已新增一批参考手册。本通知仅供了解，无需行动。",
+            "requiresAction": false,
+            "actionReason": "资料室周末开放，本通知仅供了解，无需行动。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "MAINLINE-01 人工工程响应（非模型预测）"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [],
+          "materials": [],
+          "timePoints": [],
+          "events": [],
+          "evidence": [
+            {
+              "id": "notice",
+              "sourceId": "source:939bf12e",
+              "textStart": 0,
+              "textEnd": 26,
+              "quote": "资料室已新增一批参考手册。本通知仅供了解，无需行动。",
+              "quotedText": "资料室已新增一批参考手册。本通知仅供了解，无需行动。",
+              "field": "description",
+              "extractionMethod": "manual",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [],
+          "ambiguities": [],
+          "ignoredContent": [],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 1,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": true,
+            "reviewReasons": [
+              "MAINLINE-01 人工工程响应（非模型预测）"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "source:f6821822:run:1",
+      "sourceVersionId": "source:f6821822:version:1",
+      "provider": "manual",
+      "modelName": "anonymous-offline-engineering-input",
+      "promptVersion": "recognition-2.0.0",
+      "schemaVersion": "2.0",
+      "pipelineVersion": "d26-ordinary-engineering-fake-transport",
+      "status": "succeeded",
+      "startedAt": "2026-10-02T09:50:41.172Z",
+      "completedAt": "2026-10-02T09:50:41.174Z",
+      "durationMs": 2,
+      "tokenUsage": null,
+      "qualityFlags": [
+        "MAINLINE-01 人工工程响应（非模型预测）"
+      ],
+      "errorCode": null,
+      "legacyData": {
+        "originalRecognitionResult": {
+          "schemaVersion": "2.0",
+          "promptVersion": "engineering-mainline-01",
+          "modelName": "D26 匿名工程假传输（非模型成绩）",
+          "createdAt": "2026-09-05T08:00:00.000Z",
+          "sourceSummary": {
+            "title": "MAINLINE-01 人工工程响应（非模型预测）",
+            "sourceType": "text",
+            "notificationType": "uncertain",
+            "summary": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+            "requiresAction": true,
+            "actionReason": "请保存活动手册。没有截止日期要求。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "MAINLINE-01 人工工程响应（非模型预测）"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [
+            {
+              "tempId": "save",
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "保存活动手册",
+              "actionVerb": "保存",
+              "actionObject": "活动手册",
+              "description": "保存活动手册",
+              "completionCriteria": [],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [],
+              "timePointTempIds": [],
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "inferenceLevel": "explicit",
+              "userConfirmationRequired": true,
+              "selected": true
+            }
+          ],
+          "materials": [],
+          "timePoints": [
+            {
+              "tempId": "stop-time",
+              "type": "event_start",
+              "rawText": "周三晚",
+              "normalizedValue": null,
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "vague",
+              "needsConfirmation": true,
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "selected": true
+            },
+            {
+              "tempId": "brief-start",
+              "type": "event_start",
+              "rawText": "2026年10月12日14:00",
+              "normalizedValue": "2026-10-12T14:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "selected": true
+            },
+            {
+              "tempId": "brief-end",
+              "type": "event_end",
+              "rawText": "15:00",
+              "normalizedValue": "2026-10-12T15:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "selected": true
+            }
+          ],
+          "events": [
+            {
+              "tempId": "stop",
+              "title": "预约平台将在周三晚停机",
+              "description": "",
+              "location": null,
+              "startTimePointTempId": "stop-time",
+              "endTimePointTempId": null,
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "inferenceLevel": "explicit",
+              "selected": true
+            },
+            {
+              "tempId": "briefing",
+              "title": "资料讲解会",
+              "description": "",
+              "location": "资料室",
+              "startTimePointTempId": "brief-start",
+              "endTimePointTempId": "brief-end",
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "inferenceLevel": "explicit",
+              "selected": true
+            }
+          ],
+          "evidence": [
+            {
+              "id": "notice",
+              "sourceId": "source:f6821822",
+              "textStart": 0,
+              "textEnd": 60,
+              "quote": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+              "quotedText": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+              "field": "description",
+              "extractionMethod": "manual",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [],
+          "ambiguities": [],
+          "ignoredContent": [],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 1,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": true,
+            "reviewReasons": [
+              "MAINLINE-01 人工工程响应（非模型预测）"
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "extractionDrafts": [
+    {
+      "id": "source:ea0cb01e:draft:1",
+      "recognitionRunId": "source:ea0cb01e:run:1",
+      "status": "partially_confirmed",
+      "result": {
+        "schemaVersion": "2.0",
+        "promptVersion": "d26-common-bridge-1",
+        "modelName": "D26 匿名工程语义桥接（非模型成绩）",
+        "createdAt": "2026-10-02T09:00:00+08:00",
+        "sourceSummary": {
+          "title": "提交旧版登记表",
+          "sourceType": "text",
+          "notificationType": "uncertain",
+          "summary": "3项任务，0项事件。请核对后确认。",
+          "requiresAction": true,
+          "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+        },
+        "projectMatch": {
+          "decision": "standalone_task",
+          "matchedProjectId": null,
+          "suggestedProjectTitle": null,
+          "confidence": 1,
+          "reasons": [
+            "未主动建立或匹配项目。"
+          ]
+        },
+        "projectSuggestion": null,
+        "milestones": [],
+        "standaloneTasks": [
+          {
+            "parentTempId": null,
+            "hierarchyType": "task",
+            "title": "提交旧版登记表",
+            "description": "原提交旧版登记表的要求已取消。",
+            "completionCriteria": [],
+            "estimatedMinutes": null,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "medium",
+            "dependencyTempIds": [],
+            "materialTempIds": [],
+            "timePointTempIds": [],
+            "confidence": 1,
+            "userConfirmationRequired": true,
+            "tempId": "T1",
+            "actionVerb": "提交",
+            "actionObject": "旧版登记表",
+            "evidenceIds": [
+              "d26-scope-0001-d647b49b8366ca0984e1ed7a66f508b91c737e2046d846980cabf06921623315"
+            ],
+            "inferenceLevel": "explicit",
+            "selected": false
+          },
+          {
+            "parentTempId": null,
+            "hierarchyType": "task",
+            "title": "上传新版登记表",
+            "description": "现在改为上传新版登记表。",
+            "completionCriteria": [],
+            "estimatedMinutes": null,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "medium",
+            "dependencyTempIds": [],
+            "materialTempIds": [],
+            "timePointTempIds": [],
+            "confidence": 1,
+            "userConfirmationRequired": true,
+            "tempId": "T2",
+            "actionVerb": "上传",
+            "actionObject": "新版登记表",
+            "evidenceIds": [
+              "d26-scope-0002-4ef5d863d332ed5980e5def91195f6f918f422a7e33b32aeb0ef3aa07db0d25e"
+            ],
+            "inferenceLevel": "explicit",
+            "selected": false
+          },
+          {
+            "parentTempId": null,
+            "hierarchyType": "task",
+            "title": "保存报名回执",
+            "description": "请保存报名回执。",
+            "completionCriteria": [],
+            "estimatedMinutes": null,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "medium",
+            "dependencyTempIds": [],
+            "materialTempIds": [],
+            "timePointTempIds": [],
+            "confidence": 1,
+            "userConfirmationRequired": true,
+            "tempId": "T3",
+            "actionVerb": "保存",
+            "actionObject": "报名回执",
+            "evidenceIds": [
+              "d26-scope-0003-0b665b477aad42bf56579f1d70c8580fa6d4563cc688d73d37ac6ed7f5df05ac"
+            ],
+            "inferenceLevel": "explicit",
+            "selected": true
+          }
+        ],
+        "materials": [],
+        "timePoints": [],
+        "events": [],
+        "evidence": [
+          {
+            "id": "d26-scope-0001-d647b49b8366ca0984e1ed7a66f508b91c737e2046d846980cabf06921623315",
+            "sourceId": "source:ea0cb01e",
+            "quote": "原提交旧版登记表的要求已取消。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0002-4ef5d863d332ed5980e5def91195f6f918f422a7e33b32aeb0ef3aa07db0d25e",
+            "sourceId": "source:ea0cb01e",
+            "quote": "现在改为上传新版登记表。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0003-0b665b477aad42bf56579f1d70c8580fa6d4563cc688d73d37ac6ed7f5df05ac",
+            "sourceId": "source:ea0cb01e",
+            "quote": "请保存报名回执。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          }
+        ],
+        "conflicts": [
+          {
+            "id": "d26-representation-0",
+            "type": "other",
+            "message": "当前状态、执行人或义务类型不能由普通任务字段完整表达。",
+            "entityTempIds": [
+              "T1"
+            ],
+            "evidenceIds": [],
+            "requiresDecision": true
+          },
+          {
+            "id": "d26-representation-1",
+            "type": "other",
+            "message": "取消或替代关系保留原始端点，需核对后才能接受相关事项。",
+            "entityTempIds": [
+              "T1",
+              "T2"
+            ],
+            "evidenceIds": [],
+            "requiresDecision": true
+          }
+        ],
+        "ambiguities": [],
+        "ignoredContent": [],
+        "quality": {
+          "overallConfidence": 1,
+          "hierarchyConfidence": 1,
+          "dateConfidence": 1,
+          "evidenceCoverage": 1,
+          "duplicateRisk": 0,
+          "overFragmentationRisk": 0,
+          "missingActionRisk": 0,
+          "needsHumanReview": true,
+          "reviewReasons": [
+            "当前状态、执行人或义务类型不能由普通任务字段完整表达。",
+            "取消或替代关系保留原始端点，需核对后才能接受相关事项。"
+          ]
+        }
+      },
+      "commitOperationIds": [
+        "source-review:source:ea0cb01e:draft:1:fnv1a32:4a723b21"
+      ],
+      "acceptedEntityTempIds": [
+        "T3"
+      ],
+      "rejectedEntityTempIds": [],
+      "createdAt": "2026-10-02T09:53:04.768Z",
+      "updatedAt": "2026-10-02T09:53:25.875Z",
+      "legacyData": {
+        "semanticSidecar": {
+          "version": "semantic-ordinary-bridge-1.0.0",
+          "originalSemantic": {
+            "schemaVersion": "mainline04-task-semantics-1",
+            "sourceId": "source:ea0cb01e",
+            "sourceVersionId": "source:ea0cb01e:version:1",
+            "sourceFingerprint": "sha256:21998ef9272c560947924c30176716ca4e296fe67fba97799b429bd744636483",
+            "tasks": [
+              {
+                "id": "T1",
+                "propositionScopeIds": [
+                  "scope-0001-d647b49b8366ca0984e1ed7a66f508b91c737e2046d846980cabf06921623315"
+                ],
+                "semantics": {
+                  "actor": "addressee",
+                  "speechAct": "directive",
+                  "polarity": "affirmative",
+                  "tense": "future",
+                  "status": "cancelled",
+                  "validity": "superseded",
+                  "modality": "required"
+                },
+                "inferenceLevel": "explicit",
+                "actionType": "other",
+                "action": {
+                  "surface": "提交",
+                  "scopeId": "scope-0001-d647b49b8366ca0984e1ed7a66f508b91c737e2046d846980cabf06921623315"
+                },
+                "object": {
+                  "surface": "旧版登记表",
+                  "scopeId": "scope-0001-d647b49b8366ca0984e1ed7a66f508b91c737e2046d846980cabf06921623315"
+                },
+                "effect": "local_change",
+                "detail": {
+                  "parentTempId": null,
+                  "hierarchyType": "task",
+                  "title": "提交旧版登记表",
+                  "description": "",
+                  "completionCriteria": [],
+                  "estimatedMinutes": null,
+                  "statusSuggestion": "todo",
+                  "prioritySuggestion": "medium",
+                  "dependencyTempIds": [],
+                  "materialTempIds": [],
+                  "timePointTempIds": [],
+                  "confidence": 1,
+                  "userConfirmationRequired": true
+                },
+                "condition": {
+                  "value": "not_applicable",
+                  "conditionScopeIds": [],
+                  "factScopeIds": []
+                },
+                "coverage": {
+                  "time": "not_stated",
+                  "material": "not_stated",
+                  "event": "not_stated"
+                },
+                "eventTempIds": []
+              },
+              {
+                "id": "T2",
+                "propositionScopeIds": [
+                  "scope-0002-4ef5d863d332ed5980e5def91195f6f918f422a7e33b32aeb0ef3aa07db0d25e"
+                ],
+                "semantics": {
+                  "actor": "addressee",
+                  "speechAct": "directive",
+                  "polarity": "affirmative",
+                  "tense": "future",
+                  "status": "pending",
+                  "validity": "active",
+                  "modality": "required"
+                },
+                "inferenceLevel": "explicit",
+                "actionType": "other",
+                "action": {
+                  "surface": "上传",
+                  "scopeId": "scope-0002-4ef5d863d332ed5980e5def91195f6f918f422a7e33b32aeb0ef3aa07db0d25e"
+                },
+                "object": {
+                  "surface": "新版登记表",
+                  "scopeId": "scope-0002-4ef5d863d332ed5980e5def91195f6f918f422a7e33b32aeb0ef3aa07db0d25e"
+                },
+                "effect": "local_change",
+                "detail": {
+                  "parentTempId": null,
+                  "hierarchyType": "task",
+                  "title": "上传新版登记表",
+                  "description": "",
+                  "completionCriteria": [],
+                  "estimatedMinutes": null,
+                  "statusSuggestion": "todo",
+                  "prioritySuggestion": "medium",
+                  "dependencyTempIds": [],
+                  "materialTempIds": [],
+                  "timePointTempIds": [],
+                  "confidence": 1,
+                  "userConfirmationRequired": true
+                },
+                "condition": {
+                  "value": "not_applicable",
+                  "conditionScopeIds": [],
+                  "factScopeIds": []
+                },
+                "coverage": {
+                  "time": "not_stated",
+                  "material": "not_stated",
+                  "event": "not_stated"
+                },
+                "eventTempIds": []
+              },
+              {
+                "id": "T3",
+                "propositionScopeIds": [
+                  "scope-0003-0b665b477aad42bf56579f1d70c8580fa6d4563cc688d73d37ac6ed7f5df05ac"
+                ],
+                "semantics": {
+                  "actor": "addressee",
+                  "speechAct": "directive",
+                  "polarity": "affirmative",
+                  "tense": "future",
+                  "status": "pending",
+                  "validity": "active",
+                  "modality": "required"
+                },
+                "inferenceLevel": "explicit",
+                "actionType": "other",
+                "action": {
+                  "surface": "保存",
+                  "scopeId": "scope-0003-0b665b477aad42bf56579f1d70c8580fa6d4563cc688d73d37ac6ed7f5df05ac"
+                },
+                "object": {
+                  "surface": "报名回执",
+                  "scopeId": "scope-0003-0b665b477aad42bf56579f1d70c8580fa6d4563cc688d73d37ac6ed7f5df05ac"
+                },
+                "effect": "local_change",
+                "detail": {
+                  "parentTempId": null,
+                  "hierarchyType": "task",
+                  "title": "保存报名回执",
+                  "description": "",
+                  "completionCriteria": [],
+                  "estimatedMinutes": null,
+                  "statusSuggestion": "todo",
+                  "prioritySuggestion": "medium",
+                  "dependencyTempIds": [],
+                  "materialTempIds": [],
+                  "timePointTempIds": [],
+                  "confidence": 1,
+                  "userConfirmationRequired": true
+                },
+                "condition": {
+                  "value": "not_applicable",
+                  "conditionScopeIds": [],
+                  "factScopeIds": []
+                },
+                "coverage": {
+                  "time": "not_stated",
+                  "material": "not_stated",
+                  "event": "not_stated"
+                },
+                "eventTempIds": []
+              }
+            ],
+            "materials": [],
+            "timePoints": [],
+            "events": [],
+            "revisions": [
+              {
+                "type": "supersedes",
+                "targetDirectiveId": "T1",
+                "fromDirectiveId": "T2",
+                "effective": "true",
+                "scopeIds": [
+                  "scope-0001-d647b49b8366ca0984e1ed7a66f508b91c737e2046d846980cabf06921623315",
+                  "scope-0002-4ef5d863d332ed5980e5def91195f6f918f422a7e33b32aeb0ef3aa07db0d25e"
+                ]
+              }
+            ],
+            "conflicts": [],
+            "informationScopeIds": [],
+            "unresolvedScopeIds": []
+          },
+          "firstSemantic": {
+            "schemaVersion": "mainline04-task-semantics-1",
+            "sourceId": "source:ea0cb01e",
+            "sourceVersionId": "source:ea0cb01e:version:1",
+            "sourceFingerprint": "sha256:21998ef9272c560947924c30176716ca4e296fe67fba97799b429bd744636483",
+            "tasks": [
+              {
+                "id": "T1",
+                "propositionScopeIds": [
+                  "scope-0001-d647b49b8366ca0984e1ed7a66f508b91c737e2046d846980cabf06921623315"
+                ],
+                "semantics": {
+                  "actor": "addressee",
+                  "speechAct": "directive",
+                  "polarity": "affirmative",
+                  "tense": "future",
+                  "status": "cancelled",
+                  "validity": "superseded",
+                  "modality": "required"
+                },
+                "inferenceLevel": "explicit",
+                "actionType": "other",
+                "action": {
+                  "surface": "提交",
+                  "scopeId": "scope-0001-d647b49b8366ca0984e1ed7a66f508b91c737e2046d846980cabf06921623315"
+                },
+                "object": {
+                  "surface": "旧版登记表",
+                  "scopeId": "scope-0001-d647b49b8366ca0984e1ed7a66f508b91c737e2046d846980cabf06921623315"
+                },
+                "effect": "local_change",
+                "detail": {
+                  "parentTempId": null,
+                  "hierarchyType": "task",
+                  "title": "提交旧版登记表",
+                  "description": "原提交旧版登记表的要求已取消。",
+                  "completionCriteria": [],
+                  "estimatedMinutes": null,
+                  "statusSuggestion": "todo",
+                  "prioritySuggestion": "medium",
+                  "dependencyTempIds": [],
+                  "materialTempIds": [],
+                  "timePointTempIds": [],
+                  "confidence": 1,
+                  "userConfirmationRequired": true
+                },
+                "condition": {
+                  "value": "not_applicable",
+                  "conditionScopeIds": [],
+                  "factScopeIds": []
+                },
+                "coverage": {
+                  "time": "not_stated",
+                  "material": "not_stated",
+                  "event": "not_stated"
+                },
+                "eventTempIds": []
+              },
+              {
+                "id": "T2",
+                "propositionScopeIds": [
+                  "scope-0002-4ef5d863d332ed5980e5def91195f6f918f422a7e33b32aeb0ef3aa07db0d25e"
+                ],
+                "semantics": {
+                  "actor": "addressee",
+                  "speechAct": "directive",
+                  "polarity": "affirmative",
+                  "tense": "future",
+                  "status": "pending",
+                  "validity": "active",
+                  "modality": "required"
+                },
+                "inferenceLevel": "explicit",
+                "actionType": "other",
+                "action": {
+                  "surface": "上传",
+                  "scopeId": "scope-0002-4ef5d863d332ed5980e5def91195f6f918f422a7e33b32aeb0ef3aa07db0d25e"
+                },
+                "object": {
+                  "surface": "新版登记表",
+                  "scopeId": "scope-0002-4ef5d863d332ed5980e5def91195f6f918f422a7e33b32aeb0ef3aa07db0d25e"
+                },
+                "effect": "local_change",
+                "detail": {
+                  "parentTempId": null,
+                  "hierarchyType": "task",
+                  "title": "上传新版登记表",
+                  "description": "现在改为上传新版登记表。",
+                  "completionCriteria": [],
+                  "estimatedMinutes": null,
+                  "statusSuggestion": "todo",
+                  "prioritySuggestion": "medium",
+                  "dependencyTempIds": [],
+                  "materialTempIds": [],
+                  "timePointTempIds": [],
+                  "confidence": 1,
+                  "userConfirmationRequired": true
+                },
+                "condition": {
+                  "value": "not_applicable",
+                  "conditionScopeIds": [],
+                  "factScopeIds": []
+                },
+                "coverage": {
+                  "time": "not_stated",
+                  "material": "not_stated",
+                  "event": "not_stated"
+                },
+                "eventTempIds": []
+              },
+              {
+                "id": "T3",
+                "propositionScopeIds": [
+                  "scope-0003-0b665b477aad42bf56579f1d70c8580fa6d4563cc688d73d37ac6ed7f5df05ac"
+                ],
+                "semantics": {
+                  "actor": "addressee",
+                  "speechAct": "directive",
+                  "polarity": "affirmative",
+                  "tense": "future",
+                  "status": "pending",
+                  "validity": "active",
+                  "modality": "required"
+                },
+                "inferenceLevel": "explicit",
+                "actionType": "other",
+                "action": {
+                  "surface": "保存",
+                  "scopeId": "scope-0003-0b665b477aad42bf56579f1d70c8580fa6d4563cc688d73d37ac6ed7f5df05ac"
+                },
+                "object": {
+                  "surface": "报名回执",
+                  "scopeId": "scope-0003-0b665b477aad42bf56579f1d70c8580fa6d4563cc688d73d37ac6ed7f5df05ac"
+                },
+                "effect": "local_change",
+                "detail": {
+                  "parentTempId": null,
+                  "hierarchyType": "task",
+                  "title": "保存报名回执",
+                  "description": "请保存报名回执。",
+                  "completionCriteria": [],
+                  "estimatedMinutes": null,
+                  "statusSuggestion": "todo",
+                  "prioritySuggestion": "medium",
+                  "dependencyTempIds": [],
+                  "materialTempIds": [],
+                  "timePointTempIds": [],
+                  "confidence": 1,
+                  "userConfirmationRequired": true
+                },
+                "condition": {
+                  "value": "not_applicable",
+                  "conditionScopeIds": [],
+                  "factScopeIds": []
+                },
+                "coverage": {
+                  "time": "not_stated",
+                  "material": "not_stated",
+                  "event": "not_stated"
+                },
+                "eventTempIds": []
+              }
+            ],
+            "materials": [],
+            "timePoints": [],
+            "events": [],
+            "revisions": [
+              {
+                "type": "supersedes",
+                "targetDirectiveId": "T1",
+                "fromDirectiveId": "T2",
+                "effective": "true",
+                "scopeIds": [
+                  "scope-0001-d647b49b8366ca0984e1ed7a66f508b91c737e2046d846980cabf06921623315",
+                  "scope-0002-4ef5d863d332ed5980e5def91195f6f918f422a7e33b32aeb0ef3aa07db0d25e"
+                ]
+              }
+            ],
+            "conflicts": [],
+            "informationScopeIds": [],
+            "unresolvedScopeIds": []
+          },
+          "sourceScopeEvidence": [
+            {
+              "scopeId": "scope-0001-d647b49b8366ca0984e1ed7a66f508b91c737e2046d846980cabf06921623315",
+              "evidenceId": "d26-scope-0001-d647b49b8366ca0984e1ed7a66f508b91c737e2046d846980cabf06921623315"
+            },
+            {
+              "scopeId": "scope-0002-4ef5d863d332ed5980e5def91195f6f918f422a7e33b32aeb0ef3aa07db0d25e",
+              "evidenceId": "d26-scope-0002-4ef5d863d332ed5980e5def91195f6f918f422a7e33b32aeb0ef3aa07db0d25e"
+            },
+            {
+              "scopeId": "scope-0003-0b665b477aad42bf56579f1d70c8580fa6d4563cc688d73d37ac6ed7f5df05ac",
+              "evidenceId": "d26-scope-0003-0b665b477aad42bf56579f1d70c8580fa6d4563cc688d73d37ac6ed7f5df05ac"
+            }
+          ],
+          "representationGaps": [
+            {
+              "kind": "lifecycle",
+              "entityIds": [
+                "T1"
+              ],
+              "reason": "当前状态、执行人或义务类型不能由普通任务字段完整表达。"
+            },
+            {
+              "kind": "revision",
+              "entityIds": [
+                "T1",
+                "T2"
+              ],
+              "reason": "取消或替代关系保留原始端点，需核对后才能接受相关事项。"
+            }
+          ],
+          "displayAudit": {
+            "version": "grounded-first-suggestion-1.0.0",
+            "originalProse": [
+              {
+                "entityId": "T1",
+                "kind": "task",
+                "title": "提交旧版登记表",
+                "description": ""
+              },
+              {
+                "entityId": "T2",
+                "kind": "task",
+                "title": "上传新版登记表",
+                "description": ""
+              },
+              {
+                "entityId": "T3",
+                "kind": "task",
+                "title": "保存报名回执",
+                "description": ""
+              }
+            ],
+            "generatedProse": [
+              {
+                "entityId": "T1",
+                "kind": "task",
+                "title": "提交旧版登记表",
+                "description": "原提交旧版登记表的要求已取消。"
+              },
+              {
+                "entityId": "T2",
+                "kind": "task",
+                "title": "上传新版登记表",
+                "description": "现在改为上传新版登记表。"
+              },
+              {
+                "entityId": "T3",
+                "kind": "task",
+                "title": "保存报名回执",
+                "description": "请保存报名回执。"
+              }
+            ],
+            "times": [],
+            "unresolved": [],
+            "role": "DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT"
+          }
+        },
+        "firstSuggestionDisplayed": {
+          "schemaVersion": "2.0",
+          "promptVersion": "d26-common-bridge-1",
+          "modelName": "D26 匿名工程语义桥接（非模型成绩）",
+          "createdAt": "2026-10-02T09:00:00+08:00",
+          "sourceSummary": {
+            "title": "提交旧版登记表",
+            "sourceType": "text",
+            "notificationType": "uncertain",
+            "summary": "3项任务，0项事件。请核对后确认。",
+            "requiresAction": true,
+            "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "未主动建立或匹配项目。"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [
+            {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "提交旧版登记表",
+              "description": "原提交旧版登记表的要求已取消。",
+              "completionCriteria": [],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [],
+              "timePointTempIds": [],
+              "confidence": 1,
+              "userConfirmationRequired": true,
+              "tempId": "T1",
+              "actionVerb": "提交",
+              "actionObject": "旧版登记表",
+              "evidenceIds": [
+                "d26-scope-0001-d647b49b8366ca0984e1ed7a66f508b91c737e2046d846980cabf06921623315"
+              ],
+              "inferenceLevel": "explicit",
+              "selected": false
+            },
+            {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "上传新版登记表",
+              "description": "现在改为上传新版登记表。",
+              "completionCriteria": [],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [],
+              "timePointTempIds": [],
+              "confidence": 1,
+              "userConfirmationRequired": true,
+              "tempId": "T2",
+              "actionVerb": "上传",
+              "actionObject": "新版登记表",
+              "evidenceIds": [
+                "d26-scope-0002-4ef5d863d332ed5980e5def91195f6f918f422a7e33b32aeb0ef3aa07db0d25e"
+              ],
+              "inferenceLevel": "explicit",
+              "selected": false
+            },
+            {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "保存报名回执",
+              "description": "请保存报名回执。",
+              "completionCriteria": [],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [],
+              "timePointTempIds": [],
+              "confidence": 1,
+              "userConfirmationRequired": true,
+              "tempId": "T3",
+              "actionVerb": "保存",
+              "actionObject": "报名回执",
+              "evidenceIds": [
+                "d26-scope-0003-0b665b477aad42bf56579f1d70c8580fa6d4563cc688d73d37ac6ed7f5df05ac"
+              ],
+              "inferenceLevel": "explicit",
+              "selected": true
+            }
+          ],
+          "materials": [],
+          "timePoints": [],
+          "events": [],
+          "evidence": [
+            {
+              "id": "d26-scope-0001-d647b49b8366ca0984e1ed7a66f508b91c737e2046d846980cabf06921623315",
+              "sourceId": "source:ea0cb01e",
+              "quote": "原提交旧版登记表的要求已取消。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0002-4ef5d863d332ed5980e5def91195f6f918f422a7e33b32aeb0ef3aa07db0d25e",
+              "sourceId": "source:ea0cb01e",
+              "quote": "现在改为上传新版登记表。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0003-0b665b477aad42bf56579f1d70c8580fa6d4563cc688d73d37ac6ed7f5df05ac",
+              "sourceId": "source:ea0cb01e",
+              "quote": "请保存报名回执。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [
+            {
+              "id": "d26-representation-0",
+              "type": "other",
+              "message": "当前状态、执行人或义务类型不能由普通任务字段完整表达。",
+              "entityTempIds": [
+                "T1"
+              ],
+              "evidenceIds": [],
+              "requiresDecision": true
+            },
+            {
+              "id": "d26-representation-1",
+              "type": "other",
+              "message": "取消或替代关系保留原始端点，需核对后才能接受相关事项。",
+              "entityTempIds": [
+                "T1",
+                "T2"
+              ],
+              "evidenceIds": [],
+              "requiresDecision": true
+            }
+          ],
+          "ambiguities": [],
+          "ignoredContent": [],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 1,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": true,
+            "reviewReasons": [
+              "当前状态、执行人或义务类型不能由普通任务字段完整表达。",
+              "取消或替代关系保留原始端点，需核对后才能接受相关事项。"
+            ]
+          }
+        },
+        "firstSuggestionAssembly": {
+          "version": "grounded-first-suggestion-1.0.0",
+          "originalProse": [
+            {
+              "entityId": "T1",
+              "kind": "task",
+              "title": "提交旧版登记表",
+              "description": "原提交旧版登记表的要求已取消。"
+            },
+            {
+              "entityId": "T2",
+              "kind": "task",
+              "title": "上传新版登记表",
+              "description": "现在改为上传新版登记表。"
+            },
+            {
+              "entityId": "T3",
+              "kind": "task",
+              "title": "保存报名回执",
+              "description": "请保存报名回执。"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "提交旧版登记表",
+              "description": "3项任务，0项事件。"
+            }
+          ],
+          "generatedProse": [
+            {
+              "entityId": "T1",
+              "kind": "task",
+              "title": "提交旧版登记表",
+              "description": "原提交旧版登记表的要求已取消。"
+            },
+            {
+              "entityId": "T2",
+              "kind": "task",
+              "title": "上传新版登记表",
+              "description": "现在改为上传新版登记表。"
+            },
+            {
+              "entityId": "T3",
+              "kind": "task",
+              "title": "保存报名回执",
+              "description": "请保存报名回执。"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "提交旧版登记表",
+              "description": "3项任务，0项事件。请核对后确认。"
+            }
+          ],
+          "times": [],
+          "unresolved": [],
+          "role": "DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT"
+        },
+        "v7Record": {
+          "id": "source:ea0cb01e:draft:1",
+          "sourceId": "source:ea0cb01e",
+          "sourceVersionId": "source:ea0cb01e:version:1",
+          "sourceReviewMetadata": {
+            "sourceType": "text",
+            "characterCount": 35,
+            "extractionMethod": "manual"
+          },
+          "attemptOrder": 0,
+          "status": "待确认",
+          "workflowStatus": "needs_review",
+          "createdAt": "2026-10-02T09:53:04.768Z",
+          "updatedAt": "2026-10-02T09:53:04.873Z",
+          "schemaVersion": "2.0",
+          "modelName": "D26 匿名工程语义桥接（非模型成绩）",
+          "promptVersion": "d26-common-bridge-1",
+          "recognitionResult": {
+            "schemaVersion": "2.0",
+            "promptVersion": "d26-common-bridge-1",
+            "modelName": "D26 匿名工程语义桥接（非模型成绩）",
+            "createdAt": "2026-10-02T09:00:00+08:00",
+            "sourceSummary": {
+              "title": "提交旧版登记表",
+              "sourceType": "text",
+              "notificationType": "uncertain",
+              "summary": "3项任务，0项事件。请核对后确认。",
+              "requiresAction": true,
+              "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+            },
+            "projectMatch": {
+              "decision": "standalone_task",
+              "matchedProjectId": null,
+              "suggestedProjectTitle": null,
+              "confidence": 1,
+              "reasons": [
+                "未主动建立或匹配项目。"
+              ]
+            },
+            "projectSuggestion": null,
+            "milestones": [],
+            "standaloneTasks": [
+              {
+                "parentTempId": null,
+                "hierarchyType": "task",
+                "title": "提交旧版登记表",
+                "description": "原提交旧版登记表的要求已取消。",
+                "completionCriteria": [],
+                "estimatedMinutes": null,
+                "statusSuggestion": "todo",
+                "prioritySuggestion": "medium",
+                "dependencyTempIds": [],
+                "materialTempIds": [],
+                "timePointTempIds": [],
+                "confidence": 1,
+                "userConfirmationRequired": true,
+                "tempId": "T1",
+                "actionVerb": "提交",
+                "actionObject": "旧版登记表",
+                "evidenceIds": [
+                  "d26-scope-0001-d647b49b8366ca0984e1ed7a66f508b91c737e2046d846980cabf06921623315"
+                ],
+                "inferenceLevel": "explicit",
+                "selected": false
+              },
+              {
+                "parentTempId": null,
+                "hierarchyType": "task",
+                "title": "上传新版登记表",
+                "description": "现在改为上传新版登记表。",
+                "completionCriteria": [],
+                "estimatedMinutes": null,
+                "statusSuggestion": "todo",
+                "prioritySuggestion": "medium",
+                "dependencyTempIds": [],
+                "materialTempIds": [],
+                "timePointTempIds": [],
+                "confidence": 1,
+                "userConfirmationRequired": true,
+                "tempId": "T2",
+                "actionVerb": "上传",
+                "actionObject": "新版登记表",
+                "evidenceIds": [
+                  "d26-scope-0002-4ef5d863d332ed5980e5def91195f6f918f422a7e33b32aeb0ef3aa07db0d25e"
+                ],
+                "inferenceLevel": "explicit",
+                "selected": false
+              },
+              {
+                "parentTempId": null,
+                "hierarchyType": "task",
+                "title": "保存报名回执",
+                "description": "请保存报名回执。",
+                "completionCriteria": [],
+                "estimatedMinutes": null,
+                "statusSuggestion": "todo",
+                "prioritySuggestion": "medium",
+                "dependencyTempIds": [],
+                "materialTempIds": [],
+                "timePointTempIds": [],
+                "confidence": 1,
+                "userConfirmationRequired": true,
+                "tempId": "T3",
+                "actionVerb": "保存",
+                "actionObject": "报名回执",
+                "evidenceIds": [
+                  "d26-scope-0003-0b665b477aad42bf56579f1d70c8580fa6d4563cc688d73d37ac6ed7f5df05ac"
+                ],
+                "inferenceLevel": "explicit",
+                "selected": true
+              }
+            ],
+            "materials": [],
+            "timePoints": [],
+            "events": [],
+            "evidence": [
+              {
+                "id": "d26-scope-0001-d647b49b8366ca0984e1ed7a66f508b91c737e2046d846980cabf06921623315",
+                "sourceId": "source:ea0cb01e",
+                "quote": "原提交旧版登记表的要求已取消。",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0002-4ef5d863d332ed5980e5def91195f6f918f422a7e33b32aeb0ef3aa07db0d25e",
+                "sourceId": "source:ea0cb01e",
+                "quote": "现在改为上传新版登记表。",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0003-0b665b477aad42bf56579f1d70c8580fa6d4563cc688d73d37ac6ed7f5df05ac",
+                "sourceId": "source:ea0cb01e",
+                "quote": "请保存报名回执。",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              }
+            ],
+            "conflicts": [
+              {
+                "id": "d26-representation-0",
+                "type": "other",
+                "message": "当前状态、执行人或义务类型不能由普通任务字段完整表达。",
+                "entityTempIds": [
+                  "T1"
+                ],
+                "evidenceIds": [],
+                "requiresDecision": true
+              },
+              {
+                "id": "d26-representation-1",
+                "type": "other",
+                "message": "取消或替代关系保留原始端点，需核对后才能接受相关事项。",
+                "entityTempIds": [
+                  "T1",
+                  "T2"
+                ],
+                "evidenceIds": [],
+                "requiresDecision": true
+              }
+            ],
+            "ambiguities": [],
+            "ignoredContent": [],
+            "quality": {
+              "overallConfidence": 1,
+              "hierarchyConfidence": 1,
+              "dateConfidence": 1,
+              "evidenceCoverage": 1,
+              "duplicateRisk": 0,
+              "overFragmentationRisk": 0,
+              "missingActionRisk": 0,
+              "needsHumanReview": true,
+              "reviewReasons": [
+                "当前状态、执行人或义务类型不能由普通任务字段完整表达。",
+                "取消或替代关系保留原始端点，需核对后才能接受相关事项。"
+              ]
+            }
+          },
+          "items": [
+            {
+              "id": "draft-item:source:ea0cb01e:draft:1:T1",
+              "suggestion": {
+                "id": "T1",
+                "title": "提交旧版登记表",
+                "category": "其他",
+                "deadline": "",
+                "estimatedMinutes": 30,
+                "nextAction": "提交旧版登记表",
+                "description": "原提交旧版登记表的要求已取消。",
+                "priority": "中",
+                "materials": [],
+                "evidence": "3项任务，0项事件。请核对后确认。",
+                "confidence": "高"
+              },
+              "selected": false,
+              "status": "待确认",
+              "updatedAt": "2026-10-02T09:53:04.873Z",
+              "history": []
+            },
+            {
+              "id": "draft-item:source:ea0cb01e:draft:1:T2",
+              "suggestion": {
+                "id": "T2",
+                "title": "上传新版登记表",
+                "category": "其他",
+                "deadline": "",
+                "estimatedMinutes": 30,
+                "nextAction": "上传新版登记表",
+                "description": "现在改为上传新版登记表。",
+                "priority": "中",
+                "materials": [],
+                "evidence": "3项任务，0项事件。请核对后确认。",
+                "confidence": "高"
+              },
+              "selected": false,
+              "status": "待确认",
+              "updatedAt": "2026-10-02T09:53:04.873Z",
+              "history": []
+            },
+            {
+              "id": "draft-item:source:ea0cb01e:draft:1:T3",
+              "suggestion": {
+                "id": "T3",
+                "title": "保存报名回执",
+                "category": "其他",
+                "deadline": "",
+                "estimatedMinutes": 30,
+                "nextAction": "保存报名回执",
+                "description": "请保存报名回执。",
+                "priority": "中",
+                "materials": [],
+                "evidence": "3项任务，0项事件。请核对后确认。",
+                "confidence": "高"
+              },
+              "selected": true,
+              "status": "待确认",
+              "updatedAt": "2026-10-02T09:53:04.873Z",
+              "history": []
+            }
+          ],
+          "modelVersion": "local-rules"
+        },
+        "sourceReviewReadback": {
+          "version": "source-review-d26-1",
+          "draftId": "source:ea0cb01e:draft:1",
+          "commitId": "source-review:source:ea0cb01e:draft:1:fnv1a32:4a723b21",
+          "disposition": "partial",
+          "entityIds": [
+            "task:source:ea0cb01e:draft:1:T3"
+          ],
+          "entityHashes": {
+            "task:source:ea0cb01e:draft:1:T3": "fnv1a32:2f92b3ef"
+          },
+          "verifiedAt": "2026-10-02T09:53:25.908Z"
+        }
+      }
+    },
+    {
+      "id": "source:97cbaff3:draft:1",
+      "recognitionRunId": "source:97cbaff3:run:1",
+      "status": "partially_confirmed",
+      "result": {
+        "schemaVersion": "2.0",
+        "promptVersion": "d26-common-bridge-1",
+        "modelName": "D26 匿名工程语义桥接（非模型成绩）",
+        "createdAt": "2026-10-02T09:00:00+08:00",
+        "sourceSummary": {
+          "title": "填写设备核对表",
+          "sourceType": "text",
+          "notificationType": "uncertain",
+          "summary": "4项任务，0项事件。请核对后确认。",
+          "requiresAction": true,
+          "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+        },
+        "projectMatch": {
+          "decision": "standalone_task",
+          "matchedProjectId": null,
+          "suggestedProjectTitle": null,
+          "confidence": 1,
+          "reasons": [
+            "未主动建立或匹配项目。"
+          ]
+        },
+        "projectSuggestion": null,
+        "milestones": [],
+        "standaloneTasks": [
+          {
+            "parentTempId": null,
+            "hierarchyType": "task",
+            "title": "填写设备核对表",
+            "description": "请先填写设备核对表。",
+            "completionCriteria": [],
+            "estimatedMinutes": null,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "medium",
+            "dependencyTempIds": [],
+            "materialTempIds": [],
+            "timePointTempIds": [],
+            "confidence": 1,
+            "userConfirmationRequired": true,
+            "tempId": "T1",
+            "actionVerb": "填写",
+            "actionObject": "设备核对表",
+            "evidenceIds": [
+              "d26-scope-0001-2ef2315280bed48bb36c28dff91828ea2286fe5d2f937064597a1d84224b2eaa"
+            ],
+            "inferenceLevel": "explicit",
+            "selected": true
+          },
+          {
+            "parentTempId": null,
+            "hierarchyType": "task",
+            "title": "提交设备核对表",
+            "description": "填写完成后提交设备核对表。",
+            "completionCriteria": [],
+            "estimatedMinutes": null,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "medium",
+            "dependencyTempIds": [
+              "T1"
+            ],
+            "materialTempIds": [],
+            "timePointTempIds": [],
+            "confidence": 1,
+            "userConfirmationRequired": true,
+            "tempId": "T2",
+            "actionVerb": "提交",
+            "actionObject": "设备核对表",
+            "evidenceIds": [
+              "d26-scope-0002-b43461c835d4078f5cbf80a099f95de01dd6a1ded1121ed7200ed6ccf6d205d7"
+            ],
+            "inferenceLevel": "explicit",
+            "selected": true
+          },
+          {
+            "parentTempId": null,
+            "hierarchyType": "task",
+            "title": "领取设备钥匙",
+            "description": "只有资格确认后才可以领取设备钥匙，",
+            "completionCriteria": [],
+            "estimatedMinutes": null,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "medium",
+            "dependencyTempIds": [],
+            "materialTempIds": [],
+            "timePointTempIds": [],
+            "confidence": 1,
+            "userConfirmationRequired": true,
+            "tempId": "T3",
+            "actionVerb": "领取",
+            "actionObject": "设备钥匙",
+            "evidenceIds": [
+              "d26-scope-0003-9db26462d7d4f1da5ee11bc2ed86efd2c1304a98c74c1ac167ea3b441ec83dbe"
+            ],
+            "inferenceLevel": "explicit",
+            "selected": false
+          },
+          {
+            "parentTempId": null,
+            "hierarchyType": "task",
+            "title": "领取投影设备",
+            "description": "无需领取投影设备。",
+            "completionCriteria": [],
+            "estimatedMinutes": null,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "medium",
+            "dependencyTempIds": [],
+            "materialTempIds": [],
+            "timePointTempIds": [],
+            "confidence": 1,
+            "userConfirmationRequired": true,
+            "tempId": "T4",
+            "actionVerb": "领取",
+            "actionObject": "投影设备",
+            "evidenceIds": [
+              "d26-scope-0006-41009ba2b1f6ed08fcf22665850e0c8584c5465be32458b542eb2b26b8d712d1"
+            ],
+            "inferenceLevel": "explicit",
+            "selected": false
+          }
+        ],
+        "materials": [],
+        "timePoints": [],
+        "events": [],
+        "evidence": [
+          {
+            "id": "d26-scope-0001-2ef2315280bed48bb36c28dff91828ea2286fe5d2f937064597a1d84224b2eaa",
+            "sourceId": "source:97cbaff3",
+            "quote": "请先填写设备核对表。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0002-b43461c835d4078f5cbf80a099f95de01dd6a1ded1121ed7200ed6ccf6d205d7",
+            "sourceId": "source:97cbaff3",
+            "quote": "填写完成后提交设备核对表。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0003-9db26462d7d4f1da5ee11bc2ed86efd2c1304a98c74c1ac167ea3b441ec83dbe",
+            "sourceId": "source:97cbaff3",
+            "quote": "只有资格确认后才可以领取设备钥匙，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0004-7d26ea14ab221b7990334b5a6fff6df7e2b4adb73908496e02fe2343355d548a",
+            "sourceId": "source:97cbaff3",
+            "quote": "资格尚未确认。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0005-131066a2b0c3fc1b26a7135cd2deb4343c055bb8a85e213569aae35afccd0c10",
+            "sourceId": "source:97cbaff3",
+            "quote": "你不符合借用资格，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0006-41009ba2b1f6ed08fcf22665850e0c8584c5465be32458b542eb2b26b8d712d1",
+            "sourceId": "source:97cbaff3",
+            "quote": "无需领取投影设备。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          }
+        ],
+        "conflicts": [
+          {
+            "id": "d26-representation-0",
+            "type": "other",
+            "message": "资格尚未确认，不能当成已符合；请保留待核对。",
+            "entityTempIds": [
+              "T3"
+            ],
+            "evidenceIds": [],
+            "requiresDecision": true
+          },
+          {
+            "id": "d26-representation-1",
+            "type": "other",
+            "message": "原文明确当前不适用，不创建执行任务。",
+            "entityTempIds": [
+              "T4"
+            ],
+            "evidenceIds": [],
+            "requiresDecision": true
+          },
+          {
+            "id": "d26-representation-2",
+            "type": "other",
+            "message": "当前状态、执行人或义务类型不能由普通任务字段完整表达。",
+            "entityTempIds": [
+              "T4"
+            ],
+            "evidenceIds": [],
+            "requiresDecision": true
+          }
+        ],
+        "ambiguities": [],
+        "ignoredContent": [
+          {
+            "text": "资格尚未确认。",
+            "reason": "other"
+          },
+          {
+            "text": "你不符合借用资格，",
+            "reason": "other"
+          }
+        ],
+        "quality": {
+          "overallConfidence": 1,
+          "hierarchyConfidence": 1,
+          "dateConfidence": 1,
+          "evidenceCoverage": 1,
+          "duplicateRisk": 0,
+          "overFragmentationRisk": 0,
+          "missingActionRisk": 0,
+          "needsHumanReview": true,
+          "reviewReasons": [
+            "资格尚未确认，不能当成已符合；请保留待核对。",
+            "原文明确当前不适用，不创建执行任务。",
+            "当前状态、执行人或义务类型不能由普通任务字段完整表达。"
+          ]
+        }
+      },
+      "commitOperationIds": [
+        "source-review:source:97cbaff3:draft:1:fnv1a32:2dcc14bf"
+      ],
+      "acceptedEntityTempIds": [
+        "T1",
+        "T2"
+      ],
+      "rejectedEntityTempIds": [],
+      "createdAt": "2026-10-02T09:52:02.294Z",
+      "updatedAt": "2026-10-02T09:52:20.192Z",
+      "legacyData": {
+        "semanticSidecar": {
+          "version": "semantic-ordinary-bridge-1.0.0",
+          "originalSemantic": {
+            "schemaVersion": "mainline04-task-semantics-1",
+            "sourceId": "source:97cbaff3",
+            "sourceVersionId": "source:97cbaff3:version:1",
+            "sourceFingerprint": "sha256:295744386dd09587d68e17cb9a20f37daae0f33c1a3f1da23eb4ec6c9b2f7480",
+            "tasks": [
+              {
+                "id": "T1",
+                "propositionScopeIds": [
+                  "scope-0001-2ef2315280bed48bb36c28dff91828ea2286fe5d2f937064597a1d84224b2eaa"
+                ],
+                "semantics": {
+                  "actor": "addressee",
+                  "speechAct": "directive",
+                  "polarity": "affirmative",
+                  "tense": "future",
+                  "status": "pending",
+                  "validity": "active",
+                  "modality": "required"
+                },
+                "inferenceLevel": "explicit",
+                "actionType": "other",
+                "action": {
+                  "surface": "填写",
+                  "scopeId": "scope-0001-2ef2315280bed48bb36c28dff91828ea2286fe5d2f937064597a1d84224b2eaa"
+                },
+                "object": {
+                  "surface": "设备核对表",
+                  "scopeId": "scope-0001-2ef2315280bed48bb36c28dff91828ea2286fe5d2f937064597a1d84224b2eaa"
+                },
+                "effect": "local_change",
+                "detail": {
+                  "parentTempId": null,
+                  "hierarchyType": "task",
+                  "title": "填写设备核对表",
+                  "description": "",
+                  "completionCriteria": [],
+                  "estimatedMinutes": null,
+                  "statusSuggestion": "todo",
+                  "prioritySuggestion": "medium",
+                  "dependencyTempIds": [],
+                  "materialTempIds": [],
+                  "timePointTempIds": [],
+                  "confidence": 1,
+                  "userConfirmationRequired": true
+                },
+                "condition": {
+                  "value": "not_applicable",
+                  "conditionScopeIds": [],
+                  "factScopeIds": []
+                },
+                "coverage": {
+                  "time": "not_stated",
+                  "material": "not_stated",
+                  "event": "not_stated"
+                },
+                "eventTempIds": []
+              },
+              {
+                "id": "T2",
+                "propositionScopeIds": [
+                  "scope-0002-b43461c835d4078f5cbf80a099f95de01dd6a1ded1121ed7200ed6ccf6d205d7"
+                ],
+                "semantics": {
+                  "actor": "addressee",
+                  "speechAct": "directive",
+                  "polarity": "affirmative",
+                  "tense": "future",
+                  "status": "pending",
+                  "validity": "active",
+                  "modality": "required"
+                },
+                "inferenceLevel": "explicit",
+                "actionType": "other",
+                "action": {
+                  "surface": "提交",
+                  "scopeId": "scope-0002-b43461c835d4078f5cbf80a099f95de01dd6a1ded1121ed7200ed6ccf6d205d7"
+                },
+                "object": {
+                  "surface": "设备核对表",
+                  "scopeId": "scope-0002-b43461c835d4078f5cbf80a099f95de01dd6a1ded1121ed7200ed6ccf6d205d7"
+                },
+                "effect": "local_change",
+                "detail": {
+                  "parentTempId": null,
+                  "hierarchyType": "task",
+                  "title": "提交设备核对表",
+                  "description": "",
+                  "completionCriteria": [],
+                  "estimatedMinutes": null,
+                  "statusSuggestion": "todo",
+                  "prioritySuggestion": "medium",
+                  "dependencyTempIds": [
+                    "T1"
+                  ],
+                  "materialTempIds": [],
+                  "timePointTempIds": [],
+                  "confidence": 1,
+                  "userConfirmationRequired": true
+                },
+                "condition": {
+                  "value": "not_applicable",
+                  "conditionScopeIds": [],
+                  "factScopeIds": []
+                },
+                "coverage": {
+                  "time": "not_stated",
+                  "material": "not_stated",
+                  "event": "not_stated"
+                },
+                "eventTempIds": []
+              },
+              {
+                "id": "T3",
+                "propositionScopeIds": [
+                  "scope-0003-9db26462d7d4f1da5ee11bc2ed86efd2c1304a98c74c1ac167ea3b441ec83dbe"
+                ],
+                "semantics": {
+                  "actor": "addressee",
+                  "speechAct": "directive",
+                  "polarity": "affirmative",
+                  "tense": "future",
+                  "status": "pending",
+                  "validity": "active",
+                  "modality": "required"
+                },
+                "inferenceLevel": "explicit",
+                "actionType": "other",
+                "action": {
+                  "surface": "领取",
+                  "scopeId": "scope-0003-9db26462d7d4f1da5ee11bc2ed86efd2c1304a98c74c1ac167ea3b441ec83dbe"
+                },
+                "object": {
+                  "surface": "设备钥匙",
+                  "scopeId": "scope-0003-9db26462d7d4f1da5ee11bc2ed86efd2c1304a98c74c1ac167ea3b441ec83dbe"
+                },
+                "effect": "local_change",
+                "detail": {
+                  "parentTempId": null,
+                  "hierarchyType": "task",
+                  "title": "领取设备钥匙",
+                  "description": "",
+                  "completionCriteria": [],
+                  "estimatedMinutes": null,
+                  "statusSuggestion": "todo",
+                  "prioritySuggestion": "medium",
+                  "dependencyTempIds": [],
+                  "materialTempIds": [],
+                  "timePointTempIds": [],
+                  "confidence": 1,
+                  "userConfirmationRequired": true
+                },
+                "condition": {
+                  "value": "unknown",
+                  "conditionScopeIds": [
+                    "scope-0003-9db26462d7d4f1da5ee11bc2ed86efd2c1304a98c74c1ac167ea3b441ec83dbe"
+                  ],
+                  "factScopeIds": [
+                    "scope-0004-7d26ea14ab221b7990334b5a6fff6df7e2b4adb73908496e02fe2343355d548a"
+                  ]
+                },
+                "coverage": {
+                  "time": "not_stated",
+                  "material": "not_stated",
+                  "event": "not_stated"
+                },
+                "eventTempIds": []
+              },
+              {
+                "id": "T4",
+                "propositionScopeIds": [
+                  "scope-0006-41009ba2b1f6ed08fcf22665850e0c8584c5465be32458b542eb2b26b8d712d1"
+                ],
+                "semantics": {
+                  "actor": "addressee",
+                  "speechAct": "directive",
+                  "polarity": "negative",
+                  "tense": "future",
+                  "status": "pending",
+                  "validity": "active",
+                  "modality": "informational"
+                },
+                "inferenceLevel": "explicit",
+                "actionType": "other",
+                "action": {
+                  "surface": "领取",
+                  "scopeId": "scope-0006-41009ba2b1f6ed08fcf22665850e0c8584c5465be32458b542eb2b26b8d712d1"
+                },
+                "object": {
+                  "surface": "投影设备",
+                  "scopeId": "scope-0006-41009ba2b1f6ed08fcf22665850e0c8584c5465be32458b542eb2b26b8d712d1"
+                },
+                "effect": "local_change",
+                "detail": {
+                  "parentTempId": null,
+                  "hierarchyType": "task",
+                  "title": "领取投影设备",
+                  "description": "",
+                  "completionCriteria": [],
+                  "estimatedMinutes": null,
+                  "statusSuggestion": "todo",
+                  "prioritySuggestion": "medium",
+                  "dependencyTempIds": [],
+                  "materialTempIds": [],
+                  "timePointTempIds": [],
+                  "confidence": 1,
+                  "userConfirmationRequired": true
+                },
+                "condition": {
+                  "value": "false",
+                  "conditionScopeIds": [
+                    "scope-0005-131066a2b0c3fc1b26a7135cd2deb4343c055bb8a85e213569aae35afccd0c10"
+                  ],
+                  "factScopeIds": [
+                    "scope-0005-131066a2b0c3fc1b26a7135cd2deb4343c055bb8a85e213569aae35afccd0c10"
+                  ]
+                },
+                "coverage": {
+                  "time": "not_stated",
+                  "material": "not_stated",
+                  "event": "not_stated"
+                },
+                "eventTempIds": []
+              }
+            ],
+            "materials": [],
+            "timePoints": [],
+            "events": [],
+            "revisions": [],
+            "conflicts": [],
+            "informationScopeIds": [
+              "scope-0004-7d26ea14ab221b7990334b5a6fff6df7e2b4adb73908496e02fe2343355d548a",
+              "scope-0005-131066a2b0c3fc1b26a7135cd2deb4343c055bb8a85e213569aae35afccd0c10"
+            ],
+            "unresolvedScopeIds": []
+          },
+          "firstSemantic": {
+            "schemaVersion": "mainline04-task-semantics-1",
+            "sourceId": "source:97cbaff3",
+            "sourceVersionId": "source:97cbaff3:version:1",
+            "sourceFingerprint": "sha256:295744386dd09587d68e17cb9a20f37daae0f33c1a3f1da23eb4ec6c9b2f7480",
+            "tasks": [
+              {
+                "id": "T1",
+                "propositionScopeIds": [
+                  "scope-0001-2ef2315280bed48bb36c28dff91828ea2286fe5d2f937064597a1d84224b2eaa"
+                ],
+                "semantics": {
+                  "actor": "addressee",
+                  "speechAct": "directive",
+                  "polarity": "affirmative",
+                  "tense": "future",
+                  "status": "pending",
+                  "validity": "active",
+                  "modality": "required"
+                },
+                "inferenceLevel": "explicit",
+                "actionType": "other",
+                "action": {
+                  "surface": "填写",
+                  "scopeId": "scope-0001-2ef2315280bed48bb36c28dff91828ea2286fe5d2f937064597a1d84224b2eaa"
+                },
+                "object": {
+                  "surface": "设备核对表",
+                  "scopeId": "scope-0001-2ef2315280bed48bb36c28dff91828ea2286fe5d2f937064597a1d84224b2eaa"
+                },
+                "effect": "local_change",
+                "detail": {
+                  "parentTempId": null,
+                  "hierarchyType": "task",
+                  "title": "填写设备核对表",
+                  "description": "请先填写设备核对表。",
+                  "completionCriteria": [],
+                  "estimatedMinutes": null,
+                  "statusSuggestion": "todo",
+                  "prioritySuggestion": "medium",
+                  "dependencyTempIds": [],
+                  "materialTempIds": [],
+                  "timePointTempIds": [],
+                  "confidence": 1,
+                  "userConfirmationRequired": true
+                },
+                "condition": {
+                  "value": "not_applicable",
+                  "conditionScopeIds": [],
+                  "factScopeIds": []
+                },
+                "coverage": {
+                  "time": "not_stated",
+                  "material": "not_stated",
+                  "event": "not_stated"
+                },
+                "eventTempIds": []
+              },
+              {
+                "id": "T2",
+                "propositionScopeIds": [
+                  "scope-0002-b43461c835d4078f5cbf80a099f95de01dd6a1ded1121ed7200ed6ccf6d205d7"
+                ],
+                "semantics": {
+                  "actor": "addressee",
+                  "speechAct": "directive",
+                  "polarity": "affirmative",
+                  "tense": "future",
+                  "status": "pending",
+                  "validity": "active",
+                  "modality": "required"
+                },
+                "inferenceLevel": "explicit",
+                "actionType": "other",
+                "action": {
+                  "surface": "提交",
+                  "scopeId": "scope-0002-b43461c835d4078f5cbf80a099f95de01dd6a1ded1121ed7200ed6ccf6d205d7"
+                },
+                "object": {
+                  "surface": "设备核对表",
+                  "scopeId": "scope-0002-b43461c835d4078f5cbf80a099f95de01dd6a1ded1121ed7200ed6ccf6d205d7"
+                },
+                "effect": "local_change",
+                "detail": {
+                  "parentTempId": null,
+                  "hierarchyType": "task",
+                  "title": "提交设备核对表",
+                  "description": "填写完成后提交设备核对表。",
+                  "completionCriteria": [],
+                  "estimatedMinutes": null,
+                  "statusSuggestion": "todo",
+                  "prioritySuggestion": "medium",
+                  "dependencyTempIds": [
+                    "T1"
+                  ],
+                  "materialTempIds": [],
+                  "timePointTempIds": [],
+                  "confidence": 1,
+                  "userConfirmationRequired": true
+                },
+                "condition": {
+                  "value": "not_applicable",
+                  "conditionScopeIds": [],
+                  "factScopeIds": []
+                },
+                "coverage": {
+                  "time": "not_stated",
+                  "material": "not_stated",
+                  "event": "not_stated"
+                },
+                "eventTempIds": []
+              },
+              {
+                "id": "T3",
+                "propositionScopeIds": [
+                  "scope-0003-9db26462d7d4f1da5ee11bc2ed86efd2c1304a98c74c1ac167ea3b441ec83dbe"
+                ],
+                "semantics": {
+                  "actor": "addressee",
+                  "speechAct": "directive",
+                  "polarity": "affirmative",
+                  "tense": "future",
+                  "status": "pending",
+                  "validity": "active",
+                  "modality": "required"
+                },
+                "inferenceLevel": "explicit",
+                "actionType": "other",
+                "action": {
+                  "surface": "领取",
+                  "scopeId": "scope-0003-9db26462d7d4f1da5ee11bc2ed86efd2c1304a98c74c1ac167ea3b441ec83dbe"
+                },
+                "object": {
+                  "surface": "设备钥匙",
+                  "scopeId": "scope-0003-9db26462d7d4f1da5ee11bc2ed86efd2c1304a98c74c1ac167ea3b441ec83dbe"
+                },
+                "effect": "local_change",
+                "detail": {
+                  "parentTempId": null,
+                  "hierarchyType": "task",
+                  "title": "领取设备钥匙",
+                  "description": "只有资格确认后才可以领取设备钥匙，",
+                  "completionCriteria": [],
+                  "estimatedMinutes": null,
+                  "statusSuggestion": "todo",
+                  "prioritySuggestion": "medium",
+                  "dependencyTempIds": [],
+                  "materialTempIds": [],
+                  "timePointTempIds": [],
+                  "confidence": 1,
+                  "userConfirmationRequired": true
+                },
+                "condition": {
+                  "value": "unknown",
+                  "conditionScopeIds": [
+                    "scope-0003-9db26462d7d4f1da5ee11bc2ed86efd2c1304a98c74c1ac167ea3b441ec83dbe"
+                  ],
+                  "factScopeIds": [
+                    "scope-0004-7d26ea14ab221b7990334b5a6fff6df7e2b4adb73908496e02fe2343355d548a"
+                  ]
+                },
+                "coverage": {
+                  "time": "not_stated",
+                  "material": "not_stated",
+                  "event": "not_stated"
+                },
+                "eventTempIds": []
+              },
+              {
+                "id": "T4",
+                "propositionScopeIds": [
+                  "scope-0006-41009ba2b1f6ed08fcf22665850e0c8584c5465be32458b542eb2b26b8d712d1"
+                ],
+                "semantics": {
+                  "actor": "addressee",
+                  "speechAct": "directive",
+                  "polarity": "negative",
+                  "tense": "future",
+                  "status": "pending",
+                  "validity": "active",
+                  "modality": "informational"
+                },
+                "inferenceLevel": "explicit",
+                "actionType": "other",
+                "action": {
+                  "surface": "领取",
+                  "scopeId": "scope-0006-41009ba2b1f6ed08fcf22665850e0c8584c5465be32458b542eb2b26b8d712d1"
+                },
+                "object": {
+                  "surface": "投影设备",
+                  "scopeId": "scope-0006-41009ba2b1f6ed08fcf22665850e0c8584c5465be32458b542eb2b26b8d712d1"
+                },
+                "effect": "local_change",
+                "detail": {
+                  "parentTempId": null,
+                  "hierarchyType": "task",
+                  "title": "领取投影设备",
+                  "description": "无需领取投影设备。",
+                  "completionCriteria": [],
+                  "estimatedMinutes": null,
+                  "statusSuggestion": "todo",
+                  "prioritySuggestion": "medium",
+                  "dependencyTempIds": [],
+                  "materialTempIds": [],
+                  "timePointTempIds": [],
+                  "confidence": 1,
+                  "userConfirmationRequired": true
+                },
+                "condition": {
+                  "value": "false",
+                  "conditionScopeIds": [
+                    "scope-0005-131066a2b0c3fc1b26a7135cd2deb4343c055bb8a85e213569aae35afccd0c10"
+                  ],
+                  "factScopeIds": [
+                    "scope-0005-131066a2b0c3fc1b26a7135cd2deb4343c055bb8a85e213569aae35afccd0c10"
+                  ]
+                },
+                "coverage": {
+                  "time": "not_stated",
+                  "material": "not_stated",
+                  "event": "not_stated"
+                },
+                "eventTempIds": []
+              }
+            ],
+            "materials": [],
+            "timePoints": [],
+            "events": [],
+            "revisions": [],
+            "conflicts": [],
+            "informationScopeIds": [
+              "scope-0004-7d26ea14ab221b7990334b5a6fff6df7e2b4adb73908496e02fe2343355d548a",
+              "scope-0005-131066a2b0c3fc1b26a7135cd2deb4343c055bb8a85e213569aae35afccd0c10"
+            ],
+            "unresolvedScopeIds": []
+          },
+          "sourceScopeEvidence": [
+            {
+              "scopeId": "scope-0001-2ef2315280bed48bb36c28dff91828ea2286fe5d2f937064597a1d84224b2eaa",
+              "evidenceId": "d26-scope-0001-2ef2315280bed48bb36c28dff91828ea2286fe5d2f937064597a1d84224b2eaa"
+            },
+            {
+              "scopeId": "scope-0002-b43461c835d4078f5cbf80a099f95de01dd6a1ded1121ed7200ed6ccf6d205d7",
+              "evidenceId": "d26-scope-0002-b43461c835d4078f5cbf80a099f95de01dd6a1ded1121ed7200ed6ccf6d205d7"
+            },
+            {
+              "scopeId": "scope-0003-9db26462d7d4f1da5ee11bc2ed86efd2c1304a98c74c1ac167ea3b441ec83dbe",
+              "evidenceId": "d26-scope-0003-9db26462d7d4f1da5ee11bc2ed86efd2c1304a98c74c1ac167ea3b441ec83dbe"
+            },
+            {
+              "scopeId": "scope-0004-7d26ea14ab221b7990334b5a6fff6df7e2b4adb73908496e02fe2343355d548a",
+              "evidenceId": "d26-scope-0004-7d26ea14ab221b7990334b5a6fff6df7e2b4adb73908496e02fe2343355d548a"
+            },
+            {
+              "scopeId": "scope-0005-131066a2b0c3fc1b26a7135cd2deb4343c055bb8a85e213569aae35afccd0c10",
+              "evidenceId": "d26-scope-0005-131066a2b0c3fc1b26a7135cd2deb4343c055bb8a85e213569aae35afccd0c10"
+            },
+            {
+              "scopeId": "scope-0006-41009ba2b1f6ed08fcf22665850e0c8584c5465be32458b542eb2b26b8d712d1",
+              "evidenceId": "d26-scope-0006-41009ba2b1f6ed08fcf22665850e0c8584c5465be32458b542eb2b26b8d712d1"
+            }
+          ],
+          "representationGaps": [
+            {
+              "kind": "condition",
+              "entityIds": [
+                "T3"
+              ],
+              "reason": "资格尚未确认，不能当成已符合；请保留待核对。"
+            },
+            {
+              "kind": "condition",
+              "entityIds": [
+                "T4"
+              ],
+              "reason": "原文明确当前不适用，不创建执行任务。"
+            },
+            {
+              "kind": "lifecycle",
+              "entityIds": [
+                "T4"
+              ],
+              "reason": "当前状态、执行人或义务类型不能由普通任务字段完整表达。"
+            }
+          ],
+          "displayAudit": {
+            "version": "grounded-first-suggestion-1.0.0",
+            "originalProse": [
+              {
+                "entityId": "T1",
+                "kind": "task",
+                "title": "填写设备核对表",
+                "description": ""
+              },
+              {
+                "entityId": "T2",
+                "kind": "task",
+                "title": "提交设备核对表",
+                "description": ""
+              },
+              {
+                "entityId": "T3",
+                "kind": "task",
+                "title": "领取设备钥匙",
+                "description": ""
+              },
+              {
+                "entityId": "T4",
+                "kind": "task",
+                "title": "领取投影设备",
+                "description": ""
+              }
+            ],
+            "generatedProse": [
+              {
+                "entityId": "T1",
+                "kind": "task",
+                "title": "填写设备核对表",
+                "description": "请先填写设备核对表。"
+              },
+              {
+                "entityId": "T2",
+                "kind": "task",
+                "title": "提交设备核对表",
+                "description": "填写完成后提交设备核对表。"
+              },
+              {
+                "entityId": "T3",
+                "kind": "task",
+                "title": "领取设备钥匙",
+                "description": "只有资格确认后才可以领取设备钥匙，"
+              },
+              {
+                "entityId": "T4",
+                "kind": "task",
+                "title": "领取投影设备",
+                "description": "无需领取投影设备。"
+              }
+            ],
+            "times": [],
+            "unresolved": [],
+            "role": "DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT"
+          }
+        },
+        "firstSuggestionDisplayed": {
+          "schemaVersion": "2.0",
+          "promptVersion": "d26-common-bridge-1",
+          "modelName": "D26 匿名工程语义桥接（非模型成绩）",
+          "createdAt": "2026-10-02T09:00:00+08:00",
+          "sourceSummary": {
+            "title": "填写设备核对表",
+            "sourceType": "text",
+            "notificationType": "uncertain",
+            "summary": "4项任务，0项事件。请核对后确认。",
+            "requiresAction": true,
+            "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "未主动建立或匹配项目。"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [
+            {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "填写设备核对表",
+              "description": "请先填写设备核对表。",
+              "completionCriteria": [],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [],
+              "timePointTempIds": [],
+              "confidence": 1,
+              "userConfirmationRequired": true,
+              "tempId": "T1",
+              "actionVerb": "填写",
+              "actionObject": "设备核对表",
+              "evidenceIds": [
+                "d26-scope-0001-2ef2315280bed48bb36c28dff91828ea2286fe5d2f937064597a1d84224b2eaa"
+              ],
+              "inferenceLevel": "explicit",
+              "selected": true
+            },
+            {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "提交设备核对表",
+              "description": "填写完成后提交设备核对表。",
+              "completionCriteria": [],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [
+                "T1"
+              ],
+              "materialTempIds": [],
+              "timePointTempIds": [],
+              "confidence": 1,
+              "userConfirmationRequired": true,
+              "tempId": "T2",
+              "actionVerb": "提交",
+              "actionObject": "设备核对表",
+              "evidenceIds": [
+                "d26-scope-0002-b43461c835d4078f5cbf80a099f95de01dd6a1ded1121ed7200ed6ccf6d205d7"
+              ],
+              "inferenceLevel": "explicit",
+              "selected": true
+            },
+            {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "领取设备钥匙",
+              "description": "只有资格确认后才可以领取设备钥匙，",
+              "completionCriteria": [],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [],
+              "timePointTempIds": [],
+              "confidence": 1,
+              "userConfirmationRequired": true,
+              "tempId": "T3",
+              "actionVerb": "领取",
+              "actionObject": "设备钥匙",
+              "evidenceIds": [
+                "d26-scope-0003-9db26462d7d4f1da5ee11bc2ed86efd2c1304a98c74c1ac167ea3b441ec83dbe"
+              ],
+              "inferenceLevel": "explicit",
+              "selected": false
+            },
+            {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "领取投影设备",
+              "description": "无需领取投影设备。",
+              "completionCriteria": [],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [],
+              "timePointTempIds": [],
+              "confidence": 1,
+              "userConfirmationRequired": true,
+              "tempId": "T4",
+              "actionVerb": "领取",
+              "actionObject": "投影设备",
+              "evidenceIds": [
+                "d26-scope-0006-41009ba2b1f6ed08fcf22665850e0c8584c5465be32458b542eb2b26b8d712d1"
+              ],
+              "inferenceLevel": "explicit",
+              "selected": false
+            }
+          ],
+          "materials": [],
+          "timePoints": [],
+          "events": [],
+          "evidence": [
+            {
+              "id": "d26-scope-0001-2ef2315280bed48bb36c28dff91828ea2286fe5d2f937064597a1d84224b2eaa",
+              "sourceId": "source:97cbaff3",
+              "quote": "请先填写设备核对表。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0002-b43461c835d4078f5cbf80a099f95de01dd6a1ded1121ed7200ed6ccf6d205d7",
+              "sourceId": "source:97cbaff3",
+              "quote": "填写完成后提交设备核对表。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0003-9db26462d7d4f1da5ee11bc2ed86efd2c1304a98c74c1ac167ea3b441ec83dbe",
+              "sourceId": "source:97cbaff3",
+              "quote": "只有资格确认后才可以领取设备钥匙，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0004-7d26ea14ab221b7990334b5a6fff6df7e2b4adb73908496e02fe2343355d548a",
+              "sourceId": "source:97cbaff3",
+              "quote": "资格尚未确认。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0005-131066a2b0c3fc1b26a7135cd2deb4343c055bb8a85e213569aae35afccd0c10",
+              "sourceId": "source:97cbaff3",
+              "quote": "你不符合借用资格，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0006-41009ba2b1f6ed08fcf22665850e0c8584c5465be32458b542eb2b26b8d712d1",
+              "sourceId": "source:97cbaff3",
+              "quote": "无需领取投影设备。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [
+            {
+              "id": "d26-representation-0",
+              "type": "other",
+              "message": "资格尚未确认，不能当成已符合；请保留待核对。",
+              "entityTempIds": [
+                "T3"
+              ],
+              "evidenceIds": [],
+              "requiresDecision": true
+            },
+            {
+              "id": "d26-representation-1",
+              "type": "other",
+              "message": "原文明确当前不适用，不创建执行任务。",
+              "entityTempIds": [
+                "T4"
+              ],
+              "evidenceIds": [],
+              "requiresDecision": true
+            },
+            {
+              "id": "d26-representation-2",
+              "type": "other",
+              "message": "当前状态、执行人或义务类型不能由普通任务字段完整表达。",
+              "entityTempIds": [
+                "T4"
+              ],
+              "evidenceIds": [],
+              "requiresDecision": true
+            }
+          ],
+          "ambiguities": [],
+          "ignoredContent": [
+            {
+              "text": "资格尚未确认。",
+              "reason": "other"
+            },
+            {
+              "text": "你不符合借用资格，",
+              "reason": "other"
+            }
+          ],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 1,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": true,
+            "reviewReasons": [
+              "资格尚未确认，不能当成已符合；请保留待核对。",
+              "原文明确当前不适用，不创建执行任务。",
+              "当前状态、执行人或义务类型不能由普通任务字段完整表达。"
+            ]
+          }
+        },
+        "firstSuggestionAssembly": {
+          "version": "grounded-first-suggestion-1.0.0",
+          "originalProse": [
+            {
+              "entityId": "T1",
+              "kind": "task",
+              "title": "填写设备核对表",
+              "description": "请先填写设备核对表。"
+            },
+            {
+              "entityId": "T2",
+              "kind": "task",
+              "title": "提交设备核对表",
+              "description": "填写完成后提交设备核对表。"
+            },
+            {
+              "entityId": "T3",
+              "kind": "task",
+              "title": "领取设备钥匙",
+              "description": "只有资格确认后才可以领取设备钥匙，"
+            },
+            {
+              "entityId": "T4",
+              "kind": "task",
+              "title": "领取投影设备",
+              "description": "无需领取投影设备。"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "填写设备核对表",
+              "description": "4项任务，0项事件。"
+            }
+          ],
+          "generatedProse": [
+            {
+              "entityId": "T1",
+              "kind": "task",
+              "title": "填写设备核对表",
+              "description": "请先填写设备核对表。"
+            },
+            {
+              "entityId": "T2",
+              "kind": "task",
+              "title": "提交设备核对表",
+              "description": "填写完成后提交设备核对表。"
+            },
+            {
+              "entityId": "T3",
+              "kind": "task",
+              "title": "领取设备钥匙",
+              "description": "只有资格确认后才可以领取设备钥匙，"
+            },
+            {
+              "entityId": "T4",
+              "kind": "task",
+              "title": "领取投影设备",
+              "description": "无需领取投影设备。"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "填写设备核对表",
+              "description": "4项任务，0项事件。请核对后确认。"
+            }
+          ],
+          "times": [],
+          "unresolved": [],
+          "role": "DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT"
+        },
+        "v7Record": {
+          "id": "source:97cbaff3:draft:1",
+          "sourceId": "source:97cbaff3",
+          "sourceVersionId": "source:97cbaff3:version:1",
+          "sourceReviewMetadata": {
+            "sourceType": "text",
+            "characterCount": 65,
+            "extractionMethod": "manual"
+          },
+          "attemptOrder": 0,
+          "status": "待确认",
+          "workflowStatus": "needs_review",
+          "createdAt": "2026-10-02T09:52:02.294Z",
+          "updatedAt": "2026-10-02T09:52:02.359Z",
+          "schemaVersion": "2.0",
+          "modelName": "D26 匿名工程语义桥接（非模型成绩）",
+          "promptVersion": "d26-common-bridge-1",
+          "recognitionResult": {
+            "schemaVersion": "2.0",
+            "promptVersion": "d26-common-bridge-1",
+            "modelName": "D26 匿名工程语义桥接（非模型成绩）",
+            "createdAt": "2026-10-02T09:00:00+08:00",
+            "sourceSummary": {
+              "title": "填写设备核对表",
+              "sourceType": "text",
+              "notificationType": "uncertain",
+              "summary": "4项任务，0项事件。请核对后确认。",
+              "requiresAction": true,
+              "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+            },
+            "projectMatch": {
+              "decision": "standalone_task",
+              "matchedProjectId": null,
+              "suggestedProjectTitle": null,
+              "confidence": 1,
+              "reasons": [
+                "未主动建立或匹配项目。"
+              ]
+            },
+            "projectSuggestion": null,
+            "milestones": [],
+            "standaloneTasks": [
+              {
+                "parentTempId": null,
+                "hierarchyType": "task",
+                "title": "填写设备核对表",
+                "description": "请先填写设备核对表。",
+                "completionCriteria": [],
+                "estimatedMinutes": null,
+                "statusSuggestion": "todo",
+                "prioritySuggestion": "medium",
+                "dependencyTempIds": [],
+                "materialTempIds": [],
+                "timePointTempIds": [],
+                "confidence": 1,
+                "userConfirmationRequired": true,
+                "tempId": "T1",
+                "actionVerb": "填写",
+                "actionObject": "设备核对表",
+                "evidenceIds": [
+                  "d26-scope-0001-2ef2315280bed48bb36c28dff91828ea2286fe5d2f937064597a1d84224b2eaa"
+                ],
+                "inferenceLevel": "explicit",
+                "selected": true
+              },
+              {
+                "parentTempId": null,
+                "hierarchyType": "task",
+                "title": "提交设备核对表",
+                "description": "填写完成后提交设备核对表。",
+                "completionCriteria": [],
+                "estimatedMinutes": null,
+                "statusSuggestion": "todo",
+                "prioritySuggestion": "medium",
+                "dependencyTempIds": [
+                  "T1"
+                ],
+                "materialTempIds": [],
+                "timePointTempIds": [],
+                "confidence": 1,
+                "userConfirmationRequired": true,
+                "tempId": "T2",
+                "actionVerb": "提交",
+                "actionObject": "设备核对表",
+                "evidenceIds": [
+                  "d26-scope-0002-b43461c835d4078f5cbf80a099f95de01dd6a1ded1121ed7200ed6ccf6d205d7"
+                ],
+                "inferenceLevel": "explicit",
+                "selected": true
+              },
+              {
+                "parentTempId": null,
+                "hierarchyType": "task",
+                "title": "领取设备钥匙",
+                "description": "只有资格确认后才可以领取设备钥匙，",
+                "completionCriteria": [],
+                "estimatedMinutes": null,
+                "statusSuggestion": "todo",
+                "prioritySuggestion": "medium",
+                "dependencyTempIds": [],
+                "materialTempIds": [],
+                "timePointTempIds": [],
+                "confidence": 1,
+                "userConfirmationRequired": true,
+                "tempId": "T3",
+                "actionVerb": "领取",
+                "actionObject": "设备钥匙",
+                "evidenceIds": [
+                  "d26-scope-0003-9db26462d7d4f1da5ee11bc2ed86efd2c1304a98c74c1ac167ea3b441ec83dbe"
+                ],
+                "inferenceLevel": "explicit",
+                "selected": false
+              },
+              {
+                "parentTempId": null,
+                "hierarchyType": "task",
+                "title": "领取投影设备",
+                "description": "无需领取投影设备。",
+                "completionCriteria": [],
+                "estimatedMinutes": null,
+                "statusSuggestion": "todo",
+                "prioritySuggestion": "medium",
+                "dependencyTempIds": [],
+                "materialTempIds": [],
+                "timePointTempIds": [],
+                "confidence": 1,
+                "userConfirmationRequired": true,
+                "tempId": "T4",
+                "actionVerb": "领取",
+                "actionObject": "投影设备",
+                "evidenceIds": [
+                  "d26-scope-0006-41009ba2b1f6ed08fcf22665850e0c8584c5465be32458b542eb2b26b8d712d1"
+                ],
+                "inferenceLevel": "explicit",
+                "selected": false
+              }
+            ],
+            "materials": [],
+            "timePoints": [],
+            "events": [],
+            "evidence": [
+              {
+                "id": "d26-scope-0001-2ef2315280bed48bb36c28dff91828ea2286fe5d2f937064597a1d84224b2eaa",
+                "sourceId": "source:97cbaff3",
+                "quote": "请先填写设备核对表。",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0002-b43461c835d4078f5cbf80a099f95de01dd6a1ded1121ed7200ed6ccf6d205d7",
+                "sourceId": "source:97cbaff3",
+                "quote": "填写完成后提交设备核对表。",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0003-9db26462d7d4f1da5ee11bc2ed86efd2c1304a98c74c1ac167ea3b441ec83dbe",
+                "sourceId": "source:97cbaff3",
+                "quote": "只有资格确认后才可以领取设备钥匙，",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0004-7d26ea14ab221b7990334b5a6fff6df7e2b4adb73908496e02fe2343355d548a",
+                "sourceId": "source:97cbaff3",
+                "quote": "资格尚未确认。",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0005-131066a2b0c3fc1b26a7135cd2deb4343c055bb8a85e213569aae35afccd0c10",
+                "sourceId": "source:97cbaff3",
+                "quote": "你不符合借用资格，",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0006-41009ba2b1f6ed08fcf22665850e0c8584c5465be32458b542eb2b26b8d712d1",
+                "sourceId": "source:97cbaff3",
+                "quote": "无需领取投影设备。",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              }
+            ],
+            "conflicts": [
+              {
+                "id": "d26-representation-0",
+                "type": "other",
+                "message": "资格尚未确认，不能当成已符合；请保留待核对。",
+                "entityTempIds": [
+                  "T3"
+                ],
+                "evidenceIds": [],
+                "requiresDecision": true
+              },
+              {
+                "id": "d26-representation-1",
+                "type": "other",
+                "message": "原文明确当前不适用，不创建执行任务。",
+                "entityTempIds": [
+                  "T4"
+                ],
+                "evidenceIds": [],
+                "requiresDecision": true
+              },
+              {
+                "id": "d26-representation-2",
+                "type": "other",
+                "message": "当前状态、执行人或义务类型不能由普通任务字段完整表达。",
+                "entityTempIds": [
+                  "T4"
+                ],
+                "evidenceIds": [],
+                "requiresDecision": true
+              }
+            ],
+            "ambiguities": [],
+            "ignoredContent": [
+              {
+                "text": "资格尚未确认。",
+                "reason": "other"
+              },
+              {
+                "text": "你不符合借用资格，",
+                "reason": "other"
+              }
+            ],
+            "quality": {
+              "overallConfidence": 1,
+              "hierarchyConfidence": 1,
+              "dateConfidence": 1,
+              "evidenceCoverage": 1,
+              "duplicateRisk": 0,
+              "overFragmentationRisk": 0,
+              "missingActionRisk": 0,
+              "needsHumanReview": true,
+              "reviewReasons": [
+                "资格尚未确认，不能当成已符合；请保留待核对。",
+                "原文明确当前不适用，不创建执行任务。",
+                "当前状态、执行人或义务类型不能由普通任务字段完整表达。"
+              ]
+            }
+          },
+          "items": [
+            {
+              "id": "draft-item:source:97cbaff3:draft:1:T1",
+              "suggestion": {
+                "id": "T1",
+                "title": "填写设备核对表",
+                "category": "其他",
+                "deadline": "",
+                "estimatedMinutes": 30,
+                "nextAction": "填写设备核对表",
+                "description": "请先填写设备核对表。",
+                "priority": "中",
+                "materials": [],
+                "evidence": "4项任务，0项事件。请核对后确认。",
+                "confidence": "高"
+              },
+              "selected": true,
+              "status": "待确认",
+              "updatedAt": "2026-10-02T09:52:02.359Z",
+              "history": []
+            },
+            {
+              "id": "draft-item:source:97cbaff3:draft:1:T2",
+              "suggestion": {
+                "id": "T2",
+                "title": "提交设备核对表",
+                "category": "其他",
+                "deadline": "",
+                "estimatedMinutes": 30,
+                "nextAction": "提交设备核对表",
+                "description": "填写完成后提交设备核对表。",
+                "priority": "中",
+                "materials": [],
+                "evidence": "4项任务，0项事件。请核对后确认。",
+                "confidence": "高"
+              },
+              "selected": true,
+              "status": "待确认",
+              "updatedAt": "2026-10-02T09:52:02.359Z",
+              "history": []
+            },
+            {
+              "id": "draft-item:source:97cbaff3:draft:1:T3",
+              "suggestion": {
+                "id": "T3",
+                "title": "领取设备钥匙",
+                "category": "其他",
+                "deadline": "",
+                "estimatedMinutes": 30,
+                "nextAction": "领取设备钥匙",
+                "description": "只有资格确认后才可以领取设备钥匙，",
+                "priority": "中",
+                "materials": [],
+                "evidence": "4项任务，0项事件。请核对后确认。",
+                "confidence": "高"
+              },
+              "selected": false,
+              "status": "待确认",
+              "updatedAt": "2026-10-02T09:52:02.359Z",
+              "history": []
+            },
+            {
+              "id": "draft-item:source:97cbaff3:draft:1:T4",
+              "suggestion": {
+                "id": "T4",
+                "title": "领取投影设备",
+                "category": "其他",
+                "deadline": "",
+                "estimatedMinutes": 30,
+                "nextAction": "领取投影设备",
+                "description": "无需领取投影设备。",
+                "priority": "中",
+                "materials": [],
+                "evidence": "4项任务，0项事件。请核对后确认。",
+                "confidence": "高"
+              },
+              "selected": false,
+              "status": "待确认",
+              "updatedAt": "2026-10-02T09:52:02.359Z",
+              "history": []
+            }
+          ],
+          "modelVersion": "local-rules"
+        },
+        "sourceReviewReadback": {
+          "version": "source-review-d26-1",
+          "draftId": "source:97cbaff3:draft:1",
+          "commitId": "source-review:source:97cbaff3:draft:1:fnv1a32:2dcc14bf",
+          "disposition": "partial",
+          "entityIds": [
+            "task:source:97cbaff3:draft:1:T1",
+            "task:source:97cbaff3:draft:1:T2"
+          ],
+          "entityHashes": {
+            "task:source:97cbaff3:draft:1:T1": "fnv1a32:49cb4cd5",
+            "task:source:97cbaff3:draft:1:T2": "fnv1a32:687f1b85"
+          },
+          "verifiedAt": "2026-10-02T09:52:20.235Z"
+        }
+      }
+    },
+    {
+      "id": "source:939bf12e:draft:1",
+      "recognitionRunId": "source:939bf12e:run:1",
+      "status": "confirmed",
+      "result": {
+        "schemaVersion": "2.0",
+        "promptVersion": "engineering-mainline-01",
+        "modelName": "D26 匿名工程假传输（非模型成绩）",
+        "createdAt": "2026-09-05T08:00:00.000Z",
+        "sourceSummary": {
+          "title": "通知资料",
+          "sourceType": "text",
+          "notificationType": "uncertain",
+          "summary": "未识别到需要执行的任务或事件；原文已保留，可核对并归档。",
+          "requiresAction": false,
+          "actionReason": "资料室周末开放，本通知仅供了解，无需行动。"
+        },
+        "projectMatch": {
+          "decision": "standalone_task",
+          "matchedProjectId": null,
+          "suggestedProjectTitle": null,
+          "confidence": 1,
+          "reasons": [
+            "MAINLINE-01 人工工程响应（非模型预测）"
+          ]
+        },
+        "projectSuggestion": null,
+        "milestones": [],
+        "standaloneTasks": [],
+        "materials": [],
+        "timePoints": [],
+        "events": [],
+        "evidence": [
+          {
+            "id": "notice",
+            "sourceId": "source:939bf12e",
+            "textStart": 0,
+            "textEnd": 26,
+            "quote": "资料室已新增一批参考手册。本通知仅供了解，无需行动。",
+            "quotedText": "资料室已新增一批参考手册。本通知仅供了解，无需行动。",
+            "field": "description",
+            "extractionMethod": "manual",
+            "confidence": 1
+          }
+        ],
+        "conflicts": [],
+        "ambiguities": [],
+        "ignoredContent": [],
+        "quality": {
+          "overallConfidence": 1,
+          "hierarchyConfidence": 1,
+          "dateConfidence": 1,
+          "evidenceCoverage": 1,
+          "duplicateRisk": 0,
+          "overFragmentationRisk": 0,
+          "missingActionRisk": 0,
+          "needsHumanReview": true,
+          "reviewReasons": [
+            "MAINLINE-01 人工工程响应（非模型预测）"
+          ]
+        }
+      },
+      "commitOperationIds": [
+        "source-review:source:939bf12e:draft:1:fnv1a32:637e15e5"
+      ],
+      "acceptedEntityTempIds": [],
+      "rejectedEntityTempIds": [],
+      "createdAt": "2026-10-02T09:51:29.573Z",
+      "updatedAt": "2026-10-02T09:51:44.586Z",
+      "legacyData": {
+        "firstSuggestionDisplayed": {
+          "schemaVersion": "2.0",
+          "promptVersion": "engineering-mainline-01",
+          "modelName": "D26 匿名工程假传输（非模型成绩）",
+          "createdAt": "2026-09-05T08:00:00.000Z",
+          "sourceSummary": {
+            "title": "通知资料",
+            "sourceType": "text",
+            "notificationType": "uncertain",
+            "summary": "未识别到需要执行的任务或事件；原文已保留，可核对并归档。",
+            "requiresAction": false,
+            "actionReason": "资料室周末开放，本通知仅供了解，无需行动。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "MAINLINE-01 人工工程响应（非模型预测）"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [],
+          "materials": [],
+          "timePoints": [],
+          "events": [],
+          "evidence": [
+            {
+              "id": "notice",
+              "sourceId": "source:939bf12e",
+              "textStart": 0,
+              "textEnd": 26,
+              "quote": "资料室已新增一批参考手册。本通知仅供了解，无需行动。",
+              "quotedText": "资料室已新增一批参考手册。本通知仅供了解，无需行动。",
+              "field": "description",
+              "extractionMethod": "manual",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [],
+          "ambiguities": [],
+          "ignoredContent": [],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 1,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": true,
+            "reviewReasons": [
+              "MAINLINE-01 人工工程响应（非模型预测）"
+            ]
+          }
+        },
+        "firstSuggestionAssembly": {
+          "version": "grounded-first-suggestion-1.0.0",
+          "originalProse": [
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "MAINLINE-01 人工工程响应（非模型预测）",
+              "description": "资料室已新增一批参考手册。本通知仅供了解，无需行动。"
+            }
+          ],
+          "generatedProse": [
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "通知资料",
+              "description": "未识别到需要执行的任务或事件；原文已保留，可核对并归档。"
+            }
+          ],
+          "times": [],
+          "unresolved": [],
+          "role": "DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT"
+        },
+        "v7Record": {
+          "id": "source:939bf12e:draft:1",
+          "sourceId": "source:939bf12e",
+          "sourceVersionId": "source:939bf12e:version:1",
+          "sourceReviewMetadata": {
+            "sourceType": "text",
+            "characterCount": 26,
+            "extractionMethod": "manual"
+          },
+          "attemptOrder": 0,
+          "status": "待确认",
+          "workflowStatus": "needs_review",
+          "createdAt": "2026-10-02T09:51:29.573Z",
+          "updatedAt": "2026-10-02T09:51:29.647Z",
+          "schemaVersion": "2.0",
+          "modelName": "D26 匿名工程假传输（非模型成绩）",
+          "promptVersion": "engineering-mainline-01",
+          "recognitionResult": {
+            "schemaVersion": "2.0",
+            "promptVersion": "engineering-mainline-01",
+            "modelName": "D26 匿名工程假传输（非模型成绩）",
+            "createdAt": "2026-09-05T08:00:00.000Z",
+            "sourceSummary": {
+              "title": "通知资料",
+              "sourceType": "text",
+              "notificationType": "uncertain",
+              "summary": "未识别到需要执行的任务或事件；原文已保留，可核对并归档。",
+              "requiresAction": false,
+              "actionReason": "资料室周末开放，本通知仅供了解，无需行动。"
+            },
+            "projectMatch": {
+              "decision": "standalone_task",
+              "matchedProjectId": null,
+              "suggestedProjectTitle": null,
+              "confidence": 1,
+              "reasons": [
+                "MAINLINE-01 人工工程响应（非模型预测）"
+              ]
+            },
+            "projectSuggestion": null,
+            "milestones": [],
+            "standaloneTasks": [],
+            "materials": [],
+            "timePoints": [],
+            "events": [],
+            "evidence": [
+              {
+                "id": "notice",
+                "sourceId": "source:939bf12e",
+                "textStart": 0,
+                "textEnd": 26,
+                "quote": "资料室已新增一批参考手册。本通知仅供了解，无需行动。",
+                "quotedText": "资料室已新增一批参考手册。本通知仅供了解，无需行动。",
+                "field": "description",
+                "extractionMethod": "manual",
+                "confidence": 1
+              }
+            ],
+            "conflicts": [],
+            "ambiguities": [],
+            "ignoredContent": [],
+            "quality": {
+              "overallConfidence": 1,
+              "hierarchyConfidence": 1,
+              "dateConfidence": 1,
+              "evidenceCoverage": 1,
+              "duplicateRisk": 0,
+              "overFragmentationRisk": 0,
+              "missingActionRisk": 0,
+              "needsHumanReview": true,
+              "reviewReasons": [
+                "MAINLINE-01 人工工程响应（非模型预测）"
+              ]
+            }
+          },
+          "items": [],
+          "modelVersion": "local-rules"
+        },
+        "sourceReviewReadback": {
+          "version": "source-review-d26-1",
+          "draftId": "source:939bf12e:draft:1",
+          "commitId": "source-review:source:939bf12e:draft:1:fnv1a32:637e15e5",
+          "disposition": "no_task",
+          "entityIds": [],
+          "entityHashes": {},
+          "verifiedAt": "2026-10-02T09:51:44.604Z"
+        }
+      }
+    },
+    {
+      "id": "source:f6821822:draft:1",
+      "recognitionRunId": "source:f6821822:run:1",
+      "status": "confirmed",
+      "result": {
+        "schemaVersion": "2.0",
+        "promptVersion": "engineering-mainline-01",
+        "modelName": "D26 匿名工程假传输（非模型成绩）",
+        "createdAt": "2026-09-05T08:00:00.000Z",
+        "sourceSummary": {
+          "title": "保存活动手册",
+          "sourceType": "text",
+          "notificationType": "uncertain",
+          "summary": "1项任务，2项事件。请核对后确认。",
+          "requiresAction": true,
+          "actionReason": "请保存活动手册。没有截止日期要求。"
+        },
+        "projectMatch": {
+          "decision": "standalone_task",
+          "matchedProjectId": null,
+          "suggestedProjectTitle": null,
+          "confidence": 1,
+          "reasons": [
+            "MAINLINE-01 人工工程响应（非模型预测）"
+          ]
+        },
+        "projectSuggestion": null,
+        "milestones": [],
+        "standaloneTasks": [
+          {
+            "tempId": "save",
+            "parentTempId": null,
+            "hierarchyType": "task",
+            "title": "保存活动手册",
+            "actionVerb": "保存",
+            "actionObject": "活动手册",
+            "description": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+            "completionCriteria": [],
+            "estimatedMinutes": null,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "medium",
+            "dependencyTempIds": [],
+            "materialTempIds": [],
+            "timePointTempIds": [],
+            "evidenceIds": [
+              "notice"
+            ],
+            "confidence": 1,
+            "inferenceLevel": "explicit",
+            "userConfirmationRequired": true,
+            "selected": true
+          }
+        ],
+        "materials": [],
+        "timePoints": [
+          {
+            "tempId": "stop-time",
+            "type": "event_start",
+            "rawText": "周三晚",
+            "normalizedValue": null,
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "vague",
+            "needsConfirmation": true,
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "evidenceIds": [
+              "notice"
+            ],
+            "confidence": 1,
+            "selected": true
+          },
+          {
+            "tempId": "brief-start",
+            "type": "event_start",
+            "rawText": "2026年10月12日14:00",
+            "normalizedValue": "2026-10-12T14:00",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "evidenceIds": [
+              "notice"
+            ],
+            "confidence": 1,
+            "selected": true
+          },
+          {
+            "tempId": "brief-end",
+            "type": "event_end",
+            "rawText": "15:00",
+            "normalizedValue": "2026-10-12T15:00",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "evidenceIds": [
+              "notice"
+            ],
+            "confidence": 1,
+            "selected": true
+          }
+        ],
+        "events": [
+          {
+            "tempId": "stop",
+            "title": "预约平台将在周三晚停机",
+            "description": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+            "location": null,
+            "startTimePointTempId": "stop-time",
+            "endTimePointTempId": null,
+            "evidenceIds": [
+              "notice"
+            ],
+            "confidence": 1,
+            "inferenceLevel": "explicit",
+            "selected": true
+          },
+          {
+            "tempId": "briefing",
+            "title": "资料讲解会",
+            "description": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+            "location": "资料室",
+            "startTimePointTempId": "brief-start",
+            "endTimePointTempId": "brief-end",
+            "evidenceIds": [
+              "notice"
+            ],
+            "confidence": 1,
+            "inferenceLevel": "explicit",
+            "selected": true
+          }
+        ],
+        "evidence": [
+          {
+            "id": "notice",
+            "sourceId": "source:f6821822",
+            "textStart": 0,
+            "textEnd": 60,
+            "quote": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+            "quotedText": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+            "field": "description",
+            "extractionMethod": "manual",
+            "confidence": 1
+          }
+        ],
+        "conflicts": [],
+        "ambiguities": [],
+        "ignoredContent": [],
+        "quality": {
+          "overallConfidence": 1,
+          "hierarchyConfidence": 1,
+          "dateConfidence": 1,
+          "evidenceCoverage": 1,
+          "duplicateRisk": 0,
+          "overFragmentationRisk": 0,
+          "missingActionRisk": 0,
+          "needsHumanReview": true,
+          "reviewReasons": [
+            "MAINLINE-01 人工工程响应（非模型预测）"
+          ]
+        }
+      },
+      "commitOperationIds": [
+        "source-review:source:f6821822:draft:1:fnv1a32:84f89fad"
+      ],
+      "acceptedEntityTempIds": [
+        "brief-end",
+        "brief-start",
+        "briefing",
+        "save",
+        "stop",
+        "stop-time"
+      ],
+      "rejectedEntityTempIds": [],
+      "createdAt": "2026-10-02T09:50:41.142Z",
+      "updatedAt": "2026-10-02T09:50:56.789Z",
+      "legacyData": {
+        "firstSuggestionDisplayed": {
+          "schemaVersion": "2.0",
+          "promptVersion": "engineering-mainline-01",
+          "modelName": "D26 匿名工程假传输（非模型成绩）",
+          "createdAt": "2026-09-05T08:00:00.000Z",
+          "sourceSummary": {
+            "title": "保存活动手册",
+            "sourceType": "text",
+            "notificationType": "uncertain",
+            "summary": "1项任务，2项事件。请核对后确认。",
+            "requiresAction": true,
+            "actionReason": "请保存活动手册。没有截止日期要求。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "MAINLINE-01 人工工程响应（非模型预测）"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [
+            {
+              "tempId": "save",
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "保存活动手册",
+              "actionVerb": "保存",
+              "actionObject": "活动手册",
+              "description": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+              "completionCriteria": [],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [],
+              "timePointTempIds": [],
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "inferenceLevel": "explicit",
+              "userConfirmationRequired": true,
+              "selected": true
+            }
+          ],
+          "materials": [],
+          "timePoints": [
+            {
+              "tempId": "stop-time",
+              "type": "event_start",
+              "rawText": "周三晚",
+              "normalizedValue": null,
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "vague",
+              "needsConfirmation": true,
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "selected": true
+            },
+            {
+              "tempId": "brief-start",
+              "type": "event_start",
+              "rawText": "2026年10月12日14:00",
+              "normalizedValue": "2026-10-12T14:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "selected": true
+            },
+            {
+              "tempId": "brief-end",
+              "type": "event_end",
+              "rawText": "15:00",
+              "normalizedValue": "2026-10-12T15:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "selected": true
+            }
+          ],
+          "events": [
+            {
+              "tempId": "stop",
+              "title": "预约平台将在周三晚停机",
+              "description": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+              "location": null,
+              "startTimePointTempId": "stop-time",
+              "endTimePointTempId": null,
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "inferenceLevel": "explicit",
+              "selected": true
+            },
+            {
+              "tempId": "briefing",
+              "title": "资料讲解会",
+              "description": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+              "location": "资料室",
+              "startTimePointTempId": "brief-start",
+              "endTimePointTempId": "brief-end",
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "inferenceLevel": "explicit",
+              "selected": true
+            }
+          ],
+          "evidence": [
+            {
+              "id": "notice",
+              "sourceId": "source:f6821822",
+              "textStart": 0,
+              "textEnd": 60,
+              "quote": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+              "quotedText": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+              "field": "description",
+              "extractionMethod": "manual",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [],
+          "ambiguities": [],
+          "ignoredContent": [],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 1,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": true,
+            "reviewReasons": [
+              "MAINLINE-01 人工工程响应（非模型预测）"
+            ]
+          }
+        },
+        "firstSuggestionAssembly": {
+          "version": "grounded-first-suggestion-1.0.0",
+          "originalProse": [
+            {
+              "entityId": "save",
+              "kind": "task",
+              "title": "保存活动手册",
+              "description": "保存活动手册"
+            },
+            {
+              "entityId": "stop",
+              "kind": "event",
+              "title": "预约平台将在周三晚停机",
+              "description": ""
+            },
+            {
+              "entityId": "briefing",
+              "kind": "event",
+              "title": "资料讲解会",
+              "description": ""
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "MAINLINE-01 人工工程响应（非模型预测）",
+              "description": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。"
+            }
+          ],
+          "generatedProse": [
+            {
+              "entityId": "save",
+              "kind": "task",
+              "title": "保存活动手册",
+              "description": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。"
+            },
+            {
+              "entityId": "stop",
+              "kind": "event",
+              "title": "预约平台将在周三晚停机",
+              "description": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。"
+            },
+            {
+              "entityId": "briefing",
+              "kind": "event",
+              "title": "资料讲解会",
+              "description": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "保存活动手册",
+              "description": "1项任务，2项事件。请核对后确认。"
+            }
+          ],
+          "times": [
+            {
+              "entityId": "stop-time",
+              "before": {
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              },
+              "after": {
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.0.0",
+                "point": {
+                  "rawText": "周三晚",
+                  "type": "event_start",
+                  "normalizedValue": null,
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "vague",
+                  "needsConfirmation": true,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 3
+                  },
+                  "dateKind": "none",
+                  "timeKind": "none",
+                  "correctionApplied": false,
+                  "issues": [
+                    "time_not_found",
+                    "day_period_without_clock"
+                  ]
+                },
+                "knownDate": null,
+                "dayPeriod": "晚",
+                "certainty": "partial",
+                "sourceContext": "预约平台将在周三晚停机"
+              }
+            },
+            {
+              "entityId": "brief-start",
+              "before": {
+                "normalizedValue": "2026-10-12T14:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "after": {
+                "normalizedValue": "2026-10-12T14:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.0.0",
+                "point": {
+                  "rawText": "2026年10月12日14:00",
+                  "type": "event_start",
+                  "normalizedValue": "2026-10-12T14:00",
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 16
+                  },
+                  "dateKind": "absolute",
+                  "timeKind": "clock",
+                  "correctionApplied": false,
+                  "issues": []
+                },
+                "knownDate": "2026-10-12",
+                "dayPeriod": null,
+                "certainty": "stated",
+                "sourceContext": "资料讲解会于2026年10月12日14:00开始"
+              }
+            },
+            {
+              "entityId": "brief-end",
+              "before": {
+                "normalizedValue": "2026-10-12T15:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "after": {
+                "normalizedValue": "2026-10-12T15:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.0.0",
+                "point": {
+                  "rawText": "15:00",
+                  "type": "event_end",
+                  "normalizedValue": "2026-10-12T15:00",
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 5
+                  },
+                  "dateKind": "inherited",
+                  "timeKind": "clock",
+                  "correctionApplied": false,
+                  "issues": []
+                },
+                "knownDate": "2026-10-12",
+                "dayPeriod": null,
+                "certainty": "stated",
+                "sourceContext": "资料讲解会于2026年10月12日14:00开始\n15:00结束"
+              }
+            }
+          ],
+          "unresolved": [],
+          "role": "DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT"
+        },
+        "v7Record": {
+          "id": "source:f6821822:draft:1",
+          "sourceId": "source:f6821822",
+          "sourceVersionId": "source:f6821822:version:1",
+          "sourceReviewMetadata": {
+            "sourceType": "text",
+            "characterCount": 60,
+            "extractionMethod": "manual"
+          },
+          "attemptOrder": 0,
+          "status": "待确认",
+          "workflowStatus": "needs_review",
+          "createdAt": "2026-10-02T09:50:41.142Z",
+          "updatedAt": "2026-10-02T09:50:41.174Z",
+          "schemaVersion": "2.0",
+          "modelName": "D26 匿名工程假传输（非模型成绩）",
+          "promptVersion": "engineering-mainline-01",
+          "recognitionResult": {
+            "schemaVersion": "2.0",
+            "promptVersion": "engineering-mainline-01",
+            "modelName": "D26 匿名工程假传输（非模型成绩）",
+            "createdAt": "2026-09-05T08:00:00.000Z",
+            "sourceSummary": {
+              "title": "保存活动手册",
+              "sourceType": "text",
+              "notificationType": "uncertain",
+              "summary": "1项任务，2项事件。请核对后确认。",
+              "requiresAction": true,
+              "actionReason": "请保存活动手册。没有截止日期要求。"
+            },
+            "projectMatch": {
+              "decision": "standalone_task",
+              "matchedProjectId": null,
+              "suggestedProjectTitle": null,
+              "confidence": 1,
+              "reasons": [
+                "MAINLINE-01 人工工程响应（非模型预测）"
+              ]
+            },
+            "projectSuggestion": null,
+            "milestones": [],
+            "standaloneTasks": [
+              {
+                "tempId": "save",
+                "parentTempId": null,
+                "hierarchyType": "task",
+                "title": "保存活动手册",
+                "actionVerb": "保存",
+                "actionObject": "活动手册",
+                "description": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+                "completionCriteria": [],
+                "estimatedMinutes": null,
+                "statusSuggestion": "todo",
+                "prioritySuggestion": "medium",
+                "dependencyTempIds": [],
+                "materialTempIds": [],
+                "timePointTempIds": [],
+                "evidenceIds": [
+                  "notice"
+                ],
+                "confidence": 1,
+                "inferenceLevel": "explicit",
+                "userConfirmationRequired": true,
+                "selected": true
+              }
+            ],
+            "materials": [],
+            "timePoints": [
+              {
+                "tempId": "stop-time",
+                "type": "event_start",
+                "rawText": "周三晚",
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true,
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "evidenceIds": [
+                  "notice"
+                ],
+                "confidence": 1,
+                "selected": true
+              },
+              {
+                "tempId": "brief-start",
+                "type": "event_start",
+                "rawText": "2026年10月12日14:00",
+                "normalizedValue": "2026-10-12T14:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false,
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "evidenceIds": [
+                  "notice"
+                ],
+                "confidence": 1,
+                "selected": true
+              },
+              {
+                "tempId": "brief-end",
+                "type": "event_end",
+                "rawText": "15:00",
+                "normalizedValue": "2026-10-12T15:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false,
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "evidenceIds": [
+                  "notice"
+                ],
+                "confidence": 1,
+                "selected": true
+              }
+            ],
+            "events": [
+              {
+                "tempId": "stop",
+                "title": "预约平台将在周三晚停机",
+                "description": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+                "location": null,
+                "startTimePointTempId": "stop-time",
+                "endTimePointTempId": null,
+                "evidenceIds": [
+                  "notice"
+                ],
+                "confidence": 1,
+                "inferenceLevel": "explicit",
+                "selected": true
+              },
+              {
+                "tempId": "briefing",
+                "title": "资料讲解会",
+                "description": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+                "location": "资料室",
+                "startTimePointTempId": "brief-start",
+                "endTimePointTempId": "brief-end",
+                "evidenceIds": [
+                  "notice"
+                ],
+                "confidence": 1,
+                "inferenceLevel": "explicit",
+                "selected": true
+              }
+            ],
+            "evidence": [
+              {
+                "id": "notice",
+                "sourceId": "source:f6821822",
+                "textStart": 0,
+                "textEnd": 60,
+                "quote": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+                "quotedText": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+                "field": "description",
+                "extractionMethod": "manual",
+                "confidence": 1
+              }
+            ],
+            "conflicts": [],
+            "ambiguities": [],
+            "ignoredContent": [],
+            "quality": {
+              "overallConfidence": 1,
+              "hierarchyConfidence": 1,
+              "dateConfidence": 1,
+              "evidenceCoverage": 1,
+              "duplicateRisk": 0,
+              "overFragmentationRisk": 0,
+              "missingActionRisk": 0,
+              "needsHumanReview": true,
+              "reviewReasons": [
+                "MAINLINE-01 人工工程响应（非模型预测）"
+              ]
+            }
+          },
+          "items": [
+            {
+              "id": "draft-item:source:f6821822:draft:1:save",
+              "suggestion": {
+                "id": "save",
+                "title": "保存活动手册",
+                "category": "其他",
+                "deadline": "",
+                "estimatedMinutes": 30,
+                "nextAction": "保存活动手册",
+                "description": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+                "priority": "中",
+                "materials": [],
+                "evidence": "1项任务，2项事件。请核对后确认。",
+                "confidence": "高"
+              },
+              "selected": true,
+              "status": "待确认",
+              "updatedAt": "2026-10-02T09:50:41.174Z",
+              "history": []
+            }
+          ],
+          "modelVersion": "local-rules"
+        },
+        "sourceReviewReadback": {
+          "version": "source-review-d26-1",
+          "draftId": "source:f6821822:draft:1",
+          "commitId": "source-review:source:f6821822:draft:1:fnv1a32:84f89fad",
+          "disposition": "confirmed",
+          "entityIds": [
+            "task:source:f6821822:draft:1:save",
+            "event:source:f6821822:draft:1:stop",
+            "event:source:f6821822:draft:1:briefing",
+            "time:source:f6821822:draft:1:stop-time",
+            "time:source:f6821822:draft:1:brief-start",
+            "time:source:f6821822:draft:1:brief-end"
+          ],
+          "entityHashes": {
+            "task:source:f6821822:draft:1:save": "fnv1a32:62e9ef78",
+            "event:source:f6821822:draft:1:stop": "fnv1a32:8b1d5f87",
+            "event:source:f6821822:draft:1:briefing": "fnv1a32:818e0572",
+            "time:source:f6821822:draft:1:stop-time": "fnv1a32:dc33a4fd",
+            "time:source:f6821822:draft:1:brief-start": "fnv1a32:70166fbb",
+            "time:source:f6821822:draft:1:brief-end": "fnv1a32:f598f063"
+          },
+          "verifiedAt": "2026-10-02T09:50:56.821Z"
+        }
+      }
+    }
+  ],
+  "projects": [],
+  "milestones": [],
+  "workPackages": [],
+  "tasks": [
+    {
+      "id": "task:source:f6821822:draft:1:save",
+      "projectId": null,
+      "milestoneId": null,
+      "workPackageId": null,
+      "parentTaskId": null,
+      "title": "保存活动手册",
+      "description": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+      "nextAction": "保存活动手册",
+      "status": "todo",
+      "estimatedMinutes": null,
+      "manualPriority": null,
+      "snoozedUntil": null,
+      "dependencyIds": [],
+      "createdAt": "2026-10-02T09:50:56.783Z",
+      "updatedAt": "2026-10-02T09:50:56.783Z",
+      "version": 4,
+      "legacyData": {
+        "recognitionTempId": "save",
+        "actionVerb": "保存",
+        "actionObject": "活动手册",
+        "completionCriteria": [],
+        "inferenceLevel": "explicit",
+        "prioritySuggestion": "medium",
+        "priority": "中",
+        "evidenceIds": [
+          "notice"
+        ],
+        "sourceId": "source:f6821822",
+        "category": "其他",
+        "v7Record": {
+          "id": "task:source:f6821822:draft:1:save",
+          "hierarchyType": "task",
+          "actionVerb": "保存",
+          "actionObject": "活动手册",
+          "completionCriteria": [],
+          "evidenceIds": [
+            "notice"
+          ],
+          "title": "保存活动手册",
+          "category": "其他",
+          "status": "待开始",
+          "deadline": "",
+          "estimatedMinutes": 60,
+          "estimatedMinutesKnown": false,
+          "nextAction": "保存活动手册",
+          "description": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+          "priority": "中",
+          "riskFlags": [
+            "待确认"
+          ],
+          "materials": [],
+          "dependencies": [],
+          "dependencyIds": [],
+          "reminders": [],
+          "sourceIds": [
+            "source:f6821822"
+          ],
+          "priorityReason": "由当前权威实体计算并允许手动调整",
+          "priorityReasons": [
+            "由当前权威实体计算并允许手动调整"
+          ],
+          "timePointIds": [
+            "timepoint-task:source:f6821822:draft:1:save-deadline"
+          ],
+          "materialIds": [],
+          "createdAt": "2026-10-02T09:50:56.783Z",
+          "updatedAt": "2026-10-02T09:50:56.783Z",
+          "history": [
+            {
+              "id": "history:task:source:f6821822:draft:1:save:created",
+              "field": "created",
+              "before": "null",
+              "after": "{\"id\":\"task:source:f6821822:draft:1:save\"}",
+              "changedAt": "2026-10-02T09:50:56.783Z",
+              "actor": "user",
+              "entityType": "task",
+              "entityId": "task:source:f6821822:draft:1:save",
+              "action": "created"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "task:source:97cbaff3:draft:1:T1",
+      "projectId": null,
+      "milestoneId": null,
+      "workPackageId": null,
+      "parentTaskId": null,
+      "title": "填写设备核对表",
+      "description": "请先填写设备核对表。",
+      "nextAction": "填写设备核对表",
+      "status": "todo",
+      "estimatedMinutes": null,
+      "manualPriority": null,
+      "snoozedUntil": null,
+      "dependencyIds": [],
+      "createdAt": "2026-10-02T09:52:20.185Z",
+      "updatedAt": "2026-10-02T09:52:20.185Z",
+      "version": 2,
+      "legacyData": {
+        "recognitionTempId": "T1",
+        "actionVerb": "填写",
+        "actionObject": "设备核对表",
+        "completionCriteria": [],
+        "inferenceLevel": "explicit",
+        "prioritySuggestion": "medium",
+        "priority": "中",
+        "evidenceIds": [
+          "d26-scope-0001-2ef2315280bed48bb36c28dff91828ea2286fe5d2f937064597a1d84224b2eaa"
+        ],
+        "sourceId": "source:97cbaff3",
+        "category": "其他",
+        "v7Record": {
+          "id": "task:source:97cbaff3:draft:1:T1",
+          "hierarchyType": "task",
+          "actionVerb": "填写",
+          "actionObject": "设备核对表",
+          "completionCriteria": [],
+          "evidenceIds": [
+            "d26-scope-0001-2ef2315280bed48bb36c28dff91828ea2286fe5d2f937064597a1d84224b2eaa"
+          ],
+          "title": "填写设备核对表",
+          "category": "其他",
+          "status": "待开始",
+          "deadline": "",
+          "estimatedMinutes": 60,
+          "estimatedMinutesKnown": false,
+          "nextAction": "填写设备核对表",
+          "description": "请先填写设备核对表。",
+          "priority": "中",
+          "riskFlags": [
+            "待确认"
+          ],
+          "materials": [],
+          "dependencies": [],
+          "dependencyIds": [],
+          "reminders": [],
+          "sourceIds": [
+            "source:97cbaff3"
+          ],
+          "priorityReason": "由当前权威实体计算并允许手动调整",
+          "priorityReasons": [
+            "由当前权威实体计算并允许手动调整"
+          ],
+          "timePointIds": [
+            "timepoint-task:source:97cbaff3:draft:1:T1-deadline"
+          ],
+          "materialIds": [],
+          "createdAt": "2026-10-02T09:52:20.185Z",
+          "updatedAt": "2026-10-02T09:52:20.185Z",
+          "history": [
+            {
+              "id": "history:task:source:97cbaff3:draft:1:T1:created",
+              "field": "created",
+              "before": "null",
+              "after": "{\"id\":\"task:source:97cbaff3:draft:1:T1\"}",
+              "changedAt": "2026-10-02T09:52:20.185Z",
+              "actor": "user",
+              "entityType": "task",
+              "entityId": "task:source:97cbaff3:draft:1:T1",
+              "action": "created"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "task:source:97cbaff3:draft:1:T2",
+      "projectId": null,
+      "milestoneId": null,
+      "workPackageId": null,
+      "parentTaskId": null,
+      "title": "提交设备核对表",
+      "description": "填写完成后提交设备核对表。",
+      "nextAction": "提交设备核对表",
+      "status": "todo",
+      "estimatedMinutes": null,
+      "manualPriority": null,
+      "snoozedUntil": null,
+      "dependencyIds": [
+        "task:source:97cbaff3:draft:1:T1"
+      ],
+      "createdAt": "2026-10-02T09:52:20.185Z",
+      "updatedAt": "2026-10-02T09:52:20.185Z",
+      "version": 2,
+      "legacyData": {
+        "recognitionTempId": "T2",
+        "actionVerb": "提交",
+        "actionObject": "设备核对表",
+        "completionCriteria": [],
+        "inferenceLevel": "explicit",
+        "prioritySuggestion": "medium",
+        "priority": "中",
+        "evidenceIds": [
+          "d26-scope-0002-b43461c835d4078f5cbf80a099f95de01dd6a1ded1121ed7200ed6ccf6d205d7"
+        ],
+        "sourceId": "source:97cbaff3",
+        "category": "其他",
+        "v7Record": {
+          "id": "task:source:97cbaff3:draft:1:T2",
+          "hierarchyType": "task",
+          "actionVerb": "提交",
+          "actionObject": "设备核对表",
+          "completionCriteria": [],
+          "evidenceIds": [
+            "d26-scope-0002-b43461c835d4078f5cbf80a099f95de01dd6a1ded1121ed7200ed6ccf6d205d7"
+          ],
+          "title": "提交设备核对表",
+          "category": "其他",
+          "status": "待开始",
+          "deadline": "",
+          "estimatedMinutes": 60,
+          "estimatedMinutesKnown": false,
+          "nextAction": "提交设备核对表",
+          "description": "填写完成后提交设备核对表。",
+          "priority": "中",
+          "riskFlags": [
+            "待确认"
+          ],
+          "materials": [],
+          "dependencies": [],
+          "dependencyIds": [
+            "task:source:97cbaff3:draft:1:T1"
+          ],
+          "reminders": [],
+          "sourceIds": [
+            "source:97cbaff3"
+          ],
+          "priorityReason": "由当前权威实体计算并允许手动调整",
+          "priorityReasons": [
+            "由当前权威实体计算并允许手动调整"
+          ],
+          "timePointIds": [
+            "timepoint-task:source:97cbaff3:draft:1:T2-deadline"
+          ],
+          "materialIds": [],
+          "createdAt": "2026-10-02T09:52:20.185Z",
+          "updatedAt": "2026-10-02T09:52:20.185Z",
+          "history": [
+            {
+              "id": "history:task:source:97cbaff3:draft:1:T2:created",
+              "field": "created",
+              "before": "null",
+              "after": "{\"id\":\"task:source:97cbaff3:draft:1:T2\"}",
+              "changedAt": "2026-10-02T09:52:20.185Z",
+              "actor": "user",
+              "entityType": "task",
+              "entityId": "task:source:97cbaff3:draft:1:T2",
+              "action": "created"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "task:source:ea0cb01e:draft:1:T3",
+      "projectId": null,
+      "milestoneId": null,
+      "workPackageId": null,
+      "parentTaskId": null,
+      "title": "保存报名回执",
+      "description": "请保存报名回执。",
+      "nextAction": "保存报名回执",
+      "status": "todo",
+      "estimatedMinutes": null,
+      "manualPriority": null,
+      "snoozedUntil": null,
+      "dependencyIds": [],
+      "createdAt": "2026-10-02T09:53:25.867Z",
+      "updatedAt": "2026-10-02T09:53:25.867Z",
+      "version": 1,
+      "legacyData": {
+        "recognitionTempId": "T3",
+        "actionVerb": "保存",
+        "actionObject": "报名回执",
+        "completionCriteria": [],
+        "inferenceLevel": "explicit",
+        "prioritySuggestion": "medium",
+        "priority": "中",
+        "evidenceIds": [
+          "d26-scope-0003-0b665b477aad42bf56579f1d70c8580fa6d4563cc688d73d37ac6ed7f5df05ac"
+        ],
+        "sourceId": "source:ea0cb01e",
+        "category": "其他"
+      }
+    }
+  ],
+  "materials": [],
+  "timePoints": [
+    {
+      "id": "time:source:f6821822:draft:1:stop-time",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": null,
+      "materialId": null,
+      "eventId": "event:source:f6821822:draft:1:stop",
+      "relatedTaskIds": [],
+      "relatedMaterialIds": [],
+      "type": "event_start",
+      "rawText": "周三晚",
+      "normalizedValue": null,
+      "timezone": null,
+      "isAllDay": false,
+      "precision": "vague",
+      "needsConfirmation": true,
+      "createdAt": "2026-10-02T09:50:56.783Z",
+      "updatedAt": "2026-10-02T09:50:56.783Z",
+      "legacyData": {
+        "recognitionTempId": "stop-time",
+        "evidenceIds": [
+          "notice"
+        ],
+        "confidence": 1
+      }
+    },
+    {
+      "id": "time:source:f6821822:draft:1:brief-start",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": null,
+      "materialId": null,
+      "eventId": "event:source:f6821822:draft:1:briefing",
+      "relatedTaskIds": [],
+      "relatedMaterialIds": [],
+      "type": "event_start",
+      "rawText": "2026年10月12日14:00",
+      "normalizedValue": "2026-10-12T14:00",
+      "timezone": "Asia/Shanghai",
+      "isAllDay": false,
+      "precision": "exact",
+      "needsConfirmation": false,
+      "createdAt": "2026-10-02T09:50:56.783Z",
+      "updatedAt": "2026-10-02T09:50:56.783Z",
+      "legacyData": {
+        "recognitionTempId": "brief-start",
+        "evidenceIds": [
+          "notice"
+        ],
+        "confidence": 1
+      }
+    },
+    {
+      "id": "time:source:f6821822:draft:1:brief-end",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": null,
+      "materialId": null,
+      "eventId": "event:source:f6821822:draft:1:briefing",
+      "relatedTaskIds": [],
+      "relatedMaterialIds": [],
+      "type": "event_end",
+      "rawText": "15:00",
+      "normalizedValue": "2026-10-12T15:00",
+      "timezone": "Asia/Shanghai",
+      "isAllDay": false,
+      "precision": "exact",
+      "needsConfirmation": false,
+      "createdAt": "2026-10-02T09:50:56.783Z",
+      "updatedAt": "2026-10-02T09:50:56.783Z",
+      "legacyData": {
+        "recognitionTempId": "brief-end",
+        "evidenceIds": [
+          "notice"
+        ],
+        "confidence": 1
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "event:source:f6821822:draft:1:stop",
+      "projectId": null,
+      "title": "预约平台将在周三晚停机",
+      "description": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+      "startTimePointId": "time:source:f6821822:draft:1:stop-time",
+      "endTimePointId": null,
+      "location": null,
+      "createdAt": "2026-10-02T09:50:56.783Z",
+      "updatedAt": "2026-10-02T09:50:56.783Z",
+      "legacyData": {
+        "recognitionTempId": "stop",
+        "evidenceIds": [
+          "notice"
+        ],
+        "inferenceLevel": "explicit"
+      }
+    },
+    {
+      "id": "event:source:f6821822:draft:1:briefing",
+      "projectId": null,
+      "title": "资料讲解会",
+      "description": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+      "startTimePointId": "time:source:f6821822:draft:1:brief-start",
+      "endTimePointId": "time:source:f6821822:draft:1:brief-end",
+      "location": "资料室",
+      "createdAt": "2026-10-02T09:50:56.783Z",
+      "updatedAt": "2026-10-02T09:50:56.783Z",
+      "legacyData": {
+        "recognitionTempId": "briefing",
+        "evidenceIds": [
+          "notice"
+        ],
+        "inferenceLevel": "explicit"
+      }
+    }
+  ],
+  "evidenceRefs": [
+    {
+      "id": "evidence:source:f6821822:draft:1:notice",
+      "sourceVersionId": "source:f6821822:version:1",
+      "page": null,
+      "textStart": 0,
+      "textEnd": 60,
+      "quotedText": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "manual",
+      "confidence": 1,
+      "createdAt": "2026-10-02T09:50:56.783Z",
+      "legacyData": {
+        "recognitionEvidenceId": "notice"
+      }
+    },
+    {
+      "id": "evidence:source:97cbaff3:draft:1:d26-scope-0001-2ef2315280bed48bb36c28dff91828ea2286fe5d2f937064597a1d84224b2eaa",
+      "sourceVersionId": "source:97cbaff3:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "请先填写设备核对表。",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-02T09:52:20.185Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0001-2ef2315280bed48bb36c28dff91828ea2286fe5d2f937064597a1d84224b2eaa"
+      }
+    },
+    {
+      "id": "evidence:source:97cbaff3:draft:1:d26-scope-0002-b43461c835d4078f5cbf80a099f95de01dd6a1ded1121ed7200ed6ccf6d205d7",
+      "sourceVersionId": "source:97cbaff3:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "填写完成后提交设备核对表。",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-02T09:52:20.185Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0002-b43461c835d4078f5cbf80a099f95de01dd6a1ded1121ed7200ed6ccf6d205d7"
+      }
+    },
+    {
+      "id": "evidence:source:ea0cb01e:draft:1:d26-scope-0003-0b665b477aad42bf56579f1d70c8580fa6d4563cc688d73d37ac6ed7f5df05ac",
+      "sourceVersionId": "source:ea0cb01e:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "请保存报名回执。",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-02T09:53:25.867Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0003-0b665b477aad42bf56579f1d70c8580fa6d4563cc688d73d37ac6ed7f5df05ac"
+      }
+    }
+  ],
+  "changeProposals": [],
+  "historyRecords": [
+    {
+      "id": "history:task:source:f6821822:draft:1:save:created",
+      "entityType": "task",
+      "entityId": "task:source:f6821822:draft:1:save",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "task:source:f6821822:draft:1:save"
+      },
+      "actor": "user",
+      "reason": "用户确认识别任务",
+      "sourceVersionId": "source:f6821822:version:1",
+      "changedAt": "2026-10-02T09:50:56.783Z"
+    },
+    {
+      "id": "history:time:source:f6821822:draft:1:stop-time:created",
+      "entityType": "time_point",
+      "entityId": "time:source:f6821822:draft:1:stop-time",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "time:source:f6821822:draft:1:stop-time"
+      },
+      "actor": "user",
+      "reason": "用户确认识别时间节点",
+      "sourceVersionId": "source:f6821822:version:1",
+      "changedAt": "2026-10-02T09:50:56.783Z"
+    },
+    {
+      "id": "history:time:source:f6821822:draft:1:brief-start:created",
+      "entityType": "time_point",
+      "entityId": "time:source:f6821822:draft:1:brief-start",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "time:source:f6821822:draft:1:brief-start"
+      },
+      "actor": "user",
+      "reason": "用户确认识别时间节点",
+      "sourceVersionId": "source:f6821822:version:1",
+      "changedAt": "2026-10-02T09:50:56.783Z"
+    },
+    {
+      "id": "history:time:source:f6821822:draft:1:brief-end:created",
+      "entityType": "time_point",
+      "entityId": "time:source:f6821822:draft:1:brief-end",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "time:source:f6821822:draft:1:brief-end"
+      },
+      "actor": "user",
+      "reason": "用户确认识别时间节点",
+      "sourceVersionId": "source:f6821822:version:1",
+      "changedAt": "2026-10-02T09:50:56.783Z"
+    },
+    {
+      "id": "history:event:source:f6821822:draft:1:stop:created",
+      "entityType": "event",
+      "entityId": "event:source:f6821822:draft:1:stop",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "event:source:f6821822:draft:1:stop"
+      },
+      "actor": "user",
+      "reason": "用户确认识别事件",
+      "sourceVersionId": "source:f6821822:version:1",
+      "changedAt": "2026-10-02T09:50:56.783Z"
+    },
+    {
+      "id": "history:event:source:f6821822:draft:1:briefing:created",
+      "entityType": "event",
+      "entityId": "event:source:f6821822:draft:1:briefing",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "event:source:f6821822:draft:1:briefing"
+      },
+      "actor": "user",
+      "reason": "用户确认识别事件",
+      "sourceVersionId": "source:f6821822:version:1",
+      "changedAt": "2026-10-02T09:50:56.783Z"
+    },
+    {
+      "id": "history:task:source:97cbaff3:draft:1:T1:created",
+      "entityType": "task",
+      "entityId": "task:source:97cbaff3:draft:1:T1",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "task:source:97cbaff3:draft:1:T1"
+      },
+      "actor": "user",
+      "reason": "用户确认识别任务",
+      "sourceVersionId": "source:97cbaff3:version:1",
+      "changedAt": "2026-10-02T09:52:20.185Z"
+    },
+    {
+      "id": "history:task:source:97cbaff3:draft:1:T2:created",
+      "entityType": "task",
+      "entityId": "task:source:97cbaff3:draft:1:T2",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "task:source:97cbaff3:draft:1:T2"
+      },
+      "actor": "user",
+      "reason": "用户确认识别任务",
+      "sourceVersionId": "source:97cbaff3:version:1",
+      "changedAt": "2026-10-02T09:52:20.185Z"
+    },
+    {
+      "id": "history:task:source:ea0cb01e:draft:1:T3:created",
+      "entityType": "task",
+      "entityId": "task:source:ea0cb01e:draft:1:T3",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "task:source:ea0cb01e:draft:1:T3"
+      },
+      "actor": "user",
+      "reason": "用户确认识别任务",
+      "sourceVersionId": "source:ea0cb01e:version:1",
+      "changedAt": "2026-10-02T09:53:25.867Z"
+    }
+  ],
+  "reminderRecords": [],
+  "preferences": {
+    "onboardingCompletedAt": null,
+    "legacyData": {
+      "courseBlocks": [],
+      "integrations": {
+        "sync": {
+          "endpoint": "http://127.0.0.1:8787"
+        },
+        "webMonitors": [],
+        "connectionIntents": []
+      },
+      "knowledgeSettings": {},
+      "recognitionFeedback": [],
+      "v7MigrationLog": [],
+      "v7LegacyData": {}
+    }
+  },
+  "migrationMetadata": [],
+  "savedAt": "2026-10-02T09:53:25.875Z"
+}

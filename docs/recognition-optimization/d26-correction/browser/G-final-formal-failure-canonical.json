@@ -1,0 +1,2146 @@
+{
+  "schemaVersion": 8,
+  "workspace": {
+    "id": "rco-mainline-01-02-i1-d26-ordinary-delivery05",
+    "title": "MAINLINE-01 人工工程响应（非模型预测）",
+    "createdAt": "2026-09-05T08:00:00.000Z",
+    "updatedAt": "2026-10-02T10:01:31.397Z"
+  },
+  "settings": {
+    "defaultTimezone": "Asia/Shanghai",
+    "locale": "zh-CN"
+  },
+  "sources": [
+    {
+      "id": "source:2adab6f3",
+      "workspaceId": "rco-mainline-01-02-i1-d26-ordinary-delivery05",
+      "type": "text",
+      "title": "手动粘贴消息",
+      "status": "needs_review",
+      "currentVersionId": "source:2adab6f3:version:1",
+      "createdAt": "2026-10-02T10:00:29.506Z",
+      "updatedAt": "2026-10-02T10:00:29.525Z",
+      "legacyData": {
+        "contentPreview": "请保存活动手册。没有截止日期要求。",
+        "url": null,
+        "originalFileName": null,
+        "mimeType": null,
+        "fileSize": null,
+        "fileHash": null,
+        "parserVersion": "local-rules-v2",
+        "reviewMetadata": {
+          "sourceType": "text",
+          "mimeType": null,
+          "characterCount": 17,
+          "pageCount": null,
+          "extractionMethod": "manual",
+          "ocrConfidence": null,
+          "partialExtraction": null,
+          "qualityFlags": []
+        },
+        "captureOperationId": "240cee3c-678d-40de-b7b9-efaaf3429dbf"
+      }
+    },
+    {
+      "id": "source:2ae1f324",
+      "workspaceId": "rco-mainline-01-02-i1-d26-ordinary-delivery05",
+      "type": "text",
+      "title": "手动粘贴消息",
+      "status": "confirmed",
+      "currentVersionId": "source:2ae1f324:version:1",
+      "createdAt": "2026-10-02T09:59:43.940Z",
+      "updatedAt": "2026-10-02T09:59:49.925Z",
+      "legacyData": {
+        "contentPreview": "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。",
+        "url": null,
+        "originalFileName": null,
+        "mimeType": null,
+        "fileSize": null,
+        "fileHash": null,
+        "parserVersion": "local-rules-v2",
+        "reviewMetadata": {
+          "sourceType": "text",
+          "mimeType": null,
+          "characterCount": 82,
+          "pageCount": null,
+          "extractionMethod": "manual",
+          "ocrConfidence": null,
+          "partialExtraction": null,
+          "qualityFlags": []
+        },
+        "captureOperationId": "6a3291a8-26b3-4f53-ae1c-40725a6f2acd"
+      }
+    }
+  ],
+  "sourceVersions": [
+    {
+      "id": "source:2adab6f3:version:1",
+      "sourceId": "source:2adab6f3",
+      "versionNo": 1,
+      "contentHash": "fnv1a32:8fad7f1a",
+      "rawText": "请保存活动手册。没有截止日期要求。",
+      "rawTextRef": null,
+      "createdAt": "2026-10-02T10:00:29.506Z",
+      "legacyData": {
+        "reviewMetadata": {
+          "sourceType": "text",
+          "mimeType": null,
+          "characterCount": 17,
+          "pageCount": null,
+          "extractionMethod": "manual",
+          "ocrConfidence": null,
+          "partialExtraction": null,
+          "qualityFlags": []
+        }
+      }
+    },
+    {
+      "id": "source:2ae1f324:version:1",
+      "sourceId": "source:2ae1f324",
+      "versionNo": 1,
+      "contentHash": "fnv1a32:3e34ed7c",
+      "rawText": "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。",
+      "rawTextRef": null,
+      "createdAt": "2026-10-02T09:59:43.940Z",
+      "legacyData": {
+        "reviewMetadata": {
+          "sourceType": "text",
+          "mimeType": null,
+          "characterCount": 82,
+          "pageCount": null,
+          "extractionMethod": "manual",
+          "ocrConfidence": null,
+          "partialExtraction": null,
+          "qualityFlags": []
+        }
+      }
+    }
+  ],
+  "recognitionRuns": [
+    {
+      "id": "source:2adab6f3:run:1",
+      "sourceVersionId": "source:2adab6f3:version:1",
+      "provider": "manual",
+      "modelName": "anonymous-offline-engineering-input",
+      "promptVersion": "recognition-2.0.0",
+      "schemaVersion": "2.0",
+      "pipelineVersion": "d26-ordinary-engineering-fake-transport",
+      "status": "succeeded",
+      "startedAt": "2026-10-02T10:00:29.520Z",
+      "completedAt": "2026-10-02T10:00:29.525Z",
+      "durationMs": 5,
+      "tokenUsage": null,
+      "qualityFlags": [
+        "MAINLINE-01 人工工程响应（非模型预测）"
+      ],
+      "errorCode": null,
+      "legacyData": {
+        "originalRecognitionResult": {
+          "schemaVersion": "2.0",
+          "promptVersion": "engineering-mainline-01",
+          "modelName": "D26 匿名工程假传输（非模型成绩）",
+          "createdAt": "2026-09-05T08:00:00.000Z",
+          "sourceSummary": {
+            "title": "MAINLINE-01 人工工程响应（非模型预测）",
+            "sourceType": "text",
+            "notificationType": "uncertain",
+            "summary": "请保存活动手册。没有截止日期要求。",
+            "requiresAction": true,
+            "actionReason": "请保存活动手册。没有截止日期要求。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "MAINLINE-01 人工工程响应（非模型预测）"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [
+            {
+              "tempId": "save",
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "保存活动手册",
+              "actionVerb": "保存",
+              "actionObject": "活动手册",
+              "description": "保存活动手册",
+              "completionCriteria": [],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [],
+              "timePointTempIds": [],
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "inferenceLevel": "explicit",
+              "userConfirmationRequired": true,
+              "selected": true
+            }
+          ],
+          "materials": [],
+          "timePoints": [],
+          "events": [],
+          "evidence": [
+            {
+              "id": "notice",
+              "sourceId": "source:2adab6f3",
+              "textStart": 0,
+              "textEnd": 17,
+              "quote": "请保存活动手册。没有截止日期要求。",
+              "quotedText": "请保存活动手册。没有截止日期要求。",
+              "field": "description",
+              "extractionMethod": "manual",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [],
+          "ambiguities": [],
+          "ignoredContent": [],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 1,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": true,
+            "reviewReasons": [
+              "MAINLINE-01 人工工程响应（非模型预测）"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "source:2ae1f324:run:1",
+      "sourceVersionId": "source:2ae1f324:version:1",
+      "provider": "manual",
+      "modelName": "anonymous-offline-engineering-input",
+      "promptVersion": "recognition-2.0.0",
+      "schemaVersion": "2.0",
+      "pipelineVersion": "d26-ordinary-engineering-fake-transport",
+      "status": "succeeded",
+      "startedAt": "2026-10-02T09:59:43.953Z",
+      "completedAt": "2026-10-02T09:59:43.956Z",
+      "durationMs": 3,
+      "tokenUsage": null,
+      "qualityFlags": [
+        "MAINLINE-01 人工工程响应（非模型预测）"
+      ],
+      "errorCode": null,
+      "legacyData": {
+        "originalRecognitionResult": {
+          "schemaVersion": "2.0",
+          "promptVersion": "engineering-mainline-01",
+          "modelName": "D26 匿名工程假传输（非模型成绩）",
+          "createdAt": "2026-09-05T08:00:00.000Z",
+          "sourceSummary": {
+            "title": "MAINLINE-01 人工工程响应（非模型预测）",
+            "sourceType": "text",
+            "notificationType": "uncertain",
+            "summary": "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。",
+            "requiresAction": true,
+            "actionReason": "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "MAINLINE-01 人工工程响应（非模型预测）"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [
+            {
+              "tempId": "submit",
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "提交活动报名表",
+              "actionVerb": "提交",
+              "actionObject": "活动报名表",
+              "description": "提交活动报名表",
+              "completionCriteria": [],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [
+                "m0"
+              ],
+              "timePointTempIds": [
+                "d0"
+              ],
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "inferenceLevel": "explicit",
+              "userConfirmationRequired": true,
+              "selected": true
+            },
+            {
+              "tempId": "print",
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "打印入场凭证",
+              "actionVerb": "打印",
+              "actionObject": "入场凭证",
+              "description": "打印入场凭证",
+              "completionCriteria": [],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [
+                "m1"
+              ],
+              "timePointTempIds": [
+                "d1"
+              ],
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "inferenceLevel": "explicit",
+              "userConfirmationRequired": true,
+              "selected": true
+            }
+          ],
+          "materials": [
+            {
+              "tempId": "m0",
+              "name": "活动报名表",
+              "required": true,
+              "formatRequirements": [
+                "PDF"
+              ],
+              "namingRequirements": [
+                "组别"
+              ],
+              "quantity": 1,
+              "submissionChannel": "活动平台",
+              "relatedTaskTempIds": [
+                "submit"
+              ],
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "selected": true
+            },
+            {
+              "tempId": "m1",
+              "name": "入场凭证",
+              "required": true,
+              "formatRequirements": [
+                "A4"
+              ],
+              "namingRequirements": [],
+              "quantity": 1,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "print"
+              ],
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "selected": true
+            }
+          ],
+          "timePoints": [
+            {
+              "tempId": "d0",
+              "type": "task_deadline",
+              "rawText": "2026年9月10日18:00前",
+              "normalizedValue": "2026-09-10T18:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "relatedTaskTempIds": [
+                "submit"
+              ],
+              "relatedMaterialTempIds": [
+                "m0"
+              ],
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "selected": true
+            },
+            {
+              "tempId": "d1",
+              "type": "task_deadline",
+              "rawText": "2026年9月11日18:00前",
+              "normalizedValue": "2026-09-11T18:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "relatedTaskTempIds": [
+                "print"
+              ],
+              "relatedMaterialTempIds": [
+                "m1"
+              ],
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "selected": true
+            }
+          ],
+          "events": [],
+          "evidence": [
+            {
+              "id": "notice",
+              "sourceId": "source:2ae1f324",
+              "textStart": 0,
+              "textEnd": 82,
+              "quote": "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。",
+              "quotedText": "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。",
+              "field": "description",
+              "extractionMethod": "manual",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [],
+          "ambiguities": [],
+          "ignoredContent": [],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 1,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": true,
+            "reviewReasons": [
+              "MAINLINE-01 人工工程响应（非模型预测）"
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "extractionDrafts": [
+    {
+      "id": "source:2adab6f3:draft:1",
+      "recognitionRunId": "source:2adab6f3:run:1",
+      "status": "needs_review",
+      "result": {
+        "schemaVersion": "2.0",
+        "promptVersion": "engineering-mainline-01",
+        "modelName": "D26 匿名工程假传输（非模型成绩）",
+        "createdAt": "2026-09-05T08:00:00.000Z",
+        "sourceSummary": {
+          "title": "保存活动手册",
+          "sourceType": "text",
+          "notificationType": "uncertain",
+          "summary": "1项任务，0项事件。请核对后确认。",
+          "requiresAction": true,
+          "actionReason": "请保存活动手册。没有截止日期要求。"
+        },
+        "projectMatch": {
+          "decision": "standalone_task",
+          "matchedProjectId": null,
+          "suggestedProjectTitle": null,
+          "confidence": 1,
+          "reasons": [
+            "MAINLINE-01 人工工程响应（非模型预测）"
+          ]
+        },
+        "projectSuggestion": null,
+        "milestones": [],
+        "standaloneTasks": [
+          {
+            "tempId": "save",
+            "parentTempId": null,
+            "hierarchyType": "task",
+            "title": "保存活动手册",
+            "actionVerb": "保存",
+            "actionObject": "活动手册",
+            "description": "请保存活动手册。没有截止日期要求。",
+            "completionCriteria": [],
+            "estimatedMinutes": null,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "medium",
+            "dependencyTempIds": [],
+            "materialTempIds": [],
+            "timePointTempIds": [],
+            "evidenceIds": [
+              "notice"
+            ],
+            "confidence": 1,
+            "inferenceLevel": "explicit",
+            "userConfirmationRequired": true,
+            "selected": true
+          }
+        ],
+        "materials": [],
+        "timePoints": [],
+        "events": [],
+        "evidence": [
+          {
+            "id": "notice",
+            "sourceId": "source:2adab6f3",
+            "textStart": 0,
+            "textEnd": 17,
+            "quote": "请保存活动手册。没有截止日期要求。",
+            "quotedText": "请保存活动手册。没有截止日期要求。",
+            "field": "description",
+            "extractionMethod": "manual",
+            "confidence": 1
+          }
+        ],
+        "conflicts": [],
+        "ambiguities": [],
+        "ignoredContent": [],
+        "quality": {
+          "overallConfidence": 1,
+          "hierarchyConfidence": 1,
+          "dateConfidence": 1,
+          "evidenceCoverage": 1,
+          "duplicateRisk": 0,
+          "overFragmentationRisk": 0,
+          "missingActionRisk": 0,
+          "needsHumanReview": true,
+          "reviewReasons": [
+            "MAINLINE-01 人工工程响应（非模型预测）"
+          ]
+        }
+      },
+      "commitOperationIds": [],
+      "acceptedEntityTempIds": [],
+      "rejectedEntityTempIds": [],
+      "createdAt": "2026-10-02T10:00:29.506Z",
+      "updatedAt": "2026-10-02T10:01:31.375Z",
+      "legacyData": {
+        "firstSuggestionDisplayed": {
+          "schemaVersion": "2.0",
+          "promptVersion": "engineering-mainline-01",
+          "modelName": "D26 匿名工程假传输（非模型成绩）",
+          "createdAt": "2026-09-05T08:00:00.000Z",
+          "sourceSummary": {
+            "title": "保存活动手册",
+            "sourceType": "text",
+            "notificationType": "uncertain",
+            "summary": "1项任务，0项事件。请核对后确认。",
+            "requiresAction": true,
+            "actionReason": "请保存活动手册。没有截止日期要求。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "MAINLINE-01 人工工程响应（非模型预测）"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [
+            {
+              "tempId": "save",
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "保存活动手册",
+              "actionVerb": "保存",
+              "actionObject": "活动手册",
+              "description": "请保存活动手册。没有截止日期要求。",
+              "completionCriteria": [],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [],
+              "timePointTempIds": [],
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "inferenceLevel": "explicit",
+              "userConfirmationRequired": true,
+              "selected": true
+            }
+          ],
+          "materials": [],
+          "timePoints": [],
+          "events": [],
+          "evidence": [
+            {
+              "id": "notice",
+              "sourceId": "source:2adab6f3",
+              "textStart": 0,
+              "textEnd": 17,
+              "quote": "请保存活动手册。没有截止日期要求。",
+              "quotedText": "请保存活动手册。没有截止日期要求。",
+              "field": "description",
+              "extractionMethod": "manual",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [],
+          "ambiguities": [],
+          "ignoredContent": [],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 1,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": true,
+            "reviewReasons": [
+              "MAINLINE-01 人工工程响应（非模型预测）"
+            ]
+          }
+        },
+        "firstSuggestionAssembly": {
+          "version": "grounded-first-suggestion-1.0.0",
+          "originalProse": [
+            {
+              "entityId": "save",
+              "kind": "task",
+              "title": "保存活动手册",
+              "description": "保存活动手册"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "MAINLINE-01 人工工程响应（非模型预测）",
+              "description": "请保存活动手册。没有截止日期要求。"
+            }
+          ],
+          "generatedProse": [
+            {
+              "entityId": "save",
+              "kind": "task",
+              "title": "保存活动手册",
+              "description": "请保存活动手册。没有截止日期要求。"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "保存活动手册",
+              "description": "1项任务，0项事件。请核对后确认。"
+            }
+          ],
+          "times": [],
+          "unresolved": [],
+          "role": "DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT"
+        },
+        "v7Record": {
+          "id": "source:2adab6f3:draft:1",
+          "sourceId": "source:2adab6f3",
+          "sourceVersionId": "source:2adab6f3:version:1",
+          "sourceReviewMetadata": {
+            "sourceType": "text",
+            "characterCount": 17,
+            "extractionMethod": "manual"
+          },
+          "attemptOrder": 0,
+          "status": "待确认",
+          "workflowStatus": "needs_review",
+          "createdAt": "2026-10-02T10:00:29.506Z",
+          "updatedAt": "2026-10-02T10:01:31.375Z",
+          "schemaVersion": "2.0",
+          "modelName": "D26 匿名工程假传输（非模型成绩）",
+          "promptVersion": "engineering-mainline-01",
+          "recognitionResult": {
+            "schemaVersion": "2.0",
+            "promptVersion": "engineering-mainline-01",
+            "modelName": "D26 匿名工程假传输（非模型成绩）",
+            "createdAt": "2026-09-05T08:00:00.000Z",
+            "sourceSummary": {
+              "title": "保存活动手册",
+              "sourceType": "text",
+              "notificationType": "uncertain",
+              "summary": "1项任务，0项事件。请核对后确认。",
+              "requiresAction": true,
+              "actionReason": "请保存活动手册。没有截止日期要求。"
+            },
+            "projectMatch": {
+              "decision": "standalone_task",
+              "matchedProjectId": null,
+              "suggestedProjectTitle": null,
+              "confidence": 1,
+              "reasons": [
+                "MAINLINE-01 人工工程响应（非模型预测）"
+              ]
+            },
+            "projectSuggestion": null,
+            "milestones": [],
+            "standaloneTasks": [
+              {
+                "tempId": "save",
+                "parentTempId": null,
+                "hierarchyType": "task",
+                "title": "保存活动手册",
+                "actionVerb": "保存",
+                "actionObject": "活动手册",
+                "description": "请保存活动手册。没有截止日期要求。",
+                "completionCriteria": [],
+                "estimatedMinutes": null,
+                "statusSuggestion": "todo",
+                "prioritySuggestion": "medium",
+                "dependencyTempIds": [],
+                "materialTempIds": [],
+                "timePointTempIds": [],
+                "evidenceIds": [
+                  "notice"
+                ],
+                "confidence": 1,
+                "inferenceLevel": "explicit",
+                "userConfirmationRequired": true,
+                "selected": true
+              }
+            ],
+            "materials": [],
+            "timePoints": [],
+            "events": [],
+            "evidence": [
+              {
+                "id": "notice",
+                "sourceId": "source:2adab6f3",
+                "textStart": 0,
+                "textEnd": 17,
+                "quote": "请保存活动手册。没有截止日期要求。",
+                "quotedText": "请保存活动手册。没有截止日期要求。",
+                "field": "description",
+                "extractionMethod": "manual",
+                "confidence": 1
+              }
+            ],
+            "conflicts": [],
+            "ambiguities": [],
+            "ignoredContent": [],
+            "quality": {
+              "overallConfidence": 1,
+              "hierarchyConfidence": 1,
+              "dateConfidence": 1,
+              "evidenceCoverage": 1,
+              "duplicateRisk": 0,
+              "overFragmentationRisk": 0,
+              "missingActionRisk": 0,
+              "needsHumanReview": true,
+              "reviewReasons": [
+                "MAINLINE-01 人工工程响应（非模型预测）"
+              ]
+            }
+          },
+          "items": [
+            {
+              "id": "draft-item:source:2adab6f3:draft:1:save",
+              "suggestion": {
+                "id": "save",
+                "title": "保存活动手册副本",
+                "category": "其他",
+                "deadline": "2027-10-12",
+                "nextAction": "保存活动手册",
+                "description": "请保存活动手册。没有截止日期要求。",
+                "priority": "中",
+                "materials": [],
+                "evidence": "1项任务，0项事件。请核对后确认。",
+                "confidence": "高"
+              },
+              "selected": true,
+              "status": "待确认",
+              "updatedAt": "2026-10-02T10:01:31.375Z",
+              "history": [
+                {
+                  "id": "draft-item:source:2adab6f3:draft:1:save-history-2026-10-02T10:01:02.389Z-0",
+                  "field": "识别建议",
+                  "before": "{\"id\":\"save\",\"title\":\"保存活动手册\",\"category\":\"其他\",\"deadline\":\"\",\"estimatedMinutes\":30,\"nextAction\":\"保存活动手册\",\"description\":\"请保存活动手册。没有截止日期要求。\",\"priority\":\"中\",\"materials\":[],\"evidence\":\"1项任务，0项事件。请核对后确认。\",\"confidence\":\"高\"}",
+                  "after": "{\"id\":\"save\",\"title\":\"保存活动手册副本\",\"category\":\"其他\",\"deadline\":\"\",\"estimatedMinutes\":30,\"nextAction\":\"保存活动手册\",\"description\":\"请保存活动手册。没有截止日期要求。\",\"priority\":\"中\",\"materials\":[],\"evidence\":\"1项任务，0项事件。请核对后确认。\",\"confidence\":\"高\"}",
+                  "changedAt": "2026-10-02T10:01:02.389Z",
+                  "actor": "user",
+                  "entityType": "draft",
+                  "entityId": "draft-item:source:2adab6f3:draft:1:save",
+                  "action": "updated"
+                },
+                {
+                  "id": "draft-item:source:2adab6f3:draft:1:save-history-2026-10-02T10:01:31.375Z-1",
+                  "field": "识别建议",
+                  "before": "{\"id\":\"save\",\"title\":\"保存活动手册副本\",\"category\":\"其他\",\"deadline\":\"\",\"estimatedMinutes\":30,\"nextAction\":\"保存活动手册\",\"description\":\"请保存活动手册。没有截止日期要求。\",\"priority\":\"中\",\"materials\":[],\"evidence\":\"1项任务，0项事件。请核对后确认。\",\"confidence\":\"高\"}",
+                  "after": "{\"id\":\"save\",\"title\":\"保存活动手册副本\",\"category\":\"其他\",\"deadline\":\"2027-10-12\",\"estimatedMinutes\":30,\"nextAction\":\"保存活动手册\",\"description\":\"请保存活动手册。没有截止日期要求。\",\"priority\":\"中\",\"materials\":[],\"evidence\":\"1项任务，0项事件。请核对后确认。\",\"confidence\":\"高\"}",
+                  "changedAt": "2026-10-02T10:01:31.375Z",
+                  "actor": "user",
+                  "entityType": "draft",
+                  "entityId": "draft-item:source:2adab6f3:draft:1:save",
+                  "action": "updated"
+                }
+              ]
+            }
+          ],
+          "modelVersion": "local-rules"
+        }
+      }
+    },
+    {
+      "id": "source:2ae1f324:draft:1",
+      "recognitionRunId": "source:2ae1f324:run:1",
+      "status": "confirmed",
+      "result": {
+        "schemaVersion": "2.0",
+        "promptVersion": "engineering-mainline-01",
+        "modelName": "D26 匿名工程假传输（非模型成绩）",
+        "createdAt": "2026-09-05T08:00:00.000Z",
+        "sourceSummary": {
+          "title": "提交活动报名表",
+          "sourceType": "text",
+          "notificationType": "uncertain",
+          "summary": "2项任务，0项事件。请核对后确认。",
+          "requiresAction": true,
+          "actionReason": "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。"
+        },
+        "projectMatch": {
+          "decision": "standalone_task",
+          "matchedProjectId": null,
+          "suggestedProjectTitle": null,
+          "confidence": 1,
+          "reasons": [
+            "MAINLINE-01 人工工程响应（非模型预测）"
+          ]
+        },
+        "projectSuggestion": null,
+        "milestones": [],
+        "standaloneTasks": [
+          {
+            "tempId": "submit",
+            "parentTempId": null,
+            "hierarchyType": "task",
+            "title": "提交活动报名表",
+            "actionVerb": "提交",
+            "actionObject": "活动报名表",
+            "description": "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。",
+            "completionCriteria": [],
+            "estimatedMinutes": null,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "medium",
+            "dependencyTempIds": [],
+            "materialTempIds": [
+              "m0"
+            ],
+            "timePointTempIds": [
+              "d0"
+            ],
+            "evidenceIds": [
+              "notice"
+            ],
+            "confidence": 1,
+            "inferenceLevel": "explicit",
+            "userConfirmationRequired": true,
+            "selected": true
+          },
+          {
+            "tempId": "print",
+            "parentTempId": null,
+            "hierarchyType": "task",
+            "title": "打印入场凭证",
+            "actionVerb": "打印",
+            "actionObject": "入场凭证",
+            "description": "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。",
+            "completionCriteria": [],
+            "estimatedMinutes": null,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "medium",
+            "dependencyTempIds": [],
+            "materialTempIds": [
+              "m1"
+            ],
+            "timePointTempIds": [
+              "d1"
+            ],
+            "evidenceIds": [
+              "notice"
+            ],
+            "confidence": 1,
+            "inferenceLevel": "explicit",
+            "userConfirmationRequired": true,
+            "selected": true
+          }
+        ],
+        "materials": [
+          {
+            "tempId": "m0",
+            "name": "活动报名表",
+            "required": true,
+            "formatRequirements": [
+              "PDF"
+            ],
+            "namingRequirements": [
+              "组别"
+            ],
+            "quantity": 1,
+            "submissionChannel": "活动平台",
+            "relatedTaskTempIds": [
+              "submit"
+            ],
+            "evidenceIds": [
+              "notice"
+            ],
+            "confidence": 1,
+            "selected": true
+          },
+          {
+            "tempId": "m1",
+            "name": "入场凭证",
+            "required": true,
+            "formatRequirements": [
+              "A4"
+            ],
+            "namingRequirements": [],
+            "quantity": 1,
+            "submissionChannel": null,
+            "relatedTaskTempIds": [
+              "print"
+            ],
+            "evidenceIds": [
+              "notice"
+            ],
+            "confidence": 1,
+            "selected": true
+          }
+        ],
+        "timePoints": [
+          {
+            "tempId": "d0",
+            "type": "task_deadline",
+            "rawText": "2026年9月10日18:00前",
+            "normalizedValue": "2026-09-10T18:00",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "relatedTaskTempIds": [
+              "submit"
+            ],
+            "relatedMaterialTempIds": [
+              "m0"
+            ],
+            "evidenceIds": [
+              "notice"
+            ],
+            "confidence": 1,
+            "selected": true
+          },
+          {
+            "tempId": "d1",
+            "type": "task_deadline",
+            "rawText": "2026年9月11日18:00前",
+            "normalizedValue": "2026-09-11T18:00",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "relatedTaskTempIds": [
+              "print"
+            ],
+            "relatedMaterialTempIds": [
+              "m1"
+            ],
+            "evidenceIds": [
+              "notice"
+            ],
+            "confidence": 1,
+            "selected": true
+          }
+        ],
+        "events": [],
+        "evidence": [
+          {
+            "id": "notice",
+            "sourceId": "source:2ae1f324",
+            "textStart": 0,
+            "textEnd": 82,
+            "quote": "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。",
+            "quotedText": "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。",
+            "field": "description",
+            "extractionMethod": "manual",
+            "confidence": 1
+          }
+        ],
+        "conflicts": [],
+        "ambiguities": [],
+        "ignoredContent": [],
+        "quality": {
+          "overallConfidence": 1,
+          "hierarchyConfidence": 1,
+          "dateConfidence": 1,
+          "evidenceCoverage": 1,
+          "duplicateRisk": 0,
+          "overFragmentationRisk": 0,
+          "missingActionRisk": 0,
+          "needsHumanReview": true,
+          "reviewReasons": [
+            "MAINLINE-01 人工工程响应（非模型预测）"
+          ]
+        }
+      },
+      "commitOperationIds": [
+        "source-review:source:2ae1f324:draft:1:fnv1a32:3005ffdf"
+      ],
+      "acceptedEntityTempIds": [
+        "d0",
+        "d1",
+        "m0",
+        "m1",
+        "print",
+        "submit"
+      ],
+      "rejectedEntityTempIds": [],
+      "createdAt": "2026-10-02T09:59:43.940Z",
+      "updatedAt": "2026-10-02T09:59:49.925Z",
+      "legacyData": {
+        "firstSuggestionDisplayed": {
+          "schemaVersion": "2.0",
+          "promptVersion": "engineering-mainline-01",
+          "modelName": "D26 匿名工程假传输（非模型成绩）",
+          "createdAt": "2026-09-05T08:00:00.000Z",
+          "sourceSummary": {
+            "title": "提交活动报名表",
+            "sourceType": "text",
+            "notificationType": "uncertain",
+            "summary": "2项任务，0项事件。请核对后确认。",
+            "requiresAction": true,
+            "actionReason": "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "MAINLINE-01 人工工程响应（非模型预测）"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [
+            {
+              "tempId": "submit",
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "提交活动报名表",
+              "actionVerb": "提交",
+              "actionObject": "活动报名表",
+              "description": "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。",
+              "completionCriteria": [],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [
+                "m0"
+              ],
+              "timePointTempIds": [
+                "d0"
+              ],
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "inferenceLevel": "explicit",
+              "userConfirmationRequired": true,
+              "selected": true
+            },
+            {
+              "tempId": "print",
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "打印入场凭证",
+              "actionVerb": "打印",
+              "actionObject": "入场凭证",
+              "description": "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。",
+              "completionCriteria": [],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [
+                "m1"
+              ],
+              "timePointTempIds": [
+                "d1"
+              ],
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "inferenceLevel": "explicit",
+              "userConfirmationRequired": true,
+              "selected": true
+            }
+          ],
+          "materials": [
+            {
+              "tempId": "m0",
+              "name": "活动报名表",
+              "required": true,
+              "formatRequirements": [
+                "PDF"
+              ],
+              "namingRequirements": [
+                "组别"
+              ],
+              "quantity": 1,
+              "submissionChannel": "活动平台",
+              "relatedTaskTempIds": [
+                "submit"
+              ],
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "selected": true
+            },
+            {
+              "tempId": "m1",
+              "name": "入场凭证",
+              "required": true,
+              "formatRequirements": [
+                "A4"
+              ],
+              "namingRequirements": [],
+              "quantity": 1,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "print"
+              ],
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "selected": true
+            }
+          ],
+          "timePoints": [
+            {
+              "tempId": "d0",
+              "type": "task_deadline",
+              "rawText": "2026年9月10日18:00前",
+              "normalizedValue": "2026-09-10T18:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "relatedTaskTempIds": [
+                "submit"
+              ],
+              "relatedMaterialTempIds": [
+                "m0"
+              ],
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "selected": true
+            },
+            {
+              "tempId": "d1",
+              "type": "task_deadline",
+              "rawText": "2026年9月11日18:00前",
+              "normalizedValue": "2026-09-11T18:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "relatedTaskTempIds": [
+                "print"
+              ],
+              "relatedMaterialTempIds": [
+                "m1"
+              ],
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "selected": true
+            }
+          ],
+          "events": [],
+          "evidence": [
+            {
+              "id": "notice",
+              "sourceId": "source:2ae1f324",
+              "textStart": 0,
+              "textEnd": 82,
+              "quote": "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。",
+              "quotedText": "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。",
+              "field": "description",
+              "extractionMethod": "manual",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [],
+          "ambiguities": [],
+          "ignoredContent": [],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 1,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": true,
+            "reviewReasons": [
+              "MAINLINE-01 人工工程响应（非模型预测）"
+            ]
+          }
+        },
+        "firstSuggestionAssembly": {
+          "version": "grounded-first-suggestion-1.0.0",
+          "originalProse": [
+            {
+              "entityId": "submit",
+              "kind": "task",
+              "title": "提交活动报名表",
+              "description": "提交活动报名表"
+            },
+            {
+              "entityId": "print",
+              "kind": "task",
+              "title": "打印入场凭证",
+              "description": "打印入场凭证"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "MAINLINE-01 人工工程响应（非模型预测）",
+              "description": "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。"
+            }
+          ],
+          "generatedProse": [
+            {
+              "entityId": "submit",
+              "kind": "task",
+              "title": "提交活动报名表",
+              "description": "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。"
+            },
+            {
+              "entityId": "print",
+              "kind": "task",
+              "title": "打印入场凭证",
+              "description": "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "提交活动报名表",
+              "description": "2项任务，0项事件。请核对后确认。"
+            }
+          ],
+          "times": [
+            {
+              "entityId": "d0",
+              "before": {
+                "normalizedValue": "2026-09-10T18:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "after": {
+                "normalizedValue": "2026-09-10T18:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.0.0",
+                "point": {
+                  "rawText": "2026年9月10日18:00前",
+                  "type": "task_deadline",
+                  "normalizedValue": "2026-09-10T18:00",
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 16
+                  },
+                  "dateKind": "absolute",
+                  "timeKind": "clock",
+                  "correctionApplied": false,
+                  "issues": []
+                },
+                "knownDate": "2026-09-10",
+                "dayPeriod": null,
+                "certainty": "stated",
+                "sourceContext": "请于2026年9月10日18:00前提交活动报名表"
+              }
+            },
+            {
+              "entityId": "d1",
+              "before": {
+                "normalizedValue": "2026-09-11T18:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "after": {
+                "normalizedValue": "2026-09-11T18:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.0.0",
+                "point": {
+                  "rawText": "2026年9月11日18:00前",
+                  "type": "task_deadline",
+                  "normalizedValue": "2026-09-11T18:00",
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 16
+                  },
+                  "dateKind": "absolute",
+                  "timeKind": "clock",
+                  "correctionApplied": false,
+                  "issues": []
+                },
+                "knownDate": "2026-09-11",
+                "dayPeriod": null,
+                "certainty": "stated",
+                "sourceContext": "请于2026年9月11日18:00前打印入场凭证"
+              }
+            }
+          ],
+          "unresolved": [],
+          "role": "DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT"
+        },
+        "v7Record": {
+          "id": "source:2ae1f324:draft:1",
+          "sourceId": "source:2ae1f324",
+          "sourceVersionId": "source:2ae1f324:version:1",
+          "sourceReviewMetadata": {
+            "sourceType": "text",
+            "characterCount": 82,
+            "extractionMethod": "manual"
+          },
+          "attemptOrder": 0,
+          "status": "待确认",
+          "workflowStatus": "needs_review",
+          "createdAt": "2026-10-02T09:59:43.940Z",
+          "updatedAt": "2026-10-02T09:59:43.956Z",
+          "schemaVersion": "2.0",
+          "modelName": "D26 匿名工程假传输（非模型成绩）",
+          "promptVersion": "engineering-mainline-01",
+          "recognitionResult": {
+            "schemaVersion": "2.0",
+            "promptVersion": "engineering-mainline-01",
+            "modelName": "D26 匿名工程假传输（非模型成绩）",
+            "createdAt": "2026-09-05T08:00:00.000Z",
+            "sourceSummary": {
+              "title": "提交活动报名表",
+              "sourceType": "text",
+              "notificationType": "uncertain",
+              "summary": "2项任务，0项事件。请核对后确认。",
+              "requiresAction": true,
+              "actionReason": "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。"
+            },
+            "projectMatch": {
+              "decision": "standalone_task",
+              "matchedProjectId": null,
+              "suggestedProjectTitle": null,
+              "confidence": 1,
+              "reasons": [
+                "MAINLINE-01 人工工程响应（非模型预测）"
+              ]
+            },
+            "projectSuggestion": null,
+            "milestones": [],
+            "standaloneTasks": [
+              {
+                "tempId": "submit",
+                "parentTempId": null,
+                "hierarchyType": "task",
+                "title": "提交活动报名表",
+                "actionVerb": "提交",
+                "actionObject": "活动报名表",
+                "description": "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。",
+                "completionCriteria": [],
+                "estimatedMinutes": null,
+                "statusSuggestion": "todo",
+                "prioritySuggestion": "medium",
+                "dependencyTempIds": [],
+                "materialTempIds": [
+                  "m0"
+                ],
+                "timePointTempIds": [
+                  "d0"
+                ],
+                "evidenceIds": [
+                  "notice"
+                ],
+                "confidence": 1,
+                "inferenceLevel": "explicit",
+                "userConfirmationRequired": true,
+                "selected": true
+              },
+              {
+                "tempId": "print",
+                "parentTempId": null,
+                "hierarchyType": "task",
+                "title": "打印入场凭证",
+                "actionVerb": "打印",
+                "actionObject": "入场凭证",
+                "description": "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。",
+                "completionCriteria": [],
+                "estimatedMinutes": null,
+                "statusSuggestion": "todo",
+                "prioritySuggestion": "medium",
+                "dependencyTempIds": [],
+                "materialTempIds": [
+                  "m1"
+                ],
+                "timePointTempIds": [
+                  "d1"
+                ],
+                "evidenceIds": [
+                  "notice"
+                ],
+                "confidence": 1,
+                "inferenceLevel": "explicit",
+                "userConfirmationRequired": true,
+                "selected": true
+              }
+            ],
+            "materials": [
+              {
+                "tempId": "m0",
+                "name": "活动报名表",
+                "required": true,
+                "formatRequirements": [
+                  "PDF"
+                ],
+                "namingRequirements": [
+                  "组别"
+                ],
+                "quantity": 1,
+                "submissionChannel": "活动平台",
+                "relatedTaskTempIds": [
+                  "submit"
+                ],
+                "evidenceIds": [
+                  "notice"
+                ],
+                "confidence": 1,
+                "selected": true
+              },
+              {
+                "tempId": "m1",
+                "name": "入场凭证",
+                "required": true,
+                "formatRequirements": [
+                  "A4"
+                ],
+                "namingRequirements": [],
+                "quantity": 1,
+                "submissionChannel": null,
+                "relatedTaskTempIds": [
+                  "print"
+                ],
+                "evidenceIds": [
+                  "notice"
+                ],
+                "confidence": 1,
+                "selected": true
+              }
+            ],
+            "timePoints": [
+              {
+                "tempId": "d0",
+                "type": "task_deadline",
+                "rawText": "2026年9月10日18:00前",
+                "normalizedValue": "2026-09-10T18:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false,
+                "relatedTaskTempIds": [
+                  "submit"
+                ],
+                "relatedMaterialTempIds": [
+                  "m0"
+                ],
+                "evidenceIds": [
+                  "notice"
+                ],
+                "confidence": 1,
+                "selected": true
+              },
+              {
+                "tempId": "d1",
+                "type": "task_deadline",
+                "rawText": "2026年9月11日18:00前",
+                "normalizedValue": "2026-09-11T18:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false,
+                "relatedTaskTempIds": [
+                  "print"
+                ],
+                "relatedMaterialTempIds": [
+                  "m1"
+                ],
+                "evidenceIds": [
+                  "notice"
+                ],
+                "confidence": 1,
+                "selected": true
+              }
+            ],
+            "events": [],
+            "evidence": [
+              {
+                "id": "notice",
+                "sourceId": "source:2ae1f324",
+                "textStart": 0,
+                "textEnd": 82,
+                "quote": "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。",
+                "quotedText": "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。",
+                "field": "description",
+                "extractionMethod": "manual",
+                "confidence": 1
+              }
+            ],
+            "conflicts": [],
+            "ambiguities": [],
+            "ignoredContent": [],
+            "quality": {
+              "overallConfidence": 1,
+              "hierarchyConfidence": 1,
+              "dateConfidence": 1,
+              "evidenceCoverage": 1,
+              "duplicateRisk": 0,
+              "overFragmentationRisk": 0,
+              "missingActionRisk": 0,
+              "needsHumanReview": true,
+              "reviewReasons": [
+                "MAINLINE-01 人工工程响应（非模型预测）"
+              ]
+            }
+          },
+          "items": [
+            {
+              "id": "draft-item:source:2ae1f324:draft:1:submit",
+              "suggestion": {
+                "id": "submit",
+                "title": "提交活动报名表",
+                "category": "其他",
+                "nextAction": "提交活动报名表",
+                "description": "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。",
+                "priority": "中",
+                "materials": [
+                  "活动报名表"
+                ],
+                "evidence": "2026年9月10日18:00前",
+                "confidence": "高"
+              },
+              "selected": true,
+              "status": "已确认",
+              "updatedAt": "2026-10-02T09:59:43.956Z",
+              "history": []
+            },
+            {
+              "id": "draft-item:source:2ae1f324:draft:1:print",
+              "suggestion": {
+                "id": "print",
+                "title": "打印入场凭证",
+                "category": "其他",
+                "nextAction": "打印入场凭证",
+                "description": "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。",
+                "priority": "中",
+                "materials": [
+                  "入场凭证"
+                ],
+                "evidence": "2026年9月11日18:00前",
+                "confidence": "高"
+              },
+              "selected": true,
+              "status": "已确认",
+              "updatedAt": "2026-10-02T09:59:43.956Z",
+              "history": []
+            }
+          ],
+          "modelVersion": "local-rules"
+        },
+        "sourceReviewReadback": {
+          "version": "source-review-d26-1",
+          "draftId": "source:2ae1f324:draft:1",
+          "commitId": "source-review:source:2ae1f324:draft:1:fnv1a32:3005ffdf",
+          "disposition": "confirmed",
+          "entityIds": [
+            "task:source:2ae1f324:draft:1:submit",
+            "task:source:2ae1f324:draft:1:print",
+            "time:source:2ae1f324:draft:1:d0",
+            "time:source:2ae1f324:draft:1:d1",
+            "material:source:2ae1f324:draft:1:m0",
+            "material:source:2ae1f324:draft:1:m1"
+          ],
+          "entityHashes": {
+            "task:source:2ae1f324:draft:1:submit": "fnv1a32:2b11a34c",
+            "task:source:2ae1f324:draft:1:print": "fnv1a32:ad13c5ef",
+            "time:source:2ae1f324:draft:1:d0": "fnv1a32:0bb285d7",
+            "time:source:2ae1f324:draft:1:d1": "fnv1a32:3228627d",
+            "material:source:2ae1f324:draft:1:m0": "fnv1a32:1cf81312",
+            "material:source:2ae1f324:draft:1:m1": "fnv1a32:0fe55b83"
+          },
+          "verifiedAt": "2026-10-02T10:00:08.148Z"
+        }
+      }
+    }
+  ],
+  "projects": [],
+  "milestones": [],
+  "workPackages": [],
+  "tasks": [
+    {
+      "id": "task:source:2ae1f324:draft:1:submit",
+      "projectId": null,
+      "milestoneId": null,
+      "workPackageId": null,
+      "parentTaskId": null,
+      "title": "提交活动报名表",
+      "description": "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。",
+      "nextAction": "提交活动报名表",
+      "status": "todo",
+      "estimatedMinutes": null,
+      "manualPriority": null,
+      "snoozedUntil": null,
+      "dependencyIds": [],
+      "createdAt": "2026-10-02T09:59:49.912Z",
+      "updatedAt": "2026-10-02T09:59:49.912Z",
+      "version": 2,
+      "legacyData": {
+        "recognitionTempId": "submit",
+        "actionVerb": "提交",
+        "actionObject": "活动报名表",
+        "completionCriteria": [],
+        "inferenceLevel": "explicit",
+        "prioritySuggestion": "medium",
+        "priority": "中",
+        "evidenceIds": [
+          "notice"
+        ],
+        "sourceId": "source:2ae1f324",
+        "category": "其他",
+        "v7Record": {
+          "id": "task:source:2ae1f324:draft:1:submit",
+          "hierarchyType": "task",
+          "actionVerb": "提交",
+          "actionObject": "活动报名表",
+          "completionCriteria": [],
+          "evidenceIds": [
+            "notice"
+          ],
+          "title": "提交活动报名表",
+          "category": "其他",
+          "status": "待开始",
+          "deadline": "2026-09-10T18:00",
+          "estimatedMinutes": 60,
+          "estimatedMinutesKnown": false,
+          "nextAction": "提交活动报名表",
+          "description": "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。",
+          "priority": "中",
+          "riskFlags": [],
+          "materials": [
+            {
+              "id": "material:source:2ae1f324:draft:1:m0",
+              "name": "活动报名表",
+              "done": false,
+              "status": "unverified",
+              "taskId": "task:source:2ae1f324:draft:1:submit",
+              "sourceId": "source:2ae1f324"
+            }
+          ],
+          "dependencies": [],
+          "dependencyIds": [],
+          "reminders": [],
+          "sourceIds": [
+            "source:2ae1f324"
+          ],
+          "priorityReason": "由当前权威实体计算并允许手动调整",
+          "priorityReasons": [
+            "由当前权威实体计算并允许手动调整"
+          ],
+          "timePointIds": [
+            "time:source:2ae1f324:draft:1:d0"
+          ],
+          "materialIds": [
+            "material:source:2ae1f324:draft:1:m0"
+          ],
+          "createdAt": "2026-10-02T09:59:49.912Z",
+          "updatedAt": "2026-10-02T09:59:49.912Z",
+          "history": [
+            {
+              "id": "history:task:source:2ae1f324:draft:1:submit:created",
+              "field": "created",
+              "before": "null",
+              "after": "{\"id\":\"task:source:2ae1f324:draft:1:submit\"}",
+              "changedAt": "2026-10-02T09:59:49.912Z",
+              "actor": "user",
+              "entityType": "task",
+              "entityId": "task:source:2ae1f324:draft:1:submit",
+              "action": "created"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "task:source:2ae1f324:draft:1:print",
+      "projectId": null,
+      "milestoneId": null,
+      "workPackageId": null,
+      "parentTaskId": null,
+      "title": "打印入场凭证",
+      "description": "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。",
+      "nextAction": "打印入场凭证",
+      "status": "todo",
+      "estimatedMinutes": null,
+      "manualPriority": null,
+      "snoozedUntil": null,
+      "dependencyIds": [],
+      "createdAt": "2026-10-02T09:59:49.912Z",
+      "updatedAt": "2026-10-02T09:59:49.912Z",
+      "version": 2,
+      "legacyData": {
+        "recognitionTempId": "print",
+        "actionVerb": "打印",
+        "actionObject": "入场凭证",
+        "completionCriteria": [],
+        "inferenceLevel": "explicit",
+        "prioritySuggestion": "medium",
+        "priority": "中",
+        "evidenceIds": [
+          "notice"
+        ],
+        "sourceId": "source:2ae1f324",
+        "category": "其他",
+        "v7Record": {
+          "id": "task:source:2ae1f324:draft:1:print",
+          "hierarchyType": "task",
+          "actionVerb": "打印",
+          "actionObject": "入场凭证",
+          "completionCriteria": [],
+          "evidenceIds": [
+            "notice"
+          ],
+          "title": "打印入场凭证",
+          "category": "其他",
+          "status": "待开始",
+          "deadline": "2026-09-11T18:00",
+          "estimatedMinutes": 60,
+          "estimatedMinutesKnown": false,
+          "nextAction": "打印入场凭证",
+          "description": "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。",
+          "priority": "中",
+          "riskFlags": [],
+          "materials": [
+            {
+              "id": "material:source:2ae1f324:draft:1:m1",
+              "name": "入场凭证",
+              "done": false,
+              "status": "unverified",
+              "taskId": "task:source:2ae1f324:draft:1:print",
+              "sourceId": "source:2ae1f324"
+            }
+          ],
+          "dependencies": [],
+          "dependencyIds": [],
+          "reminders": [],
+          "sourceIds": [
+            "source:2ae1f324"
+          ],
+          "priorityReason": "由当前权威实体计算并允许手动调整",
+          "priorityReasons": [
+            "由当前权威实体计算并允许手动调整"
+          ],
+          "timePointIds": [
+            "time:source:2ae1f324:draft:1:d1"
+          ],
+          "materialIds": [
+            "material:source:2ae1f324:draft:1:m1"
+          ],
+          "createdAt": "2026-10-02T09:59:49.912Z",
+          "updatedAt": "2026-10-02T09:59:49.912Z",
+          "history": [
+            {
+              "id": "history:task:source:2ae1f324:draft:1:print:created",
+              "field": "created",
+              "before": "null",
+              "after": "{\"id\":\"task:source:2ae1f324:draft:1:print\"}",
+              "changedAt": "2026-10-02T09:59:49.912Z",
+              "actor": "user",
+              "entityType": "task",
+              "entityId": "task:source:2ae1f324:draft:1:print",
+              "action": "created"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "materials": [
+    {
+      "id": "material:source:2ae1f324:draft:1:m0",
+      "projectId": null,
+      "name": "活动报名表",
+      "required": true,
+      "status": "unverified",
+      "requirements": [],
+      "formatRequirements": [
+        "PDF"
+      ],
+      "namingRequirements": [
+        "组别"
+      ],
+      "quantity": 1,
+      "submissionChannel": "活动平台",
+      "relatedTaskIds": [
+        "task:source:2ae1f324:draft:1:submit"
+      ],
+      "deadlineTimePointId": "time:source:2ae1f324:draft:1:d0",
+      "createdAt": "2026-10-02T09:59:49.912Z",
+      "updatedAt": "2026-10-02T09:59:49.912Z",
+      "version": 1,
+      "legacyData": {
+        "recognitionTempId": "m0",
+        "evidenceIds": [
+          "notice"
+        ],
+        "availabilityVersion": "ordinary-availability-unobserved-1",
+        "availabilityOrigin": "not_observed",
+        "sourceReviewDraftId": "source:2ae1f324:draft:1"
+      }
+    },
+    {
+      "id": "material:source:2ae1f324:draft:1:m1",
+      "projectId": null,
+      "name": "入场凭证",
+      "required": true,
+      "status": "unverified",
+      "requirements": [],
+      "formatRequirements": [
+        "A4"
+      ],
+      "namingRequirements": [],
+      "quantity": 1,
+      "submissionChannel": null,
+      "relatedTaskIds": [
+        "task:source:2ae1f324:draft:1:print"
+      ],
+      "deadlineTimePointId": "time:source:2ae1f324:draft:1:d1",
+      "createdAt": "2026-10-02T09:59:49.912Z",
+      "updatedAt": "2026-10-02T09:59:49.912Z",
+      "version": 1,
+      "legacyData": {
+        "recognitionTempId": "m1",
+        "evidenceIds": [
+          "notice"
+        ],
+        "availabilityVersion": "ordinary-availability-unobserved-1",
+        "availabilityOrigin": "not_observed",
+        "sourceReviewDraftId": "source:2ae1f324:draft:1"
+      }
+    }
+  ],
+  "timePoints": [
+    {
+      "id": "time:source:2ae1f324:draft:1:d0",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": "task:source:2ae1f324:draft:1:submit",
+      "materialId": "material:source:2ae1f324:draft:1:m0",
+      "eventId": null,
+      "relatedTaskIds": [
+        "task:source:2ae1f324:draft:1:submit"
+      ],
+      "relatedMaterialIds": [
+        "material:source:2ae1f324:draft:1:m0"
+      ],
+      "type": "task_deadline",
+      "rawText": "2026年9月10日18:00前",
+      "normalizedValue": "2026-09-10T18:00",
+      "timezone": "Asia/Shanghai",
+      "isAllDay": false,
+      "precision": "exact",
+      "needsConfirmation": false,
+      "createdAt": "2026-10-02T09:59:49.912Z",
+      "updatedAt": "2026-10-02T09:59:49.912Z",
+      "legacyData": {
+        "recognitionTempId": "d0",
+        "evidenceIds": [
+          "notice"
+        ],
+        "confidence": 1
+      }
+    },
+    {
+      "id": "time:source:2ae1f324:draft:1:d1",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": "task:source:2ae1f324:draft:1:print",
+      "materialId": "material:source:2ae1f324:draft:1:m1",
+      "eventId": null,
+      "relatedTaskIds": [
+        "task:source:2ae1f324:draft:1:print"
+      ],
+      "relatedMaterialIds": [
+        "material:source:2ae1f324:draft:1:m1"
+      ],
+      "type": "task_deadline",
+      "rawText": "2026年9月11日18:00前",
+      "normalizedValue": "2026-09-11T18:00",
+      "timezone": "Asia/Shanghai",
+      "isAllDay": false,
+      "precision": "exact",
+      "needsConfirmation": false,
+      "createdAt": "2026-10-02T09:59:49.912Z",
+      "updatedAt": "2026-10-02T09:59:49.912Z",
+      "legacyData": {
+        "recognitionTempId": "d1",
+        "evidenceIds": [
+          "notice"
+        ],
+        "confidence": 1
+      }
+    }
+  ],
+  "events": [],
+  "evidenceRefs": [
+    {
+      "id": "evidence:source:2ae1f324:draft:1:notice",
+      "sourceVersionId": "source:2ae1f324:version:1",
+      "page": null,
+      "textStart": 0,
+      "textEnd": 82,
+      "quotedText": "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "manual",
+      "confidence": 1,
+      "createdAt": "2026-10-02T09:59:49.912Z",
+      "legacyData": {
+        "recognitionEvidenceId": "notice"
+      }
+    }
+  ],
+  "changeProposals": [],
+  "historyRecords": [
+    {
+      "id": "history:task:source:2ae1f324:draft:1:submit:created",
+      "entityType": "task",
+      "entityId": "task:source:2ae1f324:draft:1:submit",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "task:source:2ae1f324:draft:1:submit"
+      },
+      "actor": "user",
+      "reason": "用户确认识别任务",
+      "sourceVersionId": "source:2ae1f324:version:1",
+      "changedAt": "2026-10-02T09:59:49.912Z"
+    },
+    {
+      "id": "history:task:source:2ae1f324:draft:1:print:created",
+      "entityType": "task",
+      "entityId": "task:source:2ae1f324:draft:1:print",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "task:source:2ae1f324:draft:1:print"
+      },
+      "actor": "user",
+      "reason": "用户确认识别任务",
+      "sourceVersionId": "source:2ae1f324:version:1",
+      "changedAt": "2026-10-02T09:59:49.912Z"
+    },
+    {
+      "id": "history:material:source:2ae1f324:draft:1:m0:created",
+      "entityType": "material",
+      "entityId": "material:source:2ae1f324:draft:1:m0",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "material:source:2ae1f324:draft:1:m0"
+      },
+      "actor": "user",
+      "reason": "用户确认识别材料",
+      "sourceVersionId": "source:2ae1f324:version:1",
+      "changedAt": "2026-10-02T09:59:49.912Z"
+    },
+    {
+      "id": "history:material:source:2ae1f324:draft:1:m1:created",
+      "entityType": "material",
+      "entityId": "material:source:2ae1f324:draft:1:m1",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "material:source:2ae1f324:draft:1:m1"
+      },
+      "actor": "user",
+      "reason": "用户确认识别材料",
+      "sourceVersionId": "source:2ae1f324:version:1",
+      "changedAt": "2026-10-02T09:59:49.912Z"
+    },
+    {
+      "id": "history:time:source:2ae1f324:draft:1:d0:created",
+      "entityType": "time_point",
+      "entityId": "time:source:2ae1f324:draft:1:d0",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "time:source:2ae1f324:draft:1:d0"
+      },
+      "actor": "user",
+      "reason": "用户确认识别时间节点",
+      "sourceVersionId": "source:2ae1f324:version:1",
+      "changedAt": "2026-10-02T09:59:49.912Z"
+    },
+    {
+      "id": "history:time:source:2ae1f324:draft:1:d1:created",
+      "entityType": "time_point",
+      "entityId": "time:source:2ae1f324:draft:1:d1",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "time:source:2ae1f324:draft:1:d1"
+      },
+      "actor": "user",
+      "reason": "用户确认识别时间节点",
+      "sourceVersionId": "source:2ae1f324:version:1",
+      "changedAt": "2026-10-02T09:59:49.912Z"
+    },
+    {
+      "id": "draft-item:source:2adab6f3:draft:1:save-history-2026-10-02T10:01:02.389Z-0",
+      "entityType": "extraction_draft",
+      "entityId": "source:2adab6f3:draft:1",
+      "action": "updated",
+      "fieldName": "识别建议",
+      "before": "{\"id\":\"save\",\"title\":\"保存活动手册\",\"category\":\"其他\",\"deadline\":\"\",\"estimatedMinutes\":30,\"nextAction\":\"保存活动手册\",\"description\":\"请保存活动手册。没有截止日期要求。\",\"priority\":\"中\",\"materials\":[],\"evidence\":\"1项任务，0项事件。请核对后确认。\",\"confidence\":\"高\"}",
+      "after": "{\"id\":\"save\",\"title\":\"保存活动手册副本\",\"category\":\"其他\",\"deadline\":\"\",\"estimatedMinutes\":30,\"nextAction\":\"保存活动手册\",\"description\":\"请保存活动手册。没有截止日期要求。\",\"priority\":\"中\",\"materials\":[],\"evidence\":\"1项任务，0项事件。请核对后确认。\",\"confidence\":\"高\"}",
+      "actor": "user",
+      "reason": null,
+      "sourceVersionId": null,
+      "changedAt": "2026-10-02T10:01:02.389Z",
+      "needsReview": true,
+      "legacyData": {
+        "v7Record": {
+          "id": "draft-item:source:2adab6f3:draft:1:save-history-2026-10-02T10:01:02.389Z-0",
+          "entityType": "draft",
+          "entityId": "draft-item:source:2adab6f3:draft:1:save",
+          "field": "识别建议",
+          "before": "{\"id\":\"save\",\"title\":\"保存活动手册\",\"category\":\"其他\",\"deadline\":\"\",\"estimatedMinutes\":30,\"nextAction\":\"保存活动手册\",\"description\":\"请保存活动手册。没有截止日期要求。\",\"priority\":\"中\",\"materials\":[],\"evidence\":\"1项任务，0项事件。请核对后确认。\",\"confidence\":\"高\"}",
+          "after": "{\"id\":\"save\",\"title\":\"保存活动手册副本\",\"category\":\"其他\",\"deadline\":\"\",\"estimatedMinutes\":30,\"nextAction\":\"保存活动手册\",\"description\":\"请保存活动手册。没有截止日期要求。\",\"priority\":\"中\",\"materials\":[],\"evidence\":\"1项任务，0项事件。请核对后确认。\",\"confidence\":\"高\"}",
+          "actor": "user",
+          "action": "updated",
+          "changedAt": "2026-10-02T10:01:02.389Z",
+          "originalEntityId": "draft-item:source:2adab6f3:draft:1:save"
+        }
+      }
+    },
+    {
+      "id": "draft-item:source:2adab6f3:draft:1:save-history-2026-10-02T10:01:31.375Z-1",
+      "entityType": "extraction_draft",
+      "entityId": "source:2adab6f3:draft:1",
+      "action": "updated",
+      "fieldName": "识别建议",
+      "before": "{\"id\":\"save\",\"title\":\"保存活动手册副本\",\"category\":\"其他\",\"deadline\":\"\",\"estimatedMinutes\":30,\"nextAction\":\"保存活动手册\",\"description\":\"请保存活动手册。没有截止日期要求。\",\"priority\":\"中\",\"materials\":[],\"evidence\":\"1项任务，0项事件。请核对后确认。\",\"confidence\":\"高\"}",
+      "after": "{\"id\":\"save\",\"title\":\"保存活动手册副本\",\"category\":\"其他\",\"deadline\":\"2027-10-12\",\"estimatedMinutes\":30,\"nextAction\":\"保存活动手册\",\"description\":\"请保存活动手册。没有截止日期要求。\",\"priority\":\"中\",\"materials\":[],\"evidence\":\"1项任务，0项事件。请核对后确认。\",\"confidence\":\"高\"}",
+      "actor": "user",
+      "reason": null,
+      "sourceVersionId": null,
+      "changedAt": "2026-10-02T10:01:31.375Z",
+      "needsReview": true,
+      "legacyData": {
+        "v7Record": {
+          "id": "draft-item:source:2adab6f3:draft:1:save-history-2026-10-02T10:01:31.375Z-1",
+          "entityType": "draft",
+          "entityId": "draft-item:source:2adab6f3:draft:1:save",
+          "field": "识别建议",
+          "before": "{\"id\":\"save\",\"title\":\"保存活动手册副本\",\"category\":\"其他\",\"deadline\":\"\",\"estimatedMinutes\":30,\"nextAction\":\"保存活动手册\",\"description\":\"请保存活动手册。没有截止日期要求。\",\"priority\":\"中\",\"materials\":[],\"evidence\":\"1项任务，0项事件。请核对后确认。\",\"confidence\":\"高\"}",
+          "after": "{\"id\":\"save\",\"title\":\"保存活动手册副本\",\"category\":\"其他\",\"deadline\":\"2027-10-12\",\"estimatedMinutes\":30,\"nextAction\":\"保存活动手册\",\"description\":\"请保存活动手册。没有截止日期要求。\",\"priority\":\"中\",\"materials\":[],\"evidence\":\"1项任务，0项事件。请核对后确认。\",\"confidence\":\"高\"}",
+          "actor": "user",
+          "action": "updated",
+          "changedAt": "2026-10-02T10:01:31.375Z",
+          "originalEntityId": "draft-item:source:2adab6f3:draft:1:save"
+        }
+      }
+    }
+  ],
+  "reminderRecords": [],
+  "preferences": {
+    "onboardingCompletedAt": null,
+    "legacyData": {
+      "courseBlocks": [],
+      "integrations": {
+        "sync": {
+          "endpoint": "http://127.0.0.1:8787"
+        },
+        "webMonitors": [],
+        "connectionIntents": []
+      },
+      "knowledgeSettings": {},
+      "recognitionFeedback": [
+        {
+          "id": "feedback-1790935262415-0",
+          "draftId": "source:2adab6f3:draft:1",
+          "originalKind": "task:draft-item:source:2adab6f3:draft:1:save",
+          "correctedKind": "fields:title",
+          "action": "modified",
+          "createdAt": "2026-10-02T10:01:02.415Z"
+        },
+        {
+          "id": "feedback-1790935291397-1",
+          "draftId": "source:2adab6f3:draft:1",
+          "originalKind": "task:draft-item:source:2adab6f3:draft:1:save",
+          "correctedKind": "fields:deadline",
+          "action": "modified",
+          "createdAt": "2026-10-02T10:01:31.397Z"
+        }
+      ],
+      "v7MigrationLog": [],
+      "v7LegacyData": {}
+    }
+  },
+  "migrationMetadata": [],
+  "savedAt": "2026-10-02T10:01:31.397Z"
+}

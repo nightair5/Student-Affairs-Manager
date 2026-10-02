@@ -1,0 +1,52 @@
+{
+  "version": "d26-layered-development-1",
+  "batch": "D26-C17-C18-DEVELOPMENT-R1",
+  "baseline": "Candidate17 unchanged frozen prompt and wire",
+  "challenger": "Candidate18 unchanged source-facts-3 prompt; existing explicit-edge assembly",
+  "comparison": "TWO_GENERATION_PIPELINES_WITH_COMMON_D26_ADAPTER_DISPLAY_SCORER",
+  "sources": 8,
+  "units": 16,
+  "order": "4 AB / 4 BA",
+  "scorer": "recognition-semantic-display-10.0.0",
+  "sourcePurpose": "SEEN_D25_SOURCES_REUSED_DEVELOPMENT_NOT_HOLDOUT",
+  "humanTruth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+  "fixed": [
+    "sourceText",
+    "sourceReferenceTime",
+    "timezone",
+    "model=deepseek-flash",
+    "temperature=0",
+    "reasoning=none",
+    "max_output_tokens=8192",
+    "common source-time assertions",
+    "common D26 time/display assembly",
+    "common D26 scorer"
+  ],
+  "experimental": [
+    "C17 prompt and wire versus C18 prompt and explicit-edge envelope; original raw retained"
+  ],
+  "referenceRule": "Source-authored semantic values; only stable scope/ID mappings are mechanical. No adapter-derived expected values.",
+  "denominatorPolicy": "8 sources per arm; first actual HTTP answer retained; transport/parse/schema/semantic failures and unresolved remain in denominator",
+  "reporting": [
+    "original model answer",
+    "deterministic conversion and first user display",
+    "manual final correction separately; NOT_APPLIED in paired run"
+  ],
+  "selector": "d26-layered-development-1",
+  "thresholds": {
+    "developmentImprovement": "whole-correct net > 0 without new critical risk",
+    "targetedProgress": "target risks decrease without whole net gain or new critical risk",
+    "mixed": "improvement alongside regression or new critical risk",
+    "noImprovement": "no demonstrated gain",
+    "incomplete": "unknown or missing can change conclusion"
+  },
+  "forbidden": [
+    "automatic retry",
+    "repair",
+    "verifier",
+    "connection probe",
+    "answer-based source selection",
+    "default candidate promotion"
+  ],
+  "dispatchAuthorized": false
+}

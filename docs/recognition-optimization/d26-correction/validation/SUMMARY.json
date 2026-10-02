@@ -1,0 +1,586 @@
+{
+  "version": "d26-validation-1",
+  "checkedCodeHead": "de670d59803c2c5dbfdd488559175e444662a6d2",
+  "windows": {
+    "exit": 1,
+    "outcome": "FAIL_HISTORICAL_ONLY",
+    "groups": [
+      {
+        "layer": "current-product",
+        "label": "timezone",
+        "status": 0,
+        "outcome": "PASS",
+        "error": null,
+        "log": "timezone.log",
+        "reason": null
+      },
+      {
+        "layer": "current-product",
+        "label": "contract",
+        "status": 0,
+        "outcome": "PASS",
+        "error": null,
+        "log": "contract.log",
+        "reason": null
+      },
+      {
+        "layer": "current-product",
+        "label": "time-contract",
+        "status": 0,
+        "outcome": "PASS",
+        "error": null,
+        "log": "time-contract.log",
+        "reason": null
+      },
+      {
+        "layer": "current-product",
+        "label": "vitest-product",
+        "status": 0,
+        "outcome": "PASS",
+        "error": null,
+        "log": "vitest-product.log",
+        "reason": null
+      },
+      {
+        "layer": "current-product",
+        "label": "server",
+        "status": 0,
+        "outcome": "PASS",
+        "error": null,
+        "log": "server.log",
+        "reason": null
+      },
+      {
+        "layer": "current-product",
+        "label": "worker",
+        "status": 0,
+        "outcome": "PASS",
+        "error": null,
+        "log": "worker.log",
+        "reason": null
+      },
+      {
+        "layer": "current-product",
+        "label": "worker-d26",
+        "status": 0,
+        "outcome": "PASS",
+        "error": null,
+        "log": "worker-d26.log",
+        "reason": null
+      },
+      {
+        "layer": "current-product",
+        "label": "functions",
+        "status": 0,
+        "outcome": "PASS",
+        "error": null,
+        "log": "functions.log",
+        "reason": null
+      },
+      {
+        "layer": "current-product",
+        "label": "time-parity",
+        "status": 0,
+        "outcome": "PASS",
+        "error": null,
+        "log": "time-parity.log",
+        "reason": null
+      },
+      {
+        "layer": "current-safety",
+        "label": "vitest-safety",
+        "status": 0,
+        "outcome": "PASS",
+        "error": null,
+        "log": "vitest-safety.log",
+        "reason": null
+      },
+      {
+        "layer": "current-safety",
+        "label": "vitest-runtime-current",
+        "status": 0,
+        "outcome": "PASS",
+        "error": null,
+        "log": "vitest-runtime-current.log",
+        "reason": null
+      },
+      {
+        "layer": "current-safety",
+        "label": "carrier-preparation",
+        "status": 0,
+        "outcome": "PASS",
+        "reason": null
+      },
+      {
+        "layer": "current-safety",
+        "label": "vitest-carriers",
+        "status": 0,
+        "outcome": "PASS",
+        "error": null,
+        "log": "vitest-carriers.log",
+        "reason": null
+      },
+      {
+        "layer": "current-safety",
+        "label": "current-checks",
+        "status": 0,
+        "outcome": "PASS",
+        "error": null,
+        "log": "current-checks.log",
+        "reason": null
+      },
+      {
+        "layer": "current-safety",
+        "label": "governance-unit",
+        "status": 0,
+        "outcome": "PASS",
+        "error": null,
+        "log": "governance-unit.log",
+        "reason": null
+      },
+      {
+        "layer": "current-safety",
+        "label": "multimodal-lib",
+        "status": 0,
+        "outcome": "PASS",
+        "error": null,
+        "log": "multimodal-lib.log",
+        "reason": null
+      },
+      {
+        "layer": "current-safety",
+        "label": "c11-scoring",
+        "status": 0,
+        "outcome": "PASS",
+        "error": null,
+        "log": "c11-scoring.log",
+        "reason": null
+      },
+      {
+        "layer": "current-safety",
+        "label": "c11-preview",
+        "status": 0,
+        "outcome": "PASS",
+        "error": null,
+        "log": "c11-preview.log",
+        "reason": null
+      },
+      {
+        "layer": "current-safety",
+        "label": "d25-executor",
+        "status": 0,
+        "outcome": "PASS",
+        "error": null,
+        "log": "d25-executor.log",
+        "reason": null
+      },
+      {
+        "layer": "current-safety",
+        "label": "d25-mechanism",
+        "status": 0,
+        "outcome": "PASS",
+        "error": null,
+        "log": "d25-mechanism.log",
+        "reason": null
+      },
+      {
+        "layer": "current-safety",
+        "label": "d26-mechanism",
+        "status": 0,
+        "outcome": "PASS",
+        "error": null,
+        "log": "d26-mechanism.log",
+        "reason": null
+      },
+      {
+        "layer": "current-safety",
+        "label": "d26-executor",
+        "status": 0,
+        "outcome": "PASS",
+        "error": null,
+        "log": "d26-executor.log",
+        "reason": null
+      },
+      {
+        "layer": "current-safety",
+        "label": "d26-freeze",
+        "status": 0,
+        "outcome": "PASS",
+        "error": null,
+        "log": "d26-freeze.log",
+        "reason": null
+      },
+      {
+        "layer": "current-safety",
+        "label": "d26-score-recording",
+        "status": 0,
+        "outcome": "PASS",
+        "error": null,
+        "log": "d26-score-recording.log",
+        "reason": null
+      },
+      {
+        "layer": "current-safety",
+        "label": "d25-live-safety",
+        "status": 0,
+        "outcome": "PASS",
+        "error": null,
+        "log": "d25-live-safety.log",
+        "reason": null
+      },
+      {
+        "layer": "historical",
+        "label": "historical-originals",
+        "status": 0,
+        "outcome": "PASS",
+        "log": "historical-originals.json",
+        "reason": null
+      },
+      {
+        "layer": "historical",
+        "label": "d19-diagnostic",
+        "status": 0,
+        "outcome": "PASS",
+        "error": null,
+        "log": "d19-diagnostic.log",
+        "reason": null
+      },
+      {
+        "layer": "historical",
+        "label": "d9-historical",
+        "status": 1,
+        "outcome": "FAIL",
+        "error": null,
+        "log": "d9-historical.log",
+        "reason": null
+      },
+      {
+        "layer": "historical",
+        "label": "rco-5-007",
+        "status": 1,
+        "outcome": "FAIL",
+        "error": null,
+        "log": "rco-5-007.log",
+        "reason": null
+      },
+      {
+        "layer": "historical",
+        "label": "c11-history",
+        "status": 1,
+        "outcome": "FAIL",
+        "error": null,
+        "log": "c11-history.log",
+        "reason": null
+      },
+      {
+        "layer": "historical",
+        "label": "c11-gateway",
+        "status": 1,
+        "outcome": "FAIL",
+        "error": null,
+        "log": "c11-gateway.log",
+        "reason": null
+      },
+      {
+        "layer": "historical",
+        "label": "vitest-d17-history",
+        "status": 0,
+        "outcome": "PASS",
+        "error": null,
+        "log": "vitest-d17-history.log",
+        "reason": null
+      },
+      {
+        "layer": "historical",
+        "label": "vitest-runtime-history",
+        "status": 0,
+        "outcome": "PASS",
+        "error": null,
+        "log": "vitest-runtime-history.log",
+        "reason": null
+      },
+      {
+        "layer": "historical",
+        "label": "vitest-carriers-history",
+        "status": 0,
+        "outcome": "PASS",
+        "error": null,
+        "log": "vitest-carriers-history.log",
+        "reason": null
+      }
+    ]
+  },
+  "linux": {
+    "currentProduct": {
+      "timezone": "UTC",
+      "outcome": "PASS",
+      "groups": [
+        {
+          "layer": "current-product",
+          "label": "timezone",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "timezone.log",
+          "reason": null
+        },
+        {
+          "layer": "current-product",
+          "label": "contract",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "contract.log",
+          "reason": null
+        },
+        {
+          "layer": "current-product",
+          "label": "time-contract",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "time-contract.log",
+          "reason": null
+        },
+        {
+          "layer": "current-product",
+          "label": "vitest-product",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "vitest-product.log",
+          "reason": null
+        },
+        {
+          "layer": "current-product",
+          "label": "server",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "server.log",
+          "reason": null
+        },
+        {
+          "layer": "current-product",
+          "label": "worker",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "worker.log",
+          "reason": null
+        },
+        {
+          "layer": "current-product",
+          "label": "worker-d26",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "worker-d26.log",
+          "reason": null
+        },
+        {
+          "layer": "current-product",
+          "label": "functions",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "functions.log",
+          "reason": null
+        },
+        {
+          "layer": "current-product",
+          "label": "time-parity",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "time-parity.log",
+          "reason": null
+        }
+      ]
+    },
+    "currentSafety": {
+      "timezone": "Asia/Shanghai",
+      "outcome": "INCOMPLETE",
+      "groups": [
+        {
+          "layer": "current-safety",
+          "label": "vitest-safety",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "vitest-safety.log",
+          "reason": null
+        },
+        {
+          "layer": "current-safety",
+          "label": "vitest-runtime-current",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "vitest-runtime-current.log",
+          "reason": null
+        },
+        {
+          "layer": "current-safety",
+          "label": "carrier-preparation",
+          "status": 0,
+          "outcome": "PASS",
+          "reason": null
+        },
+        {
+          "layer": "current-safety",
+          "label": "vitest-carriers",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "vitest-carriers.log",
+          "reason": null
+        },
+        {
+          "layer": "current-safety",
+          "label": "current-checks",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "current-checks.log",
+          "reason": null
+        },
+        {
+          "layer": "current-safety",
+          "label": "governance-unit",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "governance-unit.log",
+          "reason": null
+        },
+        {
+          "layer": "current-safety",
+          "label": "multimodal-lib",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "multimodal-lib.log",
+          "reason": null
+        },
+        {
+          "layer": "current-safety",
+          "label": "c11-scoring",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "c11-scoring.log",
+          "reason": null
+        },
+        {
+          "layer": "current-safety",
+          "label": "c11-preview",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "c11-preview.log",
+          "reason": null
+        },
+        {
+          "layer": "current-safety",
+          "label": "d25-executor",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "d25-executor.log",
+          "reason": null
+        },
+        {
+          "layer": "current-safety",
+          "label": "d25-mechanism",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "d25-mechanism.log",
+          "reason": null
+        },
+        {
+          "layer": "current-safety",
+          "label": "d26-mechanism",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "d26-mechanism.log",
+          "reason": null
+        },
+        {
+          "layer": "current-safety",
+          "label": "d26-executor",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "d26-executor.log",
+          "reason": null
+        },
+        {
+          "layer": "current-safety",
+          "label": "d26-freeze",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "d26-freeze.log",
+          "reason": null
+        },
+        {
+          "layer": "current-safety",
+          "label": "d26-score-recording",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "d26-score-recording.log",
+          "reason": null
+        },
+        {
+          "layer": "current-safety",
+          "label": "d25-live-safety",
+          "status": null,
+          "outcome": "NOT_AVAILABLE",
+          "reason": "FROZEN_WINDOWS_POWERSHELL_LOCK_TEST_REQUIRES_WINDOWS; portable executor tests run separately"
+        }
+      ]
+    },
+    "finalRelated": {
+      "tests": 29,
+      "failures": 0,
+      "renderChecks": 2,
+      "typecheck": "PASS"
+    }
+  },
+  "latestFollowups": {
+    "lint": {
+      "exit": 0,
+      "errors": 0,
+      "existingWarnings": 8,
+      "generatedPrivateDirectoryIgnored": ".data; runtime bundles are not source"
+    },
+    "build": {
+      "exit": 0,
+      "warning": "Existing >500kB bundle warning"
+    },
+    "freezeExecutor": {
+      "tests": 17,
+      "failures": 0
+    },
+    "browserDiagnostic": "Per-draft stale-source measurement exception retained as MISSING; verified in final05; no dropped denominator",
+    "security": {
+      "exit": 0,
+      "sourceBuildFiles": 3602,
+      "finalDocumentsIncluded": true
+    }
+  },
+  "newFailures": 0,
+  "historicalFailedGroups": [
+    "d9-historical",
+    "rco-5-007",
+    "c11-history",
+    "c11-gateway"
+  ],
+  "notGlobalPass": true,
+  "modelCalls": 0,
+  "ledgerWrites": 0
+}

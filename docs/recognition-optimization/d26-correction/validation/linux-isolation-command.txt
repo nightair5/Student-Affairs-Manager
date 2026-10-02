@@ -1,0 +1,18 @@
+set -uo pipefail
+SOURCE='/mnt/c/Users/Winner/.codex/worktrees/student-affairs-candidate11/比赛'
+STAGE='/home/winner/d26-ci-isolated-20261002'
+OUT="$SOURCE/.data/d26-ci/linux-ui-recheck"
+cd "$SOURCE"
+tar -cf - src scripts | tar -xf - -C "$STAGE" || exit 3
+cd "$STAGE"
+mkdir -p "$OUT"
+run_node() {
+  bwrap --unshare-net --unshare-pid --unshare-ipc --new-session --die-with-parent --clearenv --ro-bind /usr /usr --ro-bind /lib /lib --ro-bind /lib64 /lib64 --ro-bind /etc/hosts /etc/hosts --ro-bind /etc/nsswitch.conf /etc/nsswitch.conf --ro-bind /home/winner/.hermes/node/bin/node /node --bind "$STAGE" /project --proc /proc --dev /dev --tmpfs /tmp --tmpfs /home --setenv PATH /usr/bin:/bin --setenv HOME /tmp --setenv TZ Asia/Shanghai --chdir /project /node "$@"
+}
+run_node node_modules/vitest/vitest.mjs run --config scripts/mainline-01.vitest.config.mts --maxWorkers=2 src/experiments/mainline01p1/confirmationHarness.test.ts src/experiments/candidate16/d20ReviewSession.test.ts src/domain/v2/sourceReviewD26.test.ts src/domain/v2/ordinaryMeasurementD26.test.ts > "$OUT/related-suites.log" 2>&1
+RELATED=$?
+run_node node_modules/vitest/vitest.mjs run --config scripts/mainline-01.vitest.config.mts --maxWorkers=2 --testNamePattern 'real-input source description changes only the review banner|actual App forwards an existing description only for the real-input runtime' src/experiments/realInput01/acceptance.test.tsx > "$OUT/draft-review-render.log" 2>&1
+RENDER=$?
+run_node node_modules/typescript/bin/tsc -b --pretty false > "$OUT/typecheck.log" 2>&1
+TSC=$?
+printf 'RELATED_SUITES_EXIT=%s RENDER_EXIT=%s TSC_EXIT=%s\n' "$RELATED" "$RENDER" "$TSC" | tee "$OUT/status.log"

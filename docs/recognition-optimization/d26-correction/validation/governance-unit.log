@@ -1,0 +1,20 @@
+✔ authorized document transition preserves every historical byte and never grants dispatch (5.1985ms)
+✔ reject active document drift: AGENTS.md (0.7055ms)
+✔ reject damaged historical archive: AGENTS.md (0.3488ms)
+✔ reject active document drift: PRD.md (0.3577ms)
+✔ reject damaged historical archive: PRD.md (0.3942ms)
+✔ reject drift in any of the other 82 historical files (57.4999ms)
+✔ reject original protection baseline rewrite (0.2633ms)
+✔ reject ledger change without modifying or repairing the ledger (1.289ms)
+✔ reject frozen manifest drift (0.9382ms)
+✔ reject drift in every D7 frozen component (13.2162ms)
+✔ a third exception cannot silently waive another protected file (0.4158ms)
+✔ archives cannot be redirected outside the recorded location (0.3591ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 184.1681

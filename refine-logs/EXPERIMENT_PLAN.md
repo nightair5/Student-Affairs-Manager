@@ -1,8 +1,9 @@
 # 当前执行计划
-2026-10-02。唯一活动路线见[路线图](../docs/governance/PROJECT_EXECUTION_ROADMAP.md)，下一完整实现见[D26提示词](../docs/governance/NEXT_STAGE_EXECUTION_PROMPT.md)，理由见[本轮审查](../docs/governance/d26-product-review/REVIEW_AND_DECISIONS.md)。
 
-优先同包完成：独立时间参照与共同转换修正；一次来源接受与例外集中；一任务一段的整体安排和可靠读回。准确率仍为主线，材料准备未知不做记录义务总门，工程调试信息不做普通用户步骤。
+2026-10-02。[D26本地结果](../docs/recognition-optimization/d26-correction/D26_RESULTS.md)、[当前路线](../docs/governance/PROJECT_EXECUTION_ROADMAP.md)、[下一完整包](../docs/governance/NEXT_STAGE_EXECUTION_PROMPT.md)。
 
-D25已完成的C18/产品/安全执行器复用，原16身份全NOT_RUN。发现参照同源后原包保持，修订包默认复用8来源16单元，不扩样本或默认新候选。新绑定/价格/预算明确再申请授权；本轮没有模型许可。输出后才报告真实正确率与收益。
+D26普通保存/隐私范围、独立时间与v10首次显示、一次接受及自动读回已交付。全局计划器依最新用户修订移到紧接后续，不能作为D26完成/新比较前置。新16身份全NOT_RUN，核价卡建议US$5.30，旧许可和grant不复用；真实宿主新绑定及明确本批许可前0请求/账本只读。
 
-真人与发布各按范围另授权，不阻挡本地工程。历史模型/测量/冻结文件原样，活动测试与历史复现分组，不弱化旧失败，不循环重写规划。
+下一步同包完成：条件获准的C17/C18真实首次比较；可独立推进的本机最小安排。无需净增2/全部100%或招募作为本地总门。陈旧冲突/CAS、原答/转换/人工修改隔离、unknown、事务/独立读回复用，不重新建底座。
+
+当前同步唯一阻碍是Cloudflare自动部署绑定未核实，按用户要求保留本地提交；只读确认无发布副作用后普通推送。四项真人仍NOT_OBSERVABLE；独立Holdout/默认替换/合并/部署另需范围及证据。

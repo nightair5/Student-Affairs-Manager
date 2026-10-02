@@ -1,0 +1,31 @@
+{
+  "version": "d26-readonly-pricing-1",
+  "role": "READ_ONLY_OFFICIAL_DOCUMENTS_NO_MODEL_CALL",
+  "sourceUrl": "https://api-docs.deepseek.com/quick_start/pricing/",
+  "verifiedAt": "2026-10-02T10:58:48.4114005Z",
+  "validUntil": "2026-10-02T22:58:48.411Z",
+  "peakInputUsdPerMillion": 0.3,
+  "peakOutputUsdPerMillion": 1.2,
+  "maxInputTokens": 1048576,
+  "model": "deepseek-flash",
+  "observedRouteVersion": "DeepSeek-V4.1-Flash",
+  "contextDocumentation": "1M tokens",
+  "conservativeInputBound": 1048576,
+  "providerMaxOutputDocumentation": "384K",
+  "selectedMaxOutputTokens": 8192,
+  "cacheHitUsdPerMillion": 0.006,
+  "discountAssumed": false,
+  "additionalToolsUsed": false,
+  "imagesUsed": false,
+  "reasoning": "none",
+  "pricingHtmlSha256": "210f102275ccf1a6542f08a3bc9e4b4c7c83278cb74b35217bffa112df6363b2",
+  "responses": {
+    "url": "https://api-docs.deepseek.com/guides/responses_api",
+    "localHtmlSha256": "27afe295f52ab91f64b82f2aa5f2eec592c91710ef7113da824dd184b3c0b554",
+    "webToolOutcome": "TIMEOUT; official HTML fetched read-only using InvokeWebRequest",
+    "supported": "max_output_tokens; reasoning.effort; stream; temperature; response usage",
+    "boundary": "Requests exceeding context return 400; output_tokens includes reasoning tokens; no tools/images/server-side resources in this batch"
+  },
+  "feeRule": "Input/output token rates; use peak uncached input for all tokens, full context bound for each request; not a byte-to-token estimate; do not claim provider actual deduction",
+  "mustReverifyBeforeGrant": true
+}

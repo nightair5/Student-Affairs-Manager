@@ -1,0 +1,166 @@
+{
+  "version": "d26-roundtrip-1",
+  "role": "ZERO_CALL_ENGINEERING_CHECK",
+  "roundtrip": [
+    {
+      "sourceId": "D26-S01",
+      "positive": "PASS",
+      "negative": "DETECTED",
+      "negativeRisks": [
+        {
+          "kind": "EVENT_MISSING",
+          "factId": "E1"
+        },
+        {
+          "kind": "INDEPENDENT_TIME_WRONG",
+          "factId": "P1"
+        }
+      ],
+      "negativeError": null,
+      "orderInvariant": "PASS",
+      "evidenceRole": "ENGINEERING_ORACLE_NOT_NEW_MODEL_OUTPUT"
+    },
+    {
+      "sourceId": "D26-S02",
+      "positive": "PASS",
+      "negative": "DETECTED",
+      "negativeRisks": [
+        {
+          "kind": "EVENT_MISSING",
+          "factId": "E1"
+        },
+        {
+          "kind": "INDEPENDENT_TIME_WRONG",
+          "factId": "P1"
+        }
+      ],
+      "negativeError": null,
+      "orderInvariant": "PASS",
+      "evidenceRole": "ENGINEERING_ORACLE_NOT_NEW_MODEL_OUTPUT"
+    },
+    {
+      "sourceId": "D26-S03",
+      "positive": "PASS",
+      "negative": "DETECTED",
+      "negativeRisks": [
+        {
+          "kind": "TASK_FIELD_WRONG",
+          "taskId": "T2",
+          "field": "condition"
+        },
+        {
+          "kind": "UNSUPPORTED_CONDITION_TRUTH",
+          "taskId": "T2"
+        }
+      ],
+      "negativeError": null,
+      "orderInvariant": "PASS",
+      "evidenceRole": "ENGINEERING_ORACLE_NOT_NEW_MODEL_OUTPUT"
+    },
+    {
+      "sourceId": "D26-S04",
+      "positive": "PASS",
+      "negative": "DETECTED",
+      "negativeRisks": [
+        {
+          "kind": "TASK_FIELD_WRONG",
+          "taskId": "T2",
+          "field": "condition"
+        },
+        {
+          "kind": "UNSUPPORTED_CONDITION_TRUTH",
+          "taskId": "T2"
+        }
+      ],
+      "negativeError": null,
+      "orderInvariant": "PASS",
+      "evidenceRole": "ENGINEERING_ORACLE_NOT_NEW_MODEL_OUTPUT"
+    },
+    {
+      "sourceId": "D26-S05",
+      "positive": "PASS",
+      "negative": "DETECTED",
+      "negativeRisks": [
+        {
+          "kind": "TIME_VALUE_OR_COVERAGE_WRONG",
+          "taskId": "T1"
+        },
+        {
+          "kind": "TIME_GRAPH_CONFLICT",
+          "taskId": "T1",
+          "pointId": "PT1_0"
+        },
+        {
+          "kind": "UNSUPPORTED_INDEPENDENT_ENTITY"
+        }
+      ],
+      "negativeError": null,
+      "orderInvariant": "PASS",
+      "evidenceRole": "ENGINEERING_ORACLE_NOT_NEW_MODEL_OUTPUT"
+    },
+    {
+      "sourceId": "D26-S06",
+      "positive": "PASS",
+      "negative": "DETECTED",
+      "negativeRisks": [
+        {
+          "kind": "TIME_VALUE_OR_COVERAGE_WRONG",
+          "taskId": "T1"
+        },
+        {
+          "kind": "TIME_GRAPH_CONFLICT",
+          "taskId": "T1",
+          "pointId": "PT1_0"
+        },
+        {
+          "kind": "UNSUPPORTED_INDEPENDENT_ENTITY"
+        }
+      ],
+      "negativeError": null,
+      "orderInvariant": "PASS",
+      "evidenceRole": "ENGINEERING_ORACLE_NOT_NEW_MODEL_OUTPUT"
+    },
+    {
+      "sourceId": "D26-S07",
+      "positive": "PASS",
+      "negative": "DETECTED",
+      "negativeRisks": [
+        {
+          "kind": "TASK_FIELD_WRONG",
+          "taskId": "T1",
+          "field": "materials"
+        },
+        {
+          "kind": "MATERIAL_FACT_WRONG",
+          "taskId": "T1"
+        }
+      ],
+      "negativeError": null,
+      "orderInvariant": "PASS",
+      "evidenceRole": "ENGINEERING_ORACLE_NOT_NEW_MODEL_OUTPUT"
+    },
+    {
+      "sourceId": "D26-S08",
+      "positive": "PASS",
+      "negative": "DETECTED",
+      "negativeRisks": [
+        {
+          "kind": "TASK_PRESENCE",
+          "fn": 1,
+          "fp": 0
+        },
+        {
+          "kind": "TIME_GRAPH_CONFLICT",
+          "taskId": "T2",
+          "pointId": "PT2_0"
+        },
+        {
+          "kind": "UNSUPPORTED_INDEPENDENT_ENTITY"
+        }
+      ],
+      "negativeError": null,
+      "orderInvariant": "PASS",
+      "evidenceRole": "ENGINEERING_ORACLE_NOT_NEW_MODEL_OUTPUT"
+    }
+  ]
+}

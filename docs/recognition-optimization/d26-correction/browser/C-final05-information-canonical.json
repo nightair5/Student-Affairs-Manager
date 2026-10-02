@@ -1,0 +1,419 @@
+{
+  "schemaVersion": 8,
+  "workspace": {
+    "id": "rco-mainline-01-02-i1-d26-ordinary-delivery-final05",
+    "title": "MAINLINE-01 人工工程响应（非模型预测）",
+    "createdAt": "2026-09-05T08:00:00.000Z",
+    "updatedAt": "2026-10-02T10:52:53.908Z"
+  },
+  "settings": {
+    "defaultTimezone": "Asia/Shanghai",
+    "locale": "zh-CN"
+  },
+  "sources": [
+    {
+      "id": "source:e1f484c3",
+      "workspaceId": "rco-mainline-01-02-i1-d26-ordinary-delivery-final05",
+      "type": "text",
+      "title": "手动粘贴消息",
+      "status": "confirmed",
+      "currentVersionId": "source:e1f484c3:version:1",
+      "createdAt": "2026-10-02T10:52:53.891Z",
+      "updatedAt": "2026-10-02T10:53:44.539Z",
+      "legacyData": {
+        "contentPreview": "资料室已新增一批参考手册。本通知仅供了解，无需行动。",
+        "url": null,
+        "originalFileName": null,
+        "mimeType": null,
+        "fileSize": null,
+        "fileHash": null,
+        "parserVersion": "local-rules-v2",
+        "reviewMetadata": {
+          "sourceType": "text",
+          "mimeType": null,
+          "characterCount": 26,
+          "pageCount": null,
+          "extractionMethod": "manual",
+          "ocrConfidence": null,
+          "partialExtraction": null,
+          "qualityFlags": []
+        },
+        "captureOperationId": "02b672cf-517d-4e0e-9b4f-48bfde9af070"
+      }
+    }
+  ],
+  "sourceVersions": [
+    {
+      "id": "source:e1f484c3:version:1",
+      "sourceId": "source:e1f484c3",
+      "versionNo": 1,
+      "contentHash": "fnv1a32:35e454db",
+      "rawText": "资料室已新增一批参考手册。本通知仅供了解，无需行动。",
+      "rawTextRef": null,
+      "createdAt": "2026-10-02T10:52:53.891Z",
+      "legacyData": {
+        "reviewMetadata": {
+          "sourceType": "text",
+          "mimeType": null,
+          "characterCount": 26,
+          "pageCount": null,
+          "extractionMethod": "manual",
+          "ocrConfidence": null,
+          "partialExtraction": null,
+          "qualityFlags": []
+        }
+      }
+    }
+  ],
+  "recognitionRuns": [
+    {
+      "id": "source:e1f484c3:run:1",
+      "sourceVersionId": "source:e1f484c3:version:1",
+      "provider": "manual",
+      "modelName": "anonymous-offline-engineering-input",
+      "promptVersion": "recognition-2.0.0",
+      "schemaVersion": "2.0",
+      "pipelineVersion": "d26-ordinary-engineering-fake-transport",
+      "status": "succeeded",
+      "startedAt": "2026-10-02T10:52:53.900Z",
+      "completedAt": "2026-10-02T10:52:53.903Z",
+      "durationMs": 3,
+      "tokenUsage": null,
+      "qualityFlags": [
+        "MAINLINE-01 人工工程响应（非模型预测）"
+      ],
+      "errorCode": null,
+      "legacyData": {
+        "originalRecognitionResult": {
+          "schemaVersion": "2.0",
+          "promptVersion": "engineering-mainline-01",
+          "modelName": "D26 匿名工程假传输（非模型成绩）",
+          "createdAt": "2026-09-05T08:00:00.000Z",
+          "sourceSummary": {
+            "title": "MAINLINE-01 人工工程响应（非模型预测）",
+            "sourceType": "text",
+            "notificationType": "uncertain",
+            "summary": "资料室已新增一批参考手册。本通知仅供了解，无需行动。",
+            "requiresAction": false,
+            "actionReason": "资料室周末开放，本通知仅供了解，无需行动。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "MAINLINE-01 人工工程响应（非模型预测）"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [],
+          "materials": [],
+          "timePoints": [],
+          "events": [],
+          "evidence": [
+            {
+              "id": "notice",
+              "sourceId": "source:e1f484c3",
+              "textStart": 0,
+              "textEnd": 26,
+              "quote": "资料室已新增一批参考手册。本通知仅供了解，无需行动。",
+              "quotedText": "资料室已新增一批参考手册。本通知仅供了解，无需行动。",
+              "field": "description",
+              "extractionMethod": "manual",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [],
+          "ambiguities": [],
+          "ignoredContent": [],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 1,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": true,
+            "reviewReasons": [
+              "MAINLINE-01 人工工程响应（非模型预测）"
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "extractionDrafts": [
+    {
+      "id": "source:e1f484c3:draft:1",
+      "recognitionRunId": "source:e1f484c3:run:1",
+      "status": "confirmed",
+      "result": {
+        "schemaVersion": "2.0",
+        "promptVersion": "engineering-mainline-01",
+        "modelName": "D26 匿名工程假传输（非模型成绩）",
+        "createdAt": "2026-09-05T08:00:00.000Z",
+        "sourceSummary": {
+          "title": "通知资料",
+          "sourceType": "text",
+          "notificationType": "uncertain",
+          "summary": "未识别到需要执行的任务或事件；原文已保留，可核对并归档。",
+          "requiresAction": false,
+          "actionReason": "资料室周末开放，本通知仅供了解，无需行动。"
+        },
+        "projectMatch": {
+          "decision": "standalone_task",
+          "matchedProjectId": null,
+          "suggestedProjectTitle": null,
+          "confidence": 1,
+          "reasons": [
+            "MAINLINE-01 人工工程响应（非模型预测）"
+          ]
+        },
+        "projectSuggestion": null,
+        "milestones": [],
+        "standaloneTasks": [],
+        "materials": [],
+        "timePoints": [],
+        "events": [],
+        "evidence": [
+          {
+            "id": "notice",
+            "sourceId": "source:e1f484c3",
+            "textStart": 0,
+            "textEnd": 26,
+            "quote": "资料室已新增一批参考手册。本通知仅供了解，无需行动。",
+            "quotedText": "资料室已新增一批参考手册。本通知仅供了解，无需行动。",
+            "field": "description",
+            "extractionMethod": "manual",
+            "confidence": 1
+          }
+        ],
+        "conflicts": [],
+        "ambiguities": [],
+        "ignoredContent": [],
+        "quality": {
+          "overallConfidence": 1,
+          "hierarchyConfidence": 1,
+          "dateConfidence": 1,
+          "evidenceCoverage": 1,
+          "duplicateRisk": 0,
+          "overFragmentationRisk": 0,
+          "missingActionRisk": 0,
+          "needsHumanReview": true,
+          "reviewReasons": [
+            "MAINLINE-01 人工工程响应（非模型预测）"
+          ]
+        }
+      },
+      "commitOperationIds": [
+        "source-review:source:e1f484c3:draft:1:fnv1a32:9a70bd5d"
+      ],
+      "acceptedEntityTempIds": [],
+      "rejectedEntityTempIds": [],
+      "createdAt": "2026-10-02T10:52:53.891Z",
+      "updatedAt": "2026-10-02T10:53:44.539Z",
+      "legacyData": {
+        "firstSuggestionDisplayed": {
+          "schemaVersion": "2.0",
+          "promptVersion": "engineering-mainline-01",
+          "modelName": "D26 匿名工程假传输（非模型成绩）",
+          "createdAt": "2026-09-05T08:00:00.000Z",
+          "sourceSummary": {
+            "title": "通知资料",
+            "sourceType": "text",
+            "notificationType": "uncertain",
+            "summary": "未识别到需要执行的任务或事件；原文已保留，可核对并归档。",
+            "requiresAction": false,
+            "actionReason": "资料室周末开放，本通知仅供了解，无需行动。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "MAINLINE-01 人工工程响应（非模型预测）"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [],
+          "materials": [],
+          "timePoints": [],
+          "events": [],
+          "evidence": [
+            {
+              "id": "notice",
+              "sourceId": "source:e1f484c3",
+              "textStart": 0,
+              "textEnd": 26,
+              "quote": "资料室已新增一批参考手册。本通知仅供了解，无需行动。",
+              "quotedText": "资料室已新增一批参考手册。本通知仅供了解，无需行动。",
+              "field": "description",
+              "extractionMethod": "manual",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [],
+          "ambiguities": [],
+          "ignoredContent": [],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 1,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": true,
+            "reviewReasons": [
+              "MAINLINE-01 人工工程响应（非模型预测）"
+            ]
+          }
+        },
+        "firstSuggestionAssembly": {
+          "version": "grounded-first-suggestion-1.0.0",
+          "originalProse": [
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "MAINLINE-01 人工工程响应（非模型预测）",
+              "description": "资料室已新增一批参考手册。本通知仅供了解，无需行动。"
+            }
+          ],
+          "generatedProse": [
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "通知资料",
+              "description": "未识别到需要执行的任务或事件；原文已保留，可核对并归档。"
+            }
+          ],
+          "times": [],
+          "unresolved": [],
+          "role": "DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT"
+        },
+        "v7Record": {
+          "id": "source:e1f484c3:draft:1",
+          "sourceId": "source:e1f484c3",
+          "sourceVersionId": "source:e1f484c3:version:1",
+          "sourceReviewMetadata": {
+            "sourceType": "text",
+            "characterCount": 26,
+            "extractionMethod": "manual"
+          },
+          "attemptOrder": 0,
+          "status": "待确认",
+          "workflowStatus": "needs_review",
+          "createdAt": "2026-10-02T10:52:53.891Z",
+          "updatedAt": "2026-10-02T10:52:53.903Z",
+          "schemaVersion": "2.0",
+          "modelName": "D26 匿名工程假传输（非模型成绩）",
+          "promptVersion": "engineering-mainline-01",
+          "recognitionResult": {
+            "schemaVersion": "2.0",
+            "promptVersion": "engineering-mainline-01",
+            "modelName": "D26 匿名工程假传输（非模型成绩）",
+            "createdAt": "2026-09-05T08:00:00.000Z",
+            "sourceSummary": {
+              "title": "通知资料",
+              "sourceType": "text",
+              "notificationType": "uncertain",
+              "summary": "未识别到需要执行的任务或事件；原文已保留，可核对并归档。",
+              "requiresAction": false,
+              "actionReason": "资料室周末开放，本通知仅供了解，无需行动。"
+            },
+            "projectMatch": {
+              "decision": "standalone_task",
+              "matchedProjectId": null,
+              "suggestedProjectTitle": null,
+              "confidence": 1,
+              "reasons": [
+                "MAINLINE-01 人工工程响应（非模型预测）"
+              ]
+            },
+            "projectSuggestion": null,
+            "milestones": [],
+            "standaloneTasks": [],
+            "materials": [],
+            "timePoints": [],
+            "events": [],
+            "evidence": [
+              {
+                "id": "notice",
+                "sourceId": "source:e1f484c3",
+                "textStart": 0,
+                "textEnd": 26,
+                "quote": "资料室已新增一批参考手册。本通知仅供了解，无需行动。",
+                "quotedText": "资料室已新增一批参考手册。本通知仅供了解，无需行动。",
+                "field": "description",
+                "extractionMethod": "manual",
+                "confidence": 1
+              }
+            ],
+            "conflicts": [],
+            "ambiguities": [],
+            "ignoredContent": [],
+            "quality": {
+              "overallConfidence": 1,
+              "hierarchyConfidence": 1,
+              "dateConfidence": 1,
+              "evidenceCoverage": 1,
+              "duplicateRisk": 0,
+              "overFragmentationRisk": 0,
+              "missingActionRisk": 0,
+              "needsHumanReview": true,
+              "reviewReasons": [
+                "MAINLINE-01 人工工程响应（非模型预测）"
+              ]
+            }
+          },
+          "items": [],
+          "modelVersion": "local-rules"
+        },
+        "sourceReviewReadback": {
+          "version": "source-review-d26-1",
+          "draftId": "source:e1f484c3:draft:1",
+          "commitId": "source-review:source:e1f484c3:draft:1:fnv1a32:9a70bd5d",
+          "disposition": "no_task",
+          "entityIds": [],
+          "entityHashes": {},
+          "verifiedAt": "2026-10-02T10:53:44.553Z"
+        }
+      }
+    }
+  ],
+  "projects": [],
+  "milestones": [],
+  "workPackages": [],
+  "tasks": [],
+  "materials": [],
+  "timePoints": [],
+  "events": [],
+  "evidenceRefs": [],
+  "changeProposals": [],
+  "historyRecords": [],
+  "reminderRecords": [],
+  "preferences": {
+    "onboardingCompletedAt": null,
+    "legacyData": {
+      "courseBlocks": [],
+      "integrations": {
+        "sync": {
+          "endpoint": "http://127.0.0.1:8787"
+        },
+        "webMonitors": [],
+        "connectionIntents": []
+      },
+      "knowledgeSettings": {},
+      "recognitionFeedback": [],
+      "v7MigrationLog": [],
+      "v7LegacyData": {}
+    }
+  },
+  "migrationMetadata": [],
+  "savedAt": "2026-10-02T10:53:44.539Z"
+}
