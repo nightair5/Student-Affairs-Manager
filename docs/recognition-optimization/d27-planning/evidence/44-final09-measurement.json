@@ -1,0 +1,181 @@
+{
+  "version": "personal-plan-measurement-d27-1",
+  "role": "ENGINEERING_REPLAY_OR_UNADJUDICATED_LOCAL_USE",
+  "denominator": 2,
+  "completed": 0,
+  "incomplete": 2,
+  "wallMedianMs": null,
+  "reports": [
+    {
+      "version": "personal-plan-measurement-d27-1",
+      "role": "ENGINEERING_REPLAY_OR_UNADJUDICATED_LOCAL_USE",
+      "denominator": 1,
+      "commitCount": 1,
+      "independentReadbackCount": 1,
+      "semanticPlanChanges": 0,
+      "planChangeCountStatus": "OBSERVED",
+      "attemptedEditIds": [],
+      "completed": false,
+      "timingStatus": "MISSING",
+      "missingReasons": [
+        "REFRESH_OR_CRASH_GAP"
+      ],
+      "wallMs": null,
+      "readingMs": 21,
+      "activeEditingMs": 0,
+      "idleMs": 0,
+      "hiddenMs": 0,
+      "waitingMs": 23,
+      "firstSuggestionAccuracy": "NOT_MEASURED_BY_PLAN_TRACE",
+      "humanFourMetrics": "NOT_OBSERVABLE"
+    },
+    {
+      "version": "personal-plan-measurement-d27-1",
+      "role": "ENGINEERING_REPLAY_OR_UNADJUDICATED_LOCAL_USE",
+      "denominator": 1,
+      "commitCount": 1,
+      "independentReadbackCount": 1,
+      "semanticPlanChanges": 1,
+      "planChangeCountStatus": "OBSERVED",
+      "attemptedEditIds": [
+        "189e64f4-5fa6-4ab3-ba8b-1b2eab57481a"
+      ],
+      "completed": false,
+      "timingStatus": "MISSING",
+      "missingReasons": [
+        "REFRESH_OR_CRASH_GAP"
+      ],
+      "wallMs": null,
+      "readingMs": 262,
+      "activeEditingMs": 98,
+      "idleMs": 0,
+      "hiddenMs": 0,
+      "waitingMs": 38,
+      "firstSuggestionAccuracy": "NOT_MEASURED_BY_PLAN_TRACE",
+      "humanFourMetrics": "NOT_OBSERVABLE"
+    }
+  ],
+  "trace": [
+    {
+      "id": "c6cbb663-f875-4980-b5a7-3257fc77799c",
+      "at": 1790954520105,
+      "kind": "begin"
+    },
+    {
+      "id": "3c347099-ce52-4d8f-bbbf-2ad9eb32bfb3",
+      "at": 1790954520106,
+      "kind": "read"
+    },
+    {
+      "id": "ed57942b-c403-4641-ba4f-aad42dc38b61",
+      "at": 1790954520107,
+      "kind": "wait"
+    },
+    {
+      "id": "f7532ee7-5a28-4a26-96c5-aeeeb1abf53e",
+      "at": 1790954520124,
+      "kind": "commit",
+      "commitId": "6157de49-a61f-46f4-9160-d8e33c76b681",
+      "semanticChanges": 0
+    },
+    {
+      "id": "2658965f-97bf-47c4-a5d8-8d7d5ed5d7b6",
+      "at": 1790954520127,
+      "kind": "failure",
+      "reason": "D27_INJECTED_INDEPENDENT_READBACK_FAILURE"
+    },
+    {
+      "id": "aff0552f-2872-478f-8249-737f2769c1e0",
+      "at": 1790954539135,
+      "kind": "restore"
+    },
+    {
+      "id": "6d133977-dcc7-4e1b-8c6e-297e64d567ed",
+      "at": 1790954539137,
+      "kind": "read"
+    },
+    {
+      "id": "edcf57aa-e5a7-48cf-9dfb-e412de072330",
+      "at": 1790954539137,
+      "kind": "wait"
+    },
+    {
+      "id": "6f1d9ab6-b567-4da9-834c-335ddade71cd",
+      "at": 1790954539143,
+      "kind": "readback",
+      "commitId": "6157de49-a61f-46f4-9160-d8e33c76b681"
+    },
+    {
+      "id": "f2bff9c2-14a1-49e7-b460-156c4e65bfce",
+      "at": 1790954539157,
+      "kind": "end"
+    },
+    {
+      "id": "027d8de3-4c3d-4499-9051-6f7f2e77861a",
+      "at": 1790954747430,
+      "kind": "begin"
+    },
+    {
+      "id": "ecf40d58-1063-4e82-aacd-f92a619ab2d7",
+      "at": 1790954747431,
+      "kind": "read"
+    },
+    {
+      "id": "9d6e352d-014c-4d2a-8d42-de1b8358a429",
+      "at": 1790954747672,
+      "kind": "edit",
+      "field": "task:source:c2e9907e:draft:1:save:duration",
+      "editId": "189e64f4-5fa6-4ab3-ba8b-1b2eab57481a"
+    },
+    {
+      "id": "ad0a38fa-a13b-4818-86c0-99019108ed49",
+      "at": 1790954747770,
+      "kind": "read"
+    },
+    {
+      "id": "7fc196d9-4ae4-4008-9c70-3c90f9df5e07",
+      "at": 1790954747774,
+      "kind": "wait"
+    },
+    {
+      "id": "2378726b-ff02-43aa-995d-092c2e9edd36",
+      "at": 1790954747806,
+      "kind": "commit",
+      "commitId": "7acb6eae-6108-4695-89c9-1b34a39314f2",
+      "semanticChanges": 1
+    },
+    {
+      "id": "f97a87e1-afc2-46f3-b678-50ac72034e2a",
+      "at": 1790954747807,
+      "kind": "failure",
+      "reason": "D27_INJECTED_INDEPENDENT_READBACK_FAILURE"
+    },
+    {
+      "id": "2f7d397a-ddc3-43a1-84eb-f804db74609a",
+      "at": 1790954761352,
+      "kind": "restore"
+    },
+    {
+      "id": "7f41f3ea-385e-4fc8-bbea-7107a026d554",
+      "at": 1790954761352,
+      "kind": "read"
+    },
+    {
+      "id": "47b92791-27dd-42a7-98bc-42523cd39833",
+      "at": 1790954761353,
+      "kind": "wait"
+    },
+    {
+      "id": "bbe0e0ae-7289-4023-b19d-c1c89bfe0d54",
+      "at": 1790954761359,
+      "kind": "readback",
+      "commitId": "7acb6eae-6108-4695-89c9-1b34a39314f2"
+    },
+    {
+      "id": "0f9b6197-5931-4460-bc07-8b73c784f983",
+      "at": 1790954761373,
+      "kind": "end"
+    }
+  ],
+  "humanFourMetrics": "NOT_OBSERVABLE"
+}

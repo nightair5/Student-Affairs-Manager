@@ -1,0 +1,11 @@
+file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/prepare-d26.mjs:18
+const check = (value, code) => { if (!value) throw Error('D26_PREPARE_' + code) }
+                                                   ^
+
+Error: D26_PREPARE_FROZEN_COMPONENT_DRIFT_src/App.tsx
+    at check (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/prepare-d26.mjs:18:52)
+    at verifyD26 (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/prepare-d26.mjs:89:5)
+    at offlineAudit (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/d26-executor.mjs:124:15)
+    at file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/d26-executor.mjs:128:66
+
+Node.js v24.18.0

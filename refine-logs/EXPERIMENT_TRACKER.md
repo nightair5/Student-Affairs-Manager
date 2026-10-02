@@ -1,16 +1,16 @@
 # 当前工作跟踪
 
-2026-10-02。[D26结果](../docs/recognition-optimization/d26-correction/D26_RESULTS.md)、[短交接](../docs/recognition-optimization/CURRENT_CONTEXT.md)。
+2026-10-02。[D27结果](../docs/recognition-optimization/d27-planning/D27_RESULTS.md)、[短交接](../docs/recognition-optimization/CURRENT_CONTEXT.md)。
 
 | 工作 | 当前事实/证据 | 下一动作 |
 |---|---|---|
-| 普通保存与发送 | 三方CAS/SourceVersion不可变/默认仅当前文本/明确关联白名单；浏览器失败恢复与独立读回 | 已交付，复用；不重新全仓审计 |
-| 首次质量机制 | C18原机制继续；公共时间/显示v10修订、源语义Expected；工程反例通过 | 本批新16输出才能判断识别收益 |
-| 修订比较 | D26-C17-C18-DEVELOPMENT-R1；8来源16NOT_RUN；8未知/臂 | 新许可、价格/身份/账本与真实宿主绑定；同包比较，不默认扩大24 |
-| 低负担确认 | 普通同页任务/事件/材料/时间；一次接受自动读回；输入恢复/局部阻断 | 最小安排接续，原生语义gaps如实保留 |
-| 最小安排 | 截止、固定事件、依赖、个人状态、耗时来源可用；本轮未实现全局安排 | 本机有限窗口一任务一段，不把兼容60分钟当估计事实 |
-| 测量 | edit/checkpoint/commit/readback；阅读主动编辑0、过期来源MISSING | 工程证据不叫真人收益，未来匹配真实试次 |
-| 测试 | Windows34组30PASS/4历史FAIL；当前产品915pass/1旧skip；Linux部分不可用；audit5high2moderate | 新失败已修；维护建议另范围，不改旧锁断言凑绿 |
-| 保护/账本 | 84/119/7，938行旧SHA保持，零写 | 后续只读复核，不复用旧许可 |
-| Git | 实现de670d5本地；Worker Builds绑定未核实，未推送 | 核无自动发布后普通推送，不部署 |
-| 真人/默认/发布 | 均未运行/未授权，四项真人NOT_OBSERVABLE | 不阻挡本地识别/安排，不造同意或泛化 |
+| 普通来源核对 | D26一次接受任务/材料/事件/未知时间，恢复/CAS/原子保存/自动读回 | 已交付，复用，不重建底座 |
+| 最小安排 | D27普通首页与日历共享canonical，容量/课程/事件/锁定/依赖，调整/稍后/撤回/原deadline保留 | 按实际场景渐进增量重排，不作为首次比较总门 |
+| 首次识别比较 | D26-C17-C18-DEVELOPMENT-R1；16NOT_RUN，每臂8未知 | 原快照宿主接线+新许可/核价/账本后直接比较，不默认扩24 |
+| 冻结保护 | 原D26快照145组件/7产物/16请求保持；活动图6文件已改 | 旧prepare拒绝活动HEAD；原快照隔离重建，不改Manifest |
+| 测量 | personal-plan-measurement-d27-1；实际阅读编辑0、retry变化1、refresh MISSING/null；commit/readback可查 | 与AI纠错/真人四指标分开，不猜缺失0 |
+| 浏览器 | 6792唯一内部URL，新库final10；最终受影响路径复验及未变范围复用 | 已存证据，不循环空跑矩阵 |
+| 验证 | 最终产品9组PASS/927pass1skip；全量30PASS4历史FAIL；lint/build/scan通过；audit5high2moderate | 旧失败与兼容工具链维护单列，不弱化断言/改旧锁 |
+| 保护/账本 | 84/119/7；938行旧SHA未变；本轮0写0调用 | 后续只读核，旧许可不复用 |
+| Git | D27代码104e7a8本地；结果另提交；remote7b90b1e | Cloudflare Worker Builds绑定未核实，不推送；确认无自动发布后普通同步 |
+| 真人/默认/发布 | 0真人，四项NOT_OBSERVABLE；无默认替换/合并/部署 | 另需范围与证据，不阻挡本地识别主线 |

@@ -1,0 +1,90 @@
+{
+  "version": "personal-plan-measurement-d27-1",
+  "role": "ENGINEERING_REPLAY_OR_UNADJUDICATED_LOCAL_USE",
+  "denominator": 1,
+  "completed": 0,
+  "incomplete": 1,
+  "wallMedianMs": null,
+  "reports": [
+    {
+      "version": "personal-plan-measurement-d27-1",
+      "role": "ENGINEERING_REPLAY_OR_UNADJUDICATED_LOCAL_USE",
+      "denominator": 1,
+      "commitCount": 1,
+      "independentReadbackCount": 1,
+      "semanticPlanChanges": 0,
+      "planChangeCountStatus": "OBSERVED",
+      "attemptedEditIds": [],
+      "completed": false,
+      "timingStatus": "MISSING",
+      "missingReasons": [
+        "REFRESH_OR_CRASH_GAP"
+      ],
+      "wallMs": null,
+      "readingMs": 21,
+      "activeEditingMs": 0,
+      "idleMs": 0,
+      "hiddenMs": 0,
+      "waitingMs": 23,
+      "firstSuggestionAccuracy": "NOT_MEASURED_BY_PLAN_TRACE",
+      "humanFourMetrics": "NOT_OBSERVABLE"
+    }
+  ],
+  "trace": [
+    {
+      "id": "c6cbb663-f875-4980-b5a7-3257fc77799c",
+      "at": 1790954520105,
+      "kind": "begin"
+    },
+    {
+      "id": "3c347099-ce52-4d8f-bbbf-2ad9eb32bfb3",
+      "at": 1790954520106,
+      "kind": "read"
+    },
+    {
+      "id": "ed57942b-c403-4641-ba4f-aad42dc38b61",
+      "at": 1790954520107,
+      "kind": "wait"
+    },
+    {
+      "id": "f7532ee7-5a28-4a26-96c5-aeeeb1abf53e",
+      "at": 1790954520124,
+      "kind": "commit",
+      "commitId": "6157de49-a61f-46f4-9160-d8e33c76b681",
+      "semanticChanges": 0
+    },
+    {
+      "id": "2658965f-97bf-47c4-a5d8-8d7d5ed5d7b6",
+      "at": 1790954520127,
+      "kind": "failure",
+      "reason": "D27_INJECTED_INDEPENDENT_READBACK_FAILURE"
+    },
+    {
+      "id": "aff0552f-2872-478f-8249-737f2769c1e0",
+      "at": 1790954539135,
+      "kind": "restore"
+    },
+    {
+      "id": "6d133977-dcc7-4e1b-8c6e-297e64d567ed",
+      "at": 1790954539137,
+      "kind": "read"
+    },
+    {
+      "id": "edcf57aa-e5a7-48cf-9dfb-e412de072330",
+      "at": 1790954539137,
+      "kind": "wait"
+    },
+    {
+      "id": "6f1d9ab6-b567-4da9-834c-335ddade71cd",
+      "at": 1790954539143,
+      "kind": "readback",
+      "commitId": "6157de49-a61f-46f4-9160-d8e33c76b681"
+    },
+    {
+      "id": "f2bff9c2-14a1-49e7-b460-156c4e65bfce",
+      "at": 1790954539157,
+      "kind": "end"
+    }
+  ],
+  "humanFourMetrics": "NOT_OBSERVABLE"
+}

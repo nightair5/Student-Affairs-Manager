@@ -66,3 +66,8 @@ docs/recognition-optimization/d26-correction/** -text whitespace=cr-at-eol
 docs/recognition-optimization/d26-correction/validation/*.log whitespace=-blank-at-eof,cr-at-eol
 scripts/*d26*.mjs text eol=lf
 src/experiments/d26/** text eol=lf
+
+# D27 anonymous browser evidence retains its recorded bytes across checkouts.
+docs/recognition-optimization/d27-planning/evidence/** -text whitespace=cr-at-eol
+docs/recognition-optimization/d27-planning/evidence/CURRENT_PRODUCT_VITEST.txt -text whitespace=-blank-at-eof,cr-at-eol
+docs/recognition-optimization/d27-planning/evidence/LINT.txt -text whitespace=-blank-at-eof,cr-at-eol

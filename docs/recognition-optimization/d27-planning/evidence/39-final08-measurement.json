@@ -1,0 +1,243 @@
+{
+  "version": "personal-plan-measurement-d27-1",
+  "role": "ENGINEERING_REPLAY_OR_UNADJUDICATED_LOCAL_USE",
+  "denominator": 3,
+  "completed": 1,
+  "incomplete": 2,
+  "wallMedianMs": 29838,
+  "reports": [
+    {
+      "version": "personal-plan-measurement-d27-1",
+      "role": "ENGINEERING_REPLAY_OR_UNADJUDICATED_LOCAL_USE",
+      "denominator": 1,
+      "commitCount": 1,
+      "independentReadbackCount": 1,
+      "semanticPlanChanges": 0,
+      "planChangeCountStatus": "OBSERVED",
+      "attemptedEditIds": [],
+      "completed": true,
+      "timingStatus": "OBSERVED",
+      "missingReasons": [],
+      "wallMs": 29838,
+      "readingMs": 29812,
+      "activeEditingMs": 0,
+      "idleMs": 0,
+      "hiddenMs": 0,
+      "waitingMs": 26,
+      "firstSuggestionAccuracy": "NOT_MEASURED_BY_PLAN_TRACE",
+      "humanFourMetrics": "NOT_OBSERVABLE"
+    },
+    {
+      "version": "personal-plan-measurement-d27-1",
+      "role": "ENGINEERING_REPLAY_OR_UNADJUDICATED_LOCAL_USE",
+      "denominator": 1,
+      "commitCount": 1,
+      "independentReadbackCount": 1,
+      "semanticPlanChanges": 1,
+      "planChangeCountStatus": "OBSERVED",
+      "attemptedEditIds": [
+        "a870b37d-2e23-4fde-b2e1-4a330511c364"
+      ],
+      "completed": false,
+      "timingStatus": "MISSING",
+      "missingReasons": [
+        "REFRESH_OR_CRASH_GAP"
+      ],
+      "wallMs": null,
+      "readingMs": 314,
+      "activeEditingMs": 4989,
+      "idleMs": 249744,
+      "hiddenMs": 0,
+      "waitingMs": 20,
+      "firstSuggestionAccuracy": "NOT_MEASURED_BY_PLAN_TRACE",
+      "humanFourMetrics": "NOT_OBSERVABLE"
+    },
+    {
+      "version": "personal-plan-measurement-d27-1",
+      "role": "ENGINEERING_REPLAY_OR_UNADJUDICATED_LOCAL_USE",
+      "denominator": 1,
+      "commitCount": 1,
+      "independentReadbackCount": 1,
+      "semanticPlanChanges": 1,
+      "planChangeCountStatus": "OBSERVED",
+      "attemptedEditIds": [
+        "78a194d7-d2eb-4c0f-9343-36cdd177e464"
+      ],
+      "completed": false,
+      "timingStatus": "MISSING",
+      "missingReasons": [
+        "REFRESH_OR_CRASH_GAP"
+      ],
+      "wallMs": null,
+      "readingMs": 266,
+      "activeEditingMs": 102,
+      "idleMs": 0,
+      "hiddenMs": 0,
+      "waitingMs": 31,
+      "firstSuggestionAccuracy": "NOT_MEASURED_BY_PLAN_TRACE",
+      "humanFourMetrics": "NOT_OBSERVABLE"
+    }
+  ],
+  "trace": [
+    {
+      "id": "2e8bdadb-4b25-487e-8223-57c1941c6e88",
+      "at": 1790954051346,
+      "kind": "begin"
+    },
+    {
+      "id": "56c6a726-00a5-4f36-9a76-d02641a009b9",
+      "at": 1790954051347,
+      "kind": "read"
+    },
+    {
+      "id": "61a8ecb3-5a76-43ef-a836-e7055870410b",
+      "at": 1790954081131,
+      "kind": "wait"
+    },
+    {
+      "id": "8fd5b8ac-b9e4-4f38-a8d3-ce20fa7b2e78",
+      "at": 1790954081157,
+      "kind": "commit",
+      "commitId": "74a62d73-3553-492f-aecb-f08c52d6649e",
+      "semanticChanges": 0
+    },
+    {
+      "id": "3b27a8d5-6215-46bf-b402-a80b62d7cd38",
+      "at": 1790954081163,
+      "kind": "readback",
+      "commitId": "74a62d73-3553-492f-aecb-f08c52d6649e"
+    },
+    {
+      "id": "82a70624-d0bb-4d2a-9f74-dfd4f751d584",
+      "at": 1790954081184,
+      "kind": "end"
+    },
+    {
+      "id": "5aeabefa-5e1c-4477-a0c9-7720fafc6b59",
+      "at": 1790954083081,
+      "kind": "begin"
+    },
+    {
+      "id": "223f05c0-2011-4076-81a4-5b20b312d676",
+      "at": 1790954083082,
+      "kind": "read"
+    },
+    {
+      "id": "ccc147ba-220d-4aa2-9408-dabbc07c6b49",
+      "at": 1790954083083,
+      "kind": "edit",
+      "field": "estimate",
+      "editId": "a870b37d-2e23-4fde-b2e1-4a330511c364"
+    },
+    {
+      "id": "ac5101cd-8c74-4d6f-a452-021bce0429a0",
+      "at": 1790954088072,
+      "kind": "idle"
+    },
+    {
+      "id": "ee431e03-d7f9-4493-9c09-9cba2f2a883a",
+      "at": 1790954337816,
+      "kind": "read"
+    },
+    {
+      "id": "870deef0-4a32-417d-bfcf-0aeafdbe1f25",
+      "at": 1790954345832,
+      "kind": "restore"
+    },
+    {
+      "id": "1ce0bb6d-00f4-415c-be9b-94acb14ea7b5",
+      "at": 1790954345833,
+      "kind": "read"
+    },
+    {
+      "id": "769ed261-6f6c-4f3f-ad07-b49e4a4f7a73",
+      "at": 1790954346123,
+      "kind": "wait"
+    },
+    {
+      "id": "8048b841-49b5-4065-a97c-9f2dfb5c2597",
+      "at": 1790954346143,
+      "kind": "commit",
+      "commitId": "653b61e5-f750-4d99-aa1d-f5efe9ffd421",
+      "semanticChanges": 1
+    },
+    {
+      "id": "220d85af-a1ba-4731-bfdb-b9012a9f4b9f",
+      "at": 1790954346146,
+      "kind": "readback",
+      "commitId": "653b61e5-f750-4d99-aa1d-f5efe9ffd421"
+    },
+    {
+      "id": "ce6d4a70-2f4e-4860-9ca5-b72bc7df10c0",
+      "at": 1790954346164,
+      "kind": "end"
+    },
+    {
+      "id": "fcd2b8fe-26e3-4164-9bf8-f7d042cc5bb2",
+      "at": 1790954387549,
+      "kind": "begin"
+    },
+    {
+      "id": "aa576503-b971-4e93-ba24-ef1a70bd155c",
+      "at": 1790954387551,
+      "kind": "read"
+    },
+    {
+      "id": "5da6b907-7ef3-4d46-987c-b519ee498870",
+      "at": 1790954387791,
+      "kind": "edit",
+      "field": "task:source:769bc9c5:draft:1:save:duration",
+      "editId": "78a194d7-d2eb-4c0f-9343-36cdd177e464"
+    },
+    {
+      "id": "89173ce5-b942-4bb2-83e3-81f6ad4f2414",
+      "at": 1790954387893,
+      "kind": "read"
+    },
+    {
+      "id": "7ec3ee59-ae86-47fd-b4a0-88e5976ec33f",
+      "at": 1790954387897,
+      "kind": "wait"
+    },
+    {
+      "id": "caf6e6f7-b000-4c2c-b414-b121ca612b7f",
+      "at": 1790954387920,
+      "kind": "commit",
+      "commitId": "b1805df2-a950-4df4-ab4b-58b52b241dfc",
+      "semanticChanges": 1
+    },
+    {
+      "id": "2f8cc180-22a7-4486-ace7-52bb0287d74a",
+      "at": 1790954387921,
+      "kind": "failure",
+      "reason": "D27_INJECTED_INDEPENDENT_READBACK_FAILURE"
+    },
+    {
+      "id": "f0201ee0-8d0e-4da6-83cc-81169e5d7bca",
+      "at": 1790954464863,
+      "kind": "restore"
+    },
+    {
+      "id": "9e06a5af-e266-4edc-a5bb-89e6055bac02",
+      "at": 1790954464865,
+      "kind": "read"
+    },
+    {
+      "id": "30c7d4f7-ad79-468a-946c-d4eeb04203ef",
+      "at": 1790954464866,
+      "kind": "wait"
+    },
+    {
+      "id": "2f4c8d2c-daff-423e-b399-51ec64968473",
+      "at": 1790954464874,
+      "kind": "readback",
+      "commitId": "b1805df2-a950-4df4-ab4b-58b52b241dfc"
+    },
+    {
+      "id": "2fcdaec3-7cbe-41d6-be26-7296f14b0826",
+      "at": 1790954464890,
+      "kind": "end"
+    }
+  ],
+  "humanFourMetrics": "NOT_OBSERVABLE"
+}
