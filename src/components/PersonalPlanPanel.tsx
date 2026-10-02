@@ -112,7 +112,7 @@ export function PersonalPlanPanel({ workspace, repository, reader, store, onRelo
     <div className="section-heading"><div><span className="section-index">PLAN</span><h2 id="personal-plan-title"><CalendarClock size={22} /> 今日与近期安排</h2><p>原文截止保留；以下时段是可修改、可撤回的个人建议。</p></div></div>
     <details onToggle={e => { if (e.currentTarget.open) void begin().catch(() => setUnsaved(true)) }}>
       <summary>可用时间与估计 · {options.startTime}—{options.endTime} · {options.days}天</summary>
-      <p>尚未录入偏好时，先预览下列假设；接受安排表示采用本次时段。仅依据本机已记录行程。</p>
+      <p>尚未录入偏好时，先预览下列假设；接受安排表示采用本次时段。仅依据本机已记录行程。已接受的个人耗时保留，默认暂估只用于尚无个人耗时的事项。</p>
       <div className="plan-options" onBlur={() => { if (started) track('read') }}>
         <label>安排从哪天开始<input type="date" value={options.startDate} onChange={e => change({ ...options, startDate: e.target.value }, 'window:date')} /></label>
         <label>安排几天<input type="number" min={1} max={14} value={options.days} onChange={e => change({ ...options, days: Number(e.target.value) }, 'window:days')} /></label>

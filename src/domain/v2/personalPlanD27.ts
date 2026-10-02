@@ -253,7 +253,8 @@ export function buildPersonalPlan(w: WorkspaceV8, options: PlanOptions, id: stri
     if (!dep || Date.parse(dep.end) > Date.parse(s.start) || proposal.unscheduled.some(u => u.taskId === id)) { const t = tasks.find(t => t.id === s.taskId)!; if (!proposal.unscheduled.some(u => u.taskId === t.id)) reject(t, 'LOCK_CONFLICT') }
   }
   proposal.segments.sort((a, b) => Date.parse(a.start) - Date.parse(b.start) || a.taskId.localeCompare(b.taskId))
-  if (proposal.segments.some(s => s.durationOrigin === 'product_estimate')) proposal.warnings.push(`未提供耗时的事项暂按每项 ${o.estimateMinutes} 分钟估计；这不是原文要求，可统一或逐项修改。`)
+  const estimatedMinutes = [...new Set(proposal.segments.filter(s => s.durationOrigin === 'product_estimate').map(s => s.minutes))].sort((a, b) => a - b)
+  if (estimatedMinutes.length) proposal.warnings.push(`部分事项使用产品暂估：${estimatedMinutes.join('、')}分钟；这不是原文要求。已接受的个人耗时保留，可逐项修改；默认估计仅用于尚无个人耗时的事项。`)
   proposal.warnings.push('仅避开已记录且确定的活动、课程和锁定安排；尚未录入的行程不能被自动避开。')
   return proposal
 }
