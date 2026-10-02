@@ -1,0 +1,102 @@
+{
+  "version": "product-direction-review-validation-1",
+  "checkedAt": "2026-10-02T05:11:10.191Z",
+  "scope": "DOCUMENTATION_AND_OFFLINE_READ_ONLY_AUDIT",
+  "baseHead": "3d7650f24d47e53a8a0212030d088d20e2007544",
+  "archiveChecks": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "e9091f684865763db49840b87fd9f2034c7d72d1d50a3cafb9b47e40677b12b4",
+      "pass": true
+    },
+    {
+      "path": "PRD.md",
+      "sha256": "5ad7741918789a34bea5c86025ff71485425dec7d2d61487e7ee3c3fa01da64a",
+      "pass": true
+    },
+    {
+      "path": "docs/governance/PROGRESS_POLICY.md",
+      "sha256": "56fc57513b8839bc309fd0d6fa2c04e7944ff763b800d2d93488e8e4cbc36283",
+      "pass": true
+    },
+    {
+      "path": "docs/governance/PROJECT_EXECUTION_ROADMAP.md",
+      "sha256": "ccbe3a4b3eb13b41ec0368eedcbf0d93e5519959e1d59ebd17db63f32b240097",
+      "pass": true
+    },
+    {
+      "path": "docs/governance/NEXT_STAGE_EXECUTION_PROMPT.md",
+      "sha256": "5fa4175aecdf583ad143a3a530023e7963861af9efd62f9aea7dedf4fa0668f3",
+      "pass": true
+    },
+    {
+      "path": "docs/recognition-optimization/CURRENT_CONTEXT.md",
+      "sha256": "62d8910b8199ca387c87667e74758026e6bab3a25f5bb5a221adb92b4fa1a2c8",
+      "pass": true
+    },
+    {
+      "path": "refine-logs/EXPERIMENT_PLAN.md",
+      "sha256": "6c2abb26629ba803c346b94a10f1f131da1dae3f4c3ecb648edd74fe3280cc88",
+      "pass": true
+    },
+    {
+      "path": "refine-logs/EXPERIMENT_TRACKER.md",
+      "sha256": "f4e64deddb0d1dca3f15186121c7b5935cd35cc01988c9b160e6835cd051ded8",
+      "pass": true
+    },
+    {
+      "path": "refine-logs/MANIFEST.md",
+      "sha256": "73ffd980f3fa9f92379a8dba76338aeceaf2857665ffdea8bf59bc5569e11980",
+      "pass": true
+    }
+  ],
+  "results": [
+    {
+      "name": "history",
+      "command": "node scripts/verify-recognition-history.mjs --verify",
+      "exitCode": 0,
+      "stdout": "{\n  \"status\": \"HISTORY_PRESERVED_LEDGER_APPEND_REVIEW_REQUIRED\",\n  \"protectedFiles\": 84,\n  \"archives\": 7,\n  \"frozenFiles\": 119,\n  \"activeDocuments\": \"GIT_VERSIONED_NOT_A_RUNTIME_FREEZE\",\n  \"historicalDecisions\": \"UNCHANGED\",\n  \"ledger\": {\n    \"rows\": 938,\n    \"sha256\": \"e79aec8bbb1378e37f3941d8ffac9cce7d74bbb8e11d7ceee5c90a88b6c734b9\",\n    \"appendRows\": 98,\n    \"mode\": \"READ_ONLY\"\n  },\n  \"dispatchAuthorized\": false,\n  \"qualityPromotion\": false\n}",
+      "stderr": ""
+    },
+    {
+      "name": "d25-freeze",
+      "command": "node scripts/prepare-d25.mjs --verify",
+      "exitCode": 0,
+      "stdout": "{\"status\":\"FROZEN_NOT_RUN\",\"units\":16,\"manifestSha256\":\"b21902a115ad3feebc66fc11ab58c30564277a123dc0cb2669691a0415f1ce06\",\"identitiesSha256\":\"9fe65f082061eda84c3af7797c21223e8faf45106d3b481d6b4204acea868776\"}",
+      "stderr": ""
+    },
+    {
+      "name": "secrets",
+      "command": "node scripts/scan-secrets.mjs",
+      "exitCode": 0,
+      "stdout": "Secret scan passed across 3423 source/build files.",
+      "stderr": ""
+    },
+    {
+      "name": "diff",
+      "command": "git diff --check",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": "warning: in the working copy of 'docs/recognition-optimization/CURRENT_CONTEXT.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'refine-logs/EXPERIMENT_PLAN.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'refine-logs/EXPERIMENT_TRACKER.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'refine-logs/MANIFEST.md', LF will be replaced by CRLF the next time Git touches it"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "TIME_REFERENCE_FINDING.json",
+      "sha256": "b9e7f3eb3e82c8e0639cd1db690dcb3b0ca415f00271d635cbe9fa876e38067c",
+      "bytes": 6947
+    },
+    {
+      "path": "DISPLAY_SEMANTICS_FINDING.json",
+      "sha256": "f4c349eff3634bfa02bc99782c3397aa13f52d1bd321cf4b90203ca9231724cf",
+      "bytes": 6908
+    }
+  ],
+  "businessModelCalls": 0,
+  "grant": 0,
+  "reserve": 0,
+  "settle": 0,
+  "productRuntimeModified": false,
+  "productLintTestBuild": "NOT_RERUN_DOCUMENTATION_ONLY",
+  "d19ReadOnlyVerify": "Passed separately in this turn; original output retained unchanged"
+}

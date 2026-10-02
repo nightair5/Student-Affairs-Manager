@@ -1,0 +1,168 @@
+{
+  "version": "d26-time-reference-finding-1",
+  "role": "OFFLINE_ENGINEERING_DIAGNOSTIC",
+  "notNewModelOutput": true,
+  "businessModelCalls": 0,
+  "grant": 0,
+  "reserve": 0,
+  "settle": 0,
+  "historicalFilesModified": false,
+  "checkedAtUtc": "2026-10-02T04:54:59.113Z",
+  "startingHead": "3d7650f24d47e53a8a0212030d088d20e2007544",
+  "reproduction": {
+    "commandShape": "PowerShell here-string piped to node --input-type=module -; import d25Components and scoreD25; read immutable D25 SOURCES/REFERENCES/LEGAL_WIRE_ORACLES; for D25-S05 and D25-S06 indexImmutableScopesV11 -> adaptModelWire(oracle.wire, context).adapted -> scoreD25(frozenReference, adapted)",
+    "referenceConstruction": "scripts/prepare-d25.mjs:44-48 replaces reference time values using the same product adaptModelWire time parser.",
+    "limitations": "Tests constructed frozen engineering oracles, not new or old model response quality. No browser/canonical-save claim."
+  },
+  "componentSha256": {
+    "docs/recognition-optimization/d25-accuracy/SOURCES.json": "1b8f7e2f23fcb0ab0167ab0858b1e3c5dfb6cfcab4eb65552603f01b49b82fa3",
+    "docs/recognition-optimization/d25-accuracy/REFERENCES.json": "ca89c06d82de407c2390248fcf7ad9d6df13966109876bf006b3c892ccc9e24e",
+    "docs/recognition-optimization/d25-accuracy/LEGAL_WIRE_ORACLES.json": "1b117d17eebd13df35a8552f9ed0d631842465abe4fdce11d372a51629dec893",
+    "scripts/prepare-d25.mjs": "f84024a36c918b4ce04a93f997b62b4b41b371ce362af9e6be6d84605cbeb10c",
+    "scripts/d25-components.mjs": "03f8c7d21c24df6a59bb82bbc5d94f4a34e1bb71d74d83f500f9b46155520a99",
+    "scripts/d25-scoring.mjs": "6836ee042ccc45ce5aed96ea06241f3011a7015c635dde25b38b7b31ffe22179",
+    "src/experiments/realInput01/modelWire.ts": "c7c81ae516c30faec850f4d765ae625d2cf1d11f39ed0d515ab93da45efb8be2"
+  },
+  "finding": "Source says tentative and morning/afternoon; both adapted facts and frozen reference collapse to date_only, isAllDay=true, needsConfirmation=false. The scorer returns completeStatus=true with no risks, so this comparison cannot independently validate those shared time semantics.",
+  "minimalNextStep": "Preserve all D25 frozen bytes and results. Before claiming first whole user-facing output correctness, use a separate versioned source-semantic time contract and independent expected values. If paid comparison bindings change, freeze revised bindings before output and obtain batch-specific authorization; do not silently replace D25 references.",
+  "cases": [
+    {
+      "sourceId": "D25-S05",
+      "sourceText": "若安排你担任场地协调员，请递交场地安排单，以平台显示安排单已收取为完成。暂定下周二下午办理，场地岗位安排尚未确定。",
+      "referenceTime": "2026-09-22T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "oracleTimes": [
+        {
+          "tempId": "PT1_0",
+          "type": "planned_start",
+          "rawText": "暂定下周二下午办理",
+          "relatedTaskTempIds": [
+            "T1"
+          ],
+          "relatedMaterialTempIds": [],
+          "scopeIds": [
+            "scope-0004-9d148cc8eaa06066a6221797d81ef4705845223fc9c15a2de21b3dd750501138"
+          ],
+          "confidence": 1
+        }
+      ],
+      "actualAdaptedTimes": [
+        {
+          "tempId": "PT1_0",
+          "type": "planned_start",
+          "rawText": "暂定下周二下午办理",
+          "relatedTaskTempIds": [
+            "T1"
+          ],
+          "relatedMaterialTempIds": [],
+          "scopeIds": [
+            "scope-0004-9d148cc8eaa06066a6221797d81ef4705845223fc9c15a2de21b3dd750501138"
+          ],
+          "confidence": 1,
+          "normalizedValue": "2026-09-29",
+          "timezone": "Asia/Shanghai",
+          "isAllDay": true,
+          "precision": "date_only",
+          "needsConfirmation": false
+        }
+      ],
+      "frozenReferenceTimes": [
+        [
+          {
+            "rawText": "暂定下周二下午办理",
+            "type": "planned_start",
+            "normalizedValue": "2026-09-29",
+            "precision": "date_only",
+            "isAllDay": true,
+            "needsConfirmation": false,
+            "timezone": "Asia/Shanghai",
+            "tempId": "PT1_0",
+            "relatedTaskTempIds": [
+              "T1"
+            ],
+            "relatedMaterialTempIds": [],
+            "scopeIds": [
+              "scope-0004-9d148cc8eaa06066a6221797d81ef4705845223fc9c15a2de21b3dd750501138"
+            ],
+            "confidence": 1
+          }
+        ]
+      ],
+      "score": {
+        "version": "recognition-semantic-development-9.0.0",
+        "completeStatus": true,
+        "risks": [],
+        "rawProseAdjudication": "NOT_ADJUDICATED"
+      }
+    },
+    {
+      "sourceId": "D25-S06",
+      "sourceText": "如果安排你担任签到志愿者，请提交签到安排表，以平台显示安排表已收取为完成。暂定下周四上午办理，签到岗位安排尚未确定。",
+      "referenceTime": "2026-09-22T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "oracleTimes": [
+        {
+          "tempId": "PT1_0",
+          "type": "planned_start",
+          "rawText": "暂定下周四上午办理",
+          "relatedTaskTempIds": [
+            "T1"
+          ],
+          "relatedMaterialTempIds": [],
+          "scopeIds": [
+            "scope-0004-46a343314cce0a9b72397633e651ef91c1a3d8318e9861f8a8a554948cdee11b"
+          ],
+          "confidence": 1
+        }
+      ],
+      "actualAdaptedTimes": [
+        {
+          "tempId": "PT1_0",
+          "type": "planned_start",
+          "rawText": "暂定下周四上午办理",
+          "relatedTaskTempIds": [
+            "T1"
+          ],
+          "relatedMaterialTempIds": [],
+          "scopeIds": [
+            "scope-0004-46a343314cce0a9b72397633e651ef91c1a3d8318e9861f8a8a554948cdee11b"
+          ],
+          "confidence": 1,
+          "normalizedValue": "2026-10-01",
+          "timezone": "Asia/Shanghai",
+          "isAllDay": true,
+          "precision": "date_only",
+          "needsConfirmation": false
+        }
+      ],
+      "frozenReferenceTimes": [
+        [
+          {
+            "rawText": "暂定下周四上午办理",
+            "type": "planned_start",
+            "normalizedValue": "2026-10-01",
+            "precision": "date_only",
+            "isAllDay": true,
+            "needsConfirmation": false,
+            "timezone": "Asia/Shanghai",
+            "tempId": "PT1_0",
+            "relatedTaskTempIds": [
+              "T1"
+            ],
+            "relatedMaterialTempIds": [],
+            "scopeIds": [
+              "scope-0004-46a343314cce0a9b72397633e651ef91c1a3d8318e9861f8a8a554948cdee11b"
+            ],
+            "confidence": 1
+          }
+        ]
+      ],
+      "score": {
+        "version": "recognition-semantic-development-9.0.0",
+        "completeStatus": true,
+        "risks": [],
+        "rawProseAdjudication": "NOT_ADJUDICATED"
+      }
+    }
+  ]
+}

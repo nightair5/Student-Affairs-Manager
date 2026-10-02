@@ -1,0 +1,176 @@
+{
+  "version": "d26-display-semantics-finding-1",
+  "role": "OFFLINE_ENGINEERING_DIAGNOSTIC_SYNTHETIC_COUNTEREXAMPLE",
+  "notNewModelOutput": true,
+  "notObservedModelError": true,
+  "businessModelCalls": 0,
+  "grant": 0,
+  "reserve": 0,
+  "settle": 0,
+  "checkedAtUtc": "2026-10-02T04:57:32.345Z",
+  "source": {
+    "sourceId": "D25-S07",
+    "sourceVersionId": "D25-S07-v1",
+    "sourceText": "请于2026年10月19日16:30前提交实验物资核对表。实验物资核对表须为PDF格式，文件名为实验编号-负责人；门户提示收件成功即结束。",
+    "sourceSha256": "7be36d8dd0322e5e339910188ea99613cbd6681331ac0b89a240da1734871e4c",
+    "referenceTime": "2026-09-22T09:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "target": "CONTROL_MATERIAL_PRECISE",
+    "templateSourceId": "C17-D16-S01",
+    "seenDegree": "SEEN_TEMPLATE_DERIVED_DEVELOPMENT",
+    "metadata": "Test labels are external provenance, never stripped from arbitrary user text"
+  },
+  "originalLegalWire": {
+    "schemaVersion": "real-input-model-wire-1",
+    "tasks": [
+      {
+        "id": "T1",
+        "propositionScopeIds": [
+          "scope-0001-6e3e3e88b4c9778508438d6b250f825271f1d89523bb358af07e3e2dcc2fffdd",
+          "scope-0002-01a65c622001172bf4cf524e54ef66e31d0688fe9cfa251333a51c68f52313c6",
+          "scope-0003-a043b08310a7f7f8fc9ca5d520ec0b5b7e94d1dfde94ab5ea193d27e6a83ff6e",
+          "scope-0004-89bcd58f6ad7e24f50bda58de2a8fa31f93c64ef036e2027654033683436c82d"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "other",
+        "action": {
+          "surface": "提交",
+          "scopeId": "scope-0001-6e3e3e88b4c9778508438d6b250f825271f1d89523bb358af07e3e2dcc2fffdd"
+        },
+        "object": {
+          "surface": "实验物资核对表",
+          "scopeId": "scope-0001-6e3e3e88b4c9778508438d6b250f825271f1d89523bb358af07e3e2dcc2fffdd"
+        },
+        "effect": "local_change",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "提交实验物资核对表",
+          "description": "",
+          "completionCriteria": [
+            "门户提示收件成功"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [
+            "MT1"
+          ],
+          "timePointTempIds": [
+            "PT1_0"
+          ],
+          "confidence": 1,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [
+      {
+        "tempId": "MT1",
+        "name": "实验物资核对表",
+        "required": true,
+        "formatRequirements": [
+          "PDF格式"
+        ],
+        "namingRequirements": [
+          "实验编号-负责人"
+        ],
+        "quantity": null,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "T1"
+        ],
+        "scopeIds": [
+          "scope-0002-01a65c622001172bf4cf524e54ef66e31d0688fe9cfa251333a51c68f52313c6",
+          "scope-0003-a043b08310a7f7f8fc9ca5d520ec0b5b7e94d1dfde94ab5ea193d27e6a83ff6e"
+        ],
+        "confidence": 1
+      }
+    ],
+    "timePoints": [
+      {
+        "tempId": "PT1_0",
+        "type": "submission_deadline",
+        "rawText": "2026年10月19日16:30前",
+        "relatedTaskTempIds": [
+          "T1"
+        ],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0001-6e3e3e88b4c9778508438d6b250f825271f1d89523bb358af07e3e2dcc2fffdd"
+        ],
+        "confidence": 1
+      }
+    ],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [],
+    "unresolvedScopeIds": []
+  },
+  "modifiedPaths": [
+    {
+      "path": "tasks[0].detail.title",
+      "before": "提交实验物资核对表",
+      "after": "删除已保存记录"
+    },
+    {
+      "path": "tasks[0].detail.description",
+      "before": "",
+      "after": "不用提交表格，改为删除记录。"
+    }
+  ],
+  "otherFieldsUnchanged": true,
+  "adapterAccepted": true,
+  "baselineScore": {
+    "version": "recognition-semantic-development-9.0.0",
+    "completeStatus": true,
+    "risks": [],
+    "rawProseAdjudication": "NOT_ADJUDICATED"
+  },
+  "counterexampleScore": {
+    "version": "recognition-semantic-development-9.0.0",
+    "completeStatus": true,
+    "risks": [],
+    "rawProseAdjudication": "NOT_ADJUDICATED"
+  },
+  "reproduction": "Clone D25-S07 LEGAL_WIRE_ORACLES.wire in memory, modify only the two listed fields, adaptModelWire through d25Components, then scoreD25 against frozen REFERENCES. No frozen file, model raw, or result was modified.",
+  "relevantCode": [
+    "scripts/recognition-semantic-v7.mjs:41-62 taskFields does not compare task detail.title/description",
+    "scripts/d25-scoring.mjs:17 completeStatus reflects structured risks/disputes; return separately marks rawProseAdjudication NOT_ADJUDICATED",
+    "src/experiments/mainline04/semanticContract.ts:61-62 accepts title and description string fields"
+  ],
+  "finding": "Structural completeStatus=true does not establish correctness of the user-visible title or free description. Synthetic wrong prose can coexist with unchanged correct structured action/object/time/material facts and still receive that score. This is measurement coverage evidence, not proof that Candidate17/18 emitted these words.",
+  "minimalAlternatives": [
+    {
+      "option": "Use verified structured facts for the first user-visible task summary",
+      "implementation": "Construct title from grounded action/object and render time/material/condition fields from the same facts. Keep original free prose/raw separately traceable. Score the actual rendered first summary against the source; deterministic formatting is not silent factual repair."
+    },
+    {
+      "option": "Keep generated free prose but cover it explicitly in whole-output judgment",
+      "implementation": "Add a versioned display-semantic rubric and negative examples before new output. Report structured correctness separately; unresolved title/description judgment makes user-visible whole correctness unknown. Use a bounded provisional developer review for development, not a compulsory new human research gate."
+    }
+  ],
+  "limitation": "No browser rendering or canonical persistence claim made by this file."
+}
