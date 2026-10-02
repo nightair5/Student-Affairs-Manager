@@ -1,0 +1,19 @@
+import test from 'node:test'
+import assert from 'node:assert/strict'
+import {mkdtempSync,existsSync,rmdirSync} from 'node:fs'
+import {tmpdir} from 'node:os'
+import {join} from 'node:path'
+import {sha} from './prepare-d25.mjs'
+import {newState,runOne,nextOrdinal,fileLock} from './d25-executor.mjs'
+const binding={manifestSha256:'a'.repeat(64),identitiesSha256:'b'.repeat(64)},units=Array.from({length:16},(_,i)=>{const body={model:'deepseek-flash',ordinal:i+1};return {ordinal:i+1,body,requestSha256:sha(JSON.stringify(body)),unitIdentitySha256:sha('offline-'+i)}})
+function setup(fault=''){
+  const localUnits=structuredClone(units),state=newState(localUnits,binding),auth={authorized:true,batch:state.batch,model:'deepseek-flash',count:16,...binding,hardLimitMicroUsd:5_200_000,grantId:'OFFLINE_FAKE_GRANT_NOT_LEDGER',committedHead:'c'.repeat(40),units:localUnits.map(u=>u.unitIdentitySha256),requestSha256s:localUnits.map(u=>u.requestSha256)},seen={reserve:0,send:0,raw:0,settle:0,persist:0}
+  const fail=name=>{if(fault===name)throw Error('OFFLINE_'+name)}
+  return {state,auth,units:localUnits,binding,seen,lock:async fn=>fn(),preflight:async()=>fail('preflight'),persist:async()=>{seen.persist++;fail('persist'+seen.persist)},ledger:{reserve:async()=>{seen.reserve++;fail('reserve')},settle:async()=>{seen.settle++;fail('settle')}},rawStore:{writeOnce:async()=>{seen.raw++;fail('raw')}},transport:{sendOnce:async()=>{seen.send++;fail('send');return {status:200,text:JSON.stringify({usage:{input_tokens:100,output_tokens:100}})}}}}
+}
+test('without new authorization no reserve/send/raw/settle',async()=>{const h=setup();h.auth.authorized=false;await assert.rejects(runOne(h),/AUTHORIZATION_REQUIRED/);assert.equal(h.seen.send,0);assert.equal(h.seen.reserve,0)})
+test('request/identity/price cap drift blocks before reserve',async()=>{for(const fault of ['request','identity','budget']){const h=setup();if(fault==='request')h.units[0]={...h.units[0],body:{model:'changed'}};if(fault==='identity')h.auth.units[0]='changed';if(fault==='budget')h.auth.hardLimitMicroUsd=1;await assert.rejects(runOne(h));assert.equal(h.seen.send,0);assert.equal(h.seen.reserve,0)}})
+for(const fault of ['reserve','persist1','persist2','send','raw','persist3','settle','persist4'])test('uncertain '+fault+' preserves state and stops subsequent send',async()=>{const h=setup(fault);await assert.rejects(runOne(h));assert.equal(h.state.units[0].status,'UNCERTAIN');assert.throws(()=>nextOrdinal(h.state),/UNCERTAIN/);await assert.rejects(runOne(h));assert.ok(h.seen.send<=1)})
+test('determinate HTTP/parse failure settles once, retains ordinal and conservative upper',async()=>{const h=setup();h.transport.sendOnce=async()=>{h.seen.send++;return {status:500,text:'provider failure'}};await runOne(h);assert.equal(h.state.units[0].status,'SETTLED');assert.equal(h.state.units[0].usage,'NOT_OBSERVABLE');assert.equal(h.seen.send,1);assert.equal(nextOrdinal(h.state),2)})
+test('resume is read-only, order and settled results cannot be repeated',async()=>{const h=setup();await runOne(h);const before=JSON.stringify(h.state);assert.equal(nextOrdinal(h.state),2);assert.equal(JSON.stringify(h.state),before);h.state.units[1].status='SENDING';assert.throws(()=>nextOrdinal(h.state),/UNCERTAIN/)})
+test('actual filesystem cross-process lock rejects concurrent entry, remains after uncertainty',async()=>{const root=mkdtempSync(join(tmpdir(),'d25-lock-')),lock=join(root,'lock');let release;const first=fileLock(lock,()=>new Promise(r=>{release=r}));await new Promise(r=>setTimeout(r,0));assert.throws(()=>fileLock(lock,async()=>{}),/EEXIST/);release();await first;assert.equal(existsSync(lock),false);await assert.rejects(fileLock(lock,async()=>{throw Error('unknown')}));assert.equal(existsSync(lock),true);rmdirSync(lock);rmdirSync(root)})

@@ -1,0 +1,100 @@
+{
+  "sources": [
+    {
+      "sourceId": "D25-S01",
+      "sourceVersionId": "D25-S01-v1",
+      "sourceText": "图书借阅门户将在周三晚停机，既有借阅记录不受影响。无需删除记录，不要提交说明，也不必向值班员发消息。本通知仅说明停机消息。",
+      "sourceSha256": "2c26a738ff018e87e77d3a0db5cc0f7030714be372d45d2f587d48bce347683f",
+      "referenceTime": "2026-09-22T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "target": "S09_EVENT",
+      "templateSourceId": "C17-D16-S09",
+      "seenDegree": "SEEN_TEMPLATE_DERIVED_DEVELOPMENT",
+      "metadata": "Test labels are external provenance, never stripped from arbitrary user text"
+    },
+    {
+      "sourceId": "D25-S02",
+      "sourceVersionId": "D25-S02-v1",
+      "sourceText": "实验预约系统将于周四晚维护，已有预约不受影响。无需取消预约，不要提交说明，也不必向值班员发消息。本通知仅说明维护消息。",
+      "sourceSha256": "7c84f283d7aac45b36a11eadd949b649a0c30249fd1ec15f2266d3e9af79fa4b",
+      "referenceTime": "2026-09-22T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "target": "S09_EVENT",
+      "templateSourceId": "C17-D16-S09",
+      "seenDegree": "SEEN_TEMPLATE_DERIVED_DEVELOPMENT",
+      "metadata": "Test labels are external provenance, never stripped from arbitrary user text"
+    },
+    {
+      "sourceId": "D25-S03",
+      "sourceVersionId": "D25-S03-v1",
+      "sourceText": "请先填写社团设备登记表，登记表必填栏均已填写后，再提交社团设备登记表；社团设备登记表格式为XLSX，以器材室确认收妥登记表为完成。",
+      "sourceSha256": "1945a0d8937a4b016966bf3b9915b1fc20d8b0e68f567bd90ad7e17255c3f197",
+      "referenceTime": "2026-09-22T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "target": "S06_PREREQUISITE",
+      "templateSourceId": "C17-D16-S06",
+      "seenDegree": "SEEN_TEMPLATE_DERIVED_DEVELOPMENT",
+      "metadata": "Test labels are external provenance, never stripped from arbitrary user text"
+    },
+    {
+      "sourceId": "D25-S04",
+      "sourceVersionId": "D25-S04-v1",
+      "sourceText": "请先补全志愿服务汇总表，汇总表必填栏全部补全后，再提交志愿服务汇总表；志愿服务汇总表格式为PDF，以活动组确认收妥汇总表为完成。",
+      "sourceSha256": "a9c8d224b9c3659d2c3373b8fc275b70f31ba31137aa3df4dcdbaa0bad6bfba6",
+      "referenceTime": "2026-09-22T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "target": "S06_PREREQUISITE",
+      "templateSourceId": "C17-D16-S06",
+      "seenDegree": "SEEN_TEMPLATE_DERIVED_DEVELOPMENT",
+      "metadata": "Test labels are external provenance, never stripped from arbitrary user text"
+    },
+    {
+      "sourceId": "D25-S05",
+      "sourceVersionId": "D25-S05-v1",
+      "sourceText": "若安排你担任场地协调员，请递交场地安排单，以平台显示安排单已收取为完成。暂定下周二下午办理，场地岗位安排尚未确定。",
+      "sourceSha256": "da2534bf919fdc5b9fab0b3c23cac67eeb90e6341636e67ecd8c7cb0f1abbf23",
+      "referenceTime": "2026-09-22T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "target": "S05_GRAPH",
+      "templateSourceId": "C17-D16-S05",
+      "seenDegree": "SEEN_TEMPLATE_DERIVED_DEVELOPMENT",
+      "metadata": "Test labels are external provenance, never stripped from arbitrary user text"
+    },
+    {
+      "sourceId": "D25-S06",
+      "sourceVersionId": "D25-S06-v1",
+      "sourceText": "如果安排你担任签到志愿者，请提交签到安排表，以平台显示安排表已收取为完成。暂定下周四上午办理，签到岗位安排尚未确定。",
+      "sourceSha256": "9dcb36da6c3e3d6194d2c52615fff5ccf6b44c1b9bf0d304d296d9ba33c50ed1",
+      "referenceTime": "2026-09-22T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "target": "S05_GRAPH",
+      "templateSourceId": "C17-D16-S05",
+      "seenDegree": "SEEN_TEMPLATE_DERIVED_DEVELOPMENT",
+      "metadata": "Test labels are external provenance, never stripped from arbitrary user text"
+    },
+    {
+      "sourceId": "D25-S07",
+      "sourceVersionId": "D25-S07-v1",
+      "sourceText": "请于2026年10月19日16:30前提交实验物资核对表。实验物资核对表须为PDF格式，文件名为实验编号-负责人；门户提示收件成功即结束。",
+      "sourceSha256": "7be36d8dd0322e5e339910188ea99613cbd6681331ac0b89a240da1734871e4c",
+      "referenceTime": "2026-09-22T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "target": "CONTROL_MATERIAL_PRECISE",
+      "templateSourceId": "C17-D16-S01",
+      "seenDegree": "SEEN_TEMPLATE_DERIVED_DEVELOPMENT",
+      "metadata": "Test labels are external provenance, never stripped from arbitrary user text"
+    },
+    {
+      "sourceId": "D25-S08",
+      "sourceVersionId": "D25-S08-v1",
+      "sourceText": "请在10月20日前核对校园接待岗位，页面显示核对完成；另于10月22日前上传接待安排确认单，接待安排确认单须为PDF，平台显示承诺函已收妥。两项分别办理。",
+      "sourceSha256": "43cf06ec71b277a9d51c4330357cfcf00f5f07eb8970c6e2c98f7dd0497d7a3b",
+      "referenceTime": "2026-09-22T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "target": "CONTROL_MULTI_DATE",
+      "templateSourceId": "C17-D16-S02",
+      "seenDegree": "SEEN_TEMPLATE_DERIVED_DEVELOPMENT",
+      "metadata": "Test labels are external provenance, never stripped from arbitrary user text"
+    }
+  ]
+}

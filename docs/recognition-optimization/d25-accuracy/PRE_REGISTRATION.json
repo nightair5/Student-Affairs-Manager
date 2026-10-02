@@ -1,0 +1,44 @@
+{
+  "version": "d25-layered-development-1",
+  "baseline": "Candidate17 original frozen prompt and wire",
+  "challenger": "Candidate18 source-facts-3 / one-way assembly",
+  "comparison": "TWO_COMPLETE_GENERATION_PIPELINES_COMMON_FINAL_SEMANTICS; not prompt-only",
+  "sources": 8,
+  "units": 16,
+  "order": "4 AB / 4 BA",
+  "fixed": [
+    "source",
+    "referenceTime",
+    "timezone",
+    "model",
+    "temperature=0",
+    "reasoning=none",
+    "output=8192",
+    "common wire adapter",
+    "scorer"
+  ],
+  "experimental": [
+    "prompt",
+    "wire schema",
+    "explicit-edge assembly; original raw preserved"
+  ],
+  "selector": "d25-layered-development-1",
+  "scorer": "recognition-semantic-development-9.0.0",
+  "denominatorPolicy": "8 per arm; transport/parse/schema/semantic failures stay; unresolved=UNKNOWN; never pass rejected output",
+  "manualProse": "NOT_ADJUDICATED until real review",
+  "thresholds": {
+    "developmentImprovement": "whole-correct net>0 and no new determinate key risk",
+    "targetedProgress": "target risks decrease without whole net gain and no new key risk",
+    "mixed": "gains with regressions or new key risks",
+    "noImprovement": "no demonstrated gain",
+    "incomplete": "missing/unknown can reverse conclusion"
+  },
+  "forbidden": [
+    "retry",
+    "repair",
+    "verifier",
+    "paid probe",
+    "answer-based source selection"
+  ],
+  "dispatchAuthorized": false
+}

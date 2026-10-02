@@ -12,6 +12,9 @@ import {assertRevisionSelection,inspectRevisionLinks} from './revisionGuard'
 import {confirmSemanticSource} from '../mainline05/semanticConfirmation'
 import {D13ReplayPicker,type D13ReplayChoice} from './ReplayPicker'
 import {D20ReviewSessionRepository} from './d20ReviewSession'
+import {CANDIDATE18_VERSION} from '../realInput01/candidate18'
+import {convertCandidate18Envelope} from '../realInput01/sourceFactsV3'
+import {assertFirstSuggestionSelection,inspectFirstSuggestion} from '../realInput01/firstSuggestionGuard'
 
 export async function createD13Runtime(options:{transport:WorkspaceRecordStore&{name:string};choices:readonly D13ReplayChoice[];read:(id:string)=>Promise<D13ReplayRecord>;beforeOpen?:(record:D13ReplayRecord)=>Promise<void>;onOpen?:(record:D13ReplayRecord,draftId:string)=>Promise<void>;onDisposition?:(draftId:string,disposition:'confirmed'|'no_task')=>Promise<void>;sourceSession?:boolean;buildLabel?:string;audience?:'engineering'|'human';measurement?:D13Measurement;correctionVersion?:typeof D24_CORRECTION_VERSION;sessionFrame?:import('react').ComponentType<{children:ReactNode;onClose?:()=>void}>;inputPanel?:NonNullable<import('../mainline02/runtime').MainlineRuntime['realInput']>['inputPanel']}){
   const metrics=options.measurement??createD13Measurement(options.transport),observed=createD13Store(options.transport,metrics,options.sourceSession===true,options.correctionVersion),store=observed.store
@@ -23,9 +26,12 @@ export async function createD13Runtime(options:{transport:WorkspaceRecordStore&{
     if(opening||!options.choices.some(c=>c.id===id))throw Error('D13_REPLAY_BUSY_OR_UNKNOWN')
     opening=true
     try{const record=await options.read(id);if(record.id!==id)throw Error('D13_RECORD_IDENTITY');await options.beforeOpen?.(record)
+      // Preserve an immutable original even when schema/assembly rejects an answer.
+      if(options.buildLabel?.startsWith('D25'))await options.transport.transaction('d25-replay-raw:'+id,prior=>{const raw={candidateVersion:record.candidateVersion,responseSha256:record.responseSha256,rawHttpText:record.rawHttpText};if(prior!==undefined&&stableJson(prior)!==stableJson(raw))throw Error('D25_RAW_DRIFT');return raw})
       const draftId=await openD13Replay(repo,record)
       const original={recordId:id,kind:record.kind,candidateVersion:record.candidateVersion,requestSha256:record.requestSha256,responseSha256:record.responseSha256,context:record.context,rawHttpText:record.rawHttpText,programConversion:id.startsWith('d13-fixture-manual-d23-')?'D23_BLANK_MANUAL; parser-compatible synthetic envelope; usage placeholders are not API observations; NO_MODEL_OUTPUT':'SCOPE_ID_REBIND_ONLY; legacy replay parser; model first answer unchanged'}
-      await options.transport.transaction('d13-original:'+draftId,prior=>{if(prior!==undefined&&stableJson(prior)!==stableJson(original))throw Error('D13_ORIGINAL_DRIFT');return original})
+      const audited=record.candidateVersion===CANDIDATE18_VERSION?{...original,programConversion:convertCandidate18Envelope(record.rawHttpText,record.context).conversion}:original
+      await options.transport.transaction('d13-original:'+draftId,prior=>{if(prior!==undefined&&stableJson(prior)!==stableJson(audited))throw Error('D13_ORIGINAL_DRIFT');return audited})
       await metrics.begin(draftId,{recordId:id,sourceSha256:await sha256Text(record.context.index.sourceContent),firstOutputSha256:record.responseSha256})
       await options.onOpen?.(record,draftId)
       return draftId
@@ -55,9 +61,10 @@ export async function createD13Runtime(options:{transport:WorkspaceRecordStore&{
       onReviewFieldInput:(draftId,itemId,field)=>{if(!d21)void metrics.changed(draftId,itemId+':'+field)},
       factEditor:props=>instrument(props.draftId,base.realInput!.factEditor(props)),
       informationEditor:props=>instrument(props.draftId,base.realInput!.informationEditor?.(props)),
-      draftEditor:props=>{const issues=inspectRevisionLinks(effectiveStateFacts(stateOfRuntime(props.workspace,props.draftId)).facts)
-        return <>{issues.length>0&&<p role="alert">修订引用需纠正：{issues.map(i=>`${i.code}（${i.taskIds.join('、')||'无法定位端点'}）`).join('；')}。受影响项暂不能确认；原回答仍保留，请核对原文后编辑关系。</p>}{instrument(props.draftId,base.realInput!.draftEditor?.(props))}</>}},
-    confirm:async intent=>{const before=await repo.load();assertRevisionSelection(effectiveStateFacts(stateOfRuntime(before,intent.draftId)).facts,intent.taskTempIds)
+    draftEditor:props=>{const facts=effectiveStateFacts(stateOfRuntime(props.workspace,props.draftId)).facts,issues=inspectRevisionLinks(facts),firstIssues=options.buildLabel?.startsWith('D25')?inspectFirstSuggestion(facts):[]
+        return <>{issues.length>0&&<p role="alert">修订引用需纠正：{issues.map(i=>`${i.code}（${i.taskIds.join('、')||'无法定位端点'}）`).join('；')}。受影响项暂不能确认；原回答仍保留，请核对原文后编辑关系。</p>}{firstIssues.length>0&&<p role="alert">首次建议事实需核对：{firstIssues.map(i=>i.code==='TIME_EDGE_DISAGREEMENT'?'时间与任务归属不一致':i.code==='CONDITION_TRUTH_WITHOUT_FACT'?'条件已成立但缺原文事实':'前置任务引用不存在').join('；')}。受影响项不能保存，无关项仍可核对确认。</p>}{instrument(props.draftId,base.realInput!.draftEditor?.(props))}</>}},
+    confirm:async intent=>{const before=await repo.load();const facts=effectiveStateFacts(stateOfRuntime(before,intent.draftId)).facts;assertRevisionSelection(facts,intent.taskTempIds)
+      if(options.buildLabel?.startsWith('D25'))assertFirstSuggestionSelection(facts,intent.taskTempIds)
       const saved=options.sourceSession?await confirmSemanticSource(repo,intent):await base.confirm(intent);await readback();const draft=saved.extractionDrafts.find(d=>d.id===intent.draftId)!
       await metrics.finish(intent.draftId,draft.status==='confirmed'?'confirmed':'partial');if(draft.status==='confirmed')await options.onDisposition?.(intent.draftId,'confirmed');return saved},
       semantic:{...base.semantic!,dispose:async intent=>{if(intent.kind==='reject')await metrics.changed(intent.draftId,'disposition.reject.'+intent.taskTempIds.join(','));const saved=await base.semantic!.dispose(intent);await readback();if(intent.kind==='review_info'){await metrics.finish(intent.draftId,'no_task');await options.onDisposition?.(intent.draftId,'no_task')}return saved}},
