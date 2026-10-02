@@ -59,7 +59,7 @@ export function TaskCard({
   const materials = getMaterialProgress(task)
   const waitingFor = allTasks.filter(t => task.dependencyIds?.includes(t.id) && t.status !== '已完成')
   const unknownMaterials = task.materials.filter(m => m.status === 'unverified').length
-  const deadline = dateView ? { date: dateView.label, time: '', weekday: dateView.noDeadlineProven ? '不自动排期' : '' } : !task.deadline ? {date:task.sourceDeadlineLabel||'原文未说明截止',time:'',weekday:'不自动排期'} : deadlineParts(task.deadline)
+  const deadline = dateView ? { date: dateView.label, time: '', weekday: dateView.noDeadlineProven ? '不自动排期' : '' } : !task.deadline ? {date:task.sourceDeadlineLabel||'原文未说明截止',time:'',weekday:'个人安排另列'} : deadlineParts(task.deadline)
   const priority = calculateTaskPriority(task, allTasks, new Date(), dateView ? { [task.id]: dateView } : undefined)
 
   return (
@@ -81,7 +81,7 @@ export function TaskCard({
           <span><Clock3 size={15} />截止时间</span>
           <strong>{deadline.date}</strong>
           <em>{deadline.weekday} · {deadline.time}</em>
-          <small>{dateView ? dateView.noDeadlineProven ? '不自动生成提醒' : '' : formatDeadlineDistance(task.deadline)}</small>
+          <small>{dateView ? dateView.noDeadlineProven ? '不自动生成提醒' : '' : task.deadline ? formatDeadlineDistance(task.deadline) : '不虚构截止时间'}</small>
         </div>
         <div className="task-duration-block">
           <span>预计用时</span>
@@ -91,7 +91,7 @@ export function TaskCard({
       </div>
 
       <p className="priority-reason">排序理由：{priority.reasons.slice(0, 2).join('；')}</p>
-      {task.plannedStart && <p>我的计划：{task.plannedStart}（原文截止另列）</p>}
+      {task.plannedStart && <p>我的计划：{Number.isFinite(Date.parse(task.plannedStart)) ? new Intl.DateTimeFormat('zh-CN', {month:'long',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date(task.plannedStart)) : '待核对'}（原文截止另列）</p>}
 
       <div className="next-action">
         {waitingFor.length > 0 && <p role="status">等待先完成：{waitingFor.map(t => t.title).join('、')}</p>}

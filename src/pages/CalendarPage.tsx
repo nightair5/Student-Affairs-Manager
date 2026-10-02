@@ -15,8 +15,11 @@ import { findSuggestedWorkSlot } from '../lib/scheduling'
 import { isDateOnly, instantToWallClock } from '../lib/timeSemantics'
 import { formatDuration, getExecutableTasks } from '../lib/taskLogic'
 import type { CourseBlock, Event, Task } from '../types'
+import type { PlanSegment } from '../domain/v2/personalPlanD27'
 
 interface CalendarPageProps {
+  personalPlans?: readonly PlanSegment[]
+  personalPlanTimezone?: string
   pendingDateTaskIds?: readonly string[]
   isolatedTimezone?: string
   dateViews?: TaskDateViews
@@ -53,7 +56,7 @@ function itemTime(value: string): string {
     .format(new Date(value))
 }
 
-export function CalendarPage({ pendingDateTaskIds, isolatedTimezone, dateViews, tasks, events = [], courseBlocks, onOpenTask, onOpenEvent, onAddCourseBlock, onRemoveCourseBlock }: CalendarPageProps) {
+export function CalendarPage({ personalPlans, personalPlanTimezone = 'Asia/Shanghai', pendingDateTaskIds, isolatedTimezone, dateViews, tasks, events = [], courseBlocks, onOpenTask, onOpenEvent, onAddCourseBlock, onRemoveCourseBlock }: CalendarPageProps) {
   const [today] = useState(() => isolatedTimezone ? instantToWallClock(new Date(), isolatedTimezone) : new Date())
   const displayTime = (value: string) => isolatedTimezone ? isDateOnly(value) ? '仅日期' : value.slice(11, 16) + '（' + isolatedTimezone + '）' : itemTime(value)
   const [viewDate, setViewDate] = useState(() => new Date(today.getFullYear(), today.getMonth(), 1))
@@ -103,10 +106,10 @@ export function CalendarPage({ pendingDateTaskIds, isolatedTimezone, dateViews, 
   const agendaTitle = agendaMode === 'selected'
     ? `${dayLabel(selectedDateKey)} · ${selectedItems.length} 项`
     : `全部即将到来 · ${upcomingItems.length} 项`
-  const suggestions = useMemo(() => executableTasks
+  const suggestions = useMemo(() => personalPlans ? [] : executableTasks
     .map((task) => ({ task, slot: findSuggestedWorkSlot(task, courseBlocks, today) }))
     .filter((item) => item.slot)
-    .slice(0, 3), [courseBlocks, executableTasks, today])
+    .slice(0, 3), [courseBlocks, executableTasks, today, personalPlans])
 
   const changeMonth = (offset: number) => {
     const next = new Date(viewDate.getFullYear(), viewDate.getMonth() + offset, 1)
@@ -236,7 +239,7 @@ export function CalendarPage({ pendingDateTaskIds, isolatedTimezone, dateViews, 
       </div>
 
       <section className="schedule-section" aria-labelledby="schedule-title">
-        <div className="section-heading"><div><span className="section-index">PLAN</span><h2 id="schedule-title">课程表避让</h2><p>录入每周固定课程，本机规则会寻找 08:00–22:00 的连续空档。</p></div><CalendarDays size={20} /></div>
+        <div className="section-heading"><div><span className="section-index">PLAN</span><h2 id="schedule-title">课程表避让</h2><p>{personalPlans ? '录入每周固定课程；返回今日页核对整体安排。日期格中的任务时间表示原文截止，个人开工时段在下方单列。' : '录入每周固定课程，本机规则会寻找 08:00–22:00 的连续空档。'}</p></div><CalendarDays size={20} /></div>
         <div className="schedule-grid">
           <div className="course-panel">
             <form className="course-form" onSubmit={event => { if (dateViews) { event.preventDefault(); return } addCourse(event) }}>
@@ -248,7 +251,7 @@ export function CalendarPage({ pendingDateTaskIds, isolatedTimezone, dateViews, 
             </form>
             <div className="course-list">{courseBlocks.length ? courseBlocks.map((block) => <div className="course-item" key={block.id}><span><strong>{block.title}</strong><small>{weekdays.find((day) => day.value === block.weekday)?.label} · {block.startTime}–{block.endTime}</small></span><button className="icon-button" type="button" aria-label={`删除课程 ${block.title}`} disabled={Boolean(dateViews)} onClick={() => { if (!dateViews) onRemoveCourseBlock(block.id) }}><Trash2 size={15} /></button></div>) : <p className="muted-copy">尚未录入课程；建议不会假设你的空闲时间。</p>}</div>
           </div>
-          <div className="work-slot-panel"><h3>建议开工时段</h3>{suggestions.length ? suggestions.map(({ task, slot }) => slot && <button type="button" className="work-slot" key={task.id} onClick={() => onOpenTask(task)}><span><strong>{task.title}</strong><small>{new Intl.DateTimeFormat('zh-CN', { month: 'numeric', day: 'numeric', weekday: 'short', hour: '2-digit', minute: '2-digit' }).format(new Date(slot.start))} 开始 · {formatDuration(task.estimatedMinutes)}</small></span><em>{slot.reason}</em></button>) : <p className="muted-copy">当前没有可计算的未完成任务或连续空档。</p>}</div>
+          <div className="work-slot-panel"><h3>{personalPlans ? '已接受的个人安排' : '建议开工时段'}</h3>{personalPlans ? personalPlans.length ? personalPlans.map(plan => <button type="button" className="work-slot" key={plan.taskId} onClick={() => { const task = tasks.find(t => t.id === plan.taskId); if (task) onOpenTask(task) }}><span><strong>{plan.title}</strong><small>{new Intl.DateTimeFormat('zh-CN', { timeZone: personalPlanTimezone, month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(new Date(plan.start))} 开始 · {plan.minutes}分钟{plan.durationOrigin === 'product_estimate' ? '（产品暂估）' : ''}{plan.locked ? ' · 已锁定' : ''}</small></span><em>与首页同一份已保存安排；原文截止另列{plan.conditionalOn.length ? '，须先实际完成前置事项' : ''}。</em></button>) : <p className="muted-copy">尚未接受个人安排；今日页会按共同容量生成可核对方案。</p> : suggestions.length ? suggestions.map(({ task, slot }) => slot && <button type="button" className="work-slot" key={task.id} onClick={() => onOpenTask(task)}><span><strong>{task.title}</strong><small>{new Intl.DateTimeFormat('zh-CN', { month: 'numeric', day: 'numeric', weekday: 'short', hour: '2-digit', minute: '2-digit' }).format(new Date(slot.start))} 开始 · {formatDuration(task.estimatedMinutes)}</small></span><em>{slot.reason}</em></button>) : <p className="muted-copy">当前没有可计算的未完成任务或连续空档。</p>}</div>
         </div>
       </section>
     </main>

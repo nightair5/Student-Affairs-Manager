@@ -49,7 +49,7 @@ export class D20ReviewSessionRepository {
   readonly writer = crypto.randomUUID()
   private readonly pendingEditIds=new Map<string,string>()
   constructor(private readonly store: WorkspaceRecordStore & { name: string }, private readonly recordEdit?: (draftId:string,field:string)=>Promise<string>,private readonly recordActivity?: (draftId:string,field:string,editId:string)=>Promise<void>,private readonly ordinarySourceReview=false) {
-    const ordinaryAllowed=ordinarySourceReview&&(store.name==='student-affairs-steward'||/^rco-mainline-01-02-i1-d26-ordinary-[a-z0-9-]{2,48}$/.test(store.name))
+    const ordinaryAllowed=ordinarySourceReview&&(store.name==='student-affairs-steward'||/^rco-mainline-01-02-i1-(?:d26-ordinary|d27-plan)-[a-z0-9-]{2,48}$/.test(store.name))
     if (!ordinaryAllowed&&!/^rco-mainline-01-02-i1-real-input-(?:d2[01]-review-session-p[1-9][0-9]{0,2}|d23-study-(?:engineering|human)-[a-z0-9-]{2,32})$/.test(store.name)) throw Error('D20_ISOLATED_DATABASE_REQUIRED')
   }
   async load(workspace: WorkspaceV8, draftId: string): Promise<ReviewSession> {

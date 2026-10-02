@@ -1,11 +1,12 @@
 import type { TaskDateViews } from '../experiments/mainline02/taskDateView'
 import { ArrowRight, ClipboardPaste, Inbox, Link2, Plus, Upload } from 'lucide-react'
-import { useState, type FormEvent } from 'react'
+import { useState, type FormEvent, type ReactNode } from 'react'
 import { TaskCard } from '../components/TaskCard'
 import { getBlockedAndWaitingTasks, getFocusTasks } from '../lib/taskLogic'
 import type { Project, Task } from '../types'
 
 interface DashboardPageProps {
+  planning?: ReactNode
   engineeringInput?: boolean
   realInput?: { networkDescription: string }
   dateViews?: TaskDateViews
@@ -32,6 +33,7 @@ function todayLabel(): string {
 }
 
 export function DashboardPage({
+  planning,
   engineeringInput,
   dateViews, readOnly, realInput,
   tasks,
@@ -101,6 +103,7 @@ export function DashboardPage({
         <ArrowRight size={17} />
       </button>}
 
+      {planning}
       <section className="focus-section" aria-labelledby="focus-title">
         <div className="section-heading">
           <div><span className="section-index">TODAY</span><h2 id="focus-title">现在先做这些</h2></div>

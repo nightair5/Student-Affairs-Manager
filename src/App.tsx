@@ -1,5 +1,6 @@
 import { assertMainlineRuntime, type MainlineRuntime } from './experiments/mainline02/runtime'
 import type { WorkspaceV8 } from './domain/v2/types'
+import { storedPersonalPlans } from './domain/v2/personalPlanD27'
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { DraftReviewPanel } from './components/DraftReviewPanel'
 import { EventDetailPanel } from './components/EventDetailPanel'
@@ -41,6 +42,7 @@ import { CanonicalWorkspaceRepository, IndexedDbWorkspaceRecordStore, type Works
 import { D20ReviewSessionRepository } from './experiments/candidate16/d20ReviewSession'
 import { buildSourceReviewPlan, commitSourceReview, verifySourceReviewReadback, acknowledgeSourceReadback, sourceReviewProblem, PENDING_SOURCE_READBACK, type SourceReviewReceipt } from './domain/v2/sourceReviewD26'
 import { OrdinarySourceFacts } from './components/OrdinarySourceFacts'
+import { PersonalPlanPanel } from './components/PersonalPlanPanel'
 import { assembleRecognitionFirstSuggestionD26 } from './recognition/firstSuggestionD26'
 import {createOrdinaryMeasurement,type OrdinaryMeasurement} from './domain/v2/ordinaryMeasurementD26'
 import {
@@ -349,12 +351,15 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
     void workspaceRepository.save(workspace).then(() => {
       persistedWorkspaceRevision.current = revision
       if (pendingWorkspaceRevision.current === revision) pendingWorkspaceRevision.current = null
+      // Planning consumes canonical facts. Refresh that read-model after ordinary course/status
+      // saves without replacing any still-unsaved React edits with a compatibility projection.
+      return canonicalWorkspaceRepository.load().then(current => { if (current) setOrdinaryCanonical(current) })
     }).catch((error:unknown) => {
       if (pendingWorkspaceRevision.current === revision) pendingWorkspaceRevision.current = null
       if(error instanceof WorkspaceViewConflictError)setViewConflict(error)
       else setStorageError(true)
     })
-  }, [storageError, workspace, workspaceReady, workspaceRecovery, runtime, viewConflict, ordinaryBusy, workspaceRepository])
+  }, [storageError, workspace, workspaceReady, workspaceRecovery, runtime, viewConflict, ordinaryBusy, workspaceRepository, canonicalWorkspaceRepository])
 
   useEffect(() => {
     const openIntake = (event: KeyboardEvent) => {
@@ -1384,6 +1389,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
       case 'today':
         return (
           <DashboardPage
+            planning={!runtime && ordinaryCanonical ? <PersonalPlanPanel workspace={ordinaryCanonical} repository={canonicalWorkspaceRepository} reader={independentReader} store={ordinaryEnvironment?.store ?? ordinaryStore} onReload={refreshOrdinary}/> : undefined}
             engineeringInput={Boolean(ordinaryEnvironment)}
             realInput={runtime?.realInput}
             dateViews={dateViews}
@@ -1438,6 +1444,8 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
       case 'calendar':
         return (
           <CalendarPage
+            personalPlanTimezone={ordinaryCanonical?.settings.defaultTimezone}
+            personalPlans={!runtime && ordinaryCanonical ? storedPersonalPlans(ordinaryCanonical).filter(p => !['completed', 'cancelled'].includes(ordinaryCanonical.tasks.find(t => t.id === p.taskId)?.status ?? '')) : undefined}
             pendingDateTaskIds={runtime?.realInput?.pendingDateTaskIds&&isolatedSnapshot?runtime.realInput.pendingDateTaskIds(isolatedSnapshot):undefined}
             dateViews={dateViews}
             isolatedTimezone={runtime?.semantic?.timezone}
