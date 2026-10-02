@@ -1,9 +1,9 @@
 # 当前识别优化计划
 
-2026-10-02。[唯一活动路线](../docs/governance/PROJECT_EXECUTION_ROADMAP.md)，[D25规划及纠偏](../docs/governance/D25_ACCURACY_MAINLINE_PLAN.md)，[下一执行](../docs/governance/NEXT_STAGE_EXECUTION_PROMPT.md)。D25尚未执行。
+2026-10-02。[D25结果](../docs/recognition-optimization/d25-accuracy/D25_RESULTS.md)、[活动路线](../docs/governance/PROJECT_EXECUTION_ROADMAP.md)、[同包条件接续](../docs/governance/NEXT_STAGE_EXECUTION_PROMPT.md)。
 
-主线：S09事件/信息覆盖、S06条件/依赖、S05时间/实体图，复用D24确认保存工程。先旧录制/匿名正负例和可运行机制，建议C17对新候选8来源×2的小批配对；实际身份/次数/预算须先冻结并取得新授权。当前新模型0、grant/reserve/settle0，不默认新24身份。
+C18事实账目、独立前置完成证据和单向关联已接入现有正式产品链并验收。C17/C18的8来源16请求已冻结，4AB/4BA，全部NOT_RUN；缺本批具体模型/身份/US$5.20授权。当前上界US$5.190464；授权后核价/核账本/核实际HEAD，同一包执行评分，不另开准备阶段。
 
-原[D24](../docs/recognition-optimization/d24-product/D24_RESULTS.md)和D17原成绩保留；工程纠正不当首次模型正确。净增1可记开发观察，目标错误减少可记定向进展，真实风险退步单列；旧无关失败、缺真人不作为工程总门。
+整份净增1可观察；仅目标错误减少可记定向进展；新增风险、未知和失败单列。构造正例不算模型成绩，旧D17 C03=1/12、C17=2/12及MIXED_PROGRESS不改。新v9和事后诊断非独立人工真值。
 
-并行：复用D23的4人16条固定录制探索工具，真实范围/负责人/同意齐备才运行，不阻挡本地语义工作。换刺激另批；当前真人0，四项真人指标NOT_OBSERVABLE。无模型效果时不能以工程测试代替。
+并行D23/D24固定C17探索仍需真实范围、负责人接受、本人同意，不阻挡首次正确率主线。无真人、默认替换、Holdout、合并或部署。后续有收益才扩代表性通知；无收益按实际失败换生成假设，不无限堆Prompt。

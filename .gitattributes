@@ -49,3 +49,14 @@ scripts/d19-offline-diagnostic.mjs text eol=lf
 # D24 browser readback and validation artifacts carry exact byte-level evidence.
 docs/recognition-optimization/d24-product/** -text whitespace=cr-at-eol
 docs/recognition-optimization/d24-product/validation/*.log whitespace=-blank-at-eof,cr-at-eol
+
+# D25 frozen request and component hashes must survive another Windows checkout.
+docs/recognition-optimization/d25-accuracy/** -text whitespace=cr-at-eol
+docs/recognition-optimization/d25-accuracy/validation/*.log whitespace=-blank-at-eof,cr-at-eol
+scripts/*d25*.mjs text eol=lf
+scripts/*d25*.mts text eol=lf
+scripts/d25-ledger-append.ps1 text eol=lf
+src/experiments/candidate18/** text eol=lf
+src/experiments/realInput01/candidate18.ts text eol=lf
+src/experiments/realInput01/sourceFactsV3.ts text eol=lf
+src/experiments/realInput01/firstSuggestionGuard.ts text eol=lf

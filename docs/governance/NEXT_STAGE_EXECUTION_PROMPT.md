@@ -1,6 +1,12 @@
-# 下一工作包：D25 首次正确率定向优化与条件比较
+# 当前接续：D25本地已交付，条件执行16次比较
 
-2026-10-02，规划待执行。依据[D25路线纠偏](D25_ACCURACY_MAINLINE_PLAN.md)。本文件不自行授权调用、真人或发布；用户提交执行要求后按范围连续完成。D23/D24探索保留为并行事项，不再作为首次正确率优化的前置等待。
+2026-10-02，[D25本地结果](../recognition-optimization/d25-accuracy/D25_RESULTS.md)已交付，16/16 NOT_RUN。代码提交3aabcca00cf8eb8a0830a8f3de317a182b07186b已推送；同包继续，不重做实现或另造候选/来源/身份。D23/D24探索仍并行。本文件不授权真人、模型或发布。
+
+下一动作：用户明确授权仅D25冻结C17/C18的16个deepseek-flash请求、US$5.20硬上限、一个新grant及逐单元reserve/settle后，重新只读核官方价格、实际干净已推送HEAD、Manifest/16身份/每份requestSHA及账本完整链。绑定[授权卡](../recognition-optimization/d25-accuracy/AUTHORIZATION_CARD.json)，Manifest SHA b21902a115ad3feebc66fc11ab58c30564277a123dc0cb2669691a0415f1ce06，身份SHA 9fe65f082061eda84c3af7797c21223e8faf45106d3b481d6b4204acea868776。旧许可不可复用。
+
+先运行prepare-d25.mjs --verify和run-d25.mjs --verify及必要安全检查。上界不超过许可才建立本机新授权文件，冻结ordinal每单元最多一次发送；reserve/发送/raw/计费/settle不确定立即封存停发，不重试。16个确定结局后用score-d25.mjs --write完成同包报告；标题/自由描述/泄漏未裁决不可写0风险，争议保留分母。缺新许可则0调用/0账本写入，不反复重新准备。
+
+以下原完整工作包保留为本轮验收契约；已完成事项以D25结果与当前代码为准，不重新生成冻结包、覆盖旧证据或循环审查。
 
 ~~~text
 继续“学生事务管家”识别优化独立支线，完整执行D25：

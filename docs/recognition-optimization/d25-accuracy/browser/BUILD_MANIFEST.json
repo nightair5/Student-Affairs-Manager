@@ -1,0 +1,146 @@
+{
+  "version": "d25-isolated-preview-1",
+  "origin": "http://127.0.0.1:6751",
+  "database": "rco-mainline-01-02-i1-real-input-d23-study-engineering-d25-accuracy02",
+  "directory": ".data/d25/accuracy02",
+  "gitHead": "3aabcca00cf8eb8a0830a8f3de317a182b07186b",
+  "sourceSha256": "28a0fa1b5f8e3d1eefb74a22cc587d3ed5c5960f379cd1571002eea6ddb2c1da",
+  "modelCallsEnabled": false,
+  "humanTrial": false,
+  "records": [
+    {
+      "id": "d13-fixture-d25-01",
+      "label": "D25工程正例 S09_EVENT / Candidate18机制（非模型输出）",
+      "kind": "ENGINEERING_FIXTURE",
+      "sha256": "65329bed960f849f9fe065528709c78c1246a81b3aedbde536bc51364b023141"
+    },
+    {
+      "id": "d13-fixture-d25-02",
+      "label": "D25工程正例 S09_EVENT / Candidate18机制（非模型输出）",
+      "kind": "ENGINEERING_FIXTURE",
+      "sha256": "4e381f9671bfc7a135b499c77016ac6c434a4674538ebcd42ec0ecf95e0dbeb7"
+    },
+    {
+      "id": "d13-fixture-d25-03",
+      "label": "D25工程正例 S06_PREREQUISITE / Candidate18机制（非模型输出）",
+      "kind": "ENGINEERING_FIXTURE",
+      "sha256": "e58f52eae6f5aadc98b9d367408d412f2e98180209659ca956786ea05133e22d"
+    },
+    {
+      "id": "d13-fixture-d25-04",
+      "label": "D25工程正例 S06_PREREQUISITE / Candidate18机制（非模型输出）",
+      "kind": "ENGINEERING_FIXTURE",
+      "sha256": "a199fdb9d40d0c35d7419f59dd3bd218735f7fd1e84ce9e530be3e57748a6b50"
+    },
+    {
+      "id": "d13-fixture-d25-05",
+      "label": "D25工程正例 S05_GRAPH / Candidate18机制（非模型输出）",
+      "kind": "ENGINEERING_FIXTURE",
+      "sha256": "7616d52ebdf14a1669466c57fb5824066b4de7e8c56f78e7f79b1752b7a18f9b"
+    },
+    {
+      "id": "d13-fixture-d25-06",
+      "label": "D25工程正例 S05_GRAPH / Candidate18机制（非模型输出）",
+      "kind": "ENGINEERING_FIXTURE",
+      "sha256": "014d5974291956b98ed889ca06a613023a929f3aef63747791cb1efbcf631557"
+    },
+    {
+      "id": "d13-fixture-d25-07",
+      "label": "D25工程正例 CONTROL_MATERIAL_PRECISE / Candidate18机制（非模型输出）",
+      "kind": "ENGINEERING_FIXTURE",
+      "sha256": "de0a9ef319909989fffa47950ff31b71e85747adbef5b8714c3a7cc27f52ee0d"
+    },
+    {
+      "id": "d13-fixture-d25-08",
+      "label": "D25工程正例 CONTROL_MULTI_DATE / Candidate18机制（非模型输出）",
+      "kind": "ENGINEERING_FIXTURE",
+      "sha256": "4ddfdf39a82034b3a19450a4f9bf402aec0c1e812b0cd6ae205d23c8bc3aab2d"
+    },
+    {
+      "id": "d21-record-10",
+      "label": "D17原回答 C17-D16-S05 / Candidate17（只读）",
+      "kind": "RECORDED_MODEL",
+      "sha256": "92b484f8f775333f2a96c96a52fd097896129d6fb637f4d3c9ebdf26bba7b0a2"
+    },
+    {
+      "id": "d21-record-11",
+      "label": "D17原回答 C17-D16-S06 / Candidate17（只读）",
+      "kind": "RECORDED_MODEL",
+      "sha256": "ff09d66461aa348ba85e623fe11ebc9ba85dbdac8d673d1b4459abc6d20c9f00"
+    },
+    {
+      "id": "d21-record-18",
+      "label": "D17原回答 C17-D16-S09 / Candidate17（只读）",
+      "kind": "RECORDED_MODEL",
+      "sha256": "8b422a2f13e4521a9a75994d6bcef43e90f101edac717f97b67d4b4f9291c5e1"
+    },
+    {
+      "id": "d13-fixture-partial-revision",
+      "label": "匿名工程夹具：错误修订与无关正确项",
+      "kind": "ENGINEERING_FIXTURE",
+      "sha256": "3be5ac7a1b42471bd996abe5220a5c3659f2df37093f0a14318a59032627eb37"
+    }
+  ],
+  "assets": [
+    {
+      "path": "index.html",
+      "sha256": "5997f278b2bcc89f9ccdab4f07e51c93be237f0f39630e2717ed8978fd298d5a"
+    },
+    {
+      "path": "d25-browser.js",
+      "sha256": "2107cce0ebd6712761db98d5f537d9f57bb407c41e9b90c8225f1f753e8365f8"
+    },
+    {
+      "path": "d25-browser.css",
+      "sha256": "510c6fd27c3427423c30a4d1312ebcdc719fab8743c32bccfaceabc704b5195f"
+    },
+    {
+      "path": "records/d13-fixture-d25-01.json",
+      "sha256": "65329bed960f849f9fe065528709c78c1246a81b3aedbde536bc51364b023141"
+    },
+    {
+      "path": "records/d13-fixture-d25-02.json",
+      "sha256": "4e381f9671bfc7a135b499c77016ac6c434a4674538ebcd42ec0ecf95e0dbeb7"
+    },
+    {
+      "path": "records/d13-fixture-d25-03.json",
+      "sha256": "e58f52eae6f5aadc98b9d367408d412f2e98180209659ca956786ea05133e22d"
+    },
+    {
+      "path": "records/d13-fixture-d25-04.json",
+      "sha256": "a199fdb9d40d0c35d7419f59dd3bd218735f7fd1e84ce9e530be3e57748a6b50"
+    },
+    {
+      "path": "records/d13-fixture-d25-05.json",
+      "sha256": "7616d52ebdf14a1669466c57fb5824066b4de7e8c56f78e7f79b1752b7a18f9b"
+    },
+    {
+      "path": "records/d13-fixture-d25-06.json",
+      "sha256": "014d5974291956b98ed889ca06a613023a929f3aef63747791cb1efbcf631557"
+    },
+    {
+      "path": "records/d13-fixture-d25-07.json",
+      "sha256": "de0a9ef319909989fffa47950ff31b71e85747adbef5b8714c3a7cc27f52ee0d"
+    },
+    {
+      "path": "records/d13-fixture-d25-08.json",
+      "sha256": "4ddfdf39a82034b3a19450a4f9bf402aec0c1e812b0cd6ae205d23c8bc3aab2d"
+    },
+    {
+      "path": "records/d21-record-10.json",
+      "sha256": "92b484f8f775333f2a96c96a52fd097896129d6fb637f4d3c9ebdf26bba7b0a2"
+    },
+    {
+      "path": "records/d21-record-11.json",
+      "sha256": "ff09d66461aa348ba85e623fe11ebc9ba85dbdac8d673d1b4459abc6d20c9f00"
+    },
+    {
+      "path": "records/d21-record-18.json",
+      "sha256": "8b422a2f13e4521a9a75994d6bcef43e90f101edac717f97b67d4b4f9291c5e1"
+    },
+    {
+      "path": "records/d13-fixture-partial-revision.json",
+      "sha256": "3be5ac7a1b42471bd996abe5220a5c3659f2df37093f0a14318a59032627eb37"
+    }
+  ]
+}
