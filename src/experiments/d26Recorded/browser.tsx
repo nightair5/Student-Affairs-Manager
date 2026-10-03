@@ -13,6 +13,9 @@ import { PENDING_SOURCE_READBACK } from '../../domain/v2/sourceReviewD26'
 import { indexImmutableScopesV11 } from '../../recognition/scopeIndexV11'
 import { decodeRecordedD26, rebindRecordedScopes, RECORDED_PROJECTION_VERSION } from '../../recognition/recordedProjectionD26'
 import { decodeSourceContractRecording, SOURCE_CONTRACT_VERSION } from '../../recognition/sourceContractV4'
+import { CANDIDATE17_PROMPT_VERSION, CANDIDATE17_VERSION } from '../realInput01/candidate17'
+import { CANDIDATE18_PROMPT_VERSION, CANDIDATE18_VERSION } from '../realInput01/candidate18'
+import { CANDIDATE19_PROMPT_VERSION, CANDIDATE19_VERSION } from '../realInput01/candidate19'
 import type { WorkspaceV8, JsonValue } from '../../domain/v2/types'
 import type { IntakeInput } from '../../lib/intake'
 import '../../styles.css'
@@ -22,7 +25,7 @@ import '../d26/diagnostics.css'
 declare const __D26_RECORDED_CONFIG__: { database: string; build: string; origin: string; explicitContract?: boolean }
 const config = __D26_RECORDED_CONFIG__
 if (location.origin !== config.origin || !/^rco-mainline-01-02-i1-d27-plan-recorded-[a-z0-9-]+$/.test(config.database)) throw Error('RECORDED_ISOLATION_REQUIRED')
-interface Recording { ordinal: number; sourceId: string; sourceVersionId: string; candidate: 'Candidate17' | 'Candidate18' | 'EngineeringFixture'; sourceText: string; referenceTime: string; timezone: string; rawHttpText: string; responseSha256: string; requestSha256: string | null; frozenOutcome: string }
+interface Recording { ordinal: number; sourceId: string; sourceVersionId: string; candidate: 'Candidate17' | 'Candidate18' | 'Candidate19' | 'EngineeringFixture'; sourceText: string; referenceTime: string; timezone: string; rawHttpText: string; responseSha256: string; requestSha256: string | null; frozenOutcome: string }
 const recordings: Recording[] = await fetch('/recordings.json').then(r => { if (!r.ok) throw Error('RECORDINGS_UNAVAILABLE'); return r.json() })
 let selected = recordings.findIndex(r => r.ordinal === 2), failCommit = false, failRead = false, failCheckpoint = false
 const actual = new IsolatedTestStore(config.database)
@@ -36,7 +39,15 @@ await canonical.initialize(initial)
 const readerStore: WorkspaceRecordStore = { ...store, read: k => { if (k === 'current' && failRead) { failRead = false; return Promise.reject(Error('RECORDED_INJECTED_READBACK_FAILURE')) } return new IsolatedTestStore(config.database).read(k) } }
 const measurement = createOrdinaryMeasurement(store), sidecars = new Map<string, unknown>()
 const contractVersion = config.explicitContract ? SOURCE_CONTRACT_VERSION : RECORDED_PROJECTION_VERSION
+const recordingMetadata = () => {
+  const r = recordings[selected], engineering = r.candidate === 'EngineeringFixture'
+  return { modelName: engineering ? '匿名契约工程夹具（非模型输出）' : `${r.candidate} 固定录制`,
+    promptVersion: engineering ? 'ENGINEERING_FIXTURE_NOT_GENERATED' : r.candidate === 'Candidate17' ? CANDIDATE17_PROMPT_VERSION : r.candidate === 'Candidate18' ? CANDIDATE18_PROMPT_VERSION : CANDIDATE19_PROMPT_VERSION,
+    candidateVersion: engineering ? 'ENGINEERING_FIXTURE_NOT_CANDIDATE' : r.candidate === 'Candidate17' ? CANDIDATE17_VERSION : r.candidate === 'Candidate18' ? CANDIDATE18_VERSION : CANDIDATE19_VERSION,
+    build: config.build, responseRole: engineering ? 'ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT' : 'RECORDED_MODEL_ENGINEERING_REPLAY' }
+}
 const environment: OrdinaryAppEnvironment = { canonical, viewRepository: new IndexedDbWorkspaceRepository(canonical), reader: new CanonicalWorkspaceRepository(readerStore), capture: new CapturePersistenceService(canonical), measurement, reviewSession: new D20ReviewSessionRepository(store, measurement.changed, measurement.activity, true), initial: workspaceV8ToLegacyView((await canonical.load())!), store, label: `${config.build}；C17/C18实际录制${config.explicitContract ? ' + 匿名契约工程夹具' : ''}；${contractVersion}；实时派发关闭`, pipelineVersion: contractVersion, semanticSidecar: id => sidecars.get(id), recognitionContext: () => ({ referenceTime: recordings[selected].referenceTime, timezone: recordings[selected].timezone }),
+  recognitionMetadata: recordingMetadata,
   extraction: { status: async () => ({ configured: true, model: 'D26_FIXED_RECORDED_RESPONSES' }), extract: async () => [], recognize: async (input: IntakeInput & { sourceId?: string; sourceVersionId?: string }) => {
     const record = recordings[selected]
     if (input.content !== record.sourceText || !input.sourceId || !input.sourceVersionId) throw Error('只接受当前选中的匿名录制来源；不发送模型请求。')

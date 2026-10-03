@@ -142,7 +142,7 @@ export function declareLegacyRecordingV4(input: unknown) {
 }
 
 /** Both arms use the ordinary bridge. Unknown coverage blocks only the affected task. */
-export function decodeSourceContractRecording(rawHttpText: string, candidate: 'Candidate17' | 'Candidate18' | 'EngineeringFixture', context: WireContext) {
+export function decodeSourceContractRecording(rawHttpText: string, candidate: 'Candidate17' | 'Candidate18' | 'Candidate19' | 'EngineeringFixture', context: WireContext) {
   check(new TextEncoder().encode(rawHttpText).byteLength <= 524288, 'RESPONSE_SIZE')
   if (candidate === 'Candidate17') {
     const bridge = decodeRecordedD26(rawHttpText, candidate, context)

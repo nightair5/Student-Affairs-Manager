@@ -39,7 +39,7 @@ export function InboxPage({
   const [retryingSourceId, setRetryingSourceId] = useState<string | null>(null)
   const [actionFailure, setActionFailure] = useState<{ sourceId: string; message: string } | null>(null)
   const workflowItems = useMemo(() => buildSourceWorkflowItems(sources, drafts, canonicalWorkspace), [sources, drafts,canonicalWorkspace])
-  const pendingItems = useMemo(() => selectPendingReviewItems(sources, drafts), [sources, drafts])
+  const pendingItems = useMemo(() => selectPendingReviewItems(sources, drafts, canonicalWorkspace), [sources, drafts, canonicalWorkspace])
   const visibleItems = view === 'needs_review'
     ? pendingItems
     : workflowItems
@@ -142,7 +142,7 @@ export function InboxPage({
             {actionFailure?.sourceId === source.id && <p className="inline-error" role="alert">{actionFailure.message}</p>}
             {item.canRetry && (!onRetrySource || !onManualSupplementSource) && <p className="source-action-note">重试接线未完成；系统不会用“新建来源”代替重试。</p>}
             <div className="task-card-actions inbox-card-actions">
-              {item.canOpenDraft && draft && <button className="secondary-button" type="button" onClick={() => onOpenDraft(draft.id)}><ListChecks size={16} />核对 {counts.pending} 项</button>}
+              {item.canOpenDraft && draft && <button className="secondary-button" type="button" onClick={() => onOpenDraft(draft.id)}><ListChecks size={16} />{counts.pending ? `核对 ${counts.pendingTasks} 项任务、${counts.pendingEvents} 个事件` : item.status === 'confirmed' ? '查看已确认事实' : '核对信息与原文'}</button>}
               {item.canRetry && <button
                 className="secondary-button"
                 type="button"

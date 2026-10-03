@@ -83,6 +83,7 @@ export interface OrdinaryAppEnvironment {
   /** Recorded responses use their original inference clock, not the replay date. */
   recognitionContext?: (sourceText: string) => { referenceTime: string; timezone: string }
   pipelineVersion?: string
+  recognitionMetadata?: () => { modelName: string; promptVersion: string; candidateVersion: string; build: string; responseRole: string }
 }
 
 function captureActionMessage(error: unknown, fallback: string): string {
@@ -233,8 +234,8 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
   const dateViews = useMemo(() => runtime && isolatedSnapshot ? runtime.dates(isolatedSnapshot) : undefined, [runtime, isolatedSnapshot])
   const selectedDraft = experimentalReview?.draft ?? drafts.find((draft) => draft.id === selectedDraftId) ?? null
   const supplementSource = sources.find((source) => source.id === supplementSourceId) ?? null
-  const pendingReviewCount = useMemo(() => selectPendingReviewItems(sources, drafts)
-    .reduce((count, item) => count + item.counts.pending, 0), [drafts, sources])
+  const pendingReviewCount = useMemo(() => selectPendingReviewItems(sources, drafts, ordinaryCanonical ?? isolatedSnapshot ?? undefined)
+    .reduce((count, item) => count + item.counts.pending, 0), [drafts, sources, ordinaryCanonical, isolatedSnapshot])
   const selectedDraftCurrentSource = selectedDraft
     ? sources.find((source) => source.id === selectedDraft.sourceId) ?? null
     : null
@@ -657,6 +658,8 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
         ? ['DeepSeek 本次仅接收前 24,000 字，后续正文未进入模型识别']
         : []),
     ])]
+    const metadata = input.manualSuggestion ? undefined : ordinaryEnvironment?.recognitionMetadata?.()
+    const sourceClock = ordinaryEnvironment?.recognitionContext?.(input.content)
     const captureRequest = {
       operationId: input.operationId ?? crypto.randomUUID(),
       sourceType: input.sourceType,
@@ -667,20 +670,17 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
         : useCloudRecognition
           ? 'deepseek' as const
           : 'local-rules' as const,
-      modelName: ordinaryEnvironment ? 'anonymous-offline-engineering-input' : input.manualSuggestion
-        ? 'manual-entry'
-        : useCloudRecognition
+      modelName: input.manualSuggestion ? 'manual-entry' : metadata?.modelName ?? (ordinaryEnvironment ? 'anonymous-offline-engineering-input' : useCloudRecognition
           ? input.multimodal
             ? 'deepseek-v4-flash-vision-exp'
             : 'deepseek-v4-flash'
-          : 'local-rules',
-      promptVersion: input.manualSuggestion
-        ? null
-        : input.multimodal ? MULTIMODAL_PROMPT_VERSION : localRecognition.promptVersion,
+          : 'local-rules'),
+      promptVersion: input.manualSuggestion ? null : metadata?.promptVersion ?? (input.multimodal ? MULTIMODAL_PROMPT_VERSION : localRecognition.promptVersion),
       pipelineVersion: ordinaryEnvironment ? ordinaryEnvironment.pipelineVersion ?? 'd26-ordinary-engineering-fake-transport' : useCloudRecognition
         ? input.multimodal ? 'source-before-multimodal-ai-v1' : 'source-before-ai-v1'
         : 'source-before-local-rules-v1',
       sourceLegacyData: {
+        ...(metadata ? { recognitionProvenance: { ...metadata, componentVersion: ordinaryEnvironment?.pipelineVersion ?? null, referenceTime: sourceClock?.referenceTime ?? null, timezone: sourceClock?.timezone ?? null } } : {}),
         contentPreview: localResult.source.contentPreview,
         url: input.url ?? null,
         originalFileName: input.fileName ?? null,
@@ -1424,7 +1424,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
             {isolatedSnapshot.extractionDrafts.filter(d=>d.status==='failed'&&typeof (d.legacyData?.mainline05Failure as {response?:unknown}|undefined)?.response==='string').map(d=><button className="secondary-button" type="button" key={d.id} onClick={()=>void selectDraftForReview(d.id)}>
               纠错：{sources.find(s=>s.id===drafts.find(view=>view.id===d.id)?.sourceId)?.title??'失败通知'}</button>)}</section>}
           <InboxPage
-          canonicalWorkspace={isolatedSnapshot??undefined}
+          canonicalWorkspace={ordinaryCanonical??isolatedSnapshot??undefined}
           drafts={drafts}
           sources={sources}
           view={inboxView}

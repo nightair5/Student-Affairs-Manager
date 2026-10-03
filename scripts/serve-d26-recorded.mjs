@@ -22,6 +22,10 @@ if (mode === 'explicit-contract') {
     const f = await x.createContractFixture(kind)
     recordings.push({ ordinal: 101 + i, sourceId: f.context.index.sourceId, sourceVersionId: f.context.index.sourceVersionId, candidate: 'EngineeringFixture', sourceText: f.sourceText, referenceTime: f.context.referenceTime, timezone: f.context.timezone, rawHttpText: f.rawHttpText, responseSha256: sha(f.rawHttpText), requestSha256: null, frozenOutcome: 'NOT_MODEL_OUTPUT' })
   }
+  for (let i = 1; i <= 6; i++) {
+    const f = await x.createGenerationFixture(i)
+    recordings.push({ ordinal: 201 + i, sourceId: f.context.index.sourceId, sourceVersionId: f.context.index.sourceVersionId, candidate: 'EngineeringFixture', sourceText: f.sourceText, referenceTime: f.context.referenceTime, timezone: f.context.timezone, rawHttpText: f.rawHttpText, responseSha256: sha(f.rawHttpText), requestSha256: null, frozenOutcome: 'NOT_MODEL_OUTPUT' })
+  }
 }
 const dir = resolve('.data/d26/recorded-' + instance), origin = 'http://127.0.0.1:' + port, database = 'rco-mainline-01-02-i1-d27-plan-recorded-' + instance
 mkdirSync(dir, { recursive: true }); if (readdirSync(dir).length) throw Error('RECORDED_INSTANCE_ALREADY_BUILT')
@@ -31,5 +35,5 @@ const output = await build({ entryPoints: ['src/experiments/d26Recorded/browser.
 const files = output.outputFiles.map(f => { const name = basename(f.path), content = f.text.replace(/@import\s+url\("https:\/\/fonts\.googleapis\.com[^;]+;\s*/g, ''); writeFileSync(resolve(dir, name), content); return { name, sha256: sha(content) } })
 writeFileSync(resolve(dir, 'recordings.json'), JSON.stringify(recordings))
 writeFileSync(resolve(dir, 'index.html'), '<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>学生事务管家 · D26真实录制工程回放</title><link rel="stylesheet" href="/browser.css"></head><body><div id="root"></div><script type="module" src="/browser.js"></script></body></html>')
-writeFileSync(resolve(dir, 'manifest.json'), JSON.stringify({ origin, database, build: buildIdentity, role: 'ENGINEERING_REPLAY', mode: mode ?? 'recorded-v1', actualRecordings: 16, engineeringFixtures: mode ? 5 : 0, files, recordingsSha256: sha(JSON.stringify(recordings)), modelCallsByBrowser: 0 }, null, 2))
+writeFileSync(resolve(dir, 'manifest.json'), JSON.stringify({ origin, database, build: buildIdentity, role: 'ENGINEERING_REPLAY', mode: mode ?? 'recorded-v1', actualRecordings: 16, engineeringFixtures: mode ? 11 : 0, files, recordingsSha256: sha(JSON.stringify(recordings)), modelCallsByBrowser: 0 }, null, 2))
 createServer((req, res) => { const p = new URL(req.url, origin).pathname; if (!['/', '/browser.js', '/browser.css', '/recordings.json', '/manifest.json'].includes(p)) { res.writeHead(403); res.end('RECORDED_MODEL_AND_EXTERNAL_ROUTES_DISABLED'); return } res.setHeader('Content-Type', p.endsWith('.js') ? 'text/javascript; charset=utf-8' : p.endsWith('.css') ? 'text/css; charset=utf-8' : p.endsWith('.json') ? 'application/json' : 'text/html; charset=utf-8'); res.end(readFileSync(resolve(dir, p === '/' ? 'index.html' : p.slice(1)))) }).listen(+port, '127.0.0.1', () => console.log(JSON.stringify({ origin, database, modelCallsByBrowser: 0, build: buildIdentity })))

@@ -103,7 +103,9 @@ export async function commitSourceReview(repository: CanonicalWorkspaceRepositor
     const next = applyDomainCommitPlan(current, plan)
     const stored=next.extractionDrafts.find(d=>d.id===plan.draftId)!
     const handled=new Set([...stored.acceptedEntityTempIds,...stored.rejectedEntityTempIds])
-    const complete=tasksOf(stored.result!).every(t=>handled.has(t.tempId))&&stored.result!.events.every(e=>handled.has(e.tempId)||e.selected===false)
+    // Unchecked means deferred, not rejected. Only an actual accepted/rejected
+    // identity closes the source; otherwise refresh must retain its review entry.
+    const complete=tasksOf(stored.result!).every(t=>handled.has(t.tempId))&&stored.result!.events.every(e=>handled.has(e.tempId))
     receipt.disposition=complete?(tasksOf(stored.result!).some(t=>stored.acceptedEntityTempIds.includes(t.tempId))?'confirmed':'no_task'):'partial'
     const status=complete?'confirmed' as const:'partially_confirmed' as const
     return {...next,sources:next.sources.map(s=>s.id===plan.sourceId?{...s,status}:s),extractionDrafts:next.extractionDrafts.map(d=>d.id===plan.draftId?{...d,status,legacyData:{...d.legacyData,[PENDING_SOURCE_READBACK]:{...receipt}}}:d)}

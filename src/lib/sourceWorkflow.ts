@@ -9,6 +9,8 @@ export interface SourceEntityCounts {
   timePoints: number
   events: number
   pending: number
+  pendingTasks: number
+  pendingEvents: number
 }
 
 export interface SourceWorkflowItem {
@@ -75,15 +77,16 @@ function latestDraftForSource(source: Source, drafts: ExtractionDraft[]): Extrac
     })[0] ?? null
 }
 
-function canonicalStatus(source: Source, draft: ExtractionDraft | null): SourceWorkflowStatus {
+function canonicalStatus(source: Source, draft: ExtractionDraft | null, counts: SourceEntityCounts): SourceWorkflowStatus {
   const draftStatus = draft?.workflowStatus
   if (source.status === 'archived' || draftStatus === 'archived' || draftStatus === 'rejected' || source.extractionStatus === '已拒绝') return 'archived'
   if (source.status === 'failed' || draftStatus === 'failed') return 'failed'
   if (source.status === 'uploaded' && !draft) return 'unprocessed'
   if (source.status === 'extracting' || draftStatus === 'processing') return 'processing'
+  if (counts.pending > 0) return 'needs_review'
+  if (source.status === 'confirmed' || draftStatus === 'confirmed' || source.extractionStatus === '已确认') return 'confirmed'
   if (draft?.recognitionResult?.sourceSummary.notificationType === 'information_only'
     || draft?.recognitionResult?.sourceSummary.requiresAction === false) return 'info_only'
-  if (source.status === 'confirmed' || draftStatus === 'confirmed' || source.extractionStatus === '已确认') return 'confirmed'
   return 'needs_review'
 }
 
@@ -95,13 +98,18 @@ function taskCount(draft: ExtractionDraft | null): number {
   ), 0)
 }
 
-function entityCounts(draft: ExtractionDraft | null): SourceEntityCounts {
+function entityCounts(draft: ExtractionDraft | null, canonicalWorkspace?: WorkspaceV8): SourceEntityCounts {
+  const canonical = canonicalWorkspace?.extractionDrafts.find(d => d.id === draft?.id)
+  const disposed = new Set([...(canonical?.acceptedEntityTempIds ?? []), ...(canonical?.rejectedEntityTempIds ?? [])])
+  const terminal = !canonical && ['confirmed', 'archived', 'rejected'].includes(draft?.workflowStatus ?? '')
+  const pendingTasks = draft?.items.filter(item => item.status === '待确认').length ?? 0
+  const pendingEvents = terminal ? 0 : draft?.recognitionResult?.events.filter(event => !disposed.has(event.tempId)).length ?? 0
   return {
     tasks: taskCount(draft),
     materials: draft?.recognitionResult?.materials.length ?? 0,
     timePoints: draft?.recognitionResult?.timePoints.length ?? 0,
     events: draft?.recognitionResult?.events.length ?? 0,
-    pending: draft?.items.filter((item) => item.status === '待确认').length ?? 0,
+    pending: pendingTasks + pendingEvents, pendingTasks, pendingEvents,
   }
 }
 
@@ -131,8 +139,8 @@ function modelLabel(source: Source, draft: ExtractionDraft | null, canonicalWork
 
 export function mapSourceWorkflowItem(source: Source, drafts: ExtractionDraft[], canonicalWorkspace?:WorkspaceV8): SourceWorkflowItem {
   const draft = latestDraftForSource(source, drafts)
-  const status = canonicalStatus(source, draft)
-  const counts=entityCounts(draft)
+  const counts=entityCounts(draft, canonicalWorkspace)
+  const status = canonicalStatus(source, draft, counts)
   if(canonicalWorkspace&&status==='confirmed'){
     const events=canonicalWorkspace.events.filter(event=>event.legacyData?.sourceId===source.id)
     const eventIds=new Set(events.map(event=>event.id))
@@ -176,7 +184,7 @@ export function buildSourceWorkflowItems(sources: Source[], drafts: ExtractionDr
 }
 
 /** One shared selector for badges, queues and batch actions. */
-export function selectPendingReviewItems(sources: Source[], drafts: ExtractionDraft[]): SourceWorkflowItem[] {
-  return buildSourceWorkflowItems(sources, drafts)
+export function selectPendingReviewItems(sources: Source[], drafts: ExtractionDraft[], canonicalWorkspace?:WorkspaceV8): SourceWorkflowItem[] {
+  return buildSourceWorkflowItems(sources, drafts, canonicalWorkspace)
     .filter((item) => item.status === 'needs_review' && item.canOpenDraft && item.counts.pending > 0)
 }
