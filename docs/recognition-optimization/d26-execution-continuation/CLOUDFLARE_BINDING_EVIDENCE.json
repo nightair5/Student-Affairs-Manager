@@ -1,0 +1,39 @@
+{
+  "version": "d26-push-binding-readonly-1",
+  "role": "READ_ONLY_LOGGED_IN_DASHBOARD_OBSERVATION",
+  "repository": "nightair5/Student-Affairs-Manager",
+  "branch": "codex/e2-candidate11-blind-eval",
+  "observedAtUtcRange": ["2026-10-02T16:00:00Z", "2026-10-03T03:28:00Z"],
+  "timestampPrecision": "Range of tool observations, not provider-generated timestamps. Production was rechecked immediately before push on 2026-10-03.",
+  "method": "Official Computer Use browser DOM, signed-in Cloudflare Worker Settings > Builds; settings were read, never edited. Account ID, login identity and runtime variables excluded from this record.",
+  "workerBuilds": [
+    {"worker":"student-affairs-manager","gitRepository":"NOT_CONNECTED","recheckedBeforePush":true},
+    {"worker":"student-affairs-real-input-preview","gitRepository":"NOT_CONNECTED"},
+    {"worker":"student-affairs-manager-multimodal-exp","gitRepository":"NOT_CONNECTED"},
+    {"worker":"student-affairs-manager-preview","gitRepository":"NOT_CONNECTED"},
+    {"worker":"sa-e2-r10-facts-first-qual-preview","gitRepository":"NOT_CONNECTED"},
+    {"worker":"student-affairs-e2-r10-facts-first-qualification-ledger-preview","gitRepository":"NOT_CONNECTED"},
+    {"worker":"student-affairs-e2-r10-facts-first-qualification-preview","gitRepository":"NOT_CONNECTED"},
+    {"worker":"student-affairs-e2-r6-qualification-preview","gitRepository":"NOT_CONNECTED"},
+    {"worker":"student-affairs-e2-r6-qualification-ledger-preview","gitRepository":"NOT_CONNECTED"},
+    {"worker":"student-affairs-e2-r5-ledger-preview","gitRepository":"NOT_CONNECTED"},
+    {"worker":"student-affairs-e2-r4-ledger-preview","gitRepository":"NOT_CONNECTED"},
+    {"worker":"student-affairs-e2-r3-ledger-preview","gitRepository":"NOT_CONNECTED"},
+    {"worker":"student-affairs-e2-r2-ledger-preview","gitRepository":"NOT_CONNECTED"}
+  ],
+  "workerSettingsPath": "/workers/services/view/<worker>/production/settings",
+  "visibleBuildsExcerpt": "Git repository: GitHub / GitLab / Origin connection buttons; no connected repository or branch build settings.",
+  "languagesObserved": ["Chinese browser translation", "English"],
+  "inventoryBoundary": "Cloudflare Workers & Pages inventory: 18 applications, 15 Workers and 3 Pages. The 13 student-affairs Workers above were inspected; two unrelated Workers were not inspected. Pages inventory showed no Git connection and is supplemental only.",
+  "localCi": {
+    "path": ".github/workflows/ci.yml",
+    "observedActions": "product, safety, historical, lint, build, security, audit and Cloudflare dry-run checks; no publishing command",
+    "permissions": "contents: read",
+    "cloudflareCheck": "wrangler deploy --dry-run"
+  },
+  "decision": "CURRENT_BRANCH_PUSH_ALLOWED_NO_OBSERVED_CLOUDFLARE_GIT_DEPLOY_BINDING",
+  "boundary": "This is evidence for the current branch push, not authorization to deploy or a permanent guarantee after configuration changes. GitHub CI results must be read separately; a push is not a passed CI or a deployment.",
+  "settingsWrites": 0,
+  "deploymentCommands": 0,
+  "browserRecovery": "After the interrupted turn the old agent tab was absent. An existing-tab attach hit Emulation.setFocusEmulationEnabled timeout; a fresh official browser tab recovered successfully. Remaining Workers and production were read without changing settings."
+}

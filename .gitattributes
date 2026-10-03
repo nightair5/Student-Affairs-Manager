@@ -71,3 +71,7 @@ src/experiments/d26/** text eol=lf
 docs/recognition-optimization/d27-planning/evidence/** -text whitespace=cr-at-eol
 docs/recognition-optimization/d27-planning/evidence/CURRENT_PRODUCT_VITEST.txt -text whitespace=-blank-at-eof,cr-at-eol
 docs/recognition-optimization/d27-planning/evidence/LINT.txt -text whitespace=-blank-at-eof,cr-at-eol
+
+# D26 continuation observations and exact tool logs remain unchanged on checkout.
+docs/recognition-optimization/d26-execution-continuation/** -text whitespace=cr-at-eol
+docs/recognition-optimization/d26-execution-continuation/evidence/*.txt whitespace=-blank-at-eof,cr-at-eol

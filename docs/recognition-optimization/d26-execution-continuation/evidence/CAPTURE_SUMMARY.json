@@ -1,0 +1,76 @@
+{
+  "capturedAt": "2026-10-03T03:32:28.800Z",
+  "hostCodeCommit": "4555375788b006506abeae6107de5902ac95ad80",
+  "evidence": [
+    {
+      "path": "COMPARISON_REPORT.json",
+      "bytes": 16670,
+      "sha256": "e9c67aa2f3ef215a29d8626efe11463f4cde87151f80a03734e8dbf547b61184"
+    },
+    {
+      "path": "D26_SNAPSHOT_VERIFY.json",
+      "bytes": 557,
+      "sha256": "5c4f333b21fc2a279d8e21c6cc70d0951ab96f3f90dab47597b1e73e12fa673b"
+    },
+    {
+      "path": "FINAL_TOOLS_TEST.txt",
+      "bytes": 4806,
+      "sha256": "494cb4019c924bb418fb006babf3dce1bb71bfbbad73b3faaaf23c22b92982db"
+    },
+    {
+      "path": "HISTORY_VERIFY.json",
+      "bytes": 450,
+      "sha256": "573714ab82286cd9efc9897e2510e565c3d16ab8725fd9d057e906b8327ad1e2"
+    },
+    {
+      "path": "HOST_READ_ONLY.json",
+      "bytes": 2262,
+      "sha256": "c1b4f711f1a58b33831a9877825e70ebf89f1494fe2da13c7d31fb112ad1b550"
+    },
+    {
+      "path": "HOST_VERIFY.json",
+      "bytes": 797,
+      "sha256": "340a9de1fdf2f76e9d01fc40eecb5cf0ef2996140f1fb1baa065b1f8d4d4c492"
+    },
+    {
+      "path": "NO_AUTH_DISPATCH.json",
+      "bytes": 93,
+      "sha256": "5bef9eab002affdc6a75ad0209911c8f75ef231291bef81b22bd6af7ab6778ea"
+    },
+    {
+      "path": "NO_AUTH_PREPARE.json",
+      "bytes": 93,
+      "sha256": "5bef9eab002affdc6a75ad0209911c8f75ef231291bef81b22bd6af7ab6778ea"
+    },
+    {
+      "path": "SECURITY.txt",
+      "bytes": 136,
+      "sha256": "952d60b1c6b03ebde06dff77fcd176bdd1b6987a16978b8b23143d0651dbdf16"
+    },
+    {
+      "path": "TOOLS_LINT.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "ledgerBeforeSha256": "e79aec8bbb1378e37f3941d8ffac9cce7d74bbb8e11d7ceee5c90a88b6c734b9",
+  "ledgerAfterSha256": "e79aec8bbb1378e37f3941d8ffac9cce7d74bbb8e11d7ceee5c90a88b6c734b9",
+  "ledgerUnchanged": true,
+  "commands": {
+    "hostVerify": "PASS",
+    "readOnlyResume": "PASS",
+    "comparisonReport": "PASS",
+    "noAuthPrepare": "EXPECTED_REFUSAL",
+    "noAuthDispatch": "EXPECTED_REFUSAL",
+    "historyVerify": "PRESERVED_WITH_HISTORICAL_APPEND_REVIEW",
+    "snapshotVerify": "PASS",
+    "toolsTests": "48_PASS",
+    "toolsLint": "EXIT_0_SILENT_OUTPUT",
+    "secretScan": "PASS"
+  },
+  "captureRepair": "The first capture finished command logs but could not copy a nonexistent silent lint log. An empty log was created from the observed successful exit; checks were not rerun for this packaging fix.",
+  "modelCalls": 0,
+  "grant": 0,
+  "reserve": 0,
+  "settle": 0
+}
