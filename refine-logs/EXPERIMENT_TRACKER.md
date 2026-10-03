@@ -1,15 +1,15 @@
 # 当前工作跟踪
 
-2026-10-03。[唯一本轮结果](../docs/recognition-optimization/d26-execution-continuation/RESULTS.md)、[D27产品](../docs/recognition-optimization/d27-planning/D27_RESULTS.md)、[短交接](../docs/recognition-optimization/CURRENT_CONTEXT.md)。
+2026-10-03。[唯一本轮结果](../docs/recognition-optimization/source-contract-consistency/RESULTS.md)、[短交接](../docs/recognition-optimization/CURRENT_CONTEXT.md)、[路线](../docs/governance/PROJECT_EXECUTION_ROADMAP.md)。
 
-| 工作 | 当前事实/证据 | 下一动作 |
+| 工作 | 当前证据 | 下一动作 |
 |---|---|---|
-| 普通来源核对/D27安排 | App→ReviewSession→DomainCommitPlan→Repository；共享容量/固定活动/课程/依赖；原截止另列 | 复用，不重建底座或全局计划器 |
-| 原D26首次比较 | 16发送/16SETTLED，不确定0，许可耗尽；C17确认整份0/8、7错1未知；C18冻结0/8、8契约拒绝；EVIDENCE_INCOMPLETE | 先修输出契约与真实风险，不再次申请这16次或默认扩24 |
-| 事后产品修复 | 同片段已有主/附属事实可审计投影；scope可逆绑定/原时钟；来源拒绝不污染后续provider；C18 S01/S02可用 | 是旧raw新程序工程证据，不回填冻结分数；另6仍拒 |
-| 新录制浏览器 | 6798/new actual16r6；无任务事件、精确截止/PDF、事务失败恢复、读回失败只重读、阻断、刷新/独立读回 | 最终库Task1/Project0/Event2/Time3/Material1；未声称重验旧A—L |
-| 测量 | S01阅读主动编辑0；S07一edit/检查点/commit/readback，失败重试不重复；关闭重开MISSING/null | 工程实录与真人四项分开；语义未裁决，不把保存算正确 |
-| 检查 | 最终产品9组、lint/build/scan通过；全量37组30PASS7FAIL，host隔离修后定向39PASS；余6历史FAIL；audit5high2moderate | 不改旧冻结锁/断言凑绿；D17账本快照兼容与依赖维护另版本处理 |
-| 保护与账本 | 84保护/119冻结/7归档；938→971，仅本批33授权行，完整链及本地状态一致 | 只读核验，不复用grant；原D17分数及历史未变 |
-| Git/构建 | 代码07e1b99b6b98a4cc92058499e968bd1125aaf9ea已立即普通推送；浏览器7ce标签/source cbf17bf22cd8与代码原字节绑定 | 文档独立边界提交即推，最终SHA现场核；无部署 |
-| 真人/采用/发布 | 无真人/默认替换/合并/部署，四项NOT_OBSERVABLE | 缺真实范围/负责人接受/同意/裁决，不阻挡本地识别 |
+| 原D26付费比较 | 原16全部一次发送/SETTLED，C17确认0/8、1UNKNOWN，C18冻结8拒绝，EVIDENCE_INCOMPLETE | 原分数/许可不动，不再派发原批 |
+| 显式契约与引用 | coverage四态、主/附属、单份权威accounting、前置完成证据、事件端点局部保护；版本4.0.0 | 新输入效果另用真实新输出验证；无默认Candidate19或16/24身份 |
+| 旧raw新程序诊断 | 固定16；C17可展示8其中4待核对，C18可展示4其中2待核对、4拒绝 | 不是整份正确率；原材料/条件/时图及S08争议继续保留 |
+| 普通页与正式链 | 6809新库；S01/S02无补录事件；事务失败零半份、手动重试、已提交读回失败刷新只重读 | 复用App/ReviewSession/领域事务；最终Task2/Project0/Event4/Time8/Material2 |
+| 工程测量 | 实际edit→checkpoint→commit→readback；一个episode，重试不另计；只读主动0、刷新缺失null | 四真人指标NOT_OBSERVABLE，保存不当语义裁决 |
+| 验证/维护 | 新契约18PASS、定向32PASS、最终产品9组PASS（945/1SKIP）；lint/build/scan通过；完整31PASS6历史FAIL；audit5high2moderate | 原断言/锁不改；D17只读前缀兼容与工具链补丁另版本维护 |
+| 保护/账本 | 84/119/7、raw16、原145/7/16冻结保持；971行前后同SHA，0新调用/授权行 | 原grant耗尽，下一批另具体授权 |
+| Git/入口 | 代码69c7baff71b59f0df8e48ffab4ccf264e8865d7d立即推送；6809/source71754888caf9 | 文档边界提交即推，最终本地/upstream/远端现场核 |
+| 真人/采用/发布 | 没有真人/默认替换/合并/部署 | 范围、负责人接受、本人同意、裁决另需，不阻挡本地首次准确率 |
