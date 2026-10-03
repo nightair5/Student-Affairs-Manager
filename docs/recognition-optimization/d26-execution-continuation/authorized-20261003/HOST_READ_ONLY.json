@@ -1,0 +1,447 @@
+{
+  "status": "READ_ONLY",
+  "role": "SCOPED_DEVELOPMENT_HOST_NOT_AUTHORIZATION",
+  "state": {
+    "version": "d26-execution-state-1",
+    "batch": "D26-C17-C18-DEVELOPMENT-R1",
+    "model": "deepseek-flash",
+    "manifestSha256": "c41185c3831d35db610e5a4a563b7471b0bd60d1d92a373edd6a5c10d28f7ac2",
+    "identitiesSha256": "89f33327eabd2ec90f9d383ac922d56b56ca4654cfee0be47aac083eea411e89",
+    "authorized": true,
+    "units": [
+      {
+        "ordinal": 1,
+        "unitIdentitySha256": "879f6748ba0d330b8a328ad7ada1999dde73e305b874a02b35594a6f502a50f8",
+        "requestSha256": "0011feb1319afda1fe87251c1d1ab6fbaa664b4a0805d1c8ac05f80cfbcc1a48",
+        "status": "SETTLED",
+        "responseSha256": "0c5c6a8a1c71ea0cf032c640d65a96372f3b3de0459e7ce2f5f4339f94c0d13a",
+        "httpStatus": 200,
+        "usage": {
+          "input_tokens": 4474,
+          "input_tokens_details": {
+            "cached_tokens": 3840
+          },
+          "output_tokens": 318,
+          "output_tokens_details": {
+            "reasoning_tokens": 0
+          },
+          "total_tokens": 4792
+        },
+        "costUpperMicroUsd": 1724
+      },
+      {
+        "ordinal": 2,
+        "unitIdentitySha256": "9c5f6658ff70f49269426b2c52eaa63eee29866323f70f3fa59f4395722ca1bf",
+        "requestSha256": "59216fd7c9018cc3d701f7ca7d794a0e902b62782fd359fb427d5fcdf502e8fc",
+        "status": "SETTLED",
+        "responseSha256": "4236202ec7bb7b626e68d5a619d5c5323f194983e1c963968e171439c6113876",
+        "httpStatus": 200,
+        "usage": {
+          "input_tokens": 4437,
+          "input_tokens_details": {
+            "cached_tokens": 0
+          },
+          "output_tokens": 838,
+          "output_tokens_details": {
+            "reasoning_tokens": 0
+          },
+          "total_tokens": 5275
+        },
+        "costUpperMicroUsd": 2337
+      },
+      {
+        "ordinal": 3,
+        "unitIdentitySha256": "fc1eae030ddf38d9e6fbf97640c18b16a3cb3282a11fc67c01b9a339044f5b1d",
+        "requestSha256": "f0889e2c74a5fe05d03e9e0db432832f473c398408ce89201dabe04aaab20fc6",
+        "status": "SETTLED",
+        "responseSha256": "57477b7df00eca924120c903cb113b0242f9effcf765289beb0efced9493be5c",
+        "httpStatus": 200,
+        "usage": {
+          "input_tokens": 4427,
+          "input_tokens_details": {
+            "cached_tokens": 3840
+          },
+          "output_tokens": 826,
+          "output_tokens_details": {
+            "reasoning_tokens": 0
+          },
+          "total_tokens": 5253
+        },
+        "costUpperMicroUsd": 2320
+      },
+      {
+        "ordinal": 4,
+        "unitIdentitySha256": "6502b7fd00215650897b1bf6a6d81b27f7f3667f23211212e12ea410b3c682ae",
+        "requestSha256": "e0b58615301b2fc651fd1aaad9951b3e62bd61b1dc6dc687108a69b33260ddb1",
+        "status": "SETTLED",
+        "responseSha256": "be67ce4249dda020620141655aa6a575ac15e1cb2f1faa1c1741a71009c20ac4",
+        "httpStatus": 200,
+        "usage": {
+          "input_tokens": 4464,
+          "input_tokens_details": {
+            "cached_tokens": 3840
+          },
+          "output_tokens": 314,
+          "output_tokens_details": {
+            "reasoning_tokens": 0
+          },
+          "total_tokens": 4778
+        },
+        "costUpperMicroUsd": 1716
+      },
+      {
+        "ordinal": 5,
+        "unitIdentitySha256": "4f359277b5a7776bcfdc77ac7da824216bf48915d6a7be42cb72ffefa204d3d4",
+        "requestSha256": "b1898f194c2fc8d6216e8c432c77deda697585335ad134b54a4f9ad1aa5b5819",
+        "status": "SETTLED",
+        "responseSha256": "91cf16ea6c0912c4ffe5a657b8c47e1c64d1692c6de013f7a68ff0ef2e5a2269",
+        "httpStatus": 200,
+        "usage": {
+          "input_tokens": 4431,
+          "input_tokens_details": {
+            "cached_tokens": 3840
+          },
+          "output_tokens": 1652,
+          "output_tokens_details": {
+            "reasoning_tokens": 0
+          },
+          "total_tokens": 6083
+        },
+        "costUpperMicroUsd": 3312
+      },
+      {
+        "ordinal": 6,
+        "unitIdentitySha256": "414305df319158e1144dfb73d45b1241a3bb216fe0573b79de238fac3878a66f",
+        "requestSha256": "ca66c6706f20da64776947acee7e05d7c64db5d7202d11ab58e6a6fce7dc9f7e",
+        "status": "SETTLED",
+        "responseSha256": "2481193de27ce58c322e693a1a375fb683689cfed0d8c1388bda49b24addae59",
+        "httpStatus": 200,
+        "usage": {
+          "input_tokens": 4394,
+          "input_tokens_details": {
+            "cached_tokens": 3840
+          },
+          "output_tokens": 1470,
+          "output_tokens_details": {
+            "reasoning_tokens": 0
+          },
+          "total_tokens": 5864
+        },
+        "costUpperMicroUsd": 3083
+      },
+      {
+        "ordinal": 7,
+        "unitIdentitySha256": "a9a94d455fff3db11c3d7d77c8524102907efec7bb38ac66ad4b5d9050e87356",
+        "requestSha256": "d286adb90320ad5f686ab5185e74103c2a4a903a3894d61c6b48a82cf9d55d25",
+        "status": "SETTLED",
+        "responseSha256": "485054874c815f72aa47d8ab0f78900bf0678a3b91267f3c9f1a327d3452e574",
+        "httpStatus": 200,
+        "usage": {
+          "input_tokens": 4392,
+          "input_tokens_details": {
+            "cached_tokens": 3840
+          },
+          "output_tokens": 1482,
+          "output_tokens_details": {
+            "reasoning_tokens": 0
+          },
+          "total_tokens": 5874
+        },
+        "costUpperMicroUsd": 3096
+      },
+      {
+        "ordinal": 8,
+        "unitIdentitySha256": "c436425ad51740a781c7f6ba9a5cc551152f5d1f3c4ed98915fc5fcb4e88f597",
+        "requestSha256": "2f4cf348748383ef6b08f5321617b95d6a010fb8eaa6d59cee48e1f53c2a87ac",
+        "status": "SETTLED",
+        "responseSha256": "5cfa84d67fb6fe659392d51157b112423582c9ee7262ce14338119914c26470e",
+        "httpStatus": 200,
+        "usage": {
+          "input_tokens": 4429,
+          "input_tokens_details": {
+            "cached_tokens": 3840
+          },
+          "output_tokens": 1712,
+          "output_tokens_details": {
+            "reasoning_tokens": 0
+          },
+          "total_tokens": 6141
+        },
+        "costUpperMicroUsd": 3384
+      },
+      {
+        "ordinal": 9,
+        "unitIdentitySha256": "3384b3322a1ae3194be819d42c9384588b17f4efb2a4c564eeaecaed7df4e2ab",
+        "requestSha256": "d83b0a3165c9b002feca4c7584b073d1897243b92ff9ed91b5c70813fb5b4587",
+        "status": "SETTLED",
+        "responseSha256": "982bac11ebdc8faeeca883d6da052569dfdc4e231188a350a64da968ab812554",
+        "httpStatus": 200,
+        "usage": {
+          "input_tokens": 4417,
+          "input_tokens_details": {
+            "cached_tokens": 3840
+          },
+          "output_tokens": 1255,
+          "output_tokens_details": {
+            "reasoning_tokens": 0
+          },
+          "total_tokens": 5672
+        },
+        "costUpperMicroUsd": 2832
+      },
+      {
+        "ordinal": 10,
+        "unitIdentitySha256": "0424d155062951d5473f10aee87f8d406e990d8aa161c2f25357c898bce2b3c6",
+        "requestSha256": "8b5b93b21328e3869254c8ec1b9c014a85991f958941e7c399893953c748b1a6",
+        "status": "SETTLED",
+        "responseSha256": "76659efff07cecbafbb90699c02319706e0311571bccda84df0ef8cc357afee5",
+        "httpStatus": 200,
+        "usage": {
+          "input_tokens": 4380,
+          "input_tokens_details": {
+            "cached_tokens": 3840
+          },
+          "output_tokens": 1182,
+          "output_tokens_details": {
+            "reasoning_tokens": 0
+          },
+          "total_tokens": 5562
+        },
+        "costUpperMicroUsd": 2733
+      },
+      {
+        "ordinal": 11,
+        "unitIdentitySha256": "317ade50702eb7bde9caf4c59264b4b83bee95ad9e9fec42df3dd263cbaddfb0",
+        "requestSha256": "a93da41d09834a99eac989aef3acb64faedafa2b2dcd31c1a37eeaefcc92a328",
+        "status": "SETTLED",
+        "responseSha256": "9627499fafec37f279b285372777cc28c5ce764fc892cb92dc29a21c133e36d1",
+        "httpStatus": 200,
+        "usage": {
+          "input_tokens": 4374,
+          "input_tokens_details": {
+            "cached_tokens": 3840
+          },
+          "output_tokens": 1167,
+          "output_tokens_details": {
+            "reasoning_tokens": 0
+          },
+          "total_tokens": 5541
+        },
+        "costUpperMicroUsd": 2713
+      },
+      {
+        "ordinal": 12,
+        "unitIdentitySha256": "71eaf82b52c368d91d062b74759c9b52ed52097c421b69808f2ded6c02417ea2",
+        "requestSha256": "5b3e8be5a89ce68fbb1f88bf59087781233e6734ef7bdb0ea0f45773c6b7703c",
+        "status": "SETTLED",
+        "responseSha256": "8c25bacd87fc8d590d802bed5febeed81a7c2d247b6efea5b6daa817980aa376",
+        "httpStatus": 200,
+        "usage": {
+          "input_tokens": 4411,
+          "input_tokens_details": {
+            "cached_tokens": 3840
+          },
+          "output_tokens": 1283,
+          "output_tokens_details": {
+            "reasoning_tokens": 0
+          },
+          "total_tokens": 5694
+        },
+        "costUpperMicroUsd": 2863
+      },
+      {
+        "ordinal": 13,
+        "unitIdentitySha256": "c904f55d3029b2da74d1c783e57102ddbf0341288a0a704b831e144d68a67410",
+        "requestSha256": "2e01c9dff6d92b6a9ab0e5af181845f789d13230a3640b127fc122795902f733",
+        "status": "SETTLED",
+        "responseSha256": "c53e672f3b63b0ebc7ef7f2c2187126d4be322648293587507935b55963f8c0f",
+        "httpStatus": 200,
+        "usage": {
+          "input_tokens": 4376,
+          "input_tokens_details": {
+            "cached_tokens": 3840
+          },
+          "output_tokens": 783,
+          "output_tokens_details": {
+            "reasoning_tokens": 0
+          },
+          "total_tokens": 5159
+        },
+        "costUpperMicroUsd": 2253
+      },
+      {
+        "ordinal": 14,
+        "unitIdentitySha256": "4c2cd0b05361b263ac97ec81f3bde62881c1ddc4422107785465a6bab425b381",
+        "requestSha256": "5fb3067e2ac8542dce0bbe013036200363bb4dd97ae0a549df90896c91615c87",
+        "status": "SETTLED",
+        "responseSha256": "03b64c823ae4ef3694dee0895f19ceadd2505148370e5246ef8cab2e8eef8877",
+        "httpStatus": 200,
+        "usage": {
+          "input_tokens": 4339,
+          "input_tokens_details": {
+            "cached_tokens": 3840
+          },
+          "output_tokens": 1167,
+          "output_tokens_details": {
+            "reasoning_tokens": 0
+          },
+          "total_tokens": 5506
+        },
+        "costUpperMicroUsd": 2703
+      },
+      {
+        "ordinal": 15,
+        "unitIdentitySha256": "2d3e6ef1cd82fe23e345e31b83cb96e5a9769ed11173efda1776bee2915d9d43",
+        "requestSha256": "75d75f02f7df0c077b07f1166739d88ebe707d8636fa3c6236c67865c52beb1e",
+        "status": "SETTLED",
+        "responseSha256": "8a43c51ac7defb5dd370980b62910a4c8a490a8aa5769eeb6c7ac2d2d7a4d984",
+        "httpStatus": 200,
+        "usage": {
+          "input_tokens": 4448,
+          "input_tokens_details": {
+            "cached_tokens": 3840
+          },
+          "output_tokens": 1614,
+          "output_tokens_details": {
+            "reasoning_tokens": 0
+          },
+          "total_tokens": 6062
+        },
+        "costUpperMicroUsd": 3272
+      },
+      {
+        "ordinal": 16,
+        "unitIdentitySha256": "775ca08965d252d1ec4d2924f4ef577e2c483ee1c975654d86be34b594d5d51b",
+        "requestSha256": "31686579ad05b2fd6bfcb7db87def05a3e4cc9b27698be485e79b4b0758f28ca",
+        "status": "SETTLED",
+        "responseSha256": "564d8e9cd15f73f57d421c08ecb166f5bb9b930718636fb5ceac1487cb79ff5b",
+        "httpStatus": 200,
+        "usage": {
+          "input_tokens": 4485,
+          "input_tokens_details": {
+            "cached_tokens": 3840
+          },
+          "output_tokens": 1312,
+          "output_tokens_details": {
+            "reasoning_tokens": 0
+          },
+          "total_tokens": 5797
+        },
+        "costUpperMicroUsd": 2920
+      }
+    ],
+    "grantId": "D26-20261003-a5b5e71b-2ccd-436b-9299-be954c640540",
+    "committedHead": "7ce9fa204a5b86a0facf99b26672d47a1a34ccde",
+    "snapshotCommit": "4699d5cfdd6211299d9ab82ef7000d99fc8fe8f8",
+    "hostAuthorizationSha256": "2474d84eefda4c04207cba6b8f5f8f5699d15408b15d3f3cf4387dd03257fc59",
+    "role": "SCOPED_DEVELOPMENT_HOST_NOT_AUTHORIZATION"
+  },
+  "nextOrdinal": null,
+  "audit": "CONSISTENT",
+  "uncertainty": null,
+  "priceStatus": "CURRENT_AS_RECORDED_NOT_REVERIFIED",
+  "batchEvidence": {
+    "rows": 33,
+    "grantCount": 1,
+    "reserveCount": 16,
+    "settleCount": 16,
+    "units": [
+      {
+        "ordinal": 1,
+        "reserveCount": 1,
+        "settleCount": 1
+      },
+      {
+        "ordinal": 2,
+        "reserveCount": 1,
+        "settleCount": 1
+      },
+      {
+        "ordinal": 3,
+        "reserveCount": 1,
+        "settleCount": 1
+      },
+      {
+        "ordinal": 4,
+        "reserveCount": 1,
+        "settleCount": 1
+      },
+      {
+        "ordinal": 5,
+        "reserveCount": 1,
+        "settleCount": 1
+      },
+      {
+        "ordinal": 6,
+        "reserveCount": 1,
+        "settleCount": 1
+      },
+      {
+        "ordinal": 7,
+        "reserveCount": 1,
+        "settleCount": 1
+      },
+      {
+        "ordinal": 8,
+        "reserveCount": 1,
+        "settleCount": 1
+      },
+      {
+        "ordinal": 9,
+        "reserveCount": 1,
+        "settleCount": 1
+      },
+      {
+        "ordinal": 10,
+        "reserveCount": 1,
+        "settleCount": 1
+      },
+      {
+        "ordinal": 11,
+        "reserveCount": 1,
+        "settleCount": 1
+      },
+      {
+        "ordinal": 12,
+        "reserveCount": 1,
+        "settleCount": 1
+      },
+      {
+        "ordinal": 13,
+        "reserveCount": 1,
+        "settleCount": 1
+      },
+      {
+        "ordinal": 14,
+        "reserveCount": 1,
+        "settleCount": 1
+      },
+      {
+        "ordinal": 15,
+        "reserveCount": 1,
+        "settleCount": 1
+      },
+      {
+        "ordinal": 16,
+        "reserveCount": 1,
+        "settleCount": 1
+      }
+    ]
+  },
+  "localEvidence": {
+    "rawFiles": 16,
+    "receiptFiles": 33,
+    "incompleteStateWrite": false
+  },
+  "dispatchEligibility": "NOT_EVALUATED_READ_ONLY",
+  "lockExists": false,
+  "halt": null,
+  "ledger": {
+    "rows": 971,
+    "sha256": "7b1d1935254a7d7830e1d03892d12895707b71107dfc1bfb611f3459e839367d",
+    "tail": "d4b2338183a26a9f94c2349321e60fbf75b97ded2fff6005a02e60b7070d1d48",
+    "batchRows": 33
+  },
+  "dispatch": "NOT_PERFORMED",
+  "ledgerWrites": 0
+}

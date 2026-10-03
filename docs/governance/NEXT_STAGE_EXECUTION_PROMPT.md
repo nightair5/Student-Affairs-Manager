@@ -1,111 +1,81 @@
-# 直接接续：原D26首次比较及证据驱动修复
+# 下一执行：先让输出契约稳定产生首次可用建议
 
-2026-10-03。[执行工程与结果](../recognition-optimization/d26-execution-continuation/RESULTS.md)已交付；真实宿主、只读报告、48项工具回归和同步安全核验已经完成。D27产品复用，不重建准备系统。本文件不授权新模型、账本写、真人或发布。
+2026-10-03。[原D26比较与修复](../recognition-optimization/d26-execution-continuation/RESULTS.md)已交付。本文件替代“原16次待授权执行”的过时提示：原批已全部发送、结算、许可耗尽。文件自身不授权付费、真人或发布；用户要求执行后连续完成其本地范围。
 
 ~~~text
-继续“学生事务管家”识别优化独立支线，直接接续原D26冻结首次准确率比较。
-工作区 C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/比赛。
+继续“学生事务管家”首次准确率主线，完成输出契约一致性与证据驱动的产品修复。
+工作区 C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/比赛；
 分支 codex/e2-candidate11-blind-eval。
 
-目标：查清C18相对C17是否提高人工修改前首次整份建议正确率，
-并在同包完成最多3个证据根因的产品修复；复用D27普通核对及最小安排。
-不重开全仓审计、不重造执行器/空表/新24身份，不以计划外观证明正确率。
+目标：减少“原答已有事实却生成不了首次建议”的失败，同时保留缺事实和错误事实的真实阻断。复用本次16份实际录制和D27普通核对/最小安排，不重建执行器、空表或全局计划器，不以用户补录制造首次正确。
 
-授权本地实现、匿名正反例、旧录制只读诊断、隔离库、实际浏览器、
-适用测试和必要文档，Conventional Commit后立即普通推送。
-不新增依赖/升级v8/读取Secret明文，不接触旧用户库或改历史冻结。
-仅用户另行明确授权本批模型、原16身份、美元硬上限与唯一新grant后才付费。
-缺新许可时16NOT_RUN、模型/grant/reserve/settle0、账本只读。
-真人、独立Holdout、默认替换、合并、部署仍需各自证据与授权。
+授权本地实现、匿名不同写法正反例、录制只读诊断、新隔离库、实际浏览器、
+适用测试及必要文档；清晰Conventional Commit后立即普通推送。
+本包新模型/grant/reserve/settle0，账本只读；不读取Secret明文、不触碰旧用户库、
+不新增依赖/升级v8、不改历史冻结/Expected/raw/分数/锁/旧断言。
+原D26 US$5.30许可耗尽，不得再次prepare/dispatch或以余款扩样本。
+真人/Holdout/默认替换/合并/部署另需对应证据和授权。
 
-一、有限核验，复用已完成工程
-核实际HEAD/工作区/upstream/远端，保留用户改动，不回滚历史锚点。
-读当前AGENTS/PRD首次识别和确认相关章节、CURRENT_CONTEXT、活动路线，
-d26-execution-continuation的RESULTS/IMPLEMENTATION/VALIDATION/授权卡，
-原D26 Manifest/身份/预注册；产品受影响时再读D27对应实现/浏览器证据。
-不重读全部历史。只读历史保护、账本完整链和原D26快照。
-Cloudflare已只读核13相关Worker Builds无Git连接，CI无发布步骤，旧推送阻碍解除。
-若发布设置或CI实际发生变化再查，不循环核验未变页面；不得触发部署。
+一、有限核验
+核实际HEAD/改动/upstream/远端，保留用户资产，不回滚。
+读当前AGENTS/PRD首次与确认相关段、CURRENT_CONTEXT、本次RESULTS/
+ROOT_CAUSES/PRODUCT_REPLAY_DIAGNOSTIC/BROWSER_EVIDENCE/VALIDATION及当前路线。
+核历史保护和本批read-only现场，不重读全部历史、不循环核未变Cloudflare设置。
+原成绩C17确认整份0/8、7错1UNKNOWN，C18冻结8拒绝；EVIDENCE_INCOMPLETE不改。
+原145组件/7产物/16请求快照和本次raw原字节保留，实际授权原件不进Git。
 
-原批 D26-C17-C18-DEVELOPMENT-R1；C17/C18；8已见D25来源×2=16；4AB/4BA。
-原快照 4699d5cfdd6211299d9ab82ef7000d99fc8fe8f8。
-Manifest SHA c41185c3831d35db610e5a4a563b7471b0bd60d1d92a373edd6a5c10d28f7ac2。
-身份SHA 89f33327eabd2ec90f9d383ac922d56b56ca4654cfee0be47aac083eea411e89。
-模型deepseek-flash，Responses，temperature0/reasoning.effort none/stream false，
-max_output_tokens8192；其余及requestSha依原冻结。
-145组件/7产物/16请求保持，活动D27图6文件漂移不改旧Manifest。
-现成隔离快照：C:/Users/Winner/.codex/worktrees/student-affairs-d26-frozen/比赛。
-若不存在，按原ref恢复managed worktree，不复制活动组件冒充快照。
+二、先修两类契约根因
+1. 版本化显式coverage状态：未说明、明确没有、未知、已有事实分清；
+   已有事实必须有真实实体及依据，null不猜成not_stated。
+   检查模型wire定义/Schema/生成说明/转换/首次页逐层一致，
+   不只加Prompt提醒，不靠放宽scorer接受缺事实。
+2. 主实体与附属引用分清：现有recorded-source-accounting-projection-1仅
+   接受同原文片段且已有主事实/附属材料时间。下版生成契约须可表达这一区别。
+   missing primary、假ID、错类型、跨来源、跨scope、图冲突保留错误，
+   不自动补被模型遗漏的事件或猜接关系。
+3. 回归已明确风险：前置未完成不能写true；资格/前置完成/可开始分别表达；
+   办理时间不能变原文deadline，时间实体两向图一致；
+   材料对象与完成标准保留，不把S08原文确认单/承诺函争议定成已知真值。
+最多优先处理三类有证据根因。只改公共确定性机制就报告组件版本；
+需要改变模型输入时另版本更新promptVersion/查候选编号，旧C18原字节保持，
+不默认Candidate19或新16/24身份。
 
-从主工作区复用：
-node scripts/d26-execution-host.mjs --verify --snapshot C:/Users/Winner/.codex/worktrees/student-affairs-d26-frozen/比赛
-node scripts/d26-execution-host.mjs --resume-read-only --snapshot C:/Users/Winner/.codex/worktrees/student-affairs-d26-frozen/比赛
-node scripts/report-d26-execution.mjs --snapshot C:/Users/Winner/.codex/worktrees/student-affairs-d26-frozen/比赛
+三、实际产品接入与离线证据
+从全部16份旧raw按双臂同口径新诊断，原分数/新转换/争议/用户改动分列。
+S01/S02无需用户补录即可显示已有事件/模糊时间；
+其他6份没有原事实支持时仍拒或明确待核对，不全改unknown骗通过。
+补独立写法合法表示和最小语义反例，走真实Schema→公共转换→普通首屏→
+ReviewSession→DomainCommitPlan→Repository读回，不只测试镜像实现。
+用来源原referenceTime和可逆scope映射，不重新解释为回放当天。
+原响应/转换审计/首次展示/用户纠正分别持久化；来源拒绝不得污染下一provider，
+新机制必须接普通App路径，不建立平行保存链。
 
-二、仅有本批明确许可时直接执行
-用户许可须明确原冻结16个deepseek-flash身份、美元硬上限、
-允许且只允许一个本批新grant与逐单元reserve/settle。旧许可不得复用。
-已交付预算快照US$5.190464/建议上限5.30不是当前许可或永久价格。
-第一次grant前重新只读核官方路由、上下文/输出、峰时/缓存/推理与附加费，
-权威账本完整链/合法追加、16个identity/request SHA和当前同步HEAD。
-用官方上下文与冻结输出限证明费用上界，不用字节估token。
-任一漂移、费用超上限或安全状态未知在grant前停止付费。
+在新端口/新库实际验受影响首次显示、无任务事件、前置unknown和时间图、
+精确截止/材料、部分确认、事务失败手动恢复、只重读恢复、刷新及独立读回。
+不得触碰旧6792/6798库；最终只推荐一个新入口，标候选/版本/固定录制/构建。
+D27安排复用，个人计划与原截止分开，不扩大成全局最优算法。
+edit→checkpoint→commit→readback继续可查，重试不重复纠正、缺失不补0；
+ENGINEERING_REPLAY不进入真人指标，四项真人保持NOT_OBSERVABLE。
 
-真实许可原文及AUTHORIZATION/PRICE_EVIDENCE只保存在本机.data，不进Git。
-按已交付契约绑定当前已提交/已推送HEAD、原Manifest/身份、模型/参数、
-16身份、单元上界/总硬上限及有效核价；只能为该批建一个grant。
-不要更改原身份dispatchAuthorized=false；实际许可由独立执行层验证。
+四、若必须验证新模型首答
+先完成可运行契约与产品正反例，再根据假设冻结最小必要新来源/两臂/
+请求/参照/参数/评分/选择规则。参照provisional诚实标注，失败/未知保留分母。
+不为了看起来有进展默认造16或24次；只改转换可先旧raw诊断，不必重付费。
+只有必须改变模型输入且需要新输出时，给具体模型、身份、次数及美元上限
+申请。新价/上下文/输出界/账本/同步HEAD在新grant前核，不能用请求字节估token。
+没有本批新的明确许可只停付费，继续其余工程；旧grant绝不复用。
+事后旧raw诊断只能证明程序兼容，不能称新版模型首次准确率提升。
 
-复用 --prepare-authorized 与 --dispatch-next，每次严格冻结ordinal：
-跨进程锁/状态检查→reserve→发送前持久状态→最多一次send→
-原样raw/response SHA/真实usage→settle。零自动重试/repair/verifier/探测。
-发送、计费、raw或settle不确定立即封存并停止后续。
-usage缺失时保守内部结算单元上界并停发，不猜实际扣费。
-不以“没有raw”推断没送达；不要删除锁/孤立文件/状态来启动第二批。
-只读续跑用于核现场，不自动继续不确定单元，失败仍保留16分母。
+五、验证与交付
+定向真实正反例/失败分支先行；适用lint/test/build/security/隔离/历史保护。
+本轮相关新失败修复；全量历史六组/D17账本快照兼容及audit风险单列。
+不要改旧锁/断言/分数来凑绿，也不无疑点循环跑无关全量。
+更新一个结果入口、短交接和现有索引，按交付边界提交立即普通推送，
+核最终HEAD/upstream/远端/工作区。
 
-三、完成比较，按实际证据修产品
-只有全部16有确定结局且账本/本地状态一致，才调用原快照v10评分。
-比较不完整/锁或halt/计费未知时不判赢家；逐单元错误、未知与分母保留。
-分列模型首答（经过冻结解析/adapter的边界）、转换后人工前首次展示、
-人工最终处置。不能把自动raw契约评分称独立人工原答真值。
-每来源列整份正确、任务/无任务、独立事件/信息、时间/材料/条件/关系，
-FP/FN、Severe/Forbidden、胜平负/未知、原文和原回答依据。
-参照provisional；标题/自由描述/教学例泄漏未经真实裁决NOT_ADJUDICATED。
-
-严格用原选择规则：整份净增且无新增关键风险；目标错减少但未净增；
-改善伴退步；无收益；证据不足。不临时加净增2/整体100%或删难例。
-关键FN、无据新增、错误时间/关系不被总分抵消。
-已见Development不证明泛化、真人省时或发布资格。
-候选组件整包含Prompt/wire/转换，不能单靠整包比较归因到Prompt。
-
-只选最多3个高价值根因：原文→原答→程序转换→首次显示→保存/安排。
-优先核无任务事件/时间、条件/前置/可开始、时间与实体关系。
-区分生成错、公共转换错、参照争议、UI错；不要只堆Prompt提醒。
-不能猜事实、全部unknown/转人工、放宽评分制造收益。
-修公共确定性问题先复用旧录制离线；改比较组件只能另版本，旧批不动。
-仅必须改模型输入才提出后续候选/调用假设及预算，不默认新16/24身份。
-
-新录制接入现有App/ReviewSession/DomainCommitPlan/Repository，
-保留原回答/程序转换/用户修改及来源，不建立平行保存链。
-实际浏览器在新隔离库验首次展示、必要纠正/确认、原子保存/独立读回，
-检查任务/事件/材料/时间与安排影响。旧页面证据不冒充新模型回放。
-D27最小安排复用，原截止与个人计划分开；不扩成全局最优计划器。
-
-四、验证、同步与一次交付
-针对改动先真实正反例和失败分支，再适用lint/test/build/security/隔离/历史保护。
-只改工具时复用已通过工具检查；无新代码/疑点不重复全量产品及旧浏览器矩阵。
-产品改动完成受影响路径实际浏览器及正式保存/独立读回。
-全量旧4历史哈希失败与audit历史风险如实单列，不改旧锁/断言凑绿。
-工程时间不叫真人省时，measurement3.2/low-edit-v2及计划计量分列保留。
-四项真人指标缺实际范围、负责人接受、同意及裁决仍NOT_OBSERVABLE。
-按清晰边界Conventional Commit后立即普通推送，核最终HEAD/upstream/远端/工作区。
-更新现有结果入口、短交接和跟踪索引，不增加新准备阶段。
-
-最终大白话交付：同批首次原答/首次展示的正确率及分母；具体改善/退步/未知；
-产品机制哪些有新模型证据、哪些仅工程证明；实际发送/确定/不确定/停发；
-真实usage/内部保守结算/实扣可观察性；页面及独立读回；测试新旧失败；
-保护/账本和提交远端；最少下一授权或材料。
-无新付费许可时明确“16次未运行，已交付执行工程，待本批具体授权”。
-若安全未知封存付费现场，继续不相关安全工程；不开展真人/Holdout/默认替换/合并/部署。
+最终大白话：首次用户少改哪类事实；哪些仅旧raw新转换证据；
+还拒绝哪些/为什么；模型原效果与新工程诊断分母、争议和缺失；
+普通页面/保存/恢复/独立读回；模型/费用状态；测试新旧失败；
+保护/账本/Git；是否真的需要下一批付费以及最少那项具体授权。
+本地普通可修问题连续完成，不以预算卡、候选编号或测试数作为产品成效。
 ~~~

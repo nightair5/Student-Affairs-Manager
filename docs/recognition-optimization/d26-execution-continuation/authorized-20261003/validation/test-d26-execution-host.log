@@ -1,0 +1,62 @@
+✔ missing authorization rejects prepare and dispatch before creating lock, grant or transport (11.0321ms)
+✖ CLI refuses missing authorization before loading snapshot or credential paths (61.9836ms)
+✔ scope, baseline, stale price, uncertain fees, token proof, low cap and old batch stop before grant (111.5893ms)
+✔ uncommitted host or snapshot drift prevents grant; user authorization evidence cannot drift (23.1908ms)
+✔ recorded official price bytes cannot be paired with a cheaper authorization price or unrelated evidence role (34.3851ms)
+✔ 16 fixed ordinals settle once each, original raw/usage/receipt chains agree and completion never resends (1065.2531ms)
+✔ uncertain grant or initial state stays sealed: before_d26Grant (15.8677ms)
+✔ uncertain grant or initial state stays sealed: after_d26Grant (15.0253ms)
+✔ uncertain grant or initial state stays sealed: after_grant_before_state (19.5979ms)
+✔ uncertainty seals and never advances: before_d26Reserve (35.3896ms)
+✔ uncertainty seals and never advances: after_d26Reserve (32.2186ms)
+✔ uncertainty seals and never advances: persist_RESERVED (36.1531ms)
+✔ uncertainty seals and never advances: persist_SENDING (34.674ms)
+✔ uncertainty seals and never advances: before_send (42.9626ms)
+✔ uncertainty seals and never advances: after_send (36.7426ms)
+✔ uncertainty seals and never advances: before_raw (43.0554ms)
+✔ uncertainty seals and never advances: after_raw (38.3412ms)
+✔ uncertainty seals and never advances: persist_RAW_SAVED (45.1275ms)
+✔ uncertainty seals and never advances: before_d26Settle (49.0329ms)
+✔ uncertainty seals and never advances: after_d26Settle (49.187ms)
+✔ uncertainty seals and never advances: persist_NOT_SENT (47.5447ms)
+✔ transport exception is uncertain even without raw; fresh process cannot infer unsent (41.6616ms)
+✔ missing usage preserves raw and conservative settlement, then halts rather than charging the next unit (51.7253ms)
+✔ known HTTP failure with valid usage keeps denominator and is not retried (51.5732ms)
+✔ raw, metadata, receipt, state and authorization tampering stop the following request (236.1998ms)
+✔ interleaved ledger row and reused grant/batch cannot silently create another grant (63.2307ms)
+✔ read-only resume preserves bytes, does not need current price or git sync, reports stale price separately (55.3028ms)
+✔ real OS compare-and-append adapter operates on anonymous temporary ledger only (1442.8984ms)
+✔ separate processes cannot acquire the same batch lock; stale lock remains blocked (863.9801ms)
+✔ offline factory cannot point at real ledger or outside a temporary isolated root; errors do not echo secrets (6.4798ms)
+✔ response safety rejects nested secret reflection, metadata reflection and malformed UTF8 before raw persistence (0.8826ms)
+ℹ tests 31
+ℹ suites 0
+ℹ pass 30
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4770.0535
+
+✖ failing tests:
+
+test at scripts\d26-execution-host.node-test.mjs:74:1
+✖ CLI refuses missing authorization before loading snapshot or credential paths (61.9836ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /AUTHORIZATION_REQUIRED_NO_GRANT_NO_SEND/u. Input:
+  
+  '{"status":"STOPPED","code":"D26_HOST_OPERATION_FAILED_NO_SENSITIVE_DIAGNOSTICS","retry":false}\n'
+  
+      at TestContext.<anonymous> (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/d26-execution-host.node-test.mjs:79:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '{"status":"STOPPED","code":"D26_HOST_OPERATION_FAILED_NO_SENSITIVE_DIAGNOSTICS","retry":false}\n',
+    expected: /AUTHORIZATION_REQUIRED_NO_GRANT_NO_SEND/u,
+    operator: 'match',
+    diff: 'simple'
+  }

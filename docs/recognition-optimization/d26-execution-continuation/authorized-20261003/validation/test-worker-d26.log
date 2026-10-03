@@ -1,0 +1,62 @@
+{
+  requestId: '58cd1602-b12f-40e7-86a6-1dcde5f53aca',
+  timestamp: '2026-10-03T09:55:22.935Z',
+  path: '/api/deepseek/extract',
+  method: 'POST',
+  status: 400,
+  durationMs: 2,
+  inputLength: 418,
+  outputTokens: 0,
+  errorType: 'DEEPSEEK_CONTEXT_SELECTION_REQUIRED',
+  client: 'client-9b759fb9'
+}
+{
+  requestId: '57b742f6-e0be-4140-a894-ed9f4282892f',
+  timestamp: '2026-10-03T09:55:22.938Z',
+  path: '/api/deepseek/extract',
+  method: 'POST',
+  status: 200,
+  durationMs: 2,
+  inputLength: 142,
+  outputTokens: 0,
+  errorType: null,
+  client: 'client-9b759fb9'
+}
+{
+  requestId: 'e1f404e1-c964-485d-8df4-151b46f842f2',
+  timestamp: '2026-10-03T09:55:22.939Z',
+  path: '/api/deepseek/extract',
+  method: 'POST',
+  status: 200,
+  durationMs: 1,
+  inputLength: 503,
+  outputTokens: 0,
+  errorType: null,
+  client: 'client-9b759fb9'
+}
+{
+  requestId: '07989e31-e914-42a3-bf54-28f987a62325',
+  timestamp: '2026-10-03T09:55:22.940Z',
+  path: '/api/deepseek/extract',
+  method: 'POST',
+  status: 503,
+  durationMs: 1,
+  inputLength: 0,
+  outputTokens: 0,
+  errorType: 'DEEPSEEK_NOT_CONFIGURED',
+  client: 'client-9b759fb9'
+}
+✔ D26 accepts bounded source-only and empty legacy contexts (12.0692ms)
+✔ D26 requires selection matching every sent project and task, rejecting extras and duplicate IDs (0.6337ms)
+✔ D26 multimodal base also rejects silently attached workspace summaries (0.2972ms)
+✔ D26 worker does not contact upstream for unselected workspace details (18.3903ms)
+✔ D26 fake upstream receives only current source or exactly selected context (3.4664ms)
+✔ D26 missing configuration prevents upstream source transmission (0.5327ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 111.1683

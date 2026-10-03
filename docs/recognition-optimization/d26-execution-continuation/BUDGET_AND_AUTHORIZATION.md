@@ -1,32 +1,32 @@
-# 本批具体费用与授权
+# 本批已授权费用与关闭状态
 
-状态：**ENGINEERING_DELIVERED_PAID_BATCH_NOT_AUTHORIZED**。本卡只是可审核申请，不是授权，不创建grant/reserve/settle。
+2026-10-03。**CLOSED_PERMISSION_CONSUMED**。用户在同一任务明确授权原16个deepseek-flash请求、硬上限US$5.30、仅一个新grant、逐单元reserve/settle。本批16个身份已各发送一次并结算；余额不是新许可，不能再次派发。授权原件及核价原件只在本机.data保存。
 
-| 项目 | 本批固定内容 |
+| 绑定项目 | 实际值 |
 |---|---|
 | 批次 | D26-C17-C18-DEVELOPMENT-R1 |
-| 比较 | Candidate17 vs Candidate18，8份已见D25来源×2=16；4AB/4BA |
+| 比较/固定分母 | Candidate17 vs Candidate18；8已见D25来源×2=16，4AB/4BA |
 | 原比较快照 | 4699d5cfdd6211299d9ab82ef7000d99fc8fe8f8 |
-| 执行工具代码提交 | 4555375788b006506abeae6107de5902ac95ad80，已普通推送 |
-| 实际派发HEAD | 获准时重新核最终HEAD、upstream和远端一致，绑定到本机AUTHORIZATION；文档后续提交不能沿用旧HEAD绕过检查 |
+| 本次授权执行HEAD | 7ce9fa204a5b86a0facf99b26672d47a1a34ccde；派发前已提交并推送。后续产品/文档提交不回写授权 |
 | Manifest SHA-256 | c41185c3831d35db610e5a4a563b7471b0bd60d1d92a373edd6a5c10d28f7ac2 |
-| 16身份文件 SHA-256 | 89f33327eabd2ec90f9d383ac922d56b56ca4654cfee0be47aac083eea411e89 |
-| 每份identity/request SHA | [只读矩阵units](evidence/COMPARISON_REPORT.json)，逐项对照原身份，不重新生成 |
-| 路由/模型 | https://api.deepseek.com/responses；deepseek-flash（当前官方映射DeepSeek-V4.1-Flash） |
-| 固定参数 | temperature=0，reasoning.effort=none，stream=false，max_output_tokens=8192；其他参数依原冻结 |
-| 核价时间 | 2026-10-03 00:16:14 Asia/Shanghai；12小时证据窗口至12:16:14；实际创建grant前再核一次 |
+| 身份文件 SHA-256 | 89f33327eabd2ec90f9d383ac922d56b56ca4654cfee0be47aac083eea411e89 |
+| 单元request/response SHA | [16单元摘要](authorized-20261003/COMPACT_RESULTS.json)，依原身份 |
+| 路由/模型 | https://api.deepseek.com/responses；deepseek-flash |
+| 固定参数 | temperature=0，reasoning.effort=none，stream=false，max_output_tokens=8192；其他依原冻结 |
+| grant | D26-20261003-a5b5e71b-2ccd-436b-9299-be954c640540；仅1个 |
+| 实际发送/响应/结算 | 16 / 16 HTTP200 / 16 SETTLED；不确定0；零自动重试/repair/verifier/额外探测 |
+| 本次有效核价 | 2026-10-03T09:32:28.893Z，即17:32:28.893 Asia/Shanghai；12小时窗口至21:32:28.893Z |
+| 最坏预算/用户硬上限 | US$5.190464 / US$5.30 |
+| 实际usage | input 70,678；output 18,375；reasoning 0，均取原响应 |
+| 内部保守结算 | 43,261 microUSD = US$0.043261 |
+| 供应商实际扣费 | NOT_OBSERVABLE；没有读取账户账单或用usage冒充实扣 |
 
-官方[价格](https://api-docs.deepseek.com/quick_start/pricing/)与[Responses API](https://api-docs.deepseek.com/guides/responses_api/)留存于[核价证据](PRICING_EVIDENCE.json)。使用峰时未命中缓存输入US$0.30/百万token、输出US$1.20/百万token；不依赖折扣或缓存命中。官方上下文1M取更大的1,048,576输入上界；固定输出8192另留预算。供应商输出上限384K远大于本批8192。
+第一次grant前只读重核官方 [价格](https://api-docs.deepseek.com/quick_start/pricing/) 与 [Responses API](https://api-docs.deepseek.com/guides/responses_api/)，核峰时、缓存、推理及文本请求收费；核全部身份、同步HEAD和权威账本。官方上下文1M按更大1,048,576输入token界，冻结输出8192；峰时未命中缓存输入US$0.30/百万token、输出US$1.20/百万token，不依赖缓存或折扣：
 
-每单元上界：ceil(1,048,576×0.30 + 8,192×1.20) = **324,404 microUSD = US$0.324404**。
-16单元合计 **US$5.190464**；建议硬上限 **US$5.30**。这来自模型允许的完整上下文界，并非把请求字节数换算成token，也不是预计实际消费。失败请求按同一单元上界保留；未知发送或计费状态立即停批，不自动重试。
+每单元 ceil(1,048,576×0.30 + 8,192×1.20) = 324,404 microUSD，即US$0.324404。16单元US$5.190464。请求字节数没有当token硬界；固定输入输出上限的保守证明覆盖失败单元。本批文本，无图片或外部工具附加消费。当前完成后的价格证据不是下一批永久价格。
 
-本批仅文本，无图片、工具、服务器资源；官方按输入/输出token计费，输出usage包含推理token。新附加收费、路由/限制变动或价格过期会使该证明失效，须重新核价；超过用户硬上限时在grant前拒绝。真实usage只取原始响应，保守内部结算与供应商实扣分列，当前实扣NOT_OBSERVABLE。
+内部settle按响应usage逐单元以峰时未命中缓存上取整；汇总US$0.043261不是供应商实扣。首次发送前reserve按每单元最坏界；一次原样响应、usage及SHA落盘后settle，无修改历史raw。第14单元reserve前远端Git TLS失败，先停发、只读确认13 SETTLED/余3 NOT_SENT；连接恢复后只发送14—16，没有重发13或自动重试模型。
 
-当前实况：16/16 NOT_RUN；实际发送0、确定响应/结算0、不确定0；本批grant/reserve/settle均0。两臂各8个来源未知，正确率null/NOT_OBSERVABLE。权威账本938行、782221字节、SHA e79aec8bbb1378e37f3941d8ffac9cce7d74bbb8e11d7ceee5c90a88b6c734b9，本轮未追加。历史许可没有复用。
+账本938→971，追加仅33个本批授权事件；完整链及本地状态一致。[只读核验](authorized-20261003/HOST_READ_ONLY.json)。SHA-256 7b1d1935254a7d7830e1d03892d12895707b71107dfc1bfb611f3459e839367d。原冻结身份文件的dispatchAuthorized=false及NOT_RUN仍逐字保留，它们不是本次执行现场。
 
-下一次只需用户明确给出以下本批授权；这是**待用户发出的文字**：
-
-> 我授权仅执行D26-C17-C18-DEVELOPMENT-R1原冻结的Candidate17 vs Candidate18共16个deepseek-flash请求，费用硬上限US$5.30；允许且只允许本批创建一个新grant，逐单元reserve/settle。按冻结顺序每身份最多发送一次，不包含额外样本、重试、repair、verifier、真人、Holdout、默认替换、合并或部署。核价或状态不确定时立即停发。
-
-授权收到后直接沿已交付宿主接续：重核价/身份/账本/同步HEAD→建立本批唯一许可→16次顺序执行→原v10双臂评分→最多3类根因→现有产品新录制回放与受影响路径验收。无需另写只有启动说明的新阶段。真人材料缺失不阻挡这个本地识别比较。
+旧零许可申请和旧核价记录保存在Git历史及evidence/，不将它们篡改为本次授权。今后只读resume/report可以继续核本批；prepare/dispatch不得用本批许可开始第二批。下一轮只有确定新的模型输入机制并另冻结具体模型、身份、次数、预算后，才申请新的明确授权。无需再授权这已耗尽的16次。
