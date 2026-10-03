@@ -72,12 +72,17 @@ test('missing authorization rejects prepare and dispatch before creating lock, g
 })
 
 test('CLI refuses missing authorization before loading snapshot or credential paths', () => {
+  // Exercise the exact CLI in a credential-free temporary host, even after a
+  // legitimate real batch has created its local authorization and STATE.
+  const isolatedRoot = mkdtempSync(join(tmpdir(), 'd26-host-cli-no-auth-'))
+  mkdirSync(join(isolatedRoot, 'scripts'))
+  for (const file of ['d26-execution-host.mjs', 'candidate13-d6-budget.mjs', 'real-input-budget.mjs']) writeFileSync(join(isolatedRoot, 'scripts', file), readFileSync(join('scripts', file)))
   const output = (() => { try {
-    execFileSync(process.execPath, ['scripts/d26-execution-host.mjs', '--dispatch-next', '--snapshot', 'not-a-directory'], { encoding: 'utf8', stdio: 'pipe' })
+    execFileSync(process.execPath, ['scripts/d26-execution-host.mjs', '--dispatch-next', '--snapshot', 'not-a-directory'], { cwd: isolatedRoot, encoding: 'utf8', stdio: 'pipe' })
     assert.fail('must refuse')
   } catch (error) { assert.equal(error.status, 2); return error.stderr.toString() } })()
   assert.match(output, /AUTHORIZATION_REQUIRED_NO_GRANT_NO_SEND/u)
-  assert.equal(existsSync(resolve('.data/d26/execution/STATE.json')), false)
+  assert.equal(existsSync(join(isolatedRoot, '.data/d26/execution/STATE.json')), false)
 })
 
 test('scope, baseline, stale price, uncertain fees, token proof, low cap and old batch stop before grant', async () => {

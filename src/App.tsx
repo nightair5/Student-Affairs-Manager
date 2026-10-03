@@ -80,6 +80,9 @@ export interface OrdinaryAppEnvironment {
   store: WorkspaceRecordStore & {name:string}
   label: string
   semanticSidecar?: (sourceId:string)=>unknown
+  /** Recorded responses use their original inference clock, not the replay date. */
+  recognitionContext?: (sourceText: string) => { referenceTime: string; timezone: string }
+  pipelineVersion?: string
 }
 
 function captureActionMessage(error: unknown, fallback: string): string {
@@ -642,7 +645,9 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
     const draftRecognition = input.manualSuggestion
       ? recognitionResultFromManualSuggestion(localRecognition, input.manualSuggestion)
       : localRecognition
-    const useCloudRecognition = !input.manualSuggestion && smartExtractionStatus === 'connected'
+    // An invalid recording is a source-level rejection, not an unavailable
+    // provider. Keep injected offline providers separate from local fallback.
+    const useCloudRecognition = !input.manualSuggestion && (Boolean(ordinaryEnvironment?.extraction.recognize) || smartExtractionStatus === 'connected')
     const reviewQualityFlags = [...new Set([
       ...(input.reviewMetadata?.qualityFlags ?? []),
       ...(input.multimodal
@@ -672,7 +677,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
       promptVersion: input.manualSuggestion
         ? null
         : input.multimodal ? MULTIMODAL_PROMPT_VERSION : localRecognition.promptVersion,
-      pipelineVersion: ordinaryEnvironment ? 'd26-ordinary-engineering-fake-transport' : useCloudRecognition
+      pipelineVersion: ordinaryEnvironment ? ordinaryEnvironment.pipelineVersion ?? 'd26-ordinary-engineering-fake-transport' : useCloudRecognition
         ? input.multimodal ? 'source-before-multimodal-ai-v1' : 'source-before-ai-v1'
         : 'source-before-local-rules-v1',
       sourceLegacyData: {
@@ -708,7 +713,8 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
             : async () => draftRecognition,
       )
       const semanticSidecar=ordinaryEnvironment?.semanticSidecar?.(handle.sourceId)
-      const assembled=assembleRecognitionFirstSuggestionD26(recognitionResult,{sourceText:input.content,referenceTime:input.now?.toISOString() ?? new Date().toISOString(),timezone:Intl.DateTimeFormat().resolvedOptions().timeZone || 'Asia/Shanghai'})
+      const inferenceContext=ordinaryEnvironment?.recognitionContext?.(input.content) ?? {referenceTime:input.now?.toISOString() ?? recognitionResult.createdAt,timezone:Intl.DateTimeFormat().resolvedOptions().timeZone || 'Asia/Shanghai'}
+      const assembled=assembleRecognitionFirstSuggestionD26(recognitionResult,{sourceText:input.content,...inferenceContext})
       await canonicalWorkspaceRepository.transaction(w=>({...w,recognitionRuns:w.recognitionRuns.map(r=>r.id===handle.recognitionRunId?{...r,legacyData:{...r.legacyData,originalRecognitionResult:JSON.parse(JSON.stringify(recognitionResult))}}:r),extractionDrafts:w.extractionDrafts.map(d=>d.id===handle.draftId?{...d,result:assembled.result,legacyData:{...d.legacyData,...(semanticSidecar?{semanticSidecar:JSON.parse(JSON.stringify(semanticSidecar))}:{}),firstSuggestionDisplayed:JSON.parse(JSON.stringify(assembled.result)),firstSuggestionAssembly:JSON.parse(JSON.stringify(assembled.audit))}}:d)}))
       const saved = await workspaceRepository.load()
       if (saved) applyWorkspaceView(saved)
@@ -724,7 +730,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
       )
     } catch (error) {
       const reason = error instanceof Error ? error.message : 'DeepSeek 智能整理暂时不可用'
-      if (useCloudRecognition) setSmartExtractionStatus('unavailable')
+      if (useCloudRecognition && !ordinaryEnvironment) setSmartExtractionStatus('unavailable')
       try {
         const canonical = await canonicalWorkspaceRepository.load()
         const failedSource = canonical?.sources.find((source) => source.legacyData?.captureOperationId === captureRequest.operationId)
@@ -1644,7 +1650,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
               handleToggleDraftItemSelection(selectedDraft.id,itemId,true,true)}:undefined }) : undefined}
           key={runtime ? selectedDraft.id : undefined}
           isolatedCapabilities={Boolean(runtime)}
-          recognitionDescription={runtime?.realInput ? runtime.recognitionDescription : undefined}
+          recognitionDescription={runtime?.realInput ? runtime.recognitionDescription : ordinaryEnvironment && selectedDraft.modelName?.includes('固定录制') ? `${selectedDraft.modelName} · 比较后程序转换 · 无新模型请求` : undefined}
           ordinarySourceReview={!runtime ? {busy:ordinaryBusy || Boolean(ordinaryReceipt) || Boolean(viewConflict),unsaved:ordinaryFactsDirty,onConfirm:()=>void handleConfirmAll(selectedDraft.id),facts:<OrdinarySourceFacts draft={selectedDraft} source={selectedDraftSource} workspace={ordinaryCanonical} session={ordinaryReviewSession} onDirty={setOrdinaryFactsDirty} onSave={result=>handleOrdinaryFacts(selectedDraft.id,result)} />} : undefined}
           confirmationV2={runtime && experimentalReview ? { busy: isolatedBusy || storageError, items: experimentalReview.states } : !runtime && selectedDraft.recognitionResult ? {busy:ordinaryBusy || Boolean(ordinaryReceipt) || Boolean(viewConflict),items:Object.fromEntries(selectedDraft.items.map(item=>{const r=selectedDraft.recognitionResult!,p=r.timePoints.filter(t=>t.relatedTaskTempIds.includes(item.suggestion.id));return [item.id,{dateLabel:p.length?p.map(t=>t.rawText+(t.needsConfirmation?'（时刻待定）':'')).join('；'):'原文未说明截止；可直接保存',blockedReason:sourceReviewProblem(r,item.suggestion.id),materialTempIds:r.materials.filter(m=>m.relatedTaskTempIds.includes(item.suggestion.id)).map(m=>m.tempId),timePointTempIds:p.map(t=>t.tempId)}]}))} : undefined}
           semanticReview={runtime?.semantic && isolatedSnapshot && experimentalReview && isolatedSnapshot.extractionDrafts.find(d=>d.id===selectedDraft.id)?.legacyData?.mainline05 ? {

@@ -52,7 +52,7 @@ async function safety() {
     ['multimodal-lib','scripts/multimodal-evaluation-lib.node-test.mjs'],['c11-scoring','scripts/candidate11-scoring.node-test.mjs'],['c11-preview','scripts/candidate11-preview.node-test.mjs'],
     ['d25-executor','scripts/d25-executor.node-test.mjs'],['d25-mechanism','scripts/d25-mechanism.node-test.mjs'],['d26-mechanism','scripts/d26-mechanism.node-test.mjs'],
     ['d26-executor','scripts/d26-executor.node-test.mjs'],['d26-freeze','scripts/d26-freeze.node-test.mjs'],['d26-score-recording','scripts/d26-score-recording.node-test.mjs'],
-    ['d26-execution-host','scripts/d26-execution-host.node-test.mjs'],['d26-execution-report','scripts/report-d26-execution.node-test.mjs']])
+    ['d26-execution-host','scripts/d26-execution-host.node-test.mjs'],['d26-execution-report','scripts/report-d26-execution.node-test.mjs'],['d26-recorded-projection','scripts/d26-recorded-projection.node-test.mjs']])
   if(process.platform==='win32')nodeTests([['d25-live-safety','scripts/d25-live-safety.node-test.mjs']])
   else record({label:'d25-live-safety',status:null,outcome:'NOT_AVAILABLE',reason:'FROZEN_WINDOWS_POWERSHELL_LOCK_TEST_REQUIRES_WINDOWS; portable executor tests run separately'})
 }
