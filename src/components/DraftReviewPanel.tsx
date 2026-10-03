@@ -9,7 +9,7 @@ import type { WorkspaceV8 } from '../domain/v2/types'
 import type { D20ReviewSessionRepository, ReviewSession } from '../experiments/candidate16/d20ReviewSession'
 
 interface DraftReviewPanelProps {
-  ordinarySourceReview?:{busy:boolean;unsaved:boolean;facts:ReactNode;onConfirm:()=>void;description?:string}
+  ordinarySourceReview?:{busy:boolean;unsaved:boolean;pendingEvents?:number;facts:ReactNode;onConfirm:()=>void;description?:string}
   sessionFrame?:ComponentType<{children:ReactNode;onClose?:()=>void}>
   onRestoreTaskSelections?: (choices:Record<string,boolean>)=>void
   onReloadLatest?: () => Promise<void>
@@ -300,7 +300,7 @@ export function DraftReviewPanel({ ordinarySourceReview, sessionFrame, onRestore
           </fieldset>}
           {checkpointError&&<p role="alert">{checkpointError}</p>}
         </section>}
-        <div className="review-progress"><ListChecks size={18} /><span><strong>{pending.length} 项待确认</strong><small>{processed ? `已处理 ${processed} 项` : '确认后才会进入今日和任务中心'}</small></span></div>
+        <div className="review-progress"><ListChecks size={18} /><span><strong>{ordinarySourceReview ? `${pending.length} 项任务、${ordinarySourceReview.pendingEvents ?? recognition?.events.length ?? 0} 个事件待确认` : `${pending.length} 项待确认`}</strong><small>{processed ? `已处理 ${processed} 项任务` : '确认后才会进入今日和任务中心'}</small></span></div>
         {recognition && <section className="recognition-overview" aria-label="项目匹配与识别质量">
           <div className="recognition-project-choice">
             <div><FolderTree size={18} /><span><strong>项目归属建议</strong><small>{recognition.projectMatch.reasons.join('；') || '请人工选择项目归属'}</small></span></div>
