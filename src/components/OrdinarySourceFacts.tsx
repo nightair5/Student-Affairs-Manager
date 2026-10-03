@@ -64,7 +64,7 @@ export function OrdinarySourceFacts({draft,source,workspace,session,onDirty,onSa
         const existingEvent=result.events.find(e=>e.tempId===eventId),existing=result.timePoints.find(p=>p.tempId===(part==='start'?existingEvent?.startTimePointTempId:existingEvent?.endTimePointTempId))
         if(existing?.rawText===raw){if(part==='start')startDate=existing.normalizedValue?.slice(0,10);return {...existing,tempId:`${eventId}:${part}`,relatedTaskTempIds:[],relatedMaterialTempIds:[]}}
         const type=part==='start'?'event_start' as const:'event_end' as const,timezone=result.timePoints[0]?.timezone||'Asia/Shanghai'
-        const interpreted=interpretTimeD26(raw,{type,timezone,referenceTime:draft.createdAt,sourceContext:text.split(/[。；\n]/u).find(line=>line.includes(buffer.title)&&line.includes(raw))??raw,inheritedDate:part==='end'?startDate:undefined})
+        const interpreted=interpretTimeD26(raw,{type,timezone,referenceTime:result.createdAt,sourceContext:text.split(/[。；\n]/u).find(line=>line.includes(buffer.title)&&line.includes(raw))??raw,inheritedDate:part==='end'?startDate:undefined})
         if(part==='start')startDate=interpreted.knownDate??undefined
         return {tempId:`${eventId}:${part}`,type,rawText:raw,normalizedValue:interpreted.point.normalizedValue,timezone,isAllDay:interpreted.point.isAllDay,precision:interpreted.point.precision,needsConfirmation:interpreted.point.needsConfirmation,relatedTaskTempIds:[],relatedMaterialTempIds:[],evidenceIds:[evidenceId],confidence:1,selected:true}
       })

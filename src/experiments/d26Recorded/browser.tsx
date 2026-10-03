@@ -12,21 +12,22 @@ import { createOrdinaryMeasurement } from '../../domain/v2/ordinaryMeasurementD2
 import { PENDING_SOURCE_READBACK } from '../../domain/v2/sourceReviewD26'
 import { indexImmutableScopesV11 } from '../../recognition/scopeIndexV11'
 import { decodeRecordedD26, rebindRecordedScopes, RECORDED_PROJECTION_VERSION } from '../../recognition/recordedProjectionD26'
+import { decodeSourceContractRecording, SOURCE_CONTRACT_VERSION } from '../../recognition/sourceContractV4'
 import type { WorkspaceV8, JsonValue } from '../../domain/v2/types'
 import type { IntakeInput } from '../../lib/intake'
 import '../../styles.css'
 import '../../mobile.css'
 import '../../visual.css'
 import '../d26/diagnostics.css'
-declare const __D26_RECORDED_CONFIG__: { database: string; build: string; origin: string }
+declare const __D26_RECORDED_CONFIG__: { database: string; build: string; origin: string; explicitContract?: boolean }
 const config = __D26_RECORDED_CONFIG__
 if (location.origin !== config.origin || !/^rco-mainline-01-02-i1-d27-plan-recorded-[a-z0-9-]+$/.test(config.database)) throw Error('RECORDED_ISOLATION_REQUIRED')
-interface Recording { ordinal: number; sourceId: string; sourceVersionId: string; candidate: 'Candidate17' | 'Candidate18'; sourceText: string; referenceTime: string; timezone: string; rawHttpText: string; responseSha256: string; requestSha256: string; frozenOutcome: string }
+interface Recording { ordinal: number; sourceId: string; sourceVersionId: string; candidate: 'Candidate17' | 'Candidate18' | 'EngineeringFixture'; sourceText: string; referenceTime: string; timezone: string; rawHttpText: string; responseSha256: string; requestSha256: string | null; frozenOutcome: string }
 const recordings: Recording[] = await fetch('/recordings.json').then(r => { if (!r.ok) throw Error('RECORDINGS_UNAVAILABLE'); return r.json() })
 let selected = recordings.findIndex(r => r.ordinal === 2), failCommit = false, failRead = false, failCheckpoint = false
 const actual = new IsolatedTestStore(config.database)
 const store: WorkspaceRecordStore & { name: string } = { name: actual.name, read: k => actual.read(k), remove: k => actual.remove(k), write: (k, v) => actual.write(k, v), transaction: (k, f) => actual.transaction(k, raw => {
-  const next = f(raw), before = raw as WorkspaceV8 | undefined, after = next as WorkspaceV8 | undefined
+  const before = structuredClone(raw) as WorkspaceV8 | undefined, next = f(raw), after = next as WorkspaceV8 | undefined
   if (k === 'current' && failCommit && after?.extractionDrafts.some(d => d.legacyData?.[PENDING_SOURCE_READBACK] && JSON.stringify(d.legacyData[PENDING_SOURCE_READBACK]) !== JSON.stringify(before?.extractionDrafts.find(a => a.id === d.id)?.legacyData?.[PENDING_SOURCE_READBACK]))) { failCommit = false; throw Error('RECORDED_INJECTED_FORMAL_SAVE_FAILURE') }
   return next
 }), transactionMany: (keys, f) => actual.transactionMany(keys, raw => { if (failCheckpoint && keys.some(k => k.startsWith('d20-review-session:'))) { failCheckpoint = false; throw Error('RECORDED_INJECTED_CHECKPOINT_FAILURE') } return f(raw) }) }
@@ -34,32 +35,34 @@ const canonical = new CanonicalWorkspaceRepository(store), initial = emptyWorksp
 await canonical.initialize(initial)
 const readerStore: WorkspaceRecordStore = { ...store, read: k => { if (k === 'current' && failRead) { failRead = false; return Promise.reject(Error('RECORDED_INJECTED_READBACK_FAILURE')) } return new IsolatedTestStore(config.database).read(k) } }
 const measurement = createOrdinaryMeasurement(store), sidecars = new Map<string, unknown>()
-const environment: OrdinaryAppEnvironment = { canonical, viewRepository: new IndexedDbWorkspaceRepository(canonical), reader: new CanonicalWorkspaceRepository(readerStore), capture: new CapturePersistenceService(canonical), measurement, reviewSession: new D20ReviewSessionRepository(store, measurement.changed, measurement.activity, true), initial: workspaceV8ToLegacyView((await canonical.load())!), store, label: `${config.build}；C17/C18实际录制；${RECORDED_PROJECTION_VERSION}；实时派发关闭`, pipelineVersion: RECORDED_PROJECTION_VERSION, semanticSidecar: id => sidecars.get(id), recognitionContext: () => ({ referenceTime: recordings[selected].referenceTime, timezone: recordings[selected].timezone }),
+const contractVersion = config.explicitContract ? SOURCE_CONTRACT_VERSION : RECORDED_PROJECTION_VERSION
+const environment: OrdinaryAppEnvironment = { canonical, viewRepository: new IndexedDbWorkspaceRepository(canonical), reader: new CanonicalWorkspaceRepository(readerStore), capture: new CapturePersistenceService(canonical), measurement, reviewSession: new D20ReviewSessionRepository(store, measurement.changed, measurement.activity, true), initial: workspaceV8ToLegacyView((await canonical.load())!), store, label: `${config.build}；C17/C18实际录制${config.explicitContract ? ' + 匿名契约工程夹具' : ''}；${contractVersion}；实时派发关闭`, pipelineVersion: contractVersion, semanticSidecar: id => sidecars.get(id), recognitionContext: () => ({ referenceTime: recordings[selected].referenceTime, timezone: recordings[selected].timezone }),
   extraction: { status: async () => ({ configured: true, model: 'D26_FIXED_RECORDED_RESPONSES' }), extract: async () => [], recognize: async (input: IntakeInput & { sourceId?: string; sourceVersionId?: string }) => {
     const record = recordings[selected]
     if (input.content !== record.sourceText || !input.sourceId || !input.sourceVersionId) throw Error('只接受当前选中的匿名录制来源；不发送模型请求。')
     const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(record.rawHttpText))
     if ([...new Uint8Array(digest)].map(b => b.toString(16).padStart(2, '0')).join('') !== record.responseSha256) throw Error('录制回答校验失败，未生成建议。')
-    const provenance = { role: 'RECORDED_MODEL_ENGINEERING_REPLAY', ...record, projectionVersion: RECORDED_PROJECTION_VERSION }
+    const provenance = { role: record.candidate === 'EngineeringFixture' ? 'ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT' : 'RECORDED_MODEL_ENGINEERING_REPLAY', ...record, projectionVersion: contractVersion }
     await canonical.transaction(w => ({ ...w, recognitionRuns: w.recognitionRuns.map(r => r.sourceVersionId === input.sourceVersionId ? { ...r, modelName: `${record.candidate} 固定录制`, legacyData: { ...r.legacyData, recordedResponse: JSON.parse(JSON.stringify(provenance)) as JsonValue } } : r) }))
     try {
       const context = { index: await indexImmutableScopesV11(input.sourceId, input.sourceVersionId, input.content), referenceTime: record.referenceTime, timezone: record.timezone }
       const originalIndex = await indexImmutableScopesV11(record.sourceId, record.sourceVersionId, record.sourceText)
       const rebound = rebindRecordedScopes(record.rawHttpText, originalIndex, context.index)
-      const decoded = decodeRecordedD26(rebound.reboundHttpText, record.candidate, context, true)
-      sidecars.set(input.sourceId, { ...decoded.sidecar, recordedProvenance: provenance, scopeRebinding: { operation: rebound.operation, mapping: rebound.mapping }, postComparisonConversion: decoded.conversion, sourceRenderedEvents: decoded.sourceRenderedEvents })
+      if (!config.explicitContract && record.candidate === 'EngineeringFixture') throw Error('FIXTURE_CONTRACT_MODE_REQUIRED')
+      const decoded = config.explicitContract ? decodeSourceContractRecording(rebound.reboundHttpText, record.candidate, context) : decodeRecordedD26(rebound.reboundHttpText, record.candidate as 'Candidate17' | 'Candidate18', context, true)
+      sidecars.set(input.sourceId, { ...decoded.sidecar, recordedProvenance: provenance, scopeRebinding: { operation: rebound.operation, mapping: rebound.mapping }, postComparisonConversion: decoded.conversion, ...('coverageAudit' in decoded ? { postComparisonCoverage: decoded.coverageAudit } : {}), sourceRenderedEvents: decoded.sourceRenderedEvents })
       return decoded.result
     } catch (error) { throw Error(`录制输出不能安全生成建议（${error instanceof Error ? error.message : 'INVALID_OUTPUT'}）。没有补猜事实或重新调用模型`, { cause: error }) }
   } } }
 export function Page() {
-  const [choice, setChoice] = useState(selected), [readback, setReadback] = useState('')
+  const [choice, setChoice] = useState(selected), [readback, setReadback] = useState(''), [armedFault, setArmedFault] = useState('未注入故障')
   const readMeasurement = async () => {
     const w = await canonical.load()
     const reports = await Promise.all((w?.extractionDrafts ?? []).map(async d => ({ draftId: d.id, report: await measurement.report(d.id, await environment.reviewSession.load(w!, d.id), 'assisted') })))
     setReadback(JSON.stringify({ role: 'ENGINEERING_REPLAY', humanMetrics: 'NOT_OBSERVABLE', reports, trace: await measurement.events() }, null, 2))
   }
-  return <><App ordinaryEnvironment={environment}/><details className="d26-diagnostics"><summary>本批真实录制 · 选择来源与独立读回</summary><p>{config.build}；{config.database}；ENGINEERING_REPLAY；此入口模型请求0。原冻结成绩保留，以下为比较后程序转换。</p><label>录制来源<select value={choice} onChange={e => { selected = Number(e.target.value); setChoice(selected) }}>{recordings.map((r, i) => <option key={r.ordinal} value={i}>{r.sourceId} / {r.candidate} / 原冻结：{r.frozenOutcome}</option>)}</select></label><textarea aria-label="本批匿名通知原文" readOnly value={recordings[choice].sourceText}/><p>复制到普通“新事务”；原回答、程序转换与用户修改分别保留。相对日期使用原回答基准 {recordings[choice].referenceTime}。</p>
-    <button onClick={() => { failCommit = true }}>注入正式保存失败</button><button onClick={() => { failRead = true }}>注入提交后读回失败</button><button onClick={() => { failCheckpoint = true }}>注入检查点失败</button>
+  return <><App ordinaryEnvironment={environment}/><details className="d26-diagnostics"><summary>本批真实录制 · 选择来源与独立读回</summary><p>{config.build}；{config.database}；{contractVersion}；ENGINEERING_REPLAY；此入口模型请求0。原冻结成绩保留，以下为比较后程序转换。匿名契约夹具不是模型回答。</p><label>录制来源<select value={choice} onChange={e => { selected = Number(e.target.value); setChoice(selected) }}>{recordings.map((r, i) => <option key={r.ordinal} value={i}>{r.sourceId} / {r.candidate === 'EngineeringFixture' ? '匿名契约夹具（非模型）' : r.candidate} / 原冻结：{r.frozenOutcome}</option>)}</select></label><textarea aria-label="本批匿名通知原文" readOnly value={recordings[choice].sourceText}/><p>复制到普通“新事务”；原回答、程序转换与用户修改分别保留。相对日期使用来源原基准 {recordings[choice].referenceTime}。</p>
+    <button onClick={() => { failCommit = true; setArmedFault('已注入：下一次正式事务失败') }}>注入正式保存失败</button><button onClick={() => { failRead = true; setArmedFault('已注入：下一次独立读回失败') }}>注入提交后读回失败</button><button onClick={() => { failCheckpoint = true; setArmedFault('已注入：下一次检查点失败') }}>注入检查点失败</button><p role="status">{armedFault}</p>
     <button onClick={() => void new CanonicalWorkspaceRepository(new IsolatedTestStore(config.database)).load().then(w => setReadback(JSON.stringify(w, null, 2)))}>本批独立canonical读回</button>
     <button onClick={() => void readMeasurement()}>页面测量读回</button><pre aria-label="本批独立读回结果">{readback}</pre>
   </details></>

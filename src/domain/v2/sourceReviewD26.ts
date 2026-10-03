@@ -35,6 +35,8 @@ export function sourceEventProblem(result:RecognitionResult,eventId:string):stri
   const conflict=result.conflicts.find(c=>c.requiresDecision&&(!c.entityTempIds.length||c.entityTempIds.some(id=>ids.has(id))))
   if(conflict)return conflict.message
   if([event.startTimePointTempId,event.endTimePointTempId].some(id=>id&&!result.timePoints.some(p=>p.tempId===id)))return '独立事件引用了不存在的时间。'
+  if(event.startTimePointTempId&&result.timePoints.find(p=>p.tempId===event.startTimePointTempId)?.type!=='event_start')return '事件开始引用了其他类型的时间，请核对关联；不会把任务截止改成活动开始。'
+  if(event.endTimePointTempId&&result.timePoints.find(p=>p.tempId===event.endTimePointTempId)?.type!=='event_end')return '事件结束引用了其他类型的时间，请核对关联。'
   return undefined
 }
 

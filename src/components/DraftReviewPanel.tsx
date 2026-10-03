@@ -9,7 +9,7 @@ import type { WorkspaceV8 } from '../domain/v2/types'
 import type { D20ReviewSessionRepository, ReviewSession } from '../experiments/candidate16/d20ReviewSession'
 
 interface DraftReviewPanelProps {
-  ordinarySourceReview?:{busy:boolean;unsaved:boolean;facts:ReactNode;onConfirm:()=>void}
+  ordinarySourceReview?:{busy:boolean;unsaved:boolean;facts:ReactNode;onConfirm:()=>void;description?:string}
   sessionFrame?:ComponentType<{children:ReactNode;onClose?:()=>void}>
   onRestoreTaskSelections?: (choices:Record<string,boolean>)=>void
   onReloadLatest?: () => Promise<void>
@@ -210,6 +210,7 @@ export function DraftReviewPanel({ ordinarySourceReview, sessionFrame, onRestore
       onFieldInput={onFieldInput}
       key={item.id}
       ordinary={Boolean(ordinarySourceReview)}
+      waitingOn={ordinarySourceReview ? metadata?.dependencyTempIds.map(id=>taskMeta.get(id)?.title ?? '前置事项待核对') : undefined}
       durationKnown={ordinarySourceReview?metadata?.estimatedMinutes!==null:undefined}
       semanticFacts={<>{semanticReview?.itemFacts(item.suggestion.id, setActiveEvidence)}
         {factCorrection?.(item.suggestion.id, dirty => setFactDirty(previous => previous[item.id] === dirty ? previous : { ...previous, [item.id]: dirty }),
@@ -265,7 +266,7 @@ export function DraftReviewPanel({ ordinarySourceReview, sessionFrame, onRestore
   return <div className="modal-backdrop detail-backdrop" role="presentation">
     <aside ref={panelRef} className="detail-panel review-panel" role="dialog" aria-modal="true" aria-labelledby={titleId}>
       <header className="detail-header review-header">
-        <div><span className="category-label">第 2 步 · {recognitionDescription ?? (draft.modelName?.includes('匿名工程')?'匿名工程建议 · 无模型请求':isolatedCapabilities ? '人工工程响应（非模型预测）' : draft.modelName?.includes('deepseek') ? 'DeepSeek 建议' : '本地规则建议')}</span><h2 id={titleId}>识别出 {draft.items.length} 件事</h2><p>先看标题和时间；不准确时再点“编辑”。</p></div>
+        <div><span className="category-label">第 2 步 · {recognitionDescription ?? ordinarySourceReview?.description ?? (draft.modelName?.includes('匿名工程')?'匿名工程建议 · 无模型请求':isolatedCapabilities ? '人工工程响应（非模型预测）' : draft.modelName?.includes('deepseek') ? 'DeepSeek 建议' : '本地规则建议')}</span><h2 id={titleId}>{recognition?.events.length ? `识别出 ${draft.items.length} 项任务、${recognition.events.length} 个事件` : `识别出 ${draft.items.length} 件事`}</h2><p>先看标题和时间；不准确时再点“编辑”。</p></div>
         <button className="icon-button" type="button" onClick={onClose} aria-label="稍后处理并关闭"><X size={20} /></button>
       </header>
       <SessionFrame {...(sessionFrame?{onClose}:{})}>
@@ -377,6 +378,7 @@ export function DraftReviewPanel({ ordinarySourceReview, sessionFrame, onRestore
 }
 
 interface DraftItemReviewProps {
+  waitingOn?:string[]
   ordinary?:boolean
   durationKnown?:boolean
   onFieldInput?: DraftReviewPanelProps['onFieldInput']
@@ -404,7 +406,7 @@ interface DraftItemReviewProps {
   onMergeTask: DraftReviewPanelProps['onMergeTask']
 }
 
-function DraftItemReview({ ordinary, durationKnown, onFieldInput, semanticFacts, onDefer, isolatedCapabilities, index, item, editing, onToggleEdit, onUpdate, onConfirm, onReject, onToggleSelected, onFocusEvidence, inferenceLevel, milestones, milestoneTempId, onMoveTask, mergeTargets, onSplitTask, onMergeTask, confirmationV2 }: DraftItemReviewProps) {
+function DraftItemReview({ waitingOn, ordinary, durationKnown, onFieldInput, semanticFacts, onDefer, isolatedCapabilities, index, item, editing, onToggleEdit, onUpdate, onConfirm, onReject, onToggleSelected, onFocusEvidence, inferenceLevel, milestones, milestoneTempId, onMoveTask, mergeTargets, onSplitTask, onMergeTask, confirmationV2 }: DraftItemReviewProps) {
   const suggestion = item.suggestion
   const [mergeTargetId, setMergeTargetId] = useState('')
   if (item.status !== '待确认') return <article className={`review-item processed ${item.status === '已拒绝' ? 'rejected' : ''}`}>
@@ -419,7 +421,8 @@ function DraftItemReview({ ordinary, durationKnown, onFieldInput, semanticFacts,
       <button className={editing ? 'review-edit active' : 'review-edit'} type="button" onClick={onToggleEdit}><PencilLine size={14} />{editing ? '收起' : '编辑'}</button>
     </header>
     <div className="review-meta"><span>{suggestion.category}</span><span>{durationKnown===false?'耗时尚未估计':`约 ${suggestion.estimatedMinutes} 分钟（建议）`}</span>{suggestion.materials.length > 0 && <span>{suggestion.materials.length} 项材料</span>}{inferenceLevel && <span className={`inference-badge ${inferenceLevel}`}>{inferenceLabels[inferenceLevel]}</span>}{suggestion.confidence === '低' && <em>请重点核对</em>}</div>
-    <p className="review-next"><span>下一步</span>{suggestion.nextAction}</p>
+    <p className="review-next"><span>{ordinary&&confirmationV2?.blockedReason?'核对后动作':waitingOn?.length?'前置完成后':'下一步'}</span>{suggestion.nextAction}</p>
+    {waitingOn?.length ? <p>等待前一步：{waitingOn.join('、')}。这项待办可以保留，前置完成状态未被改成已完成。</p> : null}
     {confirmationV2 && !ordinary && <p>首次建议、原文和你的修改分开保留。编辑后先点“保存修改”，再正式核对确认；只有显示“检查点已保存”的工程入口可恢复未确认输入。{confirmationV2.blockedReason && <strong role="status">需核对（{confirmationV2.blockedReason}）</strong>}</p>}
     {ordinary && confirmationV2?.blockedReason && <p role="status">{confirmationV2.blockedReason}</p>}
     {confirmationV2?.unsaved && <p role="status">有未保存修改：请先保存修改，再确认该任务。</p>}
