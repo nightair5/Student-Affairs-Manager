@@ -1,15 +1,14 @@
 # 当前工作跟踪
 
-2026-10-03。[唯一本轮结果](../docs/recognition-optimization/source-contract-consistency/RESULTS.md)、[短交接](../docs/recognition-optimization/CURRENT_CONTEXT.md)、[路线](../docs/governance/PROJECT_EXECUTION_ROADMAP.md)。
+2026-10-04。[唯一结果](../docs/recognition-optimization/candidate19-development/RESULTS.md)、[交接](../docs/recognition-optimization/CURRENT_CONTEXT.md)、[路线](../docs/governance/PROJECT_EXECUTION_ROADMAP.md)。
 
 | 工作 | 当前证据 | 下一动作 |
 |---|---|---|
-| 原D26付费比较 | 原16全部一次发送/SETTLED，C17确认0/8、1UNKNOWN，C18冻结8拒绝，EVIDENCE_INCOMPLETE | 原分数/许可不动，不再派发原批 |
-| 显式契约与引用 | coverage四态、主/附属、单份权威accounting、前置完成证据、事件端点局部保护；版本4.0.0 | 新输入效果另用真实新输出验证；无默认Candidate19或16/24身份 |
-| 旧raw新程序诊断 | 固定16；C17可展示8其中4待核对，C18可展示4其中2待核对、4拒绝 | 不是整份正确率；原材料/条件/时图及S08争议继续保留 |
-| 普通页与正式链 | 6809新库；S01/S02无补录事件；事务失败零半份、手动重试、已提交读回失败刷新只重读 | 复用App/ReviewSession/领域事务；最终Task2/Project0/Event4/Time8/Material2 |
-| 工程测量 | 实际edit→checkpoint→commit→readback；一个episode，重试不另计；只读主动0、刷新缺失null | 四真人指标NOT_OBSERVABLE，保存不当语义裁决 |
-| 验证/维护 | 新契约18PASS、定向32PASS、最终产品9组PASS（945/1SKIP）；lint/build/scan通过；完整31PASS6历史FAIL；audit5high2moderate | 原断言/锁不改；D17只读前缀兼容与工具链补丁另版本维护 |
-| 保护/账本 | 84/119/7、raw16、原145/7/16冻结保持；971行前后同SHA，0新调用/授权行 | 原grant耗尽，下一批另具体授权 |
-| Git/入口 | 代码69c7baff71b59f0df8e48ffab4ccf264e8865d7d立即推送；6809/source71754888caf9 | 文档边界提交即推，最终本地/upstream/远端现场核 |
-| 真人/采用/发布 | 没有真人/默认替换/合并/部署 | 范围、负责人接受、本人同意、裁决另需，不阻挡本地首次准确率 |
+| 新生成契约 | C19实际v4 Schema/coverage/主附属/accounting，候选与Prompt版本；45+8定向通过 | 需要实际新首答才知道模型效果，不能用oracle通过代替准确率 |
+| 普通产品 | 6813最终ce97/source e2c33d4806d9；事件计数/刷新/部分未选、恢复覆盖修复；三类失败恢复 | 复用同App/领域事务；Task5/Project0/Event6/Time10/Material1，未知/failed/未确认保留 |
+| 新冻结 | C19-C17-C19-DEVELOPMENT-R1，6×2=12，3AB3BA；v11/provisional/原参数 | 12NOT_RUN/false，不重建身份；具体新批US$3.90授权后重核安全门同包执行 |
+| 原模型证据 | 原D26 C170/8、1UNKNOWN，C18冻结8拒绝；旧raw可展示C178/8 C184/8 | 原评分与耗尽许可不动；转换证据不当新准确率 |
+| 测量/真人 | edit/checkpoint/commit/readback、只读active0、恢复缺失null | 工程ENGINEERING_REPLAY，四真人NOT_OBSERVABLE；不增加招募门挡准确率 |
+| 验证/维护 | 最终产品9组PASS954/1skip；全量33PASS6历史FAIL，lint/build/scan通过，audit5high2moderate | 不改旧锁/断言，相关维护另版本；本轮无新增历史根因 |
+| 保护/账本 | 84/119/7、原145/7/16 raw16保持；971链/SHA前后不变，新0调用0grant/reserve/settle | 原许可不可复用，本批执行目录不存在，无授权机械拒绝 |
+| Git/采用 | ce97及前2代码提交均立即推送；文档边界同步现场核 | 真人/Holdout/默认采用/合并/部署另需范围证据及授权 |

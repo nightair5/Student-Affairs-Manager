@@ -1,0 +1,3266 @@
+{
+  "schemaVersion": 8,
+  "workspace": {
+    "id": "rco-mainline-01-02-i1-d27-plan-recorded-c19final1004c",
+    "title": "D26 实际录制工程回放（非真人）",
+    "createdAt": "2026-09-05T08:00:00.000Z",
+    "updatedAt": "2026-10-03T17:01:15.440Z"
+  },
+  "settings": {
+    "defaultTimezone": "Asia/Shanghai",
+    "locale": "zh-CN"
+  },
+  "sources": [
+    {
+      "id": "source:b22b2038",
+      "workspaceId": "rco-mainline-01-02-i1-d27-plan-recorded-c19final1004c",
+      "type": "text",
+      "title": "手动粘贴消息",
+      "status": "confirmed",
+      "currentVersionId": "source:b22b2038:version:1",
+      "createdAt": "2026-10-03T17:01:15.404Z",
+      "updatedAt": "2026-10-03T17:02:57.932Z",
+      "legacyData": {
+        "recognitionProvenance": {
+          "modelName": "匿名契约工程夹具（非模型输出）",
+          "promptVersion": "ENGINEERING_FIXTURE_NOT_GENERATED",
+          "candidateVersion": "ENGINEERING_FIXTURE_NOT_CANDIDATE",
+          "build": "ce97b325f388 / source e2c33d4806d9",
+          "responseRole": "ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT",
+          "componentVersion": "explicit-source-contract-4.0.0",
+          "referenceTime": "2026-10-03T09:00:00+08:00",
+          "timezone": "Asia/Shanghai"
+        },
+        "contentPreview": "开放实验室说明会2026年11月12日10:10开始，11:40结束。网络调试从周五夜间开始，恢复时间尚未公布。两件事仅供了解，不要求报名。",
+        "url": null,
+        "originalFileName": null,
+        "mimeType": null,
+        "fileSize": null,
+        "fileHash": null,
+        "parserVersion": "local-rules-v2",
+        "reviewMetadata": {
+          "sourceType": "text",
+          "mimeType": null,
+          "characterCount": 70,
+          "pageCount": null,
+          "extractionMethod": "manual",
+          "ocrConfidence": null,
+          "partialExtraction": null,
+          "qualityFlags": []
+        },
+        "captureOperationId": "f719bc4f-0447-4d67-a6cf-5b158549cb2a"
+      }
+    },
+    {
+      "id": "source:0255e9aa",
+      "workspaceId": "rco-mainline-01-02-i1-d27-plan-recorded-c19final1004c",
+      "type": "text",
+      "title": "手动粘贴消息",
+      "status": "confirmed",
+      "currentVersionId": "source:0255e9aa:version:1",
+      "createdAt": "2026-10-03T16:58:30.105Z",
+      "updatedAt": "2026-10-03T17:00:38.789Z",
+      "legacyData": {
+        "recognitionProvenance": {
+          "modelName": "匿名契约工程夹具（非模型输出）",
+          "promptVersion": "ENGINEERING_FIXTURE_NOT_GENERATED",
+          "candidateVersion": "ENGINEERING_FIXTURE_NOT_CANDIDATE",
+          "build": "ce97b325f388 / source e2c33d4806d9",
+          "responseRole": "ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT",
+          "componentVersion": "explicit-source-contract-4.0.0",
+          "referenceTime": "2026-10-03T09:00:00+08:00",
+          "timezone": "Asia/Shanghai"
+        },
+        "contentPreview": "校园失物查询网站将在周日晚间暂停查询。此前登记的信息保持不变，不需要重新登记，也不要发送补充邮件。",
+        "url": null,
+        "originalFileName": null,
+        "mimeType": null,
+        "fileSize": null,
+        "fileHash": null,
+        "parserVersion": "local-rules-v2",
+        "reviewMetadata": {
+          "sourceType": "text",
+          "mimeType": null,
+          "characterCount": 49,
+          "pageCount": null,
+          "extractionMethod": "manual",
+          "ocrConfidence": null,
+          "partialExtraction": null,
+          "qualityFlags": []
+        },
+        "captureOperationId": "68841f6e-8583-4f29-b4f4-499a744eba2f"
+      }
+    }
+  ],
+  "sourceVersions": [
+    {
+      "id": "source:b22b2038:version:1",
+      "sourceId": "source:b22b2038",
+      "versionNo": 1,
+      "contentHash": "fnv1a32:f68f1990",
+      "rawText": "开放实验室说明会2026年11月12日10:10开始，11:40结束。网络调试从周五夜间开始，恢复时间尚未公布。两件事仅供了解，不要求报名。",
+      "rawTextRef": null,
+      "createdAt": "2026-10-03T17:01:15.404Z",
+      "legacyData": {
+        "reviewMetadata": {
+          "sourceType": "text",
+          "mimeType": null,
+          "characterCount": 70,
+          "pageCount": null,
+          "extractionMethod": "manual",
+          "ocrConfidence": null,
+          "partialExtraction": null,
+          "qualityFlags": []
+        }
+      }
+    },
+    {
+      "id": "source:0255e9aa:version:1",
+      "sourceId": "source:0255e9aa",
+      "versionNo": 1,
+      "contentHash": "fnv1a32:a5d1f54e",
+      "rawText": "校园失物查询网站将在周日晚间暂停查询。此前登记的信息保持不变，不需要重新登记，也不要发送补充邮件。",
+      "rawTextRef": null,
+      "createdAt": "2026-10-03T16:58:30.105Z",
+      "legacyData": {
+        "reviewMetadata": {
+          "sourceType": "text",
+          "mimeType": null,
+          "characterCount": 49,
+          "pageCount": null,
+          "extractionMethod": "manual",
+          "ocrConfidence": null,
+          "partialExtraction": null,
+          "qualityFlags": []
+        }
+      }
+    }
+  ],
+  "recognitionRuns": [
+    {
+      "id": "source:b22b2038:run:1",
+      "sourceVersionId": "source:b22b2038:version:1",
+      "provider": "manual",
+      "modelName": "EngineeringFixture 固定录制",
+      "promptVersion": "ENGINEERING_FIXTURE_NOT_GENERATED",
+      "schemaVersion": "2.0",
+      "pipelineVersion": "explicit-source-contract-4.0.0",
+      "status": "succeeded",
+      "startedAt": "2026-10-03T17:01:15.414Z",
+      "completedAt": "2026-10-03T17:01:15.426Z",
+      "durationMs": 12,
+      "tokenUsage": null,
+      "qualityFlags": [],
+      "errorCode": null,
+      "legacyData": {
+        "recordedResponse": {
+          "role": "ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT",
+          "ordinal": 203,
+          "sourceId": "C19-DEV-S02",
+          "sourceVersionId": "C19-DEV-S02-v1",
+          "candidate": "EngineeringFixture",
+          "sourceText": "开放实验室说明会2026年11月12日10:10开始，11:40结束。网络调试从周五夜间开始，恢复时间尚未公布。两件事仅供了解，不要求报名。",
+          "referenceTime": "2026-10-03T09:00:00+08:00",
+          "timezone": "Asia/Shanghai",
+          "rawHttpText": "{\"model\":\"deepseek-flash\",\"status\":\"completed\",\"output\":[{\"type\":\"message\",\"role\":\"assistant\",\"content\":[{\"type\":\"output_text\",\"text\":\"{\\\"schemaVersion\\\":\\\"explicit-source-contract-4.0.0\\\",\\\"tasks\\\":[],\\\"materials\\\":[],\\\"timePoints\\\":[{\\\"tempId\\\":\\\"P1\\\",\\\"type\\\":\\\"event_start\\\",\\\"rawText\\\":\\\"2026年11月12日10:10\\\",\\\"relatedTaskTempIds\\\":[],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0001-d31d067447e8771742582dbd489e6db70f87707281ecb37e4f8afb401456463b\\\"],\\\"confidence\\\":1},{\\\"tempId\\\":\\\"P2\\\",\\\"type\\\":\\\"event_end\\\",\\\"rawText\\\":\\\"11:40\\\",\\\"relatedTaskTempIds\\\":[],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0002-c67b782ec6be9906271a57ac2906e06cbffbb24cbea2df39c758f16ad57553ef\\\"],\\\"confidence\\\":1},{\\\"tempId\\\":\\\"P3\\\",\\\"type\\\":\\\"event_start\\\",\\\"rawText\\\":\\\"周五夜间\\\",\\\"relatedTaskTempIds\\\":[],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0003-21a69a2584845cb6579c02764f756536fe7a5a3dd6e1eb3b1aac45988fdc8519\\\"],\\\"confidence\\\":1},{\\\"tempId\\\":\\\"P4\\\",\\\"type\\\":\\\"event_end\\\",\\\"rawText\\\":\\\"恢复时间尚未公布\\\",\\\"relatedTaskTempIds\\\":[],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0004-7885b4ab16a77c4695e13b2cbbd16371ce3ee00297b3d26294ef60222d05b18d\\\"],\\\"confidence\\\":1}],\\\"events\\\":[{\\\"tempId\\\":\\\"E1\\\",\\\"title\\\":\\\"开放实验室说明会\\\",\\\"description\\\":\\\"\\\",\\\"location\\\":null,\\\"startTimePointTempId\\\":\\\"P1\\\",\\\"endTimePointTempId\\\":\\\"P2\\\",\\\"relatedTaskTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0001-d31d067447e8771742582dbd489e6db70f87707281ecb37e4f8afb401456463b\\\",\\\"scope-0002-c67b782ec6be9906271a57ac2906e06cbffbb24cbea2df39c758f16ad57553ef\\\"],\\\"confidence\\\":1,\\\"inferenceLevel\\\":\\\"explicit\\\"},{\\\"tempId\\\":\\\"E2\\\",\\\"title\\\":\\\"网络调试\\\",\\\"description\\\":\\\"\\\",\\\"location\\\":null,\\\"startTimePointTempId\\\":\\\"P3\\\",\\\"endTimePointTempId\\\":\\\"P4\\\",\\\"relatedTaskTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0003-21a69a2584845cb6579c02764f756536fe7a5a3dd6e1eb3b1aac45988fdc8519\\\",\\\"scope-0004-7885b4ab16a77c4695e13b2cbbd16371ce3ee00297b3d26294ef60222d05b18d\\\"],\\\"confidence\\\":1,\\\"inferenceLevel\\\":\\\"explicit\\\"}],\\\"revisions\\\":[],\\\"conflicts\\\":[],\\\"scopeAccounting\\\":[{\\\"scopeId\\\":\\\"scope-0001-d31d067447e8771742582dbd489e6db70f87707281ecb37e4f8afb401456463b\\\",\\\"kind\\\":\\\"event\\\",\\\"primaryEntityIds\\\":[\\\"E1\\\"],\\\"secondaryEntityIds\\\":[\\\"P1\\\"]},{\\\"scopeId\\\":\\\"scope-0002-c67b782ec6be9906271a57ac2906e06cbffbb24cbea2df39c758f16ad57553ef\\\",\\\"kind\\\":\\\"event\\\",\\\"primaryEntityIds\\\":[\\\"E1\\\"],\\\"secondaryEntityIds\\\":[\\\"P2\\\"]},{\\\"scopeId\\\":\\\"scope-0003-21a69a2584845cb6579c02764f756536fe7a5a3dd6e1eb3b1aac45988fdc8519\\\",\\\"kind\\\":\\\"event\\\",\\\"primaryEntityIds\\\":[\\\"E2\\\"],\\\"secondaryEntityIds\\\":[\\\"P3\\\"]},{\\\"scopeId\\\":\\\"scope-0004-7885b4ab16a77c4695e13b2cbbd16371ce3ee00297b3d26294ef60222d05b18d\\\",\\\"kind\\\":\\\"event\\\",\\\"primaryEntityIds\\\":[\\\"E2\\\"],\\\"secondaryEntityIds\\\":[\\\"P4\\\"]},{\\\"scopeId\\\":\\\"scope-0005-8decfa2698ae847f738cbe9831da2496c9930a5b28e4473ffe4fba48b33a74b2\\\",\\\"kind\\\":\\\"information\\\",\\\"primaryEntityIds\\\":[],\\\"secondaryEntityIds\\\":[]},{\\\"scopeId\\\":\\\"scope-0006-3108d1553d59b8308b5169f95d3708100920c5e62ca23c7aae3f014f8451f11d\\\",\\\"kind\\\":\\\"information\\\",\\\"primaryEntityIds\\\":[],\\\"secondaryEntityIds\\\":[]}],\\\"prerequisiteStates\\\":[]}\"}]}],\"usage\":{\"input_tokens\":0,\"output_tokens\":0}}",
+          "responseSha256": "18aef6eafa82aa4f8169f8bb1fbf464607ad345ec02f296d8ca61a3f68bceee2",
+          "requestSha256": null,
+          "frozenOutcome": "NOT_MODEL_OUTPUT",
+          "projectionVersion": "explicit-source-contract-4.0.0"
+        },
+        "originalRecognitionResult": {
+          "schemaVersion": "2.0",
+          "promptVersion": "recognition-source-contract-4.0.0",
+          "modelName": "匿名契约工程夹具（非模型输出）",
+          "createdAt": "2026-10-03T09:00:00+08:00",
+          "sourceSummary": {
+            "title": "开放实验室说明会",
+            "sourceType": "text",
+            "notificationType": "event_notice",
+            "summary": "0项任务，2项事件。",
+            "requiresAction": false,
+            "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "未主动建立或匹配项目。"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [],
+          "materials": [],
+          "timePoints": [
+            {
+              "tempId": "P1",
+              "type": "event_start",
+              "rawText": "2026年11月12日10:10",
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "confidence": 1,
+              "normalizedValue": "2026-11-12T10:10",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "evidenceIds": [
+                "d26-scope-0001-378821a1e74c96956c687065ec5d0258e305de79a11cb6398f15f635b9365811"
+              ]
+            },
+            {
+              "tempId": "P2",
+              "type": "event_end",
+              "rawText": "11:40",
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "confidence": 1,
+              "normalizedValue": "2026-11-12T11:40",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "evidenceIds": [
+                "d26-scope-0002-2c6f70f42d3180ca590f89446dab4234401edb1f7e055d34e43d8e1938955851"
+              ]
+            },
+            {
+              "tempId": "P3",
+              "type": "event_start",
+              "rawText": "周五夜间",
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "confidence": 1,
+              "normalizedValue": null,
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "vague",
+              "needsConfirmation": true,
+              "evidenceIds": [
+                "d26-scope-0003-4e7816db3d611b7642f53c78c1299109139aea153ec38fae5ce8d097474fd1bf"
+              ]
+            },
+            {
+              "tempId": "P4",
+              "type": "event_end",
+              "rawText": "恢复时间尚未公布",
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "confidence": 1,
+              "normalizedValue": null,
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "vague",
+              "needsConfirmation": true,
+              "evidenceIds": [
+                "d26-scope-0004-7a6813eda3154f0caf8f99eacc582211c0df22af4c9e46c280fca7eff7f1e5e2"
+              ]
+            }
+          ],
+          "events": [
+            {
+              "tempId": "E1",
+              "title": "开放实验室说明会",
+              "description": "开放实验室说明会2026年11月12日10:10开始，\n11:40结束。",
+              "startTimePointTempId": "P1",
+              "endTimePointTempId": "P2",
+              "location": null,
+              "confidence": 1,
+              "inferenceLevel": "explicit",
+              "evidenceIds": [
+                "d26-scope-0001-378821a1e74c96956c687065ec5d0258e305de79a11cb6398f15f635b9365811",
+                "d26-scope-0002-2c6f70f42d3180ca590f89446dab4234401edb1f7e055d34e43d8e1938955851"
+              ],
+              "selected": true
+            },
+            {
+              "tempId": "E2",
+              "title": "网络调试",
+              "description": "网络调试从周五夜间开始，\n恢复时间尚未公布。",
+              "startTimePointTempId": "P3",
+              "endTimePointTempId": "P4",
+              "location": null,
+              "confidence": 1,
+              "inferenceLevel": "explicit",
+              "evidenceIds": [
+                "d26-scope-0003-4e7816db3d611b7642f53c78c1299109139aea153ec38fae5ce8d097474fd1bf",
+                "d26-scope-0004-7a6813eda3154f0caf8f99eacc582211c0df22af4c9e46c280fca7eff7f1e5e2"
+              ],
+              "selected": true
+            }
+          ],
+          "evidence": [
+            {
+              "id": "d26-scope-0001-378821a1e74c96956c687065ec5d0258e305de79a11cb6398f15f635b9365811",
+              "sourceId": "source:b22b2038",
+              "quote": "开放实验室说明会2026年11月12日10:10开始，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0002-2c6f70f42d3180ca590f89446dab4234401edb1f7e055d34e43d8e1938955851",
+              "sourceId": "source:b22b2038",
+              "quote": "11:40结束。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0003-4e7816db3d611b7642f53c78c1299109139aea153ec38fae5ce8d097474fd1bf",
+              "sourceId": "source:b22b2038",
+              "quote": "网络调试从周五夜间开始，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0004-7a6813eda3154f0caf8f99eacc582211c0df22af4c9e46c280fca7eff7f1e5e2",
+              "sourceId": "source:b22b2038",
+              "quote": "恢复时间尚未公布。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0005-34cf842ef0d4bbf61a3617bbd4a753a1601b10b8ca00c69dc67aeb4cdaa793ff",
+              "sourceId": "source:b22b2038",
+              "quote": "两件事仅供了解，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0006-fe72091cb53c1b43c8eb7cde626723a02982b4f0ad57ab4a5807567480f72a13",
+              "sourceId": "source:b22b2038",
+              "quote": "不要求报名。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [],
+          "ambiguities": [],
+          "ignoredContent": [
+            {
+              "text": "两件事仅供了解，",
+              "reason": "other"
+            },
+            {
+              "text": "不要求报名。",
+              "reason": "other"
+            }
+          ],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 0.5,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": false,
+            "reviewReasons": []
+          }
+        }
+      }
+    },
+    {
+      "id": "source:0255e9aa:run:1",
+      "sourceVersionId": "source:0255e9aa:version:1",
+      "provider": "manual",
+      "modelName": "EngineeringFixture 固定录制",
+      "promptVersion": "ENGINEERING_FIXTURE_NOT_GENERATED",
+      "schemaVersion": "2.0",
+      "pipelineVersion": "explicit-source-contract-4.0.0",
+      "status": "succeeded",
+      "startedAt": "2026-10-03T16:58:30.113Z",
+      "completedAt": "2026-10-03T16:58:30.124Z",
+      "durationMs": 11,
+      "tokenUsage": null,
+      "qualityFlags": [],
+      "errorCode": null,
+      "legacyData": {
+        "recordedResponse": {
+          "role": "ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT",
+          "ordinal": 202,
+          "sourceId": "C19-DEV-S01",
+          "sourceVersionId": "C19-DEV-S01-v1",
+          "candidate": "EngineeringFixture",
+          "sourceText": "校园失物查询网站将在周日晚间暂停查询。此前登记的信息保持不变，不需要重新登记，也不要发送补充邮件。",
+          "referenceTime": "2026-10-03T09:00:00+08:00",
+          "timezone": "Asia/Shanghai",
+          "rawHttpText": "{\"model\":\"deepseek-flash\",\"status\":\"completed\",\"output\":[{\"type\":\"message\",\"role\":\"assistant\",\"content\":[{\"type\":\"output_text\",\"text\":\"{\\\"schemaVersion\\\":\\\"explicit-source-contract-4.0.0\\\",\\\"tasks\\\":[],\\\"materials\\\":[],\\\"timePoints\\\":[{\\\"tempId\\\":\\\"P1\\\",\\\"type\\\":\\\"event_start\\\",\\\"rawText\\\":\\\"周日晚间\\\",\\\"relatedTaskTempIds\\\":[],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0001-d2175f450fa661e632714e804c6a781e49096cf495ee6bb29874af5c15fe9577\\\"],\\\"confidence\\\":1}],\\\"events\\\":[{\\\"tempId\\\":\\\"E1\\\",\\\"title\\\":\\\"校园失物查询网站\\\",\\\"description\\\":\\\"\\\",\\\"location\\\":null,\\\"startTimePointTempId\\\":\\\"P1\\\",\\\"endTimePointTempId\\\":null,\\\"relatedTaskTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0001-d2175f450fa661e632714e804c6a781e49096cf495ee6bb29874af5c15fe9577\\\"],\\\"confidence\\\":1,\\\"inferenceLevel\\\":\\\"explicit\\\"}],\\\"revisions\\\":[],\\\"conflicts\\\":[],\\\"scopeAccounting\\\":[{\\\"scopeId\\\":\\\"scope-0001-d2175f450fa661e632714e804c6a781e49096cf495ee6bb29874af5c15fe9577\\\",\\\"kind\\\":\\\"event\\\",\\\"primaryEntityIds\\\":[\\\"E1\\\"],\\\"secondaryEntityIds\\\":[\\\"P1\\\"]},{\\\"scopeId\\\":\\\"scope-0002-bda82f7016bb991941574b9293bd625eec2ceaa495b9f468e7644e6ffc8472d1\\\",\\\"kind\\\":\\\"information\\\",\\\"primaryEntityIds\\\":[],\\\"secondaryEntityIds\\\":[]},{\\\"scopeId\\\":\\\"scope-0003-283a70d573deeb14ba0f13645395a76f5b351e6c6a13576fc90b63ebf36ecd64\\\",\\\"kind\\\":\\\"information\\\",\\\"primaryEntityIds\\\":[],\\\"secondaryEntityIds\\\":[]},{\\\"scopeId\\\":\\\"scope-0004-b5e8a0826c3dce5194cbd00241b58c17185c5f3e4f8b7dea38d27ec248d5b105\\\",\\\"kind\\\":\\\"information\\\",\\\"primaryEntityIds\\\":[],\\\"secondaryEntityIds\\\":[]}],\\\"prerequisiteStates\\\":[]}\"}]}],\"usage\":{\"input_tokens\":0,\"output_tokens\":0}}",
+          "responseSha256": "e3d43305ac50e017818a061900691216f358e5f09728ce841e3e05bcb24470eb",
+          "requestSha256": null,
+          "frozenOutcome": "NOT_MODEL_OUTPUT",
+          "projectionVersion": "explicit-source-contract-4.0.0"
+        },
+        "originalRecognitionResult": {
+          "schemaVersion": "2.0",
+          "promptVersion": "recognition-source-contract-4.0.0",
+          "modelName": "匿名契约工程夹具（非模型输出）",
+          "createdAt": "2026-10-03T09:00:00+08:00",
+          "sourceSummary": {
+            "title": "校园失物查询网站",
+            "sourceType": "text",
+            "notificationType": "event_notice",
+            "summary": "0项任务，1项事件。",
+            "requiresAction": false,
+            "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "未主动建立或匹配项目。"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [],
+          "materials": [],
+          "timePoints": [
+            {
+              "tempId": "P1",
+              "type": "event_start",
+              "rawText": "周日晚间",
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "confidence": 1,
+              "normalizedValue": null,
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "vague",
+              "needsConfirmation": true,
+              "evidenceIds": [
+                "d26-scope-0001-7c062750dd226596e435978150733611ed32aecfe5d1097c6557a5beace42f7d"
+              ]
+            }
+          ],
+          "events": [
+            {
+              "tempId": "E1",
+              "title": "校园失物查询网站",
+              "description": "校园失物查询网站将在周日晚间暂停查询。",
+              "startTimePointTempId": "P1",
+              "endTimePointTempId": null,
+              "location": null,
+              "confidence": 1,
+              "inferenceLevel": "explicit",
+              "evidenceIds": [
+                "d26-scope-0001-7c062750dd226596e435978150733611ed32aecfe5d1097c6557a5beace42f7d"
+              ],
+              "selected": true
+            }
+          ],
+          "evidence": [
+            {
+              "id": "d26-scope-0001-7c062750dd226596e435978150733611ed32aecfe5d1097c6557a5beace42f7d",
+              "sourceId": "source:0255e9aa",
+              "quote": "校园失物查询网站将在周日晚间暂停查询。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0002-0757e48d6a7ac0de7c310d0a3f4eef023f62436ec2848efc1abb4f0eaa60ac73",
+              "sourceId": "source:0255e9aa",
+              "quote": "此前登记的信息保持不变，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0003-ffa63728bca1aa2fc92b8bdcd0c1bbe34ebb1d09ffe764c85dbcba9d54d20153",
+              "sourceId": "source:0255e9aa",
+              "quote": "不需要重新登记，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0004-b569f65531ff0de5df1f6940cbdae463a80a27a2649bafc1c182ccf46d298da0",
+              "sourceId": "source:0255e9aa",
+              "quote": "也不要发送补充邮件。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [],
+          "ambiguities": [],
+          "ignoredContent": [
+            {
+              "text": "此前登记的信息保持不变，",
+              "reason": "other"
+            },
+            {
+              "text": "不需要重新登记，",
+              "reason": "other"
+            },
+            {
+              "text": "也不要发送补充邮件。",
+              "reason": "other"
+            }
+          ],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 0.5,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": false,
+            "reviewReasons": []
+          }
+        }
+      }
+    }
+  ],
+  "extractionDrafts": [
+    {
+      "id": "source:b22b2038:draft:1",
+      "recognitionRunId": "source:b22b2038:run:1",
+      "status": "confirmed",
+      "result": {
+        "schemaVersion": "2.0",
+        "promptVersion": "recognition-source-contract-4.0.0",
+        "modelName": "匿名契约工程夹具（非模型输出）",
+        "createdAt": "2026-10-03T09:00:00+08:00",
+        "sourceSummary": {
+          "title": "开放实验室说明会",
+          "sourceType": "text",
+          "notificationType": "event_notice",
+          "summary": "0项任务，2项事件。请核对后确认。",
+          "requiresAction": false,
+          "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+        },
+        "projectMatch": {
+          "decision": "standalone_task",
+          "matchedProjectId": null,
+          "suggestedProjectTitle": null,
+          "confidence": 1,
+          "reasons": [
+            "未主动建立或匹配项目。"
+          ]
+        },
+        "projectSuggestion": null,
+        "milestones": [],
+        "standaloneTasks": [],
+        "materials": [],
+        "timePoints": [
+          {
+            "tempId": "P1",
+            "type": "event_start",
+            "rawText": "2026年11月12日10:10",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "confidence": 1,
+            "normalizedValue": "2026-11-12T10:10",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0001-378821a1e74c96956c687065ec5d0258e305de79a11cb6398f15f635b9365811"
+            ]
+          },
+          {
+            "tempId": "P2",
+            "type": "event_end",
+            "rawText": "11:40",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "confidence": 1,
+            "normalizedValue": "2026-11-12T11:40",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0002-2c6f70f42d3180ca590f89446dab4234401edb1f7e055d34e43d8e1938955851"
+            ]
+          },
+          {
+            "tempId": "P3",
+            "type": "event_start",
+            "rawText": "周五夜间",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "confidence": 1,
+            "normalizedValue": null,
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "vague",
+            "needsConfirmation": true,
+            "evidenceIds": [
+              "d26-scope-0003-4e7816db3d611b7642f53c78c1299109139aea153ec38fae5ce8d097474fd1bf"
+            ]
+          },
+          {
+            "tempId": "P4",
+            "type": "event_end",
+            "rawText": "恢复时间尚未公布",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "confidence": 1,
+            "normalizedValue": null,
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "vague",
+            "needsConfirmation": true,
+            "evidenceIds": [
+              "d26-scope-0004-7a6813eda3154f0caf8f99eacc582211c0df22af4c9e46c280fca7eff7f1e5e2"
+            ]
+          }
+        ],
+        "events": [
+          {
+            "tempId": "E1",
+            "title": "开放实验室说明会",
+            "description": "开放实验室说明会2026年11月12日10:10开始，\n11:40结束。",
+            "startTimePointTempId": "P1",
+            "endTimePointTempId": "P2",
+            "location": null,
+            "confidence": 1,
+            "inferenceLevel": "explicit",
+            "evidenceIds": [
+              "d26-scope-0001-378821a1e74c96956c687065ec5d0258e305de79a11cb6398f15f635b9365811",
+              "d26-scope-0002-2c6f70f42d3180ca590f89446dab4234401edb1f7e055d34e43d8e1938955851"
+            ],
+            "selected": true
+          },
+          {
+            "tempId": "E2",
+            "title": "网络调试",
+            "description": "网络调试从周五夜间开始，\n恢复时间尚未公布。",
+            "startTimePointTempId": "P3",
+            "endTimePointTempId": "P4",
+            "location": null,
+            "confidence": 1,
+            "inferenceLevel": "explicit",
+            "evidenceIds": [
+              "d26-scope-0003-4e7816db3d611b7642f53c78c1299109139aea153ec38fae5ce8d097474fd1bf",
+              "d26-scope-0004-7a6813eda3154f0caf8f99eacc582211c0df22af4c9e46c280fca7eff7f1e5e2"
+            ],
+            "selected": true
+          }
+        ],
+        "evidence": [
+          {
+            "id": "d26-scope-0001-378821a1e74c96956c687065ec5d0258e305de79a11cb6398f15f635b9365811",
+            "sourceId": "source:b22b2038",
+            "quote": "开放实验室说明会2026年11月12日10:10开始，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0002-2c6f70f42d3180ca590f89446dab4234401edb1f7e055d34e43d8e1938955851",
+            "sourceId": "source:b22b2038",
+            "quote": "11:40结束。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0003-4e7816db3d611b7642f53c78c1299109139aea153ec38fae5ce8d097474fd1bf",
+            "sourceId": "source:b22b2038",
+            "quote": "网络调试从周五夜间开始，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0004-7a6813eda3154f0caf8f99eacc582211c0df22af4c9e46c280fca7eff7f1e5e2",
+            "sourceId": "source:b22b2038",
+            "quote": "恢复时间尚未公布。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0005-34cf842ef0d4bbf61a3617bbd4a753a1601b10b8ca00c69dc67aeb4cdaa793ff",
+            "sourceId": "source:b22b2038",
+            "quote": "两件事仅供了解，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0006-fe72091cb53c1b43c8eb7cde626723a02982b4f0ad57ab4a5807567480f72a13",
+            "sourceId": "source:b22b2038",
+            "quote": "不要求报名。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          }
+        ],
+        "conflicts": [],
+        "ambiguities": [],
+        "ignoredContent": [
+          {
+            "text": "两件事仅供了解，",
+            "reason": "other"
+          },
+          {
+            "text": "不要求报名。",
+            "reason": "other"
+          }
+        ],
+        "quality": {
+          "overallConfidence": 1,
+          "hierarchyConfidence": 1,
+          "dateConfidence": 0.5,
+          "evidenceCoverage": 1,
+          "duplicateRisk": 0,
+          "overFragmentationRisk": 0,
+          "missingActionRisk": 0,
+          "needsHumanReview": false,
+          "reviewReasons": []
+        }
+      },
+      "commitOperationIds": [
+        "source-review:source:b22b2038:draft:1:fnv1a32:078358a6"
+      ],
+      "acceptedEntityTempIds": [
+        "E1",
+        "E2",
+        "P1",
+        "P2",
+        "P3",
+        "P4"
+      ],
+      "rejectedEntityTempIds": [],
+      "createdAt": "2026-10-03T17:01:15.404Z",
+      "updatedAt": "2026-10-03T17:02:57.932Z",
+      "legacyData": {
+        "semanticSidecar": {
+          "version": "semantic-ordinary-bridge-1.0.0",
+          "originalSemantic": {
+            "schemaVersion": "mainline04-task-semantics-1",
+            "tasks": [],
+            "materials": [],
+            "timePoints": [
+              {
+                "tempId": "P1",
+                "type": "event_start",
+                "rawText": "2026年11月12日10:10",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "scopeIds": [
+                  "scope-0001-378821a1e74c96956c687065ec5d0258e305de79a11cb6398f15f635b9365811"
+                ],
+                "confidence": 1,
+                "normalizedValue": "2026-11-12T10:10",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              {
+                "tempId": "P2",
+                "type": "event_end",
+                "rawText": "11:40",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "scopeIds": [
+                  "scope-0002-2c6f70f42d3180ca590f89446dab4234401edb1f7e055d34e43d8e1938955851"
+                ],
+                "confidence": 1,
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              },
+              {
+                "tempId": "P3",
+                "type": "event_start",
+                "rawText": "周五夜间",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "scopeIds": [
+                  "scope-0003-4e7816db3d611b7642f53c78c1299109139aea153ec38fae5ce8d097474fd1bf"
+                ],
+                "confidence": 1,
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              },
+              {
+                "tempId": "P4",
+                "type": "event_end",
+                "rawText": "恢复时间尚未公布",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "scopeIds": [
+                  "scope-0004-7a6813eda3154f0caf8f99eacc582211c0df22af4c9e46c280fca7eff7f1e5e2"
+                ],
+                "confidence": 1,
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              }
+            ],
+            "events": [
+              {
+                "tempId": "E1",
+                "title": "开放实验室说明会",
+                "description": "",
+                "location": null,
+                "startTimePointTempId": "P1",
+                "endTimePointTempId": "P2",
+                "relatedTaskTempIds": [],
+                "scopeIds": [
+                  "scope-0001-378821a1e74c96956c687065ec5d0258e305de79a11cb6398f15f635b9365811",
+                  "scope-0002-2c6f70f42d3180ca590f89446dab4234401edb1f7e055d34e43d8e1938955851"
+                ],
+                "confidence": 1,
+                "inferenceLevel": "explicit"
+              },
+              {
+                "tempId": "E2",
+                "title": "网络调试",
+                "description": "",
+                "location": null,
+                "startTimePointTempId": "P3",
+                "endTimePointTempId": "P4",
+                "relatedTaskTempIds": [],
+                "scopeIds": [
+                  "scope-0003-4e7816db3d611b7642f53c78c1299109139aea153ec38fae5ce8d097474fd1bf",
+                  "scope-0004-7a6813eda3154f0caf8f99eacc582211c0df22af4c9e46c280fca7eff7f1e5e2"
+                ],
+                "confidence": 1,
+                "inferenceLevel": "explicit"
+              }
+            ],
+            "revisions": [],
+            "conflicts": [],
+            "informationScopeIds": [
+              "scope-0005-34cf842ef0d4bbf61a3617bbd4a753a1601b10b8ca00c69dc67aeb4cdaa793ff",
+              "scope-0006-fe72091cb53c1b43c8eb7cde626723a02982b4f0ad57ab4a5807567480f72a13"
+            ],
+            "unresolvedScopeIds": [],
+            "sourceId": "source:b22b2038",
+            "sourceVersionId": "source:b22b2038:version:1",
+            "sourceFingerprint": "sha256:9d9a28bd77b3c9bb3ae87de1595cfadb5806c4151f711f77f2abd2b8ec8783c7"
+          },
+          "firstSemantic": {
+            "schemaVersion": "mainline04-task-semantics-1",
+            "tasks": [],
+            "materials": [],
+            "timePoints": [
+              {
+                "tempId": "P1",
+                "type": "event_start",
+                "rawText": "2026年11月12日10:10",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "scopeIds": [
+                  "scope-0001-378821a1e74c96956c687065ec5d0258e305de79a11cb6398f15f635b9365811"
+                ],
+                "confidence": 1,
+                "normalizedValue": "2026-11-12T10:10",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              {
+                "tempId": "P2",
+                "type": "event_end",
+                "rawText": "11:40",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "scopeIds": [
+                  "scope-0002-2c6f70f42d3180ca590f89446dab4234401edb1f7e055d34e43d8e1938955851"
+                ],
+                "confidence": 1,
+                "normalizedValue": "2026-11-12T11:40",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              {
+                "tempId": "P3",
+                "type": "event_start",
+                "rawText": "周五夜间",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "scopeIds": [
+                  "scope-0003-4e7816db3d611b7642f53c78c1299109139aea153ec38fae5ce8d097474fd1bf"
+                ],
+                "confidence": 1,
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              },
+              {
+                "tempId": "P4",
+                "type": "event_end",
+                "rawText": "恢复时间尚未公布",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "scopeIds": [
+                  "scope-0004-7a6813eda3154f0caf8f99eacc582211c0df22af4c9e46c280fca7eff7f1e5e2"
+                ],
+                "confidence": 1,
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              }
+            ],
+            "events": [
+              {
+                "tempId": "E1",
+                "title": "开放实验室说明会",
+                "description": "开放实验室说明会2026年11月12日10:10开始，\n11:40结束。",
+                "location": null,
+                "startTimePointTempId": "P1",
+                "endTimePointTempId": "P2",
+                "relatedTaskTempIds": [],
+                "scopeIds": [
+                  "scope-0001-378821a1e74c96956c687065ec5d0258e305de79a11cb6398f15f635b9365811",
+                  "scope-0002-2c6f70f42d3180ca590f89446dab4234401edb1f7e055d34e43d8e1938955851"
+                ],
+                "confidence": 1,
+                "inferenceLevel": "explicit"
+              },
+              {
+                "tempId": "E2",
+                "title": "网络调试",
+                "description": "网络调试从周五夜间开始，\n恢复时间尚未公布。",
+                "location": null,
+                "startTimePointTempId": "P3",
+                "endTimePointTempId": "P4",
+                "relatedTaskTempIds": [],
+                "scopeIds": [
+                  "scope-0003-4e7816db3d611b7642f53c78c1299109139aea153ec38fae5ce8d097474fd1bf",
+                  "scope-0004-7a6813eda3154f0caf8f99eacc582211c0df22af4c9e46c280fca7eff7f1e5e2"
+                ],
+                "confidence": 1,
+                "inferenceLevel": "explicit"
+              }
+            ],
+            "revisions": [],
+            "conflicts": [],
+            "informationScopeIds": [
+              "scope-0005-34cf842ef0d4bbf61a3617bbd4a753a1601b10b8ca00c69dc67aeb4cdaa793ff",
+              "scope-0006-fe72091cb53c1b43c8eb7cde626723a02982b4f0ad57ab4a5807567480f72a13"
+            ],
+            "unresolvedScopeIds": [],
+            "sourceId": "source:b22b2038",
+            "sourceVersionId": "source:b22b2038:version:1",
+            "sourceFingerprint": "sha256:9d9a28bd77b3c9bb3ae87de1595cfadb5806c4151f711f77f2abd2b8ec8783c7"
+          },
+          "sourceScopeEvidence": [
+            {
+              "scopeId": "scope-0001-378821a1e74c96956c687065ec5d0258e305de79a11cb6398f15f635b9365811",
+              "evidenceId": "d26-scope-0001-378821a1e74c96956c687065ec5d0258e305de79a11cb6398f15f635b9365811"
+            },
+            {
+              "scopeId": "scope-0002-2c6f70f42d3180ca590f89446dab4234401edb1f7e055d34e43d8e1938955851",
+              "evidenceId": "d26-scope-0002-2c6f70f42d3180ca590f89446dab4234401edb1f7e055d34e43d8e1938955851"
+            },
+            {
+              "scopeId": "scope-0003-4e7816db3d611b7642f53c78c1299109139aea153ec38fae5ce8d097474fd1bf",
+              "evidenceId": "d26-scope-0003-4e7816db3d611b7642f53c78c1299109139aea153ec38fae5ce8d097474fd1bf"
+            },
+            {
+              "scopeId": "scope-0004-7a6813eda3154f0caf8f99eacc582211c0df22af4c9e46c280fca7eff7f1e5e2",
+              "evidenceId": "d26-scope-0004-7a6813eda3154f0caf8f99eacc582211c0df22af4c9e46c280fca7eff7f1e5e2"
+            },
+            {
+              "scopeId": "scope-0005-34cf842ef0d4bbf61a3617bbd4a753a1601b10b8ca00c69dc67aeb4cdaa793ff",
+              "evidenceId": "d26-scope-0005-34cf842ef0d4bbf61a3617bbd4a753a1601b10b8ca00c69dc67aeb4cdaa793ff"
+            },
+            {
+              "scopeId": "scope-0006-fe72091cb53c1b43c8eb7cde626723a02982b4f0ad57ab4a5807567480f72a13",
+              "evidenceId": "d26-scope-0006-fe72091cb53c1b43c8eb7cde626723a02982b4f0ad57ab4a5807567480f72a13"
+            }
+          ],
+          "representationGaps": [],
+          "displayAudit": {
+            "version": "grounded-first-suggestion-1.0.0",
+            "originalProse": [
+              {
+                "entityId": "E1",
+                "kind": "event",
+                "title": "开放实验室说明会",
+                "description": ""
+              },
+              {
+                "entityId": "E2",
+                "kind": "event",
+                "title": "网络调试",
+                "description": ""
+              }
+            ],
+            "generatedProse": [
+              {
+                "entityId": "E1",
+                "kind": "event",
+                "title": "开放实验室说明会",
+                "description": "开放实验室说明会2026年11月12日10:10开始，\n11:40结束。"
+              },
+              {
+                "entityId": "E2",
+                "kind": "event",
+                "title": "网络调试",
+                "description": "网络调试从周五夜间开始，\n恢复时间尚未公布。"
+              }
+            ],
+            "times": [
+              {
+                "entityId": "P1",
+                "before": {
+                  "normalizedValue": "2026-11-12T10:10",
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false
+                },
+                "after": {
+                  "normalizedValue": "2026-11-12T10:10",
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false
+                },
+                "interpretation": {
+                  "version": "source-time-semantics-2.0.0",
+                  "point": {
+                    "rawText": "2026年11月12日10:10",
+                    "type": "event_start",
+                    "normalizedValue": "2026-11-12T10:10",
+                    "rangeEndNormalizedValue": null,
+                    "timezone": "Asia/Shanghai",
+                    "isAllDay": false,
+                    "precision": "exact",
+                    "needsConfirmation": false,
+                    "evidenceSpan": {
+                      "start": 0,
+                      "end": 16
+                    },
+                    "dateKind": "absolute",
+                    "timeKind": "clock",
+                    "correctionApplied": false,
+                    "issues": []
+                  },
+                  "knownDate": "2026-11-12",
+                  "dayPeriod": null,
+                  "certainty": "stated",
+                  "sourceContext": "开放实验室说明会2026年11月12日10:10开始"
+                }
+              },
+              {
+                "entityId": "P2",
+                "before": {
+                  "normalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "vague",
+                  "needsConfirmation": true
+                },
+                "after": {
+                  "normalizedValue": "2026-11-12T11:40",
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false
+                },
+                "interpretation": {
+                  "version": "source-time-semantics-2.0.0",
+                  "point": {
+                    "rawText": "11:40",
+                    "type": "event_end",
+                    "normalizedValue": "2026-11-12T11:40",
+                    "rangeEndNormalizedValue": null,
+                    "timezone": "Asia/Shanghai",
+                    "isAllDay": false,
+                    "precision": "exact",
+                    "needsConfirmation": false,
+                    "evidenceSpan": {
+                      "start": 0,
+                      "end": 5
+                    },
+                    "dateKind": "inherited",
+                    "timeKind": "clock",
+                    "correctionApplied": false,
+                    "issues": []
+                  },
+                  "knownDate": "2026-11-12",
+                  "dayPeriod": null,
+                  "certainty": "stated",
+                  "sourceContext": "开放实验室说明会2026年11月12日10:10开始\n11:40结束"
+                }
+              },
+              {
+                "entityId": "P3",
+                "before": {
+                  "normalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "vague",
+                  "needsConfirmation": true
+                },
+                "after": {
+                  "normalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "vague",
+                  "needsConfirmation": true
+                },
+                "interpretation": {
+                  "version": "source-time-semantics-2.0.0",
+                  "point": {
+                    "rawText": "周五夜间",
+                    "type": "event_start",
+                    "normalizedValue": null,
+                    "rangeEndNormalizedValue": null,
+                    "timezone": "Asia/Shanghai",
+                    "isAllDay": false,
+                    "precision": "vague",
+                    "needsConfirmation": true,
+                    "evidenceSpan": {
+                      "start": 0,
+                      "end": 4
+                    },
+                    "dateKind": "none",
+                    "timeKind": "none",
+                    "correctionApplied": false,
+                    "issues": [
+                      "time_not_found",
+                      "day_period_without_clock"
+                    ]
+                  },
+                  "knownDate": null,
+                  "dayPeriod": "夜间",
+                  "certainty": "partial",
+                  "sourceContext": "网络调试从周五夜间开始"
+                }
+              },
+              {
+                "entityId": "P4",
+                "before": {
+                  "normalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "vague",
+                  "needsConfirmation": true
+                },
+                "after": {
+                  "normalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "vague",
+                  "needsConfirmation": true
+                },
+                "interpretation": {
+                  "version": "source-time-semantics-2.0.0",
+                  "point": {
+                    "rawText": "恢复时间尚未公布",
+                    "type": "event_end",
+                    "normalizedValue": null,
+                    "rangeEndNormalizedValue": null,
+                    "timezone": "Asia/Shanghai",
+                    "isAllDay": false,
+                    "precision": "vague",
+                    "needsConfirmation": true,
+                    "evidenceSpan": {
+                      "start": 0,
+                      "end": 8
+                    },
+                    "dateKind": "none",
+                    "timeKind": "none",
+                    "correctionApplied": false,
+                    "issues": [
+                      "time_not_found",
+                      "time_unannounced"
+                    ]
+                  },
+                  "knownDate": null,
+                  "dayPeriod": null,
+                  "certainty": "unannounced",
+                  "sourceContext": "恢复时间尚未公布"
+                }
+              }
+            ],
+            "unresolved": [],
+            "role": "DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT"
+          },
+          "recordedProvenance": {
+            "role": "ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT",
+            "ordinal": 203,
+            "sourceId": "C19-DEV-S02",
+            "sourceVersionId": "C19-DEV-S02-v1",
+            "candidate": "EngineeringFixture",
+            "sourceText": "开放实验室说明会2026年11月12日10:10开始，11:40结束。网络调试从周五夜间开始，恢复时间尚未公布。两件事仅供了解，不要求报名。",
+            "referenceTime": "2026-10-03T09:00:00+08:00",
+            "timezone": "Asia/Shanghai",
+            "rawHttpText": "{\"model\":\"deepseek-flash\",\"status\":\"completed\",\"output\":[{\"type\":\"message\",\"role\":\"assistant\",\"content\":[{\"type\":\"output_text\",\"text\":\"{\\\"schemaVersion\\\":\\\"explicit-source-contract-4.0.0\\\",\\\"tasks\\\":[],\\\"materials\\\":[],\\\"timePoints\\\":[{\\\"tempId\\\":\\\"P1\\\",\\\"type\\\":\\\"event_start\\\",\\\"rawText\\\":\\\"2026年11月12日10:10\\\",\\\"relatedTaskTempIds\\\":[],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0001-d31d067447e8771742582dbd489e6db70f87707281ecb37e4f8afb401456463b\\\"],\\\"confidence\\\":1},{\\\"tempId\\\":\\\"P2\\\",\\\"type\\\":\\\"event_end\\\",\\\"rawText\\\":\\\"11:40\\\",\\\"relatedTaskTempIds\\\":[],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0002-c67b782ec6be9906271a57ac2906e06cbffbb24cbea2df39c758f16ad57553ef\\\"],\\\"confidence\\\":1},{\\\"tempId\\\":\\\"P3\\\",\\\"type\\\":\\\"event_start\\\",\\\"rawText\\\":\\\"周五夜间\\\",\\\"relatedTaskTempIds\\\":[],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0003-21a69a2584845cb6579c02764f756536fe7a5a3dd6e1eb3b1aac45988fdc8519\\\"],\\\"confidence\\\":1},{\\\"tempId\\\":\\\"P4\\\",\\\"type\\\":\\\"event_end\\\",\\\"rawText\\\":\\\"恢复时间尚未公布\\\",\\\"relatedTaskTempIds\\\":[],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0004-7885b4ab16a77c4695e13b2cbbd16371ce3ee00297b3d26294ef60222d05b18d\\\"],\\\"confidence\\\":1}],\\\"events\\\":[{\\\"tempId\\\":\\\"E1\\\",\\\"title\\\":\\\"开放实验室说明会\\\",\\\"description\\\":\\\"\\\",\\\"location\\\":null,\\\"startTimePointTempId\\\":\\\"P1\\\",\\\"endTimePointTempId\\\":\\\"P2\\\",\\\"relatedTaskTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0001-d31d067447e8771742582dbd489e6db70f87707281ecb37e4f8afb401456463b\\\",\\\"scope-0002-c67b782ec6be9906271a57ac2906e06cbffbb24cbea2df39c758f16ad57553ef\\\"],\\\"confidence\\\":1,\\\"inferenceLevel\\\":\\\"explicit\\\"},{\\\"tempId\\\":\\\"E2\\\",\\\"title\\\":\\\"网络调试\\\",\\\"description\\\":\\\"\\\",\\\"location\\\":null,\\\"startTimePointTempId\\\":\\\"P3\\\",\\\"endTimePointTempId\\\":\\\"P4\\\",\\\"relatedTaskTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0003-21a69a2584845cb6579c02764f756536fe7a5a3dd6e1eb3b1aac45988fdc8519\\\",\\\"scope-0004-7885b4ab16a77c4695e13b2cbbd16371ce3ee00297b3d26294ef60222d05b18d\\\"],\\\"confidence\\\":1,\\\"inferenceLevel\\\":\\\"explicit\\\"}],\\\"revisions\\\":[],\\\"conflicts\\\":[],\\\"scopeAccounting\\\":[{\\\"scopeId\\\":\\\"scope-0001-d31d067447e8771742582dbd489e6db70f87707281ecb37e4f8afb401456463b\\\",\\\"kind\\\":\\\"event\\\",\\\"primaryEntityIds\\\":[\\\"E1\\\"],\\\"secondaryEntityIds\\\":[\\\"P1\\\"]},{\\\"scopeId\\\":\\\"scope-0002-c67b782ec6be9906271a57ac2906e06cbffbb24cbea2df39c758f16ad57553ef\\\",\\\"kind\\\":\\\"event\\\",\\\"primaryEntityIds\\\":[\\\"E1\\\"],\\\"secondaryEntityIds\\\":[\\\"P2\\\"]},{\\\"scopeId\\\":\\\"scope-0003-21a69a2584845cb6579c02764f756536fe7a5a3dd6e1eb3b1aac45988fdc8519\\\",\\\"kind\\\":\\\"event\\\",\\\"primaryEntityIds\\\":[\\\"E2\\\"],\\\"secondaryEntityIds\\\":[\\\"P3\\\"]},{\\\"scopeId\\\":\\\"scope-0004-7885b4ab16a77c4695e13b2cbbd16371ce3ee00297b3d26294ef60222d05b18d\\\",\\\"kind\\\":\\\"event\\\",\\\"primaryEntityIds\\\":[\\\"E2\\\"],\\\"secondaryEntityIds\\\":[\\\"P4\\\"]},{\\\"scopeId\\\":\\\"scope-0005-8decfa2698ae847f738cbe9831da2496c9930a5b28e4473ffe4fba48b33a74b2\\\",\\\"kind\\\":\\\"information\\\",\\\"primaryEntityIds\\\":[],\\\"secondaryEntityIds\\\":[]},{\\\"scopeId\\\":\\\"scope-0006-3108d1553d59b8308b5169f95d3708100920c5e62ca23c7aae3f014f8451f11d\\\",\\\"kind\\\":\\\"information\\\",\\\"primaryEntityIds\\\":[],\\\"secondaryEntityIds\\\":[]}],\\\"prerequisiteStates\\\":[]}\"}]}],\"usage\":{\"input_tokens\":0,\"output_tokens\":0}}",
+            "responseSha256": "18aef6eafa82aa4f8169f8bb1fbf464607ad345ec02f296d8ca61a3f68bceee2",
+            "requestSha256": null,
+            "frozenOutcome": "NOT_MODEL_OUTPUT",
+            "projectionVersion": "explicit-source-contract-4.0.0"
+          },
+          "scopeRebinding": {
+            "operation": "IDENTICAL_SOURCE_SCOPE_ID_REBIND_ONLY",
+            "mapping": [
+              [
+                "scope-0001-d31d067447e8771742582dbd489e6db70f87707281ecb37e4f8afb401456463b",
+                "scope-0001-378821a1e74c96956c687065ec5d0258e305de79a11cb6398f15f635b9365811"
+              ],
+              [
+                "scope-0002-c67b782ec6be9906271a57ac2906e06cbffbb24cbea2df39c758f16ad57553ef",
+                "scope-0002-2c6f70f42d3180ca590f89446dab4234401edb1f7e055d34e43d8e1938955851"
+              ],
+              [
+                "scope-0003-21a69a2584845cb6579c02764f756536fe7a5a3dd6e1eb3b1aac45988fdc8519",
+                "scope-0003-4e7816db3d611b7642f53c78c1299109139aea153ec38fae5ce8d097474fd1bf"
+              ],
+              [
+                "scope-0004-7885b4ab16a77c4695e13b2cbbd16371ce3ee00297b3d26294ef60222d05b18d",
+                "scope-0004-7a6813eda3154f0caf8f99eacc582211c0df22af4c9e46c280fca7eff7f1e5e2"
+              ],
+              [
+                "scope-0005-8decfa2698ae847f738cbe9831da2496c9930a5b28e4473ffe4fba48b33a74b2",
+                "scope-0005-34cf842ef0d4bbf61a3617bbd4a753a1601b10b8ca00c69dc67aeb4cdaa793ff"
+              ],
+              [
+                "scope-0006-3108d1553d59b8308b5169f95d3708100920c5e62ca23c7aae3f014f8451f11d",
+                "scope-0006-fe72091cb53c1b43c8eb7cde626723a02982b4f0ad57ab4a5807567480f72a13"
+              ]
+            ]
+          },
+          "postComparisonConversion": {
+            "version": "explicit-source-contract-4.0.0",
+            "operation": "VALIDATED_TYPED_DECLARATIONS_AND_EXPLICIT_EDGE_INVERSES_ONLY",
+            "scopeAccounting": [
+              {
+                "scopeId": "scope-0001-378821a1e74c96956c687065ec5d0258e305de79a11cb6398f15f635b9365811",
+                "kind": "event",
+                "entityIds": [
+                  "E1"
+                ]
+              },
+              {
+                "scopeId": "scope-0002-2c6f70f42d3180ca590f89446dab4234401edb1f7e055d34e43d8e1938955851",
+                "kind": "event",
+                "entityIds": [
+                  "E1"
+                ]
+              },
+              {
+                "scopeId": "scope-0003-4e7816db3d611b7642f53c78c1299109139aea153ec38fae5ce8d097474fd1bf",
+                "kind": "event",
+                "entityIds": [
+                  "E2"
+                ]
+              },
+              {
+                "scopeId": "scope-0004-7a6813eda3154f0caf8f99eacc582211c0df22af4c9e46c280fca7eff7f1e5e2",
+                "kind": "event",
+                "entityIds": [
+                  "E2"
+                ]
+              },
+              {
+                "scopeId": "scope-0005-34cf842ef0d4bbf61a3617bbd4a753a1601b10b8ca00c69dc67aeb4cdaa793ff",
+                "kind": "information",
+                "entityIds": []
+              },
+              {
+                "scopeId": "scope-0006-fe72091cb53c1b43c8eb7cde626723a02982b4f0ad57ab4a5807567480f72a13",
+                "kind": "information",
+                "entityIds": []
+              }
+            ],
+            "prerequisiteStates": [],
+            "inferredFacts": 0,
+            "originalDeclarations": [],
+            "typedAccounting": [
+              {
+                "scopeId": "scope-0001-378821a1e74c96956c687065ec5d0258e305de79a11cb6398f15f635b9365811",
+                "kind": "event",
+                "primaryEntityIds": [
+                  "E1"
+                ],
+                "secondaryEntityIds": [
+                  "P1"
+                ]
+              },
+              {
+                "scopeId": "scope-0002-2c6f70f42d3180ca590f89446dab4234401edb1f7e055d34e43d8e1938955851",
+                "kind": "event",
+                "primaryEntityIds": [
+                  "E1"
+                ],
+                "secondaryEntityIds": [
+                  "P2"
+                ]
+              },
+              {
+                "scopeId": "scope-0003-4e7816db3d611b7642f53c78c1299109139aea153ec38fae5ce8d097474fd1bf",
+                "kind": "event",
+                "primaryEntityIds": [
+                  "E2"
+                ],
+                "secondaryEntityIds": [
+                  "P3"
+                ]
+              },
+              {
+                "scopeId": "scope-0004-7a6813eda3154f0caf8f99eacc582211c0df22af4c9e46c280fca7eff7f1e5e2",
+                "kind": "event",
+                "primaryEntityIds": [
+                  "E2"
+                ],
+                "secondaryEntityIds": [
+                  "P4"
+                ]
+              },
+              {
+                "scopeId": "scope-0005-34cf842ef0d4bbf61a3617bbd4a753a1601b10b8ca00c69dc67aeb4cdaa793ff",
+                "kind": "information",
+                "primaryEntityIds": [],
+                "secondaryEntityIds": []
+              },
+              {
+                "scopeId": "scope-0006-fe72091cb53c1b43c8eb7cde626723a02982b4f0ad57ab4a5807567480f72a13",
+                "kind": "information",
+                "primaryEntityIds": [],
+                "secondaryEntityIds": []
+              }
+            ]
+          },
+          "postComparisonCoverage": {
+            "legacy": null,
+            "declarations": [],
+            "unknownCoverage": []
+          },
+          "sourceRenderedEvents": []
+        },
+        "firstSuggestionDisplayed": {
+          "schemaVersion": "2.0",
+          "promptVersion": "recognition-source-contract-4.0.0",
+          "modelName": "匿名契约工程夹具（非模型输出）",
+          "createdAt": "2026-10-03T09:00:00+08:00",
+          "sourceSummary": {
+            "title": "开放实验室说明会",
+            "sourceType": "text",
+            "notificationType": "event_notice",
+            "summary": "0项任务，2项事件。请核对后确认。",
+            "requiresAction": false,
+            "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "未主动建立或匹配项目。"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [],
+          "materials": [],
+          "timePoints": [
+            {
+              "tempId": "P1",
+              "type": "event_start",
+              "rawText": "2026年11月12日10:10",
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "confidence": 1,
+              "normalizedValue": "2026-11-12T10:10",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "evidenceIds": [
+                "d26-scope-0001-378821a1e74c96956c687065ec5d0258e305de79a11cb6398f15f635b9365811"
+              ]
+            },
+            {
+              "tempId": "P2",
+              "type": "event_end",
+              "rawText": "11:40",
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "confidence": 1,
+              "normalizedValue": "2026-11-12T11:40",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "evidenceIds": [
+                "d26-scope-0002-2c6f70f42d3180ca590f89446dab4234401edb1f7e055d34e43d8e1938955851"
+              ]
+            },
+            {
+              "tempId": "P3",
+              "type": "event_start",
+              "rawText": "周五夜间",
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "confidence": 1,
+              "normalizedValue": null,
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "vague",
+              "needsConfirmation": true,
+              "evidenceIds": [
+                "d26-scope-0003-4e7816db3d611b7642f53c78c1299109139aea153ec38fae5ce8d097474fd1bf"
+              ]
+            },
+            {
+              "tempId": "P4",
+              "type": "event_end",
+              "rawText": "恢复时间尚未公布",
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "confidence": 1,
+              "normalizedValue": null,
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "vague",
+              "needsConfirmation": true,
+              "evidenceIds": [
+                "d26-scope-0004-7a6813eda3154f0caf8f99eacc582211c0df22af4c9e46c280fca7eff7f1e5e2"
+              ]
+            }
+          ],
+          "events": [
+            {
+              "tempId": "E1",
+              "title": "开放实验室说明会",
+              "description": "开放实验室说明会2026年11月12日10:10开始，\n11:40结束。",
+              "startTimePointTempId": "P1",
+              "endTimePointTempId": "P2",
+              "location": null,
+              "confidence": 1,
+              "inferenceLevel": "explicit",
+              "evidenceIds": [
+                "d26-scope-0001-378821a1e74c96956c687065ec5d0258e305de79a11cb6398f15f635b9365811",
+                "d26-scope-0002-2c6f70f42d3180ca590f89446dab4234401edb1f7e055d34e43d8e1938955851"
+              ],
+              "selected": true
+            },
+            {
+              "tempId": "E2",
+              "title": "网络调试",
+              "description": "网络调试从周五夜间开始，\n恢复时间尚未公布。",
+              "startTimePointTempId": "P3",
+              "endTimePointTempId": "P4",
+              "location": null,
+              "confidence": 1,
+              "inferenceLevel": "explicit",
+              "evidenceIds": [
+                "d26-scope-0003-4e7816db3d611b7642f53c78c1299109139aea153ec38fae5ce8d097474fd1bf",
+                "d26-scope-0004-7a6813eda3154f0caf8f99eacc582211c0df22af4c9e46c280fca7eff7f1e5e2"
+              ],
+              "selected": true
+            }
+          ],
+          "evidence": [
+            {
+              "id": "d26-scope-0001-378821a1e74c96956c687065ec5d0258e305de79a11cb6398f15f635b9365811",
+              "sourceId": "source:b22b2038",
+              "quote": "开放实验室说明会2026年11月12日10:10开始，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0002-2c6f70f42d3180ca590f89446dab4234401edb1f7e055d34e43d8e1938955851",
+              "sourceId": "source:b22b2038",
+              "quote": "11:40结束。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0003-4e7816db3d611b7642f53c78c1299109139aea153ec38fae5ce8d097474fd1bf",
+              "sourceId": "source:b22b2038",
+              "quote": "网络调试从周五夜间开始，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0004-7a6813eda3154f0caf8f99eacc582211c0df22af4c9e46c280fca7eff7f1e5e2",
+              "sourceId": "source:b22b2038",
+              "quote": "恢复时间尚未公布。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0005-34cf842ef0d4bbf61a3617bbd4a753a1601b10b8ca00c69dc67aeb4cdaa793ff",
+              "sourceId": "source:b22b2038",
+              "quote": "两件事仅供了解，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0006-fe72091cb53c1b43c8eb7cde626723a02982b4f0ad57ab4a5807567480f72a13",
+              "sourceId": "source:b22b2038",
+              "quote": "不要求报名。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [],
+          "ambiguities": [],
+          "ignoredContent": [
+            {
+              "text": "两件事仅供了解，",
+              "reason": "other"
+            },
+            {
+              "text": "不要求报名。",
+              "reason": "other"
+            }
+          ],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 0.5,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": false,
+            "reviewReasons": []
+          }
+        },
+        "firstSuggestionAssembly": {
+          "version": "grounded-first-suggestion-1.0.0",
+          "originalProse": [
+            {
+              "entityId": "E1",
+              "kind": "event",
+              "title": "开放实验室说明会",
+              "description": "开放实验室说明会2026年11月12日10:10开始，\n11:40结束。"
+            },
+            {
+              "entityId": "E2",
+              "kind": "event",
+              "title": "网络调试",
+              "description": "网络调试从周五夜间开始，\n恢复时间尚未公布。"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "开放实验室说明会",
+              "description": "0项任务，2项事件。"
+            }
+          ],
+          "generatedProse": [
+            {
+              "entityId": "E1",
+              "kind": "event",
+              "title": "开放实验室说明会",
+              "description": "开放实验室说明会2026年11月12日10:10开始，\n11:40结束。"
+            },
+            {
+              "entityId": "E2",
+              "kind": "event",
+              "title": "网络调试",
+              "description": "网络调试从周五夜间开始，\n恢复时间尚未公布。"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "开放实验室说明会",
+              "description": "0项任务，2项事件。请核对后确认。"
+            }
+          ],
+          "times": [
+            {
+              "entityId": "P1",
+              "before": {
+                "normalizedValue": "2026-11-12T10:10",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "after": {
+                "normalizedValue": "2026-11-12T10:10",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.0.0",
+                "point": {
+                  "rawText": "2026年11月12日10:10",
+                  "type": "event_start",
+                  "normalizedValue": "2026-11-12T10:10",
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 16
+                  },
+                  "dateKind": "absolute",
+                  "timeKind": "clock",
+                  "correctionApplied": false,
+                  "issues": []
+                },
+                "knownDate": "2026-11-12",
+                "dayPeriod": null,
+                "certainty": "stated",
+                "sourceContext": "开放实验室说明会2026年11月12日10:10开始"
+              }
+            },
+            {
+              "entityId": "P2",
+              "before": {
+                "normalizedValue": "2026-11-12T11:40",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "after": {
+                "normalizedValue": "2026-11-12T11:40",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.0.0",
+                "point": {
+                  "rawText": "11:40",
+                  "type": "event_end",
+                  "normalizedValue": "2026-11-12T11:40",
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 5
+                  },
+                  "dateKind": "inherited",
+                  "timeKind": "clock",
+                  "correctionApplied": false,
+                  "issues": []
+                },
+                "knownDate": "2026-11-12",
+                "dayPeriod": null,
+                "certainty": "stated",
+                "sourceContext": "开放实验室说明会2026年11月12日10:10开始\n11:40结束"
+              }
+            },
+            {
+              "entityId": "P3",
+              "before": {
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              },
+              "after": {
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.0.0",
+                "point": {
+                  "rawText": "周五夜间",
+                  "type": "event_start",
+                  "normalizedValue": null,
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "vague",
+                  "needsConfirmation": true,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 4
+                  },
+                  "dateKind": "none",
+                  "timeKind": "none",
+                  "correctionApplied": false,
+                  "issues": [
+                    "time_not_found",
+                    "day_period_without_clock"
+                  ]
+                },
+                "knownDate": null,
+                "dayPeriod": "夜间",
+                "certainty": "partial",
+                "sourceContext": "网络调试从周五夜间开始"
+              }
+            },
+            {
+              "entityId": "P4",
+              "before": {
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              },
+              "after": {
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.0.0",
+                "point": {
+                  "rawText": "恢复时间尚未公布",
+                  "type": "event_end",
+                  "normalizedValue": null,
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "vague",
+                  "needsConfirmation": true,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 8
+                  },
+                  "dateKind": "none",
+                  "timeKind": "none",
+                  "correctionApplied": false,
+                  "issues": [
+                    "time_not_found",
+                    "time_unannounced"
+                  ]
+                },
+                "knownDate": null,
+                "dayPeriod": null,
+                "certainty": "unannounced",
+                "sourceContext": "恢复时间尚未公布"
+              }
+            }
+          ],
+          "unresolved": [],
+          "role": "DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT"
+        },
+        "v7Record": {
+          "id": "source:b22b2038:draft:1",
+          "sourceId": "source:b22b2038",
+          "sourceVersionId": "source:b22b2038:version:1",
+          "sourceReviewMetadata": {
+            "sourceType": "text",
+            "characterCount": 70,
+            "extractionMethod": "manual"
+          },
+          "attemptOrder": 0,
+          "status": "待确认",
+          "workflowStatus": "needs_review",
+          "createdAt": "2026-10-03T17:01:15.404Z",
+          "updatedAt": "2026-10-03T17:01:15.426Z",
+          "schemaVersion": "2.0",
+          "modelName": "匿名契约工程夹具（非模型输出）",
+          "promptVersion": "recognition-source-contract-4.0.0",
+          "recognitionResult": {
+            "schemaVersion": "2.0",
+            "promptVersion": "recognition-source-contract-4.0.0",
+            "modelName": "匿名契约工程夹具（非模型输出）",
+            "createdAt": "2026-10-03T09:00:00+08:00",
+            "sourceSummary": {
+              "title": "开放实验室说明会",
+              "sourceType": "text",
+              "notificationType": "event_notice",
+              "summary": "0项任务，2项事件。请核对后确认。",
+              "requiresAction": false,
+              "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+            },
+            "projectMatch": {
+              "decision": "standalone_task",
+              "matchedProjectId": null,
+              "suggestedProjectTitle": null,
+              "confidence": 1,
+              "reasons": [
+                "未主动建立或匹配项目。"
+              ]
+            },
+            "projectSuggestion": null,
+            "milestones": [],
+            "standaloneTasks": [],
+            "materials": [],
+            "timePoints": [
+              {
+                "tempId": "P1",
+                "type": "event_start",
+                "rawText": "2026年11月12日10:10",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "confidence": 1,
+                "normalizedValue": "2026-11-12T10:10",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false,
+                "evidenceIds": [
+                  "d26-scope-0001-378821a1e74c96956c687065ec5d0258e305de79a11cb6398f15f635b9365811"
+                ]
+              },
+              {
+                "tempId": "P2",
+                "type": "event_end",
+                "rawText": "11:40",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "confidence": 1,
+                "normalizedValue": "2026-11-12T11:40",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false,
+                "evidenceIds": [
+                  "d26-scope-0002-2c6f70f42d3180ca590f89446dab4234401edb1f7e055d34e43d8e1938955851"
+                ]
+              },
+              {
+                "tempId": "P3",
+                "type": "event_start",
+                "rawText": "周五夜间",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "confidence": 1,
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true,
+                "evidenceIds": [
+                  "d26-scope-0003-4e7816db3d611b7642f53c78c1299109139aea153ec38fae5ce8d097474fd1bf"
+                ]
+              },
+              {
+                "tempId": "P4",
+                "type": "event_end",
+                "rawText": "恢复时间尚未公布",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "confidence": 1,
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true,
+                "evidenceIds": [
+                  "d26-scope-0004-7a6813eda3154f0caf8f99eacc582211c0df22af4c9e46c280fca7eff7f1e5e2"
+                ]
+              }
+            ],
+            "events": [
+              {
+                "tempId": "E1",
+                "title": "开放实验室说明会",
+                "description": "开放实验室说明会2026年11月12日10:10开始，\n11:40结束。",
+                "startTimePointTempId": "P1",
+                "endTimePointTempId": "P2",
+                "location": null,
+                "confidence": 1,
+                "inferenceLevel": "explicit",
+                "evidenceIds": [
+                  "d26-scope-0001-378821a1e74c96956c687065ec5d0258e305de79a11cb6398f15f635b9365811",
+                  "d26-scope-0002-2c6f70f42d3180ca590f89446dab4234401edb1f7e055d34e43d8e1938955851"
+                ],
+                "selected": true
+              },
+              {
+                "tempId": "E2",
+                "title": "网络调试",
+                "description": "网络调试从周五夜间开始，\n恢复时间尚未公布。",
+                "startTimePointTempId": "P3",
+                "endTimePointTempId": "P4",
+                "location": null,
+                "confidence": 1,
+                "inferenceLevel": "explicit",
+                "evidenceIds": [
+                  "d26-scope-0003-4e7816db3d611b7642f53c78c1299109139aea153ec38fae5ce8d097474fd1bf",
+                  "d26-scope-0004-7a6813eda3154f0caf8f99eacc582211c0df22af4c9e46c280fca7eff7f1e5e2"
+                ],
+                "selected": true
+              }
+            ],
+            "evidence": [
+              {
+                "id": "d26-scope-0001-378821a1e74c96956c687065ec5d0258e305de79a11cb6398f15f635b9365811",
+                "sourceId": "source:b22b2038",
+                "quote": "开放实验室说明会2026年11月12日10:10开始，",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0002-2c6f70f42d3180ca590f89446dab4234401edb1f7e055d34e43d8e1938955851",
+                "sourceId": "source:b22b2038",
+                "quote": "11:40结束。",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0003-4e7816db3d611b7642f53c78c1299109139aea153ec38fae5ce8d097474fd1bf",
+                "sourceId": "source:b22b2038",
+                "quote": "网络调试从周五夜间开始，",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0004-7a6813eda3154f0caf8f99eacc582211c0df22af4c9e46c280fca7eff7f1e5e2",
+                "sourceId": "source:b22b2038",
+                "quote": "恢复时间尚未公布。",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0005-34cf842ef0d4bbf61a3617bbd4a753a1601b10b8ca00c69dc67aeb4cdaa793ff",
+                "sourceId": "source:b22b2038",
+                "quote": "两件事仅供了解，",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0006-fe72091cb53c1b43c8eb7cde626723a02982b4f0ad57ab4a5807567480f72a13",
+                "sourceId": "source:b22b2038",
+                "quote": "不要求报名。",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              }
+            ],
+            "conflicts": [],
+            "ambiguities": [],
+            "ignoredContent": [
+              {
+                "text": "两件事仅供了解，",
+                "reason": "other"
+              },
+              {
+                "text": "不要求报名。",
+                "reason": "other"
+              }
+            ],
+            "quality": {
+              "overallConfidence": 1,
+              "hierarchyConfidence": 1,
+              "dateConfidence": 0.5,
+              "evidenceCoverage": 1,
+              "duplicateRisk": 0,
+              "overFragmentationRisk": 0,
+              "missingActionRisk": 0,
+              "needsHumanReview": false,
+              "reviewReasons": []
+            }
+          },
+          "items": [],
+          "modelVersion": "local-rules"
+        },
+        "source-review:pending-readback": {
+          "version": "source-review-d26-1",
+          "draftId": "source:b22b2038:draft:1",
+          "commitId": "source-review:source:b22b2038:draft:1:fnv1a32:078358a6",
+          "disposition": "no_task",
+          "entityIds": [
+            "event:source:b22b2038:draft:1:E1",
+            "event:source:b22b2038:draft:1:E2",
+            "time:source:b22b2038:draft:1:P1",
+            "time:source:b22b2038:draft:1:P2",
+            "time:source:b22b2038:draft:1:P3",
+            "time:source:b22b2038:draft:1:P4"
+          ],
+          "entityHashes": {
+            "event:source:b22b2038:draft:1:E1": "fnv1a32:c63962c8",
+            "event:source:b22b2038:draft:1:E2": "fnv1a32:cb4d8bf6",
+            "time:source:b22b2038:draft:1:P1": "fnv1a32:ff0dfb96",
+            "time:source:b22b2038:draft:1:P2": "fnv1a32:b8cc6e91",
+            "time:source:b22b2038:draft:1:P3": "fnv1a32:3b84d7d1",
+            "time:source:b22b2038:draft:1:P4": "fnv1a32:4ef87e64"
+          }
+        }
+      }
+    },
+    {
+      "id": "source:0255e9aa:draft:1",
+      "recognitionRunId": "source:0255e9aa:run:1",
+      "status": "confirmed",
+      "result": {
+        "schemaVersion": "2.0",
+        "promptVersion": "recognition-source-contract-4.0.0",
+        "modelName": "匿名契约工程夹具（非模型输出）",
+        "createdAt": "2026-10-03T09:00:00+08:00",
+        "sourceSummary": {
+          "title": "校园失物查询网站",
+          "sourceType": "text",
+          "notificationType": "event_notice",
+          "summary": "0项任务，1项事件。请核对后确认。",
+          "requiresAction": false,
+          "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+        },
+        "projectMatch": {
+          "decision": "standalone_task",
+          "matchedProjectId": null,
+          "suggestedProjectTitle": null,
+          "confidence": 1,
+          "reasons": [
+            "未主动建立或匹配项目。"
+          ]
+        },
+        "projectSuggestion": null,
+        "milestones": [],
+        "standaloneTasks": [],
+        "materials": [],
+        "timePoints": [
+          {
+            "tempId": "E1:start",
+            "type": "event_start",
+            "rawText": "周日晚间",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "confidence": 1,
+            "normalizedValue": null,
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "vague",
+            "needsConfirmation": true,
+            "evidenceIds": [
+              "d26-scope-0001-7c062750dd226596e435978150733611ed32aecfe5d1097c6557a5beace42f7d"
+            ]
+          }
+        ],
+        "events": [
+          {
+            "tempId": "E1",
+            "title": "校园失物查询网站将在周日晚间暂停查询",
+            "description": "",
+            "location": null,
+            "startTimePointTempId": "E1:start",
+            "endTimePointTempId": null,
+            "evidenceIds": [
+              "user-evidence:E1"
+            ],
+            "confidence": 1,
+            "inferenceLevel": "explicit",
+            "selected": true
+          }
+        ],
+        "evidence": [
+          {
+            "id": "d26-scope-0001-7c062750dd226596e435978150733611ed32aecfe5d1097c6557a5beace42f7d",
+            "sourceId": "source:0255e9aa",
+            "quote": "校园失物查询网站将在周日晚间暂停查询。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0002-0757e48d6a7ac0de7c310d0a3f4eef023f62436ec2848efc1abb4f0eaa60ac73",
+            "sourceId": "source:0255e9aa",
+            "quote": "此前登记的信息保持不变，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0003-ffa63728bca1aa2fc92b8bdcd0c1bbe34ebb1d09ffe764c85dbcba9d54d20153",
+            "sourceId": "source:0255e9aa",
+            "quote": "不需要重新登记，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0004-b569f65531ff0de5df1f6940cbdae463a80a27a2649bafc1c182ccf46d298da0",
+            "sourceId": "source:0255e9aa",
+            "quote": "也不要发送补充邮件。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "user-evidence:E1",
+            "sourceId": "source:0255e9aa",
+            "field": "event",
+            "quotedText": "校园失物查询网站将在周日晚间暂停查询。此前登记的信息保持不变，不需要重新登记，也不要发送补充邮件。",
+            "quote": "校园失物查询网站将在周日晚间暂停查询。此前登记的信息保持不变，不需要重新登记，也不要发送补充邮件。",
+            "extractionMethod": "manual"
+          }
+        ],
+        "conflicts": [],
+        "ambiguities": [],
+        "ignoredContent": [
+          {
+            "text": "此前登记的信息保持不变，",
+            "reason": "other"
+          },
+          {
+            "text": "不需要重新登记，",
+            "reason": "other"
+          },
+          {
+            "text": "也不要发送补充邮件。",
+            "reason": "other"
+          }
+        ],
+        "quality": {
+          "overallConfidence": 1,
+          "hierarchyConfidence": 1,
+          "dateConfidence": 0.5,
+          "evidenceCoverage": 1,
+          "duplicateRisk": 0,
+          "overFragmentationRisk": 0,
+          "missingActionRisk": 0,
+          "needsHumanReview": false,
+          "reviewReasons": []
+        }
+      },
+      "commitOperationIds": [
+        "source-review:source:0255e9aa:draft:1:fnv1a32:4402ff6f"
+      ],
+      "acceptedEntityTempIds": [
+        "E1",
+        "E1:start"
+      ],
+      "rejectedEntityTempIds": [],
+      "createdAt": "2026-10-03T16:58:30.105Z",
+      "updatedAt": "2026-10-03T17:00:38.789Z",
+      "legacyData": {
+        "semanticSidecar": {
+          "version": "semantic-ordinary-bridge-1.0.0",
+          "originalSemantic": {
+            "schemaVersion": "mainline04-task-semantics-1",
+            "tasks": [],
+            "materials": [],
+            "timePoints": [
+              {
+                "tempId": "P1",
+                "type": "event_start",
+                "rawText": "周日晚间",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "scopeIds": [
+                  "scope-0001-7c062750dd226596e435978150733611ed32aecfe5d1097c6557a5beace42f7d"
+                ],
+                "confidence": 1,
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              }
+            ],
+            "events": [
+              {
+                "tempId": "E1",
+                "title": "校园失物查询网站",
+                "description": "",
+                "location": null,
+                "startTimePointTempId": "P1",
+                "endTimePointTempId": null,
+                "relatedTaskTempIds": [],
+                "scopeIds": [
+                  "scope-0001-7c062750dd226596e435978150733611ed32aecfe5d1097c6557a5beace42f7d"
+                ],
+                "confidence": 1,
+                "inferenceLevel": "explicit"
+              }
+            ],
+            "revisions": [],
+            "conflicts": [],
+            "informationScopeIds": [
+              "scope-0002-0757e48d6a7ac0de7c310d0a3f4eef023f62436ec2848efc1abb4f0eaa60ac73",
+              "scope-0003-ffa63728bca1aa2fc92b8bdcd0c1bbe34ebb1d09ffe764c85dbcba9d54d20153",
+              "scope-0004-b569f65531ff0de5df1f6940cbdae463a80a27a2649bafc1c182ccf46d298da0"
+            ],
+            "unresolvedScopeIds": [],
+            "sourceId": "source:0255e9aa",
+            "sourceVersionId": "source:0255e9aa:version:1",
+            "sourceFingerprint": "sha256:4ae5068cf50753be64a4e0579be706b29198c96bdc9c7f0019e49282dabce985"
+          },
+          "firstSemantic": {
+            "schemaVersion": "mainline04-task-semantics-1",
+            "tasks": [],
+            "materials": [],
+            "timePoints": [
+              {
+                "tempId": "P1",
+                "type": "event_start",
+                "rawText": "周日晚间",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "scopeIds": [
+                  "scope-0001-7c062750dd226596e435978150733611ed32aecfe5d1097c6557a5beace42f7d"
+                ],
+                "confidence": 1,
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              }
+            ],
+            "events": [
+              {
+                "tempId": "E1",
+                "title": "校园失物查询网站",
+                "description": "校园失物查询网站将在周日晚间暂停查询。",
+                "location": null,
+                "startTimePointTempId": "P1",
+                "endTimePointTempId": null,
+                "relatedTaskTempIds": [],
+                "scopeIds": [
+                  "scope-0001-7c062750dd226596e435978150733611ed32aecfe5d1097c6557a5beace42f7d"
+                ],
+                "confidence": 1,
+                "inferenceLevel": "explicit"
+              }
+            ],
+            "revisions": [],
+            "conflicts": [],
+            "informationScopeIds": [
+              "scope-0002-0757e48d6a7ac0de7c310d0a3f4eef023f62436ec2848efc1abb4f0eaa60ac73",
+              "scope-0003-ffa63728bca1aa2fc92b8bdcd0c1bbe34ebb1d09ffe764c85dbcba9d54d20153",
+              "scope-0004-b569f65531ff0de5df1f6940cbdae463a80a27a2649bafc1c182ccf46d298da0"
+            ],
+            "unresolvedScopeIds": [],
+            "sourceId": "source:0255e9aa",
+            "sourceVersionId": "source:0255e9aa:version:1",
+            "sourceFingerprint": "sha256:4ae5068cf50753be64a4e0579be706b29198c96bdc9c7f0019e49282dabce985"
+          },
+          "sourceScopeEvidence": [
+            {
+              "scopeId": "scope-0001-7c062750dd226596e435978150733611ed32aecfe5d1097c6557a5beace42f7d",
+              "evidenceId": "d26-scope-0001-7c062750dd226596e435978150733611ed32aecfe5d1097c6557a5beace42f7d"
+            },
+            {
+              "scopeId": "scope-0002-0757e48d6a7ac0de7c310d0a3f4eef023f62436ec2848efc1abb4f0eaa60ac73",
+              "evidenceId": "d26-scope-0002-0757e48d6a7ac0de7c310d0a3f4eef023f62436ec2848efc1abb4f0eaa60ac73"
+            },
+            {
+              "scopeId": "scope-0003-ffa63728bca1aa2fc92b8bdcd0c1bbe34ebb1d09ffe764c85dbcba9d54d20153",
+              "evidenceId": "d26-scope-0003-ffa63728bca1aa2fc92b8bdcd0c1bbe34ebb1d09ffe764c85dbcba9d54d20153"
+            },
+            {
+              "scopeId": "scope-0004-b569f65531ff0de5df1f6940cbdae463a80a27a2649bafc1c182ccf46d298da0",
+              "evidenceId": "d26-scope-0004-b569f65531ff0de5df1f6940cbdae463a80a27a2649bafc1c182ccf46d298da0"
+            }
+          ],
+          "representationGaps": [],
+          "displayAudit": {
+            "version": "grounded-first-suggestion-1.0.0",
+            "originalProse": [
+              {
+                "entityId": "E1",
+                "kind": "event",
+                "title": "校园失物查询网站",
+                "description": ""
+              }
+            ],
+            "generatedProse": [
+              {
+                "entityId": "E1",
+                "kind": "event",
+                "title": "校园失物查询网站",
+                "description": "校园失物查询网站将在周日晚间暂停查询。"
+              }
+            ],
+            "times": [
+              {
+                "entityId": "P1",
+                "before": {
+                  "normalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "vague",
+                  "needsConfirmation": true
+                },
+                "after": {
+                  "normalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "vague",
+                  "needsConfirmation": true
+                },
+                "interpretation": {
+                  "version": "source-time-semantics-2.0.0",
+                  "point": {
+                    "rawText": "周日晚间",
+                    "type": "event_start",
+                    "normalizedValue": null,
+                    "rangeEndNormalizedValue": null,
+                    "timezone": "Asia/Shanghai",
+                    "isAllDay": false,
+                    "precision": "vague",
+                    "needsConfirmation": true,
+                    "evidenceSpan": {
+                      "start": 0,
+                      "end": 4
+                    },
+                    "dateKind": "none",
+                    "timeKind": "none",
+                    "correctionApplied": false,
+                    "issues": [
+                      "time_not_found",
+                      "day_period_without_clock"
+                    ]
+                  },
+                  "knownDate": null,
+                  "dayPeriod": "晚",
+                  "certainty": "partial",
+                  "sourceContext": "校园失物查询网站将在周日晚间暂停查询"
+                }
+              }
+            ],
+            "unresolved": [],
+            "role": "DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT"
+          },
+          "recordedProvenance": {
+            "role": "ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT",
+            "ordinal": 202,
+            "sourceId": "C19-DEV-S01",
+            "sourceVersionId": "C19-DEV-S01-v1",
+            "candidate": "EngineeringFixture",
+            "sourceText": "校园失物查询网站将在周日晚间暂停查询。此前登记的信息保持不变，不需要重新登记，也不要发送补充邮件。",
+            "referenceTime": "2026-10-03T09:00:00+08:00",
+            "timezone": "Asia/Shanghai",
+            "rawHttpText": "{\"model\":\"deepseek-flash\",\"status\":\"completed\",\"output\":[{\"type\":\"message\",\"role\":\"assistant\",\"content\":[{\"type\":\"output_text\",\"text\":\"{\\\"schemaVersion\\\":\\\"explicit-source-contract-4.0.0\\\",\\\"tasks\\\":[],\\\"materials\\\":[],\\\"timePoints\\\":[{\\\"tempId\\\":\\\"P1\\\",\\\"type\\\":\\\"event_start\\\",\\\"rawText\\\":\\\"周日晚间\\\",\\\"relatedTaskTempIds\\\":[],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0001-d2175f450fa661e632714e804c6a781e49096cf495ee6bb29874af5c15fe9577\\\"],\\\"confidence\\\":1}],\\\"events\\\":[{\\\"tempId\\\":\\\"E1\\\",\\\"title\\\":\\\"校园失物查询网站\\\",\\\"description\\\":\\\"\\\",\\\"location\\\":null,\\\"startTimePointTempId\\\":\\\"P1\\\",\\\"endTimePointTempId\\\":null,\\\"relatedTaskTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0001-d2175f450fa661e632714e804c6a781e49096cf495ee6bb29874af5c15fe9577\\\"],\\\"confidence\\\":1,\\\"inferenceLevel\\\":\\\"explicit\\\"}],\\\"revisions\\\":[],\\\"conflicts\\\":[],\\\"scopeAccounting\\\":[{\\\"scopeId\\\":\\\"scope-0001-d2175f450fa661e632714e804c6a781e49096cf495ee6bb29874af5c15fe9577\\\",\\\"kind\\\":\\\"event\\\",\\\"primaryEntityIds\\\":[\\\"E1\\\"],\\\"secondaryEntityIds\\\":[\\\"P1\\\"]},{\\\"scopeId\\\":\\\"scope-0002-bda82f7016bb991941574b9293bd625eec2ceaa495b9f468e7644e6ffc8472d1\\\",\\\"kind\\\":\\\"information\\\",\\\"primaryEntityIds\\\":[],\\\"secondaryEntityIds\\\":[]},{\\\"scopeId\\\":\\\"scope-0003-283a70d573deeb14ba0f13645395a76f5b351e6c6a13576fc90b63ebf36ecd64\\\",\\\"kind\\\":\\\"information\\\",\\\"primaryEntityIds\\\":[],\\\"secondaryEntityIds\\\":[]},{\\\"scopeId\\\":\\\"scope-0004-b5e8a0826c3dce5194cbd00241b58c17185c5f3e4f8b7dea38d27ec248d5b105\\\",\\\"kind\\\":\\\"information\\\",\\\"primaryEntityIds\\\":[],\\\"secondaryEntityIds\\\":[]}],\\\"prerequisiteStates\\\":[]}\"}]}],\"usage\":{\"input_tokens\":0,\"output_tokens\":0}}",
+            "responseSha256": "e3d43305ac50e017818a061900691216f358e5f09728ce841e3e05bcb24470eb",
+            "requestSha256": null,
+            "frozenOutcome": "NOT_MODEL_OUTPUT",
+            "projectionVersion": "explicit-source-contract-4.0.0"
+          },
+          "scopeRebinding": {
+            "operation": "IDENTICAL_SOURCE_SCOPE_ID_REBIND_ONLY",
+            "mapping": [
+              [
+                "scope-0001-d2175f450fa661e632714e804c6a781e49096cf495ee6bb29874af5c15fe9577",
+                "scope-0001-7c062750dd226596e435978150733611ed32aecfe5d1097c6557a5beace42f7d"
+              ],
+              [
+                "scope-0002-bda82f7016bb991941574b9293bd625eec2ceaa495b9f468e7644e6ffc8472d1",
+                "scope-0002-0757e48d6a7ac0de7c310d0a3f4eef023f62436ec2848efc1abb4f0eaa60ac73"
+              ],
+              [
+                "scope-0003-283a70d573deeb14ba0f13645395a76f5b351e6c6a13576fc90b63ebf36ecd64",
+                "scope-0003-ffa63728bca1aa2fc92b8bdcd0c1bbe34ebb1d09ffe764c85dbcba9d54d20153"
+              ],
+              [
+                "scope-0004-b5e8a0826c3dce5194cbd00241b58c17185c5f3e4f8b7dea38d27ec248d5b105",
+                "scope-0004-b569f65531ff0de5df1f6940cbdae463a80a27a2649bafc1c182ccf46d298da0"
+              ]
+            ]
+          },
+          "postComparisonConversion": {
+            "version": "explicit-source-contract-4.0.0",
+            "operation": "VALIDATED_TYPED_DECLARATIONS_AND_EXPLICIT_EDGE_INVERSES_ONLY",
+            "scopeAccounting": [
+              {
+                "scopeId": "scope-0001-7c062750dd226596e435978150733611ed32aecfe5d1097c6557a5beace42f7d",
+                "kind": "event",
+                "entityIds": [
+                  "E1"
+                ]
+              },
+              {
+                "scopeId": "scope-0002-0757e48d6a7ac0de7c310d0a3f4eef023f62436ec2848efc1abb4f0eaa60ac73",
+                "kind": "information",
+                "entityIds": []
+              },
+              {
+                "scopeId": "scope-0003-ffa63728bca1aa2fc92b8bdcd0c1bbe34ebb1d09ffe764c85dbcba9d54d20153",
+                "kind": "information",
+                "entityIds": []
+              },
+              {
+                "scopeId": "scope-0004-b569f65531ff0de5df1f6940cbdae463a80a27a2649bafc1c182ccf46d298da0",
+                "kind": "information",
+                "entityIds": []
+              }
+            ],
+            "prerequisiteStates": [],
+            "inferredFacts": 0,
+            "originalDeclarations": [],
+            "typedAccounting": [
+              {
+                "scopeId": "scope-0001-7c062750dd226596e435978150733611ed32aecfe5d1097c6557a5beace42f7d",
+                "kind": "event",
+                "primaryEntityIds": [
+                  "E1"
+                ],
+                "secondaryEntityIds": [
+                  "P1"
+                ]
+              },
+              {
+                "scopeId": "scope-0002-0757e48d6a7ac0de7c310d0a3f4eef023f62436ec2848efc1abb4f0eaa60ac73",
+                "kind": "information",
+                "primaryEntityIds": [],
+                "secondaryEntityIds": []
+              },
+              {
+                "scopeId": "scope-0003-ffa63728bca1aa2fc92b8bdcd0c1bbe34ebb1d09ffe764c85dbcba9d54d20153",
+                "kind": "information",
+                "primaryEntityIds": [],
+                "secondaryEntityIds": []
+              },
+              {
+                "scopeId": "scope-0004-b569f65531ff0de5df1f6940cbdae463a80a27a2649bafc1c182ccf46d298da0",
+                "kind": "information",
+                "primaryEntityIds": [],
+                "secondaryEntityIds": []
+              }
+            ]
+          },
+          "postComparisonCoverage": {
+            "legacy": null,
+            "declarations": [],
+            "unknownCoverage": []
+          },
+          "sourceRenderedEvents": []
+        },
+        "firstSuggestionDisplayed": {
+          "schemaVersion": "2.0",
+          "promptVersion": "recognition-source-contract-4.0.0",
+          "modelName": "匿名契约工程夹具（非模型输出）",
+          "createdAt": "2026-10-03T09:00:00+08:00",
+          "sourceSummary": {
+            "title": "校园失物查询网站",
+            "sourceType": "text",
+            "notificationType": "event_notice",
+            "summary": "0项任务，1项事件。请核对后确认。",
+            "requiresAction": false,
+            "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "未主动建立或匹配项目。"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [],
+          "materials": [],
+          "timePoints": [
+            {
+              "tempId": "P1",
+              "type": "event_start",
+              "rawText": "周日晚间",
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "confidence": 1,
+              "normalizedValue": null,
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "vague",
+              "needsConfirmation": true,
+              "evidenceIds": [
+                "d26-scope-0001-7c062750dd226596e435978150733611ed32aecfe5d1097c6557a5beace42f7d"
+              ]
+            }
+          ],
+          "events": [
+            {
+              "tempId": "E1",
+              "title": "校园失物查询网站",
+              "description": "校园失物查询网站将在周日晚间暂停查询。",
+              "startTimePointTempId": "P1",
+              "endTimePointTempId": null,
+              "location": null,
+              "confidence": 1,
+              "inferenceLevel": "explicit",
+              "evidenceIds": [
+                "d26-scope-0001-7c062750dd226596e435978150733611ed32aecfe5d1097c6557a5beace42f7d"
+              ],
+              "selected": true
+            }
+          ],
+          "evidence": [
+            {
+              "id": "d26-scope-0001-7c062750dd226596e435978150733611ed32aecfe5d1097c6557a5beace42f7d",
+              "sourceId": "source:0255e9aa",
+              "quote": "校园失物查询网站将在周日晚间暂停查询。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0002-0757e48d6a7ac0de7c310d0a3f4eef023f62436ec2848efc1abb4f0eaa60ac73",
+              "sourceId": "source:0255e9aa",
+              "quote": "此前登记的信息保持不变，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0003-ffa63728bca1aa2fc92b8bdcd0c1bbe34ebb1d09ffe764c85dbcba9d54d20153",
+              "sourceId": "source:0255e9aa",
+              "quote": "不需要重新登记，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0004-b569f65531ff0de5df1f6940cbdae463a80a27a2649bafc1c182ccf46d298da0",
+              "sourceId": "source:0255e9aa",
+              "quote": "也不要发送补充邮件。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [],
+          "ambiguities": [],
+          "ignoredContent": [
+            {
+              "text": "此前登记的信息保持不变，",
+              "reason": "other"
+            },
+            {
+              "text": "不需要重新登记，",
+              "reason": "other"
+            },
+            {
+              "text": "也不要发送补充邮件。",
+              "reason": "other"
+            }
+          ],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 0.5,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": false,
+            "reviewReasons": []
+          }
+        },
+        "firstSuggestionAssembly": {
+          "version": "grounded-first-suggestion-1.0.0",
+          "originalProse": [
+            {
+              "entityId": "E1",
+              "kind": "event",
+              "title": "校园失物查询网站",
+              "description": "校园失物查询网站将在周日晚间暂停查询。"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "校园失物查询网站",
+              "description": "0项任务，1项事件。"
+            }
+          ],
+          "generatedProse": [
+            {
+              "entityId": "E1",
+              "kind": "event",
+              "title": "校园失物查询网站",
+              "description": "校园失物查询网站将在周日晚间暂停查询。"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "校园失物查询网站",
+              "description": "0项任务，1项事件。请核对后确认。"
+            }
+          ],
+          "times": [
+            {
+              "entityId": "P1",
+              "before": {
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              },
+              "after": {
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.0.0",
+                "point": {
+                  "rawText": "周日晚间",
+                  "type": "event_start",
+                  "normalizedValue": null,
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "vague",
+                  "needsConfirmation": true,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 4
+                  },
+                  "dateKind": "none",
+                  "timeKind": "none",
+                  "correctionApplied": false,
+                  "issues": [
+                    "time_not_found",
+                    "day_period_without_clock"
+                  ]
+                },
+                "knownDate": null,
+                "dayPeriod": "晚",
+                "certainty": "partial",
+                "sourceContext": "校园失物查询网站将在周日晚间暂停查询"
+              }
+            }
+          ],
+          "unresolved": [],
+          "role": "DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT"
+        },
+        "v7Record": {
+          "id": "source:0255e9aa:draft:1",
+          "sourceId": "source:0255e9aa",
+          "sourceVersionId": "source:0255e9aa:version:1",
+          "sourceReviewMetadata": {
+            "sourceType": "text",
+            "characterCount": 49,
+            "extractionMethod": "manual"
+          },
+          "attemptOrder": 0,
+          "status": "待确认",
+          "workflowStatus": "needs_review",
+          "createdAt": "2026-10-03T16:58:30.105Z",
+          "updatedAt": "2026-10-03T17:00:12.145Z",
+          "schemaVersion": "2.0",
+          "modelName": "匿名契约工程夹具（非模型输出）",
+          "promptVersion": "recognition-source-contract-4.0.0",
+          "recognitionResult": {
+            "schemaVersion": "2.0",
+            "promptVersion": "recognition-source-contract-4.0.0",
+            "modelName": "匿名契约工程夹具（非模型输出）",
+            "createdAt": "2026-10-03T09:00:00+08:00",
+            "sourceSummary": {
+              "title": "校园失物查询网站",
+              "sourceType": "text",
+              "notificationType": "event_notice",
+              "summary": "0项任务，1项事件。请核对后确认。",
+              "requiresAction": false,
+              "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+            },
+            "projectMatch": {
+              "decision": "standalone_task",
+              "matchedProjectId": null,
+              "suggestedProjectTitle": null,
+              "confidence": 1,
+              "reasons": [
+                "未主动建立或匹配项目。"
+              ]
+            },
+            "projectSuggestion": null,
+            "milestones": [],
+            "standaloneTasks": [],
+            "materials": [],
+            "timePoints": [
+              {
+                "tempId": "E1:start",
+                "type": "event_start",
+                "rawText": "周日晚间",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "confidence": 1,
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true,
+                "evidenceIds": [
+                  "d26-scope-0001-7c062750dd226596e435978150733611ed32aecfe5d1097c6557a5beace42f7d"
+                ]
+              }
+            ],
+            "events": [
+              {
+                "tempId": "E1",
+                "title": "校园失物查询网站将在周日晚间暂停查询",
+                "description": "",
+                "location": null,
+                "startTimePointTempId": "E1:start",
+                "endTimePointTempId": null,
+                "evidenceIds": [
+                  "user-evidence:E1"
+                ],
+                "confidence": 1,
+                "inferenceLevel": "explicit",
+                "selected": true
+              }
+            ],
+            "evidence": [
+              {
+                "id": "d26-scope-0001-7c062750dd226596e435978150733611ed32aecfe5d1097c6557a5beace42f7d",
+                "sourceId": "source:0255e9aa",
+                "quote": "校园失物查询网站将在周日晚间暂停查询。",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0002-0757e48d6a7ac0de7c310d0a3f4eef023f62436ec2848efc1abb4f0eaa60ac73",
+                "sourceId": "source:0255e9aa",
+                "quote": "此前登记的信息保持不变，",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0003-ffa63728bca1aa2fc92b8bdcd0c1bbe34ebb1d09ffe764c85dbcba9d54d20153",
+                "sourceId": "source:0255e9aa",
+                "quote": "不需要重新登记，",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0004-b569f65531ff0de5df1f6940cbdae463a80a27a2649bafc1c182ccf46d298da0",
+                "sourceId": "source:0255e9aa",
+                "quote": "也不要发送补充邮件。",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "user-evidence:E1",
+                "sourceId": "source:0255e9aa",
+                "field": "event",
+                "quotedText": "校园失物查询网站将在周日晚间暂停查询。此前登记的信息保持不变，不需要重新登记，也不要发送补充邮件。",
+                "quote": "校园失物查询网站将在周日晚间暂停查询。此前登记的信息保持不变，不需要重新登记，也不要发送补充邮件。",
+                "extractionMethod": "manual"
+              }
+            ],
+            "conflicts": [],
+            "ambiguities": [],
+            "ignoredContent": [
+              {
+                "text": "此前登记的信息保持不变，",
+                "reason": "other"
+              },
+              {
+                "text": "不需要重新登记，",
+                "reason": "other"
+              },
+              {
+                "text": "也不要发送补充邮件。",
+                "reason": "other"
+              }
+            ],
+            "quality": {
+              "overallConfidence": 1,
+              "hierarchyConfidence": 1,
+              "dateConfidence": 0.5,
+              "evidenceCoverage": 1,
+              "duplicateRisk": 0,
+              "overFragmentationRisk": 0,
+              "missingActionRisk": 0,
+              "needsHumanReview": false,
+              "reviewReasons": []
+            }
+          },
+          "items": [],
+          "modelVersion": "local-rules"
+        },
+        "sourceReviewReadback": {
+          "version": "source-review-d26-1",
+          "draftId": "source:0255e9aa:draft:1",
+          "commitId": "source-review:source:0255e9aa:draft:1:fnv1a32:4402ff6f",
+          "disposition": "no_task",
+          "entityIds": [
+            "event:source:0255e9aa:draft:1:E1",
+            "time:source:0255e9aa:draft:1:E1:start"
+          ],
+          "entityHashes": {
+            "event:source:0255e9aa:draft:1:E1": "fnv1a32:5c46de1d",
+            "time:source:0255e9aa:draft:1:E1:start": "fnv1a32:879429be"
+          },
+          "verifiedAt": "2026-10-03T17:00:38.809Z"
+        }
+      }
+    }
+  ],
+  "projects": [],
+  "milestones": [],
+  "workPackages": [],
+  "tasks": [],
+  "materials": [],
+  "timePoints": [
+    {
+      "id": "time:source:0255e9aa:draft:1:E1:start",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": null,
+      "materialId": null,
+      "eventId": "event:source:0255e9aa:draft:1:E1",
+      "relatedTaskIds": [],
+      "relatedMaterialIds": [],
+      "type": "event_start",
+      "rawText": "周日晚间",
+      "normalizedValue": null,
+      "timezone": null,
+      "isAllDay": false,
+      "precision": "vague",
+      "needsConfirmation": true,
+      "createdAt": "2026-10-03T17:00:38.786Z",
+      "updatedAt": "2026-10-03T17:00:38.786Z",
+      "legacyData": {
+        "recognitionTempId": "E1:start",
+        "evidenceIds": [
+          "d26-scope-0001-7c062750dd226596e435978150733611ed32aecfe5d1097c6557a5beace42f7d"
+        ],
+        "confidence": 1
+      }
+    },
+    {
+      "id": "time:source:b22b2038:draft:1:P1",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": null,
+      "materialId": null,
+      "eventId": "event:source:b22b2038:draft:1:E1",
+      "relatedTaskIds": [],
+      "relatedMaterialIds": [],
+      "type": "event_start",
+      "rawText": "2026年11月12日10:10",
+      "normalizedValue": "2026-11-12T10:10",
+      "timezone": "Asia/Shanghai",
+      "isAllDay": false,
+      "precision": "exact",
+      "needsConfirmation": false,
+      "createdAt": "2026-10-03T17:02:57.925Z",
+      "updatedAt": "2026-10-03T17:02:57.925Z",
+      "legacyData": {
+        "recognitionTempId": "P1",
+        "evidenceIds": [
+          "d26-scope-0001-378821a1e74c96956c687065ec5d0258e305de79a11cb6398f15f635b9365811"
+        ],
+        "confidence": 1
+      }
+    },
+    {
+      "id": "time:source:b22b2038:draft:1:P2",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": null,
+      "materialId": null,
+      "eventId": "event:source:b22b2038:draft:1:E1",
+      "relatedTaskIds": [],
+      "relatedMaterialIds": [],
+      "type": "event_end",
+      "rawText": "11:40",
+      "normalizedValue": "2026-11-12T11:40",
+      "timezone": "Asia/Shanghai",
+      "isAllDay": false,
+      "precision": "exact",
+      "needsConfirmation": false,
+      "createdAt": "2026-10-03T17:02:57.925Z",
+      "updatedAt": "2026-10-03T17:02:57.925Z",
+      "legacyData": {
+        "recognitionTempId": "P2",
+        "evidenceIds": [
+          "d26-scope-0002-2c6f70f42d3180ca590f89446dab4234401edb1f7e055d34e43d8e1938955851"
+        ],
+        "confidence": 1
+      }
+    },
+    {
+      "id": "time:source:b22b2038:draft:1:P3",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": null,
+      "materialId": null,
+      "eventId": "event:source:b22b2038:draft:1:E2",
+      "relatedTaskIds": [],
+      "relatedMaterialIds": [],
+      "type": "event_start",
+      "rawText": "周五夜间",
+      "normalizedValue": null,
+      "timezone": null,
+      "isAllDay": false,
+      "precision": "vague",
+      "needsConfirmation": true,
+      "createdAt": "2026-10-03T17:02:57.925Z",
+      "updatedAt": "2026-10-03T17:02:57.925Z",
+      "legacyData": {
+        "recognitionTempId": "P3",
+        "evidenceIds": [
+          "d26-scope-0003-4e7816db3d611b7642f53c78c1299109139aea153ec38fae5ce8d097474fd1bf"
+        ],
+        "confidence": 1
+      }
+    },
+    {
+      "id": "time:source:b22b2038:draft:1:P4",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": null,
+      "materialId": null,
+      "eventId": "event:source:b22b2038:draft:1:E2",
+      "relatedTaskIds": [],
+      "relatedMaterialIds": [],
+      "type": "event_end",
+      "rawText": "恢复时间尚未公布",
+      "normalizedValue": null,
+      "timezone": null,
+      "isAllDay": false,
+      "precision": "vague",
+      "needsConfirmation": true,
+      "createdAt": "2026-10-03T17:02:57.925Z",
+      "updatedAt": "2026-10-03T17:02:57.925Z",
+      "legacyData": {
+        "recognitionTempId": "P4",
+        "evidenceIds": [
+          "d26-scope-0004-7a6813eda3154f0caf8f99eacc582211c0df22af4c9e46c280fca7eff7f1e5e2"
+        ],
+        "confidence": 1
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "event:source:0255e9aa:draft:1:E1",
+      "projectId": null,
+      "title": "校园失物查询网站将在周日晚间暂停查询",
+      "description": null,
+      "startTimePointId": "time:source:0255e9aa:draft:1:E1:start",
+      "endTimePointId": null,
+      "location": null,
+      "createdAt": "2026-10-03T17:00:38.786Z",
+      "updatedAt": "2026-10-03T17:00:38.786Z",
+      "legacyData": {
+        "recognitionTempId": "E1",
+        "evidenceIds": [
+          "user-evidence:E1"
+        ],
+        "inferenceLevel": "explicit"
+      }
+    },
+    {
+      "id": "event:source:b22b2038:draft:1:E1",
+      "projectId": null,
+      "title": "开放实验室说明会",
+      "description": "开放实验室说明会2026年11月12日10:10开始，\n11:40结束。",
+      "startTimePointId": "time:source:b22b2038:draft:1:P1",
+      "endTimePointId": "time:source:b22b2038:draft:1:P2",
+      "location": null,
+      "createdAt": "2026-10-03T17:02:57.925Z",
+      "updatedAt": "2026-10-03T17:02:57.925Z",
+      "legacyData": {
+        "recognitionTempId": "E1",
+        "evidenceIds": [
+          "d26-scope-0001-378821a1e74c96956c687065ec5d0258e305de79a11cb6398f15f635b9365811",
+          "d26-scope-0002-2c6f70f42d3180ca590f89446dab4234401edb1f7e055d34e43d8e1938955851"
+        ],
+        "inferenceLevel": "explicit"
+      }
+    },
+    {
+      "id": "event:source:b22b2038:draft:1:E2",
+      "projectId": null,
+      "title": "网络调试",
+      "description": "网络调试从周五夜间开始，\n恢复时间尚未公布。",
+      "startTimePointId": "time:source:b22b2038:draft:1:P3",
+      "endTimePointId": "time:source:b22b2038:draft:1:P4",
+      "location": null,
+      "createdAt": "2026-10-03T17:02:57.925Z",
+      "updatedAt": "2026-10-03T17:02:57.925Z",
+      "legacyData": {
+        "recognitionTempId": "E2",
+        "evidenceIds": [
+          "d26-scope-0003-4e7816db3d611b7642f53c78c1299109139aea153ec38fae5ce8d097474fd1bf",
+          "d26-scope-0004-7a6813eda3154f0caf8f99eacc582211c0df22af4c9e46c280fca7eff7f1e5e2"
+        ],
+        "inferenceLevel": "explicit"
+      }
+    }
+  ],
+  "evidenceRefs": [
+    {
+      "id": "evidence:source:0255e9aa:draft:1:d26-scope-0001-7c062750dd226596e435978150733611ed32aecfe5d1097c6557a5beace42f7d",
+      "sourceVersionId": "source:0255e9aa:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "校园失物查询网站将在周日晚间暂停查询。",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-03T17:00:38.786Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0001-7c062750dd226596e435978150733611ed32aecfe5d1097c6557a5beace42f7d"
+      }
+    },
+    {
+      "id": "evidence:source:0255e9aa:draft:1:user-evidence:E1",
+      "sourceVersionId": "source:0255e9aa:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "校园失物查询网站将在周日晚间暂停查询。此前登记的信息保持不变，不需要重新登记，也不要发送补充邮件。",
+      "bbox": null,
+      "fieldPath": "event",
+      "extractionMethod": "manual",
+      "confidence": null,
+      "createdAt": "2026-10-03T17:00:38.786Z",
+      "legacyData": {
+        "recognitionEvidenceId": "user-evidence:E1"
+      }
+    },
+    {
+      "id": "evidence:source:b22b2038:draft:1:d26-scope-0001-378821a1e74c96956c687065ec5d0258e305de79a11cb6398f15f635b9365811",
+      "sourceVersionId": "source:b22b2038:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "开放实验室说明会2026年11月12日10:10开始，",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-03T17:02:57.925Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0001-378821a1e74c96956c687065ec5d0258e305de79a11cb6398f15f635b9365811"
+      }
+    },
+    {
+      "id": "evidence:source:b22b2038:draft:1:d26-scope-0002-2c6f70f42d3180ca590f89446dab4234401edb1f7e055d34e43d8e1938955851",
+      "sourceVersionId": "source:b22b2038:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "11:40结束。",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-03T17:02:57.925Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0002-2c6f70f42d3180ca590f89446dab4234401edb1f7e055d34e43d8e1938955851"
+      }
+    },
+    {
+      "id": "evidence:source:b22b2038:draft:1:d26-scope-0003-4e7816db3d611b7642f53c78c1299109139aea153ec38fae5ce8d097474fd1bf",
+      "sourceVersionId": "source:b22b2038:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "网络调试从周五夜间开始，",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-03T17:02:57.925Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0003-4e7816db3d611b7642f53c78c1299109139aea153ec38fae5ce8d097474fd1bf"
+      }
+    },
+    {
+      "id": "evidence:source:b22b2038:draft:1:d26-scope-0004-7a6813eda3154f0caf8f99eacc582211c0df22af4c9e46c280fca7eff7f1e5e2",
+      "sourceVersionId": "source:b22b2038:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "恢复时间尚未公布。",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-03T17:02:57.925Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0004-7a6813eda3154f0caf8f99eacc582211c0df22af4c9e46c280fca7eff7f1e5e2"
+      }
+    }
+  ],
+  "changeProposals": [],
+  "historyRecords": [
+    {
+      "id": "history:time:source:0255e9aa:draft:1:E1:start:created",
+      "entityType": "time_point",
+      "entityId": "time:source:0255e9aa:draft:1:E1:start",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "time:source:0255e9aa:draft:1:E1:start"
+      },
+      "actor": "user",
+      "reason": "用户确认识别时间节点",
+      "sourceVersionId": "source:0255e9aa:version:1",
+      "changedAt": "2026-10-03T17:00:38.786Z"
+    },
+    {
+      "id": "history:event:source:0255e9aa:draft:1:E1:created",
+      "entityType": "event",
+      "entityId": "event:source:0255e9aa:draft:1:E1",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "event:source:0255e9aa:draft:1:E1"
+      },
+      "actor": "user",
+      "reason": "用户确认识别事件",
+      "sourceVersionId": "source:0255e9aa:version:1",
+      "changedAt": "2026-10-03T17:00:38.786Z"
+    },
+    {
+      "id": "history:time:source:b22b2038:draft:1:P1:created",
+      "entityType": "time_point",
+      "entityId": "time:source:b22b2038:draft:1:P1",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "time:source:b22b2038:draft:1:P1"
+      },
+      "actor": "user",
+      "reason": "用户确认识别时间节点",
+      "sourceVersionId": "source:b22b2038:version:1",
+      "changedAt": "2026-10-03T17:02:57.925Z"
+    },
+    {
+      "id": "history:time:source:b22b2038:draft:1:P2:created",
+      "entityType": "time_point",
+      "entityId": "time:source:b22b2038:draft:1:P2",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "time:source:b22b2038:draft:1:P2"
+      },
+      "actor": "user",
+      "reason": "用户确认识别时间节点",
+      "sourceVersionId": "source:b22b2038:version:1",
+      "changedAt": "2026-10-03T17:02:57.925Z"
+    },
+    {
+      "id": "history:time:source:b22b2038:draft:1:P3:created",
+      "entityType": "time_point",
+      "entityId": "time:source:b22b2038:draft:1:P3",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "time:source:b22b2038:draft:1:P3"
+      },
+      "actor": "user",
+      "reason": "用户确认识别时间节点",
+      "sourceVersionId": "source:b22b2038:version:1",
+      "changedAt": "2026-10-03T17:02:57.925Z"
+    },
+    {
+      "id": "history:time:source:b22b2038:draft:1:P4:created",
+      "entityType": "time_point",
+      "entityId": "time:source:b22b2038:draft:1:P4",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "time:source:b22b2038:draft:1:P4"
+      },
+      "actor": "user",
+      "reason": "用户确认识别时间节点",
+      "sourceVersionId": "source:b22b2038:version:1",
+      "changedAt": "2026-10-03T17:02:57.925Z"
+    },
+    {
+      "id": "history:event:source:b22b2038:draft:1:E1:created",
+      "entityType": "event",
+      "entityId": "event:source:b22b2038:draft:1:E1",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "event:source:b22b2038:draft:1:E1"
+      },
+      "actor": "user",
+      "reason": "用户确认识别事件",
+      "sourceVersionId": "source:b22b2038:version:1",
+      "changedAt": "2026-10-03T17:02:57.925Z"
+    },
+    {
+      "id": "history:event:source:b22b2038:draft:1:E2:created",
+      "entityType": "event",
+      "entityId": "event:source:b22b2038:draft:1:E2",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "event:source:b22b2038:draft:1:E2"
+      },
+      "actor": "user",
+      "reason": "用户确认识别事件",
+      "sourceVersionId": "source:b22b2038:version:1",
+      "changedAt": "2026-10-03T17:02:57.925Z"
+    }
+  ],
+  "reminderRecords": [],
+  "preferences": {
+    "onboardingCompletedAt": null,
+    "legacyData": {
+      "courseBlocks": [],
+      "integrations": {
+        "sync": {
+          "endpoint": "http://127.0.0.1:8787"
+        },
+        "webMonitors": [],
+        "connectionIntents": []
+      },
+      "knowledgeSettings": {},
+      "recognitionFeedback": [],
+      "v7MigrationLog": [],
+      "v7LegacyData": {}
+    }
+  },
+  "migrationMetadata": [],
+  "savedAt": "2026-10-03T17:02:57.932Z"
+}

@@ -8,6 +8,7 @@
 | 条件“完成后”被写成当前已完成 | 复用有来源证据的prerequisiteStates校验，资格/前置/可开始分开 | 依赖任务可以保存为等待；资格unknown相关项阻断；不推断完成 |
 | 纯事件关闭/刷新后显示核对0项，部分确认提前完结 | sourceWorkflow用canonical实际accepted/rejected身份计待核对任务/事件；Inbox直接显示二者；sourceReviewD26不将未选事件当作拒绝 | 留在同一App/ReviewSession/DomainCommitPlan/Repository；CAS及原子事务继续；不新增平行保存 |
 | 录制RecognitionRun误写成通用或本地Prompt | App在capture前记录实际候选、原Prompt、构建、录制/夹具角色、来源基准时间；手动模式仍manual-entry且Prompt=null | 工程夹具明确非模型；原回答、转换、首屏与人工输入分开，来源ID可逆映射 |
+| 刷新恢复事件后再点编辑覆盖我的输入 | OrdinarySourceFacts在共享未确认buffer存在时禁止重新开另一个编辑入口，明确保存或放弃；恢复接管可直接保存 | 实际浏览器复现后修复；不要求随便改字解锁，不关闭CAS，不静默选择冲突输入 |
 | 老评分把明确错deadline类型、格式与办结标准报争议 | 新v11复用v10，添加本批原文明确时间类型、coverage、前置状态、材料格式/命名、办结标准遗漏检查 | 旧v10不动；无损时间截取、完整/简称材料、合法事件标题作为输出前参照替代表达；争议仍保留 |
 
 主要代码：src/experiments/realInput01/candidate19.ts；src/recognition/sourceContractV4.ts；src/lib/sourceWorkflow.ts；src/pages/InboxPage.tsx；src/App.tsx；src/domain/v2/sourceReviewD26.ts；src/experiments/d26Recorded/browser.tsx。

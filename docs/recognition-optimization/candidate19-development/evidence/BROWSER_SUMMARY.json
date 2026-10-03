@@ -1,0 +1,310 @@
+{
+  "role": "ENGINEERING_REPLAY",
+  "url": "http://127.0.0.1:6813/",
+  "build": "ce97b325f388 / source e2c33d4806d9",
+  "database": "rco-mainline-01-02-i1-d27-plan-recorded-c19final1004c",
+  "counts": {
+    "sources": 10,
+    "tasks": 5,
+    "events": 6,
+    "timePoints": 10,
+    "materials": 1,
+    "projects": 0,
+    "recognitionRuns": 10,
+    "extractionDrafts": 10
+  },
+  "draftStates": [
+    {
+      "id": "source:2a7024c7:draft:1",
+      "status": "needs_review"
+    },
+    {
+      "id": "source:8fb988d1:draft:1",
+      "status": "confirmed"
+    },
+    {
+      "id": "source:ec454c34:draft:1",
+      "status": "confirmed"
+    },
+    {
+      "id": "source:64712a6a:draft:1",
+      "status": "confirmed"
+    },
+    {
+      "id": "source:f0b8e215:draft:1",
+      "status": "failed"
+    },
+    {
+      "id": "source:87e8176e:draft:1",
+      "status": "confirmed"
+    },
+    {
+      "id": "source:19270209:draft:1",
+      "status": "confirmed"
+    },
+    {
+      "id": "source:2af32851:draft:1",
+      "status": "partially_confirmed"
+    },
+    {
+      "id": "source:b22b2038:draft:1",
+      "status": "confirmed"
+    },
+    {
+      "id": "source:0255e9aa:draft:1",
+      "status": "confirmed"
+    }
+  ],
+  "events": [
+    {
+      "id": "event:source:0255e9aa:draft:1:E1",
+      "title": "校园失物查询网站将在周日晚间暂停查询",
+      "startTimePointId": "time:source:0255e9aa:draft:1:E1:start",
+      "endTimePointId": null
+    },
+    {
+      "id": "event:source:b22b2038:draft:1:E1",
+      "title": "开放实验室说明会",
+      "startTimePointId": "time:source:b22b2038:draft:1:P1",
+      "endTimePointId": "time:source:b22b2038:draft:1:P2"
+    },
+    {
+      "id": "event:source:b22b2038:draft:1:E2",
+      "title": "网络调试",
+      "startTimePointId": "time:source:b22b2038:draft:1:P3",
+      "endTimePointId": "time:source:b22b2038:draft:1:P4"
+    },
+    {
+      "id": "event:source:87e8176e:draft:1:E1",
+      "title": "培训说明会",
+      "startTimePointId": "time:source:87e8176e:draft:1:P1",
+      "endTimePointId": "time:source:87e8176e:draft:1:P2"
+    },
+    {
+      "id": "event:source:ec454c34:draft:1:event-0001",
+      "title": "图书借阅门户将在周三晚停机",
+      "startTimePointId": "time:source:ec454c34:draft:1:tp-0001",
+      "endTimePointId": null
+    },
+    {
+      "id": "event:source:8fb988d1:draft:1:event-0001",
+      "title": "实验预约系统将于周四晚维护",
+      "startTimePointId": "time:source:8fb988d1:draft:1:tp-0001",
+      "endTimePointId": null
+    }
+  ],
+  "timePoints": [
+    {
+      "id": "time:source:0255e9aa:draft:1:E1:start",
+      "type": "event_start",
+      "rawText": "周日晚间",
+      "normalizedValue": null,
+      "precision": "vague",
+      "needsConfirmation": true
+    },
+    {
+      "id": "time:source:b22b2038:draft:1:P1",
+      "type": "event_start",
+      "rawText": "2026年11月12日10:10",
+      "normalizedValue": "2026-11-12T10:10",
+      "precision": "exact",
+      "needsConfirmation": false
+    },
+    {
+      "id": "time:source:b22b2038:draft:1:P2",
+      "type": "event_end",
+      "rawText": "11:40",
+      "normalizedValue": "2026-11-12T11:40",
+      "precision": "exact",
+      "needsConfirmation": false
+    },
+    {
+      "id": "time:source:b22b2038:draft:1:P3",
+      "type": "event_start",
+      "rawText": "周五夜间",
+      "normalizedValue": null,
+      "precision": "vague",
+      "needsConfirmation": true
+    },
+    {
+      "id": "time:source:b22b2038:draft:1:P4",
+      "type": "event_end",
+      "rawText": "恢复时间尚未公布",
+      "normalizedValue": null,
+      "precision": "vague",
+      "needsConfirmation": true
+    },
+    {
+      "id": "time:source:87e8176e:draft:1:P0",
+      "type": "submission_deadline",
+      "rawText": "2026年11月13日09:25前",
+      "normalizedValue": "2026-11-13T09:25",
+      "precision": "exact",
+      "needsConfirmation": false
+    },
+    {
+      "id": "time:source:87e8176e:draft:1:P1",
+      "type": "event_start",
+      "rawText": "2026年11月14日14:20",
+      "normalizedValue": "2026-11-14T14:20",
+      "precision": "exact",
+      "needsConfirmation": false
+    },
+    {
+      "id": "time:source:87e8176e:draft:1:P2",
+      "type": "event_end",
+      "rawText": "15:35",
+      "normalizedValue": "2026-11-14T15:35",
+      "precision": "exact",
+      "needsConfirmation": false
+    },
+    {
+      "id": "time:source:ec454c34:draft:1:tp-0001",
+      "type": "event_start",
+      "rawText": "周三晚",
+      "normalizedValue": null,
+      "precision": "vague",
+      "needsConfirmation": true
+    },
+    {
+      "id": "time:source:8fb988d1:draft:1:tp-0001",
+      "type": "event_start",
+      "rawText": "周四晚",
+      "normalizedValue": null,
+      "precision": "vague",
+      "needsConfirmation": true
+    }
+  ],
+  "s01": {
+    "linkage": {
+      "version": "d21-review-session-measurement-2",
+      "role": "ENGINEERING_REPLAY",
+      "checkpointStageCount": 2,
+      "unconfirmedFieldKeys": [],
+      "conflictFieldKeys": [],
+      "pageEditIds": [
+        "b1db2ab2-3cba-4c45-875b-71f98a469d1c"
+      ],
+      "verifiedCommitIds": [
+        "source-review:source:0255e9aa:draft:1:fnv1a32:4402ff6f"
+      ],
+      "unverifiedCommitIds": [],
+      "checkpointToEditId": [
+        {
+          "field": "event:source:ordinary-buffer",
+          "editId": "b1db2ab2-3cba-4c45-875b-71f98a469d1c",
+          "checkpointHistoryId": "0cea796e-3ef9-4024-b348-b3e43968eaa3",
+          "commitId": "source-review:source:0255e9aa:draft:1:fnv1a32:4402ff6f",
+          "readbackVerified": true
+        }
+      ],
+      "humanMetrics": "NOT_OBSERVABLE"
+    },
+    "semantic": {
+      "version": "d22-semantic-active-input-1",
+      "role": "ENGINEERING_REPLAY",
+      "condition": "assisted",
+      "semanticFields": [
+        "source:events"
+      ],
+      "semanticFieldCount": 1,
+      "storageLeafFields": [
+        "event:source:ordinary-buffer"
+      ],
+      "firstWholeSuggestionCorrect": "NOT_ADJUDICATED",
+      "correctDisposition": "NOT_ADJUDICATED",
+      "lowModificationCorrectDisposition": "NOT_OBSERVABLE",
+      "activeEditMs": null,
+      "wallMs": null,
+      "readMs": null,
+      "waitMs": null,
+      "hiddenMs": null,
+      "idleMs": null,
+      "structural": true,
+      "missing": [
+        "refresh time discontinuity"
+      ],
+      "legacyMeasurement32": {
+        "version": "low-edit-v2-exploratory-1",
+        "role": "ENGINEERING_REPLAY",
+        "correctDisposition": null,
+        "zeroSubstantiveModification": null,
+        "lowModificationCorrectDisposition": null,
+        "committedFields": [
+          "event:source:ordinary-buffer"
+        ],
+        "fieldCount": 1,
+        "structural": true,
+        "activeEditMs": null,
+        "readMs": null,
+        "waitMs": null,
+        "hiddenMs": null,
+        "idleMs": null,
+        "missing": [
+          "refresh time discontinuity"
+        ],
+        "postTerminalEvents": 0,
+        "humanMetrics": "NOT_OBSERVABLE"
+      },
+      "humanMetrics": "NOT_OBSERVABLE",
+      "timeProgramConversion": "edit_activity pulses only; original editId/commit/readback unchanged"
+    }
+  },
+  "s04": {
+    "linkage": {
+      "version": "d20-review-session-measurement-1",
+      "role": "ENGINEERING_REPLAY",
+      "checkpointStageCount": 0,
+      "unconfirmedFieldKeys": [],
+      "conflictFieldKeys": [],
+      "pageEditIds": [],
+      "verifiedCommitIds": [
+        "source-review:source:19270209:draft:1:fnv1a32:c2d945d3"
+      ],
+      "unverifiedCommitIds": [],
+      "checkpointToEditId": "NOT_DIRECTLY_LINKED",
+      "humanMetrics": "NOT_OBSERVABLE"
+    },
+    "semantic": {
+      "version": "d22-semantic-active-input-1",
+      "role": "ENGINEERING_REPLAY",
+      "condition": "assisted",
+      "semanticFields": [],
+      "semanticFieldCount": 0,
+      "storageLeafFields": [],
+      "firstWholeSuggestionCorrect": "NOT_ADJUDICATED",
+      "correctDisposition": "NOT_ADJUDICATED",
+      "lowModificationCorrectDisposition": "NOT_OBSERVABLE",
+      "activeEditMs": 0,
+      "wallMs": 88448,
+      "readMs": 88362,
+      "waitMs": 86,
+      "hiddenMs": 0,
+      "idleMs": 0,
+      "structural": false,
+      "missing": [],
+      "legacyMeasurement32": {
+        "version": "low-edit-v2-exploratory-1",
+        "role": "ENGINEERING_REPLAY",
+        "correctDisposition": null,
+        "zeroSubstantiveModification": null,
+        "lowModificationCorrectDisposition": null,
+        "committedFields": [],
+        "fieldCount": 0,
+        "structural": false,
+        "activeEditMs": 0,
+        "readMs": 88362,
+        "waitMs": 86,
+        "hiddenMs": 0,
+        "idleMs": 0,
+        "missing": [],
+        "postTerminalEvents": 0,
+        "humanMetrics": "NOT_OBSERVABLE"
+      },
+      "humanMetrics": "NOT_OBSERVABLE",
+      "timeProgramConversion": "edit_activity pulses only; original editId/commit/readback unchanged"
+    }
+  },
+  "humanMetrics": "NOT_OBSERVABLE",
+  "measurementCorrectness": "NOT_ADJUDICATED"
+}

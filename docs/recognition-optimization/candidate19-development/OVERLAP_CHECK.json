@@ -1,0 +1,234 @@
+{
+  "version": "c19-source-overlap-1",
+  "method": "Chinese-normalized-character-trigram-Dice; anonymous tracked sources/references/fixture literals; no new output used",
+  "files": [
+    {
+      "path": "docs/recognition-optimization/candidate11/b1-preparation/REFERENCES.json",
+      "sha256": "06482a18eacd7987eda11bdd0439905174ddecb89c60ae9ec83fae4090e1a803"
+    },
+    {
+      "path": "docs/recognition-optimization/candidate11/b1-preparation/SOURCES.json",
+      "sha256": "bf4ef5cff6cb997b0f0a511b6f6c0ee3c51c31c5351e89dc667b1347cbe6bbbf"
+    },
+    {
+      "path": "docs/recognition-optimization/candidate12/d1-provisional-paired-preparation/PROVISIONAL_REFERENCES.json",
+      "sha256": "8b3aa80392d98f925df6b3e96ab564d1646b10f21f5f218e309d9dddf8cb4484"
+    },
+    {
+      "path": "docs/recognition-optimization/candidate12/d1-provisional-paired-preparation/PROVISIONAL_SOURCES.json",
+      "sha256": "5b9651e0e2cc60a8d356d37fa89a3948e9a7a6e8571621d43da2a6c7ce6de97e"
+    },
+    {
+      "path": "docs/recognition-optimization/candidate13/d5-development/REFERENCES.json",
+      "sha256": "7098e58f2631b44b91ef4146c245886a2af6d378f21f08acf3f220ec129eb1a9"
+    },
+    {
+      "path": "docs/recognition-optimization/candidate13/d5-development/SOURCES.json",
+      "sha256": "fd3b0f835567fa37626cda8261f5c2f9fcbbaee5c6c5ed259252f8b3bea6130b"
+    },
+    {
+      "path": "docs/recognition-optimization/candidate14/d7-blocked/INVALIDATED_R5_SEEN_SOURCES.json",
+      "sha256": "bbbcb6debfa0263aecb9899b701e28d26c384759637fd5df2bab5ed62854dcaf"
+    },
+    {
+      "path": "docs/recognition-optimization/candidate15/d8-development/REFERENCES.json",
+      "sha256": "f4f1b20b20423790f245123e3222fee64edc7c9c30a5409b8ddb85fe3a3e0b75"
+    },
+    {
+      "path": "docs/recognition-optimization/candidate15/d8-development/SOURCES.json",
+      "sha256": "361a45c61541661f8f92cac1c44ec87c26346481ddb6241a9a5f9f5d8341dc78"
+    },
+    {
+      "path": "docs/recognition-optimization/candidate15/d9-development/REFERENCES.json",
+      "sha256": "e549340452421f2e0d3b4ef9aa3e9c1bd57e8a3d22fbfcba45e5f56bb83f7fe2"
+    },
+    {
+      "path": "docs/recognition-optimization/candidate16/d13-development/REFERENCES.json",
+      "sha256": "3f7d31b474c6dcb282f92bf32fb1b64186d3cb15289cdebb96516aefcc71844f"
+    },
+    {
+      "path": "docs/recognition-optimization/candidate16/d13-development/SOURCES.json",
+      "sha256": "722fc37d5c0ae649eae1ee639c4c4eeec3320469cee212bf7295fdd4fafcd139"
+    },
+    {
+      "path": "docs/recognition-optimization/candidate17/d16-development/REFERENCES.json",
+      "sha256": "ebfac2dbc3a262c1c9de41ea230bf3d727afbc7517f188bbcbe6ecb111b3544a"
+    },
+    {
+      "path": "docs/recognition-optimization/candidate17/d16-development/SOURCES.json",
+      "sha256": "8a331b426c9c48a1987e77ee99f810287c9a28fd3e2b21c59e4250b03f6b25a8"
+    },
+    {
+      "path": "docs/recognition-optimization/d25-accuracy/REFERENCES.json",
+      "sha256": "ca89c06d82de407c2390248fcf7ad9d6df13966109876bf006b3c892ccc9e24e"
+    },
+    {
+      "path": "docs/recognition-optimization/d25-accuracy/SOURCES.json",
+      "sha256": "1b8f7e2f23fcb0ab0167ab0858b1e3c5dfb6cfcab4eb65552603f01b49b82fa3"
+    },
+    {
+      "path": "docs/recognition-optimization/d26-correction/REFERENCES.json",
+      "sha256": "c15b15b70d562584b9692176e1decfc53b70b3afff21d69d7300f8da40db37b0"
+    },
+    {
+      "path": "docs/recognition-optimization/d26-correction/SOURCES.json",
+      "sha256": "6fc9e64c1e54ee3670e8b9ccfbc58bf67f006ea9bcb7a81c968822cfb998d671"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/REFERENCES.json",
+      "sha256": "143fef7e60fd702ae0c08fa45837f322e0fdcfaaedf7dff2b08dd1240cad046b"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/REFERENCES.json",
+      "sha256": "98e2ebce2ff662b1e0427d4d96851abb888f10e0811140729642a41ba0acfed7"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate06-20260912a/REFERENCES.json",
+      "sha256": "d50c340113a7aa62575eb552e76445cdb6cfc772842d18abf6ac4b530d3a5b35"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/REFERENCES.json",
+      "sha256": "693289cbb8baabf22ac4b869439ca132748dc2908833ac2e0e092e5d84c9244d"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/prepared/REFERENCES.json",
+      "sha256": "42b1b69a1c0c5d1575e49cb1f69ee55364404108f69e14534446d5f221840567"
+    },
+    {
+      "path": "src/experiments/d26/semanticFixture.ts",
+      "sha256": "bd871f08d0034f6afced00fcf8af3ac7ab256911edaf2cdb77b6b63be1ebe803"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate02.ts",
+      "sha256": "30b276b6662a5cc7134aedc5c002db1f791b035cf1fabfcafd84b3d196ffdc25"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate03.ts",
+      "sha256": "f3a2dd9358ca2a50b9b3eba8a090211666db4c0fb8dc5fc146e742c9895f9508"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate04.ts",
+      "sha256": "aa6e27d3e0f06c15cd14ae71679450997ffea2da424627251bde738c2ab53c36"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate05.ts",
+      "sha256": "9ec9761717c2be9e45a2ebaf67b7bca6104d2959553f8d896cd1fd19579ffd30"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate06.ts",
+      "sha256": "4d6227f3a5354fc7eaf419e90b24db53975ab0a7780ec2157dd1b60edd309272"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate07.ts",
+      "sha256": "57c82b2d7e504962825d7631797ca8dc336397b32adb8e61633d4286fea3aadf"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate08.ts",
+      "sha256": "925ac339ebe0b986ddddcb0f1f53abaa7a4ee284e1ce78884cf23e8baf6180d5"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate09.ts",
+      "sha256": "6b02bbc4db0699ec6c4a93eb93585e7fd4b659e3b6d0605c774cfa9b477375d5"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate10.ts",
+      "sha256": "38676b4e4a9afa29fa5150fed381505f5bf780748f8fff579573270784533a8a"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate11.ts",
+      "sha256": "750b3e8fce44057adbb56fccced094b9f54ac0e4b4f2daaa186acf2219404150"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate12.ts",
+      "sha256": "b4f6db69360019bc81355edf181fda48ae8470d1a84d8034545e7f458b1c4bfe"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate13.ts",
+      "sha256": "a26d77a094fbadb4b4ffc4ecbbf62a02281e310c854e6fc3027f7853f8d0d3fc"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate14.ts",
+      "sha256": "7b28d2c3837a67e5a3d3781e8c90b88cb612cd90c9f74b5ff029c5dab243cd93"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate15.ts",
+      "sha256": "acb0c59c818a18d4e26973c1376ca9d2e5baf65f200632829149d90102c9bf27"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate16.ts",
+      "sha256": "e1cef96d8405cdb3c352819412b78155af550fad5f916d861bf9e128cbddf10c"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate17.ts",
+      "sha256": "ebaff284b63ed365f7ab6f9fabb937663dd4cf29e2fa0f8c5cf9e6566f8db357"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate18.ts",
+      "sha256": "d1ebcb7257ac521629e45a6c3c3b694d334178649087c62c0fa108b9bfa562e1"
+    }
+  ],
+  "strings": 453,
+  "rows": [
+    {
+      "sourceId": "C19-DEV-S01",
+      "normalizedExact": false,
+      "closest": {
+        "similarity": 0.06060606060606061,
+        "path": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/prepared/REFERENCES.json",
+        "textSha256": "85090b32260f791c0bc37fd9ceee6712799f40057c326fec8b8cc331160cd8c2"
+      },
+      "highSimilarityThreshold": 0.8
+    },
+    {
+      "sourceId": "C19-DEV-S02",
+      "normalizedExact": false,
+      "closest": {
+        "similarity": 0.12987012987012986,
+        "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/REFERENCES.json",
+        "textSha256": "3f67b0e08a1747eaa35612b84ab6a525bcc730d6ccf5689744371bcf84e05a61"
+      },
+      "highSimilarityThreshold": 0.8
+    },
+    {
+      "sourceId": "C19-DEV-S03",
+      "normalizedExact": false,
+      "closest": {
+        "similarity": 0.046511627906976744,
+        "path": "docs/recognition-optimization/d25-accuracy/SOURCES.json",
+        "textSha256": "da2534bf919fdc5b9fab0b3c23cac67eeb90e6341636e67ecd8c7cb0f1abbf23"
+      },
+      "highSimilarityThreshold": 0.8
+    },
+    {
+      "sourceId": "C19-DEV-S04",
+      "normalizedExact": false,
+      "closest": {
+        "similarity": 0.03225806451612903,
+        "path": "src/experiments/d26/semanticFixture.ts",
+        "textSha256": "567e9596ff5bc2aa68985b79973e57b9ff70624c17e77bb27e67e2c2ddca7a23"
+      },
+      "highSimilarityThreshold": 0.8
+    },
+    {
+      "sourceId": "C19-DEV-S05",
+      "normalizedExact": false,
+      "closest": {
+        "similarity": 0.13636363636363635,
+        "path": "docs/recognition-optimization/d25-accuracy/SOURCES.json",
+        "textSha256": "7be36d8dd0322e5e339910188ea99613cbd6681331ac0b89a240da1734871e4c"
+      },
+      "highSimilarityThreshold": 0.8
+    },
+    {
+      "sourceId": "C19-DEV-S06",
+      "normalizedExact": false,
+      "closest": {
+        "similarity": 0.12121212121212122,
+        "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/REFERENCES.json",
+        "textSha256": "71e374fc92448feaa0e982633268feb21e9f1ceeaa18b4dae79c455b21ac9111"
+      },
+      "highSimilarityThreshold": 0.8
+    }
+  ],
+  "limitations": "Engineering-seen model-assisted Development; lexical scan does not establish independent Holdout or semantic novelty"
+}

@@ -1,0 +1,242 @@
+{
+  "version": "c19-comparison-report-1",
+  "batch": "C19-C17-C19-DEVELOPMENT-R1",
+  "status": "NOT_RUN",
+  "plannedSources": 6,
+  "plannedRequests": 12,
+  "units": [
+    {
+      "ordinal": 1,
+      "sourceId": "C19-DEV-S01",
+      "arm": "A",
+      "candidate": "Candidate17",
+      "status": "NOT_RUN"
+    },
+    {
+      "ordinal": 2,
+      "sourceId": "C19-DEV-S01",
+      "arm": "B",
+      "candidate": "Candidate19",
+      "status": "NOT_RUN"
+    },
+    {
+      "ordinal": 3,
+      "sourceId": "C19-DEV-S02",
+      "arm": "B",
+      "candidate": "Candidate19",
+      "status": "NOT_RUN"
+    },
+    {
+      "ordinal": 4,
+      "sourceId": "C19-DEV-S02",
+      "arm": "A",
+      "candidate": "Candidate17",
+      "status": "NOT_RUN"
+    },
+    {
+      "ordinal": 5,
+      "sourceId": "C19-DEV-S03",
+      "arm": "A",
+      "candidate": "Candidate17",
+      "status": "NOT_RUN"
+    },
+    {
+      "ordinal": 6,
+      "sourceId": "C19-DEV-S03",
+      "arm": "B",
+      "candidate": "Candidate19",
+      "status": "NOT_RUN"
+    },
+    {
+      "ordinal": 7,
+      "sourceId": "C19-DEV-S04",
+      "arm": "B",
+      "candidate": "Candidate19",
+      "status": "NOT_RUN"
+    },
+    {
+      "ordinal": 8,
+      "sourceId": "C19-DEV-S04",
+      "arm": "A",
+      "candidate": "Candidate17",
+      "status": "NOT_RUN"
+    },
+    {
+      "ordinal": 9,
+      "sourceId": "C19-DEV-S05",
+      "arm": "A",
+      "candidate": "Candidate17",
+      "status": "NOT_RUN"
+    },
+    {
+      "ordinal": 10,
+      "sourceId": "C19-DEV-S05",
+      "arm": "B",
+      "candidate": "Candidate19",
+      "status": "NOT_RUN"
+    },
+    {
+      "ordinal": 11,
+      "sourceId": "C19-DEV-S06",
+      "arm": "B",
+      "candidate": "Candidate19",
+      "status": "NOT_RUN"
+    },
+    {
+      "ordinal": 12,
+      "sourceId": "C19-DEV-S06",
+      "arm": "A",
+      "candidate": "Candidate17",
+      "status": "NOT_RUN"
+    }
+  ],
+  "cases": [],
+  "summary": {
+    "Candidate17_rawContractScore": {
+      "plannedDenominator": 6,
+      "observable": 0,
+      "wholeCorrect": 0,
+      "wrong": 0,
+      "unknown": 0,
+      "notRun": 6,
+      "rate": "NOT_OBSERVABLE"
+    },
+    "Candidate17_firstDisplayScore": {
+      "plannedDenominator": 6,
+      "observable": 0,
+      "wholeCorrect": 0,
+      "wrong": 0,
+      "unknown": 0,
+      "notRun": 6,
+      "rate": "NOT_OBSERVABLE"
+    },
+    "Candidate19_rawContractScore": {
+      "plannedDenominator": 6,
+      "observable": 0,
+      "wholeCorrect": 0,
+      "wrong": 0,
+      "unknown": 0,
+      "notRun": 6,
+      "rate": "NOT_OBSERVABLE"
+    },
+    "Candidate19_firstDisplayScore": {
+      "plannedDenominator": 6,
+      "observable": 0,
+      "wholeCorrect": 0,
+      "wrong": 0,
+      "unknown": 0,
+      "notRun": 6,
+      "rate": "NOT_OBSERVABLE"
+    }
+  },
+  "selection": {
+    "version": "c19-layered-development-1",
+    "denominator": 6,
+    "observedPairs": 0,
+    "improved": 0,
+    "regressed": 0,
+    "netWhole": 0,
+    "unknown": 6,
+    "riskRegressions": [],
+    "status": "EVIDENCE_INCOMPLETE",
+    "scope": "PROVISIONAL_SEEN_DEVELOPMENT_NOT_HOLDOUT"
+  },
+  "scene": {
+    "status": "READ_ONLY",
+    "role": "SCOPED_DEVELOPMENT_HOST_NOT_AUTHORIZATION",
+    "state": null,
+    "nextOrdinal": null,
+    "audit": "NO_STATE",
+    "uncertainty": null,
+    "priceStatus": "NOT_CHECKED_NO_STATE",
+    "batchEvidence": {
+      "rows": 0,
+      "grantCount": 0,
+      "reserveCount": 0,
+      "settleCount": 0,
+      "units": [
+        {
+          "ordinal": 1,
+          "reserveCount": 0,
+          "settleCount": 0
+        },
+        {
+          "ordinal": 2,
+          "reserveCount": 0,
+          "settleCount": 0
+        },
+        {
+          "ordinal": 3,
+          "reserveCount": 0,
+          "settleCount": 0
+        },
+        {
+          "ordinal": 4,
+          "reserveCount": 0,
+          "settleCount": 0
+        },
+        {
+          "ordinal": 5,
+          "reserveCount": 0,
+          "settleCount": 0
+        },
+        {
+          "ordinal": 6,
+          "reserveCount": 0,
+          "settleCount": 0
+        },
+        {
+          "ordinal": 7,
+          "reserveCount": 0,
+          "settleCount": 0
+        },
+        {
+          "ordinal": 8,
+          "reserveCount": 0,
+          "settleCount": 0
+        },
+        {
+          "ordinal": 9,
+          "reserveCount": 0,
+          "settleCount": 0
+        },
+        {
+          "ordinal": 10,
+          "reserveCount": 0,
+          "settleCount": 0
+        },
+        {
+          "ordinal": 11,
+          "reserveCount": 0,
+          "settleCount": 0
+        },
+        {
+          "ordinal": 12,
+          "reserveCount": 0,
+          "settleCount": 0
+        }
+      ]
+    },
+    "localEvidence": {
+      "rawFiles": 0,
+      "receiptFiles": 0,
+      "incompleteStateWrite": false
+    },
+    "dispatchEligibility": "NOT_EVALUATED_READ_ONLY",
+    "lockExists": false,
+    "halt": null,
+    "ledger": {
+      "rows": 971,
+      "sha256": "7b1d1935254a7d7830e1d03892d12895707b71107dfc1bfb611f3459e839367d",
+      "tail": "d4b2338183a26a9f94c2349321e60fbf75b97ded2fff6005a02e60b7070d1d48",
+      "batchRows": 0
+    },
+    "dispatch": "NOT_PERFORMED",
+    "ledgerWrites": 0
+  },
+  "rawAssessmentBoundary": "Frozen parsed/compiled contract score, not independent human raw truth",
+  "referenceTruth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+  "freeProseAndLeakage": "NOT_ADJUDICATED unless source support is deterministically checked",
+  "humanMetrics": "NOT_OBSERVABLE",
+  "providerActualCharge": "NOT_OBSERVABLE"
+}

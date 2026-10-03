@@ -1,0 +1,78 @@
+{
+  "sources": [
+    {
+      "sourceId": "C19-DEV-S01",
+      "sourceVersionId": "C19-DEV-S01-v1",
+      "sourceText": "校园失物查询网站将在周日晚间暂停查询。此前登记的信息保持不变，不需要重新登记，也不要发送补充邮件。",
+      "sourceSha256": "15d3153166d43aa37568018eab9f8661de221c3773313689ecf766e78c181e95",
+      "referenceTime": "2026-10-03T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "role": "NEW_MODEL_ASSISTED_SYNTHETIC_DEVELOPMENT_NOT_HOLDOUT",
+      "targets": [
+        "NO_TASK_EVENT_TIME"
+      ]
+    },
+    {
+      "sourceId": "C19-DEV-S02",
+      "sourceVersionId": "C19-DEV-S02-v1",
+      "sourceText": "开放实验室说明会2026年11月12日10:10开始，11:40结束。网络调试从周五夜间开始，恢复时间尚未公布。两件事仅供了解，不要求报名。",
+      "sourceSha256": "b6ae3d744db6f70621a23d8ad2ac4611c2616df5ad977773440fa7a25c403dfd",
+      "referenceTime": "2026-10-03T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "role": "NEW_MODEL_ASSISTED_SYNTHETIC_DEVELOPMENT_NOT_HOLDOUT",
+      "targets": [
+        "NO_TASK_EVENT_TIME",
+        "EVENT_ENDPOINT_GRAPH"
+      ]
+    },
+    {
+      "sourceId": "C19-DEV-S03",
+      "sourceVersionId": "C19-DEV-S03-v1",
+      "sourceText": "先填写场地使用登记。填好之后递交场地使用登记。器材领用资格还未公布，符合资格才能领取演示器材。",
+      "sourceSha256": "d502bfa67f407bc0812b593d2879044ee39bdb2d7d2fdd4a6c02d78d081fbb31",
+      "referenceTime": "2026-10-03T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "role": "NEW_MODEL_ASSISTED_SYNTHETIC_DEVELOPMENT_NOT_HOLDOUT",
+      "targets": [
+        "QUALIFICATION_VS_PREREQUISITE"
+      ]
+    },
+    {
+      "sourceId": "C19-DEV-S04",
+      "sourceVersionId": "C19-DEV-S04-v1",
+      "sourceText": "本轮展位申请仅限获准社团。你的社团尚未获准，不能提交展位申请。另请保存活动联系编号。",
+      "sourceSha256": "efe4d47f1a03a88791b0d30c272fb253aa9e1b157b936422d5840e5941318409",
+      "referenceTime": "2026-10-03T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "role": "NEW_MODEL_ASSISTED_SYNTHETIC_DEVELOPMENT_NOT_HOLDOUT",
+      "targets": [
+        "QUALIFICATION_VS_PREREQUISITE"
+      ]
+    },
+    {
+      "sourceId": "C19-DEV-S05",
+      "sourceVersionId": "C19-DEV-S05-v1",
+      "sourceText": "请在2026年11月13日09:25前上传志愿服务统计表。统计表须为PDF，文件名包含小组编号。看到平台显示接收成功才算办结。培训说明会2026年11月14日14:20开始，15:35结束。",
+      "sourceSha256": "88d0804e9cf9fd4898278278a5406a43ceadee08b0c58634e9718fdb8d6aa174",
+      "referenceTime": "2026-10-03T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "role": "NEW_MODEL_ASSISTED_SYNTHETIC_DEVELOPMENT_NOT_HOLDOUT",
+      "targets": [
+        "TASK_EVENT_GRAPH",
+        "PRECISE_MATERIAL_COMPLETION_CONTROL"
+      ]
+    },
+    {
+      "sourceId": "C19-DEV-S06",
+      "sourceVersionId": "C19-DEV-S06-v1",
+      "sourceText": "请核对储物柜编号。本通知没有截止日期，不需要准备附件，也没有活动安排。",
+      "sourceSha256": "1522eb63567f94fc177b0638f4ed2acdd413ee7b879d5497892c899139a9a56b",
+      "referenceTime": "2026-10-03T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "role": "NEW_MODEL_ASSISTED_SYNTHETIC_DEVELOPMENT_NOT_HOLDOUT",
+      "targets": [
+        "ORDINARY_TASK_EXPLICIT_NONE_CONTROL"
+      ]
+    }
+  ]
+}

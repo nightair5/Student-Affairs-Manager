@@ -1,0 +1,1054 @@
+{
+  "schemaVersion": 8,
+  "workspace": {
+    "id": "rco-mainline-01-02-i1-d27-plan-recorded-c19final1004c",
+    "title": "D26 实际录制工程回放（非真人）",
+    "createdAt": "2026-09-05T08:00:00.000Z",
+    "updatedAt": "2026-10-03T17:00:12.155Z"
+  },
+  "settings": {
+    "defaultTimezone": "Asia/Shanghai",
+    "locale": "zh-CN"
+  },
+  "sources": [
+    {
+      "id": "source:0255e9aa",
+      "workspaceId": "rco-mainline-01-02-i1-d27-plan-recorded-c19final1004c",
+      "type": "text",
+      "title": "手动粘贴消息",
+      "status": "needs_review",
+      "currentVersionId": "source:0255e9aa:version:1",
+      "createdAt": "2026-10-03T16:58:30.105Z",
+      "updatedAt": "2026-10-03T16:58:30.124Z",
+      "legacyData": {
+        "recognitionProvenance": {
+          "modelName": "匿名契约工程夹具（非模型输出）",
+          "promptVersion": "ENGINEERING_FIXTURE_NOT_GENERATED",
+          "candidateVersion": "ENGINEERING_FIXTURE_NOT_CANDIDATE",
+          "build": "ce97b325f388 / source e2c33d4806d9",
+          "responseRole": "ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT",
+          "componentVersion": "explicit-source-contract-4.0.0",
+          "referenceTime": "2026-10-03T09:00:00+08:00",
+          "timezone": "Asia/Shanghai"
+        },
+        "contentPreview": "校园失物查询网站将在周日晚间暂停查询。此前登记的信息保持不变，不需要重新登记，也不要发送补充邮件。",
+        "url": null,
+        "originalFileName": null,
+        "mimeType": null,
+        "fileSize": null,
+        "fileHash": null,
+        "parserVersion": "local-rules-v2",
+        "reviewMetadata": {
+          "sourceType": "text",
+          "mimeType": null,
+          "characterCount": 49,
+          "pageCount": null,
+          "extractionMethod": "manual",
+          "ocrConfidence": null,
+          "partialExtraction": null,
+          "qualityFlags": []
+        },
+        "captureOperationId": "68841f6e-8583-4f29-b4f4-499a744eba2f"
+      }
+    }
+  ],
+  "sourceVersions": [
+    {
+      "id": "source:0255e9aa:version:1",
+      "sourceId": "source:0255e9aa",
+      "versionNo": 1,
+      "contentHash": "fnv1a32:a5d1f54e",
+      "rawText": "校园失物查询网站将在周日晚间暂停查询。此前登记的信息保持不变，不需要重新登记，也不要发送补充邮件。",
+      "rawTextRef": null,
+      "createdAt": "2026-10-03T16:58:30.105Z",
+      "legacyData": {
+        "reviewMetadata": {
+          "sourceType": "text",
+          "mimeType": null,
+          "characterCount": 49,
+          "pageCount": null,
+          "extractionMethod": "manual",
+          "ocrConfidence": null,
+          "partialExtraction": null,
+          "qualityFlags": []
+        }
+      }
+    }
+  ],
+  "recognitionRuns": [
+    {
+      "id": "source:0255e9aa:run:1",
+      "sourceVersionId": "source:0255e9aa:version:1",
+      "provider": "manual",
+      "modelName": "EngineeringFixture 固定录制",
+      "promptVersion": "ENGINEERING_FIXTURE_NOT_GENERATED",
+      "schemaVersion": "2.0",
+      "pipelineVersion": "explicit-source-contract-4.0.0",
+      "status": "succeeded",
+      "startedAt": "2026-10-03T16:58:30.113Z",
+      "completedAt": "2026-10-03T16:58:30.124Z",
+      "durationMs": 11,
+      "tokenUsage": null,
+      "qualityFlags": [],
+      "errorCode": null,
+      "legacyData": {
+        "recordedResponse": {
+          "role": "ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT",
+          "ordinal": 202,
+          "sourceId": "C19-DEV-S01",
+          "sourceVersionId": "C19-DEV-S01-v1",
+          "candidate": "EngineeringFixture",
+          "sourceText": "校园失物查询网站将在周日晚间暂停查询。此前登记的信息保持不变，不需要重新登记，也不要发送补充邮件。",
+          "referenceTime": "2026-10-03T09:00:00+08:00",
+          "timezone": "Asia/Shanghai",
+          "rawHttpText": "{\"model\":\"deepseek-flash\",\"status\":\"completed\",\"output\":[{\"type\":\"message\",\"role\":\"assistant\",\"content\":[{\"type\":\"output_text\",\"text\":\"{\\\"schemaVersion\\\":\\\"explicit-source-contract-4.0.0\\\",\\\"tasks\\\":[],\\\"materials\\\":[],\\\"timePoints\\\":[{\\\"tempId\\\":\\\"P1\\\",\\\"type\\\":\\\"event_start\\\",\\\"rawText\\\":\\\"周日晚间\\\",\\\"relatedTaskTempIds\\\":[],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0001-d2175f450fa661e632714e804c6a781e49096cf495ee6bb29874af5c15fe9577\\\"],\\\"confidence\\\":1}],\\\"events\\\":[{\\\"tempId\\\":\\\"E1\\\",\\\"title\\\":\\\"校园失物查询网站\\\",\\\"description\\\":\\\"\\\",\\\"location\\\":null,\\\"startTimePointTempId\\\":\\\"P1\\\",\\\"endTimePointTempId\\\":null,\\\"relatedTaskTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0001-d2175f450fa661e632714e804c6a781e49096cf495ee6bb29874af5c15fe9577\\\"],\\\"confidence\\\":1,\\\"inferenceLevel\\\":\\\"explicit\\\"}],\\\"revisions\\\":[],\\\"conflicts\\\":[],\\\"scopeAccounting\\\":[{\\\"scopeId\\\":\\\"scope-0001-d2175f450fa661e632714e804c6a781e49096cf495ee6bb29874af5c15fe9577\\\",\\\"kind\\\":\\\"event\\\",\\\"primaryEntityIds\\\":[\\\"E1\\\"],\\\"secondaryEntityIds\\\":[\\\"P1\\\"]},{\\\"scopeId\\\":\\\"scope-0002-bda82f7016bb991941574b9293bd625eec2ceaa495b9f468e7644e6ffc8472d1\\\",\\\"kind\\\":\\\"information\\\",\\\"primaryEntityIds\\\":[],\\\"secondaryEntityIds\\\":[]},{\\\"scopeId\\\":\\\"scope-0003-283a70d573deeb14ba0f13645395a76f5b351e6c6a13576fc90b63ebf36ecd64\\\",\\\"kind\\\":\\\"information\\\",\\\"primaryEntityIds\\\":[],\\\"secondaryEntityIds\\\":[]},{\\\"scopeId\\\":\\\"scope-0004-b5e8a0826c3dce5194cbd00241b58c17185c5f3e4f8b7dea38d27ec248d5b105\\\",\\\"kind\\\":\\\"information\\\",\\\"primaryEntityIds\\\":[],\\\"secondaryEntityIds\\\":[]}],\\\"prerequisiteStates\\\":[]}\"}]}],\"usage\":{\"input_tokens\":0,\"output_tokens\":0}}",
+          "responseSha256": "e3d43305ac50e017818a061900691216f358e5f09728ce841e3e05bcb24470eb",
+          "requestSha256": null,
+          "frozenOutcome": "NOT_MODEL_OUTPUT",
+          "projectionVersion": "explicit-source-contract-4.0.0"
+        },
+        "originalRecognitionResult": {
+          "schemaVersion": "2.0",
+          "promptVersion": "recognition-source-contract-4.0.0",
+          "modelName": "匿名契约工程夹具（非模型输出）",
+          "createdAt": "2026-10-03T09:00:00+08:00",
+          "sourceSummary": {
+            "title": "校园失物查询网站",
+            "sourceType": "text",
+            "notificationType": "event_notice",
+            "summary": "0项任务，1项事件。",
+            "requiresAction": false,
+            "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "未主动建立或匹配项目。"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [],
+          "materials": [],
+          "timePoints": [
+            {
+              "tempId": "P1",
+              "type": "event_start",
+              "rawText": "周日晚间",
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "confidence": 1,
+              "normalizedValue": null,
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "vague",
+              "needsConfirmation": true,
+              "evidenceIds": [
+                "d26-scope-0001-7c062750dd226596e435978150733611ed32aecfe5d1097c6557a5beace42f7d"
+              ]
+            }
+          ],
+          "events": [
+            {
+              "tempId": "E1",
+              "title": "校园失物查询网站",
+              "description": "校园失物查询网站将在周日晚间暂停查询。",
+              "startTimePointTempId": "P1",
+              "endTimePointTempId": null,
+              "location": null,
+              "confidence": 1,
+              "inferenceLevel": "explicit",
+              "evidenceIds": [
+                "d26-scope-0001-7c062750dd226596e435978150733611ed32aecfe5d1097c6557a5beace42f7d"
+              ],
+              "selected": true
+            }
+          ],
+          "evidence": [
+            {
+              "id": "d26-scope-0001-7c062750dd226596e435978150733611ed32aecfe5d1097c6557a5beace42f7d",
+              "sourceId": "source:0255e9aa",
+              "quote": "校园失物查询网站将在周日晚间暂停查询。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0002-0757e48d6a7ac0de7c310d0a3f4eef023f62436ec2848efc1abb4f0eaa60ac73",
+              "sourceId": "source:0255e9aa",
+              "quote": "此前登记的信息保持不变，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0003-ffa63728bca1aa2fc92b8bdcd0c1bbe34ebb1d09ffe764c85dbcba9d54d20153",
+              "sourceId": "source:0255e9aa",
+              "quote": "不需要重新登记，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0004-b569f65531ff0de5df1f6940cbdae463a80a27a2649bafc1c182ccf46d298da0",
+              "sourceId": "source:0255e9aa",
+              "quote": "也不要发送补充邮件。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [],
+          "ambiguities": [],
+          "ignoredContent": [
+            {
+              "text": "此前登记的信息保持不变，",
+              "reason": "other"
+            },
+            {
+              "text": "不需要重新登记，",
+              "reason": "other"
+            },
+            {
+              "text": "也不要发送补充邮件。",
+              "reason": "other"
+            }
+          ],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 0.5,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": false,
+            "reviewReasons": []
+          }
+        }
+      }
+    }
+  ],
+  "extractionDrafts": [
+    {
+      "id": "source:0255e9aa:draft:1",
+      "recognitionRunId": "source:0255e9aa:run:1",
+      "status": "needs_review",
+      "result": {
+        "schemaVersion": "2.0",
+        "promptVersion": "recognition-source-contract-4.0.0",
+        "modelName": "匿名契约工程夹具（非模型输出）",
+        "createdAt": "2026-10-03T09:00:00+08:00",
+        "sourceSummary": {
+          "title": "校园失物查询网站",
+          "sourceType": "text",
+          "notificationType": "event_notice",
+          "summary": "0项任务，1项事件。请核对后确认。",
+          "requiresAction": false,
+          "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+        },
+        "projectMatch": {
+          "decision": "standalone_task",
+          "matchedProjectId": null,
+          "suggestedProjectTitle": null,
+          "confidence": 1,
+          "reasons": [
+            "未主动建立或匹配项目。"
+          ]
+        },
+        "projectSuggestion": null,
+        "milestones": [],
+        "standaloneTasks": [],
+        "materials": [],
+        "timePoints": [
+          {
+            "tempId": "E1:start",
+            "type": "event_start",
+            "rawText": "周日晚间",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "confidence": 1,
+            "normalizedValue": null,
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "vague",
+            "needsConfirmation": true,
+            "evidenceIds": [
+              "d26-scope-0001-7c062750dd226596e435978150733611ed32aecfe5d1097c6557a5beace42f7d"
+            ]
+          }
+        ],
+        "events": [
+          {
+            "tempId": "E1",
+            "title": "校园失物查询网站将在周日晚间暂停查询",
+            "description": "",
+            "location": null,
+            "startTimePointTempId": "E1:start",
+            "endTimePointTempId": null,
+            "evidenceIds": [
+              "user-evidence:E1"
+            ],
+            "confidence": 1,
+            "inferenceLevel": "explicit",
+            "selected": true
+          }
+        ],
+        "evidence": [
+          {
+            "id": "d26-scope-0001-7c062750dd226596e435978150733611ed32aecfe5d1097c6557a5beace42f7d",
+            "sourceId": "source:0255e9aa",
+            "quote": "校园失物查询网站将在周日晚间暂停查询。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0002-0757e48d6a7ac0de7c310d0a3f4eef023f62436ec2848efc1abb4f0eaa60ac73",
+            "sourceId": "source:0255e9aa",
+            "quote": "此前登记的信息保持不变，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0003-ffa63728bca1aa2fc92b8bdcd0c1bbe34ebb1d09ffe764c85dbcba9d54d20153",
+            "sourceId": "source:0255e9aa",
+            "quote": "不需要重新登记，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0004-b569f65531ff0de5df1f6940cbdae463a80a27a2649bafc1c182ccf46d298da0",
+            "sourceId": "source:0255e9aa",
+            "quote": "也不要发送补充邮件。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "user-evidence:E1",
+            "sourceId": "source:0255e9aa",
+            "field": "event",
+            "quotedText": "校园失物查询网站将在周日晚间暂停查询。此前登记的信息保持不变，不需要重新登记，也不要发送补充邮件。",
+            "quote": "校园失物查询网站将在周日晚间暂停查询。此前登记的信息保持不变，不需要重新登记，也不要发送补充邮件。",
+            "extractionMethod": "manual"
+          }
+        ],
+        "conflicts": [],
+        "ambiguities": [],
+        "ignoredContent": [
+          {
+            "text": "此前登记的信息保持不变，",
+            "reason": "other"
+          },
+          {
+            "text": "不需要重新登记，",
+            "reason": "other"
+          },
+          {
+            "text": "也不要发送补充邮件。",
+            "reason": "other"
+          }
+        ],
+        "quality": {
+          "overallConfidence": 1,
+          "hierarchyConfidence": 1,
+          "dateConfidence": 0.5,
+          "evidenceCoverage": 1,
+          "duplicateRisk": 0,
+          "overFragmentationRisk": 0,
+          "missingActionRisk": 0,
+          "needsHumanReview": false,
+          "reviewReasons": []
+        }
+      },
+      "commitOperationIds": [],
+      "acceptedEntityTempIds": [],
+      "rejectedEntityTempIds": [],
+      "createdAt": "2026-10-03T16:58:30.105Z",
+      "updatedAt": "2026-10-03T17:00:12.145Z",
+      "legacyData": {
+        "semanticSidecar": {
+          "version": "semantic-ordinary-bridge-1.0.0",
+          "originalSemantic": {
+            "schemaVersion": "mainline04-task-semantics-1",
+            "tasks": [],
+            "materials": [],
+            "timePoints": [
+              {
+                "tempId": "P1",
+                "type": "event_start",
+                "rawText": "周日晚间",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "scopeIds": [
+                  "scope-0001-7c062750dd226596e435978150733611ed32aecfe5d1097c6557a5beace42f7d"
+                ],
+                "confidence": 1,
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              }
+            ],
+            "events": [
+              {
+                "tempId": "E1",
+                "title": "校园失物查询网站",
+                "description": "",
+                "location": null,
+                "startTimePointTempId": "P1",
+                "endTimePointTempId": null,
+                "relatedTaskTempIds": [],
+                "scopeIds": [
+                  "scope-0001-7c062750dd226596e435978150733611ed32aecfe5d1097c6557a5beace42f7d"
+                ],
+                "confidence": 1,
+                "inferenceLevel": "explicit"
+              }
+            ],
+            "revisions": [],
+            "conflicts": [],
+            "informationScopeIds": [
+              "scope-0002-0757e48d6a7ac0de7c310d0a3f4eef023f62436ec2848efc1abb4f0eaa60ac73",
+              "scope-0003-ffa63728bca1aa2fc92b8bdcd0c1bbe34ebb1d09ffe764c85dbcba9d54d20153",
+              "scope-0004-b569f65531ff0de5df1f6940cbdae463a80a27a2649bafc1c182ccf46d298da0"
+            ],
+            "unresolvedScopeIds": [],
+            "sourceId": "source:0255e9aa",
+            "sourceVersionId": "source:0255e9aa:version:1",
+            "sourceFingerprint": "sha256:4ae5068cf50753be64a4e0579be706b29198c96bdc9c7f0019e49282dabce985"
+          },
+          "firstSemantic": {
+            "schemaVersion": "mainline04-task-semantics-1",
+            "tasks": [],
+            "materials": [],
+            "timePoints": [
+              {
+                "tempId": "P1",
+                "type": "event_start",
+                "rawText": "周日晚间",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "scopeIds": [
+                  "scope-0001-7c062750dd226596e435978150733611ed32aecfe5d1097c6557a5beace42f7d"
+                ],
+                "confidence": 1,
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              }
+            ],
+            "events": [
+              {
+                "tempId": "E1",
+                "title": "校园失物查询网站",
+                "description": "校园失物查询网站将在周日晚间暂停查询。",
+                "location": null,
+                "startTimePointTempId": "P1",
+                "endTimePointTempId": null,
+                "relatedTaskTempIds": [],
+                "scopeIds": [
+                  "scope-0001-7c062750dd226596e435978150733611ed32aecfe5d1097c6557a5beace42f7d"
+                ],
+                "confidence": 1,
+                "inferenceLevel": "explicit"
+              }
+            ],
+            "revisions": [],
+            "conflicts": [],
+            "informationScopeIds": [
+              "scope-0002-0757e48d6a7ac0de7c310d0a3f4eef023f62436ec2848efc1abb4f0eaa60ac73",
+              "scope-0003-ffa63728bca1aa2fc92b8bdcd0c1bbe34ebb1d09ffe764c85dbcba9d54d20153",
+              "scope-0004-b569f65531ff0de5df1f6940cbdae463a80a27a2649bafc1c182ccf46d298da0"
+            ],
+            "unresolvedScopeIds": [],
+            "sourceId": "source:0255e9aa",
+            "sourceVersionId": "source:0255e9aa:version:1",
+            "sourceFingerprint": "sha256:4ae5068cf50753be64a4e0579be706b29198c96bdc9c7f0019e49282dabce985"
+          },
+          "sourceScopeEvidence": [
+            {
+              "scopeId": "scope-0001-7c062750dd226596e435978150733611ed32aecfe5d1097c6557a5beace42f7d",
+              "evidenceId": "d26-scope-0001-7c062750dd226596e435978150733611ed32aecfe5d1097c6557a5beace42f7d"
+            },
+            {
+              "scopeId": "scope-0002-0757e48d6a7ac0de7c310d0a3f4eef023f62436ec2848efc1abb4f0eaa60ac73",
+              "evidenceId": "d26-scope-0002-0757e48d6a7ac0de7c310d0a3f4eef023f62436ec2848efc1abb4f0eaa60ac73"
+            },
+            {
+              "scopeId": "scope-0003-ffa63728bca1aa2fc92b8bdcd0c1bbe34ebb1d09ffe764c85dbcba9d54d20153",
+              "evidenceId": "d26-scope-0003-ffa63728bca1aa2fc92b8bdcd0c1bbe34ebb1d09ffe764c85dbcba9d54d20153"
+            },
+            {
+              "scopeId": "scope-0004-b569f65531ff0de5df1f6940cbdae463a80a27a2649bafc1c182ccf46d298da0",
+              "evidenceId": "d26-scope-0004-b569f65531ff0de5df1f6940cbdae463a80a27a2649bafc1c182ccf46d298da0"
+            }
+          ],
+          "representationGaps": [],
+          "displayAudit": {
+            "version": "grounded-first-suggestion-1.0.0",
+            "originalProse": [
+              {
+                "entityId": "E1",
+                "kind": "event",
+                "title": "校园失物查询网站",
+                "description": ""
+              }
+            ],
+            "generatedProse": [
+              {
+                "entityId": "E1",
+                "kind": "event",
+                "title": "校园失物查询网站",
+                "description": "校园失物查询网站将在周日晚间暂停查询。"
+              }
+            ],
+            "times": [
+              {
+                "entityId": "P1",
+                "before": {
+                  "normalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "vague",
+                  "needsConfirmation": true
+                },
+                "after": {
+                  "normalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "vague",
+                  "needsConfirmation": true
+                },
+                "interpretation": {
+                  "version": "source-time-semantics-2.0.0",
+                  "point": {
+                    "rawText": "周日晚间",
+                    "type": "event_start",
+                    "normalizedValue": null,
+                    "rangeEndNormalizedValue": null,
+                    "timezone": "Asia/Shanghai",
+                    "isAllDay": false,
+                    "precision": "vague",
+                    "needsConfirmation": true,
+                    "evidenceSpan": {
+                      "start": 0,
+                      "end": 4
+                    },
+                    "dateKind": "none",
+                    "timeKind": "none",
+                    "correctionApplied": false,
+                    "issues": [
+                      "time_not_found",
+                      "day_period_without_clock"
+                    ]
+                  },
+                  "knownDate": null,
+                  "dayPeriod": "晚",
+                  "certainty": "partial",
+                  "sourceContext": "校园失物查询网站将在周日晚间暂停查询"
+                }
+              }
+            ],
+            "unresolved": [],
+            "role": "DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT"
+          },
+          "recordedProvenance": {
+            "role": "ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT",
+            "ordinal": 202,
+            "sourceId": "C19-DEV-S01",
+            "sourceVersionId": "C19-DEV-S01-v1",
+            "candidate": "EngineeringFixture",
+            "sourceText": "校园失物查询网站将在周日晚间暂停查询。此前登记的信息保持不变，不需要重新登记，也不要发送补充邮件。",
+            "referenceTime": "2026-10-03T09:00:00+08:00",
+            "timezone": "Asia/Shanghai",
+            "rawHttpText": "{\"model\":\"deepseek-flash\",\"status\":\"completed\",\"output\":[{\"type\":\"message\",\"role\":\"assistant\",\"content\":[{\"type\":\"output_text\",\"text\":\"{\\\"schemaVersion\\\":\\\"explicit-source-contract-4.0.0\\\",\\\"tasks\\\":[],\\\"materials\\\":[],\\\"timePoints\\\":[{\\\"tempId\\\":\\\"P1\\\",\\\"type\\\":\\\"event_start\\\",\\\"rawText\\\":\\\"周日晚间\\\",\\\"relatedTaskTempIds\\\":[],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0001-d2175f450fa661e632714e804c6a781e49096cf495ee6bb29874af5c15fe9577\\\"],\\\"confidence\\\":1}],\\\"events\\\":[{\\\"tempId\\\":\\\"E1\\\",\\\"title\\\":\\\"校园失物查询网站\\\",\\\"description\\\":\\\"\\\",\\\"location\\\":null,\\\"startTimePointTempId\\\":\\\"P1\\\",\\\"endTimePointTempId\\\":null,\\\"relatedTaskTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0001-d2175f450fa661e632714e804c6a781e49096cf495ee6bb29874af5c15fe9577\\\"],\\\"confidence\\\":1,\\\"inferenceLevel\\\":\\\"explicit\\\"}],\\\"revisions\\\":[],\\\"conflicts\\\":[],\\\"scopeAccounting\\\":[{\\\"scopeId\\\":\\\"scope-0001-d2175f450fa661e632714e804c6a781e49096cf495ee6bb29874af5c15fe9577\\\",\\\"kind\\\":\\\"event\\\",\\\"primaryEntityIds\\\":[\\\"E1\\\"],\\\"secondaryEntityIds\\\":[\\\"P1\\\"]},{\\\"scopeId\\\":\\\"scope-0002-bda82f7016bb991941574b9293bd625eec2ceaa495b9f468e7644e6ffc8472d1\\\",\\\"kind\\\":\\\"information\\\",\\\"primaryEntityIds\\\":[],\\\"secondaryEntityIds\\\":[]},{\\\"scopeId\\\":\\\"scope-0003-283a70d573deeb14ba0f13645395a76f5b351e6c6a13576fc90b63ebf36ecd64\\\",\\\"kind\\\":\\\"information\\\",\\\"primaryEntityIds\\\":[],\\\"secondaryEntityIds\\\":[]},{\\\"scopeId\\\":\\\"scope-0004-b5e8a0826c3dce5194cbd00241b58c17185c5f3e4f8b7dea38d27ec248d5b105\\\",\\\"kind\\\":\\\"information\\\",\\\"primaryEntityIds\\\":[],\\\"secondaryEntityIds\\\":[]}],\\\"prerequisiteStates\\\":[]}\"}]}],\"usage\":{\"input_tokens\":0,\"output_tokens\":0}}",
+            "responseSha256": "e3d43305ac50e017818a061900691216f358e5f09728ce841e3e05bcb24470eb",
+            "requestSha256": null,
+            "frozenOutcome": "NOT_MODEL_OUTPUT",
+            "projectionVersion": "explicit-source-contract-4.0.0"
+          },
+          "scopeRebinding": {
+            "operation": "IDENTICAL_SOURCE_SCOPE_ID_REBIND_ONLY",
+            "mapping": [
+              [
+                "scope-0001-d2175f450fa661e632714e804c6a781e49096cf495ee6bb29874af5c15fe9577",
+                "scope-0001-7c062750dd226596e435978150733611ed32aecfe5d1097c6557a5beace42f7d"
+              ],
+              [
+                "scope-0002-bda82f7016bb991941574b9293bd625eec2ceaa495b9f468e7644e6ffc8472d1",
+                "scope-0002-0757e48d6a7ac0de7c310d0a3f4eef023f62436ec2848efc1abb4f0eaa60ac73"
+              ],
+              [
+                "scope-0003-283a70d573deeb14ba0f13645395a76f5b351e6c6a13576fc90b63ebf36ecd64",
+                "scope-0003-ffa63728bca1aa2fc92b8bdcd0c1bbe34ebb1d09ffe764c85dbcba9d54d20153"
+              ],
+              [
+                "scope-0004-b5e8a0826c3dce5194cbd00241b58c17185c5f3e4f8b7dea38d27ec248d5b105",
+                "scope-0004-b569f65531ff0de5df1f6940cbdae463a80a27a2649bafc1c182ccf46d298da0"
+              ]
+            ]
+          },
+          "postComparisonConversion": {
+            "version": "explicit-source-contract-4.0.0",
+            "operation": "VALIDATED_TYPED_DECLARATIONS_AND_EXPLICIT_EDGE_INVERSES_ONLY",
+            "scopeAccounting": [
+              {
+                "scopeId": "scope-0001-7c062750dd226596e435978150733611ed32aecfe5d1097c6557a5beace42f7d",
+                "kind": "event",
+                "entityIds": [
+                  "E1"
+                ]
+              },
+              {
+                "scopeId": "scope-0002-0757e48d6a7ac0de7c310d0a3f4eef023f62436ec2848efc1abb4f0eaa60ac73",
+                "kind": "information",
+                "entityIds": []
+              },
+              {
+                "scopeId": "scope-0003-ffa63728bca1aa2fc92b8bdcd0c1bbe34ebb1d09ffe764c85dbcba9d54d20153",
+                "kind": "information",
+                "entityIds": []
+              },
+              {
+                "scopeId": "scope-0004-b569f65531ff0de5df1f6940cbdae463a80a27a2649bafc1c182ccf46d298da0",
+                "kind": "information",
+                "entityIds": []
+              }
+            ],
+            "prerequisiteStates": [],
+            "inferredFacts": 0,
+            "originalDeclarations": [],
+            "typedAccounting": [
+              {
+                "scopeId": "scope-0001-7c062750dd226596e435978150733611ed32aecfe5d1097c6557a5beace42f7d",
+                "kind": "event",
+                "primaryEntityIds": [
+                  "E1"
+                ],
+                "secondaryEntityIds": [
+                  "P1"
+                ]
+              },
+              {
+                "scopeId": "scope-0002-0757e48d6a7ac0de7c310d0a3f4eef023f62436ec2848efc1abb4f0eaa60ac73",
+                "kind": "information",
+                "primaryEntityIds": [],
+                "secondaryEntityIds": []
+              },
+              {
+                "scopeId": "scope-0003-ffa63728bca1aa2fc92b8bdcd0c1bbe34ebb1d09ffe764c85dbcba9d54d20153",
+                "kind": "information",
+                "primaryEntityIds": [],
+                "secondaryEntityIds": []
+              },
+              {
+                "scopeId": "scope-0004-b569f65531ff0de5df1f6940cbdae463a80a27a2649bafc1c182ccf46d298da0",
+                "kind": "information",
+                "primaryEntityIds": [],
+                "secondaryEntityIds": []
+              }
+            ]
+          },
+          "postComparisonCoverage": {
+            "legacy": null,
+            "declarations": [],
+            "unknownCoverage": []
+          },
+          "sourceRenderedEvents": []
+        },
+        "firstSuggestionDisplayed": {
+          "schemaVersion": "2.0",
+          "promptVersion": "recognition-source-contract-4.0.0",
+          "modelName": "匿名契约工程夹具（非模型输出）",
+          "createdAt": "2026-10-03T09:00:00+08:00",
+          "sourceSummary": {
+            "title": "校园失物查询网站",
+            "sourceType": "text",
+            "notificationType": "event_notice",
+            "summary": "0项任务，1项事件。请核对后确认。",
+            "requiresAction": false,
+            "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "未主动建立或匹配项目。"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [],
+          "materials": [],
+          "timePoints": [
+            {
+              "tempId": "P1",
+              "type": "event_start",
+              "rawText": "周日晚间",
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "confidence": 1,
+              "normalizedValue": null,
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "vague",
+              "needsConfirmation": true,
+              "evidenceIds": [
+                "d26-scope-0001-7c062750dd226596e435978150733611ed32aecfe5d1097c6557a5beace42f7d"
+              ]
+            }
+          ],
+          "events": [
+            {
+              "tempId": "E1",
+              "title": "校园失物查询网站",
+              "description": "校园失物查询网站将在周日晚间暂停查询。",
+              "startTimePointTempId": "P1",
+              "endTimePointTempId": null,
+              "location": null,
+              "confidence": 1,
+              "inferenceLevel": "explicit",
+              "evidenceIds": [
+                "d26-scope-0001-7c062750dd226596e435978150733611ed32aecfe5d1097c6557a5beace42f7d"
+              ],
+              "selected": true
+            }
+          ],
+          "evidence": [
+            {
+              "id": "d26-scope-0001-7c062750dd226596e435978150733611ed32aecfe5d1097c6557a5beace42f7d",
+              "sourceId": "source:0255e9aa",
+              "quote": "校园失物查询网站将在周日晚间暂停查询。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0002-0757e48d6a7ac0de7c310d0a3f4eef023f62436ec2848efc1abb4f0eaa60ac73",
+              "sourceId": "source:0255e9aa",
+              "quote": "此前登记的信息保持不变，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0003-ffa63728bca1aa2fc92b8bdcd0c1bbe34ebb1d09ffe764c85dbcba9d54d20153",
+              "sourceId": "source:0255e9aa",
+              "quote": "不需要重新登记，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0004-b569f65531ff0de5df1f6940cbdae463a80a27a2649bafc1c182ccf46d298da0",
+              "sourceId": "source:0255e9aa",
+              "quote": "也不要发送补充邮件。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [],
+          "ambiguities": [],
+          "ignoredContent": [
+            {
+              "text": "此前登记的信息保持不变，",
+              "reason": "other"
+            },
+            {
+              "text": "不需要重新登记，",
+              "reason": "other"
+            },
+            {
+              "text": "也不要发送补充邮件。",
+              "reason": "other"
+            }
+          ],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 0.5,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": false,
+            "reviewReasons": []
+          }
+        },
+        "firstSuggestionAssembly": {
+          "version": "grounded-first-suggestion-1.0.0",
+          "originalProse": [
+            {
+              "entityId": "E1",
+              "kind": "event",
+              "title": "校园失物查询网站",
+              "description": "校园失物查询网站将在周日晚间暂停查询。"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "校园失物查询网站",
+              "description": "0项任务，1项事件。"
+            }
+          ],
+          "generatedProse": [
+            {
+              "entityId": "E1",
+              "kind": "event",
+              "title": "校园失物查询网站",
+              "description": "校园失物查询网站将在周日晚间暂停查询。"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "校园失物查询网站",
+              "description": "0项任务，1项事件。请核对后确认。"
+            }
+          ],
+          "times": [
+            {
+              "entityId": "P1",
+              "before": {
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              },
+              "after": {
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.0.0",
+                "point": {
+                  "rawText": "周日晚间",
+                  "type": "event_start",
+                  "normalizedValue": null,
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "vague",
+                  "needsConfirmation": true,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 4
+                  },
+                  "dateKind": "none",
+                  "timeKind": "none",
+                  "correctionApplied": false,
+                  "issues": [
+                    "time_not_found",
+                    "day_period_without_clock"
+                  ]
+                },
+                "knownDate": null,
+                "dayPeriod": "晚",
+                "certainty": "partial",
+                "sourceContext": "校园失物查询网站将在周日晚间暂停查询"
+              }
+            }
+          ],
+          "unresolved": [],
+          "role": "DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT"
+        },
+        "v7Record": {
+          "id": "source:0255e9aa:draft:1",
+          "sourceId": "source:0255e9aa",
+          "sourceVersionId": "source:0255e9aa:version:1",
+          "sourceReviewMetadata": {
+            "sourceType": "text",
+            "characterCount": 49,
+            "extractionMethod": "manual"
+          },
+          "attemptOrder": 0,
+          "status": "待确认",
+          "workflowStatus": "needs_review",
+          "createdAt": "2026-10-03T16:58:30.105Z",
+          "updatedAt": "2026-10-03T17:00:12.145Z",
+          "schemaVersion": "2.0",
+          "modelName": "匿名契约工程夹具（非模型输出）",
+          "promptVersion": "recognition-source-contract-4.0.0",
+          "recognitionResult": {
+            "schemaVersion": "2.0",
+            "promptVersion": "recognition-source-contract-4.0.0",
+            "modelName": "匿名契约工程夹具（非模型输出）",
+            "createdAt": "2026-10-03T09:00:00+08:00",
+            "sourceSummary": {
+              "title": "校园失物查询网站",
+              "sourceType": "text",
+              "notificationType": "event_notice",
+              "summary": "0项任务，1项事件。请核对后确认。",
+              "requiresAction": false,
+              "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+            },
+            "projectMatch": {
+              "decision": "standalone_task",
+              "matchedProjectId": null,
+              "suggestedProjectTitle": null,
+              "confidence": 1,
+              "reasons": [
+                "未主动建立或匹配项目。"
+              ]
+            },
+            "projectSuggestion": null,
+            "milestones": [],
+            "standaloneTasks": [],
+            "materials": [],
+            "timePoints": [
+              {
+                "tempId": "E1:start",
+                "type": "event_start",
+                "rawText": "周日晚间",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "confidence": 1,
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true,
+                "evidenceIds": [
+                  "d26-scope-0001-7c062750dd226596e435978150733611ed32aecfe5d1097c6557a5beace42f7d"
+                ]
+              }
+            ],
+            "events": [
+              {
+                "tempId": "E1",
+                "title": "校园失物查询网站将在周日晚间暂停查询",
+                "description": "",
+                "location": null,
+                "startTimePointTempId": "E1:start",
+                "endTimePointTempId": null,
+                "evidenceIds": [
+                  "user-evidence:E1"
+                ],
+                "confidence": 1,
+                "inferenceLevel": "explicit",
+                "selected": true
+              }
+            ],
+            "evidence": [
+              {
+                "id": "d26-scope-0001-7c062750dd226596e435978150733611ed32aecfe5d1097c6557a5beace42f7d",
+                "sourceId": "source:0255e9aa",
+                "quote": "校园失物查询网站将在周日晚间暂停查询。",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0002-0757e48d6a7ac0de7c310d0a3f4eef023f62436ec2848efc1abb4f0eaa60ac73",
+                "sourceId": "source:0255e9aa",
+                "quote": "此前登记的信息保持不变，",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0003-ffa63728bca1aa2fc92b8bdcd0c1bbe34ebb1d09ffe764c85dbcba9d54d20153",
+                "sourceId": "source:0255e9aa",
+                "quote": "不需要重新登记，",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0004-b569f65531ff0de5df1f6940cbdae463a80a27a2649bafc1c182ccf46d298da0",
+                "sourceId": "source:0255e9aa",
+                "quote": "也不要发送补充邮件。",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "user-evidence:E1",
+                "sourceId": "source:0255e9aa",
+                "field": "event",
+                "quotedText": "校园失物查询网站将在周日晚间暂停查询。此前登记的信息保持不变，不需要重新登记，也不要发送补充邮件。",
+                "quote": "校园失物查询网站将在周日晚间暂停查询。此前登记的信息保持不变，不需要重新登记，也不要发送补充邮件。",
+                "extractionMethod": "manual"
+              }
+            ],
+            "conflicts": [],
+            "ambiguities": [],
+            "ignoredContent": [
+              {
+                "text": "此前登记的信息保持不变，",
+                "reason": "other"
+              },
+              {
+                "text": "不需要重新登记，",
+                "reason": "other"
+              },
+              {
+                "text": "也不要发送补充邮件。",
+                "reason": "other"
+              }
+            ],
+            "quality": {
+              "overallConfidence": 1,
+              "hierarchyConfidence": 1,
+              "dateConfidence": 0.5,
+              "evidenceCoverage": 1,
+              "duplicateRisk": 0,
+              "overFragmentationRisk": 0,
+              "missingActionRisk": 0,
+              "needsHumanReview": false,
+              "reviewReasons": []
+            }
+          },
+          "items": [],
+          "modelVersion": "local-rules"
+        }
+      }
+    }
+  ],
+  "projects": [],
+  "milestones": [],
+  "workPackages": [],
+  "tasks": [],
+  "materials": [],
+  "timePoints": [],
+  "events": [],
+  "evidenceRefs": [],
+  "changeProposals": [],
+  "historyRecords": [],
+  "reminderRecords": [],
+  "preferences": {
+    "onboardingCompletedAt": null,
+    "legacyData": {
+      "courseBlocks": [],
+      "integrations": {
+        "sync": {
+          "endpoint": "http://127.0.0.1:8787"
+        },
+        "webMonitors": [],
+        "connectionIntents": []
+      },
+      "knowledgeSettings": {},
+      "recognitionFeedback": [],
+      "v7MigrationLog": [],
+      "v7LegacyData": {}
+    }
+  },
+  "migrationMetadata": [],
+  "savedAt": "2026-10-03T17:00:12.155Z"
+}

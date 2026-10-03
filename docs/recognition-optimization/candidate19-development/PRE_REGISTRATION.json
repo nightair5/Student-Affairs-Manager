@@ -1,0 +1,52 @@
+{
+  "version": "c19-layered-development-1",
+  "batch": "C19-C17-C19-DEVELOPMENT-R1",
+  "sourceCount": 6,
+  "requestCount": 12,
+  "order": {
+    "AB": 3,
+    "BA": 3
+  },
+  "baseline": "Candidate17 original bytes",
+  "challenger": "Candidate19 prompt + explicit-source-contract-4.0.0 schema and compiler",
+  "scorer": "recognition-source-contract-development-11.0.0",
+  "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+  "purpose": "TARGETED_NEW_SYNTHETIC_DEVELOPMENT_NOT_HOLDOUT",
+  "fixed": [
+    "sourceText",
+    "referenceTime/timezone",
+    "deepseek-flash/Responses",
+    "temperature=0/reasoning=none/stream=false/output=8192",
+    "source-grounded time and first display",
+    "semantic and coverage scorer"
+  ],
+  "experimental": [
+    "candidate generation prompt/schema",
+    "candidate-specific wire input compilation"
+  ],
+  "denominator": "6 per arm; all 12 planned units, rejects/failures/unknown remain",
+  "decisions": [
+    "whole net > 0 and no new critical risk",
+    "target errors decrease without whole net gain",
+    "improvement alongside regression",
+    "no gain",
+    "incomplete or dispute can change decision"
+  ],
+  "criticalRisks": [
+    "task/event/time omission",
+    "unsupported action",
+    "false qualification/true completion without evidence",
+    "wrong time value/type/owner",
+    "material/completion omission",
+    "revision endpoint"
+  ],
+  "proseAndLeakage": "NOT_ADJUDICATED unless source-supported or explicitly reviewed; no zero assumption",
+  "humanFinal": "NOT_APPLIED",
+  "extras": {
+    "retry": 0,
+    "repair": 0,
+    "verifier": 0,
+    "extraSamples": 0
+  },
+  "dispatchAuthorized": false
+}
