@@ -63,10 +63,24 @@ describe('recorded negative directives, first display and formal ordinary save',
     const missing=applyRecordedDirectiveDisposition(decodeSourceContractRecording(baseline.rawHttpText,'Candidate17',c),c)
     expect(missing.result.events).toHaveLength(0);expect(missing.result.timePoints).toHaveLength(0)
   })
+  it('reminders, conditional timing and questions are not unconditional non-action information',async()=>{
+    for(const [text,retainedId] of [
+      [source.replace('不要发送','不要忘记发送'),'task-0002'],
+      [source.replace('不要发送','不要在审批前发送'),'task-0002'],
+      [source.replace('不需要重新登记','不需要现在重新登记'),'task-0001'],
+      [source.replace('不需要重新登记','不需要重新登记吗'),'task-0001'],
+    ]){
+      const v=await variant(text),p=applyRecordedDirectiveDisposition(v.decoded,v.context)
+      expect(p.result.standaloneTasks).toHaveLength(1)
+      expect(p.result.standaloneTasks[0].tempId).toBe(retainedId)
+      expect(p.result.standaloneTasks[0].selected).toBe(false)
+      expect(p.productDisposition.decisions.find(d=>d.entityId===retainedId)?.operation).toBe('RETAIN_BLOCKED')
+    }
+  })
   it('uses the real capture, ordinary draft, DomainCommitPlan and separate repository readback with 0 tasks / 1 event / 1 unknown time',async()=>{
     const store=new MemoryWorkspaceRecordStore(),repository=new CanonicalWorkspaceRepository(store)
     await repository.initialize(emptyWorkspace())
-    const capture=new CapturePersistenceService(repository),handle=await capture.beginCapture({operationId:crypto.randomUUID(),rawText:source,sourceType:'text',title:'匿名暂停查询',provider:'manual',modelName:'recorded',promptVersion:'recorded-product',pipelineVersion:'source-grounded-nonaction-projection-1.0.0'})
+    const capture=new CapturePersistenceService(repository),handle=await capture.beginCapture({operationId:crypto.randomUUID(),rawText:source,sourceType:'text',title:'匿名暂停查询',provider:'manual',modelName:'recorded',promptVersion:'recorded-product',pipelineVersion:'source-grounded-nonaction-projection-1.0.1'})
     const old=await context(),c={...old,index:await indexImmutableScopesV11(handle.sourceId,handle.sourceVersionId,source)}
     const rebound=rebindRecordedScopes(recording.rawHttpText,old.index,c.index)
     await capture.recognize(handle,async()=>applyRecordedDirectiveDisposition(decodeSourceContractRecording(rebound.reboundHttpText,'Candidate19',c),c).result)

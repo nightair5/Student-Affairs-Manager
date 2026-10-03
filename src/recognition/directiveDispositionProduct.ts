@@ -3,7 +3,7 @@ import type { WireContext } from '../experiments/realInput01/modelWire'
 import { bridgeSemanticToRecognitionD26 } from './firstSuggestionD26'
 import type { decodeSourceContractRecording } from './sourceContractV4'
 
-export const DIRECTIVE_DISPOSITION_VERSION = 'source-grounded-nonaction-projection-1.0.0'
+export const DIRECTIVE_DISPOSITION_VERSION = 'source-grounded-nonaction-projection-1.0.1'
 type Task = SemanticInput['tasks'][number]
 function negativeEvidence(task: Task, context: WireContext) {
   return task.propositionScopeIds.flatMap(id => {
@@ -12,8 +12,8 @@ function negativeEvidence(task: Task, context: WireContext) {
     const before = scope.text.slice(0, scope.text.indexOf(task.action.surface))
     // Only direct negation of this action. Double negation and mixed directives
     // stay unresolved; no source-wide keyword deletion or inferred answers.
-    return /(?:无需|不需要|不必|不要|禁止)[^，。；！？]{0,8}$/u.test(before)
-      && !/并非|不是|不能不|不得不|不只是|不仅/u.test(scope.text) ? [scope] : []
+    return /(?:无需|不需要|不必|不要|禁止)(?:再|再次|重复|自行|擅自|额外)?\s*$/u.test(before)
+      && !/并非|不是|不能不|不得不|不只是|不仅|[?？]|(?:吗|么)[，。；！？]$/u.test(scope.text) ? [scope] : []
   })
 }
 function referenced(task: Task, input: SemanticInput) {
