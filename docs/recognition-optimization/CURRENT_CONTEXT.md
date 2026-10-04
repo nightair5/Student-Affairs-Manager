@@ -4,7 +4,7 @@
 
 公共material-channel-role-grounding-1.3.0修一个确定性根因：同任务材料并列、括号格式说明、共用目的地，前两种原有地点不再误清空；缺主事实/否定/条件/错对象/坏图仍受阻。4份学校官网操作摘录的原文、SHA、匿名边界和旧26来源重合可查；工程wire不是模型回答，C19原Prompt不改，不造新候选。
 
-原12SETTLED/0不确定/唯一grant耗尽，v11 C17 2/6、C19 1/6、MIXED_PROGRESS保持；后验4暂定/2错、5暂定/1渠道争议保持。12首屏事实及诊断逐份相等。新4来源模型首答/首次展示NOT_RUN，正确率未测。当前C19单臂4身份将在已提交工程上冻结，新授权见预算卡；无授权模型/grant/reserve/settle/账本写入0。
+原12SETTLED/0不确定/唯一grant耗尽，v11 C17 2/6、C19 1/6、MIXED_PROGRESS保持；后验4暂定/2错、5暂定/1渠道争议保持。12首屏事实及诊断逐份相等。新4来源模型首答/首次展示NOT_RUN，正确率未测。C19-PUBLIC-DEVELOPMENT-R1单臂4身份已在代码d223698上冻结，162组件/6产物，Manifest/身份及NO_STATE零调用见结果；新授权见预算卡，无授权模型/grant/reserve/settle/账本写入0。首次push/远端核验网络失败已记录，未来付费仍须先确认同步HEAD。
 
 唯一http://127.0.0.1:6836/；新库public1004；构建0bcc3b8b9263/source53d0b9c7c4c1，实际源SHA可核。2公开工程wire+3原C19控制，3Task0Project1Material4Event9Time、3完成/1部分/1待核对、2null；事务失败零增量、关闭重开恢复、已提交只重读、刷新相等。公开材料个人意向unknown保留草稿。4commit/readback/0edit，2计时完整active0/3缺失，四真人NOT_OBSERVABLE。
 

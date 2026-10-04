@@ -17,3 +17,7 @@
 audit可达性：brace-expansion/sharp/undici/miniflare/wrangler五个high都在开发工具依赖，Vitest/@vitest/mocker为moderate；生产依赖0不表示开发预览服务无风险。对不可信本地图片/输入和本地开发代理仍应谨慎使用。本包仅匿名夹具、回环受限路由，未扩大暴露。兼容维护建议另开受授权维护边界，先评估当前锁允许的传递依赖修补及Wrangler/Miniflare配套升级，Vitest5为重大版本不得盲升级；保留旧冻结lock，对新维护锁运行worker/preview/carrier回归。本包未新增依赖。
 
 浏览器数据不是模型语义评分；4来源新模型NOT_RUN。四真人指标NOT_OBSERVABLE。原v11与后验参照原样，全部12首屏/后验诊断相同见OLD_12_DIAGNOSTIC。
+
+冻结核验：prepare --write/--verify、现成host --verify/--resume-read-only均确定exit0。4身份NOT_RUN、162组件/6产物、无AUTH/state/raw/锁、本批0grant/reserve/settle，996链SHA不变；模型/首次展示/人工最终均4份未判定保留分母。原有浏览器445源文件与代码提交d223698规范化Git原字节逐份相等、静态产物SHA相等见PROTECTION_AND_BUILD_PROOF；没有用起点HEAD冒称最终构建。
+
+Git提交后立即推送及只读远端核验的原始网络失败见GIT_SYNC。DNS成功、github.com443 TCP失败，不能把Everything up-to-date尾句当exit0；保留本地提交并再次普通推送，最终SHA状态以实际输出为准。

@@ -61,5 +61,25 @@
     "recordingsSha256": "4307328e7e99b8614f561436e850e64990e489e6a1a456fbc88b5c82753c2231",
     "modelCallsByBrowser": 0
   },
-  "oldDatabaseTouched": false
+  "oldDatabaseTouched": false,
+  "committedProduct": {
+    "codeCommit": "d223698ee54e47e36433ebb0fcac3624b0a8da2c",
+    "sourceSha256": "53d0b9c7c4c132704b39b6b6d2298b2f9773043629c312acc167e540bc80e6ad",
+    "sourceFiles": 445,
+    "allCommittedNormalizedBytesEqual": true,
+    "staticFiles": [
+      {
+        "name": "browser.js",
+        "sha256": "a5f6051d4ac171c023532b66f1a1c38c923efcfdad8eea2b279fce25fe55a77a",
+        "verified": true
+      },
+      {
+        "name": "browser.css",
+        "sha256": "4f130c46c6675c582e5bfe7cd1735c56926818cc399f9d628903178e9a476922",
+        "verified": true
+      }
+    ],
+    "buildIdentity": "0bcc3b8b9263 / source 53d0b9c7c4c1",
+    "limit": "Build used initial HEAD plus final source hash; commit proves those exact source bytes. Later tool/document changes do not change this product build."
+  }
 }

@@ -33,4 +33,6 @@
 
 [VALIDATION](VALIDATION.md)：50定向产品反例及4冻结/分母Node检查通过；lint0错误/8旧警告、build、security通过。全量40组34PASS/6旧历史FAIL，当前产品1040PASS/1skip；6旧失败、audit5H2M开发工具链/production0单列。84保护/119冻结/7归档及原12身份/raw/成绩保持，996行完整账本SHA前后同为c58231633b8da1b87e9106f92d0dd457f00e4789e5e5fa03de780fb377dc8750。
 
-需要新输出来回答“当前C19对陌生实际通知究竟错什么”，只准备这四份C19单臂诊断，复用既有安全执行器；不是相对提升比较。冻结和具体新授权见[BUDGET_AND_AUTHORIZATION](BUDGET_AND_AUTHORIZATION.md)。未有新授权不得付费。真人、Holdout、默认替换、合并和部署均未做。
+需要新输出来回答“当前C19对陌生实际通知究竟错什么”，已冻结这四份C19单臂诊断，复用既有安全执行器；不是相对提升比较。[Manifest](MANIFEST.json)绑定代码提交d223698ee54e47e36433ebb0fcac3624b0a8da2c、162组件及6产物；Manifest SHA 6f29277d0e6c07065e6d158d1e9335f01eddbe7228fbc20d895d5c977b6afb0f，身份SHA 77c6881849c21ba709c1ad1aec7f9bb20ab920e5f271f69e5390f915d95a20e9。四个身份dispatchAuthorized=false/NOT_RUN；[零调用及完整分母](ZERO_CALL_REPORT.json)核无AUTH/state/raw/锁、本批账本0行。参照含全部标题描述及额外义务，未裁决不满分。最坏保守预算US$1.297616，建议本批硬上限US$1.30，具体新授权见[BUDGET_AND_AUTHORIZATION](BUDGET_AND_AUTHORIZATION.md)。未有新授权不得付费。真人、Holdout、默认替换、合并和部署均未做。
+
+代码提交后立即普通push首次失败：curl55 Connection was aborted；随后ls-remote为curl28连接github.com:443失败，TCP诊断DNS成功但443不通。现场见[GIT_SYNC](GIT_SYNC.json)。不能把提交或旧远端SHA当同步成功；最终冻结提交后再普通推送，最终实际结果由执行交付报告给出。网络未恢复时，最小剩余动作仅恢复GitHub443访问并普通push；这不是模型或产品工程阻碍，且未来grant仍要求同步HEAD。

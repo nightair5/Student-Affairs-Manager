@@ -1,0 +1,142 @@
+{
+  "version": "public-source-fact-adjudication-1.0.0",
+  "references": [
+    {
+      "sourceId": "PUB-C19-01",
+      "sourceSha256": "ed08787e379f4b43d6e1347cd2b0c32b621d153755811e7ddb089cf4592c3c2d",
+      "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "assertions": [
+        {
+          "id": "PUB-C19-01-F1",
+          "statement": "没有读者待办；暂停是独立事件"
+        },
+        {
+          "id": "PUB-C19-01-F2",
+          "statement": "开始2026-05-09T15:00、结束2026-05-11T08:30，event_start/event_end，Asia/Shanghai"
+        },
+        {
+          "id": "PUB-C19-01-F3",
+          "statement": "系统安全升级原因、暂停期间业务无法办理保留；不得虚构预约或恢复操作"
+        },
+        {
+          "id": "PUB-C19-01-F4",
+          "statement": "所有标题/描述、额外任务/事件/时间/材料、证据和双向图均逐事实裁决；无据新增不能抵消"
+        }
+      ],
+      "unresolved": [],
+      "adjudication": "Source-grounded provisional fact decisions with output pointers, per model-first/display-before-human/human-final; absent/ambiguous -> UNKNOWN"
+    },
+    {
+      "sourceId": "PUB-C19-02",
+      "sourceSha256": "e4f56a58a776eb6dfbfcf15b0a399ab6d8eb6544ad94d0c24dc547fc604a1da6",
+      "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "assertions": [
+        {
+          "id": "PUB-C19-02-F1",
+          "statement": "有意向申请才适用，个人意向未知；不得写资格已满足"
+        },
+        {
+          "id": "PUB-C19-02-F2",
+          "statement": "整理材料为一份PDF：申请表、成绩单、语言证明；顺序保留"
+        },
+        {
+          "id": "PUB-C19-02-F3",
+          "statement": "命名申请院校+学生姓名+所在学院"
+        },
+        {
+          "id": "PUB-C19-02-F4",
+          "statement": "发送申请材料、加盖公章的学院回执扫描版、Excel汇总表；共用匿名接收邮箱"
+        },
+        {
+          "id": "PUB-C19-02-F5",
+          "statement": "截止2026-04-21T17:00，不能当事件开始"
+        },
+        {
+          "id": "PUB-C19-02-F6",
+          "statement": "逾期不受理；未写回执成功即办结"
+        },
+        {
+          "id": "PUB-C19-02-F7",
+          "statement": "所有标题/描述、额外任务/事件/时间/材料、证据和双向图均逐事实裁决；无据新增不能抵消"
+        }
+      ],
+      "unresolved": [
+        "原通知第二、三节另有学生/学院角色与报名范围；本摘录不证明全文处理正确",
+        "整理和发送允许无损合并或分开；最小义务相同，不按task数量硬判"
+      ],
+      "adjudication": "Source-grounded provisional fact decisions with output pointers, per model-first/display-before-human/human-final; absent/ambiguous -> UNKNOWN"
+    },
+    {
+      "sourceId": "PUB-C19-03",
+      "sourceSha256": "e8849eb36db3e06c0e37410b64e40eeca73c7131af74c6e0514b45c3675f1692",
+      "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "assertions": [
+        {
+          "id": "PUB-C19-03-F1",
+          "statement": "纸质材料提交为真实条件义务，导师/学院审核完成未知，保留等待或待核对，不能写true"
+        },
+        {
+          "id": "PUB-C19-03-F2",
+          "statement": "6月3日-6月5日是提交办理窗口，不能虚构精确时刻"
+        },
+        {
+          "id": "PUB-C19-03-F3",
+          "statement": "考核表、科研进展报告、成绩单、六份、左侧长边装订和顺序保留"
+        },
+        {
+          "id": "PUB-C19-03-F4",
+          "statement": "交到爱礼楼（北楼）216研究生办公室，有依据的陌生目的地保留"
+        },
+        {
+          "id": "PUB-C19-03-F5",
+          "statement": "考核为独立事件；拟定6月中旬normalizedValue=null、vague、需确认；具体时间地点未公布，不造日历"
+        },
+        {
+          "id": "PUB-C19-03-F6",
+          "statement": "所有标题/描述、额外任务/事件/时间/材料、证据和双向图均逐事实裁决；无据新增不能抵消"
+        }
+      ],
+      "unresolved": [
+        "原通知先行申请、导师和学院审批流程不在摘录内；不得凭空制造已完成前置实体",
+        "材料分开或聚合视图需人工审查是否无损"
+      ],
+      "adjudication": "Source-grounded provisional fact decisions with output pointers, per model-first/display-before-human/human-final; absent/ambiguous -> UNKNOWN"
+    },
+    {
+      "sourceId": "PUB-C19-04",
+      "sourceSha256": "d88641d4b4c67a374b248a271cc09b68a0c356323cc98f82a79b4466374c51f3",
+      "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "assertions": [
+        {
+          "id": "PUB-C19-04-F1",
+          "statement": "电子版自行提交被取消，不生成可执行电子版待办；不能把纸质提交也取消"
+        },
+        {
+          "id": "PUB-C19-04-F2",
+          "statement": "取消生效2026-05-10，仅日期，不改成纸质任务截止"
+        },
+        {
+          "id": "PUB-C19-04-F3",
+          "statement": "图书馆后台同步属于第三方信息，不变读者任务"
+        },
+        {
+          "id": "PUB-C19-04-F4",
+          "statement": "纸质论文提交、图书馆服务台、离校手续保留；毕业离校前具体日期未知，null及原文保留"
+        },
+        {
+          "id": "PUB-C19-04-F5",
+          "statement": "没有真实旧任务端点时不得用scope或猜ID拼修订关系"
+        },
+        {
+          "id": "PUB-C19-04-F6",
+          "statement": "所有标题/描述、额外任务/事件/时间/材料、证据和双向图均逐事实裁决；无据新增不能抵消"
+        }
+      ],
+      "unresolved": [
+        "原有纸质规范未给全文，不猜格式或份数",
+        "历史取消实体和独立生效时间的合法表示需逐事实审查，不能只按entity数量判"
+      ],
+      "adjudication": "Source-grounded provisional fact decisions with output pointers, per model-first/display-before-human/human-final; absent/ambiguous -> UNKNOWN"
+    }
+  ]
+}

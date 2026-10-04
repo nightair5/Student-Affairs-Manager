@@ -1,0 +1,22 @@
+{
+  "codeCommit": "d223698ee54e47e36433ebb0fcac3624b0a8da2c",
+  "branch": "codex/e2-candidate11-blind-eval",
+  "immediateOrdinaryPush": {
+    "exitCode": 1,
+    "error": "RPC failed; curl 55 Send failure: Connection was aborted; send-pack unexpected disconnect; remote hung up unexpectedly",
+    "misleadingTail": "Everything up-to-date is not an exit-0 proof"
+  },
+  "readOnlyRemoteCheck": {
+    "exitCode": 1,
+    "error": "curl 28 Failed to connect to github.com port 443 after 21066 ms; expected flush after ref listing"
+  },
+  "network": {
+    "dnsResolved": true,
+    "host": "github.com",
+    "tcp443": false,
+    "ping": true
+  },
+  "lastConfirmedRemoteSha": "0bcc3b8b9263e8fadf2d9fd8453e5ce74ec774c9",
+  "currentRemote": "UNKNOWN_AFTER_NETWORK_FAILURE",
+  "nextAction": "Final freeze commit immediately ordinary push; verify HEAD/upstream/remote. If 443 still unavailable, keep local commits and restore network, then ordinary push. Never force-push or call paid mode on unsynchronized HEAD."
+}

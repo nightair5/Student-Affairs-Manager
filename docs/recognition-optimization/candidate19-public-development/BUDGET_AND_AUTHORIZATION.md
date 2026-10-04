@@ -10,6 +10,6 @@
 
 价格不是永久许可。新grant前需再只读核官方路由/价格/上下文输出/额外收费、同步已提交HEAD、四个identity/request SHA及完整账本；12小时有效核价文件和真实用户授权原件仅本机.data。超上限、漂移、未明附加费或不确定状态停止。一次发送、零retry/repair/verifier/额外样本；没有raw不能断言没送达；缺usage保守结算上界并停后续。唯一新grant，原US$3.90许可不复用。
 
-此文不构成授权；本轮模型/grant/reserve/settle=0。冻结后可用如下具体授权文字：
+已在代码提交d223698ee54e47e36433ebb0fcac3624b0a8da2c上冻结：4身份NOT_RUN，162组件/6产物，Manifest SHA 6f29277d0e6c07065e6d158d1e9335f01eddbe7228fbc20d895d5c977b6afb0f，身份SHA 77c6881849c21ba709c1ad1aec7f9bb20ab920e5f271f69e5390f915d95a20e9。只读host为NO_STATE、本批0账本行/0raw/无授权。此文不构成授权；本轮模型/grant/reserve/settle=0。可用如下具体授权文字：
 
 > 授权仅执行C19-PUBLIC-DEVELOPMENT-R1原冻结的4个deepseek-flash身份，费用硬上限US$1.30，仅为本批创建一个新grant并逐单元reserve/settle；每身份最多一次发送，不增加样本、重试、repair或verifier。重新核价超上限、身份漂移或状态不一致即停止。不授权真人、Holdout、默认替换、合并或部署。

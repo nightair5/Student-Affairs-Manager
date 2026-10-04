@@ -12,4 +12,4 @@
 | 计量 | 4commit/readback、0edit、2闭合active0/3缺失 | ENGINEERING_REPLAY；历史partial布尔与canonical分列，四真人NOT_OBSERVABLE。 |
 | 验证 | 50产品定向+4冻结分母检查、lint/build/scan PASS；全量34/40、产品1040PASS/1skip | 6旧失败/audit5H2M开发工具/production0单列，不改旧锁/断言。 |
 | 保护/账本 | 84/119/7、原12raw/候选/身份/Manifest/分数保持；996完整链SHA不变 | 新模型/grant/reserve/settle/写入0。 |
-| 下一主线 | 4官网操作摘录，当前C19单臂诊断冻结，4身份NOT_RUN | 仅待本批具体授权；不是相对提升，不造新候选/无意义双臂，参照provisional。 |
+| 下一主线 | 4官网操作摘录，C19单臂4身份已在d223698冻结，162组件/6产物，NOT_RUN | 本批具体授权+同步HEAD/新核价；首次网络失败记录，不是相对提升，不造新候选/无意义双臂，参照provisional。 |
