@@ -1,0 +1,25 @@
+{
+  "role": "SINGLE_AUTHOR_MODEL_ASSISTED_SOURCE_BASED_PROVISIONAL_NOT_HOLDOUT",
+  "adjudications": [{
+    "sourceId": "PUB-C19-01",
+    "modelFirstFacts": [
+      {"factId":"PUB-C19-01-F1","verdict":"CORRECT","reason":"原答tasks为空，events已有真实服务暂停；无预约、办理或恢复待办。","outputPointer":"raw-01.json/rawHttpText/output[0]/content[0]/text: tasks,events[0]"},
+      {"factId":"PUB-C19-01-F2","verdict":"CORRECT","reason":"两个原文时间逐字存在，分别event_start/event_end且被同一暂停事件引用；Asia/Shanghai由冻结请求上下文指定，不由模型猜测。","outputPointer":"raw-01.json/modelWire: timePoints[0..1],events[0].startTimePointTempId,endTimePointTempId; SOURCES.json/referenceTime,timezone"},
+      {"factId":"PUB-C19-01-F3","verdict":"CORRECT","reason":"原事件description完整保留系统安全升级原因、暂停及业务无法办理，没有额外动作。","outputPointer":"raw-01.json/modelWire: events[0].description,tasks[]"},
+      {"factId":"PUB-C19-01-F4","verdict":"CORRECT","reason":"逐项检查全部原标题和description与摘录一致；仅1事件2时间、0任务材料修订；证据都属于原来源，两个值在时间范围片段逐字存在，事件端点类型一致。information支持引用不符合冻结wire规则，属于明确单列的表示/契约拒绝，不能把它伪称正确wire或业务事实新增。","outputPointer":"raw-01.json/modelWire: all events,timePoints,materials,tasks,revisions,conflicts,scopeAccounting; INITIAL_FROZEN_DIAGNOSTIC.json/cases[0].error"}
+    ],
+    "displayBeforeHuman": [
+      {"factId":"PUB-C19-01-F1","verdict":"CORRECT","reason":"公共1.1.0仅转换已支持的附属引用元数据，首次页面0任务1事件，无用户补录。","outputPointer":"POST_CONVERSION_DIAGNOSTIC.json/known[0].firstSuggestion.standaloneTasks,events; browser/01-first-suggestion.txt"},
+      {"factId":"PUB-C19-01-F2","verdict":"CORRECT","reason":"源日期基准未变，首次页面两个准确时间与原端点一致，未新增日程值。","outputPointer":"POST_CONVERSION_DIAGNOSTIC.json/known[0].firstSuggestion.timePoints; browser/04-public-saved.json/timePoints"},
+      {"factId":"PUB-C19-01-F3","verdict":"CORRECT","reason":"首次展示description由已有原文依据生成，原因、暂停期间无法办理及起止均保留，不包含额外操作。","outputPointer":"POST_CONVERSION_DIAGNOSTIC.json/known[0].firstSuggestion.events[0].description"},
+      {"factId":"PUB-C19-01-F4","verdict":"CORRECT","reason":"对新转换后全图逐项检查：0任务材料项目、1事件2时间；标题为原答支持标题，description为本来源片段；没有扩充业务事实，点值/类型/owner/实际时间证据一致。不同对象/值/顺序及最小错误引用反例验证同一规则；仍仅作者暂定判断，非独立人工真值。","outputPointer":"POST_CONVERSION_DIAGNOSTIC.json/known[0].firstSuggestion,supportAudit; browser/04-public-saved.json/events,timePoints,evidenceRefs; src/recognition/independentEventSupport.test.ts"}
+    ],
+    "humanFinal": [],
+    "frozenDisplay": [
+      {"factId":"PUB-C19-01-F1","verdict":"INCORRECT","reason":"原冻结程序拒绝整个回答，没有首份事件建议；未由用户补录。","outputPointer":"INITIAL_FROZEN_DIAGNOSTIC.json/cases[0]: firstSuggestion=null,decode=REJECTED"},
+      {"factId":"PUB-C19-01-F2","verdict":"INCORRECT","reason":"原冻结页面无法形成已给出的起止时间。","outputPointer":"INITIAL_FROZEN_DIAGNOSTIC.json/cases[0]: firstSuggestion=null"},
+      {"factId":"PUB-C19-01-F3","verdict":"INCORRECT","reason":"保留原来源不等于已给用户完整首份建议。","outputPointer":"INITIAL_FROZEN_DIAGNOSTIC.json/cases[0]: firstSuggestion=null"},
+      {"factId":"PUB-C19-01-F4","verdict":"INCORRECT","reason":"information引用事件/时间导致原程序PRODUCT_SUPPORT_UNSUPPORTED_CONTEXT_REFERENCE，首份建议缺失。单列产品可展示失败，不改原模型事实或旧批成绩。","outputPointer":"INITIAL_FROZEN_DIAGNOSTIC.json/cases[0].error"}
+    ]
+  }]
+}

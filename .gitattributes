@@ -79,3 +79,7 @@ docs/recognition-optimization/d26-execution-continuation/evidence/*.txt whitespa
 # Candidate19 identities, freeze and anonymous readback retain exact SHA bytes.
 docs/recognition-optimization/candidate19-development/** -text whitespace=cr-at-eol
 docs/recognition-optimization/candidate19-development/evidence/*.log whitespace=-blank-at-eof,cr-at-eol
+
+# New public paid observations keep original raw and readback SHA bytes.
+# This does not change any previously frozen public request artifact.
+docs/recognition-optimization/candidate19-public-development/paid-evidence/** -text whitespace=cr-at-eol

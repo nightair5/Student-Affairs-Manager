@@ -1,0 +1,275 @@
+{
+  "batch": "C19-PUBLIC-DEVELOPMENT-R1",
+  "referenceRole": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+  "denominator": 4,
+  "componentSnapshot": "d223698ee54e47e36433ebb0fcac3624b0a8da2c",
+  "productHead": "e32462ef85c9911e704f8f4fecdd6e24ccf5d09f",
+  "scene": {
+    "status": "HALTED_READ_ONLY",
+    "role": "SCOPED_DEVELOPMENT_HOST_NOT_AUTHORIZATION",
+    "state": {
+      "version": "scoped-execution-state-2",
+      "batch": "C19-PUBLIC-DEVELOPMENT-R1",
+      "model": "deepseek-flash",
+      "manifestSha256": "6f29277d0e6c07065e6d158d1e9335f01eddbe7228fbc20d895d5c977b6afb0f",
+      "identitiesSha256": "77c6881849c21ba709c1ad1aec7f9bb20ab920e5f271f69e5390f915d95a20e9",
+      "authorized": true,
+      "units": [
+        {
+          "ordinal": 1,
+          "unitIdentitySha256": "e314c1a5ae9ba8f545c3b1af99495782dd12d7681a58f7b4ea654f314629f36c",
+          "requestSha256": "936c5ad020b638bf58b923297a4d5d531423882ff796eb402b219af009540776",
+          "status": "SETTLED",
+          "responseSha256": "2e87f9078c1cca3536c4f6d6b7d0845be3c5bad67aaeea63f11874d67465ae9d",
+          "httpStatus": 200,
+          "usage": {
+            "input_tokens": 4684,
+            "input_tokens_details": {
+              "cached_tokens": 4096
+            },
+            "output_tokens": 887,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 5571
+          },
+          "costUpperMicroUsd": 2470
+        },
+        {
+          "ordinal": 2,
+          "unitIdentitySha256": "247ebd7efc75b3c0f5acfe42d908e799c7e8141ce1bdaf3828332f0640efecf1",
+          "requestSha256": "0631fdb13dbaabeecb0c3ab8cbdb3df91b9cc88fe2fa61bf37d2e2f840245368",
+          "status": "UNCERTAIN",
+          "haltReason": "SEND_RAW_OR_STATE"
+        },
+        {
+          "ordinal": 3,
+          "unitIdentitySha256": "83d077cb262bd0492a17fbe4f28ace9606e194adfb5a376af01b0fba169e3599",
+          "requestSha256": "8260b87ba9803f5bd5566c70b55fbca84688b0541d7bc77a76acdb6031b63a25",
+          "status": "NOT_SENT"
+        },
+        {
+          "ordinal": 4,
+          "unitIdentitySha256": "62a6844f55638f820216acc68a1466ffecd110af5c4270679b907c126fadd659",
+          "requestSha256": "0e28ca68da0d6050c252b54425d70ec0c97ebb876ffb9ae877c5d75617082753",
+          "status": "NOT_SENT"
+        }
+      ],
+      "grantId": "c19-public-r1-5f1719f8-9057-4ae9-9b6f-1cc7be707d6a",
+      "committedHead": "e32462ef85c9911e704f8f4fecdd6e24ccf5d09f",
+      "snapshotCommit": "d223698ee54e47e36433ebb0fcac3624b0a8da2c",
+      "hostAuthorizationSha256": "7cef55e3d7a4390aacf1d566578c0a21f894d143092c6dd94277ff1933b2d917",
+      "role": "SCOPED_DEVELOPMENT_HOST_NOT_AUTHORIZATION"
+    },
+    "nextOrdinal": null,
+    "audit": "UNRESOLVED",
+    "uncertainty": "D26_EXEC_UNCERTAIN_OR_DUPLICATE",
+    "priceStatus": "CURRENT_AS_RECORDED_NOT_REVERIFIED",
+    "batchEvidence": {
+      "rows": 4,
+      "grantCount": 1,
+      "reserveCount": 2,
+      "settleCount": 1,
+      "units": [
+        {
+          "ordinal": 1,
+          "reserveCount": 1,
+          "settleCount": 1
+        },
+        {
+          "ordinal": 2,
+          "reserveCount": 1,
+          "settleCount": 0
+        },
+        {
+          "ordinal": 3,
+          "reserveCount": 0,
+          "settleCount": 0
+        },
+        {
+          "ordinal": 4,
+          "reserveCount": 0,
+          "settleCount": 0
+        }
+      ]
+    },
+    "localEvidence": {
+      "rawFiles": 1,
+      "receiptFiles": 4,
+      "incompleteStateWrite": false
+    },
+    "dispatchEligibility": "NOT_EVALUATED_READ_ONLY",
+    "lockExists": true,
+    "halt": {
+      "version": "d26-host-halt-1",
+      "role": "SCOPED_DEVELOPMENT_HOST_NOT_AUTHORIZATION",
+      "batch": "C19-PUBLIC-DEVELOPMENT-R1",
+      "code": "UNIT_SEND_RAW_OR_SETTLEMENT_UNCERTAIN",
+      "observedAt": "2026-10-04T15:44:44.476Z",
+      "units": [
+        {
+          "ordinal": 1,
+          "status": "SETTLED"
+        },
+        {
+          "ordinal": 2,
+          "status": "UNCERTAIN"
+        },
+        {
+          "ordinal": 3,
+          "status": "NOT_SENT"
+        },
+        {
+          "ordinal": 4,
+          "status": "NOT_SENT"
+        }
+      ],
+      "instruction": "READ_ONLY_RECONCILIATION_NO_AUTOMATIC_RETRY_OR_LOCK_REMOVAL"
+    },
+    "ledger": {
+      "rows": 1000,
+      "sha256": "fe24750479d3a5229e386e8088199ae097f48a1f6872f0eaac016cfaeddbb48d",
+      "tail": "3607e0c9b993aa4004bbddcbc06cfe9c76423f88ae274f52db221863bb9ecd15",
+      "batchRows": 4
+    },
+    "dispatch": "NOT_PERFORMED",
+    "ledgerWrites": 0
+  },
+  "cases": [
+    {
+      "ordinal": 1,
+      "sourceId": "PUB-C19-01",
+      "status": "SETTLED",
+      "modelWire": {
+        "schemaVersion": "explicit-source-contract-4.0.0",
+        "events": [
+          {
+            "tempId": "event-0001",
+            "title": "图书馆查收查引服务将临时暂停",
+            "description": "因系统安全升级需要，图书馆查收查引服务将临时暂停，届时相关业务无法办理。",
+            "startTimePointTempId": "time-0001",
+            "endTimePointTempId": "time-0002",
+            "location": null,
+            "scopeIds": [
+              "scope-0001-b19eaae0744542b583faab1b62e38262e248b9eeca567c75f3a7db5654ba916b",
+              "scope-0002-bd49606c1dc02d514dddb30d4018b42bb331f4ed3830fa094699109770854c3c",
+              "scope-0003-a40018e7932cb258ca636b7ee5560d1bd2b19234518cf1463913a7d0e8559338",
+              "scope-0004-703bcf44bbe6b5f4f50fe27ed5d4bbff28fbf4fed420dda2e32c8cbdd7cdb682",
+              "scope-0005-59b5e31de0de9d10754b9c1e8907ae791b239498dc7fae4d98dc080ebdd30704"
+            ],
+            "confidence": 0.95,
+            "inferenceLevel": "explicit",
+            "relatedTaskTempIds": []
+          }
+        ],
+        "timePoints": [
+          {
+            "tempId": "time-0001",
+            "type": "event_start",
+            "rawText": "2026年5月9日15:00",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "scopeIds": [
+              "scope-0005-59b5e31de0de9d10754b9c1e8907ae791b239498dc7fae4d98dc080ebdd30704"
+            ],
+            "confidence": 0.95
+          },
+          {
+            "tempId": "time-0002",
+            "type": "event_end",
+            "rawText": "2026年5月11日8:30",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "scopeIds": [
+              "scope-0005-59b5e31de0de9d10754b9c1e8907ae791b239498dc7fae4d98dc080ebdd30704"
+            ],
+            "confidence": 0.95
+          }
+        ],
+        "materials": [],
+        "tasks": [],
+        "revisions": [],
+        "conflicts": [],
+        "scopeAccounting": [
+          {
+            "scopeId": "scope-0001-b19eaae0744542b583faab1b62e38262e248b9eeca567c75f3a7db5654ba916b",
+            "kind": "information",
+            "primaryEntityIds": [],
+            "secondaryEntityIds": [
+              "event-0001"
+            ]
+          },
+          {
+            "scopeId": "scope-0002-bd49606c1dc02d514dddb30d4018b42bb331f4ed3830fa094699109770854c3c",
+            "kind": "event",
+            "primaryEntityIds": [
+              "event-0001"
+            ],
+            "secondaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0003-a40018e7932cb258ca636b7ee5560d1bd2b19234518cf1463913a7d0e8559338",
+            "kind": "information",
+            "primaryEntityIds": [],
+            "secondaryEntityIds": [
+              "event-0001"
+            ]
+          },
+          {
+            "scopeId": "scope-0004-703bcf44bbe6b5f4f50fe27ed5d4bbff28fbf4fed420dda2e32c8cbdd7cdb682",
+            "kind": "information",
+            "primaryEntityIds": [],
+            "secondaryEntityIds": [
+              "time-0001",
+              "time-0002"
+            ]
+          },
+          {
+            "scopeId": "scope-0005-59b5e31de0de9d10754b9c1e8907ae791b239498dc7fae4d98dc080ebdd30704",
+            "kind": "information",
+            "primaryEntityIds": [],
+            "secondaryEntityIds": [
+              "time-0001",
+              "time-0002"
+            ]
+          }
+        ],
+        "prerequisiteStates": []
+      },
+      "responseSha256": "2e87f9078c1cca3536c4f6d6b7d0845be3c5bad67aaeea63f11874d67465ae9d",
+      "rawFileSha256": "d512946b9341fb7b2a3c1d5e3260535f533c25aa6a2a57a0b9fa7f77d2991e14",
+      "usage": {
+        "input_tokens": 4684,
+        "input_tokens_details": {
+          "cached_tokens": 4096
+        },
+        "output_tokens": 887,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5571
+      },
+      "decode": "REJECTED",
+      "error": "PRODUCT_SUPPORT_UNSUPPORTED_CONTEXT_REFERENCE",
+      "firstSuggestion": null
+    },
+    {
+      "ordinal": 2,
+      "sourceId": "PUB-C19-02",
+      "status": "UNCERTAIN",
+      "result": "UNKNOWN_NO_VERIFIED_RECORDING"
+    },
+    {
+      "ordinal": 3,
+      "sourceId": "PUB-C19-03",
+      "status": "NOT_SENT",
+      "result": "UNKNOWN_NO_VERIFIED_RECORDING"
+    },
+    {
+      "ordinal": 4,
+      "sourceId": "PUB-C19-04",
+      "status": "NOT_SENT",
+      "result": "UNKNOWN_NO_VERIFIED_RECORDING"
+    }
+  ]
+}

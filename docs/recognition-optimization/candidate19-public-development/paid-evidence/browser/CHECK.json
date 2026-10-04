@@ -1,0 +1,326 @@
+{
+  "version": "public-recorded-browser-check-1",
+  "role": "ENGINEERING_REPLAY",
+  "humanMetrics": "NOT_OBSERVABLE",
+  "build": {
+    "origin": "http://127.0.0.1:6840",
+    "database": "rco-mainline-01-02-i1-d27-plan-recorded-publicpaid1004",
+    "build": "e32462ef85c9 / source b6881247af86",
+    "role": "ENGINEERING_REPLAY",
+    "batch": "C19-PUBLIC-DEVELOPMENT-R1",
+    "batchLabel": "当前4来源：1份确定录制、1份发送状态不确定、2份停发；付费现场封存。另12份为历史回归，不混入当前分母",
+    "knownSettledRecordings": 1,
+    "historicalControls": 12,
+    "anonymousFixtures": 0,
+    "plannedRequests": 4,
+    "batchComplete": false,
+    "files": [
+      {
+        "name": "browser.js",
+        "sha256": "cade64471d376928d9d4e0e8a388bd6cb84f63cd89adf9fce70b3deddf4fe419"
+      },
+      {
+        "name": "browser.css",
+        "sha256": "4f130c46c6675c582e5bfe7cd1735c56926818cc399f9d628903178e9a476922"
+      }
+    ],
+    "recordingsSha256": "ab8aba68cb351f21281c38cceeb3e3514a896e057e2c193fb80a7019efaded61",
+    "modelCallsByBrowser": 0
+  },
+  "sourceRoles": {
+    "currentPaidKnown": 1,
+    "historicalControlsExercised": 3,
+    "currentBatchDenominator": 4
+  },
+  "publicSource": {
+    "counts": {
+      "tasks": 0,
+      "projects": 0,
+      "events": 1,
+      "timePoints": 2
+    },
+    "times": [
+      {
+        "id": "time:source:4a317694:draft:1:time-0001",
+        "type": "event_start",
+        "rawText": "2026年5月9日15:00",
+        "normalizedValue": "2026-05-09T15:00",
+        "precision": "exact"
+      },
+      {
+        "id": "time:source:4a317694:draft:1:time-0002",
+        "type": "event_end",
+        "rawText": "2026年5月11日8:30",
+        "normalizedValue": "2026-05-11T08:30",
+        "precision": "exact"
+      }
+    ],
+    "event": {
+      "id": "event:source:4a317694:draft:1:event-0001",
+      "projectId": null,
+      "title": "图书馆查收查引服务将临时暂停",
+      "description": "因系统安全升级需要，\n图书馆查收查引服务将临时暂停，\n届时相关业务无法办理。\n暂停时间：\n2026年5月9日15:00—2026年5月11日8:30",
+      "startTimePointId": "time:source:4a317694:draft:1:time-0001",
+      "endTimePointId": "time:source:4a317694:draft:1:time-0002",
+      "location": null,
+      "createdAt": "2026-10-04T16:16:20.824Z",
+      "updatedAt": "2026-10-04T16:16:20.824Z",
+      "legacyData": {
+        "recognitionTempId": "event-0001",
+        "evidenceIds": [
+          "d26-scope-0001-beedbc387a96d6a28ff8cf431e71c1c3bd786d7fc675f3318bc2746ee17b5fc4",
+          "d26-scope-0002-07ee6142fa76d501fa8ea4e904f0c946bc53b350beb4233b7f760f00e3099ef3",
+          "d26-scope-0003-a649036cb088be351b01edfc6276c925e553d5d2e8704ad5ded4c868869762a3",
+          "d26-scope-0004-0c124dc6ced7cd10d34e02f1185fe38d9d8188d9a89935165f8eff166ac59cff",
+          "d26-scope-0005-ca21572445d068bbdf91524881c2be5cc5ecc78f44e6d612752788e6aef40f20"
+        ],
+        "inferenceLevel": "explicit"
+      }
+    },
+    "userFactAdditions": 0,
+    "evidence": "04-public-saved.json"
+  },
+  "final": {
+    "counts": {
+      "tasks": 3,
+      "projects": 0,
+      "materials": 1,
+      "events": 4,
+      "timePoints": 9
+    },
+    "drafts": [
+      {
+        "id": "source:4d6269f4:draft:1",
+        "status": "confirmed"
+      },
+      {
+        "id": "source:583b106e:draft:1",
+        "status": "partially_confirmed"
+      },
+      {
+        "id": "source:49d1ad2a:draft:1",
+        "status": "confirmed"
+      },
+      {
+        "id": "source:4a317694:draft:1",
+        "status": "confirmed"
+      }
+    ],
+    "dependencyTasks": [
+      {
+        "id": "task:source:583b106e:draft:1:task-0001",
+        "title": "填写场地使用登记",
+        "dependencyIds": [],
+        "status": "todo"
+      },
+      {
+        "id": "task:source:583b106e:draft:1:task-0002",
+        "title": "递交场地使用登记",
+        "dependencyIds": [
+          "task:source:583b106e:draft:1:task-0001"
+        ],
+        "status": "todo"
+      }
+    ],
+    "material": {
+      "id": "material:source:4d6269f4:draft:1:material-0001",
+      "projectId": null,
+      "name": "志愿服务统计表",
+      "required": true,
+      "status": "unverified",
+      "requirements": [],
+      "formatRequirements": [
+        "PDF"
+      ],
+      "namingRequirements": [
+        "文件名包含小组编号"
+      ],
+      "quantity": null,
+      "submissionChannel": null,
+      "relatedTaskIds": [
+        "task:source:4d6269f4:draft:1:task-0001"
+      ],
+      "deadlineTimePointId": "time:source:4d6269f4:draft:1:time-0001",
+      "createdAt": "2026-10-04T16:32:09.936Z",
+      "updatedAt": "2026-10-04T16:32:09.936Z",
+      "version": 1,
+      "legacyData": {
+        "recognitionTempId": "material-0001",
+        "evidenceIds": [
+          "d26-scope-0001-20ebbaac7ecc72aaa3642da2ac77c7b916db8505453ecfb968131e77ae88441b",
+          "d26-scope-0002-a0ed421d0b02283314d1fc67afbf59593330583154f6dc27de92134394bf4b06",
+          "d26-scope-0003-c47f9d23795e58306434270cbd7275851e94e0b047a507e1b563ef0e1b0ee517"
+        ],
+        "availabilityVersion": "ordinary-availability-unobserved-1",
+        "availabilityOrigin": "not_observed",
+        "sourceReviewDraftId": "source:4d6269f4:draft:1"
+      }
+    },
+    "unknownTimes": [
+      {
+        "id": "time:source:49d1ad2a:draft:1:time-0003",
+        "projectId": null,
+        "milestoneId": null,
+        "taskId": null,
+        "materialId": null,
+        "eventId": "event:source:49d1ad2a:draft:1:event-0002",
+        "relatedTaskIds": [],
+        "relatedMaterialIds": [],
+        "type": "event_start",
+        "rawText": "周五夜间开始",
+        "normalizedValue": null,
+        "timezone": null,
+        "isAllDay": false,
+        "precision": "vague",
+        "needsConfirmation": true,
+        "createdAt": "2026-10-04T16:20:30.948Z",
+        "updatedAt": "2026-10-04T16:20:30.948Z",
+        "legacyData": {
+          "recognitionTempId": "time-0003",
+          "evidenceIds": [
+            "d26-scope-0003-317884d3ef6adfdf63e9ca1b996ff92062e5992af06422d548297860348454be"
+          ],
+          "confidence": 1
+        }
+      },
+      {
+        "id": "time:source:49d1ad2a:draft:1:time-0004",
+        "projectId": null,
+        "milestoneId": null,
+        "taskId": null,
+        "materialId": null,
+        "eventId": "event:source:49d1ad2a:draft:1:event-0002",
+        "relatedTaskIds": [],
+        "relatedMaterialIds": [],
+        "type": "event_end",
+        "rawText": "恢复时间尚未公布",
+        "normalizedValue": null,
+        "timezone": null,
+        "isAllDay": false,
+        "precision": "vague",
+        "needsConfirmation": true,
+        "createdAt": "2026-10-04T16:20:30.948Z",
+        "updatedAt": "2026-10-04T16:20:30.948Z",
+        "legacyData": {
+          "recognitionTempId": "time-0004",
+          "evidenceIds": [
+            "d26-scope-0004-4bab59e81052661653aa805238d5bdf074949a96a5edbe763ae57bc52489b537"
+          ],
+          "confidence": 1
+        }
+      }
+    ],
+    "evidence": "11-final-canonical.json"
+  },
+  "refresh": {
+    "allComparedFieldsUnchanged": true,
+    "fields": [
+      "tasks",
+      "projects",
+      "events",
+      "timePoints",
+      "materials",
+      "evidenceRefs",
+      "historyRecords",
+      "recognitionRuns",
+      "sourceVersions"
+    ],
+    "evidence": "13-after-refresh.json"
+  },
+  "failures": {
+    "formal": "03-formal-failure.txt + 03-formal-failure-readback.json: no half facts; close/reopen manual save ->04",
+    "committedReadback": "06-committed-readback-pending.txt ->07-after-readback-only.json: reread only, no second commit",
+    "staleObservation": {
+      "file": "06-committed-readback-pending.json",
+      "status": "NOT_USED_AS_PENDING_COMMIT_PROOF",
+      "reason": "Read visible pre before async readback refreshed; it retained the preceding public source readback."
+    }
+  },
+  "measurement": {
+    "traceRole": "ENGINEERING_REPLAY",
+    "reports": [
+      {
+        "draftId": "source:4d6269f4:draft:1",
+        "editIds": [],
+        "verifiedCommitIds": [
+          "source-review:source:4d6269f4:draft:1:fnv1a32:1d1d97b5"
+        ],
+        "activeEditMs": 0,
+        "missing": [],
+        "reportedOutcomes": {
+          "complete": true,
+          "partial": false,
+          "failureEvents": 0
+        }
+      },
+      {
+        "draftId": "source:583b106e:draft:1",
+        "editIds": [],
+        "verifiedCommitIds": [
+          "source-review:source:583b106e:draft:1:fnv1a32:cc2c3f7a"
+        ],
+        "activeEditMs": null,
+        "missing": [
+          "unclosed interval",
+          "terminal commit/readback"
+        ],
+        "reportedOutcomes": {
+          "complete": false,
+          "partial": false,
+          "failureEvents": 0
+        }
+      },
+      {
+        "draftId": "source:49d1ad2a:draft:1",
+        "editIds": [],
+        "verifiedCommitIds": [
+          "source-review:source:49d1ad2a:draft:1:fnv1a32:370c2d07"
+        ],
+        "activeEditMs": 0,
+        "missing": [],
+        "reportedOutcomes": {
+          "complete": true,
+          "partial": false,
+          "failureEvents": 1
+        }
+      },
+      {
+        "draftId": "source:4a317694:draft:1",
+        "editIds": [],
+        "verifiedCommitIds": [
+          "source-review:source:4a317694:draft:1:fnv1a32:9b2637e7"
+        ],
+        "activeEditMs": null,
+        "missing": [
+          "refresh time discontinuity"
+        ],
+        "reportedOutcomes": {
+          "complete": true,
+          "partial": false,
+          "failureEvents": 1
+        }
+      }
+    ],
+    "noEditsManufactured": true,
+    "canonicalPartialSeparateFromLegacyMetricOutcome": true
+  },
+  "isolation": [
+    {
+      "method": "GET",
+      "path": "/api/deepseek",
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/api/deepseek",
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/api/sync",
+      "status": 403
+    }
+  ],
+  "consoleErrors": [],
+  "screenshot": "16-final-page.png"
+}

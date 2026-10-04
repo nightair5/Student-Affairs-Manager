@@ -1,0 +1,157 @@
+- link "跳到主要内容":
+  - /url: "#main-content"
+- complementary:
+  - button "返回今日首页":
+    - strong: 事务管家
+    - generic: STUDENT DESK
+  - button "新事务 N":
+    - text: 新事务
+    - generic: "N"
+  - navigation "主要导航":
+    - generic: 执行闭环
+    - button "今日":
+      - text: 今日
+    - button "收件箱":
+      - text: 收件箱
+    - button "打开待确认队列，共 1 项":
+      - text: 待确认
+      - generic: "1"
+    - button "项目":
+      - text: 项目
+    - button "日历":
+      - text: 日历
+    - button "资料库":
+      - text: 资料库
+    - generic: 低频工具
+    - button "所有任务":
+      - text: 所有任务
+    - button "知识问答":
+      - text: 知识问答
+    - button "周报月报":
+      - text: 周报月报
+  - button "搜索事项":
+    - text: 搜索事项
+  - button "新手教程":
+    - text: 新手教程
+  - button "设置与服务":
+    - text: 设置与服务
+  - button "隐私与数据":
+    - text: 隐私与数据
+  - strong: 已在此设备自动保存
+  - paragraph: 同一浏览器与站点地址下可恢复；识别结果确认后才入库。
+- generic "匿名工程输入 · 普通产品路径 · 不发送模型请求"
+- main:
+  - text: 来源先保存，确认后入库
+  - heading "待确认" [level=1]
+  - paragraph: 这里只显示已经形成建议、仍等待你核对的来源；确认前不会创建正式任务。
+  - strong: "1"
+  - text: 份需关注
+  - group "收件箱视图":
+    - button "全部来源"
+    - button "待确认 1" [pressed]
+  - button "新建手动来源":
+    - text: 新建手动来源
+  - checkbox "选择全部待核对"
+  - text: 选择全部待核对
+  - article:
+    - checkbox "选择 手动粘贴消息"
+    - generic: 选择 手动粘贴消息
+    - generic: Candidate19 固定录制（非实时调用） 建议
+    - generic: 待核对
+    - heading "手动粘贴消息" [level=2]
+    - paragraph: 因系统安全升级需要，图书馆查收查引服务将临时暂停，届时相关业务无法办理。 暂停时间：2026年5月9日15:00—2026年5月11日8:30
+    - paragraph: 识别建议已保存，确认前不会创建正式任务。
+    - term: 项目
+    - definition: 独立事项
+    - term: 实体
+    - definition: 0 任务 · 0 材料 · 2 时间 · 1 活动
+    - button "核对 0 项任务、1 个事件":
+      - text: 核对 0 项任务、1 个事件
+    - button "查看来源":
+      - text: 查看来源
+    - button "归档":
+      - text: 归档
+- status:
+  - generic: 匿名工程建议已生成；没有模型请求，核对后走普通正式保存。
+  - button "关闭提示": ×
+- dialog "识别出 0 项任务、1 个事件":
+  - banner:
+    - generic: 第 2 步 · Candidate19 固定录制（非实时调用） · 比较后程序转换 · 无新模型请求
+    - heading "识别出 0 项任务、1 个事件" [level=2]
+    - paragraph: 先看标题和时间；不准确时再点“编辑”。
+    - button "稍后处理并关闭" [active]:
+  - status "未确认编辑检查点":
+    - strong: 本来源核对会话
+    - paragraph: 编辑在确认前不会创建任务。
+  - strong: 0 项任务、1 个事件待确认
+  - generic: 确认后才会进入今日和任务中心
+  - region "项目匹配与识别质量":
+    - strong: 项目归属建议
+    - text: 未主动建立或匹配项目。
+    - generic: 选择项目归属
+    - combobox "选择项目归属":
+      - option "新建项目"
+      - option "作为独立事项" [selected]
+      - option "稍后决定"
+    - strong: 需要重点核对
+    - generic: 包含事件安排
+    - button "只保留原文明确"
+    - region "聚焦复核原因":
+      - strong: 这份通知包含多个时间、材料或阶段
+      - generic: 系统已经完成初步整理，请重点确认标记项；不会自动选择、修改或创建任何事项。
+      - list:
+        - strong: 包含事件安排
+        - generic: 识别到 1 个事件，请核对开始时间、地点和是否需要创建。
+      - generic "来源提取元数据":
+        - generic: 71 字
+  - generic "原始通知与定位依据":
+    - text: 原始通知与定位依据
+  - paragraph: 因系统安全升级需要，图书馆查收查引服务将临时暂停，届时相关业务无法办理。 暂停时间：2026年5月9日15:00—2026年5月11日8:30
+  - region "项目树待确认事项":
+    - region "同一通知的独立事件与信息":
+      - heading "同一通知的事件" [level=3]
+      - article:
+        - strong: 图书馆查收查引服务将临时暂停
+        - paragraph: 地点未说明；2026年5月9日15:00 → 2026年5月11日8:30
+        - button "编辑事件"
+      - paragraph: 没有待办也可以保存停机、维护等事件。纯信息可直接标记已核对，不创建任务或空项目。
+      - button "依据原文补充遗漏事件"
+      - button "依据原文补充遗漏任务"
+    - heading "时间节点" [level=3]
+    - checkbox "event_start 2026年5月9日15:00" [checked]
+    - strong: event_start
+    - generic: 2026年5月9日15:00
+    - button "在原文中定位"
+    - checkbox "event_end 2026年5月11日8:30" [checked]
+    - strong: event_end
+    - generic: 2026年5月11日8:30
+    - button "在原文中定位"
+  - contentinfo:
+    - button "确认信息并保存独立事件"
+    - button "完成"
+- generic "本批真实录制 · 选择来源与独立读回"
+- paragraph: e32462ef85c9 / source b6881247af86；rco-mainline-01-02-i1-d27-plan-recorded-publicpaid1004；source-support-accounting-projection-1.1.0 / source-grounded-nonaction-projection-1.0.1 / source-grounded-conditional-nonaction-1.0.0 / explicit-source-contract-4.0.0 / material-channel-role-grounding-1.3.0 / source-proven-eligibility-1.0.0；ENGINEERING_REPLAY；此入口模型请求0。当前4来源：1份确定录制、1份发送状态不确定、2份停发；付费现场封存。另12份为历史回归，不混入当前分母。下方是后验程序转换，不改原成绩。原答与冻结诊断不改。
+- text: 录制来源
+- combobox "录制来源":
+  - option "PUB-C19-01 / Candidate19 / 原冻结：KNOWN_SETTLED_IN_SEALED_INCOMPLETE_BATCH" [selected]
+  - option "C19-DEV-S01 / Candidate17 / 原冻结：HISTORICAL_REGRESSION_NOT_CURRENT_FOUR"
+  - option "C19-DEV-S01 / Candidate19 / 原冻结：HISTORICAL_REGRESSION_NOT_CURRENT_FOUR"
+  - option "C19-DEV-S02 / Candidate19 / 原冻结：HISTORICAL_REGRESSION_NOT_CURRENT_FOUR"
+  - option "C19-DEV-S02 / Candidate17 / 原冻结：HISTORICAL_REGRESSION_NOT_CURRENT_FOUR"
+  - option "C19-DEV-S03 / Candidate17 / 原冻结：HISTORICAL_REGRESSION_NOT_CURRENT_FOUR"
+  - option "C19-DEV-S03 / Candidate19 / 原冻结：HISTORICAL_REGRESSION_NOT_CURRENT_FOUR"
+  - option "C19-DEV-S04 / Candidate19 / 原冻结：HISTORICAL_REGRESSION_NOT_CURRENT_FOUR"
+  - option "C19-DEV-S04 / Candidate17 / 原冻结：HISTORICAL_REGRESSION_NOT_CURRENT_FOUR"
+  - option "C19-DEV-S05 / Candidate17 / 原冻结：HISTORICAL_REGRESSION_NOT_CURRENT_FOUR"
+  - option "C19-DEV-S05 / Candidate19 / 原冻结：HISTORICAL_REGRESSION_NOT_CURRENT_FOUR"
+  - option "C19-DEV-S06 / Candidate19 / 原冻结：HISTORICAL_REGRESSION_NOT_CURRENT_FOUR"
+  - option "C19-DEV-S06 / Candidate17 / 原冻结：HISTORICAL_REGRESSION_NOT_CURRENT_FOUR"
+- textbox "本批匿名通知原文": 因系统安全升级需要，图书馆查收查引服务将临时暂停，届时相关业务无法办理。 暂停时间：2026年5月9日15:00—2026年5月11日8:30
+- paragraph: 复制到普通“新事务”；原回答、程序转换与用户修改分别保留。相对日期使用来源原基准 2026-05-09T09:00:00+08:00。
+- button "注入正式保存失败"
+- button "注入提交后读回失败"
+- button "注入检查点失败"
+- status: 未注入故障
+- button "本批独立canonical读回"
+- button "页面测量读回"
+- generic "本批独立读回结果"

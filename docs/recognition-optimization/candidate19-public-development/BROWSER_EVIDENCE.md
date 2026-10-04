@@ -1,3 +1,9 @@
+# 当前浏览器证据入口
+
+当前唯一入口6840、publicpaid1004库；1份本批已知实际录制及3份历史控制的最终构建、失败恢复、部分确认与刷新独立读回见[本轮浏览器](paid-evidence/BROWSER_EVIDENCE.md)和[CHECK](paid-evidence/browser/CHECK.json)。下方6836/public1004仅保留授权前历史工程验收，不能代替新录制，也不是当前推荐入口。
+
+---
+
 # 最终产品构建实际浏览器
 
 官方computer-use/CUA In-app browser，tab14；http://127.0.0.1:6836/。全新库rco-mainline-01-02-i1-d27-plan-recorded-public1004；构建0bcc3b8b9263/source53d0b9c7c4c1，HEAD是构建时起点，source是本轮实际待提交产品源。源/静态SHA与提交原字节后验见PROTECTION_AND_BUILD_PROOF；旧6835未访问。所有记录ENGINEERING_REPLAY，真人NOT_RUN，模型机械关闭。

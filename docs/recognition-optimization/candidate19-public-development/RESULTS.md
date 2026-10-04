@@ -1,38 +1,56 @@
-# 真实公开通知：共享提交地点修复，当前C19新来源效果待测
+# 当前首次建议：已有事件被转换误拒，产品已修；付费批次封存
 
-2026-10-04。停止状态：C19_PUBLIC_NOTICE_ENGINEERING_DELIVERED_WAITING_SINGLE_ARM_AUTHORIZATION。本轮没有新模型、grant、reserve、settle或账本写入，没有改候选或默认。当前唯一内部入口 http://127.0.0.1:6836/。
+2026-10-05。状态：PUBLIC_KNOWN_RECORDING_PRODUCT_FIX_DELIVERED_PAID_BATCH_SEALED_INCOMPLETE。当前唯一内部入口 [http://127.0.0.1:6840/](http://127.0.0.1:6840/)，普通App、固定录制、全新隔离库；实时模型机械关闭。
 
-## 实际交付
+## 实际改善与边界
 
-一个公共转换根因：原文“将学生申请材料及学院回执扫描版（须加盖公章）和Excel汇总表发送至…”明确给三种同任务材料一个目的地。1.2.0只认单对象，前两种被清空、任务被误阻断；1.3.0识别有界、同owner的完整并列对象，三种原答已有地点均保留，新增事实0。不是从原文替模型补漏，不是新Prompt收益。[逐层证据](ROOT_CAUSE.json)、[实现](IMPLEMENTATION.md)。
+PUB-C19-01原回答已经有服务暂停事件、准确开始和结束时间，但附属说明片段引用已有事件/时间，被冻结公共转换1.0.0拒绝：PRODUCT_SUPPORT_UNSUPPORTED_CONTEXT_REFERENCE，第一份建议为空。本轮只修一个确定性公共根因，source-support-accounting-projection-1.1.0把有同来源、同owner、真实主事实及实际时间依据的附属引用转为审计元数据。不创建事件、不猜端点、不改时间/关系，inferredFacts=0。
 
-普通App首屏显示三种渠道，仍保留PDF、命名、加盖公章、Excel及截止；有意向的个人资格unknown仍待核对，没有无据改true。该工程来源未正式确认，未冒称整份模型正确。另一真实暂停摘录走同一App、DomainCommitPlan和Repository保存：0Task/0Project/1Event/2Time，开始2026-05-09T15:00、结束2026-05-11T08:30。未造平行保存链。
+同一原回答现在首次就显示0任务、1事件、2准确时间，用户无需人工补录停机事件或起止。真实Schema、普通首屏、ReviewSession、DomainCommitPlan、Repository独立读回已验；假ID、缺主事实、错日期/类型、跨来源/scope、假owner和颠倒端点仍拒。不同对象、日期、标签和顺序反例也通过。[逐层根因](paid-evidence/ROOT_CAUSE.md)、[新诊断](paid-evidence/POST_CONVERSION_DIAGNOSTIC.json)。Candidate19的Prompt、wire与candidateVersion未改；没有Candidate20或新比较包。先前渠道1.3.0、资格、条件及D27最小安排复用。
 
-## 材料与分母
+这证明同一录制的程序兼容和首次可展示修复，不能称新版模型准确率提升。模型漏事实仍不补成首次正确。整个4来源不完整，不给总体正确率或相对赢家。
 
-四份独立官网通知的操作摘录：图书馆查收服务暂停、国际交流申请材料、博士中期考核、电子论文提交取消。出处/发布时间/原文SHA/匿名SHA/摘录边界见[PROVENANCE](PROVENANCE.json)。原HTML、原联系人映射留忽略的.data，提交版邮箱example.invalid。不是全文识别评价、真人或独立Holdout。[与26份旧来源及真实生成说明的重合检查](OVERLAP_CHECK.json)只证明词面不重复，不能证明统计独立。
+## 本批实际执行与完整分母
 
-| 证据层 | 正确/错误/未知 | 能说明什么 |
+用户本批明确许可4身份、US$1.30硬限、唯一新grant及逐单元reserve/settle；没有复用旧C19的US$3.90许可。执行绑定同步HEAD e32462ef85c9911e704f8f4fecdd6e24ccf5d09f、原d223698冻结包。原Manifest、4身份及dispatchAuthorized=false原字节保持。官方核价保守4单元上界US$1.297616，不以字节估token；真实许可、PRICE和AUTH原件只留本机.data。[执行与链证据](paid-evidence/EXECUTION.json)。
+
+| 原ordinal | 现场与结论 |
+|---|---|
+| 1 / PUB-C19-01 | HTTP200、raw/response/真实usage及结算确定，SETTLED。 |
+| 2 / PUB-C19-02 | 一次reserve后SEND_RAW_OR_STATE不确定，无raw/settle；UNCERTAIN，不能判“没发送”。 |
+| 3 / PUB-C19-03 | NOT_SENT，停发。 |
+| 4 / PUB-C19-04 | NOT_SENT，停发。 |
+
+第2单元触发UNIT_SEND_RAW_OR_SETTLEMENT_UNCERTAIN；HALT/锁/状态原样封存，未恢复或重发，后两份不继续发送。底层确切网络/发送/落盘原因无法从安全错误码证明。第一次grant前另有空锁/远端网络失败，零grant/state/raw/receipt/账本写入被证实后仅保留空锁并重建；它与当前不确定锁是不同现场，不能借此恢复当前锁。
+
+| 证据层，固定4分母 | 正确 / 错误 / 未知 | 含义 |
 |---|---|---|
-| 四份新公开摘录的模型首答 | 0已判正确/0已判错误/4 NOT_RUN | 正确率未测，不能写0%或100%。 |
-| 四份新公开摘录的模型首次展示 | 0已判正确/0已判错误/4 NOT_RUN | 两个合法工程wire只能证明转换和页面，不能替代模型输出。 |
-| 原12冻结v11 | C17 2/6，C19 1/6；MIXED_PROGRESS | 原结果不动。 |
-| 原12后验事实 | C17 4暂定/2事实错，C19 5暂定/1渠道争议 | single-author/model-assisted/provisional；不是新模型效果，标题/自由描述未裁决。 |
+| 原答业务事实暂定裁决 | 1 / 0 / 3 | 已读1份包含所需事件与准确端点；作者暂定、非独立真值。 |
+| 冻结wire契约 | 0接受 / 1拒绝 / 3未知 | information附属引用不合原契约，不能冒称原wire正确。 |
+| 原冻结转换后的首次建议 | 0 / 1 / 3 | 唯一已知回答无法形成建议。 |
+| 本轮新转换后的人工前建议 | 1 / 0 / 3 | 同一原答的工程修复；不是新模型输出。 |
+| 真人最终处置/四指标 | 0已裁决 / 0已裁决 / 4未知 | ENGINEERING_REPLAY，NOT_OBSERVABLE。 |
 
-[全部12新诊断](OLD_12_DIAGNOSTIC.json)：原回答SHA、首次展示事实SHA与资格修复交付逐份相等；S05“平台”仍为原模型推测、正式渠道null，完成标准/PDF/命名/截止/事件未删。没有当前C19生成错误足以支持改Prompt，不造Candidate20或无意义双臂。
+[原冻结诊断](paid-evidence/INITIAL_FROZEN_DIAGNOSTIC.json)、[逐事实暂定理由](paid-evidence/ADJUDICATION.json)及完整报告分开。标题、描述、额外义务、依据与图均检查；4分母不删。只知道1份，不能写100%或把1/4当总体估计。
 
-## 页面与保存
+原12全部仍确定结算，原v11 C17 2/6、C19 1/6、MIXED_PROGRESS不动；旧后验C17 4暂定/2错、C19 5暂定/1渠道争议不动。本轮全部12 raw SHA和人工前firstSuggestion与上轮深比较相等，S05“平台”仍推测/正式渠道null，完成标准/PDF/命名/截止/事件保留。
 
-[浏览器证据](BROWSER_EVIDENCE.md)、[canonical及测量检查](browser/CHECK.json)。两个公开工程来源、三个原C19录制控制共5来源：最终3Task/0Project/1Material/4Event/9Time，3confirmed/1partial/1needs_review。两处模糊/未公布时间null；递交任务真实依赖填写任务、前置todo，资格未知领取项未保存。正式失败零增量→关闭重开手动恢复；已提交读回失败→仅重读、数量不增加；刷新后事实相等。关联风险仍局部受阻。
+## 普通页面、保存与测量
 
-用户做法：选择下方匿名来源，将上方原文复制到首页“快速粘贴通知”，点“智能拆分任务”，核对摘要后确认。渠道正确时不需要重新输入三个地点；未知个人资格仍要由用户核对。本例没有同口径旧页面点击测量，不估算省时比例。
+新库rco-mainline-01-02-i1-d27-plan-recorded-publicpaid1004；构建e32462ef85c9 / source b6881247af86。实际验1份当前录制和3份明确标历史控制，没把13份录制混作本批模型分母。旧6836等库未访问。[浏览器操作和失败分支](paid-evidence/BROWSER_EVIDENCE.md)、[独立值与测量](paid-evidence/browser/CHECK.json)、[447份构建源与Git及raw原字节证明](paid-evidence/BUILD_PROOF.json)。代码比较仅规范化CRLF；raw和审计证据比较保持原字节，不把构建时起点HEAD当最终提交。
 
-四次正式commit/readback、0字段edit；失败与等待保留。5份工程计时中2份区间完整、主动编辑0，3份缺失/未闭合；部分终态按canonical单列，旧计量布尔不改。人工首次/最终正确、低修改收益及真人时间均NOT_OBSERVABLE，不把保存成功算语义正确或真人省时。
+公开停机事件正式失败时0Task/0Project/0Event/0Time，输入/草稿仍在；关闭重开手动确认后0Task/0Project/1Event/2Time，May9 15:00→May11 08:30。原C19 S02已提交读回失败时按钮禁止重提，只重新读回后两事件四时间一致；“周五夜间”和“恢复尚未公布”保持null/vague。S03只确认填写/递交，前置todo、递交等待，资格未知领取项仍草稿。S05准确截止、PDF、命名及完成标准保留。最终3Task/0Project/1Material/4Event/9Time，3 confirmed、1 partially_confirmed；刷新前后正式全图相等，无控制台错误。
 
-## 验证与下一步
+操作：展开下方录制区，选来源，复制只读原文到首页快速粘贴，智能拆分→核对摘要→一次接受；不需要重填这次已有事件。普通确认保留，原截止与个人安排分开。未测同口径旧页面步骤差，不估省时比例。
 
-[VALIDATION](VALIDATION.md)：50定向产品反例及4冻结/分母Node检查通过；lint0错误/8旧警告、build、security通过。全量40组34PASS/6旧历史FAIL，当前产品1040PASS/1skip；6旧失败、audit5H2M开发工具链/production0单列。84保护/119冻结/7归档及原12身份/raw/成绩保持，996行完整账本SHA前后同为c58231633b8da1b87e9106f92d0dd457f00e4789e5e5fa03de780fb377dc8750。
+4份工程页面均无字段edit，没有造editId；4个commit有独立readback，2失败保留。S02和S05有闭合工程区间且主动编辑0；PUB1刷新时间断点、S03未闭合区间写null/缺失。canonical部分确认与旧计量终态分列，没有改历史算法或把保存等同正确。真人首次/最终正确率、低修改收益和时间仍NOT_OBSERVABLE。
 
-需要新输出来回答“当前C19对陌生实际通知究竟错什么”，已冻结这四份C19单臂诊断，复用既有安全执行器；不是相对提升比较。[Manifest](MANIFEST.json)绑定代码提交d223698ee54e47e36433ebb0fcac3624b0a8da2c、162组件及6产物；Manifest SHA 6f29277d0e6c07065e6d158d1e9335f01eddbe7228fbc20d895d5c977b6afb0f，身份SHA 77c6881849c21ba709c1ad1aec7f9bb20ab920e5f271f69e5390f915d95a20e9。四个身份dispatchAuthorized=false/NOT_RUN；[零调用及完整分母](ZERO_CALL_REPORT.json)核无AUTH/state/raw/锁、本批账本0行。参照含全部标题描述及额外义务，未裁决不满分。最坏保守预算US$1.297616，建议本批硬上限US$1.30，具体新授权见[BUDGET_AND_AUTHORIZATION](BUDGET_AND_AUTHORIZATION.md)。未有新授权不得付费。真人、Holdout、默认替换、合并和部署均未做。
+## 费用、验证、保护与最小下一步
 
-代码提交后立即普通push首次失败：curl55 Connection was aborted；随后ls-remote为curl28连接github.com:443失败，TCP诊断DNS成功但443不通。冻结提交后再次普通push成功，已实际核HEAD/upstream/远端均25849225d6c957ae4037e68590ee96ecf4cd4fbf，工作区干净；冻结核验仍通过。历史网络错误与恢复证据见[GIT_SYNC](GIT_SYNC.json)，没有伪报第一次成功。本段同步日志会随独立文档提交再次立即普通推送，最终SHA由交付现场核验报告；未来grant仍需当时同步HEAD。
+ordinal1真实usage：input4684、cached4096、output887、reasoning0、total5571；内部保守结算US$0.002470，非供应商实扣。ordinal2 US$0.324404为未结算reserve上界，实扣及是否送达不可观察；硬限仍US$1.30，不以余款加样本。价格来源：[官方定价](https://api-docs.deepseek.com/quick_start/pricing/)、[Responses](https://api-docs.deepseek.com/guides/responses_api/)；原核价快照不代表未来价格。
+
+[本轮验证](paid-evidence/VALIDATION.md)：新5+原支持6定向通过；全量40组34PASS/6旧历史FAIL，当前产品1045PASS/1skip，server/worker/worker-d26/functions/carrier均执行到退出。lint0错误8旧警告、build/scan及新只读脚本lint通过。audit直连TLS失败，现有代理只读重核成功，仍5high/2moderate、production0；未改依赖/锁。
+
+84保护/119冻结/7归档通过；原996行前缀SHA保持。本批许可产生4个合法追加：grant、reserve1、settle1、reserve2；现在1000行完整链SHA fe24750479d3a5229e386e8088199ae097f48a1f6872f0eaac016cfaeddbb48d。封存后本轮产品、浏览器、测试、报告均0模型/0账本写入。新诊断可只读复验：node scripts/report-public-notice-recorded.mjs --verify；不要求旧Manifest吸收新产品代码。
+
+最少下一步是可信供应商侧第2请求的送达/响应/usage或账单证据，先只读对账。没有证据不能解除当前封存、重发第2或发送第3/4；不自动prepare/dispatch、新grant或重复申请整批。确定后才能按原身份、整批上限与对应明确恢复范围另行决策。安全本地产品已交付，完整陌生来源表现仍证据不足；真人/Holdout/default替换/合并/部署未做。

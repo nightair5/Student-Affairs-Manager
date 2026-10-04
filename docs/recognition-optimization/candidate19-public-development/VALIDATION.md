@@ -1,3 +1,9 @@
+# 当前验证入口
+
+本轮完整结果见[paid-evidence/VALIDATION](paid-evidence/VALIDATION.md)和[机器证据](paid-evidence/VALIDATION.json)。当前产品1045PASS/1skip、34/40组PASS，合法新批追加后1000链；付费现场1确定/1不确定/2停发封存。下方为授权前历史验证记录，1040测试/996链/0模型等只描述当时，原VALIDATION.json和零调用快照不回写。
+
+---
+
 # 验证与保护
 
 定向真实Schema/公共转换/保存读回：新8+旧渠道42=50 PASS；单臂请求图/身份/授权阻断/分层分母/未知与关键错误4 Node PASS。重复来源裁决保护后来补入，4 Node再跑通过。没有调用模型或创建grant。完整机器输出VALIDATION.json。

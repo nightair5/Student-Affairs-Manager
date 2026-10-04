@@ -1,3 +1,9 @@
+# 当前实现说明
+
+本文件下方为授权前的渠道1.3.0工程交付记录，零调用/NOT_RUN只适用于当时。当前真实录制已揭示另一条公共支持引用根因；实际1.1.0修改、约束、产品路径和反例见[本轮ROOT_CAUSE](paid-evidence/ROOT_CAUSE.md)，当前执行及分母以[唯一RESULTS](RESULTS.md)为准。
+
+---
+
 # 唯一产品根因与实现
 
 原文来自学院官方交流通知，见PROVENANCE第2项；输入是记录了边界和匿名化的操作摘录，非整篇通知。工程wire明确标ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT，原模型在这四份来源上未运行。ROOT_CAUSE保留原文、wire、旧1.2.0和新1.3.0审计；旧代码由Git起点原字节编译执行，不用手写旧行为模拟。
