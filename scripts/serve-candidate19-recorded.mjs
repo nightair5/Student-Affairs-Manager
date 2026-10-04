@@ -4,11 +4,11 @@ import {createHash} from 'node:crypto'
 import {createServer} from 'node:http'
 import {resolve,basename} from 'node:path'
 import {execFileSync} from 'node:child_process'
-import {createCandidate19Host,readCandidate19Package} from './candidate19-execution-host.mjs'
+import {candidate19RecordedScene} from './candidate19-recorded-readonly.mjs'
 import {candidate19Recordings} from './candidate19-recorded-data.mjs'
 const [port,instance]=process.argv.slice(2)
 if(!/^\d{4,5}$/.test(port??'')||+port<6814||+port>65535||!/^[a-z0-9-]{2,32}$/.test(instance??''))throw Error('C19_NEW_LOOPBACK_INSTANCE_REQUIRED')
-const pack=readCandidate19Package(),scene=await createCandidate19Host().resumeReadOnly()
+const {pack,scene}=await candidate19RecordedScene()
 if(scene.audit!=='CONSISTENT'||!scene.state)throw Error('C19_REPLAY_UNRESOLVED_RECORDS')
 const sources=JSON.parse(readFileSync('docs/recognition-optimization/candidate19-development/SOURCES.json')).sources
 const recordings=candidate19Recordings({units:pack.units,sources,state:scene.state,rawRoot:'.data/candidate19/execution/raw'})

@@ -43,7 +43,7 @@ import { D20ReviewSessionRepository } from './experiments/candidate16/d20ReviewS
 import { buildSourceReviewPlan, commitSourceReview, verifySourceReviewReadback, acknowledgeSourceReadback, sourceReviewProblem, PENDING_SOURCE_READBACK, type SourceReviewReceipt } from './domain/v2/sourceReviewD26'
 import { OrdinarySourceFacts } from './components/OrdinarySourceFacts'
 import { PersonalPlanPanel } from './components/PersonalPlanPanel'
-import { assembleRecognitionFirstSuggestionD26 } from './recognition/firstSuggestionD26'
+import { assembleCurrentFirstSuggestion } from './recognition/materialChannelGrounding'
 import {createOrdinaryMeasurement,type OrdinaryMeasurement} from './domain/v2/ordinaryMeasurementD26'
 import {
   mergeRecognitionTasks,
@@ -714,8 +714,8 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
       )
       const semanticSidecar=ordinaryEnvironment?.semanticSidecar?.(handle.sourceId)
       const inferenceContext=ordinaryEnvironment?.recognitionContext?.(input.content) ?? {referenceTime:input.now?.toISOString() ?? recognitionResult.createdAt,timezone:Intl.DateTimeFormat().resolvedOptions().timeZone || 'Asia/Shanghai'}
-      const assembled=assembleRecognitionFirstSuggestionD26(recognitionResult,{sourceText:input.content,...inferenceContext})
-      await canonicalWorkspaceRepository.transaction(w=>({...w,recognitionRuns:w.recognitionRuns.map(r=>r.id===handle.recognitionRunId?{...r,legacyData:{...r.legacyData,originalRecognitionResult:JSON.parse(JSON.stringify(recognitionResult))}}:r),extractionDrafts:w.extractionDrafts.map(d=>d.id===handle.draftId?{...d,result:assembled.result,legacyData:{...d.legacyData,...(semanticSidecar?{semanticSidecar:JSON.parse(JSON.stringify(semanticSidecar))}:{}),firstSuggestionDisplayed:JSON.parse(JSON.stringify(assembled.result)),firstSuggestionAssembly:JSON.parse(JSON.stringify(assembled.audit))}}:d)}))
+      const assembled=assembleCurrentFirstSuggestion(recognitionResult,{sourceText:input.content,...inferenceContext})
+      await canonicalWorkspaceRepository.transaction(w=>({...w,recognitionRuns:w.recognitionRuns.map(r=>r.id===handle.recognitionRunId?{...r,legacyData:{...r.legacyData,originalRecognitionResult:JSON.parse(JSON.stringify(recognitionResult))}}:r),extractionDrafts:w.extractionDrafts.map(d=>d.id===handle.draftId?{...d,result:assembled.result,legacyData:{...d.legacyData,...(semanticSidecar?{semanticSidecar:JSON.parse(JSON.stringify(semanticSidecar))}:{}),firstSuggestionDisplayed:JSON.parse(JSON.stringify(assembled.result)),firstSuggestionAssembly:JSON.parse(JSON.stringify(assembled.audit)),materialChannelGrounding:JSON.parse(JSON.stringify(assembled.materialChannelAudit))}}:d)}))
       const saved = await workspaceRepository.load()
       if (saved) applyWorkspaceView(saved)
       setOrdinaryCanonical(await canonicalWorkspaceRepository.load())

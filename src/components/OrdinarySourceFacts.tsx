@@ -4,6 +4,7 @@ import type {RecognitionResult} from '../recognition/types'
 import type {WorkspaceV8} from '../domain/v2/types'
 import type {D20ReviewSessionRepository,ReviewField} from '../experiments/candidate16/d20ReviewSession'
 import {interpretTimeD26} from '../lib/timeSemanticsD26'
+import {MATERIAL_CHANNEL_GROUNDING_VERSION,type MaterialChannelAudit} from '../recognition/materialChannelGrounding'
 
 type Props={draft:ExtractionDraft;source:Source|null;workspace:WorkspaceV8|null;session:D20ReviewSessionRepository;onDirty:(dirty:boolean)=>void;onSave:(result:RecognitionResult)=>Promise<void>}
 type Buffer={kind?:'event'|'task';action?:string;object?:string;eventId:string;title:string;location:string;start:string;end:string}
@@ -18,6 +19,9 @@ export function OrdinarySourceFacts({draft,source,workspace,session,onDirty,onSa
   const queue=useRef(Promise.resolve())
   const key='event:source:ordinary-buffer'
   const writer=session.writer
+  const storedAudit=workspace?.extractionDrafts.find(d=>d.id===draft.id)?.legacyData?.materialChannelGrounding
+  const channelAudit=storedAudit&&typeof storedAudit==='object'&&!Array.isArray(storedAudit)&&storedAudit.version===MATERIAL_CHANNEL_GROUNDING_VERSION
+    ? storedAudit as unknown as MaterialChannelAudit : null
   useEffect(()=>{onDirty(Boolean(buffer))},[buffer,onDirty])
   useEffect(()=>{
     if(!workspace)return
@@ -77,6 +81,11 @@ export function OrdinarySourceFacts({draft,source,workspace,session,onDirty,onSa
     }catch(error){setStatus(String(error))}finally{setBusy(false)}
   }
   return <section aria-label="同一通知的独立事件与信息">
+    {channelAudit?.decisions.length ? <section aria-label="材料渠道与办结标准"><h3>材料与办结标准</h3>
+      {channelAudit.decisions.map(d=><div key={d.materialId}><strong>{d.materialName}</strong><p>{d.status==='EXPLICIT_CHANNEL'?`提交渠道：${d.displayedValue}`:d.status==='RECEIPT_CONTEXT_UNRESOLVED'?`提交渠道尚未明确。首次模型推测“${d.originalValue}”，原文只用它说明办结回执；不作为确定提交渠道保存。`:`首次模型的渠道“${d.originalValue}”缺少同对象依据，关联事项需要核对。`}</p>
+        <details><summary>查看渠道原文依据</summary>{d.evidence.map(e=><blockquote key={e.id}>{e.quote}</blockquote>)}</details></div>)}
+      {result.standaloneTasks.flatMap(t=>t.completionCriteria.map((c,i)=><p key={t.tempId+':'+i}>完成标准：{c}</p>))}
+    </section>:null}
     <h3>{result.events.length?'同一通知的事件':'信息与独立事件'}</h3>
     {result.events.map(event=><article className="recognition-entity-row" key={event.tempId}><div><strong>{event.title}</strong><p>{event.location||'地点未说明'}；{[event.startTimePointTempId,event.endTimePointTempId].filter(Boolean).map(id=>{const p=result.timePoints.find(t=>t.tempId===id);return p?p.rawText+(p.needsConfirmation?'（具体时刻未知，不创建确定日程）':''):''}).join(' → ')||'原文未说明时间'}</p></div><button type="button" disabled={Boolean(buffer)} onClick={()=>edit({eventId:event.tempId,title:event.title,location:event.location||'',start:result.timePoints.find(p=>p.tempId===event.startTimePointTempId)?.rawText||'',end:result.timePoints.find(p=>p.tempId===event.endTimePointTempId)?.rawText||''},false)}>编辑事件</button></article>)}
     <p>没有待办也可以保存停机、维护等事件。纯信息可直接标记已核对，不创建任务或空项目。</p>
