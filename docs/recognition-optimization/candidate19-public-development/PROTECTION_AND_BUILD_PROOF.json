@@ -1,0 +1,65 @@
+{
+  "startingHead": "0bcc3b8b9263e8fadf2d9fd8453e5ce74ec774c9",
+  "before": {
+    "status": "HISTORY_PRESERVED_LEDGER_APPEND_REVIEW_REQUIRED",
+    "protectedFiles": 84,
+    "archives": 7,
+    "frozenFiles": 119,
+    "activeDocuments": "GIT_VERSIONED_NOT_A_RUNTIME_FREEZE",
+    "historicalDecisions": "UNCHANGED",
+    "ledger": {
+      "rows": 996,
+      "sha256": "c58231633b8da1b87e9106f92d0dd457f00e4789e5e5fa03de780fb377dc8750",
+      "appendRows": 156,
+      "mode": "READ_ONLY"
+    },
+    "dispatchAuthorized": false,
+    "qualityPromotion": false
+  },
+  "after": {
+    "status": "HISTORY_PRESERVED_LEDGER_APPEND_REVIEW_REQUIRED",
+    "protectedFiles": 84,
+    "archives": 7,
+    "frozenFiles": 119,
+    "activeDocuments": "GIT_VERSIONED_NOT_A_RUNTIME_FREEZE",
+    "historicalDecisions": "UNCHANGED",
+    "ledger": {
+      "rows": 996,
+      "sha256": "c58231633b8da1b87e9106f92d0dd457f00e4789e5e5fa03de780fb377dc8750",
+      "appendRows": 156,
+      "mode": "READ_ONLY"
+    },
+    "dispatchAuthorized": false,
+    "qualityPromotion": false
+  },
+  "ledgerWrites": 0,
+  "newModelCalls": 0,
+  "grant": 0,
+  "reserve": 0,
+  "settle": 0,
+  "original12": "SETTLED/0uncertain/unique exhausted grant; no restore or paid mode invoked",
+  "manifest": {
+    "origin": "http://127.0.0.1:6836",
+    "database": "rco-mainline-01-02-i1-d27-plan-recorded-public1004",
+    "build": "0bcc3b8b9263 / source 53d0b9c7c4c1",
+    "role": "ENGINEERING_REPLAY",
+    "batch": "C19-C17-C19-DEVELOPMENT-R1",
+    "knownSettledRecordings": 12,
+    "anonymousFixtures": 2,
+    "plannedRequests": 12,
+    "batchComplete": true,
+    "files": [
+      {
+        "name": "browser.js",
+        "sha256": "a5f6051d4ac171c023532b66f1a1c38c923efcfdad8eea2b279fce25fe55a77a"
+      },
+      {
+        "name": "browser.css",
+        "sha256": "4f130c46c6675c582e5bfe7cd1735c56926818cc399f9d628903178e9a476922"
+      }
+    ],
+    "recordingsSha256": "4307328e7e99b8614f561436e850e64990e489e6a1a456fbc88b5c82753c2231",
+    "modelCallsByBrowser": 0
+  },
+  "oldDatabaseTouched": false
+}

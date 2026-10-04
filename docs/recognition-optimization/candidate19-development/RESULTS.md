@@ -1,9 +1,11 @@
-# 首次准确率主线：已证明资格不再重复核对
+# 首次准确率主线：实际公开来源与共享材料提交地点
 
-2026-10-04。当前唯一[结果入口](paid-evidence/eligibility-followup/RESULTS.md)、[实现](paid-evidence/eligibility-followup/IMPLEMENTATION.md)、[浏览器](paid-evidence/eligibility-followup/BROWSER_EVIDENCE.md)、[验证](paid-evidence/eligibility-followup/VALIDATION.md)。公共source-proven-eligibility-1.0.0/semantic-ordinary-bridge-1.1.0已接普通App；同对象、同许可、本人明确获准、原答true且无矛盾的任务不再重复查资格，unknown/缺证明/矛盾及前置等待保留。有限语法不补猜。无新生成输入、候选、评分或模型批。
+2026-10-04。唯一当前[结果入口](../candidate19-public-development/RESULTS.md)、[实现](../candidate19-public-development/IMPLEMENTATION.md)、[浏览器](../candidate19-public-development/BROWSER_EVIDENCE.md)、[验证](../candidate19-public-development/VALIDATION.md)、[预算及新授权](../candidate19-public-development/BUDGET_AND_AUTHORIZATION.md)。
 
-原v11 C17 2/6、C19 1/6、MIXED_PROGRESS保持；全部12后验C17 4暂定/2事实错、C19 5暂定/1渠道争议保持，不是新模型正确率。[原冻结完整比较](paid-evidence/completed/FROZEN_COMPARISON_REPORT.json)、[原参照](paid-evidence/fact-followup/FACT_REFERENCES.json)不改。全12首次展示事实及后验诊断与上轮逐份相等；S05回执渠道仍未确认，格式/命名/完成标准/截止/事件保留。[上轮渠道1.2.0结果](paid-evidence/channel-polarity-followup/RESULTS.md)、更早包与证据原样保留。
+公共渠道1.3.0修并列材料共享地点时前两个原有值误清空，三种保留；资格1.0.0/普通bridge1.1.0和已修时间/条件复用。4份官网操作摘录provisional参照；没有确定C19生成根因，不改Prompt/候选。新来源模型未运行，单臂4身份冻结后待新具体许可，不能称准确率提高。
 
-唯一当前http://127.0.0.1:6835/；新库eligibility1004；构建2ab138c71580/source1211f91dc79b（构建时HEAD+实际源SHA）。6来源实际回放：4Task0Project2Material10Event22Time，3confirmed/3partial、10时间null；正式失败零增量、关闭重开手动恢复、已提交只重读、刷新及独立核值通过。4先固定反例2/4→4/4只是工程判定，不是模型整份提高。6commit/readback/0edit，2active0/4缺失，四真人NOT_OBSERVABLE、首次整份独立裁决NOT_ADJUDICATED。
+原v11 C17 2/6、C19 1/6、MIXED_PROGRESS保持，[原冻结比较](paid-evidence/completed/FROZEN_COMPARISON_REPORT.json)不改；全12后验4暂定/2错、5暂定/1渠道争议保持，标题/描述未裁决，[原参照](paid-evidence/fact-followup/FACT_REFERENCES.json)保留。12首屏事实/诊断与[资格交付](paid-evidence/eligibility-followup/RESULTS.md)逐份相同。S05平台只回执仍渠道null，完成标准/PDF/命名/截止/事件保留，旧grant耗尽不恢复/派发或复用。
 
-80定向PASS、lint/build/scan通过；全量33/39，产品1032PASS/1skip，6旧历史失败及audit5H2M/production0单列。84/119/7、原12raw/身份/Manifest/分数/候选和996链SHA不变；模型/grant/reserve/settle/账本写入0，耗尽许可不复用。停止C19_SOURCE_PROVEN_ELIGIBILITY_DELIVERED_NO_NEW_MODEL_BATCH_NEEDED。下一步只需少量未见实际匿名通知来检验当前首次机制；没有当前生成缺口就不造候选/批次。
+唯一当前http://127.0.0.1:6836/；新库public1004；构建0bcc3b8b9263/source53d0b9c7c4c1。5工程来源正式3Task0Project1Material4Event9Time，3完成1部分1待核对、2null；失败零增量、关闭重开恢复、已提交只重读、刷新相同。4commit/readback/0edit，2完整active0/3缺失，四真人NOT_OBSERVABLE；工程wire不是模型，旧6835及证据未动。
+
+50定向产品+4 Node通过，lint/build/scan通过；全量34/40、产品1040PASS/1skip，6旧历史失败和audit5H2M/production0单列。84/119/7、原12raw/候选/身份/Manifest/成绩保持，996完整链SHA前后不变。本轮模型/grant/reserve/settle/账本写入0。停止C19_PUBLIC_NOTICE_ENGINEERING_DELIVERED_WAITING_SINGLE_ARM_AUTHORIZATION；最少下一步本批4次具体新授权，grant前重核价，不预设双臂。

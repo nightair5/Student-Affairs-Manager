@@ -1,0 +1,113 @@
+{
+  "version": "public-source-provenance-1",
+  "sources": [
+    {
+      "sourceId": "PUB-C19-01",
+      "url": "https://library.xmu.edu.cn/info/5191/15738325.htm",
+      "published": "2026-05-09",
+      "retrievedAt": "2026-10-04T13:18:21.915Z",
+      "originalHtmlSha256": "f71e321f87c6a87325348a9b01f462ef75d1333d0f36423382640c6821bc9265",
+      "originalExcerptSha256": "ed08787e379f4b43d6e1347cd2b0c32b621d153755811e7ddb089cf4592c3c2d",
+      "anonymousInputSha256": "ed08787e379f4b43d6e1347cd2b0c32b621d153755811e7ddb089cf4592c3c2d",
+      "role": "OFFICIAL_PUBLIC_OPERATIONAL_EXCERPT_DEVELOPMENT_NOT_HOLDOUT",
+      "selection": "Selected before any new output; input scope is this excerpt, not entire webpage",
+      "transformations": [],
+      "checks": [
+        {
+          "line": 1,
+          "verbatimApartFromWhitespace": true
+        },
+        {
+          "line": 2,
+          "verbatimApartFromWhitespace": true
+        }
+      ],
+      "localOriginals": "Ignored .data/public-notice-development; no personal contact or original mapping in Git"
+    },
+    {
+      "sourceId": "PUB-C19-02",
+      "url": "https://cee.xmu.edu.cn/info/1042/41095.htm",
+      "published": "2026-04-16",
+      "retrievedAt": "2026-10-04T13:18:21.918Z",
+      "originalHtmlSha256": "385ec6aa562f73c677c01066ed4c6191c8ade00638047391f6887abb726bbbbb",
+      "originalExcerptSha256": "78ec3d164996499f1fcfe8c3766e637290414857ba271865eea339ac35699d70",
+      "anonymousInputSha256": "e4f56a58a776eb6dfbfcf15b0a399ab6d8eb6544ad94d0c24dc547fc604a1da6",
+      "role": "OFFICIAL_PUBLIC_OPERATIONAL_EXCERPT_DEVELOPMENT_NOT_HOLDOUT",
+      "selection": "Selected before any new output; input scope is this excerpt, not entire webpage",
+      "transformations": [
+        "One institutional mailbox -> exchange@example.invalid; local original not committed",
+        "Numbered material list -> semicolon heading",
+        "Removed typographic deadline brackets"
+      ],
+      "checks": [
+        {
+          "line": 1,
+          "verbatimApartFromWhitespace": false,
+          "documentedTransformation": "Original list 1/2/3 -> semicolon heading; no fact added or deleted"
+        },
+        {
+          "line": 2,
+          "verbatimApartFromWhitespace": true
+        },
+        {
+          "line": 3,
+          "verbatimApartFromWhitespace": true
+        }
+      ],
+      "localOriginals": "Ignored .data/public-notice-development; no personal contact or original mapping in Git"
+    },
+    {
+      "sourceId": "PUB-C19-03",
+      "url": "https://med.xmu.edu.cn/info/1163/68813.htm",
+      "published": "2026-04-09",
+      "retrievedAt": "2026-10-04T13:18:22.265Z",
+      "originalHtmlSha256": "ebdb8a731e2c5df8aea9d0843b9a805554ab687db38f761aea9ae89bfd144517",
+      "originalExcerptSha256": "e8849eb36db3e06c0e37410b64e40eeca73c7131af74c6e0514b45c3675f1692",
+      "anonymousInputSha256": "e8849eb36db3e06c0e37410b64e40eeca73c7131af74c6e0514b45c3675f1692",
+      "role": "OFFICIAL_PUBLIC_OPERATIONAL_EXCERPT_DEVELOPMENT_NOT_HOLDOUT",
+      "selection": "Selected before any new output; input scope is this excerpt, not entire webpage",
+      "transformations": [],
+      "checks": [
+        {
+          "line": 1,
+          "verbatimApartFromWhitespace": true
+        },
+        {
+          "line": 2,
+          "verbatimApartFromWhitespace": true
+        }
+      ],
+      "localOriginals": "Ignored .data/public-notice-development; no personal contact or original mapping in Git"
+    },
+    {
+      "sourceId": "PUB-C19-04",
+      "url": "https://library.xmu.edu.cn/info/5191/15738345.htm",
+      "published": "2026-05-09",
+      "retrievedAt": "2026-10-04T13:18:22.419Z",
+      "originalHtmlSha256": "a976def0aaaa5f951207920ec69affa8f5e1e890b8c27b815657f7adebc8b920",
+      "originalExcerptSha256": "d88641d4b4c67a374b248a271cc09b68a0c356323cc98f82a79b4466374c51f3",
+      "anonymousInputSha256": "d88641d4b4c67a374b248a271cc09b68a0c356323cc98f82a79b4466374c51f3",
+      "role": "OFFICIAL_PUBLIC_OPERATIONAL_EXCERPT_DEVELOPMENT_NOT_HOLDOUT",
+      "selection": "Selected before any new output; input scope is this excerpt, not entire webpage",
+      "transformations": [
+        "Removed purpose preface, preserved operative instructions"
+      ],
+      "checks": [
+        {
+          "line": 1,
+          "verbatimApartFromWhitespace": true
+        },
+        {
+          "line": 2,
+          "verbatimApartFromWhitespace": true
+        },
+        {
+          "line": 3,
+          "verbatimApartFromWhitespace": true,
+          "documentedTransformation": "Purpose preface removed; quoted imperative unchanged"
+        }
+      ],
+      "localOriginals": "Ignored .data/public-notice-development; no personal contact or original mapping in Git"
+    }
+  ]
+}

@@ -1,19 +1,17 @@
-# 下一执行：未见实际通知验证当前首次完整事实
+# 下一执行：原冻结四份官网摘录的C19首答诊断
 
-2026-10-04。[当前结果](../recognition-optimization/candidate19-development/RESULTS.md)。已交付明确资格、支持引用、合法时间截取、渠道作用范围与条件禁止转换；不要重复这些包或继续扩模板制造阶段。以下提示词不自动授权模型、真人或发布。
+此文件不构成新模型/真人授权；预算卡对应4身份需要独立新许可。普通已授权工程继续。
 
 ~~~text
-继续学生事务管家首次准确率主线。工作区C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/比赛；分支codex/e2-candidate11-blind-eval。核实际HEAD/用户改动/upstream/远端，保留资产不回滚。
-有限读AGENTS/PRD首次及确认段、CURRENT_CONTEXT/活动路线、candidate19-development/RESULTS及eligibility-followup的四例/全部12诊断/浏览器/验证。原v11 C17 2/6、C19 1/6、MIXED_PROGRESS，后验4暂定/2错、5暂定/1渠道争议均不改；原grant耗尽不prepare/dispatch/恢复、不复用3.90。
-优先使用本次实际提供的少量未见、已匿名通知；可本地预检但不得伪造模型回答或把人工构造wire当模型首答。原文最小义务/事件/时间/材料/条件/关系逐事实参照标single-author/model-assisted/provisional，真实争议不满分。没有新材料时如实说当前覆盖未扩，不再无限造近义模板。
-最多两项当前首次缺口，其中最多一个可反驳生成假设。先列原文→已有raw或明确非模型夹具→wire→公共转换→普通首屏→正式保存/安排。没有原模型事实不猜补；工程正反例通过不称模型提升。
-资格grounding1.0.0仅验证原答true且同对象/同许可/本人明确获准/无矛盾的当前义务，未知/否定/缺证明保留待核对；前置等待不写完成。渠道1.2.0保留陌生有据目的地，无据/矛盾渠道仍未确认。未公布时间null可正确，模糊值不造日历，S05争议不提前裁决。已修不重做。
-公共确定性问题优先旧raw离线修，报告组件版本；只在确定输入缺口时查编号/另版本Prompt与candidate、保留旧C19字节。Schema/主实体/附属引用一致，不只加“请仔细”。不默认Candidate20、16/24身份、第三臂、执行器或全局计划器。
-需要新首答证据才以C19最近基线，按唯一假设冻结最小必要未见Development两臂；来源/参照/身份与requestSha/参数/referenceTime/timezone/Schema/公共转换/输出界/评分与选择规则先定，请求无Expected，两臂同公共规则。争议/失败/未知保留分母；分层整份净增无新增关键风险、目标错减少未净增、改善伴退步、无收益、证据不足；不以总分抵消风险或100%/净增2作总开关。
-新付费另需本批具体模型/身份次数/美元硬上限/唯一新grant与逐单元reserve/settle。grant前只读重核官方路由/价格/上下文输出附加费/同步HEAD/身份/完整账本，用可证明token上界，不把字节当token；复用安全执行器，一身份一次、严格ordinal、零自动retry/repair/verifier，不确定封存。缺许可只停付费，不阻其他已授权本地工程。
-复用普通App/ReviewSession/DomainCommitPlan/Repository和D27最小安排；原答/程序转换/首次展示/人工修改分开。新端口/新库实际验受影响首屏、部分确认/局部阻断、事务失败手动恢复、提交后只重读、刷新与独立值/owner/依据。不要修改旧6835或旧库，不用旧页面证据冒充新受影响路径。
-计量复用，无字段编辑不造editId，未闭合/缺commit/readback不补0，失败成本保留、重试不重复纠正；ENGINEERING_REPLAY不进真人指标。真人缺范围/负责人接受/本人同意/裁决仍NOT_OBSERVABLE，不阻准确率本地开发。
-本地代码、匿名正反例、旧raw只读、新隔离库、实际浏览器、适用测试/必要文档及Conventional Commit后立即普通推送延续明确授权。模型/grant/reserve/settle0、账本只读，除非另取具体新批许可。不读Secret、旧用户库、不新增依赖/升级v8、不改旧raw/Expected/分数/Manifest/身份/锁/断言；不开展真人/Holdout/default替换/合并/部署。
-定向先行，适用lint/test/build/security/隔离/历史只读；全量独立组跑到退出并汇总，6旧哈希/快照失败和audit5H2M/production0单列，不改断言/锁凑绿或循环无关矩阵。只更新一个结果入口、短交接/路线/现有索引；提交立即普通推送后核HEAD/upstream/远端/工作区。
-大白话交付实际首次错误变化、原答/首次展示分母和未知、新模型与工程证据分别、页面正式值/恢复/独立读回、调用/费用/测试/保护/Git。没有当前生成缺口就诚实交付，不以候选号、空表、预算卡、测试数或扩大模板代替成效；最少下一材料或授权只列具体需要的那一项。
+继续学生事务管家首次准确率主线，接续C19-PUBLIC-DEVELOPMENT-R1四份官方操作摘录、Candidate19单臂诊断。工作区C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/比赛；分支codex/e2-candidate11-blind-eval。核HEAD/用户改动/upstream/远端，保留资产不回滚。
+有限读AGENTS/PRD首次确认段、CURRENT_CONTEXT、当前路线、candidate19-public-development的RESULTS/IMPLEMENTATION/PROVENANCE/ROOT_CAUSE/OLD_12_DIAGNOSTIC/MANIFEST/PRE_REGISTRATION/预算卡。材料是操作摘录，不是全文或Holdout；工程wire不是模型。C19输入未改，渠道1.3.0；4次只测当前表现，不证明相对提高。
+旧12唯一grant耗尽；原v11 C17 2/6、C19 1/6/MIXED_PROGRESS及后验4暂定2错/5暂定1争议保持。旧批不prepare/dispatch/恢复，不复用3.90。新许可缺失：4NOT_RUN，模型/grant/reserve/settle0、账本只读，不复制空表或造新候选。
+有本批明确模型/4身份/美元上限/唯一新grant及逐单元reserve/settle许可时，先node scripts/prepare-public-notice-diagnostic.mjs --verify、node scripts/public-notice-execution-host.mjs --verify和--resume-read-only；核完整账本/同步HEAD/原identity/requestSHA。再查官方路由/价格/1M上下文/8192输出/缓存峰时及附加费。当前deepseek-flash映射V4.1-Flash，变化记录，不冒称复现旧模型。超预算、漂移、状态不明停止付费。
+实际授权原文、AUTHORIZATION、PRICE_EVIDENCE仅.data/public-notice-development/execution，绑定本轮同步已提交HEAD/原Manifest与身份/12小时核价。身份dispatchAuthorized=false不改，执行层独立核许可。唯一新grant、现成scoped host严格ordinal每身份最多一次；零retry/repair/verifier/额外样本。持久发送前状态、原raw、真实usage及结算；没有raw不判没发送，缺usage保守结算上界并停后续，不确定封存，不删锁重发。
+四份确定结局后按冻结逐事实provisional规则，模型首答/人工前展示/人工最终分列。核任务无任务、信息/事件、时间值类型精度、材料格式命名渠道办结、条件前置取消端点、全部标题描述额外义务及依据图。无损合并/材料视图/同义允许，错值对象、缺事实、坏边、无据义务拒绝。每项存原文理由与输出位置；争议失败未知留4分母，未裁决不满分，一个关键错不被其他分数抵消，用户补录不计首次正确。参照single-author/model-assisted/provisional，不冒充独立真值。单臂只报对/错/未知，不判相对赢家。
+最多2当前根因、最多1输入假设：原文→raw→转换→首屏→保存安排。公共问题旧raw先修，只有确定生成输入缺口才另版本、最小配对及新授权，不默认Candidate20/16/24。不要重修旧C17漏项/渠道资格或重建执行器/全局计划器。
+新录制接普通App/ReviewSession/DomainCommitPlan/Repository，原答、转换、首次展示、人改分别保留，原referenceTime和scope映射不改。新端口新库验受影响路径/部分确认/事务失败手动恢复/已提交只重读/刷新独立核值；不动旧6836/6835库，旧截图不代新录制。模型缺事实不能猜補成首次正确，D27原截止与个人计划分开。
+计量复用，无edit不造editId，失败成本不删、缺失不补0；工程不进真人指标。真人缺范围/负责人/同意/裁决NOT_OBSERVABLE，不阻本地准确率。不读Secret明文、不碰旧库、不增依赖/升级v8/改历史冻结，不开展真人/Holdout/default替换/合并/部署。
+定向事实/故障先行，适用lint/test/build/security/隔离/历史。已过且无改动工具组复用，不循环全仓审计；40组6旧哈希/账本快照失败及audit5H2M单列，不改旧锁断言。Conventional Commit立即普通push，核远端及工作区；更新一个结果入口、短交接和现有索引。
+最终大白话：4来源首答/展示对错未知分母，具体生成/程序/参照/UI根因，新模型与工程分开；用户少补哪件事、页面正式值/恢复/读回；发送确定/不确定/结算/usage/保守预算与实扣可观察性；测试保护账本Git与唯一入口；最少下一授权。无许可只停付费，不以预算卡空表编号交差。
 ~~~

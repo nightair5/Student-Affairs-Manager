@@ -1,7 +1,7 @@
 import type { RecognitionResult } from './types'
 import { assembleRecognitionFirstSuggestionD26 } from './firstSuggestionD26'
 
-export const MATERIAL_CHANNEL_GROUNDING_VERSION = 'material-channel-role-grounding-1.2.0'
+export const MATERIAL_CHANNEL_GROUNDING_VERSION = 'material-channel-role-grounding-1.3.0'
 export interface MaterialChannelDecision {
   materialId: string
   materialName: string
@@ -21,19 +21,28 @@ export interface MaterialChannelAudit {
 const compact = (text: string) => text.replace(/\s/gu, '')
 const escaped = (text: string) => text.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&')
 /** Role evidence, not token overlap: a receipt is not an instruction to send there. */
-function destinationRole(clause: string, object: string, channel: string) {
+function destinationRole(clause: string, object: string, channel: string, siblingObjects: string[] = []) {
   const text = compact(clause), o = escaped(compact(object)), c = escaped(compact(channel))
   const action = '(?:提交|上传|递交|发送|交付|送交|交)'
   // Only a closed object/destination or a separate post-submission action can follow.
   // An object suffix ("清单照片") or destination suffix never counts as the same role.
   const end = '(?:$|[、：:（(]|(?:并|且|后)(?:保留|保存|等待|查看|核对|确认))'
+  // A shared destination may follow a closed enumeration, as in an actual
+  // exchange notice. Each member must be an already-declared material of this
+  // same task; a substring, foreign object or open-ended list is not evidence.
+  const members = [...new Set([object, ...siblingObjects].map(compact))].sort((a, b) => b.length - a.length)
+  const member = `(?:${members.map(escaped).join('|')})(?:[（(][^（）()]{1,40}[）)])?`
+  const list = `${member}(?:(?:及|和|与|、)${member})+`
+  const enumeration = new RegExp(`(?:把|将)?(${list})${action}(?:至|到|给)${c}${end}`, 'u').exec(text)
+  const plainList = enumeration?.[1].replace(/[（(][^（）()]{1,40}[）)]/gu, '')
+  const listed = plainList && new RegExp(`(?:^|及|和|与|、)${o}(?:$|及|和|与|、)`, 'u').test(plainList) ? enumeration : null
   const matched = [
     new RegExp(`${action}${o}(?:至|到|给)${c}${end}`, 'u'),
     new RegExp(`${o}(?:请|须|需|应)?${action}(?:至|到|给)${c}${end}`, 'u'),
     new RegExp(`(?:把|将)${o}${action}(?:至|到|给)${c}${end}`, 'u'),
     new RegExp(`(?:通过|经由|在)${c}(?:直接|统一|线上)?${action}${o}${end}`, 'u'),
     new RegExp(`${o}(?:的)?(?:提交渠道|提交地址|接收邮箱|提交入口)(?:为|是|：|:)${c}${end}`, 'u'),
-  ].map(pattern => pattern.exec(text)).find(match => match !== null)
+  ].map(pattern => pattern.exec(text)).find(match => match !== null) ?? listed
   if (!matched) return null
   // Literal object/destination names are values, not grammatical conditions (e.g. 若水).
   // Only an explicit separate receipt-printing note may be excluded. Other trailing
@@ -62,8 +71,9 @@ export function groundMaterialChannels(input: RecognitionResult, sourceText: str
       && typeof e.quote === 'string' && sourceText.includes(e.quote)).map(e => ({ id: e.id, quote: e.quote! }))
     const clauses = evidence.flatMap(e => e.quote.split(/[，。；\n]/u))
     const objects = [...new Set([material.name, ...owners.map(t => t.actionObject)].filter(Boolean))]
+    const siblings = result.materials.filter(m => owners.some(t => m.relatedTaskTempIds.includes(t.tempId) && t.materialTempIds.includes(m.tempId))).map(m => m.name)
     const roleChecks = clauses.flatMap(quote => objects.flatMap(object => {
-      const check = destinationRole(quote, object, originalValue)
+      const check = destinationRole(quote, object, originalValue, siblings)
       return check ? [{ quote, object, ...check }] : []
     }))
     const contradictory = roleChecks.some(c => c.polarity === 'NEGATED_OR_UNCERTAIN')

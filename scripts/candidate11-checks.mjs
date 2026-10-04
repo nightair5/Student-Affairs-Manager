@@ -53,7 +53,7 @@ async function safety() {
     ['d25-executor','scripts/d25-executor.node-test.mjs'],['d25-mechanism','scripts/d25-mechanism.node-test.mjs'],['d26-mechanism','scripts/d26-mechanism.node-test.mjs'],
     ['d26-executor','scripts/d26-executor.node-test.mjs'],['d26-freeze','scripts/d26-freeze.node-test.mjs'],['d26-score-recording','scripts/d26-score-recording.node-test.mjs'],
     ['d26-execution-host','scripts/d26-execution-host.node-test.mjs'],['d26-execution-report','scripts/report-d26-execution.node-test.mjs'],['d26-recorded-projection','scripts/d26-recorded-projection.node-test.mjs'],
-    ['scoped-execution','scripts/scoped-execution.node-test.mjs'],['candidate19-contract','scripts/candidate19-contract.node-test.mjs']])
+    ['scoped-execution','scripts/scoped-execution.node-test.mjs'],['candidate19-contract','scripts/candidate19-contract.node-test.mjs'],['public-notice-diagnostic','scripts/public-notice-diagnostic.node-test.mjs']])
   if(process.platform==='win32')nodeTests([['d25-live-safety','scripts/d25-live-safety.node-test.mjs']])
   else record({label:'d25-live-safety',status:null,outcome:'NOT_AVAILABLE',reason:'FROZEN_WINDOWS_POWERSHELL_LOCK_TEST_REQUIRES_WINDOWS; portable executor tests run separately'})
 }
