@@ -1,22 +1,26 @@
-# 新生成契约与来源生命周期
+# 实际录制后的产品机制修复
 
-2026-10-04。本包不更改默认候选，不改旧C17/C18、D26身份、raw和分数，不授权付费。
+2026-10-04。先前新生成契约/普通事件生命周期实现见本目录冻结代码ce97b325；此阶段仅新增非冻结文件。当前程序转换`source-grounded-nonaction-projection-1.0.1`，不是新Prompt候选；C17/C19生成文件、v11、请求及原分数不变。
 
-| 用户场景/根因 | 实际修改 | 正确性边界 |
+| 原文→原答→首次页根因 | 代码路径 | 修改/不变边界 |
 |---|---|---|
-| C18已有事件/时间，却因null和重复账目生成不了首屏 | Candidate19使用真正的explicit-source-contract-4.0.0生成Schema、四态coverage、主/附属引用和单份scopeAccounting；候选/Prompt独立版本 | present须有实体与依据；unknown不变成没有；缺主实体、错类型、跨scope、矛盾仍拒绝；没有自动补事件 |
-| 条件“完成后”被写成当前已完成 | 复用有来源证据的prerequisiteStates校验，资格/前置/可开始分开 | 依赖任务可以保存为等待；资格unknown相关项阻断；不推断完成 |
-| 纯事件关闭/刷新后显示核对0项，部分确认提前完结 | sourceWorkflow用canonical实际accepted/rejected身份计待核对任务/事件；Inbox直接显示二者；sourceReviewD26不将未选事件当作拒绝 | 留在同一App/ReviewSession/DomainCommitPlan/Repository；CAS及原子事务继续；不新增平行保存 |
-| 录制RecognitionRun误写成通用或本地Prompt | App在capture前记录实际候选、原Prompt、构建、录制/夹具角色、来源基准时间；手动模式仍manual-entry且Prompt=null | 工程夹具明确非模型；原回答、转换、首屏与人工输入分开，来源ID可逆映射 |
-| 刷新恢复事件后再点编辑覆盖我的输入 | OrdinarySourceFacts在共享未确认buffer存在时禁止重新开另一个编辑入口，明确保存或放弃；恢复接管可直接保存 | 实际浏览器复现后修复；不要求随便改字解锁，不关闭CAS，不静默选择冲突输入 |
-| 老评分把明确错deadline类型、格式与办结标准报争议 | 新v11复用v10，添加本批原文明确时间类型、coverage、前置状态、材料格式/命名、办结标准遗漏检查 | 旧v10不动；无损时间截取、完整/简称材料、合法事件标题作为输出前参照替代表达；争议仍保留 |
+| C19原答把“不需要重新登记/不要发送”写成negative动作；冻结桥仍投影为待办 | src/recognition/directiveDispositionProduct.ts | 仅动作对象在同片段、原文直接否定、模型状态一致、无引用/共享主事实时转信息；保留原实体与决策审计，不猜事实 |
+| “不要忘记发送”、临时/条件禁止或问句不能按“不执行”删除 | 同上negativeEvidence；版本1.0.1 | 限明确否定直接前缀，问句/双重否定/提醒/条件时点保留RETAIN_BLOCKED；不是见“不要”就删 |
+| 缺事件或错引用不能用转换补答案 | 同上applyRecordedDirectiveDisposition | C17遗漏仍遗漏；缺主实体/图冲突在原编译层仍拒绝，剩余事项继承原coverage/conflict阻断与未选状态 |
+| 实际回答接普通首屏、正式保存、失败恢复与独立读回 | src/experiments/candidate19Recorded/browser.tsx；scripts/candidate19-recorded-data.mjs；scripts/serve-candidate19-recorded.mjs | 固定2份已settle raw，仅回环/全新库；普通App、ReviewSession、DomainCommitPlan、Repository和D27安排；不创建平行正式事实链 |
 
-主要代码：src/experiments/realInput01/candidate19.ts；src/recognition/sourceContractV4.ts；src/lib/sourceWorkflow.ts；src/pages/InboxPage.tsx；src/App.tsx；src/domain/v2/sourceReviewD26.ts；src/experiments/d26Recorded/browser.tsx。
+`projectDirectiveDisposition`不原地修改输入；`applyRecordedDirectiveDisposition`保留originalAdapted、originalSemantic、frozenBridgeResult、productDisposition、recordedProvenance、scopeRebinding与来源原基准时间。源scope到新Source的映射可逆，原raw持久化不改；原答、候选转换、比较后程序转换、用户输入不混合。
 
-新来源及provisional参照来自generationFixtures.ts和candidate19-reference-data.mjs。值由原文先写，不从adapter输出抄真值。新增6份匿名Development，2份无任务事件、2份条件/依赖、1份精确截止+材料+事件图、1份普通无时间任务。不是独立Holdout。Schema、转换、首屏与Repository往返及合法表示/最小语义反例均在模型输出前校验。
+录制loader在提供数据前核state.SETTLED、HTTP200、request/identity/source/response SHA；只读取确定的2份，没有伪造10份NOT_RUN。拒绝来源不会成为下一provider缓存；普通App先保存Source/Version/Run/Draft再生成首屏。事件仍是事件，模糊时间不建确定日历日期；原deadline与个人计划分开。
 
-执行器复用旧D26的持久锁、写前receipt、reserve/presend/raw/settle、只读续跑与HALT协议，因旧冻结文件不可改而做版本化参数提取scoped-execution-core/host-2，将固定16改为绑定batch/count。Candidate19宿主只接新12身份；旧D26入口不接新批。凭证分支仅在单独本批授权、同步HEAD、价格、身份及账本门全部通过后可达。本轮未进入该分支。离线故障测试只用系统临时目录中的假账本/假传输。
+## 不是为答案做特例的反例
 
-真实首答契约分数、经过冻结公共转换的人工前首屏和人工最终结果分列。可展示率、工程oracle、旧raw转换成功率都不能写成新模型准确率。v11参照为单作者/model-assisted/provisional；自由描述与泄漏没有真实裁决仍NOT_ADJUDICATED。
+新增测试使用实际raw和不同匿名写法：无需、不必、直接不要合法；肯定、双重否定、不要忘记、条件时点、反问不能转无任务；被依赖的旧端点、共享主片段、无关coverage guard仍保留；正任务/材料/依赖/精确截止/独立事件图不变。实际Schema→公共decoder/compiler→新转换→ordinary draft→DomainCommitPlan→另一Repository读回，0任务/0项目/1事件/1未知时间。
 
-普通产品沿用D27最小安排、measurement3.2/low-edit-v2及语义edit/checkpoint/commit/readback，不改阈值、不升级v8或增加依赖。最终浏览器、验证和付费状态在同目录唯一RESULTS入口报告。
+src/recognition/directiveDispositionProduct.test.ts最终5个测试；scripts/candidate19-recorded-data.node-test.mjs两项读取/篡改反例。完整产品测试959通过/1跳过。不是将脚本兼容率或工程oracle当新模型准确率。
+
+## 尚未修的真实缺口
+
+C17把停查全文标information却没有event/time，程序保持遗漏，不按关键词补实体；当前这类“语义上有遗漏但没有结构坏引用”的全面覆盖仍依赖参照/真实裁决，不能称全部自动发现。C19其他5个来源未运行，所以资格、前置、材料/完成标准及修订的实际生成效果未知。关联否定只做局部阻断，普通完整取消/替代表示仍有原范围限制。S08旧材料参照争议及自由描述/标题未决不填满分。
+
+正式提交后读回失败的恢复按钮在弹层外，需先点“稍后处理并关闭”，再“重新读回并核验”；保留清楚可操作路径，但多一步，未宣称最佳体验。工程时间混有浏览器/工具等待，不能外推真人省时。本包没有修改默认候选、新模型输入、依赖、v8或历史锁。

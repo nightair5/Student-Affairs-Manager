@@ -1,4 +1,30 @@
-# 最终构建普通路径实测
+# 当前实际录制产品验收（最终1.0.1）
+
+2026-10-04。官方Computer Use/IAB真实点击，未读隐藏页面状态/存储或用单测代替浏览器。**唯一推荐：http://127.0.0.1:6817/**；构建`196e7a2ad33a / source 0655b375b834`；隔离库`rco-mainline-01-02-i1-d27-plan-recorded-c19paid1004final`；候选C19固定实际录制/explicit-source-contract-4.0.0→比较后程序转换1.0.1，ENGINEERING_REPLAY。实时模型派发0、回环、原先6813/6809及旧用户库未动。
+
+仅实际2份已SETTLED录制供选，余10未发送不伪造。所有Source/Version/Run/Draft先保存，普通App/ReviewSession/DomainCommitPlan/Repository/D27安排共享产品路径。输入使用来源原基准2026-10-03T09:00+08，不用回放当天重新解释相对时间。
+
+| 实际路径 | 操作与页面证据 | 独立结果/边界 |
+|---|---|---|
+| 最终C19首次建议 | 本批诊断区选择C19→普通快速粘贴同匿名原文→智能拆分；首屏“0项任务、1个事件”，不要求拒绝重新登记/发邮件；没有编辑或补录 | [首屏截图](paid-evidence/browser/v101-first-display.png)；事件名、周日晚间未知时间来自实际原答，新转换另有审计 |
+| 最终仅阅读 | 弹层仅阅读至少10秒后确认，无字段输入 | [实际页面测量](paid-evidence/browser/v101-measurement.json)：activeEditMs0、semanticFields[]、pageEditIds[]，failureEvents1且commit/readback完整；墙钟含工具等待，不称真人省时 |
+| 最终提交后读回失败 | 注入一次故障→确认信息并保存独立事件；页面“已提交，读回尚未验证”，提交记录保留，重复确认disabled | [失败截图](paid-evidence/browser/v101-readback-failure.png)。关闭弹层→重新读回并核验；只读回，不再提交 |
+| 最终恢复/正式事实 | UI报告“正式事实已保存，独立读回已验证”后，另一个Repository通过诊断按钮读取 | [正式canonical](paid-evidence/browser/v101-saved-canonical.json)：Task0/Project0/Event1/TimePoint1；时间raw周日晚间/normalizedValue=null/precision=vague/needsConfirmation=true；时间指event、event.startTimeId指该时间 |
+| 最终刷新/幂等 | reload→诊断区独立canonical读回 | [刷新canonical](paid-evidence/browser/v101-refreshed-canonical.json)：Event/TimePoint数组逐值相等，正式事实没有增长；console error/warn为空。[刷新截图](paid-evidence/browser/v101-refresh-complete.png) |
+| 本阶段正式事务失败过程证据 | 新6814库c19paid1004a，0任务1事件首屏→注入正式失败→页面明确未提交→关闭弹层独立读回→重开手动确认 | [失败页](paid-evidence/browser/formal-failure.png)/[失败canonical](paid-evidence/browser/failed-canonical.json)0正式实体；[成功](paid-evidence/browser/saved-canonical.json)及[刷新](paid-evidence/browser/refreshed-canonical.json)均0Task0Project1Event1Time；只复用不受1.0.1否定前缀收紧影响的相同领域提交/失败分支，**不称这是6817最终构建的截图** |
+| 本阶段1.0.0读回失败过程 | 6815/00c50d5，同实际录制、独立新库 | final-*文件保留过程证据；最终状态以上v101-*为准，不与运行构建混用 |
+
+最终commit=`source-review:source:ac9951dc:draft:1:fnv1a32:6fc1f57c`；measurement同ID包含commit和独立readback。原模型响应/原semantic/冻结bridge/new projection各存，用户纠正为空。正式时间的canonical timezone=null因为时刻未知；来源provenance仍Asia/Shanghai，不能据此编一个日历日期。
+
+[旧过程measurement](paid-evidence/browser/measurement.json)中刷新/恢复未闭合时间为null及缺失，不回填0。无真实编辑则没有editId/checkpoint成本，不能制造纠正链；最终只读完成0active有实际终态与readback。首次/最终语义正确未由负责人裁决，四项真人指标NOT_OBSERVABLE。
+
+剩余体验限制：提交后恢复需先关闭核对弹层，再点页面恢复；核对页泛化“多个时间、材料或阶段”的既有提示仍不够精确，不能称已最简。两项均未造成事实丢失/重复，但可以根据后续真实体验排优先级，不能用这一工程回放证明普遍省时。C17漏事件不补猜，双臂整批效果因封存仍未知。
+
+## 历史准备阶段工程浏览器证据（原6813，非当前实际模型比较）
+
+以下是此前新生成契约本地交付的过程记录，原文件/evidence不改。6工程oracle并非Candidate19模型输出；此前0调用状态只属于当时阶段，当前付费数看RESULTS/BATCH_STATUS。
+
+### 原6813准备阶段构建实测
 
 2026-10-04。官方Computer Use/IAB实际操作，未用盲坐标、后台UI脚本或单测冒充浏览器。入口6813，新库c19final1004c，最终代码ce97b325f388/source e2c33d4806d9。六份夹具明确ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT；另三份原D26 C18回答为只读真实旧录制，均ENGINEERING_REPLAY。旧6809未操作。
 

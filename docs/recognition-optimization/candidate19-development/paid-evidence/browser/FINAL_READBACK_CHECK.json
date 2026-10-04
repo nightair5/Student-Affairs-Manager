@@ -1,0 +1,56 @@
+{
+  "role": "ENGINEERING_REPLAY",
+  "codeCommit": "196e7a2ad33aa80776e9a3455cd8e0f7667cbb85",
+  "build": "196e7a2ad33a / source 0655b375b834",
+  "origin": "http://127.0.0.1:6817/",
+  "database": "rco-mainline-01-02-i1-d27-plan-recorded-c19paid1004final",
+  "component": "source-grounded-nonaction-projection-1.0.1",
+  "counts": {
+    "Task": 0,
+    "Project": 0,
+    "Event": 1,
+    "TimePoint": 1
+  },
+  "sameEvent": true,
+  "sameTime": true,
+  "time": {
+    "id": "time:source:ac9951dc:draft:1:time-0001",
+    "projectId": null,
+    "milestoneId": null,
+    "taskId": null,
+    "materialId": null,
+    "eventId": "event:source:ac9951dc:draft:1:event-0001",
+    "relatedTaskIds": [],
+    "relatedMaterialIds": [],
+    "type": "event_start",
+    "rawText": "周日晚间",
+    "normalizedValue": null,
+    "timezone": null,
+    "isAllDay": false,
+    "precision": "vague",
+    "needsConfirmation": true,
+    "createdAt": "2026-10-03T23:46:46.967Z",
+    "updatedAt": "2026-10-03T23:46:46.967Z",
+    "legacyData": {
+      "recognitionTempId": "time-0001",
+      "evidenceIds": [
+        "d26-scope-0001-01729f6b8150a958ca5f76a12e85891a5e26e2c0ca9a80f722f7f791926be304"
+      ],
+      "confidence": 0.9
+    }
+  },
+  "activeEditMs": 0,
+  "semanticFields": [],
+  "verifiedCommitIds": [
+    "source-review:source:ac9951dc:draft:1:fnv1a32:6fc1f57c"
+  ],
+  "missing": [],
+  "failureEvents": 1,
+  "humanMetrics": "NOT_OBSERVABLE",
+  "modelRouteGuard": {
+    "status": 403,
+    "response": "C19_MODEL_AND_EXTERNAL_ROUTES_DISABLED"
+  },
+  "modelCalls": 0,
+  "ledgerWrites": 0
+}

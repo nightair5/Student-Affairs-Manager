@@ -1,35 +1,27 @@
-# 验证结果与明确剩余项
+# 最终产品验证与历史失败
 
-2026-10-04。最终代码ce97b325f38897e87a55b63ddaea9470e8ea4156。付费、Secret分支均未进入；只读保护/旧raw/账本核验。没有新增依赖、v8迁移或修改旧锁/断言。
+2026-10-04。最终修复代码196e7a2ad33aa80776e9a3455cd8e0f7667cbb85。原模型批仅2次确定发送/结算，10未发送，保留锁；工程验证0额外模型/账本写入，不接触Secret明文或旧用户库。
 
-| 检查 | 实际结果 | 可检查证据 |
+| 检查 | 本阶段结果 | 证据/边界 |
 |---|---|---|
-| 生成契约、确认、来源生命周期、测量定向 | 5文件45 PASS | [日志](evidence/targeted-vitest.log) |
-| 参照/选择器+12单元执行器 | 8 PASS；合法变体、最小语义反例，两臂对称；13故障位置及假传输12次 | [日志](evidence/targeted-node.log)，只用临时假账本/假传输 |
-| 最终普通产品组 | 9独立组PASS，Vitest954 PASS/1 SKIP；Node/server/worker/worker-d26/functions/time-parity全部确定退出 | [汇总日志](evidence/final-product.log)，本机完整子日志.data/candidate11/checks/current-product/Asia-Shanghai/ |
-| 全量权威test | 39组33 PASS/6历史FAIL，无unavailable；并非全量PASS | [完整汇总](evidence/full-test.log)。后续两处事件UI修复后仅受影响最终产品9组重跑通过，不冒称全量是在最终代码再跑 |
-| lint | 0 error/8既有warning | [日志](evidence/final-lint.log)，FastRefresh和旧effect引用警告 |
-| TypeScript/build | PASS，659.88KB主chunk警告保留 | [日志](evidence/final-build.log)，没有提高阈值 |
-| security scan | PASS | [日志](evidence/security.log)；文档交付边界另扫描 |
-| browser/隔离/独立读回 | 受影响实际路径PASS，错误语义仍明确阻断 | [浏览器证据](BROWSER_EVIDENCE.md)、新的loopback库；旧库未触碰，403实时派发机械关闭；现行安全组及真实Repository链覆盖隔离 |
-| 84保护/119冻结/7归档 | PASS | [只读核验](evidence/HISTORY_VERIFY.json) |
-| 全部16旧raw新诊断 | READ_ONLY_VERIFIED，原模型结果不动 | [verify](evidence/OLD_RAW_REPLAY_VERIFY.json)，原诊断在source-contract-consistency |
-| 原D26快照/现场 | 原145/7/16、raw16/receipt33、16SETTLED，audit CONSISTENT | 起点复用原readonly host，未dispatch；旧执行包结果保留 |
-| 本批冻结/host | 12NOT_RUN；无auth/lock/halt/state/目录；本批账本0行 | [host](evidence/HOST_READ_ONLY.json)、[零调用报告](ZERO_CALL_REPORT.json)、[无授权拒绝](evidence/NO_AUTHORIZATION_REFUSALS.json) |
-| npm audit | 5 high/2 moderate，未修，不称PASS | [原JSON](evidence/NPM_AUDIT.json) |
+| 原录制Schema→首屏→正式事务/独立读回，不同写法与最小反例 | 最终5个定向Vitest PASS | directiveDispositionProduct.test.ts；含提醒/条件/问句不误删 |
+| 实际2份录制加载与SHA篡改 | 2项Node PASS | candidate19-recorded-data.node-test.mjs；不能把NOT_SENT伪造成录制 |
+| 全量权威npm run test | 39组：33 PASS、6历史FAIL；全部确定退出，无unavailable | [完整汇总](paid-evidence/checks/FULL_TEST_SUMMARY.json)，[精确历史日志及SHA](paid-evidence/checks/HISTORICAL_FAILURES.json)；最终源码测试，无排除套件 |
+| 当前产品9独立组 | 全通过；Vitest959 PASS/1 SKIP | [完整产品日志](paid-evidence/checks/vitest-product.log)，server/worker/worker-d26/functions/time-parity等在汇总内 |
+| lint | exit0；0错误8既有警告 | FastRefresh及旧effect引用；本轮无新增警告 |
+| build/TypeScript | PASS；1728 modules；659.88KB主chunk既有警告 | 没有提高阈值或新增依赖 |
+| security:scan | PASS；最终文档/证据边界3947 source/build files | 敏感本地许可不入Git |
+| 实际浏览器及canonical | PASS受影响路径，正式失败/读回失败/刷新分别核 | [实际操作与构建](BROWSER_EVIDENCE.md)、[独立值核对](paid-evidence/browser/FINAL_READBACK_CHECK.json)；模糊时间null、原答无人工补录；最终POST模型路由403 |
+| 历史保护/本批冻结 | 84保护119冻结7归档保持；本批原Manifest/12身份SHA不变 | prepare verify的FROZEN_NOT_RUN是原准备矩阵状态，实际2发送以BATCH_STATUS计；合法账本追加136相对旧快照 |
+| 权威账本/现场 | 完整链/原前缀合法；976行；batch5行；raw2/receipt5；lock保留、HALT null、audit CONSISTENT | [EXECUTION_REPORT](paid-evidence/EXECUTION_REPORT.json)和[错误](paid-evidence/EXECUTION_FAILURE.json)；0不确定发送，绝不把HALT null当可发送 |
+| npm audit | 总体5high/2moderate既有开发工具链风险未修，不能称PASS；production-only exit0、0漏洞 | [生产依赖审计](paid-evidence/checks/AUDIT_PRODUCTION.json)，此前全审计原JSON仍在evidence/NPM_AUDIT.json |
 
-## 历史失败与维护
+6历史失败：d19-diagnostic/vitest-d17-history为旧D17完整账本快照不接受合法追加；d9-historical为旧serve-candidate15-d8哈希；rco-5-007为旧package-lock哈希；c11-history/c11-gateway为旧AGENTS哈希。原断言/锁/Expected/raw/结果均未修改。本轮没有新的carrier调用错误、Node收集或5秒超时，不全局加timeout；完整测试退出1如实保留。
 
-[精确片段及原日志SHA](evidence/HISTORICAL_FAILURES.json)保留6组：d19-diagnostic、vitest-d17-history为`D17_SCORE_LEDGER_DRIFT`（旧全账本快照不接受合法追加）；d9-historical为`D9_GUARD_FILE_DRIFT_scripts/serve-candidate15-d8.mjs`；rco-5-007为`FREEZE_HASH_MISMATCH:package-lock.json`；c11-history/c11-gateway为`C11_HISTORY_PROTECTED_CHANGED:AGENTS.md`。本轮前已存在，不改旧锁/断言/Manifest制造通过。
+audit涉及Vitest/@vitest-mocker、Wrangler/Miniflare、brace-expansion、sharp、undici等dev工具链。该回环录制入口未公开Vitest UI/Miniflare代理/任意图片转换；production-only0不证明所有工具不可达。维护建议仍是分支隔离的兼容补丁及Wrangler/Miniflare成套更新，Vitest major不盲升，另版本lock/新冻结与适用回归；本包不audit fix旧锁。[此前具体可达性](../source-contract-consistency/VALIDATION.md)保留。
 
-现行入口将Vitest与Node发现分开、使用匿名carrier构建器、逐组限并发并全部汇总。本轮没有新的旧Node收集、carrier环境或5秒超时。没有排除旧套件、全局加timeout，完整测试仍EXIT1。
+只有1实际配对，原冻结整批准确率NOT_OBSERVABLE；局部诊断与后验程序转换分列。工程保存成功不直接等于语义正确。真人四指标NOT_OBSERVABLE，描述/标题/泄漏NOT_ADJUDICATED。失败及刷新计时缺失保留null，不能靠0填低修改成功。
 
-audit既有7项为Vitest/@vitest-mocker、Wrangler/Miniflare、sharp、undici、brace-expansion，当前lock的dev工具链。此回环录制服务未启用公开Vitest UI、Miniflare上游代理或任意图像转换，但开发工具处理不可信mock/网络/图像时风险不能称不可达。后续隔离依赖维护优先同主版本兼容补丁及配套Wrangler/Miniflare；audit推荐Vitest major不能盲升。需另版本lock/冻结基线和相应回归，本轮不audit fix或改旧冻结lock。[既有详细可达性与兼容建议](../source-contract-consistency/VALIDATION.md)继续有效。
+代码提交00c50d557b8eeee9f8f657f38e9d89bb8976a9e3、196e7a2ad33aa80776e9a3455cd8e0f7667cbb85均提交后立即普通推送。后续文档提交与运行构建不同，最终本地/upstream/远端SHA在现场核。paid-evidence保存的是匿名录制/工程证据；授权原件和映射只在.data。
 
-## 仍未证明的效果
-
-本轮6份provisional工程参照可以证明程序按合法Schema工作和发现反例；没有Candidate19模型输出，不能证明模型会如实填coverage、资格、主实体、材料或时间。12身份全部未运行，不报0%或100%。旧raw转换率也不替代整份正确率。完整取消/替代普通v8表示、S08参照争议、未裁决标题/描述/泄漏保留；不因为一项领域限制扩大成重构或伪造满分。
-
-实际工程测量有完整read-only0active、失败/重试成本与edit→commit→readback，但恢复/未闭合区间按缺失保守处理，未证明真人省时。任务/事件组结构变更计量仍有粒度限制，明确记录，不回填measurement3.2/low-edit-v2。真人四指标全部NOT_OBSERVABLE。
-
-文档/冻结不是新业务代码，提交前核diff/证据SHA/security/当前冻结与历史保护，不重复已通过的无关全量组。.gitattributes只为本批新目录追加-text规则，防止Windows checkout转换身份/读回原字节；旧路径规则未改。最终本地/upstream/远端SHA在交付现场核对。
+diff检查仅两份原测试日志vitest-d17-history.log和vitest-product.log的文件末尾空行提示；日志保留原字节与SHA，没有修剪证据冒充原输出。代码与Markdown未见空白错误。
