@@ -1,0 +1,62 @@
+{
+  "runOutcome": "FAIL",
+  "groups": 39,
+  "pass": 33,
+  "fail": 6,
+  "failures": [
+    {
+      "layer": "historical",
+      "label": "d19-diagnostic",
+      "status": 1,
+      "outcome": "FAIL",
+      "error": null,
+      "log": "d19-diagnostic.txt",
+      "sha256": "08cc31420d0d1bfae1dc0ab36fb11673369c1e960f11de52d24d04d736fbda81"
+    },
+    {
+      "layer": "historical",
+      "label": "d9-historical",
+      "status": 1,
+      "outcome": "FAIL",
+      "error": null,
+      "log": "d9-historical.txt",
+      "sha256": "205a757215d15e732693d026a7e2cb1070cdcf206355b48564c9387c8f2e520f"
+    },
+    {
+      "layer": "historical",
+      "label": "rco-5-007",
+      "status": 1,
+      "outcome": "FAIL",
+      "error": null,
+      "log": "rco-5-007.txt",
+      "sha256": "67acaec9a7991455bce35bff7af92fbbb706dce58315a0487f1ace3d7dd43a32"
+    },
+    {
+      "layer": "historical",
+      "label": "c11-history",
+      "status": 1,
+      "outcome": "FAIL",
+      "error": null,
+      "log": "c11-history.txt",
+      "sha256": "9e02bebfad110519a912acf3e8e09199d7ee9c9c6343d7cc7046cf5c964e4b8e"
+    },
+    {
+      "layer": "historical",
+      "label": "c11-gateway",
+      "status": 1,
+      "outcome": "FAIL",
+      "error": null,
+      "log": "c11-gateway.txt",
+      "sha256": "e1af3936678ff1394eb72aec4f2f08d76410e23ae6705e921c6c1988e681ec03"
+    },
+    {
+      "layer": "historical",
+      "label": "vitest-d17-history",
+      "status": 1,
+      "outcome": "FAIL",
+      "error": null,
+      "log": "vitest-d17-history.txt",
+      "sha256": "6c9ce15e9b020f58ef4cc091b29c330785e0b34228749186e4797f20aa443c04"
+    }
+  ]
+}
