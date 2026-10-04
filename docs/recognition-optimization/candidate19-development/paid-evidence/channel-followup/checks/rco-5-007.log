@@ -1,0 +1,22 @@
+✔ RCO-5-007 source-only input cannot expose Expected (3.4717ms)
+✖ RCO-5-007 prediction and scoring dependency graphs are hash bound (7.4014ms)
+✔ RCO-5-007 replay made no model, network, repair, retry, or secret access (3.3725ms)
+✔ RCO-5-007 safety gate remains fail closed (1.5157ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 3
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 92.2128
+
+✖ failing tests:
+
+test at scripts\rco-5-007-replay.node-test.mjs:20:1
+✖ RCO-5-007 prediction and scoring dependency graphs are hash bound (7.4014ms)
+  Error: FREEZE_HASH_MISMATCH:package-lock.json
+      at verifyRco5007Freeze (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/rco-5-007-integrity.mjs:17:55)
+      at async TestContext.<anonymous> (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/rco-5-007-replay.node-test.mjs:21:22)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)

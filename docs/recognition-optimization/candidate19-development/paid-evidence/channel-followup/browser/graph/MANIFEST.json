@@ -1,0 +1,26 @@
+{
+  "origin": "http://127.0.0.1:6832",
+  "database": "rco-mainline-01-02-i1-d27-plan-recorded-graphlocal1004",
+  "build": "0ce07b44204b / ENGINEERING_GRAPH_FIXTURE_BRIDGE",
+  "explicitContract": true,
+  "role": "ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT",
+  "bridgeDelta": {
+    "originalEntry": "src/experiments/candidate19Recorded/browser.tsx",
+    "originalEntrySha256": "f0caec66239391db1cd3a74b2e59ff36049f834f2643b5f5ac51938feb3db51b",
+    "originalExpression": "decodeCurrentSourceRecording(rebound.reboundHttpText, record.candidate, context)",
+    "testExpression": "decodeCurrentSourceRecording(rebound.reboundHttpText, record.candidate === 'EngineeringFixture' ? 'Candidate17' : record.candidate, context)",
+    "reason": "legacy wire fixture explicitly decoded through unchanged Candidate17 public converter; label is EngineeringFixture"
+  },
+  "ordinaryAppAndDomainUnchanged": true,
+  "files": [
+    {
+      "name": "stdin.js",
+      "sha256": "54fa571d7b38d92e6e03fe6d336196141611dcfbb80163f90f1e0c4506cee720"
+    },
+    {
+      "name": "stdin.css",
+      "sha256": "4f130c46c6675c582e5bfe7cd1735c56926818cc399f9d628903178e9a476922"
+    }
+  ],
+  "newModelCalls": 0
+}

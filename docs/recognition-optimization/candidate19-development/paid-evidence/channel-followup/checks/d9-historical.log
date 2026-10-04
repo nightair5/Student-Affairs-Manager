@@ -1,0 +1,25 @@
+✖ frozen 12×2 package is intact and remains unsent (13.2546ms)
+✔ unauthorized dispatch is always blocked by this zero-call package (4.6027ms)
+✔ request and identity drift are blocked (12.9179ms)
+✔ duplicate, reordered and dropped units are blocked (6.843ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 3
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 124.6304
+
+✖ failing tests:
+
+test at scripts\verify-candidate15-d9.test.mjs:11:1
+✖ frozen 12×2 package is intact and remains unsent (13.2546ms)
+  Error: D9_GUARD_FILE_DRIFT_scripts/serve-candidate15-d8.mjs
+      at assert (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/verify-candidate15-d9.mjs:12:45)
+      at verifyD9Files (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/verify-candidate15-d9.mjs:51:41)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/verify-candidate15-d9.test.mjs:12:20)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.start (node:internal/test_runner/test:1191:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17)

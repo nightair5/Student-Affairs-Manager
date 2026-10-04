@@ -1,0 +1,164 @@
+{
+  "version": "channel-followup-browser-1",
+  "role": "ENGINEERING_REPLAY",
+  "url": "http://127.0.0.1:6831/",
+  "build": "0ce07b44204b / source b20eb69397a5",
+  "database": "rco-mainline-01-02-i1-d27-plan-recorded-channelfinal1004",
+  "counts": {
+    "Task": 5,
+    "Project": 0,
+    "Event": 4,
+    "TimePoint": 8,
+    "Material": 1
+  },
+  "sourceStates": [
+    {
+      "id": "source:7ad3faae",
+      "state": "confirmed"
+    },
+    {
+      "id": "source:bf7161c9",
+      "state": "confirmed"
+    },
+    {
+      "id": "source:6fa9d993",
+      "state": "partially_confirmed"
+    },
+    {
+      "id": "source:c382fc0e",
+      "state": "confirmed"
+    },
+    {
+      "id": "source:c3c1334e",
+      "state": "confirmed"
+    },
+    {
+      "id": "source:b8842029",
+      "state": "confirmed"
+    }
+  ],
+  "refreshFactsIdentical": true,
+  "channel": {
+    "original": "平台",
+    "displayed": null,
+    "canonical": null,
+    "completion": [
+      "看到平台显示接收成功才算办结"
+    ]
+  },
+  "faults": {
+    "transactionBeforeRetry": {
+      "Task": 0,
+      "Event": 0,
+      "Material": 0,
+      "TimePoint": 0
+    },
+    "readbackBeforeRecoveryTaskCount": 5,
+    "afterRecoveryTaskCount": 5
+  },
+  "measurement": [
+    {
+      "draftId": "source:7ad3faae:draft:1",
+      "activeEditMs": 0,
+      "wallMs": 27958,
+      "missing": [],
+      "editIds": [],
+      "verifiedCommitIds": [
+        "source-review:source:7ad3faae:draft:1:fnv1a32:ed6b1af6"
+      ],
+      "canonicalDraftState": "confirmed",
+      "legacyReportedOutcomes": {
+        "complete": true,
+        "partial": false,
+        "failureEvents": 1
+      }
+    },
+    {
+      "draftId": "source:bf7161c9:draft:1",
+      "activeEditMs": 0,
+      "wallMs": 14503,
+      "missing": [],
+      "editIds": [],
+      "verifiedCommitIds": [
+        "source-review:source:bf7161c9:draft:1:fnv1a32:47ec5e70"
+      ],
+      "canonicalDraftState": "confirmed",
+      "legacyReportedOutcomes": {
+        "complete": true,
+        "partial": false,
+        "failureEvents": 0
+      }
+    },
+    {
+      "draftId": "source:6fa9d993:draft:1",
+      "activeEditMs": null,
+      "wallMs": null,
+      "missing": [
+        "unclosed interval",
+        "terminal commit/readback"
+      ],
+      "editIds": [],
+      "verifiedCommitIds": [
+        "source-review:source:6fa9d993:draft:1:fnv1a32:120d4b2a"
+      ],
+      "canonicalDraftState": "partially_confirmed",
+      "legacyReportedOutcomes": {
+        "complete": false,
+        "partial": false,
+        "failureEvents": 0
+      }
+    },
+    {
+      "draftId": "source:c382fc0e:draft:1",
+      "activeEditMs": 0,
+      "wallMs": 19742,
+      "missing": [],
+      "editIds": [],
+      "verifiedCommitIds": [
+        "source-review:source:c382fc0e:draft:1:fnv1a32:a79cbe88"
+      ],
+      "canonicalDraftState": "confirmed",
+      "legacyReportedOutcomes": {
+        "complete": true,
+        "partial": false,
+        "failureEvents": 0
+      }
+    },
+    {
+      "draftId": "source:c3c1334e:draft:1",
+      "activeEditMs": 0,
+      "wallMs": 12101,
+      "missing": [],
+      "editIds": [],
+      "verifiedCommitIds": [
+        "source-review:source:c3c1334e:draft:1:fnv1a32:34c186e8"
+      ],
+      "canonicalDraftState": "confirmed",
+      "legacyReportedOutcomes": {
+        "complete": true,
+        "partial": false,
+        "failureEvents": 0
+      }
+    },
+    {
+      "draftId": "source:b8842029:draft:1",
+      "activeEditMs": null,
+      "wallMs": null,
+      "missing": [
+        "refresh time discontinuity"
+      ],
+      "editIds": [],
+      "verifiedCommitIds": [
+        "source-review:source:b8842029:draft:1:fnv1a32:0550110b"
+      ],
+      "canonicalDraftState": "confirmed",
+      "legacyReportedOutcomes": {
+        "complete": true,
+        "partial": false,
+        "failureEvents": 1
+      }
+    }
+  ],
+  "humanMetrics": "NOT_OBSERVABLE",
+  "newModelCalls": 0
+}
