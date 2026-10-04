@@ -17,6 +17,18 @@
     "ping": true
   },
   "lastConfirmedRemoteSha": "0bcc3b8b9263e8fadf2d9fd8453e5ce74ec774c9",
-  "currentRemote": "UNKNOWN_AFTER_NETWORK_FAILURE",
-  "nextAction": "Final freeze commit immediately ordinary push; verify HEAD/upstream/remote. If 443 still unavailable, keep local commits and restore network, then ordinary push. Never force-push or call paid mode on unsynchronized HEAD."
+  "nextAction": "This log is a follow-up document commit; immediately ordinary push it and verify final HEAD/upstream/remote in final handoff. No paid authority follows from synchronization.",
+  "initialRemoteAfterFailure": "UNKNOWN_AFTER_NETWORK_FAILURE",
+  "recoveredDelivery": {
+    "ordinaryPushExitCode": 0,
+    "remoteCheckExitCode": 0,
+    "head": "25849225d6c957ae4037e68590ee96ecf4cd4fbf",
+    "upstream": "25849225d6c957ae4037e68590ee96ecf4cd4fbf",
+    "remote": "25849225d6c957ae4037e68590ee96ecf4cd4fbf",
+    "workspace": "CLEAN",
+    "codeCommit": "d223698ee54e47e36433ebb0fcac3624b0a8da2c",
+    "freezeVerified": "FROZEN_NOT_RUN",
+    "frozenManifestSha256": "6f29277d0e6c07065e6d158d1e9335f01eddbe7228fbc20d895d5c977b6afb0f",
+    "identitiesSha256": "77c6881849c21ba709c1ad1aec7f9bb20ab920e5f271f69e5390f915d95a20e9"
+  }
 }
