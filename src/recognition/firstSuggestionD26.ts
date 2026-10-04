@@ -2,6 +2,7 @@ import { interpretTimeD26, type D26TimeInterpretation } from '../lib/timeSemanti
 import { adaptModelWire, type WireContext } from '../experiments/realInput01/modelWire'
 import type { SemanticInput } from '../experiments/mainline04/semanticContract'
 import type { RecognitionResult, TaskSuggestionV2, TimePointSuggestionV2 } from './types'
+import { groundEligibility } from './eligibilityGrounding'
 
 export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.0.0'
 interface ProseRecord { entityId: string; kind: 'task' | 'event' | 'source'; title: string; description: string }
@@ -130,12 +131,13 @@ export interface D26RepresentationGap {
   reason: string
 }
 export interface D26SemanticSidecar {
-  version: 'semantic-ordinary-bridge-1.0.0'
+  version: 'semantic-ordinary-bridge-1.1.0'
   originalSemantic: SemanticInput
   firstSemantic: SemanticInput
   sourceScopeEvidence: Array<{ scopeId: string; evidenceId: string }>
   representationGaps: D26RepresentationGap[]
   displayAudit: D26FirstSuggestionAudit
+  eligibilityAudit: ReturnType<typeof groundEligibility>
 }
 
 /** Typed projection only. Missing 2.0 vocabulary remains in sidecar and blocks affected confirmations. */
@@ -144,8 +146,10 @@ export function bridgeSemanticToRecognitionD26(input: SemanticInput, context: Wi
   const evidenceId = (scopeId: string) => 'd26-' + scopeId
   const evidenceIds = (scopeIds: string[]) => scopeIds.map(evidenceId)
   const gaps: D26RepresentationGap[] = []
+  const eligibilityAudit = groundEligibility(first, context)
   for (const task of first.tasks) {
-    if (task.condition.value !== 'not_applicable') gaps.push({ kind: 'condition', entityIds: [task.id], reason: task.condition.value === 'false' ? '原文明确当前不适用，不创建执行任务。' : task.condition.value === 'unknown' ? '资格尚未确认，不能当成已符合；请保留待核对。' : '资格成立证据保留，普通任务尚不能完整表达。' })
+    const eligibility = eligibilityAudit.decisions.find(d => d.taskId === task.id)
+    if (eligibility?.status === 'RETAIN_REVIEW') gaps.push({ kind: 'condition', entityIds: [task.id], reason: eligibility.reason })
     if (task.semantics.status !== 'pending' || task.semantics.validity !== 'active' || task.semantics.polarity !== 'affirmative' || task.semantics.modality !== 'required' || !['addressee', 'addressed_group'].includes(task.semantics.actor)) {
       gaps.push({ kind: 'lifecycle', entityIds: [task.id], reason: '当前状态、执行人或义务类型不能由普通任务字段完整表达。' })
     }
@@ -169,7 +173,7 @@ export function bridgeSemanticToRecognitionD26(input: SemanticInput, context: Wi
     ambiguities: [], ignoredContent: first.informationScopeIds.flatMap(id => { const scope = context.index.scopes.find(row => row.id === id); return scope ? [{ text: scope.text, reason: 'other' as const }] : [] }),
     quality: { overallConfidence: 1, hierarchyConfidence: 1, dateConfidence: first.timePoints.some(point => point.needsConfirmation) ? 0.5 : 1, evidenceCoverage: 1, duplicateRisk: 0, overFragmentationRisk: 0, missingActionRisk: 0, needsHumanReview: gaps.length > 0 || audit.unresolved.length > 0, reviewReasons: unique(gaps.map(gap => gap.reason)) },
   }
-  const sidecar: D26SemanticSidecar = { version: 'semantic-ordinary-bridge-1.0.0', originalSemantic: structuredClone(input), firstSemantic: first,
-    sourceScopeEvidence: context.index.scopes.map(scope => ({ scopeId: scope.id, evidenceId: evidenceId(scope.id) })), representationGaps: gaps, displayAudit: audit }
+  const sidecar: D26SemanticSidecar = { version: 'semantic-ordinary-bridge-1.1.0', originalSemantic: structuredClone(input), firstSemantic: first,
+    sourceScopeEvidence: context.index.scopes.map(scope => ({ scopeId: scope.id, evidenceId: evidenceId(scope.id) })), representationGaps: gaps, displayAudit: audit, eligibilityAudit }
   return { result, sidecar, audit, representationGaps: gaps }
 }

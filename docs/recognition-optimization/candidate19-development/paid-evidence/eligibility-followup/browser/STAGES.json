@@ -1,0 +1,719 @@
+[
+  {
+    "label": "01-FAILED",
+    "counts": {
+      "sources": 1,
+      "tasks": 0,
+      "projects": 0,
+      "materials": 0,
+      "events": 0,
+      "timePoints": 0,
+      "historyRecords": 0
+    },
+    "drafts": [
+      {
+        "id": "source:808b123c:draft:1",
+        "status": "needs_review",
+        "commitIds": [],
+        "accepted": []
+      }
+    ],
+    "tasks": [],
+    "authoritative": true
+  },
+  {
+    "label": "01-RECOVERED",
+    "counts": {
+      "sources": 1,
+      "tasks": 1,
+      "projects": 0,
+      "materials": 1,
+      "events": 2,
+      "timePoints": 5,
+      "historyRecords": 9
+    },
+    "drafts": [
+      {
+        "id": "source:808b123c:draft:1",
+        "status": "confirmed",
+        "commitIds": [
+          "source-review:source:808b123c:draft:1:fnv1a32:bee0b1db"
+        ],
+        "accepted": [
+          "E1",
+          "E2",
+          "M1",
+          "P1",
+          "P2",
+          "P3",
+          "P4",
+          "P5",
+          "T1"
+        ]
+      }
+    ],
+    "tasks": [
+      {
+        "id": "task:source:808b123c:draft:1:T1",
+        "title": "递交场地申请",
+        "status": "todo"
+      }
+    ],
+    "authoritative": true
+  },
+  {
+    "label": "02-COMMITTED-READBACK-PENDING",
+    "counts": {
+      "sources": 2,
+      "tasks": 2,
+      "projects": 0,
+      "materials": 2,
+      "events": 4,
+      "timePoints": 10,
+      "historyRecords": 18
+    },
+    "drafts": [
+      {
+        "id": "source:25646601:draft:1",
+        "status": "confirmed",
+        "commitIds": [
+          "source-review:source:25646601:draft:1:fnv1a32:090e6671"
+        ],
+        "accepted": [
+          "E1",
+          "E2",
+          "M1",
+          "P1",
+          "P2",
+          "P3",
+          "P4",
+          "P5",
+          "T1"
+        ]
+      },
+      {
+        "id": "source:808b123c:draft:1",
+        "status": "confirmed",
+        "commitIds": [
+          "source-review:source:808b123c:draft:1:fnv1a32:bee0b1db"
+        ],
+        "accepted": [
+          "E1",
+          "E2",
+          "M1",
+          "P1",
+          "P2",
+          "P3",
+          "P4",
+          "P5",
+          "T1"
+        ]
+      }
+    ],
+    "tasks": [
+      {
+        "id": "task:source:808b123c:draft:1:T1",
+        "title": "递交场地申请",
+        "status": "todo"
+      },
+      {
+        "id": "task:source:25646601:draft:1:T1",
+        "title": "递交经费申请",
+        "status": "todo"
+      }
+    ],
+    "authoritative": true
+  },
+  {
+    "label": "02-READBACK-RECOVERED",
+    "counts": {
+      "sources": 2,
+      "tasks": 2,
+      "projects": 0,
+      "materials": 2,
+      "events": 4,
+      "timePoints": 10,
+      "historyRecords": 18
+    },
+    "drafts": [
+      {
+        "id": "source:25646601:draft:1",
+        "status": "confirmed",
+        "commitIds": [
+          "source-review:source:25646601:draft:1:fnv1a32:090e6671"
+        ],
+        "accepted": [
+          "E1",
+          "E2",
+          "M1",
+          "P1",
+          "P2",
+          "P3",
+          "P4",
+          "P5",
+          "T1"
+        ]
+      },
+      {
+        "id": "source:808b123c:draft:1",
+        "status": "confirmed",
+        "commitIds": [
+          "source-review:source:808b123c:draft:1:fnv1a32:bee0b1db"
+        ],
+        "accepted": [
+          "E1",
+          "E2",
+          "M1",
+          "P1",
+          "P2",
+          "P3",
+          "P4",
+          "P5",
+          "T1"
+        ]
+      }
+    ],
+    "tasks": [
+      {
+        "id": "task:source:808b123c:draft:1:T1",
+        "title": "递交场地申请",
+        "status": "todo"
+      },
+      {
+        "id": "task:source:25646601:draft:1:T1",
+        "title": "递交经费申请",
+        "status": "todo"
+      }
+    ],
+    "authoritative": true
+  },
+  {
+    "label": "03-READBACK-STALE-PREVIOUS-UI-RETAINED",
+    "counts": {
+      "sources": 2,
+      "tasks": 2,
+      "projects": 0,
+      "materials": 2,
+      "events": 4,
+      "timePoints": 10,
+      "historyRecords": 18
+    },
+    "drafts": [
+      {
+        "id": "source:25646601:draft:1",
+        "status": "confirmed",
+        "commitIds": [
+          "source-review:source:25646601:draft:1:fnv1a32:090e6671"
+        ],
+        "accepted": [
+          "E1",
+          "E2",
+          "M1",
+          "P1",
+          "P2",
+          "P3",
+          "P4",
+          "P5",
+          "T1"
+        ]
+      },
+      {
+        "id": "source:808b123c:draft:1",
+        "status": "confirmed",
+        "commitIds": [
+          "source-review:source:808b123c:draft:1:fnv1a32:bee0b1db"
+        ],
+        "accepted": [
+          "E1",
+          "E2",
+          "M1",
+          "P1",
+          "P2",
+          "P3",
+          "P4",
+          "P5",
+          "T1"
+        ]
+      }
+    ],
+    "tasks": [
+      {
+        "id": "task:source:808b123c:draft:1:T1",
+        "title": "递交场地申请",
+        "status": "todo"
+      },
+      {
+        "id": "task:source:25646601:draft:1:T1",
+        "title": "递交经费申请",
+        "status": "todo"
+      }
+    ],
+    "authoritative": false,
+    "reason": "Readback control still displayed previous source set; excluded from partial-save evidence. Fresh 03-04 stage and final source-scoped canonical establish persistence."
+  },
+  {
+    "label": "03-04-PARTIAL-FRESH",
+    "counts": {
+      "sources": 4,
+      "tasks": 2,
+      "projects": 0,
+      "materials": 2,
+      "events": 8,
+      "timePoints": 18,
+      "historyRecords": 30
+    },
+    "drafts": [
+      {
+        "id": "source:4652e3db:draft:1",
+        "status": "partially_confirmed",
+        "commitIds": [
+          "source-review:source:4652e3db:draft:1:fnv1a32:12ec9b98"
+        ],
+        "accepted": [
+          "E1",
+          "E2",
+          "P2",
+          "P3",
+          "P4",
+          "P5"
+        ]
+      },
+      {
+        "id": "source:be3cd670:draft:1",
+        "status": "partially_confirmed",
+        "commitIds": [
+          "source-review:source:be3cd670:draft:1:fnv1a32:b2600988"
+        ],
+        "accepted": [
+          "E1",
+          "E2",
+          "P2",
+          "P3",
+          "P4",
+          "P5"
+        ]
+      },
+      {
+        "id": "source:25646601:draft:1",
+        "status": "confirmed",
+        "commitIds": [
+          "source-review:source:25646601:draft:1:fnv1a32:090e6671"
+        ],
+        "accepted": [
+          "E1",
+          "E2",
+          "M1",
+          "P1",
+          "P2",
+          "P3",
+          "P4",
+          "P5",
+          "T1"
+        ]
+      },
+      {
+        "id": "source:808b123c:draft:1",
+        "status": "confirmed",
+        "commitIds": [
+          "source-review:source:808b123c:draft:1:fnv1a32:bee0b1db"
+        ],
+        "accepted": [
+          "E1",
+          "E2",
+          "M1",
+          "P1",
+          "P2",
+          "P3",
+          "P4",
+          "P5",
+          "T1"
+        ]
+      }
+    ],
+    "tasks": [
+      {
+        "id": "task:source:808b123c:draft:1:T1",
+        "title": "递交场地申请",
+        "status": "todo"
+      },
+      {
+        "id": "task:source:25646601:draft:1:T1",
+        "title": "递交经费申请",
+        "status": "todo"
+      }
+    ],
+    "authoritative": true
+  },
+  {
+    "label": "05-DEPENDENCY-PARTIAL",
+    "counts": {
+      "sources": 5,
+      "tasks": 4,
+      "projects": 0,
+      "materials": 2,
+      "events": 8,
+      "timePoints": 18,
+      "historyRecords": 32
+    },
+    "drafts": [
+      {
+        "id": "source:8df2d307:draft:1",
+        "status": "partially_confirmed",
+        "commitIds": [
+          "source-review:source:8df2d307:draft:1:fnv1a32:80f20760"
+        ],
+        "accepted": [
+          "task-0001",
+          "task-0002"
+        ]
+      },
+      {
+        "id": "source:4652e3db:draft:1",
+        "status": "partially_confirmed",
+        "commitIds": [
+          "source-review:source:4652e3db:draft:1:fnv1a32:12ec9b98"
+        ],
+        "accepted": [
+          "E1",
+          "E2",
+          "P2",
+          "P3",
+          "P4",
+          "P5"
+        ]
+      },
+      {
+        "id": "source:be3cd670:draft:1",
+        "status": "partially_confirmed",
+        "commitIds": [
+          "source-review:source:be3cd670:draft:1:fnv1a32:b2600988"
+        ],
+        "accepted": [
+          "E1",
+          "E2",
+          "P2",
+          "P3",
+          "P4",
+          "P5"
+        ]
+      },
+      {
+        "id": "source:25646601:draft:1",
+        "status": "confirmed",
+        "commitIds": [
+          "source-review:source:25646601:draft:1:fnv1a32:090e6671"
+        ],
+        "accepted": [
+          "E1",
+          "E2",
+          "M1",
+          "P1",
+          "P2",
+          "P3",
+          "P4",
+          "P5",
+          "T1"
+        ]
+      },
+      {
+        "id": "source:808b123c:draft:1",
+        "status": "confirmed",
+        "commitIds": [
+          "source-review:source:808b123c:draft:1:fnv1a32:bee0b1db"
+        ],
+        "accepted": [
+          "E1",
+          "E2",
+          "M1",
+          "P1",
+          "P2",
+          "P3",
+          "P4",
+          "P5",
+          "T1"
+        ]
+      }
+    ],
+    "tasks": [
+      {
+        "id": "task:source:808b123c:draft:1:T1",
+        "title": "递交场地申请",
+        "status": "todo"
+      },
+      {
+        "id": "task:source:25646601:draft:1:T1",
+        "title": "递交经费申请",
+        "status": "todo"
+      },
+      {
+        "id": "task:source:8df2d307:draft:1:task-0001",
+        "title": "填写场地使用登记",
+        "status": "todo"
+      },
+      {
+        "id": "task:source:8df2d307:draft:1:task-0002",
+        "title": "递交场地使用登记",
+        "status": "todo"
+      }
+    ],
+    "authoritative": true
+  },
+  {
+    "label": "FINAL",
+    "counts": {
+      "sources": 6,
+      "tasks": 4,
+      "projects": 0,
+      "materials": 2,
+      "events": 10,
+      "timePoints": 22,
+      "historyRecords": 38
+    },
+    "drafts": [
+      {
+        "id": "source:eefa5b16:draft:1",
+        "status": "confirmed",
+        "commitIds": [
+          "source-review:source:eefa5b16:draft:1:fnv1a32:93296a84"
+        ],
+        "accepted": [
+          "event-0001",
+          "event-0002",
+          "time-0001",
+          "time-0002",
+          "time-0003",
+          "time-0004"
+        ]
+      },
+      {
+        "id": "source:8df2d307:draft:1",
+        "status": "partially_confirmed",
+        "commitIds": [
+          "source-review:source:8df2d307:draft:1:fnv1a32:80f20760"
+        ],
+        "accepted": [
+          "task-0001",
+          "task-0002"
+        ]
+      },
+      {
+        "id": "source:4652e3db:draft:1",
+        "status": "partially_confirmed",
+        "commitIds": [
+          "source-review:source:4652e3db:draft:1:fnv1a32:12ec9b98"
+        ],
+        "accepted": [
+          "E1",
+          "E2",
+          "P2",
+          "P3",
+          "P4",
+          "P5"
+        ]
+      },
+      {
+        "id": "source:be3cd670:draft:1",
+        "status": "partially_confirmed",
+        "commitIds": [
+          "source-review:source:be3cd670:draft:1:fnv1a32:b2600988"
+        ],
+        "accepted": [
+          "E1",
+          "E2",
+          "P2",
+          "P3",
+          "P4",
+          "P5"
+        ]
+      },
+      {
+        "id": "source:25646601:draft:1",
+        "status": "confirmed",
+        "commitIds": [
+          "source-review:source:25646601:draft:1:fnv1a32:090e6671"
+        ],
+        "accepted": [
+          "E1",
+          "E2",
+          "M1",
+          "P1",
+          "P2",
+          "P3",
+          "P4",
+          "P5",
+          "T1"
+        ]
+      },
+      {
+        "id": "source:808b123c:draft:1",
+        "status": "confirmed",
+        "commitIds": [
+          "source-review:source:808b123c:draft:1:fnv1a32:bee0b1db"
+        ],
+        "accepted": [
+          "E1",
+          "E2",
+          "M1",
+          "P1",
+          "P2",
+          "P3",
+          "P4",
+          "P5",
+          "T1"
+        ]
+      }
+    ],
+    "tasks": [
+      {
+        "id": "task:source:808b123c:draft:1:T1",
+        "title": "递交场地申请",
+        "status": "todo"
+      },
+      {
+        "id": "task:source:25646601:draft:1:T1",
+        "title": "递交经费申请",
+        "status": "todo"
+      },
+      {
+        "id": "task:source:8df2d307:draft:1:task-0001",
+        "title": "填写场地使用登记",
+        "status": "todo"
+      },
+      {
+        "id": "task:source:8df2d307:draft:1:task-0002",
+        "title": "递交场地使用登记",
+        "status": "todo"
+      }
+    ],
+    "authoritative": true
+  },
+  {
+    "label": "REFRESH",
+    "counts": {
+      "sources": 6,
+      "tasks": 4,
+      "projects": 0,
+      "materials": 2,
+      "events": 10,
+      "timePoints": 22,
+      "historyRecords": 38
+    },
+    "drafts": [
+      {
+        "id": "source:eefa5b16:draft:1",
+        "status": "confirmed",
+        "commitIds": [
+          "source-review:source:eefa5b16:draft:1:fnv1a32:93296a84"
+        ],
+        "accepted": [
+          "event-0001",
+          "event-0002",
+          "time-0001",
+          "time-0002",
+          "time-0003",
+          "time-0004"
+        ]
+      },
+      {
+        "id": "source:8df2d307:draft:1",
+        "status": "partially_confirmed",
+        "commitIds": [
+          "source-review:source:8df2d307:draft:1:fnv1a32:80f20760"
+        ],
+        "accepted": [
+          "task-0001",
+          "task-0002"
+        ]
+      },
+      {
+        "id": "source:4652e3db:draft:1",
+        "status": "partially_confirmed",
+        "commitIds": [
+          "source-review:source:4652e3db:draft:1:fnv1a32:12ec9b98"
+        ],
+        "accepted": [
+          "E1",
+          "E2",
+          "P2",
+          "P3",
+          "P4",
+          "P5"
+        ]
+      },
+      {
+        "id": "source:be3cd670:draft:1",
+        "status": "partially_confirmed",
+        "commitIds": [
+          "source-review:source:be3cd670:draft:1:fnv1a32:b2600988"
+        ],
+        "accepted": [
+          "E1",
+          "E2",
+          "P2",
+          "P3",
+          "P4",
+          "P5"
+        ]
+      },
+      {
+        "id": "source:25646601:draft:1",
+        "status": "confirmed",
+        "commitIds": [
+          "source-review:source:25646601:draft:1:fnv1a32:090e6671"
+        ],
+        "accepted": [
+          "E1",
+          "E2",
+          "M1",
+          "P1",
+          "P2",
+          "P3",
+          "P4",
+          "P5",
+          "T1"
+        ]
+      },
+      {
+        "id": "source:808b123c:draft:1",
+        "status": "confirmed",
+        "commitIds": [
+          "source-review:source:808b123c:draft:1:fnv1a32:bee0b1db"
+        ],
+        "accepted": [
+          "E1",
+          "E2",
+          "M1",
+          "P1",
+          "P2",
+          "P3",
+          "P4",
+          "P5",
+          "T1"
+        ]
+      }
+    ],
+    "tasks": [
+      {
+        "id": "task:source:808b123c:draft:1:T1",
+        "title": "递交场地申请",
+        "status": "todo"
+      },
+      {
+        "id": "task:source:25646601:draft:1:T1",
+        "title": "递交经费申请",
+        "status": "todo"
+      },
+      {
+        "id": "task:source:8df2d307:draft:1:task-0001",
+        "title": "填写场地使用登记",
+        "status": "todo"
+      },
+      {
+        "id": "task:source:8df2d307:draft:1:task-0002",
+        "title": "递交场地使用登记",
+        "status": "todo"
+      }
+    ],
+    "authoritative": true
+  }
+]

@@ -1,0 +1,224 @@
+{
+  "role": "ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT",
+  "newModelCalls": 0,
+  "beforeCorrectDecisions": 2,
+  "afterCorrectDecisions": 4,
+  "denominator": 4,
+  "notWholeModelAccuracy": true,
+  "cases": [
+    {
+      "id": "approved-application",
+      "source": "本轮场地申请仅限获准社团。你的社团已获准。请于2026年11月6日15:20前递交场地申请。场地申请必须为PDF。器材讲解会于2026年11月7日14:00开始，15:00结束。系统维护在周五晚上开始，结束时间尚未公布。",
+      "rawEnvelopeSha256": "09e205ce456db50c9d1cdd162de4e3757a36a8ae3ac3c88904f4a42ad745d179",
+      "referenceRole": "single-author/model-assisted/provisional",
+      "expected": "SOURCE_PROVEN_TRUE",
+      "before": {
+        "selected": false,
+        "reason": "资格成立证据保留，普通任务尚不能完整表达。"
+      },
+      "after": {
+        "selected": true,
+        "reason": null,
+        "audit": {
+          "version": "source-proven-eligibility-1.0.0",
+          "role": "PROGRAM_SOURCE_CHECK_NOT_NEW_MODEL_OUTPUT",
+          "inferredFacts": 0,
+          "decisions": [
+            {
+              "taskId": "T1",
+              "declaredValue": "true",
+              "status": "SOURCE_PROVEN_TRUE",
+              "ruleScopeIds": [
+                "scope-0001-00b0430dee0a08dd5077b94af66c5fbbf96391743d08935a75e7edbfef4fddc8"
+              ],
+              "factScopeIds": [
+                "scope-0002-708a707589dadfb0de973d9c2f03b9371e49b14d7c2a2f9f67ef6eb57b0abd5d"
+              ],
+              "contradictoryScopeIds": [],
+              "reason": "原答声明资格成立，同对象许可规则与本人的明确获准事实一致；保留依据，不要求重复核对。"
+            }
+          ]
+        }
+      },
+      "originalCondition": {
+        "value": "true",
+        "conditionScopeIds": [
+          "scope-0001-00b0430dee0a08dd5077b94af66c5fbbf96391743d08935a75e7edbfef4fddc8"
+        ],
+        "factScopeIds": [
+          "scope-0002-708a707589dadfb0de973d9c2f03b9371e49b14d7c2a2f9f67ef6eb57b0abd5d"
+        ]
+      },
+      "firstCondition": {
+        "value": "true",
+        "conditionScopeIds": [
+          "scope-0001-00b0430dee0a08dd5077b94af66c5fbbf96391743d08935a75e7edbfef4fddc8"
+        ],
+        "factScopeIds": [
+          "scope-0002-708a707589dadfb0de973d9c2f03b9371e49b14d7c2a2f9f67ef6eb57b0abd5d"
+        ]
+      }
+    },
+    {
+      "id": "licensed-application",
+      "source": "本次经费申请只限已获得许可的社团。你的社团已经获得许可。请于2026年11月6日15:20前递交经费申请。经费申请必须为PDF。器材讲解会于2026年11月7日14:00开始，15:00结束。系统维护在周五晚上开始，结束时间尚未公布。",
+      "rawEnvelopeSha256": "a3837ba3fc6406d9dba33644f680728dbaad959c0d5566c11fb070695e2951e8",
+      "referenceRole": "single-author/model-assisted/provisional",
+      "expected": "SOURCE_PROVEN_TRUE",
+      "before": {
+        "selected": false,
+        "reason": "资格成立证据保留，普通任务尚不能完整表达。"
+      },
+      "after": {
+        "selected": true,
+        "reason": null,
+        "audit": {
+          "version": "source-proven-eligibility-1.0.0",
+          "role": "PROGRAM_SOURCE_CHECK_NOT_NEW_MODEL_OUTPUT",
+          "inferredFacts": 0,
+          "decisions": [
+            {
+              "taskId": "T1",
+              "declaredValue": "true",
+              "status": "SOURCE_PROVEN_TRUE",
+              "ruleScopeIds": [
+                "scope-0001-b996e5cebf5acf946c154b1f49ff323081fab94d8fba011740d5b546f83a81d5"
+              ],
+              "factScopeIds": [
+                "scope-0002-ba2edebdf3756b3203f9227e89052685dcc5daf68d41aef24215407306d91f3a"
+              ],
+              "contradictoryScopeIds": [],
+              "reason": "原答声明资格成立，同对象许可规则与本人的明确获准事实一致；保留依据，不要求重复核对。"
+            }
+          ]
+        }
+      },
+      "originalCondition": {
+        "value": "true",
+        "conditionScopeIds": [
+          "scope-0001-b996e5cebf5acf946c154b1f49ff323081fab94d8fba011740d5b546f83a81d5"
+        ],
+        "factScopeIds": [
+          "scope-0002-ba2edebdf3756b3203f9227e89052685dcc5daf68d41aef24215407306d91f3a"
+        ]
+      },
+      "firstCondition": {
+        "value": "true",
+        "conditionScopeIds": [
+          "scope-0001-b996e5cebf5acf946c154b1f49ff323081fab94d8fba011740d5b546f83a81d5"
+        ],
+        "factScopeIds": [
+          "scope-0002-ba2edebdf3756b3203f9227e89052685dcc5daf68d41aef24215407306d91f3a"
+        ]
+      }
+    },
+    {
+      "id": "eligibility-unannounced",
+      "source": "本轮场地申请仅限获准社团。你的社团是否获准尚未公布。请于2026年11月6日15:20前递交场地申请。场地申请必须为PDF。器材讲解会于2026年11月7日14:00开始，15:00结束。系统维护在周五晚上开始，结束时间尚未公布。",
+      "rawEnvelopeSha256": "f654fed46404920cada7ed493aac5a0afb4b6e869c10c56585ff2810f3efcd78",
+      "referenceRole": "single-author/model-assisted/provisional",
+      "expected": "RETAIN_REVIEW",
+      "before": {
+        "selected": false,
+        "reason": "资格尚未确认，不能当成已符合；请保留待核对。"
+      },
+      "after": {
+        "selected": false,
+        "reason": "资格尚未确认，不能当成已符合；请保留待核对。",
+        "audit": {
+          "version": "source-proven-eligibility-1.0.0",
+          "role": "PROGRAM_SOURCE_CHECK_NOT_NEW_MODEL_OUTPUT",
+          "inferredFacts": 0,
+          "decisions": [
+            {
+              "taskId": "T1",
+              "declaredValue": "unknown",
+              "status": "RETAIN_REVIEW",
+              "ruleScopeIds": [
+                "scope-0001-a518ca8a4a02aa3e2a871117ff139323e3fcd44c553057a2368bf0fc13c5bca3"
+              ],
+              "factScopeIds": [
+                "scope-0002-9518db4ae18cfbff417b34f09511347cd02c525ffec14a647374c4a1c8f0e434"
+              ],
+              "contradictoryScopeIds": [],
+              "reason": "资格尚未确认，不能当成已符合；请保留待核对。"
+            }
+          ]
+        }
+      },
+      "originalCondition": {
+        "value": "unknown",
+        "conditionScopeIds": [
+          "scope-0001-a518ca8a4a02aa3e2a871117ff139323e3fcd44c553057a2368bf0fc13c5bca3"
+        ],
+        "factScopeIds": [
+          "scope-0002-9518db4ae18cfbff417b34f09511347cd02c525ffec14a647374c4a1c8f0e434"
+        ]
+      },
+      "firstCondition": {
+        "value": "unknown",
+        "conditionScopeIds": [
+          "scope-0001-a518ca8a4a02aa3e2a871117ff139323e3fcd44c553057a2368bf0fc13c5bca3"
+        ],
+        "factScopeIds": [
+          "scope-0002-9518db4ae18cfbff417b34f09511347cd02c525ffec14a647374c4a1c8f0e434"
+        ]
+      }
+    },
+    {
+      "id": "contradicted-approval",
+      "source": "本次经费申请只限已获得许可的社团。你的社团尚未获得许可。请于2026年11月6日15:20前递交经费申请。经费申请必须为PDF。器材讲解会于2026年11月7日14:00开始，15:00结束。系统维护在周五晚上开始，结束时间尚未公布。",
+      "rawEnvelopeSha256": "e26da603c44cd8b2fbad9a2c4ee108573b064092dba1e0a9ca053f43075e7265",
+      "referenceRole": "single-author/model-assisted/provisional",
+      "expected": "RETAIN_REVIEW",
+      "before": {
+        "selected": false,
+        "reason": "资格成立证据保留，普通任务尚不能完整表达。"
+      },
+      "after": {
+        "selected": false,
+        "reason": "资格成立声明缺少同对象、同许可或无矛盾的明确事实；请核对资格依据。",
+        "audit": {
+          "version": "source-proven-eligibility-1.0.0",
+          "role": "PROGRAM_SOURCE_CHECK_NOT_NEW_MODEL_OUTPUT",
+          "inferredFacts": 0,
+          "decisions": [
+            {
+              "taskId": "T1",
+              "declaredValue": "true",
+              "status": "RETAIN_REVIEW",
+              "ruleScopeIds": [
+                "scope-0001-0e74ce012da966a6d9f8ac306d4f5c865563aba424f8dd477a0e200c880b7087"
+              ],
+              "factScopeIds": [
+                "scope-0002-3b0d310f866e51e1049e74aacd511722e3e3f6997a65dbc4b3ff27c04ead72c0"
+              ],
+              "contradictoryScopeIds": [
+                "scope-0002-3b0d310f866e51e1049e74aacd511722e3e3f6997a65dbc4b3ff27c04ead72c0"
+              ],
+              "reason": "资格成立声明缺少同对象、同许可或无矛盾的明确事实；请核对资格依据。"
+            }
+          ]
+        }
+      },
+      "originalCondition": {
+        "value": "true",
+        "conditionScopeIds": [
+          "scope-0001-0e74ce012da966a6d9f8ac306d4f5c865563aba424f8dd477a0e200c880b7087"
+        ],
+        "factScopeIds": [
+          "scope-0002-3b0d310f866e51e1049e74aacd511722e3e3f6997a65dbc4b3ff27c04ead72c0"
+        ]
+      },
+      "firstCondition": {
+        "value": "true",
+        "conditionScopeIds": [
+          "scope-0001-0e74ce012da966a6d9f8ac306d4f5c865563aba424f8dd477a0e200c880b7087"
+        ],
+        "factScopeIds": [
+          "scope-0002-3b0d310f866e51e1049e74aacd511722e3e3f6997a65dbc4b3ff27c04ead72c0"
+        ]
+      }
+    }
+  ]
+}

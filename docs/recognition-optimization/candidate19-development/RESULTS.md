@@ -1,9 +1,9 @@
-# 首次准确率主线：否定作用范围与字面渠道值收口
+# 首次准确率主线：已证明资格不再重复核对
 
-2026-10-04。当前唯一[结果入口](paid-evidence/channel-polarity-followup/RESULTS.md)、[浏览器](paid-evidence/channel-polarity-followup/BROWSER_EVIDENCE.md)、[验证](paid-evidence/channel-polarity-followup/VALIDATION.md)。公共material-channel-role-grounding-1.2.0已接普通App；“回执无需打印”和名称“若水”不再误阻断明确提交，真正禁止/条件仍受阻。原C19回执渠道争议保持。未修改生成输入、候选或评分，不建新批，不需本轮付费许可。
+2026-10-04。当前唯一[结果入口](paid-evidence/eligibility-followup/RESULTS.md)、[实现](paid-evidence/eligibility-followup/IMPLEMENTATION.md)、[浏览器](paid-evidence/eligibility-followup/BROWSER_EVIDENCE.md)、[验证](paid-evidence/eligibility-followup/VALIDATION.md)。公共source-proven-eligibility-1.0.0/semantic-ordinary-bridge-1.1.0已接普通App；同对象、同许可、本人明确获准、原答true且无矛盾的任务不再重复查资格，unknown/缺证明/矛盾及前置等待保留。有限语法不补猜。无新生成输入、候选、评分或模型批。
 
-原v11 C17 2/6、C19 1/6、MIXED_PROGRESS保持；全12后验4暂定/2错、5暂定/1争议保持，不是新模型准确率。[原冻结完整比较](paid-evidence/completed/FROZEN_COMPARISON_REPORT.json)、[原参照](paid-evidence/fact-followup/FACT_REFERENCES.json)不改。旧渠道1.0.0实现/全部12诊断及6831证据在[原包](paid-evidence/channel-followup/PROTECTION_AND_BUILD_PROOF.json)与Git 44cfde802d72历史保留，不以本轮重写原成绩。
+原v11 C17 2/6、C19 1/6、MIXED_PROGRESS保持；全部12后验C17 4暂定/2事实错、C19 5暂定/1渠道争议保持，不是新模型正确率。[原冻结完整比较](paid-evidence/completed/FROZEN_COMPARISON_REPORT.json)、[原参照](paid-evidence/fact-followup/FACT_REFERENCES.json)不改。全12首次展示事实及后验诊断与上轮逐份相等；S05回执渠道仍未确认，格式/命名/完成标准/截止/事件保留。[上轮渠道1.2.0结果](paid-evidence/channel-polarity-followup/RESULTS.md)、更早包与证据原样保留。
 
-唯一当前http://127.0.0.1:6834/；新库polarity1004；sourcea11946dc1504。6来源实际回放，3Task/0Project/10Event/22Time/3Material，4完成2部分、9时间null；正式失败关闭重开手动恢复、已提交只重读、刷新及独立核值通过。4作用范围反例2/4→4/4、旧12角色仍12/12，仅工程字段检查；全12旧录制首次展示事实与上一轮逐份相等。首次整份独立正确率仍NOT_OBSERVABLE。6commit/readback/0editId，3active0/3缺失、四真人NOT_OBSERVABLE。旧[1.1.0结果及6833证据](paid-evidence/channel-role-followup/RESULTS.md)原样保留。
+唯一当前http://127.0.0.1:6835/；新库eligibility1004；构建2ab138c71580/source1211f91dc79b（构建时HEAD+实际源SHA）。6来源实际回放：4Task0Project2Material10Event22Time，3confirmed/3partial、10时间null；正式失败零增量、关闭重开手动恢复、已提交只重读、刷新及独立核值通过。4先固定反例2/4→4/4只是工程判定，不是模型整份提高。6commit/readback/0edit，2active0/4缺失，四真人NOT_OBSERVABLE、首次整份独立裁决NOT_ADJUDICATED。
 
-66定向通过、lint/build/scan通过；全量33/39，产品1018PASS/1skip，6旧历史失败及audit5H2M/production0单列。84/119/7、原12raw/身份/Manifest/分数/候选和996链SHA不变；模型/grant/reserve/settle/账本写入0。上轮879ba5ce网络阻碍已恢复并普通推送。停止C19_CHANNEL_POLARITY_PRODUCT_DELIVERED_NO_NEW_MODEL_BATCH_NEEDED。
+80定向PASS、lint/build/scan通过；全量33/39，产品1032PASS/1skip，6旧历史失败及audit5H2M/production0单列。84/119/7、原12raw/身份/Manifest/分数/候选和996链SHA不变；模型/grant/reserve/settle/账本写入0，耗尽许可不复用。停止C19_SOURCE_PROVEN_ELIGIBILITY_DELIVERED_NO_NEW_MODEL_BATCH_NEEDED。下一步只需少量未见实际匿名通知来检验当前首次机制；没有当前生成缺口就不造候选/批次。
