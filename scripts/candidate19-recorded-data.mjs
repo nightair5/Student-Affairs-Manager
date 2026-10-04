@@ -13,6 +13,6 @@ export function candidate19Recordings({units,sources,state,rawRoot}) {
       ||raw.unitIdentitySha256!==unit.unitIdentitySha256||sha(source.sourceText)!==source.sourceSha256)throw Error('C19_REPLAY_IDENTITY_OR_RAW_DRIFT')
     return {ordinal:unit.ordinal,sourceId:source.sourceId,sourceVersionId:source.sourceVersionId,candidate:unit.candidate,
       sourceText:source.sourceText,referenceTime:source.referenceTime,timezone:source.timezone,rawHttpText:raw.rawHttpText,
-      responseSha256:raw.responseSha256,requestSha256:raw.requestSha256,frozenOutcome:'INCOMPLETE_BATCH_NOT_ADJUDICATED'}
+      responseSha256:raw.responseSha256,requestSha256:raw.requestSha256,frozenOutcome:state.units.every(u=>u.status==='SETTLED')?'COMPLETE_BATCH_SEE_FROZEN_REPORT':'INCOMPLETE_BATCH_NOT_ADJUDICATED'}
   })
 }
