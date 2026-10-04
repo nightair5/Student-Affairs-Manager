@@ -1,0 +1,751 @@
+{
+  "role": "ENGINEERING_REPLAY",
+  "assertions": "PASS",
+  "sourceCount": 7,
+  "counts": {
+    "tasks": 4,
+    "projects": 0,
+    "events": 12,
+    "timePoints": 27,
+    "materials": 4
+  },
+  "unknownTimeCount": 11,
+  "refreshFactsUnchanged": true,
+  "formalFailure": {
+    "beforeAndAfterFailure": {
+      "tasks": 2,
+      "projects": 0,
+      "events": 6,
+      "timePoints": 14,
+      "materials": 2
+    },
+    "afterManualRetry": {
+      "tasks": 3,
+      "projects": 0,
+      "events": 8,
+      "timePoints": 19,
+      "materials": 3
+    }
+  },
+  "readbackRecovery": {
+    "sameFormalFacts": true,
+    "pendingReceipt": {
+      "version": "source-review-d26-1",
+      "draftId": "source:d7513522:draft:1",
+      "commitId": "source-review:source:d7513522:draft:1:fnv1a32:4a94f695",
+      "disposition": "confirmed",
+      "entityIds": [
+        "task:source:d7513522:draft:1:task-0001",
+        "event:source:d7513522:draft:1:event-0001",
+        "time:source:d7513522:draft:1:time-0001",
+        "time:source:d7513522:draft:1:time-0002",
+        "time:source:d7513522:draft:1:time-0003",
+        "material:source:d7513522:draft:1:material-0001"
+      ],
+      "entityHashes": {
+        "task:source:d7513522:draft:1:task-0001": "fnv1a32:c13b6dc0",
+        "event:source:d7513522:draft:1:event-0001": "fnv1a32:e949a66d",
+        "time:source:d7513522:draft:1:time-0001": "fnv1a32:914a8836",
+        "time:source:d7513522:draft:1:time-0002": "fnv1a32:0c60cc7f",
+        "time:source:d7513522:draft:1:time-0003": "fnv1a32:c53956eb",
+        "material:source:d7513522:draft:1:material-0001": "fnv1a32:995b41b8"
+      }
+    }
+  },
+  "perSource": [
+    {
+      "sourceId": "source:3f838a29",
+      "source": "请于2026年11月6日15:20前递交器材清单。器材清单必须为PDF。器材讲解会于2026年11月7日14:00开始，15:00结束。系统维护在周五晚上开始，结束时间尚未公布。请通过资料门户提交器材清单。不得通过资料门户提交器材清单。",
+      "status": "partially_confirmed",
+      "role": "ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT",
+      "counts": {
+        "tasks": 0,
+        "projects": 0,
+        "events": 2,
+        "timePoints": 4,
+        "materials": 0
+      },
+      "tasks": [],
+      "materials": [],
+      "times": [
+        {
+          "id": "time:source:3f838a29:draft:1:P2",
+          "type": "event_start",
+          "rawText": "周五晚上",
+          "normalizedValue": null,
+          "precision": "vague",
+          "taskId": null,
+          "eventId": "event:source:3f838a29:draft:1:E1"
+        },
+        {
+          "id": "time:source:3f838a29:draft:1:P3",
+          "type": "event_end",
+          "rawText": "结束时间尚未公布",
+          "normalizedValue": null,
+          "precision": "vague",
+          "taskId": null,
+          "eventId": "event:source:3f838a29:draft:1:E1"
+        },
+        {
+          "id": "time:source:3f838a29:draft:1:P4",
+          "type": "event_start",
+          "rawText": "2026年11月7日14:00",
+          "normalizedValue": "2026-11-07T14:00",
+          "precision": "exact",
+          "taskId": null,
+          "eventId": "event:source:3f838a29:draft:1:E2"
+        },
+        {
+          "id": "time:source:3f838a29:draft:1:P5",
+          "type": "event_end",
+          "rawText": "15:00",
+          "normalizedValue": "2026-11-07T15:00",
+          "precision": "exact",
+          "taskId": null,
+          "eventId": "event:source:3f838a29:draft:1:E2"
+        }
+      ],
+      "events": [
+        {
+          "id": "event:source:3f838a29:draft:1:E1",
+          "title": "系统维护",
+          "start": "time:source:3f838a29:draft:1:P2",
+          "end": "time:source:3f838a29:draft:1:P3"
+        },
+        {
+          "id": "event:source:3f838a29:draft:1:E2",
+          "title": "器材讲解会",
+          "start": "time:source:3f838a29:draft:1:P4",
+          "end": "time:source:3f838a29:draft:1:P5"
+        }
+      ],
+      "originalResponseRetained": true,
+      "firstDisplayRetained": true
+    },
+    {
+      "sourceId": "source:608eec46",
+      "source": "校园失物查询网站将在周日晚间暂停查询。此前登记的信息保持不变，不需要重新登记，也不要发送补充邮件。",
+      "status": "confirmed",
+      "role": "RECORDED_MODEL_ENGINEERING_REPLAY",
+      "counts": {
+        "tasks": 0,
+        "projects": 0,
+        "events": 1,
+        "timePoints": 1,
+        "materials": 0
+      },
+      "tasks": [],
+      "materials": [],
+      "times": [
+        {
+          "id": "time:source:608eec46:draft:1:time-0001",
+          "type": "event_start",
+          "rawText": "周日晚间",
+          "normalizedValue": null,
+          "precision": "vague",
+          "taskId": null,
+          "eventId": "event:source:608eec46:draft:1:event-0001"
+        }
+      ],
+      "events": [
+        {
+          "id": "event:source:608eec46:draft:1:event-0001",
+          "title": "校园失物查询网站将在周日晚间暂停查询",
+          "start": "time:source:608eec46:draft:1:time-0001",
+          "end": null
+        }
+      ],
+      "originalResponseRetained": true,
+      "firstDisplayRetained": true
+    },
+    {
+      "sourceId": "source:d7513522",
+      "source": "请在2026年11月13日09:25前上传志愿服务统计表。统计表须为PDF，文件名包含小组编号。看到平台显示接收成功才算办结。培训说明会2026年11月14日14:20开始，15:35结束。",
+      "status": "confirmed",
+      "role": "RECORDED_MODEL_ENGINEERING_REPLAY",
+      "counts": {
+        "tasks": 1,
+        "projects": 0,
+        "events": 1,
+        "timePoints": 3,
+        "materials": 1
+      },
+      "tasks": [
+        {
+          "id": "task:source:d7513522:draft:1:task-0001",
+          "title": "上传志愿服务统计表",
+          "completionCriteria": [
+            "看到平台显示接收成功才算办结"
+          ],
+          "sourceId": "source:d7513522",
+          "dependencyIds": []
+        }
+      ],
+      "materials": [
+        {
+          "id": "material:source:d7513522:draft:1:material-0001",
+          "name": "志愿服务统计表",
+          "channel": null,
+          "format": [
+            "PDF"
+          ],
+          "naming": [
+            "文件名包含小组编号"
+          ],
+          "owners": [
+            "task:source:d7513522:draft:1:task-0001"
+          ]
+        }
+      ],
+      "times": [
+        {
+          "id": "time:source:d7513522:draft:1:time-0001",
+          "type": "submission_deadline",
+          "rawText": "2026年11月13日09:25前",
+          "normalizedValue": "2026-11-13T09:25",
+          "precision": "exact",
+          "taskId": "task:source:d7513522:draft:1:task-0001",
+          "eventId": null
+        },
+        {
+          "id": "time:source:d7513522:draft:1:time-0002",
+          "type": "event_start",
+          "rawText": "2026年11月14日14:20开始",
+          "normalizedValue": "2026-11-14T14:20",
+          "precision": "exact",
+          "taskId": null,
+          "eventId": "event:source:d7513522:draft:1:event-0001"
+        },
+        {
+          "id": "time:source:d7513522:draft:1:time-0003",
+          "type": "event_end",
+          "rawText": "15:35结束",
+          "normalizedValue": "2026-11-14T15:35",
+          "precision": "exact",
+          "taskId": null,
+          "eventId": "event:source:d7513522:draft:1:event-0001"
+        }
+      ],
+      "events": [
+        {
+          "id": "event:source:d7513522:draft:1:event-0001",
+          "title": "培训说明会",
+          "start": "time:source:d7513522:draft:1:time-0002",
+          "end": "time:source:d7513522:draft:1:time-0003"
+        }
+      ],
+      "originalResponseRetained": true,
+      "firstDisplayRetained": true
+    },
+    {
+      "sourceId": "source:c2cd06eb",
+      "source": "请于2026年11月6日15:20前递交器材清单。器材清单必须为PDF。器材讲解会于2026年11月7日14:00开始，15:00结束。系统维护在周五晚上开始，结束时间尚未公布。请通过资料门户提交器材清单并保留回执。",
+      "status": "confirmed",
+      "role": "ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT",
+      "counts": {
+        "tasks": 1,
+        "projects": 0,
+        "events": 2,
+        "timePoints": 5,
+        "materials": 1
+      },
+      "tasks": [
+        {
+          "id": "task:source:c2cd06eb:draft:1:T1",
+          "title": "递交器材清单",
+          "completionCriteria": [
+            "器材清单必须为PDF"
+          ],
+          "sourceId": "source:c2cd06eb",
+          "dependencyIds": []
+        }
+      ],
+      "materials": [
+        {
+          "id": "material:source:c2cd06eb:draft:1:M1",
+          "name": "器材清单",
+          "channel": "资料门户",
+          "format": [
+            "PDF"
+          ],
+          "naming": [],
+          "owners": [
+            "task:source:c2cd06eb:draft:1:T1"
+          ]
+        }
+      ],
+      "times": [
+        {
+          "id": "time:source:c2cd06eb:draft:1:P1",
+          "type": "submission_deadline",
+          "rawText": "2026年11月6日15:20前",
+          "normalizedValue": "2026-11-06T15:20",
+          "precision": "exact",
+          "taskId": "task:source:c2cd06eb:draft:1:T1",
+          "eventId": null
+        },
+        {
+          "id": "time:source:c2cd06eb:draft:1:P2",
+          "type": "event_start",
+          "rawText": "周五晚上",
+          "normalizedValue": null,
+          "precision": "vague",
+          "taskId": null,
+          "eventId": "event:source:c2cd06eb:draft:1:E1"
+        },
+        {
+          "id": "time:source:c2cd06eb:draft:1:P3",
+          "type": "event_end",
+          "rawText": "结束时间尚未公布",
+          "normalizedValue": null,
+          "precision": "vague",
+          "taskId": null,
+          "eventId": "event:source:c2cd06eb:draft:1:E1"
+        },
+        {
+          "id": "time:source:c2cd06eb:draft:1:P4",
+          "type": "event_start",
+          "rawText": "2026年11月7日14:00",
+          "normalizedValue": "2026-11-07T14:00",
+          "precision": "exact",
+          "taskId": null,
+          "eventId": "event:source:c2cd06eb:draft:1:E2"
+        },
+        {
+          "id": "time:source:c2cd06eb:draft:1:P5",
+          "type": "event_end",
+          "rawText": "15:00",
+          "normalizedValue": "2026-11-07T15:00",
+          "precision": "exact",
+          "taskId": null,
+          "eventId": "event:source:c2cd06eb:draft:1:E2"
+        }
+      ],
+      "events": [
+        {
+          "id": "event:source:c2cd06eb:draft:1:E1",
+          "title": "系统维护",
+          "start": "time:source:c2cd06eb:draft:1:P2",
+          "end": "time:source:c2cd06eb:draft:1:P3"
+        },
+        {
+          "id": "event:source:c2cd06eb:draft:1:E2",
+          "title": "器材讲解会",
+          "start": "time:source:c2cd06eb:draft:1:P4",
+          "end": "time:source:c2cd06eb:draft:1:P5"
+        }
+      ],
+      "originalResponseRetained": true,
+      "firstDisplayRetained": true
+    },
+    {
+      "sourceId": "source:f7c5b62a",
+      "source": "请于2026年11月6日15:20前递交器材清单。器材清单必须为PDF。器材讲解会于2026年11月7日14:00开始，15:00结束。系统维护在周五晚上开始，结束时间尚未公布。请把器材清单交到资料门户。",
+      "status": "confirmed",
+      "role": "ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT",
+      "counts": {
+        "tasks": 1,
+        "projects": 0,
+        "events": 2,
+        "timePoints": 5,
+        "materials": 1
+      },
+      "tasks": [
+        {
+          "id": "task:source:f7c5b62a:draft:1:T1",
+          "title": "递交器材清单",
+          "completionCriteria": [
+            "器材清单必须为PDF"
+          ],
+          "sourceId": "source:f7c5b62a",
+          "dependencyIds": []
+        }
+      ],
+      "materials": [
+        {
+          "id": "material:source:f7c5b62a:draft:1:M1",
+          "name": "器材清单",
+          "channel": "资料门户",
+          "format": [
+            "PDF"
+          ],
+          "naming": [],
+          "owners": [
+            "task:source:f7c5b62a:draft:1:T1"
+          ]
+        }
+      ],
+      "times": [
+        {
+          "id": "time:source:f7c5b62a:draft:1:P1",
+          "type": "submission_deadline",
+          "rawText": "2026年11月6日15:20前",
+          "normalizedValue": "2026-11-06T15:20",
+          "precision": "exact",
+          "taskId": "task:source:f7c5b62a:draft:1:T1",
+          "eventId": null
+        },
+        {
+          "id": "time:source:f7c5b62a:draft:1:P2",
+          "type": "event_start",
+          "rawText": "周五晚上",
+          "normalizedValue": null,
+          "precision": "vague",
+          "taskId": null,
+          "eventId": "event:source:f7c5b62a:draft:1:E1"
+        },
+        {
+          "id": "time:source:f7c5b62a:draft:1:P3",
+          "type": "event_end",
+          "rawText": "结束时间尚未公布",
+          "normalizedValue": null,
+          "precision": "vague",
+          "taskId": null,
+          "eventId": "event:source:f7c5b62a:draft:1:E1"
+        },
+        {
+          "id": "time:source:f7c5b62a:draft:1:P4",
+          "type": "event_start",
+          "rawText": "2026年11月7日14:00",
+          "normalizedValue": "2026-11-07T14:00",
+          "precision": "exact",
+          "taskId": null,
+          "eventId": "event:source:f7c5b62a:draft:1:E2"
+        },
+        {
+          "id": "time:source:f7c5b62a:draft:1:P5",
+          "type": "event_end",
+          "rawText": "15:00",
+          "normalizedValue": "2026-11-07T15:00",
+          "precision": "exact",
+          "taskId": null,
+          "eventId": "event:source:f7c5b62a:draft:1:E2"
+        }
+      ],
+      "events": [
+        {
+          "id": "event:source:f7c5b62a:draft:1:E1",
+          "title": "系统维护",
+          "start": "time:source:f7c5b62a:draft:1:P2",
+          "end": "time:source:f7c5b62a:draft:1:P3"
+        },
+        {
+          "id": "event:source:f7c5b62a:draft:1:E2",
+          "title": "器材讲解会",
+          "start": "time:source:f7c5b62a:draft:1:P4",
+          "end": "time:source:f7c5b62a:draft:1:P5"
+        }
+      ],
+      "originalResponseRetained": true,
+      "firstDisplayRetained": true
+    },
+    {
+      "sourceId": "source:9fc18111",
+      "source": "请于2026年11月6日15:20前递交器材清单。器材清单必须为PDF。器材讲解会于2026年11月7日14:00开始，15:00结束。系统维护在周五晚上开始，结束时间尚未公布。请勿通过资料门户提交器材清单。",
+      "status": "partially_confirmed",
+      "role": "ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT",
+      "counts": {
+        "tasks": 0,
+        "projects": 0,
+        "events": 2,
+        "timePoints": 4,
+        "materials": 0
+      },
+      "tasks": [],
+      "materials": [],
+      "times": [
+        {
+          "id": "time:source:9fc18111:draft:1:P2",
+          "type": "event_start",
+          "rawText": "周五晚上",
+          "normalizedValue": null,
+          "precision": "vague",
+          "taskId": null,
+          "eventId": "event:source:9fc18111:draft:1:E1"
+        },
+        {
+          "id": "time:source:9fc18111:draft:1:P3",
+          "type": "event_end",
+          "rawText": "结束时间尚未公布",
+          "normalizedValue": null,
+          "precision": "vague",
+          "taskId": null,
+          "eventId": "event:source:9fc18111:draft:1:E1"
+        },
+        {
+          "id": "time:source:9fc18111:draft:1:P4",
+          "type": "event_start",
+          "rawText": "2026年11月7日14:00",
+          "normalizedValue": "2026-11-07T14:00",
+          "precision": "exact",
+          "taskId": null,
+          "eventId": "event:source:9fc18111:draft:1:E2"
+        },
+        {
+          "id": "time:source:9fc18111:draft:1:P5",
+          "type": "event_end",
+          "rawText": "15:00",
+          "normalizedValue": "2026-11-07T15:00",
+          "precision": "exact",
+          "taskId": null,
+          "eventId": "event:source:9fc18111:draft:1:E2"
+        }
+      ],
+      "events": [
+        {
+          "id": "event:source:9fc18111:draft:1:E1",
+          "title": "系统维护",
+          "start": "time:source:9fc18111:draft:1:P2",
+          "end": "time:source:9fc18111:draft:1:P3"
+        },
+        {
+          "id": "event:source:9fc18111:draft:1:E2",
+          "title": "器材讲解会",
+          "start": "time:source:9fc18111:draft:1:P4",
+          "end": "time:source:9fc18111:draft:1:P5"
+        }
+      ],
+      "originalResponseRetained": true,
+      "firstDisplayRetained": true
+    },
+    {
+      "sourceId": "source:7f67215d",
+      "source": "请于2026年11月6日15:20前递交器材清单。器材清单必须为PDF。器材讲解会于2026年11月7日14:00开始，15:00结束。系统维护在周五晚上开始，结束时间尚未公布。器材清单请提交到星槎入口。",
+      "status": "confirmed",
+      "role": "ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT",
+      "counts": {
+        "tasks": 1,
+        "projects": 0,
+        "events": 2,
+        "timePoints": 5,
+        "materials": 1
+      },
+      "tasks": [
+        {
+          "id": "task:source:7f67215d:draft:1:T1",
+          "title": "递交器材清单",
+          "completionCriteria": [
+            "器材清单必须为PDF"
+          ],
+          "sourceId": "source:7f67215d",
+          "dependencyIds": []
+        }
+      ],
+      "materials": [
+        {
+          "id": "material:source:7f67215d:draft:1:M1",
+          "name": "器材清单",
+          "channel": "星槎入口",
+          "format": [
+            "PDF"
+          ],
+          "naming": [],
+          "owners": [
+            "task:source:7f67215d:draft:1:T1"
+          ]
+        }
+      ],
+      "times": [
+        {
+          "id": "time:source:7f67215d:draft:1:P1",
+          "type": "submission_deadline",
+          "rawText": "2026年11月6日15:20前",
+          "normalizedValue": "2026-11-06T15:20",
+          "precision": "exact",
+          "taskId": "task:source:7f67215d:draft:1:T1",
+          "eventId": null
+        },
+        {
+          "id": "time:source:7f67215d:draft:1:P2",
+          "type": "event_start",
+          "rawText": "周五晚上",
+          "normalizedValue": null,
+          "precision": "vague",
+          "taskId": null,
+          "eventId": "event:source:7f67215d:draft:1:E1"
+        },
+        {
+          "id": "time:source:7f67215d:draft:1:P3",
+          "type": "event_end",
+          "rawText": "结束时间尚未公布",
+          "normalizedValue": null,
+          "precision": "vague",
+          "taskId": null,
+          "eventId": "event:source:7f67215d:draft:1:E1"
+        },
+        {
+          "id": "time:source:7f67215d:draft:1:P4",
+          "type": "event_start",
+          "rawText": "2026年11月7日14:00",
+          "normalizedValue": "2026-11-07T14:00",
+          "precision": "exact",
+          "taskId": null,
+          "eventId": "event:source:7f67215d:draft:1:E2"
+        },
+        {
+          "id": "time:source:7f67215d:draft:1:P5",
+          "type": "event_end",
+          "rawText": "15:00",
+          "normalizedValue": "2026-11-07T15:00",
+          "precision": "exact",
+          "taskId": null,
+          "eventId": "event:source:7f67215d:draft:1:E2"
+        }
+      ],
+      "events": [
+        {
+          "id": "event:source:7f67215d:draft:1:E1",
+          "title": "系统维护",
+          "start": "time:source:7f67215d:draft:1:P2",
+          "end": "time:source:7f67215d:draft:1:P3"
+        },
+        {
+          "id": "event:source:7f67215d:draft:1:E2",
+          "title": "器材讲解会",
+          "start": "time:source:7f67215d:draft:1:P4",
+          "end": "time:source:7f67215d:draft:1:P5"
+        }
+      ],
+      "originalResponseRetained": true,
+      "firstDisplayRetained": true
+    }
+  ],
+  "metrics": [
+    {
+      "draftId": "source:3f838a29:draft:1",
+      "canonicalStatus": "partially_confirmed",
+      "commitIds": [
+        "source-review:source:3f838a29:draft:1:fnv1a32:1b1a4327"
+      ],
+      "pageEditIds": [],
+      "semanticFields": 0,
+      "activeEditMs": null,
+      "readMs": null,
+      "waitMs": null,
+      "missing": [
+        "unclosed interval",
+        "terminal commit/readback"
+      ],
+      "outcomes": {
+        "complete": false,
+        "partial": false,
+        "failureEvents": 0
+      }
+    },
+    {
+      "draftId": "source:608eec46:draft:1",
+      "canonicalStatus": "confirmed",
+      "commitIds": [
+        "source-review:source:608eec46:draft:1:fnv1a32:b9c01596"
+      ],
+      "pageEditIds": [],
+      "semanticFields": 0,
+      "activeEditMs": 0,
+      "readMs": 21643,
+      "waitMs": 250,
+      "missing": [],
+      "outcomes": {
+        "complete": true,
+        "partial": false,
+        "failureEvents": 0
+      }
+    },
+    {
+      "draftId": "source:d7513522:draft:1",
+      "canonicalStatus": "confirmed",
+      "commitIds": [
+        "source-review:source:d7513522:draft:1:fnv1a32:4a94f695"
+      ],
+      "pageEditIds": [],
+      "semanticFields": 0,
+      "activeEditMs": 0,
+      "readMs": 65408,
+      "waitMs": 223,
+      "missing": [],
+      "outcomes": {
+        "complete": true,
+        "partial": false,
+        "failureEvents": 1
+      }
+    },
+    {
+      "draftId": "source:c2cd06eb:draft:1",
+      "canonicalStatus": "confirmed",
+      "commitIds": [
+        "source-review:source:c2cd06eb:draft:1:fnv1a32:1958f7e6"
+      ],
+      "pageEditIds": [],
+      "semanticFields": 0,
+      "activeEditMs": null,
+      "readMs": null,
+      "waitMs": null,
+      "missing": [
+        "refresh time discontinuity"
+      ],
+      "outcomes": {
+        "complete": true,
+        "partial": false,
+        "failureEvents": 1
+      }
+    },
+    {
+      "draftId": "source:f7c5b62a:draft:1",
+      "canonicalStatus": "confirmed",
+      "commitIds": [
+        "source-review:source:f7c5b62a:draft:1:fnv1a32:d9f9579b"
+      ],
+      "pageEditIds": [],
+      "semanticFields": 0,
+      "activeEditMs": 0,
+      "readMs": 14740,
+      "waitMs": 149,
+      "missing": [],
+      "outcomes": {
+        "complete": true,
+        "partial": false,
+        "failureEvents": 0
+      }
+    },
+    {
+      "draftId": "source:9fc18111:draft:1",
+      "canonicalStatus": "partially_confirmed",
+      "commitIds": [
+        "source-review:source:9fc18111:draft:1:fnv1a32:497314d6"
+      ],
+      "pageEditIds": [],
+      "semanticFields": 0,
+      "activeEditMs": null,
+      "readMs": null,
+      "waitMs": null,
+      "missing": [
+        "unclosed interval",
+        "terminal commit/readback"
+      ],
+      "outcomes": {
+        "complete": false,
+        "partial": false,
+        "failureEvents": 0
+      }
+    },
+    {
+      "draftId": "source:7f67215d:draft:1",
+      "canonicalStatus": "confirmed",
+      "commitIds": [
+        "source-review:source:7f67215d:draft:1:fnv1a32:b3ccf046"
+      ],
+      "pageEditIds": [],
+      "semanticFields": 0,
+      "activeEditMs": 0,
+      "readMs": 32431,
+      "waitMs": 65,
+      "missing": [],
+      "outcomes": {
+        "complete": true,
+        "partial": false,
+        "failureEvents": 0
+      }
+    }
+  ],
+  "humanMetrics": "NOT_OBSERVABLE",
+  "newModelCalls": 0
+}

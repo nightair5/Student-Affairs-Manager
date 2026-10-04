@@ -1,7 +1,7 @@
 import type { RecognitionResult } from './types'
 import { assembleRecognitionFirstSuggestionD26 } from './firstSuggestionD26'
 
-export const MATERIAL_CHANNEL_GROUNDING_VERSION = 'material-channel-role-grounding-1.0.0'
+export const MATERIAL_CHANNEL_GROUNDING_VERSION = 'material-channel-role-grounding-1.1.0'
 export interface MaterialChannelDecision {
   materialId: string
   materialName: string
@@ -10,6 +10,7 @@ export interface MaterialChannelDecision {
   displayedValue: string | null
   status: 'EXPLICIT_CHANNEL' | 'RECEIPT_CONTEXT_UNRESOLVED' | 'UNSUPPORTED_OR_AMBIGUOUS_CHANNEL'
   evidence: Array<{ id: string; quote: string }>
+  roleChecks: Array<{ quote: string; object: string; polarity: 'AFFIRMATIVE' | 'NEGATED_OR_UNCERTAIN' }>
 }
 export interface MaterialChannelAudit {
   version: typeof MATERIAL_CHANNEL_GROUNDING_VERSION
@@ -20,15 +21,23 @@ export interface MaterialChannelAudit {
 const compact = (text: string) => text.replace(/\s/gu, '')
 const escaped = (text: string) => text.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&')
 /** Role evidence, not token overlap: a receipt is not an instruction to send there. */
-function explicitDestination(clause: string, object: string, channel: string) {
+function destinationRole(clause: string, object: string, channel: string) {
   const text = compact(clause), o = escaped(compact(object)), c = escaped(compact(channel))
-  if (/不要|不得|不必|无需|禁止|尚未|未明确|不是|若|如果|例如|假如/u.test(text)) return false
-  return [
-    new RegExp(`(?:提交|上传|递交|发送|交付|送交)${o}(?:至|到|给)${c}(?:$|[、：:（(])`, 'u'),
-    new RegExp(`${o}(?:上传|提交|递交|发送)(?:至|到|给)${c}(?:$|[、：:（(])`, 'u'),
-    new RegExp(`(?:通过|经由|在)${c}(?:直接|统一|线上)?(?:提交|上传|递交|发送)${o}(?:$|[、：:（(])`, 'u'),
-    new RegExp(`${o}(?:的)?(?:提交渠道|提交地址|接收邮箱|提交入口)(?:为|是|：|:)${c}(?:$|[、：:（(])`, 'u'),
+  const action = '(?:提交|上传|递交|发送|交付|送交|交)'
+  // Only a closed object/destination or a separate post-submission action can follow.
+  // An object suffix ("清单照片") or destination suffix never counts as the same role.
+  const end = '(?:$|[、：:（(]|(?:并|且|后)(?:保留|保存|等待|查看|核对|确认))'
+  const matched = [
+    new RegExp(`${action}${o}(?:至|到|给)${c}${end}`, 'u'),
+    new RegExp(`${o}(?:请|须|需|应)?${action}(?:至|到|给)${c}${end}`, 'u'),
+    new RegExp(`(?:把|将)${o}${action}(?:至|到|给)${c}${end}`, 'u'),
+    new RegExp(`(?:通过|经由|在)${c}(?:直接|统一|线上)?${action}${o}${end}`, 'u'),
+    new RegExp(`${o}(?:的)?(?:提交渠道|提交地址|接收邮箱|提交入口)(?:为|是|：|:)${c}${end}`, 'u'),
   ].some(pattern => pattern.test(text))
+  if (!matched) return null
+  // Do not collapse a double negative, condition, example, or question into permission.
+  const uncertain = /请勿|勿|不要|不得|不应|不可|不能|不准|不允许|禁止|不必|无需|无须|不用|尚未|未明确|不是|并非|未必|不一定|不建议|不推荐|若|如果|例如|假如|是否|能否/u.test(text)
+  return uncertain ? 'NEGATED_OR_UNCERTAIN' as const : 'AFFIRMATIVE' as const
 }
 
 /** Preserve the answer. Only source-supported destination roles become definite fields. */
@@ -44,11 +53,17 @@ export function groundMaterialChannels(input: RecognitionResult, sourceText: str
     const evidence = result.evidence.filter(e => ids.has(e.id) && e.sourceId === result.evidence.find(r => material.evidenceIds.includes(r.id))?.sourceId
       && typeof e.quote === 'string' && sourceText.includes(e.quote)).map(e => ({ id: e.id, quote: e.quote! }))
     const clauses = evidence.flatMap(e => e.quote.split(/[，。；\n]/u))
-    const direct = owners.length > 0 && clauses.some(c => [material.name, ...owners.map(t => t.actionObject)].some(o => o && explicitDestination(c, o, originalValue)))
-    const receipt = clauses.some(c => c.includes(originalValue) && /显示|提示|回执|接收成功|收到成功/u.test(c))
+    const objects = [...new Set([material.name, ...owners.map(t => t.actionObject)].filter(Boolean))]
+    const roleChecks = clauses.flatMap(quote => objects.flatMap(object => {
+      const polarity = destinationRole(quote, object, originalValue)
+      return polarity ? [{ quote, object, polarity }] : []
+    }))
+    const contradictory = roleChecks.some(c => c.polarity === 'NEGATED_OR_UNCERTAIN')
+    const direct = owners.length > 0 && !contradictory && roleChecks.some(c => c.polarity === 'AFFIRMATIVE')
+    const receipt = !contradictory && clauses.some(c => c.includes(originalValue) && /显示|提示|回执|接收成功|收到成功/u.test(c))
       && owners.some(t => t.completionCriteria.some(c => c.includes(originalValue) && /显示|提示|回执|接收成功|收到成功/u.test(c) && evidence.some(e=>e.quote.includes(c))))
     const status = direct ? 'EXPLICIT_CHANNEL' : receipt ? 'RECEIPT_CONTEXT_UNRESOLVED' : 'UNSUPPORTED_OR_AMBIGUOUS_CHANNEL'
-    audit.decisions.push({ materialId: material.tempId, materialName: material.name, ownerIds: material.relatedTaskTempIds, originalValue, displayedValue: direct ? originalValue : null, status, evidence })
+    audit.decisions.push({ materialId: material.tempId, materialName: material.name, ownerIds: material.relatedTaskTempIds, originalValue, displayedValue: direct ? originalValue : null, status, evidence, roleChecks })
     if (direct) continue
     // null here means unconfirmed destination, not "the source states no channel".
     material.submissionChannel = null

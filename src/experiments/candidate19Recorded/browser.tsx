@@ -26,7 +26,7 @@ import '../../styles.css'
 import '../../mobile.css'
 import '../../visual.css'
 import '../d26/diagnostics.css'
-declare const __C19_RECORDED_CONFIG__: { database: string; build: string; origin: string; explicitContract?: boolean }
+declare const __C19_RECORDED_CONFIG__: { database: string; build: string; origin: string; explicitContract?: boolean; fixtureCount?: number }
 const config = __C19_RECORDED_CONFIG__
 if (location.origin !== config.origin || !/^rco-mainline-01-02-i1-d27-plan-recorded-[a-z0-9-]+$/.test(config.database)) throw Error('RECORDED_ISOLATION_REQUIRED')
 interface Recording { ordinal: number; sourceId: string; sourceVersionId: string; candidate: 'Candidate17' | 'Candidate18' | 'Candidate19' | 'EngineeringFixture'; sourceText: string; referenceTime: string; timezone: string; rawHttpText: string; responseSha256: string; requestSha256: string | null; frozenOutcome: string }
@@ -58,7 +58,7 @@ const environment: OrdinaryAppEnvironment = { canonical, viewRepository: new Ind
     const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(record.rawHttpText))
     if ([...new Uint8Array(digest)].map(b => b.toString(16).padStart(2, '0')).join('') !== record.responseSha256) throw Error('录制回答校验失败，未生成建议。')
     const provenance = { role: record.candidate === 'EngineeringFixture' ? 'ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT' : 'RECORDED_MODEL_ENGINEERING_REPLAY', ...record, projectionVersion: contractVersion }
-    await canonical.transaction(w => ({ ...w, recognitionRuns: w.recognitionRuns.map(r => r.sourceVersionId === input.sourceVersionId ? { ...r, modelName: `${record.candidate} 固定录制`, legacyData: { ...r.legacyData, recordedResponse: JSON.parse(JSON.stringify(provenance)) as JsonValue } } : r) }))
+    await canonical.transaction(w => ({ ...w, recognitionRuns: w.recognitionRuns.map(r => r.sourceVersionId === input.sourceVersionId ? { ...r, modelName: recordingMetadata().modelName, legacyData: { ...r.legacyData, recordedResponse: JSON.parse(JSON.stringify(provenance)) as JsonValue } } : r) }))
     try {
       const context = { index: await indexImmutableScopesV11(input.sourceId, input.sourceVersionId, input.content), referenceTime: record.referenceTime, timezone: record.timezone }
       const originalIndex = await indexImmutableScopesV11(record.sourceId, record.sourceVersionId, record.sourceText)
@@ -77,6 +77,7 @@ export function Page() {
     setReadback(JSON.stringify({ role: 'ENGINEERING_REPLAY', humanMetrics: 'NOT_OBSERVABLE', reports, trace: await measurement.events() }, null, 2))
   }
   return <><App ordinaryEnvironment={environment}/><details className="d26-diagnostics"><summary>本批真实录制 · 选择来源与独立读回</summary><p>{config.build}；{config.database}；{contractVersion}；ENGINEERING_REPLAY；此入口模型请求0。原批12份已结算；冻结首屏结构化通过C17 2/6、C19 1/6，MIXED_PROGRESS。下方是后验程序转换，不改原成绩。原答与冻结诊断不改。</p><label>录制来源<select value={choice} onChange={e => { selected = Number(e.target.value); setChoice(selected) }}>{recordings.map((r, i) => <option key={r.ordinal} value={i}>{r.sourceId} / {r.candidate === 'EngineeringFixture' ? '匿名契约夹具（非模型）' : r.candidate} / 原冻结：{r.frozenOutcome}</option>)}</select></label><textarea aria-label="本批匿名通知原文" readOnly value={recordings[choice].sourceText}/><p>复制到普通“新事务”；原回答、程序转换与用户修改分别保留。相对日期使用来源原基准 {recordings[choice].referenceTime}。</p>
+    {Boolean(config.fixtureCount) && <p>另有{config.fixtureCount}份匿名渠道反例，经同一普通页面处理；由工程作者编写，不是模型回答，也没有新增付费身份。当前：{recordingMetadata().responseRole}。</p>}
     <button onClick={() => { failCommit = true; setArmedFault('已注入：下一次正式事务失败') }}>注入正式保存失败</button><button onClick={() => { failRead = true; setArmedFault('已注入：下一次独立读回失败') }}>注入提交后读回失败</button><button onClick={() => { failCheckpoint = true; setArmedFault('已注入：下一次检查点失败') }}>注入检查点失败</button><p role="status">{armedFault}</p>
     <button onClick={() => void new CanonicalWorkspaceRepository(new IsolatedTestStore(config.database)).load().then(w => setReadback(JSON.stringify(w, null, 2)))}>本批独立canonical读回</button>
     <button onClick={() => void readMeasurement()}>页面测量读回</button><pre aria-label="本批独立读回结果">{readback}</pre>

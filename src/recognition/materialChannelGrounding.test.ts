@@ -8,8 +8,9 @@ import { emptyWorkspace } from '../experiments/mainline01/fixtures'
 import { CanonicalWorkspaceRepository, MemoryWorkspaceRecordStore } from '../domain/v2/repository'
 import { CapturePersistenceService } from '../domain/v2/capture'
 import { IndexedDbWorkspaceRepository } from '../lib/repository'
-import { buildSourceReviewPlan, commitSourceReview, verifySourceReviewReadback } from '../domain/v2/sourceReviewD26'
+import { buildSourceReviewPlan, commitSourceReview, verifySourceReviewReadback, sourceReviewProblem } from '../domain/v2/sourceReviewD26'
 import {createContractFixture} from '../experiments/d26Recorded/contractFixtures'
+import {CHANNEL_ROLE_CASES, createChannelRoleFixture} from '../experiments/candidate19Recorded/materialChannelFixtures'
 const root='docs/recognition-optimization/candidate19-development/'
 const sources=JSON.parse(readFileSync(root+'SOURCES.json','utf8')).sources as Array<{sourceId:string;sourceVersionId:string;sourceText:string;referenceTime:string;timezone:string}>
 const raw=(n:number)=>(JSON.parse(readFileSync(root+'paid-evidence/'+(n<3?'':'completed/')+`raw-${String(n).padStart(2,'0')}.json`,'utf8')) as {rawHttpText:string}).rawHttpText
@@ -18,6 +19,41 @@ async function recorded(n=10) {
   return { s, context, decoded:decodeCurrentSourceRecording(raw(n),n===10?'Candidate19':'Candidate17',context) }
 }
 describe('source role grounded ordinary material channels',()=>{
+  it.each(CHANNEL_ROLE_CASES)('real wire $id: source role survives conversion and reordered source, with no invented facts',async row=>{
+    const assemble = async (reverse: boolean) => {
+      const f=await createChannelRoleFixture(row.id,reverse)
+      const decoded=decodeCurrentSourceRecording(f.rawHttpText,'EngineeringFixture',f.context)
+      const untouched=structuredClone(decoded.result)
+      const p=assembleCurrentFirstSuggestion(decoded.result,{sourceText:f.sourceText,referenceTime:f.context.referenceTime,timezone:f.context.timezone})
+      expect(decoded.result).toEqual(untouched)
+      expect(p.materialChannelAudit.decisions[0].status).toBe(row.expected)
+      expect(p.result.materials[0].submissionChannel).toBe(row.expected==='EXPLICIT_CHANNEL'?row.channel:null)
+      expect(p.result.materials[0].formatRequirements).toEqual(['PDF'])
+      expect(p.result.events).toHaveLength(2);expect(p.result.timePoints).toHaveLength(5)
+      expect(p.result.timePoints.filter(t=>t.normalizedValue===null)).toHaveLength(2)
+      expect(Boolean(sourceReviewProblem(p.result,'T1'))).toBe(row.expected!=='EXPLICIT_CHANNEL')
+      return p.result
+    }
+    const first=await assemble(false),reordered=await assemble(true)
+    expect(reordered.materials.map(m=>[m.name,m.submissionChannel])).toEqual(first.materials.map(m=>[m.name,m.submissionChannel]))
+    expect(reordered.timePoints.map(p=>[p.type,p.rawText,p.normalizedValue])).toEqual(first.timePoints.map(p=>[p.type,p.rawText,p.normalizedValue]))
+  })
+  it.each(CHANNEL_ROLE_CASES)('real formal path $id: a supported obligation saves, an unsupported channel blocks locally while independent events save',async row=>{
+    const f=await createChannelRoleFixture(row.id),store=new MemoryWorkspaceRecordStore(),repo=new CanonicalWorkspaceRepository(store)
+    await repo.initialize(emptyWorkspace());const capture=new CapturePersistenceService(repo)
+    const h=await capture.beginCapture({operationId:crypto.randomUUID(),rawText:f.sourceText,sourceType:'text',title:'匿名渠道反例',provider:'manual',modelName:'匿名工程夹具',promptVersion:'NOT_MODEL_OUTPUT',pipelineVersion:'channel-role-fixture-1'})
+    const context={...f.context,index:await indexImmutableScopesV11(h.sourceId,h.sourceVersionId,f.sourceText)}
+    await capture.recognize(h,async()=>assembleCurrentFirstSuggestion(decodeCurrentSourceRecording(rebindRecordedScopes(f.rawHttpText,f.context.index,context.index).reboundHttpText,'EngineeringFixture',context).result,{sourceText:f.sourceText,referenceTime:context.referenceTime,timezone:context.timezone}).result)
+    const w=(await repo.load())!,view=(await new IndexedDbWorkspaceRepository(repo).load())!.drafts.find(d=>d.id===h.draftId)!
+    const plan=buildSourceReviewPlan(w,view),receipt=await commitSourceReview(repo,plan),back=await verifySourceReviewReadback(new CanonicalWorkspaceRepository(store),receipt)
+    expect(back.tasks).toHaveLength(row.expected==='EXPLICIT_CHANNEL'?1:0)
+    expect(back.materials).toHaveLength(row.expected==='EXPLICIT_CHANNEL'?1:0)
+    expect(back.events).toHaveLength(2);expect(back.timePoints).toHaveLength(row.expected==='EXPLICIT_CHANNEL'?5:4);expect(back.projects).toHaveLength(0)
+    if(row.expected==='EXPLICIT_CHANNEL')expect(back.materials[0].submissionChannel).toBe(row.channel)
+    else expect(receipt.disposition).toBe('partial')
+    await commitSourceReview(repo,plan)
+    expect((await repo.load())!.events).toHaveLength(2)
+  })
   it.each([['周三晚',null],['开始时间尚未公布',null],['2026年11月18日20:10','2026-11-18T20:10']] as const)('new anonymous no-task event expression keeps %s without inventing an obligation or a date',async(rawText,expected)=>{
     const f=await createContractFixture('event'),sourceText=f.sourceText.replaceAll('班车订座网站','校园预约系统').replaceAll('周五晚上',rawText)
     const index=await indexImmutableScopesV11('anonymous-event-variant','anonymous-event-variant-v1',sourceText)
