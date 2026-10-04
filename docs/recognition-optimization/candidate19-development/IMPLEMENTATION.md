@@ -1,4 +1,21 @@
-# 原批完整录制后的产品转换
+# 已有录制的事实诊断与条件性禁止收口
+
+2026-10-04后续本地包。模型/grant/reserve/settle/账本写入均0。原C17/C19候选、v11、参照、12身份和raw不改。本次只有两类根因，没有新Prompt或Candidate20。
+
+| 原文→原答→发生层 | 新版本和实际代码路径 | 首次展示、正式保存与反例 |
+|---|---|---|
+| S02两事件四时间；C19原答含“11:40结束”、未公布恢复；v11部分截取差异判错。S05材料命名、办结标点另有表示差异 | `src/recognition/recordedFactDiagnostic.ts` / recorded-source-fact-diagnostic-1.0.0；`scripts/diagnose-candidate19-facts.mjs` | 新的事后provisional最小义务参照，按对象、时间值/类型/精度、实体端点、依据和信息覆盖检查；允许同对象无损截取、明确定义别名/命名同义、顺序变化。错日期/类型/对象/依据/关系/漏项仍FACT_ERROR，争议UNKNOWN。原v11不修改，不用于决定采用候选。 |
+| S04原文“仅限获准社团；你的社团尚未获准，不能提交展位申请”，两臂原答已有negative/false及真实资格依据，旧桥仍多显示一张申请核对卡 | `src/recognition/conditionalNonActionProduct.ts` / source-grounded-conditional-nonaction-1.0.0 → sourceContractV4 → firstSuggestionD26 → 普通App | 同对象资格规则、当前未获准事实、紧邻禁止动作、否定/当前状态一致、无关系风险才转信息。原任务和全部依据留审计，inferredFacts=0。首屏只剩“保存活动联系编号”，一次确认；未知资格、前置等待、提醒/双重否定/错对象/跨scope/修订或依赖端点不套此规则。 |
+
+公共转换额外检查任务声明与实际时间/材料/事件owner及反向引用、父项和依赖是否一致。只标错，不猜接；冲突、quality标记和选中资格同步。错误声明的任务受阻，独立正确事件仍可保存，不能把错误引用指向的正确事件一起封死。原声明完整保存在sidecar，真实Schema反例通过普通DomainCommitPlan验证“主动选择坏任务仍被拒绝、只选独立事件能保存”。
+
+`src/experiments/candidate19Recorded/browser.tsx`改用`decodeCurrentSourceRecording`，仍复用普通App/Capture/ReviewSession/DomainCommitPlan/Repository；没有另一套保存链。原HTTP回答、originalSemantic、冻结转换、supportAccountingAudit、productDisposition、firstSuggestionDisplayed和用户修改分别持久化。source referenceTime及可逆scope映射保留，不按回放当天重解释来源时间。
+
+`conditionalNonActionProduct.test.ts`和`recordedFactDiagnostic.test.ts`共11项定向场景包含全部12实际回答、不同对象/日期/名称/规则写法、最小语义反例、完整/部分参照、真实捕获/公共转换/正式提交/独立读回及幂等。一个独立工程视角发现的错挂时间、父项、modality、动作依据漏检均已补反例和检查；不是独立人工真值。没有修改旧断言。
+
+最新运行入口6825，source bb002e92f3e1。实际六来源首屏与保存、部分确认、正式事务失败手动恢复、提交后只重读、刷新在该构建完成，详见BROWSER_EVIDENCE。C17 S01真漏事件/时间、S02错时间类型及漏结束仍保留；S05 C19“平台”是否为提交渠道保持争议，不自动给满分。新程序不能证明新版模型生成已改善。
+
+## 之前完整比较交付的实现（历史保留）
 
 2026-10-04。C17/C19原12身份全部确定结算，旧冻结组件、请求、参照及v11原成绩保持。这里交付的是后验公共产品转换，未修改模型输入或默认候选。
 
