@@ -18,9 +18,18 @@ export const CHANNEL_ROLE_CASES = [
 ] as const
 export type ChannelRoleCaseId = typeof CHANNEL_ROLE_CASES[number]['id']
 
+/** Four source-role probes, not new model samples; fixed before changing polarity scope. */
+export const CHANNEL_POLARITY_CASES = [
+  { id: 'receipt-print-optional', object: '场地申请', channel: '青禾办事站', clause: '请通过青禾办事站提交场地申请并保存回执（无需打印）。', expected: 'EXPLICIT_CHANNEL' },
+  { id: 'receipt-print-prohibited', object: '场地申请', channel: '青禾办事站', clause: '请勿通过青禾办事站提交场地申请并保存回执（无需打印）。', expected: 'UNSUPPORTED_OR_AMBIGUOUS_CHANNEL' },
+  { id: 'literal-ruo-name', object: '报销清单', channel: '若水办事站', clause: '请将报销清单上传至若水办事站。', expected: 'EXPLICIT_CHANNEL' },
+  { id: 'conditional-ruo-name', object: '报销清单', channel: '若水办事站', clause: '若通过若水办事站提交报销清单并保存回执，请等待通知。', expected: 'UNSUPPORTED_OR_AMBIGUOUS_CHANNEL' },
+] as const
+export type ChannelPolarityCaseId = typeof CHANNEL_POLARITY_CASES[number]['id']
+
 /** Real v4 wire and graph, with one material obligation plus unrelated independent events. */
-export async function createChannelRoleFixture(id: ChannelRoleCaseId, reverse = false) {
-  const example = CHANNEL_ROLE_CASES.find(row => row.id === id)!
+export async function createChannelRoleFixture(id: ChannelRoleCaseId | ChannelPolarityCaseId, reverse = false) {
+  const example = [...CHANNEL_ROLE_CASES, ...CHANNEL_POLARITY_CASES].find(row => row.id === id)!
   const base = await createContractFixture('mixed')
   const body = base.sourceText.replaceAll('器材清单', example.object)
   const sourceText = reverse ? example.clause + body : body + example.clause

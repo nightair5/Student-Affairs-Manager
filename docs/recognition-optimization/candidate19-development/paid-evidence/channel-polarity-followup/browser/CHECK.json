@@ -1,0 +1,599 @@
+{
+  "role": "ENGINEERING_REPLAY",
+  "counts": {
+    "tasks": 3,
+    "projects": 0,
+    "materials": 3,
+    "events": 10,
+    "timePoints": 22
+  },
+  "sources": 6,
+  "confirmed": 4,
+  "partial": 2,
+  "nullTimes": 9,
+  "rows": [
+    {
+      "scene": 1,
+      "draftId": "source:986a3170:draft:1",
+      "added": {
+        "tasks": 1,
+        "projects": 0,
+        "materials": 1,
+        "events": 2,
+        "timePoints": 5
+      },
+      "status": "confirmed",
+      "commit": {
+        "version": "source-review-d26-1",
+        "draftId": "source:986a3170:draft:1",
+        "commitId": "source-review:source:986a3170:draft:1:fnv1a32:4f598dd6",
+        "disposition": "confirmed",
+        "entityIds": [
+          "task:source:986a3170:draft:1:T1",
+          "event:source:986a3170:draft:1:E1",
+          "event:source:986a3170:draft:1:E2",
+          "time:source:986a3170:draft:1:P1",
+          "time:source:986a3170:draft:1:P2",
+          "time:source:986a3170:draft:1:P3",
+          "time:source:986a3170:draft:1:P4",
+          "time:source:986a3170:draft:1:P5",
+          "material:source:986a3170:draft:1:M1"
+        ],
+        "entityHashes": {
+          "task:source:986a3170:draft:1:T1": "fnv1a32:490d7cf8",
+          "event:source:986a3170:draft:1:E1": "fnv1a32:fd717c1d",
+          "event:source:986a3170:draft:1:E2": "fnv1a32:d06bc71c",
+          "time:source:986a3170:draft:1:P1": "fnv1a32:6ebc9245",
+          "time:source:986a3170:draft:1:P2": "fnv1a32:f595d448",
+          "time:source:986a3170:draft:1:P3": "fnv1a32:7fe3e962",
+          "time:source:986a3170:draft:1:P4": "fnv1a32:9b059822",
+          "time:source:986a3170:draft:1:P5": "fnv1a32:78816084",
+          "material:source:986a3170:draft:1:M1": "fnv1a32:ce7e59f9"
+        },
+        "verifiedAt": "2026-10-04T10:52:22.273Z"
+      }
+    },
+    {
+      "scene": 2,
+      "draftId": "source:557875aa:draft:1",
+      "added": {
+        "tasks": 0,
+        "projects": 0,
+        "materials": 0,
+        "events": 2,
+        "timePoints": 4
+      },
+      "status": "partially_confirmed",
+      "commit": {
+        "version": "source-review-d26-1",
+        "draftId": "source:557875aa:draft:1",
+        "commitId": "source-review:source:557875aa:draft:1:fnv1a32:505e4193",
+        "disposition": "partial",
+        "entityIds": [
+          "event:source:557875aa:draft:1:E1",
+          "event:source:557875aa:draft:1:E2",
+          "time:source:557875aa:draft:1:P2",
+          "time:source:557875aa:draft:1:P3",
+          "time:source:557875aa:draft:1:P4",
+          "time:source:557875aa:draft:1:P5"
+        ],
+        "entityHashes": {
+          "event:source:557875aa:draft:1:E1": "fnv1a32:723114b3",
+          "event:source:557875aa:draft:1:E2": "fnv1a32:b9982fff",
+          "time:source:557875aa:draft:1:P2": "fnv1a32:c5219c5a",
+          "time:source:557875aa:draft:1:P3": "fnv1a32:cd48290e",
+          "time:source:557875aa:draft:1:P4": "fnv1a32:0e37cb14",
+          "time:source:557875aa:draft:1:P5": "fnv1a32:f79d2643"
+        },
+        "verifiedAt": "2026-10-04T10:53:20.419Z"
+      }
+    },
+    {
+      "scene": 3,
+      "draftId": "source:f62f36c2:draft:1",
+      "added": {
+        "tasks": 1,
+        "projects": 0,
+        "materials": 1,
+        "events": 2,
+        "timePoints": 5
+      },
+      "status": "confirmed",
+      "commit": {
+        "version": "source-review-d26-1",
+        "draftId": "source:f62f36c2:draft:1",
+        "commitId": "source-review:source:f62f36c2:draft:1:fnv1a32:96776056",
+        "disposition": "confirmed",
+        "entityIds": [
+          "task:source:f62f36c2:draft:1:T1",
+          "event:source:f62f36c2:draft:1:E1",
+          "event:source:f62f36c2:draft:1:E2",
+          "time:source:f62f36c2:draft:1:P1",
+          "time:source:f62f36c2:draft:1:P2",
+          "time:source:f62f36c2:draft:1:P3",
+          "time:source:f62f36c2:draft:1:P4",
+          "time:source:f62f36c2:draft:1:P5",
+          "material:source:f62f36c2:draft:1:M1"
+        ],
+        "entityHashes": {
+          "task:source:f62f36c2:draft:1:T1": "fnv1a32:369cf166",
+          "event:source:f62f36c2:draft:1:E1": "fnv1a32:293f5a77",
+          "event:source:f62f36c2:draft:1:E2": "fnv1a32:faaf85b5",
+          "time:source:f62f36c2:draft:1:P1": "fnv1a32:1965503c",
+          "time:source:f62f36c2:draft:1:P2": "fnv1a32:3848f316",
+          "time:source:f62f36c2:draft:1:P3": "fnv1a32:aa57d37b",
+          "time:source:f62f36c2:draft:1:P4": "fnv1a32:f06057f5",
+          "time:source:f62f36c2:draft:1:P5": "fnv1a32:d7103b99",
+          "material:source:f62f36c2:draft:1:M1": "fnv1a32:c113a3f0"
+        },
+        "verifiedAt": "2026-10-04T10:54:24.651Z"
+      }
+    },
+    {
+      "scene": 4,
+      "draftId": "source:29fbb4f6:draft:1",
+      "added": {
+        "tasks": 0,
+        "projects": 0,
+        "materials": 0,
+        "events": 2,
+        "timePoints": 4
+      },
+      "status": "partially_confirmed",
+      "commit": {
+        "version": "source-review-d26-1",
+        "draftId": "source:29fbb4f6:draft:1",
+        "commitId": "source-review:source:29fbb4f6:draft:1:fnv1a32:d9dbd0df",
+        "disposition": "partial",
+        "entityIds": [
+          "event:source:29fbb4f6:draft:1:E1",
+          "event:source:29fbb4f6:draft:1:E2",
+          "time:source:29fbb4f6:draft:1:P2",
+          "time:source:29fbb4f6:draft:1:P3",
+          "time:source:29fbb4f6:draft:1:P4",
+          "time:source:29fbb4f6:draft:1:P5"
+        ],
+        "entityHashes": {
+          "event:source:29fbb4f6:draft:1:E1": "fnv1a32:af8bfad1",
+          "event:source:29fbb4f6:draft:1:E2": "fnv1a32:0e9915c2",
+          "time:source:29fbb4f6:draft:1:P2": "fnv1a32:fd7bd399",
+          "time:source:29fbb4f6:draft:1:P3": "fnv1a32:dbd2b465",
+          "time:source:29fbb4f6:draft:1:P4": "fnv1a32:34c2eb05",
+          "time:source:29fbb4f6:draft:1:P5": "fnv1a32:8b9f9d37"
+        },
+        "verifiedAt": "2026-10-04T10:55:27.678Z"
+      }
+    },
+    {
+      "scene": 5,
+      "draftId": "source:d8866c0a:draft:1",
+      "added": {
+        "tasks": 0,
+        "projects": 0,
+        "materials": 0,
+        "events": 1,
+        "timePoints": 1
+      },
+      "status": "confirmed",
+      "commit": {
+        "version": "source-review-d26-1",
+        "draftId": "source:d8866c0a:draft:1",
+        "commitId": "source-review:source:d8866c0a:draft:1:fnv1a32:68c592fa",
+        "disposition": "no_task",
+        "entityIds": [
+          "event:source:d8866c0a:draft:1:event-0001",
+          "time:source:d8866c0a:draft:1:time-0001"
+        ],
+        "entityHashes": {
+          "event:source:d8866c0a:draft:1:event-0001": "fnv1a32:cca5fd82",
+          "time:source:d8866c0a:draft:1:time-0001": "fnv1a32:90d0915a"
+        },
+        "verifiedAt": "2026-10-04T10:56:43.290Z"
+      }
+    },
+    {
+      "scene": 6,
+      "draftId": "source:07368012:draft:1",
+      "added": {
+        "tasks": 1,
+        "projects": 0,
+        "materials": 1,
+        "events": 1,
+        "timePoints": 3
+      },
+      "status": "confirmed",
+      "commit": {
+        "version": "source-review-d26-1",
+        "draftId": "source:07368012:draft:1",
+        "commitId": "source-review:source:07368012:draft:1:fnv1a32:989ceb1c",
+        "disposition": "confirmed",
+        "entityIds": [
+          "task:source:07368012:draft:1:task-0001",
+          "event:source:07368012:draft:1:event-0001",
+          "time:source:07368012:draft:1:time-0001",
+          "time:source:07368012:draft:1:time-0002",
+          "time:source:07368012:draft:1:time-0003",
+          "material:source:07368012:draft:1:material-0001"
+        ],
+        "entityHashes": {
+          "task:source:07368012:draft:1:task-0001": "fnv1a32:18a1dbcf",
+          "event:source:07368012:draft:1:event-0001": "fnv1a32:b8484e9b",
+          "time:source:07368012:draft:1:time-0001": "fnv1a32:1d010b05",
+          "time:source:07368012:draft:1:time-0002": "fnv1a32:79e6d62e",
+          "time:source:07368012:draft:1:time-0003": "fnv1a32:856c8256",
+          "material:source:07368012:draft:1:material-0001": "fnv1a32:c92e8b3b"
+        },
+        "verifiedAt": "2026-10-04T10:58:42.248Z"
+      }
+    }
+  ],
+  "materialValues": [
+    {
+      "id": "material:source:986a3170:draft:1:M1",
+      "name": "场地申请",
+      "channel": "青禾办事站",
+      "owners": [
+        "task:source:986a3170:draft:1:T1"
+      ],
+      "format": [
+        "PDF"
+      ],
+      "naming": []
+    },
+    {
+      "id": "material:source:f62f36c2:draft:1:M1",
+      "name": "报销清单",
+      "channel": "若水办事站",
+      "owners": [
+        "task:source:f62f36c2:draft:1:T1"
+      ],
+      "format": [
+        "PDF"
+      ],
+      "naming": []
+    },
+    {
+      "id": "material:source:07368012:draft:1:material-0001",
+      "name": "志愿服务统计表",
+      "channel": null,
+      "owners": [
+        "task:source:07368012:draft:1:task-0001"
+      ],
+      "format": [
+        "PDF"
+      ],
+      "naming": [
+        "文件名包含小组编号"
+      ]
+    }
+  ],
+  "times": [
+    {
+      "id": "time:source:986a3170:draft:1:P1",
+      "taskId": "task:source:986a3170:draft:1:T1",
+      "eventId": null,
+      "type": "submission_deadline",
+      "rawText": "2026年11月6日15:20前",
+      "value": "2026-11-06T15:20",
+      "precision": "exact",
+      "needsConfirmation": false
+    },
+    {
+      "id": "time:source:986a3170:draft:1:P2",
+      "taskId": null,
+      "eventId": "event:source:986a3170:draft:1:E1",
+      "type": "event_start",
+      "rawText": "周五晚上",
+      "value": null,
+      "precision": "vague",
+      "needsConfirmation": true
+    },
+    {
+      "id": "time:source:986a3170:draft:1:P3",
+      "taskId": null,
+      "eventId": "event:source:986a3170:draft:1:E1",
+      "type": "event_end",
+      "rawText": "结束时间尚未公布",
+      "value": null,
+      "precision": "vague",
+      "needsConfirmation": true
+    },
+    {
+      "id": "time:source:986a3170:draft:1:P4",
+      "taskId": null,
+      "eventId": "event:source:986a3170:draft:1:E2",
+      "type": "event_start",
+      "rawText": "2026年11月7日14:00",
+      "value": "2026-11-07T14:00",
+      "precision": "exact",
+      "needsConfirmation": false
+    },
+    {
+      "id": "time:source:986a3170:draft:1:P5",
+      "taskId": null,
+      "eventId": "event:source:986a3170:draft:1:E2",
+      "type": "event_end",
+      "rawText": "15:00",
+      "value": "2026-11-07T15:00",
+      "precision": "exact",
+      "needsConfirmation": false
+    },
+    {
+      "id": "time:source:557875aa:draft:1:P2",
+      "taskId": null,
+      "eventId": "event:source:557875aa:draft:1:E1",
+      "type": "event_start",
+      "rawText": "周五晚上",
+      "value": null,
+      "precision": "vague",
+      "needsConfirmation": true
+    },
+    {
+      "id": "time:source:557875aa:draft:1:P3",
+      "taskId": null,
+      "eventId": "event:source:557875aa:draft:1:E1",
+      "type": "event_end",
+      "rawText": "结束时间尚未公布",
+      "value": null,
+      "precision": "vague",
+      "needsConfirmation": true
+    },
+    {
+      "id": "time:source:557875aa:draft:1:P4",
+      "taskId": null,
+      "eventId": "event:source:557875aa:draft:1:E2",
+      "type": "event_start",
+      "rawText": "2026年11月7日14:00",
+      "value": "2026-11-07T14:00",
+      "precision": "exact",
+      "needsConfirmation": false
+    },
+    {
+      "id": "time:source:557875aa:draft:1:P5",
+      "taskId": null,
+      "eventId": "event:source:557875aa:draft:1:E2",
+      "type": "event_end",
+      "rawText": "15:00",
+      "value": "2026-11-07T15:00",
+      "precision": "exact",
+      "needsConfirmation": false
+    },
+    {
+      "id": "time:source:f62f36c2:draft:1:P1",
+      "taskId": "task:source:f62f36c2:draft:1:T1",
+      "eventId": null,
+      "type": "submission_deadline",
+      "rawText": "2026年11月6日15:20前",
+      "value": "2026-11-06T15:20",
+      "precision": "exact",
+      "needsConfirmation": false
+    },
+    {
+      "id": "time:source:f62f36c2:draft:1:P2",
+      "taskId": null,
+      "eventId": "event:source:f62f36c2:draft:1:E1",
+      "type": "event_start",
+      "rawText": "周五晚上",
+      "value": null,
+      "precision": "vague",
+      "needsConfirmation": true
+    },
+    {
+      "id": "time:source:f62f36c2:draft:1:P3",
+      "taskId": null,
+      "eventId": "event:source:f62f36c2:draft:1:E1",
+      "type": "event_end",
+      "rawText": "结束时间尚未公布",
+      "value": null,
+      "precision": "vague",
+      "needsConfirmation": true
+    },
+    {
+      "id": "time:source:f62f36c2:draft:1:P4",
+      "taskId": null,
+      "eventId": "event:source:f62f36c2:draft:1:E2",
+      "type": "event_start",
+      "rawText": "2026年11月7日14:00",
+      "value": "2026-11-07T14:00",
+      "precision": "exact",
+      "needsConfirmation": false
+    },
+    {
+      "id": "time:source:f62f36c2:draft:1:P5",
+      "taskId": null,
+      "eventId": "event:source:f62f36c2:draft:1:E2",
+      "type": "event_end",
+      "rawText": "15:00",
+      "value": "2026-11-07T15:00",
+      "precision": "exact",
+      "needsConfirmation": false
+    },
+    {
+      "id": "time:source:29fbb4f6:draft:1:P2",
+      "taskId": null,
+      "eventId": "event:source:29fbb4f6:draft:1:E1",
+      "type": "event_start",
+      "rawText": "周五晚上",
+      "value": null,
+      "precision": "vague",
+      "needsConfirmation": true
+    },
+    {
+      "id": "time:source:29fbb4f6:draft:1:P3",
+      "taskId": null,
+      "eventId": "event:source:29fbb4f6:draft:1:E1",
+      "type": "event_end",
+      "rawText": "结束时间尚未公布",
+      "value": null,
+      "precision": "vague",
+      "needsConfirmation": true
+    },
+    {
+      "id": "time:source:29fbb4f6:draft:1:P4",
+      "taskId": null,
+      "eventId": "event:source:29fbb4f6:draft:1:E2",
+      "type": "event_start",
+      "rawText": "2026年11月7日14:00",
+      "value": "2026-11-07T14:00",
+      "precision": "exact",
+      "needsConfirmation": false
+    },
+    {
+      "id": "time:source:29fbb4f6:draft:1:P5",
+      "taskId": null,
+      "eventId": "event:source:29fbb4f6:draft:1:E2",
+      "type": "event_end",
+      "rawText": "15:00",
+      "value": "2026-11-07T15:00",
+      "precision": "exact",
+      "needsConfirmation": false
+    },
+    {
+      "id": "time:source:d8866c0a:draft:1:time-0001",
+      "taskId": null,
+      "eventId": "event:source:d8866c0a:draft:1:event-0001",
+      "type": "event_start",
+      "rawText": "周日晚间",
+      "value": null,
+      "precision": "vague",
+      "needsConfirmation": true
+    },
+    {
+      "id": "time:source:07368012:draft:1:time-0001",
+      "taskId": "task:source:07368012:draft:1:task-0001",
+      "eventId": null,
+      "type": "submission_deadline",
+      "rawText": "2026年11月13日09:25前",
+      "value": "2026-11-13T09:25",
+      "precision": "exact",
+      "needsConfirmation": false
+    },
+    {
+      "id": "time:source:07368012:draft:1:time-0002",
+      "taskId": null,
+      "eventId": "event:source:07368012:draft:1:event-0001",
+      "type": "event_start",
+      "rawText": "2026年11月14日14:20开始",
+      "value": "2026-11-14T14:20",
+      "precision": "exact",
+      "needsConfirmation": false
+    },
+    {
+      "id": "time:source:07368012:draft:1:time-0003",
+      "taskId": null,
+      "eventId": "event:source:07368012:draft:1:event-0001",
+      "type": "event_end",
+      "rawText": "15:35结束",
+      "value": "2026-11-14T15:35",
+      "precision": "exact",
+      "needsConfirmation": false
+    }
+  ],
+  "measurements": [
+    {
+      "draftId": "source:07368012:draft:1",
+      "canonicalStatus": "confirmed",
+      "legacyPartial": false,
+      "editIds": [],
+      "commitIds": [
+        "source-review:source:07368012:draft:1:fnv1a32:989ceb1c"
+      ],
+      "activeEditMs": 0,
+      "readMs": 43999,
+      "wallMs": 44240,
+      "waitMs": 241,
+      "missing": [],
+      "failures": 1
+    },
+    {
+      "draftId": "source:d8866c0a:draft:1",
+      "canonicalStatus": "confirmed",
+      "legacyPartial": false,
+      "editIds": [],
+      "commitIds": [
+        "source-review:source:d8866c0a:draft:1:fnv1a32:68c592fa"
+      ],
+      "activeEditMs": 0,
+      "readMs": 35696,
+      "wallMs": 35944,
+      "waitMs": 248,
+      "missing": [],
+      "failures": 0
+    },
+    {
+      "draftId": "source:29fbb4f6:draft:1",
+      "canonicalStatus": "partially_confirmed",
+      "legacyPartial": false,
+      "editIds": [],
+      "commitIds": [
+        "source-review:source:29fbb4f6:draft:1:fnv1a32:d9dbd0df"
+      ],
+      "activeEditMs": null,
+      "readMs": null,
+      "wallMs": null,
+      "waitMs": null,
+      "missing": [
+        "unclosed interval",
+        "terminal commit/readback"
+      ],
+      "failures": 0
+    },
+    {
+      "draftId": "source:f62f36c2:draft:1",
+      "canonicalStatus": "confirmed",
+      "legacyPartial": false,
+      "editIds": [],
+      "commitIds": [
+        "source-review:source:f62f36c2:draft:1:fnv1a32:96776056"
+      ],
+      "activeEditMs": 0,
+      "readMs": 13962,
+      "wallMs": 14145,
+      "waitMs": 183,
+      "missing": [],
+      "failures": 0
+    },
+    {
+      "draftId": "source:557875aa:draft:1",
+      "canonicalStatus": "partially_confirmed",
+      "legacyPartial": false,
+      "editIds": [],
+      "commitIds": [
+        "source-review:source:557875aa:draft:1:fnv1a32:505e4193"
+      ],
+      "activeEditMs": null,
+      "readMs": null,
+      "wallMs": null,
+      "waitMs": null,
+      "missing": [
+        "unclosed interval",
+        "terminal commit/readback"
+      ],
+      "failures": 0
+    },
+    {
+      "draftId": "source:986a3170:draft:1",
+      "canonicalStatus": "confirmed",
+      "legacyPartial": false,
+      "editIds": [],
+      "commitIds": [
+        "source-review:source:986a3170:draft:1:fnv1a32:4f598dd6"
+      ],
+      "activeEditMs": null,
+      "readMs": null,
+      "wallMs": null,
+      "waitMs": null,
+      "missing": [
+        "refresh time discontinuity"
+      ],
+      "failures": 1
+    }
+  ],
+  "formalFailureHadZeroCanonical": true,
+  "knownCommitRereadNoNewFacts": true,
+  "refreshArraysEqual": true,
+  "sourceEvidenceQuotesChecked": true,
+  "eventTimeOwnersChecked": true,
+  "firstWholeCorrect": "NOT_ADJUDICATED",
+  "humanMetrics": "NOT_OBSERVABLE"
+}

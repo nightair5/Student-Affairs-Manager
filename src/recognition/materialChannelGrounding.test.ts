@@ -10,7 +10,7 @@ import { CapturePersistenceService } from '../domain/v2/capture'
 import { IndexedDbWorkspaceRepository } from '../lib/repository'
 import { buildSourceReviewPlan, commitSourceReview, verifySourceReviewReadback, sourceReviewProblem } from '../domain/v2/sourceReviewD26'
 import {createContractFixture} from '../experiments/d26Recorded/contractFixtures'
-import {CHANNEL_ROLE_CASES, createChannelRoleFixture} from '../experiments/candidate19Recorded/materialChannelFixtures'
+import {CHANNEL_ROLE_CASES, CHANNEL_POLARITY_CASES, createChannelRoleFixture} from '../experiments/candidate19Recorded/materialChannelFixtures'
 const root='docs/recognition-optimization/candidate19-development/'
 const sources=JSON.parse(readFileSync(root+'SOURCES.json','utf8')).sources as Array<{sourceId:string;sourceVersionId:string;sourceText:string;referenceTime:string;timezone:string}>
 const raw=(n:number)=>(JSON.parse(readFileSync(root+'paid-evidence/'+(n<3?'':'completed/')+`raw-${String(n).padStart(2,'0')}.json`,'utf8')) as {rawHttpText:string}).rawHttpText
@@ -19,6 +19,34 @@ async function recorded(n=10) {
   return { s, context, decoded:decodeCurrentSourceRecording(raw(n),n===10?'Candidate19':'Candidate17',context) }
 }
 describe('source role grounded ordinary material channels',()=>{
+  it.each(CHANNEL_POLARITY_CASES)('polarity scope $id: source-supported values and separate receipt note do not erase a real prohibition or condition',async row=>{
+    const f=await createChannelRoleFixture(row.id),decoded=decodeCurrentSourceRecording(f.rawHttpText,'EngineeringFixture',f.context)
+    const before=structuredClone(decoded.result)
+    const p=assembleCurrentFirstSuggestion(decoded.result,{sourceText:f.sourceText,referenceTime:f.context.referenceTime,timezone:f.context.timezone})
+    expect(decoded.result).toEqual(before)
+    expect(p.materialChannelAudit.decisions[0].status).toBe(row.expected)
+    expect(p.result.materials[0].submissionChannel).toBe(row.expected==='EXPLICIT_CHANNEL'?row.channel:null)
+    expect(p.result.materials[0].formatRequirements).toEqual(['PDF'])
+    expect(p.result.events).toHaveLength(2);expect(p.result.timePoints).toHaveLength(5)
+    expect(Boolean(sourceReviewProblem(p.result,'T1'))).toBe(row.expected!=='EXPLICIT_CHANNEL')
+    const reordered=await createChannelRoleFixture(row.id,true)
+    const q=assembleCurrentFirstSuggestion(decodeCurrentSourceRecording(reordered.rawHttpText,'EngineeringFixture',reordered.context).result,{sourceText:reordered.sourceText,referenceTime:reordered.context.referenceTime,timezone:reordered.context.timezone})
+    expect(q.materialChannelAudit.decisions[0].status).toBe(row.expected)
+    expect(q.result.materials.map(m=>[m.name,m.submissionChannel])).toEqual(p.result.materials.map(m=>[m.name,m.submissionChannel]))
+    const store=new MemoryWorkspaceRecordStore(),repo=new CanonicalWorkspaceRepository(store)
+    await repo.initialize(emptyWorkspace());const capture=new CapturePersistenceService(repo)
+    const h=await capture.beginCapture({operationId:crypto.randomUUID(),rawText:f.sourceText,sourceType:'text',title:'匿名否定作用域反例',provider:'manual',modelName:'匿名工程夹具',promptVersion:'NOT_MODEL_OUTPUT',pipelineVersion:'channel-polarity-fixture-1'})
+    const context={...f.context,index:await indexImmutableScopesV11(h.sourceId,h.sourceVersionId,f.sourceText)}
+    await capture.recognize(h,async()=>assembleCurrentFirstSuggestion(decodeCurrentSourceRecording(rebindRecordedScopes(f.rawHttpText,f.context.index,context.index).reboundHttpText,'EngineeringFixture',context).result,{sourceText:f.sourceText,referenceTime:context.referenceTime,timezone:context.timezone}).result)
+    const w=(await repo.load())!,view=(await new IndexedDbWorkspaceRepository(repo).load())!.drafts.find(d=>d.id===h.draftId)!
+    const plan=buildSourceReviewPlan(w,view),receipt=await commitSourceReview(repo,plan),back=await verifySourceReviewReadback(new CanonicalWorkspaceRepository(store),receipt)
+    expect(back.tasks).toHaveLength(row.expected==='EXPLICIT_CHANNEL'?1:0)
+    expect(back.materials).toHaveLength(row.expected==='EXPLICIT_CHANNEL'?1:0)
+    expect(back.events).toHaveLength(2);expect(back.timePoints).toHaveLength(row.expected==='EXPLICIT_CHANNEL'?5:4)
+    expect(back.projects).toHaveLength(0)
+    if(row.expected==='EXPLICIT_CHANNEL')expect(back.materials[0].submissionChannel).toBe(row.channel)
+    else expect(receipt.disposition).toBe('partial')
+  })
   it.each(CHANNEL_ROLE_CASES)('real wire $id: source role survives conversion and reordered source, with no invented facts',async row=>{
     const assemble = async (reverse: boolean) => {
       const f=await createChannelRoleFixture(row.id,reverse)

@@ -1,0 +1,1300 @@
+{
+  "role": "ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT",
+  "version": "material-channel-role-grounding-1.2.0",
+  "modelCalls": 0,
+  "denominator": 4,
+  "passed": 4,
+  "cases": [
+    {
+      "id": "receipt-print-optional",
+      "source": "请于2026年11月6日15:20前递交场地申请。场地申请必须为PDF。器材讲解会于2026年11月7日14:00开始，15:00结束。系统维护在周五晚上开始，结束时间尚未公布。请通过青禾办事站提交场地申请并保存回执（无需打印）。",
+      "expected": "EXPLICIT_CHANNEL",
+      "wireSha256": "5c4738e665e16e1ccddd65249b87120433dba6ac3f77a49ae6b246ab23ed4828",
+      "observed": "EXPLICIT_CHANNEL",
+      "pass": true,
+      "decision": {
+        "materialId": "M1",
+        "materialName": "场地申请",
+        "ownerIds": [
+          "T1"
+        ],
+        "originalValue": "青禾办事站",
+        "displayedValue": "青禾办事站",
+        "status": "EXPLICIT_CHANNEL",
+        "evidence": [
+          {
+            "id": "d26-scope-0001-93ed4d16c965c733c7dbc0cfae63a83322c97a58f0a423bfaf84fc82bee26ccf",
+            "quote": "请于2026年11月6日15:20前递交场地申请。"
+          },
+          {
+            "id": "d26-scope-0002-a7ef437915a3fa6d70895ba9dcb031b6260ba2e8de42c4ca508c4f63a061d0bd",
+            "quote": "场地申请必须为PDF。"
+          },
+          {
+            "id": "d26-scope-0007-97fa4b2c5d8a86f0d6d25dc458e58c4d719b50205a6103becbb62e183720f2ab",
+            "quote": "请通过青禾办事站提交场地申请并保存回执（无需打印）。"
+          }
+        ],
+        "roleChecks": [
+          {
+            "quote": "请通过青禾办事站提交场地申请并保存回执（无需打印）",
+            "object": "场地申请",
+            "polarity": "AFFIRMATIVE",
+            "roleText": "通过青禾办事站提交场地申请并保存",
+            "polarityText": "请通过<渠道>提交<对象>并保存回执",
+            "unrelatedQualifier": "（无需打印）"
+          }
+        ]
+      },
+      "rawHttpText": "{\"model\":\"deepseek-flash\",\"status\":\"completed\",\"output\":[{\"type\":\"message\",\"role\":\"assistant\",\"content\":[{\"type\":\"output_text\",\"text\":\"{\\\"schemaVersion\\\":\\\"explicit-source-contract-4.0.0\\\",\\\"tasks\\\":[{\\\"id\\\":\\\"T1\\\",\\\"propositionScopeIds\\\":[\\\"scope-0001-93ed4d16c965c733c7dbc0cfae63a83322c97a58f0a423bfaf84fc82bee26ccf\\\",\\\"scope-0002-a7ef437915a3fa6d70895ba9dcb031b6260ba2e8de42c4ca508c4f63a061d0bd\\\",\\\"scope-0007-97fa4b2c5d8a86f0d6d25dc458e58c4d719b50205a6103becbb62e183720f2ab\\\"],\\\"semantics\\\":{\\\"actor\\\":\\\"addressee\\\",\\\"speechAct\\\":\\\"directive\\\",\\\"polarity\\\":\\\"affirmative\\\",\\\"tense\\\":\\\"future\\\",\\\"status\\\":\\\"pending\\\",\\\"validity\\\":\\\"active\\\",\\\"modality\\\":\\\"required\\\"},\\\"inferenceLevel\\\":\\\"explicit\\\",\\\"actionType\\\":\\\"other\\\",\\\"action\\\":{\\\"surface\\\":\\\"递交\\\",\\\"scopeId\\\":\\\"scope-0001-93ed4d16c965c733c7dbc0cfae63a83322c97a58f0a423bfaf84fc82bee26ccf\\\"},\\\"object\\\":{\\\"surface\\\":\\\"场地申请\\\",\\\"scopeId\\\":\\\"scope-0001-93ed4d16c965c733c7dbc0cfae63a83322c97a58f0a423bfaf84fc82bee26ccf\\\"},\\\"effect\\\":\\\"local_change\\\",\\\"detail\\\":{\\\"parentTempId\\\":null,\\\"hierarchyType\\\":\\\"task\\\",\\\"title\\\":\\\"递交场地申请\\\",\\\"description\\\":\\\"\\\",\\\"completionCriteria\\\":[\\\"场地申请必须为PDF\\\"],\\\"estimatedMinutes\\\":null,\\\"statusSuggestion\\\":\\\"todo\\\",\\\"prioritySuggestion\\\":\\\"medium\\\",\\\"dependencyTempIds\\\":[],\\\"confidence\\\":1,\\\"userConfirmationRequired\\\":true},\\\"condition\\\":{\\\"value\\\":\\\"not_applicable\\\",\\\"conditionScopeIds\\\":[],\\\"factScopeIds\\\":[]},\\\"coverage\\\":{\\\"time\\\":{\\\"status\\\":\\\"present\\\",\\\"entityIds\\\":[\\\"P1\\\"],\\\"scopeIds\\\":[\\\"scope-0001-93ed4d16c965c733c7dbc0cfae63a83322c97a58f0a423bfaf84fc82bee26ccf\\\"]},\\\"material\\\":{\\\"status\\\":\\\"present\\\",\\\"entityIds\\\":[\\\"M1\\\"],\\\"scopeIds\\\":[\\\"scope-0002-a7ef437915a3fa6d70895ba9dcb031b6260ba2e8de42c4ca508c4f63a061d0bd\\\",\\\"scope-0007-97fa4b2c5d8a86f0d6d25dc458e58c4d719b50205a6103becbb62e183720f2ab\\\"]},\\\"event\\\":{\\\"status\\\":\\\"not_stated\\\",\\\"entityIds\\\":[],\\\"scopeIds\\\":[]}}}],\\\"materials\\\":[{\\\"tempId\\\":\\\"M1\\\",\\\"name\\\":\\\"场地申请\\\",\\\"required\\\":true,\\\"formatRequirements\\\":[\\\"PDF\\\"],\\\"namingRequirements\\\":[],\\\"quantity\\\":null,\\\"submissionChannel\\\":\\\"青禾办事站\\\",\\\"relatedTaskTempIds\\\":[\\\"T1\\\"],\\\"scopeIds\\\":[\\\"scope-0002-a7ef437915a3fa6d70895ba9dcb031b6260ba2e8de42c4ca508c4f63a061d0bd\\\",\\\"scope-0007-97fa4b2c5d8a86f0d6d25dc458e58c4d719b50205a6103becbb62e183720f2ab\\\"],\\\"confidence\\\":1}],\\\"timePoints\\\":[{\\\"tempId\\\":\\\"P1\\\",\\\"type\\\":\\\"submission_deadline\\\",\\\"rawText\\\":\\\"2026年11月6日15:20前\\\",\\\"relatedTaskTempIds\\\":[\\\"T1\\\"],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0001-93ed4d16c965c733c7dbc0cfae63a83322c97a58f0a423bfaf84fc82bee26ccf\\\"],\\\"confidence\\\":1},{\\\"tempId\\\":\\\"P2\\\",\\\"type\\\":\\\"event_start\\\",\\\"rawText\\\":\\\"周五晚上\\\",\\\"relatedTaskTempIds\\\":[],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0005-661adce92925c5fda0475016b386a207e2ece6e71cf37c52e79e7ecfad6b7bea\\\"],\\\"confidence\\\":1},{\\\"tempId\\\":\\\"P3\\\",\\\"type\\\":\\\"event_end\\\",\\\"rawText\\\":\\\"结束时间尚未公布\\\",\\\"relatedTaskTempIds\\\":[],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0006-7758049b68a7eaa8cdf13e03516b88ac94d17777394625a66ae2b9eb00955b1e\\\"],\\\"confidence\\\":1},{\\\"tempId\\\":\\\"P4\\\",\\\"type\\\":\\\"event_start\\\",\\\"rawText\\\":\\\"2026年11月7日14:00\\\",\\\"relatedTaskTempIds\\\":[],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0003-a42951e23325b850274344f2fad96b9fc97a5ad6ec3818b938946b59d8e636b0\\\"],\\\"confidence\\\":1},{\\\"tempId\\\":\\\"P5\\\",\\\"type\\\":\\\"event_end\\\",\\\"rawText\\\":\\\"15:00\\\",\\\"relatedTaskTempIds\\\":[],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0004-e802e2ceac713cbf8d61875cac71eaab9d5e2e63aabdcccccb874200ace4f7c3\\\"],\\\"confidence\\\":1}],\\\"events\\\":[{\\\"tempId\\\":\\\"E1\\\",\\\"title\\\":\\\"系统维护\\\",\\\"description\\\":\\\"\\\",\\\"location\\\":null,\\\"startTimePointTempId\\\":\\\"P2\\\",\\\"endTimePointTempId\\\":\\\"P3\\\",\\\"relatedTaskTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0005-661adce92925c5fda0475016b386a207e2ece6e71cf37c52e79e7ecfad6b7bea\\\",\\\"scope-0006-7758049b68a7eaa8cdf13e03516b88ac94d17777394625a66ae2b9eb00955b1e\\\"],\\\"confidence\\\":1,\\\"inferenceLevel\\\":\\\"explicit\\\"},{\\\"tempId\\\":\\\"E2\\\",\\\"title\\\":\\\"器材讲解会\\\",\\\"description\\\":\\\"\\\",\\\"location\\\":null,\\\"startTimePointTempId\\\":\\\"P4\\\",\\\"endTimePointTempId\\\":\\\"P5\\\",\\\"relatedTaskTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0003-a42951e23325b850274344f2fad96b9fc97a5ad6ec3818b938946b59d8e636b0\\\",\\\"scope-0004-e802e2ceac713cbf8d61875cac71eaab9d5e2e63aabdcccccb874200ace4f7c3\\\"],\\\"confidence\\\":1,\\\"inferenceLevel\\\":\\\"explicit\\\"}],\\\"revisions\\\":[],\\\"conflicts\\\":[],\\\"scopeAccounting\\\":[{\\\"scopeId\\\":\\\"scope-0001-93ed4d16c965c733c7dbc0cfae63a83322c97a58f0a423bfaf84fc82bee26ccf\\\",\\\"kind\\\":\\\"action\\\",\\\"primaryEntityIds\\\":[\\\"T1\\\"],\\\"secondaryEntityIds\\\":[\\\"P1\\\"]},{\\\"scopeId\\\":\\\"scope-0002-a7ef437915a3fa6d70895ba9dcb031b6260ba2e8de42c4ca508c4f63a061d0bd\\\",\\\"kind\\\":\\\"action\\\",\\\"primaryEntityIds\\\":[\\\"T1\\\"],\\\"secondaryEntityIds\\\":[\\\"M1\\\"]},{\\\"scopeId\\\":\\\"scope-0003-a42951e23325b850274344f2fad96b9fc97a5ad6ec3818b938946b59d8e636b0\\\",\\\"kind\\\":\\\"event\\\",\\\"primaryEntityIds\\\":[\\\"E2\\\"],\\\"secondaryEntityIds\\\":[\\\"P4\\\"]},{\\\"scopeId\\\":\\\"scope-0004-e802e2ceac713cbf8d61875cac71eaab9d5e2e63aabdcccccb874200ace4f7c3\\\",\\\"kind\\\":\\\"event\\\",\\\"primaryEntityIds\\\":[\\\"E2\\\"],\\\"secondaryEntityIds\\\":[\\\"P5\\\"]},{\\\"scopeId\\\":\\\"scope-0005-661adce92925c5fda0475016b386a207e2ece6e71cf37c52e79e7ecfad6b7bea\\\",\\\"kind\\\":\\\"event\\\",\\\"primaryEntityIds\\\":[\\\"E1\\\"],\\\"secondaryEntityIds\\\":[\\\"P2\\\"]},{\\\"scopeId\\\":\\\"scope-0006-7758049b68a7eaa8cdf13e03516b88ac94d17777394625a66ae2b9eb00955b1e\\\",\\\"kind\\\":\\\"event\\\",\\\"primaryEntityIds\\\":[\\\"E1\\\"],\\\"secondaryEntityIds\\\":[\\\"P3\\\"]},{\\\"scopeId\\\":\\\"scope-0007-97fa4b2c5d8a86f0d6d25dc458e58c4d719b50205a6103becbb62e183720f2ab\\\",\\\"kind\\\":\\\"action\\\",\\\"primaryEntityIds\\\":[\\\"T1\\\"],\\\"secondaryEntityIds\\\":[\\\"M1\\\"]}],\\\"prerequisiteStates\\\":[]}\"}]}],\"usage\":{\"input_tokens\":0,\"output_tokens\":0}}",
+      "firstSuggestion": {
+        "schemaVersion": "2.0",
+        "promptVersion": "recognition-source-contract-4.0.0",
+        "modelName": "匿名契约工程夹具（非模型输出）",
+        "createdAt": "2026-10-03T09:00:00+08:00",
+        "sourceSummary": {
+          "title": "递交场地申请",
+          "sourceType": "text",
+          "notificationType": "uncertain",
+          "summary": "1项任务，2项事件。请核对后确认。",
+          "requiresAction": true,
+          "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+        },
+        "projectMatch": {
+          "decision": "standalone_task",
+          "matchedProjectId": null,
+          "suggestedProjectTitle": null,
+          "confidence": 1,
+          "reasons": [
+            "未主动建立或匹配项目。"
+          ]
+        },
+        "projectSuggestion": null,
+        "milestones": [],
+        "standaloneTasks": [
+          {
+            "parentTempId": null,
+            "hierarchyType": "task",
+            "title": "递交场地申请",
+            "description": "请于2026年11月6日15:20前递交场地申请。\n场地申请必须为PDF。\n请通过青禾办事站提交场地申请并保存回执（无需打印）。",
+            "completionCriteria": [
+              "场地申请必须为PDF"
+            ],
+            "estimatedMinutes": null,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "medium",
+            "dependencyTempIds": [],
+            "confidence": 1,
+            "userConfirmationRequired": true,
+            "materialTempIds": [
+              "M1"
+            ],
+            "timePointTempIds": [
+              "P1"
+            ],
+            "tempId": "T1",
+            "actionVerb": "递交",
+            "actionObject": "场地申请",
+            "evidenceIds": [
+              "d26-scope-0001-93ed4d16c965c733c7dbc0cfae63a83322c97a58f0a423bfaf84fc82bee26ccf",
+              "d26-scope-0002-a7ef437915a3fa6d70895ba9dcb031b6260ba2e8de42c4ca508c4f63a061d0bd",
+              "d26-scope-0007-97fa4b2c5d8a86f0d6d25dc458e58c4d719b50205a6103becbb62e183720f2ab"
+            ],
+            "inferenceLevel": "explicit",
+            "selected": true
+          }
+        ],
+        "materials": [
+          {
+            "tempId": "M1",
+            "name": "场地申请",
+            "required": true,
+            "formatRequirements": [
+              "PDF"
+            ],
+            "namingRequirements": [],
+            "quantity": null,
+            "submissionChannel": "青禾办事站",
+            "relatedTaskTempIds": [
+              "T1"
+            ],
+            "confidence": 1,
+            "evidenceIds": [
+              "d26-scope-0002-a7ef437915a3fa6d70895ba9dcb031b6260ba2e8de42c4ca508c4f63a061d0bd",
+              "d26-scope-0007-97fa4b2c5d8a86f0d6d25dc458e58c4d719b50205a6103becbb62e183720f2ab"
+            ]
+          }
+        ],
+        "timePoints": [
+          {
+            "tempId": "P1",
+            "type": "submission_deadline",
+            "rawText": "2026年11月6日15:20前",
+            "relatedTaskTempIds": [
+              "T1"
+            ],
+            "relatedMaterialTempIds": [],
+            "confidence": 1,
+            "normalizedValue": "2026-11-06T15:20",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0001-93ed4d16c965c733c7dbc0cfae63a83322c97a58f0a423bfaf84fc82bee26ccf"
+            ]
+          },
+          {
+            "tempId": "P2",
+            "type": "event_start",
+            "rawText": "周五晚上",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "confidence": 1,
+            "normalizedValue": null,
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "vague",
+            "needsConfirmation": true,
+            "evidenceIds": [
+              "d26-scope-0005-661adce92925c5fda0475016b386a207e2ece6e71cf37c52e79e7ecfad6b7bea"
+            ]
+          },
+          {
+            "tempId": "P3",
+            "type": "event_end",
+            "rawText": "结束时间尚未公布",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "confidence": 1,
+            "normalizedValue": null,
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "vague",
+            "needsConfirmation": true,
+            "evidenceIds": [
+              "d26-scope-0006-7758049b68a7eaa8cdf13e03516b88ac94d17777394625a66ae2b9eb00955b1e"
+            ]
+          },
+          {
+            "tempId": "P4",
+            "type": "event_start",
+            "rawText": "2026年11月7日14:00",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "confidence": 1,
+            "normalizedValue": "2026-11-07T14:00",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0003-a42951e23325b850274344f2fad96b9fc97a5ad6ec3818b938946b59d8e636b0"
+            ]
+          },
+          {
+            "tempId": "P5",
+            "type": "event_end",
+            "rawText": "15:00",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "confidence": 1,
+            "normalizedValue": "2026-11-07T15:00",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0004-e802e2ceac713cbf8d61875cac71eaab9d5e2e63aabdcccccb874200ace4f7c3"
+            ]
+          }
+        ],
+        "events": [
+          {
+            "tempId": "E1",
+            "title": "系统维护",
+            "description": "系统维护在周五晚上开始，\n结束时间尚未公布。",
+            "startTimePointTempId": "P2",
+            "endTimePointTempId": "P3",
+            "location": null,
+            "confidence": 1,
+            "inferenceLevel": "explicit",
+            "evidenceIds": [
+              "d26-scope-0005-661adce92925c5fda0475016b386a207e2ece6e71cf37c52e79e7ecfad6b7bea",
+              "d26-scope-0006-7758049b68a7eaa8cdf13e03516b88ac94d17777394625a66ae2b9eb00955b1e"
+            ],
+            "selected": true
+          },
+          {
+            "tempId": "E2",
+            "title": "器材讲解会",
+            "description": "器材讲解会于2026年11月7日14:00开始，\n15:00结束。",
+            "startTimePointTempId": "P4",
+            "endTimePointTempId": "P5",
+            "location": null,
+            "confidence": 1,
+            "inferenceLevel": "explicit",
+            "evidenceIds": [
+              "d26-scope-0003-a42951e23325b850274344f2fad96b9fc97a5ad6ec3818b938946b59d8e636b0",
+              "d26-scope-0004-e802e2ceac713cbf8d61875cac71eaab9d5e2e63aabdcccccb874200ace4f7c3"
+            ],
+            "selected": true
+          }
+        ],
+        "evidence": [
+          {
+            "id": "d26-scope-0001-93ed4d16c965c733c7dbc0cfae63a83322c97a58f0a423bfaf84fc82bee26ccf",
+            "sourceId": "channel-role-receipt-print-optional",
+            "quote": "请于2026年11月6日15:20前递交场地申请。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0002-a7ef437915a3fa6d70895ba9dcb031b6260ba2e8de42c4ca508c4f63a061d0bd",
+            "sourceId": "channel-role-receipt-print-optional",
+            "quote": "场地申请必须为PDF。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0003-a42951e23325b850274344f2fad96b9fc97a5ad6ec3818b938946b59d8e636b0",
+            "sourceId": "channel-role-receipt-print-optional",
+            "quote": "器材讲解会于2026年11月7日14:00开始，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0004-e802e2ceac713cbf8d61875cac71eaab9d5e2e63aabdcccccb874200ace4f7c3",
+            "sourceId": "channel-role-receipt-print-optional",
+            "quote": "15:00结束。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0005-661adce92925c5fda0475016b386a207e2ece6e71cf37c52e79e7ecfad6b7bea",
+            "sourceId": "channel-role-receipt-print-optional",
+            "quote": "系统维护在周五晚上开始，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0006-7758049b68a7eaa8cdf13e03516b88ac94d17777394625a66ae2b9eb00955b1e",
+            "sourceId": "channel-role-receipt-print-optional",
+            "quote": "结束时间尚未公布。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0007-97fa4b2c5d8a86f0d6d25dc458e58c4d719b50205a6103becbb62e183720f2ab",
+            "sourceId": "channel-role-receipt-print-optional",
+            "quote": "请通过青禾办事站提交场地申请并保存回执（无需打印）。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          }
+        ],
+        "conflicts": [],
+        "ambiguities": [],
+        "ignoredContent": [],
+        "quality": {
+          "overallConfidence": 1,
+          "hierarchyConfidence": 1,
+          "dateConfidence": 0.5,
+          "evidenceCoverage": 1,
+          "duplicateRisk": 0,
+          "overFragmentationRisk": 0,
+          "missingActionRisk": 0,
+          "needsHumanReview": false,
+          "reviewReasons": []
+        }
+      }
+    },
+    {
+      "id": "receipt-print-prohibited",
+      "source": "请于2026年11月6日15:20前递交场地申请。场地申请必须为PDF。器材讲解会于2026年11月7日14:00开始，15:00结束。系统维护在周五晚上开始，结束时间尚未公布。请勿通过青禾办事站提交场地申请并保存回执（无需打印）。",
+      "expected": "UNSUPPORTED_OR_AMBIGUOUS_CHANNEL",
+      "wireSha256": "706413ad969c643971c271656b1c73c1a6d7486d4858851fa821e7701b7d962a",
+      "observed": "UNSUPPORTED_OR_AMBIGUOUS_CHANNEL",
+      "pass": true,
+      "decision": {
+        "materialId": "M1",
+        "materialName": "场地申请",
+        "ownerIds": [
+          "T1"
+        ],
+        "originalValue": "青禾办事站",
+        "displayedValue": null,
+        "status": "UNSUPPORTED_OR_AMBIGUOUS_CHANNEL",
+        "evidence": [
+          {
+            "id": "d26-scope-0001-ff724de28c24edc27dbb2ab6db74d012a366bfab15d9db351fdb13bcefeacbf4",
+            "quote": "请于2026年11月6日15:20前递交场地申请。"
+          },
+          {
+            "id": "d26-scope-0002-36333b8e3f5792d4de988162d7e70c8ef6845c85438778ddbb8aba333094d16e",
+            "quote": "场地申请必须为PDF。"
+          },
+          {
+            "id": "d26-scope-0007-42a36b6092eea6c4962bbc72322cc3f2f183e28395cb8b0aaebcd1c9321da2fe",
+            "quote": "请勿通过青禾办事站提交场地申请并保存回执（无需打印）。"
+          }
+        ],
+        "roleChecks": [
+          {
+            "quote": "请勿通过青禾办事站提交场地申请并保存回执（无需打印）",
+            "object": "场地申请",
+            "polarity": "NEGATED_OR_UNCERTAIN",
+            "roleText": "通过青禾办事站提交场地申请并保存",
+            "polarityText": "请勿通过<渠道>提交<对象>并保存回执",
+            "unrelatedQualifier": "（无需打印）"
+          }
+        ]
+      },
+      "rawHttpText": "{\"model\":\"deepseek-flash\",\"status\":\"completed\",\"output\":[{\"type\":\"message\",\"role\":\"assistant\",\"content\":[{\"type\":\"output_text\",\"text\":\"{\\\"schemaVersion\\\":\\\"explicit-source-contract-4.0.0\\\",\\\"tasks\\\":[{\\\"id\\\":\\\"T1\\\",\\\"propositionScopeIds\\\":[\\\"scope-0001-ff724de28c24edc27dbb2ab6db74d012a366bfab15d9db351fdb13bcefeacbf4\\\",\\\"scope-0002-36333b8e3f5792d4de988162d7e70c8ef6845c85438778ddbb8aba333094d16e\\\",\\\"scope-0007-42a36b6092eea6c4962bbc72322cc3f2f183e28395cb8b0aaebcd1c9321da2fe\\\"],\\\"semantics\\\":{\\\"actor\\\":\\\"addressee\\\",\\\"speechAct\\\":\\\"directive\\\",\\\"polarity\\\":\\\"affirmative\\\",\\\"tense\\\":\\\"future\\\",\\\"status\\\":\\\"pending\\\",\\\"validity\\\":\\\"active\\\",\\\"modality\\\":\\\"required\\\"},\\\"inferenceLevel\\\":\\\"explicit\\\",\\\"actionType\\\":\\\"other\\\",\\\"action\\\":{\\\"surface\\\":\\\"递交\\\",\\\"scopeId\\\":\\\"scope-0001-ff724de28c24edc27dbb2ab6db74d012a366bfab15d9db351fdb13bcefeacbf4\\\"},\\\"object\\\":{\\\"surface\\\":\\\"场地申请\\\",\\\"scopeId\\\":\\\"scope-0001-ff724de28c24edc27dbb2ab6db74d012a366bfab15d9db351fdb13bcefeacbf4\\\"},\\\"effect\\\":\\\"local_change\\\",\\\"detail\\\":{\\\"parentTempId\\\":null,\\\"hierarchyType\\\":\\\"task\\\",\\\"title\\\":\\\"递交场地申请\\\",\\\"description\\\":\\\"\\\",\\\"completionCriteria\\\":[\\\"场地申请必须为PDF\\\"],\\\"estimatedMinutes\\\":null,\\\"statusSuggestion\\\":\\\"todo\\\",\\\"prioritySuggestion\\\":\\\"medium\\\",\\\"dependencyTempIds\\\":[],\\\"confidence\\\":1,\\\"userConfirmationRequired\\\":true},\\\"condition\\\":{\\\"value\\\":\\\"not_applicable\\\",\\\"conditionScopeIds\\\":[],\\\"factScopeIds\\\":[]},\\\"coverage\\\":{\\\"time\\\":{\\\"status\\\":\\\"present\\\",\\\"entityIds\\\":[\\\"P1\\\"],\\\"scopeIds\\\":[\\\"scope-0001-ff724de28c24edc27dbb2ab6db74d012a366bfab15d9db351fdb13bcefeacbf4\\\"]},\\\"material\\\":{\\\"status\\\":\\\"present\\\",\\\"entityIds\\\":[\\\"M1\\\"],\\\"scopeIds\\\":[\\\"scope-0002-36333b8e3f5792d4de988162d7e70c8ef6845c85438778ddbb8aba333094d16e\\\",\\\"scope-0007-42a36b6092eea6c4962bbc72322cc3f2f183e28395cb8b0aaebcd1c9321da2fe\\\"]},\\\"event\\\":{\\\"status\\\":\\\"not_stated\\\",\\\"entityIds\\\":[],\\\"scopeIds\\\":[]}}}],\\\"materials\\\":[{\\\"tempId\\\":\\\"M1\\\",\\\"name\\\":\\\"场地申请\\\",\\\"required\\\":true,\\\"formatRequirements\\\":[\\\"PDF\\\"],\\\"namingRequirements\\\":[],\\\"quantity\\\":null,\\\"submissionChannel\\\":\\\"青禾办事站\\\",\\\"relatedTaskTempIds\\\":[\\\"T1\\\"],\\\"scopeIds\\\":[\\\"scope-0002-36333b8e3f5792d4de988162d7e70c8ef6845c85438778ddbb8aba333094d16e\\\",\\\"scope-0007-42a36b6092eea6c4962bbc72322cc3f2f183e28395cb8b0aaebcd1c9321da2fe\\\"],\\\"confidence\\\":1}],\\\"timePoints\\\":[{\\\"tempId\\\":\\\"P1\\\",\\\"type\\\":\\\"submission_deadline\\\",\\\"rawText\\\":\\\"2026年11月6日15:20前\\\",\\\"relatedTaskTempIds\\\":[\\\"T1\\\"],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0001-ff724de28c24edc27dbb2ab6db74d012a366bfab15d9db351fdb13bcefeacbf4\\\"],\\\"confidence\\\":1},{\\\"tempId\\\":\\\"P2\\\",\\\"type\\\":\\\"event_start\\\",\\\"rawText\\\":\\\"周五晚上\\\",\\\"relatedTaskTempIds\\\":[],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0005-7646336c527fbc683a2650faa78d1f4748d56d390c7682a996e259e37ddc8268\\\"],\\\"confidence\\\":1},{\\\"tempId\\\":\\\"P3\\\",\\\"type\\\":\\\"event_end\\\",\\\"rawText\\\":\\\"结束时间尚未公布\\\",\\\"relatedTaskTempIds\\\":[],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0006-863cd4db37d9c1179efa64d90c6bbbc5aa63ea59151f6db5319f14f79626a4cb\\\"],\\\"confidence\\\":1},{\\\"tempId\\\":\\\"P4\\\",\\\"type\\\":\\\"event_start\\\",\\\"rawText\\\":\\\"2026年11月7日14:00\\\",\\\"relatedTaskTempIds\\\":[],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0003-d0cf3d2f13db9cb78f883f1b75dc8e9d09afcf8cfe160655e4ae46bcb80599d5\\\"],\\\"confidence\\\":1},{\\\"tempId\\\":\\\"P5\\\",\\\"type\\\":\\\"event_end\\\",\\\"rawText\\\":\\\"15:00\\\",\\\"relatedTaskTempIds\\\":[],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0004-46aa9633f3298de2dcc7db8c1e8f19f69ed2a9c46e303baada93cbe1e7a02e0b\\\"],\\\"confidence\\\":1}],\\\"events\\\":[{\\\"tempId\\\":\\\"E1\\\",\\\"title\\\":\\\"系统维护\\\",\\\"description\\\":\\\"\\\",\\\"location\\\":null,\\\"startTimePointTempId\\\":\\\"P2\\\",\\\"endTimePointTempId\\\":\\\"P3\\\",\\\"relatedTaskTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0005-7646336c527fbc683a2650faa78d1f4748d56d390c7682a996e259e37ddc8268\\\",\\\"scope-0006-863cd4db37d9c1179efa64d90c6bbbc5aa63ea59151f6db5319f14f79626a4cb\\\"],\\\"confidence\\\":1,\\\"inferenceLevel\\\":\\\"explicit\\\"},{\\\"tempId\\\":\\\"E2\\\",\\\"title\\\":\\\"器材讲解会\\\",\\\"description\\\":\\\"\\\",\\\"location\\\":null,\\\"startTimePointTempId\\\":\\\"P4\\\",\\\"endTimePointTempId\\\":\\\"P5\\\",\\\"relatedTaskTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0003-d0cf3d2f13db9cb78f883f1b75dc8e9d09afcf8cfe160655e4ae46bcb80599d5\\\",\\\"scope-0004-46aa9633f3298de2dcc7db8c1e8f19f69ed2a9c46e303baada93cbe1e7a02e0b\\\"],\\\"confidence\\\":1,\\\"inferenceLevel\\\":\\\"explicit\\\"}],\\\"revisions\\\":[],\\\"conflicts\\\":[],\\\"scopeAccounting\\\":[{\\\"scopeId\\\":\\\"scope-0001-ff724de28c24edc27dbb2ab6db74d012a366bfab15d9db351fdb13bcefeacbf4\\\",\\\"kind\\\":\\\"action\\\",\\\"primaryEntityIds\\\":[\\\"T1\\\"],\\\"secondaryEntityIds\\\":[\\\"P1\\\"]},{\\\"scopeId\\\":\\\"scope-0002-36333b8e3f5792d4de988162d7e70c8ef6845c85438778ddbb8aba333094d16e\\\",\\\"kind\\\":\\\"action\\\",\\\"primaryEntityIds\\\":[\\\"T1\\\"],\\\"secondaryEntityIds\\\":[\\\"M1\\\"]},{\\\"scopeId\\\":\\\"scope-0003-d0cf3d2f13db9cb78f883f1b75dc8e9d09afcf8cfe160655e4ae46bcb80599d5\\\",\\\"kind\\\":\\\"event\\\",\\\"primaryEntityIds\\\":[\\\"E2\\\"],\\\"secondaryEntityIds\\\":[\\\"P4\\\"]},{\\\"scopeId\\\":\\\"scope-0004-46aa9633f3298de2dcc7db8c1e8f19f69ed2a9c46e303baada93cbe1e7a02e0b\\\",\\\"kind\\\":\\\"event\\\",\\\"primaryEntityIds\\\":[\\\"E2\\\"],\\\"secondaryEntityIds\\\":[\\\"P5\\\"]},{\\\"scopeId\\\":\\\"scope-0005-7646336c527fbc683a2650faa78d1f4748d56d390c7682a996e259e37ddc8268\\\",\\\"kind\\\":\\\"event\\\",\\\"primaryEntityIds\\\":[\\\"E1\\\"],\\\"secondaryEntityIds\\\":[\\\"P2\\\"]},{\\\"scopeId\\\":\\\"scope-0006-863cd4db37d9c1179efa64d90c6bbbc5aa63ea59151f6db5319f14f79626a4cb\\\",\\\"kind\\\":\\\"event\\\",\\\"primaryEntityIds\\\":[\\\"E1\\\"],\\\"secondaryEntityIds\\\":[\\\"P3\\\"]},{\\\"scopeId\\\":\\\"scope-0007-42a36b6092eea6c4962bbc72322cc3f2f183e28395cb8b0aaebcd1c9321da2fe\\\",\\\"kind\\\":\\\"action\\\",\\\"primaryEntityIds\\\":[\\\"T1\\\"],\\\"secondaryEntityIds\\\":[\\\"M1\\\"]}],\\\"prerequisiteStates\\\":[]}\"}]}],\"usage\":{\"input_tokens\":0,\"output_tokens\":0}}",
+      "firstSuggestion": {
+        "schemaVersion": "2.0",
+        "promptVersion": "recognition-source-contract-4.0.0",
+        "modelName": "匿名契约工程夹具（非模型输出）",
+        "createdAt": "2026-10-03T09:00:00+08:00",
+        "sourceSummary": {
+          "title": "递交场地申请",
+          "sourceType": "text",
+          "notificationType": "uncertain",
+          "summary": "1项任务，2项事件。请核对后确认。",
+          "requiresAction": true,
+          "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+        },
+        "projectMatch": {
+          "decision": "standalone_task",
+          "matchedProjectId": null,
+          "suggestedProjectTitle": null,
+          "confidence": 1,
+          "reasons": [
+            "未主动建立或匹配项目。"
+          ]
+        },
+        "projectSuggestion": null,
+        "milestones": [],
+        "standaloneTasks": [
+          {
+            "parentTempId": null,
+            "hierarchyType": "task",
+            "title": "递交场地申请",
+            "description": "请于2026年11月6日15:20前递交场地申请。\n场地申请必须为PDF。\n请勿通过青禾办事站提交场地申请并保存回执（无需打印）。",
+            "completionCriteria": [
+              "场地申请必须为PDF"
+            ],
+            "estimatedMinutes": null,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "medium",
+            "dependencyTempIds": [],
+            "confidence": 1,
+            "userConfirmationRequired": true,
+            "materialTempIds": [
+              "M1"
+            ],
+            "timePointTempIds": [
+              "P1"
+            ],
+            "tempId": "T1",
+            "actionVerb": "递交",
+            "actionObject": "场地申请",
+            "evidenceIds": [
+              "d26-scope-0001-ff724de28c24edc27dbb2ab6db74d012a366bfab15d9db351fdb13bcefeacbf4",
+              "d26-scope-0002-36333b8e3f5792d4de988162d7e70c8ef6845c85438778ddbb8aba333094d16e",
+              "d26-scope-0007-42a36b6092eea6c4962bbc72322cc3f2f183e28395cb8b0aaebcd1c9321da2fe"
+            ],
+            "inferenceLevel": "explicit",
+            "selected": false
+          }
+        ],
+        "materials": [
+          {
+            "tempId": "M1",
+            "name": "场地申请",
+            "required": true,
+            "formatRequirements": [
+              "PDF"
+            ],
+            "namingRequirements": [],
+            "quantity": null,
+            "submissionChannel": null,
+            "relatedTaskTempIds": [
+              "T1"
+            ],
+            "confidence": 1,
+            "evidenceIds": [
+              "d26-scope-0002-36333b8e3f5792d4de988162d7e70c8ef6845c85438778ddbb8aba333094d16e",
+              "d26-scope-0007-42a36b6092eea6c4962bbc72322cc3f2f183e28395cb8b0aaebcd1c9321da2fe"
+            ]
+          }
+        ],
+        "timePoints": [
+          {
+            "tempId": "P1",
+            "type": "submission_deadline",
+            "rawText": "2026年11月6日15:20前",
+            "relatedTaskTempIds": [
+              "T1"
+            ],
+            "relatedMaterialTempIds": [],
+            "confidence": 1,
+            "normalizedValue": "2026-11-06T15:20",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0001-ff724de28c24edc27dbb2ab6db74d012a366bfab15d9db351fdb13bcefeacbf4"
+            ]
+          },
+          {
+            "tempId": "P2",
+            "type": "event_start",
+            "rawText": "周五晚上",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "confidence": 1,
+            "normalizedValue": null,
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "vague",
+            "needsConfirmation": true,
+            "evidenceIds": [
+              "d26-scope-0005-7646336c527fbc683a2650faa78d1f4748d56d390c7682a996e259e37ddc8268"
+            ]
+          },
+          {
+            "tempId": "P3",
+            "type": "event_end",
+            "rawText": "结束时间尚未公布",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "confidence": 1,
+            "normalizedValue": null,
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "vague",
+            "needsConfirmation": true,
+            "evidenceIds": [
+              "d26-scope-0006-863cd4db37d9c1179efa64d90c6bbbc5aa63ea59151f6db5319f14f79626a4cb"
+            ]
+          },
+          {
+            "tempId": "P4",
+            "type": "event_start",
+            "rawText": "2026年11月7日14:00",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "confidence": 1,
+            "normalizedValue": "2026-11-07T14:00",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0003-d0cf3d2f13db9cb78f883f1b75dc8e9d09afcf8cfe160655e4ae46bcb80599d5"
+            ]
+          },
+          {
+            "tempId": "P5",
+            "type": "event_end",
+            "rawText": "15:00",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "confidence": 1,
+            "normalizedValue": "2026-11-07T15:00",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0004-46aa9633f3298de2dcc7db8c1e8f19f69ed2a9c46e303baada93cbe1e7a02e0b"
+            ]
+          }
+        ],
+        "events": [
+          {
+            "tempId": "E1",
+            "title": "系统维护",
+            "description": "系统维护在周五晚上开始，\n结束时间尚未公布。",
+            "startTimePointTempId": "P2",
+            "endTimePointTempId": "P3",
+            "location": null,
+            "confidence": 1,
+            "inferenceLevel": "explicit",
+            "evidenceIds": [
+              "d26-scope-0005-7646336c527fbc683a2650faa78d1f4748d56d390c7682a996e259e37ddc8268",
+              "d26-scope-0006-863cd4db37d9c1179efa64d90c6bbbc5aa63ea59151f6db5319f14f79626a4cb"
+            ],
+            "selected": true
+          },
+          {
+            "tempId": "E2",
+            "title": "器材讲解会",
+            "description": "器材讲解会于2026年11月7日14:00开始，\n15:00结束。",
+            "startTimePointTempId": "P4",
+            "endTimePointTempId": "P5",
+            "location": null,
+            "confidence": 1,
+            "inferenceLevel": "explicit",
+            "evidenceIds": [
+              "d26-scope-0003-d0cf3d2f13db9cb78f883f1b75dc8e9d09afcf8cfe160655e4ae46bcb80599d5",
+              "d26-scope-0004-46aa9633f3298de2dcc7db8c1e8f19f69ed2a9c46e303baada93cbe1e7a02e0b"
+            ],
+            "selected": true
+          }
+        ],
+        "evidence": [
+          {
+            "id": "d26-scope-0001-ff724de28c24edc27dbb2ab6db74d012a366bfab15d9db351fdb13bcefeacbf4",
+            "sourceId": "channel-role-receipt-print-prohibited",
+            "quote": "请于2026年11月6日15:20前递交场地申请。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0002-36333b8e3f5792d4de988162d7e70c8ef6845c85438778ddbb8aba333094d16e",
+            "sourceId": "channel-role-receipt-print-prohibited",
+            "quote": "场地申请必须为PDF。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0003-d0cf3d2f13db9cb78f883f1b75dc8e9d09afcf8cfe160655e4ae46bcb80599d5",
+            "sourceId": "channel-role-receipt-print-prohibited",
+            "quote": "器材讲解会于2026年11月7日14:00开始，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0004-46aa9633f3298de2dcc7db8c1e8f19f69ed2a9c46e303baada93cbe1e7a02e0b",
+            "sourceId": "channel-role-receipt-print-prohibited",
+            "quote": "15:00结束。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0005-7646336c527fbc683a2650faa78d1f4748d56d390c7682a996e259e37ddc8268",
+            "sourceId": "channel-role-receipt-print-prohibited",
+            "quote": "系统维护在周五晚上开始，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0006-863cd4db37d9c1179efa64d90c6bbbc5aa63ea59151f6db5319f14f79626a4cb",
+            "sourceId": "channel-role-receipt-print-prohibited",
+            "quote": "结束时间尚未公布。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0007-42a36b6092eea6c4962bbc72322cc3f2f183e28395cb8b0aaebcd1c9321da2fe",
+            "sourceId": "channel-role-receipt-print-prohibited",
+            "quote": "请勿通过青禾办事站提交场地申请并保存回执（无需打印）。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          }
+        ],
+        "conflicts": [
+          {
+            "id": "material-channel:M1",
+            "type": "other",
+            "message": "场地申请的提交渠道“青禾办事站”缺少同对象的明确依据；请核对关联事项。",
+            "entityTempIds": [
+              "M1",
+              "T1"
+            ],
+            "evidenceIds": [
+              "d26-scope-0001-ff724de28c24edc27dbb2ab6db74d012a366bfab15d9db351fdb13bcefeacbf4",
+              "d26-scope-0002-36333b8e3f5792d4de988162d7e70c8ef6845c85438778ddbb8aba333094d16e",
+              "d26-scope-0007-42a36b6092eea6c4962bbc72322cc3f2f183e28395cb8b0aaebcd1c9321da2fe"
+            ],
+            "requiresDecision": true
+          }
+        ],
+        "ambiguities": [],
+        "ignoredContent": [],
+        "quality": {
+          "overallConfidence": 1,
+          "hierarchyConfidence": 1,
+          "dateConfidence": 0.5,
+          "evidenceCoverage": 1,
+          "duplicateRisk": 0,
+          "overFragmentationRisk": 0,
+          "missingActionRisk": 0,
+          "needsHumanReview": true,
+          "reviewReasons": [
+            "场地申请的提交渠道“青禾办事站”缺少同对象的明确依据；请核对关联事项。"
+          ]
+        }
+      }
+    },
+    {
+      "id": "literal-ruo-name",
+      "source": "请于2026年11月6日15:20前递交报销清单。报销清单必须为PDF。器材讲解会于2026年11月7日14:00开始，15:00结束。系统维护在周五晚上开始，结束时间尚未公布。请将报销清单上传至若水办事站。",
+      "expected": "EXPLICIT_CHANNEL",
+      "wireSha256": "49ababfe5ad2882240a65946610611dde1b9865cc28686779efd68c4e479477d",
+      "observed": "EXPLICIT_CHANNEL",
+      "pass": true,
+      "decision": {
+        "materialId": "M1",
+        "materialName": "报销清单",
+        "ownerIds": [
+          "T1"
+        ],
+        "originalValue": "若水办事站",
+        "displayedValue": "若水办事站",
+        "status": "EXPLICIT_CHANNEL",
+        "evidence": [
+          {
+            "id": "d26-scope-0001-8ba8fd07b5d819014ce474a277dcfd987e06cca937c5d86ca53eac94a7b3c04d",
+            "quote": "请于2026年11月6日15:20前递交报销清单。"
+          },
+          {
+            "id": "d26-scope-0002-8f7e6106fed82ce902310bb7ce557f1c219e1f711dd318f20962b24abbe44c63",
+            "quote": "报销清单必须为PDF。"
+          },
+          {
+            "id": "d26-scope-0007-6012ff9a08ae939693d48589942b2ee708bc7411ff32b5c80e038424fb58a694",
+            "quote": "请将报销清单上传至若水办事站。"
+          }
+        ],
+        "roleChecks": [
+          {
+            "quote": "请将报销清单上传至若水办事站",
+            "object": "报销清单",
+            "polarity": "AFFIRMATIVE",
+            "roleText": "报销清单上传至若水办事站",
+            "polarityText": "请将<对象>上传至<渠道>",
+            "unrelatedQualifier": null
+          }
+        ]
+      },
+      "rawHttpText": "{\"model\":\"deepseek-flash\",\"status\":\"completed\",\"output\":[{\"type\":\"message\",\"role\":\"assistant\",\"content\":[{\"type\":\"output_text\",\"text\":\"{\\\"schemaVersion\\\":\\\"explicit-source-contract-4.0.0\\\",\\\"tasks\\\":[{\\\"id\\\":\\\"T1\\\",\\\"propositionScopeIds\\\":[\\\"scope-0001-8ba8fd07b5d819014ce474a277dcfd987e06cca937c5d86ca53eac94a7b3c04d\\\",\\\"scope-0002-8f7e6106fed82ce902310bb7ce557f1c219e1f711dd318f20962b24abbe44c63\\\",\\\"scope-0007-6012ff9a08ae939693d48589942b2ee708bc7411ff32b5c80e038424fb58a694\\\"],\\\"semantics\\\":{\\\"actor\\\":\\\"addressee\\\",\\\"speechAct\\\":\\\"directive\\\",\\\"polarity\\\":\\\"affirmative\\\",\\\"tense\\\":\\\"future\\\",\\\"status\\\":\\\"pending\\\",\\\"validity\\\":\\\"active\\\",\\\"modality\\\":\\\"required\\\"},\\\"inferenceLevel\\\":\\\"explicit\\\",\\\"actionType\\\":\\\"other\\\",\\\"action\\\":{\\\"surface\\\":\\\"递交\\\",\\\"scopeId\\\":\\\"scope-0001-8ba8fd07b5d819014ce474a277dcfd987e06cca937c5d86ca53eac94a7b3c04d\\\"},\\\"object\\\":{\\\"surface\\\":\\\"报销清单\\\",\\\"scopeId\\\":\\\"scope-0001-8ba8fd07b5d819014ce474a277dcfd987e06cca937c5d86ca53eac94a7b3c04d\\\"},\\\"effect\\\":\\\"local_change\\\",\\\"detail\\\":{\\\"parentTempId\\\":null,\\\"hierarchyType\\\":\\\"task\\\",\\\"title\\\":\\\"递交报销清单\\\",\\\"description\\\":\\\"\\\",\\\"completionCriteria\\\":[\\\"报销清单必须为PDF\\\"],\\\"estimatedMinutes\\\":null,\\\"statusSuggestion\\\":\\\"todo\\\",\\\"prioritySuggestion\\\":\\\"medium\\\",\\\"dependencyTempIds\\\":[],\\\"confidence\\\":1,\\\"userConfirmationRequired\\\":true},\\\"condition\\\":{\\\"value\\\":\\\"not_applicable\\\",\\\"conditionScopeIds\\\":[],\\\"factScopeIds\\\":[]},\\\"coverage\\\":{\\\"time\\\":{\\\"status\\\":\\\"present\\\",\\\"entityIds\\\":[\\\"P1\\\"],\\\"scopeIds\\\":[\\\"scope-0001-8ba8fd07b5d819014ce474a277dcfd987e06cca937c5d86ca53eac94a7b3c04d\\\"]},\\\"material\\\":{\\\"status\\\":\\\"present\\\",\\\"entityIds\\\":[\\\"M1\\\"],\\\"scopeIds\\\":[\\\"scope-0002-8f7e6106fed82ce902310bb7ce557f1c219e1f711dd318f20962b24abbe44c63\\\",\\\"scope-0007-6012ff9a08ae939693d48589942b2ee708bc7411ff32b5c80e038424fb58a694\\\"]},\\\"event\\\":{\\\"status\\\":\\\"not_stated\\\",\\\"entityIds\\\":[],\\\"scopeIds\\\":[]}}}],\\\"materials\\\":[{\\\"tempId\\\":\\\"M1\\\",\\\"name\\\":\\\"报销清单\\\",\\\"required\\\":true,\\\"formatRequirements\\\":[\\\"PDF\\\"],\\\"namingRequirements\\\":[],\\\"quantity\\\":null,\\\"submissionChannel\\\":\\\"若水办事站\\\",\\\"relatedTaskTempIds\\\":[\\\"T1\\\"],\\\"scopeIds\\\":[\\\"scope-0002-8f7e6106fed82ce902310bb7ce557f1c219e1f711dd318f20962b24abbe44c63\\\",\\\"scope-0007-6012ff9a08ae939693d48589942b2ee708bc7411ff32b5c80e038424fb58a694\\\"],\\\"confidence\\\":1}],\\\"timePoints\\\":[{\\\"tempId\\\":\\\"P1\\\",\\\"type\\\":\\\"submission_deadline\\\",\\\"rawText\\\":\\\"2026年11月6日15:20前\\\",\\\"relatedTaskTempIds\\\":[\\\"T1\\\"],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0001-8ba8fd07b5d819014ce474a277dcfd987e06cca937c5d86ca53eac94a7b3c04d\\\"],\\\"confidence\\\":1},{\\\"tempId\\\":\\\"P2\\\",\\\"type\\\":\\\"event_start\\\",\\\"rawText\\\":\\\"周五晚上\\\",\\\"relatedTaskTempIds\\\":[],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0005-384387358f9fe5f0e0fc74ae9c92518efed718643601481ec34daa445735bcc5\\\"],\\\"confidence\\\":1},{\\\"tempId\\\":\\\"P3\\\",\\\"type\\\":\\\"event_end\\\",\\\"rawText\\\":\\\"结束时间尚未公布\\\",\\\"relatedTaskTempIds\\\":[],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0006-325cf8f8e71574b99cbf340d7d28a851b34d84c841fb1b72a08e7a069a16e7e0\\\"],\\\"confidence\\\":1},{\\\"tempId\\\":\\\"P4\\\",\\\"type\\\":\\\"event_start\\\",\\\"rawText\\\":\\\"2026年11月7日14:00\\\",\\\"relatedTaskTempIds\\\":[],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0003-de418bef6279fb9d712cf0f4a2963b334730d01409ade563df082ad4c09181b7\\\"],\\\"confidence\\\":1},{\\\"tempId\\\":\\\"P5\\\",\\\"type\\\":\\\"event_end\\\",\\\"rawText\\\":\\\"15:00\\\",\\\"relatedTaskTempIds\\\":[],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0004-61c735e4152362b30949d6c6e56b3bfa7ce6adce7e5e7ccc2c3a7c18ef54729d\\\"],\\\"confidence\\\":1}],\\\"events\\\":[{\\\"tempId\\\":\\\"E1\\\",\\\"title\\\":\\\"系统维护\\\",\\\"description\\\":\\\"\\\",\\\"location\\\":null,\\\"startTimePointTempId\\\":\\\"P2\\\",\\\"endTimePointTempId\\\":\\\"P3\\\",\\\"relatedTaskTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0005-384387358f9fe5f0e0fc74ae9c92518efed718643601481ec34daa445735bcc5\\\",\\\"scope-0006-325cf8f8e71574b99cbf340d7d28a851b34d84c841fb1b72a08e7a069a16e7e0\\\"],\\\"confidence\\\":1,\\\"inferenceLevel\\\":\\\"explicit\\\"},{\\\"tempId\\\":\\\"E2\\\",\\\"title\\\":\\\"器材讲解会\\\",\\\"description\\\":\\\"\\\",\\\"location\\\":null,\\\"startTimePointTempId\\\":\\\"P4\\\",\\\"endTimePointTempId\\\":\\\"P5\\\",\\\"relatedTaskTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0003-de418bef6279fb9d712cf0f4a2963b334730d01409ade563df082ad4c09181b7\\\",\\\"scope-0004-61c735e4152362b30949d6c6e56b3bfa7ce6adce7e5e7ccc2c3a7c18ef54729d\\\"],\\\"confidence\\\":1,\\\"inferenceLevel\\\":\\\"explicit\\\"}],\\\"revisions\\\":[],\\\"conflicts\\\":[],\\\"scopeAccounting\\\":[{\\\"scopeId\\\":\\\"scope-0001-8ba8fd07b5d819014ce474a277dcfd987e06cca937c5d86ca53eac94a7b3c04d\\\",\\\"kind\\\":\\\"action\\\",\\\"primaryEntityIds\\\":[\\\"T1\\\"],\\\"secondaryEntityIds\\\":[\\\"P1\\\"]},{\\\"scopeId\\\":\\\"scope-0002-8f7e6106fed82ce902310bb7ce557f1c219e1f711dd318f20962b24abbe44c63\\\",\\\"kind\\\":\\\"action\\\",\\\"primaryEntityIds\\\":[\\\"T1\\\"],\\\"secondaryEntityIds\\\":[\\\"M1\\\"]},{\\\"scopeId\\\":\\\"scope-0003-de418bef6279fb9d712cf0f4a2963b334730d01409ade563df082ad4c09181b7\\\",\\\"kind\\\":\\\"event\\\",\\\"primaryEntityIds\\\":[\\\"E2\\\"],\\\"secondaryEntityIds\\\":[\\\"P4\\\"]},{\\\"scopeId\\\":\\\"scope-0004-61c735e4152362b30949d6c6e56b3bfa7ce6adce7e5e7ccc2c3a7c18ef54729d\\\",\\\"kind\\\":\\\"event\\\",\\\"primaryEntityIds\\\":[\\\"E2\\\"],\\\"secondaryEntityIds\\\":[\\\"P5\\\"]},{\\\"scopeId\\\":\\\"scope-0005-384387358f9fe5f0e0fc74ae9c92518efed718643601481ec34daa445735bcc5\\\",\\\"kind\\\":\\\"event\\\",\\\"primaryEntityIds\\\":[\\\"E1\\\"],\\\"secondaryEntityIds\\\":[\\\"P2\\\"]},{\\\"scopeId\\\":\\\"scope-0006-325cf8f8e71574b99cbf340d7d28a851b34d84c841fb1b72a08e7a069a16e7e0\\\",\\\"kind\\\":\\\"event\\\",\\\"primaryEntityIds\\\":[\\\"E1\\\"],\\\"secondaryEntityIds\\\":[\\\"P3\\\"]},{\\\"scopeId\\\":\\\"scope-0007-6012ff9a08ae939693d48589942b2ee708bc7411ff32b5c80e038424fb58a694\\\",\\\"kind\\\":\\\"action\\\",\\\"primaryEntityIds\\\":[\\\"T1\\\"],\\\"secondaryEntityIds\\\":[\\\"M1\\\"]}],\\\"prerequisiteStates\\\":[]}\"}]}],\"usage\":{\"input_tokens\":0,\"output_tokens\":0}}",
+      "firstSuggestion": {
+        "schemaVersion": "2.0",
+        "promptVersion": "recognition-source-contract-4.0.0",
+        "modelName": "匿名契约工程夹具（非模型输出）",
+        "createdAt": "2026-10-03T09:00:00+08:00",
+        "sourceSummary": {
+          "title": "递交报销清单",
+          "sourceType": "text",
+          "notificationType": "uncertain",
+          "summary": "1项任务，2项事件。请核对后确认。",
+          "requiresAction": true,
+          "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+        },
+        "projectMatch": {
+          "decision": "standalone_task",
+          "matchedProjectId": null,
+          "suggestedProjectTitle": null,
+          "confidence": 1,
+          "reasons": [
+            "未主动建立或匹配项目。"
+          ]
+        },
+        "projectSuggestion": null,
+        "milestones": [],
+        "standaloneTasks": [
+          {
+            "parentTempId": null,
+            "hierarchyType": "task",
+            "title": "递交报销清单",
+            "description": "请于2026年11月6日15:20前递交报销清单。\n报销清单必须为PDF。\n请将报销清单上传至若水办事站。",
+            "completionCriteria": [
+              "报销清单必须为PDF"
+            ],
+            "estimatedMinutes": null,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "medium",
+            "dependencyTempIds": [],
+            "confidence": 1,
+            "userConfirmationRequired": true,
+            "materialTempIds": [
+              "M1"
+            ],
+            "timePointTempIds": [
+              "P1"
+            ],
+            "tempId": "T1",
+            "actionVerb": "递交",
+            "actionObject": "报销清单",
+            "evidenceIds": [
+              "d26-scope-0001-8ba8fd07b5d819014ce474a277dcfd987e06cca937c5d86ca53eac94a7b3c04d",
+              "d26-scope-0002-8f7e6106fed82ce902310bb7ce557f1c219e1f711dd318f20962b24abbe44c63",
+              "d26-scope-0007-6012ff9a08ae939693d48589942b2ee708bc7411ff32b5c80e038424fb58a694"
+            ],
+            "inferenceLevel": "explicit",
+            "selected": true
+          }
+        ],
+        "materials": [
+          {
+            "tempId": "M1",
+            "name": "报销清单",
+            "required": true,
+            "formatRequirements": [
+              "PDF"
+            ],
+            "namingRequirements": [],
+            "quantity": null,
+            "submissionChannel": "若水办事站",
+            "relatedTaskTempIds": [
+              "T1"
+            ],
+            "confidence": 1,
+            "evidenceIds": [
+              "d26-scope-0002-8f7e6106fed82ce902310bb7ce557f1c219e1f711dd318f20962b24abbe44c63",
+              "d26-scope-0007-6012ff9a08ae939693d48589942b2ee708bc7411ff32b5c80e038424fb58a694"
+            ]
+          }
+        ],
+        "timePoints": [
+          {
+            "tempId": "P1",
+            "type": "submission_deadline",
+            "rawText": "2026年11月6日15:20前",
+            "relatedTaskTempIds": [
+              "T1"
+            ],
+            "relatedMaterialTempIds": [],
+            "confidence": 1,
+            "normalizedValue": "2026-11-06T15:20",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0001-8ba8fd07b5d819014ce474a277dcfd987e06cca937c5d86ca53eac94a7b3c04d"
+            ]
+          },
+          {
+            "tempId": "P2",
+            "type": "event_start",
+            "rawText": "周五晚上",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "confidence": 1,
+            "normalizedValue": null,
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "vague",
+            "needsConfirmation": true,
+            "evidenceIds": [
+              "d26-scope-0005-384387358f9fe5f0e0fc74ae9c92518efed718643601481ec34daa445735bcc5"
+            ]
+          },
+          {
+            "tempId": "P3",
+            "type": "event_end",
+            "rawText": "结束时间尚未公布",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "confidence": 1,
+            "normalizedValue": null,
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "vague",
+            "needsConfirmation": true,
+            "evidenceIds": [
+              "d26-scope-0006-325cf8f8e71574b99cbf340d7d28a851b34d84c841fb1b72a08e7a069a16e7e0"
+            ]
+          },
+          {
+            "tempId": "P4",
+            "type": "event_start",
+            "rawText": "2026年11月7日14:00",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "confidence": 1,
+            "normalizedValue": "2026-11-07T14:00",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0003-de418bef6279fb9d712cf0f4a2963b334730d01409ade563df082ad4c09181b7"
+            ]
+          },
+          {
+            "tempId": "P5",
+            "type": "event_end",
+            "rawText": "15:00",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "confidence": 1,
+            "normalizedValue": "2026-11-07T15:00",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0004-61c735e4152362b30949d6c6e56b3bfa7ce6adce7e5e7ccc2c3a7c18ef54729d"
+            ]
+          }
+        ],
+        "events": [
+          {
+            "tempId": "E1",
+            "title": "系统维护",
+            "description": "系统维护在周五晚上开始，\n结束时间尚未公布。",
+            "startTimePointTempId": "P2",
+            "endTimePointTempId": "P3",
+            "location": null,
+            "confidence": 1,
+            "inferenceLevel": "explicit",
+            "evidenceIds": [
+              "d26-scope-0005-384387358f9fe5f0e0fc74ae9c92518efed718643601481ec34daa445735bcc5",
+              "d26-scope-0006-325cf8f8e71574b99cbf340d7d28a851b34d84c841fb1b72a08e7a069a16e7e0"
+            ],
+            "selected": true
+          },
+          {
+            "tempId": "E2",
+            "title": "器材讲解会",
+            "description": "器材讲解会于2026年11月7日14:00开始，\n15:00结束。",
+            "startTimePointTempId": "P4",
+            "endTimePointTempId": "P5",
+            "location": null,
+            "confidence": 1,
+            "inferenceLevel": "explicit",
+            "evidenceIds": [
+              "d26-scope-0003-de418bef6279fb9d712cf0f4a2963b334730d01409ade563df082ad4c09181b7",
+              "d26-scope-0004-61c735e4152362b30949d6c6e56b3bfa7ce6adce7e5e7ccc2c3a7c18ef54729d"
+            ],
+            "selected": true
+          }
+        ],
+        "evidence": [
+          {
+            "id": "d26-scope-0001-8ba8fd07b5d819014ce474a277dcfd987e06cca937c5d86ca53eac94a7b3c04d",
+            "sourceId": "channel-role-literal-ruo-name",
+            "quote": "请于2026年11月6日15:20前递交报销清单。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0002-8f7e6106fed82ce902310bb7ce557f1c219e1f711dd318f20962b24abbe44c63",
+            "sourceId": "channel-role-literal-ruo-name",
+            "quote": "报销清单必须为PDF。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0003-de418bef6279fb9d712cf0f4a2963b334730d01409ade563df082ad4c09181b7",
+            "sourceId": "channel-role-literal-ruo-name",
+            "quote": "器材讲解会于2026年11月7日14:00开始，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0004-61c735e4152362b30949d6c6e56b3bfa7ce6adce7e5e7ccc2c3a7c18ef54729d",
+            "sourceId": "channel-role-literal-ruo-name",
+            "quote": "15:00结束。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0005-384387358f9fe5f0e0fc74ae9c92518efed718643601481ec34daa445735bcc5",
+            "sourceId": "channel-role-literal-ruo-name",
+            "quote": "系统维护在周五晚上开始，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0006-325cf8f8e71574b99cbf340d7d28a851b34d84c841fb1b72a08e7a069a16e7e0",
+            "sourceId": "channel-role-literal-ruo-name",
+            "quote": "结束时间尚未公布。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0007-6012ff9a08ae939693d48589942b2ee708bc7411ff32b5c80e038424fb58a694",
+            "sourceId": "channel-role-literal-ruo-name",
+            "quote": "请将报销清单上传至若水办事站。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          }
+        ],
+        "conflicts": [],
+        "ambiguities": [],
+        "ignoredContent": [],
+        "quality": {
+          "overallConfidence": 1,
+          "hierarchyConfidence": 1,
+          "dateConfidence": 0.5,
+          "evidenceCoverage": 1,
+          "duplicateRisk": 0,
+          "overFragmentationRisk": 0,
+          "missingActionRisk": 0,
+          "needsHumanReview": false,
+          "reviewReasons": []
+        }
+      }
+    },
+    {
+      "id": "conditional-ruo-name",
+      "source": "请于2026年11月6日15:20前递交报销清单。报销清单必须为PDF。器材讲解会于2026年11月7日14:00开始，15:00结束。系统维护在周五晚上开始，结束时间尚未公布。若通过若水办事站提交报销清单并保存回执，请等待通知。",
+      "expected": "UNSUPPORTED_OR_AMBIGUOUS_CHANNEL",
+      "wireSha256": "3882646f4179eb7a79a8cb11d0624dc2720418332f6ef9d61820ea499d6fcc6b",
+      "observed": "UNSUPPORTED_OR_AMBIGUOUS_CHANNEL",
+      "pass": true,
+      "decision": {
+        "materialId": "M1",
+        "materialName": "报销清单",
+        "ownerIds": [
+          "T1"
+        ],
+        "originalValue": "若水办事站",
+        "displayedValue": null,
+        "status": "UNSUPPORTED_OR_AMBIGUOUS_CHANNEL",
+        "evidence": [
+          {
+            "id": "d26-scope-0001-b887c74ea5dc0bfc6abc03a3077411fd72ba4a12a0964f4ef39dca2125a6a9f2",
+            "quote": "请于2026年11月6日15:20前递交报销清单。"
+          },
+          {
+            "id": "d26-scope-0002-29645934a6403cd8e87aafece85fdce48e9fdc557a0ad345eb23060c5c0b35ea",
+            "quote": "报销清单必须为PDF。"
+          },
+          {
+            "id": "d26-scope-0007-764a5f19a9b9093f0365ecf1c850af229d18cfa5c8941efb2ca48f7ab9cfe4f9",
+            "quote": "若通过若水办事站提交报销清单并保存回执，"
+          },
+          {
+            "id": "d26-scope-0008-ab83940d3e0c92a7c5826257426c39c0853837fa0d4424a3aa1d864cf40aa424",
+            "quote": "请等待通知。"
+          }
+        ],
+        "roleChecks": [
+          {
+            "quote": "若通过若水办事站提交报销清单并保存回执",
+            "object": "报销清单",
+            "polarity": "NEGATED_OR_UNCERTAIN",
+            "roleText": "通过若水办事站提交报销清单并保存",
+            "polarityText": "若通过<渠道>提交<对象>并保存回执",
+            "unrelatedQualifier": null
+          }
+        ]
+      },
+      "rawHttpText": "{\"model\":\"deepseek-flash\",\"status\":\"completed\",\"output\":[{\"type\":\"message\",\"role\":\"assistant\",\"content\":[{\"type\":\"output_text\",\"text\":\"{\\\"schemaVersion\\\":\\\"explicit-source-contract-4.0.0\\\",\\\"tasks\\\":[{\\\"id\\\":\\\"T1\\\",\\\"propositionScopeIds\\\":[\\\"scope-0001-b887c74ea5dc0bfc6abc03a3077411fd72ba4a12a0964f4ef39dca2125a6a9f2\\\",\\\"scope-0002-29645934a6403cd8e87aafece85fdce48e9fdc557a0ad345eb23060c5c0b35ea\\\",\\\"scope-0007-764a5f19a9b9093f0365ecf1c850af229d18cfa5c8941efb2ca48f7ab9cfe4f9\\\",\\\"scope-0008-ab83940d3e0c92a7c5826257426c39c0853837fa0d4424a3aa1d864cf40aa424\\\"],\\\"semantics\\\":{\\\"actor\\\":\\\"addressee\\\",\\\"speechAct\\\":\\\"directive\\\",\\\"polarity\\\":\\\"affirmative\\\",\\\"tense\\\":\\\"future\\\",\\\"status\\\":\\\"pending\\\",\\\"validity\\\":\\\"active\\\",\\\"modality\\\":\\\"required\\\"},\\\"inferenceLevel\\\":\\\"explicit\\\",\\\"actionType\\\":\\\"other\\\",\\\"action\\\":{\\\"surface\\\":\\\"递交\\\",\\\"scopeId\\\":\\\"scope-0001-b887c74ea5dc0bfc6abc03a3077411fd72ba4a12a0964f4ef39dca2125a6a9f2\\\"},\\\"object\\\":{\\\"surface\\\":\\\"报销清单\\\",\\\"scopeId\\\":\\\"scope-0001-b887c74ea5dc0bfc6abc03a3077411fd72ba4a12a0964f4ef39dca2125a6a9f2\\\"},\\\"effect\\\":\\\"local_change\\\",\\\"detail\\\":{\\\"parentTempId\\\":null,\\\"hierarchyType\\\":\\\"task\\\",\\\"title\\\":\\\"递交报销清单\\\",\\\"description\\\":\\\"\\\",\\\"completionCriteria\\\":[\\\"报销清单必须为PDF\\\"],\\\"estimatedMinutes\\\":null,\\\"statusSuggestion\\\":\\\"todo\\\",\\\"prioritySuggestion\\\":\\\"medium\\\",\\\"dependencyTempIds\\\":[],\\\"confidence\\\":1,\\\"userConfirmationRequired\\\":true},\\\"condition\\\":{\\\"value\\\":\\\"not_applicable\\\",\\\"conditionScopeIds\\\":[],\\\"factScopeIds\\\":[]},\\\"coverage\\\":{\\\"time\\\":{\\\"status\\\":\\\"present\\\",\\\"entityIds\\\":[\\\"P1\\\"],\\\"scopeIds\\\":[\\\"scope-0001-b887c74ea5dc0bfc6abc03a3077411fd72ba4a12a0964f4ef39dca2125a6a9f2\\\"]},\\\"material\\\":{\\\"status\\\":\\\"present\\\",\\\"entityIds\\\":[\\\"M1\\\"],\\\"scopeIds\\\":[\\\"scope-0002-29645934a6403cd8e87aafece85fdce48e9fdc557a0ad345eb23060c5c0b35ea\\\",\\\"scope-0007-764a5f19a9b9093f0365ecf1c850af229d18cfa5c8941efb2ca48f7ab9cfe4f9\\\",\\\"scope-0008-ab83940d3e0c92a7c5826257426c39c0853837fa0d4424a3aa1d864cf40aa424\\\"]},\\\"event\\\":{\\\"status\\\":\\\"not_stated\\\",\\\"entityIds\\\":[],\\\"scopeIds\\\":[]}}}],\\\"materials\\\":[{\\\"tempId\\\":\\\"M1\\\",\\\"name\\\":\\\"报销清单\\\",\\\"required\\\":true,\\\"formatRequirements\\\":[\\\"PDF\\\"],\\\"namingRequirements\\\":[],\\\"quantity\\\":null,\\\"submissionChannel\\\":\\\"若水办事站\\\",\\\"relatedTaskTempIds\\\":[\\\"T1\\\"],\\\"scopeIds\\\":[\\\"scope-0002-29645934a6403cd8e87aafece85fdce48e9fdc557a0ad345eb23060c5c0b35ea\\\",\\\"scope-0007-764a5f19a9b9093f0365ecf1c850af229d18cfa5c8941efb2ca48f7ab9cfe4f9\\\",\\\"scope-0008-ab83940d3e0c92a7c5826257426c39c0853837fa0d4424a3aa1d864cf40aa424\\\"],\\\"confidence\\\":1}],\\\"timePoints\\\":[{\\\"tempId\\\":\\\"P1\\\",\\\"type\\\":\\\"submission_deadline\\\",\\\"rawText\\\":\\\"2026年11月6日15:20前\\\",\\\"relatedTaskTempIds\\\":[\\\"T1\\\"],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0001-b887c74ea5dc0bfc6abc03a3077411fd72ba4a12a0964f4ef39dca2125a6a9f2\\\"],\\\"confidence\\\":1},{\\\"tempId\\\":\\\"P2\\\",\\\"type\\\":\\\"event_start\\\",\\\"rawText\\\":\\\"周五晚上\\\",\\\"relatedTaskTempIds\\\":[],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0005-53088f304284a0a05931f5c9d5709d39249bb6224afdbcbc9740b1bb1fc87f79\\\"],\\\"confidence\\\":1},{\\\"tempId\\\":\\\"P3\\\",\\\"type\\\":\\\"event_end\\\",\\\"rawText\\\":\\\"结束时间尚未公布\\\",\\\"relatedTaskTempIds\\\":[],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0006-e908a5898f60d1175df6efb7e278a165a1ec5abcef8b29b47f75975fa54187c7\\\"],\\\"confidence\\\":1},{\\\"tempId\\\":\\\"P4\\\",\\\"type\\\":\\\"event_start\\\",\\\"rawText\\\":\\\"2026年11月7日14:00\\\",\\\"relatedTaskTempIds\\\":[],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0003-acf7752f235483ba78ec1e6093aad05dde2945a0e695578a706d4e6c93df9f8a\\\"],\\\"confidence\\\":1},{\\\"tempId\\\":\\\"P5\\\",\\\"type\\\":\\\"event_end\\\",\\\"rawText\\\":\\\"15:00\\\",\\\"relatedTaskTempIds\\\":[],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0004-705f04bca4231147d836e94457b7355b2d7281956c7244d70c6778ac4f941363\\\"],\\\"confidence\\\":1}],\\\"events\\\":[{\\\"tempId\\\":\\\"E1\\\",\\\"title\\\":\\\"系统维护\\\",\\\"description\\\":\\\"\\\",\\\"location\\\":null,\\\"startTimePointTempId\\\":\\\"P2\\\",\\\"endTimePointTempId\\\":\\\"P3\\\",\\\"relatedTaskTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0005-53088f304284a0a05931f5c9d5709d39249bb6224afdbcbc9740b1bb1fc87f79\\\",\\\"scope-0006-e908a5898f60d1175df6efb7e278a165a1ec5abcef8b29b47f75975fa54187c7\\\"],\\\"confidence\\\":1,\\\"inferenceLevel\\\":\\\"explicit\\\"},{\\\"tempId\\\":\\\"E2\\\",\\\"title\\\":\\\"器材讲解会\\\",\\\"description\\\":\\\"\\\",\\\"location\\\":null,\\\"startTimePointTempId\\\":\\\"P4\\\",\\\"endTimePointTempId\\\":\\\"P5\\\",\\\"relatedTaskTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0003-acf7752f235483ba78ec1e6093aad05dde2945a0e695578a706d4e6c93df9f8a\\\",\\\"scope-0004-705f04bca4231147d836e94457b7355b2d7281956c7244d70c6778ac4f941363\\\"],\\\"confidence\\\":1,\\\"inferenceLevel\\\":\\\"explicit\\\"}],\\\"revisions\\\":[],\\\"conflicts\\\":[],\\\"scopeAccounting\\\":[{\\\"scopeId\\\":\\\"scope-0001-b887c74ea5dc0bfc6abc03a3077411fd72ba4a12a0964f4ef39dca2125a6a9f2\\\",\\\"kind\\\":\\\"action\\\",\\\"primaryEntityIds\\\":[\\\"T1\\\"],\\\"secondaryEntityIds\\\":[\\\"P1\\\"]},{\\\"scopeId\\\":\\\"scope-0002-29645934a6403cd8e87aafece85fdce48e9fdc557a0ad345eb23060c5c0b35ea\\\",\\\"kind\\\":\\\"action\\\",\\\"primaryEntityIds\\\":[\\\"T1\\\"],\\\"secondaryEntityIds\\\":[\\\"M1\\\"]},{\\\"scopeId\\\":\\\"scope-0003-acf7752f235483ba78ec1e6093aad05dde2945a0e695578a706d4e6c93df9f8a\\\",\\\"kind\\\":\\\"event\\\",\\\"primaryEntityIds\\\":[\\\"E2\\\"],\\\"secondaryEntityIds\\\":[\\\"P4\\\"]},{\\\"scopeId\\\":\\\"scope-0004-705f04bca4231147d836e94457b7355b2d7281956c7244d70c6778ac4f941363\\\",\\\"kind\\\":\\\"event\\\",\\\"primaryEntityIds\\\":[\\\"E2\\\"],\\\"secondaryEntityIds\\\":[\\\"P5\\\"]},{\\\"scopeId\\\":\\\"scope-0005-53088f304284a0a05931f5c9d5709d39249bb6224afdbcbc9740b1bb1fc87f79\\\",\\\"kind\\\":\\\"event\\\",\\\"primaryEntityIds\\\":[\\\"E1\\\"],\\\"secondaryEntityIds\\\":[\\\"P2\\\"]},{\\\"scopeId\\\":\\\"scope-0006-e908a5898f60d1175df6efb7e278a165a1ec5abcef8b29b47f75975fa54187c7\\\",\\\"kind\\\":\\\"event\\\",\\\"primaryEntityIds\\\":[\\\"E1\\\"],\\\"secondaryEntityIds\\\":[\\\"P3\\\"]},{\\\"scopeId\\\":\\\"scope-0007-764a5f19a9b9093f0365ecf1c850af229d18cfa5c8941efb2ca48f7ab9cfe4f9\\\",\\\"kind\\\":\\\"action\\\",\\\"primaryEntityIds\\\":[\\\"T1\\\"],\\\"secondaryEntityIds\\\":[\\\"M1\\\"]},{\\\"scopeId\\\":\\\"scope-0008-ab83940d3e0c92a7c5826257426c39c0853837fa0d4424a3aa1d864cf40aa424\\\",\\\"kind\\\":\\\"action\\\",\\\"primaryEntityIds\\\":[\\\"T1\\\"],\\\"secondaryEntityIds\\\":[\\\"M1\\\"]}],\\\"prerequisiteStates\\\":[]}\"}]}],\"usage\":{\"input_tokens\":0,\"output_tokens\":0}}",
+      "firstSuggestion": {
+        "schemaVersion": "2.0",
+        "promptVersion": "recognition-source-contract-4.0.0",
+        "modelName": "匿名契约工程夹具（非模型输出）",
+        "createdAt": "2026-10-03T09:00:00+08:00",
+        "sourceSummary": {
+          "title": "递交报销清单",
+          "sourceType": "text",
+          "notificationType": "uncertain",
+          "summary": "1项任务，2项事件。请核对后确认。",
+          "requiresAction": true,
+          "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+        },
+        "projectMatch": {
+          "decision": "standalone_task",
+          "matchedProjectId": null,
+          "suggestedProjectTitle": null,
+          "confidence": 1,
+          "reasons": [
+            "未主动建立或匹配项目。"
+          ]
+        },
+        "projectSuggestion": null,
+        "milestones": [],
+        "standaloneTasks": [
+          {
+            "parentTempId": null,
+            "hierarchyType": "task",
+            "title": "递交报销清单",
+            "description": "请于2026年11月6日15:20前递交报销清单。\n报销清单必须为PDF。\n若通过若水办事站提交报销清单并保存回执，\n请等待通知。",
+            "completionCriteria": [
+              "报销清单必须为PDF"
+            ],
+            "estimatedMinutes": null,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "medium",
+            "dependencyTempIds": [],
+            "confidence": 1,
+            "userConfirmationRequired": true,
+            "materialTempIds": [
+              "M1"
+            ],
+            "timePointTempIds": [
+              "P1"
+            ],
+            "tempId": "T1",
+            "actionVerb": "递交",
+            "actionObject": "报销清单",
+            "evidenceIds": [
+              "d26-scope-0001-b887c74ea5dc0bfc6abc03a3077411fd72ba4a12a0964f4ef39dca2125a6a9f2",
+              "d26-scope-0002-29645934a6403cd8e87aafece85fdce48e9fdc557a0ad345eb23060c5c0b35ea",
+              "d26-scope-0007-764a5f19a9b9093f0365ecf1c850af229d18cfa5c8941efb2ca48f7ab9cfe4f9",
+              "d26-scope-0008-ab83940d3e0c92a7c5826257426c39c0853837fa0d4424a3aa1d864cf40aa424"
+            ],
+            "inferenceLevel": "explicit",
+            "selected": false
+          }
+        ],
+        "materials": [
+          {
+            "tempId": "M1",
+            "name": "报销清单",
+            "required": true,
+            "formatRequirements": [
+              "PDF"
+            ],
+            "namingRequirements": [],
+            "quantity": null,
+            "submissionChannel": null,
+            "relatedTaskTempIds": [
+              "T1"
+            ],
+            "confidence": 1,
+            "evidenceIds": [
+              "d26-scope-0002-29645934a6403cd8e87aafece85fdce48e9fdc557a0ad345eb23060c5c0b35ea",
+              "d26-scope-0007-764a5f19a9b9093f0365ecf1c850af229d18cfa5c8941efb2ca48f7ab9cfe4f9",
+              "d26-scope-0008-ab83940d3e0c92a7c5826257426c39c0853837fa0d4424a3aa1d864cf40aa424"
+            ]
+          }
+        ],
+        "timePoints": [
+          {
+            "tempId": "P1",
+            "type": "submission_deadline",
+            "rawText": "2026年11月6日15:20前",
+            "relatedTaskTempIds": [
+              "T1"
+            ],
+            "relatedMaterialTempIds": [],
+            "confidence": 1,
+            "normalizedValue": "2026-11-06T15:20",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0001-b887c74ea5dc0bfc6abc03a3077411fd72ba4a12a0964f4ef39dca2125a6a9f2"
+            ]
+          },
+          {
+            "tempId": "P2",
+            "type": "event_start",
+            "rawText": "周五晚上",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "confidence": 1,
+            "normalizedValue": null,
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "vague",
+            "needsConfirmation": true,
+            "evidenceIds": [
+              "d26-scope-0005-53088f304284a0a05931f5c9d5709d39249bb6224afdbcbc9740b1bb1fc87f79"
+            ]
+          },
+          {
+            "tempId": "P3",
+            "type": "event_end",
+            "rawText": "结束时间尚未公布",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "confidence": 1,
+            "normalizedValue": null,
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "vague",
+            "needsConfirmation": true,
+            "evidenceIds": [
+              "d26-scope-0006-e908a5898f60d1175df6efb7e278a165a1ec5abcef8b29b47f75975fa54187c7"
+            ]
+          },
+          {
+            "tempId": "P4",
+            "type": "event_start",
+            "rawText": "2026年11月7日14:00",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "confidence": 1,
+            "normalizedValue": "2026-11-07T14:00",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0003-acf7752f235483ba78ec1e6093aad05dde2945a0e695578a706d4e6c93df9f8a"
+            ]
+          },
+          {
+            "tempId": "P5",
+            "type": "event_end",
+            "rawText": "15:00",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "confidence": 1,
+            "normalizedValue": "2026-11-07T15:00",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0004-705f04bca4231147d836e94457b7355b2d7281956c7244d70c6778ac4f941363"
+            ]
+          }
+        ],
+        "events": [
+          {
+            "tempId": "E1",
+            "title": "系统维护",
+            "description": "系统维护在周五晚上开始，\n结束时间尚未公布。",
+            "startTimePointTempId": "P2",
+            "endTimePointTempId": "P3",
+            "location": null,
+            "confidence": 1,
+            "inferenceLevel": "explicit",
+            "evidenceIds": [
+              "d26-scope-0005-53088f304284a0a05931f5c9d5709d39249bb6224afdbcbc9740b1bb1fc87f79",
+              "d26-scope-0006-e908a5898f60d1175df6efb7e278a165a1ec5abcef8b29b47f75975fa54187c7"
+            ],
+            "selected": true
+          },
+          {
+            "tempId": "E2",
+            "title": "器材讲解会",
+            "description": "器材讲解会于2026年11月7日14:00开始，\n15:00结束。",
+            "startTimePointTempId": "P4",
+            "endTimePointTempId": "P5",
+            "location": null,
+            "confidence": 1,
+            "inferenceLevel": "explicit",
+            "evidenceIds": [
+              "d26-scope-0003-acf7752f235483ba78ec1e6093aad05dde2945a0e695578a706d4e6c93df9f8a",
+              "d26-scope-0004-705f04bca4231147d836e94457b7355b2d7281956c7244d70c6778ac4f941363"
+            ],
+            "selected": true
+          }
+        ],
+        "evidence": [
+          {
+            "id": "d26-scope-0001-b887c74ea5dc0bfc6abc03a3077411fd72ba4a12a0964f4ef39dca2125a6a9f2",
+            "sourceId": "channel-role-conditional-ruo-name",
+            "quote": "请于2026年11月6日15:20前递交报销清单。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0002-29645934a6403cd8e87aafece85fdce48e9fdc557a0ad345eb23060c5c0b35ea",
+            "sourceId": "channel-role-conditional-ruo-name",
+            "quote": "报销清单必须为PDF。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0003-acf7752f235483ba78ec1e6093aad05dde2945a0e695578a706d4e6c93df9f8a",
+            "sourceId": "channel-role-conditional-ruo-name",
+            "quote": "器材讲解会于2026年11月7日14:00开始，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0004-705f04bca4231147d836e94457b7355b2d7281956c7244d70c6778ac4f941363",
+            "sourceId": "channel-role-conditional-ruo-name",
+            "quote": "15:00结束。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0005-53088f304284a0a05931f5c9d5709d39249bb6224afdbcbc9740b1bb1fc87f79",
+            "sourceId": "channel-role-conditional-ruo-name",
+            "quote": "系统维护在周五晚上开始，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0006-e908a5898f60d1175df6efb7e278a165a1ec5abcef8b29b47f75975fa54187c7",
+            "sourceId": "channel-role-conditional-ruo-name",
+            "quote": "结束时间尚未公布。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0007-764a5f19a9b9093f0365ecf1c850af229d18cfa5c8941efb2ca48f7ab9cfe4f9",
+            "sourceId": "channel-role-conditional-ruo-name",
+            "quote": "若通过若水办事站提交报销清单并保存回执，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0008-ab83940d3e0c92a7c5826257426c39c0853837fa0d4424a3aa1d864cf40aa424",
+            "sourceId": "channel-role-conditional-ruo-name",
+            "quote": "请等待通知。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          }
+        ],
+        "conflicts": [
+          {
+            "id": "material-channel:M1",
+            "type": "other",
+            "message": "报销清单的提交渠道“若水办事站”缺少同对象的明确依据；请核对关联事项。",
+            "entityTempIds": [
+              "M1",
+              "T1"
+            ],
+            "evidenceIds": [
+              "d26-scope-0001-b887c74ea5dc0bfc6abc03a3077411fd72ba4a12a0964f4ef39dca2125a6a9f2",
+              "d26-scope-0002-29645934a6403cd8e87aafece85fdce48e9fdc557a0ad345eb23060c5c0b35ea",
+              "d26-scope-0007-764a5f19a9b9093f0365ecf1c850af229d18cfa5c8941efb2ca48f7ab9cfe4f9",
+              "d26-scope-0008-ab83940d3e0c92a7c5826257426c39c0853837fa0d4424a3aa1d864cf40aa424"
+            ],
+            "requiresDecision": true
+          }
+        ],
+        "ambiguities": [],
+        "ignoredContent": [],
+        "quality": {
+          "overallConfidence": 1,
+          "hierarchyConfidence": 1,
+          "dateConfidence": 0.5,
+          "evidenceCoverage": 1,
+          "duplicateRisk": 0,
+          "overFragmentationRisk": 0,
+          "missingActionRisk": 0,
+          "needsHumanReview": true,
+          "reviewReasons": [
+            "报销清单的提交渠道“若水办事站”缺少同对象的明确依据；请核对关联事项。"
+          ]
+        }
+      }
+    }
+  ]
+}

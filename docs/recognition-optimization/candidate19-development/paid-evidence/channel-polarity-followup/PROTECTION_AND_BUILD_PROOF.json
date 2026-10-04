@@ -1,0 +1,120 @@
+{
+  "startingHead": "879ba5ce7f0fd9d8e8ef26714c855de50c94d3c6",
+  "sourceSha256": "a11946dc1504b5e531ed508693711b78ebc82f67e0584b981888b3309221f7a1",
+  "manifest": {
+    "origin": "http://127.0.0.1:6834",
+    "database": "rco-mainline-01-02-i1-d27-plan-recorded-polarity1004",
+    "build": "879ba5ce7f0f / source a11946dc1504",
+    "role": "ENGINEERING_REPLAY",
+    "batch": "C19-C17-C19-DEVELOPMENT-R1",
+    "knownSettledRecordings": 12,
+    "anonymousFixtures": 4,
+    "plannedRequests": 12,
+    "batchComplete": true,
+    "files": [
+      {
+        "name": "browser.js",
+        "sha256": "db309a0b7deec2309e38f941bf34ccdf5f380f82f83aea2a9ff79a9c688463f5"
+      },
+      {
+        "name": "browser.css",
+        "sha256": "4f130c46c6675c582e5bfe7cd1735c56926818cc399f9d628903178e9a476922"
+      }
+    ],
+    "recordingsSha256": "cfec994c7cc8341b4af9129f34db761ca9ea9bc45078fb15bcbf7d712bc5e7de",
+    "modelCallsByBrowser": 0
+  },
+  "raws": [
+    {
+      "ordinal": 1,
+      "path": "docs/recognition-optimization/candidate19-development/paid-evidence/raw-01.json",
+      "sha256": "e2d0e2d85cbbbe2cbb6ee89f808fddffd99f0019edc0e8a617a30ec503b8ec68",
+      "sameAsStartingGitBytes": true
+    },
+    {
+      "ordinal": 2,
+      "path": "docs/recognition-optimization/candidate19-development/paid-evidence/raw-02.json",
+      "sha256": "66e6983fc9ad8a757f0017762db436c1e2807b5235143c3809cfc62ecb13ee03",
+      "sameAsStartingGitBytes": true
+    },
+    {
+      "ordinal": 3,
+      "path": "docs/recognition-optimization/candidate19-development/paid-evidence/completed/raw-03.json",
+      "sha256": "ca189c62f4571a94e7f6341a568788ec56a414cecb82f345a754ed8e1f018f10",
+      "sameAsStartingGitBytes": true
+    },
+    {
+      "ordinal": 4,
+      "path": "docs/recognition-optimization/candidate19-development/paid-evidence/completed/raw-04.json",
+      "sha256": "0dba1ef4ceb35de65332f65d352df6e3ead576fe2d795345a1725fa80c7ea3eb",
+      "sameAsStartingGitBytes": true
+    },
+    {
+      "ordinal": 5,
+      "path": "docs/recognition-optimization/candidate19-development/paid-evidence/completed/raw-05.json",
+      "sha256": "f25efc008df35c8044ec1e80c78c9fa4f0fdfdf138f5e2e52a1f2dd974e2683c",
+      "sameAsStartingGitBytes": true
+    },
+    {
+      "ordinal": 6,
+      "path": "docs/recognition-optimization/candidate19-development/paid-evidence/completed/raw-06.json",
+      "sha256": "fbee406bc7e51edcc6f4b224fd82a5bb134ee4cd8abc84d3c77205e25f37cee5",
+      "sameAsStartingGitBytes": true
+    },
+    {
+      "ordinal": 7,
+      "path": "docs/recognition-optimization/candidate19-development/paid-evidence/completed/raw-07.json",
+      "sha256": "edb37d9279cac8a9de3fc6b463ab49cc9a1e98b258e7524c7fe8d72933c67e69",
+      "sameAsStartingGitBytes": true
+    },
+    {
+      "ordinal": 8,
+      "path": "docs/recognition-optimization/candidate19-development/paid-evidence/completed/raw-08.json",
+      "sha256": "c54fb77283017842cf07682edd0c739bcbf4bef598537ef283dafe791a2e03b7",
+      "sameAsStartingGitBytes": true
+    },
+    {
+      "ordinal": 9,
+      "path": "docs/recognition-optimization/candidate19-development/paid-evidence/completed/raw-09.json",
+      "sha256": "3ab4e3011ce16aed2f264eeb4f333856441f446fdfbeaa9fffadb7a69e936ae2",
+      "sameAsStartingGitBytes": true
+    },
+    {
+      "ordinal": 10,
+      "path": "docs/recognition-optimization/candidate19-development/paid-evidence/completed/raw-10.json",
+      "sha256": "5699b17de313b0b52075cc17ea037a78615c2e486139ab6c62eee5153c7a4fba",
+      "sameAsStartingGitBytes": true
+    },
+    {
+      "ordinal": 11,
+      "path": "docs/recognition-optimization/candidate19-development/paid-evidence/completed/raw-11.json",
+      "sha256": "40f2d5999ce554f7266ec2541a6dc48c0f496e822c0ebdd71ac15991bb313536",
+      "sameAsStartingGitBytes": true
+    },
+    {
+      "ordinal": 12,
+      "path": "docs/recognition-optimization/candidate19-development/paid-evidence/completed/raw-12.json",
+      "sha256": "48e10cffca0c97d28d67037dabf3488b6ff67a1c0b22fe35b8c58d0aa8b93cca",
+      "sameAsStartingGitBytes": true
+    }
+  ],
+  "all12FirstSuggestionFactsUnchanged": true,
+  "all12PostHocDiagnosesUnchanged": true,
+  "ledgerBefore": {
+    "rows": 996,
+    "sha256": "c58231633b8da1b87e9106f92d0dd457f00e4789e5e5fa03de780fb377dc8750",
+    "tail": "eafde02d394e0cab472e16288543303f31318b661c13a5a771a4edbc9a7dfac8",
+    "batchRows": 25
+  },
+  "ledgerAfter": {
+    "rows": 996,
+    "sha256": "c58231633b8da1b87e9106f92d0dd457f00e4789e5e5fa03de780fb377dc8750",
+    "tail": "eafde02d394e0cab472e16288543303f31318b661c13a5a771a4edbc9a7dfac8",
+    "batchRows": 25
+  },
+  "ledgerSame": true,
+  "modelCalls": 0,
+  "grant": 0,
+  "reserve": 0,
+  "settle": 0
+}

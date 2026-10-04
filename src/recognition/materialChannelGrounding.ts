@@ -1,7 +1,7 @@
 import type { RecognitionResult } from './types'
 import { assembleRecognitionFirstSuggestionD26 } from './firstSuggestionD26'
 
-export const MATERIAL_CHANNEL_GROUNDING_VERSION = 'material-channel-role-grounding-1.1.0'
+export const MATERIAL_CHANNEL_GROUNDING_VERSION = 'material-channel-role-grounding-1.2.0'
 export interface MaterialChannelDecision {
   materialId: string
   materialName: string
@@ -10,7 +10,7 @@ export interface MaterialChannelDecision {
   displayedValue: string | null
   status: 'EXPLICIT_CHANNEL' | 'RECEIPT_CONTEXT_UNRESOLVED' | 'UNSUPPORTED_OR_AMBIGUOUS_CHANNEL'
   evidence: Array<{ id: string; quote: string }>
-  roleChecks: Array<{ quote: string; object: string; polarity: 'AFFIRMATIVE' | 'NEGATED_OR_UNCERTAIN' }>
+  roleChecks: Array<{ quote: string; object: string; polarity: 'AFFIRMATIVE' | 'NEGATED_OR_UNCERTAIN'; roleText: string; polarityText: string; unrelatedQualifier: string | null }>
 }
 export interface MaterialChannelAudit {
   version: typeof MATERIAL_CHANNEL_GROUNDING_VERSION
@@ -33,11 +33,19 @@ function destinationRole(clause: string, object: string, channel: string) {
     new RegExp(`(?:把|将)${o}${action}(?:至|到|给)${c}${end}`, 'u'),
     new RegExp(`(?:通过|经由|在)${c}(?:直接|统一|线上)?${action}${o}${end}`, 'u'),
     new RegExp(`${o}(?:的)?(?:提交渠道|提交地址|接收邮箱|提交入口)(?:为|是|：|:)${c}${end}`, 'u'),
-  ].some(pattern => pattern.test(text))
+  ].map(pattern => pattern.exec(text)).find(match => match !== null)
   if (!matched) return null
+  // Literal object/destination names are values, not grammatical conditions (e.g. 若水).
+  // Only an explicit separate receipt-printing note may be excluded. Other trailing
+  // conditions, prohibitions and contradictions still participate in the decision.
+  const receiptNote = /(?:并|且)(?:保留|保存)(?:电子)?回执([（(](?:无需|无须|不用|不必)打印(?:纸质版|纸质回执)?[）)])$/u.exec(text)
+  const unrelatedQualifier = receiptNote?.[1] ?? null
+  const polarityText = (unrelatedQualifier ? text.slice(0, -unrelatedQualifier.length) : text)
+    .replaceAll(compact(object), '<对象>').replaceAll(compact(channel), '<渠道>')
   // Do not collapse a double negative, condition, example, or question into permission.
-  const uncertain = /请勿|勿|不要|不得|不应|不可|不能|不准|不允许|禁止|不必|无需|无须|不用|尚未|未明确|不是|并非|未必|不一定|不建议|不推荐|若|如果|例如|假如|是否|能否/u.test(text)
-  return uncertain ? 'NEGATED_OR_UNCERTAIN' as const : 'AFFIRMATIVE' as const
+  const uncertain = /请勿|勿|不要|不得|不应|不可|不能|不准|不允许|禁止|不必|无需|无须|不用|尚未|未明确|不是|并非|未必|不一定|不建议|不推荐|若|如果|例如|假如|是否|能否/u.test(polarityText)
+  return { polarity: uncertain ? 'NEGATED_OR_UNCERTAIN' as const : 'AFFIRMATIVE' as const,
+    roleText: matched[0], polarityText, unrelatedQualifier }
 }
 
 /** Preserve the answer. Only source-supported destination roles become definite fields. */
@@ -55,8 +63,8 @@ export function groundMaterialChannels(input: RecognitionResult, sourceText: str
     const clauses = evidence.flatMap(e => e.quote.split(/[，。；\n]/u))
     const objects = [...new Set([material.name, ...owners.map(t => t.actionObject)].filter(Boolean))]
     const roleChecks = clauses.flatMap(quote => objects.flatMap(object => {
-      const polarity = destinationRole(quote, object, originalValue)
-      return polarity ? [{ quote, object, polarity }] : []
+      const check = destinationRole(quote, object, originalValue)
+      return check ? [{ quote, object, ...check }] : []
     }))
     const contradictory = roleChecks.some(c => c.polarity === 'NEGATED_OR_UNCERTAIN')
     const direct = owners.length > 0 && !contradictory && roleChecks.some(c => c.polarity === 'AFFIRMATIVE')

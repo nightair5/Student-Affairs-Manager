@@ -4,10 +4,12 @@ import {resolve,join} from 'node:path'
 import {pathToFileURL} from 'node:url'
 import {createHash} from 'node:crypto'
 const output=resolve(process.argv[2]??'.data/candidate19/channel-role-variants')
+const polarity=process.argv[3]==='--polarity'
+if(process.argv.length>4||process.argv[3]&&!polarity)throw Error('CHANNEL_ROLE_DIAGNOSTIC_MODE')
 mkdirSync(output,{recursive:true})
-await build({stdin:{contents:`export {CHANNEL_ROLE_CASES,createChannelRoleFixture} from './src/experiments/candidate19Recorded/materialChannelFixtures';export {decodeCurrentSourceRecording} from './src/recognition/conditionalNonActionProduct';export {assembleCurrentFirstSuggestion,MATERIAL_CHANNEL_GROUNDING_VERSION} from './src/recognition/materialChannelGrounding'`,resolveDir:process.cwd()},outfile:join(output,'components.mjs'),bundle:true,platform:'node',format:'esm'})
+await build({stdin:{contents:`export {CHANNEL_ROLE_CASES,CHANNEL_POLARITY_CASES,createChannelRoleFixture} from './src/experiments/candidate19Recorded/materialChannelFixtures';export {decodeCurrentSourceRecording} from './src/recognition/conditionalNonActionProduct';export {assembleCurrentFirstSuggestion,MATERIAL_CHANNEL_GROUNDING_VERSION} from './src/recognition/materialChannelGrounding'`,resolveDir:process.cwd()},outfile:join(output,'components.mjs'),bundle:true,platform:'node',format:'esm'})
 const x=await import(pathToFileURL(join(output,'components.mjs'))),cases=[]
-for(const row of x.CHANNEL_ROLE_CASES){
+for(const row of polarity?x.CHANNEL_POLARITY_CASES:x.CHANNEL_ROLE_CASES){
   const f=await x.createChannelRoleFixture(row.id),decoded=x.decodeCurrentSourceRecording(f.rawHttpText,'EngineeringFixture',f.context)
   const first=x.assembleCurrentFirstSuggestion(decoded.result,{sourceText:f.sourceText,referenceTime:f.context.referenceTime,timezone:f.context.timezone})
   const decision=first.materialChannelAudit.decisions[0]
