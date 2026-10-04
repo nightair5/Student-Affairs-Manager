@@ -1,0 +1,354 @@
+{
+  "version": "c19-browser-canonical-check-1",
+  "role": "ENGINEERING_REPLAY",
+  "manifest": {
+    "origin": "http://127.0.0.1:6820",
+    "database": "rco-mainline-01-02-i1-d27-plan-recorded-c19complete1004",
+    "build": "6abc47a8d192 / source 194d64cb84ec",
+    "role": "ENGINEERING_REPLAY",
+    "batch": "C19-C17-C19-DEVELOPMENT-R1",
+    "knownSettledRecordings": 12,
+    "plannedRequests": 12,
+    "batchComplete": true,
+    "files": [
+      {
+        "name": "browser.js",
+        "sha256": "57b1c10c55f34a9ee492ef036d9609ab95f2b4808eff038045ab3b673042d7f6"
+      },
+      {
+        "name": "browser.css",
+        "sha256": "4f130c46c6675c582e5bfe7cd1735c56926818cc399f9d628903178e9a476922"
+      }
+    ],
+    "recordingsSha256": "c26e31d6d1fd9843c80eaabea153e8c8c554faa2e15377ef5d72badec2eb6085",
+    "modelCallsByBrowser": 0
+  },
+  "failedCounts": {
+    "tasks": 0,
+    "projects": 0,
+    "events": 0,
+    "timePoints": 0,
+    "materials": 0
+  },
+  "s05SuccessCounts": {
+    "tasks": 1,
+    "projects": 0,
+    "events": 1,
+    "timePoints": 3,
+    "materials": 1
+  },
+  "s03PartialCounts": {
+    "tasks": 3,
+    "projects": 0,
+    "events": 1,
+    "timePoints": 3,
+    "materials": 1
+  },
+  "s01RecoveredCounts": {
+    "tasks": 3,
+    "projects": 0,
+    "events": 2,
+    "timePoints": 4,
+    "materials": 1
+  },
+  "finalCounts": {
+    "tasks": 3,
+    "projects": 0,
+    "events": 4,
+    "timePoints": 8,
+    "materials": 1
+  },
+  "noHalfFacts": true,
+  "s01RefreshUnchanged": true,
+  "noCompletedPredecessor": true,
+  "dependency": [
+    "task:source:c1c99d6d:draft:1:task-0001"
+  ],
+  "unknownQualificationTaskNotCommitted": true,
+  "sourceDraftStatuses": [
+    {
+      "id": "source:e8c52610:draft:1",
+      "status": "confirmed",
+      "readback": {
+        "version": "source-review-d26-1",
+        "draftId": "source:e8c52610:draft:1",
+        "commitId": "source-review:source:e8c52610:draft:1:fnv1a32:dafacca8",
+        "disposition": "no_task",
+        "entityIds": [
+          "event:source:e8c52610:draft:1:event-0001",
+          "event:source:e8c52610:draft:1:event-0002",
+          "time:source:e8c52610:draft:1:time-0001",
+          "time:source:e8c52610:draft:1:time-0002",
+          "time:source:e8c52610:draft:1:time-0003",
+          "time:source:e8c52610:draft:1:time-0004"
+        ],
+        "entityHashes": {
+          "event:source:e8c52610:draft:1:event-0001": "fnv1a32:3437f207",
+          "event:source:e8c52610:draft:1:event-0002": "fnv1a32:86a664fb",
+          "time:source:e8c52610:draft:1:time-0001": "fnv1a32:6debb726",
+          "time:source:e8c52610:draft:1:time-0002": "fnv1a32:dcdb32d8",
+          "time:source:e8c52610:draft:1:time-0003": "fnv1a32:354ec4ba",
+          "time:source:e8c52610:draft:1:time-0004": "fnv1a32:ed9b913e"
+        },
+        "verifiedAt": "2026-10-04T01:03:50.667Z"
+      }
+    },
+    {
+      "id": "source:d33f47ab:draft:1",
+      "status": "confirmed",
+      "readback": {
+        "version": "source-review-d26-1",
+        "draftId": "source:d33f47ab:draft:1",
+        "commitId": "source-review:source:d33f47ab:draft:1:fnv1a32:8dd338d2",
+        "disposition": "no_task",
+        "entityIds": [
+          "event:source:d33f47ab:draft:1:event-0001",
+          "time:source:d33f47ab:draft:1:time-0001"
+        ],
+        "entityHashes": {
+          "event:source:d33f47ab:draft:1:event-0001": "fnv1a32:58a83993",
+          "time:source:d33f47ab:draft:1:time-0001": "fnv1a32:ae15d239"
+        },
+        "verifiedAt": "2026-10-04T01:01:46.653Z"
+      }
+    },
+    {
+      "id": "source:c1c99d6d:draft:1",
+      "status": "partially_confirmed",
+      "readback": {
+        "version": "source-review-d26-1",
+        "draftId": "source:c1c99d6d:draft:1",
+        "commitId": "source-review:source:c1c99d6d:draft:1:fnv1a32:55a562ff",
+        "disposition": "partial",
+        "entityIds": [
+          "task:source:c1c99d6d:draft:1:task-0001",
+          "task:source:c1c99d6d:draft:1:task-0002"
+        ],
+        "entityHashes": {
+          "task:source:c1c99d6d:draft:1:task-0001": "fnv1a32:a57beeb4",
+          "task:source:c1c99d6d:draft:1:task-0002": "fnv1a32:6c561e23"
+        },
+        "verifiedAt": "2026-10-04T00:59:27.808Z"
+      }
+    },
+    {
+      "id": "source:b67cf5a8:draft:1",
+      "status": "confirmed",
+      "readback": {
+        "version": "source-review-d26-1",
+        "draftId": "source:b67cf5a8:draft:1",
+        "commitId": "source-review:source:b67cf5a8:draft:1:fnv1a32:1e08bdab",
+        "disposition": "confirmed",
+        "entityIds": [
+          "task:source:b67cf5a8:draft:1:task-0001",
+          "event:source:b67cf5a8:draft:1:event-0001",
+          "time:source:b67cf5a8:draft:1:time-0001",
+          "time:source:b67cf5a8:draft:1:time-0002",
+          "time:source:b67cf5a8:draft:1:time-0003",
+          "material:source:b67cf5a8:draft:1:material-0001"
+        ],
+        "entityHashes": {
+          "task:source:b67cf5a8:draft:1:task-0001": "fnv1a32:324a7c04",
+          "event:source:b67cf5a8:draft:1:event-0001": "fnv1a32:c1234053",
+          "time:source:b67cf5a8:draft:1:time-0001": "fnv1a32:72b8d084",
+          "time:source:b67cf5a8:draft:1:time-0002": "fnv1a32:fec048fe",
+          "time:source:b67cf5a8:draft:1:time-0003": "fnv1a32:421a1a13",
+          "material:source:b67cf5a8:draft:1:material-0001": "fnv1a32:0bf42143"
+        },
+        "verifiedAt": "2026-10-04T00:53:24.709Z"
+      }
+    }
+  ],
+  "times": [
+    {
+      "id": "time:source:b67cf5a8:draft:1:time-0001",
+      "rawText": "2026年11月13日09:25前",
+      "value": "2026-11-13T09:25",
+      "type": "submission_deadline",
+      "eventId": null,
+      "precision": "exact",
+      "needsConfirmation": false
+    },
+    {
+      "id": "time:source:b67cf5a8:draft:1:time-0002",
+      "rawText": "2026年11月14日14:20开始",
+      "value": "2026-11-14T14:20",
+      "type": "event_start",
+      "eventId": "event:source:b67cf5a8:draft:1:event-0001",
+      "precision": "exact",
+      "needsConfirmation": false
+    },
+    {
+      "id": "time:source:b67cf5a8:draft:1:time-0003",
+      "rawText": "15:35结束",
+      "value": "2026-11-14T15:35",
+      "type": "event_end",
+      "eventId": "event:source:b67cf5a8:draft:1:event-0001",
+      "precision": "exact",
+      "needsConfirmation": false
+    },
+    {
+      "id": "time:source:d33f47ab:draft:1:time-0001",
+      "rawText": "周日晚间",
+      "value": null,
+      "type": "event_start",
+      "eventId": "event:source:d33f47ab:draft:1:event-0001",
+      "precision": "vague",
+      "needsConfirmation": true
+    },
+    {
+      "id": "time:source:e8c52610:draft:1:time-0001",
+      "rawText": "2026年11月12日10:10开始",
+      "value": "2026-11-12T10:10",
+      "type": "event_start",
+      "eventId": "event:source:e8c52610:draft:1:event-0001",
+      "precision": "exact",
+      "needsConfirmation": false
+    },
+    {
+      "id": "time:source:e8c52610:draft:1:time-0002",
+      "rawText": "11:40结束",
+      "value": "2026-11-12T11:40",
+      "type": "event_end",
+      "eventId": "event:source:e8c52610:draft:1:event-0001",
+      "precision": "exact",
+      "needsConfirmation": false
+    },
+    {
+      "id": "time:source:e8c52610:draft:1:time-0003",
+      "rawText": "周五夜间开始",
+      "value": null,
+      "type": "event_start",
+      "eventId": "event:source:e8c52610:draft:1:event-0002",
+      "precision": "vague",
+      "needsConfirmation": true
+    },
+    {
+      "id": "time:source:e8c52610:draft:1:time-0004",
+      "rawText": "恢复时间尚未公布",
+      "value": null,
+      "type": "event_end",
+      "eventId": "event:source:e8c52610:draft:1:event-0002",
+      "precision": "vague",
+      "needsConfirmation": true
+    }
+  ],
+  "materials": [
+    {
+      "name": "志愿服务统计表",
+      "format": [
+        "PDF"
+      ],
+      "naming": [
+        "文件名包含小组编号"
+      ],
+      "owner": [
+        "task:source:b67cf5a8:draft:1:task-0001"
+      ]
+    }
+  ],
+  "completionCriteria": [
+    {
+      "title": "上传志愿服务统计表",
+      "completionCriteria": [
+        "看到平台显示接收成功才算办结"
+      ]
+    },
+    {
+      "title": "填写场地使用登记",
+      "completionCriteria": []
+    },
+    {
+      "title": "递交场地使用登记",
+      "completionCriteria": []
+    }
+  ],
+  "metrics": [
+    {
+      "draftId": "source:e8c52610:draft:1",
+      "activeEditMs": 0,
+      "wallMs": 35909,
+      "readMs": 35787,
+      "waitMs": 122,
+      "missing": [],
+      "verifiedCommitIds": [
+        "source-review:source:e8c52610:draft:1:fnv1a32:dafacca8"
+      ],
+      "editIds": [],
+      "canonicalStatus": "confirmed",
+      "reportedOutcomes": {
+        "complete": true,
+        "partial": false,
+        "failureEvents": 0
+      }
+    },
+    {
+      "draftId": "source:d33f47ab:draft:1",
+      "activeEditMs": 0,
+      "wallMs": 68021,
+      "readMs": 67887,
+      "waitMs": 134,
+      "missing": [],
+      "verifiedCommitIds": [
+        "source-review:source:d33f47ab:draft:1:fnv1a32:8dd338d2"
+      ],
+      "editIds": [],
+      "canonicalStatus": "confirmed",
+      "reportedOutcomes": {
+        "complete": true,
+        "partial": false,
+        "failureEvents": 1
+      }
+    },
+    {
+      "draftId": "source:c1c99d6d:draft:1",
+      "activeEditMs": null,
+      "wallMs": null,
+      "readMs": null,
+      "waitMs": null,
+      "missing": [
+        "unclosed interval",
+        "terminal commit/readback"
+      ],
+      "verifiedCommitIds": [
+        "source-review:source:c1c99d6d:draft:1:fnv1a32:55a562ff"
+      ],
+      "editIds": [],
+      "canonicalStatus": "partially_confirmed",
+      "reportedOutcomes": {
+        "complete": false,
+        "partial": false,
+        "failureEvents": 0
+      }
+    },
+    {
+      "draftId": "source:b67cf5a8:draft:1",
+      "activeEditMs": null,
+      "wallMs": null,
+      "readMs": null,
+      "waitMs": null,
+      "missing": [
+        "refresh time discontinuity"
+      ],
+      "verifiedCommitIds": [
+        "source-review:source:b67cf5a8:draft:1:fnv1a32:1e08bdab"
+      ],
+      "editIds": [],
+      "canonicalStatus": "confirmed",
+      "reportedOutcomes": {
+        "complete": true,
+        "partial": false,
+        "failureEvents": 1
+      }
+    }
+  ],
+  "independentHumanCorrectness": "NOT_ADJUDICATED",
+  "humanMetrics": "NOT_OBSERVABLE",
+  "consoleErrors": [],
+  "operatorObservations": [
+    "Immediate DOM read after asynchronous reader click initially returned preceding failed readback; final files were replaced only after fresh visible state and repository readback.",
+    "Partial confirmation leaves review dialog open for the remaining unknown item; hidden-dialog wait was an incorrect test expectation, not a save failure.",
+    "Read-only 35.787 and 67.887 seconds produced activeEditMs=0; S03 remains open and S05 refresh discontinuity retain null.",
+    "Legacy engineering outcome.partial is false for open partial source despite canonical partially_confirmed; no success or zero timing inferred from that flag."
+  ]
+}

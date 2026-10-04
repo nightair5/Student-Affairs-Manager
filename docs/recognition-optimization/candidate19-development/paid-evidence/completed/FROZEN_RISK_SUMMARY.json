@@ -1,0 +1,331 @@
+{
+  "version": "c19-frozen-risk-readout-1",
+  "role": "READOUT_OF_UNCHANGED_V11_NOT_NEW_SCORE",
+  "rows": [
+    {
+      "ordinal": 1,
+      "sourceId": "C19-DEV-S01",
+      "candidate": "Candidate17",
+      "whole": false,
+      "taskPresence": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "expected": 0,
+        "actual": 0
+      },
+      "legacySeverity": {
+        "severe": 0,
+        "major": 1,
+        "forbidden": 0,
+        "keyMajor": 1
+      },
+      "forbiddenIds": [],
+      "newFactRiskUnits": [
+        "[\"EVENT_MISSING\",\"E1\",null,null,null]",
+        "[\"INDEPENDENT_TIME_WRONG\",\"P1\",null,null,null]"
+      ],
+      "disputes": [],
+      "freeProseAndLeakage": "NOT_ADJUDICATED",
+      "error": null
+    },
+    {
+      "ordinal": 2,
+      "sourceId": "C19-DEV-S01",
+      "candidate": "Candidate19",
+      "whole": false,
+      "taskPresence": {
+        "tp": 0,
+        "fp": 2,
+        "fn": 0,
+        "expected": 0,
+        "actual": 2
+      },
+      "legacySeverity": {
+        "severe": 0,
+        "major": 1,
+        "forbidden": 0,
+        "keyMajor": 1
+      },
+      "forbiddenIds": [],
+      "newFactRiskUnits": [
+        "FP:重新登记|重新登记",
+        "FP:发送|补充邮件",
+        "[\"INDEPENDENT_INFORMATION_MISSING\",\"I4\",null,null,null]",
+        "[\"INDEPENDENT_INFORMATION_MISSING\",\"I5\",null,null,null]"
+      ],
+      "disputes": [],
+      "freeProseAndLeakage": "NOT_ADJUDICATED",
+      "error": null
+    },
+    {
+      "ordinal": 3,
+      "sourceId": "C19-DEV-S02",
+      "candidate": "Candidate19",
+      "whole": false,
+      "taskPresence": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "expected": 0,
+        "actual": 0
+      },
+      "legacySeverity": {
+        "severe": 0,
+        "major": 1,
+        "forbidden": 0,
+        "keyMajor": 1
+      },
+      "forbiddenIds": [],
+      "newFactRiskUnits": [
+        "[\"EVENT_TIME_OR_LOCATION_WRONG\",\"E1\",null,null,null]",
+        "[\"INDEPENDENT_TIME_WRONG\",\"P1\",null,null,null]",
+        "[\"INDEPENDENT_TIME_WRONG\",\"P2\",null,null,null]",
+        "[\"EVENT_TIME_OR_LOCATION_WRONG\",\"E2\",null,null,null]",
+        "[\"INDEPENDENT_TIME_WRONG\",\"P3\",null,null,null]",
+        "[\"UNSUPPORTED_INDEPENDENT_ENTITY\",null,null,null,null]"
+      ],
+      "disputes": [],
+      "freeProseAndLeakage": "NOT_ADJUDICATED",
+      "error": null
+    },
+    {
+      "ordinal": 4,
+      "sourceId": "C19-DEV-S02",
+      "candidate": "Candidate17",
+      "whole": false,
+      "taskPresence": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "expected": 0,
+        "actual": 0
+      },
+      "legacySeverity": {
+        "severe": 0,
+        "major": 1,
+        "forbidden": 0,
+        "keyMajor": 1
+      },
+      "forbiddenIds": [],
+      "newFactRiskUnits": [
+        "[\"EVENT_TIME_OR_LOCATION_WRONG\",\"E1\",null,null,null]",
+        "[\"INDEPENDENT_TIME_WRONG\",\"P1\",null,null,null]",
+        "[\"INDEPENDENT_TIME_WRONG\",\"P2\",null,null,null]",
+        "[\"EVENT_TIME_OR_LOCATION_WRONG\",\"E2\",null,null,null]",
+        "[\"INDEPENDENT_TIME_WRONG\",\"P3\",null,null,null]",
+        "[\"INDEPENDENT_TIME_WRONG\",\"P4\",null,null,null]",
+        "[\"UNSUPPORTED_INDEPENDENT_ENTITY\",null,null,null,null]"
+      ],
+      "disputes": [],
+      "freeProseAndLeakage": "NOT_ADJUDICATED",
+      "error": null
+    },
+    {
+      "ordinal": 5,
+      "sourceId": "C19-DEV-S03",
+      "candidate": "Candidate17",
+      "whole": true,
+      "taskPresence": {
+        "tp": 3,
+        "fp": 0,
+        "fn": 0,
+        "expected": 3,
+        "actual": 3
+      },
+      "legacySeverity": {
+        "severe": 0,
+        "major": 0,
+        "forbidden": 0,
+        "keyMajor": 0
+      },
+      "forbiddenIds": [],
+      "newFactRiskUnits": [],
+      "disputes": [],
+      "freeProseAndLeakage": "NOT_ADJUDICATED",
+      "error": null
+    },
+    {
+      "ordinal": 6,
+      "sourceId": "C19-DEV-S03",
+      "candidate": "Candidate19",
+      "whole": false,
+      "taskPresence": null,
+      "legacySeverity": "NOT_SCORED_CONTRACT_REJECT",
+      "forbiddenIds": "NOT_SCORED_CONTRACT_REJECT",
+      "newFactRiskUnits": [
+        "SCHEMA_REFERENCE_OR_TRANSPORT_REJECT"
+      ],
+      "disputes": [],
+      "freeProseAndLeakage": "NOT_ADJUDICATED",
+      "error": "SOURCE_CONTRACT_INFORMATION_ENTITY"
+    },
+    {
+      "ordinal": 7,
+      "sourceId": "C19-DEV-S04",
+      "candidate": "Candidate19",
+      "whole": false,
+      "taskPresence": {
+        "tp": 1,
+        "fp": 1,
+        "fn": 0,
+        "expected": 1,
+        "actual": 2
+      },
+      "legacySeverity": {
+        "severe": 0,
+        "major": 1,
+        "forbidden": 0,
+        "keyMajor": 1
+      },
+      "forbiddenIds": [],
+      "newFactRiskUnits": [
+        "FP:不能提交|展位申请",
+        "[\"INDEPENDENT_INFORMATION_MISSING\",\"I3\",null,null,null]"
+      ],
+      "disputes": [],
+      "freeProseAndLeakage": "NOT_ADJUDICATED",
+      "error": null
+    },
+    {
+      "ordinal": 8,
+      "sourceId": "C19-DEV-S04",
+      "candidate": "Candidate17",
+      "whole": false,
+      "taskPresence": {
+        "tp": 1,
+        "fp": 1,
+        "fn": 0,
+        "expected": 1,
+        "actual": 2
+      },
+      "legacySeverity": {
+        "severe": 0,
+        "major": 2,
+        "forbidden": 0,
+        "keyMajor": 2
+      },
+      "forbiddenIds": [],
+      "newFactRiskUnits": [
+        "[\"TASK_FIELD_WRONG\",\"completionStandards\",null,\"保存|活动联系编号\",\"\"]",
+        "FP:提交|展位申请",
+        "[\"INDEPENDENT_INFORMATION_MISSING\",\"I3\",null,null,null]"
+      ],
+      "disputes": [],
+      "freeProseAndLeakage": "NOT_ADJUDICATED",
+      "error": null
+    },
+    {
+      "ordinal": 9,
+      "sourceId": "C19-DEV-S05",
+      "candidate": "Candidate17",
+      "whole": false,
+      "taskPresence": null,
+      "legacySeverity": {
+        "severe": 0,
+        "major": 3,
+        "forbidden": 0,
+        "keyMajor": 3
+      },
+      "forbiddenIds": [],
+      "newFactRiskUnits": [
+        "[\"EVENT_TIME_OR_LOCATION_WRONG\",\"E1\",null,null,null]",
+        "[\"INDEPENDENT_TIME_WRONG\",\"P1\",null,null,null]",
+        "[\"INDEPENDENT_TIME_WRONG\",\"P2\",null,null,null]",
+        "[\"UNSUPPORTED_INDEPENDENT_ENTITY\",null,null,null,null]",
+        "{\"kind\":\"SOURCE_MATERIAL_FIELD_WRONG\",\"taskId\":\"T1\",\"field\":\"namingRequirements\"}"
+      ],
+      "disputes": [
+        {
+          "kind": "REPRESENTATION_MAPPING_UNRESOLVED",
+          "alternatives": 2
+        }
+      ],
+      "freeProseAndLeakage": "NOT_ADJUDICATED",
+      "error": null
+    },
+    {
+      "ordinal": 10,
+      "sourceId": "C19-DEV-S05",
+      "candidate": "Candidate19",
+      "whole": false,
+      "taskPresence": null,
+      "legacySeverity": "NOT_SCORED_CONTRACT_REJECT",
+      "forbiddenIds": "NOT_SCORED_CONTRACT_REJECT",
+      "newFactRiskUnits": [
+        "SCHEMA_REFERENCE_OR_TRANSPORT_REJECT"
+      ],
+      "disputes": [],
+      "freeProseAndLeakage": "NOT_ADJUDICATED",
+      "error": "SOURCE_CONTRACT_INFORMATION_ENTITY"
+    },
+    {
+      "ordinal": 11,
+      "sourceId": "C19-DEV-S06",
+      "candidate": "Candidate19",
+      "whole": true,
+      "taskPresence": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "expected": 1,
+        "actual": 1
+      },
+      "legacySeverity": {
+        "severe": 0,
+        "major": 0,
+        "forbidden": 0,
+        "keyMajor": 0
+      },
+      "forbiddenIds": [],
+      "newFactRiskUnits": [],
+      "disputes": [],
+      "freeProseAndLeakage": "NOT_ADJUDICATED",
+      "error": null
+    },
+    {
+      "ordinal": 12,
+      "sourceId": "C19-DEV-S06",
+      "candidate": "Candidate17",
+      "whole": true,
+      "taskPresence": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "expected": 1,
+        "actual": 1
+      },
+      "legacySeverity": {
+        "severe": 0,
+        "major": 0,
+        "forbidden": 0,
+        "keyMajor": 0
+      },
+      "forbiddenIds": [],
+      "newFactRiskUnits": [],
+      "disputes": [],
+      "freeProseAndLeakage": "NOT_ADJUDICATED",
+      "error": null
+    }
+  ],
+  "summary": {
+    "Candidate17": {
+      "plannedDenominator": 6,
+      "legacySeverityObservable": 6,
+      "legacySeverityMissing": 0,
+      "legacySevere": 0,
+      "legacyForbidden": 0,
+      "independentHumanSeverity": "NOT_ADJUDICATED",
+      "legacyCounterDoesNotCoverAllNewRiskUnits": true
+    },
+    "Candidate19": {
+      "plannedDenominator": 6,
+      "legacySeverityObservable": 4,
+      "legacySeverityMissing": 2,
+      "legacySevere": 0,
+      "legacyForbidden": 0,
+      "independentHumanSeverity": "NOT_ADJUDICATED",
+      "legacyCounterDoesNotCoverAllNewRiskUnits": true
+    }
+  }
+}

@@ -1,48 +1,52 @@
-# 当前结果：2次实际回答已封存，首次展示修复已交付
+# 原12次比较完成，已有事实的首次展示修复已交付
 
-2026-10-04。批次`C19-C17-C19-DEVELOPMENT-R1`。**12个计划请求中，2个已发送并结算、10个未发送、0个发送状态不确定；比较未完成，不能判赢家或报告两臂整批首次正确率。** 本地产品修复已交付，付费现场保留锁。原许可已用于本批唯一grant，不能重新prepare、建第二grant或另扩样本。
+2026-10-04。C19-C17-C19-DEVELOPMENT-R1，6匿名Development来源、C17/C19两臂、3AB/3BA。**12发送、12 SETTLED、0未发送、0不确定；本次仅续ordinal3–12，前2未重发，沿用唯一原grant。** 原冻结整份结构化通过率：C17 **2/6=33.3%**，C19 **1/6=16.7%**；原选择器MIXED_PROGRESS，净变化−1，不能采用C19为更好候选。
 
-## 真正发生了什么
+数字是**provisional开发参照下，冻结解析/编译/评分链的整份通过率**；包含输出契约拒绝及表示差异，不是独立人工裁决的所有文字正确率，更不是总体用户正确率。标题、自由描述、教学例泄漏NOT_ADJUDICATED，真人四指标NOT_OBSERVABLE。后验程序修复另列，原成绩不回写。
 
-用户明确授权本批12个deepseek-flash身份和US$3.90硬上限。第一次发送前重新核官方价格、身份、完整账本链、已提交并推送HEAD。ordinal1/2分别得到C17/C19的同一来源S01回答并settle。ordinal3在**reserve/send之前**查询Git远端时发生Windows schannel TLS握手失败。执行器按冻结协议保留跨进程锁；没有第3次reserve或模型发送。随后远端已恢复、只读对账CONSISTENT，但不能把恢复网络等同于获准删除锁。
+## 完整比较和具体问题
 
-[完整现场报告](paid-evidence/EXECUTION_REPORT.json)、[实际计数](paid-evidence/BATCH_STATUS.json)、[原始错误与代码位置](paid-evidence/EXECUTION_FAILURE.json)。完整报告的评分summary是未通过完整性门的占位输出，不代表已经发送的两份是NOT_RUN；发送状态以units/scene和BATCH_STATUS为准。固定分母仍每臂6、合计12；ZERO_CALL_REPORT是**之前冻结准备时的历史零调用快照**，保持原字节，不能作为当前调用计数。
+[原冻结完整报告](paid-evidence/completed/FROZEN_COMPARISON_REPORT.json)：原回答契约、人工修改前首次展示两层均为C17 2正确/4错/0未知，C19 1正确/5错/0未知，每臂固定分母6。0胜、5平、1负；风险集合新增S01/S03/S04/S05不能全称真实事实退步，须追到原答和转换层。
 
-## 一份实际来源能看出的改善与问题
-
-原文：校园失物查询网站将在周日晚间暂停查询。此前登记的信息保持不变，不需要重新登记，也不要发送补充邮件。
-
-| 层 | C17实际回答 | C19实际回答及修复 |
+| 来源 | 原冻结C17 / C19 | 原答、发生层和产品影响 |
 |---|---|---|
-| 原回答 | tasks/events/timePoints均空，把全文作为information；遗漏独立事件和时间 | 有暂停查询事件及周日晚间/null/vague时间；另有两条polarity=negative动作记录 |
-| 冻结编译/首次展示 | 无事件、无时间，程序不补猜 | 否定动作仍被投影为两条未选中且受阻的待办，用户需要额外核对；不是原答要求用户发邮件 |
-| 原冻结v11的局部诊断 | 此1份整份不正确：EVENT_MISSING、INDEPENDENT_TIME_WRONG | 此1份整份不正确：任务presence FP2、相关信息覆盖缺失；存在表示/转换影响，不能都称模型事实错 |
-| 比较后产品转换1.0.1 | 仍不替原答补遗漏事件 | 将同片段有明确禁止/无需依据、无关联且状态一致的否定动作保留为信息；首次页0任务1事件1未知时间，无需用户拒绝两条多余待办 |
+| S01 停止查询、无需登记或邮件 | 错 / 错 | C17确实漏事件/周日晚间时间；C19已有事件/未知时间，negative动作却在冻结桥生成两张受阻待办。1.0.1直接禁止转换后首屏0任务1事件。缺事件仍不补猜。 |
+| S02 两事件、精确起止、恢复未公布 | 错 / 错 | C19已有两事件四时间，11:40结束继承同事件日期正确，未知恢复null；v11部分截取/表示差异判为时间风险。C17另有网络开始类型和未公布结束遗漏。争议不直接改满分。 |
+| S03 填写→递交，领取资格未知 | 正确 / 契约拒绝 | C19三个动作及依赖/unknown资格已有，重复支持引用触发SOURCE_CONTRACT_INFORMATION_ENTITY，整份首屏无法生成。新转换恢复事实，前两项可保存，领取仍待核对。 |
+| S04 未获准不能申请、保存编号 | 错 / 错 | 两臂都留下不应直接执行的申请项；C19negative/false仍受阻，无关保存编号可用。条件性禁止不能套直接禁止删除规则，本包未称已修。 |
+| S05 上传统计表、PDF/命名/办结、说明会 | 错 / 契约拒绝 | C19材料、办结标准、起止时间主事实已有，附属信息引用导致整份拒绝。新转换恢复建议及保存。v11另有原文边界/命名表示争议，原成绩保持。 |
+| S06 核对编号，无截止/附件/活动 | 正确 / 正确 | 普通控制两臂均通过，不补时间或事件。 |
 
-这里只观察到**1/6来源、1个配对**，两个局部冻结诊断均0/1，不作为整批0%或C19赢家结论。标题/自由描述/教学例泄漏与人工语义裁决仍NOT_ADJUDICATED。新转换是看到录制后的版本化工程修复，不回写冻结成绩，不称新版模型首次准确率提高。[原答/冻结转换/局部判错](paid-evidence/PARTIAL_REPLAY_DIAGNOSTIC.json)、[raw01](paid-evidence/raw-01.json)、[raw02](paid-evidence/raw-02.json)。
+v11输出逐事实riskUnits和引用/传输拒绝。[旧子评分风险读数](paid-evidence/completed/FROZEN_RISK_SUMMARY.json)：C17有6/6、C19有4/6可评legacy.severity，观测Severe/Forbidden均0；C19另2份契约拒绝未评，不能补0。这些旧计数不覆盖全部新增riskUnits，也不等于独立人工判定全批无严重风险。自由描述及未裁决不填0，拒绝同样占分母。[全部12原答/冻结分数/新转换并列](paid-evidence/completed/PRODUCT_DIAGNOSTIC.json)保留原文、responseSHA及争议。
 
-## 用户少动手的具体变化
+## 实际修复和边界
 
-新`source-grounded-nonaction-projection-1.0.1`检查动作、对象、同来源同片段依据、否定状态及全部引用。明确的“不要发送”不再作为当前待办；“不要忘记发送”、条件性“不要在审批前发送”、问句、双重否定、错对象、关联端点和共享主片段保留阻断。已有材料、依赖、精确截止及事件关系不变；没有自动补主实体或猜时间。原raw、冻结semantic、冻结首屏、新程序决策审计、人工修改分别保留。
+复用source-grounded-nonaction-projection-1.0.1，直接禁止/无需动作不增加待办；提醒、前置限制、问句、双重否定及关联端点保留核对。
 
-实际接入普通App→ReviewSession→DomainCommitPlan→Repository；没有平行保存链、默认候选替换、新Prompt候选或新付费样本。原D27最小安排继续复用，个人计划不覆盖原文截止。[代码路径与边界](IMPLEMENTATION.md)。
+新source-support-accounting-projection-1.0.0只转换已由真实主事实承担的支持性材料格式、命名、完成标准和资格说明；要求真实owner、同来源/片段和原文值。资格仍unknown，前置未完成不改completed。假ID、错类型、跨来源/片段、缺主事实、错办结标准、图冲突继续拒绝，不为模型补遗漏。
 
-## 实际页面、保存与测量
+真实Schema→公共转换→普通App/ReviewSession→DomainCommitPlan→Repository已运行。S03/S05两份原拒绝录制现在不补录即可首次显示已有事实；两臂各6/6可解码**不是6/6正确率**。原raw/wire、冻结semantic/首屏、新转换审计、用户纠正分别保存。没有Prompt/候选/默认替换、评分放宽或新付费样本。[代码与反例](IMPLEMENTATION.md)。
 
-唯一推荐内部入口以[BROWSER_EVIDENCE](BROWSER_EVIDENCE.md)最终构建为准：新回环端口与全新隔离库，只有本批2份真实固定录制，实时派发0。C19无需人工填事件即可首屏0任务1事件；正式读回Task0/Project0/Event1/TimePoint1，周日晚间normalizedValue=null、precision=vague、needsConfirmation=true。正式保存失败未留下半份事实；提交后读回失败保留commit并阻止重提，关闭弹层后只重新读回；刷新数量和关键值一致。
+## 浏览器、保存和四指标
 
-真实页面测量保留commit→独立readback、失败记录、0人工纠正和0主动编辑。至少10秒只读实测；墙钟含自动化/工具等待，不能据此称真人省时。旧中途刷新场景缺失null保留；没有editId就不制造纠正。首次语义正确与最终语义正确未裁决，低修改正确处置不可观察。四项真人指标全部NOT_OBSERVABLE。
+唯一内部入口 **http://127.0.0.1:6820/**；构建6abc47a8d192 / source 194d64cb84ec；新库rco-mainline-01-02-i1-d27-plan-recorded-c19complete1004；12份固定实际录制、ENGINEERING_REPLAY、实时派发关闭。旧6817/6809和旧用户库未操作。
 
-## 费用、保护和结论边界
+[BROWSER_EVIDENCE](BROWSER_EVIDENCE.md)、[独立值检查](paid-evidence/completed/browser/CHECK.json)：S05首屏1任务1事件1材料3时间，正式失败0事实，手动重试及刷新正确。S03保存2项todo及依赖，领取未确认；S01未知事件时间null/vague，提交后读回失败只重新读取，没有重提；S02两事件四时间，模糊开始和恢复未公布null。累计Task3/Project0/Event4/TimePoint8/Material1；D27个人安排不覆盖原文截止。
 
-峰时/全缓存未命中/full-context保守预算US$3.892848，硬上限US$3.90。已收到真实usage：input8940、output1507、total10447、cached input3840、reasoning0。内部按实际usage和保守单价结算US$0.004491；供应商实扣NOT_OBSERVABLE。1grant/2reserve/2settle；账本971→976，仅5条合法追加；工程阶段没有追加。[核价/结算](BUDGET_AND_AUTHORIZATION.md)。
+页面4来源均有commit/readback，无字段修改因此editId为空、不造纠正链。闭合只读2份：阅读35.787s/67.887s，主动编辑0；部分未结束及刷新断点2份时间null保留。旧outcomes.partial=false不能代替canonical的partially_confirmed，明确分列。最终正确、低修改正确未经裁决不算成功；ENGINEERING_REPLAY墙钟含工具等待，不称真人省时。[测量原记录](paid-evidence/completed/browser/MEASUREMENT.json)。四真人指标仍NOT_OBSERVABLE。
 
-历史保护84、冻结119、归档7通过；本批Manifest与12身份SHA不变。原D26 145组件/7产物/16请求及raw保留，D17原1/12、2/12及MIXED_PROGRESS不动；D26原0/8、8拒绝及EVIDENCE_INCOMPLETE不动。新组件另文件，不动原候选/原冻结。授权原件、价格绑定、Secret和真实映射不进Git。
+## 恢复、费用和保护
 
-[验证](VALIDATION.md)区分当前产品通过与全量6个历史失败；audit开发工具链5high/2moderate仍在，production-only0。提交后立即普通推送，最终本地/upstream/远端SHA现场核验；运行构建与后续文档HEAD分别报告。
+恢复代码5d395c3a7dbd6e0d2257ce275f415941b592768f先测试提交立即推送。先核owner终止、ordinal3无reserve/presend/raw/receipt/settle和孤立写入，保全原现场；独立guard内比锁身份后原子改名保留旧锁。补充绑定当前同步HEAD、原authSHA/snapshot/身份/grant/cap和新核价；缺日志/残留guard/状态更新/未决发送封存，一次独立复核后补实际故障测试。
 
-## 最少剩余动作
+[COMPLETION_PROOF](paid-evidence/completed/COMPLETION_PROOF.json)：原AUTH和raw01/02字节未变，audit CONSISTENT、无活动锁/HALT；1grant12reserve12settle，总25行，本次仅20合法追加。账本996行SHA c58231633b8da1b87e9106f92d0dd457f00e4789e5e5fa03de780fb377dc8750，完整链/原前缀有效，后续工程只读。真实授权原件只在.data不入Git。
 
-本批比较被执行锁封存，不是缺新的12次授权，也不是预算超限。**只缺一次具体的安全恢复授权**：允许对第3单元发送前Git核验遗留锁进行有证据的恢复，保留唯一原grant、原12身份与US$3.90总上限，只续原10个未发送身份，前2个绝不重发。先制作版本化恢复绑定和离线故障证明；只读证明任何未决发送均不释放，核价/HEAD/链/身份一致才恢复。原AUTHORIZATION不得覆盖，不能直接删锁后dispatch。[下一执行](../../governance/NEXT_STAGE_EXECUTION_PROMPT.md)。
+预算上界US$3.892848≤3.90；真实input54270/output14511/total68781/cached43520/reasoning0。内部保守结算US$0.033699，供应商实扣NOT_OBSERVABLE。前2不重发，续10均HTTP200，零额外样本/自动重试/repair/verifier；全部身份耗尽，余款不是新许可。[费用](BUDGET_AND_AUTHORIZATION.md)。
 
-本轮状态：`C19_PRODUCT_CONVERSION_DELIVERED_PAID_BATCH_SEALED`。未完成整批模型效果比较；没有真人、Holdout、默认采用、合并或部署。后续继续准确率主线，不重新造执行器、候选编号或空表。
+84保护/119冻结/7归档、原D26 145组件/7产物/16请求及raw、D17/D26旧分数保持，原Manifest/身份SHA不变。[验证](VALIDATION.md)：产品965PASS/1SKIP，全量39组33PASS/6历史FAIL，lint/build/scan通过；audit5high/2moderate开发工具风险仍在，production-only0。代码两边界已立即推送，文档证据再推并现场核HEAD。
+
+## 下一步
+
+用这12份原答优先分开等价表示与真实事实错误（S02/S05），再处理S04条件性禁止的首次展示，原冻结成绩不改。不先付费排查程序/评分争议，不默认Candidate20或新12/24身份。只有生成机制确须改变且旧raw无法验证时，才提最小两臂假设和新费用授权。
+
+停止状态：C19_FROZEN_COMPARISON_COMPLETE_PRODUCT_COMPATIBILITY_DELIVERED。原2/12 EXECUTION_REPORT/BATCH_STATUS和ZERO_CALL_REPORT仅历史快照，原文件不改；当前以completed证据为准。C19未证实净收益，新程序兼容不称新模型准确率提高。没有真人/Holdout/默认采用/合并/部署。

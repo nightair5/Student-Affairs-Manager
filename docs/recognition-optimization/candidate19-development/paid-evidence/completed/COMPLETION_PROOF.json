@@ -1,0 +1,107 @@
+{
+  "version": "c19-authorized-recovery-completion-proof-1",
+  "batch": "C19-C17-C19-DEVELOPMENT-R1",
+  "recovery": {
+    "version": "c19-pre-reserve-lock-recovery-1",
+    "supplementSha256": "59a973c13d0724fdfcfbb943b2cadc9b57211e32bf1ae19bfad030dd872011c1",
+    "originalLock": {
+      "dev": "3805697950",
+      "ino": "9851624188979214",
+      "birthtimeNs": "1791067961200449900",
+      "mtimeNs": "1791067961200449900"
+    },
+    "originalAuthorizationSha256": "8e889bde0ef5079f80f146882586f314266ee5d76d4f520aee27568a267fcef8",
+    "startOrdinal": 3,
+    "endOrdinal": 12,
+    "grantId": "C19-R1-1fe28759-b1d5-412c-abf9-c118fa79f0ad",
+    "recoveryHead": "5d395c3a7dbd6e0d2257ce275f415941b592768f",
+    "recoveredAt": "2026-10-04T00:22:36.688Z",
+    "ledgerWrites": 0,
+    "modelRequests": 0
+  },
+  "originalAuthorizationUnchanged": true,
+  "originalRawUnchanged": [
+    {
+      "ordinal": 1,
+      "unchanged": true
+    },
+    {
+      "ordinal": 2,
+      "unchanged": true
+    }
+  ],
+  "oldLockRetained": true,
+  "activeLockExists": false,
+  "grantCount": 1,
+  "reserveCount": 12,
+  "settleCount": 12,
+  "sentThisRecovery": 10,
+  "totalSent": 12,
+  "uncertain": null,
+  "halt": null,
+  "audit": "CONSISTENT",
+  "ledger": {
+    "rows": 996,
+    "sha256": "c58231633b8da1b87e9106f92d0dd457f00e4789e5e5fa03de780fb377dc8750",
+    "tail": "eafde02d394e0cab472e16288543303f31318b661c13a5a771a4edbc9a7dfac8",
+    "batchRows": 25
+  },
+  "summary": {
+    "Candidate17_rawContractScore": {
+      "plannedDenominator": 6,
+      "observable": 6,
+      "wholeCorrect": 2,
+      "wrong": 4,
+      "unknown": 0,
+      "notRun": 0,
+      "rate": "2/6"
+    },
+    "Candidate17_firstDisplayScore": {
+      "plannedDenominator": 6,
+      "observable": 6,
+      "wholeCorrect": 2,
+      "wrong": 4,
+      "unknown": 0,
+      "notRun": 0,
+      "rate": "2/6"
+    },
+    "Candidate19_rawContractScore": {
+      "plannedDenominator": 6,
+      "observable": 6,
+      "wholeCorrect": 1,
+      "wrong": 5,
+      "unknown": 0,
+      "notRun": 0,
+      "rate": "1/6"
+    },
+    "Candidate19_firstDisplayScore": {
+      "plannedDenominator": 6,
+      "observable": 6,
+      "wholeCorrect": 1,
+      "wrong": 5,
+      "unknown": 0,
+      "notRun": 0,
+      "rate": "1/6"
+    }
+  },
+  "selection": {
+    "version": "c19-layered-development-1",
+    "denominator": 6,
+    "observedPairs": 6,
+    "improved": 0,
+    "regressed": 1,
+    "netWhole": -1,
+    "unknown": 0,
+    "riskRegressions": [
+      "C19-DEV-S01",
+      "C19-DEV-S03",
+      "C19-DEV-S04",
+      "C19-DEV-S05"
+    ],
+    "status": "MIXED_PROGRESS",
+    "scope": "PROVISIONAL_SEEN_DEVELOPMENT_NOT_HOLDOUT"
+  },
+  "authorizationOriginals": "LOCAL_PRIVATE_NOT_IN_GIT",
+  "extraSamplesRetriesRepairVerifier": 0,
+  "providerActualCharge": "NOT_OBSERVABLE"
+}

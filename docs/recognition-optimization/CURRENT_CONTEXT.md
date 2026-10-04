@@ -1,15 +1,17 @@
-# 当前交接：产品转换已修，原12次比较封存2/12
+# 当前交接：原C17/C19比较完成，已有事实的产品转换已修
 
 2026-10-04。candidate11/比赛；codex/e2-candidate11-blind-eval。[唯一结果](candidate19-development/RESULTS.md)、[路线](../governance/PROJECT_EXECUTION_ROADMAP.md)、[下一执行](../governance/NEXT_STAGE_EXECUTION_PROMPT.md)。
 
-本批C19-C17-C19-DEVELOPMENT-R1用户已授权12次/US$3.90/唯一新grant。实际2发送2SETTLED、10NOT_SENT、0不确定。ordinal3在reserve/send之前Git远端schannel TLS失败，跨进程锁保留、HALT null、readonly audit CONSISTENT。网络恢复也未删锁/继续发；原AUTH绑定ddff187，代码已另版本。不能prepare第二grant或复用余额扩样本。原冻结summary未通过完整门，整批正确率NOT_OBSERVABLE/EVIDENCE_INCOMPLETE；原ZERO_CALL_REPORT仅历史冻结准备快照。
+原C19-C17-C19-DEVELOPMENT-R1共12请求/6匿名Development×2臂/3AB3BA全部SETTLED，0不确定。用户窄授权一次恢复发送前遗留锁；本次只续3–12，前2不重发，原AUTH/raw01/02字节不变，旧锁留存，无活动锁/HALT。唯一原grant，1grant12reserve12settle，不能再prepare/dispatch或用余额扩样本。恢复代码5d395c3a7dbd6e0d2257ce275f415941b592768f和产品6abc47a8d19294ee63993c5f8d57ba5445be010e均立即普通推送。
 
-唯一实际S01配对：C17漏停查事件与周日晚间时间；C19保留事件/未知时间，另两条negative动作在冻结桥误投影为待办，局部v11均不整份正确。不是C19要求用户发送邮件，也不是整批0%。新source-grounded-nonaction-projection-1.0.1将有直接原文证据且无关联的禁止/无需动作转信息；不要忘记、条件时点、问句、双重否定、错对象、引用/共享scope保留阻断。C17缺事件不补猜。后验旧raw转换不是模型首次准确率提高，原raw/分数不动。
+原v11 parsed/compiled raw与首次展示两层：C17 2/6、C19 1/6，0胜5平1负、净−1、MIXED_PROGRESS。provisional结构化参照，不是独立人工原答真值。S03/S05 C19已有事实却被信息附属引用整份拒绝；S01 C17缺事件不补猜，C19 negative桥误成待办；S02/S05另有rawText/表示争议。原分数保持，未裁决不填0。
 
-代码00c50d557b8e与196e7a2ad33a均提交后立即普通推送。唯一当前内部入口http://127.0.0.1:6817/；构建196e7a2ad33a/source0655b375b834；库rco-mainline-01-02-i1-d27-plan-recorded-c19paid1004final。仅本批两份固定真实录制，回环/派发0/普通App与ReviewSession/领域事务/Repository。最终C19无人工补录首屏0任务1事件，读回Task0/Project0/Event1/Time1；周日晚间null/vague，失败/只重读/刷新保持。旧6813/6809和用户库不动，6814/6815仅本轮过程证据不推荐。
+新source-support-accounting-projection-1.0.0接受同来源真实主事实覆盖的材料/命名/办结和unknown资格支持引用，保留原wire+审计；复用直接禁止转换1.0.1。缺事实/假ID/跨scope/错owner/错值/图冲突继续阻断。旧12raw后验两臂6/6可解码不代表全正确，不换Prompt/候选/默认。S04条件性禁止还需定向产品修。
 
-官方重核预算US$3.892848≤3.90；真实usage10447(input8940/output1507)，内部保守settleUS$0.004491，实扣NOT_OBSERVABLE。1grant2reserve2settle，971→976账本仅5合法追加，SHA bcb849817e2d956f7caa61c26c70200229e91136c15c18eea88c9bcfecfc4458。后续工程只读。84保护119冻结7归档和原D26 145/7/16保持。本批Manifest794f0949a3342f0fbad6a70cb5916e69bf7f447757260bf2aae78398fef47c79、身份7d969f0aeb216bd158fc2a32346a5b1863fa189e5b206386be2205bd5708a5e0不变。
+唯一入口http://127.0.0.1:6820/；构建6abc47a8d192/source194d64cb84ec；新库rco-mainline-01-02-i1-d27-plan-recorded-c19complete1004，12固定录制/ENGINEERING_REPLAY/模型0。实际S05无需补录1任务1事件1材料3时间，正式失败0事实/手动重试成功；S03两todo依赖可保存、资格项待核对；S01只重读恢复/刷新无重复、未知时间null；S02两事件四时间归属正确，未知恢复null。累计3Task/0Project/4Event/8Time/1Material。旧库不动，普通App→ReviewSession→领域事务→Repository，D27个人计划不改deadline。
 
-最终定向5+Node2 PASS；全量39组33PASS6历史FAIL，当前产品959/1skip；lint0错误8既有警告、build/scanPASS。总体audit5high2moderate开发工具链风险保留，production-only0。真实页面0主动编辑/0纠正，commit/readback可查；中途刷新缺失null不补0，工程墙钟含工具等待。四真人指标NOT_OBSERVABLE。D17/D26原分数不变，不默认Candidate20/Holdout/默认采用/合并/部署。
+4页面来源commit/readback可查，无字段编辑不造editId。2闭合只读active0，2刷新/未结束时间null；canonical3confirmed/1partial，旧partial布尔不当真实终态。四真人NOT_OBSERVABLE。产品965PASS/1skip；全量39组33PASS6历史FAIL；lint0错误8既有警告/build/scan通过；audit5H2M工具链风险保留/production0。
 
-最少下一动作：用户明确允许一次有证据的第3单元发送前锁恢复，只续原10未发送身份，沿用唯一原grant及US$3.90总上限，前2不重发。先保全现场/版本化补充绑定/离线故障验证/核新价与同步HEAD；状态不一致不释放。不要直接删除锁或覆盖原授权。此状态不是全包比较完成。
+峰时/full-context最坏US$3.892848≤3.90，真实usage68781(input54270/output14511/cached43520/reasoning0)，内部保守settleUS$0.033699，实扣NOT_OBSERVABLE。账本996行SHA c58231633b8da1b87e9106f92d0dd457f00e4789e5e5fa03de780fb377dc8750，恢复仅20合法追加，之后工程只读。84/119/7及原D26 145/7/16保持，原Manifest794f0949a3342f0fbad6a70cb5916e69bf7f447757260bf2aae78398fef47c79、身份7d969f0aeb216bd158fc2a32346a5b1863fa189e5b206386be2205bd5708a5e0不变。原2/12报告和ZERO_CALL为历史快照，不当当前。
+
+下一步不缺本批恢复许可：先在原12raw分离表示争议和事实错、定向修S04，别再造执行器/候选/身份或重审全仓。确需新模型输入和首答证据才另申请具体新批。无人/Holdout/默认采用/合并/部署授权。当前C19_FROZEN_COMPARISON_COMPLETE_PRODUCT_COMPATIBILITY_DELIVERED；不是准确率已净增或产品已上线。
