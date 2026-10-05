@@ -2,3 +2,5 @@
 *.json -text
 *.png -text
 *.txt -text
+# AX list markers contain a trailing space; keep captured evidence byte-exact.
+BROWSER_PENDING.txt whitespace=-blank-at-eol
