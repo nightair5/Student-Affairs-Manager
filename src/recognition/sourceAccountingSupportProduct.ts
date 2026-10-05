@@ -2,6 +2,7 @@ import { plainJson } from '../experiments/mainline04/semanticContract'
 import type { WireContext } from '../experiments/realInput01/modelWire'
 import { decodeSourceContractRecording, type SourceContractV4 } from './sourceContractV4'
 import { applyRecordedDirectiveDisposition } from './directiveDispositionProduct'
+import { classifyEventTimeLabel, EVENT_TIME_LABEL_SUPPORT_VERSION } from './eventTimeLabelSupport'
 
 export const SOURCE_SUPPORT_PRODUCT_VERSION = 'source-support-accounting-projection-1.1.0'
 const normalize = (s: string) => s.replace(/[\s，。；,:：;！!]/gu, '')
@@ -12,7 +13,7 @@ export function projectSourceSupportAccounting(rawHttpText: string, context: Wir
   const original = plainJson(JSON.parse(envelope.output[0].content[0].text)) as SourceContractV4
   if (original.schemaVersion !== 'explicit-source-contract-4.0.0' || !Array.isArray(original.scopeAccounting)) throw Error('PRODUCT_SUPPORT_WIRE_REQUIRED')
   const projected = structuredClone(original)
-  const changes: Array<{ scopeId: string; entityId: string; reason: 'MATERIAL_SPECIFICATION' | 'COMPLETION_STANDARD' | 'QUALIFICATION_CONTEXT' | 'INDEPENDENT_EVENT_CONTEXT' | 'EVENT_TIME_CONTEXT' | 'EVENT_TIME_LABEL_CONTEXT' }> = []
+  const changes: Array<{ scopeId: string; entityId: string; reason: 'MATERIAL_SPECIFICATION' | 'COMPLETION_STANDARD' | 'QUALIFICATION_CONTEXT' | 'INDEPENDENT_EVENT_CONTEXT' | 'EVENT_TIME_CONTEXT' | 'EVENT_TIME_LABEL_CONTEXT'; policyVersion?: typeof EVENT_TIME_LABEL_SUPPORT_VERSION }> = []
   const groundedTask = (id: string) => original.tasks.find(t => t.id === id && context.index.scopes.some(s => s.id === t.action.scopeId && s.text.includes(t.action.surface)) && context.index.scopes.some(s => s.id === t.object.scopeId && s.text.includes(t.object.surface)) && original.scopeAccounting.some(row => row.kind === 'action' && row.primaryEntityIds.includes(id) && t.propositionScopeIds.includes(row.scopeId)))
   // The event and both endpoints must already exist. Supporting accounting is
   // metadata: projecting it never creates an event, changes a value or an edge.
@@ -48,11 +49,11 @@ export function projectSourceSupportAccounting(rawHttpText: string, context: Wir
         // A label-only line may cite its immediately following value as context.
         // It never replaces the endpoint's actual value evidence. Arbitrary
         // neighbouring prose, remote scopes and unrelated events still fail.
-        const timeLabel = /^(?:暂停|恢复|活动|开放(?:调整)?|停用|服务|考核|举办)?(?:开始|结束)?(?:时间|时段|日期)$/u.test(normalize(scope.text))
+        const timeLabel = classifyEventTimeLabel(scope.text)
         if (timeLabel && eventOwner.scopeIds.includes(scope.id) && context.index.scopes.some(s => s.order === scope.order + 1
           && eventOwner.scopeIds.includes(s.id) && point.scopeIds.includes(s.id)
           && normalize(point.rawText) && normalize(s.text).includes(normalize(point.rawText)))) {
-          changes.push({ scopeId: scope.id, entityId: id, reason: 'EVENT_TIME_LABEL_CONTEXT' }); continue
+          changes.push({ scopeId: scope.id, entityId: id, reason: 'EVENT_TIME_LABEL_CONTEXT', ...(timeLabel === 'operation-label' ? { policyVersion: EVENT_TIME_LABEL_SUPPORT_VERSION } : {}) }); continue
         }
       }
       const material = original.materials.find(m => m.tempId === id)

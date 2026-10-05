@@ -1,0 +1,362 @@
+{
+  "version": "sealed-followup-validation-1",
+  "fullTest": {
+    "outcome": "FAIL",
+    "total": 41,
+    "pass": 35,
+    "fail": 6,
+    "groups": [
+      {
+        "layer": "current-product",
+        "label": "timezone",
+        "outcome": "PASS",
+        "status": 0
+      },
+      {
+        "layer": "current-product",
+        "label": "contract",
+        "outcome": "PASS",
+        "status": 0
+      },
+      {
+        "layer": "current-product",
+        "label": "time-contract",
+        "outcome": "PASS",
+        "status": 0
+      },
+      {
+        "layer": "current-product",
+        "label": "vitest-product",
+        "outcome": "PASS",
+        "status": 0
+      },
+      {
+        "layer": "current-product",
+        "label": "server",
+        "outcome": "PASS",
+        "status": 0
+      },
+      {
+        "layer": "current-product",
+        "label": "worker",
+        "outcome": "PASS",
+        "status": 0
+      },
+      {
+        "layer": "current-product",
+        "label": "worker-d26",
+        "outcome": "PASS",
+        "status": 0
+      },
+      {
+        "layer": "current-product",
+        "label": "functions",
+        "outcome": "PASS",
+        "status": 0
+      },
+      {
+        "layer": "current-product",
+        "label": "time-parity",
+        "outcome": "PASS",
+        "status": 0
+      },
+      {
+        "layer": "current-safety",
+        "label": "vitest-safety",
+        "outcome": "PASS",
+        "status": 0
+      },
+      {
+        "layer": "current-safety",
+        "label": "vitest-runtime-current",
+        "outcome": "PASS",
+        "status": 0
+      },
+      {
+        "layer": "current-safety",
+        "label": "carrier-preparation",
+        "outcome": "PASS",
+        "status": 0
+      },
+      {
+        "layer": "current-safety",
+        "label": "vitest-carriers",
+        "outcome": "PASS",
+        "status": 0
+      },
+      {
+        "layer": "current-safety",
+        "label": "current-checks",
+        "outcome": "PASS",
+        "status": 0
+      },
+      {
+        "layer": "current-safety",
+        "label": "governance-unit",
+        "outcome": "PASS",
+        "status": 0
+      },
+      {
+        "layer": "current-safety",
+        "label": "multimodal-lib",
+        "outcome": "PASS",
+        "status": 0
+      },
+      {
+        "layer": "current-safety",
+        "label": "c11-scoring",
+        "outcome": "PASS",
+        "status": 0
+      },
+      {
+        "layer": "current-safety",
+        "label": "c11-preview",
+        "outcome": "PASS",
+        "status": 0
+      },
+      {
+        "layer": "current-safety",
+        "label": "d25-executor",
+        "outcome": "PASS",
+        "status": 0
+      },
+      {
+        "layer": "current-safety",
+        "label": "d25-mechanism",
+        "outcome": "PASS",
+        "status": 0
+      },
+      {
+        "layer": "current-safety",
+        "label": "d26-mechanism",
+        "outcome": "PASS",
+        "status": 0
+      },
+      {
+        "layer": "current-safety",
+        "label": "d26-executor",
+        "outcome": "PASS",
+        "status": 0
+      },
+      {
+        "layer": "current-safety",
+        "label": "d26-freeze",
+        "outcome": "PASS",
+        "status": 0
+      },
+      {
+        "layer": "current-safety",
+        "label": "d26-score-recording",
+        "outcome": "PASS",
+        "status": 0
+      },
+      {
+        "layer": "current-safety",
+        "label": "d26-execution-host",
+        "outcome": "PASS",
+        "status": 0
+      },
+      {
+        "layer": "current-safety",
+        "label": "d26-execution-report",
+        "outcome": "PASS",
+        "status": 0
+      },
+      {
+        "layer": "current-safety",
+        "label": "d26-recorded-projection",
+        "outcome": "PASS",
+        "status": 0
+      },
+      {
+        "layer": "current-safety",
+        "label": "scoped-execution",
+        "outcome": "PASS",
+        "status": 0
+      },
+      {
+        "layer": "current-safety",
+        "label": "scoped-diagnostics",
+        "outcome": "PASS",
+        "status": 0
+      },
+      {
+        "layer": "current-safety",
+        "label": "candidate19-contract",
+        "outcome": "PASS",
+        "status": 0
+      },
+      {
+        "layer": "current-safety",
+        "label": "public-notice-diagnostic",
+        "outcome": "PASS",
+        "status": 0
+      },
+      {
+        "layer": "current-safety",
+        "label": "d25-live-safety",
+        "outcome": "PASS",
+        "status": 0
+      },
+      {
+        "layer": "historical",
+        "label": "historical-originals",
+        "outcome": "PASS",
+        "status": 0
+      },
+      {
+        "layer": "historical",
+        "label": "d19-diagnostic",
+        "outcome": "FAIL",
+        "status": 1
+      },
+      {
+        "layer": "historical",
+        "label": "d9-historical",
+        "outcome": "FAIL",
+        "status": 1
+      },
+      {
+        "layer": "historical",
+        "label": "rco-5-007",
+        "outcome": "FAIL",
+        "status": 1
+      },
+      {
+        "layer": "historical",
+        "label": "c11-history",
+        "outcome": "FAIL",
+        "status": 1
+      },
+      {
+        "layer": "historical",
+        "label": "c11-gateway",
+        "outcome": "FAIL",
+        "status": 1
+      },
+      {
+        "layer": "historical",
+        "label": "vitest-d17-history",
+        "outcome": "FAIL",
+        "status": 1
+      },
+      {
+        "layer": "historical",
+        "label": "vitest-runtime-history",
+        "outcome": "PASS",
+        "status": 0
+      },
+      {
+        "layer": "historical",
+        "label": "vitest-carriers-history",
+        "outcome": "PASS",
+        "status": 0
+      }
+    ]
+  },
+  "currentProduct": {
+    "passed": 1048,
+    "skipped": 1
+  },
+  "lint": {
+    "outcome": "PASS",
+    "errors": 0,
+    "existingWarnings": 8
+  },
+  "build": "PASS",
+  "securityScan": "PASS",
+  "phaseOffline": {
+    "tests": 7,
+    "pass": 7,
+    "failed": 0,
+    "lateObservationFailureRechecked": true,
+    "authorityLedgerUsed": false,
+    "liveTransportUsed": false
+  },
+  "audit": {
+    "total": {
+      "info": 0,
+      "low": 0,
+      "moderate": 2,
+      "high": 5,
+      "critical": 0,
+      "total": 7
+    },
+    "production": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 0,
+      "critical": 0,
+      "total": 0
+    },
+    "dependencyChanges": 0
+  },
+  "history": {
+    "status": "HISTORY_PRESERVED_LEDGER_APPEND_REVIEW_REQUIRED",
+    "protectedFiles": 84,
+    "archives": 7,
+    "frozenFiles": 119,
+    "activeDocuments": "GIT_VERSIONED_NOT_A_RUNTIME_FREEZE",
+    "historicalDecisions": "UNCHANGED",
+    "ledger": {
+      "rows": 1000,
+      "sha256": "fe24750479d3a5229e386e8088199ae097f48a1f6872f0eaac016cfaeddbb48d",
+      "appendRows": 160,
+      "mode": "READ_ONLY"
+    },
+    "dispatchAuthorized": false,
+    "qualityPromotion": false
+  },
+  "recordedVerify": {
+    "status": "SEALED_SCENE_AND_KNOWN_DIAGNOSTIC_VERIFIED",
+    "before": {
+      "modelFirstFacts": {
+        "correct": 1,
+        "incorrect": 0,
+        "unknown": 3,
+        "denominator": 4
+      },
+      "displayBeforeHuman": {
+        "correct": 0,
+        "incorrect": 1,
+        "unknown": 3,
+        "denominator": 4
+      },
+      "humanFinal": {
+        "correct": 0,
+        "incorrect": 0,
+        "unknown": 4,
+        "denominator": 4
+      }
+    },
+    "after": {
+      "modelFirstFacts": {
+        "correct": 1,
+        "incorrect": 0,
+        "unknown": 3,
+        "denominator": 4
+      },
+      "displayBeforeHuman": {
+        "correct": 1,
+        "incorrect": 0,
+        "unknown": 3,
+        "denominator": 4
+      },
+      "humanFinal": {
+        "correct": 0,
+        "incorrect": 0,
+        "unknown": 4,
+        "denominator": 4
+      }
+    },
+    "oldTwelveUnchanged": 12,
+    "dispatch": 0,
+    "ledgerWrites": 0
+  },
+  "modelCalls": 0,
+  "grant": 0,
+  "reserve": 0,
+  "settle": 0,
+  "ledgerWrites": 0
+}

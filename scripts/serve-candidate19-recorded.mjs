@@ -9,9 +9,9 @@ import {candidate19RecordedScene} from './candidate19-recorded-readonly.mjs'
 import {candidate19Recordings} from './candidate19-recorded-data.mjs'
 import {publicNoticeRecordedScene,historicalCandidate19Controls} from './public-notice-recorded-readonly.mjs'
 const [port,instance,fixtureMode]=process.argv.slice(2)
-if(process.argv.length>5||fixtureMode&&!['--channel-role-fixtures','--channel-polarity-fixtures','--eligibility-fixtures','--public-notice-fixtures','--public-paid-recordings'].includes(fixtureMode))throw Error('C19_UNKNOWN_REPLAY_MODE')
+if(process.argv.length>5||fixtureMode&&!['--channel-role-fixtures','--channel-polarity-fixtures','--eligibility-fixtures','--public-notice-fixtures','--public-paid-recordings','--sealed-followup-fixtures'].includes(fixtureMode))throw Error('C19_UNKNOWN_REPLAY_MODE')
 if(!/^\d{4,5}$/.test(port??'')||+port<6814||+port>65535||!/^[a-z0-9-]{2,32}$/.test(instance??''))throw Error('C19_NEW_LOOPBACK_INSTANCE_REQUIRED')
-const publicPaid=fixtureMode==='--public-paid-recordings'
+const publicPaid=['--public-paid-recordings','--sealed-followup-fixtures'].includes(fixtureMode)
 let scene,recordings,batchLabel,plannedRequests,knownSettled,initialOrdinal
 if(publicPaid){
   const verified=publicNoticeRecordedScene();scene=verified.scene
@@ -30,7 +30,16 @@ if(!recordings.length)throw Error('C19_NO_SETTLED_RECORDINGS')
 const sha=v=>createHash('sha256').update(v).digest('hex'),dir=resolve('.data/candidate19/recorded-'+instance)
 mkdirSync(dir,{recursive:true});if(readdirSync(dir).length)throw Error('C19_REPLAY_INSTANCE_ALREADY_BUILT')
 let fixtureCount=0
-if(fixtureMode==='--public-notice-fixtures'){
+if(fixtureMode==='--sealed-followup-fixtures'){
+  const fixtureFile=resolve(dir,'fixture-builder.mjs')
+  await build({stdin:{contents:`export {EVENT_LABEL_CASES,createEventLabelFixture} from './src/experiments/candidate19Recorded/eventLabelFixtures'`,resolveDir:process.cwd()},outfile:fixtureFile,bundle:true,platform:'node',format:'esm'})
+  const {EVENT_LABEL_CASES,createEventLabelFixture}=await import(pathToFileURL(fixtureFile))
+  fixtureCount=EVENT_LABEL_CASES.length
+  for(const [i,row] of EVENT_LABEL_CASES.entries()){
+    const f=await createEventLabelFixture(row.id)
+    recordings.push({ordinal:101+i,sourceId:f.context.index.sourceId,sourceVersionId:f.context.index.sourceVersionId,candidate:'EngineeringFixture',sourceText:f.sourceText,referenceTime:f.context.referenceTime,timezone:f.context.timezone,rawHttpText:f.rawHttpText,responseSha256:sha(f.rawHttpText),requestSha256:null,frozenOutcome:'ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT'})
+  }
+}else if(fixtureMode==='--public-notice-fixtures'){
   const fixtureFile=resolve(dir,'fixture-builder.mjs')
   await build({stdin:{contents:`export {createPublicNoticeFixture} from './src/experiments/candidate19Recorded/publicNotices'`,resolveDir:process.cwd()},outfile:fixtureFile,bundle:true,platform:'node',format:'esm'})
   const {createPublicNoticeFixture}=await import(pathToFileURL(fixtureFile))

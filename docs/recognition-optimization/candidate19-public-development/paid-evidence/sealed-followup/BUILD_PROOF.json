@@ -1,0 +1,146 @@
+{
+  "version": "sealed-followup-final-build-proof-1",
+  "role": "ENGINEERING_REPLAY",
+  "manifest": {
+    "origin": "http://127.0.0.1:6841",
+    "database": "rco-mainline-01-02-i1-d27-plan-recorded-sealedfollowup1005",
+    "build": "071882533535 / source 21ea7092cd86",
+    "role": "ENGINEERING_REPLAY",
+    "batch": "C19-PUBLIC-DEVELOPMENT-R1",
+    "batchLabel": "当前4来源：1份确定录制、1份发送状态不确定、2份停发；付费现场封存。另12份为历史回归，不混入当前分母",
+    "knownSettledRecordings": 1,
+    "historicalControls": 12,
+    "anonymousFixtures": 2,
+    "plannedRequests": 4,
+    "batchComplete": false,
+    "files": [
+      {
+        "name": "browser.js",
+        "sha256": "90576db479293019be1c43557e9a1709ce2a431fc58f4eeb303b1e2d0a13f3e7"
+      },
+      {
+        "name": "browser.css",
+        "sha256": "4f130c46c6675c582e5bfe7cd1735c56926818cc399f9d628903178e9a476922"
+      }
+    ],
+    "recordingsSha256": "75812d4db49fdb74f90c49e977ec1095181c237bf59dcfa480ff334637badf2d",
+    "modelCallsByBrowser": 0
+  },
+  "source": {
+    "workingRawSha256": "21ea7092cd864ab6b45dab4f9025ab970a7c75af4639b973295498d5abd9f31a",
+    "workingNormalizedSha256": "6b3c0b2f29836cead2636a3cd08b26cd35fa876013f6aa7eab8e3c28f1034bc0",
+    "stagedNormalizedSha256": "6b3c0b2f29836cead2636a3cd08b26cd35fa876013f6aa7eab8e3c28f1034bc0",
+    "files": 450,
+    "drift": [],
+    "normalization": "CRLF_TO_LF_FOR_SOURCE_ONLY_NOT_RAW_OR_LEDGER",
+    "actualBuildBundleFiles": [
+      {
+        "name": "browser.js",
+        "sha256": "90576db479293019be1c43557e9a1709ce2a431fc58f4eeb303b1e2d0a13f3e7"
+      },
+      {
+        "name": "browser.css",
+        "sha256": "4f130c46c6675c582e5bfe7cd1735c56926818cc399f9d628903178e9a476922"
+      }
+    ]
+  },
+  "browser": {
+    "formalFailureBeforeCommitCounts": {
+      "events": 2,
+      "timePoints": 4
+    },
+    "readbackOnlyPreservesFactsAndHistory": true,
+    "refreshPreservesNineCollections": true,
+    "finalCounts": {
+      "tasks": 0,
+      "projects": 0,
+      "events": 3,
+      "timePoints": 6
+    },
+    "timePoints": [
+      {
+        "type": "event_start",
+        "rawText": "2026年5月9日15:00",
+        "normalizedValue": "2026-05-09T15:00"
+      },
+      {
+        "type": "event_end",
+        "rawText": "2026年5月11日8:30",
+        "normalizedValue": "2026-05-11T08:30"
+      },
+      {
+        "type": "event_start",
+        "rawText": "2026年6月3日16:40",
+        "normalizedValue": "2026-06-03T16:40"
+      },
+      {
+        "type": "event_end",
+        "rawText": "2026年6月5日9:10",
+        "normalizedValue": "2026-06-05T09:10"
+      },
+      {
+        "type": "event_start",
+        "rawText": "2026年7月6日10:20",
+        "normalizedValue": "2026-07-06T10:20"
+      },
+      {
+        "type": "event_end",
+        "rawText": "2026年7月8日11:30",
+        "normalizedValue": "2026-07-08T11:30"
+      }
+    ],
+    "measurementFile": "browser/13-measurement.json"
+  },
+  "originalRawAndFrozenArtifacts": [
+    {
+      "path": "docs/recognition-optimization/candidate19-public-development/paid-evidence/raw-01.json",
+      "sha256": "d512946b9341fb7b2a3c1d5e3260535f533c25aa6a2a57a0b9fa7f77d2991e14",
+      "rawBytesEqualStartingCommit": true
+    },
+    {
+      "path": "docs/recognition-optimization/candidate19-public-development/paid-evidence/INITIAL_FROZEN_DIAGNOSTIC.json",
+      "sha256": "6907ef10ea5a4be4623708fa00d74eddb684f006f94a136a819a3396fd5ac32d",
+      "rawBytesEqualStartingCommit": true
+    },
+    {
+      "path": "docs/recognition-optimization/candidate19-public-development/paid-evidence/POST_CONVERSION_DIAGNOSTIC.json",
+      "sha256": "4e15279406b6e2046d0b8d8bbe84961c91bca239a44f6506c0331b7e8b061d0d",
+      "rawBytesEqualStartingCommit": true
+    },
+    {
+      "path": "docs/recognition-optimization/candidate19-public-development/paid-evidence/ADJUDICATION.json",
+      "sha256": "3b3993609329f75dbb4ba0a9c9b47b402367094a1d3ae7f0f6812286e27700fb",
+      "rawBytesEqualStartingCommit": true
+    },
+    {
+      "path": "docs/recognition-optimization/candidate19-public-development/paid-evidence/EXECUTION.json",
+      "sha256": "03fe74632aa35c11028e2b9ca930f2cef2c18704a074e7f20651d0c7dfc6e103",
+      "rawBytesEqualStartingCommit": true
+    },
+    {
+      "path": "docs/recognition-optimization/candidate19-public-development/MANIFEST.json",
+      "sha256": "6f29277d0e6c07065e6d158d1e9335f01eddbe7228fbc20d895d5c977b6afb0f",
+      "rawBytesEqualStartingCommit": true
+    },
+    {
+      "path": "docs/recognition-optimization/candidate19-public-development/PREPARED_REQUEST_IDENTITIES.json",
+      "sha256": "77c6881849c21ba709c1ad1aec7f9bb20ab920e5f271f69e5390f915d95a20e9",
+      "rawBytesEqualStartingCommit": true
+    }
+  ],
+  "sceneIntegrity": {
+    "stateSha256": "72bc4d1aa6312f42840d0c280ae4ef29e049e6cee09017862a9a63f87b471819",
+    "authorizationSha256": "7cef55e3d7a4390aacf1d566578c0a21f894d143092c6dd94277ff1933b2d917",
+    "priceEvidenceSha256": "283064f7b492b25a7d0b770d53a0ed01a61479020e3349b33923806c6c3882b4",
+    "userAuthorizationSha256": "380aa6ab55b2010d24d06aa38028bc095aa72a553f1825b1ab0450715bdb5e37"
+  },
+  "ledger": {
+    "rows": 1000,
+    "sha256": "fe24750479d3a5229e386e8088199ae097f48a1f6872f0eaac016cfaeddbb48d",
+    "tail": "3607e0c9b993aa4004bbddcbc06cfe9c76423f88ae274f52db221863bb9ecd15",
+    "batchRows": 4
+  },
+  "modelCalls": 0,
+  "ledgerWrites": 0,
+  "finalCommit": "REPORTED_AFTER_COMMIT_NO_SELF_REFERENTIAL_SHA"
+}

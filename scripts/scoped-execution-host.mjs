@@ -153,13 +153,13 @@ function createHost({ root, ledgerPath, engine, packageRead, gitCheck, append, t
             },
             ledger: { reserve: args => appendRow(pack.auth, { kind: 'scopedReserve', batchId: BATCH, ...args }),
               settle: args => appendRow(pack.auth, { kind: 'scopedSettle', batchId: BATCH, ...args }) },
-            transport: { sendOnce: async (body, unit) => {
+            transport: { sendOnce: async (body, unit, observation) => {
               const fresh = authorization(); check(fresh.authSha256 === pack.authSha256, 'AUTH_CHANGED_BEFORE_SEND')
               const { later } = ledgerRead(pack.auth, true), reservation = later.at(-1)?.event
               check(later.length === 2 * unit.ordinal && reservation.kind === 'scopedReserve' && reservation.ordinal === unit.ordinal
                 && reservation.requestSha256 === unit.requestSha256 && reservation.unitIdentitySha256 === unit.unitIdentitySha256, 'RESERVATION_BEFORE_SEND')
               await fault('before_send')
-              const response = await transport.sendOnce(body, unit, pack.auth)
+              const response = await transport.sendOnce(body, unit, pack.auth, observation)
               await fault('after_send')
               return response
             } } })
