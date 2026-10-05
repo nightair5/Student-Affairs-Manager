@@ -8,12 +8,18 @@ import {pathToFileURL} from 'node:url'
 import {candidate19RecordedScene} from './candidate19-recorded-readonly.mjs'
 import {candidate19Recordings} from './candidate19-recorded-data.mjs'
 import {publicNoticeRecordedScene,historicalCandidate19Controls} from './public-notice-recorded-readonly.mjs'
+import {currentNoticeRecordedScene} from './current-notice-recorded-readonly.mjs'
 const [port,instance,fixtureMode]=process.argv.slice(2)
-if(process.argv.length>5||fixtureMode&&!['--channel-role-fixtures','--channel-polarity-fixtures','--eligibility-fixtures','--public-notice-fixtures','--public-paid-recordings','--sealed-followup-fixtures','--current-notice-fixtures'].includes(fixtureMode))throw Error('C19_UNKNOWN_REPLAY_MODE')
+if(process.argv.length>5||fixtureMode&&!['--channel-role-fixtures','--channel-polarity-fixtures','--eligibility-fixtures','--public-notice-fixtures','--public-paid-recordings','--sealed-followup-fixtures','--current-notice-fixtures','--current-notice-batch'].includes(fixtureMode))throw Error('C19_UNKNOWN_REPLAY_MODE')
 if(!/^\d{4,5}$/.test(port??'')||+port<6814||+port>65535||!/^[a-z0-9-]{2,32}$/.test(instance??''))throw Error('C19_NEW_LOOPBACK_INSTANCE_REQUIRED')
 const publicPaid=['--public-paid-recordings','--sealed-followup-fixtures','--current-notice-fixtures'].includes(fixtureMode)
-let scene,recordings,batchLabel,plannedRequests,knownSettled,initialOrdinal
-if(publicPaid){
+const currentBatch=fixtureMode==='--current-notice-batch'
+let scene,recordings,batchLabel,plannedRequests,knownSettled,initialOrdinal,currentSources
+if(currentBatch){
+  const verified=await currentNoticeRecordedScene();scene=verified.scene;recordings=verified.recordings;currentSources=verified.sources
+  plannedRequests=4;knownSettled=recordings.length;initialOrdinal=1
+  batchLabel='当前Candidate19单臂4份大学通知诊断；'+knownSettled+'份确定录制；未运行或未裁决保持UNKNOWN；不是候选比较或真人结果'
+}else if(publicPaid){
   const verified=publicNoticeRecordedScene();scene=verified.scene
   recordings=[...verified.recordings,...historicalCandidate19Controls()]
   plannedRequests=4;knownSettled=verified.recordings.length;initialOrdinal=1
@@ -26,7 +32,7 @@ if(publicPaid){
   plannedRequests=12;knownSettled=recordings.length;initialOrdinal=2
   batchLabel='原批12/12确定结算；冻结首屏结构化通过C17 2/6、C19 1/6，MIXED_PROGRESS'
 }
-if(!recordings.length)throw Error('C19_NO_SETTLED_RECORDINGS')
+if(!recordings.length&&!currentBatch)throw Error('C19_NO_SETTLED_RECORDINGS')
 const sha=v=>createHash('sha256').update(v).digest('hex'),dir=resolve('.data/candidate19/recorded-'+instance)
 mkdirSync(dir,{recursive:true});if(readdirSync(dir).length)throw Error('C19_REPLAY_INSTANCE_ALREADY_BUILT')
 let fixtureCount=0
@@ -68,7 +74,7 @@ if(fixtureMode==='--current-notice-fixtures'){
     const f=await createEligibilityFixture(row.id)
     recordings.push({ordinal:101+i,sourceId:f.context.index.sourceId,sourceVersionId:f.context.index.sourceVersionId,candidate:'EngineeringFixture',sourceText:f.sourceText,referenceTime:f.context.referenceTime,timezone:f.context.timezone,rawHttpText:f.rawHttpText,responseSha256:sha(f.rawHttpText),requestSha256:null,frozenOutcome:'ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT'})
   }
-}else if(fixtureMode&&!publicPaid){
+}else if(fixtureMode&&!publicPaid&&!currentBatch){
   const fixtureFile=resolve(dir,'fixture-builder.mjs')
   await build({stdin:{contents:`export {CHANNEL_ROLE_CASES,CHANNEL_POLARITY_CASES,createChannelRoleFixture} from './src/experiments/candidate19Recorded/materialChannelFixtures'`,resolveDir:process.cwd()},outfile:fixtureFile,bundle:true,platform:'node',format:'esm'})
   const {CHANNEL_ROLE_CASES,CHANNEL_POLARITY_CASES,createChannelRoleFixture}=await import(pathToFileURL(fixtureFile))
@@ -81,9 +87,12 @@ if(fixtureMode==='--current-notice-fixtures'){
 }
 const hash=createHash('sha256');for(const f of execFileSync('git',['ls-files','--cached','--others','--exclude-standard','src','scripts/serve-candidate19-recorded.mjs','scripts/candidate19-recorded-data.mjs','scripts/public-notice-recorded-readonly.mjs'],{encoding:'utf8'}).trim().split('\n').sort())hash.update(f).update(readFileSync(f))
 const buildIdentity=execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim().slice(0,12)+' / source '+hash.digest('hex').slice(0,12),origin='http://127.0.0.1:'+port,database='rco-mainline-01-02-i1-d27-plan-recorded-'+instance
-const result=await build({entryPoints:['src/experiments/candidate19Recorded/browser.tsx'],bundle:true,write:false,format:'esm',platform:'browser',jsx:'automatic',target:'es2022',outdir:'memory',define:{'process.env.NODE_ENV':'"production"','import.meta.env':'{}',__C19_RECORDED_CONFIG__:JSON.stringify({origin,database,build:buildIdentity,explicitContract:true,fixtureCount,batchLabel,initialOrdinal})}})
+const pending=currentBatch&&!recordings.length
+const result=pending?{outputFiles:[]}:await build({entryPoints:['src/experiments/candidate19Recorded/browser.tsx'],bundle:true,write:false,format:'esm',platform:'browser',jsx:'automatic',target:'es2022',outdir:'memory',define:{'process.env.NODE_ENV':'"production"','import.meta.env':'{}',__C19_RECORDED_CONFIG__:JSON.stringify({origin,database,build:buildIdentity,explicitContract:true,fixtureCount,batchLabel,initialOrdinal})}})
 const files=result.outputFiles.map(f=>{const name=basename(f.path),content=f.text.replace(/@import\s+url\("https:\/\/fonts\.googleapis\.com[^;]+;\s*/g,'');writeFileSync(resolve(dir,name),content);return {name,sha256:sha(content)}})
 writeFileSync(resolve(dir,'recordings.json'),JSON.stringify(recordings))
-writeFileSync(resolve(dir,'index.html'),'<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>学生事务管家 · C19真实录制产品修复</title><link rel="stylesheet" href="/browser.css"></head><body><div id="root"></div><script type="module" src="/browser.js"></script></body></html>')
-writeFileSync(resolve(dir,'manifest.json'),JSON.stringify({origin,database,build:buildIdentity,role:'ENGINEERING_REPLAY',batch:publicPaid?scene.batch:scene.state.batch,batchLabel,knownSettledRecordings:knownSettled,historicalControls:publicPaid?12:0,anonymousFixtures:fixtureCount,plannedRequests,batchComplete:publicPaid?false:scene.state.units.every(u=>u.status==='SETTLED'),files,recordingsSha256:sha(JSON.stringify(recordings)),modelCallsByBrowser:0},null,2))
-createServer((req,res)=>{const p=new URL(req.url,origin).pathname;if(req.method!=='GET'||!['/','/browser.js','/browser.css','/recordings.json','/manifest.json'].includes(p)){res.writeHead(403);res.end('C19_MODEL_AND_EXTERNAL_ROUTES_DISABLED');return}res.setHeader('Content-Type',p.endsWith('.js')?'text/javascript; charset=utf-8':p.endsWith('.css')?'text/css; charset=utf-8':p.endsWith('.json')?'application/json':'text/html; charset=utf-8');res.end(readFileSync(resolve(dir,p==='/'?'index.html':p.slice(1))))}).listen(+port,'127.0.0.1',()=>console.log(JSON.stringify({origin,database,build:buildIdentity,recordings:recordings.length,modelCallsByBrowser:0})))
+const escape=v=>String(v).replace(/[&<>"']/gu,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))
+const pendingHtml='<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>学生事务管家 · 真实首次输出待授权</title><style>body{font:18px/1.7 system-ui;max-width:900px;margin:40px auto;padding:24px;background:#f5f8fa;color:#183957}li{margin:24px 0}code{overflow-wrap:anywhere}</style><h1>4份真实通知，等待本批模型授权</h1><p>这是工程状态页，尚无模型首答。0份录制，4份NOT_RUN，整份正确率UNKNOWN。此页面不创建任务，也不打开工作区数据库。</p><p>Candidate19原生成契约；公共时间2.1.0、首次组装1.1.0；ENGINEERING_REPLAY，非真人试用。浏览器不发送模型请求。</p><p>构建：'+escape(buildIdentity)+'<br>预留全新隔离库：<code>'+escape(database)+'</code></p><ol>'+currentSources?.map(s=>'<li><strong>'+escape(s.title)+'</strong> · NOT_RUN<br>原文时基：'+escape(s.referenceTime)+'<br><a href="'+escape(s.url)+'">官方出处</a></li>').join('')+'</ol><p>获得本批许可并确定结算后，同一回放模式载入真实raw，接现有普通App→ReviewSession→DomainCommitPlan→Repository；不以手写wire替代模型回答。</p></html>'
+writeFileSync(resolve(dir,'index.html'),pending?pendingHtml:'<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>学生事务管家 · C19真实录制产品修复</title><link rel="stylesheet" href="/browser.css"></head><body><div id="root"></div><script type="module" src="/browser.js"></script></body></html>')
+writeFileSync(resolve(dir,'manifest.json'),JSON.stringify({origin,database,build:buildIdentity,role:'ENGINEERING_REPLAY',mode:pending?'PENDING_AUTHORIZATION_NO_MODEL_RESPONSE':'ORDINARY_APP_FIXED_RECORDING',databaseOpenedByPage:!pending,batch:currentBatch||publicPaid?scene.batch:scene.state.batch,batchLabel,knownSettledRecordings:knownSettled,historicalControls:publicPaid?12:0,anonymousFixtures:fixtureCount,plannedRequests,batchComplete:publicPaid?false:scene.state?.units.every(u=>u.status==='SETTLED')??false,files,recordingsSha256:sha(JSON.stringify(recordings)),modelCallsByBrowser:0},null,2))
+createServer((req,res)=>{const p=new URL(req.url,origin).pathname;if(req.method!=='GET'||!['/','/browser.js','/browser.css','/recordings.json','/manifest.json'].includes(p)){res.writeHead(403);res.end('C19_MODEL_AND_EXTERNAL_ROUTES_DISABLED');return}const file=resolve(dir,p==='/'?'index.html':p.slice(1));if(!readdirSync(dir).includes(basename(file))){res.writeHead(404);res.end('NO_MODEL_RECORDING_BUNDLE');return}res.setHeader('Content-Type',p.endsWith('.js')?'text/javascript; charset=utf-8':p.endsWith('.css')?'text/css; charset=utf-8':p.endsWith('.json')?'application/json':'text/html; charset=utf-8');res.end(readFileSync(file))}).listen(+port,'127.0.0.1',()=>console.log(JSON.stringify({origin,database,build:buildIdentity,mode:pending?'PENDING_AUTHORIZATION_NO_MODEL_RESPONSE':'ORDINARY_APP_FIXED_RECORDING',recordings:recordings.length,modelCallsByBrowser:0})))
