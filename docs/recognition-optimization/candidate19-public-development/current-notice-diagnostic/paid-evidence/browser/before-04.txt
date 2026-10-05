@@ -1,0 +1,118 @@
+Browser tab: 4, Title: "学生事务管家 · C19真实录制产品修复", URL: "http://127.0.0.1:6853/".
+The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 177-184, 187-212, 215-216, 219-223
+~				169 text 来源先保存，确认后入库
+~				170 heading 收件箱, Value: 1
+~					171 text 收件箱
+~				172 text 查看每份来源的真实处理状态。失败不会删除来源；重新识别会沿用原来源与当前版本。
+~				174 text 4
+~				175 text 份需关注
+~				176 container 收件箱视图
++					177 checkbox 全部来源, Value: 1
++					178 checkbox 待确认 2, Value: 0
++				179 button 新建手动来源
++					180 image
++					181 text 新建手动来源
++				182 checkbox (settable, integer) Description: 选择全部待核对, Value: 0
++				183 container
++					184 text Candidate19 固定录制 建议 识别失败
+~				185 heading 手动粘贴消息, Value: 2
+~					186 text 手动粘贴消息
++				187 text 活动信息 **时间** 2026年10月12日（周一） 12:30-14:00 **地点** 海韵园办公楼A栋302室 **报名** 扫描下方二维码进行报名，听众报名截止时间为2026年10月11日中午12:00，主办方提供50份免费午餐，按报名顺序先到先得（讲座的听众总人数不作限制，感兴趣均可报名）。
++				188 text 来源仍保留；可复用同一来源重新识别或手工补充。
++				189 definition list
++					190 container 项目
++						191 text 项目
++					192 text 未形成项目建议
++					193 container 实体
++						194 text 实体
++					195 text 0 任务 · 0 材料 · 0 时间 · 0 活动
++				196 text 识别失败，来源已保留，可重试或手动补充。
++				197 container
++					198 button 本地规则重试
++						199 image
++						200 text 本地规则重试
++					201 button 手工补充
++						202 image
++						203 text 手工补充
++					204 button 查看来源
++						205 image
++						206 text 查看来源
++				207 container
++					208 text Candidate19 固定录制 建议 识别失败
++				209 heading 手动粘贴消息, Value: 2
++					210 text 手动粘贴消息
++				211 text 为方便新生更好地了解校园文化、简化注册流程，2026级新生须于指定时间内登录迎新系统完成网上预注册流程。 由于系统维护和升级，迎新系统开放时间与入学须知中规定的时间略有不同，请以本通知的时间为准。新生请在指定时间内激活账号和登录系统，不在指定时间内激活账号和登录都会显示“账号和密码错误”。 本科生（大陆地区）：8月13—27日
++				212 text 来源仍保留；可复用同一来源重新识别或手工补充。
+~				213 definition list
+~					214 container 项目
++						215 text 项目
++					216 text 未形成项目建议
+~					217 container 实体
+~						218 text 实体
++					219 text 0 任务 · 0 材料 · 0 时间 · 0 活动
++				220 text 识别失败，来源已保留，可重试或手动补充。
++				221 container
++					222 button 本地规则重试
++						223 image
++						224 text 本地规则重试
++					225 button 手工补充
++						226 image
++						227 text 手工补充
++					228 button 查看来源
++						229 image
++						230 text 查看来源
++				231 container
++					232 checkbox (settable, integer) Description: 选择 手动粘贴消息, Value: 0
++					233 text 选择  手动粘贴消息
++				234 container
++					235 text Candidate19 固定录制（非实时调用） 建议 待核对
++				236 heading 手动粘贴消息, Value: 2
++					237 text 手动粘贴消息
++				238 text 招生对象：在读本科生和研究生、青年研究人员等 收费情况：免费 活动时间：2026年7月6日-7月10日 活动形式：线上讲座，被录取的正式学员可以进入线上会议室听课并提问互动，各学员需自行准备相关终端设备，以便连线 报名方式：网络报名，有意参加活动可通过下方二维码报名 学习结束后可获得暑期学校结业证书，欢迎大家踊跃报名，我们期待与您相聚云端。 报名截止时间：2026年6月30日17:00
++				239 text 识别建议已保存，确认前不会创建正式任务。
++				240 definition list
++					241 container 项目
++						242 text 项目
++					243 text 独立事项
++					244 container 实体
++						245 text 实体
++					246 text 2 任务 · 1 材料 · 3 时间 · 4 活动
++				247 container
++					248 button 核对 2 项任务、4 个事件
++						249 image
++						250 text 核对 2 项任务、4 个事件
++					251 button 查看来源
++						252 image
++						253 text 查看来源
++					254 button 归档
++						255 image
++						256 text 归档
++				257 container
++					258 checkbox (settable, integer) Description: 选择 手动粘贴消息, Value: 0
++					259 text 选择  手动粘贴消息
++				260 container
++					261 text Candidate19 固定录制（非实时调用） 建议 待核对
++				262 heading 手动粘贴消息, Value: 2
++					263 text 手动粘贴消息
++				264 text 一、各位同学应于7月16日前通过学工系统“暑假离留校登记”应用完成相关信息登记（https://xmuxg.xmu.edu.cn/app/182），并确保填写的信息完整、准确。离校同学应如实登记去向、联系方式及返校安排；暑期留校同学如短期离厦外出，视同离校学生管理，亦应及时做好相关登记。
++				265 text 识别建议已保存，确认前不会创建正式任务。
++				266 definition list
++					267 container 项目
++						268 text 项目
++					269 text 独立事项
++					270 container 实体
++						271 text 实体
++					272 text 3 任务 · 2 材料 · 1 时间 · 0 活动
++				273 container
++					274 button 核对 3 项任务、0 个事件
++						275 image
++						276 text 核对 3 项任务、0 个事件
++					277 button 查看来源
++						278 image
++						279 text 查看来源
++					280 button 归档
++						281 image
++						282 text 归档
+~			166 text 录制输出不能安全生成建议（SOURCE_CONTRACT_COVERAGE_ENTITY）。没有补猜事实或重新调用模型；原始来源已安全保存。可在收件箱重试识别、查看原文或手动整理。
+The focused UI element is 0 AXWebArea 学生事务管家 · C19真实录制产品修复, URL: 127.0.0.1:6853/

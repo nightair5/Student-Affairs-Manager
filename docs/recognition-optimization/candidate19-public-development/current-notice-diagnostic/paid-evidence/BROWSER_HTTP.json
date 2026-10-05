@@ -1,0 +1,19 @@
+{
+  "modelCalls": 0,
+  "rows": [
+    {
+      "path": "/manifest.json",
+      "status": 200
+    },
+    {
+      "path": "/api/deepseek",
+      "status": 403,
+      "text": "C19_MODEL_AND_EXTERNAL_ROUTES_DISABLED"
+    },
+    {
+      "path": "/api/recognize",
+      "status": 403,
+      "text": "C19_MODEL_AND_EXTERNAL_ROUTES_DISABLED"
+    }
+  ]
+}

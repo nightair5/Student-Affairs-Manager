@@ -1,0 +1,434 @@
+{
+  "version": "public-source-fact-post-conversion-adjudication-1",
+  "scope": "POST_OUTPUT_PROGRAM_COMPATIBILITY_NOT_NEW_MODEL_METRIC",
+  "adjudications": [
+    {
+      "sourceId": "C19-CURRENT-REAL-01",
+      "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "modelFirstFacts": [
+        {
+          "factId": "C19-CURRENT-REAL-01-F1",
+          "verdict": "CORRECT",
+          "reason": "预注册及激活登录动作均有来源；没有新增重置密码。",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-01",
+          "outputPointer": "paid-evidence/raw-01.json#rawHttpText.output.message.output_text"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-01-F2",
+          "verdict": "INCORRECT",
+          "reason": "唯一time-0001将8月13—27日窗口写成task_deadline；没有类型正确的开始与结束，且T2宣称使用但owner只有T1。",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-01",
+          "outputPointer": "paid-evidence/raw-01.json#rawHttpText.output.message.output_text"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-01-F3",
+          "verdict": "CORRECT",
+          "reason": "大陆本科身份个人状态unknown，未称已满足。",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-01",
+          "outputPointer": "paid-evidence/raw-01.json#rawHttpText.output.message.output_text"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-01-F4",
+          "verdict": "CORRECT",
+          "reason": "原答描述保留以本通知为准；没有猜旧日期或不存在修订端点。",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-01",
+          "outputPointer": "paid-evidence/raw-01.json#rawHttpText.output.message.output_text"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-01-F5",
+          "verdict": "CORRECT",
+          "reason": "窗口外密码错误保留信息，未变成重置任务。",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-01",
+          "outputPointer": "paid-evidence/raw-01.json#rawHttpText.output.message.output_text"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-01-F6",
+          "verdict": "INCORRECT",
+          "reason": "T2 coverage.time实体与time-0001权威归属不一致。",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-01",
+          "outputPointer": "paid-evidence/raw-01.json#rawHttpText.output.message.output_text"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-01-F7",
+          "verdict": "INCORRECT",
+          "reason": "动作拆合本身合法，但错误时间类型和图冲突阻断整份。",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-01",
+          "outputPointer": "paid-evidence/raw-01.json#rawHttpText.output.message.output_text"
+        }
+      ],
+      "displayBeforeHuman": [
+        {
+          "factId": "C19-CURRENT-REAL-01-F1",
+          "verdict": "INCORRECT",
+          "reason": "首次转换SOURCE_CONTRACT_COVERAGE_ENTITY拒绝，原文保留但必要建议未生成。",
+          "outputPointer": "AFTER.json#rows/0/firstSuggestion",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-01"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-01-F2",
+          "verdict": "INCORRECT",
+          "reason": "首次转换SOURCE_CONTRACT_COVERAGE_ENTITY拒绝，原文保留但必要建议未生成。",
+          "outputPointer": "AFTER.json#rows/0/firstSuggestion",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-01"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-01-F3",
+          "verdict": "INCORRECT",
+          "reason": "首次转换SOURCE_CONTRACT_COVERAGE_ENTITY拒绝，原文保留但必要建议未生成。",
+          "outputPointer": "AFTER.json#rows/0/firstSuggestion",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-01"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-01-F4",
+          "verdict": "INCORRECT",
+          "reason": "首次转换SOURCE_CONTRACT_COVERAGE_ENTITY拒绝，原文保留但必要建议未生成。",
+          "outputPointer": "AFTER.json#rows/0/firstSuggestion",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-01"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-01-F5",
+          "verdict": "INCORRECT",
+          "reason": "首次转换SOURCE_CONTRACT_COVERAGE_ENTITY拒绝，原文保留但必要建议未生成。",
+          "outputPointer": "AFTER.json#rows/0/firstSuggestion",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-01"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-01-F6",
+          "verdict": "INCORRECT",
+          "reason": "首次转换SOURCE_CONTRACT_COVERAGE_ENTITY拒绝，原文保留但必要建议未生成。",
+          "outputPointer": "AFTER.json#rows/0/firstSuggestion",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-01"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-01-F7",
+          "verdict": "INCORRECT",
+          "reason": "首次转换SOURCE_CONTRACT_COVERAGE_ENTITY拒绝，原文保留但必要建议未生成。",
+          "outputPointer": "AFTER.json#rows/0/firstSuggestion",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-01"
+        }
+      ],
+      "humanFinal": []
+    },
+    {
+      "sourceId": "C19-CURRENT-REAL-02",
+      "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "modelFirstFacts": [
+        {
+          "factId": "C19-CURRENT-REAL-02-F1",
+          "verdict": "CORRECT",
+          "reason": "核心登记及离校字段、短期外出登记均有对象；三条可作条件下无损拆分，未补虚构动作。",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-02",
+          "outputPointer": "paid-evidence/raw-02.json#rawHttpText.output.message.output_text"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-02-F2",
+          "verdict": "CORRECT",
+          "reason": "7月16日前保持日期精度及原文，未补日终时刻。",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-02",
+          "outputPointer": "paid-evidence/raw-02.json#rawHttpText.output.message.output_text"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-02-F3",
+          "verdict": "CORRECT",
+          "reason": "原material-0001给出原文明示学工系统应用及相同URL，仅展示组合顺序不同。",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-02",
+          "outputPointer": "paid-evidence/raw-02.json#rawHttpText.output.message.output_text"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-02-F4",
+          "verdict": "CORRECT",
+          "reason": "完整准确、如实登记和及时登记均保留，没有声称已完成。",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-02",
+          "outputPointer": "paid-evidence/raw-02.json#rawHttpText.output.message.output_text"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-02-F5",
+          "verdict": "CORRECT",
+          "reason": "基本登记无个人条件；离校和短期外出个人适用unknown。",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-02",
+          "outputPointer": "paid-evidence/raw-02.json#rawHttpText.output.message.output_text"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-02-F6",
+          "verdict": "CORRECT",
+          "reason": "实体及引用属本来源；未知适用不等于证据错。",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-02",
+          "outputPointer": "paid-evidence/raw-02.json#rawHttpText.output.message.output_text"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-02-F7",
+          "verdict": "UNKNOWN",
+          "reason": "条件字段独立拆分是否造成用户误解、继承总截止以及自由描述整体保真尚需裁决；不填整份通过。",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-02",
+          "outputPointer": "paid-evidence/raw-02.json#rawHttpText.output.message.output_text"
+        }
+      ],
+      "displayBeforeHuman": [
+        {
+          "factId": "C19-CURRENT-REAL-02-F1",
+          "verdict": "CORRECT",
+          "reason": "核心登记及离校字段、短期外出登记均有对象；三条可作条件下无损拆分，未补虚构动作。",
+          "outputPointer": "AFTER.json#rows/1/firstSuggestion",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-02"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-02-F2",
+          "verdict": "CORRECT",
+          "reason": "7月16日前保持日期精度及原文，未补日终时刻。",
+          "outputPointer": "AFTER.json#rows/1/firstSuggestion",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-02"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-02-F3",
+          "verdict": "CORRECT",
+          "reason": "同对象真实登记角色、精确应用名及URL已有原文和原raw支持；1.4.0按唯一相邻引用重建角色后保留。普通页面及canonical material均读回相同值。",
+          "outputPointer": "AFTER.json#rows/1/firstSuggestion",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-02"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-02-F4",
+          "verdict": "CORRECT",
+          "reason": "完整准确、如实登记和及时登记均保留，没有声称已完成。",
+          "outputPointer": "AFTER.json#rows/1/firstSuggestion",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-02"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-02-F5",
+          "verdict": "CORRECT",
+          "reason": "基本登记无个人条件；离校和短期外出个人适用unknown。",
+          "outputPointer": "AFTER.json#rows/1/firstSuggestion",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-02"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-02-F6",
+          "verdict": "CORRECT",
+          "reason": "实体及引用属本来源；未知适用不等于证据错。",
+          "outputPointer": "AFTER.json#rows/1/firstSuggestion",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-02"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-02-F7",
+          "verdict": "UNKNOWN",
+          "reason": "条件字段独立拆分是否造成用户误解、继承总截止以及自由描述整体保真尚需裁决；不填整份通过。",
+          "outputPointer": "AFTER.json#rows/1/firstSuggestion",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-02"
+        }
+      ],
+      "humanFinal": []
+    },
+    {
+      "sourceId": "C19-CURRENT-REAL-03",
+      "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "modelFirstFacts": [
+        {
+          "factId": "C19-CURRENT-REAL-03-F1",
+          "verdict": "CORRECT",
+          "reason": "报名条件unknown，没有断言所有人已符合或已报名；原文兴趣说明在描述内保留。",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-03",
+          "outputPointer": "paid-evidence/raw-03.json#rawHttpText.output.message.output_text"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-03-F2",
+          "verdict": "INCORRECT",
+          "reason": "同一暑期学校拆为活动时间、线上讲座、录取后互动和结业证书四个独立事件；结果说明并非独立活动。",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-03",
+          "outputPointer": "paid-evidence/raw-03.json#rawHttpText.output.message.output_text"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-03-F3",
+          "verdict": "CORRECT",
+          "reason": "原答报名截止及同一E1起止值/类型正确；省略年份的结束引用是合法同年补全。",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-03",
+          "outputPointer": "paid-evidence/raw-03.json#rawHttpText.output.message.output_text"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-03-F4",
+          "verdict": "CORRECT",
+          "reason": "设备任务个人录取适用unknown，未把录取写完成。",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-03",
+          "outputPointer": "paid-evidence/raw-03.json#rawHttpText.output.message.output_text"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-03-F5",
+          "verdict": "CORRECT",
+          "reason": "人群/免费/证书及二维码信息保留，没有猜二维码URL或提交证书任务。",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-03",
+          "outputPointer": "paid-evidence/raw-03.json#rawHttpText.output.message.output_text"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-03-F6",
+          "verdict": "CORRECT",
+          "reason": "值和关系均有本来源支持，展开结束年份可无损还原；额外事件语义错误另列。",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-03",
+          "outputPointer": "paid-evidence/raw-03.json#rawHttpText.output.message.output_text"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-03-F7",
+          "verdict": "INCORRECT",
+          "reason": "证书结果和活动形式制造额外独立事件，整份不能通过。",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-03",
+          "outputPointer": "paid-evidence/raw-03.json#rawHttpText.output.message.output_text"
+        }
+      ],
+      "displayBeforeHuman": [
+        {
+          "factId": "C19-CURRENT-REAL-03-F1",
+          "verdict": "CORRECT",
+          "reason": "报名条件unknown，没有断言所有人已符合或已报名；原文兴趣说明在描述内保留。",
+          "outputPointer": "AFTER.json#rows/2/firstSuggestion",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-03"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-03-F2",
+          "verdict": "INCORRECT",
+          "reason": "同一暑期学校拆为活动时间、线上讲座、录取后互动和结业证书四个独立事件；结果说明并非独立活动。",
+          "outputPointer": "AFTER.json#rows/2/firstSuggestion",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-03"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-03-F3",
+          "verdict": "CORRECT",
+          "reason": "1.2.0保留同一既有事件明确闭区间中的结束日期2026-07-10/date_only；原答值、字段类型、owner和证据未猜改，页面/独立读回/刷新一致。额外三事件仍错误。",
+          "outputPointer": "AFTER.json#rows/2/firstSuggestion",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-03"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-03-F4",
+          "verdict": "CORRECT",
+          "reason": "设备任务个人录取适用unknown，未把录取写完成。",
+          "outputPointer": "AFTER.json#rows/2/firstSuggestion",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-03"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-03-F5",
+          "verdict": "CORRECT",
+          "reason": "人群/免费/证书及二维码信息保留，没有猜二维码URL或提交证书任务。",
+          "outputPointer": "AFTER.json#rows/2/firstSuggestion",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-03"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-03-F6",
+          "verdict": "CORRECT",
+          "reason": "值和关系均有本来源支持，展开结束年份可无损还原；额外事件语义错误另列。",
+          "outputPointer": "AFTER.json#rows/2/firstSuggestion",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-03"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-03-F7",
+          "verdict": "INCORRECT",
+          "reason": "证书结果和活动形式制造额外独立事件，整份不能通过。",
+          "outputPointer": "AFTER.json#rows/2/firstSuggestion",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-03"
+        }
+      ],
+      "humanFinal": []
+    },
+    {
+      "sourceId": "C19-CURRENT-REAL-04",
+      "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "modelFirstFacts": [
+        {
+          "factId": "C19-CURRENT-REAL-04-F1",
+          "verdict": "INCORRECT",
+          "reason": "event_start只有日期，漏12:30；event_end使用整个12:30-14:00而没有正确日期关联。",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-04",
+          "outputPointer": "paid-evidence/raw-04.json#rawHttpText.output.message.output_text"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-04-F2",
+          "verdict": "INCORRECT",
+          "reason": "个人兴趣unknown却写condition=true；报名对象为二维码而非活动本身，需核对。",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-04",
+          "outputPointer": "paid-evidence/raw-04.json#rawHttpText.output.message.output_text"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-04-F3",
+          "verdict": "CORRECT",
+          "reason": "报名截止2026-10-11中午12:00与task-0001关联正确。",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-04",
+          "outputPointer": "paid-evidence/raw-04.json#rawHttpText.output.message.output_text"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-04-F4",
+          "verdict": "CORRECT",
+          "reason": "50份午餐及总听众不限均保留，未写50人听课上限。",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-04",
+          "outputPointer": "paid-evidence/raw-04.json#rawHttpText.output.message.output_text"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-04-F5",
+          "verdict": "INCORRECT",
+          "reason": "感兴趣均可报名不是本人感兴趣证据；condition=true无个人事实支持。",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-04",
+          "outputPointer": "paid-evidence/raw-04.json#rawHttpText.output.message.output_text"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-04-F6",
+          "verdict": "INCORRECT",
+          "reason": "E1关联T1但T1 coverage.event=not_stated，权威边与状态矛盾。",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-04",
+          "outputPointer": "paid-evidence/raw-04.json#rawHttpText.output.message.output_text"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-04-F7",
+          "verdict": "INCORRECT",
+          "reason": "主办方提供午餐作为issuer/informational实体却标task，此外时间缺值与coverage图冲突。",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-04",
+          "outputPointer": "paid-evidence/raw-04.json#rawHttpText.output.message.output_text"
+        }
+      ],
+      "displayBeforeHuman": [
+        {
+          "factId": "C19-CURRENT-REAL-04-F1",
+          "verdict": "INCORRECT",
+          "reason": "首次转换SOURCE_CONTRACT_COVERAGE_ENTITY拒绝，原文保留但必要建议未生成。",
+          "outputPointer": "AFTER.json#rows/3/firstSuggestion",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-04"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-04-F2",
+          "verdict": "INCORRECT",
+          "reason": "首次转换SOURCE_CONTRACT_COVERAGE_ENTITY拒绝，原文保留但必要建议未生成。",
+          "outputPointer": "AFTER.json#rows/3/firstSuggestion",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-04"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-04-F3",
+          "verdict": "INCORRECT",
+          "reason": "首次转换SOURCE_CONTRACT_COVERAGE_ENTITY拒绝，原文保留但必要建议未生成。",
+          "outputPointer": "AFTER.json#rows/3/firstSuggestion",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-04"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-04-F4",
+          "verdict": "INCORRECT",
+          "reason": "首次转换SOURCE_CONTRACT_COVERAGE_ENTITY拒绝，原文保留但必要建议未生成。",
+          "outputPointer": "AFTER.json#rows/3/firstSuggestion",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-04"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-04-F5",
+          "verdict": "INCORRECT",
+          "reason": "首次转换SOURCE_CONTRACT_COVERAGE_ENTITY拒绝，原文保留但必要建议未生成。",
+          "outputPointer": "AFTER.json#rows/3/firstSuggestion",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-04"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-04-F6",
+          "verdict": "INCORRECT",
+          "reason": "首次转换SOURCE_CONTRACT_COVERAGE_ENTITY拒绝，原文保留但必要建议未生成。",
+          "outputPointer": "AFTER.json#rows/3/firstSuggestion",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-04"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-04-F7",
+          "verdict": "INCORRECT",
+          "reason": "首次转换SOURCE_CONTRACT_COVERAGE_ENTITY拒绝，原文保留但必要建议未生成。",
+          "outputPointer": "AFTER.json#rows/3/firstSuggestion",
+          "sourcePointer": "SOURCES.json#C19-CURRENT-REAL-04"
+        }
+      ],
+      "humanFinal": []
+    }
+  ]
+}

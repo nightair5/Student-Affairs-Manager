@@ -1,13 +1,15 @@
-# 当前交接：4份真实首次输出冻结，待本批具体许可
+# 当前交接：4真实首答完成，两个公共误挡收口
 
 2026-10-05。candidate11/比赛，codex/e2-candidate11-blind-eval。[唯一结果](candidate19-public-development/RESULTS.md)、[路线](../governance/PROJECT_EXECUTION_ROADMAP.md)、[下一执行](../governance/NEXT_STAGE_EXECUTION_PROMPT.md)。
 
-C19-CURRENT-REAL-NOTICE-DEVELOPMENT-R1：4大学官方通知节选FRESH-02/04/05/06，单臂原Candidate19；原时基、provisional参照、参数、身份与requestSha、评价及首屏图已冻结。generationCommit c4f5aedf7cb71f16d13dfcb93b626dd42ae3a155，176组件/5产物/4请求。Manifest cd4a49ac41bd30d53ad479fe0c5c7a53cc04e313c88f74befc8a4175cab492c0，身份1214d78de761d2da742ad58e9e3a6cc6ffa205c357d50724d4eda2a1b7c88a52。4NOT_RUN；原答/人工前首屏0正确0错4UNKNOWN，不报准确率。已有6均Development，FRESH-01历史/FRESH-07中学生仅控制。
+C19-CURRENT-REAL-NOTICE-DEVELOPMENT-R1原4身份已一次发送全部SETTLED，0不确定/0重试，唯一grant耗尽。模型原答0正确3错1UNKNOWN/4；原首次展示0正确4错/4；后验新公共转换0正确3错1UNKNOWN/4。参照provisional，不是独立真值/新模型提高。原C19/Manifest/176组件/5产物/4请求/raw/v11与旧后验争议不改。
 
-6852是当前待授权状态页，实际构建c4f5aedf7cb7/source0ae7e9716e95；新currentdiag1005ready隔离库未打开，0录制不加载App。真实新raw普通首屏/保存/恢复/安排/读回NOT_RUN，不用状态页或旧页面顶替。已有普通App/ReviewSession/DomainCommitPlan/Repository/D27和时间2.1.0/首次组装1.1.0不变，旧13首次事实逐份相同。无新的生成证据，不改Prompt/候选。
+渠道1.4.0修02相邻引用/登记角色/应用+URL误清；首次组装1.2.0修03既有同事件区间结束年份补全及相邻title误挡。旧13firstFacts相同。01/04coverage-owner图矛盾仍拒绝；03多余事件仍错；02整体自由描述未知/重复title未修。普通事件整体保存缺逐个拒绝，明确产品缺口。
 
-工具四文件16PASS，lint/build/scanPASS、8旧warning。仅工具/回放模式变更，明确复用上一轮41组34PASS7FAIL：六旧哈希/账本快照+server bad port，server独立8PASS；audit5H2M/production0复用。不是本轮重新全跑或全绿。[验证](candidate19-public-development/current-notice-diagnostic/VALIDATION.md)。
+唯一6855，ORDINARY_APP_FIXED_RECORDING / ENGINEERING_REPLAY，实际d8fde20f94f9/source d226a74a307a，新库current-real-final1005。02普通部分确认、事务失败不留半份、手动重试、已提交刷新后只重读、03端点/owner正式读回与刷新已实测。工程库Task2 Material2 Time4 Event4 Project0：02正常/故障capture各1任务，03原多余事件保留错证据。3来源canonical部分确认、2失败，旧ordinary.partial=false不覆盖实际状态。pageEditIds[]、3verifiedCommitIds、计时缺失null、四真人NOT_OBSERVABLE。原截止未改，过去deadline无新时段。
 
-84/119/7和1000链SHA fe24750479d3a5229e386e8088199ae097f48a1f6872f0eaac016cfaeddbb48d及原996前缀不变；新model/grant/reserve/settle0，无AUTH/STATE/raw。原公开批1SETTLED1UNCERTAIN2NOT_SENT继续封存，原许可耗尽，不恢复/补settle/解锁/重发。旧v11及后验争议保持，四真人NOT_OBSERVABLE。
+全量41组35PASS6历史FAIL，新增只读1组3PASS另跑，总42组36PASS6FAIL；定向78PASS，lint/build/scan通过，8旧warning；server本次PASS，旧bad port未复现。audit5H2M/production0无依赖变化复用，不全绿。[证据](candidate19-public-development/current-notice-diagnostic/paid-evidence/VALIDATION.md)。
 
-下一只缺新批4 deepseek-flash身份、整批US$1.30硬限、唯一新grant/逐单元reserve/settle明确许可。[具体申请](candidate19-public-development/current-notice-diagnostic/AUTHORIZATION_REQUEST.md)。最坏US$1.297616；首grant前重核核价有效窗/同步HEAD/身份/完整链，不沿用旧数值许可。获许可直接同包4次、固定分母诊断、最多2真实根因/1输入假设、新raw普通浏览器及独立读回；不另起准备阶段。
+84/119/7通过；1000→1009本批1grant4reserve4settle合法追加，SHA c730854da5eabbef8c6c62d1da2dea6511ecf2f586fa9872fd2c9b4a1baa140f，996/1000前缀不变，后续只读。内部保守结算US$0.020598，实扣NOT_OBSERVABLE。旧封存公开批1确定1未知2未发不动。用户.audit-2026-10-05/8文件保留，7份哈希不变，README期间更新原样保留；本机exclude不进Git。
+
+下一包先本地处理单一权威关系声明与单活动边界；至多1新输入假设、原C19不改，普通逐事件拒绝是最小可用缺口。可运行后才判断最小两臂新输出，另具体许可；不建预算空阶段、不复用1.30。不开展真人/Holdout/default替换/合并/部署。最终Git SHA以交付消息为准。

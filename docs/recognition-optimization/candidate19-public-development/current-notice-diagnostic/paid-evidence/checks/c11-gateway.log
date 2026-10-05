@@ -1,0 +1,84 @@
+✔ candidate11 is accepted by existing request inspection without changing gateway or policies (0.5631ms)
+✖ candidate11 mock transport retains reserve and never auto-retries (1.7622ms)
+✖ candidate11 mock timeout retains reserve and never auto-retries (1.1799ms)
+✖ candidate11 mock raw retains reserve and never auto-retries (1.3043ms)
+✖ candidate11 mock settlement retains reserve and never auto-retries (1.114ms)
+✖ candidate11 mock full retains reserve and never auto-retries (1.1989ms)
+✔ identity mismatch rejects before reservation and transport (3.6884ms)
+✔ repeated execution cannot reserve a settled engineering unit twice (5.9322ms)
+✔ same gateway refuses concurrent writer while first request is outstanding (21.9183ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 4
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 188.8707
+
+✖ failing tests:
+
+test at scripts\candidate11-gateway.node-test.mjs:39:72
+✖ candidate11 mock transport retains reserve and never auto-retries (1.7622ms)
+  Error: C11_HISTORY_PROTECTED_CHANGED:AGENTS.md
+      at check (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/verify-candidate11-analysis.mjs:12:52)
+      at verifyProtectedFiles (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/verify-candidate11-analysis.mjs:25:45)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/candidate11-gateway.node-test.mjs:40:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3)
+
+test at scripts\candidate11-gateway.node-test.mjs:39:72
+✖ candidate11 mock timeout retains reserve and never auto-retries (1.1799ms)
+  Error: C11_HISTORY_PROTECTED_CHANGED:AGENTS.md
+      at check (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/verify-candidate11-analysis.mjs:12:52)
+      at verifyProtectedFiles (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/verify-candidate11-analysis.mjs:25:45)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/candidate11-gateway.node-test.mjs:40:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at scripts\candidate11-gateway.node-test.mjs:39:72
+✖ candidate11 mock raw retains reserve and never auto-retries (1.3043ms)
+  Error: C11_HISTORY_PROTECTED_CHANGED:AGENTS.md
+      at check (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/verify-candidate11-analysis.mjs:12:52)
+      at verifyProtectedFiles (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/verify-candidate11-analysis.mjs:25:45)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/candidate11-gateway.node-test.mjs:40:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at scripts\candidate11-gateway.node-test.mjs:39:72
+✖ candidate11 mock settlement retains reserve and never auto-retries (1.114ms)
+  Error: C11_HISTORY_PROTECTED_CHANGED:AGENTS.md
+      at check (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/verify-candidate11-analysis.mjs:12:52)
+      at verifyProtectedFiles (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/verify-candidate11-analysis.mjs:25:45)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/candidate11-gateway.node-test.mjs:40:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at scripts\candidate11-gateway.node-test.mjs:39:72
+✖ candidate11 mock full retains reserve and never auto-retries (1.1989ms)
+  Error: C11_HISTORY_PROTECTED_CHANGED:AGENTS.md
+      at check (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/verify-candidate11-analysis.mjs:12:52)
+      at verifyProtectedFiles (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/verify-candidate11-analysis.mjs:25:45)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/candidate11-gateway.node-test.mjs:40:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)

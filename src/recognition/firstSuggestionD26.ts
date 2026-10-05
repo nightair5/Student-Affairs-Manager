@@ -3,8 +3,9 @@ import { adaptModelWire, type WireContext } from '../experiments/realInput01/mod
 import type { SemanticInput } from '../experiments/mainline04/semanticContract'
 import type { RecognitionResult, TaskSuggestionV2, TimePointSuggestionV2 } from './types'
 import { groundEligibility } from './eligibilityGrounding'
+import { rangeEndpointSupport } from './rangeEndpointSupport'
 
-export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.1.0'
+export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.2.0'
 interface ProseRecord { entityId: string; kind: 'task' | 'event' | 'source'; title: string; description: string }
 export interface D26FirstSuggestionAudit {
   version: typeof D26_FIRST_SUGGESTION_VERSION
@@ -12,13 +13,26 @@ export interface D26FirstSuggestionAudit {
   generatedProse: ProseRecord[]
   times: Array<{ entityId: string; before: TimeFields; after: TimeFields; interpretation: D26TimeInterpretation }>
   unresolved: Array<{ entityId: string; reason: string }>
+  rangeSupport: Array<{entityId:string; quote:string; literalRange:string; expanded:string; rule:'CITED_SAME_EVENT_RANGE_ENDPOINT'}>
   role: 'DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT'
 }
 type TimeFields = Pick<TimePointSuggestionV2, 'normalizedValue' | 'timezone' | 'isAllDay' | 'precision' | 'needsConfirmation'>
 const fields = (point: TimeFields): TimeFields => ({ normalizedValue: point.normalizedValue, timezone: point.timezone,
   isAllDay: point.isAllDay, precision: point.precision, needsConfirmation: point.needsConfirmation })
-const auditRecord = (): D26FirstSuggestionAudit => ({ version: D26_FIRST_SUGGESTION_VERSION, originalProse: [], generatedProse: [], times: [], unresolved: [], role: 'DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT' })
+const auditRecord = (): D26FirstSuggestionAudit => ({ version: D26_FIRST_SUGGESTION_VERSION, originalProse: [], generatedProse: [], times: [], unresolved: [], rangeSupport: [], role: 'DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT' })
 const supported = (value: string, quotes: string[]) => Boolean(value.trim()) && quotes.some(quote => quote.includes(value))
+function supportedAdjacent(value: string, quotes: string[], sourceText: string) {
+  if (supported(value, quotes)) return true
+  const start = sourceText.indexOf(value)
+  if (!value.trim() || start < 0 || sourceText.indexOf(value, start + 1) >= 0) return false
+  const spans = unique(quotes).flatMap(quote => {
+    const at = sourceText.indexOf(quote)
+    return at >= 0 && sourceText.indexOf(quote, at + 1) < 0 ? [{start:at,end:at+quote.length}] : []
+  }).sort((a,b)=>a.start-b.start)
+  let covered = start
+  for (const span of spans) if (span.start <= covered && span.end > covered) covered = span.end
+  return covered >= start + value.length
+}
 const unique = (values: string[]) => [...new Set(values)]
 function timeClause(rawText: string, quote: string): string {
   const start = quote.indexOf(rawText)
@@ -32,15 +46,17 @@ function prose(audit: D26FirstSuggestionAudit, original: ProseRecord, title: str
   audit.generatedProse.push({ ...original, title, description })
   return { title, description }
 }
-function time<T extends TimeFields & { tempId: string; rawText: string; type: TimePointSuggestionV2['type'] }>(point: T, quotes: string[], referenceTime: string, timezone: string, audit: D26FirstSuggestionAudit, inheritedDate?: string, anchorContext = '') {
+function time<T extends TimeFields & { tempId: string; rawText: string; type: TimePointSuggestionV2['type'] }>(point: T, quotes: string[], referenceTime: string, timezone: string, audit: D26FirstSuggestionAudit, inheritedDate?: string, anchorContext = '', rangeQuotes: string[] = []) {
   const before = fields(point)
-  if (!supported(point.rawText, quotes)) {
+  const range = supported(point.rawText, quotes) ? null : rangeEndpointSupport(point.rawText, point.type, rangeQuotes, referenceTime, timezone)
+  if (!supported(point.rawText, quotes) && !range) {
     audit.unresolved.push({ entityId: point.tempId, reason: 'TIME_SOURCE_SUPPORT_MISSING' })
     Object.assign(point, { normalizedValue: null, isAllDay: false, precision: 'vague', needsConfirmation: true })
     return
   }
+  if (range) audit.rangeSupport.push({entityId:point.tempId,...range})
   const interpretation = interpretTimeD26(point.rawText, { type: point.type, referenceTime, timezone, inheritedDate,
-    sourceContext: [anchorContext, ...quotes.filter(quote => quote.includes(point.rawText)).map(quote => timeClause(point.rawText, quote))].filter(Boolean).join('\n') })
+    sourceContext: [anchorContext, range?.quote, ...quotes.filter(quote => quote.includes(point.rawText)).map(quote => timeClause(point.rawText, quote))].filter(Boolean).join('\n') })
   Object.assign(point, fields(interpretation.point))
   audit.times.push({ entityId: point.tempId, before, after: fields(point), interpretation })
 }
@@ -94,7 +110,9 @@ export function assembleSemanticFirstSuggestionD26(input: SemanticInput, context
     const heading = citedEventDate(point, result.events, pointQuotes, eventQuotes, context.index.sourceContent, context.referenceTime, context.timezone)
     const anchor = heading ?? eventAnchor(point.tempId, result.events, result.timePoints, pointQuotes, eventQuotes, context.index.sourceContent, context.referenceTime, context.timezone)
     if (heading?.blocked) audit.unresolved.push({ entityId: point.tempId, reason: 'EVENT_DATE_HEADING_NOT_UNAMBIGUOUS' })
-    time(point, quote(point.scopeIds), context.referenceTime, context.timezone, audit, anchor?.date, anchor?.context)
+    const owners = result.events.filter(e => e.startTimePointTempId === point.tempId || e.endTimePointTempId === point.tempId)
+    const rangeQuotes = owners.length === 1 ? pointQuotes(point.tempId).filter(q => eventQuotes(owners[0].tempId).includes(q)) : []
+    time(point, quote(point.scopeIds), context.referenceTime, context.timezone, audit, anchor?.date, anchor?.context, rangeQuotes)
   }
   for (const task of result.tasks) {
     const quotes = quote(task.propositionScopeIds)
@@ -105,7 +123,7 @@ export function assembleSemanticFirstSuggestionD26(input: SemanticInput, context
     if (!grounded) audit.unresolved.push({ entityId: task.id, reason: 'ACTION_OBJECT_SOURCE_SUPPORT_MISSING' })
   }
   for (const event of result.events) {
-    const quotes = quote(event.scopeIds), grounded = supported(event.title, quotes)
+    const quotes = quote(event.scopeIds), grounded = supportedAdjacent(event.title, quotes, context.index.sourceContent)
     const original = { entityId: event.tempId, kind: 'event' as const, title: event.title, description: event.description }
     Object.assign(event, prose(audit, original, grounded ? event.title : '待核对事件', grounded ? unique(quotes).join('\n') : '事件内容缺少对应来源依据，请核对。'))
     if (!grounded) audit.unresolved.push({ entityId: event.tempId, reason: 'EVENT_SOURCE_SUPPORT_MISSING' })
@@ -132,7 +150,9 @@ export function assembleRecognitionFirstSuggestionD26(input: RecognitionResult, 
     const heading = citedEventDate(point, result.events, pointQuotes, eventQuotes, context.sourceText, context.referenceTime, context.timezone)
     const anchor = heading ?? eventAnchor(point.tempId, result.events, result.timePoints, pointQuotes, eventQuotes, context.sourceText, context.referenceTime, context.timezone)
     if (heading?.blocked) audit.unresolved.push({ entityId: point.tempId, reason: 'EVENT_DATE_HEADING_NOT_UNAMBIGUOUS' })
-    time(point, quote(point.evidenceIds), context.referenceTime, context.timezone, audit, anchor?.date, anchor?.context)
+    const owners = result.events.filter(e => e.startTimePointTempId === point.tempId || e.endTimePointTempId === point.tempId)
+    const rangeQuotes = owners.length === 1 ? pointQuotes(point.tempId).filter(q => eventQuotes(owners[0].tempId).includes(q)) : []
+    time(point, quote(point.evidenceIds), context.referenceTime, context.timezone, audit, anchor?.date, anchor?.context, rangeQuotes)
   }
   const tasks: TaskSuggestionV2[] = [...result.standaloneTasks, ...result.milestones.flatMap(m => [...m.tasks, ...m.workPackages.flatMap(w => w.tasks)])]
   for (const task of tasks) {
@@ -143,7 +163,7 @@ export function assembleRecognitionFirstSuggestionD26(input: RecognitionResult, 
     if (!grounded) { task.selected = false; audit.unresolved.push({ entityId: task.tempId, reason: 'ACTION_OBJECT_SOURCE_SUPPORT_MISSING' }) }
   }
   for (const event of result.events) {
-    const quotes = quote(event.evidenceIds), grounded = supported(event.title, quotes)
+    const quotes = quote(event.evidenceIds), grounded = supportedAdjacent(event.title, quotes, context.sourceText)
     const original = { entityId: event.tempId, kind: 'event' as const, title: event.title, description: event.description }
     Object.assign(event, prose(audit, original, grounded ? event.title : '待核对事件', grounded ? unique(quotes).join('\n') : '事件内容缺少对应来源依据，请核对。'))
     if (!grounded) { event.selected = false; audit.unresolved.push({ entityId: event.tempId, reason: 'EVENT_SOURCE_SUPPORT_MISSING' }) }

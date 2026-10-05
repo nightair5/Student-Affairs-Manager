@@ -1,7 +1,7 @@
 import type { RecognitionResult } from './types'
 import { assembleRecognitionFirstSuggestionD26 } from './firstSuggestionD26'
 
-export const MATERIAL_CHANNEL_GROUNDING_VERSION = 'material-channel-role-grounding-1.3.0'
+export const MATERIAL_CHANNEL_GROUNDING_VERSION = 'material-channel-role-grounding-1.4.0'
 export interface MaterialChannelDecision {
   materialId: string
   materialName: string
@@ -20,9 +20,29 @@ export interface MaterialChannelAudit {
 }
 const compact = (text: string) => text.replace(/\s/gu, '')
 const escaped = (text: string) => text.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&')
+function citedClauses(evidence: Array<{quote:string}>, sourceText: string) {
+  // The scope tokenizer may split https: from //host. Rejoin only uniquely
+  // located, byte-adjacent cited fragments, never scan uncited paragraph text.
+  const spans = evidence.flatMap(e => {const at=sourceText.indexOf(e.quote);return at>=0&&sourceText.indexOf(e.quote,at+1)<0?[{start:at,end:at+e.quote.length}]:[]}).sort((a,b)=>a.start-b.start)
+  const joined: Array<{start:number;end:number}> = []
+  for(const span of spans){const previous=joined.at(-1);if(previous&&span.start<=previous.end)previous.end=Math.max(previous.end,span.end);else joined.push({...span})}
+  return [...new Set([...evidence.map(e=>e.quote),...joined.map(s=>sourceText.slice(s.start,s.end))])].flatMap(q=>q.split(/[，。；\n]/u))
+}
 /** Role evidence, not token overlap: a receipt is not an instruction to send there. */
 function destinationRole(clause: string, object: string, channel: string, siblingObjects: string[] = []) {
-  const text = compact(clause), o = escaped(compact(object)), c = escaped(compact(channel))
+  let text = compact(clause)
+  const o = escaped(compact(object))
+  // A label and its URL may be displayed together even when the original URL
+  // follows the registration object. Both literal values must occur in this
+  // same clause; never accept a URL borrowed from another item or paragraph.
+  const composite = /^(.*?)[（(](https:\/\/[^\s（）()]+)[）)]$/u.exec(compact(channel))
+  const label = composite?.[1] ?? compact(channel)
+  if (composite) {
+    const suffix = new RegExp(`${o}(?:登记|填报|注册)?[（(]${escaped(composite[2])}[）)]$`, 'u')
+    if (!label || !suffix.test(text)) return null
+    text = text.replace(new RegExp(`[（(]${escaped(composite[2])}[）)]$`, 'u'), '')
+  }
+  const c = escaped(label)
   const action = '(?:提交|上传|递交|发送|交付|送交|交)'
   // Only a closed object/destination or a separate post-submission action can follow.
   // An object suffix ("清单照片") or destination suffix never counts as the same role.
@@ -42,6 +62,8 @@ function destinationRole(clause: string, object: string, channel: string, siblin
     new RegExp(`(?:把|将)${o}${action}(?:至|到|给)${c}${end}`, 'u'),
     new RegExp(`(?:通过|经由|在)${c}(?:直接|统一|线上)?${action}${o}${end}`, 'u'),
     new RegExp(`${o}(?:的)?(?:提交渠道|提交地址|接收邮箱|提交入口)(?:为|是|：|:)${c}${end}`, 'u'),
+    new RegExp(`(?:通过|经由|在)${c}(?:完成|进行)${o}(?:登记|填报|注册)${end}`, 'u'),
+    new RegExp(`(?:通过|经由|在)${c}(?:登记|填报|注册)${o}${end}`, 'u'),
   ].map(pattern => pattern.exec(text)).find(match => match !== null) ?? listed
   if (!matched) return null
   // Literal object/destination names are values, not grammatical conditions (e.g. 若水).
@@ -50,7 +72,7 @@ function destinationRole(clause: string, object: string, channel: string, siblin
   const receiptNote = /(?:并|且)(?:保留|保存)(?:电子)?回执([（(](?:无需|无须|不用|不必)打印(?:纸质版|纸质回执)?[）)])$/u.exec(text)
   const unrelatedQualifier = receiptNote?.[1] ?? null
   const polarityText = (unrelatedQualifier ? text.slice(0, -unrelatedQualifier.length) : text)
-    .replaceAll(compact(object), '<对象>').replaceAll(compact(channel), '<渠道>')
+    .replaceAll(compact(object), '<对象>').replaceAll(label, '<渠道>')
   // Do not collapse a double negative, condition, example, or question into permission.
   const uncertain = /请勿|勿|不要|不得|不应|不可|不能|不准|不允许|禁止|不必|无需|无须|不用|尚未|未明确|不是|并非|未必|不一定|不建议|不推荐|若|如果|例如|假如|是否|能否/u.test(polarityText)
   return { polarity: uncertain ? 'NEGATED_OR_UNCERTAIN' as const : 'AFFIRMATIVE' as const,
@@ -69,7 +91,7 @@ export function groundMaterialChannels(input: RecognitionResult, sourceText: str
     const ids = new Set([...material.evidenceIds, ...owners.flatMap(t => t.evidenceIds)])
     const evidence = result.evidence.filter(e => ids.has(e.id) && e.sourceId === result.evidence.find(r => material.evidenceIds.includes(r.id))?.sourceId
       && typeof e.quote === 'string' && sourceText.includes(e.quote)).map(e => ({ id: e.id, quote: e.quote! }))
-    const clauses = evidence.flatMap(e => e.quote.split(/[，。；\n]/u))
+    const clauses = citedClauses(evidence, sourceText)
     const objects = [...new Set([material.name, ...owners.map(t => t.actionObject)].filter(Boolean))]
     const siblings = result.materials.filter(m => owners.some(t => m.relatedTaskTempIds.includes(t.tempId) && t.materialTempIds.includes(m.tempId))).map(m => m.name)
     const roleChecks = clauses.flatMap(quote => objects.flatMap(object => {

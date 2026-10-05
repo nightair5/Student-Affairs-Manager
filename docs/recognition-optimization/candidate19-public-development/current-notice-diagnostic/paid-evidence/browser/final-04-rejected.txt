@@ -1,0 +1,236 @@
+Browser tab: 5, Title: "学生事务管家 · C19真实录制产品修复", URL: "http://127.0.0.1:6855/".
+1 AXWebArea 学生事务管家 · C19真实录制产品修复, URL: 127.0.0.1:6855/
+	2 container root
+		3 link Description: 跳到主要内容, Value: 127.0.0.1:6855/#main-content
+		4 container
+			5 button 返回今日首页
+				6 text 事务管家
+				7 text STUDENT DESK
+			8 button 新事务 N
+				9 image
+				10 text 新事务
+				11 text N
+			12 container 主要导航
+				13 text 执行闭环
+				14 button 今日
+					15 image
+					16 text 今日
+				17 button 收件箱
+					18 image
+					19 text 收件箱
+				20 button 打开待确认队列，共 6 项
+					21 image
+					22 text 待确认
+					23 text 6
+				24 button 项目
+					25 image
+					26 text 项目
+				27 button 日历
+					28 image
+					29 text 日历
+				30 button 资料库
+					31 image
+					32 text 资料库
+				33 text 低频工具
+				34 button 所有任务
+					35 image
+					36 text 所有任务
+				37 button 知识问答
+					38 image
+					39 text 知识问答
+				40 button 周报月报
+					41 image
+					42 text 周报月报
+			43 button 搜索事项
+				44 image
+				45 text 搜索事项
+			46 button 新手教程
+				47 image
+				48 text 新手教程
+			49 button 设置与服务
+				50 image
+				51 text 设置与服务
+			52 button 隐私与数据
+				53 image
+				54 text 隐私与数据
+			55 text 已在此设备自动保存 同一浏览器与站点地址下可恢复；识别结果确认后才入库。
+		56 container main-content
+			57 button (collapsed) 匿名工程输入 · 普通产品路径 · 不发送模型请求, Secondary Actions: Expand
+				58 text 匿名工程输入 · 普通产品路径 · 不发送模型请求
+			59 container
+				60 text 来源先保存，确认后入库
+				61 heading 收件箱, Value: 1
+					62 text 收件箱
+				63 text 查看每份来源的真实处理状态。失败不会删除来源；重新识别会沿用原来源与当前版本。
+				64 image
+				65 text 5
+				66 text 份需关注
+				67 container 收件箱视图
+					68 checkbox 全部来源, Value: 1
+					69 checkbox 待确认 3, Value: 0
+				70 button 新建手动来源
+					71 image
+					72 text 新建手动来源
+				73 checkbox (settable, integer) Description: 选择全部待核对, Value: 0
+				197 container
+					198 text Candidate19 固定录制 建议 识别失败
+				199 heading 2
+				200 text 活动信息 **时间** 2026年10月12日（周一） 12:30-14:00 **地点** 海韵园办公楼A栋302室 **报名** 扫描下方二维码进行报名，听众报名截止时间为2026年10月11日中午12:00，主办方提供50份免费午餐，按报名顺序先到先得（讲座的听众总人数不作限制，感兴趣均可报名）。
+				201 text 来源仍保留；可复用同一来源重新识别或手工补充。
+				202 definition list
+					203 container 项目
+						204 text 项目
+					205 text 未形成项目建议
+					206 container 实体
+						207 text 实体
+					208 text 0 任务 · 0 材料 · 0 时间 · 0 活动
+				209 text 识别失败，来源已保留，可重试或手动补充。
+				210 container
+					211 button 本地规则重试
+						212 image
+						213 text 本地规则重试
+					214 button 手工补充
+						215 image
+						216 text 手工补充
+					217 button 查看来源
+						218 image
+						219 text 查看来源
+				74 container
+					75 text Candidate19 固定录制 建议 识别失败
+				76 heading 手动粘贴消息, Value: 2
+					77 text 手动粘贴消息
+				78 text 为方便新生更好地了解校园文化、简化注册流程，2026级新生须于指定时间内登录迎新系统完成网上预注册流程。 由于系统维护和升级，迎新系统开放时间与入学须知中规定的时间略有不同，请以本通知的时间为准。新生请在指定时间内激活账号和登录系统，不在指定时间内激活账号和登录都会显示“账号和密码错误”。 本科生（大陆地区）：8月13—27日
+				79 text 来源仍保留；可复用同一来源重新识别或手工补充。
+				80 definition list
+					81 container 项目
+						82 text 项目
+					83 text 未形成项目建议
+					84 container 实体
+						85 text 实体
+					86 text 0 任务 · 0 材料 · 0 时间 · 0 活动
+				87 text 识别失败，来源已保留，可重试或手动补充。
+				88 container
+					89 button 本地规则重试
+						90 image
+						91 text 本地规则重试
+					92 button 手工补充
+						93 image
+						94 text 手工补充
+					95 button 查看来源
+						96 image
+						97 text 查看来源
+				98 container
+					99 checkbox (settable, integer) Description: 选择, Value: 0
+					100 text 选择
+				101 container
+					102 text Candidate19 固定录制（非实时调用） 建议 待核对
+				103 heading 2
+				104 text 招生对象：在读本科生和研究生、青年研究人员等 收费情况：免费 活动时间：2026年7月6日-7月10日 活动形式：线上讲座，被录取的正式学员可以进入线上会议室听课并提问互动，各学员需自行准备相关终端设备，以便连线 报名方式：网络报名，有意参加活动可通过下方二维码报名 学习结束后可获得暑期学校结业证书，欢迎大家踊跃报名，我们期待与您相聚云端。 报名截止时间：2026年6月30日17:00
+				105 text 识别建议已保存，确认前不会创建正式任务。
+				106 definition list
+					107 container 项目
+						108 text 项目
+					109 text 独立事项
+					110 container 实体
+						111 text 实体
+					112 text 2 任务 · 1 材料 · 3 时间 · 4 活动
+				113 container
+					114 button 核对 2 项任务、0 个事件
+						115 image
+						116 text 核对 2 项任务、0 个事件
+					117 button 查看来源
+						118 image
+						119 text 查看来源
+					120 button 归档
+						121 image
+						122 text 归档
+				123 container
+					124 checkbox (settable, integer) Description: 选择 手动粘贴消息, Value: 0
+					125 text 选择  手动粘贴消息
+				126 container
+					127 text Candidate19 固定录制（非实时调用） 建议 待核对
+				128 heading 手动粘贴消息, Value: 2
+					129 text 手动粘贴消息
+				130 text 一、各位同学应于7月16日前通过学工系统“暑假离留校登记”应用完成相关信息登记（https://xmuxg.xmu.edu.cn/app/182），并确保填写的信息完整、准确。离校同学应如实登记去向、联系方式及返校安排；暑期留校同学如短期离厦外出，视同离校学生管理，亦应及时做好相关登记。
+				131 text 识别建议已保存，确认前不会创建正式任务。
+				132 definition list
+					133 container 项目
+						134 text 项目
+					135 text 独立事项
+					136 container 实体
+						137 text 实体
+					138 text 3 任务 · 2 材料 · 1 时间 · 0 活动
+				139 container
+					140 button 核对 2 项任务、0 个事件
+						141 image
+						142 text 核对 2 项任务、0 个事件
+					143 button 查看来源
+						144 image
+						145 text 查看来源
+					146 button 归档
+						147 image
+						148 text 归档
+				149 container
+					150 checkbox (settable, integer) Description: 选择 手动粘贴消息, Value: 0
+					151 text 选择  手动粘贴消息
+				152 container
+					153 text Candidate19 固定录制（非实时调用） 建议 待核对
+				154 heading 手动粘贴消息, Value: 2
+					155 text 手动粘贴消息
+				156 text 一、各位同学应于7月16日前通过学工系统“暑假离留校登记”应用完成相关信息登记（https://xmuxg.xmu.edu.cn/app/182），并确保填写的信息完整、准确。离校同学应如实登记去向、联系方式及返校安排；暑期留校同学如短期离厦外出，视同离校学生管理，亦应及时做好相关登记。
+				157 text 识别建议已保存，确认前不会创建正式任务。
+				158 definition list
+					159 container 项目
+						160 text 项目
+					161 text 独立事项
+					162 container 实体
+						163 text 实体
+					164 text 3 任务 · 2 材料 · 1 时间 · 0 活动
+				165 container
+					166 button 核对 2 项任务、0 个事件
+						167 image
+						168 text 核对 2 项任务、0 个事件
+					169 button 查看来源
+						170 image
+						171 text 查看来源
+					172 button 归档
+						173 image
+						174 text 归档
+		175 container
+			176 text 录制输出不能安全生成建议（SOURCE_CONTRACT_COVERAGE_ENTITY）。没有补猜事实或重新调用模型；原始来源已安全保存。可在收件箱重试识别、查看原文或手动整理。
+			177 button 关闭提示
+		178 container
+			179 button (expanded) 本批真实录制 · 选择来源与独立读回, Secondary Actions: Collapse
+				180 text 本批真实录制 · 选择来源与独立读回
+			181 text d8fde20f94f9 / source d226a74a307a ； rco-mainline-01-02-i1-d27-plan-recorded-current-real-final1005 ； source-support-accounting-projection-1.1.0 / event-time-label-context-1.0.0 / source-grounded-nonaction-projection-1.0.1 / source-grounded-conditional-nonaction-1.0.0 / explicit-source-contract-4.0.0 / material-channel-role-grounding-1.4.0 / source-proven-eligibility-1.0.0 / source-time-semantics-2.1.0 / grounded-first-suggestion-1.2.0 ；ENGINEERING_REPLAY；此入口模型请求0。 当前Candidate19单臂4份大学通知诊断；4份确定录制；未运行或未裁决保持UNKNOWN；不是候选比较或真人结果 。下方是后验程序转换，不改原成绩。原答与冻结诊断不改。 录制来源
+			182 pop up button (collapsed, settable) 录制来源, Value: C19-CURRENT-REAL-04 / Candidate19 / 原冻结：CURRENT_SINGLE_ARM_SETTLED_RECORDING, Secondary Actions: Expand
+				183 menu
+					184 C19-CURRENT-REAL-01 / Candidate19 / 原冻结：CURRENT_SINGLE_ARM_SETTLED_RECORDING
+					185 C19-CURRENT-REAL-02 / Candidate19 / 原冻结：CURRENT_SINGLE_ARM_SETTLED_RECORDING
+					186 C19-CURRENT-REAL-03 / Candidate19 / 原冻结：CURRENT_SINGLE_ARM_SETTLED_RECORDING
+					187 (selected) C19-CURRENT-REAL-04 / Candidate19 / 原冻结：CURRENT_SINGLE_ARM_SETTLED_RECORDING
+			188 text entry area Description: 本批匿名通知原文, Value: 活动信息
+
+**时间**
+
+2026年10月12日（周一）
+
+12:30-14:00
+
+**地点**
+
+海韵园办公楼A栋302室
+
+**报名**
+
+扫描下方二维码进行报名，听众报名截止时间为2026年10月11日中午12:00，主办方提供50份免费午餐，按报名顺序先到先得（讲座的听众总人数不作限制，感兴趣均可报名）。
+			189 text 复制到普通“新事务”；原回答、程序转换与用户修改分别保留。相对日期使用来源原基准  2026-09-29T09:00:00+08:00 。
+			190 button 注入正式保存失败
+			191 button 注入提交后读回失败
+			192 button 注入检查点失败
+			193 text 未注入故障
+			194 button 本批独立canonical读回
+			195 button 页面测量读回
+			196 container 本批独立读回结果
+
+The focused UI element is 8 button 新事务 N

@@ -9,14 +9,15 @@ import {candidate19RecordedScene} from './candidate19-recorded-readonly.mjs'
 import {candidate19Recordings} from './candidate19-recorded-data.mjs'
 import {publicNoticeRecordedScene,historicalCandidate19Controls} from './public-notice-recorded-readonly.mjs'
 import {currentNoticeRecordedScene} from './current-notice-recorded-readonly.mjs'
+import {completedCurrentNoticeScene} from './current-notice-completed-readonly.mjs'
 const [port,instance,fixtureMode]=process.argv.slice(2)
-if(process.argv.length>5||fixtureMode&&!['--channel-role-fixtures','--channel-polarity-fixtures','--eligibility-fixtures','--public-notice-fixtures','--public-paid-recordings','--sealed-followup-fixtures','--current-notice-fixtures','--current-notice-batch'].includes(fixtureMode))throw Error('C19_UNKNOWN_REPLAY_MODE')
+if(process.argv.length>5||fixtureMode&&!['--channel-role-fixtures','--channel-polarity-fixtures','--eligibility-fixtures','--public-notice-fixtures','--public-paid-recordings','--sealed-followup-fixtures','--current-notice-fixtures','--current-notice-batch','--current-notice-completed'].includes(fixtureMode))throw Error('C19_UNKNOWN_REPLAY_MODE')
 if(!/^\d{4,5}$/.test(port??'')||+port<6814||+port>65535||!/^[a-z0-9-]{2,32}$/.test(instance??''))throw Error('C19_NEW_LOOPBACK_INSTANCE_REQUIRED')
 const publicPaid=['--public-paid-recordings','--sealed-followup-fixtures','--current-notice-fixtures'].includes(fixtureMode)
-const currentBatch=fixtureMode==='--current-notice-batch'
+const currentBatch=['--current-notice-batch','--current-notice-completed'].includes(fixtureMode)
 let scene,recordings,batchLabel,plannedRequests,knownSettled,initialOrdinal,currentSources
 if(currentBatch){
-  const verified=await currentNoticeRecordedScene();scene=verified.scene;recordings=verified.recordings;currentSources=verified.sources
+  const verified=await (fixtureMode==='--current-notice-completed'?completedCurrentNoticeScene():currentNoticeRecordedScene());scene=verified.scene;recordings=verified.recordings;currentSources=verified.sources
   plannedRequests=4;knownSettled=recordings.length;initialOrdinal=1
   batchLabel='当前Candidate19单臂4份大学通知诊断；'+knownSettled+'份确定录制；未运行或未裁决保持UNKNOWN；不是候选比较或真人结果'
 }else if(publicPaid){

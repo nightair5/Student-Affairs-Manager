@@ -1,0 +1,111 @@
+{
+  "role": "ENGINEERING_REPLAY",
+  "url": "http://127.0.0.1:6855/",
+  "mode": "ORDINARY_APP_FIXED_RECORDING",
+  "build": "d8fde20f94f9 / source d226a74a307a",
+  "database": "rco-mainline-01-02-i1-d27-plan-recorded-current-real-final1005",
+  "count": {
+    "Task": 2,
+    "Event": 4,
+    "TimePoint": 4,
+    "Material": 2,
+    "Project": 0
+  },
+  "sources": [
+    {
+      "id": "source:1a3b25f8",
+      "status": "failed"
+    },
+    {
+      "id": "source:abedcc03",
+      "status": "failed"
+    },
+    {
+      "id": "source:c65e63e7",
+      "status": "partially_confirmed"
+    },
+    {
+      "id": "source:1613a998",
+      "status": "partially_confirmed"
+    },
+    {
+      "id": "source:470c36c4",
+      "status": "partially_confirmed"
+    }
+  ],
+  "partialCanonical": 3,
+  "failedCanonical": 2,
+  "measurement": [
+    {
+      "draftId": "source:1a3b25f8:draft:1",
+      "role": "ENGINEERING_REPLAY",
+      "pageEditIds": [],
+      "verifiedCommitIds": [],
+      "failureEvents": 0,
+      "timeMissing": [
+        "registration",
+        "unclosed interval",
+        "terminal commit/readback"
+      ],
+      "legacyOrdinaryPartial": false
+    },
+    {
+      "draftId": "source:abedcc03:draft:1",
+      "role": "ENGINEERING_REPLAY",
+      "pageEditIds": [],
+      "verifiedCommitIds": [],
+      "failureEvents": 0,
+      "timeMissing": [
+        "registration",
+        "unclosed interval",
+        "terminal commit/readback"
+      ],
+      "legacyOrdinaryPartial": false
+    },
+    {
+      "draftId": "source:c65e63e7:draft:1",
+      "role": "ENGINEERING_REPLAY",
+      "pageEditIds": [],
+      "verifiedCommitIds": [
+        "source-review:source:c65e63e7:draft:1:fnv1a32:5d29c971"
+      ],
+      "failureEvents": 0,
+      "timeMissing": [
+        "unclosed interval",
+        "terminal commit/readback"
+      ],
+      "legacyOrdinaryPartial": false
+    },
+    {
+      "draftId": "source:1613a998:draft:1",
+      "role": "ENGINEERING_REPLAY",
+      "pageEditIds": [],
+      "verifiedCommitIds": [
+        "source-review:source:1613a998:draft:1:fnv1a32:80446958"
+      ],
+      "failureEvents": 2,
+      "timeMissing": [
+        "refresh time discontinuity",
+        "unclosed interval",
+        "terminal commit/readback"
+      ],
+      "legacyOrdinaryPartial": false
+    },
+    {
+      "draftId": "source:470c36c4:draft:1",
+      "role": "ENGINEERING_REPLAY",
+      "pageEditIds": [],
+      "verifiedCommitIds": [
+        "source-review:source:470c36c4:draft:1:fnv1a32:f11321bb"
+      ],
+      "failureEvents": 0,
+      "timeMissing": [
+        "unclosed interval",
+        "terminal commit/readback"
+      ],
+      "legacyOrdinaryPartial": false
+    }
+  ],
+  "adjudication": "Save success is not correctness. S03 extra events remain incorrect. Engine replay is not human final truth.",
+  "browserNewModelCalls": 0
+}
