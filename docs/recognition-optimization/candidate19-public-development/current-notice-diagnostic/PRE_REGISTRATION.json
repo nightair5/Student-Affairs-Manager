@@ -1,0 +1,27 @@
+{
+  "batch": "C19-CURRENT-REAL-NOTICE-DEVELOPMENT-R1",
+  "design": "CURRENT_C19_SINGLE_ARM_FIRST_OUTPUT_DIAGNOSTIC_NOT_COMPARISON",
+  "sourceCount": 4,
+  "requestCount": 4,
+  "denominator": "All four fixed excerpts, including transport/parse/schema/reference failures, disagreements and unknowns",
+  "candidate": "Candidate19 original prompt/schema unchanged",
+  "scorer": "public-source-fact-adjudication-1.0.0",
+  "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+  "layers": [
+    "modelFirstFacts",
+    "displayBeforeHuman",
+    "humanFinal"
+  ],
+  "scope": "SEEN_DEVELOPMENT_EXCERPTS_NOT_HOLDOUT",
+  "legalRepresentation": "Equivalent order, names and lossless views/merges are allowed only if all source obligations, values, precision, evidence and owners remain; explicit unknown/unannounced may be correct, unspecified differs from unknown",
+  "disputes": "Date-window representation and 日前 boundary are source-first; date_only with preserved raw does not invent end-of-day. Unknown personal interest/qualification is not an extraction failure. Unread QR/pictures and old replacement endpoints are not guessed.",
+  "prose": "All user-facing title/description/extras must be explicitly provisionally adjudicated; otherwise whole UNKNOWN",
+  "decision": "Report correct/incorrect/UNKNOWN at each layer and source; no winner/improvement claim; at most 2 evidence roots/1 later input hypothesis",
+  "extras": {
+    "retry": 0,
+    "repair": 0,
+    "verifier": 0,
+    "extraSamples": 0
+  },
+  "dispatchAuthorized": false
+}

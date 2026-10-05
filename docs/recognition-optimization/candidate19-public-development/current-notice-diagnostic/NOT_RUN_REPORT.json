@@ -1,0 +1,650 @@
+{
+  "batch": "C19-CURRENT-REAL-NOTICE-DEVELOPMENT-R1",
+  "snapshot": "c4f5aedf7cb71f16d13dfcb93b626dd42ae3a155",
+  "authorization": "NOT_IMPLIED_BY_REPORT",
+  "execution": {
+    "status": "READ_ONLY",
+    "role": "SCOPED_DEVELOPMENT_HOST_NOT_AUTHORIZATION",
+    "state": null,
+    "nextOrdinal": null,
+    "audit": "NO_STATE",
+    "uncertainty": null,
+    "priceStatus": "NOT_CHECKED_NO_STATE",
+    "batchEvidence": {
+      "rows": 0,
+      "grantCount": 0,
+      "reserveCount": 0,
+      "settleCount": 0,
+      "units": [
+        {
+          "ordinal": 1,
+          "reserveCount": 0,
+          "settleCount": 0
+        },
+        {
+          "ordinal": 2,
+          "reserveCount": 0,
+          "settleCount": 0
+        },
+        {
+          "ordinal": 3,
+          "reserveCount": 0,
+          "settleCount": 0
+        },
+        {
+          "ordinal": 4,
+          "reserveCount": 0,
+          "settleCount": 0
+        }
+      ]
+    },
+    "localEvidence": {
+      "rawFiles": 0,
+      "receiptFiles": 0,
+      "incompleteStateWrite": false
+    },
+    "dispatchEligibility": "NOT_EVALUATED_READ_ONLY",
+    "lockExists": false,
+    "halt": null,
+    "ledger": {
+      "rows": 1000,
+      "sha256": "fe24750479d3a5229e386e8088199ae097f48a1f6872f0eaac016cfaeddbb48d",
+      "tail": "3607e0c9b993aa4004bbddcbc06cfe9c76423f88ae274f52db221863bb9ecd15",
+      "batchRows": 0
+    },
+    "dispatch": "NOT_PERFORMED",
+    "ledgerWrites": 0
+  },
+  "metricScope": "CURRENT_SINGLE_ARM_DEVELOPMENT_NOT_IMPROVEMENT",
+  "version": "public-source-fact-adjudication-1.0.0",
+  "denominator": 4,
+  "cases": [
+    {
+      "sourceId": "C19-CURRENT-REAL-01",
+      "adjudicationRecords": 0,
+      "version": "public-source-fact-adjudication-1.0.0",
+      "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "stages": {
+        "modelFirstFacts": {
+          "complete": "UNKNOWN",
+          "correct": 0,
+          "incorrect": 0,
+          "unknown": 7,
+          "checks": [
+            {
+              "factId": "C19-CURRENT-REAL-01-F1",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-01-F2",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-01-F3",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-01-F4",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-01-F5",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-01-F6",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-01-F7",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            }
+          ],
+          "unregistered": []
+        },
+        "displayBeforeHuman": {
+          "complete": "UNKNOWN",
+          "correct": 0,
+          "incorrect": 0,
+          "unknown": 7,
+          "checks": [
+            {
+              "factId": "C19-CURRENT-REAL-01-F1",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-01-F2",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-01-F3",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-01-F4",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-01-F5",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-01-F6",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-01-F7",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            }
+          ],
+          "unregistered": []
+        },
+        "humanFinal": {
+          "complete": "UNKNOWN",
+          "correct": 0,
+          "incorrect": 0,
+          "unknown": 7,
+          "checks": [
+            {
+              "factId": "C19-CURRENT-REAL-01-F1",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-01-F2",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-01-F3",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-01-F4",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-01-F5",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-01-F6",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-01-F7",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            }
+          ],
+          "unregistered": []
+        }
+      },
+      "comparison": "SINGLE_ARM_CURRENT_BASELINE_NOT_RELATIVE_IMPROVEMENT"
+    },
+    {
+      "sourceId": "C19-CURRENT-REAL-02",
+      "adjudicationRecords": 0,
+      "version": "public-source-fact-adjudication-1.0.0",
+      "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "stages": {
+        "modelFirstFacts": {
+          "complete": "UNKNOWN",
+          "correct": 0,
+          "incorrect": 0,
+          "unknown": 7,
+          "checks": [
+            {
+              "factId": "C19-CURRENT-REAL-02-F1",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-02-F2",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-02-F3",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-02-F4",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-02-F5",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-02-F6",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-02-F7",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            }
+          ],
+          "unregistered": []
+        },
+        "displayBeforeHuman": {
+          "complete": "UNKNOWN",
+          "correct": 0,
+          "incorrect": 0,
+          "unknown": 7,
+          "checks": [
+            {
+              "factId": "C19-CURRENT-REAL-02-F1",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-02-F2",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-02-F3",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-02-F4",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-02-F5",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-02-F6",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-02-F7",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            }
+          ],
+          "unregistered": []
+        },
+        "humanFinal": {
+          "complete": "UNKNOWN",
+          "correct": 0,
+          "incorrect": 0,
+          "unknown": 7,
+          "checks": [
+            {
+              "factId": "C19-CURRENT-REAL-02-F1",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-02-F2",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-02-F3",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-02-F4",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-02-F5",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-02-F6",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-02-F7",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            }
+          ],
+          "unregistered": []
+        }
+      },
+      "comparison": "SINGLE_ARM_CURRENT_BASELINE_NOT_RELATIVE_IMPROVEMENT"
+    },
+    {
+      "sourceId": "C19-CURRENT-REAL-03",
+      "adjudicationRecords": 0,
+      "version": "public-source-fact-adjudication-1.0.0",
+      "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "stages": {
+        "modelFirstFacts": {
+          "complete": "UNKNOWN",
+          "correct": 0,
+          "incorrect": 0,
+          "unknown": 7,
+          "checks": [
+            {
+              "factId": "C19-CURRENT-REAL-03-F1",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-03-F2",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-03-F3",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-03-F4",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-03-F5",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-03-F6",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-03-F7",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            }
+          ],
+          "unregistered": []
+        },
+        "displayBeforeHuman": {
+          "complete": "UNKNOWN",
+          "correct": 0,
+          "incorrect": 0,
+          "unknown": 7,
+          "checks": [
+            {
+              "factId": "C19-CURRENT-REAL-03-F1",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-03-F2",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-03-F3",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-03-F4",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-03-F5",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-03-F6",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-03-F7",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            }
+          ],
+          "unregistered": []
+        },
+        "humanFinal": {
+          "complete": "UNKNOWN",
+          "correct": 0,
+          "incorrect": 0,
+          "unknown": 7,
+          "checks": [
+            {
+              "factId": "C19-CURRENT-REAL-03-F1",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-03-F2",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-03-F3",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-03-F4",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-03-F5",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-03-F6",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-03-F7",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            }
+          ],
+          "unregistered": []
+        }
+      },
+      "comparison": "SINGLE_ARM_CURRENT_BASELINE_NOT_RELATIVE_IMPROVEMENT"
+    },
+    {
+      "sourceId": "C19-CURRENT-REAL-04",
+      "adjudicationRecords": 0,
+      "version": "public-source-fact-adjudication-1.0.0",
+      "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "stages": {
+        "modelFirstFacts": {
+          "complete": "UNKNOWN",
+          "correct": 0,
+          "incorrect": 0,
+          "unknown": 7,
+          "checks": [
+            {
+              "factId": "C19-CURRENT-REAL-04-F1",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-04-F2",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-04-F3",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-04-F4",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-04-F5",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-04-F6",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-04-F7",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            }
+          ],
+          "unregistered": []
+        },
+        "displayBeforeHuman": {
+          "complete": "UNKNOWN",
+          "correct": 0,
+          "incorrect": 0,
+          "unknown": 7,
+          "checks": [
+            {
+              "factId": "C19-CURRENT-REAL-04-F1",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-04-F2",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-04-F3",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-04-F4",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-04-F5",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-04-F6",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-04-F7",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            }
+          ],
+          "unregistered": []
+        },
+        "humanFinal": {
+          "complete": "UNKNOWN",
+          "correct": 0,
+          "incorrect": 0,
+          "unknown": 7,
+          "checks": [
+            {
+              "factId": "C19-CURRENT-REAL-04-F1",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-04-F2",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-04-F3",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-04-F4",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-04-F5",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-04-F6",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "C19-CURRENT-REAL-04-F7",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            }
+          ],
+          "unregistered": []
+        }
+      },
+      "comparison": "SINGLE_ARM_CURRENT_BASELINE_NOT_RELATIVE_IMPROVEMENT"
+    }
+  ],
+  "summary": {
+    "modelFirstFacts": {
+      "correct": 0,
+      "incorrect": 0,
+      "unknown": 4,
+      "denominator": 4
+    },
+    "displayBeforeHuman": {
+      "correct": 0,
+      "incorrect": 0,
+      "unknown": 4,
+      "denominator": 4
+    },
+    "humanFinal": {
+      "correct": 0,
+      "incorrect": 0,
+      "unknown": 4,
+      "denominator": 4
+    }
+  },
+  "modelCallsByThisReport": 0,
+  "ledgerWrites": 0,
+  "humanMetrics": "NOT_OBSERVABLE"
+}
