@@ -1,23 +1,57 @@
-# 下一执行：特定请求证据接续，首次准确率主线不变
+# 下一执行：当前C19真实首答诊断，不再等待原封存支线
 
-本文件不授权付费、解封、补结算、真人或发布。没有供应商材料时无需重复当前已验工程。
-
-2026-10-05：[登录控制台有限查询](../recognition-optimization/candidate19-public-development/paid-evidence/sealed-followup/PROVIDER_LOOKUP.md)已完成。可见用量为汇总、账单为充值/赠送；导出未取得，没有第2关联。用户先自行通过官方反馈取得特定记录或支持答复。收到前不要重复同一查证/已验工程，也不要新增空白恢复包或替代批次。下面执行仅在有新材料或真实新缺口时推进相应步骤。
+本文件是接续说明，不授权付费、恢复原请求、真人、默认替换或发布。两项本地时间修复已经交付；下一轮需要新模型证据时，先具体冻结核价，再申请一次明确许可。不要再扩大手写反例来代替真实首次输出。
 
 ~~~text
-继续学生事务管家首次准确率主线。工作区C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/比赛；分支codex/e2-candidate11-blind-eval。核实际HEAD/用户改动/upstream/remote，保留资产不回滚。有限读AGENTS/PRD首次确认段、CURRENT_CONTEXT/活动路线、candidate19-public-development/RESULTS和paid-evidence/sealed-followup的FORENSICS/FORENSIC_SNAPSHOT/PRODUCT_DIAGNOSTIC/BROWSER_EVIDENCE/VALIDATION/BUILD_PROOF；不重开全仓审计。
+继续学生事务管家首次准确率主线。
+工作区C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/比赛；
+分支codex/e2-candidate11-blind-eval。
+核实际HEAD、用户改动、upstream/远端，保留资产，不回滚。
 
-原C19-PUBLIC-DEVELOPMENT-R1：1SETTLED/2UNCERTAIN/3与4NOT_SENT，唯一原grant，US$1.30整批硬限。第2一次reserve上界0.324404、无raw/settle，送达/实扣未知；HALT观测2026-10-04T15:44:44.476Z不是发送起点。第1usage4684/4096cached/887/0reasoning、内部0.002470非实扣。原HALT/锁/STATE/AUTH/PRICE/raw/receipt和快照不改，不能因为没raw判没送，不prepare/dispatch/新grant/重发/猜settle。旧12许可和3.90耗尽。
+目标：查当前Candidate19对未取得模型输出的真实通知，人工改动前整份建议到底对不对；用真实结果最多修2个高价值根因。不是先造Candidate20、扩大模板、等待供应商或重审全仓。
 
-先只读核现场/报告verify/84保护119冻结7归档/原996前缀与1000完整链；当前SHA fe24750479d3a5229e386e8088199ae097f48a1f6872f0eaac016cfaeddbb48d，合法追加定位而非改旧断言。若用户给特定供应商请求记录，核请求关联、时间/responseID/status/usage/计费，原件只本机忽略.data。通用余额不足以证明第2；无材料保持封存，一次列缺项，不循环探测。计费确定输出不可恢复仍OUTPUT_UNAVAILABLE/UNKNOWN，不造raw不删分母。
+有限读取AGENTS、PRD首次/确认/安排段、CURRENT_CONTEXT、活动路线、candidate19-public-development/RESULTS及current-notice-mainline的SOURCES/PROVENANCE/IMPLEMENTATION/BEFORE/AFTER/OLD_RECORDING_REGRESSION/BROWSER_EVIDENCE/VALIDATION。
+保留公共时间2.1.0、首次组装1.1.0，以及支持/渠道/资格/禁止/保存/安排已交付能力；不要原样重做。
+已验2手写wire/3端点不是模型成绩；六实际节选均新输出NOT_RUN/整份UNKNOWN。旧13首屏事实逐份相同。v11 C17 2/6 C19 1/6 MIXED_PROGRESS及后验4暂定2错/5暂定1争议不改。
 
-当前执行器不支持外部对账结案/跳过UNCERTAIN ordinal。材料齐备后才提出最小版本化恢复层和对应授权：原快照/identity/requestSHA、唯一grant/整批上限、既有结算和未决暴露、同步HEAD/有效核价绑定，旧现场保留。只有用户另行明确相应范围才可恢复，1绝不重发、2不自动重发、3/4每身份最多一次、零retry/repair/verifier；不将当前产品组件塞入原请求。
+一、先固定最小必要实际输出
+本轮当前版本单臂诊断即可，不是新候选优劣配对。
+复用六份已取官方材料，按主用户/结构覆盖决定具体子集；FRESH-07中学生通知只边界控制，FRESH-01历史时基不当当前活动。
+确需补明确未公布或真实取消来源时，有限官方公开取材，smart-crawl已装路由；只写清节选边界，不凑大数据集。未读海报/二维码不补。
+参照已provisional：核最小任务/事件/时间/材料/渠道/办结/条件/关系。日期窗口/日前边界/工作日/角色争议单列，未决不满分。参照以原文建立，不能看回答后改答案凑对。
+从未取得真实输出的来源在输出前固定选择和分母；已用于工程开发只能叫Development，不叫Holdout。
 
-当前event-time-label-context-1.0.0修两种合法复合标签原有事件/起止误拒，条件否定/坏owner/值/关系仍拒，inferredFacts0。基础支持1.1.0、渠道1.3.0、D27复用，C19输入未改。未来安全phase诊断只记录白名单，不反推过去。当前4原答1暂定3未知、冻结wire1拒3未知、冻结首屏0正确1错3未知、当前首屏1暂定3未知，本轮旧13展示未变；匿名2夹具不是模型样本，不报总体正确率。旧v11 C17 2/6 C19 1/6 MIXED_PROGRESS、后验争议保持。
+二、冻结再申请唯一具体许可
+复用现安全执行器及公共组件，不重建发送系统。
+固定批目的/来源参照SHA/实际请求identity与requestSha/模型参数输出界/referenceTime/timezone/C19输入/Schema/当前公共转换/评价及首次显示规则。请求不含Expected。
+所有新身份NOT_RUN、dispatchAuthorized=false。不是原不确定身份替代；原封存支线仍不动。
+需要修改模型输入的假设必须从真实生成根因产生；无此证据不改Prompt或候选。
+冻结及普通回放准备完成后，只读核官方模型路由/当前价格/上下文与输出/附加费/账本完整链/同步HEAD，费用用可证明上界，不用请求字节估token。
+给用户唯一具体授权申请：批名、模型、确切身份次数、美元总硬限、唯一新grant、逐单元reserve/settle、每身份最多一次、零retry/repair/verifier、不确定停发。
+没有新许可只停止付费，完成其余授权本地；不得沿用1.30/3.90/5.30旧许可。
+用户随后明确授权，直接同包接续执行和结果，不另造启动阶段。
 
-普通App/ReviewSession/DomainCommitPlan/Repository已验6841/new sealedfollowup1005库，固定录制实时关闭。未改路径复用明确证据；有新确定根因才新库验受影响首屏/保存/失败手动恢复/只重读/刷新/独立值依据owner。最多2首次根因/1生成假设，无实际缺口不扩大模板/Prompt。公共程序旧raw先修；只有真实输入变化且需新输出才新最小两臂假设/冻结/费用申请，不默认编号/16/24或第三臂，不以新批消除旧未知。人补事实不计首次正确。
+三、真实结果与定向修复
+严格ordinal和跨进程状态锁，reserve→持久send状态→最多一次发送→原样raw/真实usage→settle；不确定立即封存，不以无raw判未发，保留固定分母。
+按每来源原文→原答→Schema→公共转换→首次页面→保存/安排追层。
+完整事实包括无任务事件、起止及未公布、资格与前置等待、材料/目的地/办结、取消对象与真实端点。
+允许合法表示；拒绝错对象/值/类型/owner、关键遗漏、无据待办、矛盾证据/关系。
+原答、转换后的人工前首屏、人改后最终、安排分开。保存成功、可解码率或人补录不能算首次正确。
+先旧raw修确定程序错；若生成错确需改输入，提出最多1个可反驳假设并另版本，旧C19不改。只有必须验证新输入时才冻结最小两臂另申请，不默认16/24/第三臂。
+整份正确/错/未知分母保留；标题/泄漏未裁决仍NOT_ADJUDICATED。单臂诊断不声称C19相对新候选获胜；小Development不证明泛化。
 
-本地授权以用户实际范围为准。不读Secret/旧用户库、不新增依赖/升级v8、不改旧冻结/锁/断言/成绩。本轮没有新增明确许可则model/grant/reserve/settle0，账本只读。测量复用，缺失null、无edit不造editId，工程不进真人。定向验证先行，适用lint/test/build/security/隔离/历史，既有无影响检查复用；41组35PASS6旧FAIL/audit5H2M production0不称全绿，不改旧断言凑绿。Conventional Commit后立即普通push，更新现有入口/短交接/路线/索引。
+四、产品验收与交付
+沿普通App/ReviewSession/DomainCommitPlan/Repository，D27原截止与个人计划分开、不扩全局算法。
+新端口新库实际回放新raw首次显示、正确项部分保存、坏关系局部阻断、事务失败保留输入/手动恢复、已提交只重读、刷新/独立值/精度/依据/owner。
+不动6851或旧用户库。旧页面不能代替新模型回放。普通用户无需ID/scope/ISO，不为省点击静默正式写入。
+测量沿用，无edit不造editId，时间缺失null；canonical部分终态单列，不把旧ordinary.partial=false当真值；工程不进四项真人指标。
+只读核84保护119冻结7归档/1000完整链及原996前缀；合法追加先定位，不改旧快照断言。
+原公开批1SETTLED1UNCERTAIN2NOT_SENT，唯一旧grant封存，不prepare/dispatch/恢复/补settle/解锁/重发；供应商没有新特定材料不循环查，支线不阻产品工作。
+新代码定向及适用lint/test/build/security/隔离/浏览器，独立组确定退出；六旧失败和server随机bad port、audit5H2M/production0分别报告，不弱化断言/加timeout/改锁。
+本轮已通过无影响检查可以明确复用，普通可修问题连续完成。
+更新一个现有结果入口、短交接/路线/索引，Conventional Commit后立即普通push，核HEAD/upstream/远端/干净或准确用户改动。
 
-最后报告实际首次变化/完整分母未知/模型工程边界、原批证据恢复支持、页面正式值/恢复/读回、调用费用/测试保护Git与最少下一材料。无新授权付费封存。不开展真人/Holdout/default替换/合并/部署。
+交付大白话：真实首答/首次展示正确、错误和未知各多少；最关键逐来源缺口/争议；具体程序或生成修复；用户还须改什么；实际保存/安排/恢复/读回；模型发送/确定/未知/费用；测试保护账本Git；只缺的具体许可或材料。
+本地授权以用户本轮明确范围为准；本文件不授权新的业务模型、grant/reserve/settle、真人/Holdout/default替换/合并/部署。
+不读取Secret、旧用户库，不新增依赖/升级v8，不改旧Expected/raw/成绩/冻结/锁/断言。
 ~~~
