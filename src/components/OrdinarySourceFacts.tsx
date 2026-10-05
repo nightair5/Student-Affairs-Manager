@@ -1,6 +1,6 @@
 import {useEffect,useRef,useState} from 'react'
 import type {ExtractionDraft,Source} from '../types'
-import type {RecognitionResult} from '../recognition/types'
+import type {RecognitionResult,TimePointSuggestionV2} from '../recognition/types'
 import type {WorkspaceV8} from '../domain/v2/types'
 import type {D20ReviewSessionRepository,ReviewField} from '../experiments/candidate16/d20ReviewSession'
 import {interpretTimeD26} from '../lib/timeSemanticsD26'
@@ -9,6 +9,12 @@ import {MATERIAL_CHANNEL_GROUNDING_VERSION,type MaterialChannelAudit} from '../r
 type Props={draft:ExtractionDraft;source:Source|null;workspace:WorkspaceV8|null;session:D20ReviewSessionRepository;onDirty:(dirty:boolean)=>void;onSave:(result:RecognitionResult)=>Promise<void>}
 type Buffer={kind?:'event'|'task';action?:string;object?:string;eventId:string;title:string;location:string;start:string;end:string}
 const blank:Buffer={eventId:'',title:'',location:'',start:'',end:''}
+function eventTimeSummary(point:TimePointSuggestionV2):string {
+  if(point.needsConfirmation||!point.normalizedValue)return point.rawText+'（具体时刻未知，不创建确定日程）'
+  const match=point.normalizedValue.match(/^(\d{4})-(\d{2})-(\d{2})(?:T(\d{2}:\d{2}))?$/u)
+  if(!match)return point.rawText
+  return `${match[1]}年${Number(match[2])}月${Number(match[3])}日${match[4]?' '+match[4]:''}（原文：${point.rawText}）`
+}
 /** Uses the ordinary result + persistent ReviewSession and the parent's real repository save. */
 export function OrdinarySourceFacts({draft,source,workspace,session,onDirty,onSave}:Props){
   const result=draft.recognitionResult
@@ -87,7 +93,7 @@ export function OrdinarySourceFacts({draft,source,workspace,session,onDirty,onSa
       {result.standaloneTasks.flatMap(t=>t.completionCriteria.map((c,i)=><p key={t.tempId+':'+i}>完成标准：{c}</p>))}
     </section>:null}
     <h3>{result.events.length?'同一通知的事件':'信息与独立事件'}</h3>
-    {result.events.map(event=><article className="recognition-entity-row" key={event.tempId}><div><strong>{event.title}</strong><p>{event.location||'地点未说明'}；{[event.startTimePointTempId,event.endTimePointTempId].filter(Boolean).map(id=>{const p=result.timePoints.find(t=>t.tempId===id);return p?p.rawText+(p.needsConfirmation?'（具体时刻未知，不创建确定日程）':''):''}).join(' → ')||'原文未说明时间'}</p></div><button type="button" disabled={Boolean(buffer)} onClick={()=>edit({eventId:event.tempId,title:event.title,location:event.location||'',start:result.timePoints.find(p=>p.tempId===event.startTimePointTempId)?.rawText||'',end:result.timePoints.find(p=>p.tempId===event.endTimePointTempId)?.rawText||''},false)}>编辑事件</button></article>)}
+    {result.events.map(event=><article className="recognition-entity-row" key={event.tempId}><div><strong>{event.title}</strong><p>{event.location||'地点未说明'}；{[event.startTimePointTempId,event.endTimePointTempId].filter(Boolean).map(id=>{const p=result.timePoints.find(t=>t.tempId===id);return p?eventTimeSummary(p):''}).join(' → ')||'原文未说明时间'}</p></div><button type="button" disabled={Boolean(buffer)} onClick={()=>edit({eventId:event.tempId,title:event.title,location:event.location||'',start:result.timePoints.find(p=>p.tempId===event.startTimePointTempId)?.rawText||'',end:result.timePoints.find(p=>p.tempId===event.endTimePointTempId)?.rawText||''},false)}>编辑事件</button></article>)}
     <p>没有待办也可以保存停机、维护等事件。纯信息可直接标记已核对，不创建任务或空项目。</p>
     <button type="button" disabled={Boolean(buffer)} onClick={()=>edit(blank,false)}>依据原文补充遗漏事件</button>
     <button type="button" disabled={Boolean(buffer)} onClick={()=>edit({...blank,kind:'task',action:'',object:''},false)}>依据原文补充遗漏任务</button>

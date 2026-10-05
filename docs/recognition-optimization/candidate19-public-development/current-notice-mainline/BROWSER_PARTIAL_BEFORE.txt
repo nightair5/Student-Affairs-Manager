@@ -1,0 +1,197 @@
+- link "跳到主要内容":
+  - /url: "#main-content"
+- banner:
+  - button "返回今日首页":
+    - strong: 事务管家
+  - button "新事务":
+    - text: 新事务
+- navigation "手机端主要导航":
+  - button "今日":
+    - generic: 今日
+  - button "3 收件箱":
+    - emphasis: "3"
+    - generic: 收件箱
+  - button "项目":
+    - generic: 项目
+  - button "日历":
+    - generic: 日历
+  - button "更多":
+    - generic: 更多
+- generic "匿名工程输入 · 普通产品路径 · 不发送模型请求"
+- main:
+  - text: 来源先保存，确认后入库
+  - heading "待确认" [level=1]
+  - paragraph: 这里只显示已经形成建议、仍等待你核对的来源；确认前不会创建正式任务。
+  - strong: "1"
+  - text: 份需关注
+  - group "收件箱视图":
+    - button "全部来源"
+    - button "待确认 1" [pressed]
+  - button "新建手动来源":
+    - text: 新建手动来源
+  - checkbox "选择全部待核对"
+  - text: 选择全部待核对
+  - article:
+    - checkbox "选择 手动粘贴消息"
+    - generic: 选择 手动粘贴消息
+    - generic: Candidate19 固定录制（非实时调用） 建议
+    - generic: 待核对
+    - heading "手动粘贴消息" [level=2]
+    - paragraph: 先填写场地使用登记。填好之后递交场地使用登记。器材领用资格还未公布，符合资格才能领取演示器材。
+    - paragraph: 识别建议已保存，确认前不会创建正式任务。
+    - term: 项目
+    - definition: 独立事项
+    - term: 实体
+    - definition: 3 任务 · 0 材料 · 0 时间 · 0 活动
+    - button "核对 3 项任务、0 个事件":
+      - text: 核对 3 项任务、0 个事件
+    - button "查看来源":
+      - text: 查看来源
+    - button "归档":
+      - text: 归档
+- status:
+  - generic: 匿名工程建议已生成；没有模型请求，核对后走普通正式保存。
+  - button "关闭提示": ×
+- dialog "识别出 3 件事":
+  - banner:
+    - generic: 第 2 步 · Candidate19 固定录制（非实时调用） · 比较后程序转换 · 无新模型请求
+    - heading "识别出 3 件事" [level=2]
+    - paragraph: 先看标题和时间；不准确时再点“编辑”。
+    - button "稍后处理并关闭" [active]:
+  - status "未确认编辑检查点":
+    - strong: 本来源核对会话
+    - paragraph: 编辑在确认前不会创建任务。
+  - strong: 3 项任务、0 个事件待确认
+  - generic: 确认后才会进入今日和任务中心
+  - region "项目匹配与识别质量":
+    - strong: 项目归属建议
+    - text: 未主动建立或匹配项目。
+    - generic: 选择项目归属
+    - combobox "选择项目归属":
+      - option "新建项目"
+      - option "作为独立事项" [selected]
+      - option "稍后决定"
+    - strong: 需要重点核对
+    - generic: 存在识别冲突；存在质量标记
+    - button "只保留原文明确"
+    - region "聚焦复核原因":
+      - strong: 这份通知包含多个时间、材料或阶段
+      - generic: 系统已经完成初步整理，请重点确认标记项；不会自动选择、修改或创建任何事项。
+      - list:
+        - strong: 存在识别冲突
+        - generic: 1 项结果互相冲突，不会自动替你决定。
+        - strong: 存在质量标记
+        - generic: 1 项质量标记需要人工复核。
+      - generic "来源提取元数据":
+        - generic: 47 字
+      - strong: 质量标记
+      - list:
+        - listitem: 资格尚未确认，不能当成已符合；请保留待核对。
+    - strong: 发现 1 项冲突
+    - article:
+      - paragraph: 资格尚未确认，不能当成已符合；请保留待核对。
+      - generic: 暂无可定位依据
+  - generic "原始通知与定位依据":
+    - text: 原始通知与定位依据
+  - paragraph: 先填写场地使用登记。填好之后递交场地使用登记。器材领用资格还未公布，符合资格才能领取演示器材。
+  - region "项目树待确认事项":
+    - region "同一通知的独立事件与信息":
+      - heading "信息与独立事件" [level=3]
+      - paragraph: 没有待办也可以保存停机、维护等事件。纯信息可直接标记已核对，不创建任务或空项目。
+      - button "依据原文补充遗漏事件"
+      - button "依据原文补充遗漏任务"
+    - article:
+      - checkbox "选择该任务" [checked]
+      - generic: 选择该任务
+      - generic: "1"
+      - strong: 填写场地使用登记
+      - time:
+        - text: 原答未提供截止
+      - button "编辑":
+        - text: 编辑
+      - generic: 其他
+      - generic: 耗时尚未估计
+      - generic: 原文明确
+      - paragraph: 下一步填写场地使用登记
+      - generic "为什么这样拆？"
+      - button "不需要":
+        - text: 不需要
+      - button "加入任务":
+        - text: 加入任务
+    - article:
+      - checkbox "选择该任务" [checked]
+      - generic: 选择该任务
+      - generic: "2"
+      - strong: 递交场地使用登记
+      - time:
+        - text: 原答未提供截止
+      - button "编辑":
+        - text: 编辑
+      - generic: 其他
+      - generic: 耗时尚未估计
+      - generic: 原文明确
+      - paragraph: 前置完成后递交场地使用登记
+      - paragraph: 等待前一步：填写场地使用登记。这项待办可以保留，前置完成状态未被改成已完成。
+      - generic "为什么这样拆？"
+      - button "不需要":
+        - text: 不需要
+      - button "加入任务":
+        - text: 加入任务
+    - article:
+      - checkbox "选择该任务"
+      - generic: 选择该任务
+      - generic: "3"
+      - strong: 领取演示器材
+      - time:
+        - text: 原答未提供截止
+      - button "编辑":
+        - text: 编辑
+      - generic: 其他
+      - generic: 耗时尚未估计
+      - generic: 原文明确
+      - paragraph: 核对后动作领取演示器材
+      - status: 资格尚未确认，不能当成已符合；请保留待核对。
+      - generic "为什么这样拆？"
+      - button "不需要":
+        - text: 不需要
+      - button "加入任务" [disabled]:
+        - text: 加入任务
+  - contentinfo:
+    - generic "确认后创建预览":
+      - strong: 本次将创建
+      - generic: 0 个项目
+      - generic: 2 个任务
+      - generic: 0 个时间节点
+      - generic: 0 项材料
+      - generic: 0 个事件
+    - button "稍后再处理"
+    - button "一次接受本通知（2）":
+      - text: 一次接受本通知（2）
+- generic "本批真实录制 · 选择来源与独立读回"
+- paragraph: d2b0cc6800cc / source 97e42e786c60；rco-mainline-01-02-i1-d27-plan-recorded-currentnoticefinal1005；source-support-accounting-projection-1.1.0 / event-time-label-context-1.0.0 / source-grounded-nonaction-projection-1.0.1 / source-grounded-conditional-nonaction-1.0.0 / explicit-source-contract-4.0.0 / material-channel-role-grounding-1.3.0 / source-proven-eligibility-1.0.0 / source-time-semantics-2.1.0 / grounded-first-suggestion-1.1.0；ENGINEERING_REPLAY；此入口模型请求0。当前4来源：1份确定录制、1份发送状态不确定、2份停发；付费现场封存。另12份为历史回归，不混入当前分母；另2份公开摘录的手写合法契约，仅证明程序时间转换，非模型输出。下方是后验程序转换，不改原成绩。原答与冻结诊断不改。
+- text: 录制来源
+- combobox "录制来源":
+  - option "PUB-C19-01 / Candidate19 / 原冻结：KNOWN_SETTLED_IN_SEALED_INCOMPLETE_BATCH"
+  - option "C19-DEV-S01 / Candidate17 / 原冻结：HISTORICAL_REGRESSION_NOT_CURRENT_FOUR"
+  - option "C19-DEV-S01 / Candidate19 / 原冻结：HISTORICAL_REGRESSION_NOT_CURRENT_FOUR"
+  - option "C19-DEV-S02 / Candidate19 / 原冻结：HISTORICAL_REGRESSION_NOT_CURRENT_FOUR"
+  - option "C19-DEV-S02 / Candidate17 / 原冻结：HISTORICAL_REGRESSION_NOT_CURRENT_FOUR"
+  - option "C19-DEV-S03 / Candidate17 / 原冻结：HISTORICAL_REGRESSION_NOT_CURRENT_FOUR"
+  - option "C19-DEV-S03 / Candidate19 / 原冻结：HISTORICAL_REGRESSION_NOT_CURRENT_FOUR" [selected]
+  - option "C19-DEV-S04 / Candidate19 / 原冻结：HISTORICAL_REGRESSION_NOT_CURRENT_FOUR"
+  - option "C19-DEV-S04 / Candidate17 / 原冻结：HISTORICAL_REGRESSION_NOT_CURRENT_FOUR"
+  - option "C19-DEV-S05 / Candidate17 / 原冻结：HISTORICAL_REGRESSION_NOT_CURRENT_FOUR"
+  - option "C19-DEV-S05 / Candidate19 / 原冻结：HISTORICAL_REGRESSION_NOT_CURRENT_FOUR"
+  - option "C19-DEV-S06 / Candidate19 / 原冻结：HISTORICAL_REGRESSION_NOT_CURRENT_FOUR"
+  - option "C19-DEV-S06 / Candidate17 / 原冻结：HISTORICAL_REGRESSION_NOT_CURRENT_FOUR"
+  - option "heading-clock / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT"
+  - option "midnight-deadline / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT"
+- textbox "本批匿名通知原文": 先填写场地使用登记。填好之后递交场地使用登记。器材领用资格还未公布，符合资格才能领取演示器材。
+- paragraph: 复制到普通“新事务”；原回答、程序转换与用户修改分别保留。相对日期使用来源原基准 2026-10-03T09:00:00+08:00。
+- paragraph: 另有2份匿名定向反例，经同一普通页面处理；由工程作者编写，不是模型回答，也没有新增付费身份。当前：RECORDED_MODEL_ENGINEERING_REPLAY。
+- button "注入正式保存失败"
+- button "注入提交后读回失败"
+- button "注入检查点失败"
+- status: 已注入：下一次独立读回失败
+- button "本批独立canonical读回"
+- button "页面测量读回"

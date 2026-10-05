@@ -4,7 +4,7 @@ import type { SemanticInput } from '../experiments/mainline04/semanticContract'
 import type { RecognitionResult, TaskSuggestionV2, TimePointSuggestionV2 } from './types'
 import { groundEligibility } from './eligibilityGrounding'
 
-export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.0.0'
+export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.1.0'
 interface ProseRecord { entityId: string; kind: 'task' | 'event' | 'source'; title: string; description: string }
 export interface D26FirstSuggestionAudit {
   version: typeof D26_FIRST_SUGGESTION_VERSION
@@ -45,13 +45,39 @@ function time<T extends TimeFields & { tempId: string; rawText: string; type: Ti
   audit.times.push({ entityId: point.tempId, before, after: fields(point), interpretation })
 }
 
-function eventAnchor(pointId: string, events: Array<{ startTimePointTempId: string | null; endTimePointTempId: string | null }>, points: Array<{ tempId: string; rawText: string; type: TimePointSuggestionV2['type'] }>, quotes: (id: string) => string[], referenceTime: string, timezone: string) {
+type EventAnchorOwner = { tempId: string; startTimePointTempId: string | null; endTimePointTempId: string | null }
+type AnchorPoint = { tempId: string; rawText: string; type: TimePointSuggestionV2['type'] }
+function citedEventDate(point: AnchorPoint, events: EventAnchorOwner[], quotes: (id: string) => string[], eventQuotes: (id: string) => string[], sourceText: string, referenceTime: string, timezone: string) {
+  if (!['event_start', 'event_end'].includes(point.type)) return undefined
+  // A date heading is usable only when the model already cites it for this
+  // endpoint AND its unique event owner, immediately above the cited time row.
+  // This does not scan unrelated source dates or create a missing endpoint.
+  const dates = unique(quotes(point.tempId).filter(q => /^(?:日期[：:]?\s*|时间[：:]?\s*)?\d{4}年\d{1,2}月\d{1,2}日(?:[（(](?:周|星期)[一二三四五六日天][）)])?\s*$/u.test(q)))
+  if (!dates.length) return undefined
+  const blocked = { date: undefined, context: '', blocked: true }
+  const owners = events.filter(e => e.startTimePointTempId === point.tempId || e.endTimePointTempId === point.tempId)
+  if (dates.length !== 1 || owners.length !== 1 || !eventQuotes(owners[0].tempId).includes(dates[0])) return blocked
+  const dateQuote = dates[0], at = sourceText.indexOf(dateQuote)
+  if (at < 0 || sourceText.indexOf(dateQuote, at + 1) >= 0) return blocked
+  const adjacent = quotes(point.tempId).filter(q => q.includes(point.rawText)).some(q => {
+    const start = sourceText.indexOf(q)
+    return start >= at + dateQuote.length && sourceText.indexOf(q, start + 1) < 0
+      && /^\s*$/u.test(sourceText.slice(at + dateQuote.length, start))
+  })
+  const date = interpretTimeD26(dateQuote, { type: point.type, referenceTime, timezone })
+  return adjacent && date.point.precision === 'date_only' && !date.point.needsConfirmation && date.knownDate
+    ? { date: date.knownDate, context: dateQuote, blocked: false } : blocked
+}
+
+function eventAnchor(pointId: string, events: EventAnchorOwner[], points: AnchorPoint[], quotes: (id: string) => string[], eventQuotes: (id: string) => string[], sourceText: string, referenceTime: string, timezone: string) {
   const owners = events.filter(event => event.endTimePointTempId === pointId)
   const anchors = owners.flatMap(event => {
     const start = points.find(point => point.tempId === event.startTimePointTempId)
     if (!start || start.tempId === pointId || !supported(start.rawText, quotes(start.tempId))) return []
-    const sourceContext = quotes(start.tempId).filter(quote => quote.includes(start.rawText)).map(quote => timeClause(start.rawText, quote)).join('\n')
-    const interpreted = interpretTimeD26(start.rawText, { type: start.type, referenceTime, timezone, sourceContext })
+    const heading = citedEventDate(start, events, quotes, eventQuotes, sourceText, referenceTime, timezone)
+    if (heading?.blocked) return []
+    const sourceContext = [heading?.context, ...quotes(start.tempId).filter(quote => quote.includes(start.rawText)).map(quote => timeClause(start.rawText, quote))].filter(Boolean).join('\n')
+    const interpreted = interpretTimeD26(start.rawText, { type: start.type, referenceTime, timezone, sourceContext, inheritedDate: heading?.date })
     return interpreted.knownDate ? [{ date: interpreted.knownDate, context: sourceContext }] : []
   })
   // Shared endpoints with disagreeing or absent anchors remain unresolved.
@@ -62,8 +88,12 @@ function eventAnchor(pointId: string, events: Array<{ startTimePointTempId: stri
 export function assembleSemanticFirstSuggestionD26(input: SemanticInput, context: WireContext) {
   const result = structuredClone(input), audit = auditRecord()
   const quote = (ids: string[]) => ids.flatMap(id => context.index.scopes.find(scope => scope.id === id)?.text ?? [])
+  const pointQuotes = (id: string) => quote(result.timePoints.find(p => p.tempId === id)?.scopeIds ?? [])
+  const eventQuotes = (id: string) => quote(result.events.find(e => e.tempId === id)?.scopeIds ?? [])
   for (const point of result.timePoints) {
-    const anchor = eventAnchor(point.tempId, result.events, result.timePoints, id => quote(result.timePoints.find(p => p.tempId === id)?.scopeIds ?? []), context.referenceTime, context.timezone)
+    const heading = citedEventDate(point, result.events, pointQuotes, eventQuotes, context.index.sourceContent, context.referenceTime, context.timezone)
+    const anchor = heading ?? eventAnchor(point.tempId, result.events, result.timePoints, pointQuotes, eventQuotes, context.index.sourceContent, context.referenceTime, context.timezone)
+    if (heading?.blocked) audit.unresolved.push({ entityId: point.tempId, reason: 'EVENT_DATE_HEADING_NOT_UNAMBIGUOUS' })
     time(point, quote(point.scopeIds), context.referenceTime, context.timezone, audit, anchor?.date, anchor?.context)
   }
   for (const task of result.tasks) {
@@ -96,8 +126,12 @@ export function assembleRecognitionFirstSuggestionD26(input: RecognitionResult, 
     const evidence = result.evidence.find(row => row.id === id)
     return evidence?.quote && context.sourceText.includes(evidence.quote) ? [evidence.quote] : []
   })
+  const pointQuotes = (id: string) => quote(result.timePoints.find(p => p.tempId === id)?.evidenceIds ?? [])
+  const eventQuotes = (id: string) => quote(result.events.find(e => e.tempId === id)?.evidenceIds ?? [])
   for (const point of result.timePoints) {
-    const anchor = eventAnchor(point.tempId, result.events, result.timePoints, id => quote(result.timePoints.find(p => p.tempId === id)?.evidenceIds ?? []), context.referenceTime, context.timezone)
+    const heading = citedEventDate(point, result.events, pointQuotes, eventQuotes, context.sourceText, context.referenceTime, context.timezone)
+    const anchor = heading ?? eventAnchor(point.tempId, result.events, result.timePoints, pointQuotes, eventQuotes, context.sourceText, context.referenceTime, context.timezone)
+    if (heading?.blocked) audit.unresolved.push({ entityId: point.tempId, reason: 'EVENT_DATE_HEADING_NOT_UNAMBIGUOUS' })
     time(point, quote(point.evidenceIds), context.referenceTime, context.timezone, audit, anchor?.date, anchor?.context)
   }
   const tasks: TaskSuggestionV2[] = [...result.standaloneTasks, ...result.milestones.flatMap(m => [...m.tasks, ...m.workPackages.flatMap(w => w.tasks)])]
