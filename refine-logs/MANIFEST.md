@@ -6,6 +6,8 @@
 
 ## 保留的冻结与复用入口
 
+最新接续：[供应商只读取证与查询草稿](../docs/recognition-optimization/candidate19-public-development/paid-evidence/sealed-followup/PROVIDER_LOOKUP.md)、[校验摘要](../docs/recognition-optimization/candidate19-public-development/paid-evidence/sealed-followup/PROVIDER_LOOKUP_VERIFY.json)。无新产品代码/模型输出，原第2仍未知；私人原件不进Git，未启用恢复。
+
 原冻结[Manifest](../docs/recognition-optimization/candidate19-development/MANIFEST.json)、[12身份](../docs/recognition-optimization/candidate19-development/PREPARED_REQUEST_IDENTITIES.json)、[历史零调用准备快照](../docs/recognition-optimization/candidate19-development/ZERO_CALL_REPORT.json)不改。旧[16raw转换诊断](../docs/recognition-optimization/source-contract-consistency/RESULTS.md)、[原D26实际比较](../docs/recognition-optimization/d26-execution-continuation/RESULTS.md)保留；不以兼容性改写模型分数，不复用耗尽许可。
 复用D27产品：[结果](../docs/recognition-optimization/d27-planning/D27_RESULTS.md)、[实现](../docs/recognition-optimization/d27-planning/IMPLEMENTATION.md)、[浏览器](../docs/recognition-optimization/d27-planning/BROWSER_EVIDENCE.md)、[验证](../docs/recognition-optimization/d27-planning/VALIDATION.md)、[证据索引](../docs/recognition-optimization/d27-planning/evidence/EVIDENCE_INDEX.json)。普通最小安排复用，旧6792/6798入口与库未动，本轮实际录制通过普通产品链回放，不是新模型调用。
 

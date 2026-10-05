@@ -1,8 +1,14 @@
-# 当前首次建议：复合时间标签误拒已修，付费现场保持封存
+# 当前首次建议：产品修复保留，第2请求取证仍未结案
 
-2026-10-05。状态：SEALED_REQUEST_FORENSICS_AND_EVENT_LABEL_PRODUCT_FIX_DELIVERED。唯一当前内部入口[http://127.0.0.1:6841/](http://127.0.0.1:6841/)，普通App、固定录制/匿名工程夹具、全新隔离库，实时模型机械关闭。
+2026-10-05。最新接续：PROVIDER_LOOKUP_COMPLETED_REQUEST_ASSOCIATION_UNRESOLVED；此前产品状态SEALED_REQUEST_FORENSICS_AND_EVENT_LABEL_PRODUCT_FIX_DELIVERED保持。唯一当前内部入口[http://127.0.0.1:6841/](http://127.0.0.1:6841/)，普通App、固定录制/匿名工程夹具、隔离库及构建未改，实时模型机械关闭。
 
-## 本轮实际改变
+## 最新只读取证
+
+实际进入已登录供应商控制台，查原日期用量及账单，核官方帮助→反馈表单；可见记录为账号汇总/充值信息，未建立第2身份与请求状态、usage、实扣或回答的关联。导出尝试未取得文件，原错误及恢复步骤保留。私人原件只留忽略.data，没有代发工单。[查证结果、用户可自行提交的准确查询文字及验证](paid-evidence/sealed-followup/PROVIDER_LOOKUP.md)。
+
+本次没有新输出或确定新产品缺口，未修改代码、Prompt、候选或恢复执行层，不创建替代批次。原4仍1SETTLED/1UNCERTAIN/2NOT_SENT，首次分母与旧结果不变。三项只读verify通过，账本和现场原字节不变；未受影响的工程和浏览器复用下文既有证据。下一材料仅能关联第2请求的供应商记录或支持答复，无证据继续封存。
+
+## 已交付的产品改进（本次未改代码）
 
 只修一个确定性产品根因：原回答已有事件、准确起止和依据，却因“暂停办理时间”“服务暂停运行时段”复合标签被公共支持转换误拒，生成不了第一份建议。用起点0718825原代码复跑同一完整有效夹具，2种均拒；新event-time-label-context-1.0.0都能首次展示。仍要求真实主事件/端点、同source/owner、紧邻实际值片段；不新建事件、不猜日期或接关系，inferredFacts=0。4个条件/否定/未公布/指令反例仍拒，错ID/值/类型/跨源/owner/缺主事实/坏边原保护保持。[wire与前后诊断](paid-evidence/sealed-followup/PRODUCT_DIAGNOSTIC.json)。
 

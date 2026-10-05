@@ -2,6 +2,8 @@
 
 本文件不授权付费、解封、补结算、真人或发布。没有供应商材料时无需重复当前已验工程。
 
+2026-10-05：[登录控制台有限查询](../recognition-optimization/candidate19-public-development/paid-evidence/sealed-followup/PROVIDER_LOOKUP.md)已完成。可见用量为汇总、账单为充值/赠送；导出未取得，没有第2关联。用户先自行通过官方反馈取得特定记录或支持答复。收到前不要重复同一查证/已验工程，也不要新增空白恢复包或替代批次。下面执行仅在有新材料或真实新缺口时推进相应步骤。
+
 ~~~text
 继续学生事务管家首次准确率主线。工作区C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/比赛；分支codex/e2-candidate11-blind-eval。核实际HEAD/用户改动/upstream/remote，保留资产不回滚。有限读AGENTS/PRD首次确认段、CURRENT_CONTEXT/活动路线、candidate19-public-development/RESULTS和paid-evidence/sealed-followup的FORENSICS/FORENSIC_SNAPSHOT/PRODUCT_DIAGNOSTIC/BROWSER_EVIDENCE/VALIDATION/BUILD_PROOF；不重开全仓审计。
 
