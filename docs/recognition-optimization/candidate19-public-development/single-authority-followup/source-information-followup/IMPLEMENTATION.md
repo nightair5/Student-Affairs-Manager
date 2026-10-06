@@ -10,3 +10,5 @@
 
 代码交付前10定向、4只读Node、9当前产品组、24当前安全检查记录（含carrier构建）确定退出通过；lint0错误8既有警告，build通过且保留既有大包警告，security scan通过。最终新端口/新库浏览器及交接在后续证据提交，代码测试不能代替实际点击验收。旧6历史失败与audit5H2M/production0沿原VALIDATION明确复用，未重新运行或改断言。
 
+
+最终6872同代码构建已实际验收首屏与三类恢复、正式独立值和刷新；见[BROWSER_EVIDENCE](BROWSER_EVIDENCE.md)与[VALIDATION](VALIDATION.md)。

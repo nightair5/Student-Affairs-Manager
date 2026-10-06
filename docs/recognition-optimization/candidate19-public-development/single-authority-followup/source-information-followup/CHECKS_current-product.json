@@ -1,0 +1,83 @@
+{
+  "phase": "current-product",
+  "timezone": "Asia/Shanghai",
+  "envDir": false,
+  "rootEnvRead": false,
+  "modelCalls": 0,
+  "ledgerWrites": 0,
+  "outcome": "PASS",
+  "results": [
+    {
+      "layer": "current-product",
+      "label": "timezone",
+      "status": 0,
+      "outcome": "PASS",
+      "error": null,
+      "log": ".data/source-information-1006/checks/current-product/timezone.log"
+    },
+    {
+      "layer": "current-product",
+      "label": "contract",
+      "status": 0,
+      "outcome": "PASS",
+      "error": null,
+      "log": ".data/source-information-1006/checks/current-product/contract.log"
+    },
+    {
+      "layer": "current-product",
+      "label": "time-contract",
+      "status": 0,
+      "outcome": "PASS",
+      "error": null,
+      "log": ".data/source-information-1006/checks/current-product/time-contract.log"
+    },
+    {
+      "layer": "current-product",
+      "label": "vitest-product",
+      "status": 0,
+      "outcome": "PASS",
+      "error": null,
+      "log": ".data/source-information-1006/checks/current-product/vitest-product.log"
+    },
+    {
+      "layer": "current-product",
+      "label": "server",
+      "status": 0,
+      "outcome": "PASS",
+      "error": null,
+      "log": ".data/source-information-1006/checks/current-product/server.log"
+    },
+    {
+      "layer": "current-product",
+      "label": "worker",
+      "status": 0,
+      "outcome": "PASS",
+      "error": null,
+      "log": ".data/source-information-1006/checks/current-product/worker.log"
+    },
+    {
+      "layer": "current-product",
+      "label": "worker-d26",
+      "status": 0,
+      "outcome": "PASS",
+      "error": null,
+      "log": ".data/source-information-1006/checks/current-product/worker-d26.log"
+    },
+    {
+      "layer": "current-product",
+      "label": "functions",
+      "status": 0,
+      "outcome": "PASS",
+      "error": null,
+      "log": ".data/source-information-1006/checks/current-product/functions.log"
+    },
+    {
+      "layer": "current-product",
+      "label": "time-parity",
+      "status": 0,
+      "outcome": "PASS",
+      "error": null,
+      "log": ".data/source-information-1006/checks/current-product/time-parity.log"
+    }
+  ]
+}
