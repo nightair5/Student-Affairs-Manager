@@ -4,6 +4,12 @@
 
 ## 付费后程序修复验证
 
+最终提交构建6871补充：87eb70021c8f/sourceb513046c8715、新库authority-paid-final-1006，真实01/02普通首屏及检查点/事务/读回三失败、手动恢复、刷新和独立Repository全部实际通过。总Task0/Project0/Event2/Time4/Material0，各来源1事件2时间；未公布结束null/vague、正确owner/依据，C19学习证明首屏遗漏如实保留错误。2工程计量报告29trace，刷新时间缺失null；console=[]，GET manifest200/模型POST403。见PAID_BROWSER_EVIDENCE.md及paid-evidence/BROWSER_SUMMARY/EVIDENCE_INDEX。
+
+最终历史命令确定exit0，准确状态HISTORY_PRESERVED_LEDGER_APPEND_REVIEW_REQUIRED：84保护/119冻结/7归档完整，较历史基线有175追加，并非全部本轮新增。本轮从已核1009基线只有六条授权grant/reserve/settle追加，独立reader核唯一grant/身份/receipt/raw/usage和1009原字节前缀及完整1015链，封存后16文件完全未变。最终security:scan exit0、4514 source/build文件PASS；日志及当前9产品组摘要SHA写paid-evidence/EVIDENCE_INDEX，不把旧六全量失败说全绿。
+
+后验产品及最终浏览器后，只读reader独立核原packet/Git blobs/唯一grant/receipt/raw/usage/完整1015链；1009原字节前缀验证，封存后16文件SHA与文件清单完全不变。paid-evidence/FINAL_READ_ONLY_SCENE.json是只读结果，不是新许可或旧付费gate替代。随后文档变更不影响87eb700运行代码，测试复用范围如实注明；最终历史及敏感信息扫描再执行一次，不重复无关全量矩阵。
+
 - 真实SA01两份录制只读诊断；原8状态2SETTLED/1UNCERTAIN/5NOT_SENT，整批EVIDENCE_INCOMPLETE。原授权US$2.60、1grant/3reserve/2settle，3传输入口、无重发；账本1015行六条合法追加。第三请求是否送达/扣费未知，锁和HALT保留。
 - 定向V5及新属性反向索引26PASS（21既有+5新），包括不同活动/共享时间、跨依据/对象/非法时间owner、安全隔离与真实正式保存读回；新只读封存读取器4Node PASS，完全匿名fake transport/临时账本，篡改raw、无settle、缺封存均拒绝且不修现场。
 - 当前产品9独立组全部确定退出PASS，含Vitest、server、worker、worker-d26、functions及时间/契约。lint0error/8旧warning，build PASS旧体积提示，security:scan PASS。新只读reader约束补充后再跑4Node检查；前一锁测试EISDIR是测试代码将目录当文件，已修并确定退出，不是遗留产品失败。

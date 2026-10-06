@@ -1,13 +1,13 @@
-# 当前交接：权威契约与逐事件处置已交付
+# 当前交接：真实两份录制完成首屏修复，原批不确定封存
 
-2026-10-06。ROOT C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/比赛，branch codex/e2-candidate11-blind-eval。[唯一结果](candidate19-public-development/RESULTS.md)、[路线](../governance/PROJECT_EXECUTION_ROADMAP.md)、[执行](../governance/NEXT_STAGE_EXECUTION_PROMPT.md)。工程c780ebea52b91ef32f5861608f722b23e624799a已推送；最终证据HEAD看交付消息，保留后续资产。
+2026-10-06。ROOT C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/比赛；branch codex/e2-candidate11-blind-eval。[唯一结果](candidate19-public-development/RESULTS.md)、[路线](../governance/PROJECT_EXECUTION_ROADMAP.md)、[执行](../governance/NEXT_STAGE_EXECUTION_PROMPT.md)。产品87eb70021c8fad1b2bf85b1e781268d96f36b44a已推送，最终证据HEAD看交付消息，保留用户资产，不回滚。
 
-V5 single-authority-source-contract-5.0.0 / single-authority-generation-1.0.0 / recognition-single-authority-1.0.0另版本，不默认C20、不改C19。时间owners权威、端点/coverage索引程序推导；活动形式/结果留属性，不猜合旧事件。普通逐事件保留/暂缓/拒绝，持久检查点/版本guard/CAS、共享/原子保存/读回沿现有链。D27窗口外不安排，个人计划与原时间分开。
+用户已授权C19-SINGLE-AUTHORITY-DEVELOPMENT-R1原8身份/US$2.60。实际2SETTLED/1UNCERTAIN/5NOT_SENT，1grant/3reserve/2settle。ordinal3进入TRANSPORT_ENTER后失败，无raw/usage/settle，立即封存锁/HALT；送达/实扣未知。不再prepare/dispatch/解锁/恢复/补settle/重发。旧公开封存也不动。[执行及只读现场](candidate19-public-development/single-authority-followup/paid-evidence/EXECUTION_SUMMARY.json)。下一仅需ordinal3特定响应/送达/usage或可靠未送达材料，证据一致后再判断具体恢复授权，不能因剩余额度自动发。
 
-唯一6869，普通App ENGINEERING_REPLAY，c780ebea52b9/source5f3eac81462d，新库authority-final6-1006；旧6855等未动。最终A—J PASS：共享2事件1时间、坏owner局部阻断、原03拒3保留1、无半份、已提交只重读、检查点手动恢复、刷新接管不改字保存。Task4 Project0 Event9 Time17 Material1，5confirmed/3partial；8工程报告75trace，时间缺失null，四真人NOT_OBSERVABLE。[浏览器](candidate19-public-development/single-authority-followup/BROWSER_EVIDENCE.md)。
+新公共single-authority-attribute-index-1.0.0将真实嵌套属性的反向依据索引由程序派生，修SA01原答已有形式/讨论/学习证明被编译器拒绝；不猜事实/owner，非法时间owner仍阻断。V5/C19/原Manifest/identity/raw/参照未改，旧付费gate仍正确拒绝活动组件漂移。只读录制reader核原Git182组件/5产物/8请求与授权/账本，只暴露2SETTLED，无mutation API。
 
-原真实4首答0正确3错1UNKNOWN/4；原首屏4错、后验3错1UNKNOWN，不改原成绩。旧v11/12后验不改；旧13firstFacts相同，原4仍2decode/2refuse。夹具不是模型成绩；原02标题/自由描述未裁决，03拆分、01/04原错误保留。
+各臂固定分母4：C19原答0正确0错4未知（SA01学习证明表示争议），首次页0正确1错3未知；SingleAuthority原答1暂定正确0错3未知、原冻结首屏0正确1错3未知、新程序首屏1暂定正确0错3未知。EVIDENCE_INCOMPLETE_NO_WINNER，不是模型提高。旧真实4/v11/12后验不改，四真人NOT_OBSERVABLE。
 
-C19-SINGLE-AUTHORITY-DEVELOPMENT-R1：4匿名作者Development×C19/SingleAuthority=8身份，2AB/2BA，182组件/5产物；Manifest b3f49a424ccd7b3c740c4009f30d1708e3bf4b5399ded3c0a4c768a0c65c9b29；identity1651fe39ada86fbcecb298b93c72574f2b4401956f4124be0b3dc79a5b3f8459。全NOT_RUN/dispatch false，无AUTH/state/lock/halt/新批账本，模型/grant/reserve/settle0。[唯一申请](candidate19-public-development/single-authority-followup/BUDGET_REQUEST.md)：8次deepseek-flash/US$2.60硬限，另需本批许可。获许可同包复用执行器、逐事实裁决、新raw普通回放；grant前重核价格/同步HEAD/身份/链。
+唯一http://127.0.0.1:6871/，普通固定录制ENGINEERING_REPLAY，87eb70021c8f/sourceb513046c8715，新库authority-paid-final-1006；模型POST403。最终真实录制首屏、检查点失败/手动恢复刷新、事务无半份/重试、已提交只重读/刷新通过；各1事件2时间、总Task0 Project0 Event2 Time4 Material0。开始12/3 13:30 exact，未公布结束null/vague且owner/依据正确；2工程报告29trace，刷新时间缺失null。[最终浏览器](candidate19-public-development/single-authority-followup/PAID_BROWSER_EVIDENCE.md)。未变多活动/共享/坏owner/窗口复用原已提交A—J，不冒充未返回模型结果。
 
-39定向、新工具3PASS；全量36/42组PASS6历史FAIL，最终产品9组PASS；lint/build/scan通过8旧warning。六旧快照/哈希与audit5H2M/production0单列，无新相关失败。[验证](candidate19-public-development/single-authority-followup/VALIDATION.md)。84/119/7PASS，1009链/996和1000前缀不变，SHA c730854da5eabbef8c6c62d1da2dea6511ecf2f586fa9872fd2c9b4a1baa140f。原4grant耗尽；旧公开1确定1未知2未发不动；用户handover/15审计文件保留。无Secret/旧库/依赖/v8/旧冻结修改，不真人/Holdout/default替换/合并/部署。
+26定向/4只读Node/9产品组PASS，lint0error8旧warning、build/scanPASS；旧全量6历史失败、audit5H2M/production0保留。84/119/7PASS，1015完整链SHA25f32a95eb28a264c3bec20500cf0b439ab33ad445dddfe8eba243c469c948d9；1009/1000/996前缀不变，六条本批合法追加。已知usage9405输入2207输出，内部US$0.005471、实扣不可观测；03上界reserve0.324404不是消费。16封存现场文件未变。用户handover/15审计资产保留，无Secret/旧库/依赖/v8/旧冻结修改，不真人/Holdout/default替换/合并/部署。
