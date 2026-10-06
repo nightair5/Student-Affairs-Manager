@@ -10,14 +10,19 @@ import {candidate19Recordings} from './candidate19-recorded-data.mjs'
 import {publicNoticeRecordedScene,historicalCandidate19Controls} from './public-notice-recorded-readonly.mjs'
 import {currentNoticeRecordedScene} from './current-notice-recorded-readonly.mjs'
 import {completedCurrentNoticeScene} from './current-notice-completed-readonly.mjs'
+import {authorityRecordedScene} from './single-authority-recorded-readonly.mjs'
 const [port,instance,fixtureMode]=process.argv.slice(2)
-if(process.argv.length>5||fixtureMode&&!['--channel-role-fixtures','--channel-polarity-fixtures','--eligibility-fixtures','--public-notice-fixtures','--public-paid-recordings','--sealed-followup-fixtures','--current-notice-fixtures','--current-notice-batch','--current-notice-completed'].includes(fixtureMode))throw Error('C19_UNKNOWN_REPLAY_MODE')
+if(process.argv.length>5||fixtureMode&&!['--channel-role-fixtures','--channel-polarity-fixtures','--eligibility-fixtures','--public-notice-fixtures','--public-paid-recordings','--sealed-followup-fixtures','--current-notice-fixtures','--current-notice-batch','--current-notice-completed','--single-authority-fixtures','--single-authority-comparison'].includes(fixtureMode))throw Error('C19_UNKNOWN_REPLAY_MODE')
 if(!/^\d{4,5}$/.test(port??'')||+port<6814||+port>65535||!/^[a-z0-9-]{2,32}$/.test(instance??''))throw Error('C19_NEW_LOOPBACK_INSTANCE_REQUIRED')
 const publicPaid=['--public-paid-recordings','--sealed-followup-fixtures','--current-notice-fixtures'].includes(fixtureMode)
-const currentBatch=['--current-notice-batch','--current-notice-completed'].includes(fixtureMode)
+const currentBatch=['--current-notice-batch','--current-notice-completed','--single-authority-fixtures','--single-authority-comparison'].includes(fixtureMode)
 let scene,recordings,batchLabel,plannedRequests,knownSettled,initialOrdinal,currentSources
-if(currentBatch){
-  const verified=await (fixtureMode==='--current-notice-completed'?completedCurrentNoticeScene():currentNoticeRecordedScene());scene=verified.scene;recordings=verified.recordings;currentSources=verified.sources
+if(fixtureMode==='--single-authority-comparison'){
+  const verified=await authorityRecordedScene();scene=verified.scene;recordings=verified.recordings;currentSources=verified.sources
+  plannedRequests=8;knownSettled=recordings.length;initialOrdinal=1
+  batchLabel='C19与单一权威生成机制4来源两臂8录制；匿名Development、暂定参照；未裁决保持UNKNOWN，不是独立Holdout或真人结果'
+}else if(currentBatch){
+  const verified=await (fixtureMode==='--current-notice-batch'?currentNoticeRecordedScene():completedCurrentNoticeScene());scene=verified.scene;recordings=verified.recordings;currentSources=verified.sources
   plannedRequests=4;knownSettled=recordings.length;initialOrdinal=1
   batchLabel='当前Candidate19单臂4份大学通知诊断；'+knownSettled+'份确定录制；未运行或未裁决保持UNKNOWN；不是候选比较或真人结果'
 }else if(publicPaid){
@@ -37,7 +42,13 @@ if(!recordings.length&&!currentBatch)throw Error('C19_NO_SETTLED_RECORDINGS')
 const sha=v=>createHash('sha256').update(v).digest('hex'),dir=resolve('.data/candidate19/recorded-'+instance)
 mkdirSync(dir,{recursive:true});if(readdirSync(dir).length)throw Error('C19_REPLAY_INSTANCE_ALREADY_BUILT')
 let fixtureCount=0
-if(fixtureMode==='--current-notice-fixtures'){
+if(fixtureMode==='--single-authority-fixtures'){
+  const fixtureFile=resolve(dir,'fixture-builder.mjs')
+  await build({stdin:{contents:`export {AUTHORITY_CASES,createAuthorityFixture} from './src/experiments/candidate19Recorded/singleAuthorityFixtures';export {SINGLE_AUTHORITY_VERSION} from './src/recognition/sourceContractV5'`,resolveDir:process.cwd()},outfile:fixtureFile,bundle:true,platform:'node',format:'esm'})
+  const {AUTHORITY_CASES,createAuthorityFixture,SINGLE_AUTHORITY_VERSION}=await import(pathToFileURL(fixtureFile))
+  fixtureCount=AUTHORITY_CASES.length;initialOrdinal=101;batchLabel+='；单一权威关系生成机制工程夹具，不是新模型回答或准确率'
+  for(const [i,kind] of AUTHORITY_CASES.entries()){const f=await createAuthorityFixture(kind);recordings.push({ordinal:101+i,sourceId:f.context.index.sourceId,sourceVersionId:f.context.index.sourceVersionId,candidate:'EngineeringFixture',generationContract:SINGLE_AUTHORITY_VERSION,sourceText:f.sourceText,referenceTime:f.context.referenceTime,timezone:f.context.timezone,rawHttpText:f.rawHttpText,responseSha256:sha(f.rawHttpText),requestSha256:null,frozenOutcome:'ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT'})}
+}else if(fixtureMode==='--current-notice-fixtures'){
   const fixtureFile=resolve(dir,'fixture-builder.mjs')
   await build({stdin:{contents:`export {CURRENT_NOTICE_CASES,createCurrentNoticeFixture} from './src/experiments/candidate19Recorded/currentNoticeFixtures'`,resolveDir:process.cwd()},outfile:fixtureFile,bundle:true,platform:'node',format:'esm'})
   const {CURRENT_NOTICE_CASES,createCurrentNoticeFixture}=await import(pathToFileURL(fixtureFile))

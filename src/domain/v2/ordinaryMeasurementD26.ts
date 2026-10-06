@@ -5,6 +5,7 @@ import {calculateD22Engineering} from '../../experiments/candidate16/d22Measurem
 import type {ReviewSession} from '../../experiments/candidate16/d20ReviewSession'
 import type {SourceReviewReceipt} from './sourceReviewD26'
 import {workspaceSnapshotHash} from './migration'
+import {eventDisposition} from './eventDisposition'
 
 export const ORDINARY_MEASUREMENT_VERSION='ordinary-source-measurement-d26-1'
 const key='ordinary-source-measurement-d26-1'
@@ -60,7 +61,8 @@ export function createOrdinaryMeasurement(store:WorkspaceRecordStore,now=Date.no
         }
         if(item.status==='已拒绝'){corrections.add(`task:${String(item.id)}:reject`);structural.add('reject')}
       }
-      if(changed&&fields.some(f=>f.startsWith('event:'))){corrections.add('source:events');structural.add('event-change')}
+      for(const event of draft.result?.events??[])if(eventDisposition(workspace,draft.id,event.tempId)==='reject'&&fields.includes(`event:${event.tempId}:disposition`)){corrections.add(`event:${event.tempId}:reject`);structural.add('event-reject')}
+      if(changed&&fields.some(f=>f.startsWith('event:')&&!f.endsWith(':disposition'))){corrections.add('source:events');structural.add('event-change')}
       await append(receipt.draftId,'commit',{commitId:receipt.commitId,disposition:receipt.disposition,includedEditIds:[...new Set(edits.flatMap(h=>h.editId?[h.editId]:[]))],includedOperationIds:[receipt.commitId],fields,semanticFields:[...corrections],structural:structural.size>0})
     },
     readback:async(receipt:SourceReviewReceipt)=>{const rows=await events(receipt.draftId);if(!rows.some(e=>e.kind==='readback'&&e.commitId===receipt.commitId))await append(receipt.draftId,'readback',{commitId:receipt.commitId})},

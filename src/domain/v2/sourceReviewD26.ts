@@ -4,6 +4,7 @@ import { applyDomainCommitPlan, buildDomainCommitPlanV2, selectionFromDraftItems
 import { workspaceSnapshotHash } from './migration'
 import type { CanonicalWorkspaceRepository } from './repository'
 import type { WorkspaceV8 } from './types'
+import {eventDisposition} from './eventDisposition'
 
 export const SOURCE_REVIEW_VERSION = 'source-review-d26-1'
 export const PENDING_SOURCE_READBACK = 'source-review:pending-readback'
@@ -52,7 +53,8 @@ export function buildSourceReviewPlan(workspace: WorkspaceV8, view: DraftView, i
   if (workspaceSnapshotHash(view.recognitionResult) !== workspaceSnapshotHash(draft.result)) throw Error('SOURCE_REVIEW_DRAFT_CHANGED')
   const items = itemId ? view.items.filter(i => i.id === itemId) : view.items
   const selection = selectionFromDraftItems(draft.result, items)
-  selection.rejectedTempIds = view.items.filter(i => i.status === '已拒绝').map(i => i.suggestion.id)
+  const rejectedEvents=draft.result.events.filter(e=>eventDisposition(workspace,draft.id,e.tempId)==='reject'&&!draft.acceptedEntityTempIds.includes(e.tempId)).map(e=>e.tempId)
+  selection.rejectedTempIds = [...view.items.filter(i => i.status === '已拒绝').map(i => i.suggestion.id),...rejectedEvents]
   for (const id of selection.taskTempIds) {
     const problem = sourceReviewProblem(draft.result, id)
     if (problem) throw Error(problem)
@@ -81,6 +83,12 @@ export function buildSourceReviewPlan(workspace: WorkspaceV8, view: DraftView, i
   }
   const planningWorkspace = selection.taskTempIds.length ? workspace : {...workspace,extractionDrafts:workspace.extractionDrafts.map(d => d.id === draft.id ? {...d,result:{...draft.result!,projectMatch:{...draft.result!.projectMatch,decision:'standalone_task' as const,matchedProjectId:null}}} : d)}
   const plan = buildDomainCommitPlanV2(planningWorkspace, draft.id, selection, now)
+  // Shared event time retains all explicit owners, including owners accepted in an earlier partial commit.
+  for(const point of plan.create.timePoints){const tempId=point.legacyData?.recognitionTempId;const owners=draft.result.events.filter(e=>[e.startTimePointTempId,e.endTimePointTempId].includes(typeof tempId==='string'?tempId:'')&&!rejectedEvents.includes(e.tempId));const ids=owners.flatMap(e=>{const created=plan.create.events.find(v=>v.legacyData?.recognitionTempId===e.tempId),existing=workspace.events.find(v=>v.legacyData?.recognitionTempId===e.tempId&&v.legacyData?.sourceReviewDraftId===draft.id);return created?[created.id]:existing?[existing.id]:[]});if(ids.length)point.legacyData={...point.legacyData,sharedEventIds:ids}}
+  for(const event of plan.create.events)event.legacyData={...event.legacyData,sourceReviewDraftId:draft.id}
+  const sidecar=draft.legacyData?.semanticSidecar,audit=sidecar&&typeof sidecar==='object'&&!Array.isArray(sidecar)?sidecar.singleAuthorityAudit:null
+  const windows=audit&&typeof audit==='object'&&!Array.isArray(audit)&&Array.isArray(audit.sourceWindows)?audit.sourceWindows:[]
+  for(const p of plan.create.timePoints){const row=windows.find(v=>v&&typeof v==='object'&&!Array.isArray(v)&&v.id===p.legacyData?.recognitionTempId);if(row&&typeof row==='object'&&!Array.isArray(row))p.legacyData={...p.legacyData,sourceTimeRole:row.role,sourceWindowOwners:row.owners}}
   for(const material of plan.create.materials){
     material.status='unverified'
     material.legacyData={...material.legacyData,availabilityVersion:'ordinary-availability-unobserved-1',availabilityOrigin:'not_observed',sourceReviewDraftId:draft.id}
@@ -101,6 +109,8 @@ export async function commitSourceReview(repository: CanonicalWorkspaceRepositor
   await repository.transaction(current => {
     if (current.sources.find(s => s.id === plan.sourceId)?.currentVersionId !== plan.sourceVersionId) throw Error('SOURCE_REVIEW_SOURCE_VERSION_CHANGED')
     const next = applyDomainCommitPlan(current, plan)
+    // Existing shared facts are upserted rather than replaced. Verify the actual atomic transaction result, including all retained owners.
+    receipt.entityHashes=Object.fromEntries([...next.tasks,...next.events,...next.timePoints,...next.materials].filter(e=>receipt.entityIds.includes(e.id)).map(e=>[e.id,workspaceSnapshotHash(e)]))
     const stored=next.extractionDrafts.find(d=>d.id===plan.draftId)!
     const handled=new Set([...stored.acceptedEntityTempIds,...stored.rejectedEntityTempIds])
     // Unchecked means deferred, not rejected. Only an actual accepted/rejected

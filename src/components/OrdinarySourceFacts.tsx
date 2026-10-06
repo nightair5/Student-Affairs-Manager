@@ -5,8 +5,9 @@ import type {WorkspaceV8} from '../domain/v2/types'
 import type {D20ReviewSessionRepository,ReviewField} from '../experiments/candidate16/d20ReviewSession'
 import {interpretTimeD26} from '../lib/timeSemanticsD26'
 import {MATERIAL_CHANNEL_GROUNDING_VERSION,type MaterialChannelAudit} from '../recognition/materialChannelGrounding'
+import {eventDisposition,type EventDisposition} from '../domain/v2/eventDisposition'
 
-type Props={draft:ExtractionDraft;source:Source|null;workspace:WorkspaceV8|null;session:D20ReviewSessionRepository;onDirty:(dirty:boolean)=>void;onSave:(result:RecognitionResult)=>Promise<void>}
+type Props={draft:ExtractionDraft;source:Source|null;workspace:WorkspaceV8|null;session:D20ReviewSessionRepository;onDirty:(dirty:boolean)=>void;onSave:(result:RecognitionResult,decision?:{eventId:string;before:EventDisposition;after:EventDisposition})=>Promise<void>}
 type Buffer={kind?:'event'|'task';action?:string;object?:string;eventId:string;title:string;location:string;start:string;end:string}
 const blank:Buffer={eventId:'',title:'',location:'',start:'',end:''}
 function eventTimeSummary(point:TimePointSuggestionV2):string {
@@ -22,20 +23,39 @@ export function OrdinarySourceFacts({draft,source,workspace,session,onDirty,onSa
   const [field,setField]=useState<ReviewField|null>(null)
   const [status,setStatus]=useState('')
   const [busy,setBusy]=useState(false)
+  const [pendingChoice,setPendingChoice]=useState<{eventId:string;decision:EventDisposition;field:ReviewField|null}|null>(null)
   const queue=useRef(Promise.resolve())
   const key='event:source:ordinary-buffer'
   const writer=session.writer
   const storedAudit=workspace?.extractionDrafts.find(d=>d.id===draft.id)?.legacyData?.materialChannelGrounding
   const channelAudit=storedAudit&&typeof storedAudit==='object'&&!Array.isArray(storedAudit)&&storedAudit.version===MATERIAL_CHANNEL_GROUNDING_VERSION
     ? storedAudit as unknown as MaterialChannelAudit : null
-  useEffect(()=>{onDirty(Boolean(buffer))},[buffer,onDirty])
+  const sidecar=workspace?.extractionDrafts.find(d=>d.id===draft.id)?.legacyData?.semanticSidecar,authority=sidecar&&typeof sidecar==='object'&&!Array.isArray(sidecar)?sidecar.singleAuthorityAudit:null
+  const windows=authority&&typeof authority==='object'&&!Array.isArray(authority)&&Array.isArray(authority.sourceWindows)?authority.sourceWindows:[]
+  useEffect(()=>{onDirty(Boolean(buffer)||Boolean(pendingChoice))},[buffer,pendingChoice,onDirty])
   useEffect(()=>{
     if(!workspace)return
     let live=true
-    void session.load(workspace,draft.id).then(record=>{if(!live)return;const stored=record.fields[key];if(stored){setField(stored);setBuffer(previous=>previous ?? stored.mine as Buffer);setStatus(stored.conflict?'另一页面修改了事件，请先选择。':'发现尚未正式确认的事件输入。')}}).catch(error=>{if(live)setStatus(String(error))})
+    void session.load(workspace,draft.id).then(record=>{if(!live)return;const stored=record.fields[key];if(stored){setField(stored);setBuffer(previous=>previous ?? stored.mine as Buffer);setStatus(stored.conflict?'另一页面修改了事件，请先选择。':'发现尚未正式确认的事件输入。')}const choice=Object.entries(record.fields).find(([k])=>k.startsWith('event:')&&k.endsWith(':disposition'));if(choice){const value=choice[1].mine as {eventId:string;decision:EventDisposition};setPendingChoice(previous=>previous??{...value,field:choice[1]});setStatus('发现未完成的事件选择，请恢复或处理冲突。')}}).catch(error=>{if(live)setStatus(String(error))})
     return()=>{live=false}
   },[draft.id,workspace,session])
   if(!result)return null
+  const applyChoice=async(eventId:string,decision:EventDisposition,stored?:ReviewField)=>{
+    if(!workspace)return
+    setBusy(true)
+    const choiceKey=`event:${eventId}:disposition`,mine={eventId,decision}
+    setPendingChoice({...mine,field:stored??null})
+    try{
+      const base=eventDisposition(workspace,draft.id,eventId)
+      const current=stored??(await session.stage(workspace,draft.id,choiceKey,base,mine,writer,decision!==base)).fields[choiceKey]
+      setPendingChoice({...mine,field:current})
+      if(current.conflict||current.writer!==writer)throw Error('事件选择需接管或解决冲突，双方选择均保留。')
+      const next={...result,events:result.events.map(e=>e.tempId===eventId?{...e,selected:decision==='keep'}:e)}
+      await session.withFreshField(workspace,draft.id,choiceKey,writer,current.revision,mine,()=>onSave(next,{eventId,before:base,after:decision}))
+      await session.clear(workspace,draft.id,choiceKey,writer,current.revision)
+      setPendingChoice(null);setStatus(decision==='reject'?'事件拒绝已存入草稿；原始首次建议不变。正式确认时只保存保留的事实。':decision==='defer'?'这项事件暂缓；正确项仍可确认。':'事件已保留，等待正式确认。')
+    }catch(error){setStatus(`事件选择尚未完成，输入保留，可手动重试：${String(error)}`)}finally{setBusy(false)}
+  }
   const edit=(next:Buffer,changed=true)=>{
     setBuffer(next)
     if(!workspace)return
@@ -68,32 +88,38 @@ export function OrdinarySourceFacts({draft,source,workspace,session,onDirty,onSa
       if(!text.includes(buffer.title.trim())||[buffer.location,buffer.start,buffer.end].some(raw=>raw&&!text.includes(raw)))throw Error('事件名称、地点和时间原文必须有当前通知依据；不会替你猜日期。')
       const eventId=buffer.eventId||`user-event:${crypto.randomUUID()}`
       const evidenceId=`user-evidence:${eventId}`
-      const event={tempId:eventId,title:buffer.title.trim(),description:'',location:buffer.location.trim()||null,startTimePointTempId:buffer.start?`${eventId}:start`:null,endTimePointTempId:buffer.end?`${eventId}:end`:null,evidenceIds:[evidenceId],confidence:1,inferenceLevel:'explicit' as const,selected:true}
+      const old=result.events.find(e=>e.tempId===eventId)
+      const event={...old,tempId:eventId,title:buffer.title.trim(),description:old?.description??'',location:buffer.location.trim()||null,startTimePointTempId:null as string|null,endTimePointTempId:null as string|null,evidenceIds:[...new Set([...(old?.evidenceIds??[]),evidenceId])],confidence:1,inferenceLevel:'explicit' as const,selected:old?.selected??true}
       let startDate:string|undefined
       const points=([['start',buffer.start],['end',buffer.end]] as const).filter(([,raw])=>raw).map(([part,raw])=>{
         const existingEvent=result.events.find(e=>e.tempId===eventId),existing=result.timePoints.find(p=>p.tempId===(part==='start'?existingEvent?.startTimePointTempId:existingEvent?.endTimePointTempId))
-        if(existing?.rawText===raw){if(part==='start')startDate=existing.normalizedValue?.slice(0,10);return {...existing,tempId:`${eventId}:${part}`,relatedTaskTempIds:[],relatedMaterialTempIds:[]}}
+        if(existing?.rawText===raw){if(part==='start')startDate=existing.normalizedValue?.slice(0,10);return existing}
         const type=part==='start'?'event_start' as const:'event_end' as const,timezone=result.timePoints[0]?.timezone||'Asia/Shanghai'
         const interpreted=interpretTimeD26(raw,{type,timezone,referenceTime:result.createdAt,sourceContext:text.split(/[。；\n]/u).find(line=>line.includes(buffer.title)&&line.includes(raw))??raw,inheritedDate:part==='end'?startDate:undefined})
         if(part==='start')startDate=interpreted.knownDate??undefined
         return {tempId:`${eventId}:${part}`,type,rawText:raw,normalizedValue:interpreted.point.normalizedValue,timezone,isAllDay:interpreted.point.isAllDay,precision:interpreted.point.precision,needsConfirmation:interpreted.point.needsConfirmation,relatedTaskTempIds:[],relatedMaterialTempIds:[],evidenceIds:[evidenceId],confidence:1,selected:true}
       })
-      const old=result.events.find(e=>e.tempId===eventId),removed=new Set([old?.startTimePointTempId,old?.endTimePointTempId,`${eventId}:start`,`${eventId}:end`])
+      event.startTimePointTempId=buffer.start?points.find(p=>p.rawText===buffer.start&&p.type==='event_start')?.tempId??null:null
+      event.endTimePointTempId=buffer.end?points.find(p=>p.rawText===buffer.end&&p.type==='event_end')?.tempId??null:null
+      const removed=new Set([old?.startTimePointTempId,old?.endTimePointTempId,`${eventId}:start`,`${eventId}:end`])
       const shared=new Set(result.events.filter(e=>e.tempId!==eventId).flatMap(e=>[e.startTimePointTempId,e.endTimePointTempId]))
-      const next={...result,events:[...result.events.filter(e=>e.tempId!==eventId),event],timePoints:[...result.timePoints.filter(p=>!removed.has(p.tempId)||shared.has(p.tempId)||p.relatedTaskTempIds.length>0),...points],evidence:[...result.evidence.filter(e=>e.id!==evidenceId),{id:evidenceId,sourceId:draft.sourceId,field:'event' as const,quotedText:text,quote:text,extractionMethod:'manual' as const}]}
+      const retained=result.timePoints.filter(p=>!removed.has(p.tempId)||shared.has(p.tempId)||p.relatedTaskTempIds.length>0||p.relatedMaterialTempIds.length>0)
+      const next={...result,events:result.events.map(e=>e.tempId===eventId?event:e).concat(old?[]:[event]),timePoints:[...retained.filter(p=>!points.some(next=>next.tempId===p.tempId)),...points],evidence:[...result.evidence.filter(e=>e.id!==evidenceId),{id:evidenceId,sourceId:draft.sourceId,field:'event' as const,quotedText:text,quote:text,extractionMethod:'manual' as const}]}
       await session.withFreshField(workspace,draft.id,key,writer,current.revision,buffer,()=>onSave(next))
       await session.clear(workspace,draft.id,key,writer,current.revision)
       setBuffer(null);setField(null);setStatus('事件草稿纠正已保存，等待本来源正式确认。')
     }catch(error){setStatus(String(error))}finally{setBusy(false)}
   }
   return <section aria-label="同一通知的独立事件与信息">
+    {windows.length>0&&<section aria-label="原文办理窗口"><h3>原文办理窗口（不是截止或个人计划）</h3>{windows.map((v,i)=>{if(!v||typeof v!=='object'||Array.isArray(v))return null;const p=result.timePoints.find(p=>p.tempId===v.id);return p?<p key={i}>{v.role==='window_start'?'开放开始':'开放结束'}：{eventTimeSummary(p)}</p>:null})}</section>}
     {channelAudit?.decisions.length ? <section aria-label="材料渠道与办结标准"><h3>材料与办结标准</h3>
       {channelAudit.decisions.map(d=><div key={d.materialId}><strong>{d.materialName}</strong><p>{d.status==='EXPLICIT_CHANNEL'?`提交渠道：${d.displayedValue}`:d.status==='RECEIPT_CONTEXT_UNRESOLVED'?`提交渠道尚未明确。首次模型推测“${d.originalValue}”，原文只用它说明办结回执；不作为确定提交渠道保存。`:`首次模型的渠道“${d.originalValue}”缺少同对象依据，关联事项需要核对。`}</p>
         <details><summary>查看渠道原文依据</summary>{d.evidence.map(e=><blockquote key={e.id}>{e.quote}</blockquote>)}</details></div>)}
       {result.standaloneTasks.flatMap(t=>t.completionCriteria.map((c,i)=><p key={t.tempId+':'+i}>完成标准：{c}</p>))}
     </section>:null}
     <h3>{result.events.length?'同一通知的事件':'信息与独立事件'}</h3>
-    {result.events.map(event=><article className="recognition-entity-row" key={event.tempId}><div><strong>{event.title}</strong><p>{event.location||'地点未说明'}；{[event.startTimePointTempId,event.endTimePointTempId].filter(Boolean).map(id=>{const p=result.timePoints.find(t=>t.tempId===id);return p?eventTimeSummary(p):''}).join(' → ')||'原文未说明时间'}</p></div><button type="button" disabled={Boolean(buffer)} onClick={()=>edit({eventId:event.tempId,title:event.title,location:event.location||'',start:result.timePoints.find(p=>p.tempId===event.startTimePointTempId)?.rawText||'',end:result.timePoints.find(p=>p.tempId===event.endTimePointTempId)?.rawText||''},false)}>编辑事件</button></article>)}
+    {result.events.map(event=>{const handled=workspace?.extractionDrafts.find(d=>d.id===draft.id)?.acceptedEntityTempIds.includes(event.tempId)||workspace?.extractionDrafts.find(d=>d.id===draft.id)?.rejectedEntityTempIds.includes(event.tempId);return <article className="recognition-entity-row" key={event.tempId}><div><strong>{event.title}</strong><p>{event.location||'地点未说明'}；{[event.startTimePointTempId,event.endTimePointTempId].filter(Boolean).map(id=>{const p=result.timePoints.find(t=>t.tempId===id);return p?eventTimeSummary(p):''}).join(' → ')||'原文未说明时间'}</p>{event.description && <p>{event.description}</p>}<p>{handled?'已正式处置':eventDisposition(workspace,draft.id,event.tempId)==='reject'?'已拒绝（草稿）':event.selected===false?'暂缓确认':'保留，待正式确认'}</p><label>处置“{event.title}”<select disabled={busy||Boolean(buffer)||Boolean(pendingChoice)||Boolean(handled)} value={eventDisposition(workspace,draft.id,event.tempId)} onChange={e=>void applyChoice(event.tempId,e.target.value as EventDisposition)}><option value="keep">保留</option><option value="defer">暂缓</option><option value="reject">拒绝多余事件</option></select></label></div><button type="button" disabled={busy||Boolean(buffer)||Boolean(pendingChoice)||Boolean(handled)} onClick={()=>edit({eventId:event.tempId,title:event.title,location:event.location||'',start:result.timePoints.find(p=>p.tempId===event.startTimePointTempId)?.rawText||'',end:result.timePoints.find(p=>p.tempId===event.endTimePointTempId)?.rawText||''},false)}>编辑事件</button></article>})}
+    {pendingChoice&&<div role="alert"><p>{pendingChoice.field?'事件选择检查点保留，尚未完成草稿保存。':'事件选择仍在本页，检查点尚未保存；刷新可能丢失，请手动重试。'}</p>{pendingChoice.field?.conflict?<>{(['latest','incoming'] as const).map(choice=><button key={choice} disabled={busy} onClick={()=>{if(workspace&&pendingChoice.field)void session.resolve(workspace,draft.id,`event:${pendingChoice.eventId}:disposition`,choice,writer,pendingChoice.field.revision).then(r=>{const f=r.fields[`event:${pendingChoice.eventId}:disposition`],value=f.mine as {eventId:string;decision:EventDisposition};setPendingChoice({...value,field:f})}).catch(e=>setStatus(String(e)))}}>采用{choice==='latest'?'最新选择':'我的选择'}</button>)}</>:<button disabled={busy} onClick={()=>{if(!workspace)return;const p=pendingChoice;if(p.field&&p.field.writer!==writer)void session.recover(workspace,draft.id,writer,{[`event:${p.eventId}:disposition`]:p.field.revision}).then(r=>applyChoice(p.eventId,p.decision,r.fields[`event:${p.eventId}:disposition`])).catch(e=>setStatus(String(e)));else void applyChoice(p.eventId,p.decision,p.field??undefined)}}>恢复并保存事件选择</button>}</div>}
     <p>没有待办也可以保存停机、维护等事件。纯信息可直接标记已核对，不创建任务或空项目。</p>
     <button type="button" disabled={Boolean(buffer)} onClick={()=>edit(blank,false)}>依据原文补充遗漏事件</button>
     <button type="button" disabled={Boolean(buffer)} onClick={()=>edit({...blank,kind:'task',action:'',object:''},false)}>依据原文补充遗漏任务</button>

@@ -42,6 +42,7 @@ import { CanonicalWorkspaceRepository, IndexedDbWorkspaceRecordStore, type Works
 import { D20ReviewSessionRepository } from './experiments/candidate16/d20ReviewSession'
 import { buildSourceReviewPlan, commitSourceReview, verifySourceReviewReadback, acknowledgeSourceReadback, sourceReviewProblem, PENDING_SOURCE_READBACK, type SourceReviewReceipt } from './domain/v2/sourceReviewD26'
 import { OrdinarySourceFacts } from './components/OrdinarySourceFacts'
+import {eventDispositionField,type EventDisposition} from './domain/v2/eventDisposition'
 import { PersonalPlanPanel } from './components/PersonalPlanPanel'
 import { assembleCurrentFirstSuggestion } from './recognition/materialChannelGrounding'
 import {createOrdinaryMeasurement,type OrdinaryMeasurement} from './domain/v2/ordinaryMeasurementD26'
@@ -1241,9 +1242,10 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
     await confirmOrdinary(draftId)
   }
 
-  const handleOrdinaryFacts = async (draftId:string,result:NonNullable<ExtractionDraft['recognitionResult']>) => {
+  const handleOrdinaryFacts = async (draftId:string,result:NonNullable<ExtractionDraft['recognitionResult']>,decision?:{eventId:string;before:EventDisposition;after:EventDisposition}) => {
     const nextDrafts=drafts.map(d=>d.id===draftId?{...d,recognitionResult:result,updatedAt:new Date().toISOString()}:d)
-    await workspaceRepository.save({...workspace,drafts:nextDrafts})
+    const history=decision?[...workspace.historyRecords,{id:crypto.randomUUID(),entityType:'draft' as const,entityId:draftId,action:'updated',field:eventDispositionField(decision.eventId),before:decision.before,after:decision.after,actor:'user' as const,changedAt:new Date().toISOString()}]:workspace.historyRecords
+    await workspaceRepository.save({...workspace,drafts:nextDrafts,historyRecords:history})
     await refreshOrdinary()
     setNotice({text:'草稿纠正已保存；原始首次回答不变，尚未正式确认。'})
   }
@@ -1651,7 +1653,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
           key={runtime ? selectedDraft.id : undefined}
           isolatedCapabilities={Boolean(runtime)}
           recognitionDescription={runtime?.realInput ? runtime.recognitionDescription : undefined}
-          ordinarySourceReview={!runtime ? {pendingEvents:selectedDraftSource ? mapSourceWorkflowItem(selectedDraftSource,[selectedDraft],ordinaryCanonical ?? undefined).counts.pendingEvents : 0,busy:ordinaryBusy || Boolean(ordinaryReceipt) || Boolean(viewConflict),unsaved:ordinaryFactsDirty,description:ordinaryEnvironment ? selectedDraft.modelName?.includes('固定录制') ? `${selectedDraft.modelName} · 比较后程序转换 · 无新模型请求` : selectedDraft.modelName?.includes('夹具') ? `${selectedDraft.modelName} · 无新模型请求` : undefined : undefined,onConfirm:()=>void handleConfirmAll(selectedDraft.id),facts:<OrdinarySourceFacts draft={selectedDraft} source={selectedDraftSource} workspace={ordinaryCanonical} session={ordinaryReviewSession} onDirty={setOrdinaryFactsDirty} onSave={result=>handleOrdinaryFacts(selectedDraft.id,result)} />} : undefined}
+          ordinarySourceReview={!runtime ? {pendingEvents:selectedDraftSource ? mapSourceWorkflowItem(selectedDraftSource,[selectedDraft],ordinaryCanonical ?? undefined).counts.pendingEvents : 0,busy:ordinaryBusy || Boolean(ordinaryReceipt) || Boolean(viewConflict),unsaved:ordinaryFactsDirty,description:ordinaryEnvironment ? selectedDraft.modelName?.includes('固定录制') ? `${selectedDraft.modelName} · 比较后程序转换 · 无新模型请求` : selectedDraft.modelName?.includes('夹具') ? `${selectedDraft.modelName} · 无新模型请求` : undefined : undefined,onConfirm:()=>void handleConfirmAll(selectedDraft.id),facts:<OrdinarySourceFacts draft={selectedDraft} source={selectedDraftSource} workspace={ordinaryCanonical} session={ordinaryReviewSession} onDirty={setOrdinaryFactsDirty} onSave={(result,decision)=>handleOrdinaryFacts(selectedDraft.id,result,decision)} />} : undefined}
           confirmationV2={runtime && experimentalReview ? { busy: isolatedBusy || storageError, items: experimentalReview.states } : !runtime && selectedDraft.recognitionResult ? {busy:ordinaryBusy || Boolean(ordinaryReceipt) || Boolean(viewConflict),items:Object.fromEntries(selectedDraft.items.map(item=>{const r=selectedDraft.recognitionResult!,p=r.timePoints.filter(t=>t.relatedTaskTempIds.includes(item.suggestion.id)),coveragePending=r.conflicts.some(c=>c.requiresDecision&&c.id===`coverage:${item.suggestion.id}:time`);return [item.id,{dateLabel:p.length?p.map(t=>t.rawText+(t.needsConfirmation?'（时刻待定）':'')).join('；'):coveragePending?'时间覆盖待核对，不能当成未说明':'原答未提供截止',blockedReason:sourceReviewProblem(r,item.suggestion.id),materialTempIds:r.materials.filter(m=>m.relatedTaskTempIds.includes(item.suggestion.id)).map(m=>m.tempId),timePointTempIds:p.map(t=>t.tempId)}]}))} : undefined}
           semanticReview={runtime?.semantic && isolatedSnapshot && experimentalReview && isolatedSnapshot.extractionDrafts.find(d=>d.id===selectedDraft.id)?.legacyData?.mainline05 ? {
             itemFacts: (taskId, onFocus) => runtime.semantic!.facts(isolatedSnapshot, selectedDraft.id, taskId, onFocus),

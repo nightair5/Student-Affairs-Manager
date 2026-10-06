@@ -357,8 +357,10 @@ function upsertTimePoints(current: TimePoint[], incoming: TimePoint[]): TimePoin
     }
     const relatedTaskIds = [...new Set([...existing.relatedTaskIds, ...item.relatedTaskIds])]
     const relatedMaterialIds = [...new Set([...existing.relatedMaterialIds, ...item.relatedMaterialIds])]
+    const sharedEventIds=[...new Set([...(Array.isArray(existing.legacyData?.sharedEventIds)?existing.legacyData.sharedEventIds:[]),...(Array.isArray(item.legacyData?.sharedEventIds)?item.legacyData.sharedEventIds:[])])]
     const relatedChanged = relatedTaskIds.length !== existing.relatedTaskIds.length
       || relatedMaterialIds.length !== existing.relatedMaterialIds.length
+      || sharedEventIds.length !== (Array.isArray(existing.legacyData?.sharedEventIds)?existing.legacyData.sharedEventIds.length:0)
     byId.set(item.id, {
       ...existing,
       milestoneId: existing.milestoneId ?? item.milestoneId,
@@ -367,6 +369,7 @@ function upsertTimePoints(current: TimePoint[], incoming: TimePoint[]): TimePoin
       eventId: existing.eventId ?? item.eventId,
       relatedTaskIds,
       relatedMaterialIds,
+      legacyData:{...existing.legacyData,...(sharedEventIds.length?{sharedEventIds}:{})},
       updatedAt: relatedChanged ? item.updatedAt : existing.updatedAt,
     })
   })

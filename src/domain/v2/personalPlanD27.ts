@@ -107,13 +107,14 @@ export function planBaseline(w: WorkspaceV8): string {
   for (const id of relevantVersions) { const v = w.sourceVersions.find(v => v.id === id); if (v) sourceIds.add(v.sourceId) }
   return JSON.stringify({ workspaceId: w.workspace.id, timezone: w.settings.defaultTimezone,
     tasks: sorted(w.tasks).map(t => ({ id: t.id, title: t.title, status: t.status, estimatedMinutes: t.estimatedMinutes, manualPriority: t.manualPriority, snoozedUntil: t.snoozedUntil, dependencyIds: [...t.dependencyIds].sort(), sourceId: t.legacyData?.sourceId ?? null, gaps: taskGaps(w, t) })),
-    times: sorted(w.timePoints).map(p => ({ id: p.id, type: p.type, taskId: p.taskId, eventId: p.eventId, relatedTaskIds: [...p.relatedTaskIds].sort(), normalizedValue: p.normalizedValue, timezone: p.timezone, precision: p.precision, needsConfirmation: p.needsConfirmation, metadata: p.legacyData?.personalPlanD27 ?? null })),
+    times: sorted(w.timePoints).map(p => ({ id: p.id, type: p.type, taskId: p.taskId, eventId: p.eventId, relatedTaskIds: [...p.relatedTaskIds].sort(), normalizedValue: p.normalizedValue, timezone: p.timezone, precision: p.precision, needsConfirmation: p.needsConfirmation, sourceTimeRole:p.legacyData?.sourceTimeRole??null, metadata: p.legacyData?.personalPlanD27 ?? null })),
     events: sorted(w.events).map(e => ({ id: e.id, startTimePointId: e.startTimePointId, endTimePointId: e.endTimePointId })),
     sourceVersions: sorted(w.sources.filter(s => sourceIds.has(s.id))).map(s => ({ id: s.id, current: s.currentVersionId, version: w.sourceVersions.find(v => v.id === s.currentVersionId) })),
     courses: w.preferences.legacyData?.courseBlocks ?? [],
   })
 }
 const reasons: Record<string, string> = {
+  SOURCE_WINDOW_NEEDS_REVIEW:'原文办理窗口的起止尚未完整确定，先保留待定。', SOURCE_WINDOW_OUTSIDE_PLAN:'本次安排范围不在原文开放窗口内；保留待办，不改原文时间。',
   COMPLETED: '已经完成，不重复安排。', CANCELLED: '已取消，不安排执行。', NOT_APPLICABLE: '资格不适用，不安排执行。', QUALIFICATION_UNKNOWN: '资格尚未确认，先保留待定。', NOT_CURRENT_ACTION: '不是当前有效行动。', RELATION_NEEDS_REVIEW: '修订或关联仍待核对。',
   DURATION_UNKNOWN: '耗时未知，且本次未采用估计。', DEPENDENCY_MISSING: '找不到前置事项，不能猜它已完成。', DEPENDENCY_CYCLE: '前置事项形成循环，无法确定执行顺序。', DEPENDENCY_UNSCHEDULED: '前置事项尚未排入，不能排在它之前。', OVERDUE: '原文截止已过，需明确改期决定。', CAPACITY: '可用时间不足，无法在窗口或截止前连续完成。', USER_LATER: '你选择以后再安排。', LEGACY_PLAN_UNBOUNDED: '已有个人计划缺少可靠时长，保留原计划，暂不移动。', INVALID_MANUAL_SLOT: '调整后与可用时间、固定占用、截止或前置安排冲突。', DEADLINE_CONFLICT: '存在相互矛盾或未核实的具体截止，先核对。', LOCK_CONFLICT: '锁定时间与当前固定活动、期限或前置发生冲突，保留锁定并提示。',
 }
@@ -164,6 +165,13 @@ export function buildPersonalPlan(w: WorkspaceV8, options: PlanOptions, id: stri
     const values = [...exact, ...dates].map(p => p.precision === 'date_only' ? parseBusinessDateTime(addDateOnlyDays(p.normalizedValue!, 1) + 'T00:00', p.timezone ?? zone)!.getTime() : parseBusinessDateTime(p.normalizedValue!, p.timezone ?? zone)!.getTime())
     return { value: values.length ? Math.min(...values) : Infinity, text: points.map(p => p.rawText).join('；') || null, conflict: ['task_deadline', 'submission_deadline', 'registration_deadline'].some(type => new Set(points.filter(p => p.type === type && p.normalizedValue).map(p => p.normalizedValue)).size > 1) || exact.some(p => p.needsConfirmation) }
   }
+  const sourceWindow=(t:Task)=>{
+    const points=w.timePoints.filter(p=>p.relatedTaskIds.includes(t.id)&&['window_start','window_end'].includes(String(p.legacyData?.sourceTimeRole)))
+    if(!points.length)return {start:-Infinity,end:Infinity,invalid:false,present:false}
+    const starts=points.filter(p=>p.legacyData?.sourceTimeRole==='window_start').map(p=>pointMs(p,zone)),ends=points.filter(p=>p.legacyData?.sourceTimeRole==='window_end').map(p=>pointMs(p,zone))
+    const valid=starts.length===1&&ends.length===1&&starts[0]!==undefined&&ends[0]!==undefined&&ends[0]>starts[0]
+    return {start:valid?starts[0]!:-Infinity,end:valid?ends[0]!:Infinity,invalid:!valid,present:true}
+  }
   const canUse = (slot: Interval, earliest: number, latest: number) => Number.isFinite(slot.start) && slot.start >= earliest && slot.end <= latest && windows.some(win => slot.start >= win.start && slot.end <= win.end) && ![...fixed, ...occupied].some(b => overlap(slot, b))
   const tasks = sorted(w.tasks).sort((a, b) => (deadline(a).value - deadline(b).value) || (b.manualPriority ?? 0) - (a.manualPriority ?? 0) || a.id.localeCompare(b.id))
   const handled = new Set<string>(), visiting = new Set<string>()
@@ -192,7 +200,8 @@ export function buildPersonalPlan(w: WorkspaceV8, options: PlanOptions, id: stri
     if (effective?.locked === false) continue // Explicitly unlocking is a user decision in the proposed plan.
     const s: PlanSegment = { taskId: t.id, title: t.title, start: new Date(start).toISOString(), end: new Date(end).toISOString(), minutes: meta.minutes, durationOrigin: meta.durationOrigin, locked: true, conditionalOn: t.dependencyIds.filter(id => w.tasks.find(t => t.id === id)?.status !== 'completed'), reason: '保留你锁定的安排。', originalDeadline: deadline(t).text, retained: true }
     proposal.segments.push(s); occupied.push({ start, end }); handled.add(t.id)
-    if ([...fixed, ...occupied.slice(0, -1)].some(b => overlap(b, { start, end })) || !windows.some(win => start >= win.start && end <= win.end) || end > deadline(t).value || deadline(t).conflict || staleSource(t) || t.snoozedUntil && start < parseBusinessDateTime(t.snoozedUntil, zone)!.getTime() || taskGaps(w, t).length || cycleIds.has(t.id)) reject(t, 'LOCK_CONFLICT')
+    const sourceBounds=sourceWindow(t)
+    if ([...fixed, ...occupied.slice(0, -1)].some(b => overlap(b, { start, end })) || !windows.some(win => start >= win.start && end <= win.end) || end > deadline(t).value || sourceBounds.invalid || start<sourceBounds.start || end>sourceBounds.end || deadline(t).conflict || staleSource(t) || t.snoozedUntil && start < parseBusinessDateTime(t.snoozedUntil, zone)!.getTime() || taskGaps(w, t).length || cycleIds.has(t.id)) reject(t, 'LOCK_CONFLICT')
   }
   const schedule = (t: Task): void => {
     if (handled.has(t.id)) return
@@ -205,6 +214,10 @@ export function buildPersonalPlan(w: WorkspaceV8, options: PlanOptions, id: stri
     const override = o.overrides[t.id]
     if (override?.later) { reject(t, 'USER_LATER'); return }
     const due = deadline(t)
+    const sourceBounds=sourceWindow(t)
+    if(sourceBounds.invalid){reject(t,'SOURCE_WINDOW_NEEDS_REVIEW');return}
+    if(sourceBounds.present&&!windows.some(win=>win.end>sourceBounds.start&&win.start<sourceBounds.end)){reject(t,'SOURCE_WINDOW_OUTSIDE_PLAN');return}
+    due.value=Math.min(due.value,sourceBounds.end)
     if (due.conflict) { reject(t, 'DEADLINE_CONFLICT'); return }
     if (due.value <= now) { reject(t, 'OVERDUE'); return }
     if (existing.some(p => !ownPoint(p) && p.relatedTaskIds.includes(t.id))) { reject(t, 'LEGACY_PLAN_UNBOUNDED'); return }
@@ -212,7 +225,7 @@ export function buildPersonalPlan(w: WorkspaceV8, options: PlanOptions, id: stri
     const minutes = override?.minutes ?? oldMeta?.minutes ?? t.estimatedMinutes ?? o.estimateMinutes
     if (minutes === null || !validMinutes(minutes)) { reject(t, 'DURATION_UNKNOWN'); return }
     const origin: DurationOrigin = override?.minutes !== undefined ? 'user' : oldMeta?.durationOrigin ?? (t.estimatedMinutes !== null ? 'recorded_estimate' : 'product_estimate')
-    let earliest = now
+    let earliest = Math.max(now,sourceBounds.start)
     if (t.snoozedUntil) { const until = parseBusinessDateTime(t.snoozedUntil, zone); if (!until) throw Error('PERSONAL_PLAN_SNOOZE_INVALID'); earliest = Math.max(earliest, until.getTime()) }
     visiting.add(t.id)
     for (const id of t.dependencyIds) {
