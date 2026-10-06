@@ -6,6 +6,7 @@ import type {D20ReviewSessionRepository,ReviewField} from '../experiments/candid
 import {interpretTimeD26} from '../lib/timeSemanticsD26'
 import {MATERIAL_CHANNEL_GROUNDING_VERSION,type MaterialChannelAudit} from '../recognition/materialChannelGrounding'
 import {eventDisposition,type EventDisposition} from '../domain/v2/eventDisposition'
+import {currentDraftSourceInformation} from '../recognition/sourceInformationPreview'
 
 type Props={draft:ExtractionDraft;source:Source|null;workspace:WorkspaceV8|null;session:D20ReviewSessionRepository;onDirty:(dirty:boolean)=>void;onSave:(result:RecognitionResult,decision?:{eventId:string;before:EventDisposition;after:EventDisposition})=>Promise<void>}
 type Buffer={kind?:'event'|'task';action?:string;object?:string;eventId:string;title:string;location:string;start:string;end:string}
@@ -32,6 +33,7 @@ export function OrdinarySourceFacts({draft,source,workspace,session,onDirty,onSa
     ? storedAudit as unknown as MaterialChannelAudit : null
   const sidecar=workspace?.extractionDrafts.find(d=>d.id===draft.id)?.legacyData?.semanticSidecar,authority=sidecar&&typeof sidecar==='object'&&!Array.isArray(sidecar)?sidecar.singleAuthorityAudit:null
   const windows=authority&&typeof authority==='object'&&!Array.isArray(authority)&&Array.isArray(authority.sourceWindows)?authority.sourceWindows:[]
+  const sourceInformation=workspace?currentDraftSourceInformation(workspace,draft.id):null
   useEffect(()=>{onDirty(Boolean(buffer)||Boolean(pendingChoice))},[buffer,pendingChoice,onDirty])
   useEffect(()=>{
     if(!workspace)return
@@ -111,6 +113,8 @@ export function OrdinarySourceFacts({draft,source,workspace,session,onDirty,onSa
     }catch(error){setStatus(String(error))}finally{setBusy(false)}
   }
   return <section aria-label="同一通知的独立事件与信息">
+    {sourceInformation?.status==='CURRENT'&&sourceInformation.preview.items.length>0&&<section aria-label="通知补充说明"><h3>通知补充说明</h3><p>原回答保留的信息；未关联到具体事项，不会据此新增任务或日程。</p>{sourceInformation.preview.items.map(item=><blockquote key={item.text}>{item.text}</blockquote>)}<details><summary>查看补充说明原文依据</summary>{sourceInformation.preview.items.flatMap(item=>item.evidenceIds.map(id=>{const evidence=result.evidence.find(e=>e.id===id);return evidence?<blockquote key={item.text+id}>{evidence.quote}</blockquote>:null}))}</details></section>}
+    {sourceInformation?.status==='SOURCE_VERSION_UNAVAILABLE'&&result.ignoredContent.some(i=>i.reason==='other')&&<p role="status">来源版本已变化或暂不可读取，请重新打开当前通知后核对补充说明。</p>}
     {windows.length>0&&<section aria-label="原文办理窗口"><h3>原文办理窗口（不是截止或个人计划）</h3>{windows.map((v,i)=>{if(!v||typeof v!=='object'||Array.isArray(v))return null;const p=result.timePoints.find(p=>p.tempId===v.id);return p?<p key={i}>{v.role==='window_start'?'开放开始':'开放结束'}：{eventTimeSummary(p)}</p>:null})}</section>}
     {channelAudit?.decisions.length ? <section aria-label="材料渠道与办结标准"><h3>材料与办结标准</h3>
       {channelAudit.decisions.map(d=><div key={d.materialId}><strong>{d.materialName}</strong><p>{d.status==='EXPLICIT_CHANNEL'?`提交渠道：${d.displayedValue}`:d.status==='RECEIPT_CONTEXT_UNRESOLVED'?`提交渠道尚未明确。首次模型推测“${d.originalValue}”，原文只用它说明办结回执；不作为确定提交渠道保存。`:`首次模型的渠道“${d.originalValue}”缺少同对象依据，关联事项需要核对。`}</p>
