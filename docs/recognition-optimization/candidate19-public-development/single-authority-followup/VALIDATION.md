@@ -19,3 +19,7 @@
 本机日志：`.data/single-authority-tests.log`、`single-authority-product-final.log`、`single-authority-targeted-final.log`、`single-authority-lint-final.log`、`single-authority-build-final.log`、`single-authority-security-final.log`与`single-authority-history-after.log`。日志不进入Git，最终证据索引保存hash。
 
 未测试：新付费V5真实输出、真人四指标、独立Holdout、默认替换、线上速度和部署。付费工具仅测安全拒绝和只读绑定，真实transport未调用。新输出NOT_RUN，不能从夹具/测试数量推算首次模型正确率。
+
+最终交付补充：6869构建c780ebea52b9/source5f3eac81462d实际A—J全部PASS，含最终构建刷新接管不改字保存；最终console error/warn=[]，GET manifest200/POST模型路由403。独立仓储Task4/Project0/Event9/Time17/Material1，5confirmed/3partial。8工程测量报告75trace，未闭合时间null/missing。完整证据见BROWSER_EVIDENCE/BROWSER_SUMMARY/EVIDENCE_INDEX。
+
+比较冻结及只读host最终核验PASS：182组件/5产物/8身份，generationCommit c780ebea52b91ef32f5861608f722b23e624799a，AUTH/state/lock/halt无、raw0/本批账本0；8NOT_RUN，模型/grant/reserve/settle0。最终历史verify再次PASS，同一1009行SHA未变。数据/日志只留本机，新增证据文档不触发重复产品全量；敏感信息扫描在新文档/冻结加入后再次PASS，4498文件，日志single-authority-security-delivery.log。

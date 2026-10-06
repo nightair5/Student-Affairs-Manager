@@ -1,6 +1,6 @@
 # 识别与任务转化优化执行计划
 
-> 历史计划入口说明（2026-09-27）：以下是 2026-09-05 的范围与顺序快照，保留用于追溯。当前工作以 [CURRENT_CONTEXT](CURRENT_CONTEXT.md)、[根 PRD](../../PRD.md)、[根 AGENTS](../../AGENTS.md) 和 [D8 工作包](../governance/NEXT_STAGE_EXECUTION_PROMPT.md) 为准；旧“本次仅文档”“WAIT_AUTHORIZATION”与 PRD 第 14 节编号不能自动约束后续已授权任务。最新问题及资源见 [全局复查](../governance/review-20260927-r2/REVIEW_AND_ACTIONS.md)。
+> 当前入口（2026-10-06）：单一权威关系契约、逐事件处置及最终A—J已交付，原真实4首答0正确3错1UNKNOWN不改；新最小8身份比较NOT_RUN，另需本批许可。见 [唯一结果](candidate19-public-development/RESULTS.md)、[CURRENT_CONTEXT](CURRENT_CONTEXT.md)、[活动路线](../governance/PROJECT_EXECUTION_ROADMAP.md) 和 [接续执行](../governance/NEXT_STAGE_EXECUTION_PROMPT.md)。以下2026-09-05历史范围/顺序保留，不作为当前阶段或许可；根PRD/AGENTS与用户当前明确授权适用。
 
 > 版本：2.0 / 2026-09-05 / RCO-DOCS-002。
 > 本次只重整文档，不授权实现、模型调用、新盲测、真人研究或部署。
