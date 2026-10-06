@@ -1,6 +1,15 @@
 # 实现交付验证
 
-2026-10-06。最终浏览器证据另见本目录BROWSER_EVIDENCE.md；本记录不将过程证据冒充最终构建。
+2026-10-06。原工程/授权前快照如下；当前付费及程序收口补充见本节、paid-evidence及PAID_BROWSER_EVIDENCE.md，不能再把授权前0调用当现状。
+
+## 付费后程序修复验证
+
+- 真实SA01两份录制只读诊断；原8状态2SETTLED/1UNCERTAIN/5NOT_SENT，整批EVIDENCE_INCOMPLETE。原授权US$2.60、1grant/3reserve/2settle，3传输入口、无重发；账本1015行六条合法追加。第三请求是否送达/扣费未知，锁和HALT保留。
+- 定向V5及新属性反向索引26PASS（21既有+5新），包括不同活动/共享时间、跨依据/对象/非法时间owner、安全隔离与真实正式保存读回；新只读封存读取器4Node PASS，完全匿名fake transport/临时账本，篡改raw、无settle、缺封存均拒绝且不修现场。
+- 当前产品9独立组全部确定退出PASS，含Vitest、server、worker、worker-d26、functions及时间/契约。lint0error/8旧warning，build PASS旧体积提示，security:scan PASS。新只读reader约束补充后再跑4Node检查；前一锁测试EISDIR是测试代码将目录当文件，已修并确定退出，不是遗留产品失败。
+- 全量旧36/42组PASS、六历史FAIL沿下方记录保留；新增只读组单独通过，不借定向通过宣称全量绿。原比较Node组授权前3PASS明确复用；其无AUTH调用断言不在真实已授权封存现场重新运行，不改旧断言。
+- 过程6870真实录制首屏、检查点/事务/读回三失败、刷新与独立值通过。最终提交后新端口新库复验状态写PAID_BROWSER_EVIDENCE.md。原6869 A—J的多活动/共享/窗口/坏owner/旧raw人工拒绝路径没有业务实现改动，结合26定向反例可复用其工程证据，不冒充未取得的SA02—04实际模型输出。
+- 未验证：整批候选比较、第三请求送达/usage/实扣、另外六个身份结果、独立人工真值/泛化、真人四指标。SA01暂定逐事实裁决以原注册4项断言报告，C19原答学习证明独立信息表达争议仍UNKNOWN；未公布结束null/vague可表达unknown语义，不改v8枚举/旧参照凑分。
 
 | 检查 | 结果与范围 |
 |---|---|

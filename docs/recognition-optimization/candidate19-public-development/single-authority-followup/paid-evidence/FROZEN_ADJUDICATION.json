@@ -1,0 +1,130 @@
+{
+  "batch": "C19-SINGLE-AUTHORITY-DEVELOPMENT-R1",
+  "role": "SEALED_INCOMPLETE_BATCH_PROVISIONAL_FACT_REVIEW",
+  "referencesSha256": "9bc27a90fefdc1be0f76a177008f1390f64fe33e61489dea54cf86aa3acee54d",
+  "records": [
+    {
+      "sourceId": "authority-development-SA-01",
+      "candidate": "Candidate19",
+      "ordinal": 1,
+      "responseSha256": "fa34c6b1824a0d2af89565f2d880cba2014a311389642d739ec8d6315c2a7dc7",
+      "modelFirstFacts": [
+        {
+          "factId": "entities",
+          "verdict": "UNKNOWN",
+          "reason": "学习证明scope0005仅information，无活动关联；说明是否允许独立信息表达需独立裁决。没有把sourceIndex包含全文算模型已作活动事实。",
+          "outputPointer": "wire.events[0].description/scopeIds; wire.scopeAccounting[4]"
+        },
+        {
+          "factId": "time",
+          "verdict": "CORRECT",
+          "reason": "开始2026-12-03T13:30 exact；明示结束未公布，null和原文保留。unknown是语义状态，v8用vague+null；不改原参照或旧解析。",
+          "outputPointer": "wire.timePoints[0:2]"
+        },
+        {
+          "factId": "graph",
+          "verdict": "CORRECT",
+          "reason": "两起止节点均真实归属同一工作坊，0任务；没有报名、额外活动或关系。",
+          "outputPointer": "wire.events[0] and wire.timePoints"
+        },
+        {
+          "factId": "prose",
+          "verdict": "CORRECT",
+          "reason": "逐项查看唯一标题、描述、地点、活动属性、全scopeAccounting、所有数组：都在本原文有依据，无额外实体/义务；学习证明覆盖问题另列entities。",
+          "outputPointer": "wire.*; sourceText"
+        }
+      ],
+      "displayBeforeHuman": [
+        {
+          "factId": "entities",
+          "verdict": "INCORRECT",
+          "reason": "第一份活动卡片未包含学习证明，只在完整原文/信息scope中保留；冻结参照要求作为该活动信息，用户不应靠翻原文补齐。",
+          "outputPointer": "diagnostic/01.json:decoded.result.events[0].description; paid-browser/SA01-C19-first.txt"
+        },
+        {
+          "factId": "time",
+          "verdict": "CORRECT",
+          "reason": "开始2026-12-03T13:30 exact；明示结束未公布，null和原文保留。unknown是语义状态，v8用vague+null；不改原参照或旧解析。",
+          "outputPointer": "wire.timePoints[0:2]"
+        },
+        {
+          "factId": "graph",
+          "verdict": "CORRECT",
+          "reason": "两起止节点均真实归属同一工作坊，0任务；没有报名、额外活动或关系。",
+          "outputPointer": "wire.events[0] and wire.timePoints"
+        },
+        {
+          "factId": "prose",
+          "verdict": "CORRECT",
+          "reason": "逐项查看唯一标题、描述、地点、活动属性、全scopeAccounting、所有数组：都在本原文有依据，无额外实体/义务；学习证明覆盖问题另列entities。",
+          "outputPointer": "wire.*; sourceText"
+        }
+      ],
+      "humanFinal": [],
+      "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "executionStatus": "SETTLED"
+    },
+    {
+      "sourceId": "authority-development-SA-01",
+      "candidate": "SingleAuthority",
+      "ordinal": 2,
+      "responseSha256": "0fbe21fa409604a32f7d791c93a8622d5269b7fe63b92cb65370c81f2e6e2ed2",
+      "modelFirstFacts": [
+        {
+          "factId": "entities",
+          "verdict": "CORRECT",
+          "reason": "0任务1活动；format/participation/outcome均嵌套属于工作坊，有原文依据，不另造活动。",
+          "outputPointer": "wire.events[0].attributes[0:3]"
+        },
+        {
+          "factId": "time",
+          "verdict": "CORRECT",
+          "reason": "开始2026-12-03T13:30 exact；明示结束未公布，null和原文保留。unknown是语义状态，v8用vague+null；不改原参照或旧解析。",
+          "outputPointer": "wire.timePoints[0:2]"
+        },
+        {
+          "factId": "graph",
+          "verdict": "CORRECT",
+          "reason": "两起止节点均真实归属同一工作坊，0任务；没有报名、额外活动或关系。",
+          "outputPointer": "wire.events[0] and wire.timePoints"
+        },
+        {
+          "factId": "prose",
+          "verdict": "CORRECT",
+          "reason": "逐项查看唯一标题、描述、地点、活动属性、全scopeAccounting、所有数组：都在本原文有依据，无额外实体/义务；学习证明覆盖问题另列entities。",
+          "outputPointer": "wire.*; sourceText"
+        }
+      ],
+      "displayBeforeHuman": [
+        {
+          "factId": "entities",
+          "verdict": "INCORRECT",
+          "reason": "冻结编译器拒绝SINGLE_AUTHORITY_ATTRIBUTE_EVIDENCE，未形成首次建议；原答有事实不等于冻结显示成功。",
+          "outputPointer": "diagnostic/02.json:decodeError"
+        },
+        {
+          "factId": "time",
+          "verdict": "UNKNOWN",
+          "reason": "冻结拒绝，未形成显示。",
+          "outputPointer": "diagnostic/02.json:decodeError"
+        },
+        {
+          "factId": "graph",
+          "verdict": "UNKNOWN",
+          "reason": "冻结拒绝，未形成显示。",
+          "outputPointer": "diagnostic/02.json:decodeError"
+        },
+        {
+          "factId": "prose",
+          "verdict": "UNKNOWN",
+          "reason": "冻结拒绝，未形成显示。",
+          "outputPointer": "diagnostic/02.json:decodeError"
+        }
+      ],
+      "humanFinal": [],
+      "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "executionStatus": "SETTLED"
+    }
+  ],
+  "noIndependentHoldout": true
+}

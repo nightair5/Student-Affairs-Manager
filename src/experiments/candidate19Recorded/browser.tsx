@@ -24,7 +24,8 @@ import { D26_FIRST_SUGGESTION_VERSION } from '../../recognition/firstSuggestionD
 import { CANDIDATE17_PROMPT_VERSION, CANDIDATE17_VERSION } from '../realInput01/candidate17'
 import { CANDIDATE18_PROMPT_VERSION, CANDIDATE18_VERSION } from '../realInput01/candidate18'
 import { CANDIDATE19_PROMPT_VERSION, CANDIDATE19_VERSION } from '../realInput01/candidate19'
-import { decodeSingleAuthorityRecording,SINGLE_AUTHORITY_CANDIDATE_VERSION,SINGLE_AUTHORITY_PROMPT_VERSION,SINGLE_AUTHORITY_VERSION } from '../../recognition/sourceContractV5'
+import { SINGLE_AUTHORITY_CANDIDATE_VERSION,SINGLE_AUTHORITY_PROMPT_VERSION,SINGLE_AUTHORITY_VERSION } from '../../recognition/sourceContractV5'
+import { decodeAuthorityProductRecording, AUTHORITY_ATTRIBUTE_INDEX_VERSION } from '../../recognition/singleAuthorityProduct'
 import type { WorkspaceV8, JsonValue } from '../../domain/v2/types'
 import type { IntakeInput } from '../../lib/intake'
 import '../../styles.css'
@@ -49,7 +50,7 @@ const canonical = new CanonicalWorkspaceRepository(store), initial = emptyWorksp
 await canonical.initialize(initial)
 const readerStore: WorkspaceRecordStore = { ...store, read: k => { if (k === 'current' && failRead) { failRead = false; return Promise.reject(Error('RECORDED_INJECTED_READBACK_FAILURE')) } return new IsolatedTestStore(config.database).read(k) } }
 const measurement = createOrdinaryMeasurement(store), sidecars = new Map<string, unknown>()
-const contractVersion = SOURCE_SUPPORT_PRODUCT_VERSION + ' / ' + EVENT_TIME_LABEL_SUPPORT_VERSION + ' / ' + DIRECTIVE_DISPOSITION_VERSION + ' / ' + CONDITIONAL_NON_ACTION_VERSION + ' / ' + SOURCE_CONTRACT_VERSION + ' / ' + MATERIAL_CHANNEL_GROUNDING_VERSION + ' / ' + ELIGIBILITY_GROUNDING_VERSION + ' / ' + D26_TIME_VERSION + ' / ' + D26_FIRST_SUGGESTION_VERSION
+const contractVersion = SOURCE_SUPPORT_PRODUCT_VERSION + ' / ' + EVENT_TIME_LABEL_SUPPORT_VERSION + ' / ' + DIRECTIVE_DISPOSITION_VERSION + ' / ' + CONDITIONAL_NON_ACTION_VERSION + ' / ' + SOURCE_CONTRACT_VERSION + ' / ' + MATERIAL_CHANNEL_GROUNDING_VERSION + ' / ' + ELIGIBILITY_GROUNDING_VERSION + ' / ' + D26_TIME_VERSION + ' / ' + D26_FIRST_SUGGESTION_VERSION + ' / ' + AUTHORITY_ATTRIBUTE_INDEX_VERSION
 const recordingMetadata = () => {
   const r = recordings[selected], engineering = r.candidate === 'EngineeringFixture'
   return { modelName: engineering ? '匿名契约工程夹具（非模型输出）' : `${r.candidate} 固定录制`,
@@ -71,7 +72,7 @@ const environment: OrdinaryAppEnvironment = { canonical, viewRepository: new Ind
       const originalIndex = await indexImmutableScopesV11(record.sourceId, record.sourceVersionId, record.sourceText)
       const rebound = rebindRecordedScopes(record.rawHttpText, originalIndex, context.index)
       if (!config.explicitContract && record.candidate === 'EngineeringFixture') throw Error('FIXTURE_CONTRACT_MODE_REQUIRED')
-      const decoded = record.generationContract===SINGLE_AUTHORITY_VERSION?decodeSingleAuthorityRecording(rebound.reboundHttpText,context,record.candidate==='SingleAuthority'?'SingleAuthority':'EngineeringFixture'):record.candidate==='SingleAuthority'?(()=>{throw Error('SINGLE_AUTHORITY_RECORDING_CONTRACT_REQUIRED')})():decodeCurrentSourceRecording(rebound.reboundHttpText, record.candidate, context)
+      const decoded = record.generationContract===SINGLE_AUTHORITY_VERSION?decodeAuthorityProductRecording(rebound.reboundHttpText,context,record.candidate==='SingleAuthority'?'SingleAuthority':'EngineeringFixture'):record.candidate==='SingleAuthority'?(()=>{throw Error('SINGLE_AUTHORITY_RECORDING_CONTRACT_REQUIRED')})():decodeCurrentSourceRecording(rebound.reboundHttpText, record.candidate, context)
       sidecars.set(input.sourceId, { ...decoded.sidecar, recordedProvenance: provenance, scopeRebinding: { operation: rebound.operation, mapping: rebound.mapping }, postComparisonConversion: decoded.conversion, productDisposition: decoded.productDisposition, ...('coverageAudit' in decoded ? { postComparisonCoverage: decoded.coverageAudit } : {}), sourceRenderedEvents: decoded.sourceRenderedEvents })
       return decoded.result
     } catch (error) { throw Error(`录制输出不能安全生成建议（${error instanceof Error ? error.message : 'INVALID_OUTPUT'}）。没有补猜事实或重新调用模型`, { cause: error }) }

@@ -1,6 +1,18 @@
 # 单一权威关系与逐事件处置实现
 
-2026-10-06。工程实现，不是新模型成绩。当前原4首答仍0正确/3错误/1UNKNOWN；相同raw的后验展示亦0/3/1，分母4。
+2026-10-06。原真实4首答仍0正确/3错误/1UNKNOWN；相同raw的后验展示亦0/3/1，分母4。下方原工程及冻结准备记录保留；本批获授权后的状态见本节和paid-evidence/EXECUTION_SUMMARY.json。
+
+## 实际回答驱动的后验程序修复
+
+本批原8身份只取得SA01的两臂确定录制，ordinal3传输不确定即封存，4—8未发送；1grant/3reserve/2settle，无重发。没有整批赢家。原Manifest、身份、请求、参照、V5/C19及两份raw原字节不改。
+
+SA01 SingleAuthority原答已有在线、作品讨论及学习证明三个嵌套属性，各有真实原文scope；冻结编译器却要求这些依据在event.scopeIds再次复制，报SINGLE_AUTHORITY_ATTRIBUTE_EVIDENCE。该要求与单一权威声明及程序生成索引的目的冲突。`singleAuthorityProduct.ts`另版本single-authority-attribute-index-1.0.0，仅从已经嵌套声明且逐字有据的属性派生反向event证据索引，再走原严格编译器与普通保存链。假依据、另一对象主归属、非法时间owner不因扩展索引被放行；没有补原答遗漏的事实。
+
+普通App录制provider接新程序版本，原raw、可逆scope重绑定、转换审计、首次显示及用户处置独立持久化。C19 SA01未附着到活动的学习证明不自动补录；原答表示争议保留UNKNOWN，首屏缺该信息为错误。新程序只是让SingleAuthority已有事实进入首次卡片，不是新模型输出或原冻结成绩改善。
+
+`single-authority-observed-readonly.mjs`是已封存批的只读录制读取器：核原Git blob/182组件、5产物、8身份，核本机授权哈希、ledger前缀/完整链、唯一grant、逐单元receipt/raw/usage及HALT/锁。只暴露SETTLED的01/02；3UNCERTAIN和5NOT_SENT仍在8分母。没有发送、解锁、结算、恢复API。原付费gate仍要求活动组件与旧Manifest一致，代码已变时正确拒绝，未削弱为续发通道。
+
+实际过程6870普通回放：两来源各0Task/0Project/1Event/2Time；学习证明直接在SingleAuthority首次卡片出现，未补字。检查点失败保留选择，手动恢复并刷新仍暂缓；正式事务失败无半份，重试成功后读回失败只重新读取；刷新canonical仍一致。提交构建的最终复验另见PAID_BROWSER_EVIDENCE.md，不以过程替代最终。
 
 ## 两个实证根因
 

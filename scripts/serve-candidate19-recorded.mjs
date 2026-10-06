@@ -11,13 +11,18 @@ import {publicNoticeRecordedScene,historicalCandidate19Controls} from './public-
 import {currentNoticeRecordedScene} from './current-notice-recorded-readonly.mjs'
 import {completedCurrentNoticeScene} from './current-notice-completed-readonly.mjs'
 import {authorityRecordedScene} from './single-authority-recorded-readonly.mjs'
+import {authorityObservedScene} from './single-authority-observed-readonly.mjs'
 const [port,instance,fixtureMode]=process.argv.slice(2)
-if(process.argv.length>5||fixtureMode&&!['--channel-role-fixtures','--channel-polarity-fixtures','--eligibility-fixtures','--public-notice-fixtures','--public-paid-recordings','--sealed-followup-fixtures','--current-notice-fixtures','--current-notice-batch','--current-notice-completed','--single-authority-fixtures','--single-authority-comparison'].includes(fixtureMode))throw Error('C19_UNKNOWN_REPLAY_MODE')
+if(process.argv.length>5||fixtureMode&&!['--channel-role-fixtures','--channel-polarity-fixtures','--eligibility-fixtures','--public-notice-fixtures','--public-paid-recordings','--sealed-followup-fixtures','--current-notice-fixtures','--current-notice-batch','--current-notice-completed','--single-authority-fixtures','--single-authority-comparison','--single-authority-observed'].includes(fixtureMode))throw Error('C19_UNKNOWN_REPLAY_MODE')
 if(!/^\d{4,5}$/.test(port??'')||+port<6814||+port>65535||!/^[a-z0-9-]{2,32}$/.test(instance??''))throw Error('C19_NEW_LOOPBACK_INSTANCE_REQUIRED')
 const publicPaid=['--public-paid-recordings','--sealed-followup-fixtures','--current-notice-fixtures'].includes(fixtureMode)
-const currentBatch=['--current-notice-batch','--current-notice-completed','--single-authority-fixtures','--single-authority-comparison'].includes(fixtureMode)
+const currentBatch=['--current-notice-batch','--current-notice-completed','--single-authority-fixtures','--single-authority-comparison','--single-authority-observed'].includes(fixtureMode)
 let scene,recordings,batchLabel,plannedRequests,knownSettled,initialOrdinal,currentSources
-if(fixtureMode==='--single-authority-comparison'){
+if(fixtureMode==='--single-authority-observed'){
+  const verified=authorityObservedScene();scene=verified.scene;recordings=verified.recordings;currentSources=verified.sources
+  plannedRequests=8;knownSettled=recordings.length;initialOrdinal=1
+  batchLabel=`原冻结8身份：${knownSettled}份确定录制、${scene.units.filter(u=>u.status==='UNCERTAIN').length}份传输不确定、${scene.units.filter(u=>u.status==='NOT_SENT').length}份未发送；原付费现场只读。本页只回放独立核验的SETTLED记录，未运行及未决留在分母，不能判赢家`
+}else if(fixtureMode==='--single-authority-comparison'){
   const verified=await authorityRecordedScene();scene=verified.scene;recordings=verified.recordings;currentSources=verified.sources
   plannedRequests=8;knownSettled=recordings.length;initialOrdinal=1
   batchLabel='C19与单一权威生成机制4来源两臂8录制；匿名Development、暂定参照；未裁决保持UNKNOWN，不是独立Holdout或真人结果'

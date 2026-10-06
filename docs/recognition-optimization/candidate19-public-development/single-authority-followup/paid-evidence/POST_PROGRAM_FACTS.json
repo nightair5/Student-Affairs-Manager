@@ -1,0 +1,154 @@
+[
+  {
+    "ordinal": 1,
+    "responseSha256": "fa34c6b1824a0d2af89565f2d880cba2014a311389642d739ec8d6315c2a7dc7",
+    "version": "C19_UNCHANGED",
+    "displayUnchanged": true,
+    "counts": {
+      "tasks": 0,
+      "events": 1,
+      "timePoints": 2
+    },
+    "events": [
+      {
+        "tempId": "event-0001",
+        "title": "影像叙事工作坊",
+        "description": "2026年12月3日13:30开展影像叙事工作坊，\n结束时间暂未公布。\n全程在线，\n安排作品讨论，",
+        "startTimePointTempId": "time-0001",
+        "endTimePointTempId": "time-0002",
+        "location": "在线",
+        "confidence": 0.95,
+        "inferenceLevel": "explicit",
+        "evidenceIds": [
+          "d26-scope-0001-fb5e5dfed923e925eac495d437c9c39c82cf97c7a349e20792d22a37f8410725",
+          "d26-scope-0002-25c06b02717e8dbbfd63b585a1ca4b037f2956b3f04a2347c18281e72186bde7",
+          "d26-scope-0003-c103e85aa38123931d1f0049a40683e23dfe9193c6982205f3b850f3ee4f1414",
+          "d26-scope-0004-aad54b121232c2be3264c63900547814a4cb290868c15980274ffbf3946e1aff"
+        ],
+        "selected": true
+      }
+    ],
+    "timePoints": [
+      {
+        "tempId": "time-0001",
+        "type": "event_start",
+        "rawText": "2026年12月3日13:30",
+        "relatedTaskTempIds": [],
+        "relatedMaterialTempIds": [],
+        "confidence": 0.95,
+        "normalizedValue": "2026-12-03T13:30",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "exact",
+        "needsConfirmation": false,
+        "evidenceIds": [
+          "d26-scope-0001-fb5e5dfed923e925eac495d437c9c39c82cf97c7a349e20792d22a37f8410725"
+        ]
+      },
+      {
+        "tempId": "time-0002",
+        "type": "event_end",
+        "rawText": "结束时间暂未公布",
+        "relatedTaskTempIds": [],
+        "relatedMaterialTempIds": [],
+        "confidence": 0.95,
+        "normalizedValue": null,
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "vague",
+        "needsConfirmation": true,
+        "evidenceIds": [
+          "d26-scope-0002-25c06b02717e8dbbfd63b585a1ca4b037f2956b3f04a2347c18281e72186bde7"
+        ]
+      }
+    ]
+  },
+  {
+    "ordinal": 2,
+    "responseSha256": "0fbe21fa409604a32f7d791c93a8622d5269b7fe63b92cb65370c81f2e6e2ed2",
+    "version": "single-authority-attribute-index-1.0.0",
+    "inferredFacts": 0,
+    "additions": [
+      {
+        "eventId": "event-0001",
+        "attribute": 0,
+        "scopeIds": [
+          "scope-0003-c103e85aa38123931d1f0049a40683e23dfe9193c6982205f3b850f3ee4f1414"
+        ]
+      },
+      {
+        "eventId": "event-0001",
+        "attribute": 1,
+        "scopeIds": [
+          "scope-0004-aad54b121232c2be3264c63900547814a4cb290868c15980274ffbf3946e1aff"
+        ]
+      },
+      {
+        "eventId": "event-0001",
+        "attribute": 2,
+        "scopeIds": [
+          "scope-0005-f0de4d3342d3c10ac0d8fc30a83c9d81ed8beb15ac8856a132bb7ae633364f43"
+        ]
+      }
+    ],
+    "counts": {
+      "tasks": 0,
+      "events": 1,
+      "timePoints": 2
+    },
+    "events": [
+      {
+        "tempId": "event-0001",
+        "title": "影像叙事工作坊",
+        "description": "2026年12月3日13:30开展影像叙事工作坊，\n结束时间暂未公布。\n全程在线，\n安排作品讨论，\n完成学习后提供学习证明。",
+        "startTimePointTempId": "time-0001",
+        "endTimePointTempId": "time-0002",
+        "location": null,
+        "confidence": 1,
+        "inferenceLevel": "explicit",
+        "evidenceIds": [
+          "d26-scope-0001-fb5e5dfed923e925eac495d437c9c39c82cf97c7a349e20792d22a37f8410725",
+          "d26-scope-0002-25c06b02717e8dbbfd63b585a1ca4b037f2956b3f04a2347c18281e72186bde7",
+          "d26-scope-0003-c103e85aa38123931d1f0049a40683e23dfe9193c6982205f3b850f3ee4f1414",
+          "d26-scope-0004-aad54b121232c2be3264c63900547814a4cb290868c15980274ffbf3946e1aff",
+          "d26-scope-0005-f0de4d3342d3c10ac0d8fc30a83c9d81ed8beb15ac8856a132bb7ae633364f43"
+        ],
+        "selected": true
+      }
+    ],
+    "timePoints": [
+      {
+        "tempId": "time-0001",
+        "type": "event_start",
+        "rawText": "2026年12月3日13:30",
+        "confidence": 1,
+        "relatedTaskTempIds": [],
+        "relatedMaterialTempIds": [],
+        "normalizedValue": "2026-12-03T13:30",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "exact",
+        "needsConfirmation": false,
+        "evidenceIds": [
+          "d26-scope-0001-fb5e5dfed923e925eac495d437c9c39c82cf97c7a349e20792d22a37f8410725"
+        ]
+      },
+      {
+        "tempId": "time-0002",
+        "type": "event_end",
+        "rawText": "结束时间暂未公布。",
+        "confidence": 1,
+        "relatedTaskTempIds": [],
+        "relatedMaterialTempIds": [],
+        "normalizedValue": null,
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "vague",
+        "needsConfirmation": true,
+        "evidenceIds": [
+          "d26-scope-0002-25c06b02717e8dbbfd63b585a1ca4b037f2956b3f04a2347c18281e72186bde7"
+        ]
+      }
+    ]
+  }
+]
