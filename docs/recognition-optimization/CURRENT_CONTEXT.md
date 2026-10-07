@@ -7,6 +7,6 @@
 
 唯一http://127.0.0.1:6876/，普通固定录制ENGINEERING_REPLAY，构建73f94d0dbf62/source d5a886e1ca34，新库mechanism-restore-final-1007。6875完整受影响功能矩阵及独立Task5 Event3 Time16 Material2；仅状态文案改动后6876窗口→正式→安排→刷新回归Task1 Time3，11/6—8日原端点/个人09:00分开。故障输入保留/无半份/已提交只重读；模型POST403/console=[]。10工程报告57trace，部分终态canonical单列，缺失null、无编辑无editId，四真人NOT_OBSERVABLE。
 
-现成V5在这4官方节选尚无真实输出；下一独立单臂V5-CURRENT-REAL-NOTICE-DEVELOPMENT-R1，4身份NOT_RUN、原来源/参照/时基、生成契约5.0.0不改，不替代封存请求。新冻结/本批具体许可由接续文件绑定；无许可只停付费、不重建执行器或新候选。
+现成V5在这4官方节选尚无真实输出；独立单臂V5-CURRENT-REAL-NOTICE-DEVELOPMENT-R1已冻结190组件/5产物/4身份，NOT_RUN，原来源/参照/时基、生成契约5.0.0不改，不替代封存请求。生成99424e33ced530bffc2a6c80908a35417d475b28；Manifest e0d484a6945b659a35f784a5840f269eb6df77c9e5ffb42361ccb20f00debfb0、身份66496ee7f395f9641667065fb199d398bb333305b3fec0bf45b3b193c9abe724。严格核验及独立只读PASS，无AUTH/state/grant/send；4UNKNOWN。唯一具体许可申请为原4个deepseek-flash/整批US$1.30/一个新grant及逐单元reserve/settle，详见RESULTS链接；无许可只停付费，后续有许可同包接续。旧额度不复用。
 
 原03仍UNCERTAIN：8身份2SETTLED1UNCERTAIN5NOT_SENT、1grant3reserve2settle、锁/HALT与16文件SHA同；旧公开封存不动。不prepare/dispatch/补settle/解锁/重发/替代原身份。无新请求级材料不循环查供应商，不阻主线。此包模型/grant/reserve/settle0、账本1015SHA25f32a95eb28a264c3bec20500cf0b439ab33ad445dddfe8eba243c469c948d9只读，996/1000/1009前缀及84/119/7保持。当前产品9、安全24、19定向/12Node通过，全量6旧失败、audit5H2M/production0保留；lint/build/scan通过。用户handover/15审计资产未动。无Secret/旧库/依赖/v8/历史改写；不真人/Holdout/default替换/合并/部署。

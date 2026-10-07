@@ -22,3 +22,6 @@
 
 本地证据 .data/candidate11/checks/test/Asia-Shanghai/summary.json 保留全42分组日志索引。后续无相关代码改动不重复全部矩阵。最后状态文案改动不触及安全/保存算法，相应24安全组明确复用；薄绑定的新auth边界另有12 Node反例。
 安全执行器没改，新增脚本只绑定独立四来源及普通回放；新身份NOT_RUN，原耗尽grant不调用。未运行真人、Holdout、默认替换、合并、部署，不读Secret/旧库，不加依赖/v8升级。模型原效果与程序兼容分列。
+
+最终冻结：生成提交99424e33ced530bffc2a6c80908a35417d475b28，190组件/5产物/4身份。prepare-v5-current-notice --write/--verify及--report确定exit0；薄host --verify/--resume-read-only确定exit0；独立v5CurrentNoticeRecordedScene()返回0录制、NO_STATE、0本批链记录，无AUTH/lock/HALT。未调用prepare-authorized/dispatch-next。只读快照、原身份及全4UNKNOWN报告见v5-diagnostic；报告/申请不在5个原产物里，原冻结字节不改。
+最终6876 GET /manifest.json=200且构建73f94d0dbf62/source d5a886e1ca34；POST /api/deepseek=403，服务器在任何非GET路由直接拒绝，模型调用0。本地原响应final-server-readonly.json位于.data/current-mechanism-followup，页面原DB未换身份。文档/冻结产物改动不影响产品bundle，明确复用上述最终浏览器及已通过矩阵，未循环重跑。

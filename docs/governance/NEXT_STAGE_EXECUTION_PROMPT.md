@@ -7,6 +7,7 @@ ROOT C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/比赛；branc
 
 ## 本批身份与条件
 独立V5-CURRENT-REAL-NOTICE-DEVELOPMENT-R1：当前未改SingleAuthority生成机制，已有4份官方节选，单臂4请求。不是原封存ordinal3替代，不填原8未知，不判候选赢家。参照single-author/model-assisted/provisional，来源已见Development、原文时基，未读二维码不补。
+原冻结生成99424e33ced530bffc2a6c80908a35417d475b28；190组件/5产物/4请求。Manifest e0d484a6945b659a35f784a5840f269eb6df77c9e5ffb42361ccb20f00debfb0，身份66496ee7f395f9641667065fb199d398bb333305b3fec0bf45b3b193c9abe724。PERMISSION_REQUEST.md建议US$1.30整批硬限，官方保守上界US$1.297616；建议不是当前许可。四请求全部NOT_RUN/UNKNOWN，严格冻结和独立只读核验已通过，不重新write或建立另一批。
 冻结源、原参照、实际请求identity/requestSha、模型/参数/输出界、V5Schema/公共程序/评分及全分母。以已提交MANIFEST和授权申请中的实际SHA/生成commit为准，不重造或修改它们。全4固定分母保留错误/未决/未运行；标题/自由描述/泄漏未裁决NOT_ADJUDICATED。
 
 用户未明确授权本批模型、四身份次数、总美元硬上限、唯一新grant和逐单元reserve/settle时：4NOT_RUN、模型/grant/reserve/settle0、账本只读；只完成已经授权的安全工程。旧1.30/2.60/3.90/5.30均非本批许可。

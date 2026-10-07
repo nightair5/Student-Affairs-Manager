@@ -1,0 +1,72 @@
+{
+  "verifiedAt": "2026-10-07T10:19:46.862Z",
+  "binding": {
+    "manifestSha256": "e0d484a6945b659a35f784a5840f269eb6df77c9e5ffb42361ccb20f00debfb0",
+    "identitiesSha256": "66496ee7f395f9641667065fb199d398bb333305b3fec0bf45b3b193c9abe724"
+  },
+  "snapshot": "99424e33ced530bffc2a6c80908a35417d475b28",
+  "components": 190,
+  "artifacts": 5,
+  "requests": 4,
+  "scene": {
+    "status": "READ_ONLY",
+    "role": "V5_CURRENT_NOTICE_READ_ONLY_NOT_DISPATCH",
+    "state": null,
+    "nextOrdinal": null,
+    "audit": "NO_STATE",
+    "uncertainty": null,
+    "priceStatus": "NOT_CHECKED_NO_STATE",
+    "batchEvidence": {
+      "rows": 0,
+      "grantCount": 0,
+      "reserveCount": 0,
+      "settleCount": 0,
+      "units": [
+        {
+          "ordinal": 1,
+          "reserveCount": 0,
+          "settleCount": 0
+        },
+        {
+          "ordinal": 2,
+          "reserveCount": 0,
+          "settleCount": 0
+        },
+        {
+          "ordinal": 3,
+          "reserveCount": 0,
+          "settleCount": 0
+        },
+        {
+          "ordinal": 4,
+          "reserveCount": 0,
+          "settleCount": 0
+        }
+      ]
+    },
+    "localEvidence": {
+      "rawFiles": 0,
+      "receiptFiles": 0,
+      "incompleteStateWrite": false
+    },
+    "dispatchEligibility": "NOT_EVALUATED_READ_ONLY",
+    "lockExists": false,
+    "halt": null,
+    "ledger": {
+      "rows": 1015,
+      "sha256": "25f32a95eb28a264c3bec20500cf0b439ab33ad445dddfe8eba243c469c948d9",
+      "tail": "1d56fe14fa715661c06bcc26360650029e468855676039b331a9240bc3f484c2",
+      "batchRows": 0
+    },
+    "dispatch": "NOT_PERFORMED",
+    "ledgerWrites": 0,
+    "batch": "V5-CURRENT-REAL-NOTICE-DEVELOPMENT-R1",
+    "denominator": 4
+  },
+  "recordings": 0,
+  "modelRequests": 0,
+  "grant": 0,
+  "reserve": 0,
+  "settle": 0,
+  "authorizationCreated": false
+}

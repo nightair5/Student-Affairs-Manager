@@ -39,7 +39,9 @@
 
 ## 必要的当前版本新输出
 V5生成契约已可运行，但只取得一份匿名作者的确定输出；没有上述4份官方节选的V5首答。因此下一步是**独立当前版本四来源单臂诊断**，复用既有来源/参照/时基，不先造候选、输入假设或两臂费用，不替代封存ordinal3、不填原八次未知。
-批V5-CURRENT-REAL-NOTICE-DEVELOPMENT-R1，现成安全执行器的薄绑定；相同未改V5 Schema/Prompt。来源、七类事实参照、request身份/SHA、参数/公共层、评分/停止规则在任何输出前冻结；NOT_RUN/dispatchAuthorized=false。冻结核验和本批具体申请随最后交付收口，本轮没有付费许可，不prepare/dispatch。
+批V5-CURRENT-REAL-NOTICE-DEVELOPMENT-R1，现成安全执行器的薄绑定；相同未改V5 Schema/Prompt。来源、七类事实参照、request身份/SHA、参数/公共层、评分/停止规则已在任何输出前冻结；NOT_RUN/dispatchAuthorized=false。本轮没有付费许可，不prepare/dispatch。
+生成提交99424e33ced530bffc2a6c80908a35417d475b28，190组件/5产物/4请求。Manifest SHA e0d484a6945b659a35f784a5840f269eb6df77c9e5ffb42361ccb20f00debfb0，身份SHA 66496ee7f395f9641667065fb199d398bb333305b3fec0bf45b3b193c9abe724；严格组件/原Git blobs/产物/请求核验PASS，只读reader0录制、链无本批记录。[全4未知报告](current-notice-diagnostic/current-mechanism-followup/v5-diagnostic/FROZEN_REPORT.json)、[只读现场](current-notice-diagnostic/current-mechanism-followup/v5-diagnostic/READ_ONLY_VALIDATION.json)。
+唯一[具体许可申请](current-notice-diagnostic/current-mechanism-followup/v5-diagnostic/PERMISSION_REQUEST.md)：原4个deepseek-flash身份，总硬上限US$1.30，唯一本批新grant/逐单元reserve/settle。官方峰价、完整上下文上界及8192输出证明合计US$1.297616；是保守预算不是实际费用。grant前再核价/路由/同步HEAD/身份/完整链，旧许可和快照均不得代替新授权。原始价格材料及拟议证据只本机.data，无AUTH/用户同意文件。
 
 ## 保护、费用、验证与资产
 本轮模型/grant/reserve/settle全0，账本只读。1015行SHA25f32a95eb28a264c3bec20500cf0b439ab33ad445dddfe8eba243c469c948d9前后相同；996/1000/1009字节前缀核验。84保护119冻结7归档PASS，原封存16文件逐SHA全同。[只读现场](current-notice-diagnostic/current-mechanism-followup/READ_ONLY_SCENE.json)。
