@@ -1,0 +1,152 @@
+{
+  "role": "INDEPENDENT_READBACK_EVIDENCE_SUMMARY_NOT_WORKSPACE_EXPORT",
+  "build": "73f94d0dbf62 / source d5a886e1ca34",
+  "database": "rco-mainline-01-02-i1-d27-plan-recorded-mechanism-restore-final-1007",
+  "originalReadbackSha256": "0ad544ca84043fc55e2d8a3900f3b3ea68b45d2b80af50307107795ef1a5062c",
+  "counts": {
+    "Task": 1,
+    "Project": 0,
+    "Event": 0,
+    "TimePoint": 3,
+    "Material": 0
+  },
+  "sourceVersions": [
+    {
+      "id": "source:dd8ceb9f:version:1",
+      "sourceId": "source:dd8ceb9f",
+      "versionNo": 1,
+      "rawText": "请在开放时段办理申请。办理申请开放时间为2026年11月6—8日。",
+      "contentHash": "fnv1a32:63354384"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "task:source:dd8ceb9f:draft:1:T1",
+      "title": "办理申请",
+      "nextAction": "办理申请",
+      "status": "todo",
+      "dependencyIds": []
+    }
+  ],
+  "events": [],
+  "materials": [],
+  "timePoints": [
+    {
+      "id": "time:source:dd8ceb9f:draft:1:P1",
+      "type": "event_start",
+      "taskId": "task:source:dd8ceb9f:draft:1:T1",
+      "materialId": null,
+      "eventId": null,
+      "relatedTaskIds": [
+        "task:source:dd8ceb9f:draft:1:T1"
+      ],
+      "relatedMaterialIds": [],
+      "rawText": "2026年11月6—8日",
+      "normalizedValue": "2026-11-06",
+      "timezone": null,
+      "precision": "date_only",
+      "needsConfirmation": false,
+      "sourceTimeRole": "window_start"
+    },
+    {
+      "id": "time:source:dd8ceb9f:draft:1:P2",
+      "type": "event_end",
+      "taskId": "task:source:dd8ceb9f:draft:1:T1",
+      "materialId": null,
+      "eventId": null,
+      "relatedTaskIds": [
+        "task:source:dd8ceb9f:draft:1:T1"
+      ],
+      "relatedMaterialIds": [],
+      "rawText": "2026年11月6—8日",
+      "normalizedValue": "2026-11-08",
+      "timezone": null,
+      "precision": "date_only",
+      "needsConfirmation": false,
+      "sourceTimeRole": "window_end"
+    },
+    {
+      "id": "personal-plan:task:source:dd8ceb9f:draft:1:T1",
+      "type": "planned_start",
+      "taskId": "task:source:dd8ceb9f:draft:1:T1",
+      "materialId": null,
+      "eventId": null,
+      "relatedTaskIds": [
+        "task:source:dd8ceb9f:draft:1:T1"
+      ],
+      "relatedMaterialIds": [],
+      "rawText": "个人计划起点（不替代原文截止）",
+      "normalizedValue": "2026-11-06T01:00:00.000Z",
+      "timezone": "Asia/Shanghai",
+      "precision": "exact",
+      "needsConfirmation": false,
+      "personalPlan": {
+        "version": "personal-plan-d27-1",
+        "minutes": 30,
+        "durationOrigin": "product_estimate",
+        "locked": false,
+        "operationId": "d0d1748a-789e-4143-a7a9-029e747004bd",
+        "conditionalOn": []
+      }
+    }
+  ],
+  "evidenceRefs": [
+    {
+      "id": "evidence:source:dd8ceb9f:draft:1:d26-scope-0001-13ed7dc957b69796f76b4a016e24895c00eb1f5524d9f044e6f4be4e861dda1b",
+      "sourceVersionId": "source:dd8ceb9f:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "请在开放时段办理申请。",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-07T09:58:35.913Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0001-13ed7dc957b69796f76b4a016e24895c00eb1f5524d9f044e6f4be4e861dda1b"
+      }
+    },
+    {
+      "id": "evidence:source:dd8ceb9f:draft:1:d26-scope-0002-e67d977691aee169e3f288c1d828fb21b1d86e9952de6f5e1ddfe767005d1730",
+      "sourceVersionId": "source:dd8ceb9f:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "办理申请开放时间为2026年11月6—8日。",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-07T09:58:35.913Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0002-e67d977691aee169e3f288c1d828fb21b1d86e9952de6f5e1ddfe767005d1730"
+      }
+    }
+  ],
+  "drafts": [
+    {
+      "id": "source:dd8ceb9f:draft:1",
+      "status": "confirmed",
+      "commitOperationIds": [
+        "source-review:source:dd8ceb9f:draft:1:fnv1a32:66a89786"
+      ],
+      "acceptedEntityTempIds": [
+        "P1",
+        "P2",
+        "T1"
+      ],
+      "rejectedEntityTempIds": []
+    }
+  ],
+  "personalPlanReceipt": {
+    "version": "personal-plan-d27-1",
+    "commitId": "d0d1748a-789e-4143-a7a9-029e747004bd",
+    "kind": "apply",
+    "verified": true,
+    "committedAt": "2026-10-07T09:59:04.351Z",
+    "pointIds": [
+      "personal-plan:task:source:dd8ceb9f:draft:1:T1"
+    ]
+  }
+}
