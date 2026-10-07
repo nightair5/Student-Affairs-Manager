@@ -1,4 +1,6 @@
 # 义务先行与单一活动关联：可运行机制，不是已知模型收益
+本次仅[发送边界观察工具](TRANSPORT_BOUNDARY.md)新增，产品和原冻结198组件未改。原请求证据仍不够，原8封存保持；旧4raw新诊断结果/拒绝理由逐份不变，没有为了推进阶段修改Prompt或猜补事实。观察包装可选且未接原付费host，不提供恢复或新许可。
+
 2026-10-07。工作区candidate11，分支codex/e2-candidate11-blind-eval。现有App、ReviewSession、DomainCommitPlan、Repository、D27安排复用。没有新业务请求或账本写入。
 
 ## 两处发生层与一个生成假设

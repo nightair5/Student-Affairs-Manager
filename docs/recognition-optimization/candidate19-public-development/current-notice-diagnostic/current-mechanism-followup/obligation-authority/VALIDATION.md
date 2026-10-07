@@ -1,4 +1,6 @@
 # 验证结果与边界
+2026-10-07有限取证接续：[最终适用退出](TRANSPORT_VALIDATION.json)。仅新工具/离线测试，8新边界+4原core+3原phase+56原gateway通过，语法/lint/security/历史/冻结通过。两项新测试误把后续只读Git核验当额外发送，已修为检查adapter/POST效应不重复；原gateway初次缺REAL_INPUT_TEST_TEMP，正确隔离环境下56通过，均不是新的产品根因，旧断言未改。产品/构建/6886浏览器/测量复用，198组件哈希一致；未新跑全量、真人或新raw浏览器，不改前次六旧失败。完整账本1026 SHA489da37a…及新8/旧16封存字节保持，权威账本写0。新观察层只在原host/core离线接入验收，真实付费接入NOT_RUN。
+
 2026-10-07。现行carrier权威入口，所有运行组到确定退出，不排除失败或全局增加timeout。[退出汇总](TEST_EXIT_SUMMARY.json)、[首次全量原摘要](FULL_TEST_INITIAL_SUMMARY.json)。
 
 | 检查 | 最终结果 | 说明 |

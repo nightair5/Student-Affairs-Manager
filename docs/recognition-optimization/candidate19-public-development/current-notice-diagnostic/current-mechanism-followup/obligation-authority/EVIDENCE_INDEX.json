@@ -72,8 +72,8 @@
     },
     {
       "path": "IMPLEMENTATION.md",
-      "sha256": "846f9f2df9f9d56f96df4d2ba4dab0ecdd9c180cabbb75fd837a10d226763d73",
-      "bytes": 5576
+      "sha256": "e220a307ff12e52645d32f221e3239a298b84673571b716612472d1acd1478a7",
+      "bytes": 5904
     },
     {
       "path": "MEASUREMENT_FINAL_READBACK.json",
@@ -112,8 +112,23 @@
     },
     {
       "path": "VALIDATION.md",
-      "sha256": "e62f8a20c135184f98e95a50a0fd03e94346f39432dd876bed319bb105a58481",
-      "bytes": 4915
+      "sha256": "4b41e45ba2c9345a53db4a4f540076f260215c7afbe5461e7217528dbec72ef5",
+      "bytes": 5649
+    },
+    {
+      "path": "TRANSPORT_BOUNDARY.md",
+      "sha256": "0f664b2c212212aa0bf536a5a58e8a8d4ed7d169c3e9f8a63ec2df653386fdc5",
+      "bytes": 5199
+    },
+    {
+      "path": "TRANSPORT_FORENSICS.json",
+      "sha256": "0143638bdba545a48e2daf737a209f990588350008b944fcef1ae37594a371c1",
+      "bytes": 15257
+    },
+    {
+      "path": "TRANSPORT_VALIDATION.json",
+      "sha256": "3e1783ddcc41581fd2fee58c9f2c50e406d1acc8a17bbf57ea79717cb3f4279a",
+      "bytes": 4814
     }
   ],
   "notes": [
@@ -227,6 +242,34 @@
         "path": "comparison/paid-evidence/TLS_ROUTE_DIAGNOSTIC.json",
         "sha256": "a225bbf3d668e63a88f6036d226f5464cc50e10796a1cbe8a6c8f97db2f45250",
         "bytes": 482
+      }
+    ]
+  },
+  "transportFollowup": {
+    "role": "READ_ONLY_AND_OFFLINE_OBSERVATION_NOT_NEW_MODEL_EVIDENCE",
+    "version": "scoped-transport-boundary-observation-1.0.0",
+    "newModelOutputs": 0,
+    "model": 0,
+    "ledgerWrites": 0,
+    "status": "KEEP_SEALED_NO_RECOVERY_AUTHORIZATION_REQUEST",
+    "counts": {
+      "SETTLED": 0,
+      "UNCERTAIN": 1,
+      "NOT_SENT": 7
+    },
+    "newObservationBoundToOriginalPaidHost": false,
+    "originalPacketRole": "Frozen pre-execution NOT_RUN/auth card preserved; currentPaidExecution and followup describe the actual sealed state.",
+    "productComponentsUnchanged": 198,
+    "sources": [
+      {
+        "path": "scripts/scoped-transport-boundary-diagnostics.mjs",
+        "sha256": "6fccba503ff7af090b653c3598b531248d7e8a74179c106d4b64234294da1cb2",
+        "mode": "raw"
+      },
+      {
+        "path": "scripts/scoped-transport-boundary.node-test.mjs",
+        "sha256": "93f63ba0bf361646a7f7ee158a59a3e33c2f95e737defaeeee35cc7a4d44e27a",
+        "mode": "raw"
       }
     ]
   }

@@ -1,0 +1,134 @@
+{
+  "role": "OFFLINE_TOOLING_NOT_MODEL_OR_BROWSER_ACCEPTANCE",
+  "observedAt": "2026-10-07T15:07:28.207Z",
+  "groups": [
+    {
+      "name": "new-boundary",
+      "exit": 0,
+      "error": null,
+      "pass": "8",
+      "fail": "0",
+      "outcome": "PASS",
+      "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\obligation-authority\\forensics\\checks\\new-boundary.log",
+      "finalSourceSha256": "93f63ba0bf361646a7f7ee158a59a3e33c2f95e737defaeeee35cc7a4d44e27a"
+    },
+    {
+      "name": "existing-core",
+      "exit": 0,
+      "error": null,
+      "pass": "4",
+      "fail": "0",
+      "outcome": "PASS",
+      "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\obligation-authority\\forensics\\checks\\existing-core.log"
+    },
+    {
+      "name": "existing-phase",
+      "exit": 0,
+      "error": null,
+      "pass": "3",
+      "fail": "0",
+      "outcome": "PASS",
+      "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\obligation-authority\\forensics\\checks\\existing-phase.log"
+    },
+    {
+      "name": "existing-gateway",
+      "exit": 0,
+      "error": null,
+      "pass": "56",
+      "fail": "0",
+      "outcome": "PASS",
+      "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\obligation-authority\\forensics\\checks\\existing-gateway.log"
+    },
+    {
+      "name": "boundary-syntax",
+      "exit": 0,
+      "error": null,
+      "pass": null,
+      "fail": null,
+      "outcome": "PASS",
+      "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\obligation-authority\\forensics\\checks\\boundary-syntax.log"
+    },
+    {
+      "name": "boundary-test-syntax",
+      "exit": 0,
+      "error": null,
+      "pass": null,
+      "fail": null,
+      "outcome": "PASS",
+      "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\obligation-authority\\forensics\\checks\\boundary-test-syntax.log"
+    },
+    {
+      "name": "lint",
+      "exit": 0,
+      "error": null,
+      "pass": null,
+      "fail": null,
+      "outcome": "PASS",
+      "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\obligation-authority\\forensics\\checks\\lint.log"
+    },
+    {
+      "name": "security",
+      "exit": 0,
+      "error": null,
+      "pass": null,
+      "fail": null,
+      "outcome": "PASS",
+      "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\obligation-authority\\forensics\\checks\\security.log"
+    },
+    {
+      "name": "history",
+      "exit": 0,
+      "error": null,
+      "pass": null,
+      "fail": null,
+      "outcome": "PASS",
+      "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\obligation-authority\\forensics\\checks\\history.log"
+    },
+    {
+      "name": "original-freeze",
+      "exit": 0,
+      "error": null,
+      "pass": null,
+      "fail": null,
+      "outcome": "PASS",
+      "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\obligation-authority\\forensics\\checks\\original-freeze.log"
+    }
+  ],
+  "model": 0,
+  "ledgerWrites": 0,
+  "reuse": {
+    "product": "All 198 frozen components unchanged. Reuse final product9/build/6886 browser and recovery/canonical/measurement evidence.",
+    "full": "Previous full run six historical failures remain; no new full run or claim of full PASS.",
+    "historyFailures": [
+      "d19-diagnostic",
+      "d9-historical",
+      "rco-5-007",
+      "c11-history",
+      "c11-gateway",
+      "vitest-d17-history"
+    ],
+    "audit": "5high2moderate/production0 prior evidence not rescanned"
+  },
+  "processIssues": [
+    {
+      "kind": "NEW_TEST_EXPECTATION_FIXED",
+      "reason": "Repeated halted dispatch legitimately performs a read-only Git authorization check; assertions now check zero additional adapter/POST effects, not unchanged Git read count. No old assertion modified."
+    },
+    {
+      "kind": "INCORRECT_DIRECT_INVOCATION_FIXED",
+      "reason": "Initial gateway subset omitted REAL_INPUT_TEST_TEMP. Correct run supplies a new absolute temp root and filtered environment; missing env is not a product failure."
+    }
+  ],
+  "newFailure": false,
+  "toolSha256": "6fccba503ff7af090b653c3598b531248d7e8a74179c106d4b64234294da1cb2",
+  "finalDirectedObservedAt": "2026-10-07T15:13:03.356Z",
+  "entryReadOnly": {
+    "url": "http://127.0.0.1:6886/",
+    "observedAt": "2026-10-07T15:13:03.414Z",
+    "status": 200,
+    "manifestSha256": "c5ec5772a6b260b584f57f8455f74dc4c7af6e00bd6dc457386e43b442b61d13",
+    "browserInteractions": "NOT_RUN_THIS_TOOL_ONLY_FOLLOWUP_REUSE_FINAL_6886",
+    "canonicalAccess": 0,
+    "model": 0
+  }
+}

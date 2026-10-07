@@ -1,7 +1,9 @@
-# 当前结果：义务先行工程已交付，新比较第1身份不确定封存
+# 当前结果：义务先行工程已交付，有限取证后原比较继续封存
 2026-10-07。唯一当前结果入口。[机制](current-notice-diagnostic/current-mechanism-followup/obligation-authority/IMPLEMENTATION.md)、[浏览器](current-notice-diagnostic/current-mechanism-followup/obligation-authority/BROWSER_EVIDENCE.md)、[验证](current-notice-diagnostic/current-mechanism-followup/obligation-authority/VALIDATION.md)、[四旧raw逐份比较](current-notice-diagnostic/current-mechanism-followup/obligation-authority/OLD_RECORDING_COMPARISON.json)、[保护/现场](current-notice-diagnostic/current-mechanism-followup/obligation-authority/FINAL_READ_ONLY_SCENE.json)。本轮产品工程73a8b923、冻结72e4b580均已提交并普通推送。用户已另授权原8次/US$2.60，首次grant前重新核价/HEAD/身份/账本；第1身份不确定，立即停发封存，比较未完成。[实际执行与最小缺项](current-notice-diagnostic/current-mechanism-followup/obligation-authority/comparison/paid-evidence/EXECUTION_SUMMARY.md)。
 
 ## 用户少改什么
+本次接续完成[有限取证与最小工具修复](current-notice-diagnostic/current-mechanism-followup/obligation-authority/TRANSPORT_BOUNDARY.md)：原TRANSPORT_ENTER在最后授权/Git核验之前；临时匿名host/core反例证明Git失败（fake POST=0）与POST失败（fake POST=1）均留下同样旧记录，不能恢复原请求。新可选观察层分清核验/adapter/CONNECT/TLS/POST/响应与本地保存，不改原host/core或绑定本批派发。四旧raw再次诊断逐份相同，未发现新确定产品缺口；本次没有减少已观测首次事实错误，也没有新模型收益。新模型/grant/reserve/settle/权威账本写均0。[现场](current-notice-diagnostic/current-mechanism-followup/obligation-authority/TRANSPORT_FORENSICS.json)、[适用验证与复用边界](current-notice-diagnostic/current-mechanism-followup/obligation-authority/TRANSPORT_VALIDATION.json)。
+
 一份通知里的报名/准备动作与独立活动现在能从已有真实关联进入普通首次卡片，正式保存后关联不丢。先只确认事件也不会生成占位任务；任务后来确认能解析同一关联。新生成契约先列动作对象、资格/前置，再生成活动和时间owner，只有一份task.eventLinks声明，程序派生反向索引。coverage present仍须真实实体，不靠unknown/猜补填正确。
 
 这是一个可反驳的输入机制假设，不是已知模型提升。旧V5/C19/默认候选字节不改；新candidateVersion=obligation-authority-generation-1.0.0，promptVersion=recognition-obligation-authority-1.0.0、Schema6.0.0；普通semantic bridge1.2.0/source-event-task-relations-1，Workspace仍v8。真实生成缺事实01/03/04仍拒，不能由程序自动补成首次正确。
@@ -27,6 +29,8 @@
 6工程报告40trace，无字段edit不造editId；选择/人工恢复纠正分开，失败成本和时间缺失保留，canonical partial单列，历史measurement3.2/low-edit-v2不改。四真人NOT_OBSERVABLE，没有新真人范围/负责人/同意/裁决；工程不计真人省时。
 
 ## 验证、账本与付费边界
+本次仅新增工具及其离线测试：new-boundary8、原core4、原phase3、原gateway56均确定exit0；语法/lint/security/原冻结/历史保护通过。直接gateway初次缺REAL_INPUT_TEST_TEMP是调用环境错误，改用新绝对临时目录后56通过，未改旧断言。原产品198组件未改，复用此前产品9/build/6886实际浏览器和测量，不声称本次重跑全量或新raw浏览器。六旧失败/audit5H2M/production0仍单列。
+
 13定向和2新隔离preauth通过，最终产品9组/lint/build/security通过；本轮安全24未变结果复用。首次全量7失败中本轮generated契约同步已修；六旧D17快照/D9/RCO-5-007/C11哈希断言失败仍在，不称全绿，不弱化锁/Expected/旧断言。8既有lint warning/chunk warning/audit5H2M/production0单列。最终浏览器console[]。
 
 84保护/119冻结/7归档保持；授权后账本1024→1026，SHA489da37a7b83c2d3d6c00d8f2ef949e6d3fae4f8e9e250e5bac7ca80a84ec278，仅合法追加本批grant/reserve两行，旧1024完整前缀25d8dbb4…不变；996/1000/1009/1015前缀和旧16封存文件保持。handover/15审计资产保留。原V5实际批4SETTLED/0UNCERTAIN、1grant4reserve4settle已完成，US$1.30不可再用；原生成99424e33、Manifest e0d484a6…、identity66496ee7…及raw不改。本批0SETTLED/1UNCERTAIN/7NOT_SENT、1grant/1reserve/0settle、0可用新raw。ordinal1进入TRANSPORT_ENTER后OTHER_FAILURE，送达/真实usage/实扣未知；单元reserve上界US$0.324404不是实扣，没有内部settle，不声称新增费用0。HALT/锁/8现场文件字节封存，后7未reserve/发送。原8批2SETTLED1UNCERTAIN5NOT_SENT及公开封存不解锁/补settle/重发，不循环等供应商。
