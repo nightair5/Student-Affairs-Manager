@@ -19,3 +19,6 @@
 工程测量6报告40trace；无字段edit不造editId。6885故障编辑单独留检查点/edit/commit/readback链，不计模型首次正确。刷新开放区间缺失null，失败成本不补0或省时百分比；measurement3.2/low-edit-v2不改，canonical partial独立报告。四真人NOT_OBSERVABLE，没有造人/同意/裁决。
 
 新输入机制没有模型输出，准确率UNKNOWN；只读旧raw不足以证明它提高。普通工程可以独立revert，旧外部请求及账本既成事实不能靠revert抹去。本轮无新的模型/grant/reserve/settle，封存不解锁/补settle/重发；新比较待具体许可。未测试真人、独立Holdout、默认替换、合并或部署。
+
+## 冻结接续只读核验
+工程73a8b923已普通推送，4作者Development×V5/V6=8冻结，198组件/5产物；--verify核Git blobs、工作组件、5产物、8身份/request SHA/参数/参照，全部NOT_RUN。单独只读reader/host显示NO_STATE/0raw/0grant/0reserve/0settle/0账本写入。官方当前路由/价格和Responses参数已核，price原件仅.data；保守US$2.595232，申请US$2.60，真实授权尚无。此后只有冻结材料/证据/短交接变化，复用未受影响的产品/安全/浏览器检查，付费前仍须重新核价和同步HEAD/完整链。

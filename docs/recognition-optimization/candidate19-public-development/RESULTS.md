@@ -1,5 +1,5 @@
 # 当前结果：义务先行机制与普通活动关联已落地，模型收益尚未验证
-2026-10-07。唯一当前结果入口。[机制](current-notice-diagnostic/current-mechanism-followup/obligation-authority/IMPLEMENTATION.md)、[浏览器](current-notice-diagnostic/current-mechanism-followup/obligation-authority/BROWSER_EVIDENCE.md)、[验证](current-notice-diagnostic/current-mechanism-followup/obligation-authority/VALIDATION.md)、[四旧raw逐份比较](current-notice-diagnostic/current-mechanism-followup/obligation-authority/OLD_RECORDING_COMPARISON.json)、[保护/现场](current-notice-diagnostic/current-mechanism-followup/obligation-authority/FINAL_READ_ONLY_SCENE.json)。本轮先交可运行产品，再冻结最小必要8次新比较；没有新付费许可。
+2026-10-07。唯一当前结果入口。[机制](current-notice-diagnostic/current-mechanism-followup/obligation-authority/IMPLEMENTATION.md)、[浏览器](current-notice-diagnostic/current-mechanism-followup/obligation-authority/BROWSER_EVIDENCE.md)、[验证](current-notice-diagnostic/current-mechanism-followup/obligation-authority/VALIDATION.md)、[四旧raw逐份比较](current-notice-diagnostic/current-mechanism-followup/obligation-authority/OLD_RECORDING_COMPARISON.json)、[保护/现场](current-notice-diagnostic/current-mechanism-followup/obligation-authority/FINAL_READ_ONLY_SCENE.json)。本轮产品工程73a8b923已提交并普通推送；最小必要8次新比较已冻结并只读核验，没有新付费许可。
 
 ## 用户少改什么
 一份通知里的报名/准备动作与独立活动现在能从已有真实关联进入普通首次卡片，正式保存后关联不丢。先只确认事件也不会生成占位任务；任务后来确认能解析同一关联。新生成契约先列动作对象、资格/前置，再生成活动和时间owner，只有一份task.eventLinks声明，程序派生反向索引。coverage present仍须真实实体，不靠unknown/猜补填正确。
@@ -12,7 +12,8 @@
 | 原V5当前实际4原答暂定事实 | 0 | 3 | 1 | 4 |
 | 原冻结首次展示 | 0 | 4 | 0 | 4 |
 | 本轮公共程序同原4raw首次展示 | 0 | 3 | 1 | 4 |
-| 新义务先行模型首答 | 0 | 0 | 4 | 每臂计划4，未运行 |
+| 新比较V5模型首答 | 0 | 0 | 4 | 4，全部未运行 |
+| 新比较义务先行V6模型首答 | 0 | 0 | 4 | 4，全部未运行 |
 
 四旧raw与上一轮first result或拒绝理由逐份相同；可解码1份不等于25%完整正确。01缺窗口owner，03准备义务被location_note吞掉且报名缺关联，04报名缺关联是真错误；02日前边界/完整条件拆分未决。单臂已见Development/provisional，标题/描述/泄漏NOT_ADJUDICATED；0/4是确认正确数为0，不能把未知当错后宣称真实率已知。原v11 C17 2/6/C19 1/6 MIXED_PROGRESS与12后验4暂定2错/5暂定1争议、所有旧成绩保持。
 
@@ -31,4 +32,4 @@
 84保护/119冻结/7归档保持；账本仍1024行SHA25d8dbb4a4a56379ab9f7bc9d66d8023c4a3d4db65cb61d14caa50b14ee87a14，本轮零追加；996/1000/1009/1015前缀和旧16封存文件保持。handover/15审计资产保留。原V5实际批4SETTLED/0UNCERTAIN、1grant4reserve4settle已完成，US$1.30不可再用；原生成99424e33、Manifest e0d484a6…、identity66496ee7…及raw不改。本轮模型/grant/reserve/settle=0，新增费用0。原8批2SETTLED1UNCERTAIN5NOT_SENT及公开封存不解锁/补settle/重发，不循环等供应商。
 
 ## 下一最少动作
-新输入是否减少真实首次错误，旧raw不能证明。最小V5-OBLIGATION-AUTHORITY-DEVELOPMENT-R1为4作者匿名Development×V5/新V6=8，2AB2BA；三风险来源+材料普通控制，没有第三臂或16/24默认扩样本。两臂公共转换/首屏/参照/评分一致，provisional未知/争议/失败保留各臂4分母；整包变化不只归因Prompt。完成冻结、重新只读核官方路由/现价/上下文输出界及同步HEAD后，仅申请本批具体模型/8身份/美元硬限/唯一新grant及逐单元reserve/settle。未获新许可就保持NOT_RUN，已交付本地入口可用。不需真人/账号/全局计划器做前置，不开展Holdout/default替换/合并/部署。
+新输入是否减少真实首次错误，旧raw不能证明。最小V5-OBLIGATION-AUTHORITY-DEVELOPMENT-R1为4作者匿名Development×V5/新V6=8，2AB2BA；三风险来源+材料普通控制，没有第三臂或16/24默认扩样本。两臂公共转换/首屏/参照/评分一致，provisional未知/争议/失败保留各臂4分母；整包变化不只归因Prompt。已固定198组件/5产物/8请求，代码快照73a8b9235520ddd598a03001ffc475218367c7bd；Manifest b2749c885ee466b187fe2a74537997f78a9ec2b3e494d02e4b6fd494379b1fea，identity bf8c3ddfea61b6353f5d12d72021dd1042faeb4ef27b7b23b6b74df22dad594f。[具体授权卡](current-notice-diagnostic/current-mechanism-followup/obligation-authority/comparison/AUTHORIZATION_CARD.md)、[逐身份未运行与各臂分母](current-notice-diagnostic/current-mechanism-followup/obligation-authority/comparison/NOT_RUN_REPORT.json)。官方现价/路由/Responses输出界已只读核对，整批保守上界US$2.595232，拟申请8次deepseek-flash、US$2.60硬上限、唯一新grant及逐单元reserve/settle；首次grant前重新核价/同步HEAD/身份/完整链。未获新许可就保持NOT_RUN，已交付本地入口可用。不需真人/账号/全局计划器做前置，不开展Holdout/default替换/合并/部署。

@@ -1,0 +1,150 @@
+{
+  "version": "obligation-authority-paired-source-facts-1.0.0",
+  "references": [
+    {
+      "sourceId": "obligation-development-OA-01",
+      "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "assertions": [
+        {
+          "id": "obligations",
+          "description": "检查麦克风、安装声景训练营会议客户端两个义务，不吞成附注；录取资格unknown，不写已取得",
+          "critical": true
+        },
+        {
+          "id": "prerequisite",
+          "description": "安装前置检查完成，原文未说明个人完成状态；等待而非直接可开始，不把资格当完成",
+          "critical": true
+        },
+        {
+          "id": "events",
+          "description": "1独立声景训练营；两个义务与该活动的真实关系按原文依据裁决，不猜额外活动",
+          "critical": true
+        },
+        {
+          "id": "time",
+          "description": "活动开始2026-12-07T09:20 exact；结束null，certainty=unannounced，现行canonical precision=vague；保留结束时间尚未公布；任务没有deadline",
+          "critical": true
+        },
+        {
+          "id": "graph",
+          "description": "所有present有真实事实/owner/关联；未知资格与前置完成分别保留",
+          "critical": true
+        },
+        {
+          "id": "prose",
+          "description": "全部标题、描述、属性、额外实体、覆盖和关系逐项暂定裁决；未决或无据新增不满分",
+          "critical": false
+        }
+      ],
+      "disputes": [
+        "标题/自由描述/教学泄漏未独立裁决NOT_ADJUDICATED；原文全义务、所有额外实体及描述必须逐项核，不能仅检查结构",
+        "明确未公布null可正确；日前边界/完整条件拆分未决不填满分；命名/顺序及无损格式同义允许，错对象/日期/类型/依据/关系拒绝"
+      ]
+    },
+    {
+      "sourceId": "obligation-development-OA-02",
+      "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "assertions": [
+        {
+          "id": "obligations",
+          "description": "创建图书馆预约账号、验证校园邮箱两个义务；无显式依赖，不创造先后",
+          "critical": true
+        },
+        {
+          "id": "time",
+          "description": "两项办理窗口开始2026-12-01T08:30、结束2026-12-03T16:45 exact；不是deadline或planned_start",
+          "critical": true
+        },
+        {
+          "id": "graph",
+          "description": "两个动作均有窗口owner；可用共享或无损同值独立时间表示，不得遗漏其中一个owner",
+          "critical": true
+        },
+        {
+          "id": "events",
+          "description": "0独立事件，不把开放窗口冒充活动；明确无deadline保留",
+          "critical": true
+        },
+        {
+          "id": "prose",
+          "description": "全部动作对象、标题、描述、覆盖和额外字段暂定裁决；不猜具体办理计划",
+          "critical": false
+        }
+      ],
+      "disputes": [
+        "标题/自由描述/教学泄漏未独立裁决NOT_ADJUDICATED；原文全义务、所有额外实体及描述必须逐项核，不能仅检查结构",
+        "明确未公布null可正确；日前边界/完整条件拆分未决不填满分；命名/顺序及无损格式同义允许，错对象/日期/类型/依据/关系拒绝"
+      ]
+    },
+    {
+      "sourceId": "obligation-development-OA-03",
+      "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "assertions": [
+        {
+          "id": "obligations",
+          "description": "只有报名摄影交流会1个义务；维护不是登记待办",
+          "critical": true
+        },
+        {
+          "id": "events",
+          "description": "摄影交流会与器材服务维护两个独立事件，名称、属性不混",
+          "critical": true
+        },
+        {
+          "id": "time",
+          "description": "报名deadline 2026-12-04T12:10；交流会开始2026-12-06T14:30结束16:00 exact；维护开始周六晚null vague、结束尚未公布null，certainty=unannounced，现行canonical precision=vague",
+          "critical": true
+        },
+        {
+          "id": "graph",
+          "description": "报名关联摄影交流会，不接维护；各事件起止owner一致，不能因同来源自动相连",
+          "critical": true
+        },
+        {
+          "id": "prose",
+          "description": "维护信息、无登记、所有标题描述及额外事实逐项暂定裁决；模糊null不是遗漏",
+          "critical": false
+        }
+      ],
+      "disputes": [
+        "标题/自由描述/教学泄漏未独立裁决NOT_ADJUDICATED；原文全义务、所有额外实体及描述必须逐项核，不能仅检查结构",
+        "明确未公布null可正确；日前边界/完整条件拆分未决不填满分；命名/顺序及无损格式同义允许，错对象/日期/类型/依据/关系拒绝"
+      ]
+    },
+    {
+      "sourceId": "obligation-development-OA-04",
+      "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "assertions": [
+        {
+          "id": "obligations",
+          "description": "提交器材借用申请1任务；收到受理编号是完成标准，不造第二动作",
+          "critical": true
+        },
+        {
+          "id": "materials",
+          "description": "申请材料PDF、文件名班级和姓名、明确目的地资料接收室、办结标准受理编号完整保留；陌生目的地有据不清空",
+          "critical": true
+        },
+        {
+          "id": "time",
+          "description": "任务deadline 2026-12-08T15:40 exact；不与个人安排混淆",
+          "critical": true
+        },
+        {
+          "id": "graph",
+          "description": "材料和截止owner为提交申请；无独立活动，不能制造event present",
+          "critical": true
+        },
+        {
+          "id": "prose",
+          "description": "所有标题、描述、对象、附注和额外事实逐项暂定裁决；未知和争议不满分",
+          "critical": false
+        }
+      ],
+      "disputes": [
+        "标题/自由描述/教学泄漏未独立裁决NOT_ADJUDICATED；原文全义务、所有额外实体及描述必须逐项核，不能仅检查结构",
+        "明确未公布null可正确；日前边界/完整条件拆分未决不填满分；命名/顺序及无损格式同义允许，错对象/日期/类型/依据/关系拒绝"
+      ]
+    }
+  ]
+}

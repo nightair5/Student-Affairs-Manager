@@ -112,13 +112,70 @@
     },
     {
       "path": "VALIDATION.md",
-      "sha256": "47cbf8f82b3cb331f0fde05ef22df624d7dd3c34d121e42a046647fe8c09c25a",
-      "bytes": 3491
+      "sha256": "4ae7ec20c5275a76386518176844e10af62a926ee8a7580cd860ce27984dec44",
+      "bytes": 4079
     }
   ],
   "notes": [
     "6885 fault recovery evidence reused after only no-task fixture/title and pending-comparison copy changed; ordinary App/ReviewSession/Repository/recovery code unchanged between 6885 and 6886. Registration relation rerun on 6886.",
     "Process fixture noncontiguous title failure preserved; corrected author fixture, no production grounding loosening.",
     "Asynchronous read captures may be earlier; final refreshed readback is decisive, not intermediate PRE values."
-  ]
+  ],
+  "frozenComparison": {
+    "batch": "V5-OBLIGATION-AUTHORITY-DEVELOPMENT-R1",
+    "snapshot": "73a8b9235520ddd598a03001ffc475218367c7bd",
+    "manifestSha256": "b2749c885ee466b187fe2a74537997f78a9ec2b3e494d02e4b6fd494379b1fea",
+    "identitiesSha256": "bf8c3ddfea61b6353f5d12d72021dd1042faeb4ef27b7b23b6b74df22dad594f",
+    "status": "NOT_RUN",
+    "units": 8,
+    "sourceProvenance": "New wording/objects/dates; conceptual overlap deliberate. These authored Development notices are not official actual notices, independent Holdout or evidence of generalization.",
+    "authorization": "NONE",
+    "publicFiles": [
+      {
+        "path": "comparison/AUTHORIZATION_CARD.md",
+        "sha256": "6c880a95e1db23f904b09ab6363f33f5ebd34f45d76354c07b8c0a634aaa7030",
+        "bytes": 3121
+      },
+      {
+        "path": "comparison/FREEZE_VALIDATION.json",
+        "sha256": "5b94c92335f853ab45efee063ac094d4b673d80bc7149146704473cf9f7df3c4",
+        "bytes": 1356
+      },
+      {
+        "path": "comparison/MANIFEST.json",
+        "sha256": "b2749c885ee466b187fe2a74537997f78a9ec2b3e494d02e4b6fd494379b1fea",
+        "bytes": 30273
+      },
+      {
+        "path": "comparison/NOT_RUN_REPORT.json",
+        "sha256": "caa9c8449586be091fe40f445a57f446588249c528a6fc3a28fdaaed28b1763e",
+        "bytes": 6498
+      },
+      {
+        "path": "comparison/PREPARED_REQUEST_IDENTITIES.json",
+        "sha256": "bf8c3ddfea61b6353f5d12d72021dd1042faeb4ef27b7b23b6b74df22dad594f",
+        "bytes": 340886
+      },
+      {
+        "path": "comparison/PRE_REGISTRATION.json",
+        "sha256": "e6853e6cf1c37b98b4ea2c5d80955a2601bf1def54419acc8fe30d1c6ffa3f12",
+        "bytes": 2168
+      },
+      {
+        "path": "comparison/REFERENCES.json",
+        "sha256": "f8c46da4e7778da2de0550615032b58d8d7fa3566adaf913287ac7d005df0c92",
+        "bytes": 6561
+      },
+      {
+        "path": "comparison/SELECTION.json",
+        "sha256": "de3cbe4e1f09a71effe890843f366582dd4ee6cd0749c6c75f6b6cf858c9d550",
+        "bytes": 761
+      },
+      {
+        "path": "comparison/SOURCES.json",
+        "sha256": "ab5d733d5db79fc6dd008765219224992032d316e381c4075ce0ad84918530e5",
+        "bytes": 2455
+      }
+    ]
+  }
 }

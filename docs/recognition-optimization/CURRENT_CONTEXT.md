@@ -9,4 +9,4 @@
 
 13定向/2新隔离preauth/产品9/lint/build/security通过，安全24本轮未变结果复用；全量自己generated契约不同步已修，六旧哈希/快照失败及audit5H2M/production0保留。84/119/7、账本1024 SHA25d8dbb4a4a56379ab9f7bc9d66d8023c4a3d4db65cb61d14caa50b14ee87a14与996/1000/1009/1015前缀、16封存文件/资产不变。
 
-下一只需新生成首答验证的本批具体许可：拟V5-OBLIGATION-AUTHORITY-DEVELOPMENT-R1，4新作者Development×V5/V6=8，2AB2BA，同公共规则，先提交推送/冻结/现价核对后申请。NOT_RUN/dispatchAuthorized=false；旧额度不复用。原封存8批2SETTLED1UNCERTAIN5NOT_SENT/公开封存不动，无特定材料不等供应商；不Secret/旧库/依赖/v8/历史改写，不真人/Holdout/default替换/合并/部署。
+下一只需新生成首答验证的本批具体许可：已冻结V5-OBLIGATION-AUTHORITY-DEVELOPMENT-R1，4新作者Development×V5/V6=8，2AB2BA，同公共规则，工程73a8b923已提交推送，198组件/5产物/8请求及现价已核，Manifest b2749c88/identity bf8c3ddf；申请仅本批8次deepseek-flash、US$2.60硬限及唯一新grant/逐单元reserve-settle，授权卡见唯一RESULTS。grant前重新核价及同步HEAD/完整链。NOT_RUN/dispatchAuthorized=false；旧额度不复用。原封存8批2SETTLED1UNCERTAIN5NOT_SENT/公开封存不动，无特定材料不等供应商；不Secret/旧库/依赖/v8/历史改写，不真人/Holdout/default替换/合并/部署。
