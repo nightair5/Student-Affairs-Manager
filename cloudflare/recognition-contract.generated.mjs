@@ -1,5 +1,5 @@
 // GENERATED from src/recognition/schema.ts; do not edit.
-// source-sha256: 92989435101ad219b52729a001494550339ecc7cc2ded3dd5fa20c1bef503c5c
+// source-sha256: e6e5b1b0482cb08c48562e7a7660fcc3d86079589a3672c58da985785f57c59b
 const categories = new Set(['比赛', '保研', '课程', '老师任务', '其他']);
 const inferenceLevels = new Set(['explicit', 'strong_inference', 'optional_suggestion']);
 const priorities = new Set(['low', 'medium', 'high', 'urgent']);
@@ -181,7 +181,12 @@ function requiredFieldIssues(value) {
         'tempId', 'title', 'description', 'startTimePointTempId', 'endTimePointTempId', 'location',
         'evidenceIds', 'confidence', 'inferenceLevel',
     ];
-    requireArrayItems(value.events, 'events', eventFields, [...eventFields, 'selected']);
+    requireArrayItems(value.events, 'events', eventFields, [...eventFields, 'selected', 'relatedTaskTempIds']);
+    if (Array.isArray(value.events))
+        value.events.forEach((e, i) => {
+            if (isRecord(e) && e.relatedTaskTempIds !== undefined && (!isStringArray(e.relatedTaskTempIds) || new Set(e.relatedTaskTempIds).size !== e.relatedTaskTempIds.length))
+                issues.push({ category: 'schema', code: 'EVENT_TASK_LINK_SHAPE', path: `events[${i}].relatedTaskTempIds` });
+        });
     requireArrayItems(value.evidence, 'evidence', ['id', 'sourceId', 'quote', 'field'], ['id', 'sourceId', 'quote', 'quotedText', 'field', 'page', 'textStart', 'textEnd', 'boundingBox', 'extractionMethod', 'confidence']);
     requireArrayItems(value.conflicts, 'conflicts', [
         'id', 'type', 'message', 'entityTempIds', 'evidenceIds', 'requiresDecision',
@@ -366,6 +371,7 @@ function collectReferenceIssues(result) {
         missing(point.evidenceIds, evidenceIds, 'TIME_POINT_EVIDENCE_MISSING', `timePoints[${pointIndex}].evidenceIds`);
     });
     result.events.forEach((event, eventIndex) => {
+        missing(event.relatedTaskTempIds ?? [], taskIds, 'EVENT_TASK_MISSING', `events[${eventIndex}].relatedTaskTempIds`);
         if (event.startTimePointTempId !== null && !timePointIds.has(event.startTimePointTempId)) {
             issues.push({ category: 'reference', code: 'EVENT_TIME_POINT_MISSING', path: `events[${eventIndex}].startTimePointTempId`, referenceId: event.startTimePointTempId });
         }

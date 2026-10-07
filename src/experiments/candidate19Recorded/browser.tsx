@@ -25,12 +25,14 @@ import { CANDIDATE17_PROMPT_VERSION, CANDIDATE17_VERSION } from '../realInput01/
 import { CANDIDATE18_PROMPT_VERSION, CANDIDATE18_VERSION } from '../realInput01/candidate18'
 import { CANDIDATE19_PROMPT_VERSION, CANDIDATE19_VERSION } from '../realInput01/candidate19'
 import { SINGLE_AUTHORITY_CANDIDATE_VERSION,SINGLE_AUTHORITY_PROMPT_VERSION,SINGLE_AUTHORITY_VERSION } from '../../recognition/sourceContractV5'
+import { OBLIGATION_CANDIDATE_VERSION, OBLIGATION_PROMPT_VERSION, OBLIGATION_AUTHORITY_VERSION, decodeObligationProductRecording } from '../../recognition/sourceContractV6'
 import { decodeAuthorityProductRecording, AUTHORITY_ATTRIBUTE_INDEX_VERSION } from '../../recognition/singleAuthorityProduct'
 import { AUTHORITY_SUPPORT_CONTEXT_VERSION } from '../../recognition/authoritySupportContext'
 import { AUTHORITY_ENDPOINT_COMPOSITION_VERSION } from '../../recognition/authorityEndpointComposition'
 import { SOURCE_INFORMATION_PREVIEW_VERSION } from '../../recognition/sourceInformationPreview'
 import { SOURCE_WINDOW_GROUNDING_VERSION } from '../../recognition/sourceWindowGrounding'
 import { SOURCE_WINDOW_PLAN_VERSION } from '../../domain/v2/personalPlanD27'
+import { EVENT_TASK_RELATION_VERSION } from '../../domain/v2/eventTaskRelations'
 import type { WorkspaceV8, JsonValue } from '../../domain/v2/types'
 import type { IntakeInput } from '../../lib/intake'
 import '../../styles.css'
@@ -40,7 +42,7 @@ import '../d26/diagnostics.css'
 declare const __C19_RECORDED_CONFIG__: { database: string; build: string; origin: string; explicitContract?: boolean; fixtureCount?: number; batchLabel?: string; initialOrdinal?: number }
 const config = __C19_RECORDED_CONFIG__
 if (location.origin !== config.origin || !/^rco-mainline-01-02-i1-d27-plan-recorded-[a-z0-9-]+$/.test(config.database)) throw Error('RECORDED_ISOLATION_REQUIRED')
-interface Recording { ordinal: number; sourceId: string; sourceVersionId: string; candidate: 'Candidate17' | 'Candidate18' | 'Candidate19' | 'SingleAuthority' | 'EngineeringFixture'; generationContract?:string;sourceText: string; referenceTime: string; timezone: string; rawHttpText: string; responseSha256: string; requestSha256: string | null; frozenOutcome: string }
+interface Recording { ordinal: number; sourceId: string; sourceVersionId: string; candidate: 'Candidate17' | 'Candidate18' | 'Candidate19' | 'SingleAuthority' | 'ObligationAuthority' | 'EngineeringFixture'; generationContract?:string;sourceText: string; referenceTime: string; timezone: string; rawHttpText: string; responseSha256: string; requestSha256: string | null; frozenOutcome: string }
 const recordings: Recording[] = await fetch('/recordings.json').then(r => { if (!r.ok) throw Error('RECORDINGS_UNAVAILABLE'); return r.json() })
 let selected = recordings.findIndex(r => r.ordinal === (config.initialOrdinal ?? 2)), failCommit = false, failRead = false, failCheckpoint = false
 if (selected < 0) throw Error('RECORDED_INITIAL_SOURCE_REQUIRED')
@@ -55,12 +57,12 @@ const canonical = new CanonicalWorkspaceRepository(store), initial = emptyWorksp
 await canonical.initialize(initial)
 const readerStore: WorkspaceRecordStore = { ...store, read: k => { if (k === 'current' && failRead) { failRead = false; return Promise.reject(Error('RECORDED_INJECTED_READBACK_FAILURE')) } return new IsolatedTestStore(config.database).read(k) } }
 const measurement = createOrdinaryMeasurement(store), sidecars = new Map<string, unknown>()
-const contractVersion = SOURCE_SUPPORT_PRODUCT_VERSION + ' / ' + EVENT_TIME_LABEL_SUPPORT_VERSION + ' / ' + DIRECTIVE_DISPOSITION_VERSION + ' / ' + CONDITIONAL_NON_ACTION_VERSION + ' / ' + SOURCE_CONTRACT_VERSION + ' / ' + MATERIAL_CHANNEL_GROUNDING_VERSION + ' / ' + ELIGIBILITY_GROUNDING_VERSION + ' / ' + D26_TIME_VERSION + ' / ' + D26_FIRST_SUGGESTION_VERSION + ' / ' + AUTHORITY_ATTRIBUTE_INDEX_VERSION + ' / ' + AUTHORITY_ENDPOINT_COMPOSITION_VERSION + ' / ' + AUTHORITY_SUPPORT_CONTEXT_VERSION + ' / ' + SOURCE_INFORMATION_PREVIEW_VERSION + ' / ' + SOURCE_WINDOW_GROUNDING_VERSION + ' / ' + SOURCE_WINDOW_PLAN_VERSION
+const contractVersion = EVENT_TASK_RELATION_VERSION + ' / ' + SOURCE_SUPPORT_PRODUCT_VERSION + ' / ' + EVENT_TIME_LABEL_SUPPORT_VERSION + ' / ' + DIRECTIVE_DISPOSITION_VERSION + ' / ' + CONDITIONAL_NON_ACTION_VERSION + ' / ' + SOURCE_CONTRACT_VERSION + ' / ' + MATERIAL_CHANNEL_GROUNDING_VERSION + ' / ' + ELIGIBILITY_GROUNDING_VERSION + ' / ' + D26_TIME_VERSION + ' / ' + D26_FIRST_SUGGESTION_VERSION + ' / ' + AUTHORITY_ATTRIBUTE_INDEX_VERSION + ' / ' + AUTHORITY_ENDPOINT_COMPOSITION_VERSION + ' / ' + AUTHORITY_SUPPORT_CONTEXT_VERSION + ' / ' + SOURCE_INFORMATION_PREVIEW_VERSION + ' / ' + SOURCE_WINDOW_GROUNDING_VERSION + ' / ' + SOURCE_WINDOW_PLAN_VERSION
 const recordingMetadata = () => {
   const r = recordings[selected], engineering = r.candidate === 'EngineeringFixture'
   return { modelName: engineering ? '匿名契约工程夹具（非模型输出）' : `${r.candidate} 固定录制`,
-    promptVersion: r.generationContract===SINGLE_AUTHORITY_VERSION?SINGLE_AUTHORITY_PROMPT_VERSION:engineering ? 'ENGINEERING_FIXTURE_NOT_GENERATED' : r.candidate === 'Candidate17' ? CANDIDATE17_PROMPT_VERSION : r.candidate === 'Candidate18' ? CANDIDATE18_PROMPT_VERSION : CANDIDATE19_PROMPT_VERSION,
-    candidateVersion:r.generationContract===SINGLE_AUTHORITY_VERSION?SINGLE_AUTHORITY_CANDIDATE_VERSION: engineering ? 'ENGINEERING_FIXTURE_NOT_CANDIDATE' : r.candidate === 'Candidate17' ? CANDIDATE17_VERSION : r.candidate === 'Candidate18' ? CANDIDATE18_VERSION : CANDIDATE19_VERSION,
+    promptVersion: r.generationContract===OBLIGATION_AUTHORITY_VERSION?OBLIGATION_PROMPT_VERSION:r.generationContract===SINGLE_AUTHORITY_VERSION?SINGLE_AUTHORITY_PROMPT_VERSION:engineering ? 'ENGINEERING_FIXTURE_NOT_GENERATED' : r.candidate === 'Candidate17' ? CANDIDATE17_PROMPT_VERSION : r.candidate === 'Candidate18' ? CANDIDATE18_PROMPT_VERSION : CANDIDATE19_PROMPT_VERSION,
+    candidateVersion:r.generationContract===OBLIGATION_AUTHORITY_VERSION?OBLIGATION_CANDIDATE_VERSION:r.generationContract===SINGLE_AUTHORITY_VERSION?SINGLE_AUTHORITY_CANDIDATE_VERSION: engineering ? 'ENGINEERING_FIXTURE_NOT_CANDIDATE' : r.candidate === 'Candidate17' ? CANDIDATE17_VERSION : r.candidate === 'Candidate18' ? CANDIDATE18_VERSION : CANDIDATE19_VERSION,
     build: config.build, responseRole: engineering ? 'ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT' : 'RECORDED_MODEL_ENGINEERING_REPLAY' }
 }
 const environment: OrdinaryAppEnvironment = { canonical, viewRepository: new IndexedDbWorkspaceRepository(canonical), reader: new CanonicalWorkspaceRepository(readerStore), capture: new CapturePersistenceService(canonical), measurement, reviewSession: new D20ReviewSessionRepository(store, measurement.changed, measurement.activity, true), initial: workspaceV8ToLegacyView((await canonical.load())!), store, label: `${config.build}；${batchLabel}；${contractVersion}；实时派发关闭`, pipelineVersion: contractVersion, semanticSidecar: id => sidecars.get(id), recognitionContext: () => ({ referenceTime: recordings[selected].referenceTime, timezone: recordings[selected].timezone }),
@@ -77,7 +79,18 @@ const environment: OrdinaryAppEnvironment = { canonical, viewRepository: new Ind
       const originalIndex = await indexImmutableScopesV11(record.sourceId, record.sourceVersionId, record.sourceText)
       const rebound = rebindRecordedScopes(record.rawHttpText, originalIndex, context.index)
       if (!config.explicitContract && record.candidate === 'EngineeringFixture') throw Error('FIXTURE_CONTRACT_MODE_REQUIRED')
-      const decoded = record.generationContract===SINGLE_AUTHORITY_VERSION?decodeAuthorityProductRecording(rebound.reboundHttpText,context,record.candidate==='SingleAuthority'?'SingleAuthority':'EngineeringFixture'):record.candidate==='SingleAuthority'?(()=>{throw Error('SINGLE_AUTHORITY_RECORDING_CONTRACT_REQUIRED')})():decodeCurrentSourceRecording(rebound.reboundHttpText, record.candidate, context)
+      const decoded = (() => {
+        if (record.generationContract === OBLIGATION_AUTHORITY_VERSION) {
+          if (record.candidate !== 'ObligationAuthority' && record.candidate !== 'EngineeringFixture') throw Error('OBLIGATION_RECORDING_ROLE_MISMATCH')
+          return decodeObligationProductRecording(rebound.reboundHttpText, context, record.candidate === 'EngineeringFixture' ? 'EngineeringFixture' : 'SingleAuthority')
+        }
+        if (record.generationContract === SINGLE_AUTHORITY_VERSION) {
+          if (record.candidate !== 'SingleAuthority' && record.candidate !== 'EngineeringFixture') throw Error('SINGLE_AUTHORITY_RECORDING_ROLE_MISMATCH')
+          return decodeAuthorityProductRecording(rebound.reboundHttpText, context, record.candidate === 'SingleAuthority' ? 'SingleAuthority' : 'EngineeringFixture')
+        }
+        if (record.candidate === 'SingleAuthority' || record.candidate === 'ObligationAuthority') throw Error('RECORDING_GENERATION_CONTRACT_REQUIRED')
+        return decodeCurrentSourceRecording(rebound.reboundHttpText, record.candidate, context)
+      })()
       sidecars.set(input.sourceId, { ...decoded.sidecar, recordedProvenance: provenance, scopeRebinding: { operation: rebound.operation, mapping: rebound.mapping }, postComparisonConversion: decoded.conversion, productDisposition: decoded.productDisposition, ...('coverageAudit' in decoded ? { postComparisonCoverage: decoded.coverageAudit } : {}), sourceRenderedEvents: decoded.sourceRenderedEvents })
       return decoded.result
     } catch (error) { throw Error(`录制输出不能安全生成建议（${error instanceof Error ? error.message : 'INVALID_OUTPUT'}）。没有补猜事实或重新调用模型`, { cause: error }) }

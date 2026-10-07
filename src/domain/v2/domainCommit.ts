@@ -493,6 +493,7 @@ function buildDomainCommitPlanInternal(
   const recognizedTasks = allRecognitionTasks(result)
   const selectedTaskIds = new Set(selection.taskTempIds)
   const selectedTasks = recognizedTasks.filter((item) => selectedTaskIds.has(item.tempId))
+  for (const event of result.events) if (event.relatedTaskTempIds && (new Set(event.relatedTaskTempIds).size !== event.relatedTaskTempIds.length || event.relatedTaskTempIds.some(id => !recognizedTasks.some(t => t.tempId === id)))) throw Error('DOMAIN_COMMIT_EVENT_TASK_REFERENCE')
   if (!selectedTasks.length && !selection.eventTempIds.length && !selection.materialTempIds.length) throw new Error('DOMAIN_COMMIT_EMPTY')
   const alreadyCommittedTaskIds = new Set(recognizedTasks
     .filter((task) => draft.acceptedEntityTempIds.includes(task.tempId)
@@ -662,7 +663,9 @@ function buildDomainCommitPlanInternal(
     startTimePointId: item.startTimePointTempId ? timeIdMap.get(item.startTimePointTempId) ?? null : null,
     endTimePointId: item.endTimePointTempId ? timeIdMap.get(item.endTimePointTempId) ?? null : null,
     location: item.location, createdAt: now, updatedAt: now,
-    legacyData: { recognitionTempId: item.tempId, evidenceIds: item.evidenceIds, inferenceLevel: item.inferenceLevel },
+    legacyData: { recognitionTempId: item.tempId, evidenceIds: item.evidenceIds, inferenceLevel: item.inferenceLevel,
+      ...(item.relatedTaskTempIds?.length ? { sourceTaskRelations: { version: 'source-event-task-relations-1', draftId, taskTempIds: item.relatedTaskTempIds } } : {}),
+    },
   }))
 
   const evidenceIds = new Set<string>()

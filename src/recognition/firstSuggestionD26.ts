@@ -195,7 +195,7 @@ export interface D26RepresentationGap {
   reason: string
 }
 export interface D26SemanticSidecar {
-  version: 'semantic-ordinary-bridge-1.1.0'
+  version: 'semantic-ordinary-bridge-1.2.0'
   originalSemantic: SemanticInput
   firstSemantic: SemanticInput
   sourceScopeEvidence: Array<{ scopeId: string; evidenceId: string }>
@@ -219,7 +219,6 @@ export function bridgeSemanticToRecognitionD26(input: SemanticInput, context: Wi
     }
   }
   for (const revision of first.revisions) gaps.push({ kind: 'revision', entityIds: [revision.targetDirectiveId, ...(revision.fromDirectiveId ? [revision.fromDirectiveId] : [])], reason: '取消或替代关系保留原始端点，需核对后才能接受相关事项。' })
-  for (const event of first.events) if (event.relatedTaskTempIds.length) gaps.push({ kind: 'event_task_relation', entityIds: [event.tempId, ...event.relatedTaskTempIds], reason: '事件与任务关系保留在语义记录，普通结构尚不能完整表达。' })
   for (const scopeId of first.unresolvedScopeIds) gaps.push({ kind: 'unresolved_scope', entityIds: first.tasks.filter(task => task.propositionScopeIds.includes(scopeId)).map(task => task.id), reason: '存在尚未解决的来源片段。' })
   const blocked = new Set(gaps.flatMap(gap => gap.entityIds))
   const result: RecognitionResult = {
@@ -230,6 +229,7 @@ export function bridgeSemanticToRecognitionD26(input: SemanticInput, context: Wi
     materials: first.materials.map(({ scopeIds, ...material }) => ({ ...material, evidenceIds: evidenceIds(scopeIds) })),
     timePoints: first.timePoints.map(({ scopeIds, ...point }) => ({ ...point, evidenceIds: evidenceIds(scopeIds) })),
     events: first.events.map(event => ({ tempId: event.tempId, title: event.title, description: event.description, startTimePointTempId: event.startTimePointTempId,
+      ...(event.relatedTaskTempIds.length ? { relatedTaskTempIds: [...event.relatedTaskTempIds] } : {}),
       endTimePointTempId: event.endTimePointTempId, location: event.location, confidence: event.confidence, inferenceLevel: event.inferenceLevel,
       evidenceIds: evidenceIds(event.scopeIds), selected: !blocked.has(event.tempId) })),
     evidence: context.index.scopes.map(scope => ({ id: evidenceId(scope.id), sourceId: first.sourceId, quote: scope.text, field: 'description', extractionMethod: 'parser', confidence: 1 })),
@@ -237,7 +237,7 @@ export function bridgeSemanticToRecognitionD26(input: SemanticInput, context: Wi
     ambiguities: [], ignoredContent: first.informationScopeIds.flatMap(id => { const scope = context.index.scopes.find(row => row.id === id); return scope ? [{ text: scope.text, reason: 'other' as const }] : [] }),
     quality: { overallConfidence: 1, hierarchyConfidence: 1, dateConfidence: first.timePoints.some(point => point.needsConfirmation) ? 0.5 : 1, evidenceCoverage: 1, duplicateRisk: 0, overFragmentationRisk: 0, missingActionRisk: 0, needsHumanReview: gaps.length > 0 || audit.unresolved.length > 0, reviewReasons: unique(gaps.map(gap => gap.reason)) },
   }
-  const sidecar: D26SemanticSidecar = { version: 'semantic-ordinary-bridge-1.1.0', originalSemantic: structuredClone(input), firstSemantic: first,
+  const sidecar: D26SemanticSidecar = { version: 'semantic-ordinary-bridge-1.2.0', originalSemantic: structuredClone(input), firstSemantic: first,
     sourceScopeEvidence: context.index.scopes.map(scope => ({ scopeId: scope.id, evidenceId: evidenceId(scope.id) })), representationGaps: gaps, displayAudit: audit, eligibilityAudit }
   return { result, sidecar, audit, representationGaps: gaps }
 }

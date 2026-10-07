@@ -1,43 +1,34 @@
-# 当前交付：V5真实四份已运行，两处首次程序误阻断已修
-2026-10-07。V5_CURRENT_REAL_NOTICE_EXECUTED_PRODUCT_FIXES_DELIVERED_NO_WHOLE_ACCURACY_WIN_CLAIM。
-核心仍是放入通知，第一份尽量不用改。本批真实运行完了；程序减少了原答有事实却整份显示不了的问题，但没有证据宣布完整首份正确率提高。
-[逐断言](current-notice-diagnostic/current-mechanism-followup/v5-diagnostic/paid-evidence/FACT_ADJUDICATION.json)、[分层报告](current-notice-diagnostic/current-mechanism-followup/v5-diagnostic/paid-evidence/POST_PROGRAM_REPORT.json)、[原事实](current-notice-diagnostic/current-mechanism-followup/v5-diagnostic/paid-evidence/MODEL_FACTS.json)、[实现](current-notice-diagnostic/current-mechanism-followup/v5-diagnostic/paid-evidence/IMPLEMENTATION.md)、[浏览器](current-notice-diagnostic/current-mechanism-followup/v5-diagnostic/paid-evidence/BROWSER_EVIDENCE.md)、[验证](current-notice-diagnostic/current-mechanism-followup/v5-diagnostic/paid-evidence/VALIDATION.md)、[执行及usage](current-notice-diagnostic/current-mechanism-followup/v5-diagnostic/paid-evidence/EXECUTION_SUMMARY.json)。此页唯一当前入口；旧证据留原目录。
+# 当前结果：义务先行机制与普通活动关联已落地，模型收益尚未验证
+2026-10-07。唯一当前结果入口。[机制](current-notice-diagnostic/current-mechanism-followup/obligation-authority/IMPLEMENTATION.md)、[浏览器](current-notice-diagnostic/current-mechanism-followup/obligation-authority/BROWSER_EVIDENCE.md)、[验证](current-notice-diagnostic/current-mechanism-followup/obligation-authority/VALIDATION.md)、[四旧raw逐份比较](current-notice-diagnostic/current-mechanism-followup/obligation-authority/OLD_RECORDING_COMPARISON.json)、[保护/现场](current-notice-diagnostic/current-mechanism-followup/obligation-authority/FINAL_READ_ONLY_SCENE.json)。本轮先交可运行产品，再冻结最小必要8次新比较；没有新付费许可。
 
-## 首答与首屏分别怎样
-V5-CURRENT-REAL-NOTICE-DEVELOPMENT-R1，4官方已见节选、当前SingleAuthority单臂，source-first provisional参照，原时基/时区。输出前冻结7类断言，原参照没改。
+## 用户少改什么
+一份通知里的报名/准备动作与独立活动现在能从已有真实关联进入普通首次卡片，正式保存后关联不丢。先只确认事件也不会生成占位任务；任务后来确认能解析同一关联。新生成契约先列动作对象、资格/前置，再生成活动和时间owner，只有一份task.eventLinks声明，程序派生反向索引。coverage present仍须真实实体，不靠unknown/猜补填正确。
 
-| 层 | 整份正确 | 错误 | 未知 | 固定分母 |
+这是一个可反驳的输入机制假设，不是已知模型提升。旧V5/C19/默认候选字节不改；新candidateVersion=obligation-authority-generation-1.0.0，promptVersion=recognition-obligation-authority-1.0.0、Schema6.0.0；普通semantic bridge1.2.0/source-event-task-relations-1，Workspace仍v8。真实生成缺事实01/03/04仍拒，不能由程序自动补成首次正确。
+
+## 首次正确率仍怎样
+| 层 | 正确 | 错误 | 未知 | 分母 |
 |---|---:|---:|---:|---:|
-| 本批4实际原答事实暂定 | 0 | 3 | 1 | 4 |
-| 取得输出后的原冻结首次展示 | 0 | 4 | 0 | 4 |
-| 新公共程序同4raw首次展示 | 0 | 3 | 1 | 4 |
-| 真人最终处置 | 0 | 0 | 4 | 4，NOT_RUN |
+| 原V5当前实际4原答暂定事实 | 0 | 3 | 1 | 4 |
+| 原冻结首次展示 | 0 | 4 | 0 | 4 |
+| 本轮公共程序同原4raw首次展示 | 0 | 3 | 1 | 4 |
+| 新义务先行模型首答 | 0 | 0 | 4 | 每臂计划4，未运行 |
 
-0/4是已确认正确数为0，不是已知真实率0%；仍有未决。1份可显示不等于25%完整正确，不缩分母到成功/保存样本。单臂不判候选优劣、小Development不证明泛化。后验程序兼容不叫新版模型提高。标题/自由描述/泄漏未独立裁决NOT_ADJUDICATED。
+四旧raw与上一轮first result或拒绝理由逐份相同；可解码1份不等于25%完整正确。01缺窗口owner，03准备义务被location_note吞掉且报名缺关联，04报名缺关联是真错误；02日前边界/完整条件拆分未决。单臂已见Development/provisional，标题/描述/泄漏NOT_ADJUDICATED；0/4是确认正确数为0，不能把未知当错后宣称真实率已知。原v11 C17 2/6/C19 1/6 MIXED_PROGRESS与12后验4暂定2错/5暂定1争议、所有旧成绩保持。
 
-| 来源 | 原答具体缺口/表示 | 新程序及用户影响 |
-|---|---|---|
-| 01迎新窗口 | 激活登录task time present而无窗口owner，活动属性用主动作scope | 仍AUTHORITY_ATTRIBUTE_ACCOUNTING_OWNER，不猜时间归属，整份错误 |
-| 02离留校登记 | 主登记/日期/URL/完整准确/条件已有；辅助information引用被冻结契约误拒 | context支持投影后3建议/1日期，主登记无需编辑直接部分接受；两个unknown子项待核对，日前边界及完整拆分未决，整份UNKNOWN |
-| 03线上暑期学校 | 准备设备义务塞location_note；报名event present却无relatedTask | 仍MISSING_PRESENT_FACT，不补动作/关系，整份错误 |
-| 04讲座/午餐 | 同事件日期clock互补是合法表示；报名event present无relatedTask是真图缺失 | 端点表示修复但关系仍拒绝；50份午餐未当听众上限，整份错误 |
+## 实际页面与保存
+唯一[当前内部入口](http://127.0.0.1:6886/)。固定录制/匿名作者wire ENGINEERING_REPLAY，4原实际录制+8工程控制分开；不接受任意通知实时AI，模型POST403。构建base1c9a9d7433fd/source4bb12420d16e，新库obligation-final-r2。展开“本批真实录制”选来源→复制原文到普通首页→智能拆分→核对/接受；不填ID/scope/ISO，不静默正式写入。
 
-见原文/outputPointer和PRODUCT_DIAGNOSTIC。拒绝可以安全但不能算正确首次交付，也不能因放宽合法表示抹掉真实图错误。
+无任务维护0Task/0Project/1Event/2Time，模糊/未公布null；分行日期clock精确起止；PDF/命名/截止保留；坏owner只接受无关丙组；前置未完成的提交保留等待，资格未知领取仍待核对。报名事件/任务/截止/起止同源关联正式保存。最终独立4Task/4Event/12Time/1Material/0Project，12Time含3个人planned_start，原截止未改。六receipt、原依据及owner可查，刷新一致。[读回](current-notice-diagnostic/current-mechanism-followup/obligation-authority/CANONICAL_FINAL_READBACK.json)。
 
-## 用户少改什么，普通页怎样操作
-authority-support-context-1.0.0让真实主任务附属URL/criteria/条件不再仅因information引用整份消失；fakeowner/新义务/缺事实仍阻。authority-endpoint-composition-1.0.0及grounded-first-suggestion-1.4.0让同事件明示日期/分行时段形成精确起止，普通App二次组装不丢成null；没有补关联、猜日期或改旧Prompt/候选。
-唯一[内部入口](http://127.0.0.1:6880/)，base4fd9d6951ecb/source612fde68461e，新隔离库rco-mainline-01-02-i1-d27-plan-recorded-v5-paid-accepted-1007。4SETTLED录制+2匿名工程夹具分开，ENGINEERING_REPLAY、模型POST403。
-展开录制来源→选02→粘对应原文→智能拆分→一次接受主登记；个人条件未知子项保留。日期clock夹具可直接确认无任务事件，不改字。01/03/04仍需生成机制修复或有依据人工纠正，不能自动接受。普通用户不填ID/scope/ISO，不静默正式写入。
-最终独立Task1/Project0/Event2/TimePoint4/Material0，3receipt verified：真实02原7月16日前/2026-07-16/date_only及完整准确标准；匿名事件11/20 09:30—11:00同owner；丙组11/14 16:00。检查点失败输入保留手动恢复；事务失败0半份；已提交读回失败只重读，同commit不重复；刷新一致。原截止与个人计划分开，首页因历史截止已过不造新安排。保存不等于语义正确。
-6工程报告32trace：真实02/日期夹具无字段编辑无editId，坏owner2选择episode可关联检查点commit/readback，非事实语义纠正；重试同editId，失败成本保留。canonical confirmed1/partial2/failed3，旧partial=false不抹掉真实partial。时间缺失null，四真人NOT_OBSERVABLE；无旧同口径步骤数据，不估省时。
+检查点失败输入保留并如实提示未持久化，手动重试后刷新恢复；事务失败没有半份事实，手动重试；提交已成功读回失败保留commit，刷新只重读，同commit无重复。部分保存后的deadline空值白屏已修，选择预览不再暗示重建旧事件。完整故障证据6885复用依据及最终6886回归见浏览器报告，不拿过程白屏当PASS。安排继续D27，前置受阻、不扩全局计划器。
 
-## 确定执行、费用与保护
-原4身份每次一次，4SETTLED/0UNCERTAIN/0NOT_SENT、1grant4reserve4settle、0retry/repair/verifier。HTTP200/rawSHA/usage有证；授权原件仅本机.data。原生成99424e33、Manifest e0d484a6945b659a35f784a5840f269eb6df77c9e5ffb42361ccb20f00debfb0、identity66496ee7f395f9641667065fb199d398bb333305b3fec0bf45b3b193c9abe724保持。US$1.30许可已完成，不再prepare/dispatch或余款扩样本。
-输入19781/cache15872、输出9537/reason0，总29318；内部保守US$0.017381，供应商实际扣费NOT_OBSERVABLE，不能混称实扣。授权前核现价/路由和上下文上界，4单元最坏US$1.297616≤1.30，非字节估token。[官方价格](https://api-docs.deepseek.com/quick_start/pricing/)、[Responses usage](https://api-docs.deepseek.com/guides/responses_api/)，原核价/授权材料只本机。
-账本1024行SHA25d8dbb4a4a56379ab9f7bc9d66d8023c4a3d4db65cb61d14caa50b14ee87a14，本轮9合法追加；996/1000/1009/1015前缀、84保护119冻结7归档及封存16文件保持。[最终只读](current-notice-diagnostic/current-mechanism-followup/v5-diagnostic/paid-evidence/FINAL_READ_ONLY_SCENE.json)。不是账本零改变。
-原8比较2SETTLED1UNCERTAIN5NOT_SENT/原公开封存保持，不解锁/重发/补settle。原v11 C17 2/6/C19 1/6 MIXED_PROGRESS、12后验4暂定2错/5暂定1渠道争议、旧真实4/旧单权威成绩不改，不拼成统一胜率。
+6工程报告40trace，无字段edit不造editId；选择/人工恢复纠正分开，失败成本和时间缺失保留，canonical partial单列，历史measurement3.2/low-edit-v2不改。四真人NOT_OBSERVABLE，没有新真人范围/负责人/同意/裁决；工程不计真人省时。
 
-## 验证及下一步
-26定向/最终9产品组/lint/build通过，安全24复用本轮未变结果，security/history最终核验。全量exit1、六旧历史哈希/快照失败单列；原preauth已授权现场旧前提失败，新隔离目录原3测试PASS，未删除真实AUTH/改旧断言凑绿。console[]；既有lint8warning/chunk warning/audit5H2M/production0保持，不称全绿。
-handover/15审计资产保持，不Secret/旧库/依赖/v8/历史改写，不真人/Holdout/default替换/合并/部署。代码可独立revert，真实付费和账本追加不可借revert抹去。
-下一最值得做的是一个生成假设：先明确每个动作对象及适用前置，再从单一权威声明组织时间/报名关联，减少设备准备被属性吞掉、present无owner。先本地版本和反例，必要新输出才冻最小两臂另取具体模型/身份次数/美元硬限许可，尚未造新批/身份或费用申请。无需等旧供应商支线，也不把真人/账号/全局规划当前置。
+## 验证、账本与付费边界
+13定向和2新隔离preauth通过，最终产品9组/lint/build/security通过；本轮安全24未变结果复用。首次全量7失败中本轮generated契约同步已修；六旧D17快照/D9/RCO-5-007/C11哈希断言失败仍在，不称全绿，不弱化锁/Expected/旧断言。8既有lint warning/chunk warning/audit5H2M/production0单列。最终浏览器console[]。
+
+84保护/119冻结/7归档保持；账本仍1024行SHA25d8dbb4a4a56379ab9f7bc9d66d8023c4a3d4db65cb61d14caa50b14ee87a14，本轮零追加；996/1000/1009/1015前缀和旧16封存文件保持。handover/15审计资产保留。原V5实际批4SETTLED/0UNCERTAIN、1grant4reserve4settle已完成，US$1.30不可再用；原生成99424e33、Manifest e0d484a6…、identity66496ee7…及raw不改。本轮模型/grant/reserve/settle=0，新增费用0。原8批2SETTLED1UNCERTAIN5NOT_SENT及公开封存不解锁/补settle/重发，不循环等供应商。
+
+## 下一最少动作
+新输入是否减少真实首次错误，旧raw不能证明。最小V5-OBLIGATION-AUTHORITY-DEVELOPMENT-R1为4作者匿名Development×V5/新V6=8，2AB2BA；三风险来源+材料普通控制，没有第三臂或16/24默认扩样本。两臂公共转换/首屏/参照/评分一致，provisional未知/争议/失败保留各臂4分母；整包变化不只归因Prompt。完成冻结、重新只读核官方路由/现价/上下文输出界及同步HEAD后，仅申请本批具体模型/8身份/美元硬限/唯一新grant及逐单元reserve/settle。未获新许可就保持NOT_RUN，已交付本地入口可用。不需真人/账号/全局计划器做前置，不开展Holdout/default替换/合并/部署。

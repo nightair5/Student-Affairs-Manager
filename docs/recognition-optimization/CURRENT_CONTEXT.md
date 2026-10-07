@@ -1,12 +1,12 @@
-# 当前交接：V5真实四份已结算，两处程序修复
-2026-10-07。ROOT C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/比赛；branch codex/e2-candidate11-blind-eval。[唯一结果](candidate19-public-development/RESULTS.md)、[路线](../governance/PROJECT_EXECUTION_ROADMAP.md)、[接续](../governance/NEXT_STAGE_EXECUTION_PROMPT.md)。
+# 当前交接：义务先行及普通活动关联已落地
+2026-10-07。ROOT C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/比赛；branch codex/e2-candidate11-blind-eval。[唯一结果](candidate19-public-development/RESULTS.md)、[路线](../governance/PROJECT_EXECUTION_ROADMAP.md)。
 
-V5-CURRENT-REAL-NOTICE-DEVELOPMENT-R1原4身份各发送一次、4SETTLED/0UNCERTAIN，1grant4reserve4settle，授权US$1.30已完成，不再prepare/dispatch或用余款扩样本。原生成99424e33/Manifest e0d484a6…/identity66496ee7…保持。[实证](candidate19-public-development/current-notice-diagnostic/current-mechanism-followup/v5-diagnostic/paid-evidence/EXECUTION_SUMMARY.json)。输入19781/cache15872/输出9537/reason0，内部保守US$0.017381，实扣NOT_OBSERVABLE。
+本轮两个根因：真实V5的义务被属性吞掉/present无owner或关联；合法已有活动关联无法进普通产品。新义务先行Schema6.0.0/candidate obligation-authority-generation-1.0.0/prompt recognition-obligation-authority-1.0.0可运行，task.eventLinks只一份权威关系，程序只派生索引。普通bridge1.2.0及source-event-task-relations-1保存部分/后续确认关联，v8不升级，默认未换。没有新模型收益证据。
 
-原答暂定0正确3错1UNKNOWN；原冻结首屏0/4/0；新程序同raw首屏0/3/1，分母4，不宣称新模型提高或赢家。01激活登录窗口owner缺失；03设备准备义务被属性吞掉且报名关联缺失；04报名关联缺失仍拒绝。02可直接显示/部分保存主登记，两个unknown条件子项保留；日前边界/完整拆分/自由描述未决。原v11与所有旧批成绩保持。
+原4真实raw全量新诊断逐份与上一轮相同：原答0正确3错1UNKNOWN、原冻结首屏0/4/0、当前公共首屏0/3/1，全4分母provisional。01/03/04真实缺事实仍拒，02争议未满分。原v11/12后验/旧成绩保持；旧V5已4SETTLED、唯一grant耗尽，本轮模型/grant/reserve/settle0。
 
-支持context1.0.0只接受真实主任务的附属URL/标准/条件，不猜事实；端点composition1.0.0组合同事件明确相邻日期clock，first1.4.0防普通二次组装丢日期/时刻。Schema/Prompt/候选没改。唯一http://127.0.0.1:6880/，base4fd9d6951ecb/source612fde68461e，新库v5-paid-accepted-1007，4真实录制+2匿名夹具分开，模型POST403。最终Task1/Project0/Event2/Time4/Material0，3独立verifiedcommit；三故障手动恢复/只重读/刷新，原截止与个人计划分开。
+唯一http://127.0.0.1:6886/，固定录制+作者wire分开、实时POST403、新库obligation-final-r2，base1c9a9d7433fd/source4bb12420d16e。首屏关系/未知资格/窗口/无任务事件/坏owner局部/材料/前置、三故障恢复及只重读、刷新/独立值已验。最终4Task4Event12Time1Material0Project，12Time含3个人计划，原截止不改；6报告40trace，无字段edit不造editId，四真人NOT_OBSERVABLE。
 
-26定向/最终产品9组/lint/build/scan及84/119/7通过；本轮未受影响安全24复用；全量六旧哈希/快照失败及已授权现场preauth旧前提失败单列，新隔离目录原3测试通过。6工程报告32trace，canonical两个partial单列，缺失null/无编辑无editId，四真人NOT_OBSERVABLE。账本1024 SHA25d8dbb4a4a56379ab9f7bc9d66d8023c4a3d4db65cb61d14caa50b14ee87a14，9授权追加，996/1000/1009/1015前缀及旧封存16文件字节保持。
+13定向/2新隔离preauth/产品9/lint/build/security通过，安全24本轮未变结果复用；全量自己generated契约不同步已修，六旧哈希/快照失败及audit5H2M/production0保留。84/119/7、账本1024 SHA25d8dbb4a4a56379ab9f7bc9d66d8023c4a3d4db65cb61d14caa50b14ee87a14与996/1000/1009/1015前缀、16封存文件/资产不变。
 
-下一步最多一个“义务先于附属属性、present对应真实owner/关联”的可反驳生成假设：先本地版本/反例，必要新输出才冻最小比较另取许可，不默认候选/16或24次。旧8批2SETTLED1UNCERTAIN5NOT_SENT和公开封存不动，无新请求特定材料不循环等供应商。handover/15审计资产保留，不Secret/旧库/依赖/v8/历史改写，不真人/Holdout/default替换/合并/部署。
+下一只需新生成首答验证的本批具体许可：拟V5-OBLIGATION-AUTHORITY-DEVELOPMENT-R1，4新作者Development×V5/V6=8，2AB2BA，同公共规则，先提交推送/冻结/现价核对后申请。NOT_RUN/dispatchAuthorized=false；旧额度不复用。原封存8批2SETTLED1UNCERTAIN5NOT_SENT/公开封存不动，无特定材料不等供应商；不Secret/旧库/依赖/v8/历史改写，不真人/Holdout/default替换/合并/部署。

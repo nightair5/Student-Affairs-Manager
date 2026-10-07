@@ -1,0 +1,77 @@
+{
+  "version": "obligation-public-regression-1",
+  "role": "POST_PROGRAM_SAME_OLD_RAW_NOT_NEW_MODEL_ACCURACY",
+  "cases": [
+    {
+      "sourceId": "V5-CURRENT-REAL-01",
+      "responseSha256": "71888da3173a23ec37842cd46396f195fda5e32215800ebe410fbb586ba264b3",
+      "requestSha256": "2628d42633e5cdff20e2da34bdbe526ae9b119202a240c3d7a56edf02aedd39b",
+      "frozen": "REJECTED",
+      "frozenReason": "SINGLE_AUTHORITY_MISSING_PRESENT_FACT",
+      "product": "REJECTED",
+      "productReason": "AUTHORITY_ATTRIBUTE_ACCOUNTING_OWNER",
+      "unchangedFirstResult": true,
+      "unchangedRejectReason": true,
+      "modelFirstVerdict": "INCORRECT",
+      "displayFirstVerdict": "INCORRECT"
+    },
+    {
+      "sourceId": "V5-CURRENT-REAL-02",
+      "responseSha256": "9eaa3ebff9560c4db55d632c4b15183066bccb9e6ca3e32621bf3ace793a39be",
+      "requestSha256": "aa5d8d31566ab8bb4aa427b270e86173bda966f28b4c1539f57b34e5a373e83c",
+      "frozen": "REJECTED",
+      "frozenReason": "SOURCE_CONTRACT_INFORMATION_ENTITY",
+      "product": "DECODED",
+      "unchangedFirstResult": true,
+      "unchangedRejectReason": true,
+      "modelFirstVerdict": "UNKNOWN",
+      "displayFirstVerdict": "UNKNOWN"
+    },
+    {
+      "sourceId": "V5-CURRENT-REAL-03",
+      "responseSha256": "7d1841de380483a55bc54aa7f6f7ec4aa1cbd1c499f6f13dbb696ba098beaf40",
+      "requestSha256": "fb39f05627337a26a70323a0697caea711b0acbdd87d65254866f2cf709a884f",
+      "frozen": "REJECTED",
+      "frozenReason": "SINGLE_AUTHORITY_ATTRIBUTE_EVIDENCE",
+      "product": "REJECTED",
+      "productReason": "SINGLE_AUTHORITY_MISSING_PRESENT_FACT",
+      "unchangedFirstResult": true,
+      "unchangedRejectReason": true,
+      "modelFirstVerdict": "INCORRECT",
+      "displayFirstVerdict": "INCORRECT"
+    },
+    {
+      "sourceId": "V5-CURRENT-REAL-04",
+      "responseSha256": "839213d54377d1747bbc28c6bf049fc93152864b13f9209537672761702ca90e",
+      "requestSha256": "979f7dc31b11768a4912c58d938fc4c609e940ce6fc6b83245e0ce2f6d38f788",
+      "frozen": "REJECTED",
+      "frozenReason": "SINGLE_AUTHORITY_DUPLICATE_ENDPOINT",
+      "product": "REJECTED",
+      "productReason": "SINGLE_AUTHORITY_MISSING_PRESENT_FACT",
+      "unchangedFirstResult": true,
+      "unchangedRejectReason": true,
+      "modelFirstVerdict": "INCORRECT",
+      "displayFirstVerdict": "INCORRECT"
+    }
+  ],
+  "originalModelFirst": {
+    "correct": 0,
+    "incorrect": 3,
+    "unknown": 1,
+    "denominator": 4
+  },
+  "originalFrozenDisplay": {
+    "correct": 0,
+    "incorrect": 4,
+    "unknown": 0,
+    "denominator": 4
+  },
+  "currentDisplay": {
+    "correct": 0,
+    "incorrect": 3,
+    "unknown": 1,
+    "denominator": 4
+  },
+  "provisional": true,
+  "freeProse": "NOT_ADJUDICATED"
+}

@@ -1,0 +1,124 @@
+{
+  "role": "ENGINEERING_REPLAY_NOT_MODEL_ACCURACY_NOT_HUMAN",
+  "currentUrl": "http://127.0.0.1:6886/",
+  "newModelOutputs": 0,
+  "originals": [
+    {
+      "path": ".data\\obligation-authority\\browser-originals\\BROWSER_6885_CAPTURE.json",
+      "sha256": "a45005c2e7360870c398fca0dee34c33ca47854da0b99775e27e25e7758d146a",
+      "bytes": 4101725
+    },
+    {
+      "path": ".data\\obligation-authority\\browser-originals\\BROWSER_FINAL_CAPTURE.json",
+      "sha256": "14b1310234fa0fa21e8bd8053d434033faa5f643482e1434bda13e43e0d91f1e",
+      "bytes": 9397680
+    },
+    {
+      "path": ".data\\obligation-authority\\browser-originals\\CANONICAL_FINAL_READBACK.json",
+      "sha256": "a775fe8e726c81d1fbbb972783dadc15a600fcf855a315636c626a8b5b55cdc6",
+      "bytes": 744735
+    },
+    {
+      "path": ".data\\obligation-authority\\browser-originals\\MEASUREMENT_FINAL_READBACK.json",
+      "sha256": "b7e5bbe23d59cd84d345f51a69c8d71588a71a1b385517e119c8541656e08731",
+      "bytes": 28243
+    },
+    {
+      "path": ".data\\obligation-authority\\browser-originals\\PROCESS_BROWSER_EVIDENCE.json",
+      "sha256": "6b349ae1a6ba8666e1529fa9ea0621e3d870bb53b1678c42f0d9ff28698f6f3e",
+      "bytes": 921960
+    },
+    {
+      "path": ".data\\obligation-authority\\browser-originals\\RECOVERY_FAILURE_PROCESS.json",
+      "sha256": "db0190c789cd9198da28caf88ea421b8cedd5ca391cb91932f3114532e323c8b",
+      "bytes": 35668
+    }
+  ],
+  "publicFiles": [
+    {
+      "path": "BROWSER_6885_CAPTURE.json",
+      "sha256": "eaaa4810bd8ea520c2d85ac1db9d4b0f300ba379d31475324a1c8f17ad16a36e",
+      "bytes": 193772
+    },
+    {
+      "path": "BROWSER_EVIDENCE.md",
+      "sha256": "d9695ad7896e178e38d703fa323f3e97e77dda1548670034739bf3f9060b2b49",
+      "bytes": 6032
+    },
+    {
+      "path": "BROWSER_FINAL_CAPTURE.json",
+      "sha256": "796659982f2b99bb8a4fa1f376126a33efcbf459f9fbba70076bd77f9d95ec59",
+      "bytes": 351951
+    },
+    {
+      "path": "CANONICAL_FINAL_READBACK.json",
+      "sha256": "1500805f0a33007c0dda4f6b88b17323e9fcb320a1804a48a5d0a9834847f4b5",
+      "bytes": 62175
+    },
+    {
+      "path": "FINAL_PAGE.png",
+      "sha256": "5e78e919bbfcb401b26d0bf19ac2fe889a140009ba2505c93e99ff49777c3ece",
+      "bytes": 54017
+    },
+    {
+      "path": "FINAL_READ_ONLY_SCENE.json",
+      "sha256": "c75b537128ce3eb695163c11430c7e494e0d677e32021bb13392c3938280138f",
+      "bytes": 6954
+    },
+    {
+      "path": "FULL_TEST_INITIAL_SUMMARY.json",
+      "sha256": "3b801a1669e92f873bab0063b5d182145c02c1d9eac9acafdd118f567e225247",
+      "bytes": 12856
+    },
+    {
+      "path": "IMPLEMENTATION.md",
+      "sha256": "846f9f2df9f9d56f96df4d2ba4dab0ecdd9c180cabbb75fd837a10d226763d73",
+      "bytes": 5576
+    },
+    {
+      "path": "MEASUREMENT_FINAL_READBACK.json",
+      "sha256": "b7e5bbe23d59cd84d345f51a69c8d71588a71a1b385517e119c8541656e08731",
+      "bytes": 28243
+    },
+    {
+      "path": "MEASUREMENT_SUMMARY.json",
+      "sha256": "3ca4b6ebdcefe2bdb20fadf0f0142ee0911afd7672c84c2228d4f23f40f5dbe3",
+      "bytes": 8035
+    },
+    {
+      "path": "OLD_RECORDING_COMPARISON.json",
+      "sha256": "94a2c97458708e27a35d879f6b39a1ba7c830401196f248c28a47444681e8251",
+      "bytes": 2728
+    },
+    {
+      "path": "OLD_RECORDING_REGRESSION.json",
+      "sha256": "c325326738de2dc960312a9be0e4fbc8348b7b40473ae8bbde53feaf618e34df",
+      "bytes": 270034
+    },
+    {
+      "path": "PROCESS_BROWSER_EVIDENCE.json",
+      "sha256": "e4db1b68c0a9c5966e56de0834c68c8275da23b9a43511fbc52b6332901eaeb1",
+      "bytes": 320590
+    },
+    {
+      "path": "RECOVERY_FAILURE_PROCESS.json",
+      "sha256": "a2b4aa1db2100131b68f869cad21c2946cc452b5b773a6060a1892b04a91aeec",
+      "bytes": 35756
+    },
+    {
+      "path": "TEST_EXIT_SUMMARY.json",
+      "sha256": "7639bb29f45a7891dad2b29b4725a2b20e0bd8a1ec48745ca0d968bb4400cb16",
+      "bytes": 5670
+    },
+    {
+      "path": "VALIDATION.md",
+      "sha256": "47cbf8f82b3cb331f0fde05ef22df624d7dd3c34d121e42a046647fe8c09c25a",
+      "bytes": 3491
+    }
+  ],
+  "notes": [
+    "6885 fault recovery evidence reused after only no-task fixture/title and pending-comparison copy changed; ordinary App/ReviewSession/Repository/recovery code unchanged between 6885 and 6886. Registration relation rerun on 6886.",
+    "Process fixture noncontiguous title failure preserved; corrected author fixture, no production grounding loosening.",
+    "Asynchronous read captures may be earlier; final refreshed readback is decisive, not intermediate PRE values."
+  ]
+}
