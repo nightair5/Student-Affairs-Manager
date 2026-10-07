@@ -4,8 +4,9 @@ import type { SemanticInput } from '../experiments/mainline04/semanticContract'
 import type { RecognitionResult, TaskSuggestionV2, TimePointSuggestionV2 } from './types'
 import { groundEligibility } from './eligibilityGrounding'
 import { rangeEndpointSupport } from './rangeEndpointSupport'
+import { taskActionText } from '../lib/taskActionText'
 
-export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.2.0'
+export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.3.0'
 interface ProseRecord { entityId: string; kind: 'task' | 'event' | 'source'; title: string; description: string }
 export interface D26FirstSuggestionAudit {
   version: typeof D26_FIRST_SUGGESTION_VERSION
@@ -118,7 +119,7 @@ export function assembleSemanticFirstSuggestionD26(input: SemanticInput, context
     const quotes = quote(task.propositionScopeIds)
     const grounded = supported(task.action.surface, quote([task.action.scopeId])) && supported(task.object.surface, quote([task.object.scopeId]))
     const original = { entityId: task.id, kind: 'task' as const, title: task.detail.title, description: task.detail.description }
-    Object.assign(task.detail, prose(audit, original, grounded ? task.action.surface + task.object.surface : '待核对事项',
+    Object.assign(task.detail, prose(audit, original, grounded ? taskActionText(task.action.surface, task.object.surface) : '待核对事项',
       grounded ? unique(quotes).join('\n') : '动作或对象缺少对应来源依据，请核对。'))
     if (!grounded) audit.unresolved.push({ entityId: task.id, reason: 'ACTION_OBJECT_SOURCE_SUPPORT_MISSING' })
   }
@@ -158,7 +159,7 @@ export function assembleRecognitionFirstSuggestionD26(input: RecognitionResult, 
   for (const task of tasks) {
     const quotes = quote(task.evidenceIds), grounded = supported(task.actionVerb, quotes) && supported(task.actionObject, quotes)
     const original = { entityId: task.tempId, kind: 'task' as const, title: task.title, description: task.description }
-    Object.assign(task, prose(audit, original, grounded ? task.actionVerb + task.actionObject : '待核对事项',
+    Object.assign(task, prose(audit, original, grounded ? taskActionText(task.actionVerb, task.actionObject) : '待核对事项',
       grounded ? unique(quotes).join('\n') : '动作或对象缺少对应来源依据，请核对。'))
     if (!grounded) { task.selected = false; audit.unresolved.push({ entityId: task.tempId, reason: 'ACTION_OBJECT_SOURCE_SUPPORT_MISSING' }) }
   }

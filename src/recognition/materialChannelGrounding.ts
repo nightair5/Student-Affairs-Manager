@@ -1,5 +1,6 @@
 import type { RecognitionResult } from './types'
 import { assembleRecognitionFirstSuggestionD26 } from './firstSuggestionD26'
+import { groundSourceWindows } from './sourceWindowGrounding'
 
 export const MATERIAL_CHANNEL_GROUNDING_VERSION = 'material-channel-role-grounding-1.4.0'
 export interface MaterialChannelDecision {
@@ -122,8 +123,9 @@ export function groundMaterialChannels(input: RecognitionResult, sourceText: str
 }
 
 /** Shared ordinary first screen; no change to candidate prompts, schema, or historical scorer. */
-export function assembleCurrentFirstSuggestion(input: RecognitionResult, context: { sourceText: string; referenceTime: string; timezone: string }) {
+export function assembleCurrentFirstSuggestion(input: RecognitionResult, context: { sourceText: string; referenceTime: string; timezone: string; sourceWindows?: import('./sourceWindowGrounding').SourceWindowDeclaration[] }) {
   const first = assembleRecognitionFirstSuggestionD26(input, context)
   const channels = groundMaterialChannels(first.result, context.sourceText)
-  return { ...first, result: channels.result, materialChannelAudit: channels.audit }
+  const windows = groundSourceWindows(channels.result, context.sourceWindows ?? [], context)
+  return { ...first, result: windows.result, materialChannelAudit: channels.audit, sourceWindowGrounding: windows.audit }
 }

@@ -1,0 +1,1152 @@
+{
+  "version": "current-mechanism-fact-followup-1",
+  "baselineProductCommit": "246357e4fc9c698179508eeef6a6aab3d756da47",
+  "role": "POST_PROGRAM_DIAGNOSTIC_NOT_NEW_MODEL_SCORE",
+  "modelRequests": 0,
+  "grant": 0,
+  "reserve": 0,
+  "settle": 0,
+  "ledgerWrites": 0,
+  "ledger": {
+    "rows": 1015,
+    "sha256": "25f32a95eb28a264c3bec20500cf0b439ab33ad445dddfe8eba243c469c948d9",
+    "tail": "1d56fe14fa715661c06bcc26360650029e468855676039b331a9240bc3f484c2",
+    "batchRows": 9,
+    "otherLaterRows": 6
+  },
+  "roots": [
+    "LITERAL_TASK_TITLE_OBJECT_REPEATED",
+    "EXPLICIT_WINDOW_END_USES_START_DATE"
+  ],
+  "realDenominator": 4,
+  "wholeCurrent": {
+    "correct": 0,
+    "incorrect": 3,
+    "unknown": 1,
+    "reference": "existing provisional judgment retained, no rescore of historical reports"
+  },
+  "real": [
+    {
+      "sourceId": "C19-CURRENT-REAL-01",
+      "candidate": "Candidate19",
+      "responseSha256": "df36b9a7a367f0df3cdf20d08b38d85b3ee213f929e6deaf0ff53109ce3e9456",
+      "referenceTime": "2026-07-24T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "before": {
+        "status": "REJECTED",
+        "reason": "SOURCE_CONTRACT_COVERAGE_ENTITY"
+      },
+      "after": {
+        "status": "REJECTED",
+        "reason": "SOURCE_CONTRACT_COVERAGE_ENTITY"
+      },
+      "wholeCurrentProvisional": "INCORRECT",
+      "newModelEvidence": false
+    },
+    {
+      "sourceId": "C19-CURRENT-REAL-02",
+      "candidate": "Candidate19",
+      "responseSha256": "27a0ef7282d5baf27cfd3e80be47c1ff3f73387d1f7cb64c877f62670eedd215",
+      "referenceTime": "2026-07-10T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "before": {
+        "status": "DECODED",
+        "tasks": [
+          {
+            "id": "task-0001",
+            "title": "完成相关信息登记相关信息",
+            "action": "完成相关信息登记",
+            "object": "相关信息",
+            "dependencies": []
+          },
+          {
+            "id": "task-0002",
+            "title": "登记去向、联系方式及返校安排",
+            "action": "登记",
+            "object": "去向、联系方式及返校安排",
+            "dependencies": []
+          },
+          {
+            "id": "task-0003",
+            "title": "做好相关登记相关登记",
+            "action": "做好相关登记",
+            "object": "相关登记",
+            "dependencies": []
+          }
+        ],
+        "events": [],
+        "times": [
+          {
+            "id": "time-0001",
+            "type": "task_deadline",
+            "rawText": "7月16日前",
+            "value": "2026-07-16",
+            "precision": "date_only",
+            "needsConfirmation": false,
+            "owners": {
+              "tasks": [
+                "task-0001"
+              ],
+              "materials": []
+            }
+          }
+        ],
+        "materials": [
+          {
+            "tempId": "material-0001",
+            "name": "相关信息",
+            "required": true,
+            "formatRequirements": [],
+            "namingRequirements": [],
+            "quantity": null,
+            "submissionChannel": "学工系统“暑假离留校登记”应用（https://xmuxg.xmu.edu.cn/app/182）",
+            "relatedTaskTempIds": [
+              "task-0001"
+            ],
+            "confidence": 0.9,
+            "evidenceIds": [
+              "d26-scope-0001-88c781c36f12cf17f6a10beca5a651602854839b5035321e075bec1d4caa0451",
+              "d26-scope-0002-ef4e4763645e5eb221cd6354c64faa6523e8c43e959aa6d5ae3aab1c7b2c7738"
+            ]
+          },
+          {
+            "tempId": "material-0002",
+            "name": "去向、联系方式及返校安排",
+            "required": true,
+            "formatRequirements": [],
+            "namingRequirements": [],
+            "quantity": null,
+            "submissionChannel": null,
+            "relatedTaskTempIds": [
+              "task-0002"
+            ],
+            "confidence": 0.9,
+            "evidenceIds": [
+              "d26-scope-0004-8a02e6a80022466c135fb35524a03fa08aea2165771ecc745001dfc2f0d91217"
+            ]
+          }
+        ],
+        "information": [],
+        "conflicts": [
+          {
+            "id": "d26-representation-0",
+            "type": "other",
+            "message": "资格尚未确认，不能当成已符合；请保留待核对。",
+            "entityTempIds": [
+              "task-0002"
+            ],
+            "evidenceIds": [],
+            "requiresDecision": true
+          },
+          {
+            "id": "d26-representation-1",
+            "type": "other",
+            "message": "资格尚未确认，不能当成已符合；请保留待核对。",
+            "entityTempIds": [
+              "task-0003"
+            ],
+            "evidenceIds": [],
+            "requiresDecision": true
+          }
+        ]
+      },
+      "after": {
+        "status": "DECODED",
+        "tasks": [
+          {
+            "id": "task-0001",
+            "title": "完成相关信息登记",
+            "action": "完成相关信息登记",
+            "object": "相关信息",
+            "dependencies": []
+          },
+          {
+            "id": "task-0002",
+            "title": "登记去向、联系方式及返校安排",
+            "action": "登记",
+            "object": "去向、联系方式及返校安排",
+            "dependencies": []
+          },
+          {
+            "id": "task-0003",
+            "title": "做好相关登记",
+            "action": "做好相关登记",
+            "object": "相关登记",
+            "dependencies": []
+          }
+        ],
+        "events": [],
+        "times": [
+          {
+            "id": "time-0001",
+            "type": "task_deadline",
+            "rawText": "7月16日前",
+            "value": "2026-07-16",
+            "precision": "date_only",
+            "needsConfirmation": false,
+            "owners": {
+              "tasks": [
+                "task-0001"
+              ],
+              "materials": []
+            }
+          }
+        ],
+        "materials": [
+          {
+            "tempId": "material-0001",
+            "name": "相关信息",
+            "required": true,
+            "formatRequirements": [],
+            "namingRequirements": [],
+            "quantity": null,
+            "submissionChannel": "学工系统“暑假离留校登记”应用（https://xmuxg.xmu.edu.cn/app/182）",
+            "relatedTaskTempIds": [
+              "task-0001"
+            ],
+            "confidence": 0.9,
+            "evidenceIds": [
+              "d26-scope-0001-88c781c36f12cf17f6a10beca5a651602854839b5035321e075bec1d4caa0451",
+              "d26-scope-0002-ef4e4763645e5eb221cd6354c64faa6523e8c43e959aa6d5ae3aab1c7b2c7738"
+            ]
+          },
+          {
+            "tempId": "material-0002",
+            "name": "去向、联系方式及返校安排",
+            "required": true,
+            "formatRequirements": [],
+            "namingRequirements": [],
+            "quantity": null,
+            "submissionChannel": null,
+            "relatedTaskTempIds": [
+              "task-0002"
+            ],
+            "confidence": 0.9,
+            "evidenceIds": [
+              "d26-scope-0004-8a02e6a80022466c135fb35524a03fa08aea2165771ecc745001dfc2f0d91217"
+            ]
+          }
+        ],
+        "information": [],
+        "conflicts": [
+          {
+            "id": "d26-representation-0",
+            "type": "other",
+            "message": "资格尚未确认，不能当成已符合；请保留待核对。",
+            "entityTempIds": [
+              "task-0002"
+            ],
+            "evidenceIds": [],
+            "requiresDecision": true
+          },
+          {
+            "id": "d26-representation-1",
+            "type": "other",
+            "message": "资格尚未确认，不能当成已符合；请保留待核对。",
+            "entityTempIds": [
+              "task-0003"
+            ],
+            "evidenceIds": [],
+            "requiresDecision": true
+          }
+        ]
+      },
+      "wholeCurrentProvisional": "UNKNOWN",
+      "newModelEvidence": false
+    },
+    {
+      "sourceId": "C19-CURRENT-REAL-03",
+      "candidate": "Candidate19",
+      "responseSha256": "fc51e92919884eb1a87ad6e4c92d4b5e3acd303fb5d10dc5e57ce1c7464ce19f",
+      "referenceTime": "2026-06-23T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "before": {
+        "status": "DECODED",
+        "tasks": [
+          {
+            "id": "task-0001",
+            "title": "报名活动",
+            "action": "报名",
+            "object": "活动",
+            "dependencies": []
+          },
+          {
+            "id": "task-0002",
+            "title": "准备相关终端设备",
+            "action": "准备",
+            "object": "相关终端设备",
+            "dependencies": []
+          }
+        ],
+        "events": [
+          {
+            "id": "event-0001",
+            "title": "活动时间：2026年7月6日-7月10日",
+            "start": "time-0002",
+            "end": "time-0003",
+            "description": "活动时间：\n2026年7月6日-7月10日"
+          },
+          {
+            "id": "event-0002",
+            "title": "线上讲座",
+            "start": null,
+            "end": null,
+            "description": "活动形式：\n线上讲座，"
+          },
+          {
+            "id": "event-0003",
+            "title": "被录取的正式学员可以进入线上会议室听课并提问互动",
+            "start": null,
+            "end": null,
+            "description": "被录取的正式学员可以进入线上会议室听课并提问互动，"
+          },
+          {
+            "id": "event-0004",
+            "title": "学习结束后可获得暑期学校结业证书",
+            "start": null,
+            "end": null,
+            "description": "学习结束后可获得暑期学校结业证书，"
+          }
+        ],
+        "times": [
+          {
+            "id": "time-0001",
+            "type": "registration_deadline",
+            "rawText": "2026年6月30日17:00",
+            "value": "2026-06-30T17:00",
+            "precision": "exact",
+            "needsConfirmation": false,
+            "owners": {
+              "tasks": [
+                "task-0001"
+              ],
+              "materials": []
+            }
+          },
+          {
+            "id": "time-0002",
+            "type": "event_start",
+            "rawText": "2026年7月6日",
+            "value": "2026-07-06",
+            "precision": "date_only",
+            "needsConfirmation": false,
+            "owners": {
+              "tasks": [],
+              "materials": []
+            }
+          },
+          {
+            "id": "time-0003",
+            "type": "event_end",
+            "rawText": "2026年7月10日",
+            "value": "2026-07-10",
+            "precision": "date_only",
+            "needsConfirmation": false,
+            "owners": {
+              "tasks": [],
+              "materials": []
+            }
+          }
+        ],
+        "materials": [
+          {
+            "tempId": "material-0001",
+            "name": "相关终端设备",
+            "required": true,
+            "formatRequirements": [],
+            "namingRequirements": [],
+            "quantity": null,
+            "submissionChannel": null,
+            "relatedTaskTempIds": [
+              "task-0002"
+            ],
+            "confidence": 0.9,
+            "evidenceIds": [
+              "d26-scope-0010-addd52faa11717240ad906b745b4d20b468479256ad0945a92b62374873516f6",
+              "d26-scope-0011-6944eb2464c0e897cfc1900552c19d62a0304d2628944eb96652ba4a76278079"
+            ]
+          }
+        ],
+        "information": [
+          {
+            "text": "招生对象：",
+            "reason": "other"
+          },
+          {
+            "text": "在读本科生和研究生、青年研究人员等",
+            "reason": "other"
+          },
+          {
+            "text": "收费情况：",
+            "reason": "other"
+          },
+          {
+            "text": "免费",
+            "reason": "other"
+          },
+          {
+            "text": "活动时间：",
+            "reason": "other"
+          },
+          {
+            "text": "活动形式：",
+            "reason": "other"
+          },
+          {
+            "text": "报名方式：",
+            "reason": "other"
+          },
+          {
+            "text": "欢迎大家踊跃报名，",
+            "reason": "other"
+          },
+          {
+            "text": "我们期待与您相聚云端。",
+            "reason": "other"
+          },
+          {
+            "text": "报名截止时间：",
+            "reason": "other"
+          },
+          {
+            "text": "2026年6月30日17:00",
+            "reason": "other"
+          }
+        ],
+        "conflicts": [
+          {
+            "id": "d26-representation-0",
+            "type": "other",
+            "message": "资格尚未确认，不能当成已符合；请保留待核对。",
+            "entityTempIds": [
+              "task-0001"
+            ],
+            "evidenceIds": [],
+            "requiresDecision": true
+          },
+          {
+            "id": "d26-representation-1",
+            "type": "other",
+            "message": "资格尚未确认，不能当成已符合；请保留待核对。",
+            "entityTempIds": [
+              "task-0002"
+            ],
+            "evidenceIds": [],
+            "requiresDecision": true
+          }
+        ]
+      },
+      "after": {
+        "status": "DECODED",
+        "tasks": [
+          {
+            "id": "task-0001",
+            "title": "报名活动",
+            "action": "报名",
+            "object": "活动",
+            "dependencies": []
+          },
+          {
+            "id": "task-0002",
+            "title": "准备相关终端设备",
+            "action": "准备",
+            "object": "相关终端设备",
+            "dependencies": []
+          }
+        ],
+        "events": [
+          {
+            "id": "event-0001",
+            "title": "活动时间：2026年7月6日-7月10日",
+            "start": "time-0002",
+            "end": "time-0003",
+            "description": "活动时间：\n2026年7月6日-7月10日"
+          },
+          {
+            "id": "event-0002",
+            "title": "线上讲座",
+            "start": null,
+            "end": null,
+            "description": "活动形式：\n线上讲座，"
+          },
+          {
+            "id": "event-0003",
+            "title": "被录取的正式学员可以进入线上会议室听课并提问互动",
+            "start": null,
+            "end": null,
+            "description": "被录取的正式学员可以进入线上会议室听课并提问互动，"
+          },
+          {
+            "id": "event-0004",
+            "title": "学习结束后可获得暑期学校结业证书",
+            "start": null,
+            "end": null,
+            "description": "学习结束后可获得暑期学校结业证书，"
+          }
+        ],
+        "times": [
+          {
+            "id": "time-0001",
+            "type": "registration_deadline",
+            "rawText": "2026年6月30日17:00",
+            "value": "2026-06-30T17:00",
+            "precision": "exact",
+            "needsConfirmation": false,
+            "owners": {
+              "tasks": [
+                "task-0001"
+              ],
+              "materials": []
+            }
+          },
+          {
+            "id": "time-0002",
+            "type": "event_start",
+            "rawText": "2026年7月6日",
+            "value": "2026-07-06",
+            "precision": "date_only",
+            "needsConfirmation": false,
+            "owners": {
+              "tasks": [],
+              "materials": []
+            }
+          },
+          {
+            "id": "time-0003",
+            "type": "event_end",
+            "rawText": "2026年7月10日",
+            "value": "2026-07-10",
+            "precision": "date_only",
+            "needsConfirmation": false,
+            "owners": {
+              "tasks": [],
+              "materials": []
+            }
+          }
+        ],
+        "materials": [
+          {
+            "tempId": "material-0001",
+            "name": "相关终端设备",
+            "required": true,
+            "formatRequirements": [],
+            "namingRequirements": [],
+            "quantity": null,
+            "submissionChannel": null,
+            "relatedTaskTempIds": [
+              "task-0002"
+            ],
+            "confidence": 0.9,
+            "evidenceIds": [
+              "d26-scope-0010-addd52faa11717240ad906b745b4d20b468479256ad0945a92b62374873516f6",
+              "d26-scope-0011-6944eb2464c0e897cfc1900552c19d62a0304d2628944eb96652ba4a76278079"
+            ]
+          }
+        ],
+        "information": [
+          {
+            "text": "招生对象：",
+            "reason": "other"
+          },
+          {
+            "text": "在读本科生和研究生、青年研究人员等",
+            "reason": "other"
+          },
+          {
+            "text": "收费情况：",
+            "reason": "other"
+          },
+          {
+            "text": "免费",
+            "reason": "other"
+          },
+          {
+            "text": "活动时间：",
+            "reason": "other"
+          },
+          {
+            "text": "活动形式：",
+            "reason": "other"
+          },
+          {
+            "text": "报名方式：",
+            "reason": "other"
+          },
+          {
+            "text": "欢迎大家踊跃报名，",
+            "reason": "other"
+          },
+          {
+            "text": "我们期待与您相聚云端。",
+            "reason": "other"
+          },
+          {
+            "text": "报名截止时间：",
+            "reason": "other"
+          },
+          {
+            "text": "2026年6月30日17:00",
+            "reason": "other"
+          }
+        ],
+        "conflicts": [
+          {
+            "id": "d26-representation-0",
+            "type": "other",
+            "message": "资格尚未确认，不能当成已符合；请保留待核对。",
+            "entityTempIds": [
+              "task-0001"
+            ],
+            "evidenceIds": [],
+            "requiresDecision": true
+          },
+          {
+            "id": "d26-representation-1",
+            "type": "other",
+            "message": "资格尚未确认，不能当成已符合；请保留待核对。",
+            "entityTempIds": [
+              "task-0002"
+            ],
+            "evidenceIds": [],
+            "requiresDecision": true
+          }
+        ]
+      },
+      "wholeCurrentProvisional": "INCORRECT",
+      "newModelEvidence": false
+    },
+    {
+      "sourceId": "C19-CURRENT-REAL-04",
+      "candidate": "Candidate19",
+      "responseSha256": "16fe6032a418e828313056811612c9020aa1545e9b89e33ee3a7b5139d53a66f",
+      "referenceTime": "2026-09-29T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "before": {
+        "status": "REJECTED",
+        "reason": "SOURCE_CONTRACT_COVERAGE_ENTITY"
+      },
+      "after": {
+        "status": "REJECTED",
+        "reason": "SOURCE_CONTRACT_COVERAGE_ENTITY"
+      },
+      "wholeCurrentProvisional": "INCORRECT",
+      "newModelEvidence": false
+    }
+  ],
+  "engineering": [
+    {
+      "kind": "compact-window",
+      "role": "ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT",
+      "before": {
+        "status": "DECODED",
+        "tasks": [
+          {
+            "id": "T1",
+            "title": "办理申请",
+            "action": "办理",
+            "object": "申请",
+            "dependencies": []
+          }
+        ],
+        "events": [],
+        "times": [
+          {
+            "id": "P1",
+            "type": "event_start",
+            "rawText": "2026年11月6—8日",
+            "value": "2026-11-06",
+            "precision": "date_only",
+            "needsConfirmation": false,
+            "owners": {
+              "tasks": [
+                "T1"
+              ],
+              "materials": []
+            }
+          },
+          {
+            "id": "P2",
+            "type": "event_end",
+            "rawText": "2026年11月6—8日",
+            "value": "2026-11-06",
+            "precision": "date_only",
+            "needsConfirmation": false,
+            "owners": {
+              "tasks": [
+                "T1"
+              ],
+              "materials": []
+            }
+          }
+        ],
+        "materials": [],
+        "information": [],
+        "conflicts": []
+      },
+      "after": {
+        "status": "DECODED",
+        "tasks": [
+          {
+            "id": "T1",
+            "title": "办理申请",
+            "action": "办理",
+            "object": "申请",
+            "dependencies": []
+          }
+        ],
+        "events": [],
+        "times": [
+          {
+            "id": "P1",
+            "type": "event_start",
+            "rawText": "2026年11月6—8日",
+            "value": "2026-11-06",
+            "precision": "date_only",
+            "needsConfirmation": false,
+            "owners": {
+              "tasks": [
+                "T1"
+              ],
+              "materials": []
+            }
+          },
+          {
+            "id": "P2",
+            "type": "event_end",
+            "rawText": "2026年11月6—8日",
+            "value": "2026-11-08",
+            "precision": "date_only",
+            "needsConfirmation": false,
+            "owners": {
+              "tasks": [
+                "T1"
+              ],
+              "materials": []
+            }
+          }
+        ],
+        "materials": [],
+        "information": [],
+        "conflicts": []
+      }
+    },
+    {
+      "kind": "expanded-window",
+      "role": "ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT",
+      "before": {
+        "status": "DECODED",
+        "tasks": [
+          {
+            "id": "T1",
+            "title": "办理申请",
+            "action": "办理",
+            "object": "申请",
+            "dependencies": []
+          }
+        ],
+        "events": [],
+        "times": [
+          {
+            "id": "P1",
+            "type": "event_start",
+            "rawText": "2026年11月6日",
+            "value": null,
+            "precision": "vague",
+            "needsConfirmation": true,
+            "owners": {
+              "tasks": [
+                "T1"
+              ],
+              "materials": []
+            }
+          },
+          {
+            "id": "P2",
+            "type": "event_end",
+            "rawText": "2026年11月8日",
+            "value": null,
+            "precision": "vague",
+            "needsConfirmation": true,
+            "owners": {
+              "tasks": [
+                "T1"
+              ],
+              "materials": []
+            }
+          }
+        ],
+        "materials": [],
+        "information": [],
+        "conflicts": []
+      },
+      "after": {
+        "status": "DECODED",
+        "tasks": [
+          {
+            "id": "T1",
+            "title": "办理申请",
+            "action": "办理",
+            "object": "申请",
+            "dependencies": []
+          }
+        ],
+        "events": [],
+        "times": [
+          {
+            "id": "P1",
+            "type": "event_start",
+            "rawText": "2026年11月6日",
+            "value": "2026-11-06",
+            "precision": "date_only",
+            "needsConfirmation": false,
+            "owners": {
+              "tasks": [
+                "T1"
+              ],
+              "materials": []
+            }
+          },
+          {
+            "id": "P2",
+            "type": "event_end",
+            "rawText": "2026年11月8日",
+            "value": "2026-11-08",
+            "precision": "date_only",
+            "needsConfirmation": false,
+            "owners": {
+              "tasks": [
+                "T1"
+              ],
+              "materials": []
+            }
+          }
+        ],
+        "materials": [],
+        "information": [],
+        "conflicts": []
+      }
+    },
+    {
+      "kind": "whole-action",
+      "role": "ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT",
+      "before": {
+        "status": "DECODED",
+        "tasks": [
+          {
+            "id": "T1",
+            "title": "完成相关信息登记相关信息",
+            "action": "完成相关信息登记",
+            "object": "相关信息",
+            "dependencies": []
+          }
+        ],
+        "events": [],
+        "times": [
+          {
+            "id": "P1",
+            "type": "submission_deadline",
+            "rawText": "2026年11月6日17:00",
+            "value": "2026-11-06T17:00",
+            "precision": "exact",
+            "needsConfirmation": false,
+            "owners": {
+              "tasks": [
+                "T1"
+              ],
+              "materials": []
+            }
+          }
+        ],
+        "materials": [],
+        "information": [],
+        "conflicts": []
+      },
+      "after": {
+        "status": "DECODED",
+        "tasks": [
+          {
+            "id": "T1",
+            "title": "完成相关信息登记",
+            "action": "完成相关信息登记",
+            "object": "相关信息",
+            "dependencies": []
+          }
+        ],
+        "events": [],
+        "times": [
+          {
+            "id": "P1",
+            "type": "submission_deadline",
+            "rawText": "2026年11月6日17:00",
+            "value": "2026-11-06T17:00",
+            "precision": "exact",
+            "needsConfirmation": false,
+            "owners": {
+              "tasks": [
+                "T1"
+              ],
+              "materials": []
+            }
+          }
+        ],
+        "materials": [],
+        "information": [],
+        "conflicts": []
+      }
+    }
+  ],
+  "sealed": {
+    "denominator": 8,
+    "settled": 2,
+    "uncertain": 1,
+    "notSent": 5,
+    "winner": "EVIDENCE_INCOMPLETE_NO_WINNER",
+    "known": [
+      {
+        "sourceId": "authority-development-SA-01",
+        "candidate": "Candidate19",
+        "before": {
+          "status": "DECODED",
+          "tasks": [],
+          "events": [
+            {
+              "id": "event-0001",
+              "title": "影像叙事工作坊",
+              "start": "time-0001",
+              "end": "time-0002",
+              "description": "2026年12月3日13:30开展影像叙事工作坊，\n结束时间暂未公布。\n全程在线，\n安排作品讨论，"
+            }
+          ],
+          "times": [
+            {
+              "id": "time-0001",
+              "type": "event_start",
+              "rawText": "2026年12月3日13:30",
+              "value": "2026-12-03T13:30",
+              "precision": "exact",
+              "needsConfirmation": false,
+              "owners": {
+                "tasks": [],
+                "materials": []
+              }
+            },
+            {
+              "id": "time-0002",
+              "type": "event_end",
+              "rawText": "结束时间暂未公布",
+              "value": null,
+              "precision": "vague",
+              "needsConfirmation": true,
+              "owners": {
+                "tasks": [],
+                "materials": []
+              }
+            }
+          ],
+          "materials": [],
+          "information": [
+            {
+              "text": "完成学习后提供学习证明。",
+              "reason": "other"
+            },
+            {
+              "text": "本消息仅告知活动，",
+              "reason": "other"
+            },
+            {
+              "text": "无需报名。",
+              "reason": "other"
+            }
+          ],
+          "conflicts": []
+        },
+        "after": {
+          "status": "DECODED",
+          "tasks": [],
+          "events": [
+            {
+              "id": "event-0001",
+              "title": "影像叙事工作坊",
+              "start": "time-0001",
+              "end": "time-0002",
+              "description": "2026年12月3日13:30开展影像叙事工作坊，\n结束时间暂未公布。\n全程在线，\n安排作品讨论，"
+            }
+          ],
+          "times": [
+            {
+              "id": "time-0001",
+              "type": "event_start",
+              "rawText": "2026年12月3日13:30",
+              "value": "2026-12-03T13:30",
+              "precision": "exact",
+              "needsConfirmation": false,
+              "owners": {
+                "tasks": [],
+                "materials": []
+              }
+            },
+            {
+              "id": "time-0002",
+              "type": "event_end",
+              "rawText": "结束时间暂未公布",
+              "value": null,
+              "precision": "vague",
+              "needsConfirmation": true,
+              "owners": {
+                "tasks": [],
+                "materials": []
+              }
+            }
+          ],
+          "materials": [],
+          "information": [
+            {
+              "text": "完成学习后提供学习证明。",
+              "reason": "other"
+            },
+            {
+              "text": "本消息仅告知活动，",
+              "reason": "other"
+            },
+            {
+              "text": "无需报名。",
+              "reason": "other"
+            }
+          ],
+          "conflicts": []
+        }
+      },
+      {
+        "sourceId": "authority-development-SA-01",
+        "candidate": "SingleAuthority",
+        "before": {
+          "status": "DECODED",
+          "tasks": [],
+          "events": [
+            {
+              "id": "event-0001",
+              "title": "影像叙事工作坊",
+              "start": "time-0001",
+              "end": "time-0002",
+              "description": "2026年12月3日13:30开展影像叙事工作坊，\n结束时间暂未公布。\n全程在线，\n安排作品讨论，\n完成学习后提供学习证明。"
+            }
+          ],
+          "times": [
+            {
+              "id": "time-0001",
+              "type": "event_start",
+              "rawText": "2026年12月3日13:30",
+              "value": "2026-12-03T13:30",
+              "precision": "exact",
+              "needsConfirmation": false,
+              "owners": {
+                "tasks": [],
+                "materials": []
+              }
+            },
+            {
+              "id": "time-0002",
+              "type": "event_end",
+              "rawText": "结束时间暂未公布。",
+              "value": null,
+              "precision": "vague",
+              "needsConfirmation": true,
+              "owners": {
+                "tasks": [],
+                "materials": []
+              }
+            }
+          ],
+          "materials": [],
+          "information": [
+            {
+              "text": "全程在线，",
+              "reason": "other"
+            },
+            {
+              "text": "安排作品讨论，",
+              "reason": "other"
+            },
+            {
+              "text": "完成学习后提供学习证明。",
+              "reason": "other"
+            },
+            {
+              "text": "本消息仅告知活动，",
+              "reason": "other"
+            },
+            {
+              "text": "无需报名。",
+              "reason": "other"
+            }
+          ],
+          "conflicts": []
+        },
+        "after": {
+          "status": "DECODED",
+          "tasks": [],
+          "events": [
+            {
+              "id": "event-0001",
+              "title": "影像叙事工作坊",
+              "start": "time-0001",
+              "end": "time-0002",
+              "description": "2026年12月3日13:30开展影像叙事工作坊，\n结束时间暂未公布。\n全程在线，\n安排作品讨论，\n完成学习后提供学习证明。"
+            }
+          ],
+          "times": [
+            {
+              "id": "time-0001",
+              "type": "event_start",
+              "rawText": "2026年12月3日13:30",
+              "value": "2026-12-03T13:30",
+              "precision": "exact",
+              "needsConfirmation": false,
+              "owners": {
+                "tasks": [],
+                "materials": []
+              }
+            },
+            {
+              "id": "time-0002",
+              "type": "event_end",
+              "rawText": "结束时间暂未公布。",
+              "value": null,
+              "precision": "vague",
+              "needsConfirmation": true,
+              "owners": {
+                "tasks": [],
+                "materials": []
+              }
+            }
+          ],
+          "materials": [],
+          "information": [
+            {
+              "text": "全程在线，",
+              "reason": "other"
+            },
+            {
+              "text": "安排作品讨论，",
+              "reason": "other"
+            },
+            {
+              "text": "完成学习后提供学习证明。",
+              "reason": "other"
+            },
+            {
+              "text": "本消息仅告知活动，",
+              "reason": "other"
+            },
+            {
+              "text": "无需报名。",
+              "reason": "other"
+            }
+          ],
+          "conflicts": []
+        }
+      }
+    ]
+  },
+  "newGenerationHypothesis": "NONE; V5 already distinguishes owners/window roles/activity attributes; actual output evidence on these sources remains missing"
+}

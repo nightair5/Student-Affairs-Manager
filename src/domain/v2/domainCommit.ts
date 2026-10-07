@@ -1,6 +1,7 @@
 import type { DraftItem, ParsedSuggestion } from '../../types'
 import type { RecognitionResult, TaskSuggestionV2 } from '../../recognition/types'
 import { workspaceSnapshotHash } from './migration'
+import { taskActionText } from '../../lib/taskActionText'
 import type { CanonicalWorkspaceRepository } from './repository'
 import type {
   EvidenceRef, HistoryEntityType, HistoryRecord, JsonValue, Material, Milestone, Project, Task,
@@ -605,7 +606,7 @@ function buildDomainCommitPlanInternal(
       workPackageId: projectId && item.workPackageTempId ? entityId('work-package', draftId, item.workPackageTempId) : null,
       parentTaskId: item.parentTempId ? taskIdMap.get(item.parentTempId) ?? null : null,
       title: override?.title ?? item.title, description: override?.description ?? (item.description || null),
-      nextAction: override?.nextAction ?? (item.actionVerb && item.actionObject ? `${item.actionVerb}${item.actionObject}` : item.title),
+      nextAction: override?.nextAction ?? (item.actionVerb && item.actionObject ? taskActionText(item.actionVerb, item.actionObject) : item.title),
       status: 'todo', estimatedMinutes: override?.estimatedMinutes ?? item.estimatedMinutes, manualPriority: null,
       snoozedUntil: null, dependencyIds: item.dependencyTempIds.map((id) => taskIdMap.get(id)!),
       createdAt: now, updatedAt: now, version: 1,

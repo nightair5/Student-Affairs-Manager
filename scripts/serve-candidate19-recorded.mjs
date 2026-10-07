@@ -13,10 +13,10 @@ import {completedCurrentNoticeScene} from './current-notice-completed-readonly.m
 import {authorityRecordedScene} from './single-authority-recorded-readonly.mjs'
 import {authorityObservedScene} from './single-authority-observed-readonly.mjs'
 const [port,instance,fixtureMode]=process.argv.slice(2)
-if(process.argv.length>5||fixtureMode&&!['--channel-role-fixtures','--channel-polarity-fixtures','--eligibility-fixtures','--public-notice-fixtures','--public-paid-recordings','--sealed-followup-fixtures','--current-notice-fixtures','--current-notice-batch','--current-notice-completed','--single-authority-fixtures','--single-authority-comparison','--single-authority-observed'].includes(fixtureMode))throw Error('C19_UNKNOWN_REPLAY_MODE')
+if(process.argv.length>5||fixtureMode&&!['--channel-role-fixtures','--channel-polarity-fixtures','--eligibility-fixtures','--public-notice-fixtures','--public-paid-recordings','--sealed-followup-fixtures','--current-notice-fixtures','--current-notice-batch','--current-notice-completed','--single-authority-fixtures','--single-authority-comparison','--single-authority-observed','--current-mechanism-fixtures'].includes(fixtureMode))throw Error('C19_UNKNOWN_REPLAY_MODE')
 if(!/^\d{4,5}$/.test(port??'')||+port<6814||+port>65535||!/^[a-z0-9-]{2,32}$/.test(instance??''))throw Error('C19_NEW_LOOPBACK_INSTANCE_REQUIRED')
 const publicPaid=['--public-paid-recordings','--sealed-followup-fixtures','--current-notice-fixtures'].includes(fixtureMode)
-const currentBatch=['--current-notice-batch','--current-notice-completed','--single-authority-fixtures','--single-authority-comparison','--single-authority-observed'].includes(fixtureMode)
+const currentBatch=['--current-notice-batch','--current-notice-completed','--single-authority-fixtures','--single-authority-comparison','--single-authority-observed','--current-mechanism-fixtures'].includes(fixtureMode)
 let scene,recordings,batchLabel,plannedRequests,knownSettled,initialOrdinal,currentSources
 if(fixtureMode==='--single-authority-observed'){
   const verified=authorityObservedScene();scene=verified.scene;recordings=verified.recordings;currentSources=verified.sources
@@ -47,7 +47,14 @@ if(!recordings.length&&!currentBatch)throw Error('C19_NO_SETTLED_RECORDINGS')
 const sha=v=>createHash('sha256').update(v).digest('hex'),dir=resolve('.data/candidate19/recorded-'+instance)
 mkdirSync(dir,{recursive:true});if(readdirSync(dir).length)throw Error('C19_REPLAY_INSTANCE_ALREADY_BUILT')
 let fixtureCount=0
-if(fixtureMode==='--single-authority-fixtures'){
+if(fixtureMode==='--current-mechanism-fixtures'){
+  const fixtureFile=resolve(dir,'fixture-builder.mjs')
+  await build({stdin:{contents:`export {CURRENT_MECHANISM_CASES,createCurrentMechanismFixture} from './src/experiments/candidate19Recorded/currentMechanismFixtures';export {createAuthorityFixture} from './src/experiments/candidate19Recorded/singleAuthorityFixtures';export {SINGLE_AUTHORITY_VERSION} from './src/recognition/sourceContractV5'`,resolveDir:process.cwd()},outfile:fixtureFile,bundle:true,platform:'node',format:'esm'})
+  const {CURRENT_MECHANISM_CASES,createCurrentMechanismFixture,createAuthorityFixture,SINGLE_AUTHORITY_VERSION}=await import(pathToFileURL(fixtureFile))
+  const fixtures=[...await Promise.all(CURRENT_MECHANISM_CASES.map(kind=>createCurrentMechanismFixture(kind))),...await Promise.all(['mixed','bad-owner'].map(kind=>createAuthorityFixture(kind)))]
+  fixtureCount=fixtures.length;initialOrdinal=2;batchLabel+='；3份本轮标题/窗口定向夹具和2份已有部分确认/坏关系控制，均非模型输出'
+  for(const [i,f] of fixtures.entries())recordings.push({ordinal:101+i,sourceId:f.context.index.sourceId,sourceVersionId:f.context.index.sourceVersionId,candidate:'EngineeringFixture',generationContract:SINGLE_AUTHORITY_VERSION,sourceText:f.sourceText,referenceTime:f.context.referenceTime,timezone:f.context.timezone,rawHttpText:f.rawHttpText,responseSha256:sha(f.rawHttpText),requestSha256:null,frozenOutcome:'ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT'})
+}else if(fixtureMode==='--single-authority-fixtures'){
   const fixtureFile=resolve(dir,'fixture-builder.mjs')
   await build({stdin:{contents:`export {AUTHORITY_CASES,createAuthorityFixture} from './src/experiments/candidate19Recorded/singleAuthorityFixtures';export {SINGLE_AUTHORITY_VERSION} from './src/recognition/sourceContractV5'`,resolveDir:process.cwd()},outfile:fixtureFile,bundle:true,platform:'node',format:'esm'})
   const {AUTHORITY_CASES,createAuthorityFixture,SINGLE_AUTHORITY_VERSION}=await import(pathToFileURL(fixtureFile))

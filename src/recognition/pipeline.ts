@@ -1,5 +1,6 @@
 import type { ParsedSuggestion, Project, SourceType, Task, TaskCategory } from '../types'
 import { createSuggestions } from '../lib/parser'
+import { taskActionText } from '../lib/taskActionText'
 import { parseChineseTimeAst } from '../lib/timeSemantics'
 import { RECOGNITION_MODEL_NAME, RECOGNITION_PROMPT_VERSION } from './prompt'
 import type {
@@ -471,7 +472,7 @@ export function recognitionToLegacySuggestions(result: RecognitionResult): Parse
       category: result.projectSuggestion?.category.value ?? '其他',
       deadline: point?.normalizedValue ?? '',
       estimatedMinutes: task.estimatedMinutes ?? 30,
-      nextAction: `${task.actionVerb}${task.actionObject}`,
+      nextAction: taskActionText(task.actionVerb, task.actionObject),
       description: task.description,
       priority: task.prioritySuggestion === 'urgent' || task.prioritySuggestion === 'high' ? '高' : task.prioritySuggestion === 'low' ? '低' : '中',
       materials: materialNames,

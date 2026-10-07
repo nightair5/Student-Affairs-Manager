@@ -1,6 +1,8 @@
 import type { WireContext } from '../experiments/realInput01/modelWire'
 import { plainJson } from '../experiments/mainline04/semanticContract'
 import { decodeSingleAuthorityRecording, type SingleAuthorityFacts } from './sourceContractV5'
+import { assembleCurrentFirstSuggestion } from './materialChannelGrounding'
+import { sourceWindowsFromSidecar } from './sourceWindowGrounding'
 
 export const AUTHORITY_ATTRIBUTE_INDEX_VERSION = 'single-authority-attribute-index-1.0.0'
 const check = (ok: unknown, code: string) => { if (!ok) throw Error('AUTHORITY_ATTRIBUTE_' + code) }
@@ -42,6 +44,8 @@ export function decodeAuthorityProductRecording(raw: string, context: WireContex
   const projection = projectAuthorityAttributeIndex(JSON.parse(texts[0].text), context)
   texts[0].text = JSON.stringify(projection.projected)
   const decoded = decodeSingleAuthorityRecording(JSON.stringify(envelope), context, role)
-  return { ...decoded, attributeIndexAudit: projection.audit, sidecar: { ...decoded.sidecar,
-    attributeIndexAudit: projection.audit, originalResponse: raw, postComparisonProductVersion: AUTHORITY_ATTRIBUTE_INDEX_VERSION } }
+  const first = assembleCurrentFirstSuggestion(decoded.result, { sourceText: context.index.sourceContent, referenceTime: context.referenceTime,
+    timezone: context.timezone, sourceWindows: sourceWindowsFromSidecar(decoded.sidecar) })
+  return { ...decoded, result: first.result, attributeIndexAudit: projection.audit, sourceWindowGrounding: first.sourceWindowGrounding, sidecar: { ...decoded.sidecar,
+    attributeIndexAudit: projection.audit, sourceWindowGrounding: first.sourceWindowGrounding, originalResponse: raw, postComparisonProductVersion: AUTHORITY_ATTRIBUTE_INDEX_VERSION } }
 }
