@@ -3,6 +3,7 @@ import type { HistoryRecord, JsonValue, Task, TimePoint, WorkspaceV8 } from './t
 import { addDateOnlyDays, instantToWallClock, isDateOnly, parseBusinessDateTime, wallClockToInstant } from '../../lib/timeSemantics'
 
 export const PLAN_VERSION = 'personal-plan-d27-1' as const
+export const SOURCE_WINDOW_PLAN_VERSION = 'source-window-plan-1.1.0' as const
 export const PLAN_RECEIPT = 'personalPlanD27Receipt'
 export const PLAN_UNDO = 'personalPlanD27Undo'
 export type DurationOrigin = 'user' | 'recorded_estimate' | 'product_estimate'
@@ -105,7 +106,7 @@ export function planBaseline(w: WorkspaceV8): string {
   const relevantVersions = new Set(w.historyRecords.filter(h => entityIds.has(h.entityId) && h.sourceVersionId).map(h => h.sourceVersionId!))
   const sourceIds = new Set(w.tasks.map(t => t.legacyData?.sourceId).filter(v => typeof v === 'string'))
   for (const id of relevantVersions) { const v = w.sourceVersions.find(v => v.id === id); if (v) sourceIds.add(v.sourceId) }
-  return JSON.stringify({ workspaceId: w.workspace.id, timezone: w.settings.defaultTimezone,
+  return JSON.stringify({ workspaceId: w.workspace.id, timezone: w.settings.defaultTimezone, sourceWindowProgram: SOURCE_WINDOW_PLAN_VERSION,
     tasks: sorted(w.tasks).map(t => ({ id: t.id, title: t.title, status: t.status, estimatedMinutes: t.estimatedMinutes, manualPriority: t.manualPriority, snoozedUntil: t.snoozedUntil, dependencyIds: [...t.dependencyIds].sort(), sourceId: t.legacyData?.sourceId ?? null, gaps: taskGaps(w, t) })),
     times: sorted(w.timePoints).map(p => ({ id: p.id, type: p.type, taskId: p.taskId, eventId: p.eventId, relatedTaskIds: [...p.relatedTaskIds].sort(), normalizedValue: p.normalizedValue, timezone: p.timezone, precision: p.precision, needsConfirmation: p.needsConfirmation, sourceTimeRole:p.legacyData?.sourceTimeRole??null, metadata: p.legacyData?.personalPlanD27 ?? null })),
     events: sorted(w.events).map(e => ({ id: e.id, startTimePointId: e.startTimePointId, endTimePointId: e.endTimePointId })),
@@ -129,6 +130,16 @@ export function validatePlanOptions(o: PlanOptions): void {
 type Interval = { start: number; end: number }
 const overlap = (a: Interval, b: Interval) => a.start < b.end && b.start < a.end
 const pointMs = (p: TimePoint | undefined, timezone: string) => p?.precision === 'exact' && !p.needsConfirmation && p.normalizedValue ? parseBusinessDateTime(p.normalizedValue, p.timezone ?? timezone)?.getTime() : undefined
+// Calendar windows constrain personal slots by whole stated dates. These bounds
+// never replace the source value/precision with a fabricated source clock time.
+const sourceWindowMs = (p: TimePoint, timezone: string, end: boolean) => {
+  if (p.needsConfirmation || !p.normalizedValue) return undefined
+  if (p.precision === 'date_only' && isDateOnly(p.normalizedValue)) {
+    const date = end ? addDateOnlyDays(p.normalizedValue, 1) : p.normalizedValue
+    return parseBusinessDateTime(date + 'T00:00', p.timezone ?? timezone)?.getTime()
+  }
+  return pointMs(p, timezone)
+}
 export function buildPersonalPlan(w: WorkspaceV8, options: PlanOptions, id: string = crypto.randomUUID()): PlanProposal {
   validatePersonalPlanMetadata(w); validatePlanOptions(options)
   if (w.tasks.length > 200) throw Error('PERSONAL_PLAN_TASK_LIMIT_200')
@@ -168,7 +179,7 @@ export function buildPersonalPlan(w: WorkspaceV8, options: PlanOptions, id: stri
   const sourceWindow=(t:Task)=>{
     const points=w.timePoints.filter(p=>p.relatedTaskIds.includes(t.id)&&['window_start','window_end'].includes(String(p.legacyData?.sourceTimeRole)))
     if(!points.length)return {start:-Infinity,end:Infinity,invalid:false,present:false}
-    const starts=points.filter(p=>p.legacyData?.sourceTimeRole==='window_start').map(p=>pointMs(p,zone)),ends=points.filter(p=>p.legacyData?.sourceTimeRole==='window_end').map(p=>pointMs(p,zone))
+    const starts=points.filter(p=>p.legacyData?.sourceTimeRole==='window_start').map(p=>sourceWindowMs(p,zone,false)),ends=points.filter(p=>p.legacyData?.sourceTimeRole==='window_end').map(p=>sourceWindowMs(p,zone,true))
     const valid=starts.length===1&&ends.length===1&&starts[0]!==undefined&&ends[0]!==undefined&&ends[0]>starts[0]
     return {start:valid?starts[0]!:-Infinity,end:valid?ends[0]!:Infinity,invalid:!valid,present:true}
   }

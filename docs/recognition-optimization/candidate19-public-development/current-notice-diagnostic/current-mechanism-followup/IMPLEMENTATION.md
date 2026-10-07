@@ -9,6 +9,8 @@
 
 窗口角色仍存在既有semanticSidecar.singleAuthorityAudit.sourceWindows，App第二次普通组装继续使用同一声明，sourceWindowGrounding审计存入原草稿事务。正式保存沿ReviewSession→DomainCommitPlan→Repository，canonical时间legacyData保留sourceTimeRole/owners；Workspace v8不变。原截止与D27个人安排分开。
 
+最终浏览器进一步发现该窗口根因在D27安排层的关联缺口：已正确保存的date_only端点被只接受exact的安排器误报“起止尚未完整确定”。source-window-plan-1.1.0将明确日期窗口用作整日约束（结束日期包含当天），仍按用户可用时间生成个人建议，不给原文补时刻。范围外提示SOURCE_WINDOW_OUTSIDE_PLAN，空值/待确认仍受阻；原时间节点不改。planBaseline纳入程序版本，旧方案不能绕过新读集检查。既有精确时刻窗口、原截止和锁定安排测试保留；未扩展全局算法。
+
 补充修复一处回放工具前置问题：current-notice-completed-readonly原调用通用付费host，后续其他批次合法追加会报D26_HOST_LEDGER_BATCH_DRIFT。独立只读reader现在校验完整链、原基线、准确本批9条记录/4raw及逐笔receipt/usage；他批合法追加可读取，复用grant碰撞、改raw/receipt、状态未决、破链仍拒绝。没有mutation API；通用付费gate和封存现场完全不改。
 
 发生层与固定分母详见[同raw前后诊断](DIAGNOSTIC.json)。真实01窗口类型/owner矛盾仍拒绝，真实04时间遗漏/个人兴趣true/图冲突仍拒绝。真实03仍拆出4活动，未自动猜合。真实02标题改善但条件拆分、总截止/自由描述仍待裁决。旧4原答0正确3错1UNKNOWN；当前首屏仍0/3/1，不称模型提高。旧原冻结首屏4错、旧后验0/3/1保留原字节。

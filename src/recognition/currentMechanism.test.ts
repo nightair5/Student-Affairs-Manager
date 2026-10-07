@@ -11,6 +11,7 @@ import { CapturePersistenceService } from '../domain/v2/capture'
 import { IndexedDbWorkspaceRepository } from '../lib/repository'
 import { emptyWorkspace } from '../experiments/mainline01/fixtures'
 import { buildSourceReviewPlan, commitSourceReview, verifySourceReviewReadback } from '../domain/v2/sourceReviewD26'
+import { buildPersonalPlan, defaultPlanOptions } from '../domain/v2/personalPlanD27'
 
 const rewrite = (raw: string, facts: unknown) => { const e = JSON.parse(raw); e.output[0].content[0].text = JSON.stringify(facts); return JSON.stringify(e) }
 describe('current ordinary title and explicitly owned calendar window', () => {
@@ -78,6 +79,17 @@ describe('current ordinary title and explicitly owned calendar window', () => {
         expect(read.timePoints.map(p => p.normalizedValue)).toEqual(['2026-11-06', '2026-11-08'])
         expect(read.timePoints.map(p => p.legacyData?.sourceTimeRole)).toEqual(['window_start', 'window_end'])
         expect(read.timePoints.some(p => p.type === 'task_deadline' || p.type === 'planned_start')).toBe(false)
+        const originals = structuredClone(read.timePoints), taskId = read.tasks[0].id
+        expect(buildPersonalPlan(read, defaultPlanOptions(new Date('2026-10-07T09:00:00+08:00'))).unscheduled[0].code).toBe('SOURCE_WINDOW_OUTSIDE_PLAN')
+        const options = { ...defaultPlanOptions(new Date('2026-11-06T09:00:00+08:00')), days: 4 }
+        const proposal = buildPersonalPlan(read, options)
+        expect(proposal.segments[0].start).toBe('2026-11-06T01:00:00.000Z')
+        expect(proposal.segments[0].originalDeadline).toBeNull()
+        expect(buildPersonalPlan(read, { ...options, overrides: { [taskId]: { start: '2026-11-08T17:30' } } }).segments).toHaveLength(1)
+        expect(buildPersonalPlan(read, { ...options, overrides: { [taskId]: { start: '2026-11-09T09:00' } } }).unscheduled[0].code).toBe('INVALID_MANUAL_SLOT')
+        expect(read.timePoints).toEqual(originals)
+        read.timePoints[1].normalizedValue = null; read.timePoints[1].needsConfirmation = true
+        expect(buildPersonalPlan(read, options).unscheduled[0].code).toBe('SOURCE_WINDOW_NEEDS_REVIEW')
       } else {
         expect(read.tasks[0].title).toBe('完成相关信息登记')
         expect(view.drafts[0].items[0].suggestion.nextAction).toBe('完成相关信息登记')
