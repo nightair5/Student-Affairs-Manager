@@ -37,7 +37,9 @@ export function PersonalPlanPanel({ workspace, repository, reader, store, onRelo
       if (!live) return
       if (saved?.version === 'personal-plan-measurement-d27-1') {
         validatePlanOptions(saved.options); setOptions(saved.options); edits.current = saved.editIds; original.current = saved.initialOptions ?? saved.options
-        setNotice('上次未确认的安排调整已恢复；请查看当前结果后接受。')
+        setNotice(Object.keys(saved.editIds).length
+          ? '上次未确认的安排调整已恢复；请查看当前结果后接受。'
+          : '可用时间与估计已恢复。已保存安排仍保留；下面是可再次调整的方案。')
       }
       setReady(true)
     }).catch(e => { if (live) { setProblem(message(e)); setReady(true) } })
