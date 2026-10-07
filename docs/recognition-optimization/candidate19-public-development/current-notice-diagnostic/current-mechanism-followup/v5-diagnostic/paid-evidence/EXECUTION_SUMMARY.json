@@ -1,0 +1,134 @@
+{
+  "version": "v5-current-paid-execution-summary-1",
+  "batch": "V5-CURRENT-REAL-NOTICE-DEVELOPMENT-R1",
+  "role": "ACTUAL_CURRENT_VERSION_DEVELOPMENT_NOT_HOLDOUT",
+  "committedExecutionHead": "4fd9d6951ecb3096d6777c26ff24896ac541dba1",
+  "snapshotCommit": "99424e33ced530bffc2a6c80908a35417d475b28",
+  "manifestSha256": "e0d484a6945b659a35f784a5840f269eb6df77c9e5ffb42361ccb20f00debfb0",
+  "identitiesSha256": "66496ee7f395f9641667065fb199d398bb333305b3fec0bf45b3b193c9abe724",
+  "authorizationSha256": "e091bbf41e66f93fe514b4c9d91304ca6aa86ad02be8aa797998098bef310e99",
+  "grantId": "V5-CURRENT-REAL-R1-03c7502a-f87c-41df-b4e1-231c11eb2acf",
+  "capUsd": 1.3,
+  "worstAuthorizedUsd": 1.297616,
+  "counts": {
+    "sent": 4,
+    "settled": 4,
+    "uncertain": 0,
+    "notSent": 0,
+    "grant": 1,
+    "reserve": 4,
+    "settle": 4,
+    "retries": 0,
+    "repair": 0,
+    "verifier": 0
+  },
+  "units": [
+    {
+      "ordinal": 1,
+      "unitIdentitySha256": "8c6fd53b39e3f741c579cbd6597e9d98fd66c6a200af5579b236570c8a382890",
+      "requestSha256": "2628d42633e5cdff20e2da34bdbe526ae9b119202a240c3d7a56edf02aedd39b",
+      "status": "SETTLED",
+      "responseSha256": "71888da3173a23ec37842cd46396f195fda5e32215800ebe410fbb586ba264b3",
+      "httpStatus": 200,
+      "usage": {
+        "input_tokens": 4802,
+        "input_tokens_details": {
+          "cached_tokens": 3968
+        },
+        "output_tokens": 1684,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6486
+      },
+      "costUpperMicroUsd": 3462
+    },
+    {
+      "ordinal": 2,
+      "unitIdentitySha256": "49727f3f8594c13ad9f6fecd6c6f051f992f452e153e7e7889a58733ec9adaf9",
+      "requestSha256": "aa5d8d31566ab8bb4aa427b270e86173bda966f28b4c1539f57b34e5a373e83c",
+      "status": "SETTLED",
+      "responseSha256": "9eaa3ebff9560c4db55d632c4b15183066bccb9e6ca3e32621bf3ace793a39be",
+      "httpStatus": 200,
+      "usage": {
+        "input_tokens": 4698,
+        "input_tokens_details": {
+          "cached_tokens": 3968
+        },
+        "output_tokens": 2063,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6761
+      },
+      "costUpperMicroUsd": 3885
+    },
+    {
+      "ordinal": 3,
+      "unitIdentitySha256": "dbc6b6987e301844335dfe0640189a192787397ce740ddeb0e92241be637a772",
+      "requestSha256": "fb39f05627337a26a70323a0697caea711b0acbdd87d65254866f2cf709a884f",
+      "status": "SETTLED",
+      "responseSha256": "7d1841de380483a55bc54aa7f6f7ec4aa1cbd1c499f6f13dbb696ba098beaf40",
+      "httpStatus": 200,
+      "usage": {
+        "input_tokens": 5323,
+        "input_tokens_details": {
+          "cached_tokens": 3968
+        },
+        "output_tokens": 3356,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 8679
+      },
+      "costUpperMicroUsd": 5625
+    },
+    {
+      "ordinal": 4,
+      "unitIdentitySha256": "624d40e09f505fbc8fa939f14796b6a7214140e863ec8a3233b82257cf9553dd",
+      "requestSha256": "979f7dc31b11768a4912c58d938fc4c609e940ce6fc6b83245e0ce2f6d38f788",
+      "status": "SETTLED",
+      "responseSha256": "839213d54377d1747bbc28c6bf049fc93152864b13f9209537672761702ca90e",
+      "httpStatus": 200,
+      "usage": {
+        "input_tokens": 4958,
+        "input_tokens_details": {
+          "cached_tokens": 3968
+        },
+        "output_tokens": 2434,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 7392
+      },
+      "costUpperMicroUsd": 4409
+    }
+  ],
+  "usageTotals": {
+    "input": 19781,
+    "cachedInput": 15872,
+    "output": 9537,
+    "reasoning": 0,
+    "total": 29318
+  },
+  "internalConservativeMicroUsd": 17381,
+  "providerActualDebit": "NOT_OBSERVABLE",
+  "priceEvidence": {
+    "priceSha256": "e8d92c36114d0c01cc5bba62a58132aba9dd4c44b34c0c9138a139b1892e2796",
+    "officialPricing": "https://api-docs.deepseek.com/quick_start/pricing/",
+    "officialResponses": "https://api-docs.deepseek.com/guides/responses_api/",
+    "inputUpperTokens": 1048576,
+    "outputUpperTokens": 8192,
+    "inputUsdPerMillion": 0.3,
+    "outputUsdPerMillion": 1.2,
+    "unitUpperMicroUsd": 324404,
+    "policy": "Peak uncached rates and full official context bound, not request-byte token estimation; actual usage observed, provider debit not inferred"
+  },
+  "ledger": {
+    "rows": 1024,
+    "sha256": "25d8dbb4a4a56379ab9f7bc9d66d8023c4a3d4db65cb61d14caa50b14ee87a14",
+    "tail": "2470a3e04b8c34f84cb6120805fe499b43d70fb98805bca274259a9624329a9b",
+    "batchRows": 9
+  },
+  "localRawPolicy": "Original HTTP bytes and authorization originals remain local .data; public fact copies and SHA are separate artifacts, never rewritten as original responses."
+}

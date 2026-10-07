@@ -1,0 +1,204 @@
+{
+  "version": "v5-paid-final-read-only-scene-1",
+  "history": {
+    "protected": 84,
+    "frozen": 119,
+    "archives": 7,
+    "status": "HISTORY_PRESERVED_LEDGER_APPEND_REVIEW_REQUIRED"
+  },
+  "ledger": {
+    "rows": 1024,
+    "sha256": "25d8dbb4a4a56379ab9f7bc9d66d8023c4a3d4db65cb61d14caa50b14ee87a14",
+    "tail": "2470a3e04b8c34f84cb6120805fe499b43d70fb98805bca274259a9624329a9b",
+    "batchRows": 9
+  },
+  "prefixes": [
+    {
+      "rows": 996,
+      "sha256": "c58231633b8da1b87e9106f92d0dd457f00e4789e5e5fa03de780fb377dc8750",
+      "unchanged": true
+    },
+    {
+      "rows": 1000,
+      "sha256": "fe24750479d3a5229e386e8088199ae097f48a1f6872f0eaac016cfaeddbb48d",
+      "unchanged": true
+    },
+    {
+      "rows": 1009,
+      "sha256": "c730854da5eabbef8c6c62d1da2dea6511ecf2f586fa9872fd2c9b4a1baa140f",
+      "unchanged": true
+    },
+    {
+      "rows": 1015,
+      "sha256": "25f32a95eb28a264c3bec20500cf0b439ab33ad445dddfe8eba243c469c948d9",
+      "unchanged": true
+    }
+  ],
+  "v5": {
+    "batch": "V5-CURRENT-REAL-NOTICE-DEVELOPMENT-R1",
+    "audit": "CONSISTENT",
+    "status": {
+      "SETTLED": 4,
+      "UNCERTAIN": 0,
+      "NOT_SENT": 0
+    },
+    "batchEvidence": {
+      "rows": 9,
+      "grantCount": 1,
+      "reserveCount": 4,
+      "settleCount": 4,
+      "units": [
+        {
+          "ordinal": 1,
+          "reserveCount": 1,
+          "settleCount": 1
+        },
+        {
+          "ordinal": 2,
+          "reserveCount": 1,
+          "settleCount": 1
+        },
+        {
+          "ordinal": 3,
+          "reserveCount": 1,
+          "settleCount": 1
+        },
+        {
+          "ordinal": 4,
+          "reserveCount": 1,
+          "settleCount": 1
+        }
+      ]
+    },
+    "halt": null,
+    "lockExists": false,
+    "rawSha": [
+      {
+        "ordinal": 1,
+        "responseSha256": "71888da3173a23ec37842cd46396f195fda5e32215800ebe410fbb586ba264b3"
+      },
+      {
+        "ordinal": 2,
+        "responseSha256": "9eaa3ebff9560c4db55d632c4b15183066bccb9e6ca3e32621bf3ace793a39be"
+      },
+      {
+        "ordinal": 3,
+        "responseSha256": "7d1841de380483a55bc54aa7f6f7ec4aa1cbd1c499f6f13dbb696ba098beaf40"
+      },
+      {
+        "ordinal": 4,
+        "responseSha256": "839213d54377d1747bbc28c6bf049fc93152864b13f9209537672761702ca90e"
+      }
+    ]
+  },
+  "oldAuthority": {
+    "verification": "ORIGINAL_PACKET_RECEIPTS_USAGE_CHAIN_AND_SEALED_SITE_CHECKED",
+    "status": {
+      "SETTLED": 2,
+      "UNCERTAIN": 1,
+      "NOT_SENT": 5
+    },
+    "lockExists": true,
+    "haltExists": true,
+    "sealedFiles": [
+      {
+        "path": "AUTHORIZATION.json",
+        "sha256": "c3e10eb533790362832cc1bba1dd0286063b54535f3f97d9fec3e91a4b033c57",
+        "currentSha256": "c3e10eb533790362832cc1bba1dd0286063b54535f3f97d9fec3e91a4b033c57"
+      },
+      {
+        "path": "HALT.json",
+        "sha256": "6b27a983122f40e3bdb81c18b499c939af558e24f21bbdf2fc80c00f2800468c",
+        "currentSha256": "6b27a983122f40e3bdb81c18b499c939af558e24f21bbdf2fc80c00f2800468c"
+      },
+      {
+        "path": "phase-observation-v1/01.jsonl",
+        "sha256": "84221bf01b9525d51e3aa88f95c794da2a65696e07a22ae7584648430bdac163",
+        "currentSha256": "84221bf01b9525d51e3aa88f95c794da2a65696e07a22ae7584648430bdac163"
+      },
+      {
+        "path": "phase-observation-v1/02.jsonl",
+        "sha256": "39da4e6550eaa041847039d4406d3c3ad0d8d97d08fc31a5f536a9f037471530",
+        "currentSha256": "39da4e6550eaa041847039d4406d3c3ad0d8d97d08fc31a5f536a9f037471530"
+      },
+      {
+        "path": "phase-observation-v1/03.jsonl",
+        "sha256": "df6b161f2231055177efc607755b987e639a6bc28b30279e22fbc4ee22e2c998",
+        "currentSha256": "df6b161f2231055177efc607755b987e639a6bc28b30279e22fbc4ee22e2c998"
+      },
+      {
+        "path": "PRICE_EVIDENCE.json",
+        "sha256": "fb738255eac5aa991242de1248dbcace473599aa5b278a4a9910d76e0bb05aee",
+        "currentSha256": "fb738255eac5aa991242de1248dbcace473599aa5b278a4a9910d76e0bb05aee"
+      },
+      {
+        "path": "raw/01.json",
+        "sha256": "f3e7045ba0021323d83468488bcebebd9785372d4e3bce7d1a77df8eeb5e75ca",
+        "currentSha256": "f3e7045ba0021323d83468488bcebebd9785372d4e3bce7d1a77df8eeb5e75ca"
+      },
+      {
+        "path": "raw/02.json",
+        "sha256": "1df3a5e507f066388026be4288a41ac5131418355a6ff5bac02b432cadabe198",
+        "currentSha256": "1df3a5e507f066388026be4288a41ac5131418355a6ff5bac02b432cadabe198"
+      },
+      {
+        "path": "receipts/000001009.json",
+        "sha256": "f7ae8e9e0b0e81fd2f82384e77d4b32ccddc89b71ea8c24e54ef5e4b7fbde346",
+        "currentSha256": "f7ae8e9e0b0e81fd2f82384e77d4b32ccddc89b71ea8c24e54ef5e4b7fbde346"
+      },
+      {
+        "path": "receipts/000001010.json",
+        "sha256": "8ec0dd7b03f68018d8b988d510e930388ae68db29b0fd1f25dcfb52b0b5ceb41",
+        "currentSha256": "8ec0dd7b03f68018d8b988d510e930388ae68db29b0fd1f25dcfb52b0b5ceb41"
+      },
+      {
+        "path": "receipts/000001011.json",
+        "sha256": "06d2827ccf1aeda628d4c4de73f7521a6d3dbedc20fd042a3ab669808c4a0192",
+        "currentSha256": "06d2827ccf1aeda628d4c4de73f7521a6d3dbedc20fd042a3ab669808c4a0192"
+      },
+      {
+        "path": "receipts/000001012.json",
+        "sha256": "02b923af84f7300b2aaae3bc53079486f7a7be1b09d97fb5ad7dbcf81cc15253",
+        "currentSha256": "02b923af84f7300b2aaae3bc53079486f7a7be1b09d97fb5ad7dbcf81cc15253"
+      },
+      {
+        "path": "receipts/000001013.json",
+        "sha256": "d8733ff66b963ce6f3d1c82b65d722e1a29f7837671dfbe5bc7bfd2dae6cefff",
+        "currentSha256": "d8733ff66b963ce6f3d1c82b65d722e1a29f7837671dfbe5bc7bfd2dae6cefff"
+      },
+      {
+        "path": "receipts/000001014.json",
+        "sha256": "db781c009b76b5b04057f2a71bd8068e03523b3b4c5cef283edcafad593c6c3b",
+        "currentSha256": "db781c009b76b5b04057f2a71bd8068e03523b3b4c5cef283edcafad593c6c3b"
+      },
+      {
+        "path": "STATE.json",
+        "sha256": "7992b9521ede37c853ecd2b384a97e9e7ff8f8c56a2fc0291f9c3e9f0d855952",
+        "currentSha256": "7992b9521ede37c853ecd2b384a97e9e7ff8f8c56a2fc0291f9c3e9f0d855952"
+      },
+      {
+        "path": "USER_AUTHORIZATION.txt",
+        "sha256": "ac5041f365df3e8e29f43708e11f842e832924eb684a5ac3bcb2bc8fd866e836",
+        "currentSha256": "ac5041f365df3e8e29f43708e11f842e832924eb684a5ac3bcb2bc8fd866e836"
+      }
+    ]
+  },
+  "modelRoutes": [
+    {
+      "path": "/api/deepseek",
+      "status": 403,
+      "body": "C19_MODEL_AND_EXTERNAL_ROUTES_DISABLED"
+    },
+    {
+      "path": "/api/recognition",
+      "status": 403,
+      "body": "C19_MODEL_AND_EXTERNAL_ROUTES_DISABLED"
+    }
+  ],
+  "userAssets": {
+    "handoverExists": true,
+    "handoverSha256": "b7e18a12748a2f99dd94f6d67ccd70bbeecefd6f230a8cc215c820ffcb53b2fc",
+    "auditFiles": 15
+  },
+  "noMutations": "No grant/reserve/settle/dispatch/unlock/state repair in this final reader; authorized batch already completed."
+}

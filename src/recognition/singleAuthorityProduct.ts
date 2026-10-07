@@ -3,6 +3,8 @@ import { plainJson } from '../experiments/mainline04/semanticContract'
 import { decodeSingleAuthorityRecording, type SingleAuthorityFacts } from './sourceContractV5'
 import { assembleCurrentFirstSuggestion } from './materialChannelGrounding'
 import { sourceWindowsFromSidecar } from './sourceWindowGrounding'
+import { projectAuthoritySupportContext } from './authoritySupportContext'
+import { projectAuthorityEndpointComposition } from './authorityEndpointComposition'
 
 export const AUTHORITY_ATTRIBUTE_INDEX_VERSION = 'single-authority-attribute-index-1.0.0'
 const check = (ok: unknown, code: string) => { if (!ok) throw Error('AUTHORITY_ATTRIBUTE_' + code) }
@@ -41,11 +43,14 @@ export function decodeAuthorityProductRecording(raw: string, context: WireContex
   const texts = Array.isArray(envelope.output) ? envelope.output.filter((v: { type?: string }) => v.type === 'message')
     .flatMap((v: { content?: { type?: string; text?: string }[] }) => v.content?.filter(c => c.type === 'output_text') ?? []) : []
   check(texts.length === 1 && typeof texts[0].text === 'string', 'RESPONSE_TEXT')
-  const projection = projectAuthorityAttributeIndex(JSON.parse(texts[0].text), context)
+  const support = projectAuthoritySupportContext(JSON.parse(texts[0].text), context)
+  const endpoints = projectAuthorityEndpointComposition(support.projected, context)
+  const projection = projectAuthorityAttributeIndex(endpoints.projected, context)
   texts[0].text = JSON.stringify(projection.projected)
   const decoded = decodeSingleAuthorityRecording(JSON.stringify(envelope), context, role)
   const first = assembleCurrentFirstSuggestion(decoded.result, { sourceText: context.index.sourceContent, referenceTime: context.referenceTime,
     timezone: context.timezone, sourceWindows: sourceWindowsFromSidecar(decoded.sidecar) })
   return { ...decoded, result: first.result, attributeIndexAudit: projection.audit, sourceWindowGrounding: first.sourceWindowGrounding, sidecar: { ...decoded.sidecar,
-    attributeIndexAudit: projection.audit, sourceWindowGrounding: first.sourceWindowGrounding, originalResponse: raw, postComparisonProductVersion: AUTHORITY_ATTRIBUTE_INDEX_VERSION } }
+    attributeIndexAudit: projection.audit, authoritySupportContextAudit: support.audit, authorityEndpointCompositionAudit: endpoints.audit,
+    sourceWindowGrounding: first.sourceWindowGrounding, originalResponse: raw, postComparisonProductVersion: support.audit.version + '/' + endpoints.audit.version } }
 }

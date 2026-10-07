@@ -6,7 +6,7 @@ import { groundEligibility } from './eligibilityGrounding'
 import { rangeEndpointSupport } from './rangeEndpointSupport'
 import { taskActionText } from '../lib/taskActionText'
 
-export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.3.0'
+export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.4.0'
 interface ProseRecord { entityId: string; kind: 'task' | 'event' | 'source'; title: string; description: string }
 export interface D26FirstSuggestionAudit {
   version: typeof D26_FIRST_SUGGESTION_VERSION
@@ -14,7 +14,7 @@ export interface D26FirstSuggestionAudit {
   generatedProse: ProseRecord[]
   times: Array<{ entityId: string; before: TimeFields; after: TimeFields; interpretation: D26TimeInterpretation }>
   unresolved: Array<{ entityId: string; reason: string }>
-  rangeSupport: Array<{entityId:string; quote:string; literalRange:string; expanded:string; rule:'CITED_SAME_EVENT_RANGE_ENDPOINT'}>
+  rangeSupport: Array<{entityId:string; quote:string; literalRange:string; expanded:string; rule:'CITED_SAME_EVENT_RANGE_ENDPOINT'|'CITED_SAME_EVENT_CLOCK_RANGE'}>
   role: 'DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT'
 }
 type TimeFields = Pick<TimePointSuggestionV2, 'normalizedValue' | 'timezone' | 'isAllDay' | 'precision' | 'needsConfirmation'>
@@ -56,7 +56,16 @@ function time<T extends TimeFields & { tempId: string; rawText: string; type: Ti
     return
   }
   if (range) audit.rangeSupport.push({entityId:point.tempId,...range})
-  const interpretation = interpretTimeD26(point.rawText, { type: point.type, referenceTime, timezone, inheritedDate,
+  // Bare clock ranges resemble dates to the legacy parser. Use a clock
+  // endpoint only when the same event and endpoint explicitly cite the unique
+  // adjacent calendar heading already checked by citedEventDate.
+  const clocks = /^(\d{1,2}):([0-5]\d)\s*[-—–]\s*(\d{1,2}):([0-5]\d)$/u.exec(point.rawText)
+  const heading = /^\d{4}年\d{1,2}月\d{1,2}日(?:[（(](?:周|星期)[一二三四五六日天][）)])?\s*$/u.test(anchorContext)
+  const validClocks = clocks && +clocks[1] <= 23 && +clocks[3] <= 23 && +clocks[3] * 60 + +clocks[4] > +clocks[1] * 60 + +clocks[2]
+  const composed = inheritedDate && heading && validClocks && ['event_start','event_end'].includes(point.type)
+    ? anchorContext + ' ' + (point.type === 'event_start' ? clocks[1]+':'+clocks[2] : clocks[3]+':'+clocks[4]) : null
+  if (composed) audit.rangeSupport.push({entityId:point.tempId,quote:anchorContext+'\n'+point.rawText,literalRange:point.rawText,expanded:composed,rule:'CITED_SAME_EVENT_CLOCK_RANGE'})
+  const interpretation = interpretTimeD26(composed ?? point.rawText, { type: point.type, referenceTime, timezone, inheritedDate,
     sourceContext: [anchorContext, range?.quote, ...quotes.filter(quote => quote.includes(point.rawText)).map(quote => timeClause(point.rawText, quote))].filter(Boolean).join('\n') })
   Object.assign(point, fields(interpretation.point))
   audit.times.push({ entityId: point.tempId, before, after: fields(point), interpretation })

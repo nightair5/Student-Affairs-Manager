@@ -14,12 +14,12 @@ import {authorityRecordedScene} from './single-authority-recorded-readonly.mjs'
 import {authorityObservedScene} from './single-authority-observed-readonly.mjs'
 import {v5CurrentNoticeRecordedScene} from './v5-current-notice-recorded-readonly.mjs'
 const [port,instance,fixtureMode]=process.argv.slice(2)
-if(process.argv.length>5||fixtureMode&&!['--channel-role-fixtures','--channel-polarity-fixtures','--eligibility-fixtures','--public-notice-fixtures','--public-paid-recordings','--sealed-followup-fixtures','--current-notice-fixtures','--current-notice-batch','--current-notice-completed','--single-authority-fixtures','--single-authority-comparison','--single-authority-observed','--current-mechanism-fixtures','--v5-current-real-recordings'].includes(fixtureMode))throw Error('C19_UNKNOWN_REPLAY_MODE')
+if(process.argv.length>5||fixtureMode&&!['--channel-role-fixtures','--channel-polarity-fixtures','--eligibility-fixtures','--public-notice-fixtures','--public-paid-recordings','--sealed-followup-fixtures','--current-notice-fixtures','--current-notice-batch','--current-notice-completed','--single-authority-fixtures','--single-authority-comparison','--single-authority-observed','--current-mechanism-fixtures','--v5-current-real-recordings','--v5-current-real-fixtures'].includes(fixtureMode))throw Error('C19_UNKNOWN_REPLAY_MODE')
 if(!/^\d{4,5}$/.test(port??'')||+port<6814||+port>65535||!/^[a-z0-9-]{2,32}$/.test(instance??''))throw Error('C19_NEW_LOOPBACK_INSTANCE_REQUIRED')
 const publicPaid=['--public-paid-recordings','--sealed-followup-fixtures','--current-notice-fixtures'].includes(fixtureMode)
-const currentBatch=['--current-notice-batch','--current-notice-completed','--single-authority-fixtures','--single-authority-comparison','--single-authority-observed','--current-mechanism-fixtures','--v5-current-real-recordings'].includes(fixtureMode)
+const currentBatch=['--current-notice-batch','--current-notice-completed','--single-authority-fixtures','--single-authority-comparison','--single-authority-observed','--current-mechanism-fixtures','--v5-current-real-recordings','--v5-current-real-fixtures'].includes(fixtureMode)
 let scene,recordings,batchLabel,plannedRequests,knownSettled,initialOrdinal,currentSources
-if(fixtureMode==='--v5-current-real-recordings'){
+if(['--v5-current-real-recordings','--v5-current-real-fixtures'].includes(fixtureMode)){
   const verified=await v5CurrentNoticeRecordedScene();scene=verified.scene;recordings=verified.recordings;currentSources=verified.sources
   plannedRequests=4;knownSettled=recordings.length;initialOrdinal=1
   batchLabel='当前V5单臂4份官方已见节选诊断；'+knownSettled+'份确定录制；不是原封存批替代、不判候选赢家；未知保留分母'
@@ -52,7 +52,15 @@ if(!recordings.length&&!currentBatch)throw Error('C19_NO_SETTLED_RECORDINGS')
 const sha=v=>createHash('sha256').update(v).digest('hex'),dir=resolve('.data/candidate19/recorded-'+instance)
 mkdirSync(dir,{recursive:true});if(readdirSync(dir).length)throw Error('C19_REPLAY_INSTANCE_ALREADY_BUILT')
 let fixtureCount=0
-if(fixtureMode==='--current-mechanism-fixtures'){
+if(fixtureMode==='--v5-current-real-fixtures'){
+  const fixtureFile=resolve(dir,'fixture-builder.mjs')
+  await build({stdin:{contents:`export {createCompositionFixture} from './src/experiments/candidate19Recorded/authorityCompositionFixtures';export {createAuthorityFixture} from './src/experiments/candidate19Recorded/singleAuthorityFixtures';export {SINGLE_AUTHORITY_VERSION} from './src/recognition/sourceContractV5'`,resolveDir:process.cwd()},outfile:fixtureFile,bundle:true,platform:'node',format:'esm'})
+  const {createCompositionFixture,createAuthorityFixture,SINGLE_AUTHORITY_VERSION}=await import(pathToFileURL(fixtureFile))
+  const a=await createCompositionFixture(),b=await createAuthorityFixture('bad-owner')
+  const fixtures=[{...a,rawHttpText:a.envelope()},b]
+  fixtureCount=2;batchLabel+='；另2份同事件日期/时段和坏归属匿名控制，仅工程夹具，不计模型4分母'
+  for(const [i,f] of fixtures.entries())recordings.push({ordinal:101+i,sourceId:f.context.index.sourceId,sourceVersionId:f.context.index.sourceVersionId,candidate:'EngineeringFixture',generationContract:SINGLE_AUTHORITY_VERSION,sourceText:f.sourceText,referenceTime:f.context.referenceTime,timezone:f.context.timezone,rawHttpText:f.rawHttpText,responseSha256:sha(f.rawHttpText),requestSha256:null,frozenOutcome:'ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT'})
+}else if(fixtureMode==='--current-mechanism-fixtures'){
   const fixtureFile=resolve(dir,'fixture-builder.mjs')
   await build({stdin:{contents:`export {CURRENT_MECHANISM_CASES,createCurrentMechanismFixture} from './src/experiments/candidate19Recorded/currentMechanismFixtures';export {createAuthorityFixture} from './src/experiments/candidate19Recorded/singleAuthorityFixtures';export {SINGLE_AUTHORITY_VERSION} from './src/recognition/sourceContractV5'`,resolveDir:process.cwd()},outfile:fixtureFile,bundle:true,platform:'node',format:'esm'})
   const {CURRENT_MECHANISM_CASES,createCurrentMechanismFixture,createAuthorityFixture,SINGLE_AUTHORITY_VERSION}=await import(pathToFileURL(fixtureFile))

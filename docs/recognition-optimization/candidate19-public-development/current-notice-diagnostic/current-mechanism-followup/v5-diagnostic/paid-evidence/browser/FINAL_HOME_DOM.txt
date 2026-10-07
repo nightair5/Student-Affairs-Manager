@@ -1,0 +1,131 @@
+- link "跳到主要内容":
+  - /url: "#main-content"
+- complementary:
+  - button "返回今日首页" [active]:
+    - strong: 事务管家
+    - generic: STUDENT DESK
+  - button "新事务 N":
+    - text: 新事务
+    - generic: "N"
+  - navigation "主要导航":
+    - generic: 执行闭环
+    - button "今日":
+      - text: 今日
+    - button "收件箱":
+      - text: 收件箱
+    - button "打开待确认队列，共 4 项":
+      - text: 待确认
+      - generic: "4"
+    - button "项目":
+      - text: 项目
+    - button "日历":
+      - text: 日历
+    - button "资料库":
+      - text: 资料库
+    - generic: 低频工具
+    - button "所有任务":
+      - text: 所有任务
+    - button "知识问答":
+      - text: 知识问答
+    - button "周报月报":
+      - text: 周报月报
+  - button "搜索事项":
+    - text: 搜索事项
+  - button "新手教程":
+    - text: 新手教程
+  - button "设置与服务":
+    - text: 设置与服务
+  - button "隐私与数据":
+    - text: 隐私与数据
+  - strong: 已在此设备自动保存
+  - paragraph: 同一浏览器与站点地址下可恢复；识别结果确认后才入库。
+- generic "匿名工程输入 · 普通产品路径 · 不发送模型请求"
+- main:
+  - text: 10月7日星期三
+  - heading "今天只看最重要的 1 件事" [level=1]:
+    - text: 今天只看最重要的
+    - emphasis: "1"
+    - text: 件事
+  - paragraph: 不用管理所有事情。先处理首页，再去任务中心查看其余内容。
+  - strong: 收到新通知？直接粘贴
+  - generic: 日期、事项和材料会先拆成待确认建议。
+  - generic: 匿名工程输入 · 模型派发关闭
+  - textbox "快速粘贴通知":
+    - /placeholder: 粘贴老师消息、群通知或网页正文……
+  - button "上传文件或链接":
+    - text: 上传文件或链接
+  - button "智能拆分任务" [disabled]:
+    - text: 智能拆分任务
+  - generic: 本入口只接受列出的匿名工程通知，不外发、不调用模型；编辑、确认和保存使用普通产品路径。
+  - button "还有 4 项建议等你确认 关闭页面也不会丢失，可以稍后处理。":
+    - strong: 还有 4 项建议等你确认
+    - generic: 关闭页面也不会丢失，可以稍后处理。
+  - region "今日与近期安排":
+    - generic: PLAN
+    - heading "今日与近期安排" [level=2]:
+      - text: 今日与近期安排
+    - paragraph: 原文截止保留；以下时段是可修改、可撤回的个人建议。
+    - generic "可用时间与估计 · 09:00—18:00 · 7天"
+    - heading "待接受方案 · 0项时段" [level=3]
+    - list
+    - generic "未新排入或需要处理 · 1项"
+    - list:
+      - strong: 完成相关信息登记
+      - text: ：原文截止已过，需明确改期决定。
+    - generic "安排依据与待定点"
+    - button "接受这份安排"
+    - button "重新读取并核对"
+    - generic "本次安排记录与时间"
+  - region "现在先做这些":
+    - generic: TODAY
+    - heading "现在先做这些" [level=2]
+    - button "全部 1 项":
+      - text: 全部 1 项
+    - article:
+      - generic: 独立事项 · 其他
+      - button "查看 完成相关信息登记 详情":
+        - text: 查看详情
+      - heading "完成相关信息登记" [level=3]
+      - text: 截止时间
+      - strong: 2026-07-16
+      - emphasis: · 仅日期，原文未说明时刻
+      - text: 已逾期 84 天
+      - generic: 预计用时
+      - strong: 尚未估计
+      - paragraph: 排序理由：已逾期 84 天；你设为高优先级
+      - generic: 下一步
+      - strong: 完成相关信息登记
+      - generic "任务风险":
+        - text: 已逾期
+      - generic "快速操作":
+        - button "开始":
+          - text: 开始
+        - button "稍后":
+          - text: 稍后
+        - button "置顶":
+          - text: 置顶
+      - button "标记完成":
+        - text: 标记完成
+- status:
+  - generic: 已保存并独立读回：0 项任务、1 个事件；不确定时间保持原状。
+  - button "关闭提示": ×
+- generic "本批真实录制 · 选择来源与独立读回"
+- paragraph: 4fd9d6951ecb / source 612fde68461e；rco-mainline-01-02-i1-d27-plan-recorded-v5-paid-accepted-1007；source-support-accounting-projection-1.1.0 / event-time-label-context-1.0.0 / source-grounded-nonaction-projection-1.0.1 / source-grounded-conditional-nonaction-1.0.0 / explicit-source-contract-4.0.0 / material-channel-role-grounding-1.4.0 / source-proven-eligibility-1.0.0 / source-time-semantics-2.1.0 / grounded-first-suggestion-1.4.0 / single-authority-attribute-index-1.0.0 / authority-endpoint-composition-1.0.0 / authority-support-context-1.0.0 / source-information-preview-1.0.0 / source-window-endpoints-1.0.0 / source-window-plan-1.1.0；ENGINEERING_REPLAY；此入口模型请求0。当前V5单臂4份官方已见节选诊断；4份确定录制；不是原封存批替代、不判候选赢家；未知保留分母；另2份同事件日期/时段和坏归属匿名控制，仅工程夹具，不计模型4分母。下方是后验程序转换，不改原成绩。原答与冻结诊断不改。
+- paragraph: 当前生成契约：single-authority-source-contract-5.0.0；single-authority-generation-1.0.0；RECORDED_MODEL_ENGINEERING_REPLAY
+- text: 录制来源
+- combobox "录制来源":
+  - option "V5-CURRENT-REAL-01 / SingleAuthority / 原冻结：CURRENT_V5_SINGLE_ARM_SETTLED_NOT_COMPARISON" [selected]
+  - option "V5-CURRENT-REAL-02 / SingleAuthority / 原冻结：CURRENT_V5_SINGLE_ARM_SETTLED_NOT_COMPARISON"
+  - option "V5-CURRENT-REAL-03 / SingleAuthority / 原冻结：CURRENT_V5_SINGLE_ARM_SETTLED_NOT_COMPARISON"
+  - option "V5-CURRENT-REAL-04 / SingleAuthority / 原冻结：CURRENT_V5_SINGLE_ARM_SETTLED_NOT_COMPARISON"
+  - option "endpoint-test / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT"
+  - option "authority-fixture-bad-owner / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT"
+- textbox "本批匿名通知原文": 为方便新生更好地了解校园文化、简化注册流程，2026级新生须于指定时间内登录迎新系统完成网上预注册流程。 由于系统维护和升级，迎新系统开放时间与入学须知中规定的时间略有不同，请以本通知的时间为准。新生请在指定时间内激活账号和登录系统，不在指定时间内激活账号和登录都会显示“账号和密码错误”。 本科生（大陆地区）：8月13—27日
+- paragraph: 复制到普通“新事务”；原回答、程序转换与用户修改分别保留。相对日期使用来源原基准 2026-07-24T09:00:00+08:00。
+- paragraph: 另有2份匿名定向反例，经同一普通页面处理；由工程作者编写，不是模型回答，也没有新增付费身份。当前：RECORDED_MODEL_ENGINEERING_REPLAY。
+- button "注入正式保存失败"
+- button "注入提交后读回失败"
+- button "注入检查点失败"
+- status: 未注入故障
+- button "本批独立canonical读回"
+- button "页面测量读回"
