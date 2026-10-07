@@ -42,8 +42,8 @@
     },
     {
       "path": "BROWSER_EVIDENCE.md",
-      "sha256": "d9695ad7896e178e38d703fa323f3e97e77dda1548670034739bf3f9060b2b49",
-      "bytes": 6032
+      "sha256": "556614efff45b3f7229fef89adac1263fbf07d8a52f4dbff66815ba2ebfd063c",
+      "bytes": 6365
     },
     {
       "path": "BROWSER_FINAL_CAPTURE.json",
@@ -112,8 +112,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "sha256": "4ae7ec20c5275a76386518176844e10af62a926ee8a7580cd860ce27984dec44",
-      "bytes": 4079
+      "sha256": "e62f8a20c135184f98e95a50a0fd03e94346f39432dd876bed319bb105a58481",
+      "bytes": 4915
     }
   ],
   "notes": [
@@ -175,6 +175,58 @@
         "path": "comparison/SOURCES.json",
         "sha256": "ab5d733d5db79fc6dd008765219224992032d316e381c4075ce0ad84918530e5",
         "bytes": 2455
+      }
+    ]
+  },
+  "currentPaidExecution": {
+    "status": "HALTED_NO_WINNER",
+    "SETTLED": 0,
+    "UNCERTAIN": 1,
+    "NOT_SENT": 7,
+    "newUsableRaw": 0,
+    "ledgerRows": 1026,
+    "ledgerSha256": "489da37a7b83c2d3d6c00d8f2ef949e6d3fae4f8e9e250e5bac7ca80a84ec278",
+    "path": "comparison/paid-evidence/EXECUTION_SUMMARY.md",
+    "files": [
+      {
+        "path": "comparison/paid-evidence/EXECUTION_SUMMARY.json",
+        "sha256": "2075537f1e1d73f842d09050c316aa40e3a7ce10c3770cf6db834323981822ac",
+        "bytes": 4487
+      },
+      {
+        "path": "comparison/paid-evidence/EXECUTION_SUMMARY.md",
+        "sha256": "f8b5c9d0054d1f426b6905ecd0fe71483a9187e04b27d106479bf6ec343e8d75",
+        "bytes": 2796
+      },
+      {
+        "path": "comparison/paid-evidence/FINAL_READ_ONLY_SCENE.json",
+        "sha256": "a391ebd1111a0dbbe0efae7108571479a415593d6136156a5b201c92cfa12366",
+        "bytes": 5296
+      },
+      {
+        "path": "comparison/paid-evidence/FROZEN_OUTCOME_REPORT.json",
+        "sha256": "261cc7a253baa62da0753b4bfc42e6076029b65b5c10f947df5793458ef3fb32",
+        "bytes": 5920
+      },
+      {
+        "path": "comparison/paid-evidence/PHASE_OBSERVATION_01.jsonl",
+        "sha256": "0b1cb2af9a5f49ad88cdd8497cf9cd1acf7eaa1af88478e9ed7c98540c5bc62b",
+        "bytes": 3175
+      },
+      {
+        "path": "comparison/paid-evidence/PROTECTION_FINAL.json",
+        "sha256": "fbbce0b833334ee8d637df50a19d327d686b23768ea15d4f898ee8b2bbd877c6",
+        "bytes": 6267
+      },
+      {
+        "path": "comparison/paid-evidence/SEALED_FILE_HASHES.json",
+        "sha256": "71a77ef0f009093ddeb537281139330eade6637bfc7640f44e33a176c5a769e4",
+        "bytes": 1806
+      },
+      {
+        "path": "comparison/paid-evidence/TLS_ROUTE_DIAGNOSTIC.json",
+        "sha256": "a225bbf3d668e63a88f6036d226f5464cc50e10796a1cbe8a6c8f97db2f45250",
+        "bytes": 482
       }
     ]
   }

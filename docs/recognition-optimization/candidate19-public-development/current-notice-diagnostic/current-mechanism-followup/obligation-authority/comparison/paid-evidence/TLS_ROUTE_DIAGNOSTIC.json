@@ -1,0 +1,20 @@
+{
+  "role": "CURRENT_ROUTE_ONLY_NOT_ORIGINAL_DELIVERY_PROOF",
+  "observedAt": "2026-10-07T13:45:36.821Z",
+  "proxy": "127.0.0.1:10081",
+  "target": "api.deepseek.com:443",
+  "POST": 0,
+  "credentials": 0,
+  "sourceBytes": 0,
+  "modelRequests": 0,
+  "ledgerWrites": 0,
+  "stages": [
+    "CONNECT_STARTED",
+    "PROXY_TUNNEL_READY",
+    "TLS_READY_NO_CREDENTIAL_NO_POST"
+  ],
+  "proxyStatus": 200,
+  "headBytes": 0,
+  "tlsAuthorized": true,
+  "status": "TLS_READY_NO_MODEL_REQUEST"
+}

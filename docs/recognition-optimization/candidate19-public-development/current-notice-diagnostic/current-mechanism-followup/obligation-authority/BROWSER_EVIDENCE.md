@@ -21,3 +21,6 @@
 6885三故障复用依据：后来仅修改no-task作者标题、定向测试及尚未运行比较状态页文案；App/ReviewSession/DomainCommitPlan/Repository/恢复代码未变。6886重新验关系正式保存，并验剩余受影响场景；不将6882/6883白屏过程当最终通过。过程白屏真正修复见RECOVERY_FAILURE_PROCESS及IMPLEMENTATION。
 
 浏览器原始连接错误：首次6885就绪前goto出现net::ERR_CONNECTION_REFUSED；同error页再次导航遇data URL策略拒绝。沿官方browser-troubleshooting诊断一次，在同browser2取得新tab恢复成功；没有SendKeys/盲坐标/替代隐藏读库。最终console error/warn=[]。本轮未新跑双标签不同字段/同字段矩阵；CAS/三向合并实现未改，相关适用产品测试通过，旧证据不冒充新操作。没有新模型raw可回放，新生成首答验收NOT_RUN。
+
+## 新模型回放边界
+之后原8请求获US$2.60许可，但ordinal1不确定封存，无可用raw，后7未发送。**新模型录制首次建议/保存/安排浏览器NOT_RUN**，本文件6886是已交付旧录制/作者wire证据，不代替新模型验收；仍只推荐6886工程入口，不启动另一套实时AI页面。

@@ -22,3 +22,6 @@
 
 ## 冻结接续只读核验
 工程73a8b923已普通推送，4作者Development×V5/V6=8冻结，198组件/5产物；--verify核Git blobs、工作组件、5产物、8身份/request SHA/参数/参照，全部NOT_RUN。单独只读reader/host显示NO_STATE/0raw/0grant/0reserve/0settle/0账本写入。官方当前路由/价格和Responses参数已核，price原件仅.data；保守US$2.595232，申请US$2.60，真实授权尚无。此后只有冻结材料/证据/短交接变化，复用未受影响的产品/安全/浏览器检查，付费前仍须重新核价和同步HEAD/完整链。
+
+## 获准后实际停发（后续状态，前文零调用是授权前）
+原8/US$2.60获用户明确授权，grant前核官方价格/Responses/同步72e4b580/全部身份/1024完整链，唯一grant后只执行ordinal1。不确定D26_SAFETY_STOP_UNCERTAIN/TRANSPORT_ENTER→OTHER_FAILURE触发HALT/锁，0SETTLED1UNCERTAIN7NOT_SENT，1grant1reserve0settle，无raw/usage，费用实扣不可观察。只读取证+一次无密钥无POST TLS检查，未自动恢复。新raw浏览器NOT_RUN。当前history verify exit0/status HISTORY_PRESERVED_LEDGER_APPEND_REVIEW_REQUIRED：84/119/7不变，1026链有效，新增两行为本批grant/reserve已逐条定位核验，旧1024前缀不变。没有产品新变化，复用此前产品/安全/浏览器通过与六旧失败，不能称完整比较完成。详见comparison/paid-evidence。
