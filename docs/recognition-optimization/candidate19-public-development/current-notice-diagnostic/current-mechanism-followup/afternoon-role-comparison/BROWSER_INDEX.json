@@ -69,6 +69,10 @@
       "sha256": "e272809f49343dd1c2532f2b297f3ae89a5b6f2b20e9f27705491aaab01dbe81"
     },
     {
+      "path": "browser/FINAL-COMMITTED-PRODUCT.png",
+      "sha256": "d189785d2e2796e79fe31e8c0442487bc171c040bebfb3ed182f09d0463de597"
+    },
+    {
       "path": "browser/FINAL-PAGE-MEASUREMENT.json",
       "sha256": "17c17b278ef13a6653b047733f9d89d9137406098ef541813a9f7fd03ebe9010"
     },
@@ -140,5 +144,13 @@
       "path": "browser/FINAL-TRANSACTION-MANUAL-RECOVERY.json",
       "sha256": "ed012fbb91605aab137f62736036b181bb5de01316b4a99fecbbe7da21484e08"
     }
-  ]
+  ],
+  "finalBuild": {
+    "commit": "b193ddd8f235",
+    "sourceHash": "e4b3f58baa8c",
+    "url": "http://127.0.0.1:6902/",
+    "database": "rco-mainline-01-02-i1-d27-plan-recorded-afternoon-role-verified",
+    "sameCanonicalAfterCommit": true,
+    "modelCallsByBrowser": 0
+  }
 }

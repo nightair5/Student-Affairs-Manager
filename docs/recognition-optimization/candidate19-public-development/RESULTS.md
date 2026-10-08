@@ -1,3 +1,27 @@
+# 当前结果：下午角色分离与首次展示修复已交付，模型比较不完整
+2026-10-08下午。唯一活动结果入口；下面上午及更早记录是保留的历史。[完整报告](current-notice-diagnostic/current-mechanism-followup/afternoon-role-comparison/REPORT.md) · [逐来源裁决](current-notice-diagnostic/current-mechanism-followup/afternoon-role-comparison/FACT_ADJUDICATION.json) · [实际执行](current-notice-diagnostic/current-mechanism-followup/afternoon-role-comparison/EXECUTION_SUMMARY.json) · [机制](current-notice-diagnostic/current-mechanism-followup/afternoon-role-comparison/IMPLEMENTATION.md) · [浏览器](current-notice-diagnostic/current-mechanism-followup/afternoon-role-comparison/BROWSER_EVIDENCE.md) · [验证](current-notice-diagnostic/current-mechanism-followup/afternoon-role-comparison/VALIDATION.md)。
+
+**用户少重填：**已有动作、活动及起止不再因主实体和附属引用混在一个索引里全部消失；原文明示的跨段共用窗口直接显示起止和两个owner，不变截止/个人计划。可选任务一次明确“加入任务”即可接受，不默认勾选。五新raw原冻结0/5可显示→新公共程序5/5，保留真实材料/资格/关系错和争议；这不是100%正确率，也不是模型新输出变好。
+
+| 层（每臂4固定分母） | V6暂定完整/确定错/未知 | V7暂定完整/确定错/未知 |
+|---|---|---|
+| 原答事实（与wire合法性分开） | 0 / 2 / 2 | 1 / 0 / 3 |
+| 原冻结人工前首次显示 | 0 / 3 / 1 | 0 / 2 / 2 |
+| 新公共程序同raw首次显示 | 0 / 2 / 2 | 1 / 0 / 3 |
+
+1/4仅单作者模型辅助provisional事实完整，非独立真值或总体25%准确率。RA01 V6二维码被当必备材料是真错，V7已分开；RA02 V6资格依据/活动关联不一致是真错，V7准备任务与活动关联未声明仍争议；RA03 V6无条件依据的unknown仍争议，窗口已有事实已显示；V7同来源不确定无raw；RA04两臂未发送。标题/自由描述除RA01 V7源文逐项暂定核验外仍NOT_ADJUDICATED，教学泄漏均未独立裁决。比较EVIDENCE_INCOMPLETE_NO_WINNER，不选赢家、不替换默认。原v11/旧12后验/旧V5与上午V6成绩不改。
+
+新V7生成假设仅一个：明确区分optional参与、真实业务对象、逐字executionChannel、资格和完成前置。Schema/说明/bridge同版本，旧V6字节不变。新公共primary-support1.0.0/context1.2.0/window1.2.0沿App→ReviewSession→DomainCommitPlan→Repository；原答/转换审计/首屏/人改分开，infer0、不建保存链、不升级v8。两轮实质迭代，无第三轮扩样或新增输入假设。
+
+唯一[当前内部入口](http://127.0.0.1:6902/)，固定录制工程回放+匿名夹具，实时机械关闭，非任意通知实时AI。全5新raw首屏、真实事件部分保存、无任务null、坏owner局部阻断、双动作窗口、三故障手动恢复、已提交只重读、D27安排及刷新已实际验。独立3Task/4Event/11TimePoint/0Material/0Project，含1个人planned_start；原11月6日17:00截止不变。模型RA04材料控制NOT_SENT，不用旧材料页面代替。四真人NOT_OBSERVABLE，工程时间不叫真人省时。[正式事实](current-notice-diagnostic/current-mechanism-followup/afternoon-role-comparison/browser/FINAL-CANONICAL.json) · [工程测量](current-notice-diagnostic/current-mechanism-followup/afternoon-role-comparison/browser/FINAL-PAGE-MEASUREMENT.json)。
+
+**调用现场：**预先授权共享16请求/US$6/4小时/3轮；本轮只冻新4作者Development×两臂8身份，一个grant、6reserve、5settle：5SETTLED/1UNCERTAIN/2NOT_SENT，零retry/repair/verifier。第6身份TLS边界失败，无POST观测也无raw，送达/计费未知；HALT与锁保留，整个包停止付费，不用余量换身份重发。5份真实usage输入25110（cache17664）/输出8657/总33767；内部保守结算US$0.017923，不确定预留US$0.324404，占用+结算US$0.342327，供应商实扣NOT_OBSERVABLE。原件/核价仅本机.data，不伪造逐批回复。
+
+lint/build/security、当前产品/安全及3历史保护组通过，全量exit1仅6旧历史组失败，旧断言/锁保持，audit5H2M/production0未消除。84/119/7、1047行完整链SHA8bd95719a88fb94c7557f0202fe394cfc18e90b924fa73e337a25b0612c0aa01及旧前缀、旧封存24文件与用户16资产逐字保持。dcee136实现、2b2642f冻结、b193ddd实录驱动公共修复均已普通推送；最终交接提交另按现场核验。
+
+**下一步：**用现有raw澄清“准备义务是否必须关联活动”和“未说明资格时unknown是否属于表示误阻断”，保留未决，不默认新候选/批次。恢复当前封存最少缺ordinal6请求特定送达/响应/usage或可靠未送达材料；普通余额/TLS现已成功不足。本包未解锁/补settle/重发，缺材料不阻其他本地工程。不真人/Holdout/default/merge/deploy。
+
+---
 # 当前结果：4份V6真实输出已完成，已有事实不再整份消失
 2026-10-08。唯一活动结果入口；下方2026-10-07记录保留为历史，不作为当前状态。
 [机制](current-notice-diagnostic/current-mechanism-followup/autonomous-v6/IMPLEMENTATION.md) · [逐事实裁决](current-notice-diagnostic/current-mechanism-followup/autonomous-v6/FACT_ADJUDICATION.json) · [全部8份原答/程序诊断](current-notice-diagnostic/current-mechanism-followup/autonomous-v6/PRODUCT_DIAGNOSTIC.json) · [实际执行](current-notice-diagnostic/current-mechanism-followup/autonomous-v6/EXECUTION_SUMMARY.json) · [浏览器](current-notice-diagnostic/current-mechanism-followup/autonomous-v6/BROWSER_EVIDENCE.md) · [验证](current-notice-diagnostic/current-mechanism-followup/autonomous-v6/VALIDATION.md)。
