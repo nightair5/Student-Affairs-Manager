@@ -15,15 +15,20 @@ import {authorityObservedScene} from './single-authority-observed-readonly.mjs'
 import {v5CurrentNoticeRecordedScene} from './v5-current-notice-recorded-readonly.mjs'
 import {obligationRecordedScene} from './obligation-authority-recorded-readonly.mjs'
 import {autonomousV6RecordedScene} from './autonomous-v6-readonly.mjs'
+import {afternoonRoleScene} from './afternoon-role-readonly.mjs'
 import {observedSettledBatch} from './settled-batch-observed-readonly.mjs'
 import {verifyV5NoticeDiagnostic,ROOT as V5ROOT,BATCH as V5BATCH,COUNT as V5COUNT} from './prepare-v5-current-notice.mjs'
 const [port,instance,fixtureMode]=process.argv.slice(2)
-if(process.argv.length>5||fixtureMode&&!['--channel-role-fixtures','--channel-polarity-fixtures','--eligibility-fixtures','--public-notice-fixtures','--public-paid-recordings','--sealed-followup-fixtures','--current-notice-fixtures','--current-notice-batch','--current-notice-completed','--single-authority-fixtures','--single-authority-comparison','--single-authority-observed','--current-mechanism-fixtures','--v5-current-real-recordings','--v5-current-real-fixtures','--obligation-authority-fixtures','--obligation-authority-comparison','--autonomous-v6-recordings'].includes(fixtureMode))throw Error('C19_UNKNOWN_REPLAY_MODE')
+if(process.argv.length>5||fixtureMode&&!['--channel-role-fixtures','--channel-polarity-fixtures','--eligibility-fixtures','--public-notice-fixtures','--public-paid-recordings','--sealed-followup-fixtures','--current-notice-fixtures','--current-notice-batch','--current-notice-completed','--single-authority-fixtures','--single-authority-comparison','--single-authority-observed','--current-mechanism-fixtures','--v5-current-real-recordings','--v5-current-real-fixtures','--obligation-authority-fixtures','--obligation-authority-comparison','--autonomous-v6-recordings','--afternoon-role-fixtures','--afternoon-role-recordings'].includes(fixtureMode))throw Error('C19_UNKNOWN_REPLAY_MODE')
 if(!/^\d{4,5}$/.test(port??'')||+port<6814||+port>65535||!/^[a-z0-9-]{2,32}$/.test(instance??''))throw Error('C19_NEW_LOOPBACK_INSTANCE_REQUIRED')
 const publicPaid=['--public-paid-recordings','--sealed-followup-fixtures','--current-notice-fixtures'].includes(fixtureMode)
-const currentBatch=['--current-notice-batch','--current-notice-completed','--single-authority-fixtures','--single-authority-comparison','--single-authority-observed','--current-mechanism-fixtures','--v5-current-real-recordings','--v5-current-real-fixtures','--obligation-authority-fixtures','--obligation-authority-comparison','--autonomous-v6-recordings'].includes(fixtureMode)
+const currentBatch=['--current-notice-batch','--current-notice-completed','--single-authority-fixtures','--single-authority-comparison','--single-authority-observed','--current-mechanism-fixtures','--v5-current-real-recordings','--v5-current-real-fixtures','--obligation-authority-fixtures','--obligation-authority-comparison','--autonomous-v6-recordings','--afternoon-role-fixtures','--afternoon-role-recordings'].includes(fixtureMode)
 let scene,recordings,batchLabel,plannedRequests,knownSettled,initialOrdinal,currentSources
-if(fixtureMode==='--autonomous-v6-recordings'){
+if(fixtureMode==='--afternoon-role-fixtures'){
+  scene={role:'ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT',modelRequests:0};recordings=[];currentSources=[];plannedRequests=8;knownSettled=0;initialOrdinal=101;batchLabel='V7角色分离仅工程夹具；新比较未发送，不是模型成绩'
+}else if(fixtureMode==='--afternoon-role-recordings'){
+  const verified=afternoonRoleScene(),historical=await autonomousV6RecordedScene();scene=verified.scene;recordings=[...verified.recordings,...historical.recordings.map(r=>({...r,ordinal:r.ordinal+50}))];currentSources=[...verified.sources,...historical.sources];plannedRequests=8;knownSettled=verified.recordings.length;initialOrdinal=recordings[0]?.ordinal??101;batchLabel='下午V6/V7角色分离4作者Development通知两臂；'+knownSettled+'份确定录制；另4份上午官方节选回归，分母和结果分开，不是Holdout'
+}else if(fixtureMode==='--autonomous-v6-recordings'){
   const verified=await autonomousV6RecordedScene(),historical=observedSettledBatch({root:V5ROOT,execution:resolve('.data/v5-current-notice/execution'),batch:V5BATCH,count:V5COUNT,verifyPacket:verifyV5NoticeDiagnostic});scene=verified.scene;recordings=[...verified.recordings,...historical.recordings.map(r=>({...r,ordinal:r.ordinal+50}))];currentSources=[...verified.sources,...historical.sources]
   plannedRequests=4;knownSettled=verified.recordings.length;initialOrdinal=recordings[0]?.ordinal??101
   batchLabel='本次V6单臂4官方已见节选：'+knownSettled+'份确定录制；另4份旧V5只读回归，不混入新分母，不是配对胜负或Holdout'
@@ -64,7 +69,13 @@ if(!recordings.length&&!currentBatch)throw Error('C19_NO_SETTLED_RECORDINGS')
 const sha=v=>createHash('sha256').update(v).digest('hex'),dir=resolve('.data/candidate19/recorded-'+instance)
 mkdirSync(dir,{recursive:true});if(readdirSync(dir).length)throw Error('C19_REPLAY_INSTANCE_ALREADY_BUILT')
 let fixtureCount=0
-if(['--obligation-authority-fixtures','--autonomous-v6-recordings'].includes(fixtureMode)){
+if(['--afternoon-role-fixtures','--afternoon-role-recordings'].includes(fixtureMode)){
+  const fixtureFile=resolve(dir,'fixture-builder.mjs')
+  await build({stdin:{contents:`export {createRoleFixture} from './src/experiments/candidate19Recorded/roleFixtures';export {ROLE_AUTHORITY_VERSION} from './src/recognition/sourceContractV7';export {createAuthorityFixture} from './src/experiments/candidate19Recorded/singleAuthorityFixtures';export {SINGLE_AUTHORITY_VERSION} from './src/recognition/sourceContractV5';export {createObligationFixture} from './src/experiments/candidate19Recorded/obligationFixtures';export {OBLIGATION_AUTHORITY_VERSION} from './src/recognition/sourceContractV6'`,resolveDir:process.cwd()},outfile:fixtureFile,bundle:true,platform:'node',format:'esm'})
+  const x=await import(pathToFileURL(fixtureFile)),fixtures=[await x.createRoleFixture(),await x.createAuthorityFixture('bad-owner'),await x.createAuthorityFixture('dependency'),await x.createObligationFixture('shared-window'),await x.createObligationFixture('equipment'),await x.createObligationFixture('no-task')]
+  fixtureCount=fixtures.length;batchLabel+='；另6份工程夹具独立标记，不计模型样本'
+  for(const [i,f] of fixtures.entries())recordings.push({ordinal:101+i,sourceId:f.context.index.sourceId,sourceVersionId:f.context.index.sourceVersionId,candidate:'EngineeringFixture',generationContract:i===0?x.ROLE_AUTHORITY_VERSION:i<3?x.SINGLE_AUTHORITY_VERSION:x.OBLIGATION_AUTHORITY_VERSION,sourceText:f.sourceText,referenceTime:f.context.referenceTime,timezone:f.context.timezone,rawHttpText:f.rawHttpText,responseSha256:sha(f.rawHttpText),requestSha256:null,frozenOutcome:'ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT'})
+}else if(['--obligation-authority-fixtures','--autonomous-v6-recordings'].includes(fixtureMode)){
   const fixtureFile=resolve(dir,'fixture-builder.mjs')
   await build({stdin:{contents:`export {OBLIGATION_CASES,createObligationFixture} from './src/experiments/candidate19Recorded/obligationFixtures';export {OBLIGATION_AUTHORITY_VERSION} from './src/recognition/sourceContractV6';export {createAuthorityFixture} from './src/experiments/candidate19Recorded/singleAuthorityFixtures';export {SINGLE_AUTHORITY_VERSION} from './src/recognition/sourceContractV5'`,resolveDir:process.cwd()},outfile:fixtureFile,bundle:true,platform:'node',format:'esm'})
   const {OBLIGATION_CASES,createObligationFixture,OBLIGATION_AUTHORITY_VERSION,createAuthorityFixture,SINGLE_AUTHORITY_VERSION}=await import(pathToFileURL(fixtureFile))

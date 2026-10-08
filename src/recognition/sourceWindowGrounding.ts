@@ -1,15 +1,17 @@
 import type { RecognitionResult, TimePointSuggestionV2 } from './types'
 import { interpretTimeD26 } from '../lib/timeSemanticsD26'
 
-export const SOURCE_WINDOW_GROUNDING_VERSION = 'source-window-endpoints-1.1.0'
+export const SOURCE_WINDOW_GROUNDING_VERSION = 'source-window-endpoints-1.2.0'
 export interface SourceWindowDeclaration {
   id: string
   role: 'window_start' | 'window_end'
   owners: Array<{ kind: 'task' | 'material'; entityId: string }>
   valuePolicy?: 'CITED_VALUE_SEPARATE_FROM_OWNER'
+  ownerEvidencePolicy?: 'EXPLICIT_SINGLE_WINDOW_REFERENCE'
 }
-export function sourceWindowsFromSidecar(sidecar: unknown): SourceWindowDeclaration[] {
+export function sourceWindowsFromSidecar(sidecar: unknown, separatedOwnerEvidence = false): SourceWindowDeclaration[] {
   if (!sidecar || typeof sidecar !== 'object' || !('singleAuthorityAudit' in sidecar)) return []
+  separatedOwnerEvidence ||= 'publicWindowOwnerPolicy' in sidecar && sidecar.publicWindowOwnerPolicy === 'EXPLICIT_SINGLE_WINDOW_REFERENCE'
   const audit = sidecar.singleAuthorityAudit
   if (!audit || typeof audit !== 'object' || !('sourceWindows' in audit)) return []
   const rows = audit.sourceWindows
@@ -24,7 +26,8 @@ export function sourceWindowsFromSidecar(sidecar: unknown): SourceWindowDeclarat
     })
     const local = 'localCoverage' in audit && audit.localCoverage && typeof audit.localCoverage === 'object' && 'enabled' in audit.localCoverage && audit.localCoverage.enabled === true
     return { id: row.id, role: row.role as SourceWindowDeclaration['role'], owners,
-      ...(local ? { valuePolicy: 'CITED_VALUE_SEPARATE_FROM_OWNER' as const } : {}) }
+      ...(local ? { valuePolicy: 'CITED_VALUE_SEPARATE_FROM_OWNER' as const } : {}),
+      ...(local && separatedOwnerEvidence ? { ownerEvidencePolicy: 'EXPLICIT_SINGLE_WINDOW_REFERENCE' as const } : {}) }
   })
 }
 type Fields = Pick<TimePointSuggestionV2, 'normalizedValue' | 'precision' | 'isAllDay' | 'needsConfirmation' | 'timezone'>
@@ -32,7 +35,7 @@ export interface SourceWindowAudit {
   version: typeof SOURCE_WINDOW_GROUNDING_VERSION
   inferredFacts: 0
   decisions: Array<{ id: string; role: SourceWindowDeclaration['role']; owners: SourceWindowDeclaration['owners']; rawText: string;
-    before: Fields; after: Fields; status: 'CITED_DATE_RANGE_ENDPOINT' | 'CITED_DATE_OWNER_UNRESOLVED' | 'UNRESOLVED_RANGE'; quotes: string[]; literalRange: string | null }>
+    before: Fields; after: Fields; status: 'CITED_DATE_RANGE_ENDPOINT' | 'CITED_DATE_OWNER_UNRESOLVED' | 'UNRESOLVED_RANGE'; quotes: string[]; literalRange: string | null; ownerSupport: 'SHARED_CITATION' | 'EXPLICIT_SINGLE_WINDOW_REFERENCE' | 'UNRESOLVED' }>
 }
 const fields = (p: Fields): Fields => ({ normalizedValue: p.normalizedValue, precision: p.precision, isAllDay: p.isAllDay, needsConfirmation: p.needsConfirmation, timezone: p.timezone })
 const rangePattern = () => /(?:(\d{4})年)?(\d{1,2})月(\d{1,2})日?\s*[—–－\-~～至]\s*(?:(\d{4})年)?(?:(\d{1,2})月)?(\d{1,2})日/gu
@@ -76,14 +79,23 @@ export function groundSourceWindows(input: RecognitionResult, declarations: Sour
     // A clock-bearing date range must never be reduced to all-day dates.
     const clockFree = found.every(({ q, m }) => !/\d\s*[:：]\s*\d|\d\s*点|上午|下午|中午|晚上/u.test(q.text.slice(q.text.indexOf(m[0]), q.text.indexOf(m[0]) + m[0].length + 8)))
     const valueValid = r?.start && r.end && r.end >= r.start && rawMatches && clockFree
-    const valid = ownerValid && quotes.length > 0 && valueValid
+    // A task's action and its explicitly referenced, unique window may be in
+    // separate source spans. This proves a declared link, never adds an owner.
+    const sourceRanges = [...context.sourceText.matchAll(rangePattern())]
+    const separateOwnerSupport = declaration.ownerEvidencePolicy === 'EXPLICIT_SINGLE_WINDOW_REFERENCE'
+      && sourceRanges.length === 1 && sourceRanges[0][0] === r?.literal
+      && declaration.owners.every(o => o.kind === 'task')
+      && owners.every(o => o && quote(o.evidenceIds).some(q => /(?:在|于|须于)(?:上述|该|指定)(?:时间|时段|办理窗口)(?:内|期间)/u.test(q.text)
+        && !/(?:不|无需|不要|不得|禁止).{0,5}(?:在|于)(?:上述|该|指定)/u.test(q.text)))
+    const valid = ownerValid && (quotes.length > 0 || separateOwnerSupport) && valueValid
     // Keep a source-supported calendar value even when its claimed task
     // association needs review. It remains blocked and cannot be used as a
     // confirmed deadline or schedule until that separate risk is resolved.
     Object.assign(p, valueValid && (valid || preserveCitedValue) ? { normalizedValue: expected!, precision: 'date_only', isAllDay: true, needsConfirmation: !valid, timezone: context.timezone }
       : { normalizedValue: null, precision: 'vague', isAllDay: false, needsConfirmation: true })
     audit.decisions.push({ id: p.tempId, role: declaration.role, owners: declaration.owners, rawText: p.rawText, before, after: fields(p),
-      status: valid ? 'CITED_DATE_RANGE_ENDPOINT' : valueValid ? 'CITED_DATE_OWNER_UNRESOLVED' : 'UNRESOLVED_RANGE', quotes: allQuotes.map(q => q.text), literalRange: r?.literal ?? null })
+      status: valid ? 'CITED_DATE_RANGE_ENDPOINT' : valueValid ? 'CITED_DATE_OWNER_UNRESOLVED' : 'UNRESOLVED_RANGE', quotes: allQuotes.map(q => q.text), literalRange: r?.literal ?? null,
+      ownerSupport: quotes.length ? 'SHARED_CITATION' : separateOwnerSupport ? 'EXPLICIT_SINGLE_WINDOW_REFERENCE' : 'UNRESOLVED' })
     if (!valid) {
       result.quality.needsHumanReview = true
       const conflictId = 'source-window:' + p.tempId

@@ -90,14 +90,14 @@ export function projectObligationAuthority(input: unknown, context: WireContext,
     localRelations: { version: OBLIGATION_LOCAL_RELATION_VERSION, enabled: localizeEvidenceMismatch, quarantinedRelations, quarantinedPrerequisites }, original } }
 }
 
-export function decodeObligationProductRecording(raw: string, context: WireContext, role: 'EngineeringFixture' | 'SingleAuthority' = 'EngineeringFixture', localizeMissingCoverage=false) {
+export function decodeObligationProductRecording(raw: string, context: WireContext, role: 'EngineeringFixture' | 'SingleAuthority' = 'EngineeringFixture', localizeMissingCoverage=false, separatedWindowEvidence=false) {
   check(new TextEncoder().encode(raw).byteLength <= 524288, 'RESPONSE_SIZE')
   const envelope = JSON.parse(raw), messages = Array.isArray(envelope.output) ? envelope.output.filter((v: { type?: string }) => v.type === 'message') : []
   const texts = messages.flatMap((v: { content?: { type?: string; text?: string }[] }) => v.content?.filter(c => c.type === 'output_text') ?? [])
   check(texts.length === 1 && typeof texts[0].text === 'string', 'RESPONSE_TEXT')
   const projection = projectObligationAuthority(JSON.parse(texts[0].text), context, localizeMissingCoverage)
   texts[0].text = JSON.stringify(projection.projected)
-  const decoded = decodeAuthorityProductRecording(JSON.stringify(envelope), context, role, localizeMissingCoverage)
+  const decoded = decodeAuthorityProductRecording(JSON.stringify(envelope), context, role, localizeMissingCoverage, separatedWindowEvidence)
   return { ...decoded, result: { ...decoded.result, promptVersion: OBLIGATION_PROMPT_VERSION, modelName: role === 'EngineeringFixture' ? '义务先行匿名契约夹具（非模型输出）' : 'ObligationAuthority 固定录制（非实时调用）' },
     sidecar: { ...decoded.sidecar, originalResponse: raw, obligationAuthorityAudit: projection.audit } }
 }

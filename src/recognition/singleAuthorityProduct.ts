@@ -6,6 +6,7 @@ import { sourceWindowsFromSidecar } from './sourceWindowGrounding'
 import { projectAuthoritySupportContext } from './authoritySupportContext'
 import { projectAuthorityEndpointComposition } from './authorityEndpointComposition'
 import { hasLiteralScopeSpan } from './authorityLiteralSupport'
+import { retainOptionalParticipation } from './optionalParticipationProduct'
 
 export const AUTHORITY_ATTRIBUTE_INDEX_VERSION = 'single-authority-attribute-index-1.0.0'
 export const AUTHORITY_SHARED_ATTRIBUTE_VERSION = 'single-authority-shared-attribute-index-1.2.0'
@@ -43,7 +44,7 @@ export function projectAuthorityAttributeIndex(input: unknown, context: WireCont
   return { projected, audit: { version: allowSharedAction ? AUTHORITY_SHARED_ATTRIBUTE_VERSION : AUTHORITY_ATTRIBUTE_INDEX_VERSION, operation: 'NESTED_ATTRIBUTE_TO_EVENT_EVIDENCE_INDEX', inferredFacts: 0, additions, original } }
 }
 
-export function decodeAuthorityProductRecording(raw: string, context: WireContext, role: 'EngineeringFixture' | 'SingleAuthority' = 'EngineeringFixture', localizeMissingCoverage=false) {
+export function decodeAuthorityProductRecording(raw: string, context: WireContext, role: 'EngineeringFixture' | 'SingleAuthority' = 'EngineeringFixture', localizeMissingCoverage=false, separatedWindowEvidence=false) {
   const envelope = JSON.parse(raw)
   const texts = Array.isArray(envelope.output) ? envelope.output.filter((v: { type?: string }) => v.type === 'message')
     .flatMap((v: { content?: { type?: string; text?: string }[] }) => v.content?.filter(c => c.type === 'output_text') ?? []) : []
@@ -54,8 +55,11 @@ export function decodeAuthorityProductRecording(raw: string, context: WireContex
   texts[0].text = JSON.stringify(projection.projected)
   const decoded = decodeSingleAuthorityRecording(JSON.stringify(envelope), context, role, localizeMissingCoverage)
   const first = assembleCurrentFirstSuggestion(decoded.result, { sourceText: context.index.sourceContent, referenceTime: context.referenceTime,
-    timezone: context.timezone, sourceWindows: sourceWindowsFromSidecar(decoded.sidecar) })
-  return { ...decoded, result: first.result, attributeIndexAudit: projection.audit, sourceWindowGrounding: first.sourceWindowGrounding, sidecar: { ...decoded.sidecar,
+    timezone: context.timezone, sourceWindows: sourceWindowsFromSidecar(decoded.sidecar, separatedWindowEvidence) })
+  const optional = localizeMissingCoverage ? retainOptionalParticipation(first.result, decoded.sidecar, context) : null
+  return { ...decoded, result: optional?.result ?? first.result, attributeIndexAudit: projection.audit, sourceWindowGrounding: first.sourceWindowGrounding, sidecar: { ...decoded.sidecar,
+    ...(optional ? { representationGaps: optional.representationGaps, optionalParticipation: optional.audit } : {}),
+    ...(separatedWindowEvidence ? { publicWindowOwnerPolicy: 'EXPLICIT_SINGLE_WINDOW_REFERENCE' } : {}),
     attributeIndexAudit: projection.audit, authoritySupportContextAudit: support.audit, authorityEndpointCompositionAudit: endpoints.audit,
     sourceWindowGrounding: first.sourceWindowGrounding, originalResponse: raw, postComparisonProductVersion: support.audit.version + '/' + endpoints.audit.version } }
 }

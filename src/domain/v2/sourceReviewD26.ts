@@ -51,7 +51,11 @@ export function buildSourceReviewPlan(workspace: WorkspaceV8, view: DraftView, i
   if (!version || source?.currentVersionId !== version.id || view.sourceVersionId && view.sourceVersionId !== version.id) throw Error('SOURCE_REVIEW_SOURCE_VERSION_CHANGED')
   // The view must have been persisted through the ordinary repository's three-way CAS.
   if (workspaceSnapshotHash(view.recognitionResult) !== workspaceSnapshotHash(draft.result)) throw Error('SOURCE_REVIEW_DRAFT_CHANGED')
-  const items = itemId ? view.items.filter(i => i.id === itemId) : view.items
+  // The per-item "加入任务" action is itself an explicit user choice. A
+  // voluntary suggestion stays unchecked in bulk confirmation, but need not
+  // require a checkbox before this direct acceptance action.
+  const items = itemId ? view.items.filter(i => i.id === itemId && i.status === '待确认').map(i => ({ ...i, selected: true })) : view.items
+  if (itemId && items.length !== 1) throw Error('SOURCE_REVIEW_PENDING_ITEM_REQUIRED')
   const selection = selectionFromDraftItems(draft.result, items)
   const rejectedEvents=draft.result.events.filter(e=>eventDisposition(workspace,draft.id,e.tempId)==='reject'&&!draft.acceptedEntityTempIds.includes(e.tempId)).map(e=>e.tempId)
   selection.rejectedTempIds = [...view.items.filter(i => i.status === '已拒绝').map(i => i.suggestion.id),...rejectedEvents]
