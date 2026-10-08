@@ -1,0 +1,4231 @@
+{
+  "batch": "V6-CURRENT-REAL-NOTICE-DEVELOPMENT-20261008-R1",
+  "status": "NOT_RUN",
+  "dispatchAuthorized": false,
+  "requests": [
+    {
+      "batch": "V6-CURRENT-REAL-NOTICE-DEVELOPMENT-20261008-R1",
+      "ordinal": 1,
+      "sourceId": "V6-REAL-20261008-01",
+      "sourceVersionId": "V6-REAL-20261008-01-v1",
+      "sourceSha256": "a82c64b9a8e28d851c5a6699ba6fe16ea87528c5c923cdebb8aee1c469d39f64",
+      "arm": "SINGLE",
+      "candidate": "ObligationAuthority",
+      "candidateVersion": "obligation-authority-generation-1.0.0",
+      "promptVersion": "recognition-obligation-authority-1.0.0",
+      "generationContract": "obligation-authority-source-contract-6.0.0",
+      "requestSha256": "9fed385662a63e281c464bfa48bdfe75dc57167a0bea2c818d4ae09f94e976ad",
+      "referenceSha256": "f21df96caf5bd83ad560e37046abf4b70303cbf8e0b57d93accf5ac8778c0d9b",
+      "model": "deepseek-flash",
+      "scorer": "v6-real-notice-provisional-1",
+      "commonLayer": "LOCAL_COVERAGE_1_SHARED_ATTRIBUTE_1_1_CURRENT_COMMON_PRODUCT",
+      "referenceTime": "2026-07-24T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "unitIdentitySha256": "c954b082377fb2bcc1c029fd47180a3e88edc556d5134d1b7617c63eb60f6b3c",
+      "body": {
+        "model": "deepseek-flash",
+        "temperature": 0,
+        "reasoning": {
+          "effort": "none"
+        },
+        "stream": false,
+        "max_output_tokens": 8192,
+        "input": [
+          {
+            "role": "system",
+            "content": [
+              {
+                "type": "input_text",
+                "text": "根据通知输出指定JSON，按Schema顺序先完成tasks和prerequisiteStates，再组织活动、时间、材料及逐片段覆盖；只输出JSON，不调用第二次核对。\n第一层是最小义务：每个需要独立完成的动作+对象先有真实task，包括准备设备、报名、激活登录。资格condition回答适用性，dependencyTempIds/prerequisiteStates回答前一步是否完成；未给个人状态用unknown，不写true。已录取才参与等资格与准备后的顺序不能互相冒充。格式、材料名称、办理结果、纯说明和禁止不是独立动作；另需缴费等新动作也不能吞为criteria/地点附注。\n第二层只声明一份关联：每项任务eventLinks列真实关联活动及该关系的scopeIds，依据同时出现在该task.propositionScopeIds及event.scopeIds；event不再生成relatedTaskTempIds反向副本，由程序派生。关系不明保留冲突/unknown，不能仅因同来源就相连。材料.relatedTaskTempIds、timePoints.owners仍为各自一份权威归属；同窗口适用于两个动作须列两个真实task owner，不许只写coverage present。\ncoverage四态逐类明确：present必须有对应真实实体和owner/eventLinks且absenceScopeIds为空；not_stated是没提，explicit_none引用明示没有，unknown保留未决。模糊、仅日期、未公布起止仍有time实体和原文rawText，日期由公共程序解释，不能补默认时刻。办理窗口window_start/window_end不能变deadline。\n第三层保留独立事件和附属说明：无任务也保留事件、起止和明确未公布。一个活动一个event；真正独立不同活动分开。attributes只保留形式、互动、结业结果、地点附注，不替代已经识别的义务。scopeAccounting引用真实主task/event，附属引用和反向索引由程序派生；不能把scope当实体，不伪造遗漏事实覆盖。\n所有事实保留逐字依据；材料格式、命名、明确目的地和完成标准保留，回执不冒充渠道。取消/替代用真实对象端点，未知端点保持风险。原文事实、个人状态与个人计划分开；不生成计划、不正式写入、不增加常识义务。"
+              }
+            ]
+          },
+          {
+            "role": "user",
+            "content": [
+              {
+                "type": "input_text",
+                "text": "{\"source\":\"为方便新生更好地了解校园文化、简化注册流程，2026级新生须于指定时间内登录迎新系统完成网上预注册流程。\\n由于系统维护和升级，迎新系统开放时间与入学须知中规定的时间略有不同，请以本通知的时间为准。新生请在指定时间内激活账号和登录系统，不在指定时间内激活账号和登录都会显示“账号和密码错误”。\\n本科生（大陆地区）：8月13—27日\",\"referenceTime\":\"2026-07-24T09:00:00+08:00\",\"timezone\":\"Asia/Shanghai\",\"scopes\":[{\"id\":\"scope-0001-4f95954ce113fea416776db4b078731abe891cd6fe86f79b99b997cc17ec0231\",\"text\":\"为方便新生更好地了解校园文化、简化注册流程，\"},{\"id\":\"scope-0002-75a038bdf1354607b285b15c28d12f0c7bf126cd6374674180446a7c7c6d546d\",\"text\":\"2026级新生须于指定时间内登录迎新系统完成网上预注册流程。\"},{\"id\":\"scope-0003-9711db5f7188e53e16875a410e5ada1d94ec27cfd39e1c0a724bd6997c9e966a\",\"text\":\"由于系统维护和升级，\"},{\"id\":\"scope-0004-df3c9b7c9166c1258a0d84b6c6e3d673e7f835b636fd46a49038af001962f53d\",\"text\":\"迎新系统开放时间与入学须知中规定的时间略有不同，\"},{\"id\":\"scope-0005-2429d7a047896b8f8831b05af019f2bed34b99ad4d2fbe004a5feff389713403\",\"text\":\"请以本通知的时间为准。\"},{\"id\":\"scope-0006-667e62bdd47350817e0cdcdeb20bbcf004d928a40cdb5115cab4756496ad2309\",\"text\":\"新生请在指定时间内激活账号和登录系统，\"},{\"id\":\"scope-0007-4a947d9db4e9fa2d50ee63aaad80a047a23525a80d1e541572cbcf3a4aa9f323\",\"text\":\"不在指定时间内激活账号和登录都会显示“账号和密码错误”。\"},{\"id\":\"scope-0008-9fc01e8ae821391beb4b474e3767ec5e0fd37031c6fd806f1003a8574892bde2\",\"text\":\"本科生（大陆地区）：\"},{\"id\":\"scope-0009-8d585559ca348e91000c4f6f5ac45215522c3a16a50ed88cc7b059a2e69f706b\",\"text\":\"8月13—27日\"}]}"
+              }
+            ]
+          }
+        ],
+        "text": {
+          "format": {
+            "type": "json_schema",
+            "name": "source_semantics",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "schemaVersion": {
+                  "type": "string",
+                  "const": "obligation-authority-source-contract-6.0.0"
+                },
+                "tasks": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "propositionScopeIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 4000
+                        },
+                        "maxItems": 200,
+                        "uniqueItems": true
+                      },
+                      "semantics": {
+                        "type": "object",
+                        "properties": {
+                          "actor": {
+                            "type": "string",
+                            "enum": [
+                              "addressee",
+                              "addressed_group",
+                              "issuer",
+                              "third_party",
+                              "unknown"
+                            ]
+                          },
+                          "speechAct": {
+                            "type": "string",
+                            "enum": [
+                              "directive",
+                              "assertive",
+                              "interrogative",
+                              "hypothetical",
+                              "quoted",
+                              "unknown"
+                            ]
+                          },
+                          "polarity": {
+                            "type": "string",
+                            "enum": [
+                              "affirmative",
+                              "negative",
+                              "uncertain"
+                            ]
+                          },
+                          "tense": {
+                            "type": "string",
+                            "enum": [
+                              "future",
+                              "present",
+                              "past",
+                              "unknown"
+                            ]
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": [
+                              "pending",
+                              "completed",
+                              "cancelled",
+                              "unknown"
+                            ]
+                          },
+                          "validity": {
+                            "type": "string",
+                            "enum": [
+                              "active",
+                              "superseded",
+                              "uncertain"
+                            ]
+                          },
+                          "modality": {
+                            "type": "string",
+                            "enum": [
+                              "required",
+                              "recommended",
+                              "optional",
+                              "informational",
+                              "unknown"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "actor",
+                          "speechAct",
+                          "polarity",
+                          "tense",
+                          "status",
+                          "validity",
+                          "modality"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "inferenceLevel": {
+                        "type": "string",
+                        "enum": [
+                          "explicit",
+                          "strong_inference",
+                          "optional_suggestion"
+                        ]
+                      },
+                      "actionType": {
+                        "type": "string",
+                        "enum": [
+                          "review",
+                          "complete",
+                          "fill",
+                          "prepare",
+                          "attend",
+                          "carry",
+                          "save",
+                          "print",
+                          "submit",
+                          "upload",
+                          "send",
+                          "contact",
+                          "collect",
+                          "sign",
+                          "register",
+                          "pay",
+                          "other"
+                        ]
+                      },
+                      "action": {
+                        "type": "object",
+                        "properties": {
+                          "scopeId": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "surface": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        },
+                        "required": [
+                          "scopeId",
+                          "surface"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "object": {
+                        "type": "object",
+                        "properties": {
+                          "scopeId": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "surface": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        },
+                        "required": [
+                          "scopeId",
+                          "surface"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "effect": {
+                        "type": "string",
+                        "enum": [
+                          "local_change",
+                          "external_transfer",
+                          "external_interaction",
+                          "physical_action",
+                          "unknown"
+                        ]
+                      },
+                      "detail": {
+                        "type": "object",
+                        "properties": {
+                          "parentTempId": {
+                            "anyOf": [
+                              {
+                                "type": "string",
+                                "minLength": 1,
+                                "maxLength": 4000
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "hierarchyType": {
+                            "type": "string",
+                            "enum": [
+                              "task",
+                              "subtask"
+                            ]
+                          },
+                          "title": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 4000
+                          },
+                          "description": {
+                            "type": "string",
+                            "maxLength": 4000
+                          },
+                          "completionCriteria": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 4000
+                            },
+                            "maxItems": 200,
+                            "uniqueItems": false
+                          },
+                          "estimatedMinutes": {
+                            "anyOf": [
+                              {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 10080
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "statusSuggestion": {
+                            "const": "todo"
+                          },
+                          "prioritySuggestion": {
+                            "type": "string",
+                            "enum": [
+                              "low",
+                              "medium",
+                              "high",
+                              "urgent"
+                            ]
+                          },
+                          "dependencyTempIds": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 4000
+                            },
+                            "maxItems": 200,
+                            "uniqueItems": true
+                          },
+                          "confidence": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 1
+                          },
+                          "userConfirmationRequired": {
+                            "const": true
+                          }
+                        },
+                        "required": [
+                          "parentTempId",
+                          "hierarchyType",
+                          "title",
+                          "description",
+                          "completionCriteria",
+                          "estimatedMinutes",
+                          "statusSuggestion",
+                          "prioritySuggestion",
+                          "dependencyTempIds",
+                          "confidence",
+                          "userConfirmationRequired"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "condition": {
+                        "type": "object",
+                        "properties": {
+                          "value": {
+                            "type": "string",
+                            "enum": [
+                              "true",
+                              "false",
+                              "unknown",
+                              "not_applicable"
+                            ]
+                          },
+                          "conditionScopeIds": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 4000
+                            },
+                            "maxItems": 200,
+                            "uniqueItems": true
+                          },
+                          "factScopeIds": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 4000
+                            },
+                            "maxItems": 200,
+                            "uniqueItems": true
+                          }
+                        },
+                        "required": [
+                          "value",
+                          "conditionScopeIds",
+                          "factScopeIds"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "coverage": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "time",
+                          "material",
+                          "event"
+                        ],
+                        "properties": {
+                          "time": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [
+                              "status",
+                              "absenceScopeIds"
+                            ],
+                            "properties": {
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "present",
+                                  "not_stated",
+                                  "explicit_none",
+                                  "unknown"
+                                ]
+                              },
+                              "absenceScopeIds": {
+                                "type": "array",
+                                "maxItems": 200,
+                                "uniqueItems": true,
+                                "items": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 4000
+                                }
+                              }
+                            }
+                          },
+                          "material": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [
+                              "status",
+                              "absenceScopeIds"
+                            ],
+                            "properties": {
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "present",
+                                  "not_stated",
+                                  "explicit_none",
+                                  "unknown"
+                                ]
+                              },
+                              "absenceScopeIds": {
+                                "type": "array",
+                                "maxItems": 200,
+                                "uniqueItems": true,
+                                "items": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 4000
+                                }
+                              }
+                            }
+                          },
+                          "event": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [
+                              "status",
+                              "absenceScopeIds"
+                            ],
+                            "properties": {
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "present",
+                                  "not_stated",
+                                  "explicit_none",
+                                  "unknown"
+                                ]
+                              },
+                              "absenceScopeIds": {
+                                "type": "array",
+                                "maxItems": 200,
+                                "uniqueItems": true,
+                                "items": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 4000
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "description": "四态声明不替代事实：present必须能从实际材料、时间owners、eventLinks找到实体；not_stated/explicit_none/unknown仍分别保留。"
+                      },
+                      "eventLinks": {
+                        "type": "array",
+                        "maxItems": 200,
+                        "uniqueItems": true,
+                        "items": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": [
+                            "eventId",
+                            "scopeIds"
+                          ],
+                          "properties": {
+                            "eventId": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 4000
+                            },
+                            "scopeIds": {
+                              "type": "array",
+                              "minItems": 1,
+                              "maxItems": 200,
+                              "uniqueItems": true,
+                              "items": {
+                                "type": "string",
+                                "minLength": 1,
+                                "maxLength": 4000
+                              }
+                            }
+                          }
+                        },
+                        "description": "报名/准备等真实义务关联的活动；每条依据须同时被任务propositionScopeIds和对应事件scopeIds引用。不复制事件反向任务索引；无关联填空数组。"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "propositionScopeIds",
+                      "semantics",
+                      "inferenceLevel",
+                      "actionType",
+                      "action",
+                      "object",
+                      "effect",
+                      "detail",
+                      "condition",
+                      "coverage",
+                      "eventLinks"
+                    ],
+                    "additionalProperties": false,
+                    "description": "先列每个独立义务的动作、对象、适用条件及前置。准备设备/提交/激活等动作不能放入事件附注。eventLinks是任务关联活动的一份权威声明，附逐字依据。"
+                  },
+                  "maxItems": 200,
+                  "uniqueItems": false
+                },
+                "prerequisiteStates": {
+                  "type": "array",
+                  "maxItems": 200,
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "taskId",
+                      "predecessorId",
+                      "completion",
+                      "factScopeIds"
+                    ],
+                    "properties": {
+                      "taskId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "predecessorId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "completion": {
+                        "type": "string",
+                        "enum": [
+                          "true",
+                          "false",
+                          "unknown"
+                        ]
+                      },
+                      "factScopeIds": {
+                        "type": "array",
+                        "maxItems": 200,
+                        "uniqueItems": true,
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 4000
+                        }
+                      }
+                    }
+                  }
+                },
+                "events": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "tempId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "title": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "description": {
+                        "type": "string",
+                        "maxLength": 4000
+                      },
+                      "location": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 4000
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "scopeIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 4000
+                        },
+                        "maxItems": 200,
+                        "uniqueItems": true
+                      },
+                      "confidence": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                      },
+                      "inferenceLevel": {
+                        "type": "string",
+                        "enum": [
+                          "explicit",
+                          "strong_inference",
+                          "optional_suggestion"
+                        ]
+                      },
+                      "attributes": {
+                        "type": "array",
+                        "maxItems": 40,
+                        "items": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": [
+                            "kind",
+                            "text",
+                            "scopeIds"
+                          ],
+                          "properties": {
+                            "kind": {
+                              "type": "string",
+                              "enum": [
+                                "format",
+                                "participation",
+                                "outcome",
+                                "location_note"
+                              ]
+                            },
+                            "text": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 4000
+                            },
+                            "scopeIds": {
+                              "type": "array",
+                              "maxItems": 200,
+                              "uniqueItems": true,
+                              "items": {
+                                "type": "string",
+                                "minLength": 1,
+                                "maxLength": 4000
+                              },
+                              "minItems": 1
+                            }
+                          }
+                        },
+                        "description": "仅形式、互动、结果和真正地点附注。需/须/请准备等独立动作先列任务，不能被附注或完成标准吞掉。"
+                      }
+                    },
+                    "required": [
+                      "tempId",
+                      "title",
+                      "description",
+                      "location",
+                      "scopeIds",
+                      "confidence",
+                      "inferenceLevel",
+                      "attributes"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "maxItems": 200,
+                  "uniqueItems": false
+                },
+                "timePoints": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "tempId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "registration_deadline",
+                          "submission_deadline",
+                          "task_deadline",
+                          "event_start",
+                          "event_end",
+                          "result_announcement",
+                          "planned_start",
+                          "window_start",
+                          "window_end"
+                        ]
+                      },
+                      "rawText": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "scopeIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 4000
+                        },
+                        "maxItems": 200,
+                        "uniqueItems": true
+                      },
+                      "confidence": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                      },
+                      "owners": {
+                        "type": "array",
+                        "minItems": 1,
+                        "maxItems": 200,
+                        "uniqueItems": true,
+                        "items": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": [
+                            "kind",
+                            "entityId"
+                          ],
+                          "properties": {
+                            "kind": {
+                              "type": "string",
+                              "enum": [
+                                "task",
+                                "material",
+                                "event_start",
+                                "event_end"
+                              ]
+                            },
+                            "entityId": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 4000
+                            }
+                          }
+                        },
+                        "description": "时间的一份权威归属。多个动作共用窗口须逐个列真实task owner；事件起止使用event_start/event_end。未公布/模糊仍保留原文时间实体，不猜日期。"
+                      }
+                    },
+                    "required": [
+                      "tempId",
+                      "type",
+                      "rawText",
+                      "scopeIds",
+                      "confidence",
+                      "owners"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "maxItems": 200,
+                  "uniqueItems": false
+                },
+                "materials": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "tempId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "name": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "required": {
+                        "type": "boolean"
+                      },
+                      "formatRequirements": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 4000
+                        },
+                        "maxItems": 200,
+                        "uniqueItems": false
+                      },
+                      "namingRequirements": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 4000
+                        },
+                        "maxItems": 200,
+                        "uniqueItems": false
+                      },
+                      "quantity": {
+                        "anyOf": [
+                          {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 10080
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "submissionChannel": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 4000
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "relatedTaskTempIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 4000
+                        },
+                        "maxItems": 200,
+                        "uniqueItems": true
+                      },
+                      "scopeIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 4000
+                        },
+                        "maxItems": 200,
+                        "uniqueItems": true
+                      },
+                      "confidence": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                      }
+                    },
+                    "required": [
+                      "tempId",
+                      "name",
+                      "required",
+                      "formatRequirements",
+                      "namingRequirements",
+                      "quantity",
+                      "submissionChannel",
+                      "relatedTaskTempIds",
+                      "scopeIds",
+                      "confidence"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "maxItems": 200,
+                  "uniqueItems": false
+                },
+                "revisions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "supersedes",
+                          "cancels",
+                          "amends"
+                        ]
+                      },
+                      "targetDirectiveId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "scopeIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 4000
+                        },
+                        "maxItems": 200,
+                        "uniqueItems": true
+                      },
+                      "fromDirectiveId": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 4000
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "effective": {
+                        "type": "string",
+                        "enum": [
+                          "true",
+                          "false",
+                          "unknown"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "targetDirectiveId",
+                      "scopeIds",
+                      "fromDirectiveId",
+                      "effective"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "maxItems": 200,
+                  "uniqueItems": false
+                },
+                "conflicts": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "deadline",
+                          "project_match",
+                          "duplicate",
+                          "hierarchy",
+                          "other"
+                        ]
+                      },
+                      "message": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "entityTempIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 4000
+                        },
+                        "maxItems": 200,
+                        "uniqueItems": true
+                      },
+                      "scopeIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 4000
+                        },
+                        "maxItems": 200,
+                        "uniqueItems": true
+                      },
+                      "requiresDecision": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "type",
+                      "message",
+                      "entityTempIds",
+                      "scopeIds",
+                      "requiresDecision"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "maxItems": 200,
+                  "uniqueItems": false
+                },
+                "scopeAccounting": {
+                  "type": "array",
+                  "maxItems": 200,
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "scopeId",
+                      "kind",
+                      "primaryEntityIds"
+                    ],
+                    "properties": {
+                      "scopeId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "kind": {
+                        "type": "string",
+                        "enum": [
+                          "action",
+                          "event",
+                          "information",
+                          "unresolved"
+                        ]
+                      },
+                      "primaryEntityIds": {
+                        "type": "array",
+                        "maxItems": 200,
+                        "uniqueItems": true,
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 4000
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "required": [
+                "schemaVersion",
+                "tasks",
+                "prerequisiteStates",
+                "events",
+                "timePoints",
+                "materials",
+                "revisions",
+                "conflicts",
+                "scopeAccounting"
+              ],
+              "additionalProperties": false
+            }
+          }
+        }
+      },
+      "dispatchAuthorized": false,
+      "status": "NOT_RUN"
+    },
+    {
+      "batch": "V6-CURRENT-REAL-NOTICE-DEVELOPMENT-20261008-R1",
+      "ordinal": 2,
+      "sourceId": "V6-REAL-20261008-02",
+      "sourceVersionId": "V6-REAL-20261008-02-v1",
+      "sourceSha256": "15b4abc5e1964161570a45c56830db843839362f32ec54a5f4ea9b54979f0bbb",
+      "arm": "SINGLE",
+      "candidate": "ObligationAuthority",
+      "candidateVersion": "obligation-authority-generation-1.0.0",
+      "promptVersion": "recognition-obligation-authority-1.0.0",
+      "generationContract": "obligation-authority-source-contract-6.0.0",
+      "requestSha256": "b768a306b9ad6be83a0f215170aaf6d9d770c3861c7f1c5a1cb659372fad9deb",
+      "referenceSha256": "f21df96caf5bd83ad560e37046abf4b70303cbf8e0b57d93accf5ac8778c0d9b",
+      "model": "deepseek-flash",
+      "scorer": "v6-real-notice-provisional-1",
+      "commonLayer": "LOCAL_COVERAGE_1_SHARED_ATTRIBUTE_1_1_CURRENT_COMMON_PRODUCT",
+      "referenceTime": "2026-07-10T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "unitIdentitySha256": "1a4ea72b34f31c6df05ca5d5d2dbb64da7c32e14a866fd2b6e5adb190695f44e",
+      "body": {
+        "model": "deepseek-flash",
+        "temperature": 0,
+        "reasoning": {
+          "effort": "none"
+        },
+        "stream": false,
+        "max_output_tokens": 8192,
+        "input": [
+          {
+            "role": "system",
+            "content": [
+              {
+                "type": "input_text",
+                "text": "根据通知输出指定JSON，按Schema顺序先完成tasks和prerequisiteStates，再组织活动、时间、材料及逐片段覆盖；只输出JSON，不调用第二次核对。\n第一层是最小义务：每个需要独立完成的动作+对象先有真实task，包括准备设备、报名、激活登录。资格condition回答适用性，dependencyTempIds/prerequisiteStates回答前一步是否完成；未给个人状态用unknown，不写true。已录取才参与等资格与准备后的顺序不能互相冒充。格式、材料名称、办理结果、纯说明和禁止不是独立动作；另需缴费等新动作也不能吞为criteria/地点附注。\n第二层只声明一份关联：每项任务eventLinks列真实关联活动及该关系的scopeIds，依据同时出现在该task.propositionScopeIds及event.scopeIds；event不再生成relatedTaskTempIds反向副本，由程序派生。关系不明保留冲突/unknown，不能仅因同来源就相连。材料.relatedTaskTempIds、timePoints.owners仍为各自一份权威归属；同窗口适用于两个动作须列两个真实task owner，不许只写coverage present。\ncoverage四态逐类明确：present必须有对应真实实体和owner/eventLinks且absenceScopeIds为空；not_stated是没提，explicit_none引用明示没有，unknown保留未决。模糊、仅日期、未公布起止仍有time实体和原文rawText，日期由公共程序解释，不能补默认时刻。办理窗口window_start/window_end不能变deadline。\n第三层保留独立事件和附属说明：无任务也保留事件、起止和明确未公布。一个活动一个event；真正独立不同活动分开。attributes只保留形式、互动、结业结果、地点附注，不替代已经识别的义务。scopeAccounting引用真实主task/event，附属引用和反向索引由程序派生；不能把scope当实体，不伪造遗漏事实覆盖。\n所有事实保留逐字依据；材料格式、命名、明确目的地和完成标准保留，回执不冒充渠道。取消/替代用真实对象端点，未知端点保持风险。原文事实、个人状态与个人计划分开；不生成计划、不正式写入、不增加常识义务。"
+              }
+            ]
+          },
+          {
+            "role": "user",
+            "content": [
+              {
+                "type": "input_text",
+                "text": "{\"source\":\"一、各位同学应于7月16日前通过学工系统“暑假离留校登记”应用完成相关信息登记（https://xmuxg.xmu.edu.cn/app/182），并确保填写的信息完整、准确。离校同学应如实登记去向、联系方式及返校安排；暑期留校同学如短期离厦外出，视同离校学生管理，亦应及时做好相关登记。\",\"referenceTime\":\"2026-07-10T09:00:00+08:00\",\"timezone\":\"Asia/Shanghai\",\"scopes\":[{\"id\":\"scope-0001-8e0a8c0b3c0a8d2122867e909d8a97571001a8aad32bf9e378acfd097f4c5777\",\"text\":\"一、各位同学应于7月16日前通过学工系统“暑假离留校登记”应用完成相关信息登记（https:\"},{\"id\":\"scope-0002-c4d40189715d6156a6e9e6e23d028a2a3762591c24c455caeb385300a293d0ae\",\"text\":\"//xmuxg.xmu.edu.cn/app/182），\"},{\"id\":\"scope-0003-6d71e6d371d3f861b817921523085a7cf3e0f6351ee4851a218276a33e3595c5\",\"text\":\"并确保填写的信息完整、准确。\"},{\"id\":\"scope-0004-2736ce47f261a9dd9b33e3bcd67e813c53cf73399fda2b01c994d83c5f8c4aed\",\"text\":\"离校同学应如实登记去向、联系方式及返校安排；\"},{\"id\":\"scope-0005-3145dc4cd618ae933377103fb0713bebe01961f5b899c10d72e84c86f8cd4f8c\",\"text\":\"暑期留校同学如短期离厦外出，\"},{\"id\":\"scope-0006-c2eb63aa61d388586792e2024056b45a42b9f52fd6084cc05f069e96d4ef19f3\",\"text\":\"视同离校学生管理，\"},{\"id\":\"scope-0007-2d3aebe8b4916c574859af7cca2a1ecc58ca1f3ddc2be55a1f75739b5763254e\",\"text\":\"亦应及时做好相关登记。\"}]}"
+              }
+            ]
+          }
+        ],
+        "text": {
+          "format": {
+            "type": "json_schema",
+            "name": "source_semantics",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "schemaVersion": {
+                  "type": "string",
+                  "const": "obligation-authority-source-contract-6.0.0"
+                },
+                "tasks": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "propositionScopeIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 4000
+                        },
+                        "maxItems": 200,
+                        "uniqueItems": true
+                      },
+                      "semantics": {
+                        "type": "object",
+                        "properties": {
+                          "actor": {
+                            "type": "string",
+                            "enum": [
+                              "addressee",
+                              "addressed_group",
+                              "issuer",
+                              "third_party",
+                              "unknown"
+                            ]
+                          },
+                          "speechAct": {
+                            "type": "string",
+                            "enum": [
+                              "directive",
+                              "assertive",
+                              "interrogative",
+                              "hypothetical",
+                              "quoted",
+                              "unknown"
+                            ]
+                          },
+                          "polarity": {
+                            "type": "string",
+                            "enum": [
+                              "affirmative",
+                              "negative",
+                              "uncertain"
+                            ]
+                          },
+                          "tense": {
+                            "type": "string",
+                            "enum": [
+                              "future",
+                              "present",
+                              "past",
+                              "unknown"
+                            ]
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": [
+                              "pending",
+                              "completed",
+                              "cancelled",
+                              "unknown"
+                            ]
+                          },
+                          "validity": {
+                            "type": "string",
+                            "enum": [
+                              "active",
+                              "superseded",
+                              "uncertain"
+                            ]
+                          },
+                          "modality": {
+                            "type": "string",
+                            "enum": [
+                              "required",
+                              "recommended",
+                              "optional",
+                              "informational",
+                              "unknown"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "actor",
+                          "speechAct",
+                          "polarity",
+                          "tense",
+                          "status",
+                          "validity",
+                          "modality"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "inferenceLevel": {
+                        "type": "string",
+                        "enum": [
+                          "explicit",
+                          "strong_inference",
+                          "optional_suggestion"
+                        ]
+                      },
+                      "actionType": {
+                        "type": "string",
+                        "enum": [
+                          "review",
+                          "complete",
+                          "fill",
+                          "prepare",
+                          "attend",
+                          "carry",
+                          "save",
+                          "print",
+                          "submit",
+                          "upload",
+                          "send",
+                          "contact",
+                          "collect",
+                          "sign",
+                          "register",
+                          "pay",
+                          "other"
+                        ]
+                      },
+                      "action": {
+                        "type": "object",
+                        "properties": {
+                          "scopeId": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "surface": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        },
+                        "required": [
+                          "scopeId",
+                          "surface"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "object": {
+                        "type": "object",
+                        "properties": {
+                          "scopeId": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "surface": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        },
+                        "required": [
+                          "scopeId",
+                          "surface"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "effect": {
+                        "type": "string",
+                        "enum": [
+                          "local_change",
+                          "external_transfer",
+                          "external_interaction",
+                          "physical_action",
+                          "unknown"
+                        ]
+                      },
+                      "detail": {
+                        "type": "object",
+                        "properties": {
+                          "parentTempId": {
+                            "anyOf": [
+                              {
+                                "type": "string",
+                                "minLength": 1,
+                                "maxLength": 4000
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "hierarchyType": {
+                            "type": "string",
+                            "enum": [
+                              "task",
+                              "subtask"
+                            ]
+                          },
+                          "title": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 4000
+                          },
+                          "description": {
+                            "type": "string",
+                            "maxLength": 4000
+                          },
+                          "completionCriteria": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 4000
+                            },
+                            "maxItems": 200,
+                            "uniqueItems": false
+                          },
+                          "estimatedMinutes": {
+                            "anyOf": [
+                              {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 10080
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "statusSuggestion": {
+                            "const": "todo"
+                          },
+                          "prioritySuggestion": {
+                            "type": "string",
+                            "enum": [
+                              "low",
+                              "medium",
+                              "high",
+                              "urgent"
+                            ]
+                          },
+                          "dependencyTempIds": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 4000
+                            },
+                            "maxItems": 200,
+                            "uniqueItems": true
+                          },
+                          "confidence": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 1
+                          },
+                          "userConfirmationRequired": {
+                            "const": true
+                          }
+                        },
+                        "required": [
+                          "parentTempId",
+                          "hierarchyType",
+                          "title",
+                          "description",
+                          "completionCriteria",
+                          "estimatedMinutes",
+                          "statusSuggestion",
+                          "prioritySuggestion",
+                          "dependencyTempIds",
+                          "confidence",
+                          "userConfirmationRequired"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "condition": {
+                        "type": "object",
+                        "properties": {
+                          "value": {
+                            "type": "string",
+                            "enum": [
+                              "true",
+                              "false",
+                              "unknown",
+                              "not_applicable"
+                            ]
+                          },
+                          "conditionScopeIds": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 4000
+                            },
+                            "maxItems": 200,
+                            "uniqueItems": true
+                          },
+                          "factScopeIds": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 4000
+                            },
+                            "maxItems": 200,
+                            "uniqueItems": true
+                          }
+                        },
+                        "required": [
+                          "value",
+                          "conditionScopeIds",
+                          "factScopeIds"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "coverage": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "time",
+                          "material",
+                          "event"
+                        ],
+                        "properties": {
+                          "time": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [
+                              "status",
+                              "absenceScopeIds"
+                            ],
+                            "properties": {
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "present",
+                                  "not_stated",
+                                  "explicit_none",
+                                  "unknown"
+                                ]
+                              },
+                              "absenceScopeIds": {
+                                "type": "array",
+                                "maxItems": 200,
+                                "uniqueItems": true,
+                                "items": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 4000
+                                }
+                              }
+                            }
+                          },
+                          "material": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [
+                              "status",
+                              "absenceScopeIds"
+                            ],
+                            "properties": {
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "present",
+                                  "not_stated",
+                                  "explicit_none",
+                                  "unknown"
+                                ]
+                              },
+                              "absenceScopeIds": {
+                                "type": "array",
+                                "maxItems": 200,
+                                "uniqueItems": true,
+                                "items": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 4000
+                                }
+                              }
+                            }
+                          },
+                          "event": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [
+                              "status",
+                              "absenceScopeIds"
+                            ],
+                            "properties": {
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "present",
+                                  "not_stated",
+                                  "explicit_none",
+                                  "unknown"
+                                ]
+                              },
+                              "absenceScopeIds": {
+                                "type": "array",
+                                "maxItems": 200,
+                                "uniqueItems": true,
+                                "items": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 4000
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "description": "四态声明不替代事实：present必须能从实际材料、时间owners、eventLinks找到实体；not_stated/explicit_none/unknown仍分别保留。"
+                      },
+                      "eventLinks": {
+                        "type": "array",
+                        "maxItems": 200,
+                        "uniqueItems": true,
+                        "items": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": [
+                            "eventId",
+                            "scopeIds"
+                          ],
+                          "properties": {
+                            "eventId": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 4000
+                            },
+                            "scopeIds": {
+                              "type": "array",
+                              "minItems": 1,
+                              "maxItems": 200,
+                              "uniqueItems": true,
+                              "items": {
+                                "type": "string",
+                                "minLength": 1,
+                                "maxLength": 4000
+                              }
+                            }
+                          }
+                        },
+                        "description": "报名/准备等真实义务关联的活动；每条依据须同时被任务propositionScopeIds和对应事件scopeIds引用。不复制事件反向任务索引；无关联填空数组。"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "propositionScopeIds",
+                      "semantics",
+                      "inferenceLevel",
+                      "actionType",
+                      "action",
+                      "object",
+                      "effect",
+                      "detail",
+                      "condition",
+                      "coverage",
+                      "eventLinks"
+                    ],
+                    "additionalProperties": false,
+                    "description": "先列每个独立义务的动作、对象、适用条件及前置。准备设备/提交/激活等动作不能放入事件附注。eventLinks是任务关联活动的一份权威声明，附逐字依据。"
+                  },
+                  "maxItems": 200,
+                  "uniqueItems": false
+                },
+                "prerequisiteStates": {
+                  "type": "array",
+                  "maxItems": 200,
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "taskId",
+                      "predecessorId",
+                      "completion",
+                      "factScopeIds"
+                    ],
+                    "properties": {
+                      "taskId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "predecessorId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "completion": {
+                        "type": "string",
+                        "enum": [
+                          "true",
+                          "false",
+                          "unknown"
+                        ]
+                      },
+                      "factScopeIds": {
+                        "type": "array",
+                        "maxItems": 200,
+                        "uniqueItems": true,
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 4000
+                        }
+                      }
+                    }
+                  }
+                },
+                "events": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "tempId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "title": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "description": {
+                        "type": "string",
+                        "maxLength": 4000
+                      },
+                      "location": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 4000
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "scopeIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 4000
+                        },
+                        "maxItems": 200,
+                        "uniqueItems": true
+                      },
+                      "confidence": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                      },
+                      "inferenceLevel": {
+                        "type": "string",
+                        "enum": [
+                          "explicit",
+                          "strong_inference",
+                          "optional_suggestion"
+                        ]
+                      },
+                      "attributes": {
+                        "type": "array",
+                        "maxItems": 40,
+                        "items": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": [
+                            "kind",
+                            "text",
+                            "scopeIds"
+                          ],
+                          "properties": {
+                            "kind": {
+                              "type": "string",
+                              "enum": [
+                                "format",
+                                "participation",
+                                "outcome",
+                                "location_note"
+                              ]
+                            },
+                            "text": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 4000
+                            },
+                            "scopeIds": {
+                              "type": "array",
+                              "maxItems": 200,
+                              "uniqueItems": true,
+                              "items": {
+                                "type": "string",
+                                "minLength": 1,
+                                "maxLength": 4000
+                              },
+                              "minItems": 1
+                            }
+                          }
+                        },
+                        "description": "仅形式、互动、结果和真正地点附注。需/须/请准备等独立动作先列任务，不能被附注或完成标准吞掉。"
+                      }
+                    },
+                    "required": [
+                      "tempId",
+                      "title",
+                      "description",
+                      "location",
+                      "scopeIds",
+                      "confidence",
+                      "inferenceLevel",
+                      "attributes"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "maxItems": 200,
+                  "uniqueItems": false
+                },
+                "timePoints": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "tempId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "registration_deadline",
+                          "submission_deadline",
+                          "task_deadline",
+                          "event_start",
+                          "event_end",
+                          "result_announcement",
+                          "planned_start",
+                          "window_start",
+                          "window_end"
+                        ]
+                      },
+                      "rawText": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "scopeIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 4000
+                        },
+                        "maxItems": 200,
+                        "uniqueItems": true
+                      },
+                      "confidence": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                      },
+                      "owners": {
+                        "type": "array",
+                        "minItems": 1,
+                        "maxItems": 200,
+                        "uniqueItems": true,
+                        "items": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": [
+                            "kind",
+                            "entityId"
+                          ],
+                          "properties": {
+                            "kind": {
+                              "type": "string",
+                              "enum": [
+                                "task",
+                                "material",
+                                "event_start",
+                                "event_end"
+                              ]
+                            },
+                            "entityId": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 4000
+                            }
+                          }
+                        },
+                        "description": "时间的一份权威归属。多个动作共用窗口须逐个列真实task owner；事件起止使用event_start/event_end。未公布/模糊仍保留原文时间实体，不猜日期。"
+                      }
+                    },
+                    "required": [
+                      "tempId",
+                      "type",
+                      "rawText",
+                      "scopeIds",
+                      "confidence",
+                      "owners"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "maxItems": 200,
+                  "uniqueItems": false
+                },
+                "materials": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "tempId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "name": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "required": {
+                        "type": "boolean"
+                      },
+                      "formatRequirements": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 4000
+                        },
+                        "maxItems": 200,
+                        "uniqueItems": false
+                      },
+                      "namingRequirements": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 4000
+                        },
+                        "maxItems": 200,
+                        "uniqueItems": false
+                      },
+                      "quantity": {
+                        "anyOf": [
+                          {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 10080
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "submissionChannel": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 4000
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "relatedTaskTempIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 4000
+                        },
+                        "maxItems": 200,
+                        "uniqueItems": true
+                      },
+                      "scopeIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 4000
+                        },
+                        "maxItems": 200,
+                        "uniqueItems": true
+                      },
+                      "confidence": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                      }
+                    },
+                    "required": [
+                      "tempId",
+                      "name",
+                      "required",
+                      "formatRequirements",
+                      "namingRequirements",
+                      "quantity",
+                      "submissionChannel",
+                      "relatedTaskTempIds",
+                      "scopeIds",
+                      "confidence"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "maxItems": 200,
+                  "uniqueItems": false
+                },
+                "revisions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "supersedes",
+                          "cancels",
+                          "amends"
+                        ]
+                      },
+                      "targetDirectiveId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "scopeIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 4000
+                        },
+                        "maxItems": 200,
+                        "uniqueItems": true
+                      },
+                      "fromDirectiveId": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 4000
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "effective": {
+                        "type": "string",
+                        "enum": [
+                          "true",
+                          "false",
+                          "unknown"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "targetDirectiveId",
+                      "scopeIds",
+                      "fromDirectiveId",
+                      "effective"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "maxItems": 200,
+                  "uniqueItems": false
+                },
+                "conflicts": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "deadline",
+                          "project_match",
+                          "duplicate",
+                          "hierarchy",
+                          "other"
+                        ]
+                      },
+                      "message": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "entityTempIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 4000
+                        },
+                        "maxItems": 200,
+                        "uniqueItems": true
+                      },
+                      "scopeIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 4000
+                        },
+                        "maxItems": 200,
+                        "uniqueItems": true
+                      },
+                      "requiresDecision": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "type",
+                      "message",
+                      "entityTempIds",
+                      "scopeIds",
+                      "requiresDecision"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "maxItems": 200,
+                  "uniqueItems": false
+                },
+                "scopeAccounting": {
+                  "type": "array",
+                  "maxItems": 200,
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "scopeId",
+                      "kind",
+                      "primaryEntityIds"
+                    ],
+                    "properties": {
+                      "scopeId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "kind": {
+                        "type": "string",
+                        "enum": [
+                          "action",
+                          "event",
+                          "information",
+                          "unresolved"
+                        ]
+                      },
+                      "primaryEntityIds": {
+                        "type": "array",
+                        "maxItems": 200,
+                        "uniqueItems": true,
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 4000
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "required": [
+                "schemaVersion",
+                "tasks",
+                "prerequisiteStates",
+                "events",
+                "timePoints",
+                "materials",
+                "revisions",
+                "conflicts",
+                "scopeAccounting"
+              ],
+              "additionalProperties": false
+            }
+          }
+        }
+      },
+      "dispatchAuthorized": false,
+      "status": "NOT_RUN"
+    },
+    {
+      "batch": "V6-CURRENT-REAL-NOTICE-DEVELOPMENT-20261008-R1",
+      "ordinal": 3,
+      "sourceId": "V6-REAL-20261008-03",
+      "sourceVersionId": "V6-REAL-20261008-03-v1",
+      "sourceSha256": "e751a6400d42dfeb3894935cb452b04ee18db16926d060d44a5ef0f8deb7d793",
+      "arm": "SINGLE",
+      "candidate": "ObligationAuthority",
+      "candidateVersion": "obligation-authority-generation-1.0.0",
+      "promptVersion": "recognition-obligation-authority-1.0.0",
+      "generationContract": "obligation-authority-source-contract-6.0.0",
+      "requestSha256": "387162c78f7cd44e4477e8c7e6a694681b8b5f6a17c7fd79364ba11a0caf684a",
+      "referenceSha256": "f21df96caf5bd83ad560e37046abf4b70303cbf8e0b57d93accf5ac8778c0d9b",
+      "model": "deepseek-flash",
+      "scorer": "v6-real-notice-provisional-1",
+      "commonLayer": "LOCAL_COVERAGE_1_SHARED_ATTRIBUTE_1_1_CURRENT_COMMON_PRODUCT",
+      "referenceTime": "2026-06-23T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "unitIdentitySha256": "5f9daf72a258a850cec044c48fff992eb184e26cf909586fe9c4c6b41cd24b8b",
+      "body": {
+        "model": "deepseek-flash",
+        "temperature": 0,
+        "reasoning": {
+          "effort": "none"
+        },
+        "stream": false,
+        "max_output_tokens": 8192,
+        "input": [
+          {
+            "role": "system",
+            "content": [
+              {
+                "type": "input_text",
+                "text": "根据通知输出指定JSON，按Schema顺序先完成tasks和prerequisiteStates，再组织活动、时间、材料及逐片段覆盖；只输出JSON，不调用第二次核对。\n第一层是最小义务：每个需要独立完成的动作+对象先有真实task，包括准备设备、报名、激活登录。资格condition回答适用性，dependencyTempIds/prerequisiteStates回答前一步是否完成；未给个人状态用unknown，不写true。已录取才参与等资格与准备后的顺序不能互相冒充。格式、材料名称、办理结果、纯说明和禁止不是独立动作；另需缴费等新动作也不能吞为criteria/地点附注。\n第二层只声明一份关联：每项任务eventLinks列真实关联活动及该关系的scopeIds，依据同时出现在该task.propositionScopeIds及event.scopeIds；event不再生成relatedTaskTempIds反向副本，由程序派生。关系不明保留冲突/unknown，不能仅因同来源就相连。材料.relatedTaskTempIds、timePoints.owners仍为各自一份权威归属；同窗口适用于两个动作须列两个真实task owner，不许只写coverage present。\ncoverage四态逐类明确：present必须有对应真实实体和owner/eventLinks且absenceScopeIds为空；not_stated是没提，explicit_none引用明示没有，unknown保留未决。模糊、仅日期、未公布起止仍有time实体和原文rawText，日期由公共程序解释，不能补默认时刻。办理窗口window_start/window_end不能变deadline。\n第三层保留独立事件和附属说明：无任务也保留事件、起止和明确未公布。一个活动一个event；真正独立不同活动分开。attributes只保留形式、互动、结业结果、地点附注，不替代已经识别的义务。scopeAccounting引用真实主task/event，附属引用和反向索引由程序派生；不能把scope当实体，不伪造遗漏事实覆盖。\n所有事实保留逐字依据；材料格式、命名、明确目的地和完成标准保留，回执不冒充渠道。取消/替代用真实对象端点，未知端点保持风险。原文事实、个人状态与个人计划分开；不生成计划、不正式写入、不增加常识义务。"
+              }
+            ]
+          },
+          {
+            "role": "user",
+            "content": [
+              {
+                "type": "input_text",
+                "text": "{\"source\":\"招生对象：在读本科生和研究生、青年研究人员等\\n收费情况：免费\\n活动时间：2026年7月6日-7月10日\\n活动形式：线上讲座，被录取的正式学员可以进入线上会议室听课并提问互动，各学员需自行准备相关终端设备，以便连线\\n报名方式：网络报名，有意参加活动可通过下方二维码报名\\n学习结束后可获得暑期学校结业证书，欢迎大家踊跃报名，我们期待与您相聚云端。\\n报名截止时间：2026年6月30日17:00\",\"referenceTime\":\"2026-06-23T09:00:00+08:00\",\"timezone\":\"Asia/Shanghai\",\"scopes\":[{\"id\":\"scope-0001-af2de12747fbce6c5ad94a26a745896d92a8f1e01f71bc6b59d844de52706952\",\"text\":\"招生对象：\"},{\"id\":\"scope-0002-a22ac13dc3fdeb20ee8ba2aedc4901f404874f6f76b32e926497cc17619ac78d\",\"text\":\"在读本科生和研究生、青年研究人员等\"},{\"id\":\"scope-0003-9aafa9fcdeddbe8b26c4b4f639601d29bdc012215fe6430e8035c34a75e72e5d\",\"text\":\"收费情况：\"},{\"id\":\"scope-0004-b3eb453b9eaba399b0032db2f559886ef11108b0e9ef4d1ea713982bda013a81\",\"text\":\"免费\"},{\"id\":\"scope-0005-ee5c4c4c19f9a533dfdefcdea762bb99ce49d3e03c085e17b84bf1fdef995ddb\",\"text\":\"活动时间：\"},{\"id\":\"scope-0006-aebf3708880b02545b45dddf252246f4b20c8a801d8ad43be00ee1093199f8aa\",\"text\":\"2026年7月6日-7月10日\"},{\"id\":\"scope-0007-daf71739c8ba611c8951d2ded5701d9e9a09a11664ed9da8a3fae74175978f26\",\"text\":\"活动形式：\"},{\"id\":\"scope-0008-09ff0f3305b6d86559807cc337aa32dcd9e23ef1c99a7241bfc28d1d950030b8\",\"text\":\"线上讲座，\"},{\"id\":\"scope-0009-346a10a0694a9cc8dc4aba1728fc378139fe281b3b745c48869b443ba976d358\",\"text\":\"被录取的正式学员可以进入线上会议室听课并提问互动，\"},{\"id\":\"scope-0010-a16d95b6809705a9405bc667f148af7387be385994a28e68f7932bc389a353c1\",\"text\":\"各学员需自行准备相关终端设备，\"},{\"id\":\"scope-0011-492812e4df4131fe5af89eca23b5fe73564fa277d6426ac901309ddb2bab34b0\",\"text\":\"以便连线\"},{\"id\":\"scope-0012-8ad26e44f7e225a4e8c8c7a4ccb09ad092274947cc421bcc28867c7d85833eb9\",\"text\":\"报名方式：\"},{\"id\":\"scope-0013-c67a9c86602a741ddd6f4baf1c5e248fc2a4a3294f7f0f168a0ade34941234f2\",\"text\":\"网络报名，\"},{\"id\":\"scope-0014-13d082b3da977a40e4effd1dac5524f9a775f937e2f172c5f4750350a2e0b088\",\"text\":\"有意参加活动可通过下方二维码报名\"},{\"id\":\"scope-0015-f0958bb2b0ffbead4de3e09c72140b65de4d6650701ebf20b82c02d335dd0d00\",\"text\":\"学习结束后可获得暑期学校结业证书，\"},{\"id\":\"scope-0016-6b181533e21c2791c447a703c747420ad796f027280b86d7d579996a1cccca13\",\"text\":\"欢迎大家踊跃报名，\"},{\"id\":\"scope-0017-98e125a24eb2564d8a096caa85b1576f9f56f1d63c3f03ca5fbd650d979986d5\",\"text\":\"我们期待与您相聚云端。\"},{\"id\":\"scope-0018-31157a6be163b111ad43430b270fb3be4e862d5430605c4c9171dd5851d350d9\",\"text\":\"报名截止时间：\"},{\"id\":\"scope-0019-f0f7366b0b2c4fe61c0ba501ed505d52b433f2595b235a28acb48335abf13b8f\",\"text\":\"2026年6月30日17:00\"}]}"
+              }
+            ]
+          }
+        ],
+        "text": {
+          "format": {
+            "type": "json_schema",
+            "name": "source_semantics",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "schemaVersion": {
+                  "type": "string",
+                  "const": "obligation-authority-source-contract-6.0.0"
+                },
+                "tasks": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "propositionScopeIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 4000
+                        },
+                        "maxItems": 200,
+                        "uniqueItems": true
+                      },
+                      "semantics": {
+                        "type": "object",
+                        "properties": {
+                          "actor": {
+                            "type": "string",
+                            "enum": [
+                              "addressee",
+                              "addressed_group",
+                              "issuer",
+                              "third_party",
+                              "unknown"
+                            ]
+                          },
+                          "speechAct": {
+                            "type": "string",
+                            "enum": [
+                              "directive",
+                              "assertive",
+                              "interrogative",
+                              "hypothetical",
+                              "quoted",
+                              "unknown"
+                            ]
+                          },
+                          "polarity": {
+                            "type": "string",
+                            "enum": [
+                              "affirmative",
+                              "negative",
+                              "uncertain"
+                            ]
+                          },
+                          "tense": {
+                            "type": "string",
+                            "enum": [
+                              "future",
+                              "present",
+                              "past",
+                              "unknown"
+                            ]
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": [
+                              "pending",
+                              "completed",
+                              "cancelled",
+                              "unknown"
+                            ]
+                          },
+                          "validity": {
+                            "type": "string",
+                            "enum": [
+                              "active",
+                              "superseded",
+                              "uncertain"
+                            ]
+                          },
+                          "modality": {
+                            "type": "string",
+                            "enum": [
+                              "required",
+                              "recommended",
+                              "optional",
+                              "informational",
+                              "unknown"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "actor",
+                          "speechAct",
+                          "polarity",
+                          "tense",
+                          "status",
+                          "validity",
+                          "modality"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "inferenceLevel": {
+                        "type": "string",
+                        "enum": [
+                          "explicit",
+                          "strong_inference",
+                          "optional_suggestion"
+                        ]
+                      },
+                      "actionType": {
+                        "type": "string",
+                        "enum": [
+                          "review",
+                          "complete",
+                          "fill",
+                          "prepare",
+                          "attend",
+                          "carry",
+                          "save",
+                          "print",
+                          "submit",
+                          "upload",
+                          "send",
+                          "contact",
+                          "collect",
+                          "sign",
+                          "register",
+                          "pay",
+                          "other"
+                        ]
+                      },
+                      "action": {
+                        "type": "object",
+                        "properties": {
+                          "scopeId": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "surface": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        },
+                        "required": [
+                          "scopeId",
+                          "surface"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "object": {
+                        "type": "object",
+                        "properties": {
+                          "scopeId": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "surface": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        },
+                        "required": [
+                          "scopeId",
+                          "surface"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "effect": {
+                        "type": "string",
+                        "enum": [
+                          "local_change",
+                          "external_transfer",
+                          "external_interaction",
+                          "physical_action",
+                          "unknown"
+                        ]
+                      },
+                      "detail": {
+                        "type": "object",
+                        "properties": {
+                          "parentTempId": {
+                            "anyOf": [
+                              {
+                                "type": "string",
+                                "minLength": 1,
+                                "maxLength": 4000
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "hierarchyType": {
+                            "type": "string",
+                            "enum": [
+                              "task",
+                              "subtask"
+                            ]
+                          },
+                          "title": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 4000
+                          },
+                          "description": {
+                            "type": "string",
+                            "maxLength": 4000
+                          },
+                          "completionCriteria": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 4000
+                            },
+                            "maxItems": 200,
+                            "uniqueItems": false
+                          },
+                          "estimatedMinutes": {
+                            "anyOf": [
+                              {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 10080
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "statusSuggestion": {
+                            "const": "todo"
+                          },
+                          "prioritySuggestion": {
+                            "type": "string",
+                            "enum": [
+                              "low",
+                              "medium",
+                              "high",
+                              "urgent"
+                            ]
+                          },
+                          "dependencyTempIds": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 4000
+                            },
+                            "maxItems": 200,
+                            "uniqueItems": true
+                          },
+                          "confidence": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 1
+                          },
+                          "userConfirmationRequired": {
+                            "const": true
+                          }
+                        },
+                        "required": [
+                          "parentTempId",
+                          "hierarchyType",
+                          "title",
+                          "description",
+                          "completionCriteria",
+                          "estimatedMinutes",
+                          "statusSuggestion",
+                          "prioritySuggestion",
+                          "dependencyTempIds",
+                          "confidence",
+                          "userConfirmationRequired"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "condition": {
+                        "type": "object",
+                        "properties": {
+                          "value": {
+                            "type": "string",
+                            "enum": [
+                              "true",
+                              "false",
+                              "unknown",
+                              "not_applicable"
+                            ]
+                          },
+                          "conditionScopeIds": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 4000
+                            },
+                            "maxItems": 200,
+                            "uniqueItems": true
+                          },
+                          "factScopeIds": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 4000
+                            },
+                            "maxItems": 200,
+                            "uniqueItems": true
+                          }
+                        },
+                        "required": [
+                          "value",
+                          "conditionScopeIds",
+                          "factScopeIds"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "coverage": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "time",
+                          "material",
+                          "event"
+                        ],
+                        "properties": {
+                          "time": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [
+                              "status",
+                              "absenceScopeIds"
+                            ],
+                            "properties": {
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "present",
+                                  "not_stated",
+                                  "explicit_none",
+                                  "unknown"
+                                ]
+                              },
+                              "absenceScopeIds": {
+                                "type": "array",
+                                "maxItems": 200,
+                                "uniqueItems": true,
+                                "items": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 4000
+                                }
+                              }
+                            }
+                          },
+                          "material": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [
+                              "status",
+                              "absenceScopeIds"
+                            ],
+                            "properties": {
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "present",
+                                  "not_stated",
+                                  "explicit_none",
+                                  "unknown"
+                                ]
+                              },
+                              "absenceScopeIds": {
+                                "type": "array",
+                                "maxItems": 200,
+                                "uniqueItems": true,
+                                "items": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 4000
+                                }
+                              }
+                            }
+                          },
+                          "event": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [
+                              "status",
+                              "absenceScopeIds"
+                            ],
+                            "properties": {
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "present",
+                                  "not_stated",
+                                  "explicit_none",
+                                  "unknown"
+                                ]
+                              },
+                              "absenceScopeIds": {
+                                "type": "array",
+                                "maxItems": 200,
+                                "uniqueItems": true,
+                                "items": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 4000
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "description": "四态声明不替代事实：present必须能从实际材料、时间owners、eventLinks找到实体；not_stated/explicit_none/unknown仍分别保留。"
+                      },
+                      "eventLinks": {
+                        "type": "array",
+                        "maxItems": 200,
+                        "uniqueItems": true,
+                        "items": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": [
+                            "eventId",
+                            "scopeIds"
+                          ],
+                          "properties": {
+                            "eventId": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 4000
+                            },
+                            "scopeIds": {
+                              "type": "array",
+                              "minItems": 1,
+                              "maxItems": 200,
+                              "uniqueItems": true,
+                              "items": {
+                                "type": "string",
+                                "minLength": 1,
+                                "maxLength": 4000
+                              }
+                            }
+                          }
+                        },
+                        "description": "报名/准备等真实义务关联的活动；每条依据须同时被任务propositionScopeIds和对应事件scopeIds引用。不复制事件反向任务索引；无关联填空数组。"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "propositionScopeIds",
+                      "semantics",
+                      "inferenceLevel",
+                      "actionType",
+                      "action",
+                      "object",
+                      "effect",
+                      "detail",
+                      "condition",
+                      "coverage",
+                      "eventLinks"
+                    ],
+                    "additionalProperties": false,
+                    "description": "先列每个独立义务的动作、对象、适用条件及前置。准备设备/提交/激活等动作不能放入事件附注。eventLinks是任务关联活动的一份权威声明，附逐字依据。"
+                  },
+                  "maxItems": 200,
+                  "uniqueItems": false
+                },
+                "prerequisiteStates": {
+                  "type": "array",
+                  "maxItems": 200,
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "taskId",
+                      "predecessorId",
+                      "completion",
+                      "factScopeIds"
+                    ],
+                    "properties": {
+                      "taskId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "predecessorId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "completion": {
+                        "type": "string",
+                        "enum": [
+                          "true",
+                          "false",
+                          "unknown"
+                        ]
+                      },
+                      "factScopeIds": {
+                        "type": "array",
+                        "maxItems": 200,
+                        "uniqueItems": true,
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 4000
+                        }
+                      }
+                    }
+                  }
+                },
+                "events": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "tempId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "title": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "description": {
+                        "type": "string",
+                        "maxLength": 4000
+                      },
+                      "location": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 4000
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "scopeIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 4000
+                        },
+                        "maxItems": 200,
+                        "uniqueItems": true
+                      },
+                      "confidence": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                      },
+                      "inferenceLevel": {
+                        "type": "string",
+                        "enum": [
+                          "explicit",
+                          "strong_inference",
+                          "optional_suggestion"
+                        ]
+                      },
+                      "attributes": {
+                        "type": "array",
+                        "maxItems": 40,
+                        "items": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": [
+                            "kind",
+                            "text",
+                            "scopeIds"
+                          ],
+                          "properties": {
+                            "kind": {
+                              "type": "string",
+                              "enum": [
+                                "format",
+                                "participation",
+                                "outcome",
+                                "location_note"
+                              ]
+                            },
+                            "text": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 4000
+                            },
+                            "scopeIds": {
+                              "type": "array",
+                              "maxItems": 200,
+                              "uniqueItems": true,
+                              "items": {
+                                "type": "string",
+                                "minLength": 1,
+                                "maxLength": 4000
+                              },
+                              "minItems": 1
+                            }
+                          }
+                        },
+                        "description": "仅形式、互动、结果和真正地点附注。需/须/请准备等独立动作先列任务，不能被附注或完成标准吞掉。"
+                      }
+                    },
+                    "required": [
+                      "tempId",
+                      "title",
+                      "description",
+                      "location",
+                      "scopeIds",
+                      "confidence",
+                      "inferenceLevel",
+                      "attributes"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "maxItems": 200,
+                  "uniqueItems": false
+                },
+                "timePoints": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "tempId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "registration_deadline",
+                          "submission_deadline",
+                          "task_deadline",
+                          "event_start",
+                          "event_end",
+                          "result_announcement",
+                          "planned_start",
+                          "window_start",
+                          "window_end"
+                        ]
+                      },
+                      "rawText": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "scopeIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 4000
+                        },
+                        "maxItems": 200,
+                        "uniqueItems": true
+                      },
+                      "confidence": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                      },
+                      "owners": {
+                        "type": "array",
+                        "minItems": 1,
+                        "maxItems": 200,
+                        "uniqueItems": true,
+                        "items": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": [
+                            "kind",
+                            "entityId"
+                          ],
+                          "properties": {
+                            "kind": {
+                              "type": "string",
+                              "enum": [
+                                "task",
+                                "material",
+                                "event_start",
+                                "event_end"
+                              ]
+                            },
+                            "entityId": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 4000
+                            }
+                          }
+                        },
+                        "description": "时间的一份权威归属。多个动作共用窗口须逐个列真实task owner；事件起止使用event_start/event_end。未公布/模糊仍保留原文时间实体，不猜日期。"
+                      }
+                    },
+                    "required": [
+                      "tempId",
+                      "type",
+                      "rawText",
+                      "scopeIds",
+                      "confidence",
+                      "owners"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "maxItems": 200,
+                  "uniqueItems": false
+                },
+                "materials": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "tempId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "name": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "required": {
+                        "type": "boolean"
+                      },
+                      "formatRequirements": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 4000
+                        },
+                        "maxItems": 200,
+                        "uniqueItems": false
+                      },
+                      "namingRequirements": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 4000
+                        },
+                        "maxItems": 200,
+                        "uniqueItems": false
+                      },
+                      "quantity": {
+                        "anyOf": [
+                          {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 10080
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "submissionChannel": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 4000
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "relatedTaskTempIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 4000
+                        },
+                        "maxItems": 200,
+                        "uniqueItems": true
+                      },
+                      "scopeIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 4000
+                        },
+                        "maxItems": 200,
+                        "uniqueItems": true
+                      },
+                      "confidence": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                      }
+                    },
+                    "required": [
+                      "tempId",
+                      "name",
+                      "required",
+                      "formatRequirements",
+                      "namingRequirements",
+                      "quantity",
+                      "submissionChannel",
+                      "relatedTaskTempIds",
+                      "scopeIds",
+                      "confidence"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "maxItems": 200,
+                  "uniqueItems": false
+                },
+                "revisions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "supersedes",
+                          "cancels",
+                          "amends"
+                        ]
+                      },
+                      "targetDirectiveId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "scopeIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 4000
+                        },
+                        "maxItems": 200,
+                        "uniqueItems": true
+                      },
+                      "fromDirectiveId": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 4000
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "effective": {
+                        "type": "string",
+                        "enum": [
+                          "true",
+                          "false",
+                          "unknown"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "targetDirectiveId",
+                      "scopeIds",
+                      "fromDirectiveId",
+                      "effective"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "maxItems": 200,
+                  "uniqueItems": false
+                },
+                "conflicts": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "deadline",
+                          "project_match",
+                          "duplicate",
+                          "hierarchy",
+                          "other"
+                        ]
+                      },
+                      "message": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "entityTempIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 4000
+                        },
+                        "maxItems": 200,
+                        "uniqueItems": true
+                      },
+                      "scopeIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 4000
+                        },
+                        "maxItems": 200,
+                        "uniqueItems": true
+                      },
+                      "requiresDecision": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "type",
+                      "message",
+                      "entityTempIds",
+                      "scopeIds",
+                      "requiresDecision"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "maxItems": 200,
+                  "uniqueItems": false
+                },
+                "scopeAccounting": {
+                  "type": "array",
+                  "maxItems": 200,
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "scopeId",
+                      "kind",
+                      "primaryEntityIds"
+                    ],
+                    "properties": {
+                      "scopeId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "kind": {
+                        "type": "string",
+                        "enum": [
+                          "action",
+                          "event",
+                          "information",
+                          "unresolved"
+                        ]
+                      },
+                      "primaryEntityIds": {
+                        "type": "array",
+                        "maxItems": 200,
+                        "uniqueItems": true,
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 4000
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "required": [
+                "schemaVersion",
+                "tasks",
+                "prerequisiteStates",
+                "events",
+                "timePoints",
+                "materials",
+                "revisions",
+                "conflicts",
+                "scopeAccounting"
+              ],
+              "additionalProperties": false
+            }
+          }
+        }
+      },
+      "dispatchAuthorized": false,
+      "status": "NOT_RUN"
+    },
+    {
+      "batch": "V6-CURRENT-REAL-NOTICE-DEVELOPMENT-20261008-R1",
+      "ordinal": 4,
+      "sourceId": "V6-REAL-20261008-04",
+      "sourceVersionId": "V6-REAL-20261008-04-v1",
+      "sourceSha256": "ebc1612063c03172bf98302cffbc98c1f838830e732fefc246a01fbb0c30723b",
+      "arm": "SINGLE",
+      "candidate": "ObligationAuthority",
+      "candidateVersion": "obligation-authority-generation-1.0.0",
+      "promptVersion": "recognition-obligation-authority-1.0.0",
+      "generationContract": "obligation-authority-source-contract-6.0.0",
+      "requestSha256": "8db2a709f16439e80c3bde4c7b9f2e799c16f393dd718fef56d3828d3c633342",
+      "referenceSha256": "f21df96caf5bd83ad560e37046abf4b70303cbf8e0b57d93accf5ac8778c0d9b",
+      "model": "deepseek-flash",
+      "scorer": "v6-real-notice-provisional-1",
+      "commonLayer": "LOCAL_COVERAGE_1_SHARED_ATTRIBUTE_1_1_CURRENT_COMMON_PRODUCT",
+      "referenceTime": "2026-09-29T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "unitIdentitySha256": "a3f46bd1c03231dc0b75b0d8fc8b792129970eea49ced7bcdc9175074e33f428",
+      "body": {
+        "model": "deepseek-flash",
+        "temperature": 0,
+        "reasoning": {
+          "effort": "none"
+        },
+        "stream": false,
+        "max_output_tokens": 8192,
+        "input": [
+          {
+            "role": "system",
+            "content": [
+              {
+                "type": "input_text",
+                "text": "根据通知输出指定JSON，按Schema顺序先完成tasks和prerequisiteStates，再组织活动、时间、材料及逐片段覆盖；只输出JSON，不调用第二次核对。\n第一层是最小义务：每个需要独立完成的动作+对象先有真实task，包括准备设备、报名、激活登录。资格condition回答适用性，dependencyTempIds/prerequisiteStates回答前一步是否完成；未给个人状态用unknown，不写true。已录取才参与等资格与准备后的顺序不能互相冒充。格式、材料名称、办理结果、纯说明和禁止不是独立动作；另需缴费等新动作也不能吞为criteria/地点附注。\n第二层只声明一份关联：每项任务eventLinks列真实关联活动及该关系的scopeIds，依据同时出现在该task.propositionScopeIds及event.scopeIds；event不再生成relatedTaskTempIds反向副本，由程序派生。关系不明保留冲突/unknown，不能仅因同来源就相连。材料.relatedTaskTempIds、timePoints.owners仍为各自一份权威归属；同窗口适用于两个动作须列两个真实task owner，不许只写coverage present。\ncoverage四态逐类明确：present必须有对应真实实体和owner/eventLinks且absenceScopeIds为空；not_stated是没提，explicit_none引用明示没有，unknown保留未决。模糊、仅日期、未公布起止仍有time实体和原文rawText，日期由公共程序解释，不能补默认时刻。办理窗口window_start/window_end不能变deadline。\n第三层保留独立事件和附属说明：无任务也保留事件、起止和明确未公布。一个活动一个event；真正独立不同活动分开。attributes只保留形式、互动、结业结果、地点附注，不替代已经识别的义务。scopeAccounting引用真实主task/event，附属引用和反向索引由程序派生；不能把scope当实体，不伪造遗漏事实覆盖。\n所有事实保留逐字依据；材料格式、命名、明确目的地和完成标准保留，回执不冒充渠道。取消/替代用真实对象端点，未知端点保持风险。原文事实、个人状态与个人计划分开；不生成计划、不正式写入、不增加常识义务。"
+              }
+            ]
+          },
+          {
+            "role": "user",
+            "content": [
+              {
+                "type": "input_text",
+                "text": "{\"source\":\"活动信息\\n\\n**时间**\\n\\n2026年10月12日（周一）\\n\\n12:30-14:00\\n\\n**地点**\\n\\n海韵园办公楼A栋302室\\n\\n**报名**\\n\\n扫描下方二维码进行报名，听众报名截止时间为2026年10月11日中午12:00，主办方提供50份免费午餐，按报名顺序先到先得（讲座的听众总人数不作限制，感兴趣均可报名）。\",\"referenceTime\":\"2026-09-29T09:00:00+08:00\",\"timezone\":\"Asia/Shanghai\",\"scopes\":[{\"id\":\"scope-0001-5f8df81395009c48955db508a34d7f5d4730bc0cf080ac1af39ada90a3b636a0\",\"text\":\"活动信息\"},{\"id\":\"scope-0002-99f400790776d5ac1f3d5b805a75c8aeab28cf94d2fb814cb33ae5b14d2a7996\",\"text\":\"**时间**\"},{\"id\":\"scope-0003-acb3632e61d0b80afe89a029c0f10763ef4784ea35b6b8dc65d6610c21695ea9\",\"text\":\"2026年10月12日（周一）\"},{\"id\":\"scope-0004-1b0a3c6b792bf55c34445752c6fb174fa39688f405e623ec63a58e975dcd761b\",\"text\":\"12:30-14:00\"},{\"id\":\"scope-0005-1b9b33a0cd9285fc141292b2ad684e396f75bb6af5d0bbd876c799d32748e2e3\",\"text\":\"**地点**\"},{\"id\":\"scope-0006-dc100c4c236515ddabf68394e673adf772fb3c66050ec5ef895b368927331fa3\",\"text\":\"海韵园办公楼A栋302室\"},{\"id\":\"scope-0007-17fc43402a4577b6b67bfb33fcb35321eb82bb5ed1df7b3bd6abedb06dcc3ee2\",\"text\":\"**报名**\"},{\"id\":\"scope-0008-2c3eedec4dcb49b65de265b0b9925e720d3927f045705696d6ce4489555e60c6\",\"text\":\"扫描下方二维码进行报名，\"},{\"id\":\"scope-0009-85f6224c448bd033fec9952e9b689766939230d04d1e532f3278fd4fead3aa84\",\"text\":\"听众报名截止时间为2026年10月11日中午12:00，\"},{\"id\":\"scope-0010-b71a99fab4880255d5c54a3c97358917180189f3fac2d2ffac2d112662dacc75\",\"text\":\"主办方提供50份免费午餐，\"},{\"id\":\"scope-0011-432efbffebdb9624bbba0e90119a2864f1a392315deb4ef7db7dbc583a6641b1\",\"text\":\"按报名顺序先到先得（讲座的听众总人数不作限制，\"},{\"id\":\"scope-0012-638b3250bce23ac6ea63f1fd9b2f7119c58825a0a9406295c155b21a032910f7\",\"text\":\"感兴趣均可报名）。\"}]}"
+              }
+            ]
+          }
+        ],
+        "text": {
+          "format": {
+            "type": "json_schema",
+            "name": "source_semantics",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "schemaVersion": {
+                  "type": "string",
+                  "const": "obligation-authority-source-contract-6.0.0"
+                },
+                "tasks": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "propositionScopeIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 4000
+                        },
+                        "maxItems": 200,
+                        "uniqueItems": true
+                      },
+                      "semantics": {
+                        "type": "object",
+                        "properties": {
+                          "actor": {
+                            "type": "string",
+                            "enum": [
+                              "addressee",
+                              "addressed_group",
+                              "issuer",
+                              "third_party",
+                              "unknown"
+                            ]
+                          },
+                          "speechAct": {
+                            "type": "string",
+                            "enum": [
+                              "directive",
+                              "assertive",
+                              "interrogative",
+                              "hypothetical",
+                              "quoted",
+                              "unknown"
+                            ]
+                          },
+                          "polarity": {
+                            "type": "string",
+                            "enum": [
+                              "affirmative",
+                              "negative",
+                              "uncertain"
+                            ]
+                          },
+                          "tense": {
+                            "type": "string",
+                            "enum": [
+                              "future",
+                              "present",
+                              "past",
+                              "unknown"
+                            ]
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": [
+                              "pending",
+                              "completed",
+                              "cancelled",
+                              "unknown"
+                            ]
+                          },
+                          "validity": {
+                            "type": "string",
+                            "enum": [
+                              "active",
+                              "superseded",
+                              "uncertain"
+                            ]
+                          },
+                          "modality": {
+                            "type": "string",
+                            "enum": [
+                              "required",
+                              "recommended",
+                              "optional",
+                              "informational",
+                              "unknown"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "actor",
+                          "speechAct",
+                          "polarity",
+                          "tense",
+                          "status",
+                          "validity",
+                          "modality"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "inferenceLevel": {
+                        "type": "string",
+                        "enum": [
+                          "explicit",
+                          "strong_inference",
+                          "optional_suggestion"
+                        ]
+                      },
+                      "actionType": {
+                        "type": "string",
+                        "enum": [
+                          "review",
+                          "complete",
+                          "fill",
+                          "prepare",
+                          "attend",
+                          "carry",
+                          "save",
+                          "print",
+                          "submit",
+                          "upload",
+                          "send",
+                          "contact",
+                          "collect",
+                          "sign",
+                          "register",
+                          "pay",
+                          "other"
+                        ]
+                      },
+                      "action": {
+                        "type": "object",
+                        "properties": {
+                          "scopeId": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "surface": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        },
+                        "required": [
+                          "scopeId",
+                          "surface"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "object": {
+                        "type": "object",
+                        "properties": {
+                          "scopeId": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "surface": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        },
+                        "required": [
+                          "scopeId",
+                          "surface"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "effect": {
+                        "type": "string",
+                        "enum": [
+                          "local_change",
+                          "external_transfer",
+                          "external_interaction",
+                          "physical_action",
+                          "unknown"
+                        ]
+                      },
+                      "detail": {
+                        "type": "object",
+                        "properties": {
+                          "parentTempId": {
+                            "anyOf": [
+                              {
+                                "type": "string",
+                                "minLength": 1,
+                                "maxLength": 4000
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "hierarchyType": {
+                            "type": "string",
+                            "enum": [
+                              "task",
+                              "subtask"
+                            ]
+                          },
+                          "title": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 4000
+                          },
+                          "description": {
+                            "type": "string",
+                            "maxLength": 4000
+                          },
+                          "completionCriteria": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 4000
+                            },
+                            "maxItems": 200,
+                            "uniqueItems": false
+                          },
+                          "estimatedMinutes": {
+                            "anyOf": [
+                              {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 10080
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "statusSuggestion": {
+                            "const": "todo"
+                          },
+                          "prioritySuggestion": {
+                            "type": "string",
+                            "enum": [
+                              "low",
+                              "medium",
+                              "high",
+                              "urgent"
+                            ]
+                          },
+                          "dependencyTempIds": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 4000
+                            },
+                            "maxItems": 200,
+                            "uniqueItems": true
+                          },
+                          "confidence": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 1
+                          },
+                          "userConfirmationRequired": {
+                            "const": true
+                          }
+                        },
+                        "required": [
+                          "parentTempId",
+                          "hierarchyType",
+                          "title",
+                          "description",
+                          "completionCriteria",
+                          "estimatedMinutes",
+                          "statusSuggestion",
+                          "prioritySuggestion",
+                          "dependencyTempIds",
+                          "confidence",
+                          "userConfirmationRequired"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "condition": {
+                        "type": "object",
+                        "properties": {
+                          "value": {
+                            "type": "string",
+                            "enum": [
+                              "true",
+                              "false",
+                              "unknown",
+                              "not_applicable"
+                            ]
+                          },
+                          "conditionScopeIds": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 4000
+                            },
+                            "maxItems": 200,
+                            "uniqueItems": true
+                          },
+                          "factScopeIds": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 4000
+                            },
+                            "maxItems": 200,
+                            "uniqueItems": true
+                          }
+                        },
+                        "required": [
+                          "value",
+                          "conditionScopeIds",
+                          "factScopeIds"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "coverage": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "time",
+                          "material",
+                          "event"
+                        ],
+                        "properties": {
+                          "time": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [
+                              "status",
+                              "absenceScopeIds"
+                            ],
+                            "properties": {
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "present",
+                                  "not_stated",
+                                  "explicit_none",
+                                  "unknown"
+                                ]
+                              },
+                              "absenceScopeIds": {
+                                "type": "array",
+                                "maxItems": 200,
+                                "uniqueItems": true,
+                                "items": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 4000
+                                }
+                              }
+                            }
+                          },
+                          "material": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [
+                              "status",
+                              "absenceScopeIds"
+                            ],
+                            "properties": {
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "present",
+                                  "not_stated",
+                                  "explicit_none",
+                                  "unknown"
+                                ]
+                              },
+                              "absenceScopeIds": {
+                                "type": "array",
+                                "maxItems": 200,
+                                "uniqueItems": true,
+                                "items": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 4000
+                                }
+                              }
+                            }
+                          },
+                          "event": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [
+                              "status",
+                              "absenceScopeIds"
+                            ],
+                            "properties": {
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "present",
+                                  "not_stated",
+                                  "explicit_none",
+                                  "unknown"
+                                ]
+                              },
+                              "absenceScopeIds": {
+                                "type": "array",
+                                "maxItems": 200,
+                                "uniqueItems": true,
+                                "items": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 4000
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "description": "四态声明不替代事实：present必须能从实际材料、时间owners、eventLinks找到实体；not_stated/explicit_none/unknown仍分别保留。"
+                      },
+                      "eventLinks": {
+                        "type": "array",
+                        "maxItems": 200,
+                        "uniqueItems": true,
+                        "items": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": [
+                            "eventId",
+                            "scopeIds"
+                          ],
+                          "properties": {
+                            "eventId": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 4000
+                            },
+                            "scopeIds": {
+                              "type": "array",
+                              "minItems": 1,
+                              "maxItems": 200,
+                              "uniqueItems": true,
+                              "items": {
+                                "type": "string",
+                                "minLength": 1,
+                                "maxLength": 4000
+                              }
+                            }
+                          }
+                        },
+                        "description": "报名/准备等真实义务关联的活动；每条依据须同时被任务propositionScopeIds和对应事件scopeIds引用。不复制事件反向任务索引；无关联填空数组。"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "propositionScopeIds",
+                      "semantics",
+                      "inferenceLevel",
+                      "actionType",
+                      "action",
+                      "object",
+                      "effect",
+                      "detail",
+                      "condition",
+                      "coverage",
+                      "eventLinks"
+                    ],
+                    "additionalProperties": false,
+                    "description": "先列每个独立义务的动作、对象、适用条件及前置。准备设备/提交/激活等动作不能放入事件附注。eventLinks是任务关联活动的一份权威声明，附逐字依据。"
+                  },
+                  "maxItems": 200,
+                  "uniqueItems": false
+                },
+                "prerequisiteStates": {
+                  "type": "array",
+                  "maxItems": 200,
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "taskId",
+                      "predecessorId",
+                      "completion",
+                      "factScopeIds"
+                    ],
+                    "properties": {
+                      "taskId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "predecessorId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "completion": {
+                        "type": "string",
+                        "enum": [
+                          "true",
+                          "false",
+                          "unknown"
+                        ]
+                      },
+                      "factScopeIds": {
+                        "type": "array",
+                        "maxItems": 200,
+                        "uniqueItems": true,
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 4000
+                        }
+                      }
+                    }
+                  }
+                },
+                "events": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "tempId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "title": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "description": {
+                        "type": "string",
+                        "maxLength": 4000
+                      },
+                      "location": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 4000
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "scopeIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 4000
+                        },
+                        "maxItems": 200,
+                        "uniqueItems": true
+                      },
+                      "confidence": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                      },
+                      "inferenceLevel": {
+                        "type": "string",
+                        "enum": [
+                          "explicit",
+                          "strong_inference",
+                          "optional_suggestion"
+                        ]
+                      },
+                      "attributes": {
+                        "type": "array",
+                        "maxItems": 40,
+                        "items": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": [
+                            "kind",
+                            "text",
+                            "scopeIds"
+                          ],
+                          "properties": {
+                            "kind": {
+                              "type": "string",
+                              "enum": [
+                                "format",
+                                "participation",
+                                "outcome",
+                                "location_note"
+                              ]
+                            },
+                            "text": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 4000
+                            },
+                            "scopeIds": {
+                              "type": "array",
+                              "maxItems": 200,
+                              "uniqueItems": true,
+                              "items": {
+                                "type": "string",
+                                "minLength": 1,
+                                "maxLength": 4000
+                              },
+                              "minItems": 1
+                            }
+                          }
+                        },
+                        "description": "仅形式、互动、结果和真正地点附注。需/须/请准备等独立动作先列任务，不能被附注或完成标准吞掉。"
+                      }
+                    },
+                    "required": [
+                      "tempId",
+                      "title",
+                      "description",
+                      "location",
+                      "scopeIds",
+                      "confidence",
+                      "inferenceLevel",
+                      "attributes"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "maxItems": 200,
+                  "uniqueItems": false
+                },
+                "timePoints": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "tempId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "registration_deadline",
+                          "submission_deadline",
+                          "task_deadline",
+                          "event_start",
+                          "event_end",
+                          "result_announcement",
+                          "planned_start",
+                          "window_start",
+                          "window_end"
+                        ]
+                      },
+                      "rawText": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "scopeIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 4000
+                        },
+                        "maxItems": 200,
+                        "uniqueItems": true
+                      },
+                      "confidence": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                      },
+                      "owners": {
+                        "type": "array",
+                        "minItems": 1,
+                        "maxItems": 200,
+                        "uniqueItems": true,
+                        "items": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": [
+                            "kind",
+                            "entityId"
+                          ],
+                          "properties": {
+                            "kind": {
+                              "type": "string",
+                              "enum": [
+                                "task",
+                                "material",
+                                "event_start",
+                                "event_end"
+                              ]
+                            },
+                            "entityId": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 4000
+                            }
+                          }
+                        },
+                        "description": "时间的一份权威归属。多个动作共用窗口须逐个列真实task owner；事件起止使用event_start/event_end。未公布/模糊仍保留原文时间实体，不猜日期。"
+                      }
+                    },
+                    "required": [
+                      "tempId",
+                      "type",
+                      "rawText",
+                      "scopeIds",
+                      "confidence",
+                      "owners"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "maxItems": 200,
+                  "uniqueItems": false
+                },
+                "materials": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "tempId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "name": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "required": {
+                        "type": "boolean"
+                      },
+                      "formatRequirements": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 4000
+                        },
+                        "maxItems": 200,
+                        "uniqueItems": false
+                      },
+                      "namingRequirements": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 4000
+                        },
+                        "maxItems": 200,
+                        "uniqueItems": false
+                      },
+                      "quantity": {
+                        "anyOf": [
+                          {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 10080
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "submissionChannel": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 4000
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "relatedTaskTempIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 4000
+                        },
+                        "maxItems": 200,
+                        "uniqueItems": true
+                      },
+                      "scopeIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 4000
+                        },
+                        "maxItems": 200,
+                        "uniqueItems": true
+                      },
+                      "confidence": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                      }
+                    },
+                    "required": [
+                      "tempId",
+                      "name",
+                      "required",
+                      "formatRequirements",
+                      "namingRequirements",
+                      "quantity",
+                      "submissionChannel",
+                      "relatedTaskTempIds",
+                      "scopeIds",
+                      "confidence"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "maxItems": 200,
+                  "uniqueItems": false
+                },
+                "revisions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "supersedes",
+                          "cancels",
+                          "amends"
+                        ]
+                      },
+                      "targetDirectiveId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "scopeIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 4000
+                        },
+                        "maxItems": 200,
+                        "uniqueItems": true
+                      },
+                      "fromDirectiveId": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 4000
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "effective": {
+                        "type": "string",
+                        "enum": [
+                          "true",
+                          "false",
+                          "unknown"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "targetDirectiveId",
+                      "scopeIds",
+                      "fromDirectiveId",
+                      "effective"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "maxItems": 200,
+                  "uniqueItems": false
+                },
+                "conflicts": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "deadline",
+                          "project_match",
+                          "duplicate",
+                          "hierarchy",
+                          "other"
+                        ]
+                      },
+                      "message": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "entityTempIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 4000
+                        },
+                        "maxItems": 200,
+                        "uniqueItems": true
+                      },
+                      "scopeIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 4000
+                        },
+                        "maxItems": 200,
+                        "uniqueItems": true
+                      },
+                      "requiresDecision": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "type",
+                      "message",
+                      "entityTempIds",
+                      "scopeIds",
+                      "requiresDecision"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "maxItems": 200,
+                  "uniqueItems": false
+                },
+                "scopeAccounting": {
+                  "type": "array",
+                  "maxItems": 200,
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "scopeId",
+                      "kind",
+                      "primaryEntityIds"
+                    ],
+                    "properties": {
+                      "scopeId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4000
+                      },
+                      "kind": {
+                        "type": "string",
+                        "enum": [
+                          "action",
+                          "event",
+                          "information",
+                          "unresolved"
+                        ]
+                      },
+                      "primaryEntityIds": {
+                        "type": "array",
+                        "maxItems": 200,
+                        "uniqueItems": true,
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 4000
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "required": [
+                "schemaVersion",
+                "tasks",
+                "prerequisiteStates",
+                "events",
+                "timePoints",
+                "materials",
+                "revisions",
+                "conflicts",
+                "scopeAccounting"
+              ],
+              "additionalProperties": false
+            }
+          }
+        }
+      },
+      "dispatchAuthorized": false,
+      "status": "NOT_RUN"
+    }
+  ]
+}
