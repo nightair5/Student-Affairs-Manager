@@ -1,0 +1,97 @@
+{
+  "view": "FOCUSED_READBACK_EVIDENCE_NOT_FULL_BACKUP",
+  "original": {
+    "path": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\afternoon-mainline-20261008\\browser-originals\\FINAL-TRANSACTION-MANUAL-RECOVERY.json",
+    "sha256": "56038662967347cb054269d7ef9ae22b005daf471303733a0f968594e4f45546"
+  },
+  "canonicalCounts": {
+    "tasks": 0,
+    "events": 1,
+    "timePoints": 2,
+    "materials": 0
+  },
+  "tasks": [],
+  "events": [
+    {
+      "id": "event:source:495e6cb6:draft:1:E1",
+      "projectId": null,
+      "title": "网络服务在周五晚上维护",
+      "description": "网络服务在周五晚上维护，\n结束时间尚未公布。",
+      "startTimePointId": "time:source:495e6cb6:draft:1:P1",
+      "endTimePointId": "time:source:495e6cb6:draft:1:P2",
+      "location": null,
+      "createdAt": "2026-10-08T10:19:23.546Z",
+      "updatedAt": "2026-10-08T10:19:23.546Z",
+      "legacyData": {
+        "recognitionTempId": "E1",
+        "evidenceIds": [
+          "d26-scope-0001-7607ef84f0f5f8a362ffd40c857ce5a12189b554296c47b00caffae736d8fee1",
+          "d26-scope-0002-81b865df15ccdd250aaf69192a8424ffd3d6d35db25dd7c04d95d4bdca84ad2d"
+        ],
+        "inferenceLevel": "explicit",
+        "sourceReviewDraftId": "source:495e6cb6:draft:1"
+      }
+    }
+  ],
+  "timePoints": [
+    {
+      "id": "time:source:495e6cb6:draft:1:P1",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": null,
+      "materialId": null,
+      "eventId": "event:source:495e6cb6:draft:1:E1",
+      "relatedTaskIds": [],
+      "relatedMaterialIds": [],
+      "type": "event_start",
+      "rawText": "周五晚上",
+      "normalizedValue": null,
+      "timezone": null,
+      "isAllDay": false,
+      "precision": "vague",
+      "needsConfirmation": true,
+      "createdAt": "2026-10-08T10:19:23.546Z",
+      "updatedAt": "2026-10-08T10:19:23.546Z",
+      "legacyData": {
+        "recognitionTempId": "P1",
+        "evidenceIds": [
+          "d26-scope-0001-7607ef84f0f5f8a362ffd40c857ce5a12189b554296c47b00caffae736d8fee1"
+        ],
+        "confidence": 1,
+        "sharedEventIds": [
+          "event:source:495e6cb6:draft:1:E1"
+        ]
+      }
+    },
+    {
+      "id": "time:source:495e6cb6:draft:1:P2",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": null,
+      "materialId": null,
+      "eventId": "event:source:495e6cb6:draft:1:E1",
+      "relatedTaskIds": [],
+      "relatedMaterialIds": [],
+      "type": "event_end",
+      "rawText": "结束时间尚未公布",
+      "normalizedValue": null,
+      "timezone": null,
+      "isAllDay": false,
+      "precision": "vague",
+      "needsConfirmation": true,
+      "createdAt": "2026-10-08T10:19:23.546Z",
+      "updatedAt": "2026-10-08T10:19:23.546Z",
+      "legacyData": {
+        "recognitionTempId": "P2",
+        "evidenceIds": [
+          "d26-scope-0002-81b865df15ccdd250aaf69192a8424ffd3d6d35db25dd7c04d95d4bdca84ad2d"
+        ],
+        "confidence": 1,
+        "sharedEventIds": [
+          "event:source:495e6cb6:draft:1:E1"
+        ]
+      }
+    }
+  ],
+  "sourceFactsNotInvented": true
+}

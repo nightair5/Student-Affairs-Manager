@@ -17,6 +17,7 @@ import {obligationRecordedScene} from './obligation-authority-recorded-readonly.
 import {autonomousV6RecordedScene} from './autonomous-v6-readonly.mjs'
 import {afternoonRoleScene} from './afternoon-role-readonly.mjs'
 import {observedSettledBatch} from './settled-batch-observed-readonly.mjs'
+import {verifyV6Notices,ROOT as MORNINGROOT,BATCH as MORNINGBATCH,COUNT as MORNINGCOUNT} from './autonomous-v6-notice.mjs'
 import {verifyV5NoticeDiagnostic,ROOT as V5ROOT,BATCH as V5BATCH,COUNT as V5COUNT} from './prepare-v5-current-notice.mjs'
 const [port,instance,fixtureMode]=process.argv.slice(2)
 if(process.argv.length>5||fixtureMode&&!['--channel-role-fixtures','--channel-polarity-fixtures','--eligibility-fixtures','--public-notice-fixtures','--public-paid-recordings','--sealed-followup-fixtures','--current-notice-fixtures','--current-notice-batch','--current-notice-completed','--single-authority-fixtures','--single-authority-comparison','--single-authority-observed','--current-mechanism-fixtures','--v5-current-real-recordings','--v5-current-real-fixtures','--obligation-authority-fixtures','--obligation-authority-comparison','--autonomous-v6-recordings','--afternoon-role-fixtures','--afternoon-role-recordings'].includes(fixtureMode))throw Error('C19_UNKNOWN_REPLAY_MODE')
@@ -27,7 +28,7 @@ let scene,recordings,batchLabel,plannedRequests,knownSettled,initialOrdinal,curr
 if(fixtureMode==='--afternoon-role-fixtures'){
   scene={role:'ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT',modelRequests:0};recordings=[];currentSources=[];plannedRequests=8;knownSettled=0;initialOrdinal=101;batchLabel='V7角色分离仅工程夹具；新比较未发送，不是模型成绩'
 }else if(fixtureMode==='--afternoon-role-recordings'){
-  const verified=afternoonRoleScene(),historical=await autonomousV6RecordedScene();scene=verified.scene;recordings=[...verified.recordings,...historical.recordings.map(r=>({...r,ordinal:r.ordinal+50}))];currentSources=[...verified.sources,...historical.sources];plannedRequests=8;knownSettled=verified.recordings.length;initialOrdinal=recordings[0]?.ordinal??101;batchLabel='下午V6/V7角色分离4作者Development通知两臂；'+knownSettled+'份确定录制；另4份上午官方节选回归，分母和结果分开，不是Holdout'
+  const verified=afternoonRoleScene(),historical=observedSettledBatch({root:MORNINGROOT,execution:resolve('.data/autonomous-mainline-20261008/execution'),batch:MORNINGBATCH,count:MORNINGCOUNT,verifyPacket:verifyV6Notices});scene=verified.scene;recordings=[...verified.recordings,...historical.recordings.map(r=>({...r,ordinal:r.ordinal+50}))];currentSources=[...verified.sources,...historical.sources];plannedRequests=8;knownSettled=verified.recordings.length;initialOrdinal=recordings[0]?.ordinal??101;batchLabel='下午V6/V7角色分离4作者Development通知两臂；'+knownSettled+'份确定录制；另4份上午官方节选回归，分母和结果分开，不是Holdout'
 }else if(fixtureMode==='--autonomous-v6-recordings'){
   const verified=await autonomousV6RecordedScene(),historical=observedSettledBatch({root:V5ROOT,execution:resolve('.data/v5-current-notice/execution'),batch:V5BATCH,count:V5COUNT,verifyPacket:verifyV5NoticeDiagnostic});scene=verified.scene;recordings=[...verified.recordings,...historical.recordings.map(r=>({...r,ordinal:r.ordinal+50}))];currentSources=[...verified.sources,...historical.sources]
   plannedRequests=4;knownSettled=verified.recordings.length;initialOrdinal=recordings[0]?.ordinal??101

@@ -1,0 +1,244 @@
+Browser tab: 7, Title: "学生事务管家 · C19真实录制产品修复", URL: "http://127.0.0.1:6902/".
+0 AXWebArea 学生事务管家 · C19真实录制产品修复, URL: 127.0.0.1:6902/
+	1 container root
+		2 link Description: 跳到主要内容, Value: 127.0.0.1:6902/#main-content
+		3 container
+			4 button 返回今日首页
+				5 text 事务管家
+				6 text STUDENT DESK
+			7 button 新事务 N
+				8 image
+				9 text 新事务
+				10 text N
+			11 container 主要导航
+				12 text 执行闭环
+				13 button 今日
+					14 image
+					15 text 今日
+				16 button 收件箱
+					17 image
+					18 text 收件箱
+				19 button 打开待确认队列，共 2 项
+					20 image
+					21 text 待确认
+					22 text 2
+				23 button 项目
+					24 image
+					25 text 项目
+				26 button 日历
+					27 image
+					28 text 日历
+				29 button 资料库
+					30 image
+					31 text 资料库
+				32 text 低频工具
+				33 button 所有任务
+					34 image
+					35 text 所有任务
+				36 button 知识问答
+					37 image
+					38 text 知识问答
+				39 button 周报月报
+					40 image
+					41 text 周报月报
+			42 button 搜索事项
+				43 image
+				44 text 搜索事项
+			45 button 新手教程
+				46 image
+				47 text 新手教程
+			48 button 设置与服务
+				49 image
+				50 text 设置与服务
+			51 button 隐私与数据
+				52 image
+				53 text 隐私与数据
+			54 text 已在此设备自动保存 同一浏览器与站点地址下可恢复；识别结果确认后才入库。
+		55 container main-content
+			56 button (collapsed) 匿名工程输入 · 普通产品路径 · 不发送模型请求, Secondary Actions: Expand
+				57 text 匿名工程输入 · 普通产品路径 · 不发送模型请求
+			138 container
+				139 text 来源先保存，确认后入库
+				140 heading 待确认, Value: 1
+					141 text 待确认
+				142 text 这里只显示已经形成建议、仍等待你核对的来源；确认前不会创建正式任务。
+				143 image
+				144 text 1
+				145 text 份需关注
+				146 container 收件箱视图
+					147 checkbox 全部来源, Value: 0
+					148 checkbox 待确认 1, Value: 1
+				149 button 新建手动来源
+					150 image
+					151 text 新建手动来源
+				152 checkbox (settable, integer) Description: 选择全部待核对, Value: 0
+				153 container
+					154 checkbox (settable, integer) Description: 选择 手动粘贴消息, Value: 0
+					155 text 选择  手动粘贴消息
+				156 container
+					157 text RoleAuthority 固定录制（非实时调用） 建议 待核对
+				158 heading 手动粘贴消息, Value: 2
+					159 text 手动粘贴消息
+				160 text 图像解读交流会面向在读本科生。有意参加者可通过预约二维码报名图像解读交流会，报名截止为2026年12月14日16:20。图像解读交流会于2026年12月16日10:10开始，结束时间尚未公布。
+				161 text 识别建议已保存，确认前不会创建正式任务。
+				162 definition list
+					163 container 项目
+						164 text 项目
+					165 text 独立事项
+					166 container 实体
+						167 text 实体
+					168 text 1 任务 · 0 材料 · 3 时间 · 1 活动
+				169 container
+					170 button 核对 1 项任务、1 个事件
+						171 image
+						172 text 核对 1 项任务、1 个事件
+					173 button 查看来源
+						174 image
+						175 text 查看来源
+					176 button 归档
+						177 image
+						178 text 归档
+		179 container
+			180 text 匿名工程建议已生成；没有模型请求，核对后走普通正式保存。
+			181 button 关闭提示
+		182 container 识别出 1 项任务、1 个事件
+			183 container
+				184 text 第 2 步 ·  RoleAuthority 固定录制（非实时调用） · 比较后程序转换 · 无新模型请求
+				185 heading 识别出 1 项任务、1 个事件, Value: 2, ID: :r1:
+					186 text 识别出 1 项任务、1 个事件
+				187 text 先看标题和时间；不准确时再点“编辑”。
+				188 button 稍后处理并关闭
+					189 image
+			190 container 未确认编辑检查点
+				191 text 本来源核对会话
+				192 text 编辑在确认前不会创建任务。
+			193 image
+			194 text 1 项任务、1 个事件待确认
+			195 text 确认后才会进入今日和任务中心
+			196 container 项目匹配与识别质量
+				197 image
+				198 text 项目归属建议
+				199 text 未主动建立或匹配项目。
+				200 container
+					201 text 选择项目归属
+					202 pop up button (collapsed, settable) 选择项目归属, Value: 作为独立事项, Secondary Actions: Expand
+						203 menu
+							204 新建项目
+							205 (selected) 作为独立事项
+							206 稍后决定
+				207 image
+				208 text 需要重点核对
+				209 text 包含事件安排；存在识别冲突；存在质量标记
+				210 button 只保留原文明确
+				211 container 聚焦复核原因
+					212 container
+						213 image
+						214 text 这份通知包含多个时间、材料或阶段 系统已经完成初步整理，请重点确认标记项；不会自动选择、修改或创建任何事项。
+					215 content list
+						216 container
+							217 text 包含事件安排 识别到 1 个事件，请核对开始时间、地点和是否需要创建。
+						218 container
+							219 text 存在识别冲突 1 项结果互相冲突，不会自动替你决定。
+						220 container
+							221 text 存在质量标记 1 项质量标记需要人工复核。
+					222 container 来源提取元数据
+						223 text 96  字
+					224 text 质量标记
+					225 content list
+						226 text 资格尚未确认，不能当成已符合；请保留待核对。
+				227 container
+					228 text 发现  1  项冲突
+				229 container
+					230 text 资格尚未确认，不能当成已符合；请保留待核对。 暂无可定位依据
+			231 container
+				232 button (expanded) 原始通知与定位依据, Secondary Actions: Collapse
+					233 image
+					234 text 原始通知与定位依据
+				235 text 图像解读交流会面向在读本科生。有意参加者可通过预约二维码报名图像解读交流会，报名截止为2026年12月14日16:20。图像解读交流会于2026年12月16日10:10开始，结束时间尚未公布。
+			236 container 项目树待确认事项
+				237 container 同一通知的独立事件与信息
+					238 heading 同一通知的事件, Value: 3
+						239 text 同一通知的事件
+					240 container
+						241 text 图像解读交流会 地点未说明 ； 2026年12月16日 10:10（原文：2026年12月16日10:10） → 结束时间尚未公布（具体时刻未知，不创建确定日程） 图像解读交流会面向在读本科生。 有意参加者可通过预约二维码报名图像解读交流会， 图像解读交流会于2026年12月16日10:10开始， 结束时间尚未公布。 关联事项： 报名图像解读交流会 。任务是否已确认单独保留。 保留，待正式确认 处置“ 图像解读交流会 ”
+						242 pop up button (collapsed, settable) 处置“图像解读交流会”, Value: 保留, Secondary Actions: Expand
+							243 menu
+								244 (selected) 保留
+								245 暂缓
+								246 拒绝多余事件
+						247 button 编辑事件
+					248 text 没有待办也可以保存停机、维护等事件。纯信息可直接标记已核对，不创建任务或空项目。
+					249 button 依据原文补充遗漏事件
+					250 button 依据原文补充遗漏任务
+				251 container
+					252 container
+						253 checkbox (settable, integer) Description: 选择该任务, Value: 0
+						254 text 选择该任务
+					255 text 1
+					256 text 报名图像解读交流会
+					257 container
+						258 image
+						259 text 2026年12月14日16:20
+					260 button 编辑
+						261 image
+						262 text 编辑
+					263 text 其他 耗时尚未估计 可选建议 核对后动作 报名图像解读交流会 资格尚未确认，不能当成已符合；请保留待核对。
+					264 button (collapsed) 为什么这样拆？, Secondary Actions: Expand
+						265 text 为什么这样拆？
+					266 button 不需要
+						267 image
+						268 text 不需要
+					269 button (disabled) 加入任务
+						270 image
+						271 text 加入任务
+				272 container
+					273 heading 时间节点, Value: 3
+						274 text 时间节点
+					275 checkbox (settable, integer) Description: registration_deadline 2026年12月14日16:20, Value: 1
+					276 text registration_deadline
+					277 text 2026年12月14日16:20
+					278 button 在原文中定位
+					279 checkbox (settable, integer) Description: event_start 2026年12月16日10:10, Value: 1
+					280 text event_start
+					281 text 2026年12月16日10:10
+					282 button 在原文中定位
+					283 checkbox (settable, integer) Description: event_end 结束时间尚未公布 · 需要确认, Value: 1
+					284 text event_end
+					285 container
+						286 text 结束时间尚未公布  · 需要确认
+					287 button 在原文中定位
+			288 container
+				289 button 仅保存独立事件；任务仍待核对
+				290 button 稍后再处理
+		108 container
+			109 button (expanded) 本批真实录制 · 选择来源与独立读回, Secondary Actions: Collapse
+				110 text 本批真实录制 · 选择来源与独立读回
+			111 text 2b2642fba705 / source e4b3f58baa8c ； rco-mainline-01-02-i1-d27-plan-recorded-afternoon-role-verified ； source-event-task-relations-1 / source-support-accounting-projection-1.1.0 / event-time-label-context-1.0.0 / source-grounded-nonaction-projection-1.0.1 / source-grounded-conditional-nonaction-1.0.0 / explicit-source-contract-4.0.0 / material-channel-role-grounding-1.4.0 / source-proven-eligibility-1.0.0 / source-time-semantics-2.1.0 / grounded-first-suggestion-1.4.0 / single-authority-shared-attribute-index-1.2.0 / authority-local-coverage-1.1.0 / obligation-local-relation-1.0.0 / authority-endpoint-composition-1.1.0 / authority-support-context-1.2.0 / source-information-preview-1.0.0 / source-window-endpoints-1.2.0 / source-window-plan-1.1.0 / literal-optional-participation-1.0.0 / authority-primary-support-index-1.0.0 ；ENGINEERING_REPLAY；此入口模型请求0。 下午V6/V7角色分离4作者Development通知两臂；5份确定录制；另4份上午官方节选回归，分母和结果分开，不是Holdout；另6份工程夹具独立标记，不计模型样本 。下方是后验程序转换，不改原成绩。原答与冻结诊断不改。 当前生成契约： role-authority-source-contract-7.0.0 ； role-authority-generation-1.0.0 ； RECORDED_MODEL_ENGINEERING_REPLAY 录制来源
+			112 pop up button (collapsed, settable) 录制来源, Value: role-development-RA-01 / RoleAuthority / 原冻结：KNOWN_SETTLED_READ_ONLY_NOT_NEW_MODEL_SCORE, Secondary Actions: Expand
+				113 menu
+					114 role-development-RA-01 / ObligationAuthority / 原冻结：KNOWN_SETTLED_READ_ONLY_NOT_NEW_MODEL_SCORE
+					115 (selected) role-development-RA-01 / RoleAuthority / 原冻结：KNOWN_SETTLED_READ_ONLY_NOT_NEW_MODEL_SCORE
+					116 role-development-RA-02 / RoleAuthority / 原冻结：KNOWN_SETTLED_READ_ONLY_NOT_NEW_MODEL_SCORE
+					117 role-development-RA-02 / ObligationAuthority / 原冻结：KNOWN_SETTLED_READ_ONLY_NOT_NEW_MODEL_SCORE
+					118 role-development-RA-03 / ObligationAuthority / 原冻结：KNOWN_SETTLED_READ_ONLY_NOT_NEW_MODEL_SCORE
+					119 V6-REAL-20261008-01 / ObligationAuthority / 原冻结：KNOWN_SETTLED_READ_ONLY_NOT_NEW_MODEL_SCORE
+					120 V6-REAL-20261008-02 / ObligationAuthority / 原冻结：KNOWN_SETTLED_READ_ONLY_NOT_NEW_MODEL_SCORE
+					121 V6-REAL-20261008-03 / ObligationAuthority / 原冻结：KNOWN_SETTLED_READ_ONLY_NOT_NEW_MODEL_SCORE
+					122 V6-REAL-20261008-04 / ObligationAuthority / 原冻结：KNOWN_SETTLED_READ_ONLY_NOT_NEW_MODEL_SCORE
+					123 role-fixture-optional-channel / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT
+					124 authority-fixture-bad-owner / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT
+					125 contract-fixture-dependency / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT
+					126 obligation-fixture-shared-window / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT
+					127 obligation-fixture-equipment / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT
+					128 obligation-fixture-no-task / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT
+			129 text entry area Description: 本批匿名通知原文, Value: 图像解读交流会面向在读本科生。有意参加者可通过预约二维码报名图像解读交流会，报名截止为2026年12月14日16:20。图像解读交流会于2026年12月16日10:10开始，结束时间尚未公布。
+			130 text 复制到普通“新事务”；原回答、程序转换与用户修改分别保留。相对日期使用来源原基准  2026-10-08T16:30:00+08:00 。 另有 6 份匿名定向反例，经同一普通页面处理；由工程作者编写，不是模型回答，也没有新增付费身份。当前： RECORDED_MODEL_ENGINEERING_REPLAY 。
+			131 button 注入正式保存失败
+			132 button 注入提交后读回失败
+			133 button 注入检查点失败
+			134 text 未注入故障
+			135 button 本批独立canonical读回
+			136 button 页面测量读回
+			137 container 本批独立读回结果
+
+The focused UI element is 188 button 稍后处理并关闭

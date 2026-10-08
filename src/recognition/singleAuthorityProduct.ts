@@ -7,6 +7,7 @@ import { projectAuthoritySupportContext } from './authoritySupportContext'
 import { projectAuthorityEndpointComposition } from './authorityEndpointComposition'
 import { hasLiteralScopeSpan } from './authorityLiteralSupport'
 import { retainOptionalParticipation } from './optionalParticipationProduct'
+import { projectAuthorityPrimarySupport } from './authorityPrimarySupport'
 
 export const AUTHORITY_ATTRIBUTE_INDEX_VERSION = 'single-authority-attribute-index-1.0.0'
 export const AUTHORITY_SHARED_ATTRIBUTE_VERSION = 'single-authority-shared-attribute-index-1.2.0'
@@ -50,7 +51,8 @@ export function decodeAuthorityProductRecording(raw: string, context: WireContex
     .flatMap((v: { content?: { type?: string; text?: string }[] }) => v.content?.filter(c => c.type === 'output_text') ?? []) : []
   check(texts.length === 1 && typeof texts[0].text === 'string', 'RESPONSE_TEXT')
   const support = projectAuthoritySupportContext(JSON.parse(texts[0].text), context, localizeMissingCoverage)
-  const endpoints = projectAuthorityEndpointComposition(support.projected, context, localizeMissingCoverage)
+  const primary = localizeMissingCoverage ? projectAuthorityPrimarySupport(support.projected, context) : null
+  const endpoints = projectAuthorityEndpointComposition(primary?.projected ?? support.projected, context, localizeMissingCoverage)
   const projection = projectAuthorityAttributeIndex(endpoints.projected, context, localizeMissingCoverage)
   texts[0].text = JSON.stringify(projection.projected)
   const decoded = decodeSingleAuthorityRecording(JSON.stringify(envelope), context, role, localizeMissingCoverage)
@@ -61,5 +63,6 @@ export function decodeAuthorityProductRecording(raw: string, context: WireContex
     ...(optional ? { representationGaps: optional.representationGaps, optionalParticipation: optional.audit } : {}),
     ...(separatedWindowEvidence ? { publicWindowOwnerPolicy: 'EXPLICIT_SINGLE_WINDOW_REFERENCE' } : {}),
     attributeIndexAudit: projection.audit, authoritySupportContextAudit: support.audit, authorityEndpointCompositionAudit: endpoints.audit,
-    sourceWindowGrounding: first.sourceWindowGrounding, originalResponse: raw, postComparisonProductVersion: support.audit.version + '/' + endpoints.audit.version } }
+    ...(primary ? { authorityPrimarySupportAudit: primary.audit } : {}),
+    sourceWindowGrounding: first.sourceWindowGrounding, originalResponse: raw, postComparisonProductVersion: support.audit.version + '/' + endpoints.audit.version + (primary ? '/' + primary.audit.version : '') } }
 }

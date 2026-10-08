@@ -1,0 +1,325 @@
+Browser tab: 7, Title: "学生事务管家 · C19真实录制产品修复", URL: "http://127.0.0.1:6902/".
+0 AXWebArea 学生事务管家 · C19真实录制产品修复, URL: 127.0.0.1:6902/
+	1 container root
+		2 link Description: 跳到主要内容, Value: 127.0.0.1:6902/#main-content
+		3 container
+			4 button 返回今日首页
+				5 text 事务管家
+				6 text STUDENT DESK
+			7 button 新事务 N
+				8 image
+				9 text 新事务
+				10 text N
+			11 container 主要导航
+				12 text 执行闭环
+				13 button 今日
+					14 image
+					15 text 今日
+				16 button 收件箱
+					17 image
+					18 text 收件箱
+				19 button 打开待确认队列，共 8 项
+					20 image
+					21 text 待确认
+					22 text 8
+				23 button 项目
+					24 image
+					25 text 项目
+				26 button 日历
+					27 image
+					28 text 日历
+				29 button 资料库
+					30 image
+					31 text 资料库
+				32 text 低频工具
+				33 button 所有任务
+					34 image
+					35 text 所有任务
+				36 button 知识问答
+					37 image
+					38 text 知识问答
+				39 button 周报月报
+					40 image
+					41 text 周报月报
+			42 button 搜索事项
+				43 image
+				44 text 搜索事项
+			45 button 新手教程
+				46 image
+				47 text 新手教程
+			48 button 设置与服务
+				49 image
+				50 text 设置与服务
+			51 button 隐私与数据
+				52 image
+				53 text 隐私与数据
+			54 text 已在此设备自动保存 同一浏览器与站点地址下可恢复；识别结果确认后才入库。
+		55 container main-content
+			56 button (collapsed) 匿名工程输入 · 普通产品路径 · 不发送模型请求, Secondary Actions: Expand
+				57 text 匿名工程输入 · 普通产品路径 · 不发送模型请求
+			182 container
+				183 text 来源先保存，确认后入库
+				184 heading 待确认, Value: 1
+					185 text 待确认
+				186 text 这里只显示已经形成建议、仍等待你核对的来源；确认前不会创建正式任务。
+				187 image
+				188 text 3
+				189 text 份需关注
+				190 container 收件箱视图
+					191 checkbox 全部来源, Value: 0
+					192 checkbox 待确认 3, Value: 1
+				193 button 新建手动来源
+					194 image
+					195 text 新建手动来源
+				196 checkbox (settable, integer) Description: 选择全部待核对, Value: 0
+				197 container
+					198 checkbox (settable, integer) Description: 选择 手动粘贴消息, Value: 0
+					199 text 选择  手动粘贴消息
+				200 container
+					201 text ObligationAuthority 固定录制（非实时调用） 建议 待核对
+				202 heading 手动粘贴消息, Value: 2
+					203 text 手动粘贴消息
+				204 text 取得音像研习班录取资格的学员需先测试耳机。测试完成后安装音像研习班会议软件。音像研习班于2026年12月18日13:25开始，14:55结束。原文未说明任何人的录取或测试完成情况。
+				205 text 识别建议已保存，确认前不会创建正式任务。
+				206 definition list
+					207 container 项目
+						208 text 项目
+					209 text 独立事项
+					210 container 实体
+						211 text 实体
+					212 text 2 任务 · 0 材料 · 2 时间 · 1 活动
+				213 container
+					214 button 核对 2 项任务、1 个事件
+						215 image
+						216 text 核对 2 项任务、1 个事件
+					217 button 查看来源
+						218 image
+						219 text 查看来源
+					220 button 归档
+						221 image
+						222 text 归档
+				223 container
+					224 checkbox (settable, integer) Description: 选择 手动粘贴消息, Value: 0
+					225 text 选择  手动粘贴消息
+				226 container
+					227 text RoleAuthority 固定录制（非实时调用） 建议 待核对
+				228 heading 手动粘贴消息, Value: 2
+					229 text 手动粘贴消息
+				230 text 取得音像研习班录取资格的学员需先测试耳机。测试完成后安装音像研习班会议软件。音像研习班于2026年12月18日13:25开始，14:55结束。原文未说明任何人的录取或测试完成情况。
+				231 text 识别建议已保存，确认前不会创建正式任务。
+				232 definition list
+					233 container 项目
+						234 text 项目
+					235 text 独立事项
+					236 container 实体
+						237 text 实体
+					238 text 2 任务 · 0 材料 · 2 时间 · 1 活动
+				239 container
+					240 button 核对 2 项任务、1 个事件
+						241 image
+						242 text 核对 2 项任务、1 个事件
+					243 button 查看来源
+						244 image
+						245 text 查看来源
+					246 button 归档
+						247 image
+						248 text 归档
+				249 container
+					250 checkbox (settable, integer) Description: 选择 手动粘贴消息, Value: 0
+					251 text 选择  手动粘贴消息
+				252 container
+					253 text RoleAuthority 固定录制（非实时调用） 建议 待核对
+				254 heading 手动粘贴消息, Value: 2
+					255 text 手动粘贴消息
+				256 text 图像解读交流会面向在读本科生。有意参加者可通过预约二维码报名图像解读交流会，报名截止为2026年12月14日16:20。图像解读交流会于2026年12月16日10:10开始，结束时间尚未公布。
+				257 text 识别建议已保存，确认前不会创建正式任务。
+				258 definition list
+					259 container 项目
+						260 text 项目
+					261 text 独立事项
+					262 container 实体
+						263 text 实体
+					264 text 1 任务 · 0 材料 · 3 时间 · 1 活动
+				265 container
+					266 button 核对 1 项任务、1 个事件
+						267 image
+						268 text 核对 1 项任务、1 个事件
+					269 button 查看来源
+						270 image
+						271 text 查看来源
+					272 button 归档
+						273 image
+						274 text 归档
+		179 container
+			180 text 匿名工程建议已生成；没有模型请求，核对后走普通正式保存。
+			181 button 关闭提示
+		275 container 识别出 2 项任务、1 个事件
+			276 container
+				277 text 第 2 步 ·  ObligationAuthority 固定录制（非实时调用） · 比较后程序转换 · 无新模型请求
+				278 heading 识别出 2 项任务、1 个事件, Value: 2, ID: :r3:
+					279 text 识别出 2 项任务、1 个事件
+				280 text 先看标题和时间；不准确时再点“编辑”。
+				281 button 稍后处理并关闭
+					282 image
+			283 container 未确认编辑检查点
+				284 text 本来源核对会话
+				285 text 编辑在确认前不会创建任务。
+			286 image
+			287 text 2 项任务、1 个事件待确认
+			288 text 确认后才会进入今日和任务中心
+			289 container 项目匹配与识别质量
+				290 image
+				291 text 项目归属建议
+				292 text 未主动建立或匹配项目。
+				293 container
+					294 text 选择项目归属
+					295 pop up button (collapsed, settable) 选择项目归属, Value: 作为独立事项, Secondary Actions: Expand
+						296 menu
+							297 新建项目
+							298 (selected) 作为独立事项
+							299 稍后决定
+				300 image
+				301 text 需要重点核对
+				302 text 包含事件安排；存在识别冲突；存在质量标记
+				303 button 只保留原文明确
+				304 container 聚焦复核原因
+					305 container
+						306 image
+						307 text 这份通知包含多个时间、材料或阶段 系统已经完成初步整理，请重点确认标记项；不会自动选择、修改或创建任何事项。
+					308 content list
+						309 container
+							310 text 包含事件安排 识别到 1 个事件，请核对开始时间、地点和是否需要创建。
+						311 container
+							312 text 存在识别冲突 3 项结果互相冲突，不会自动替你决定。
+						313 container
+							314 text 存在质量标记 2 项质量标记需要人工复核。
+					315 container 来源提取元数据
+						316 text 90  字
+					317 text 质量标记
+					318 content list
+						319 text 资格尚未确认，不能当成已符合；请保留待核对。
+						320 text 该事项与活动的关联依据不完整，关联暂不采用；已有活动和无关联风险的内容仍可单独保存。
+				321 container
+					322 text 发现  3  项冲突
+				323 container
+					324 text 该事项与活动的关联依据不完整，关联暂不采用；已有活动和无关联风险的内容仍可单独保存。
+					325 button 在原文中定位
+				326 container
+					327 text 资格尚未确认，不能当成已符合；请保留待核对。 暂无可定位依据
+				328 container
+					329 text 资格尚未确认，不能当成已符合；请保留待核对。 暂无可定位依据
+			330 container
+				331 button (expanded) 原始通知与定位依据, Secondary Actions: Collapse
+					332 image
+					333 text 原始通知与定位依据
+				334 text 取得音像研习班录取资格的学员需先测试耳机。测试完成后安装音像研习班会议软件。音像研习班于2026年12月18日13:25开始，14:55结束。原文未说明任何人的录取或测试完成情况。
+			335 container 项目树待确认事项
+				336 container 同一通知的独立事件与信息
+					337 container 通知补充说明
+						338 heading 通知补充说明, Value: 3
+							339 text 通知补充说明
+						340 text 原回答保留的信息；未关联到具体事项，不会据此新增任务或日程。
+						341 text 原文未说明任何人的录取或测试完成情况。
+						342 button (collapsed) 查看补充说明原文依据, Secondary Actions: Expand
+							343 text 查看补充说明原文依据
+					344 heading 同一通知的事件, Value: 3
+						345 text 同一通知的事件
+					346 container
+						347 text 音像研习班 地点未说明 ； 2026年12月18日 13:25（原文：2026年12月18日13:25开始） → 2026年12月18日 14:55（原文：14:55结束） 音像研习班于2026年12月18日13:25开始， 14:55结束。 保留，待正式确认 处置“ 音像研习班 ”
+						348 pop up button (collapsed, settable) 处置“音像研习班”, Value: 保留, Secondary Actions: Expand
+							349 menu
+								350 (selected) 保留
+								351 暂缓
+								352 拒绝多余事件
+						353 button 编辑事件
+					354 text 没有待办也可以保存停机、维护等事件。纯信息可直接标记已核对，不创建任务或空项目。
+					355 button 依据原文补充遗漏事件
+					356 button 依据原文补充遗漏任务
+				357 container
+					358 container
+						359 checkbox (settable, integer) Description: 选择该任务, Value: 0
+						360 text 选择该任务
+					361 text 1
+					362 text 测试耳机
+					363 container
+						364 image
+						365 text 原答未提供截止
+					366 button 编辑
+						367 image
+						368 text 编辑
+					369 text 其他 耗时尚未估计 原文明确 核对后动作 测试耳机 资格尚未确认，不能当成已符合；请保留待核对。
+					370 button (collapsed) 为什么这样拆？, Secondary Actions: Expand
+						371 text 为什么这样拆？
+					372 button 不需要
+						373 image
+						374 text 不需要
+					375 button (disabled) 加入任务
+						376 image
+						377 text 加入任务
+				378 container
+					379 container
+						380 checkbox (settable, integer) Description: 选择该任务, Value: 0
+						381 text 选择该任务
+					382 text 2
+					383 text 安装音像研习班会议软件
+					384 container
+						385 image
+						386 text 原答未提供截止
+					387 button 编辑
+						388 image
+						389 text 编辑
+					390 text 其他 耗时尚未估计 原文明确 核对后动作 安装音像研习班会议软件 等待前一步： 测试耳机 。这项待办可以保留，前置完成状态未被改成已完成。 该事项与活动的关联依据不完整，关联暂不采用；已有活动和无关联风险的内容仍可单独保存。
+					391 button (collapsed) 为什么这样拆？, Secondary Actions: Expand
+						392 text 为什么这样拆？
+					393 button 不需要
+						394 image
+						395 text 不需要
+					396 button (disabled) 加入任务
+						397 image
+						398 text 加入任务
+				399 container
+					400 heading 时间节点, Value: 3
+						401 text 时间节点
+					402 checkbox (settable, integer) Description: event_start 2026年12月18日13:25开始, Value: 1
+					403 text event_start
+					404 text 2026年12月18日13:25开始
+					405 button 在原文中定位
+					406 checkbox (settable, integer) Description: event_end 14:55结束, Value: 1
+					407 text event_end
+					408 text 14:55结束
+					409 button 在原文中定位
+			410 container
+				411 button 仅保存独立事件；任务仍待核对
+				412 button 稍后再处理
+		108 container
+			109 button (expanded) 本批真实录制 · 选择来源与独立读回, Secondary Actions: Collapse
+				110 text 本批真实录制 · 选择来源与独立读回
+			111 text 2b2642fba705 / source e4b3f58baa8c ； rco-mainline-01-02-i1-d27-plan-recorded-afternoon-role-verified ； source-event-task-relations-1 / source-support-accounting-projection-1.1.0 / event-time-label-context-1.0.0 / source-grounded-nonaction-projection-1.0.1 / source-grounded-conditional-nonaction-1.0.0 / explicit-source-contract-4.0.0 / material-channel-role-grounding-1.4.0 / source-proven-eligibility-1.0.0 / source-time-semantics-2.1.0 / grounded-first-suggestion-1.4.0 / single-authority-shared-attribute-index-1.2.0 / authority-local-coverage-1.1.0 / obligation-local-relation-1.0.0 / authority-endpoint-composition-1.1.0 / authority-support-context-1.2.0 / source-information-preview-1.0.0 / source-window-endpoints-1.2.0 / source-window-plan-1.1.0 / literal-optional-participation-1.0.0 / authority-primary-support-index-1.0.0 ；ENGINEERING_REPLAY；此入口模型请求0。 下午V6/V7角色分离4作者Development通知两臂；5份确定录制；另4份上午官方节选回归，分母和结果分开，不是Holdout；另6份工程夹具独立标记，不计模型样本 。下方是后验程序转换，不改原成绩。原答与冻结诊断不改。 当前生成契约： obligation-authority-source-contract-6.0.0 ； obligation-authority-generation-1.0.0 ； RECORDED_MODEL_ENGINEERING_REPLAY 录制来源
+			112 pop up button (collapsed, settable) 录制来源, Value: role-development-RA-02 / ObligationAuthority / 原冻结：KNOWN_SETTLED_READ_ONLY_NOT_NEW_MODEL_SCORE, Secondary Actions: Expand
+				113 menu
+					114 role-development-RA-01 / ObligationAuthority / 原冻结：KNOWN_SETTLED_READ_ONLY_NOT_NEW_MODEL_SCORE
+					115 role-development-RA-01 / RoleAuthority / 原冻结：KNOWN_SETTLED_READ_ONLY_NOT_NEW_MODEL_SCORE
+					116 role-development-RA-02 / RoleAuthority / 原冻结：KNOWN_SETTLED_READ_ONLY_NOT_NEW_MODEL_SCORE
+					117 (selected) role-development-RA-02 / ObligationAuthority / 原冻结：KNOWN_SETTLED_READ_ONLY_NOT_NEW_MODEL_SCORE
+					118 role-development-RA-03 / ObligationAuthority / 原冻结：KNOWN_SETTLED_READ_ONLY_NOT_NEW_MODEL_SCORE
+					119 V6-REAL-20261008-01 / ObligationAuthority / 原冻结：KNOWN_SETTLED_READ_ONLY_NOT_NEW_MODEL_SCORE
+					120 V6-REAL-20261008-02 / ObligationAuthority / 原冻结：KNOWN_SETTLED_READ_ONLY_NOT_NEW_MODEL_SCORE
+					121 V6-REAL-20261008-03 / ObligationAuthority / 原冻结：KNOWN_SETTLED_READ_ONLY_NOT_NEW_MODEL_SCORE
+					122 V6-REAL-20261008-04 / ObligationAuthority / 原冻结：KNOWN_SETTLED_READ_ONLY_NOT_NEW_MODEL_SCORE
+					123 role-fixture-optional-channel / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT
+					124 authority-fixture-bad-owner / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT
+					125 contract-fixture-dependency / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT
+					126 obligation-fixture-shared-window / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT
+					127 obligation-fixture-equipment / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT
+					128 obligation-fixture-no-task / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT
+			129 text entry area Description: 本批匿名通知原文, Value: 取得音像研习班录取资格的学员需先测试耳机。测试完成后安装音像研习班会议软件。音像研习班于2026年12月18日13:25开始，14:55结束。原文未说明任何人的录取或测试完成情况。
+			130 text 复制到普通“新事务”；原回答、程序转换与用户修改分别保留。相对日期使用来源原基准  2026-10-08T16:30:00+08:00 。 另有 6 份匿名定向反例，经同一普通页面处理；由工程作者编写，不是模型回答，也没有新增付费身份。当前： RECORDED_MODEL_ENGINEERING_REPLAY 。
+			131 button 注入正式保存失败
+			132 button 注入提交后读回失败
+			133 button 注入检查点失败
+			134 text 未注入故障
+			135 button 本批独立canonical读回
+			136 button 页面测量读回
+			137 container 本批独立读回结果
+
+The focused UI element is 281 button 稍后处理并关闭

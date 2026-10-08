@@ -4,7 +4,7 @@ import type { SingleAuthorityFacts } from './sourceContractV5'
 import { hasLiteralScopeSpan } from './authorityLiteralSupport'
 
 export const AUTHORITY_SUPPORT_CONTEXT_VERSION = 'authority-support-context-1.0.0'
-export const AUTHORITY_TYPED_SUPPORT_CONTEXT_VERSION = 'authority-support-context-1.1.0'
+export const AUTHORITY_TYPED_SUPPORT_CONTEXT_VERSION = 'authority-support-context-1.2.0'
 const text = (s: string) => s.replace(/[\s，。；,:：;！!]/gu, '')
 const check = (ok: unknown) => { if (!ok) throw Error('AUTHORITY_SUPPORT_CONTEXT_REFERENCE') }
 
@@ -27,8 +27,21 @@ export function projectAuthoritySupportContext(input: unknown, context: WireCont
         const event = original.events.find(e => e.tempId === id)
         // This changes only the legacy information index. The real entity,
         // owners and their separate source/type checks remain intact downstream.
+        const valueScopes = point?.scopeIds.filter(id => context.index.scopes.find(s => s.id === id)?.text.includes(point.rawText)) ?? []
+        // A window may cite its literal date plus an explicit owner-reference
+        // clause. Separate those existing citations; do not invent an owner.
+        const windowReference = point && ['window_start', 'window_end'].includes(point.type)
+          && valueScopes.length > 0 && hasLiteralScopeSpan(point.rawText, valueScopes, context)
+          && [...context.index.sourceContent.matchAll(/(?:\d{4}年)?\d{1,2}月\d{1,2}日?\s*[—–－\-~～至]\s*(?:\d{4}年)?(?:\d{1,2}月)?\d{1,2}日/gu)].length === 1
+          && point.scopeIds.every(id => valueScopes.includes(id) || context.index.scopes.some(s => s.id === id
+            && /(?:在|于)(?:上述|该|指定)(?:时间|时段|办理窗口)(?:内|期间)/u.test(s.text)
+            && !/(?:不|无需|不要|不得|禁止).{0,5}(?:在|于)/u.test(s.text)))
+          && point.owners.length > 0 && point.owners.every(o => o.kind === 'task' && original.tasks.some(t => t.id === o.entityId
+            && t.propositionScopeIds.some(id => context.index.scopes.some(s => s.id === id
+              && /(?:在|于)(?:上述|该|指定)(?:时间|时段|办理窗口)(?:内|期间)/u.test(s.text)
+              && !/(?:不|无需|不要|不得|禁止).{0,5}(?:在|于)/u.test(s.text)))))
         const timeSupport = point && point.scopeIds.includes(row.scopeId)
-          && hasLiteralScopeSpan(point.rawText, point.scopeIds.filter(s => context.index.scopes.find(v => v.id === s)?.text && !/^[^\d]*[:：]$/u.test(context.index.scopes.find(v => v.id === s)!.text)), context)
+          && (windowReference || hasLiteralScopeSpan(point.rawText, point.scopeIds.filter(s => context.index.scopes.find(v => v.id === s)?.text && !/^[^\d]*[:：]$/u.test(context.index.scopes.find(v => v.id === s)!.text)), context))
         const eventSupport = event && event.scopeIds.includes(row.scopeId)
           && event.attributes.some(a => a.scopeIds.includes(row.scopeId) && hasLiteralScopeSpan(a.text, a.scopeIds, context))
         check(timeSupport || eventSupport)
