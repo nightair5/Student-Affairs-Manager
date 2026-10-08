@@ -14,13 +14,20 @@ import {authorityRecordedScene} from './single-authority-recorded-readonly.mjs'
 import {authorityObservedScene} from './single-authority-observed-readonly.mjs'
 import {v5CurrentNoticeRecordedScene} from './v5-current-notice-recorded-readonly.mjs'
 import {obligationRecordedScene} from './obligation-authority-recorded-readonly.mjs'
+import {autonomousV6RecordedScene} from './autonomous-v6-readonly.mjs'
+import {observedSettledBatch} from './settled-batch-observed-readonly.mjs'
+import {verifyV5NoticeDiagnostic,ROOT as V5ROOT,BATCH as V5BATCH,COUNT as V5COUNT} from './prepare-v5-current-notice.mjs'
 const [port,instance,fixtureMode]=process.argv.slice(2)
-if(process.argv.length>5||fixtureMode&&!['--channel-role-fixtures','--channel-polarity-fixtures','--eligibility-fixtures','--public-notice-fixtures','--public-paid-recordings','--sealed-followup-fixtures','--current-notice-fixtures','--current-notice-batch','--current-notice-completed','--single-authority-fixtures','--single-authority-comparison','--single-authority-observed','--current-mechanism-fixtures','--v5-current-real-recordings','--v5-current-real-fixtures','--obligation-authority-fixtures','--obligation-authority-comparison'].includes(fixtureMode))throw Error('C19_UNKNOWN_REPLAY_MODE')
+if(process.argv.length>5||fixtureMode&&!['--channel-role-fixtures','--channel-polarity-fixtures','--eligibility-fixtures','--public-notice-fixtures','--public-paid-recordings','--sealed-followup-fixtures','--current-notice-fixtures','--current-notice-batch','--current-notice-completed','--single-authority-fixtures','--single-authority-comparison','--single-authority-observed','--current-mechanism-fixtures','--v5-current-real-recordings','--v5-current-real-fixtures','--obligation-authority-fixtures','--obligation-authority-comparison','--autonomous-v6-recordings'].includes(fixtureMode))throw Error('C19_UNKNOWN_REPLAY_MODE')
 if(!/^\d{4,5}$/.test(port??'')||+port<6814||+port>65535||!/^[a-z0-9-]{2,32}$/.test(instance??''))throw Error('C19_NEW_LOOPBACK_INSTANCE_REQUIRED')
 const publicPaid=['--public-paid-recordings','--sealed-followup-fixtures','--current-notice-fixtures'].includes(fixtureMode)
-const currentBatch=['--current-notice-batch','--current-notice-completed','--single-authority-fixtures','--single-authority-comparison','--single-authority-observed','--current-mechanism-fixtures','--v5-current-real-recordings','--v5-current-real-fixtures','--obligation-authority-fixtures','--obligation-authority-comparison'].includes(fixtureMode)
+const currentBatch=['--current-notice-batch','--current-notice-completed','--single-authority-fixtures','--single-authority-comparison','--single-authority-observed','--current-mechanism-fixtures','--v5-current-real-recordings','--v5-current-real-fixtures','--obligation-authority-fixtures','--obligation-authority-comparison','--autonomous-v6-recordings'].includes(fixtureMode)
 let scene,recordings,batchLabel,plannedRequests,knownSettled,initialOrdinal,currentSources
-if(fixtureMode==='--obligation-authority-comparison'){
+if(fixtureMode==='--autonomous-v6-recordings'){
+  const verified=await autonomousV6RecordedScene(),historical=observedSettledBatch({root:V5ROOT,execution:resolve('.data/v5-current-notice/execution'),batch:V5BATCH,count:V5COUNT,verifyPacket:verifyV5NoticeDiagnostic});scene=verified.scene;recordings=[...verified.recordings,...historical.recordings.map(r=>({...r,ordinal:r.ordinal+50}))];currentSources=[...verified.sources,...historical.sources]
+  plannedRequests=4;knownSettled=verified.recordings.length;initialOrdinal=recordings[0]?.ordinal??101
+  batchLabel='本次V6单臂4官方已见节选：'+knownSettled+'份确定录制；另4份旧V5只读回归，不混入新分母，不是配对胜负或Holdout'
+}else if(fixtureMode==='--obligation-authority-comparison'){
   const verified=await obligationRecordedScene();scene=verified.scene;recordings=verified.recordings;currentSources=verified.sources
   plannedRequests=8;knownSettled=recordings.length;initialOrdinal=recordings[0]?.ordinal??1
   batchLabel='V5与义务先行单一关联机制4作者Development来源两臂；'+knownSettled+'份确定录制；未知与失败保留各臂4分母，不是官方真实通知或Holdout'
@@ -57,12 +64,12 @@ if(!recordings.length&&!currentBatch)throw Error('C19_NO_SETTLED_RECORDINGS')
 const sha=v=>createHash('sha256').update(v).digest('hex'),dir=resolve('.data/candidate19/recorded-'+instance)
 mkdirSync(dir,{recursive:true});if(readdirSync(dir).length)throw Error('C19_REPLAY_INSTANCE_ALREADY_BUILT')
 let fixtureCount=0
-if(fixtureMode==='--obligation-authority-fixtures'){
+if(['--obligation-authority-fixtures','--autonomous-v6-recordings'].includes(fixtureMode)){
   const fixtureFile=resolve(dir,'fixture-builder.mjs')
   await build({stdin:{contents:`export {OBLIGATION_CASES,createObligationFixture} from './src/experiments/candidate19Recorded/obligationFixtures';export {OBLIGATION_AUTHORITY_VERSION} from './src/recognition/sourceContractV6';export {createAuthorityFixture} from './src/experiments/candidate19Recorded/singleAuthorityFixtures';export {SINGLE_AUTHORITY_VERSION} from './src/recognition/sourceContractV5'`,resolveDir:process.cwd()},outfile:fixtureFile,bundle:true,platform:'node',format:'esm'})
   const {OBLIGATION_CASES,createObligationFixture,OBLIGATION_AUTHORITY_VERSION,createAuthorityFixture,SINGLE_AUTHORITY_VERSION}=await import(pathToFileURL(fixtureFile))
   const fixtures=[...await Promise.all(OBLIGATION_CASES.map(createObligationFixture)),await createAuthorityFixture('bad-owner'),await createAuthorityFixture('dependency')]
-  fixtureCount=fixtures.length;initialOrdinal=101;batchLabel+='；另6份义务先行及2份已有坏owner/前置等待工程控制，新生成模型输出0'
+  fixtureCount=fixtures.length;if(fixtureMode!=='--autonomous-v6-recordings')initialOrdinal=101;batchLabel+='；另6份义务先行及2份坏owner/前置等待工程控制，不计模型样本'
   for(const [i,f] of fixtures.entries())recordings.push({ordinal:101+i,sourceId:f.context.index.sourceId,sourceVersionId:f.context.index.sourceVersionId,candidate:'EngineeringFixture',generationContract:i<6?OBLIGATION_AUTHORITY_VERSION:SINGLE_AUTHORITY_VERSION,sourceText:f.sourceText,referenceTime:f.context.referenceTime,timezone:f.context.timezone,rawHttpText:f.rawHttpText,responseSha256:sha(f.rawHttpText),requestSha256:null,frozenOutcome:'ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT'})
 }else if(fixtureMode==='--v5-current-real-fixtures'){
   const fixtureFile=resolve(dir,'fixture-builder.mjs')

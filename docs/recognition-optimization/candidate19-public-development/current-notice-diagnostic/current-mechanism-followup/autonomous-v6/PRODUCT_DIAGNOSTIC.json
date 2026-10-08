@@ -1,0 +1,2075 @@
+{
+  "role": "ACTUAL_SETTLED_RAW_READ_ONLY_PROGRAM_DIAGNOSTIC_NOT_NEW_MODEL_SCORE",
+  "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+  "cases": [
+    {
+      "sourceId": "V5-CURRENT-REAL-01",
+      "cohort": "HISTORICAL_V5",
+      "sourceSha256": "a82c64b9a8e28d851c5a6699ba6fe16ea87528c5c923cdebb8aee1c469d39f64",
+      "responseSha256": "71888da3173a23ec37842cd46396f195fda5e32215800ebe410fbb586ba264b3",
+      "requestSha256": "2628d42633e5cdff20e2da34bdbe526ae9b119202a240c3d7a56edf02aedd39b",
+      "sourceText": "为方便新生更好地了解校园文化、简化注册流程，2026级新生须于指定时间内登录迎新系统完成网上预注册流程。\n由于系统维护和升级，迎新系统开放时间与入学须知中规定的时间略有不同，请以本通知的时间为准。新生请在指定时间内激活账号和登录系统，不在指定时间内激活账号和登录都会显示“账号和密码错误”。\n本科生（大陆地区）：8月13—27日",
+      "referenceTime": "2026-07-24T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "wire": {
+        "schemaVersion": "single-authority-source-contract-5.0.0",
+        "events": [
+          {
+            "tempId": "event-0001",
+            "title": "2026级新生网上预注册",
+            "description": "2026级新生须于指定时间内登录迎新系统完成网上预注册流程。",
+            "location": null,
+            "scopeIds": [
+              "scope-0002-593a0c372b29aecf206e655624ab3951754500ac741e0ae5c6a7334e53844278"
+            ],
+            "confidence": 0.9,
+            "inferenceLevel": "explicit",
+            "relatedTaskTempIds": [
+              "task-0001"
+            ],
+            "attributes": [
+              {
+                "kind": "format",
+                "text": "登录迎新系统完成网上预注册流程",
+                "scopeIds": [
+                  "scope-0002-593a0c372b29aecf206e655624ab3951754500ac741e0ae5c6a7334e53844278"
+                ]
+              }
+            ]
+          }
+        ],
+        "timePoints": [
+          {
+            "tempId": "time-0001",
+            "type": "window_start",
+            "rawText": "8月13—27日",
+            "scopeIds": [
+              "scope-0009-6fb34e0a3e8fc693b35bac73800d6060e11e4742c3699ffc2eef48828dfbba78"
+            ],
+            "confidence": 0.85,
+            "owners": [
+              {
+                "kind": "task",
+                "entityId": "task-0001"
+              }
+            ]
+          },
+          {
+            "tempId": "time-0002",
+            "type": "window_end",
+            "rawText": "8月13—27日",
+            "scopeIds": [
+              "scope-0009-6fb34e0a3e8fc693b35bac73800d6060e11e4742c3699ffc2eef48828dfbba78"
+            ],
+            "confidence": 0.85,
+            "owners": [
+              {
+                "kind": "task",
+                "entityId": "task-0001"
+              }
+            ]
+          }
+        ],
+        "materials": [],
+        "tasks": [
+          {
+            "id": "task-0001",
+            "propositionScopeIds": [
+              "scope-0002-593a0c372b29aecf206e655624ab3951754500ac741e0ae5c6a7334e53844278"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "register",
+            "action": {
+              "scopeId": "scope-0002-593a0c372b29aecf206e655624ab3951754500ac741e0ae5c6a7334e53844278",
+              "surface": "登录迎新系统完成网上预注册流程"
+            },
+            "object": {
+              "scopeId": "scope-0002-593a0c372b29aecf206e655624ab3951754500ac741e0ae5c6a7334e53844278",
+              "surface": "网上预注册流程"
+            },
+            "effect": "external_transfer",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "完成网上预注册",
+              "description": "2026级新生须于指定时间内登录迎新系统完成网上预注册流程。",
+              "completionCriteria": [
+                "登录迎新系统完成网上预注册流程"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "high",
+              "dependencyTempIds": [],
+              "confidence": 0.9,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "unknown",
+              "conditionScopeIds": [],
+              "factScopeIds": []
+            },
+            "coverage": {
+              "time": {
+                "status": "present",
+                "absenceScopeIds": []
+              },
+              "material": {
+                "status": "not_stated",
+                "absenceScopeIds": []
+              },
+              "event": {
+                "status": "present",
+                "absenceScopeIds": []
+              }
+            }
+          },
+          {
+            "id": "task-0002",
+            "propositionScopeIds": [
+              "scope-0006-4642e22af01018839feaa0d5e2ff323e89c7694365ba3b32edcb81e12a300e9d"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "other",
+            "action": {
+              "scopeId": "scope-0006-4642e22af01018839feaa0d5e2ff323e89c7694365ba3b32edcb81e12a300e9d",
+              "surface": "激活账号和登录系统"
+            },
+            "object": {
+              "scopeId": "scope-0006-4642e22af01018839feaa0d5e2ff323e89c7694365ba3b32edcb81e12a300e9d",
+              "surface": "账号和系统"
+            },
+            "effect": "external_interaction",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "激活账号并登录系统",
+              "description": "新生请在指定时间内激活账号和登录系统。",
+              "completionCriteria": [
+                "在指定时间内激活账号和登录系统"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "high",
+              "dependencyTempIds": [],
+              "confidence": 0.9,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "unknown",
+              "conditionScopeIds": [],
+              "factScopeIds": []
+            },
+            "coverage": {
+              "time": {
+                "status": "present",
+                "absenceScopeIds": []
+              },
+              "material": {
+                "status": "not_stated",
+                "absenceScopeIds": []
+              },
+              "event": {
+                "status": "not_stated",
+                "absenceScopeIds": []
+              }
+            }
+          }
+        ],
+        "revisions": [],
+        "conflicts": [],
+        "scopeAccounting": [
+          {
+            "scopeId": "scope-0001-3e62e2d62aced77e644bd38045c79b4d5893236645c9e42e832ae6a40289e598",
+            "kind": "information",
+            "primaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0002-593a0c372b29aecf206e655624ab3951754500ac741e0ae5c6a7334e53844278",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-0001"
+            ]
+          },
+          {
+            "scopeId": "scope-0003-c4c8a7eaabbe30813cef91512fe9940f89a61002075dbff25eb192581de21150",
+            "kind": "information",
+            "primaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0004-39ee4867300bc8df499fa3282cbf1ef89d9c8e9dcb7b5bff61c6d020a3896c44",
+            "kind": "information",
+            "primaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0005-44011970c347fe8174f5d001c6aea71c5f3149e663ccda5928df4f223bafe4e8",
+            "kind": "information",
+            "primaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0006-4642e22af01018839feaa0d5e2ff323e89c7694365ba3b32edcb81e12a300e9d",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-0002"
+            ]
+          },
+          {
+            "scopeId": "scope-0007-13e69f4fd00b608b6a5525cc298addbb3ea527705f229f1436c15fd30cd4b9d9",
+            "kind": "information",
+            "primaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0008-32125842675be865ab896e96b5973a8009b0ef9a27298aca092a1418a837ddbb",
+            "kind": "information",
+            "primaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0009-6fb34e0a3e8fc693b35bac73800d6060e11e4742c3699ffc2eef48828dfbba78",
+            "kind": "information",
+            "primaryEntityIds": []
+          }
+        ],
+        "prerequisiteStates": []
+      },
+      "strictProgram": {
+        "status": "REJECTED",
+        "code": "AUTHORITY_ATTRIBUTE_ACCOUNTING_OWNER"
+      },
+      "currentProduct": {
+        "status": "DISPLAYED_NOT_WHOLE_SOURCE_CORRECTNESS",
+        "tasks": [
+          {
+            "parentTempId": null,
+            "hierarchyType": "task",
+            "title": "登录迎新系统完成网上预注册流程",
+            "description": "2026级新生须于指定时间内登录迎新系统完成网上预注册流程。",
+            "completionCriteria": [
+              "登录迎新系统完成网上预注册流程"
+            ],
+            "estimatedMinutes": null,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "high",
+            "dependencyTempIds": [],
+            "confidence": 0.9,
+            "userConfirmationRequired": true,
+            "materialTempIds": [],
+            "timePointTempIds": [
+              "time-0001",
+              "time-0002"
+            ],
+            "tempId": "task-0001",
+            "actionVerb": "登录迎新系统完成网上预注册流程",
+            "actionObject": "网上预注册流程",
+            "evidenceIds": [
+              "d26-scope-0002-593a0c372b29aecf206e655624ab3951754500ac741e0ae5c6a7334e53844278"
+            ],
+            "inferenceLevel": "explicit",
+            "selected": false
+          },
+          {
+            "parentTempId": null,
+            "hierarchyType": "task",
+            "title": "待核对事项",
+            "description": "动作或对象缺少对应来源依据，请核对。",
+            "completionCriteria": [
+              "在指定时间内激活账号和登录系统"
+            ],
+            "estimatedMinutes": null,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "high",
+            "dependencyTempIds": [],
+            "confidence": 0.9,
+            "userConfirmationRequired": true,
+            "materialTempIds": [],
+            "timePointTempIds": [],
+            "tempId": "task-0002",
+            "actionVerb": "激活账号和登录系统",
+            "actionObject": "账号和系统",
+            "evidenceIds": [
+              "d26-scope-0006-4642e22af01018839feaa0d5e2ff323e89c7694365ba3b32edcb81e12a300e9d"
+            ],
+            "inferenceLevel": "explicit",
+            "selected": false
+          }
+        ],
+        "events": [
+          {
+            "tempId": "event-0001",
+            "title": "待核对事件",
+            "description": "事件内容缺少对应来源依据，请核对。",
+            "startTimePointTempId": null,
+            "relatedTaskTempIds": [
+              "task-0001"
+            ],
+            "endTimePointTempId": null,
+            "location": null,
+            "confidence": 0.9,
+            "inferenceLevel": "explicit",
+            "evidenceIds": [
+              "d26-scope-0002-593a0c372b29aecf206e655624ab3951754500ac741e0ae5c6a7334e53844278"
+            ],
+            "selected": false
+          }
+        ],
+        "timePoints": [
+          {
+            "tempId": "time-0001",
+            "type": "event_start",
+            "rawText": "8月13—27日",
+            "confidence": 0.85,
+            "relatedTaskTempIds": [
+              "task-0001"
+            ],
+            "relatedMaterialTempIds": [],
+            "normalizedValue": null,
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "vague",
+            "needsConfirmation": true,
+            "evidenceIds": [
+              "d26-scope-0009-6fb34e0a3e8fc693b35bac73800d6060e11e4742c3699ffc2eef48828dfbba78"
+            ]
+          },
+          {
+            "tempId": "time-0002",
+            "type": "event_end",
+            "rawText": "8月13—27日",
+            "confidence": 0.85,
+            "relatedTaskTempIds": [
+              "task-0001"
+            ],
+            "relatedMaterialTempIds": [],
+            "normalizedValue": null,
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "vague",
+            "needsConfirmation": true,
+            "evidenceIds": [
+              "d26-scope-0009-6fb34e0a3e8fc693b35bac73800d6060e11e4742c3699ffc2eef48828dfbba78"
+            ]
+          }
+        ],
+        "materials": [],
+        "conflicts": [
+          {
+            "id": "d26-representation-0",
+            "type": "other",
+            "message": "资格尚未确认，不能当成已符合；请保留待核对。",
+            "entityTempIds": [
+              "task-0001"
+            ],
+            "evidenceIds": [],
+            "requiresDecision": true
+          },
+          {
+            "id": "d26-representation-1",
+            "type": "other",
+            "message": "资格尚未确认，不能当成已符合；请保留待核对。",
+            "entityTempIds": [
+              "task-0002"
+            ],
+            "evidenceIds": [],
+            "requiresDecision": true
+          },
+          {
+            "id": "coverage:task-0002:time",
+            "type": "other",
+            "message": "这项任务的时间覆盖未说明清楚，保留已有事实，请核对；不能当成原文没有。",
+            "entityTempIds": [
+              "task-0002"
+            ],
+            "evidenceIds": [
+              "d26-scope-0006-4642e22af01018839feaa0d5e2ff323e89c7694365ba3b32edcb81e12a300e9d"
+            ],
+            "requiresDecision": true
+          },
+          {
+            "id": "source-window:time-0001",
+            "type": "other",
+            "message": "办理窗口的日期或对象依据不一致，请核对；未推测日期或截止。",
+            "entityTempIds": [
+              "time-0001",
+              "task-0001"
+            ],
+            "evidenceIds": [
+              "d26-scope-0009-6fb34e0a3e8fc693b35bac73800d6060e11e4742c3699ffc2eef48828dfbba78"
+            ],
+            "requiresDecision": true
+          },
+          {
+            "id": "source-window:time-0002",
+            "type": "other",
+            "message": "办理窗口的日期或对象依据不一致，请核对；未推测日期或截止。",
+            "entityTempIds": [
+              "time-0002",
+              "task-0001"
+            ],
+            "evidenceIds": [
+              "d26-scope-0009-6fb34e0a3e8fc693b35bac73800d6060e11e4742c3699ffc2eef48828dfbba78"
+            ],
+            "requiresDecision": true
+          }
+        ],
+        "quality": {
+          "overallConfidence": 1,
+          "hierarchyConfidence": 1,
+          "dateConfidence": 1,
+          "evidenceCoverage": 1,
+          "duplicateRisk": 0,
+          "overFragmentationRisk": 0,
+          "missingActionRisk": 0,
+          "needsHumanReview": true,
+          "reviewReasons": [
+            "资格尚未确认，不能当成已符合；请保留待核对。",
+            "这项任务的时间覆盖未说明清楚，保留已有事实，请核对；不能当成原文没有。",
+            "部分首次摘要缺少完整来源依据，请核对标记事项。"
+          ]
+        },
+        "localCoverage": {
+          "version": "authority-local-coverage-1.0.0",
+          "enabled": true,
+          "missingCoverage": [
+            {
+              "taskId": "task-0002",
+              "category": "time",
+              "originalClaim": {
+                "status": "present",
+                "absenceScopeIds": []
+              },
+              "code": "MISSING_PRESENT_FACT"
+            }
+          ]
+        },
+        "attributeAudit": {
+          "version": "single-authority-shared-attribute-index-1.1.0",
+          "additions": []
+        },
+        "sourceWindows": {
+          "version": "source-window-endpoints-1.0.0",
+          "inferredFacts": 0,
+          "decisions": [
+            {
+              "id": "time-0001",
+              "role": "window_start",
+              "owners": [
+                {
+                  "kind": "task",
+                  "entityId": "task-0001"
+                }
+              ],
+              "rawText": "8月13—27日",
+              "before": {
+                "normalizedValue": "2026-08-13",
+                "precision": "date_only",
+                "isAllDay": true,
+                "needsConfirmation": false,
+                "timezone": "Asia/Shanghai"
+              },
+              "after": {
+                "normalizedValue": null,
+                "precision": "vague",
+                "isAllDay": false,
+                "needsConfirmation": true,
+                "timezone": "Asia/Shanghai"
+              },
+              "status": "UNRESOLVED_RANGE",
+              "quotes": [],
+              "literalRange": null
+            },
+            {
+              "id": "time-0002",
+              "role": "window_end",
+              "owners": [
+                {
+                  "kind": "task",
+                  "entityId": "task-0001"
+                }
+              ],
+              "rawText": "8月13—27日",
+              "before": {
+                "normalizedValue": "2026-08-13",
+                "precision": "date_only",
+                "isAllDay": true,
+                "needsConfirmation": false,
+                "timezone": "Asia/Shanghai"
+              },
+              "after": {
+                "normalizedValue": null,
+                "precision": "vague",
+                "isAllDay": false,
+                "needsConfirmation": true,
+                "timezone": "Asia/Shanghai"
+              },
+              "status": "UNRESOLVED_RANGE",
+              "quotes": [],
+              "literalRange": null
+            }
+          ]
+        }
+      }
+    },
+    {
+      "sourceId": "V5-CURRENT-REAL-02",
+      "cohort": "HISTORICAL_V5",
+      "sourceSha256": "15b4abc5e1964161570a45c56830db843839362f32ec54a5f4ea9b54979f0bbb",
+      "responseSha256": "9eaa3ebff9560c4db55d632c4b15183066bccb9e6ca3e32621bf3ace793a39be",
+      "requestSha256": "aa5d8d31566ab8bb4aa427b270e86173bda966f28b4c1539f57b34e5a373e83c",
+      "sourceText": "一、各位同学应于7月16日前通过学工系统“暑假离留校登记”应用完成相关信息登记（https://xmuxg.xmu.edu.cn/app/182），并确保填写的信息完整、准确。离校同学应如实登记去向、联系方式及返校安排；暑期留校同学如短期离厦外出，视同离校学生管理，亦应及时做好相关登记。",
+      "referenceTime": "2026-07-10T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "wire": {
+        "schemaVersion": "single-authority-source-contract-5.0.0",
+        "events": [],
+        "timePoints": [
+          {
+            "tempId": "time-0001",
+            "type": "task_deadline",
+            "rawText": "7月16日前",
+            "scopeIds": [
+              "scope-0001-50c27bb5fcc362e18d225875c6f8b7e568abc65b9111ef7534c952f659dcc6d9"
+            ],
+            "confidence": 0.95,
+            "owners": [
+              {
+                "kind": "task",
+                "entityId": "task-0001"
+              }
+            ]
+          }
+        ],
+        "materials": [],
+        "tasks": [
+          {
+            "id": "task-0001",
+            "propositionScopeIds": [
+              "scope-0001-50c27bb5fcc362e18d225875c6f8b7e568abc65b9111ef7534c952f659dcc6d9",
+              "scope-0002-ac0679a9dd77ba9d0e887255342fdcd8e3ffa398515681c09599d9d92ffbf10e",
+              "scope-0003-18e1173af6d88f8e61ef2959d28f61e58431932af6526c9d7d8d2fd9e2b140e3"
+            ],
+            "semantics": {
+              "actor": "addressed_group",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "register",
+            "action": {
+              "scopeId": "scope-0001-50c27bb5fcc362e18d225875c6f8b7e568abc65b9111ef7534c952f659dcc6d9",
+              "surface": "完成相关信息登记"
+            },
+            "object": {
+              "scopeId": "scope-0001-50c27bb5fcc362e18d225875c6f8b7e568abc65b9111ef7534c952f659dcc6d9",
+              "surface": "相关信息登记"
+            },
+            "effect": "external_transfer",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "通过学工系统“暑假离留校登记”应用完成相关信息登记",
+              "description": "各位同学应于7月16日前通过学工系统“暑假离留校登记”应用完成相关信息登记，并确保填写的信息完整、准确。",
+              "completionCriteria": [
+                "于7月16日前通过学工系统“暑假离留校登记”应用完成相关信息登记",
+                "确保填写的信息完整、准确"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "high",
+              "dependencyTempIds": [],
+              "confidence": 0.95,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": []
+            },
+            "coverage": {
+              "time": {
+                "status": "present",
+                "absenceScopeIds": []
+              },
+              "material": {
+                "status": "not_stated",
+                "absenceScopeIds": []
+              },
+              "event": {
+                "status": "not_stated",
+                "absenceScopeIds": []
+              }
+            }
+          },
+          {
+            "id": "task-0002",
+            "propositionScopeIds": [
+              "scope-0004-566f39a917f2f49360dae235073817007d69b553b5300a97a1c3297a92fca14e"
+            ],
+            "semantics": {
+              "actor": "addressed_group",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "register",
+            "action": {
+              "scopeId": "scope-0004-566f39a917f2f49360dae235073817007d69b553b5300a97a1c3297a92fca14e",
+              "surface": "如实登记"
+            },
+            "object": {
+              "scopeId": "scope-0004-566f39a917f2f49360dae235073817007d69b553b5300a97a1c3297a92fca14e",
+              "surface": "去向、联系方式及返校安排"
+            },
+            "effect": "external_transfer",
+            "detail": {
+              "parentTempId": "task-0001",
+              "hierarchyType": "subtask",
+              "title": "离校同学如实登记去向、联系方式及返校安排",
+              "description": "离校同学应如实登记去向、联系方式及返校安排。",
+              "completionCriteria": [
+                "如实登记去向、联系方式及返校安排"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "high",
+              "dependencyTempIds": [],
+              "confidence": 0.95,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "unknown",
+              "conditionScopeIds": [
+                "scope-0004-566f39a917f2f49360dae235073817007d69b553b5300a97a1c3297a92fca14e"
+              ],
+              "factScopeIds": []
+            },
+            "coverage": {
+              "time": {
+                "status": "not_stated",
+                "absenceScopeIds": []
+              },
+              "material": {
+                "status": "not_stated",
+                "absenceScopeIds": []
+              },
+              "event": {
+                "status": "not_stated",
+                "absenceScopeIds": []
+              }
+            }
+          },
+          {
+            "id": "task-0003",
+            "propositionScopeIds": [
+              "scope-0005-279f1ed8b7befb927f49f79b18e89d9f29ee2953db0eb84bb81441dde61a198d",
+              "scope-0006-117be51161d099d157b977fb17dae39e0505d995b162d4be44e964747d32e1f9",
+              "scope-0007-e7b22da527135c8e8dbb35b6581b8de69ca104546e9a9771d251246300a84989"
+            ],
+            "semantics": {
+              "actor": "addressed_group",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "register",
+            "action": {
+              "scopeId": "scope-0007-e7b22da527135c8e8dbb35b6581b8de69ca104546e9a9771d251246300a84989",
+              "surface": "及时做好相关登记"
+            },
+            "object": {
+              "scopeId": "scope-0007-e7b22da527135c8e8dbb35b6581b8de69ca104546e9a9771d251246300a84989",
+              "surface": "相关登记"
+            },
+            "effect": "external_transfer",
+            "detail": {
+              "parentTempId": "task-0001",
+              "hierarchyType": "subtask",
+              "title": "暑期留校同学短期离厦外出及时做好相关登记",
+              "description": "暑期留校同学如短期离厦外出，视同离校学生管理，亦应及时做好相关登记。",
+              "completionCriteria": [
+                "及时做好相关登记"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "high",
+              "dependencyTempIds": [],
+              "confidence": 0.95,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "unknown",
+              "conditionScopeIds": [
+                "scope-0005-279f1ed8b7befb927f49f79b18e89d9f29ee2953db0eb84bb81441dde61a198d"
+              ],
+              "factScopeIds": []
+            },
+            "coverage": {
+              "time": {
+                "status": "not_stated",
+                "absenceScopeIds": []
+              },
+              "material": {
+                "status": "not_stated",
+                "absenceScopeIds": []
+              },
+              "event": {
+                "status": "not_stated",
+                "absenceScopeIds": []
+              }
+            }
+          }
+        ],
+        "revisions": [],
+        "conflicts": [],
+        "scopeAccounting": [
+          {
+            "scopeId": "scope-0001-50c27bb5fcc362e18d225875c6f8b7e568abc65b9111ef7534c952f659dcc6d9",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-0001"
+            ]
+          },
+          {
+            "scopeId": "scope-0002-ac0679a9dd77ba9d0e887255342fdcd8e3ffa398515681c09599d9d92ffbf10e",
+            "kind": "information",
+            "primaryEntityIds": [
+              "task-0001"
+            ]
+          },
+          {
+            "scopeId": "scope-0003-18e1173af6d88f8e61ef2959d28f61e58431932af6526c9d7d8d2fd9e2b140e3",
+            "kind": "information",
+            "primaryEntityIds": [
+              "task-0001"
+            ]
+          },
+          {
+            "scopeId": "scope-0004-566f39a917f2f49360dae235073817007d69b553b5300a97a1c3297a92fca14e",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-0002"
+            ]
+          },
+          {
+            "scopeId": "scope-0005-279f1ed8b7befb927f49f79b18e89d9f29ee2953db0eb84bb81441dde61a198d",
+            "kind": "information",
+            "primaryEntityIds": [
+              "task-0003"
+            ]
+          },
+          {
+            "scopeId": "scope-0006-117be51161d099d157b977fb17dae39e0505d995b162d4be44e964747d32e1f9",
+            "kind": "information",
+            "primaryEntityIds": [
+              "task-0003"
+            ]
+          },
+          {
+            "scopeId": "scope-0007-e7b22da527135c8e8dbb35b6581b8de69ca104546e9a9771d251246300a84989",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-0003"
+            ]
+          }
+        ],
+        "prerequisiteStates": []
+      },
+      "strictProgram": {
+        "status": "DISPLAYED_NOT_WHOLE_SOURCE_CORRECTNESS",
+        "tasks": [
+          {
+            "parentTempId": null,
+            "hierarchyType": "task",
+            "title": "完成相关信息登记",
+            "description": "一、各位同学应于7月16日前通过学工系统“暑假离留校登记”应用完成相关信息登记（https:\n//xmuxg.xmu.edu.cn/app/182），\n并确保填写的信息完整、准确。",
+            "completionCriteria": [
+              "于7月16日前通过学工系统“暑假离留校登记”应用完成相关信息登记",
+              "确保填写的信息完整、准确"
+            ],
+            "estimatedMinutes": null,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "high",
+            "dependencyTempIds": [],
+            "confidence": 0.95,
+            "userConfirmationRequired": true,
+            "materialTempIds": [],
+            "timePointTempIds": [
+              "time-0001"
+            ],
+            "tempId": "task-0001",
+            "actionVerb": "完成相关信息登记",
+            "actionObject": "相关信息登记",
+            "evidenceIds": [
+              "d26-scope-0001-50c27bb5fcc362e18d225875c6f8b7e568abc65b9111ef7534c952f659dcc6d9",
+              "d26-scope-0002-ac0679a9dd77ba9d0e887255342fdcd8e3ffa398515681c09599d9d92ffbf10e",
+              "d26-scope-0003-18e1173af6d88f8e61ef2959d28f61e58431932af6526c9d7d8d2fd9e2b140e3"
+            ],
+            "inferenceLevel": "explicit",
+            "selected": true
+          },
+          {
+            "parentTempId": "task-0001",
+            "hierarchyType": "subtask",
+            "title": "如实登记去向、联系方式及返校安排",
+            "description": "离校同学应如实登记去向、联系方式及返校安排；",
+            "completionCriteria": [
+              "如实登记去向、联系方式及返校安排"
+            ],
+            "estimatedMinutes": null,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "high",
+            "dependencyTempIds": [],
+            "confidence": 0.95,
+            "userConfirmationRequired": true,
+            "materialTempIds": [],
+            "timePointTempIds": [],
+            "tempId": "task-0002",
+            "actionVerb": "如实登记",
+            "actionObject": "去向、联系方式及返校安排",
+            "evidenceIds": [
+              "d26-scope-0004-566f39a917f2f49360dae235073817007d69b553b5300a97a1c3297a92fca14e"
+            ],
+            "inferenceLevel": "explicit",
+            "selected": false
+          },
+          {
+            "parentTempId": "task-0001",
+            "hierarchyType": "subtask",
+            "title": "及时做好相关登记",
+            "description": "暑期留校同学如短期离厦外出，\n视同离校学生管理，\n亦应及时做好相关登记。",
+            "completionCriteria": [
+              "及时做好相关登记"
+            ],
+            "estimatedMinutes": null,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "high",
+            "dependencyTempIds": [],
+            "confidence": 0.95,
+            "userConfirmationRequired": true,
+            "materialTempIds": [],
+            "timePointTempIds": [],
+            "tempId": "task-0003",
+            "actionVerb": "及时做好相关登记",
+            "actionObject": "相关登记",
+            "evidenceIds": [
+              "d26-scope-0005-279f1ed8b7befb927f49f79b18e89d9f29ee2953db0eb84bb81441dde61a198d",
+              "d26-scope-0006-117be51161d099d157b977fb17dae39e0505d995b162d4be44e964747d32e1f9",
+              "d26-scope-0007-e7b22da527135c8e8dbb35b6581b8de69ca104546e9a9771d251246300a84989"
+            ],
+            "inferenceLevel": "explicit",
+            "selected": false
+          }
+        ],
+        "events": [],
+        "timePoints": [
+          {
+            "tempId": "time-0001",
+            "type": "task_deadline",
+            "rawText": "7月16日前",
+            "confidence": 0.95,
+            "relatedTaskTempIds": [
+              "task-0001"
+            ],
+            "relatedMaterialTempIds": [],
+            "normalizedValue": "2026-07-16",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": true,
+            "precision": "date_only",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0001-50c27bb5fcc362e18d225875c6f8b7e568abc65b9111ef7534c952f659dcc6d9"
+            ]
+          }
+        ],
+        "materials": [],
+        "conflicts": [
+          {
+            "id": "d26-representation-0",
+            "type": "other",
+            "message": "资格尚未确认，不能当成已符合；请保留待核对。",
+            "entityTempIds": [
+              "task-0002"
+            ],
+            "evidenceIds": [],
+            "requiresDecision": true
+          },
+          {
+            "id": "d26-representation-1",
+            "type": "other",
+            "message": "资格尚未确认，不能当成已符合；请保留待核对。",
+            "entityTempIds": [
+              "task-0003"
+            ],
+            "evidenceIds": [],
+            "requiresDecision": true
+          }
+        ],
+        "quality": {
+          "overallConfidence": 1,
+          "hierarchyConfidence": 1,
+          "dateConfidence": 1,
+          "evidenceCoverage": 1,
+          "duplicateRisk": 0,
+          "overFragmentationRisk": 0,
+          "missingActionRisk": 0,
+          "needsHumanReview": true,
+          "reviewReasons": [
+            "资格尚未确认，不能当成已符合；请保留待核对。"
+          ]
+        },
+        "localCoverage": {
+          "version": "authority-local-coverage-1.0.0",
+          "enabled": false,
+          "missingCoverage": []
+        },
+        "attributeAudit": {
+          "version": "single-authority-attribute-index-1.0.0",
+          "additions": []
+        },
+        "sourceWindows": {
+          "version": "source-window-endpoints-1.0.0",
+          "inferredFacts": 0,
+          "decisions": []
+        }
+      },
+      "currentProduct": {
+        "status": "DISPLAYED_NOT_WHOLE_SOURCE_CORRECTNESS",
+        "tasks": [
+          {
+            "parentTempId": null,
+            "hierarchyType": "task",
+            "title": "完成相关信息登记",
+            "description": "一、各位同学应于7月16日前通过学工系统“暑假离留校登记”应用完成相关信息登记（https:\n//xmuxg.xmu.edu.cn/app/182），\n并确保填写的信息完整、准确。",
+            "completionCriteria": [
+              "于7月16日前通过学工系统“暑假离留校登记”应用完成相关信息登记",
+              "确保填写的信息完整、准确"
+            ],
+            "estimatedMinutes": null,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "high",
+            "dependencyTempIds": [],
+            "confidence": 0.95,
+            "userConfirmationRequired": true,
+            "materialTempIds": [],
+            "timePointTempIds": [
+              "time-0001"
+            ],
+            "tempId": "task-0001",
+            "actionVerb": "完成相关信息登记",
+            "actionObject": "相关信息登记",
+            "evidenceIds": [
+              "d26-scope-0001-50c27bb5fcc362e18d225875c6f8b7e568abc65b9111ef7534c952f659dcc6d9",
+              "d26-scope-0002-ac0679a9dd77ba9d0e887255342fdcd8e3ffa398515681c09599d9d92ffbf10e",
+              "d26-scope-0003-18e1173af6d88f8e61ef2959d28f61e58431932af6526c9d7d8d2fd9e2b140e3"
+            ],
+            "inferenceLevel": "explicit",
+            "selected": true
+          },
+          {
+            "parentTempId": "task-0001",
+            "hierarchyType": "subtask",
+            "title": "如实登记去向、联系方式及返校安排",
+            "description": "离校同学应如实登记去向、联系方式及返校安排；",
+            "completionCriteria": [
+              "如实登记去向、联系方式及返校安排"
+            ],
+            "estimatedMinutes": null,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "high",
+            "dependencyTempIds": [],
+            "confidence": 0.95,
+            "userConfirmationRequired": true,
+            "materialTempIds": [],
+            "timePointTempIds": [],
+            "tempId": "task-0002",
+            "actionVerb": "如实登记",
+            "actionObject": "去向、联系方式及返校安排",
+            "evidenceIds": [
+              "d26-scope-0004-566f39a917f2f49360dae235073817007d69b553b5300a97a1c3297a92fca14e"
+            ],
+            "inferenceLevel": "explicit",
+            "selected": false
+          },
+          {
+            "parentTempId": "task-0001",
+            "hierarchyType": "subtask",
+            "title": "及时做好相关登记",
+            "description": "暑期留校同学如短期离厦外出，\n视同离校学生管理，\n亦应及时做好相关登记。",
+            "completionCriteria": [
+              "及时做好相关登记"
+            ],
+            "estimatedMinutes": null,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "high",
+            "dependencyTempIds": [],
+            "confidence": 0.95,
+            "userConfirmationRequired": true,
+            "materialTempIds": [],
+            "timePointTempIds": [],
+            "tempId": "task-0003",
+            "actionVerb": "及时做好相关登记",
+            "actionObject": "相关登记",
+            "evidenceIds": [
+              "d26-scope-0005-279f1ed8b7befb927f49f79b18e89d9f29ee2953db0eb84bb81441dde61a198d",
+              "d26-scope-0006-117be51161d099d157b977fb17dae39e0505d995b162d4be44e964747d32e1f9",
+              "d26-scope-0007-e7b22da527135c8e8dbb35b6581b8de69ca104546e9a9771d251246300a84989"
+            ],
+            "inferenceLevel": "explicit",
+            "selected": false
+          }
+        ],
+        "events": [],
+        "timePoints": [
+          {
+            "tempId": "time-0001",
+            "type": "task_deadline",
+            "rawText": "7月16日前",
+            "confidence": 0.95,
+            "relatedTaskTempIds": [
+              "task-0001"
+            ],
+            "relatedMaterialTempIds": [],
+            "normalizedValue": "2026-07-16",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": true,
+            "precision": "date_only",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0001-50c27bb5fcc362e18d225875c6f8b7e568abc65b9111ef7534c952f659dcc6d9"
+            ]
+          }
+        ],
+        "materials": [],
+        "conflicts": [
+          {
+            "id": "d26-representation-0",
+            "type": "other",
+            "message": "资格尚未确认，不能当成已符合；请保留待核对。",
+            "entityTempIds": [
+              "task-0002"
+            ],
+            "evidenceIds": [],
+            "requiresDecision": true
+          },
+          {
+            "id": "d26-representation-1",
+            "type": "other",
+            "message": "资格尚未确认，不能当成已符合；请保留待核对。",
+            "entityTempIds": [
+              "task-0003"
+            ],
+            "evidenceIds": [],
+            "requiresDecision": true
+          }
+        ],
+        "quality": {
+          "overallConfidence": 1,
+          "hierarchyConfidence": 1,
+          "dateConfidence": 1,
+          "evidenceCoverage": 1,
+          "duplicateRisk": 0,
+          "overFragmentationRisk": 0,
+          "missingActionRisk": 0,
+          "needsHumanReview": true,
+          "reviewReasons": [
+            "资格尚未确认，不能当成已符合；请保留待核对。"
+          ]
+        },
+        "localCoverage": {
+          "version": "authority-local-coverage-1.0.0",
+          "enabled": true,
+          "missingCoverage": []
+        },
+        "attributeAudit": {
+          "version": "single-authority-shared-attribute-index-1.1.0",
+          "additions": []
+        },
+        "sourceWindows": {
+          "version": "source-window-endpoints-1.0.0",
+          "inferredFacts": 0,
+          "decisions": []
+        }
+      }
+    },
+    {
+      "sourceId": "V5-CURRENT-REAL-03",
+      "cohort": "HISTORICAL_V5",
+      "sourceSha256": "e751a6400d42dfeb3894935cb452b04ee18db16926d060d44a5ef0f8deb7d793",
+      "responseSha256": "7d1841de380483a55bc54aa7f6f7ec4aa1cbd1c499f6f13dbb696ba098beaf40",
+      "requestSha256": "fb39f05627337a26a70323a0697caea711b0acbdd87d65254866f2cf709a884f",
+      "sourceText": "招生对象：在读本科生和研究生、青年研究人员等\n收费情况：免费\n活动时间：2026年7月6日-7月10日\n活动形式：线上讲座，被录取的正式学员可以进入线上会议室听课并提问互动，各学员需自行准备相关终端设备，以便连线\n报名方式：网络报名，有意参加活动可通过下方二维码报名\n学习结束后可获得暑期学校结业证书，欢迎大家踊跃报名，我们期待与您相聚云端。\n报名截止时间：2026年6月30日17:00",
+      "referenceTime": "2026-06-23T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "wire": {
+        "schemaVersion": "single-authority-source-contract-5.0.0",
+        "events": [
+          {
+            "tempId": "event-0001",
+            "title": "线上讲座",
+            "description": "活动形式为线上讲座，被录取的正式学员可以进入线上会议室听课并提问互动，各学员需自行准备相关终端设备，以便连线。",
+            "location": "线上",
+            "scopeIds": [
+              "scope-0007-cb026169198b0dc1935d1d99cf3cf6b8fae4cdef08839891d2a90468ec80f1c3",
+              "scope-0008-e1535253831ce31e6793a329613239d54a4a476bd5f220565a0d47e38bb6bfc6",
+              "scope-0009-58bc1387fa1868701898a92037e79e4ca69c92f40152d4f5985e5a6a3e258727",
+              "scope-0010-73637acaf8ee8d014bb4c3d8eaee6a6eef3c79bf54af966779cf1091580c8c95",
+              "scope-0011-219e480fa0b4edbabe458f706d6d780f3d0435393fb05ac4d80ca1043f2102e8"
+            ],
+            "confidence": 0.95,
+            "inferenceLevel": "explicit",
+            "relatedTaskTempIds": [],
+            "attributes": [
+              {
+                "kind": "format",
+                "text": "线上讲座，",
+                "scopeIds": [
+                  "scope-0008-e1535253831ce31e6793a329613239d54a4a476bd5f220565a0d47e38bb6bfc6"
+                ]
+              },
+              {
+                "kind": "participation",
+                "text": "被录取的正式学员可以进入线上会议室听课并提问互动，",
+                "scopeIds": [
+                  "scope-0009-58bc1387fa1868701898a92037e79e4ca69c92f40152d4f5985e5a6a3e258727"
+                ]
+              },
+              {
+                "kind": "location_note",
+                "text": "各学员需自行准备相关终端设备，",
+                "scopeIds": [
+                  "scope-0010-73637acaf8ee8d014bb4c3d8eaee6a6eef3c79bf54af966779cf1091580c8c95"
+                ]
+              },
+              {
+                "kind": "location_note",
+                "text": "以便连线",
+                "scopeIds": [
+                  "scope-0011-219e480fa0b4edbabe458f706d6d780f3d0435393fb05ac4d80ca1043f2102e8"
+                ]
+              },
+              {
+                "kind": "outcome",
+                "text": "学习结束后可获得暑期学校结业证书，",
+                "scopeIds": [
+                  "scope-0015-79cc2ff67e98f0ff5c9473825bd6114b005d516ac2371b16d4428d6c4c98f1d9"
+                ]
+              }
+            ]
+          }
+        ],
+        "timePoints": [
+          {
+            "tempId": "time-0001",
+            "type": "event_start",
+            "rawText": "2026年7月6日-7月10日",
+            "scopeIds": [
+              "scope-0005-c60b1aad88029c4be4101571e484eb7ed3f731193b9c3ddca674f5ab0753740c",
+              "scope-0006-ffd0602f308e847d2a4f85422db68c55b7daf94aa022444e3efc5b9430712944"
+            ],
+            "confidence": 0.95,
+            "owners": [
+              {
+                "kind": "event_start",
+                "entityId": "event-0001"
+              }
+            ]
+          },
+          {
+            "tempId": "time-0002",
+            "type": "event_end",
+            "rawText": "2026年7月6日-7月10日",
+            "scopeIds": [
+              "scope-0005-c60b1aad88029c4be4101571e484eb7ed3f731193b9c3ddca674f5ab0753740c",
+              "scope-0006-ffd0602f308e847d2a4f85422db68c55b7daf94aa022444e3efc5b9430712944"
+            ],
+            "confidence": 0.95,
+            "owners": [
+              {
+                "kind": "event_end",
+                "entityId": "event-0001"
+              }
+            ]
+          },
+          {
+            "tempId": "time-0003",
+            "type": "registration_deadline",
+            "rawText": "2026年6月30日17:00",
+            "scopeIds": [
+              "scope-0018-c666eada9a43b361ac81ce92ac1dcbff800fe48999e320da28d10abe7b05dc87",
+              "scope-0019-3d34510040a85e39543f05e42bdb264bc4cd6bbe4b3b1412b596536b66ad0768"
+            ],
+            "confidence": 0.95,
+            "owners": [
+              {
+                "kind": "task",
+                "entityId": "task-0001"
+              }
+            ]
+          }
+        ],
+        "materials": [],
+        "tasks": [
+          {
+            "id": "task-0001",
+            "propositionScopeIds": [
+              "scope-0012-c993bff5695812383bdec87c30f8e234f5cbf057aac5055b2d65d67ab302a9d4",
+              "scope-0013-a9b859f238709c3fc0c806a2902d832a59a93d4e039a742926f03e5e281939e0",
+              "scope-0014-d454893a41faf1b8a4c261dd1141c6c39bcd002892b135426ba819f621daccbb",
+              "scope-0018-c666eada9a43b361ac81ce92ac1dcbff800fe48999e320da28d10abe7b05dc87",
+              "scope-0019-3d34510040a85e39543f05e42bdb264bc4cd6bbe4b3b1412b596536b66ad0768"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "register",
+            "action": {
+              "scopeId": "scope-0013-a9b859f238709c3fc0c806a2902d832a59a93d4e039a742926f03e5e281939e0",
+              "surface": "网络报名"
+            },
+            "object": {
+              "scopeId": "scope-0014-d454893a41faf1b8a4c261dd1141c6c39bcd002892b135426ba819f621daccbb",
+              "surface": "有意参加活动可通过下方二维码报名"
+            },
+            "effect": "external_interaction",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "网络报名",
+              "description": "有意参加活动可通过下方二维码报名，报名截止时间为2026年6月30日17:00。",
+              "completionCriteria": [
+                "通过下方二维码完成网络报名"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "high",
+              "dependencyTempIds": [],
+              "confidence": 0.95,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "unknown",
+              "conditionScopeIds": [],
+              "factScopeIds": []
+            },
+            "coverage": {
+              "time": {
+                "status": "present",
+                "absenceScopeIds": []
+              },
+              "material": {
+                "status": "not_stated",
+                "absenceScopeIds": []
+              },
+              "event": {
+                "status": "present",
+                "absenceScopeIds": []
+              }
+            }
+          }
+        ],
+        "revisions": [],
+        "conflicts": [],
+        "scopeAccounting": [
+          {
+            "scopeId": "scope-0001-34b21d378fb94b09914772480ff3cdec86c5d14359de59c8f94a58e94c561be4",
+            "kind": "information",
+            "primaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0002-f23c7b33c4bb696433b85747cee8aad999c4e2dcb72b542aa7481369ad1ce4bf",
+            "kind": "information",
+            "primaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0003-de52cc137de718edf90987b7db282a52308886a49329b4516894ac066d4af8ea",
+            "kind": "information",
+            "primaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0004-6b8be682dbbbf190073d76a88be7a064bae2356a4c974d08f77c1922ead1de44",
+            "kind": "information",
+            "primaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0005-c60b1aad88029c4be4101571e484eb7ed3f731193b9c3ddca674f5ab0753740c",
+            "kind": "information",
+            "primaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0006-ffd0602f308e847d2a4f85422db68c55b7daf94aa022444e3efc5b9430712944",
+            "kind": "information",
+            "primaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0007-cb026169198b0dc1935d1d99cf3cf6b8fae4cdef08839891d2a90468ec80f1c3",
+            "kind": "information",
+            "primaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0008-e1535253831ce31e6793a329613239d54a4a476bd5f220565a0d47e38bb6bfc6",
+            "kind": "event",
+            "primaryEntityIds": [
+              "event-0001"
+            ]
+          },
+          {
+            "scopeId": "scope-0009-58bc1387fa1868701898a92037e79e4ca69c92f40152d4f5985e5a6a3e258727",
+            "kind": "event",
+            "primaryEntityIds": [
+              "event-0001"
+            ]
+          },
+          {
+            "scopeId": "scope-0010-73637acaf8ee8d014bb4c3d8eaee6a6eef3c79bf54af966779cf1091580c8c95",
+            "kind": "event",
+            "primaryEntityIds": [
+              "event-0001"
+            ]
+          },
+          {
+            "scopeId": "scope-0011-219e480fa0b4edbabe458f706d6d780f3d0435393fb05ac4d80ca1043f2102e8",
+            "kind": "event",
+            "primaryEntityIds": [
+              "event-0001"
+            ]
+          },
+          {
+            "scopeId": "scope-0012-c993bff5695812383bdec87c30f8e234f5cbf057aac5055b2d65d67ab302a9d4",
+            "kind": "information",
+            "primaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0013-a9b859f238709c3fc0c806a2902d832a59a93d4e039a742926f03e5e281939e0",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-0001"
+            ]
+          },
+          {
+            "scopeId": "scope-0014-d454893a41faf1b8a4c261dd1141c6c39bcd002892b135426ba819f621daccbb",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-0001"
+            ]
+          },
+          {
+            "scopeId": "scope-0015-79cc2ff67e98f0ff5c9473825bd6114b005d516ac2371b16d4428d6c4c98f1d9",
+            "kind": "event",
+            "primaryEntityIds": [
+              "event-0001"
+            ]
+          },
+          {
+            "scopeId": "scope-0016-aa0a2955e9f631dbc607ec0392ce0567f9e3d708b8519c5e88a273fe7afee120",
+            "kind": "information",
+            "primaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0017-0a2d463102aa4ddde6084a16f37d6333cd067bff789ca14b06e3b01b735d8b9c",
+            "kind": "information",
+            "primaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0018-c666eada9a43b361ac81ce92ac1dcbff800fe48999e320da28d10abe7b05dc87",
+            "kind": "information",
+            "primaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0019-3d34510040a85e39543f05e42bdb264bc4cd6bbe4b3b1412b596536b66ad0768",
+            "kind": "information",
+            "primaryEntityIds": []
+          }
+        ],
+        "prerequisiteStates": []
+      },
+      "strictProgram": {
+        "status": "REJECTED",
+        "code": "SINGLE_AUTHORITY_MISSING_PRESENT_FACT"
+      },
+      "currentProduct": {
+        "status": "DISPLAYED_NOT_WHOLE_SOURCE_CORRECTNESS",
+        "tasks": [
+          {
+            "parentTempId": null,
+            "hierarchyType": "task",
+            "title": "网络报名有意参加活动可通过下方二维码报名",
+            "description": "报名方式：\n网络报名，\n有意参加活动可通过下方二维码报名\n报名截止时间：\n2026年6月30日17:00",
+            "completionCriteria": [
+              "通过下方二维码完成网络报名"
+            ],
+            "estimatedMinutes": null,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "high",
+            "dependencyTempIds": [],
+            "confidence": 0.95,
+            "userConfirmationRequired": true,
+            "materialTempIds": [],
+            "timePointTempIds": [
+              "time-0003"
+            ],
+            "tempId": "task-0001",
+            "actionVerb": "网络报名",
+            "actionObject": "有意参加活动可通过下方二维码报名",
+            "evidenceIds": [
+              "d26-scope-0012-c993bff5695812383bdec87c30f8e234f5cbf057aac5055b2d65d67ab302a9d4",
+              "d26-scope-0013-a9b859f238709c3fc0c806a2902d832a59a93d4e039a742926f03e5e281939e0",
+              "d26-scope-0014-d454893a41faf1b8a4c261dd1141c6c39bcd002892b135426ba819f621daccbb",
+              "d26-scope-0018-c666eada9a43b361ac81ce92ac1dcbff800fe48999e320da28d10abe7b05dc87",
+              "d26-scope-0019-3d34510040a85e39543f05e42bdb264bc4cd6bbe4b3b1412b596536b66ad0768"
+            ],
+            "inferenceLevel": "explicit",
+            "selected": false
+          }
+        ],
+        "events": [
+          {
+            "tempId": "event-0001",
+            "title": "线上讲座",
+            "description": "活动形式：\n线上讲座，\n被录取的正式学员可以进入线上会议室听课并提问互动，\n各学员需自行准备相关终端设备，\n以便连线\n学习结束后可获得暑期学校结业证书，",
+            "startTimePointTempId": null,
+            "endTimePointTempId": null,
+            "location": "线上",
+            "confidence": 0.95,
+            "inferenceLevel": "explicit",
+            "evidenceIds": [
+              "d26-scope-0007-cb026169198b0dc1935d1d99cf3cf6b8fae4cdef08839891d2a90468ec80f1c3",
+              "d26-scope-0008-e1535253831ce31e6793a329613239d54a4a476bd5f220565a0d47e38bb6bfc6",
+              "d26-scope-0009-58bc1387fa1868701898a92037e79e4ca69c92f40152d4f5985e5a6a3e258727",
+              "d26-scope-0010-73637acaf8ee8d014bb4c3d8eaee6a6eef3c79bf54af966779cf1091580c8c95",
+              "d26-scope-0011-219e480fa0b4edbabe458f706d6d780f3d0435393fb05ac4d80ca1043f2102e8",
+              "d26-scope-0015-79cc2ff67e98f0ff5c9473825bd6114b005d516ac2371b16d4428d6c4c98f1d9"
+            ],
+            "selected": true
+          }
+        ],
+        "timePoints": [
+          {
+            "tempId": "time-0001",
+            "type": "event_start",
+            "rawText": "2026年7月6日-7月10日",
+            "confidence": 0.95,
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "normalizedValue": "2026-07-06",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": true,
+            "precision": "date_only",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0005-c60b1aad88029c4be4101571e484eb7ed3f731193b9c3ddca674f5ab0753740c",
+              "d26-scope-0006-ffd0602f308e847d2a4f85422db68c55b7daf94aa022444e3efc5b9430712944"
+            ]
+          },
+          {
+            "tempId": "time-0002",
+            "type": "event_end",
+            "rawText": "2026年7月6日-7月10日",
+            "confidence": 0.95,
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "normalizedValue": "2026-07-06",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": true,
+            "precision": "date_only",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0005-c60b1aad88029c4be4101571e484eb7ed3f731193b9c3ddca674f5ab0753740c",
+              "d26-scope-0006-ffd0602f308e847d2a4f85422db68c55b7daf94aa022444e3efc5b9430712944"
+            ]
+          },
+          {
+            "tempId": "time-0003",
+            "type": "registration_deadline",
+            "rawText": "2026年6月30日17:00",
+            "confidence": 0.95,
+            "relatedTaskTempIds": [
+              "task-0001"
+            ],
+            "relatedMaterialTempIds": [],
+            "normalizedValue": "2026-06-30T17:00",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0018-c666eada9a43b361ac81ce92ac1dcbff800fe48999e320da28d10abe7b05dc87",
+              "d26-scope-0019-3d34510040a85e39543f05e42bdb264bc4cd6bbe4b3b1412b596536b66ad0768"
+            ]
+          }
+        ],
+        "materials": [],
+        "conflicts": [
+          {
+            "id": "owner-risk-0",
+            "type": "other",
+            "message": "时间归属与所引原文对象不一致，相关事件需重新核对；无关联项可继续保存。",
+            "entityTempIds": [
+              "time-0001",
+              "event-0001"
+            ],
+            "requiresDecision": true,
+            "evidenceIds": [
+              "d26-scope-0005-c60b1aad88029c4be4101571e484eb7ed3f731193b9c3ddca674f5ab0753740c",
+              "d26-scope-0006-ffd0602f308e847d2a4f85422db68c55b7daf94aa022444e3efc5b9430712944"
+            ]
+          },
+          {
+            "id": "owner-risk-1",
+            "type": "other",
+            "message": "时间归属与所引原文对象不一致，相关事件需重新核对；无关联项可继续保存。",
+            "entityTempIds": [
+              "time-0002",
+              "event-0001"
+            ],
+            "requiresDecision": true,
+            "evidenceIds": [
+              "d26-scope-0005-c60b1aad88029c4be4101571e484eb7ed3f731193b9c3ddca674f5ab0753740c",
+              "d26-scope-0006-ffd0602f308e847d2a4f85422db68c55b7daf94aa022444e3efc5b9430712944"
+            ]
+          },
+          {
+            "id": "d26-representation-0",
+            "type": "other",
+            "message": "资格尚未确认，不能当成已符合；请保留待核对。",
+            "entityTempIds": [
+              "task-0001"
+            ],
+            "evidenceIds": [],
+            "requiresDecision": true
+          },
+          {
+            "id": "coverage:task-0001:event",
+            "type": "other",
+            "message": "这项任务的关联事件覆盖未说明清楚，保留已有事实，请核对；不能当成原文没有。",
+            "entityTempIds": [
+              "task-0001"
+            ],
+            "evidenceIds": [
+              "d26-scope-0012-c993bff5695812383bdec87c30f8e234f5cbf057aac5055b2d65d67ab302a9d4",
+              "d26-scope-0013-a9b859f238709c3fc0c806a2902d832a59a93d4e039a742926f03e5e281939e0",
+              "d26-scope-0014-d454893a41faf1b8a4c261dd1141c6c39bcd002892b135426ba819f621daccbb",
+              "d26-scope-0018-c666eada9a43b361ac81ce92ac1dcbff800fe48999e320da28d10abe7b05dc87",
+              "d26-scope-0019-3d34510040a85e39543f05e42bdb264bc4cd6bbe4b3b1412b596536b66ad0768"
+            ],
+            "requiresDecision": true
+          }
+        ],
+        "quality": {
+          "overallConfidence": 1,
+          "hierarchyConfidence": 1,
+          "dateConfidence": 1,
+          "evidenceCoverage": 1,
+          "duplicateRisk": 0,
+          "overFragmentationRisk": 0,
+          "missingActionRisk": 0,
+          "needsHumanReview": true,
+          "reviewReasons": [
+            "资格尚未确认，不能当成已符合；请保留待核对。",
+            "时间归属与所引原文对象不一致，相关事件需重新核对；无关联项可继续保存。",
+            "这项任务的关联事件覆盖未说明清楚，保留已有事实，请核对；不能当成原文没有。"
+          ]
+        },
+        "localCoverage": {
+          "version": "authority-local-coverage-1.0.0",
+          "enabled": true,
+          "missingCoverage": [
+            {
+              "taskId": "task-0001",
+              "category": "event",
+              "originalClaim": {
+                "status": "present",
+                "absenceScopeIds": []
+              },
+              "code": "MISSING_PRESENT_FACT"
+            }
+          ]
+        },
+        "attributeAudit": {
+          "version": "single-authority-shared-attribute-index-1.1.0",
+          "additions": [
+            {
+              "eventId": "event-0001",
+              "attribute": 4,
+              "scopeIds": [
+                "scope-0015-79cc2ff67e98f0ff5c9473825bd6114b005d516ac2371b16d4428d6c4c98f1d9"
+              ]
+            }
+          ]
+        },
+        "sourceWindows": {
+          "version": "source-window-endpoints-1.0.0",
+          "inferredFacts": 0,
+          "decisions": []
+        }
+      }
+    },
+    {
+      "sourceId": "V5-CURRENT-REAL-04",
+      "cohort": "HISTORICAL_V5",
+      "sourceSha256": "ebc1612063c03172bf98302cffbc98c1f838830e732fefc246a01fbb0c30723b",
+      "responseSha256": "839213d54377d1747bbc28c6bf049fc93152864b13f9209537672761702ca90e",
+      "requestSha256": "979f7dc31b11768a4912c58d938fc4c609e940ce6fc6b83245e0ce2f6d38f788",
+      "sourceText": "活动信息\n\n**时间**\n\n2026年10月12日（周一）\n\n12:30-14:00\n\n**地点**\n\n海韵园办公楼A栋302室\n\n**报名**\n\n扫描下方二维码进行报名，听众报名截止时间为2026年10月11日中午12:00，主办方提供50份免费午餐，按报名顺序先到先得（讲座的听众总人数不作限制，感兴趣均可报名）。",
+      "referenceTime": "2026-09-29T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "wire": {
+        "schemaVersion": "single-authority-source-contract-5.0.0",
+        "events": [
+          {
+            "tempId": "event-0001",
+            "title": "讲座",
+            "description": "2026年10月12日（周一）12:30-14:00在海韵园办公楼A栋302室举行的讲座。",
+            "location": "海韵园办公楼A栋302室",
+            "scopeIds": [
+              "scope-0001-d5fd93a7185762150474aa059d177475047978a1c0380e2b69e97fdf20ca0d55",
+              "scope-0003-c0aa0abc00eb8b1e2d7b0f0a10a3481b128cefb4a1893eed350aecda6e322c39",
+              "scope-0004-9a482d4a59d08a1b713587531d5f29b67c21e19d4874132dabe935ccdd1c5924",
+              "scope-0006-ab66211fe292fa417bfa33840ab366c8e78443b2f2f5ab56586b3507c1b35157"
+            ],
+            "confidence": 0.9,
+            "inferenceLevel": "explicit",
+            "relatedTaskTempIds": [],
+            "attributes": [
+              {
+                "kind": "location_note",
+                "text": "海韵园办公楼A栋302室",
+                "scopeIds": [
+                  "scope-0006-ab66211fe292fa417bfa33840ab366c8e78443b2f2f5ab56586b3507c1b35157"
+                ]
+              }
+            ]
+          }
+        ],
+        "timePoints": [
+          {
+            "tempId": "time-0001",
+            "type": "event_start",
+            "rawText": "2026年10月12日（周一）",
+            "scopeIds": [
+              "scope-0003-c0aa0abc00eb8b1e2d7b0f0a10a3481b128cefb4a1893eed350aecda6e322c39"
+            ],
+            "confidence": 0.9,
+            "owners": [
+              {
+                "kind": "event_start",
+                "entityId": "event-0001"
+              }
+            ]
+          },
+          {
+            "tempId": "time-0002",
+            "type": "event_start",
+            "rawText": "12:30-14:00",
+            "scopeIds": [
+              "scope-0004-9a482d4a59d08a1b713587531d5f29b67c21e19d4874132dabe935ccdd1c5924"
+            ],
+            "confidence": 0.9,
+            "owners": [
+              {
+                "kind": "event_start",
+                "entityId": "event-0001"
+              }
+            ]
+          },
+          {
+            "tempId": "time-0003",
+            "type": "event_end",
+            "rawText": "12:30-14:00",
+            "scopeIds": [
+              "scope-0004-9a482d4a59d08a1b713587531d5f29b67c21e19d4874132dabe935ccdd1c5924"
+            ],
+            "confidence": 0.9,
+            "owners": [
+              {
+                "kind": "event_end",
+                "entityId": "event-0001"
+              }
+            ]
+          },
+          {
+            "tempId": "time-0004",
+            "type": "registration_deadline",
+            "rawText": "听众报名截止时间为2026年10月11日中午12:00",
+            "scopeIds": [
+              "scope-0009-c6b63c9b1e2462102732566311b745f076109da772c1fc44b85653a93d67db9b"
+            ],
+            "confidence": 0.9,
+            "owners": [
+              {
+                "kind": "task",
+                "entityId": "task-0001"
+              }
+            ]
+          }
+        ],
+        "materials": [],
+        "tasks": [
+          {
+            "id": "task-0001",
+            "propositionScopeIds": [
+              "scope-0008-7ca492f9793a5e015367fe1198c94b5fa99ed35c5e423ebfe669d9a2353267f5",
+              "scope-0009-c6b63c9b1e2462102732566311b745f076109da772c1fc44b85653a93d67db9b",
+              "scope-0012-6e5ea4127909eb6121fbd0a235afc2079207d4cae8b2fe3f8ebcc697475163bd"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "register",
+            "action": {
+              "scopeId": "scope-0008-7ca492f9793a5e015367fe1198c94b5fa99ed35c5e423ebfe669d9a2353267f5",
+              "surface": "扫描下方二维码进行报名"
+            },
+            "object": {
+              "scopeId": "scope-0008-7ca492f9793a5e015367fe1198c94b5fa99ed35c5e423ebfe669d9a2353267f5",
+              "surface": "报名"
+            },
+            "effect": "external_interaction",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "扫描二维码报名",
+              "description": "扫描下方二维码进行报名，听众报名截止时间为2026年10月11日中午12:00。",
+              "completionCriteria": [
+                "扫描下方二维码进行报名"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "confidence": 0.9,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "unknown",
+              "conditionScopeIds": [],
+              "factScopeIds": []
+            },
+            "coverage": {
+              "time": {
+                "status": "present",
+                "absenceScopeIds": []
+              },
+              "material": {
+                "status": "not_stated",
+                "absenceScopeIds": []
+              },
+              "event": {
+                "status": "present",
+                "absenceScopeIds": []
+              }
+            }
+          }
+        ],
+        "revisions": [],
+        "conflicts": [],
+        "scopeAccounting": [
+          {
+            "scopeId": "scope-0001-d5fd93a7185762150474aa059d177475047978a1c0380e2b69e97fdf20ca0d55",
+            "kind": "information",
+            "primaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0002-019f7129641d70d5e2b216640cd3373a5811d063dcd390e976c5ce643453e5ab",
+            "kind": "information",
+            "primaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0003-c0aa0abc00eb8b1e2d7b0f0a10a3481b128cefb4a1893eed350aecda6e322c39",
+            "kind": "event",
+            "primaryEntityIds": [
+              "event-0001"
+            ]
+          },
+          {
+            "scopeId": "scope-0004-9a482d4a59d08a1b713587531d5f29b67c21e19d4874132dabe935ccdd1c5924",
+            "kind": "event",
+            "primaryEntityIds": [
+              "event-0001"
+            ]
+          },
+          {
+            "scopeId": "scope-0005-0a01d0c971bc5347a6126c8cd869c70929b3185ea037f469403718126afb24bf",
+            "kind": "information",
+            "primaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0006-ab66211fe292fa417bfa33840ab366c8e78443b2f2f5ab56586b3507c1b35157",
+            "kind": "event",
+            "primaryEntityIds": [
+              "event-0001"
+            ]
+          },
+          {
+            "scopeId": "scope-0007-4d463dc66e14afc3c4eaaa369e382a56ac4671a67c2184dee9fb910bb3446fa5",
+            "kind": "information",
+            "primaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0008-7ca492f9793a5e015367fe1198c94b5fa99ed35c5e423ebfe669d9a2353267f5",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-0001"
+            ]
+          },
+          {
+            "scopeId": "scope-0009-c6b63c9b1e2462102732566311b745f076109da772c1fc44b85653a93d67db9b",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-0001"
+            ]
+          },
+          {
+            "scopeId": "scope-0010-e849d754736038b49e5d7d3df317ef2d05d62206d324f6b7746dad19e911aea6",
+            "kind": "information",
+            "primaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0011-d8b71b07466c5ac9e58a55b907fac4b82c5a635102b1b66a19e2154afe43e85e",
+            "kind": "information",
+            "primaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0012-6e5ea4127909eb6121fbd0a235afc2079207d4cae8b2fe3f8ebcc697475163bd",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-0001"
+            ]
+          }
+        ],
+        "prerequisiteStates": []
+      },
+      "strictProgram": {
+        "status": "REJECTED",
+        "code": "SINGLE_AUTHORITY_MISSING_PRESENT_FACT"
+      },
+      "currentProduct": {
+        "status": "DISPLAYED_NOT_WHOLE_SOURCE_CORRECTNESS",
+        "tasks": [
+          {
+            "parentTempId": null,
+            "hierarchyType": "task",
+            "title": "扫描下方二维码进行报名",
+            "description": "扫描下方二维码进行报名，\n听众报名截止时间为2026年10月11日中午12:00，\n感兴趣均可报名）。",
+            "completionCriteria": [
+              "扫描下方二维码进行报名"
+            ],
+            "estimatedMinutes": null,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "medium",
+            "dependencyTempIds": [],
+            "confidence": 0.9,
+            "userConfirmationRequired": true,
+            "materialTempIds": [],
+            "timePointTempIds": [
+              "time-0004"
+            ],
+            "tempId": "task-0001",
+            "actionVerb": "扫描下方二维码进行报名",
+            "actionObject": "报名",
+            "evidenceIds": [
+              "d26-scope-0008-7ca492f9793a5e015367fe1198c94b5fa99ed35c5e423ebfe669d9a2353267f5",
+              "d26-scope-0009-c6b63c9b1e2462102732566311b745f076109da772c1fc44b85653a93d67db9b",
+              "d26-scope-0012-6e5ea4127909eb6121fbd0a235afc2079207d4cae8b2fe3f8ebcc697475163bd"
+            ],
+            "inferenceLevel": "explicit",
+            "selected": false
+          }
+        ],
+        "events": [
+          {
+            "tempId": "event-0001",
+            "title": "待核对事件",
+            "description": "事件内容缺少对应来源依据，请核对。",
+            "startTimePointTempId": "time-0001",
+            "endTimePointTempId": "time-0003",
+            "location": "海韵园办公楼A栋302室",
+            "confidence": 0.9,
+            "inferenceLevel": "explicit",
+            "evidenceIds": [
+              "d26-scope-0001-d5fd93a7185762150474aa059d177475047978a1c0380e2b69e97fdf20ca0d55",
+              "d26-scope-0003-c0aa0abc00eb8b1e2d7b0f0a10a3481b128cefb4a1893eed350aecda6e322c39",
+              "d26-scope-0004-9a482d4a59d08a1b713587531d5f29b67c21e19d4874132dabe935ccdd1c5924",
+              "d26-scope-0006-ab66211fe292fa417bfa33840ab366c8e78443b2f2f5ab56586b3507c1b35157"
+            ],
+            "selected": false
+          }
+        ],
+        "timePoints": [
+          {
+            "tempId": "time-0001",
+            "type": "event_start",
+            "rawText": "12:30-14:00",
+            "confidence": 0.9,
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "normalizedValue": "2026-10-12T12:30",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0003-c0aa0abc00eb8b1e2d7b0f0a10a3481b128cefb4a1893eed350aecda6e322c39",
+              "d26-scope-0004-9a482d4a59d08a1b713587531d5f29b67c21e19d4874132dabe935ccdd1c5924"
+            ]
+          },
+          {
+            "tempId": "time-0003",
+            "type": "event_end",
+            "rawText": "12:30-14:00",
+            "confidence": 0.9,
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "normalizedValue": "2026-10-12T14:00",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0003-c0aa0abc00eb8b1e2d7b0f0a10a3481b128cefb4a1893eed350aecda6e322c39",
+              "d26-scope-0004-9a482d4a59d08a1b713587531d5f29b67c21e19d4874132dabe935ccdd1c5924"
+            ]
+          },
+          {
+            "tempId": "time-0004",
+            "type": "registration_deadline",
+            "rawText": "听众报名截止时间为2026年10月11日中午12:00",
+            "confidence": 0.9,
+            "relatedTaskTempIds": [
+              "task-0001"
+            ],
+            "relatedMaterialTempIds": [],
+            "normalizedValue": "2026-10-11T12:00",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0009-c6b63c9b1e2462102732566311b745f076109da772c1fc44b85653a93d67db9b"
+            ]
+          }
+        ],
+        "materials": [],
+        "conflicts": [
+          {
+            "id": "d26-representation-0",
+            "type": "other",
+            "message": "资格尚未确认，不能当成已符合；请保留待核对。",
+            "entityTempIds": [
+              "task-0001"
+            ],
+            "evidenceIds": [],
+            "requiresDecision": true
+          },
+          {
+            "id": "coverage:task-0001:event",
+            "type": "other",
+            "message": "这项任务的关联事件覆盖未说明清楚，保留已有事实，请核对；不能当成原文没有。",
+            "entityTempIds": [
+              "task-0001"
+            ],
+            "evidenceIds": [
+              "d26-scope-0008-7ca492f9793a5e015367fe1198c94b5fa99ed35c5e423ebfe669d9a2353267f5",
+              "d26-scope-0009-c6b63c9b1e2462102732566311b745f076109da772c1fc44b85653a93d67db9b",
+              "d26-scope-0012-6e5ea4127909eb6121fbd0a235afc2079207d4cae8b2fe3f8ebcc697475163bd"
+            ],
+            "requiresDecision": true
+          }
+        ],
+        "quality": {
+          "overallConfidence": 1,
+          "hierarchyConfidence": 1,
+          "dateConfidence": 1,
+          "evidenceCoverage": 1,
+          "duplicateRisk": 0,
+          "overFragmentationRisk": 0,
+          "missingActionRisk": 0,
+          "needsHumanReview": true,
+          "reviewReasons": [
+            "资格尚未确认，不能当成已符合；请保留待核对。",
+            "这项任务的关联事件覆盖未说明清楚，保留已有事实，请核对；不能当成原文没有。",
+            "部分首次摘要缺少完整来源依据，请核对标记事项。"
+          ]
+        },
+        "localCoverage": {
+          "version": "authority-local-coverage-1.0.0",
+          "enabled": true,
+          "missingCoverage": [
+            {
+              "taskId": "task-0001",
+              "category": "event",
+              "originalClaim": {
+                "status": "present",
+                "absenceScopeIds": []
+              },
+              "code": "MISSING_PRESENT_FACT"
+            }
+          ]
+        },
+        "attributeAudit": {
+          "version": "single-authority-shared-attribute-index-1.1.0",
+          "additions": []
+        },
+        "sourceWindows": {
+          "version": "source-window-endpoints-1.0.0",
+          "inferredFacts": 0,
+          "decisions": []
+        }
+      }
+    }
+  ],
+  "summary": {
+    "HISTORICAL_V5": {
+      "observed": 4,
+      "strictDisplayed": 1,
+      "currentDisplayed": 4,
+      "wholeSourceAccuracy": "REQUIRES_SEPARATE_FACT_ADJUDICATION"
+    },
+    "CURRENT_V6": {
+      "observed": 0,
+      "strictDisplayed": 0,
+      "currentDisplayed": 0,
+      "wholeSourceAccuracy": "REQUIRES_SEPARATE_FACT_ADJUDICATION"
+    }
+  }
+}

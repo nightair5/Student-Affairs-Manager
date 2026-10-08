@@ -7,11 +7,12 @@ import { projectAuthoritySupportContext } from './authoritySupportContext'
 import { projectAuthorityEndpointComposition } from './authorityEndpointComposition'
 
 export const AUTHORITY_ATTRIBUTE_INDEX_VERSION = 'single-authority-attribute-index-1.0.0'
+export const AUTHORITY_SHARED_ATTRIBUTE_VERSION = 'single-authority-shared-attribute-index-1.1.0'
 const check = (ok: unknown, code: string) => { if (!ok) throw Error('AUTHORITY_ATTRIBUTE_' + code) }
 
 /** The nested attribute already declares its event. Derive the inverse evidence
  * index without adding a fact, guessing an owner, or rewriting the frozen wire. */
-export function projectAuthorityAttributeIndex(input: unknown, context: WireContext) {
+export function projectAuthorityAttributeIndex(input: unknown, context: WireContext, allowSharedAction=false) {
   const original = plainJson(input) as SingleAuthorityFacts, projected = structuredClone(original)
   check(Array.isArray(projected.events) && Array.isArray(projected.timePoints) && Array.isArray(projected.scopeAccounting), 'SHAPE')
   const additions: Array<{ eventId: string; attribute: number; scopeIds: string[] }> = []
@@ -23,8 +24,11 @@ export function projectAuthorityAttributeIndex(input: unknown, context: WireCont
         const scope = context.index.scopes.find(s => s.id === id)
         check(scope && scope.text.includes(a.text), 'SOURCE_EVIDENCE')
         const rows = projected.scopeAccounting.filter(r => r.scopeId === id)
+        const sharedAction = allowSharedAction && rows.length === 1 && rows[0].kind === 'action'
+          && rows[0].primaryEntityIds.length > 0 && rows[0].primaryEntityIds.every(taskId =>
+            e.relatedTaskTempIds.includes(taskId) && projected.tasks.some(t => t.id === taskId && t.propositionScopeIds.includes(id)))
         check(rows.length === 1 && ((rows[0].kind === 'information' && rows[0].primaryEntityIds.length === 0)
-          || (rows[0].kind === 'event' && rows[0].primaryEntityIds.includes(e.tempId))), 'ACCOUNTING_OWNER')
+          || (rows[0].kind === 'event' && rows[0].primaryEntityIds.includes(e.tempId)) || sharedAction), 'ACCOUNTING_OWNER')
         // An added attribute index must never make a previously invalid time
         // owner pass the frozen event-time evidence guard.
         check(!projected.timePoints.some(p => p.scopeIds.includes(id) && p.owners.some(o =>
@@ -35,19 +39,19 @@ export function projectAuthorityAttributeIndex(input: unknown, context: WireCont
       if (extra.length) { e.scopeIds.push(...extra); additions.push({ eventId: e.tempId, attribute: i, scopeIds: extra }) }
     }
   }
-  return { projected, audit: { version: AUTHORITY_ATTRIBUTE_INDEX_VERSION, operation: 'NESTED_ATTRIBUTE_TO_EVENT_EVIDENCE_INDEX', inferredFacts: 0, additions, original } }
+  return { projected, audit: { version: allowSharedAction ? AUTHORITY_SHARED_ATTRIBUTE_VERSION : AUTHORITY_ATTRIBUTE_INDEX_VERSION, operation: 'NESTED_ATTRIBUTE_TO_EVENT_EVIDENCE_INDEX', inferredFacts: 0, additions, original } }
 }
 
-export function decodeAuthorityProductRecording(raw: string, context: WireContext, role: 'EngineeringFixture' | 'SingleAuthority' = 'EngineeringFixture') {
+export function decodeAuthorityProductRecording(raw: string, context: WireContext, role: 'EngineeringFixture' | 'SingleAuthority' = 'EngineeringFixture', localizeMissingCoverage=false) {
   const envelope = JSON.parse(raw)
   const texts = Array.isArray(envelope.output) ? envelope.output.filter((v: { type?: string }) => v.type === 'message')
     .flatMap((v: { content?: { type?: string; text?: string }[] }) => v.content?.filter(c => c.type === 'output_text') ?? []) : []
   check(texts.length === 1 && typeof texts[0].text === 'string', 'RESPONSE_TEXT')
   const support = projectAuthoritySupportContext(JSON.parse(texts[0].text), context)
   const endpoints = projectAuthorityEndpointComposition(support.projected, context)
-  const projection = projectAuthorityAttributeIndex(endpoints.projected, context)
+  const projection = projectAuthorityAttributeIndex(endpoints.projected, context, localizeMissingCoverage)
   texts[0].text = JSON.stringify(projection.projected)
-  const decoded = decodeSingleAuthorityRecording(JSON.stringify(envelope), context, role)
+  const decoded = decodeSingleAuthorityRecording(JSON.stringify(envelope), context, role, localizeMissingCoverage)
   const first = assembleCurrentFirstSuggestion(decoded.result, { sourceText: context.index.sourceContent, referenceTime: context.referenceTime,
     timezone: context.timezone, sourceWindows: sourceWindowsFromSidecar(decoded.sidecar) })
   return { ...decoded, result: first.result, attributeIndexAudit: projection.audit, sourceWindowGrounding: first.sourceWindowGrounding, sidecar: { ...decoded.sidecar,

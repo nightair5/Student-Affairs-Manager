@@ -8,6 +8,7 @@ import { decodeCurrentSourceRecording } from './conditionalNonActionProduct'
 export const SINGLE_AUTHORITY_VERSION = 'single-authority-source-contract-5.0.0'
 export const SINGLE_AUTHORITY_CANDIDATE_VERSION = 'single-authority-generation-1.0.0'
 export const SINGLE_AUTHORITY_PROMPT_VERSION = 'recognition-single-authority-1.0.0'
+export const AUTHORITY_LOCAL_COVERAGE_VERSION = 'authority-local-coverage-1.0.0'
 type Category = 'time' | 'material' | 'event'
 type Owner = { kind: 'task' | 'material' | 'event_start' | 'event_end'; entityId: string }
 type Claim = { status: 'present' | 'not_stated' | 'explicit_none' | 'unknown'; absenceScopeIds: string[] }
@@ -56,7 +57,7 @@ const check = (ok: unknown, code: string) => { if (!ok) throw Error('SINGLE_AUTH
 const categories: Category[] = ['time', 'material', 'event']
 
 /** Generates only inverse indexes. A missing fact, owner, endpoint or coverage claim remains an error. */
-export function compileSingleAuthority(input: unknown, context: WireContext, quarantineInvalidOwners=false) {
+export function compileSingleAuthority(input: unknown, context: WireContext, quarantineInvalidOwners=false, localizeMissingCoverage=false) {
   const facts = plainJson(input) as SingleAuthorityFacts
   check(matches(facts, SINGLE_AUTHORITY_SCHEMA), 'SHAPE')
   const tasks = new Set(facts.tasks.map(t => t.id)), materials = new Set(facts.materials.map(m => m.tempId)), events = new Map(facts.events.map(e => [e.tempId, e]))
@@ -91,8 +92,15 @@ export function compileSingleAuthority(input: unknown, context: WireContext, qua
     const ms = projected.materials.filter(m => m.relatedTaskTempIds.includes(taskId)), es = projected.events.filter(e => e.relatedTaskTempIds.includes(taskId))
     return category === 'material' ? ms : category === 'event' ? es : projected.timePoints.filter(p => p.relatedTaskTempIds.includes(taskId) || p.relatedMaterialTempIds.some(id => ms.some(m => m.tempId === id)) || es.some(e => e.startTimePointTempId === p.tempId || e.endTimePointTempId === p.tempId))
   }
+  const missingCoverage: Array<{ taskId: string; category: Category; originalClaim: Claim; code: 'MISSING_PRESENT_FACT' }> = []
   projected.tasks = facts.tasks.map(t => ({ ...t, coverage: Object.fromEntries(categories.map(category => {
     const claim = t.coverage[category], entities = owned(t.id, category)
+    // The raw claim stays in audit. Only a demonstrably absent owner index may
+    // become a guarded compatibility view; no owner or fact is synthesized.
+    if (localizeMissingCoverage && claim.status === 'present' && entities.length === 0 && claim.absenceScopeIds.length === 0) {
+      missingCoverage.push({ taskId: t.id, category, originalClaim: structuredClone(claim), code: 'MISSING_PRESENT_FACT' })
+      return [category, { status: 'unknown', entityIds: [], scopeIds: t.propositionScopeIds }]
+    }
     check(claim.status !== 'present' || entities.length > 0 && claim.absenceScopeIds.length === 0, 'MISSING_PRESENT_FACT')
     check(claim.status === 'present' || entities.length === 0, 'COVERAGE_OWNER_CONTRADICTION')
     return [category, { status: claim.status, entityIds: entities.map(e => e.tempId), scopeIds: claim.status === 'present' ? [...new Set(entities.flatMap(e => e.scopeIds))] : claim.absenceScopeIds }]
@@ -101,17 +109,17 @@ export function compileSingleAuthority(input: unknown, context: WireContext, qua
     ? e.relatedTaskTempIds.some(id => row.primaryEntityIds.includes(id)) || e.relatedMaterialTempIds.some(id => projected.materials.some(m => m.tempId === id && m.relatedTaskTempIds.some(t => row.primaryEntityIds.includes(t)))) || projected.events.some(v => row.primaryEntityIds.includes(v.tempId) && [v.startTimePointTempId, v.endTimePointTempId].includes(e.tempId))
     : e.relatedTaskTempIds.some(id => row.primaryEntityIds.includes(id)))).map(e => e.tempId) }))
   const assembled = assembleSourceContractV4(projected, context)
-  return { ...assembled, projected, audit: { version: SINGLE_AUTHORITY_VERSION, operation: 'EXPLICIT_OWNER_TO_ENDPOINT_AND_COVERAGE_INDEX', inferredFacts: 0, original: facts, quarantinedOwners:quarantined,sourceWindows:facts.timePoints.filter(p=>p.type==='window_start'||p.type==='window_end').map(p=>({id:p.tempId,role:p.type,owners:p.owners})),timeOwners: facts.timePoints.map(p => ({ id: p.tempId, owners: p.owners })), projectedCoverage: projected.tasks.map(t => ({ id: t.id, coverage: t.coverage })) } }
+  return { ...assembled, projected, audit: { version: SINGLE_AUTHORITY_VERSION, operation: 'EXPLICIT_OWNER_TO_ENDPOINT_AND_COVERAGE_INDEX', inferredFacts: 0, original: facts, localCoverage: { version: AUTHORITY_LOCAL_COVERAGE_VERSION, enabled: localizeMissingCoverage, missingCoverage }, quarantinedOwners:quarantined,sourceWindows:facts.timePoints.filter(p=>p.type==='window_start'||p.type==='window_end').map(p=>({id:p.tempId,role:p.type,owners:p.owners})),timeOwners: facts.timePoints.map(p => ({ id: p.tempId, owners: p.owners })), projectedCoverage: projected.tasks.map(t => ({ id: t.id, coverage: t.coverage })) } }
 }
 
-export function decodeSingleAuthorityRecording(raw: string, context: WireContext, responseRole: 'EngineeringFixture' | 'SingleAuthority' = 'EngineeringFixture') {
+export function decodeSingleAuthorityRecording(raw: string, context: WireContext, responseRole: 'EngineeringFixture' | 'SingleAuthority' = 'EngineeringFixture', localizeMissingCoverage=false) {
   check(new TextEncoder().encode(raw).byteLength <= 524288, 'RESPONSE_SIZE')
   const envelope = JSON.parse(raw)
   const messages = Array.isArray(envelope.output) ? envelope.output.filter((v: {type?:string}) => v.type === 'message') : []
   const texts = messages.flatMap((v: {content?:{type?:string;text?:string}[]}) => v.content?.filter(c=>c.type==='output_text') ?? [])
   check(texts.length === 1 && typeof texts[0].text === 'string', 'RESPONSE_TEXT')
   const text = texts[0].text as string
-  const compiled = compileSingleAuthority(JSON.parse(text), context,true)
+  const compiled = compileSingleAuthority(JSON.parse(text), context,true,localizeMissingCoverage)
   texts[0].text = JSON.stringify(compiled.projected)
   envelope.output = messages
   const decoded = decodeCurrentSourceRecording(JSON.stringify(envelope), 'EngineeringFixture', context)
