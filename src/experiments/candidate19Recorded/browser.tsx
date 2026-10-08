@@ -25,11 +25,11 @@ import { CANDIDATE17_PROMPT_VERSION, CANDIDATE17_VERSION } from '../realInput01/
 import { CANDIDATE18_PROMPT_VERSION, CANDIDATE18_VERSION } from '../realInput01/candidate18'
 import { CANDIDATE19_PROMPT_VERSION, CANDIDATE19_VERSION } from '../realInput01/candidate19'
 import { SINGLE_AUTHORITY_CANDIDATE_VERSION,SINGLE_AUTHORITY_PROMPT_VERSION,SINGLE_AUTHORITY_VERSION } from '../../recognition/sourceContractV5'
-import { OBLIGATION_CANDIDATE_VERSION, OBLIGATION_PROMPT_VERSION, OBLIGATION_AUTHORITY_VERSION, decodeObligationProductRecording } from '../../recognition/sourceContractV6'
+import { OBLIGATION_CANDIDATE_VERSION, OBLIGATION_PROMPT_VERSION, OBLIGATION_AUTHORITY_VERSION, OBLIGATION_LOCAL_RELATION_VERSION, decodeObligationProductRecording } from '../../recognition/sourceContractV6'
 import { decodeAuthorityProductRecording, AUTHORITY_SHARED_ATTRIBUTE_VERSION } from '../../recognition/singleAuthorityProduct'
 import { AUTHORITY_LOCAL_COVERAGE_VERSION } from '../../recognition/sourceContractV5'
-import { AUTHORITY_SUPPORT_CONTEXT_VERSION } from '../../recognition/authoritySupportContext'
-import { AUTHORITY_ENDPOINT_COMPOSITION_VERSION } from '../../recognition/authorityEndpointComposition'
+import { AUTHORITY_TYPED_SUPPORT_CONTEXT_VERSION } from '../../recognition/authoritySupportContext'
+import { AUTHORITY_CITED_ENDPOINT_COMPOSITION_VERSION as AUTHORITY_ENDPOINT_COMPOSITION_VERSION } from '../../recognition/authorityEndpointComposition'
 import { SOURCE_INFORMATION_PREVIEW_VERSION } from '../../recognition/sourceInformationPreview'
 import { SOURCE_WINDOW_GROUNDING_VERSION } from '../../recognition/sourceWindowGrounding'
 import { SOURCE_WINDOW_PLAN_VERSION } from '../../domain/v2/personalPlanD27'
@@ -58,7 +58,7 @@ const canonical = new CanonicalWorkspaceRepository(store), initial = emptyWorksp
 await canonical.initialize(initial)
 const readerStore: WorkspaceRecordStore = { ...store, read: k => { if (k === 'current' && failRead) { failRead = false; return Promise.reject(Error('RECORDED_INJECTED_READBACK_FAILURE')) } return new IsolatedTestStore(config.database).read(k) } }
 const measurement = createOrdinaryMeasurement(store), sidecars = new Map<string, unknown>()
-const contractVersion = EVENT_TASK_RELATION_VERSION + ' / ' + SOURCE_SUPPORT_PRODUCT_VERSION + ' / ' + EVENT_TIME_LABEL_SUPPORT_VERSION + ' / ' + DIRECTIVE_DISPOSITION_VERSION + ' / ' + CONDITIONAL_NON_ACTION_VERSION + ' / ' + SOURCE_CONTRACT_VERSION + ' / ' + MATERIAL_CHANNEL_GROUNDING_VERSION + ' / ' + ELIGIBILITY_GROUNDING_VERSION + ' / ' + D26_TIME_VERSION + ' / ' + D26_FIRST_SUGGESTION_VERSION + ' / ' + AUTHORITY_SHARED_ATTRIBUTE_VERSION + ' / ' + AUTHORITY_LOCAL_COVERAGE_VERSION + ' / ' + AUTHORITY_ENDPOINT_COMPOSITION_VERSION + ' / ' + AUTHORITY_SUPPORT_CONTEXT_VERSION + ' / ' + SOURCE_INFORMATION_PREVIEW_VERSION + ' / ' + SOURCE_WINDOW_GROUNDING_VERSION + ' / ' + SOURCE_WINDOW_PLAN_VERSION
+const contractVersion = EVENT_TASK_RELATION_VERSION + ' / ' + SOURCE_SUPPORT_PRODUCT_VERSION + ' / ' + EVENT_TIME_LABEL_SUPPORT_VERSION + ' / ' + DIRECTIVE_DISPOSITION_VERSION + ' / ' + CONDITIONAL_NON_ACTION_VERSION + ' / ' + SOURCE_CONTRACT_VERSION + ' / ' + MATERIAL_CHANNEL_GROUNDING_VERSION + ' / ' + ELIGIBILITY_GROUNDING_VERSION + ' / ' + D26_TIME_VERSION + ' / ' + D26_FIRST_SUGGESTION_VERSION + ' / ' + AUTHORITY_SHARED_ATTRIBUTE_VERSION + ' / ' + AUTHORITY_LOCAL_COVERAGE_VERSION + ' / ' + OBLIGATION_LOCAL_RELATION_VERSION + ' / ' + AUTHORITY_ENDPOINT_COMPOSITION_VERSION + ' / ' + AUTHORITY_TYPED_SUPPORT_CONTEXT_VERSION + ' / ' + SOURCE_INFORMATION_PREVIEW_VERSION + ' / ' + SOURCE_WINDOW_GROUNDING_VERSION + ' / ' + SOURCE_WINDOW_PLAN_VERSION
 const recordingMetadata = () => {
   const r = recordings[selected], engineering = r.candidate === 'EngineeringFixture'
   return { modelName: engineering ? '匿名契约工程夹具（非模型输出）' : `${r.candidate} 固定录制`,

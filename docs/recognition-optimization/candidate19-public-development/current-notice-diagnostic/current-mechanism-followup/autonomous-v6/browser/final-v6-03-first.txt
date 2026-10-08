@@ -1,0 +1,314 @@
+- link "跳到主要内容":
+  - /url: "#main-content"
+- banner:
+  - button "返回今日首页":
+    - strong: 事务管家
+  - button "新事务":
+    - text: 新事务
+- navigation "手机端主要导航":
+  - button "今日":
+    - generic: 今日
+  - button "12 收件箱":
+    - emphasis: "12"
+    - generic: 收件箱
+  - button "项目":
+    - generic: 项目
+  - button "日历":
+    - generic: 日历
+  - button "更多":
+    - generic: 更多
+- generic "匿名工程输入 · 普通产品路径 · 不发送模型请求"
+- main:
+  - text: 来源先保存，确认后入库
+  - heading "待确认" [level=1]
+  - paragraph: 这里只显示已经形成建议、仍等待你核对的来源；确认前不会创建正式任务。
+  - strong: "6"
+  - text: 份需关注
+  - group "收件箱视图":
+    - button "全部来源"
+    - button "待确认 6" [pressed]
+  - button "新建手动来源":
+    - text: 新建手动来源
+  - checkbox "选择全部待核对"
+  - text: 选择全部待核对
+  - article:
+    - checkbox "选择 手动粘贴消息"
+    - generic: 选择 手动粘贴消息
+    - generic: ObligationAuthority 固定录制（非实时调用） 建议
+    - generic: 待核对
+    - heading "手动粘贴消息" [level=2]
+    - paragraph: 招生对象：在读本科生和研究生、青年研究人员等 收费情况：免费 活动时间：2026年7月6日-7月10日 活动形式：线上讲座，被录取的正式学员可以进入线上会议室听课并提问互动，各学员需自行准备相关终端设备，以便连线 报名方式：网络报名，有意参加活动可通过下方二维码报名 学习结束后可获得暑期学校结业证书，欢迎大家踊跃报名，我们期待与您相聚云端。 报名截止时间：2026年6月30日17:00
+    - paragraph: 识别建议已保存，确认前不会创建正式任务。
+    - term: 项目
+    - definition: 独立事项
+    - term: 实体
+    - definition: 2 任务 · 0 材料 · 3 时间 · 1 活动
+    - button "核对 2 项任务、1 个事件":
+      - text: 核对 2 项任务、1 个事件
+    - button "查看来源":
+      - text: 查看来源
+    - button "归档":
+      - text: 归档
+  - article:
+    - checkbox "选择 手动粘贴消息"
+    - generic: 选择 手动粘贴消息
+    - generic: ObligationAuthority 固定录制（非实时调用） 建议
+    - generic: 待核对
+    - heading "手动粘贴消息" [level=2]
+    - paragraph: 一、各位同学应于7月16日前通过学工系统“暑假离留校登记”应用完成相关信息登记（https://xmuxg.xmu.edu.cn/app/182），并确保填写的信息完整、准确。离校同学应如实登记去向、联系方式及返校安排；暑期留校同学如短期离厦外出，视同离校学生管理，亦应及时做好相关登记。
+    - paragraph: 识别建议已保存，确认前不会创建正式任务。
+    - term: 项目
+    - definition: 独立事项
+    - term: 实体
+    - definition: 3 任务 · 0 材料 · 1 时间 · 0 活动
+    - button "核对 2 项任务、0 个事件":
+      - text: 核对 2 项任务、0 个事件
+    - button "查看来源":
+      - text: 查看来源
+    - button "归档":
+      - text: 归档
+  - article:
+    - checkbox "选择 手动粘贴消息"
+    - generic: 选择 手动粘贴消息
+    - generic: ObligationAuthority 固定录制（非实时调用） 建议
+    - generic: 待核对
+    - heading "手动粘贴消息" [level=2]
+    - paragraph: 为方便新生更好地了解校园文化、简化注册流程，2026级新生须于指定时间内登录迎新系统完成网上预注册流程。 由于系统维护和升级，迎新系统开放时间与入学须知中规定的时间略有不同，请以本通知的时间为准。新生请在指定时间内激活账号和登录系统，不在指定时间内激活账号和登录都会显示“账号和密码错误”。 本科生（大陆地区）：8月13—27日
+    - paragraph: 识别建议已保存，确认前不会创建正式任务。
+    - term: 项目
+    - definition: 独立事项
+    - term: 实体
+    - definition: 3 任务 · 0 材料 · 2 时间 · 0 活动
+    - button "核对 3 项任务、0 个事件":
+      - text: 核对 3 项任务、0 个事件
+    - button "查看来源":
+      - text: 查看来源
+    - button "归档":
+      - text: 归档
+  - article:
+    - checkbox "选择 手动粘贴消息"
+    - generic: 选择 手动粘贴消息
+    - generic: 匿名契约工程夹具（非模型输出） 建议
+    - generic: 待核对
+    - heading "手动粘贴消息" [level=2]
+    - paragraph: 先填写借用记录。填写完成后提交借用记录。借用资格尚未公布，只有符合资格才能领取储物柜钥匙。本通知未设截止日期。
+    - paragraph: 识别建议已保存，确认前不会创建正式任务。
+    - term: 项目
+    - definition: 独立事项
+    - term: 实体
+    - definition: 3 任务 · 独立事件及时间请在核对页查看
+    - button "核对 1 项任务、0 个事件":
+      - text: 核对 1 项任务、0 个事件
+    - button "查看来源":
+      - text: 查看来源
+    - button "归档":
+      - text: 归档
+  - article:
+    - checkbox "选择 手动粘贴消息"
+    - generic: 选择 手动粘贴消息
+    - generic: 匿名契约工程夹具（非模型输出） 建议
+    - generic: 待核对
+    - heading "手动粘贴消息" [level=2]
+    - paragraph: 甲组讨论于2026年11月12日14:00开始。乙组讨论于2026年11月13日15:00开始。丙组讨论于2026年11月14日16:00开始。仅供了解。
+    - paragraph: 识别建议已保存，确认前不会创建正式任务。
+    - term: 项目
+    - definition: 独立事项
+    - term: 实体
+    - definition: 0 任务 · 独立事件及时间请在核对页查看
+    - button "核对 0 项任务、2 个事件":
+      - text: 核对 0 项任务、2 个事件
+    - button "查看来源":
+      - text: 查看来源
+    - button "归档":
+      - text: 归档
+  - article:
+    - checkbox "选择 手动粘贴消息"
+    - generic: 选择 手动粘贴消息
+    - generic: ObligationAuthority 固定录制（非实时调用） 建议
+    - generic: 待核对
+    - heading "手动粘贴消息" [level=2]
+    - paragraph: 活动信息 **时间** 2026年10月12日（周一） 12:30-14:00 **地点** 海韵园办公楼A栋302室 **报名** 扫描下方二维码进行报名，听众报名截止时间为2026年10月11日中午12:00，主办方提供50份免费午餐，按报名顺序先到先得（讲座的听众总人数不作限制，感兴趣均可报名）。
+    - paragraph: 识别建议已保存，确认前不会创建正式任务。
+    - term: 项目
+    - definition: 独立事项
+    - term: 实体
+    - definition: 1 任务 · 1 材料 · 3 时间 · 1 活动
+    - button "核对 1 项任务、0 个事件":
+      - text: 核对 1 项任务、0 个事件
+    - button "查看来源":
+      - text: 查看来源
+    - button "归档":
+      - text: 归档
+- status:
+  - generic: 匿名工程建议已生成；没有模型请求，核对后走普通正式保存。
+  - button "关闭提示": ×
+- dialog "识别出 2 项任务、1 个事件":
+  - banner:
+    - generic: 第 2 步 · ObligationAuthority 固定录制（非实时调用） · 比较后程序转换 · 无新模型请求
+    - heading "识别出 2 项任务、1 个事件" [level=2]
+    - paragraph: 先看标题和时间；不准确时再点“编辑”。
+    - button "稍后处理并关闭" [active]:
+  - status "未确认编辑检查点":
+    - strong: 本来源核对会话
+    - paragraph: 编辑在确认前不会创建任务。
+  - strong: 2 项任务、1 个事件待确认
+  - generic: 确认后才会进入今日和任务中心
+  - region "项目匹配与识别质量":
+    - strong: 项目归属建议
+    - text: 未主动建立或匹配项目。
+    - generic: 选择项目归属
+    - combobox "选择项目归属":
+      - option "新建项目"
+      - option "作为独立事项" [selected]
+      - option "稍后决定"
+    - strong: 需要重点核对
+    - generic: 包含事件安排；存在识别冲突；存在质量标记
+    - button "只保留原文明确"
+    - region "聚焦复核原因":
+      - strong: 这份通知包含多个时间、材料或阶段
+      - generic: 系统已经完成初步整理，请重点确认标记项；不会自动选择、修改或创建任何事项。
+      - list:
+        - strong: 包含事件安排
+        - generic: 识别到 1 个事件，请核对开始时间、地点和是否需要创建。
+        - strong: 存在识别冲突
+        - generic: 5 项结果互相冲突，不会自动替你决定。
+        - strong: 存在质量标记
+        - generic: 5 项质量标记需要人工复核。
+      - generic "来源提取元数据":
+        - generic: 194 字
+      - strong: 质量标记
+      - list:
+        - listitem: 资格尚未确认，不能当成已符合；请保留待核对。
+        - listitem: 该事项与活动的关联依据不完整，关联暂不采用；已有活动和无关联风险的内容仍可单独保存。
+        - listitem: 前置状态与所声明的依赖不一致，不能当成已完成或可开始；该事项待核对，其他内容可单独保存。
+        - listitem: 这项任务的关联事件覆盖未说明清楚，保留已有事实，请核对；不能当成原文没有。
+        - listitem: 部分首次摘要缺少完整来源依据，请核对标记事项。
+    - strong: 发现 5 项冲突
+    - article:
+      - paragraph: 该事项与活动的关联依据不完整，关联暂不采用；已有活动和无关联风险的内容仍可单独保存。
+      - button "在原文中定位"
+    - article:
+      - paragraph: 前置状态与所声明的依赖不一致，不能当成已完成或可开始；该事项待核对，其他内容可单独保存。
+      - button "在原文中定位"
+    - article:
+      - paragraph: 资格尚未确认，不能当成已符合；请保留待核对。
+      - generic: 暂无可定位依据
+    - article:
+      - paragraph: 资格尚未确认，不能当成已符合；请保留待核对。
+      - generic: 暂无可定位依据
+    - article:
+      - paragraph: 这项任务的关联事件覆盖未说明清楚，保留已有事实，请核对；不能当成原文没有。
+      - button "在原文中定位"
+  - generic "原始通知与定位依据":
+    - text: 原始通知与定位依据
+  - paragraph: 招生对象：在读本科生和研究生、青年研究人员等 收费情况：免费 活动时间：2026年7月6日-7月10日 活动形式：线上讲座，被录取的正式学员可以进入线上会议室听课并提问互动，各学员需自行准备相关终端设备，以便连线 报名方式：网络报名，有意参加活动可通过下方二维码报名 学习结束后可获得暑期学校结业证书，欢迎大家踊跃报名，我们期待与您相聚云端。 报名截止时间：2026年6月30日17:00
+  - region "项目树待确认事项":
+    - region "同一通知的独立事件与信息":
+      - region "通知补充说明":
+        - heading "通知补充说明" [level=3]
+        - paragraph: 原回答保留的信息；未关联到具体事项，不会据此新增任务或日程。
+        - blockquote: 招生对象：
+        - blockquote: 在读本科生和研究生、青年研究人员等
+        - blockquote: 收费情况：
+        - blockquote: 免费
+        - generic "查看补充说明原文依据"
+      - heading "同一通知的事件" [level=3]
+      - article:
+        - strong: 待核对事件
+        - paragraph: 线上会议室；2026年7月6日（原文：2026年7月6日） → 2026年7月10日（原文：2026年7月10日）
+        - paragraph: 事件内容缺少对应来源依据，请核对。
+        - paragraph: 关联事项：自行准备相关终端设备。任务是否已确认单独保留。
+        - paragraph: 暂缓确认
+        - text: 处置“待核对事件”
+        - combobox "处置“待核对事件”":
+          - option "保留"
+          - option "暂缓" [selected]
+          - option "拒绝多余事件"
+        - button "编辑事件"
+      - paragraph: 没有待办也可以保存停机、维护等事件。纯信息可直接标记已核对，不创建任务或空项目。
+      - button "依据原文补充遗漏事件"
+      - button "依据原文补充遗漏任务"
+    - article:
+      - checkbox "选择该任务"
+      - generic: 选择该任务
+      - generic: "1"
+      - strong: 网络报名下方二维码
+      - time:
+        - text: 2026年6月30日17:00
+      - button "编辑":
+        - text: 编辑
+      - generic: 其他
+      - generic: 耗时尚未估计
+      - generic: 原文明确
+      - paragraph: 核对后动作网络报名下方二维码
+      - status: 该事项与活动的关联依据不完整，关联暂不采用；已有活动和无关联风险的内容仍可单独保存。
+      - generic "为什么这样拆？"
+      - button "不需要":
+        - text: 不需要
+      - button "加入任务" [disabled]:
+        - text: 加入任务
+    - article:
+      - checkbox "选择该任务"
+      - generic: 选择该任务
+      - generic: "2"
+      - strong: 自行准备相关终端设备
+      - time:
+        - text: 原答未提供截止
+      - button "编辑":
+        - text: 编辑
+      - generic: 其他
+      - generic: 耗时尚未估计
+      - generic: 原文明确
+      - paragraph: 核对后动作自行准备相关终端设备
+      - status: 前置状态与所声明的依赖不一致，不能当成已完成或可开始；该事项待核对，其他内容可单独保存。
+      - generic "为什么这样拆？"
+      - button "不需要":
+        - text: 不需要
+      - button "加入任务" [disabled]:
+        - text: 加入任务
+    - heading "时间节点" [level=3]
+    - checkbox "registration_deadline 2026年6月30日17:00" [checked]
+    - strong: registration_deadline
+    - generic: 2026年6月30日17:00
+    - button "在原文中定位"
+    - checkbox "event_start 2026年7月6日" [checked]
+    - strong: event_start
+    - generic: 2026年7月6日
+    - button "在原文中定位"
+    - checkbox "event_end 2026年7月10日" [checked]
+    - strong: event_end
+    - generic: 2026年7月10日
+    - button "在原文中定位"
+  - contentinfo:
+    - button "仅保存独立事件；任务仍待核对"
+    - button "稍后再处理"
+- generic "本批真实录制 · 选择来源与独立读回"
+- paragraph: 6aa3550f02d3 / source e364676630c0；rco-mainline-01-02-i1-d27-plan-recorded-morning-v6-delivery-final；source-event-task-relations-1 / source-support-accounting-projection-1.1.0 / event-time-label-context-1.0.0 / source-grounded-nonaction-projection-1.0.1 / source-grounded-conditional-nonaction-1.0.0 / explicit-source-contract-4.0.0 / material-channel-role-grounding-1.4.0 / source-proven-eligibility-1.0.0 / source-time-semantics-2.1.0 / grounded-first-suggestion-1.4.0 / single-authority-shared-attribute-index-1.2.0 / authority-local-coverage-1.1.0 / obligation-local-relation-1.0.0 / authority-endpoint-composition-1.1.0 / authority-support-context-1.1.0 / source-information-preview-1.0.0 / source-window-endpoints-1.1.0 / source-window-plan-1.1.0；ENGINEERING_REPLAY；此入口模型请求0。本次V6单臂4官方已见节选：4份确定录制；另4份旧V5只读回归，不混入新分母，不是配对胜负或Holdout；另6份义务先行及2份坏owner/前置等待工程控制，不计模型样本。下方是后验程序转换，不改原成绩。原答与冻结诊断不改。
+- paragraph: 当前生成契约：obligation-authority-source-contract-6.0.0；obligation-authority-generation-1.0.0；RECORDED_MODEL_ENGINEERING_REPLAY
+- text: 录制来源
+- combobox "录制来源":
+  - option "V6-REAL-20261008-01 / ObligationAuthority / 原冻结：CURRENT_V6_SINGLE_ARM_SETTLED_NOT_COMPARISON"
+  - option "V6-REAL-20261008-02 / ObligationAuthority / 原冻结：CURRENT_V6_SINGLE_ARM_SETTLED_NOT_COMPARISON"
+  - option "V6-REAL-20261008-03 / ObligationAuthority / 原冻结：CURRENT_V6_SINGLE_ARM_SETTLED_NOT_COMPARISON" [selected]
+  - option "V6-REAL-20261008-04 / ObligationAuthority / 原冻结：CURRENT_V6_SINGLE_ARM_SETTLED_NOT_COMPARISON"
+  - option "V5-CURRENT-REAL-01 / SingleAuthority / 原冻结：KNOWN_SETTLED_READ_ONLY_NOT_NEW_MODEL_SCORE"
+  - option "V5-CURRENT-REAL-02 / SingleAuthority / 原冻结：KNOWN_SETTLED_READ_ONLY_NOT_NEW_MODEL_SCORE"
+  - option "V5-CURRENT-REAL-03 / SingleAuthority / 原冻结：KNOWN_SETTLED_READ_ONLY_NOT_NEW_MODEL_SCORE"
+  - option "V5-CURRENT-REAL-04 / SingleAuthority / 原冻结：KNOWN_SETTLED_READ_ONLY_NOT_NEW_MODEL_SCORE"
+  - option "obligation-fixture-equipment / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT"
+  - option "obligation-fixture-registration / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT"
+  - option "obligation-fixture-shared-window / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT"
+  - option "obligation-fixture-no-task / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT"
+  - option "endpoint-test / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT"
+  - option "contract-fixture-deadline / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT"
+  - option "authority-fixture-bad-owner / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT"
+  - option "contract-fixture-dependency / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT"
+- textbox "本批匿名通知原文": 招生对象：在读本科生和研究生、青年研究人员等 收费情况：免费 活动时间：2026年7月6日-7月10日 活动形式：线上讲座，被录取的正式学员可以进入线上会议室听课并提问互动，各学员需自行准备相关终端设备，以便连线 报名方式：网络报名，有意参加活动可通过下方二维码报名 学习结束后可获得暑期学校结业证书，欢迎大家踊跃报名，我们期待与您相聚云端。 报名截止时间：2026年6月30日17:00
+- paragraph: 复制到普通“新事务”；原回答、程序转换与用户修改分别保留。相对日期使用来源原基准 2026-06-23T09:00:00+08:00。
+- paragraph: 另有8份匿名定向反例，经同一普通页面处理；由工程作者编写，不是模型回答，也没有新增付费身份。当前：RECORDED_MODEL_ENGINEERING_REPLAY。
+- button "注入正式保存失败"
+- button "注入提交后读回失败"
+- button "注入检查点失败"
+- status: 未注入故障
+- button "本批独立canonical读回"
+- button "页面测量读回"

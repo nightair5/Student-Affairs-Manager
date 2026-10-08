@@ -1,11 +1,12 @@
 import type { RecognitionResult, TimePointSuggestionV2 } from './types'
 import { interpretTimeD26 } from '../lib/timeSemanticsD26'
 
-export const SOURCE_WINDOW_GROUNDING_VERSION = 'source-window-endpoints-1.0.0'
+export const SOURCE_WINDOW_GROUNDING_VERSION = 'source-window-endpoints-1.1.0'
 export interface SourceWindowDeclaration {
   id: string
   role: 'window_start' | 'window_end'
   owners: Array<{ kind: 'task' | 'material'; entityId: string }>
+  valuePolicy?: 'CITED_VALUE_SEPARATE_FROM_OWNER'
 }
 export function sourceWindowsFromSidecar(sidecar: unknown): SourceWindowDeclaration[] {
   if (!sidecar || typeof sidecar !== 'object' || !('singleAuthorityAudit' in sidecar)) return []
@@ -21,7 +22,9 @@ export function sourceWindowsFromSidecar(sidecar: unknown): SourceWindowDeclarat
         || !('entityId' in owner) || typeof owner.entityId !== 'string') throw Error('SOURCE_WINDOW_DECLARATIONS_INVALID')
       return { kind: owner.kind as 'task' | 'material', entityId: owner.entityId }
     })
-    return { id: row.id, role: row.role as SourceWindowDeclaration['role'], owners }
+    const local = 'localCoverage' in audit && audit.localCoverage && typeof audit.localCoverage === 'object' && 'enabled' in audit.localCoverage && audit.localCoverage.enabled === true
+    return { id: row.id, role: row.role as SourceWindowDeclaration['role'], owners,
+      ...(local ? { valuePolicy: 'CITED_VALUE_SEPARATE_FROM_OWNER' as const } : {}) }
   })
 }
 type Fields = Pick<TimePointSuggestionV2, 'normalizedValue' | 'precision' | 'isAllDay' | 'needsConfirmation' | 'timezone'>
@@ -29,7 +32,7 @@ export interface SourceWindowAudit {
   version: typeof SOURCE_WINDOW_GROUNDING_VERSION
   inferredFacts: 0
   decisions: Array<{ id: string; role: SourceWindowDeclaration['role']; owners: SourceWindowDeclaration['owners']; rawText: string;
-    before: Fields; after: Fields; status: 'CITED_DATE_RANGE_ENDPOINT' | 'UNRESOLVED_RANGE'; quotes: string[]; literalRange: string | null }>
+    before: Fields; after: Fields; status: 'CITED_DATE_RANGE_ENDPOINT' | 'CITED_DATE_OWNER_UNRESOLVED' | 'UNRESOLVED_RANGE'; quotes: string[]; literalRange: string | null }>
 }
 const fields = (p: Fields): Fields => ({ normalizedValue: p.normalizedValue, precision: p.precision, isAllDay: p.isAllDay, needsConfirmation: p.needsConfirmation, timezone: p.timezone })
 const rangePattern = () => /(?:(\d{4})年)?(\d{1,2})月(\d{1,2})日?\s*[—–－\-~～至]\s*(?:(\d{4})年)?(?:(\d{1,2})月)?(\d{1,2})日/gu
@@ -54,7 +57,8 @@ export function groundSourceWindows(input: RecognitionResult, declarations: Sour
       && p.type === (declaration.role === 'window_start' ? 'event_start' : 'event_end')
       && declaration.owners.every(o => (o.kind === 'task' ? p.relatedTaskTempIds : p.relatedMaterialTempIds).includes(o.entityId))
     const quotes = allQuotes.filter(q => owners.every(o => o?.evidenceIds.includes(q.id)))
-    const found = quotes.flatMap(q => [...q.text.matchAll(rangePattern())].map(m => ({ q, m })))
+    const preserveCitedValue = declaration.valuePolicy === 'CITED_VALUE_SEPARATE_FROM_OWNER'
+    const found = (preserveCitedValue ? allQuotes : quotes).flatMap(q => [...q.text.matchAll(rangePattern())].map(m => ({ q, m })))
     // Literal individual endpoints, clocks and unannounced values keep the
     // ordinary parser. This layer only handles cited calendar-date ranges.
     if (ownerValid && !found.length && ![...p.rawText.matchAll(rangePattern())].length) continue
@@ -71,14 +75,20 @@ export function groundSourceWindows(input: RecognitionResult, declarations: Sour
       || rawRanges.length === 0 && rawPoint.precision === 'date_only' && !rawPoint.needsConfirmation && rawPoint.normalizedValue === expected)
     // A clock-bearing date range must never be reduced to all-day dates.
     const clockFree = found.every(({ q, m }) => !/\d\s*[:：]\s*\d|\d\s*点|上午|下午|中午|晚上/u.test(q.text.slice(q.text.indexOf(m[0]), q.text.indexOf(m[0]) + m[0].length + 8)))
-    const valid = ownerValid && r?.start && r.end && r.end >= r.start && rawMatches && clockFree
-    Object.assign(p, valid ? { normalizedValue: expected!, precision: 'date_only', isAllDay: true, needsConfirmation: false, timezone: context.timezone }
+    const valueValid = r?.start && r.end && r.end >= r.start && rawMatches && clockFree
+    const valid = ownerValid && quotes.length > 0 && valueValid
+    // Keep a source-supported calendar value even when its claimed task
+    // association needs review. It remains blocked and cannot be used as a
+    // confirmed deadline or schedule until that separate risk is resolved.
+    Object.assign(p, valueValid && (valid || preserveCitedValue) ? { normalizedValue: expected!, precision: 'date_only', isAllDay: true, needsConfirmation: !valid, timezone: context.timezone }
       : { normalizedValue: null, precision: 'vague', isAllDay: false, needsConfirmation: true })
     audit.decisions.push({ id: p.tempId, role: declaration.role, owners: declaration.owners, rawText: p.rawText, before, after: fields(p),
-      status: valid ? 'CITED_DATE_RANGE_ENDPOINT' : 'UNRESOLVED_RANGE', quotes: quotes.map(q => q.text), literalRange: r?.literal ?? null })
+      status: valid ? 'CITED_DATE_RANGE_ENDPOINT' : valueValid ? 'CITED_DATE_OWNER_UNRESOLVED' : 'UNRESOLVED_RANGE', quotes: allQuotes.map(q => q.text), literalRange: r?.literal ?? null })
     if (!valid) {
       result.quality.needsHumanReview = true
-      result.conflicts.push({ id: 'source-window:' + p.tempId, type: 'other', message: '办理窗口的日期或对象依据不一致，请核对；未推测日期或截止。', entityTempIds: [p.tempId, ...declaration.owners.map(o => o.entityId)], evidenceIds: p.evidenceIds, requiresDecision: true })
+      const conflictId = 'source-window:' + p.tempId
+      result.conflicts = result.conflicts.filter(c => c.id !== conflictId)
+      result.conflicts.push({ id: conflictId, type: 'other', message: valueValid ? '原文日期已保留；它与事项的关联尚待核对，不能当成已确认截止或个人安排。' : '办理窗口的日期或对象依据不一致，请核对；未推测日期或截止。', entityTempIds: [p.tempId, ...declaration.owners.map(o => o.entityId)], evidenceIds: p.evidenceIds, requiresDecision: true })
     }
   }
   return { result, audit }

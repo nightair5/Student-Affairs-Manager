@@ -1,3 +1,47 @@
+# 当前结果：4份V6真实输出已完成，已有事实不再整份消失
+2026-10-08。唯一活动结果入口；下方2026-10-07记录保留为历史，不作为当前状态。
+[机制](current-notice-diagnostic/current-mechanism-followup/autonomous-v6/IMPLEMENTATION.md) · [逐事实裁决](current-notice-diagnostic/current-mechanism-followup/autonomous-v6/FACT_ADJUDICATION.json) · [全部8份原答/程序诊断](current-notice-diagnostic/current-mechanism-followup/autonomous-v6/PRODUCT_DIAGNOSTIC.json) · [实际执行](current-notice-diagnostic/current-mechanism-followup/autonomous-v6/EXECUTION_SUMMARY.json) · [浏览器](current-notice-diagnostic/current-mechanism-followup/autonomous-v6/BROWSER_EVIDENCE.md) · [验证](current-notice-diagnostic/current-mechanism-followup/autonomous-v6/VALIDATION.md)。
+
+## 用户现在少改什么
+
+原答有正确任务、活动、材料或时间时，一个局部present/引用错误不再让整份消失。普通首屏保留事实，只阻相关动作；不猜漏项，不把错误关系补正确。新讲座录制的分行日期和12:30—14:00可以直接展示、单独接受事件，无需用户重填时间；新离留校登记可只接受基本义务，两个个人条件项继续待核对。原截止与个人安排仍分开。
+
+两根因：局部coverage/关系错误的全局拒绝；真实附属事实及跨相邻scope时间表示不兼容。公共local coverage1.1.0/local relation1.0.0/support context1.1.0/shared attribute1.2.0/endpoint1.1.0/window1.1.0已接普通App→ReviewSession→DomainCommitPlan→Repository。严格默认、V6输入Schema/candidate/prompt、Workspace v8、旧默认候选不变。
+
+## 首次整份正确率诚实分层
+
+| 证据层 | 确认正确 | 确定错误 | 未知 | 分母 |
+|---|---:|---:|---:|---:|
+| 本次V6实际原答，provisional | 0 | 1 | 3 | 4 |
+| 原冻结程序首次显示（4份都拒绝） | 0 | 4 | 0 | 4 |
+| 当前公共程序同4raw人工前首屏 | 0 | 1 | 3 | 4 |
+| 人工最终处置 | NOT_ADJUDICATED | NOT_ADJUDICATED | NOT_ADJUDICATED | 与首答分开 |
+
+确认整份正确数为0/4，3份未决；不能宣称总体准确率已知为0%，更不能把“可显示4/4”称100%正确。第一份流程依赖推断/窗口归属表示未决；第二份日前日终和条件拆合未决；第三份二维码当报名对象、报名与录取前置混淆、两向关系矛盾有确定错误；第四份自愿参与/required及二维码材料角色未决。标题/自由描述及争议不填满分。
+
+原V5四实际原答/当前同raw语义0/3/1保持，展示兼容严格1/4→当前4/4；新V6严格0/4→当前4/4。新第三份准备设备动作真实存在，不是程序补录；这里只能描述新增观察，单臂4已见官方节选、source-first single-author/model-assisted/provisional，不证明V6相对V5胜出、泛化、Holdout或真人省时。原v11 C17 2/6、C19 1/6 MIXED_PROGRESS及12后验4暂定2错/5暂定1争议不改。
+
+## 页面、恢复与实际保存
+
+唯一[当前内部入口](http://127.0.0.1:6895/)，6aa3550f02d3/source e364676630c0，新隔离库morning-v6-delivery-final。4本次V6录制+4旧V5+8匿名控制分别标注，16选项不是16次调用。实时机械关闭/POST403，不冒充任意通知实时AI。
+
+最终独立4Task/3Event/8TimePoint/1Material/0Project，含1个人安排；PDF/学院姓名命名/11月6日15:20、活动起止、owner/原依据保持。实际验新4首屏、基本登记/事件部分接受、无任务模糊/未公布null、坏owner局部保护、前置等待及未知资格、三故障手动恢复、已提交只重读、刷新和D27安排。未改旧库。[最终实体](current-notice-diagnostic/current-mechanism-followup/autonomous-v6/browser/FINAL_CANONICAL.json)。
+
+8工程测量报告/55trace、6commit/6readback、2人工字段edit关联检查点版本→commit→readback；无编辑不造editId，刷新缺失null、失败保留，canonical partial单列。四真人NOT_OBSERVABLE。过程6894显式保留待核标题不是正确处置；最终6895第三份默认暂缓未正式保存。人工故障修改不算首答质量。
+
+## 调用、费用、保护和测试
+
+本次真实预先授权共享16请求/US$6.00/4小时/3轮；独立新V6-CURRENT-REAL-NOTICE-DEVELOPMENT-20261008-R1只用了4请求，4SETTLED/0UNCERTAIN、1grant4reserve4settle，零retry/repair/verifier。原件仅本机.data，不伪造逐批回复。新4不是原封存身份替代。输入21198/输出12775/合计33973，内部非缓存峰价保守结算US$0.021691，供应商实扣NOT_OBSERVABLE。证明的最坏上界1.297616美元，分配硬限1.30。授权时间窗已过，本次接续只收口，不用余量调用。
+
+账本1035 SHAeee9d8f7b1194306b2a8da84a258b0705d3ef46830cb3bec7f87864286891df7，只9合法追加，1026/1024/1015/1009/1000/996前缀保持；84/119/7、原8及16封存文件字节、handover/15审计资产保持。[只读保护](current-notice-diagnostic/current-mechanism-followup/autonomous-v6/PROTECTION_READ_ONLY.json)。旧义务8批0SETTLED1UNCERTAIN7NOT_SENT、旧单权威8批2SETTLED1UNCERTAIN5NOT_SENT及公开封存继续封存，不prepare/dispatch/解锁/补settle/重发，不循环供应商。
+
+定向真实公共链、lint/build/security、9现产品/24安全/3历史组通过；npm run test仍exit1，6旧D17账本/D9/RCO-5-007/C11哈希失败原断言保留，不能称全绿或发布完成。旧8warning/chunk warning、audit5H2M/production0单列。没有新增依赖/v8升级/Secret入Git。工程交付边界提交后立即普通推送，最终Git以现场核验为准。
+
+## 最小下一步
+
+先复用这4份真实raw，定向解决当前窗口跨句归属误阻断和自愿报名的对象/程序要求表达，明确合法表示与事实错误。若改生成输入，提出一个可反驳假设，再做最小新验证；当前单臂不支持改默认或宣布胜出。不需现在补笼统预算、真人/账号/全局计划器前置。本次没有新输入机制，不造V7/Candidate20、第三臂或新批。4小时授权已结束，未来新业务调用需新的工作包范围。旧封存仅需请求特定送达/usage材料，不阻普通工程。
+
+---
 # 当前结果：义务先行工程已交付，有限取证后原比较继续封存
 2026-10-07。唯一当前结果入口。[机制](current-notice-diagnostic/current-mechanism-followup/obligation-authority/IMPLEMENTATION.md)、[浏览器](current-notice-diagnostic/current-mechanism-followup/obligation-authority/BROWSER_EVIDENCE.md)、[验证](current-notice-diagnostic/current-mechanism-followup/obligation-authority/VALIDATION.md)、[四旧raw逐份比较](current-notice-diagnostic/current-mechanism-followup/obligation-authority/OLD_RECORDING_COMPARISON.json)、[保护/现场](current-notice-diagnostic/current-mechanism-followup/obligation-authority/FINAL_READ_ONLY_SCENE.json)。本轮产品工程73a8b923、冻结72e4b580均已提交并普通推送。用户已另授权原8次/US$2.60，首次grant前重新核价/HEAD/身份/账本；第1身份不确定，立即停发封存，比较未完成。[实际执行与最小缺项](current-notice-diagnostic/current-mechanism-followup/obligation-authority/comparison/paid-evidence/EXECUTION_SUMMARY.md)。
 

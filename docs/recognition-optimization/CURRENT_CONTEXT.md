@@ -1,14 +1,14 @@
-# 当前交接：有限取证已收口，原8比较继续封存
-2026-10-07。ROOT candidate11/比赛，分支codex/e2-candidate11-blind-eval；[唯一结果](candidate19-public-development/RESULTS.md)。工程73a8b923、冻结72e4b580已普通推送，handover/15审计资产保留。
+# 当前交接：V6真实4份完成，局部展示修复交付
+2026-10-08。ROOT candidate11/比赛，分支codex/e2-candidate11-blind-eval；[唯一结果](candidate19-public-development/RESULTS.md)。保留handover/15审计资产，未回滚。
 
-义务先行V6（候选obligation-authority-generation-1.0.0/Prompt1.0.0）、task.eventLinks唯一声明；普通bridge1.2.0/event-task-relations-1与v8原子保存接通，部分保存空deadline白屏已修。旧V5/原答/成绩/默认不改。旧4原答/当前首屏0正确3错1未知，冻结首屏0/4/0，不能称提高。
+新V6单臂4官方已见节选4SETTLED0UNCERTAIN，1grant4reserve4settle，真实usage33973token、内部保守US$0.021691/实扣NOT_OBSERVABLE。原答0正确1错3未知；当前首屏同0/1/3，原严格首屏0/4/0。可显示0/4→4/4只证明公共兼容；不是整份100%、新旧胜负或Holdout。第三份二维码对象/前置/关系确定错，其余3表示/角色争议保持未知。原V5 0/3/1/v11/12后验不改。
 
-唯一6886固定旧录制+作者wire、实时POST403，新库obligation-final-r2。首屏/部分/坏关系/三故障/只重读/刷新已验；独立4Task4Event12Time1Material0Project，含3个人安排，原截止保持。13定向/2preauth/产品9/lint/build/security通过，安全24复用；全量六旧失败/audit5H2M/production0保留。四真人NOT_OBSERVABLE。
+[本轮机制与证据](candidate19-public-development/current-notice-diagnostic/current-mechanism-followup/autonomous-v6/IMPLEMENTATION.md)：local coverage1.1/local relation1.0/support context1.1/shared attribute1.2/endpoint1.1/window1.1；保留真实事实、局部隔离错误，无猜补。原V6输入/prompt/schema/default/v8不改。原9b73656e冻结、执行6aa3550f及Manifest315144fc.../identityf5bb170d.../raw不动，付费gate漂移仍受阻；只读reader不替dispatch。
 
-V5-OBLIGATION-AUTHORITY-DEVELOPMENT-R1（4作者Development×V5/V6=8）已另获US$2.60许可；原Manifest b2749c88/identity bf8c3ddf/198组件5产物不动。0SETTLED1UNCERTAIN7NOT_SENT、1grant1reserve0settle、无新raw；ordinal1 TRANSPORT_ENTER→OTHER_FAILURE，送达/usage/实扣未知，reserve上界0.324404美元不是费用。各臂4UNKNOWN，EVIDENCE_INCOMPLETE_NO_WINNER，未做新raw浏览器。
+唯一6895固定录制+8工程控制，build6aa3550f/sourcee364676630c0、新库morning-v6-delivery-final，实时POST403。新4首屏/部分/坏owner/前置/三故障/只重读/刷新/D27已实际验；独立4Task3Event8Time1Material0Project，1个人安排、原截止不改。8测量55trace、6commit6readback、2字段edit关联检查点；缺失null、四真人NOT_OBSERVABLE。
 
-账本1026 SHA489da37a7b83c2d3d6c00d8f2ef949e6d3fae4f8e9e250e5bac7ca80a84ec278，仅新grant/reserve2合法追加，1024及996/1000/1009/1015前缀、84/119/7、旧16封存保持。新HALT/锁/8现场文件不删不改，不再prepare/dispatch/补settle/重发，旧各grant不复用。
+lint/build/security及9产品24安全3历史组通过，全量exit1仅6既有D17/D9/RCO/C11失败，旧断言/锁不改；8warning/chunk/audit5H2M/production0保留。84/119/7、handover15审计/旧8+16封存保持；账本1026→1035仅9合法追加，SHAeee9d8f7b1194306b2a8da84a258b0705d3ef46830cb3bec7f87864286891df7，原前缀不变。
 
-本次[有限取证](candidate19-public-development/current-notice-diagnostic/current-mechanism-followup/obligation-authority/TRANSPORT_BOUNDARY.md)核原Git blobs：TRANSPORT_ENTER先于最后授权/Git/reserve检查。原host/core离线Git失败（fake POST0）与POST失败（fake POST1）同样留下旧阶段，原原因/送达仍UNKNOWN。新增可选boundary observation1.0.0分清核验/CONNECT/TLS/POST/响应/保存，未接原付费host、不改冻结/封存或授权gate。旧4raw重诊断首屏结果及拒绝理由逐份不变，无新确定产品缺口，不造候选/Prompt变化。新边界8/原core4/phase3/gateway56、语法/lint/security/历史/冻结通过；原产品198组件未变，复用9产品/build/6886浏览器，新raw浏览器NOT_RUN；本次模型/grant/reserve/settle/账本写0。
+原义务8比较0SETTLED1UNCERTAIN7NOT_SENT/旧单权威2SETTLED1UNCERTAIN5NOT_SENT/公开封存不恢复；TRANSPORT_ENTER/无raw不能证明送达/未发。不循环供应商、不删锁/补settle/重发。
 
-下一只缺ordinal1特定响应/usage/送达或可靠未送达证据（identity5226a924…/request206bfbcf…，全值见唯一结果的paid-evidence）。材料核一致后才形成具体恢复方案并另取最小许可；当前HEAD不同于旧授权HEAD，不能回滚/改旧Manifest或授权凑过。余额/无raw/当前TLS/离线反例均不足；不再循环取证、供应商或新增准备批。不真人/Holdout/default/合并/部署；不Secret明文/旧库/依赖/v8/历史改写。V6可运行工程已交付，首次准确率收益仍缺新输出证明。
+本次一次性16/6美元/4小时/3轮只用了4请求；窗口已过，继续只收口已有成果，无新付费或第四轮。下一先旧raw定向核窗口跨句owner与自愿报名对象/要求，不默认新candidate/批；确需新首答另定最小授权。不真人/Holdout/default/merge/deploy/Secret/旧库/依赖/v8升级/历史改写。

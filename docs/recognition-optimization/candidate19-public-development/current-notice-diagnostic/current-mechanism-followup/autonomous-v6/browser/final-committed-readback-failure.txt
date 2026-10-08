@@ -1,0 +1,177 @@
+- link "跳到主要内容":
+  - /url: "#main-content"
+- banner:
+  - button "返回今日首页":
+    - strong: 事务管家
+  - button "新事务":
+    - text: 新事务
+- navigation "手机端主要导航":
+  - button "今日":
+    - generic: 今日
+  - button "2 收件箱":
+    - emphasis: "2"
+    - generic: 收件箱
+  - button "项目":
+    - generic: 项目
+  - button "日历":
+    - generic: 日历
+  - button "更多":
+    - generic: 更多
+- generic "匿名工程输入 · 普通产品路径 · 不发送模型请求"
+- status:
+  - strong: 已提交，读回尚未验证。
+  - paragraph: 提交记录已保留；恢复只重新读回，不重复创建任务。
+  - button "重新读回并核验"
+- main:
+  - text: 来源先保存，确认后入库
+  - heading "待确认" [level=1]
+  - paragraph: 这里只显示已经形成建议、仍等待你核对的来源；确认前不会创建正式任务。
+  - strong: "2"
+  - text: 份需关注
+  - group "收件箱视图":
+    - button "全部来源"
+    - button "待确认 2" [pressed]
+  - button "新建手动来源":
+    - text: 新建手动来源
+  - checkbox "选择全部待核对"
+  - text: 选择全部待核对
+  - article:
+    - checkbox "选择 手动粘贴消息"
+    - generic: 选择 手动粘贴消息
+    - generic: 义务先行匿名契约夹具（非模型输出） 建议
+    - generic: 待核对
+    - heading "手动粘贴消息" [level=2]
+    - paragraph: 请于2026年11月6日15:20前递交器材清单。器材清单必须为PDF，文件名用学院和姓名。
+    - paragraph: 识别建议已保存，确认前不会创建正式任务。
+    - term: 项目
+    - definition: 独立事项
+    - term: 实体
+    - definition: 1 任务 · 1 材料 · 1 时间 · 0 活动
+    - button "核对 1 项任务、0 个事件":
+      - text: 核对 1 项任务、0 个事件
+    - button "查看来源":
+      - text: 查看来源
+    - button "归档":
+      - text: 归档
+  - article:
+    - checkbox "选择 手动粘贴消息"
+    - generic: 选择 手动粘贴消息
+    - generic: ObligationAuthority 固定录制（非实时调用） 建议
+    - generic: 待核对
+    - heading "手动粘贴消息" [level=2]
+    - paragraph: 活动信息 **时间** 2026年10月12日（周一） 12:30-14:00 **地点** 海韵园办公楼A栋302室 **报名** 扫描下方二维码进行报名，听众报名截止时间为2026年10月11日中午12:00，主办方提供50份免费午餐，按报名顺序先到先得（讲座的听众总人数不作限制，感兴趣均可报名）。
+    - paragraph: 识别建议已保存，确认前不会创建正式任务。
+    - term: 项目
+    - definition: 独立事项
+    - term: 实体
+    - definition: 1 任务 · 1 材料 · 3 时间 · 1 活动
+    - button "核对 1 项任务、0 个事件":
+      - text: 核对 1 项任务、0 个事件
+    - button "查看来源":
+      - text: 查看来源
+    - button "归档":
+      - text: 归档
+- status:
+  - generic: 已提交，读回尚未验证；输入和提交记录保留，请重新读回，勿重复提交。
+  - button "关闭提示": ×
+- dialog "识别出 1 件事":
+  - banner:
+    - generic: 第 2 步 · 义务先行匿名契约夹具（非模型输出） · 无新模型请求
+    - heading "识别出 1 件事" [level=2]
+    - paragraph: 先看标题和时间；不准确时再点“编辑”。
+    - button "稍后处理并关闭":
+  - status "未确认编辑检查点":
+    - strong: 恢复的未确认草稿
+    - paragraph: 编辑在确认前不会创建任务。
+  - strong: 1 项任务、0 个事件待确认
+  - generic: 确认后才会进入今日和任务中心
+  - region "项目匹配与识别质量":
+    - strong: 项目归属建议
+    - text: 未主动建立或匹配项目。
+    - generic: 选择项目归属
+    - combobox "选择项目归属":
+      - option "新建项目"
+      - option "作为独立事项" [selected]
+      - option "稍后决定"
+    - strong: 结构校验通过
+    - generic: 证据覆盖 100%
+    - button "只保留原文明确"
+  - generic "原始通知与定位依据":
+    - text: 原始通知与定位依据
+  - paragraph: 请于2026年11月6日15:20前递交器材清单。器材清单必须为PDF，文件名用学院和姓名。
+  - region "项目树待确认事项":
+    - region "同一通知的独立事件与信息":
+      - heading "信息与独立事件" [level=3]
+      - paragraph: 没有待办也可以保存停机、维护等事件。纯信息可直接标记已核对，不创建任务或空项目。
+      - button "依据原文补充遗漏事件"
+      - button "依据原文补充遗漏任务"
+    - article:
+      - checkbox "选择该任务" [checked]
+      - generic: 选择该任务
+      - generic: "1"
+      - strong: 递交器材清单（PDF）
+      - time:
+        - text: 2026年11月6日15:20前
+      - button "编辑":
+        - text: 编辑
+      - generic: 其他
+      - generic: 耗时尚未估计
+      - generic: 1 项材料
+      - generic: 原文明确
+      - paragraph: 下一步递交器材清单
+      - generic "为什么这样拆？"
+      - button "不需要":
+        - text: 不需要
+      - button "加入任务" [disabled]:
+        - text: 加入任务
+    - heading "材料" [level=3]
+    - checkbox "器材清单 PDF" [checked]
+    - strong: 器材清单
+    - generic: PDF
+    - button "在原文中定位"
+    - heading "时间节点" [level=3]
+    - checkbox "submission_deadline 2026年11月6日15:20前" [checked]
+    - strong: submission_deadline
+    - generic: 2026年11月6日15:20前
+    - button "在原文中定位"
+  - contentinfo:
+    - generic "确认后创建预览":
+      - strong: 本次选择内容；已保存项不重复创建
+      - generic: 0 个项目
+      - generic: 1 个任务
+      - generic: 1 个时间节点
+      - generic: 1 项材料
+      - generic: 0 个事件
+    - button "稍后再处理"
+    - button "一次接受本通知（1）" [disabled]:
+      - text: 一次接受本通知（1）
+- generic "本批真实录制 · 选择来源与独立读回"
+- paragraph: 6aa3550f02d3 / source e364676630c0；rco-mainline-01-02-i1-d27-plan-recorded-morning-v6-delivery-final；source-event-task-relations-1 / source-support-accounting-projection-1.1.0 / event-time-label-context-1.0.0 / source-grounded-nonaction-projection-1.0.1 / source-grounded-conditional-nonaction-1.0.0 / explicit-source-contract-4.0.0 / material-channel-role-grounding-1.4.0 / source-proven-eligibility-1.0.0 / source-time-semantics-2.1.0 / grounded-first-suggestion-1.4.0 / single-authority-shared-attribute-index-1.2.0 / authority-local-coverage-1.1.0 / obligation-local-relation-1.0.0 / authority-endpoint-composition-1.1.0 / authority-support-context-1.1.0 / source-information-preview-1.0.0 / source-window-endpoints-1.1.0 / source-window-plan-1.1.0；ENGINEERING_REPLAY；此入口模型请求0。本次V6单臂4官方已见节选：4份确定录制；另4份旧V5只读回归，不混入新分母，不是配对胜负或Holdout；另6份义务先行及2份坏owner/前置等待工程控制，不计模型样本。下方是后验程序转换，不改原成绩。原答与冻结诊断不改。
+- paragraph: 当前生成契约：obligation-authority-source-contract-6.0.0；obligation-authority-generation-1.0.0；ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT
+- text: 录制来源
+- combobox "录制来源":
+  - option "V6-REAL-20261008-01 / ObligationAuthority / 原冻结：CURRENT_V6_SINGLE_ARM_SETTLED_NOT_COMPARISON"
+  - option "V6-REAL-20261008-02 / ObligationAuthority / 原冻结：CURRENT_V6_SINGLE_ARM_SETTLED_NOT_COMPARISON"
+  - option "V6-REAL-20261008-03 / ObligationAuthority / 原冻结：CURRENT_V6_SINGLE_ARM_SETTLED_NOT_COMPARISON"
+  - option "V6-REAL-20261008-04 / ObligationAuthority / 原冻结：CURRENT_V6_SINGLE_ARM_SETTLED_NOT_COMPARISON"
+  - option "V5-CURRENT-REAL-01 / SingleAuthority / 原冻结：KNOWN_SETTLED_READ_ONLY_NOT_NEW_MODEL_SCORE"
+  - option "V5-CURRENT-REAL-02 / SingleAuthority / 原冻结：KNOWN_SETTLED_READ_ONLY_NOT_NEW_MODEL_SCORE"
+  - option "V5-CURRENT-REAL-03 / SingleAuthority / 原冻结：KNOWN_SETTLED_READ_ONLY_NOT_NEW_MODEL_SCORE"
+  - option "V5-CURRENT-REAL-04 / SingleAuthority / 原冻结：KNOWN_SETTLED_READ_ONLY_NOT_NEW_MODEL_SCORE"
+  - option "obligation-fixture-equipment / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT"
+  - option "obligation-fixture-registration / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT"
+  - option "obligation-fixture-shared-window / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT"
+  - option "obligation-fixture-no-task / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT"
+  - option "endpoint-test / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT"
+  - option "contract-fixture-deadline / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT" [selected]
+  - option "authority-fixture-bad-owner / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT"
+  - option "contract-fixture-dependency / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT"
+- textbox "本批匿名通知原文": 请于2026年11月6日15:20前递交器材清单。器材清单必须为PDF，文件名用学院和姓名。
+- paragraph: 复制到普通“新事务”；原回答、程序转换与用户修改分别保留。相对日期使用来源原基准 2026-10-03T09:00:00+08:00。
+- paragraph: 另有8份匿名定向反例，经同一普通页面处理；由工程作者编写，不是模型回答，也没有新增付费身份。当前：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT。
+- button "注入正式保存失败"
+- button "注入提交后读回失败"
+- button "注入检查点失败"
+- status: 已注入：下一次独立读回失败
+- button "本批独立canonical读回"
+- button "页面测量读回"

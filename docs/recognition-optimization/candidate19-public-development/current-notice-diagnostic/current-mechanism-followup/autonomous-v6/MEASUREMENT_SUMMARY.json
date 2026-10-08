@@ -1,0 +1,349 @@
+{
+  "role": "ENGINEERING_REPLAY",
+  "humanMetrics": "NOT_OBSERVABLE",
+  "traceCount": 55,
+  "reportCount": 8,
+  "traceKinds": {
+    "begin": 8,
+    "read": 11,
+    "wait": 7,
+    "commit": 6,
+    "wait_end": 7,
+    "readback": 6,
+    "end": 2,
+    "restore": 3,
+    "edit": 2,
+    "edit_activity": 1,
+    "failure": 2
+  },
+  "reports": [
+    {
+      "draftId": "source:cdcf5811:draft:1",
+      "semanticFieldCount": 0,
+      "missing": [
+        "unclosed interval",
+        "terminal commit/readback"
+      ],
+      "times": {
+        "active": null,
+        "read": null,
+        "wait": null,
+        "wall": null
+      },
+      "linkage": {
+        "version": "d20-review-session-measurement-1",
+        "role": "ENGINEERING_REPLAY",
+        "checkpointStageCount": 0,
+        "unconfirmedFieldKeys": [],
+        "conflictFieldKeys": [],
+        "pageEditIds": [],
+        "verifiedCommitIds": [],
+        "unverifiedCommitIds": [],
+        "checkpointToEditId": "NOT_DIRECTLY_LINKED",
+        "humanMetrics": "NOT_OBSERVABLE"
+      },
+      "correctionCheckpointLinks": [],
+      "outcomes": {
+        "complete": false,
+        "partial": false,
+        "failureEvents": 0
+      },
+      "humanMetrics": "NOT_OBSERVABLE"
+    },
+    {
+      "draftId": "source:c3f76c3d:draft:1",
+      "semanticFieldCount": 0,
+      "missing": [
+        "unclosed interval",
+        "terminal commit/readback"
+      ],
+      "times": {
+        "active": null,
+        "read": null,
+        "wait": null,
+        "wall": null
+      },
+      "linkage": {
+        "version": "d20-review-session-measurement-1",
+        "role": "ENGINEERING_REPLAY",
+        "checkpointStageCount": 0,
+        "unconfirmedFieldKeys": [],
+        "conflictFieldKeys": [],
+        "pageEditIds": [],
+        "verifiedCommitIds": [
+          "source-review:source:c3f76c3d:draft:1:fnv1a32:fba2b30a"
+        ],
+        "unverifiedCommitIds": [],
+        "checkpointToEditId": "NOT_DIRECTLY_LINKED",
+        "humanMetrics": "NOT_OBSERVABLE"
+      },
+      "correctionCheckpointLinks": [],
+      "outcomes": {
+        "complete": false,
+        "partial": false,
+        "failureEvents": 0
+      },
+      "humanMetrics": "NOT_OBSERVABLE"
+    },
+    {
+      "draftId": "source:19960b6c:draft:1",
+      "semanticFieldCount": 0,
+      "missing": [
+        "unclosed interval",
+        "terminal commit/readback"
+      ],
+      "times": {
+        "active": null,
+        "read": null,
+        "wait": null,
+        "wall": null
+      },
+      "linkage": {
+        "version": "d20-review-session-measurement-1",
+        "role": "ENGINEERING_REPLAY",
+        "checkpointStageCount": 0,
+        "unconfirmedFieldKeys": [],
+        "conflictFieldKeys": [],
+        "pageEditIds": [],
+        "verifiedCommitIds": [],
+        "unverifiedCommitIds": [],
+        "checkpointToEditId": "NOT_DIRECTLY_LINKED",
+        "humanMetrics": "NOT_OBSERVABLE"
+      },
+      "correctionCheckpointLinks": [],
+      "outcomes": {
+        "complete": false,
+        "partial": false,
+        "failureEvents": 0
+      },
+      "humanMetrics": "NOT_OBSERVABLE"
+    },
+    {
+      "draftId": "source:ac4cfb07:draft:1",
+      "semanticFieldCount": 0,
+      "missing": [
+        "unclosed interval",
+        "terminal commit/readback"
+      ],
+      "times": {
+        "active": null,
+        "read": null,
+        "wait": null,
+        "wall": null
+      },
+      "linkage": {
+        "version": "d20-review-session-measurement-1",
+        "role": "ENGINEERING_REPLAY",
+        "checkpointStageCount": 0,
+        "unconfirmedFieldKeys": [],
+        "conflictFieldKeys": [],
+        "pageEditIds": [],
+        "verifiedCommitIds": [
+          "source-review:source:ac4cfb07:draft:1:fnv1a32:a41799e6"
+        ],
+        "unverifiedCommitIds": [],
+        "checkpointToEditId": "NOT_DIRECTLY_LINKED",
+        "humanMetrics": "NOT_OBSERVABLE"
+      },
+      "correctionCheckpointLinks": [],
+      "outcomes": {
+        "complete": false,
+        "partial": false,
+        "failureEvents": 0
+      },
+      "humanMetrics": "NOT_OBSERVABLE"
+    },
+    {
+      "draftId": "source:2848da40:draft:1",
+      "semanticFieldCount": 0,
+      "missing": [
+        "unclosed interval",
+        "terminal commit/readback"
+      ],
+      "times": {
+        "active": null,
+        "read": null,
+        "wait": null,
+        "wall": null
+      },
+      "linkage": {
+        "version": "d20-review-session-measurement-1",
+        "role": "ENGINEERING_REPLAY",
+        "checkpointStageCount": 0,
+        "unconfirmedFieldKeys": [],
+        "conflictFieldKeys": [],
+        "pageEditIds": [],
+        "verifiedCommitIds": [
+          "source-review:source:2848da40:draft:1:fnv1a32:5362af0b"
+        ],
+        "unverifiedCommitIds": [],
+        "checkpointToEditId": "NOT_DIRECTLY_LINKED",
+        "humanMetrics": "NOT_OBSERVABLE"
+      },
+      "correctionCheckpointLinks": [],
+      "outcomes": {
+        "complete": false,
+        "partial": false,
+        "failureEvents": 0
+      },
+      "humanMetrics": "NOT_OBSERVABLE"
+    },
+    {
+      "draftId": "source:2f0a274d:draft:1",
+      "semanticFieldCount": 2,
+      "missing": [
+        "refresh time discontinuity"
+      ],
+      "times": {
+        "active": null,
+        "read": null,
+        "wait": null,
+        "wall": null
+      },
+      "linkage": {
+        "version": "d21-review-session-measurement-2",
+        "role": "ENGINEERING_REPLAY",
+        "checkpointStageCount": 2,
+        "unconfirmedFieldKeys": [
+          "task:draft-item:source:2f0a274d:draft:1:T1:facts"
+        ],
+        "conflictFieldKeys": [],
+        "pageEditIds": [
+          "b48a3e4e-fde6-479a-b4eb-18e49d0f1b35",
+          "4e3794d1-977c-48f7-ad6c-2918b5490e73"
+        ],
+        "verifiedCommitIds": [
+          "source-review:source:2f0a274d:draft:1:fnv1a32:7e3dd160"
+        ],
+        "unverifiedCommitIds": [],
+        "checkpointToEditId": [
+          {
+            "field": "task:draft-item:source:2f0a274d:draft:1:T1:title",
+            "editId": "b48a3e4e-fde6-479a-b4eb-18e49d0f1b35",
+            "checkpointHistoryId": "96adc31d-5907-4f67-b04a-92123f3c7820",
+            "commitId": "source-review:source:2f0a274d:draft:1:fnv1a32:7e3dd160",
+            "readbackVerified": true
+          },
+          {
+            "field": "task:draft-item:source:2f0a274d:draft:1:T1:facts",
+            "editId": "4e3794d1-977c-48f7-ad6c-2918b5490e73",
+            "checkpointHistoryId": "b1cd5f5f-b22e-46a9-a348-24bb39913fc3",
+            "commitId": "source-review:source:2f0a274d:draft:1:fnv1a32:7e3dd160",
+            "readbackVerified": true
+          }
+        ],
+        "humanMetrics": "NOT_OBSERVABLE"
+      },
+      "correctionCheckpointLinks": [
+        {
+          "editId": "b48a3e4e-fde6-479a-b4eb-18e49d0f1b35",
+          "field": "task:draft-item:source:2f0a274d:draft:1:T1:title",
+          "checkpointOperationId": "96adc31d-5907-4f67-b04a-92123f3c7820",
+          "checkpointRevision": "5df8ea7a-9bdf-4ef7-b5d1-0358189867fd",
+          "commits": [
+            {
+              "commitId": "source-review:source:2f0a274d:draft:1:fnv1a32:7e3dd160",
+              "operationIds": [
+                "source-review:source:2f0a274d:draft:1:fnv1a32:7e3dd160"
+              ],
+              "readbackIds": [
+                "a87dcd29-e503-4028-a24f-7aa0bba1ddd8"
+              ]
+            }
+          ]
+        },
+        {
+          "editId": "4e3794d1-977c-48f7-ad6c-2918b5490e73",
+          "field": "task:draft-item:source:2f0a274d:draft:1:T1:facts",
+          "checkpointOperationId": "b1cd5f5f-b22e-46a9-a348-24bb39913fc3",
+          "checkpointRevision": "3260f54e-8ef6-41ea-a462-b0c4ff66cf54",
+          "commits": [
+            {
+              "commitId": "source-review:source:2f0a274d:draft:1:fnv1a32:7e3dd160",
+              "operationIds": [
+                "source-review:source:2f0a274d:draft:1:fnv1a32:7e3dd160"
+              ],
+              "readbackIds": [
+                "a87dcd29-e503-4028-a24f-7aa0bba1ddd8"
+              ]
+            }
+          ]
+        }
+      ],
+      "outcomes": {
+        "complete": true,
+        "partial": false,
+        "failureEvents": 2
+      },
+      "humanMetrics": "NOT_OBSERVABLE"
+    },
+    {
+      "draftId": "source:3a205523:draft:1",
+      "semanticFieldCount": 0,
+      "missing": [],
+      "times": {
+        "active": 0,
+        "read": 11275,
+        "wait": 769,
+        "wall": 12044
+      },
+      "linkage": {
+        "version": "d20-review-session-measurement-1",
+        "role": "ENGINEERING_REPLAY",
+        "checkpointStageCount": 0,
+        "unconfirmedFieldKeys": [],
+        "conflictFieldKeys": [],
+        "pageEditIds": [],
+        "verifiedCommitIds": [
+          "source-review:source:3a205523:draft:1:fnv1a32:7979c8fe"
+        ],
+        "unverifiedCommitIds": [],
+        "checkpointToEditId": "NOT_DIRECTLY_LINKED",
+        "humanMetrics": "NOT_OBSERVABLE"
+      },
+      "correctionCheckpointLinks": [],
+      "outcomes": {
+        "complete": true,
+        "partial": false,
+        "failureEvents": 0
+      },
+      "humanMetrics": "NOT_OBSERVABLE"
+    },
+    {
+      "draftId": "source:6d16047e:draft:1",
+      "semanticFieldCount": 0,
+      "missing": [
+        "unclosed interval",
+        "terminal commit/readback"
+      ],
+      "times": {
+        "active": null,
+        "read": null,
+        "wait": null,
+        "wall": null
+      },
+      "linkage": {
+        "version": "d20-review-session-measurement-1",
+        "role": "ENGINEERING_REPLAY",
+        "checkpointStageCount": 0,
+        "unconfirmedFieldKeys": [],
+        "conflictFieldKeys": [],
+        "pageEditIds": [],
+        "verifiedCommitIds": [
+          "source-review:source:6d16047e:draft:1:fnv1a32:1d9e47a3"
+        ],
+        "unverifiedCommitIds": [],
+        "checkpointToEditId": "NOT_DIRECTLY_LINKED",
+        "humanMetrics": "NOT_OBSERVABLE"
+      },
+      "correctionCheckpointLinks": [],
+      "outcomes": {
+        "complete": false,
+        "partial": false,
+        "failureEvents": 0
+      },
+      "humanMetrics": "NOT_OBSERVABLE"
+    }
+  ],
+  "rule": "No field edits do not fabricate editIds; missing intervals remain null; canonical partial states are separate from legacy ordinary flags."
+}

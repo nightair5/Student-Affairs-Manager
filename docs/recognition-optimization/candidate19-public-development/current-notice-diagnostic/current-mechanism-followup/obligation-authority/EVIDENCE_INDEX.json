@@ -272,5 +272,304 @@
         "mode": "raw"
       }
     ]
+  },
+  "autonomousV6Followup": {
+    "date": "2026-10-08",
+    "currentUrl": "http://127.0.0.1:6895/",
+    "role": "CURRENT_V6_SINGLE_ARM_DEVELOPMENT_AND_VERSIONED_PUBLIC_REPLAY",
+    "originalFrozenComparisonUntouched": true,
+    "outputs": 4,
+    "SETTLED": 4,
+    "UNCERTAIN": 0,
+    "rawWhole": {
+      "correct": 0,
+      "incorrect": 1,
+      "unknown": 3,
+      "denominator": 4
+    },
+    "firstWhole": {
+      "correct": 0,
+      "incorrect": 1,
+      "unknown": 3,
+      "denominator": 4
+    },
+    "displayed": {
+      "strict": 0,
+      "current": 4,
+      "denominator": 4
+    },
+    "generationWinner": "NOT_A_PAIRED_COMPARISON",
+    "publicFiles": [
+      {
+        "path": "../autonomous-v6/browser/final-bad-owner-blocked.txt",
+        "mode": "lf",
+        "sha256": "91cf7a330406061b2187ce983ec94841c776e091eeed5ae42c1abfa005ee1bd3",
+        "bytes": 12018
+      },
+      {
+        "path": "../autonomous-v6/browser/final-bad-owner-readback.json",
+        "mode": "lf",
+        "sha256": "6d0d61219e1be515774fa793cd8d20209f449ef44859944d667ad6d180e664bf",
+        "bytes": 90023
+      },
+      {
+        "path": "../autonomous-v6/browser/final-bad-owner.txt",
+        "mode": "lf",
+        "sha256": "c327c21fa0523883500fbc23ab06412600f23f3390b4114abe834ed4e6c456af",
+        "bytes": 12013
+      },
+      {
+        "path": "../autonomous-v6/browser/final-checkpoint-failure.txt",
+        "mode": "lf",
+        "sha256": "e41541f83bb40db8dd7f1757046a98ef27b5095ebeadd57045b5d8316b84eac4",
+        "bytes": 10994
+      },
+      {
+        "path": "../autonomous-v6/browser/final-checkpoint-recovered.txt",
+        "mode": "lf",
+        "sha256": "a33516488b518d685f3e1deb7d07f6b4444f327df1355fcdc3f27113b80055e3",
+        "bytes": 10739
+      },
+      {
+        "path": "../autonomous-v6/browser/final-committed-readback-failure.txt",
+        "mode": "lf",
+        "sha256": "f9a685d06a438dc8fbd95ff5497f37b547beac77bf3a27875a22d352397fbb55",
+        "bytes": 10043
+      },
+      {
+        "path": "../autonomous-v6/browser/final-material-first.txt",
+        "mode": "lf",
+        "sha256": "c0b498f1a776e08f0c1f266cc518917b886b8fd5c54744265d3e6c882c18ddf8",
+        "bytes": 9800
+      },
+      {
+        "path": "../autonomous-v6/browser/final-no-task-first.txt",
+        "mode": "lf",
+        "sha256": "43b851fe88c37002a50306114c78760b6744833cad5827b05202f32f1e04cf74",
+        "bytes": 10383
+      },
+      {
+        "path": "../autonomous-v6/browser/final-no-task-readback.json",
+        "mode": "lf",
+        "sha256": "eb99365e76f3d28a75d582cda979d68125939c14fa50ef87c61772dc7197e7b0",
+        "bytes": 39510
+      },
+      {
+        "path": "../autonomous-v6/browser/final-personal-plan.txt",
+        "mode": "lf",
+        "sha256": "7a38c50220f79562d1b714e09befbd10b58401b36a849176ab98f111aae72ed8",
+        "bytes": 5817
+      },
+      {
+        "path": "../autonomous-v6/browser/final-plan-readback.json",
+        "mode": "lf",
+        "sha256": "8dcc13afd0b090b06f5ab90c7a0dcc207e7c74e9093f15c3005d29b978123c52",
+        "bytes": 74273
+      },
+      {
+        "path": "../autonomous-v6/browser/final-prerequisite-readback.json",
+        "mode": "lf",
+        "sha256": "2029d15b022b7c2a0aeb4d16c60d7c42457dd2b48b1e7d003bd0e8d14280b222",
+        "bytes": 102741
+      },
+      {
+        "path": "../autonomous-v6/browser/final-prerequisite-wait.txt",
+        "mode": "lf",
+        "sha256": "d5a941f1c1038955048a6e9326f2d74e525883dde910c6b21257d06c929efeec",
+        "bytes": 12877
+      },
+      {
+        "path": "../autonomous-v6/browser/final-refresh.txt",
+        "mode": "lf",
+        "sha256": "708191d32c22b08fdaa8f3092232c641d11aee9263f9fb0441cb80807f28f630",
+        "bytes": 5406
+      },
+      {
+        "path": "../autonomous-v6/browser/final-save-recovered.json",
+        "mode": "lf",
+        "sha256": "a62a6f1970007d7c1e4b248159bd19a212e035502564649f05f6906443df9a6b",
+        "bytes": 58788
+      },
+      {
+        "path": "../autonomous-v6/browser/final-transaction-failure.txt",
+        "mode": "lf",
+        "sha256": "bf519f0e79e9afa71fb7c871e26c666f71aa4ebf2b2a1c665ababee550472e4c",
+        "bytes": 9834
+      },
+      {
+        "path": "../autonomous-v6/browser/final-transaction-no-half.json",
+        "mode": "lf",
+        "sha256": "2263e7aede4d4cb32c02ce5238f7e5e2a1e52ee0e487d577f0bea16a9de42767",
+        "bytes": 52131
+      },
+      {
+        "path": "../autonomous-v6/browser/final-v6-01-first.txt",
+        "mode": "lf",
+        "sha256": "cb5953037e87991efb33357d69800a0c8576faa014dcd26ca660027dd98cf267",
+        "bytes": 16526
+      },
+      {
+        "path": "../autonomous-v6/browser/final-v6-02-first.txt",
+        "mode": "lf",
+        "sha256": "239d33153ab15613b7d7d9d54483aa68ee271b1e613db387527f076cc83b9960",
+        "bytes": 15517
+      },
+      {
+        "path": "../autonomous-v6/browser/final-v6-02-readback.json",
+        "mode": "lf",
+        "sha256": "a9e20aa889783023e20d1392dc4d70574ace745df65a101fc9989f33a07641c6",
+        "bytes": 60774
+      },
+      {
+        "path": "../autonomous-v6/browser/final-v6-03-first.txt",
+        "mode": "lf",
+        "sha256": "07284761df42e1ec8add13e17eb1bc32a49f1efe133881d6ff700cf19f4f58ed",
+        "bytes": 18940
+      },
+      {
+        "path": "../autonomous-v6/browser/final-v6-04-first.png",
+        "mode": "raw",
+        "sha256": "ef8fa32653dcb1ddc0b31eeb3fb560d343bc24cfdcc0010d13463210087b00c0",
+        "bytes": 67995
+      },
+      {
+        "path": "../autonomous-v6/browser/final-v6-04-first.txt",
+        "mode": "lf",
+        "sha256": "38097f5bba88d062144d655f64591bf64421b438690ea66dab3612d0ca3cd651",
+        "bytes": 11981
+      },
+      {
+        "path": "../autonomous-v6/browser/final-v6-04-readback.json",
+        "mode": "lf",
+        "sha256": "5e63afc51d49411cbad67dd2279087878ea0821f9c44969ee5a5508b11b064d3",
+        "bytes": 27464
+      },
+      {
+        "path": "../autonomous-v6/browser/FINAL_CANONICAL.json",
+        "mode": "lf",
+        "sha256": "1bb4a85bc979c29f7214d19c4c1c45a76a19b45163342573609251d43bcbdaf8",
+        "bytes": 133384
+      },
+      {
+        "path": "../autonomous-v6/browser/FINAL_CONSOLE.json",
+        "mode": "lf",
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "bytes": 2
+      },
+      {
+        "path": "../autonomous-v6/browser/FINAL_HOME.png",
+        "mode": "raw",
+        "sha256": "137b3b39e644bd8a5e07ab58624b224ed13af6d18913655d4a7aa5928485249a",
+        "bytes": 28938
+      },
+      {
+        "path": "../autonomous-v6/browser/FINAL_HOME.txt",
+        "mode": "lf",
+        "sha256": "6ba8b7c14b4d76a4039ef019320a6c2672b9f02721501fdf62c62ae0397e8865",
+        "bytes": 8899
+      },
+      {
+        "path": "../autonomous-v6/browser/FINAL_MEASUREMENT.json",
+        "mode": "lf",
+        "sha256": "81b01e18c7d42038474326b56e98672c5536539ac32c928f3ef0c909af6cd8d9",
+        "bytes": 41260
+      },
+      {
+        "path": "../autonomous-v6/browser/v6-01-first.png",
+        "mode": "raw",
+        "sha256": "33136ce3082910d2e3e6cfe949caa287fde07ba39913f0297b976cd5b746cb4d",
+        "bytes": 66763
+      },
+      {
+        "path": "../autonomous-v6/browser/v6-03-readback.json",
+        "mode": "lf",
+        "sha256": "ee2de3dfb8996a1d66aeb0e1287576c8a41d674b45cc1a09fad5a12b67afcfaa",
+        "bytes": 69546
+      },
+      {
+        "path": "../autonomous-v6/BROWSER_EVIDENCE.md",
+        "mode": "lf",
+        "sha256": "76b4e59dce4f76ee75403949a458a859063c888fba4b5fd65a8330156061d0d3",
+        "bytes": 4262
+      },
+      {
+        "path": "../autonomous-v6/EXECUTION_SUMMARY.json",
+        "mode": "lf",
+        "sha256": "cdd90f290e5da5c38aa0933214cd493e4f5880594a4480b1678328d670c7c199",
+        "bytes": 4002
+      },
+      {
+        "path": "../autonomous-v6/FACT_ADJUDICATION.json",
+        "mode": "lf",
+        "sha256": "3743f29dae534686c643077e4e23b993eb82fc3257d31faa03a240ad46f90b46",
+        "bytes": 54465
+      },
+      {
+        "path": "../autonomous-v6/IMPLEMENTATION.md",
+        "mode": "lf",
+        "sha256": "140141bc0a92cd82f1262e5436482bd78cfddf5d8a79b83ba6e60c630d5e2894",
+        "bytes": 4020
+      },
+      {
+        "path": "../autonomous-v6/MANIFEST.json",
+        "mode": "lf",
+        "sha256": "315144fc6682c14cf7e45637d5f22b39f03295e57e3c059ccf4bc7a3e5aedd1f",
+        "bytes": 31345
+      },
+      {
+        "path": "../autonomous-v6/MEASUREMENT_SUMMARY.json",
+        "mode": "lf",
+        "sha256": "8702e91994b027b83ee8fb52b8414df8fb48d025983dd525363e6ad583cce2b5",
+        "bytes": 10237
+      },
+      {
+        "path": "../autonomous-v6/PREPARED_REQUEST_IDENTITIES.json",
+        "mode": "lf",
+        "sha256": "f5bb170d9f780fa57eac1eecf421fd00a6e26ba586329c8cc48bdfcc1169cb62",
+        "bytes": 179207
+      },
+      {
+        "path": "../autonomous-v6/PRE_REGISTRATION.json",
+        "mode": "lf",
+        "sha256": "8f6c92b2eeee04425572198d35566018d82fc32349ace60089648734ca969330",
+        "bytes": 1781
+      },
+      {
+        "path": "../autonomous-v6/PRODUCT_DIAGNOSTIC.json",
+        "mode": "lf",
+        "sha256": "4f2c2eb43ef8958111fef5adc4b4cc9e5120c3db323cc2b8107a647f71c9ad31",
+        "bytes": 165350
+      },
+      {
+        "path": "../autonomous-v6/PROTECTION_READ_ONLY.json",
+        "mode": "lf",
+        "sha256": "8460e4daec1abd5d9c9477c424e4fdd25783dd466e246c9523e5117812877fd4",
+        "bytes": 7292
+      },
+      {
+        "path": "../autonomous-v6/REFERENCES.json",
+        "mode": "lf",
+        "sha256": "f21df96caf5bd83ad560e37046abf4b70303cbf8e0b57d93accf5ac8778c0d9b",
+        "bytes": 10123
+      },
+      {
+        "path": "../autonomous-v6/SOURCES.json",
+        "mode": "lf",
+        "sha256": "d7d95826ee278b66cb500741a363d35b686f389b7c01dc70b640ef7bdf316b08",
+        "bytes": 4482
+      },
+      {
+        "path": "../autonomous-v6/TEST_EXIT_SUMMARY.json",
+        "mode": "lf",
+        "sha256": "7b5b2d92c31084516023fdc4a7b6afced68f994094026d405a5633318379029a",
+        "bytes": 9510
+      },
+      {
+        "path": "../autonomous-v6/VALIDATION.md",
+        "mode": "lf",
+        "sha256": "a68a7ad98fb90c05fac2921019bb54079cb7f26c10b23eea74a903a5a979af5a",
+        "bytes": 3321
+      }
+    ]
   }
 }

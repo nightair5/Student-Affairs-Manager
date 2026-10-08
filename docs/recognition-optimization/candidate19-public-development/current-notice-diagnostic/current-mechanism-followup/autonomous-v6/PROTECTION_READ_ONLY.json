@@ -1,0 +1,229 @@
+{
+  "role": "READ_ONLY_NO_DISPATCH_NO_LEDGER_MUTATION",
+  "history": {
+    "status": "HISTORY_PRESERVED_LEDGER_APPEND_REVIEW_REQUIRED",
+    "protectedFiles": 84,
+    "archives": 7,
+    "frozenFiles": 119,
+    "activeDocuments": "GIT_VERSIONED_NOT_A_RUNTIME_FREEZE",
+    "historicalDecisions": "UNCHANGED",
+    "ledger": {
+      "rows": 1035,
+      "sha256": "eee9d8f7b1194306b2a8da84a258b0705d3ef46830cb3bec7f87864286891df7",
+      "appendRows": 195,
+      "mode": "READ_ONLY"
+    },
+    "dispatchAuthorized": false,
+    "qualityPromotion": false
+  },
+  "preservedSealed": {
+    "obligation": [
+      {
+        "path": "AUTHORIZATION.json",
+        "sha256": "142122135370b5bf30c08e0551a93e23a30b0e0f411d4a6842b63fdc5cad5104",
+        "unchanged": true
+      },
+      {
+        "path": "HALT.json",
+        "sha256": "539618269170323b6f7c2f6893a3dc914759b6d85fb0f895ad8af5d098796f28",
+        "unchanged": true
+      },
+      {
+        "path": "phase-observation-v1/01.jsonl",
+        "sha256": "0b1cb2af9a5f49ad88cdd8497cf9cd1acf7eaa1af88478e9ed7c98540c5bc62b",
+        "unchanged": true
+      },
+      {
+        "path": "PRICE_EVIDENCE.json",
+        "sha256": "66dee55a7e0854442af4e28f464bf54a708d8bce8838441cfa9675ea8b353f64",
+        "unchanged": true
+      },
+      {
+        "path": "receipts/000001024.json",
+        "sha256": "8b837ed1396236c635cb22f783dc1d50bc5372d5e35e618e5f452a207bf41557",
+        "unchanged": true
+      },
+      {
+        "path": "receipts/000001025.json",
+        "sha256": "9a6d993da27789b194eba4d60020fcf0e5f0ea0e4ec9f2337fac8e77e466bdbd",
+        "unchanged": true
+      },
+      {
+        "path": "STATE.json",
+        "sha256": "71cf049f0e643ef66a906ed96546de7d036a990c4a7598a1506eb9f41c2eaaeb",
+        "unchanged": true
+      },
+      {
+        "path": "USER_AUTHORIZATION.txt",
+        "sha256": "8f1a2c6bde6fac897c4854cace21a70d97f45339590e0c35eebd0a7ce5419495",
+        "unchanged": true
+      }
+    ],
+    "authority": [
+      {
+        "path": "AUTHORIZATION.json",
+        "sha256": "c3e10eb533790362832cc1bba1dd0286063b54535f3f97d9fec3e91a4b033c57",
+        "unchanged": true
+      },
+      {
+        "path": "HALT.json",
+        "sha256": "6b27a983122f40e3bdb81c18b499c939af558e24f21bbdf2fc80c00f2800468c",
+        "unchanged": true
+      },
+      {
+        "path": "phase-observation-v1/01.jsonl",
+        "sha256": "84221bf01b9525d51e3aa88f95c794da2a65696e07a22ae7584648430bdac163",
+        "unchanged": true
+      },
+      {
+        "path": "phase-observation-v1/02.jsonl",
+        "sha256": "39da4e6550eaa041847039d4406d3c3ad0d8d97d08fc31a5f536a9f037471530",
+        "unchanged": true
+      },
+      {
+        "path": "phase-observation-v1/03.jsonl",
+        "sha256": "df6b161f2231055177efc607755b987e639a6bc28b30279e22fbc4ee22e2c998",
+        "unchanged": true
+      },
+      {
+        "path": "PRICE_EVIDENCE.json",
+        "sha256": "fb738255eac5aa991242de1248dbcace473599aa5b278a4a9910d76e0bb05aee",
+        "unchanged": true
+      },
+      {
+        "path": "raw/01.json",
+        "sha256": "f3e7045ba0021323d83468488bcebebd9785372d4e3bce7d1a77df8eeb5e75ca",
+        "unchanged": true
+      },
+      {
+        "path": "raw/02.json",
+        "sha256": "1df3a5e507f066388026be4288a41ac5131418355a6ff5bac02b432cadabe198",
+        "unchanged": true
+      },
+      {
+        "path": "receipts/000001009.json",
+        "sha256": "f7ae8e9e0b0e81fd2f82384e77d4b32ccddc89b71ea8c24e54ef5e4b7fbde346",
+        "unchanged": true
+      },
+      {
+        "path": "receipts/000001010.json",
+        "sha256": "8ec0dd7b03f68018d8b988d510e930388ae68db29b0fd1f25dcfb52b0b5ceb41",
+        "unchanged": true
+      },
+      {
+        "path": "receipts/000001011.json",
+        "sha256": "06d2827ccf1aeda628d4c4de73f7521a6d3dbedc20fd042a3ab669808c4a0192",
+        "unchanged": true
+      },
+      {
+        "path": "receipts/000001012.json",
+        "sha256": "02b923af84f7300b2aaae3bc53079486f7a7be1b09d97fb5ad7dbcf81cc15253",
+        "unchanged": true
+      },
+      {
+        "path": "receipts/000001013.json",
+        "sha256": "d8733ff66b963ce6f3d1c82b65d722e1a29f7837671dfbe5bc7bfd2dae6cefff",
+        "unchanged": true
+      },
+      {
+        "path": "receipts/000001014.json",
+        "sha256": "db781c009b76b5b04057f2a71bd8068e03523b3b4c5cef283edcafad593c6c3b",
+        "unchanged": true
+      },
+      {
+        "path": "STATE.json",
+        "sha256": "7992b9521ede37c853ecd2b384a97e9e7ff8f8c56a2fc0291f9c3e9f0d855952",
+        "unchanged": true
+      },
+      {
+        "path": "USER_AUTHORIZATION.txt",
+        "sha256": "ac5041f365df3e8e29f43708e11f842e832924eb684a5ac3bcb2bc8fd866e836",
+        "unchanged": true
+      }
+    ]
+  },
+  "userAssets": [
+    {
+      "path": "CODEX_DESKTOP_HANDOVER.md",
+      "sha256": "b7e18a12748a2f99dd94f6d67ccd70bbeecefd6f230a8cc215c820ffcb53b2fc",
+      "unchanged": true
+    },
+    {
+      "path": "ARCHITECTURE_MAP.md",
+      "sha256": "c975912e5d09bd0bfad137d604a5f1cb25086d57ef9b27f335ff980d81024565",
+      "unchanged": true
+    },
+    {
+      "path": "AUDIT_REVALIDATION.md",
+      "sha256": "0ca3be81fa763ec88569217eef54f5d8187a12769b573b9b350ee8d9ff7b527a",
+      "unchanged": true
+    },
+    {
+      "path": "COMPLETE_SUMMARY.md",
+      "sha256": "eec8abba68f6db2bac2674929d33777ce904976d02597d65bc66501e3c4c6fa5",
+      "unchanged": true
+    },
+    {
+      "path": "CONVERGENCE_ROADMAP.md",
+      "sha256": "e2a22a6e3a747cc8f610470a689797218b4f39f3192354863c15af724033a730",
+      "unchanged": true
+    },
+    {
+      "path": "EXECUTION_REPORT.md",
+      "sha256": "f29b1c94b5567e87a86493a2252acb7b74738c8cc136cbfbfb467b47e2718e2f",
+      "unchanged": true
+    },
+    {
+      "path": "EXECUTIVE_AUDIT.md",
+      "sha256": "5e51c4d07fe8c1bdff4d152a72881c5772ea774e7f33b4389694f3a2d8ac4aec",
+      "unchanged": true
+    },
+    {
+      "path": "FINDINGS.json",
+      "sha256": "a2c0ad03e24f7885c95bf287dfbfc8364f8d1db333133dccd764d0a85073156b",
+      "unchanged": true
+    },
+    {
+      "path": "FINDINGS.md",
+      "sha256": "f04ff554af29c144cd7c2c7c112479bc1b59f686f027a3565213c15d18a4fe09",
+      "unchanged": true
+    },
+    {
+      "path": "INDEX.md",
+      "sha256": "dbc0034a1b4226c93cc7c14c537cad42b2d69ae573853a5bf78768d8c9eb015f",
+      "unchanged": true
+    },
+    {
+      "path": "OPTIMIZATION_MASTER_PLAN.md",
+      "sha256": "4e52d1c6725039e018eb36f7567a88ca07bc91463f0f49d4ef7ce10335d81a61",
+      "unchanged": true
+    },
+    {
+      "path": "OWNER_DECISION_BRIEF.md",
+      "sha256": "015521cdc28dc98c2fc9e4eac0776f61d57f3ee9190bf9149553a663aa28cbcd",
+      "unchanged": true
+    },
+    {
+      "path": "PHASE0_QUICKSTART.md",
+      "sha256": "44c6d937358186802bf7f6faa7600a86aa32ec4943d1274c3d6014510345a250",
+      "unchanged": true
+    },
+    {
+      "path": "PROJECT_HEALTH_SCORECARD.md",
+      "sha256": "44b03b7df92599a50394cfe310b0297a0f66ce9d20a1aafd13e76d3e6631383f",
+      "unchanged": true
+    },
+    {
+      "path": "README.md",
+      "sha256": "2cddda1f40caede072ff5e95cc3ea295ced3ff6acfc31bd6635b0f9e35069771",
+      "unchanged": true
+    },
+    {
+      "path": "STOP_DOING.md",
+      "sha256": "15a5f88567579b1dafe3b717a3642000c978cf2e01b7c1fd8bb6be1801862fa6",
+      "unchanged": true
+    }
+  ],
+  "originalPackageExpired": true,
+  "extraRequestsAfterExpiry": 0
+}

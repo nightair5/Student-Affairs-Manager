@@ -4,11 +4,12 @@ import { plainJson } from '../experiments/mainline04/semanticContract'
 import type { WireContext } from '../experiments/realInput01/modelWire'
 import { MAX_REQUEST_BYTES } from '../experiments/realInput01/modelWire'
 import { decodeCurrentSourceRecording } from './conditionalNonActionProduct'
+import { hasLiteralScopeSpan } from './authorityLiteralSupport'
 
 export const SINGLE_AUTHORITY_VERSION = 'single-authority-source-contract-5.0.0'
 export const SINGLE_AUTHORITY_CANDIDATE_VERSION = 'single-authority-generation-1.0.0'
 export const SINGLE_AUTHORITY_PROMPT_VERSION = 'recognition-single-authority-1.0.0'
-export const AUTHORITY_LOCAL_COVERAGE_VERSION = 'authority-local-coverage-1.0.0'
+export const AUTHORITY_LOCAL_COVERAGE_VERSION = 'authority-local-coverage-1.1.0'
 type Category = 'time' | 'material' | 'event'
 type Owner = { kind: 'task' | 'material' | 'event_start' | 'event_end'; entityId: string }
 type Claim = { status: 'present' | 'not_stated' | 'explicit_none' | 'unknown'; absenceScopeIds: string[] }
@@ -81,7 +82,9 @@ export function compileSingleAuthority(input: unknown, context: WireContext, qua
   }
   const projected: SourceContractV4 = { ...facts, schemaVersion: 'explicit-source-contract-4.0.0',
     events: facts.events.map(({ attributes, ...e }) => {
-      for (const a of attributes) check(a.scopeIds.every(id => e.scopeIds.includes(id)) && a.scopeIds.some(id => context.index.scopes.find(s => s.id === id)?.text.includes(a.text)), 'ATTRIBUTE_EVIDENCE')
+      for (const a of attributes) check(a.scopeIds.every(id => e.scopeIds.includes(id)) && (localizeMissingCoverage
+        ? hasLiteralScopeSpan(a.text, a.scopeIds, context)
+        : a.scopeIds.some(id => context.index.scopes.find(s => s.id === id)?.text.includes(a.text))), 'ATTRIBUTE_EVIDENCE')
       return { ...e, description: [e.description, ...attributes.map(a => a.text)].filter(Boolean).join('；'), startTimePointTempId: endpoints.get(e.tempId + ':event_start') ?? null, endTimePointTempId: endpoints.get(e.tempId + ':event_end') ?? null }
     }),
     // v8 keeps its existing endpoint vocabulary; the explicit source-window role is separately retained in canonical legacyData.
@@ -93,8 +96,18 @@ export function compileSingleAuthority(input: unknown, context: WireContext, qua
     return category === 'material' ? ms : category === 'event' ? es : projected.timePoints.filter(p => p.relatedTaskTempIds.includes(taskId) || p.relatedMaterialTempIds.some(id => ms.some(m => m.tempId === id)) || es.some(e => e.startTimePointTempId === p.tempId || e.endTimePointTempId === p.tempId))
   }
   const missingCoverage: Array<{ taskId: string; category: Category; originalClaim: Claim; code: 'MISSING_PRESENT_FACT' }> = []
+  const associatedEventTimes: Array<{ taskId: string; originalClaim: Claim; timeIds: string[]; reason: 'LEGACY_ASSOCIATED_EVENT_TIME_INDEX_ONLY' }> = []
   projected.tasks = facts.tasks.map(t => ({ ...t, coverage: Object.fromEntries(categories.map(category => {
     const claim = t.coverage[category], entities = owned(t.id, category)
+    // The legacy coverage index includes associated event endpoints. Their
+    // presence does not mean a preparation task has its own deadline/time.
+    const directTimes = category === 'time' && projected.timePoints.some(p => p.relatedTaskTempIds.includes(t.id)
+      || p.relatedMaterialTempIds.some(id => projected.materials.some(m => m.tempId === id && m.relatedTaskTempIds.includes(t.id))))
+    if (localizeMissingCoverage && category === 'time' && claim.status === 'not_stated' && !claim.absenceScopeIds.length
+      && entities.length > 0 && !directTimes) {
+      associatedEventTimes.push({ taskId: t.id, originalClaim: structuredClone(claim), timeIds: entities.map(e => e.tempId), reason: 'LEGACY_ASSOCIATED_EVENT_TIME_INDEX_ONLY' })
+      return [category, { status: 'present', entityIds: entities.map(e => e.tempId), scopeIds: [...new Set(entities.flatMap(e => e.scopeIds))] }]
+    }
     // The raw claim stays in audit. Only a demonstrably absent owner index may
     // become a guarded compatibility view; no owner or fact is synthesized.
     if (localizeMissingCoverage && claim.status === 'present' && entities.length === 0 && claim.absenceScopeIds.length === 0) {
@@ -109,7 +122,7 @@ export function compileSingleAuthority(input: unknown, context: WireContext, qua
     ? e.relatedTaskTempIds.some(id => row.primaryEntityIds.includes(id)) || e.relatedMaterialTempIds.some(id => projected.materials.some(m => m.tempId === id && m.relatedTaskTempIds.some(t => row.primaryEntityIds.includes(t)))) || projected.events.some(v => row.primaryEntityIds.includes(v.tempId) && [v.startTimePointTempId, v.endTimePointTempId].includes(e.tempId))
     : e.relatedTaskTempIds.some(id => row.primaryEntityIds.includes(id)))).map(e => e.tempId) }))
   const assembled = assembleSourceContractV4(projected, context)
-  return { ...assembled, projected, audit: { version: SINGLE_AUTHORITY_VERSION, operation: 'EXPLICIT_OWNER_TO_ENDPOINT_AND_COVERAGE_INDEX', inferredFacts: 0, original: facts, localCoverage: { version: AUTHORITY_LOCAL_COVERAGE_VERSION, enabled: localizeMissingCoverage, missingCoverage }, quarantinedOwners:quarantined,sourceWindows:facts.timePoints.filter(p=>p.type==='window_start'||p.type==='window_end').map(p=>({id:p.tempId,role:p.type,owners:p.owners})),timeOwners: facts.timePoints.map(p => ({ id: p.tempId, owners: p.owners })), projectedCoverage: projected.tasks.map(t => ({ id: t.id, coverage: t.coverage })) } }
+  return { ...assembled, projected, audit: { version: SINGLE_AUTHORITY_VERSION, operation: 'EXPLICIT_OWNER_TO_ENDPOINT_AND_COVERAGE_INDEX', inferredFacts: 0, original: facts, localCoverage: { version: AUTHORITY_LOCAL_COVERAGE_VERSION, enabled: localizeMissingCoverage, missingCoverage, associatedEventTimes }, quarantinedOwners:quarantined,sourceWindows:facts.timePoints.filter(p=>p.type==='window_start'||p.type==='window_end').map(p=>({id:p.tempId,role:p.type,owners:p.owners})),timeOwners: facts.timePoints.map(p => ({ id: p.tempId, owners: p.owners })), projectedCoverage: projected.tasks.map(t => ({ id: t.id, coverage: t.coverage })) } }
 }
 
 export function decodeSingleAuthorityRecording(raw: string, context: WireContext, responseRole: 'EngineeringFixture' | 'SingleAuthority' = 'EngineeringFixture', localizeMissingCoverage=false) {

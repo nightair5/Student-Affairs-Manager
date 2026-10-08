@@ -1,0 +1,1033 @@
+{
+  "workspace": {
+    "id": "rco-mainline-01-02-i1-d27-plan-recorded-morning-v6-delivery-final",
+    "title": "C19 已验证录制产品回放（非真人）",
+    "createdAt": "2026-09-05T08:00:00.000Z",
+    "updatedAt": "2026-10-08T01:33:49.468Z"
+  },
+  "sources": [
+    {
+      "id": "source:3a205523",
+      "status": "confirmed",
+      "provenance": {
+        "modelName": "匿名契约工程夹具（非模型输出）",
+        "promptVersion": "recognition-obligation-authority-1.0.0",
+        "candidateVersion": "obligation-authority-generation-1.0.0",
+        "build": "6aa3550f02d3 / source e364676630c0",
+        "responseRole": "ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT",
+        "componentVersion": "source-event-task-relations-1 / source-support-accounting-projection-1.1.0 / event-time-label-context-1.0.0 / source-grounded-nonaction-projection-1.0.1 / source-grounded-conditional-nonaction-1.0.0 / explicit-source-contract-4.0.0 / material-channel-role-grounding-1.4.0 / source-proven-eligibility-1.0.0 / source-time-semantics-2.1.0 / grounded-first-suggestion-1.4.0 / single-authority-shared-attribute-index-1.2.0 / authority-local-coverage-1.1.0 / obligation-local-relation-1.0.0 / authority-endpoint-composition-1.1.0 / authority-support-context-1.1.0 / source-information-preview-1.0.0 / source-window-endpoints-1.1.0 / source-window-plan-1.1.0",
+        "referenceTime": "2026-10-07T09:00:00+08:00",
+        "timezone": "Asia/Shanghai"
+      }
+    },
+    {
+      "id": "source:6d16047e",
+      "status": "partially_confirmed",
+      "provenance": {
+        "modelName": "ObligationAuthority 固定录制",
+        "promptVersion": "recognition-obligation-authority-1.0.0",
+        "candidateVersion": "obligation-authority-generation-1.0.0",
+        "build": "6aa3550f02d3 / source e364676630c0",
+        "responseRole": "RECORDED_MODEL_ENGINEERING_REPLAY",
+        "componentVersion": "source-event-task-relations-1 / source-support-accounting-projection-1.1.0 / event-time-label-context-1.0.0 / source-grounded-nonaction-projection-1.0.1 / source-grounded-conditional-nonaction-1.0.0 / explicit-source-contract-4.0.0 / material-channel-role-grounding-1.4.0 / source-proven-eligibility-1.0.0 / source-time-semantics-2.1.0 / grounded-first-suggestion-1.4.0 / single-authority-shared-attribute-index-1.2.0 / authority-local-coverage-1.1.0 / obligation-local-relation-1.0.0 / authority-endpoint-composition-1.1.0 / authority-support-context-1.1.0 / source-information-preview-1.0.0 / source-window-endpoints-1.1.0 / source-window-plan-1.1.0",
+        "referenceTime": "2026-09-29T09:00:00+08:00",
+        "timezone": "Asia/Shanghai"
+      }
+    }
+  ],
+  "tasks": [],
+  "events": [
+    {
+      "id": "event:source:6d16047e:draft:1:event-lecture",
+      "projectId": null,
+      "title": "讲座",
+      "description": "活动信息\n2026年10月12日（周一）\n12:30-14:00\n海韵园办公楼A栋302室\n扫描下方二维码进行报名，\n听众报名截止时间为2026年10月11日中午12:00，\n主办方提供50份免费午餐，\n按报名顺序先到先得（讲座的听众总人数不作限制，\n感兴趣均可报名）。",
+      "startTimePointId": "time:source:6d16047e:draft:1:time-event-start",
+      "endTimePointId": "time:source:6d16047e:draft:1:time-event-end",
+      "location": "海韵园办公楼A栋302室",
+      "createdAt": "2026-10-08T01:31:47.446Z",
+      "updatedAt": "2026-10-08T01:31:47.446Z",
+      "legacyData": {
+        "recognitionTempId": "event-lecture",
+        "evidenceIds": [
+          "d26-scope-0001-99342d649e2f51e5e60037a65baf43d0bbcf747f025da49fcf1222e5a749b12a",
+          "d26-scope-0003-8bac91ec790467644495f606f54fd724611bdc9a3004935e3efd3ef9abc87092",
+          "d26-scope-0004-4d1179696eb781b11c70b6f9e717b99fdf27967ea763f6f84ee5c7167291cf85",
+          "d26-scope-0006-42e720855a14cd7c5c49029bc2dbbacb809d57fc3f60368964bcff2a2ea4ba71",
+          "d26-scope-0008-7ca3f03d142e7dc8eea343282db43cc68af3fab1e784f77602586994201ad4f3",
+          "d26-scope-0009-75545e906be950736d24e58fdc9459e7f32ced5b0083efbd606ec962219e2274",
+          "d26-scope-0010-f6610750209c7d191aff25d0bd0e30db2f4766d9b81c70e257bed1dc4bb82fd6",
+          "d26-scope-0011-69e3683502642e0bfd9c8d432f139885e3d96955a078f0b12d5a4ce3eff2771a",
+          "d26-scope-0012-e2e6463e8c71f358228b59f988a516e3920bfbf07d5f19b0cc78167e5615731d"
+        ],
+        "inferenceLevel": "explicit",
+        "sourceTaskRelations": {
+          "version": "source-event-task-relations-1",
+          "draftId": "source:6d16047e:draft:1",
+          "taskTempIds": [
+            "task-register-audience"
+          ]
+        },
+        "sourceReviewDraftId": "source:6d16047e:draft:1"
+      }
+    },
+    {
+      "id": "event:source:3a205523:draft:1:E1",
+      "projectId": null,
+      "title": "网络服务在周五晚上维护",
+      "description": "网络服务在周五晚上维护，\n结束时间尚未公布。",
+      "startTimePointId": "time:source:3a205523:draft:1:P1",
+      "endTimePointId": "time:source:3a205523:draft:1:P2",
+      "location": null,
+      "createdAt": "2026-10-08T01:34:00.838Z",
+      "updatedAt": "2026-10-08T01:34:00.838Z",
+      "legacyData": {
+        "recognitionTempId": "E1",
+        "evidenceIds": [
+          "d26-scope-0001-d59171308c875f6535f8efc95a4fb94be3d98ea50fcd6ce63f1921f72cea2925",
+          "d26-scope-0002-63616d3d8b4aa92d44d29afe11a7f67ae61bf674540d0215fb8612dc44f35c7c"
+        ],
+        "inferenceLevel": "explicit",
+        "sourceReviewDraftId": "source:3a205523:draft:1"
+      }
+    }
+  ],
+  "timePoints": [
+    {
+      "id": "time:source:6d16047e:draft:1:time-event-start",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": null,
+      "materialId": null,
+      "eventId": "event:source:6d16047e:draft:1:event-lecture",
+      "relatedTaskIds": [],
+      "relatedMaterialIds": [],
+      "type": "event_start",
+      "rawText": "12:30-14:00",
+      "normalizedValue": "2026-10-12T12:30",
+      "timezone": "Asia/Shanghai",
+      "isAllDay": false,
+      "precision": "exact",
+      "needsConfirmation": false,
+      "createdAt": "2026-10-08T01:31:47.446Z",
+      "updatedAt": "2026-10-08T01:31:47.446Z",
+      "legacyData": {
+        "recognitionTempId": "time-event-start",
+        "evidenceIds": [
+          "d26-scope-0003-8bac91ec790467644495f606f54fd724611bdc9a3004935e3efd3ef9abc87092",
+          "d26-scope-0004-4d1179696eb781b11c70b6f9e717b99fdf27967ea763f6f84ee5c7167291cf85"
+        ],
+        "confidence": 0.9,
+        "sharedEventIds": [
+          "event:source:6d16047e:draft:1:event-lecture"
+        ]
+      }
+    },
+    {
+      "id": "time:source:6d16047e:draft:1:time-event-end",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": null,
+      "materialId": null,
+      "eventId": "event:source:6d16047e:draft:1:event-lecture",
+      "relatedTaskIds": [],
+      "relatedMaterialIds": [],
+      "type": "event_end",
+      "rawText": "12:30-14:00",
+      "normalizedValue": "2026-10-12T14:00",
+      "timezone": "Asia/Shanghai",
+      "isAllDay": false,
+      "precision": "exact",
+      "needsConfirmation": false,
+      "createdAt": "2026-10-08T01:31:47.446Z",
+      "updatedAt": "2026-10-08T01:31:47.446Z",
+      "legacyData": {
+        "recognitionTempId": "time-event-end",
+        "evidenceIds": [
+          "d26-scope-0003-8bac91ec790467644495f606f54fd724611bdc9a3004935e3efd3ef9abc87092",
+          "d26-scope-0004-4d1179696eb781b11c70b6f9e717b99fdf27967ea763f6f84ee5c7167291cf85"
+        ],
+        "confidence": 0.9,
+        "sharedEventIds": [
+          "event:source:6d16047e:draft:1:event-lecture"
+        ]
+      }
+    },
+    {
+      "id": "time:source:3a205523:draft:1:P1",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": null,
+      "materialId": null,
+      "eventId": "event:source:3a205523:draft:1:E1",
+      "relatedTaskIds": [],
+      "relatedMaterialIds": [],
+      "type": "event_start",
+      "rawText": "周五晚上",
+      "normalizedValue": null,
+      "timezone": null,
+      "isAllDay": false,
+      "precision": "vague",
+      "needsConfirmation": true,
+      "createdAt": "2026-10-08T01:34:00.838Z",
+      "updatedAt": "2026-10-08T01:34:00.838Z",
+      "legacyData": {
+        "recognitionTempId": "P1",
+        "evidenceIds": [
+          "d26-scope-0001-d59171308c875f6535f8efc95a4fb94be3d98ea50fcd6ce63f1921f72cea2925"
+        ],
+        "confidence": 1,
+        "sharedEventIds": [
+          "event:source:3a205523:draft:1:E1"
+        ]
+      }
+    },
+    {
+      "id": "time:source:3a205523:draft:1:P2",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": null,
+      "materialId": null,
+      "eventId": "event:source:3a205523:draft:1:E1",
+      "relatedTaskIds": [],
+      "relatedMaterialIds": [],
+      "type": "event_end",
+      "rawText": "结束时间尚未公布",
+      "normalizedValue": null,
+      "timezone": null,
+      "isAllDay": false,
+      "precision": "vague",
+      "needsConfirmation": true,
+      "createdAt": "2026-10-08T01:34:00.838Z",
+      "updatedAt": "2026-10-08T01:34:00.838Z",
+      "legacyData": {
+        "recognitionTempId": "P2",
+        "evidenceIds": [
+          "d26-scope-0002-63616d3d8b4aa92d44d29afe11a7f67ae61bf674540d0215fb8612dc44f35c7c"
+        ],
+        "confidence": 1,
+        "sharedEventIds": [
+          "event:source:3a205523:draft:1:E1"
+        ]
+      }
+    }
+  ],
+  "materials": [],
+  "evidenceRefs": [
+    {
+      "id": "evidence:source:6d16047e:draft:1:d26-scope-0001-99342d649e2f51e5e60037a65baf43d0bbcf747f025da49fcf1222e5a749b12a",
+      "sourceVersionId": "source:6d16047e:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "活动信息",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-08T01:31:47.446Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0001-99342d649e2f51e5e60037a65baf43d0bbcf747f025da49fcf1222e5a749b12a"
+      }
+    },
+    {
+      "id": "evidence:source:6d16047e:draft:1:d26-scope-0003-8bac91ec790467644495f606f54fd724611bdc9a3004935e3efd3ef9abc87092",
+      "sourceVersionId": "source:6d16047e:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "2026年10月12日（周一）",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-08T01:31:47.446Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0003-8bac91ec790467644495f606f54fd724611bdc9a3004935e3efd3ef9abc87092"
+      }
+    },
+    {
+      "id": "evidence:source:6d16047e:draft:1:d26-scope-0004-4d1179696eb781b11c70b6f9e717b99fdf27967ea763f6f84ee5c7167291cf85",
+      "sourceVersionId": "source:6d16047e:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "12:30-14:00",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-08T01:31:47.446Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0004-4d1179696eb781b11c70b6f9e717b99fdf27967ea763f6f84ee5c7167291cf85"
+      }
+    },
+    {
+      "id": "evidence:source:6d16047e:draft:1:d26-scope-0006-42e720855a14cd7c5c49029bc2dbbacb809d57fc3f60368964bcff2a2ea4ba71",
+      "sourceVersionId": "source:6d16047e:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "海韵园办公楼A栋302室",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-08T01:31:47.446Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0006-42e720855a14cd7c5c49029bc2dbbacb809d57fc3f60368964bcff2a2ea4ba71"
+      }
+    },
+    {
+      "id": "evidence:source:6d16047e:draft:1:d26-scope-0008-7ca3f03d142e7dc8eea343282db43cc68af3fab1e784f77602586994201ad4f3",
+      "sourceVersionId": "source:6d16047e:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "扫描下方二维码进行报名，",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-08T01:31:47.446Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0008-7ca3f03d142e7dc8eea343282db43cc68af3fab1e784f77602586994201ad4f3"
+      }
+    },
+    {
+      "id": "evidence:source:6d16047e:draft:1:d26-scope-0009-75545e906be950736d24e58fdc9459e7f32ced5b0083efbd606ec962219e2274",
+      "sourceVersionId": "source:6d16047e:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "听众报名截止时间为2026年10月11日中午12:00，",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-08T01:31:47.446Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0009-75545e906be950736d24e58fdc9459e7f32ced5b0083efbd606ec962219e2274"
+      }
+    },
+    {
+      "id": "evidence:source:6d16047e:draft:1:d26-scope-0010-f6610750209c7d191aff25d0bd0e30db2f4766d9b81c70e257bed1dc4bb82fd6",
+      "sourceVersionId": "source:6d16047e:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "主办方提供50份免费午餐，",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-08T01:31:47.446Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0010-f6610750209c7d191aff25d0bd0e30db2f4766d9b81c70e257bed1dc4bb82fd6"
+      }
+    },
+    {
+      "id": "evidence:source:6d16047e:draft:1:d26-scope-0011-69e3683502642e0bfd9c8d432f139885e3d96955a078f0b12d5a4ce3eff2771a",
+      "sourceVersionId": "source:6d16047e:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "按报名顺序先到先得（讲座的听众总人数不作限制，",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-08T01:31:47.446Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0011-69e3683502642e0bfd9c8d432f139885e3d96955a078f0b12d5a4ce3eff2771a"
+      }
+    },
+    {
+      "id": "evidence:source:6d16047e:draft:1:d26-scope-0012-e2e6463e8c71f358228b59f988a516e3920bfbf07d5f19b0cc78167e5615731d",
+      "sourceVersionId": "source:6d16047e:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "感兴趣均可报名）。",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-08T01:31:47.446Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0012-e2e6463e8c71f358228b59f988a516e3920bfbf07d5f19b0cc78167e5615731d"
+      }
+    },
+    {
+      "id": "evidence:source:3a205523:draft:1:d26-scope-0001-d59171308c875f6535f8efc95a4fb94be3d98ea50fcd6ce63f1921f72cea2925",
+      "sourceVersionId": "source:3a205523:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "网络服务在周五晚上维护，",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-08T01:34:00.838Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0001-d59171308c875f6535f8efc95a4fb94be3d98ea50fcd6ce63f1921f72cea2925"
+      }
+    },
+    {
+      "id": "evidence:source:3a205523:draft:1:d26-scope-0002-63616d3d8b4aa92d44d29afe11a7f67ae61bf674540d0215fb8612dc44f35c7c",
+      "sourceVersionId": "source:3a205523:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "结束时间尚未公布。",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-08T01:34:00.838Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0002-63616d3d8b4aa92d44d29afe11a7f67ae61bf674540d0215fb8612dc44f35c7c"
+      }
+    }
+  ],
+  "historyRecords": [
+    {
+      "id": "history:time:source:6d16047e:draft:1:time-event-start:created",
+      "entityType": "time_point",
+      "entityId": "time:source:6d16047e:draft:1:time-event-start",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "time:source:6d16047e:draft:1:time-event-start"
+      },
+      "actor": "user",
+      "reason": "用户确认识别时间节点",
+      "sourceVersionId": "source:6d16047e:version:1",
+      "changedAt": "2026-10-08T01:31:47.446Z"
+    },
+    {
+      "id": "history:time:source:6d16047e:draft:1:time-event-end:created",
+      "entityType": "time_point",
+      "entityId": "time:source:6d16047e:draft:1:time-event-end",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "time:source:6d16047e:draft:1:time-event-end"
+      },
+      "actor": "user",
+      "reason": "用户确认识别时间节点",
+      "sourceVersionId": "source:6d16047e:version:1",
+      "changedAt": "2026-10-08T01:31:47.446Z"
+    },
+    {
+      "id": "history:event:source:6d16047e:draft:1:event-lecture:created",
+      "entityType": "event",
+      "entityId": "event:source:6d16047e:draft:1:event-lecture",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "event:source:6d16047e:draft:1:event-lecture"
+      },
+      "actor": "user",
+      "reason": "用户确认识别事件",
+      "sourceVersionId": "source:6d16047e:version:1",
+      "changedAt": "2026-10-08T01:31:47.446Z"
+    },
+    {
+      "id": "history:time:source:3a205523:draft:1:P1:created",
+      "entityType": "time_point",
+      "entityId": "time:source:3a205523:draft:1:P1",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "time:source:3a205523:draft:1:P1"
+      },
+      "actor": "user",
+      "reason": "用户确认识别时间节点",
+      "sourceVersionId": "source:3a205523:version:1",
+      "changedAt": "2026-10-08T01:34:00.838Z"
+    },
+    {
+      "id": "history:time:source:3a205523:draft:1:P2:created",
+      "entityType": "time_point",
+      "entityId": "time:source:3a205523:draft:1:P2",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "time:source:3a205523:draft:1:P2"
+      },
+      "actor": "user",
+      "reason": "用户确认识别时间节点",
+      "sourceVersionId": "source:3a205523:version:1",
+      "changedAt": "2026-10-08T01:34:00.838Z"
+    },
+    {
+      "id": "history:event:source:3a205523:draft:1:E1:created",
+      "entityType": "event",
+      "entityId": "event:source:3a205523:draft:1:E1",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "event:source:3a205523:draft:1:E1"
+      },
+      "actor": "user",
+      "reason": "用户确认识别事件",
+      "sourceVersionId": "source:3a205523:version:1",
+      "changedAt": "2026-10-08T01:34:00.838Z"
+    }
+  ],
+  "plans": {
+    "onboardingCompletedAt": null,
+    "legacyData": {
+      "courseBlocks": [],
+      "integrations": {
+        "sync": {
+          "endpoint": "http://127.0.0.1:8787"
+        },
+        "webMonitors": [],
+        "connectionIntents": []
+      },
+      "knowledgeSettings": {},
+      "recognitionFeedback": [],
+      "v7MigrationLog": [],
+      "v7LegacyData": {}
+    }
+  },
+  "firstDisplay": [
+    {
+      "id": "source:3a205523:draft:1",
+      "status": "confirmed",
+      "first": {
+        "schemaVersion": "2.0",
+        "promptVersion": "recognition-obligation-authority-1.0.0",
+        "modelName": "义务先行匿名契约夹具（非模型输出）",
+        "createdAt": "2026-10-07T09:00:00+08:00",
+        "sourceSummary": {
+          "title": "网络服务在周五晚上维护",
+          "sourceType": "text",
+          "notificationType": "event_notice",
+          "summary": "0项任务，1项事件。请核对后确认。",
+          "requiresAction": false,
+          "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+        },
+        "projectMatch": {
+          "decision": "standalone_task",
+          "matchedProjectId": null,
+          "suggestedProjectTitle": null,
+          "confidence": 1,
+          "reasons": [
+            "未主动建立或匹配项目。"
+          ]
+        },
+        "projectSuggestion": null,
+        "milestones": [],
+        "standaloneTasks": [],
+        "materials": [],
+        "timePoints": [
+          {
+            "tempId": "P1",
+            "rawText": "周五晚上",
+            "type": "event_start",
+            "confidence": 1,
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "normalizedValue": null,
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "vague",
+            "needsConfirmation": true,
+            "evidenceIds": [
+              "d26-scope-0001-d59171308c875f6535f8efc95a4fb94be3d98ea50fcd6ce63f1921f72cea2925"
+            ]
+          },
+          {
+            "tempId": "P2",
+            "rawText": "结束时间尚未公布",
+            "type": "event_end",
+            "confidence": 1,
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "normalizedValue": null,
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "vague",
+            "needsConfirmation": true,
+            "evidenceIds": [
+              "d26-scope-0002-63616d3d8b4aa92d44d29afe11a7f67ae61bf674540d0215fb8612dc44f35c7c"
+            ]
+          }
+        ],
+        "events": [
+          {
+            "tempId": "E1",
+            "title": "网络服务在周五晚上维护",
+            "description": "网络服务在周五晚上维护，\n结束时间尚未公布。",
+            "startTimePointTempId": "P1",
+            "endTimePointTempId": "P2",
+            "location": null,
+            "confidence": 1,
+            "inferenceLevel": "explicit",
+            "evidenceIds": [
+              "d26-scope-0001-d59171308c875f6535f8efc95a4fb94be3d98ea50fcd6ce63f1921f72cea2925",
+              "d26-scope-0002-63616d3d8b4aa92d44d29afe11a7f67ae61bf674540d0215fb8612dc44f35c7c"
+            ],
+            "selected": true
+          }
+        ],
+        "evidence": [
+          {
+            "id": "d26-scope-0001-d59171308c875f6535f8efc95a4fb94be3d98ea50fcd6ce63f1921f72cea2925",
+            "sourceId": "source:3a205523",
+            "quote": "网络服务在周五晚上维护，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0002-63616d3d8b4aa92d44d29afe11a7f67ae61bf674540d0215fb8612dc44f35c7c",
+            "sourceId": "source:3a205523",
+            "quote": "结束时间尚未公布。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0003-80f57e993fe63e1c2d4d6f23f06a33112be653c9855dd93a2f0f0c37243990bf",
+            "sourceId": "source:3a205523",
+            "quote": "不需报名，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0004-648ea0e4b88f0cc67ef9507a5064ef3fbb53f380033116a19de298ed2e0a3f95",
+            "sourceId": "source:3a205523",
+            "quote": "不需提交说明。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          }
+        ],
+        "conflicts": [],
+        "ambiguities": [],
+        "ignoredContent": [
+          {
+            "text": "不需报名，",
+            "reason": "other"
+          },
+          {
+            "text": "不需提交说明。",
+            "reason": "other"
+          }
+        ],
+        "quality": {
+          "overallConfidence": 1,
+          "hierarchyConfidence": 1,
+          "dateConfidence": 0.5,
+          "evidenceCoverage": 1,
+          "duplicateRisk": 0,
+          "overFragmentationRisk": 0,
+          "missingActionRisk": 0,
+          "needsHumanReview": false,
+          "reviewReasons": []
+        }
+      },
+      "information": {
+        "version": "source-information-preview-1.0.0",
+        "sourceId": "source:3a205523",
+        "sourceVersionId": "source:3a205523:version:1",
+        "inferredFacts": 0,
+        "items": [
+          {
+            "text": "不需报名，",
+            "evidenceIds": [
+              "d26-scope-0003-80f57e993fe63e1c2d4d6f23f06a33112be653c9855dd93a2f0f0c37243990bf"
+            ]
+          },
+          {
+            "text": "不需提交说明。",
+            "evidenceIds": [
+              "d26-scope-0004-648ea0e4b88f0cc67ef9507a5064ef3fbb53f380033116a19de298ed2e0a3f95"
+            ]
+          }
+        ],
+        "suppressed": []
+      }
+    },
+    {
+      "id": "source:6d16047e:draft:1",
+      "status": "partially_confirmed",
+      "first": {
+        "schemaVersion": "2.0",
+        "promptVersion": "recognition-obligation-authority-1.0.0",
+        "modelName": "ObligationAuthority 固定录制（非实时调用）",
+        "createdAt": "2026-09-29T09:00:00+08:00",
+        "sourceSummary": {
+          "title": "扫描下方二维码进行报名",
+          "sourceType": "text",
+          "notificationType": "uncertain",
+          "summary": "1项任务，1项事件。请核对后确认。",
+          "requiresAction": true,
+          "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+        },
+        "projectMatch": {
+          "decision": "standalone_task",
+          "matchedProjectId": null,
+          "suggestedProjectTitle": null,
+          "confidence": 1,
+          "reasons": [
+            "未主动建立或匹配项目。"
+          ]
+        },
+        "projectSuggestion": null,
+        "milestones": [],
+        "standaloneTasks": [
+          {
+            "parentTempId": null,
+            "hierarchyType": "task",
+            "title": "扫描下方二维码进行报名",
+            "description": "扫描下方二维码进行报名，\n听众报名截止时间为2026年10月11日中午12:00，\n感兴趣均可报名）。",
+            "completionCriteria": [
+              "完成扫码报名"
+            ],
+            "estimatedMinutes": null,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "high",
+            "dependencyTempIds": [],
+            "confidence": 0.95,
+            "userConfirmationRequired": true,
+            "materialTempIds": [
+              "material-qr-code"
+            ],
+            "timePointTempIds": [
+              "time-registration-deadline"
+            ],
+            "tempId": "task-register-audience",
+            "actionVerb": "扫描下方二维码进行报名",
+            "actionObject": "报名",
+            "evidenceIds": [
+              "d26-scope-0008-7ca3f03d142e7dc8eea343282db43cc68af3fab1e784f77602586994201ad4f3",
+              "d26-scope-0009-75545e906be950736d24e58fdc9459e7f32ced5b0083efbd606ec962219e2274",
+              "d26-scope-0012-e2e6463e8c71f358228b59f988a516e3920bfbf07d5f19b0cc78167e5615731d"
+            ],
+            "inferenceLevel": "explicit",
+            "selected": false
+          }
+        ],
+        "materials": [
+          {
+            "tempId": "material-qr-code",
+            "name": "报名二维码",
+            "required": true,
+            "formatRequirements": [],
+            "namingRequirements": [],
+            "quantity": null,
+            "submissionChannel": null,
+            "relatedTaskTempIds": [
+              "task-register-audience"
+            ],
+            "confidence": 0.9,
+            "evidenceIds": [
+              "d26-scope-0008-7ca3f03d142e7dc8eea343282db43cc68af3fab1e784f77602586994201ad4f3"
+            ]
+          }
+        ],
+        "timePoints": [
+          {
+            "tempId": "time-registration-deadline",
+            "type": "registration_deadline",
+            "rawText": "2026年10月11日中午12:00",
+            "confidence": 0.95,
+            "relatedTaskTempIds": [
+              "task-register-audience"
+            ],
+            "relatedMaterialTempIds": [],
+            "normalizedValue": "2026-10-11T12:00",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0009-75545e906be950736d24e58fdc9459e7f32ced5b0083efbd606ec962219e2274"
+            ]
+          },
+          {
+            "tempId": "time-event-start",
+            "type": "event_start",
+            "rawText": "12:30-14:00",
+            "confidence": 0.9,
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "normalizedValue": "2026-10-12T12:30",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0003-8bac91ec790467644495f606f54fd724611bdc9a3004935e3efd3ef9abc87092",
+              "d26-scope-0004-4d1179696eb781b11c70b6f9e717b99fdf27967ea763f6f84ee5c7167291cf85"
+            ]
+          },
+          {
+            "tempId": "time-event-end",
+            "type": "event_end",
+            "rawText": "12:30-14:00",
+            "confidence": 0.9,
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "normalizedValue": "2026-10-12T14:00",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0003-8bac91ec790467644495f606f54fd724611bdc9a3004935e3efd3ef9abc87092",
+              "d26-scope-0004-4d1179696eb781b11c70b6f9e717b99fdf27967ea763f6f84ee5c7167291cf85"
+            ]
+          }
+        ],
+        "events": [
+          {
+            "tempId": "event-lecture",
+            "title": "讲座",
+            "description": "活动信息\n2026年10月12日（周一）\n12:30-14:00\n海韵园办公楼A栋302室\n扫描下方二维码进行报名，\n听众报名截止时间为2026年10月11日中午12:00，\n主办方提供50份免费午餐，\n按报名顺序先到先得（讲座的听众总人数不作限制，\n感兴趣均可报名）。",
+            "startTimePointTempId": "time-event-start",
+            "relatedTaskTempIds": [
+              "task-register-audience"
+            ],
+            "endTimePointTempId": "time-event-end",
+            "location": "海韵园办公楼A栋302室",
+            "confidence": 0.95,
+            "inferenceLevel": "explicit",
+            "evidenceIds": [
+              "d26-scope-0001-99342d649e2f51e5e60037a65baf43d0bbcf747f025da49fcf1222e5a749b12a",
+              "d26-scope-0003-8bac91ec790467644495f606f54fd724611bdc9a3004935e3efd3ef9abc87092",
+              "d26-scope-0004-4d1179696eb781b11c70b6f9e717b99fdf27967ea763f6f84ee5c7167291cf85",
+              "d26-scope-0006-42e720855a14cd7c5c49029bc2dbbacb809d57fc3f60368964bcff2a2ea4ba71",
+              "d26-scope-0008-7ca3f03d142e7dc8eea343282db43cc68af3fab1e784f77602586994201ad4f3",
+              "d26-scope-0009-75545e906be950736d24e58fdc9459e7f32ced5b0083efbd606ec962219e2274",
+              "d26-scope-0010-f6610750209c7d191aff25d0bd0e30db2f4766d9b81c70e257bed1dc4bb82fd6",
+              "d26-scope-0011-69e3683502642e0bfd9c8d432f139885e3d96955a078f0b12d5a4ce3eff2771a",
+              "d26-scope-0012-e2e6463e8c71f358228b59f988a516e3920bfbf07d5f19b0cc78167e5615731d"
+            ],
+            "selected": true
+          }
+        ],
+        "evidence": [
+          {
+            "id": "d26-scope-0001-99342d649e2f51e5e60037a65baf43d0bbcf747f025da49fcf1222e5a749b12a",
+            "sourceId": "source:6d16047e",
+            "quote": "活动信息",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0002-b2b745471c6e74bdb0ab341332caf64b31ded0617ed812f9c298dc0d497dfa12",
+            "sourceId": "source:6d16047e",
+            "quote": "**时间**",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0003-8bac91ec790467644495f606f54fd724611bdc9a3004935e3efd3ef9abc87092",
+            "sourceId": "source:6d16047e",
+            "quote": "2026年10月12日（周一）",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0004-4d1179696eb781b11c70b6f9e717b99fdf27967ea763f6f84ee5c7167291cf85",
+            "sourceId": "source:6d16047e",
+            "quote": "12:30-14:00",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0005-524cb261f7dead197f5499e3c4865b91ee0262ab55336aa2ef575c8e7eb2cf2d",
+            "sourceId": "source:6d16047e",
+            "quote": "**地点**",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0006-42e720855a14cd7c5c49029bc2dbbacb809d57fc3f60368964bcff2a2ea4ba71",
+            "sourceId": "source:6d16047e",
+            "quote": "海韵园办公楼A栋302室",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0007-e9be290820b37509e4ff3d2791c73b4689e16ffad8ab6dcf103f2edb3363a086",
+            "sourceId": "source:6d16047e",
+            "quote": "**报名**",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0008-7ca3f03d142e7dc8eea343282db43cc68af3fab1e784f77602586994201ad4f3",
+            "sourceId": "source:6d16047e",
+            "quote": "扫描下方二维码进行报名，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0009-75545e906be950736d24e58fdc9459e7f32ced5b0083efbd606ec962219e2274",
+            "sourceId": "source:6d16047e",
+            "quote": "听众报名截止时间为2026年10月11日中午12:00，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0010-f6610750209c7d191aff25d0bd0e30db2f4766d9b81c70e257bed1dc4bb82fd6",
+            "sourceId": "source:6d16047e",
+            "quote": "主办方提供50份免费午餐，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0011-69e3683502642e0bfd9c8d432f139885e3d96955a078f0b12d5a4ce3eff2771a",
+            "sourceId": "source:6d16047e",
+            "quote": "按报名顺序先到先得（讲座的听众总人数不作限制，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0012-e2e6463e8c71f358228b59f988a516e3920bfbf07d5f19b0cc78167e5615731d",
+            "sourceId": "source:6d16047e",
+            "quote": "感兴趣均可报名）。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          }
+        ],
+        "conflicts": [
+          {
+            "id": "d26-representation-0",
+            "type": "other",
+            "message": "资格尚未确认，不能当成已符合；请保留待核对。",
+            "entityTempIds": [
+              "task-register-audience"
+            ],
+            "evidenceIds": [],
+            "requiresDecision": true
+          }
+        ],
+        "ambiguities": [],
+        "ignoredContent": [
+          {
+            "text": "听众报名截止时间为2026年10月11日中午12:00，",
+            "reason": "other"
+          },
+          {
+            "text": "主办方提供50份免费午餐，",
+            "reason": "other"
+          },
+          {
+            "text": "按报名顺序先到先得（讲座的听众总人数不作限制，",
+            "reason": "other"
+          },
+          {
+            "text": "感兴趣均可报名）。",
+            "reason": "other"
+          },
+          {
+            "text": "活动信息",
+            "reason": "other"
+          },
+          {
+            "text": "**时间**",
+            "reason": "other"
+          },
+          {
+            "text": "**地点**",
+            "reason": "other"
+          },
+          {
+            "text": "**报名**",
+            "reason": "other"
+          }
+        ],
+        "quality": {
+          "overallConfidence": 1,
+          "hierarchyConfidence": 1,
+          "dateConfidence": 1,
+          "evidenceCoverage": 1,
+          "duplicateRisk": 0,
+          "overFragmentationRisk": 0,
+          "missingActionRisk": 0,
+          "needsHumanReview": true,
+          "reviewReasons": [
+            "资格尚未确认，不能当成已符合；请保留待核对。"
+          ]
+        }
+      },
+      "information": {
+        "version": "source-information-preview-1.0.0",
+        "sourceId": "source:6d16047e",
+        "sourceVersionId": "source:6d16047e:version:1",
+        "inferredFacts": 0,
+        "items": [
+          {
+            "text": "**时间**",
+            "evidenceIds": [
+              "d26-scope-0002-b2b745471c6e74bdb0ab341332caf64b31ded0617ed812f9c298dc0d497dfa12"
+            ]
+          },
+          {
+            "text": "**地点**",
+            "evidenceIds": [
+              "d26-scope-0005-524cb261f7dead197f5499e3c4865b91ee0262ab55336aa2ef575c8e7eb2cf2d"
+            ]
+          },
+          {
+            "text": "**报名**",
+            "evidenceIds": [
+              "d26-scope-0007-e9be290820b37509e4ff3d2791c73b4689e16ffad8ab6dcf103f2edb3363a086"
+            ]
+          }
+        ],
+        "suppressed": [
+          {
+            "text": "听众报名截止时间为2026年10月11日中午12:00，",
+            "reason": "ENTITY_EVIDENCE_ALREADY_DISPLAYED"
+          },
+          {
+            "text": "主办方提供50份免费午餐，",
+            "reason": "ENTITY_EVIDENCE_ALREADY_DISPLAYED"
+          },
+          {
+            "text": "按报名顺序先到先得（讲座的听众总人数不作限制，",
+            "reason": "ENTITY_EVIDENCE_ALREADY_DISPLAYED"
+          },
+          {
+            "text": "感兴趣均可报名）。",
+            "reason": "ENTITY_EVIDENCE_ALREADY_DISPLAYED"
+          },
+          {
+            "text": "活动信息",
+            "reason": "ENTITY_EVIDENCE_ALREADY_DISPLAYED"
+          }
+        ]
+      }
+    }
+  ],
+  "savedAt": "2026-10-08T01:34:00.848Z"
+}

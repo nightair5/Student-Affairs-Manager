@@ -5,9 +5,10 @@ import { assembleCurrentFirstSuggestion } from './materialChannelGrounding'
 import { sourceWindowsFromSidecar } from './sourceWindowGrounding'
 import { projectAuthoritySupportContext } from './authoritySupportContext'
 import { projectAuthorityEndpointComposition } from './authorityEndpointComposition'
+import { hasLiteralScopeSpan } from './authorityLiteralSupport'
 
 export const AUTHORITY_ATTRIBUTE_INDEX_VERSION = 'single-authority-attribute-index-1.0.0'
-export const AUTHORITY_SHARED_ATTRIBUTE_VERSION = 'single-authority-shared-attribute-index-1.1.0'
+export const AUTHORITY_SHARED_ATTRIBUTE_VERSION = 'single-authority-shared-attribute-index-1.2.0'
 const check = (ok: unknown, code: string) => { if (!ok) throw Error('AUTHORITY_ATTRIBUTE_' + code) }
 
 /** The nested attribute already declares its event. Derive the inverse evidence
@@ -22,7 +23,7 @@ export function projectAuthorityAttributeIndex(input: unknown, context: WireCont
       check(typeof a.text === 'string' && Array.isArray(a.scopeIds) && a.scopeIds.length > 0, 'SHAPE')
       for (const id of a.scopeIds) {
         const scope = context.index.scopes.find(s => s.id === id)
-        check(scope && scope.text.includes(a.text), 'SOURCE_EVIDENCE')
+        check(scope && (allowSharedAction ? hasLiteralScopeSpan(a.text, a.scopeIds, context) : scope.text.includes(a.text)), 'SOURCE_EVIDENCE')
         const rows = projected.scopeAccounting.filter(r => r.scopeId === id)
         const sharedAction = allowSharedAction && rows.length === 1 && rows[0].kind === 'action'
           && rows[0].primaryEntityIds.length > 0 && rows[0].primaryEntityIds.every(taskId =>
@@ -47,8 +48,8 @@ export function decodeAuthorityProductRecording(raw: string, context: WireContex
   const texts = Array.isArray(envelope.output) ? envelope.output.filter((v: { type?: string }) => v.type === 'message')
     .flatMap((v: { content?: { type?: string; text?: string }[] }) => v.content?.filter(c => c.type === 'output_text') ?? []) : []
   check(texts.length === 1 && typeof texts[0].text === 'string', 'RESPONSE_TEXT')
-  const support = projectAuthoritySupportContext(JSON.parse(texts[0].text), context)
-  const endpoints = projectAuthorityEndpointComposition(support.projected, context)
+  const support = projectAuthoritySupportContext(JSON.parse(texts[0].text), context, localizeMissingCoverage)
+  const endpoints = projectAuthorityEndpointComposition(support.projected, context, localizeMissingCoverage)
   const projection = projectAuthorityAttributeIndex(endpoints.projected, context, localizeMissingCoverage)
   texts[0].text = JSON.stringify(projection.projected)
   const decoded = decodeSingleAuthorityRecording(JSON.stringify(envelope), context, role, localizeMissingCoverage)

@@ -6,6 +6,7 @@ import { decodeAuthorityProductRecording } from './singleAuthorityProduct'
 export const OBLIGATION_AUTHORITY_VERSION = 'obligation-authority-source-contract-6.0.0' as const
 export const OBLIGATION_CANDIDATE_VERSION = 'obligation-authority-generation-1.0.0'
 export const OBLIGATION_PROMPT_VERSION = 'recognition-obligation-authority-1.0.0'
+export const OBLIGATION_LOCAL_RELATION_VERSION = 'obligation-local-relation-1.0.0'
 export type ObligationAuthorityFacts = Omit<SingleAuthorityFacts, 'schemaVersion' | 'tasks' | 'events'> & {
   schemaVersion: typeof OBLIGATION_AUTHORITY_VERSION
   tasks: Array<SingleAuthorityFacts['tasks'][number] & { eventLinks: Array<{ eventId: string; scopeIds: string[] }> }>
@@ -48,25 +49,45 @@ function matches(value: unknown, schema: Schema): boolean {
 const check = (ok: unknown, code: string) => { if (!ok) throw Error('OBLIGATION_AUTHORITY_' + code) }
 
 /** Only invert explicit task links. No omitted obligation, owner or relationship is inferred. */
-export function projectObligationAuthority(input: unknown, context: WireContext) {
+export function projectObligationAuthority(input: unknown, context: WireContext, localizeEvidenceMismatch = false) {
   const original = plainJson(input) as ObligationAuthorityFacts
   check(matches(original, OBLIGATION_AUTHORITY_SCHEMA), 'SHAPE')
   const relations: Array<{ taskId: string; eventId: string; scopeIds: string[] }> = []
+  const quarantinedRelations: typeof relations = []
+  const quarantinedPrerequisites: ObligationAuthorityFacts['prerequisiteStates'] = []
   for (const t of original.tasks) {
     const seen = new Set<string>()
     for (const link of t.eventLinks) {
       const e = original.events.find(e => e.tempId === link.eventId)
       check(e && !seen.has(link.eventId), 'EVENT_LINK_REFERENCE')
-      check(link.scopeIds.every(id => context.index.scopes.some(s => s.id === id) && t.propositionScopeIds.includes(id) && e!.scopeIds.includes(id)), 'EVENT_LINK_EVIDENCE')
+      check(link.scopeIds.every(id => context.index.scopes.some(s => s.id === id) && t.propositionScopeIds.includes(id)), 'EVENT_LINK_EVIDENCE')
       seen.add(link.eventId)
+      if (!link.scopeIds.every(id => e!.scopeIds.includes(id))) {
+        check(localizeEvidenceMismatch, 'EVENT_LINK_EVIDENCE')
+        quarantinedRelations.push({ taskId: t.id, eventId: link.eventId, scopeIds: [...link.scopeIds] })
+        continue
+      }
       relations.push({ taskId: t.id, eventId: link.eventId, scopeIds: [...link.scopeIds] })
     }
   }
+  const prerequisiteStates = original.prerequisiteStates.filter(p => {
+    const t = original.tasks.find(t => t.id === p.taskId), predecessor = original.tasks.find(t => t.id === p.predecessorId)
+    check(t && predecessor && p.factScopeIds.every(id => context.index.scopes.some(s => s.id === id)), 'PREREQUISITE_REFERENCE')
+    if (!t!.detail.dependencyTempIds.includes(p.predecessorId) && localizeEvidenceMismatch) { quarantinedPrerequisites.push(p); return false }
+    return true
+  })
   const projected: SingleAuthorityFacts = { ...original, schemaVersion: SINGLE_AUTHORITY_VERSION,
+    prerequisiteStates,
     tasks: original.tasks.map(({ eventLinks, ...t }) => { void eventLinks; return t }),
     events: original.events.map(e => ({ ...e, relatedTaskTempIds: relations.filter(r => r.eventId === e.tempId).map(r => r.taskId) })),
+    conflicts: [...original.conflicts, ...quarantinedRelations.map((r, i) => ({ id: `event-link-risk-${i}`, type: 'other' as const,
+      message: '该事项与活动的关联依据不完整，关联暂不采用；已有活动和无关联风险的内容仍可单独保存。',
+      entityTempIds: [r.taskId], scopeIds: r.scopeIds, requiresDecision: true })), ...quarantinedPrerequisites.map((p, i) => ({ id: `prerequisite-link-risk-${i}`, type: 'other' as const,
+      message: '前置状态与所声明的依赖不一致，不能当成已完成或可开始；该事项待核对，其他内容可单独保存。',
+      entityTempIds: [p.taskId], scopeIds: p.factScopeIds, requiresDecision: true }))],
   }
-  return { projected, audit: { version: OBLIGATION_AUTHORITY_VERSION, operation: 'TASK_EVENT_LINK_TO_INVERSE_INDEX_ONLY', inferredFacts: 0, relations, original } }
+  return { projected, audit: { version: OBLIGATION_AUTHORITY_VERSION, operation: 'TASK_EVENT_LINK_TO_INVERSE_INDEX_ONLY', inferredFacts: 0, relations,
+    localRelations: { version: OBLIGATION_LOCAL_RELATION_VERSION, enabled: localizeEvidenceMismatch, quarantinedRelations, quarantinedPrerequisites }, original } }
 }
 
 export function decodeObligationProductRecording(raw: string, context: WireContext, role: 'EngineeringFixture' | 'SingleAuthority' = 'EngineeringFixture', localizeMissingCoverage=false) {
@@ -74,7 +95,7 @@ export function decodeObligationProductRecording(raw: string, context: WireConte
   const envelope = JSON.parse(raw), messages = Array.isArray(envelope.output) ? envelope.output.filter((v: { type?: string }) => v.type === 'message') : []
   const texts = messages.flatMap((v: { content?: { type?: string; text?: string }[] }) => v.content?.filter(c => c.type === 'output_text') ?? [])
   check(texts.length === 1 && typeof texts[0].text === 'string', 'RESPONSE_TEXT')
-  const projection = projectObligationAuthority(JSON.parse(texts[0].text), context)
+  const projection = projectObligationAuthority(JSON.parse(texts[0].text), context, localizeMissingCoverage)
   texts[0].text = JSON.stringify(projection.projected)
   const decoded = decodeAuthorityProductRecording(JSON.stringify(envelope), context, role, localizeMissingCoverage)
   return { ...decoded, result: { ...decoded.result, promptVersion: OBLIGATION_PROMPT_VERSION, modelName: role === 'EngineeringFixture' ? '义务先行匿名契约夹具（非模型输出）' : 'ObligationAuthority 固定录制（非实时调用）' },

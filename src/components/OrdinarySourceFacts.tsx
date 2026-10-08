@@ -12,10 +12,10 @@ type Props={draft:ExtractionDraft;source:Source|null;workspace:WorkspaceV8|null;
 type Buffer={kind?:'event'|'task';action?:string;object?:string;eventId:string;title:string;location:string;start:string;end:string}
 const blank:Buffer={eventId:'',title:'',location:'',start:'',end:''}
 function eventTimeSummary(point:TimePointSuggestionV2):string {
-  if(point.needsConfirmation||!point.normalizedValue)return point.rawText+'（具体时刻未知，不创建确定日程）'
+  if(!point.normalizedValue||point.needsConfirmation&&point.precision!=='date_only')return point.rawText+'（具体时刻未知，不创建确定日程）'
   const match=point.normalizedValue.match(/^(\d{4})-(\d{2})-(\d{2})(?:T(\d{2}:\d{2}))?$/u)
   if(!match)return point.rawText
-  return `${match[1]}年${Number(match[2])}月${Number(match[3])}日${match[4]?' '+match[4]:''}（原文：${point.rawText}）`
+  return `${match[1]}年${Number(match[2])}月${Number(match[3])}日${match[4]?' '+match[4]:''}（${point.needsConfirmation?'关联待核对，暂不创建确定日程；':''}原文：${point.rawText}）`
 }
 /** Uses the ordinary result + persistent ReviewSession and the parent's real repository save. */
 export function OrdinarySourceFacts({draft,source,workspace,session,onDirty,onSave}:Props){
