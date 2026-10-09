@@ -1,0 +1,47 @@
+{
+  "version": "task-requirements-fact-adjudication-1.0.0",
+  "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+  "sources": [
+    {
+      "sourceId": "REQ-01",
+      "minimumFacts": {
+        "tasks": [
+          "完成仪器借用登记",
+          "领取借用卡"
+        ],
+        "requirements": [
+          "登记设备编号和联系电话",
+          "跨校使用者填写接收单位"
+        ],
+        "time": [
+          "登记截止2026-11-20T16:00",
+          "领取时间2026-11-21T09:00，不改成登记截止"
+        ],
+        "location": "领取器材室",
+        "prerequisite": "登记提交后领取，未提供完成状态不得true",
+        "events": 0
+      },
+      "disputes": []
+    },
+    {
+      "sourceId": "REQ-02",
+      "minimumFacts": {
+        "tasks": [
+          "可选报名摄影工作坊",
+          "录取后准备相机"
+        ],
+        "requirements": [
+          "报名填写年级",
+          "需借用器材者注明器材型号"
+        ],
+        "event": "摄影工作坊，艺文楼C204，2026-11-25T14:00至16:00",
+        "deadline": "报名2026-11-22T18:00",
+        "channel": "报名二维码，不猜链接或文件",
+        "completion": "收到确认邮件",
+        "qualification": "准备相机的录取资格unknown，不编成已完成前置"
+      },
+      "disputes": []
+    }
+  ],
+  "rule": "Whole provisional correctness requires all minimum facts, no extra independent duty, supported values/types/owners/relations, and reviewed titles/free prose. Incorrect required fact wins over score. Disputes/failed/no-output/unreviewed facts retain UNKNOWN in denominator. User corrections never first correct. Equivalent literal spans/format/order allowed, wrong object/date/relationship forbidden."
+}
