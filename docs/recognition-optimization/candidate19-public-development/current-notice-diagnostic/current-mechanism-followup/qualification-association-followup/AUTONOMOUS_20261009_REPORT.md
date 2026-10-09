@@ -65,7 +65,7 @@ measurement3.2/low-edit-v2不改；当前页面操作时间未采集，缺失不
 
 已停止该工具，不用CDP/Playwright/SendKeys等替代绕过。继续独立代码/模型工作不算继续Computer Use。本轮普通页面实际点击、页面刷新和IndexedDB独立回读均**NOT_RUN**；旧6913页面证据不能充当这次验收。
 
-最终内部入口预留[6915固定录制](http://127.0.0.1:6915/)，由最终提交构建、回环绑定、全新隔离DB实例requirements-paid-1009-final；4配对真实raw+4官方真实raw与5工程控制分开标识。模型派发机械关闭。构建/HTTP/POST403检查和Manifest见最终现场，不将“服务器打开”称点击通过，不是任意通知实时AI。
+最终内部入口[6915固定录制](http://127.0.0.1:6915/)，由最终产品提交构建、回环绑定、全新隔离DB实例requirements-paid-1009-v2；4配对真实raw+4官方真实raw与5工程控制分开标识。模型派发机械关闭。构建/HTTP/POST403检查和Manifest见最终现场，不将“服务器打开”称点击通过，不是任意通知实时AI。HTTP核验发现只读scene.units未被旧manifest读取，误报batchComplete=false；已修元数据读同一确定状态，历史控制明确4份，数据库初始化与实际是否打开分开，不用HTTP200声称数据库已创建。
 
 ## 调用、费用及旧封存
 
