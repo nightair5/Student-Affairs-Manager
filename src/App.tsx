@@ -48,6 +48,7 @@ import {eventDispositionField,type EventDisposition} from './domain/v2/eventDisp
 import { PersonalPlanPanel } from './components/PersonalPlanPanel'
 import { assembleCurrentFirstSuggestion } from './recognition/materialChannelGrounding'
 import { sourceWindowsFromSidecar } from './recognition/sourceWindowGrounding'
+import { sourceActionTimesFromSidecar } from './recognition/sourceActionTime'
 import { projectSourceInformation } from './recognition/sourceInformationPreview'
 import {createOrdinaryMeasurement,type OrdinaryMeasurement} from './domain/v2/ordinaryMeasurementD26'
 import {
@@ -723,7 +724,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
       )
       const semanticSidecar=ordinaryEnvironment?.semanticSidecar?.(handle.sourceId)
       const inferenceContext=ordinaryEnvironment?.recognitionContext?.(input.content) ?? {referenceTime:input.now?.toISOString() ?? recognitionResult.createdAt,timezone:Intl.DateTimeFormat().resolvedOptions().timeZone || 'Asia/Shanghai'}
-      const assembled=assembleCurrentFirstSuggestion(recognitionResult,{sourceText:input.content,...inferenceContext,sourceWindows:sourceWindowsFromSidecar(semanticSidecar)})
+      const assembled=assembleCurrentFirstSuggestion(recognitionResult,{sourceText:input.content,...inferenceContext,sourceWindows:sourceWindowsFromSidecar(semanticSidecar),sourceActionTimes:sourceActionTimesFromSidecar(semanticSidecar)})
       const sourceInformation=projectSourceInformation(assembled.result,{sourceId:handle.sourceId,sourceVersionId:handle.sourceVersionId,text:input.content})
       await canonicalWorkspaceRepository.transaction(w=>({...w,recognitionRuns:w.recognitionRuns.map(r=>r.id===handle.recognitionRunId?{...r,legacyData:{...r.legacyData,originalRecognitionResult:JSON.parse(JSON.stringify(recognitionResult))}}:r),extractionDrafts:w.extractionDrafts.map(d=>d.id===handle.draftId?{...d,result:assembled.result,legacyData:{...d.legacyData,...(semanticSidecar?{semanticSidecar:JSON.parse(JSON.stringify(semanticSidecar))}:{}),firstSuggestionDisplayed:JSON.parse(JSON.stringify(assembled.result)),firstSourceInformationDisplayed:JSON.parse(JSON.stringify(sourceInformation)),firstSuggestionAssembly:JSON.parse(JSON.stringify(assembled.audit)),materialChannelGrounding:JSON.parse(JSON.stringify(assembled.materialChannelAudit)),sourceWindowGrounding:JSON.parse(JSON.stringify(assembled.sourceWindowGrounding))}}:d)}))
       const saved = await workspaceRepository.load()

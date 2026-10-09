@@ -5,8 +5,9 @@ import type { RecognitionResult, TaskSuggestionV2, TimePointSuggestionV2 } from 
 import { groundEligibility } from './eligibilityGrounding'
 import { rangeEndpointSupport } from './rangeEndpointSupport'
 import { taskActionText } from '../lib/taskActionText'
+import { supportedCoordinatedObject, supportedEventDescriptor } from './compoundNameSupport'
 
-export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.4.0'
+export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.5.0'
 interface ProseRecord { entityId: string; kind: 'task' | 'event' | 'source'; title: string; description: string }
 export interface D26FirstSuggestionAudit {
   version: typeof D26_FIRST_SUGGESTION_VERSION
@@ -126,14 +127,14 @@ export function assembleSemanticFirstSuggestionD26(input: SemanticInput, context
   }
   for (const task of result.tasks) {
     const quotes = quote(task.propositionScopeIds)
-    const grounded = supported(task.action.surface, quote([task.action.scopeId])) && supported(task.object.surface, quote([task.object.scopeId]))
+    const grounded = supported(task.action.surface, quote([task.action.scopeId])) && (supported(task.object.surface, quote([task.object.scopeId])) || supportedCoordinatedObject(task.object.surface,task.action.surface,quote([task.object.scopeId])))
     const original = { entityId: task.id, kind: 'task' as const, title: task.detail.title, description: task.detail.description }
     Object.assign(task.detail, prose(audit, original, grounded ? taskActionText(task.action.surface, task.object.surface) : '待核对事项',
       grounded ? unique(quotes).join('\n') : '动作或对象缺少对应来源依据，请核对。'))
     if (!grounded) audit.unresolved.push({ entityId: task.id, reason: 'ACTION_OBJECT_SOURCE_SUPPORT_MISSING' })
   }
   for (const event of result.events) {
-    const quotes = quote(event.scopeIds), grounded = supportedAdjacent(event.title, quotes, context.index.sourceContent)
+    const quotes = quote(event.scopeIds), grounded = supportedAdjacent(event.title, quotes, context.index.sourceContent)||supportedEventDescriptor(event.title,quotes)
     const original = { entityId: event.tempId, kind: 'event' as const, title: event.title, description: event.description }
     Object.assign(event, prose(audit, original, grounded ? event.title : '待核对事件', grounded ? unique(quotes).join('\n') : '事件内容缺少对应来源依据，请核对。'))
     if (!grounded) audit.unresolved.push({ entityId: event.tempId, reason: 'EVENT_SOURCE_SUPPORT_MISSING' })
@@ -166,14 +167,14 @@ export function assembleRecognitionFirstSuggestionD26(input: RecognitionResult, 
   }
   const tasks: TaskSuggestionV2[] = [...result.standaloneTasks, ...result.milestones.flatMap(m => [...m.tasks, ...m.workPackages.flatMap(w => w.tasks)])]
   for (const task of tasks) {
-    const quotes = quote(task.evidenceIds), grounded = supported(task.actionVerb, quotes) && supported(task.actionObject, quotes)
+    const quotes = quote(task.evidenceIds), grounded = supported(task.actionVerb, quotes) && (supported(task.actionObject, quotes)||supportedCoordinatedObject(task.actionObject,task.actionVerb,quotes))
     const original = { entityId: task.tempId, kind: 'task' as const, title: task.title, description: task.description }
     Object.assign(task, prose(audit, original, grounded ? taskActionText(task.actionVerb, task.actionObject) : '待核对事项',
       grounded ? unique(quotes).join('\n') : '动作或对象缺少对应来源依据，请核对。'))
     if (!grounded) { task.selected = false; audit.unresolved.push({ entityId: task.tempId, reason: 'ACTION_OBJECT_SOURCE_SUPPORT_MISSING' }) }
   }
   for (const event of result.events) {
-    const quotes = quote(event.evidenceIds), grounded = supportedAdjacent(event.title, quotes, context.sourceText)
+    const quotes = quote(event.evidenceIds), grounded = supportedAdjacent(event.title, quotes, context.sourceText)||supportedEventDescriptor(event.title,quotes)
     const original = { entityId: event.tempId, kind: 'event' as const, title: event.title, description: event.description }
     Object.assign(event, prose(audit, original, grounded ? event.title : '待核对事件', grounded ? unique(quotes).join('\n') : '事件内容缺少对应来源依据，请核对。'))
     if (!grounded) { event.selected = false; audit.unresolved.push({ entityId: event.tempId, reason: 'EVENT_SOURCE_SUPPORT_MISSING' }) }

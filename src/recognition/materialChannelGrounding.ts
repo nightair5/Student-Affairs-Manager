@@ -1,6 +1,7 @@
 import type { RecognitionResult } from './types'
 import { assembleRecognitionFirstSuggestionD26 } from './firstSuggestionD26'
 import { groundSourceWindows } from './sourceWindowGrounding'
+import { groundSourceActionTimes, type SourceActionTimeDeclaration } from './sourceActionTime'
 
 export const MATERIAL_CHANNEL_GROUNDING_VERSION = 'material-channel-role-grounding-1.4.0'
 export interface MaterialChannelDecision {
@@ -123,9 +124,10 @@ export function groundMaterialChannels(input: RecognitionResult, sourceText: str
 }
 
 /** Shared ordinary first screen; no change to candidate prompts, schema, or historical scorer. */
-export function assembleCurrentFirstSuggestion(input: RecognitionResult, context: { sourceText: string; referenceTime: string; timezone: string; sourceWindows?: import('./sourceWindowGrounding').SourceWindowDeclaration[] }) {
+export function assembleCurrentFirstSuggestion(input: RecognitionResult, context: { sourceText: string; referenceTime: string; timezone: string; sourceWindows?: import('./sourceWindowGrounding').SourceWindowDeclaration[]; sourceActionTimes?: SourceActionTimeDeclaration[] }) {
   const first = assembleRecognitionFirstSuggestionD26(input, context)
   const channels = groundMaterialChannels(first.result, context.sourceText)
   const windows = groundSourceWindows(channels.result, context.sourceWindows ?? [], context)
-  return { ...first, result: windows.result, materialChannelAudit: channels.audit, sourceWindowGrounding: windows.audit }
+  const appointments=groundSourceActionTimes(windows.result,context.sourceText,context.sourceActionTimes)
+  return { ...first, audit:{...first.audit,sourceActionTimes:appointments.audit},result: appointments.result, materialChannelAudit: channels.audit, sourceWindowGrounding: windows.audit }
 }

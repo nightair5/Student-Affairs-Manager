@@ -116,6 +116,7 @@ export function planBaseline(w: WorkspaceV8): string {
   })
 }
 const reasons: Record<string, string> = {
+  SOURCE_ACTION_TIME_NEEDS_REVIEW:'原文指定办理时间尚未确定，保留原文，不改排到其他时刻。',SOURCE_ACTION_TIME_OUTSIDE_PLAN:'原文指定办理时刻不在可用范围内或存在冲突；保留指定时间。',
   SOURCE_WINDOW_NEEDS_REVIEW:'原文办理窗口的起止尚未完整确定，先保留待定。', SOURCE_WINDOW_OUTSIDE_PLAN:'本次安排范围不在原文开放窗口内；保留待办，不改原文时间。',
   COMPLETED: '已经完成，不重复安排。', CANCELLED: '已取消，不安排执行。', NOT_APPLICABLE: '资格不适用，不安排执行。', QUALIFICATION_UNKNOWN: '资格尚未确认，先保留待定。', NOT_CURRENT_ACTION: '不是当前有效行动。', RELATION_NEEDS_REVIEW: '修订或关联仍待核对。',
   DURATION_UNKNOWN: '耗时未知，且本次未采用估计。', DEPENDENCY_MISSING: '找不到前置事项，不能猜它已完成。', DEPENDENCY_CYCLE: '前置事项形成循环，无法确定执行顺序。', DEPENDENCY_UNSCHEDULED: '前置事项尚未排入，不能排在它之前。', OVERDUE: '原文截止已过，需明确改期决定。', CAPACITY: '可用时间不足，无法在窗口或截止前连续完成。', USER_LATER: '你选择以后再安排。', LEGACY_PLAN_UNBOUNDED: '已有个人计划缺少可靠时长，保留原计划，暂不移动。', INVALID_MANUAL_SLOT: '调整后与可用时间、固定占用、截止或前置安排冲突。', DEADLINE_CONFLICT: '存在相互矛盾或未核实的具体截止，先核对。', LOCK_CONFLICT: '锁定时间与当前固定活动、期限或前置发生冲突，保留锁定并提示。',
@@ -185,7 +186,8 @@ export function buildPersonalPlan(w: WorkspaceV8, options: PlanOptions, id: stri
     return {start:valid?starts[0]!:-Infinity,end:valid?ends[0]!:Infinity,invalid:!valid,present:true}
   }
   const canUse = (slot: Interval, earliest: number, latest: number) => Number.isFinite(slot.start) && slot.start >= earliest && slot.end <= latest && windows.some(win => slot.start >= win.start && slot.end <= win.end) && ![...fixed, ...occupied].some(b => overlap(slot, b))
-  const tasks = sorted(w.tasks).sort((a, b) => (deadline(a).value - deadline(b).value) || (b.manualPriority ?? 0) - (a.manualPriority ?? 0) || a.id.localeCompare(b.id))
+  const appointment=(t:Task)=>w.timePoints.filter(p=>p.relatedTaskIds.includes(t.id)&&p.legacyData?.sourceTimeRole==='task_action_time')
+  const tasks = sorted(w.tasks).sort((a, b) => Number(Boolean(appointment(b).length))-Number(Boolean(appointment(a).length)) || (deadline(a).value - deadline(b).value) || (b.manualPriority ?? 0) - (a.manualPriority ?? 0) || a.id.localeCompare(b.id))
   const handled = new Set<string>(), visiting = new Set<string>()
   const cycleIds = new Set<string>(), cycleDone = new Set<string>()
   const visitCycle = (t: Task, path: string[]) => {
@@ -213,7 +215,9 @@ export function buildPersonalPlan(w: WorkspaceV8, options: PlanOptions, id: stri
     const s: PlanSegment = { taskId: t.id, title: t.title, start: new Date(start).toISOString(), end: new Date(end).toISOString(), minutes: meta.minutes, durationOrigin: meta.durationOrigin, locked: true, conditionalOn: t.dependencyIds.filter(id => w.tasks.find(t => t.id === id)?.status !== 'completed'), reason: '保留你锁定的安排。', originalDeadline: deadline(t).text, retained: true }
     proposal.segments.push(s); occupied.push({ start, end }); handled.add(t.id)
     const sourceBounds=sourceWindow(t)
-    if ([...fixed, ...occupied.slice(0, -1)].some(b => overlap(b, { start, end })) || !windows.some(win => start >= win.start && end <= win.end) || end > deadline(t).value || sourceBounds.invalid || start<sourceBounds.start || end>sourceBounds.end || deadline(t).conflict || staleSource(t) || t.snoozedUntil && start < parseBusinessDateTime(t.snoozedUntil, zone)!.getTime() || taskGaps(w, t).length || cycleIds.has(t.id)) reject(t, 'LOCK_CONFLICT')
+    const sourceAppointments=appointment(t)
+    const sourceAppointmentConflict=sourceAppointments.length>0&&(sourceAppointments.length!==1||sourceAppointments[0].needsConfirmation||sourceAppointments[0].precision!=='exact'||pointMs(sourceAppointments[0],zone)!==start)
+    if ([...fixed, ...occupied.slice(0, -1)].some(b => overlap(b, { start, end })) || !windows.some(win => start >= win.start && end <= win.end) || end > deadline(t).value || sourceBounds.invalid || sourceAppointmentConflict || start<sourceBounds.start || end>sourceBounds.end || deadline(t).conflict || staleSource(t) || t.snoozedUntil && start < parseBusinessDateTime(t.snoozedUntil, zone)!.getTime() || taskGaps(w, t).length || cycleIds.has(t.id)) reject(t, 'LOCK_CONFLICT')
   }
   const schedule = (t: Task): void => {
     if (handled.has(t.id)) return
@@ -227,6 +231,8 @@ export function buildPersonalPlan(w: WorkspaceV8, options: PlanOptions, id: stri
     if (override?.later) { reject(t, 'USER_LATER'); return }
     const due = deadline(t)
     const sourceBounds=sourceWindow(t)
+    const sourceAppointments=appointment(t)
+    if(sourceAppointments.length&&(sourceAppointments.length!==1||pointMs(sourceAppointments[0],zone)===undefined)){reject(t,'SOURCE_ACTION_TIME_NEEDS_REVIEW');return}
     if(sourceBounds.invalid){reject(t,'SOURCE_WINDOW_NEEDS_REVIEW');return}
     if(sourceBounds.present&&!windows.some(win=>win.end>sourceBounds.start&&win.start<sourceBounds.end)){reject(t,'SOURCE_WINDOW_OUTSIDE_PLAN');return}
     due.value=Math.min(due.value,sourceBounds.end)
@@ -252,7 +258,11 @@ export function buildPersonalPlan(w: WorkspaceV8, options: PlanOptions, id: stri
     visiting.delete(t.id)
     const duration = minutes * 60_000
     let slot: Interval | undefined
-    if (override?.start) {
+    if(sourceAppointments.length){
+      const start=pointMs(sourceAppointments[0],zone)!,candidate={start,end:start+duration}
+      if(override?.start&&parseBusinessDateTime(override.start,zone)?.getTime()!==start||!canUse(candidate,earliest,due.value)){reject(t,'SOURCE_ACTION_TIME_OUTSIDE_PLAN');return}
+      slot=candidate
+    } else if (override?.start) {
       const start = parseBusinessDateTime(override.start, zone)?.getTime() ?? NaN
       const candidate = { start, end: start + duration }
       if (canUse(candidate, earliest, due.value)) slot = candidate
@@ -269,7 +279,7 @@ export function buildPersonalPlan(w: WorkspaceV8, options: PlanOptions, id: stri
       }
     }
     if (!slot) { reject(t, 'CAPACITY'); return }
-    proposal.segments.push({ taskId: t.id, title: t.title, start: new Date(slot.start).toISOString(), end: new Date(slot.end).toISOString(), minutes, durationOrigin: origin, locked: override?.locked ?? false, conditionalOn: t.dependencyIds.filter(id => tasks.find(t => t.id === id)?.status !== 'completed'), reason: t.dependencyIds.length ? '排在前置事项之后；须实际完成前置才可开始。' : due.text ? '按原文截止先后分配共同可用时间。' : '没有原文截止，按稳定顺序放入可用时间。', originalDeadline: due.text, retained: false }); occupied.push(slot)
+    proposal.segments.push({ taskId: t.id, title: t.title, start: new Date(slot.start).toISOString(), end: new Date(slot.end).toISOString(), minutes, durationOrigin: origin, locked: override?.locked ?? false, conditionalOn: t.dependencyIds.filter(id => tasks.find(t => t.id === id)?.status !== 'completed'), reason: sourceAppointments.length?'保留原文指定办理时刻；时长仅为明确标注的安排估计。':t.dependencyIds.length ? '排在前置事项之后；须实际完成前置才可开始。' : due.text ? '按原文截止先后分配共同可用时间。' : '没有原文截止，按稳定顺序放入可用时间。', originalDeadline: due.text, retained: false }); occupied.push(slot)
   }
   tasks.forEach(schedule)
   // Locked successor may predate its newly scheduled prerequisite. Preserve it, expose conflict.

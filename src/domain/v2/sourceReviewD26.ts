@@ -95,6 +95,9 @@ export function buildSourceReviewPlan(workspace: WorkspaceV8, view: DraftView, i
   const sidecar=draft.legacyData?.semanticSidecar,audit=sidecar&&typeof sidecar==='object'&&!Array.isArray(sidecar)?sidecar.singleAuthorityAudit:null
   const windows=audit&&typeof audit==='object'&&!Array.isArray(audit)&&Array.isArray(audit.sourceWindows)?audit.sourceWindows:[]
   for(const p of plan.create.timePoints){const row=windows.find(v=>v&&typeof v==='object'&&!Array.isArray(v)&&v.id===p.legacyData?.recognitionTempId);if(row&&typeof row==='object'&&!Array.isArray(row))p.legacyData={...p.legacyData,sourceTimeRole:row.role,sourceWindowOwners:row.owners}}
+  const assembly=draft.legacyData?.firstSuggestionAssembly
+  const appointments=assembly&&typeof assembly==='object'&&!Array.isArray(assembly)&&assembly.sourceActionTimes&&typeof assembly.sourceActionTimes==='object'&&!Array.isArray(assembly.sourceActionTimes)&&Array.isArray(assembly.sourceActionTimes.decisions)?assembly.sourceActionTimes.decisions:[]
+  for(const p of plan.create.timePoints){const row=appointments.find(v=>v&&typeof v==='object'&&!Array.isArray(v)&&v.id===p.legacyData?.recognitionTempId);if(row&&typeof row==='object'&&!Array.isArray(row)&&row.role==='task_action_time'&&p.type==='event_start')p.legacyData={...p.legacyData,sourceTimeRole:'task_action_time',sourceActionTimeAudit:row}}
   for(const material of plan.create.materials){
     material.status='unverified'
     material.legacyData={...material.legacyData,availabilityVersion:'ordinary-availability-unobserved-1',availabilityOrigin:'not_observed',sourceReviewDraftId:draft.id}
