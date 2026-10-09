@@ -5,9 +5,9 @@ import type { RecognitionResult, TaskSuggestionV2, TimePointSuggestionV2 } from 
 import { groundEligibility } from './eligibilityGrounding'
 import { rangeEndpointSupport } from './rangeEndpointSupport'
 import { taskActionText } from '../lib/taskActionText'
-import { supportedCoordinatedObject, supportedEventDescriptor } from './compoundNameSupport'
+import { supportedCoordinatedObject, supportedEventDescriptor, supportedEventOperation } from './compoundNameSupport'
 
-export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.5.1'
+export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.6.0'
 interface ProseRecord { entityId: string; kind: 'task' | 'event' | 'source'; title: string; description: string }
 export interface D26FirstSuggestionAudit {
   version: typeof D26_FIRST_SUGGESTION_VERSION
@@ -15,13 +15,14 @@ export interface D26FirstSuggestionAudit {
   generatedProse: ProseRecord[]
   times: Array<{ entityId: string; before: TimeFields; after: TimeFields; interpretation: D26TimeInterpretation }>
   unresolved: Array<{ entityId: string; reason: string }>
+  actionFields: Array<{entityId:string; before:string; after:string; status:'CITED_VERB_PROJECTION'|'LOCAL_UNRESOLVED_ACTION'; quotes:string[]}>
   rangeSupport: Array<{entityId:string; quote:string; literalRange:string; expanded:string; rule:'CITED_SAME_EVENT_RANGE_ENDPOINT'|'CITED_SAME_EVENT_CLOCK_RANGE'}>
   role: 'DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT'
 }
 type TimeFields = Pick<TimePointSuggestionV2, 'normalizedValue' | 'timezone' | 'isAllDay' | 'precision' | 'needsConfirmation'>
 const fields = (point: TimeFields): TimeFields => ({ normalizedValue: point.normalizedValue, timezone: point.timezone,
   isAllDay: point.isAllDay, precision: point.precision, needsConfirmation: point.needsConfirmation })
-const auditRecord = (): D26FirstSuggestionAudit => ({ version: D26_FIRST_SUGGESTION_VERSION, originalProse: [], generatedProse: [], times: [], unresolved: [], rangeSupport: [], role: 'DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT' })
+const auditRecord = (): D26FirstSuggestionAudit => ({ version: D26_FIRST_SUGGESTION_VERSION, originalProse: [], generatedProse: [], times: [], unresolved: [], actionFields: [], rangeSupport: [], role: 'DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT' })
 const supported = (value: string, quotes: string[]) => Boolean(value.trim()) && quotes.some(quote => quote.includes(value))
 function supportedAdjacent(value: string, quotes: string[], sourceText: string) {
   if (supported(value, quotes)) return true
@@ -36,6 +37,32 @@ function supportedAdjacent(value: string, quotes: string[], sourceText: string) 
   return covered >= start + value.length
 }
 const unique = (values: string[]) => [...new Set(values)]
+/** Wire action.surface is a citation, while the ordinary actionVerb is at most
+ * 20 characters. Project only a verb in that same grounded grammatical action;
+ * never truncate source text, guess an action or discard the other tasks. */
+function boundActionField(task:TaskSuggestionV2, quotes:string[], sourceText:string, audit:D26FirstSuggestionAudit) {
+  if(task.actionVerb.length<=20)return
+  const before=task.actionVerb, cited=supportedAdjacent(before,quotes,sourceText)&&supportedAdjacent(task.actionObject,quotes,sourceText)
+  const verbs='提交|上传|登录|选择|填写|领取|准备|签署|打印|发送|联系|办理|缴纳|核对|保存|删除|参加|完成|申请|登记|激活|带上|下载'
+  const prefixes='(?:(?:请|须|需|应|务必|准确|按时|立即|尽快)\\s*)*'
+  const leading=new RegExp('^'+prefixes+'('+verbs+')','u').exec(before)
+  const disposal=new RegExp('^'+prefixes+'(?:将|把)([^，。；]+?)('+verbs+')(?:至|到|给|$)','u').exec(before)
+  const safeDisposal=disposal&&disposal[1].includes(task.actionObject)&&!new RegExp(verbs,'u').test(disposal[1])
+  const residual=before.replace(task.actionObject,'')
+  const independentAction=new RegExp('(?:并|且|然后|再|同时|以及)\\s*('+verbs+')','u').test(residual)
+  const at=sourceText.indexOf(before),prefix=at<0?'':sourceText.slice(0,at).split(/[，。；\n]/u).at(-1)??''
+  const negated=/请勿|不要|不得|无需|不必|禁止|取消|不再/u.test(prefix+residual)
+  const verb=cited&&!independentAction&&!negated?(leading?.[1]??(safeDisposal?disposal![2]:null)):null
+  task.actionVerb=verb??'待核对'
+  audit.actionFields.push({entityId:task.tempId,before,after:task.actionVerb,status:verb?'CITED_VERB_PROJECTION':'LOCAL_UNRESOLVED_ACTION',quotes})
+  if(!verb){task.selected=false;audit.unresolved.push({entityId:task.tempId,reason:'ACTION_FIELD_NOT_SOURCE_GROUNDED'})}
+}
+function retainActionBlocks(result:RecognitionResult,audit:D26FirstSuggestionAudit) {
+  for(const row of audit.actionFields.filter(a=>a.status==='LOCAL_UNRESOLVED_ACTION')){
+    const id='first-action-source:'+row.entityId
+    if(!result.conflicts.some(c=>c.id===id))result.conflicts.push({id,type:'other',message:'动作字段不能从同一事项的原文中可靠拆出，请核对该事项；其他有依据的事项可单独保存。',entityTempIds:[row.entityId],evidenceIds:result.standaloneTasks.find(t=>t.tempId===row.entityId)?.evidenceIds??[],requiresDecision:true})
+  }
+}
 function timeClause(rawText: string, quote: string): string {
   const start = quote.indexOf(rawText)
   if (start < 0) return ''
@@ -127,14 +154,23 @@ export function assembleSemanticFirstSuggestionD26(input: SemanticInput, context
   }
   for (const task of result.tasks) {
     const quotes = quote(task.propositionScopeIds)
-    const grounded = supported(task.action.surface, quote([task.action.scopeId])) && (supported(task.object.surface, quote([task.object.scopeId])) || supportedCoordinatedObject(task.object.surface,task.action.surface,quote([task.object.scopeId])))
+    // A URL colon can split one action into adjacent source scopes. Its value
+    // must begin inside its declared scope and all remaining bytes be cited by
+    // the same proposition; unrelated clauses cannot provide the missing text.
+    const partSupported=(value:string,scopeId:string)=>{
+      if(supported(value,quote([scopeId])))return true
+      const own=context.index.scopes.find(s=>s.id===scopeId),start=context.index.sourceContent.indexOf(value)
+      return Boolean(own&&task.propositionScopeIds.includes(scopeId)&&start>=own.start&&start<own.end
+        &&supportedAdjacent(value,quotes,context.index.sourceContent))
+    }
+    const grounded = partSupported(task.action.surface,task.action.scopeId) && (partSupported(task.object.surface,task.object.scopeId) || supportedCoordinatedObject(task.object.surface,task.action.surface,quote([task.object.scopeId])))
     const original = { entityId: task.id, kind: 'task' as const, title: task.detail.title, description: task.detail.description }
     Object.assign(task.detail, prose(audit, original, grounded ? supportedCoordinatedObject(task.object.surface,task.action.surface,quote([task.object.scopeId]))?task.action.surface:taskActionText(task.action.surface, task.object.surface) : '待核对事项',
       grounded ? unique(quotes).join('\n') : '动作或对象缺少对应来源依据，请核对。'))
     if (!grounded) audit.unresolved.push({ entityId: task.id, reason: 'ACTION_OBJECT_SOURCE_SUPPORT_MISSING' })
   }
   for (const event of result.events) {
-    const quotes = quote(event.scopeIds), grounded = supportedAdjacent(event.title, quotes, context.index.sourceContent)||supportedEventDescriptor(event.title,quotes)
+    const quotes = quote(event.scopeIds), grounded = supportedAdjacent(event.title, quotes, context.index.sourceContent)||supportedEventDescriptor(event.title,quotes)||supportedEventOperation(event.title,quotes,context.index.sourceContent)
     const original = { entityId: event.tempId, kind: 'event' as const, title: event.title, description: event.description }
     Object.assign(event, prose(audit, original, grounded ? event.title : '待核对事件', grounded ? unique(quotes).join('\n') : '事件内容缺少对应来源依据，请核对。'))
     if (!grounded) audit.unresolved.push({ entityId: event.tempId, reason: 'EVENT_SOURCE_SUPPORT_MISSING' })
@@ -167,14 +203,15 @@ export function assembleRecognitionFirstSuggestionD26(input: RecognitionResult, 
   }
   const tasks: TaskSuggestionV2[] = [...result.standaloneTasks, ...result.milestones.flatMap(m => [...m.tasks, ...m.workPackages.flatMap(w => w.tasks)])]
   for (const task of tasks) {
-    const quotes = quote(task.evidenceIds), grounded = supported(task.actionVerb, quotes) && (supported(task.actionObject, quotes)||supportedCoordinatedObject(task.actionObject,task.actionVerb,quotes))
+    boundActionField(task,quote(task.evidenceIds),context.sourceText,audit)
+    const quotes = quote(task.evidenceIds), grounded = supportedAdjacent(task.actionVerb, quotes,context.sourceText) && (supportedAdjacent(task.actionObject, quotes,context.sourceText)||supportedCoordinatedObject(task.actionObject,task.actionVerb,quotes))
     const original = { entityId: task.tempId, kind: 'task' as const, title: task.title, description: task.description }
     Object.assign(task, prose(audit, original, grounded ? supportedCoordinatedObject(task.actionObject,task.actionVerb,quotes)?task.actionVerb:taskActionText(task.actionVerb, task.actionObject) : '待核对事项',
       grounded ? unique(quotes).join('\n') : '动作或对象缺少对应来源依据，请核对。'))
     if (!grounded) { task.selected = false; audit.unresolved.push({ entityId: task.tempId, reason: 'ACTION_OBJECT_SOURCE_SUPPORT_MISSING' }) }
   }
   for (const event of result.events) {
-    const quotes = quote(event.evidenceIds), grounded = supportedAdjacent(event.title, quotes, context.sourceText)||supportedEventDescriptor(event.title,quotes)
+    const quotes = quote(event.evidenceIds), grounded = supportedAdjacent(event.title, quotes, context.sourceText)||supportedEventDescriptor(event.title,quotes)||supportedEventOperation(event.title,quotes,context.sourceText)
     const original = { entityId: event.tempId, kind: 'event' as const, title: event.title, description: event.description }
     Object.assign(event, prose(audit, original, grounded ? event.title : '待核对事件', grounded ? unique(quotes).join('\n') : '事件内容缺少对应来源依据，请核对。'))
     if (!grounded) { event.selected = false; audit.unresolved.push({ entityId: event.tempId, reason: 'EVENT_SOURCE_SUPPORT_MISSING' }) }
@@ -183,6 +220,7 @@ export function assembleRecognitionFirstSuggestionD26(input: RecognitionResult, 
   const summary = tasks.length || result.events.length ? `${tasks.length}项任务，${result.events.length}项事件。请核对后确认。` : '未识别到需要执行的任务或事件；原文已保留，可核对并归档。'
   prose(audit, { entityId: 'source', kind: 'source', title: result.sourceSummary.title, description: result.sourceSummary.summary }, title, summary)
   Object.assign(result.sourceSummary, { title, summary })
+  retainActionBlocks(result,audit)
   if (audit.unresolved.length) {
     result.quality.needsHumanReview = true
     result.quality.reviewReasons = unique([...result.quality.reviewReasons, '部分首次摘要缺少完整来源依据，请核对标记事项。'])
@@ -240,5 +278,9 @@ export function bridgeSemanticToRecognitionD26(input: SemanticInput, context: Wi
   }
   const sidecar: D26SemanticSidecar = { version: 'semantic-ordinary-bridge-1.2.0', originalSemantic: structuredClone(input), firstSemantic: first,
     sourceScopeEvidence: context.index.scopes.map(scope => ({ scopeId: scope.id, evidenceId: evidenceId(scope.id) })), representationGaps: gaps, displayAudit: audit, eligibilityAudit }
+  for(const task of result.standaloneTasks)boundActionField(task,quoteTask(task.evidenceIds),context.index.sourceContent,audit)
+  retainActionBlocks(result,audit)
+  if(audit.unresolved.length)result.quality.needsHumanReview=true
+  function quoteTask(ids:string[]){return result.evidence.filter(e=>ids.includes(e.id)).map(e=>e.quote!).filter(Boolean)}
   return { result, sidecar, audit, representationGaps: gaps }
 }
