@@ -1,0 +1,44 @@
+{
+  "verifiedAt": "2026-10-09T09:40:28.243Z",
+  "origin": "http://127.0.0.1:6916",
+  "homeStatus": 200,
+  "manifestStatus": 200,
+  "recordingsStatus": 200,
+  "modelPostStatus": 403,
+  "modelResponse": "C19_MODEL_AND_EXTERNAL_ROUTES_DISABLED",
+  "recordingsCount": 8,
+  "recordingsSha256": "e228f780878509f78d1426c60d2fca04906153e8514c691b1180bea744ba3628",
+  "manifest": {
+    "origin": "http://127.0.0.1:6916",
+    "database": "rco-mainline-01-02-i1-d27-plan-recorded-fact-role-20261009-1741",
+    "build": "5bf2ca3e9d62 / source 2bb718e25f89",
+    "role": "ENGINEERING_REPLAY",
+    "mode": "ORDINARY_APP_FIXED_RECORDING",
+    "databaseOpenedByPage": "NOT_OBSERVED",
+    "databaseInitializesOnPageLoad": true,
+    "batch": "TASK-REQUIREMENTS-FACT-ROLE-DEVELOPMENT-20261009-R1",
+    "batchLabel": "事实角色与条件字段：4作者Development来源、两臂8固定录制；不是实时调用或Holdout",
+    "knownSettledRecordings": 8,
+    "historicalControls": 0,
+    "anonymousFixtures": 0,
+    "plannedRequests": 8,
+    "batchComplete": true,
+    "files": [
+      {
+        "name": "browser.js",
+        "sha256": "3caf8578238737d4022f208eb6c0a7f291c61d1db94bf465eb11a344e32aba04"
+      },
+      {
+        "name": "browser.css",
+        "sha256": "4f130c46c6675c582e5bfe7cd1735c56926818cc399f9d628903178e9a476922"
+      }
+    ],
+    "recordingsSha256": "e228f780878509f78d1426c60d2fca04906153e8514c691b1180bea744ba3628",
+    "modelCallsByBrowser": 0
+  },
+  "browser": "NOT_RUN_POLICY_STOP",
+  "databaseActuallyOpened": "NOT_OBSERVED",
+  "browserClicks": 0,
+  "browserIndexedDbReadback": "NOT_RUN",
+  "memoryRepository": "Verified separately in PERSISTENCE_REPLAY.json; not browser acceptance"
+}

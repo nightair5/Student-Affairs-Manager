@@ -1,13 +1,13 @@
-# 当前交接：条件字段真实验证与有据反向索引已收口
+# 当前交接：事实角色及有据引用已收口，浏览器未验
 
-ROOT candidate11/比赛，branch codex/e2-candidate11-blind-eval。[唯一结果](candidate19-public-development/RESULTS.md)。2026-10-09实际执行；handover/15审计资产保留。
+ROOT candidate11/比赛，branch codex/e2-candidate11-blind-eval。[唯一结果](candidate19-public-development/RESULTS.md)。2026-10-09执行；用户handover/15审计资产保留。
 
-用户本轮3h/16请求/$6预授权：条件性完成原4个有证据的发送前身份，原grant不变；另2匿名来源×V7/条件字段4请求。合计8SETTLED/0UNCERTAIN，零retry/repair/verifier，新增1grant8reserve8settle。真实usage内部保守上界$0.040424，实扣NOT_OBSERVABLE。原真正UNCERTAIN全部封存，不恢复、不补settle或重发。
+本包3h/16/$6共享预授权，实际独立新批4作者Development通知×TaskRequirements/FactRoleAuthority=8，8SETTLED/0UNCERTAIN，1grant8reserve8settle，零retry/repair/verifier。usage45644/16123，保守内部结算$0.033042，实扣NOT_OBSERVABLE。旧不确定/完成批不恢复，未用余量扩样。
 
-新生成requirements显式owner，字段卡3/4→2/2，独立领取/相机准备不丢。公共context1.4.0/requirement projection1.1.0/relation1.2.0只派生原答已有依据和反向索引；默认/旧Prompt/v8不改。配对各2：原答V7 0正确2错，新机制1暂定1错；冻结首份均0/2，后程序同raw新机制1/2、V7 0/2。MIXED_PROGRESS：REQ-01领取时间类型和两项材料覆盖仍错，有退步，不选默认赢家。官方4原答0/2/2，首份数据0完整；组合表示与泛称损失保留，不能4/4解码算准确率。
+原答暂定最小事实2/4→4/4；冻结首次数据1/4→0/4，MIXED_PROGRESS；后公共程序同raw两臂4/4只是事后兼容，不改旧成绩。typed support1.5.0/relation1.3.0/first1.5.1/action-time-role1.0.1保留真实材料属性、短前置、已声明报名引用和源办理时间；假owner/错对象/新动作/true前置仍拒。FR03两臂Task1/Event1/Time3/Material0/Project0部分保存，电脑资格unknown留草稿。D27源办理时刻固定、个人计划分开。
 
-[报告与逐例](candidate19-public-development/current-notice-diagnostic/current-mechanism-followup/qualification-association-followup/AUTONOMOUS_20261009_REPORT.md)。实际普通产品函数/内存Repository部分保存、三故障恢复、只重读及D27通过，REQ-02 Task1/Event1/Time4（含1个人安排）/Material0/Project0；相机资格unknown仍等待。原答/转换/首份分开，无编辑不造editId、计量历史不改、四真人NOT_OBSERVABLE。
+唯一新入口6916固定8录制、实时关闭，新隔离库；构建5bf2ca3e9d62/source2bb718e25f89。HTTP200/模型POST403。普通内存Repository保存/恢复/只重读/安排/独立实例已验；浏览器点击/刷新IndexedDB NOT_RUN_POLICY_STOP：官方Computer Use不能可靠识别Windows URL，未绕过。四真人NOT_OBSERVABLE。
 
-当前新入口6915固定真实录制与工程控制，实时关闭；最终构建HTTP现场见结果。**浏览器点击NOT_RUN**：Computer Use不能可靠判Windows URL而停止，未绕过。旧6913不能代替本轮验收。lint/build通过，42组36PASS/6旧FAIL，audit开发2critical6high1moderate、production0。84/119/7、74资产不变，1065完整链SHAf648795b...，原1048及更旧前缀保持。
+42独立组36PASS/6旧FAIL，lint/build/security与46定向通过；默认Vitest附加超时/缺载体日志保留，权威载体命令相关组通过；不改旧断言/timeout。audit开发2critical6high1moderate/production0。84保护119冻结7归档、132本机资产保持；1082链SHAb3e3952c...，1065f648795b...及996/1000/1009/1015/1048前缀不变。
 
-下一用这8份raw定向查办理时间/截止、material实际owner与有据组合名称误阻断，再补同构建实际浏览器验收；不重造执行器/保存链/全局计划器。当前付费已收口，不用余量扩样。旧v11/12后验不改，不真人/Holdout/default/merge/deploy/Secret/旧库/依赖升级。
+下一完成6916同构建真实点击/部分/恢复/刷新/独立IndexedDB读回；不需新模型预算。当前两根因工程收口，无新缺口不造新候选。默认/Workspace v8/真人/Holdout/合并/部署/Secret/旧库/依赖/旧冻结均未改变。

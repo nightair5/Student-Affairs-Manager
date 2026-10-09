@@ -1,3 +1,25 @@
+# 当前结果：办理时刻与真实引用恢复，8次全部确定，冻结比较收益伴退步
+
+2026-10-09。本包实际执行8个新请求，8SETTLED/0UNCERTAIN，1新grant/8reserve/8settle，零retry/repair/verifier；未恢复旧封存或用余款扩样。修复原文领取时刻被当deadline及材料/前置/关联重复索引误拒绝，接普通App保存与D27。
+
+[本包完整报告](current-notice-diagnostic/current-mechanism-followup/qualification-association-followup/fact-role-comparison/observed/REPORT.md) · [逐份原答与首次数据](current-notice-diagnostic/current-mechanism-followup/qualification-association-followup/fact-role-comparison/observed/FACT_ADJUDICATION.json) · [保存恢复](current-notice-diagnostic/current-mechanism-followup/qualification-association-followup/fact-role-comparison/observed/PERSISTENCE_REPLAY.json) · [费用](current-notice-diagnostic/current-mechanism-followup/qualification-association-followup/fact-role-comparison/observed/EXECUTION_SUMMARY.json) · [验证](current-notice-diagnostic/current-mechanism-followup/qualification-association-followup/fact-role-comparison/observed/VALIDATION_SUMMARY.json)。
+
+| 4作者Development来源×两臂，各臂分母4（暂定最小事实） | TaskRequirements正确/错/未知 | FactRoleAuthority正确/错/未知 |
+|---|---|---|
+| 原答 | 2/2/0 | 4/0/0 |
+| 输出前冻结公共程序首次数据 | 1/3/0 | 0/4/0 |
+| 修公共程序后同raw首次数据 | 4/0/0 | 4/0/0 |
+
+冻结结论MIXED_PROGRESS：新输入的两个办理时间角色更准，但公共首次层退步；后程序恢复不能改冻结成绩或称新模型4/4泛化。参照single-author/model-assisted/provisional，独立真值/教学例泄漏NOT_ADJUDICATED，保存不当语义正确，用户补录不计首次。未知录取、前置等待及模糊/未公布null保留，未删除难例。
+
+用户少重填日期、材料PDF/名称和已有关联，源指定办理时间不被个人计划提前。工程内存普通Repository正式保存/部分/失败恢复/只重读/安排已验证；浏览器点击NOT_RUN_POLICY_STOP（官方Computer Use无法可靠识别Windows URL），没有绕过。唯一[新固定录制入口6916](http://127.0.0.1:6916/)，实时机械关闭、8真实录制、新库；构建5bf2ca3e9d62/source2bb718e25f89，HTTP200/模型POST403，实际页面DB打开未观察。
+
+usage45644input/16123output，峰时cache-miss保守内部结算US$0.033042，实扣NOT_OBSERVABLE；本包未用满16/$6。42权威独立组36PASS/6旧FAIL，lint/build/security与46定向通过；audit开发2critical6high1moderate/production0保持。84/119/7与132资产不变，1082完整链及1065/更旧前缀保持。[保护](current-notice-diagnostic/current-mechanism-followup/qualification-association-followup/fact-role-comparison/observed/PROTECTION.json)。下一只缺可用官方浏览器通道完成当前构建实点击，不需新增付费。
+
+---
+
+以下为原样保留的历史工作包：
+
 # 当前结果：条件字段真实验证与首次数据损失修复，收益伴退步
 
 2026-10-09。本轮实际完成8请求/8SETTLED/0UNCERTAIN，零retry/repair/verifier；用户3小时共享授权范围内自主执行，没有逐批追加确认。原4有证据的发送前身份用原grant完成，另2匿名来源×两臂4请求仅1新grant，所有旧真正不确定批继续封存。
