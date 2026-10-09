@@ -1,0 +1,140 @@
+{
+  "role": "FINAL_ENGINEERING_READ_ONLY_NOT_BROWSER_ACCEPTANCE",
+  "checkedAt": "2026-10-09T03:21:07.826Z",
+  "root": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛",
+  "branch": "codex/e2-candidate11-blind-eval",
+  "productCommit": "d54d6b9a4b48c22cc800fa1dad6c83797b6bec94",
+  "upstream": "d54d6b9a4b48c22cc800fa1dad6c83797b6bec94",
+  "liveRemote": "d54d6b9a4b48c22cc800fa1dad6c83797b6bec94",
+  "workingTreeBeforeEvidenceCommit": "?? CODEX_DESKTOP_HANDOVER.md",
+  "assets": {
+    "checked": 74,
+    "changed": [],
+    "handoverUntrackedPreserved": true,
+    "auditOriginals": 15
+  },
+  "ledger": {
+    "rows": 1065,
+    "sha256": "f648795b2037014e78a6fa3b45dae532230c12d9911992ef3eb996b2c06c06a7",
+    "tail": "187318a35bd865c9645c937e29a0eec1d713c108ba0e43cab2a63f97b2adeeb9",
+    "batchRows": 9,
+    "old1048PrefixSha256": "c234a07e74bd1ed324e99e7915928daf11e982235c40d1dd52e3d7c772ebc9a9",
+    "workPackageAppendRows": 17,
+    "grantAppends": 1,
+    "reserveAppends": 8,
+    "settleAppends": 8
+  },
+  "batches": [
+    {
+      "batch": "V7-CURRENT-QUALIFICATION-PUBLIC-DEVELOPMENT-20261008-R1",
+      "denominator": 4,
+      "verifiedSettled": 4,
+      "units": [
+        {
+          "ordinal": 1,
+          "status": "SETTLED"
+        },
+        {
+          "ordinal": 2,
+          "status": "SETTLED"
+        },
+        {
+          "ordinal": 3,
+          "status": "SETTLED"
+        },
+        {
+          "ordinal": 4,
+          "status": "SETTLED"
+        }
+      ],
+      "lockExists": false,
+      "haltExists": false,
+      "readerModelRequests": 0,
+      "readerLedgerWrites": 0
+    },
+    {
+      "batch": "V7-TASK-REQUIREMENTS-DEVELOPMENT-20261009-R1",
+      "denominator": 4,
+      "verifiedSettled": 4,
+      "units": [
+        {
+          "ordinal": 1,
+          "status": "SETTLED"
+        },
+        {
+          "ordinal": 2,
+          "status": "SETTLED"
+        },
+        {
+          "ordinal": 3,
+          "status": "SETTLED"
+        },
+        {
+          "ordinal": 4,
+          "status": "SETTLED"
+        }
+      ],
+      "lockExists": false,
+      "haltExists": false,
+      "readerModelRequests": 0,
+      "readerLedgerWrites": 0
+    }
+  ],
+  "newUncertain": 0,
+  "oldUncertainSitesUnchanged": true,
+  "http": {
+    "checkedAt": "2026-10-09T03:19:46.511Z",
+    "homeStatus": 200,
+    "modelPostStatus": 403,
+    "manifest": {
+      "origin": "http://127.0.0.1:6915",
+      "database": "rco-mainline-01-02-i1-d27-plan-recorded-requirements-paid-1009-v2",
+      "build": "d54d6b9a4b48 / source 4195c8451e1f",
+      "role": "ENGINEERING_REPLAY",
+      "mode": "ORDINARY_APP_FIXED_RECORDING",
+      "databaseOpenedByPage": "NOT_OBSERVED",
+      "databaseInitializesOnPageLoad": true,
+      "batch": "V7-TASK-REQUIREMENTS-DEVELOPMENT-20261009-R1",
+      "batchLabel": "V7/条件字段契约：2作者Development来源、两臂4确定录制；另4官方节选只读回归；不是Holdout或泛化成绩；另5份工程控制单独标记",
+      "knownSettledRecordings": 4,
+      "historicalControls": 4,
+      "anonymousFixtures": 5,
+      "plannedRequests": 4,
+      "batchComplete": true,
+      "files": [
+        {
+          "name": "browser.js",
+          "sha256": "df91abf4d5ded38ebae44386c85bfb11116933477a287c23e763f7101785d6d6"
+        },
+        {
+          "name": "browser.css",
+          "sha256": "4f130c46c6675c582e5bfe7cd1735c56926818cc399f9d628903178e9a476922"
+        }
+      ],
+      "recordingsSha256": "a04359975a2d8bacdf294b9d1262c7ec9cbd029aa306f5684169b6a38255dd66",
+      "modelCallsByBrowser": 0
+    },
+    "recordings": 13,
+    "browser": "NOT_RUN_POLICY_STOP"
+  },
+  "browser": {
+    "status": "NOT_RUN_POLICY_STOP",
+    "alternateMethodUsed": false
+  },
+  "measurement": {
+    "human": "NOT_OBSERVABLE",
+    "browserTimes": null,
+    "fieldEdits": 0
+  },
+  "scope": {
+    "defaultChanged": false,
+    "workspaceV8Changed": false,
+    "newDependencies": false,
+    "human": false,
+    "holdout": false,
+    "merged": false,
+    "deployed": false
+  },
+  "regressionScores": "UNCHANGED",
+  "finalModelPermissionUse": "CLOSED_NO_MORE_CALLS"
+}
