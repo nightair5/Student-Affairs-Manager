@@ -4,7 +4,7 @@ import type { SingleAuthorityFacts } from './sourceContractV5'
 import { hasLiteralScopeSpan } from './authorityLiteralSupport'
 
 export const AUTHORITY_SUPPORT_CONTEXT_VERSION = 'authority-support-context-1.0.0'
-export const AUTHORITY_TYPED_SUPPORT_CONTEXT_VERSION = 'authority-support-context-1.4.0'
+export const AUTHORITY_TYPED_SUPPORT_CONTEXT_VERSION = 'authority-support-context-1.5.0'
 const text = (s: string) => s.replace(/[\s，。；,:：;！!]/gu, '')
 const check = (ok: unknown) => { if (!ok) throw Error('AUTHORITY_SUPPORT_CONTEXT_REFERENCE') }
 
@@ -14,9 +14,17 @@ const check = (ok: unknown) => { if (!ok) throw Error('AUTHORITY_SUPPORT_CONTEXT
 export function projectAuthoritySupportContext(input: unknown, context: WireContext, allowTypedSupport = false) {
   const original = plainJson(input) as SingleAuthorityFacts, projected = structuredClone(original)
   check(Array.isArray(projected.scopeAccounting) && Array.isArray(projected.tasks))
-  const changes: Array<{ scopeId: string; taskId: string; reason: 'LITERAL_SUPPORT' | 'URL_CONTINUATION' | 'TYPED_ATTRIBUTE_SUPPORT' | 'EXPLICIT_STATE_OR_RECEIPT_SUPPORT' }> = []
+  const changes: Array<{ scopeId: string; taskId: string; reason: 'LITERAL_SUPPORT' | 'URL_CONTINUATION' | 'TYPED_ATTRIBUTE_SUPPORT' | 'EXPLICIT_STATE_OR_RECEIPT_SUPPORT' | 'DECLARED_PREREQUISITE_CONTEXT' }> = []
   const omittedScopes: Array<{ scopeId: string; kind: 'information' | 'unresolved'; reason: 'PAIRED_STRUCTURAL_LABEL' | 'UNACCOUNTED_SCOPE' }> = []
+  const prerequisiteSupport=(id:string,scopeId:string)=>{
+    const scope=context.index.scopes.find(s=>s.id===scopeId),verb=scope?.text.match(/^(登记|报名|领取|提交|办理|申请|预约)(?:提交|完成|成功)?后[，。；]?$/u)?.[1]
+    const t=original.tasks.find(t=>t.id===id)
+    return allowTypedSupport&&!!verb&&!!t&&original.prerequisiteStates.some(p=>p.taskId===id&&p.completion==='unknown'&&p.factScopeIds.includes(scopeId)&&t.detail.dependencyTempIds.includes(p.predecessorId)&&original.tasks.some(pre=>pre.id===p.predecessorId&&(pre.action.surface.includes(verb)||pre.action.surface==='完成'&&pre.object.surface.endsWith(verb))))
+  }
   for (const row of projected.scopeAccounting) {
+    // A short "领取后" clause is an already declared unknown predecessor
+    // context, never another submitted action. Do not reclassify full directives.
+    if(allowTypedSupport&&row.kind==='action'&&row.primaryEntityIds.length&&row.primaryEntityIds.every(id=>prerequisiteSupport(id,row.scopeId))){row.kind='information'}
     if (row.kind !== 'information' || !row.primaryEntityIds.length) continue
     const scope = context.index.scopes.find(s => s.id === row.scopeId)
     check(scope && new Set(row.primaryEntityIds).size === row.primaryEntityIds.length)
@@ -25,6 +33,7 @@ export function projectAuthoritySupportContext(input: unknown, context: WireCont
       if (!task && allowTypedSupport) {
         const point = original.timePoints.find(p => p.tempId === id)
         const event = original.events.find(e => e.tempId === id)
+        const material=original.materials.find(m=>m.tempId===id)
         // This changes only the legacy information index. The real entity,
         // owners and their separate source/type checks remain intact downstream.
         const valueScopes = point?.scopeIds.filter(id => context.index.scopes.find(s => s.id === id)?.text.includes(point.rawText)) ?? []
@@ -47,7 +56,20 @@ export function projectAuthoritySupportContext(input: unknown, context: WireCont
         // that duplicate index here rejected an otherwise supported attribute.
         const eventSupport = event && event.attributes.some(a => a.scopeIds.includes(row.scopeId)
           && hasLiteralScopeSpan(a.text, a.scopeIds, context))
-        check(timeSupport || eventSupport)
+        // A material cites its name, format and naming clauses together. Each
+        // value must use its contributing citation, not require unrelated
+        // attribute clauses to overlap the same occurrence of the name.
+        const materialLiteral=(value:string)=>!!material&&material.scopeIds.some(id=>hasLiteralScopeSpan(value,[id],context))
+        const previousMaterialScope=context.index.scopes.find(s=>s.order===scope!.order-1)
+        const materialAttributeOwner=material&&(scope!.text.includes(material.name)
+          ||/^(?:文件名|命名|格式|数量)/u.test(scope!.text)&&!!previousMaterialScope&&material.scopeIds.includes(previousMaterialScope.id)&&previousMaterialScope.text.includes(material.name))
+          &&/(?:须为|格式|文件名|命名|数量)/u.test(scope!.text)
+          &&!/(?:另|还|另外)(?:需|须|要).{0,8}(?:提交|领取|缴费|准备|办理)/u.test(scope!.text)
+        const materialSupport=material&&material.scopeIds.includes(row.scopeId)&&material.relatedTaskTempIds.length>0&&material.relatedTaskTempIds.every(id=>original.tasks.some(t=>t.id===id))
+          &&materialLiteral(material.name)&&materialAttributeOwner
+          &&!original.materials.some(m=>m.tempId!==material.tempId&&scope!.text.includes(m.name)&&!scope!.text.includes(material.name))
+          &&[material.name,...material.formatRequirements,...material.namingRequirements,material.submissionChannel??''].filter(Boolean).some(value=>hasLiteralScopeSpan(value,[row.scopeId],context))
+        check(timeSupport || eventSupport || materialSupport)
         changes.push({ scopeId: row.scopeId, taskId: id, reason: 'TYPED_ATTRIBUTE_SUPPORT' })
         continue
       }
@@ -56,13 +78,15 @@ export function projectAuthoritySupportContext(input: unknown, context: WireCont
       // or explicitly cited unknown personal-state declaration. Neither creates
       // an obligation, changes qualification, nor classifies arbitrary prose.
       const receiptAction=scope!.text.match(/^(报名|登记|提交|办理|申请|预约)(?:成功|办结|完成)以.+为准[。；]?$/u)?.[1]
+        ??scope!.text.match(/^收到[^，。；]{1,60}才算(报名|登记|提交|办理|申请|预约)完成[。；]?$/u)?.[1]
       const receiptSupport = allowTypedSupport && receiptAction
         && (task!.action.surface.includes(receiptAction)||task!.object.surface.includes(receiptAction))
         && task!.detail.completionCriteria.some(c=>hasLiteralScopeSpan(c,[row.scopeId],context)&&text(c).includes(text(scope!.text)))
       const unknownStateSupport = allowTypedSupport && task!.condition.value==='unknown'
         && task!.condition.conditionScopeIds.includes(row.scopeId)&&task!.condition.factScopeIds.includes(row.scopeId)
         && /^是否.{1,30}(?:尚未|还未|未)(?:公布|通知|确定)[。；]?$/u.test(scope!.text)
-      check(task!.propositionScopeIds.includes(row.scopeId)||receiptSupport||unknownStateSupport)
+      const declaredPrerequisite=prerequisiteSupport(id,row.scopeId)
+      check(task!.propositionScopeIds.includes(row.scopeId)||receiptSupport||unknownStateSupport||declaredPrerequisite)
       const action = context.index.scopes.find(s => s.id === task!.action.scopeId)
       const object = context.index.scopes.find(s => s.id === task!.object.scopeId)
       check(action?.text.includes(task!.action.surface) && object?.text.includes(task!.object.surface)
@@ -70,11 +94,11 @@ export function projectAuthoritySupportContext(input: unknown, context: WireCont
           && task!.propositionScopeIds.includes(r.scopeId)))
       // A primary directive cannot be reclassified as information.
       check(row.scopeId !== task!.action.scopeId && row.scopeId !== task!.object.scopeId)
-      if(receiptSupport||unknownStateSupport){
+      if(receiptSupport||unknownStateSupport||declaredPrerequisite){
         const target=projected.tasks.find(t=>t.id===id)!
         target.propositionScopeIds=[...new Set([...target.propositionScopeIds,row.scopeId])]
         if(!target.detail.description.includes(scope!.text))target.detail.description=[target.detail.description,scope!.text].filter(Boolean).join('\n')
-        changes.push({scopeId:row.scopeId,taskId:id,reason:'EXPLICIT_STATE_OR_RECEIPT_SUPPORT'})
+        changes.push({scopeId:row.scopeId,taskId:id,reason:declaredPrerequisite?'DECLARED_PREREQUISITE_CONTEXT':'EXPLICIT_STATE_OR_RECEIPT_SUPPORT'})
         continue
       }
       const literal = text(scope!.text), previous = context.index.scopes.find(s => s.order === scope!.order - 1)

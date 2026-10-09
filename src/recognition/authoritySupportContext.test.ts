@@ -28,6 +28,43 @@ async function fixture(object = '返校登记') {
 }
 
 describe('existing authoritative task support uses the ordinary product path', () => {
+  it.each(['实践报告','实验记录'])('material %s attributes use their own contributing citations without erasing actions',async name=>{
+    const x=await fixture(name),sourceText=`请提交${name}。${name}须为PDF，文件名为学号-姓名。`
+    const index=await indexImmutableScopesV11('material-support','v1',sourceText),[action,format,naming]=index.scopes
+    const f=structuredClone(x.facts),t=f.tasks[0]
+    t.action={surface:'提交',scopeId:action.id};t.object={surface:name,scopeId:action.id};t.propositionScopeIds=[action.id]
+    t.detail.title=`提交${name}`;t.detail.description=action.text;t.detail.completionCriteria=[]
+    t.coverage.time={status:'not_stated',absenceScopeIds:[]};t.coverage.material={status:'present',absenceScopeIds:[]};f.timePoints=[]
+    f.materials=[{tempId:'M1',name,required:true,formatRequirements:['PDF'],namingRequirements:['学号-姓名'],quantity:null,submissionChannel:null,relatedTaskTempIds:[t.id],scopeIds:[action.id,format.id,naming.id],confidence:1}]
+    f.scopeAccounting=index.scopes.map(s=>({scopeId:s.id,kind:s.id===action.id?'action' as const:'information' as const,primaryEntityIds:[s.id===action.id?t.id:'M1']}))
+    const context={...x.context,index},before=structuredClone(f),d=decodeAuthorityProductRecording(x.envelope(f),context,'EngineeringFixture',true,true)
+    expect(f).toEqual(before);expect(d.result.materials[0].formatRequirements).toContain('PDF');expect(d.result.materials[0].namingRequirements).toContain('学号-姓名')
+    expect(d.sidecar.authoritySupportContextAudit.inferredFacts).toBe(0)
+    const fake=structuredClone(f);fake.materials[0].relatedTaskTempIds=['other-task']
+    expect(()=>projectAuthoritySupportContext(fake,context,true)).toThrow('REFERENCE')
+    const wrong=structuredClone(f);wrong.materials[0].name='缴费收据'
+    expect(()=>projectAuthoritySupportContext(wrong,context,true)).toThrow('REFERENCE')
+    const extraText=sourceText+'另须缴费。',extraIndex=await indexImmutableScopesV11('material-support','v1',extraText),extra=extraIndex.scopes.at(-1)!,unsupported=structuredClone(f)
+    unsupported.materials[0].scopeIds.push(extra.id);unsupported.scopeAccounting.push({scopeId:extra.id,kind:'information',primaryEntityIds:['M1']})
+    expect(()=>projectAuthoritySupportContext(unsupported,{...context,index:extraIndex},true)).toThrow('REFERENCE')
+    const foreignText=sourceText+'另一份证明须为PDF，',foreignIndex=await indexImmutableScopesV11('material-support','v1',foreignText),foreignScope=foreignIndex.scopes.at(-1)!,foreign=structuredClone(f)
+    foreign.materials[0].scopeIds.push(foreignScope.id);foreign.scopeAccounting.push({scopeId:foreignScope.id,kind:'information',primaryEntityIds:['M1']})
+    expect(()=>projectAuthoritySupportContext(foreign,{...context,index:foreignIndex},true)).toThrow('REFERENCE')
+  })
+  it('a declared unknown predecessor supports its short context, never proof of completion or a new obligation',async()=>{
+    const x=await fixture(),sourceText='请完成登记。登记提交后，请领取借用卡。',index=await indexImmutableScopesV11('predecessor-context','v1',sourceText),[first,after,second]=index.scopes
+    const f=structuredClone(x.facts),pre=f.tasks[0],next=structuredClone(pre);next.id='T2'
+    pre.action={surface:'完成',scopeId:first.id};pre.object={surface:'登记',scopeId:first.id};pre.propositionScopeIds=[first.id];pre.detail.description=first.text
+    next.action={surface:'领取',scopeId:second.id};next.object={surface:'借用卡',scopeId:second.id};next.propositionScopeIds=[second.id];next.detail.description=second.text;next.detail.dependencyTempIds=[pre.id]
+    f.tasks=[pre,next];f.timePoints=[];f.prerequisiteStates=[{taskId:next.id,predecessorId:pre.id,completion:'unknown',factScopeIds:[after.id]}]
+    f.scopeAccounting=[{scopeId:first.id,kind:'action',primaryEntityIds:[pre.id]},{scopeId:after.id,kind:'information',primaryEntityIds:[next.id]},{scopeId:second.id,kind:'action',primaryEntityIds:[next.id]}]
+    const context={...x.context,index},p=projectAuthoritySupportContext(f,context,true)
+    expect(p.projected.prerequisiteStates[0].completion).toBe('unknown');expect(p.projected.tasks[1].propositionScopeIds).toContain(after.id)
+    const trueState=structuredClone(f);trueState.prerequisiteStates[0].completion='true'
+    expect(()=>projectAuthoritySupportContext(trueState,context,true)).toThrow('REFERENCE')
+    const missing=structuredClone(f);missing.tasks[1].detail.dependencyTempIds=[]
+    expect(()=>projectAuthoritySupportContext(missing,context,true)).toThrow('REFERENCE')
+  })
   it('derives only explicitly owned literal receipt and unknown-state inverses, without inventing eligibility',async()=>{
     const x=await fixture('仪器预约'),sourceText='请完成仪器预约。预约成功以收到确认邮件为准。是否录取尚未通知。'
     const index=await indexImmutableScopesV11('receipt-state','v1',sourceText),[action,receipt,state]=index.scopes

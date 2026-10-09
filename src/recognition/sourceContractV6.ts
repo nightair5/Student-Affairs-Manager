@@ -7,7 +7,7 @@ import { hasLiteralScopeSpan } from './authorityLiteralSupport'
 export const OBLIGATION_AUTHORITY_VERSION = 'obligation-authority-source-contract-6.0.0' as const
 export const OBLIGATION_CANDIDATE_VERSION = 'obligation-authority-generation-1.0.0'
 export const OBLIGATION_PROMPT_VERSION = 'recognition-obligation-authority-1.0.0'
-export const OBLIGATION_LOCAL_RELATION_VERSION = 'obligation-local-relation-1.2.0'
+export const OBLIGATION_LOCAL_RELATION_VERSION = 'obligation-local-relation-1.3.0'
 export type ObligationAuthorityFacts = Omit<SingleAuthorityFacts, 'schemaVersion' | 'tasks' | 'events'> & {
   schemaVersion: typeof OBLIGATION_AUTHORITY_VERSION
   tasks: Array<SingleAuthorityFacts['tasks'][number] & { eventLinks: Array<{ eventId: string; scopeIds: string[] }> }>
@@ -69,11 +69,12 @@ export function projectObligationAuthority(input: unknown, context: WireContext,
         // The link itself is the authority. Its missing duplicate event index
         // may be derived only when every actual citation names the exact task
         // object/event and action; unrelated scopes/owners are never repaired.
+        const actionCitation=(id:string)=>t.propositionScopeIds.includes(id)&&context.index.scopes.some(s=>s.id===id&&s.text.includes(t.action.surface)&&s.text.includes(e!.title)&&!/(?:不要|不得|取消|无需|不必|勿|禁止).{0,8}(?:报名|登记|准备|参加)/u.test(s.text))
         const explicitEndpoint = t.object.surface.trim()===e!.title.trim()
+          && original.events.filter(v=>v.title.trim()===e!.title.trim()).length===1
           && e!.scopeIds.some(id=>hasLiteralScopeSpan(e!.title,[id],context))
-          && link.scopeIds.every(id=>t.propositionScopeIds.includes(id)&&context.index.scopes.some(s=>s.id===id
-            && s.text.includes(t.action.surface)&&s.text.includes(e!.title)
-            && !/(?:不要|不得|取消|无需|不必|勿|禁止).{0,8}(?:报名|登记|准备|参加)/u.test(s.text)))
+          && link.scopeIds.some(actionCitation)
+          && link.scopeIds.every(id=>actionCitation(id)||id===t.object.scopeId&&e!.scopeIds.includes(id)&&hasLiteralScopeSpan(e!.title,[id],context))
         if(explicitEndpoint){
           const relation={taskId:t.id,eventId:link.eventId,scopeIds:[...link.scopeIds]}
           derivedInverseEvidence.push(relation);relations.push(relation);continue

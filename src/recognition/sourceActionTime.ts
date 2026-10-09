@@ -1,7 +1,7 @@
 import type { RecognitionResult } from './types'
 import { taskActionText } from '../lib/taskActionText'
 
-export const SOURCE_ACTION_TIME_VERSION = 'source-action-time-role-1.0.0'
+export const SOURCE_ACTION_TIME_VERSION = 'source-action-time-role-1.0.1'
 export interface SourceActionTimeDeclaration { id: string; owners: Array<{ kind: 'task'; entityId: string }> }
 export interface SourceActionTimeDecision { id: string; ownerIds: string[]; beforeType: string; role: 'task_action_time'; reason: 'EXPLICIT_GENERATION_ROLE' | 'CITED_ACTION_AT_TIME'; quotes: string[] }
 const escaped = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&')
@@ -13,7 +13,7 @@ export function groundSourceActionTimes(input: RecognitionResult, sourceText: st
   const tasks = [...result.standaloneTasks, ...result.milestones.flatMap(m => [...m.tasks, ...m.workPackages.flatMap(w => w.tasks)])]
   for (const p of result.timePoints) {
     const declaration = declarations.find(d => d.id === p.tempId)
-    if (!declaration && !['task_deadline','submission_deadline','registration_deadline'].includes(p.type)) continue
+    if (!declaration && !['task_deadline','submission_deadline','registration_deadline','event_start'].includes(p.type)) continue
     const owners = tasks.filter(t => p.relatedTaskTempIds.includes(t.tempId) && t.timePointTempIds.includes(p.tempId))
     const quotes = result.evidence.filter(e => p.evidenceIds.includes(e.id) && e.quote && sourceText.includes(e.quote)).map(e => ({id:e.id,text:e.quote!}))
     const valid = owners.length > 0 && !p.relatedMaterialTempIds.length && !result.events.some(e => [e.startTimePointTempId,e.endTimePointTempId].includes(p.tempId))

@@ -1,0 +1,283 @@
+{
+  "batch": "TASK-REQUIREMENTS-FACT-ROLE-DEVELOPMENT-20261009-R1",
+  "denominatorPerArm": 4,
+  "method": "Source and frozen minimum facts compared with raw factual values and existing real citations; title/free text source reviewed, independent adjudication unavailable.",
+  "rows": [
+    {
+      "ordinal": 1,
+      "sourceId": "FR-01",
+      "candidate": "TaskRequirements",
+      "requestSha256": "d4bf1eb9f9275c0d44f3ce29eaa0c7d5e4e8d87da4db218bac8dd704f2e763d3",
+      "responseSha256": "956ee1f6abb2d6d61252a86cfbd07bb4ae17c4a20cea0dd95c175cb8b58a8cbb",
+      "minimumFactRaw": "INCORRECT",
+      "minimumFactFrozenFirst": "INCORRECT",
+      "minimumFactPostFirst": "PROVISIONALLY_CORRECT",
+      "rawError": "SOURCE_ACTION_APPOINTMENT_MISCLASSIFIED_AS_DEADLINE",
+      "frozenProgramFailure": "AUTHORITY_SUPPORT_CONTEXT_REFERENCE",
+      "categories": {
+        "taskNoTask": "CORRECT",
+        "eventInformation": "CORRECT",
+        "time": "WRONG_ROLE",
+        "material": "CORRECT",
+        "conditionsPrerequisites": "CORRECT_UNKNOWN_RETAINED",
+        "relationships": "CORRECT_FACT_ENDPOINTS_DUPLICATE_INDEX_IS_PROGRAM_ISSUE"
+      },
+      "titleAndFreeText": "SOURCE_CHECKED_BY_THIS_MODEL_ASSISTED_AUTHOR_NOT_INDEPENDENT",
+      "teachingExampleLeakage": "NOT_ADJUDICATED",
+      "fullIndependentTruth": "NOT_ADJUDICATED",
+      "newErrors": [],
+      "notes": [],
+      "referenceVersion": "source-fact-role-adjudication-1.0.0",
+      "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+    },
+    {
+      "ordinal": 2,
+      "sourceId": "FR-01",
+      "candidate": "FactRoleAuthority",
+      "requestSha256": "69e78e55204fdf1d579f9b5f5a55bef9ee866952dde5a819031a4bdeb0c2a468",
+      "responseSha256": "46d08263da5980e1c407425cf6b82026d9ab4dfea31d3f8bc7b90ae7545c8865",
+      "minimumFactRaw": "PROVISIONALLY_CORRECT",
+      "minimumFactFrozenFirst": "INCORRECT",
+      "minimumFactPostFirst": "PROVISIONALLY_CORRECT",
+      "rawError": null,
+      "frozenProgramFailure": "AUTHORITY_SUPPORT_CONTEXT_REFERENCE",
+      "categories": {
+        "taskNoTask": "CORRECT",
+        "eventInformation": "CORRECT",
+        "time": "CORRECT_INCLUDING_EXPLICIT_UNKNOWN",
+        "material": "CORRECT",
+        "conditionsPrerequisites": "CORRECT_UNKNOWN_RETAINED",
+        "relationships": "CORRECT_FACT_ENDPOINTS_DUPLICATE_INDEX_IS_PROGRAM_ISSUE"
+      },
+      "titleAndFreeText": "SOURCE_CHECKED_BY_THIS_MODEL_ASSISTED_AUTHOR_NOT_INDEPENDENT",
+      "teachingExampleLeakage": "NOT_ADJUDICATED",
+      "fullIndependentTruth": "NOT_ADJUDICATED",
+      "newErrors": [],
+      "notes": [],
+      "referenceVersion": "source-fact-role-adjudication-1.0.0",
+      "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+    },
+    {
+      "ordinal": 3,
+      "sourceId": "FR-02",
+      "candidate": "FactRoleAuthority",
+      "requestSha256": "fa6d8c061080938a7232f3cb52e359f70fc20844a8065242f12e7f88568bbdaf",
+      "responseSha256": "914aeadc334d9adf6b279cf9035275341669a47a4391b9aea06f8270a3940804",
+      "minimumFactRaw": "PROVISIONALLY_CORRECT",
+      "minimumFactFrozenFirst": "INCORRECT",
+      "minimumFactPostFirst": "PROVISIONALLY_CORRECT",
+      "rawError": null,
+      "frozenProgramFailure": "AUTHORITY_SUPPORT_CONTEXT_REFERENCE",
+      "categories": {
+        "taskNoTask": "CORRECT",
+        "eventInformation": "CORRECT",
+        "time": "CORRECT_INCLUDING_EXPLICIT_UNKNOWN",
+        "material": "CORRECT",
+        "conditionsPrerequisites": "CORRECT_UNKNOWN_RETAINED",
+        "relationships": "CORRECT_FACT_ENDPOINTS_DUPLICATE_INDEX_IS_PROGRAM_ISSUE"
+      },
+      "titleAndFreeText": "SOURCE_CHECKED_BY_THIS_MODEL_ASSISTED_AUTHOR_NOT_INDEPENDENT",
+      "teachingExampleLeakage": "NOT_ADJUDICATED",
+      "fullIndependentTruth": "NOT_ADJUDICATED",
+      "newErrors": [],
+      "notes": [],
+      "referenceVersion": "source-fact-role-adjudication-1.0.0",
+      "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+    },
+    {
+      "ordinal": 4,
+      "sourceId": "FR-02",
+      "candidate": "TaskRequirements",
+      "requestSha256": "ab553a22ca595448833f91494f94f9ca1dc06f22c22372abc65dadad838215c5",
+      "responseSha256": "cf743d8320885ba6ceb62698c48dbff65c873f295bd1d89129ca49cfa12c377a",
+      "minimumFactRaw": "INCORRECT",
+      "minimumFactFrozenFirst": "INCORRECT",
+      "minimumFactPostFirst": "PROVISIONALLY_CORRECT",
+      "rawError": "SOURCE_ACTION_APPOINTMENT_MISCLASSIFIED_AS_DEADLINE",
+      "frozenProgramFailure": "AUTHORITY_SUPPORT_CONTEXT_REFERENCE",
+      "categories": {
+        "taskNoTask": "CORRECT",
+        "eventInformation": "CORRECT",
+        "time": "WRONG_ROLE",
+        "material": "CORRECT",
+        "conditionsPrerequisites": "CORRECT_UNKNOWN_RETAINED",
+        "relationships": "CORRECT_FACT_ENDPOINTS_DUPLICATE_INDEX_IS_PROGRAM_ISSUE"
+      },
+      "titleAndFreeText": "SOURCE_CHECKED_BY_THIS_MODEL_ASSISTED_AUTHOR_NOT_INDEPENDENT",
+      "teachingExampleLeakage": "NOT_ADJUDICATED",
+      "fullIndependentTruth": "NOT_ADJUDICATED",
+      "newErrors": [],
+      "notes": [],
+      "referenceVersion": "source-fact-role-adjudication-1.0.0",
+      "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+    },
+    {
+      "ordinal": 5,
+      "sourceId": "FR-03",
+      "candidate": "TaskRequirements",
+      "requestSha256": "619872d50088b5315ef2600d7b53af7ef0183c6c165462a8c89d2e51ad83d9c3",
+      "responseSha256": "6e8e0dd18249031e76738f385beef9a91f978a341dec8e42773ccb130817f999",
+      "minimumFactRaw": "PROVISIONALLY_CORRECT",
+      "minimumFactFrozenFirst": "PROVISIONALLY_CORRECT",
+      "minimumFactPostFirst": "PROVISIONALLY_CORRECT",
+      "rawError": null,
+      "frozenProgramFailure": null,
+      "categories": {
+        "taskNoTask": "CORRECT",
+        "eventInformation": "CORRECT",
+        "time": "CORRECT_INCLUDING_EXPLICIT_UNKNOWN",
+        "material": "CORRECT",
+        "conditionsPrerequisites": "CORRECT_UNKNOWN_RETAINED",
+        "relationships": "CORRECT_FACT_ENDPOINTS_DUPLICATE_INDEX_IS_PROGRAM_ISSUE"
+      },
+      "titleAndFreeText": "SOURCE_CHECKED_BY_THIS_MODEL_ASSISTED_AUTHOR_NOT_INDEPENDENT",
+      "teachingExampleLeakage": "NOT_ADJUDICATED",
+      "fullIndependentTruth": "NOT_ADJUDICATED",
+      "newErrors": [],
+      "notes": [
+        "The unknown admission is a correct source state, not a missing fact. Preparation remains pending; registration can be selected.",
+        "No extra preparation-event association was added to the frozen minimum reference after seeing output."
+      ],
+      "referenceVersion": "source-fact-role-adjudication-1.0.0",
+      "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+    },
+    {
+      "ordinal": 6,
+      "sourceId": "FR-03",
+      "candidate": "FactRoleAuthority",
+      "requestSha256": "3fd3d2830893fb1904f1c47c37ea95ce7187497541f957900386b126d3d748b2",
+      "responseSha256": "5ced0a13e45ca450ab504118eb0706b9a840366c1279e4550db7f85d1c1a1772",
+      "minimumFactRaw": "PROVISIONALLY_CORRECT",
+      "minimumFactFrozenFirst": "INCORRECT",
+      "minimumFactPostFirst": "PROVISIONALLY_CORRECT",
+      "rawError": null,
+      "frozenProgramFailure": "VALID_SINGLE_AUTHORITY_LINK_CITATIONS_QUARANTINED",
+      "categories": {
+        "taskNoTask": "CORRECT",
+        "eventInformation": "CORRECT",
+        "time": "CORRECT_INCLUDING_EXPLICIT_UNKNOWN",
+        "material": "CORRECT",
+        "conditionsPrerequisites": "CORRECT_UNKNOWN_RETAINED",
+        "relationships": "CORRECT_FACT_ENDPOINTS_DUPLICATE_INDEX_IS_PROGRAM_ISSUE"
+      },
+      "titleAndFreeText": "SOURCE_CHECKED_BY_THIS_MODEL_ASSISTED_AUTHOR_NOT_INDEPENDENT",
+      "teachingExampleLeakage": "NOT_ADJUDICATED",
+      "fullIndependentTruth": "NOT_ADJUDICATED",
+      "newErrors": [],
+      "notes": [
+        "The unknown admission is a correct source state, not a missing fact. Preparation remains pending; registration can be selected.",
+        "No extra preparation-event association was added to the frozen minimum reference after seeing output."
+      ],
+      "referenceVersion": "source-fact-role-adjudication-1.0.0",
+      "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+    },
+    {
+      "ordinal": 7,
+      "sourceId": "FR-04",
+      "candidate": "FactRoleAuthority",
+      "requestSha256": "904fced15f7a34334380a390219dfc0cdf5808590eaff32d8a3a575b37e8478e",
+      "responseSha256": "0f48c684edec67519da2ea037546967c576a1374de008a3304f1fcb15716e6b1",
+      "minimumFactRaw": "PROVISIONALLY_CORRECT",
+      "minimumFactFrozenFirst": "INCORRECT",
+      "minimumFactPostFirst": "PROVISIONALLY_CORRECT",
+      "rawError": null,
+      "frozenProgramFailure": "AUTHORITY_SUPPORT_CONTEXT_REFERENCE",
+      "categories": {
+        "taskNoTask": "CORRECT",
+        "eventInformation": "CORRECT",
+        "time": "CORRECT_INCLUDING_EXPLICIT_UNKNOWN",
+        "material": "CORRECT",
+        "conditionsPrerequisites": "CORRECT_UNKNOWN_RETAINED",
+        "relationships": "CORRECT_FACT_ENDPOINTS_DUPLICATE_INDEX_IS_PROGRAM_ISSUE"
+      },
+      "titleAndFreeText": "SOURCE_CHECKED_BY_THIS_MODEL_ASSISTED_AUTHOR_NOT_INDEPENDENT",
+      "teachingExampleLeakage": "NOT_ADJUDICATED",
+      "fullIndependentTruth": "NOT_ADJUDICATED",
+      "newErrors": [],
+      "notes": [],
+      "referenceVersion": "source-fact-role-adjudication-1.0.0",
+      "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+    },
+    {
+      "ordinal": 8,
+      "sourceId": "FR-04",
+      "candidate": "TaskRequirements",
+      "requestSha256": "00806f71dc8f25ff0b4e23a103dbe9e46b29e239ebf648390816546681ae230e",
+      "responseSha256": "0e07401fbf288858ee4a058af01b699f0d93ee5e9c704b96c3e395f3ee9a7bda",
+      "minimumFactRaw": "PROVISIONALLY_CORRECT",
+      "minimumFactFrozenFirst": "INCORRECT",
+      "minimumFactPostFirst": "PROVISIONALLY_CORRECT",
+      "rawError": null,
+      "frozenProgramFailure": "AUTHORITY_SUPPORT_CONTEXT_REFERENCE",
+      "categories": {
+        "taskNoTask": "CORRECT",
+        "eventInformation": "CORRECT",
+        "time": "CORRECT_INCLUDING_EXPLICIT_UNKNOWN",
+        "material": "CORRECT",
+        "conditionsPrerequisites": "CORRECT_UNKNOWN_RETAINED",
+        "relationships": "CORRECT_FACT_ENDPOINTS_DUPLICATE_INDEX_IS_PROGRAM_ISSUE"
+      },
+      "titleAndFreeText": "SOURCE_CHECKED_BY_THIS_MODEL_ASSISTED_AUTHOR_NOT_INDEPENDENT",
+      "teachingExampleLeakage": "NOT_ADJUDICATED",
+      "fullIndependentTruth": "NOT_ADJUDICATED",
+      "newErrors": [],
+      "notes": [],
+      "referenceVersion": "source-fact-role-adjudication-1.0.0",
+      "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+    }
+  ],
+  "summary": {
+    "raw": {
+      "TaskRequirements": {
+        "correct": 2,
+        "incorrect": 2,
+        "unknown": 0
+      },
+      "FactRoleAuthority": {
+        "correct": 4,
+        "incorrect": 0,
+        "unknown": 0
+      }
+    },
+    "frozenFirst": {
+      "TaskRequirements": {
+        "correct": 1,
+        "incorrect": 3,
+        "unknown": 0
+      },
+      "FactRoleAuthority": {
+        "correct": 0,
+        "incorrect": 4,
+        "unknown": 0
+      }
+    },
+    "postProgramSameRaw": {
+      "TaskRequirements": {
+        "correct": 4,
+        "incorrect": 0,
+        "unknown": 0
+      },
+      "FactRoleAuthority": {
+        "correct": 4,
+        "incorrect": 0,
+        "unknown": 0
+      }
+    },
+    "frozenConclusion": "MIXED_PROGRESS",
+    "rawTargetAppointmentErrors": {
+      "TaskRequirements": 2,
+      "FactRoleAuthority": 0
+    },
+    "presenceContradictionsObserved": {
+      "TaskRequirements": 0,
+      "FactRoleAuthority": 0
+    },
+    "postProgramConclusion": "COMMON_PROGRAM_COMPATIBILITY_GAIN_NOT_NEW_MODEL_SCORE"
+  },
+  "limits": [
+    "Four author anonymous Development sources, eight responses but four independent source texts.",
+    "Raw factual gain does not establish public first-display gain: frozen display regresses.",
+    "Post-program replay is post hoc same-raw engineering evidence, never eight new model outputs or revised frozen grades.",
+    "No independent Holdout, real-user correctness or generalization claims."
+  ]
+}

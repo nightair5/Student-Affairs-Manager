@@ -13,6 +13,19 @@ import { validateRecognitionResult } from './schema'
 import { indexImmutableScopesV11 } from './scopeIndexV11'
 
 describe('obligations first, one task-event authority, no missing-fact repair', () => {
+  it('one explicit registration link can cite its action and its separately named activity, never a foreign or ambiguous object',async()=>{
+    const x=await createObligationFixture('registration'),f=structuredClone(x.facts),t=f.tasks[0],e=f.events[0]
+    const action=t.action.scopeId,named=e.scopeIds.find(id=>id!==action&&x.context.index.scopes.find(s=>s.id===id)?.text.includes(e.title))!
+    t.object.scopeId=named;t.propositionScopeIds=t.propositionScopeIds.filter(id=>id!==named)
+    t.eventLinks[0].scopeIds=[named,action]
+    const p=projectObligationAuthority(f,x.context,true)
+    expect(p.projected.events[0].relatedTaskTempIds).toEqual([t.id]);expect(p.audit.localRelations.quarantinedRelations).toHaveLength(0)
+    expect(p.audit.inferredFacts).toBe(0)
+    const wrong=structuredClone(f);wrong.tasks[0].object.surface='另一活动'
+    expect(projectObligationAuthority(wrong,x.context,true).audit.localRelations.quarantinedRelations).toHaveLength(1)
+    const ambiguous=structuredClone(f);ambiguous.events.push({...ambiguous.events[0],tempId:'second-same-title'})
+    expect(projectObligationAuthority(ambiguous,x.context,true).audit.localRelations.quarantinedRelations).toHaveLength(1)
+  })
   it('derives a missing event inverse only from an explicit link naming the same supported action and object',async()=>{
     const x=await createObligationFixture('registration'),facts=structuredClone(x.facts),link=facts.tasks[0].eventLinks[0]
     facts.events[0].scopeIds=facts.events[0].scopeIds.filter(id=>!link.scopeIds.includes(id))
