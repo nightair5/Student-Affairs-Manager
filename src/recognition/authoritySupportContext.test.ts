@@ -28,6 +28,21 @@ async function fixture(object = '返校登记') {
 }
 
 describe('existing authoritative task support uses the ordinary product path', () => {
+  it('nested event support owns its actual literal attribute before inverse indexing, with foreign owners still rejected',async()=>{
+    const x=await createAuthorityFixture('single'), f=structuredClone(x.facts), e=f.events[0]
+    const ids=e.attributes.flatMap(a=>a.scopeIds)
+    e.scopeIds=e.scopeIds.filter(id=>!ids.includes(id))
+    for(const id of ids){const row=f.scopeAccounting.find(r=>r.scopeId===id)!;row.kind='information';row.primaryEntityIds=[e.tempId]}
+    const envelope=JSON.parse(x.rawHttpText);envelope.output[0].content[0].text=JSON.stringify(f)
+    const raw=JSON.stringify(envelope),d=decodeAuthorityProductRecording(raw,x.context,'EngineeringFixture',true,true)
+    expect(d.result.events[0].description).toContain('参与证明')
+    expect(d.sidecar.originalResponse).toBe(raw)
+    expect(d.sidecar.authoritySupportContextAudit.changes.length).toBeGreaterThan(0)
+    const foreign=structuredClone(f);foreign.scopeAccounting.find(r=>ids.includes(r.scopeId))!.primaryEntityIds=['other-event']
+    expect(()=>projectAuthoritySupportContext(foreign,x.context,true)).toThrow('CONTEXT_REFERENCE')
+    const invalid=structuredClone(f);invalid.events[0].attributes[0].text='另须缴费'
+    expect(()=>projectAuthoritySupportContext(invalid,x.context,true)).toThrow('CONTEXT_REFERENCE')
+  })
   it.each(['返校登记', '设备借用登记'])('URL and completion support retain the existing %s without altering raw facts', async object => {
     const f = await fixture(object), before = structuredClone(f.facts), raw = f.envelope()
     expect(() => decodeSingleAuthorityRecording(raw, f.context)).toThrow('INFORMATION_ENTITY')

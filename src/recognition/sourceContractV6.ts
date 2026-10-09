@@ -6,7 +6,7 @@ import { decodeAuthorityProductRecording } from './singleAuthorityProduct'
 export const OBLIGATION_AUTHORITY_VERSION = 'obligation-authority-source-contract-6.0.0' as const
 export const OBLIGATION_CANDIDATE_VERSION = 'obligation-authority-generation-1.0.0'
 export const OBLIGATION_PROMPT_VERSION = 'recognition-obligation-authority-1.0.0'
-export const OBLIGATION_LOCAL_RELATION_VERSION = 'obligation-local-relation-1.0.0'
+export const OBLIGATION_LOCAL_RELATION_VERSION = 'obligation-local-relation-1.1.0'
 export type ObligationAuthorityFacts = Omit<SingleAuthorityFacts, 'schemaVersion' | 'tasks' | 'events'> & {
   schemaVersion: typeof OBLIGATION_AUTHORITY_VERSION
   tasks: Array<SingleAuthorityFacts['tasks'][number] & { eventLinks: Array<{ eventId: string; scopeIds: string[] }> }>
@@ -60,9 +60,9 @@ export function projectObligationAuthority(input: unknown, context: WireContext,
     for (const link of t.eventLinks) {
       const e = original.events.find(e => e.tempId === link.eventId)
       check(e && !seen.has(link.eventId), 'EVENT_LINK_REFERENCE')
-      check(link.scopeIds.every(id => context.index.scopes.some(s => s.id === id) && t.propositionScopeIds.includes(id)), 'EVENT_LINK_EVIDENCE')
+      check(link.scopeIds.every(id => context.index.scopes.some(s => s.id === id)), 'EVENT_LINK_EVIDENCE')
       seen.add(link.eventId)
-      if (!link.scopeIds.every(id => e!.scopeIds.includes(id))) {
+      if (!link.scopeIds.every(id => t.propositionScopeIds.includes(id) && e!.scopeIds.includes(id))) {
         check(localizeEvidenceMismatch, 'EVENT_LINK_EVIDENCE')
         quarantinedRelations.push({ taskId: t.id, eventId: link.eventId, scopeIds: [...link.scopeIds] })
         continue

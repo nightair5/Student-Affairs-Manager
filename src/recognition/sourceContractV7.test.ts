@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { createRoleFixture, roleEnvelope, toRoleFixture } from '../experiments/candidate19Recorded/roleFixtures'
 import { createObligationFixture } from '../experiments/candidate19Recorded/obligationFixtures'
-import { buildRoleAuthorityRequest, ROLE_AUTHORITY_SCHEMA, decodeRoleProductRecording } from './sourceContractV7'
+import { buildRoleAuthorityRequest, ROLE_AUTHORITY_SCHEMA, decodeRoleProductRecording, projectRoleAuthority } from './sourceContractV7'
 import { buildObligationAuthorityRequest } from './sourceContractV6'
 import { validateRecognitionResult } from './schema'
 import { CanonicalWorkspaceRepository, MemoryWorkspaceRecordStore } from '../domain/v2/repository'
@@ -32,6 +32,29 @@ describe('single authority for participation and literal execution channel', () 
     expect(() => decodeRoleProductRecording(roleEnvelope(bad), x.context)).toThrow('SHAPE')
     f.tasks[0].executionChannel = null; f.tasks[0].participation.scopeIds = []
     expect(() => decodeRoleProductRecording(roleEnvelope(f), x.context)).toThrow('PARTICIPATION_EVIDENCE')
+  })
+  it('quarantines a bad channel locally, preserves the event, and blocks accepting the affected task', async () => {
+    const x = await createRoleFixture(), f = structuredClone(x.facts)
+    f.tasks[0].executionChannel!.surface = '缴费平台'
+    const original = roleEnvelope(f), d = decodeRoleProductRecording(original, x.context, 'EngineeringFixture', true, true)
+    expect(d.result.events).toHaveLength(1)
+    expect(d.result.standaloneTasks).toHaveLength(1)
+    expect(d.result.standaloneTasks[0].description).not.toContain('缴费平台')
+    expect(d.sidecar.originalResponse).toBe(original)
+    expect(d.sidecar.roleAuthorityAudit.localChannels.quarantinedChannels).toHaveLength(1)
+    expect(d.result.conflicts.some(c => c.id === 'channel-evidence-risk-0' && c.entityTempIds.includes(f.tasks[0].id))).toBe(true)
+    const repo = new CanonicalWorkspaceRepository(new MemoryWorkspaceRecordStore())
+    await repo.initialize(emptyWorkspace())
+    const capture = new CapturePersistenceService(repo), h = await capture.beginCapture({operationId:crypto.randomUUID(),sourceType:'text',title:'局部风险',rawText:x.sourceText,provider:'manual',modelName:'FIXTURE',promptVersion:'fixture',pipelineVersion:'fixture'})
+    await capture.recognize(h, async()=>d.result)
+    const view = new IndexedDbWorkspaceRepository(repo), draft = (await view.load())!.drafts[0]
+    const commit = await commitSourceReview(repo, buildSourceReviewPlan((await repo.load())!, draft))
+    const read = await verifySourceReviewReadback(repo, commit)
+    expect(read.events).toHaveLength(1); expect(read.tasks).toHaveLength(0)
+    const current=(await view.load())!.drafts[0]
+    expect(()=>buildSourceReviewPlan(read, current, current.items[0].id)).toThrow()
+    f.tasks[0].executionChannel!.scopeIds = ['other-source-scope']
+    expect(()=>projectRoleAuthority(f,x.context,true)).toThrow('CHANNEL_REFERENCE')
   })
   it('preserves unknown qualification, unannounced end and no invented predecessor', async () => {
     const x = await createObligationFixture('equipment'), f = toRoleFixture(x.facts)

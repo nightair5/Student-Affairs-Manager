@@ -13,6 +13,10 @@ import {createBoundaryJournal,withTransportBoundaryDiagnostics,createBoundaryPin
 export const PACKAGE_ROOT=resolve('.data/autonomous-three-hour-20261008'),EXECUTION_ROOT=resolve(PACKAGE_ROOT,'execution-v7')
 const git=a=>execFileSync('git',a,{encoding:'utf8'}).trim()
 export function createCurrentRoleHost(){
+ return createRoleScopedHost({batch:BATCH,count:COUNT,packageRoot:PACKAGE_ROOT,executionRoot:EXECUTION_ROOT,packageRead:verifyCurrentRole})
+}
+// Batch binding reuses the same durable engine/transport, with no alternative sending path.
+export function createRoleScopedHost({batch:BATCH,count:COUNT,packageRoot:PACKAGE_ROOT,executionRoot:EXECUTION_ROOT,packageRead:verifyCurrentRole}){
  const pack=verifyCurrentRole(),scope={batch:BATCH,count:COUNT,snapshot:pack.snapshot},root=EXECUTION_ROOT
  const opts={root,ledgerPath:AUTHORITATIVE_LEDGER,engine:createScopedEngine(scope,{diagnostics:createSafePhaseJournal(resolve(root,'phase-observation-v1'))}),packageRead:verifyCurrentRole,role:'SCOPED_DEVELOPMENT_HOST_NOT_AUTHORIZATION',
   gitCheck:head=>{const p=JSON.parse(readFileSync(resolve(PACKAGE_ROOT,'PACKAGE.json'),'utf8').replace(/^\uFEFF/u,''));assertPackageBudget(p,PACKAGE_ROOT);const a=JSON.parse(readFileSync(resolve(root,'AUTHORIZATION.json')));if(a.packageAuthorizationSha256!==p.authorizationSha256||a.userMessageSha256!==p.authorizationSha256||!p.batches.some(b=>b.batch===BATCH&&b.count===COUNT&&b.hardLimitMicroUsd===a.hardLimitMicroUsd&&resolve(PACKAGE_ROOT,b.executionRoot)===root))throw Error('CURRENT_ROLE_PACKAGE_BINDING');const userOnly=git(['status','--porcelain','--untracked-files=all']).split(/\r?\n/u).filter(Boolean).every(l=>l==='?? CODEX_DESKTOP_HANDOVER.md');if(git(['branch','--show-current'])!=='codex/e2-candidate11-blind-eval'||git(['rev-parse','HEAD'])!==head||git(['rev-parse','@{u}'])!==head||git(['ls-remote','origin','refs/heads/codex/e2-candidate11-blind-eval']).split(/\s+/u)[0]!==head||!userOnly)throw Error('CURRENT_ROLE_GIT_NOT_SYNCHRONIZED')},

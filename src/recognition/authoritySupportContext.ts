@@ -4,7 +4,7 @@ import type { SingleAuthorityFacts } from './sourceContractV5'
 import { hasLiteralScopeSpan } from './authorityLiteralSupport'
 
 export const AUTHORITY_SUPPORT_CONTEXT_VERSION = 'authority-support-context-1.0.0'
-export const AUTHORITY_TYPED_SUPPORT_CONTEXT_VERSION = 'authority-support-context-1.2.0'
+export const AUTHORITY_TYPED_SUPPORT_CONTEXT_VERSION = 'authority-support-context-1.3.0'
 const text = (s: string) => s.replace(/[\s，。；,:：;！!]/gu, '')
 const check = (ok: unknown) => { if (!ok) throw Error('AUTHORITY_SUPPORT_CONTEXT_REFERENCE') }
 
@@ -42,8 +42,11 @@ export function projectAuthoritySupportContext(input: unknown, context: WireCont
               && !/(?:不|无需|不要|不得|禁止).{0,5}(?:在|于)/u.test(s.text)))))
         const timeSupport = point && point.scopeIds.includes(row.scopeId)
           && (windowReference || hasLiteralScopeSpan(point.rawText, point.scopeIds.filter(s => context.index.scopes.find(v => v.id === s)?.text && !/^[^\d]*[:：]$/u.test(context.index.scopes.find(v => v.id === s)!.text)), context))
-        const eventSupport = event && event.scopeIds.includes(row.scopeId)
-          && event.attributes.some(a => a.scopeIds.includes(row.scopeId) && hasLiteralScopeSpan(a.text, a.scopeIds, context))
+        // Nested attributes already declare their owner. Their valid literal
+        // citations derive the inverse event index in the next stage; requiring
+        // that duplicate index here rejected an otherwise supported attribute.
+        const eventSupport = event && event.attributes.some(a => a.scopeIds.includes(row.scopeId)
+          && hasLiteralScopeSpan(a.text, a.scopeIds, context))
         check(timeSupport || eventSupport)
         changes.push({ scopeId: row.scopeId, taskId: id, reason: 'TYPED_ATTRIBUTE_SUPPORT' })
         continue

@@ -6,6 +6,7 @@ import { hasLiteralScopeSpan } from './authorityLiteralSupport'
 export const ROLE_AUTHORITY_VERSION = 'role-authority-source-contract-7.0.0' as const
 export const ROLE_CANDIDATE_VERSION = 'role-authority-generation-1.0.0'
 export const ROLE_PROMPT_VERSION = 'recognition-role-authority-1.0.0'
+export const ROLE_LOCAL_CHANNEL_VERSION = 'role-local-channel-evidence-1.0.0'
 type Task = ObligationAuthorityFacts['tasks'][number]
 export type RoleAuthorityFacts = Omit<ObligationAuthorityFacts, 'schemaVersion' | 'tasks'> & {
   schemaVersion: typeof ROLE_AUTHORITY_VERSION
@@ -49,29 +50,43 @@ const check = (v: unknown, code: string) => { if (!v) throw Error('ROLE_AUTHORIT
 
 /** One participation authority; literal channels become ordinary description,
  * not new tasks/materials/eligibility. Every original declaration is audited. */
-export function projectRoleAuthority(input: unknown, context: WireContext) {
+export function projectRoleAuthority(input: unknown, context: WireContext, localizeEvidenceMismatch = false) {
   const original = plainJson(input) as RoleAuthorityFacts
   check(matches(original, ROLE_AUTHORITY_SCHEMA), 'SHAPE')
+  const quarantinedChannels: Array<{ taskId: string; declaration: NonNullable<RoleAuthorityFacts['tasks'][number]['executionChannel']> }> = []
   const decisions = original.tasks.map(t => {
     const p = t.participation, c = t.executionChannel
     check((p.mode === 'unknown' || p.scopeIds.length > 0) && p.scopeIds.every(id => t.propositionScopeIds.includes(id) && context.index.scopes.some(s => s.id === id)), 'PARTICIPATION_EVIDENCE')
-    if (c) check(c.scopeIds.every(id => t.propositionScopeIds.includes(id)) && hasLiteralScopeSpan(c.surface, c.scopeIds, context), 'CHANNEL_EVIDENCE')
+    if (c) {
+      check(c.scopeIds.every(id => context.index.scopes.some(s => s.id === id)), 'CHANNEL_REFERENCE')
+      if (!c.scopeIds.every(id => t.propositionScopeIds.includes(id)) || !hasLiteralScopeSpan(c.surface, c.scopeIds, context)) {
+        check(localizeEvidenceMismatch, 'CHANNEL_EVIDENCE')
+        quarantinedChannels.push({ taskId: t.id, declaration: structuredClone(c) })
+      }
+    }
     return { taskId: t.id, participation: p, executionChannel: c }
   })
   const projected: ObligationAuthorityFacts = { ...original, schemaVersion: OBLIGATION_AUTHORITY_VERSION,
-    tasks: original.tasks.map(({ participation, executionChannel, ...t }) => ({ ...t,
+    tasks: original.tasks.map(({ participation, executionChannel: declaredChannel, ...t }) => {
+      const executionChannel = quarantinedChannels.some(c => c.taskId === t.id) ? null : declaredChannel
+      return { ...t,
       semantics: { ...t.semantics, modality: participation.mode },
       detail: { ...t.detail, description: executionChannel && !t.detail.description.includes(executionChannel.surface)
         ? [t.detail.description, `办理方式：${executionChannel.surface}`].filter(Boolean).join('；') : t.detail.description },
-    })),
+      }
+    }),
+    conflicts: [...original.conflicts, ...quarantinedChannels.map((c, i) => ({ id: `channel-evidence-risk-${i}`, type: 'other' as const,
+      message: '这项事项的办理渠道引用不完整，渠道暂不采用；请核对该事项，其他有依据的内容可单独保存。',
+      entityTempIds: [c.taskId], scopeIds: c.declaration.scopeIds, requiresDecision: true }))],
   }
-  return { projected, audit: { version: ROLE_AUTHORITY_VERSION, inferredFacts: 0, operation: 'PARTICIPATION_TO_MODALITY_LITERAL_CHANNEL_TO_DESCRIPTION', decisions, original } }
+  return { projected, audit: { version: ROLE_AUTHORITY_VERSION, inferredFacts: 0, operation: 'PARTICIPATION_TO_MODALITY_LITERAL_CHANNEL_TO_DESCRIPTION', decisions,
+    localChannels: { version: ROLE_LOCAL_CHANNEL_VERSION, enabled: localizeEvidenceMismatch, quarantinedChannels }, original } }
 }
 export function decodeRoleProductRecording(raw: string, context: WireContext, role: 'EngineeringFixture' | 'SingleAuthority' = 'EngineeringFixture', localizeMissingCoverage = false, separatedWindowEvidence = false) {
   check(new TextEncoder().encode(raw).byteLength <= 524288, 'RESPONSE_SIZE')
   const envelope = JSON.parse(raw), texts = Array.isArray(envelope.output) ? envelope.output.filter((v: { type?: string }) => v.type === 'message').flatMap((v: { content?: Array<{ type?: string; text?: string }> }) => v.content?.filter(c => c.type === 'output_text') ?? []) : []
   check(texts.length === 1 && typeof texts[0].text === 'string', 'RESPONSE_TEXT')
-  const projection = projectRoleAuthority(JSON.parse(texts[0].text), context)
+  const projection = projectRoleAuthority(JSON.parse(texts[0].text), context, localizeMissingCoverage)
   texts[0].text = JSON.stringify(projection.projected)
   const d = decodeObligationProductRecording(JSON.stringify(envelope), context, role, localizeMissingCoverage, separatedWindowEvidence)
   return { ...d, result: { ...d.result, promptVersion: ROLE_PROMPT_VERSION, modelName: role === 'EngineeringFixture' ? '角色分离匿名契约夹具（非模型输出）' : 'RoleAuthority 固定录制（非实时调用）' }, sidecar: { ...d.sidecar, originalResponse: raw, roleAuthorityAudit: projection.audit } }

@@ -41,6 +41,19 @@ describe('obligations first, one task-event authority, no missing-fact repair', 
     const wrong = structuredClone(f); wrong.prerequisiteStates[0].completion = 'true'; wrong.prerequisiteStates[0].factScopeIds = f.tasks[1].propositionScopeIds
     expect(() => decodeObligationProductRecording(obligationEnvelope(wrong), x.context)).toThrow('CONDITIONAL_NOT_COMPLETION_PROOF')
   })
+  it('valid but mismatched link citations quarantine only the task; unknown identities still reject', async () => {
+    const x=await createObligationFixture('registration'), f=structuredClone(x.facts)
+    const id=x.context.index.scopes.at(-1)!.id
+    f.tasks[0].eventLinks[0].scopeIds=[id]
+    f.tasks[0].propositionScopeIds=f.tasks[0].propositionScopeIds.filter(s=>s!==id)
+    expect(()=>projectObligationAuthority(f,x.context)).toThrow('EVENT_LINK_EVIDENCE')
+    const d=projectObligationAuthority(f,x.context,true)
+    expect(d.projected.events[0].relatedTaskTempIds).toEqual([])
+    expect(d.audit.localRelations.quarantinedRelations).toHaveLength(1)
+    expect(d.projected.conflicts[0].entityTempIds).toEqual([f.tasks[0].id])
+    f.tasks[0].eventLinks[0].eventId='unseen-event'
+    expect(()=>projectObligationAuthority(f,x.context,true)).toThrow('EVENT_LINK_REFERENCE')
+  })
   it('links and all actual facts survive ordinary capture, formal transaction and independent readback without edits', async () => {
     const x = await createObligationFixture('registration'), d = decodeObligationProductRecording(x.rawHttpText, x.context), store = new MemoryWorkspaceRecordStore(), repo = new CanonicalWorkspaceRepository(store)
     await repo.initialize(emptyWorkspace()); const capture = new CapturePersistenceService(repo)
