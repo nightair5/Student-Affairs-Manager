@@ -1,0 +1,748 @@
+{
+  "role": "ENGINEERING_MEMORY_STORE",
+  "browser": "NOT_RUN_POLICY_STOP",
+  "humanMetrics": "NOT_OBSERVABLE",
+  "rows": [
+    {
+      "group": "official-current",
+      "ordinal": 1,
+      "sourceId": "current-role-public-FRESH-02",
+      "candidate": "RoleAuthority",
+      "evidence": "ENGINEERING_MEMORY_STORE_NOT_BROWSER_IDB",
+      "humanMetrics": "NOT_OBSERVABLE",
+      "fieldEdits": 0,
+      "rawPreserved": true,
+      "firstPreserved": true,
+      "sourceRebinding": "IDENTICAL_SOURCE_SCOPE_ID_REBIND_ONLY",
+      "taskProblems": [
+        {
+          "id": "task-0001",
+          "problem": "资格尚未确认，不能当成已符合；请保留待核对。"
+        },
+        {
+          "id": "task-0002",
+          "problem": "这项事项的办理渠道引用不完整，渠道暂不采用；请核对该事项，其他有依据的内容可单独保存。"
+        }
+      ],
+      "receipts": [],
+      "canonical": {
+        "tasks": [],
+        "events": [],
+        "timePoints": [],
+        "materials": [],
+        "projects": 0,
+        "draftStatus": "needs_review",
+        "commitIds": []
+      }
+    },
+    {
+      "group": "official-current",
+      "ordinal": 2,
+      "sourceId": "current-role-public-FRESH-04",
+      "candidate": "RoleAuthority",
+      "evidence": "ENGINEERING_MEMORY_STORE_NOT_BROWSER_IDB",
+      "humanMetrics": "NOT_OBSERVABLE",
+      "fieldEdits": 0,
+      "rawPreserved": true,
+      "firstPreserved": true,
+      "sourceRebinding": "IDENTICAL_SOURCE_SCOPE_ID_REBIND_ONLY",
+      "taskProblems": [
+        {
+          "id": "task-0001",
+          "problem": "这项事项的办理渠道引用不完整，渠道暂不采用；请核对该事项，其他有依据的内容可单独保存。"
+        },
+        {
+          "id": "task-0002",
+          "problem": "资格尚未确认，不能当成已符合；请保留待核对。"
+        },
+        {
+          "id": "task-0003",
+          "problem": "资格尚未确认，不能当成已符合；请保留待核对。"
+        }
+      ],
+      "receipts": [],
+      "canonical": {
+        "tasks": [],
+        "events": [],
+        "timePoints": [],
+        "materials": [],
+        "projects": 0,
+        "draftStatus": "needs_review",
+        "commitIds": []
+      }
+    },
+    {
+      "group": "official-current",
+      "ordinal": 3,
+      "sourceId": "current-role-public-FRESH-05",
+      "candidate": "RoleAuthority",
+      "evidence": "ENGINEERING_MEMORY_STORE_NOT_BROWSER_IDB",
+      "humanMetrics": "NOT_OBSERVABLE",
+      "fieldEdits": 0,
+      "rawPreserved": true,
+      "firstPreserved": true,
+      "sourceRebinding": "IDENTICAL_SOURCE_SCOPE_ID_REBIND_ONLY",
+      "taskProblems": [
+        {
+          "id": "task-register-summer-school",
+          "problem": "该事项与活动的关联依据不完整，关联暂不采用；已有活动和无关联风险的内容仍可单独保存。"
+        },
+        {
+          "id": "task-prepare-terminal-device",
+          "problem": "该事项与活动的关联依据不完整，关联暂不采用；已有活动和无关联风险的内容仍可单独保存。"
+        }
+      ],
+      "receipts": [],
+      "canonical": {
+        "tasks": [],
+        "events": [],
+        "timePoints": [],
+        "materials": [],
+        "projects": 0,
+        "draftStatus": "needs_review",
+        "commitIds": []
+      }
+    },
+    {
+      "group": "official-current",
+      "ordinal": 4,
+      "sourceId": "current-role-public-FRESH-06",
+      "candidate": "RoleAuthority",
+      "evidence": "ENGINEERING_MEMORY_STORE_NOT_BROWSER_IDB",
+      "humanMetrics": "NOT_OBSERVABLE",
+      "fieldEdits": 0,
+      "rawPreserved": true,
+      "firstPreserved": true,
+      "sourceRebinding": "IDENTICAL_SOURCE_SCOPE_ID_REBIND_ONLY",
+      "taskProblems": [
+        {
+          "id": "task-register-lecture",
+          "problem": "该事项与活动的关联依据不完整，关联暂不采用；已有活动和无关联风险的内容仍可单独保存。"
+        }
+      ],
+      "receipts": [
+        {
+          "version": "source-review-d26-1",
+          "draftId": "source:b9a5b145:draft:1",
+          "commitId": "source-review:source:b9a5b145:draft:1:fnv1a32:1d61c58e",
+          "disposition": "partial",
+          "entityIds": [
+            "event:source:b9a5b145:draft:1:event-lecture",
+            "time:source:b9a5b145:draft:1:time-event-start",
+            "time:source:b9a5b145:draft:1:time-event-end"
+          ],
+          "entityHashes": {
+            "event:source:b9a5b145:draft:1:event-lecture": "fnv1a32:1f2ba29d",
+            "time:source:b9a5b145:draft:1:time-event-start": "fnv1a32:61ec13d6",
+            "time:source:b9a5b145:draft:1:time-event-end": "fnv1a32:76c17d02"
+          }
+        }
+      ],
+      "canonical": {
+        "tasks": [],
+        "events": [
+          {
+            "id": "event:source:b9a5b145:draft:1:event-lecture",
+            "projectId": null,
+            "title": "讲座",
+            "description": "活动信息\n2026年10月12日（周一）\n12:30-14:00\n**地点**\n海韵园办公楼A栋302室\n按报名顺序先到先得（讲座的听众总人数不作限制，\n感兴趣均可报名）。\n主办方提供50份免费午餐，",
+            "startTimePointId": "time:source:b9a5b145:draft:1:time-event-start",
+            "endTimePointId": "time:source:b9a5b145:draft:1:time-event-end",
+            "location": "海韵园办公楼A栋302室",
+            "createdAt": "2026-10-09T03:03:33.243Z",
+            "updatedAt": "2026-10-09T03:03:33.243Z",
+            "legacyData": {
+              "recognitionTempId": "event-lecture",
+              "evidenceIds": [
+                "d26-scope-0001-591c9e493d8ee861902ff18f69e505851e38629e1b7f222fa75d1c8238a8fa8b",
+                "d26-scope-0003-519762be38974b9fa1e47863e3904333d181c5e22625f9ade987114d44a0e6a2",
+                "d26-scope-0004-d04586b2b873baaa5d919f2fd48d8d50a8bc359964decc74c0958b52d17cfb38",
+                "d26-scope-0005-33da00265a5fa2f068a5c4ab5cb74903efcb9f66e6d9f89080dc12349282aa0c",
+                "d26-scope-0006-137e3c1f1e29d87dda7b7e52a836cf4a7d0b80f6fd34290b143d212db60f0343",
+                "d26-scope-0011-bbc044783c5652c95a658a463962425e68f3b498f7f0cc87739ec8d24ac80e89",
+                "d26-scope-0012-9381351ea0dadf0408353ab1566e41a03f4ed9758711140be91029c547c2df6b",
+                "d26-scope-0010-b5268b30e6ac5e49924d6c1b23f5e34e095137cc16806a1a898e78be416ad524"
+              ],
+              "inferenceLevel": "explicit",
+              "sourceReviewDraftId": "source:b9a5b145:draft:1"
+            }
+          }
+        ],
+        "timePoints": [
+          {
+            "id": "time:source:b9a5b145:draft:1:time-event-start",
+            "projectId": null,
+            "milestoneId": null,
+            "taskId": null,
+            "materialId": null,
+            "eventId": "event:source:b9a5b145:draft:1:event-lecture",
+            "relatedTaskIds": [],
+            "relatedMaterialIds": [],
+            "type": "event_start",
+            "rawText": "12:30-14:00",
+            "normalizedValue": "2026-10-12T12:30",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "createdAt": "2026-10-09T03:03:33.243Z",
+            "updatedAt": "2026-10-09T03:03:33.243Z",
+            "legacyData": {
+              "recognitionTempId": "time-event-start",
+              "evidenceIds": [
+                "d26-scope-0003-519762be38974b9fa1e47863e3904333d181c5e22625f9ade987114d44a0e6a2",
+                "d26-scope-0004-d04586b2b873baaa5d919f2fd48d8d50a8bc359964decc74c0958b52d17cfb38"
+              ],
+              "confidence": 0.95,
+              "sharedEventIds": [
+                "event:source:b9a5b145:draft:1:event-lecture"
+              ]
+            }
+          },
+          {
+            "id": "time:source:b9a5b145:draft:1:time-event-end",
+            "projectId": null,
+            "milestoneId": null,
+            "taskId": null,
+            "materialId": null,
+            "eventId": "event:source:b9a5b145:draft:1:event-lecture",
+            "relatedTaskIds": [],
+            "relatedMaterialIds": [],
+            "type": "event_end",
+            "rawText": "12:30-14:00",
+            "normalizedValue": "2026-10-12T14:00",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "createdAt": "2026-10-09T03:03:33.243Z",
+            "updatedAt": "2026-10-09T03:03:33.243Z",
+            "legacyData": {
+              "recognitionTempId": "time-event-end",
+              "evidenceIds": [
+                "d26-scope-0003-519762be38974b9fa1e47863e3904333d181c5e22625f9ade987114d44a0e6a2",
+                "d26-scope-0004-d04586b2b873baaa5d919f2fd48d8d50a8bc359964decc74c0958b52d17cfb38"
+              ],
+              "confidence": 0.95,
+              "sharedEventIds": [
+                "event:source:b9a5b145:draft:1:event-lecture"
+              ]
+            }
+          }
+        ],
+        "materials": [],
+        "projects": 0,
+        "draftStatus": "partially_confirmed",
+        "commitIds": [
+          "source-review:source:b9a5b145:draft:1:fnv1a32:1d61c58e"
+        ]
+      },
+      "formalFailure": "ENGINEERING_FORMAL_TRANSACTION_FAILURE",
+      "noPartialFactsAfterFailure": true,
+      "readbackFailure": "ENGINEERING_READBACK_FAILURE",
+      "readOnlyRecoveryNoSecondCommit": true
+    },
+    {
+      "group": "paired-requirements",
+      "ordinal": 1,
+      "sourceId": "REQ-01",
+      "candidate": "RoleAuthority",
+      "evidence": "ENGINEERING_MEMORY_STORE_NOT_BROWSER_IDB",
+      "humanMetrics": "NOT_OBSERVABLE",
+      "fieldEdits": 0,
+      "rawPreserved": true,
+      "firstPreserved": true,
+      "sourceRebinding": "IDENTICAL_SOURCE_SCOPE_ID_REBIND_ONLY",
+      "taskProblems": [
+        {
+          "id": "task-0001",
+          "problem": "这项任务的材料覆盖未说明清楚，保留已有事实，请核对；不能当成原文没有。"
+        },
+        {
+          "id": "task-0002",
+          "problem": null
+        },
+        {
+          "id": "task-0003",
+          "problem": null
+        }
+      ],
+      "receipts": [],
+      "canonical": {
+        "tasks": [],
+        "events": [],
+        "timePoints": [],
+        "materials": [],
+        "projects": 0,
+        "draftStatus": "needs_review",
+        "commitIds": []
+      }
+    },
+    {
+      "group": "paired-requirements",
+      "ordinal": 2,
+      "sourceId": "REQ-01",
+      "candidate": "TaskRequirements",
+      "evidence": "ENGINEERING_MEMORY_STORE_NOT_BROWSER_IDB",
+      "humanMetrics": "NOT_OBSERVABLE",
+      "fieldEdits": 0,
+      "rawPreserved": true,
+      "firstPreserved": true,
+      "sourceRebinding": "IDENTICAL_SOURCE_SCOPE_ID_REBIND_ONLY",
+      "taskProblems": [
+        {
+          "id": "task-register-instrument-borrow",
+          "problem": "这项任务的材料覆盖未说明清楚，保留已有事实，请核对；不能当成原文没有。"
+        },
+        {
+          "id": "task-collect-borrow-card",
+          "problem": "这项任务的材料覆盖未说明清楚，保留已有事实，请核对；不能当成原文没有。"
+        }
+      ],
+      "receipts": [],
+      "canonical": {
+        "tasks": [],
+        "events": [],
+        "timePoints": [],
+        "materials": [],
+        "projects": 0,
+        "draftStatus": "needs_review",
+        "commitIds": []
+      }
+    },
+    {
+      "group": "paired-requirements",
+      "ordinal": 3,
+      "sourceId": "REQ-02",
+      "candidate": "TaskRequirements",
+      "evidence": "ENGINEERING_MEMORY_STORE_NOT_BROWSER_IDB",
+      "humanMetrics": "NOT_OBSERVABLE",
+      "fieldEdits": 0,
+      "rawPreserved": true,
+      "firstPreserved": true,
+      "sourceRebinding": "IDENTICAL_SOURCE_SCOPE_ID_REBIND_ONLY",
+      "taskProblems": [
+        {
+          "id": "task-register-photo-workshop",
+          "problem": null
+        },
+        {
+          "id": "task-prepare-camera",
+          "problem": "资格尚未确认，不能当成已符合；请保留待核对。"
+        }
+      ],
+      "receipts": [
+        {
+          "version": "source-review-d26-1",
+          "draftId": "source:846c1201:draft:1",
+          "commitId": "source-review:source:846c1201:draft:1:fnv1a32:9c3cc529",
+          "disposition": "partial",
+          "entityIds": [
+            "event:source:846c1201:draft:1:event-photo-workshop",
+            "time:source:846c1201:draft:1:time-event-start",
+            "time:source:846c1201:draft:1:time-event-end"
+          ],
+          "entityHashes": {
+            "event:source:846c1201:draft:1:event-photo-workshop": "fnv1a32:c96d1d47",
+            "time:source:846c1201:draft:1:time-event-start": "fnv1a32:a944d3ce",
+            "time:source:846c1201:draft:1:time-event-end": "fnv1a32:b1fd1eb9"
+          }
+        },
+        {
+          "version": "source-review-d26-1",
+          "draftId": "source:846c1201:draft:1",
+          "commitId": "source-review:source:846c1201:draft:1:fnv1a32:1d0a238d",
+          "disposition": "partial",
+          "entityIds": [
+            "task:source:846c1201:draft:1:task-register-photo-workshop",
+            "time:source:846c1201:draft:1:time-registration-deadline"
+          ],
+          "entityHashes": {
+            "task:source:846c1201:draft:1:task-register-photo-workshop": "fnv1a32:eea4d243",
+            "time:source:846c1201:draft:1:time-registration-deadline": "fnv1a32:6febfe75"
+          }
+        }
+      ],
+      "canonical": {
+        "tasks": [
+          {
+            "id": "task:source:846c1201:draft:1:task-register-photo-workshop",
+            "projectId": null,
+            "milestoneId": null,
+            "workPackageId": null,
+            "parentTaskId": null,
+            "title": "报名摄影工作坊",
+            "description": "有意参加者可在2026年11月22日18:00前通过报名二维码报名摄影工作坊。\n报名时须填写年级；\n需借用器材者还须注明器材型号。\n报名成功以收到确认邮件为准。",
+            "nextAction": "报名摄影工作坊",
+            "status": "todo",
+            "estimatedMinutes": null,
+            "manualPriority": null,
+            "snoozedUntil": null,
+            "dependencyIds": [],
+            "createdAt": "2026-10-09T03:03:33.424Z",
+            "updatedAt": "2026-10-09T03:03:33.424Z",
+            "version": 1,
+            "legacyData": {
+              "recognitionTempId": "task-register-photo-workshop",
+              "actionVerb": "报名",
+              "actionObject": "摄影工作坊",
+              "completionCriteria": [
+                "报名成功以收到确认邮件为准。",
+                "报名时须填写年级；",
+                "需借用器材者还须注明器材型号。"
+              ],
+              "inferenceLevel": "optional_suggestion",
+              "prioritySuggestion": "medium",
+              "priority": "中",
+              "evidenceIds": [
+                "d26-scope-0004-181cec3dbd35d1299e3fe12ec875f72bf05df38fc21f13fddf463c19b4f14e1e",
+                "d26-scope-0005-43879c9487f6b34168a67b7194a0bcaf5deda0ee054a41389c685eb482bca955",
+                "d26-scope-0006-528cc17cbbc093015d29c69de5c3da1b0fc3508cce6788ee2b954fe53ec72938",
+                "d26-scope-0009-2b15f8f6a86b0c393afa3d6bd2f94463f1b871aee608b25b24a5cd8b0c108cab"
+              ],
+              "sourceId": "source:846c1201",
+              "category": "其他"
+            }
+          }
+        ],
+        "events": [
+          {
+            "id": "event:source:846c1201:draft:1:event-photo-workshop",
+            "projectId": null,
+            "title": "摄影工作坊",
+            "description": "摄影工作坊于2026年11月25日14:00开始，\n16:00结束，\n地点为艺文楼C204。\n有意参加者可在2026年11月22日18:00前通过报名二维码报名摄影工作坊。",
+            "startTimePointId": "time:source:846c1201:draft:1:time-event-start",
+            "endTimePointId": "time:source:846c1201:draft:1:time-event-end",
+            "location": "艺文楼C204",
+            "createdAt": "2026-10-09T03:03:33.381Z",
+            "updatedAt": "2026-10-09T03:03:33.381Z",
+            "legacyData": {
+              "recognitionTempId": "event-photo-workshop",
+              "evidenceIds": [
+                "d26-scope-0001-933f56009148a5ae8d3ed3ed2d30683df9708c30e437ce910e0d3a8d8458be6b",
+                "d26-scope-0002-edcd411e1d9702e3b10b2e65539230fcd8391bbb0d3c3ff84f06e7a3b3042fa0",
+                "d26-scope-0003-88a3e86df6fed4b9dc0d04602ebe825517f1bf8b3653e64403e80b81ddbf4bd7",
+                "d26-scope-0004-181cec3dbd35d1299e3fe12ec875f72bf05df38fc21f13fddf463c19b4f14e1e"
+              ],
+              "inferenceLevel": "explicit",
+              "sourceTaskRelations": {
+                "version": "source-event-task-relations-1",
+                "draftId": "source:846c1201:draft:1",
+                "taskTempIds": [
+                  "task-register-photo-workshop"
+                ]
+              },
+              "sourceReviewDraftId": "source:846c1201:draft:1"
+            }
+          }
+        ],
+        "timePoints": [
+          {
+            "id": "time:source:846c1201:draft:1:time-event-start",
+            "projectId": null,
+            "milestoneId": null,
+            "taskId": null,
+            "materialId": null,
+            "eventId": "event:source:846c1201:draft:1:event-photo-workshop",
+            "relatedTaskIds": [],
+            "relatedMaterialIds": [],
+            "type": "event_start",
+            "rawText": "2026年11月25日14:00开始",
+            "normalizedValue": "2026-11-25T14:00",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "createdAt": "2026-10-09T03:03:33.381Z",
+            "updatedAt": "2026-10-09T03:03:33.381Z",
+            "legacyData": {
+              "recognitionTempId": "time-event-start",
+              "evidenceIds": [
+                "d26-scope-0001-933f56009148a5ae8d3ed3ed2d30683df9708c30e437ce910e0d3a8d8458be6b"
+              ],
+              "confidence": 0.95,
+              "sharedEventIds": [
+                "event:source:846c1201:draft:1:event-photo-workshop"
+              ]
+            }
+          },
+          {
+            "id": "time:source:846c1201:draft:1:time-event-end",
+            "projectId": null,
+            "milestoneId": null,
+            "taskId": null,
+            "materialId": null,
+            "eventId": "event:source:846c1201:draft:1:event-photo-workshop",
+            "relatedTaskIds": [],
+            "relatedMaterialIds": [],
+            "type": "event_end",
+            "rawText": "16:00结束",
+            "normalizedValue": "2026-11-25T16:00",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "createdAt": "2026-10-09T03:03:33.381Z",
+            "updatedAt": "2026-10-09T03:03:33.381Z",
+            "legacyData": {
+              "recognitionTempId": "time-event-end",
+              "evidenceIds": [
+                "d26-scope-0002-edcd411e1d9702e3b10b2e65539230fcd8391bbb0d3c3ff84f06e7a3b3042fa0"
+              ],
+              "confidence": 0.95,
+              "sharedEventIds": [
+                "event:source:846c1201:draft:1:event-photo-workshop"
+              ]
+            }
+          },
+          {
+            "id": "time:source:846c1201:draft:1:time-registration-deadline",
+            "projectId": null,
+            "milestoneId": null,
+            "taskId": "task:source:846c1201:draft:1:task-register-photo-workshop",
+            "materialId": null,
+            "eventId": null,
+            "relatedTaskIds": [
+              "task:source:846c1201:draft:1:task-register-photo-workshop"
+            ],
+            "relatedMaterialIds": [],
+            "type": "registration_deadline",
+            "rawText": "2026年11月22日18:00前",
+            "normalizedValue": "2026-11-22T18:00",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "createdAt": "2026-10-09T03:03:33.424Z",
+            "updatedAt": "2026-10-09T03:03:33.424Z",
+            "legacyData": {
+              "recognitionTempId": "time-registration-deadline",
+              "evidenceIds": [
+                "d26-scope-0004-181cec3dbd35d1299e3fe12ec875f72bf05df38fc21f13fddf463c19b4f14e1e"
+              ],
+              "confidence": 0.95
+            }
+          },
+          {
+            "id": "personal-plan:task:source:846c1201:draft:1:task-register-photo-workshop",
+            "projectId": null,
+            "milestoneId": null,
+            "taskId": "task:source:846c1201:draft:1:task-register-photo-workshop",
+            "materialId": null,
+            "eventId": null,
+            "relatedTaskIds": [
+              "task:source:846c1201:draft:1:task-register-photo-workshop"
+            ],
+            "relatedMaterialIds": [],
+            "type": "planned_start",
+            "rawText": "个人计划起点（不替代原文截止）",
+            "normalizedValue": "2026-11-20T01:00:00.000Z",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "createdAt": "2026-11-20T01:00:00.000Z",
+            "updatedAt": "2026-11-20T01:00:00.000Z",
+            "legacyData": {
+              "personalPlanD27": {
+                "version": "personal-plan-d27-1",
+                "minutes": 30,
+                "durationOrigin": "product_estimate",
+                "locked": false,
+                "operationId": "2dafa5b1-350e-41a7-8ba3-12f877646c38",
+                "conditionalOn": []
+              }
+            }
+          }
+        ],
+        "materials": [],
+        "projects": 0,
+        "draftStatus": "partially_confirmed",
+        "commitIds": [
+          "source-review:source:846c1201:draft:1:fnv1a32:9c3cc529",
+          "source-review:source:846c1201:draft:1:fnv1a32:1d0a238d"
+        ]
+      },
+      "formalFailure": "ENGINEERING_FORMAL_TRANSACTION_FAILURE",
+      "noPartialFactsAfterFailure": true,
+      "readbackFailure": "ENGINEERING_READBACK_FAILURE",
+      "readOnlyRecoveryNoSecondCommit": true,
+      "unknownQualificationBlocked": "适用状态尚未明确，请在本通知适用性中核对；不会假定资格或前置已完成。",
+      "checkpointFailure": "ENGINEERING_CHECKPOINT_FAILURE",
+      "checkpointSelectionRetained": true,
+      "noInventedEditId": true,
+      "personalPlan": {
+        "receipt": "2dafa5b1-350e-41a7-8ba3-12f877646c38",
+        "segments": [
+          {
+            "taskId": "task:source:846c1201:draft:1:task-register-photo-workshop",
+            "title": "报名摄影工作坊",
+            "start": "2026-11-20T01:00:00.000Z",
+            "end": "2026-11-20T01:30:00.000Z",
+            "minutes": 30,
+            "durationOrigin": "product_estimate",
+            "locked": false,
+            "conditionalOn": [],
+            "reason": "按原文截止先后分配共同可用时间。",
+            "originalDeadline": "2026年11月22日18:00前",
+            "retained": false
+          }
+        ],
+        "unscheduled": [],
+        "sourceTimesUnchanged": true
+      }
+    },
+    {
+      "group": "paired-requirements",
+      "ordinal": 4,
+      "sourceId": "REQ-02",
+      "candidate": "RoleAuthority",
+      "evidence": "ENGINEERING_MEMORY_STORE_NOT_BROWSER_IDB",
+      "humanMetrics": "NOT_OBSERVABLE",
+      "fieldEdits": 0,
+      "rawPreserved": true,
+      "firstPreserved": true,
+      "sourceRebinding": "IDENTICAL_SOURCE_SCOPE_ID_REBIND_ONLY",
+      "taskProblems": [
+        {
+          "id": "task-register-workshop",
+          "problem": "这项任务的材料覆盖未说明清楚，保留已有事实，请核对；不能当成原文没有。"
+        },
+        {
+          "id": "task-fill-grade",
+          "problem": null
+        },
+        {
+          "id": "task-note-equipment-model",
+          "problem": "资格尚未确认，不能当成已符合；请保留待核对。"
+        },
+        {
+          "id": "task-prepare-camera",
+          "problem": "资格尚未确认，不能当成已符合；请保留待核对。"
+        }
+      ],
+      "receipts": [
+        {
+          "version": "source-review-d26-1",
+          "draftId": "source:59bc9e16:draft:1",
+          "commitId": "source-review:source:59bc9e16:draft:1:fnv1a32:6b41dac3",
+          "disposition": "partial",
+          "entityIds": [
+            "event:source:59bc9e16:draft:1:event-workshop",
+            "time:source:59bc9e16:draft:1:time-event-start",
+            "time:source:59bc9e16:draft:1:time-event-end"
+          ],
+          "entityHashes": {
+            "event:source:59bc9e16:draft:1:event-workshop": "fnv1a32:ee1370fa",
+            "time:source:59bc9e16:draft:1:time-event-start": "fnv1a32:6b386316",
+            "time:source:59bc9e16:draft:1:time-event-end": "fnv1a32:b7172403"
+          }
+        }
+      ],
+      "canonical": {
+        "tasks": [],
+        "events": [
+          {
+            "id": "event:source:59bc9e16:draft:1:event-workshop",
+            "projectId": null,
+            "title": "摄影工作坊",
+            "description": "摄影工作坊于2026年11月25日14:00开始，\n16:00结束，\n地点为艺文楼C204。\n有意参加者可在2026年11月22日18:00前通过报名二维码报名摄影工作坊。",
+            "startTimePointId": "time:source:59bc9e16:draft:1:time-event-start",
+            "endTimePointId": "time:source:59bc9e16:draft:1:time-event-end",
+            "location": "艺文楼C204",
+            "createdAt": "2026-10-09T03:03:33.517Z",
+            "updatedAt": "2026-10-09T03:03:33.517Z",
+            "legacyData": {
+              "recognitionTempId": "event-workshop",
+              "evidenceIds": [
+                "d26-scope-0001-28224413b227b76496777f64875c11d8e63ca153d8c0e39d52b2e638efb48b58",
+                "d26-scope-0002-e84ee655d1acb8a1b60c1a2d3f55a13a131370c63a938c0eed6e8c15b984a196",
+                "d26-scope-0003-d791f6a8f493d84de1911fb43767bf905837b2a757dbff6ce7de158764a2cf69",
+                "d26-scope-0004-8c88d36bd8e6ffaa3cfe8be5f21c38df348396f4db67f736be5abc84100c9099"
+              ],
+              "inferenceLevel": "explicit",
+              "sourceTaskRelations": {
+                "version": "source-event-task-relations-1",
+                "draftId": "source:59bc9e16:draft:1",
+                "taskTempIds": [
+                  "task-register-workshop"
+                ]
+              },
+              "sourceReviewDraftId": "source:59bc9e16:draft:1"
+            }
+          }
+        ],
+        "timePoints": [
+          {
+            "id": "time:source:59bc9e16:draft:1:time-event-start",
+            "projectId": null,
+            "milestoneId": null,
+            "taskId": null,
+            "materialId": null,
+            "eventId": "event:source:59bc9e16:draft:1:event-workshop",
+            "relatedTaskIds": [],
+            "relatedMaterialIds": [],
+            "type": "event_start",
+            "rawText": "2026年11月25日14:00开始",
+            "normalizedValue": "2026-11-25T14:00",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "createdAt": "2026-10-09T03:03:33.517Z",
+            "updatedAt": "2026-10-09T03:03:33.517Z",
+            "legacyData": {
+              "recognitionTempId": "time-event-start",
+              "evidenceIds": [
+                "d26-scope-0001-28224413b227b76496777f64875c11d8e63ca153d8c0e39d52b2e638efb48b58"
+              ],
+              "confidence": 0.95,
+              "sharedEventIds": [
+                "event:source:59bc9e16:draft:1:event-workshop"
+              ]
+            }
+          },
+          {
+            "id": "time:source:59bc9e16:draft:1:time-event-end",
+            "projectId": null,
+            "milestoneId": null,
+            "taskId": null,
+            "materialId": null,
+            "eventId": "event:source:59bc9e16:draft:1:event-workshop",
+            "relatedTaskIds": [],
+            "relatedMaterialIds": [],
+            "type": "event_end",
+            "rawText": "16:00结束",
+            "normalizedValue": "2026-11-25T16:00",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "createdAt": "2026-10-09T03:03:33.517Z",
+            "updatedAt": "2026-10-09T03:03:33.517Z",
+            "legacyData": {
+              "recognitionTempId": "time-event-end",
+              "evidenceIds": [
+                "d26-scope-0002-e84ee655d1acb8a1b60c1a2d3f55a13a131370c63a938c0eed6e8c15b984a196"
+              ],
+              "confidence": 0.95,
+              "sharedEventIds": [
+                "event:source:59bc9e16:draft:1:event-workshop"
+              ]
+            }
+          }
+        ],
+        "materials": [],
+        "projects": 0,
+        "draftStatus": "partially_confirmed",
+        "commitIds": [
+          "source-review:source:59bc9e16:draft:1:fnv1a32:6b41dac3"
+        ]
+      },
+      "formalFailure": "ENGINEERING_FORMAL_TRANSACTION_FAILURE",
+      "noPartialFactsAfterFailure": true,
+      "readbackFailure": "ENGINEERING_READBACK_FAILURE",
+      "readOnlyRecoveryNoSecondCommit": true
+    }
+  ]
+}

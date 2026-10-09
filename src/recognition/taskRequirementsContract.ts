@@ -7,6 +7,7 @@ import { MAX_REQUEST_BYTES } from '../experiments/realInput01/modelWire'
 export const TASK_REQUIREMENTS_VERSION = 'task-requirements-source-contract-1.0.0'
 export const TASK_REQUIREMENTS_CANDIDATE = 'task-requirements-generation-1.0.0'
 export const TASK_REQUIREMENTS_PROMPT = 'recognition-task-requirements-1.0.0'
+export const TASK_REQUIREMENTS_PROJECTION_VERSION = 'task-requirements-owner-projection-1.1.0'
 type Requirement = { ownerTaskId: string; text: string; scopeIds: string[]; conditionScopeIds: string[] }
 export type TaskRequirementsFacts = Omit<RoleAuthorityFacts,'schemaVersion'> & { schemaVersion: typeof TASK_REQUIREMENTS_VERSION; requirements: Requirement[] }
 export const TASK_REQUIREMENTS_SCHEMA=structuredClone(ROLE_AUTHORITY_SCHEMA)
@@ -24,6 +25,7 @@ export function projectTaskRequirements(input:unknown,context:WireContext){
   check(original.schemaVersion===TASK_REQUIREMENTS_VERSION&&Array.isArray(original.requirements)&&original.requirements.length<=32,'SHAPE')
   const {requirements,...rest}=original
   const projected:RoleAuthorityFacts={...rest,schemaVersion:ROLE_AUTHORITY_VERSION}
+  const informationIndexChanges: Array<{scopeId:string;ownerTaskId:string}> = []
   projectRoleAuthority(projected,context,true) // Validate every existing wire field, not a mirror schema.
   for(const r of requirements){
     check(r&&Object.keys(r).sort().join(',')==='conditionScopeIds,ownerTaskId,scopeIds,text'
@@ -37,8 +39,15 @@ export function projectTaskRequirements(input:unknown,context:WireContext){
     t!.propositionScopeIds=[...new Set([...t!.propositionScopeIds,...r.scopeIds])]
     t!.detail.description=[t!.detail.description,r.text].filter((s,i,a)=>!!s&&a.indexOf(s)===i).join('\n')
     t!.detail.completionCriteria=[...new Set([...t!.detail.completionCriteria,r.text])]
+    // This typed, literal requirement already has its real task owner. The
+    // legacy information index cannot use that owner as another primary action.
+    // Remove only this explicit inverse citation, never another entity or scope.
+    for(const row of projected.scopeAccounting.filter(row=>row.kind==='information'&&r.scopeIds.includes(row.scopeId)&&row.primaryEntityIds.includes(r.ownerTaskId))){
+      row.primaryEntityIds=row.primaryEntityIds.filter(id=>id!==r.ownerTaskId)
+      informationIndexChanges.push({scopeId:row.scopeId,ownerTaskId:r.ownerTaskId})
+    }
   }
-  return {projected,audit:{version:TASK_REQUIREMENTS_VERSION,inferredFacts:0,operation:'EXPLICIT_REQUIREMENT_OWNER_TO_TASK_DETAILS',original,requirements}}
+  return {projected,audit:{version:TASK_REQUIREMENTS_PROJECTION_VERSION,wireVersion:TASK_REQUIREMENTS_VERSION,inferredFacts:0,operation:'EXPLICIT_REQUIREMENT_OWNER_TO_TASK_DETAILS',original,requirements,informationIndexChanges}}
 }
 export function decodeTaskRequirementsRecording(raw:string,context:WireContext,role:'EngineeringFixture'|'SingleAuthority'='EngineeringFixture'){
   check(new TextEncoder().encode(raw).byteLength<=524288,'SIZE')

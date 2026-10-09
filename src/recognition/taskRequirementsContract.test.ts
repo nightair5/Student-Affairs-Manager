@@ -10,6 +10,24 @@ import { emptyWorkspace } from '../experiments/mainline01/fixtures'
 import { buildSourceReviewPlan,commitSourceReview,verifySourceReviewReadback } from '../domain/v2/sourceReviewD26'
 
 describe('typed requirements retain one core action and independent obligations',()=>{
+  it('uses literal typed ownership for information support without erasing unrelated references or coverage risks',async()=>{
+    const x=await createTaskRequirementsFixture(),facts=structuredClone(x.facts),r=facts.requirements[0]
+    const scopeId=r.scopeIds[0],row=facts.scopeAccounting.find(row=>row.scopeId===scopeId)!
+    row.kind='information';row.primaryEntityIds=[r.ownerTaskId]
+    const p=projectTaskRequirements(facts,x.context)
+    expect(p.projected.scopeAccounting.find(row=>row.scopeId===scopeId)!.primaryEntityIds).toEqual([])
+    expect(p.audit.informationIndexChanges).toContainEqual({scopeId,ownerTaskId:r.ownerTaskId})
+    const envelope=JSON.parse(x.rawHttpText);envelope.output[0].content[0].text=JSON.stringify(facts)
+    const raw=JSON.stringify(envelope),d=decodeTaskRequirementsRecording(raw,x.context)
+    expect(d.sidecar.originalResponse).toBe(raw);expect(d.result.standaloneTasks).toHaveLength(2)
+    const invalid=structuredClone(facts);invalid.scopeAccounting.find(row=>row.scopeId===scopeId)!.primaryEntityIds=['missing-owner']
+    envelope.output[0].content[0].text=JSON.stringify(invalid)
+    expect(()=>decodeTaskRequirementsRecording(JSON.stringify(envelope),x.context)).toThrow('REFERENCE')
+    const missing=structuredClone(facts);missing.tasks[0].coverage.material.status='present';missing.materials=[]
+    envelope.output[0].content[0].text=JSON.stringify(missing)
+    const blocked=decodeTaskRequirementsRecording(JSON.stringify(envelope),x.context)
+    expect(blocked.result.conflicts.some(c=>c.id.includes('material')&&c.requiresDecision)).toBe(true)
+  })
   it('preserves conditional fields, two real actions and shared window through canonical save/readback',async()=>{
     const x=await createTaskRequirementsFixture(),d=decodeTaskRequirementsRecording(x.rawHttpText,x.context)
     expect(validateRecognitionResult(d.result).valid).toBe(true)

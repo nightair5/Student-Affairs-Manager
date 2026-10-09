@@ -28,6 +28,24 @@ async function fixture(object = '返校登记') {
 }
 
 describe('existing authoritative task support uses the ordinary product path', () => {
+  it('derives only explicitly owned literal receipt and unknown-state inverses, without inventing eligibility',async()=>{
+    const x=await fixture('仪器预约'),sourceText='请完成仪器预约。预约成功以收到确认邮件为准。是否录取尚未通知。'
+    const index=await indexImmutableScopesV11('receipt-state','v1',sourceText),[action,receipt,state]=index.scopes
+    const facts=structuredClone(x.facts),t=facts.tasks[0]
+    t.action={surface:'完成',scopeId:action.id};t.object={surface:'仪器预约',scopeId:action.id}
+    t.propositionScopeIds=[action.id];t.detail.description=action.text;t.detail.completionCriteria=[receipt.text]
+    t.condition={value:'unknown',conditionScopeIds:[state.id],factScopeIds:[state.id]}
+    t.coverage.time={status:'not_stated',absenceScopeIds:[]};facts.timePoints=[]
+    facts.scopeAccounting=index.scopes.map(s=>({scopeId:s.id,kind:s.id===action.id?'action' as const:'information' as const,primaryEntityIds:[t.id]}))
+    const p=projectAuthoritySupportContext(facts,{...x.context,index},true)
+    expect(p.projected.tasks[0].condition.value).toBe('unknown')
+    expect(p.projected.tasks[0].propositionScopeIds).toEqual([action.id,receipt.id,state.id])
+    expect(p.audit.changes).toHaveLength(2)
+    const absent=structuredClone(facts);absent.tasks[0].condition.factScopeIds=[]
+    expect(()=>projectAuthoritySupportContext(absent,{...x.context,index},true)).toThrow('REFERENCE')
+    const unsupported=structuredClone(facts);unsupported.tasks[0].detail.completionCriteria=['提交后需另行缴费']
+    expect(()=>projectAuthoritySupportContext(unsupported,{...x.context,index},true)).toThrow('REFERENCE')
+  })
   it('nested event support owns its actual literal attribute before inverse indexing, with foreign owners still rejected',async()=>{
     const x=await createAuthorityFixture('single'), f=structuredClone(x.facts), e=f.events[0]
     const ids=e.attributes.flatMap(a=>a.scopeIds)

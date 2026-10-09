@@ -2,11 +2,12 @@ import { plainJson } from '../experiments/mainline04/semanticContract'
 import { MAX_REQUEST_BYTES, type WireContext } from '../experiments/realInput01/modelWire'
 import { buildSingleAuthorityRequest, SINGLE_AUTHORITY_SCHEMA, SINGLE_AUTHORITY_VERSION, type SingleAuthorityFacts } from './sourceContractV5'
 import { decodeAuthorityProductRecording } from './singleAuthorityProduct'
+import { hasLiteralScopeSpan } from './authorityLiteralSupport'
 
 export const OBLIGATION_AUTHORITY_VERSION = 'obligation-authority-source-contract-6.0.0' as const
 export const OBLIGATION_CANDIDATE_VERSION = 'obligation-authority-generation-1.0.0'
 export const OBLIGATION_PROMPT_VERSION = 'recognition-obligation-authority-1.0.0'
-export const OBLIGATION_LOCAL_RELATION_VERSION = 'obligation-local-relation-1.1.0'
+export const OBLIGATION_LOCAL_RELATION_VERSION = 'obligation-local-relation-1.2.0'
 export type ObligationAuthorityFacts = Omit<SingleAuthorityFacts, 'schemaVersion' | 'tasks' | 'events'> & {
   schemaVersion: typeof OBLIGATION_AUTHORITY_VERSION
   tasks: Array<SingleAuthorityFacts['tasks'][number] & { eventLinks: Array<{ eventId: string; scopeIds: string[] }> }>
@@ -54,6 +55,7 @@ export function projectObligationAuthority(input: unknown, context: WireContext,
   check(matches(original, OBLIGATION_AUTHORITY_SCHEMA), 'SHAPE')
   const relations: Array<{ taskId: string; eventId: string; scopeIds: string[] }> = []
   const quarantinedRelations: typeof relations = []
+  const derivedInverseEvidence: typeof relations = []
   const quarantinedPrerequisites: ObligationAuthorityFacts['prerequisiteStates'] = []
   for (const t of original.tasks) {
     const seen = new Set<string>()
@@ -64,6 +66,18 @@ export function projectObligationAuthority(input: unknown, context: WireContext,
       seen.add(link.eventId)
       if (!link.scopeIds.every(id => t.propositionScopeIds.includes(id) && e!.scopeIds.includes(id))) {
         check(localizeEvidenceMismatch, 'EVENT_LINK_EVIDENCE')
+        // The link itself is the authority. Its missing duplicate event index
+        // may be derived only when every actual citation names the exact task
+        // object/event and action; unrelated scopes/owners are never repaired.
+        const explicitEndpoint = t.object.surface.trim()===e!.title.trim()
+          && e!.scopeIds.some(id=>hasLiteralScopeSpan(e!.title,[id],context))
+          && link.scopeIds.every(id=>t.propositionScopeIds.includes(id)&&context.index.scopes.some(s=>s.id===id
+            && s.text.includes(t.action.surface)&&s.text.includes(e!.title)
+            && !/(?:不要|不得|取消|无需|不必|勿|禁止).{0,8}(?:报名|登记|准备|参加)/u.test(s.text)))
+        if(explicitEndpoint){
+          const relation={taskId:t.id,eventId:link.eventId,scopeIds:[...link.scopeIds]}
+          derivedInverseEvidence.push(relation);relations.push(relation);continue
+        }
         quarantinedRelations.push({ taskId: t.id, eventId: link.eventId, scopeIds: [...link.scopeIds] })
         continue
       }
@@ -79,7 +93,7 @@ export function projectObligationAuthority(input: unknown, context: WireContext,
   const projected: SingleAuthorityFacts = { ...original, schemaVersion: SINGLE_AUTHORITY_VERSION,
     prerequisiteStates,
     tasks: original.tasks.map(({ eventLinks, ...t }) => { void eventLinks; return t }),
-    events: original.events.map(e => ({ ...e, relatedTaskTempIds: relations.filter(r => r.eventId === e.tempId).map(r => r.taskId) })),
+    events: original.events.map(e => ({ ...e,scopeIds:[...new Set([...e.scopeIds,...derivedInverseEvidence.filter(r=>r.eventId===e.tempId).flatMap(r=>r.scopeIds)])], relatedTaskTempIds: relations.filter(r => r.eventId === e.tempId).map(r => r.taskId) })),
     conflicts: [...original.conflicts, ...quarantinedRelations.map((r, i) => ({ id: `event-link-risk-${i}`, type: 'other' as const,
       message: '该事项与活动的关联依据不完整，关联暂不采用；已有活动和无关联风险的内容仍可单独保存。',
       entityTempIds: [r.taskId], scopeIds: r.scopeIds, requiresDecision: true })), ...quarantinedPrerequisites.map((p, i) => ({ id: `prerequisite-link-risk-${i}`, type: 'other' as const,
@@ -87,7 +101,7 @@ export function projectObligationAuthority(input: unknown, context: WireContext,
       entityTempIds: [p.taskId], scopeIds: p.factScopeIds, requiresDecision: true }))],
   }
   return { projected, audit: { version: OBLIGATION_AUTHORITY_VERSION, operation: 'TASK_EVENT_LINK_TO_INVERSE_INDEX_ONLY', inferredFacts: 0, relations,
-    localRelations: { version: OBLIGATION_LOCAL_RELATION_VERSION, enabled: localizeEvidenceMismatch, quarantinedRelations, quarantinedPrerequisites }, original } }
+    localRelations: { version: OBLIGATION_LOCAL_RELATION_VERSION, enabled: localizeEvidenceMismatch, derivedInverseEvidence, quarantinedRelations, quarantinedPrerequisites }, original } }
 }
 
 export function decodeObligationProductRecording(raw: string, context: WireContext, role: 'EngineeringFixture' | 'SingleAuthority' = 'EngineeringFixture', localizeMissingCoverage=false, separatedWindowEvidence=false) {

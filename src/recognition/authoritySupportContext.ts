@@ -4,7 +4,7 @@ import type { SingleAuthorityFacts } from './sourceContractV5'
 import { hasLiteralScopeSpan } from './authorityLiteralSupport'
 
 export const AUTHORITY_SUPPORT_CONTEXT_VERSION = 'authority-support-context-1.0.0'
-export const AUTHORITY_TYPED_SUPPORT_CONTEXT_VERSION = 'authority-support-context-1.3.0'
+export const AUTHORITY_TYPED_SUPPORT_CONTEXT_VERSION = 'authority-support-context-1.4.0'
 const text = (s: string) => s.replace(/[\s，。；,:：;！!]/gu, '')
 const check = (ok: unknown) => { if (!ok) throw Error('AUTHORITY_SUPPORT_CONTEXT_REFERENCE') }
 
@@ -14,7 +14,7 @@ const check = (ok: unknown) => { if (!ok) throw Error('AUTHORITY_SUPPORT_CONTEXT
 export function projectAuthoritySupportContext(input: unknown, context: WireContext, allowTypedSupport = false) {
   const original = plainJson(input) as SingleAuthorityFacts, projected = structuredClone(original)
   check(Array.isArray(projected.scopeAccounting) && Array.isArray(projected.tasks))
-  const changes: Array<{ scopeId: string; taskId: string; reason: 'LITERAL_SUPPORT' | 'URL_CONTINUATION' | 'TYPED_ATTRIBUTE_SUPPORT' }> = []
+  const changes: Array<{ scopeId: string; taskId: string; reason: 'LITERAL_SUPPORT' | 'URL_CONTINUATION' | 'TYPED_ATTRIBUTE_SUPPORT' | 'EXPLICIT_STATE_OR_RECEIPT_SUPPORT' }> = []
   const omittedScopes: Array<{ scopeId: string; kind: 'information' | 'unresolved'; reason: 'PAIRED_STRUCTURAL_LABEL' | 'UNACCOUNTED_SCOPE' }> = []
   for (const row of projected.scopeAccounting) {
     if (row.kind !== 'information' || !row.primaryEntityIds.length) continue
@@ -51,7 +51,18 @@ export function projectAuthoritySupportContext(input: unknown, context: WireCont
         changes.push({ scopeId: row.scopeId, taskId: id, reason: 'TYPED_ATTRIBUTE_SUPPORT' })
         continue
       }
-      check(task && task.propositionScopeIds.includes(row.scopeId))
+      check(task)
+      // Derive an omitted inverse index from an existing exact receipt criterion
+      // or explicitly cited unknown personal-state declaration. Neither creates
+      // an obligation, changes qualification, nor classifies arbitrary prose.
+      const receiptAction=scope!.text.match(/^(报名|登记|提交|办理|申请|预约)(?:成功|办结|完成)以.+为准[。；]?$/u)?.[1]
+      const receiptSupport = allowTypedSupport && receiptAction
+        && (task!.action.surface.includes(receiptAction)||task!.object.surface.includes(receiptAction))
+        && task!.detail.completionCriteria.some(c=>hasLiteralScopeSpan(c,[row.scopeId],context)&&text(c).includes(text(scope!.text)))
+      const unknownStateSupport = allowTypedSupport && task!.condition.value==='unknown'
+        && task!.condition.conditionScopeIds.includes(row.scopeId)&&task!.condition.factScopeIds.includes(row.scopeId)
+        && /^是否.{1,30}(?:尚未|还未|未)(?:公布|通知|确定)[。；]?$/u.test(scope!.text)
+      check(task!.propositionScopeIds.includes(row.scopeId)||receiptSupport||unknownStateSupport)
       const action = context.index.scopes.find(s => s.id === task!.action.scopeId)
       const object = context.index.scopes.find(s => s.id === task!.object.scopeId)
       check(action?.text.includes(task!.action.surface) && object?.text.includes(task!.object.surface)
@@ -59,6 +70,13 @@ export function projectAuthoritySupportContext(input: unknown, context: WireCont
           && task!.propositionScopeIds.includes(r.scopeId)))
       // A primary directive cannot be reclassified as information.
       check(row.scopeId !== task!.action.scopeId && row.scopeId !== task!.object.scopeId)
+      if(receiptSupport||unknownStateSupport){
+        const target=projected.tasks.find(t=>t.id===id)!
+        target.propositionScopeIds=[...new Set([...target.propositionScopeIds,row.scopeId])]
+        if(!target.detail.description.includes(scope!.text))target.detail.description=[target.detail.description,scope!.text].filter(Boolean).join('\n')
+        changes.push({scopeId:row.scopeId,taskId:id,reason:'EXPLICIT_STATE_OR_RECEIPT_SUPPORT'})
+        continue
+      }
       const literal = text(scope!.text), previous = context.index.scopes.find(s => s.order === scope!.order - 1)
       const url = /^\/\/[A-Za-z0-9.-]+\//u.test(scope!.text) && previous?.text.endsWith('https:')
         && task!.propositionScopeIds.includes(previous.id) && previous.id === action!.id

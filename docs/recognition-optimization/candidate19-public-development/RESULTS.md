@@ -1,4 +1,26 @@
-# 当前结果：共享适用判断和恢复已交付，新四份模型输出未完成
+# 当前结果：条件字段真实验证与首次数据损失修复，收益伴退步
+
+2026-10-09。本轮实际完成8请求/8SETTLED/0UNCERTAIN，零retry/repair/verifier；用户3小时共享授权范围内自主执行，没有逐批追加确认。原4有证据的发送前身份用原grant完成，另2匿名来源×两臂4请求仅1新grant，所有旧真正不确定批继续封存。
+
+[完整报告](current-notice-diagnostic/current-mechanism-followup/qualification-association-followup/AUTONOMOUS_20261009_REPORT.md) · [逐份事实](current-notice-diagnostic/current-mechanism-followup/qualification-association-followup/task-requirements-comparison/observed/FACT_ADJUDICATION.json) · [原答](current-notice-diagnostic/current-mechanism-followup/qualification-association-followup/task-requirements-comparison/observed/MODEL_OBSERVATIONS.json) · [前后转换](current-notice-diagnostic/current-mechanism-followup/qualification-association-followup/task-requirements-comparison/observed/PRODUCT_DIAGNOSTIC.json) · [保存恢复](current-notice-diagnostic/current-mechanism-followup/qualification-association-followup/task-requirements-comparison/observed/PERSISTENCE_REPLAY.json) · [调用](current-notice-diagnostic/current-mechanism-followup/qualification-association-followup/task-requirements-comparison/observed/EXECUTION_SUMMARY.json) · [验证](current-notice-diagnostic/current-mechanism-followup/qualification-association-followup/task-requirements-comparison/observed/VALIDATION_SUMMARY.json)。以下旧包为原样保留的历史。
+
+**用户少改：**设备编号/联系方式/年级/器材型号归回登记或报名要求，两来源字段事项3/4→2/2，独立领取/录取后准备仍保留。原答已有的unknown录取、确认邮件办结和活动关联不因漏重复索引而整份消失；假owner、缺实体、错时间和无据关系仍受阻。复用普通App/ReviewSession/DomainCommitPlan/Repository及D27，原答/转换/首份/人改分开，默认及v8未改。
+
+| 同两匿名Development来源，每臂分母2 | V7正确/错/未知 | 条件字段机制正确/错/未知 |
+|---|---|---|
+| 真实原答事实，provisional | 0 / 2 / 0 | 1 / 1 / 0 |
+| 原冻结公共程序首份数据 | 0 / 2 / 0 | 0 / 2 / 0 |
+| 新公共程序同raw首份数据 | 0 / 2 / 0 | 1 / 1 / 0 |
+
+结论**MIXED_PROGRESS**：REQ-02暂定完整，REQ-01仍把领取时间当截止，新机制material present无实体导致两任务受阻，不能选默认赢家。1/2不代表总体50%准确率，后程序修复不重写冻结比较；非独立真值/Holdout/泛化。官方另4节选原答0完整2错2未知，首份数据仍0完整，局部事实恢复不算整份正确；旧v11/12后验不改。
+
+内存普通产品链验证部分确认/事务无半份/手动恢复/提交后只重读/检查点/独立加载及安排：REQ-02 Task1/Event1/Time4（含1个人安排）/Material0/Project0，录取unknown相机待办仍未确认。**浏览器点击NOT_RUN**：Computer Use不能可靠识别当前Windows URL而策略停止，未换方式绕过；内存证据、旧6913均不冒充新页面。最终唯一[固定录制入口6915](http://127.0.0.1:6915/)，实时模型关闭，构建HTTP现场以最终记录为准。
+
+真实usage输入44924/输出22452，内部保守结算上界US$0.040424，实扣NOT_OBSERVABLE；本轮只分配最坏硬限2.60美元、8次数，未花满16/$6。42独立组36PASS/6旧历史FAIL，整体exit1；lint/build通过，开发audit2critical6high1moderate、production0。保护84/119/7及74用户/封存资产保持，账本1065合法完整链及1048旧前缀不变。下一用现raw定向查办理时间/材料owner/组合名称，不再造空表或重建系统。
+
+---
+
+# 历史结果：共享适用判断和恢复已交付，新四份模型输出未完成
 
 2026-10-09交接，实测记录为10月8日UTC。[本轮完整报告](current-notice-diagnostic/current-mechanism-followup/qualification-association-followup/REPORT.md) · [浏览器](current-notice-diagnostic/current-mechanism-followup/qualification-association-followup/BROWSER_EVIDENCE.md) · [验证](current-notice-diagnostic/current-mechanism-followup/qualification-association-followup/VALIDATION.md)。
 

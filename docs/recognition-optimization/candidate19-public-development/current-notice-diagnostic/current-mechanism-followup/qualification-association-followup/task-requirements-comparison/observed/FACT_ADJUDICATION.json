@@ -1,0 +1,311 @@
+{
+  "version": "requirements-observed-source-facts-1.0.0",
+  "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+  "evaluation": "POST_OUTPUT_SOURCE_FACT_DIAGNOSTIC_NOT_OLD_SCORE_REWRITE",
+  "referenceFrozenBeforeOutputs": true,
+  "browser": "NOT_RUN_POLICY_STOP",
+  "unknownQualificationCanBeCorrect": true,
+  "rows": [
+    {
+      "group": "official-current",
+      "ordinal": 1,
+      "raw": "UNKNOWN",
+      "first": "INCORRECT",
+      "facts": [
+        "激活、登录、预注册及2026-08-13至27日期窗口存在；个人类别未给出，资格unknown可合法"
+      ],
+      "errors": [],
+      "disputes": [
+        "账号和系统为组合对象、渠道迎新系统仅引系统片段；组合表示与逐字引用仍未裁决"
+      ],
+      "firstLoss": [
+        "激活登录的组合对象未通过公共逐字规则，首份数据仍为待核对事项，不能称已完整展示"
+      ],
+      "layer": "GENERATION_REPRESENTATION_AND_PRIMARY_LITERAL_SUPPORT",
+      "sourceId": "current-role-public-FRESH-02",
+      "candidate": "RoleAuthority",
+      "requestSha256": "0c15940b19ed1abe7097ba5a86a0227a712390df180f4a04d05365d214e45d56",
+      "responseSha256": "f272672bce9162260e6a7c99996c43a1cb17fcee983ac525e55adb4b48d8f63c",
+      "sourceQuote": "为方便新生更好地了解校园文化、简化注册流程，2026级新生须于指定时间内登录迎新系统完成网上预注册流程。\n由于系统维护和升级，迎新系统开放时间与入学须知中规定的时间略有不同，请以本通知的时间为准。新生请在指定时间内激活账号和登录系统，不在指定时间内激活账号和登录都会显示“账号和密码错误”。\n本科生（大陆地区）：8月13—27日",
+      "frozenDecodeError": "ROLE_AUTHORITY_CHANNEL_EVIDENCE",
+      "rawFactEvidence": "MODEL_OBSERVATIONS.json same group/ordinal",
+      "firstEvidence": "PRODUCT_DIAGNOSTIC.json same group/ordinal",
+      "userCorrections": 0,
+      "independentAdjudication": false,
+      "leakageAdjudication": "NOT_ADJUDICATED"
+    },
+    {
+      "group": "official-current",
+      "ordinal": 2,
+      "raw": "INCORRECT",
+      "first": "INCORRECT",
+      "facts": [
+        "核心离留校登记、2026-07-16日期及学工系统应用存在"
+      ],
+      "errors": [
+        "冻结最小义务是一项核心登记；去向/联系方式/返校安排被另列独立待办，短期离厦被另列同登记待办，首份增加核对负担"
+      ],
+      "disputes": [
+        "日前日终边界未独立裁决",
+        "组合渠道原文真实存在但被逐字范围规则局部阻断，不称凭空渠道"
+      ],
+      "firstLoss": [
+        "三个登记卡及局部渠道风险仍在"
+      ],
+      "layer": "GENERATION_FORM_REQUIREMENT_FRAGMENTATION",
+      "sourceId": "current-role-public-FRESH-04",
+      "candidate": "RoleAuthority",
+      "requestSha256": "fc723f08c305b449a9abe60b046e194e83950d23716233f57344b6b9d06a7f65",
+      "responseSha256": "db4e838a96921bcc281ec5534b1f26c42e944f09ee04d6cc04001cf15e35ff17",
+      "sourceQuote": "一、各位同学应于7月16日前通过学工系统“暑假离留校登记”应用完成相关信息登记（https://xmuxg.xmu.edu.cn/app/182），并确保填写的信息完整、准确。离校同学应如实登记去向、联系方式及返校安排；暑期留校同学如短期离厦外出，视同离校学生管理，亦应及时做好相关登记。",
+      "frozenDecodeError": "ROLE_AUTHORITY_CHANNEL_EVIDENCE",
+      "rawFactEvidence": "MODEL_OBSERVATIONS.json same group/ordinal",
+      "firstEvidence": "PRODUCT_DIAGNOSTIC.json same group/ordinal",
+      "userCorrections": 0,
+      "independentAdjudication": false,
+      "leakageAdjudication": "NOT_ADJUDICATED"
+    },
+    {
+      "group": "official-current",
+      "ordinal": 3,
+      "raw": "UNKNOWN",
+      "first": "INCORRECT",
+      "facts": [
+        "报名、准备终端、活动日期2026-07-06至10、报名截止2026-06-30T17:00、线上形式存在"
+      ],
+      "errors": [],
+      "disputes": [
+        "暑期学校活动组合标题及活动对象与关联的表示/归属未裁决",
+        "未读取课程海报和二维码，不补URL或场次"
+      ],
+      "firstLoss": [
+        "事件身份仍被首份规则降为待核对事件；保存此事件受阻，已有格式/讨论/证明属性不能抵消这个损失"
+      ],
+      "layer": "PRIMARY_LITERAL_SUPPORT_AND_EVENT_LINK_SCOPE",
+      "sourceId": "current-role-public-FRESH-05",
+      "candidate": "RoleAuthority",
+      "requestSha256": "3dc7a7beca597d886d4bccba3f15e7f1a7668739aedfa93396e29ed156c596b7",
+      "responseSha256": "a1c1ae0d301d4e10d6de1ba491d2fe008ab5636f95250f352b44583287c09bc7",
+      "sourceQuote": "招生对象：在读本科生和研究生、青年研究人员等\n收费情况：免费\n活动时间：2026年7月6日-7月10日\n活动形式：线上讲座，被录取的正式学员可以进入线上会议室听课并提问互动，各学员需自行准备相关终端设备，以便连线\n报名方式：网络报名，有意参加活动可通过下方二维码报名\n学习结束后可获得暑期学校结业证书，欢迎大家踊跃报名，我们期待与您相聚云端。\n报名截止时间：2026年6月30日17:00",
+      "frozenDecodeError": null,
+      "rawFactEvidence": "MODEL_OBSERVATIONS.json same group/ordinal",
+      "firstEvidence": "PRODUCT_DIAGNOSTIC.json same group/ordinal",
+      "userCorrections": 0,
+      "independentAdjudication": false,
+      "leakageAdjudication": "NOT_ADJUDICATED"
+    },
+    {
+      "group": "official-current",
+      "ordinal": 4,
+      "raw": "INCORRECT",
+      "first": "INCORRECT",
+      "facts": [
+        "讲座2026-10-12T12:30至14:00、地点、报名截止2026-10-11T12:00及50份午餐存在"
+      ],
+      "errors": [
+        "报名object=活动信息，取了结构标题而非报名业务对象；是生成对象错误"
+      ],
+      "disputes": [],
+      "firstLoss": [
+        "错误任务保持待核对；正确讲座及起止恢复显示并可单独确认，整份仍不正确"
+      ],
+      "layer": "GENERATION_OBJECT_AND_LOCAL_RELATION_QUARANTINE",
+      "sourceId": "current-role-public-FRESH-06",
+      "candidate": "RoleAuthority",
+      "requestSha256": "0eb80f1c063acc48355441b4f5e1dcbac015a62211afb69d4ed7aa049e4848f1",
+      "responseSha256": "30f84ae2675e2a6bdc5bdf0a25671eb79ccbe8790f1f52e50a1cbdc7224ec50d",
+      "sourceQuote": "活动信息\n\n**时间**\n\n2026年10月12日（周一）\n\n12:30-14:00\n\n**地点**\n\n海韵园办公楼A栋302室\n\n**报名**\n\n扫描下方二维码进行报名，听众报名截止时间为2026年10月11日中午12:00，主办方提供50份免费午餐，按报名顺序先到先得（讲座的听众总人数不作限制，感兴趣均可报名）。",
+      "frozenDecodeError": "OBLIGATION_AUTHORITY_EVENT_LINK_EVIDENCE",
+      "rawFactEvidence": "MODEL_OBSERVATIONS.json same group/ordinal",
+      "firstEvidence": "PRODUCT_DIAGNOSTIC.json same group/ordinal",
+      "userCorrections": 0,
+      "independentAdjudication": false,
+      "leakageAdjudication": "NOT_ADJUDICATED"
+    },
+    {
+      "group": "paired-requirements",
+      "ordinal": 1,
+      "raw": "INCORRECT",
+      "first": "INCORRECT",
+      "facts": [
+        "登记/领取独立动作、登记截止、领取地点和时间存在；一个字段子项仍在"
+      ],
+      "errors": [
+        "领取办理时刻被标task_deadline",
+        "登记material=present但材料仅连接字段子项，登记本身覆盖仍缺owner"
+      ],
+      "disputes": [
+        "子项展示粒度不单独当无据义务；关键时间类型错误足以判整份错"
+      ],
+      "firstLoss": [
+        "material覆盖风险保留；不改原时间类型凑对"
+      ],
+      "layer": "GENERATION_TIME_ROLE_AND_MATERIAL_OWNER",
+      "sourceId": "REQ-01",
+      "candidate": "RoleAuthority",
+      "requestSha256": "577b776938f03c74f2f885bb20ade20d5692b6ff0ac71039e2639b586862192d",
+      "responseSha256": "750c6f6f02317890bbd95b5a65d388e829085a094cdd025dd92a93c42edb65dc",
+      "sourceQuote": "请在2026年11月20日16:00前完成仪器借用登记。登记时须填写设备编号和联系电话；跨校使用者还须填写接收单位。同一登记不需要另填第二份表。登记提交后，请于2026年11月21日09:00到器材室领取借用卡。",
+      "frozenDecodeError": null,
+      "rawFactEvidence": "MODEL_OBSERVATIONS.json same group/ordinal",
+      "firstEvidence": "PRODUCT_DIAGNOSTIC.json same group/ordinal",
+      "userCorrections": 0,
+      "independentAdjudication": false,
+      "leakageAdjudication": "NOT_ADJUDICATED"
+    },
+    {
+      "group": "paired-requirements",
+      "ordinal": 2,
+      "raw": "INCORRECT",
+      "first": "INCORRECT",
+      "facts": [
+        "仅2真实动作；3条原文要求归登记，包括跨校条件和无需第二表；领取未吞为要求"
+      ],
+      "errors": [
+        "领取办理时刻仍task_deadline",
+        "materials=[]且两task均material=present，违反现有覆盖契约，不能程序补成not_stated"
+      ],
+      "disputes": [],
+      "firstLoss": [
+        "原冻结SUPPORT_CONTEXT_REFERENCE全份拒绝已修；首份2任务仍各有材料风险"
+      ],
+      "layer": "GENERATION_TIME_ROLE_AND_MATERIAL_COVERAGE",
+      "sourceId": "REQ-01",
+      "candidate": "TaskRequirements",
+      "requestSha256": "bd3ebfcba66da74bee31be7c4972fb530440852f3e7fdcdc5f94c26eac9ed0b7",
+      "responseSha256": "ed7e89a18c3b9fded70d6d4254f1f94e2fa1c8689c4a836994d33db0907fd5b9",
+      "sourceQuote": "请在2026年11月20日16:00前完成仪器借用登记。登记时须填写设备编号和联系电话；跨校使用者还须填写接收单位。同一登记不需要另填第二份表。登记提交后，请于2026年11月21日09:00到器材室领取借用卡。",
+      "frozenDecodeError": "AUTHORITY_SUPPORT_CONTEXT_REFERENCE",
+      "rawFactEvidence": "MODEL_OBSERVATIONS.json same group/ordinal",
+      "firstEvidence": "PRODUCT_DIAGNOSTIC.json same group/ordinal",
+      "userCorrections": 0,
+      "independentAdjudication": false,
+      "leakageAdjudication": "NOT_ADJUDICATED"
+    },
+    {
+      "group": "paired-requirements",
+      "ordinal": 3,
+      "raw": "PROVISIONAL_CORRECT",
+      "first": "PROVISIONAL_CORRECT",
+      "facts": [
+        "2真实动作：可选报名、录取后准备相机",
+        "2报名字段要求显式owner，不使局部借器材条件成为整个报名资格",
+        "摄影工作坊/艺文楼C204/2026-11-25T14:00至16:00",
+        "报名截止2026-11-22T18:00、二维码渠道、确认邮件办结",
+        "相机材料owner=准备相机；是否录取未通知保持unknown",
+        "task.eventLinks真实指向同一活动，程序仅派生漏写的反向索引"
+      ],
+      "errors": [],
+      "disputes": [],
+      "firstLoss": [],
+      "layer": "VALID_SOURCE_FACTS_WITH_DERIVED_INVERSE_INDEX",
+      "proseReview": "标题、自由描述、条件字段、回执逐句核原文暂定无额外事实；非独立人工真值",
+      "sourceId": "REQ-02",
+      "candidate": "TaskRequirements",
+      "requestSha256": "d8323d65861aa093d3c65fb1c8376c5836b64a2ce8acb405f3ce59d6acd9b6eb",
+      "responseSha256": "33a377de2e9cc73923dd29c17c3ed0b2e66947a22318b994f6a2f71dd5ffcb20",
+      "sourceQuote": "摄影工作坊于2026年11月25日14:00开始，16:00结束，地点为艺文楼C204。有意参加者可在2026年11月22日18:00前通过报名二维码报名摄影工作坊。报名时须填写年级；需借用器材者还须注明器材型号。获得录取后需自行准备相机；是否录取尚未通知。报名成功以收到确认邮件为准。",
+      "frozenDecodeError": "AUTHORITY_SUPPORT_CONTEXT_REFERENCE",
+      "rawFactEvidence": "MODEL_OBSERVATIONS.json same group/ordinal",
+      "firstEvidence": "PRODUCT_DIAGNOSTIC.json same group/ordinal",
+      "userCorrections": 0,
+      "independentAdjudication": false,
+      "leakageAdjudication": "NOT_ADJUDICATED"
+    },
+    {
+      "group": "paired-requirements",
+      "ordinal": 4,
+      "raw": "INCORRECT",
+      "first": "INCORRECT",
+      "facts": [
+        "活动起止/地点、报名截止、二维码及相机准备动作存在"
+      ],
+      "errors": [
+        "填写年级/注明型号子项依赖报名完成，字段办理时序被倒置",
+        "报名material=present但materials=[]，契约不一致"
+      ],
+      "disputes": [
+        "2字段子项本身是粒度/用户操作负担，不凭数量单独认作无据新增"
+      ],
+      "firstLoss": [
+        "材料覆盖和局部资格仍待核对；独立活动可保存"
+      ],
+      "layer": "GENERATION_DEPENDENCY_AND_MATERIAL_COVERAGE",
+      "sourceId": "REQ-02",
+      "candidate": "RoleAuthority",
+      "requestSha256": "86621b07dbfde053e8d58970f3e333b87c5e9d1dc63ce8ae5cbff6b7a94be11b",
+      "responseSha256": "375e844ac0a7a0ff152fd8f2a660935b275880c855b58b1803070d6a7797a161",
+      "sourceQuote": "摄影工作坊于2026年11月25日14:00开始，16:00结束，地点为艺文楼C204。有意参加者可在2026年11月22日18:00前通过报名二维码报名摄影工作坊。报名时须填写年级；需借用器材者还须注明器材型号。获得录取后需自行准备相机；是否录取尚未通知。报名成功以收到确认邮件为准。",
+      "frozenDecodeError": null,
+      "rawFactEvidence": "MODEL_OBSERVATIONS.json same group/ordinal",
+      "firstEvidence": "PRODUCT_DIAGNOSTIC.json same group/ordinal",
+      "userCorrections": 0,
+      "independentAdjudication": false,
+      "leakageAdjudication": "NOT_ADJUDICATED"
+    }
+  ],
+  "summary": {
+    "officialRaw": {
+      "provisionalCorrect": 0,
+      "incorrect": 2,
+      "unknown": 2,
+      "denominator": 4
+    },
+    "officialFirstData": {
+      "provisionalCorrect": 0,
+      "incorrect": 4,
+      "unknown": 0,
+      "denominator": 4
+    },
+    "pairedRaw": {
+      "RoleAuthority": {
+        "provisionalCorrect": 0,
+        "incorrect": 2,
+        "unknown": 0,
+        "denominator": 2
+      },
+      "TaskRequirements": {
+        "provisionalCorrect": 1,
+        "incorrect": 1,
+        "unknown": 0,
+        "denominator": 2
+      }
+    },
+    "pairedPostProgramFirst": {
+      "RoleAuthority": {
+        "provisionalCorrect": 0,
+        "incorrect": 2,
+        "unknown": 0,
+        "denominator": 2
+      },
+      "TaskRequirements": {
+        "provisionalCorrect": 1,
+        "incorrect": 1,
+        "unknown": 0,
+        "denominator": 2
+      }
+    },
+    "frozenFirst": {
+      "RoleAuthority": {
+        "provisionalCorrect": 0,
+        "incorrect": 2,
+        "unknown": 0,
+        "denominator": 2
+      },
+      "TaskRequirements": {
+        "provisionalCorrect": 0,
+        "incorrect": 2,
+        "unknown": 0,
+        "denominator": 2
+      }
+    },
+    "selection": "MIXED_PROGRESS",
+    "selectionBasis": [
+      "目标字段独立卡总数由3+4变2+2，独立领取/设备没有吞并",
+      "新机制REQ-02源事实暂定完整；冻结程序仍拒绝，不改冻结结果",
+      "后程序首份REQ-02恢复完整，REQ-01仍有真实时间错误及更广材料覆盖阻断",
+      "仅2作者Development来源；无独立裁决/泛化/默认替换结论"
+    ]
+  },
+  "humanMetrics": "NOT_OBSERVABLE"
+}

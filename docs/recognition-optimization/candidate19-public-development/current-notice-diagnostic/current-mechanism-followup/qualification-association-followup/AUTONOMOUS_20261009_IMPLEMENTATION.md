@@ -1,5 +1,7 @@
 # 2026-10-09：首屏局部风险及条件字段机制
 
+最终实际结果见[AUTONOMOUS_20261009_REPORT](AUTONOMOUS_20261009_REPORT.md)。以下初始实现/冻结记录保留；新比较已经4SETTLED，不再NOT_RUN。实际raw后仅公共程序再版本化：context1.4.0、requirement owner projection1.1.0、local relation1.2.0；生成输入/Schema/Prompt冻结字节不变。它们从实际要求owner、明确unknown事实/回执及已有task.eventLinks派生缺少的反向索引，不猜新事实。新REQ-02首份数据暂定完整，REQ-01时间角色及材料覆盖仍错，结论MIXED_PROGRESS。浏览器点击仍NOT_RUN，内存Repository证明不冒充页面。
+
 本轮依据用户3小时、合计16请求/US$6预授权执行，真实授权原件只在本机.data。先条件性接续原4个发送前身份，现已4SETTLED；原grant、原AUTH、原身份和raw不改，真正UNCERTAIN旧批不动。
 
 ## 发生层与可运行修改

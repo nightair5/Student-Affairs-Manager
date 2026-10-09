@@ -13,6 +13,21 @@ import { validateRecognitionResult } from './schema'
 import { indexImmutableScopesV11 } from './scopeIndexV11'
 
 describe('obligations first, one task-event authority, no missing-fact repair', () => {
+  it('derives a missing event inverse only from an explicit link naming the same supported action and object',async()=>{
+    const x=await createObligationFixture('registration'),facts=structuredClone(x.facts),link=facts.tasks[0].eventLinks[0]
+    facts.events[0].scopeIds=facts.events[0].scopeIds.filter(id=>!link.scopeIds.includes(id))
+    expect(()=>projectObligationAuthority(facts,x.context)).toThrow('EVENT_LINK_EVIDENCE')
+    const p=projectObligationAuthority(facts,x.context,true)
+    expect(p.audit.localRelations.derivedInverseEvidence).toHaveLength(1)
+    expect(p.projected.events[0].relatedTaskTempIds).toEqual([facts.tasks[0].id])
+    expect(p.audit.inferredFacts).toBe(0)
+    const d=decodeObligationProductRecording(obligationEnvelope(facts),x.context,'EngineeringFixture',true,true)
+    expect(d.result.conflicts.some(c=>c.id.startsWith('event-link-risk'))).toBe(false)
+    const wrong=structuredClone(facts);wrong.events[0].title='别的讲座'
+    expect(projectObligationAuthority(wrong,x.context,true).audit.localRelations.quarantinedRelations).toHaveLength(1)
+    const unrelated=structuredClone(facts);unrelated.tasks[0].eventLinks[0].scopeIds=[x.context.index.scopes.at(-1)!.id]
+    expect(projectObligationAuthority(unrelated,x.context,true).audit.localRelations.quarantinedRelations).toHaveLength(1)
+  })
   it.each(OBLIGATION_CASES)('%s is representable through actual schema and common first display', async kind => {
     const x = await createObligationFixture(kind), before = structuredClone(x.facts), d = decodeObligationProductRecording(x.rawHttpText, x.context)
     expect(d.sidecar.originalResponse).toBe(x.rawHttpText); expect(x.facts).toEqual(before)

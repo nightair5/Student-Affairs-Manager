@@ -149,5 +149,45 @@
       "sha256": "4b3718e6438b8ea6c8dc465e6d13a5fecd867992f9dbce909cfed4c602576f49"
     }
   ],
-  "modelRawMutated": false
+  "modelRawMutated": false,
+  "autonomous20261009": {
+    "role": "ENGINEERING_WITH_ACTUAL_MODEL_RECORDINGS",
+    "url": "http://127.0.0.1:6915/",
+    "browser": "NOT_RUN_POLICY_STOP",
+    "humanMetrics": "NOT_OBSERVABLE",
+    "files": [
+      {
+        "path": "AUTONOMOUS_20261009_IMPLEMENTATION.md",
+        "sha256": "3fdcb3e6eabf3a1af9b05e7b008a95bee0fc5c1d381b6738c116dc5dceabfb5e"
+      },
+      {
+        "path": "AUTONOMOUS_20261009_REPORT.md",
+        "sha256": "d7dd354508f46d81a1865c6637ebec35cc17437891101eef11a491fd2f522aff"
+      },
+      {
+        "path": "task-requirements-comparison/observed/FACT_ADJUDICATION.json",
+        "sha256": "038b7227f6992c23ac3a0906d790620fe8e61bb58658585772a4e11829bb1e65"
+      },
+      {
+        "path": "task-requirements-comparison/observed/MODEL_OBSERVATIONS.json",
+        "sha256": "90b2e8a301461bc24e97d70b50661004e4b1d6817f75cda87ed81de12ca9cb01"
+      },
+      {
+        "path": "task-requirements-comparison/observed/PRODUCT_DIAGNOSTIC.json",
+        "sha256": "6f1757e69c1a877dca337a923640c3ee03837f508bb9c33351639350abcbc3a4"
+      },
+      {
+        "path": "task-requirements-comparison/observed/PERSISTENCE_REPLAY.json",
+        "sha256": "bbe6d5af2e90cfebca1c1051f228daa8aae2758893426ad36e0b8e84ddbe9a42"
+      },
+      {
+        "path": "task-requirements-comparison/observed/EXECUTION_SUMMARY.json",
+        "sha256": "977b03526b63d555ba2582d47dc49f89916844d91a05500c4184e45c0d8d6059"
+      },
+      {
+        "path": "task-requirements-comparison/observed/VALIDATION_SUMMARY.json",
+        "sha256": "3ee29d02957684673d5f50375f8e658e536c7264677c592d2342d4e1eb841fcf"
+      }
+    ]
+  }
 }

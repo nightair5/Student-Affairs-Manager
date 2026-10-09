@@ -1,0 +1,172 @@
+{
+  "role": "READ_ONLY",
+  "actualRequests": 8,
+  "settled": 8,
+  "uncertain": 0,
+  "extraRetry": 0,
+  "repair": 0,
+  "verifier": 0,
+  "oldGrant": "current-role-fbd02397-d840-4b3c-9116-f00d9bcd073a",
+  "newGrant": "requirements-0a9db007-ba0a-4947-b74d-09c9e1563e60",
+  "allocationMicroUsd": 2600000,
+  "packageCapMicroUsd": 6000000,
+  "totals": {
+    "input": 44924,
+    "output": 22452,
+    "total": 67376,
+    "costUpperMicroUsd": 40424
+  },
+  "providerDeduction": "NOT_OBSERVABLE",
+  "units": [
+    {
+      "ordinal": 1,
+      "batch": "V7-CURRENT-QUALIFICATION-PUBLIC-DEVELOPMENT-20261008-R1",
+      "status": "SETTLED",
+      "usage": {
+        "input_tokens": 5480,
+        "input_tokens_details": {
+          "cached_tokens": 4608
+        },
+        "output_tokens": 1930,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 7410
+      },
+      "costUpperMicroUsd": 3960,
+      "responseSha256": "f272672bce9162260e6a7c99996c43a1cb17fcee983ac525e55adb4b48d8f63c"
+    },
+    {
+      "ordinal": 2,
+      "batch": "V7-CURRENT-QUALIFICATION-PUBLIC-DEVELOPMENT-20261008-R1",
+      "status": "SETTLED",
+      "usage": {
+        "input_tokens": 5368,
+        "input_tokens_details": {
+          "cached_tokens": 4608
+        },
+        "output_tokens": 2365,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 7733
+      },
+      "costUpperMicroUsd": 4449,
+      "responseSha256": "db4e838a96921bcc281ec5534b1f26c42e944f09ee04d6cc04001cf15e35ff17"
+    },
+    {
+      "ordinal": 3,
+      "batch": "V7-CURRENT-QUALIFICATION-PUBLIC-DEVELOPMENT-20261008-R1",
+      "status": "SETTLED",
+      "usage": {
+        "input_tokens": 6002,
+        "input_tokens_details": {
+          "cached_tokens": 4608
+        },
+        "output_tokens": 3389,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 9391
+      },
+      "costUpperMicroUsd": 5868,
+      "responseSha256": "a1c1ae0d301d4e10d6de1ba491d2fe008ab5636f95250f352b44583287c09bc7"
+    },
+    {
+      "ordinal": 4,
+      "batch": "V7-CURRENT-QUALIFICATION-PUBLIC-DEVELOPMENT-20261008-R1",
+      "status": "SETTLED",
+      "usage": {
+        "input_tokens": 5634,
+        "input_tokens_details": {
+          "cached_tokens": 4608
+        },
+        "output_tokens": 2551,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 8185
+      },
+      "costUpperMicroUsd": 4752,
+      "responseSha256": "30f84ae2675e2a6bdc5bdf0a25671eb79ccbe8790f1f52e50a1cbdc7224ec50d"
+    },
+    {
+      "ordinal": 1,
+      "batch": "V7-TASK-REQUIREMENTS-DEVELOPMENT-20261009-R1",
+      "status": "SETTLED",
+      "usage": {
+        "input_tokens": 5293,
+        "input_tokens_details": {
+          "cached_tokens": 4608
+        },
+        "output_tokens": 2688,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 7981
+      },
+      "costUpperMicroUsd": 4814,
+      "responseSha256": "750c6f6f02317890bbd95b5a65d388e829085a094cdd025dd92a93c42edb65dc"
+    },
+    {
+      "ordinal": 2,
+      "batch": "V7-TASK-REQUIREMENTS-DEVELOPMENT-20261009-R1",
+      "status": "SETTLED",
+      "usage": {
+        "input_tokens": 5745,
+        "input_tokens_details": {
+          "cached_tokens": 128
+        },
+        "output_tokens": 2125,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 7870
+      },
+      "costUpperMicroUsd": 4274,
+      "responseSha256": "ed7e89a18c3b9fded70d6d4254f1f94e2fa1c8689c4a836994d33db0907fd5b9"
+    },
+    {
+      "ordinal": 3,
+      "batch": "V7-TASK-REQUIREMENTS-DEVELOPMENT-20261009-R1",
+      "status": "SETTLED",
+      "usage": {
+        "input_tokens": 5927,
+        "input_tokens_details": {
+          "cached_tokens": 5120
+        },
+        "output_tokens": 3271,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 9198
+      },
+      "costUpperMicroUsd": 5704,
+      "responseSha256": "33a377de2e9cc73923dd29c17c3ed0b2e66947a22318b994f6a2f71dd5ffcb20"
+    },
+    {
+      "ordinal": 4,
+      "batch": "V7-TASK-REQUIREMENTS-DEVELOPMENT-20261009-R1",
+      "status": "SETTLED",
+      "usage": {
+        "input_tokens": 5475,
+        "input_tokens_details": {
+          "cached_tokens": 4608
+        },
+        "output_tokens": 4133,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 9608
+      },
+      "costUpperMicroUsd": 6603,
+      "responseSha256": "375e844ac0a7a0ff152fd8f2a660935b275880c855b58b1803070d6a7797a161"
+    }
+  ],
+  "ledger": {
+    "rows": 1065,
+    "sha256": "f648795b2037014e78a6fa3b45dae532230c12d9911992ef3eb996b2c06c06a7",
+    "tail": "187318a35bd865c9645c937e29a0eec1d713c108ba0e43cab2a63f97b2adeeb9",
+    "batchRows": 9
+  }
+}
